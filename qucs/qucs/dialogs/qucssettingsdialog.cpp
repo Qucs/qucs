@@ -426,7 +426,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
     homeEdit->setText(QucsSettings.QucsHomeDir.canonicalPath());
     admsXmlEdit->setText(QucsSettings.AdmsXmlBinDir.canonicalPath());
     ascoEdit->setText(QucsSettings.AscoBinDir.canonicalPath());
-    octaveEdit->setText(QucsSettings.OctaveBinDir.canonicalPath());
+    octaveEdit->setText(QucsSettings.OctaveExecutable);
 
 
     resize(300, 200);
@@ -501,6 +501,8 @@ void QucsSettingsDialog::slotOK()
 
 // -----------------------------------------------------------
 // Applies any changed settings
+/// \todo simplify the conditionals involving `changed = true`
+///  if user hit apply, save settings and refresh everything
 void QucsSettingsDialog::slotApply()
 {
     bool changed = false;
@@ -617,9 +619,13 @@ void QucsSettingsDialog::slotApply()
     /*! Update QucsSettings, tool paths */
     QucsSettings.AdmsXmlBinDir = admsXmlEdit->text();
     QucsSettings.AscoBinDir = ascoEdit->text();
-    QucsSettings.OctaveBinDir = octaveEdit->text();
+    QucsSettings.OctaveExecutable = octaveEdit->text();
 
-    QucsSettings.IgnoreFutureVersion = checkLoadFromFutureVersions->isChecked();
+    if (QucsSettings.IgnoreFutureVersion != checkLoadFromFutureVersions->isChecked())
+    {
+      QucsSettings.IgnoreFutureVersion = checkLoadFromFutureVersions->isChecked();
+      changed = true;
+    }
 
     if (QucsSettings.GraphAntiAliasing != checkAntiAliasing->isChecked())
     {
@@ -911,10 +917,8 @@ void QucsSettingsDialog::slotAscoDirBrowse()
 
 void QucsSettingsDialog::slotOctaveDirBrowse()
 {
-  QString d = QFileDialog::getExistingDirectory
-    (this, tr("Select the octave bin directory"),
-     octaveEdit->text(),
-     QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+  QString d = QFileDialog::getOpenFileName(this, tr("Select the octave executable"),
+                                           octaveEdit->text(), "All files (*)");
 
   if(!d.isEmpty())
     octaveEdit->setText(d);

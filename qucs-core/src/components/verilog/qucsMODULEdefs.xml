@@ -59,12 +59,79 @@
   <admst:apply-templates select="arg1" match=":%s" required="yes"/>
 </admst:template>
 
+<!-- Handle mapply_ternary on parameter definition, see bsim6 model -->
+<admst:template match="aamapply_ternary">
+     <admst:if test="[name='conditional']">
+             <admst:apply-templates select="arg1" match=":%(datatypename)" required="yes"/>
+             <admst:apply-templates select="arg2" match=":%(datatypename)" required="yes"/>
+             <admst:apply-templates select="arg3" match=":%(datatypename)" required="yes"/>
+     </admst:if>
+</admst:template>
+
+<admst:template match=":mapply_binary">
+  <admst:text format="("/>
+  <admst:apply-templates select="arg1" match=":%(adms/datatypename)" required="yes"/>
+  <admst:if test="[name='bw_or']"> <admst:text format="|"/> </admst:if>
+  <admst:if test="[name='bw_and']"> <admst:text format="&amp;"/> </admst:if>
+  <admst:if test="[name='addp']"> <admst:text format="+"/> </admst:if>
+  <admst:if test="[name='addm']"> <admst:text format="-"/> </admst:if>
+  <admst:if test="[name='multtime']"> <admst:text format="*"/> </admst:if>
+  <admst:if test="[name='multdiv']"> <admst:text format="/"/> </admst:if>
+  <admst:if test="[name='and']"> <admst:text format="&amp;&amp;"/> </admst:if>
+  <admst:if test="[name='equ']"> <admst:text format="=="/> </admst:if>
+  <admst:if test="[name='gt']"> <admst:text format="&gt;"/> </admst:if>
+  <admst:if test="[name='gt_equ']"> <admst:text format="&gt;="/> </admst:if>
+  <admst:if test="[name='lt']"> <admst:text format="&lt;"/> </admst:if>
+  <admst:if test="[name='lt_equ']"> <admst:text format="&lt;="/> </admst:if>
+  <admst:if test="[name='notequ']"> <admst:text format="!="/> </admst:if>
+  <admst:if test="[name='or']"> <admst:text format="||"/> </admst:if>
+  <admst:if test="[name='multmod']"> <admst:text format="%%"/> </admst:if>
+  <admst:apply-templates select="arg2" match=":%(adms/datatypename)" required="yes"/>
+  <admst:text format=")"/>
+</admst:template>
+<admst:template match=":mapply_ternary">
+  <admst:if test="[name='conditional']">
+    <admst:text format="("/>
+    <admst:apply-templates select="arg1" match=":%(adms/datatypename)" required="yes"/>
+    <admst:text format="?"/>
+    <admst:apply-templates select="arg2" match=":%(adms/datatypename)" required="yes"/>
+    <admst:text format=":"/>
+    <admst:apply-templates select="arg3" match=":%(adms/datatypename)" required="yes"/>
+    <admst:text format=")"/>
+  </admst:if>
+</admst:template>
+
+<admst:template match=":function">
+  <admst:text format="%(name)"/>
+  <admst:if test="arguments">
+    <admst:text format="("/>
+    <admst:join select="arguments" separator=",">
+      <admst:apply-templates select="." match=":%(adms/datatypename)" required="yes"/>
+    </admst:join>
+    <admst:text format=")"/>
+  </admst:if>
+</admst:template>
+
+<admst:template match=":function">
+  <admst:text format="%(name)"/>
+  <admst:if test="arguments">
+    <admst:text format="("/>
+    <admst:join select="arguments" separator=",">
+      <admst:apply-templates select="." match=":%(adms/datatypename)" required="yes"/>
+    </admst:join>
+    <admst:text format=")"/>
+  </admst:if>
+</admst:template>
+
+
 <admst:template match=":string">
   <admst:text format="&quot;%(value)&quot;"/>
 </admst:template>
 
+<!-- recurse, till it retuns the value of the independent variable -->
 <admst:template match=":variable">
-  <admst:text format="&quot;%(name)&quot;"/>
+  <!-- admst:text format="&quot;%(name)&quot;"/ -->
+  <admst:apply-templates select="default" match=":expression"/>
 </admst:template>
 
 <admst:template match=":range">
@@ -129,6 +196,7 @@
   </admst:choose>
 </admst:template>
 
+
 <admst:template match=":property">
   <!-- name -->
   <admst:value-of select="name"/>
@@ -149,6 +217,7 @@
 
   <!-- default value -->
   <admst:text format=", { "/>
+
   <admst:apply-templates select="default" match=":expression"/>
   <admst:text format=", PROP_NO_STR }, "/>
 
@@ -243,6 +312,7 @@ PROP_REQ [] = {
     </admst:if>
   </admst:if>
 </admst:for-each>
+
 <admst:text format="  PROP_NO_PROP };\n"/>
 // optional properties
 PROP_OPT [] = {
@@ -268,6 +338,7 @@ PROP_OPT [] = {
   <admst:text format=", PROP_NO_STR }, PROP_MIN_VAL (qucs::K) },\n"/>
   </admst:if>
 </admst:if>
+
 <admst:text format="  PROP_NO_PROP };\n"/>
 // device definition
 struct define_t $module::cirdef =

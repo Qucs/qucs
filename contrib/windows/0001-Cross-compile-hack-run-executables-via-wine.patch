@@ -1,0 +1,42 @@
+From e0474ebdc22148dd6bab690a5f23df3932bf23b1 Mon Sep 17 00:00:00 2001
+From: Guilherme Brondani Torri <guitorri@gmail.com>
+Date: Sat, 5 Nov 2016 23:37:30 +0100
+Subject: [PATCH 1/1] Cross-compile hack, run executables via `wine`.
+
+Compiled executables need to be run in the targed system
+for a successful compilation.
+
+First `gperfappgen` is run to generate code for `qucsator`.
+Then `qucsator` is run to genrate code for `qucsconv`.
+
+The Windows targets will fail to run on a *nix host.
+The solution is to run `wine [executable]`.
+---
+ qucs-core/src/Makefile.am | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/qucs-core/src/Makefile.am b/qucs-core/src/Makefile.am
+index fa7b8dd..f6da496 100644
+--- a/qucs-core/src/Makefile.am
++++ b/qucs-core/src/Makefile.am
+@@ -122,7 +122,7 @@ all-am: qucsdefs.h
+ generated_FILES = qucsdefs.h
+ 
+ qucsdefs.h: qucsator$(EXEEXT)
+-	./$< -l > $@
++	wine ./$< -l > $@
+ 
+ ## The qucs equation definitions use a hash lookup table
+ ## generated using gperf and put in gperfapphash.cpp which
+@@ -154,7 +154,7 @@ FILTER=| dos2unix
+ endif
+ 
+ gperfapphash.gph: gperfappgen$(EXEEXT)
+-	./$< $(FILTER) > $@
++	wine ./$< $(FILTER) > $@
+ 
+ gperfapphash.cpp: gperfapphash.gph
+ 	$(GPERF) -I -m 8 $< | sed -e 's/{""},/{"",0},/g' > $@
+-- 
+2.1.2
+

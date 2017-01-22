@@ -28,6 +28,7 @@
 #include <QStringList>
 #include <QDir>
 #include <QStandardItemModel>
+#include <QDebug>
 
 ProjectView::ProjectView(QWidget *parent)
   : QTreeView(parent)
@@ -57,7 +58,11 @@ ProjectView::setProjPath(const QString &path)
   if (m_valid) {
     m_projPath = path; // full path
     m_projName = QDir(m_projPath).dirName(); // only project directory name
-    m_projName.remove("_prj");
+    if (m_projName.endsWith("_prj")) {
+      m_projName.chop(4);// remove "_prj" from name
+    } else { // should not happen
+      qWarning() << "ProjectView::setProjPath() : path does not end in '_prj' (" << m_projName << ")";
+    }
   }
   refresh();
 }
@@ -89,7 +94,7 @@ ProjectView::refresh()
 
   // put all files into "Content"-ListView
   QDir workPath(m_projPath);
-  QStringList files = workPath.entryList("*", QDir::Files, QDir::Name);
+  QStringList files = workPath.entryList(QStringList() << "*", QDir::Files, QDir::Name);
   QStringList::iterator it;
   QString extName, fileName;
   QList<QStandardItem *> columnData;
@@ -123,13 +128,14 @@ ProjectView::refresh()
       APPEND_CHILD(5, columnData);
     }
     else if(extName == "sch") {
+      // test if it's a valid schematic file
       int n = Schematic::testFile(workPath.filePath(fileName));
       if(n >= 0) {
-        if(n > 0) {
+        if(n > 0) { // is a subcircuit
           columnData.append(new QStandardItem(QString::number(n)+tr("-port")));
         }
+        APPEND_CHILD(6, columnData);
       }
-      APPEND_CHILD(6, columnData);
     }
     else {
       APPEND_CHILD(7, columnData);

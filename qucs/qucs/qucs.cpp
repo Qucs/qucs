@@ -40,6 +40,7 @@
 #include <QFileSystemModel>
 #include <QUrl>
 #include <QSettings>
+#include <QVariant>
 #include <QDebug>
 
 #include "main.h"
@@ -115,6 +116,13 @@ const char *empty_xpm[] = {  // provides same height than "smallsave_xpm"
 "1 17 1 1", "  c None", " ", " ", " ", " ", " ",
 " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "};
 
+struct iconCompInfoStruct
+{
+  int catIdx; // index of the component Category
+  int compIdx; // index of the component itself in the Category
+};
+
+Q_DECLARE_METATYPE(iconCompInfoStruct)
 
 QucsApp::QucsApp()
 {
@@ -407,12 +415,15 @@ void QucsApp::fillLibrariesTreeView ()
     QDir LibDir(QucsSettings.LibDir);
     LibFiles = LibDir.entryList(QStringList("*.lib"), QDir::Files, QDir::Name);
 
-    // create top level library itmes, base on the library names
+    // create top level library items, base on the library names
     for(it = LibFiles.begin(); it != LibFiles.end(); it++)
     {
+        QString libPath(*it);
+        libPath.chop(4); // remove extension
+
         ComponentLibrary parsedlibrary;
 
-        int result = parseComponentLibrary (QucsSettings.LibDir + *it , parsedlibrary);
+        int result = parseComponentLibrary (libPath , parsedlibrary);
         QStringList nameAndFileName;
         nameAndFileName.append (parsedlibrary.name);
         nameAndFileName.append (QucsSettings.LibDir + *it);
@@ -422,8 +433,11 @@ void QucsApp::fillLibrariesTreeView ()
         switch (result)
         {
             case QUCS_COMP_LIB_IO_ERROR:
-                QMessageBox::critical(0, tr ("Error"), tr("Cannot open \"%1\".").arg (*it));
+            {
+                QString filename = getLibAbsPath(libPath);
+                QMessageBox::critical(0, tr ("Error"), tr("Cannot open \"%1\".").arg (filename));
                 return;
+            }
             case QUCS_COMP_LIB_CORRUPT:
                 QMessageBox::critical(0, tr("Error"), tr("Library is corrupt."));
                 return;
@@ -464,74 +478,67 @@ void QucsApp::fillLibrariesTreeView ()
 
     QDir UserLibDir = QDir (QucsSettings.QucsHomeDir.canonicalPath () + "/user_lib/");
 
-    // if there are user libraries, add them too
-    if(UserLibDir.exists ())
+    LibFiles = UserLibDir.entryList(QStringList("*.lib"), QDir::Files, QDir::Name);
+    int UserLibCount = LibFiles.count();
+
+    if (UserLibCount > 0) // there are user libraries
     {
-        //LibFiles = UserLibDir.entryList("*.lib", QDir::Files, QDir::Name);
-        LibFiles = UserLibDir.entryList(QStringList("*.lib"), QDir::Files, QDir::Name);
-        int UserLibCount = LibFiles.count();
 
-        if (UserLibCount > 0)
+        // create top level library itmes, base on the library names
+        for(it = LibFiles.begin(); it != LibFiles.end(); it++)
         {
+            QString libPath(UserLibDir.absoluteFilePath(*it));
+            libPath.chop(4); // remove extension
 
-            // create top level library itmes, base on the library names
-            for(it = LibFiles.begin(); it != LibFiles.end(); it++)
+            ComponentLibrary parsedlibrary;
+
+            int result = parseComponentLibrary (libPath, parsedlibrary);
+            QStringList nameAndFileName;
+            nameAndFileName.append (parsedlibrary.name);
+            nameAndFileName.append (UserLibDir.absolutePath() +"/"+ *it);
+
+            QTreeWidgetItem* newlibitem = new QTreeWidgetItem((QTreeWidget*)0, nameAndFileName);
+
+            switch (result)
             {
-                ComponentLibrary parsedlibrary;
-
-                int result = parseComponentLibrary (UserLibDir.absolutePath() +"/"+ *it , parsedlibrary);
-                QStringList nameAndFileName;
-                nameAndFileName.append (parsedlibrary.name);
-                nameAndFileName.append (UserLibDir.absolutePath() +"/"+ *it);
-
-                QTreeWidgetItem* newlibitem = new QTreeWidgetItem((QTreeWidget*)0, nameAndFileName);
-
-                switch (result)
+                case QUCS_COMP_LIB_IO_ERROR:
                 {
-                    case QUCS_COMP_LIB_IO_ERROR:
-                        QMessageBox::critical(0, tr ("Error"), tr("Cannot open \"%1\".").arg (UserLibDir.absolutePath()+"/" +*it));
-                        return;
-                    case QUCS_COMP_LIB_CORRUPT:
-                        QMessageBox::critical(0, tr("Error"), tr("Library is corrupt."));
-                        return;
-                    default:
-                        break;
+                    QString filename = getLibAbsPath(libPath);
+                    QMessageBox::critical(0, tr ("Error"), tr("Cannot open \"%1\".").arg (filename));
+                    return;
                 }
-
-                for (int i = 0; i < parsedlibrary.components.count (); i++)
-                {
-                    QStringList compNameAndDefinition;
-
-                    compNameAndDefinition.append (parsedlibrary.components[i].name);
-
-                    QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
-
-                    s +=  "<Components>\n  " +
-                          parsedlibrary.components[i].modelString + "\n" +
-                          "</Components>\n";
-
-                    compNameAndDefinition.append (s);
-
-
-                    QTreeWidgetItem* newcompitem = new QTreeWidgetItem(newlibitem, compNameAndDefinition);
-
-                    // Silence warning from the compiler about unused variable newcompitem
-                    // we pass the pointer to the parent item in the constructor
-                    Q_UNUSED( newcompitem )
-                }
-
-                topitems.append (newlibitem);
+                case QUCS_COMP_LIB_CORRUPT:
+                    QMessageBox::critical(0, tr("Error"), tr("Library is corrupt."));
+                    return;
+                default:
+                    break;
             }
-            libTreeWidget->insertTopLevelItems(0, topitems);
+
+            for (int i = 0; i < parsedlibrary.components.count (); i++)
+            {
+                QStringList compNameAndDefinition;
+
+                compNameAndDefinition.append (parsedlibrary.components[i].name);
+
+                QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
+
+                s +=  "<Components>\n  " +
+                      parsedlibrary.components[i].modelString + "\n" +
+                      "</Components>\n";
+
+                compNameAndDefinition.append (s);
+
+
+                QTreeWidgetItem* newcompitem = new QTreeWidgetItem(newlibitem, compNameAndDefinition);
+
+                // Silence warning from the compiler about unused variable newcompitem
+                // we pass the pointer to the parent item in the constructor
+                Q_UNUSED( newcompitem )
+            }
+
+            topitems.append (newlibitem);
         }
-        else
-        {
-            // make the user libraries section header
-            newitem = new QTreeWidgetItem((QTreeWidget*)0, QStringList("No User Libraries"));
-            sectionFont.setBold (false);
-            newitem->setFont (0, sectionFont);
-            topitems.append (newitem);
-        }
+        libTreeWidget->insertTopLevelItems(0, topitems);
     }
     else
     {
@@ -592,6 +599,7 @@ void QucsApp::fillComboBox (bool setAll)
 {
   //CompChoose->setMaxVisibleItems (13); // Increase this if you add items below.
   CompChoose->clear ();
+  CompSearch->clear(); // clear the search box, in case search was active...
 
   if (!setAll) {
     CompChoose->insertItem(CompChoose->count(), QObject::tr("paintings"));
@@ -613,7 +621,6 @@ void QucsApp::slotSetCompView (int index)
   editText->setHidden (true); // disable text edit of component property
 
   QList<Module *> Comps;
-  CompComps->clear ();   // clear the IconView
   if (CompChoose->count () <= 0) return;
 
   // was in "search mode" ?
@@ -621,22 +628,28 @@ void QucsApp::slotSetCompView (int index)
     if (index == 0) // user selected "Search results" item
       return;
     CompChoose->removeItem(0);
-    CompSearch->clear();
+    CompSearch->clear(); // clear the search box
     --index; // adjust requested index since item 0 was removed
   }
+  CompComps->clear ();   // clear the IconView
 
   // make sure the right index is selected
   //  (might have been called by a cleared search and not by user action)
   CompChoose->setCurrentIndex(index);
+  int compIdx;
+  iconCompInfoStruct iconCompInfo;
+  QVariant v;
   QString item = CompChoose->itemText (index);
+  int catIdx = Category::getModulesNr(item);
 
   Comps = Category::getModules(item);
   QString Name;
+  pInfoFunc Infos = 0;
 
   // if something was registered dynamicaly, get and draw icons into dock
   if (item == QObject::tr("verilog-a user devices")) {
 
-    QListWidgetItem *icon;
+    compIdx = 0;
     QMapIterator<QString, QString> i(Module::vaComponents);
     while (i.hasNext()) {
       i.next();
@@ -668,25 +681,33 @@ void QucsApp::slotSetCompView (int index)
         // default icon
         vaIcon = QPixmap(":/bitmaps/editdelete.png");
       }
-
-      // Add icon an name tag to dock
-      icon = new QListWidgetItem(vaIcon, Name);
+      QListWidgetItem *icon = new QListWidgetItem(vaIcon, Name);
       icon->setToolTip(Name);
+      iconCompInfo = iconCompInfoStruct{catIdx, compIdx};
+      v.setValue(iconCompInfo);
+      icon->setData(Qt::UserRole, v);
       CompComps->addItem(icon);
+      compIdx++;
     }
-  }
-  else {
+  } else {
+    // static components
     char * File;
     // Populate list of component bitmaps
+    compIdx = 0;
     QList<Module *>::const_iterator it;
     for (it = Comps.constBegin(); it != Comps.constEnd(); it++) {
-      if ((*it)->info) {
+      Infos = (*it)->info;
+      if (Infos) {
         /// \todo warning: expression result unused, can we rewrite this?
         (void) *((*it)->info) (Name, File, false);
         QListWidgetItem *icon = new QListWidgetItem(QPixmap(":/bitmaps/" + QString (File) + ".png"), Name);
         icon->setToolTip(Name);
+        iconCompInfo = iconCompInfoStruct{catIdx, compIdx};
+        v.setValue(iconCompInfo);
+        icon->setData(Qt::UserRole, v);
         CompComps->addItem(icon);
       }
+      compIdx++;
     }
   }
 }
@@ -710,17 +731,24 @@ void QucsApp::slotSearchComponent(const QString &searchText)
   if (searchText.isEmpty()) {
     slotSetCompView(CompChoose->currentIndex());
   } else {
+    CompChoose->setCurrentIndex(0); // make sure the "Search results" category is selected
     editText->setHidden (true); // disable text edit of component property
 
     //traverse all component and match searchText with name
     QString Name;
     char * File;
     QList<Module *> Comps;
+    iconCompInfoStruct iconCompInfo;
+    QVariant v;
 
     QStringList cats = Category::getCategories ();
+    int catIdx = 0;
     foreach(QString it, cats) {
+      // this will go also over the "verilog-a user devices" category, if present
+      //   but since modules there have no 'info' function it won't handle them
       Comps = Category::getModules(it);
       QList<Module *>::const_iterator modit;
+      int compIdx = 0;
       for (modit = Comps.constBegin(); modit != Comps.constEnd(); modit++) {
         if ((*modit)->info) {
           /// \todo warning: expression result unused, can we rewrite this?
@@ -730,15 +758,22 @@ void QucsApp::slotSearchComponent(const QString &searchText)
             //match
             QListWidgetItem *icon = new QListWidgetItem(QPixmap(":/bitmaps/" + QString (File) + ".png"), Name);
             icon->setToolTip(it + ": " + Name);
+            // add component category and module indexes to the icon
+            iconCompInfo = iconCompInfoStruct{catIdx, compIdx};
+            v.setValue(iconCompInfo);
+            icon->setData(Qt::UserRole, v);
             CompComps->addItem(icon);
           }
         }
+        compIdx++;
       }
+      catIdx++;
     }
+    // the "verilog-a user devices" is the last category, if present
     QMapIterator<QString, QString> i(Module::vaComponents);
+    int compIdx = 0;
     while (i.hasNext()) {
       i.next();
-
       // Just need path to bitmap, do not create an object
       QString Name, vaBitmap;
       vacomponent::info (Name, vaBitmap, false, i.value());
@@ -766,8 +801,13 @@ void QucsApp::slotSearchComponent(const QString &searchText)
         // Add icon an name tag to dock
         QListWidgetItem *icon = new QListWidgetItem(vaIcon, Name);
         icon->setToolTip(tr("verilog-a user devices") + ": " + Name);
+        // Verilog-A is the last category
+        iconCompInfo = iconCompInfoStruct{catIdx-1, compIdx};
+        v.setValue(iconCompInfo);
+        icon->setData(Qt::UserRole, v);
         CompComps->addItem(icon);
       }
+      compIdx++;
     }
   }
 }
@@ -825,70 +865,44 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
 
   // if symbol mode, only paintings are enabled.
   Comps = Category::getModules(CompChoose->currentText());
-  qDebug() << "pressed CompComps id" << i;
-  qDebug() << CompComps->item(i)->text(); //Name;
 
   QString name = CompComps->item(i)->text();
   QString CompName;
   QString CompFile_qstr;
   char *CompFile_cptr;
 
-  if (!CompSearch->text().isEmpty()) {
-    //comp search is not empty, search all category to get a component in same name
-    QStringList cats = Category::getCategories();
-    int i = 0;
-    //search normal component
-    foreach (QString it, cats) {
-      Comps = Category::getModules (it);
-      foreach(Module *mod, Comps) {
-        if (mod->info) {
-          (*mod->info)(CompName, CompFile_cptr, false);
-          if (CompName == name) {
-	    // change currently selected category, so the user will 
-	    //   learn where the component comes from
-            CompChoose->setCurrentIndex(i+1); // +1 due to the added "Search Results" item
-	    ccCurIdx = i; // remember the category to select when exiting search
-	    //!! comment out the above two lines if you would like that the search
-	    //!!   returns back to the last selected category instead
-            view->selElem = (*mod->info) (CompName, CompFile_cptr, true);
-	    // TODO: component found, exit the loops now...
-          }
-        }
-      }
-      i++;
-    }
-    //search verilog-a component
-    i = CompChoose->findText(QObject::tr("verilog-a user devices"));
-    QMapIterator<QString, QString> it(Module::vaComponents);
-    while (it.hasNext()) {
-      it.next();
+  qDebug() << "pressed CompComps id" << i << name;
+  QVariant v = CompComps->item(i)->data(Qt::UserRole);
+  iconCompInfoStruct iconCompInfo = v.value<iconCompInfoStruct>();
+  qDebug() << "slotSelectComponent()" << iconCompInfo.catIdx << iconCompInfo.compIdx;
 
-      // Just need vacomponent name, do not create an object
-      QString Name, vaBitmap;
-      vacomponent::info (Name, vaBitmap, false, it.value());
-
-      if (Name == name) {
-        view->selElem = vacomponent::info(CompName, CompFile_qstr, true, it.value());
-      }
-    }
+  Category* cat = Category::Categories.at(iconCompInfo.catIdx);
+  Module *mod = cat->Content.at(iconCompInfo.compIdx);
+  qDebug() << "mod->info" << mod->info;
+  qDebug() << "mod->infoVA" << mod->infoVA;
+  Infos = mod->info;
+  if (Infos) {
+    // static component
+    view->selElem = (*mod->info) (CompName, CompFile_cptr, true);
   } else {
-    // handle static and dynamic components
-    if (CompChoose->currentText() == QObject::tr("verilog-a user devices")){
-      InfosVA = Comps.at(i)->infoVA;
-
-      // get JSON file out of item name on widgetitem
-      QString filename = Module::vaComponents[name];
-
-      if (InfosVA) {
-        qDebug() <<  " slotSelectComponent, view->selElem" ;
-        view->selElem = (*InfosVA) (CompName, CompFile_qstr, true, filename);
-      }
+    // Verilog-A component
+    InfosVA = mod->infoVA;
+    // get JSON file out of item name on widgetitem
+    QString filename = Module::vaComponents[name];
+    if (InfosVA) {
+      view->selElem = (*InfosVA) (CompName, CompFile_qstr, true, filename);
     }
-    else {
-      Infos = Comps.at(i)->info;
+  }
 
-      if (Infos)
-        view->selElem = (*Infos) (CompName, CompFile_cptr, true);
+  // in "search mode" ?
+  if (CompChoose->itemText(0) == tr("Search results")) {
+    if (Infos || InfosVA) {
+      // change currently selected category, so the user will
+      //   see where the component comes from
+      CompChoose->setCurrentIndex(iconCompInfo.catIdx+1); // +1 due to the added "Search Results" item
+      ccCurIdx = iconCompInfo.catIdx; // remember the category to select when exiting search
+      //!! comment out the above two lines if you would like that the search
+      //!!   returns back to the last selected category instead
     }
   }
 }
@@ -1159,39 +1173,42 @@ void QucsApp::openProject(const QString& Path)
 {
   slotHideEdit(); // disable text edit of component property
 
-  QString Name = Path;
-  if (Name.endsWith(QDir::separator())) {
-    Name = Name.left(Name.length()-1);  // cut off trailing '/'
+  QDir ProjDir(QDir::cleanPath(Path)); // the full path
+  QString openProjName = ProjDir.dirName(); // only the project directory name
+
+  if(!ProjDir.exists() || !ProjDir.isReadable()) { // check project directory
+    QMessageBox::critical(this, tr("Error"),
+                          tr("Cannot access project directory: %1").arg(Path));
+    return;
   }
-  int i = Name.lastIndexOf(QDir::separator());
-  if(i > 0) Name = Name.mid(i+1);   // cut out the last subdirectory
-  Name.remove("_prj");
+
+  if (!openProjName.endsWith("_prj")) { // should not happen
+    QMessageBox::critical(this, tr("Error"),
+                          tr("Project directory name does not end in '_prj'(%1)").arg(openProjName));
+    return;
+  }
 
   if(!closeAllFiles()) return;   // close files and ask for saving them
   Schematic *d = new Schematic(this, "");
-  i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
+  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
   DocumentTab->setCurrentIndex(i);
 
   view->drawn = false;
 
   slotResetWarnings();
 
-  QDir ProjDir(QDir::cleanPath(Path));
-  if(!ProjDir.exists() || !ProjDir.isReadable()) { // check project directory
-    QMessageBox::critical(this, tr("Error"),
-                          tr("Cannot access project directory: ")+Path);
-    return;
-  }
   QucsSettings.QucsWorkDir.setPath(ProjDir.path());
   octave->adjustDirectory();
 
   Content->setProjPath(QucsSettings.QucsWorkDir.absolutePath());
 
   TabView->setCurrentIndex(1);   // switch to "Content"-Tab
-  ProjName = Name;   // remember the name of project
+
+  openProjName.chop(4); // remove "_prj" from name
+  ProjName = openProjName;   // remember the name of project
 
   // show name in title of main window
-  setWindowTitle("Qucs " PACKAGE_VERSION + tr(" - Project: ")+Name);
+  setWindowTitle("Qucs " PACKAGE_VERSION + tr(" - Project: ")+ProjName);
 }
 
 // ----------------------------------------------------------
@@ -1291,18 +1308,19 @@ bool QucsApp::deleteProject(const QString& Path)
 {
   slotHideEdit();
 
-  QString Name = Path;
+  if(Path.isEmpty()) return false;
 
-  if(Name.isEmpty()) return false;
+  QString delProjName = QDir(Path).dirName(); // only project directory name
 
-  if (Name.endsWith(QDir::separator())) {
-    Name = Name.left(Name.length()-1);  // cut off trailing '/'
+  if (!delProjName.endsWith("_prj")) { // should not happen
+    QMessageBox::critical(this, tr("Error"),
+                          tr("Project directory name does not end in '_prj' (%1)").arg(delProjName));
+    return false;
   }
-  int i = Name.lastIndexOf(QDir::separator());
-  if(i > 0) Name = Name.mid(i+1);  // cut out the last subdirectory
-  Name.chop(4); // remove "_prj" from name
 
-  if(Name == ProjName) {
+  delProjName.chop(4); // remove "_prj" from name
+
+  if(delProjName == ProjName) {
     QMessageBox::information(this, tr("Info"),
         tr("Cannot delete an open project !"));
     return false;
@@ -1708,29 +1726,29 @@ bool QucsApp::closeAllFiles()
 void QucsApp::slotFileExamples()
 {
   statusBar()->showMessage(tr("Open examples directory..."));
-  QString path = QDir::toNativeSeparators(QucsSettings.ExamplesDir);
-  QDesktopServices::openUrl(QUrl("file:///" + path.replace("\\","/")));
+  // pass the QUrl representation of a local file
+  QDesktopServices::openUrl(QUrl::fromLocalFile(QucsSettings.ExamplesDir));
   statusBar()->showMessage(tr("Ready."));
 }
 
 void QucsApp::slotHelpTutorial()
 {
-  QString path = QDir::toNativeSeparators(QucsSettings.DocDir);
-  QUrl url = QUrl("file:///" + path.replace("\\","/") + "tutorial/" + QObject::sender()->objectName());
+  // pass the QUrl representation of a local file
+  QUrl url = QUrl::fromLocalFile(QDir::cleanPath(QucsSettings.DocDir + "/tutorial/" + QObject::sender()->objectName()));
   QDesktopServices::openUrl(url);
 }
 
 void QucsApp::slotHelpTechnical()
 {
-  QString path = QDir::toNativeSeparators(QucsSettings.DocDir);
-  QUrl url = QUrl("file:///" + path.replace("\\","/") + "technical/" + QObject::sender()->objectName());
+  // pass the QUrl representation of a local file
+  QUrl url = QUrl::fromLocalFile(QDir::cleanPath(QucsSettings.DocDir + "/technical/" + QObject::sender()->objectName()));
   QDesktopServices::openUrl(url);
 }
 
 void QucsApp::slotHelpReport()
 {
-  QString path = QDir::toNativeSeparators(QucsSettings.DocDir);
-  QUrl url = QUrl("file:///" + path.replace("\\","/") + "report/" + QObject::sender()->objectName());
+  // pass the QUrl representation of a local file
+  QUrl url = QUrl::fromLocalFile(QDir::cleanPath(QucsSettings.DocDir + "/report/" + QObject::sender()->objectName()));
   QDesktopServices::openUrl(url);
 }
 
@@ -2461,6 +2479,9 @@ void QucsApp::switchEditMode(bool SchematicMode)
   setMarker->setEnabled(SchematicMode);
   selectMarker->setEnabled(SchematicMode);
   simulate->setEnabled(SchematicMode);
+  // no search in "symbol painting mode" as only paintings should be used
+  CompSearch->setEnabled(SchematicMode);
+  CompSearchClear->setEnabled(SchematicMode);
 }
 
 // ---------------------------------------------------------
@@ -2551,12 +2572,10 @@ void QucsApp::slotPowerMatching()
     Imag *= -1.0;
 
   MatchDialog *Dia = new MatchDialog(this);
-  Dia->TwoCheck->setChecked(false);
-  Dia->TwoCheck->setEnabled(false);
 //  Dia->Ref1Edit->setText(QString::number(Z0));
-  Dia->S11magEdit->setText(QString::number(pm->powReal()));
-  Dia->S11degEdit->setText(QString::number(Imag));
+  Dia->setS11LineEdits(pm->powReal(), Imag);
   Dia->setFrequency(pm->powFreq());
+  Dia->setTwoPortMatch(false); // will also cause the corresponding impedance LineEdit to be updated
 
   slotToPage();
   if(Dia->exec() != QDialog::Accepted)
@@ -2634,16 +2653,12 @@ void QucsApp::slot2PortMatching()
   delete Diag;
 
   MatchDialog *Dia = new MatchDialog(this);
-  Dia->TwoCheck->setEnabled(false);
+  Dia->setTwoPortMatch(true);
   Dia->setFrequency(Freq);
-  Dia->S11magEdit->setText(QString::number(S11real));
-  Dia->S11degEdit->setText(QString::number(S11imag));
-  Dia->S12magEdit->setText(QString::number(S12real));
-  Dia->S12degEdit->setText(QString::number(S12imag));
-  Dia->S21magEdit->setText(QString::number(S21real));
-  Dia->S21degEdit->setText(QString::number(S21imag));
-  Dia->S22magEdit->setText(QString::number(S22real));
-  Dia->S22degEdit->setText(QString::number(S22imag));
+  Dia->setS11LineEdits(S11real, S11imag);
+  Dia->setS12LineEdits(S12real, S12imag);
+  Dia->setS21LineEdits(S21real, S21imag);
+  Dia->setS22LineEdits(S22real, S22imag);
 
   slotToPage();
   if(Dia->exec() != QDialog::Accepted)

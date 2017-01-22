@@ -35,6 +35,7 @@
 
 tQucsSettings QucsSettings;
 QDir UserLibDir;
+QDir SysLibDir;
 
 
 // #########################################################################
@@ -84,6 +85,8 @@ bool saveApplSettings(QucsLib *qucs)
 
 int main(int argc, char *argv[])
 {
+  QApplication a(argc, argv);
+
   // apply default settings
   QucsSettings.x = 100;
   QucsSettings.y = 50;
@@ -100,15 +103,22 @@ int main(int argc, char *argv[])
     QucsSettings.LangDir =     QucsDir.canonicalPath() + "/share/qucs/lang/";
     QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
   } else {
-    QucsSettings.LangDir = LANGUAGEDIR;
-    QucsSettings.LibDir = LIBRARYDIR;
+    QString QucsApplicationPath = QCoreApplication::applicationDirPath();
+#ifdef __APPLE__
+    QucsDir = QDir(QucsApplicationPath.section("/bin",0,0));
+#else
+    QucsDir = QDir(QucsApplicationPath);
+    QucsDir.cdUp();
+#endif
+    QucsSettings.LangDir = QucsDir.canonicalPath() + "/share/qucs/lang/";
+    QucsSettings.LibDir  = QucsDir.canonicalPath() + "/share/qucs/library/";
   }
 
   loadSettings();
 
+  SysLibDir.setPath(QucsSettings.LibDir);
   UserLibDir.setPath(QucsSettings.QucsHomeDir.canonicalPath() + "/user_lib/");
 
-  QApplication a(argc, argv);
   a.setFont(QucsSettings.font);
 
   QTranslator tor( 0 );

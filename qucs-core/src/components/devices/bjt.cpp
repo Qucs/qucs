@@ -460,19 +460,24 @@ void bjt::calcDC (void) {
   dQbdUbe = Q1 * (Qb * Var + gif * Ikf / Sqrt);
   dQbdUbc = Q1 * (Qb * Vaf + gir * Ikr / Sqrt);
 
+  // If and gif will be later used also for the capacitance/charge calculations
+  // Values computed from the excess phase routine should be used only
+  //   for computing the companion model current and conductance
+  nr_double_t Ifx = If;
+  nr_double_t gifx = gif;
   // during transient analysis only
   if (doTR) {
     // calculate excess phase influence
-    If /= Qb;
-    excessPhase (cexState, If, gif);
-    If *= Qb;
+    Ifx /= Qb;
+    excessPhase (cexState, Ifx, gifx);
+    Ifx *= Qb;
   }
 
   // compute transfer current
-  It = (If - Ir) / Qb;
+  It = (Ifx - Ir) / Qb;
 
   // compute forward and backward transconductance
-  gitf = (+gif - It * dQbdUbe) / Qb;
+  gitf = (+gifx - It * dQbdUbe) / Qb;
   gitr = (-gir - It * dQbdUbc) / Qb;
 
   // compute old SPICE values

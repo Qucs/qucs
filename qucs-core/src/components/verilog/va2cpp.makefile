@@ -25,6 +25,7 @@ VA=.va
 # handle deletion if Windows cmd.exe or MinGW MSYS terminal
 ifeq ($(OS),Windows_NT)
   RM=del
+  SHELL=cmd.exe
   ifeq ($(MSYSTEM),MINGW32)
 	RM=rm -f
   endif
@@ -57,7 +58,7 @@ va2cpp: $(MODEL).cpp
 
 .va.cpp: $(XML_FILES)
 	@echo '# va2cpp - Creating C++ sources.'
-	# BUG: must catch stray spaces in ADMSXML, adding extra quotation
+# BUG: must catch stray spaces in ADMSXML, adding extra quotation
 	"$(ADMSXML)" $< \
                            -I "$(INC)"                    \
                            -e "$(INC)/qucsVersion.xml"    \

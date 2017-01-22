@@ -31,9 +31,9 @@ else
 DOC_SUBDIR =
 endif
 
-SUBDIRS = examples qucs qucs-core $(DOC_SUBDIR)
+SUBDIRS = qucs qucs-core $(DOC_SUBDIR)
 
-EXTRA_DIST = bootstrap
+EXTRA_DIST = bootstrap VERSION README.md NEWS.md CONTRIBUTING.md
 
 # this is insane. the qucs testsuite needs to be
 #  - either moved into qucs
@@ -51,7 +51,10 @@ all-local:
   #
 MORE_PATH=$(abs_top_builddir)/qucs/qucs:$(abs_top_builddir)/qucs-core/src:$(abs_top_builddir)/qucs-core/src/converter
 
+if QUCS_TEST
 check-local: qucsatorcheck eqncheck qucscheck
+endif
+
 QUCSTEST_ENV = export PATH=$(MORE_PATH):$(PATH); \
                export QUCSCONV=qucsconv; \
                export QUCS_LIBDIR=$(abs_top_srcdir)/qucs/qucs-lib/library; \

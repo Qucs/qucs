@@ -22,6 +22,9 @@
 # Boston, MA 02110-1301, USA.  
 #
 
+# this is required when using pdflatex (default)
+all: admsflow.pdf
+
 EXTRA_DIST = $(PNGS) $(PDFS) $(XFIG)
 
 PNGS = componentdialog.png hicumschematic.png

@@ -27,10 +27,17 @@ AC_PATH_PROG(PS2PDF, ps2pdf, :)
 AC_PATH_PROG(EPSTOPDF, epstopdf, :)
 
 AC_PATH_PROG(OCTAVE, octave, no)
-AM_CONDITIONAL(USE_OCTAVE, test x$OCTAVE != xno)
+
+AS_IF([test "x$OCTAVE" != xno],
+	AS_IF([octave --eval eglobpar 2>/dev/null],
+		     [OCTAVE_EPSTK=yes], [OCTAVE_EPSTK=no])
+	)
+AM_CONDITIONAL(USE_OCTAVE, test x$OCTAVE_EPSTK != xno)
 
 # FIXME: don't use colons
-AC_PATH_PROG(LATEX2HTML, latex2html, :)
+AC_PATH_PROG(LATEX2HTML, latex2html, no)
+AM_CONDITIONAL(USE_LATEX2HTML, test x$LATEX2HTML != xno)
+
 AC_PATH_PROG(TEX2PDF, tex2pdf, :)
 AC_PATH_PROG(MAKEINDEX, makeindex, :)
 
@@ -80,6 +87,11 @@ AC_SUBST(enable_dot)
 AC_SUBST(enable_html_docs)
 AC_SUBST(enable_latex_docs)
 ])
+
+# sometimes you may need special flags.
+# (such as -shell-escape?)
+# (not implemented any further)
+AC_SUBST([PDFLATEX_FLAGS])
 
 dnl Check for doxygen.
 CHECK_DOXYGEN
@@ -157,4 +169,9 @@ AC_OUTPUT
 # Print results.
 AC_MSG_RESULT([])
 AC_MSG_RESULT([ $PACKAGE version $VERSION configured successfully.])
+AC_MSG_RESULT([
+Configure Information:
+        OCTAVE    : $OCTAVE
+    OCTAVE_EPSTK  : $OCTAVE_EPSTK
+	 ])
 AC_MSG_RESULT([])

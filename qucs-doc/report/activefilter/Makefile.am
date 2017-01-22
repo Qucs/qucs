@@ -22,43 +22,43 @@
 # Boston, MA 02110-1301, USA.  
 #
 
+include $(top_srcdir)/qucstex.mk
+
 SUBDIRS = pics
 
-EXTRA_DIST = $(SOURCES)
+EXTRA_DIST = $(SOURCES) $(BIBFILE)
 
 SOURCES = activefilter.tex content.tex
+BIBFILE = activefilter.bib
 TARGETS = activefilter.pdf
 
-activefilter.pdf: $(SOURCES)
-
-pics-report:
-	cd pics && $(MAKE) $(AM_MAKEFLAGS) report
-
-report: pics-report $(TARGETS)
-
-book: pics-report
+activefilter.pdf: $(SOURCES) $(BIBFILE)
 
 SUFFIXES = .tex .dvi .ps
 
-.tex.dvi:
-	$(LATEX) --shell-escape $<
-	$(LATEX) --shell-escape $<
-	$(LATEX) -interaction=batchmode --shell-escape $<
+# this is not required, as we are using pdflatex now.
+# .tex.dvi:
+# 	$(LATEX) --shell-escape $<
+# 	$(LATEX) --shell-escape $<
+# 	$(LATEX) -interaction=batchmode --shell-escape $<
+# 
+# 	bibtex $*
+# 
+# .dvi.ps:
+# 	$(DVIPS) $< -o $@
 
-.tex.pdf:
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) --shell-escape $<
-	bibtex $*
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) --shell-escape $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode --shell-escape $<
+activefilter.pdf: texpdfHACK = export BIBINPUTS=$(srcdir):; bibtex activefilter
 
-.dvi.ps:
-	$(DVIPS) $< -o $@
 
 # installation of documentation
 docdatadir = ${prefix}/share/qucs/docs/report
 docdata_DATA = ${TARGETS}
 
+# insane hack. allows latex to execute arbitrary code
+# (used to render some plots)
+# TODO: specify all commands within Makefile
+activefilter.pdf: PDFLATEX_FLAGS=--shell-escape
 
-CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx
+CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx *.pgf-plot.table *.pgf-plot.gnuplot
 MAINTAINERCLEANFILES = Makefile.in
 DISTCLEANFILES = *.ps *.pdf

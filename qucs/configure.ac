@@ -710,7 +710,7 @@ AC_PATH_PROGS(UIC, uic-qt4 uic, :, [$QT_DIR/bin:$PATH])
 AC_PATH_PROGS(RCC, rcc, :, [$QT_DIR/bin:$PATH])
 
 if test "$MOC" = ":"; then
-  AC_MSG_WARN([
+  AC_MSG_ERROR([
   The $PACKAGE package needs the 'Qt Meta Object Compiler' to compile properly.
   Though Qt itself may be properly installed including headers and libraries
   the 'moc' program is missing.  Possibly you need to install the full
@@ -718,7 +718,7 @@ if test "$MOC" = ":"; then
 fi
 
 if test "$UIC" = ":"; then
-  AC_MSG_WARN([
+  AC_MSG_ERROR([
   The $PACKAGE package needs the 'Qt User Interface Compiler' to compile properly.
   Though Qt itself may be properly installed including headers and libraries
   the 'uic' program is missing.  Possibly you need to install the full
@@ -764,20 +764,6 @@ mingw* | *msys* | cygwin*)
 esac
 AC_SUBST(PATHXFORM)
 
-dnl Create path info.
-LANG_PATH="$prefix/share/qucs/lang/"
-AC_DEFINE_UNQUOTED([LANGUAGEDIR], ["$LANG_PATH"],
-  [Where the language files go.])
-unset LANG_PATH
-LIBRARY_PATH="$prefix/share/qucs/library/"
-AC_DEFINE_UNQUOTED([LIBRARYDIR], ["$LIBRARY_PATH"],
-  [Where the component library files go.])
-unset LIBRARY_PATH
-DOC_PATH="$prefix/share/qucs/docs/"
-AC_DEFINE_UNQUOTED([DOCDIR], ["$DOC_PATH"],
-  [Where the documentation files go.])
-unset DOC_PATH
-
 dnl Definitions at top of <config.h>.
 AH_TOP([
 /* __BEGIN_DECLS should be used at the beginning of your declarations,
@@ -801,6 +787,7 @@ AH_TOP([
 dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([Makefile
     contrib/Makefile
+    examples/Makefile
     qucs-edit/Makefile
     qucs-help/Makefile
     qucs-help/docs/Makefile
