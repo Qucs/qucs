@@ -177,7 +177,8 @@ script:
   - echo ${DISTCHECK_CONFIGURE_FLAGS}
   - ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest ${CONFIGURE_FLAGS}
   - if [ "$OSX" = true ]; then
-      make check;
+      make;
+      make qucscheck;
     else
       make distcheck DISTCHECK_CONFIGURE_FLAGS="${DISTCHECK_CONFIGURE_FLAGS}";
     fi
