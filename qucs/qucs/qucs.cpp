@@ -2070,6 +2070,26 @@ void QucsApp::slotSimulate()
     return;
   }
 
+  // Check if there is at least on simulation block in the schematic
+  /// \todo Filtering components by the Model string is error prone, use enumeration or similar.
+  Schematic *sch = dynamic_cast<Schematic *>(w);
+  if (sch) {
+    bool haveSimulation = false;
+    for(Component *pc = sch->Components->first(); pc != 0; pc = sch->Components->next()) {
+      QString model = pc->Model;
+      // simulation components start with a "."
+      if (model.startsWith(".")) {
+        qDebug() << "  First simulation found:" << model;
+        haveSimulation = true;
+        break;
+      }
+    }
+    if (! haveSimulation) {
+      QMessageBox::information(this, tr("Info"),tr("Please add a simulation component."));
+      return; // abort
+    }
+  }
+
   SimMessage *sim = new SimMessage(w, this);
   // disconnect is automatically performed, if one of the involved objects
   // is destroyed !
