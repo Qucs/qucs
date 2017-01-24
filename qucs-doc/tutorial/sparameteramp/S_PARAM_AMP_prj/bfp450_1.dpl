@@ -1,0 +1,50 @@
+<Qucs Schematic 0.0.19>
+<Properties>
+  <View=-59,30,800,1802,1,0,1020>
+  <Grid=10,10,0>
+  <DataSet=bfp450_1.dat>
+  <DataDisplay=bfp450_1.sch>
+  <OpenDisplay=1>
+  <Script=bfp450_1.m>
+  <RunScript=0>
+  <showFrame=0>
+  <FrameText0=Title>
+  <FrameText1=Drawn By:>
+  <FrameText2=Date:>
+  <FrameText3=Revision:>
+</Properties>
+<Symbol>
+</Symbol>
+<Components>
+</Components>
+<Wires>
+</Wires>
+<Diagrams>
+  <Rect 130 888 442 428 3 #c0c0c0 1 00 1 0 2e+09 1.2e+10 1 -6.42986 10 73.7933 1 -0.223544 1 5.34857 315 0 225 "" "" "">
+	<"S[2,1]" #0000ff 0 3 0 0 0>
+	<"S[1,2]" #ff0000 0 3 0 0 0>
+	<"K" #00ff00 0 3 0 0 1>
+	  <Mkr 8.72111e+08 123 -159 3 0 0>
+	<"Fmindb" #00aaff 0 3 0 0 1>
+	  <Mkr 8.72111e+08 128 -199 3 0 0>
+  </Rect>
+  <Smith 140 419 369 369 3 #c0c0c0 1 00 1 0 1 1 1 0 4 1 1 0 1 1 315 0 225 "" "" "">
+	<"S[1,1]" #0000ff 0 3 0 0 0>
+	  <Mkr 8.72111e+08 128 -219 3 0 0>
+	<"S[2,2]" #ff0000 0 3 0 0 0>
+	  <Mkr 8.72111e+08 137 -143 3 0 0>
+	<"Sopt" #ff00ff 0 3 0 0 0>
+  </Smith>
+  <Smith 90 1546 466 466 3 #c0c0c0 1 00 1 0 1 1 0 0 5 1.5 1 0 1 1 315 0 225 "" "" "">
+	<"S[1,1]" #0000ff 0 3 0 4 0>
+	<"GA" #ff00ff 0 3 0 0 0>
+	  <Mkr 314.286/160/9e+08 316 -177 3 1 0>
+	<"NF" #00ff00 0 3 0 0 0>
+	  <Mkr 62.8571/1.4/9e+08 361 -341 3 1 0>
+	<"SG" #ff0000 0 3 0 0 0>
+  </Smith>
+</Diagrams>
+<Paintings>
+  <Arrow 230 1140 -50 40 20 8 #000000 0 1 0>
+  <Text 230 1130 12 #000000 0 "Source Stability\nCircle">
+</Paintings>
