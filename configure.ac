@@ -385,7 +385,7 @@ case $host_os in
     dnl  * MacpPorts default   /opt/local/lib
     with_qt=no
     AC_MSG_CHECKING([for Qt OS X framework])
-    paths="$QTDIR/lib /Library/Frameworks /opt/local/lib /usr/local/lib"
+    paths="$QTDIR/lib ${prefix}/Library/Frameworks /opt/local/lib /usr/local/lib"
     for path in $paths; do
       if test -f "$path/QtGui.framework/Headers/QApplication"; then
         with_qt=yes
@@ -406,6 +406,7 @@ case $host_os in
       CPPFLAGS="$CPPFLAGS -I$path/QtSvg.framework/Headers"
       CPPFLAGS="$CPPFLAGS -I$path/QtScript.framework/Headers"
       CPPFLAGS="$CPPFLAGS -I$path/Qt3Support.framework/Headers"
+      QT_LDFLAGS="$QT_LDFLAGS -F$path"
     else
       AC_MSG_ERROR([not found])
     fi
@@ -413,7 +414,7 @@ case $host_os in
     dnl Define Qt3Support
     QT_DEF="-DQT_SHARED -DQT3_SUPPORT"
     CPPFLAGS="$CPPFLAGS $QT_DEF"
-    QT_LDFLAGS="-headerpad_max_install_names"
+    QT_LDFLAGS="$QT_LDFLAGS -headerpad_max_install_names"
 
     if test "$enable_qucs_gui_debug" = yes; then
       CPPFLAGS="$CPPFLAGS -W -Wall"
@@ -568,7 +569,7 @@ case $host_os in
     DEVELOPER_DIR="${MACOSX_SDK_PATH%/SDKs*}"
     DEVELOPER_DIR="${DEVELOPER_DIR%/Platforms*}"
     export DEVELOPER_DIR
-    FRAMEWORKSHOME="$MACOSX_SDK_PATH/System/Library/Frameworks"
+    FRAMEWORKSHOME="${prefix}/Library/Frameworks"
     MACOSX_DEPLOYMENT_TARGET="$with_macosx_version_min_required"
 
     case "$with_macosx_version_min_required" in
