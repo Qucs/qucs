@@ -381,11 +381,11 @@ case $host_os in
     dnl Check for Qt in:
     dnl  * Digia default path: /Library/Frameworks
     dnl  * User provided path: QTDIR
-    dnl  * Homebrew defaul:    /usr/local/lib
-    dnl  * MacpPorts default   /opt/local/lib
+    dnl  * Homebrew defaul:    /usr/local/lib or ${prefix}/Library/Frameworks
+    dnl  * MacpPorts default   /opt/local/lib or ${prefix}/Library/Frameworks
     with_qt=no
     AC_MSG_CHECKING([for Qt OS X framework])
-    paths="$QTDIR/lib ${prefix}/Library/Frameworks /opt/local/lib /usr/local/lib"
+    paths="$QTDIR/lib ${prefix}/Library/Frameworks /Library/Frameworks /opt/local/lib /usr/local/lib"
     for path in $paths; do
       if test -f "$path/QtGui.framework/Headers/QApplication"; then
         with_qt=yes
