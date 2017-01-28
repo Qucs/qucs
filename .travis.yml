@@ -29,8 +29,9 @@ python:
 virtualenv:
   system_site_packages: true
 
-# Force OSX 10.10 as Qt 4.8.7 installer does not work with OSX 10.11
-osx_image: xcode6.4
+# Qt 4.8.7 official installer works up to OSX 10.10 or xcode6.4
+# Use rebuilt (with Qt3Support) homebrew bottle for OSX 10.12 or xcode8.2
+osx_image: xcode8.2
 
 matrix:
   exclude:
@@ -122,14 +123,12 @@ install:
       brew install adms;
     fi
 
-  # Install official Qt (185MB)
-  # Homebrew Qt binary has no Qt3Support (build from souce takes hours)
+  # The Qt4 brew bottles from github.com/cartr/homebrew-qt4 do not include Qt3Support
+  # Below is a rebuild bottle that does include Qt3Support, skip-relocate to manually install into cellar
   - if [[ $OSX ]]; then
-      QT_VERSION=4.8.7 ;
-      curl -L -O http://download.qt.io/official_releases/qt/4.8/4.8.7/qt-opensource-mac-${QT_VERSION}.dmg ;
-      hdiutil mount qt-opensource-mac-${QT_VERSION}.dmg ;
-      sudo installer -pkg /Volumes/Qt\ 4.8.7/Qt.mpkg -target / ;
-      hdiutil unmount /Volumes/Qt\ 4.8.7 ;
+      curl -L -O https://dl.bintray.com/guitorri/qucs/qt-4.8.7_3.sierra.bottle.2.tar.gz ;
+      tar -C $(brew --cellar) -xvf qt-4.8.7_3.sierra.bottle.2.tar.gz ;
+      brew link --force qt ;
     fi
 
 script:
@@ -176,7 +175,7 @@ script:
   - echo ${CONFIGURE_FLAGS}
   - echo ${DISTCHECK_CONFIGURE_FLAGS}
   - ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest ${CONFIGURE_FLAGS}
-  - if [ "$OSX" = true ]; then
+  - if [[ $OSX ]]; then
       make;
       make qucscheck;
     else
