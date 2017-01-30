@@ -685,46 +685,31 @@ void QucsApp::editFile(const QString& File)
       QString prog;
       QStringList args;
 
-      if (QucsSettings.Editor.toLower().contains("qucsedit")) {
-
-#ifdef __MINGW32__
-  prog = "qucsedit.exe";
-#elif __APPLE__
-  prog = "qucsedit.app/Contents/MacOS/qucsedit";
-#else
-  prog = "qucsedit";
-#endif
-
-        QFileInfo editor(QucsSettings.BinDir + prog);
-        prog = QDir::toNativeSeparators(editor.canonicalFilePath());
-      }
-      else { // user defined editor
-          QFileInfo editor(QucsSettings.Editor);
-          prog = QDir::toNativeSeparators(editor.canonicalFilePath());
-      }
+      QFileInfo editor(QucsSettings.Editor);
+      prog = QDir::toNativeSeparators(editor.canonicalFilePath());
 
       if (!File.isEmpty()) {
           args << File;
       }
 
-      QProcess *QucsEditor = new QProcess();
+      QProcess *externalEditor = new QProcess();
       QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
       env.insert("PATH", env.value("PATH") );
-      QucsEditor->setProcessEnvironment(env);
+      externalEditor->setProcessEnvironment(env);
 
       qDebug() << "Command: " << prog << args.join(" ");
 
-      QucsEditor->start(prog, args);
+      externalEditor->start(prog, args);
 
-      if( !QucsEditor->waitForStarted(1000) ) {
+      if( !externalEditor->waitForStarted(1000) ) {
         QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor! \n\n%1").arg(prog));
-        delete QucsEditor;
+        delete externalEditor;
         return;
       }
-      qDebug() << QucsEditor->readAllStandardError();
+      qDebug() << externalEditor->readAllStandardError();
 
       // to kill it before qucs ends
-      connect(this, SIGNAL(signalKillEmAll()), QucsEditor, SLOT(kill()));
+      connect(this, SIGNAL(signalKillEmAll()), externalEditor, SLOT(kill()));
     }
 }
 
