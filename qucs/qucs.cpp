@@ -1349,9 +1349,8 @@ void QucsApp::slotTextNew()
 {
   statusBar()->showMessage(tr("Creating new text editor..."));
   slotHideEdit(); // disable text edit of component property
-  TextDoc *d = new TextDoc(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
-  DocumentTab->setCurrentIndex(i);
+
+  editFile("");
 
   statusBar()->showMessage(tr("Ready."));
 }
