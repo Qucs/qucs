@@ -652,15 +652,25 @@ void QucsApp::slotSelectMarker()
 extern QString lastDirOpenSave; // to remember last directory and file
 
 // ------------------------------------------------------------------------
-// Is called by slotShowLastMsg(), by slotShowLastNetlist() and from the
-// component edit dialog.
+///
+/// \brief QucsApp::editFile
+/// \param File is the filename, or empty for a new file
+///
+/// Called by :
+/// - slotTextNew()
+/// - slotShowLastMsg()
+/// - slotShowLastNetlist()
+/// - edit properties of components (such as spice, verilog)
+///
 void QucsApp::editFile(const QString& File)
 {
     if ((QucsSettings.Editor.toLower() == "qucs") | QucsSettings.Editor.isEmpty())
     {
         // The Editor is 'qucs' or empty, open a net document tab
         if (File.isEmpty()) {
-            QucsApp::slotTextNew();
+            TextDoc *d = new TextDoc(this, "");
+            int i = DocumentTab->addTab(d, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
+            DocumentTab->setCurrentIndex(i);
         }
         else
         {
