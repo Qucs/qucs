@@ -2204,9 +2204,7 @@ void QucsApp::slotOpenContent(const QModelIndex &idx)
   QFileInfo Info(QucsSettings.QucsWorkDir.filePath(filename));
   QString extName = Info.suffix();
 
-  if (extName == "sch" || extName == "dpl" || extName == "vhdl" ||
-      extName == "vhd" || extName == "v" || extName == "va" ||
-      extName == "m" || extName == "oct") {
+  if (extName == "sch" || extName == "dpl") {
     gotoPage(Info.absoluteFilePath());
     updateRecentFilesList(Info.absoluteFilePath());
     slotUpdateRecentFiles();
@@ -2226,10 +2224,14 @@ void QucsApp::slotOpenContent(const QModelIndex &idx)
     return;
   }
 
-  if(extName == "dat") {
-    editFile(Info.absoluteFilePath());  // open datasets with text editor
+  // open text files with text editor
+  if(extName == "dat" || extName == "vhdl" ||
+     extName == "vhd" || extName == "v" || extName == "va" ||
+     extName == "m" || extName == "oct") {
+    editFile(Info.absoluteFilePath());
     return;
   }
+
 
   // File is no Qucs file, so go through list and search a user
   // defined program to open it.
