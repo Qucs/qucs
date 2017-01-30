@@ -123,7 +123,7 @@ void TL_Filter::getMicrostrip(double Z0, double freq, tSubstrate *substrate,
     // compute line parameters
     calcMicrostrip(substrate, width, freq, er_eff, Z0_current);
 
-    if(fabs(Z0 - Z0_current) < MAX_ERROR)
+    if(std::abs(Z0 - Z0_current) < MAX_ERROR)
       break;  // wanted value was found
 
     increment = width / 100.0;
@@ -195,8 +195,8 @@ void TL_Filter::sythesizeCoupledMicrostrip
     getCoupledMicrostrip
 	   (width, gap, freq, substrate, zl_e_current, zl_o_current, ce, co);
 
-    if(fabs(zl_e - zl_e_current) < MAX_ERROR)
-      if(fabs(zl_o - zl_o_current) < MAX_ERROR)
+    if(std::abs(zl_e - zl_e_current) < MAX_ERROR)
+      if(std::abs(zl_o - zl_o_current) < MAX_ERROR)
         break;  // wanted value was found
 
     // compute new line parameters
@@ -424,7 +424,7 @@ void TL_Filter::getCoupledMicrostrip
   a /= 0.8928 + 0.1072 * (1.0 - exp(-0.42 * pow(fn / 20.0, 3.215)));   // = P14
   b = 0.6366 * (exp(-0.3401 * fn) - 1.0)
       * atan(1.263 * pow(Wh_o / 3.0, 1.629));                          // P11
-  b = fabs(1.0 - 0.8928 * (1.0 + b) * a);                              // = P15_2
+  b = std::abs(1.0 - 0.8928 * (1.0 + b) * a);                              // = P15_2
   a  = 0.0363 * exp(-4.6 * Wh_o) * (1.0 - exp(-pow(fn / 38.7, 4.97))); // = P3
   a  = pow((a*d + 0.1844) * fn * b, 1.5763);                           // = Fo
   a *= 0.27488 + (0.6315 + 0.525 / pow(1.0 + 0.0157 * fn, 20.0)) * Wh_o
@@ -454,7 +454,7 @@ void TL_Filter::getCoupledMicrostrip
   a += 1.275 * (1.0 - exp(-0.004625 * b * pow(er, 1.674) * pow(fn / 18.365, 2.745)))
        + 1.0;                                                            // = Ce
 
-  b  = fabs(1.0 - 42.54 * pow(g, 0.133) * exp(-0.812 * g)
+  b  = std::abs(1.0 - 42.54 * pow(g, 0.133) * exp(-0.812 * g)
                   * pow(Wh_e, 2.5) / (1.0 + 0.033 * pow(Wh_e, 2.5)));    // = Q21
   b  = 0.016 + pow(0.0514 * er * b, 4.524);                              // = qe
   c  = pow(fn / 28.843, 12);                                             // = re
