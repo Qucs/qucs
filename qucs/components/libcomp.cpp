@@ -149,7 +149,7 @@ int LibComp::loadSection(const QString& Name, QString& Section,
 
   // search model
   Start = Section.indexOf("<"+Name+">");
-  if(Start < 0)
+  if(Start < 0) {
     if((Name == "Symbol") && (~libDefaultSymbol.isEmpty())) {
       // component does not define its own symbol but the library defines a default symbol
       Section = libDefaultSymbol;
@@ -157,6 +157,7 @@ int LibComp::loadSection(const QString& Name, QString& Section,
     } else {
       return -7;  // symbol not found
     }
+  }
   Start = Section.indexOf('\n', Start);
   if(Start < 0)  return -8;  // file corrupt
   while(Section.at(++Start) == ' ') ;
