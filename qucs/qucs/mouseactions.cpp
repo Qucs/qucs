@@ -788,17 +788,17 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
       QucsMain->symEdit->addTo(ComponentMenu);
       QucsMain->fileSettings->addTo(ComponentMenu);
     }
-    if(!QucsMain->moveText->isOn())
+    if(!QucsMain->moveText->isChecked())
       QucsMain->moveText->addTo(ComponentMenu);
     break;
   }
   while(true) {
     if(focusElement)
       if(focusElement->Type == isGraph) break;
-    if(!QucsMain->onGrid->isOn())
+    if(!QucsMain->onGrid->isChecked())
       QucsMain->onGrid->addTo(ComponentMenu);
     QucsMain->editCopy->addTo(ComponentMenu);
-    if(!QucsMain->editPaste->isOn())
+    if(!QucsMain->editPaste->isChecked())
       QucsMain->editPaste->addTo(ComponentMenu);
     break;
   }
@@ -813,7 +813,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
     break;
   }
 
-  if(!QucsMain->editDelete->isOn())
+  if(!QucsMain->editDelete->isChecked())
     QucsMain->editDelete->addTo(ComponentMenu);
   if(focusElement) if(focusElement->Type == isMarker) {
     ComponentMenu->insertSeparator();
@@ -835,25 +835,25 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
     }
     ComponentMenu->insertSeparator();
     if(focusElement) if(focusElement->Type & isComponent)
-      if(!QucsMain->editActivate->isOn())
+      if(!QucsMain->editActivate->isChecked())
         QucsMain->editActivate->addTo(ComponentMenu);
-    if(!QucsMain->editRotate->isOn())
+    if(!QucsMain->editRotate->isChecked())
       QucsMain->editRotate->addTo(ComponentMenu);
-    if(!QucsMain->editMirror->isOn())
+    if(!QucsMain->editMirror->isChecked())
       QucsMain->editMirror->addTo(ComponentMenu);
-    if(!QucsMain->editMirrorY->isOn())
+    if(!QucsMain->editMirrorY->isChecked())
       QucsMain->editMirrorY->addTo(ComponentMenu);
 
     // right-click menu to go into hierarchy
     if(focusElement) {
       if(focusElement->Type & isComponent)
 	if(((Component*)focusElement)->Model == "Sub")
-	  if(!QucsMain->intoH->isOn())
+      if(!QucsMain->intoH->isChecked())
 	    QucsMain->intoH->addTo(ComponentMenu);
     }
     // right-click menu to pop out of hierarchy
     if(!focusElement)
-      if(!QucsMain->popH->isOn())
+      if(!QucsMain->popH->isChecked())
 	QucsMain->popH->addTo(ComponentMenu);
   } while(false);
 
