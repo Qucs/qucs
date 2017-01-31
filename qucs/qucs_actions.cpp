@@ -80,7 +80,7 @@ bool QucsApp::performToggleAction(bool on, QAction *Action,
     return false;
   }
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   do {
     if(Function) if((Doc->*Function)()) {
       Action->blockSignals(true);
@@ -147,7 +147,7 @@ void QucsApp::slotEditMirrorY(bool on)
 // \todo update the status or tooltip message
 void QucsApp::slotEditActivate (bool on)
 {
-  TextDoc * Doc = (TextDoc *) DocumentTab->currentPage ();
+  TextDoc * Doc = (TextDoc *) DocumentTab->currentWidget ();
   if (isTextDocument (Doc)) {
     //TODO Doc->clearParagraphBackground (Doc->tmpPosX);
     Doc->commentSelected ();
@@ -166,7 +166,7 @@ void QucsApp::slotEditActivate (bool on)
 // Is called if "Delete"-Button is pressed.
 void QucsApp::slotEditDelete(bool on)
 {
-  TextDoc *Doc = (TextDoc*)DocumentTab->currentPage();
+  TextDoc *Doc = (TextDoc*)DocumentTab->currentWidget();
   if(isTextDocument(Doc)) {
     Doc->viewport()->setFocus();
     //Doc->del();
@@ -215,7 +215,7 @@ void QucsApp::slotMoveText(bool on)
 // Is called, when "Zoom in" action is triggered.
 void QucsApp::slotZoomIn(bool on)
 {
-  TextDoc *Doc = (TextDoc*)DocumentTab->currentPage();
+  TextDoc *Doc = (TextDoc*)DocumentTab->currentWidget();
   if(isTextDocument(Doc)) {
     Doc->zoomBy(1.5f);
     magPlus->blockSignals(true);
@@ -238,7 +238,7 @@ void QucsApp::slotEscape()
 // Is called when the select toolbar button is pressed.
 void QucsApp::slotSelect(bool on)
 {
-  QWidget *w = DocumentTab->currentPage();
+  QWidget *w = DocumentTab->currentWidget();
   if(isTextDocument(w)) {
     ((TextDoc*)w)->viewport()->setFocus();
       select->blockSignals(true);
@@ -248,7 +248,7 @@ void QucsApp::slotSelect(bool on)
   }
 
   // goto to insertWire mode if ESC pressed during wiring
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(MouseMoveAction == &MouseActions::MMoveWire2) {
     MouseMoveAction = &MouseActions::MMoveWire1;
     MousePressAction = &MouseActions::MPressWire1;
@@ -273,7 +273,7 @@ void QucsApp::slotEditCut()
   statusBar()->message(tr("Cutting selection..."));
   slotHideEdit(); // disable text edit of component property
 
-  QWidget *Doc = DocumentTab->currentPage();
+  QWidget *Doc = DocumentTab->currentWidget();
   if(isTextDocument (Doc)) {
     ((TextDoc *)Doc)->cut();
   } else {
@@ -288,7 +288,7 @@ void QucsApp::slotEditCopy()
 {
   statusBar()->message(tr("Copying selection to clipboard..."));
 
-  QWidget *Doc = DocumentTab->currentPage();
+  QWidget *Doc = DocumentTab->currentWidget();
   if(isTextDocument (Doc)) {
     ((TextDoc *)Doc)->copy();
   } else {
@@ -302,7 +302,7 @@ void QucsApp::slotEditCopy()
 void QucsApp::slotEditPaste(bool on)
 {
   // get the current document
-  QWidget *Doc = DocumentTab->currentPage();
+  QWidget *Doc = DocumentTab->currentWidget();
 
   // if the current document is a text document paste in
   // the contents of the clipboard as text
@@ -361,7 +361,7 @@ void QucsApp::slotEditPaste(bool on)
 // -----------------------------------------------------------------------
 void QucsApp::slotInsertEntity ()
 {
-  TextDoc * Doc = (TextDoc *) DocumentTab->currentPage ();
+  TextDoc * Doc = (TextDoc *) DocumentTab->currentWidget ();
   Doc->viewport()->setFocus ();
   //TODO Doc->clearParagraphBackground (Doc->tmpPosX);
   Doc->insertSkeleton ();
@@ -399,7 +399,7 @@ void QucsApp::slotInsertEquation(bool on)
 
   view->selElem = new Equation();
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(view->drawn) Doc->viewport()->update();
   view->drawn = false;
   MouseMoveAction = &MouseActions::MMoveElement;
@@ -432,7 +432,7 @@ void QucsApp::slotInsertGround(bool on)
 
   view->selElem = new Ground();
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(view->drawn) Doc->viewport()->update();
   view->drawn = false;
   MouseMoveAction = &MouseActions::MMoveElement;
@@ -465,7 +465,7 @@ void QucsApp::slotInsertPort(bool on)
 
   view->selElem = new SubCirPort();
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(view->drawn) Doc->viewport()->update();
   view->drawn = false;
   MouseMoveAction = &MouseActions::MMoveElement;
@@ -476,7 +476,7 @@ void QucsApp::slotInsertPort(bool on)
 // Is called, when "Undo"-Button is pressed.
 void QucsApp::slotEditUndo()
 {
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(isTextDocument(Doc)) {
     ((TextDoc*)Doc)->viewport()->setFocus();
     ((TextDoc*)Doc)->undo();
@@ -494,7 +494,7 @@ void QucsApp::slotEditUndo()
 // Is called, when "Undo"-Button is pressed.
 void QucsApp::slotEditRedo()
 {
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(isTextDocument(Doc)) {
     ((TextDoc*)Doc)->viewport()->setFocus();
     ((TextDoc*)Doc)->redo();
@@ -514,7 +514,7 @@ void QucsApp::slotAlignTop()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(!Doc->aligning(0))
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
@@ -528,7 +528,7 @@ void QucsApp::slotAlignBottom()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(!Doc->aligning(1))
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
@@ -542,7 +542,7 @@ void QucsApp::slotAlignLeft()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(!Doc->aligning(2))
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
@@ -556,7 +556,7 @@ void QucsApp::slotAlignRight()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(!Doc->aligning(3))
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
@@ -570,7 +570,7 @@ void QucsApp::slotDistribHoriz()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   Doc->distributeHorizontal();
   Doc->viewport()->update();
   view->drawn = false;
@@ -582,7 +582,7 @@ void QucsApp::slotDistribVert()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   Doc->distributeVertical();
   Doc->viewport()->update();
   view->drawn = false;
@@ -594,7 +594,7 @@ void QucsApp::slotCenterHorizontal()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(!Doc->aligning(4))
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
@@ -608,7 +608,7 @@ void QucsApp::slotCenterVertical()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(!Doc->aligning(5))
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
@@ -622,7 +622,7 @@ void QucsApp::slotSelectAll()
 {
   slotHideEdit(); // disable text edit of component property
 
-  QWidget *Doc = DocumentTab->currentPage();
+  QWidget *Doc = DocumentTab->currentWidget();
   if(isTextDocument(Doc)) {
     ((TextDoc*)Doc)->viewport()->setFocus();
     //((TextDoc*)Doc)->selectAll(true);
@@ -641,7 +641,7 @@ void QucsApp::slotSelectMarker()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   Doc->selectMarkers();
   Doc->viewport()->update();
   view->drawn = false;
@@ -852,14 +852,14 @@ void QucsApp::showHTML(const QString& Page)
 // Is called when the find action is triggered.
 void QucsApp::slotEditFind()
 {
-  SearchDia->initSearch(DocumentTab->currentPage(),
-      ((TextDoc *)DocumentTab->currentPage())->textCursor().selectedText(), false);
+  SearchDia->initSearch(DocumentTab->currentWidget(),
+      ((TextDoc *)DocumentTab->currentWidget())->textCursor().selectedText(), false);
 }
 
 // --------------------------------------------------------------
 void QucsApp::slotChangeProps()
 {
-  QWidget *Doc = DocumentTab->currentPage();
+  QWidget *Doc = DocumentTab->currentWidget();
   if(isTextDocument(Doc)) {
     ((TextDoc*)Doc)->viewport()->setFocus();
 
@@ -969,7 +969,7 @@ void QucsApp::slotCursorLeft(bool left)
   if(!editText->isHidden()) return;  // for edit of component property ?
 
   Q3PtrList<Element> movingElements;
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   int markerCount = Doc->copySelectedElements(&movingElements);
 
   if((movingElements.count() - markerCount) < 1) {
@@ -1038,7 +1038,7 @@ void QucsApp::slotCursorUp(bool up)
   }
 
   Q3PtrList<Element> movingElements;
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   int markerCount = Doc->copySelectedElements(&movingElements);
 
   if((movingElements.count() - markerCount) < 1) { // all selections are markers
@@ -1070,7 +1070,7 @@ void QucsApp::slotApplyCompText()
 {
   QString s;
   QFont f = QucsSettings.font;
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   f.setPointSizeFloat( Doc->Scale * float(f.pointSize()) );
   editText->setFont(f);
 
