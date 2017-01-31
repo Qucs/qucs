@@ -141,7 +141,8 @@ FillDialog::~FillDialog()
 // --------------------------------------------------------------------------
 void FillDialog::slotSetColor()
 {
-  QColor c = QColorDialog::getColor(ColorButt->paletteBackgroundColor(),this);
+  QColor c = QColorDialog::getColor(
+              misc::getWidgetBackgroundColor(ColorButt),this);
   if(c.isValid())
     misc::setWidgetBackgroundColor(ColorButt, c);
 }
@@ -149,8 +150,8 @@ void FillDialog::slotSetColor()
 // --------------------------------------------------------------------------
 void FillDialog::slotSetFillColor()
 {
-  QColor c =
-    QColorDialog::getColor(FillColorButt->paletteBackgroundColor(), this);
+  QColor c = QColorDialog::getColor(
+              misc::getWidgetBackgroundColor(FillColorButt),this);
   misc::setWidgetBackgroundColor(FillColorButt, c);
 }
 

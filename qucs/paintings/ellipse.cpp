@@ -385,8 +385,10 @@ bool Ellipse::Dialog()
     return false;
   }
 
-  if(Pen.color() != d->ColorButt->paletteBackgroundColor()) {
-    Pen.setColor(d->ColorButt->paletteBackgroundColor());
+  /// \todo deduplicate
+  QColor penColor = misc::getWidgetBackgroundColor(d->ColorButt);
+  if(Pen.color() != penColor) {
+    Pen.setColor(penColor);
     changed = true;
   }
   if(Pen.width()  != d->LineWidth->text().toInt()) {
@@ -401,8 +403,9 @@ bool Ellipse::Dialog()
     filled = d->CheckFilled->isChecked();
     changed = true;
   }
-  if(Brush.color() != d->FillColorButt->paletteBackgroundColor()) {
-    Brush.setColor(d->FillColorButt->paletteBackgroundColor());
+  QColor brushColor = misc::getWidgetBackgroundColor(d->FillColorButt);
+  if(Brush.color() != brushColor) {
+    Brush.setColor(brushColor);
     changed = true;
   }
   if(Brush.style()  != d->FillStyleBox->currentIndex()) {

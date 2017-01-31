@@ -827,7 +827,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 
     if(Diag->Name != "Tab") {
       if(Diag->Name != "Truth") {
-        g->Color = ColorButt->paletteBackgroundColor();
+        g->Color = misc::getWidgetBackgroundColor(ColorButt);
         g->Thick = Property2->text().toInt();
         QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
         QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
@@ -988,7 +988,7 @@ void DiagramDialog::slotNewGraph()
 // FIXME: call  Diag->whateverelse();
   if(Diag->Name != "Tab") { // BUG
     if(Diag->Name != "Truth") { // BUG
-      g->Color = ColorButt->paletteBackgroundColor();
+      g->Color = misc::getWidgetBackgroundColor(ColorButt);
       g->Thick = Property2->text().toInt();
       g->Style = toGraphStyle(PropertyBox->currentIndex());
       assert(g->Style!=GRAPHSTYLE_INVALID);
@@ -1040,10 +1040,12 @@ void DiagramDialog::slotApply()
       Diag->yAxis.GridOn = GridOn->isChecked();
       changed = true;
     }
-    if(GridColorButt)
-      if(Diag->GridPen.color() != GridColorButt->paletteBackgroundColor()) {
-      Diag->GridPen.setColor(GridColorButt->paletteBackgroundColor());
-      changed = true;
+    if(GridColorButt) {
+      QColor gridColBut = misc::getWidgetBackgroundColor(GridColorButt);
+      if(Diag->GridPen.color() != gridColBut) {
+        Diag->GridPen.setColor(gridColBut);
+        changed = true;
+      }
     }
     if(GridStyleBox)
       if(Diag->GridPen.style()!=(Qt::PenStyle)(GridStyleBox->currentIndex()+1)) {
@@ -1197,7 +1199,8 @@ void DiagramDialog::reject()
 // --------------------------------------------------------------------------
 void DiagramDialog::slotSetColor()
 {
-  QColor c = QColorDialog::getColor(ColorButt->paletteBackgroundColor(),this);
+  QColor c = QColorDialog::getColor(
+              misc::getWidgetBackgroundColor(ColorButt),this);
   if(!c.isValid()) return;
   QString stylesheet = QString("QPushButton {background-color: %1};").arg(c.name());
   ColorButt->setStyleSheet(stylesheet);
@@ -1216,7 +1219,7 @@ void DiagramDialog::slotSetColor()
 void DiagramDialog::slotSetGridColor()
 {
   QColor c = QColorDialog::getColor(
-			GridColorButt->paletteBackgroundColor(),this);
+              misc::getWidgetBackgroundColor(GridColorButt),this);
   if(!c.isValid()) return;
   misc::setWidgetBackgroundColor(GridColorButt, c);
   changed = true;
