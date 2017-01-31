@@ -104,8 +104,8 @@ void MarkerDialog::slotAcceptValues()
 					changed = true;
 			}
 	}
-  if(NumberBox->currentItem() != pMarker->numMode) {
-    pMarker->numMode = NumberBox->currentItem();
+  if(NumberBox->currentIndex() != pMarker->numMode) {
+    pMarker->numMode = NumberBox->currentIndex();
     changed = true;
   }
   if(TransBox->isChecked() != pMarker->transparent) {

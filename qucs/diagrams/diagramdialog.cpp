@@ -837,10 +837,10 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
         if(g->Var.right(3) == ".Vb")   // harmonic balance output ?
           if(PropertyBox->count() >= GRAPHSTYLE_ARROW)
             PropertyBox->setCurrentIndex(GRAPHSTYLE_ARROW);
-        g->Style = toGraphStyle(PropertyBox->currentItem());
+        g->Style = toGraphStyle(PropertyBox->currentIndex());
         assert(g->Style!=GRAPHSTYLE_INVALID);
         if(yAxisBox) {
-          g->yAxisNo = yAxisBox->currentItem();
+          g->yAxisNo = yAxisBox->currentIndex();
           yAxisBox->setEnabled(true);
           Label4->setEnabled(true);
         }
@@ -852,7 +852,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
     }
     else {
       g->Precision = Property2->text().toInt();
-      g->numMode   = PropertyBox->currentItem();
+      g->numMode   = PropertyBox->currentIndex();
     }
 
     Graphs.append(g);
@@ -991,15 +991,15 @@ void DiagramDialog::slotNewGraph()
     if(Diag->Name != "Truth") { // BUG
       g->Color = ColorButt->paletteBackgroundColor();
       g->Thick = Property2->text().toInt();
-      g->Style = toGraphStyle(PropertyBox->currentItem());
+      g->Style = toGraphStyle(PropertyBox->currentIndex());
       assert(g->Style!=GRAPHSTYLE_INVALID);
-      if(yAxisBox)  g->yAxisNo = yAxisBox->currentItem();
+      if(yAxisBox)  g->yAxisNo = yAxisBox->currentIndex();
       else if(Diag->Name == "Rect3D")  g->yAxisNo = 1;
     }
   }
   else {
     g->Precision = Property2->text().toInt();
-    g->numMode   = PropertyBox->currentItem();
+    g->numMode   = PropertyBox->currentIndex();
   }
   Graphs.append(g);
   changed = true;
@@ -1047,8 +1047,8 @@ void DiagramDialog::slotApply()
       changed = true;
     }
     if(GridStyleBox)
-      if(Diag->GridPen.style()!=(Qt::PenStyle)(GridStyleBox->currentItem()+1)) {
-      Diag->GridPen.setStyle((Qt::PenStyle)(GridStyleBox->currentItem()+1));
+      if(Diag->GridPen.style()!=(Qt::PenStyle)(GridStyleBox->currentIndex()+1)) {
+      Diag->GridPen.setStyle((Qt::PenStyle)(GridStyleBox->currentIndex()+1));
       changed = true;
     }
     if((Diag->Name != "Smith") && (Diag->Name != "Polar")) {
