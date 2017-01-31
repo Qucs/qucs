@@ -148,7 +148,7 @@ void OctaveWindow::sendCommand(const QString& cmd)
 void OctaveWindow::runOctaveScript(const QString& name)
 {
   QFileInfo info(name);
-  sendCommand(info.baseName(true));
+  sendCommand(info.completeBaseName());
 }
 
 // ------------------------------------------------------------------------

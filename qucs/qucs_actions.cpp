@@ -1239,7 +1239,7 @@ void QucsApp::slotExportGraphAsCsv()
 
   QFileInfo Info(s);
   lastDir = Info.absolutePath();  // remember last directory
-  if(Info.extension().isEmpty())
+  if(Info.suffix().isEmpty())
     s += ".csv";
 
   QFile File(s);
