@@ -812,7 +812,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
   if(!QucsMain->editDelete->isChecked())
     ComponentMenu->addAction(QucsMain->editDelete);
   if(focusElement) if(focusElement->Type == isMarker) {
-    ComponentMenu->insertSeparator();
+    ComponentMenu->addSeparator();
     QString s = QObject::tr("power matching");
     if( ((Marker*)focusElement)->pGraph->Var == "Sopt" )
       s = QObject::tr("noise matching");
@@ -829,7 +829,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
         break;
       }
     }
-    ComponentMenu->insertSeparator();
+    ComponentMenu->addSeparator();
     if(focusElement) if(focusElement->Type & isComponent)
       if(!QucsMain->editActivate->isChecked())
         ComponentMenu->addAction(QucsMain->editActivate);
