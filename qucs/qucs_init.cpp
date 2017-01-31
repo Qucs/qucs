@@ -674,36 +674,36 @@ void QucsApp::initMenuBar()
   for (int i = 0; i < MaxRecentFiles; ++i) {
     recentFilesMenu->addAction(fileRecentAction[i]);
   }
-  recentFilesMenu->insertSeparator();
+  recentFilesMenu->addSeparator();
   recentFilesMenu->addAction(fileClearRecent);
 
-  fileMenu->insertSeparator();
+  fileMenu->addSeparator();
   fileMenu->addAction(fileSave);
   fileMenu->addAction(fileSaveAll);
   fileMenu->addAction(fileSaveAs);
   fileMenu->addAction(exportAsImage);
   fileMenu->addAction(filePrint);
   fileMenu->addAction(filePrintFit);
-  fileMenu->insertSeparator();
+  fileMenu->addSeparator();
   fileMenu->addAction(fileExamples);
-  fileMenu->insertSeparator();
+  fileMenu->addSeparator();
   fileMenu->addAction(fileSettings);
   fileMenu->addAction(symEdit);
-  fileMenu->insertSeparator();
+  fileMenu->addSeparator();
   fileMenu->addAction(applSettings);
   fileMenu->addAction(refreshSchPath);
-  fileMenu->insertSeparator();
+  fileMenu->addSeparator();
   fileMenu->addAction(fileQuit);
 
   editMenu = new QMenu(tr("&Edit"));  // menuBar entry editMenu
   editMenu->addAction(undo);
   editMenu->addAction(redo);
-  editMenu->insertSeparator();
+  editMenu->addSeparator();
   editMenu->addAction(editCut);
   editMenu->addAction(editCopy);
   editMenu->addAction(editPaste);
   editMenu->addAction(editDelete);
-  editMenu->insertSeparator();
+  editMenu->addSeparator();
   editMenu->addAction(select);
   editMenu->addAction(selectAll);
   editMenu->addAction(selectMarker);
@@ -713,7 +713,7 @@ void QucsApp::initMenuBar()
   editMenu->addAction(editMirror);
   editMenu->addAction(editMirrorY);
   editMenu->addAction(editActivate);
-  editMenu->insertSeparator();
+  editMenu->addSeparator();
   editMenu->addAction(intoH);
   editMenu->addAction(popH);
 
@@ -722,15 +722,15 @@ void QucsApp::initMenuBar()
   alignMenu = new QMenu(tr("P&ositioning"));  // menuBar entry alignMenu
   alignMenu->addAction(moveText);
   alignMenu->addAction(onGrid);
-  alignMenu->insertSeparator();
+  alignMenu->addSeparator();
   alignMenu->addAction(centerHor);
   alignMenu->addAction(centerVert);
-  alignMenu->insertSeparator();
+  alignMenu->addSeparator();
   alignMenu->addAction(alignTop);
   alignMenu->addAction(alignBottom);
   alignMenu->addAction(alignLeft);
   alignMenu->addAction(alignRight);
-  alignMenu->insertSeparator();
+  alignMenu->addSeparator();
   alignMenu->addAction(distrHor);
   alignMenu->addAction(distrVert);
 
@@ -752,14 +752,14 @@ void QucsApp::initMenuBar()
   projMenu->addAction(addToProj);
   projMenu->addAction(projClose);
   projMenu->addAction(projDel);
-  projMenu->insertSeparator();
+  projMenu->addSeparator();
   projMenu->addAction(createLib);
   projMenu->addAction(createPkg);
   projMenu->addAction(extractPkg);
-  projMenu->insertSeparator();
+  projMenu->addSeparator();
   projMenu->addAction(importData);
   projMenu->addAction(graph2csv);
-  projMenu->insertSeparator();
+  projMenu->addSeparator();
   // TODO only enable if document is VA file
   projMenu->addAction(buildModule);
   projMenu->addAction(loadModule);
@@ -789,7 +789,7 @@ void QucsApp::initMenuBar()
   viewMenu->addAction(magOne);
   viewMenu->addAction(magPlus);
   viewMenu->addAction(magMinus);
-  viewMenu->insertSeparator();
+  viewMenu->addSeparator();
   viewMenu->setCheckable(true);
   viewMenu->addAction(viewToolBar);
   viewMenu->addAction(viewStatusBar);
@@ -800,7 +800,7 @@ void QucsApp::initMenuBar()
   helpMenu = new QMenu(tr("&Help"));  // menuBar entry helpMenu
   helpMenu->addAction(helpIndex);
   helpMenu->addAction(helpGetStart);
-  helpMenu->insertSeparator();
+  helpMenu->addSeparator();
 
 
 
@@ -864,7 +864,7 @@ void QucsApp::initMenuBar()
   }
 
 
-  helpMenu->insertSeparator();
+  helpMenu->addSeparator();
   helpMenu->addAction(helpAboutApp);
   helpMenu->addAction(helpAboutQt);
 
@@ -877,7 +877,7 @@ void QucsApp::initMenuBar()
   menuBar()->addMenu(toolMenu);
   menuBar()->addMenu(simMenu);
   menuBar()->addMenu(viewMenu);
-  menuBar()->insertSeparator();
+  menuBar()->addSeparator();
   menuBar()->addMenu(helpMenu);
 
 }
