@@ -392,8 +392,8 @@ bool Ellipse::Dialog()
     Pen.setWidth(d->LineWidth->text().toInt());
     changed = true;
   }
-  if(Pen.style()  != (Qt::PenStyle)(d->StyleBox->currentItem()+1)) {
-    Pen.setStyle((Qt::PenStyle)(d->StyleBox->currentItem()+1));
+  if(Pen.style()  != (Qt::PenStyle)(d->StyleBox->currentIndex()+1)) {
+    Pen.setStyle((Qt::PenStyle)(d->StyleBox->currentIndex()+1));
     changed = true;
   }
   if(filled != d->CheckFilled->isChecked()) {
@@ -404,8 +404,8 @@ bool Ellipse::Dialog()
     Brush.setColor(d->FillColorButt->paletteBackgroundColor());
     changed = true;
   }
-  if(Brush.style()  != d->FillStyleBox->currentItem()) {
-    Brush.setStyle((Qt::BrushStyle)d->FillStyleBox->currentItem());
+  if(Brush.style()  != d->FillStyleBox->currentIndex()) {
+    Brush.setStyle((Qt::BrushStyle)d->FillStyleBox->currentIndex());
     changed = true;
   }
 

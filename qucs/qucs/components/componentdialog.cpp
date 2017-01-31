@@ -1123,7 +1123,7 @@ void ComponentDialog::slotBrowseFile()
     edit->setText(s);
   }
   /* FIX
-  prop->currentItem()->setText(1, s); */
+  prop->currentIndex()->setText(1, s); */
 }
 
 // -------------------------------------------------------------------------

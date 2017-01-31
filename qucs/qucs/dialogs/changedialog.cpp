@@ -104,7 +104,7 @@ ChangeDialog::~ChangeDialog()
 // in "CompTypeEdit".
 bool ChangeDialog::matches(const QString& CompModel)
 {
-  switch(CompTypeEdit->currentItem()) {
+  switch(CompTypeEdit->currentIndex()) {
     case 0: return true;
     case 1: if(CompModel == "R") return true;
             return false;
