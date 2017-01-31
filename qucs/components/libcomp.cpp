@@ -247,7 +247,7 @@ bool LibComp::createSubNetlist(QTextStream *stream, QStringList &FileList,
   for(QStringList::Iterator it = Includes.begin();
       it != Includes.end(); ++it ) {
     QString s = getSubcircuitFile()+"/"+*it;
-    if(FileList.findIndex(s) >= 0) continue;
+    if(FileList.indexOf(s) >= 0) continue;
     FileList.append(s);
 
     // load file and stuff into stream
