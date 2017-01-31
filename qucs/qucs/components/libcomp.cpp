@@ -93,7 +93,7 @@ int LibComp::loadSection(const QString& Name, QString& Section,
   QString libDefaultSymbol;
 
   QTextStream ReadWhole(&file);
-  Section = ReadWhole.read();
+  Section = ReadWhole.readAll();
   file.close();
 
 

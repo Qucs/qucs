@@ -373,7 +373,7 @@ bool TextDoc::load ()
   setLanguage (DocName);
 
   QTextStream stream (&file);
-  insertPlainText(stream.read ());
+  insertPlainText(stream.readAll());
   document()->setModified(false);
   slotSetChanged ();
   file.close ();
