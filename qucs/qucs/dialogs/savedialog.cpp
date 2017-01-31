@@ -117,7 +117,7 @@ void SaveDialog::saveSelectedClicked()
          if(app->saveFile(doc) == false)
             unsavable.append(doc);
          else
-            unsavedDocs.remove(it);
+            unsavedDocs.erase(it);
       }
    }
    if(unsavable.isEmpty())
