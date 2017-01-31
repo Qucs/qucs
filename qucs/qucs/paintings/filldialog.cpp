@@ -59,11 +59,11 @@ FillDialog::FillDialog(const QString& _Caption, bool show, QWidget *parent)
 
   gp1->addWidget(new QLabel(tr("Line Style: "), Tab1), 2,0);
   StyleBox = new QComboBox(Tab1);
-  StyleBox->insertItem(tr("solid line"));
-  StyleBox->insertItem(tr("dash line"));
-  StyleBox->insertItem(tr("dot line"));
-  StyleBox->insertItem(tr("dash dot line"));
-  StyleBox->insertItem(tr("dash dot dot line"));
+  StyleBox->addItem(tr("solid line"));
+  StyleBox->addItem(tr("dash line"));
+  StyleBox->addItem(tr("dot line"));
+  StyleBox->addItem(tr("dash dot line"));
+  StyleBox->addItem(tr("dash dot dot line"));
   gp1->addWidget(StyleBox, 2,1);
 
 
@@ -89,21 +89,21 @@ if(show) {
   FillLabel2 = new QLabel(tr("Fill Style: "), Tab2);
   gp2->addWidget(FillLabel2, 2,0);
   FillStyleBox = new QComboBox(Tab2);
-  FillStyleBox->insertItem(tr("no filling"));
-  FillStyleBox->insertItem(tr("solid"));
-  FillStyleBox->insertItem(tr("dense 1 (densest)"));
-  FillStyleBox->insertItem(tr("dense 2"));
-  FillStyleBox->insertItem(tr("dense 3"));
-  FillStyleBox->insertItem(tr("dense 4"));
-  FillStyleBox->insertItem(tr("dense 5"));
-  FillStyleBox->insertItem(tr("dense 6"));
-  FillStyleBox->insertItem(tr("dense 7 (least dense)"));
-  FillStyleBox->insertItem(tr("horizontal line"));
-  FillStyleBox->insertItem(tr("vertical line"));
-  FillStyleBox->insertItem(tr("crossed lines"));
-  FillStyleBox->insertItem(tr("hatched backwards"));
-  FillStyleBox->insertItem(tr("hatched forwards"));
-  FillStyleBox->insertItem(tr("diagonal crossed"));
+  FillStyleBox->addItem(tr("no filling"));
+  FillStyleBox->addItem(tr("solid"));
+  FillStyleBox->addItem(tr("dense 1 (densest)"));
+  FillStyleBox->addItem(tr("dense 2"));
+  FillStyleBox->addItem(tr("dense 3"));
+  FillStyleBox->addItem(tr("dense 4"));
+  FillStyleBox->addItem(tr("dense 5"));
+  FillStyleBox->addItem(tr("dense 6"));
+  FillStyleBox->addItem(tr("dense 7 (least dense)"));
+  FillStyleBox->addItem(tr("horizontal line"));
+  FillStyleBox->addItem(tr("vertical line"));
+  FillStyleBox->addItem(tr("crossed lines"));
+  FillStyleBox->addItem(tr("hatched backwards"));
+  FillStyleBox->addItem(tr("hatched forwards"));
+  FillStyleBox->addItem(tr("diagonal crossed"));
   gp2->addWidget(FillStyleBox, 2,1);
 
 
