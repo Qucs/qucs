@@ -225,26 +225,26 @@ void TextDoc::becomeCurrent (bool)
   emit signalRedoState(document()->isRedoAvailable());
 
   // update appropriate menu entries
-  App->symEdit->setMenuText (tr("Edit Text Symbol"));
+  App->symEdit->setText (tr("Edit Text Symbol"));
   App->symEdit->setStatusTip (tr("Edits the symbol for this text document"));
   App->symEdit->setWhatsThis (
 	tr("Edit Text Symbol\n\nEdits the symbol for this text document"));
 
   if (language == LANG_VHDL) {
-    App->insEntity->setMenuText (tr("VHDL entity"));
+    App->insEntity->setText (tr("VHDL entity"));
     App->insEntity->setStatusTip (tr("Inserts skeleton of VHDL entity"));
     App->insEntity->setWhatsThis (
 	tr("VHDL entity\n\nInserts the skeleton of a VHDL entity"));
   }
   else if (language == LANG_VERILOG || language == LANG_VERILOGA) {
-    App->insEntity->setMenuText (tr("Verilog module"));
+    App->insEntity->setText (tr("Verilog module"));
     App->insEntity->setStatusTip (tr("Inserts skeleton of Verilog module"));
     App->insEntity->setWhatsThis (
 	tr("Verilog module\n\nInserts the skeleton of a Verilog module"));
     App->buildModule->setEnabled(true);
   }
   else if (language == LANG_OCTAVE) {
-    App->insEntity->setMenuText (tr("Octave function"));
+    App->insEntity->setText (tr("Octave function"));
     App->insEntity->setStatusTip (tr("Inserts skeleton of Octave function"));
     App->insEntity->setWhatsThis (
 	tr("Octave function\n\nInserts the skeleton of a Octave function"));
