@@ -328,8 +328,8 @@ int LibraryDialog::intoFile(QString &ifn, QString &ofn, QStringList &IFiles)
   else {
     QByteArray FileContent = ifile.readAll();
     ifile.close();
-    if(ifile.name().right(4) == ".lst")
-      LibDir.remove(ifile.name());
+    if(ifile.fileName().right(4) == ".lst")
+      LibDir.remove(ifile.fileName());
     QDir LibDirSub(LibDir);
     if(!LibDirSub.cd(NameEdit->text())) {
       if(!LibDirSub.mkdir(NameEdit->text())) {
