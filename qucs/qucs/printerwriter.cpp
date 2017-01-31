@@ -114,7 +114,7 @@ PrinterWriter::print(QWidget *doc)
         return;
       }
       for (int z = Printer->numCopies(); z > 0; --z) {
-        if (Printer->aborted()) {
+        if (Printer->printerState() == QPrinter::Aborted) {
           break;
         }
 
