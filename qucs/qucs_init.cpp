@@ -948,7 +948,7 @@ void QucsApp::initStatusBar()
   PositionLabel->setAlignment(Qt::AlignRight);
   statusBar()->addWidget(PositionLabel, 0, true);
 
-  statusBar()->message(tr("Ready."), 2000);
+  statusBar()->showMessage(tr("Ready."), 2000);
 }
 
 // ----------------------------------------------------------

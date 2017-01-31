@@ -270,7 +270,7 @@ void QucsApp::slotSelect(bool on)
 // --------------------------------------------------------------------
 void QucsApp::slotEditCut()
 {
-  statusBar()->message(tr("Cutting selection..."));
+  statusBar()->showMessage(tr("Cutting selection..."));
   slotHideEdit(); // disable text edit of component property
 
   QWidget *Doc = DocumentTab->currentWidget();
@@ -280,13 +280,13 @@ void QucsApp::slotEditCut()
     ((Schematic *)Doc)->cut();
   }
 
-  statusBar()->message(tr("Ready."));
+  statusBar()->showMessage(tr("Ready."));
 }
 
 // --------------------------------------------------------------------
 void QucsApp::slotEditCopy()
 {
-  statusBar()->message(tr("Copying selection to clipboard..."));
+  statusBar()->showMessage(tr("Copying selection to clipboard..."));
 
   QWidget *Doc = DocumentTab->currentWidget();
   if(isTextDocument (Doc)) {
@@ -295,7 +295,7 @@ void QucsApp::slotEditCopy()
     ((Schematic *)Doc)->copy();
   }
 
-  statusBar()->message(tr("Ready."));
+  statusBar()->showMessage(tr("Ready."));
 }
 
 // -----------------------------------------------------------------------
@@ -665,16 +665,16 @@ void QucsApp::editFile(const QString& File)
         {
             slotHideEdit(); // disable text edit of component property
 
-            statusBar()->message(tr("Opening file..."));
+            statusBar()->showMessage(tr("Opening file..."));
 
             QFileInfo finfo(File);
 
             if(!finfo.exists())
-                statusBar()->message(tr("Opening aborted, file not found."), 2000);
+                statusBar()->showMessage(tr("Opening aborted, file not found."), 2000);
             else {
                 gotoPage(File);
                 lastDirOpenSave = File;   // remember last directory and file
-                statusBar()->message(tr("Ready."));
+                statusBar()->showMessage(tr("Ready."));
             }
         }
     }
@@ -890,7 +890,7 @@ void QucsApp::slotAddToProject()
     lastDir.isEmpty() ? QString(".") : lastDir, QucsFileFilter);
 
   if(List.isEmpty()) {
-    statusBar()->message(tr("No files copied."), 2000);
+    statusBar()->showMessage(tr("No files copied."), 2000);
     return;
   }
 
@@ -956,7 +956,7 @@ void QucsApp::slotAddToProject()
 
   free(Buffer);
   slotUpdateTreeview();
-  statusBar()->message(tr("Ready."));
+  statusBar()->showMessage(tr("Ready."));
 }
 
 // -----------------------------------------------------------
