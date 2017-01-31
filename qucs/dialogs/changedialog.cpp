@@ -52,11 +52,11 @@ ChangeDialog::ChangeDialog(Schematic *Doc_)
 
   all->addWidget(new QLabel(tr("Components:"), this), 0,0);
   CompTypeEdit = new QComboBox(this);
-  CompTypeEdit->insertItem(tr("all components"));
-  CompTypeEdit->insertItem(tr("resistors"));
-  CompTypeEdit->insertItem(tr("capacitors"));
-  CompTypeEdit->insertItem(tr("inductors"));
-  CompTypeEdit->insertItem(tr("transistors"));
+  CompTypeEdit->addItem(tr("all components"));
+  CompTypeEdit->addItem(tr("resistors"));
+  CompTypeEdit->addItem(tr("capacitors"));
+  CompTypeEdit->addItem(tr("inductors"));
+  CompTypeEdit->addItem(tr("transistors"));
   all->addWidget(CompTypeEdit, 0,1);
 
   all->addWidget(new QLabel(tr("Component Names:"), this), 1,0);
@@ -70,9 +70,9 @@ ChangeDialog::ChangeDialog(Schematic *Doc_)
   PropNameEdit = new QComboBox(this);
   PropNameEdit->setEditable(true);
   PropNameEdit->setValidator(ValRestrict);
-  PropNameEdit->insertItem("Temp");
-  PropNameEdit->insertItem("Subst");
-  PropNameEdit->insertItem("Model");
+  PropNameEdit->addItem("Temp");
+  PropNameEdit->addItem("Subst");
+  PropNameEdit->addItem("Model");
   all->addWidget(PropNameEdit, 2,1);
   connect(PropNameEdit, SIGNAL(activated(int)), SLOT(slotButtReplace()));
 
