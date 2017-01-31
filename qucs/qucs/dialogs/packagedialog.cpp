@@ -218,7 +218,7 @@ int PackageDialog::insertDirectory(const QString& DirName,
   Entries.pop_front();  // delete ".." from list
   for(it = Entries.begin(); it != Entries.end(); ++it) {
     Stream << Q_UINT32(CODE_DIR) << (*it).toLatin1();
-    if(insertDirectory(myDir.absPath()+QDir::separator()+(*it), Stream) < 0)
+    if(insertDirectory(myDir.absolutePath()+QDir::separator()+(*it), Stream) < 0)
       return -1;
     Stream << Q_UINT32(CODE_DIR_END) << Q_UINT32(0);
   }
@@ -229,7 +229,7 @@ int PackageDialog::insertDirectory(const QString& DirName,
 int PackageDialog::insertLibraries(QDataStream& Stream)
 {
   QFile File;
-  QDir myDir(QucsSettings.QucsHomeDir.absPath() + QDir::separator() + "user_lib");
+  QDir myDir(QucsSettings.QucsHomeDir.absolutePath() + QDir::separator() + "user_lib");
   QStringList Entries = myDir.entryList("*", QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Entries.begin(); it != Entries.end(); ++it) {
@@ -298,7 +298,7 @@ void PackageDialog::slotCreate()
     if(p->isChecked()) {
       s = p->text() + "_prj";
       Stream << Q_UINT32(CODE_DIR) << s.toLatin1();
-      s = QucsSettings.QucsHomeDir.absPath() + QDir::separator() + s;
+      s = QucsSettings.QucsHomeDir.absolutePath() + QDir::separator() + s;
       if(insertDirectory(s, Stream) < 0) {
         PkgFile.close();
         PkgFile.remove();
@@ -405,7 +405,7 @@ void PackageDialog::extractPackage()
           break;
         goto ErrorEnd;
       case CODE_DIR_END:
-        MsgText->append(tr("Leave directory \"%1\"").arg(currDir.absPath()));
+        MsgText->append(tr("Leave directory \"%1\"").arg(currDir.absolutePath()));
         currDir.cdUp();
         break;
       case CODE_FILE:
@@ -447,7 +447,7 @@ int PackageDialog::extractDirectory(QFile& PkgFile, Q_UINT32 Count, QDir& currDi
     return -2;
   }
   currDir.cd(QString(p));
-  MsgText->append(tr("Create and enter directory \"%1\"").arg(currDir.absPath()));
+  MsgText->append(tr("Create and enter directory \"%1\"").arg(currDir.absolutePath()));
 
   free(p);
   return 1;
@@ -483,7 +483,7 @@ int PackageDialog::extractLibrary(QFile& PkgFile, Q_UINT32 Count)
   free(p);
 
   p = Content.data();
-  QFile File(QucsSettings.QucsHomeDir.absPath() +
+  QFile File(QucsSettings.QucsHomeDir.absolutePath() +
              QDir::convertSeparators("/user_lib/") + QString(p));
   if(File.exists()) {
     MsgText->append(tr("ERROR: User library \"%1\" already exists!").arg(QString(p)));

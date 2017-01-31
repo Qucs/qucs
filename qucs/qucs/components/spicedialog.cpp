@@ -292,7 +292,7 @@ void SpiceDialog::slotButtBrowse()
 
   // snip path if file in current directory
   if(QucsSettings.QucsWorkDir.exists(Info.fileName()) &&
-          QucsSettings.QucsWorkDir.absPath() == Info.dirPath(true)) {
+          QucsSettings.QucsWorkDir.absolutePath() == Info.dirPath(true)) {
     s = Info.fileName();
   }
   FileEdit->setText(s);
