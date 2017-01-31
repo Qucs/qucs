@@ -190,9 +190,9 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     Box2Layout->addWidget(Label1);
     PropertyBox = new QComboBox();
     Box2Layout->addWidget(PropertyBox);
-    PropertyBox->insertItem(tr("real/imaginary"));
-    PropertyBox->insertItem(tr("magnitude/angle (degree)"));
-    PropertyBox->insertItem(tr("magnitude/angle (radian)"));
+    PropertyBox->addItem(tr("real/imaginary"));
+    PropertyBox->addItem(tr("magnitude/angle (degree)"));
+    PropertyBox->addItem(tr("magnitude/angle (radian)"));
     PropertyBox->setCurrentItem(1);
     connect(PropertyBox, SIGNAL(activated(int)), SLOT(slotSetNumMode(int)));
     Box2Layout->setStretchFactor(new QWidget(Box2), 5); // stretchable placeholder
@@ -221,14 +221,14 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     Label3->setEnabled(false);
     PropertyBox = new QComboBox();
     Box2Layout->addWidget(PropertyBox);
-    PropertyBox->insertItem(tr("solid line"));
-    PropertyBox->insertItem(tr("dash line"));
-    PropertyBox->insertItem(tr("dot line"));
+    PropertyBox->addItem(tr("solid line"));
+    PropertyBox->addItem(tr("dash line"));
+    PropertyBox->addItem(tr("dot line"));
     if(Diag->Name != "Time") {
-      PropertyBox->insertItem(tr("long dash line"));
-      PropertyBox->insertItem(tr("stars"));
-      PropertyBox->insertItem(tr("circles"));
-      PropertyBox->insertItem(tr("arrows"));
+      PropertyBox->addItem(tr("long dash line"));
+      PropertyBox->addItem(tr("stars"));
+      PropertyBox->addItem(tr("circles"));
+      PropertyBox->addItem(tr("arrows"));
     }
     connect(PropertyBox, SIGNAL(activated(int)),
 			 SLOT(slotSetGraphStyle(int)));
@@ -249,8 +249,8 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
       Label4->setEnabled(false);
       yAxisBox = new QComboBox();
       Box2Layout->addWidget(yAxisBox);
-      yAxisBox->insertItem(NameY);
-      yAxisBox->insertItem(NameZ);
+      yAxisBox->addItem(NameY);
+      yAxisBox->addItem(NameZ);
       yAxisBox->setEnabled(false);
       connect(yAxisBox, SIGNAL(activated(int)), SLOT(slotSetYAxis(int)));
     }
@@ -372,11 +372,11 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
       GridLabel2 = new QLabel(tr("Grid Style: "), Tab2);
       gp->addMultiCellWidget(GridLabel2, Row,Row,0,0);
       GridStyleBox = new QComboBox(Tab2);
-      GridStyleBox->insertItem(tr("solid line"));
-      GridStyleBox->insertItem(tr("dash line"));
-      GridStyleBox->insertItem(tr("dot line"));
-      GridStyleBox->insertItem(tr("dash dot line"));
-      GridStyleBox->insertItem(tr("dash dot dot line"));
+      GridStyleBox->addItem(tr("solid line"));
+      GridStyleBox->addItem(tr("dash line"));
+      GridStyleBox->addItem(tr("dot line"));
+      GridStyleBox->addItem(tr("dash dot line"));
+      GridStyleBox->addItem(tr("dash dot dot line"));
       gp->addMultiCellWidget(GridStyleBox, Row,Row,1,2);
       Row++;
       GridStyleBox->setCurrentItem(Diag->GridPen.style()-1);
@@ -692,7 +692,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   QStringList Elements = ProjDir.entryList(QStringList("*.dat"), QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Elements.begin(); it != Elements.end(); ++it) {
-    ChooseData->insertItem((*it).left((*it).length()-4));
+    ChooseData->addItem((*it).left((*it).length()-4));
     if((*it) == Info.fileName())
       // default dataset should be the current
       ChooseData->setCurrentItem(ChooseData->count()-1);
