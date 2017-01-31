@@ -207,10 +207,11 @@ void VASettingsDialog::slotOk ()
 void VASettingsDialog::slotBrowse ()
 {
   QString s = QFileDialog::getOpenFileName (
+     this,
+     tr("Enter an Icon File Name"),
      lastDir.isEmpty () ? QString (".") : lastDir,
-     tr("PNG files")+" (*.png);;"+
-     tr("Any file")+" (*)",
-     this, 0, tr("Enter an Icon File Name"));
+     tr("PNG files")+" (*.png);;"+ tr("Any file")+" (*)"
+     );
 
   if (!s.isEmpty ()) {
     QFileInfo Info (s);
