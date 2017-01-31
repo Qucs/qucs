@@ -421,7 +421,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
         Row++;
 
         QLabel *LabelRotX = new QLabel(tr("Rotation around x-Axis:"), Tab2);
-        LabelRotX->setPaletteForegroundColor(Qt::red);
+        misc::setWidgetForegroundColor(LabelRotX, Qt::red);
         gp->addWidget(LabelRotX, Row,0);
         SliderRotX = new QSlider(0,360,20, ((Rect3DDiagram*)Diag)->rotX,
 				 Qt::Horizontal, Tab2);
@@ -437,7 +437,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
         Row++;
 
         QLabel *LabelRotY = new QLabel(tr("Rotation around y-Axis:"), Tab2);
-        LabelRotY->setPaletteForegroundColor(Qt::green);
+        misc::setWidgetForegroundColor(LabelRotY, Qt::green);
         gp->addWidget(LabelRotY, Row,0);
         SliderRotY = new QSlider(0,360,20, ((Rect3DDiagram*)Diag)->rotY,
 				 Qt::Horizontal, Tab2);
@@ -453,7 +453,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
         Row++;
 
         QLabel *LabelRotZ = new QLabel(tr("Rotation around z-Axis:"), Tab2);
-        LabelRotZ->setPaletteForegroundColor(Qt::blue);
+        misc::setWidgetForegroundColor(LabelRotZ, Qt::blue);
         gp->addWidget(LabelRotZ, Row,0);
         SliderRotZ = new QSlider(0,360,20, ((Rect3DDiagram*)Diag)->rotZ,
 				 Qt::Horizontal, Tab2);
