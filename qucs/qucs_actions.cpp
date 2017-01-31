@@ -938,12 +938,12 @@ void QucsApp::slotAddToProject()
 
     // copy data
     do {
-      Num = origFile.readBlock(Buffer, 0x10000);
+      Num = origFile.read(Buffer, 0x10000);
       if(Num < 0) {
         QMessageBox::critical(this, tr("Error"), tr("Cannot read \"%1\" !").arg(*it));
         break;
       }
-      Num = destFile.writeBlock(Buffer, Num);
+      Num = destFile.write(Buffer, Num);
       if(Num < 0) {
         QMessageBox::critical(this, tr("Error"), tr("Cannot write \"%1\" !").arg(*it));
         break;
