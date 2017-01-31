@@ -465,7 +465,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
   if(!pp->Value.isEmpty())
   {
     PortsList->clear();
-    QStringList ports = QStringList::split(',', pp->Value);
+    QStringList ports = pp->Value.split(',');
     foreach(QString port, ports) {
       PortsList->addItem(port);
     }
