@@ -288,11 +288,11 @@ void SpiceDialog::slotButtBrowse()
   }
 
   QFileInfo Info(s);
-  lastDir = Info.dirPath(true);  // remember last directory
+  lastDir = Info.absolutePath();  // remember last directory
 
   // snip path if file in current directory
   if(QucsSettings.QucsWorkDir.exists(Info.fileName()) &&
-          QucsSettings.QucsWorkDir.absolutePath() == Info.dirPath(true)) {
+          QucsSettings.QucsWorkDir.absolutePath() == Info.absolutePath()) {
     s = Info.fileName();
   }
   FileEdit->setText(s);
