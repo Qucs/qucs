@@ -19,6 +19,9 @@
  * \Declaration of some miscellaneous function
  */
 
+#include <QWidget>
+#include <QPalette>
+
 class QString;
 
 namespace misc {
@@ -40,6 +43,9 @@ namespace misc {
   bool    Verilog_Delay(QString&, const QString&);
   QString Verilog_Param(const QString);
   bool    checkVersion(QString&);
+
+  inline void setWidgetBackgroundColor(QWidget *q, const QColor &c)
+  { QPalette p ; p.setColor(q->backgroundRole(), c); q->setPalette(p); }
 }
 
 /*! handle the application version string

@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "arrowdialog.h"
+#include "misc.h"
 
 #include <QLabel>
 #include <QValidator>
@@ -55,7 +56,7 @@ ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
 
   all->addWidget(new QLabel(tr("Line color: "), this), 1,0);
   ColorButt = new QPushButton("    ",this);
-  ColorButt->setPaletteBackgroundColor(QColor(0,0,0));
+  misc::setWidgetBackgroundColor(ColorButt, QColor(0,0,0));
   connect(ColorButt, SIGNAL(clicked()), SLOT(slotSetColor()));
   all->addWidget(ColorButt, 1,1);
 
@@ -112,7 +113,8 @@ ArrowDialog::~ArrowDialog()
 void ArrowDialog::slotSetColor()
 {
   QColor c = QColorDialog::getColor(ColorButt->paletteBackgroundColor(),this);
-  if(c.isValid()) ColorButt->setPaletteBackgroundColor(c);
+  if(c.isValid())
+      misc::setWidgetBackgroundColor(ColorButt, c);
 }
 
 // --------------------------------------------------------------------------

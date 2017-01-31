@@ -53,6 +53,7 @@
 #include "components/vhdlfile.h"
 #include "components/verilogfile.h"
 #include "components/vafile.h"
+#include "misc.h"
 
 // just dummies for empty lists
 Q3PtrList<Wire>      SymbolWires;
@@ -102,7 +103,7 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
 
   setVScrollBarMode(Q3ScrollView::AlwaysOn);
   setHScrollBarMode(Q3ScrollView::AlwaysOn);
-  viewport()->setPaletteBackgroundColor(QucsSettings.BGColor);
+  misc::setWidgetBackgroundColor(viewport(), QucsSettings.BGColor);
   viewport()->setMouseTracking(true);
   viewport()->setAcceptDrops(true);  // enable drag'n drop
 

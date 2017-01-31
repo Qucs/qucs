@@ -18,6 +18,7 @@
 #include "graphictextdialog.h"
 
 #include "qucs.h"
+#include "misc.h"
 
 #include <QLabel>
 #include <QLineEdit>
@@ -75,7 +76,7 @@ GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
   ColorButt = new QPushButton("        ");
   h1Layout->addWidget(tc);
   h1Layout->addWidget(ColorButt);
-  ColorButt->setPaletteBackgroundColor(QColor(0,0,0));
+  misc::setWidgetBackgroundColor(ColorButt, QColor(0,0,0));
   connect(ColorButt, SIGNAL(clicked()), SLOT(slotSetColor()));
 
   QWidget *place1 = new QWidget(h1); // stretchable placeholder
@@ -113,7 +114,8 @@ GraphicTextDialog::~GraphicTextDialog()
 void GraphicTextDialog::slotSetColor()
 {
   QColor c = QColorDialog::getColor(ColorButt->paletteBackgroundColor(),this);
-  if(c.isValid()) ColorButt->setPaletteBackgroundColor(c);
+  if(c.isValid())
+    misc::setWidgetBackgroundColor(ColorButt, c);
 }
 
 // --------------------------------------------------------------------------

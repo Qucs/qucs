@@ -18,6 +18,7 @@
 #include "filldialog.h"
 #include "schematic.h"
 #include "viewpainter.h"
+#include "misc.h"
 
 #include <QPainter>
 #include <QPushButton>
@@ -371,10 +372,10 @@ bool Ellipse::Dialog()
   bool changed = false;
 
   FillDialog *d = new FillDialog(QObject::tr("Edit Ellipse Properties"));
-  d->ColorButt->setPaletteBackgroundColor(Pen.color());
+  misc::setWidgetBackgroundColor(d->ColorButt, Pen.color());
   d->LineWidth->setText(QString::number(Pen.width()));
   d->StyleBox->setCurrentIndex(Pen.style()-1);
-  d->FillColorButt->setPaletteBackgroundColor(Brush.color());
+  misc::setWidgetBackgroundColor(d->FillColorButt, Brush.color());
   d->FillStyleBox->setCurrentIndex(Brush.style());
   d->CheckFilled->setChecked(filled);
   d->slotCheckFilled(filled);

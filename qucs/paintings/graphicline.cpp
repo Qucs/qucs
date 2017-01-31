@@ -16,6 +16,7 @@
  ***************************************************************************/
 #include "graphicline.h"
 #include "filldialog.h"
+#include "misc.h"
 #include "schematic.h"
 
 #include <QPainter>
@@ -324,7 +325,7 @@ bool GraphicLine::Dialog()
   bool changed = false;
 
   FillDialog *d = new FillDialog(QObject::tr("Edit Line Properties"), false);
-  d->ColorButt->setPaletteBackgroundColor(Pen.color());
+  misc::setWidgetBackgroundColor(d->ColorButt, Pen.color());
   d->LineWidth->setText(QString::number(Pen.width()));
   d->StyleBox->setCurrentIndex(Pen.style()-1);
 

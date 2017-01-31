@@ -23,6 +23,7 @@
 #include "qucs.h"
 #include "schematic.h"
 #include "rect3ddiagram.h"
+#include "misc.h"
 
 #include <cmath>
 #include <assert.h>
@@ -365,7 +366,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
       connect(GridColorButt, SIGNAL(clicked()), SLOT(slotSetGridColor()));
       gp->addWidget(GridColorButt, Row, 1);
       Row++;
-      GridColorButt->setPaletteBackgroundColor(Diag->GridPen.color());
+      misc::setWidgetBackgroundColor(GridColorButt, Diag->GridPen.color());
 
       GridLabel2 = new QLabel(tr("Grid Style: "), Tab2);
       gp->addWidget(GridLabel2, Row, 0);
@@ -714,7 +715,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
       QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
       QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
       ColorButt->setStyleSheet(stylesheet);
-      ColorButt->setPaletteBackgroundColor(selectedColor);
+      misc::setWidgetBackgroundColor(ColorButt, selectedColor);
     }
   }
 }
@@ -831,7 +832,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
         QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
         QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
         ColorButt->setStyleSheet(stylesheet);
-        ColorButt->setPaletteBackgroundColor(selectedColor);
+        misc::setWidgetBackgroundColor(ColorButt, selectedColor);
         if(g->Var.right(3) == ".Vb")   // harmonic balance output ?
           if(PropertyBox->count() >= GRAPHSTYLE_ARROW)
             PropertyBox->setCurrentIndex(GRAPHSTYLE_ARROW);
@@ -895,7 +896,7 @@ void DiagramDialog::SelectGraph(Graph *g)
       Property2->setText(QString::number(g->Thick));
       QString stylesheet = QString("QPushButton {background-color: %1};").arg(g->Color.name());
       ColorButt->setStyleSheet(stylesheet);
-      ColorButt->setPaletteBackgroundColor(g->Color);
+      misc::setWidgetBackgroundColor(ColorButt, g->Color);
       PropertyBox->setCurrentIndex(g->Style);
       if(yAxisBox) {
         yAxisBox->setCurrentIndex(g->yAxisNo);
@@ -949,7 +950,7 @@ void DiagramDialog::slotDeleteGraph()
       QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
       QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
       ColorButt->setStyleSheet(stylesheet);
-      ColorButt->setPaletteBackgroundColor(selectedColor);
+      misc::setWidgetBackgroundColor(ColorButt, selectedColor);
       Property2->setText("0");
       if(yAxisBox) {
         yAxisBox->setCurrentIndex(0);
@@ -1200,7 +1201,7 @@ void DiagramDialog::slotSetColor()
   if(!c.isValid()) return;
   QString stylesheet = QString("QPushButton {background-color: %1};").arg(c.name());
   ColorButt->setStyleSheet(stylesheet);
-  ColorButt->setPaletteBackgroundColor(c);
+  misc::setWidgetBackgroundColor(ColorButt, c);
 
   int i = GraphList->currentRow();
   if(i < 0) return;   // return, if no item selected
@@ -1217,7 +1218,7 @@ void DiagramDialog::slotSetGridColor()
   QColor c = QColorDialog::getColor(
 			GridColorButt->paletteBackgroundColor(),this);
   if(!c.isValid()) return;
-  GridColorButt->setPaletteBackgroundColor(c);
+  misc::setWidgetBackgroundColor(GridColorButt, c);
   changed = true;
 }
 

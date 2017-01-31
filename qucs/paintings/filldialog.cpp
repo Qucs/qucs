@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "filldialog.h"
+#include "misc.h"
 
 #include <QLabel>
 #include <QValidator>
@@ -53,7 +54,7 @@ FillDialog::FillDialog(const QString& _Caption, bool show, QWidget *parent)
 
   gp1->addWidget(new QLabel(tr("Line Color: "), Tab1), 1,0);
   ColorButt = new QPushButton("        ",Tab1);
-  ColorButt->setPaletteBackgroundColor(QColor(0,0,0));
+  misc::setWidgetBackgroundColor(ColorButt, QColor(0,0,0));
   connect(ColorButt, SIGNAL(clicked()), SLOT(slotSetColor()));
   gp1->addWidget(ColorButt, 1,1);
 
@@ -82,7 +83,7 @@ if(show) {
   FillLabel1 = new QLabel(tr("Fill Color: "), Tab2);
   gp2->addWidget(FillLabel1, 1,0);
   FillColorButt = new QPushButton("        ", Tab2);
-  FillColorButt->setPaletteBackgroundColor(QColor(0,0,0));
+  misc::setWidgetBackgroundColor(FillColorButt, QColor(0,0,0));
   connect(FillColorButt, SIGNAL(clicked()), SLOT(slotSetFillColor()));
   gp2->addWidget(FillColorButt, 1,1);
 
@@ -141,7 +142,8 @@ FillDialog::~FillDialog()
 void FillDialog::slotSetColor()
 {
   QColor c = QColorDialog::getColor(ColorButt->paletteBackgroundColor(),this);
-  if(c.isValid()) ColorButt->setPaletteBackgroundColor(c);
+  if(c.isValid())
+    misc::setWidgetBackgroundColor(ColorButt, c);
 }
 
 // --------------------------------------------------------------------------
@@ -149,7 +151,7 @@ void FillDialog::slotSetFillColor()
 {
   QColor c =
     QColorDialog::getColor(FillColorButt->paletteBackgroundColor(), this);
-  FillColorButt->setPaletteBackgroundColor(c);
+  misc::setWidgetBackgroundColor(FillColorButt, c);
 }
 
 // --------------------------------------------------------------------------
