@@ -1072,7 +1072,7 @@ void QucsApp::slotApplyCompText()
   QString s;
   QFont f = QucsSettings.font;
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  f.setPointSizeFloat( Doc->Scale * float(f.pointSize()) );
+  f.setPointSizeF(Doc->Scale * float(f.pointSize()) );
   editText->setFont(f);
 
   Property  *pp = 0;
