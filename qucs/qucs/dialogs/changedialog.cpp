@@ -187,7 +187,7 @@ void ChangeDialog::slotButtReplace()
             str = pp->Description.mid(i1+1, i2-i1-1);
             str.replace( QRegExp("[^a-zA-Z0-9_,]"), "" );
             List = List.split(',',str);
-            if(List.findIndex(NewValueEdit->text()) >= 0)
+            if(List.indexOf(NewValueEdit->text()) >= 0)
               break;    // property value is okay
 
             pb->setChecked(false);
