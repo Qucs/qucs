@@ -781,25 +781,21 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
       if((focusElement->Type & isComponent) == 0) break;
     }
     else {
-/// \todo "exchange like this"
-      //ComponentMenu->addAction(QucsMain->symEdit);
-      //to QucsMain->symEdit->addTo(ComponentMenu);
-      // see http://qt-project.org/doc/qt-4.8/qaction-qt3.html#addTo
-      QucsMain->symEdit->addTo(ComponentMenu);
-      QucsMain->fileSettings->addTo(ComponentMenu);
+      ComponentMenu->addAction(QucsMain->symEdit);
+      ComponentMenu->addAction(QucsMain->fileSettings);
     }
     if(!QucsMain->moveText->isChecked())
-      QucsMain->moveText->addTo(ComponentMenu);
+      ComponentMenu->addAction(QucsMain->moveText);
     break;
   }
   while(true) {
     if(focusElement)
       if(focusElement->Type == isGraph) break;
     if(!QucsMain->onGrid->isChecked())
-      QucsMain->onGrid->addTo(ComponentMenu);
-    QucsMain->editCopy->addTo(ComponentMenu);
+      ComponentMenu->addAction(QucsMain->onGrid);
+    ComponentMenu->addAction(QucsMain->editCopy);
     if(!QucsMain->editPaste->isChecked())
-      QucsMain->editPaste->addTo(ComponentMenu);
+      ComponentMenu->addAction(QucsMain->editPaste);
     break;
   }
 
@@ -814,7 +810,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
   }
 
   if(!QucsMain->editDelete->isChecked())
-    QucsMain->editDelete->addTo(ComponentMenu);
+    ComponentMenu->addAction(QucsMain->editDelete);
   if(focusElement) if(focusElement->Type == isMarker) {
     ComponentMenu->insertSeparator();
     QString s = QObject::tr("power matching");
@@ -829,32 +825,32 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
     if(focusElement) {
       if(focusElement->Type == isDiagram) break;
       if(focusElement->Type == isGraph) {
-        QucsMain->graph2csv->addTo(ComponentMenu);
+        ComponentMenu->addAction(QucsMain->graph2csv);
         break;
       }
     }
     ComponentMenu->insertSeparator();
     if(focusElement) if(focusElement->Type & isComponent)
       if(!QucsMain->editActivate->isChecked())
-        QucsMain->editActivate->addTo(ComponentMenu);
+        ComponentMenu->addAction(QucsMain->editActivate);
     if(!QucsMain->editRotate->isChecked())
-      QucsMain->editRotate->addTo(ComponentMenu);
+      ComponentMenu->addAction(QucsMain->editRotate);
     if(!QucsMain->editMirror->isChecked())
-      QucsMain->editMirror->addTo(ComponentMenu);
+      ComponentMenu->addAction(QucsMain->editMirror);
     if(!QucsMain->editMirrorY->isChecked())
-      QucsMain->editMirrorY->addTo(ComponentMenu);
+      ComponentMenu->addAction(QucsMain->editMirrorY);
 
     // right-click menu to go into hierarchy
     if(focusElement) {
       if(focusElement->Type & isComponent)
 	if(((Component*)focusElement)->Model == "Sub")
       if(!QucsMain->intoH->isChecked())
-	    QucsMain->intoH->addTo(ComponentMenu);
+        ComponentMenu->addAction(QucsMain->intoH);
     }
     // right-click menu to pop out of hierarchy
     if(!focusElement)
       if(!QucsMain->popH->isChecked())
-	QucsMain->popH->addTo(ComponentMenu);
+        ComponentMenu->addAction(QucsMain->popH);
   } while(false);
 
   *focusMEvent = *Event;  // remember event for "edit component" action
