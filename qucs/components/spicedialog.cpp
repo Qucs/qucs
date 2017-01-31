@@ -161,7 +161,7 @@ SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
   SimCheck->setChecked(Comp->Props.at(2)->Value == "yes");
   for(int i=0; i<PrepCombo->count(); i++)
   {
-    if(PrepCombo->text(i) == Comp->Props.at(3)->Value)
+    if(PrepCombo->itemText(i) == Comp->Props.at(3)->Value)
     {
       PrepCombo->setCurrentIndex(i);
       currentPrep = i;
