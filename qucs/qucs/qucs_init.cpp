@@ -22,6 +22,7 @@
 #include "main.h"
 #include "qucs.h"
 #include "octave_window.h"
+#include "misc.h"
 
 #include <QAction>
 #include <QShortcut>
@@ -965,9 +966,9 @@ void QucsApp::slotShowWarnings()
 
   ResultState++;
   if(ResultState & 1)
-    WarningLabel->setPaletteForegroundColor(Qt::red);
+    misc::setWidgetForegroundColor(WarningLabel, Qt::red);
   else
-    WarningLabel->setPaletteForegroundColor(Qt::black);
+    misc::setWidgetForegroundColor(WarningLabel, Qt::black);
 
   if(ResultState < 9)
     QTimer::singleShot(500, this, SLOT(slotShowWarnings()));
@@ -981,7 +982,7 @@ void QucsApp::slotResetWarnings()
   QFont f = WarningLabel->font();   // reset warning label
   f.setWeight(QFont::Normal);
   WarningLabel->setFont(f);
-  WarningLabel->setPaletteForegroundColor(Qt::black);
+  misc::setWidgetForegroundColor(WarningLabel, Qt::black);
   WarningLabel->setText(tr("no warnings"));
 }
 

@@ -50,6 +50,8 @@ namespace misc {
   inline const QColor getWidgetBackgroundColor(const QWidget *q)
   { return q->palette().color(q->backgroundRole()); }
 
+  inline void setWidgetForegroundColor(QWidget *q, const QColor &c)
+  { QPalette p = q->palette(); p.setColor(q->foregroundRole(), c); q->setPalette(p); }
 }
 
 /*! handle the application version string
