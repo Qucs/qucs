@@ -56,6 +56,7 @@ dcfeed.cpp		logical_and.cpp		pm_modulator.cpp
 vcresistor.cpp
 vacomponent.cpp
 mutualx.cpp
+circline.cpp
 )
 
 SET(COMPONENTS_HDRS
@@ -78,6 +79,7 @@ capacitor.h
 cccs.h
 ccvs.h
 circulator.h
+circline.h
 coaxialline.h
 comp_1bit.h
 comp_2bit.h
