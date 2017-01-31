@@ -86,7 +86,7 @@ int LibComp::loadSection(const QString& Name, QString& Section,
 			 QStringList *Includes)
 {
   QDir Directory(QucsSettings.LibDir);
-  QFile file(Directory.absFilePath(Props.first()->Value + ".lib"));
+  QFile file(Directory.absoluteFilePath(Props.first()->Value + ".lib"));
   if(!file.open(QIODevice::ReadOnly))
     return -1;
 
@@ -222,7 +222,7 @@ int LibComp::loadSymbol()
 QString LibComp::getSubcircuitFile()
 {
   QDir Directory(QucsSettings.LibDir);
-  QString FileName = Directory.absFilePath(Props.first()->Value);
+  QString FileName = Directory.absoluteFilePath(Props.first()->Value);
   return misc::properAbsFileName(FileName);
 }
 
