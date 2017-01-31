@@ -775,8 +775,9 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
   while(true) {
     if(focusElement) {
       focusElement->isSelected = true;
-      ComponentMenu->insertItem(
-         QObject::tr("Edit Properties"), QucsMain, SLOT(slotEditElement()));
+      QAction *editProp = new QAction(QObject::tr("Edit Properties"), QucsMain);
+      QucsMain->connect(editProp, SIGNAL(triggered()), SLOT(slotEditElement()));
+      ComponentMenu->addAction(editProp);
 
       if((focusElement->Type & isComponent) == 0) break;
     }
@@ -802,8 +803,9 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
   while (true) {
     if (focusElement) {
       if (focusElement->Type == isDiagram) {
-        ComponentMenu->insertItem(QObject::tr("Export as image"), QucsMain,
-            SLOT(slotSaveDiagramToGraphicsFile()));
+        QAction *imgExport = new QAction(QObject::tr("Export as image"), QucsMain);
+        QucsMain->connect(imgExport, SIGNAL(triggered()), SLOT(slotSaveDiagramToGraphicsFile()));
+        ComponentMenu->addAction(imgExport);
       }
     }
     break;
@@ -816,10 +818,15 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
     QString s = QObject::tr("power matching");
     if( ((Marker*)focusElement)->pGraph->Var == "Sopt" )
       s = QObject::tr("noise matching");
-    ComponentMenu->insertItem(s, QucsMain, SLOT(slotPowerMatching()));
-    if( ((Marker*)focusElement)->pGraph->Var.left(2) == "S[" )
-      ComponentMenu->insertItem(QObject::tr("2-port matching"), QucsMain,
-                                SLOT(slot2PortMatching()));
+
+    QAction *powerMatch = new QAction(s, QucsMain);
+    QucsMain->connect(powerMatch, SIGNAL(triggered()), SLOT(slotPowerMatching()));
+    ComponentMenu->addAction(powerMatch);
+    if( ((Marker*)focusElement)->pGraph->Var.left(2) == "S[" ) {
+      QAction *power2Match = new QAction(QObject::tr("2-port matching"), QucsMain);
+      QucsMain->connect(power2Match, SIGNAL(triggered()), SLOT(slot2PortMatching()));
+      ComponentMenu->addAction(power2Match);
+    }
   }
   do {
     if(focusElement) {
