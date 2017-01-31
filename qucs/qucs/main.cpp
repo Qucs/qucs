@@ -926,7 +926,6 @@ int main(int argc, char *argv[])
   }
 
   QucsMain = new QucsApp();
-  a.setMainWidget(QucsMain);
   
   QucsMain->show();
   int result = a.exec();
