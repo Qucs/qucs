@@ -47,7 +47,7 @@ GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
 		   this));
 
   text = new QTextEdit(this);
-  text->setTextFormat(Qt::PlainText);
+  text->toPlainText();
   text->setWordWrapMode(QTextOption::NoWrap);
   text->setMinimumSize(350,150);
   vert->addWidget(text);
