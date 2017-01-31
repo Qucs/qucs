@@ -178,7 +178,7 @@ int PackageDialog::insertFile(const QString& FileName, QFile& File,
   Q_ULONG Count = File.size();
   char *p = (char*)malloc(Count+FileName.length()+2);
   strcpy(p, FileName.toLatin1());
-  File.readBlock(p+FileName.length()+1, Count);
+  File.read(p+FileName.length()+1, Count);
   File.close();
 
   Count += FileName.length()+1;
@@ -282,7 +282,7 @@ void PackageDialog::slotCreate()
   char Header[HEADER_LENGTH];
   memset(Header, 0, HEADER_LENGTH);
   strcpy(Header, "Qucs package " PACKAGE_VERSION);
-  PkgFile.writeBlock(Header, HEADER_LENGTH);
+  PkgFile.write(Header, HEADER_LENGTH);
 
 
   // Write project files to package.
@@ -429,7 +429,7 @@ ErrorEnd:
 int PackageDialog::extractDirectory(QFile& PkgFile, Q_UINT32 Count, QDir& currDir)
 {
   char *p = (char*)malloc(Count);
-  PkgFile.readBlock(p, Count);
+  PkgFile.read(p, Count);
 
   if(currDir.cd(QString(p))) { // directory exists ?
     MsgText->append(tr("ERROR: Project directory \"%1\" already exists!").arg(QString(p)));
@@ -451,7 +451,7 @@ int PackageDialog::extractDirectory(QFile& PkgFile, Q_UINT32 Count, QDir& currDi
 int PackageDialog::extractFile(QFile& PkgFile, Q_UINT32 Count, QDir& currDir)
 {
   char *p = (char*)malloc(Count);
-  PkgFile.readBlock(p, Count);
+  PkgFile.read(p, Count);
   QByteArray Content = qUncompress((unsigned char*)p, Count);
   free(p);
 
@@ -462,7 +462,7 @@ int PackageDialog::extractFile(QFile& PkgFile, Q_UINT32 Count, QDir& currDir)
     return -1;
   }
 
-  File.writeBlock(p+strlen(p)+1, Content.size()-strlen(p)-1);
+  File.write(p+strlen(p)+1, Content.size()-strlen(p)-1);
   File.close();
   MsgText->append(tr("Create file \"%1\"").arg(QString(p)));
   return 1;
@@ -472,7 +472,7 @@ int PackageDialog::extractFile(QFile& PkgFile, Q_UINT32 Count, QDir& currDir)
 int PackageDialog::extractLibrary(QFile& PkgFile, Q_UINT32 Count)
 {
   char *p = (char*)malloc(Count);
-  PkgFile.readBlock(p, Count);
+  PkgFile.read(p, Count);
   QByteArray Content = qUncompress((unsigned char*)p, Count);
   free(p);
 
@@ -489,7 +489,7 @@ int PackageDialog::extractLibrary(QFile& PkgFile, Q_UINT32 Count)
     return -1;
   }
 
-  File.writeBlock(p+strlen(p)+1, Content.size()-strlen(p)-1);
+  File.write(p+strlen(p)+1, Content.size()-strlen(p)-1);
   File.close();
   MsgText->append(tr("Create library \"%1\"").arg(QString(p)));
   return 1;
