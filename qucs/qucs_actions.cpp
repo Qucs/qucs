@@ -1409,7 +1409,7 @@ void QucsApp::slotLoadModule()
         // pick up new category 'verilog-a user components' from `Module::category`
         //set new category into view
         QucsApp::fillComboBox(true);
-        CompChoose->setCurrentItem(CompChoose->count()-1);
+        CompChoose->setCurrentIndex(CompChoose->count()-1);
         slotSetCompView(CompChoose->count()-1);
 
         // icons of dynamically registered components ready to be dragged
@@ -1418,7 +1418,7 @@ void QucsApp::slotLoadModule()
         // remove any previously registerd icons from the listview
         int foundCat = CompChoose->findText(QObject::tr("verilog-a user devices"));
         if (foundCat != -1) {
-          CompChoose->setCurrentItem(foundCat);
+          CompChoose->setCurrentIndex(foundCat);
           CompComps->clear();
         }
       }

@@ -163,7 +163,7 @@ SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
   {
     if(PrepCombo->text(i) == Comp->Props.at(3)->Value)
     {
-      PrepCombo->setCurrentItem(i);
+      PrepCombo->setCurrentIndex(i);
       currentPrep = i;
       break;
     }
@@ -307,7 +307,7 @@ void SpiceDialog::slotPrepChanged(int i)
   if(currentPrep != i)
   {
     currentPrep = i;
-    PrepCombo->setCurrentItem(i);
+    PrepCombo->setCurrentIndex(i);
     loadSpiceNetList(FileEdit->text());  // reload netlist nodes
   }
 }

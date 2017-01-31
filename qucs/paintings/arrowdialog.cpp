@@ -138,15 +138,15 @@ void ArrowDialog::SetComboBox(Qt::PenStyle _Style)
 {
   LineStyle = _Style;
   switch(_Style) {
-    case Qt::SolidLine      : StyleBox->setCurrentItem(0);
+    case Qt::SolidLine      : StyleBox->setCurrentIndex(0);
                               break;
-    case Qt::DashLine       : StyleBox->setCurrentItem(1);
+    case Qt::DashLine       : StyleBox->setCurrentIndex(1);
                               break;
-    case Qt::DotLine        : StyleBox->setCurrentItem(2);
+    case Qt::DotLine        : StyleBox->setCurrentIndex(2);
                               break;
-    case Qt::DashDotLine    : StyleBox->setCurrentItem(3);
+    case Qt::DashDotLine    : StyleBox->setCurrentIndex(3);
                               break;
-    case Qt::DashDotDotLine : StyleBox->setCurrentItem(4);
+    case Qt::DashDotDotLine : StyleBox->setCurrentIndex(4);
                               break;
     default: ;
   }
