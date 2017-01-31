@@ -257,7 +257,7 @@ bool LibComp::createSubNetlist(QTextStream *stream, QStringList &FileList,
     } else {
       QByteArray FileContent = file.readAll();
       file.close();
-      //?stream->writeRawBytes(FileContent.data(), FileContent.size());
+      //?stream->writeRawBytes(FileContent.value(), FileContent.size());
       (*stream) << FileContent.data();
       qDebug() << "hi from libcomp";
     }
