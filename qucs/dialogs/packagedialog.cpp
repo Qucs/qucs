@@ -50,7 +50,7 @@
 
 
 PackageDialog::PackageDialog(QWidget *parent_, bool create_)
-			: QDialog(parent_) 
+            : QDialog(parent_)
 {
   all = new QVBoxLayout(this);
   all->setMargin(5);
@@ -76,20 +76,20 @@ PackageDialog::PackageDialog(QWidget *parent_, bool create_)
 
     Group = new QGroupBox(tr("Choose projects:"));
     all->addWidget(Group);
-    
+
     QScrollArea *scrollArea = new QScrollArea(Group);
     scrollArea->setWidgetResizable(true);
-    
+
     QWidget *scrollWidget = new QWidget();
-    
+
     QVBoxLayout *checkBoxLayout = new QVBoxLayout();
     scrollWidget->setLayout(checkBoxLayout);
     scrollArea->setWidget(scrollWidget);
-    
+
     QVBoxLayout *areaLayout = new QVBoxLayout();
     areaLayout->addWidget(scrollArea);
     Group->setLayout(areaLayout);
-    
+
     // ...........................................................
     all->addLayout(h2);
     QPushButton *ButtCreate = new QPushButton(tr("Create"));
@@ -101,7 +101,7 @@ PackageDialog::PackageDialog(QWidget *parent_, bool create_)
 
     // ...........................................................
     // insert all projects
-    QStringList PrDirs = QucsSettings.QucsHomeDir.entryList("*", QDir::Dirs, QDir::Name);
+    QStringList PrDirs = QucsSettings.QucsHomeDir.entryList(QStringList("*"), QDir::Dirs, QDir::Name);
     QStringList::iterator it;
     for(it = PrDirs.begin(); it != PrDirs.end(); it++)
        if((*it).right(4) == "_prj"){   // project directories end with "_prj"
@@ -109,14 +109,14 @@ PackageDialog::PackageDialog(QWidget *parent_, bool create_)
          checkBoxLayout->addWidget(subCheck);
          BoxList.append(subCheck);
        }
-    
+
     //QColor theColor;
     if(BoxList.isEmpty()) {
       ButtCreate->setEnabled(false);
       //theColor =
       //   (new QLabel(tr("No projects!"), Dia_Box))->paletteBackgroundColor();
       QLabel *noProj = new QLabel(tr("No projects!"));
-      checkBoxLayout->addWidget(noProj);              
+      checkBoxLayout->addWidget(noProj);
     }
     //else
     //  theColor = BoxList.current()->paletteBackgroundColor();
@@ -203,7 +203,7 @@ int PackageDialog::insertDirectory(const QString& DirName,
   QDir myDir(DirName);
 
   // Put all files of this directory into the package.
-  QStringList Entries = myDir.entryList("*", QDir::Files, QDir::Name);
+  QStringList Entries = myDir.entryList(QStringList("*"), QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Entries.begin(); it != Entries.end(); ++it) {
     File.setFileName(myDir.absoluteFilePath(*it));
@@ -213,7 +213,7 @@ int PackageDialog::insertDirectory(const QString& DirName,
   }
 
   // Put all subdirectories into the package.
-  Entries = myDir.entryList("*", QDir::Dirs, QDir::Name);
+  Entries = myDir.entryList(QStringList("*"), QDir::Dirs, QDir::Name);
   Entries.pop_front();  // delete "." from list
   Entries.pop_front();  // delete ".." from list
   for(it = Entries.begin(); it != Entries.end(); ++it) {
@@ -230,7 +230,7 @@ int PackageDialog::insertLibraries(QDataStream& Stream)
 {
   QFile File;
   QDir myDir(QucsSettings.QucsHomeDir.absolutePath() + QDir::separator() + "user_lib");
-  QStringList Entries = myDir.entryList("*", QDir::Files, QDir::Name);
+  QStringList Entries = myDir.entryList(QStringList("*"), QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Entries.begin(); it != Entries.end(); ++it) {
     File.setFileName(myDir.absoluteFilePath(*it));
@@ -258,7 +258,7 @@ void PackageDialog::slotCreate()
       if(p->isChecked())
         count++;
     }
-    
+
     if(count < 1) {
       QMessageBox::critical(this, tr("Error"), tr("Please choose at least one project!"));
       return;
@@ -294,7 +294,7 @@ void PackageDialog::slotCreate()
   // Write project files to package.
   i.toFront();
   while(i.hasNext()) {
-    p = i.next();  
+    p = i.next();
     if(p->isChecked()) {
       s = p->text() + "_prj";
       Stream << Q_UINT32(CODE_DIR) << s.toLatin1();
