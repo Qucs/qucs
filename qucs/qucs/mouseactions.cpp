@@ -497,7 +497,7 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
 //          ((Wire*)pe)->Label->paintScheme(&painter);
 
   drawn = true;
-  if((Event->state() & Qt::ControlModifier) == 0)
+  if((Event->button() & Qt::ControlModifier) == 0)
     Doc->setOnGrid(MAx2, MAy2);  // use grid only if CTRL key not pressed
   MAx1 = MAx2 - MAx1;
   MAy1 = MAy2 - MAy1;
@@ -932,7 +932,7 @@ void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent*, float fX, float fY)
 void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, float fY)
 {
   bool Ctrl;
-  if(Event->state() & Qt::ControlModifier) Ctrl = true;
+  if(Event->button() & Qt::ControlModifier) Ctrl = true;
   else Ctrl = false;
 
   int No=0;
@@ -1538,7 +1538,7 @@ void MouseActions::MPressZoomIn(Schematic *Doc, QMouseEvent*, float fX, float fY
 void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
 {
   bool ctrl;
-  if(Event->state() & Qt::ControlModifier) ctrl = true;
+  if(Event->button() & Qt::ControlModifier) ctrl = true;
   else ctrl = false;
 
   if(!ctrl) Doc->deselectElements(focusElement);
@@ -1566,7 +1566,7 @@ void MouseActions::MReleaseSelect2(Schematic *Doc, QMouseEvent *Event)
   if(Event->button() != Qt::LeftButton) return;
 
   bool Ctrl;
-  if(Event->state() & Qt::ControlModifier) Ctrl = true;
+  if(Event->button() & Qt::ControlModifier) Ctrl = true;
   else Ctrl = false;
 
   // selects all elements within the rectangle
