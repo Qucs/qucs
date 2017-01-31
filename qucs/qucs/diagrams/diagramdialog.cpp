@@ -689,7 +689,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   // put all data files into ComboBox
   QFileInfo Info(defaultDataSet);
   QDir ProjDir(Info.dirPath());
-  QStringList Elements = ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
+  QStringList Elements = ProjDir.entryList(QStringList("*.dat"), QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Elements.begin(); it != Elements.end(); ++it) {
     ChooseData->insertItem((*it).left((*it).length()-4));
