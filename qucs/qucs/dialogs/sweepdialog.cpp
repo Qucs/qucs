@@ -92,7 +92,7 @@ SweepDialog::SweepDialog(Schematic *Doc_)
   QGridLayout *all = new QGridLayout(this);//, pGraph->cPointsX.count()+2,2,3,3);
   all->setMargin(5);
   all->setSpacing(5);
-  all->setColStretch(1,5);
+  all->setColumnStretch(1,5);
 
   DataX const *pD;
   mySpinBox *Box;
