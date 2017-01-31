@@ -311,10 +311,10 @@ void PackageDialog::slotCreate()
     }
 
   // Calculate checksum and write it to package file.
-  PkgFile.at(0);
+  PkgFile.seek(0);
   QByteArray Content = PkgFile.readAll();
   Q_UINT16 Checksum = qChecksum(Content.data(), Content.size());
-  PkgFile.at(HEADER_LENGTH-sizeof(Q_UINT16));
+  PkgFile.seek(HEADER_LENGTH-sizeof(Q_UINT16));
   Stream << Checksum;
   PkgFile.close();
 
@@ -378,7 +378,7 @@ void PackageDialog::extractPackage()
   }
 
   // checksum correct ?
-  PkgFile.at(HEADER_LENGTH-2);
+  PkgFile.seek(HEADER_LENGTH-2);
   Stream >> Checksum;
   *((Q_UINT16*)(Content.data()+HEADER_LENGTH-2)) = 0;
   if(Checksum != qChecksum(Content.data(), Content.size())) {
