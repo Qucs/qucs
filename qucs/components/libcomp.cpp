@@ -140,7 +140,7 @@ int LibComp::loadSection(const QString& Name, QString& Section,
       if(EndI < 0)  return -11;  // file corrupt
       StartI++; EndI--;
       QString inc = Section.mid(StartI, EndI-StartI);
-      QStringList f = QStringList::split(QRegExp("\"\\s+\""), inc);
+      QStringList f = inc.split(QRegExp("\"\\s+\""));
       for(QStringList::Iterator it = f.begin(); it != f.end(); ++it ) {
 	Includes->append(*it);
       }
