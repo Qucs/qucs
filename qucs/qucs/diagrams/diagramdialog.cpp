@@ -193,7 +193,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     PropertyBox->addItem(tr("real/imaginary"));
     PropertyBox->addItem(tr("magnitude/angle (degree)"));
     PropertyBox->addItem(tr("magnitude/angle (radian)"));
-    PropertyBox->setCurrentItem(1);
+    PropertyBox->setCurrentIndex(1);
     connect(PropertyBox, SIGNAL(activated(int)), SLOT(slotSetNumMode(int)));
     Box2Layout->setStretchFactor(new QWidget(Box2), 5); // stretchable placeholder
 
@@ -379,7 +379,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
       GridStyleBox->addItem(tr("dash dot dot line"));
       gp->addMultiCellWidget(GridStyleBox, Row,Row,1,2);
       Row++;
-      GridStyleBox->setCurrentItem(Diag->GridPen.style()-1);
+      GridStyleBox->setCurrentIndex(Diag->GridPen.style()-1);
     
       GridOn->setChecked(Diag->xAxis.GridOn);
       if(!Diag->xAxis.GridOn) slotSetGridBox(0);
@@ -695,7 +695,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     ChooseData->addItem((*it).left((*it).length()-4));
     if((*it) == Info.fileName())
       // default dataset should be the current
-      ChooseData->setCurrentItem(ChooseData->count()-1);
+      ChooseData->setCurrentIndex(ChooseData->count()-1);
   }
   slotReadVars(0);  // put variables into the ListView
 
@@ -836,7 +836,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
         ColorButt->setPaletteBackgroundColor(selectedColor);
         if(g->Var.right(3) == ".Vb")   // harmonic balance output ?
           if(PropertyBox->count() >= GRAPHSTYLE_ARROW)
-            PropertyBox->setCurrentItem(GRAPHSTYLE_ARROW);
+            PropertyBox->setCurrentIndex(GRAPHSTYLE_ARROW);
         g->Style = toGraphStyle(PropertyBox->currentItem());
         assert(g->Style!=GRAPHSTYLE_INVALID);
         if(yAxisBox) {
@@ -898,9 +898,9 @@ void DiagramDialog::SelectGraph(Graph *g)
       QString stylesheet = QString("QPushButton {background-color: %1};").arg(g->Color.name());
       ColorButt->setStyleSheet(stylesheet);
       ColorButt->setPaletteBackgroundColor(g->Color);
-      PropertyBox->setCurrentItem(g->Style);
+      PropertyBox->setCurrentIndex(g->Style);
       if(yAxisBox) {
-        yAxisBox->setCurrentItem(g->yAxisNo);
+        yAxisBox->setCurrentIndex(g->yAxisNo);
         yAxisBox->setEnabled(true);
         Label4->setEnabled(true);
       }
@@ -911,7 +911,7 @@ void DiagramDialog::SelectGraph(Graph *g)
   }
   else {
     Property2->setText(QString::number(g->Precision));
-    PropertyBox->setCurrentItem(g->numMode);
+    PropertyBox->setCurrentIndex(g->numMode);
   }
   toTake = false;
 
@@ -954,7 +954,7 @@ void DiagramDialog::slotDeleteGraph()
       ColorButt->setPaletteBackgroundColor(selectedColor);
       Property2->setText("0");
       if(yAxisBox) {
-        yAxisBox->setCurrentItem(0);
+        yAxisBox->setCurrentIndex(0);
         yAxisBox->setEnabled(false);
         Label4->setEnabled(false);
       }
@@ -968,7 +968,7 @@ void DiagramDialog::slotDeleteGraph()
   toTake  = false;
 
   if(Property2) {
-    PropertyBox->setCurrentItem(0);
+    PropertyBox->setCurrentIndex(0);
 
     Label1->setEnabled(false);
     PropertyBox->setEnabled(false);
