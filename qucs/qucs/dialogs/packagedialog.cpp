@@ -161,7 +161,7 @@ void PackageDialog::slotBrowse()
   QFileInfo Info(s);
   lastDir = Info.absolutePath();  // remember last directory
 
-  if(Info.extension().isEmpty())
+  if(Info.suffix().isEmpty())
     s += ".qucs";
   NameEdit->setText(s);
 }
@@ -267,7 +267,7 @@ void PackageDialog::slotCreate()
 
   QString s(NameEdit->text());
   QFileInfo Info(s);
-  if(Info.extension().isEmpty())
+  if(Info.suffix().isEmpty())
     s += ".qucs";
   NameEdit->setText(s);
 
@@ -353,7 +353,7 @@ void PackageDialog::extractPackage()
 
   QFile PkgFile(s);
   if(!PkgFile.open(QIODevice::ReadOnly)) {
-    if(Info.extension().isEmpty()) s += ".qucs";
+    if(Info.suffix().isEmpty()) s += ".qucs";
     PkgFile.setFileName(s);
     if(!PkgFile.open(QIODevice::ReadOnly)) {
       MsgText->append(tr("ERROR: Cannot open package!"));

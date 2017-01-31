@@ -814,7 +814,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
   int row = Item->row();
   QString s1 = ChooseVars->item(row, 0)->text();
   QFileInfo Info(defaultDataSet);
-  if(ChooseData->currentText() != Info.baseName(true))
+  if(ChooseData->currentText() != Info.completeBaseName())
     s1 = ChooseData->currentText() + ":" + s1;
   GraphInput->setText(s1);
 

@@ -99,7 +99,7 @@ TextDoc::~TextDoc()
 void TextDoc::setLanguage (const QString& FileName)
 {
   QFileInfo Info (FileName);
-  QString ext = Info.extension (false);
+  QString ext = Info.suffix();
   if (ext == "vhd" || ext == "vhdl")
     setLanguage (LANG_VHDL);
   else if (ext == "v")
@@ -205,9 +205,9 @@ void TextDoc::setName (const QString& Name_)
 
   QFileInfo Info (DocName);
 
-  DataSet = Info.baseName (true) + ".dat";
-  DataDisplay = Info.baseName (true) + ".dpl";
-  if(Info.extension(false) == "m" || Info.extension(false) == "oct")
+  DataSet = Info.completeBaseName() + ".dat";
+  DataDisplay = Info.completeBaseName() + ".dpl";
+  if(Info.suffix() == "m" || Info.suffix() == "oct")
     SimTime = "1";
 }
 
@@ -560,7 +560,7 @@ QString TextDoc::getModuleName (void)
   case LANG_OCTAVE:
     {
       QFileInfo Info (DocName);
-      return Info.baseName (true);
+      return Info.completeBaseName();
     }
   default:
     return "";
