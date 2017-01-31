@@ -127,7 +127,7 @@ bool ChangeDialog::matches(const QString& CompModel)
 // Is called if the "Replace"-button is pressed.
 void ChangeDialog::slotButtReplace()
 {
-  Expr.setWildcard(true);  // switch into wildcard mode
+  Expr.setPatternSyntax(QRegExp::Wildcard);  // switch into wildcard mode
   Expr.setPattern(CompNameEdit->text());
   if(!Expr.isValid()) {
     QMessageBox::critical(this, tr("Error"),
@@ -147,7 +147,7 @@ void ChangeDialog::slotButtReplace()
   Dia_All->addWidget(Dia_Scroll);
   
   QVBoxLayout *Dia_Box = new QVBoxLayout(Dia_Scroll->viewport());
-  Dia_Scroll->insertChild(Dia_Box);
+  Dia_Box->setParent(Dia_Scroll);
   QLabel *Dia_Label = new QLabel(tr("Change properties of\n")
                                + tr("these components ?"), Dia);
   Dia_All->addWidget(Dia_Label);
@@ -172,7 +172,7 @@ void ChangeDialog::slotButtReplace()
   // search through all components
   for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next()) {
     if(matches(pc->Model)) {
-      if(Expr.search(pc->Name) >= 0)
+      if(Expr.indexIn(pc->Name) >= 0)
         for(Property *pp = pc->Props.first(); pp!=0; pp = pc->Props.next())
           if(pp->Name == PropNameEdit->currentText()) {
             pb = new QCheckBox(pc->Name);
@@ -186,7 +186,7 @@ void ChangeDialog::slotButtReplace()
             if(i2-i1 < 2)  break;
             str = pp->Description.mid(i1+1, i2-i1-1);
             str.replace( QRegExp("[^a-zA-Z0-9_,]"), "" );
-            List = List.split(',',str);
+            List = str.split(',');
             if(List.indexOf(NewValueEdit->text()) >= 0)
               break;    // property value is okay
 
