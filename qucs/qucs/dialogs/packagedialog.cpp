@@ -121,7 +121,7 @@ PackageDialog::PackageDialog(QWidget *parent_, bool create_)
     setWindowTitle(tr("Extract Project Package"));
 
     MsgText = new QTextEdit(this);
-    MsgText->setTextFormat(Qt::PlainText);
+    MsgText->toPlainText();
     MsgText->setWordWrapMode(QTextOption::NoWrap);
     MsgText->setReadOnly(true);
     all->addWidget(MsgText);

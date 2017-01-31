@@ -40,7 +40,7 @@ OctaveWindow::OctaveWindow(QDockWidget *parent_): QWidget()
   output = new QTextEdit(this);
   output->setReadOnly(true);
   output->setUndoRedoEnabled(false);
-  output->setTextFormat(Qt::LogText);
+  output->toPlainText();
   output->setLineWrapMode(QTextEdit::NoWrap);
   misc::setWidgetBackgroundColor(output, QucsSettings.BGColor);
   allLayout->addWidget(output);

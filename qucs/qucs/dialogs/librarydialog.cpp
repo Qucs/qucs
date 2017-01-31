@@ -150,7 +150,7 @@ LibraryDialog::LibraryDialog(QWidget *parent)
   QGroupBox *descrBox = new QGroupBox(tr("Description:"));
   subcktDescrLayout->addWidget(descrBox);
   textDescr = new QTextEdit();
-  textDescr->setTextFormat(Qt::PlainText);
+  textDescr->toPlainText();
   textDescr->setWordWrapMode(QTextOption::NoWrap);
   connect(textDescr, SIGNAL(textChanged()), SLOT(slotUpdateDescription()));
   QVBoxLayout *vGroup = new QVBoxLayout;
