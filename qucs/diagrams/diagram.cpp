@@ -125,7 +125,7 @@ void Diagram::paintDiagram(ViewPainter *p)
                    p->DY + float(cy-pt->y) * p->Scale));
 
       p->Painter->setPen(pt->Color);
-      p->Painter->drawText(0, 0, pt->s);
+      p->Painter->drawText(QPoint(0, 0), pt->s);
     }
     p->Painter->setWorldMatrix(wm);
     p->Painter->setWorldMatrixEnabled(false);
