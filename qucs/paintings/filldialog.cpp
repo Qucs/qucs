@@ -76,7 +76,7 @@ if(show) {
 
   CheckFilled = new QCheckBox(tr("enable filling"),Tab2);
   connect(CheckFilled, SIGNAL(toggled(bool)), SLOT(slotCheckFilled(bool)));
-  gp2->addMultiCellWidget(CheckFilled, 0,0,0,1);
+  gp2->addWidget(CheckFilled, 0, 0);
 
 
   FillLabel1 = new QLabel(tr("Fill Color: "), Tab2);
