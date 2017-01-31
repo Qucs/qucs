@@ -45,7 +45,7 @@ MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent)
   NumberBox->insertItem(tr("real/imaginary"));
   NumberBox->insertItem(tr("magnitude/angle (degree)"));
   NumberBox->insertItem(tr("magnitude/angle (radian)"));
-  NumberBox->setCurrentItem(pMarker->numMode);
+  NumberBox->setCurrentIndex(pMarker->numMode);
 
   g->addWidget(new QLabel(tr("Number Notation: ")), 1,0);
   g->addWidget(NumberBox, 1, 1);
