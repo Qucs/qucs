@@ -121,9 +121,9 @@ VASettingsDialog::VASettingsDialog (TextDoc * Doc_)
     mosRadio->setChecked (true);
   else
     nonRadio->setChecked (true);
-  all->addMultiCellWidget (nonRadio, 4, 4, 0, 1);
-  all->addWidget (bjtRadio, 4, 2);
-  all->addMultiCellWidget (mosRadio, 4, 4, 3, 4);
+  all->addWidget (nonRadio, 4, 0);
+  all->addWidget (bjtRadio, 4, 1);
+  all->addWidget (mosRadio, 4, 2);
 
   toggleGroupTyp = new QButtonGroup ();
   QRadioButton * anaRadio = 
@@ -141,9 +141,9 @@ VASettingsDialog::VASettingsDialog (TextDoc * Doc_)
     anaRadio->setChecked (true);
   else
     digRadio->setChecked (true);
-  all->addMultiCellWidget (anaRadio, 5, 5, 0, 1);
-  all->addWidget (allRadio, 5, 2);
-  all->addMultiCellWidget (digRadio, 5, 5, 3, 4);
+  all->addWidget (anaRadio, 5, 0);
+  all->addWidget (allRadio, 5, 1);
+  all->addWidget (digRadio, 5, 2);
 
   QHBoxLayout * Buttons = new QHBoxLayout ();
   vbox->addLayout(Buttons);
