@@ -153,7 +153,7 @@ void QucsApp::slotEditActivate (bool on)
     Doc->commentSelected ();
 
     editActivate->blockSignals (true);
-    editActivate->setOn (false);  // release toolbar button
+    editActivate->setChecked(false);  // release toolbar button
     editActivate->blockSignals (false);
   }
   else
