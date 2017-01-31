@@ -196,16 +196,6 @@ void ChangeDialog::slotButtReplace()
           }
     }
   }
-/*
-  QColor theColor;
-  if(pList.isEmpty()) {
-    YesButton->setEnabled(false);
-    theColor =
-       (new QLabel(tr("No match found!"), Dia_Box))->paletteBackgroundColor();
-  }
-  else  theColor = pList.current()->paletteBackgroundColor();
-*/
-  //Dia_Scroll->viewport()->setPaletteBackgroundColor(theColor);
   Dia->resize(50, 300);
 
 

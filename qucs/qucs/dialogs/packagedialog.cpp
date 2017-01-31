@@ -110,17 +110,11 @@ PackageDialog::PackageDialog(QWidget *parent_, bool create_)
          BoxList.append(subCheck);
        }
 
-    //QColor theColor;
     if(BoxList.isEmpty()) {
       ButtCreate->setEnabled(false);
-      //theColor =
-      //   (new QLabel(tr("No projects!"), Dia_Box))->paletteBackgroundColor();
       QLabel *noProj = new QLabel(tr("No projects!"));
       checkBoxLayout->addWidget(noProj);
     }
-    //else
-    //  theColor = BoxList.current()->paletteBackgroundColor();
-    //Dia_Scroll->viewport()->setPaletteBackgroundColor(theColor);
   }
 
   else {  // of "if(create_)"

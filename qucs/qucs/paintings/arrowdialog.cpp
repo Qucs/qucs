@@ -112,7 +112,8 @@ ArrowDialog::~ArrowDialog()
 // --------------------------------------------------------------------------
 void ArrowDialog::slotSetColor()
 {
-  QColor c = QColorDialog::getColor(ColorButt->paletteBackgroundColor(),this);
+  QColor c = QColorDialog::getColor(
+               misc::getWidgetBackgroundColor(ColorButt), this);
   if(c.isValid())
       misc::setWidgetBackgroundColor(ColorButt, c);
 }
