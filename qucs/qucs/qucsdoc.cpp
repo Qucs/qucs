@@ -29,7 +29,7 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& Name_)
   DocName = Name_;
   QFileInfo Info(DocName);
   if(!DocName.isEmpty()) {
-    DocName = Info.absFilePath();
+    DocName = Info.absoluteFilePath();
     QString base = Info.baseName(true);
     QString ext = Info.extension(false);
 

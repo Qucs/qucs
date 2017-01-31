@@ -276,7 +276,7 @@ void LibraryDialog::slotCreateNext()
     return;
   }
 
-  LibFile.setFileName(LibDir.absFilePath(NameEdit->text()) + ".lib");
+  LibFile.setFileName(LibDir.absoluteFilePath(NameEdit->text()) + ".lib");
   if(LibFile.exists()) {
     QMessageBox::critical(this, tr("Error"), tr("A library with this name already exists!"));
     return;
@@ -343,7 +343,7 @@ int LibraryDialog::intoFile(QString &ifn, QString &ofn, QStringList &IFiles)
     ofn = Info.fileName();
     IFiles.append(ofn);
     QFile ofile;
-    ofile.setFileName(LibDirSub.absFilePath(ofn));
+    ofile.setFileName(LibDirSub.absoluteFilePath(ofn));
     if(!ofile.open(QIODevice::WriteOnly)) {
       ErrText->insertPlainText(
         QObject::tr("ERROR: Cannot create file \"%1\".\n").arg(ofn));

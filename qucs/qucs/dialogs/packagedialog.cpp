@@ -206,7 +206,7 @@ int PackageDialog::insertDirectory(const QString& DirName,
   QStringList Entries = myDir.entryList("*", QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Entries.begin(); it != Entries.end(); ++it) {
-    File.setFileName(myDir.absFilePath(*it));
+    File.setFileName(myDir.absoluteFilePath(*it));
     Stream << Q_UINT32(CODE_FILE);
     if(insertFile(*it, File, Stream) < 0)
       return -1;
@@ -233,7 +233,7 @@ int PackageDialog::insertLibraries(QDataStream& Stream)
   QStringList Entries = myDir.entryList("*", QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Entries.begin(); it != Entries.end(); ++it) {
-    File.setFileName(myDir.absFilePath(*it));
+    File.setFileName(myDir.absoluteFilePath(*it));
     Stream << Q_UINT32(CODE_LIBRARY);
     if(insertFile(*it, File, Stream) < 0)
       return -1;
@@ -462,7 +462,7 @@ int PackageDialog::extractFile(QFile& PkgFile, Q_UINT32 Count, QDir& currDir)
   free(p);
 
   p = Content.data();
-  QFile File(currDir.absFilePath(QString(p)));
+  QFile File(currDir.absoluteFilePath(QString(p)));
   if(!File.open(QIODevice::WriteOnly)) {
     MsgText->append(tr("ERROR: Cannot create file \"%1\"!").arg(QString(p)));
     return -1;
