@@ -159,7 +159,7 @@ void PackageDialog::slotBrowse()
   if(s.isEmpty()) return;
 
   QFileInfo Info(s);
-  lastDir = Info.dirPath(true);  // remember last directory
+  lastDir = Info.absolutePath();  // remember last directory
 
   if(Info.extension().isEmpty())
     s += ".qucs";
@@ -349,7 +349,7 @@ void PackageDialog::extractPackage()
   }
 
   QFileInfo Info(s);
-  lastDir = Info.dirPath(true);  // remember last directory
+  lastDir = Info.absolutePath();  // remember last directory
 
   QFile PkgFile(s);
   if(!PkgFile.open(QIODevice::ReadOnly)) {

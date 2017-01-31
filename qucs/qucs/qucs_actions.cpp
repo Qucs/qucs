@@ -901,7 +901,7 @@ void QucsApp::slotAddToProject()
   QStringList FileList = List;  // make a copy as recommended by Qt
   QStringList::Iterator it = FileList.begin();
   QFileInfo Info(*it);
-  lastDir = Info.dirPath(true);  // remember last directory
+  lastDir = Info.absolutePath();  // remember last directory
 
   // copy all files to project directory
   int Num;
@@ -1238,7 +1238,7 @@ void QucsApp::slotExportGraphAsCsv()
     return;
 
   QFileInfo Info(s);
-  lastDir = Info.dirPath(true);  // remember last directory
+  lastDir = Info.absolutePath();  // remember last directory
   if(Info.extension().isEmpty())
     s += ".csv";
 

@@ -214,7 +214,7 @@ void VASettingsDialog::slotBrowse ()
 
   if (!s.isEmpty ()) {
     QFileInfo Info (s);
-    lastDir = Info.dirPath (true);  // remember last directory
+    lastDir = Info.absolutePath();  // remember last directory
     IconEdit->setText (s);
     IconButt->setPixmap (QPixmap (s));
   }
