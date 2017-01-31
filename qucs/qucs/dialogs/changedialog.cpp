@@ -182,7 +182,7 @@ void ChangeDialog::slotButtReplace()
             i1 = pp->Description.indexOf('[');
             if(i1 < 0)  break;  // no multiple-choice property
 
-            i2 = pp->Description.findRev(']');
+            i2 = pp->Description.lastIndexOf(']');
             if(i2-i1 < 2)  break;
             str = pp->Description.mid(i1+1, i2-i1-1);
             str.replace( QRegExp("[^a-zA-Z0-9_,]"), "" );

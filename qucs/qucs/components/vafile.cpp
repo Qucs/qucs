@@ -66,7 +66,7 @@ VerilogA_File_Info::VerilogA_File_Info (QString File, bool isfile)
   Expr1.setCaseSensitive(true);
   k--;
   Expr.setPattern("\\bmodule\\b");  // start of last module
-  k = File.findRev(Expr, k);
+  k = File.lastIndexOf(Expr, k);
   if(k < 0)
     return;
 
