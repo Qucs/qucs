@@ -17,6 +17,7 @@
 #include "ellipsearc.h"
 #include "filldialog.h"
 #include "main.h"
+#include "misc.h"
 #include "schematic.h"
 
 #include <QPainter>
@@ -385,7 +386,7 @@ bool EllipseArc::Dialog()
   bool changed = false;
 
   FillDialog *d = new FillDialog(QObject::tr("Edit Arc Properties"), false);
-  d->ColorButt->setPaletteBackgroundColor(Pen.color());
+  misc::setWidgetBackgroundColor(d->ColorButt, Pen.color());
   d->LineWidth->setText(QString::number(Pen.width()));
   d->StyleBox->setCurrentIndex(Pen.style()-1);
 
