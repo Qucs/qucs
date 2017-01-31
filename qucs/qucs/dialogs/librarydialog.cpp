@@ -351,7 +351,7 @@ int LibraryDialog::intoFile(QString &ifn, QString &ofn, QStringList &IFiles)
     }
     else {
       QDataStream ds(&ofile);
-      ds.writeRawBytes(FileContent.data(), FileContent.size());
+      ds.writeRawData(FileContent.data(), FileContent.size());
       ofile.close();
     }
   }
