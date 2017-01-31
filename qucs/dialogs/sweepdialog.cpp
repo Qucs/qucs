@@ -163,7 +163,7 @@ Graph* SweepDialog::setBiasPoints()
   bool hasNoComp;
   Graph *pg = new Graph(NULL, ""); // HACK!
   QFileInfo Info(Doc->DocName);
-  QString DataSet = Info.dirPath() + QDir::separator() + Doc->DataSet;
+  QString DataSet = Info.path() + QDir::separator() + Doc->DataSet;
 
   Node *pn;
   Element *pe;

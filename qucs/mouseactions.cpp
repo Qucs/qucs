@@ -1766,8 +1766,8 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 	  else pe = NULL;
 	  break;
 	case isDiagram:
-	  Doc->Diagrams->append((Diagram*)pe);
-	  ((Diagram*)pe)->loadGraphData(Info.dirPath() + QDir::separator() +
+      Doc->Diagrams->append((Diagram*)pe);
+      ((Diagram*)pe)->loadGraphData(Info.path() + QDir::separator() +
 					Doc->DataSet);
 	  Doc->enlargeView(pe->cx, pe->cy-pe->y2, pe->cx+pe->x2, pe->cy);
 	  break;
