@@ -146,10 +146,11 @@ PackageDialog::~PackageDialog()
 void PackageDialog::slotBrowse()
 {
   QString s = QFileDialog::getSaveFileName(
-     lastDir.isEmpty() ? QString(".") : lastDir,
-     tr("Qucs Packages")+" (*.qucs);;"+
-     tr("Any File")+" (*)",
-     this, 0, tr("Enter a Package File Name"));
+    this,
+    tr("Enter a Package File Name"),
+    lastDir.isEmpty() ? QString(".") : lastDir,
+    tr("Qucs Packages")+" (*.qucs);;"+ tr("Any File")+" (*)"
+    );
   if(s.isEmpty()) return;
 
   QFileInfo Info(s);
@@ -332,10 +333,11 @@ void PackageDialog::slotCreate()
 void PackageDialog::extractPackage()
 {
   QString s = QFileDialog::getOpenFileName(
+     this,
+     tr("Enter a Package File Name"),
      lastDir.isEmpty() ? QString(".") : lastDir,
-     tr("Qucs Packages")+" (*.qucs);;"+
-     tr("Any File")+" (*)",
-     this, 0, tr("Enter a Package File Name"));
+     tr("Qucs Packages")+" (*.qucs);;"+ tr("Any File")+" (*)"
+     );
 
   if(s.isEmpty()) {
     reject();
