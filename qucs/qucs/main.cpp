@@ -247,12 +247,16 @@ Schematic *openSchematic(QString schematic)
 {
   qDebug() << "*** try to load schematic :" << schematic;
 
+  // QString to *char
+  QByteArray ba = schematic.toLatin1();
+  const char *c_sch = ba.data();
+
   QFile file(schematic);  // save simulator messages
   if(file.open(QIODevice::ReadOnly)) {
     file.close();
   }
   else {
-    fprintf(stderr, "Error: Could not load schematic %s\n", schematic.ascii());
+    fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
     return NULL;
   }
 
@@ -264,7 +268,7 @@ Schematic *openSchematic(QString schematic)
 
   // load schematic file if possible
   if(!sch->loadDocument()) {
-    fprintf(stderr, "Error: Could not load schematic %s\n", schematic.ascii());
+    fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
     delete sch;
     return NULL;
   }
@@ -280,6 +284,10 @@ int doNetlist(QString schematic, QString netlist)
 
   qDebug() << "*** try to write netlist  :" << netlist;
 
+  // QString to *char
+  QByteArray ba = schematic.toLatin1();
+  const char *c_net = ba.data();
+
   QStringList Collect;
 
   QPlainTextEdit *ErrText = new QPlainTextEdit();  //dummy
@@ -290,7 +298,7 @@ int doNetlist(QString schematic, QString netlist)
 
   NetlistFile.setFileName(netlist);
   if(!NetlistFile.open(QIODevice::WriteOnly)) {
-    fprintf(stderr, "Error: Could not load netlist %s\n", netlist.ascii());
+    fprintf(stderr, "Error: Could not load netlist %s\n", c_net);
     return -1;
   }
 
@@ -299,8 +307,7 @@ int doNetlist(QString schematic, QString netlist)
 
   if(SimPorts < -5) {
     NetlistFile.close();
-    QByteArray ba = netlist.toLatin1();
-    fprintf(stderr, "Error: Could not prepare netlist %s\n", ba.data());
+    fprintf(stderr, "Error: Could not prepare netlist %s\n", c_net);
     /// \todo better handling for error/warnings
     qCritical() << ErrText->toPlainText();
     return 1;
