@@ -406,7 +406,7 @@ void LibraryDialog::slotNextDescr()
 void LibraryDialog::slotUpdateDescription()
 {
   // store on every change
-  Descriptions[curDescr] = textDescr->text();
+  Descriptions[curDescr] = textDescr->toPlainText();
 }
 
 // ---------------------------------------------------------------
