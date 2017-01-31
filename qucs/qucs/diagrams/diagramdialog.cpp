@@ -114,7 +114,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
 	  const Schematic* s = dynamic_cast<const Schematic*>(parent);
 	  assert(s);
 	  QFileInfo Info(s->DocName);
-	  defaultDataSet = Info.dirPath() + QDir::separator() + s->DataSet;
+	  defaultDataSet = Info.path() + QDir::separator() + s->DataSet;
   }else{
 	  defaultDataSet = "unknown";
   }
@@ -688,7 +688,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   // ...........................................................
   // put all data files into ComboBox
   QFileInfo Info(defaultDataSet);
-  QDir ProjDir(Info.dirPath());
+  QDir ProjDir(Info.path());
   QStringList Elements = ProjDir.entryList(QStringList("*.dat"), QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Elements.begin(); it != Elements.end(); ++it) {
@@ -735,7 +735,7 @@ void DiagramDialog::slotReadVars(int)
   QFileInfo Info(defaultDataSet);
   QString DocName = ChooseData->currentText()+".dat";
 
-  QFile file(Info.dirPath() + QDir::separator() + DocName);
+  QFile file(Info.path() + QDir::separator() + DocName);
   if(!file.open(QIODevice::ReadOnly)) {
     return;
   }
