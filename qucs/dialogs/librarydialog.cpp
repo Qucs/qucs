@@ -467,13 +467,13 @@ void LibraryDialog::slotSave()
       QStringList IFiles;
       SubMap::Iterator it = FileList.begin();
       while(it != FileList.end()) {
-          QString f = it.data().File;
+          QString f = it.value().File;
           QString ifn, ofn;
-          if(it.data().Type == "SCH") {
+          if(it.value().Type == "SCH") {
               ifn = f + ".lst";
               ofn = ifn;
           }
-          else if(it.data().Type == "CIR") {
+          else if(it.value().Type == "CIR") {
               ifn = f + ".lst";
               ofn = ifn;
           }
@@ -505,13 +505,13 @@ void LibraryDialog::slotSave()
       QStringList IFiles;
       SubMap::Iterator it = FileList.begin();
       while(it != FileList.end()) {
-          QString f = it.data().File;
+          QString f = it.value().File;
           QString ifn, ofn;
-          if(it.data().Type == "SCH") {
+          if(it.value().Type == "SCH") {
               ifn = f + ".lst";
               ofn = f + ".v";
           }
-          else if(it.data().Type == "VER") {
+          else if(it.value().Type == "VER") {
               ifn = f;
               ofn = ifn;
           }
@@ -542,13 +542,13 @@ void LibraryDialog::slotSave()
       QStringList IFiles;
       SubMap::Iterator it = FileList.begin();
       while(it != FileList.end()) {
-          QString f = it.data().File;
+          QString f = it.value().File;
           QString ifn, ofn;
-          if(it.data().Type == "SCH") {
+          if(it.value().Type == "SCH") {
               ifn = f + ".lst";
               ofn = f + ".vhdl";
           }
-          else if(it.data().Type == "VHD") {
+          else if(it.value().Type == "VHD") {
               ifn = f;
               ofn = ifn;
           }
