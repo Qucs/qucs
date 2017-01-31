@@ -943,11 +943,11 @@ void QucsApp::initStatusBar()
 {
   // To reserve enough space, insert the longest text and rewrite it afterwards.
   WarningLabel = new QLabel(tr("no warnings"), statusBar());
-  statusBar()->addWidget(WarningLabel, 0, true);
+  statusBar()->addPermanentWidget(WarningLabel, 0);
 
   PositionLabel = new QLabel("0 : 0", statusBar());
   PositionLabel->setAlignment(Qt::AlignRight);
-  statusBar()->addWidget(PositionLabel, 0, true);
+  statusBar()->addPermanentWidget(PositionLabel, 0);
 
   statusBar()->showMessage(tr("Ready."), 2000);
 }
