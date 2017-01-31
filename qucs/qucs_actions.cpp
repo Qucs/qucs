@@ -1005,10 +1005,10 @@ void QucsApp::slotCursorUp(bool up)
     if(Begin < 0) return;  // no selection list ?
     int End = pp->Description.indexOf(editText->text(), Begin); // current
     if(End < 0) return;  // should never happen
-    End = pp->Description.findRev(',', End);
+    End = pp->Description.lastIndexOf(',', End);
     if(End < Begin) return;  // was first item ?
     End--;
-    int Pos = pp->Description.findRev(',', End);
+    int Pos = pp->Description.lastIndexOf(',', End);
     if(Pos < Begin) Pos = Begin;   // is first item ?
     Pos++;
     if(pp->Description.at(Pos) == ' ') Pos++; // remove leading space
