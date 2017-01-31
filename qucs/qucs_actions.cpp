@@ -976,11 +976,11 @@ void QucsApp::slotCursorLeft(bool left)
     if(markerCount > 0) {  // only move marker if nothing else selected
       Doc->markerLeftRight(left, &movingElements);
     } else if(left) {
-      if(Doc->scrollLeft(Doc->horizontalScrollBar()->lineStep()))
-        Doc->scrollBy(-Doc->horizontalScrollBar()->lineStep(), 0);
+      if(Doc->scrollLeft(Doc->horizontalScrollBar()->singleStep()))
+        Doc->scrollBy(-Doc->horizontalScrollBar()->singleStep(), 0);
     }else{ // right
-      if(Doc->scrollRight(-Doc->horizontalScrollBar()->lineStep()))
-        Doc->scrollBy(Doc->horizontalScrollBar()->lineStep(), 0);
+      if(Doc->scrollRight(-Doc->horizontalScrollBar()->singleStep()))
+        Doc->scrollBy(Doc->horizontalScrollBar()->singleStep(), 0);
     }
 
     Doc->viewport()->update();
@@ -1045,11 +1045,11 @@ void QucsApp::slotCursorUp(bool up)
     if(markerCount > 0) {  // only move marker if nothing else selected
       Doc->markerUpDown(up, &movingElements);
     } else if(up) { // nothing selected at all
-      if(Doc->scrollUp(Doc->verticalScrollBar()->lineStep()))
-        Doc->scrollBy(0, -Doc->verticalScrollBar()->lineStep());
+      if(Doc->scrollUp(Doc->verticalScrollBar()->singleStep()))
+        Doc->scrollBy(0, -Doc->verticalScrollBar()->singleStep());
     } else { // down
-      if(Doc->scrollDown(-Doc->verticalScrollBar()->lineStep()))
-        Doc->scrollBy(0, Doc->verticalScrollBar()->lineStep());
+      if(Doc->scrollDown(-Doc->verticalScrollBar()->singleStep()))
+        Doc->scrollBy(0, Doc->verticalScrollBar()->singleStep());
     }
 
     Doc->viewport()->update();
