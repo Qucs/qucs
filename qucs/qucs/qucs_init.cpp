@@ -567,6 +567,13 @@ void QucsApp::initActions()
   tr("Resistor color codes\n\nStarts standard resistor color code computation program"));
   connect(callRes, SIGNAL(triggered()), SLOT(slotCallRes()));
 
+  callPowerComb = new QAction(tr("Power combining"), this);
+  callPowerComb->setShortcut(Qt::CTRL+Qt::Key_9);
+  callPowerComb->setStatusTip(tr("Starts Qucs power combining tool"));
+  callPowerComb->setWhatsThis(
+  tr("Power combining synthesis\n\nStarts power combining synthesis tool"));
+  connect(callPowerComb, SIGNAL(triggered()), SLOT(slotCallPowerComb()));
+
   simulate = new QAction(QIcon((":/bitmaps/gear.png")), tr("Simulate"), this);
   simulate->setShortcut(Qt::Key_F2);
   simulate->setStatusTip(tr("Simulates the current schematic"));
@@ -773,6 +780,7 @@ void QucsApp::initMenuBar()
   toolMenu->addAction(callMatch);
   toolMenu->addAction(callAtt);
   toolMenu->addAction(callRes);
+  toolMenu->addAction(callPowerComb);
 
 
 

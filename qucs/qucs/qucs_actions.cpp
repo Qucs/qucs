@@ -796,6 +796,13 @@ void QucsApp::slotCallRes()
   launchTool("qucsrescodes", "resistor color code calculation");
 }
 
+//-------------------------------------------------------------------
+// It starts the power combining synthesis tool
+void QucsApp::slotCallPowerComb()
+{
+  launchTool("qucspowercombining", "Power combiner synthesis");
+}
+
 /*!
  * \brief launch an external application passing arguments
  *

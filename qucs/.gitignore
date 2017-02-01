@@ -33,6 +33,7 @@ qucs-help/qucshelp
 qucs-lib/qucslib
 qucs-transcalc/qucstrans
 qucs-rescodes/qucsrescodes
+qucs-powercombining/qucspowercombining
 qucs/qucs
 debian/files
 debian/qucs.debhelper.log
