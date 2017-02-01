@@ -33,9 +33,7 @@ PrinterWriter::PrinterWriter()
 {
   //default setting
   Printer = new QPrinter(QPrinter::HighResolution);
-  Printer->setOptionEnabled(QPrinter::PrintSelection, true);
-  Printer->setOptionEnabled(QPrinter::PrintPageRange, false);
-  Printer->setOptionEnabled(QPrinter::PrintToFile, true);
+
 
   Printer->setPaperSize(QPrinter::A4);
   Printer->setColorMode(QPrinter::Color);
@@ -94,8 +92,10 @@ void
 PrinterWriter::print(QWidget *doc)
 {
   QPrintDialog *dialog = new QPrintDialog(Printer, 0);
+  dialog->setOption(QAbstractPrintDialog::PrintSelection, true);
+  dialog->setOption(QAbstractPrintDialog::PrintPageRange, false);
+  dialog->setOption(QAbstractPrintDialog::PrintToFile, true);
   dialog->setWindowTitle(QObject::tr("Print Document"));
-  dialog->addEnabledOption(QAbstractPrintDialog::PrintSelection);
 
   if (QucsApp::isTextDocument(doc))
   {
