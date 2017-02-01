@@ -45,6 +45,7 @@
 
 #include "schematic.h"
 #include "module.h"
+#include "misc.h"
 
 #include "components/components.h"
 
@@ -63,6 +64,7 @@ tQucsSettings QucsSettings;
 QucsApp *QucsMain = 0;  // the Qucs application itself
 QString lastDir;    // to remember last directory for several dialogs
 QStringList qucsPathList;
+VersionTriplet QucsVersion; // Qucs version string
 
 // #########################################################################
 // Loads the settings file and stores the settings.
@@ -645,6 +647,9 @@ void createListComponentEntry(){
 int main(int argc, char *argv[])
 {
   qInstallMsgHandler(qucsMessageOutput);
+  // set the Qucs version string
+  QucsVersion = VersionTriplet(PACKAGE_VERSION);
+
   // apply default settings
   QucsSettings.font = QFont("Helvetica", 12);
   QucsSettings.largeFontSize = 16.0;
@@ -660,6 +665,15 @@ int main(int argc, char *argv[])
   QucsSettings.y = h/8;
   QucsSettings.dx = w*3/4;
   QucsSettings.dy = h*3/4;
+
+  // default
+  QucsSettings.QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
+  QucsSettings.QucsWorkDir.setPath(QucsSettings.QucsHomeDir.canonicalPath());
+
+  // load existing settings (if any)
+  loadSettings();
+
+  // continue to set up overrides or default settings (some are saved on exit)
 
   // check for relocation env variable
   char* var = getenv("QUCSDIR");
@@ -690,12 +704,10 @@ int main(int argc, char *argv[])
 	  QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
   }
   QucsSettings.OctaveDir =   QucsDir.canonicalPath() + "/share/qucs/octave/";
-  QucsSettings.ExamplesDir = QucsDir.canonicalPath() + "/share/qucs/docs/examples/";
+  QucsSettings.ExamplesDir = QucsDir.canonicalPath() + "/share/qucs/examples/";
   QucsSettings.DocDir =      QucsDir.canonicalPath() + "/share/qucs/docs/";
 
   QucsSettings.Editor = "qucs";
-  QucsSettings.QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
-  QucsSettings.QucsWorkDir.setPath(QucsSettings.QucsHomeDir.canonicalPath());
 
   /// \todo Make the setting up of all executables below more consistent
   var = getenv("QUCSATOR");
@@ -759,8 +771,6 @@ int main(int argc, char *argv[])
   } else {
       QucsSettings.QucsOctave.clear();
   }
-
-  loadSettings();
 
   if(!QucsSettings.BGColor.isValid())
     QucsSettings.BGColor.setRgb(255, 250, 225);
