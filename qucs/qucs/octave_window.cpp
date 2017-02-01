@@ -142,7 +142,9 @@ void OctaveWindow::sendCommand(const QString& cmd)
   QString cmdstr = cmd + "\n";
   //output->insertAt(cmdstr, par, idx);
   //output->scrollToBottom();
-  octProcess.write(cmdstr);
+  QByteArray ba = cmdstr.toLatin1();
+  const char *c_cmdstr = ba.data();
+  octProcess.write(c_cmdstr);
 }
 
 // ------------------------------------------------------------------------
