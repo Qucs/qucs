@@ -357,7 +357,7 @@ QMenu *TextDoc::createStandardContextMenu()
   QMenu *popup = QPlainTextEdit::createStandardContextMenu();
 
    if (language != LANG_OCTAVE) {
-     App->fileSettings->addTo((QWidget *)popup);
+     ((QWidget *)popup)->addAction(App->fileSettings);
    }
    return popup;
 }
