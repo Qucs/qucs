@@ -36,6 +36,7 @@
 #include <QMessageBox>
 #include <QRegExp>
 #include <QtSvg>
+#include <QDebug>
 
 #include "qucs.h"
 #include "main.h"
@@ -807,8 +808,10 @@ int main(int argc, char *argv[])
 
   QTranslator tor( 0 );
   QString lang = QucsSettings.Language;
-  if(lang.isEmpty())
-    lang = QTextCodec::locale();
+  if(lang.isEmpty()) {
+    QLocale loc;
+    lang = loc.name();
+  }
   tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
   a.installTranslator( &tor );
 
