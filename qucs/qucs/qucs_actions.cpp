@@ -1171,7 +1171,11 @@ void QucsApp::slotApplyCompText()
   misc::setWidgetBackgroundColor(editText, QucsSettings.BGColor);
   editText->setFocus();
   editText->selectAll();
-  editText->reparent(Doc->viewport(), 0, QPoint(view->MAx2, view->MAy2), true);
+  // make QLineEdit editable on mouse click
+  QPoint p = QPoint(view->MAx2, view->MAy2);
+  editText->setParent(Doc->viewport());
+  editText->setGeometry(p.x(), p.y(), editText->width(), editText->height());
+  editText->show();
 }
 
 // -----------------------------------------------------------
