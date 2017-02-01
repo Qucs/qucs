@@ -819,7 +819,7 @@ void QucsApp::initMenuBar()
       QAction* helpTechnicalActions = new QAction(entries[i], this);
       helpTechnicalActions->setObjectName ( entries[i] );
       helpTechnicalActions->setStatusTip(tr("Open ")+entries[i]);
-      helpTechnicalActions->setWhatsThis(tr(entries[i]+"\n\nOpen "+entries[i]));
+      helpTechnicalActions->setWhatsThis(tr("Open ")+entries[i]);
       connect(helpTechnicalActions, SIGNAL(triggered()), SLOT(slotHelpTechnical()));
       helpTechnical->addAction(helpTechnicalActions);
     }
@@ -839,7 +839,7 @@ void QucsApp::initMenuBar()
       QAction* helpReportActions = new QAction(entries[i], this);
       helpReportActions->setObjectName ( entries[i] );
       helpReportActions->setStatusTip(tr("Open ")+entries[i]);
-      helpReportActions->setWhatsThis(tr(entries[i]+"\n\nOpen "+entries[i]));
+      helpReportActions->setWhatsThis(tr("Open ")+entries[i]);
       connect(helpReportActions, SIGNAL(triggered()), SLOT(slotHelpReport()));
       helpReport->addAction(helpReportActions);
     }
@@ -858,7 +858,7 @@ void QucsApp::initMenuBar()
       QAction* helpTutorialActions = new QAction(entries[i], this);
       helpTutorialActions->setObjectName ( entries[i] );
       helpTutorialActions->setStatusTip(tr("Open ")+entries[i]);
-      helpTutorialActions->setWhatsThis(tr(entries[i]+"\n\nOpen "+entries[i]));
+      helpTutorialActions->setWhatsThis(tr("Open ")+entries[i]);
       connect(helpTutorialActions, SIGNAL(triggered()), SLOT(slotHelpTutorial()));
       helpTutorial->addAction(helpTutorialActions);
     }
