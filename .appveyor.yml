@@ -39,21 +39,21 @@ build_script:
 
   ## Other dependencies
   # Download, build and install ADMS
-  - bash -lc "exec 0</dev/null && wget.exe http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.4.tar.gz"
-  - bash -lc "exec 0</dev/null && tar xvfz adms-2.3.4.tar.gz"
-  - bash -lc "exec 0</dev/null && cd adms-2.3.4/ && ./configure && make install && cd -"
+  - bash -lc "exec 0</dev/null && wget.exe http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.6.tar.gz"
+  - bash -lc "exec 0</dev/null && tar xvfz adms-2.3.6.tar.gz"
+  - bash -lc "exec 0</dev/null && cd adms-2.3.6/ && ./configure && make install && cd -"
   - bash -lc "exec 0</dev/null && admsXml -h"
 
   ## Build Qucs-GUI applications and install
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && ./bootstrap"
-  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && export QTDIR=/c/msys64/mingw%MBITS%/ && ./configure --prefix=/c/qucs-win%MBITS%"
-  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && make install"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && export QTDIR=/c/msys64/mingw%MBITS% && ./configure --prefix=/c/qucs-win%MBITS% --disable-dependency-tracking"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && make -j2 install"
   - bash -lc "exec 0</dev/null && cd /c/qucs-win%MBITS%/bin  && ./qucs -v"
 
   ## Build Qucs-core and install
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && ./bootstrap"
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && ./configure --prefix=/c/qucs-win%MBITS% --with-mkadms=`which admsXml` --disable-dependency-tracking"
-  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && make install"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && make -j2 install"
   - bash -lc "exec 0</dev/null && cd /c/qucs-win%MBITS%/bin && ./qucsator -v"
 
   ## Prepare simple redistributable package (no qucs-doc)

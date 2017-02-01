@@ -1,0 +1,38 @@
+<Qucs Schematic 0.0.18>
+<Properties>
+  <View=-147,0,800,1602,1,147,0>
+  <Grid=10,10,0>
+  <DataSet=dual2.dat>
+  <DataDisplay=dual2.sch>
+  <OpenDisplay=1>
+  <Script=dual2.m>
+  <RunScript=0>
+  <showFrame=0>
+  <FrameText0=Title>
+  <FrameText1=Drawn By:>
+  <FrameText2=Date:>
+  <FrameText3=Revision:>
+</Properties>
+<Symbol>
+</Symbol>
+<Components>
+</Components>
+<Wires>
+</Wires>
+<Diagrams>
+  <Rect 44 902 578 682 3 #c0c0c0 1 00 1 -1 0.2 1 0 -20 5 30 0 0 1 5 315 0 225 "" "" "">
+	<"dual_2:S11db" #0000ff 0 3 0 0 0>
+	  <Mkr 1.0995e+10 435 -445 3 0 0>
+	<"dual_2:S21db" #ff0000 0 3 0 0 0>
+	  <Mkr 1.0995e+10 381 -583 3 0 0>
+	<"dual_2:S22db" #ff00ff 0 3 0 0 0>
+	  <Mkr 1.0995e+10 376 -56 3 0 0>
+	<"dual_2:K" #000000 0 3 0 0 1>
+	  <Mkr 1.0995e+10 410 -510 3 0 0>
+	<"dual_1:S11db" #0000ff 0 3 0 1 0>
+	<"dual_1:S21db" #ff0000 0 3 0 1 0>
+	<"dual_1:S22db" #ff00ff 0 3 0 1 0>
+  </Rect>
+</Diagrams>
+<Paintings>
+</Paintings>

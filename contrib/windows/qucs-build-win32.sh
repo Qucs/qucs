@@ -1,14 +1,15 @@
 #!/bin/bash
 
 #
-# This script cross compiles Qucs from OSX/Linux to Windows 32.
-# It uses Wine and MinGW.
+# This script cross compiles Qucs from OSX to Windows 32.
+# It uses Wine and MinGW-w64.
+# The MinGW-w64 is the compiler used by the official Qt 4.8.6 binaries/installer.
+# The reason to use it is twofold. We don't need to compile Qt and we can
+# easily redistribute the compiler. The same compiler is needed for to build
+# and load components in the simulator.
 #
 
 ## TODO
-# * use AppVeyor to package, build binary and upload to SF
-# * create a release/package branches
-# * perhaps nightly builds in the future
 # * Linux cross compile script
 
 ##
@@ -23,10 +24,8 @@
 # Need to add --disable-dependency-tracking to avoid mixup of host and target header files
 # https://software.sandia.gov/trac/acro/ticket/2835
 
-
 ## Setup Mac OSX host, Win32 target
 #
-
 
 ## 1) Install Wine (using homebrew)
 #
@@ -72,7 +71,7 @@
 # regedit /tmp/qttemp.reg
 # rm /tmp/qttemp.reg
 
-## 5) Install Inno Setup 5 (used also on `qucs-installer-win32.sh`)
+## 5) Install Inno Setup 5 (used in `qucs-installer-win32.sh`)
 # Install older Inno version due to issues with wine
 # Error: * Could not find dependent assembly L"Microsoft.Windows.Common-Controls" (6.0.0.0)
 #
@@ -80,34 +79,20 @@
 #  http://files.jrsoftware.org/is/5/isetup-5.5.0.exe	29-May-2012 06:51 	1.8M
 # $ wine isetup-5.5.0.exe
 
-
-
-#if [ $# -ne 0 ]
-#then
-#  RELEASE=$1
-#else
-#  RELEASE=$(date +"%y%m%d")
-#  RELEASE="0.0.18."${RELEASE:0:6}
-#fi
-#echo Building release: $RELEASE
-
+# check for tarball as argument
 if [ "$#" -ne 1 ]; then
-    echo "Provide tarball as argument..."
+    echo "Provide release tarball as argument..."
     exit
 fi
 
+echo "Cross-compiling Qucs for Win32"
+
+# Install prefix
+WINDIR=${HOME}/.wine/drive_c/qucs-win32-bin
+
 REPO=${PWD}
 echo Working from: ${REPO}
-# TODO test location
 
-# simple test for current location
-if [ ! -d release ]
-then
-	echo Sub-directory _release_ does not exists, run release_tarball.sh or change directory.
-  exit
-fi
-
-cd ${REPO}/release
 mkdir build_win32
 cd build_win32
 
@@ -117,18 +102,23 @@ TARBALL=$(basename $1)
 DIRNAME=$(basename $1 .tar.gz)
 
 echo Using source tarball: $TARBALL
-
 tar xvfz ../$TARBALL
 cd $DIRNAME
 
-echo "Building Qucs for Win32"
+# Hack #1: create a wrapper for `wine gperf`
+# Mixing gperf from host and target (wine, Windows) does now work due to line ending problems, see issue #295.
+# Doing GPERF="wine gperf" is not recornized by configure.
+# Doing GPERF="~/.wine/mingw/bin/gperf" let it be recognized but the execution will lack the wine prefix.
+cat > /tmp/gperf << 'EOF'
+#!/bin/sh
+wine gperf.exe $@
+EOF
+chmod u+x /tmp/gperf
 
-# Temporary install prefix
-WINDIR=${HOME}/.wine/drive_c/qucs-win32-bin
-
+# Create environment wrapper for mingw
+cat > /tmp/mingw << 'EOF'
 # Set QTDIR
 export QTDIR=${HOME}/.wine/drive_c/Qt/4.8.6
-
 export AR="wine ar.exe"
 export AS="wine as.exe"
 export CXX="wine g++.exe"
@@ -140,25 +130,41 @@ export OBJDUMP="wine objdump.exe"
 export RANLIB="wine ranlib.exe"
 export STRIP="wine strip.exe"
 export WINDRES="wine windres.exe"
+# point to wrapper
+export GPERF="/tmp/gperf"
+exec "$@"
+EOF
+chmod u+x /tmp/mingw
 
-echo "Configuring for i386-MinGW32 cross ..."
 
-# no need for triplets with mingw-w64?
-# http://sourceforge.net/apps/trac/mingw-w64/wiki/TypeTriplets
+# Hack #2: Patch Makefile.am to run executables via wine.
+# In qucs-core it is needed to run executables (gperfappgen, qucsator) thru wine, on the targed system.
+patch -p1 < ${REPO}/contrib/windows/0001-Cross-compile-hack-run-executables-via-wine.patch
 
-./configure --prefix=${WINDIR} --target=i386-mingw32 --host=i386-mingw32 --build=i586-linux --program-prefix="" --disable-dependency-tracking
 
-# cleanup
+# FIXME
+#  - no need for triplets with mingw-w64?
+#    http://sourceforge.net/apps/trac/mingw-w64/wiki/TypeTriplets
+#  - qucs-doc not working yet
+
 if [ -d ${WINDIR} ]
 then
-	echo Prefix directory exists, removing: ${WINDIR}
-	rm -rf ${WINDIR}
+	echo
+	echo Prefix directory exists: ${WINDIR}
+	echo
 fi
 
+
+# Configure and cross-compile
+/tmp/mingw ./configure --disable-doc --prefix=${WINDIR}  --target=i386-mingw32 --host=i386-mingw32 --build=i586-linux --program-prefix="" --disable-dependency-tracking
+make install
+
+
+# Use host to build and install qucs-doc
+cd qucs-doc
+./configure  --prefix=${WINDIR}
 make
 make install
 
-# deploy pdfs and other things
-make install data
 
-# Install binaries into ~/.wine/drive_c/qucs-win32-bin/
+# Installed files into ~/.wine/drive_c/qucs-win32-bin/

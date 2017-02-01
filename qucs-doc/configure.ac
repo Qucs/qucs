@@ -162,7 +162,9 @@ AC_CONFIG_FILES([Makefile
 		 tutorial/RFResModels/Makefile
 		 tutorial/RFResModels/pics/Makefile
 		 tutorial/activefilter/Makefile
-		 tutorial/activefilter/pics/Makefile])
+		 tutorial/activefilter/pics/Makefile
+                 tutorial/sparameteramp/Makefile
+                 tutorial/sparameteramp/pics/Makefile])
 
 AC_OUTPUT
 

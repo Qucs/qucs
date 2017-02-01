@@ -1,0 +1,30 @@
+<Qucs Schematic 0.0.18>
+<Properties>
+  <View=-56,0,800,800,1,56,0>
+  <Grid=10,10,0>
+  <DataSet=anp_1.dat>
+  <DataDisplay=anp_1.sch>
+  <OpenDisplay=1>
+  <Script=anp_1.m>
+  <RunScript=0>
+  <showFrame=0>
+  <FrameText0=Title>
+  <FrameText1=Drawn By:>
+  <FrameText2=Date:>
+  <FrameText3=Revision:>
+</Properties>
+<Symbol>
+</Symbol>
+<Components>
+</Components>
+<Wires>
+</Wires>
+<Diagrams>
+  <Rect 40 428 605 368 3 #c0c0c0 1 00 1 1e+08 1e+08 1e+09 1 -55.0083 10 4.93425 1 -1 0.2 1 315 0 225 "" "" "">
+	<"S11dB" #0000ff 0 3 0 0 0>
+	<"S22dB" #ff0000 0 3 0 0 0>
+	<"S33dB" #ff00ff 0 3 0 0 0>
+  </Rect>
+</Diagrams>
+<Paintings>
+</Paintings>
