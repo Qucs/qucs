@@ -32,6 +32,10 @@ install:
   - set "CC=/c/msys64/mingw%MBITS%/bin/gcc.exe"
   - set "CXX=/c/msys64/mingw%MBITS%/bin/g++.exe"
 
+  # Set compiler (64bit)
+  - set "CC=/c/msys64/mingw64/bin/gcc.exe"
+  - set "CXX=/c/msys64/mingw64/bin/g++.exe"
+
 
 build_script:
   ## Notes
