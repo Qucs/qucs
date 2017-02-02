@@ -35,9 +35,7 @@ public:
   static Element* info_us(QString&, char* &, bool getNewOne=false);
 
   void set_dev_type(){ incomplete(); }
-  QString name() const{ untested();
-	  return QObject::tr("resistor");
-  }
+//  QString name() const // use Component::name
 
 protected:
   void createSymbol();
