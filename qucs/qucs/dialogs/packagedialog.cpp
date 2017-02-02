@@ -480,7 +480,7 @@ int PackageDialog::extractLibrary(QFile& PkgFile, Q_UINT32 Count)
 
   p = Content.data();
   QFile File(QucsSettings.QucsHomeDir.absolutePath() +
-             QDir::convertSeparators("/user_lib/") + QString(p));
+             QDir::toNativeSeparators("/user_lib/") + QString(p));
   if(File.exists()) {
     MsgText->append(tr("ERROR: User library \"%1\" already exists!").arg(QString(p)));
     return -1;

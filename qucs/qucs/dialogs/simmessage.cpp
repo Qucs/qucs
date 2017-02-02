@@ -76,7 +76,7 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
   DataDisplay = Doc->DataDisplay;
   Script = Doc->Script;
   QFileInfo Info(DocName);
-  DataSet = QDir::convertSeparators(Info.path()) +
+  DataSet = QDir::toNativeSeparators(Info.path()) +
     QDir::separator() + Doc->DataSet;
   showBias = Doc->showBias;     // save some settings as the document...
   SimOpenDpl = Doc->SimOpenDpl; // ...could be closed during the simulation.
@@ -408,7 +408,7 @@ void SimMessage::startSimulator()
       QString entity = VInfo.EntityName.toLower();
       QString lib = Doc->Library.toLower();
       if (lib.isEmpty()) lib = "work";
-      QString dir = QDir::convertSeparators (QucsSettings.QucsHomeDir.path());
+      QString dir = QDir::toNativeSeparators(QucsSettings.QucsHomeDir.path());
       QDir vhdlDir(dir);
       if(!vhdlDir.exists("vhdl"))
 	if(!vhdlDir.mkdir("vhdl")) {
