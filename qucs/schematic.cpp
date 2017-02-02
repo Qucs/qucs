@@ -2079,7 +2079,7 @@ void Schematic::contentsDropEvent(QDropEvent *Event)
 
     // URI:  file:/home/linuxuser/Desktop/example.sch
     foreach(QUrl url, urls) {
-      App->gotoPage(QDir::convertSeparators(url.toLocalFile()));
+      App->gotoPage(QDir::toNativeSeparators(url.toLocalFile()));
     }
 
     d->DocChanged = changed;

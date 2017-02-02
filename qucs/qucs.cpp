@@ -582,9 +582,9 @@ QucsDoc * QucsApp::findDoc (QString File, int * Pos)
 {
   QucsDoc * d;
   int No = 0;
-  File = QDir::convertSeparators (File);
+  File = QDir::toNativeSeparators(File);
   while ((d = getDoc (No++)) != 0)
-    if (QDir::convertSeparators (d->DocName) == File) {
+    if (QDir::toNativeSeparators(d->DocName) == File) {
       if (Pos) *Pos = No - 1;
       return d;
     }
@@ -1264,7 +1264,7 @@ void QucsApp::slotMenuProjClose()
 
   slotResetWarnings();
   setWindowTitle("Qucs " PACKAGE_VERSION + tr(" - Project: "));
-  QucsSettings.QucsWorkDir.setPath(QDir::homePath()+QDir::convertSeparators ("/.qucs"));
+  QucsSettings.QucsWorkDir.setPath(QDir::homePath()+QDir::toNativeSeparators("/.qucs"));
   octave->adjustDirectory();
 
   Content->setProjPath("");
