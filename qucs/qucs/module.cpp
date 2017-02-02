@@ -211,8 +211,11 @@ static void REGISTER_COMP_1(std::string const& cat, std::string const& name)
   // FIXME: do this upon module loading!
   Symbol const* sym = symbol_dispatcher[name];
   Component const* legacy_component = prechecked_cast<Component const*>(sym);
-  if(legacy_component){
+  if(legacy_component){ untested();
+    // careful: "name" is the dictionary key (std::string) and the netlist name
+    //          sym->name() is the GUI representation  (QString)
 	  qDebug() << "loading" << QString::fromStdString(name)
+		        << "named" << sym->name()
 		        << "into" << QString::fromStdString(cat);
 	  guiRegisterElement(cat, legacy_component);
   }else{ incomplete();
