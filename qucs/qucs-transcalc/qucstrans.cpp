@@ -63,7 +63,6 @@
 #include "coax.h"
 #include "rectwaveguide.h"
 #include "c_microstrip.h"
-#include "stripline.h"
 
 // Defines maximum number of entries in each property category.
 static const int TransMaxBox[MAX_TRANS_BOXES] = { 9, 1, 4, 3 };
@@ -238,33 +237,6 @@ struct TransType TransLineTypes[] = {
     } } },
     7, TRANS_RESULTS, TRANS_RADIOS
   },
- { ModeStripline, "Stripline", "stripline.png", NULL,
-    { { {
-      { "Er",    4.5,   NULL, TRANS_NONES, 0, TRANS_QOBJS },
-      { "Mur",   1,     NULL, TRANS_NONES, 0, TRANS_QOBJS },
-      { "h", 27.56, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
-      { "Tand",  0.018, NULL, TRANS_NONES, 0, TRANS_QOBJS },
-      { "T", 1.42, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
-      { "Sigma", 5.8e7, NULL, TRANS_NONES, 0, TRANS_QOBJS },
-
-      TRANS_END
-    } },
-    { {
-      { "Freq",  10, NULL, TRANS_FREQS, 0, TRANS_QOBJS },
-      TRANS_END
-    } },
-    { {
-      { "W",     19.69, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
-      { "L",     100, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
-      TRANS_END
-    } },
-    { {
-      { "Z0",    50, NULL, TRANS_OHMS,   0, TRANS_QOBJS },
-      { "Ang_l", 90, NULL, TRANS_ANGLES, 0, TRANS_QOBJS },
-      TRANS_END
-    } } },
-    2, TRANS_RESULTS, { 0, 1, -1, -1 }
-  },
   { ModeNone, NULL, NULL, NULL, { { { TRANS_END } } }, 0,
     TRANS_RESULTS, TRANS_RADIOS }
 };
@@ -278,6 +250,7 @@ struct TransUnit TransUnits[] = {
 
 /* Constructor setups the GUI. */
 QucsTranscalc::QucsTranscalc() {
+    
   QWidget *centralWidget = new QWidget(this);  
   setCentralWidget(centralWidget);
   
@@ -360,7 +333,6 @@ QucsTranscalc::QucsTranscalc() {
   tranType->insertItem (3, tr("Rectangular Waveguide"));
   tranType->insertItem (4, tr("Coaxial Line"));
   tranType->insertItem (5, tr("Coupled Microstrip"));
-  tranType->insertItem (6, tr("Stripline"));
   connect(tranType, SIGNAL(activated(int)), SLOT(slotSelectType(int)));
   // setup transmission line picture
   pix = new QLabel (lineGroup);
@@ -387,12 +359,15 @@ QucsTranscalc::QucsTranscalc() {
   // substrate parameter box
   QGroupBox * substrate = new QGroupBox (tr("Substrate Parameters"));
   vm->addWidget(substrate);
+
   // Pass the GroupBox > create Grid layout > Add widgets > set layout
   createPropItems (substrate, TRANS_SUBSTRATE);
+
   // component parameter box
   QGroupBox * component = new QGroupBox (tr("Component Parameters"));
   vm->addWidget(component);
   createPropItems (component, TRANS_COMPONENT);
+
 
   // === right
   QVBoxLayout *vr = new QVBoxLayout();
@@ -446,6 +421,7 @@ QucsTranscalc::QucsTranscalc() {
   // setup calculated result bix
   createResultItems (calculated);
   updateSelection ();
+
   // instantiate transmission lines
   TransLineTypes[0].line = new microstrip ();
   TransLineTypes[0].line->setApplication (this);
@@ -459,9 +435,6 @@ QucsTranscalc::QucsTranscalc() {
   TransLineTypes[4].line->setApplication (this);
   TransLineTypes[5].line = new c_microstrip ();
   TransLineTypes[5].line->setApplication (this);
-  TransLineTypes[6].line = new stripline ();
-  TransLineTypes[6].line->setApplication (this);
-
 }
 
 /* Destructor destroys the application. */
@@ -477,38 +450,38 @@ QucsTranscalc::~QucsTranscalc()
    structures. */
 void QucsTranscalc::setupTranslations () {
   // calculated results
-  int i = 0;//Microstrip
+  int i = 0;
   TransLineTypes[i].result[0].name = new QString(tr("ErEff"));
   TransLineTypes[i].result[1].name = new QString(tr("Conductor Losses"));
   TransLineTypes[i].result[2].name = new QString(tr("Dielectric Losses"));
   TransLineTypes[i].result[3].name = new QString(tr("Skin Depth"));
 
-  i++;//CPW
+  i++;
   TransLineTypes[i].result[0].name = new QString(tr("ErEff"));
   TransLineTypes[i].result[1].name = new QString(tr("Conductor Losses"));
   TransLineTypes[i].result[2].name = new QString(tr("Dielectric Losses"));
   TransLineTypes[i].result[3].name = new QString(tr("Skin Depth"));
 
-  i++;//GCPW
+  i++;
   TransLineTypes[i].result[0].name = new QString(tr("ErEff"));
   TransLineTypes[i].result[1].name = new QString(tr("Conductor Losses"));
   TransLineTypes[i].result[2].name = new QString(tr("Dielectric Losses"));
   TransLineTypes[i].result[3].name = new QString(tr("Skin Depth"));
 
-  i++;//Rectangular waveguide
+  i++;
   TransLineTypes[i].result[0].name = new QString(tr("ErEff"));
   TransLineTypes[i].result[1].name = new QString(tr("Conductor Losses"));
   TransLineTypes[i].result[2].name = new QString(tr("Dielectric Losses"));
   TransLineTypes[i].result[3].name = new QString(tr("TE-Modes"));
   TransLineTypes[i].result[4].name = new QString(tr("TM-Modes"));
 
-  i++;//Coaxial line
+  i++;
   TransLineTypes[i].result[0].name = new QString(tr("Conductor Losses"));
   TransLineTypes[i].result[1].name = new QString(tr("Dielectric Losses"));
   TransLineTypes[i].result[2].name = new QString(tr("TE-Modes"));
   TransLineTypes[i].result[3].name = new QString(tr("TM-Modes"));
 
-  i++;//Coupled microstripx
+  i++;
   TransLineTypes[i].result[0].name = new QString(tr("ErEff Even"));
   TransLineTypes[i].result[1].name = new QString(tr("ErEff Odd"));
   TransLineTypes[i].result[2].name = new QString(tr("Conductor Losses Even"));
@@ -517,14 +490,8 @@ void QucsTranscalc::setupTranslations () {
   TransLineTypes[i].result[5].name = new QString(tr("Dielectric Losses Odd"));
   TransLineTypes[i].result[6].name = new QString(tr("Skin Depth"));
 
-  i++;//Stripline
-  TransLineTypes[i].result[0].name = new QString(tr("Conductor Losses"));
-  TransLineTypes[i].result[1].name = new QString(tr("Dielectric Losses"));
-  TransLineTypes[i].result[2].name = new QString(tr("Skin Depth"));
-
   // extra tool tips
   struct TransType * t = TransLineTypes;
-  //Microstrip
   t->array[0].item[0].tip = new QString(tr("Relative Permittivity"));
   t->array[0].item[1].tip = new QString(tr("Relative Permeability"));
   t->array[0].item[2].tip = new QString(tr("Height of Substrate"));
@@ -539,7 +506,7 @@ void QucsTranscalc::setupTranslations () {
   t->array[3].item[0].tip = new QString(tr("Characteristic Impedance"));
   t->array[3].item[1].tip = new QString(tr("Electrical Length"));
 
-  t++;//CPW
+  t++;
   t->array[0].item[0].tip = new QString(tr("Relative Permittivity"));
   t->array[0].item[1].tip = new QString(tr("Height of Substrate"));
   t->array[0].item[2].tip = new QString(tr("Strip Thickness"));
@@ -552,7 +519,7 @@ void QucsTranscalc::setupTranslations () {
   t->array[3].item[0].tip = new QString(tr("Characteristic Impedance"));
   t->array[3].item[1].tip = new QString(tr("Electrical Length"));
 
-  t++;//GCPW
+  t++;
   t->array[0].item[0].tip = new QString(tr("Relative Permittivity"));
   t->array[0].item[1].tip = new QString(tr("Height of Substrate"));
   t->array[0].item[2].tip = new QString(tr("Strip Thickness"));
@@ -565,7 +532,7 @@ void QucsTranscalc::setupTranslations () {
   t->array[3].item[0].tip = new QString(tr("Characteristic Impedance"));
   t->array[3].item[1].tip = new QString(tr("Electrical Length"));
 
-  t++;//Rectangular waveguide
+  t++;
   t->array[0].item[0].tip = new QString(tr("Relative Permittivity"));
   t->array[0].item[1].tip = new QString(tr("Relative Permeability"));
   t->array[0].item[2].tip = new QString(tr("Conductivity of Metal"));
@@ -578,7 +545,7 @@ void QucsTranscalc::setupTranslations () {
   t->array[3].item[0].tip = new QString(tr("Characteristic Impedance"));
   t->array[3].item[1].tip = new QString(tr("Electrical Length"));
 
-  t++;//Coaxial line
+  t++;
   t->array[0].item[0].tip = new QString(tr("Relative Permittivity"));
   t->array[0].item[1].tip = new QString(tr("Relative Permeability"));
   t->array[0].item[2].tip = new QString(tr("Dielectric Loss Tangent"));
@@ -590,7 +557,7 @@ void QucsTranscalc::setupTranslations () {
   t->array[3].item[0].tip = new QString(tr("Characteristic Impedance"));
   t->array[3].item[1].tip = new QString(tr("Electrical Length"));
 
-  t++;//Coupled microstrip
+  t++;
   t->array[0].item[0].tip = new QString(tr("Relative Permittivity"));
   t->array[0].item[1].tip = new QString(tr("Relative Permeability"));
   t->array[0].item[2].tip = new QString(tr("Height of Substrate"));
@@ -606,19 +573,6 @@ void QucsTranscalc::setupTranslations () {
   t->array[3].item[0].tip = new QString(tr("Even-Mode Impedance"));
   t->array[3].item[1].tip = new QString(tr("Odd-Mode Impedance"));
   t->array[3].item[2].tip = new QString(tr("Electrical Length"));
-
-  t++;//Stripline
-  t->array[0].item[0].tip = new QString(tr("Relative Permittivity"));
-  t->array[0].item[1].tip = new QString(tr("Relative Permeability"));
-  t->array[0].item[2].tip = new QString(tr("Dielectric Loss Tangent"));
-  t->array[0].item[3].tip = new QString(tr("Conductivity of Metal"));
-  t->array[0].item[4].tip = new QString(tr("Conductor thickness"));
-  t->array[0].item[5].tip = new QString(tr("Substrate height"));
-  t->array[1].item[0].tip = new QString(tr("Frequency"));
-  t->array[2].item[0].tip = new QString(tr("Width"));
-  t->array[2].item[1].tip = new QString(tr("Length"));
-  t->array[3].item[0].tip = new QString(tr("Characteristic Impedance"));
-  t->array[3].item[1].tip = new QString(tr("Electrical Length"));
 }
 
 /* Creates a property item 'val' in a parameter category specified by
@@ -626,6 +580,7 @@ void QucsTranscalc::setupTranslations () {
 void QucsTranscalc::createPropItem (QGridLayout * parentGrid, TransValue * val,
                     int box, QButtonGroup * group) {
   Q_UNUSED(group);
+
   QRadioButton * r = NULL;
   QLabel * l;
   QLineEdit * e;
@@ -714,6 +669,7 @@ void QucsTranscalc::setMode (int _mode) {
   mode = _mode;
   setUpdatesEnabled(false);
   updateMode ();
+
   // update selection and results
   updateSelection ();
   updateResultItems ();
@@ -780,7 +736,9 @@ void QucsTranscalc::createPropItems (QGroupBox *parent, int box) {
   struct TransValue * val, * dup;
   int last = 0, idx = getTypeIndex ();
   val = TransLineTypes[idx].array[box].item;
+
   QGridLayout *boxGrid = new QGridLayout();
+
   QButtonGroup * group = new QButtonGroup();
   connect(group, SIGNAL(buttonPressed(int)), SLOT(slotRadioChecked(int)));
 
@@ -790,7 +748,6 @@ void QucsTranscalc::createPropItems (QGroupBox *parent, int box) {
   // go through each parameter category
   for (int i = 0; i < TransMaxBox[box]; i++) {
     // fix uninitialized memory
-
     if (val->name == NULL) last++;
     if (last) {
       val->name = NULL;
@@ -809,7 +766,7 @@ void QucsTranscalc::createPropItems (QGroupBox *parent, int box) {
     dup->lineedit = val->lineedit;
     dup->combobox = val->combobox;
     dup->radio = val->radio;
-  //  dup->value = val->value;
+    //dup->value = val->value;
       }
     }
     val++;

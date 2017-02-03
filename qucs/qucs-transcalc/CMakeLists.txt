@@ -54,7 +54,6 @@ SET(QUCSTRANS_HDRS
   microstrip.h
   rectwaveguide.h
   transline.h
-  stripline.h
   units.h
 )
 
@@ -73,7 +72,6 @@ SET( LIB_SRC
   microstrip.cpp
   rectwaveguide.cpp
   transline.cpp
-  stripline.cpp
 )
 
 SET(RESOURCES qucstrans.qrc)
