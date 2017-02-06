@@ -39,9 +39,10 @@ OctaveWindow::OctaveWindow(QDockWidget *parent_): QWidget()
   output = new QTextEdit(this);
   output->setReadOnly(true);
   output->setUndoRedoEnabled(false);
-  output->setTextFormat(Qt::LogText);
   output->setLineWrapMode(QTextEdit::NoWrap);
-  output->setPaletteBackgroundColor(QucsSettings.BGColor);
+  QPalette p = output->palette();
+  p.setColor(QPalette::Base, QucsSettings.BGColor);
+  output->setPalette(p);
   allLayout->addWidget(output);
 
   input = new QLineEdit(this);
@@ -57,6 +58,7 @@ OctaveWindow::OctaveWindow(QDockWidget *parent_): QWidget()
   histPosition = 0;
 
   input->installEventFilter(this);
+  output->installEventFilter(this);
 }
 
 // -----------------------------------------------------------------
@@ -128,7 +130,7 @@ bool OctaveWindow::startOctave()
 // ------------------------------------------------------------------------
 void OctaveWindow::adjustDirectory()
 {
-  sendCommand("cd \"" + QucsSettings.QucsWorkDir.absPath() + "\"");
+  sendCommand("cd \"" + QucsSettings.QucsWorkDir.absolutePath() + "\"");
 }
 
 // ------------------------------------------------------------------------
@@ -141,14 +143,14 @@ void OctaveWindow::sendCommand(const QString& cmd)
   QString cmdstr = cmd + "\n";
   //output->insertAt(cmdstr, par, idx);
   //output->scrollToBottom();
-  octProcess.write(cmdstr);
+  octProcess.write(cmdstr.toAscii());
 }
 
 // ------------------------------------------------------------------------
 void OctaveWindow::runOctaveScript(const QString& name)
 {
   QFileInfo info(name);
-  sendCommand(info.baseName(true));
+  sendCommand(info.completeBaseName());
 }
 
 // ------------------------------------------------------------------------
@@ -165,8 +167,18 @@ void OctaveWindow::slotSendCommand()
 
 
 bool OctaveWindow::eventFilter(QObject *obj, QEvent *event) {
-    Q_UNUSED(obj);
-
+  if (obj == output) {
+    // handle Ctrl-C (copy) for the output TextEdit as it seems
+    // not to be handled when it is set ReadOnly and a global
+    // action for Ctrl-C is set
+    if (event->type() == QEvent::KeyRelease) {
+      QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+      if (keyEvent->matches(QKeySequence::Copy)) {
+        output->copy();
+        return true; // no need to pass this event to the target
+      }
+    }
+  }
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
             if (keyEvent->key() == Qt::Key_PageUp) {
