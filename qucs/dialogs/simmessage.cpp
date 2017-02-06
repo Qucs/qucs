@@ -326,7 +326,7 @@ void SimMessage::slotFinishSpiceNetlist(int status )
 #ifdef __MINGW32__
 #include <windows.h>
 static QString pathName(QString longpath) {
-  const char * lpath = QDir::convertSeparators(longpath).ascii();
+  const char * lpath = QDir::toNativeSeparators(longpath).ascii();
   char spath[2048];
   int len = GetShortPathNameA(lpath,spath,sizeof(spath)-1);
   spath[len] = '\0';
@@ -350,7 +350,7 @@ void SimMessage::startSimulator()
 
   QString SimTime;
   QStringList Arguments;
-  QString SimPath = QDir::convertSeparators (QucsSettings.QucsHomeDir.absolutePath());
+  QString SimPath = QDir::toNativeSeparators(QucsSettings.QucsHomeDir.absolutePath());
 #ifdef __MINGW32__
   QString QucsDigiLib = "qucsdigilib.bat";
   QString QucsDigi = "qucsdigi.bat";
