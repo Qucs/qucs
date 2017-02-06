@@ -30,7 +30,7 @@ QString* CoupledLine_Filter::createSchematic(tFilter *Filter, tSubstrate *Substr
   int i, x, y, dx;
   double Value, gap, len, dl, width, er_eff, Z0e, Z0o;
   double freq = (Filter->Frequency2 + Filter->Frequency) / 2.0;
-  double Bandwidth = fabs(Filter->Frequency2 - Filter->Frequency) / freq;
+  double Bandwidth = std::abs(Filter->Frequency2 - Filter->Frequency) / freq;
 
   width = gap = er_eff = 1.0;
 

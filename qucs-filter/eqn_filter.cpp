@@ -78,11 +78,11 @@ QString* Equation_Filter::createSchematic(tFilter *Filter)
       break;
     case CLASS_BANDPASS:  // transform to bandpass
       varS = QString("*(S+%1/S)").arg(Omega*Omega);
-      Omega = 0.5 / pi / fabs(Filter->Frequency2 - Filter->Frequency);
+      Omega = 0.5 / pi / std::abs(Filter->Frequency2 - Filter->Frequency);
       break;
     case CLASS_BANDSTOP:  // transform to bandstop
       varS = QString("/(S+%1/S)").arg(Omega*Omega);
-      Omega = 2.0 * pi * fabs(Filter->Frequency2 - Filter->Frequency);
+      Omega = 2.0 * pi * std::abs(Filter->Frequency2 - Filter->Frequency);
       break;
   }
 

@@ -54,7 +54,7 @@ qf_cauer::qf_cauer (qf_double_t amin, qf_double_t amax, qf_double_t fc,
     return;
 
   if ((type == BANDPASS || type == BANDSTOP) &&
-      fabs (fs - (fc * fc) / fs) < bw)
+      std::abs (fs - (fc * fc) / fs) < bw)
     return;
 
   normalize (amin, amax, fs, type);
@@ -79,7 +79,7 @@ static qf_double_t FMAX (qf_double_t x, qf_double_t y) {
 // K by the arithmetic/geometric mean (AGM) method
 qf_double_t qf_cauer::K (qf_double_t k) {
   qf_double_t a = 1, b = sqrt (1 - k * k);
-  while (fabs (a - b) > K_ERR) {
+  while (std::abs (a - b) > K_ERR) {
     qf_double_t t = a;
     a = 0.5 * (a + b);
     b = sqrt (t * b);
@@ -134,7 +134,7 @@ qf_double_t qf_cauer::ellip_RF (qf_double_t x, qf_double_t y, qf_double_t z) {
     dely = (ave - yt) / ave;
     delz = (ave - zt) / ave;
   }
-  while (FMAX (FMAX (fabs (delx), fabs (dely)), fabs (delz)) > K_ERR1);
+  while (FMAX (FMAX (std::abs (delx), std::abs (dely)), std::abs (delz)) > K_ERR1);
 
   e2 = delx * dely - delz * delz;
   e3 = delx * dely * delz;
@@ -190,7 +190,7 @@ qf_cauer::ellip_sncndn (qf_double_t uu, qf_double_t emmc,
       em[i] = a;
       en[i] = (emc = sqrt (emc));
       c = 0.5 * (a + emc);
-      if (fabs (a - emc) <= SN_ACC * a)
+      if (std::abs (a - emc) <= SN_ACC * a)
 	break;
       emc *= a;
       a = c;
@@ -275,11 +275,11 @@ void qf_cauer::normalize (qf_double_t amin, qf_double_t amax,
     th = fs / fc;
     break;
   case BANDPASS:
-    th = bw / fabs (fs - (fc * fc) / fs);
+    th = bw / std::abs (fs - (fc * fc) / fs);
     break;
   case BANDSTOP :
-    th = fabs (fs * bw / (fs * fs - fc * fc));
-    bw = fabs (fs - (fc * fc) / fs);
+    th = std::abs (fs * bw / (fs * fs - fc * fc));
+    bw = std::abs (fs - (fc * fc) / fs);
     break;
   }
 
@@ -308,7 +308,7 @@ void qf_cauer::xfer (void) {
 
 #ifdef _QF_CAUER_DEBUG
   std::cerr << "Computing filter of order " << ord << " with ";
-  std::cerr << "rho = " << rho << " and theta = " << ASIND (th) << "°\n";
+  std::cerr << "rho = " << rho << " and theta = " << ASIND (th) << "ï¿½\n";
   std::cerr << "k = " << k << '\n';
 #endif
 
