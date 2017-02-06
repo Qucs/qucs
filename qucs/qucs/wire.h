@@ -25,6 +25,7 @@
 
 class QPainter;
 class QString;
+class Schematic;
 
 
 class Wire : public Conductor {
@@ -33,7 +34,7 @@ public:
  ~Wire();
 
   void paint(ViewPainter*);
-  void paintScheme(QPainter*);
+  void paintScheme(Schematic*);
   void setCenter(int, int, bool relative=false);
   void getCenter(int&, int&);
   bool getSelected(int, int);
