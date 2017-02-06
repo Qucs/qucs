@@ -38,20 +38,20 @@ Filter::Filter(Filter::FilterFunc ffunc_, Filter::FType type_, FilterParam par)
         Fl = par.Fl;
         Fu = par.Fu;
         TW = par.TW;
-        BW = fabs(Fu -Fl);
+        BW = std::abs(Fu -Fl);
         F0 = sqrt(Fu*Fl);
         if ((ftype==Filter::BandPass)||
             (ftype==Filter::BandStop)) { // BandPass
             Fc=BW;          // cutoff freq. of LPF prototype
             double  Fs1 = Fu + TW;
-            double  Fs1lp = fabsf(Fs1 - (F0*F0)/Fs1);    // stopband freq. of LPF prototype
+            double  Fs1lp = std::abs(Fs1 - (F0*F0)/Fs1);    // stopband freq. of LPF prototype
             double  Fs2 = Fl - TW;
-            double  Fs2lp = fabsf(Fs2 - (F0*F0)/Fs2);
+            double  Fs2lp = std::abs(Fs2 - (F0*F0)/Fs2);
             Fs = std::min(Fs1lp,Fs2lp);
         }
         Ap = 3.0;        
         qDebug()<<Fc<<Fs;
-        Q = F0/fabs(Fu-Fl);
+        Q = F0/std::abs(Fu-Fl);
     }
 
     Rp = par.Rp;
@@ -506,7 +506,7 @@ bool Filter::calcCauer() // from Digital Filter Designer's handbook p.103
         sum += term;
     }
     double  denom = 1.0+2.0*sum;
-    P0 = fabs(numer/denom);
+    P0 = std::abs(numer/denom);
     double  ww = 1.0+k*P0*P0;
     ww = sqrt(ww*(1.0+P0*P0/k));
     int r = (order-(order%2))/2;

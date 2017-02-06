@@ -92,7 +92,7 @@ double Filter::getQuadraticNormValues(int No, tFilter *theFilter, double &b)
 QString Filter::num2str(double Num)
 {
   char c = 0;
-  double cal = fabs(Num);
+  double cal = std::abs(Num);
   if(cal > 1e-20) {
     cal = log10(cal) / 3.0;
     if(cal < -0.2)  cal -= 0.98;
