@@ -25,7 +25,6 @@
 
 class QucsTranscalc;
 
-const double c0 = 299792458;// Speed of light (m/s)
 
 class transline {
  public:
