@@ -32,7 +32,7 @@
 #include <QListWidgetItem>
 
 SaveDialog::SaveDialog( QWidget* parent, const char* name, bool modal, Qt::WFlags fl )
-   : QDialog( parent, name, modal, fl ),unsavedDocs()
+   : QDialog( parent, fl ),unsavedDocs()
 {
    if ( !name )
       setWindowTitle( tr( "Save the modified files" ) );
