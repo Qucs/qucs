@@ -791,7 +791,6 @@ void QucsApp::initMenuBar()
   viewMenu->addAction(magPlus);
   viewMenu->addAction(magMinus);
   viewMenu->addSeparator();
-  viewMenu->setCheckable(true);
   viewMenu->addAction(viewToolBar);
   viewMenu->addAction(viewStatusBar);
   viewMenu->addAction(viewBrowseDock);
