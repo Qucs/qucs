@@ -423,8 +423,11 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
         QLabel *LabelRotX = new QLabel(tr("Rotation around x-Axis:"), Tab2);
         misc::setWidgetForegroundColor(LabelRotX, Qt::red);
         gp->addWidget(LabelRotX, Row,0);
-        SliderRotX = new QSlider(0,360,20, ((Rect3DDiagram*)Diag)->rotX,
-				 Qt::Horizontal, Tab2);
+        SliderRotX = new QSlider(Qt::Horizontal, Tab2);
+        SliderRotX->setMinimum(0);
+        SliderRotX->setMaximum(360);
+        SliderRotX->setPageStep(20);
+        SliderRotX->setValue(((Rect3DDiagram*)Diag)->rotX);
         gp->addWidget(SliderRotX, Row,1);
         connect(SliderRotX, SIGNAL(valueChanged(int)), SLOT(slotNewRotX(int)));
         rotationX = new QLineEdit(Tab2);
@@ -439,8 +442,11 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
         QLabel *LabelRotY = new QLabel(tr("Rotation around y-Axis:"), Tab2);
         misc::setWidgetForegroundColor(LabelRotY, Qt::green);
         gp->addWidget(LabelRotY, Row,0);
-        SliderRotY = new QSlider(0,360,20, ((Rect3DDiagram*)Diag)->rotY,
-				 Qt::Horizontal, Tab2);
+        SliderRotY = new QSlider(Qt::Horizontal, Tab2);
+        SliderRotY->setMinimum(0);
+        SliderRotY->setMaximum(360);
+        SliderRotY->setPageStep(20);
+        SliderRotY->setValue(((Rect3DDiagram*)Diag)->rotY);
         gp->addWidget(SliderRotY, Row,1);
         connect(SliderRotY, SIGNAL(valueChanged(int)), SLOT(slotNewRotY(int)));
         rotationY = new QLineEdit(Tab2);
@@ -455,8 +461,11 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
         QLabel *LabelRotZ = new QLabel(tr("Rotation around z-Axis:"), Tab2);
         misc::setWidgetForegroundColor(LabelRotZ, Qt::blue);
         gp->addWidget(LabelRotZ, Row,0);
-        SliderRotZ = new QSlider(0,360,20, ((Rect3DDiagram*)Diag)->rotZ,
-				 Qt::Horizontal, Tab2);
+        SliderRotZ = new QSlider(Qt::Horizontal, Tab2);
+        SliderRotZ->setMinimum(0);
+        SliderRotZ->setMaximum(360);
+        SliderRotZ->setPageStep(20);
+        SliderRotZ->setValue(((Rect3DDiagram*)Diag)->rotZ);
         gp->addWidget(SliderRotZ, Row,1);
         connect(SliderRotZ, SIGNAL(valueChanged(int)), SLOT(slotNewRotZ(int)));
         rotationZ = new QLineEdit(Tab2);
