@@ -39,7 +39,7 @@
 
 
 SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
-    : QDialog(d, 0, TRUE, Qt::WDestructiveClose)
+    : QDialog(d, Qt::WDestructiveClose)
 {
   App = App_; // pointer to main application
 
