@@ -28,8 +28,7 @@
 #include <QHBoxLayout>
 
 
-ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
-                                  : QDialog(parent, name)
+ArrowDialog::ArrowDialog(QWidget *parent) : QDialog(parent)
 {
   setWindowTitle(tr("Edit Arrow Properties"));
   val100 = new QIntValidator(0, 100, this);
