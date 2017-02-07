@@ -32,7 +32,7 @@
 
 
 GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
-                                  : QDialog(parent, name)
+                                  : QDialog(parent)
 {
   setWindowTitle(tr("Edit Text Properties"));
 
