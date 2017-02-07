@@ -27,7 +27,7 @@
 
 
 MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent)
-                     : QDialog(parent, 0, FALSE, Qt::WDestructiveClose)
+                     : QDialog(parent, Qt::WDestructiveClose)
 {
   setWindowTitle(tr("Edit Marker Properties"));
   pMarker = pm_;
