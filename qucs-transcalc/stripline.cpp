@@ -59,7 +59,7 @@ void stripline::get_stripline_sub ()
 void stripline::get_stripline_comp ()
 {
   f = getProperty ("Freq", UNIT_FREQ, FREQ_HZ);
-  lambda_0 = c0/f;
+  lambda_0 = C0/f;
 }
 
 /*
@@ -128,15 +128,22 @@ void stripline::analyze ()
   show_results();
 }
 
-/* This function calculates the static line impedance*/
-void stripline::calculateZ0()
+
+// This function calculates the characteristic impedance of a symmetric stripline according to [1], eq. 4.80-4.84
+double stripline::getZ0fromWidth(double W_)
 {
   double x = t/(2.*h);
   double m= 2/(1 + 2*x/3*(1-x));
-  double B = (x/(pi*(1-x)))*(1 - 0.5*log(pow(x/(2.-x),2) + pow((0.0796*x)/((W/(2.*h)) + 1.1*x),m)));
-  double A = 1/((W/(2*h - t)) + B);
-  // Line impedace
-  Z0 = (30/sqrt(er))*log(1 + (4/pi)*A*((8/pi)*A + sqrt(pow((8/pi)*A,2) + 6.27)));
+  double B = (x/(pi*(1-x)))*(1 - 0.5*log(pow(x/(2.-x),2) + pow((0.0796*x)/((W_/(2.*h)) + 1.1*x),m)));
+  double A = 1/((W_/(2*h - t)) + B);
+  // Line impedance
+  return (30/sqrt(er))*log(1 + (4/pi)*A*((8/pi)*A + sqrt(pow((8/pi)*A,2) + 6.27)));
+}
+
+/* This function calculates the static line impedance*/
+void stripline::calculateZ0()
+{
+  Z0 = getZ0fromWidth(W);
 }
 
 void stripline::getStriplineLength()
@@ -147,7 +154,7 @@ void stripline::getStriplineLength()
 }
 
 /*
- * synthesize() - synthesis function 	
+ * 	
  */
 int stripline::synthesize ()
 {
@@ -157,6 +164,8 @@ int stripline::synthesize ()
   alphac_stripline();// alpha_c and skin depth
   alphad_stripline();// alpha_d
 
+
+  // Zero-thickness approximation
   double B = exp(Z0*sqrt(er)/30)-1;
   double C = sqrt(4*B+6.27);
   double A = 2*B/C;
@@ -167,9 +176,29 @@ int stripline::synthesize ()
   double We = (2*h - t)*A1;
   double A2 = (x/(pi*(1-x))) * (1 - 0.5*log( (x*x/(4-2*x+x*x)) + pow((0.0796*x/( (We/(2*h)) + 1.1*x)),m) ));
 
-  double W_ = (A1 - A2)*(2*h-t);
+  double Wi = (A1 - A2)*(2*h-t);//Width given by the zero-thickness approximation (Initial guess for the refinement)
+ 
+  double Zi, diff_Zi, Zi__;
+  double dW = Wi*1e-4;//Differential width
+  double err = std::abs(Zi - Z0);//Error metric: Norm-1
+  unsigned int MAX_ITER = 100, iter = 0;
+  double MAX_ERR = 1e-5;
+  double slope, Zi_1 = 0, Zi_diff, step;
 
-  setProperty ("W", W_, UNIT_LENGTH, LENGTH_M);
+
+  // The Newton-Raphson method is employed to refine the width given by the zero-thickness approximation with the analysis formulae.
+  while ((std::abs(Z0 - Zi_1) > MAX_ERR)&&(iter < MAX_ITER))//Stop condition: |Z0 - Z_i| < MAX_ERR or max. number iterations exceeded
+  {
+    Zi = getZ0fromWidth(Wi+dW);
+    Zi_diff = (Zi - Zi_1) / dW;
+    step = (Z0 - Zi_1) / Zi_diff - dW;
+    Wi += step+dW;
+    if (Wi <= 0.0) Wi = dW;
+    Zi_1 = getZ0fromWidth(Wi);
+    iter++;
+  }
+
+  setProperty ("W", Wi, UNIT_LENGTH, LENGTH_M);
   double lambda_g = lambda_0/sqrt(er * mur);
   /* calculate physical length */
   l = (lambda_g * ang_l)/(2.0 * pi);    /* in m */
