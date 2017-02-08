@@ -23,6 +23,7 @@
 #
 
 SUBDIRS = \
+  man \
   qucs \
 	qucs-activefilter \
 	qucs-attenuator \
