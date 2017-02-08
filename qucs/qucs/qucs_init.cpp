@@ -644,18 +644,6 @@ void QucsApp::initActions()
   helpOnline->setWhatsThis(tr("Qucs-help\n\nOpen help website in the default browser."));
   connect(helpOnline, SIGNAL(triggered()), SLOT(slotHelpOnline()));
 
-  helpIndex = new QAction(tr("Help Index..."), this);
-  helpIndex->setShortcut(Qt::Key_F1);
-  helpIndex->setStatusTip(tr("Index of Qucs Help"));
-  helpIndex->setWhatsThis(tr("Help Index\n\nIndex of intern Qucs help"));
-  connect(helpIndex, SIGNAL(triggered()), SLOT(slotHelpIndex()));
-
-  helpGetStart = new QAction(tr("Getting Started..."), this);
-  helpGetStart->setStatusTip(tr("Getting Started with Qucs"));
-  helpGetStart->setWhatsThis(
-	tr("Getting Started\n\nShort introduction into Qucs"));
-  connect(helpGetStart, SIGNAL(triggered()), SLOT(slotGettingStarted()));
-
   helpAboutApp = new QAction(tr("&About Qucs..."), this);
   helpAboutApp->setStatusTip(tr("About the application"));
   helpAboutApp->setWhatsThis(tr("About\n\nAbout the application"));
@@ -805,9 +793,7 @@ void QucsApp::initMenuBar()
 
   helpMenu = new QMenu(tr("&Help"));  // menuBar entry helpMenu
   helpMenu->addAction(helpOnline);
-  helpMenu->addAction(helpIndex);
-  helpMenu->addAction(helpGetStart);
-  helpMenu->addSeparator();
+  helpMenu->insertSeparator();
 
 
 

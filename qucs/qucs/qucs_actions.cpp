@@ -834,18 +834,6 @@ void QucsApp::slotHelpOnline()
 }
 
 // --------------------------------------------------------------
-void QucsApp::slotHelpIndex()
-{
-  showHTML("index.html");
-}
-
-// --------------------------------------------------------------
-void QucsApp::slotGettingStarted()
-{
-  showHTML("start.html");
-}
-
-// --------------------------------------------------------------
 void QucsApp::showHTML(const QString& Page)
 {
   launchTool("qucshelp", "help", Page);
