@@ -42,7 +42,8 @@ FillDialog::FillDialog(const QString& _Caption, bool show, QWidget *parent)
 
   // ...........................................................
   QWidget *Tab1 = new QWidget(t);
-  QGridLayout *gp1 = new QGridLayout(Tab1,3,2,5,5);
+  QGridLayout *gp1 = new QGridLayout(Tab1);
+  Tab1->setLayout(gp1);
 
   gp1->addWidget(new QLabel(tr("Line Width: "), Tab1), 0,0);
   val100 = new QIntValidator(0,100, this);
@@ -73,7 +74,8 @@ FillDialog::FillDialog(const QString& _Caption, bool show, QWidget *parent)
   // ...........................................................
 if(show) {
   QWidget *Tab2 = new QWidget(t);
-  QGridLayout *gp2 = new QGridLayout(Tab2,3,2,5,5);
+  QGridLayout *gp2 = new QGridLayout(Tab2);
+  Tab2->setLayout(gp2);
 
   CheckFilled = new QCheckBox(tr("enable filling"),Tab2);
   connect(CheckFilled, SIGNAL(toggled(bool)), SLOT(slotCheckFilled(bool)));
