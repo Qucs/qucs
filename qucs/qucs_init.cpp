@@ -638,6 +638,12 @@ void QucsApp::initActions()
       tr("Octave Window\n\nShows/hides the Octave dock window"));
   connect(viewOctaveDock, SIGNAL(toggled(bool)), SLOT(slotViewOctaveDock(bool)));
 
+  helpOnline = new QAction(tr("Qucs-Help website"), this);
+  helpOnline->setShortcut(Qt::Key_F1);
+  helpOnline->setStatusTip(tr("Open help website in the default browser."));
+  helpOnline->setWhatsThis(tr("Qucs-help\n\nOpen help website in the default browser."));
+  connect(helpOnline, SIGNAL(triggered()), SLOT(slotHelpOnline()));
+
   helpIndex = new QAction(tr("Help Index..."), this);
   helpIndex->setShortcut(Qt::Key_F1);
   helpIndex->setStatusTip(tr("Index of Qucs Help"));
@@ -798,6 +804,7 @@ void QucsApp::initMenuBar()
 
 
   helpMenu = new QMenu(tr("&Help"));  // menuBar entry helpMenu
+  helpMenu->addAction(helpOnline);
   helpMenu->addAction(helpIndex);
   helpMenu->addAction(helpGetStart);
   helpMenu->addSeparator();
