@@ -177,8 +177,8 @@ QucsApp::QucsApp()
   lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
 
   // load documents given as command line arguments
-  for(int z=1; z<qApp->argc(); z++) {
-    QString arg = qApp->argv()[z];
+  for(int z=1; z<qApp->arguments().size(); z++) {
+    QString arg = qApp->arguments()[z];
     QByteArray ba = arg.toLatin1();
     const char *c_arg= ba.data();
     if(*(c_arg) != '-') {
