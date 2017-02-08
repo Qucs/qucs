@@ -328,7 +328,8 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   int Row = 0;
   if(Diag->Name.at(0) != 'T') {  // not tabular or timing diagram
     QWidget *Tab2 = new QWidget(t);
-    QGridLayout *gp = new QGridLayout(Tab2,13,3,5,5);
+    QGridLayout *gp = new QGridLayout();
+    Tab2->setLayout(gp);
 
     gp->addWidget(new QLabel(tr("x-Axis Label:"), Tab2), Row, 0);
     xLabel = new QLineEdit(Tab2);
