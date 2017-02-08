@@ -72,7 +72,7 @@ MouseActions::MouseActions(QucsApp* App_)
   // initialize menu appearing by right mouse button click on component
   ComponentMenu = new QMenu(QucsMain);
   focusMEvent   = new QMouseEvent(QEvent::MouseButtonPress, QPoint(0,0),
-				  Qt::NoButton, Qt::NoButton);
+                  Qt::NoButton, Qt::NoButton, Qt::NoModifier);
 }
 
 
