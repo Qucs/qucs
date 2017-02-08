@@ -371,11 +371,12 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
       connect(SpicePrep, SIGNAL(readyReadStandardError()), SLOT(slotGetPrepErr()));
     }
 
-    QMessageBox *MBox = new QMessageBox(tr("Info"),
+    QMessageBox *MBox = new QMessageBox(QMessageBox::NoIcon,
+                                        tr("Info"),
                                         tr("Preprocessing SPICE file \"%1\".").arg(FileInfo.filePath()),
-                                        QMessageBox::NoIcon, QMessageBox::Abort,
-                                        QMessageBox::NoButton, QMessageBox::NoButton, this, 0, true,
-                                        Qt::WStyle_DialogBorder |  Qt::WDestructiveClose);
+                                        QMessageBox::Abort,
+                                        this);
+    MBox->setAttribute(Qt::WA_DeleteOnClose);
 
     connect(SpicePrep, SIGNAL(finished(int, QProcess::ExitStatus)), MBox, SLOT(close()));
 
@@ -438,12 +439,12 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
   connect(QucsConv, SIGNAL(readyReadStandardError()), SLOT(slotGetError()));
 
 
-  QMessageBox *MBox = new QMessageBox(tr("Info"),
+  QMessageBox *MBox = new QMessageBox(QMessageBox::NoIcon,
+                                      tr("Info"),
                                       tr("Converting SPICE file \"%1\".").arg(FileInfo.filePath()),
-                                      QMessageBox::NoIcon, QMessageBox::Abort,
-                                      QMessageBox::NoButton, QMessageBox::NoButton, this, 0, true,
-                                      Qt::WStyle_DialogBorder |  Qt::WDestructiveClose);
-
+                                      QMessageBox::Abort,
+                                      this);
+  MBox->setAttribute(Qt::WA_DeleteOnClose);
   connect(QucsConv, SIGNAL(finished(int, QProcess::ExitStatus)), MBox, SLOT(close()));
 
   QucsConv->start(Program, Arguments);
