@@ -87,7 +87,7 @@ protected:
 
 public slots:
   void slotFileNew();     // generate a new schematic in the view TabBar
-  void slotTextNew();     // generate a new text editor in the view TabBar
+  void slotTextNew();     // edit text in the built editor or user defined editor
   void slotFileOpen();    // open a document
   void slotFileSave();    // save a document
   void slotFileSaveAs();  // save a document under a different filename
