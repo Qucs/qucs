@@ -695,7 +695,8 @@ void QucsApp::editFile(const QString& File)
       QString prog;
       QStringList args;
 
-      QFileInfo editor(QucsSettings.Editor);
+      QString editorPath = QucsSettings.Editor;
+      QFileInfo editor(editorPath);
       prog = QDir::toNativeSeparators(editor.canonicalFilePath());
 
       if (!File.isEmpty()) {
@@ -703,16 +704,11 @@ void QucsApp::editFile(const QString& File)
       }
 
       QProcess *externalEditor = new QProcess();
-      QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-      env.insert("PATH", env.value("PATH") );
-      externalEditor->setProcessEnvironment(env);
-
-      qDebug() << "Command: " << prog << args.join(" ");
-
+      qDebug() << "Command: " << editorPath << args.join(" ");
       externalEditor->start(prog, args);
 
       if( !externalEditor->waitForStarted(1000) ) {
-        QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor! \n\n%1").arg(prog));
+        QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor: \n\n%1").arg(editorPath));
         delete externalEditor;
         return;
       }

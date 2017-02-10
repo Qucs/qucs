@@ -66,6 +66,7 @@ private slots:
     void slotHomeDirBrowse();
     void slotAdmsXmlDirBrowse();
     void slotAscoDirBrowse();
+    void slotEditorBrowse();
     void slotOctaveDirBrowse();
 
     void slotAddPath();
