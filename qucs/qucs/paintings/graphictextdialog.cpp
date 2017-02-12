@@ -73,10 +73,10 @@ GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
   connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
 
   QLabel *tc = new QLabel(tr("Text color: "));
-  ColorButt = new QPushButton("        ");
+  ColorButt = new QPushButton("");
   h1Layout->addWidget(tc);
   h1Layout->addWidget(ColorButt);
-  misc::setWidgetBackgroundColor(ColorButt, QColor(0,0,0));
+  misc::setPickerColor(ColorButt, QColor(0,0,0));
   connect(ColorButt, SIGNAL(clicked()), SLOT(slotSetColor()));
 
   QWidget *place1 = new QWidget(h1); // stretchable placeholder
@@ -116,7 +116,7 @@ void GraphicTextDialog::slotSetColor()
   QColor c =
      QColorDialog::getColor(misc::getWidgetBackgroundColor(ColorButt), this);
   if(c.isValid())
-    misc::setWidgetBackgroundColor(ColorButt, c);
+    misc::setPickerColor(ColorButt, c);
 }
 
 // --------------------------------------------------------------------------
