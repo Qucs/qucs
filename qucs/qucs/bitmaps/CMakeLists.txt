@@ -1,5 +1,5 @@
 
-SET(XPMS  ac_voltage.png arrow.png capacitor.png dc_current.png dc_voltage.png
+SET(XPMS  ac_voltage.png ac_voltage_eu.png arrow.png capacitor.png dc_current.png dc_current_eu.png dc_voltage.png dc_voltage_eu.png  ac_current_eu.png
   inductor.png line.png msline.png polar.png rect.png rectangle.png
   resistor.png resistor_us.png smith.png source.png symtrans.png tabular.png
   text.png tline.png transformer.png gnd.png dc.png hb.png sparameter.png
@@ -27,7 +27,7 @@ SET(PNGS  fileopen.png filesave.png editdelete.png editcut.png editcopy.png
   fileprint.png filesaveall.png gear.png mirror.png nodename.png marker.png
   port.png rebuild.png redo.png rotate_ccw.png top.png undo.png viewmag1.png
   viewmag+.png viewmag-.png viewmagfit.png wire.png filenew.png mirrory.png
-  ground.png textnew.png quit.png back.png forward.png home.png previous.png
+  ground.png ground_eu.png textnew.png quit.png back.png forward.png home.png previous.png
   next.png #close_tab.png clearFilterText.png sub.png textbold.png textitalic.png
   #textleft.png textright.png super.png textcenter.png textjustify.png 
   text.png

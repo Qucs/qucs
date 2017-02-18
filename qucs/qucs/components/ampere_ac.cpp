@@ -18,29 +18,9 @@
 #include "ampere_ac.h"
 
 
-Ampere_ac::Ampere_ac()
+Ampere_ac::Ampere_ac(bool european)
 {
   Description = QObject::tr("ideal ac current source");
-
-  Arcs.append(new Arc(-12,-12, 24, 24,  0, 16*360,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line( 30,  0, 12,  0,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line( -7,  0,  7,  0,QPen(Qt::darkBlue,3)));
-  Lines.append(new Line(  6,  0,  0, -4,QPen(Qt::darkBlue,3)));
-  Lines.append(new Line(  6,  0,  0,  4,QPen(Qt::darkBlue,3)));
-  Arcs.append(new Arc( 12,  5,  6,  6,16*270, 16*180,QPen(Qt::darkBlue,2)));
-  Arcs.append(new Arc( 12, 11,  6,  6, 16*90, 16*180,QPen(Qt::darkBlue,2)));
-
-  Ports.append(new Port( 30,  0));
-  Ports.append(new Port(-30,  0));
-
-  x1 = -30; y1 = -14;
-  x2 =  30; y2 =  16;
-
-  tx = x1+4;
-  ty = y2+4;
-  Model = "Iac";
-  Name  = "I";
 
   Props.append(new Property("I", "1 mA", true,
 		QObject::tr("peak current in Ampere")));
@@ -51,6 +31,18 @@ Ampere_ac::Ampere_ac()
   Props.append(new Property("Theta", "0", false,
 		QObject::tr("damping factor (transient simulation only)")));
 
+  // this must be the last property in the list !!!
+  Props.append(new Property("Symbol", "european", false,
+		QObject::tr("schematic symbol")+" [european, US]"));
+  if(!european)  Props.getLast()->Value = "US";
+  createSymbol();
+
+  tx = x1+4;
+  ty = y2+4;
+  Model = "Iac";
+  Name  = "I";
+
+
   rotate();  // fix historical flaw
 }
 
@@ -60,14 +52,57 @@ Ampere_ac::~Ampere_ac()
 
 Component* Ampere_ac::newOne()
 {
-  return new Ampere_ac();
+  return new Ampere_ac(Props.getLast()->Value != "US");
 }
 
+// -------------------------------------------------------
 Element* Ampere_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("ac Current Source");
+  BitmapFile = (char *) "ac_current_eu";
+
+  if(getNewOne)  return new Ampere_ac();
+  return 0;
+}
+
+// -------------------------------------------------------
+Element* Ampere_ac::info_us(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("ac Current Source");
   BitmapFile = (char *) "ac_current";
 
-  if(getNewOne)  return new Ampere_ac();
+  if(getNewOne)  return new Ampere_ac(false);
   return 0;
+}
+
+// -------------------------------------------------------
+void Ampere_ac::createSymbol()
+{
+  if(Props.getLast()->Value == "US") {
+  Arcs.append(new Arc(-12,-12, 24, 24,  0, 16*360,QPen(Qt::darkBlue,2)));
+  Lines.append(new Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
+  Lines.append(new Line( 30,  0, 12,  0,QPen(Qt::darkBlue,2)));
+  Lines.append(new Line( -7,  0,  7,  0,QPen(Qt::darkBlue,3)));
+  Lines.append(new Line(  6,  0,  0, -4,QPen(Qt::darkBlue,3)));
+  Lines.append(new Line(  6,  0,  0,  4,QPen(Qt::darkBlue,3)));
+  Arcs.append(new Arc( 12,  5,  6,  6,16*270, 16*180,QPen(Qt::darkBlue,2)));
+  Arcs.append(new Arc( 12, 11,  6,  6, 16*90, 16*180,QPen(Qt::darkBlue,2)));
+  }
+  else {
+  Arcs.append(new Arc(-12,-12, 24, 24,  0, 16*360,QPen(Qt::darkBlue,2)));
+  Lines.append(new Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
+  Lines.append(new Line( 30,  0, 12,  0,QPen(Qt::darkBlue,2)));
+  Lines.append(new Line( -7,  -17,  7,  -17,QPen(Qt::darkBlue,3)));
+  Lines.append(new Line(  6,  -17,  0, -21,QPen(Qt::darkBlue,3)));
+  Lines.append(new Line(  6,  -17,  0,  -13,QPen(Qt::darkBlue,3)));
+  Lines.append(new Line(  0,  -12,  0,  12,QPen(Qt::darkBlue,2)));
+  Arcs.append(new Arc( 12,  5,  6,  6,16*270, 16*180,QPen(Qt::darkBlue,2)));
+  Arcs.append(new Arc( 12, 11,  6,  6, 16*90, 16*180,QPen(Qt::darkBlue,2)));
+  }
+  Ports.append(new Port( 30,  0));
+  Ports.append(new Port(-30,  0));
+
+  x1 = -30; y1 = -14;
+  x2 =  30; y2 =  16;
+
 }

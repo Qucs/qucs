@@ -21,12 +21,17 @@
 #include "component.h"
 
 
-class Ampere_ac : public Component  {
+class Ampere_ac : public MultiViewComponent  {
 public:
-  Ampere_ac();
+  Ampere_ac(bool european=true);
   ~Ampere_ac();
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
+  static Element* info_us(QString&, char* &, bool getNewOne=false);
+
+protected:
+  void createSymbol();
 };
+
 
 #endif

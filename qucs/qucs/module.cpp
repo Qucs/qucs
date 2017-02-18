@@ -177,7 +177,17 @@ void Module::intoCategory (Module * m) {
   registerComponent (cat, &val::inf1); \
   registerComponent (cat, &val::inf2); \
   registerComponent (cat, &val::inf3)
+#define REGISTER_COMP_1_0(cat,val,inf1)  \
+  registerComponent (cat, &val::inf1);
 
+#define REGISTER_MOST_USE(val) \
+  REGISTER_COMP_1 (QObject::tr("EU symbol"),val)
+#define REGISTER_MOST_USE_1(val,inf1) \
+  REGISTER_COMP_1_0 (QObject::tr("EU symbol"),val,inf1)
+#define REGISTER_MOST_USE_2(val,inf1,inf2) \
+  REGISTER_COMP_2 (QObject::tr("EU symbol"),val,inf1,inf2)
+#define REGISTER_MOST_USE_3(val,inf1,inf2,inf3) \
+  REGISTER_COMP_3 (QObject::tr("EU symbol"),val,inf1,inf2,inf3)
 #define REGISTER_LUMPED_1(val) \
   REGISTER_COMP_1 (QObject::tr("lumped components"),val)
 #define REGISTER_LUMPED_2(val,inf1,inf2) \
@@ -221,6 +231,29 @@ void Module::intoCategory (Module * m) {
 // registers every component available in the application.  Put here
 // any new component.
 void Module::registerModules (void) {
+
+  // Most Use
+  REGISTER_MOST_USE_1 (Resistor, info);
+//  REGISTER_MOST_USE (Resistor,info_us);
+  REGISTER_MOST_USE (Capacitor);
+  REGISTER_MOST_USE (Inductor);
+  REGISTER_MOST_USE_1 (Ground,info);
+//  REGISTER_MOST_USE (Ground);
+  REGISTER_MOST_USE_1 (Volt_dc,info);
+  REGISTER_MOST_USE_1 (Ampere_dc,info);
+  REGISTER_MOST_USE_1 (Volt_ac,info);
+  REGISTER_MOST_USE_1 (Ampere_ac,info);
+  REGISTER_MOST_USE (Diode);
+  REGISTER_MOST_USE (iProbe);
+  REGISTER_MOST_USE (vProbe);
+  REGISTER_MOST_USE (OpAmp);
+  REGISTER_MOST_USE_2 (BJT, info, info_pnp);
+  REGISTER_MOST_USE_2 (BJTsub, info, info_pnp);
+  REGISTER_MOST_USE_2 (JFET, info, info_p);
+  REGISTER_MOST_USE_3 (MOSFET, info, info_p, info_depl);
+  REGISTER_MOST_USE_3 (MOSFET_sub, info, info_p, info_depl);
+  REGISTER_MOST_USE (EqnDefined);
+
 
   // lumped components
   REGISTER_LUMPED_2 (Resistor, info, info_us);

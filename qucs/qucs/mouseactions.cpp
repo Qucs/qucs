@@ -1915,7 +1915,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
     case isDigitalComponent:
          c = (Component*)focusElement;
 //         qDebug() << "cast focusElement into" << c->Name;
-         if(c->Model == "GND") return;
+    //     if(c->Model == "GND") return;
 
          if(c->Model == "SPICE") {
            SpiceDialog *sd = new SpiceDialog(App, (SpiceFile*)c, Doc);

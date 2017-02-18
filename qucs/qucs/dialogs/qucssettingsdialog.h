@@ -78,7 +78,7 @@ public:
 
     QFont Font;
     QCheckBox *checkWiring, *checkLoadFromFutureVersions,
-              *checkAntiAliasing, *checkTextAntiAliasing;
+              *checkAntiAliasing, *checkTextAntiAliasing, *checkUSGNDSymbol;
     QComboBox *LanguageCombo;
     QPushButton *FontButton, *BGColorButton;
     QLineEdit *LargeFontSizeEdit, *undoNumEdit, *editorEdit, *Input_Suffix,

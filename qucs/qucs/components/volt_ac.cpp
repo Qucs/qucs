@@ -18,29 +18,9 @@
 #include "volt_ac.h"
 
 
-Volt_ac::Volt_ac()
+Volt_ac::Volt_ac(bool european)
 {
   Description = QObject::tr("ideal ac voltage source");
-
-  Arcs.append(new Arc(-12,-12, 24, 24,     0, 16*360,QPen(Qt::darkBlue,2)));
-  Arcs.append(new Arc( -3, -7,  7,  7,16*270, 16*180,QPen(Qt::darkBlue,2)));
-  Arcs.append(new Arc( -3,  0,  7,  7, 16*90, 16*180,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line( 30,  0, 12,  0,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line( 18,  5, 18, 11,QPen(Qt::red,1)));
-  Lines.append(new Line( 21,  8, 15,  8,QPen(Qt::red,1)));
-  Lines.append(new Line(-18,  5,-18, 11,QPen(Qt::black,1)));
-
-  Ports.append(new Port( 30,  0));
-  Ports.append(new Port(-30,  0));
-
-  x1 = -30; y1 = -14;
-  x2 =  30; y2 =  14;
-
-  tx = x1+4;
-  ty = y2+4;
-  Model = "Vac";
-  Name  = "V";
 
   Props.append(new Property("U", "1 V", true,
 		QObject::tr("peak voltage in Volts")));
@@ -51,6 +31,17 @@ Volt_ac::Volt_ac()
   Props.append(new Property("Theta", "0", false,
 		QObject::tr("damping factor (transient simulation only)")));
 
+    // this must be the last property in the list !!!
+  Props.append(new Property("Symbol", "european", false,
+		QObject::tr("schematic symbol")+" [european, US]"));
+  if(!european)  Props.getLast()->Value = "US";
+  createSymbol();
+
+  tx = x1+4;
+  ty = y2+4;
+  Model = "Vac";
+  Name  = "V";
+
   rotate();  // fix historical flaw
 }
 
@@ -60,14 +51,55 @@ Volt_ac::~Volt_ac()
 
 Component* Volt_ac::newOne()
 {
-  return new Volt_ac();
+  return new Volt_ac(Props.getLast()->Value != "US");
 }
 
 Element* Volt_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("ac Voltage Source");
-  BitmapFile = (char *) "ac_voltage";
+  BitmapFile = (char *) "ac_voltage_eu";
 
   if(getNewOne)  return new Volt_ac();
   return 0;
+}
+
+// -------------------------------------------------------
+Element* Volt_ac::info_us(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("ac Voltage Source");
+  BitmapFile = (char *) "ac_voltage";
+
+  if(getNewOne)  return new Volt_ac(false);
+  return 0;
+}
+
+// -------------------------------------------------------
+void Volt_ac::createSymbol()
+{
+  if(Props.getLast()->Value == "US") {
+  Arcs.append(new Arc(-12,-12, 24, 24,     0, 16*360,QPen(Qt::darkBlue,2)));
+  Arcs.append(new Arc( -3, -7,  7,  7,16*270, 16*180,QPen(Qt::darkBlue,2)));
+  Arcs.append(new Arc( -3,  0,  7,  7, 16*90, 16*180,QPen(Qt::darkBlue,2)));
+  Lines.append(new Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
+  Lines.append(new Line( 30,  0, 12,  0,QPen(Qt::darkBlue,2)));
+  Lines.append(new Line( 18,  5, 18, 11,QPen(Qt::red,1)));
+  Lines.append(new Line( 21,  8, 15,  8,QPen(Qt::red,1)));
+  Lines.append(new Line(-18,  5,-18, 11,QPen(Qt::black,1)));
+  }
+  else {
+  Arcs.append(new Arc(-12,-12, 24, 24,  0, 16*360,QPen(Qt::darkBlue,2)));
+  Lines.append(new Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
+  Lines.append(new Line( 30,  0, 12,  0,QPen(Qt::darkBlue,2)));
+  Lines.append(new Line( -7,  0,  7,  -0,QPen(Qt::darkBlue,3)));
+  Lines.append(new Line(  6,  0,  0, -4,QPen(Qt::darkBlue,3)));
+  Lines.append(new Line(  6,  0,  0,  4,QPen(Qt::darkBlue,3)));
+  Arcs.append(new Arc( 12,  5,  6,  6,16*270, 16*180,QPen(Qt::darkBlue,2)));
+  Arcs.append(new Arc( 12, 11,  6,  6, 16*90, 16*180,QPen(Qt::darkBlue,2)));
+  }
+
+  Ports.append(new Port( 30,  0));
+  Ports.append(new Port(-30,  0));
+
+  x1 = -30; y1 = -14;
+  x2 =  30; y2 =  14;
 }

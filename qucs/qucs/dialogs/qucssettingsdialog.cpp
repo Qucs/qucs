@@ -149,6 +149,12 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
     appSettingsGrid->addWidget(checkTextAntiAliasing,9,1);
     checkTextAntiAliasing->setChecked(QucsSettings.TextAntiAliasing);
 
+    appSettingsGrid->addWidget(new QLabel(tr("GND symbol checked for US unless European:")));
+    checkUSGNDSymbol = new QCheckBox(appSettingsTab);
+    checkUSGNDSymbol->setToolTip(tr("Check for US GND Symbol."));
+    appSettingsGrid->addWidget(checkUSGNDSymbol,10,1);
+    checkUSGNDSymbol->setChecked(QucsSettings.USGNDSymbol);
+
     t->addTab(appSettingsTab, tr("Settings"));
 
     // ...........................................................
@@ -639,6 +645,11 @@ void QucsSettingsDialog::slotApply()
       changed = true;
     }
 
+    if (QucsSettings.USGNDSymbol != checkUSGNDSymbol->isChecked())
+    {
+      QucsSettings.USGNDSymbol = checkUSGNDSymbol->isChecked();
+      changed = true;
+    }
     // use toDouble() as it can interpret the string according to the current locale
     if (QucsSettings.largeFontSize != LargeFontSizeEdit->text().toDouble(&ok))
     {

@@ -21,15 +21,17 @@
 #include "component.h"
 
 
-class Ground : public Component  {
+class Ground : public MultiViewComponent  {
 public:
-  Ground();
+  Ground(bool european=true);
  ~Ground();
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
+  static Element* info_us(QString&, char* &, bool getNewOne=false);
 
 protected:
   QString netlist();
+  void createSymbol();
 };
 
 #endif

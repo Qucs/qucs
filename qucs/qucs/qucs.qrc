@@ -2,6 +2,8 @@
     <qresource prefix="/">
         <file>bitmaps/ac_current.png</file>
         <file>bitmaps/ac_voltage.png</file>
+        <file>bitmaps/ac_current_eu.png</file>
+        <file>bitmaps/ac_voltage_eu.png</file>
         <file>bitmaps/ac.png</file>
         <file>bitmaps/am_mod.png</file>
         <file>bitmaps/amplifier.png</file>
@@ -38,6 +40,8 @@
         <file>bitmaps/curve.png</file>
         <file>bitmaps/dc_current.png</file>
         <file>bitmaps/dc_voltage.png</file>
+        <file>bitmaps/dc_current_eu.png</file>
+        <file>bitmaps/dc_voltage_eu.png</file>
         <file>bitmaps/dc.png</file>
         <file>bitmaps/dcblock.png</file>
         <file>bitmaps/dcfeed.png</file>
@@ -79,8 +83,10 @@
         <file>bitmaps/gatedDlatch.png</file>
         <file>bitmaps/gear.png</file>
         <file>bitmaps/gnd.png</file>
+        <file>bitmaps/gnd_eu.png</file>
         <file>bitmaps/greytobinary4bit.png</file>
         <file>bitmaps/ground.png</file>
+        <file>bitmaps/ground_eu.png</file>
         <file>bitmaps/gyrator.png</file>
         <file>bitmaps/ha1b.png</file>
         <file>bitmaps/hb.png</file>
