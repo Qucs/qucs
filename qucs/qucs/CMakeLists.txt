@@ -153,6 +153,7 @@ SET(QUCS_SRCS
   wirelabel.cpp node.cpp qucs_init.cpp
   syntax.cpp misc.cpp messagedock.cpp
   imagewriter.cpp printerwriter.cpp projectView.cpp
+  frame.cpp
 )
 
 SET(QUCS_HDRS
@@ -173,6 +174,7 @@ textdoc.h
 viewpainter.h
 wire.h
 wirelabel.h
+frame.h
 )
 
 #

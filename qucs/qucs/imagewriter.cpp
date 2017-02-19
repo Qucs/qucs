@@ -295,7 +295,7 @@ void ImageWriter::getSchWidthAndHeight(Schematic *sch, int &w, int &h, int &xmin
     h = abs(ymax - ymin);
 
     int f_w, f_h;
-    if (sch->sizeOfFrame(f_w,f_h)) {
+    if (sch->schematicFrame->sizeOfFrame(f_w,f_h)) {
         xmin = std::min(0,xmin); // For components
         ymin = std::min(0,ymin); // that fall out of frame
         w = abs(std::max(f_w,sch->UsedX2) - xmin);
