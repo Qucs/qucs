@@ -71,7 +71,8 @@ libqucsschematic_la_SOURCES= \
   viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
   schematic_file.cpp syntax.cpp module.cpp octave_window.cpp \
   messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
-  projectView.cpp
+	projectView.cpp \
+	frame.cpp
 
 nodist_libqucsschematic_la_SOURCES = $(MOCFILES)
 
@@ -97,6 +98,7 @@ qucs_real_LDADD = \
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
 	qt_compat.h \
   wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
+  frame.h \
   projectView.h printerwriter.h imagewriter.h
 
 # must be installed. but later

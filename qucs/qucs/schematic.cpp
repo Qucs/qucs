@@ -105,12 +105,9 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   /// Having it as an item messes up the item count.
   //scene->addItem(schematicFrame);
 
-
-  showFrame = 0;  // don't show
-  Frame_Text0 = tr("Title");
-  Frame_Text1 = tr("Drawn By:");
-  Frame_Text2 = tr("Date:");
-  Frame_Text3 = tr("Revision:");
+  // add a Frame to the schematic
+  schematicFrame =  new Frame();
+  scene->addItem(schematicFrame);
 
   this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -326,91 +323,6 @@ void Schematic::setChanged(bool c, bool fillStack, char Op)
   return;
 }
 
-// -----------------------------------------------------------
-bool Schematic::sizeOfFrame(int& xall, int& yall)
-{
-  // Values exclude border of 1.5cm at each side.
-  switch(showFrame) {
-    case 1:  xall = 1020; yall =  765; break;  // DIN A5 landscape
-    case 2:  xall =  765; yall = 1020; break;  // DIN A5 portrait
-    case 3:  xall = 1530; yall = 1020; break;  // DIN A4 landscape
-    case 4:  xall = 1020; yall = 1530; break;  // DIN A4 portrait
-    case 5:  xall = 2295; yall = 1530; break;  // DIN A3 landscape
-    case 6:  xall = 1530; yall = 2295; break;  // DIN A3 portrait
-    case 7:  xall = 1414; yall = 1054; break;  // letter landscape
-    case 8:  xall = 1054; yall = 1414; break;  // letter portrait
-    default:  return false;
-  }
-
-  return true;
-}
-
-// -----------------------------------------------------------
-void Schematic::paintFrame(ViewPainter *p)
-{
-  // dimensions:  X cm / 2.54 * 144
-  int xall, yall;
-  if(!sizeOfFrame(xall, yall))
-    return;
-  p->Painter->setPen(QPen(Qt::darkGray,1));
-  //p->Painter->setPen(QPen(Qt::black,0));
-  int d = p->LineSpacing + int(4.0 * p->Scale);
-  int x1_, y1_, x2_, y2_;
-  p->map(xall, yall, x1_, y1_);
-  x2_ = int(xall * p->Scale) + 1;
-  y2_ = int(yall * p->Scale) + 1;
-  p->Painter->drawRect(x1_, y1_, -x2_, -y2_);
-  p->Painter->drawRect(x1_-d, y1_-d, 2*d-x2_, 2*d-y2_);
-
-  int z;
-  int step = xall / ((xall+127) / 255);
-  for(z=step; z<=xall-step; z+=step) {
-    p->map(z, 0, x2_, y2_);
-    p->Painter->drawLine(x2_, y2_, x2_, y2_+d);
-    p->Painter->drawLine(x2_, y1_-d, x2_, y1_);
-  }
-  char Letter[2] = "1";
-  for(z=step/2+5; z<xall; z+=step) {
-    p->drawText(Letter, z, 3, 0);
-    p->map(z, yall+3, x2_, y2_);
-    p->Painter->drawText(x2_, y2_-d, 0, 0, Qt::TextDontClip, Letter);
-    Letter[0]++;
-  }
-
-  step = yall / ((yall+127) / 255);
-  for(z=step; z<=yall-step; z+=step) {
-    p->map(0, z, x2_, y2_);
-    p->Painter->drawLine(x2_, y2_, x2_+d, y2_);
-    p->Painter->drawLine(x1_-d, y2_, x1_, y2_);
-  }
-  Letter[0] = 'A';
-  for(z=step/2+5; z<yall; z+=step) {
-    p->drawText(Letter, 5, z, 0);
-    p->map(xall+5, z, x2_, y2_);
-    p->Painter->drawText(x2_-d, y2_, 0, 0, Qt::TextDontClip, Letter);
-    Letter[0]++;
-  }
-
-  // draw text box with text
-  p->map(xall-340, yall-3, x1_, y1_);
-  p->map(xall-3,   yall-3, x2_, y2_);
-  x1_ -= d;  x2_ -= d;
-  y1_ -= d;  y2_ -= d;
-  d = int(6.0 * p->Scale);
-  z = int(200.0 * p->Scale);
-  y1_ -= p->LineSpacing + d;
-  p->Painter->drawLine(x1_, y1_, x2_, y1_);
-  p->Painter->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, Frame_Text2);
-  p->Painter->drawLine(x1_+z, y1_, x1_+z, y1_ + p->LineSpacing+d);
-  p->Painter->drawText(x1_+d+z, y1_+(d>>1), 0, 0, Qt::TextDontClip, Frame_Text3);
-  y1_ -= p->LineSpacing + d;
-  p->Painter->drawLine(x1_, y1_, x2_, y1_);
-  p->Painter->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, Frame_Text1);
-  y1_ -= (Frame_Text0.count('\n')+1) * p->LineSpacing + d;
-  p->Painter->drawRect(x2_, y2_, x1_-x2_-1, y1_-y2_-1);
-  p->Painter->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, Frame_Text0);
-}
-
 
 void Schematic::PostPaintEvent (PE pe, int x1, int y1, int x2, int y2, int a, int b, bool PaintOnViewport)
 {
@@ -491,9 +403,9 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
     float ScaleY = float((printerH - 2*marginY) /
                    float((UsedY2-UsedY1) * printerDpiY)) * screenDpiY;
 
-    if(showFrame){
+    if(schematicFrame->PageType){
         int xall, yall;
-        sizeOfFrame(xall, yall);
+        schematicFrame->sizeOfFrame(xall, yall);
         ScaleX = ((float)(printerW - 2*marginX) /
                        (float)(xall * printerDpiX)) * screenDpiX;
         ScaleY = ((float)(printerH - 2*marginY) /
@@ -511,7 +423,7 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
   ViewPainter p;
   int StartX = UsedX1;
   int StartY = UsedY1;
-  if(showFrame) {
+  if(schematicFrame->PageType) {
     if(UsedX1 > 0)  StartX = 0;
     if(UsedY1 > 0)  StartY = 0;
   }
@@ -526,8 +438,9 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
   p.init(Painter, PrintScale * PrintRatio,
          -StartX, -StartY, -marginX, -marginY, PrintScale, PrintRatio);
 
-  if(!symbolMode)
-    paintFrame(&p);
+  TODO("Hangle frame paint");
+  ///if(!symbolMode)
+  ///  paintFrame(&p);
 
   paintSchToViewpainter(&p,printAll,false,screenDpiX,printerDpiX);
 
@@ -540,8 +453,9 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
     bool selected;
 
     if (printAll) {
-        int x2,y2;
-        if (sizeOfFrame(x2,y2)) paintFrame(p);
+        // if there is a frame print?
+        /// int x2,y2;
+        /// \todo if (sizeOfFrame(x2,y2)) paintFrame(p);
     }
 
     for(Component *pc = Components->first(); pc != 0; pc = Components->next())
