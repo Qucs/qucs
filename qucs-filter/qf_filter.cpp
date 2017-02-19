@@ -106,7 +106,7 @@ void qf_filter::extract_pole_pCsLC (qf_double_t p, qfc * pComp,
 // User readable value string.
 std::string qf_filter::num2str (qf_double_t num) {
   char c = 0;
-  qf_double_t cal = fabs(num);
+  qf_double_t cal = std::abs(num);
   if(cal > 1e-20) {
     cal = log10(cal) / 3.0;
     if(cal < -0.2)  cal -= 0.98;

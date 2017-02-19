@@ -28,7 +28,6 @@
 #include <QCloseEvent>
 #include <QMainWindow>
 #include <QDir>
-
 class QComboBox;
 class QLineEdit;
 class QLabel;
@@ -45,7 +44,7 @@ class transline;
 
 // Current limit defintions.
 #define MAX_TRANS_BOXES   4
-#define MAX_TRANS_TYPES   6
+#define MAX_TRANS_TYPES   7 //Number of transmission lines
 #define MAX_TRANS_RESULTS 7
 
 // Types of transmission line properties.
@@ -110,6 +109,7 @@ enum TransMode {
   ModeRectangular = 3,
   ModeCoaxial = 4,
   ModeCoupledMicrostrip = 5,
+  ModeStripline = 6,
   ModeNone
 };
 

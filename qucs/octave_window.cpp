@@ -4,6 +4,7 @@
  ***************************************************************************/
 #include "octave_window.h"
 #include "main.h"
+#include "misc.h"
 
 #include <QSize>
 #include <QColor>
@@ -39,9 +40,9 @@ OctaveWindow::OctaveWindow(QDockWidget *parent_): QWidget()
   output = new QTextEdit(this);
   output->setReadOnly(true);
   output->setUndoRedoEnabled(false);
-  output->setTextFormat(Qt::LogText);
+  output->toPlainText();
   output->setLineWrapMode(QTextEdit::NoWrap);
-  output->setPaletteBackgroundColor(QucsSettings.BGColor);
+  misc::setWidgetBackgroundColor(output, QucsSettings.BGColor);
   allLayout->addWidget(output);
 
   input = new QLineEdit(this);
@@ -128,7 +129,7 @@ bool OctaveWindow::startOctave()
 // ------------------------------------------------------------------------
 void OctaveWindow::adjustDirectory()
 {
-  sendCommand("cd \"" + QucsSettings.QucsWorkDir.absPath() + "\"");
+  sendCommand("cd \"" + QucsSettings.QucsWorkDir.absolutePath() + "\"");
 }
 
 // ------------------------------------------------------------------------
@@ -141,14 +142,16 @@ void OctaveWindow::sendCommand(const QString& cmd)
   QString cmdstr = cmd + "\n";
   //output->insertAt(cmdstr, par, idx);
   //output->scrollToBottom();
-  octProcess.write(cmdstr);
+  QByteArray ba = cmdstr.toLatin1();
+  const char *c_cmdstr = ba.data();
+  octProcess.write(c_cmdstr);
 }
 
 // ------------------------------------------------------------------------
 void OctaveWindow::runOctaveScript(const QString& name)
 {
   QFileInfo info(name);
-  sendCommand(info.baseName(true));
+  sendCommand(info.completeBaseName());
 }
 
 // ------------------------------------------------------------------------

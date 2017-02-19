@@ -30,7 +30,7 @@ QString* Line_Filter::createSchematic(tFilter *Filter, tSubstrate *Substrate, bo
 {
   double Value, Value2, gap, len, dl, width, er_eff, Wh;
   double Omega = (Filter->Frequency2 + Filter->Frequency) / 2.0;
-  double Bandwidth = fabs(Filter->Frequency2 - Filter->Frequency) / Omega;
+  double Bandwidth = std::abs(Filter->Frequency2 - Filter->Frequency) / Omega;
 
   // get "width" and "er_eff"
   width = er_eff = 1.0;

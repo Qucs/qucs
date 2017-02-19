@@ -36,6 +36,7 @@
 #include <QMessageBox>
 #include <QRegExp>
 #include <QtSvg>
+#include <QDebug>
 
 #include "qucs.h"
 #include "main.h"
@@ -247,12 +248,16 @@ Schematic *openSchematic(QString schematic)
 {
   qDebug() << "*** try to load schematic :" << schematic;
 
+  // QString to *char
+  QByteArray ba = schematic.toLatin1();
+  const char *c_sch = ba.data();
+
   QFile file(schematic);  // save simulator messages
   if(file.open(QIODevice::ReadOnly)) {
     file.close();
   }
   else {
-    fprintf(stderr, "Error: Could not load schematic %s\n", schematic.ascii());
+    fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
     return NULL;
   }
 
@@ -264,7 +269,7 @@ Schematic *openSchematic(QString schematic)
 
   // load schematic file if possible
   if(!sch->loadDocument()) {
-    fprintf(stderr, "Error: Could not load schematic %s\n", schematic.ascii());
+    fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
     delete sch;
     return NULL;
   }
@@ -280,6 +285,10 @@ int doNetlist(QString schematic, QString netlist)
 
   qDebug() << "*** try to write netlist  :" << netlist;
 
+  // QString to *char
+  QByteArray ba = schematic.toLatin1();
+  const char *c_net = ba.data();
+
   QStringList Collect;
 
   QPlainTextEdit *ErrText = new QPlainTextEdit();  //dummy
@@ -290,7 +299,7 @@ int doNetlist(QString schematic, QString netlist)
 
   NetlistFile.setFileName(netlist);
   if(!NetlistFile.open(QIODevice::WriteOnly)) {
-    fprintf(stderr, "Error: Could not load netlist %s\n", netlist.ascii());
+    fprintf(stderr, "Error: Could not load netlist %s\n", c_net);
     return -1;
   }
 
@@ -299,8 +308,7 @@ int doNetlist(QString schematic, QString netlist)
 
   if(SimPorts < -5) {
     NetlistFile.close();
-    QByteArray ba = netlist.toLatin1();
-    fprintf(stderr, "Error: Could not prepare netlist %s\n", ba.data());
+    fprintf(stderr, "Error: Could not prepare netlist %s\n", c_net);
     /// \todo better handling for error/warnings
     qCritical() << ErrText->toPlainText();
     return 1;
@@ -556,7 +564,7 @@ void createDocData() {
         QTextStream out(&file);
         out << compData.join("\n");
         file.close();
-        fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(), c->Model.toAscii().data(), file.name().toAscii().data());
+        fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(), c->Model.toAscii().data(), file.fileName().toAscii().data());
 
         QStringList compProps;
         compProps << "# Note: auto-generated file (changes will be lost on update)";
@@ -578,7 +586,7 @@ void createDocData() {
         outProps << compProps.join("\n");
         compProps.clear();
         file.close();
-        fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(), c->Model.toAscii().data(), fileProps.name().toAscii().data());
+        fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(), c->Model.toAscii().data(), fileProps.fileName().toAscii().data());
     } // module
   } // category
   fprintf(stdout, "Created data for %i components from %i categories\n", nComps, nCats);
@@ -663,7 +671,7 @@ int main(int argc, char *argv[])
   QucsSettings.dy = h*3/4;
 
   // default
-  QucsSettings.QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
+  QucsSettings.QucsHomeDir.setPath(QDir::homePath()+QDir::toNativeSeparators("/.qucs"));
   QucsSettings.QucsWorkDir.setPath(QucsSettings.QucsHomeDir.canonicalPath());
 
   // load existing settings (if any)
@@ -800,8 +808,10 @@ int main(int argc, char *argv[])
 
   QTranslator tor( 0 );
   QString lang = QucsSettings.Language;
-  if(lang.isEmpty())
-    lang = QTextCodec::locale();
+  if(lang.isEmpty()) {
+    QLocale loc;
+    lang = loc.name();
+  }
   tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
   a.installTranslator( &tor );
 
@@ -919,7 +929,6 @@ int main(int argc, char *argv[])
   }
 
   QucsMain = new QucsApp();
-  a.setMainWidget(QucsMain);
   
   QucsMain->show();
   int result = a.exec();

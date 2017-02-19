@@ -269,7 +269,7 @@ void QucsHelp::nextLink()
 
 void QucsHelp::slotToggleSidebar(bool b)
 {
-  dock->setShown(b);
+  dock->setVisible(b);
 }
 
 void QucsHelp::slotToggleSidebarAction(bool b)

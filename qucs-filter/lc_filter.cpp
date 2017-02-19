@@ -53,7 +53,7 @@ QString* LC_Filter::createSchematic(tFilter *Filter, bool piType)
     Omega /= cosh(acosh(1.0 / Value) / double(Filter->Order));
   }
 
-  Bandwidth = fabs(Filter->Frequency2 - Filter->Frequency) / Omega;
+  Bandwidth = std::abs(Filter->Frequency2 - Filter->Frequency) / Omega;
   Omega *= 2.0*pi;   // angular frequency
 
   // create the Qucs schematic
@@ -121,7 +121,7 @@ QString* LC_Filter::createSchematic(tFilter *Filter, bool piType)
 
       case CLASS_BANDSTOP:
         Value2 = 1.0 / Omega / Omega / Bandwidth / Value; // transform to bandstop
-        Value *= 0.5 * fabs(Filter->Frequency2/Filter->Frequency - Filter->Frequency/Filter->Frequency2);
+        Value *= 0.5 * std::abs(Filter->Frequency2/Filter->Frequency - Filter->Frequency/Filter->Frequency2);
         if(i & 1) {
           *s += QString("<L L1 1 %1 %2 -26 -44 0 0 \"%3H\" 1>\n").arg(x).arg(yl-35).arg(num2str(Value));
           *s += QString("<C C1 1 %1 %2 -26 10 0 0 \"%3F\" 1>\n").arg(x).arg(yl).arg(num2str(Value2));
