@@ -26,7 +26,6 @@ SUBDIRS = \
   qucs \
 	qucs-activefilter \
 	qucs-attenuator \
-	qucs-edit \
 	qucs-filter \
 	qucs-help \
 	qucs-lib \

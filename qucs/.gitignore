@@ -26,7 +26,6 @@ depcomp
 *.a
 install-sh
 qucs-attenuator/qucsattenuator
-qucs-edit/qucsedit
 qucs-filter-v2/qucsfilter
 qucs-filter/qucsfilter
 qucs-help/qucshelp

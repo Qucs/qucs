@@ -1,0 +1,25 @@
+/* XPM */
+static char *empty_xpm[] = {
+/* width height num_colors chars_per_pixel */
+"1 17 1 1",
+/* colors */
+" c None",
+/* pixels */
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" "
+};
