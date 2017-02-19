@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "arrowdialog.h"
+#include "misc.h"
 
 #include <QLabel>
 #include <QValidator>
@@ -27,13 +28,12 @@
 #include <QHBoxLayout>
 
 
-ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
-                                  : QDialog(parent, name)
+ArrowDialog::ArrowDialog(QWidget *parent) : QDialog(parent)
 {
   setWindowTitle(tr("Edit Arrow Properties"));
   val100 = new QIntValidator(0, 100, this);
 
-  all = new QGridLayout(this, 5,4,3,3);
+  all = new QGridLayout(this);
   all->setMargin(3);
 
 
@@ -55,7 +55,7 @@ ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
 
   all->addWidget(new QLabel(tr("Line color: "), this), 1,0);
   ColorButt = new QPushButton("    ",this);
-  ColorButt->setPaletteBackgroundColor(QColor(0,0,0));
+  misc::setWidgetBackgroundColor(ColorButt, QColor(0,0,0));
   connect(ColorButt, SIGNAL(clicked()), SLOT(slotSetColor()));
   all->addWidget(ColorButt, 1,1);
 
@@ -69,20 +69,20 @@ ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
 
   all->addWidget(new QLabel(tr("Line style: "), this), 2,0);
   StyleBox = new QComboBox(this);
-  StyleBox->insertItem(tr("solid line"));
-  StyleBox->insertItem(tr("dash line"));
-  StyleBox->insertItem(tr("dot line"));
-  StyleBox->insertItem(tr("dash dot line"));
-  StyleBox->insertItem(tr("dash dot dot line"));
+  StyleBox->addItem(tr("solid line"));
+  StyleBox->addItem(tr("dash line"));
+  StyleBox->addItem(tr("dot line"));
+  StyleBox->addItem(tr("dash dot line"));
+  StyleBox->addItem(tr("dash dot dot line"));
   connect(StyleBox, SIGNAL(activated(int)), SLOT(slotSetStyle(int)));
   LineStyle = Qt::SolidLine;
-  all->addMultiCellWidget(StyleBox, 2,2,1,2);
+  all->addWidget(StyleBox, 2,1,1,3);
 
   all->addWidget(new QLabel(tr("Arrow head: "), this), 3,0);
   ArrowStyleBox = new QComboBox(this);
-  ArrowStyleBox->insertItem(tr("two lines"));
-  ArrowStyleBox->insertItem(tr("filled"));
-  all->addMultiCellWidget(ArrowStyleBox, 3,3,1,2);
+  ArrowStyleBox->addItem(tr("two lines"));
+  ArrowStyleBox->addItem(tr("filled"));
+  all->addWidget(ArrowStyleBox, 3,1,1,3);
 
 
   QWidget *h1 = new QWidget(this);
@@ -97,7 +97,7 @@ ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
   connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
   
   h1->setLayout(h1Layout);
-  all->addMultiCellWidget(h1, 4,4,0,3);
+  all->addWidget(h1, 4,0,1,4);
 
   ButtOK->setFocus();
 }
@@ -111,8 +111,10 @@ ArrowDialog::~ArrowDialog()
 // --------------------------------------------------------------------------
 void ArrowDialog::slotSetColor()
 {
-  QColor c = QColorDialog::getColor(ColorButt->paletteBackgroundColor(),this);
-  if(c.isValid()) ColorButt->setPaletteBackgroundColor(c);
+  QColor c = QColorDialog::getColor(
+               misc::getWidgetBackgroundColor(ColorButt), this);
+  if(c.isValid())
+      misc::setWidgetBackgroundColor(ColorButt, c);
 }
 
 // --------------------------------------------------------------------------
@@ -138,15 +140,15 @@ void ArrowDialog::SetComboBox(Qt::PenStyle _Style)
 {
   LineStyle = _Style;
   switch(_Style) {
-    case Qt::SolidLine      : StyleBox->setCurrentItem(0);
+    case Qt::SolidLine      : StyleBox->setCurrentIndex(0);
                               break;
-    case Qt::DashLine       : StyleBox->setCurrentItem(1);
+    case Qt::DashLine       : StyleBox->setCurrentIndex(1);
                               break;
-    case Qt::DotLine        : StyleBox->setCurrentItem(2);
+    case Qt::DotLine        : StyleBox->setCurrentIndex(2);
                               break;
-    case Qt::DashDotLine    : StyleBox->setCurrentItem(3);
+    case Qt::DashDotLine    : StyleBox->setCurrentIndex(3);
                               break;
-    case Qt::DashDotDotLine : StyleBox->setCurrentItem(4);
+    case Qt::DashDotDotLine : StyleBox->setCurrentIndex(4);
                               break;
     default: ;
   }

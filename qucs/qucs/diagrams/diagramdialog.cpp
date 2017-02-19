@@ -23,6 +23,7 @@
 #include "qucs.h"
 #include "schematic.h"
 #include "rect3ddiagram.h"
+#include "misc.h"
 
 #include <cmath>
 #include <assert.h>
@@ -105,7 +106,7 @@ static const int NumDefaultColors = 8;
 
 
 DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
-                    : QDialog(parent, 0, TRUE, Qt::WDestructiveClose)
+                    : QDialog(parent, Qt::WDestructiveClose)
 {
   Diag = d;
   Graphs.setAutoDelete(true);
@@ -114,7 +115,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
 	  const Schematic* s = dynamic_cast<const Schematic*>(parent);
 	  assert(s);
 	  QFileInfo Info(s->DocName);
-	  defaultDataSet = Info.dirPath() + QDir::separator() + s->DataSet;
+	  defaultDataSet = Info.path() + QDir::separator() + s->DataSet;
   }else{
 	  defaultDataSet = "unknown";
   }
@@ -190,10 +191,10 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     Box2Layout->addWidget(Label1);
     PropertyBox = new QComboBox();
     Box2Layout->addWidget(PropertyBox);
-    PropertyBox->insertItem(tr("real/imaginary"));
-    PropertyBox->insertItem(tr("magnitude/angle (degree)"));
-    PropertyBox->insertItem(tr("magnitude/angle (radian)"));
-    PropertyBox->setCurrentItem(1);
+    PropertyBox->addItem(tr("real/imaginary"));
+    PropertyBox->addItem(tr("magnitude/angle (degree)"));
+    PropertyBox->addItem(tr("magnitude/angle (radian)"));
+    PropertyBox->setCurrentIndex(1);
     connect(PropertyBox, SIGNAL(activated(int)), SLOT(slotSetNumMode(int)));
     Box2Layout->setStretchFactor(new QWidget(Box2), 5); // stretchable placeholder
 
@@ -221,14 +222,14 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     Label3->setEnabled(false);
     PropertyBox = new QComboBox();
     Box2Layout->addWidget(PropertyBox);
-    PropertyBox->insertItem(tr("solid line"));
-    PropertyBox->insertItem(tr("dash line"));
-    PropertyBox->insertItem(tr("dot line"));
+    PropertyBox->addItem(tr("solid line"));
+    PropertyBox->addItem(tr("dash line"));
+    PropertyBox->addItem(tr("dot line"));
     if(Diag->Name != "Time") {
-      PropertyBox->insertItem(tr("long dash line"));
-      PropertyBox->insertItem(tr("stars"));
-      PropertyBox->insertItem(tr("circles"));
-      PropertyBox->insertItem(tr("arrows"));
+      PropertyBox->addItem(tr("long dash line"));
+      PropertyBox->addItem(tr("stars"));
+      PropertyBox->addItem(tr("circles"));
+      PropertyBox->addItem(tr("arrows"));
     }
     connect(PropertyBox, SIGNAL(activated(int)),
 			 SLOT(slotSetGraphStyle(int)));
@@ -249,8 +250,8 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
       Label4->setEnabled(false);
       yAxisBox = new QComboBox();
       Box2Layout->addWidget(yAxisBox);
-      yAxisBox->insertItem(NameY);
-      yAxisBox->insertItem(NameZ);
+      yAxisBox->addItem(NameY);
+      yAxisBox->addItem(NameZ);
       yAxisBox->setEnabled(false);
       connect(yAxisBox, SIGNAL(activated(int)), SLOT(slotSetYAxis(int)));
     }
@@ -327,59 +328,58 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   int Row = 0;
   if(Diag->Name.at(0) != 'T') {  // not tabular or timing diagram
     QWidget *Tab2 = new QWidget(t);
-    QGridLayout *gp = new QGridLayout(Tab2,13,3,5,5);
+    QGridLayout *gp = new QGridLayout();
+    Tab2->setLayout(gp);
 
-    gp->addMultiCellWidget(new QLabel(tr("x-Axis Label:"), Tab2), Row,Row,0,0);
+    gp->addWidget(new QLabel(tr("x-Axis Label:"), Tab2), Row, 0);
     xLabel = new QLineEdit(Tab2);
     xLabel->setValidator(Validator);
-    gp->addMultiCellWidget(xLabel, Row,Row,1,2);
+    gp->addWidget(xLabel, Row, 1);
     Row++;
 
-    gp->addMultiCellWidget(
-		new QLabel(NameY+" "+tr("Label:"), Tab2), Row,Row,0,0);
+    gp->addWidget(new QLabel(NameY+" "+tr("Label:"), Tab2), Row, 0);
     ylLabel = new QLineEdit(Tab2);
     ylLabel->setValidator(Validator);
-    gp->addMultiCellWidget(ylLabel, Row,Row,1,2);
+    gp->addWidget(ylLabel, Row, 1);
     Row++;
 
     if((Diag->Name != "Smith") && (Diag->Name != "Polar")) {
-      gp->addMultiCellWidget(
-		new QLabel(NameZ +" "+tr("Label:"), Tab2), Row,Row,0,0);
+      gp->addWidget(new QLabel(NameZ +" "+tr("Label:"), Tab2), Row, 0);
       yrLabel = new QLineEdit(Tab2);
       yrLabel->setValidator(Validator);
-      gp->addMultiCellWidget(yrLabel, Row,Row,1,2);
+      gp->addWidget(yrLabel, Row, 1);
       Row++;
     }
 
-    gp->addMultiCellWidget(new QLabel(
-        tr("<b>Label text</b>: Use LaTeX style for special characters, e.g. \\tau"),
-        Tab2),  Row,Row,0,2);
+    gp->addWidget(
+        new QLabel(tr("<b>Label text</b>: Use LaTeX style for special characters, e.g. \\tau"), Tab2),
+        Row, 0, 1, 2);
     Row++;
 
     if(Diag->Name != "Rect3D") {
       GridOn = new QCheckBox(tr("show Grid"), Tab2);
-      gp->addMultiCellWidget(GridOn, Row,Row,0,2);
+      gp->addWidget(GridOn, Row, 0);
       Row++;
 
       GridLabel1 = new QLabel(tr("Grid Color:"),Tab2);
-      gp->addMultiCellWidget(GridLabel1, Row,Row,0,0);
+      gp->addWidget(GridLabel1, Row, 0);
       GridColorButt = new QPushButton("        ",Tab2);
       connect(GridColorButt, SIGNAL(clicked()), SLOT(slotSetGridColor()));
-      gp->addMultiCellWidget(GridColorButt, Row,Row,1,2);
+      gp->addWidget(GridColorButt, Row, 1);
       Row++;
-      GridColorButt->setPaletteBackgroundColor(Diag->GridPen.color());
+      misc::setWidgetBackgroundColor(GridColorButt, Diag->GridPen.color());
 
       GridLabel2 = new QLabel(tr("Grid Style: "), Tab2);
-      gp->addMultiCellWidget(GridLabel2, Row,Row,0,0);
+      gp->addWidget(GridLabel2, Row, 0);
       GridStyleBox = new QComboBox(Tab2);
-      GridStyleBox->insertItem(tr("solid line"));
-      GridStyleBox->insertItem(tr("dash line"));
-      GridStyleBox->insertItem(tr("dot line"));
-      GridStyleBox->insertItem(tr("dash dot line"));
-      GridStyleBox->insertItem(tr("dash dot dot line"));
-      gp->addMultiCellWidget(GridStyleBox, Row,Row,1,2);
+      GridStyleBox->addItem(tr("solid line"));
+      GridStyleBox->addItem(tr("dash line"));
+      GridStyleBox->addItem(tr("dot line"));
+      GridStyleBox->addItem(tr("dash dot line"));
+      GridStyleBox->addItem(tr("dash dot dot line"));
+      gp->addWidget(GridStyleBox, Row, 1);
       Row++;
-      GridStyleBox->setCurrentItem(Diag->GridPen.style()-1);
+      GridStyleBox->setCurrentIndex(Diag->GridPen.style()-1);
     
       GridOn->setChecked(Diag->xAxis.GridOn);
       if(!Diag->xAxis.GridOn) slotSetGridBox(0);
@@ -398,15 +398,15 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
 
     if((Diag->Name.left(4) == "Rect") || (Diag->Name == "Curve")) {
       GridLogX = new QCheckBox(tr("logarithmical X Axis Grid"), Tab2);
-      gp->addMultiCellWidget(GridLogX, Row,Row,0,2);
+      gp->addWidget(GridLogX, Row, 0);
       Row++;
 
       GridLogY = new QCheckBox(tr("logarithmical")+" "+NameY+" "+tr("Grid"), Tab2);
-      gp->addMultiCellWidget(GridLogY, Row,Row,0,2);
+      gp->addWidget(GridLogY, Row, 0);
       Row++;
 
       GridLogZ = new QCheckBox(tr("logarithmical")+" "+NameZ+" "+tr("Grid"), Tab2);
-      gp->addMultiCellWidget(GridLogZ, Row,Row,0,2);
+      gp->addWidget(GridLogZ, Row, 0);
       Row++;
 
       // ...........................................................
@@ -418,14 +418,17 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
 
       if(Diag->Name == "Rect3D") {
         hideInvisible = new QCheckBox(tr("hide invisible lines"), Tab2);
-        gp->addMultiCellWidget(hideInvisible, Row,Row,0,2);
+        gp->addWidget(hideInvisible, Row, 0);
         Row++;
 
         QLabel *LabelRotX = new QLabel(tr("Rotation around x-Axis:"), Tab2);
-        LabelRotX->setPaletteForegroundColor(Qt::red);
+        misc::setWidgetForegroundColor(LabelRotX, Qt::red);
         gp->addWidget(LabelRotX, Row,0);
-        SliderRotX = new QSlider(0,360,20, ((Rect3DDiagram*)Diag)->rotX,
-				 Qt::Horizontal, Tab2);
+        SliderRotX = new QSlider(Qt::Horizontal, Tab2);
+        SliderRotX->setMinimum(0);
+        SliderRotX->setMaximum(360);
+        SliderRotX->setPageStep(20);
+        SliderRotX->setValue(((Rect3DDiagram*)Diag)->rotX);
         gp->addWidget(SliderRotX, Row,1);
         connect(SliderRotX, SIGNAL(valueChanged(int)), SLOT(slotNewRotX(int)));
         rotationX = new QLineEdit(Tab2);
@@ -438,10 +441,13 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
         Row++;
 
         QLabel *LabelRotY = new QLabel(tr("Rotation around y-Axis:"), Tab2);
-        LabelRotY->setPaletteForegroundColor(Qt::green);
+        misc::setWidgetForegroundColor(LabelRotY, Qt::green);
         gp->addWidget(LabelRotY, Row,0);
-        SliderRotY = new QSlider(0,360,20, ((Rect3DDiagram*)Diag)->rotY,
-				 Qt::Horizontal, Tab2);
+        SliderRotY = new QSlider(Qt::Horizontal, Tab2);
+        SliderRotY->setMinimum(0);
+        SliderRotY->setMaximum(360);
+        SliderRotY->setPageStep(20);
+        SliderRotY->setValue(((Rect3DDiagram*)Diag)->rotY);
         gp->addWidget(SliderRotY, Row,1);
         connect(SliderRotY, SIGNAL(valueChanged(int)), SLOT(slotNewRotY(int)));
         rotationY = new QLineEdit(Tab2);
@@ -454,10 +460,13 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
         Row++;
 
         QLabel *LabelRotZ = new QLabel(tr("Rotation around z-Axis:"), Tab2);
-        LabelRotZ->setPaletteForegroundColor(Qt::blue);
+        misc::setWidgetForegroundColor(LabelRotZ, Qt::blue);
         gp->addWidget(LabelRotZ, Row,0);
-        SliderRotZ = new QSlider(0,360,20, ((Rect3DDiagram*)Diag)->rotZ,
-				 Qt::Horizontal, Tab2);
+        SliderRotZ = new QSlider(Qt::Horizontal, Tab2);
+        SliderRotZ->setMinimum(0);
+        SliderRotZ->setMaximum(360);
+        SliderRotZ->setPageStep(20);
+        SliderRotZ->setValue(((Rect3DDiagram*)Diag)->rotZ);
         gp->addWidget(SliderRotZ, Row,1);
         connect(SliderRotZ, SIGNAL(valueChanged(int)), SLOT(slotNewRotZ(int)));
         rotationZ = new QLineEdit(Tab2);
@@ -688,14 +697,14 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   // ...........................................................
   // put all data files into ComboBox
   QFileInfo Info(defaultDataSet);
-  QDir ProjDir(Info.dirPath());
-  QStringList Elements = ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
+  QDir ProjDir(Info.path());
+  QStringList Elements = ProjDir.entryList(QStringList("*.dat"), QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Elements.begin(); it != Elements.end(); ++it) {
-    ChooseData->insertItem((*it).left((*it).length()-4));
+    ChooseData->addItem((*it).left((*it).length()-4));
     if((*it) == Info.fileName())
       // default dataset should be the current
-      ChooseData->setCurrentItem(ChooseData->count()-1);
+      ChooseData->setCurrentIndex(ChooseData->count()-1);
   }
   slotReadVars(0);  // put variables into the ListView
 
@@ -716,7 +725,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
       QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
       QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
       ColorButt->setStyleSheet(stylesheet);
-      ColorButt->setPaletteBackgroundColor(selectedColor);
+      misc::setWidgetBackgroundColor(ColorButt, selectedColor);
     }
   }
 }
@@ -735,7 +744,7 @@ void DiagramDialog::slotReadVars(int)
   QFileInfo Info(defaultDataSet);
   QString DocName = ChooseData->currentText()+".dat";
 
-  QFile file(Info.dirPath() + QDir::separator() + DocName);
+  QFile file(Info.path() + QDir::separator() + DocName);
   if(!file.open(QIODevice::ReadOnly)) {
     return;
   }
@@ -816,7 +825,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
   int row = Item->row();
   QString s1 = ChooseVars->item(row, 0)->text();
   QFileInfo Info(defaultDataSet);
-  if(ChooseData->currentText() != Info.baseName(true))
+  if(ChooseData->currentText() != Info.completeBaseName())
     s1 = ChooseData->currentText() + ":" + s1;
   GraphInput->setText(s1);
 
@@ -828,19 +837,19 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 
     if(Diag->Name != "Tab") {
       if(Diag->Name != "Truth") {
-        g->Color = ColorButt->paletteBackgroundColor();
+        g->Color = misc::getWidgetBackgroundColor(ColorButt);
         g->Thick = Property2->text().toInt();
         QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
         QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
         ColorButt->setStyleSheet(stylesheet);
-        ColorButt->setPaletteBackgroundColor(selectedColor);
+        misc::setWidgetBackgroundColor(ColorButt, selectedColor);
         if(g->Var.right(3) == ".Vb")   // harmonic balance output ?
           if(PropertyBox->count() >= GRAPHSTYLE_ARROW)
-            PropertyBox->setCurrentItem(GRAPHSTYLE_ARROW);
-        g->Style = toGraphStyle(PropertyBox->currentItem());
+            PropertyBox->setCurrentIndex(GRAPHSTYLE_ARROW);
+        g->Style = toGraphStyle(PropertyBox->currentIndex());
         assert(g->Style!=GRAPHSTYLE_INVALID);
         if(yAxisBox) {
-          g->yAxisNo = yAxisBox->currentItem();
+          g->yAxisNo = yAxisBox->currentIndex();
           yAxisBox->setEnabled(true);
           Label4->setEnabled(true);
         }
@@ -852,7 +861,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
     }
     else {
       g->Precision = Property2->text().toInt();
-      g->numMode   = PropertyBox->currentItem();
+      g->numMode   = PropertyBox->currentIndex();
     }
 
     Graphs.append(g);
@@ -897,10 +906,10 @@ void DiagramDialog::SelectGraph(Graph *g)
       Property2->setText(QString::number(g->Thick));
       QString stylesheet = QString("QPushButton {background-color: %1};").arg(g->Color.name());
       ColorButt->setStyleSheet(stylesheet);
-      ColorButt->setPaletteBackgroundColor(g->Color);
-      PropertyBox->setCurrentItem(g->Style);
+      misc::setWidgetBackgroundColor(ColorButt, g->Color);
+      PropertyBox->setCurrentIndex(g->Style);
       if(yAxisBox) {
-        yAxisBox->setCurrentItem(g->yAxisNo);
+        yAxisBox->setCurrentIndex(g->yAxisNo);
         yAxisBox->setEnabled(true);
         Label4->setEnabled(true);
       }
@@ -911,7 +920,7 @@ void DiagramDialog::SelectGraph(Graph *g)
   }
   else {
     Property2->setText(QString::number(g->Precision));
-    PropertyBox->setCurrentItem(g->numMode);
+    PropertyBox->setCurrentIndex(g->numMode);
   }
   toTake = false;
 
@@ -951,10 +960,10 @@ void DiagramDialog::slotDeleteGraph()
       QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
       QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
       ColorButt->setStyleSheet(stylesheet);
-      ColorButt->setPaletteBackgroundColor(selectedColor);
+      misc::setWidgetBackgroundColor(ColorButt, selectedColor);
       Property2->setText("0");
       if(yAxisBox) {
-        yAxisBox->setCurrentItem(0);
+        yAxisBox->setCurrentIndex(0);
         yAxisBox->setEnabled(false);
         Label4->setEnabled(false);
       }
@@ -968,7 +977,7 @@ void DiagramDialog::slotDeleteGraph()
   toTake  = false;
 
   if(Property2) {
-    PropertyBox->setCurrentItem(0);
+    PropertyBox->setCurrentIndex(0);
 
     Label1->setEnabled(false);
     PropertyBox->setEnabled(false);
@@ -989,17 +998,17 @@ void DiagramDialog::slotNewGraph()
 // FIXME: call  Diag->whateverelse();
   if(Diag->Name != "Tab") { // BUG
     if(Diag->Name != "Truth") { // BUG
-      g->Color = ColorButt->paletteBackgroundColor();
+      g->Color = misc::getWidgetBackgroundColor(ColorButt);
       g->Thick = Property2->text().toInt();
-      g->Style = toGraphStyle(PropertyBox->currentItem());
+      g->Style = toGraphStyle(PropertyBox->currentIndex());
       assert(g->Style!=GRAPHSTYLE_INVALID);
-      if(yAxisBox)  g->yAxisNo = yAxisBox->currentItem();
+      if(yAxisBox)  g->yAxisNo = yAxisBox->currentIndex();
       else if(Diag->Name == "Rect3D")  g->yAxisNo = 1;
     }
   }
   else {
     g->Precision = Property2->text().toInt();
-    g->numMode   = PropertyBox->currentItem();
+    g->numMode   = PropertyBox->currentIndex();
   }
   Graphs.append(g);
   changed = true;
@@ -1041,14 +1050,16 @@ void DiagramDialog::slotApply()
       Diag->yAxis.GridOn = GridOn->isChecked();
       changed = true;
     }
-    if(GridColorButt)
-      if(Diag->GridPen.color() != GridColorButt->paletteBackgroundColor()) {
-      Diag->GridPen.setColor(GridColorButt->paletteBackgroundColor());
-      changed = true;
+    if(GridColorButt) {
+      QColor gridColBut = misc::getWidgetBackgroundColor(GridColorButt);
+      if(Diag->GridPen.color() != gridColBut) {
+        Diag->GridPen.setColor(gridColBut);
+        changed = true;
+      }
     }
     if(GridStyleBox)
-      if(Diag->GridPen.style()!=(Qt::PenStyle)(GridStyleBox->currentItem()+1)) {
-      Diag->GridPen.setStyle((Qt::PenStyle)(GridStyleBox->currentItem()+1));
+      if(Diag->GridPen.style()!=(Qt::PenStyle)(GridStyleBox->currentIndex()+1)) {
+      Diag->GridPen.setStyle((Qt::PenStyle)(GridStyleBox->currentIndex()+1));
       changed = true;
     }
     if((Diag->Name != "Smith") && (Diag->Name != "Polar")) {
@@ -1198,11 +1209,12 @@ void DiagramDialog::reject()
 // --------------------------------------------------------------------------
 void DiagramDialog::slotSetColor()
 {
-  QColor c = QColorDialog::getColor(ColorButt->paletteBackgroundColor(),this);
+  QColor c = QColorDialog::getColor(
+              misc::getWidgetBackgroundColor(ColorButt),this);
   if(!c.isValid()) return;
   QString stylesheet = QString("QPushButton {background-color: %1};").arg(c.name());
   ColorButt->setStyleSheet(stylesheet);
-  ColorButt->setPaletteBackgroundColor(c);
+  misc::setWidgetBackgroundColor(ColorButt, c);
 
   int i = GraphList->currentRow();
   if(i < 0) return;   // return, if no item selected
@@ -1217,9 +1229,9 @@ void DiagramDialog::slotSetColor()
 void DiagramDialog::slotSetGridColor()
 {
   QColor c = QColorDialog::getColor(
-			GridColorButt->paletteBackgroundColor(),this);
+              misc::getWidgetBackgroundColor(GridColorButt),this);
   if(!c.isValid()) return;
-  GridColorButt->setPaletteBackgroundColor(c);
+  misc::setWidgetBackgroundColor(GridColorButt, c);
   changed = true;
 }
 

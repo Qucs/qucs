@@ -1046,7 +1046,7 @@ void QucsTranscalc::slotValueChanged()
 
 // Load transmission line values from the given file.
 bool QucsTranscalc::loadFile(QString fname, int * _mode) {
-  QFile file(QDir::convertSeparators (fname));
+  QFile file(QDir::toNativeSeparators(fname));
   if(!file.open(QIODevice::ReadOnly)) return false; // file doesn't exist
 
   QTextStream stream(&file);
@@ -1088,7 +1088,7 @@ bool QucsTranscalc::loadFile(QString fname, int * _mode) {
 
 // Saves current transmission line values into the given file.
 bool QucsTranscalc::saveFile(QString fname) {
-  QFile file (QDir::convertSeparators (fname));
+  QFile file (QDir::toNativeSeparators(fname));
   if(!file.open (QIODevice::WriteOnly)) return false; // file not writable
   QTextStream stream (&file);
 

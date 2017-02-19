@@ -177,9 +177,11 @@ QucsApp::QucsApp()
   lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
 
   // load documents given as command line arguments
-  for(int z=1; z<qApp->argc(); z++) {
-    QString arg = qApp->argv()[z];
-    if(*(arg) != '-') {
+  for(int z=1; z<qApp->arguments().size(); z++) {
+    QString arg = qApp->arguments()[z];
+    QByteArray ba = arg.toLatin1();
+    const char *c_arg= ba.data();
+    if(*(c_arg) != '-') {
       QFileInfo Info(arg);
       QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
       arg = QucsSettings.QucsWorkDir.filePath(Info.fileName());
@@ -580,9 +582,9 @@ QucsDoc * QucsApp::findDoc (QString File, int * Pos)
 {
   QucsDoc * d;
   int No = 0;
-  File = QDir::convertSeparators (File);
+  File = QDir::toNativeSeparators(File);
   while ((d = getDoc (No++)) != 0)
-    if (QDir::convertSeparators (d->DocName) == File) {
+    if (QDir::toNativeSeparators(d->DocName) == File) {
       if (Pos) *Pos = No - 1;
       return d;
     }
@@ -1262,7 +1264,7 @@ void QucsApp::slotMenuProjClose()
 
   slotResetWarnings();
   setWindowTitle("Qucs " PACKAGE_VERSION + tr(" - Project: "));
-  QucsSettings.QucsWorkDir.setPath(QDir::homePath()+QDir::convertSeparators ("/.qucs"));
+  QucsSettings.QucsWorkDir.setPath(QDir::homePath()+QDir::toNativeSeparators("/.qucs"));
   octave->adjustDirectory();
 
   Content->setProjPath("");
