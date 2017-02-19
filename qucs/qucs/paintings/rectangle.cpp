@@ -16,6 +16,7 @@
  ***************************************************************************/
 #include "rectangle.h"
 #include "filldialog.h"
+#include "misc.h"
 #include "schematic.h"
 
 #include <QPainter>
@@ -372,11 +373,11 @@ bool Rectangle::Dialog()
   bool changed = false;
 
   FillDialog *d = new FillDialog(QObject::tr("Edit Rectangle Properties"));
-  d->ColorButt->setPaletteBackgroundColor(Pen.color());
+  misc::setWidgetBackgroundColor(d->ColorButt, Pen.color());
   d->LineWidth->setText(QString::number(Pen.width()));
-  d->StyleBox->setCurrentItem(Pen.style()-1);
-  d->FillColorButt->setPaletteBackgroundColor(Brush.color());
-  d->FillStyleBox->setCurrentItem(Brush.style());
+  d->StyleBox->setCurrentIndex(Pen.style()-1);
+  misc::setWidgetBackgroundColor(d->FillColorButt, Brush.color());
+  d->FillStyleBox->setCurrentIndex(Brush.style());
   d->CheckFilled->setChecked(filled);
   d->slotCheckFilled(filled);
 
@@ -385,28 +386,31 @@ bool Rectangle::Dialog()
     return false;
   }
 
-  if(Pen.color() != d->ColorButt->paletteBackgroundColor()) {
-    Pen.setColor(d->ColorButt->paletteBackgroundColor());
+  /// \todo deduplicate
+  QColor penColor = misc::getWidgetBackgroundColor(d->ColorButt);
+  if(Pen.color() != penColor) {
+    Pen.setColor(penColor);
     changed = true;
   }
   if(Pen.width()  != d->LineWidth->text().toInt()) {
     Pen.setWidth(d->LineWidth->text().toInt());
     changed = true;
   }
-  if(Pen.style()  != (Qt::PenStyle)(d->StyleBox->currentItem()+1)) {
-    Pen.setStyle((Qt::PenStyle)(d->StyleBox->currentItem()+1));
+  if(Pen.style()  != (Qt::PenStyle)(d->StyleBox->currentIndex()+1)) {
+    Pen.setStyle((Qt::PenStyle)(d->StyleBox->currentIndex()+1));
     changed = true;
   }
   if(filled != d->CheckFilled->isChecked()) {
     filled = d->CheckFilled->isChecked();
     changed = true;
   }
-  if(Brush.color() != d->FillColorButt->paletteBackgroundColor()) {
-    Brush.setColor(d->FillColorButt->paletteBackgroundColor());
+  QColor brushColor = misc::getWidgetBackgroundColor(d->FillColorButt);
+  if(Brush.color() != brushColor) {
+    Brush.setColor(brushColor);
     changed = true;
   }
-  if(Brush.style() != d->FillStyleBox->currentItem()) {
-    Brush.setStyle((Qt::BrushStyle)d->FillStyleBox->currentItem());
+  if(Brush.style() != d->FillStyleBox->currentIndex()) {
+    Brush.setStyle((Qt::BrushStyle)d->FillStyleBox->currentIndex());
     changed = true;
   }
 

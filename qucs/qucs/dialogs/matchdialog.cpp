@@ -97,8 +97,8 @@ MatchDialog::MatchDialog(QWidget *parent)
   h1->addWidget(FormatLabel);
   FormatCombo = new QComboBox();
   h1->addWidget(FormatCombo);
-  FormatCombo->insertItem(0, tr("real/imag"));
-  FormatCombo->insertItem(1, tr("mag/deg"));
+  FormatCombo->addItem(tr("real/imag"));
+  FormatCombo->addItem(tr("mag/deg"));
   connect(FormatCombo, SIGNAL(activated(int)), SLOT(slotChangeMode(int)));
   h1->addStretch(5);
   SParLayout->addLayout(h1);

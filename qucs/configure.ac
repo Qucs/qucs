@@ -299,7 +299,7 @@ case $host_os in
     if test "$enable_mt" = yes; then
       QT_LDF=""
       QT_LIB="-lQtCore -lQtGui -lQtXml -lQt3Support -lQtSvg -lQtScript"
-      QT_INC="$QT_DEF -DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS -DQT_THREAD_SUPPORT -D_REENTRANT"
+      QT_INC="$QT_DEF -DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS -DQT_DEPRECATED_WARNINGS -DQT_THREAD_SUPPORT -D_REENTRANT"
       [case $host_os in
         *freebsd*) QT_LIB="$QT_LIB -pthread" ;;
         *mingw* | *msys*) QT_INC="$QT_INC -mthreads"; QT_LDF="$QT_LDF -mthreads" ;;
@@ -412,7 +412,7 @@ case $host_os in
     fi
 
     dnl Define Qt3Support
-    QT_DEF="-DQT_SHARED -DQT3_SUPPORT"
+    QT_DEF="-DQT_SHARED -DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS -DQT_DEPRECATED_WARNINGS"
     CPPFLAGS="$CPPFLAGS $QT_DEF"
     QT_LDFLAGS="$QT_LDFLAGS -headerpad_max_install_names"
 

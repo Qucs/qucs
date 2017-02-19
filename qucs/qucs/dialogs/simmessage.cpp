@@ -76,7 +76,7 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
   DataDisplay = Doc->DataDisplay;
   Script = Doc->Script;
   QFileInfo Info(DocName);
-  DataSet = QDir::convertSeparators(Info.path()) +
+  DataSet = QDir::toNativeSeparators(Info.path()) +
     QDir::separator() + Doc->DataSet;
   showBias = Doc->showBias;     // save some settings as the document...
   SimOpenDpl = Doc->SimOpenDpl; // ...could be closed during the simulation.
@@ -326,7 +326,7 @@ void SimMessage::slotFinishSpiceNetlist(int status )
 #ifdef __MINGW32__
 #include <windows.h>
 static QString pathName(QString longpath) {
-  const char * lpath = QDir::convertSeparators(longpath).ascii();
+  const char * lpath = QDir::toNativeSeparators(longpath).toAscii();
   char spath[2048];
   int len = GetShortPathNameA(lpath,spath,sizeof(spath)-1);
   spath[len] = '\0';
@@ -350,7 +350,7 @@ void SimMessage::startSimulator()
 
   QString SimTime;
   QStringList Arguments;
-  QString SimPath = QDir::convertSeparators (QucsSettings.QucsHomeDir.absolutePath());
+  QString SimPath = QDir::toNativeSeparators(QucsSettings.QucsHomeDir.absolutePath());
 #ifdef __MINGW32__
   QString QucsDigiLib = "qucsdigilib.bat";
   QString QucsDigi = "qucsdigi.bat";
@@ -408,7 +408,7 @@ void SimMessage::startSimulator()
       QString entity = VInfo.EntityName.toLower();
       QString lib = Doc->Library.toLower();
       if (lib.isEmpty()) lib = "work";
-      QString dir = QDir::convertSeparators (QucsSettings.QucsHomeDir.path());
+      QString dir = QDir::toNativeSeparators(QucsSettings.QucsHomeDir.path());
       QDir vhdlDir(dir);
       if(!vhdlDir.exists("vhdl"))
 	if(!vhdlDir.mkdir("vhdl")) {
