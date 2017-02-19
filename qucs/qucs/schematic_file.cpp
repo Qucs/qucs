@@ -377,16 +377,16 @@ int Schematic::saveDocument()
   stream << "  <OpenDisplay=" << SimOpenDpl << ">\n";
   stream << "  <Script=" << Script << ">\n";
   stream << "  <RunScript=" << SimRunScript << ">\n";
-  stream << "  <showFrame=" << showFrame << ">\n";
+  stream << "  <showFrame=" << schematicFrame->PageType << ">\n";
 
   QString t;
-  misc::convert2ASCII(t = Frame_Text0);
+  misc::convert2ASCII(t = schematicFrame->Title);
   stream << "  <FrameText0=" << t << ">\n";
-  misc::convert2ASCII(t = Frame_Text1);
+  misc::convert2ASCII(t = schematicFrame->Author);
   stream << "  <FrameText1=" << t << ">\n";
-  misc::convert2ASCII(t = Frame_Text2);
+  misc::convert2ASCII(t = schematicFrame->Date);
   stream << "  <FrameText2=" << t << ">\n";
-  misc::convert2ASCII(t = Frame_Text3);
+  misc::convert2ASCII(t = schematicFrame->Revision);
   stream << "  <FrameText3=" << t << ">\n";
   stream << "</Properties>\n";
 
@@ -588,11 +588,11 @@ bool Schematic::loadProperties(QTextStream *stream)
 		if(nstr.toInt(&ok) == 0) SimRunScript = false;
 		else SimRunScript = true;
     else if(cstr == "showFrame")
-		showFrame = nstr.at(0).toLatin1() - '0';
-    else if(cstr == "FrameText0") misc::convert2Unicode(Frame_Text0 = nstr);
-    else if(cstr == "FrameText1") misc::convert2Unicode(Frame_Text1 = nstr);
-    else if(cstr == "FrameText2") misc::convert2Unicode(Frame_Text2 = nstr);
-    else if(cstr == "FrameText3") misc::convert2Unicode(Frame_Text3 = nstr);
+                schematicFrame->PageType= nstr.at(0).toLatin1() - '0';
+    else if(cstr == "FrameText0") misc::convert2Unicode(schematicFrame->Title = nstr);
+    else if(cstr == "FrameText1") misc::convert2Unicode(schematicFrame->Author = nstr);
+    else if(cstr == "FrameText2") misc::convert2Unicode(schematicFrame->Date = nstr);
+    else if(cstr == "FrameText3") misc::convert2Unicode(schematicFrame->Revision= nstr);
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 	   QObject::tr("Format Error:\nUnknown property: ")+cstr);

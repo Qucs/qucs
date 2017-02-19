@@ -34,6 +34,7 @@
 #include "diagrams/diagram.h"
 #include "paintings/painting.h"
 #include "components/component.h"
+#include "frame.h"
 
 #include <QGraphicsView>
 #include <Q3PtrList>
@@ -108,7 +109,6 @@ public:
   void PostPaintEvent(PE pe, int x1=0, int y1=0, int x2=0, int y2=0, int a=0, int b=0,bool PaintOnViewport=false);
 
   float textCorr();
-  bool sizeOfFrame(int&, int&);
   void  sizeOfAll(int&, int&, int&, int&);
   bool  rotateElements();
   bool  mirrorXComponents();
@@ -145,6 +145,9 @@ public:
   // schematic Scene for this QGraphicsView
   QGraphicsScene *scene;
 
+  // schematic frame item
+  Frame *schematicFrame;
+
   // The pointers points to the current lists, either to the schematic
   // elements "Doc..." or to the symbol elements "SymbolPaints".
 // private: //TODO. one at a time.
@@ -170,9 +173,6 @@ public:
   int ViewX1, ViewY1, ViewX2, ViewY2;  // size of the document area
   int UsedX1, UsedY1, UsedX2, UsedY2;  // document area used by elements
 
-  int showFrame;
-  QString Frame_Text0, Frame_Text1, Frame_Text2, Frame_Text3;
-
   // Two of those data sets are needed for Schematic and for symbol.
   // Which one is in "tmp..." depends on "symbolMode".
   float tmpScale;
@@ -196,8 +196,6 @@ signals:
   void signalFileChanged(bool);
 
 protected:
-  void paintFrame(ViewPainter*);
-
   // overloaded function to get actions of user
   void contentsMouseMoveEvent(QMouseEvent*);
   void contentsMousePressEvent(QMouseEvent*);

@@ -171,16 +171,16 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
     Check_GridOn->setChecked(Doc->GridOn);
     Input_GridX->setText(QString::number(Doc->GridX));
     Input_GridY->setText(QString::number(Doc->GridY));
-    Combo_Frame->setCurrentIndex(Doc->showFrame);
+    Combo_Frame->setCurrentIndex(Doc->schematicFrame->PageType);
 
     QString Text_;
-    decode_String(Text_ = Doc->Frame_Text0);
+    decode_String(Text_ = Doc->schematicFrame->Title);
     Input_Frame0->setText(Text_);
-    decode_String(Text_ = Doc->Frame_Text1);
+    decode_String(Text_ = Doc->schematicFrame->Author);
     Input_Frame1->setText(Text_);
-    decode_String(Text_ = Doc->Frame_Text2);
+    decode_String(Text_ = Doc->schematicFrame->Date);
     Input_Frame2->setText(Text_);
-    decode_String(Text_ = Doc->Frame_Text3);
+    decode_String(Text_ = Doc->schematicFrame->Revision);
     Input_Frame3->setText(Text_);
 
     resize(250, 200);
@@ -275,38 +275,38 @@ void SettingsDialog::slotApply()
         changed = true;
     }
 
-    if(Doc->showFrame != Combo_Frame->currentIndex())
+    if(Doc->schematicFrame->PageType != Combo_Frame->currentIndex())
     {
-        Doc->showFrame = Combo_Frame->currentIndex();
+        Doc->schematicFrame->PageType = Combo_Frame->currentIndex();
         changed = true;
     }
 
     QString t;
     encode_String(Input_Frame0->toPlainText(), t);
-    if(Doc->Frame_Text0 != t)
+    if(Doc->schematicFrame->Title != t)
     {
-        Doc->Frame_Text0 = t;
+        Doc->schematicFrame->Title = t;
         changed = true;
     }
 
     encode_String(Input_Frame1->text(), t);
-    if(Doc->Frame_Text1 != t)
+    if(Doc->schematicFrame->Author != t)
     {
-        Doc->Frame_Text1 = t;
+        Doc->schematicFrame->Author = t;
         changed = true;
     }
 
     encode_String(Input_Frame2->text(), t);
-    if(Doc->Frame_Text2 != t)
+    if(Doc->schematicFrame->Date != t)
     {
-        Doc->Frame_Text2 = t;
+        Doc->schematicFrame->Date = t;
         changed = true;
     }
 
     encode_String(Input_Frame3->text(), t);
-    if(Doc->Frame_Text3 != t)
+    if(Doc->schematicFrame->Revision != t)
     {
-        Doc->Frame_Text3 = t;
+        Doc->schematicFrame->Revision = t;
         changed = true;
     }
 
