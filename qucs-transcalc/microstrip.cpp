@@ -531,7 +531,7 @@ int microstrip::synthesize()
   calc();
   Z0_current = Z0;
 
-  error = fabs(Z0_dest - Z0_current);
+  error = std::abs(Z0_dest - Z0_current);
 
   while (error > MAX_ERROR) {
     iteration++;
@@ -552,7 +552,7 @@ int microstrip::synthesize()
     /* compute microstrip parameters */
     calc();
     Z0_current = Z0;
-    error = fabs(Z0_dest - Z0_current);
+    error = std::abs(Z0_dest - Z0_current);
     /*      printf("Iteration = %d\n",iteration);
 	    printf("w = %g\t Z0 = %g\n",ms->w, Z0_current); */
     if (iteration > maxiter)
