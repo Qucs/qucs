@@ -4,6 +4,10 @@
     begin                : Sat Apr 10 2004
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
+****************************************************************************
+    Update               : Added delta markers feature. March 2017
+    Author		 : Andres Martinez-Mera
+    email                : andresmartinezmera@gmail.com
  ***************************************************************************/
 
 /***************************************************************************
@@ -29,7 +33,7 @@
 #include <QString>
 #include <QPainter>
 #include <QDebug>
-
+#include <QFile>
 #include <limits.h>
 #include <cmath>
 #include <stdlib.h>
@@ -46,7 +50,7 @@ static double default_Z0=50;
  * marker position is the sampling point closest to the click.
  */
 
-Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
+Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_, QString markerID) :
   Element(),
   pGraph(pg_),
   Precision(3),
@@ -55,11 +59,20 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
 {
   Type = isMarker;
   isSelected = transparent = false;
-
   cx =  cx_;
   cy = -cy_;
   fCX = float(cx);
   fCY = float(cy);
+  
+  MarkerID=markerID;
+  MarkerColor = Qt::black;
+
+  ReferenceMarkerData = {0,0,0,0,0,0};
+  MarkerLineWidth = 1;
+  MarkerMode=0;// MarkerMode = 0 => Conventional marker
+               // MarkerMode = 1 => Delta marker
+  ReferenceMarkerID = "#NO_REF#";//No reference
+
   if(!pGraph){
     makeInvalid();
   }else{
@@ -70,11 +83,63 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
 
   x1 =  cx + 60;
   y1 = -cy - 60;
-
 }
 
 Marker::~Marker()
 {
+}
+
+QMap<QString, std::vector<double>> Marker::getMarkersMap()
+{
+  return ActiveMarkers;
+}
+
+QString Marker::getID(void)
+{
+return MarkerID;
+}
+
+void Marker::setID(QString ID)
+{
+MarkerID = ID;
+createText();
+}
+
+
+
+int Marker::getLineWidth()
+{
+  return MarkerLineWidth;
+}
+
+void Marker::setLineWidth(int width)
+{
+  MarkerLineWidth = width;
+}
+
+void Marker::setReferenceMarkerID(QString ref)
+{
+   ReferenceMarkerID=ref;
+}
+
+
+// This function returns the marker values. Its main use is to provide data to the Diagram object so
+// as to build a map with the data of all the active markers.
+std::vector<double> Marker::getData()
+{
+  std::vector<double> data(6);
+  data[0] = VarDep[0];//Real part
+  data[1] = VarDep[1];//Imaginary part
+  data[2] = VarPos[0];//Independent variable
+  data[3] = fCX;//Marker cordinates
+  data[4] = fCY;
+  data[5] = MarkerMode;//This allows to save the marker mode in a map structure. This map is used by markerdialog class to separate those conventional from delta markers
+  return data;
+}
+
+void Marker::setMarkersMap(QMap<QString, std::vector<double>> markersMap)
+{
+   ActiveMarkers = markersMap;
 }
 
 // ---------------------------------------------------------------------
@@ -211,7 +276,8 @@ void Marker::createText()
     makeInvalid();
     return;
   }
-
+  // independent variables
+  MarkerMode ? Text = MarkerID + QString("\nDelta mode, Ref.: ") + ReferenceMarkerID + "\n" :  Text = MarkerID + "\n";
   unsigned nVarPos = VarPos.size();
 
   if(nVarPos > pGraph->numAxes()){
@@ -224,9 +290,13 @@ void Marker::createText()
       VarPos[nVarPos++] = 0.; // pad
     }
   }
-
-  // independent variables
-  Text = "";
+  std::vector<double> VarRef(nVarPos+2);//nVarPos independent variables + 1 complex dependent variable 
+  
+  if (MarkerMode == 1)//Delta mode activated
+  {  
+    //Get reference marker data
+    ReferenceMarkerData = ActiveMarkers[ReferenceMarkerID];
+  }
   double *pp;
   nVarPos = pGraph->numAxes();
   DataX const *pD;
@@ -257,19 +327,58 @@ void Marker::createText()
 
   // now actually create text.
   for(unsigned ii=0; (pD=pGraph->axis(ii)); ++ii) {
-    if(ii==0 && diag()->Name=="Waveac")
+    if (MarkerMode == 0)//Default marker
+    { 
+     if(ii==0 && diag()->Name=="Waveac")
       Text += "Time: " + unit(VarPos[ii]) + "\n";
-    else
+     else
       Text += pD->Var + ": " + QString::number(VarPos[ii],'g',Precision) + "\n";
+    }
+    else//Delta marker
+    {
+     Text += QChar(0x0394) + pD->Var + ": " + QString::number(VarPos[ii]-ReferenceMarkerData[2],'g',Precision) + "\n";
+    }
+  }
+  
+  if (MarkerMode == 1)//Delta marker
+  {
+     Text += QChar(0x0394) + pGraph->Var + ": ";
+  }
+  else//Default marker
+  {
+     Text += pGraph->Var + ": ";
   }
 
-  Text += pGraph->Var + ": ";
   switch(numMode) {
-    case nM_Rect: Text += misc::complexRect(*pz, *(pz+1), Precision);
+    case nM_Rect: 
+        if (MarkerMode)//Delta marker
+        {
+            Text += misc::complexRect(*pz-ReferenceMarkerData[0], *(pz+1)-ReferenceMarkerData[1], Precision);
+        }
+        else//Default marker
+        {
+            Text += misc::complexRect(*pz, *(pz+1), Precision);
+        }
       break;
-    case nM_Deg: Text += misc::complexDeg(*pz, *(pz+1), Precision);
+    case nM_Deg: 
+        if (MarkerMode)//Delta marker
+        {
+            Text += misc::complexDeg(*pz-ReferenceMarkerData[0], *(pz+1)-ReferenceMarkerData[1], Precision);
+        }
+        else//Default marker
+        {
+            Text += misc::complexDeg(*pz, *(pz+1), Precision);
+        }
       break;
-    case nM_Rad: Text += misc::complexRad(*pz, *(pz+1), Precision);
+    case nM_Rad: 
+       if (MarkerMode)
+       {
+         Text += misc::complexRad(*pz-ReferenceMarkerData[0], *(pz+1)-ReferenceMarkerData[1], Precision);
+       }
+       else
+       {
+          Text += misc::complexRad(*pz, *(pz+1), Precision);
+       }
       break;
   }
 
@@ -456,9 +565,34 @@ bool Marker::moveUpDown(bool up)
   return true;
 }
 
+void Marker::setColor(QColor c)
+{
+  MarkerColor = c;
+}
+
+QColor Marker::getColor()
+{
+  return MarkerColor;
+}
+
+void Marker::setMarkerMode(int mode)
+{
+  MarkerMode = mode;
+}
+
+int Marker::getMarkerMode() const
+{
+  return MarkerMode;
+}
+
+
 // ---------------------------------------------------------------------
 void Marker::paint(ViewPainter *p, int x0, int y0)
 {
+  createText();
+
+// is a flag which indicates whether the marker was previously saved or not.
+
   // keep track of painter state
   p->Painter->save();
 
@@ -473,9 +607,13 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
   x2_ = p->drawText(Text, x0+x1+3, y0+y1+3, &y2_);
   x2_ += int(6.0*p->Scale);
   y2_ += int(6.0*p->Scale);
-  if(!transparent) {
+  if(transparent) {
     p->eraseRect(x0+x1, y0+y1, x2_, y2_);
     p->drawText(Text, x0+x1+3, y0+y1+3);
+  }
+  else
+  {
+    p->drawRectD(x0+x1, y0+y1, x2_, y2_);
   }
   p->Painter->setWorldMatrix(wm);
   p->Painter->setWorldMatrixEnabled(false);
@@ -483,8 +621,10 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
   // restore painter state
   p->Painter->restore();
 
-  p->Painter->setPen(QPen(Qt::darkMagenta,0));
-  p->drawRectD(x0+x1, y0+y1, x2_, y2_);
+  if (MarkerMode == 0) p->Painter->setPen(QPen(MarkerColor,MarkerLineWidth));//Delta markers should be black only
+  
+
+  p->Painter->setPen(QPen(Qt::black,1));
 
   x2 = int(float(x2_) / p->Scale);
   y2 = int(float(y2_) / p->Scale);
@@ -505,6 +645,14 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
   fx2 = (float(x0)+fCX)*p->Scale + p->DX;
   fy2 = (float(y0)-fCY)*p->Scale + p->DY;
   p->Painter->drawLine(x1_, y1_, TO_INT(fx2), TO_INT(fy2));
+
+  if (MarkerMode == 1) //Delta Marker
+  {//Draws a second line from the box to the reference marker
+    fx2 = (float(x0)+ReferenceMarkerData[3])*p->Scale + p->DX;
+    fy2 = (float(y0)-ReferenceMarkerData[4])*p->Scale + p->DY;
+    p->Painter->setPen(QPen(Qt::darkGray, 2, Qt::DotLine));
+    p->Painter->drawLine(x1_, y1_, TO_INT(fx2), TO_INT(fy2));
+  }
 
   if(isSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
@@ -564,13 +712,28 @@ void Marker::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 }
 
 // ---------------------------------------------------------------------
+// This function returns a QString with the marker properties (position, name, color, linewidth, etc...)
+// it is called by a Graph object so as to include markers in a .dpl file
 QString Marker::save()
 {
   QString s  = "<Mkr ";
+ 
+  s += QString("%1 ").arg(MarkerID);
+  
+  //Add color and linewidth
+  s += QString("%1 %2 ").arg(MarkerColor.name()).arg(MarkerLineWidth);
+
+  //Add marker mode (delta or normal) and reference marker (if exists)
+
+  s += QString("%1 %2 ").arg(MarkerMode).arg(ReferenceMarkerID);
+
+  //Add reference marker data
+  s += QString("%1#%2#%3#%4#%5 ").arg(ReferenceMarkerData[0]).arg(ReferenceMarkerData[1]).arg(ReferenceMarkerData[2]).arg(ReferenceMarkerData[3]).arg(ReferenceMarkerData[4]);
 
   for(auto i : VarPos){
     s += QString::number(i)+"/";
   }
+
   s.replace(s.length()-1,1,' ');
   //s.at(s.length()-1) = (const QChar&)' ';
 
@@ -581,10 +744,9 @@ QString Marker::save()
 
   return s;
 }
-
-// ---------------------------------------------------------------------
-// All graphs must have been loaded before this function !
-bool Marker::load(const QString& _s)
+//-----------------------------------------------------------------------
+// Backward compatibility function for reading markers from file
+bool Marker::loadOldFormatMarker(const QString& _s)
 {
   bool ok;
   QString s = _s;
@@ -626,6 +788,97 @@ bool Marker::load(const QString& _s)
   if(!ok) return false;
 
   n  = s.section(' ',6,6);      // transparent
+  if(n.isEmpty()) return true;  // is optional
+  if(n == "0")  transparent = false;
+  else  transparent = true;
+
+
+  //Color
+  MarkerColor.setNamedColor("#000000");
+  
+  //Line width
+  MarkerLineWidth = 1;
+
+  //Marker mode (delta or normal)
+  MarkerMode = 0;
+
+  //Reference marker
+  ReferenceMarkerID = QString("#NO_REF#");
+ 
+
+  return true;
+}
+
+// ---------------------------------------------------------------------
+// All graphs must have been loaded before this function !
+bool Marker::load(const QString& _s)
+{
+  bool ok;
+  QString s = _s;
+
+  if (s.count(" ") == 6)//Old marker's format. This function is needed to guarantee the compatibility with the old marker format
+  {
+    return loadOldFormatMarker(s);
+  }
+  if(s.at(0) != '<') return false;
+  if(s.at(s.length()-1) != '>') return false;
+  s = s.mid(1, s.length()-2);   // cut off start and end character
+
+  if(s.section(' ',0,0) != "Mkr") return false;
+
+  MarkerID = s.section(' ',1,1);    // VarPos
+
+  //Color
+  MarkerColor.setNamedColor(s.section(' ',2,2));
+  
+  //Line width
+  MarkerLineWidth = s.section(' ',3,3).toInt();
+
+  //Marker mode (delta or normal)
+  MarkerMode = s.section(' ',4,4).toInt();
+
+  //Reference marker
+  ReferenceMarkerID = s.section(' ',5,5);
+
+  //Reference marker data
+  QString RefMrkData = s.section(' ',6,6);
+  ReferenceMarkerData[0] = RefMrkData.section('#', 0 ,0).toDouble();
+  ReferenceMarkerData[1] = RefMrkData.section('#', 1 ,1).toDouble();
+  ReferenceMarkerData[2] = RefMrkData.section('#', 2 ,2).toDouble();
+  ReferenceMarkerData[3] = RefMrkData.section('#', 3 ,3).toDouble();
+  ReferenceMarkerData[4] = RefMrkData.section('#', 4 ,4).toDouble();
+
+  int i=0, j;
+  QString n = s.section(' ',7,7);    // VarPos
+
+  unsigned nVarPos = 0;
+  j = (n.count('/') + 3);
+  VarPos.resize(j);
+
+  do {
+    j = n.indexOf('/', i);
+    VarPos[nVarPos++] = n.mid(i,j-i).toDouble(&ok);
+    if(!ok) return false;
+    i = j+1;
+  } while(j >= 0);
+
+  n  = s.section(' ',8,8);    // x1
+  x1 = n.toInt(&ok);
+  if(!ok) return false;
+
+  n  = s.section(' ',9,9);    // y1
+  y1 = n.toInt(&ok);
+  if(!ok) return false;
+
+  n  = s.section(' ',10,10);      // Precision
+  Precision = n.toInt(&ok);
+  if(!ok) return false;
+
+  n  = s.section(' ',11,11);      // numMode
+  numMode = n.toInt(&ok);
+  if(!ok) return false;
+
+  n  = s.section(' ',12,12);      // transparent
   if(n.isEmpty()) return true;  // is optional
   if(n == "0")  transparent = false;
   else  transparent = true;
@@ -677,6 +930,11 @@ const Diagram* Marker::diag() const
 Marker* Marker::sameNewOne(Graph *pGraph_)
 {
   Marker *pm = new Marker(pGraph_, 0, cx ,cy);
+  pm->MarkerID=MarkerID;
+  pm->MarkerLineWidth=MarkerLineWidth;
+  pm->MarkerMode=MarkerMode;
+  pm->ReferenceMarkerID=ReferenceMarkerID;
+  pm->MarkerColor=MarkerColor;
 
   pm->x1 = x1;  pm->y1 = y1;
   pm->x2 = x2;  pm->y2 = y2;

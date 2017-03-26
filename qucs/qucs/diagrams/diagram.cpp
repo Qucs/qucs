@@ -49,12 +49,13 @@
 #include <QDateTime>
 #include <QPainter>
 #include <QDebug>
+#include <QFile>
+#include <QTextStream>
 #include <QString>
 
 Diagram::Diagram(int _cx, int _cy)
 {
   cx = _cx;  cy = _cy;
-  
   // x1, x2, y1, y2 are the selectable boundings of the diagram, but these
   // are the real boundings. They are set in "createAxisLabels()".
   Bounding_x1 = Bounding_x2 = Bounding_y1 = Bounding_y2 = 0;
@@ -85,7 +86,9 @@ Diagram::Diagram(int _cx, int _cy)
   Type = isDiagram;
   isSelected = false;
   GridPen = QPen(Qt::lightGray,0);
+  Nmarkers=0;
 }
+
 
 Diagram::~Diagram()
 {
@@ -93,30 +96,26 @@ Diagram::~Diagram()
   freq= nullptr;
 }
 
+
+
 /*!
    Paint function for most diagrams (cartesian, smith, polar, ...)
 */
 void Diagram::paint(ViewPainter *p)
 {
-    paintDiagram(p);
-    paintMarkers(p);
-}
+  // paint all lines
+  foreach(Line *pl, Lines) {
+    p->Painter->setPen(pl->style);
+    p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
+  }
 
-void Diagram::paintDiagram(ViewPainter *p)
-{
-    // paint all lines
-    foreach(Line *pl, Lines) {
-      p->Painter->setPen(pl->style);
-      p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
-    }
+  // paint all arcs (1 pixel larger to compensate for strange circle method)
+  foreach(Arc *pa, Arcs) {
+    p->Painter->setPen(pa->style);
+    p->drawArc(cx+pa->x, cy-pa->y, pa->w, pa->h, pa->angle, pa->arclen);
+  }
 
-    // paint all arcs (1 pixel larger to compensate for strange circle method)
-    foreach(Arc *pa, Arcs) {
-      p->Painter->setPen(pa->style);
-      p->drawArc(cx+pa->x, cy-pa->y, pa->w, pa->h, pa->angle, pa->arclen);
-    }
-
-    // draw all graphs
+  // draw all graphs
   foreach(Graph *pg, Graphs)
   {
     if(Name=="Phasor")//phasor diagram uses another way to draw
@@ -137,39 +136,56 @@ void Diagram::paintDiagram(ViewPainter *p)
                    p->DX + float(cx+pt->x) * p->Scale,
                    p->DY + float(cy-pt->y) * p->Scale));
 
-      p->Painter->setPen(pt->Color);
-      p->Painter->drawText(QPoint(0, 0), pt->s);
+    p->Painter->setPen(pt->Color);
+    p->Painter->drawText(0, 0, pt->s);
+  }
+  p->Painter->setWorldMatrix(wm);
+  p->Painter->setWorldMatrixEnabled(false);
+
+  // restore painter state
+  p->Painter->restore();
+
+
+  // draw markers last, so they are at the top of painting layers
+
+qDebug() << "---------MARKERS MAP----------";
+qDebug() << "Re{y}, Im{y}, x_position, y_position, indep_var, Delta_Mode?";
+  // Get all active markers in the diagram and map their values
+   ActiveMarkers.clear();
+   foreach(Graph *pg, Graphs)
+    foreach(Marker *pm, pg->Markers)
+      {
+      std::vector<double> val = pm->getData();
+      ActiveMarkers.insert(pm->getID(), pm->getData());
+      qDebug() << "Key: " << pm->getID() << "Values: {" << val[0] << ", " << val[1] << ", " << val[2] << ", " << val[3] << ", " << val[4] << ", " << val[5] << "}";
+      }
+qDebug() << "----------------------------";
+
+   QString IDref;
+   std::vector<double> RefData;
+   foreach(Graph *pg, Graphs)
+    foreach(Marker *pm, pg->Markers)
+    {
+      pm->setMarkersMap(ActiveMarkers);
+      pm->paint(p, cx, cy);
     }
-    p->Painter->setWorldMatrix(wm);
-    p->Painter->setWorldMatrixEnabled(false);
-
-    // restore painter state
-    p->Painter->restore();
 
 
-    if(isSelected) {
-      int x_, y_;
-      float fx_, fy_;
-      p->map(cx, cy-y2, x_, y_);
-      fx_ = float(x2)*p->Scale + 10;
-      fy_ = float(y2)*p->Scale + 10;
+  if(isSelected) {
+    int x_, y_;
+    float fx_, fy_;
+    p->map(cx, cy-y2, x_, y_);
+    fx_ = float(x2)*p->Scale + 10;
+    fy_ = float(y2)*p->Scale + 10;
 
-      p->Painter->setPen(QPen(Qt::darkGray,3));
-      p->Painter->drawRect(x_-5, y_-5, TO_INT(fx_), TO_INT(fy_));
-      p->Painter->setPen(QPen(Qt::darkRed,2));
-      p->drawResizeRect(cx, cy-y2);  // markers for changing the size
-      p->drawResizeRect(cx, cy);
-      p->drawResizeRect(cx+x2, cy-y2);
-      p->drawResizeRect(cx+x2, cy);
-    }
-}
-
-void Diagram::paintMarkers(ViewPainter *p, bool paintAll)
-{
-    // draw markers last, so they are at the top of painting layers
-    foreach(Graph *pg, Graphs)
-      foreach(Marker *pm, pg->Markers)
-          if ((pm->Type & 1)||paintAll) pm->paint(p, cx, cy);
+    p->Painter->setPen(QPen(Qt::darkGray,3));
+    p->Painter->drawRect(x_-5, y_-5, TO_INT(fx_), TO_INT(fy_));
+    p->Painter->setPen(QPen(Qt::darkRed,2));
+    p->drawResizeRect(cx, cy-y2);  // markers for changing the size
+    p->drawResizeRect(cx, cy);
+    p->drawResizeRect(cx+x2, cy-y2);
+    p->drawResizeRect(cx+x2, cy);
+  }
 }
 
 // ------------------------------------------------------------
@@ -392,7 +408,7 @@ bool Diagram::insideDiagram(float x, float y) const
 /*!
    (try to) set a Marker to a diagram
 */
-Marker* Diagram::setMarker(int x, int y)
+Marker* Diagram::setMarker(int x, int y, QString markerID)
 {
   if(getSelected(x, y)) {
     // test all graphs of the diagram
@@ -400,7 +416,7 @@ Marker* Diagram::setMarker(int x, int y)
       int n  = pg->getSelected(x-cx, cy-y); // sic!
       if(n >= 0) {
 	assert(pg->parentDiagram() == this);
-	Marker *pm = new Marker(pg, n, x-cx, y-cy);
+	Marker *pm = new Marker(pg, n, x-cx, y-cy, markerID);
 	pg->Markers.append(pm);
 	return pm;
       }
@@ -408,6 +424,12 @@ Marker* Diagram::setMarker(int x, int y)
   }
   return NULL;
 }
+
+QString Diagram::newMarkerName()
+{
+  return QString("Marker%1").arg(ActiveMarkers.size());
+}
+
 
 /*!
    Cohen-Sutherland clipping algorithm
@@ -822,6 +844,7 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
   int yNum = yAxis.numGraphs;
   int zNum = zAxis.numGraphs;
   yAxis.numGraphs = zAxis.numGraphs = 0;
+  DefaultDataset = defaultDataSet;
 
   double xmin = xAxis.min, ymin = yAxis.min, zmin = zAxis.min;
   double xmax = xAxis.max, ymax = yAxis.max, zmax = zAxis.max;
@@ -1507,11 +1530,19 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
       if(!pg)  return false;
       assert(pg->parentDiagram() == this);
       Marker *pm = new Marker(pg);
+        
+      if (s.count(" ") == 6)//Old marker format 
+      {
+        std::vector<double> padding = {0,0,0,0,0,0};
+        pm->setID(newMarkerName());
+        ActiveMarkers.insert(pm->getID(), padding);
+      }
       if(!pm->load(s)) {
 	delete pm;
 	return false;
       }
       pg->Markers.append(pm);
+      Nmarkers++;
       continue;
     }
 
@@ -2466,3 +2497,4 @@ double Diagram::wavevalX(int i) const
     return i*xAxis.up/(sc*50); 
 }
 // vim:ts=8:sw=2:noet
+

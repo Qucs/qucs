@@ -60,7 +60,7 @@ class Diagram : public Element {
 public:
   Diagram(int _cx=0, int _cy=0);
   virtual ~Diagram();
-
+  QString DefaultDataset;
   virtual Diagram* newOne();
   virtual int  calcDiagram() { return 0; };
   virtual void calcCoordinate
@@ -72,8 +72,6 @@ public:
   virtual QString extraMarkerText(Marker const*) const {return "";}
   
   virtual void paint(ViewPainter*);
-  virtual void paintDiagram(ViewPainter* p);
-  void paintMarkers(ViewPainter* p, bool paintAll = true);
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
   void    paintScheme(Schematic*);
@@ -82,17 +80,19 @@ public:
   bool    resizeTouched(float, float, float);
   QString save();
   bool    load(const QString&, QTextStream*);
-
   void getAxisLimits(Graph*);
   void updateGraphData();
   void loadGraphData(const QString&);
+  //void loadMarkerData(QString);
   void recalcGraphData();
   bool sameDependencies(Graph const*, Graph const*) const;
   int  checkColumnWidth(const QString&, const QFontMetrics&, int, int, int);
 
+  QList<QString>  MarkerIDs;
+
   virtual bool insideDiagram(float, float) const;
   bool insideDiagramP(Graph::iterator const& ) const;
-  Marker* setMarker(int x, int y);
+  Marker* setMarker(int x, int y, QString markerID);
 
   bool insideDiagramPh(Graph::iterator const& , float*, float*) const;
   bool newcoordinate(Graph::iterator const& , float*, float*) const;
@@ -105,6 +105,11 @@ public:
 
   QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   QPen    GridPen;
+  int Nmarkers;
+  QString RefMarker;//ID of the reference marker
+  std::vector<double> RefMarkerData;// {Real, Imag, X}
+  QString newMarkerName();
+
 
   QList<Graph *>  Graphs;
   QList<Arc *>    Arcs;
@@ -140,8 +145,10 @@ protected:
 
   virtual void calcData(Graph*);
 
+
 private:
   int Bounding_x1, Bounding_x2, Bounding_y1, Bounding_y2;
+  QMap<QString, std::vector<double>> ActiveMarkers;
 };
 
 #endif

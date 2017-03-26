@@ -135,21 +135,38 @@ QString SmithDiagram::extraMarkerText(Marker const* m) const
   std::vector<double> const& Pos = m->varPos();
   unsigned nVarPos = pGraph->numAxes();
   assert(nVarPos == Pos.size());
-  double Zr, Zi;
+  double Zr, Zi, Zrd, Zid;
   double Z0 = m->Z0;
   double Precision = m->precision(); // hmmm
 
   Zr = m->powReal();
   Zi = m->powImag();
-
   MatchDialog::r2z(Zr, Zi, Z0);
   QString Var = pGraph->Var;
 
-  if(Var.startsWith("S")) { // uuh, ooh hack.
+  if (m->getMarkerMode() == 0)//Conventional marker
+  {
+    if(Var.startsWith("S")) { // uuh, ooh hack.
     return "\n"+ Var.replace('S', 'Z')+": " +misc::complexRect(Zr, Zi, Precision);
-  }else{
+    }else{
     return "\nZ("+ Var+"): " +misc::complexRect(Zr, Zi, Precision);
+    }
   }
+  else//Delta marker
+  {
+     std::vector<double> data = m->ReferenceMarkerData;
+     Zrd = data.at(0);
+     Zid = data.at(1);
+     MatchDialog::r2z(Zrd, Zid, Z0);
+     if(Var.startsWith("S")) { // uuh, ooh hack.
+     return "\n"+ QString(QChar(0x0394)) + Var.replace('S', 'Z')+": " +misc::complexRect(Zr-Zrd, Zi-Zid, Precision);
+     }else{
+     return "\n"+ QString(QChar(0x0394)) + "Z("+ Var+"): " +misc::complexRect(Zr-Zrd, Zi-Zid, Precision);
+     }
+  }
+
+
+
 }
 
 // vim:ts=8:sw=2:noet

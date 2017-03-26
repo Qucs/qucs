@@ -19,6 +19,8 @@
 #define MARKERDIALOG_H
 #include "marker.h"
 #include <QDialog>
+#include <QDebug>
+#include <QLabel>
 
 class QLineEdit;
 class QComboBox;
@@ -32,14 +34,21 @@ public:
 
 private slots:
   void slotAcceptValues();
-
+  void slotSetColor();
+  void slotDeltaMode();
 public:
   Marker *pMarker;
 
-  QComboBox  *NumberBox;
-  QLineEdit  *Precision;
-  QLineEdit  *SourceImpedance;
-  QCheckBox  *TransBox;
+  QComboBox  *NumberBox, *RefMarkerComboBox;
+  QLineEdit  *Precision, *MarkerLineWidth;
+  QLineEdit  *SourceImpedance, *MarkerID;
+  QCheckBox  *TransBox, *DeltaModeCheckBox;
+  QPushButton *ColorButton;
+  QColor MarkerColor;
+  QLabel * ColorLabel;
+
+private:
+  QMap<QString, std::vector<double>> ActiveMarkers;
 };
 
 #endif

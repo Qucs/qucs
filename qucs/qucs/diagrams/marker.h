@@ -20,6 +20,8 @@
 
 #include "element.h"
 #include "viewpainter.h"
+#include <QColorDialog>
+#include <QMap>
 
 class QPainter;
 class Diagram;
@@ -35,7 +37,7 @@ struct Axis;
 
 class Marker : public Element {
 public:
-  Marker(Graph *pg_=0, int _nn=0, int cx_=0, int cy_=0);
+  Marker(Graph *pg_=0, int _nn=0, int cx_=0, int cy_=0, QString markerID="");
  ~Marker();
 
 private:
@@ -67,15 +69,42 @@ public: // power matching stuff. some sort of VarPos (ab?)use
   double  powFreq() const {return VarPos[0];}
   double  powReal() const {return VarDep[0];}
   double  powImag() const {return VarDep[1];}
+  void setID(QString ID);
+  void setColor(QColor c);
+  QColor getColor(void);
+  QString getID(void);
 
+  int getLineWidth();
+  void setLineWidth(int width);
+  int getMarkerMode() const;
+  void setMarkerMode(int mode);
+
+  bool loadOldFormatMarker(const QString& _s);//Old marker version compatibility function
+  std::vector<double> getData();//This function returns the marker value (real, complex) and the independent variable
+  void setRefData(std::vector<double>);
 // private: // not yet
   Graph const *pGraph;   // the corresponding graph
+
+  void setReferenceMarkerID(QString);
+  void setMarkersMap(QMap<QString, std::vector<double>>);
+
+  QMap<QString, std::vector<double>> getMarkersMap();
+  std::vector<double> ReferenceMarkerData;
 
 private:
   std::vector<double> VarPos;   // values the marker is pointing to
   double VarDep[2];   // dependent value
   float  fCX, fCY;  // coordinates for the line from graph to marker body
   double yt;
+
+  QString MarkerID;
+  QColor MarkerColor;
+  int MarkerLineWidth;
+  int MarkerMode;
+  QString ReferenceMarkerID;
+
+  QMap<QString, std::vector<double>> ActiveMarkers;//Every marker must know the IDs of the other markers. Otherwise, it wouldn't be possible
+//to choose a reference marker in markerdialog class
 
 public:
   QString Text;     // the string to be displayed in the marker text
