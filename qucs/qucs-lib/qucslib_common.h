@@ -207,6 +207,10 @@ inline int makeModelString (QString libPath, QString compname, QString compstrin
     }
 
     // construct the library model string
+    QString full_userlib = QucsSettings.QucsHomeDir.canonicalPath() // check is it user library or not ?
+            +QDir::convertSeparators ("/user_lib/")+libname;
+    QFileInfo inf(full_userlib+".lib");
+    if (inf.exists()) libname = full_userlib;
     modelstring =  "<Lib " + Prefix + " 1 0 0 " +
                    QString::number(Text_x) + " " +
                    QString::number(Text_y) + " 0 0 \"" +
