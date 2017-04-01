@@ -79,9 +79,8 @@ public: // power matching stuff. some sort of VarPos (ab?)use
   int getMarkerMode() const;
   void setMarkerMode(int mode);
 
-  bool loadOldFormatMarker(const QString& _s);//Old marker version compatibility function
-  std::vector<double> getData();//This function returns the marker value (real, complex) and the independent variable
-  void setRefData(std::vector<double>);
+  std::vector<double> getData();//This function returns the marker value (real, complex), the independent variable, the position of the marker and a flag indicating the marker mode
+
 // private: // not yet
   Graph const *pGraph;   // the corresponding graph
 

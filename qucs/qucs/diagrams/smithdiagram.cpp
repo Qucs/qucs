@@ -155,6 +155,7 @@ QString SmithDiagram::extraMarkerText(Marker const* m) const
   else//Delta marker
   {
      std::vector<double> data = m->ReferenceMarkerData;
+     if (data.size() == 0) return "";
      Zrd = data.at(0);
      Zid = data.at(1);
      MatchDialog::r2z(Zrd, Zid, Z0);
@@ -163,6 +164,7 @@ QString SmithDiagram::extraMarkerText(Marker const* m) const
      }else{
      return "\n"+ QString(QChar(0x0394)) + "Z("+ Var+"): " +misc::complexRect(Zr-Zrd, Zi-Zid, Precision);
      }
+
   }
 
 

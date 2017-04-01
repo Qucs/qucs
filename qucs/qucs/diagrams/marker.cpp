@@ -717,18 +717,6 @@ void Marker::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 QString Marker::save()
 {
   QString s  = "<Mkr ";
- 
-  s += QString("%1 ").arg(MarkerID);
-  
-  //Add color and linewidth
-  s += QString("%1 %2 ").arg(MarkerColor.name()).arg(MarkerLineWidth);
-
-  //Add marker mode (delta or normal) and reference marker (if exists)
-
-  s += QString("%1 %2 ").arg(MarkerMode).arg(ReferenceMarkerID);
-
-  //Add reference marker data
-  s += QString("%1#%2#%3#%4#%5 ").arg(ReferenceMarkerData[0]).arg(ReferenceMarkerData[1]).arg(ReferenceMarkerData[2]).arg(ReferenceMarkerData[3]).arg(ReferenceMarkerData[4]);
 
   for(auto i : VarPos){
     s += QString::number(i)+"/";
@@ -739,14 +727,30 @@ QString Marker::save()
 
   s += QString::number(x1) +" "+ QString::number(y1) +" "
       +QString::number(Precision) +" "+ QString::number(numMode);
-  if(transparent)  s += " 1>";
-  else  s += " 0>";
+
+  if(transparent)  s += " 1 ";
+  else  s += " 0 ";
+
+  //New fields (they are added at the end of the line so as to be compatible with old versions of Qucs)
+  s += QString("%1 ").arg(MarkerID);
+  
+  //Add color and linewidth
+  s += QString("%1 %2 ").arg(MarkerColor.name()).arg(MarkerLineWidth);
+
+  //Add marker mode (delta or normal) and reference marker (if exists)
+
+  s += QString("%1 %2 ").arg(MarkerMode).arg(ReferenceMarkerID);
+
+  //Add reference marker data
+  s += QString("%1#%2#%3#%4#%5 >").arg(ReferenceMarkerData[0]).arg(ReferenceMarkerData[1]).arg(ReferenceMarkerData[2]).arg(ReferenceMarkerData[3]).arg(ReferenceMarkerData[4]);
 
   return s;
 }
-//-----------------------------------------------------------------------
-// Backward compatibility function for reading markers from file
-bool Marker::loadOldFormatMarker(const QString& _s)
+
+
+// ---------------------------------------------------------------------
+// All graphs must have been loaded before this function !
+bool Marker::load(const QString& _s)
 {
   bool ok;
   QString s = _s;
@@ -769,6 +773,7 @@ bool Marker::loadOldFormatMarker(const QString& _s)
     VarPos[nVarPos++] = n.mid(i,j-i).toDouble(&ok);
     if(!ok) return false;
     i = j+1;
+    qDebug() << VarPos[nVarPos++];
   } while(j >= 0);
 
   n  = s.section(' ',2,2);    // x1
@@ -783,7 +788,7 @@ bool Marker::loadOldFormatMarker(const QString& _s)
   Precision = n.toInt(&ok);
   if(!ok) return false;
 
-  n  = s.section(' ',5,5);      // numMode
+  n  = s.section(' ',5,5);      // numMode (polar or cartersian)
   numMode = n.toInt(&ok);
   if(!ok) return false;
 
@@ -792,97 +797,39 @@ bool Marker::loadOldFormatMarker(const QString& _s)
   if(n == "0")  transparent = false;
   else  transparent = true;
 
+  //New fields
 
-  //Color
-  MarkerColor.setNamedColor("#000000");
-  
-  //Line width
-  MarkerLineWidth = 1;
-
-  //Marker mode (delta or normal)
-  MarkerMode = 0;
-
-  //Reference marker
-  ReferenceMarkerID = QString("#NO_REF#");
- 
-
-  return true;
-}
-
-// ---------------------------------------------------------------------
-// All graphs must have been loaded before this function !
-bool Marker::load(const QString& _s)
-{
-  bool ok;
-  QString s = _s;
-
-  if (s.count(" ") == 6)//Old marker's format. This function is needed to guarantee the compatibility with the old marker format
+  QString tempID = s.section(' ',7,7); //temp string to check the marker format
+  qDebug() << "MarkerID " << MarkerID;
+  if (tempID.isEmpty())//Loaded legacy .dpl doc
   {
-    return loadOldFormatMarker(s);
+    MarkerColor.setNamedColor("#000000");//Color
+    MarkerLineWidth = 1;//Line width
+    MarkerMode = 0;//Conventional marker
+    ReferenceMarkerID = QString("#NO_REF#");//Reference marker
+    return true;
   }
-  if(s.at(0) != '<') return false;
-  if(s.at(s.length()-1) != '>') return false;
-  s = s.mid(1, s.length()-2);   // cut off start and end character
-
-  if(s.section(' ',0,0) != "Mkr") return false;
-
-  MarkerID = s.section(' ',1,1);    // VarPos
+  MarkerID = tempID;//Marker ID
 
   //Color
-  MarkerColor.setNamedColor(s.section(' ',2,2));
+  MarkerColor.setNamedColor(s.section(' ',8,8));
   
   //Line width
-  MarkerLineWidth = s.section(' ',3,3).toInt();
+  MarkerLineWidth = s.section(' ',9,9).toInt();
 
   //Marker mode (delta or normal)
-  MarkerMode = s.section(' ',4,4).toInt();
+  MarkerMode = s.section(' ',10,10).toInt();
 
   //Reference marker
-  ReferenceMarkerID = s.section(' ',5,5);
+  ReferenceMarkerID = s.section(' ',11,11);
 
   //Reference marker data
-  QString RefMrkData = s.section(' ',6,6);
+  QString RefMrkData = s.section(' ',12,12);
   ReferenceMarkerData[0] = RefMrkData.section('#', 0 ,0).toDouble();
   ReferenceMarkerData[1] = RefMrkData.section('#', 1 ,1).toDouble();
   ReferenceMarkerData[2] = RefMrkData.section('#', 2 ,2).toDouble();
   ReferenceMarkerData[3] = RefMrkData.section('#', 3 ,3).toDouble();
   ReferenceMarkerData[4] = RefMrkData.section('#', 4 ,4).toDouble();
-
-  int i=0, j;
-  QString n = s.section(' ',7,7);    // VarPos
-
-  unsigned nVarPos = 0;
-  j = (n.count('/') + 3);
-  VarPos.resize(j);
-
-  do {
-    j = n.indexOf('/', i);
-    VarPos[nVarPos++] = n.mid(i,j-i).toDouble(&ok);
-    if(!ok) return false;
-    i = j+1;
-  } while(j >= 0);
-
-  n  = s.section(' ',8,8);    // x1
-  x1 = n.toInt(&ok);
-  if(!ok) return false;
-
-  n  = s.section(' ',9,9);    // y1
-  y1 = n.toInt(&ok);
-  if(!ok) return false;
-
-  n  = s.section(' ',10,10);      // Precision
-  Precision = n.toInt(&ok);
-  if(!ok) return false;
-
-  n  = s.section(' ',11,11);      // numMode
-  numMode = n.toInt(&ok);
-  if(!ok) return false;
-
-  n  = s.section(' ',12,12);      // transparent
-  if(n.isEmpty()) return true;  // is optional
-  if(n == "0")  transparent = false;
-  else  transparent = true;
-
   return true;
 }
 
