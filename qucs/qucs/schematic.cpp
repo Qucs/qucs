@@ -419,8 +419,6 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
   }
 
 
-  //bool selected;
-  ViewPainter p;
   int StartX = UsedX1;
   int StartY = UsedY1;
   if(schematicFrame->PageType) {
@@ -428,13 +426,20 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
     if(UsedY1 > 0)  StartY = 0;
   }
 
-  float PrintRatio = printerDpiX / screenDpiX;
   QFont oldFont = Painter->font();
-  QFont printFont = Painter->font();
+
 #ifdef __MINGW32__
+  float PrintRatio = printerDpiX / screenDpiX;
+  QFont printFont = Painter->font();
   printFont.setPointSizeF(printFont.pointSizeF()/PrintRatio);
   Painter->setFont(printFont);
 #endif
+
+  TODO("Fix Schematic::print");
+  /// \todo print
+  /*
+  //bool selected;
+  ViewPainter p;
   p.init(Painter, PrintScale * PrintRatio,
          -StartX, -StartY, -marginX, -marginY, PrintScale, PrintRatio);
 
@@ -443,12 +448,71 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
   ///  paintFrame(&p);
 
   paintSchToViewpainter(&p,printAll,false,screenDpiX,printerDpiX);
+ */
+  /// \todo capture scene content onto printer
+  /// Disentangle this mess:
+  /// - print
+  /// - paintInit
+  /// - paintSchToViewpainter
+  // http://doc.qt.io/qt-4.8/qgraphicsscene.html#render
+  // the following simply dump the scene to the painting device
+  //
+  // http://doc.qt.io/qt-4.8/qgraphicsview.html#render
+  // it might be better to create a new view, adjust as needed and send that
+  // to the painting device.
+  scene->render(Painter);
 
   Painter->setFont(oldFont);
 }
 
+/// \todo eliminate Schematic::paintInit ported from ViewPainter::init
+void Schematic::paintInit(QPainter *p,
+			  float Scale,
+			  int DX_, int DY_,
+			  int dx_, int dy_,
+			  float FontScale, float PrintScale)
+{
+  // unused DX = float(DX_) * Scale - float(dx_);
+  // unused DY = float(DY_) * Scale - float(dy_);
 
-void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImage, int screenDpiX, int printerDpiX)
+  QFont f = p->font();
+  if(FontScale == 0.0)
+    FontScale = Scale;
+#ifdef __MINGW32__
+  FontScale = Scale;
+#endif
+  f.setPointSizeF( FontScale * float(f.pointSize()) );
+  p->setFont(f);
+  // unused int lineSpacing = p->fontMetrics().lineSpacing();
+  p-> setMatrixEnabled(false);   // we use our own coordinate transformation
+
+  QPainter::RenderHints hints = 0;
+  // Ask to to antialias drawings if requested
+  if (QucsSettings.GraphAntiAliasing) hints |= QPainter::Antialiasing;
+  // Ask to antialias text if requested
+  if (QucsSettings.TextAntiAliasing) hints |= QPainter::TextAntialiasing;
+  p->setRenderHints(hints);
+}
+
+/*!
+ * \brief Schematic::paintSchToViewpainter
+ * \param p
+ * \param printAll
+ * \param toImage
+ * \param screenDpiX
+ * \param printerDpiX
+ *
+ * This deprecated function visits all items and adjust them for print in a separate scence/view (was ViewPainter).
+ * It relied on the ViewPainter::init to setup things like
+ *  - fontsizes, linespace, and metrics
+ *  - QPainter rendering options.
+ * It might print:
+ *  - all
+ *  - only the selected
+ *  - change fontsize if the ouptut is to image or hardcopy
+ *  - ...
+ */
+void Schematic::paintSchToViewpainter(QPainter *p, bool printAll, bool toImage, int screenDpiX, int printerDpiX)
 {
     TODO("fix print, no good to call paint()");
     /*
