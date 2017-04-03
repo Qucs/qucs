@@ -65,12 +65,10 @@ ImageWriter::noGuiPrint(QWidget *doc, QString printFile, QString color)
     svg1->setSize(QSize(1.12*w, h));
     QPainter *p = new QPainter(svg1);
     p->fillRect(0, 0, svg1->size().width(), svg1->size().height(), Qt::white);
-    ViewPainter *vp = new ViewPainter(p);
-    vp->init(p, 1.0, 0, 0, xmin-bourder/2, ymin-bourder/2, 1.0, 1.0);
 
-    sch->paintSchToViewpainter(vp,true,true);
+    sch->paintInit(p, 1.0, 0, 0, xmin-bourder/2, ymin-bourder/2, 1.0, 1.0);
+    sch->paintSchToViewpainter(p,true,true);
 
-    delete vp;
     delete p;
     delete svg1;
 
@@ -102,14 +100,12 @@ ImageWriter::noGuiPrint(QWidget *doc, QString printFile, QString color)
 
     QPainter* p = new QPainter(img);
     p->fillRect(0, 0, w, h, Qt::white);
-    ViewPainter* vp = new ViewPainter(p);
-    vp->init(p, scal, 0, 0, xmin*scal-bourder/2, ymin*scal-bourder/2, scal,scal);
 
-    sch->paintSchToViewpainter(vp,true,true);
+    sch->paintInit(p, scal, 0, 0, xmin*scal-bourder/2, ymin*scal-bourder/2, scal,scal);
+    sch->paintSchToViewpainter(p,true,true);
 
     img->save(printFile);
 
-    delete vp;
     delete p;
     delete img;
   } else {
@@ -204,15 +200,12 @@ int ImageWriter::print(QWidget *doc)
 
         QPainter* p = new QPainter(img);
         p->fillRect(0, 0, w, h, Qt::white);
-        ViewPainter* vp = new ViewPainter(p);
-        vp->init(p, scal, 0, 0, 
-            xmin*scal-border/2, ymin*scal-border/2, scal, scal);
 
-        sch->paintSchToViewpainter(vp, exportAll, true);
+        sch->paintInit(p, scal, 0, 0, xmin*scal-border/2, ymin*scal-border/2, scal, scal);
+        sch->paintSchToViewpainter(p, exportAll, true);
 
         img->save(filename);
 
-        delete vp;
         delete p;
         delete img;
       } 
@@ -230,11 +223,9 @@ int ImageWriter::print(QWidget *doc)
         QPainter *p = new QPainter(svgwriter);
         p->fillRect(0, 0, svgwriter->size().width(), svgwriter->size().height(), Qt::white);
 
-        ViewPainter *vp = new ViewPainter(p);
-        vp->init(p, 1.0, 0, 0, xmin-border/2, ymin-border/2, 1.0, 1.0);
-        sch->paintSchToViewpainter(vp,exportAll,true);
+        sch->paintInit(p, 1.0, 0, 0, xmin-border/2, ymin-border/2, 1.0, 1.0);
+        sch->paintSchToViewpainter(p,exportAll,true);
 
-        delete vp;
         delete p;
         delete svgwriter;
 
