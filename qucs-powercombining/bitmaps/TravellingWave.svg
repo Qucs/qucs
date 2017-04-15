@@ -11,7 +11,7 @@
    height="380"
    version="1.2"
    id="svg9371"
-   inkscape:version="0.48.4 r9939"
+   inkscape:version="0.91 r13725"
    sodipodi:docname="TravellingWave.svg">
   <metadata
      id="metadata9781">
@@ -35,12 +35,12 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1366"
-     inkscape:window-height="713"
+     inkscape:window-height="704"
      id="namedview9779"
      showgrid="false"
-     inkscape:zoom="1.0043794"
-     inkscape:cx="397.59096"
-     inkscape:cy="111.44503"
+     inkscape:zoom="0.5021897"
+     inkscape:cx="679.66635"
+     inkscape:cy="214.1796"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
@@ -1193,5 +1193,43 @@
        id="path9777"
        d="m 445,74 c 0,2.7614 -2.239,5 -5,5 -2.761,0 -5,-2.2386 -5,-5 0,-2.7614 2.239,-5 5,-5 2.761,0 5,2.2386 5,5"
        vector-effect="non-scaling-stroke" />
+  </g>
+  <polyline
+     transform="matrix(0.41077346,0,0,0.73390928,475.22412,77.152966)"
+     style="font-style:normal;font-weight:400;font-size:12px;font-family:Helvetica;fill:none;stroke:#000080;stroke-width:2;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1"
+     id="polyline9623-3"
+     points="15,79 45,79 "
+     vector-effect="none" />
+  <polyline
+     transform="matrix(0.41077346,0,0,0.73390928,475.21313,165.20525)"
+     style="font-style:normal;font-weight:400;font-size:12px;font-family:Helvetica;fill:none;stroke:#000080;stroke-width:2;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1"
+     id="polyline9623-3-6"
+     points="15,79 45,79 "
+     vector-effect="none" />
+  <g
+     style="font-style:normal;font-weight:400;font-size:12px;font-family:Helvetica;fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1"
+     id="g9749-7"
+     font-style="normal"
+     font-weight="400"
+     font-size="12"
+     transform="matrix(0.73390928,0,0,0.73390928,482.95311,76.969347)">
+    <path
+       inkscape:connector-curvature="0"
+       id="path9751-5"
+       d="m 19,79 c 0,2.2091 -1.7909,4 -4,4 -2.2091,0 -4,-1.7909 -4,-4 0,-2.2091 1.7909,-4 4,-4 2.2091,0 4,1.7909 4,4"
+       vector-effect="none" />
+  </g>
+  <g
+     style="font-style:normal;font-weight:400;font-size:12px;font-family:Helvetica;fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1"
+     id="g9749-7-3"
+     font-style="normal"
+     font-weight="400"
+     font-size="12"
+     transform="matrix(0.73390928,0,0,0.73390928,482.95311,165.20791)">
+    <path
+       inkscape:connector-curvature="0"
+       id="path9751-5-5"
+       d="m 19,79 c 0,2.2091 -1.7909,4 -4,4 -2.2091,0 -4,-1.7909 -4,-4 0,-2.2091 1.7909,-4 4,-4 2.2091,0 4,1.7909 4,4"
+       vector-effect="none" />
   </g>
 </svg>
