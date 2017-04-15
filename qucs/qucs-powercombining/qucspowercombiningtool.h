@@ -1,7 +1,7 @@
 /*
  * qucspowercombiningtool.h - Power combining tool definition
  *
- * copyright (C) 2015 Andres Martinez-Mera <andresmartinezmera@gmail.com>
+ * copyright (C) 2017 Andres Martinez-Mera <andresmartinezmera@gmail.com>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,8 @@
 #endif
 #include <complex>
 #include <QtSvg>
-
+#include<QDebug>
+#include <QDesktopWidget>
 struct tSubstrate {
   double er;
   double height;
@@ -59,9 +60,9 @@ public:
     ~QucsPowerCombiningTool();
      QLabel *NLabel,*RefImp,*FreqLabel,*K1Label, *RelPermlabel, *SubstrateHeightlabel, *SubstrateMMlabel, *ThicknessLabel,
             *ThicknessumLabel, *MinWidthLabel, *MinWidthmmLabel, *MaxWidthLabel, *MaxWidthmmLabel, *tanDLabel,
-            *ResistivityLabel, *RoughnessLabel,*TopoLabel, *OhmLabel, *NStagesLabel, *AlphaLabel, *AlphadBLabel;
+            *ResistivityLabel, *RoughnessLabel,*TopoLabel, *OhmLabel, *NStagesLabel, *AlphaLabel, *AlphadBLabel, *UnitsLabel;
 
-     QComboBox *TopoCombo, *BranchesCombo, *FreqScaleCombo, *RelPermcomboBox, *NStagesCombo;
+     QComboBox *TopoCombo, *BranchesCombo, *FreqScaleCombo, *RelPermcomboBox, *NStagesCombo, *UnitsCombo;
 
      QLineEdit *RefImplineEdit, *FreqlineEdit, *K1lineEdit, *SubstrateHeightlineEdit, *ThicknesslineEdit, *MinWidthlineEdit,
                  *MaxWidthlineEdit, *tanDlineEdit, *ResistivitylineEdit, *RoughnesslineEdit, *AlphalineEdit;
@@ -73,7 +74,6 @@ public:
      QStatusBar *statusBar;
      QGridLayout *gboxImage;
      QSvgWidget *imgWidget;
-
 
      private slots:
          void on_TopoCombo_currentIndexChanged(int index);
@@ -95,5 +95,11 @@ public:
          QString calcMultistageWilkinsonIsolators(double Freq, QString Zlines, double L, std::complex<double> gamma, int NStages, double Z0);
          void on_MicrostripcheckBox_clicked();
          void on_LCcheckBox_clicked();
+
+private:
+    QSize DefaultSize, ExtendedSize;
+    QString ConvertLengthFromM(double);
+    QString RoundVariablePrecision(double);
+    QString num2str(double);
 
 };
