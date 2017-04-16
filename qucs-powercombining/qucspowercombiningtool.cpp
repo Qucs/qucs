@@ -110,10 +110,13 @@ QucsPowerCombiningTool::QucsPowerCombiningTool()
   // Output power ratio
   QHBoxLayout *hboxImpl5 = new QHBoxLayout();
   K1Label = new QLabel("Output Power ratio");
-  K1lineEdit=new QLineEdit("1");
+  K1lineEdit=new QLineEdit("0");
   K1lineEdit->setFixedWidth(40);
+  K1LabeldB = new QLabel("dB");
+  K1LabeldB->setFixedWidth(20);
   hboxImpl5->addWidget(K1Label);
   hboxImpl5->addWidget(K1lineEdit);
+  hboxImpl5->addWidget(K1LabeldB);
   VboxImplementation->addLayout(hboxImpl5);
 
   // Number of stages
@@ -369,12 +372,14 @@ void QucsPowerCombiningTool::on_TopoCombo_currentIndexChanged(int index)
         BranchesCombo->addItem("2");
         K1lineEdit->setVisible(true);
         K1Label->setVisible(true);
+        K1LabeldB->setVisible(true);
         BranchesCombo->setEditable(false);
     }
     else
     {
         K1lineEdit->setVisible(false);
         K1Label->setVisible(false);
+        K1LabeldB->setVisible(false);
     }
 
     if (index == 7)//Gysel
@@ -454,6 +459,7 @@ void QucsPowerCombiningTool::on_GenerateButton_clicked()
     double Z0 = RefImplineEdit->text().toDouble();
     int N=BranchesCombo->currentText().toInt();
     double K=K1lineEdit->text().toDouble();//Power ratio. Output port 1
+    K = pow(10, K/20.);//Conversion to natural units
     double Freq = FreqlineEdit->text().toDouble()*getScaleFreq();
     bool SP_block = AddSparcheckBox->isChecked();
     int NStages = NStagesCombo->currentText().toInt();
@@ -655,8 +661,8 @@ int QucsPowerCombiningTool::Wilkinson(double Z0, double Freq, double K, bool SP_
            }
            else
            {
-               s += QString("<TLIN Line1 1 410 -90 -26 -71 0 0 \"%1 Ohm\" 1 \"%2\" 1 \"%3 dB\" 0 \"26.85\" 0>\n").arg(RoundVariablePrecision(sqrt(Z0*R2))).arg(lambda4).arg(Alpha);//Quarter wave matching output branch 1
-               s += QString("<TLIN Line1 1 410 30 -26 20 0 0 \"%1 Ohm\" 1 \"%2\" 1 \"%3 dB\" 0 \"26.85\" 0>\n").arg(RoundVariablePrecision(sqrt(Z0*R3))).arg(lambda4).arg(Alpha);//Quarter wave matching output branch 2
+               s += QString("<TLIN Line1 1 410 -90 -26 -71 0 0 \"%1 Ohm\" 1 \"%2\" 1 \"%3 dB\" 0 \"26.85\" 0>\n").arg(RoundVariablePrecision(sqrt(Z0*R2))).arg(ConvertLengthFromM(lambda4)).arg(Alpha);//Quarter wave matching output branch 1
+               s += QString("<TLIN Line1 1 410 30 -26 20 0 0 \"%1 Ohm\" 1 \"%2\" 1 \"%3 dB\" 0 \"26.85\" 0>\n").arg(RoundVariablePrecision(sqrt(Z0*R3))).arg(ConvertLengthFromM(lambda4)).arg(Alpha);//Quarter wave matching output branch 2
            }
            }
     }

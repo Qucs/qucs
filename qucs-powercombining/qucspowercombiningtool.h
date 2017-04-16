@@ -52,13 +52,21 @@ static inline double sech(const double x) {
   return  (2.0 / (exp(x) + exp(-(x))));
 }
 
+
+/*
+ References:
+ [1] "High Efficiency RF and Microwave Solid State Power Amplifiers". Paolo Colantonio, 
+      Franco Giannini and Ernesto Limiti. 2009. John Wiley and Sons Inc.
+ [2] "RF and Microwave Transmitter Design, First Edition". Andrei Grebennikov. 2011. John Wiley and Sons Inc.
+*/
+
 class QucsPowerCombiningTool : public QMainWindow
 {
   Q_OBJECT
 public:
      QucsPowerCombiningTool();
     ~QucsPowerCombiningTool();
-     QLabel *NLabel,*RefImp,*FreqLabel,*K1Label, *RelPermlabel, *SubstrateHeightlabel, *SubstrateMMlabel, *ThicknessLabel,
+     QLabel *NLabel,*RefImp,*FreqLabel,*K1Label, *K1LabeldB, *RelPermlabel, *SubstrateHeightlabel, *SubstrateMMlabel, *ThicknessLabel,
             *ThicknessumLabel, *MinWidthLabel, *MinWidthmmLabel, *MaxWidthLabel, *MaxWidthmmLabel, *tanDLabel,
             *ResistivityLabel, *RoughnessLabel,*TopoLabel, *OhmLabel, *NStagesLabel, *AlphaLabel, *AlphadBLabel, *UnitsLabel;
 
