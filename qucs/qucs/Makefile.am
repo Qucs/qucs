@@ -105,6 +105,7 @@ EXTRA_DIST = \
 
 SUFFIXES = .h .moc.cpp
 
+SUFFIXES = .moc.cpp
 .h.moc.cpp:
 	$(MOC) -o $@ $<
 
