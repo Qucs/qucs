@@ -444,7 +444,7 @@ void module::registerDynamicModules (char *proj, std::list<std::string> modlist)
 */
 
   fprintf(stdout,"project location: %s\n", proj);
-  fprintf(stdout,"modules to load: %lu\n", modlist.size());
+  fprintf(stdout,"modules to load: %u\n", modlist.size());
 
   std::list<std::string>::iterator it;
   for (it=modlist.begin(); it!=modlist.end(); ++it) {

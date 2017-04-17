@@ -94,8 +94,8 @@ spline::spline (tvector<nr_double_t> y, tvector<nr_double_t> t) {
 
 // Pass interpolation datapoints as vectors.
 void spline::vectors (qucs::vector y, qucs::vector t) {
-  int i = t.getSize ();
-  assert (y.getSize () == i && i >= 3);
+  unsigned int i = t.getSize ();
+  assert ((unsigned int) y.getSize () == i && i >= 3);
 
   // create local copy of f(x)
   realloc (i);
@@ -106,8 +106,8 @@ void spline::vectors (qucs::vector y, qucs::vector t) {
 
 // Pass interpolation datapoints as tvectors.
 void spline::vectors (::std::vector<nr_double_t> y, ::std::vector<nr_double_t> t) {
-  int i = (int)t.size ();
-  assert ((int)y.size () == i && i >= 3);
+  unsigned int i = t.size ();
+  assert (y.size () == i && i >= 3);
 
   // create local copy of f(x)
   realloc (i);
@@ -118,7 +118,7 @@ void spline::vectors (::std::vector<nr_double_t> y, ::std::vector<nr_double_t> t
 
 // Pass interpolation datapoints as tvectors.
 void spline::vectors (tvector<nr_double_t> y, tvector<nr_double_t> t) {
-  int i = t.size ();
+  unsigned int i = t.size ();
   assert (y.size () == i && i >= 3);
 
   // create local copy of f(x)
@@ -130,7 +130,7 @@ void spline::vectors (tvector<nr_double_t> y, tvector<nr_double_t> t) {
 
 // Pass interpolation datapoints as pointers.
 void spline::vectors (nr_double_t * y, nr_double_t * t, int len) {
-  int i = len;
+  unsigned int i = len;
   assert (i >= 3);
 
   // create local copy of f(x)
@@ -141,7 +141,7 @@ void spline::vectors (nr_double_t * y, nr_double_t * t, int len) {
 }
 
 // Reallocate vector data if necessary.
-void spline::realloc (int size) {
+void spline::realloc (unsigned int size) {
   if (n != size - 1) {
     n = size - 1;
     delete[] f0;
@@ -158,7 +158,7 @@ void spline::realloc (int size) {
 void spline::construct (void) {
 
   // calculate first derivative h = f'(x)
-  int i;
+  unsigned int i;
   nr_double_t * h  = new nr_double_t[n+1];
   for (i = 0; i < n; i++) {
     h[i] = x[i+1] - x[i];

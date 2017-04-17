@@ -337,7 +337,7 @@ class circuit : public object, public integrator
   int pol;
 
  private:
-  int size;
+  unsigned int size;
   int pacport;
   int vsource;
   int vsources;

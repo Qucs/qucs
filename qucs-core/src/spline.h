@@ -62,7 +62,7 @@ class spline
 
  private:
   nr_double_t * upper_bound (nr_double_t *, nr_double_t *, nr_double_t);
-  void realloc (int);
+  void realloc (unsigned int);
 
  private:
   nr_double_t * x;
@@ -71,7 +71,7 @@ class spline
   nr_double_t * f2;
   nr_double_t * f3;
   nr_double_t d0, dn;
-  int n;
+  unsigned int n;
   int boundary;
 };
 

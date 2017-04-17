@@ -129,7 +129,7 @@ circuit::circuit (const circuit & c) : object (c), integrator (c) {
   if (size > 0) {
     // copy each node and set its circuit to the current circuit object
     nodes = new node[size];
-    for (int i = 0; i < size; i++) {
+    for (unsigned i = 0; i < size; i++) {
       nodes[i] = node (c.nodes[i]);;
       nodes[i].setCircuit (this);
     }
@@ -197,7 +197,7 @@ circuit::~circuit () {
    completely lost except the current size equals the given size. */
 void circuit::setSize (int s) {
   // nothing to do here
-  if (size == s) return;
+  if (size == (unsigned) s) return;
   assert (s >= 0);
 
   if (size > 0) {
@@ -642,8 +642,8 @@ void circuit::setInternalNode (int node, const std::string &suffix) {
 /* This function copies the matrix elements inside the given matrix to
    the internal S-parameter matrix of the circuit. */
 void circuit::setMatrixS (matrix s) {
-  int r = s.getRows ();
-  int c = s.getCols ();
+  unsigned r = s.getRows ();
+  unsigned c = s.getCols ();
   // copy matrix elements
   if (r > 0 && c > 0 && r * c == size * size) {
     memcpy (MatrixS, s.getData (), sizeof (nr_complex_t) * r * c);
@@ -663,8 +663,8 @@ matrix circuit::getMatrixS (void) {
 /* This function copies the matrix elements inside the given matrix to
    the internal noise correlation matrix of the circuit. */
 void circuit::setMatrixN (matrix n) {
-  int r = n.getRows ();
-  int c = n.getCols ();
+  unsigned r = n.getRows ();
+  unsigned c = n.getCols ();
   // copy matrix elements
   if (r > 0 && c > 0 && r * c == size * size) {
     memcpy (MatrixN, n.getData (), sizeof (nr_complex_t) * r * c);
@@ -684,8 +684,8 @@ matrix circuit::getMatrixN (void) {
 /* This function copies the matrix elements inside the given matrix to
    the internal G-MNA matrix of the circuit. */
 void circuit::setMatrixY (matrix y) {
-  int r = y.getRows ();
-  int c = y.getCols ();
+  unsigned r = y.getRows ();
+  unsigned c = y.getCols ();
   // copy matrix elements
   if (r > 0 && c > 0 && r * c == size * size) {
     memcpy (MatrixY, y.getData (), sizeof (nr_complex_t) * r * c);

@@ -250,7 +250,7 @@ void nasolver<nr_type_t>::applyNodeset (bool nokeep)
     if (x == NULL || nlist == NULL) return;
 
     // set each solution to zero
-    if (nokeep) for (int i = 0; i < x->size (); i++) x->set (i, 0);
+    if (nokeep) for (unsigned int i = 0; i < x->size (); i++) x->set (i, 0);
 
     // then apply the nodeset itself
     for (nodeset * n = subnet->getNodeset (); n; n = n->getNext ())
