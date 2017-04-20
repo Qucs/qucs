@@ -51,7 +51,7 @@ cpwstep.cpp		jkff_SR.cpp		pad4bit.cpp		volt_noise.cpp
 ctline.cpp		libcomp.cpp		param_sweep.cpp		vprobe.cpp
 d_flipflop.cpp		log_amp.cpp		phaseshifter.cpp	vpulse.cpp
 dc_sim.cpp		logic_0.cpp		photodiode.cpp		vrect.cpp
-dcblock.cpp		logic_1.cpp		phototransistor.cpp
+dcblock.cpp		logic_1.cpp		phototransistor.cpp	wprobe.cpp
 dcfeed.cpp		logical_and.cpp		pm_modulator.cpp
 vcresistor.cpp
 vacomponent.cpp
@@ -127,6 +127,7 @@ iexp.h
 ifile.h
 inductor.h
 iprobe.h
+wprobe.h
 ipulse.h
 irect.h
 isolator.h
