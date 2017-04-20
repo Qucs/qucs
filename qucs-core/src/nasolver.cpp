@@ -1356,10 +1356,33 @@ void nasolver<nr_type_t>::saveResults (const std::string &volts, const std::stri
             if (!c->isProbe ()) continue;
             if (!c->getSubcircuit().empty() && !(saveOPs & SAVE_ALL)) continue;
             if (volts != "vn")
-                c->saveOperatingPoints ();	    
+                c->saveOperatingPoints ();
 	    std::string n = createOP (c->getName (), volts);
             saveVariable (n, nr_complex_t (c->getOperatingPoint ("Vr"),
-                                   c->getOperatingPoint ("Vi")), f);
+            c->getOperatingPoint ("Vi")), f);
+
+	    //add watt probe data
+	    c->calcOperatingPoints ();
+	    for (auto ops: c->getOperatingPoints ())
+            {
+		//It will only get values if none of the strings are 0
+		//Once again most of this is adapted from Vprobe and Iprobe
+                operatingpoint &p = ops.second;
+	        if (strcmp(p.getName(), "Vi") == 0) continue;
+                if (strcmp(p.getName(), "VAi") == 0) continue;
+	        if (strcmp(p.getName(), "Vr") == 0) continue;
+		if (strcmp(p.getName(), "VAr") == 0)
+		{
+              	    std::string n = createOP(c->getName(), "S");
+              	    saveVariable (n, nr_complex_t (c->getOperatingPoint ("VAr"),
+                    c->getOperatingPoint ("VAi")), f);
+		   continue;
+		}
+           	
+           	std::string n = createOP(c->getName(), p.getName());
+           	saveVariable(n, p.getValue(), f);
+       	    }	    
+	    	    
         }
     }
 

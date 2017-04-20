@@ -32,7 +32,7 @@ libcomponent_la_SOURCES = attenuator.cpp dcblock.cpp open.cpp vccs.cpp        \
 	biastee.cpp circulator.cpp dcfeed.cpp pac.cpp vcvs.cpp capacitor.cpp \
 	ground.cpp resistor.cpp cccs.cpp cross.cpp trafo.cpp inductor.cpp    \
 	tee.cpp ccvs.cpp isolator.cpp itrafo.cpp strafo.cpp vdc.cpp idc.cpp  \
-	vac.cpp phaseshifter.cpp gyrator.cpp tline.cpp iprobe.cpp iac.cpp    \
+        vac.cpp phaseshifter.cpp gyrator.cpp tline.cpp iprobe.cpp wprobe.cpp iac.cpp    \
 	spfile.cpp vnoise.cpp inoise.cpp vpulse.cpp ipulse.cpp vrect.cpp     \
 	irect.cpp amplifier.cpp opamp.cpp iinoise.cpp mutual.cpp mutual2.cpp \
 	vvnoise.cpp ivnoise.cpp coupler.cpp coaxline.cpp vprobe.cpp vam.cpp  \
@@ -46,7 +46,7 @@ noinst_HEADERS = attenuator.h dcblock.h open.h vccs.h biastee.h circulator.h \
 	dcfeed.h pac.h vcvs.h capacitor.h ground.h resistor.h cccs.h cross.h \
 	trafo.h inductor.h tee.h ccvs.h isolator.h component.h itrafo.h      \
 	strafo.h vdc.h idc.h vac.h component_id.h phaseshifter.h gyrator.h   \
-	tline.h iprobe.h iac.h spfile.h vnoise.h inoise.h vpulse.h ipulse.h  \
+        tline.h iprobe.h wprobe.h iac.h spfile.h vnoise.h inoise.h vpulse.h ipulse.h  \
 	vrect.h irect.h amplifier.h opamp.h iinoise.h mutual.h mutual2.h     \
 	vvnoise.h ivnoise.h coupler.h coaxline.h vprobe.h vam.h vpm.h        \
 	tswitch.h relais.h short.h twistedpair.h tline4p.h vexp.h iexp.h     \
