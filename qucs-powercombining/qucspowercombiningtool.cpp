@@ -36,19 +36,15 @@
 QucsPowerCombiningTool::QucsPowerCombiningTool()
 {
   setWindowTitle("Qucs Power Combining Tool " PACKAGE_VERSION);
+  // set application icon
+  setWindowIcon(QPixmap(":/images/bitmaps/big.qucs.xpm"));
   centralWidget = new QWidget();
   QHBoxLayout *hbox = new QHBoxLayout();
-  ImplementationgroupBox = new QGroupBox("Implementation");
+  SpecificationsgroupBox = new QGroupBox("Implementation");
   MicrostripgroupBox  = new QGroupBox("Microstrip substrate");
   ImagegroupBox  = new QGroupBox("Preview");
 
-  QSizePolicy policy(QSizePolicy::Preferred,QSizePolicy::Preferred);
-  policy.setHeightForWidth(true);
-  this->setSizePolicy(policy);
-  centralWidget->setSizePolicy(policy);
-
-
-  //Add elements to ImplementationgroupBox
+  //Add elements to SpecificationsgroupBox
   QVBoxLayout *VboxImplementation = new QVBoxLayout();
   //Topology
   QHBoxLayout *hboxImpl1 = new QHBoxLayout();
@@ -72,6 +68,7 @@ QucsPowerCombiningTool::QucsPowerCombiningTool()
   NLabel  =new QLabel("Number of outputs");
   BranchesCombo = new QComboBox();
   BranchesCombo->addItem("2");
+  BranchesCombo->setEnabled(false);
   BranchesCombo->setFixedWidth(60);
   hboxImpl2->addWidget(NLabel);
   hboxImpl2->addWidget(BranchesCombo);
@@ -166,19 +163,22 @@ QucsPowerCombiningTool::QucsPowerCombiningTool()
   hboxImpl6->addWidget(AddSparcheckBox);
   VboxImplementation->addLayout(hboxImpl6);
 
-  //Synthesize Microstrip
-  QHBoxLayout *hboxImpl7 = new QHBoxLayout();
-  MicrostripcheckBox=new QCheckBox("Microstrip implementation");
-  MicrostripcheckBox->setChecked(false);
-  hboxImpl7->addWidget(MicrostripcheckBox);
+  //Implementation. Mutually exclusive radiobuttons for selecting ideal transmission lines, microstrip tech, o CLC pi aproximations of quarter-wave lines
+  ImplementationgroupBox = new QGroupBox("Implementation");
+  QHBoxLayout *hboxImpl7 = new QHBoxLayout();//Layout for the groupbox
+  QVBoxLayout *vboxImpl = new QVBoxLayout();//Layout for allocating the radiobuttons
+  IdealTLradioButton=new QRadioButton("Ideal TL");//Synthesize Microstrip
+  MicrostripradioButton=new QRadioButton("Microstrip");//Synthesize Microstrip
+  LumpedElementsradioButton=new QRadioButton("Lumped elements");//Lumped elements implementation
+  //Add widgets to the layout
+  vboxImpl->addWidget(IdealTLradioButton);
+  vboxImpl->addWidget(MicrostripradioButton);
+  vboxImpl->addWidget(LumpedElementsradioButton);
+  IdealTLradioButton->setChecked(true);//Activate ideal TL by default
+  ImplementationgroupBox->setLayout(vboxImpl);//Add layout to the groupbox
+  hboxImpl7->addWidget(ImplementationgroupBox);
   VboxImplementation->addLayout(hboxImpl7);
 
-  //Lumped elements implementation
-  QHBoxLayout *hboxImpl9 = new QHBoxLayout();
-  LumpedcheckBox=new QCheckBox("Lumped element implementation");
-  LumpedcheckBox->setChecked(false);
-  hboxImpl9->addWidget(LumpedcheckBox);
-  VboxImplementation->addLayout(hboxImpl9);
 
   //Go! Button
   QHBoxLayout *hboxImpl8 = new QHBoxLayout();
@@ -264,41 +264,31 @@ QucsPowerCombiningTool::QucsPowerCombiningTool()
   hboxMicr8->addWidget(RoughnesslineEdit);
   VboxMicrostrip->addLayout(hboxMicr8);
 
-
-  // Image
    QSize sz;
    QString s1 = ":/bitmaps/Wilkinson.svg";
    QGridLayout * imgLayout = new QGridLayout();
    imgWidget = new QSvgWidget(s1);
-
    sz = imgWidget->size();
+   imgWidget->setFixedSize(.6*sz);
    imgLayout->addWidget(imgWidget);
    ImagegroupBox->setLayout(imgLayout);
+   imgLayout->setAlignment(imgWidget, Qt::AlignHCenter);
 
-  ImplementationgroupBox->setLayout(VboxImplementation);
+  SpecificationsgroupBox->setLayout(VboxImplementation);
   MicrostripgroupBox->setLayout(VboxMicrostrip);
-  hbox->addWidget(ImplementationgroupBox);
+  hbox->addWidget(SpecificationsgroupBox);
   hbox->addWidget(ImagegroupBox);
   hbox->addWidget(MicrostripgroupBox);
   centralWidget->setLayout(hbox);
   setCentralWidget(centralWidget);
  
-  MicrostripgroupBox->hide();
+  MicrostripgroupBox->setEnabled(false);
   statusBar = new QStatusBar();
   setStatusBar(statusBar);
   connect(GenerateButton, SIGNAL(clicked()), SLOT(on_GenerateButton_clicked()));
   connect(TopoCombo, SIGNAL(currentIndexChanged(int)), SLOT(on_TopoCombo_currentIndexChanged(int)));
-  connect(MicrostripcheckBox, SIGNAL(clicked()), SLOT(on_MicrostripcheckBox_clicked()));
-  connect(LumpedcheckBox, SIGNAL(clicked()), SLOT(on_LCcheckBox_clicked()));
-
-  //Get the screen dimensions and scale the main window according to that
-  //the size policy is set to 'fixed' so as to allow the substrate parameters tab to be shown or hidden
-   QDesktopWidget dw;
-   QRect screenSize = dw.availableGeometry(this);
-   DefaultSize = QSize(screenSize.width() * 0.5, screenSize.height() * 0.6);//Hide substrate tab
-   ExtendedSize = QSize(screenSize.width() * 0.8, screenSize.height() * 0.6);//Show substrate tab
-   this->setFixedSize(DefaultSize);
-
+  connect(MicrostripradioButton, SIGNAL(clicked()), SLOT(on_MicrostripradioButton_clicked()));
+  connect(LumpedElementsradioButton, SIGNAL(clicked()), SLOT(on_LCRadioButton_clicked()));
 
 }
 
@@ -335,7 +325,7 @@ double QucsPowerCombiningTool::getScaleFreq()
 // This function changes the window according to the selected topology
 void QucsPowerCombiningTool::on_TopoCombo_currentIndexChanged(int index)
 {
-    bool lumpedImplementation = LumpedcheckBox->isChecked();
+    bool lumpedImplementation = LumpedElementsradioButton->isChecked();
     //Update image
     switch (index)
     {
@@ -368,40 +358,36 @@ void QucsPowerCombiningTool::on_TopoCombo_currentIndexChanged(int index)
     // Change settings
     if ((index==0)|(index==2)||(index==3))//Wilkinson, Tee, Branchline
     {
-        BranchesCombo->clear();
-        BranchesCombo->addItem("2");
         K1lineEdit->setVisible(true);
         K1Label->setVisible(true);
         K1LabeldB->setVisible(true);
+        BranchesCombo->clear();
+        BranchesCombo->addItem("2");
+        BranchesCombo->setEnabled(false);
         BranchesCombo->setEditable(false);
     }
     else
-    {
+    {//The rest of power combiners do not support unequal power ratio
         K1lineEdit->setVisible(false);
         K1Label->setVisible(false);
         K1LabeldB->setVisible(false);
     }
 
-    if (index == 7)//Gysel
-    {
-        BranchesCombo->clear();
-        BranchesCombo->setEditable(false);
+    if ((index == 3)||(index == 4)||(index == 6))//Branchline, double-box branchline and Gysel
+    {//The Gysel power combiner has only two output branches
         BranchesCombo->clear();
         BranchesCombo->addItem("2");
+        BranchesCombo->setEnabled(false);
         BranchesCombo->setEditable(false);
     }
     
-    if ((index == 0)||(index==1))//Wilkinson
+    if ((index == 0)||(index==1))//Conventional and multistage Wilkinson
     {
-        LumpedcheckBox->setVisible(true);
-        NStagesLabel->show();
-        NStagesCombo->show();
+        LumpedElementsradioButton->setEnabled(true);
     }
-    else//Not implemented
+    else//Only the Wilkinson combiners support the CLC equivalent of a quarter-wavelength line
     {
-        LumpedcheckBox->setVisible(false);
-        NStagesLabel->hide();
-        NStagesCombo->hide();
+        LumpedElementsradioButton->setEnabled(false);
     }
   
     if (index == 1)//Multistage Wilkinson. So far, it is not possible to implement more than 7 stages
@@ -417,7 +403,7 @@ void QucsPowerCombiningTool::on_TopoCombo_currentIndexChanged(int index)
       NStagesCombo->setVisible(true);
       BranchesCombo->clear();
       BranchesCombo->addItem("2");//2 outputs only
-      BranchesCombo->setEditable(false);
+      BranchesCombo->setEnabled(false);
     }
     else//There are no more multistage combiners implemented
     {
@@ -431,6 +417,7 @@ void QucsPowerCombiningTool::on_TopoCombo_currentIndexChanged(int index)
         BranchesCombo->addItem("5");
         BranchesCombo->addItem("7");
         BranchesCombo->setEditable(true);
+        BranchesCombo->setEnabled(true);
     }
     if(index == 7)// Travelling wave
     {
@@ -440,6 +427,7 @@ void QucsPowerCombiningTool::on_TopoCombo_currentIndexChanged(int index)
         BranchesCombo->addItem("5");
         BranchesCombo->addItem("6");
         BranchesCombo->setEditable(true);//Let the user to specify an arbitrary number of outputs
+        BranchesCombo->setEnabled(true);
     }
     if(index == 8)//Tree
     {
@@ -448,6 +436,7 @@ void QucsPowerCombiningTool::on_TopoCombo_currentIndexChanged(int index)
         BranchesCombo->addItem("8");
         BranchesCombo->addItem("16");
         BranchesCombo->setEditable(true);//Let the user to specify an arbitrary number of outputs (power of 2)
+        BranchesCombo->setEnabled(true);
     }
 }
 
@@ -465,8 +454,8 @@ void QucsPowerCombiningTool::on_GenerateButton_clicked()
     int NStages = NStagesCombo->currentText().toInt();
     tSubstrate Substrate;
     double alpha = AlphalineEdit->text().toDouble();//Attenuation coefficient in dB/m
-    bool microcheck = MicrostripcheckBox->isChecked();
-    bool LumpedElements = LumpedcheckBox->isChecked();//Lumped element implementation?
+    bool microcheck = MicrostripradioButton->isChecked();
+    bool LumpedElements = LumpedElementsradioButton->isChecked();//Lumped element implementation?
 
     if (microcheck)//Substrate
     {
@@ -588,11 +577,12 @@ int QucsPowerCombiningTool::Wilkinson(double Z0, double Freq, double K, bool SP_
         //Output port 2
         s += QString("<Pac P1 1 500 60 18 -26 0 1 \"1\" 0 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Z0);
         s += QString("<GND * 1 500 90 0 0 0 0>\n");
+        
         //S-parameter analysis component
-        double freq_start = std::max(0., Freq-1e9);
-        double freq_stop = Freq+1e9;
-        s += QString("<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
-        s += QString("<Eqn Eqn1 1 50 200 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"S21_dB=dB(S[2,1])\" 1  \"S31_dB=dB(S[3,1])\" 1 \"yes\" 0>\n");
+        QString freq_start = QString("%1%2").arg(0.5*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
+        QString freq_stop = QString("%1%2").arg(1.5*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
+        s += QString("<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"%2\" 1 \"%3\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
+        s += QString("<Eqn Eqn1 1 50 200 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"S21_dB=dB(S[2,1])\" 1  \"S31_dB=dB(S[3,1])\" 1 \"S22_dB=dB(S[2,2])\" 1 \"S33_dB=dB(S[3,3])\" 1 \"yes\" 0>\n");
         if (microcheck)s += QString("<SUBST Sub1 1 400 200 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
     }
 
@@ -797,7 +787,7 @@ QString QucsPowerCombiningTool::calcChebyLines(double RL, double Z0, double gamm
 }
 
 // This function calculates the isolation resistors given the impedance of the quarter wave lines
-QString QucsPowerCombiningTool::calcMultistageWilkinsonIsolators(double Freq, QString Zlines, double L, std::complex<double> gamma, int NStages, double Z0)
+QString QucsPowerCombiningTool::calcMultistageWilkinsonIsolators(QString Zlines, double L, std::complex<double> gamma, int NStages, double Z0)
 {
   double Z_, R, Zaux = Zlines.section(';', NStages-1, NStages-1).toDouble();
   QString s;
@@ -855,7 +845,7 @@ int QucsPowerCombiningTool::MultistageWilkinson(double Z0, double Freq, int NSta
       alpha = log(pow(0.1*Alpha, 10));//Alpha is given in dB/m, then it is necessary to convert it into Np/m units
     }
     std::complex<double> gamma(alpha, 2*pi/lambda);//It is only considered the attenation of the metal conductor since it tends to be much higher than the dielectric
-    QString Risol = calcMultistageWilkinsonIsolators(Freq, Zlines, lambda4, gamma, NStages, Z0);
+    QString Risol = calcMultistageWilkinsonIsolators(Zlines, lambda4, gamma, NStages, Z0);
 
 
     QString wirestr = "<Wires>\n", str;
@@ -869,10 +859,12 @@ int QucsPowerCombiningTool::MultistageWilkinson(double Z0, double Freq, int NSta
         wirestr +=QString("<0 0 0 -30 \"\" 0 0 0>\n");//Vertical wire
         wirestr +=QString("<0 -30 70 -30 \"\" 0 0 0>\n");//Horizontal wire
         //S-parameter analysis component
-        double freq_start = std::max(0., Freq-1e9);
-        double freq_stop = Freq+1e9;
-        s += QString("<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
+        QString freq_start = QString("%1%2").arg((1/NStages)*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
+        QString freq_stop = QString("%1%2").arg((2+1/NStages)*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
+        s += QString("<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"%2\" 1 \"%3\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg(freq_start).arg(freq_stop);
         str += QString("\"S11_dB=dB(S[1,1])\" 1 ");
+        str += QString("\"S22_dB=dB(S[2,2])\" 1 ");
+        str += QString("\"S33_dB=dB(S[3,3])\" 1 ");
         str += QString("\"S21_dB=dB(S[2,1])\" 1 ");
         str +=QString("\"S31_dB=dB(S[3,1])\" 1 ");
         s += QString("<Eqn Eqn1 1 50 200 -28 15 0 0 ") + str + QString("\"yes\" 0>\n");
@@ -887,7 +879,7 @@ int QucsPowerCombiningTool::MultistageWilkinson(double Z0, double Freq, int NSta
     {
         er = Substrate.er;
         getMicrostrip(Z0, Freq, &Substrate, width, er);
-        s += QString("<MLIN MS1 1 %3 -30 -26 20 0 0 \"Sub1\" 0 \"%1\" 0 \"%2\" 0 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(ConvertLengthFromM(width)).arg(ConvertLengthFromM(lambda4/sqrt(er))).arg(x);
+        s += QString("<MLIN MS1 1 %3 -30 -26 20 0 0 \"Sub1\" 0 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(ConvertLengthFromM(width)).arg(ConvertLengthFromM(lambda4/sqrt(er))).arg(x);
     }
     else
     {
@@ -904,7 +896,14 @@ int QucsPowerCombiningTool::MultistageWilkinson(double Z0, double Freq, int NSta
        }
 
     }
-    wirestr +=QString("<%1 -90 %1 30 \"\" 0 0 0>\n").arg(x+30);
+    
+    
+    x+=50;//Separation between the source transmission line and the beginning of the output branches
+    wirestr +=QString("<%1 -30 %2 -30 \"\" 0 0 0>\n").arg(x-20).arg(x+30);//Vertical line joining the output branches
+    wirestr +=QString("<%1 -90 %1 30 \"\" 0 0 0>\n").arg(x+30);//Vertical line joining the output branches
+    
+
+
     int aux=1;
     for (int i = NStages-1; i>= 0;i--, aux++)
     {
@@ -1011,10 +1010,10 @@ int QucsPowerCombiningTool::Tee(double Z0, double Freq, double K, bool SP_block,
         s += QString("<Pac P1 1 450 60 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(2*Z0);
         s += QString("<GND * 1 450 90 0 0 0 0>\n");
         //S-parameter analysis component
-        double freq_start = std::max(0., Freq-1e9);
-        double freq_stop = Freq+1e9;
-        s += QString("<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
-        s += QString("<Eqn Eqn1 1 50 200 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"S21_dB=dB(S[2,1])\" 1  \"S31_dB=dB(S[3,1])\" 1 \"yes\" 0>\n");
+        QString freq_start = QString("%1%2").arg(0.5*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
+        QString freq_stop = QString("%1%2").arg(1.5*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
+        s += QString("<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"%2\" 1 \"%3\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg(freq_start).arg(freq_stop);
+        s += QString("<Eqn Eqn1 1 50 200 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"S21_dB=dB(S[2,1])\" 1  \"S31_dB=dB(S[3,1])\" 1 \"S22_dB=dB(S[2,2])\" 1 \"S33_dB=dB(S[3,3])\" 1 \"yes\" 0>\n");
         if (microcheck)s += QString("<SUBST Sub1 1 400 200 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
 
     }
@@ -1106,10 +1105,10 @@ int QucsPowerCombiningTool::Branchline(double Z0, double Freq, double K, bool SP
         s += QString("<Pac P1 1 400 90 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Z0);
         s += QString("<GND * 1 400 120 0 0 0 0>\n");
         //S-parameter analysis component
-        double freq_start = std::max(0., Freq-1e9);
-        double freq_stop = Freq+1e9;
-        s += QString("<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
-        s += QString("<Eqn Eqn1 1 50 200 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"S21_dB=dB(S[2,1])\" 1  \"S31_dB=dB(S[3,1])\" 1 \"yes\" 0>\n");
+        QString freq_start = QString("%1%2").arg(0.5*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
+        QString freq_stop = QString("%1%2").arg(1.5*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
+        s += QString("<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"%2\" 1 \"%3\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg(freq_start).arg(freq_stop);
+        s += QString("<Eqn Eqn1 1 50 200 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"S21_dB=dB(S[2,1])\" 1  \"S31_dB=dB(S[3,1])\" 1 \"S22_dB=dB(S[2,2])\" 1 \"S33_dB=dB(S[3,3])\" 1 \"yes\" 0>\n");
         if (microcheck)s += QString("<SUBST Sub1 1 400 200 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
 
     }
@@ -1195,10 +1194,10 @@ int QucsPowerCombiningTool::DoubleBoxBranchline(double Z0, double Freq, double K
         s += QString("<Pac P1 1 500 90 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Z0);
         s += QString("<GND * 1 500 120 0 0 0 0>\n");
         //S-parameter analysis component
-        double freq_start = std::max(0., Freq-1e9);
-        double freq_stop = Freq+1e9;
-        s += QString("<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
-        s += QString("<Eqn Eqn1 1 50 200 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"S21_dB=dB(S[2,1])\" 1  \"S31_dB=dB(S[3,1])\" 1 \"yes\" 0>\n");
+        QString freq_start = QString("%1%2").arg(0.5*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
+        QString freq_stop = QString("%1%2").arg(1.5*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
+        s += QString("<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"%2\" 1 \"%3\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg(freq_start).arg(freq_stop);
+        s += QString("<Eqn Eqn1 1 50 200 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"S21_dB=dB(S[2,1])\" 1  \"S31_dB=dB(S[3,1])\" 1 \"S22_dB=dB(S[2,2])\" 1 \"S33_dB=dB(S[3,3])\" 1 \"yes\" 0>\n");
         if (microcheck)s += QString("<SUBST Sub1 1 400 200 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
 
     }
@@ -1304,11 +1303,16 @@ int QucsPowerCombiningTool::Bagley(double Z0, double Freq, int N, bool SP_block,
         //Source
         s += QString("<Pac P1 1 0 -60 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Z0);
         s += QString("<GND * 1 0 -30 0 0 0 0>\n");
-        double freq_start = std::max(0., Freq-1e9);
-        double freq_stop = Freq+1e9;
-        s += QString("<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
+        QString freq_start = QString("%1%2").arg(0.5*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
+        QString freq_stop = QString("%1%2").arg(1.5*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
+        s += QString("<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"%2\" 1 \"%3\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg(freq_start).arg(freq_stop);
+        //Equations
         QString str = QString(" \"S11_dB=dB(S[1,1])\" 1 ");
-        for (int i=2;i<=N+1; i++) str += QString("\"S%1_dB=dB(S[%2,1])\" 1 ").arg(10*i+1).arg(i);
+        for (int i=2;i<=N+1; i++) 
+        {
+          str += QString("\"S%1%2_dB=dB(S[%1,1])\" 1 ").arg(i).arg(1);
+          str += QString("\"S%1%1_dB=dB(S[%1,%1])\" 1 ").arg(i);
+        }
         s += QString("<Eqn Eqn1 1 50 200 -28 15 0 0") + str + QString("\"yes\" 0>\n");
         if (microcheck)s += QString("<SUBST Sub1 1 400 200 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
     }
@@ -1339,11 +1343,11 @@ int QucsPowerCombiningTool::Bagley(double Z0, double Freq, int N, bool SP_block,
         {
             er = Substrate.er;
             getMicrostrip(Zbranch, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 %1 30 -34 -67 0 0 \"Sub1\" 0 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(ConvertLengthFromM(width)).arg(ConvertLengthFromM(lambda2/sqrt(er)));
+            s += QString("<MLIN MS1 1 %1 30 -34 -73 0 0 \"Sub1\" 0 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(ConvertLengthFromM(width)).arg(ConvertLengthFromM(lambda2/sqrt(er)));
         }
         else
         {
-            s += QString("<TLIN Line1 1 %1 30 -34 -67 0 0 \"%2 Ohm\" 1 \"%3\" 1 \"%4 dB\" 0 \"26.85\" 0>\n").arg(x).arg(RoundVariablePrecision(Zbranch)).arg(ConvertLengthFromM(lambda2)).arg(Alpha);
+            s += QString("<TLIN Line1 1 %1 30 -34 -73 0 0 \"%2 Ohm\" 1 \"%3\" 1 \"%4 dB\" 0 \"26.85\" 0>\n").arg(x).arg(RoundVariablePrecision(Zbranch)).arg(ConvertLengthFromM(lambda2)).arg(Alpha);
         }
         x+=100;
         if (SP_block)
@@ -1408,10 +1412,11 @@ int QucsPowerCombiningTool::Gysel(double Z0, double Freq, bool SP_block, bool mi
         s += QString("<GND * 1 30 -130 0 0 0 0>\n");
 
         //S-parameter analysis component
-        double freq_start = std::max(0., Freq-1e9);
-        double freq_stop = Freq+1e9;
-        s += QString("<.SP SP1 1 200 250 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
-        s += QString("<Eqn Eqn1 1 50 250 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"S21_dB=dB(S[2,1])\" 1  \"S31_dB=dB(S[3,1])\" 1 \"yes\" 0>\n");
+        QString freq_start = QString("%1%2").arg(0.5*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
+        QString freq_stop = QString("%1%2").arg(1.5*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
+        s += QString("<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"%2\" 1 \"%3\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg(freq_start).arg(freq_stop);
+        s += QString("<Eqn Eqn1 1 50 250 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"S21_dB=dB(S[2,1])\" 1  \"S31_dB=dB(S[3,1])\" 1 \"S22_dB=dB(S[2,2])\" 1 \"S33_dB=dB(S[3,3])\" 1 \"yes\" 0>\n");
+
         if (microcheck)s += QString("<SUBST Sub1 1 400 250 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
 
 
@@ -1495,10 +1500,15 @@ int QucsPowerCombiningTool::TravellingWave(double Z0, double Freq, int N, bool S
         wirestr +=QString("<0 0 0 -30 \"\" 0 0 0>\n");//Vertical wire
         wirestr +=QString("<0 -30 40 -30 \"\" 0 0 0>\n");//Horizontal wire
         //S-parameter analysis component
-        double freq_start = std::max(0., Freq-1e9);
-        double freq_stop = Freq+1e9;
-        s += QString("<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
-        for (int i=2;i<=N+1; i++) str += QString("\"S%1_dB=dB(S[%2,1])\" 1 ").arg(10*i+1).arg(i);
+        QString freq_start = QString("%1%2").arg(0.5*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
+        QString freq_stop = QString("%1%2").arg(1.5*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
+        s += QString("<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"%2\" 1 \"%3\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg(freq_start).arg(freq_stop);
+        // Equations
+        for (int i=2;i<=N+1; i++) 
+        {
+          str += QString("\"S%1%2_dB=dB(S[%1,1])\" 1 ").arg(i).arg(1);
+          str += QString("\"S%1%1_dB=dB(S[%1,%1])\" 1 ").arg(i);
+        }
         s += QString("<Eqn Eqn1 1 50 200 -28 15 0 0 ") + str + QString("\"yes\" 0>\n");
         if (microcheck)s += QString("<SUBST Sub1 1 400 200 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
 
@@ -1543,13 +1553,13 @@ int QucsPowerCombiningTool::TravellingWave(double Z0, double Freq, int N, bool S
         {
             er = Substrate.er;
             getMicrostrip(Z0, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 %3 -30 -38 -68 0 0 \"Sub1\" 0 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lambda4/sqrt(er)).arg(x);
+            s += QString("<MLIN MS1 1 %3 -30 -38 -80 0 0 \"Sub1\" 0 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(ConvertLengthFromM(width)).arg(ConvertLengthFromM(lambda4/sqrt(er))).arg(x);
             er = Substrate.er;
             getMicrostrip(Z3, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 %3 -90 -40 -70 0 0 \"Sub1\" 0 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lambda4/sqrt(er)).arg(x+130);
+            s += QString("<MLIN MS1 1 %3 -90 -40 -80 0 0 \"Sub1\" 0 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(ConvertLengthFromM(width)).arg(ConvertLengthFromM(lambda4/sqrt(er))).arg(x+130);
             er = Substrate.er;
             getMicrostrip(Z2, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 %3 30 -26 20 0 0 \"Sub1\" 0 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lambda4/sqrt(er)).arg(x+130);
+            s += QString("<MLIN MS1 1 %3 30 -26 20 0 0 \"Sub1\" 0 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(ConvertLengthFromM(width)).arg(ConvertLengthFromM(lambda4/sqrt(er))).arg(x+130);
         }
         else
         {
@@ -1564,14 +1574,16 @@ int QucsPowerCombiningTool::TravellingWave(double Z0, double Freq, int N, bool S
         {// An unequal power ratio implies that the load impedance != 50, so it requires matching.
             if (microcheck)
             {   
-                aux_str = ConvertLengthFromM(lambda4/sqrt(er));
-                aux_str_2 = RoundVariablePrecision(width);
                 er = Substrate.er;
                 getMicrostrip(sqrt(Z0*R3), Freq, &Substrate, width, er);
-                s += QString("<MLIN MS1 1 %3 -90 -40 -70 0 0 \"Sub1\" 0 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(aux_str_2).arg(aux_str).arg(x+230);
+                aux_str = ConvertLengthFromM(lambda4/sqrt(er));
+                aux_str_2 = ConvertLengthFromM(width);
+                s += QString("<MLIN MS1 1 %3 -90 -40 -80 0 0 \"Sub1\" 0 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(aux_str_2).arg(aux_str).arg(x+230);
 
                 er = Substrate.er;
                 getMicrostrip(sqrt(Z0*R2), Freq, &Substrate, width, er);
+                aux_str = ConvertLengthFromM(lambda4/sqrt(er));
+                aux_str_2 = ConvertLengthFromM(width);
                 s += QString("<MLIN MS1 1 %3 30 -26 20 0 0 \"Sub1\" 0 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(aux_str_2).arg(aux_str).arg(x+230);
 
             }
@@ -1643,24 +1655,24 @@ int QucsPowerCombiningTool::Tree(double Z0, double Freq, int N, bool SP_block, b
             {
                 er = Substrate.er;
                 getMicrostrip(Z0, Freq, &Substrate, width, er);
-                s += QString("<MLIN MS1 1 %3 %4 -26 20 0 0 \"Sub1\" 0 \"%1\" 0 \"%2\" 0 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lambda4/sqrt(er)).arg(x).arg(offset);
+                s += QString("<MLIN MS1 1 %3 %4 -26 20 0 0 \"Sub1\" 0 \"%1\" 0 \"%2\" 0 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(ConvertLengthFromM(width)).arg(ConvertLengthFromM(lambda4/sqrt(er))).arg(x).arg(offset);
 
                 er = Substrate.er;
-                getMicrostrip(Z0, Freq, &Substrate, width, er);
-                s += QString("<MLIN MS1 1 %3 %4 -26 20 0 0 \"Sub1\" 0 \"%1\" 0 \"%2\" 0 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lambda4/sqrt(er)).arg(x+100).arg(y+offset);
+                getMicrostrip(Zbranch, Freq, &Substrate, width, er);
+                s += QString("<MLIN MS1 1 %3 %4 -26 20 0 0 \"Sub1\" 0 \"%1\" 0 \"%2\" 0 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(ConvertLengthFromM(width)).arg(ConvertLengthFromM(lambda4/sqrt(er))).arg(x+100).arg(y+offset);
 
                 er = Substrate.er;
-                getMicrostrip(Z0, Freq, &Substrate, width, er);
-                s += QString("<MLIN MS1 1 %3 %4 -26 20 0 0 \"Sub1\" 0 \"%1\" 0 \"%2\" 0 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lambda4/sqrt(er)).arg(x+100).arg(-y+offset);
+                getMicrostrip(Zbranch, Freq, &Substrate, width, er);
+                s += QString("<MLIN MS1 1 %3 %4 -26 20 0 0 \"Sub1\" 0 \"%1\" 0 \"%2\" 0 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(ConvertLengthFromM(width)).arg(ConvertLengthFromM(lambda4/sqrt(er))).arg(x+100).arg(-y+offset);
 
             }
             else
             {
-                s += QString("<TLIN Line1 1 %1 %2 -26 20 0 0 \"%3\" 0 \"%4\" 0 \"%5 dB\" 0 \"26.85\" 0>\n").arg(x).arg(offset).arg(Z0).arg(lambda4).arg(Alpha);//Z0 line
-                s += QString("<TLIN Line1 1 %1 %2 -26 20 0 0 \"%3\" 0 \"%4\" 0 \"%5 dB\" 0 \"26.85\" 0>\n").arg(x+100).arg(y+offset).arg(Zbranch).arg(lambda4).arg(Alpha);//Output branch 1
-                s += QString("<TLIN Line1 1 %1 %2 -26 20 0 0 \"%3\" 0 \"%4\" 0 \"%5 dB\" 0 \"26.85\" 0>\n").arg(x+100).arg(-y+offset).arg(Zbranch).arg(lambda4).arg(Alpha);//Output branch 2
+                s += QString("<TLIN Line1 1 %1 %2 -26 20 0 0 \"%3\" 0 \"%4\" 0 \"%5 dB\" 0 \"26.85\" 0>\n").arg(x).arg(offset).arg(Z0).arg(ConvertLengthFromM(lambda4)).arg(Alpha);//Z0 line
+                s += QString("<TLIN Line1 1 %1 %2 -26 20 0 0 \"%3\" 0 \"%4\" 0 \"%5 dB\" 0 \"26.85\" 0>\n").arg(x+100).arg(y+offset).arg(Zbranch).arg(ConvertLengthFromM(lambda4)).arg(Alpha);//Output branch 1
+                s += QString("<TLIN Line1 1 %1 %2 -26 20 0 0 \"%3\" 0 \"%4\" 0 \"%5 dB\" 0 \"26.85\" 0>\n").arg(x+100).arg(-y+offset).arg(Zbranch).arg(ConvertLengthFromM(lambda4)).arg(Alpha);//Output branch 2
             }
-            s += QString("<R R1 1 %1 %2 30 -26 0 -1 \"%3 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x+160).arg(offset).arg(2*Z0);//Isolation resistor
+            s += QString("<R R1 1 %1 %2 15 -26 0 -1 \"%3 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x+160).arg(offset).arg(2*Z0);//Isolation resistor
 
             wirestr +=QString("<%1 %3 %2 %3 \"\" 0 0 0>\n").arg(x+30).arg(x+70).arg(y+offset);
             wirestr +=QString("<%1 %3 %2 %3 \"\" 0 0 0>\n").arg(x+30).arg(x+70).arg(-y+offset);
@@ -1685,10 +1697,14 @@ int QucsPowerCombiningTool::Tree(double Z0, double Freq, int N, bool SP_block, b
                     wirestr +=QString("<%2 %1 %3 %1 \"\" 0 0 0>\n").arg(offset).arg(x-100).arg(x-30);//Horizontal wire
 
                     //S-parameter analysis component
-                    double freq_start = std::max(0., Freq-1e9);
-                    double freq_stop = Freq+1e9;
-                    s += QString("<.SP SP1 1 %3 %4 0 67 0 0 \"lin\" 1 \"%1Hz\" 1 \"%2Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg(freq_start).arg(freq_stop).arg(x-200).arg(offset+200);
-                    for (int i=2;i<=N+1; i++) str += QString("\"S%1_dB=dB(S[%2,1])\" 1 ").arg(10*i+1).arg(i);
+                    QString freq_start = QString("%1%2").arg((1/N)*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
+                    QString freq_stop = QString("%1%2").arg((2+1/N)*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
+                    s += QString("<.SP SP1 1 %3 %4 0 67 0 0 \"lin\" 1 \"%1\" 1 \"%2\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg(freq_start).arg(freq_stop).arg(x-200).arg(offset+200);
+                    for (int i=2;i<=N+1; i++) 
+                    {
+                      str += QString("\"S%1%2_dB=dB(S[%1,1])\" 1 ").arg(i).arg(1);
+                      str += QString("\"S%1%1_dB=dB(S[%1,%1])\" 1 ").arg(i);
+                    }
                     s += QString("<Eqn Eqn1 1 %1 %2 -28 15 0 0 ").arg(x-400).arg(offset+200) + str + QString("\"yes\" 0>\n");
                     if (microcheck)s += QString("<SUBST Sub1 1 400 200 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
 
@@ -1847,60 +1863,30 @@ void QucsPowerCombiningTool::getMicrostrip(double Z0, double freq, tSubstrate *s
 
 
 
-void QucsPowerCombiningTool::on_MicrostripcheckBox_clicked()
+void QucsPowerCombiningTool::on_MicrostripradioButton_clicked()
 {
-    bool visible = MicrostripcheckBox->isChecked();
-    if (visible)
-    { 
-      MicrostripgroupBox->show();
+      MicrostripgroupBox->setEnabled(true);
       AlphaLabel->setVisible(true);
       AlphalineEdit->setVisible(true);
       AlphadBLabel->setVisible(true);
-      LumpedcheckBox->setChecked(false);
-      this->setFixedSize(ExtendedSize);
-    }
-    else
-    {
-      MicrostripgroupBox->hide();
-      AlphaLabel->setVisible(false);
-      AlphalineEdit->setVisible(false);
-      AlphadBLabel->setVisible(false);
-      this->setFixedSize(DefaultSize);
-    }
-   
-   LumpedcheckBox->setChecked(false);//Deactivate LC checkbox
-   switch (TopoCombo->currentIndex())//Update preview
-   { 
-      case 0: imgWidget->load(QString(":/bitmaps/Wilkinson.svg")); break;
-      case 1: imgWidget->load(QString(":/bitmaps/MultistageWilkinson.svg"));
-   }
+
+      switch (TopoCombo->currentIndex())//Update image
+      { 
+        case 0: imgWidget->load(QString(":/bitmaps/Wilkinson.svg")); break;
+        case 1: imgWidget->load(QString(":/bitmaps/MultistageWilkinson.svg"));
+      }
 }
 
-void QucsPowerCombiningTool::on_LCcheckBox_clicked()
+void QucsPowerCombiningTool::on_LCRadioButton_clicked()
 {
-   if (LumpedcheckBox->isChecked())//Selected lumped components implementation
-   {
       if (TopoCombo->currentIndex() == 0) imgWidget->load(QString(":/bitmaps/WilkinsonLC.svg"));
       if (TopoCombo->currentIndex() == 1) imgWidget->load(QString(":/bitmaps/MultistageWilkinsonLC.svg")); 
-      MicrostripcheckBox->setChecked(false);
-      MicrostripgroupBox->hide();
+      MicrostripgroupBox->setEnabled(false);
       
       //Hide the length unit combo
       UnitsCombo->setVisible(false);
       UnitsLabel->setVisible(false);
-      
-      //Set window size
-      this->setFixedSize(DefaultSize);
-   }
-   else//Selected TL implementations
-   {
-      if (TopoCombo->currentIndex() == 0) imgWidget->load(QString(":/bitmaps/Wilkinson.svg"));
-      if (TopoCombo->currentIndex() == 1) imgWidget->load(QString(":/bitmaps/MultistageWilkinson.svg"));
-
-      //Show the length unit combo
-      UnitsCombo->setVisible(true);
-      UnitsLabel->setVisible(true);
-   }
+     
 }
 
 //Rounds a double number using the minimum number of decimal places
@@ -1912,35 +1898,99 @@ QString QucsPowerCombiningTool::RoundVariablePrecision(double val)
 }
 
 
-//This function creates a string for the transmission line length
+//This function creates a string for the transmission line length and automatically changes the unit length if the value lies outside [1,999.99]
 QString QucsPowerCombiningTool::ConvertLengthFromM(double len)
 {
   int index = UnitsCombo->currentIndex();
-  double conv=len;
+  double conv;
 
+  do{
+  conv=len;
   switch (index)
   {
-    case 0: //milimeters
-          conv *=1e3;
-          return QString("%1 mm").arg(RoundVariablePrecision(conv));
     case 1: //mils
           conv *= 39370.1;
+          if (conv > 999.99)
+          {
+            index = 4;//inches
+            break;
+          }
+          if(conv < 1) 
+          {
+            index = 2;//microns
+            break;
+          }
           return QString("%1 mil").arg(RoundVariablePrecision(conv));
     case 2: //microns
           conv *= 1e6;
+          if (conv > 999.99)
+          {
+            index = 0;//milimeters
+            break;
+          }
+          if(conv < 1) 
+          {
+            index = 3;//nanometers
+            break;
+          }
           return QString("%1 um").arg(RoundVariablePrecision(conv));
     case 3: //nanometers
           conv *= 1e9;
+          if (conv > 999.99)
+          {
+            index = 2;//microns
+            break;
+          }
           return QString("%1 nm").arg(RoundVariablePrecision(conv));
     case 4: //inch
           conv *= 39.3701;
+          if (conv > 999.99)
+          {
+            index = 5;//feets
+            break;
+          }
+          if(conv < 1) 
+          {
+            index = 1;//mils
+            break;
+          }
           return QString("%1 in").arg(RoundVariablePrecision(conv));
     case 5: //ft
           conv *= 3.280841666667; 
+          if (conv > 999.99)
+          {
+            index = 6;//meters
+            break;
+          }
+          if(conv < 1) 
+          {
+            index = 4;//inches
+            break;
+          }
           return QString("%1 ft").arg(RoundVariablePrecision(conv));
     case 6: //m
+          if(conv < 1) 
+          {
+            index = 0;//mm
+            break;
+          }
           return QString("%1").arg(RoundVariablePrecision(len));
+    default: //milimeters
+          conv *=1e3;
+          if (conv > 999.99)
+          {
+            index = 6;//meters
+            break;
+          }
+          if(conv < 1) 
+          {
+            index = 2;//microns
+            break;
+          }
+          return QString("%1 mm").arg(RoundVariablePrecision(conv));
   }
+  }while(true);
+  return QString("");
 }
 
 // Copied from Qucs misc class
@@ -1975,3 +2025,4 @@ QString QucsPowerCombiningTool::num2str(double Num)
 
   return Str;
 }
+ // Image
