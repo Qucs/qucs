@@ -11,5 +11,6 @@
         <file>bitmaps/Bagley.svg</file>
         <file>bitmaps/Gysel.svg</file>
         <file>bitmaps/Tee.svg</file>
+        <file>bitmaps/big.qucs.xpm</file>
     </qresource>
 </RCC>

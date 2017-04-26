@@ -75,9 +75,10 @@ public:
      QLineEdit *RefImplineEdit, *FreqlineEdit, *K1lineEdit, *SubstrateHeightlineEdit, *ThicknesslineEdit, *MinWidthlineEdit,
                  *MaxWidthlineEdit, *tanDlineEdit, *ResistivitylineEdit, *RoughnesslineEdit, *AlphalineEdit;
 
-     QCheckBox *AddSparcheckBox,*MicrostripcheckBox, *LumpedcheckBox;
+     QCheckBox *AddSparcheckBox;
+     QRadioButton *IdealTLradioButton, *MicrostripradioButton, *LumpedElementsradioButton;
      QPushButton *GenerateButton;
-     QGroupBox *ImplementationgroupBox,*MicrostripgroupBox, *ImagegroupBox;
+     QGroupBox *SpecificationsgroupBox,*MicrostripgroupBox, *ImagegroupBox, *ImplementationgroupBox;
      QWidget *centralWidget;
      QStatusBar *statusBar;
      QGridLayout *gboxImage;
@@ -100,12 +101,11 @@ public:
          int TravellingWave(double Z0, double Freq, int N, bool SP_block, bool microcheck, tSubstrate Substrate, double Alpha);
          int Tree(double Z0, double Freq, int N, bool SP_block, bool microcheck, tSubstrate Substrate, double Alpha);
          QString calcChebyLines(double RL, double Z0, double gamma, int NStages);
-         QString calcMultistageWilkinsonIsolators(double Freq, QString Zlines, double L, std::complex<double> gamma, int NStages, double Z0);
-         void on_MicrostripcheckBox_clicked();
-         void on_LCcheckBox_clicked();
+         QString calcMultistageWilkinsonIsolators(QString Zlines, double L, std::complex<double> gamma, int NStages, double Z0);
+         void on_MicrostripradioButton_clicked();
+         void on_LCRadioButton_clicked();
 
 private:
-    QSize DefaultSize, ExtendedSize;
     QString ConvertLengthFromM(double);
     QString RoundVariablePrecision(double);
     QString num2str(double);
