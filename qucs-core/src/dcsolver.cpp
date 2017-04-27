@@ -36,6 +36,7 @@
 #include "analysis.h"
 #include "nasolver.h"
 #include "dcsolver.h"
+#include "component_id.h"
 
 namespace qucs {
 
@@ -117,6 +118,11 @@ int dcsolver::solve (void) {
   }
   preferred = convHelper;
 
+  //Setting up the second analysis, related to the ohmmeter
+  back:
+  retry = -1;
+  fallback = 0;
+
   if (!subnet->isNonLinear ()) {
     // Start the linear solver.
     convHelper = CONV_None;
@@ -160,6 +166,24 @@ int dcsolver::solve (void) {
       break;
     }
   } while (retry != -1);
+   //only act if there is an ohmmeter in the circuit and it is the first run of analysis
+   if(ohm == 1)
+    {
+      circuit * root = subnet->getRoot ();
+        for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+	   if(c->getType() == CIR_OHMMETER )
+           {
+             c->calcOperatingPoints ();
+	     //if it detects some kind of voltage, the ohmmeter will not work
+             if(c->getOperatingPoint ("R") != 0) c->setstate(0);
+             else c->initDC2();/*if the circuit analysis has finished and the ohmmeter 
+	     didn't detect any voltage, it will start the internal corrent source*/
+           }
+        }
+        ohm=0;
+	goto back;//return to the beginning of the analysis
+    }
+
 
   // save results and cleanup the solver
   saveOperatingPoints ();
@@ -183,6 +207,8 @@ void dcsolver::calc (dcsolver * self) {
 void dcsolver::init (void) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    //Tells the solver if there is an ohmmeter in the circuit
+    if(c->getType() == CIR_OHMMETER ) ohm=1;
     c->initDC ();
   }
 }

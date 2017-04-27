@@ -82,6 +82,7 @@ enum circuit_type {
   CIR_TLINE4P,
   CIR_RLCG,
   CIR_IPROBE,
+  CIR_OHMMETER,
   CIR_WPROBE,
   CIR_VPROBE,
   CIR_SPFILE,

@@ -60,7 +60,7 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   hpribin4bit.cpp msrstub.cpp phototransistor.cpp nigbt.cpp \
   hybrid.cpp ctline.cpp tunneldiode.cpp \
   etr_sim.cpp ecvs.cpp vcresistor.cpp vacomponent.cpp        \
-  mutualx.cpp circline.cpp
+  mutualx.cpp circline.cpp ohmmeter.cpp
 
 nodist_libcomponents_a_SOURCES = $(MOCFILES)
 
@@ -90,7 +90,7 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   comp_2bit.h comp_4bit.h hpribin4bit.h msrstub.h phototransistor.h nigbt.h   \
   vafile.h hybrid.h ctline.h tunneldiode.h      \
   etr_sim.h ecvs.h vcresistor.h vacomponent.h                  \
-  mutualx.h circline.h
+  mutualx.h circline.h ohmmeter.h
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 

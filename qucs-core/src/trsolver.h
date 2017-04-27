@@ -99,6 +99,7 @@ protected:
     history * tHistory;
     bool relaxTSR;
     bool initialDC;
+    int ohm;
 
 };
 

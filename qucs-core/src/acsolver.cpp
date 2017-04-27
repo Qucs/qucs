@@ -38,6 +38,7 @@
 #include "analysis.h"
 #include "nasolver.h"
 #include "acsolver.h"
+#include "component_id.h"
 
 namespace qucs {
 
@@ -85,12 +86,14 @@ int acsolver::solve (void) {
   if (swp == NULL) {
     swp = createSweep ("acfrequency");
   }
-
+  ohm=0;
   // initialize node voltages, first guess for non-linear circuits and
   // generate extra circuits if necessary
   init ();
   setCalculation ((calculate_func_t) &calc);
   solve_pre ();
+
+  back:
 
   swp->reset ();
   for (int i = 0; i < swp->getSize (); i++) {
@@ -108,6 +111,36 @@ int acsolver::solve (void) {
 
     // compute noise if requested
     if (noise) solve_noise ();
+
+  /*only act if there is an ohmmeter in the circuit 
+  and it is the first run of analysis*/
+  if(ohm == 1)
+    {
+      if(freq==0) continue;//if the frequency is 0, there are no valid values
+      circuit * root = subnet->getRoot ();
+        for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+	   if(c->getType() == CIR_OHMMETER )
+           {
+             //The ohmmeter will act as a voltmeter to detect external sources.
+	     if(c->getstate()>0)
+	     {
+             	c->calcOperatingPoints ();
+		//if it detects any voltage, the ohmmeter will not work
+             	if((c->getOperatingPoint ("R") != 0 || 
+                c->getOperatingPoint ("Z") != 0)) c->setstate(0);
+             }
+             /*if the circuit analysis has finished and the ohmmeterdidn't detect 
+             any voltage, it will start the internal corrent source*/
+	     if(i==swp->getSize()-1 && c->getstate()>0) c->initAC2();
+           }
+        }
+        if(i==swp->getSize()-1)
+	{
+       	  ohm=0;	  
+	  goto back;//return to the beginning of the analysis
+        }
+        continue;
+    }    
 
     // save results
     saveAllResults (freq);
@@ -133,6 +166,8 @@ void acsolver::init (void) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     if (c->isNonLinear ()) c->calcOperatingPoints ();
+    if(c->getType() == CIR_OHMMETER ) ohm=1;/*Tells the solver if there 
+    is an ohmmeter in the circuit*/
     c->initAC ();
     if (noise) c->initNoiseAC ();
   }

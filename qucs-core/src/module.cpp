@@ -232,6 +232,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (cpwgap);
   REGISTER_CIRCUIT (cpwstep);
   REGISTER_CIRCUIT (iprobe);
+  REGISTER_CIRCUIT (ohmmeter);
   REGISTER_CIRCUIT (wprobe);
   REGISTER_CIRCUIT (vprobe);
   REGISTER_CIRCUIT (jfet);
