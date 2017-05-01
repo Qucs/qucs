@@ -34,6 +34,7 @@ MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent)
 {
   setWindowTitle(tr("Edit Marker Properties"));
   pMarker = pm_;
+  MarkerColor = pMarker->getColor();
   ActiveMarkers = pm_->getMarkersMap();//The map of markers is needed so as to create a list for choosing a reference marker at the menu
 
   QGridLayout *g = new QGridLayout;
@@ -177,24 +178,24 @@ void MarkerDialog::slotDeltaMode()
 // ----------------------------------------------------------
 void MarkerDialog::slotAcceptValues()
 {
-  pMarker->setID(MarkerID->text());//Marker identifier
+  QString ID = MarkerID->text();
+  if (!ID.isEmpty())pMarker->setID(ID);//Marker identifier
   pMarker->setLineWidth(MarkerLineWidth->text().toInt());//Marker line width property
   // Mode of operation: Normal (0) or Delta (1)
-  
 
-  if (DeltaModeCheckBox->isChecked())
+
+  if (DeltaModeCheckBox->isChecked())//Delta marker
   { 
     pMarker->setMarkerMode(1);
     pMarker->setReferenceMarkerID(RefMarkerComboBox->currentText());
-    pMarker->setColor(QColor(0,0,0));
+    pMarker->setColor(Qt::darkMagenta);
   }
-  else
+  else//Conventional marker
   {
     pMarker->setMarkerMode(0);
     pMarker->setReferenceMarkerID("None");
     pMarker->setColor(MarkerColor);
   }
-
   
   int tmp = Precision->text().toInt();
   if(tmp != pMarker->Precision) {
@@ -216,8 +217,7 @@ void MarkerDialog::slotAcceptValues()
   }
 
   pMarker->transparent = TransBox->isChecked();
-
-    pMarker->createText();
+  pMarker->createText();
     done(2);
 }
 

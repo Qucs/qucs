@@ -65,7 +65,7 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_, QString markerID) :
   fCY = float(cy);
   
   MarkerID=markerID;
-  MarkerColor = Qt::black;
+  MarkerColor = Qt::darkMagenta;//Default marker color
 
   ReferenceMarkerData = {0,0,0,0,0,0};
   MarkerLineWidth = 1;
@@ -613,7 +613,13 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
   }
   else
   {
-    p->drawRectD(x0+x1, y0+y1, x2_, y2_);
+    if (MarkerMode == 0) 
+    {
+      p->Painter->setPen(QPen(MarkerColor,MarkerLineWidth));//The color of the conventional markers is customizable. However, delta markers are black
+      double pad = MarkerLineWidth;//Extra pad. Otherwise, the box would overlap the text if the linewidth is big
+      p->drawRectD(x0+x1-pad/1.4142, y0+y1-pad/1.4142, x2_+pad, y2_+pad);
+    }
+    else p->drawRectD(x0+x1, y0+y1, x2_, y2_);
   }
   p->Painter->setWorldMatrix(wm);
   p->Painter->setWorldMatrixEnabled(false);
@@ -621,10 +627,7 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
   // restore painter state
   p->Painter->restore();
 
-  if (MarkerMode == 0) p->Painter->setPen(QPen(MarkerColor,MarkerLineWidth));//Delta markers should be black only
-  
-
-  p->Painter->setPen(QPen(Qt::black,1));
+  p->Painter->setPen(QPen(Qt::darkMagenta,1));
 
   x2 = int(float(x2_) / p->Scale);
   y2 = int(float(y2_) / p->Scale);
@@ -803,7 +806,7 @@ bool Marker::load(const QString& _s)
   qDebug() << "MarkerID " << MarkerID;
   if (tempID.isEmpty())//Loaded legacy .dpl doc
   {
-    MarkerColor.setNamedColor("#000000");//Color
+    MarkerColor = Qt::darkMagenta;//Color
     MarkerLineWidth = 1;//Line width
     MarkerMode = 0;//Conventional marker
     ReferenceMarkerID = QString("#NO_REF#");//Reference marker
