@@ -50,6 +50,8 @@ Ampere_ac::Ampere_ac()
 		QObject::tr("initial phase in degrees")));
   Props.append(new Property("Theta", "0", false,
 		QObject::tr("damping factor (transient simulation only)")));
+  Props.append(new Property("Ri", "0 Ohm", false,
+		QObject::tr("Internal resistance, (0 : disable), ideal behavior")));
 
   rotate();  // fix historical flaw
 }

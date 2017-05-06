@@ -47,6 +47,13 @@ wprobe::wprobe () : circuit (4) {
 void wprobe::initDC (void) {
   allocMatrixMNA ();
   voltageSource (VSRC_1, NODE_1, NODE_2);
+  nr_double_t r = getScaledProperty ("Riv");
+  // Setting the internal resistance
+  if (r != 0.0) {
+    nr_double_t g = 1.0 / r;
+    setY (NODE_3, NODE_3, +g); setY (NODE_4, NODE_4, +g);
+    setY (NODE_3, NODE_4, -g); setY (NODE_4, NODE_3, -g);
+  }
 }
 
 void wprobe::initAC (void) {
@@ -85,6 +92,9 @@ void wprobe::initTR (void) {
 
 //properties
 PROP_REQ [] = { PROP_NO_PROP };
-PROP_OPT [] = { PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Riv", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Rii", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  PROP_NO_PROP };
 struct define_t wprobe::cirdef =
   { "WProbe", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

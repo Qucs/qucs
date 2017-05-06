@@ -46,6 +46,15 @@ void vprobe::initSP (void) {
 
 void vprobe::initDC (void) {
   allocMatrixMNA ();
+  nr_double_t r = getScaledProperty ("Ri");
+  // Setting the internal resistance
+  if (r != 0.0) {
+    nr_double_t g = 1.0 / r;
+    setVoltageSources (0);
+    setY (NODE_1, NODE_1, +g); setY (NODE_2, NODE_2, +g);
+    setY (NODE_1, NODE_2, -g); setY (NODE_2, NODE_1, -g);
+  }
+  // The internal resistance can't be zero
 }
 
 void vprobe::saveOperatingPoints (void) {
@@ -65,6 +74,8 @@ void vprobe::initTR (void) {
 
 // properties
 PROP_REQ [] = { PROP_NO_PROP };
-PROP_OPT [] = { PROP_NO_PROP };
+PROP_OPT [] = { 
+  { "Ri", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  PROP_NO_PROP };
 struct define_t vprobe::cirdef =
   { "VProbe", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

@@ -22,6 +22,9 @@ iProbe::iProbe()
 {
   Description = QObject::tr("current probe");
 
+  Props.append(new Property("Ri", "0 Ohm", false,
+		QObject::tr("Internal resistance, (0 : disable), ideal behavior")));
+
   Lines.append(new Line(-30,  0,-20,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 30,  0, 20,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-20,  0, 20,  0,QPen(Qt::darkBlue,3)));
