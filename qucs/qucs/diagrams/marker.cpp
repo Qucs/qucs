@@ -607,20 +607,16 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
   x2_ = p->drawText(Text, x0+x1+3, y0+y1+3, &y2_);
   x2_ += int(6.0*p->Scale);
   y2_ += int(6.0*p->Scale);
-  if(transparent) {
+  if(!transparent) {
     p->eraseRect(x0+x1, y0+y1, x2_, y2_);
     p->drawText(Text, x0+x1+3, y0+y1+3);
   }
-  else
-  {
-    if (MarkerMode == 0) 
-    {
-      p->Painter->setPen(QPen(MarkerColor,MarkerLineWidth));//The color of the conventional markers is customizable. However, delta markers are black
-      double pad = MarkerLineWidth;//Extra pad. Otherwise, the box would overlap the text if the linewidth is big
-      p->drawRectD(x0+x1-pad/1.4142, y0+y1-pad/1.4142, x2_+pad, y2_+pad);
-    }
-    else p->drawRectD(x0+x1, y0+y1, x2_, y2_);
-  }
+
+   p->Painter->setPen(QPen(MarkerColor,MarkerLineWidth));//The color of the conventional markers is customizable. However, delta markers are black
+   double pad = MarkerLineWidth;//Extra pad. Otherwise, the box would overlap the text if the linewidth is big
+   p->drawRectD(x0+x1-pad/1.4142, y0+y1-pad/1.4142, x2_+pad, y2_+pad);
+
+
   p->Painter->setWorldMatrix(wm);
   p->Painter->setWorldMatrixEnabled(false);
 
@@ -776,7 +772,6 @@ bool Marker::load(const QString& _s)
     VarPos[nVarPos++] = n.mid(i,j-i).toDouble(&ok);
     if(!ok) return false;
     i = j+1;
-    qDebug() << VarPos[nVarPos++];
   } while(j >= 0);
 
   n  = s.section(' ',2,2);    // x1
