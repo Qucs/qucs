@@ -130,7 +130,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   ValDouble  = new QDoubleValidator(-1e200, 1e200, 6, this);
 
   QString NameY, NameZ;
-  if((Diag->Name == "Rect") || (Diag->Name == "Curve")) {
+  if((Diag->Name == "Rect") || (Diag->Name == "Curve") || (Diag->Name == "Waveac")) {
     NameY = tr("left Axis");
     NameZ = tr("right Axis");
   }
@@ -152,7 +152,10 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     NameY = tr("y-Axis");
     NameZ = tr("z-Axis");
   }
-
+  else if(Diag->Name == "Phasor") {
+    NameY = tr("left Axis");
+    NameZ = tr("right Axis");
+  }
   
   all = new QVBoxLayout(this); // to provide neccessary size
   QTabWidget *t = new QTabWidget();
@@ -223,13 +226,16 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     PropertyBox = new QComboBox();
     Box2Layout->addWidget(PropertyBox);
     PropertyBox->addItem(tr("solid line"));
-    PropertyBox->addItem(tr("dash line"));
-    PropertyBox->addItem(tr("dot line"));
-    if(Diag->Name != "Time") {
-      PropertyBox->addItem(tr("long dash line"));
-      PropertyBox->addItem(tr("stars"));
-      PropertyBox->addItem(tr("circles"));
-      PropertyBox->addItem(tr("arrows"));
+    if(Diag->Name != "Phasor")
+    {
+      PropertyBox->insertItem(tr("dash line"));
+      PropertyBox->insertItem(tr("dot line"));
+      if(Diag->Name != "Time") {
+	PropertyBox->insertItem(tr("long dash line"));
+	PropertyBox->insertItem(tr("stars"));
+	PropertyBox->insertItem(tr("circles"));
+	PropertyBox->insertItem(tr("arrows"));
+      }
     }
     connect(PropertyBox, SIGNAL(activated(int)),
 			 SLOT(slotSetGraphStyle(int)));
@@ -244,7 +250,8 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     Property2->setMaxLength(2);
     Property2->setText("0");
 
-    if((Diag->Name=="Rect") || (Diag->Name=="PS") || (Diag->Name=="SP") || (Diag->Name=="Curve")) {
+    if((Diag->Name=="Rect") || (Diag->Name=="PS") || (Diag->Name=="SP") || (Diag->Name=="Curve") 
+|| (Diag->Name=="Phasor") ) {
       Label4 = new QLabel(tr("y-Axis:"));
       Box2Layout->addWidget(Label4);
       Label4->setEnabled(false);
@@ -280,30 +287,61 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   ChooseData = new QComboBox();
   DataGroupLayout->addWidget(ChooseData);
   ChooseData->setMinimumWidth(300); // will force also min width of table below
-  connect(ChooseData, SIGNAL(activated(int)), SLOT(slotReadVars(int)));
+
   // todo: replace by QTableWidget
   // see https://gist.github.com/ClemensFMN/8955411
-  ChooseVars = new QTableWidget(1, 3);
-  ChooseVars->verticalHeader()->setVisible(false);
-  ChooseVars->horizontalHeader()->setStretchLastSection(true);
-  ChooseVars->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
-  // make sure sorting is disabled before inserting items
-  ChooseVars->setSortingEnabled(false);
-  ChooseVars->horizontalHeader()->setSortIndicatorShown(true);
-  ChooseVars->horizontalHeader()->setSortIndicator(0, Qt::AscendingOrder);
+  //instead of a menu with all graphs available will show 4 checkbox for 4 types of graph(voltage,current,eletric power and eletric impedance)
+  if(Diag->Name == "Phasor")
+  {
+    inputV = new QCheckBox(tr("V"));//, PHBox1);
+    DataGroupLayout->addWidget(inputV);
+    connect(inputV, SIGNAL(stateChanged(int)), SLOT(PhasorvalV(int)));
+    inputI = new QCheckBox(tr("I"));//, PHBox1);
+    DataGroupLayout->addWidget(inputI);
+    connect(inputI, SIGNAL(stateChanged(int)), SLOT(PhasorvalI(int)));
+    inputP = new QCheckBox(tr("P"));//, PHBox1);
+    DataGroupLayout->addWidget(inputP);
+    connect(inputP, SIGNAL(stateChanged(int)), SLOT(PhasorvalP(int)));
+    inputZ = new QCheckBox(tr("Z"));//, PHBox1);
+    DataGroupLayout->addWidget(inputZ);
+    connect(inputZ, SIGNAL(stateChanged(int)), SLOT(PhasorvalZ(int)));
+  }
+  //for Phasor and waveac,it will have a new input for frequency
+  if(Diag->Name == "Phasor" || Diag->Name == "Waveac") 
+  {
+    DataGroupLayout->addWidget(new QLabel(tr("frequency in Hertz")));
+    freq = new QLineEdit();
+    DataGroupLayout->addWidget(freq);
+    freq->setValidator(Validator);
+    if(Diag->sfreq.isEmpty())
+      Diag->sfreq = "0 Hz";
+    freq->setText(Diag->sfreq);
+  }
+  if(Diag->Name != "Phasor")
+  {
+    Name=Diag->Name;
+    connect(ChooseData, SIGNAL(activated(int)), SLOT(slotReadVars(int)));
+    ChooseVars = new QTableWidget(1, 3);
+    ChooseVars->verticalHeader()->setVisible(false);
+    ChooseVars->horizontalHeader()->setStretchLastSection(true);
+    ChooseVars->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+    // make sure sorting is disabled before inserting items
+    ChooseVars->setSortingEnabled(false);
+    ChooseVars->horizontalHeader()->setSortIndicatorShown(true);
+    ChooseVars->horizontalHeader()->setSortIndicator(0, Qt::AscendingOrder);
 
-  ChooseVars->setSelectionBehavior(QAbstractItemView::SelectRows);
-  //ChooseVars->selectRow(0);
-  DataGroupLayout->addWidget(ChooseVars);
-  //ChooseVars->addColumn(tr("Name"));
-  //ChooseVars->addColumn(tr("Type"));
-  //ChooseVars->addColumn(tr("Size"));
-  QStringList headers;
-  headers << tr("Name") << tr("Type") << tr("Size");
-  ChooseVars->setHorizontalHeaderLabels(headers);
+    ChooseVars->setSelectionBehavior(QAbstractItemView::SelectRows);
+    //ChooseVars->selectRow(0);
+    DataGroupLayout->addWidget(ChooseVars);
+    //ChooseVars->addColumn(tr("Name"));
+    //ChooseVars->addColumn(tr("Type"));
+    //ChooseVars->addColumn(tr("Size"));
+    QStringList headers;
+    headers << tr("Name") << tr("Type") << tr("Size");
+    ChooseVars->setHorizontalHeaderLabels(headers);
 
-  connect(ChooseVars, SIGNAL(itemDoubleClicked(QTableWidgetItem*)), SLOT(slotTakeVar(QTableWidgetItem*)));
-
+    connect(ChooseVars, SIGNAL(itemDoubleClicked(QTableWidgetItem*)), SLOT(slotTakeVar(QTableWidgetItem*)));
+  }
 
   QGroupBox *GraphGroup = new QGroupBox(tr("Graph"));
   Box1Layout->addWidget(GraphGroup);
@@ -664,7 +702,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
        axisZ->setEnabled(false);
     }
     if(Diag->Name.left(4) != "Rect")   // cartesian 2D and 3D
-      if(Diag->Name != "Curve") {
+       if((Diag->Name != "Curve") && (Diag->Name != "Phasor") && (Diag->Name != "Waveac")) {
         axisX->setEnabled(false);
         startY->setEnabled(false);
         startZ->setEnabled(false);
@@ -706,7 +744,9 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
       // default dataset should be the current
       ChooseData->setCurrentIndex(ChooseData->count()-1);
   }
-  slotReadVars(0);  // put variables into the ListView
+
+  if(Diag->Name != "Phasor")
+    slotReadVars(0);  // put variables into the ListView
 
   // ...........................................................
   // put all graphs into the ListBox
@@ -727,6 +767,13 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
       ColorButt->setStyleSheet(stylesheet);
       misc::setWidgetBackgroundColor(ColorButt, selectedColor);
     }
+  }
+  if(Diag->Name == "Phasor")
+    {
+      if(testvar(".v")) inputV->setChecked(true);
+      if(testvar(".i")) inputI->setChecked(true);
+      if(testvar(".S")) inputP->setChecked(true);
+      if(testvar(".Ohm")) inputZ->setChecked(true);
   }
 }
 
@@ -750,7 +797,7 @@ void DiagramDialog::slotReadVars(int)
   }
 
   QString Line, tmp, Var;
-  int varNumber = 0;
+  int varNumber = 0,l=0;
   // reading the file as a whole improves speed very much, also using
   // a QByteArray rather than a QString
   QByteArray FileString = file.readAll();
@@ -769,8 +816,25 @@ void DiagramDialog::slotReadVars(int)
     i = FileString.indexOf('<', j)+1;
 
     Var = Line.section(' ', 1, 1).remove('>');
+    //waveac only shows voltage(".v") and current(".i")
     if(Var.length()>0)
+    {
+      
+      if(Name=="Waveac")
+      {
+	l = Var.indexOf(".i",0,Qt::CaseSensitive);
+	if(l==-1)
+	{
+	  QString a =".v";
+	  l = Var.indexOf(a,0,Qt::CaseSensitive);
+	  if(l!=-1 && Var.size() != (l + a.size()))
+	    l=-1;
+	}
+	  
+      } 
+      if(l == -1) continue;
       if(Var.at(0) == '_')  continue;
+    }
 
     if(Line.left(3) == "dep") {
       tmp = Line.section(' ', 2);
@@ -822,8 +886,15 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
   GraphInput->cursorPosition();
   //QString s="";
   //QString s1 = Item->text();
-  int row = Item->row();
-  QString s1 = ChooseVars->item(row, 0)->text();
+  QString s1;
+  if(Diag->Name != "Phasor")
+  {
+     int row = Item->row();
+     s1 = ChooseVars->item(row, 0)->text();
+  }
+  else
+     s1 = Var2;
+
   QFileInfo Info(defaultDataSet);
   if(ChooseData->currentText() != Info.completeBaseName())
     s1 = ChooseData->currentText() + ":" + s1;
@@ -933,12 +1004,21 @@ void DiagramDialog::SelectGraph(Graph *g)
 }
 
 /*!
- Is called when the 'delelte graph' button is pressed.
+ Is called when the 'delete graph' button is pressed.
 */
 void DiagramDialog::slotDeleteGraph()
 {
-  int i = GraphList->currentRow();
-  if(i < 0) return;   // return, if no item selected
+  int i;
+  if(Diag->Name != "Phasor" || Var2 != ".a")
+  {
+    i = GraphList->currentRow();
+    if(i < 0) return;   // return, if no item selected
+  }
+  else
+  {
+    i = loc;
+    if(i < 0) return;
+  }
 
   GraphList->takeItem(i);
   Graphs.remove(i);
@@ -1103,6 +1183,11 @@ void DiagramDialog::slotApply()
 
     // Use string compares for all floating point numbers, in
     // order to avoid rounding problems.
+    if(Diag->Name == "Phasor" || Diag->Name == "Waveac")
+      if(Diag->sfreq != freq->text()) {
+	 Diag->sfreq = freq->text();
+	  changed = true;
+      }
     if(QString::number(Diag->xAxis.limit_min) != startX->text()) {
       Diag->xAxis.limit_min = startX->text().toDouble();
       changed = true;
@@ -1340,7 +1425,7 @@ void DiagramDialog::slotSetYAxis(int axis)
 void DiagramDialog::slotManualX(int state)
 {
   if(state == 2) {
-    if((Diag->Name.left(4) == "Rect") || (Diag->Name == "Curve"))
+    if((Diag->Name.left(4) == "Rect") || (Diag->Name == "Curve")||(Diag->Name=="Phasor")  || (Diag->Name=="Waveac"))
       startX->setEnabled(true);
     stopX->setEnabled(true);
     if(GridLogX) if(GridLogX->isChecked())  return;
@@ -1357,7 +1442,7 @@ void DiagramDialog::slotManualX(int state)
 void DiagramDialog::slotManualY(int state)
 {
   if(state == 2) {
-    if((Diag->Name.left(4) == "Rect") || (Diag->Name == "Curve"))
+    if((Diag->Name.left(4) == "Rect") || (Diag->Name == "Curve")||(Diag->Name=="Phasor")  || (Diag->Name=="Waveac"))
       startY->setEnabled(true);
     stopY->setEnabled(true);
     if(GridLogY) if(GridLogY->isChecked())  return;
@@ -1374,7 +1459,7 @@ void DiagramDialog::slotManualY(int state)
 void DiagramDialog::slotManualZ(int state)
 {
   if(state == 2) {
-    if((Diag->Name.left(4) == "Rect") || (Diag->Name == "Curve"))
+    if((Diag->Name.left(4) == "Rect") || (Diag->Name == "Curve")||(Diag->Name=="Phasor")  || (Diag->Name=="Waveac"))
       startZ->setEnabled(true);
     stopZ->setEnabled(true);
     if(GridLogZ) if(GridLogZ->isChecked())  return;
@@ -1467,5 +1552,138 @@ void DiagramDialog::slotEditRotZ(const QString& Text)
   DiagCross->rotZ = Text.toFloat() * pi/180.0;
   DiagCross->update();
 }
+/*if the checkbox 'V' change stated*/
+void DiagramDialog::PhasorvalV(int state)
+{
+  if(state == 2) {//if check add graph of type ".v" if exist
+    addvar(".v");
+  }
+  else {//if uncheck remove graph of type ".v"
+    remvar(".v");
+  }
+}
+/*if the checkbox 'I' change stated*/
+void DiagramDialog::PhasorvalI(int state)
+{
+  if(state == 2) {//if check add graph of type ".i" if exist
+    addvar(".i");
+  }
+  else {//if uncheck remove graph of type ".i"
+    remvar(".i");
+  }
+}
+/*if the checkbox 'P' change stated*/
+void DiagramDialog::PhasorvalP(int state)
+{
+  if(state == 2) {//if check add graph of type ".S" if exist
+    addvar(".S");
+  }
+  else {//if uncheck remove graph of type ".S"
+    remvar(".S");
+  }
+}
+/*if the checkbox 'Z' change stated*/
+void DiagramDialog::PhasorvalZ(int state)
+{
+  if(state == 2) {//if check add graph of type ".Ohm" if exist
+    addvar(".Ohm");
+  }
+  else {
+    remvar(".Ohm");//if uncheck remove graph of type ".Ohm"
+  }
+}
+/*this function will find graph of a certain type and place on screen*/
+void DiagramDialog::addvar(QString a)
+{
+  QFileInfo Info(defaultDataSet);
+  QString DocName = ChooseData->currentText()+".dat";
 
+  QFile file(Info.dirPath() + QDir::separator() + DocName);
+  if(!file.open(QIODevice::ReadOnly)) {
+    return;
+  }
+
+  QString Line, tmp, Var;
+  Var2 = "";
+  //int varNumber = 0;
+  // reading the file as a whole improves speed very much, also using
+  // a QByteArray rather than a QString
+  QByteArray FileString = file.readAll();
+  file.close();
+
+  
+  int i=0, j=0, l=0;
+  QList<QListWidgetItem *> m;
+
+  for(i = GraphList->count()-1; i>=0; i--)
+  {
+    
+      Var = GraphList->item(i)->text();
+
+      if(Var.indexOf(a,0,Qt::CaseSensitive) != -1) return;
+  }
+
+  i = FileString.indexOf('<')+1;
+
+  if(i > 0)
+  do {
+    j = FileString.indexOf('>', i);
+    for(int k=0;k<j-i;k++) Line[k]=FileString[k+i];
+    Line.truncate(j-i);
+    i = FileString.indexOf('<', j)+1;
+
+    Var2 = Line.section(' ', 1, 1).remove('>');
+    if(Var2.length()>0)
+      if(Var2.at(0) == '_')  continue;   
+
+    m = GraphList->findItems(Var2, Qt::MatchExactly);
+    l = Var2.indexOf(a,0,Qt::CaseSensitive);
+
+    if( l != -1 && Var2.size() == (l + a.size()) && !m.size()>0)//Var2.size == (l + a.size()) in case of voltage (.v) to don't let pass a variable like (name.var)
+    {
+      QTableWidgetItem* I;
+      slotTakeVar(I);
+    }
+
+  } while(i > 0);
+  
+}
+/*will locate if exist a graph on screen that match the type and removes*/
+void DiagramDialog::remvar(QString a)
+{
+    loc = -1;
+    QString Var;
+    int i;
+    Var2 = ".a";    
+
+    for(i = GraphList->count()-1; i>=0; i--)
+    {
+    
+      Var = GraphList->item(i)->text();
+
+      if(Var.indexOf(a,0,Qt::CaseSensitive) != -1)
+      {
+	loc = i;
+	slotDeleteGraph();
+      }
+    }
+    Var2="";
+
+}
+/*checks if a type of graph is on screen*/
+bool DiagramDialog::testvar (QString a)
+{
+  int i;
+  QString Var;
+
+  foreach(Graph *pg, Diag->Graphs) {
+  
+    Var = pg->Var;
+    if(Var.indexOf(a,0,Qt::CaseSensitive) != -1)
+    {
+      return true;
+    }
+  }
+    return false;
+}
 // vim:ts=8:sw=2:noet

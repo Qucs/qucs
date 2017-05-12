@@ -83,6 +83,13 @@ private slots:
   void slotEditRotX(const QString&);
   void slotEditRotY(const QString&);
   void slotEditRotZ(const QString&);
+  void PhasorvalV(int);
+  void PhasorvalI(int);
+  void PhasorvalP(int);
+  void PhasorvalZ(int);
+  void addvar(QString);
+  void remvar(QString);
+  bool testvar(QString);
 
 protected slots:
     void reject();
@@ -92,6 +99,9 @@ private:
 
   Diagram *Diag;
   QString defaultDataSet;
+  QString Var2;
+  int loc;
+  QString Name;
 
   QRegExp Expr;
   QDoubleValidator *ValDouble;
@@ -106,10 +116,12 @@ private:
   QLineEdit   *GraphInput, *Property2, *xLabel, *ylLabel, *yrLabel;
   QCheckBox   *GridOn, *GridLogX, *GridLogY, *GridLogZ;
   QCheckBox   *manualX, *manualY, *manualZ, *hideInvisible;
+  QCheckBox   *inputV, *inputI, *inputP, *inputZ;
   QLineEdit   *startX, *stepX, *stopX;
   QLineEdit   *startY, *stepY, *stopY;
   QLineEdit   *startZ, *stepZ, *stopZ;
   QLineEdit   *rotationX, *rotationY, *rotationZ;
+  QLineEdit   *freq;
   QLabel      *GridLabel1, *GridLabel2, *Label1, *Label2, *Label3, *Label4;
   QComboBox   *PropertyBox, *GridStyleBox, *yAxisBox;
   QPushButton *ColorButt, *GridColorButt;

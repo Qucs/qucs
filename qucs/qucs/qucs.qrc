@@ -148,6 +148,7 @@
         <file>bitmaps/pad3bit.png</file>
         <file>bitmaps/pad4bit.png</file>
         <file>bitmaps/pfet.png</file>
+        <file>bitmaps/phasor.png</file>
         <file>bitmaps/photodiode.png</file>
         <file>bitmaps/phototransistor.png</file>
         <file>bitmaps/pm_mod.png</file>
@@ -222,6 +223,7 @@
         <file>bitmaps/vprobe.png</file>
         <file>bitmaps/vpulse.png</file>
         <file>bitmaps/vrect.png</file>
+        <file>bitmaps/wave.png</file>
         <file>bitmaps/wire.png</file>
         <file>bitmaps/xnor.png</file>
         <file>bitmaps/xor.png</file>
