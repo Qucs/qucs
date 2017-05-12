@@ -408,6 +408,8 @@ void Module::registerModules (void) {
   REGISTER_DIAGRAM_1 (CurveDiagram);
   REGISTER_DIAGRAM_1 (TimingDiagram);
   REGISTER_DIAGRAM_1 (TruthDiagram);
+  REGISTER_DIAGRAM_1 (PhasorDiagram);
+  REGISTER_DIAGRAM_1 (Waveac);
 
   // external simulation
   REGISTER_EXTERNAL_1 (ETR_Sim);

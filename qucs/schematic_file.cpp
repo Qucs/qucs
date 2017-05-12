@@ -758,6 +758,8 @@ bool Schematic::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
     else if(cstr == "<Curve") d = new CurveDiagram();
     else if(cstr == "<Time") d = new TimingDiagram();
     else if(cstr == "<Truth") d = new TruthDiagram();
+    else if(cstr == "<Phasor") d = new PhasorDiagram();
+    else if(cstr == "<Waveac") d = new Waveac();
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 		   QObject::tr("Format Error:\nUnknown diagram!"));
