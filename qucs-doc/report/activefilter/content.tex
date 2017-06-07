@@ -856,6 +856,92 @@ i-1/2, & \quad N \mbox{ even}
 \verb|Filter::cauerOrderEstim()| and \verb|Filter::calcCauer()| implement this
 algorithm. These functions are called together. See \verb|filter.cpp|.
 
+\section{Legendre}
+
+Legendre filter (or "L" optimum filter) provides the maximum possible magnitude 
+response rolloff and has no ripple in passband. The magnitude response of 
+Legendre filter for unity cutoff frequency is defined as following:
+
+\begin{equation}
+ |H(j\omega)|=\frac{1}{\sqrt{1+L_n(\omega^2)}}
+\end{equation}
+
+where $L_n(\omega^2)$ is $n$-th order optimal polynomial, which is derived from 
+Legendre polynomials \cite{lfilt}. The first 10 Legendre polynomials are shown 
+in the Table \ref{tab:lgndr}. An example of typical magnitude response for 
+Legendre filter is shown in the Figure \ref{fig:lgndr}.
+
+\begin{table}[!ht]
+\centering
+\caption{The first "L" polynomials}\label{tab:lgndr}
+ \begin{tabular}{|r|l|}
+ \hline
+ $n$ & $L_n(\omega^2)$ \\
+ \hline
+ 1 & $\omega^2$ \\
+ 2 & $\omega^4$ \\
+ 3 & $\omega^2 - 3\omega^4 + 3\omega^6$ \\
+ 4 & 3$\omega^4 - 8\omega^6 + 6\omega^8$ \\
+ 5 & $\omega^2 - 8\omega^4 + 28\omega^6 - 40\omega^8 + 20\omega^{10}$ \\
+ 6 & 6$\omega^4 - 40\omega^6 + 105\omega^8 - 120\omega^{10} + 50\omega^{12}$ \\
+ 7 & $\omega^2 - 15\omega^4 + 105\omega^6 - 355\omega^{8} + 615\omega^{10} + 
+525\omega^{12} + 175\omega^{14}$ \\
+ 8 & 10$\omega^4 - 120\omega^6 + 615\omega^8 - 1624\omega^{10} + 
+2310\omega^{12} - 1680\omega^{14} + 490\omega^{16}$ \\
+ 9 & $\omega^2 - 24\omega^4 + 276\omega^6 - 1624\omega^{8} + 
+5376\omega^{10} - 10416\omega^{12} + 11704\omega^{14} - 7056\omega^{16} + 
+1764\omega^{18}$\\
+ 10 & 15$\omega^4 - 280\omega^6 + 2310\omega^8 - 10416\omega^{10} + 
+27860\omega^{12} - 45360\omega^{14} + 44100\omega^{16} - $ \\
+   & $ - 23520\omega^{18} + 5292\omega^{20}$\\
+ \hline
+\end{tabular}
+
+\end{table}
+
+
+\begin{figure}[!ht]
+  \centering
+  \begin{tikzpicture}
+   \draw[-latex] (0,0) -- (7,0) node [anchor=west] {$\omega$};
+   \draw[-latex] (0,0) -- (0,5) node [anchor=south]
+    {$|H(j\omega)|$};
+    \draw[domain=0:2,y=4cm, x=3cm,samples=200,name path=MR] plot
+function{1/sqrt(1+3*x**4-8*x**6+6*x**8)};
+    \draw[dashed,domain=0:2,y=4cm, x=3cm,smooth,name path=MR] plot
+           function{1/(1+x**8)**0.5};
+  \end{tikzpicture}
+  \caption{Typical 4-th Legendre optimum filter magnitude response (solid 
+curve) compared to Butterworth 4-th order filter magnitude response (dashed 
+curve)}
+  \label{fig:lgndr}
+\end{figure}
+
+The following sequence is used to synthesize Legendre filter in 
+Qucsactivefilter application. Input parameters are cutoff frequency $f_c$ and 
+filter order $n$. 
+
+\begin{enumerate}
+ \item Select appropriate Legendre polynomial from the table \ref{tab:lgndr}
+ \item Obtain squared magnitude response $H^2(\omega)$. For example, for 4-th 
+order filter:
+\begin{equation}
+ H^(\omega) = \frac{1}{1+\omega^2-3\omega^4+3\omega^6}
+\end{equation}
+\item Substitute $-s^2=\omega^2$. For 4-th order filter we obtain:
+\begin{equation}
+ H(s^2)=\frac{1}{1-s^2-3s^4-3s^6}
+\end{equation}
+\item Calculate roots of denominator. Roots of denominator are the poles of 
+transfer function. 
+\item Synthesize filter circuitry by known transfer function poles. 
+\end{enumerate}
+
+Qucsactivefilter application uses predefined poles table of Legendre filter. 
+The \verb|bessel.h| header file contains poles table. This table is computed in 
+Octave using steps 1 -- 4 of the algorithm. Qucsactivefilter application takes 
+pole value from the table and perform step 5 to obtain filter circuitry. 
+
 \section{Bessel}
 
 For all considered filter transfer approximations magnitude response was 
