@@ -123,6 +123,7 @@ QucsActiveFilter::QucsActiveFilter(QWidget *parent)
         <<tr("Inverse Chebyshev")
         <<tr("Cauer (Elliptic)")
         <<tr("Bessel")
+        <<tr("Legendre")
         <<tr("User defined");
     cbxFilterFunc->addItems(lst2);
     connect(cbxFilterFunc,SIGNAL(currentIndexChanged(int)),this,SLOT(slotSwitchParameters()));
@@ -319,6 +320,9 @@ void QucsActiveFilter::slotCalcSchematic()
             case funcBessel : ffunc = Filter::Bessel;
                      par.order = edtOrder->text().toInt();
                      break;
+            case funcLegendre : ffunc = Filter::Legendre;
+                    par.order = edtOrder->text().toInt();
+                    break;
             case funcUser : ffunc = Filter::User;
                      break;
             default: ffunc = Filter::NoFunc;
@@ -517,14 +521,16 @@ void QucsActiveFilter::slotSwitchParameters()
         cbxFilterType->removeItem(topoCauer);
     }
 
-    if ((cbxFilterFunc->currentIndex())==funcBessel) { // Bessel
+    if ((cbxFilterFunc->currentIndex()==funcBessel) ||
+        (cbxFilterFunc->currentIndex()==funcLegendre)){ // Bessel or Legendre
         edtOrder->setEnabled(true);
     } else {
         edtOrder->setEnabled(false);
     }
 
     if ((cbxFilterFunc->currentIndex()==funcUser)||
-        (cbxFilterFunc->currentIndex()==funcBessel)) { // Bessel or User Def.
+        (cbxFilterFunc->currentIndex()==funcBessel) ||
+        (cbxFilterFunc->currentIndex()==funcLegendre)) { // Bessel, Legendre or User Def.
         btnDefineTransferFunc->setEnabled(true);
         edtF2->setEnabled(false);
         edtPassbRpl->setEnabled(false);
