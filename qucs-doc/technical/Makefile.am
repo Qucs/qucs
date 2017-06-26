@@ -53,7 +53,7 @@ FIGURES = differential.fig biast.fig \
   mscross.fig bondwire.fig tline4p.fig
 PSFILES = MNAexample.eps NLexample.eps CYexample.eps MNAnoise1.eps \
   MNAnoise2.eps Unoise.eps MNAsingular.eps Real_c.eps Real_ec.eps  \
-  Real_r.eps TLpiece.eps QuarterWavelengthFilter.eps
+  Real_r.eps TLpiece.eps QuarterWavelengthFilter.eps rectwaveguide.eps circularwaveguide.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PSFRAGTEXS = $(FIGURES:.fig=.tex) $(MATHFILES:.m=.tex)
 PDFFILES = $(FIGURES:.fig=.pdf)
