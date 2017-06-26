@@ -67,6 +67,7 @@ noinst_HEADERS = \
 	qf_filter.h \
 	qf_cauer.h \
 	quarterwave_filter.h \
+        qw_coupled_ring_filter.h \
 	qf_matrix.h \
 	line_filter.h \
 	filter.h \
