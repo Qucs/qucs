@@ -393,6 +393,13 @@ QString * QucsFilter::calculateFilter(struct tFilter * Filter)
     Substrate.minWidth = EditMinWidth->text().toDouble() / 1e3;
     Substrate.maxWidth = EditMaxWidth->text().toDouble() / 1e3;
 
+    //Throw an error for even Chebyshev filters
+    if ((Filter->Type == TYPE_CHEBYSHEV) && (Filter->Order % 2 == 0))
+    {
+      QMessageBox::critical(0, "Error", "Even order Chebyshev can't be realized with passive filters.");
+      return NULL;
+    }
+
     bool isMicrostrip = MicrostripcheckBox->isChecked();
     switch(ComboRealize->currentIndex()) {
       case 2:  // End coupled transmission line filter
@@ -596,7 +603,6 @@ void QucsFilter::slotClassChanged(int index)
       LabelStop->setEnabled(true);
       EditStop->setEnabled(true);
       ComboStop->setEnabled(true);
-      LabelStart->setText(tr("Start frequency:"));
       break;
   }
   if (index == CLASS_BANDPASS) {
@@ -658,6 +664,9 @@ void QucsFilter::FlushImage()
       case 7:
            s1 = ":/bitmaps/CCoupled_Shunt_Resonators.svg";
            break;
+      case 8:
+           s1 = ":/bitmaps/RFEDD.svg";
+           break;
    }
    imgLayout->load(s1);
 }
@@ -666,50 +675,66 @@ void QucsFilter::FlushImage()
 void QucsFilter::slotRealizationChanged(int index)
 {
   FlushImage();
-  if(index < 2)         // set to LC ladder type?
+
+  if (index < 2)//LC filters
   {
-    MicrostripcheckBox->setEnabled(false);
-    MicrostripcheckBox->setChecked(false);
-    ComboClass->setEnabled(true);
-  }  
-  else
+     ComboType->clear();
+     ComboType->addItem("Bessel");
+     ComboType->addItem("Butterworth");
+     ComboType->addItem("Chebyshev");
+     ComboType->addItem("Cauer");
+     MicrostripcheckBox->setEnabled(false);
+     MicrostripcheckBox->setChecked(false);
+     box2->setEnabled(false);//Microstrip substrate definition panel
+     ComboClass->setEnabled(true);
+     return;
+  }
+
+  //Remove Cauer filters from ComboClass since they cannot be implemented with the other topologies
+  //Otherwise, the user may select it and face a number of annoying warnings...
+  ComboType->clear();
+  ComboType->addItem("Bessel");
+  ComboType->addItem("Butterworth");
+  ComboType->addItem("Chebyshev");
+
+
+  //Shared settings for microwave BP filters
+  if ((index == 2) || (index == 3) || (index == 5) || (index == 6))
   {
-   MicrostripcheckBox->setEnabled(true);
-  if(index <= 3) {  // set to "transmission line" types?
-    // set to bandpass fixed
-    ComboClass->setCurrentIndex(CLASS_BANDPASS);
-    slotClassChanged(CLASS_BANDPASS);
-    ComboClass->setEnabled(false);
+           ComboClass->setCurrentIndex(CLASS_BANDPASS);
+           slotClassChanged(CLASS_BANDPASS);
+           ComboClass->setEnabled(false);
+           MicrostripcheckBox->setEnabled(true);
+           MicrostripcheckBox->setChecked(false);//By default, the microstrip implementation is unchecked
+           box2->setEnabled(false);//Microstrip substrate definition panel
   }
-  else if(index < 5) {  // set to "stepped impedance" types?
-    // set to lowpass fixed
-    ComboClass->setCurrentIndex(CLASS_LOWPASS);
-    slotClassChanged(CLASS_LOWPASS);
-    ComboClass->setEnabled(false);
-  }
-  else
-    ComboClass->setEnabled(true);
-  }
-  if (index == 5)//Quarter wave coupled resonator
+  
+  if (index == 4)//Stepped impedance LPF
   {
-     ComboClass->setCurrentIndex(CLASS_BANDPASS);
-     slotClassChanged(CLASS_BANDPASS);
-  }
-  if (index == 6)//Quarter wave ring
-  {
+     ComboClass->setCurrentIndex(CLASS_LOWPASS);
+     slotClassChanged(CLASS_LOWPASS);
      ComboClass->setEnabled(false);
-     ComboType->setEnabled(false);
-     EditOrder->setEnabled(false);
+     MicrostripcheckBox->setEnabled(true);
+     MicrostripcheckBox->setChecked(false);//By default, the microstrip implementation is unchecked
+     box2->setEnabled(false);//Microstrip substrate definition panel
+  }
+
+  if (index == 6)//Quarter wavelength side coupled ring resonator (BP)
+  {
+     ComboType->setEnabled(false);//Conventional frequency responses not available
+     EditOrder->setEnabled(false);//Not possible to modify the order
      LabelStart->setText("1st transmission zero frequency:");
-     LabelStop->setText("Central frequency:");
+     LabelStop->setText("2nd transmission zero frequency::");
   }
   else
   {
-     ComboType->setEnabled(true);
      EditOrder->setEnabled(true);
+     ComboType->setEnabled(true);//The other filters can implement canonical responses
      LabelStart->setText(tr("Corner frequency:"));
      LabelStop->setText(tr("Stop frequency:"));
-   }
+  }
+
+  //Shared settings for the qw-ring resonator and the capacitively coupled shunt resonators
   if ((index == 6)||(index == 7))
   {
     MicrostripcheckBox->setEnabled(false);//Microstrip implementation does not work...
@@ -717,6 +742,15 @@ void QucsFilter::slotRealizationChanged(int index)
     slotClassChanged(CLASS_BANDPASS);
     ComboClass->setEnabled(false);
   }
+
+  if (index == 8)//RF EDD filter
+  {
+     MicrostripcheckBox->setEnabled(false);
+     MicrostripcheckBox->setChecked(false);
+     ComboClass->setEnabled(true);
+     ComboType->setEnabled(true);
+  }
+
 } 
 
 void QucsFilter::on_MicrostripcheckBox_clicked()

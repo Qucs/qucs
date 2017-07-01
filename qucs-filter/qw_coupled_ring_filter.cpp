@@ -87,8 +87,8 @@ QString* QW_Coupled_Ring_Filter::createSchematic(tFilter *Filter, tSubstrate *Su
   if (isMicrostrip)//Microstrip implementation
   {
    TL_Filter::getMicrostrip(Filter->Impedance, f0, Substrate, width, er_eff);
-   *s += QString("<MLIN MS1 1 190 -40 -26 20 0 0 \"Sub1\" 0 \"%1\" 0 \"%2\" 0 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(l4/sqrt(er_eff));
-   *s += QString("<MLIN MS1 1 200 140 -26 20 0 0 \"Sub1\" 0 \"%1\" 0 \"%2\" 0 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(l4/sqrt(er_eff));
+   *s += QString("<MLIN MS1 1 190 -40 -26 20 0 0 \"Sub1\" 0 \"%1\" 0 \"%2\" 0 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(num2str(width)).arg(num2str(l4/sqrt(er_eff)));
+   *s += QString("<MLIN MS1 1 200 140 -26 20 0 0 \"Sub1\" 0 \"%1\" 0 \"%2\" 0 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(num2str(width)).arg(num2str(l4/sqrt(er_eff)));
    
     sythesizeCoupledMicrostrip(Zo, Ze, f0, Substrate, width, gap, er_eff);
     /*if((width < 1e-7) || (gap < 1e-7)) 
@@ -109,10 +109,10 @@ QString* QW_Coupled_Ring_Filter::createSchematic(tFilter *Filter, tSubstrate *Su
   }
   else//Ideal transmission line implementation
   {
-  *s += QString("<TLIN Line1 1 190 -40 -26 20 0 0 \"%1 Ohm\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Zr).arg(l4);
-  *s += QString("<TLIN Line2 1 200 140 -26 20 0 0 \"%1 Ohm\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Zr).arg(l4);
-  *s += QString("<CTLIN Line3 1 290 60 16 -26 0 1 \"%1 Ohm\" 1 \"%2 Ohm\" 1 \"%3\" 1 \"1\" 0 \"1\" 0 \"0 dB\" 0 \"0 dB\" 0 \"26.85\" 0>\n").arg(Ze).arg(Zo).arg(l4);
-  *s += QString("<CTLIN Line4 1 90 60 -63 -26 0 3 \"%1 Ohm\" 1 \"%2 Ohm\" 1 \"%3\" 1 \"1\" 0 \"1\" 0 \"0 dB\" 0 \"0 dB\" 0 \"26.85\" 0>\n").arg(Ze).arg(Zo).arg(l4);
+  *s += QString("<TLIN Line1 1 190 -40 -26 20 0 0 \"%1 Ohm\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Zr).arg(num2str(l4));
+  *s += QString("<TLIN Line2 1 200 140 -26 20 0 0 \"%1 Ohm\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Zr).arg(num2str(l4));
+  *s += QString("<CTLIN Line3 1 290 60 16 -26 0 1 \"%1 Ohm\" 1 \"%2 Ohm\" 1 \"%3\" 1 \"1\" 0 \"1\" 0 \"0 dB\" 0 \"0 dB\" 0 \"26.85\" 0>\n").arg(Ze).arg(Zo).arg(num2str(l4));
+  *s += QString("<CTLIN Line4 1 90 60 -63 -26 0 3 \"%1 Ohm\" 1 \"%2 Ohm\" 1 \"%3\" 1 \"1\" 0 \"1\" 0 \"0 dB\" 0 \"0 dB\" 0 \"26.85\" 0>\n").arg(Ze).arg(Zo).arg(num2str(l4));
 
 
   }

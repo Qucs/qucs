@@ -383,8 +383,8 @@ std::string qf_filter::to_qucs (void) {
       << num2str(Value).c_str() << "Hz\" 1 \"" << num2str(Value2).c_str()
       << "Hz\" 1 \"200\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n"
       << "<Eqn Eqn1 1 260 " << yc+10
-      << " -28 15 0 0 \"dBS21=dB(S[2,1])\" 1 "
-      << "\"dBS11=dB(S[1,1])\" 1 \"yes\" 0>\n"
+      << " -28 15 0 0 \"S21_dB=dB(S[2,1])\" 1 "
+      << "\"S11_dB=dB(S[1,1])\" 1 \"yes\" 0>\n"
       << "</Components>\n";
 
   res << "<Wires>\n";

@@ -60,7 +60,7 @@ int x = 90;//Index for drawing the schematic
 QString *wirestr= new QString("<0 -30 60 -30 "" 0 0 0 "">\n");
 QString *s = new QString("<Qucs Schematic " PACKAGE_VERSION ">\n");
   *s += "<Components>\n";
-  *s += QString("<Pac P1 1 0 0 0 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Filter->Impedance);
+  *s += QString("<Pac P1 1 0 0 -92 -31 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Filter->Impedance);
   *s += QString("<GND * 1 0 30 0 0 0 0>\n");
   
   for(int i = 0; i < N; i++)//Component calculation 
@@ -70,7 +70,7 @@ QString *s = new QString("<Qucs Schematic " PACKAGE_VERSION ">\n");
      {
        J[i]= sqrt(pi*delta/(4*g[i]))/Z0;
        C[i] = J[i]/(w0*sqrt(1-Z0*Z0*J[i]*J[i]));
-       *s += QString("<C C1 1 %1 -30 -26 17 0 0 \"%2\" 1 \"\" 0 \"neutral\" 0>\n").arg(x).arg(C[i]);
+       *s += QString("<C C1 1 %1 -30 -26 17 0 0 \"%2\" 1 \"\" 0 \"neutral\" 0>\n").arg(x).arg(num2str(C[i]));
        x+=60;
        continue;
      }
@@ -81,10 +81,10 @@ QString *s = new QString("<Qucs Schematic " PACKAGE_VERSION ">\n");
      l[i-1] = (Z0*w0*deltaC[i-1]/(2*pi))*lambda0;
      if (l[i-1] < 0) l[i-1] += lambda0/4;
      *wirestr += QString("<%1 -30 %2 -30 "" 0 0 0 "">\n").arg(x-30).arg(x+30);
-     *s += QString("<TLIN Line1 1 %1 0 -26 20 0 1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Filter->Impedance).arg(l[i-1]);
+     *s += QString("<TLIN Line1 1 %1 0 -41 46 0 1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Filter->Impedance).arg(num2str(l[i-1]));
      *s += QString("<GND * 1 %1 30 0 0 0 0>\n").arg(x);
      x += 60;
-     *s += QString("<C C1 1 %1 -30 -26 17 0 0 \"%2\" 1 \"\" 0 \"neutral\" 0>\n").arg(x).arg(C[i]);
+     *s += QString("<C C1 1 %1 -30 -26 17 0 0 \"%2\" 1 \"\" 0 \"neutral\" 0>\n").arg(x).arg(num2str(C[i]));
      x += 60;
   }
 
@@ -97,10 +97,10 @@ if (l[N-1] < 0) l[N-1] +=lambda0/4;
 
   //Wiring
   *wirestr += QString("<%1 -30 %2 -30 "" 0 0 0 "">\n").arg(x-30).arg(x+30);
-  *s += QString("<TLIN Line1 1 %1 0 -26 20 0 1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Filter->Impedance).arg(l[N-1]);
+  *s += QString("<TLIN Line1 1 %1 0 -41 46 0 1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Filter->Impedance).arg(num2str(l[N-1]));
   *s += QString("<GND * 1 %1 30 0 0 0 0>\n").arg(x);
   x += 60;
-  *s += QString("<C C1 1 %1 -30 -26 17 0 0 \"%2\" 1 \"\" 0 \"neutral\" 0>\n	").arg(x).arg(C[N]);
+  *s += QString("<C C1 1 %1 -30 -26 17 0 0 \"%2\" 1 \"\" 0 \"neutral\" 0>\n	").arg(x).arg(num2str(C[N]));
   x += 60;  
   *wirestr += QString("<%1 -30 %2 -30 "" 0 0 0 "">\n").arg(x-30).arg(x+30);
   *s += QString("<Pac P2 1 %1 0 18 -26 0 1 \"2\" 1 \"%2 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(x+30).arg(Filter->Impedance);
