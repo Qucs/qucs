@@ -71,7 +71,7 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_, QString markerID) :
   MarkerLineWidth = 1;
   MarkerMode=0;// MarkerMode = 0 => Conventional marker
                // MarkerMode = 1 => Delta marker
-  ReferenceMarkerID = "#NO_REF#";//No reference
+  ReferenceMarkerID = "";//No reference
 
   if(!pGraph){
     makeInvalid();
@@ -736,14 +736,14 @@ QString Marker::save()
   else  s += " 0 ";
 
   //New fields (they are added at the end of the line so as to be compatible with old versions of Qucs)
-  s += QString("%1 ").arg(MarkerID);
+  s += QString("\"%1\" ").arg(MarkerID);
   
   //Add color and linewidth
   s += QString("%1 %2 ").arg(MarkerColor.name()).arg(MarkerLineWidth);
 
   //Add marker mode (delta or normal) and reference marker (if exists)
 
-  s += QString("%1 %2 ").arg(MarkerMode).arg(ReferenceMarkerID);
+  s += QString("%1 \"%2\" ").arg(MarkerMode).arg(ReferenceMarkerID);
 
   //Add reference marker data
   s += QString("%1#%2#%3#%4#%5 >").arg(ReferenceMarkerData[0]).arg(ReferenceMarkerData[1]).arg(ReferenceMarkerData[2]).arg(ReferenceMarkerData[3]).arg(ReferenceMarkerData[4]);
@@ -802,32 +802,35 @@ bool Marker::load(const QString& _s)
 
   //New fields
 
-  QString tempID = s.section(' ',7,7); //temp string to check the marker format
-  qDebug() << "MarkerID " << MarkerID;
+  qDebug() << "s = " << s;
+  QString tempID = s.section('"',1,1); //temp string to check the marker format
+  qDebug() << "tempID " << tempID;
   if (tempID.isEmpty())//Loaded legacy .dpl doc
   {
     MarkerColor = Qt::darkMagenta;//Color
     MarkerLineWidth = 1;//Line width
     MarkerMode = 0;//Conventional marker
-    ReferenceMarkerID = QString("#NO_REF#");//Reference marker
+    ReferenceMarkerID = QString("");//Reference marker
     return true;
   }
   MarkerID = tempID;//Marker ID
+  s = s.section('"',2,-1); // keep the remaining part of the line
 
   //Color
-  MarkerColor.setNamedColor(s.section(' ',8,8));
+  MarkerColor.setNamedColor(s.section(' ',1,1));
   
   //Line width
-  MarkerLineWidth = s.section(' ',9,9).toInt();
+  MarkerLineWidth = s.section(' ',2,2).toInt();
 
   //Marker mode (delta or normal)
-  MarkerMode = s.section(' ',10,10).toInt();
+  MarkerMode = s.section(' ',3,3).toInt();
 
   //Reference marker
-  ReferenceMarkerID = s.section(' ',11,11);
+  ReferenceMarkerID = s.section('"',1,1); // Marker ID string is in quotes;
+  s = s.section('"',2,-1); // keep the remaining part of the line
 
   //Reference marker data
-  QString RefMrkData = s.section(' ',12,12);
+  QString RefMrkData = s.section(' ',1,1);
   ReferenceMarkerData[0] = RefMrkData.section('#', 0 ,0).toDouble();
   ReferenceMarkerData[1] = RefMrkData.section('#', 1 ,1).toDouble();
   ReferenceMarkerData[2] = RefMrkData.section('#', 2 ,2).toDouble();

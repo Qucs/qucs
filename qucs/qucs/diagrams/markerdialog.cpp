@@ -27,8 +27,7 @@
 #include <QGridLayout>
 #include <QComboBox>
 #include <QCheckBox>
-
-
+#include <QMessageBox>
 MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent)
                      : QDialog(parent, Qt::WDestructiveClose)
 {
@@ -179,7 +178,13 @@ void MarkerDialog::slotDeltaMode()
 void MarkerDialog::slotAcceptValues()
 {
   QString ID = MarkerID->text();
-  if (!ID.isEmpty())pMarker->setID(ID);//Marker identifier
+
+  if (ID.isEmpty()) {
+    QMessageBox::warning(this, tr("Warning"), tr("Marker ID string cannot be empty"));
+    return;
+  }
+    
+  pMarker->setID(ID);//Marker identifier
   pMarker->setLineWidth(MarkerLineWidth->text().toInt());//Marker line width property
   // Mode of operation: Normal (0) or Delta (1)
 
