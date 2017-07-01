@@ -24,5 +24,6 @@
         <file>bitmaps/LC_cauer_lowpass.svg</file>
         <file>bitmaps/LC_cauer_bandpass.svg</file>
         <file>bitmaps/LC_cauer_notch.svg</file>
+        <file>bitmaps/RFEDD.svg</file>
     </qresource>
 </RCC>

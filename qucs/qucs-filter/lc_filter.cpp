@@ -256,7 +256,10 @@ QString* LC_Filter::createSchematic(tFilter *Filter, bool piType)
     }
     else {
       if(Filter->Order & 1)
+       {
         *s += QString("<%1 240 %2 240 \"\" 0 0 0>\n").arg(x+30).arg(x+70);
+        *s += QString("<%1 240 %2 240 \"\" 0 0 0>\n").arg(x+170).arg(x+210);
+       }
       else
         *s += QString("<%1 240 %2 240 \"\" 0 0 0>\n").arg(x+110).arg(x+210);
     }
