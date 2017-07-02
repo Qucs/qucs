@@ -687,6 +687,10 @@ void QucsFilter::slotRealizationChanged(int index)
      MicrostripcheckBox->setChecked(false);
      box2->setEnabled(false);//Microstrip substrate definition panel
      ComboClass->setEnabled(true);
+     EditOrder->setEnabled(true);
+     ComboType->setEnabled(true);//The other filters can implement canonical responses
+     LabelStart->setText(tr("Corner frequency:"));
+     LabelStop->setText(tr("Stop frequency:"));
      return;
   }
 
@@ -724,7 +728,7 @@ void QucsFilter::slotRealizationChanged(int index)
      ComboType->setEnabled(false);//Conventional frequency responses not available
      EditOrder->setEnabled(false);//Not possible to modify the order
      LabelStart->setText("1st transmission zero frequency:");
-     LabelStop->setText("2nd transmission zero frequency::");
+     LabelStop->setText("2nd transmission zero frequency:");
   }
   else
   {
