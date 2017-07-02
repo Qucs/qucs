@@ -122,7 +122,8 @@ MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent)
    RefMarkerComboBox->addItems(AvailableMarkers);
    DeltaModeCheckBox->setEnabled(true);
   }
-  RefMarkerComboBox->setEnabled(false);
+  // enable ComboBox only if multiple choices are available
+  RefMarkerComboBox->setEnabled(AvailableMarkers.count() > 1);
   g->addWidget(RefMarkerComboBox, 8, 1);
 
   // first => activated by pressing RETURN
