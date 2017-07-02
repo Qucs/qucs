@@ -86,9 +86,7 @@ public: // power matching stuff. some sort of VarPos (ab?)use
 
   void setReferenceMarkerID(QString);
   QString getReferenceMarkerID();
-  void setMarkersMap(QMap<QString, std::vector<double>>);
 
-  QMap<QString, std::vector<double>> getMarkersMap();
   std::vector<double> ReferenceMarkerData;
 
 private:
@@ -102,9 +100,6 @@ private:
   int MarkerLineWidth;
   int MarkerMode;
   QString ReferenceMarkerID;
-
-  QMap<QString, std::vector<double>> ActiveMarkers;//Every marker must know the IDs of the other markers. Otherwise, it wouldn't be possible
-//to choose a reference marker in markerdialog class
 
 public:
   QString Text;     // the string to be displayed in the marker text

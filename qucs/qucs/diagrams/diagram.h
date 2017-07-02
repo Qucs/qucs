@@ -127,7 +127,7 @@ public:
 
   bool hideLines;       // for "Rect3D": hide invisible lines ?
   int rotX, rotY, rotZ; // for "Rect3D": rotation around x, y and z axis
-
+QMap<QString, std::vector<double>> ActiveMarkers;
 protected:
   void calcSmithAxisScale(Axis*, int&, int&);
   void createSmithChart(Axis*, int Mode=7);
@@ -145,10 +145,9 @@ protected:
 
   virtual void calcData(Graph*);
 
-
 private:
   int Bounding_x1, Bounding_x2, Bounding_y1, Bounding_y2;
-  QMap<QString, std::vector<double>> ActiveMarkers;
+  
 };
 
 #endif

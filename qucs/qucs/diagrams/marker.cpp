@@ -89,11 +89,6 @@ Marker::~Marker()
 {
 }
 
-QMap<QString, std::vector<double>> Marker::getMarkersMap()
-{
-  return ActiveMarkers;
-}
-
 QString Marker::getID(void)
 {
 return MarkerID;
@@ -140,11 +135,6 @@ std::vector<double> Marker::getData()
   data[4] = fCY;
   data[5] = MarkerMode;//This allows to save the marker mode in a map structure. This map is used by markerdialog class to separate those conventional from delta markers
   return data;
-}
-
-void Marker::setMarkersMap(QMap<QString, std::vector<double>> markersMap)
-{
-   ActiveMarkers = markersMap;
 }
 
 // ---------------------------------------------------------------------
@@ -300,7 +290,7 @@ void Marker::createText()
   if (MarkerMode == 1)//Delta mode activated
   {  
     //Get reference marker data
-    ReferenceMarkerData = ActiveMarkers[ReferenceMarkerID];
+    ReferenceMarkerData = diag()->ActiveMarkers[ReferenceMarkerID];
   }
   double *pp;
   nVarPos = pGraph->numAxes();

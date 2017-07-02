@@ -181,7 +181,6 @@ qDebug() << "----------------------------";
           pm->setMarkerMode(0);
         }
       }
-      pm->setMarkersMap(ActiveMarkers);
       pm->paint(p, cx, cy);
     }
 

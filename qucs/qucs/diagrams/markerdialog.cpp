@@ -34,7 +34,7 @@ MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent)
   setWindowTitle(tr("Edit Marker Properties"));
   pMarker = pm_;
   MarkerColor = pMarker->getColor();
-  ActiveMarkers = pm_->getMarkersMap();//The map of markers is needed so as to create a list for choosing a reference marker at the menu
+  ActiveMarkers = pm_->diag()->ActiveMarkers; // The map of markers is needed so as to create a list for choosing a reference marker at the menu
 
   QGridLayout *g = new QGridLayout;
 
