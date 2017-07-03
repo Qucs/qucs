@@ -299,7 +299,7 @@ case $host_os in
     if test "$enable_mt" = yes; then
       QT_LDF=""
       QT_LIB="-lQtCore -lQtGui -lQtXml -lQt3Support -lQtSvg -lQtScript"
-      QT_INC="$QT_DEF -DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS -DQT_THREAD_SUPPORT -D_REENTRANT"
+      QT_INC="$QT_DEF -DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS -DQT_DEPRECATED_WARNINGS -DQT_THREAD_SUPPORT -D_REENTRANT"
       [case $host_os in
         *freebsd*) QT_LIB="$QT_LIB -pthread" ;;
         *mingw* | *msys*) QT_INC="$QT_INC -mthreads"; QT_LDF="$QT_LDF -mthreads" ;;
@@ -381,11 +381,11 @@ case $host_os in
     dnl Check for Qt in:
     dnl  * Digia default path: /Library/Frameworks
     dnl  * User provided path: QTDIR
-    dnl  * Homebrew defaul:    /usr/local/lib
-    dnl  * MacpPorts default   /opt/local/lib
+    dnl  * Homebrew defaul:    /usr/local/lib or ${prefix}/Library/Frameworks
+    dnl  * MacpPorts default   /opt/local/lib or ${prefix}/Library/Frameworks
     with_qt=no
     AC_MSG_CHECKING([for Qt OS X framework])
-    paths="$QTDIR/lib /Library/Frameworks /opt/local/lib /usr/local/lib"
+    paths="$QTDIR/lib ${prefix}/Library/Frameworks /Library/Frameworks /opt/local/lib /usr/local/lib"
     for path in $paths; do
       if test -f "$path/QtGui.framework/Headers/QApplication"; then
         with_qt=yes
@@ -406,14 +406,15 @@ case $host_os in
       CPPFLAGS="$CPPFLAGS -I$path/QtSvg.framework/Headers"
       CPPFLAGS="$CPPFLAGS -I$path/QtScript.framework/Headers"
       CPPFLAGS="$CPPFLAGS -I$path/Qt3Support.framework/Headers"
+      QT_LDFLAGS="$QT_LDFLAGS -F$path"
     else
       AC_MSG_ERROR([not found])
     fi
 
     dnl Define Qt3Support
-    QT_DEF="-DQT_SHARED -DQT3_SUPPORT"
+    QT_DEF="-DQT_SHARED -DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS -DQT_DEPRECATED_WARNINGS"
     CPPFLAGS="$CPPFLAGS $QT_DEF"
-    QT_LDFLAGS="-headerpad_max_install_names"
+    QT_LDFLAGS="$QT_LDFLAGS -headerpad_max_install_names"
 
     if test "$enable_qucs_gui_debug" = yes; then
       CPPFLAGS="$CPPFLAGS -W -Wall"
@@ -568,7 +569,7 @@ case $host_os in
     DEVELOPER_DIR="${MACOSX_SDK_PATH%/SDKs*}"
     DEVELOPER_DIR="${DEVELOPER_DIR%/Platforms*}"
     export DEVELOPER_DIR
-    FRAMEWORKSHOME="$MACOSX_SDK_PATH/System/Library/Frameworks"
+    FRAMEWORKSHOME="${prefix}/Library/Frameworks"
     MACOSX_DEPLOYMENT_TARGET="$with_macosx_version_min_required"
 
     case "$with_macosx_version_min_required" in
@@ -788,7 +789,6 @@ dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([Makefile
     contrib/Makefile
     examples/Makefile
-    qucs-edit/Makefile
     qucs-help/Makefile
     qucs-help/docs/Makefile
     qucs-help/docs/en/Makefile

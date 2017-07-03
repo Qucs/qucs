@@ -216,7 +216,7 @@ QString SpiceFile::getSubcircuitFile()
                 else
                 {
                     /// \todo improve GUI/CLI error/warning
-                    qCritical() << "Spice file not found:" << localFileInfo.absFilePath();
+                    qCritical() << "Spice file not found:" << localFileInfo.absoluteFilePath();
                 }
             }
         }
@@ -311,7 +311,7 @@ bool SpiceFile::createSubNetlist(QTextStream *stream)
   }
   QByteArray FileContent = ConvFile.readAll();
   ConvFile.close();
-  //? stream->writeRawBytes(FileContent.data(), FileContent.size());
+  //? stream->writeRawBytes(FileContent.value(), FileContent.size());
   (*stream) << FileContent.data();
   return true;
 }

@@ -22,6 +22,7 @@
         <file>bitmaps/capacitor.png</file>
         <file>bitmaps/cccs.png</file>
         <file>bitmaps/ccvs.png</file>
+        <file>bitmaps/circline.png</file>
         <file>bitmaps/circulator.png</file>
         <file>bitmaps/coaxial.png</file>
         <file>bitmaps/comp_1bit.png</file>
@@ -230,6 +231,8 @@
         <file>bitmaps/tick.png</file>
         <file>bitmaps/error.png</file>
         <file>bitmaps/mutualx.png</file>
-	<file>bitmaps/hicolor/128x128/apps/qucs.png</file>
+        <file>bitmaps/hicolor/128x128/apps/qucs.png</file>
+        <file>bitmaps/smallsave.xpm</file>
+        <file>bitmaps/empty.xpm</file>
     </qresource>
 </RCC>

@@ -33,7 +33,8 @@ HEADERS  += \
     transferfuncdialog.h \
     bessel.h \
     qucsactivefilter.h \
-    helpdialog.h
+    helpdialog.h \
+    legendre.h
 
 RESOURCES += \
     qucsactivefilter.qrc
