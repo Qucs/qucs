@@ -87,7 +87,7 @@
 #include "iprobe.h"
 #include "wprobe.h"
 #include "vprobe.h"
-#include "spfile.h"
+#include "spembed.h"
 #include "vpulse.h"
 #include "ipulse.h"
 #include "vrect.h"
