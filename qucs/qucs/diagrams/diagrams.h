@@ -31,5 +31,7 @@
 #include "curvediagram.h"
 #include "timingdiagram.h"
 #include "truthdiagram.h"
+#include "phasordiagram.h"
+#include "waveac.h"
 
 #endif

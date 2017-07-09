@@ -81,6 +81,7 @@ void vdc::calcHB (nr_double_t frequency) {
 PROP_REQ [] = {
   { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
 PROP_OPT [] = {
+  { "Ri", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
   PROP_NO_PROP };
 struct define_t vdc::cirdef =
   { "Vdc", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

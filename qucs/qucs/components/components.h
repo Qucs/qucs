@@ -98,6 +98,8 @@
 #include "opt_sim.h"
 #include "param_sweep.h"
 #include "iprobe.h"
+#include "ohmmeter.h"
+#include "wprobe.h"
 #include "vprobe.h"
 #include "volt_noise.h"
 #include "ampere_noise.h"

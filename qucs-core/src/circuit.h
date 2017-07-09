@@ -124,12 +124,16 @@ class circuit : public object, public integrator
   virtual void calcSP (nr_double_t) { }
   virtual void initDC (void) { allocMatrixMNA (); }
   virtual void calcDC (void) { }
+  virtual void initDC2 (void) { }//only used in ohmmeter.cpp
   virtual void restartDC (void) { }
   virtual void initNoiseSP (void) { allocMatrixN (); }
   virtual void calcNoiseSP (nr_double_t) { }
   virtual void initNoiseAC (void) { allocMatrixN (vsources); }
   virtual void calcNoiseAC (nr_double_t) { }
   virtual void initAC (void) { allocMatrixMNA (); }
+  virtual void initAC2 (void) { }//only used in ohmmeter.cpp
+  virtual void setstate (int) { } //only used in ohmmeter.cpp
+  virtual int getstate () { }//only used in ohmmeter.cpp
   virtual void calcAC (nr_double_t) { }
   virtual void initTR (void) { allocMatrixMNA (); }
   virtual void calcTR (nr_double_t) { }

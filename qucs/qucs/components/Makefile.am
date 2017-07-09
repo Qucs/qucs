@@ -36,7 +36,7 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   source_ac.cpp isolator.cpp equation.cpp circulator.cpp attenuator.cpp       \
   ampere_dc.cpp transformer.cpp symtrafo.cpp subcirport.cpp ground.cpp        \
   dcfeed.cpp dcblock.cpp biast.cpp inductor.cpp capacitor.cpp vhdlfile.cpp    \
-  component.cpp resistor.cpp iprobe.cpp volt_noise.cpp ampere_noise.cpp       \
+  component.cpp resistor.cpp iprobe.cpp wprobe.cpp volt_noise.cpp ampere_noise.cpp       \
   msmbend.cpp msopen.cpp ampere_ac.cpp bjt.cpp jfet.cpp mosfet.cpp            \
   msgap.cpp bjtsub.cpp mosfet_sub.cpp vpulse.cpp ipulse.cpp vrect.cpp         \
   irect.cpp msvia.cpp amplifier.cpp opamp.cpp spicefile.cpp cpwopen.cpp       \
@@ -60,7 +60,7 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   hpribin4bit.cpp msrstub.cpp phototransistor.cpp nigbt.cpp \
   hybrid.cpp ctline.cpp tunneldiode.cpp \
   etr_sim.cpp ecvs.cpp vcresistor.cpp vacomponent.cpp        \
-  mutualx.cpp circline.cpp
+  mutualx.cpp circline.cpp ohmmeter.cpp
 
 nodist_libcomponents_a_SOURCES = $(MOCFILES)
 
@@ -71,7 +71,7 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   ccvs.h coplanar.h dc_sim.h diode.h hb_sim.h mscorner.h mscoupled.h mslange.h          \
   mscross.h msline.h msstep.h mstee.h param_sweep.h sp_sim.h substrate.h      \
   tline.h tr_sim.h component.h vcvs.h gyrator.h phaseshifter.h vhdlfile.h     \
-  iprobe.h volt_noise.h ampere_noise.h msmbend.h msopen.h ampere_ac.h bjt.h   \
+  iprobe.h wprobe.h volt_noise.h ampere_noise.h msmbend.h msopen.h ampere_ac.h bjt.h   \
   jfet.h mosfet.h msgap.h bjtsub.h mosfet_sub.h vpulse.h ipulse.h vrect.h     \
   irect.h msvia.h amplifier.h opamp.h spicefile.h cpwopen.h cpwshort.h        \
   cpwgap.h cpwstep.h libcomp.h mutual.h mutual2.h noise_ii.h noise_iv.h       \
@@ -90,7 +90,7 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   comp_2bit.h comp_4bit.h hpribin4bit.h msrstub.h phototransistor.h nigbt.h   \
   vafile.h hybrid.h ctline.h tunneldiode.h      \
   etr_sim.h ecvs.h vcresistor.h vacomponent.h                  \
-  mutualx.h circline.h
+  mutualx.h circline.h ohmmeter.h
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 

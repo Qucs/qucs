@@ -44,14 +44,14 @@ componentdialog.cpp	inductor.cpp		noise_vv.cpp		vcvs.cpp
 iprobe.cpp		opamp.cpp		verilogfile.cpp		vcresistor.cpp
 coplanar.cpp		ipulse.cpp		opt_sim.cpp		vexp.cpp
 coupler.cpp		irect.cpp		optimizedialog.cpp	vfile.cpp
-cpwgap.cpp		isolator.cpp	vhdlfile.cpp
+cpwgap.cpp		isolator.cpp		ohmmeter.cpp		vhdlfile.cpp
 cpwopen.cpp		jfet.cpp		pad2bit.cpp		volt_ac.cpp
 cpwshort.cpp		jk_flipflop.cpp		pad3bit.cpp		volt_dc.cpp
 cpwstep.cpp		jkff_SR.cpp		pad4bit.cpp		volt_noise.cpp
 ctline.cpp		libcomp.cpp		param_sweep.cpp		vprobe.cpp
 d_flipflop.cpp		log_amp.cpp		phaseshifter.cpp	vpulse.cpp
 dc_sim.cpp		logic_0.cpp		photodiode.cpp		vrect.cpp
-dcblock.cpp		logic_1.cpp		phototransistor.cpp
+dcblock.cpp		logic_1.cpp		phototransistor.cpp	wprobe.cpp
 dcfeed.cpp		logical_and.cpp		pm_modulator.cpp
 vcresistor.cpp
 vacomponent.cpp
@@ -127,6 +127,7 @@ iexp.h
 ifile.h
 inductor.h
 iprobe.h
+wprobe.h
 ipulse.h
 irect.h
 isolator.h
@@ -170,6 +171,7 @@ nigbt.h
 noise_ii.h
 noise_iv.h
 noise_vv.h
+ohmmeter.h
 opamp.h
 opt_sim.h
 optimizedialog.h

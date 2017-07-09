@@ -82,6 +82,8 @@
 #include "tline4p.h"
 #include "rlcg.h"
 #include "iprobe.h"
+#include "ohmmeter.h"
+#include "wprobe.h"
 #include "vprobe.h"
 #include "spfile.h"
 #include "vpulse.h"

@@ -46,6 +46,7 @@
 #include "transient.h"
 #include "exception.h"
 #include "exceptionstack.h"
+#include "component_id.h"
 
 #define STEPDEBUG   0 // set to zero for release
 #define BREAKPOINTS 0 // exact breakpoint calculation
@@ -206,12 +207,19 @@ int trsolver::solve (void)
         if (error)
             return -1;
     }
-
+    ohm=0;
     // Initialize transient analysis.
     setDescription ("transient");
     initTR ();
     setCalculation ((calculate_func_t) &calcTR);
     solve_pre ();
+
+    //Setting up the second analysis, related to the ohmmeter
+    back:
+    saveCurrent = current = 0;
+    stepDelta = -1;
+    converged = 0;
+    fixpoint = 0;
 
     // Create time sweep if necessary.
     initSteps ();
@@ -371,7 +379,38 @@ int trsolver::solve (void)
         }
         while (saveCurrent < time); // Hit a requested time point?
 
+
         // Save results.
+	/*only act if there is an ohmmeter in the circuit and 
+        it is the first run of analysis*/
+	if(ohm == 1)
+    	{
+	  if(time==0) continue;//if the time is 0, there are no valid values
+    	  circuit * root = subnet->getRoot ();
+      	  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) 
+	 {
+	    if(c->getType() == CIR_OHMMETER )
+            {
+	    /*In the beginning, the ohmmeter will act as a 
+	    voltmeter to detect external sources.*/
+	      if(c->getstate()>0)
+	      {
+             	c->calcOperatingPoints ();
+		//if it detects any voltage the ohmmeter will not work
+             	if(c->getOperatingPoint ("R") > 0) c->setstate(0);
+	      }
+	      /*if the circuit analysis has finished and the ohmmeter didn't
+	      detect any voltage, it will start the internal corrent source*/
+	      if(i==swp->getSize()-1 && c->getstate()>0) c->initDC2();
+            }
+       	 }
+          if(i==swp->getSize()-1)
+	  {
+       	    ohm=0;	  
+	    goto back;//return to the beginning of the analysis
+          }
+          continue;
+        }
 #if STEPDEBUG
         logprint (LOG_STATUS, "DEBUG: save point at t = %.3e, h = %.3e\n",
                   (double) saveCurrent, (double) delta);
@@ -860,6 +899,8 @@ void trsolver::deinitTR (void)
 // The function initialize a single circuit.
 void trsolver::initCircuitTR (circuit * c)
 {
+    //Tells the solver if there is an ohmmeter in the circuit
+    if(c->getType() == CIR_OHMMETER ) ohm=1;
     c->initTR ();
     c->initStates ();
     c->setCoefficients (corrCoeff);

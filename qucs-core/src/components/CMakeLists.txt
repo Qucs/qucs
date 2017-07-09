@@ -38,6 +38,7 @@ SET( COMPONENTS_SRC
   mutual.cpp
   mutual2.cpp
   mutualx.cpp
+  ohmmeter.cpp
   opamp.cpp
   open.cpp
   pac.cpp
@@ -69,6 +70,7 @@ SET( COMPONENTS_SRC
   vpulse.cpp
   vrect.cpp
   vvnoise.cpp
+  wprobe.cpp
 )
 
 SET(HEADERS

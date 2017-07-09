@@ -98,6 +98,7 @@ PROP_OPT [] = {
   { "Phase", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-360, 360) },
   { "Theta", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
   { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Ri", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
   PROP_NO_PROP };
 struct define_t vac::cirdef =
   { "Vac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
