@@ -166,6 +166,21 @@ qDebug() << "----------------------------";
    foreach(Graph *pg, Graphs)
     foreach(Marker *pm, pg->Markers)
     {
+      IDref = pm->getReferenceMarkerID();
+      if (!ActiveMarkers.contains(IDref))
+      {//If the reference marker was removed or its name has changed, the marker pointing to that reference must be a conventional marker
+        pm->setReferenceMarkerID("");
+        pm->setMarkerMode(0);
+      }
+      else
+      {//The reference marker exists, then check if delta mode is activated
+        RefData = ActiveMarkers[IDref];//Reference marker data. The 5th field shows if delta mode is activated
+        if (RefData[5] == 1)
+        {//If the reference marker is already a delta marker, the current marker must be a conventional marker
+          pm->setReferenceMarkerID("");
+          pm->setMarkerMode(0);
+        }
+      }
       pm->setMarkersMap(ActiveMarkers);
       pm->paint(p, cx, cy);
     }

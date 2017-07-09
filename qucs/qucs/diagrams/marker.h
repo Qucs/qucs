@@ -85,6 +85,7 @@ public: // power matching stuff. some sort of VarPos (ab?)use
   Graph const *pGraph;   // the corresponding graph
 
   void setReferenceMarkerID(QString);
+  QString getReferenceMarkerID();
   void setMarkersMap(QMap<QString, std::vector<double>>);
 
   QMap<QString, std::vector<double>> getMarkersMap();

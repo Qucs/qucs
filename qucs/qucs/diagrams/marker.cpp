@@ -122,6 +122,11 @@ void Marker::setReferenceMarkerID(QString ref)
    ReferenceMarkerID=ref;
 }
 
+QString Marker::getReferenceMarkerID()
+{
+   return ReferenceMarkerID;
+}
+
 
 // This function returns the marker values. Its main use is to provide data to the Diagram object so
 // as to build a map with the data of all the active markers.
