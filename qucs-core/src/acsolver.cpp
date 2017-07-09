@@ -127,7 +127,7 @@ int acsolver::solve (void) {
              	c->calcOperatingPoints ();
 		//if it detects any voltage, the ohmmeter will not work
              	if((c->getOperatingPoint ("R") != 0 || 
-                c->getOperatingPoint ("Z") != 0)) c->setstate(0);
+                c->getOperatingPoint ("X") != 0)) c->setstate(0);
              }
              /*if the circuit analysis has finished and the ohmmeterdidn't detect 
              any voltage, it will start the internal corrent source*/

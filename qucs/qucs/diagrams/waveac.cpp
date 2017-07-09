@@ -217,7 +217,6 @@ Frame:
 
 void Waveac::calcData(Graph *g)
 {
-  double *px;
   double *pz = g->cPointsY;
   if(!pz)  return;
   if(g->numAxes() < 1) return;
@@ -319,7 +318,7 @@ Diagram* Waveac::newOne()
 // ------------------------------------------------------------
 Element* Waveac::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("Temporal Diagram(AC)");
+  Name = QObject::tr("AC Temporal diagram");
   BitmapFile = (char *) "wave";
 
   if(getNewOne)  return new Waveac();

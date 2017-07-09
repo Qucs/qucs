@@ -99,7 +99,7 @@ int PhasorDiagram::calcDiagram()
   Texts.clear();
   Arcs.clear();
 
- double GridStep, corr, zD, zDstep, GridNum;
+ double GridStep, zD, zDstep, GridNum;
   // get size of text using the screen-compatible metric
   QFontMetrics metrics(QucsSettings.font, 0);
   y1 = QucsSettings.font.pointSize() + 6;
@@ -107,8 +107,7 @@ int PhasorDiagram::calcDiagram()
   x1 = 10;      // position of label text
   x3 = x2 + 7;
   QString tmp;
-  bool back = false;
-  int  z, w, valid = 0;
+  int  z, valid = 0;
 
   // =====  give "step" the right sign (if user made it wrong)  ==============
   xAxis.step = fabs(xAxis.step);
@@ -127,9 +126,6 @@ int PhasorDiagram::calcDiagram()
   // ====  x grid  =======================================================
 
   calcAxisScale(&xAxis, GridNum, zD, zDstep, GridStep, double(x2));
-  double Expo;
-  if(xAxis.up == 0.0)  Expo = log10(fabs(xAxis.up-xAxis.low));
-  else  Expo = log10(fabs(xAxis.up));
 
   zD += 0.5;     // perform rounding
   z = int(zD);   //  "int(...)" implies "floor(...)"
@@ -160,7 +156,6 @@ int PhasorDiagram::calcDiagram()
   calcRestAxis(&xAxisP,&yAxisP,&zAxisP);
   calcRestAxis(&xAxisZ,&yAxisZ,&zAxisZ);
 
-Frame:
   // outer frame
   Lines.append(new Line(0,  y2, x2, y2, QPen(Qt::black,0)));
   Lines.append(new Line(x2, y2, x2,  0, QPen(Qt::black,0)));
@@ -197,16 +192,12 @@ void PhasorDiagram::calcRestAxis(Axis *xA, Axis *yA , Axis *zA)
 
 void PhasorDiagram::calcData(Graph *g)
 {
-  double *px;
   double *pz = g->cPointsY;
   if(!pz)  return;
   if(g->numAxes() < 1) return;
 
-  int z,sc,i;
+  int z, i;
   int Size = ((2*(g->count(0)) + 1)*nfreqt * g->countY) + 10;
-
-  double Dummy = 0.0;  // not used
-  double *py;
 
   g->resizeScrPoints(Size);
   auto p = g->begin();
@@ -291,7 +282,7 @@ Diagram* PhasorDiagram::newOne()
 // ------------------------------------------------------------
 Element* PhasorDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("Phasor(AC)");
+  Name = QObject::tr("AC Phasorial diagram");
   BitmapFile = (char *) "phasor";
 
   if(getNewOne)  return new PhasorDiagram();

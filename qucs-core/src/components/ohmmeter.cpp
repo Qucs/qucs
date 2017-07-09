@@ -68,15 +68,15 @@ void ohmmeter::calcOperatingPoints (void) {
   if(on>0)// Testing if the ohmmeter is already working or allowed to work
   {
     nr_double_t R = real (getV (NODE_1) - getV (NODE_2));
-    nr_double_t Z = imag (getV (NODE_1) - getV (NODE_2));
+    nr_double_t X = imag (getV (NODE_1) - getV (NODE_2));
     setOperatingPoint ("R", R);
-    setOperatingPoint ("Z", Z);
+    setOperatingPoint ("X", X);
   }
   else // if it is connected to an external source, it will show as NAN
   {
     nr_double_t R=NAN;
     setOperatingPoint ("R", R);
-    setOperatingPoint ("Z", R);
+    setOperatingPoint ("X", R);
   }
 
 }

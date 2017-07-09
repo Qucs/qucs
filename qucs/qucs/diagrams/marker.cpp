@@ -177,7 +177,7 @@ void Marker::fix()
   }
   if(diag()->Name!="Waveac") return;
 
-  int nn,x,y,d,dmin = INT_MAX;
+  int nn,x,d,dmin = INT_MAX;
   Axis const *pa;
   if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
   else  pa = &(diag()->zAxis);
@@ -230,7 +230,6 @@ void Marker::createText()
   double *pp;
   nVarPos = pGraph->numAxes();
   DataX const *pD;
-  double n;
   if(diag()->Name!="Waveac")
   {
     auto p = pGraph->findSample(VarPos);
@@ -648,7 +647,7 @@ bool Marker::getSelected(int x_, int y_)
 /*will find the y value of a point in time for waveac*/
 double Marker::wavevalY(double xn,std::vector<double>& VarPos)  
 {
-  double *px,n;
+  double n;
   double af=0.0; //angles
   double A = 0.0;
   double yp[2];
