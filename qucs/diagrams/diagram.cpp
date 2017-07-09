@@ -183,7 +183,7 @@ void Diagram::paintScheme(Schematic *p)
 */
 void Diagram::createAxisLabels()
 {
-  int   x, y, z, w, wmax = 0;
+  int   x, y, w, wmax = 0;
   QString Str;
   // get size of text using the screen-compatible metric
   QFontMetrics metrics(QucsSettings.font, 0);
@@ -687,7 +687,7 @@ void Diagram::getAxisLimits(Graph *pg)
 {
   // FIXME: Graph should know the limits. but it doesn't yet.
   //        we should only copy here. better: just wrap, dont use {x,y,z}Axis
-  int z,i,m=0;
+  int z,i=0;
   double x, y, *p;
   QString var, find;
   DataX const *pD = pg->axis(0);
@@ -2150,7 +2150,7 @@ bool Diagram::newcoordinate(Graph::iterator const& p,float* xn, float* yn) const
   float d;
   float b;
   
-  if(((f1 > f3 - 3) && (f1 < f3 + 3)) || (f2 > f4 - 3) && (f2 < f4 + 3))
+  if(((f1 > f3 - 3) && (f1 < f3 + 3)) || ((f2 > f4 - 3) && (f2 < f4 + 3)))
   {
     d = 0.0;
     b = 0.0;
@@ -2211,7 +2211,6 @@ void Diagram::phasorscale()
 void Diagram::findaxisA(Graph *g) 
 {
     QString var = g->Var;
-    int n;
     
     xAxisA = &xAxis;
     yAxisA = &yAxis;
@@ -2248,8 +2247,8 @@ bool Diagram::findmatch(Graph *g , int m)
 {
   double *px;
   double *pz = g->cPointsY + 2*m*g->axis(0)->count;
-  int i,z;
-  if(freq <= 0)
+  int z;
+  if(freq <= (double*) 0)
   {
     freq=0;
     sfreq = "0 Hz";
@@ -2323,7 +2322,7 @@ void Diagram::findfreq(Graph *g)
       a = value.indexOf("hz",0,Qt::CaseInsensitive);
     }
 
-    double *px,f=0,xa;
+    double *px,f=0;
     int i,z;
     double d,dmin=DBL_MAX;
     num = value.mid(0,a);

@@ -970,6 +970,8 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       if(((Diagram*)focusElement)->Name.left(4) != "Rect")
         if(((Diagram*)focusElement)->Name.at(0) != 'T')
           if(((Diagram*)focusElement)->Name != "Curve")
+            if(((Diagram*)focusElement)->Name != "Waveac")
+	      if(((Diagram*)focusElement)->Name != "Phasor")
             isMoveEqual = true;  // diagram must be square
 
       focusElement->Type = isDiagram;

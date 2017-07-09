@@ -29,9 +29,9 @@ wProbe::wProbe()
   Description = QObject::tr("power probe");
 
   Props.append(new Property("Riv", "0 Ohm", false,
-		QObject::tr("Internal resistance, (0 : disable), ideal behavior")));
+		QObject::tr("Voltage probe internal resistor, (0 : disable)")));
   Props.append(new Property("Rii", "0 Ohm", false,
-		QObject::tr("Internal resistance, (0 : disable), ideal behavior")));
+		QObject::tr("Current probe internal resistor, (0 : disable)")));
 
 //Large box
   Lines.append(new Line(-20,-33, 20,-33,QPen(Qt::darkBlue,2)));

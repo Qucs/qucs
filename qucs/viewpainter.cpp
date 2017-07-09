@@ -59,7 +59,7 @@ void ViewPainter::init(QPainter *p, float Scale_, int DX_, int DY_,
   p-> setMatrixEnabled(false);   // we use our own coordinate transformation
 
   QPainter::RenderHints hints = 0;
-  // Ask to to antialias drawings if requested
+  // Ask to antialias drawings if requested
   if (QucsSettings.GraphAntiAliasing) hints |= QPainter::Antialiasing;
   // Ask to antialias text if requested
   if (QucsSettings.TextAntiAliasing) hints |= QPainter::TextAntialiasing;
@@ -206,8 +206,7 @@ void Graph::drawvect(int x0, int y0, ViewPainter *p) const
       pp++;
       continue;
     }
-    if(pp->getScrX() != -1)//if true, draw the arrow head
-    {
+
       phi = atan2(double(y2-y1), double(x2-x1));     
       beta = atan2(double(4), double(10));
       double alfa = beta+phi;
@@ -223,8 +222,6 @@ void Graph::drawvect(int x0, int y0, ViewPainter *p) const
       
       Painter->drawLine(QLineF(x4, y4, x2, y2));
 
-    }
-    else pp++;
   }
 
 }
