@@ -1,5 +1,29 @@
 <RCC>
     <qresource prefix="/">
         <file>bitmaps/big.qucs.xpm</file>
+        <file>bitmaps/LC_Ladder_Pi_LPF.svg</file>
+        <file>bitmaps/LC_Ladder_Pi_HPF.svg</file>
+        <file>bitmaps/LC_Ladder_Pi_BPF.svg</file>
+        <file>bitmaps/LC_Ladder_Pi_Notch.svg</file>
+        <file>bitmaps/LC_Ladder_Tee_LPF.svg</file>
+        <file>bitmaps/LC_Ladder_Tee_HPF.svg</file>
+        <file>bitmaps/LC_Ladder_Tee_BPF.svg</file>
+        <file>bitmaps/LC_Ladder_Tee_Notch.svg</file>
+        <file>bitmaps/CCoupled.svg</file>
+        <file>bitmaps/CCoupled_Lines.svg</file>
+        <file>bitmaps/CCoupled_Lines_Microstrip.svg</file>
+        <file>bitmaps/CCoupled_Microstrip.svg</file>
+        <file>bitmaps/Quarterwave_Bandpass_Ideal.svg</file>
+        <file>bitmaps/Quarterwave_Bandpass_Microstrip.svg</file>
+        <file>bitmaps/Quarterwave_Notch_Ideal.svg</file>
+        <file>bitmaps/Quarterwave_Notch_Microstrip.svg</file>
+        <file>bitmaps/Quarterwave_Side_Coupled_Ring.svg</file>
+        <file>bitmaps/Stepped_Impedance_Ideal.svg</file>
+        <file>bitmaps/Stepped_Impedance_Microstrip.svg</file>
+        <file>bitmaps/CCoupled_Shunt_Resonators.svg</file>
+        <file>bitmaps/LC_cauer_lowpass.svg</file>
+        <file>bitmaps/LC_cauer_bandpass.svg</file>
+        <file>bitmaps/LC_cauer_notch.svg</file>
+        <file>bitmaps/RFEDD.svg</file>
     </qresource>
 </RCC>
