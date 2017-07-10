@@ -35,6 +35,7 @@ ENDIF()
 
 FIND_PACKAGE( Qt4 REQUIRED )
 SET( QT_USE_QTGUI TRUE )
+SET( QT_USE_QTSVG TRUE )
 
 INCLUDE( ${QT_USE_FILE} )
 
@@ -55,6 +56,8 @@ SET(QUCS-FILTER_SRCS
   stepz_filter.cpp
   tl_filter.cpp
   quarterwave_filter.cpp
+  qw_coupled_ring_filter.cpp
+  ccoupled_shunt_resonators.cpp
 )
 
 SET(QUCS-FILTER_HDRS
