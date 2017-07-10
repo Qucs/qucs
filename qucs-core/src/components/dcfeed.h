@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __DCFEED_H__
-#define __DCFEED_H__
+#ifndef DCFEED_H
+#define DCFEED_H
 
 class dcfeed : public qucs::circuit
 {
@@ -36,4 +36,4 @@ class dcfeed : public qucs::circuit
   void calcTR (nr_double_t);
 };
 
-#endif /* __DCFEED_H__ */
+#endif /* DCFEED_H */

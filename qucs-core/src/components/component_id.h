@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __COMPONENT_ID_H__
-#define __COMPONENT_ID_H__
+#ifndef COMPONENT_ID_H
+#define COMPONENT_ID_H
 
 namespace qucs {
 
@@ -195,4 +195,4 @@ enum circuit_type {
 
 } // namespace qucs
 
-#endif /* __COMPONENT_ID_H__ */
+#endif /* COMPONENT_ID_H */

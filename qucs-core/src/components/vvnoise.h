@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __VVNOISE_H__
-#define __VVNOISE_H__
+#ifndef VVNOISE_H
+#define VVNOISE_H
 
 class vvnoise : public qucs::circuit
 {
@@ -37,4 +37,4 @@ class vvnoise : public qucs::circuit
   void initTR (void);
 };
 
-#endif /* __VVNOISE_H__ */
+#endif /* VVNOISE_H */

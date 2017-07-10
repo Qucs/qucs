@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CPWSTEP_H__
-#define __CPWSTEP_H__
+#ifndef CPWSTEP_H
+#define CPWSTEP_H
 
 class cpwstep : public qucs::circuit
 {
@@ -40,4 +40,4 @@ class cpwstep : public qucs::circuit
   nr_complex_t calcY (nr_double_t);
 };
 
-#endif /* __CPWSTEP_H__ */
+#endif /* CPWSTEP_H */

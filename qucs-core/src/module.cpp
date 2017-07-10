@@ -332,13 +332,13 @@ static const char * def_prefix =
 " * \n"
 " */\n"
 "\n"
-"#ifndef __QUCSDEFS_H__\n"
-"#define __QUCSDEFS_H__\n";
+"#ifndef QUCSDEFS_H\n"
+"#define QUCSDEFS_H\n";
 
 // header suffix
 static const char * def_suffix =
 "\n"
-"#endif /* __QUCSDEFS_H__ */\n";
+"#endif /* QUCSDEFS_H */\n";
 
 // start of list of definitions
 static const char * def_start =

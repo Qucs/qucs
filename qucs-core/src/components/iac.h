@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __IAC_H__
-#define __IAC_H__
+#ifndef IAC_H
+#define IAC_H
 
 class iac : public qucs::circuit
 {
@@ -35,4 +35,4 @@ class iac : public qucs::circuit
   void calcTR (nr_double_t);
 };
 
-#endif /* __IAC_H__ */
+#endif /* IAC_H */

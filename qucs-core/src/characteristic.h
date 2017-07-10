@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CHARACTERISTIC_H__
-#define __CHARACTERISTIC_H__
+#ifndef CHARACTERISTIC_H
+#define CHARACTERISTIC_H
 
 #include "pair.h"
 
@@ -33,4 +33,4 @@ typedef class qucs::pair characteristic;
 
 } // namespace qucs
 
-#endif /* __CHARACTERISTIC_H__ */
+#endif /* CHARACTERISTIC_H */

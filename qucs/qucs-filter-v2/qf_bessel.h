@@ -1,7 +1,7 @@
 // Bessel filters
 
-#ifndef	_QF_BESSEL_H
-#define	_QF_BESSEL_H
+#ifndef	QF_BESSEL_H
+#define	QF_BESSEL_H
 
 class qf_bessel: public qf_filter {
 
@@ -47,4 +47,4 @@ struct qf_filter_api qf_bessel_api =
 }; 
 
   # endif // _QF_API
-# endif	  // _QF_BESSEL_H
+# endif	  // QF_BESSEL_H

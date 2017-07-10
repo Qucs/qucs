@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef pad4bit_H
-#define pad4bit_H
+#ifndef PAD4BIT_H
+#define PAD4BIT_H
 
 #include "component.h"
 
@@ -26,4 +26,4 @@ class pad4bit : public Component
     QString verilogCode(int);
 };
 
-#endif /* pad4bit_H */
+#endif /* PAD4BIT_H */

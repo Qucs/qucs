@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __EQNDEFINED_H__
-#define __EQNDEFINED_H__
+#ifndef EQNDEFINED_H
+#define EQNDEFINED_H
 
 class eqndefined : public qucs::circuit
 {
@@ -64,4 +64,4 @@ class eqndefined : public qucs::circuit
   bool doHB;
 };
 
-#endif /* __EQNDEFINED_H__ */
+#endif /* EQNDEFINED_H */

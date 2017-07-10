@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __FOURIER_H__
-#define __FOURIER_H__
+#ifndef FOURIER_H
+#define FOURIER_H
 
 namespace qucs {
 
@@ -56,4 +56,4 @@ namespace fourier {
 
 } // namespace qucs
 
-#endif /* __FOURIER_H__ */
+#endif /* FOURIER_H */

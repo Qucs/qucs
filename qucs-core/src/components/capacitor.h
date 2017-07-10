@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CAPACITOR_H__
-#define __CAPACITOR_H__
+#ifndef CAPACITOR_H
+#define CAPACITOR_H
 
 /*\brief Capacitor class */
 class capacitor : public qucs::circuit
@@ -41,4 +41,4 @@ class capacitor : public qucs::circuit
 
 };
 
-#endif /* __CAPACITOR_H__ */
+#endif /* CAPACITOR_H */

@@ -30,8 +30,8 @@
  *
  */
 
-#ifndef __ANALYSES_H__
-#define __ANALYSES_H__
+#ifndef ANALYSES_H
+#define ANALYSES_H
 
 #include "analysis.h"
 #include "spsolver.h"
@@ -42,4 +42,4 @@
 #include "hbsolver.h"
 #include "e_trsolver.h"
 
-#endif /* __ANALYSES_H__ */
+#endif /* ANALYSES_H */

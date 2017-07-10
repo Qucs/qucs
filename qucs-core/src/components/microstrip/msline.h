@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __MSLINE_H__
-#define __MSLINE_H__
+#ifndef MSLINE_H
+#define MSLINE_H
 
 class msline : public qucs::circuit
 {
@@ -66,4 +66,4 @@ class msline : public qucs::circuit
   nr_double_t alpha, beta, zl, ereff;
 };
 
-#endif /* __MSLINE_H__ */
+#endif /* MSLINE_H */

@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CTLINE_H__
-#define __CTLINE_H__
+#ifndef CTLINE_H
+#define CTLINE_H
 
 class ctline : public qucs::circuit
 {
@@ -37,4 +37,4 @@ class ctline : public qucs::circuit
   void calcNoiseSP (nr_double_t);
 };
 
-#endif /* __CTLINE_H__ */
+#endif /* CTLINE_H */

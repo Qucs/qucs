@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CIRCULATOR_H__
-#define __CIRCULATOR_H__
+#ifndef CIRCULATOR_H
+#define CIRCULATOR_H
 
 class circulator : public qucs::circuit
 {
@@ -35,4 +35,4 @@ class circulator : public qucs::circuit
   void initTR (void);
 };
 
-#endif /* __CIRCULATOR_H__ */
+#endif /* CIRCULATOR_H */

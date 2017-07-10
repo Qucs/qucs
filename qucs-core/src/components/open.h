@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __OPEN_H__
-#define __OPEN_H__
+#ifndef OPEN_H
+#define OPEN_H
 
 class open : public qucs::circuit
 {
@@ -32,4 +32,4 @@ class open : public qucs::circuit
   void initSP (void);
 };
 
-#endif /* __OPEN_H__ */
+#endif /* OPEN_H */

@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __ITRAFO_H__
-#define __ITRAFO_H__
+#ifndef ITRAFO_H
+#define ITRAFO_H
 
 class itrafo : public qucs::circuit
 {
@@ -32,4 +32,4 @@ class itrafo : public qucs::circuit
   void initSP (void);
 };
 
-#endif /* __ITRAFO_H__ */
+#endif /* ITRAFO_H */

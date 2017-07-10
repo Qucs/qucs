@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __IINOISE_H__
-#define __IINOISE_H__
+#ifndef IINOISE_H
+#define IINOISE_H
 
 class iinoise : public qucs::circuit
 {
@@ -37,4 +37,4 @@ class iinoise : public qucs::circuit
   qucs::matrix calcMatrixCy (nr_double_t);
 };
 
-#endif /* __IINOISE_H__ */
+#endif /* IINOISE_H */

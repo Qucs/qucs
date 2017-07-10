@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef andor4x2_H
-#define andor4x2_H
+#ifndef ANDOR4X2_H
+#define ANDOR4X2_H
 
 #include "component.h"
 
@@ -26,4 +26,4 @@ class andor4x2 : public Component
     QString verilogCode(int);
 };
 
-#endif /* andor4x2_H */
+#endif /* ANDOR4X2_H */

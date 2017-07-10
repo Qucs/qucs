@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __TRANSIENT_H__
-#define __TRANSIENT_H__
+#ifndef TRANSIENT_H
+#define TRANSIENT_H
 
 namespace qucs {
 
@@ -63,4 +63,4 @@ namespace transient {
 
 } // namespace qucs
 
-#endif /* __TRANSIENT_H__ */
+#endif /* TRANSIENT_H */

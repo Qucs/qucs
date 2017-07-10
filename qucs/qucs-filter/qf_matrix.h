@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef _QF_MATRIX_H
-#define _QF_MATRIX_H
+#ifndef QF_MATRIX_H
+#define QF_MATRIX_H
 
 class qf_matrix
 {
@@ -47,4 +47,4 @@ class qf_matrix
   qf_double_t * data;
 };
 
-#endif // _QF_MATRIX_H
+#endif // QF_MATRIX_H

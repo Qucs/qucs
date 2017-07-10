@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __MSRSTUB_H__
-#define __MSRSTUB_H__
+#ifndef MSRSTUB_H
+#define MSRSTUB_H
 
 class msrstub : public qucs::circuit
 {
@@ -37,4 +37,4 @@ class msrstub : public qucs::circuit
   nr_complex_t calcZ (nr_double_t);
 };
 
-#endif /* __MSRSTUB_H__ */
+#endif /* MSRSTUB_H */

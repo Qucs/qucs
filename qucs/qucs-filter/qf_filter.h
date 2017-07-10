@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef _QF_FILTER_H
-#define _QF_FILTER_H
+#ifndef QF_FILTER_H
+#define QF_FILTER_H
 
 // Header for filter
 
@@ -115,4 +115,4 @@ private:
   std::string num2str (qf_double_t);
 };
 
-#endif // _QF_FILTER_H
+#endif // QF_FILTER_H

@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CHECK_NETLIST_H__
-#define __CHECK_NETLIST_H__
+#ifndef CHECK_NETLIST_H
+#define CHECK_NETLIST_H
 
 #include "netdefs.h"
 
@@ -59,4 +59,4 @@ netlist_unchain_definition (struct definition_t *, struct definition_t *);
 
 __END_DECLS
 
-#endif /* __CHECK_NETLIST_H__ */
+#endif /* CHECK_NETLIST_H */

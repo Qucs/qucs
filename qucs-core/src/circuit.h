@@ -28,8 +28,8 @@
  * Contains the circuit class definition.
  */
 
-#ifndef __CIRCUIT_H__
-#define __CIRCUIT_H__
+#ifndef CIRCUIT_H
+#define CIRCUIT_H
 
 #include "characteristic.h"
 #include "operatingpoint.h"
@@ -389,4 +389,4 @@ extern "C" {
 
 }
 
-#endif /* __CIRCUIT_H__ */
+#endif /* CIRCUIT_H */

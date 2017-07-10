@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __IEXP_H__
-#define __IEXP_H__
+#ifndef IEXP_H
+#define IEXP_H
 
 class iexp : public qucs::circuit
 {
@@ -37,4 +37,4 @@ class iexp : public qucs::circuit
   void calcTR (nr_double_t);
 };
 
-#endif /* __IEXP_H__ */
+#endif /* IEXP_H */

@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __RLCG_H__
-#define __RLCG_H__
+#ifndef RLCG_H
+#define RLCG_H
 
 class rlcg : public qucs::circuit
 {
@@ -44,4 +44,4 @@ class rlcg : public qucs::circuit
   nr_complex_t z;
 };
 
-#endif /* __RLCG_H__ */
+#endif /* RLCG_H */

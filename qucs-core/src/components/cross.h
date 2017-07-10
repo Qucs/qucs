@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CROSS_H__
-#define __CROSS_H__
+#ifndef CROSS_H
+#define CROSS_H
 
 class cross : public qucs::circuit
 {
@@ -35,4 +35,4 @@ class cross : public qucs::circuit
   void initTR (void);
 };
 
-#endif /* __CROSS_H__ */
+#endif /* CROSS_H */

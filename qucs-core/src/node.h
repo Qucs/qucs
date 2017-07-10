@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __NODE_H__
-#define __NODE_H__
+#ifndef NODE_H
+#define NODE_H
 
 namespace qucs {
 
@@ -59,4 +59,4 @@ class node : public object
 
 } // namespace qucs
 
-#endif /* __NODE_H__ */
+#endif /* NODE_H */

@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __EVALUATE_H__
-#define __EVALUATE_H__
+#ifndef EVALUATE_H
+#define EVALUATE_H
 
 namespace qucs {
 
@@ -808,4 +808,4 @@ extern struct application_t applications[];
 
 } // namespace qucs
 
-#endif /* __EVALUATE_H__ */
+#endif /* EVALUATE_H */

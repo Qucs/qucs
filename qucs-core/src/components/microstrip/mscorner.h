@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __MSCORNER_H__
-#define __MSCORNER_H__
+#ifndef MSCORNER_H
+#define MSCORNER_H
 
 class mscorner : public qucs::circuit
 {
@@ -42,4 +42,4 @@ class mscorner : public qucs::circuit
   nr_double_t L, C, h;
 };
 
-#endif /* __MSCORNER_H__ */
+#endif /* MSCORNER_H */

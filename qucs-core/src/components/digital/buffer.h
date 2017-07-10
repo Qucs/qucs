@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __BUFFER_H__
-#define __BUFFER_H__
+#ifndef BUFFER_H
+#define BUFFER_H
 
 class buffer : public digital
 {
@@ -33,4 +33,4 @@ class buffer : public digital
   void calcDerivatives (void);
 };
 
-#endif /* __BUFFER_H__ */
+#endif /* BUFFER_H */

@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __DIFFERENTIATE_H__
-#define __DIFFERENTIATE_H__
+#ifndef DIFFERENTIATE_H
+#define DIFFERENTIATE_H
 
 namespace qucs {
 
@@ -115,4 +115,4 @@ extern struct differentiation_t differentiations[];
 
 } // namespace qucs
 
-#endif /* __DIFFERENTIATE_H__ */
+#endif /* DIFFERENTIATE_H */

@@ -21,8 +21,8 @@
  *
  */
 
-#ifndef __UNITS_H
-#define __UNITS_H
+#ifndef UNITS_H
+#define UNITS_H
 
 #include <cmath>
 
@@ -72,4 +72,4 @@ static const double MAX_ERROR = 0.000001;
 #define ANG_RAD 1
 
 
-#endif /* __UNITS_H */
+#endif /* UNITS_H */

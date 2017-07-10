@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __DATASET_H__
-#define __DATASET_H__
+#ifndef DATASET_H
+#define DATASET_H
 
 #include "object.h"
 
@@ -82,4 +82,4 @@ class dataset : public object
 
 } // namespace qucs
 
-#endif /* __DATASET_H__ */
+#endif /* DATASET_H */

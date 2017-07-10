@@ -72,6 +72,7 @@
 <!-- handling of device: starting point -->
 <admst:for-each select="/module">
 <!-- definition of variables -->
+<admst:variable name="MODULE" path="upper-case(/module)"/>
 <admst:value-of select="name"/>
 <admst:variable name="module" select="%s"/>
 <admst:count select="node"/>
@@ -349,8 +350,8 @@
  */
 
 <admst:text format="\n"/>
-<admst:text format="#ifndef $module"/>_H\n
-<admst:text format="#define $module"/>_H\n\n
+<admst:text format="#ifndef $MODULE"/>_H\n
+<admst:text format="#define $MODULE"/>_H\n\n
 <admst:text format="#include &quot;component.h&quot;\n\n"/>
 
 <admst:choose>
@@ -369,7 +370,7 @@
 </admst:if>
 <admst:text format="  protected:\n    void createSymbol();\n};\n\n"/>
 
-<admst:text format="#endif /* $(module)_H */\n"/>
+<admst:text format="#endif /* $(MODULE)_H */\n"/>
 
 </admst:open>
 <admst:message format="$module.gui.cpp and $module.gui.h: files created\n"/>

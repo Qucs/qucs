@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CHECK_SPICE_H__
-#define __CHECK_SPICE_H__
+#ifndef CHECK_SPICE_H
+#define CHECK_SPICE_H
 
 #include "netdefs.h"
 
@@ -65,4 +65,4 @@ extern int spice_errors;
 
 __END_DECLS
 
-#endif /* __CHECK_SPICE_H__ */
+#endif /* CHECK_SPICE_H */

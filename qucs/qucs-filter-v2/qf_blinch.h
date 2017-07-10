@@ -1,5 +1,5 @@
-# ifndef  _QF_BLINCH_H
-# define  _QF_BLINCH_H
+# ifndef  QF_BLINCH_H
+# define  QF_BLINCH_H
 
 /*
 static qf_double_t pole2 [36] = {
@@ -93,4 +93,4 @@ struct	qf_filter_api qf_blinch_api =
   QF_LOWPASS | QF_HIGHPASS | QF_BANDPASS | QF_BANDSTOP | QF_ZIGZAG,
 };
   # endif // _QF_API
-# endif // _QF_BLINCH_H
+# endif // QF_BLINCH_H

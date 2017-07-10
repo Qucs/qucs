@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __INTERPOLATOR_H__
-#define __INTERPOLATOR_H__
+#ifndef INTERPOLATOR_H
+#define INTERPOLATOR_H
 
 // Type of data and interpolators.
 #define INTERPOL_LINEAR  1
@@ -79,4 +79,4 @@ private:
 
 } // namespace qucs
 
-#endif /* __INTERPOLATOR_H__ */
+#endif /* INTERPOLATOR_H */

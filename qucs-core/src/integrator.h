@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __INTEGRATOR_H__
-#define __INTEGRATOR_H__
+#ifndef INTEGRATOR_H
+#define INTEGRATOR_H
 
 #include "states.h"
 
@@ -66,4 +66,4 @@ class integrator : public states<nr_double_t>
 
 } // namespace qucs
 
-#endif /* __INTEGRATOR_H__ */
+#endif /* INTEGRATOR_H */

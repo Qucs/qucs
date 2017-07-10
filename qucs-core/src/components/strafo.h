@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __STRAFO_H__
-#define __STRAFO_H__
+#ifndef STRAFO_H
+#define STRAFO_H
 
 class strafo : public qucs::circuit
 {
@@ -35,4 +35,4 @@ class strafo : public qucs::circuit
   void initTR (void);
 };
 
-#endif /* __STRAFO_H__ */
+#endif /* STRAFO_H */

@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __IVNOISE_H__
-#define __IVNOISE_H__
+#ifndef IVNOISE_H
+#define IVNOISE_H
 
 class ivnoise : public qucs::circuit
 {
@@ -37,4 +37,4 @@ class ivnoise : public qucs::circuit
   void initTR (void);
 };
 
-#endif /* __IVNOISE_H__ */
+#endif /* IVNOISE_H */

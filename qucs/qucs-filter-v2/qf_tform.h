@@ -1,7 +1,7 @@
 //Added by qt3to4:
 #include <Q3TextStream>
-# ifndef  _QF_TFORM_H
-# define  _QF_TFORM_H
+# ifndef  QF_TFORM_H
+# define  QF_TFORM_H
 // Headers for standard transformations
 // Those transformations are : lowpass (no transform), highpass
 // standard bandpass (geometrical type) and bandstop (inverse bandpass)
@@ -231,4 +231,4 @@ struct	qf_tform_api	  qf_bandstop_api = {
 };
 
   # endif // _QF_API
-# endif	  // _QF_TFORM_H
+# endif	  // QF_TFORM_H

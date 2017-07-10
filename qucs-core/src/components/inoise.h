@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __INOISE_H__
-#define __INOISE_H__
+#ifndef INOISE_H
+#define INOISE_H
 
 class inoise : public qucs::circuit
 {
@@ -34,4 +34,4 @@ class inoise : public qucs::circuit
   void calcNoiseAC (nr_double_t);
 };
 
-#endif /* __INOISE_H__ */
+#endif /* INOISE_H */

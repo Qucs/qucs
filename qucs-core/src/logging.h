@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __LOGGING_H__
-#define __LOGGING_H__
+#ifndef LOGGING_H
+#define LOGGING_H
 
 #define LOG_ERROR  0
 #define LOG_STATUS 1
@@ -40,4 +40,4 @@ extern int progressbar_gui;
 
 __END_DECLS
 
-#endif /* __LOGGING_H__ */
+#endif /* LOGGING_H */

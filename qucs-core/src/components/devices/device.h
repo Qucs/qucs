@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __DEVICE_H__
-#define __DEVICE_H__
+#ifndef DEVICE_H
+#define DEVICE_H
 
 namespace qucs {
 
@@ -226,4 +226,4 @@ namespace device {
 
 } // namespace qucs
 
-#endif /* __DEVICE_H__ */
+#endif /* DEVICE_H */

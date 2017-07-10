@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CHECK_CITI_H__
-#define __CHECK_CITI_H__
+#ifndef CHECK_CITI_H
+#define CHECK_CITI_H
 
 namespace qucs {
   class dataset;
@@ -69,4 +69,4 @@ void citi_destroy (void);
 
 __END_DECLS
 
-#endif /* __CHECK_CITI_H__ */
+#endif /* CHECK_CITI_H */

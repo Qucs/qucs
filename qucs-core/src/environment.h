@@ -28,8 +28,8 @@
  * Contains the environment class definition.
  */
 
-#ifndef __ENVIRONMENT_H__
-#define __ENVIRONMENT_H__
+#ifndef ENVIRONMENT_H
+#define ENVIRONMENT_H
 
 #include <list>
 #include <string>
@@ -127,4 +127,4 @@ class environment
 
 } // namespace qucs
 
-#endif /* __ENVIRONMENT_H__ */
+#endif /* ENVIRONMENT_H */

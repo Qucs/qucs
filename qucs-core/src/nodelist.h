@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __NODELIST_H__
-#define __NODELIST_H__
+#ifndef NODELIST_H
+#define NODELIST_H
 
 #include <vector>
 #include <list>
@@ -141,4 +141,4 @@ class nodelist
 
 } // namespace qucs
 
-#endif /* __NODELIST_H__ */
+#endif /* NODELIST_H */

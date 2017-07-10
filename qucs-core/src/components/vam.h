@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __VAM_H__
-#define __VAM_H__
+#ifndef VAM_H
+#define VAM_H
 
 class vam : public qucs::circuit
 {
@@ -36,4 +36,4 @@ class vam : public qucs::circuit
   void calcTR (nr_double_t);
 };
 
-#endif /* __VAM_H__ */
+#endif /* VAM_H */

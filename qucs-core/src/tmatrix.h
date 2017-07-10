@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __TMATRIX_H__
-#define __TMATRIX_H__
+#ifndef TMATRIX_H
+#define TMATRIX_H
 
 #include <assert.h>
 
@@ -101,4 +101,4 @@ class tmatrix
 
 #include "tmatrix.cpp"
 
-#endif /* __TMATRIX_H__ */
+#endif /* TMATRIX_H */

@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __AND_H__
-#define __AND_H__
+#ifndef AND_H
+#define AND_H
 
 class logicand : public digital
 {
@@ -33,4 +33,4 @@ class logicand : public digital
   void calcDerivatives (void);
 };
 
-#endif /* __AND_H__ */
+#endif /* AND_H */

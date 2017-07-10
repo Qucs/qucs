@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef dmux4to16_H
-#define dmux4to16_H
+#ifndef DMUX4TO16_H
+#define DMUX4TO16_H
 
 #include "component.h"
 
@@ -26,4 +26,4 @@ class dmux4to16 : public Component
     QString verilogCode(int);
 };
 
-#endif /* dmux4to16_H */
+#endif /* DMUX4TO16_H */

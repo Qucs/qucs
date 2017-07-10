@@ -4,8 +4,8 @@
 // These filters are the easiest to compute, since the values of the
 // standard lowpass prototype are given by simple formulae. There is, thus,
 // no need to rely on the complex polynomial machinery used elsewhere.
-#ifndef _QF_BUTCHEB_H
-#define	_QF_BUTCHEB_H
+#ifndef QF_BUTCHEB_H
+#define	QF_BUTCHEB_H
 
 // A general class common to both filters
 
@@ -92,4 +92,4 @@ struct qf_filter_api	qf_cheb_api = {
 };
 
   # endif //_QF_API
-# endif	  //_QF_BUTCHEB_H
+# endif	  //QF_BUTCHEB_H

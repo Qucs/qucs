@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __COMPLEX_H__
-#define __COMPLEX_H__
+#ifndef COMPLEX_H
+#define COMPLEX_H
 
 #include <complex>
 #include "real.h"
@@ -160,4 +160,4 @@ bool operator <  (const nr_complex_t, const nr_complex_t);
 
 } // namespace qucs
 
-#endif /* __COMPLEX_H__ */
+#endif /* COMPLEX_H */

@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __HASH_H__
-#define __HASH_H__
+#ifndef HASH_H
+#define HASH_H
 
 namespace qucs {
 
@@ -173,4 +173,4 @@ class hashiterator
 
 #include "hash.cpp"
 
-#endif /* __HASH_H__ */
+#endif /* HASH_H */

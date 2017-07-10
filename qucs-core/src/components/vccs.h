@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __VCCS_H__
-#define __VCCS_H__
+#ifndef VCCS_H
+#define VCCS_H
 
 class vccs : public qucs::circuit
 {
@@ -37,4 +37,4 @@ class vccs : public qucs::circuit
   void calcTR (nr_double_t);
 };
 
-#endif /* __VCCS_H__ */
+#endif /* VCCS_H */

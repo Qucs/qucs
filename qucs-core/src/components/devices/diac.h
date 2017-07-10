@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __DIAC_H__
-#define __DIAC_H__
+#ifndef DIAC_H
+#define DIAC_H
 
 #include "devstates.h"
 
@@ -50,4 +50,4 @@ class diac : public qucs::circuit, public qucs::devstates
   qucs::matrix calcMatrixY (nr_double_t);
 };
 
-#endif /* __DIAC_H__ */
+#endif /* DIAC_H */

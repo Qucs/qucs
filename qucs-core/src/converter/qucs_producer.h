@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __QUCS_PRODUCER_H__
-#define __QUCS_PRODUCER_H__
+#ifndef QUCS_PRODUCER_H
+#define QUCS_PRODUCER_H
 namespace qucs {
   class dataset;
 }
@@ -40,4 +40,4 @@ void qucslib_producer (void);
 void qucsdata_producer_vcd (void);
 void qucsdata_producer (qucs::dataset *);
 
-#endif /* __QUCS_PRODUCER_H__ */
+#endif /* QUCS_PRODUCER_H */

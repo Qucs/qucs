@@ -30,8 +30,8 @@
  @defgroup qucsMathConstants Qucs Math Constants
 */
 
-#ifndef __CONSTS_H__
-#define __CONSTS_H__
+#ifndef CONSTS_H
+#define CONSTS_H
 
 #include <cmath>
 
@@ -91,4 +91,4 @@ static const double limitexp = 80.0;
 
 } // namespace qucs
 
-#endif /* __CONSTS_H__ */
+#endif /* CONSTS_H */

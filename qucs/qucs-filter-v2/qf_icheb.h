@@ -1,5 +1,5 @@
-#ifndef	_QF_ICHEB_H
-#define	_QF_ICHEB_H
+#ifndef	QF_ICHEB_H
+#define	QF_ICHEB_H
 // Icheb : inverse chebychev filters
 
 class qf_icheb : public qf_filter {
@@ -42,4 +42,4 @@ struct	qf_filter_api	qf_icheb_api = {
 };
 
   # endif // _QF_API
-#endif // _QF_ICHEB_H
+#endif // QF_ICHEB_H

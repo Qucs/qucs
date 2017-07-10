@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __MOSFET_H__
-#define __MOSFET_H__
+#ifndef MOSFET_H
+#define MOSFET_H
 
 class mosfet : public qucs::circuit
 {
@@ -62,4 +62,4 @@ class mosfet : public qucs::circuit
   qucs::circuit * rg;
 };
 
-#endif /* __MOSFET_H__ */
+#endif /* MOSFET_H */

@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __RECEIVER_H__
-#define __RECEIVER_H__
+#ifndef RECEIVER_H
+#define RECEIVER_H
 
 #include <cstdint>
 
@@ -54,4 +54,4 @@ namespace emi {
 
 } // namespace qucs
 
-#endif /* __RECEIVER_H__ */
+#endif /* RECEIVER_H */

@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __TEE_H__
-#define __TEE_H__
+#ifndef TEE_H
+#define TEE_H
 
 class tee : public qucs::circuit
 {
@@ -35,4 +35,4 @@ class tee : public qucs::circuit
   void initTR (void);
 };
 
-#endif /* __TEE_H__ */
+#endif /* TEE_H */

@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __MSMBEND_H__
-#define __MSMBEND_H__
+#ifndef MSMBEND_H
+#define MSMBEND_H
 
 class msmbend : public qucs::circuit
 {
@@ -37,4 +37,4 @@ class msmbend : public qucs::circuit
   qucs::matrix calcMatrixZ (nr_double_t);
 };
 
-#endif /* __MSMBEND_H__ */
+#endif /* MSMBEND_H */

@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef comp_4bit_H
-#define comp_4bit_H
+#ifndef COMP_4BIT_H
+#define COMP_4BIT_H
 
 #include "component.h"
 
@@ -26,4 +26,4 @@ class comp_4bit : public Component
     QString verilogCode(int);
 };
 
-#endif /* comp_4bit_H */
+#endif /* COMP_4BIT_H */

@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __NASOLUTION_H__
-#define __NASOLUTION_H__
+#ifndef NASOLUTION_H
+#define NASOLUTION_H
 
 #include <string>
 #include <unordered_map>
@@ -54,4 +54,4 @@ template <typename T>
 } // namespace qucs
 
 
-#endif /* __NASOLUTION_H__ */
+#endif /* NASOLUTION_H */

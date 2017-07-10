@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __DCSOLVER_H__
-#define __DCSOLVER_H__
+#ifndef DCSOLVER_H
+#define DCSOLVER_H
 
 #include "nasolver.h"
 
@@ -49,5 +49,5 @@ class dcsolver : public nasolver<nr_double_t>
 
 } // namespace qucs
 
-#endif /* __DCSOLVER_H__ */
+#endif /* DCSOLVER_H */
 

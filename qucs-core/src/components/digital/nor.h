@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __NOR_H__
-#define __NOR_H__
+#ifndef NOR_H
+#define NOR_H
 
 class logicnor : public digital
 {
@@ -33,4 +33,4 @@ class logicnor : public digital
   void calcDerivatives (void);
 };
 
-#endif /* __NOR_H__ */
+#endif /* NOR_H */

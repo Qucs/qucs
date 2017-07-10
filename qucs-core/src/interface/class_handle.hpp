@@ -30,8 +30,8 @@
 */
 
 
-#ifndef __CLASS_HANDLE_HPP__
-#define __CLASS_HANDLE_HPP__
+#ifndef CLASS_HANDLE_HPP
+#define CLASS_HANDLE_HPP
 #include <stdint.h>
 #include <string>
 #include <cstring>
@@ -82,4 +82,4 @@ template<class base> inline void destroyObject(const mxArray *in)
     mexUnlock();
 }
 
-#endif // __CLASS_HANDLE_HPP__
+#endif // CLASS_HANDLE_HPP

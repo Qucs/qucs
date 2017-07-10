@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CPWSHORT_H__
-#define __CPWSHORT_H__
+#ifndef CPWSHORT_H
+#define CPWSHORT_H
 
 class cpwshort : public qucs::circuit
 {
@@ -40,4 +40,4 @@ class cpwshort : public qucs::circuit
   nr_complex_t calcZ (nr_double_t);
 };
 
-#endif /* __CPWSHORT_H__ */
+#endif /* CPWSHORT_H */

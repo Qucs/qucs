@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __MSGAP_H__
-#define __MSGAP_H__
+#ifndef MSGAP_H
+#define MSGAP_H
 
 class msgap : public qucs::circuit
 {
@@ -36,4 +36,4 @@ class msgap : public qucs::circuit
   qucs::matrix calcMatrixY (nr_double_t);
 };
 
-#endif /* __MSGAP_H__ */
+#endif /* MSGAP_H */

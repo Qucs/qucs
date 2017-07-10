@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __RESISTOR_H__
-#define __RESISTOR_H__
+#ifndef RESISTOR_H
+#define RESISTOR_H
 
 class resistor : public qucs::circuit
 {
@@ -45,4 +45,4 @@ class resistor : public qucs::circuit
   void initModel (void);
 };
 
-#endif /* __RESISTOR_H__ */
+#endif /* RESISTOR_H */

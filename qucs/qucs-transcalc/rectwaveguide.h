@@ -21,8 +21,8 @@
  *
  */
 
-#ifndef __RECTWAVEGUIDE_H
-#define __RECTWAVEGUIDE_H
+#ifndef RECTWAVEGUIDE_H
+#define RECTWAVEGUIDE_H
 
 class rectwaveguide : public transline {
  public:
@@ -62,4 +62,4 @@ class rectwaveguide : public transline {
   void show_results ();
 };
 
-#endif /* __RECTWAVEGUIDE_H */
+#endif /* RECTWAVEGUIDE_H */

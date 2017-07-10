@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __VAC_H__
-#define __VAC_H__
+#ifndef VAC_H
+#define VAC_H
 
 class vac : public qucs::circuit
 {
@@ -38,4 +38,4 @@ class vac : public qucs::circuit
   void calcHB (nr_double_t);
 };
 
-#endif /* __VAC_H__ */
+#endif /* VAC_H */

@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __MSCROSS_H__
-#define __MSCROSS_H__
+#ifndef MSCROSS_H
+#define MSCROSS_H
 
 class mscross : public qucs::circuit
 {
@@ -44,4 +44,4 @@ class mscross : public qucs::circuit
   nr_double_t calcInd (nr_double_t, nr_double_t, nr_double_t);
 };
 
-#endif /* __MSCROSS_H__ */
+#endif /* MSCROSS_H */

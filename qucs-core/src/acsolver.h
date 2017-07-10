@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __ACSOLVER_H__
-#define __ACSOLVER_H__
+#ifndef ACSOLVER_H
+#define ACSOLVER_H
 
 #include "nasolver.h"
 
@@ -56,5 +56,5 @@ class acsolver : public nasolver<nr_complex_t>
 
 } // namespace qucs
 
-#endif /* __ACSOLVER_H__ */
+#endif /* ACSOLVER_H */
 

@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __OPERATINGPOINT_H__
-#define __OPERATINGPOINT_H__
+#ifndef OPERATINGPOINT_H
+#define OPERATINGPOINT_H
 
 #include "pair.h"
 
@@ -33,4 +33,4 @@ typedef class qucs::pair operatingpoint;
 
 } // namespace qucs
 
-#endif /* __OPERATINGPOINT_H__ */
+#endif /* OPERATINGPOINT_H */

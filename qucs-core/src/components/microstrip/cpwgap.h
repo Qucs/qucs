@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CPWGAP_H__
-#define __CPWGAP_H__
+#ifndef CPWGAP_H
+#define CPWGAP_H
 
 class cpwgap : public qucs::circuit
 {
@@ -35,4 +35,4 @@ class cpwgap : public qucs::circuit
   qucs::matrix calcMatrixY (nr_double_t);
 };
 
-#endif /* __CPWGAP_H__ */
+#endif /* CPWGAP_H */

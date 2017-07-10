@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __COUPLER_H__
-#define __COUPLER_H__
+#ifndef COUPLER_H
+#define COUPLER_H
 
 class coupler : public qucs::circuit
 {
@@ -35,4 +35,4 @@ class coupler : public qucs::circuit
   void initTR (void);
 };
 
-#endif /* __COUPLER_H__ */
+#endif /* COUPLER_H */

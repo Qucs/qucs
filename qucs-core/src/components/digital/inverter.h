@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __INVERTER_H__
-#define __INVERTER_H__
+#ifndef INVERTER_H
+#define INVERTER_H
 
 class inverter : public digital
 {
@@ -33,4 +33,4 @@ class inverter : public digital
   void calcDerivatives (void);
 };
 
-#endif /* __INVERTER_H__ */
+#endif /* INVERTER_H */

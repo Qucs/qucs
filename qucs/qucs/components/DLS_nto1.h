@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef DLS_nto1_H
-#define DLS_nto1_H
+#ifndef DLS_NTO1_H
+#define DLS_NTO1_H
 
 #include "component.h"
 
@@ -24,4 +24,4 @@ class DLS_nto1 : public Component
     void createSymbol();
 };
 
-#endif /* DLS_nto1_H */
+#endif /* DLS_NTO1_H */

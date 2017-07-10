@@ -26,8 +26,8 @@
    \brief Dense matrix class header file
 */
 
-#ifndef __MATRIX_H__
-#define __MATRIX_H__
+#ifndef MATRIX_H
+#define MATRIX_H
 
 namespace qucs {
 
@@ -219,4 +219,4 @@ class matrix
 
 } // namespace qucs
 
-#endif /* __MATRIX_H__ */
+#endif /* MATRIX_H */

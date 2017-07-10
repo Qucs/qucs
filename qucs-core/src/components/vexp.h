@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __VEXP_H__
-#define __VEXP_H__
+#ifndef VEXP_H
+#define VEXP_H
 
 class vexp : public qucs::circuit
 {
@@ -37,4 +37,4 @@ class vexp : public qucs::circuit
   void calcTR (nr_double_t);
 };
 
-#endif /* __VEXP_H__ */
+#endif /* VEXP_H */

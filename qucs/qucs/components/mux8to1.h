@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef mux8to1_H
-#define mux8to1_H
+#ifndef MUX8TO1_H
+#define MUX8TO1_H
 
 #include "component.h"
 
@@ -26,4 +26,4 @@ class mux8to1 : public Component
     QString verilogCode(int);
 };
 
-#endif /* mux8to1_H */
+#endif /* MUX8TO1_H */

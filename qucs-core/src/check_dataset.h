@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CHECK_DATASET_H__
-#define __CHECK_DATASET_H__
+#ifndef CHECK_DATASET_H
+#define CHECK_DATASET_H
 
 namespace qucs {
   class dataset;
@@ -51,4 +51,4 @@ int dataset_check (qucs::dataset *);
 
 __END_DECLS
 
-#endif /* __CHECK_DATASET_H__ */
+#endif /* CHECK_DATASET_H */

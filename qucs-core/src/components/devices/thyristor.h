@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __THYRISTOR_H__
-#define __THYRISTOR_H__
+#ifndef THYRISTOR_H
+#define THYRISTOR_H
 
 #include "devstates.h"
 
@@ -52,4 +52,4 @@ class thyristor : public qucs::circuit, public qucs::devstates
   qucs::matrix calcMatrixY (nr_double_t);
 };
 
-#endif /* __THYRISTOR_H__ */
+#endif /* THYRISTOR_H */

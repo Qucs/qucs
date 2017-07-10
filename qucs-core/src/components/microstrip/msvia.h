@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __MSVIA_H__
-#define __MSVIA_H__
+#ifndef MSVIA_H
+#define MSVIA_H
 
 class msvia : public qucs::circuit
 {
@@ -44,4 +44,4 @@ class msvia : public qucs::circuit
   nr_complex_t Z;
 };
 
-#endif /* __MSVIA_H__ */
+#endif /* MSVIA_H */

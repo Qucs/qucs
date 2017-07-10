@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __IPROBE_H__
-#define __IPROBE_H__
+#ifndef IPROBE_H
+#define IPROBE_H
 
 class iprobe : public qucs::circuit
 {
@@ -35,4 +35,4 @@ class iprobe : public qucs::circuit
   void initTR (void);
 };
 
-#endif /* __IPROBE_H__ */
+#endif /* IPROBE_H */

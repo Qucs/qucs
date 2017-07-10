@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CCCS_H__
-#define __CCCS_H__
+#ifndef CCCS_H
+#define CCCS_H
 
 class cccs : public qucs::circuit
 {
@@ -37,4 +37,4 @@ class cccs : public qucs::circuit
   void calcTR (nr_double_t);
 };
 
-#endif /* __CCCS_H__ */
+#endif /* CCCS_H */

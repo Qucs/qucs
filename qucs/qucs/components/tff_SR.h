@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef tff_SR_H
-#define tff_SR_H
+#ifndef TFF_SR_H
+#define TFF_SR_H
 
 #include "component.h"
 
@@ -26,4 +26,4 @@ class tff_SR : public Component
     QString verilogCode(int);
 };
 
-#endif /* tff_SR_H */
+#endif /* TFF_SR_H */

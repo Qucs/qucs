@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __DIODE_H__
-#define __DIODE_H__
+#ifndef DIODE_H
+#define DIODE_H
 
 #include "devstates.h"
 
@@ -58,4 +58,4 @@ class diode : public qucs::circuit, public qucs::devstates
   void initModel (void);
 };
 
-#endif /* __DIODE_H__ */
+#endif /* DIODE_H */

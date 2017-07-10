@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef photodiode_H
-#define photodiode_H
+#ifndef PHOTODIODE_H
+#define PHOTODIODE_H
 
 #include "component.h"
 
@@ -24,4 +24,4 @@ class photodiode : public Component
     void createSymbol();
 };
 
-#endif /* photodiode_H */
+#endif /* PHOTODIODE_H */

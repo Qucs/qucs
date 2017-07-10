@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __HYBRID_H__
-#define __HYBRID_H__
+#ifndef HYBRID_H
+#define HYBRID_H
 
 class hybrid : public qucs::circuit
 {
@@ -35,4 +35,4 @@ class hybrid : public qucs::circuit
   void initTR (void);
 };
 
-#endif /* __HYBRID_H__ */
+#endif /* HYBRID_H */

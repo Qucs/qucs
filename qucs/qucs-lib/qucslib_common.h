@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef _QUCSLIB_COMMON_H_
-#define _QUCSLIB_COMMON_H_
+#ifndef QUCSLIB_COMMON_H
+#define QUCSLIB_COMMON_H
 
 #include <QFile>
 #include <QFileInfo>
@@ -318,4 +318,4 @@ inline int parseComponentLibrary (QString libPath, ComponentLibrary &library, LI
 
 }
 
-#endif // _QUCSLIB_COMMON_H_
+#endif /* QUCSLIB_COMMON_H */

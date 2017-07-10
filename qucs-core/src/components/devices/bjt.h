@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __BJT_H__
-#define __BJT_H__
+#ifndef BJT_H
+#define BJT_H
 
 class bjt : public qucs::circuit
 {
@@ -63,4 +63,4 @@ class bjt : public qucs::circuit
   bool doTR;
 };
 
-#endif /* __BJT_H__ */
+#endif /* BJT_H */

@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __TLINE_H__
-#define __TLINE_H__
+#ifndef TLINE_H
+#define TLINE_H
 
 class tline : public qucs::circuit
 {
@@ -39,4 +39,4 @@ class tline : public qucs::circuit
   void calcNoiseSP (nr_double_t);
 };
 
-#endif /* __TLINE_H__ */
+#endif /* TLINE_H */

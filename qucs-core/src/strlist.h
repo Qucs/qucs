@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __STRLIST_H__
-#define __STRLIST_H__
+#ifndef STRLIST_H
+#define STRLIST_H
 
 namespace qucs {
 
@@ -88,4 +88,4 @@ class strlistiterator
 
 } // namespace qucs
 
-#endif /* __STRLIST_H__ */
+#endif /* STRLIST_H */

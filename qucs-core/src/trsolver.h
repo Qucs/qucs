@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __TRSOLVER_H__
-#define __TRSOLVER_H__
+#ifndef TRSOLVER_H
+#define TRSOLVER_H
 
 #include "nasolver.h"
 #include "states.h"
@@ -105,4 +105,4 @@ protected:
 
 } // namespace qucs
 
-#endif /* __TRSOLVER_H__ */
+#endif /* TRSOLVER_H */

@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __VECTOR_H__
-#define __VECTOR_H__
+#ifndef VECTOR_H
+#define VECTOR_H
 
 #include <limits>
 
@@ -333,4 +333,4 @@ vector deg2rad     (vector);
 
 } // namespace qucs
 
-#endif /* __VECTOR_H__ */
+#endif /* VECTOR_H */

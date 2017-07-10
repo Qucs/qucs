@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __MSTEE_H__
-#define __MSTEE_H__
+#ifndef MSTEE_H
+#define MSTEE_H
 
 namespace qucs {
   class circuit;
@@ -58,4 +58,4 @@ class mstee : public qucs::circuit
   qucs::circuit * line2;
 };
 
-#endif /* __MSTEE_H__ */
+#endif /* MSTEE_H */

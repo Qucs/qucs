@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __PAC_H__
-#define __PAC_H__
+#ifndef PAC_H
+#define PAC_H
 
 class pac : public qucs::circuit
 {
@@ -39,4 +39,4 @@ class pac : public qucs::circuit
   void calcHB (nr_double_t);
 };
 
-#endif /* __PAC_H__ */
+#endif /* PAC_H */

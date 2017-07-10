@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __DIGITAL_H__
-#define __DIGITAL_H__
+#ifndef DIGITAL_H
+#define DIGITAL_H
 
 class digital : public qucs::circuit
 {
@@ -60,4 +60,4 @@ class digital : public qucs::circuit
   void freeDigital (void);
 };
 
-#endif /* __DIGITAL_H__ */
+#endif /* DIGITAL_H */

@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __TOUCHSTONE_PRODUCER_H__
-#define __TOUCHSTONE_PRODUCER_H__
+#ifndef TOUCHSTONE_PRODUCER_H
+#define TOUCHSTONE_PRODUCER_H
 
 #include "logging.h"
 #include "strlist.h"
@@ -39,4 +39,4 @@ extern FILE * touchstone_out;
 /* Available functions of the producers. */
 void touchstone_producer (const char * variable);
 
-#endif /* __TOUCHSTONE_PRODUCER_H__ */
+#endif /* TOUCHSTONE_PRODUCER_H */

@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef gatedDlatch_H
-#define gatedDlatch_H
+#ifndef GATEDDLATCH_H
+#define GATEDDLATCH_H
 
 #include "component.h"
 
@@ -26,4 +26,4 @@ class gatedDlatch : public Component
     QString verilogCode(int);
 };
 
-#endif /* gatedDlatch_H */
+#endif /* GATEDDLATCH_H */

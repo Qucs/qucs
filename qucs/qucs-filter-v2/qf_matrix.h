@@ -1,5 +1,5 @@
-#ifndef _QF_MATRIX_H
-  #define _QF_MATRIX_H
+#ifndef QF_MATRIX_H
+  #define QF_MATRIX_H
 
 #ifdef	_QF_MATRIX_DEBUG
   #define IL

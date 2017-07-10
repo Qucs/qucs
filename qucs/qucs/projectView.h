@@ -21,8 +21,8 @@
  *
  */
 
-#ifndef PROJECTVIEW_H_
-#define PROJECTVIEW_H_ value
+#ifndef PROJECTVIEW_H
+#define PROJECTVIEW_H
 
 #include <QTreeView>
 #include <QString>
@@ -57,4 +57,4 @@ private:
   QString m_projName;
 };
 
-#endif /* PROJECTVIEW_H_ */
+#endif /* PROJECTVIEW_H */

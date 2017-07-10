@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __VPULSE_H__
-#define __VPULSE_H__
+#ifndef VPULSE_H
+#define VPULSE_H
 
 class vpulse : public qucs::circuit
 {
@@ -36,4 +36,4 @@ class vpulse : public qucs::circuit
   void calcTR (nr_double_t);
 };
 
-#endif /* __VPULSE_H__ */
+#endif /* VPULSE_H */

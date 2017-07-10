@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __RANGE_H__
-#define __RANGE_H__
+#ifndef RANGE_H
+#define RANGE_H
 
 namespace qucs {
 
@@ -51,4 +51,4 @@ class range
 
 } // namespace qucs
 
-#endif /* __RANGE_H__ */
+#endif /* RANGE_H */

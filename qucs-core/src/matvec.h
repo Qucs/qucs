@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __MATVEC_H__
-#define __MATVEC_H__
+#ifndef MATVEC_H
+#define MATVEC_H
 
 namespace qucs {
 
@@ -170,4 +170,4 @@ class matvec
 
 } // namespace qucs
 
-#endif /* __MATVEC_H__ */
+#endif /* MATVEC_H */

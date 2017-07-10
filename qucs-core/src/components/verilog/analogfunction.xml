@@ -38,6 +38,7 @@
 
 <admst:for-each select="/module">
 <!-- definition of variables -->
+<admst:variable name="MODULE" path="upper-case(/module)"/>
 <admst:value-of select="name"/>
 <admst:variable name="module" select="%s"/>
 </admst:for-each>
@@ -1105,12 +1106,12 @@ double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separ
  *
  */
 
-#ifndef __$(module)_ANALOGFUNCTION_H__
-#define __$(module)_ANALOGFUNCTION_H__
+#ifndef $(MODULE)_ANALOGFUNCTION_H
+#define $(MODULE)_ANALOGFUNCTION_H
 
 <admst:text format="\n"/>
 <admst:apply-templates select="/module" match="analogfunctionH"/>
-#endif /* __$(module)_ANALOGFUNCTION_H__ */
+#endif /* $(MODULE)_ANALOGFUNCTION_H */
 <admst:text format="\n"/>
 </admst:open>
 <admst:message format="$(filename).$(module).analogfunction.h created\n"/>

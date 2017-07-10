@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __PROPERTY_H__
-#define __PROPERTY_H__
+#ifndef PROPERTY_H
+#define PROPERTY_H
 
 #include <string>
 #include <unordered_map>
@@ -73,4 +73,4 @@ typedef std::unordered_map<std::string, property> properties;
  
 } // namespace qucs
 
-#endif /* __PROPERTY_H__ */
+#endif /* PROPERTY_H */

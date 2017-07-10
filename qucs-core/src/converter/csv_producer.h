@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CSV_PRODUCER_H__
-#define __CSV_PRODUCER_H__
+#ifndef CSV_PRODUCER_H
+#define CSV_PRODUCER_H
 
 #include "logging.h"
 #include "strlist.h"
@@ -39,4 +39,4 @@ extern FILE * csv_out;
 /* Available functions of the producers. */
 void csv_producer (char * variable, const char * sep = ";");
 
-#endif /* __CSV_PRODUCER_H__ */
+#endif /* CSV_PRODUCER_H */

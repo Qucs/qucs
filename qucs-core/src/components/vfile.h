@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __VFILE_H__
-#define __VFILE_H__
+#ifndef VFILE_H
+#define VFILE_H
 
 namespace qucs {
   class dataset;
@@ -50,4 +50,4 @@ private:
   qucs::interpolator * inter;
 };
 
-#endif /* __VFILE_H__ */
+#endif /* VFILE_H */

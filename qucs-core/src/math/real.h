@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __REAL_H__
-#define __REAL_H__
+#ifndef REAL_H
+#define REAL_H
 
 #include <cmath>
 
@@ -143,4 +143,4 @@ nr_double_t   abs (const nr_double_t);
 
 } // namespace qucs
 
-#endif /* __REAL_H__ */
+#endif /* REAL_H */

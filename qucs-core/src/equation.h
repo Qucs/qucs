@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __EQUATION_H__
-#define __EQUATION_H__
+#ifndef EQUATION_H
+#define EQUATION_H
 
 #include "object.h"
 #include "complex.h"
@@ -361,4 +361,4 @@ private:
 
 } // namespace qucs
 
-#endif /* __EQUATION_H__ */
+#endif /* EQUATION_H */

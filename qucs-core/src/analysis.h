@@ -28,8 +28,8 @@
  * Contains the analysis class definition.
  */
 
-#ifndef __ANALYSIS_H__
-#define __ANALYSIS_H__
+#ifndef ANALYSIS_H
+#define ANALYSIS_H
 
 #include "object.h"
 #include "ptrlist.h"
@@ -279,4 +279,4 @@ protected:
 
 } // namespace qucs
 
-#endif /* __ANALYSIS_H__ */
+#endif /* ANALYSIS_H */

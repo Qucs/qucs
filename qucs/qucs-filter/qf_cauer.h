@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef _QF_CAUER_H
-#define _QF_CAUER_H
+#ifndef QF_CAUER_H
+#define QF_CAUER_H
 
 const qf_double_t SN_ACC = 1e-5;	// Accuracy of sn(x) is SN_ACC^2
 const qf_double_t K_ERR1 = 1e-8;	// Accuracy of K(k)
@@ -61,4 +61,4 @@ public:
   void dump (void);		// Dumps to cout
 };
 
-#endif // _QF_CAUER_H
+#endif // QF_CAUER_H

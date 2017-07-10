@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __PAIR_H__
-#define __PAIR_H__
+#ifndef PAIR_H
+#define PAIR_H
 
 #include <utility>
 #include <string>
@@ -69,4 +69,4 @@ class pair
 
 } // namespace qucs
 
-#endif /* __PAIR_H__ */
+#endif /* PAIR_H */

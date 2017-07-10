@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __XNOR_H__
-#define __XNOR_H__
+#ifndef XNOR_H
+#define XNOR_H
 
 class logicxnor : public digital
 {
@@ -33,4 +33,4 @@ class logicxnor : public digital
   void calcDerivatives (void);
 };
 
-#endif /* __XNOR_H__ */
+#endif /* XNOR_H */

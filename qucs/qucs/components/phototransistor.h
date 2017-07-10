@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef phototransistor_H
-#define phototransistor_H
+#ifndef PHOTOTRANSISTOR_H
+#define PHOTOTRANSISTOR_H
 
 #include "component.h"
 
@@ -24,4 +24,4 @@ class phototransistor : public Component
     void createSymbol();
 };
 
-#endif /* phototransistor_H */
+#endif /* PHOTOTRANSISTOR_H */
