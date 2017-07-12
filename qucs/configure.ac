@@ -788,17 +788,8 @@ AH_TOP([
 dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([Makefile
     contrib/Makefile
+    man/Makefile
     examples/Makefile
-    qucs-help/Makefile
-    qucs-help/docs/Makefile
-    qucs-help/docs/en/Makefile
-    qucs-help/docs/de/Makefile
-    qucs-help/docs/es/Makefile
-    qucs-help/docs/fr/Makefile
-    qucs-help/docs/ru/Makefile
-    qucs-help/docs/uk/Makefile
-    qucs-help/docs/cs/Makefile
-    qucs-help/docs/pt/Makefile
     qucs-filter/Makefile
     qucs-activefilter/Makefile
     qucs-transcalc/Makefile

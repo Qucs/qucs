@@ -1,42 +1,28 @@
 ## Process this file with automake to produce Makefile.in
-# 
-# qucs-help/docs/de/Makefile.am
+#
+# man/Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2005 Raimund 'Raimi' Jacob <raimi@lkcc.org>
-# Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2017 Guilherme Brondani Torri <guitorri@gmail.com>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2, or (at your option)
 # any later version.
-# 
+#
 # This software is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this package; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
-# Boston, MA 02110-1301, USA.  
+# Boston, MA 02110-1301, USA.
 #
 
-HTML = index.html short.html start.html mathfunc.html subcircuit.html \
-  programs.html start_digi.html characters.html matching.html internal.html \
-  start_opt.html
-PIC  = qucshaupt.png paste.png wire.png select.png inhalttab.png \
-  unterschaltung.png qucsdigi.png optimization1.png optimization2.png \
-  optimization3.png optimization4.png optimization5.png optimization6.png \
-  optimization7.png optimization8.png
-
-EXTRA_DIST = $(HTML) $(PIC)
-
-# installation of documentation
-docdatadir = ${prefix}/share/qucs/docs/de
-docdata_DATA = $(EXTRA_DIST)
+dist_man_MANS = qucs.1 qucsdigi.1 qucsveri.1 qucsdigilib.1
 
 CLEANFILES = *~
 MAINTAINERCLEANFILES = Makefile.in
-

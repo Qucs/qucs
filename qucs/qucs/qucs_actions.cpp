@@ -39,6 +39,8 @@
 #include <QTreeWidgetItem>
 #include <QMutableHashIterator>
 #include <QListWidget>
+#include <QDesktopServices>
+#include <QUrl>
 
 #include "projectView.h"
 #include "main.h"
@@ -821,17 +823,14 @@ void QucsApp::launchTool(const QString& prog, const QString& progDesc, const QSt
   connect(this, SIGNAL(signalKillEmAll()), tool, SLOT(kill()));
 }
 
-
-// --------------------------------------------------------------
-void QucsApp::slotHelpIndex()
+/**
+ * @brief QucsApp::slotHelpOnline
+ * Open default browser poining at the Qucs-Help website.
+ */
+void QucsApp::slotHelpOnline()
 {
-  showHTML("index.html");
-}
-
-// --------------------------------------------------------------
-void QucsApp::slotGettingStarted()
-{
-  showHTML("start.html");
+  QString link = "http://qucs-help.readthedocs.io/";
+  QDesktopServices::openUrl(QUrl(link));
 }
 
 // --------------------------------------------------------------
@@ -839,6 +838,8 @@ void QucsApp::showHTML(const QString& Page)
 {
   launchTool("qucshelp", "help", Page);
 }
+
+
 
 // ---------------------------------------------------------------------
 // Is called when the find action is triggered.

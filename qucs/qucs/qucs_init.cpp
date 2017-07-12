@@ -638,17 +638,11 @@ void QucsApp::initActions()
       tr("Octave Window\n\nShows/hides the Octave dock window"));
   connect(viewOctaveDock, SIGNAL(toggled(bool)), SLOT(slotViewOctaveDock(bool)));
 
-  helpIndex = new QAction(tr("Help Index..."), this);
-  helpIndex->setShortcut(Qt::Key_F1);
-  helpIndex->setStatusTip(tr("Index of Qucs Help"));
-  helpIndex->setWhatsThis(tr("Help Index\n\nIndex of intern Qucs help"));
-  connect(helpIndex, SIGNAL(triggered()), SLOT(slotHelpIndex()));
-
-  helpGetStart = new QAction(tr("Getting Started..."), this);
-  helpGetStart->setStatusTip(tr("Getting Started with Qucs"));
-  helpGetStart->setWhatsThis(
-	tr("Getting Started\n\nShort introduction into Qucs"));
-  connect(helpGetStart, SIGNAL(triggered()), SLOT(slotGettingStarted()));
+  helpOnline = new QAction(tr("Qucs-Help website"), this);
+  helpOnline->setShortcut(Qt::Key_F1);
+  helpOnline->setStatusTip(tr("Open help website in the default browser."));
+  helpOnline->setWhatsThis(tr("Qucs-help\n\nOpen help website in the default browser."));
+  connect(helpOnline, SIGNAL(triggered()), SLOT(slotHelpOnline()));
 
   helpAboutApp = new QAction(tr("&About Qucs..."), this);
   helpAboutApp->setStatusTip(tr("About the application"));
@@ -798,9 +792,8 @@ void QucsApp::initMenuBar()
 
 
   helpMenu = new QMenu(tr("&Help"));  // menuBar entry helpMenu
-  helpMenu->addAction(helpIndex);
-  helpMenu->addAction(helpGetStart);
-  helpMenu->addSeparator();
+  helpMenu->addAction(helpOnline);
+  helpMenu->insertSeparator();
 
 
 
