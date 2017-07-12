@@ -54,10 +54,8 @@ dc_sim.cpp		logic_0.cpp		photodiode.cpp		vrect.cpp
 dcblock.cpp		logic_1.cpp		phototransistor.cpp	wprobe.cpp
 dcfeed.cpp		logical_and.cpp		pm_modulator.cpp        capq.cpp
 vcresistor.cpp          indq.cpp                spiralinductor.cpp      circularloop.cpp
-vacomponent.cpp
-mutualx.cpp
-circline.cpp
-taperedline.cpp
+vacomponent.cpp		mutualx.cpp		circline.cpp		taperedline.cpp
+sp2deembed.cpp
 )
 
 SET(COMPONENTS_HDRS
@@ -197,6 +195,7 @@ rlcg.h
 rs_flipflop.h
 source_ac.h
 sp_sim.h
+sp2deembed.h
 sparamfile.h
 spicedialog.h
 spicefile.h
