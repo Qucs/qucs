@@ -53,6 +53,7 @@ SET( COMPONENTS_SRC
   short.cpp
   spfile.cpp
   spembed.cpp
+  spdeembed.cpp
   strafo.cpp
   tee.cpp
   tline.cpp

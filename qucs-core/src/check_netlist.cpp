@@ -292,6 +292,11 @@ static int checker_resolve_variable (struct definition_t * root,
         {
             found++;
         }
+        /* 6a. find file reference in S-parameter de-embedding file components */
+        if ((val = checker_find_variable (root, "SPDfile", "File", value->ident)))
+        {
+            found++;
+        }
         /* 7. find variable in equation */
         if (root->env)
         {

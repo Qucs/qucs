@@ -88,6 +88,7 @@
 #include "wprobe.h"
 #include "vprobe.h"
 #include "spembed.h"
+#include "spdeembed.h"
 #include "vpulse.h"
 #include "ipulse.h"
 #include "vrect.h"

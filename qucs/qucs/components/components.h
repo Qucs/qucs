@@ -38,6 +38,7 @@
 #include "subcirport.h"
 #include "subcircuit.h"
 #include "sparamfile.h"
+#include "sp2deembed.h"
 #include "equation.h"
 #include "attenuator.h"
 #include "amplifier.h"
