@@ -228,13 +228,13 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     PropertyBox->addItem(tr("solid line"));
     if(Diag->Name != "Phasor")
     {
-      PropertyBox->insertItem(tr("dash line"));
-      PropertyBox->insertItem(tr("dot line"));
+      PropertyBox->addItem(tr("dash line"));
+      PropertyBox->addItem(tr("dot line"));
       if(Diag->Name != "Time") {
-	PropertyBox->insertItem(tr("long dash line"));
-	PropertyBox->insertItem(tr("stars"));
-	PropertyBox->insertItem(tr("circles"));
-	PropertyBox->insertItem(tr("arrows"));
+    PropertyBox->addItem(tr("long dash line"));
+    PropertyBox->addItem(tr("stars"));
+    PropertyBox->addItem(tr("circles"));
+    PropertyBox->addItem(tr("arrows"));
       }
     }
     connect(PropertyBox, SIGNAL(activated(int)),
@@ -1598,7 +1598,7 @@ void DiagramDialog::addvar(QString a)
   QFileInfo Info(defaultDataSet);
   QString DocName = ChooseData->currentText()+".dat";
 
-  QFile file(Info.dirPath() + QDir::separator() + DocName);
+  QFile file(Info.path() + QDir::separator() + DocName);
   if(!file.open(QIODevice::ReadOnly)) {
     return;
   }
