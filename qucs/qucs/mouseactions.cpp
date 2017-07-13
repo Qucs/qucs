@@ -497,7 +497,7 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
 //          ((Wire*)pe)->Label->paintScheme(&painter);
 
   drawn = true;
-  if (Event->modifiers().testFlag(Qt::ControlModifier))
+  if (!Event->modifiers().testFlag(Qt::ControlModifier))
     Doc->setOnGrid(MAx2, MAy2);  // use grid only if CTRL key not pressed
   MAx1 = MAx2 - MAx1;
   MAy1 = MAy2 - MAy1;
