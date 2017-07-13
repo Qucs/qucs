@@ -1673,7 +1673,6 @@ void DiagramDialog::remvar(QString a)
 /*checks if a type of graph is on screen*/
 bool DiagramDialog::testvar (QString a)
 {
-  int i;
   QString Var;
 
   foreach(Graph *pg, Diag->Graphs) {
