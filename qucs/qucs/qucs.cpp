@@ -883,7 +883,7 @@ void QucsApp::initCursorMenu()
   }
   
   APPEND_MENU(ActionCMenuOpen, slotCMenuOpen, "Open")
-  APPEND_MENU(ActionCMenuCopy, slotCMenuCopy, "Duplicate")
+  APPEND_MENU(ActionCMenuCopy, slotCMenuCopy, "Copy file")
   APPEND_MENU(ActionCMenuRename, slotCMenuRename, "Rename")
   APPEND_MENU(ActionCMenuDelete, slotCMenuDelete, "Delete")
   APPEND_MENU(ActionCMenuInsert, slotCMenuInsert, "Insert")
