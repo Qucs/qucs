@@ -13,7 +13,7 @@ diagrams.h
 graph.h
 marker.h
 markerdialog.h
-phasor.h
+phasordiagram.h
 polardiagram.h
 psdiagram.h
 rect3ddiagram.h
@@ -29,7 +29,7 @@ SET(DIAGRAMS_SRCS
 curvediagram.cpp	graph.cpp		polardiagram.cpp	smithdiagram.cpp
 diagram.cpp		marker.cpp		psdiagram.cpp		tabdiagram.cpp
 diagramdialog.cpp	markerdialog.cpp	rect3ddiagram.cpp	timingdiagram.cpp
-rectdiagram.cpp		phasor.cpp		truthdiagram.cpp	waveac.cpp
+rectdiagram.cpp		phasordiagram.cpp		truthdiagram.cpp	waveac.cpp
 )
 
 SET(DIAGRAMS_MOC_HDRS
