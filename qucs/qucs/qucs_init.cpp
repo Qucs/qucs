@@ -793,9 +793,6 @@ void QucsApp::initMenuBar()
 
   helpMenu = new QMenu(tr("&Help"));  // menuBar entry helpMenu
   helpMenu->addAction(helpOnline);
-  helpMenu->insertSeparator();
-
-
 
   //Fill submenu's with filenames of PDF documents
   QDir TechnicalDir = QDir(QucsSettings.DocDir.replace('\\','/'));
