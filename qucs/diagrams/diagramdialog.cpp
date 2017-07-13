@@ -231,10 +231,10 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
       PropertyBox->addItem(tr("dash line"));
       PropertyBox->addItem(tr("dot line"));
       if(Diag->Name != "Time") {
-    PropertyBox->addItem(tr("long dash line"));
-    PropertyBox->addItem(tr("stars"));
-    PropertyBox->addItem(tr("circles"));
-    PropertyBox->addItem(tr("arrows"));
+        PropertyBox->addItem(tr("long dash line"));
+        PropertyBox->addItem(tr("stars"));
+        PropertyBox->addItem(tr("circles"));
+        PropertyBox->addItem(tr("arrows"));
       }
     }
     connect(PropertyBox, SIGNAL(activated(int)),
