@@ -52,9 +52,7 @@ QString* QW_Coupled_Ring_Filter::createSchematic(tFilter *Filter, tSubstrate *Su
   double y = 0.01; // Bandpass ripple (dB)
   double Ye = 1/Ze;
   double x = -pow(10,(-y/20));
-  double rf = ftz/f0;//Ratio between the first transmission zero and the central frequency
   double TZ = (sin(pi*ftz/(2*f0))*sin(pi*ftz/(2*f0)))/(1 + cos(pi*ftz/(2*f0))*cos(pi*ftz/(2*f0)));
-  double theta_tz = pi*ftz/(2*f0);
   double SQ = sqrt((1-x*x)*(TZ*TZ-1)*(TZ*TZ-1)*Z0*Z0);
   double R = -Ye*Z0*(Z0*(x*x-2)+2*SQ);
   double Q = 2*TZ*TZ*Ye*Z0*(Z0*(x*x-2)+SQ);
