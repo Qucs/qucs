@@ -42,7 +42,7 @@ CCoupled_Shunt_Resonator_Filter::CCoupled_Shunt_Resonator_Filter()
 
 // -----------------------------------------------------------------------
 // This function generates the schematic
-QString* CCoupled_Shunt_Resonator_Filter::createSchematic(tFilter *Filter, tSubstrate *Substrate, bool isMicrostrip)
+QString* CCoupled_Shunt_Resonator_Filter::createSchematic(tFilter *Filter)
 {
 //Design equations
 double f0 = Filter->Frequency+0.5*(Filter->Frequency2-Filter->Frequency);//Central frequency

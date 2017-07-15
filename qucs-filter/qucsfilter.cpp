@@ -418,7 +418,7 @@ QString * QucsFilter::calculateFilter(struct tFilter * Filter)
         s = QW_Coupled_Ring_Filter::createSchematic(Filter, &Substrate, isMicrostrip);
         return s;
       case 7: // Capacitively coupled shunt resonators
-        s = CCoupled_Shunt_Resonator_Filter::createSchematic(Filter, &Substrate, isMicrostrip);
+        s = CCoupled_Shunt_Resonator_Filter::createSchematic(Filter);
         return s;
       case 8:  // equation defined filter
         s = Equation_Filter::createSchematic(Filter);
