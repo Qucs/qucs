@@ -1639,10 +1639,9 @@ void DiagramDialog::addvar(QString a)
     m = GraphList->findItems(Var2, Qt::MatchExactly);
     l = Var2.indexOf(a,0,Qt::CaseSensitive);
 
-    if( l != -1 && Var2.size() == (l + a.size()) && !m.size()>0)//Var2.size == (l + a.size()) in case of voltage (.v) to don't let pass a variable like (name.var)
+    if( l != -1 && Var2.size() == (l + a.size()) && !(m.size()>0))//Var2.size == (l + a.size()) in case of voltage (.v) to don't let pass a variable like (name.var)
     {
-      QTableWidgetItem* I;
-      slotTakeVar(I);
+      slotTakeVar(NULL);//In the case of the phasor diagram, the table ChooseVars is not used. Instead of that, the graph is put in the list bu using Var2.
     }
 
   } while(i > 0);
