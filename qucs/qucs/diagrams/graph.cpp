@@ -305,7 +305,7 @@ int Graph::getSelectedP(int x, int y)
           yn = d1 * float(x) + b1;
         }
       }
-      if(((f1 >= f3) && (xn >= f3)  && (xn <= f1)) || (f3 >= f1) && (xn >= f1)  && (xn <= f3))
+      if(((f1 >= f3) && (xn >= f3)  && (xn <= f1)) || ((f3 >= f1) && (xn >= f1)  && (xn <= f3)))
         if(((f2 >= f4) && (yn >= f4) && (yn <= f2)) || ((f4 >= f2) && (yn >= f2) && (yn <= f4)))
           if((y >= int(yn) - 5) && (y <= int(yn) + 5) && (x >= int(xn) - 5) && (x <= int(xn) + 5))
             return 1;
