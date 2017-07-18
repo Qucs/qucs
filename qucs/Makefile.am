@@ -22,7 +22,13 @@
 # Boston, MA 02110-1301, USA.
 #
 
-SUBDIRS = components diagrams paintings dialogs octave
+include ../common.mk
+
+SUBDIRS = \
+	bitmaps \
+	components diagrams \
+	paintings \
+	dialogs octave
 
 if COND_WIN32
 bin_SCRIPTS = qucsdigi.bat qucsveri.bat qucsdigilib.bat
@@ -45,12 +51,9 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 qucs_SOURCES = node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
   qucs.cpp main.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
   viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
-  schematic_file.cpp syntax.cpp module.cpp octave_window.cpp qrc_qucs.cpp   \
+  schematic_file.cpp syntax.cpp module.cpp octave_window.cpp qucs_.qrc   \
   messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
 	projectView.cpp
-
-qrc_qucs.cpp: qucs.qrc
-	$(RCC) -o $@ $<
 
 nodist_qucs_SOURCES = $(MOCFILES)
 
@@ -92,7 +95,7 @@ EXTRA_DIST = \
 	qucsdigi qucsdigilib qucsdigi.bat qucsdigilib.bat qucsveri qucsveri.bat \
 	$(hicolor16_DATA) $(hicolor22_DATA) $(hicolor32_DATA) $(hicolor48_DATA) \
 	$(hicolor64_DATA) $(hicolor128_DATA) $(hicolor256_DATA) $(hicolor512_DATA) \
-	$(hicolorsc_DATA) $(desktop_DATA) qucs.qrc \
+	$(hicolorsc_DATA) $(desktop_DATA) \
 	bitmaps/qucs.icns \
 	bitmaps/qucsattenuator.icns \
 	bitmaps/qucsfilter.icns \
@@ -103,11 +106,6 @@ EXTRA_DIST = \
 	bitmaps/qucsrescodes.icns \
 	bitmaps/qucstrans.icns
 
-SUFFIXES = .h .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -o $@ $<
-
-CLEANFILES = *~ *.rej *.orig
+CLEANFILES = *~ *.rej *.orig qucs_.cpp
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.qm
 DISTCLEANFILES = *.moc.cpp *.qm

@@ -36,7 +36,8 @@ SUBDIRS = \
 	examples \
 	$(RELEASEDIRS)
 
-EXTRA_DIST = ar-lib bootstrap depcomp PLATFORMS RELEASE Info.plist
+EXTRA_DIST = ar-lib bootstrap depcomp PLATFORMS RELEASE Info.plist \
+	common.mk
 
 # MacOSX specific installation of applications
 if COND_MACOSX
