@@ -708,22 +708,18 @@ AC_PATH_PROGS(LUPDATE, lupdate-qt4 lupdate, :, [$QT_DIR/bin:$PATH])
 dnl Check for MOC/UIC/RCC support.
 AC_PATH_PROGS(MOC, moc-qt4 moc, :, [$QT_DIR/bin:$PATH])
 AC_PATH_PROGS(UIC, uic-qt4 uic, :, [$QT_DIR/bin:$PATH])
-AC_PATH_PROGS(RCC, rcc, :, [$QT_DIR/bin:$PATH])
+AC_PATH_PROGS(RCC, rcc-qt4 rcc, :, [$QT_DIR/bin:$PATH])
 
 if test "$MOC" = ":"; then
-  AC_MSG_ERROR([
-  The $PACKAGE package needs the 'Qt Meta Object Compiler' to compile properly.
-  Though Qt itself may be properly installed including headers and libraries
-  the 'moc' program is missing.  Possibly you need to install the full
-  development package of Qt.])
+  AC_MSG_ERROR([Need 'moc' to compile, 'moc' is part of Qt])
 fi
 
 if test "$UIC" = ":"; then
-  AC_MSG_ERROR([
-  The $PACKAGE package needs the 'Qt User Interface Compiler' to compile properly.
-  Though Qt itself may be properly installed including headers and libraries
-  the 'uic' program is missing.  Possibly you need to install the full
-  development package of Qt.])
+  AC_MSG_ERROR([Need 'uic' to compile, 'uic' is part of Qt])
+fi
+
+if test "$RCC" = ":"; then
+  AC_MSG_ERROR([Need 'rcc' to compile, 'rcc' is part of Qt])
 fi
 
 dnl check for Qt moveable tabwidgets (introduced in Qt 4.5)
@@ -793,12 +789,15 @@ AC_CONFIG_FILES([Makefile
     qucs-filter/Makefile
     qucs-activefilter/Makefile
     qucs-transcalc/Makefile
+    qucs-transcalc/bitmaps/Makefile
     qucs-transcalc/examples/Makefile
     qucs-lib/Makefile
     qucs-lib/library/Makefile
     qucs-attenuator/Makefile
+    qucs-attenuator/bitmaps/Makefile
     qucs-rescodes/Makefile
     qucs/Makefile
+    qucs/bitmaps/Makefile
     qucs/octave/Makefile
     qucs/components/Makefile
     qucs/diagrams/Makefile
