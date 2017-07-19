@@ -79,7 +79,7 @@ public: // power matching stuff. some sort of VarPos (ab?)use
   int getMarkerMode() const;
   void setMarkerMode(int mode);
 
-  std::vector<double> getData();//This function returns the marker value (real, complex), the independent variable, the position of the marker and a flag indicating the marker mode
+  struct MarkerData getData();//This function returns the marker value (real, complex), the independent variable, the position of the marker and a flag indicating the marker mode
 
 // private: // not yet
   Graph const *pGraph;   // the corresponding graph
@@ -109,6 +109,7 @@ public:
 // private: // not yet, cross-manipulated by MarkerDialog
   int Precision; // number of digits to show
   int numMode;   // real/imag or polar (deg/rad)
+  bool DisplayZ, DisplayY;//Only for Smith charts. These flags indicate the optional parameters to be displayed
 
 public: // shouldn't be there, cross-manipulated by MarkerDialog
         // to be implemented within SmithDiagram.

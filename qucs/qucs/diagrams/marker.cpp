@@ -63,6 +63,11 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_, QString markerID) :
   cy = -cy_;
   fCX = float(cx);
   fCY = float(cy);
+
+  //Default setting for displaying extra parameters. The markers will show the impedance data if the chart is type "Smith".
+  //In the case of having an admittance chart, admittance will be display. 
+  DisplayZ = (diag()->Name == "Smith");
+  DisplayY = (diag()->Name == "ySmith");
   
   MarkerID=markerID;
   MarkerColor = Qt::darkMagenta;//Default marker color
@@ -125,8 +130,9 @@ QString Marker::getReferenceMarkerID()
 
 // This function returns the marker values. Its main use is to provide data to the Diagram object so
 // as to build a map with the data of all the active markers.
-std::vector<double> Marker::getData()
+struct MarkerData Marker::getData()
 {
+  struct MarkerData MKD;
   std::vector<double> data(6);
   data[0] = VarDep[0];//Real part
   data[1] = VarDep[1];//Imaginary part
@@ -134,7 +140,9 @@ std::vector<double> Marker::getData()
   data[3] = fCX;//Marker cordinates
   data[4] = fCY;
   data[5] = MarkerMode;//This allows to save the marker mode in a map structure. This map is used by markerdialog class to separate those conventional from delta markers
-  return data;
+  MKD.parameters=data;
+  MKD.graphID = pGraph->Var;
+  return MKD;
 }
 
 // ---------------------------------------------------------------------
@@ -290,7 +298,7 @@ void Marker::createText()
   if (MarkerMode == 1)//Delta mode activated
   {  
     //Get reference marker data
-    ReferenceMarkerData = diag()->ActiveMarkers[ReferenceMarkerID];
+    ReferenceMarkerData = diag()->ActiveMarkers[ReferenceMarkerID].parameters;
   }
   double *pp;
   nVarPos = pGraph->numAxes();
@@ -331,7 +339,11 @@ void Marker::createText()
     }
     else//Delta marker
     {
-     Text += QChar(0x0394) + pD->Var + ": " + QString::number(VarPos[ii]-ReferenceMarkerData[2],'g',Precision) + "\n";
+     if((ii == 0)&&(diag()->Name=="Phasor")) continue;//In phasor and waveAC plots freq is constant so there is no need of printing delta(ACfreq) = 0
+     if(diag()->Name=="Waveac")
+       Text += "Time: " + unit(VarPos[ii]-ReferenceMarkerData[2]) + "\n";
+     else
+       Text += QChar(0x0394) + pD->Var + ": " + QString::number(VarPos[ii]-ReferenceMarkerData[2],'g',Precision) + "\n";
     }
   }
   
@@ -736,7 +748,10 @@ QString Marker::save()
   s += QString("%1 \"%2\" ").arg(MarkerMode).arg(ReferenceMarkerID);
 
   //Add reference marker data
-  s += QString("%1#%2#%3#%4#%5 >").arg(ReferenceMarkerData[0]).arg(ReferenceMarkerData[1]).arg(ReferenceMarkerData[2]).arg(ReferenceMarkerData[3]).arg(ReferenceMarkerData[4]);
+  s += QString("%1#%2#%3#%4#%5 ").arg(ReferenceMarkerData[0]).arg(ReferenceMarkerData[1]).arg(ReferenceMarkerData[2]).arg(ReferenceMarkerData[3]).arg(ReferenceMarkerData[4]);
+
+  //Display impedance/admittance data (Smith chart diagrams only)
+  s += QString("%1 %2>").arg(DisplayZ).arg(DisplayY);
 
   return s;
 }
@@ -826,6 +841,14 @@ bool Marker::load(const QString& _s)
   ReferenceMarkerData[2] = RefMrkData.section('#', 2 ,2).toDouble();
   ReferenceMarkerData[3] = RefMrkData.section('#', 3 ,3).toDouble();
   ReferenceMarkerData[4] = RefMrkData.section('#', 4 ,4).toDouble();
+
+  //Display impedance/admittance data (Smith chart diagrams only)
+  n  = s.section(' ',2,2);
+  DisplayZ = (n.toInt()!=0);//Display impedance?
+
+  n  = s.section(' ',3,3);
+  DisplayY = (n.toInt()!=0);//Display admittance?
+
   return true;
 }
 

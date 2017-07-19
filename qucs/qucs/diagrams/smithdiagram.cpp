@@ -33,7 +33,6 @@
 #include "misc.h"
 #include "../dialogs/matchdialog.h" // For r2z function
 
-
 SmithDiagram::SmithDiagram(int _cx, int _cy, bool ImpMode) : Diagram(_cx, _cy)
 {
   x1 = 10;     // position of label text
@@ -135,21 +134,33 @@ QString SmithDiagram::extraMarkerText(Marker const* m) const
   std::vector<double> const& Pos = m->varPos();
   unsigned nVarPos = pGraph->numAxes();
   assert(nVarPos == Pos.size());
-  double Zr, Zi, Zrd, Zid;
+  double Zr, Zi, Zrd, Zid;//Impedance parameters
+  double Yr, Yi, Yrd, Yid;//Admittance parameters
   double Z0 = m->Z0;
   double Precision = m->precision(); // hmmm
-
+  QString ExtraParamsText;//Variable used for displaying extra marker data
+  
   Zr = m->powReal();
   Zi = m->powImag();
+
   MatchDialog::r2z(Zr, Zi, Z0);
+  Yr = 1/Zr; Yi = 1/Zi;//The impedance data are converted into admittance. So from this point on, Zr, Zi are admittance values
+
   QString Var = pGraph->Var;
+  QString Var_ =Var;  
 
   if (m->getMarkerMode() == 0)//Conventional marker
   {
+    QString valMarkerZ = misc::complexRect(Zr, Zi, Precision);
+    QString valMarkerY = misc::complexRect(Yr, Yi, Precision);
     if(Var.startsWith("S")) { // uuh, ooh hack.
-    return "\n"+ Var.replace('S', 'Z')+": " +misc::complexRect(Zr, Zi, Precision);
+      if (m->DisplayZ) ExtraParamsText = "\n"+ Var.replace('S', 'Z')+": " +valMarkerZ;
+      if (m->DisplayY) ExtraParamsText += "\n"+ Var_.replace('S', 'Y')+": " +valMarkerY;//Var_ is a copy of pGraph->Var. It is used to guarantee the display is correct even if DisplayZ is true
+    return ExtraParamsText;
     }else{
-    return "\nZ("+ Var+"): " +misc::complexRect(Zr, Zi, Precision);
+      if (m->DisplayZ) ExtraParamsText = "\nZ("+ Var+"): " +valMarkerZ;
+      if (m->DisplayY) ExtraParamsText = "\nY("+ Var+"): " +valMarkerY;
+    return ExtraParamsText;
     }
   }
   else//Delta marker
@@ -159,10 +170,19 @@ QString SmithDiagram::extraMarkerText(Marker const* m) const
      Zrd = data.at(0);
      Zid = data.at(1);
      MatchDialog::r2z(Zrd, Zid, Z0);
+     if (m->DisplayY)
+     {//Admittance mode
+       Yrd = 1/Zrd;
+       Yid = 1/Zid;
+     } 
      if(Var.startsWith("S")) { // uuh, ooh hack.
-     return "\n"+ QString(QChar(0x0394)) + Var.replace('S', 'Z')+": " +misc::complexRect(Zr-Zrd, Zi-Zid, Precision);
+        if (m->DisplayZ) ExtraParamsText = "\n"+  QString(QChar(0x0394)) + Var.replace('S', 'Z')+": " +misc::complexRect(Zr-Zrd, Zi-Zid, Precision);
+        if (m->DisplayY) ExtraParamsText += "\n"+  QString(QChar(0x0394)) + Var_.replace('S', 'Y')+": " +misc::complexRect(Yr-Yrd, Yi-Yid, Precision);
+     return ExtraParamsText;
      }else{
-     return "\n"+ QString(QChar(0x0394)) + "Z("+ Var+"): " +misc::complexRect(Zr-Zrd, Zi-Zid, Precision);
+        if (m->DisplayZ) ExtraParamsText = "\n"+  QString(QChar(0x0394)) + "Z("+ Var+": " +misc::complexRect(Zr-Zrd, Zi-Zid, Precision);
+        if (m->DisplayY) ExtraParamsText += "\n"+ QString(QChar(0x0394)) + "Y("+ Var+": " +misc::complexRect(Yr-Yrd, Yi-Yid, Precision);
+     return ExtraParamsText;
      }
 
   }

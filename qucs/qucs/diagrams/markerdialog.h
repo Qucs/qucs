@@ -46,9 +46,11 @@ public:
   QPushButton *ColorButton;
   QColor MarkerColor;
   QLabel * ColorLabel;
+  QWidget *ZYSelectBox;
+  QCheckBox *ZCheckBox, *YCheckBox;
 
 private:
-  QMap<QString, std::vector<double>> ActiveMarkers;
+  QMap<QString, struct MarkerData> ActiveMarkers;
 };
 
 #endif

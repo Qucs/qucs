@@ -55,6 +55,11 @@ struct Axis {
   double limit_min, limit_max, step;   // if not auto-scale
 };
 
+struct MarkerData
+{
+   std::vector<double> parameters;//Color, transparency, cordinates
+   QString graphID;//Name of the graph where the marker is placed
+};
 
 class Diagram : public Element {
 public:
@@ -127,7 +132,7 @@ public:
 
   bool hideLines;       // for "Rect3D": hide invisible lines ?
   int rotX, rotY, rotZ; // for "Rect3D": rotation around x, y and z axis
-QMap<QString, std::vector<double>> ActiveMarkers;
+  QMap<QString, struct MarkerData> ActiveMarkers;
 protected:
   void calcSmithAxisScale(Axis*, int&, int&);
   void createSmithChart(Axis*, int Mode=7);

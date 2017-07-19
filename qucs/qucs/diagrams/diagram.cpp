@@ -155,14 +155,17 @@ qDebug() << "Re{y}, Im{y}, x_position, y_position, indep_var, Delta_Mode?";
    foreach(Graph *pg, Graphs)
     foreach(Marker *pm, pg->Markers)
       {
-      std::vector<double> val = pm->getData();
-      ActiveMarkers.insert(pm->getID(), pm->getData());
-      qDebug() << "Key: " << pm->getID() << "Values: {" << val[0] << ", " << val[1] << ", " << val[2] << ", " << val[3] << ", " << val[4] << ", " << val[5] << "}";
+      std::vector<double> val = pm->getData().parameters;
+      struct MarkerData MKD;
+      MKD.parameters = val;
+      MKD.graphID = pg->Var;
+      ActiveMarkers.insert(pm->getID(), MKD);
+      qDebug() << "Key: " << pm->getID() << "Values: {" << val[0] << ", " << val[1] << ", " << val[2] << ", " << val[3] << ", " << val[4] << ", " << val[5] << ", " << pg->Var << "}";
       }
 qDebug() << "----------------------------";
 
    QString IDref;
-   std::vector<double> RefData;
+   struct MarkerData RefData;
    foreach(Graph *pg, Graphs)
     foreach(Marker *pm, pg->Markers)
     {
@@ -175,7 +178,7 @@ qDebug() << "----------------------------";
       else
       {//The reference marker exists, then check if delta mode is activated
         RefData = ActiveMarkers[IDref];//Reference marker data. The 5th field shows if delta mode is activated
-        if (RefData[5] == 1)
+        if (RefData.parameters[5] == 1)
         {//If the reference marker is already a delta marker, the current marker must be a conventional marker
           pm->setReferenceMarkerID("");
           pm->setMarkerMode(0);
@@ -1547,9 +1550,12 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
         
       if (s.count(" ") == 6)//Old marker format 
       {
+        struct MarkerData MKD;
         std::vector<double> padding = {0,0,0,0,0,0};
         pm->setID(newMarkerName());
-        ActiveMarkers.insert(pm->getID(), padding);
+        MKD.parameters = padding;
+        MKD.graphID = pg->Var;
+        ActiveMarkers.insert(pm->getID(), MKD);
       }
       if(!pm->load(s)) {
 	delete pm;
