@@ -385,7 +385,7 @@ bool Marker::moveLeftRight(bool left)
       x=diag()->freq[n];
       if(VarPos[0] == x) break;
     }
-    if(n == diag()->nfreqt) n == diag()->nfreqt-1;
+    if(n == diag()->nfreqt) n = diag()->nfreqt-1;
 
     if(left) {
       if(n == 0) return false;

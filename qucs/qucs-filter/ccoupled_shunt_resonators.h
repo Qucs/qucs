@@ -31,7 +31,7 @@ class CCoupled_Shunt_Resonator_Filter : public TL_Filter {
 public:
   CCoupled_Shunt_Resonator_Filter();
 
-  static QString* createSchematic(tFilter*, tSubstrate*, bool);
+  static QString* createSchematic(tFilter*);
 };
 
 #endif

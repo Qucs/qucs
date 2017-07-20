@@ -228,13 +228,13 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     PropertyBox->addItem(tr("solid line"));
     if(Diag->Name != "Phasor")
     {
-      PropertyBox->insertItem(tr("dash line"));
-      PropertyBox->insertItem(tr("dot line"));
+      PropertyBox->addItem(tr("dash line"));
+      PropertyBox->addItem(tr("dot line"));
       if(Diag->Name != "Time") {
-	PropertyBox->insertItem(tr("long dash line"));
-	PropertyBox->insertItem(tr("stars"));
-	PropertyBox->insertItem(tr("circles"));
-	PropertyBox->insertItem(tr("arrows"));
+        PropertyBox->addItem(tr("long dash line"));
+        PropertyBox->addItem(tr("stars"));
+        PropertyBox->addItem(tr("circles"));
+        PropertyBox->addItem(tr("arrows"));
       }
     }
     connect(PropertyBox, SIGNAL(activated(int)),
@@ -1598,7 +1598,7 @@ void DiagramDialog::addvar(QString a)
   QFileInfo Info(defaultDataSet);
   QString DocName = ChooseData->currentText()+".dat";
 
-  QFile file(Info.dirPath() + QDir::separator() + DocName);
+  QFile file(Info.path() + QDir::separator() + DocName);
   if(!file.open(QIODevice::ReadOnly)) {
     return;
   }
@@ -1639,10 +1639,9 @@ void DiagramDialog::addvar(QString a)
     m = GraphList->findItems(Var2, Qt::MatchExactly);
     l = Var2.indexOf(a,0,Qt::CaseSensitive);
 
-    if( l != -1 && Var2.size() == (l + a.size()) && !m.size()>0)//Var2.size == (l + a.size()) in case of voltage (.v) to don't let pass a variable like (name.var)
+    if( l != -1 && Var2.size() == (l + a.size()) && !(m.size()>0))//Var2.size == (l + a.size()) in case of voltage (.v) to don't let pass a variable like (name.var)
     {
-      QTableWidgetItem* I;
-      slotTakeVar(I);
+      slotTakeVar(NULL);//In the case of the phasor diagram, the table ChooseVars is not used. Instead of that, the graph is put in the list bu using Var2.
     }
 
   } while(i > 0);
@@ -1673,7 +1672,6 @@ void DiagramDialog::remvar(QString a)
 /*checks if a type of graph is on screen*/
 bool DiagramDialog::testvar (QString a)
 {
-  int i;
   QString Var;
 
   foreach(Graph *pg, Diag->Graphs) {
