@@ -60,6 +60,12 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
   cy = -cy_;
   fCX = float(cx);
   fCY = float(cy);
+
+  //Default setting for displaying extra parameters. The markers will show the impedance data if the chart is type "Smith".
+  //In the case of having an admittance chart, admittance will be display. 
+  DisplayZ = (diag()->Name == "Smith");
+  DisplayY = (diag()->Name == "ySmith");
+
   if(!pGraph){
     makeInvalid();
   }else{
@@ -576,8 +582,18 @@ QString Marker::save()
 
   s += QString::number(x1) +" "+ QString::number(y1) +" "
       +QString::number(Precision) +" "+ QString::number(numMode);
-  if(transparent)  s += " 1>";
-  else  s += " 0>";
+  if(transparent)  s += " 1 ";
+  else  s += " 0 ";
+
+  if (diag()->Name.count("Smith"))//Impedance/admittance smith charts
+  {
+  (DisplayZ) ? s+="1 ":s+= "0 ";
+  (DisplayY) ? s+="1>":s+= "0>";
+  }
+  else
+  {
+    s+=">"; 
+  }
 
   return s;
 }
@@ -629,6 +645,14 @@ bool Marker::load(const QString& _s)
   if(n.isEmpty()) return true;  // is optional
   if(n == "0")  transparent = false;
   else  transparent = true;
+
+  //Display impedance data in case of having a Smith chart
+  n  = s.section(' ',7,7);
+  DisplayZ = (n.toInt()!=0);
+
+  //Display admittance data in case of having a Smith chart
+  n  = s.section(' ',8,8);
+  DisplayY = (n.toInt()!=0);
 
   return true;
 }

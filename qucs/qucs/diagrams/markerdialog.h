@@ -40,6 +40,8 @@ public:
   QLineEdit  *Precision;
   QLineEdit  *SourceImpedance;
   QCheckBox  *TransBox;
+  QWidget *ZYSelectBox;
+  QCheckBox *ZCheckBox, *YCheckBox;
 };
 
 #endif

@@ -51,19 +51,31 @@ MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent)
   g->addWidget(NumberBox, 1, 1);
 
   assert(pMarker->diag());
-  if(pMarker->diag()->Name=="Smith") // BUG
+  if(pMarker->diag()->Name.count("Smith")) // BUG
   {
     //S parameter also displayed as Z, need Z0 here
-		SourceImpedance = new QLineEdit();
-  	SourceImpedance->setText(QString::number(pMarker->Z0));
+    SourceImpedance = new QLineEdit();
+    SourceImpedance->setText(QString::number(pMarker->Z0));
 
-		g->addWidget(new QLabel(tr("Z0: ")), 2,0);
-		g->addWidget(SourceImpedance,2,1);
-	}
+    g->addWidget(new QLabel(tr("Z0: ")), 2,0);
+    g->addWidget(SourceImpedance,2,1);
+    ZYSelectBox = new QWidget();
+    QGridLayout *gridZY = new QGridLayout();
+    ZCheckBox = new QCheckBox("Impedance");
+    YCheckBox = new QCheckBox("Admittance");
+    gridZY->addWidget(ZCheckBox, 0, 0);
+    gridZY->addWidget(YCheckBox, 0, 1);
+    ZCheckBox->setChecked(pMarker->DisplayZ);
+    YCheckBox->setChecked(pMarker->DisplayY);
+    ZYSelectBox->setLayout(gridZY);
+
+    g->addWidget(new QLabel("Extra parameters"),3,0);
+    g->addWidget(ZYSelectBox,3,1);
+   }
   
   TransBox = new QCheckBox(tr("transparent"));
   TransBox->setChecked(pMarker->transparent);
-  g->addWidget(TransBox,3,0);
+  g->addWidget(TransBox,4,0);
 
   // first => activated by pressing RETURN
   QPushButton *ButtOK = new QPushButton(tr("OK"));
@@ -76,7 +88,7 @@ MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent)
   b->setSpacing(5);
   b->addWidget(ButtOK);
   b->addWidget(ButtCancel);
-  g->addLayout(b,4,0,1,2);
+  g->addLayout(b,5,0,1,2);
 
   this->setLayout(g);
 }
@@ -95,15 +107,20 @@ void MarkerDialog::slotAcceptValues()
     changed = true;
   }
   assert(pMarker->diag());
-  if(pMarker->diag()->Name=="Smith") // BUG: need generic MarkerDialog.
-	{
-			double SrcImp = SourceImpedance->text().toDouble();
-			if(SrcImp != pMarker->Z0)
-			{
-					pMarker->Z0 = SrcImp;
-					changed = true;
-			}
-	}
+
+   if(pMarker->diag()->Name.count("Smith")) // BUG: need generic MarkerDialog.
+   {
+      double SrcImp = SourceImpedance->text().toDouble();
+      if(SrcImp != pMarker->Z0)
+      {
+	pMarker->Z0 = SrcImp;
+      }
+    //Update extra marker data display settings
+    pMarker->DisplayZ = ZCheckBox->isChecked(); 
+    pMarker->DisplayY = YCheckBox->isChecked();
+    changed = true;
+   }
+
   if(NumberBox->currentIndex() != pMarker->numMode) {
     pMarker->numMode = NumberBox->currentIndex();
     changed = true;

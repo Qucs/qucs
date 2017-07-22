@@ -135,20 +135,30 @@ QString SmithDiagram::extraMarkerText(Marker const* m) const
   std::vector<double> const& Pos = m->varPos();
   unsigned nVarPos = pGraph->numAxes();
   assert(nVarPos == Pos.size());
-  double Zr, Zi;
+  double Zr, Zi, Yr, Yi;
   double Z0 = m->Z0;
   double Precision = m->precision(); // hmmm
+  QString ExtraParamsText;//Variable used for displaying extra marker data (impedance and/or admittance)
 
   Zr = m->powReal();
   Zi = m->powImag();
 
   MatchDialog::r2z(Zr, Zi, Z0);
+  Yr = 1/Zr; Yi = 1/Zi;//The impedance data are converted into admittance.
   QString Var = pGraph->Var;
+  QString Var_ =Var;
+
+  QString valMarkerZ = misc::complexRect(Zr, Zi, Precision);
+  QString valMarkerY = misc::complexRect(Yr, Yi, Precision);
 
   if(Var.startsWith("S")) { // uuh, ooh hack.
-    return "\n"+ Var.replace('S', 'Z')+": " +misc::complexRect(Zr, Zi, Precision);
+      if (m->DisplayZ) ExtraParamsText = "\n"+ Var.replace('S', 'Z')+": " +valMarkerZ;
+      if (m->DisplayY) ExtraParamsText += "\n"+ Var_.replace('S', 'Y')+": " +valMarkerY;//Var_ is a copy of pGraph->Var. It is used to guarantee the display is correct even if DisplayZ is true
+    return ExtraParamsText;
   }else{
-    return "\nZ("+ Var+"): " +misc::complexRect(Zr, Zi, Precision);
+      if (m->DisplayZ) ExtraParamsText = "\nZ("+ Var+"): " +valMarkerZ;
+      if (m->DisplayY) ExtraParamsText += "\nY("+ Var+"): " +valMarkerY;
+    return ExtraParamsText;
   }
 }
 

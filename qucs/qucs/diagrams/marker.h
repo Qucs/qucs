@@ -85,6 +85,7 @@ public:
 // private: // not yet, cross-manipulated by MarkerDialog
   int Precision; // number of digits to show
   int numMode;   // real/imag or polar (deg/rad)
+  bool DisplayZ, DisplayY;//Only for Smith charts. These flags indicate the optional parameters to be displayed
 
 public: // shouldn't be there, cross-manipulated by MarkerDialog
         // to be implemented within SmithDiagram.
