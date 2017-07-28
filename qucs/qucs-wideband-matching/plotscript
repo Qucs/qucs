@@ -1,4 +1,4 @@
-source = "/home/andresmmera/git/qucs/qucs/qucs-wideband-matching/GRABIM.dat"
+source = "/home/andresmmera/gnuplotdata"
 
 # S11 [dB]
 set term x11 0
