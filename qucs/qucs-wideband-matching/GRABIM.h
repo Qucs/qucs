@@ -82,6 +82,7 @@ public:
     void setTopoScript(std::string);
     void setSearchMode(int);
     void SimplifyNetwork(bool);
+    bool refine;//Runs a Nelder-Mead local optimizer to refine results
 
 private:
     vector<double> GridSearch();

@@ -47,7 +47,7 @@ class IO
 public:
     IO();
     ~IO();
-    int exportGNUplot(GRABIM_Result, string);
+    int exportGNUplot(GRABIM_Result, string, bool);
     int loadS1Pdata(std::string, terminal);
     int ResampleImpedances();
     vector<complex<double>> getSourceImpedance();
@@ -59,6 +59,7 @@ public:
     int ExportQucsSchematic(GRABIM_Result, string);
     void PrintNetwork_StandardOutput(GRABIM_Result);
     void UseClipboard(bool);
+    bool UseGNUplot;
 
 
 private:
@@ -88,6 +89,7 @@ private:
     bool CopyToClipboard;
     string Num2String(int x);
     string Num2String(double x);
+    void generateGNUplotScript(string, string, bool);
 
 };
 

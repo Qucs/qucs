@@ -65,12 +65,13 @@ private:
     QWidget * centralWidget;
     QSvgWidget *imgWidget;
     QComboBox *Topology, *SearchModeCombo;
-
     QComboBox *minFUnitsCombo, * maxFUnitsCombo;
+    QCheckBox *UseGNUplotCheckbox, *RefineCheckbox;
     QLabel *minFLabel, *maxFLabel, *TopoScriptLabel, *SearchModeLabel;
     QString  SourceFile, LoadFile;
     QString GNUplot_path, TopoScript_path;
     QLineEdit * minFEdit, * maxFEdit;
+    QGroupBox *SourceImpGroupBox, *LoadImpGroupBox; 
 
     QCheckBox * FixedZLCheckbox, * FixedZSCheckbox;
     QLineEdit * FixedZSLineedit, *FixedZLLineedit;
@@ -78,8 +79,9 @@ private:
     QLabel *ZLOhmLabel, *ZSOhmLabel;
 
     QVBoxLayout * mainLayout, * SourceLayout, * LoadLayout;
-    QHBoxLayout * TopoScriptLayout, *vbox, * ConstantZSLayout, * ConstantZLLayout, *Impedancelayout, *ButtonsLayout;
-    QGridLayout *GNUplotLayout, *TopoLayout;
+    QHBoxLayout * TopoScriptLayout, * ConstantZSLayout, * ConstantZLLayout, *ButtonsLayout;
+    QGridLayout *Impedancelayout, *vbox;
+    QGridLayout *OptionsLayout, *TopoLayout;
     QGroupBox *FreqgroupBox;
 
 

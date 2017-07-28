@@ -121,29 +121,50 @@ GRABIM_Result GRABIM::RunGRABIM()
     double  aux_flocal, best=1e8;
     unsigned int best_index=0;
 
-
-    // The local optimizer is used for those topologies with good matching condition. Observation seems to suggest that acting so improves the chance of finding a good result
-    cout << "Local candidates:" << endl;
-    for (unsigned int i = 0; i < candidates.size(); i++)
+    if (refine)
     {
-        topology = candidates[i];
-        aux_grid = Vopt[i];
-        aux_local = NelderMead(aux_grid);
-        aux_flocal = CandidateEval(aux_local);
-        if (aux_flocal < best)
-        {
-            best_index = i;
-            best = aux_flocal;
-            Res.x_grid_search = Vopt[i];
-            Res.x_local_opt = aux_local;
-            Res.grid_val = CandidateEval(Vopt[i]);
-            Res.nlopt_val = aux_flocal;
-        }
+    // The local optimizer is used for those topologies with good matching condition. Observation seems to suggest that acting so improves the chance of finding a good result
+      cout << "Local candidates:" << endl;
+      for (unsigned int i = 0; i < candidates.size(); i++)
+      {
+          topology = candidates[i];
+          aux_grid = Vopt[i];
+          aux_local = NelderMead(aux_grid);
+          aux_flocal = CandidateEval(aux_local);
+          if (aux_flocal < best)
+          {
+              best_index = i;
+              best = aux_flocal;
+              Res.x_grid_search = Vopt[i];
+              Res.x_local_opt = aux_local;
+              Res.grid_val = CandidateEval(Vopt[i]);
+              Res.nlopt_val = aux_flocal;
+          }
+      }
     }
-
+    else
+    {//Skip local optimiser step
+       //Find best candidante
+       double val;
+       for (unsigned int i = 0; i < candidates.size(); i++)
+       {
+          topology = candidates[i];
+          aux_local = Vopt[i];
+          aux_flocal = CandidateEval(aux_local);
+          if (aux_flocal < best)
+          {
+              best_index = i;
+              best = aux_flocal;
+              Res.x_grid_search = Vopt[i];
+              Res.grid_val = CandidateEval(Vopt[i]);
+              Res.x_local_opt = Res.x_grid_search ;
+              Res.nlopt_val = Res.grid_val;
+          }
+       }
+    }
     //At this point, it was found the best candidate so the code below arranges data so as to produce the output data
     topology = candidates[best_index];
-
+    Res.topology = topology.c_str();//Save network topology to create a Qucs schematic
     Res.ZS = ZS;
     Res.ZL = ZL;
     Res.freq = freq;
@@ -154,11 +175,13 @@ GRABIM_Result GRABIM::RunGRABIM()
     Res.S12_gridsearch = vector<complex<double>>(freq.size());
     Res.S22_gridsearch = vector<complex<double>>(freq.size());
 
-    Res.S11_nlopt = vector<complex<double>>(freq.size());
-    Res.S21_nlopt = vector<complex<double>>(freq.size());
-    Res.S12_nlopt = vector<complex<double>>(freq.size());
-    Res.S22_nlopt = vector<complex<double>>(freq.size());
-
+    if (refine)
+    {
+       Res.S11_nlopt = vector<complex<double>>(freq.size());
+       Res.S21_nlopt = vector<complex<double>>(freq.size());
+       Res.S12_nlopt = vector<complex<double>>(freq.size());
+       Res.S22_nlopt = vector<complex<double>>(freq.size());
+    }
 
     //Generate S parameter results
     Mat S_gridsearch, S_nlopt;
@@ -176,16 +199,16 @@ GRABIM_Result GRABIM::RunGRABIM()
         Res.S12_gridsearch[i] = S_gridsearch(0,1);
         Res.S22_gridsearch[i] = S_gridsearch(1,1);
 
-        // NLopt
+        // Local optimizer
+        if (refine)
+        {
         S_nlopt = S2PEngine.getSparams(Res.x_local_opt, ZS[i], ZL[i], freq[i], topology);
         Res.S11_nlopt[i] = S_nlopt(0,0);
         Res.S21_nlopt[i] = S_nlopt(1,0);
         Res.S12_nlopt[i] = S_nlopt(0,1);
         Res.S22_nlopt[i] = S_nlopt(1,1);
+        }
     }
-
-    Res.topology = topology.c_str();//Save network topology to create a Qucs schematic
-
     return Res;
 }
 

@@ -21,14 +21,10 @@
  *
  */
 
-#ifdef QT_NO_DEBUG //Qt libraries
-     #include "ui.h"
-     #include <QApplication>
-#else //Only command line operation
-    #include "GRABIM.h"
-    #include "io.h"
-#endif
-
+#include "ui.h"
+#include <QApplication>
+#include "GRABIM.h"
+#include "io.h"
 #include "mat.h"
 #include "MathOperations.h"
 #include <time.h>//Get random seed using time
@@ -79,14 +75,12 @@ int main(int argc, char *argv[])
 
     if ((argc < 5) && (help == false))//User interface
     {
-     #ifdef QT_NO_DEBUG
     QApplication app(argc, argv);
     ui *WB_MatchingTool = new ui();
     WB_MatchingTool->raise();
     WB_MatchingTool->resize(350, 350);
     WB_MatchingTool->show();
     return app.exec();
-     #endif
     }
     else //Command line
     {
@@ -302,7 +296,7 @@ int main(int argc, char *argv[])
         cout << "The GNUplot data was written at " << GNUplot_path << endl;
         cout << "You can find a sample script to plot S11 in the same folder as the source code" << endl;
 
-        inout_operations->exportGNUplot(R, GNUplot_path);
+        inout_operations->exportGNUplot(R, GNUplot_path, false);
         inout_operations->ExportQucsSchematic(R, QucsSchPath);
         delete inout_operations;
         delete MatchingObject;

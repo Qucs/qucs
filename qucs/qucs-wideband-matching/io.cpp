@@ -49,25 +49,109 @@ double string_to_double( const std::string& s )
 
 
 //Export data according to the GNUplot data file format
-int IO::exportGNUplot(GRABIM_Result Res, string filepath)
+int IO::exportGNUplot(GRABIM_Result Res, string folderpath, bool LocalOptimizer)
 {
     ofstream GNUplotExport;
-    GNUplotExport.open (filepath, std::ofstream::out);
+    string datapath = folderpath+"/data";
+    string scriptpath = folderpath+"/plotscript";
+    GNUplotExport.open (datapath, std::ofstream::out);
     if(!GNUplotExport.is_open()) return -1;
     GNUplotExport << "#GRABIM data" << endl;
-    GNUplotExport << "#freq S11(Grid search) S11(Local optimiser) S21(Grid search) S21(Local optimiser) " << endl;
-    for (unsigned int i = 0; i < Res.freq.size(); i++)
-    {//Writes frequency S11_grid[db] S11_optimiser[db] and S21[dB]
-        GNUplotExport << Res.freq.at(i)*1e-9 << " " << 20*log10(abs(Res.S11_gridsearch.at(i))) << " "
+    if (LocalOptimizer)
+    {
+       GNUplotExport << "#freq S11(Grid search) S11(Local optimiser) S21(Grid search) S21(Local optimiser) " << endl;
+       for (unsigned int i = 0; i < Res.freq.size(); i++)
+       {//Writes frequency S11_grid[db] S11_optimiser[db] and S21[dB]
+         GNUplotExport << Res.freq.at(i)*1e-9 << " " << 20*log10(abs(Res.S11_gridsearch.at(i))) << " "
                       << 20*log10(abs(Res.S21_gridsearch.at(i))) << " " << 20*log10(abs(Res.S11_nlopt.at(i)))
                       << " " << 20*log10(abs(Res.S21_nlopt.at(i))) << " " << real(Res.S11_nlopt.at(i))
                       << " " << imag(Res.S11_nlopt.at(i)) <<endl;
+       }
+    }
+    else
+    {//The local optimizer step was skipped
+       GNUplotExport << "#freq S11(Grid search) S11(Local optimiser) S21(Grid search) S21(Local optimiser) " << endl;
+       for (unsigned int i = 0; i < Res.freq.size(); i++)
+       {//Writes frequency S11_grid[db] S11_optimiser[db] and S21[dB]
+         GNUplotExport << Res.freq.at(i)*1e-9 << " " << 20*log10(abs(Res.S11_gridsearch.at(i))) << " "
+                      << 20*log10(abs(Res.S21_gridsearch.at(i))) << " " << -1
+                      << " " << -1 << " " << real(Res.S11_gridsearch.at(i))
+                      << " " << imag(Res.S11_gridsearch.at(i)) <<endl;
+       }
     }
     GNUplotExport.close();
-
-    return 0;
+    generateGNUplotScript(datapath, scriptpath, LocalOptimizer);
+    string gnuplot_command = "gnuplot " + scriptpath + " -p";
+    system(gnuplot_command.c_str());
+    system("\n");
+return 0;
 }
 
+
+void IO::generateGNUplotScript(string datapath, string scriptpath, bool LocalOptimizer)
+{
+   string script;
+   script = "source = \"" + datapath + "\"\n";
+   script += "# S21, S11 [dB]\n"
+              "set term x11 0\n"
+              "set title \"Network response\"\n"
+              "set xlabel \"Frequency (GHz)\"\n"
+              "set grid ytics lt 0 lw 1 lc rgb \"#bbbbbb\"\n"
+              "set grid xtics lt 0 lw 1 lc rgb \"#bbbbbb\"\n";
+
+   if (LocalOptimizer)
+   {
+   script += "plot source using 1:5 with lines title \"S21 (dB) (refined)\" linecolor rgb \"red\" linewidth 2, source using 1:4 with lines title \"S11 (dB) (refined)\" linecolor rgb \"blue\" linewidth 2;\n";
+   }
+   else
+   {
+    script += "plot source using 1:3 with lines title \"S21 (dB) Grid search\" linecolor rgb \"red\", source using 1:2 with lines title \"S11 (dB) Grid search\" linecolor rgb \"blue\";\n";
+   }
+
+   script +=  "#Smith chart plot\n"
+              "#Source: http://swigerco.com/gnuradio/phase/vna_comp/\n"
+              "set term x11 2\n"
+              "set size square\n"
+              "set clip\n"
+              "set xtics axis nomirror\n"
+              "set ytics axis nomirror\n"
+              "unset grid\n"
+              "unset polar\n"
+              "unset key\n"
+              "set para\n"
+              "set rrange [-0 : 10]\n"
+              "set trange [-pi : pi]\n"
+              "set xrange [-1:1]\n"
+              "set yrange [-1:1]\n"
+              "set label \"-10dB\" at 0.22,0.22\n"
+              "set label \"-15dB\" at 0.1,0.1\n"
+              "tv(t,r) = sin(t)/(1+r)\n"
+              "tu(t,r) = (cos(t) +r)/(1+r)\n"
+              "cu(t,x) = 1 + cos(t)/x\n"
+              "cv(t,x) = (1+ sin(t))/x\n"
+              "plot cu(t,.1) linecolor rgb \"black\" linewidth 0.2 ,cv(t,.1) linecolor rgb \"black\" linewidth 0.2 ,cu(t,.1) linecolor rgb \"black\" linewidth 0.2 ,-cv(t,.1) linecolor rgb \"black\" linewidth 0.2 ,\\\n"
+              "cu(t,1) linecolor rgb \"black\" linewidth 0.2 ,cv(t,1) linecolor rgb \"black\" linewidth 0.2 ,cu(t,1) linecolor rgb \"black\" linewidth 0.2 ,-cv(t,1) linecolor rgb \"black\" linewidth 0.2 ,\\\n"
+              "cu(t,10) linecolor rgb \"black\" linewidth 0.2 ,cv(t,10) linecolor rgb \"black\" linewidth 0.2 ,cu(t,10) linecolor rgb \"black\" linewidth 0.2 ,-cv(t,10) linecolor rgb \"black\" linewidth 0.2 ,\\\n"
+              "tu(t,.1) linecolor rgb \"black\" linewidth 0.2, tv(t,.1) linecolor rgb \"black\" linewidth 0.2 ,\\\n"
+              "tu(t,.2) linecolor rgb \"black\" linewidth 0.2 ,tv(t,.2) linecolor rgb \"black\" linewidth 0.2 ,\\\n"
+              "tu(t,.3) linecolor rgb \"black\" linewidth 0.2 ,tv(t,.3) linecolor rgb \"black\" linewidth 0.2 ,\\\n"
+              "tu(t,.4) linecolor rgb \"black\" linewidth 0.2 ,tv(t,.4) linecolor rgb \"black\" linewidth 0.2 ,\\\n"
+              "tu(t,.5) linecolor rgb \"black\" linewidth 0.2 ,tv(t,.5) linecolor rgb \"black\" linewidth 0.2 ,\\\n"
+              "tu(t,.6) linecolor rgb \"black\" linewidth 0.2 ,tv(t,.6) linecolor rgb \"black\" linewidth 0.2 ,\\\n"
+              "tu(t,.7) linecolor rgb \"black\" linewidth 0.2 ,tv(t,.7) linecolor rgb \"black\" linewidth 0.2 ,\\\n"
+              "tu(t,.8) linecolor rgb \"black\" linewidth 0.2 ,tv(t,.8) linecolor rgb \"black\" linewidth 0.2 ,\\\n"
+              "tu(t,.9) linecolor rgb \"black\" linewidth 0.2 ,tv(t,.9) linecolor rgb \"black\" linewidth 0.2 ,\\\n"
+              "tu(t,1) linecolor rgb \"black\" linewidth 0.2 ,tv(t,1) linecolor rgb \"black\" linewidth 0.2 ,\\\n"
+              "tu(t,2) linecolor rgb \"black\" linewidth 0.2 ,tv(t,2) linecolor rgb \"black\" linewidth 0.2 ,\\\n"
+              "tu(t,5) linecolor rgb \"black\" linewidth 0.2 ,tv(t,5) linecolor rgb \"black\" linewidth 0.2 ,\\\n"
+              "tu(t,10) linecolor rgb \"black\" linewidth 0.2 ,tv(t,10) linecolor rgb \"black\" linewidth 0.2 ,\\\n"
+              "cu(t,.5) linecolor rgb \"black\" linewidth 0.2 ,cv(t,.5) linecolor rgb \"black\" linewidth 0.2 ,cu(t,.5) linecolor rgb \"black\" linewidth 0.2 ,-cv(t,.5) linecolor rgb \"black\" linewidth 0.2 ,\\\n"
+              "tu(t,0) linecolor rgb \"black\" linewidth 0.6 ,tv(t,0) linecolor rgb \"black\" linewidth 0.6 , source using 6:7 linecolor rgb \"red\" with lines,0.335*sin(t),0.335*cos(t) linecolor rgb \"green\",0.175*sin(t),0.175*cos(t) linecolor rgb \"green\"\n";
+    ofstream GNUplotScript;
+    GNUplotScript.open (scriptpath, std::ofstream::out);
+    GNUplotScript << script;
+    GNUplotScript.close();
+}
 
 // Extends std::tolower(int c) capability to st::string arguments
 string tolower(string str)
@@ -480,7 +564,6 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
     // 2: Port 2
     // 3: Port 1, Port 2 and S parameter simulation
 
-
     if ((R.source_path.empty()) && (abs(ZS.at(0).imag()) < 1e-3) && (ZS.at(0).real() > 1e-3))
     {//Conventional term
         componentstr += "<Pac P1 1 " + Num2String(x_pos) + " -30 18 -26 0 1 \"1\" 1 \"" + Num2String(ZS.at(0).real()) + " Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n";
@@ -576,7 +659,6 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
         }
 
     }
-
     double spacing = 30;
     x_pos += spacing;
 
@@ -593,6 +675,13 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
         componentstr += "<SPfile X1 1 " + Num2String(x_pos) + " -120 -26 -67 0 0 \"" + R.load_path + "\" 1 \"rectangular\" 0 \"linear\" 0 \"open\" 0 \"1\" 0>\n";
         componentstr += "<GND * 1 " + Num2String(x_pos) + " -90 0 0 0 0>\n";
     }
+
+    //Finally, add the S-par simulation block
+    double fstart = fmatching_min*0.3;
+    double fstop = fmatching_max*1.7;
+    componentstr += "<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"" + Num2String(fstart) + "\" 1 \"" + Num2String(fstop) + "\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n";
+    componentstr += "<Eqn Eqn1 1 50 200 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"S21_dB=dB(S[2,1])\" 1 \"S22_dB=dB(S[2,2])\" 1 \"yes\" 0>\n";
+
     return 0;
 }
 
@@ -619,11 +708,9 @@ bool IO::CreateSchematic(string components, string wires, string paintings, stri
     Schematic += paintings;
     Schematic += "</Paintings>\n";
 
-    if (CopyToClipboard)
-    {  
-       #ifdef QT_NO_DEBUG
+    if (QucsFilePath.empty())
+    {
        QApplication::clipboard()->setText(QString(Schematic.c_str()), QClipboard::Clipboard);//Copy into clipboard
-       #endif
     }
     else//Dump content into a file
     {
@@ -635,11 +722,37 @@ bool IO::CreateSchematic(string components, string wires, string paintings, stri
     return true;
 }
 
-string IO::Num2String(double x)
+string IO::Num2String(double Num)
 {
- std::ostringstream s;
-s << x;
-return s.str();
+  char c = 0;
+  double cal = abs(Num);
+  if(cal > 1e-20) {
+    cal = log10(cal) / 3.0;
+    if(cal < -0.2)  cal -= 0.98;
+    int Expo = int(cal);
+
+    if(Expo >= -5) if(Expo <= 4)
+      switch(Expo) {
+        case -5: c = 'f'; break;
+        case -4: c = 'p'; break;
+        case -3: c = 'n'; break;
+        case -2: c = 'u'; break;
+        case -1: c = 'm'; break;
+        case  1: c = 'k'; break;
+        case  2: c = 'M'; break;
+        case  3: c = 'G'; break;
+        case  4: c = 'T'; break;
+      }
+
+    if(c)  Num /= pow(10.0, double(3*Expo));
+  }
+
+  std::ostringstream s;
+  s << Num;
+  string Str = s.str();
+  if(c)  Str += c;
+
+  return Str;
 }
 
 

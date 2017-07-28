@@ -27,15 +27,15 @@
 ui::ui()
 {
       GNUplot_path = QCoreApplication::applicationDirPath() + "/GRABIM.dat";
-      setFixedSize(400, 300);
+      setMinimumSize(400,450);
       centralWidget =  new QWidget();
-      Impedancelayout = new QHBoxLayout();
+      Impedancelayout = new QGridLayout();
       ButtonsLayout = new QHBoxLayout();
       TopoLayout = new QGridLayout();
 
       //Create source load impedance buttons
-      SourceFileButton = new QPushButton("Source impedance");
-      LoadFileButton = new QPushButton("Load impedance");
+      SourceFileButton = new QPushButton(".s1p file");
+      LoadFileButton = new QPushButton(".s1p file");
       connect(SourceFileButton, SIGNAL(clicked()), this, SLOT(SourceImpedance_clicked()));
       connect(LoadFileButton, SIGNAL(clicked()), this, SLOT(LoadImpedance_clicked()));
 
@@ -66,9 +66,17 @@ ui::ui()
       ConstantZLLayout->addWidget(FixedZLLineedit);
       ConstantZLLayout->addWidget(ZLOhmLabel);
 
+      QLabel *SourceLabel = new QLabel("Source");
+      SourceLabel->setStyleSheet("QLabel {font-weight: bold; border: 1px solid black;}");
+      SourceLabel->setAlignment(Qt::AlignHCenter);
+      SourceLayout->addWidget(SourceLabel);
       SourceLayout->addWidget(SourceFileButton);
       SourceLayout->addLayout(ConstantZSLayout);
 
+      QLabel *LoadLabel = new QLabel("Load");
+      LoadLabel->setStyleSheet("QLabel {font-weight: bold; border: 1px solid black;}");
+      LoadLabel->setAlignment(Qt::AlignHCenter);
+      LoadLayout->addWidget(LoadLabel);
       LoadLayout->addWidget(LoadFileButton);
       LoadLayout->addLayout(ConstantZLLayout);
 
@@ -81,6 +89,14 @@ ui::ui()
       SourceLayout->addWidget(FixedZSCheckbox);
       LoadLayout->addWidget(FixedZLCheckbox);
 
+      SourceImpGroupBox = new QGroupBox();
+      SourceImpGroupBox->setStyleSheet("QGroupBox{  border: 1px solid black;}");
+      LoadImpGroupBox = new QGroupBox();
+      LoadImpGroupBox->setStyleSheet("QGroupBox{  border: 1px solid black;}");
+
+      SourceImpGroupBox->setLayout(SourceLayout);
+      LoadImpGroupBox->setLayout(LoadLayout);
+
       // Image
        QSize sz;
        QString s1 = ":/bitmaps/MatchingNetwork.svg";
@@ -89,9 +105,9 @@ ui::ui()
        imgWidget->setFixedSize(.2*sz);
 
 
-      Impedancelayout->addLayout(SourceLayout);
-      Impedancelayout->addWidget(imgWidget);
-      Impedancelayout->addLayout(LoadLayout);
+      Impedancelayout->addWidget(SourceImpGroupBox,0,0);
+      Impedancelayout->addWidget(imgWidget,0,1);
+      Impedancelayout->addWidget(LoadImpGroupBox,0,2);
 
 
        // Matching band
@@ -117,17 +133,23 @@ ui::ui()
        maxFUnitsCombo->setCurrentIndex(2);
        maxFUnitsCombo->setMinimumContentsLength(5);
 
-       vbox = new QHBoxLayout;
-       vbox->addWidget(minFLabel);
-       vbox->addWidget(minFEdit);
-       vbox->addWidget(minFUnitsCombo);
+       vbox = new QGridLayout;
+       vbox->addWidget(minFLabel,0,0);
+       vbox->addWidget(minFEdit,0,1);
+       vbox->addWidget(minFUnitsCombo,0,2);
 
-       vbox->addWidget(maxFLabel);
-       vbox->addWidget(maxFEdit);
-       vbox->addWidget(maxFUnitsCombo);
+       vbox->addWidget(maxFLabel,0,3);
+       vbox->addWidget(maxFEdit,0,4);
+       vbox->addWidget(maxFUnitsCombo,0,5);
        FreqgroupBox->setLayout(vbox);
+    
+       //Use a size policy. Otherwise, large blank spaces appear
+       QSizePolicy sizePolicy((QSizePolicy::Policy)QSizePolicy::Minimum,(QSizePolicy::Policy)QSizePolicy::Fixed);
+       sizePolicy.setHorizontalStretch(0);
+       sizePolicy.setVerticalStretch(0);
+       FreqgroupBox->setSizePolicy( sizePolicy );
 
-       //Topology selection
+        // Options
        SearchModeLabel = new QLabel("Search Mode");
 
        SearchModeCombo = new QComboBox();
@@ -138,17 +160,22 @@ ui::ui()
        SearchModeCombo->insertItem(4,"LC + TL + Stubs order 6");
        connect(SearchModeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(TopoCombo_clicked(int)));
 
-       TopoLayout->addWidget(SearchModeLabel, 0, 0);
-       TopoLayout->addWidget(SearchModeCombo, 0, 1);
+       UseGNUplotCheckbox = new QCheckBox("Use GNUplot");
+       UseGNUplotCheckbox->setChecked(true);
+       RefineCheckbox = new QCheckBox("Refine");
+       RefineCheckbox->setChecked(false);
 
-
-        // GNUPLOT
-       GNUplotLayout = new QGridLayout();
+       OptionsLayout = new QGridLayout();
        GNUplotButton = new QPushButton("Browse");
        connect(GNUplotButton, SIGNAL(clicked()), this, SLOT(GNUplotOutput_clicked()));
 
-       GNUplotLayout->addWidget(new QLabel("Save GNUplot data:"), 0, 0);
-       GNUplotLayout->addWidget(GNUplotButton, 0, 1);
+       OptionsLayout->addWidget(SearchModeLabel, 0, 0);
+       OptionsLayout->addWidget(SearchModeCombo, 0, 1);
+       OptionsLayout->addWidget(UseGNUplotCheckbox, 1, 0);
+       OptionsLayout->addWidget(RefineCheckbox, 1, 1);
+       OptionsLayout->addWidget(new QLabel("Temp folder GNUplot:"), 2, 0);
+       OptionsLayout->addWidget(GNUplotButton, 2, 1);
+       GNUplot_path = "/tmp";
 
 
 
@@ -177,8 +204,7 @@ ui::ui()
       mainLayout = new QVBoxLayout();
       mainLayout->addLayout(Impedancelayout);
       mainLayout->addWidget(FreqgroupBox);
-      mainLayout->addLayout(TopoLayout);
-      mainLayout->addLayout(GNUplotLayout);
+      mainLayout->addLayout(OptionsLayout);
       mainLayout->addLayout(TopoScriptLayout);
       mainLayout->addLayout(ButtonsLayout);
 
@@ -218,7 +244,7 @@ ui::~ui()
       delete ZSOhmLabel;
       delete ZLOhmLabel;
       delete centralWidget;
-      delete GNUplotLayout;
+      delete OptionsLayout;
       delete mainLayout;
       delete vbox;
       delete FreqgroupBox;
@@ -343,6 +369,7 @@ void ui::go_clicked()
         //Check if the specified frequencies lie with the s1p/s2p data
         inout_operations->ResampleImpedances();//Force data update
     }
+    inout_operations->UseGNUplot = UseGNUplotCheckbox->isChecked();
 
     GRABIM * MatchingObject = new GRABIM();
     // Impedance and frequency settings
@@ -350,6 +377,7 @@ void ui::go_clicked()
     MatchingObject->SetLoadImpedance(inout_operations->getLoadImpedance());
     MatchingObject->SetFrequency(inout_operations->getFrequency());
     MatchingObject->setTopoScript(TopoScript_path.toStdString());
+    MatchingObject->refine = RefineCheckbox->isChecked();
 
     MatchingObject->setSearchMode(SearchModeCombo->currentIndex());
 
@@ -372,9 +400,9 @@ void ui::go_clicked()
 //Final message
 
     QMessageBox::information(0, QObject::tr("Finished"),
-                         QObject::tr("GRABIM has successfully finished. \nA schematic has been copied to the clipboard so you can paste it into Qucs\nAlternatively, you can check the performance of the network using GNUplot"));
+                         QObject::tr("GRABIM has successfully finished. \nThe matching network has been copied to the clipboard so you can paste it into Qucs"));
 
-    inout_operations->exportGNUplot(R, GNUplot_path.toStdString());
+    if (UseGNUplotCheckbox->isChecked())inout_operations->exportGNUplot(R, GNUplot_path.toStdString(), MatchingObject->refine);
     inout_operations->ExportQucsSchematic(R, "");
     delete MatchingObject;
     delete inout_operations;
@@ -404,7 +432,7 @@ void ui::LoadImpedance_clicked()
 // so the user can check the performance of the network without running Qucs
 void ui::GNUplotOutput_clicked()
 {
-    GNUplot_path = QFileDialog::getSaveFileName(this,
+    GNUplot_path = QFileDialog::getExistingDirectory(this,
         tr("Save GNUplot script"), QCoreApplication::applicationDirPath());
 }
 
@@ -498,7 +526,6 @@ void ui::TopoCombo_clicked(int index)
 {
    if (index==1)
    {
-     setFixedSize(400, 350);
      TopoScriptLabel->setVisible(true);
      TopoScriptButton->setVisible(true);
    }
@@ -506,6 +533,5 @@ void ui::TopoCombo_clicked(int index)
    {
      TopoScriptLabel->setVisible(false);
      TopoScriptButton->setVisible(false);
-     setFixedSize(400, 300);
    }
 }
