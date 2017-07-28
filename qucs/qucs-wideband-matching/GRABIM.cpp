@@ -145,7 +145,6 @@ GRABIM_Result GRABIM::RunGRABIM()
     else
     {//Skip local optimiser step
        //Find best candidante
-       double val;
        for (unsigned int i = 0; i < candidates.size(); i++)
        {
           topology = candidates[i];
@@ -241,7 +240,7 @@ vector<double> GRABIM::GridSearch()
     int N_initial_guess  = 100;
     vector<vector<double>> XKQ(N_initial_guess, vector<double>(xk.size()));
     vector<double> FXK(N_initial_guess);
-    for (unsigned int r = 0; r < N_initial_guess; r++)
+    for (int r = 0; r < N_initial_guess; r++)
     {
        for (unsigned int c = 0; c < dim; c++)
        {
@@ -857,14 +856,14 @@ void GRABIM::SimplifyNetwork(bool simplify_mode)
 void printSimplex(vector<vector<double>>X, vector<double>fx)
 {
 cout << "SIMPLEX" << endl;
-for (int i = 0; i < X.size(); i++)
+for (unsigned int i = 0; i < X.size(); i++)
 {
-  for (int j = 0; j < X[0].size(); j++) cout << X[i][j]<<" ";
+  for (unsigned int j = 0; j < X[0].size(); j++) cout << X[i][j]<<" ";
   cout << endl;
 }
 
 cout << "FX: " <<endl;
-  for (int j = 0; j < fx.size(); j++) cout << fx[j]<<" ";
+  for (unsigned int j = 0; j < fx.size(); j++) cout << fx[j]<<" ";
   cout << endl;
 
 }
@@ -959,12 +958,11 @@ vector<double> GRABIM::NelderMead(vector<double> x)
 {
   unsigned int n = x.size();
   unsigned int iter = 0, max_iter = 500;
-  double grad = 1e-8;//Step gradient threshold
   double grad_aux;
   double alpha = 1., beta = 2., gamma = 1/2., delta = 1/2.;//Classic coefficients
   double fr=0, fe=0, foc=0, fic=0, f1=0, fn=0, fn_1=0;
   double f_pre=0, f_curr=0;
-  bool shrink = false, stopcondition=false;
+  bool shrink = false;
   vector<vector<double>> X(n+1, vector<double>(n));//Simplex
   vector<double> fx(n+1);
   vector<double> xr(n), xe(n), xoc(n), xic(n), xi(n), x1(n);

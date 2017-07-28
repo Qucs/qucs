@@ -34,10 +34,8 @@
 #include <queue>
 #include <fstream>
 
-#ifdef QT_NO_DEBUG
-  #include <QApplication>
-  #include <QClipboard>
-#endif
+#include <QApplication>
+#include <QClipboard>
 
 using namespace std;
 enum terminal {SOURCE, LOAD};

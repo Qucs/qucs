@@ -594,7 +594,7 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
     //    6: Short circuited stub
 
     int value_index = 0;
-    for (int i = 0; i < R.topology.length(); i++)
+    for (unsigned int i = 0; i < R.topology.length(); i++)
     {
         component = R.topology.at(i);
 

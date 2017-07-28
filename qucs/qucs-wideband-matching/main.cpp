@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
           srand (time(NULL));//Random seed. If the user provides a specific seed, this property is modified below
 
           //Parse arguments
-          for (unsigned int i = 1; i < argc; i++)
+          for (int i = 1; i < argc; i++)
           {
               if (!strcmp(argv[i], "--set-topo") && (argc -1 >= (i+1)))//User-defined topology
               {

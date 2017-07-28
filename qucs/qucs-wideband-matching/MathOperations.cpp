@@ -83,7 +83,7 @@ vector<complex<double>>  interp(vector<double> f1, vector<complex<double>> Z, ve
         double realpart_, imagpart_;
 	unsigned int i1, i2, nslots, aux=0;
 	double step_r, step_i, a=0;
-	for (int ind = 0; ind < f1.size()-1; ind++)
+	for (unsigned int ind = 0; ind < f1.size()-1; ind++)
 	{
           i1 = closestIndex(f2, f1[ind]);
 	  i2 = closestIndex(f2, f1[ind+1]);
@@ -95,7 +95,7 @@ vector<complex<double>>  interp(vector<double> f1, vector<complex<double>> Z, ve
 	  for (unsigned int i = a; i <= nslots; i++, aux++)
 	  {
 	    realpart_ = realpart[ind] + i*step_r;
-	    imagpart_ = imagpart[ind] + i*step_r;
+	    imagpart_ = imagpart[ind] + i*step_i;
             Z_[aux] = complex<double>(realpart_, imagpart_);
           }
           if (a==0)a=1;
@@ -112,8 +112,7 @@ unsigned int closestIndex(std::vector<double> vec, double value)
  vector<double>::iterator it;
  it = std::lower_bound(vec.begin(), vec.end(), value);
  
- int index = it-vec.begin();
- if (index < 0) index = 0;
+ unsigned int index = it-vec.begin();
  if (index > vec.size()-1) index = vec.size()-1;
  return index;
 }
