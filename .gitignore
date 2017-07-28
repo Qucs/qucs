@@ -242,8 +242,6 @@ CMakeLists.txt.user
 # except in the examples/ directory
 !examples/*.sch
 !examples/*.dpl
-!qucs-doc/tutorial/sparameteramp/*/*.sch
-!qucs-doc/tutorial/sparameteramp/*/*.dpl
 
 # Xcode #
 #########
