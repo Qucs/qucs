@@ -58,7 +58,7 @@ public:
 
 private:
     QPushButton * SourceFileButton, * LoadFileButton;
-    QPushButton * RunButton;
+    QPushButton * RunButton, *AmplifierS2Pbutton;
     QPushButton * GNUplotButton;
     QWidget * centralWidget;
     QSvgWidget *imgWidget;
@@ -66,12 +66,12 @@ private:
     QComboBox *minFUnitsCombo, * maxFUnitsCombo;
     QCheckBox *UseGNUplotCheckbox, *RefineCheckbox;
     QLabel *minFLabel, *maxFLabel, *SearchModeLabel, *LabelResult;
-    QString  SourceFile, LoadFile;
+    QString  SourceFile, LoadFile, AmpFile;
     QString GNUplot_path;
     QLineEdit * minFEdit, * maxFEdit;
     QGroupBox *SourceImpGroupBox, *LoadImpGroupBox; 
 
-    QCheckBox * FixedZLCheckbox, * FixedZSCheckbox;
+    QCheckBox * FixedZLCheckbox, * FixedZSCheckbox, *TwoPortMatchingCheckbox;
     QLineEdit * FixedZSLineedit, *FixedZLLineedit;
 
     QLabel *ZLOhmLabel, *ZSOhmLabel;
@@ -93,6 +93,8 @@ private:
     void FixedZSCheckbox_clicked();
     void FixedZLCheckbox_clicked();
     void slotShowResult();
+    void TwoPortMatchingCheckbox_state(int);
+    void BrowseAmplifier_S2P();
 
   private:
     complex<double> getComplexImpedanceFromText(char *);

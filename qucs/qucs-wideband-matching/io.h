@@ -47,9 +47,11 @@ public:
     ~IO();
     int exportGNUplot(GRABIM_Result, string, bool);
     int loadS1Pdata(std::string, terminal);
+    int loadS2Pdata(std::string);
     int ResampleImpedances();
     vector<complex<double>> getSourceImpedance();
     vector<complex<double>> getLoadImpedance();
+    vector<vector<complex<double>>> getAmplifierS2P();
     vector<double> getFrequency();
     void set_constant_ZS_vs_freq(complex<double>);
     void set_constant_ZL_vs_freq(complex<double>);
@@ -65,6 +67,7 @@ private:
     // ZS and ZL are the source and load impedances, respectively whereas fS and fL indicates the frequencies where
     // ZS and ZL were sampled
     vector<complex<double>> ZS, ZL;
+    vector<vector<complex<double>>> AmpS2P;
     vector<double>  fS, fL;
 
     vector<double> freq;//More often than not, ZS and ZL are sampled at different frecuencies, so it is necessary to have

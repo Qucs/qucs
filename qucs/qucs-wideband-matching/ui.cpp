@@ -104,9 +104,19 @@ ui::ui()
        sz = imgWidget->size();
        imgWidget->setFixedSize(.2*sz);
 
+      //Amplifier
+      QPixmap pixmap(":/bitmaps/amplifier.svg");
+      QIcon ButtonIcon(pixmap);
+      AmplifierS2Pbutton = new QPushButton();
+      AmplifierS2Pbutton->setIcon(ButtonIcon);
+      AmplifierS2Pbutton->setIconSize(pixmap.rect().size());
+      AmplifierS2Pbutton->setVisible(false);
+      connect(AmplifierS2Pbutton, SIGNAL(clicked()), this, SLOT(BrowseAmplifier_S2P()));
+
 
       Impedancelayout->addWidget(SourceImpGroupBox,0,0);
       Impedancelayout->addWidget(imgWidget,0,1);
+      Impedancelayout->addWidget(AmplifierS2Pbutton,0,1);
       Impedancelayout->addWidget(LoadImpGroupBox,0,2);
 
 
@@ -150,6 +160,8 @@ ui::ui()
        FreqgroupBox->setSizePolicy( sizePolicy );
 
        // Options
+       TwoPortMatchingCheckbox = new QCheckBox("2-port matching");
+       connect(TwoPortMatchingCheckbox, SIGNAL(stateChanged(int)), this, SLOT(TwoPortMatchingCheckbox_state(int)));
        UseGNUplotCheckbox = new QCheckBox("Use GNUplot");
        UseGNUplotCheckbox->setChecked(true);
        RefineCheckbox = new QCheckBox("Refine");
@@ -161,6 +173,7 @@ ui::ui()
 
        OptionsLayout->addWidget(UseGNUplotCheckbox, 0, 0);
        OptionsLayout->addWidget(RefineCheckbox, 0, 1);
+       OptionsLayout->addWidget(TwoPortMatchingCheckbox, 0, 2);
        OptionsLayout->addWidget(new QLabel("Temp folder GNUplot:"), 1, 0);
        OptionsLayout->addWidget(GNUplotButton, 1, 1);
        GNUplot_path = "/tmp";
@@ -290,6 +303,14 @@ void ui::go_clicked()
        }
        inout_operations->set_constant_ZS_vs_freq(zs_temp);
     }
+    if (TwoPortMatchingCheckbox->isChecked())
+    {
+       inout_operations->loadS2Pdata(AmpFile.toStdString());
+    }
+    else
+    {
+       inout_operations->loadS2Pdata("");
+    } 
 
     if (!FixedZLCheckbox->isChecked())
     {
@@ -349,6 +370,7 @@ void ui::go_clicked()
     // Impedance and frequency settings
     MatchingObject->SetSourceImpedance(inout_operations->getSourceImpedance());
     MatchingObject->SetLoadImpedance(inout_operations->getLoadImpedance());
+    MatchingObject->SetAmplifierS2P(inout_operations->getAmplifierS2P());
     MatchingObject->SetFrequency(inout_operations->getFrequency());
     MatchingObject->refine = RefineCheckbox->isChecked();
     MatchingObject->setSearchMode(0);//Default mode
@@ -393,6 +415,13 @@ void ui::SourceImpedance_clicked()
 void ui::LoadImpedance_clicked()
 {
     LoadFile = QFileDialog::getOpenFileName(this,
+        tr("Open S-parameter file"), QCoreApplication::applicationDirPath());
+}
+
+// Opens a file dialog to select the s2p data
+void ui::BrowseAmplifier_S2P()
+{
+    AmpFile = QFileDialog::getOpenFileName(this,
         tr("Open S-parameter file"), QCoreApplication::applicationDirPath());
 }
 
@@ -515,4 +544,19 @@ void ui::slotShowResult()
   c = 500;
   if(ResultState > 5)  c = 3000;
   QTimer::singleShot(c, this, SLOT(slotShowResult()));
+}
+
+//This function catches the event triggered by the 2-port checkbox
+void ui::TwoPortMatchingCheckbox_state(int state)
+{
+   if (state == Qt::Unchecked)
+   { 
+      imgWidget->setVisible(true);
+      AmplifierS2Pbutton->setVisible(false);
+   }
+   else
+   {
+      imgWidget->setVisible(false);
+      AmplifierS2Pbutton->setVisible(true);
+   }
 }

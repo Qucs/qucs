@@ -324,6 +324,11 @@ int IO::loadS1Pdata(std::string filepath, terminal Port)
     return 0;
 }
 
+//Reads a s2p Touchstone file
+int IO::loadS2Pdata(std::string)
+{
+
+}
 
 // Load and source impedances may be sampled at different frequencies. It is essential to resample them
 // using the same frequency basis. This requires interpolation of complex data. It would be desirable to use
@@ -435,6 +440,13 @@ vector<complex<double>> IO::getLoadImpedance()
 {
     ResampleImpedances();
     return ZL;
+}
+
+
+vector<vector<complex<double>>> IO::getAmplifierS2P()
+{
+    ResampleImpedances();
+    return AmpS2P;
 }
 
 vector<double> IO::getFrequency()

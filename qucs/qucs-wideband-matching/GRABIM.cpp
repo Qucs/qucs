@@ -1055,5 +1055,8 @@ vector<double> GRABIM::NelderMead(vector<double> x)
  return getRow(X, 0);
 }
 
+void GRABIM::SetAmplifierS2P(vector<vector<complex<double>>> amps2p)
+{
 
+}
 

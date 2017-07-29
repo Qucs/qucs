@@ -83,6 +83,7 @@ public:
     void setSearchMode(int);
     void SimplifyNetwork(bool);
     bool refine;//Runs a Nelder-Mead local optimizer to refine results
+    void SetAmplifierS2P(vector<vector<complex<double>>>);
 
 private:
     vector<double> GridSearch();
