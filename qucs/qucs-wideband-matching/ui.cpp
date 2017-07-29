@@ -113,10 +113,10 @@ ui::ui()
        // Matching band
        FreqgroupBox = new QGroupBox(tr("Matching band"));
        minFLabel = new QLabel("Min:");
-       minFEdit = new QLineEdit("1");
+       minFEdit = new QLineEdit("1000");
        minFUnitsCombo =  new QComboBox();
        maxFLabel = new QLabel("Max:");
-       maxFEdit = new QLineEdit("2");
+       maxFEdit = new QLineEdit("2000");
        maxFUnitsCombo =  new QComboBox();
 
 
@@ -124,13 +124,13 @@ ui::ui()
        minFUnitsCombo->addItem("kHz");
        minFUnitsCombo->addItem("MHz");
        minFUnitsCombo->addItem("GHz");
-       minFUnitsCombo->setCurrentIndex(2);
+       minFUnitsCombo->setCurrentIndex(1);
        minFUnitsCombo->setMinimumContentsLength(5);
 
        maxFUnitsCombo->addItem("kHz");
        maxFUnitsCombo->addItem("MHz");
        maxFUnitsCombo->addItem("GHz");
-       maxFUnitsCombo->setCurrentIndex(2);
+       maxFUnitsCombo->setCurrentIndex(1);
        maxFUnitsCombo->setMinimumContentsLength(5);
 
        vbox = new QGridLayout;
