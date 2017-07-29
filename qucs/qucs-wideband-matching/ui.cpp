@@ -27,7 +27,7 @@
 ui::ui()
 {
       GNUplot_path = QCoreApplication::applicationDirPath() + "/GRABIM.dat";
-      setMinimumSize(400,450);
+      setMinimumSize(400,350);
       centralWidget =  new QWidget();
       Impedancelayout = new QGridLayout();
       ButtonsLayout = new QHBoxLayout();
@@ -191,13 +191,9 @@ ui::ui()
        TopoScript_path = "USER_TOPOLOGY_SCRIPT";
 
       //Create go/cancel buttons
-      RunButton = new QPushButton("Go");
-      CancelButton = new QPushButton("Cancel");
+      RunButton = new QPushButton("Calculate and put into clipboard");
       ButtonsLayout->addWidget(RunButton);
-      ButtonsLayout->addWidget(CancelButton);
-
       connect(RunButton, SIGNAL(clicked()), this, SLOT(go_clicked()));
-      connect(CancelButton, SIGNAL(clicked()), this, SLOT(cancel_clicked()));
 
 
       //Create main layout and add individual layouts
@@ -208,12 +204,15 @@ ui::ui()
       mainLayout->addLayout(TopoScriptLayout);
       mainLayout->addLayout(ButtonsLayout);
 
+      LabelResult = new QLabel(this);
+      ResultState = 100;
+      slotShowResult();
+      LabelResult->setAlignment(Qt::AlignHCenter);
+      mainLayout->addWidget(LabelResult); 
+
       centralWidget->setLayout(mainLayout);
       setCentralWidget(centralWidget);
       setWindowTitle("Qucs wideband matching tool " PACKAGE_VERSION);
-
-      statusBar()->showMessage(tr("Ready"));
-  
 }
 
 ui::~ui()
@@ -221,7 +220,6 @@ ui::~ui()
 //Free memory. Prevent memory leaks
       delete Impedancelayout;
       delete RunButton;
-      delete CancelButton;
       delete TopoScriptLabel;
       delete TopoScriptButton;
       delete TopoScriptLayout;
@@ -258,7 +256,6 @@ ui::~ui()
 }
 void ui::go_clicked()
 {
-
     //Before starting the matching engine, we must ensure that the impedance data is already loaded
     if (SourceFile.isEmpty() && (FixedZSLineedit->text().isEmpty()))
     {
@@ -311,7 +308,7 @@ void ui::go_clicked()
        if (real(zs_temp) == -1)//Check if the input value is correct
        {
            QMessageBox::warning(0, QObject::tr("Error"),
-                                QObject::tr("The input given for the source impedance is not valid"));
+                                QObject::tr("Invalid source impedance"));
            return;
        }
        inout_operations->set_constant_ZS_vs_freq(zs_temp);
@@ -331,7 +328,7 @@ void ui::go_clicked()
         if (zl_temp.real() == -1)//Check if the input value is correct
         {
             QMessageBox::warning(0, QObject::tr("Error"),
-                                 QObject::tr("The input given for the load impedance is not valid"));
+                                 QObject::tr("Invalid load impedance"));
             return;
         }
         inout_operations->set_constant_ZL_vs_freq(zl_temp);
@@ -345,7 +342,7 @@ void ui::go_clicked()
     if ((fmatching_min == -1) || (fmatching_max == -1))
     {
         QMessageBox::warning(0, QObject::tr("Error"),
-                             QObject::tr("Incorrect frequency settings"));
+                             QObject::tr("Wrong frequency settings"));
         return;
     }
     else//Everything correct... lets set frequency
@@ -397,22 +394,18 @@ void ui::go_clicked()
     (FixedZLCheckbox->isChecked()) ? R.load_path = "": R.load_path = LoadFile.toStdString();
     R.QucsVersion = PACKAGE_VERSION;
 
-//Final message
-
-    QMessageBox::information(0, QObject::tr("Finished"),
-                         QObject::tr("GRABIM has successfully finished. \nThe matching network has been copied to the clipboard so you can paste it into Qucs"));
-
     inout_operations->tmp_path = "/tmp";
     if (UseGNUplotCheckbox->isChecked())inout_operations->exportGNUplot(R, GNUplot_path.toStdString(), MatchingObject->refine);
     inout_operations->ExportQucsSchematic(R, "");
     delete MatchingObject;
     delete inout_operations;
-}
+   
+    // show result for some time
+    ResultState = 0;
+    LabelResult->setText(tr("Result:") + "<font color=\"#008000\"><b>  " +
+                       tr("Successful") + "</b></font>");
+    QTimer::singleShot(500, this, SLOT(slotShowResult()));
 
-// Exits app
-void ui::cancel_clicked()
-{
-   this->close();
 }
 
 // Opens a file dialog to select the s1p file which contains source impedance data
@@ -556,4 +549,25 @@ void ui::TopoCombo_clicked(int index)
      TopoScriptLabel->setVisible(false);
      TopoScriptButton->setVisible(false);
    }
+}
+
+//This function display the result {success, failure} of the synthesis
+//Copied from qucs-filter
+void ui::slotShowResult()
+{
+  if(ResultState > 5) {
+    LabelResult->setText(tr("Result: --"));
+    return;
+  }
+
+  int c;
+  ResultState++;
+  if(ResultState & 1)  c = 0xFF;
+  else c = 0x80;
+  QString s = QString("<font color=\"#00%1000\"><b>  ").arg(c, 2, 16);
+  LabelResult->setText(tr("Result:") + s + tr("Successful") + "</b></font>");
+
+  c = 500;
+  if(ResultState > 5)  c = 3000;
+  QTimer::singleShot(c, this, SLOT(slotShowResult()));
 }

@@ -49,7 +49,6 @@
 
 using namespace std;
 
-
 class ui :public QMainWindow
 {
      Q_OBJECT
@@ -59,7 +58,7 @@ public:
 
 private:
     QPushButton * SourceFileButton, * LoadFileButton;
-    QPushButton * RunButton, * CancelButton;
+    QPushButton * RunButton;
     QPushButton * GNUplotButton;
     QPushButton * TopoScriptButton;
     QWidget * centralWidget;
@@ -67,7 +66,7 @@ private:
     QComboBox *Topology, *SearchModeCombo;
     QComboBox *minFUnitsCombo, * maxFUnitsCombo;
     QCheckBox *UseGNUplotCheckbox, *RefineCheckbox;
-    QLabel *minFLabel, *maxFLabel, *TopoScriptLabel, *SearchModeLabel;
+    QLabel *minFLabel, *maxFLabel, *TopoScriptLabel, *SearchModeLabel, *LabelResult;
     QString  SourceFile, LoadFile;
     QString GNUplot_path, TopoScript_path;
     QLineEdit * minFEdit, * maxFEdit;
@@ -89,7 +88,6 @@ private:
  private slots:
 
     void go_clicked();
-    void cancel_clicked();
     void SourceImpedance_clicked();
     void LoadImpedance_clicked();
     void GNUplotOutput_clicked();
@@ -97,12 +95,14 @@ private:
     void FixedZLCheckbox_clicked();
     void TopoScriptButton_clicked();
     void TopoCombo_clicked(int);
+    void slotShowResult();
 
   private:
     complex<double> getComplexImpedanceFromText(char *);
     int CheckInputText(string);
     double getFreqScale(int);
     QString getTopoScriptPath();
+    int ResultState;
 };
 
 #endif // UI_H
