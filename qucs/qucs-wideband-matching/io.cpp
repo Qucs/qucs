@@ -552,7 +552,7 @@ int IO::ExportQucsSchematic(GRABIM_Result R, string QucsFile)
 int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, string & wirestr, string & paintingstr)
 {
     string component;
-    int x_series = 120, x_shunt = 20;//x-axis spacing depending on whether the component is placed in a series or shunt configuration
+    int x_series = 120, x_shunt = 100;//x-axis spacing depending on whether the component is placed in a series or shunt configuration
     //Clear input strings (just in case)
     componentstr = "";
     wirestr = "";
@@ -569,9 +569,9 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
         componentstr += "<Pac P1 1 " + Num2String(x_pos) + " -30 18 -26 0 1 \"1\" 1 \"" + Num2String(ZS.at(0).real()) + " Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n";
         componentstr += "<GND * 1 " + Num2String(x_pos) + " 0 0 0 0 0>\n";
 
-        wirestr += "<" + Num2String(x_pos) + " -60 " + Num2String(x_pos) + " -120>\n";
-        wirestr += "<" + Num2String(x_pos) +" -120 "+ Num2String(x_pos+60) +" -120>\n";
-        x_pos +=60;
+        wirestr += "<" + Num2String(x_pos) + " -60 " + Num2String(x_pos) + " -120 "" 0 0 0 "">\n";
+        wirestr += "<" + Num2String(x_pos) +" -120 "+ Num2String(x_pos+120) +" -120 "" 0 0 0 "">\n";
+        x_pos +=120;
     }
     else
     {//Place a S-param file
@@ -579,7 +579,7 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
         componentstr += "<GND * 1 " + Num2String(x_pos) +" -90 0 0 0 0>\n";
         x_pos = 30;
         wirestr += "<" + Num2String(x_pos) + " -120 " + Num2String(x_pos+60) + " -120>\n";
-        x_pos +=60;
+        x_pos +=100;
     }
 
 
@@ -617,7 +617,7 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
         else if (!component.compare("2"))//Shunt inductor
         {
             componentstr += "<GND * 1 " + Num2String(x_pos) + " 0 0 0 0 0>\n";
-            componentstr += "<L L1 1 " + Num2String(x_pos) + " -30 -26 2 0 1 \"" + Num2String(R.x_local_opt.at(value_index)) + "\" 1 \"\" 0>\n";
+            componentstr += "<L L1 1 " + Num2String(x_pos) + " -30 -40 40 0 1 \"" + Num2String(R.x_local_opt.at(value_index)) + "\" 1 \"\" 0>\n";
             wirestr += "<" + Num2String(x_pos) + " -60 " + Num2String(x_pos) +" -120 \"\" 0 0 0 \"\">\n";
             wirestr += "<" + Num2String(x_pos) + " -120 " + Num2String(x_pos+x_shunt) + " -120 \"\" 0 0 0 "">\n";
             x_pos += x_shunt;
@@ -626,7 +626,7 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
         else if (!component.compare("3"))//Shunt capacitor
         {
             componentstr += "<GND * 1 " + Num2String(x_pos) + " 0 0 0 0 0>\n";
-            componentstr += "<C C1 1 " + Num2String(x_pos) + " -30 -26 17 0 1 \"" + Num2String(R.x_local_opt.at(value_index)) + "\" 1 \"\" 0>\n";
+            componentstr += "<C C1 1 " + Num2String(x_pos) + " -30 -40 40 0 1 \"" + Num2String(R.x_local_opt.at(value_index)) + "\" 1 \"\" 0>\n";
             wirestr += "<" + Num2String(x_pos) +" -60 " + Num2String(x_pos) + " -120 \"\" 0 0 0 \"\">\n";
             wirestr += "<" + Num2String(x_pos) + " -120 " + Num2String(x_pos+x_shunt) + " -120 \"\" 0 0 0 "">\n";
             x_pos += x_shunt;
@@ -667,8 +667,8 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
         componentstr += "<Pac P1 1 " + Num2String(x_pos) + " -30 18 -26 0 1 \"1\" 1 \"" + Num2String(ZL.at(0).real()) + " Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n";
         componentstr += "<GND * 1 "+Num2String(x_pos)+" 0 0 0 0 0>\n";
 
-        wirestr += "<" + Num2String(x_pos) + " -60 " + Num2String(x_pos) + " -120>\n";
-        wirestr += "<" + Num2String(x_pos-spacing) + " -120 " + Num2String(x_pos) + " -120>\n";
+        wirestr += "<" + Num2String(x_pos) + " -60 " + Num2String(x_pos) + " -120 "" 0 0 0 "">\n";
+        wirestr += "<" + Num2String(x_pos-spacing) + " -120 " + Num2String(x_pos) + " -120 "" 0 0 0 "">\n";
     }
     else
     {//Place a S-param file
