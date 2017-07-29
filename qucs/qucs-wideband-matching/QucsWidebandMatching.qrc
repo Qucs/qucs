@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>bitmaps/MatchingNetwork.svg</file>
+        <file>bitmaps/big.qucs.xpm</file>
     </qresource>
 </RCC>

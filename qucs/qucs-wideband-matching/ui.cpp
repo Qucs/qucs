@@ -26,6 +26,7 @@
 
 ui::ui()
 {
+      setWindowIcon(QPixmap(":/bitmaps/big.qucs.xpm"));
       GNUplot_path = QCoreApplication::applicationDirPath() + "/GRABIM.dat";
       setMinimumSize(400,350);
       centralWidget =  new QWidget();
