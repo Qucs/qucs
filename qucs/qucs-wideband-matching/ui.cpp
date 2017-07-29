@@ -256,6 +256,13 @@ ui::~ui()
 }
 void ui::go_clicked()
 {
+    if ((system("gnuplot -V") != 0) && (UseGNUplotCheckbox->isChecked()))
+    {//GNUplot is not installed
+       QMessageBox::warning(0, QObject::tr("Error"),
+                             QObject::tr("GNUplot is required to display results"));
+        return;
+    }
+
     //Before starting the matching engine, we must ensure that the impedance data is already loaded
     if (SourceFile.isEmpty() && (FixedZSLineedit->text().isEmpty()))
     {
