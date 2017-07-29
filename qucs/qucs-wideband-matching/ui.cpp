@@ -32,7 +32,6 @@ ui::ui()
       centralWidget =  new QWidget();
       Impedancelayout = new QGridLayout();
       ButtonsLayout = new QHBoxLayout();
-      TopoLayout = new QGridLayout();
 
       //Create source load impedance buttons
       SourceFileButton = new QPushButton(".s1p file");
@@ -150,17 +149,7 @@ ui::ui()
        sizePolicy.setVerticalStretch(0);
        FreqgroupBox->setSizePolicy( sizePolicy );
 
-        // Options
-       SearchModeLabel = new QLabel("Search Mode");
-
-       SearchModeCombo = new QComboBox();
-       SearchModeCombo->insertItem(0,"Default set");
-       SearchModeCombo->insertItem(1,"User list");
-       SearchModeCombo->insertItem(2,"LC order 4");
-       SearchModeCombo->insertItem(3,"LC + TL order 6");
-       SearchModeCombo->insertItem(4,"LC + TL + Stubs order 6");
-       connect(SearchModeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(TopoCombo_clicked(int)));
-
+       // Options
        UseGNUplotCheckbox = new QCheckBox("Use GNUplot");
        UseGNUplotCheckbox->setChecked(true);
        RefineCheckbox = new QCheckBox("Refine");
@@ -170,26 +159,11 @@ ui::ui()
        GNUplotButton = new QPushButton("Browse");
        connect(GNUplotButton, SIGNAL(clicked()), this, SLOT(GNUplotOutput_clicked()));
 
-       OptionsLayout->addWidget(SearchModeLabel, 0, 0);
-       OptionsLayout->addWidget(SearchModeCombo, 0, 1);
-       OptionsLayout->addWidget(UseGNUplotCheckbox, 1, 0);
-       OptionsLayout->addWidget(RefineCheckbox, 1, 1);
-       OptionsLayout->addWidget(new QLabel("Temp folder GNUplot:"), 2, 0);
-       OptionsLayout->addWidget(GNUplotButton, 2, 1);
+       OptionsLayout->addWidget(UseGNUplotCheckbox, 0, 0);
+       OptionsLayout->addWidget(RefineCheckbox, 0, 1);
+       OptionsLayout->addWidget(new QLabel("Temp folder GNUplot:"), 1, 0);
+       OptionsLayout->addWidget(GNUplotButton, 1, 1);
        GNUplot_path = "/tmp";
-
-
-
-       TopoScriptLayout =  new QHBoxLayout();
-       TopoScriptButton =  new QPushButton("Browse");
-       TopoScriptLabel = new QLabel("User list:");
-       TopoScriptLayout->addWidget(TopoScriptLabel);
-       TopoScriptLayout->addWidget(TopoScriptButton);
-       connect(TopoScriptButton, SIGNAL(clicked()), this, SLOT(TopoScriptButton_clicked()));
-       TopoScriptLabel->setVisible(false);
-       TopoScriptButton->setVisible(false);
-
-       TopoScript_path = "USER_TOPOLOGY_SCRIPT";
 
       //Create go/cancel buttons
       RunButton = new QPushButton("Calculate and put into clipboard");
@@ -202,7 +176,6 @@ ui::ui()
       mainLayout->addLayout(Impedancelayout);
       mainLayout->addWidget(FreqgroupBox);
       mainLayout->addLayout(OptionsLayout);
-      mainLayout->addLayout(TopoScriptLayout);
       mainLayout->addLayout(ButtonsLayout);
 
       LabelResult = new QLabel(this);
@@ -221,9 +194,6 @@ ui::~ui()
 //Free memory. Prevent memory leaks
       delete Impedancelayout;
       delete RunButton;
-      delete TopoScriptLabel;
-      delete TopoScriptButton;
-      delete TopoScriptLayout;
       delete GNUplotButton;
       delete SearchModeCombo;
       delete SearchModeLabel;
@@ -250,7 +220,6 @@ ui::~ui()
       delete ConstantZSLayout;
       delete ConstantZLLayout;
       delete ButtonsLayout;
-      delete TopoLayout;
       delete SourceLayout;
       delete LoadLayout;
 
@@ -381,11 +350,8 @@ void ui::go_clicked()
     MatchingObject->SetSourceImpedance(inout_operations->getSourceImpedance());
     MatchingObject->SetLoadImpedance(inout_operations->getLoadImpedance());
     MatchingObject->SetFrequency(inout_operations->getFrequency());
-    MatchingObject->setTopoScript(TopoScript_path.toStdString());
     MatchingObject->refine = RefineCheckbox->isChecked();
-
-    MatchingObject->setSearchMode(SearchModeCombo->currentIndex());
-
+    MatchingObject->setSearchMode(0);//Default mode
 
     GRABIM_Result R = MatchingObject->RunGRABIM();//Runs GRABIM. Well, this is not exactly the algorithm
 
@@ -436,14 +402,6 @@ void ui::GNUplotOutput_clicked()
 {
     GNUplot_path = QFileDialog::getExistingDirectory(this,
         tr("Save GNUplot script"), QCoreApplication::applicationDirPath());
-}
-
-// The user can feed the engine with custom topologies. In this sense, this function opens a file dialog for setting the path to
-// a list of user-defined topologies
-void ui::TopoScriptButton_clicked()
-{
-    TopoScript_path = QFileDialog::getOpenFileName(this,
-        tr("Open script"), QCoreApplication::applicationDirPath());
 }
 
 // Shows hides button/lineedit for source impedance selection
@@ -536,27 +494,6 @@ double ui::getFreqScale(int index)
 
    }
    return 1e6;
-}
-
-// Returns the path to the user-defined topologies list
-QString ui::getTopoScriptPath()
-{
-    return TopoScript_path;
-}
-
-// Search mode changed
-void ui::TopoCombo_clicked(int index)
-{
-   if (index==1)
-   {
-     TopoScriptLabel->setVisible(true);
-     TopoScriptButton->setVisible(true);
-   }
-   else
-   {
-     TopoScriptLabel->setVisible(false);
-     TopoScriptButton->setVisible(false);
-   }
 }
 
 //This function display the result {success, failure} of the synthesis

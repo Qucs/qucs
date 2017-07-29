@@ -60,15 +60,14 @@ private:
     QPushButton * SourceFileButton, * LoadFileButton;
     QPushButton * RunButton;
     QPushButton * GNUplotButton;
-    QPushButton * TopoScriptButton;
     QWidget * centralWidget;
     QSvgWidget *imgWidget;
-    QComboBox *Topology, *SearchModeCombo;
+    QComboBox *SearchModeCombo;
     QComboBox *minFUnitsCombo, * maxFUnitsCombo;
     QCheckBox *UseGNUplotCheckbox, *RefineCheckbox;
-    QLabel *minFLabel, *maxFLabel, *TopoScriptLabel, *SearchModeLabel, *LabelResult;
+    QLabel *minFLabel, *maxFLabel, *SearchModeLabel, *LabelResult;
     QString  SourceFile, LoadFile;
-    QString GNUplot_path, TopoScript_path;
+    QString GNUplot_path;
     QLineEdit * minFEdit, * maxFEdit;
     QGroupBox *SourceImpGroupBox, *LoadImpGroupBox; 
 
@@ -78,9 +77,9 @@ private:
     QLabel *ZLOhmLabel, *ZSOhmLabel;
 
     QVBoxLayout * mainLayout, * SourceLayout, * LoadLayout;
-    QHBoxLayout * TopoScriptLayout, * ConstantZSLayout, * ConstantZLLayout, *ButtonsLayout;
+    QHBoxLayout * ConstantZSLayout, * ConstantZLLayout, *ButtonsLayout;
     QGridLayout *Impedancelayout, *vbox;
-    QGridLayout *OptionsLayout, *TopoLayout;
+    QGridLayout *OptionsLayout;
     QGroupBox *FreqgroupBox;
 
 
@@ -93,15 +92,12 @@ private:
     void GNUplotOutput_clicked();
     void FixedZSCheckbox_clicked();
     void FixedZLCheckbox_clicked();
-    void TopoScriptButton_clicked();
-    void TopoCombo_clicked(int);
     void slotShowResult();
 
   private:
     complex<double> getComplexImpedanceFromText(char *);
     int CheckInputText(string);
     double getFreqScale(int);
-    QString getTopoScriptPath();
     int ResultState;
 };
 
