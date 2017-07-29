@@ -58,6 +58,7 @@ public:
     void PrintNetwork_StandardOutput(GRABIM_Result);
     void UseClipboard(bool);
     bool UseGNUplot;
+    string tmp_path;//Path to a temporary directory for data dumping
 
 
 private:
@@ -88,6 +89,7 @@ private:
     string Num2String(int x);
     string Num2String(double x);
     void generateGNUplotScript(string, string, bool);
+    void generateConstant_s1p(string, complex<double>);
 
 };
 

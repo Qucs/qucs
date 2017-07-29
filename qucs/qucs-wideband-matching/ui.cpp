@@ -402,6 +402,7 @@ void ui::go_clicked()
     QMessageBox::information(0, QObject::tr("Finished"),
                          QObject::tr("GRABIM has successfully finished. \nThe matching network has been copied to the clipboard so you can paste it into Qucs"));
 
+    inout_operations->tmp_path = "/tmp";
     if (UseGNUplotCheckbox->isChecked())inout_operations->exportGNUplot(R, GNUplot_path.toStdString(), MatchingObject->refine);
     inout_operations->ExportQucsSchematic(R, "");
     delete MatchingObject;

@@ -52,6 +52,7 @@ double string_to_double( const std::string& s )
 int IO::exportGNUplot(GRABIM_Result Res, string folderpath, bool LocalOptimizer)
 {
     ofstream GNUplotExport;
+    if (folderpath.empty()) folderpath = this->tmp_path;
     string datapath = folderpath+"/data";
     string scriptpath = folderpath+"/plotscript";
     GNUplotExport.open (datapath, std::ofstream::out);
@@ -105,11 +106,12 @@ void IO::generateGNUplotScript(string datapath, string scriptpath, bool LocalOpt
    }
    else
    {
-    script += "plot source using 1:3 with lines title \"S21 (dB) Grid search\" linecolor rgb \"red\", source using 1:2 with lines title \"S11 (dB) Grid search\" linecolor rgb \"blue\";\n";
+    script += "plot source using 1:3 with lines title \"S21 (dB) Grid search\" linecolor rgb \"red\" linewidth 2, source using 1:2 with lines title \"S11 (dB) Grid search\" linecolor rgb \"blue\" linewidth 2;\n";
    }
 
    script +=  "#Smith chart plot\n"
               "#Source: http://swigerco.com/gnuradio/phase/vna_comp/\n"
+              "set title \"S11\"\n"
               "set term x11 2\n"
               "set size square\n"
               "set clip\n"
@@ -545,18 +547,25 @@ int IO::ExportQucsSchematic(GRABIM_Result R, string QucsFile)
     return 0;
 }
 
-
+//This function creates a s1p file given a constant impedance. It adds a unique point, the S-param simulator should understand that this is constant
+void IO::generateConstant_s1p(string datapath, complex<double> Z)
+{
+  std::ofstream s1pFile(datapath.c_str(), ios_base::out);
+  s1pFile << "# Hz Z RI R 1\n1000 " + Num2String(Z.real()) + " " + Num2String(Z.imag());
+  s1pFile.close();
+}
 
 // Given a string code of inductors, capacitors and transmission lines, it generates the Qucs network. Notice that the schematic is split into
 // three part: components, wires and paintings, all of them are passed by reference.
 int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, string & wirestr, string & paintingstr)
 {
     string component;
-    int x_series = 120, x_shunt = 100;//x-axis spacing depending on whether the component is placed in a series or shunt configuration
+    int x_series = 150, x_shunt = 120;//x-axis spacing depending on whether the component is placed in a series or shunt configuration
     //Clear input strings (just in case)
     componentstr = "";
     wirestr = "";
     paintingstr = "";
+    bool term1 = false, term2 = false;//Flags the display equations
 
     // Schematic code
     // 0: Port 1 + S parameter simulation
@@ -572,13 +581,20 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
         wirestr += "<" + Num2String(x_pos) + " -60 " + Num2String(x_pos) + " -120 "" 0 0 0 "">\n";
         wirestr += "<" + Num2String(x_pos) +" -120 "+ Num2String(x_pos+120) +" -120 "" 0 0 0 "">\n";
         x_pos +=120;
+        term1 = true;//Add S11_dB = dB(S[1,1]) equation
     }
     else
     {//Place a S-param file
+        if (R.source_path.empty())
+        {
+          string s1p_path = tmp_path + "/ZS_data.s1p";
+          generateConstant_s1p(s1p_path, ZS.at(0));
+          R.source_path =  s1p_path;
+        }
         componentstr += "<SPfile X1 1 " + Num2String(x_pos) + " -120 -26 -67 1 2 \"" + R.source_path + "\" 1 \"rectangular\" 0 \"linear\" 0 \"open\" 0 \"1\" 0>\n";
         componentstr += "<GND * 1 " + Num2String(x_pos) +" -90 0 0 0 0>\n";
         x_pos = 30;
-        wirestr += "<" + Num2String(x_pos) + " -120 " + Num2String(x_pos+60) + " -120>\n";
+        wirestr += "<" + Num2String(x_pos) + " -120 " + Num2String(x_pos+100) + " -120>\n";
         x_pos +=100;
     }
 
@@ -669,9 +685,16 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
 
         wirestr += "<" + Num2String(x_pos) + " -60 " + Num2String(x_pos) + " -120 "" 0 0 0 "">\n";
         wirestr += "<" + Num2String(x_pos-spacing) + " -120 " + Num2String(x_pos) + " -120 "" 0 0 0 "">\n";
+        term2 = true;//Add S22_dB = dB(S[2,2]) equation
     }
     else
     {//Place a S-param file
+        if (R.load_path.empty())
+        {
+          string s1p_path = tmp_path + "/ZL_data.s1p";
+          generateConstant_s1p(s1p_path, ZL.at(0));
+          R.load_path =  s1p_path;
+        }
         componentstr += "<SPfile X1 1 " + Num2String(x_pos) + " -120 -26 -67 0 0 \"" + R.load_path + "\" 1 \"rectangular\" 0 \"linear\" 0 \"open\" 0 \"1\" 0>\n";
         componentstr += "<GND * 1 " + Num2String(x_pos) + " -90 0 0 0 0>\n";
     }
@@ -680,7 +703,13 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
     double fstart = fmatching_min*0.3;
     double fstop = fmatching_max*1.7;
     componentstr += "<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"" + Num2String(fstart) + "\" 1 \"" + Num2String(fstop) + "\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n";
-    componentstr += "<Eqn Eqn1 1 50 200 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"S21_dB=dB(S[2,1])\" 1 \"S22_dB=dB(S[2,2])\" 1 \"yes\" 0>\n";
+   
+    //Add equations
+    string eqn = ""; 
+    if (term1) eqn = "\"S11_dB=dB(S[1,1])\" 1 ";
+    if (term2) eqn += "\"S22_dB=dB(S[2,2])\" 1 ";
+    if (term1 && term2) eqn += "\"S21_dB=dB(S[2,1])\" 1 ";
+    if (term1 || term2) componentstr += "<Eqn Eqn1 1 50 200 -28 15 0 0 " + eqn + "\"yes\" 0>\n";
 
     return 0;
 }
