@@ -387,6 +387,10 @@ void QucsPowerCombiningTool::on_TopoCombo_currentIndexChanged(int index)
     }
     else//Only the Wilkinson combiners support the CLC equivalent of a quarter-wavelength line
     {
+        if (lumpedImplementation) {
+          // Lumped elements checkbox selected, reset to Ideal TL
+          IdealTLradioButton->setChecked(true);
+        }
         LumpedElementsradioButton->setEnabled(false);
     }
   
