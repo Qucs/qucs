@@ -479,6 +479,20 @@ void ui::FixedZLCheckbox_clicked()
     }
 }
 
+//This function checks if the data introduced by the user contains text or strange characters
+int ui::CheckInputText(string str)
+{
+  char c;
+  for (unsigned int i = 0; i < str.length();i++)
+  {
+   c = str.at(i);
+     if ((c < 48) || (c>57))//No letters allowed
+       return -1;
+  }
+  return 0;
+
+}
+
 // The user can also specify a constant complex impedance vs frequency. This function parses user's input
 // and return the cx_double value
 complex<double> ui::getComplexImpedanceFromText(char *arg)
@@ -487,15 +501,22 @@ complex<double> ui::getComplexImpedanceFromText(char *arg)
     int index = arg_str.find_first_of("j");
     int sign = 1;
     double zreal, zimag;
-    if (index != -1)//Then it is a complex impedance
+    if (arg_str.find_first_of("j") != string::npos)//Then it is a complex impedance
     {
-        zreal = atof(arg_str.substr(0, index-1).c_str());
+        string ZR_str = arg_str.substr(0, index-1);
+        if (CheckInputText(ZR_str) == -1) return complex<double>(-1, -1);
+        zreal = atof(ZR_str.c_str());
         if (!arg_str.substr(index-1, 1).compare("-")) sign = -1;
-        zimag = sign*atof(arg_str.substr(index+1).c_str());
+
+        string ZI_str = arg_str.substr(index+1);
+        if (CheckInputText(ZI_str) == -1) return complex<double>(-1, -1);
+        zimag = sign*atof(ZI_str.c_str());
         return complex<double>(zreal, zimag);
     }
     else//Real impedance
     {
+        string ZR_str = arg;
+        if (CheckInputText(ZR_str) == -1) return complex<double>(-1, -1);
         zreal = atof(arg);
         if (zreal > 0)return complex<double>(zreal, 0);
         else//Wrong input...

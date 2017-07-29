@@ -98,8 +98,9 @@ private:
     void TopoScriptButton_clicked();
     void TopoCombo_clicked(int);
 
+  private:
     complex<double> getComplexImpedanceFromText(char *);
-
+    int CheckInputText(string);
     double getFreqScale(int);
     QString getTopoScriptPath();
 };
