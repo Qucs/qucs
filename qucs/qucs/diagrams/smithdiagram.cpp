@@ -144,8 +144,12 @@ QString SmithDiagram::extraMarkerText(Marker const* m) const
   Zi = m->powImag();
 
   MatchDialog::r2z(Zr, Zi, Z0);
-  Yr = 1/Zr; Yi = 1/Zi;//The impedance data are converted into admittance. So from this point on, Zr, Zi are admittance values
-
+  // convert impedance to admittance
+  Yr = Zr; Yi = Zi;
+  MatchDialog::c2p(Yr, Yi);
+  Yr = 1.0 / Yr; // magnitude
+  Yi = -Yi; // angle
+  MatchDialog::p2c(Yr, Yi);
   QString Var = pGraph->Var;
   QString Var_ =Var;  
 
