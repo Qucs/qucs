@@ -568,7 +568,7 @@ nr_complex_t polar (const nr_complex_t a, const nr_complex_t p)
 #ifdef HAVE_CXX_COMPLEX_POLAR_COMPLEX
     return std::polar (a, p);
 #else
-    return a * exp (nr_complex_t (imag (p),-real (p)));
+    return a * exp(nr_complex_t(0.0, 1.0) * p);
 #endif
 }
 
