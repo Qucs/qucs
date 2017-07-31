@@ -49,6 +49,11 @@ typedef struct GRABIM_Result {
 
 } GRABIM_Result;
 
+typedef struct AmpData{
+       deque<complex<double>> S11, S21, S12, S22;
+} AmpData;
+
+
 
 //Reference:
 // [1] Broadband direct-coupled and RF matching networks. Thomas R. Cuthbert, 1999

@@ -1,7 +1,7 @@
  /*
  * ui.cpp - User interface class implementation
  *
- * copyright (C) 2016 Andres Martinez-Mera <andresmartinezmera@gmail.com>
+ * copyright (C) 2017 Andres Martinez-Mera <andresmartinezmera@gmail.com>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -173,9 +173,9 @@ ui::ui()
 
        OptionsLayout->addWidget(UseGNUplotCheckbox, 0, 0);
        OptionsLayout->addWidget(RefineCheckbox, 0, 1);
-       OptionsLayout->addWidget(TwoPortMatchingCheckbox, 0, 2);
-       OptionsLayout->addWidget(new QLabel("Temp folder GNUplot:"), 1, 0);
-       OptionsLayout->addWidget(GNUplotButton, 1, 1);
+       OptionsLayout->addWidget(TwoPortMatchingCheckbox, 1, 0);
+       OptionsLayout->addWidget(new QLabel("Temp folder GNUplot:"), 2, 0);
+       OptionsLayout->addWidget(GNUplotButton, 2, 1);
        GNUplot_path = "/tmp";
 
       //Create go/cancel buttons

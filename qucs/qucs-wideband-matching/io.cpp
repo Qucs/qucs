@@ -325,9 +325,188 @@ int IO::loadS1Pdata(std::string filepath, terminal Port)
 }
 
 //Reads a s2p Touchstone file
-int IO::loadS2Pdata(std::string)
+int IO::loadS2Pdata(std::string filepath)
 {
+   std::ifstream s2pfile(filepath.c_str());//Tries to open the data file.
+    if(!s2pfile.is_open())//The data file cannot be opened => error
+    {
+        return -1;
+    }
 
+    std::string line;
+    double freq_scale = 1;
+    double Zref = 50;
+
+    std::getline(s2pfile, line);
+    while(line.compare(0, 1, "#"))//Looking for # field
+    {
+        std::getline(s2pfile, line);
+    }
+
+    line = tolower(line);
+    freq_scale = getS2PfreqScale(line);
+
+
+    //Get the impedance at which the S params were measured
+
+    int Rindex = line.find_last_of("r");
+    Rindex = line.find_first_not_of(" ", Rindex);
+    Zref = atof(line.substr(Rindex+1).c_str());
+
+    bool is_indB = (line.find("db") != string::npos);
+    bool RI = (line.find("ma") == string::npos);
+    bool isS_par = (line.find(" s ") != string::npos);
+    bool isZ_par = (line.find(" z ") != string::npos);
+
+
+    while( getline(s2pfile, line) )
+    {//Looking for the start of the raw data
+
+        line = RemoveBlankSpaces(line);
+
+        if ((!line.compare(0,1, "!"))|| (line.length() == 1)) continue;
+        else break;
+
+
+    }
+
+    //DATA beginning.
+    //At this point, the number of frequency samples is not known, so it's better to
+    //push data into queues and then arrange it into armadillo structures
+    std::queue <double> frequency, S11M, S11A, S21M, S21A, S12M, S12A, S22M, S22A;
+    unsigned int qsize=0;
+
+    do
+    {
+        line = RemoveBlankSpaces(line);
+        if (line.empty()|| (line.length()==1))break;
+        if (line.at(0) == '!') break;//Comment
+
+        //Frequency
+        int index = line.find_first_of(" ");
+        if (index == -1)index = line.find_first_of("\t");
+        frequency.push(string_to_double(line.substr(0,index)));
+        line.erase(0, index+1);
+
+        //Read S11
+        //-----------------------------------------------
+        index = line.find_first_of(" ");
+        if (index == -1)index = line.find_first_of("\t");
+        S11M.push(string_to_double(line.substr(0,index)));
+        line.erase(0, index+1);
+
+        index = line.find_first_of(" ");
+        if (index == -1)index = line.find_first_of("\t");
+        S11A.push(string_to_double(line.substr(0,index)));
+        line.erase(0, index+1);
+        //-----------------------------------------------
+
+        //Read S21
+        //-----------------------------------------------
+        index = line.find_first_of(" ");
+        if (index == -1)index = line.find_first_of("\t");
+        S21M.push(string_to_double(line.substr(0,index)));
+        line.erase(0, index+1);
+
+        index = line.find_first_of(" ");
+        if (index == -1)index = line.find_first_of("\t");
+        S21A.push(string_to_double(line.substr(0,index)));
+        line.erase(0, index+1);
+        //-----------------------------------------------
+
+        //Read S12
+        //-----------------------------------------------
+        index = line.find_first_of(" ");
+        if (index == -1)index = line.find_first_of("\t");
+        S12M.push(string_to_double(line.substr(0,index)));
+        line.erase(0, index+1);
+
+        index = line.find_first_of(" ");
+        if (index == -1)index = line.find_first_of("\t");
+        S12A.push(string_to_double(line.substr(0,index)));
+        line.erase(0, index+1);
+        //-----------------------------------------------
+
+        //Read S22
+        //-----------------------------------------------
+        index = line.find_first_of(" ");
+        if (index == -1)index = line.find_first_of("\t");
+        S22M.push(string_to_double(line.substr(0,index)));
+        line.erase(0, index+1);
+
+        index = line.find_first_of(" ");
+        if (index == -1)index = line.find_first_of("\t");
+        S22A.push(string_to_double(line.substr(0,index)));
+        //-----------------------------------------------
+
+        qsize++;
+    }while (std::getline(s2pfile, line));
+    s2pfile.close();
+    deque<double> freq(qsize);
+    AmpData AmpS2P;
+
+    double S11m, S11a, S21m, S21a, S12m, S12a, S22m, S22a;
+    for (unsigned int i = 0; i < qsize; i++)
+    {
+        freq[i] = freq_scale*frequency.front();
+        frequency.pop();
+
+        S11m = S11M.front();
+        S11a = S11A.front();
+        S11M.pop();
+        S11A.pop();
+
+        S21m = S21M.front();
+        S21a = S21A.front();
+        S21M.pop();
+        S21A.pop();
+
+        S12m = S12M.front();
+        S12a = S12A.front();
+        S12M.pop();
+        S12A.pop();
+
+        S22m = S22M.front();
+        S22a = S22A.front();
+        S22M.pop();
+        S22A.pop();
+
+        if (is_indB) S11m = pow(10, .05*S11m);
+        if (is_indB) S21m = pow(10, .05*S21m); 
+        if (is_indB) S12m = pow(10, .05*S12m); 
+        if (is_indB) S22m = pow(10, .05*S22m);
+
+        if (RI)
+        {
+    	    AmpS2P.S11.push_back(complex<double>(S11m, S11a));
+    	    AmpS2P.S21.push_back(complex<double>(S21m, S21a)); 
+    	    AmpS2P.S12.push_back(complex<double>(S12m, S12a)); 
+    	    AmpS2P.S22.push_back(complex<double>(S22m, S22a)); 
+        }
+        else
+        {   
+
+           
+            S11a = (pi/180)*S11a;
+            S21a = (pi/180)*S21a;
+            S12a = (pi/180)*S12a;
+            S22a = (pi/180)*S22a;
+    	    
+            AmpS2P.S11.push_back(complex<double>(S11m,0)*complex<double>(cos(S11a), sin(S11a)));
+    	    AmpS2P.S21.push_back(complex<double>(S21m,0)*complex<double>(cos(S21a), sin(S21a))); 
+    	    AmpS2P.S12.push_back(complex<double>(S12m,0)*complex<double>(cos(S12a), sin(S12a))); 
+    	    AmpS2P.S22.push_back(complex<double>(S22m,0)*complex<double>(cos(S22a), sin(S22a)));
+/*
+           cout << freq.at(i) << " S11:" <<S11m << ", " << S11a << "==> " << AmpS2P.S11.at(i) << endl;
+           cout << freq.at(i) << " S21:" <<S21m << ", " << S21a << "==> " << AmpS2P.S21.at(i) << endl;
+           cout << freq.at(i) << " S12:" <<S12m << ", " << S12a << "==> " << AmpS2P.S12.at(i) << endl;
+           cout << freq.at(i) << " S22:" <<S22m << ", " << S22a << "==> " << AmpS2P.S22.at(i) << endl << endl;*/
+        }
+ 
+
+
+    }
+    return 0;
 }
 
 // Load and source impedances may be sampled at different frequencies. It is essential to resample them
