@@ -27,6 +27,47 @@ Qucs is an integrated circuit simulator which means you are able to setup a circ
   - Darwin/OS X
   - FreeBSD
   - Windows
+  - Docker (WiP)
+  
+## Usage docker image
+
+* [qucs/qucs _(contrib/docker/stable/Dockerfile)_](https://github.com/ilyar/qucs/blob/add_docker/contrib/docker/Dockerfile)
+
+Server access control program for X:
+
+    xhost +local:docker
+
+Run Qucs:
+
+    docker run --rm \
+    --volume /tmp/.X11-unix:/tmp/.X11-unix \
+    --volume ~/workspace:/home/.qucs \
+    qucs/qucs
+
+Run Qucs with set ENV var (optional):
+
+    docker run --rm \
+    --volume /tmp/.X11-unix:/tmp/.X11-unix \
+    --env DISPLAY=unix:$DISPLAY \
+    --env RUNUSER_UID=$(id -u) \
+    --volume ~/workspace:/home/.qucs \
+    qucs/qucs 
+
+### Image Variants
+
+The `qucs/qucs` images come in many flavors:
+
+* qucs/qucs:latest (default)
+* qucs/qucs:develop
+* qucs/qucs:spice
+
+**Manual building image:**
+
+```bash
+cd contrib/docker
+SOURCE_BRANCH=master ./hooks/build
+SOURCE_BRANCH=master IMAGE_NAME=local/qucs sh hooks/build
+``` 
 
 ## Branching strategy for the Git repository
 

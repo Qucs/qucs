@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+echo "------ HOOK START - BUILD -------"
+
+source build.env
+
+printenv
+
+docker build --build-arg QUCS_VERSION=$SOURCE_BRANCH -t $IMAGE_NAME .
+
+echo "------ HOOK END - BUILD -------"
