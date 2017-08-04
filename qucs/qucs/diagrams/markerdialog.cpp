@@ -63,10 +63,16 @@ MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent)
     QGridLayout *gridZY = new QGridLayout();
     ZCheckBox = new QCheckBox("Impedance");
     YCheckBox = new QCheckBox("Admittance");
+    ZSCheckBox = new QCheckBox("Series eq. circuit");
+    ZPCheckBox = new QCheckBox("Parallel eq. circuit");    
     gridZY->addWidget(ZCheckBox, 0, 0);
     gridZY->addWidget(YCheckBox, 0, 1);
-    ZCheckBox->setChecked(pMarker->DisplayZ);
-    YCheckBox->setChecked(pMarker->DisplayY);
+    gridZY->addWidget(ZSCheckBox, 1, 0);
+    gridZY->addWidget(ZPCheckBox, 1, 1);
+    ZCheckBox->setChecked(pMarker->optText & Marker::SHOW_Z);
+    YCheckBox->setChecked(pMarker->optText & Marker::SHOW_Y);
+    ZSCheckBox->setChecked(pMarker->optText & Marker::SHOW_ZS);
+    ZPCheckBox->setChecked(pMarker->optText & Marker::SHOW_ZP);
     ZYSelectBox->setLayout(gridZY);
 
     g->addWidget(new QLabel("Extra parameters"),3,0);
@@ -116,8 +122,12 @@ void MarkerDialog::slotAcceptValues()
 	pMarker->Z0 = SrcImp;
       }
     //Update extra marker data display settings
-    pMarker->DisplayZ = ZCheckBox->isChecked(); 
-    pMarker->DisplayY = YCheckBox->isChecked();
+      pMarker->optText =
+        (ZCheckBox->isChecked()) * Marker::SHOW_Z +
+        (YCheckBox->isChecked()) * Marker::SHOW_Y +
+        (ZSCheckBox->isChecked()) * Marker::SHOW_ZS +
+        (ZPCheckBox->isChecked()) * Marker::SHOW_ZP;
+
     changed = true;
    }
 

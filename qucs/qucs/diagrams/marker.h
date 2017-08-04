@@ -85,11 +85,21 @@ public:
 // private: // not yet, cross-manipulated by MarkerDialog
   int Precision; // number of digits to show
   int numMode;   // real/imag or polar (deg/rad)
-  bool DisplayZ, DisplayY;//Only for Smith charts. These flags indicate the optional parameters to be displayed
 
 public: // shouldn't be there, cross-manipulated by MarkerDialog
         // to be implemented within SmithDiagram.
 	double Z0;		//Only used in smith chart marker, to convert S to Z
+
+  // These flags indicate the optional parameters to be displayed
+  // Currently used only for Smith charts
+  enum extraText {
+    SHOW_Z  = 0x01,
+    SHOW_Y  = 0x02,
+    SHOW_ZS = 0x04,
+    SHOW_ZP = 0x08
+  };
+
+  unsigned optText;  // selected optional parameters
 };
 
 #endif

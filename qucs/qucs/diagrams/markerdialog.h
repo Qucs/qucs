@@ -41,7 +41,7 @@ public:
   QLineEdit  *SourceImpedance;
   QCheckBox  *TransBox;
   QWidget *ZYSelectBox;
-  QCheckBox *ZCheckBox, *YCheckBox;
+  QCheckBox *ZCheckBox, *YCheckBox, *ZSCheckBox, *ZPCheckBox;
 };
 
 #endif

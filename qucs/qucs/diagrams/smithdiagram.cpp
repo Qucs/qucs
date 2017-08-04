@@ -33,6 +33,7 @@
 #include "misc.h"
 #include "../dialogs/matchdialog.h" // For r2z function
 
+static const double pi = 3.1415926535897932384626433832795029;  /* pi   */
 
 SmithDiagram::SmithDiagram(int _cx, int _cy, bool ImpMode) : Diagram(_cx, _cy)
 {
@@ -135,7 +136,7 @@ QString SmithDiagram::extraMarkerText(Marker const* m) const
   std::vector<double> const& Pos = m->varPos();
   unsigned nVarPos = pGraph->numAxes();
   assert(nVarPos == Pos.size());
-  double Zr, Zi, Yr, Yi;
+  double Zr, Zi, Yr, Yi, Ds;
   double Z0 = m->Z0;
   double Precision = m->precision(); // hmmm
   QString ExtraParamsText;//Variable used for displaying extra marker data (impedance and/or admittance)
@@ -152,20 +153,56 @@ QString SmithDiagram::extraMarkerText(Marker const* m) const
   MatchDialog::p2c(Yr, Yi);
     
   QString Var = pGraph->Var;
-  QString Var_ =Var;
+  QString varName;
 
   QString valMarkerZ = misc::complexRect(Zr, Zi, Precision);
   QString valMarkerY = misc::complexRect(Yr, Yi, Precision);
 
-  if(Var.startsWith("S")) { // uuh, ooh hack.
-      if (m->DisplayZ) ExtraParamsText = "\n"+ Var.replace('S', 'Z')+": " +valMarkerZ;
-      if (m->DisplayY) ExtraParamsText += "\n"+ Var_.replace('S', 'Y')+": " +valMarkerY;//Var_ is a copy of pGraph->Var. It is used to guarantee the display is correct even if DisplayZ is true
-    return ExtraParamsText;
-  }else{
-      if (m->DisplayZ) ExtraParamsText = "\nZ("+ Var+"): " +valMarkerZ;
-      if (m->DisplayY) ExtraParamsText += "\nY("+ Var+"): " +valMarkerY;
-    return ExtraParamsText;
+  double omega = 2.0 * pi * m->powFreq();
+  QString extText, unitSymbol;
+
+  if (m->optText & Marker::SHOW_Z) {
+      if(Var.startsWith("S")) { // uuh, ooh hack.
+        varName = 'Z' + Var.mid(1);
+      } else {
+        varName = Var;
+      }
+      ExtraParamsText = "\n" + varName +": " + valMarkerZ + ' ' + QChar(0x2126);
   }
+  
+  if (m->optText & Marker::SHOW_Y) {
+      if(Var.startsWith("S")) { // uuh, ooh hack.
+        varName = 'Y' + Var.mid(1);
+      } else {
+        varName = Var;
+      }
+      ExtraParamsText += "\n" + varName +": " + valMarkerY  + " S";
+  }
+  
+  if (m->optText & Marker::SHOW_ZS) {
+    if (Zi < 0) { // capacitive reactance
+      Ds = -1.0/(omega*Zi); // equivalent series capacitance
+      unitSymbol = "F";
+    } else { // inductive reactance
+      Ds = Zi / omega; // equivalent series inductance
+      unitSymbol = "H";
+    }
+    ExtraParamsText += "\n" + misc::num2str(Zr) + QChar(0x2126)
+      + "+" + misc::num2str(Ds) + unitSymbol;
+  }
+
+  if (m->optText & Marker::SHOW_ZP) {
+    if (Yi > 0) { // capacitive susceptance
+      Ds = Yi/omega; // equivalent parallel capacitance
+      unitSymbol = "F";
+    } else { // inductive susceptance
+      Ds = -1.0 / (omega * Yi); // equivalent parallel inductance
+      unitSymbol = "H";
+    }
+    ExtraParamsText += "\n" + misc::num2str(1/Yr) + QChar(0x2126)
+      + "||" + misc::num2str(Ds) + unitSymbol;
+  }
+  return ExtraParamsText;
 }
 
 // vim:ts=8:sw=2:noet
