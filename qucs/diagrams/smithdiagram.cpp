@@ -187,8 +187,8 @@ QString SmithDiagram::extraMarkerText(Marker const* m) const
       Ds = Zi / omega; // equivalent series inductance
       unitSymbol = "H";
     }
-    ExtraParamsText += "\n" + misc::num2str(Zr) + QChar(0x2126)
-      + "+" + misc::num2str(Ds) + unitSymbol;
+    ExtraParamsText += "\n" + misc::num2str(Zr, Precision) + QChar(0x2126)
+      + "+" + misc::num2str(Ds, Precision) + unitSymbol;
   }
 
   if (m->optText & Marker::SHOW_ZP) {
@@ -199,10 +199,11 @@ QString SmithDiagram::extraMarkerText(Marker const* m) const
       Ds = -1.0 / (omega * Yi); // equivalent parallel inductance
       unitSymbol = "H";
     }
-    ExtraParamsText += "\n" + misc::num2str(1/Yr) + QChar(0x2126)
-      + "||" + misc::num2str(Ds) + unitSymbol;
+    ExtraParamsText += "\n" + misc::num2str(1/Yr, Precision) + QChar(0x2126)
+      + "||" + misc::num2str(Ds, Precision) + unitSymbol;
   }
   return ExtraParamsText;
 }
 
 // vim:ts=8:sw=2:noet
+ 
