@@ -262,16 +262,15 @@ int main(int argc, char *argv[])
 
         GRABIM * MatchingObject = new GRABIM();
         // Impedance and frequency settings
-        MatchingObject->SetSourceImpedance(inout_operations->getSourceImpedance());
-        MatchingObject->SetLoadImpedance(inout_operations->getLoadImpedance());
-        MatchingObject->SetFrequency(inout_operations->getFrequency());
+        MatchingData data = inout_operations->getMatchingData();
+        MatchingObject->SetData(data);
         MatchingObject->setTopoScript(TopoScript_path);
         MatchingObject->SetTopology(topo);
         MatchingObject->setSearchMode(search_mode);
         MatchingObject->SimplifyNetwork(!no_simplify);
 
 
-        GRABIM_Result R = MatchingObject->RunGRABIM();//Runs GRABIM. Please bear in mind that this is not a rigorous implementation of [1] 
+        GRABIM_Result R = MatchingObject->RunGRABIM(inout_operations->ZS, inout_operations->ZL);//Runs GRABIM. Please bear in mind that this is not a rigorous implementation of [1]
         // Biggest differences between this code and [1]:
         // 1) The candidate vector is always defined in natural units rather than logarithmic units.
         // 2) Frequency is not normalized.
@@ -296,8 +295,10 @@ int main(int argc, char *argv[])
         cout << "The GNUplot data was written at " << GNUplot_path << endl;
         cout << "You can find a sample script to plot S11 in the same folder as the source code" << endl;
 
-        inout_operations->exportGNUplot(R, GNUplot_path, false);
-        inout_operations->ExportQucsSchematic(R, QucsSchPath);
+        TwoPortCircuit TPC;
+        TPC.InputMatching = R;
+        inout_operations->exportGNUplot(TPC.InputMatching, GNUplot_path, false);
+        inout_operations->ExportQucsSchematic(TPC, QucsSchPath);
         delete inout_operations;
         delete MatchingObject;
     }

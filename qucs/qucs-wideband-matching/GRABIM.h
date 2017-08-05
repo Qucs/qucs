@@ -33,6 +33,7 @@ using namespace std;
 
 enum ObjectiveFunction {NINF_S11dB, NINF_POWERTRANS};
 
+
 typedef struct GRABIM_Result {
     vector<double> x_grid_search;
     double grid_val;
@@ -45,14 +46,28 @@ typedef struct GRABIM_Result {
     std::string topology;
     std::string source_path;
     std::string load_path;
-    std::string QucsVersion;
+
 
 } GRABIM_Result;
 
+typedef struct TwoPortCircuit{
+    GRABIM_Result InputMatching;
+    GRABIM_Result OutputMatching;
+    std::string amplifier_path;
+    std::string QucsVersion;
+
+}TwoPortCircuit;
+
 typedef struct AmpData{
-       deque<complex<double>> S11, S21, S12, S22;
+       vector<complex<double>> S11, S21, S12, S22;
+       double Z0;//Reference impedance at which the SPAR data was extracted
 } AmpData;
 
+
+typedef struct MatchingData{
+       vector<complex<double>> ZS, ZL, Zin_maxg, Zout_maxg;
+       vector<double> freq;
+} MatchingData;
 
 
 //Reference:
@@ -66,15 +81,13 @@ public:
     GRABIM();
     ~GRABIM();
 
-    int SetSourceImpedance(vector<complex<double>>);
-    int SetLoadImpedance(vector<complex<double>>);
-    int SetFrequency(vector<double>);
+    int SetData(MatchingData);
 
     int SetInitialPivot(vector<double>);
     vector<double> GetInitialPivot();
     int SetMatchingBand(double, double);
     int SetTopology(std::string);
-    GRABIM_Result RunGRABIM();
+    GRABIM_Result RunGRABIM(vector<complex<double>>, vector<complex<double>>);
     int SetMaxIterGridSearch(int);
     int SetThreshold(double);
     double GetThreshold();
@@ -86,9 +99,10 @@ public:
 
     void setTopoScript(std::string);
     void setSearchMode(int);
+    void CreateTopologiesList();
     void SimplifyNetwork(bool);
     bool refine;//Runs a Nelder-Mead local optimizer to refine results
-    void SetAmplifierS2P(vector<vector<complex<double>>>);
+    void SetAmplifierS2P(AmpData);
 
 private:
     vector<double> GridSearch();
@@ -98,8 +112,12 @@ private:
     vector<double> InspectCandidate(vector<double>);
     vector<double> x_ini;
 
+    vector<complex<double>> ZS, ZL, Zin_maxg, Zout_maxg;
     vector<double> freq;
-    vector<complex<double>> ZS, ZL;
+    vector<complex<double>> Z1, Z2;//One-port: Z1 = ZS, Z2 = ZL
+                                   //Two-port: Z1 = ZS, Z2 = Zin_maxg
+                                   //          Z1 = Zout_maxg, Z2 = ZL
+    AmpData Amplifier_SPAR;
 
     std::string topology;
     unsigned int Grid_MaxIter;

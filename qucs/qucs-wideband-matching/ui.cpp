@@ -51,6 +51,7 @@ ui::ui()
       ZSOhmLabel = new QLabel("Ohm");
       ZLOhmLabel = new QLabel("Ohm");
 
+
       ZSOhmLabel->setVisible(false);
       ZLOhmLabel->setVisible(false);
 
@@ -66,14 +67,14 @@ ui::ui()
       ConstantZLLayout->addWidget(FixedZLLineedit);
       ConstantZLLayout->addWidget(ZLOhmLabel);
 
-      QLabel *SourceLabel = new QLabel("Source");
+      SourceLabel = new QLabel("Source");
       SourceLabel->setStyleSheet("QLabel {font-weight: bold; border: 1px solid black;}");
       SourceLabel->setAlignment(Qt::AlignHCenter);
       SourceLayout->addWidget(SourceLabel);
       SourceLayout->addWidget(SourceFileButton);
       SourceLayout->addLayout(ConstantZSLayout);
 
-      QLabel *LoadLabel = new QLabel("Load");
+      LoadLabel = new QLabel("Load");
       LoadLabel->setStyleSheet("QLabel {font-weight: bold; border: 1px solid black;}");
       LoadLabel->setAlignment(Qt::AlignHCenter);
       LoadLayout->addWidget(LoadLabel);
@@ -90,9 +91,11 @@ ui::ui()
       LoadLayout->addWidget(FixedZLCheckbox);
 
       SourceImpGroupBox = new QGroupBox();
+      SourceImpGroupBox->setMinimumSize(130,20);
       SourceImpGroupBox->setStyleSheet("QGroupBox{  border: 1px solid black;}");
       LoadImpGroupBox = new QGroupBox();
       LoadImpGroupBox->setStyleSheet("QGroupBox{  border: 1px solid black;}");
+      LoadImpGroupBox->setMinimumSize(130,20);
 
       SourceImpGroupBox->setLayout(SourceLayout);
       LoadImpGroupBox->setLayout(LoadLayout);
@@ -177,6 +180,7 @@ ui::ui()
        OptionsLayout->addWidget(new QLabel("Temp folder GNUplot:"), 2, 0);
        OptionsLayout->addWidget(GNUplotButton, 2, 1);
        GNUplot_path = "/tmp";
+
 
       //Create go/cancel buttons
       RunButton = new QPushButton("Calculate and put into clipboard");
@@ -267,34 +271,52 @@ void ui::go_clicked()
     if (LoadFile.contains(".s1p")) formatLoad = 0;
 
 
-    if ((formatSource != 0) && (!FixedZSCheckbox->isChecked()))
+    if ((formatSource != 0) && (!FixedZSCheckbox->isChecked()) && (!TwoPortMatchingCheckbox->isChecked()))
     {
         QMessageBox::warning(0, QObject::tr("Error"),
                              QObject::tr("Unknown source impedace"));
         return;
     }
 
-    if ((formatLoad != 0)  && (!FixedZLCheckbox->isChecked()))
+    if ((formatLoad != 0)  && (!FixedZLCheckbox->isChecked()) && (!TwoPortMatchingCheckbox->isChecked()))
     {
         QMessageBox::warning(0, QObject::tr("Error"),
                              QObject::tr("Unknown load impedance"));
         return;
     }
 
-    //Impedance data paths were already specified, let's proceed to bring the S-par data into memory
     IO * inout_operations = new IO();
 
-    if (!FixedZSCheckbox->isChecked())//Read source impedance from file
+    if (TwoPortMatchingCheckbox->isChecked())
+    {
+       inout_operations->Two_Port_Matching=true;
+       inout_operations->loadS2Pdata(AmpFile.toStdString());
+    }
+    else
+    {
+       inout_operations->Two_Port_Matching=false;
+    }
+
+
+    //Impedance data paths were already specified, let's proceed to bring the S-par data into memory
+
+    if (!FixedZSCheckbox->isChecked() && (!TwoPortMatchingCheckbox->isChecked()))//Read source impedance from file
     {
         inout_operations->loadS1Pdata(SourceFile.toStdString(), SOURCE);//s1p
     }
     else//Set constant source impedance
     {
        complex<double> zs_temp;
+       if (!TwoPortMatchingCheckbox->isChecked())
+       {
        QByteArray ba = FixedZSLineedit->text().toLatin1();
        char * text = ba.data();
        zs_temp = getComplexImpedanceFromText(text);
-
+       }
+       else
+       {
+         zs_temp = inout_operations->AmpS2P.Z0;
+       }
        if (real(zs_temp) == -1)//Check if the input value is correct
        {
            QMessageBox::warning(0, QObject::tr("Error"),
@@ -303,25 +325,24 @@ void ui::go_clicked()
        }
        inout_operations->set_constant_ZS_vs_freq(zs_temp);
     }
-    if (TwoPortMatchingCheckbox->isChecked())
-    {
-       inout_operations->loadS2Pdata(AmpFile.toStdString());
-    }
-    else
-    {
-       inout_operations->loadS2Pdata("");
-    } 
 
-    if (!FixedZLCheckbox->isChecked())
+    if (!FixedZLCheckbox->isChecked() && (!TwoPortMatchingCheckbox->isChecked()))
     {
        inout_operations->loadS1Pdata(LoadFile.toStdString(), LOAD);//s1p
     }
     else
     {
         complex<double> zl_temp;
+        if (!TwoPortMatchingCheckbox->isChecked())
+        {
         QByteArray ba = FixedZLLineedit->text().toLatin1();
         char * text = ba.data();
         zl_temp = getComplexImpedanceFromText(text);
+        }
+        else
+        {
+          zl_temp = inout_operations->AmpS2P.Z0;
+        }
 
         if (zl_temp.real() == -1)//Check if the input value is correct
         {
@@ -330,7 +351,6 @@ void ui::go_clicked()
             return;
         }
         inout_operations->set_constant_ZL_vs_freq(zl_temp);
-
     }
 
     //Check frequency specifications
@@ -343,56 +363,69 @@ void ui::go_clicked()
                              QObject::tr("Wrong frequency settings"));
         return;
     }
-    else//Everything correct... lets set frequency
+
+    //Scale frequency according to the combobox units
+    fmatching_min *= getFreqScale(minFUnitsCombo->currentIndex());
+    fmatching_max *= getFreqScale(maxFUnitsCombo->currentIndex());
+    inout_operations->set_matching_band(fmatching_min, fmatching_max);
+    if (fmatching_min < min(inout_operations->getFrequency())-1e6)//The lower freq is not present at s1p/s2p
     {
-        //Scale frequency according to the combobox units
-        fmatching_min *= getFreqScale(minFUnitsCombo->currentIndex());
-        fmatching_max *= getFreqScale(maxFUnitsCombo->currentIndex());
-        inout_operations->set_matching_band(fmatching_min, fmatching_max);
-        if (fmatching_min < min(inout_operations->getFrequency())-1e6)//The lower freq is not present at s1p/s2p
-        {
-            QMessageBox::warning(0, QObject::tr("Error"),
-                                 QObject::tr("One of the impedance data files does not contain the specified lower frequency"));
-            return;
-        }
-        if (fmatching_max > max(inout_operations->getFrequency())+1e6)//The maximum freq is not present at s1p/s2p
-        {
-            QMessageBox::warning(0, QObject::tr("Error"),
-                                 QObject::tr("One of the impedance data files does not contain the specified upper frequency"));
-            return;
-        }
-        //Check if the specified frequencies lie with the s1p/s2p data
-        inout_operations->ResampleImpedances();//Force data update
+        QMessageBox::warning(0, QObject::tr("Error"),
+                             QObject::tr("One of the impedance data files does not contain the specified lower frequency"));
+        return;
     }
+    if (fmatching_max > max(inout_operations->getFrequency())+1e6)//The maximum freq is not present at s1p/s2p
+    {
+        QMessageBox::warning(0, QObject::tr("Error"),
+                             QObject::tr("One of the impedance data files does not contain the specified upper frequency"));
+        return;
+    }
+
+    //Check if the specified frequencies lie with the s1p/s2p data
+    if (inout_operations->ResampleImpedances() == -2)
+    {
+        QMessageBox::warning(0, QObject::tr("Warning"),
+                             QObject::tr("It is not possible to match the source and load ports simultaneously.\nThe unilateral approach will be used..."));
+    }
+
     inout_operations->UseGNUplot = UseGNUplotCheckbox->isChecked();
 
     GRABIM * MatchingObject = new GRABIM();
     // Impedance and frequency settings
-    MatchingObject->SetSourceImpedance(inout_operations->getSourceImpedance());
-    MatchingObject->SetLoadImpedance(inout_operations->getLoadImpedance());
-    MatchingObject->SetAmplifierS2P(inout_operations->getAmplifierS2P());
-    MatchingObject->SetFrequency(inout_operations->getFrequency());
+    MatchingObject->SetData(inout_operations->getMatchingData());
     MatchingObject->refine = RefineCheckbox->isChecked();
     MatchingObject->setSearchMode(0);//Default mode
 
-    GRABIM_Result R = MatchingObject->RunGRABIM();//Runs GRABIM. Well, this is not exactly the algorithm
+    GRABIM_Result R, RS, RL;
 
-    // detailed at [1] but from my point of view is functional and easier to code...
-    //Notes:
-    // 1) The candidate vector is not in log units. I do not see a good reason for doing so. Maybe I am missing something important
-    // 2) Frequency is not in rad/s.
-    // 3) The objective function is the magnitude of S11 expressed in dB. log(x) functions usually have strong
-    // gradients so it seem to suggest that this is good for derivative free opt algorithms
-    // 4) This code takes advantage from NLopt derivative-free local optimisers. NLopt is easy to link and it works
-    // fine. Despite the fact that the Nelder-Mead algorithm does not guarantee convergence (among other problems), it leads to achieve a good local (probably, global) optimum. NM is known to fail when the dimension of the problem is above 14-15. However, as far as matching networks are concerned, the lower order, the simpler the tuning. In practice it is not usual to find matching networks with more than 6 elements
+    if (TwoPortMatchingCheckbox->isChecked())
+    {
+         RS = MatchingObject->RunGRABIM(inout_operations->ZS, inout_operations->Zin_maxg);//Input matching network
+         RL = MatchingObject->RunGRABIM(inout_operations->Zout_maxg, inout_operations->ZL);//Output matching network
+         (FixedZSCheckbox->isChecked()) ? RS.source_path = "" : RL.source_path = SourceFile.toStdString();
+         (FixedZLCheckbox->isChecked()) ? RL.load_path = "": RL.load_path = LoadFile.toStdString();
+         TwoPortCircuit TPC;
+         TPC.InputMatching = RS;
+         TPC.OutputMatching = RL;
+         TPC.amplifier_path = AmpFile.toStdString();
+         inout_operations->ExportQucsSchematic(TPC, "");
 
-    (FixedZSCheckbox->isChecked()) ? R.source_path = "" : R.source_path = SourceFile.toStdString();
-    (FixedZLCheckbox->isChecked()) ? R.load_path = "": R.load_path = LoadFile.toStdString();
-    R.QucsVersion = PACKAGE_VERSION;
+    }
+    else
+    {
+        R = MatchingObject->RunGRABIM(inout_operations->ZS, inout_operations->ZL);
+        (FixedZSCheckbox->isChecked()) ? R.source_path = "" : R.source_path = SourceFile.toStdString();
+        (FixedZLCheckbox->isChecked()) ? R.load_path = "": R.load_path = LoadFile.toStdString();
 
-    inout_operations->tmp_path = "/tmp";
-    if (UseGNUplotCheckbox->isChecked())inout_operations->exportGNUplot(R, GNUplot_path.toStdString(), MatchingObject->refine);
-    inout_operations->ExportQucsSchematic(R, "");
+        TwoPortCircuit TPC;
+        TPC.InputMatching = R;
+        TPC.QucsVersion = PACKAGE_VERSION;
+
+        inout_operations->tmp_path = "/tmp";
+        if (UseGNUplotCheckbox->isChecked())inout_operations->exportGNUplot(R, GNUplot_path.toStdString(), MatchingObject->refine);
+        inout_operations->ExportQucsSchematic(TPC, "");
+    }
+
     delete MatchingObject;
     delete inout_operations;
    
@@ -551,12 +584,41 @@ void ui::TwoPortMatchingCheckbox_state(int state)
 {
    if (state == Qt::Unchecked)
    { 
+      //Deactivate the S2P button
       imgWidget->setVisible(true);
       AmplifierS2Pbutton->setVisible(false);
+
+      //Show the source and load options
+      (FixedZSCheckbox->isChecked())? FixedZSLineedit->setVisible(true): SourceFileButton->setVisible(true);
+      (FixedZLCheckbox->isChecked())? FixedZLLineedit->setVisible(true): LoadFileButton->setVisible(true);
+
+      FixedZSCheckbox->setVisible(true);
+      FixedZLCheckbox->setVisible(true);
+
+      SourceLabel->setText("Source");
+      LoadLabel->setText("Load");
+
    }
    else
    {
+      //Activate S2P button
       imgWidget->setVisible(false);
       AmplifierS2Pbutton->setVisible(true);
+
+      //Hide terms. Two-port matching can only be done at the impedance
+      //at which the S2P device was measured:
+
+      SourceFileButton->setVisible(false);
+      LoadFileButton->setVisible(false);
+
+      FixedZSCheckbox->setVisible(false);
+      FixedZLCheckbox->setVisible(false);
+
+      FixedZSLineedit->setVisible(false);
+      FixedZLLineedit->setVisible(false);
+
+      SourceLabel->setText("Source\nZ0");
+      LoadLabel->setText("Load\nZ0");
+
    }
 }

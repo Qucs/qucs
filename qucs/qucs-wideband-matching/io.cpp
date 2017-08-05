@@ -312,14 +312,12 @@ int IO::loadS1Pdata(std::string filepath, terminal Port)
     {
         fS = freq;
         ZS = Z;
-        if (!ZL.empty())ResampleImpedances();
     }
 
     if (Port == LOAD)//Set load port properties
     {
         fL = freq;
         ZL = Z;
-        if (!ZS.empty())ResampleImpedances();
     }
     return 0;
 }
@@ -332,7 +330,6 @@ int IO::loadS2Pdata(std::string filepath)
     {
         return -1;
     }
-
     std::string line;
     double freq_scale = 1;
     double Zref = 50;
@@ -351,13 +348,10 @@ int IO::loadS2Pdata(std::string filepath)
 
     int Rindex = line.find_last_of("r");
     Rindex = line.find_first_not_of(" ", Rindex);
-    Zref = atof(line.substr(Rindex+1).c_str());
+    AmpS2P.Z0 = atof(line.substr(Rindex+1).c_str());
 
     bool is_indB = (line.find("db") != string::npos);
-    bool RI = (line.find("ma") == string::npos);
-    bool isS_par = (line.find(" s ") != string::npos);
-    bool isZ_par = (line.find(" z ") != string::npos);
-
+    bool RI = (line.find("ri") != string::npos);
 
     while( getline(s2pfile, line) )
     {//Looking for the start of the raw data
@@ -442,8 +436,7 @@ int IO::loadS2Pdata(std::string filepath)
         qsize++;
     }while (std::getline(s2pfile, line));
     s2pfile.close();
-    deque<double> freq(qsize);
-    AmpData AmpS2P;
+    vector<double> freq(qsize);
 
     double S11m, S11a, S21m, S21a, S12m, S12a, S22m, S22a;
     for (unsigned int i = 0; i < qsize; i++)
@@ -484,9 +477,7 @@ int IO::loadS2Pdata(std::string filepath)
     	    AmpS2P.S22.push_back(complex<double>(S22m, S22a)); 
         }
         else
-        {   
-
-           
+        {            
             S11a = (pi/180)*S11a;
             S21a = (pi/180)*S21a;
             S12a = (pi/180)*S12a;
@@ -496,16 +487,12 @@ int IO::loadS2Pdata(std::string filepath)
     	    AmpS2P.S21.push_back(complex<double>(S21m,0)*complex<double>(cos(S21a), sin(S21a))); 
     	    AmpS2P.S12.push_back(complex<double>(S12m,0)*complex<double>(cos(S12a), sin(S12a))); 
     	    AmpS2P.S22.push_back(complex<double>(S22m,0)*complex<double>(cos(S22a), sin(S22a)));
-/*
-           cout << freq.at(i) << " S11:" <<S11m << ", " << S11a << "==> " << AmpS2P.S11.at(i) << endl;
-           cout << freq.at(i) << " S21:" <<S21m << ", " << S21a << "==> " << AmpS2P.S21.at(i) << endl;
-           cout << freq.at(i) << " S12:" <<S12m << ", " << S12a << "==> " << AmpS2P.S12.at(i) << endl;
-           cout << freq.at(i) << " S22:" <<S22m << ", " << S22a << "==> " << AmpS2P.S22.at(i) << endl << endl;*/
         }
  
 
 
     }
+    fAMP = freq;
     return 0;
 }
 
@@ -514,123 +501,181 @@ int IO::loadS2Pdata(std::string filepath)
 // spline or cubic interpolation, but it seems that they are not implemented in Armadillo
 int IO::ResampleImpedances()
 {
-    bool ready = false;
+    if (ZS.size() == 0) return 0;//Not set
+    if (ZL.size() == 0) return 0;//Not set
+    if ((Two_Port_Matching)&&(fAMP.size() == 0)) return 0;//Not set
+
     if (fmatching_min == -1) return 0;
 
-    //Check whether the vectors are already resampled or not
-    if ((ZS.size() == ZL.size()) && (ZS.size() == freq.size()))
+    freq = linspace(fmatching_min, fmatching_max, Nsamples);//Frequency vector employed for matching
+
+    //Source impedance
+    if (ZS.size() == 1)
     {
-        return 0;
+       complex<double> zs_temp = ZS[0];
+       ZS.resize(freq.size());
+       ZS = ones(ZS);
+       ZS = Product(ZS,zs_temp);
+    }
+    else
+    {
+        //Extract impedance lying on the specified frequency band defined by the user in the UI
+        unsigned int i1s = closestIndex(fS, fmatching_min);
+        unsigned int i2s = closestIndex(fS, fmatching_max);
+        vector<complex<double>> zs = SubVector(ZS, i1s, i2s);//Useful impedance data
+        vector<double> fs = SubVector(fS, i1s, i2s);//Frequency points where the impedance zs is sampled
+        vector<complex<double>> ZS_ = interp(fs, zs, freq);//Interpolation using input data
+        ZS.resize(ZS_.size());//Resize ZS array
+        ZS = ZS_;//Copy data
     }
 
-    double fmin, fmax;
-    /*We have to discern the following cases
-    1: ZS constant, ZL constant versus frequency
-    2: ZS s2p/s1p, ZL constant vs freq
-    3: ZS constant vs freq, ZS s2p/s1p
-    4: ZS s2p/s1p vs ZL s2p/s1p
-    */
-
-    fmin = fmatching_min;
-    fmax = fmatching_max;
-
-    if ((ZS.size() == 1) && (ZL.size() == 1)) //ZS constant, ZL constant vs frequency
+    //Load impedance
+    if (ZL.size() == 1)
     {
-        freq = linspace(fmatching_min, fmatching_max, Nsamples);//Available freqs
-        complex<double> zs_temp = ZS[0];
-        complex<double> zl_temp = ZL[0];
-        //Create ZS and ZL vectors with the same length than freq
-        ZS.resize(freq.size());
-        ZS = ones(ZS);
-        ZS = Product(ZS,zs_temp);
-
-        ZL.resize(freq.size());
-        ZL = ones(ZL);
-        ZL = Product(ZL,zl_temp);
-
-        return 0;
+       complex<double> zl_temp = ZL[0];
+       ZL.resize(freq.size());
+       ZL = ones(ZL);
+       ZL = Product(ZL,zl_temp);
+    }
+    else
+    {
+        //Extract impedance lying on the specified frequency band defined by the user in the UI
+        unsigned int i1l = closestIndex(fL, fmatching_min);
+        unsigned int i2l = closestIndex(fL, fmatching_max);
+        vector<complex<double>> zl = SubVector(ZL, i1l, i2l);//Useful impedance data
+        vector<double> fl = SubVector(fL, i1l, i2l);//Frequency points where the impedance zs is sampled
+        vector<complex<double>> ZL_ = interp(fl, zl, freq);//Interpolation using input data
+        ZL.resize(ZL_.size());//Resize ZS array
+        ZL = ZL_;//Copy data
     }
 
-    if ((ZS.size() == 1) && (ZL.size() != 1)) //ZS constant vs ZL s2p/s1p
+    if (AmpS2P.S11.empty()) return 0;//One port matching
+
+    //Amplifier SPAR data
+    if (AmpS2P.S11.size() == 1)//Constant SPAR vs frequency. Corner case, but some user may input data like this
     {
-        if (min(fL) > fmin ) fmin = min(fL);
-        if (max(fL) < fmax ) fmax = max(fL);
-        fS = fL;
-        complex<double> zs_temp = ZS[0];
-        ZS.resize(ZL.size());
-        ZS = ones(ZL);
-        ZS = Product(ZS,zs_temp);
-        ready = true;
+       complex<double> S11_temp = AmpS2P.S11[0];
+       complex<double> S21_temp = AmpS2P.S21[0];
+       complex<double> S12_temp = AmpS2P.S12[0];
+       complex<double> S22_temp = AmpS2P.S22[0];
+
+       AmpS2P.S11.resize(freq.size());
+       AmpS2P.S21.resize(freq.size());
+       AmpS2P.S12.resize(freq.size());
+       AmpS2P.S22.resize(freq.size());
+
+       AmpS2P.S11 = ones(AmpS2P.S11);
+       AmpS2P.S21 = ones(AmpS2P.S21);
+       AmpS2P.S12 = ones(AmpS2P.S12);
+       AmpS2P.S22 = ones(AmpS2P.S22);
+
+       AmpS2P.S11 = Product(AmpS2P.S11,S11_temp);
+       AmpS2P.S21 = Product(AmpS2P.S21,S21_temp);
+       AmpS2P.S12 = Product(AmpS2P.S12,S12_temp);
+       AmpS2P.S22 = Product(AmpS2P.S22,S22_temp);
     }
-    if ((ZS.size() != 1) && (ZL.size() == 1) && (!ready)) //ZS s2p/s1p vs ZL constant
-    {
-        if (min(fS) > fmin ) fmin = min(fS);
-        if (max(fS) < fmax ) fmax = max(fS);
-        fL = fS;
-        complex<double> zl_temp = ZL[0];
-        ZL.resize(ZS.size());
-        ZL = ones(ZL);
-        ZL = Product(ZL,zl_temp);
-        ready = true;
-    }
-    if ((ZS.size() != 1) && (ZL.size() != 1) && (!ready)) //ZS s2p/s1p vs ZL s2p/s1p
-    {
-          double fmin_aux, fmax_aux;
-          //Define vector of available freqs
-          (min(fS) > min(fL)) ? fmin_aux = min(fS) : fmin_aux = min(fL);
-          (max(fS) > max(fL)) ? fmax_aux = max(fL) : fmax_aux = max(fS);
+   else
+   {
+        //Extract impedance lying on the specified frequency band defined by the user in the UI
+        unsigned int i1amp = closestIndex(fAMP, fmatching_min);
+        unsigned int i2amp = closestIndex(fAMP, fmatching_max);
+        
+        vector<complex<double>> s11 = SubVector(AmpS2P.S11, i1amp, i2amp);
+        vector<complex<double>> s21 = SubVector(AmpS2P.S21, i1amp, i2amp);
+        vector<complex<double>> s12 = SubVector(AmpS2P.S12, i1amp, i2amp);
+        vector<complex<double>> s22 = SubVector(AmpS2P.S22, i1amp, i2amp);
+        vector<double> fa = SubVector(fAMP, i1amp, i2amp);//Frequency points where the impedance zs is sampled
 
-          if (fmin_aux < fmin ) fmin = fmin_aux;
-          if (fmax_aux > fmax ) fmax = fmax_aux;
+        vector<complex<double>> S11_ = interp(fa, s11, freq);//Interpolation using input data
+        vector<complex<double>> S21_ = interp(fa, s21, freq);
+        vector<complex<double>> S12_ = interp(fa, s12, freq);
+        vector<complex<double>> S22_ = interp(fa, s22, freq);
 
-          //int N;//Number of points for linear interpolation
-          //(ZS.n_elem > ZL.n_elem) ? N = 2*ZS.n_elem : N = 2*ZL.n_elem;
-    }
+        AmpS2P.S11.resize(S11_.size());
+        AmpS2P.S21.resize(S21_.size());
+        AmpS2P.S12.resize(S12_.size());
+        AmpS2P.S22.resize(S22_.size());
 
-        freq = linspace(fmin, fmax, Nsamples);//Available freqs
-        unsigned int i1s = closestIndex(fS, fmin)-1;
-        unsigned int i2s = closestIndex(fS, fmax)+1;
-        unsigned int i1l = closestIndex(fL, fmin)-1;
-        unsigned int i2l = closestIndex(fL, fmax)+1;  
+        AmpS2P.S11 = S11_;//Copy data
+        AmpS2P.S21 = S21_;
+        AmpS2P.S12 = S12_;
+        AmpS2P.S22 = S22_;
+   }
 
-        vector<complex<double>> zs = SubVector(ZS, i1s, i2s);
-        vector<complex<double>> zl = SubVector(ZL, i1l, i2l);
-        vector<double> fs = SubVector(fS, i1s, i2s);
-        vector<double> fl = SubVector(fL, i1l, i2l);
+   //Finally, we calculate conj(Zin) and conj(Zout) for achieving maximum gain on a two-port device
 
-        vector<complex<double>> ZS_ = interp(fs, zs, freq);
-        vector<complex<double>> ZL_ = interp(fl, zl, freq);  
-          
-        ZS.resize(ZS_.size());
-        ZL.resize(ZL_.size());
+    /***********************************************************************
+      (gamma_S)                (gamma_in)    (gamma_out)                (gamma_L)
+              _________________       _______        __________________
+             |                 | Zin |       | Zout |                  |
+        ZS---| INPUT MATCHING  |-----|  TRT  |------| OUTPUT MATCHING  |---ZL
+             |_________________|     |_______|      |__________________|
 
-        ZS = ZS_;
-        ZL = ZL_;
-        return 0;
+    ************************************************************************/
 
+   vector<complex<double>> delta = AmpS2P.S11*AmpS2P.S22 - AmpS2P.S21*AmpS2P.S12;
+   vector<double> B1 = 1 + abs(AmpS2P.S11)*abs(AmpS2P.S11) - abs(AmpS2P.S22)*abs(AmpS2P.S22) - abs(delta)*abs(delta);
+   vector<double> B2 = 1 + abs(AmpS2P.S22)*abs(AmpS2P.S22) - abs(AmpS2P.S11)*abs(AmpS2P.S11) - abs(delta)*abs(delta);
+   vector<complex<double>> C1 = AmpS2P.S11 - delta*conj(AmpS2P.S22);
+   vector<complex<double>> C2 = AmpS2P.S22 - delta*conj(AmpS2P.S11);
+   complex<double> gamma_S, gamma_L;
+   int ext_code = 0;
+   Zin_maxg.resize(C1.size());
+   Zout_maxg.resize(C1.size());
+   //The sign of the square root must be chosen for each frequency so here we cannot apply vector operations
+   for (int i = 0; i < C1.size(); i++)
+   {
+      gamma_S = (B1[i]-sqrt(B1[i]*B1[i] - 4.*abs(C1[i])*abs(C1[i])))/(2.*C1[i]);
+      gamma_L = (B2[i]-sqrt(B2[i]*B2[i] - 4.*abs(C2[i])*abs(C2[i])))/(2.*C2[i]);
+
+      if ((gamma_S != gamma_S) || (gamma_L != gamma_L))//Check if Nan
+      {
+          ext_code = -2;
+          Zin_maxg[i]  = AmpS2P.Z0*(complex<double>(1,0)+conj(AmpS2P.S11.at(i)))/(complex<double>(1,0)-conj(AmpS2P.S11.at(i)));
+          Zout_maxg[i] = AmpS2P.Z0*(complex<double>(1,0)+conj(AmpS2P.S22.at(i)))/(complex<double>(1,0)-conj(AmpS2P.S22.at(i)));
+      }
+      else
+      {
+         Zin_maxg[i]  = AmpS2P.Z0*(complex<double>(1,0)+conj(gamma_S))/(complex<double>(1,0)-conj(gamma_S));
+         Zout_maxg[i] = AmpS2P.Z0*(complex<double>(1,0)+conj(gamma_L))/(complex<double>(1,0)-conj(gamma_L));
+         continue;
+      }
+      if (real(Zin_maxg[i]) <= 0)
+      {
+        gamma_S = (B1[i]+sqrt(B1[i]*B1[i] - 4.*abs(C1[i])*abs(C1[i])))/(2.*C1[i]);
+        Zin_maxg[i]  = ZS[i]*(complex<double>(1,0)+conj(gamma_S))/(complex<double>(1,0)-conj(gamma_S));
+      }
+
+      if (real(Zout_maxg[i]) <= 0)
+      {
+        gamma_L = (B2[i]+sqrt(B2[i]*B2[i] - 4.*abs(C2[i])*abs(C2[i])))/(2.*C2[i]);
+        Zout_maxg[i] = ZL[i]*(complex<double>(1,0)+conj(gamma_L))/(complex<double>(1,0)-conj(gamma_L));
+      }
+   }
+
+   //Notice that the equation below difer from the typical equations for two-port matching in the sense that
+   //here ZS and ZL are used instead of Z0. Although in general the amplifier is matched to Z0=50 or 75\Ohm
+   //this tool aims to treat the impedance matching problem in a more general fashion
+
+
+   return ext_code;
 }
 
-vector<complex<double>> IO::getSourceImpedance()
+MatchingData IO::getMatchingData()
 {
-    ResampleImpedances();
-    return ZS;
-}
-vector<complex<double>> IO::getLoadImpedance()
-{
-    ResampleImpedances();
-    return ZL;
+   MatchingData data;
+   data.freq = freq;
+   data.ZS = ZS;
+   data.ZL = ZL;
+   data.Zin_maxg = Zin_maxg;
+   data.Zout_maxg = Zout_maxg;
+   return data;
 }
 
 
-vector<vector<complex<double>>> IO::getAmplifierS2P()
-{
-    ResampleImpedances();
-    return AmpS2P;
-}
 
 vector<double> IO::getFrequency()
 {
-    ResampleImpedances();
     return freq;
 }
 
@@ -656,26 +701,6 @@ void IO::set_matching_band(double fmin, double fmax)
     freq = linspace(fmatching_min, fmatching_max, Nsamples);//Available freqs
 }
 
-// Set load/source matching impedace
-int IO::setMatchingImpedances()
-{
-    //Select impedance values at the matching band
-    int index1 = getFreqIndex(fmatching_min);
-    int index2 = getFreqIndex(fmatching_max);
-
-    vector<complex<double>> ZS_(&ZS[index1], &ZS[index2+1]);
-    vector<complex<double>> ZL_(&ZL[index1], &ZL[index2+1]);
-
-    ZS_matching = ZS_;
-    ZL_matching = ZL_;
-
-    //Now, it's needed to update the matching band according to f_analysis values
-    vector<double>freq_(&freq[index1], &freq[index2]);
-    f_matching = freq_;
-
-    return 0;
-}
-
 
 // Gets the index of a given frequency
 int IO::getFreqIndex(double f1)
@@ -683,18 +708,6 @@ int IO::getFreqIndex(double f1)
     return closestIndex(freq, f1) ;
 }
 
-/*
-//Sets local optimisation algorithm
-void IO::setLocalOptimiser(nlopt::algorithm NL)
-{
-    LocalOptAlgo = NL;
-}
-
-
-nlopt::algorithm IO::getLocalOptimiser()
-{
-    return LocalOptAlgo;
-}*/
 
 
 //Get freq scale from a string line
@@ -726,15 +739,15 @@ double IO::getS2PfreqScale(string line)
 
 
 // This function exports the best topology found to a Qucs schematic
-int IO::ExportQucsSchematic(GRABIM_Result R, string QucsFile)
+int IO::ExportQucsSchematic(TwoPortCircuit TPC, string QucsFile)
 {
     std::string wirestr = "";
     std::string componentstr = "";
     std::string paintingstr = "";
     int x_pos = 0;
-    SchematicParser(R, x_pos, componentstr, wirestr, paintingstr);
-    if (R.QucsVersion.empty()) R.QucsVersion = "0.0.19";
-    CreateSchematic(componentstr, wirestr, paintingstr, R.QucsVersion, QucsFile);
+    SchematicParser(TPC, x_pos, componentstr, wirestr, paintingstr);
+    if (TPC.QucsVersion.empty()) TPC.QucsVersion = "0.0.19";
+    CreateSchematic(componentstr, wirestr, paintingstr, TPC.QucsVersion, QucsFile);
     return 0;
 }
 
@@ -748,10 +761,8 @@ void IO::generateConstant_s1p(string datapath, complex<double> Z)
 
 // Given a string code of inductors, capacitors and transmission lines, it generates the Qucs network. Notice that the schematic is split into
 // three part: components, wires and paintings, all of them are passed by reference.
-int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, string & wirestr, string & paintingstr)
+int IO::SchematicParser(TwoPortCircuit TPC, int & x_pos, string & componentstr, string & wirestr, string & paintingstr)
 {
-    string component;
-    int x_series = 150, x_shunt = 120;//x-axis spacing depending on whether the component is placed in a series or shunt configuration
     //Clear input strings (just in case)
     componentstr = "";
     wirestr = "";
@@ -763,6 +774,8 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
     // 1: Port 1
     // 2: Port 2
     // 3: Port 1, Port 2 and S parameter simulation
+
+    GRABIM_Result R = TPC.InputMatching;
 
     if ((R.source_path.empty()) && (abs(ZS.at(0).imag()) < 1e-3) && (ZS.at(0).real() > 1e-3))
     {//Conventional term
@@ -789,6 +802,102 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
         x_pos +=100;
     }
 
+    //Draw ladder network
+    CreateLadder(R, componentstr, wirestr, x_pos);
+    if (!TPC.OutputMatching.freq.empty())
+    {//Two-port network
+        //Place S2P device
+        x_pos += 30;
+        componentstr += "<SPfile X1 1 " + Num2String(x_pos) + " -120 -26 -67 0 0 \"" + TPC.amplifier_path + "\" 1 \"rectangular\" 0 \"linear\" 0 \"open\" 0 \"2\" 0>\n";
+        componentstr += "<GND * 1 " + Num2String(x_pos) +" -90 0 0 0 0>\n";
+        x_pos += 30;
+        wirestr += "<" + Num2String(x_pos+30) + " -120 " + Num2String(x_pos) + " -120>\n";
+        R = TPC.OutputMatching;
+        CreateLadder(R, componentstr, wirestr, x_pos);
+    }
+
+    int spacing = 30;
+    x_pos += spacing;
+
+    if ((R.load_path.empty()) && (abs(ZL.at(0).imag()) < 1e-3) && (ZL.at(0).real() > 1e-3))
+    {//Conventional term
+        componentstr += "<Pac P1 1 " + Num2String(x_pos) + " -30 18 -26 0 1 \"1\" 1 \"" + Num2String(ZL.at(0).real()) + " Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n";
+        componentstr += "<GND * 1 "+Num2String(x_pos)+" 0 0 0 0 0>\n";
+
+        wirestr += "<" + Num2String(x_pos) + " -60 " + Num2String(x_pos) + " -120 "" 0 0 0 "">\n";
+        wirestr += "<" + Num2String(x_pos-spacing) + " -120 " + Num2String(x_pos) + " -120 "" 0 0 0 "">\n";
+        term2 = true;//Add S22_dB = dB(S[2,2]) equation
+    }
+    else
+    {//Place a S-param file
+        if (R.load_path.empty())
+        {
+          string s1p_path = tmp_path + "/ZL_data.s1p";
+          generateConstant_s1p(s1p_path, ZL.at(0));
+          R.load_path =  s1p_path;
+        }
+        componentstr += "<SPfile X1 1 " + Num2String(x_pos) + " -120 -26 -67 0 0 \"" + R.load_path + "\" 1 \"rectangular\" 0 \"linear\" 0 \"open\" 0 \"1\" 0>\n";
+        componentstr += "<GND * 1 " + Num2String(x_pos) + " -90 0 0 0 0>\n";
+    }
+
+    //Finally, add the S-par simulation block
+    double fstart = fmatching_min*0.3;
+    double fstop = fmatching_max*1.7;
+    componentstr += "<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"" + Num2String(fstart) + "\" 1 \"" + Num2String(fstop) + "\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n";
+   
+    //Add equations
+    string eqn = ""; 
+    if (term1) eqn = "\"S11_dB=dB(S[1,1])\" 1 ";
+    if (term2) eqn += "\"S22_dB=dB(S[2,2])\" 1 ";
+    if (term1 && term2) eqn += "\"S21_dB=dB(S[2,1])\" 1 ";
+    if (term1 || term2) componentstr += "<Eqn Eqn1 1 50 200 -28 15 0 0 " + eqn + "\"yes\" 0>\n";
+
+    return 0;
+}
+
+
+//-----------------------------------------------------------------------------
+// Given the components, wires and paintings, it creates the schematic and copies on the clipboard
+bool IO::CreateSchematic(string components, string wires, string paintings, string QucsVersion, string QucsFilePath)
+{
+    //Header
+    std::string Schematic = "<Qucs Schematic " + QucsVersion + ">\n";
+
+    //Add components
+    Schematic += "<Components>\n";
+    Schematic += components;
+    Schematic += "</Components>\n";
+
+    //Add wires
+    Schematic+= "<Wires>\n";
+    Schematic += wires;
+    Schematic+= "</Wires>\n";
+
+    //Add paintings
+    Schematic += "<Paintings>\n";
+    Schematic += paintings;
+    Schematic += "</Paintings>\n";
+
+    if (QucsFilePath.empty())
+    {
+       QApplication::clipboard()->setText(QString(Schematic.c_str()), QClipboard::Clipboard);//Copy into clipboard
+    }
+    else//Dump content into a file
+    {
+       std::ofstream QucsFile(QucsFilePath.c_str(), ios_base::out);
+       QucsFile << Schematic;
+       QucsFile.close();
+    }
+
+    return true;
+}
+
+
+
+void IO::CreateLadder(GRABIM_Result R, string & componentstr, string & wirestr, int & x_pos)
+{
+    string component;
+    int x_series = 150, x_shunt = 120;//x-axis spacing depending on whether the component is placed in a series or shunt configuration
 
     // The string format is as follows: "XX<value>;XX<value2>;...XX<valueN>;"
     // where XX, YY, ZZ define the type of component and its configuration.
@@ -866,81 +975,8 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
         }
 
     }
-    double spacing = 30;
-    x_pos += spacing;
-
-    if ((R.load_path.empty()) && (abs(ZL.at(0).imag()) < 1e-3) && (ZL.at(0).real() > 1e-3))
-    {//Conventional term
-        componentstr += "<Pac P1 1 " + Num2String(x_pos) + " -30 18 -26 0 1 \"1\" 1 \"" + Num2String(ZL.at(0).real()) + " Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n";
-        componentstr += "<GND * 1 "+Num2String(x_pos)+" 0 0 0 0 0>\n";
-
-        wirestr += "<" + Num2String(x_pos) + " -60 " + Num2String(x_pos) + " -120 "" 0 0 0 "">\n";
-        wirestr += "<" + Num2String(x_pos-spacing) + " -120 " + Num2String(x_pos) + " -120 "" 0 0 0 "">\n";
-        term2 = true;//Add S22_dB = dB(S[2,2]) equation
-    }
-    else
-    {//Place a S-param file
-        if (R.load_path.empty())
-        {
-          string s1p_path = tmp_path + "/ZL_data.s1p";
-          generateConstant_s1p(s1p_path, ZL.at(0));
-          R.load_path =  s1p_path;
-        }
-        componentstr += "<SPfile X1 1 " + Num2String(x_pos) + " -120 -26 -67 0 0 \"" + R.load_path + "\" 1 \"rectangular\" 0 \"linear\" 0 \"open\" 0 \"1\" 0>\n";
-        componentstr += "<GND * 1 " + Num2String(x_pos) + " -90 0 0 0 0>\n";
-    }
-
-    //Finally, add the S-par simulation block
-    double fstart = fmatching_min*0.3;
-    double fstop = fmatching_max*1.7;
-    componentstr += "<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"" + Num2String(fstart) + "\" 1 \"" + Num2String(fstop) + "\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n";
-   
-    //Add equations
-    string eqn = ""; 
-    if (term1) eqn = "\"S11_dB=dB(S[1,1])\" 1 ";
-    if (term2) eqn += "\"S22_dB=dB(S[2,2])\" 1 ";
-    if (term1 && term2) eqn += "\"S21_dB=dB(S[2,1])\" 1 ";
-    if (term1 || term2) componentstr += "<Eqn Eqn1 1 50 200 -28 15 0 0 " + eqn + "\"yes\" 0>\n";
-
-    return 0;
 }
 
-
-//-----------------------------------------------------------------------------
-// Given the components, wires and paintings, it creates the schematic and copies on the clipboard
-bool IO::CreateSchematic(string components, string wires, string paintings, string QucsVersion, string QucsFilePath)
-{
-    //Header
-    std::string Schematic = "<Qucs Schematic " + QucsVersion + ">\n";
-
-    //Add components
-    Schematic += "<Components>\n";
-    Schematic += components;
-    Schematic += "</Components>\n";
-
-    //Add wires
-    Schematic+= "<Wires>\n";
-    Schematic += wires;
-    Schematic+= "</Wires>\n";
-
-    //Add paintings
-    Schematic += "<Paintings>\n";
-    Schematic += paintings;
-    Schematic += "</Paintings>\n";
-
-    if (QucsFilePath.empty())
-    {
-       QApplication::clipboard()->setText(QString(Schematic.c_str()), QClipboard::Clipboard);//Copy into clipboard
-    }
-    else//Dump content into a file
-    {
-       std::ofstream QucsFile(QucsFilePath.c_str(), ios_base::out);
-       QucsFile << Schematic;
-       QucsFile.close();
-    }
-
-    return true;
-}
 
 string IO::Num2String(double Num)
 {

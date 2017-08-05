@@ -45,24 +45,13 @@ GRABIM::~GRABIM()
 {}
 
 
-// It sets the source impedance vs frequency
-int GRABIM::SetSourceImpedance(vector<complex<double>> zs)
+int GRABIM::SetData(MatchingData data)
 {
-    ZS = zs;
-    return 0;
-}
-
-// It loads a s2p file and calculates the input impedance
-int GRABIM::SetLoadImpedance(vector<complex<double>> zl)
-{
-    ZL = zl;
-    return 0;
-}
-
-// It sets the load impedance vs frequency
-int GRABIM::SetFrequency(vector<double> f)
-{
-    freq = f;
+    ZS = data.ZS;
+    ZL = data.ZL;
+    Zin_maxg = data.Zin_maxg;
+    Zout_maxg = data.Zout_maxg;
+    freq = data.freq;
     return 0;
 }
 
@@ -109,11 +98,15 @@ double GRABIM::GetThreshold()
     return MatchingThreshold;
 }
 
+
 // Starts the engine
-GRABIM_Result GRABIM::RunGRABIM()
+GRABIM_Result GRABIM::RunGRABIM(vector<complex<double>> Z1_, vector<complex<double>> Z2_)
 {
     GRABIM_Result Res;
-
+    //Set input and output impedances
+    Z1 = Z1_;
+    Z2 = Z2_;
+    CreateTopologiesList();
     vector<vector<double>> Vopt;//This data structure which contains the optimum vector for each circuit topology.
     vector<string> candidates;//List of topologies. The grid search will be done for each one of them
     GridSearch_DifferentTopologies(Vopt, candidates);//Runs the grid search for each topology
@@ -164,8 +157,8 @@ GRABIM_Result GRABIM::RunGRABIM()
     //At this point, it was found the best candidate so the code below arranges data so as to produce the output data
     topology = candidates[best_index];
     Res.topology = topology.c_str();//Save network topology to create a Qucs schematic
-    Res.ZS = ZS;
-    Res.ZL = ZL;
+    Res.ZS = Z1;
+    Res.ZL = Z2;
     Res.freq = freq;
 
     //Initialize S param vectors
@@ -192,7 +185,7 @@ GRABIM_Result GRABIM::RunGRABIM()
     for (unsigned int i = 0; i < freq.size(); i++)
     {
         // Grid search
-        S_gridsearch = S2PEngine.getSparams(Res.x_grid_search, ZS[i], ZL[i], freq[i], topology);
+        S_gridsearch = S2PEngine.getSparams(Res.x_grid_search, Z1[i], Z2[i], freq[i], topology);
         Res.S11_gridsearch[i] = S_gridsearch(0,0);
         Res.S21_gridsearch[i] = S_gridsearch(1,0);
         Res.S12_gridsearch[i] = S_gridsearch(0,1);
@@ -201,7 +194,7 @@ GRABIM_Result GRABIM::RunGRABIM()
         // Local optimizer
         if (refine)
         {
-        S_nlopt = S2PEngine.getSparams(Res.x_local_opt, ZS[i], ZL[i], freq[i], topology);
+        S_nlopt = S2PEngine.getSparams(Res.x_local_opt, Z1[i], Z2[i], freq[i], topology);
         Res.S11_nlopt[i] = S_nlopt(0,0);
         Res.S21_nlopt[i] = S_nlopt(1,0);
         Res.S12_nlopt[i] = S_nlopt(0,1);
@@ -338,7 +331,6 @@ int GRABIM::GridSearch_DifferentTopologies(vector<vector<double>> & Vopt, vector
     double gridtest, opttopo = 1e12;
     vector<double> Vaux;
     string tag, best;
-
     unsigned int n_topo = TopoList.size();
     for (unsigned int i = 0; i < n_topo; i++)
     {
@@ -347,8 +339,8 @@ int GRABIM::GridSearch_DifferentTopologies(vector<vector<double>> & Vopt, vector
         TopoList.pop_front();
         TagList.pop_front();
         AutoSetInitialPivot();;
-        Vaux = GridSearch(); 
-        gridtest = CandidateEval(Vaux);  
+        Vaux = GridSearch();
+        gridtest = CandidateEval(Vaux);
         cout << 100.*(i+1)/n_topo<< "% completed. " << tag << ": S11_min = " <<  gridtest << " dB" << endl;
 
         if (gridtest < -8.)
@@ -530,7 +522,7 @@ vector<double> GRABIM::InspectCandidate(vector<double> xk)
         default://It is a transmission line or a stub
             if (xk[index] < 0)//Something is wrong...
             {
-                xk[index] = .5*(mean(abs(ZS))+mean(abs(ZL)));
+                xk[index] = .5*(mean(abs(Z1))+mean(abs(Z2)));
             }
             if (xk[index+1] < 0)
             {
@@ -566,19 +558,18 @@ double GRABIM::CandidateEval(vector<double> x)
     double fobj = -1e3;
     Mat S, ABCD;
     SparEngine S2PEngine;
-    vector<complex<double>> s11 (freq.size());
     for (unsigned int i = 0; i < freq.size(); i++)
     {
         if (ObjFun == ObjectiveFunction::NINF_S11dB)
         {
-            S = S2PEngine.getSparams(x, ZS[i], ZL[i], freq[i], topology);
+            S = S2PEngine.getSparams(x, Z1[i], Z2[i], freq[i], topology);
             if (abs(S(0,0)) > fobj) fobj = abs(S(0,0));//N inf
   
         }
         if (ObjFun == ObjectiveFunction::NINF_POWERTRANS)
         {
             ABCD = S2PEngine.getABCDmatrix(x, freq.at(i), topology);
-            fobj = CalcInvPowerTransfer(ABCD, ZS.at(i), ZL.at(i));
+            fobj = CalcInvPowerTransfer(ABCD, Z1.at(i), Z2.at(i));
         }
     }
     if (ObjFun == ObjectiveFunction::NINF_S11dB)fobj = 20*log10(fobj);//|grad{log(x)}| > |grad{x}| when x < 1;
@@ -620,7 +611,7 @@ void GRABIM::AutoSetInitialPivot()
     double meanf = .5*(min(freq)+max(freq));
     double meanw = 2*pi*meanf;
     double lambda4 = c0/(4.*meanf);
-    double meanZ = 0.75*(mean(abs(ZL))+mean(abs(ZS)));
+    double meanZ = 0.75*(mean(abs(Z1))+mean(abs(Z2)));
     queue <double> XINI;
     for (unsigned int i = 0; i< topology.size();i++)
     {
@@ -628,16 +619,16 @@ void GRABIM::AutoSetInitialPivot()
         if (!topology.substr(i,1).compare("2")) XINI.push(meanZ/meanw);
         if (!topology.substr(i,1).compare("1")) XINI.push(1/(meanZ*meanw));
         if (!topology.substr(i,1).compare("3")) XINI.push(1/(meanZ*meanw));
-        if((!topology.substr(i,1).compare("5"))||(!topology.substr(i,1).compare("6")))XINI.push(mean(real(ZS)+real(ZL))),XINI.push(lambda4);
+        if((!topology.substr(i,1).compare("5"))||(!topology.substr(i,1).compare("6")))XINI.push(mean(real(Z1)+real(Z2))),XINI.push(lambda4);
 
         if (!topology.substr(i,1).compare("4"))//Transmission line
         {
             // Here it is defined a linear impedance profile. In case the user selected 444, this tries
             // works real-to-real impedance transformer. Luckily, GRABIM will find a better result
             double Zi;
-            double m = (mean(real(ZL))-mean(real(ZS)))/topology.length();
+            double m = (mean(real(Z2))-mean(real(Z1)))/topology.length();
 
-            Zi = m*i+mean(real(ZS));
+            Zi = m*i+mean(real(Z1));
             XINI.push(Zi);
             XINI.push(lambda4);
         }
@@ -684,7 +675,15 @@ void GRABIM::CheckDim(vector<vector<double>> & C, vector<vector<double>> & xkq, 
 // 2: LC networks up to 4 elements
 // 3: LC + TL networks up to 6 elements
 // 4: LC + TL + stubs networks up to 6 elements
+
 void GRABIM::setSearchMode(int mode)
+{
+    search_mode = mode;
+}
+
+
+
+void GRABIM::CreateTopologiesList()
 {
     string str;
     TopoList.clear();
@@ -692,7 +691,7 @@ void GRABIM::setSearchMode(int mode)
     list<string>::iterator it_topo, it_tag;
     it_topo = TopoList.begin();
     it_tag = TagList.begin();
-    switch (mode)
+    switch (search_mode)
     {
     case -1://Unique network (Only quick command line checks)
     {
@@ -1055,8 +1054,8 @@ vector<double> GRABIM::NelderMead(vector<double> x)
  return getRow(X, 0);
 }
 
-void GRABIM::SetAmplifierS2P(vector<vector<complex<double>>> amps2p)
+void GRABIM::SetAmplifierS2P(AmpData amps2p)
 {
-
+  Amplifier_SPAR = amps2p;
 }
 

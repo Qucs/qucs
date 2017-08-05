@@ -75,13 +75,13 @@ private:
     QLineEdit * FixedZSLineedit, *FixedZLLineedit;
 
     QLabel *ZLOhmLabel, *ZSOhmLabel;
+    QLabel *SourceLabel, *LoadLabel;
 
     QVBoxLayout * mainLayout, * SourceLayout, * LoadLayout;
     QHBoxLayout * ConstantZSLayout, * ConstantZLLayout, *ButtonsLayout;
     QGridLayout *Impedancelayout, *vbox;
     QGridLayout *OptionsLayout;
     QGroupBox *FreqgroupBox;
-
 
 
  private slots:
