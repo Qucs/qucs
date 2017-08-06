@@ -174,7 +174,7 @@ QT4_WRAP_CPP( QUCS_MOC_SRCS ${QUCS_MOC_HDRS} )
 #
 # generate rules for building source files from bitmap resources
 #
-SET(RESOURCES qucs.qrc)
+SET(RESOURCES qucs_.qrc)
 QT4_ADD_RESOURCES(RESOURCES_SRCS ${RESOURCES})
 
 if(UNIX AND NOT APPLE)

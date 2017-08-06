@@ -48,7 +48,7 @@ SET( attenuator_moc_headers qucsattenuator.h )
 
 QT4_WRAP_CPP( attenuator_moc_sources ${attenuator_moc_headers} )
 
-SET(RESOURCES qucsattenuator.qrc)
+SET(RESOURCES qucsattenuator_.qrc)
 
 QT4_ADD_RESOURCES(RESOURCES_SRCS ${RESOURCES})
 
