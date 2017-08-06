@@ -22,6 +22,8 @@
 # Boston, MA 02110-1301, USA.
 #
 
+include ../common.mk
+
 bin_PROGRAMS = qucsfilter
 
 dist_man_MANS = qucsfilter.1
@@ -46,12 +48,7 @@ qucsfilter_SOURCES =  \
 	quarterwave_filter.cpp \
         qw_coupled_ring_filter.cpp \
         ccoupled_shunt_resonators.cpp \
-	qrc_qucsfilter.cpp
-
-qrc_qucsfilter.cpp: qucsfilter.qrc
-	$(RCC) -o $@ $<
-
-EXTRA_DIST = qucsfilter.qrc
+	qucsfilter_.qrc
 
 nodist_qucsfilter_SOURCES = $(MOCFILES)
 
@@ -77,11 +74,33 @@ noinst_HEADERS = \
 	material_props.h \
 	cline_filter.h
 
-SUFFIXES = .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -o $@ $<
-
-CLEANFILES = *~
+CLEANFILES = *~ qucsfilter_.cpp
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
 DISTCLEANFILES = *.moc.cpp
+EXTRA_DIST = ${BITMAPS}
+BITMAPS = \
+	bitmaps/Quarterwave_Notch_Microstrip.svg \
+	bitmaps/CCoupled_Lines_Microstrip.svg \
+	bitmaps/CCoupled_Shunt_Resonators.svg \
+	bitmaps/LC_cauer_notch.svg \
+	bitmaps/Quarterwave_Bandpass_Microstrip.svg \
+	bitmaps/RFEDD.svg \
+	bitmaps/LC_Ladder_Tee_HPF.svg \
+	bitmaps/Quarterwave_Notch_Ideal.svg \
+	bitmaps/LC_Ladder_Pi_BPF.svg \
+	bitmaps/Quarterwave_Side_Coupled_Ring.svg \
+	bitmaps/LC_Ladder_Pi_Notch.svg \
+	bitmaps/LC_Ladder_Pi_HPF.svg \
+	bitmaps/LC_Ladder_Tee_LPF.svg \
+	bitmaps/Stepped_Impedance_Ideal.svg \
+	bitmaps/Stepped_Impedance_Microstrip.svg \
+	bitmaps/CCoupled.svg \
+	bitmaps/CCoupled_Microstrip.svg \
+	bitmaps/LC_Ladder_Tee_Notch.svg \
+	bitmaps/big.qucs.xpm \
+	bitmaps/LC_cauer_bandpass.svg \
+	bitmaps/LC_cauer_lowpass.svg \
+	bitmaps/Quarterwave_Bandpass_Ideal.svg \
+	bitmaps/LC_Ladder_Pi_LPF.svg \
+	bitmaps/LC_Ladder_Tee_BPF.svg \
+	bitmaps/CCoupled_Lines.svg
