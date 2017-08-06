@@ -357,7 +357,7 @@ void ui::go_clicked()
     double fmatching_min = minFEdit->text().toDouble();
     double fmatching_max = maxFEdit->text().toDouble();
 
-    if ((fmatching_min == -1) || (fmatching_max == -1))
+    if ((fmatching_min == -1) || (fmatching_max == -1) || (fmatching_min > fmatching_max))
     {
         QMessageBox::warning(0, QObject::tr("Error"),
                              QObject::tr("Wrong frequency settings"));
