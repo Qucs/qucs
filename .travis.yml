@@ -24,6 +24,10 @@ python:
 virtualenv:
   system_site_packages: true
 
+cache:
+  apt: true
+  ccache: true
+
 # packages required by all Linux builds
 #   additional packages are defined in the matrix, depending on needs
 addons:
@@ -74,7 +78,6 @@ env:
     - secure: "HfplEtCmFfgmKIKWfwe/Pw+BZcciFiIfw5gP/nF7IRVDSIjxOzwBHC+E/TyayR1iRmp3dHs6/fOrLFFNWJZzzH/qdmxGybrvECkgp5oF2ho6paAa3zcdTXan6r0+ye4JV20n6pqBtOM5IS3eQv1eFc81lTa80hzBiPQfEp3tW9w="
 
 before_install:
-
   # Set variables for readability.
   - if [[ $TRAVIS_OS_NAME == linux ]]; then LINUX=true; fi
   - if [[ $TRAVIS_OS_NAME == osx ]]; then OSX=true; fi
@@ -105,6 +108,8 @@ install:
       brew link --force bison;
       brew install python;
       pip install matplotlib;
+      brew install ccache;
+      export PATH="/usr/local/opt/ccache/libexec:$PATH";
     fi
 
   # Use tap for ADMS
@@ -121,6 +126,10 @@ install:
       brew link --force qt ;
     fi
 
+before_script:
+  - ccache --version
+  - ccache --zero-stats
+
 script:
   - uname -a
   - $CXX --version
@@ -135,6 +144,15 @@ script:
   - python -c "import numpy; print numpy.__version__"
   - pwd
   - ls
+
+  - if [[ $LINUX && $CLANG ]]; then
+      ls -trla /usr/lib/ccache;
+    fi
+
+    # For some reason clang compiler toolchain installation in Ubuntu does not have symlink in the ccache symlinks directory, so workaround it
+  - if [[ $LINUX && $CLANG ]]; then
+      ln -s $(which ccache) $HOME/clang && ln -s $(which ccache) $HOME/clang++ && export PATH=$HOME:$PATH;
+    fi
 
   # fetch gtest...
   - wget https://github.com/google/googletest/archive/release-1.7.0.tar.gz -O /tmp/gtest.tar.gz
@@ -154,6 +172,9 @@ script:
   # Check available tools
   - which admsXml && admsXml --version
 
+  # enable parallel make after building ADMS
+  - export MAKEFLAGS="-j2"
+  
   # run all checks
   - ./bootstrap
   - CONFIGURE_FLAGS=--disable-doc
@@ -180,3 +201,6 @@ script:
   - if [[ $TRAVIS_BRANCH == develop ]] ; then
       echo developmentstuff...;
     fi
+
+  - ccache --show-stats
+  
