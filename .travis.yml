@@ -16,7 +16,7 @@
 
 language: cpp
 dist: trusty
-sudo: required
+sudo: false
 
 python:
   - "2.7"
@@ -83,10 +83,6 @@ before_install:
 
   - if [[ $TRAVIS_BRANCH == master ]] ; then MASTER=true; fi
 
-  - which $CC
-  # workaround clang not system wide, fail on sudo make install for adms
-  - export CC=`which $CC`
-
   # Set xvfb for headless qucs GUI test
   - "export DISPLAY=:99.0"
   -  if [[ $LINUX ]]; then sh -e /etc/init.d/xvfb start; fi
@@ -147,10 +143,12 @@ script:
 
 
   # Build ADMS from release (avoid need of Perl and its modules)
+  #   install locally to avoid using sudo, add local bin/ to PATH so the Qucs configure can find it
   - if [[ $LINUX ]]; then
       wget http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.6.tar.gz -O /tmp/adms-2.3.6.tar.gz;
       tar -xzvf /tmp/adms-2.3.6.tar.gz;
-      cd adms-2.3.6 && ./configure --prefix=/usr && make && sudo make install && cd ..;
+      cd adms-2.3.6 && ./configure --prefix=$HOME && make && make install && cd ..;
+      export PATH=$HOME/bin:$PATH;
     fi
 
   # Check available tools
