@@ -329,6 +329,70 @@ S_{12} = S_{21} = 1-S_{11}
 
 An ideal inductor is noise free.
 
+\section{Lossy reactances}
+Because of its physical implementation, both capacitors and inductors exhibit a lossy behaviour which can be assessed in terms of their quality factor. The quality factor, Q, of a reactance is defined as the ratio between the stored energy and the dissipated energy per unit time.
+When using a series resistance $R_s$ to represent the losses, it is also given by
+
+\begin{itemize}
+\item Capacitor: $Q = \frac{1}{\omega C R_s} = \frac{1}{2 \pi f \cdot C \cdot R_s}$
+\item Inductor: $Q = \frac{\omega L}{R_s} = \frac{2 \pi f \cdot L }{R_s}$
+\end{itemize}
+
+note that in general the losses and thus the quality factor are frequency dependent. Some common models for the variation of Q with the frequency are:
+
+\begin{itemize}
+\item Constant: $Q(f) = Q(f_0)$
+\item Linear: $Q(f) = Q(f_0)\cdot (f/f_0)$
+\item Square root: $Q(f) = Q(f_0)\cdot \sqrt{f/f_0}$
+\end{itemize}
+
+
+\subsection{Equivalent circuits and S matrices}
+
+For the lossy components models described above, the scattering parameters (normalized to $Z_0$) can be computed from the S-parameters of a generic series element.
+
+\begin{itemize}
+
+\item Capacitor
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=7cm]{capq}
+\end{center}
+\caption{Equivalent circuit of a lossy capacitor}
+\label{fig:capq_ec}
+\end{figure}
+
+Defining $Y_s = \frac{j \omega C}{1+j \omega C R}$ we have
+
+\begin{equation}
+S_{11} = S_{22} = \frac{1}{1 + y} \qquad , \qquad y = 2 \cdot Z_0 \cdot Y_s\\
+\end{equation}
+\begin{equation}
+S_{12} = S_{21} = 1-S_{11}
+\end{equation}
+
+\item Inductor
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=7cm]{indq}
+\end{center}
+\caption{Equivalent circuit of a lossy inductor}
+\label{fig:indq_ec}
+\end{figure}
+
+With $Zs = R + j \omega L$, the S-parameter matrix is given by
+
+\begin{equation}
+S_{11} = S_{22} = \frac{z}{z + 2} \qquad , \qquad z = \frac{Z_s}{Z_0}\\
+\end{equation}
+\begin{equation}
+S_{12} = S_{21} = 1-S_{11}
+\end{equation}
+
+\end{itemize}
+
+The noise parameters of these components can in general be computed using Bosma's theorem.
+
 
 \section{DC Block}
 

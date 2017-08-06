@@ -52,8 +52,8 @@ ctline.cpp		libcomp.cpp		param_sweep.cpp		vprobe.cpp
 d_flipflop.cpp		log_amp.cpp		phaseshifter.cpp	vpulse.cpp
 dc_sim.cpp		logic_0.cpp		photodiode.cpp		vrect.cpp
 dcblock.cpp		logic_1.cpp		phototransistor.cpp	wprobe.cpp
-dcfeed.cpp		logical_and.cpp		pm_modulator.cpp
-vcresistor.cpp
+dcfeed.cpp		logical_and.cpp		pm_modulator.cpp        capq.cpp
+vcresistor.cpp          indq.cpp                spiralinductor.cpp      circularloop.cpp
 vacomponent.cpp
 mutualx.cpp
 circline.cpp
@@ -77,10 +77,12 @@ bjt.h
 bjtsub.h
 bondwire.h
 capacitor.h
+capq.h
 cccs.h
 ccvs.h
 circulator.h
 circline.h
+circularloop.h
 coaxialline.h
 comp_1bit.h
 comp_2bit.h
@@ -128,6 +130,7 @@ hybrid.h
 iexp.h
 ifile.h
 inductor.h
+indq.h
 iprobe.h
 wprobe.h
 ipulse.h
@@ -198,6 +201,7 @@ sp_sim.h
 sparamfile.h
 spicedialog.h
 spicefile.h
+spiralinductor.h
 subcircuit.h
 subcirport.h
 substrate.h

@@ -19,6 +19,7 @@ PNG = \
 	bottom.png \
 	buffer.png \
 	capacitor.png \
+	capq.png \
 	cccs.png \
 	ccvs.png \
 	circline.png \
@@ -92,6 +93,9 @@ PNG = \
 	iexp.png \
 	ifile.png \
 	inductor.png \
+	indq.png \
+	spiralinductor.png \
+	circularloop.png \
 	inverter.png \
 	iprobe.png \
 	ipulse.png \

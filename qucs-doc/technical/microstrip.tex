@@ -1650,3 +1650,88 @@ Mirror is a strange model that is frequency independent.  Whereas
 computations are valid, hypothesis are arguable.  Indeed, they did the
 assumption that the ground plane is perfect that is really a zero
 order model in the high frequency domain.
+
+\section{Planar inductors}
+
+The planar inductors are widely used both in MMIC and PCB designs as an alternative to coil inductors. The model implemented in Qucs is based on following equivalent circuit \cite{BahlLumpedComponents}:
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=9cm]{PrintedInductorEC}
+\end{center}
+\caption{Equivalent circuit of a printed inductor}
+\label{fig:PrintedInductoEC}
+\end{figure}
+
+
+
+
+\subsection{Circular loop}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=7cm]{CircularLoop}
+\end{center}
+\caption{Design parameters of the circular loop inductor}
+\label{fig:CircularLoop}
+\end{figure}
+
+\noindent The parameters for the equivalent circuit model \ref{fig:PrintedInductoEC} are given by the following equations:
+
+\begin{align}
+L (nH) & = 1.257 \cdot 10^{-3} a \left( ln \left( \frac{a}{W+t}\right) + 0.078\right) \cdot K_g \\
+R (\Omega) & = \frac{\pi \cdot a \cdot K\cdot R_s}{W+t} \\
+C (pF) & = 33.33 \cdot 10^{-4} \cdot \frac{ \pi \cdot a \cdot \sqrt{\epsilon_{re}}}{Z_0}
+\end{align}
+
+\noindent where
+
+\begin{align}
+K_g & = 0.57 - 0.145 \cdot ln \left( \frac{W}{h}\right) \;\;\;\;\; \frac{W}{h} > 0.05 \\
+K & = 1.4 + 0.217 \cdot ln \left( \frac{W}{5 \cdot t}\right)  \;\;\;\;\; 5 < \frac{W}{t}  < 100
+\label{eq:MicrostripLossesInd}
+\end{align}
+
+\noindent $K_g$ accounts for the ground plane effect and \textit{K} is a correction factor that accounts for the crowding effect at the corners of the transmission line \cite{BahlLumpedComponents}.
+
+\subsection{Spiral inductor}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=14cm]{PlanarSpiralInductors}
+\end{center}
+\caption{Circular, octogonal, hexagonal and square spiral planar inductors}
+\label{fig:PlanarSpiralInductors}
+\end{figure}
+
+\noindent The parameters for the equivalent circuit model \ref{fig:PrintedInductoEC} are given by the following equations:
+
+\begin{align}
+L & =  \frac{\mu_0 \cdot n^2 \cdot D_{av} c_1}{2} \left( ln \left( \frac{c_2}{\rho}\right) + c_3 \cdot \rho + c_4 \cdot \rho^2 \right)\\
+R & = \frac{K \cdot \pi \cdot a \cdot n \cdot R_s}{W} \\
+C (pF) & = 3.5 \cdot 10^{-5} D_0 + 0.06
+\end{align}
+
+
+\noindent where \textit{n} is the number of turns, $K$ is the same as in \ref{eq:MicrostripLossesInd} and \textit{a} and $D_{av}$ are defined as:
+
+\begin{align}
+ a & = \frac{D_o + D_i}{4} \\
+ D_{av} & = \frac{D_o + D_i}{2}
+\end{align}
+
+\noindent The coefficients of the inductance formula are the following:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\multicolumn{1}{|l|}{Geometry}   & $c_1$ & $c_2$ & $c_3$ & $c_4$\\ \hline
+\multicolumn{1}{|l|}{Square} & 1.27 & 2.07 & 0.18 & 0.13            \\ \hline
+\multicolumn{1}{|l|}{Hexagonal} & 1.09 & 2.23 & 0 & 0.17            \\ \hline
+\multicolumn{1}{|l|}{Octogonal} & 1.07 & 2.29 & 0 &  0.19        \\ \hline
+\multicolumn{1}{|l|}{Circular} & 1 & 2.46 & 0 &   0.2       \\ \hline
+\end{tabular}
+\caption{Coefficients of the inductance formula depending on the geometry}
+\label{tab:SpiralIndCoeffs}
+\end{table}
