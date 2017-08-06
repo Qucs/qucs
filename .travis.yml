@@ -15,39 +15,58 @@
 # - doxygen build (master only)
 
 language: cpp
-
 dist: trusty
-
 sudo: required
-
-os:
-  - linux
-  - osx
-
-compiler:
-  - gcc
-  - clang
 
 python:
   - "2.7"
+
 virtualenv:
   system_site_packages: true
+
+# packages required by all Linux builds
+#   additional packages are defined in the matrix, depending on needs
+addons:
+  apt:
+    packages: &native_deps
+      - gperf
+      - latex2html
+      - octave
 
 # Qt 4.8.7 official installer works up to OSX 10.10 or xcode6.4
 # Use rebuilt (with Qt3Support) homebrew bottle for OSX 10.12 or xcode8.2
 osx_image: xcode8.2
 
 matrix:
-  exclude:
-    - os: osx
+  include:
+    - os: linux
       compiler: gcc
+      addons:
+        apt:
+          packages:
+            - *native_deps
+            - lcov # lcov is required by configure, only gcov really needed thou
 
-addons:
-  apt:
-    packages:
-      - gperf
-      - latex2html
-      - octave
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          packages:
+            - *native_deps
+            - doxygen # add packages for  Doxygen and qucs-doc PDF build
+            - texlive
+            - texlive-math-extra
+            - texlive-science
+            - transfig
+            - gnuplot
+            - texlive-publishers
+            - graphviz
+            - texlive-font-utils
+            - ps2eps
+            - pgf
+
+    - os: osx
+      compiler: clang
 
 # Set secure environment with encrypted string containing GIT_NAME, GIT_EMAIL and GH_TOKEN
 env:
@@ -75,16 +94,7 @@ before_install:
 install:
   # Setup Linux
   # Set up for Coveralls for GCC (LINUX) only
-  # lcov is required by configure, only gcov really needed thou
-  - if [[ $GCC ]]; then
-      sudo apt-get install lcov ;
-      sudo pip install cpp-coveralls ;
-    fi
-
-  # Set up for Doxygen and qucs-doc PDF build
-  - if [[ $LINUX && $CLANG ]]; then
-      sudo apt-get install -qq doxygen texlive texlive-math-extra texlive-science transfig gnuplot texlive-publishers graphviz texlive-font-utils ps2eps pgf;
-    fi
+  - if [[ $GCC ]]; then pip install cpp-coveralls; fi
 
   # Qucs-Test uses Numpy to compare results
   - if [[ $LINUX ]]; then pip install --only-binary=numpy,matplotlib numpy matplotlib; fi
