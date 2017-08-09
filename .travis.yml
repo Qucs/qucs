@@ -45,6 +45,15 @@ matrix:
   include:
     - os: linux
       compiler: gcc
+      env: BUILD=cmake
+      addons:
+        apt:
+          packages:
+            - *native_deps
+
+    - os: linux
+      compiler: gcc
+      env: BUILD=autotools
       addons:
         apt:
           packages:
@@ -53,6 +62,7 @@ matrix:
 
     - os: linux
       compiler: clang
+      env: BUILD=autotools
       addons:
         apt:
           packages:
@@ -71,6 +81,7 @@ matrix:
 
     - os: osx
       compiler: clang
+      env: BUILD=autotools
 
 # Set secure environment with encrypted string containing GIT_NAME, GIT_EMAIL and GH_TOKEN
 env:
@@ -83,6 +94,8 @@ before_install:
   - if [[ $TRAVIS_OS_NAME == osx ]]; then OSX=true; fi
   - if [[ $CC == gcc ]]; then GCC=true; fi
   - if [[ $CC == clang ]]; then CLANG=true; fi
+  - if [[ $BUILD == autotools ]]; then AUTOTOOLS=true; fi
+  - if [[ $BUILD == cmake ]]; then CMAKE=true; fi
 
   - if [[ $TRAVIS_BRANCH == master ]] ; then MASTER=true; fi
 
@@ -138,8 +151,8 @@ script:
   - which flex  && flex --version
   - which bison && bison --version
   # use gcov matched to GCC
-  - if [[ $GCC ]]; then which gcov-4.8 && gcov-4.8 --version; fi
-  - if [[ $GCC ]]; then  lcov --version; fi
+  - if [[ $GCC && $AUTOTOOLS ]]; then which gcov-4.8 && gcov-4.8 --version; fi
+  - if [[ $GCC && $AUTOTOOLS ]]; then  lcov --version; fi
   - python --version
   - python -c "import numpy; print numpy.__version__"
   - pwd
@@ -174,26 +187,34 @@ script:
 
   # enable parallel make after building ADMS
   - export MAKEFLAGS="-j2"
-  
+
   # run all checks
   - ./bootstrap
-  - CONFIGURE_FLAGS=--disable-doc
-  - if [[ $LINUX && $CLANG ]]; then
-       CONFIGURE_FLAGS="";
-    fi
-  - DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --disable-dependency-tracking --disable-doc"
-  - if [[ $LINUX && $CLANG ]]; then
-       DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --enable-doc";
-    fi
-  - echo ${CONFIGURE_FLAGS}
-  - echo ${DISTCHECK_CONFIGURE_FLAGS}
-  - ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest ${CONFIGURE_FLAGS}
+
   - if [[ $OSX ]]; then
+      ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc;
       make;
       make qucscheck;
-    else
-      make distcheck DISTCHECK_CONFIGURE_FLAGS="${DISTCHECK_CONFIGURE_FLAGS}";
     fi
+
+    if [[ $LINUX && $AUTOTOOLS && $CLANG ]]; then
+      ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --enable-doc;
+      make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --enable-doc";
+    fi
+
+   if [[ $LINUX && $AUTOTOOLS && $GCC ]]; then
+      ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc;
+      make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --disable-dependency-tracking --disable-doc";
+    fi
+
+  # with cmake build only
+  - if [[ $CMAKE ]]; then
+      mkdir build;
+      cd build;
+      cmake ..;
+      make;
+    fi
+
   - echo $TRAVIS_BRANCH
 
   # incomplete
