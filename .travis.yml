@@ -37,10 +37,6 @@ addons:
       - latex2html
       - octave
 
-# Qt 4.8.7 official installer works up to OSX 10.10 or xcode6.4
-# Use rebuilt (with Qt3Support) homebrew bottle for OSX 10.12 or xcode8.2
-osx_image: xcode8.2
-
 matrix:
   include:
     - os: linux
@@ -80,6 +76,9 @@ matrix:
             - pgf
 
     - os: osx
+      # Qt 4.8.7 official installer works up to OSX 10.10 or xcode6.4
+      # Use rebuilt (with Qt3Support) homebrew bottle for OSX 10.12 or xcode8.2
+      osx_image: xcode8.2
       compiler: clang
       env: BUILD=autotools
 
