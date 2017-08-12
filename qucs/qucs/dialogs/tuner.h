@@ -30,6 +30,9 @@
 #include <QSlider>
 #include <QLabel>
 #include <QToolButton>
+#include <QComboBox>
+#include <QSplitter>
+#include <QStatusBar>
 
 extern QucsApp *QucsMain;  // the Qucs application itself
 
@@ -57,11 +60,17 @@ class tunerElement : public QWidget
         QLineEdit *minimum;
         QLineEdit *value;
         QLineEdit *step;
+        QComboBox *MaxUnitsCombobox;
+        QComboBox *MinUnitsCombobox;
+        QComboBox *ValueUnitsCombobox;
+        QComboBox *StepUnitsCombobox;
+        QWidget *Up_Down_Buttons_Widget;
         QToolButton *up;
         QToolButton *down;
         float minValue;
         float maxValue;
         float numValue;
+        float stepValue;
 
     private slots:
 
@@ -97,8 +106,9 @@ private:
     QGridLayout *gbox;
     QList<tunerElement*> *currentElements;
     QList<Property*> *currentProps;
-    QLabel *info;
-
+    QStatusBar *info;
+    QSplitter *splitter;
+    QWidget *ButtonsPanel;
     bool valuesUpated;
     Schematic* doc;
 

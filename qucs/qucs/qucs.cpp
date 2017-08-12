@@ -136,10 +136,6 @@ QucsApp::QucsApp()
   // instance of small text search dialog
   SearchDia = new SearchDialog(this);
 
-  // instance of tuner
-  tunerDia = new TunerDialog(this);
-
-
   // creates a document called "untitled"
   DocumentTab->createEmptySchematic("");
 
@@ -2075,6 +2071,9 @@ void QucsApp::slotTune(bool checked)
 {
     if (checked)
     {
+        // instance of tuner
+        tunerDia = new TunerDialog(this);//The object can be instantiated here since when checked == false the memory will be freed
+
         slotHideEdit(); // disable text edit of component property
         workToolbar->setEnabled(false); // disable workToolbar to preserve TuneMouseAction
         QucsDoc *Doc;
@@ -2098,7 +2097,8 @@ void QucsApp::slotTune(bool checked)
         this->workToolbar->setEnabled(true);
 
         // MouseActions are reset in closing of tunerDialog class
-        tunerDia->close();
+        tunerDia->close();//According to QWidget documentation (http://doc.qt.io/qt-4.8/qwidget.html#close),
+                          //the object is removed since it has the Qt::WA_DeleteOnClose flag
     }
 }
 

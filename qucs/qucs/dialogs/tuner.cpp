@@ -34,42 +34,57 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     : QWidget(parent)
 {
     int index, row, column, rowSpan, colSpan;
-    //ctor
 
+    setAttribute(Qt::WA_DeleteOnClose);
     prop = component->Props.at(selectedPropertyId);
     QGridLayout *gbox = new QGridLayout();
-    this->setLayout(gbox);
+    setLayout(gbox);
     QLabel *tunerName = new QLabel(component->Name + ":" + prop->Name);
+    tunerName->setStyleSheet("QLabel {font: bold}");
     gbox->addWidget(tunerName);
 
 
+    gbox->addWidget(new QLabel(tr("Max.:")), 1, 0);
+    maximum = new QLineEdit();
+    maximum->setValidator( new QDoubleValidator(0, 100, 2, this) );//Prevent the user from entering text
+    MaxUnitsCombobox = new QComboBox(this);
+    MaxUnitsCombobox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+    gbox->addWidget(maximum, 1, 1);
+    gbox->addWidget(MaxUnitsCombobox,1,2);
+
     slider = new QSlider(Qt::Vertical);
-    gbox->addWidget(slider);
+    gbox->addWidget(slider, 2, 0, 2, 2, Qt::AlignCenter);
     slider->setMinimumHeight(200);
 
-    QLabel *Label = new QLabel(tr("Step"));
-    gbox->addWidget(Label);
-    step = new QLineEdit();
-    gbox->addWidget(step);
 
-    QLabel *Label1 = new QLabel(tr("Value"));
-    gbox->addWidget(Label1);
-    value = new QLineEdit();
-    originalValue = prop->Value.copy();
-    gbox->addWidget(value);
-
-    QLabel *Label2 = new QLabel(tr("Minimum"));
-    gbox->addWidget(Label2);
+    gbox->addWidget(new QLabel(tr("Min.:")), 4, 0);
     minimum = new QLineEdit();
-    gbox->addWidget(minimum);
+    minimum->setValidator( new QDoubleValidator(0, 100, 2, this) );//Prevent the user from entering text
+    MinUnitsCombobox = new QComboBox(this);
+    MinUnitsCombobox->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
+    gbox->addWidget(minimum, 4, 1);
+    gbox->addWidget(MinUnitsCombobox,4,2);
 
-    QLabel *Label3 = new QLabel(tr("Maximum"));
-    gbox->addWidget(Label3);
-    maximum = new QLineEdit();
-    gbox->addWidget(maximum);
+    gbox->addWidget(new QLabel(tr("Val.:")), 5, 0);
+    value = new QLineEdit();
+    value->setValidator( new QDoubleValidator(0, 100, 2, this) );//Prevent the user from entering text
+    ValueUnitsCombobox = new QComboBox(this);
+    originalValue = prop->Value.copy();
+    gbox->addWidget(value, 5, 1);
+    gbox->addWidget(ValueUnitsCombobox,5,2);
+
+
+    gbox->addWidget(new QLabel(tr("Step")), 6, 0);
+    step = new QLineEdit();
+    step->setValidator( new QDoubleValidator(0, 100, 2, this) );//Prevent the user from entering text
+    StepUnitsCombobox = new QComboBox(this);
+    gbox->addWidget(step, 6, 1);
+    gbox->addWidget(StepUnitsCombobox,6,2);
+
+
 
     QPushButton *remove = new QPushButton(tr("Remove"), this);
-    gbox->addWidget(remove);
+    gbox->addWidget(remove, 7, 0);
 
 
     QStringList lst = prop->Value.split(' ');
@@ -83,22 +98,27 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     QLabel *unitLabel = new QLabel(unit, this);
     gbox->addWidget(unitLabel, row, column+1, 1, 1); // Value
 
+    Up_Down_Buttons_Widget = new QWidget();
+    QGridLayout *buttonsLayout = new QGridLayout();
     up = new QToolButton(this, "Up");
     up->setArrowType(Qt::UpArrow);
-    gbox->addWidget(up, 1, gbox->columnCount() -1, 1, 1);
+    buttonsLayout->addWidget(up, 0, 0);
 
     down = new QToolButton(this, "Down");
     down->setArrowType(Qt::DownArrow);
-    gbox->addWidget(down, 2, gbox->columnCount() - 1, 1, 1);
+    buttonsLayout->addWidget(down, 1, 0);
+    Up_Down_Buttons_Widget->setLayout(buttonsLayout);
+    Up_Down_Buttons_Widget->setStyleSheet("QWidget {border: 1px solid black;}");
+    gbox->addWidget(Up_Down_Buttons_Widget, 2, 2, 2, 1);
 
     numValue = lst.first().toFloat();
-    maxValue = ceil(numValue + (numValue * 0.15));
-    minValue = floor(numValue - (numValue * 0.15));
-
+    maxValue = numValue*1.15;// max = nominal + 15%
+    minValue = numValue*0.85;// min = nominal - 15%
+    stepValue = (maxValue-minValue)/20;//20 steps between minimum and maximum
     maximum->setText(QString::number(maxValue));
     minimum->setText(QString::number(minValue));
     value->setText(QString::number(numValue));
-    step->setText(QString::number(numValue/10));
+    step->setText(QString::number(stepValue));
 
     slider->setRange(0,100);
     float v = (numValue - minValue) / (maxValue - minValue);
@@ -287,6 +307,11 @@ TunerDialog::TunerDialog(QWidget *parent) :
     gbox = new QGridLayout();
     this->setLayout(gbox);
 
+    splitter = new QSplitter(parent);
+    ButtonsPanel = new QWidget();
+    QGridLayout * buttonsLayout = new QGridLayout();
+    ButtonsPanel->setLayout(buttonsLayout);
+
     currentElements = new QList<tunerElement*>();
     currentProps = new QList<Property*>();
 
@@ -294,14 +319,18 @@ TunerDialog::TunerDialog(QWidget *parent) :
     QPushButton *updateValues = new QPushButton("Update Values", this);
     QPushButton *resetValues = new QPushButton("Reset Values", this);
 
-    info = new QLabel(this);
-    gbox->addWidget(resetValues);
-    gbox->addWidget(updateValues);
-    gbox->addWidget(closeButton);
-    gbox->addWidget(info);
-    info->setAlignment(Qt::AlignmentFlag::AlignBottom);
+    info = new QStatusBar;
+    buttonsLayout->addWidget(resetValues);
+    buttonsLayout->addWidget(updateValues);
+    buttonsLayout->addWidget(closeButton);
 
-    info->setText("Please select a component to tune");
+    gbox->addWidget(ButtonsPanel, 0, 0, Qt::AlignTop);
+    gbox->addWidget(info, 1, 0, Qt::AlignBottom);
+    gbox->addWidget(splitter,0, 1, Qt::AlignRight);
+
+
+    info->showMessage("Please select a component to tune");
+    setMinimumWidth(300);//Otherwise, it won't fit the "help" text...
     valuesUpated = false;
     connect(closeButton, SIGNAL(released()), this, SLOT(close()));
     connect(resetValues, SIGNAL(released()),this, SLOT(slotResetValues()));
@@ -311,7 +340,7 @@ TunerDialog::TunerDialog(QWidget *parent) :
 void TunerDialog::infoMsg(const QString msg)
 {
     info->clear();
-    info->setText(msg);
+    info->showMessage(msg);
 }
 
 bool TunerDialog::containsProperty(Property* prop)
@@ -328,29 +357,26 @@ void TunerDialog::addTunerElement(tunerElement *element)
     connect(element, SIGNAL(elementValueUpdated()), this, SLOT(slotElementValueUpdated()));
     connect(element, SIGNAL(removeElement(tunerElement*)), this, SLOT(slotRemoveTunerElement(tunerElement*)));
 
-    int column = gbox->columnCount();
-
     if (!currentProps->contains(element->getElementProperty()))
     {
-        gbox->addWidget(element, 0, column, gbox->rowCount(), 1);
+        splitter->addWidget(element);
         currentProps->append(element->getElementProperty());
         currentElements->append(element);
-        this->infoMsg(QString("Added element\r\n"));
+        this->adjustSize();
+        this->update();
     }
     else
     {
         QMessageBox::message("Already Found", "Already tuning this element", "OK");
     }
-
+   info->clear();//The user has already selected a component. It makes no longer sense to display the help message
 }
 
 void TunerDialog::slotRemoveTunerElement(tunerElement *e)
 {
     qDebug() << "Tuner::slotRemoveTunerElement()";
-    this->infoMsg("Removed element from Tuner");
     currentProps->removeAll(e->getElementProperty());
-    currentElements->removeAll(e);
-    this->infoMsg(QString("Removed element: ") + e->name());
+    currentElements->removeAll(e);//This will also destroy the element in QSplitter: https://stackoverflow.com/questions/371599/how-to-remove-qwidgets-from-qsplitter
     delete e;
     this->adjustSize();
     this->update();
