@@ -1629,7 +1629,7 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
     {
       componentstr += QString("<Pac P1 1 %2 -30 18 -26 0 1 \"1\" 1 \"%1\" 1 "
                               "\"0 dBm\" 0 \"1 GHz\" 0>\n")
-                          .arg(misc::num2str(value, 3)+"Ohm") // reference impedance
+                          .arg(misc::num2str(value, 3, "Ohm")) // reference impedance
                           .arg(x_pos);
       componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
       wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos);
@@ -1647,7 +1647,7 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
       x_pos += 100;
       componentstr += QString("<Pac P2 1 %2 -30 18 -26 0 1 \"1\" 1 \"%1\" 1 "
                               "\"0 dBm\" 0 \"1 GHz\" 0>\n")
-                          .arg(misc::num2str(value, 3)+"Ohm") // reference impedance 
+                          .arg(misc::num2str(value, 3, "Ohm")) // reference impedance
                           .arg(x_pos);
       componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
       wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos); // Vertical wire
@@ -1664,8 +1664,7 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
       x_pos += 200;
     } else if (!tag.compare("LS")) // Series inductor
     {
-      QString val = misc::num2str(value, 3) +
-                    "H"; // Add suffix nH, uH - 3 significant digits
+      QString val = misc::num2str(value, 3, "H"); // Add prefix, unit - 3 significant digits
       componentstr += QString("<L L1 1 %1 -120 -26 10 0 0 \"%2\" 1 "
                               " 0>\n")
                           .arg(x_pos + 60)
@@ -1683,8 +1682,7 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
       x_pos += x_series;
     } else if (!tag.compare("CS")) // Series capacitor
     {
-      QString val = misc::num2str(value, 3) +
-                    "F"; // Add suffix pF, nF - 3 significant digits
+      QString val = misc::num2str(value, 3, "F"); // Add prefix, unit - 3 significant digits
       componentstr += QString("<C C1 1 %1 -120 -26 17 0 0 \"%2\" 1 "
                               " 0>\n")
                           .arg(x_pos + 60)
@@ -1702,8 +1700,7 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
       x_pos += x_series;
     } else if (!tag.compare("LP")) // Shunt inductor
     {
-      QString val = misc::num2str(value, 3) +
-                    "H"; // Add suffix nH, uH - 3 significant digits
+      QString val = misc::num2str(value, 3, "H"); // Add prefix, unit - 3 significant digits
       componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
       componentstr += QString("<L L1 1 %1 -30 5 -20 0 1 \"%2\" 1 "
                               " 0>\n")
@@ -1721,8 +1718,7 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
       x_pos += x_shunt;
     } else if (!tag.compare("CP")) // Shunt capacitor
     {
-      QString val = misc::num2str(value, 3) +
-                    "F"; // Add suffix pF, nF - 3 significant digits
+      QString val = misc::num2str(value, 3, "F"); // Add prefix, unit - 3 significant digits
       componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
       componentstr += QString("<C C1 1 %1 -30 15 -20 0 1 \"%2\" 1 "
                               " 0>\n")
@@ -1745,11 +1741,9 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
         er = Substrate.er;
         getMicrostrip(value, Freq, &Substrate, width, er);
         QString val_width =
-            misc::num2str(width, 3) +
-            "m"; // Add suffix mm, cm - 3 significant digits
+          misc::num2str(width, 3, "m"); // Add prefix, unit - 3 significant digits
         QString val_length =
-            misc::num2str(value2 / sqrt(er), 3) +
-            "m"; // Add suffix mm, cm - 3 significant digits
+          misc::num2str(value2 / sqrt(er), 3, "m"); // Add prefix, unit - 3 significant digits
         componentstr +=
             QString("<MLIN MS1 1 %3 -120 -26 20 0 0 \"Sub1\" 1 \"%1\" 1 \"%2\" "
                     "1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n")
@@ -1757,12 +1751,10 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
                 .arg(val_length)
                 .arg(x_pos + 60);
       } else {
-        QString val_impedance = misc::num2str(value, 3) +
-                                "Ohm"; // Add a suffix (although rarely needed
-                                       // here) - 3 significant digits
-        QString val_length =
-            misc::num2str(value2, 3) +
-            "m"; // Add suffix mm, cm - 3 significant digits
+        // Add a prefix (although rarely needed here) and unit - 3 significant digits
+        QString val_impedance = misc::num2str(value, 3, "Ohm");
+        // Add prefix, unit - 3 significant digits
+        QString val_length = misc::num2str(value2, 3, "m");
         componentstr += QString("<TLIN Line1 1 %3 -120 -26 20 0 0 \"%1\" 1 "
                                 "\"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n")
                             .arg(val_impedance)
@@ -1786,12 +1778,10 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
       {
         er = Substrate.er;
         getMicrostrip(value, Freq, &Substrate, width, er);
-        QString val_width =
-            misc::num2str(width, 3) +
-            "m"; // Add suffix mm, cm - 3 significant digits
-        QString val_length =
-            misc::num2str(value2 / sqrt(er), 3) +
-            "m"; // Add suffix mm, cm - 3 significant digits
+        // Add prefix, unit - 3 significant digits
+        QString val_width = misc::num2str(width, 3, "m");
+        // Add prefix, unit - 3 significant digits
+        QString val_length = misc::num2str(value2 / sqrt(er), 3, "m");
         componentstr +=
             QString("<MLIN MS1 1 %3 -180 30 -30 0 1 \"Sub1\" 1 \"%1\" 1 \"%2\" "
                     "1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n")
@@ -1799,12 +1789,10 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
                 .arg(val_length)
                 .arg(x_pos);
       } else {
-        QString val_impedance = misc::num2str(value, 3) +
-                                "Ohm"; // Add a suffix (although rarely needed
-                                       // here) - 3 significant digits
-        QString val_length =
-            misc::num2str(value2, 3) +
-            "m"; // Add suffix mm, cm - 3 significant digits
+        // Add a prefix (although rarely needed here) and unit - 3 significant digits
+        QString val_impedance = misc::num2str(value, 3, "Ohm");
+        // Add prefix, unit - 3 significant digits
+        QString val_length = misc::num2str(value2, 3, "m");
         componentstr += QString("<TLIN Line1 1 %3 -180 30 -30 0 1 \"%1\" 1 "
                                 "\"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n")
                             .arg(val_impedance)
@@ -1828,12 +1816,10 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
       {
         er = Substrate.er;
         getMicrostrip(value, Freq, &Substrate, width, er);
-        QString val_width =
-            misc::num2str(width, 3) +
-            "m"; // Add suffix mm, cm - 3 significant digits
-        QString val_length =
-            misc::num2str(value2 / sqrt(er), 3) +
-            "m"; // Add suffix mm, cm - 3 significant digits
+        // Add suffix mm, cm - 3 significant digits
+        QString val_width = misc::num2str(width, 3, "m");
+        // Add suffix mm, cm - 3 significant digits
+        QString val_length = misc::num2str(value2 / sqrt(er), 3, "m");
         componentstr +=
             QString("<MLIN MS1 1 %3 -60 -26 30 0 1 \"Sub1\" 1 \"%1\" 1 \"%2\" "
                     "1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n")
@@ -1841,12 +1827,10 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
                 .arg(val_length)
                 .arg(x_pos);
       } else {
-        QString val_impedance = misc::num2str(value, 3) +
-                                "Ohm"; // Add a suffix (although rarely needed
-                                       // here) - 3 significant digits
-        QString val_length =
-            misc::num2str(value2, 3) +
-            "m"; // Add suffix mm, cm - 3 significant digits
+        // Add a prefix (although rarely needed here) and unit - 3 significant digits
+        QString val_impedance = misc::num2str(value, 3, "Ohm");
+        // Add suffix mm, cm - 3 significant digits
+        QString val_length = misc::num2str(value2, 3, "m");
         componentstr += QString("<TLIN Line1 1 %3 -60 -26 30 0 1 \"%1\" 1 "
                                 "\"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n")
                             .arg(val_impedance)
@@ -1869,12 +1853,8 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
       {
         er = Substrate.er;
         getMicrostrip(value, Freq, &Substrate, width, er);
-        QString val_width =
-            misc::num2str(width, 3) +
-            "m"; // Add suffix mm, cm - 3 significant digits
-        QString val_length =
-            misc::num2str(value2 / sqrt(er), 3) +
-            "m"; // Add suffix mm, cm - 3 significant digits
+        QString val_width = misc::num2str(width, 3, "m");
+        QString val_length = misc::num2str(value2 / sqrt(er), 3, "m");
         componentstr +=
             QString("<MLIN MS1 1 %3 -180 30 -30 0 1 \"Sub1\" 1 \"%1\" 1 \"%2\" "
                     "1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n")
@@ -1882,12 +1862,8 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
                 .arg(val_length)
                 .arg(x_pos);
       } else {
-        QString val_impedance = misc::num2str(value, 3) +
-                                "Ohm"; // Add a suffix (although rarely needed
-                                       // here) - 3 significant digits
-        QString val_length =
-            misc::num2str(value2, 3) +
-            "m"; // Add suffix mm, cm - 3 significant digits
+        QString val_impedance = misc::num2str(value, 3, "Ohm");
+        QString val_length = misc::num2str(value2, 3, "m");
         componentstr += QString("<TLIN Line1 1 %3 -180 30 -30 0 1 \"%1\" 1 "
                                 "\"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n")
                             .arg(val_impedance)
@@ -1912,12 +1888,8 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
       {
         er = Substrate.er;
         getMicrostrip(value, Freq, &Substrate, width, er);
-        QString val_width =
-            misc::num2str(width, 3) +
-            "m"; // Add suffix mm, cm - 3 significant digits
-        QString val_length =
-            misc::num2str(value2 / sqrt(er), 3) +
-            "m"; // Add suffix mm, cm - 3 significant digits
+        QString val_width = misc::num2str(width, 3, "m");
+        QString val_length = misc::num2str(value2 / sqrt(er), 3, "m");
         componentstr +=
             QString("<MLIN MS1 1 %3 -60 30 -30 0 1 \"Sub1\" 1 \"%1\" 1 \"%2\" "
                     "1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n")
@@ -1925,12 +1897,8 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
                 .arg(val_length)
                 .arg(x_pos);
       } else {
-        QString val_impedance = misc::num2str(value, 3) +
-                                "Ohm"; // Add a suffix (although rarely needed
-                                       // here) - 3 significant digits
-        QString val_length =
-            misc::num2str(value2, 3) +
-            "m"; // Add suffix mm, cm - 3 significant digits
+        QString val_impedance = misc::num2str(value, 3, "Ohm");
+        QString val_length = misc::num2str(value2, 3, "m");
         componentstr += QString("<TLIN Line1 1 %3 -60 20 30 0 1 \"%1\" 1 "
                                 "\"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n")
                             .arg(val_impedance)
@@ -1954,8 +1922,8 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
       //   cover 1 octave below and 1 above, user will adjust if needed...
       double freq_start = Freq / 2.0;
       double freq_stop = 2.0 *Freq;
-      QString val_freq_start = misc::num2str(freq_start, 3) + "Hz";
-      QString val_freq_stop = misc::num2str(freq_stop, 3) + "Hz";
+      QString val_freq_start = misc::num2str(freq_start, 3, "Hz");
+      QString val_freq_stop = misc::num2str(freq_stop, 3, "Hz");
 
       componentstr +=
           QString("<.SP SP1 1 0 100 0 67 0 0 \"lin\" 1 \"%1\" 1 \"%2\" 1 "
@@ -1977,9 +1945,9 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
       x_pos += 100;
       if ((RL > 1e-3) && (XL < -1e-3)) // R + C
       {
-        QString val_Res = misc::num2str(RL, 3) + "Ohm";
-        QString val_Cap = misc::num2str(1 / (fabs(XL) * 2 * pi * Freq), 3) +
-                          "F"; // Need to use abs() because XL < 0
+        QString val_Res = misc::num2str(RL, 3, "Ohm");
+        // Need to use abs() because XL < 0
+        QString val_Cap = misc::num2str(1 / (fabs(XL) * 2 * pi * Freq), 3, "F");
         componentstr +=
             QString(
                 "<R R1 1 %1 -30 15 -26 0 -1 \"%2\" 1 \"26.85\" 0 \"US\" 0>\n")
@@ -1989,16 +1957,16 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
                             .arg(x_pos)
                             .arg(val_Cap);
         paintingstr +=
-            QString("<Text %1 50 12 #000000 0 \"%4-j%5 %2 @ %3Hz\">\n")
+            QString("<Text %1 50 12 #000000 0 \"%4-j%5 %2 @ %3\">\n")
                 .arg(x_pos)
                 .arg(QChar(0x2126))
-                .arg(misc::num2str(Freq, 3))
+                .arg(misc::num2str(Freq, 3, "Hz"))
                 .arg(RL)
                 .arg(fabs(XL));
       } else if ((RL > 1e-3) && (XL > 1e-3)) // R + L
       {
-        QString val_Res = misc::num2str(RL, 3) + "Ohm";
-        QString val_Ind = misc::num2str(XL / (2 * pi * Freq), 3) + "H";
+        QString val_Res = misc::num2str(RL, 3, "Ohm");
+        QString val_Ind = misc::num2str(XL / (2 * pi * Freq), 3, "H");
         componentstr +=
             QString(
                 "<R R1 1 %1 -30 15 -26 0 -1 \"%2\" 1 \"26.85\" 0 \"US\" 0>\n")
@@ -2008,30 +1976,30 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
                             .arg(x_pos)
                             .arg(val_Ind);
         paintingstr +=
-            QString("<Text %1 50 12 #000000 0 \"%4+j%5 %2 @ %3Hz\">\n")
+            QString("<Text %1 50 12 #000000 0 \"%4+j%5 %2 @ %3\">\n")
                 .arg(x_pos)
                 .arg(QChar(0x2126))
-                .arg(misc::num2str(Freq, 3))
+                .arg(misc::num2str(Freq, 3, "Hz"))
                 .arg(RL)
                 .arg(XL);
       } else if ((RL > 1e-3) && (fabs(XL) < 1e-3)) // R
       {
-        QString val_Res = misc::num2str(RL, 3) + "Ohm";
+        QString val_Res = misc::num2str(RL, 3, "Ohm");
         componentstr +=
             QString(
                 "<R R1 1 %1 -30 15 -26 0 -1 \"%2\" 1 \"26.85\" 0 \"US\" 0>\n")
                 .arg(x_pos)
                 .arg(val_Res);
         wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos); // Vertical wire
-        paintingstr += QString("<Text %1 50 12 #000000 0 \"%4 %2 @ %3Hz\">\n")
+        paintingstr += QString("<Text %1 50 12 #000000 0 \"%4 %2 @ %3\">\n")
                            .arg(x_pos)
                            .arg(QChar(0x2126))
-                           .arg(misc::num2str(Freq, 3))
+                           .arg(misc::num2str(Freq, 3, "Hz"))
                            .arg(Freq * 1e-9)
                            .arg(RL);
       } else if ((RL < 1e-3) && (XL > 1e-3)) // L
       {
-        QString val_Ind = misc::num2str(XL / (2 * pi * Freq), 3) + "H";
+        QString val_Ind = misc::num2str(XL / (2 * pi * Freq), 3, "H");
         componentstr +=
             QString(
                 "<L L1 1 %1 -30 15 -26 0 -1 \"%2\" 1 \"26.85\" 0 \"US\" 0>\n")
@@ -2039,16 +2007,16 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
                 .arg(val_Ind);
         wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos); // Vertical wire
         paintingstr +=
-            QString("<Text %1 50 12 #000000 0 \"j%4 %2 @ %3Hz\">\n")
+            QString("<Text %1 50 12 #000000 0 \"j%4 %2 @ %3\">\n")
                 .arg(x_pos)
                 .arg(QChar(0x2126))
-                .arg(misc::num2str(Freq, 3))
+                .arg(misc::num2str(Freq, 3, "Hz"))
                 .arg(Freq * 1e-9)
                 .arg(XL);
       } else if ((RL < 1e-3) && (XL < -1e-3)) // C
       {
-        QString val_Cap = misc::num2str(1 / (fabs(XL) * 2 * pi * Freq), 3) +
-                          "F"; // Need to use abs() because XL < 0
+        // Need to use abs() because XL < 0
+        QString val_Cap = misc::num2str(1 / (fabs(XL) * 2 * pi * Freq), 3, "F");
         componentstr +=
             QString(
                 "<C C1 1 %1 -30 15 -26 0 -1 \"%2\" 1 \"26.85\" 0 \"US\" 0>\n")
@@ -2056,10 +2024,10 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
                 .arg(val_Cap);
         wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos); // Vertical wire
         paintingstr +=
-            QString("<Text %1 50 12 #000000 0 \"-j%4 %2 @ %3Hz\">\n")
+            QString("<Text %1 50 12 #000000 0 \"-j%4 %2 @ %3\">\n")
                 .arg(x_pos)
                 .arg(QChar(0x2126))
-                .arg(misc::num2str(Freq, 3))
+                .arg(misc::num2str(Freq, 3, "Hz"))
                 .arg(fabs(XL));
       }
       wirestr += QString("<%1 -120 %2 -120>\n")
