@@ -894,9 +894,6 @@ bool MatchDialog::calcMatchingCircuit(double S11real, double S11imag, double Z0,
   int x_pos = 0;
 
   r2z(RL, XL, Z0);
-  RL = round(RL * 1e2) /
-       1e2; // Rounding to 2 decimals (just for painting purposes)
-  XL = round(XL * 1e2) / 1e2;
 
   if (SP_Block) {
     laddercode.append("S2P:Freq;");
@@ -1620,7 +1617,7 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
       {
         label = component;
       } else // The value is a double number. For a clearer representation in
-             // the schematic, it will be rounded off to 2 decimal positions
+             // the schematic, it will be shown with a limited precision
       {
         value = component.toDouble();
       }
@@ -1632,7 +1629,7 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
     {
       componentstr += QString("<Pac P1 1 %2 -30 18 -26 0 1 \"1\" 1 \"%1\" 1 "
                               "\"0 dBm\" 0 \"1 GHz\" 0>\n")
-                          .arg(value)
+                          .arg(misc::num2str(value, 3)+"Ohm") // reference impedance
                           .arg(x_pos);
       componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
       wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos);
@@ -1650,7 +1647,7 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
       x_pos += 100;
       componentstr += QString("<Pac P2 1 %2 -30 18 -26 0 1 \"1\" 1 \"%1\" 1 "
                               "\"0 dBm\" 0 \"1 GHz\" 0>\n")
-                          .arg(value)
+                          .arg(misc::num2str(value, 3)+"Ohm") // reference impedance 
                           .arg(x_pos);
       componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
       wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos); // Vertical wire
@@ -1954,13 +1951,17 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
     } else if (!tag.compare("S2P")) // S-param simulation block
     {
       // Add the frequency range for the S-param simulation
-      double freq_start = std::max(0., value - 1e9);
-      double freq_stop = Freq + 1e9;
+      //   cover 1 octave below and 1 above, user will adjust if needed...
+      double freq_start = Freq / 2.0;
+      double freq_stop = 2.0 *Freq;
+      QString val_freq_start = misc::num2str(freq_start, 3) + "Hz";
+      QString val_freq_stop = misc::num2str(freq_stop, 3) + "Hz";
+
       componentstr +=
-          QString("<.SP SP1 1 0 100 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 "
+          QString("<.SP SP1 1 0 100 0 67 0 0 \"lin\" 1 \"%1\" 1 \"%2\" 1 "
                   "\"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n")
-              .arg((freq_start))
-              .arg((freq_stop));
+              .arg((val_freq_start))
+              .arg((val_freq_stop));
 
       if (laddercode.indexOf("P2") == -1) // One port simulation
         componentstr += QString("<Eqn Eqn1 1 200 100 -28 15 0 0 "
@@ -1988,10 +1989,10 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
                             .arg(x_pos)
                             .arg(val_Cap);
         paintingstr +=
-            QString("<Text %1 50 12 #000000 0 \"%4-j%5 %2 @ %3 GHz\">\n")
+            QString("<Text %1 50 12 #000000 0 \"%4-j%5 %2 @ %3Hz\">\n")
                 .arg(x_pos)
                 .arg(QChar(0x2126))
-                .arg(Freq * 1e-9)
+                .arg(misc::num2str(Freq, 3))
                 .arg(RL)
                 .arg(fabs(XL));
       } else if ((RL > 1e-3) && (XL > 1e-3)) // R + L
@@ -2007,10 +2008,10 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
                             .arg(x_pos)
                             .arg(val_Ind);
         paintingstr +=
-            QString("<Text %1 50 12 #000000 0 \"%4+j%5 %2 @ %3 GHz\">\n")
+            QString("<Text %1 50 12 #000000 0 \"%4+j%5 %2 @ %3Hz\">\n")
                 .arg(x_pos)
                 .arg(QChar(0x2126))
-                .arg(Freq * 1e-9)
+                .arg(misc::num2str(Freq, 3))
                 .arg(RL)
                 .arg(XL);
       } else if ((RL > 1e-3) && (fabs(XL) < 1e-3)) // R
@@ -2022,9 +2023,10 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
                 .arg(x_pos)
                 .arg(val_Res);
         wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos); // Vertical wire
-        paintingstr += QString("<Text %1 50 12 #000000 0 \"%4 %2 @ %3 GHz\">\n")
+        paintingstr += QString("<Text %1 50 12 #000000 0 \"%4 %2 @ %3Hz\">\n")
                            .arg(x_pos)
                            .arg(QChar(0x2126))
+                           .arg(misc::num2str(Freq, 3))
                            .arg(Freq * 1e-9)
                            .arg(RL);
       } else if ((RL < 1e-3) && (XL > 1e-3)) // L
@@ -2037,9 +2039,10 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
                 .arg(val_Ind);
         wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos); // Vertical wire
         paintingstr +=
-            QString("<Text %1 50 12 #000000 0 \"j%4 %2 @ %3 GHz\">\n")
+            QString("<Text %1 50 12 #000000 0 \"j%4 %2 @ %3Hz\">\n")
                 .arg(x_pos)
                 .arg(QChar(0x2126))
+                .arg(misc::num2str(Freq, 3))
                 .arg(Freq * 1e-9)
                 .arg(XL);
       } else if ((RL < 1e-3) && (XL < -1e-3)) // C
@@ -2053,10 +2056,10 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
                 .arg(val_Cap);
         wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos); // Vertical wire
         paintingstr +=
-            QString("<Text %1 50 12 #000000 0 \"-j%4 %2 @ %3 GHz\">\n")
+            QString("<Text %1 50 12 #000000 0 \"-j%4 %2 @ %3Hz\">\n")
                 .arg(x_pos)
                 .arg(QChar(0x2126))
-                .arg(Freq * 1e-9)
+                .arg(misc::num2str(Freq, 3))
                 .arg(fabs(XL));
       }
       wirestr += QString("<%1 -120 %2 -120>\n")
