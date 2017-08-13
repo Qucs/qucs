@@ -254,6 +254,8 @@ public:
   ContextMenuTabWidget *DocumentTab;
   QListWidget *CompComps;
   QTreeWidget *libTreeWidget;
+  bool TuningMode;//Indicates whether the tuning mode is activated or not. It is public in order to let mouseactions.cpp to access it directly w/o implementing a getter function
+
 
   // menu appearing by right mouse button click on content listview
   QMenu *ContentMenu;
