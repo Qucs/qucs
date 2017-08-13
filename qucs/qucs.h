@@ -24,6 +24,11 @@
 #include <QStack>
 #include <QDir>
 
+/**
+ * @file qucs.h
+ * @brief definition of the main Qucs application class and other helper classes
+ */
+
 class QucsDoc;
 class Schematic;
 class SimMessage;
@@ -32,6 +37,7 @@ class SearchDialog;
 class OctaveWindow;
 class MessageDock;
 class ProjectView;
+class ContextMenuTabWidget;
 class VersionTriplet;
 class QucsApp;
 
@@ -131,7 +137,7 @@ class QucsApp : public QMainWindow {
 public:
   QucsApp();
  ~QucsApp();
-  bool closeAllFiles();
+  bool closeAllFiles(int exceptTab = -1);
   bool gotoPage(const QString&);   // to load a document
   QucsDoc *getDoc(int No=-1);
   QucsDoc* findDoc (QString, int * Pos = 0);
@@ -227,7 +233,7 @@ signals:
 
 public:
   MouseActions *view;
-  QTabWidget *DocumentTab;
+  ContextMenuTabWidget *DocumentTab;
   QListWidget *CompComps;
   QTreeWidget *libTreeWidget;
 
@@ -441,6 +447,26 @@ private:
   void launchTool(const QString&, const QString&, const QString& = ""); // tool, description and args
   friend class SaveDialog;
   QString lastExportFilename;
+};
+
+/**
+ * @brief a QTabWidget with context menu for tabs
+ *
+ */
+class ContextMenuTabWidget : public QTabWidget
+{
+  Q_OBJECT
+public:
+  ContextMenuTabWidget(QucsApp *parent = 0);
+public slots:
+  void showContextMenu(const QPoint& point);
+private:
+  int contextTabIndex; // index of tab where context menu was opened
+  QucsApp *App; // the main application - parent widget
+private slots:
+  void slotCxMenuClose();
+  void slotCxMenuCloseOthers();
+  void slotCxMenuCloseAll();
 };
 
 #endif /* QUCS_H */
