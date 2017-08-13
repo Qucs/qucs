@@ -1995,7 +1995,6 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
                            .arg(x_pos)
                            .arg(QChar(0x2126))
                            .arg(misc::num2str(Freq, 3, "Hz"))
-                           .arg(Freq * 1e-9)
                            .arg(RL);
       } else if ((RL < 1e-3) && (XL > 1e-3)) // L
       {
@@ -2011,7 +2010,6 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
                 .arg(x_pos)
                 .arg(QChar(0x2126))
                 .arg(misc::num2str(Freq, 3, "Hz"))
-                .arg(Freq * 1e-9)
                 .arg(XL);
       } else if ((RL < 1e-3) && (XL < -1e-3)) // C
       {
