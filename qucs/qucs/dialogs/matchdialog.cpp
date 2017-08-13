@@ -1329,7 +1329,7 @@ QString MatchDialog::calcDoubleStub(double r_real, double r_imag, double Z0,
                      .arg(d)
                      .arg(lstub1);
   if ((open_short) && (!BalancedStubs))
-    laddercode = QString("OL:%1#%2;TL:%1#%3;OL:%1#%4")
+    laddercode = QString("OL:%1#%2;TL:%1#%3;OL:%1#%4;")
                      .arg(Z0)
                      .arg(lstub2)
                      .arg(d)
@@ -1341,7 +1341,7 @@ QString MatchDialog::calcDoubleStub(double r_real, double r_imag, double Z0,
                      .arg(d)
                      .arg(lstub1);
   if ((!open_short) && (!BalancedStubs))
-    laddercode = QString("SL:%1#%2;TL:%1#%3;SL:%1#%4")
+    laddercode = QString("SL:%1#%2;TL:%1#%3;SL:%1#%4;")
                      .arg(Z0)
                      .arg(lstub2)
                      .arg(d)
