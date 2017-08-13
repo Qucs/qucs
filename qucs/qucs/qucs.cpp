@@ -136,6 +136,8 @@ QucsApp::QucsApp()
   // instance of small text search dialog
   SearchDia = new SearchDialog(this);
 
+  TuningMode = false;//Force tuning mode to false
+
   // creates a document called "untitled"
   DocumentTab->createEmptySchematic("");
 

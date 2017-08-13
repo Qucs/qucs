@@ -15,27 +15,113 @@
  *                                                                         *
  ***************************************************************************/
 #include "tuner.h"
-#include <cmath>
 
-#include "qucs.h"
-#include "mouseactions.h"
-#include "components/component.h"
-
-#include <QWidget>
-#include <QAction>
-#include <QDialog>
-#include <QLabel>
-#include <QTextEdit>
-#include <QMessageBox>
-#include <QDebug>
-#include <QToolButton>
-
-tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPropertyId)
+tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, int selectedPropertyId)
     : QWidget(parent)
 {
-    int index, row, column, rowSpan, colSpan;
+    bool ok;//Flag which indicates whether the property is tunable or not
+    QStringList ScaleFactorList;
+    ScaleFactorList << "f" << "p" << "n" << "u" << "m" << "" << "k" << "M" << "G";
+    int magnitudeIndex = 5;//No scaling
+    //First of all we need to check whether the property is tunable (number + units) or not (random string)
+    //There may be an arbitrary number of spaces between magnitude and unit, so in first place we need to normalize that
+    //In this sense, all blank spaces are removed
+    QString val = pp->Value;
 
-    setAttribute(Qt::WA_DeleteOnClose);
+    if (val.contains("e", Qt::CaseInsensitive))//Scientific notation
+    {
+        val = misc::num2str(val.toDouble());
+    }
+
+    val.remove(" ");
+
+    //Now, it's time to look for the suffix... if any!
+    int units_index = -1;
+    for (int i = 0; i < val.length(); i++)
+    {
+        if (val.at(i).isLetter())
+        {
+            if (i == 0)
+            {
+                ok = false;
+                break;
+            }
+            units_index = i;//Select index
+            qDebug() << val.mid(0, i);
+            numValue = val.mid(0, i).toFloat(&ok);//Get the magnitude
+            break;
+        }
+    }
+
+       //Fin the units from the string
+       unit = val.mid(units_index);// unit should be sth like mA, mm, uV, nA, etc... here
+
+       switch (unit.at(0).toAscii()) {
+       case 'f': magnitudeIndex = 0;
+                 break;
+       case 'p': magnitudeIndex = 1;
+                 break;
+       case 'n': magnitudeIndex = 2;
+                 break;
+       case 'u': magnitudeIndex = 3;
+                 break;
+       case 'm': magnitudeIndex = 4;
+                 break;
+       case 'k': magnitudeIndex = 6;
+                 break;
+       case 'M': magnitudeIndex = 7;
+                 break;
+       case 'G': magnitudeIndex = 8;
+                 break;
+       }
+
+       if (unit.length() <= 1)
+       {//It comes with no units... so let's try to find a suitable unit
+        QMap <QString, QStringList> Keywords;//Map containing the keywords that may appear in the property description
+        Keywords["F"] << "capacitance";
+        Keywords["H"] << "inductance";
+        Keywords["Ohm"] << "resistance";
+        Keywords["V"] << "voltage";
+        Keywords["A"] << "current";
+        Keywords["m"] << "length" << "width" << "thickness";
+        Keywords["s"] << "time";
+
+        //If one of the keywords appears in the description text, then the key of the map
+        //is used as unit...
+        bool found = false;
+        for(auto e : Keywords.keys())
+        {
+          for (int i = 0; i < Keywords[e].length(); i++)
+          {
+              if (pp->Description.indexOf(Keywords[e].at(i), Qt::CaseInsensitive) != -1)
+              {
+                  unit = e;
+                  found = true;
+                  break;
+              }
+          }
+          if (found) break;
+        }
+       }
+       else
+       {//The value comes with unit, so let's strip it
+          unit = unit.mid(1);
+       }
+
+        //Finally, add the unit to the QStringList for adding it to the scale comboboxes later
+        for (int i = 0; i < ScaleFactorList.length(); i++) ScaleFactorList[i] += unit;
+
+
+    if (!ok)
+    {
+        QMessageBox::warning(0,
+                             "Property not correct",
+                             "You selected a non-tunable property",
+                             QMessageBox::Ok);
+        return;
+    };
+
+    setAttribute(Qt::WA_DeleteOnClose);//This attribute forces the widget to be destroyed after closing
     prop = component->Props.at(selectedPropertyId);
     QGridLayout *gbox = new QGridLayout();
     setLayout(gbox);
@@ -49,6 +135,8 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     maximum->setValidator( new QDoubleValidator(0, 100, 2, this) );//Prevent the user from entering text
     MaxUnitsCombobox = new QComboBox(this);
     MaxUnitsCombobox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+    MaxUnitsCombobox->addItems(ScaleFactorList);
+    MaxUnitsCombobox->setCurrentIndex(magnitudeIndex);
     gbox->addWidget(maximum, 1, 1);
     gbox->addWidget(MaxUnitsCombobox,1,2);
 
@@ -62,6 +150,9 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     minimum->setValidator( new QDoubleValidator(0, 100, 2, this) );//Prevent the user from entering text
     MinUnitsCombobox = new QComboBox(this);
     MinUnitsCombobox->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
+    MinUnitsCombobox->addItems(ScaleFactorList);
+    MinUnitsCombobox->setCurrentIndex(magnitudeIndex);
+
     gbox->addWidget(minimum, 4, 1);
     gbox->addWidget(MinUnitsCombobox,4,2);
 
@@ -72,6 +163,8 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     originalValue = prop->Value.copy();
     gbox->addWidget(value, 5, 1);
     gbox->addWidget(ValueUnitsCombobox,5,2);
+    ValueUnitsCombobox->addItems(ScaleFactorList);
+    ValueUnitsCombobox->setCurrentIndex(magnitudeIndex);
 
 
     gbox->addWidget(new QLabel(tr("Step")), 6, 0);
@@ -80,23 +173,12 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     StepUnitsCombobox = new QComboBox(this);
     gbox->addWidget(step, 6, 1);
     gbox->addWidget(StepUnitsCombobox,6,2);
-
+    StepUnitsCombobox->addItems(ScaleFactorList);
+    StepUnitsCombobox->setCurrentIndex(magnitudeIndex);
 
 
     QPushButton *remove = new QPushButton(tr("Remove"), this);
     gbox->addWidget(remove, 7, 0);
-
-
-    QStringList lst = prop->Value.split(' ');
-    if (lst.count() > 1)
-        unit = lst.last();
-    else
-        unit = ""; // No unit
-
-    index = gbox->indexOf(value);
-    gbox->getItemPosition(index, &row, &column, &rowSpan, &colSpan);
-    QLabel *unitLabel = new QLabel(unit, this);
-    gbox->addWidget(unitLabel, row, column+1, 1, 1); // Value
 
     Up_Down_Buttons_Widget = new QWidget();
     QGridLayout *buttonsLayout = new QGridLayout();
@@ -111,7 +193,6 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     Up_Down_Buttons_Widget->setStyleSheet("QWidget {border: 1px solid black;}");
     gbox->addWidget(Up_Down_Buttons_Widget, 2, 2, 2, 1);
 
-    numValue = lst.first().toFloat();
     maxValue = numValue*1.15;// max = nominal + 15%
     minValue = numValue*0.85;// min = nominal - 15%
     stepValue = (maxValue-minValue)/20;//20 steps between minimum and maximum
@@ -129,12 +210,27 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
 
     connect(slider, SIGNAL(valueChanged(int)), this, SLOT(slotValueChanged()));
     connect(maximum, SIGNAL(editingFinished()), this, SLOT(slotMaxValueChanged()));
+    connect(MaxUnitsCombobox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotMaxValueChanged()));
+
     connect(minimum, SIGNAL(editingFinished()), this, SLOT(slotMinValueChanged()));
+    connect(MinUnitsCombobox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotMinValueChanged()));
+
     connect(step, SIGNAL(editingFinished()), this, SLOT(slotStepChanged()));
+    connect(StepUnitsCombobox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotStepChanged()));
+
     connect(value, SIGNAL(editingFinished()), this, SLOT(slotValueChanged()));
+    connect(ValueUnitsCombobox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotValueChanged()));
+
     connect(remove, SIGNAL(released()), this, SLOT(slotDelete()));
     connect(up, SIGNAL(clicked()), this, SLOT(slotUpClicked()));
     connect(down, SIGNAL(clicked()), this, SLOT(slotDownClicked()));
+
+    //So far, minimum, maximum, stepValue and value has the same scale. Let's set the right value
+    bool aux;
+    maxValue = getMaxValue(aux);
+    minValue = getMinValue(aux);
+    numValue = getValue(aux);
+    stepValue = getStep(aux);
 }
 
 Property* tunerElement::getElementProperty()
@@ -153,17 +249,62 @@ void tunerElement::resetValue()
 void tunerElement::updateProperty()
 {
 
-    prop->Value = value->text().append(tr(" ") + unit);
+    prop->Value = value->text().append(tr(" ") + ValueUnitsCombobox->currentText());
 }
+
+
+/*
+Given a QString containing number + suffix (i.e. 2.5p, 3.9n), this function separates '2.5' from 'p' and gives the corresponding index to that suffix
+*/
+QString tunerElement::SeparateMagnitudeFromSuffix(QString num, int & index)
+{
+  index = -1;
+  int sp;
+  for (int i = 0; i < num.length(); i++)
+  {
+      if (num.at(i).isLetter())
+      {
+          sp = i;
+          break;
+      }
+  }
+
+  switch(num.at(sp).toAscii()) {
+      case 'f': index = 0;
+                break;
+      case 'p': index = 1;
+                break;
+      case 'n': index = 2;
+                break;
+      case 'u': index = 3;
+                break;
+      case 'm': index = 4;
+                break;
+      case 'k': index = 6;
+                break;
+      case 'M': index = 7;
+                break;
+      case 'G': index = 8;
+                break;
+      }
+  return num.mid(0,sp);
+}
+
 
 void tunerElement::slotMaxValueChanged()
 {
     bool ok;
-    float v = maximum->text().toFloat(&ok);
+    float v = getMaxValue(ok);
 
-    if (!ok)
+    if (!ok || (v <= minValue))
     {
         QMessageBox::warning(this, "ERROR", "Maximum value not correct", QMessageBox::Ok);
+        //Restore values
+        QString val = misc::num2str(maxValue);
+        int index = 5;//By default, no scaling
+        val = SeparateMagnitudeFromSuffix(val, index);
+        maximum->setText(val);
+        MaxUnitsCombobox->setCurrentIndex(index);
         return;
     }
 
@@ -176,11 +317,17 @@ void tunerElement::slotMaxValueChanged()
 void tunerElement::slotMinValueChanged()
 {
     bool ok;
-    float v = minimum->text().toFloat(&ok);
+    float v = getMinValue(ok);
 
-    if (!ok)
+    if (!ok || (v >= maxValue))
     {
         QMessageBox::warning(this, "ERROR", "Minimum value not correct", QMessageBox::Ok);
+        //Restore values
+        QString val = misc::num2str(minValue);
+        int index = 5;//By default, no scaling
+        val = SeparateMagnitudeFromSuffix(val, index);
+        minimum->setText(val);
+        MinUnitsCombobox->setCurrentIndex(index);
         return;
     }
 
@@ -193,8 +340,8 @@ void tunerElement::slotMinValueChanged()
 void tunerElement::slotStepChanged()
 {
     bool ok;
-    float v = step->text().toFloat(&ok);
-    float range = maxValue - minValue;
+    float v = getStep(ok);
+    float range = getMaxValue(ok) - getMinValue(ok);
 
     qDebug() << "tunerElement::slotStepChanged()" << v;
 
@@ -204,21 +351,32 @@ void tunerElement::slotStepChanged()
         return;
     }
 
+    //Adjust the slider step and update the marker position
     slider->blockSignals(true);
     slider->setTickInterval(100 / (range/v));
+    slider->setValue(v*100);
     slider->blockSignals(false);
+    updateSlider();
 }
 
 void tunerElement::slotValueChanged()
 {
-    bool ok;
-    float v = value->text().toFloat(&ok);
+    bool ok = false;
+    float v = getValue(ok);
+    minValue = getMinValue(ok);
+    maxValue = getMaxValue(ok);
     float slider_v = minValue + ((slider->value()/100.0) * (maxValue - minValue));
     qDebug() << "tunerElement::slotValueChanged()" << v;
 
     if (!ok)
     {
         QMessageBox::warning(this, "ERROR", "Entered value not correct", QMessageBox::Ok);
+        //Restore values
+        QString val = misc::num2str(numValue);
+        int index = 5;//By default, no scaling
+        val = SeparateMagnitudeFromSuffix(val, index);
+        value->setText(val);
+        ValueUnitsCombobox->setCurrentIndex(index);
         return;
     }
 
@@ -234,6 +392,12 @@ void tunerElement::slotValueChanged()
     }
 
     numValue = v;
+    //Update text & combobox. This is specially needed in case the input value exceeds the minumum and max. limits
+    QString val = misc::num2str(numValue);
+    int index = 5;//By default, no scaling
+    val = SeparateMagnitudeFromSuffix(val, index);
+    value->setText(val);
+    ValueUnitsCombobox->setCurrentIndex(index);
 
     if ( (int)v*1000 != (int)slider_v*1000 )
         updateSlider();
@@ -244,12 +408,14 @@ void tunerElement::slotValueChanged()
 
 void tunerElement::slotUpClicked()
 {
-    float s = step->text().toFloat();
+    bool ok;
+    float s = getStep(ok);
     qDebug() << "tunerElement::slotUpClicked() " << s;
 
-    numValue += s;
+    numValue = getValue(ok) + s;
+    if (numValue > maxValue) numValue = getMaxValue(ok);
 
-    value->setText(QString::number(numValue, 'f', 3));
+    value->setText(QString::number(numValue/getScale(ValueUnitsCombobox->currentIndex()), 'f', 3));
 
     slotValueChanged();
     updateSlider();
@@ -257,11 +423,14 @@ void tunerElement::slotUpClicked()
 
 void tunerElement::slotDownClicked()
 {
-    float s = step->text().toFloat();
+    bool ok;
+    float s = getStep(ok);
     qDebug() << "tunerElement::slotDownClicked() " << s;
 
-    numValue -= s;
-    value->setText(QString::number(numValue, 'f', 3));
+    numValue = getValue(ok) - s;
+    if (numValue < getMinValue(ok)) numValue = getMinValue(ok);
+
+    value->setText(QString::number(numValue/getScale(ValueUnitsCombobox->currentIndex()), 'f', 3));
 
     slotValueChanged();
     updateSlider();
@@ -275,12 +444,52 @@ void tunerElement::slotDelete()
 
 void tunerElement::updateSlider()
 {
+    bool ok;
+    numValue = getValue(ok);
+    minValue = getMinValue(ok);
+    maxValue = getMaxValue(ok);
     float v = (numValue - minValue) / (maxValue - minValue);
-    float s = step->text().toFloat();
+    float s = getStep(ok);
     slider->blockSignals(true);
     slider->setValue(v*100);
     slider->setTickInterval(100 / ((maxValue - minValue)/s));
     slider->blockSignals(false);
+}
+
+float tunerElement::getScale(int index)
+{
+    switch (index)
+    {
+    case 0: return pow(10, -15);//femto
+    case 1: return pow(10, -12);//pico
+    case 2: return pow(10 ,-9);//nano
+    case 3: return pow(10, -6);//micro
+    case 4: return pow(10,-3);//mili
+    case 5: return 1;
+    case 6: return pow(10, 3);//kilo
+    case 7: return pow(10, 6);//mega
+    case 8: return pow(10, 9);//giga
+    }
+}
+
+float tunerElement::getValue(bool &ok)
+{
+   return value->text().toFloat(&ok)*getScale(ValueUnitsCombobox->currentIndex());
+}
+
+float tunerElement::getMaxValue(bool &ok)
+{
+   return maximum->text().toFloat(&ok)*getScale(MaxUnitsCombobox->currentIndex());
+}
+
+float tunerElement::getMinValue(bool &ok)
+{
+   return minimum->text().toFloat(&ok)*getScale(MinUnitsCombobox->currentIndex());
+}
+
+float tunerElement::getStep(bool &ok)
+{
+   return step->text().toFloat(&ok)*getScale(StepUnitsCombobox->currentIndex());
 }
 
 tunerElement::~tunerElement()
@@ -301,6 +510,7 @@ tunerElement::~tunerElement()
 TunerDialog::TunerDialog(QWidget *parent) :
     QDialog(parent)
 {
+    setAttribute(Qt::WA_DeleteOnClose);//This attribute forces the widget to be destroyed after closing
     qDebug() << "Tuner::TunerDialog";
     this->setName("Tuner");
     this->setCaption("Tuner");
@@ -316,8 +526,10 @@ TunerDialog::TunerDialog(QWidget *parent) :
     currentProps = new QList<Property*>();
 
     closeButton = new QPushButton("Close", this);
-    QPushButton *updateValues = new QPushButton("Update Values", this);
-    QPushButton *resetValues = new QPushButton("Reset Values", this);
+    updateValues = new QPushButton("Update Values", this);
+    updateValues->setEnabled(false);//It doesn't make sense to activate it at first... only when at least a tuning element is active...
+    resetValues = new QPushButton("Reset Values", this);
+    resetValues->setEnabled(false);
 
     info = new QStatusBar;
     buttonsLayout->addWidget(resetValues);
@@ -354,6 +566,9 @@ void TunerDialog::addTunerElement(tunerElement *element)
     if (!element)
         return;
 
+    updateValues->setEnabled(true);
+    resetValues->setEnabled(true);
+
     connect(element, SIGNAL(elementValueUpdated()), this, SLOT(slotElementValueUpdated()));
     connect(element, SIGNAL(removeElement(tunerElement*)), this, SLOT(slotRemoveTunerElement(tunerElement*)));
 
@@ -378,6 +593,12 @@ void TunerDialog::slotRemoveTunerElement(tunerElement *e)
     currentProps->removeAll(e->getElementProperty());
     currentElements->removeAll(e);//This will also destroy the element in QSplitter: https://stackoverflow.com/questions/371599/how-to-remove-qwidgets-from-qsplitter
     delete e;
+    if (currentProps->size() == 0)
+    {//No tuning boxes
+        updateValues->setEnabled(false);
+        resetValues->setEnabled(false);
+        info->showMessage("Please select a component to tune");
+    }
     this->adjustSize();
     this->update();
 }
@@ -471,3 +692,4 @@ TunerDialog::~TunerDialog()
 {
 
 }
+

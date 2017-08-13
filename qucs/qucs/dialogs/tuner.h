@@ -20,6 +20,9 @@
 #include <QWidget>
 #include "qucs.h"
 #include "components/components.h"
+#include "misc.h"
+#include <cmath>
+#include "mouseactions.h"
 
 #include <QWidget>
 #include <QDialog>
@@ -33,6 +36,10 @@
 #include <QComboBox>
 #include <QSplitter>
 #include <QStatusBar>
+#include <QAction>
+#include <QTextEdit>
+#include <QMessageBox>
+#include <QDebug>
 
 extern QucsApp *QucsMain;  // the Qucs application itself
 
@@ -40,10 +47,15 @@ class tunerElement : public QWidget
 {
     Q_OBJECT
     public:
-        tunerElement(QWidget *parent, Component*, int);
+        tunerElement(QWidget *parent, Component*, Property *, int);
         Property* getElementProperty();
         void resetValue();
         void updateProperty();
+        float getValue(bool &);
+        float getMaxValue(bool &);
+        float getMinValue(bool &);
+        float getStep(bool &);
+        float getScale(int);
 
         virtual ~tunerElement();
     signals:
@@ -81,7 +93,7 @@ class tunerElement : public QWidget
         void slotDelete();
         void slotDownClicked();
         void slotUpClicked();
-
+        QString SeparateMagnitudeFromSuffix(QString num, int &);
         void updateSlider();
 };
 
@@ -111,6 +123,7 @@ private:
     QWidget *ButtonsPanel;
     bool valuesUpated;
     Schematic* doc;
+    QPushButton *updateValues, *resetValues;//They're private in order to make enable or disable them
 
     void blockInput(bool enabled);
     void closeEvent(QCloseEvent *event);
