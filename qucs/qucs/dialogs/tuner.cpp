@@ -248,8 +248,8 @@ void tunerElement::resetValue()
 
 void tunerElement::updateProperty()
 {
-
     prop->Value = value->text().append(tr(" ") + ValueUnitsCombobox->currentText());
+        qDebug() << "Updated property: " << prop->Value;
 }
 
 
@@ -547,7 +547,13 @@ TunerDialog::TunerDialog(QWidget *parent) :
     connect(closeButton, SIGNAL(released()), this, SLOT(close()));
     connect(resetValues, SIGNAL(released()),this, SLOT(slotResetValues()));
     connect(updateValues, SIGNAL(released()), this, SLOT(slotUpdateValues()));
+
+    //Management of the Esc shortcut. Otherwise, it will exit the tuner and leave the toogle button activated
+    QShortcut *shortcut_Esc = new QShortcut(Qt::Key_Escape, this);
+    QObject::connect(shortcut_Esc, SIGNAL(activated()), this, SLOT(close()));
 }
+
+
 
 void TunerDialog::infoMsg(const QString msg)
 {
@@ -675,7 +681,7 @@ void TunerDialog::closeEvent(QCloseEvent *event)
     QucsMain->MousePressAction = &MouseActions::MPressSelect;
     QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
     QucsMain->tune->setChecked(false);
-    event->accept();
+   event->accept();
 }
 
 void TunerDialog::showEvent(QShowEvent *e)

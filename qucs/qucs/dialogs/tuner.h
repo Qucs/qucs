@@ -40,6 +40,7 @@
 #include <QTextEdit>
 #include <QMessageBox>
 #include <QDebug>
+#include <QShortcut>
 
 extern QucsApp *QucsMain;  // the Qucs application itself
 
