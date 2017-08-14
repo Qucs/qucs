@@ -533,6 +533,13 @@ TunerDialog::TunerDialog(QWidget *parent) :
     resetValues = new QPushButton("Reset Values", this);
     resetValues->setEnabled(false);
 
+    //When pressing the Enter key at the Maxium lineedit focus is automatically set to the reset button leading to
+    //confunsing and unexpected behavior. In this sense, the lines below are a workaround. The focus is rejected for
+    //these buttons, so that focus can never reach them
+    resetValues->setFocusPolicy(Qt::NoFocus);
+    updateValues->setFocusPolicy(Qt::NoFocus);
+    closeButton->setFocusPolicy(Qt::NoFocus);
+
     info = new QStatusBar;
     buttonsLayout->addWidget(resetValues);
     buttonsLayout->addWidget(updateValues);
