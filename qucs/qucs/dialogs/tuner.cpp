@@ -110,7 +110,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
 
         //Finally, add the unit to the QStringList for adding it to the scale comboboxes later
         for (int i = 0; i < ScaleFactorList.length(); i++) ScaleFactorList[i] += unit;
-
+    originalValue = QString::number(numValue)+ScaleFactorList[magnitudeIndex];
 
     if (!ok)
     {
@@ -160,7 +160,6 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     value = new QLineEdit();
     value->setValidator( new QDoubleValidator(0, 100, 2, this) );//Prevent the user from entering text
     ValueUnitsCombobox = new QComboBox(this);
-    originalValue = prop->Value.copy();
     gbox->addWidget(value, 5, 1);
     gbox->addWidget(ValueUnitsCombobox,5,2);
     ValueUnitsCombobox->addItems(ScaleFactorList);
@@ -208,7 +207,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     slider->setTickmarks(QSlider::Both);
     slider->setTickInterval(0);
 
-    connect(slider, SIGNAL(valueChanged(int)), this, SLOT(slotValueChanged()));
+
     connect(maximum, SIGNAL(editingFinished()), this, SLOT(slotMaxValueChanged()));
     connect(MaxUnitsCombobox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotMaxValueChanged()));
 
@@ -218,8 +217,9 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     connect(step, SIGNAL(editingFinished()), this, SLOT(slotStepChanged()));
     connect(StepUnitsCombobox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotStepChanged()));
 
-    connect(value, SIGNAL(editingFinished()), this, SLOT(slotValueChanged()));
-    connect(ValueUnitsCombobox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotValueChanged()));
+    connect(slider, SIGNAL(valueChanged(int)), this, SLOT(slotValueChanged()));
+    connect(value, SIGNAL(editingFinished()), this, SLOT(updateSlider()));
+    connect(ValueUnitsCombobox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSlider()));
 
     connect(remove, SIGNAL(released()), this, SLOT(slotDelete()));
     connect(up, SIGNAL(clicked()), this, SLOT(slotUpClicked()));
@@ -241,9 +241,13 @@ Property* tunerElement::getElementProperty()
 void tunerElement::resetValue()
 {
     prop->Value = originalValue;
-
-    value->setText(originalValue.split(' ').first());
-    this->slotValueChanged();
+    //Reset value value
+    int index = 5;//By default, no scaling
+    QString val = SeparateMagnitudeFromSuffix(originalValue, index);
+    value->setText(val);
+    ValueUnitsCombobox->setCurrentIndex(index);
+    updateSlider();
+    slotValueChanged();
 }
 
 void tunerElement::updateProperty()
@@ -362,11 +366,10 @@ void tunerElement::slotStepChanged()
 void tunerElement::slotValueChanged()
 {
     bool ok = false;
-    float v = getValue(ok);
     minValue = getMinValue(ok);
     maxValue = getMaxValue(ok);
     float slider_v = minValue + ((slider->value()/100.0) * (maxValue - minValue));
-    qDebug() << "tunerElement::slotValueChanged()" << v;
+    qDebug() << "tunerElement::slotValueChanged()" << slider_v;
 
     if (!ok)
     {
@@ -380,27 +383,24 @@ void tunerElement::slotValueChanged()
         return;
     }
 
-    if (v > maxValue)
+    if (slider_v > maxValue)
     {
         value->setText(QString::number(maxValue));
-        v = maxValue;
+        slider_v = maxValue;
     }
-    else if (v < minValue)
+    else if (slider_v < minValue)
     {
         value->setText(QString::number(minValue));
-        v = minValue;
+        slider_v = minValue;
     }
 
-    numValue = v;
+    numValue = slider_v;
     //Update text & combobox. This is specially needed in case the input value exceeds the minumum and max. limits
     QString val = misc::num2str(numValue);
     int index = 5;//By default, no scaling
     val = SeparateMagnitudeFromSuffix(val, index);
     value->setText(val);
     ValueUnitsCombobox->setCurrentIndex(index);
-
-    if ( (int)v*1000 != (int)slider_v*1000 )
-        updateSlider();
 
     updateProperty();
     emit elementValueUpdated();
@@ -417,8 +417,8 @@ void tunerElement::slotUpClicked()
 
     value->setText(QString::number(numValue/getScale(ValueUnitsCombobox->currentIndex()), 'f', 3));
 
+    updateSlider();//First, update the slider. Then update the value since this slot will take the value from the slider
     slotValueChanged();
-    updateSlider();
 }
 
 void tunerElement::slotDownClicked()
@@ -432,8 +432,9 @@ void tunerElement::slotDownClicked()
 
     value->setText(QString::number(numValue/getScale(ValueUnitsCombobox->currentIndex()), 'f', 3));
 
+    updateSlider();//First, update the slider. Then update the value since this slot will take the value from the slider
     slotValueChanged();
-    updateSlider();
+
 }
 
 void tunerElement::slotDelete()
@@ -442,9 +443,41 @@ void tunerElement::slotDelete()
     emit removeElement(this);
 }
 
+/*
+The control reaches this function whenever the user changes the value-related inputs, i.e. textbox, scale combo or the slider
+For this reason, some of the values given by the user may be out of range and there's a need to check that such data is correct
+*/
 void tunerElement::updateSlider()
 {
     bool ok;
+    float val = getValue(ok);
+    float min_val = getMinValue(ok);
+    float max_val = getMaxValue(ok);
+    //Check if the text data is correct
+    if ((val <  min_val)|| (getValue(ok) > max_val) || (!ok))
+    {//Restore last values and return
+        //Value
+        QString val = misc::num2str(numValue);
+        int index = 5;//By default, no scaling
+        val = SeparateMagnitudeFromSuffix(val, index);
+        value->setText(val);
+        ValueUnitsCombobox->setCurrentIndex(index);
+
+        //Maximum value
+        val = misc::num2str(max_val);
+        index = 5;//By default, no scaling
+        val = SeparateMagnitudeFromSuffix(val, index);
+        maximum->setText(val);
+        MaxUnitsCombobox->setCurrentIndex(index);
+
+        //Minimum value
+        val = misc::num2str(min_val);
+        index = 5;//By default, no scaling
+        val = SeparateMagnitudeFromSuffix(val, index);
+        minimum->setText(val);
+        MinUnitsCombobox->setCurrentIndex(index);
+        return;
+    }
     numValue = getValue(ok);
     minValue = getMinValue(ok);
     maxValue = getMaxValue(ok);
@@ -454,6 +487,7 @@ void tunerElement::updateSlider()
     slider->setValue(v*100);
     slider->setTickInterval(100 / ((maxValue - minValue)/s));
     slider->blockSignals(false);
+    slotValueChanged();
 }
 
 float tunerElement::getScale(int index)
