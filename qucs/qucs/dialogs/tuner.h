@@ -94,6 +94,7 @@ class tunerElement : public QWidget
         void slotDelete();
         void slotDownClicked();
         void slotUpClicked();
+        void slotSliderChanged();
         QString SeparateMagnitudeFromSuffix(QString num, int &);
         void updateSlider();
 };
