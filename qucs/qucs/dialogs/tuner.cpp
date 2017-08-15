@@ -23,6 +23,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     QStringList ScaleFactorList;
     ScaleFactorList << "f" << "p" << "n" << "u" << "m" << "" << "k" << "M" << "G";
     int magnitudeIndex = 5;//No scaling
+    int minValueValidator = 0;
     //First of all we need to check whether the property is tunable (number + units) or not (random string)
     //There may be an arbitrary number of spaces between magnitude and unit, so in first place we need to normalize that
     //In this sense, all blank spaces are removed
@@ -89,6 +90,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
         //If one of the keywords appears in the description text, then the key of the map
         //is used as unit...
         bool found = false;
+        int index=-1;
         for(auto e : Keywords.keys())
         {
           for (int i = 0; i < Keywords[e].length(); i++)
@@ -96,11 +98,13 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
               if (pp->Description.indexOf(Keywords[e].at(i), Qt::CaseInsensitive) != -1)
               {
                   unit = e;
+                  index = i;
                   found = true;
+                  if ((i==3) || (i ==4))//Voltage or current
+                      minValueValidator = -100;//Allow negative numbers in the lineedits
                   break;
               }
           }
-          if (found) break;
         }
        }
        else
@@ -132,7 +136,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
 
     gbox->addWidget(new QLabel(tr("Max.:")), 1, 0);
     maximum = new QLineEdit();
-    maximum->setValidator( new QDoubleValidator(0, 100, 2, this) );//Prevent the user from entering text
+    maximum->setValidator( new QDoubleValidator(minValueValidator, 100, 2, this) );//Prevent the user from entering text
     MaxUnitsCombobox = new QComboBox(this);
     MaxUnitsCombobox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
     MaxUnitsCombobox->addItems(ScaleFactorList);
@@ -147,7 +151,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
 
     gbox->addWidget(new QLabel(tr("Min.:")), 4, 0);
     minimum = new QLineEdit();
-    minimum->setValidator( new QDoubleValidator(0, 100, 2, this) );//Prevent the user from entering text
+    minimum->setValidator( new QDoubleValidator(minValueValidator, 100, 2, this) );//Prevent the user from entering text
     MinUnitsCombobox = new QComboBox(this);
     MinUnitsCombobox->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
     MinUnitsCombobox->addItems(ScaleFactorList);
@@ -158,7 +162,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
 
     gbox->addWidget(new QLabel(tr("Val.:")), 5, 0);
     value = new QLineEdit();
-    value->setValidator( new QDoubleValidator(0, 100, 2, this) );//Prevent the user from entering text
+    value->setValidator( new QDoubleValidator(minValueValidator, 100, 2, this) );//Prevent the user from entering text
     ValueUnitsCombobox = new QComboBox(this);
     gbox->addWidget(value, 5, 1);
     gbox->addWidget(ValueUnitsCombobox,5,2);
@@ -263,7 +267,7 @@ Given a QString containing number + suffix (i.e. 2.5p, 3.9n), this function sepa
 QString tunerElement::SeparateMagnitudeFromSuffix(QString num, int & index)
 {
   index = -1;
-  int sp;
+  int sp=-1;
   for (int i = 0; i < num.length(); i++)
   {
       if (num.at(i).isLetter())
@@ -272,6 +276,8 @@ QString tunerElement::SeparateMagnitudeFromSuffix(QString num, int & index)
           break;
       }
   }
+
+  if (sp == -1) return num;//It doesn't come with a suffix
 
   switch(num.at(sp).toAscii()) {
       case 'f': index = 0;
@@ -299,6 +305,8 @@ void tunerElement::slotMaxValueChanged()
 {
     bool ok;
     float v = getMaxValue(ok);
+    maximum->blockSignals(true);
+    MaxUnitsCombobox->blockSignals(true);
 
     if (!ok || (v <= minValue))
     {
@@ -309,13 +317,15 @@ void tunerElement::slotMaxValueChanged()
         val = SeparateMagnitudeFromSuffix(val, index);
         maximum->setText(val);
         MaxUnitsCombobox->setCurrentIndex(index);
+        maximum->blockSignals(false);
+        MaxUnitsCombobox->blockSignals(false);
         return;
     }
 
     maxValue = v;
     if (v < numValue) {
         maxValue = numValue;
-        //Update text... since maxValue differs from what the user entered
+        //Update text... since maxValue was set to numValue and differs from what the user entered
         QString val = misc::num2str(maxValue);
         int index = 5;//By default, no scaling
         val = SeparateMagnitudeFromSuffix(val, index);
@@ -325,12 +335,16 @@ void tunerElement::slotMaxValueChanged()
     qDebug() << "tunerElement::slotMaxValueChanged() " << v;
 
     updateSlider();
+    maximum->blockSignals(false);
+    MaxUnitsCombobox->blockSignals(false);
 }
 
 void tunerElement::slotMinValueChanged()
 {
     bool ok;
     float v = getMinValue(ok);
+    minimum->blockSignals(true);
+    MinUnitsCombobox->blockSignals(true);
 
     if (!ok || (v >= maxValue))
     {
@@ -341,13 +355,15 @@ void tunerElement::slotMinValueChanged()
         val = SeparateMagnitudeFromSuffix(val, index);
         minimum->setText(val);
         MinUnitsCombobox->setCurrentIndex(index);
+        minimum->blockSignals(false);
+        MinUnitsCombobox->blockSignals(false);
         return;
     }
 
     minValue = v;
     if (v > numValue) {
         minValue = numValue;
-        //Update text... since maxValue differs from what the user entered
+        //Update text... since minValue was set to numValue and differs from what the user entered
         QString val = misc::num2str(minValue);
         int index = 5;//By default, no scaling
         val = SeparateMagnitudeFromSuffix(val, index);
@@ -358,21 +374,35 @@ void tunerElement::slotMinValueChanged()
     qDebug() << "slotMinValueChanged() " << v;
 
     updateSlider();
+    minimum->blockSignals(false);
+    MinUnitsCombobox->blockSignals(false);
 }
 
 void tunerElement::slotStepChanged()
 {
     bool ok;
-    float v = stepValue;
-    float range = getMaxValue(ok) - getMinValue(ok);
+    float v =  getStep(ok);
 
     qDebug() << "tunerElement::slotStepChanged()" << v;
 
     if (!ok)
     {
         QMessageBox::warning(this, "ERROR", "Entered step is not correct", QMessageBox::Ok);
+        //Restore previous step
+        QString val = misc::num2str(stepValue);
+        int index = 5;//By default, no scaling
+        val = SeparateMagnitudeFromSuffix(val, index);
+        step->setText(val);
+        StepUnitsCombobox->setCurrentIndex(index);
         return;
     }
+
+    stepValue = v;
+    QString val = misc::num2str(stepValue);
+    int index = 5;//By default, no scaling
+    val = SeparateMagnitudeFromSuffix(val, index);
+    step->setText(val);
+    StepUnitsCombobox->setCurrentIndex(index);
 }
 
 void tunerElement::slotSliderChanged()
@@ -402,10 +432,43 @@ void tunerElement::slotSliderChanged()
 void tunerElement::slotValueChanged()
 {
     bool ok;
-    numValue = getValue(ok);
+    float v = getValue(ok);
+    value->blockSignals(true);
+    ValueUnitsCombobox->blockSignals(true);
+    if (!ok || (v < 0))
+    {
+        QMessageBox::warning(this, "ERROR", "Value not correct", QMessageBox::Ok);
+        //Restore values
+        QString val = misc::num2str(numValue);
+        int index = 5;//By default, no scaling
+        val = SeparateMagnitudeFromSuffix(val, index);
+        value->setText(val);
+        ValueUnitsCombobox->setCurrentIndex(index);
+        value->blockSignals(false);
+        ValueUnitsCombobox->blockSignals(false);
+        return;
+    }
+
+    numValue = v;
+    bool updateText = false;
+    if (v > maxValue) numValue = maxValue, updateText = true;
+    if (v < minValue) numValue = minValue, updateText = true;
+
+    if (updateText)
+    {
+        //Update text... since numValue ws set to either max or min and differs from what the user entered
+        QString val = misc::num2str(numValue);
+        int index = 5;//By default, no scaling
+        val = SeparateMagnitudeFromSuffix(val, index);
+        value->setText(val);
+        ValueUnitsCombobox->setCurrentIndex(index);
+    }
+
     updateSlider();
     updateProperty();
     emit elementValueUpdated();
+    value->blockSignals(false);
+    ValueUnitsCombobox->blockSignals(false);
 }
 
 void tunerElement::slotUpClicked()
