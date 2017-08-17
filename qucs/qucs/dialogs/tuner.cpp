@@ -23,7 +23,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     QStringList ScaleFactorList;
     ScaleFactorList << "f" << "p" << "n" << "u" << "m" << "" << "k" << "M" << "G";
     int magnitudeIndex = 5;//No scaling
-    int minValueValidator = 0;
+    float minValueValidator = PTRDIFF_MIN;
     //First of all we need to check whether the property is tunable (number + units) or not (random string)
     //There may be an arbitrary number of spaces between magnitude and unit, so in first place we need to normalize that
     //In this sense, all blank spaces are removed
@@ -107,8 +107,8 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
                   unit = e;
                   index = i;
                   found = true;
-                  if ((i==3) || (i ==4))//Voltage or current
-                      minValueValidator = -100;//Allow negative numbers in the lineedits
+                  if ((i!=3) && (i !=4 ))//Not a voltage nor a current
+                      minValueValidator = 0;//Allow positive numbers only in the lineedits
                   break;
               }
           }
@@ -117,7 +117,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
        }
        else
        {//The value comes with unit
-          unit = unit.mid(1);
+          if (magnitudeIndex != 5) unit = unit.mid(1);
        }
 
         //Finally, add the unit to the QStringList for adding it to the scale comboboxes later
@@ -144,7 +144,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
 
     gbox->addWidget(new QLabel(tr("Max.:")), 1, 0);
     maximum = new QLineEdit();
-    maximum->setValidator( new QDoubleValidator(minValueValidator, 100, 2, this) );//Prevent the user from entering text
+    maximum->setValidator( new QDoubleValidator(minValueValidator, PTRDIFF_MAX, 2, this) );//Prevent the user from entering text
     MaxUnitsCombobox = new QComboBox(this);
     MaxUnitsCombobox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
     MaxUnitsCombobox->addItems(ScaleFactorList);
@@ -170,7 +170,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
 
     gbox->addWidget(new QLabel(tr("Val.:")), 5, 0);
     value = new QLineEdit();
-    value->setValidator( new QDoubleValidator(minValueValidator, 100, 2, this) );//Prevent the user from entering text
+    value->setValidator( new QDoubleValidator(minValueValidator, PTRDIFF_MAX, 2, this) );//Prevent the user from entering text
     ValueUnitsCombobox = new QComboBox(this);
     gbox->addWidget(value, 5, 1);
     gbox->addWidget(ValueUnitsCombobox,5,2);
@@ -180,7 +180,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
 
     gbox->addWidget(new QLabel(tr("Step")), 6, 0);
     step = new QLineEdit();
-    step->setValidator( new QDoubleValidator(0, 100, 2, this) );//Prevent the user from entering text
+    step->setValidator( new QDoubleValidator(0, PTRDIFF_MAX, 2, this) );//Prevent the user from entering text
     StepUnitsCombobox = new QComboBox(this);
     gbox->addWidget(step, 6, 1);
     gbox->addWidget(StepUnitsCombobox,6,2);
@@ -274,7 +274,6 @@ Given a QString containing number + suffix (i.e. 2.5p, 3.9n), this function sepa
 */
 QString SeparateMagnitudeFromSuffix(QString num, int & index)
 {
-  index = -1;
   int sp=-1;
   for (int i = 0; i < num.length(); i++)
   {
@@ -415,6 +414,8 @@ void tunerElement::slotStepChanged()
 
 void tunerElement::slotSliderChanged()
 {
+     value->blockSignals(true);
+     ValueUnitsCombobox->blockSignals(true);
      float slider_v = minValue + ((slider->value()/100.0) * (maxValue - minValue));
      if (slider_v > maxValue)
      {
@@ -433,6 +434,8 @@ void tunerElement::slotSliderChanged()
      val = SeparateMagnitudeFromSuffix(val, index);
      value->setText(val);
      ValueUnitsCombobox->setCurrentIndex(index);
+     value->blockSignals(false);
+     ValueUnitsCombobox->blockSignals(false);
      slotValueChanged();
 }
 
