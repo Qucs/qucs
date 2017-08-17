@@ -19,7 +19,7 @@
 tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, int selectedPropertyId)
     : QWidget(parent)
 {
-    bool ok;//Flag which indicates whether the property is tunable or not
+    bool ok=true;//Flag which indicates whether the property is tunable or not
     QStringList ScaleFactorList;
     ScaleFactorList << "f" << "p" << "n" << "u" << "m" << "" << "k" << "M" << "G";
     int magnitudeIndex = 5;//No scaling
@@ -28,6 +28,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     //There may be an arbitrary number of spaces between magnitude and unit, so in first place we need to normalize that
     //In this sense, all blank spaces are removed
     QString val = pp->Value;
+    unit.clear();
 
     if (val.contains("e", Qt::CaseInsensitive))//Scientific notation
     {
@@ -42,7 +43,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     {
         if (val.at(i).isLetter())
         {
-            if (i == 0)
+            if (i == 0)//It starts with a letter
             {
                 ok = false;
                 break;
@@ -54,7 +55,9 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
         }
     }
 
-       //Fin the units from the string
+    if (units_index != -1)
+    {
+       //Find the units from the string
        unit = val.mid(units_index);// unit should be sth like mA, mm, uV, nA, etc... here
 
        switch (unit.at(0).toAscii()) {
@@ -75,7 +78,11 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
        case 'G': magnitudeIndex = 8;
                  break;
        }
-
+    }
+    else
+    {
+      numValue = val.toFloat(&ok);
+    }
        if (unit.length() <= 1)
        {//It comes with no units... so let's try to find a suitable unit
         QMap <QString, QStringList> Keywords;//Map containing the keywords that may appear in the property description
@@ -105,10 +112,11 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
                   break;
               }
           }
+          if (found) break;
         }
        }
        else
-       {//The value comes with unit, so let's strip it
+       {//The value comes with unit
           unit = unit.mid(1);
        }
 
@@ -264,7 +272,7 @@ void tunerElement::updateProperty()
 /*
 Given a QString containing number + suffix (i.e. 2.5p, 3.9n), this function separates '2.5' from 'p' and gives the corresponding index to that suffix
 */
-QString tunerElement::SeparateMagnitudeFromSuffix(QString num, int & index)
+QString SeparateMagnitudeFromSuffix(QString num, int & index)
 {
   index = -1;
   int sp=-1;
@@ -521,7 +529,7 @@ void tunerElement::updateSlider()
     slider->blockSignals(false);
 }
 
-float tunerElement::getScale(int index)
+float getScale(int index)
 {
     switch (index)
     {
@@ -696,6 +704,20 @@ void TunerDialog::slotSimulationEnded()
     this->setEnabled(true);
 }
 
+
+bool TunerDialog::checkChanges()
+{
+  for (int i = 0; i < currentElements->count(); i++)
+  {
+      int index=-1;
+      QString val = SeparateMagnitudeFromSuffix(currentElements->at(i)->originalValue, index);
+      float initial_val = val.toFloat()*getScale(index);
+      if (initial_val != currentElements->at(i)->numValue) return true;
+  }
+
+  return false;
+}
+
 void TunerDialog::slotResetValues()
 {
     qDebug() << "Tuner::slotResetValues()";
@@ -734,7 +756,7 @@ void TunerDialog::slotResetTunerDialog()
 void TunerDialog::closeEvent(QCloseEvent *event)
 {
     QMessageBox::StandardButton msg;
-    if (!valuesUpated)
+    if (!valuesUpated && checkChanges())
     {
     msg = QMessageBox::question(this, "Update values before closing?",
                                 "Do you want to update the component values before closing?",

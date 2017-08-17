@@ -44,6 +44,9 @@
 
 extern QucsApp *QucsMain;  // the Qucs application itself
 
+float getScale(int);
+QString SeparateMagnitudeFromSuffix(QString num, int &);
+
 class tunerElement : public QWidget
 {
     Q_OBJECT
@@ -56,7 +59,8 @@ class tunerElement : public QWidget
         float getMaxValue(bool &);
         float getMinValue(bool &);
         float getStep(bool &);
-        float getScale(int);
+        QString originalValue;//OriginalValue and numValue need to be public since they need to be accessed by tunerDialog when checking if the initial value was modified
+        float numValue;
 
         virtual ~tunerElement();
     signals:
@@ -66,7 +70,6 @@ class tunerElement : public QWidget
     protected:
     private:
         Property* prop;
-        QString originalValue;
         QString unit;
         QSlider *slider;
         QLineEdit *maximum;
@@ -82,7 +85,6 @@ class tunerElement : public QWidget
         QToolButton *down;
         float minValue;
         float maxValue;
-        float numValue;
         float stepValue;
 
     private slots:
@@ -95,7 +97,6 @@ class tunerElement : public QWidget
         void slotDownClicked();
         void slotUpClicked();
         void slotSliderChanged();
-        QString SeparateMagnitudeFromSuffix(QString num, int &);
         void updateSlider();
 };
 
@@ -136,6 +137,7 @@ private slots:
     void slotRemoveTunerElement(tunerElement*);
     void slotUpdateValues();
     void slotResetValues();
+    bool checkChanges();
     void slotSimulationEnded();
 };
 
