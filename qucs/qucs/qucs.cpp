@@ -2193,9 +2193,16 @@ void QucsApp::slotSimulate()
   connect(sim, SIGNAL(SimulationEnded(int,SimMessage*)),
           tunerDia, SLOT(slotSimulationEnded()));
   }
-  sim->show();
+  else//It doesn't make sense to show the simulation window since it vanishes quickly
+  {
+     sim->show();
+  }
 
-  if(!sim->startProcess()) return;
+  if(!sim->startProcess())
+  {
+      if (TuningMode == true) sim->show();//The message window is hidden when the tuning mode is active, but in case of error such window pops up
+      return;
+  }
 
   // to kill it before qucs ends
   connect(this, SIGNAL(signalKillEmAll()), sim, SLOT(slotClose()));
