@@ -24,6 +24,8 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     ScaleFactorList << "f" << "p" << "n" << "u" << "m" << "" << "k" << "M" << "G";
     int magnitudeIndex = 5;//No scaling
     float minValueValidator = PTRDIFF_MIN;
+
+    // ************************************** HANDLE PROPERTY VALUE **************************************
     //First of all we need to check whether the property is tunable (number + units) or not (random string)
     //There may be an arbitrary number of spaces between magnitude and unit, so in first place we need to normalize that
     //In this sense, all blank spaces are removed
@@ -49,7 +51,6 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
                 break;
             }
             units_index = i;//Select index
-            qDebug() << val.mid(0, i);
             numValue = val.mid(0, i).toFloat(&ok);//Get the magnitude
             break;
         }
@@ -59,28 +60,10 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     {
        //Find the units from the string
        unit = val.mid(units_index);// unit should be sth like mA, mm, uV, nA, etc... here
-
-       switch (unit.at(0).toAscii()) {
-       case 'f': magnitudeIndex = 0;
-                 break;
-       case 'p': magnitudeIndex = 1;
-                 break;
-       case 'n': magnitudeIndex = 2;
-                 break;
-       case 'u': magnitudeIndex = 3;
-                 break;
-       case 'm': magnitudeIndex = 4;
-                 break;
-       case 'k': magnitudeIndex = 6;
-                 break;
-       case 'M': magnitudeIndex = 7;
-                 break;
-       case 'G': magnitudeIndex = 8;
-                 break;
-       }
+       SeparateMagnitudeFromSuffix(unit, magnitudeIndex);
     }
     else
-    {
+    {//The property value contains only numbers
       numValue = val.toFloat(&ok);
     }
        if (unit.length() <= 1)
@@ -97,7 +80,6 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
         //If one of the keywords appears in the description text, then the key of the map
         //is used as unit...
         bool found = false;
-        int index=-1;
         for(auto e : Keywords.keys())
         {
           for (int i = 0; i < Keywords[e].length(); i++)
@@ -105,7 +87,6 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
               if (pp->Description.indexOf(Keywords[e].at(i), Qt::CaseInsensitive) != -1)
               {
                   unit = e;
-                  index = i;
                   found = true;
                   if ((i!=3) && (i !=4 ))//Not a voltage nor a current
                       minValueValidator = 0;//Allow positive numbers only in the lineedits
@@ -132,7 +113,9 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
                              QMessageBox::Ok);
         return;
     };
+    //******************************  HANDLE PROPERTY VALUE (END) ***************************
 
+    //UI setup
     setAttribute(Qt::WA_DeleteOnClose);//This attribute forces the widget to be destroyed after closing
     prop = component->Props.at(selectedPropertyId);
     QGridLayout *gbox = new QGridLayout();
@@ -140,6 +123,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     QLabel *tunerName = new QLabel(component->Name + ":" + prop->Name);
     tunerName->setStyleSheet("QLabel {font: bold}");
     gbox->addWidget(tunerName);
+
 
 
     gbox->addWidget(new QLabel(tr("Max.:")), 1, 0);
@@ -193,19 +177,19 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
 
     Up_Down_Buttons_Widget = new QWidget();
     QGridLayout *buttonsLayout = new QGridLayout();
-    up = new QToolButton(this, "Up");
+    up = new QToolButton(this);
     up->setArrowType(Qt::UpArrow);
     buttonsLayout->addWidget(up, 0, 0);
 
-    down = new QToolButton(this, "Down");
+    down = new QToolButton(this);
     down->setArrowType(Qt::DownArrow);
     buttonsLayout->addWidget(down, 1, 0);
     Up_Down_Buttons_Widget->setLayout(buttonsLayout);
     Up_Down_Buttons_Widget->setStyleSheet("QWidget {border: 1px solid black;}");
     gbox->addWidget(Up_Down_Buttons_Widget, 2, 2, 2, 1);
 
-    maxValue = numValue*1.15;// max = nominal + 15%
-    minValue = numValue*0.85;// min = nominal - 15%
+    maxValue = numValue*1.15;// max = initial_value + 15%
+    minValue = numValue*0.85;// min = initial_value - 15%
     stepValue = (maxValue-minValue)/20;//20 steps between minimum and maximum
     maximum->setText(QString::number(maxValue));
     minimum->setText(QString::number(minValue));
@@ -216,7 +200,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     float v = (numValue - minValue) / (maxValue - minValue);
     slider->setValue(v*100);
 
-    slider->setTickmarks(QSlider::Both);
+    slider->setTickPosition(QSlider::TicksBothSides);
     slider->setTickInterval(0);
 
 
@@ -262,6 +246,9 @@ void tunerElement::resetValue()
     slotValueChanged();
 }
 
+/*
+ * This function updates the value of the element for further simulation
+ */
 void tunerElement::updateProperty()
 {
     prop->Value = value->text().append(tr(" ") + ValueUnitsCombobox->currentText());
@@ -308,6 +295,9 @@ QString SeparateMagnitudeFromSuffix(QString num, int & index)
 }
 
 
+/*
+ * The control reaches this function when either the maximum value QLineedit or its corresponding combobox are edited
+ */
 void tunerElement::slotMaxValueChanged()
 {
     bool ok;
@@ -346,6 +336,9 @@ void tunerElement::slotMaxValueChanged()
     MaxUnitsCombobox->blockSignals(false);
 }
 
+/*
+ * The control reaches this function when either the minimum value QLineedit or its corresponding combobox are edited
+ */
 void tunerElement::slotMinValueChanged()
 {
     bool ok;
@@ -385,6 +378,9 @@ void tunerElement::slotMinValueChanged()
     MinUnitsCombobox->blockSignals(false);
 }
 
+/*
+ * The control reaches this function when either the step QLineedit or its corresponding combobox are edited
+ */
 void tunerElement::slotStepChanged()
 {
     bool ok;
@@ -405,13 +401,12 @@ void tunerElement::slotStepChanged()
     }
 
     stepValue = v;
-    QString val = misc::num2str(stepValue);
-    int index = 5;//By default, no scaling
-    val = SeparateMagnitudeFromSuffix(val, index);
-    step->setText(val);
-    StepUnitsCombobox->setCurrentIndex(index);
 }
 
+
+/*
+ * The control reaches this function when the slider position (i.e. the value of the variable) is changed
+ */
 void tunerElement::slotSliderChanged()
 {
      value->blockSignals(true);
@@ -439,7 +434,11 @@ void tunerElement::slotSliderChanged()
      slotValueChanged();
 }
 
-
+/*
+ * The variable can be modified by moving the slider, editing the corresponding QLineedit box or changing the scale factor.
+ * The control reaches this function when one of the events above is triggered. It checks if the input value is correct, updates it
+ * and finally runs the simulation
+ */
 void tunerElement::slotValueChanged()
 {
     bool ok;
@@ -462,12 +461,14 @@ void tunerElement::slotValueChanged()
 
     numValue = v;
     bool updateText = false;
+    //Force numValue to stay within [minValue, maxValue]
     if (v > maxValue) numValue = maxValue, updateText = true;
     if (v < minValue) numValue = minValue, updateText = true;
 
     if (updateText)
     {
-        //Update text... since numValue ws set to either max or min and differs from what the user entered
+        //Update text... because of the lines above numValue may be set to maxValue or minValue so it may differ
+        //from what the user entered
         QString val = misc::num2str(numValue);
         int index = 5;//By default, no scaling
         val = SeparateMagnitudeFromSuffix(val, index);
@@ -482,6 +483,7 @@ void tunerElement::slotValueChanged()
     ValueUnitsCombobox->blockSignals(false);
 }
 
+// Up button click
 void tunerElement::slotUpClicked()
 {
     bool ok;
@@ -497,6 +499,7 @@ void tunerElement::slotUpClicked()
     slotValueChanged();
 }
 
+//Down button click
 void tunerElement::slotDownClicked()
 {
     bool ok;
@@ -532,6 +535,9 @@ void tunerElement::updateSlider()
     slider->blockSignals(false);
 }
 
+
+// Given the current index of a combobox, this function returns the scale factor according to the selection.
+// Notice that this function does not belong neither tunerElement nor tunerDialog
 float getScale(int index)
 {
     switch (index)
@@ -546,23 +552,28 @@ float getScale(int index)
     case 7: return pow(10, 6);//mega
     case 8: return pow(10, 9);//giga
     }
+    return 0;
 }
 
+// Reads the value from the user interface
 float tunerElement::getValue(bool &ok)
 {
    return value->text().toFloat(&ok)*getScale(ValueUnitsCombobox->currentIndex());
 }
 
+// Reads the maximum value from the user interface
 float tunerElement::getMaxValue(bool &ok)
 {
    return maximum->text().toFloat(&ok)*getScale(MaxUnitsCombobox->currentIndex());
 }
 
+// Reads the minimum value from the user interface
 float tunerElement::getMinValue(bool &ok)
 {
    return minimum->text().toFloat(&ok)*getScale(MinUnitsCombobox->currentIndex());
 }
 
+// Reads the step from the user interface
 float tunerElement::getStep(bool &ok)
 {
    return step->text().toFloat(&ok)*getScale(StepUnitsCombobox->currentIndex());
@@ -583,13 +594,15 @@ tunerElement::~tunerElement()
  *
  */
 
+
+//Main window. It contains zero or more tunerElement objects
 TunerDialog::TunerDialog(QWidget *parent) :
     QDialog(parent)
 {
     setAttribute(Qt::WA_DeleteOnClose);//This attribute forces the widget to be destroyed after closing
     qDebug() << "Tuner::TunerDialog";
-    this->setName("Tuner");
-    this->setCaption("Tuner");
+    this->setObjectName("Tuner");
+    this->setWindowTitle("Tuner");
     gbox = new QGridLayout();
     this->setLayout(gbox);
 
@@ -626,7 +639,7 @@ TunerDialog::TunerDialog(QWidget *parent) :
 
     info->showMessage("Please select a component to tune");
     setMinimumWidth(300);//Otherwise, it won't fit the "help" text...
-    valuesUpated = false;
+    valuesUpdated = false;
     connect(closeButton, SIGNAL(released()), this, SLOT(close()));
     connect(resetValues, SIGNAL(released()),this, SLOT(slotResetValues()));
     connect(updateValues, SIGNAL(released()), this, SLOT(slotUpdateValues()));
@@ -640,7 +653,7 @@ TunerDialog::TunerDialog(QWidget *parent) :
 
 void TunerDialog::infoMsg(const QString msg)
 {
-    info->clear();
+    info->clearMessage();
     info->showMessage(msg);
 }
 
@@ -650,6 +663,7 @@ bool TunerDialog::containsProperty(Property* prop)
     else return false;
 }
 
+// Adds a tuner element (variable to be tuned)
 void TunerDialog::addTunerElement(tunerElement *element)
 {
     if (!element)
@@ -671,9 +685,13 @@ void TunerDialog::addTunerElement(tunerElement *element)
     }
     else
     {
-        QMessageBox::message("Already Found", "Already tuning this element", "OK");
+        QMessageBox msgBox;
+        msgBox.setText("Already Found");
+        msgBox.setInformativeText("Already tuning this element");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.exec();
     }
-   info->clear();//The user has already selected a component. It makes no longer sense to display the help message
+   info->clearMessage();//The user has already selected a component. It makes no longer sense to display the help message
 }
 
 void TunerDialog::slotRemoveTunerElement(tunerElement *e)
@@ -717,7 +735,6 @@ bool TunerDialog::checkChanges()
       float initial_val = val.toFloat()*getScale(index);
       if (initial_val != currentElements->at(i)->numValue) return true;
   }
-
   return false;
 }
 
@@ -739,7 +756,7 @@ void TunerDialog::slotUpdateValues()
         currentElements->at(i)->updateProperty();
     }
     this->infoMsg("Updated Schematic values");
-    valuesUpated = true;
+    valuesUpdated = true;
 }
 
 void TunerDialog::slotResetTunerDialog()
@@ -759,7 +776,7 @@ void TunerDialog::slotResetTunerDialog()
 void TunerDialog::closeEvent(QCloseEvent *event)
 {
     QMessageBox::StandardButton msg;
-    if (!valuesUpated && checkChanges())
+    if (!valuesUpdated && checkChanges())
     {
     msg = QMessageBox::question(this, "Update values before closing?",
                                 "Do you want to update the component values before closing?",
@@ -773,7 +790,7 @@ void TunerDialog::closeEvent(QCloseEvent *event)
     else
         slotResetValues();
     }
-    this->valuesUpated = false;
+    this->valuesUpdated = false;
     //Undo changes to mouse actions when closing tuner window
     QucsMain->MousePressAction = &MouseActions::MPressSelect;
     QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
@@ -788,7 +805,6 @@ void TunerDialog::showEvent(QShowEvent *e)
         if (currentElements->at(i)->getElementProperty() == nullptr)
             currentElements->removeAt(i);
     }
-
 }
 
 TunerDialog::~TunerDialog()

@@ -124,8 +124,7 @@ private:
     QStatusBar *info;
     QSplitter *splitter;
     QWidget *ButtonsPanel;
-    bool valuesUpated;
-    Schematic* doc;
+    bool valuesUpdated;
     QPushButton *updateValues, *resetValues;//They're private in order to make enable or disable them
 
     void blockInput(bool enabled);
