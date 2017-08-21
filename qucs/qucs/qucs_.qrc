@@ -246,5 +246,6 @@
         <file>bitmaps/smallsave.xpm</file>
         <file>bitmaps/empty.xpm</file>
         <file>bitmaps/tune.png</file>
+        <file>bitmaps/RemoveElementTuning.png</file>
     </qresource>
 </RCC>

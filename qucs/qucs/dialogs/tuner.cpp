@@ -122,11 +122,12 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     setLayout(gbox);
     QLabel *tunerName = new QLabel(component->Name + ":" + prop->Name);
     tunerName->setStyleSheet("QLabel {font: bold}");
-    gbox->addWidget(tunerName);
+    gbox->addWidget(tunerName,0,0,1,2);
 
 
-
-    gbox->addWidget(new QLabel(tr("Max.:")), 1, 0);
+    QLabel * maxLabel = new QLabel(tr("Max.:"));
+    maxLabel->setLineWidth(5);
+    gbox->addWidget(maxLabel, 1, 0);
     maximum = new QLineEdit();
     maximum->setValidator( new QDoubleValidator(minValueValidator, PTRDIFF_MAX, 2, this) );//Prevent the user from entering text
     MaxUnitsCombobox = new QComboBox(this);
@@ -137,11 +138,13 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     gbox->addWidget(MaxUnitsCombobox,1,2);
 
     slider = new QSlider(Qt::Vertical);
-    gbox->addWidget(slider, 2, 0, 2, 2, Qt::AlignCenter);
+    gbox->addWidget(slider, 2, 1, 2, 1, Qt::AlignCenter);
     slider->setMinimumHeight(200);
 
 
-    gbox->addWidget(new QLabel(tr("Min.:")), 4, 0);
+    QLabel * minLabel = new QLabel(tr("Min.:"));
+    minLabel->setLineWidth(5);
+    gbox->addWidget(minLabel, 4, 0);
     minimum = new QLineEdit();
     minimum->setValidator( new QDoubleValidator(minValueValidator, 100, 2, this) );//Prevent the user from entering text
     MinUnitsCombobox = new QComboBox(this);
@@ -152,7 +155,9 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     gbox->addWidget(minimum, 4, 1);
     gbox->addWidget(MinUnitsCombobox,4,2);
 
-    gbox->addWidget(new QLabel(tr("Val.:")), 5, 0);
+    QLabel *valLabel = new QLabel(tr("Val.:"));
+    valLabel->setLineWidth(5);
+    gbox->addWidget(valLabel, 5, 0);
     value = new QLineEdit();
     value->setValidator( new QDoubleValidator(minValueValidator, PTRDIFF_MAX, 2, this) );//Prevent the user from entering text
     ValueUnitsCombobox = new QComboBox(this);
@@ -161,8 +166,9 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     ValueUnitsCombobox->addItems(ScaleFactorList);
     ValueUnitsCombobox->setCurrentIndex(magnitudeIndex);
 
-
-    gbox->addWidget(new QLabel(tr("Step")), 6, 0);
+    QLabel * stepLabel = new QLabel(tr("Step"));
+    stepLabel->setLineWidth(5);
+    gbox->addWidget(stepLabel, 6, 0);
     step = new QLineEdit();
     step->setValidator( new QDoubleValidator(0, PTRDIFF_MAX, 2, this) );//Prevent the user from entering text
     StepUnitsCombobox = new QComboBox(this);
@@ -172,8 +178,12 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     StepUnitsCombobox->setCurrentIndex(magnitudeIndex);
 
 
-    QPushButton *remove = new QPushButton(tr("Remove"), this);
-    gbox->addWidget(remove, 7, 0);
+    QPushButton *remove = new QPushButton("", this);
+    gbox->addWidget(remove, 0, 2);
+    QPixmap pixmap(":/bitmaps/RemoveElementTuning.png");
+    QIcon ButtonIcon(pixmap);
+    remove->setIcon(ButtonIcon);
+    remove->setIconSize(pixmap.rect().size()/2);
 
     Up_Down_Buttons_Widget = new QWidget();
     QGridLayout *buttonsLayout = new QGridLayout();
