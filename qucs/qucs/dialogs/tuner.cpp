@@ -79,7 +79,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     {//The property value contains only numbers
       numValue = val.toFloat();
     }
-       if (unit.length() <= 1)
+       if ((unit.length() <= 1) && (!pp->Description.isEmpty()))
        {//It comes with no units... so let's try to find a suitable unit
         QMap <QString, QStringList> Keywords;//Map containing the keywords that may appear in the property description
         Keywords["F"] << "capacitance";
@@ -735,9 +735,9 @@ void TunerDialog::slotElementValueUpdated()
     QucsMain->slotSimulate();
 }
 
-void TunerDialog::slotSimulationEnded()
+void TunerDialog::SimulationEnded()
 {
-    qDebug() << "Tuner::slotSimulationEnded()";
+    qDebug() << "Tuner::SimulationEnded()";
 
     this->setEnabled(true);
 }

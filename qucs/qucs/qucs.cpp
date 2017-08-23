@@ -2185,13 +2185,8 @@ void QucsApp::slotSimulate()
   connect(sim, SIGNAL(displayDataPage(QString&, QString&)),
         this, SLOT(slotChangePage(QString&, QString&)));
 
-  if (TuningMode == true)
+  if (TuningMode == false)
   {//It doesn't make sense to connect the slot outside the tuning mode
-  connect(sim, SIGNAL(SimulationEnded(int,SimMessage*)),
-          tunerDia, SLOT(slotSimulationEnded()));
-  }
-  else//It doesn't make sense to show the simulation window since it vanishes quickly
-  {
      sim->show();
   }
 
@@ -2209,7 +2204,15 @@ void QucsApp::slotSimulate()
 // Is called after the simulation process terminates.
 void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 {
-  if(Status != 0) return;  // errors ocurred ?
+  if(Status != 0)
+  {// errors ocurred ?
+      if (TuningMode)
+      {
+          sim->show();
+          tunerDia->SimulationEnded();
+      }
+   return;
+  }
 
   if(sim->ErrText->document()->lineCount() > 1)   // were there warnings ?
     slotShowWarnings();
@@ -2262,7 +2265,10 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 
   // Kill the simulation process, otherwise we have 200+++ sims in the background
   if(TuningMode)
+  {
       sim->slotClose();
+      tunerDia->SimulationEnded();
+  }
 }
 
 // ------------------------------------------------------------------------

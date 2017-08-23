@@ -110,6 +110,7 @@ public:
     virtual ~TunerDialog();
     void addTunerElement(tunerElement *element);
     bool containsProperty(Property *prop);
+    void SimulationEnded();
 
 signals:
     void addTunerElement(Element *e);
@@ -139,7 +140,6 @@ private slots:
     void slotUpdateValues();
     void slotResetValues();
     bool checkChanges();
-    void slotSimulationEnded();
 };
 
 #endif // TUNER_H
