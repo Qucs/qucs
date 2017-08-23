@@ -19,7 +19,19 @@
 tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, int selectedPropertyId)
     : QWidget(parent)
 {
+    /* The tuner is defined in the real domain so those parameters that take integer values will probably
+     * fail under tuning mode. In this sense, the conditions below try to detect those parameters which cannot be tuned
+     * The proper way to do this would be to include a flag in every component propery which gives
+     * information about its domain */
+
+    if ((component->Model == ".HB") && ((pp->Name=="n"))) throw -1;//Number of harmonics in a HB simulation
+    if (pp->Name=="Num") throw -1;//Port number
+    if ((pp->Name=="MaxIter") || (pp->Name=="Order") || (pp->Name=="Number") || (pp->Name=="Points")) throw -1;//Simulation parameters of integer domain
+    if (pp->Name=="Branches") throw -1;//Branches parameter in the EDD
+    if (pp->Name=="Ports") throw -1;//Number of ports in a SNP file component
+
     bool ok=true;//Flag which indicates whether the property is tunable or not
+
     QStringList ScaleFactorList;
     ScaleFactorList << "f" << "p" << "n" << "u" << "m" << "" << "k" << "M" << "G";
     int magnitudeIndex = 5;//No scaling
