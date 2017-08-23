@@ -50,6 +50,7 @@ public:
 signals:
   void SimulationEnded(int, SimMessage*);
   void displayDataPage(QString&, QString&);
+  void progressBarChanged(int);
 
 public slots:
   void slotClose();

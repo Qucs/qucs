@@ -2185,7 +2185,11 @@ void QucsApp::slotSimulate()
   connect(sim, SIGNAL(displayDataPage(QString&, QString&)),
         this, SLOT(slotChangePage(QString&, QString&)));
 
-  if (TuningMode == false)
+  if (TuningMode == true)
+  {
+   connect(sim, SIGNAL(progressBarChanged(int)), tunerDia, SLOT(slotUpdateProgressBar(int)));
+  }
+  else
   {//It doesn't make sense to connect the slot outside the tuning mode
      sim->show();
   }

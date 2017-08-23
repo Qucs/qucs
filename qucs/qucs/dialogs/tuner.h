@@ -41,6 +41,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QShortcut>
+#include <QProgressBar>
 
 extern QucsApp *QucsMain;  // the Qucs application itself
 
@@ -85,6 +86,7 @@ class tunerElement : public QWidget
         QWidget *Up_Down_Buttons_Widget;
         QToolButton *up;
         QToolButton *down;
+
         float minValue;
         float maxValue;
         float stepValue;
@@ -128,6 +130,7 @@ private:
     QSplitter *splitter;
     QWidget *ButtonsPanel;
     bool valuesUpdated;
+    QProgressBar *progressBar;
     QPushButton *updateValues, *resetValues;//They're private in order to make enable or disable them
 
     void blockInput(bool enabled);
@@ -140,6 +143,7 @@ private slots:
     void slotUpdateValues();
     void slotResetValues();
     bool checkChanges();
+    void slotUpdateProgressBar(int);
 };
 
 #endif // TUNER_H

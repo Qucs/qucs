@@ -219,7 +219,6 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     slider->setTickPosition(QSlider::TicksBothSides);
     slider->setTickInterval(0);
 
-
     connect(maximum, SIGNAL(editingFinished()), this, SLOT(slotMaxValueChanged()));
     connect(MaxUnitsCombobox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotMaxValueChanged()));
 
@@ -653,6 +652,10 @@ TunerDialog::TunerDialog(QWidget *parent) :
     gbox->addWidget(info, 1, 0, Qt::AlignBottom);
     gbox->addWidget(splitter,0, 1, Qt::AlignRight);
 
+    progressBar = new QProgressBar();
+    progressBar->setMaximum(100);
+    progressBar->setVisible(false);
+    gbox->addWidget(progressBar, 2, 0);
 
     info->showMessage("Please select a component to tune");
     setMinimumWidth(300);//Otherwise, it won't fit the "help" text...
@@ -666,7 +669,10 @@ TunerDialog::TunerDialog(QWidget *parent) :
     QObject::connect(shortcut_Esc, SIGNAL(activated()), this, SLOT(close()));
 }
 
-
+void TunerDialog::slotUpdateProgressBar(int value)
+{
+    progressBar->setValue(value);
+}
 
 void TunerDialog::infoMsg(const QString msg)
 {
@@ -731,6 +737,7 @@ void TunerDialog::slotElementValueUpdated()
 {
     qDebug() << "Tuner::slotElementValueUpdated()";
 
+    progressBar->setVisible(true);
     this->setEnabled(false);
     QucsMain->slotSimulate();
 }
@@ -740,6 +747,7 @@ void TunerDialog::SimulationEnded()
     qDebug() << "Tuner::SimulationEnded()";
 
     this->setEnabled(true);
+    progressBar->setVisible(false);
 }
 
 

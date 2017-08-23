@@ -653,9 +653,10 @@ void SimMessage::slotDisplayMsg()
       }
 #else
       SimProgress->setMaximum(100);
-      SimProgress->setValue(
-         10*int(ProgressText.at(i-2).toLatin1()-'0') +
-            int(ProgressText.at(i-1).toLatin1()-'0'));
+      int value = 10*int(ProgressText.at(i-2).toLatin1()-'0') +
+              int(ProgressText.at(i-1).toLatin1()-'0');
+      SimProgress->setValue(value);
+      emit progressBarChanged(value);
 #endif
       ProgressText.remove(0, i+1);
     }
