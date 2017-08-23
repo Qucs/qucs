@@ -16,22 +16,28 @@
  ***************************************************************************/
 #include "tuner.h"
 
+
+
+bool checkProperty(Component *component, Property *pp)
+{
+    if (component->Model.at(0) == '.') return false;//Simulation parameters
+    // Properties defined in the integer+ domain
+    if (pp->Name=="Num") return false;//Port number
+    if (pp->Name=="Branches") return false;//Branches parameter in the EDD
+    if (pp->Name=="Ports") return false;//Number of ports in a SNP file component
+    if (!pp->Value.at(0).isNumber()) return false;//String
+    //Check if the value contains symbols *, /, -, +
+    for (int i = 0; i < pp->Value.length(); i++)
+    {
+        if (!pp->Value.at(i).isLetterOrNumber() && (pp->Value.at(i) != '.') && (pp->Value.at(i) != ' ')) return false;
+        if (pp->Value.at(i).toLower() == 'e') break;//Scientific notation
+    }
+    return true;
+}
+
 tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, int selectedPropertyId)
     : QWidget(parent)
 {
-    /* The tuner is defined in the real domain so those parameters that take integer values will probably
-     * fail under tuning mode. In this sense, the conditions below try to detect those parameters which cannot be tuned
-     * The proper way to do this would be to include a flag in every component propery which gives
-     * information about its domain */
-
-    if ((component->Model == ".HB") && ((pp->Name=="n"))) throw -1;//Number of harmonics in a HB simulation
-    if (pp->Name=="Num") throw -1;//Port number
-    if ((pp->Name=="MaxIter") || (pp->Name=="Order") || (pp->Name=="Number") || (pp->Name=="Points")) throw -1;//Simulation parameters of integer domain
-    if (pp->Name=="Branches") throw -1;//Branches parameter in the EDD
-    if (pp->Name=="Ports") throw -1;//Number of ports in a SNP file component
-
-    bool ok=true;//Flag which indicates whether the property is tunable or not
-
     QStringList ScaleFactorList;
     ScaleFactorList << "f" << "p" << "n" << "u" << "m" << "" << "k" << "M" << "G";
     int magnitudeIndex = 5;//No scaling
@@ -57,13 +63,8 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     {
         if (val.at(i).isLetter())
         {
-            if (i == 0)//It starts with a letter
-            {
-                ok = false;
-                break;
-            }
             units_index = i;//Select index
-            numValue = val.mid(0, i).toFloat(&ok);//Get the magnitude
+            numValue = val.mid(0, i).toFloat();//Get the magnitude
             break;
         }
     }
@@ -76,7 +77,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     }
     else
     {//The property value contains only numbers
-      numValue = val.toFloat(&ok);
+      numValue = val.toFloat();
     }
        if (unit.length() <= 1)
        {//It comes with no units... so let's try to find a suitable unit
@@ -117,14 +118,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
         for (int i = 0; i < ScaleFactorList.length(); i++) ScaleFactorList[i] += unit;
     originalValue = QString::number(numValue)+ScaleFactorList[magnitudeIndex];
 
-    if (!ok)
-    {
-        QMessageBox::warning(0,
-                             "Property not correct",
-                             "You selected a non-tunable property",
-                             QMessageBox::Ok);
-        return;
-    };
+
     //******************************  HANDLE PROPERTY VALUE (END) ***************************
 
     //UI setup
@@ -315,6 +309,7 @@ QString SeparateMagnitudeFromSuffix(QString num, int & index)
       }
   return num.mid(0,sp);
 }
+
 
 
 /*

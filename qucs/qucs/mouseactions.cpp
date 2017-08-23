@@ -1125,8 +1125,19 @@ void MouseActions::MPressTune(Schematic *Doc, QMouseEvent *Event, float fX, floa
 
             if (! App->tunerDia->containsProperty(pp) )
             {
-                tunerElement *tune = new tunerElement(App->tunerDia, pc, pp, No);
-                if (tune != NULL) App->tunerDia->addTunerElement(tune);//Tunable property
+                if (checkProperty(pc, pp))
+                {
+                    tunerElement *tune = new tunerElement(App->tunerDia, pc, pp, No);
+                    if (tune != NULL) App->tunerDia->addTunerElement(tune);//Tunable property
+                }
+                else
+                {
+                    QMessageBox::warning(0,
+                                         "Property not correct",
+                                         "You selected a non-tunable property",
+                                         QMessageBox::Ok);
+                    return;
+                }
             }
             return;
         }

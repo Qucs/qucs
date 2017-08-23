@@ -46,6 +46,7 @@ extern QucsApp *QucsMain;  // the Qucs application itself
 
 float getScale(int);
 QString SeparateMagnitudeFromSuffix(QString num, int &);
+bool checkProperty(Component *component, Property *pp);
 
 class tunerElement : public QWidget
 {
@@ -61,6 +62,7 @@ class tunerElement : public QWidget
         float getStep(bool &);
         QString originalValue;//OriginalValue and numValue need to be public since they need to be accessed by tunerDialog when checking if the initial value was modified
         float numValue;
+
 
         virtual ~tunerElement();
     signals:
