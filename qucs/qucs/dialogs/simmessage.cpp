@@ -220,7 +220,7 @@ void SimMessage::setDocWidget(QWidget *w)
     DataDisplay = Doc->DataDisplay;
     Script = Doc->Script;
     QFileInfo Info(DocName);
-    DataSet = QDir::convertSeparators(Info.path()) +
+    DataSet = QDir::toNativeSeparators(Info.path()) +
       QDir::separator() + Doc->DataSet;
     showBias = Doc->showBias;     // save some settings as the document...
     SimOpenDpl = Doc->SimOpenDpl; // ...could be closed during the simulation.
