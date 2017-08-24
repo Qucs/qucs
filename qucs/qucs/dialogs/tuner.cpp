@@ -42,6 +42,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     ScaleFactorList << "f" << "p" << "n" << "u" << "m" << "" << "k" << "M" << "G";
     int magnitudeIndex = 5;//No scaling
     float minValueValidator = PTRDIFF_MIN;
+    bool has_unit = true;
 
     // ************************************** HANDLE PROPERTY VALUE **************************************
     //First of all we need to check whether the property is tunable (number + units) or not (random string)
@@ -53,6 +54,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
     if (val.contains("e", Qt::CaseInsensitive))//Scientific notation
     {
         val = misc::num2str(val.toDouble());
+        has_unit = false; //num2str doesn't return the unit
     }
 
     val.remove(" ");
@@ -115,7 +117,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, 
        }
 
         //Finally, add the unit to the QStringList for adding it to the scale comboboxes later
-        for (int i = 0; i < ScaleFactorList.length(); i++) ScaleFactorList[i] += unit;
+        if (has_unit) for (int i = 0; i < ScaleFactorList.length(); i++) ScaleFactorList[i] += unit;
     originalValue = QString::number(numValue)+ScaleFactorList[magnitudeIndex];
 
 
