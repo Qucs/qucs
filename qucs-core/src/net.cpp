@@ -350,7 +350,13 @@ void net::orderAnalysis (void) {
 void net::sortChildAnalyses (analysis * parent) {
   ptrlist<analysis> * alist = parent->getAnalysis ();
   if (alist != nullptr) {
-    for (auto *a: *alist) {
+
+    for (auto it = alist->begin(); it != alist->end(); /* empty */) {
+      // Copy the value of the element (a pointer), and advance the
+      // iterator prior to manipulating the list.
+      analysis *a = *it;
+      ++it;
+
       if (a->getType () == ANALYSIS_DC
 	  || containsAnalysis (a, ANALYSIS_DC)) {
 	parent->delAnalysis (a);
