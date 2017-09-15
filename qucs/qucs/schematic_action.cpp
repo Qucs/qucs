@@ -482,9 +482,10 @@ void Schematic::actionApplyCompText()
 		s = pp->Value;
 	editText->setMinimumWidth(editText->fontMetrics().width(s)+4);
 
-	contentsToViewport(int(Doc->Scale * float(mouseActions()->MAx1 - Doc->ViewX1)),
-			int(Doc->Scale * float(mouseActions()->MAy1 - Doc->ViewY1)),
-			mouseActions()->MAx2, mouseActions()->MAy2);
+  incomplete();
+  /// Doc->contentsToViewport(int(Doc->Scale * float(view->MAx1 - Doc->ViewX1)),
+  ///			 int(Doc->Scale * float(view->MAy1 - Doc->ViewY1)),
+  ///	 view->MAx2, view->MAy2);
 	editText->setReadOnly(false);
 	if(pp) {  // is it a property ?
 		s = pp->Value;
