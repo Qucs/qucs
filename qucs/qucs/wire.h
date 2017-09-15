@@ -32,6 +32,9 @@ public:
   Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0);
  ~Wire();
 
+  virtual QRectF boundingRect() const;
+  virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
+
   void paint(ViewPainter*);
   void paintScheme(QPainter*);
   void setCenter(int, int, bool relative=false);

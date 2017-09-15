@@ -27,6 +27,9 @@ public:
   Painting();
  ~Painting() {};
 
+  virtual QRectF boundingRect() const;
+  virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
+
   virtual void getCenter(int&, int &) {};
   virtual bool getSelected(float, float, float) { return false; };
 

@@ -37,8 +37,10 @@
 #ifndef ELEMENT_H
 #define ELEMENT_H
 
+#include <QGraphicsItem>
 #include <QPen>
 #include <QBrush>
+#include <QDebug>
 
 class Node;
 class QPainter;
@@ -136,21 +138,30 @@ struct Property {
 
 /** \class Element
   * \brief Superclass of all schematic drawing elements
-  *
+  * Element and its derived classes can be used in the QGraphicsView canvas.
   *
   */
-class Element {
+class Element : public QGraphicsItem{
 public:
   Element();
   virtual ~Element();
 
   virtual void paintScheme(Schematic *);
   virtual void paintScheme(QPainter *);
+
   virtual void setCenter(int, int, bool relative=false);
   virtual void getCenter(int&, int&);
 
-  bool isSelected;
-  int  Type;    // whether it is Component, Wire, ...
+  virtual QRectF boundingRect() const;
+  virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
+
+public:
+  bool selected() const { return elemSelected; }
+  // BUG: use dynamic_cast to obtain type
+  bool elemType() const { return elemType; }
+
+  bool elemSelected;
+  int  elemType;    // BUG. obsolete.
   int  cx, cy, x1, y1, x2, y2;  // center and relative boundings
 };
 

@@ -142,6 +142,9 @@ public:
   bool scrollLeft(int);
   bool scrollRight(int);
 
+  // schematic Scene for this QGraphicsView
+  QGraphicsScene *scene;
+
   // The pointers points to the current lists, either to the schematic
   // elements "Doc..." or to the symbol elements "SymbolPaints".
 // private: //TODO. one at a time.

@@ -84,8 +84,8 @@ Diagram::Diagram(int _cx, int _cy)
   rotZ = 225;
   hideLines = true;  // hide invisible lines
 
-  Type = isDiagram;
-  isSelected = false;
+  ElemType = isDiagram;
+  ElemSelected = false;
   GridPen = QPen(Qt::lightGray,0);
 }
 
@@ -93,6 +93,16 @@ Diagram::~Diagram()
 {
   if(freq!=nullptr) delete[] freq;
   freq= nullptr;
+}
+
+QRectF Diagram::boundingRect() const
+{
+  return *(new QRectF());
+}
+
+void Diagram::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
+{
+
 }
 
 /*!
@@ -144,7 +154,7 @@ void Diagram::paintDiagram(ViewPainter *p)
     p->Painter->restore();
 
 
-    if(isSelected) {
+    if(ElemSelected) {
       int x_, y_;
       float fx_, fy_;
       p->map(cx, cy-y2, x_, y_);
@@ -166,7 +176,7 @@ void Diagram::paintMarkers(ViewPainter *p, bool paintAll)
     // draw markers last, so they are at the top of painting layers
     foreach(Graph *pg, Graphs)
       foreach(Marker *pm, pg->Markers)
-          if ((pm->Type & 1)||paintAll) pm->paint(p, cx, cy);
+          if ((pm->ElemType & 1)||paintAll) pm->paint(p, cx, cy);
 }
 
 // ------------------------------------------------------------

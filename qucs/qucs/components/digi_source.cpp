@@ -21,7 +21,7 @@
 
 Digi_Source::Digi_Source()
 {
-  Type = isComponent;   // both analog and digital
+  ElemType = isComponent;   // both analog and digital
   Description = QObject::tr("digital source");
 
   Lines.append(new Line(-10,  0,  0,  0,QPen(Qt::darkGreen,2)));

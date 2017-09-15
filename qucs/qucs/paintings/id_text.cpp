@@ -23,7 +23,7 @@
 ID_Text::ID_Text(int cx_, int cy_)
 {
   Name = ".ID ";
-  isSelected = false;
+  ElemSelected = false;
   cx = cx_;
   cy = cy_;
   x2 = y2 = 20;
@@ -60,7 +60,7 @@ void ID_Text::paint(ViewPainter *p)
     }
   }
 
-  if(isSelected) {
+  if(ElemSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->Painter->drawRoundRect(x-4, y-4, x2+8, y2+8);
   }

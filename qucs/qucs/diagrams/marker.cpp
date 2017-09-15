@@ -53,8 +53,8 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
   numMode(0),
   Z0(default_Z0) // BUG: see declaration.
 {
-  Type = isMarker;
-  isSelected = transparent = false;
+  ElemType = isMarker;
+  ElemSelected = transparent = false;
 
   cx =  cx_;
   cy = -cy_;
@@ -86,6 +86,16 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
 
 Marker::~Marker()
 {
+}
+
+QRectF Marker::boundingRect() const
+{
+  return *(new QRectF());
+}
+
+void Marker::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
+{
+
 }
 
 // ---------------------------------------------------------------------
@@ -460,7 +470,7 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
   fy2 = (float(y0)-fCY)*p->Scale + p->DY;
   p->Painter->drawLine(x1_, y1_, TO_INT(fx2), TO_INT(fy2));
 
-  if(isSelected) {
+  if(ElemSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(x0+x1-3, y0+y1-3, x2+6, y2+6);
   }

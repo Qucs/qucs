@@ -29,7 +29,7 @@
 
 LibComp::LibComp()
 {
-  Type = isComponent;   // both analog and digital
+  ElemType = isComponent;   // both analog and digital
   Description = QObject::tr("Component taken from Qucs library");
 
   Ports.append(new Port(0,  0));  // dummy port because of being device

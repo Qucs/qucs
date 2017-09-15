@@ -21,7 +21,7 @@
 
 binarytogrey4bit::binarytogrey4bit()
 {
-  Type = isComponent; // Analogue and digital component.
+  ElemType = isComponent; // Analogue and digital component.
   Description = QObject::tr ("4bit binary to Gray converter verilog device");
 
   Props.append (new Property ("TR", "6", false,
