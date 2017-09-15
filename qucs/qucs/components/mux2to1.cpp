@@ -21,7 +21,7 @@
 
 mux2to1::mux2to1()
 {
-  Type = isComponent; // Analogue and digital component.
+  ElemType = isComponent; // Analogue and digital component.
   Description = QObject::tr ("2to1 multiplexer verilog device");
 
   Props.append (new Property ("TR", "6", false,

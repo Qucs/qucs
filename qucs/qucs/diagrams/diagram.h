@@ -61,6 +61,9 @@ public:
   Diagram(int _cx=0, int _cy=0);
   virtual ~Diagram();
 
+  virtual QRectF boundingRect() const;
+  virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
+
   virtual Diagram* newOne();
   virtual int  calcDiagram() { return 0; };
   virtual void calcCoordinate

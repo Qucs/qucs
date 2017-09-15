@@ -13,7 +13,7 @@
 
 pad4bit::pad4bit()
 {
-  Type = isComponent; // Analogue and digital component.
+  ElemType = isComponent; // Analogue and digital component.
   Description = QObject::tr ("4bit pattern generator verilog device");
 
   Props.append (new Property ("Number", "0", false,

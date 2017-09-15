@@ -30,6 +30,9 @@ public:
   Node(int, int);
  ~Node();
 
+  QRectF boundingRect() const;
+  void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
+
   void  paint(ViewPainter*);
   bool  getSelected(int, int);
   void  setName(const QString&, const QString&, int x_=0, int y_=0);

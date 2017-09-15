@@ -30,12 +30,22 @@ Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2)
   Port2 = n2;
   Label  = 0;
 
-  Type = isWire;
-  isSelected = false;
+  ElemType = isWire;
+  ElemSelected = false;
 }
 
 Wire::~Wire()
 {
+}
+
+QRectF Wire::boundingRect() const
+{
+  return *(new QRect(x1, y1, x2-x1, y2-y1) );
+}
+
+void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
+{
+
 }
 
 // ----------------------------------------------------------------
@@ -58,8 +68,8 @@ void Wire::rotate()
     tmp = Label->cx;
     Label->cx = xm + Label->cy - ym;
     Label->cy = ym - tmp + xm;
-    if(Label->Type == isHWireLabel) Label->Type = isVWireLabel;
-    else Label->Type = isHWireLabel;
+    if(Label->ElemType == isHWireLabel) Label->ElemType = isVWireLabel;
+    else Label->ElemType = isHWireLabel;
   }
 }
 
@@ -107,7 +117,7 @@ void Wire::paintScheme(QPainter *p)
 // ----------------------------------------------------------------
 void Wire::paint(ViewPainter *p)
 {
-  if(isSelected) {
+  if(ElemSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,6));
     p->drawLine(x1, y1, x2, y2);
     p->Painter->setPen(QPen(Qt::lightGray,2));

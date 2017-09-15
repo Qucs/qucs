@@ -64,7 +64,7 @@ QString Schematic::createClipboardFile()
   // Build element document.
   s += "<Components>\n";
   for(pc = Components->first(); pc != 0; pc = Components->next()){
-    if(pc->isSelected) {
+    if(pc->ElemSelected) {
       QTextStream str(&s);
       saveComponent(str, pc);
       s += "\n";
@@ -75,28 +75,28 @@ QString Schematic::createClipboardFile()
 
   s += "<Wires>\n";
   for(pw = Wires->first(); pw != 0; pw = Wires->next())
-    if(pw->isSelected) {
+    if(pw->ElemSelected) {
       z++;
-      if(pw->Label) if(!pw->Label->isSelected) {
+      if(pw->Label) if(!pw->Label->ElemSelected) {
 	s += pw->save().section('"', 0, 0)+"\"\" 0 0 0>\n";
 	continue;
       }
       s += pw->save()+"\n";
     }
   for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
-    if(pn->Label) if(pn->Label->isSelected) {
+    if(pn->Label) if(pn->Label->ElemSelected) {
       s += pn->Label->save()+"\n";  z++; }
   s += "</Wires>\n";
 
   s += "<Diagrams>\n";
   for(pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
-    if(pd->isSelected) {
+    if(pd->ElemSelected) {
       s += pd->save()+"\n";  z++; }
   s += "</Diagrams>\n";
 
   s += "<Paintings>\n";
   for(pp = Paintings->first(); pp != 0; pp = Paintings->next())
-    if(pp->isSelected)
+    if(pp->ElemSelected)
       if(pp->Name.at(0) != '.') {  // subcircuit specific -> do not copy
         s += "<"+pp->save()+">\n";  z++; }
   s += "</Paintings>\n";
@@ -696,7 +696,7 @@ void Schematic::simpleInsertWire(Wire *pw)
   if(pw->x1 == pw->x2) if(pw->y1 == pw->y2) {
     pn->Label = pw->Label;   // wire with length zero are just node labels
     if (pn->Label) {
-      pn->Label->Type = isNodeLabel;
+      pn->Label->ElemType = isNodeLabel;
       pn->Label->pOwner = pn;
     }
     delete pw;           // delete wire because this is not a wire
@@ -740,7 +740,7 @@ bool Schematic::loadWires(QTextStream *stream, Q3PtrList<Element> *List)
     }
     if(List) {
       if(w->x1 == w->x2) if(w->y1 == w->y2) if(w->Label) {
-	w->Label->Type = isMovingLabel;
+        w->Label->ElemType = isMovingLabel;
 	List->append(w->Label);
 	delete w;
 	continue;
@@ -1181,7 +1181,7 @@ void Schematic::propagateNode(QStringList& Collect,
   Cons.append(pn);
   for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
     for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
-      if(pe->Type == isWire) {
+      if(pe->ElemType == isWire) {
 	pw = (Wire*)pe;
 	if(p2 != pw->Port1) {
 	  if(pw->Port1->Name.isEmpty()) {
@@ -1236,13 +1236,13 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 
     // check analog/digital typed components
     if(isAnalog) {
-      if((pc->Type & isAnalogComponent) == 0) {
-        ErrText->appendPlainText(QObject::tr("ERROR: Component \"%1\" has no analog model.").arg(pc->name() ));
+      if((pc->type() & isAnalogComponent) == 0) {
+        ErrText->appendPlainText(QObject::tr("ERROR: Component \"%1\" has no analog model.").arg(pc->name()));
         return false;
       }
     } else {
-      if((pc->Type & isDigitalComponent) == 0) {
-        ErrText->appendPlainText(QObject::tr("ERROR: Component \"%1\" has no digital model.").arg(pc->name() ));
+      if((pc->type() & isDigitalComponent) == 0) {
+        ErrText->appendPlainText(QObject::tr("ERROR: Component \"%1\" has no digital model.").arg(pc->name()));
         return false;
       }
     }

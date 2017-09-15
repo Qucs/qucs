@@ -44,11 +44,11 @@
  */
 Component::Component()
 {
-  Type = isAnalogComponent;
+  ElemType = isAnalogComponent;
 
   mirroredX = false;
   rotated = 0;
-  isSelected = false;
+  ElemSelected = false;
   isActive = COMP_IS_ACTIVE;
   showName = true;
 
@@ -306,7 +306,7 @@ void Component::paint(ViewPainter *p)
   }
 
   // draw component bounding box
-  if(isSelected) {
+  if(ElemSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(cx+x1, cy+y1, x2-x1, y2-y1);
   }
@@ -964,7 +964,15 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   return c;
 }
 
-// -------------------------------------------------------
+QRectF Component::boundingRect() const
+{
+  return *(new QRectF(x1, y1, x2-x1, y2-y1));
+}
+
+void Component::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
+{
+
+}
 
 // *******************************************************************
 // ***  The following functions are used to load the schematic symbol
@@ -1274,7 +1282,7 @@ Property * Component::getProperty(const QString& name)
 // ---------------------------------------------------------------------
 void Component::copyComponent(Component *pc)
 {
-  Type = pc->Type;
+  ElemType = pc->ElemType;
   x1 = pc->x1;
   y1 = pc->y1;
   x2 = pc->x2;
@@ -1349,7 +1357,7 @@ void MultiViewComponent::recreate(Schematic *Doc)
 // ***********************************************************************
 GateComponent::GateComponent()
 {
-  Type = isComponent;   // both analog and digital
+  ElemType = isComponent;   // both analog and digital
   Name  = "Y";
 
   // the list order must be preserved !!!

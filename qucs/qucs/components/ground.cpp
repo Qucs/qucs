@@ -21,7 +21,7 @@
 
 Ground::Ground()
 {
-  Type = isComponent;   // both analog and digital
+  ElemType = isComponent;   // both analog and digital
   Description = QObject::tr("ground (reference potential)");
 
   Lines.append(new Line(  0,  0,  0, 10,QPen(Qt::darkBlue,2)));

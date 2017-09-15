@@ -22,7 +22,7 @@
 
 dmux3to8::dmux3to8()
 {
-  Type = isComponent; // Analogue and digital component.
+  ElemType = isComponent; // Analogue and digital component.
   Description = QObject::tr ("3to8 demultiplexer verilog device");
 
   Props.append (new Property ("TR", "6", false,

@@ -53,6 +53,9 @@ public:
   void    mirrorY();  // mirror about Y axis
   bool    load(const QString&);
 
+  virtual QRectF boundingRect() const;
+  virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
+
   // to hold track of the component appearance for saving and copying
   bool mirroredX;   // is it mirrored about X axis or not
   int  rotated;     // rotation angle divided by 90 degrees

@@ -88,6 +88,9 @@ public:
   Graph(const Diagram*, const QString& _Line="");
  ~Graph();
 
+  virtual QRectF boundingRect() const;
+  virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
+
   class ScrPt{
     float ScrX;
     float ScrY;

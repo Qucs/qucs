@@ -26,7 +26,7 @@
 
 VHDL_File::VHDL_File()
 {
-  Type = isDigitalComponent;
+  ElemType = isDigitalComponent;
   Description = QObject::tr("VHDL file");
 
   Props.append(new Property("File", "sub.vhdl", false,
