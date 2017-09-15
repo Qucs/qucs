@@ -372,8 +372,10 @@ int Schematic::saveDocument()
   }
   else {
     stream << "  <View=" << ViewX1<<","<<ViewY1<<","
-			 << ViewX2<<","<<ViewY2<< ",";
-    stream << Scale <<","<<contentsX()<<","<<contentsY() << ">\n";
+                         << ViewX2<<","<<ViewY2<< ",";
+    TODO("Fix contentsX");
+    /// \todo  stream << Scale <<","<<contentsX()<<","<<contentsY() << ">\n";
+    stream << Scale <<","<< 0 <<","<< 0 << ">\n";
   }
   stream << "  <Grid=" << GridX<<","<<GridY<<","
 			<< GridOn << ">\n";
