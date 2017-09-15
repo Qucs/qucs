@@ -98,8 +98,11 @@ public:
 
 #if QT_VERSION < 0x050000
 typedef Element ElementGraphics;
+#define SchematicBase Q3ScrollView
 #else
+// strictly, this should also work with qt4.
 class ElementGraphics;
+#define SchematicBase QGraphicsView
 #endif
 
 class SchematicModel{
@@ -128,7 +131,7 @@ private:
   Schematic* _doc;
 };
 
-class Schematic : public Q3ScrollView, public QucsDoc {
+class Schematic : public SchematicBase, public QucsDoc {
   Q_OBJECT
 public:
   Schematic(QucsApp*, const QString&);
@@ -273,7 +276,6 @@ protected:
   void paintFrame(ViewPainter*);
 
   // overloaded function to get actions of user
-  void drawContents(QPainter*, int, int, int, int);
   void contentsMouseMoveEvent(QMouseEvent*);
   void contentsMousePressEvent(QMouseEvent*);
   void contentsMouseDoubleClickEvent(QMouseEvent*);
