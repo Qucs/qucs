@@ -30,7 +30,7 @@
 
 Subcircuit::Subcircuit()
 {
-  Type = isComponent;   // both analog and digital
+  ElemType = isComponent;   // both analog and digital
   Description = QObject::tr("subcircuit");
 
   Props.append(new Property("File", "", false,

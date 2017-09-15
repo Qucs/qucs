@@ -20,7 +20,7 @@
 
 logic_0::logic_0()
 {
-  Type = isComponent; // Analogue and digital component.
+  ElemType = isComponent; // Analogue and digital component.
   Description = QObject::tr ("logic 0 verilog device");
 
   Props.append (new Property ("LEVEL", "0", false,

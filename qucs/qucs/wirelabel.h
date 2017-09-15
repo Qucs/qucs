@@ -34,6 +34,9 @@ public:
             int _x1=0, int _y1=0, int _Type=isNodeLabel);
   ~WireLabel();
 
+  virtual QRectF boundingRect() const;
+  virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
+
   void paintScheme(QPainter *p);
   void setCenter(int x, int y, bool relative=false);
   bool getSelected(int, int);

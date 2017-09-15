@@ -22,7 +22,7 @@
 
 Equation::Equation()
 {
-  Type = isComponent; // Analogue and digital component.
+  ElemType = isComponent; // Analogue and digital component.
   Description = QObject::tr("equation");
 
   QFont f = QucsSettings.font;
