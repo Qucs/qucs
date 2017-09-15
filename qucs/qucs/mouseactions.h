@@ -37,7 +37,6 @@ public:
   MouseActions(QucsApp*);
   virtual ~MouseActions();
 
-  void setPainter(Schematic*);
   bool pasteElements(Schematic*);
   void editElement(Schematic*, QMouseEvent*);
   void editLabel(Schematic*, WireLabel*);

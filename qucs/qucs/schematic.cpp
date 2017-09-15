@@ -40,6 +40,7 @@
 #include <QDebug>
 #include <QApplication>
 #include <QClipboard>
+#include <QScrollBar>
 
 #include "qucs.h"
 #include "schematic.h"
@@ -100,24 +101,31 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   Frame_Text2 = tr("Date:");
   Frame_Text3 = tr("Revision:");
 
-  setVScrollBarMode(Q3ScrollView::AlwaysOn);
-  setHScrollBarMode(Q3ScrollView::AlwaysOn);
+  this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+  this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
   misc::setWidgetBackgroundColor(viewport(), QucsSettings.BGColor);
   viewport()->setMouseTracking(true);
   viewport()->setAcceptDrops(true);  // enable drag'n drop
 
+  TODO("Repair scroll connect");
   // to repair some strange  scrolling artefacts
+  /** \todo
   connect(this, SIGNAL(horizontalSliderReleased()),
       viewport(), SLOT(update()));
   connect(this, SIGNAL(verticalSliderReleased()),
       viewport(), SLOT(update()));
+  */
+
   if (App_) {
     connect(this, SIGNAL(signalCursorPosChanged(int, int)), 
         App_, SLOT(printCursorPosition(int, int)));
+    /** \todo
     connect(this, SIGNAL(horizontalSliderPressed()), 
         App_, SLOT(slotHideEdit()));
     connect(this, SIGNAL(verticalSliderPressed()),
         App_, SLOT(slotHideEdit()));
+    */
     connect(this, SIGNAL(signalUndoState(bool)),
         App_, SLOT(slotUpdateUndo(bool)));
     connect(this, SIGNAL(signalRedoState(bool)),
@@ -391,123 +399,6 @@ void Schematic::paintFrame(ViewPainter *p)
   p->Painter->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, Frame_Text0);
 }
 
-// -----------------------------------------------------------
-// Is called when the content (schematic or data display) has to be drawn.
-void Schematic::drawContents(QPainter *p, int, int, int, int)
-{
-  ViewPainter Painter;
-
-  Painter.init(p, Scale, -ViewX1, -ViewY1, contentsX(), contentsY());
-
-  paintGrid(&Painter, contentsX(), contentsY(),
-            visibleWidth(), visibleHeight());
-
-  if(!symbolMode)
-    paintFrame(&Painter);
-
-  for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-    pc->paint(&Painter);
-
-  for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next()) {
-    pw->paint(&Painter);
-    if(pw->Label)
-      pw->Label->paint(&Painter);  // separate because of paintSelected
-  }
-
-  Node *pn;
-  for(pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
-    pn->paint(&Painter);
-    if(pn->Label)
-      pn->Label->paint(&Painter);  // separate because of paintSelected
-  }
-
-  // FIXME disable here, issue with select box goes away
-  // also, instead of red, line turns blue
-  for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
-    pd->paint(&Painter);
-
-  for(Painting *pp = Paintings->first(); pp != 0; pp = Paintings->next())
-    pp->paint(&Painter);
-
-  if(showBias > 0) {  // show DC bias points in schematic ?
-    int x, y, z;
-    for(pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
-      if(pn->Name.isEmpty()) continue;
-      x = pn->cx;
-      y = pn->cy + 4;
-      z = pn->x1;
-      if(z & 1) x -= Painter.Painter->fontMetrics().width(pn->Name);
-      if(!(z & 2)) {
-        y -= (Painter.LineSpacing>>1) + 4;
-        if(z & 1) x -= 4;
-        else x += 4;
-      }
-      if(z & 0x10)
-        Painter.Painter->setPen(Qt::darkGreen);  // green for currents
-      else
-        Painter.Painter->setPen(Qt::blue);   // blue for voltages
-      Painter.drawText(pn->Name, x, y);
-    }
-  }
-
-  /*
-   * The following events used to be drawn from mouseactions.cpp, but since Qt4
-   * Paint actions can only be called from within the paint event, so they
-   * are put into a QList (PostedPaintEvents) and processed here
-   */
-  for(int i=0;i<PostedPaintEvents.size();i++)
-  {
-    PostedPaintEvent p = PostedPaintEvents[i];
-    QPainter painter2(viewport());
-
-    switch(p.pe)
-    {
-      case _NotRop:
-        if(p.PaintOnViewport)
-          painter2.setCompositionMode(QPainter::RasterOp_SourceAndNotDestination);
-        else
-          Painter.Painter->setCompositionMode(QPainter::RasterOp_SourceAndNotDestination);
-        break;
-      case _Rect:
-        if(p.PaintOnViewport)
-          painter2.drawRect(p.x1, p.y1, p.x2, p.y2);
-        else
-          Painter.drawRect(p.x1, p.y1, p.x2, p.y2);
-        break;
-      case _Line:
-        if(p.PaintOnViewport)
-          painter2.drawLine(p.x1, p.y1, p.x2, p.y2);
-        else
-          Painter.drawLine(p.x1, p.y1, p.x2, p.y2);
-        break;
-      case _Ellipse:
-        if(p.PaintOnViewport)
-          painter2.drawEllipse(p.x1, p.y1, p.x2, p.y2);
-        else
-          Painter.drawEllipse(p.x1, p.y1, p.x2, p.y2);
-        break;
-      case _Arc:
-        if(p.PaintOnViewport)
-          painter2.drawArc(p.x1, p.y1, p.x2, p.y2, p.a, p.b);
-        else
-          Painter.drawArc(p.x1, p.y1, p.x2, p.y2, p.a, p.b);
-        break;
-      case _DotLine:
-        Painter.Painter->setPen(Qt::DotLine);
-        break;
-      case _Translate:
-
-        painter2.translate(p.x1, p.y1);
-        break;
-      case _Scale:
-        painter2.scale(p.x1,p.y1);
-        break;
-    }
-
-  }
-  PostedPaintEvents.clear();
-
-}
 
 void Schematic::PostPaintEvent (PE pe, int x1, int y1, int x2, int y2, int a, int b, bool PaintOnViewport)
 {
@@ -755,8 +646,9 @@ float Schematic::zoom(float s)
   // to hidden. This causes some flicker, but it is still nicer.
   viewport()->setHidden(true);
 //  setHidden(true);
-  resizeContents(int(Scale*float(ViewX2 - ViewX1)),
-                 int(Scale*float(ViewY2 - ViewY1)));
+  TODO("Fix resizeContents");
+  /// todo resizeContents(int(Scale*float(ViewX2 - ViewX1)),
+  ///               int(Scale*float(ViewY2 - ViewY1)));
 //  setHidden(false);
   viewport()->setHidden(false);
 
@@ -770,14 +662,19 @@ float Schematic::zoomBy(float s)
 {
   zoom(s);
   s -= 1.0;
-  scrollBy( int(s * float(contentsX()+visibleWidth()/2)),
-            int(s * float(contentsY()+visibleHeight()/2)) );
+  TODO("Fix contentsX");
+  /// todo scrollBy( int(s * float(contentsX()+visibleWidth()/2)),
+  ///          int(s * float(contentsY()+visibleHeight()/2)) );
   return Scale;
 }
 
 // ---------------------------------------------------
 void Schematic::showAll()
 {
+  TODO("Fix showAll");
+  fitInView(this->sceneRect(), Qt::KeepAspectRatio);
+  /// \todo showAll
+  /*
   sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
   if(UsedX1 == 0)
     if(UsedX2 == 0)
@@ -798,6 +695,7 @@ void Schematic::showAll()
   ViewX2 = UsedX2 + 40;
   ViewY2 = UsedY2 + 40;
   zoom(xScale);
+  */
 }
 
 // ---------------------------------------------------
@@ -824,7 +722,8 @@ void Schematic::showNoZoom()
   ViewY1 = y1-40;
   ViewX2 = x2+40;
   ViewY2 = y2+40;
-  resizeContents(x2-x1+80, y2-y1+80);
+  TODO("Fix resizeContents");
+  ///\todo resizeContents(x2-x1+80, y2-y1+80);
   viewport()->update();
   App->view->drawn = false;
 }
@@ -851,9 +750,10 @@ void Schematic::enlargeView(int x1, int y1, int x2, int y2)
   if(x2 > ViewX2) ViewX2 = x2+40;
   if(y2 > ViewY2) ViewY2 = y2+40;
 
-  resizeContents(int(Scale*float(ViewX2 - ViewX1)),
-		int(Scale*float(ViewY2 - ViewY1)));
-  scrollBy(dx,dy);
+  TODO("Fix resizeContents");
+  /// \todo resizeContents(int(Scale*float(ViewX2 - ViewX1)),
+  /// 		int(Scale*float(ViewY2 - ViewY1)));
+  ///scrollBy(dx,dy);
 }
 
 // ---------------------------------------------------
@@ -1339,7 +1239,8 @@ bool Schematic::load()
   if(ViewX2 < UsedX2)  ViewX2 = UsedX2;
   if(ViewY2 < UsedY2)  ViewY2 = UsedY2;
   zoom(1.0f);
-  setContentsPos(tmpViewX1, tmpViewY1);
+  TODO("Fix setContentsPos");
+  /// \todo setContentsPos(tmpViewX1, tmpViewY1);
   tmpViewX1 = tmpViewY1 = -200;   // was used as temporary cache
   return true;
 }
@@ -1853,6 +1754,8 @@ void Schematic::switchPaintMode()
 {
   symbolMode = !symbolMode;  // change mode
 
+  TODO("Fix contentsY");
+  /** \todo switch paint mode
   int tmp, t2;
   float temp;
   temp = Scale; Scale  = tmpScale;  tmpScale  = temp;
@@ -1869,6 +1772,7 @@ void Schematic::switchPaintMode()
   tmp = UsedY1; UsedY1 = tmpUsedY1; tmpUsedY1 = tmp;
   tmp = UsedX2; UsedX2 = tmpUsedX2; tmpUsedX2 = tmp;
   tmp = UsedY2; UsedY2 = tmpUsedY2; tmpUsedY2 = tmp;
+  */
 }
 
 
@@ -1881,6 +1785,9 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
 {
   App->editText->setHidden(true);  // disable edit of component property
   // use smaller steps; typically the returned delta() is a multiple of 120
+
+  TODO("Fix wheelEvent");
+  /** \todo
   int delta = Event->delta() >> 1;
 
   // ...................................................................
@@ -1910,6 +1817,7 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
   }
 
   Event->accept();   // QScrollView must not handle this event
+  */
 }
 
 // -----------------------------------------------------------
@@ -1917,6 +1825,8 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
 // area accordingly.
 bool Schematic::scrollUp(int step)
 {
+  TODO("Fix scroll");
+  /**
   int diff;
 
   diff = contentsY() - step;
@@ -1933,7 +1843,7 @@ bool Schematic::scrollUp(int step)
     resizeContents(contentsWidth(), contentsHeight()-diff);
     ViewY2 -= diff;
   }
-
+  */
   return true;
 }
 
@@ -1942,6 +1852,8 @@ bool Schematic::scrollUp(int step)
 // area accordingly. ("step" must be negative!)
 bool Schematic::scrollDown(int step)
 {
+  TODO("Fix scroll");
+  /**
   int diff;
 
   diff = contentsHeight() - contentsY()-visibleHeight() + step;
@@ -1959,7 +1871,7 @@ bool Schematic::scrollDown(int step)
     ViewY1 -= diff;
     return false;
   }
-
+  */
   return true;
 }
 
@@ -1968,6 +1880,8 @@ bool Schematic::scrollDown(int step)
 // area accordingly.
 bool Schematic::scrollLeft(int step)
 {
+  TODO("Fix scroll");
+  /**
   int diff;
 
   diff = contentsX() - step;
@@ -1984,7 +1898,7 @@ bool Schematic::scrollLeft(int step)
     resizeContents(contentsWidth()-diff, contentsHeight());
     ViewX2 -= diff;
   }
-
+  */
   return true;
 }
 
@@ -1993,6 +1907,9 @@ bool Schematic::scrollLeft(int step)
 // view area accordingly. ("step" must be negative!)
 bool Schematic::scrollRight(int step)
 {
+
+  TODO("Fix scroll");
+  /**
   int diff;
 
   diff = contentsWidth() - contentsX()-visibleWidth() + step;
@@ -2010,7 +1927,7 @@ bool Schematic::scrollRight(int step)
     ViewX1 -= diff;
     return false;
   }
-
+  */
   return true;
 }
 
@@ -2157,7 +2074,7 @@ void Schematic::contentsDragLeaveEvent(QDragLeaveEvent*)
       if(App->view->drawn) {
 
         QPainter painter(viewport());
-        App->view->setPainter(this);
+        //App->view->setPainter(this);
         ((Component*)App->view->selElem)->paintScheme(this);
         App->view->drawn = false;
       }

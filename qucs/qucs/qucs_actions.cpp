@@ -982,6 +982,8 @@ void QucsApp::slotCursorLeft(bool left)
   }
   if(!editText->isHidden()) return;  // for edit of component property ?
 
+  TODO("Fix scrollling");
+  /** \todo
   Q3PtrList<Element> movingElements;
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   int markerCount = Doc->copySelectedElements(&movingElements);
@@ -1005,6 +1007,7 @@ void QucsApp::slotCursorLeft(bool left)
     view->MAx3 = 1;  // sign for moved elements
     view->endElementMoving(Doc, &movingElements);
   }
+  */
 }
 
 // -----------------------------------------------------------
@@ -1051,6 +1054,8 @@ void QucsApp::slotCursorUp(bool up)
     return;
   }
 
+  TODO("Fix scrolling");
+  /** \todo
   Q3PtrList<Element> movingElements;
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   int markerCount = Doc->copySelectedElements(&movingElements);
@@ -1074,6 +1079,7 @@ void QucsApp::slotCursorUp(bool up)
     view->MAx3 = 1;  // sign for moved elements
     view->endElementMoving(Doc, &movingElements);
   }
+  */
 }
 
 // -----------------------------------------------------------
@@ -1161,9 +1167,11 @@ void QucsApp::slotApplyCompText()
   editText->setMinimumWidth(editText->fontMetrics().width(s)+4);
 
 
-  Doc->contentsToViewport(int(Doc->Scale * float(view->MAx1 - Doc->ViewX1)),
-			 int(Doc->Scale * float(view->MAy1 - Doc->ViewY1)),
-			 view->MAx2, view->MAy2);
+  TODO("Need to map contentsToViewport?");
+  /// \todo Doc->contentsToViewport(int(Doc->Scale * float(view->MAx1 - Doc->ViewX1)),
+  ///			 int(Doc->Scale * float(view->MAy1 - Doc->ViewY1)),
+  ///	 view->MAx2, view->MAy2);
+
   editText->setReadOnly(false);
   if(pp) {  // is it a property ?
     s = pp->Value;
