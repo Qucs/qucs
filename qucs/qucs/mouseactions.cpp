@@ -19,6 +19,7 @@
 #include "qucs.h"
 #include "node.h"
 #include "schematic.h"
+#include "misc.h"
 #include "mouseactions.h"
 #include "module.h"
 #include "components/component.h"
@@ -71,19 +72,6 @@ MouseActions::~MouseActions()
 {
   delete ComponentMenu;
   delete focusMEvent;
-}
-
-// -----------------------------------------------------------
-void MouseActions::setPainter(Schematic *Doc)
-{
-  // contents to viewport transformation
-
-  Doc->PostPaintEvent(_Translate,-Doc->contentsX(), -Doc->contentsY());
-  Doc->PostPaintEvent(_Scale,Doc->Scale, Doc->Scale);
-  Doc->PostPaintEvent(_Translate,-Doc->ViewX1, -Doc->ViewY1);
-  Doc->PostPaintEvent(_DotLine);
-  Doc->PostPaintEvent(_NotRop);
-
 }
 
 // -----------------------------------------------------------
@@ -295,8 +283,8 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
 
 
   //QPainter painter(Doc->viewport());
-  setPainter(Doc);
-
+  TODO("Sort out contentsX");
+  /*
   if(selElem->Type == isPainting) {
     Doc->PostPaintEvent (_NotRop, 0,0,0,0);
     x -= Doc->contentsX();
@@ -307,7 +295,7 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
     Doc->viewport()->update();
     return;
   }  // of "if(isPainting)"
-
+  */
 
   // ********** it is a component or diagram
   if(drawn) selElem->paintScheme(Doc); // erase old scheme
@@ -321,12 +309,15 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
   Doc->viewport()->update();
 }
 
+
 /**
  * @brief draws wire aiming cross on Document view
  * @param Doc - pointer to Schematics object
  * @param fx  - document x-coordinate of center
  * @param fy  - document x-coordinate of center
- */
+ *
+ *  \todo Move aim (crosshair) to separate class
+ *
 static void paintAim(Schematic *Doc, int fx,int fy){
 	//let we reserve couple of points at the edges of lines for some aesthetics,
 	//and visual check that our calculations has fit the widget window.
@@ -356,6 +347,7 @@ static void paintGhostLineV(Schematic *Doc, int fx, int fy, int fyy){
 	Doc->PostPaintEvent (_Line, fx-1, fy, fx-1, fyy);
 	Doc->PostPaintEvent (_Line, fx+1, fy, fx+1, fyy);
 }
+*/
 
 
 // -----------------------------------------------------------
@@ -368,7 +360,8 @@ void MouseActions::MMoveWire2(Schematic *Doc, QMouseEvent *Event)
 { untested();
   Set2(Event, Doc);
   Doc->setOnGrid(MAx2, MAy2);
-  paintAim(Doc,MAx2,MAy2); //let we paint aim cross
+  /// \todo paint aim
+  /*paintAim(Doc,MAx2,MAy2); //let we paint aim cross
 
   //because cross slightly masks a wire, let we make wire thicker
   //better to make it by increasing of pen, but here we cannot access
@@ -381,7 +374,7 @@ void MouseActions::MMoveWire2(Schematic *Doc, QMouseEvent *Event)
 	paintGhostLineH(Doc,MAx3,MAy3,MAx2);
 	paintGhostLineV(Doc,MAx2,MAy3,MAy2);
   }
-
+  */
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickWire2;
   Doc->viewport()->update();
 }
@@ -416,9 +409,10 @@ void MouseActions::MMoveWire1(Schematic *Doc, QMouseEvent *Event)
 { untested();
   Set3(Event, Doc);
   Doc->setOnGrid(MAx3, MAy3);
-  paintAim(Doc,MAx3,MAy3);
-  MAx2 = DOC_X_POS(Doc->contentsX()+Doc->viewport()->width()-1-2);
-  MAx2 = DOC_Y_POS(Doc->contentsY()+Doc->viewport()->height()-1-2);
+  /// \todo paint aim
+  //paintAim(Doc,MAx3,MAy3);
+  //MAx2 = DOC_X_POS(Doc->contentsX()+Doc->viewport()->width()-1-2);
+  //MAx2 = DOC_Y_POS(Doc->contentsY()+Doc->viewport()->height()-1-2);
   Doc->viewport()->update();
 }
 
@@ -444,7 +438,7 @@ void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
 
 // -----------------------------------------------------------
 void MouseActions::MMoveResizePainting(Schematic *Doc, QMouseEvent *Event)
-{ untested();
+{
   setPainter(Doc);
 
   Set1(Event, Doc);
@@ -465,7 +459,6 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
   setPainter(Doc);
 
   Set2(Event, Doc);
-
   Doc->setOnGrid(MAx2, MAy2);
   MAx3 = MAx1 = MAx2 - MAx1;
   MAy3 = MAy1 = MAy2 - MAy1;
@@ -1331,9 +1324,6 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event)
   // QPointF pos=Doc->mapToScene(Event->pos());
 
   if(selElem == 0) return;
-  //QPainter painter(Doc->viewport());
-  //setPainter(Doc, &painter);
-
 
   int x1, y1, x2, y2, rot;
   if(selElem->Type & isComponent) {
@@ -1443,7 +1433,7 @@ void MouseActions::MPressWire1(Schematic *Doc, QMouseEvent* Event)
   Doc->setOnGrid(MAx3, MAy3);
 
 //ALYS - draw aiming cross
-  paintAim(Doc,MAx3, MAy3);
+  /// \todo paintAim(Doc,MAx3, MAy3);
 //#######################
 
   formerAction = 0; // keep wire action active after first wire finished
@@ -1513,6 +1503,7 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event)
 
    /// \todo document right mouse button changes the wire corner
   case Qt::RightButton :
+      TODO("Sort out paintAim and GhostLine")
 
 #if 0
 	//ALYS - old code preserved because isn't clear - what it was???
@@ -1534,19 +1525,19 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event)
 
     MAx1 ^= 1;    // change the painting direction of wire corner
 	if(MAx1 == 0) {
-		paintGhostLineV(Doc,MAx3,MAy3,MAy2);
-		paintGhostLineH(Doc,MAx3,MAy2,MAx2);
+		/// \todo paintGhostLineV(Doc,MAx3,MAy3,MAy2);
+		///paintGhostLineH(Doc,MAx3,MAy2,MAx2);
     }
     else {
-		paintGhostLineH(Doc,MAx3,MAy3,MAx2);
-		paintGhostLineV(Doc,MAx2,MAy3,MAy2);
+                /// \todo paintGhostLineH(Doc,MAx3,MAy3,MAx2);
+                //paintGhostLineV(Doc,MAx2,MAy3,MAy2);
     }
     break;
 
   default: ;    // avoids compiler warnings
   }
 
-  paintAim(Doc,MAx2,MAy2); //ALYS - added missed aiming cross
+  /// \todo paintAim(Doc,MAx2,MAy2); //ALYS - added missed aiming cross
   Doc->viewport()->update();
 }
 
@@ -1934,7 +1925,6 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 
   // ............................................................
   case Qt::RightButton :  // right button rotates the elements
-    //setPainter(Doc, &painter);
 
     if(drawn) // erase old scheme
       paintElementsScheme(Doc);
@@ -1979,6 +1969,8 @@ void MouseActions::MReleaseZoomIn(Schematic *Doc, QMouseEvent *Event)
 
   MAx1 = Event->pos().x();
   MAy1 = Event->pos().y();
+  TODO("Sort out contentsX");
+  /**
   float DX = float(MAx2);
   float DY = float(MAy2);
 
@@ -2004,7 +1996,7 @@ void MouseActions::MReleaseZoomIn(Schematic *Doc, QMouseEvent *Event)
   xShift -= (0.5*Doc->visibleWidth() + Doc->contentsX());
   yShift -= (0.5*Doc->visibleHeight() + Doc->contentsY());
   Doc->scrollBy(xShift, yShift);
-
+  */
   QucsMain->MouseMoveAction = &MouseActions::MMoveZoomIn;
   QucsMain->MouseReleaseAction = 0;
   Doc->releaseKeyboard();  // allow keyboard inputs again

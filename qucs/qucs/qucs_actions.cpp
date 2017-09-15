@@ -1070,7 +1070,6 @@ void QucsApp::slotCursor(arrow_dir_t dir)
     editText->setText(pp->Description.mid(Pos, End-Pos));
     editText->selectAll();
   }else{
-
   }
 }
 
@@ -1159,9 +1158,11 @@ void QucsApp::slotApplyCompText()
   editText->setMinimumWidth(editText->fontMetrics().width(s)+4);
 
 
-  Doc->contentsToViewport(int(Doc->Scale * float(view->MAx1 - Doc->ViewX1)),
-			 int(Doc->Scale * float(view->MAy1 - Doc->ViewY1)),
-			 view->MAx2, view->MAy2);
+  TODO("Need to map contentsToViewport?");
+  /// \todo Doc->contentsToViewport(int(Doc->Scale * float(view->MAx1 - Doc->ViewX1)),
+  ///			 int(Doc->Scale * float(view->MAy1 - Doc->ViewY1)),
+  ///	 view->MAx2, view->MAy2);
+
   editText->setReadOnly(false);
   if(pp) {  // is it a property ?
     s = pp->Value;
