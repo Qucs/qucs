@@ -20,7 +20,7 @@
 
 Digi_Sim::Digi_Sim()
 {
-  Type = isDigitalComponent;
+  ElemType = isDigitalComponent;
   Description = QObject::tr("digital simulation");
 
   QString  s = Description;

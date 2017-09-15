@@ -30,7 +30,7 @@
 EllipseArc::EllipseArc()
 {
   Name = "EArc ";
-  isSelected = false;
+  ElemSelected = false;
   Pen = QPen(QColor());
   cx = cy = x1 = x2 = y1 = y2 = Angle = ArcLen = 0;
 }
@@ -42,7 +42,7 @@ EllipseArc::~EllipseArc()
 // --------------------------------------------------------------------------
 void EllipseArc::paint(ViewPainter *p)
 {
-  if(isSelected) {
+  if(ElemSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
     p->drawArc(cx, cy, x2, y2, Angle, ArcLen);
     p->Painter->setPen(QPen(Qt::white, Pen.width(), Pen.style()));

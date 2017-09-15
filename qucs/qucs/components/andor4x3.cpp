@@ -21,7 +21,7 @@
 
 andor4x3::andor4x3()
 {
-  Type = isComponent; // Analogue and digital component.
+  ElemType = isComponent; // Analogue and digital component.
   Description = QObject::tr ("4x3 andor verilog device");
 
   Props.append (new Property ("TR", "6", false,

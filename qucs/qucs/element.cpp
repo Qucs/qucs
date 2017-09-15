@@ -19,8 +19,8 @@
 
 Element::Element()
 {
-  Type = isDummyElement;
-  isSelected = false;
+  ElemType = isDummyElement;
+  ElemSelected = false;
   cx = cy = x1 = y1 = x2 = y2 = 0;
 }
 
@@ -41,5 +41,14 @@ void Element::setCenter(int, int, bool)
 }
 
 void Element::getCenter(int&, int&)
+{
+}
+
+QRectF Element::boundingRect() const
+{
+  return *(new QRectF(x1, y1, x2-x1, y2-y1));
+}
+
+void Element::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
 }

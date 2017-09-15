@@ -22,7 +22,7 @@
 
 Logical_Inv::Logical_Inv()
 {
-  Type = isComponent;   // both analog and digital
+  ElemType = isComponent;   // both analog and digital
   Description = QObject::tr("logical inverter");
 
   // the list order must be preserved !!!

@@ -1245,7 +1245,7 @@ void QucsApp::slotExportGraphAsCsv()
 
   for(;;) {
     if(view->focusElement)
-      if(view->focusElement->Type == isGraph)
+      if(view->focusElement->ElemType == isGraph)
         break;
 
     QMessageBox::critical(this, tr("Error"), tr("Please select a diagram graph!"));

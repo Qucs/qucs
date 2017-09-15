@@ -29,14 +29,14 @@ Graph::Graph(Diagram const* d, const QString& _Line) :
   Style(GRAPHSTYLE_SOLID),
   diagram(d)
 {
-  Type = isGraph;
+  ElemType = isGraph;
 
   Var    = _Line;
   countY = 0;    // no points in graph
   Thick  = numMode = 0;
   Color  = 0x0000ff;   // blue
   Precision  = 3;
-  isSelected = false;
+  ElemSelected = false;
   yAxisNo = 0;   // left y axis
 
   cPointsY = 0;
@@ -47,6 +47,16 @@ Graph::~Graph()
 {
   if(cPointsY != 0)
     delete[] cPointsY;
+}
+
+QRectF Graph::boundingRect() const
+{
+  return *(new QRectF());
+}
+
+void Graph::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
+{
+
 }
 
 // ---------------------------------------------------------------------
@@ -63,7 +73,7 @@ void Graph::paint(ViewPainter *p, int x0, int y0)
   if(!ScrPoints.size())
     return;
 
-  if(isSelected) {
+  if(ElemSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,Thick*p->PrintScale+4));
     paintLines(p, x0, y0);
 
@@ -101,7 +111,7 @@ void Graph::paintvect(ViewPainter *p, int x0, int y0)
     if(!ScrPoints.size())
     return;
 
-  if(isSelected) {
+  if(ElemSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,Thick*p->PrintScale+4));
     drawvect(x0, y0, p);
 

@@ -27,7 +27,7 @@
 
 Verilog_File::Verilog_File()
 {
-  Type = isDigitalComponent;
+  ElemType = isDigitalComponent;
   Description = QObject::tr("Verilog file");
 
   Props.append(new Property("File", "sub.v", false,

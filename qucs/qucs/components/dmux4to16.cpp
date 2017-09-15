@@ -21,7 +21,7 @@
 
 dmux4to16::dmux4to16()
 {
-  Type = isComponent; // Analogue and digital component.
+  ElemType = isComponent; // Analogue and digital component.
   Description = QObject::tr ("4to16 demultiplexer verilog device");
 
   Props.append (new Property ("TR", "6", false,

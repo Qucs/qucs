@@ -21,7 +21,7 @@
 
 greytobinary4bit::greytobinary4bit()
 {
-  Type = isComponent; // Analogue and digital component.
+  ElemType = isComponent; // Analogue and digital component.
   Description = QObject::tr ("4bit Gray to binary converter verilog device");
 
   Props.append (new Property ("TR", "6", false,

@@ -29,7 +29,7 @@
 Ellipse::Ellipse(bool _filled)
 {
   Name = "Ellipse ";
-  isSelected = false;
+  ElemSelected = false;
   Pen = QPen(QColor());
   Brush = QBrush(Qt::lightGray);
   filled = _filled;
@@ -45,7 +45,7 @@ Ellipse::~Ellipse()
 // --------------------------------------------------------------------------
 void Ellipse::paint(ViewPainter *p)
 {
-  if(isSelected) {
+  if(ElemSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
     if(filled)  p->Painter->setBrush(Brush);
     p->drawEllipse(cx, cy, x2, y2);

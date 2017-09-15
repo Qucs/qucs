@@ -32,7 +32,7 @@
 GraphicText::GraphicText()
 {
   Name = "Text ";
-  isSelected = false;
+  ElemSelected = false;
   Color = QColor(0,0,0);
   Font = QucsSettings.font;
   cx = cy = 0;
@@ -71,7 +71,7 @@ void GraphicText::paint(ViewPainter *p)
   int w, h;
   w = p->drawTextMapped(Text, 0, 0, &h);
 
-  if(isSelected) {
+  if(ElemSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->Painter->drawRect(-3, -2, w+6, h+5);
   }
