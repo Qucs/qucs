@@ -46,16 +46,18 @@ TabDiagram::~TabDiagram()
 {
 }
 
-void TabDiagram::paint(ViewPainter *p)
-{
-    paintDiagram(p);
-}
-
 // ------------------------------------------------------------
-void TabDiagram::paintDiagram(ViewPainter *p)
+void TabDiagram::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
   // paint all lines
   foreach(Line *pl, Lines) {
+    QPen pen(pl->style);
+    pen.setCosmetic(true); // do not scale thickness
+    painter->setPen(pen);
+    painter->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
+  }
+  /// \todo TabDiagram::paint
+  /*
     p->Painter->setPen(pl->style);
     p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
   }
@@ -105,22 +107,22 @@ void TabDiagram::paintDiagram(ViewPainter *p)
 
     p->Painter->setBrush(QBrush(Qt::NoBrush));
   }
+  */
 
-
-  p->Painter->setPen(Qt::black);
+  painter->setPen(Qt::black);
   // write whole text
   foreach(Text *pt, Texts)
-    p->drawText(pt->s, cx+pt->x, cy-pt->y);
+    painter->drawText(cx+pt->x, cy-pt->y, pt->s);
 
-
-  if(ElemSelected) {
-    p->Painter->setPen(QPen(Qt::darkGray,3));
-    p->drawRect(cx-5, cy-y2-5, x2+10, y2+10);
-    p->Painter->setPen(QPen(Qt::darkRed,2));
-    p->drawResizeRect(cx, cy-y2);  // markers for changing the size
-    p->drawResizeRect(cx, cy);
-    p->drawResizeRect(cx+x2, cy-y2);
-    p->drawResizeRect(cx+x2, cy);
+  //if(ElemSelected) {
+  if(isSelected()) {
+    painter->setPen(QPen(Qt::darkGray,3));
+    painter->drawRect(cx-5, cy-y2-5, x2+10, y2+10);
+    painter->setPen(QPen(Qt::darkRed,2));
+    painter->drawRect(cx-5,    cy-y2-5, 10, 10);  // markers for changing the size
+    painter->drawRect(cx-5,    cy-5,    10, 10);
+    painter->drawRect(cx+x2-5, cy-y2-5, 10, 10);
+    painter->drawRect(cx+x2-5, cy-5,    10, 10);
   }
 }
 
