@@ -801,6 +801,11 @@ bool Schematic::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
       return false;
     }
     List->append(d);
+
+  qDebug() << __FUNCTION__ << d->Name;
+  /// insert diagram into the scene
+  scene->addItem(d);
+  scene->update();
   }
 
   QMessageBox::critical(0, QObject::tr("Error"),
