@@ -663,6 +663,13 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
     c = getComponentFromName(Line, this);
     if(!c) return false;
 
+    qDebug() << __FUNCTION__ << c->Name;
+    /// insert component into the scene
+    QPointF center(c->cx, c->cy);
+    c->setPos(center);
+    scene->addItem(c);
+    scene->update();
+
     if(List) {  // "paste" ?
       int z;
       for(z=c->name().length()-1; z>=0; z--) // cut off number of component name
