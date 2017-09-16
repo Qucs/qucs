@@ -610,8 +610,14 @@ bool Schematic::loadProperties(QTextStream *stream)
   return false;
 }
 
-// ---------------------------------------------------
-// Inserts a component without performing logic for wire optimization.
+/*!
+ * @brief Schematic::simpleInsertComponent
+ *
+ * Inserts a component without performing logic for wire optimization.
+ * Used when loading from a schematic file.
+ *
+ * @param c is pointing to the component to be inserted.
+ */
 void Schematic::simpleInsertComponent(Component *c)
 {
   Node *pn;
@@ -636,6 +642,9 @@ void Schematic::simpleInsertComponent(Component *c)
     if(pn == 0) { // create new node, if no existing one lies at this position
       pn = new Node(x, y);
       DocNodes.append(pn);
+
+      // add Node to scene
+      scene->addItem(pn);
     }
     pn->Connections.append(c);  // connect schematic node to component node
     if (!pp->Type.isEmpty()) {
@@ -646,9 +655,23 @@ void Schematic::simpleInsertComponent(Component *c)
   }
 
   DocComps.append(c);
+  // add Component to scene
+  scene->addItem(c);
 }
 
 // -------------------------------------------------------------
+/*!
+ * \brief Schematic::loadComponents
+ * \param stream File being loaded
+ * \param List add read Component to a list of pointers
+ * \return Error if Component fielt could not be open
+ *
+ * Parse components from the input stream.
+ * If a list pointer is provided, a list of pointers to Components
+ * ( comming from paste? ) is created and passed by reference.
+ * Otherwise insert component into database and graphics scene.
+ *
+ */
 bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
 {
   QString Line, cstr;
@@ -663,12 +686,9 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
     c = getComponentFromName(Line, this);
     if(!c) return false;
 
-    qDebug() << __FUNCTION__ << c->Name;
-    /// insert component into the scene
+    // set component location
     QPointF center(c->cx, c->cy);
     c->setPos(center);
-    scene->addItem(c);
-    scene->update();
 
     if(List) {  // "paste" ?
       int z;
@@ -676,7 +696,9 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
         if(!c->name().at(z).isDigit()) break;
       c->obsolete_name_override_hack(c->name().left(z+1));
       List->append(c);
-    }else{
+    }
+    else  {
+      // insert component into database and scene
       simpleInsertComponent(c);
     }
   }
