@@ -15,6 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "graph.h"
+#include "diagram.h"
 
 #include <stdlib.h>
 #include <iostream>
@@ -49,16 +50,6 @@ Graph::~Graph()
     delete[] cPointsY;
 }
 
-QRectF Graph::boundingRect() const
-{
-  return *(new QRectF());
-}
-
-void Graph::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
-{
-
-}
-
 // ---------------------------------------------------------------------
 void Graph::createMarkerText() const
 {
@@ -67,63 +58,303 @@ void Graph::createMarkerText() const
   }
 }
 
-// ---------------------------------------------------------------------
-void Graph::paint(ViewPainter *p, int x0, int y0)
+QRectF Graph::boundingRect() const
 {
+  return *(new QRectF());
+}
+
+// ---------------------------------------------------------------------
+void Graph::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
+{
+  Q_UNUSED(item);
+  Q_UNUSED(widget);
+
   if(!ScrPoints.size())
     return;
 
-  if(ElemSelected) {
-    p->Painter->setPen(QPen(Qt::darkGray,Thick*p->PrintScale+4));
-    paintLines(p, x0, y0);
+  // need to know parent to draw based on its coordinates
+  const Diagram *parent= this->parentDiagram();
 
-    p->Painter->setPen(QPen(Qt::white, Thick*p->PrintScale, Qt::SolidLine));
-    paintLines(p, x0, y0);
+  if(ElemSelected) {
+    /// \todo  PrintScale
+    //painter->setPen(QPen(Qt::darkGray,Thick*p->PrintScale+4));
+    painter->setPen(QPen(Qt::darkGray,Thick));
+    paintLines(painter,  parent->cx , parent->cy);
+
+    //painter->setPen(QPen(Qt::white, Thick*p->PrintScale, Qt::SolidLine));
+    painter->setPen(QPen(Qt::white, Thick, Qt::SolidLine));
+    paintLines(painter, parent->cx, parent->cy);
     return;
   }
 
   // **** not selected ****
-  p->Painter->setPen(QPen(QColor(Color), Thick*p->PrintScale, Qt::SolidLine));
-  paintLines(p, x0, y0);
+  //painter->setPen(QPen(QColor(Color), Thick*p->PrintScale, Qt::SolidLine));
+  painter->setPen(QPen(QColor(Color), Thick, Qt::SolidLine));
+  paintLines(painter, parent->cx, parent->cy);
 }
 
 // ---------------------------------------------------------------------
-void Graph::paintLines(ViewPainter *p, int x0, int y0)
+void Graph::paintLines(QPainter *painter, const int x0, const int y0)
 {
   switch(Style) {
     case GRAPHSTYLE_STAR:
-      drawStarSymbols(x0, y0, p);
+      drawStarSymbols(x0, y0, painter);
       break;
     case GRAPHSTYLE_CIRCLE:
-      drawCircleSymbols(x0, y0, p);
+      drawCircleSymbols(x0, y0, painter);
       break;
     case GRAPHSTYLE_ARROW:
-      drawArrowSymbols(x0, y0, p);
+      drawArrowSymbols(x0, y0, painter);
       break;
     default:
-      drawLines(x0, y0, p);
+      drawLines(x0, y0, painter);
   }
 }
+
+/*!
+ * draw a (line) graph from screen coord pairs
+ */
+void Graph::drawLines(int x0, int y0, QPainter *p) const
+{
+  float DX_, DY_;
+  float x1, y1;
+  auto Scale = 1; /// \todo p->Scale;
+  auto Painter = p;
+  QVector<qreal> dashes;
+
+  double Stroke=10., Space=0.;
+  switch(Style) {
+    case GRAPHSTYLE_DASH:
+      Stroke = 10.; Space =  6.;
+      break;
+    case GRAPHSTYLE_DOT:
+      Stroke =  2.; Space =  4.;
+      break;
+    case GRAPHSTYLE_LONGDASH:
+      Stroke = 24.; Space =  8.;
+      break;
+    default:
+      break;
+  }
+
+  QPen pen = Painter->pen();
+  switch(Style) {
+    case GRAPHSTYLE_DASH:
+    case GRAPHSTYLE_DOT:
+    case GRAPHSTYLE_LONGDASH:
+      dashes << Stroke << Space;
+      pen.setDashPattern(dashes);
+      Painter->setPen(pen);
+      break;
+    default:
+      pen.setStyle(Qt::SolidLine);
+      break;
+  }
+  Painter->setPen(pen);
+
+  auto pp = begin();
+  if(!pp->isPt())
+    pp++;
+
+  /// \todo DX DY
+  DX_ = /*p->DX*/ + float(x0)*Scale;
+  DY_ = /*p->DY*/ + float(y0)*Scale;
+
+  while(!pp->isGraphEnd()) {
+    if(pp->isStrokeEnd()) ++pp; // ??
+    QPainterPath path;
+    if(pp->isPt()) {
+      x1 = DX_ + pp->getScrX()*Scale;
+      y1 = DY_ - pp->getScrY()*Scale;
+      path.moveTo(x1,y1);
+      ++pp;
+    }else{
+      break;
+    }
+
+    while(!pp->isStrokeEnd()) {
+      x1 = DX_ + pp->getScrX()*Scale;
+      y1 = DY_ - pp->getScrY()*Scale;
+      path.lineTo(x1,y1);
+      ++pp;
+    }
+
+    Painter->drawPath(path);
+  }
+}
+
+// -------------------------------------------------------------
+void Graph::drawStarSymbols(int x0i, int y0i, QPainter *p) const
+{
+  float x3, x0, y0, x1, x2, y1, y2;
+  float z, DX_, DY_;
+  auto Scale = 1; /// \todo p->Scale;
+  auto Painter = p;
+  auto pp = begin();
+  if(!pp->isPt())
+    pp++;
+
+  /// \todo DX DY
+  DX_ = /*p->DX*/ + float(x0i)*Scale;
+  DY_ = /*p->DY*/ + float(y0i)*Scale;
+
+  while(!pp->isGraphEnd()) {
+    if(pp->isPt()) {
+      z = DX_ + pp->getScrX()*Scale;
+      x0 = z-5.0*Scale;
+      x3 = z+5.0*Scale;
+      x1 = z-4.0*Scale;
+      x2 = z+4.0*Scale;
+      z = DY_ - (pp++)->getScrY()*Scale;
+      y0 = z;
+      y1 = z-4.0*Scale;
+      y2 = z+4.0*Scale;
+      Painter->drawLine(QLineF(x0, y0, x3, y0)); // horizontal line
+      Painter->drawLine(QLineF(x1, y2, x2, y1)); // upper left to lower right
+      Painter->drawLine(QLineF(x2, y2, x1, y1)); // upper right to lower left
+    }
+    else  pp++;
+  }
+}
+
+// -------------------------------------------------------------
+void Graph::drawCircleSymbols(int x0i, int y0i, QPainter *p) const
+{
+  float x0, y0;
+  float z, DX_, DY_;
+  auto Scale = 1; /// \todo p->Scale;
+  auto Painter = p;
+  auto pp = begin();
+  if(!pp->isPt())
+    pp++;
+
+  z = 8.0*Scale;
+  /// \todo DX DY
+  DX_ = /*p->DX*/ + float(x0i)*Scale;
+  DY_ = /*p->DY*/ + float(y0i)*Scale;
+
+  while(!pp->isGraphEnd()) {
+    if(pp->isPt()) {
+      x0 = DX_ + (pp->getScrX()-4.0)*Scale;
+      y0 = DY_ - ((pp++)->getScrY()+4.0)*Scale;
+      Painter->drawEllipse(QRectF(x0, y0, z, z));
+    }
+    else  pp++;
+  }
+}
+
+// -------------------------------------------------------------
+void Graph::drawArrowSymbols(int x0i, int y0i, QPainter *p) const
+{
+  int x0, y0, x1, x2, y1, y2;
+  float DX_, DY_;
+  auto Scale = 1; /// \todo p->Scale;
+  auto Painter = p;
+  auto pp = begin();
+  if(!pp->isPt())
+    pp++;
+
+  /// \todo DX DY
+  DX_ = /*p->DX*/ + float(x0i)*Scale;
+  DY_ = /*p->DY*/ + float(y0i)*Scale;
+  y2 = DY_;
+
+  while(!pp->isGraphEnd()) {
+    if(pp->isPt()) {
+      x0 = DX_ + pp->getScrX()*Scale;
+      x1 = x0-4.0*Scale;
+      x2 = x0+4.0*Scale;
+      y0 = DY_ - (pp++)->getScrY()*Scale;
+      y1 = y0+7.0*Scale;
+      Painter->drawLine(QLineF(x0, y0, x0, y2));
+      Painter->drawLine(QLineF(x1, y1, x0, y0));
+      Painter->drawLine(QLineF(x2, y1, x0, y0));
+    }
+    else  pp++;
+  }
+}
+
 // ---------------------------------------------------------------------
 /*paint function for phasor diagram*/
-void Graph::paintvect(ViewPainter *p, int x0, int y0)
+/// \todo Dead code? not called anywhere ?
+void Graph::paintvect(int x0, int y0, QPainter *p) const
 {
     if(!ScrPoints.size())
     return;
 
   if(ElemSelected) {
-    p->Painter->setPen(QPen(Qt::darkGray,Thick*p->PrintScale+4));
+    /// \todo p->setPen(QPen(Qt::darkGray,Thick*p->PrintScale+4));
     drawvect(x0, y0, p);
 
-    p->Painter->setPen(QPen(Qt::white, Thick*p->PrintScale, Qt::SolidLine));
+    /// /todo p->setPen(QPen(Qt::white, Thick*p->PrintScale, Qt::SolidLine));
     drawvect(x0, y0, p);
     return;
   }
 
   // **** not selected ****
-  p->Painter->setPen(QPen(QColor(Color), Thick*p->PrintScale, Qt::SolidLine));
+  /// \todo p->Painter->setPen(QPen(QColor(Color), Thick*p->PrintScale, Qt::SolidLine));
   drawvect(x0, y0, p);
 }
+
+
+// -------------------------------------------------------------
+//draws the vectors of phasor diagram
+void Graph::drawvect(int x0, int y0, QPainter *p) const
+{
+  float DX_, DY_;
+  double beta, phi;
+  QPolygon Points;
+  auto Painter = p;
+  QPen pen = Painter->pen();
+  auto Scale = 1; /// \todo p->Scale;
+
+  Painter->setPen(pen);
+  QPainterPath path;
+  auto pp = begin();
+  if(!pp->isPt())
+    pp++;
+
+  /// \todo DX DY
+  DX_ = /*p->DX*/ + float(x0)*Scale;
+  DY_ = /*p->DY*/ + float(y0)*Scale;
+
+  float x1, y1,x2,y2,x3,y3,x4,y4;
+
+  while(!pp->isGraphEnd())
+  {
+    if(!pp->isBranchEnd())//draws the main line
+    {
+      x1=DX_ + pp->getScrX()*Scale;
+      y1=DY_ - (pp++)->getScrY()*Scale;
+      x2=DX_ + pp->getScrX()*Scale;
+      y2=DY_ - (pp++)->getScrY()*Scale;
+      Painter->drawLine(QLineF(x1, y1, x2, y2));
+    }
+    else
+    {
+      pp++;
+      continue;
+    }
+
+      phi = atan2(double(y2-y1), double(x2-x1));
+      beta = atan2(double(4), double(10));
+      double alfa = beta+phi;
+      double Length = sqrt(4*4+10*10);
+      x3 = x2-int(Length*cos(alfa));
+      y3 = y2-int(Length*sin(alfa));
+      Painter->drawLine(QLineF(x3, y3, x2, y2));
+      pp++;
+
+      alfa = phi-beta;
+      x4 = x2-int(Length*cos(alfa));
+      y4 = y2-int(Length*sin(alfa));
+
+      Painter->drawLine(QLineF(x4, y4, x2, y2));
+
+  }
+
+}
+
 // ---------------------------------------------------------------------
 QString Graph::save()
 {
