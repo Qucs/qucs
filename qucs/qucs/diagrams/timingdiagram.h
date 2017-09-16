@@ -28,8 +28,7 @@ public:
 
   Diagram* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  void paint(ViewPainter *p);
-  void paintDiagram(ViewPainter *p);
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
   int calcDiagram();
   int scroll(int);
   bool scrollTo(int, int, int);
