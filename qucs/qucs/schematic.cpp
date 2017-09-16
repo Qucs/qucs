@@ -450,6 +450,8 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
 
 void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImage, int screenDpiX, int printerDpiX)
 {
+    TODO("fix print, no good to call paint()");
+    /*
     bool selected;
 
     if (printAll) {
@@ -559,6 +561,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
         p->drawText(pn->Name, x, y);
       }
     }
+    */
 }
 
 // -----------------------------------------------------------

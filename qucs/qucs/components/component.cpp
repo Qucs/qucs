@@ -60,6 +60,8 @@ Component::Component()
   Props.setAutoDelete(true);
 
   containingSchematic = NULL;
+
+   setFlags(ItemIsSelectable|ItemIsMovable);
 }
 
 // -------------------------------------------------------
@@ -182,79 +184,136 @@ bool Component::getSelected(int x_, int y_)
   return false;
 }
 
-// -------------------------------------------------------
-void Component::paint(ViewPainter *p)
-{
-  int x, y, a, b, xb, yb;
-  QFont f = p->Painter->font();   // save current font
-  QFont newFont = f;
-  if(Model.at(0) == '.') {   // is simulation component (dc, ac, ...)
-    newFont.setPointSizeF(p->Scale * Texts.first()->Size);
-    newFont.setWeight(QFont::DemiBold);
-    p->Painter->setFont(newFont);
-    p->map(cx, cy, x, y);
 
-    p->Painter->setPen(QPen(Qt::darkBlue,2));
-    a = b = 0;
+QRectF Component::boundingRect() const
+{
+  return *(new QRectF(x1, y1, x2-x1, y2-y1));
+}
+
+void Component::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
+{
+  Q_UNUSED(item);
+  Q_UNUSED(widget);
+
+  /// \todo move the paint down to each simulation component?
+  // is simulation component (dc, ac, ...)
+  bool isSimulation = false;
+  /// \bug vacomponent crashes, Model empty?
+  if(Model.size() && Model.at(0) == '.')
+    isSimulation = true;
+
+  QFont f = painter->font();   // save current font
+  QFont newFont = f;
+
+  if(isSimulation) {
+    /// \todo offset mouse to center, or grab item on any location
+
+    newFont.setPointSizeF(Texts.first()->Size);
+    newFont.setWeight(QFont::DemiBold);
+    painter->setFont(newFont);
+    //p->map(cx, cy, x, y);
+
+    painter->setPen(QPen(Qt::darkBlue,2));
+
+    // compute size of text
+    int w=0; // texts width
+    int h=0; // texts height
     QRect r, t;
     foreach(Text *pt, Texts) {
-      t.setRect(x, y+b, 0, 0);
-      p->Painter->drawText(t, Qt::AlignLeft|Qt::TextDontClip, pt->s, &r);
-      b += r.height();
-      if(a < r.width())  a = r.width();
+      int flags =  Qt::AlignLeft|Qt::TextDontClip;
+      t.setRect(0, 0+h, 0, 0);
+      painter->drawText(t, flags, pt->s, &r);
+      h += r.height();
+      if(w < r.width())
+        w = r.width();
     }
-    xb = a + int(12.0*p->Scale);
-    yb = b + int(10.0*p->Scale);
-    x2 = x1+25 + int(float(a) / p->Scale);
-    y2 = y1+23 + int(float(b) / p->Scale);
-    if(ty < y2+1) if(ty > y1-r.height())  ty = y2 + 1;
 
-    p->map(cx-1, cy, x, y);
-    p->map(cx-6, cy-5, a, b);
-    p->Painter->drawRect(a, b, xb, yb);
-    p->Painter->drawLine(x,      y+yb, a,      b+yb);
-    p->Painter->drawLine(x+xb-1, y+yb, x,      y+yb);
-    p->Painter->drawLine(x+xb-1, y+yb, a+xb,   b+yb);
-    p->Painter->drawLine(x+xb-1, y+yb, x+xb-1, y);
-    p->Painter->drawLine(x+xb-1, y,    a+xb,   b);
+    // Draw simulation block
+    //  diagonal line
+    //  horizontal line
+    //  diagonal line
+    //  vertical line
+    //  diagonal line
+    //
+    // 1 ----- 2
+    // | .c    | \
+    // |       |  5
+    // 4 ----- 3  |
+    //   \      \ |
+    //    7 ----- 6
+
+    // augmented text box size
+    int bx = w + 12;
+    int by = h + 10;
+
+    // new origin from center, easier to draw
+    int xn = -6;
+    int yn = -5;
+
+    // box depth (sort of)
+    int dz = 5;
+
+    // update relative boundings and text position
+    x2 = x1 + 25 + w;
+    y2 = y1 + 23 + h;
+    if(ty < y2+1)
+      if(ty > y1-r.height())
+        ty = y2 + 1;
+
+    painter->drawPoint(0,0); // center
+    painter->drawRect(xn,       yn,       bx,       by);
+    painter->drawLine(xn,       yn+by,    xn+dz,    yn+by+dz); //diag 4-7
+    painter->drawLine(xn+dz,    yn+by+dz, xn+dz+bx, yn+by+dz); //hori 4-3
+    painter->drawLine(xn+bx,    yn+by,    xn+bx+dz, yn+by+dz); //diag 3-6
+    painter->drawLine(xn+bx+dz, yn+dz,    xn+bx+dz, yn+dz+by); //vert 5-6
+    painter->drawLine(xn+bx,    yn,       xn+bx+dz, yn+dz);    //diag 2-5
   }
-  else {    // normal components go here
+
+  if (! isSimulation) { /// \todo move to simulation component?
 
     // paint all lines
-    foreach(Line *p1, Lines) {
-      p->Painter->setPen(p1->style);
-      p->drawLine(cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
+    foreach (Line *l, Lines) {
+      QPen pen(l->style);
+      pen.setCosmetic(true); // do not scale thickness
+      painter->setPen(pen);
+      painter->drawLine(l->x1, l->y1, l->x2, l->y2);
     }
-
     // paint all arcs
-    foreach(Arc *p3, Arcs) {
-      p->Painter->setPen(p3->style);
-      p->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
+    foreach(Arc *a, Arcs) {
+      QPen pen(a->style);
+      pen.setCosmetic(true); // do not scale thickness
+      painter->setPen(pen);
+      painter->drawArc(a->x, a->y, a->w, a->h, a->angle, a->arclen);
     }
-
     // paint all rectangles
-    foreach(Area *pa, Rects) {
-      p->Painter->setPen(pa->Pen);
-      p->Painter->setBrush(pa->Brush);
-      p->drawRect(cx+pa->x, cy+pa->y, pa->w, pa->h);
+    foreach(Area *a, Rects) {
+      painter->setPen(a->Pen);
+      painter->setBrush(a->Brush);
+      painter->drawRect(a->x, a->y, a->w, a->h);
     }
-
     // paint all ellipses
-    foreach(Area *pa, Ellips) {
-      p->Painter->setPen(pa->Pen);
-      p->Painter->setBrush(pa->Brush);
-      p->drawEllipse(cx+pa->x, cy+pa->y, pa->w, pa->h);
+    foreach(Area *a, Ellips) {
+      painter->setPen(a->Pen);
+      painter->setBrush(a->Brush);
+      painter->drawEllipse(a->x, a->y, a->w, a->h);
     }
-    p->Painter->setBrush(Qt::NoBrush);
 
+    painter->setBrush(Qt::NoBrush);
     newFont.setWeight(QFont::Light);
 
+    /// \todo components with rotated text?? subcircuit maybe?
+    /// code similar to portions of GrahicText::paint
+/*
     // keep track of painter state
     p->Painter->save();
 
+  // rotate text acordingly
     QMatrix wm = p->Painter->worldMatrix();
-    // write all text
+*/
+    // paint all texts (on the symbol)
     foreach(Text *pt, Texts) {
+      //qDebug() << "component text:" << pt->s;
+      /*
       p->Painter->setWorldMatrix(
           QMatrix(pt->mCos, -pt->mSin, pt->mSin, pt->mCos,
                    p->DX + float(cx+pt->x) * p->Scale,
@@ -265,50 +324,74 @@ void Component::paint(ViewPainter *p)
       p->Painter->setFont(newFont);
       p->Painter->setPen(pt->Color);
       if (0) {
-	p->Painter->drawText(0, 0, 0, 0, Qt::AlignLeft|Qt::TextDontClip, pt->s);
+        p->Painter->drawText(0, 0, 0, 0, Qt::AlignLeft|Qt::TextDontClip, pt->s);
       } else {
-	int w, h;
-	w = p->drawTextMapped (pt->s, 0, 0, &h);
-    Q_UNUSED(w);
+        int w, h;
+        w = p->drawTextMapped (pt->s, 0, 0, &h);
       }
+      */
+      /// \todo figure out the rotation and transformation matrix stuff.
+      newFont.setPointSize(pt->Size);
+      newFont.setOverline(pt->over);
+      newFont.setUnderline(pt->under);
+      painter->setFont(newFont);
+      painter->setPen(pt->Color);
+      /// \todo crude text placement
+      int flags = Qt::AlignLeft|Qt::TextDontClip;
+      painter->drawText(pt->x, pt->y, 0, 0, flags, pt->s);
     }
+/*
     p->Painter->setWorldMatrix(wm);
     p->Painter->setWorldMatrixEnabled(false);
 
     // restore painter state
     p->Painter->restore();
-  }
+*/
 
-  // restore old font
-  p->Painter->setFont(f);
+  } // not simulation
 
-  p->Painter->setPen(QPen(Qt::black,1));
-  p->map(cx+tx, cy+ty, x, y);
+  // restore previous font
+  painter->setFont(f);
+  painter->setPen(QPen(Qt::black,1));
+
+  // keep track of text vertical displacement
+  int y=0;
   if(showName) {
-    p->Painter->drawText(x, y, 0, 0, Qt::TextDontClip, Name);
-    y += p->LineSpacing;
+    painter->drawText(tx, ty+y, 0, 0, Qt::TextDontClip, Name);
+    y += painter->fontMetrics().lineSpacing();
   }
-  // write all properties
-  for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next())
-    if(p4->display) {
-      p->Painter->drawText(x, y, 0, 0, Qt::TextDontClip, p4->Name+"="+p4->Value);
-      y += p->LineSpacing;
-    }
 
+  // write all properties
+  foreach(Property *p, Props) {
+    if(p->display) {
+      painter->drawText(tx, ty+y, 0, 0, Qt::TextDontClip, p->Name+"="+p->Value);
+      y += painter->fontMetrics().lineSpacing();
+    }
+  }
+
+  // draw crossed box for active/inactive/shorted state
   if(isActive == COMP_IS_OPEN)
-    p->Painter->setPen(QPen(Qt::red,0));
+    painter->setPen(QPen(Qt::red,0));
   else if(isActive & COMP_IS_SHORTEN)
-    p->Painter->setPen(QPen(Qt::darkGreen,0));
+    painter->setPen(QPen(Qt::darkGreen,0));
   if(isActive != COMP_IS_ACTIVE) {
-    p->drawRect(cx+x1, cy+y1, x2-x1+1, y2-y1+1);
-    p->drawLine(cx+x1, cy+y1, cx+x2, cy+y2);
-    p->drawLine(cx+x1, cy+y2, cx+x2, cy+y1);
+    painter->drawRect(x1, y1, x2-x1+1, y2-y1+1);
+    painter->drawLine(x1, y1, x2, y2);
+    painter->drawLine(x1, y2, x2, y1);
   }
 
   // draw component bounding box
-  if(ElemSelected) {
-    p->Painter->setPen(QPen(Qt::darkGray,3));
-    p->drawRoundRect(cx+x1, cy+y1, x2-x1, y2-y1);
+  if(isSelected()) {
+    ElemSelected = true;
+    painter->setPen(QPen(Qt::darkGray,3));
+    painter->drawRoundedRect(boundingRect(), 5.0, 5.0);
+  }
+  else {
+    ElemSelected = false;
+    // else visualize boundingRect
+    boundingBoxColor.setCosmetic(true); // do not scale thickness
+    painter->setPen(boundingBoxColor);
+    painter->drawRect(boundingRect());
   }
 }
 
@@ -377,7 +460,7 @@ void Component::print(ViewPainter *p, float FontScale)
   foreach(Text *pt, Texts)
     pt->Size *= FontScale;
 
-  paint(p);
+  /// \todo paint(p);
 
  foreach(Text *pt, Texts)
     pt->Size /= FontScale;
@@ -962,16 +1045,6 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   }
 
   return c;
-}
-
-QRectF Component::boundingRect() const
-{
-  return *(new QRectF(x1, y1, x2-x1, y2-y1));
-}
-
-void Component::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
-{
-
 }
 
 // *******************************************************************

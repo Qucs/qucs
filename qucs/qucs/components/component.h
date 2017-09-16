@@ -38,9 +38,12 @@ public:
   QString getNetlist();
   QString get_VHDL_Code(int);
   QString get_Verilog_Code(int);
-  void    paint(ViewPainter*);
+
+  QRectF  boundingRect() const;
+  void    paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
   void    paintScheme(Schematic*);
   void    print(ViewPainter*, float);
+
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
   int     textSize(int&, int&);
@@ -53,8 +56,9 @@ public:
   void    mirrorY();  // mirror about Y axis
   bool    load(const QString&);
 
-  virtual QRectF boundingRect() const;
-  virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
+  /// \todo remove temporary stuff
+  // default pen used to draw the bounding box
+  QPen boundingBoxColor = QPen(Qt::magenta,1);
 
   // to hold track of the component appearance for saving and copying
   bool mirroredX;   // is it mirrored about X axis or not
