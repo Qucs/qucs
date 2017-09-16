@@ -28,16 +28,15 @@ public:
 
   virtual Diagram* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  virtual void paint(ViewPainter*);
-  virtual void paintDiagram(ViewPainter *p);
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
   virtual int calcDiagram();
   virtual int scroll(int);
   virtual bool scrollTo(int, int, int);
 
-  void createAxisLabels() {};   // no labels in this diagram
+  void createAxisLabels() {}   // no labels in this diagram
 
 protected:
-  void calcData(Graph*) {};  // no graph data
+  void calcData(Graph*) {}  // no graph data
 };
 
 #endif
