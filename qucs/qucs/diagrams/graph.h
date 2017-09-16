@@ -88,8 +88,6 @@ public:
   Graph(const Diagram*, const QString& _Line="");
  ~Graph();
 
-  virtual QRectF boundingRect() const;
-  virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
 
   class ScrPt{
     float ScrX;
@@ -128,14 +126,15 @@ public:
   int loadDatFile(const QString& filename);
   int loadIndepVarData(const QString&, char* datfilecontent, DataX* where);
 
-  void    paint(ViewPainter*, int, int);
-  void    paintLines(ViewPainter*, int, int);
+  virtual QRectF boundingRect() const;
+  virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
+  void    paintLines(QPainter *painter, const int, const int);
+
   QString save();
   bool    load(const QString&);
   int     getSelected(int, int);
   int     getSelectedP(int, int);
   Graph*  sameNewOne();
-  void    paintvect(ViewPainter*, int, int);
   
 private: // tmp hack
   DataX* mutable_axis(uint i) { if(i<(uint)cPointsX.size()) return cPointsX.at(i); return NULL;}
@@ -170,11 +169,13 @@ public:
   int  numMode;     // real/imag or polar (deg/rad)
 
 private: // painting
-  void drawLines(int, int, ViewPainter*) const;
-  void drawStarSymbols(int, int, ViewPainter*) const;
-  void drawCircleSymbols(int, int, ViewPainter*) const;
-  void drawArrowSymbols(int, int, ViewPainter*) const;
-  void drawvect(int, int, ViewPainter*) const;
+  void drawLines(int, int, QPainter*) const;
+  void drawStarSymbols(int, int, QPainter*) const;
+  void drawCircleSymbols(int, int, QPainter*) const;
+  void drawArrowSymbols(int, int, QPainter*) const;
+  void paintvect(int, int, QPainter*) const;
+  void drawvect(int, int, QPainter*) const;
+
 public: // marker related
   void createMarkerText() const;
   std::pair<double,double> findSample(std::vector<double>&) const;
