@@ -19,8 +19,6 @@
 #define PAINTING_H
 
 #include "element.h"
-#include "viewpainter.h"
-
 
 class Painting : public Element  {
 public:

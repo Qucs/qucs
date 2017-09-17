@@ -21,7 +21,6 @@
 #include "graph.h"
 #include "marker.h"
 #include "element.h"
-#include "viewpainter.h"
 
 #include <QFile>
 #include <QTextStream>
