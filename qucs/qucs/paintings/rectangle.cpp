@@ -37,32 +37,34 @@ Rectangle::Rectangle(bool _filled)
   y1 = y2 = 0;
 }
 
-Rectangle::~Rectangle()
+QRectF Rectangle::boundingRect() const
 {
+  return *(new QRectF(cx+x1, cy+y1, x2-x1, y2-y1));
 }
 
-// --------------------------------------------------------------------------
-void Rectangle::paint(ViewPainter *p)
+void Rectangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
-  if(ElemSelected) {
-    p->Painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
-    if(filled)  p->Painter->setBrush(Brush);
-    p->drawRect(cx, cy, x2, y2);
-    p->Painter->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
-    p->Painter->setBrush(Qt::NoBrush);
-    p->drawRect(cx, cy, x2, y2);
+  if(isSelected()) {
+    painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
+    if(filled)
+      painter->setBrush(Brush);
+    painter->drawRect(cx, cy, x2, y2);
+    painter->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
+    painter->setBrush(Qt::NoBrush);
+    painter->drawRect(cx, cy, x2, y2);
 
-    p->Painter->setPen(QPen(Qt::darkRed,2));
-    p->drawResizeRect(cx, cy+y2);  // markers for changing the size
-    p->drawResizeRect(cx, cy);
-    p->drawResizeRect(cx+x2, cy+y2);
-    p->drawResizeRect(cx+x2, cy);
+    painter->setPen(QPen(Qt::darkRed,2));
+    painter->drawRect(cx-5,    cy+y2-5, 10, 10);  // markers for changing the size
+    painter->drawRect(cx-5,    cy-5,    10, 10);
+    painter->drawRect(cx+x2-5, cy+y2-5, 10, 10);
+    painter->drawRect(cx+x2-5, cy-5,    10, 10);
     return;
   }
-  p->Painter->setPen(Pen);
-  if(filled)  p->Painter->setBrush(Brush);
-  p->drawRect(cx, cy, x2, y2);
-  p->Painter->setBrush(Qt::NoBrush); // no filling for the next paintings
+  painter->setPen(Pen);
+  if(filled)
+    painter->setBrush(Brush);
+  painter->drawRect(cx, cy, x2, y2);
+  painter->setBrush(Qt::NoBrush); // no filling for the next paintings
 }
 
 // --------------------------------------------------------------------------
