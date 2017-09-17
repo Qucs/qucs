@@ -455,7 +455,8 @@ void Component::paintScheme(Schematic *p)
 
 // -------------------------------------------------------
 // For output on a printer device.
-void Component::print(ViewPainter *p, float FontScale)
+/// \todo is Component::print needed?
+void Component::print(QPainter *p, float FontScale)
 {
   foreach(Text *pt, Texts)
     pt->Size *= FontScale;

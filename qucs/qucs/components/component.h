@@ -23,7 +23,6 @@
 #include "element.h"
 
 class Schematic;
-class ViewPainter;
 class QString;
 class QPen;
 class ComponentDialog;
@@ -42,7 +41,7 @@ public:
   QRectF  boundingRect() const;
   void    paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
   void    paintScheme(Schematic*);
-  void    print(ViewPainter*, float);
+  void    print(QPainter*, float);
 
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
