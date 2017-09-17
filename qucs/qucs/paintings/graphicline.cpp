@@ -36,26 +36,37 @@ GraphicLine::GraphicLine(int cx_, int cy_, int x2_, int y2_, QPen Pen_)
   y2 = y2_;
 }
 
-GraphicLine::~GraphicLine()
+QRectF GraphicLine::boundingRect() const
 {
+  int _x1, _y1, _x2, _y2;
+  //Bounding(_x1, _y1, _x2, _y2);
+  if(x2 < 0) { _x1 = cx+x2; _x2 = cx; }
+  else { _x1 = cx; _x2 = cx+x2; }
+
+  if(y2 < 0) { _y1 = cy+y2; _y2 = cy; }
+  else { _y1 = cy; _y2 = cy+y2; }
+  return *(new QRectF(_x1, _y1, _x2 - _x1, _y2 - _y1));
 }
 
-// --------------------------------------------------------------------------
-void GraphicLine::paint(ViewPainter *p)
+void GraphicLine::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
-  if(ElemSelected) {
-    p->Painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
-    p->drawLine(cx, cy, cx+x2, cy+y2);
-    p->Painter->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
-    p->drawLine(cx, cy, cx+x2, cy+y2);
+  if(isSelected()) {
+    painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
+    painter->drawLine(cx, cy, cx+x2, cy+y2);
+    painter->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
+    painter->drawLine(cx, cy, cx+x2, cy+y2);
 
-    p->Painter->setPen(QPen(Qt::darkRed,2));
-    p->drawResizeRect(cx, cy);  // markers for changing the size
-    p->drawResizeRect(cx+x2, cy+y2);
+    painter->setPen(QPen(Qt::darkRed,2));
+    painter->drawRect(cx-5,    cy-5, 10, 10);  // markers for changing the size
+    painter->drawRect(cx+x2-5, cy+y2-5, 10, 10);
+
+
+    painter->setPen(QPen(Qt::green,2));
+    painter->drawRect(boundingRect());
     return;
   }
-  p->Painter->setPen(Pen);
-  p->drawLine(cx, cy, cx+x2, cy+y2);
+  painter->setPen(Pen);
+  painter->drawLine(cx, cy, cx+x2, cy+y2);
 }
 
 // --------------------------------------------------------------------------
