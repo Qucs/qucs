@@ -26,8 +26,10 @@
 class Ellipse : public Painting  {
 public:
   Ellipse(bool _filled=false);
- ~Ellipse();
+  virtual ~Ellipse() {}
 
+  QRectF boundingRect() const;
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
   void paintScheme(Schematic*);
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
@@ -39,7 +41,6 @@ public:
   QString save();
   QString saveCpp();
   QString saveJSON();
-  void paint(ViewPainter*);
   void MouseMoving(Schematic*, int, int, int, int, Schematic*, int, int, bool);
   bool MousePressing();
   bool getSelected(float, float, float);
