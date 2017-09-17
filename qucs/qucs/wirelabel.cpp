@@ -35,20 +35,14 @@ WireLabel::WireLabel(const QString& _Name, int _cx, int _cy,
   ElemType = _Type;
   ElemSelected = false;
   isHighlighted = false;
-}
 
-WireLabel::~WireLabel()
-{
+  setFlags(ItemIsSelectable|ItemIsMovable);
+  setAcceptsHoverEvents(true);
 }
 
 QRectF WireLabel::boundingRect() const
 {
   return *(new QRectF(x1,y1,x2,y2));
-}
-
-void WireLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
-{
-
 }
 
 // ----------------------------------------------------------------
@@ -114,92 +108,149 @@ bool WireLabel::getSelected(int x, int y)
 }
 
 // ----------------------------------------------------------------
-void WireLabel::paint(ViewPainter *p)
+void WireLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
-  QFont f = p->Painter->font(); // save current font
-  QFont newFont = f;
+  Q_UNUSED(item);
+  Q_UNUSED(widget);
 
+  //qDebug() << cx << cy << Name;
+
+  /*
+  /// \bug crash on focusOutEvent if drawText
+  /// issue with pointers??
+  */
+   //painter->drawText( boundingRect(), Name);
+   //painter->setPen(QPen(Qt::darkGray,3));
+   //painter->drawText(cx+x1, cy+y1, Name);
+
+  // draw component bounding box
+  if(isSelected()) {
+    //ElemSelected = true;
+    painter->setPen(QPen(Qt::darkGray,3));
+    painter->drawRoundedRect(boundingRect(), 5.0, 5.0);
+  }
+
+  QFont font = painter->font();
   if (isHighlighted)
   {
 //    QColor highlightfill (Qt::blue);
 //    highlightfill.setAlpha(50);
 //    p->fillRect(x1-1, y1-1, x2, y2, highlightfill);
-    p->Painter->setPen(QPen(Qt::darkBlue,3));
-    newFont.setWeight (QFont::Bold);
+    painter->setPen(QPen(Qt::darkBlue,3));
+    font.setWeight (QFont::DemiBold);
   }
   else
   {
-    newFont.setWeight (QFont::Normal);
-    p->Painter->setPen(QPen(Qt::black,1));
+    font.setWeight (QFont::Normal);
+    painter->setPen(QPen(Qt::black,1));
   }
-  p->Painter->setFont (newFont);
-  x2 = p->drawText(Name, x1, y1, &y2);
-  p->Painter->setFont(f); // restore old font
+  painter->setFont (font);
+  QRectF rf = painter->boundingRect(QRectF(x1, y1, 0, 0), Qt::TextDontClip, Name);
+  painter->drawText(QRect(x1, y1, 0, 0), Qt::TextDontClip, Name);
+  //text width and height
+  x2 = rf.width();
+  y2 = rf.height();
 
-  int xpaint=0, ypaint=4, phi=0;
+  // cx, cy : coord where the label attaches, be it a wire or a node.
+  // x1, y1 : text label bounding box lower-left corner
+  // x2, y2 : text label width and height
+
+  // coordinate of line from arc to label frame
+  int xpaint=0, ypaint=0;
+  // orientation of arc if attached to a wire
+  int phi=0;
   switch(ElemType) {
-    case isVWireLabel:  ypaint=0; xpaint=4; phi=16*140; break;
-    case isHWireLabel:  phi=16*50; break;
-    case isNodeLabel:   ypaint = 0;
+    case isVWireLabel:  xpaint=4, ypaint=0; phi=16*140; break;
+    case isHWireLabel:  xpaint=0, ypaint=4; phi=16*50; break;
+    case isNodeLabel:   ;
     default:            ;
   }
 
+  /*
+   Draw label arc, line and text frame.
+   Label Placement:
+   x                 x
+     LABEL     LABEL
+
+     LABEL     LABEL
+   x                 x
+
+   Arc orientation:
+    - acording to wire direction
+    - opening oposite to label location
+  */
   int c, d;
-  int a = int(double(x2) / p->Scale) >> 1;
-  int b = int(double(y2) / p->Scale) >> 1;
+  int a = int(double(x2) / 2);
+  int b = int(double(y2) / 2);
   if(cx < x1+a) {    // where should frame be painted ?
     if(cy < y1+b) {
       if(phi == 16*50)  phi += 16*180;
-      p->map(x1-3, y1-2, a, b);    // low right
+      // label low right from arc
+      a = x1-3;
+      b = y1-2;
       c = a + (x2>>1);
       d = b + y2;
-      p->map(cx+xpaint, cy+ypaint, xpaint, ypaint);
+      xpaint = cx+xpaint;
+      ypaint = cy+ypaint;
     }
     else {
       if(phi != 0)  phi += 16*180;
-      p->map(x1-3, y1+1, a, b);    // up right
+      // label up right from arc
+      a = x1-3;
+      b = y1+2;
       b += y2;
       c  = a + (x2>>1);
       d  = b - y2;
-      p->map(cx+xpaint, cy-ypaint, xpaint, ypaint);
+      xpaint = cx+xpaint;
+      ypaint = cy-ypaint;
     }
   }
   else {
     if(cy < y1+b) {
-      p->map(x1+3, y1-2, a, b);   // low left
+      // label low left from arc
+      a = x1+3;
+      b = y1-2;
       a += x2;
       c  = a - (x2>>1);
       d  = b + y2;
-      p->map(cx-xpaint, cy+ypaint, xpaint, ypaint);
+      xpaint = cx-xpaint;
+      ypaint = cy+ypaint;
     }
     else {
       if(phi > 16*90)  phi += 16*180;
-      p->map(x1+3, y1+1, a, b);    // up left
+      // label up left from arc
+      a = x1+3;
+      b = y1+2;
       a += x2;
       b += y2;
       c  = a - (x2>>1);
       d  = b - y2;
-      p->map(cx-xpaint, cy-ypaint, xpaint, ypaint);
+      xpaint = cx-xpaint;
+      ypaint = cy-ypaint;
     }
   }
 
+  // color label red if has initial value
   if(initValue.isEmpty())
-    p->Painter->setPen(QPen(Qt::darkMagenta,0));
+    painter->setPen(QPen(Qt::darkMagenta,0));
   else
-    p->Painter->setPen(QPen(Qt::red,0));
+    painter->setPen(QPen(Qt::red,0));
 
-  if(phi)  p->drawArc(cx-4, cy-4, 8, 8, phi, 16*255);
-  p->Painter->drawLine(a, b, c, b);
-  p->Painter->drawLine(a, b, a, d);
-  p->Painter->drawLine(xpaint, ypaint, a, b);
+  // draw open arc around wire
+  if(phi)
+    painter->drawArc(cx-4, cy-4, 8, 8, phi, 16*255);
 
-  x2 = int(double(x2) / p->Scale);
-  y2 = int(double(y2) / p->Scale);
+  // label frame
+  painter->drawLine(a, b, c, b); //horizontal
+  painter->drawLine(a, b, a, d); //vertical
+
+  // line from Wire or Node to WireLabel label
+  painter->drawLine(xpaint, ypaint, a, b);
 
   if(ElemSelected)
   {
-    p->Painter->setPen(QPen(Qt::darkGray,3));
-    p->drawRoundRect(x1-2, y1-2, x2+6, y2+5);
+    painter->setPen(QPen(Qt::darkGray,3));
+    painter->drawRoundRect(x1-2, y1-2, x2+6, y2+5);
   }
 }
 
