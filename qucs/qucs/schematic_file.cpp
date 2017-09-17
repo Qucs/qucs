@@ -708,44 +708,73 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
   return false;
 }
 
-// -------------------------------------------------------------
-// Inserts a wire without performing logic for optimizing.
+/*!
+ * \brief Schematic::simpleInsertWire
+ * \param pw
+ * Inserts a wire without performing logic for optimizing.
+ * \todo similar to insertNode
+ *
+ * - check for node 1 overlap
+ * - check for zero length wire
+ * - add node label (at wire corner) to scene
+ * - check for node 2 overlap
+ * - add nodes to list
+ * - add nodes to scene
+ * - add wire to list
+ * - add wire to scene
+ * - add wire label to scene
+ *
+ */
 void Schematic::simpleInsertWire(Wire *pw)
 {
-  Node *pn;
-  // check if first wire node lies upon existing node
-  for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
-    if(pn->cx == pw->x1) if(pn->cy == pw->y1) break;
+  Node *pn1 = 0;
+  Node *pn2 = 0;
 
-  if(!pn) {   // create new node, if no existing one lies at this position
-    pn = new Node(pw->x1, pw->y1);
-    DocNodes.append(pn);
+  // check if first wire node lies upon existing node
+  for(pn1 = DocNodes.first(); pn1 != 0; pn1 = DocNodes.next())
+    if(pn1->cx == pw->x1) if(pn1->cy == pw->y1) break;
+
+  // create new node, if no existing one lies at this position
+  if(!pn1) {
+    pn1 = new Node(pw->x1, pw->y1);
+    DocNodes.append(pn1);
   }
 
+  // check for zero length wire
   if(pw->x1 == pw->x2) if(pw->y1 == pw->y2) {
-    pn->Label = pw->Label;   // wire with length zero are just node labels
-    if (pn->Label) {
-      pn->Label->ElemType = isNodeLabel;
-      pn->Label->pOwner = pn;
+    pn1->Label = pw->Label;   // wire with length zero are just node labels
+    if (pn1->Label) {
+      pn1->Label->ElemType = isNodeLabel;
+      pn1->Label->pOwner = pn1;
+      // add WireLabel to scene
+      scene->addItem(pn1->Label);
     }
     delete pw;           // delete wire because this is not a wire
     return;
   }
-  pn->Connections.append(pw);  // connect schematic node to component node
-  pw->Port1 = pn;
+  pn1->Connections.append(pw);  // connect schematic node to component node
+  pw->Port1 = pn1;
 
   // check if second wire node lies upon existing node
-  for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
-    if(pn->cx == pw->x2) if(pn->cy == pw->y2) break;
+  for(pn2 = DocNodes.first(); pn2 != 0; pn2 = DocNodes.next())
+    if(pn2->cx == pw->x2) if(pn2->cy == pw->y2) break;
 
-  if(!pn) {   // create new node, if no existing one lies at this position
-    pn = new Node(pw->x2, pw->y2);
-    DocNodes.append(pn);
+  if(!pn2) {   // create new node, if no existing one lies at this position
+    pn2 = new Node(pw->x2, pw->y2);
+    DocNodes.append(pn2);
   }
-  pn->Connections.append(pw);  // connect schematic node to component node
-  pw->Port2 = pn;
+  pn2->Connections.append(pw);  // connect schematic node to component node
+  pw->Port2 = pn2;
 
   DocWires.append(pw);
+
+  scene->addItem(pn1);
+  scene->addItem(pn2);
+  scene->addItem(pw);
+
+  if(pw->Label) {
+    scene->addItem(pw->Label);
+  }
 }
 
 // -------------------------------------------------------------
