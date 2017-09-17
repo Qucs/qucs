@@ -19,7 +19,6 @@
 #define MARKER_H
 
 #include "element.h"
-#include "viewpainter.h"
 
 class QPainter;
 class Diagram;
@@ -36,10 +35,9 @@ struct Axis;
 class Marker : public Element {
 public:
   Marker(Graph *pg_=0, int _nn=0, int cx_=0, int cy_=0);
- ~Marker();
+  virtual ~Marker() {}
 
   virtual QRectF boundingRect() const;
-  virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
 
 private:
   void    initText(int);
@@ -53,7 +51,7 @@ public:
   void    makeInvalid();
   bool    moveLeftRight(bool);
   bool    moveUpDown(bool);
-  void    paint(ViewPainter*, int, int);
+  void    paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
   void    paintScheme(QPainter*);
   void    setCenter(int, int, bool);
   void    Bounding(int& _x1, int& _y1, int& _x2, int& _y2);

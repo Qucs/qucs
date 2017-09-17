@@ -26,9 +26,11 @@
 class Arrow : public Painting  {
 public:
   Arrow();
- ~Arrow();
+  virtual ~Arrow() {}
 
-  void paint(ViewPainter*);
+  QRectF boundingRect() const;
+
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
   void paintScheme(Schematic*);
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
