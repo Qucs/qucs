@@ -48,63 +48,86 @@ Arrow::Arrow()
   Length = sqrt(Width*Width + Height*Height);
 }
 
-Arrow::~Arrow()
+QRectF Arrow::boundingRect() const
 {
+  // from Bounding
+  int _x1, _y1, _x2, _y2;
+  if(x2 < 0) { _x1 = cx+x2; _x2 = cx; }
+  else { _x1 = cx; _x2 = cx+x2; }
+
+  if(y2 < 0) { _y1 = cy+y2; _y2 = cy; }
+  else { _y1 = cy; _y2 = cy+y2; }
+  return *(new QRectF(_x1, _y1, _x2-_x1, _y2-_y1));
 }
 
+
 // --------------------------------------------------------------------------
-void Arrow::paint(ViewPainter *p)
+void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
-  QPolygon Points;
-  int x1_, y1_, x2_, y2_, x3_, y3_;
-  if(ElemSelected) {
-    p->Painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
-    p->drawLine(cx, cy, cx+x2, cy+y2);
-    p->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
-    p->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);
+  /// \todo cleanup Arrow::paint
+  //QPolygon Points;
+  //int x1_, y1_, x2_, y2_, x3_, y3_;
+
+  //calcArrowHead(); // for xp#, yp#. Hack! needs to be done on mouse move to update arrow head.
+
+  /// \todo precise selection over the lines, not the boundingRect
+  /// http://www.qtcentre.org/threads/25206-QGraphicsItem-QLineF-Precise-Selection
+
+  if(isSelected()) {
+    painter->setPen(QPen(Qt::darkGray, Pen.width()+5));
+    painter->drawLine(cx, cy, cx+x2, cy+y2);
+    painter->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
+    painter->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);
     if(Style == 0) {   // arrow head with two lines ?
-      p->Painter->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
-      p->drawLine(cx, cy, cx+x2, cy+y2);
-      p->Painter->setPen(QPen(Qt::white, Pen.width(), Qt::SolidLine));
-      p->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
-      p->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);
+      painter->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
+      painter->drawLine(cx, cy, cx+x2, cy+y2);
+      painter->setPen(QPen(Qt::white, Pen.width(), Qt::SolidLine));
+      painter->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
+      painter->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);
     }
     else {   // filled arrow head
-      p->drawLine(cx+xp1, cy+yp1, cx+xp2, cy+yp2);
-      p->Painter->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
-      p->drawLine(cx, cy, cx+x2, cy+y2);
+      painter->drawLine(cx+xp1, cy+yp1, cx+xp2, cy+yp2);
+      painter->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
+      painter->drawLine(cx, cy, cx+x2, cy+y2);
 
-      p->Painter->setPen(QPen(Qt::white, Pen.width(), Qt::SolidLine));
-      p->Painter->setBrush(Qt::white);
-      p->map(cx+xp1, cy+yp1, x1_, y1_);
-      p->map(cx+x2, cy+y2, x2_, y2_);
-      p->map(cx+xp2, cy+yp2, x3_, y3_);
-      Points.setPoints(3, x1_, y1_, x2_, y2_, x3_, y3_);
-      p->Painter->drawConvexPolygon(Points);
-      p->Painter->setBrush(Qt::NoBrush); // no filling for next paintings
+      painter->setPen(QPen(Qt::white, Pen.width(), Qt::SolidLine));
+      painter->setBrush(Qt::white);
+      /// \todo ViewPainter::map does scaling, displace and cast to int
+      //p->map(cx+xp1, cy+yp1, x1_, y1_);
+      //p->map(cx+x2, cy+y2, x2_, y2_);
+      //p->map(cx+xp2, cy+yp2, x3_, y3_);
+      //Points.setPoints(3, x1_, y1_, x2_, y2_, x3_, y3_);
+      //painter->drawConvexPolygon(Points,3);
+      painter->setBrush(Qt::NoBrush); // no filling for next paintings
     }
 
-    p->Painter->setPen(QPen(Qt::darkRed,2));
-    p->drawResizeRect(cx, cy);  // markers for changing the size
-    p->drawResizeRect(cx+x2, cy+y2);
+    //dummy box
+    painter->setPen(QPen(Qt::green,2));
+    painter->drawRect(boundingRect());
+
+    painter->setPen(QPen(Qt::darkRed,2));
+    painter->drawRect(cx-5,    cy-5,    10, 10);  // markers for changing the size
+    painter->drawRect(cx+x2-5, cy+y2-5, 10, 10);
     return;
   }
-  p->Painter->setPen(Pen);
-  p->drawLine(cx, cy, cx+x2, cy+y2);
-  p->Painter->setPen(QPen(Pen.color(), Pen.width(), Qt::SolidLine));
+
+  painter->setPen(Pen);
+  painter->drawLine(cx, cy, cx+x2, cy+y2);
+  painter->setPen(QPen(Pen.color(), Pen.width(), Qt::SolidLine));
   if(Style == 0) {   // arrow head with two lines ?
-    p->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
-    p->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);
+    painter->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
+    painter->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);
   }
   else {   // filled arrow head
-    p->Painter->setBrush(Pen.color());
-    p->map(cx+xp1, cy+yp1, x1_, y1_);
-    p->map(cx+x2, cy+y2, x2_, y2_);
-    p->map(cx+xp2, cy+yp2, x3_, y3_);
-    Points.setPoints(3, x1_, y1_, x2_, y2_, x3_, y3_);
-    p->Painter->drawConvexPolygon(Points);
-    p->Painter->setBrush(Qt::NoBrush); // no filling for next paintings
-  }
+    painter->setBrush(Pen.color());
+    //p->map(cx+xp1, cy+yp1, x1_, y1_);
+    //p->map(cx+x2, cy+y2, x2_, y2_);
+    //p->map(cx+xp2, cy+yp2, x3_, y3_);
+    //Points.setPoints(3, x1_, y1_, x2_, y2_, x3_, y3_);
+    //Points.setPoints(3, cx+xp1, cx+yp1, cx+x2, cy+y2, cx+xp2, cy+yp2);
+    //painter->drawConvexPolygon(Points);
+    painter->setBrush(Qt::NoBrush); // no filling for next paintings
+    }
 }
 
 // --------------------------------------------------------------------------
