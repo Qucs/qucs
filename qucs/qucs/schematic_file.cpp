@@ -904,6 +904,11 @@ bool Schematic::loadPaintings(QTextStream *stream, Q3PtrList<Painting> *List)
       return false;
     }
     List->append(p);
+
+    qDebug() << __FUNCTION__ << p->Name;
+    /// insert Paiting into the scene
+    scene->addItem(p);
+    scene->update();
   }
 
   QMessageBox::critical(0, QObject::tr("Error"),
