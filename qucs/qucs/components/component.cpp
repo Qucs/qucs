@@ -22,7 +22,6 @@
 #include "node.h"
 #include "qucs.h"
 #include "schematic.h"
-#include "viewpainter.h"
 #include "module.h"
 #include "misc.h"
 

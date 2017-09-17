@@ -16,7 +16,6 @@
  ***************************************************************************/
 #include "qucs.h"
 #include "mnemo.h"
-#include "viewpainter.h"
 #include "graphictext.h"
 #include "graphictextdialog.h"
 #include "schematic.h"

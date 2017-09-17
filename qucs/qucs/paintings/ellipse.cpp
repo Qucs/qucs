@@ -17,7 +17,6 @@
 #include "ellipse.h"
 #include "filldialog.h"
 #include "schematic.h"
-#include "viewpainter.h"
 #include "misc.h"
 
 #include <QPainter>
