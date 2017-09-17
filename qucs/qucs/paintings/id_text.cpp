@@ -31,20 +31,20 @@ ID_Text::ID_Text(int cx_, int cy_)
   Prefix = "SUB";
 }
 
-ID_Text::~ID_Text()
+QRectF ID_Text::boundingRect() const
 {
+  return *(new QRectF(x1, y1, x2-x1, y2-y1));
 }
 
-// --------------------------------------------------------------------------
-void ID_Text::paint(ViewPainter *p)
+void ID_Text::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
-  int x, y;
-  p->Painter->setPen(QPen(Qt::black,1));
-  p->map(cx, cy, x, y);
+  /// \todo finish porting ID_text::paint()
+  painter->setPen(QPen(Qt::black,1));
 
   QRect r;
-  p->Painter->drawText(QRect(x, y, 0, 0), Qt::TextDontClip, Prefix, &r);
+  painter->drawText(QRect(cx, cy, 0, 0), Qt::TextDontClip, Prefix, &r);
   x2 = r.width();
+  /*
   y2 = p->LineSpacing;
 
   p->Painter->drawText(QRect(x, y+y2, 0, 0), Qt::TextDontClip, "File=name", &r);
@@ -67,6 +67,7 @@ void ID_Text::paint(ViewPainter *p)
 
   x2 = int(float(x2) / p->Scale);
   y2 = int(float(y2) / p->Scale);
+  */
 }
 
 // --------------------------------------------------------------------------
