@@ -19,7 +19,6 @@
 #define WIRELABEL_H
 
 #include "element.h"
-#include "viewpainter.h"
 
 #include <QString>
 
@@ -32,22 +31,21 @@ class WireLabel : public Element {
 public:
   WireLabel(const QString& _Name=0, int _cx=0, int _cy=0,
             int _x1=0, int _y1=0, int _Type=isNodeLabel);
-  ~WireLabel();
+  virtual ~WireLabel() {}
 
   virtual QRectF boundingRect() const;
-  virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
 
   void paintScheme(QPainter *p);
   void setCenter(int x, int y, bool relative=false);
   bool getSelected(int, int);
   void setName(const QString& Name_);
-  void setHighlighted (bool newval) { isHighlighted = newval; };
+  void setHighlighted (bool newval) { isHighlighted = newval; }
 
 
   Conductor *pOwner;  // Wire or Node where label belongs to
   QString Name, initValue;
 
-  void    paint(ViewPainter*);
+  void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
   void    rotate();
   QString save();
   bool    load(const QString& s);
