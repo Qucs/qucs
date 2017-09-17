@@ -333,7 +333,7 @@ void Schematic::PostPaintEvent (PE pe, int x1, int y1, int x2, int y2, int a, in
 
 
 // ---------------------------------------------------
-void Schematic::contentsMouseMoveEvent(QMouseEvent *Event)
+void Schematic::mouseMoveEvent(QMouseEvent *Event)
 {
   emit signalCursorPosChanged(Event->pos().x(), Event->pos().y());
   if(App->MouseMoveAction)
@@ -341,8 +341,9 @@ void Schematic::contentsMouseMoveEvent(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void Schematic::contentsMousePressEvent(QMouseEvent *Event)
+void Schematic::mousePressEvent(QMouseEvent *Event)
 {
+  TODO("check mousePressEvent");
   App->editText->setHidden(true); // disable text edit of component property
   if(App->MouseReleaseAction == &MouseActions::MReleasePaste)
     return;
@@ -366,15 +367,17 @@ void Schematic::contentsMousePressEvent(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void Schematic::contentsMouseReleaseEvent(QMouseEvent *Event)
+void Schematic::mouseReleaseEvent(QMouseEvent *Event)
 {
+  TODO("check mouseReleaseEvent");
   if(App->MouseReleaseAction)
     (App->view->*(App->MouseReleaseAction))(this, Event);
 }
 
 // -----------------------------------------------------------
-void Schematic::contentsMouseDoubleClickEvent(QMouseEvent *Event)
+void Schematic::mouseDoubleClickEvent(QMouseEvent *Event)
 {
+  TODO("check mouseDoubleClickEvent");
   if(App->MouseDoubleClickAction)
     (App->view->*(App->MouseDoubleClickAction))(this, Event);
 }
