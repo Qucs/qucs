@@ -196,10 +196,10 @@ signals:
 
 protected:
   // overloaded function to get actions of user
-  void contentsMouseMoveEvent(QMouseEvent*);
-  void contentsMousePressEvent(QMouseEvent*);
-  void contentsMouseDoubleClickEvent(QMouseEvent*);
-  void contentsMouseReleaseEvent(QMouseEvent*);
+  void mouseMoveEvent(QMouseEvent*);
+  void mousePressEvent(QMouseEvent*);
+  void mouseReleaseEvent(QMouseEvent*);
+  void mouseDoubleClickEvent(QMouseEvent*);
   void contentsWheelEvent(QWheelEvent*);
   void contentsDropEvent(QDropEvent*);
   void contentsDragEnterEvent(QDragEnterEvent*);
