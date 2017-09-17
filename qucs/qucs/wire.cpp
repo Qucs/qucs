@@ -32,20 +32,15 @@ Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2)
 
   ElemType = isWire;
   ElemSelected = false;
+
+  setFlags(ItemIsSelectable|ItemIsMovable);
+  setAcceptsHoverEvents(true);
 }
 
-Wire::~Wire()
-{
-}
 
 QRectF Wire::boundingRect() const
 {
   return *(new QRect(x1, y1, x2-x1, y2-y1) );
-}
-
-void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
-{
-
 }
 
 // ----------------------------------------------------------------
@@ -115,18 +110,24 @@ void Wire::paintScheme(QPainter *p)
 }
 
 // ----------------------------------------------------------------
-void Wire::paint(ViewPainter *p)
+void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
-  if(ElemSelected) {
-    p->Painter->setPen(QPen(Qt::darkGray,6));
-    p->drawLine(x1, y1, x2, y2);
-    p->Painter->setPen(QPen(Qt::lightGray,2));
-    p->drawLine(x1, y1, x2, y2);
-  }
-  else {
-    p->Painter->setPen(QPen(Qt::darkBlue,2));
-    p->drawLine(x1, y1, x2, y2);
-  }
+ Q_UNUSED(item);
+ Q_UNUSED(widget);
+
+
+ if(isSelected()) {
+   ElemSelected = true;
+   painter->setPen(QPen(Qt::darkGray,6));
+   painter->drawLine(x1, y1, x2, y2);
+   painter->setPen(QPen(Qt::lightGray,2));
+   painter->drawLine(x1, y1, x2, y2);
+ }
+ else {
+   ElemSelected = false;
+   painter->setPen(QPen(Qt::darkBlue,2));
+   painter->drawLine(x1, y1, x2, y2);
+ }
 }
 
 // ----------------------------------------------------------------
