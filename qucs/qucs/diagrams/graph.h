@@ -52,8 +52,6 @@ inline graphstyle_t toGraphStyle(int x){
 }
 
 class Diagram;
-class ViewPainter;
-
 
 struct DataX {
   DataX(const QString& Var_, double *Points_=0, int count_=0)
