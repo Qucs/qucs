@@ -84,18 +84,9 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
 
 }
 
-Marker::~Marker()
-{
-}
-
 QRectF Marker::boundingRect() const
 {
-  return *(new QRectF());
-}
-
-void Marker::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
-{
-
+  return *(new QRectF(diag()->cx+x1-3, diag()->cy+y1-3, x2+6, y2+6));
 }
 
 // ---------------------------------------------------------------------
@@ -421,40 +412,50 @@ bool Marker::moveUpDown(bool up)
 }
 
 // ---------------------------------------------------------------------
-void Marker::paint(ViewPainter *p, int x0, int y0)
+void Marker::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
+  Q_UNUSED(item);
+  Q_UNUSED(widget);
+
+  /// \todo cleanup
   // keep track of painter state
-  p->Painter->save();
+  ///p->Painter->save();
 
   // Workaround for bug in Qt: If WorldMatrix is turned off, \n in the
   // text creates a terrible mess.
-  p->Painter->setWorldMatrixEnabled(true);
-  QMatrix wm = p->Painter->worldMatrix();
-  p->Painter->setWorldMatrix(QMatrix());
+  ///p->Painter->setWorldMatrixEnabled(true);
+  ///QMatrix wm = p->Painter->worldMatrix();
+  ///->Painter->setWorldMatrix(QMatrix());
 
-  int x2_, y2_;
-  p->Painter->setPen(QPen(Qt::black,1));
-  x2_ = p->drawText(Text, x0+x1+3, y0+y1+3, &y2_);
-  x2_ += int(6.0*p->Scale);
-  y2_ += int(6.0*p->Scale);
+  int x0 = diag()->cx;
+  int y0 = diag()->cy;
+  int x2_, y2_; //text width and height
+  painter->setPen(QPen(Qt::black,1));
+  QRectF rf = painter->boundingRect(QRectF(x1, y1, 0, 0), Qt::TextDontClip, Text);
+  painter->drawText(QRect(x0+x1+3, y0+y1+3, 0, 0), Qt::TextDontClip,Text);
+  x2_ = rf.width();
+  y2_ = rf.height();
+  x2_ += int(6.0);
+  y2_ += int(6.0);
   if(!transparent) {
-    p->eraseRect(x0+x1, y0+y1, x2_, y2_);
-    p->drawText(Text, x0+x1+3, y0+y1+3);
+    /// \bug it does not erase the graphs, only the diagram frame.
+    painter->eraseRect(x0+x1, y0+y1, x2_, y2_);
+    painter->drawText(QRect(x0+x1+3, y0+y1+3, 0, 0), Qt::TextDontClip,Text);
   }
-  p->Painter->setWorldMatrix(wm);
-  p->Painter->setWorldMatrixEnabled(false);
-
+  ///p->Painter->setWorldMatrix(wm);
+  ///p->Painter->setWorldMatrixEnabled(false);
   // restore painter state
-  p->Painter->restore();
+  //p->Painter->restore();
 
-  p->Painter->setPen(QPen(Qt::darkMagenta,0));
-  p->drawRectD(x0+x1, y0+y1, x2_, y2_);
+  painter->setPen(QPen(Qt::darkMagenta,0));
+  painter->drawRect(x0+x1, y0+y1, x2_, y2_);
 
-  x2 = int(float(x2_) / p->Scale);
-  y2 = int(float(y2_) / p->Scale);
+  x2 = int(float(x2_));
+  y2 = int(float(y2_));
 
   int x1_, y1_;
-  p->map(x0+x1, y0+y1, x1_, y1_);
+  x1_ = x0+x1;
+  y1_ = y0+y1;
   // which corner of rectangle should be connected to line ?
   if(cx < x1+(x2>>1)) {
     if(-cy >= y1+(y2>>1))
@@ -466,14 +467,21 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
       y1_ += y2_ - 1;
   }
   float fx2, fy2;
-  fx2 = (float(x0)+fCX)*p->Scale + p->DX;
-  fy2 = (float(y0)-fCY)*p->Scale + p->DY;
-  p->Painter->drawLine(x1_, y1_, TO_INT(fx2), TO_INT(fy2));
+  fx2 = (float(x0)+fCX);/// \todo p->Scale + p->DX;
+  fy2 = (float(y0)-fCY);/// *p->Scale + p->DY;
+  painter->drawLine(x1_, y1_, int(fx2+0.5), int(fy2+0.5));
 
+   /// \todo
+/*
   if(ElemSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(x0+x1-3, y0+y1-3, x2+6, y2+6);
   }
+*/
+#ifdef QT_DEBUG
+  painter->setPen(QPen(Qt::darkMagenta,1));
+  painter->drawRect(boundingRect());
+#endif
 }
 
 // ---------------------------------------------------------------------
