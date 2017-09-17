@@ -146,8 +146,8 @@ ADD_SUBDIRECTORY( tests )
 SET(QUCS_SRCS
   attach.cpp
   element.cpp	octave_window.cpp	qucsdoc.cpp
-  textdoc.cpp  schematic.cpp
-  mnemo.cpp	qucs.cpp	viewpainter.cpp
+  textdoc.cpp schematic.cpp
+  mnemo.cpp	qucs.cpp
   module.cpp	schematic_element.cpp	wire.cpp
   mouseactions.cpp qucs_actions.cpp	schematic_file.cpp
   wirelabel.cpp node.cpp qucs_init.cpp
@@ -171,7 +171,6 @@ qucsdoc.h
 schematic.h
 syntax.h
 textdoc.h
-viewpainter.h
 wire.h
 wirelabel.h
 frame.h

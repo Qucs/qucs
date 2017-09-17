@@ -30,7 +30,6 @@
 #include "wire.h"
 #include "node.h"
 #include "qucsdoc.h"
-#include "viewpainter.h"
 #include "diagrams/diagram.h"
 #include "paintings/painting.h"
 #include "components/component.h"

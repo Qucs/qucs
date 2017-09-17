@@ -46,7 +46,6 @@
 #include "schematic.h"
 #include "node.h"
 #include "textdoc.h"
-#include "viewpainter.h"
 #include "mouseactions.h"
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
