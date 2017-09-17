@@ -388,6 +388,8 @@ Marker* Diagram::setMarker(int x, int y)
 	assert(pg->parentDiagram() == this);
 	Marker *pm = new Marker(pg, n, x-cx, y-cy);
 	pg->Markers.append(pm);
+	//set Diagram as parent of Marker, handle Marker::paint()
+	pm->setParentItem(this);
 	return pm;
       }
     }
@@ -1423,6 +1425,8 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
 	return false;
       }
       pg->Markers.append(pm);
+      //set Diagram as parent of Marker, handle Marker::paint()
+      pm->setParentItem(this);
       continue;
     }
 
