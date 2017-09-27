@@ -86,7 +86,7 @@ public:
   void MPressMirrorX(Schematic*, QMouseEvent*, float, float);
   void MPressMirrorY(Schematic*, QMouseEvent*, float, float);
   void MPressRotate(Schematic*, QMouseEvent*, float, float);
-  void MPressElement(Schematic*, QMouseEvent*, float, float);
+  void MPressElement(Schematic*, QMouseEvent*, float x, float y);
   void MPressLabel(Schematic*, QMouseEvent*, float, float);
   void MPressWire1(Schematic*, QMouseEvent*, float, float);
   void MPressWire2(Schematic*, QMouseEvent*, float, float);

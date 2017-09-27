@@ -349,7 +349,16 @@ void Schematic::mouseMoveEvent(QMouseEvent *Event)
     (App->view->*(App->MouseMoveAction))(this, Event);
 }
 
-// -----------------------------------------------------------
+
+/*!
+ * \brief Schematic::mousePressEvent
+ * \param Event
+ *
+ * Event handler for mouse press.
+ * Set current mouse press (function pointer) handler.
+ * Pass position in Scene coordinates to handler.
+ * Set next mouse release handler.
+ */
 void Schematic::mousePressEvent(QMouseEvent *Event)
 {
   TODO("check mousePressEvent");
@@ -357,8 +366,12 @@ void Schematic::mousePressEvent(QMouseEvent *Event)
   if(App->MouseReleaseAction == &MouseActions::MReleasePaste)
     return;
 
-  float x = float(Event->pos().x())/Scale + float(ViewX1);
-  float y = float(Event->pos().y())/Scale + float(ViewY1);
+  /// \todo same as DOC_X_FPOS
+  //float x = float(Event->pos().x())/Scale + float(ViewX1);
+  //float y = float(Event->pos().y())/Scale + float(ViewY1);
+  QPointF pos = mapToScene(Event->pos());
+  float x = pos.x();
+  float y = pos.y();
 
   if(Event->button() != Qt::LeftButton)
     if(App->MousePressAction != &MouseActions::MPressElement)
