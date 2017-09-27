@@ -1210,7 +1210,7 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent*, float fX, float fY
 
 // -----------------------------------------------------------
 // insert component, diagram, painting into schematic ?!
-void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, float)
+void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float x, float y)
 {
   if(selElem == 0) return;
 
@@ -1227,6 +1227,12 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
 	// part of
 	Comp->setSchematic (Doc);
 	Comp->textSize(x1, y1);
+
+	/// insert Component into scene
+	/// set center position before nodes are inserted
+	Comp->setPos(x,y);
+	Doc->scene->addItem(Comp);
+
 	Doc->insertComponent(Comp);
 	Comp->textSize(x2, y2);
 	if(Comp->tx < Comp->x1) Comp->tx -= x2 - x1;
