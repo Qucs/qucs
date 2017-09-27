@@ -332,10 +332,19 @@ void Schematic::PostPaintEvent (PE pe, int x1, int y1, int x2, int y2, int a, in
 }
 
 
-// ---------------------------------------------------
+/*!
+ * \brief Schematic::mouseMoveEvent
+ * \param Event
+ *
+ * Event handler for mouse movements over the View.
+ * Send signal to update the cursor position on the status bar.
+ * Cursor position is reported in Scene coordinates.
+ * Update current mouse move (function pointer) handler.
+ */
 void Schematic::mouseMoveEvent(QMouseEvent *Event)
 {
-  emit signalCursorPosChanged(Event->pos().x(), Event->pos().y());
+  QPointF pos = mapToScene(Event->pos().x(), Event->pos().y());
+  emit signalCursorPosChanged(pos.x(), pos.y());
   if(App->MouseMoveAction)
     (App->view->*(App->MouseMoveAction))(this, Event);
 }
