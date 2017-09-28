@@ -194,6 +194,12 @@ void Component::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, Q
   Q_UNUSED(item);
   Q_UNUSED(widget);
 
+
+  if(drawScheme) {
+    paintScheme(painter);
+    return;
+  }
+
   /// \todo move the paint down to each simulation component?
   // is simulation component (dc, ac, ...)
   bool isSimulation = false;
@@ -396,12 +402,11 @@ void Component::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, Q
 
 // -------------------------------------------------------
 // Paints the component when moved with the mouse.
-void Component::paintScheme(Schematic *p)
+void Component::paintScheme(QPainter *painter)
 {
-  // qDebug() << "paintScheme" << Model;
   if(Model.at(0) == '.') {   // is simulation component (dc, ac, ...)
     int a, b, xb, yb;
-    QFont newFont = p->font();
+    QFont newFont = painter->font();
 
     float Scale =
           ((Schematic*)QucsMain->DocumentTab->currentWidget())->Scale;
@@ -424,32 +429,32 @@ void Component::paintScheme(Schematic *p)
     y2 = y1+23 + int(float(b) / Scale);
     if(ty < y2+1) if(ty > y1-r.height())  ty = y2 + 1;
 
-    p->PostPaintEvent(_Rect,cx-6, cy-5, xb, yb);
-    p->PostPaintEvent(_Line,cx-1, cy+yb, cx-6, cy+yb-5);
-    p->PostPaintEvent(_Line,cx+xb-2, cy+yb, cx-1, cy+yb);
-    p->PostPaintEvent(_Line,cx+xb-2, cy+yb, cx+xb-6, cy+yb-5);
-    p->PostPaintEvent(_Line,cx+xb-2, cy+yb, cx+xb-2, cy);
-    p->PostPaintEvent(_Line,cx+xb-2, cy, cx+xb-6, cy-5);
+    painter->drawRect(-6, -5, xb, yb);
+    painter->drawLine(-1, yb, -6, yb-5);
+    painter->drawLine(xb-2, yb, -1, yb);
+    painter->drawLine(xb-2, yb, xb-6, yb-5);
+    painter->drawLine(xb-2, yb, xb-2, 0);
+    painter->drawLine(xb-2, 0, xb-6, -5);
     return;
   }
 
   // paint all lines
   foreach(Line *p1, Lines)
-    p->PostPaintEvent(_Line,cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
+    painter->drawLine(p1->x1, p1->y1, p1->x2, p1->y2);
 
   // paint all ports
   foreach(Port *p2, Ports)
-    if(p2->avail) p->PostPaintEvent(_Ellipse,cx+p2->x-4, cy+p2->y-4, 8, 8);
+    if(p2->avail) painter->drawEllipse(p2->x-4, p2->y-4, 8, 8);
 
   foreach(Arc *p3, Arcs)   // paint all arcs
-    p->PostPaintEvent(_Arc,cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
+    painter->drawArc(p3->x, p3->y, p3->w, p3->h, p3->angle, p3->arclen);
 
 
   foreach(Area *pa, Rects) // paint all rectangles
-    p->PostPaintEvent(_Rect,cx+pa->x, cy+pa->y, pa->w, pa->h);
+    painter->drawRect(pa->x, pa->y, pa->w, pa->h);
 
   foreach(Area *pa, Ellips) // paint all ellipses
-    p->PostPaintEvent(_Ellipse,cx+pa->x, cy+pa->y, pa->w, pa->h);
+    painter->drawEllipse(pa->x, pa->y, pa->w, pa->h);
 }
 
 // -------------------------------------------------------

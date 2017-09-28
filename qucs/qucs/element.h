@@ -163,6 +163,7 @@ public:
   bool elemSelected;
   int  elemType;    // BUG. obsolete.
   int  cx, cy, x1, y1, x2, y2;  // center and relative boundings
+  bool drawScheme; // inform paint method to draw element or its outline
 };
 
 

@@ -40,7 +40,7 @@ public:
 
   QRectF  boundingRect() const;
   void    paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
-  void    paintScheme(Schematic*);
+  void    paintScheme(QPainter* painter);
   void    print(QPainter*, float);
 
   void    setCenter(int, int, bool relative=false);
