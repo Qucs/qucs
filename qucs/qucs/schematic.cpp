@@ -2040,7 +2040,8 @@ void Schematic::contentsDragLeaveEvent(QDragLeaveEvent*)
 
         QPainter painter(viewport());
         //App->view->setPainter(this);
-        ((Component*)App->view->selElem)->paintScheme(this);
+        TODO("fix paintscheme")
+        //((Component*)App->view->selElem)->paintScheme(this);
         App->view->drawn = false;
       }
 
