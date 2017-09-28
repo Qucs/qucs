@@ -797,8 +797,13 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
 {
   slotHideEdit(); // disable text edit of component property
 
-  // delete previously selected elements
-  if(view->selElem != 0)  delete view->selElem;
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
+
+  // remove from scene and delete previously selected elements
+  if(view->selElem != 0)  {
+      Doc->scene->removeItem(view->selElem);
+      delete view->selElem;
+  }
   view->selElem  = 0;   // no component/diagram/painting selected
 
   if(item == 0) {   // mouse button pressed not over an item ?
