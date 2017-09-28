@@ -300,6 +300,7 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
   if(!drawn) {
     Doc->scene->addItem(selElem);
     drawn = true;
+    selElem->drawScheme = true;
   }
   selElem->setPos(gx, gy);
 
@@ -1247,6 +1248,8 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float x, fl
 	Doc->setOnGrid(gx, gy);
 	Comp->setPos(gx,gy);
 	Doc->scene->addItem(Comp);
+	/// clear flag, paint whole Element, not just outline
+	Comp->drawScheme = false;
 
 	// Note: insertCopmponents does increment  name1 -> name2
 	Doc->insertComponent(Comp);
