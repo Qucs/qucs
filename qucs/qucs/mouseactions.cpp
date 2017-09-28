@@ -305,8 +305,6 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
   selElem->setPos(gx, gy);
 
   selElem->setCenter(gx, gy);
-  /// \todo refactor paintScheme
-  selElem->paintScheme(Doc); // paint scheme at new position
 }
 
 
