@@ -232,7 +232,7 @@ void QucsApp::slotZoomIn(bool on)
 
 void QucsApp::slotEscape()
 {
-    select->setChecked(true);
+    select->setChecked(true); // trigger slotSelect
     slotSearchClear();
 }
 
@@ -261,6 +261,13 @@ void QucsApp::slotSelect(bool on)
     select->setChecked(false);
     select->blockSignals(false);
     return;
+  }
+
+  // remove from scene and delete previously selected elements
+  if(view->selElem != 0)  {
+      Doc->scene->removeItem(view->selElem);
+      delete view->selElem;
+      view->selElem = 0;
   }
 
   if(performToggleAction(on, select, 0, 0, &MouseActions::MPressSelect)) {
