@@ -256,25 +256,33 @@ void MouseActions::moveElements(Q3PtrList<Element> *movElements, int x, int y)
 // **********       Functions for serving mouse moving          **********
 // **********                                                   **********
 // ***********************************************************************
+
+/*!
+ * \brief MouseActions::MMoveElement
+ * \param Doc
+ * \param Event
+ *
+ * Event handler, an Element selected for insertion is moved
+ * on the View.
+ *
+ * Set the mouse decoration/cursor to represent the selElem.
+ * Motion snaps to grid points.
+ *
+ * selElem is an Element object, see QucsApp::slotSelectComponent and
+ * other similar slots.
+ */
 void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
 {
   if(selElem == 0) return;
 
-//  qDebug() << "MMoveElement got selElem";
-
-  int x  = Event->pos().x();
-  int y  = Event->pos().y();
-  int fx = DOC_X_POS(x);
-  int fy = DOC_Y_POS(y);
-  int gx = fx;
-  int gy = fy;
+  QPointF pos = Doc->mapToScene(Event->pos());
+  int gx = pos.x();
+  int gy = pos.y();
   Doc->setOnGrid(gx, gy);
 
-
-  //QPainter painter(Doc->viewport());
-  TODO("Sort out contentsX");
-  /*
+  /// \todo handle scheme for paintings
   if(selElem->Type == isPainting) {
+  /*
     Doc->PostPaintEvent (_NotRop, 0,0,0,0);
     x -= Doc->contentsX();
     y -= Doc->contentsY();
@@ -282,20 +290,22 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
                                        Doc, x, y, drawn);
     drawn = true;
     Doc->viewport()->update();
+  */
     return;
   }  // of "if(isPainting)"
-  */
 
   // ********** it is a component or diagram
-  if(drawn) selElem->paintScheme(Doc); // erase old scheme
-  drawn = true;
 
-//  Component *comp = (Component*)selElem;
-  //qDebug() << "desc" << comp->Description << "gx" << gx << "gy" << gy;
+  // while moving, add selElem only once to scene
+  if(!drawn) {
+    Doc->scene->addItem(selElem);
+    drawn = true;
+  }
+  selElem->setPos(gx, gy);
 
   selElem->setCenter(gx, gy);
+  /// \todo refactor paintScheme
   selElem->paintScheme(Doc); // paint scheme at new position
-  Doc->viewport()->update();
 }
 
 
@@ -1215,6 +1225,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float x, fl
   if(selElem == 0) return;
 
   int x1, y1, x2, y2, rot;
+  int gx, gy;
   if(selElem->ElemType & isComponent) {
     Component *Comp = (Component*)selElem;
 //    qDebug() << "+-+ got to switch:" << Comp->Name;
@@ -1229,22 +1240,23 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float x, fl
 	Comp->textSize(x1, y1);
 
 	/// insert Component into scene
-	/// set center position before nodes are inserted
-	Comp->setPos(x,y);
+	/// snap to grid points
+	/// set center position before nodes are inserted (?)
+	gx = x;
+	gy = y;
+	Doc->setOnGrid(gx, gy);
+	Comp->setPos(gx,gy);
 	Doc->scene->addItem(Comp);
 
+	// Note: insertCopmponents does increment  name1 -> name2
 	Doc->insertComponent(Comp);
 	Comp->textSize(x2, y2);
 	if(Comp->tx < Comp->x1) Comp->tx -= x2 - x1;
-
-    // Note: insertCopmponents does increment  name1 -> name2
-//    qDebug() << "  +-+ got to insert:" << Comp->Name;
 
 	// enlarge viewarea if component lies outside the view
 	Comp->entireBounds(x1,y1,x2,y2, Doc->textCorr());
 	Doc->enlargeView(x1, y1, x2, y2);
 
-	drawn = false;
 	Doc->viewport()->update();
 	Doc->setChanged(true, true);
 	rot = Comp->rotated;
@@ -1268,16 +1280,17 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float x, fl
       case Qt::RightButton :  // right mouse button rotates the component
 	if(Comp->Ports.count() == 0)
 	  break;  // do not rotate components without ports
-	Comp->paintScheme(Doc); // erase old component scheme
 	Comp->rotate();
-	Comp->paintScheme(Doc); // paint new component scheme
+	Doc->viewport()->update();
 	break;
 
       default: ;   // avoids compiler warnings
     }
-//    qDebug() << "   => selElem = Comp;" << Comp->Name;
-    // comp it geting empty
+
+    // keep current Element selected
     selElem = Comp;
+    // get ready to paint selElem scheme on next move event
+    drawn = false;
     return;
 
   }  // of "if(isComponent)"
