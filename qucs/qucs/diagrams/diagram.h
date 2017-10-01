@@ -77,7 +77,6 @@ public:
 
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
-  void    paintScheme(Schematic*);
   void    Bounding(int&, int&, int&, int&);
   bool    getSelected(int, int);
   bool    resizeTouched(float, float, float);

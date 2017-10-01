@@ -1310,7 +1310,6 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float x, fl
     if(Event->button() != Qt::LeftButton) return;
 
     Diagram *Diag = (Diagram*)selElem;
-    QFileInfo Info(Doc->DocName);
     // dialog is Qt::WDestructiveClose !!!
     DiagramDialog *dia =
        new DiagramDialog(Diag, Doc);
@@ -1319,14 +1318,16 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float x, fl
       drawn = false;
       return;
     }
-
+    // add to list
     Doc->Diagrams->append(Diag);
+    // clear flag, draw whole Diagram, not only scheme
+    selElem->drawScheme = false;
     Doc->enlargeView(Diag->cx, Diag->cy-Diag->y2, Diag->cx+Diag->x2, Diag->cy);
     Doc->setChanged(true, true);   // document has been changed
 
     Doc->viewport()->repaint();
-    Diag = Diag->newOne(); // the component is used, so create a new one
-    Diag->paintScheme(Doc);
+    // the selEleme is used, so create a new one;
+    Diag = Diag->newOne();
     selElem = Diag;
     return;
   }  // of "if(isDiagram)"
