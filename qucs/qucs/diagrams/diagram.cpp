@@ -116,6 +116,12 @@ void Diagram::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
   Q_UNUSED(item);
   Q_UNUSED(widget);
 
+  // outline on insert mode
+  if(drawScheme) {
+    painter->drawRect(cx, cy-y2, x2, y2);
+    return;
+  }
+
   paintDiagram(painter);
   paintMarkers(painter);
 
@@ -206,12 +212,6 @@ void Diagram::paintMarkers(QPainter *p, bool paintAll)
       foreach(Marker *pm, pg->Markers)
           if ((pm->ElemType & 1)||paintAll) pm->paint(p, cx, cy);
     */
-}
-
-// ------------------------------------------------------------
-void Diagram::paintScheme(Schematic *p)
-{
-  p->PostPaintEvent(_Rect, cx, cy-y2, x2, y2);
 }
 
 /*!
