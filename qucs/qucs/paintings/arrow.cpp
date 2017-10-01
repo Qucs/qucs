@@ -64,11 +64,28 @@ QRectF Arrow::boundingRect() const
 // --------------------------------------------------------------------------
 void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
+  Q_UNUSED(item);
+  Q_UNUSED(widget);
+
+  // paint mouse decoration, relative to mouse cursor
+  // track mouse move event
+  if(drawScheme){
+    painter->drawLine(ex+x1+25, ey+y1,   ex+x1+13, ey+y1+12);
+    painter->drawLine(ex+x1+18, ey+y1+2, ex+x1+25, ey+y1);
+    painter->drawLine(ex+x1+23, ey+y1+7, ex+x1+25, ey+y1);
+  }
+
+  // preview arrow after first mouse press
+  if(State > 0) {
+    painter->drawLine(cx, cy, cx+x2, cy+y2);
+    painter->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
+    painter->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);
+    return;
+  }
+
   /// \todo cleanup Arrow::paint
   //QPolygon Points;
   //int x1_, y1_, x2_, y2_, x3_, y3_;
-
-  //calcArrowHead(); // for xp#, yp#. Hack! needs to be done on mouse move to update arrow head.
 
   /// \todo precise selection over the lines, not the boundingRect
   /// http://www.qtcentre.org/threads/25206-QGraphicsItem-QLineF-Precise-Selection
@@ -128,14 +145,6 @@ void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidg
     //painter->drawConvexPolygon(Points);
     painter->setBrush(Qt::NoBrush); // no filling for next paintings
     }
-}
-
-// --------------------------------------------------------------------------
-void Arrow::paintScheme(Schematic *p)
-{
-  p->PostPaintEvent(_Line, cx, cy, cx+x2, cy+y2,0,0,false);
-  p->PostPaintEvent(_Line, cx+x2, cy+y2, cx+xp1, cy+yp1,0,0,false);
-  p->PostPaintEvent(_Line, cx+x2, cy+y2, cx+xp2, cy+yp2,0,0,false);
 }
 
 // --------------------------------------------------------------------------
@@ -285,12 +294,10 @@ bool Arrow::resizeTouched(float fX, float fY, float len)
 // Mouse move action during resize.
 void Arrow::MouseResizeMoving(int x, int y, Schematic *p)
 {
-  paintScheme(p);  // erase old painting
   if(State == 1) { x2 += cx-x; y2 += cy-y; cx = x; cy = y; } // moving shaft
   else { x2 = x-cx;  y2 = y-cy; }  // moving head
 
   calcArrowHead();
-  paintScheme(p);  // paint new painting
 }
 
 // --------------------------------------------------------------------------
@@ -314,41 +321,27 @@ void Arrow::MouseMoving(
 	Schematic *paintScale, int, int, int gx, int gy,
 	Schematic *p, int x, int y, bool drawn)
 {
-  if(State > 0) {
-    if(State > 1) {
-      calcArrowHead();
-      paintScheme(paintScale);  // erase old painting
-    }
-    State++;
+  if(State > 0) { // after first press
+    // update end point
     x2 = gx-cx;
     y2 = gy-cy;
-    calcArrowHead();
-    paintScheme(paintScale);  // paint new painting
   }
-  else { cx = gx; cy = gy; }
+  else { cx = gx; cy = gy; } // update start point
 
+  calcArrowHead();
 
-// FIXME #warning  p->setPen(Qt::SolidLine);
-  if(drawn) {
-    p->PostPaintEvent(_Line, x1+25, y1, x1+13, y1+12,0,0,true);  // erase old cursor symbol
-    p->PostPaintEvent(_Line, x1+18, y1+2, x1+25, y1,0,0,true);
-    p->PostPaintEvent(_Line, x1+23, y1+7, x1+25, y1,0,0,true);
-  }
-  x1 = x;
-  y1 = y;
-  p->PostPaintEvent(_Line, x1+25, y1, x1+13, y1+12,0,0,true);  // paint new cursor symbol
-  p->PostPaintEvent(_Line, x1+18, y1+2, x1+25, y1,0,0,true);
-  p->PostPaintEvent(_Line, x1+23, y1+7, x1+25, y1,0,0,true);
+  // track mouse move event to show scheme
+  ex = gx;
+  ey = gy;
 }
 
 // --------------------------------------------------------------------------
 bool Arrow::MousePressing()
 {
   State++;
-  if(State > 2) {
+  if(State == 2) {
     x1 = y1 = 0;
     State = 0;
-
     calcArrowHead();
     return true;    // painting is ready
   }
