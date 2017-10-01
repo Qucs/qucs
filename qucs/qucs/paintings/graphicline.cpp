@@ -50,6 +50,18 @@ QRectF GraphicLine::boundingRect() const
 
 void GraphicLine::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
+
+  if(drawScheme) {
+    painter->drawLine(ex+x1+27, ey+y1,    ex+x1+15, ey+y1+12);
+    painter->drawLine(ex+x1+25, ey+y1-2,  ex+x1+29, ey+y1+2);
+    painter->drawLine(ex+x1+13, ey+y1+10, ex+x1+17, ey+y1+14);
+  }
+
+  if(State > 0) {
+    painter->drawLine(cx, cy, cx+x2, cy+y2);
+    return;
+  }
+
   if(isSelected()) {
     painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
     painter->drawLine(cx, cy, cx+x2, cy+y2);
@@ -67,12 +79,6 @@ void GraphicLine::paint(QPainter *painter, const QStyleOptionGraphicsItem *item,
   }
   painter->setPen(Pen);
   painter->drawLine(cx, cy, cx+x2, cy+y2);
-}
-
-// --------------------------------------------------------------------------
-void GraphicLine::paintScheme(Schematic *p)
-{
-  p->PostPaintEvent(_Line, cx, cy, cx+x2, cy+y2);
 }
 
 // --------------------------------------------------------------------------
@@ -203,11 +209,8 @@ bool GraphicLine::resizeTouched(float fX, float fY, float len)
 // Mouse move action during resize.
 void GraphicLine::MouseResizeMoving(int x, int y, Schematic *p)
 {
-  paintScheme(p);  // erase old painting
   if(State == 1) { x2 += cx-x; y2 += cy-y; cx = x; cy = y; } // move beginning
   else { x2 = x-cx;  y2 = y-cy; }  // move ending
-
-  paintScheme(p);  // paint new painting
 }
 
 // --------------------------------------------------------------------------
@@ -217,35 +220,23 @@ void GraphicLine::MouseMoving(
 	Schematic *paintScale, int, int, int gx, int gy,
 	Schematic *p, int x, int y, bool drawn)
 {
-  if(State > 0) {
-    if(State > 1)
-      paintScale->PostPaintEvent(_Line, cx, cy, cx+x2, cy+y2);  // erase old painting
-    State++;
+  if(State > 0) { // after first press
+    // update ending
     x2 = gx-cx;
     y2 = gy-cy;
-    paintScale->PostPaintEvent(_Line, cx, cy, cx+x2, cy+y2);  // paint new painting
   }
-  else { cx = gx; cy = gy; }
+  else { cx = gx; cy = gy; } // update start
 
-
-  // FIXME #warning p->setPen(Qt::SolidLine);
-  if(drawn) {
-    p->PostPaintEvent(_Line, x1+27, y1, x1+15, y1+12,0,0,true);  // erase old cursor symbol
-    p->PostPaintEvent(_Line, x1+25, y1-2, x1+29, y1+2,0,0,true);
-    p->PostPaintEvent(_Line, x1+13, y1+10, x1+17, y1+14,0,0,true);
-  }
-  x1 = x;
-  y1 = y;
-  p->PostPaintEvent(_Line, x1+27, y1, x1+15, y1+12,0,0,true);  // paint new cursor symbol
-  p->PostPaintEvent(_Line, x1+25, y1-2, x1+29, y1+2,0,0,true);
-  p->PostPaintEvent(_Line, x1+13, y1+10, x1+17, y1+14,0,0,true);
+  // track mouse move event to show scheme
+  ex = gx;
+  ey = gy;
 }
 
 // --------------------------------------------------------------------------
 bool GraphicLine::MousePressing()
 {
   State++;
-  if(State > 2) {
+  if(State == 2) {
     x1 = y1 = 0;
     State = 0;
     return true;    // painting is ready
