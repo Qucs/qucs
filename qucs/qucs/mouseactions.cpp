@@ -1321,13 +1321,14 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float x, fl
     Doc->Diagrams->append(Diag);
     // clear flag, draw whole Diagram, not only scheme
     selElem->drawScheme = false;
-    Doc->enlargeView(Diag->cx, Diag->cy-Diag->y2, Diag->cx+Diag->x2, Diag->cy);
+    /// \todo Doc->enlargeView(Diag->cx, Diag->cy-Diag->y2, Diag->cx+Diag->x2, Diag->cy);
     Doc->setChanged(true, true);   // document has been changed
-
-    Doc->viewport()->repaint();
+    Doc->viewport()->update();
     // the selEleme is used, so create a new one;
     Diag = Diag->newOne();
     selElem = Diag;
+    // clear draw flag to trigger new insert on MMoveElement
+    drawn = false;
     return;
   } // isDiagram
 
