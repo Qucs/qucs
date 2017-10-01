@@ -402,6 +402,7 @@ void Component::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, Q
 
 // -------------------------------------------------------
 // Paints the component when moved with the mouse.
+// Draw relative to cx, cy, which are updated on mouse move event
 void Component::paintScheme(QPainter *painter)
 {
   if(Model.at(0) == '.') {   // is simulation component (dc, ac, ...)
@@ -429,32 +430,32 @@ void Component::paintScheme(QPainter *painter)
     y2 = y1+23 + int(float(b) / Scale);
     if(ty < y2+1) if(ty > y1-r.height())  ty = y2 + 1;
 
-    painter->drawRect(-6, -5, xb, yb);
-    painter->drawLine(-1, yb, -6, yb-5);
-    painter->drawLine(xb-2, yb, -1, yb);
-    painter->drawLine(xb-2, yb, xb-6, yb-5);
-    painter->drawLine(xb-2, yb, xb-2, 0);
-    painter->drawLine(xb-2, 0, xb-6, -5);
+    painter->drawRect(cx-6,    cy-5,  xb, yb);
+    painter->drawLine(cx-1,    cy+yb, cx-6,    cy+yb-5);
+    painter->drawLine(cx+xb-2, cy+yb, cx-1,    cy+yb);
+    painter->drawLine(cx+xb-2, cy+yb, cx+xb-6, cy+yb-5);
+    painter->drawLine(cx+xb-2, cy+yb, cx+xb-2, cy);
+    painter->drawLine(cx+xb-2, cy,    cx+xb-6, cy-5);
     return;
   }
 
   // paint all lines
   foreach(Line *p1, Lines)
-    painter->drawLine(p1->x1, p1->y1, p1->x2, p1->y2);
+    painter->drawLine(cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
 
   // paint all ports
   foreach(Port *p2, Ports)
-    if(p2->avail) painter->drawEllipse(p2->x-4, p2->y-4, 8, 8);
+    if(p2->avail) painter->drawEllipse(cx+p2->x-4, cy+p2->y-4, 8, 8);
 
   foreach(Arc *p3, Arcs)   // paint all arcs
-    painter->drawArc(p3->x, p3->y, p3->w, p3->h, p3->angle, p3->arclen);
+    painter->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
 
 
   foreach(Area *pa, Rects) // paint all rectangles
-    painter->drawRect(pa->x, pa->y, pa->w, pa->h);
+    painter->drawRect(cx+pa->x, cy+pa->y, pa->w, pa->h);
 
   foreach(Area *pa, Ellips) // paint all ellipses
-    painter->drawEllipse(pa->x, pa->y, pa->w, pa->h);
+    painter->drawEllipse(cx+pa->x, cy+pa->y, pa->w, pa->h);
 }
 
 // -------------------------------------------------------
