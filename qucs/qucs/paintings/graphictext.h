@@ -32,7 +32,6 @@ public:
 
   QRectF boundingRect() const;
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
-  void paintScheme(Schematic*);
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
@@ -56,6 +55,8 @@ public:
   QFont    Font;
   QString  Text;
   int      Angle;
+
+  int ex, ey; // used to track position of mouse move event
 };
 
 #endif
