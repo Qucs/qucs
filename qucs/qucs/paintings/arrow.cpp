@@ -331,8 +331,8 @@ void Arrow::MouseMoving(
   calcArrowHead();
 
   // track mouse move event to show scheme
-  ex = gx;
-  ey = gy;
+  ex = x;
+  ey = y;
 }
 
 // --------------------------------------------------------------------------
