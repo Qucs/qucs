@@ -279,8 +279,10 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
   if(selElem == 0) return;
 
   QPointF pos = Doc->mapToScene(Event->pos());
-  int gx = pos.x();
-  int gy = pos.y();
+  int x = pos.x();
+  int y = pos.y();
+  int gx = x;
+  int gy = y;
   Doc->setOnGrid(gx, gy);
 
   // while moving, add selElem only once to scene
@@ -292,8 +294,6 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
 
   // Painting handle the tracking of the mouse movement
   if(selElem->ElemType == isPainting) {
-    int x = gx;
-    int y = gx;
     // propagate mouse move event
     // it takes care of setCenter
     ((Painting*)selElem)->MouseMoving(Doc, x, y, gx, gy,
