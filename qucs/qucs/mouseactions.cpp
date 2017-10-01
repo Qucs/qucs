@@ -270,6 +270,9 @@ void MouseActions::moveElements(Q3PtrList<Element> *movElements, int x, int y)
  *
  * selElem is an Element object, see QucsApp::slotSelectComponent and
  * other similar slots.
+ *
+ * When mouse moves over the scene, the Element must be added and
+ * updated acordingly.
  */
 void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
 {
@@ -280,31 +283,28 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
   int gy = pos.y();
   Doc->setOnGrid(gx, gy);
 
-  /// \todo handle scheme for paintings
-  if(selElem->Type == isPainting) {
-  /*
-    Doc->PostPaintEvent (_NotRop, 0,0,0,0);
-    x -= Doc->contentsX();
-    y -= Doc->contentsY();
-    ((Painting*)selElem)->MouseMoving(Doc, x, y, gx, gy,
-                                       Doc, x, y, drawn);
-    drawn = true;
-    Doc->viewport()->update();
-  */
-    return;
-  }  // of "if(isPainting)"
-
-  // ********** it is a component or diagram
-
   // while moving, add selElem only once to scene
   if(!drawn) {
     Doc->scene->addItem(selElem);
     drawn = true;
     selElem->drawScheme = true;
   }
-  selElem->setPos(gx, gy);
 
+  // Painting handle the tracking of the mouse movement
+  if(selElem->ElemType == isPainting) {
+    int x = gx;
+    int y = gx;
+    // propagate mouse move event
+    // it takes care of setCenter
+    ((Painting*)selElem)->MouseMoving(Doc, x, y, gx, gy,
+                                       Doc, x, y, drawn);
+    return;
+  }
+
+  // Default to Component or Diagram
+  // move Element with the cursor
   selElem->setCenter(gx, gy);
+
 }
 
 
@@ -1217,8 +1217,19 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent*, float fX, float fY
   Doc->setChanged(true, true);
 }
 
-// -----------------------------------------------------------
-// insert component, diagram, painting into schematic ?!
+/*!
+ * \brief MouseActions::MPressElement
+ * \param Doc
+ * \param Event
+ * \param x
+ * \param y
+ *
+ * Event handler, an Element is selected for insersion and a mouse
+ * press takes place on the View.
+ *
+ * Handle the insertion of Elements, component, diagram and painting
+ * into the schematic.
+ */
 void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float x, float y)
 {
   if(selElem == 0) return;
@@ -1320,20 +1331,33 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float x, fl
     return;
   }  // of "if(isDiagram)"
 
+  else if(selElem->ElemType == isPainting) {
 
-  // ***********  it is a painting !!!
-  if(((Painting*)selElem)->MousePressing()) {
-    Doc->Paintings->append((Painting*)selElem);
-    ((Painting*)selElem)->Bounding(x1,y1,x2,y2);
-    //Doc->enlargeView(x1, y1, x2, y2);
-    selElem = ((Painting*)selElem)->newOne();
+    // propagate press event
+    bool finalPress = ((Painting*)selElem)->MousePressing();
 
-    Doc->viewport()->update();
-    Doc->setChanged(true, true);
+    // wait till all press events took place
+    // 1 press: graphictext
+    // 2 press: line, arrow, ellipse, rectangle
+    // 4 press: ellipsearc
+    // Note that MMoveElement keeps snapping to grid and updatig cx,cy
+    if( finalPress )  {
+      // add Element to list
+      Doc->Paintings->append((Painting*)selElem);
+      // clear scheme flag
+      selElem->drawScheme = false;
+      // mark document as changed
+      Doc->setChanged(true, true);
+      // keep a new Element selected
+      selElem = ((Painting*)selElem)->newOne();
+      // clear draw flag to trigger new insert on MMoveElement
+      drawn = false;
 
-    MMoveElement(Doc, Event);  // needed before next mouse pressing
-    drawn = false;
-  }
+      Doc->viewport()->update();
+      /// \todo fit view
+      //Doc->enlargeView(x1, y1, x2, y2);
+    }
+  } // isPainting
 }
 
 
