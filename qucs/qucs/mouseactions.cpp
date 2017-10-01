@@ -1273,17 +1273,15 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float x, fl
 	Doc->setChanged(true, true);
 	rot = Comp->rotated;
 
-    // handle static and dynamic components
-//    QucsApp::CompChoose;
-    if (Module::vaComponents.contains(entryName)){
-      QString filename = Module::vaComponents[entryName];
-//      qDebug() << "   ===+ recast";
-      Comp = dynamic_cast<vacomponent*>(Comp)->newOne(filename); //va component
-      qDebug() << "   => recast = Comp;" << Comp->name() << "filename: " << filename;
-    }
-    else {
+	// handle static and dynamic components
+	if (Module::vaComponents.contains(entryName)){
+	  QString filename = Module::vaComponents[entryName];
+	  Comp = dynamic_cast<vacomponent*>(Comp)->newOne(filename); //va component
+	  qDebug() << "   => recast = Comp;" << Comp->name() << "filename: " << filename;
+	}
+	else {
 	  Comp = Comp->newOne(); // static component is used, so create a new one
-    }
+	}
 	rot -= Comp->rotated;
 	rot &= 3;
 	while(rot--) Comp->rotate(); // keep last rotation for single component
@@ -1304,8 +1302,8 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float x, fl
     // get ready to paint selElem scheme on next move event
     drawn = false;
     return;
+  } // isComponent
 
-  }  // of "if(isComponent)"
   else if(selElem->ElemType == isDiagram) {
     if(Event->button() != Qt::LeftButton) return;
 
@@ -1313,7 +1311,8 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float x, fl
     // dialog is Qt::WDestructiveClose !!!
     DiagramDialog *dia =
        new DiagramDialog(Diag, Doc);
-    if(dia->exec() == QDialog::Rejected) {  // don't insert if dialog canceled
+    // don't insert if dialog canceled
+    if(dia->exec() == QDialog::Rejected) {
       Doc->viewport()->update();
       drawn = false;
       return;
@@ -1330,10 +1329,9 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float x, fl
     Diag = Diag->newOne();
     selElem = Diag;
     return;
-  }  // of "if(isDiagram)"
+  } // isDiagram
 
   else if(selElem->ElemType == isPainting) {
-
     // propagate press event
     bool finalPress = ((Painting*)selElem)->MousePressing();
 
