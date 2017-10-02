@@ -29,10 +29,6 @@ Element::~Element()
 {
 }
 
-void Element::paintScheme(Schematic *)
-{
-}
-
 void Element::paintScheme(QPainter *)
 {
 }
