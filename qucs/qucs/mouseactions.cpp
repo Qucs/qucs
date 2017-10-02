@@ -466,7 +466,7 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
     }
     else pe->setCenter(MAx1, MAy1, true);
 
-  pe->paintScheme(Doc);
+  /// \todo pe->paintScheme(Doc);
   }
 
   drawn = true;
@@ -484,10 +484,10 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
   MAx2 = DOC_X_POS(Event->pos().x());
   MAy2 = DOC_Y_POS(Event->pos().y());
 
-  Element *pe;
-  if(drawn) // erase old scheme
-    for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
-      pe->paintScheme(Doc);
+  //Element *pe;
+  //if(drawn) // erase old scheme
+    //for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
+      ///\todo pe->paintScheme(Doc);
 //      if(pe->Type == isWire)  if(((Wire*)pe)->Label)
 //        if(!((Wire*)pe)->Label->isSelected)
 //          ((Wire*)pe)->Label->paintScheme(&painter);
@@ -502,8 +502,8 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
   moveElements(&movingElements, MAx1, MAy1);  // moves elements by MAx1/MAy1
 
   // paint afterwards to avoid conflict between wire and label painting
-  for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
-    pe->paintScheme(Doc);
+  //for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
+    ///\ todo pe->paintScheme(Doc);
 //    if(pe->Type == isWire)  if(((Wire*)pe)->Label)
 //      if(!((Wire*)pe)->Label->isSelected)
 //        ((Wire*)pe)->Label->paintScheme(&painter);
@@ -1718,9 +1718,11 @@ void MouseActions::MReleaseResizePainting(Schematic *Doc, QMouseEvent *Event)
 // -----------------------------------------------------------
 void MouseActions::paintElementsScheme(Schematic *p)
 {
-  Element *pe;
-  for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
-    pe->paintScheme(p);
+  TODO("is paintElementsScheme needed?")
+  //Element *pe;
+  //for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
+    /// \todo drawScheme maybe? pe->paintScheme(p);
+
 }
 
 // -----------------------------------------------------------
