@@ -44,6 +44,24 @@ QRectF Ellipse::boundingRect() const
 
 void Ellipse::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
+  // paint mouse decoration
+  if(drawScheme) {
+    painter->drawEllipse(ex+13, ey, 18, 12);
+    if(filled) {
+      painter->drawLine(ex+14, ey+7, ex+20, ey+1);
+      painter->drawLine(ex+25, ey+2, ex+18, ey+9);
+      painter->drawLine(ex+29, ey+4, ex+23, ey+10);
+    }
+    // preview ellipse after first mouse press
+    if(State == 1) {
+      // _Ellipse hang/crash application, using _Arc solved, see bug 141 (closed)
+      painter->drawArc(x1, y1, x2-x1, y2-y1, 0, 16*360);
+      return;
+    }
+    return;
+  }
+
+
   if(isSelected()) {
     painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
     if(filled)
@@ -61,17 +79,12 @@ void Ellipse::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
 
     return;
   }
+
   painter->setPen(Pen);
   if(filled)
     painter->setBrush(Brush);
   painter->drawEllipse(cx, cy, x2, y2);
   painter->setBrush(Qt::NoBrush); // no filling for the next paintings
-}
-
-// --------------------------------------------------------------------------
-void Ellipse::paintScheme(Schematic *p)
-{
-  p->PostPaintEvent(_Ellipse, cx, cy, x2, y2);
 }
 
 // --------------------------------------------------------------------------
@@ -92,7 +105,9 @@ void Ellipse::setCenter(int x, int y, bool relative)
 // --------------------------------------------------------------------------
 Painting* Ellipse::newOne()
 {
-  return new Ellipse();
+  Ellipse* newOne = new Ellipse();
+  newOne->filled = filled;
+  return newOne;
 }
 
 // --------------------------------------------------------------------------
@@ -239,7 +254,6 @@ bool Ellipse::resizeTouched(float fX, float fY, float len)
 // Mouse move action during resize.
 void Ellipse::MouseResizeMoving(int x, int y, Schematic *p)
 {
-  paintScheme(p);  // erase old painting
   switch(State) {
     case 0: x2 = x-cx; y2 = y-cy; // lower right corner
 	    break;
@@ -252,8 +266,6 @@ void Ellipse::MouseResizeMoving(int x, int y, Schematic *p)
   }
   if(x2 < 0) { State ^= 1; x2 *= -1; cx -= x2; }
   if(y2 < 0) { State ^= 2; y2 *= -1; cy -= y2; }
-
-  paintScheme(p);  // paint new painting
 }
 
 // --------------------------------------------------------------------------
@@ -263,33 +275,18 @@ void Ellipse::MouseMoving(
 	Schematic *paintScale, int, int, int gx, int gy,
 	Schematic *p, int x, int y, bool drawn)
 {
-  if(State > 0) {
-    if(State > 1)
-      // _Ellipse hang/crash application, using _Arc solved, see bug 141 (closed)
-      paintScale->PostPaintEvent(_Arc, x1, y1, x2-x1, y2-y1, 0, 16*360); // erase old painting
-    State++;
+  if(State > 0) { // after first press
     x2 = gx;
     y2 = gy;
-    paintScale->PostPaintEvent(_Arc, x1, y1, x2-x1, y2-y1, 0, 16*360);
   }
   else { x2 = gx; y2 = gy; }
 
-  if(drawn) {
-    p->PostPaintEvent(_Ellipse, cx+13, cy, 18, 12,0,0,true);  // erase old cursor symbol
-    if(filled) {
-      p->PostPaintEvent(_Line, cx+14, cy+7, cx+20, cy+1,0,0,true);
-      p->PostPaintEvent(_Line, cx+25, cy+2, cx+18, cy+9,0,0,true);
-      p->PostPaintEvent(_Line, cx+29, cy+4, cx+23, cy+10,0,0,true);
-    }
-  }
   cx = x;
   cy = y;
-  p->PostPaintEvent(_Ellipse, cx+13, cy, 18, 12,0,0,true);  // paint new cursor symbol
-  if(filled) {
-    p->PostPaintEvent(_Line, cx+14, cy+7, cx+20, cy+1,0,0,true);
-    p->PostPaintEvent(_Line, cx+25, cy+2, cx+18, cy+9,0,0,true);
-    p->PostPaintEvent(_Line, cx+29, cy+4, cx+23, cy+10,0,0,true);
-  }
+
+  // track mouse move event to show scheme
+  ex = x;
+  ey = y;
 }
 
 // --------------------------------------------------------------------------
@@ -300,7 +297,7 @@ bool Ellipse::MousePressing()
     x1 = x2;
     y1 = y2;    // first corner is determined
   }
-  else {
+  else if(State == 2){
     if(x1 < x2) { cx = x1; x2 = x2-x1; } // cx/cy to upper left corner
     else { cx = x2; x2 = x1-x2; }
     if(y1 < y2) { cy = y1; y2 = y2-y1; }
