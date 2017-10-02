@@ -38,6 +38,11 @@ QRectF ID_Text::boundingRect() const
 
 void ID_Text::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
+  /// \todo draw subcircuit symbol id on move
+  // draw mouse decoration
+  //if(drawScheme)
+  //  painter->drawRect(cx, cy, x2, y2);
+
   /// \todo finish porting ID_text::paint()
   painter->setPen(QPen(Qt::black,1));
 
@@ -68,12 +73,6 @@ void ID_Text::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWi
   x2 = int(float(x2) / p->Scale);
   y2 = int(float(y2) / p->Scale);
   */
-}
-
-// --------------------------------------------------------------------------
-void ID_Text::paintScheme(Schematic *p)
-{
-  p->PostPaintEvent(_Rect, cx, cy, x2, y2);
 }
 
 // --------------------------------------------------------------------------
