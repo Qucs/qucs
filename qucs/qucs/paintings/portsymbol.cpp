@@ -56,8 +56,11 @@ void PortSymbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, 
   // keep track of painter state
   //p->Painter->save();
 
-  painter->setPen(QPen(Qt::red,1));  // like open node
-  painter->drawEllipse(cx-4, cy-4, 8, 8);
+  if(drawScheme) {
+    painter->setPen(QPen(Qt::red,1));  // like open node
+    painter->drawEllipse(cx-4, cy-4, 8, 8);
+    return;
+  }
 
   /*
   QSize r = p->Painter->fontMetrics().size(0, nameStr);
@@ -117,13 +120,6 @@ void PortSymbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, 
     painter->setPen(QPen(Qt::darkGray,3));
     painter->drawRoundRect(cx+x1-4, cy+y1-4, x2+8, y2+8);
   }
-}
-
-// --------------------------------------------------------------------------
-void PortSymbol::paintScheme(Schematic *p)
-{
-  p->PostPaintEvent(_Ellipse, cx-4, cy-4, 8, 8);
-  p->PostPaintEvent(_Rect, cx+x1, cy+y1, x2, y2);
 }
 
 // --------------------------------------------------------------------------
