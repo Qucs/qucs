@@ -270,6 +270,9 @@ void QucsApp::slotSelect(bool on)
       view->selElem = 0;
   }
 
+  // reset mouse cursor
+  Doc->mouseCursor->setCursorType(MouseCursor::NoCursor);
+
   if(performToggleAction(on, select, 0, 0, &MouseActions::MPressSelect)) {
     MouseReleaseAction = &MouseActions::MReleaseSelect;
     MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
