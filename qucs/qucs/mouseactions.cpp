@@ -414,7 +414,7 @@ void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
     else { if(MAy2<0) MAy2 = -abs(MAx2); else MAy2 = abs(MAx2); }
   }
 
-  Doc->PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);
+  /// \todo Doc->PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);
 }
 
 // -----------------------------------------------------------

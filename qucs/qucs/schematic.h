@@ -62,8 +62,6 @@ struct DigSignal {
   QString Type; // type of signal
 };
 typedef QMap<QString, DigSignal> DigMap;
-typedef enum {_NotRop, _Rect, _Line, _Ellipse, _Arc, _DotLine, _Translate, _Scale}PE;
-typedef struct {PE pe; int x1; int y1;int x2;int y2;int a; int b; bool PaintOnViewport;}PostedPaintEvent;
 
 // subcircuit, vhdl, etc. file structure
 struct SubFile {
@@ -105,8 +103,6 @@ public:
 
   void paintInit(QPainter*, float, int, int, int, int, float FontScale_=0.0, float PrintScale=1.0);
   void paintSchToViewpainter(QPainter* p, bool printAll, bool toImage, int screenDpiX=96, int printerDpiX=300);
-
-  void PostPaintEvent(PE pe, int x1=0, int y1=0, int x2=0, int y2=0, int a=0, int b=0,bool PaintOnViewport=false);
 
   float textCorr();
   void  sizeOfAll(int&, int&, int&, int&);
@@ -165,7 +161,6 @@ public:
 
   PaintingList  SymbolPaints;  // symbol definition for subcircuit
 
-  QList<PostedPaintEvent>   PostedPaintEvents;
   bool symbolMode;  // true if in symbol painting mode
 
   // mouse decoration to reflect currently selected mode
