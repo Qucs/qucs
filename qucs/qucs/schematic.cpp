@@ -104,9 +104,6 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   /// Having it as an item messes up the item count.
   //scene->addItem(schematicFrame);
 
-  // add a Frame to the schematic
-  schematicFrame =  new Frame();
-  scene->addItem(schematicFrame);
 
   // add a MouseCursor to the scene
   mouseCursor = new MouseCursor();
