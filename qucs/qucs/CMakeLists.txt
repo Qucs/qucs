@@ -154,6 +154,7 @@ SET(QUCS_SRCS
   syntax.cpp misc.cpp messagedock.cpp
   imagewriter.cpp printerwriter.cpp projectView.cpp
   frame.cpp
+  mousecursor.cpp
 )
 
 SET(QUCS_HDRS
@@ -174,6 +175,7 @@ textdoc.h
 wire.h
 wirelabel.h
 frame.h
+mousecursor.h
 )
 
 #
