@@ -323,16 +323,6 @@ void Schematic::setChanged(bool c, bool fillStack, char Op)
   return;
 }
 
-
-void Schematic::PostPaintEvent (PE pe, int x1, int y1, int x2, int y2, int a, int b, bool PaintOnViewport)
-{
-  PostedPaintEvent p = {pe, x1,y1,x2,y2,a,b,PaintOnViewport};
-  PostedPaintEvents.push_back(p);
-  viewport()->update();
-  update();
-}
-
-
 /*!
  * \brief Schematic::mouseMoveEvent
  * \param Event
