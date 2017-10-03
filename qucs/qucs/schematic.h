@@ -34,6 +34,7 @@
 #include "paintings/painting.h"
 #include "components/component.h"
 #include "frame.h"
+#include "mousecursor.h"
 
 #include <QGraphicsView>
 #include <Q3PtrList>
@@ -167,6 +168,8 @@ public:
   QList<PostedPaintEvent>   PostedPaintEvents;
   bool symbolMode;  // true if in symbol painting mode
 
+  // mouse decoration to reflect currently selected mode
+  MouseCursor *mouseCursor;
 
   int GridX, GridY;
   int ViewX1, ViewY1, ViewX2, ViewY2;  // size of the document area

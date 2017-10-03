@@ -108,6 +108,10 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   schematicFrame =  new Frame();
   scene->addItem(schematicFrame);
 
+  // add a MouseCursor to the scene
+  mouseCursor = new MouseCursor();
+  scene->addItem(mouseCursor);
+
   this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 

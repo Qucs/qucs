@@ -563,9 +563,8 @@ void MouseActions::MMoveDelete(Schematic *Doc, QMouseEvent *Event)
   MAx3  = DOC_X_POS(Event->pos().x());
   MAy3  = DOC_Y_POS(Event->pos().y());
 
-  // cannot draw on the viewport, it is displaced by the size of dock and toolbar
-  Doc->PostPaintEvent (_Line, MAx3-15, MAy3-15, MAx3+15, MAy3+15,0,0,false);
-  Doc->PostPaintEvent (_Line, MAx3-15, MAy3+15, MAx3+15, MAy3-15,0,0,false);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorDelete);
+  Doc->mouseCursor->setPos(Event->pos());
 }
 
 
@@ -579,15 +578,8 @@ void MouseActions::MMoveLabel(Schematic *Doc, QMouseEvent *Event)
   MAx3  = DOC_X_POS(Event->pos().x());
   MAy3  = DOC_Y_POS(Event->pos().y());
 
-  // paint marker
-  Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx3+10, MAy3-10);
-  Doc->PostPaintEvent (_Line, MAx3+10, MAy3-10, MAx3+20, MAy3-10);
-  Doc->PostPaintEvent (_Line, MAx3+10, MAy3-10, MAx3+10, MAy3-17);
-
-  // paint A
-  Doc->PostPaintEvent (_Line, MAx3+12, MAy3-12, MAx3+15, MAy3-23);
-  Doc->PostPaintEvent (_Line, MAx3+14, MAy3-17, MAx3+17, MAy3-17);
-  Doc->PostPaintEvent (_Line, MAx3+19, MAy3-12, MAx3+16, MAy3-23);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorLabel);
+  Doc->mouseCursor->setPos(Event->pos());
 }
 
 
@@ -601,9 +593,8 @@ void MouseActions::MMoveMarker(Schematic *Doc, QMouseEvent *Event)
   MAx3  = DOC_X_POS(Event->pos().x());
   MAy3  = DOC_Y_POS(Event->pos().y());
 
-  Doc->PostPaintEvent (_Line, MAx3, MAy3-2, MAx3-8, MAy3-10);
-  Doc->PostPaintEvent (_Line, MAx3+1, MAy3-3, MAx3+8, MAy3-10);
-  Doc->PostPaintEvent (_Line, MAx3-7, MAy3-10, MAx3+7, MAy3-10);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorMarker);
+  Doc->mouseCursor->setPos(Event->pos());
 }
 
 
@@ -617,11 +608,8 @@ void MouseActions::MMoveMirrorY(Schematic *Doc, QMouseEvent *Event)
   MAx3  = DOC_X_POS(Event->pos().x());
   MAy3  = DOC_Y_POS(Event->pos().y());
 
-  Doc->PostPaintEvent (_Line, MAx3-11, MAy3-4, MAx3-9, MAy3-9);
-  Doc->PostPaintEvent (_Line, MAx3-11, MAy3-3, MAx3-6, MAy3-3);
-  Doc->PostPaintEvent (_Line, MAx3+11, MAy3-4, MAx3+9, MAy3-9);
-  Doc->PostPaintEvent (_Line, MAx3+11, MAy3-3, MAx3+6, MAy3-3);
-  Doc->PostPaintEvent (_Arc, MAx3-10, MAy3-8, 21, 10, 16*20, 16*140,false);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorMirrorX);
+  Doc->mouseCursor->setPos(Event->pos());
 }
 
 
@@ -635,15 +623,12 @@ void MouseActions::MMoveMirrorX(Schematic *Doc, QMouseEvent *Event)
   MAx3  = DOC_X_POS(Event->pos().x());
   MAy3  = DOC_Y_POS(Event->pos().y());
 
-  Doc->PostPaintEvent (_Line, MAx3-4, MAy3-11, MAx3-9, MAy3-9);
-  Doc->PostPaintEvent (_Line, MAx3-3, MAy3-11, MAx3-3, MAy3-6);
-  Doc->PostPaintEvent (_Line, MAx3-4, MAy3+11, MAx3-9, MAy3+9);
-  Doc->PostPaintEvent (_Line, MAx3-3, MAy3+11, MAx3-3, MAy3+6);
-  Doc->PostPaintEvent (_Arc, MAx3-8, MAy3-10, 10, 21, 16*110, 16*140,false);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorMirrorY);
+  Doc->mouseCursor->setPos(Event->pos());
 }
 
 /**
- * @brief MouseActions::MMoveMirrorX Paints "rotate" mouse cursor
+ * @brief MouseActions::MMoveRotate Paints "rotate" mouse cursor
  * @param Doc
  * @param Event
  */
@@ -652,9 +637,8 @@ void MouseActions::MMoveRotate(Schematic *Doc, QMouseEvent *Event)
   MAx3  = DOC_X_POS(Event->pos().x());
   MAy3  = DOC_Y_POS(Event->pos().y());
 
-  Doc->PostPaintEvent (_Line, MAx3-6, MAy3+8, MAx3-6, MAy3+1);
-  Doc->PostPaintEvent (_Line, MAx3-7, MAy3+8, MAx3-12, MAy3+8);
-  Doc->PostPaintEvent (_Arc, MAx3-10, MAy3-10, 21, 21, -16*20, 16*240,false);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorRotate);
+  Doc->mouseCursor->setPos(Event->pos());
 }
 
 
@@ -668,9 +652,8 @@ void MouseActions::MMoveActivate(Schematic *Doc, QMouseEvent *Event)
   MAx3  = DOC_X_POS(Event->pos().x());
   MAy3  = DOC_Y_POS(Event->pos().y());
 
-  Doc->PostPaintEvent (_Rect, MAx3, MAy3-9, 14, 10);
-  Doc->PostPaintEvent (_Line, MAx3, MAy3-9, MAx3+13, MAy3);
-  Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx3+13, MAy3-9);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorActivate);
+  Doc->mouseCursor->setPos(Event->pos());
 }
 
 
@@ -684,12 +667,8 @@ void MouseActions::MMoveOnGrid(Schematic *Doc, QMouseEvent *Event)
   MAx3  = DOC_X_POS(Event->pos().x());
   MAy3  = DOC_Y_POS(Event->pos().y());
 
-  Doc->PostPaintEvent (_Line, MAx3+10, MAy3+ 3, MAx3+25, MAy3+3);
-  Doc->PostPaintEvent (_Line, MAx3+10, MAy3+ 7, MAx3+25, MAy3+7);
-  Doc->PostPaintEvent (_Line, MAx3+10, MAy3+11, MAx3+25, MAy3+11);
-  Doc->PostPaintEvent (_Line, MAx3+13, MAy3, MAx3+13, MAy3+15);
-  Doc->PostPaintEvent (_Line, MAx3+17, MAy3, MAx3+17, MAy3+15);
-  Doc->PostPaintEvent (_Line, MAx3+21, MAy3, MAx3+21, MAy3+15);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorOnGrid);
+  Doc->mouseCursor->setPos(Event->pos());
 }
 
 
@@ -703,14 +682,8 @@ void MouseActions::MMoveMoveTextB(Schematic *Doc, QMouseEvent *Event)
   MAx3  = DOC_X_POS(Event->pos().x());
   MAy3  = DOC_Y_POS(Event->pos().y());
 
-  Doc->PostPaintEvent (_Line, MAx3+14, MAy3   , MAx3+16, MAy3);
-  Doc->PostPaintEvent (_Line, MAx3+23, MAy3   , MAx3+25, MAy3);
-  Doc->PostPaintEvent (_Line, MAx3+13, MAy3   , MAx3+13, MAy3+ 3);
-  Doc->PostPaintEvent (_Line, MAx3+13, MAy3+ 7, MAx3+13, MAy3+10);
-  Doc->PostPaintEvent (_Line, MAx3+14, MAy3+10, MAx3+16, MAy3+10);
-  Doc->PostPaintEvent (_Line, MAx3+23, MAy3+10, MAx3+25, MAy3+10);
-  Doc->PostPaintEvent (_Line, MAx3+26, MAy3   , MAx3+26, MAy3+ 3);
-  Doc->PostPaintEvent (_Line, MAx3+26, MAy3+ 7, MAx3+26, MAy3+10);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorMoveTextB);
+  Doc->mouseCursor->setPos(Event->pos());
 }
 
 
@@ -728,7 +701,12 @@ void MouseActions::MMoveMoveText(Schematic *Doc, QMouseEvent *Event)
   MAx3  = newX;
   MAy3  = newY;
 
-  Doc->PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);
+  /// \todo Doc->PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);
+  /* MPressMoveText sets the MAxy cache vars, this was supposed to draw a rectangle
+   * This is not really a cursor, isn't it more down to the paint() of the text?
+  */
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorMoveText);
+  Doc->mouseCursor->setPos(Event->pos());
 }
 
 
@@ -742,10 +720,8 @@ void MouseActions::MMoveZoomIn(Schematic *Doc, QMouseEvent *Event)
   MAx3  = DOC_X_POS(Event->pos().x());
   MAy3  = DOC_Y_POS(Event->pos().y());
 
-  Doc->PostPaintEvent (_Line, MAx3+14, MAy3   , MAx3+22, MAy3);
-  Doc->PostPaintEvent (_Line, MAx3+18, MAy3-4 , MAx3+18, MAy3+4);
-  Doc->PostPaintEvent (_Ellipse, MAx3+12, MAy3-6, 13, 13,0,0,false);
-  Doc->viewport()->update();
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorZoomIn);
+  Doc->mouseCursor->setPos(Event->pos());
 }
 
 
