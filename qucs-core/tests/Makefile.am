@@ -46,6 +46,7 @@ libqucsUnitTest_SOURCES = testMain.cpp \
 	Fourier.cpp \
 	Math.cpp \
 	Matrix.cpp \
+	Spline.cpp \
 	Vector.cpp
 else
 libqucsUnitTest:
