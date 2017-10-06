@@ -1094,6 +1094,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
 
 void MouseActions::MPressTune(Schematic *Doc, QMouseEvent *Event, float fX, float fY)
 {
+    Q_UNUSED(Event);
     int No=0;
     MAx1 = int(fX);
     MAy1 = int(fY);

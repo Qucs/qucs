@@ -827,6 +827,7 @@ void TunerDialog::closeEvent(QCloseEvent *event)
 
 void TunerDialog::showEvent(QShowEvent *e)
 {
+    Q_UNUSED(e);
     for (int i = 0; i < currentElements->count(); i++)
     {
         if (currentElements->at(i)->getElementProperty() == nullptr)
