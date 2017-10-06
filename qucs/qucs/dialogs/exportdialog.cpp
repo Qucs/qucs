@@ -200,8 +200,8 @@ void ExportDialog::calcWidth()
 {
     if (cbRatio->isChecked()) {
         float h = editResolutionY->text().toFloat();
-        float w =  round((h*dwidth)/dheight);
-        editResolutionX->setText(QString::number(w));
+        float w =  (h*dwidth)/dheight;
+        editResolutionX->setText(QString::number(w, 'f', 0)); // integer number of pixels
     }
 }
 
@@ -210,8 +210,8 @@ void ExportDialog::calcHeight()
 {
     if (cbRatio->isChecked()) {
         float w = editResolutionX->text().toFloat();
-        float h =  round((w*dheight)/dwidth);
-        editResolutionY->setText(QString::number(h));
+        float h =  (w*dheight)/dwidth;
+        editResolutionY->setText(QString::number(h, 'f', 0)); // integer number of pixels
     }
 
 }
@@ -345,11 +345,11 @@ void ExportDialog::recalcScale()
 {
     scale = editScale->text().toFloat();
     if (cbSelected->isChecked()) {
-        editResolutionX->setText(QString::number(scale*dwidthsel));
-        editResolutionY->setText(QString::number(scale*dheightsel));
+        editResolutionX->setText(QString::number(scale*dwidthsel, 'f', 0));  // integer number of pixels
+        editResolutionY->setText(QString::number(scale*dheightsel, 'f', 0)); // integer number of pixels
     } else {
-        editResolutionX->setText(QString::number(scale*dwidth));
-        editResolutionY->setText(QString::number(scale*dheight));
+        editResolutionX->setText(QString::number(scale*dwidth, 'f', 0));
+        editResolutionY->setText(QString::number(scale*dheight, 'f', 0));
     }
 
 }
