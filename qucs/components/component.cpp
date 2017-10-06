@@ -621,62 +621,21 @@ QString Component::netlist()
   // with the component, as for the other components, they're accounted
   // as a resistor as well, and the changes were made to their .cpp
   foreach(Port *p1, Ports){
-  i++;
-
-    if ((Model == "Vdc" || Model == "Vac") && i==0) { // node 0 is +
-      s += " " + p1->Connection->Name + "_TEMP_" + Name;   // node names
-    }
-    else if ((Model == "IProbe") && i==1) {  // node 1 is +
-      s += " " + p1->Connection->Name + "_TEMP_" + Name;   // node names
-    } 
-    else if (Model == "WProbe" && (i==1)) {  // node 1 is +
-      s += " " + p1->Connection->Name + "_TEMP_" + Name + "1";   // node names
-    }
-    else  {
-      s += " " + p1->Connection->Name;   // node names
-    }
+    i++;
+    s += " " + p1->Connection->Name;   // node names
   }
 
   // output all properties
-  for (Property *p2 = Props.first(); p2 != 0; p2 = Props.next())
-    if (p2->Name != "Symbol")
+  for (Property *p2 = Props.first(); p2 != 0; p2 = Props.next()){
+    if (p2->Name != "Symbol"){
       s += " " + p2->Name + "=\"" + p2->Value + "\"";
-   
+    }else{
+      // BUG: what is this?
+      // doing name dependent stuff
+    }
+  }
+
   s += '\n';
-
-  if (Model == "Vdc" || Model == "Vac") {
-    // output all node names
-    Port *p1 = Ports.at(0);
-    s += "R:_R_" + p1->Connection->Name + "_TEMP_" + Name;
-    s += " " + p1->Connection->Name + "_TEMP_" + Name;   // node names
-    s += " " + p1->Connection->Name;   // node names
-    // output all properties
-    for (Property *p2 = Props.first(); p2 != 0; p2 = Props.next())
-      if (p2->Name == "Ri") s += " R=\"" + p2->Value + "\"";
-    s += " Temp = \"26.85\" Tc1 = \"0.0\" Tc2 = \"0.0\" Tnom = \"26.85\"";
-  }
-  else if (Model == "IProbe") {
-    Port *p1 = Ports.at(1);
-    s += "R:_R_" + p1->Connection->Name + "_TEMP_" + Name;
-    s += " " + p1->Connection->Name + "_TEMP_" + Name;   // node names
-    s += " " + p1->Connection->Name;   // node names
-    // output all properties
-    for (Property *p2 = Props.first(); p2 != 0; p2 = Props.next())
-      if (p2->Name == "Ri") s += " R=\"" + p2->Value + "\"";
-    s += " Temp = \"26.85\" Tc1 = \"0.0\" Tc2 = \"0.0\" Tnom = \"26.85\"";
-  }
-
- else if (Model == "WProbe") {
-    Port *p1 = Ports.at(1);
-    s += "R:_R_" + p1->Connection->Name + "_TEMP_" + Name + "1";
-    s += " " + p1->Connection->Name + "_TEMP_" + Name + "1";   // node names
-    s += " " + p1->Connection->Name;   // node names
-    // output all properties
-    for (Property *p2 = Props.first(); p2 != 0; p2 = Props.next())
-      if (p2->Name == "Rii") s += " R=\"" + p2->Value + "\"";
-    s += " Temp = \"26.85\" Tc1 = \"0.0\" Tc2 = \"0.0\" Tnom = \"26.85\"";
-  }
-
   s += '\n';
 
   return s;
