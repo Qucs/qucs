@@ -620,9 +620,13 @@ void createListComponentEntry(){
 
     foreach (Module *Mod, Comps) {
       Element *e = (Mod->info) (Name, File, true);
+		// dangerous. better precheck cast
       Component *c = (Component* ) e;
 
-      QString qucsEntry = c->save();
+		// FIXME: cleanup
+		QTextStream s;
+		c->getSchematic()->saveComponent(s, c);
+      QString qucsEntry = *(s.string());
       fprintf(stdout, "%s; qucs    ; %s\n", c->Model.toAscii().data(), qucsEntry.toAscii().data());
 
       // add dummy ports/wires, avoid segfault
