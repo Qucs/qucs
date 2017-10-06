@@ -92,4 +92,6 @@ bool loadSettings();
 bool saveApplSettings();
 void qucsMessageOutput(QtMsgType type, const char *msg);
 
+// void attach(const char*); not yet.
+
 #endif // ifndef QUCS_MAIN_H

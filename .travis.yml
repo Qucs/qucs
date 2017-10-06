@@ -134,6 +134,7 @@ install:
 script:
   - uname -a
   - $CXX --version
+  - awk --version | head -n1
   - autoconf --version
   - automake --version
   - which flex  && flex --version
@@ -184,7 +185,7 @@ script:
   - echo $TRAVIS_BRANCH
 
   # incomplete
-  - echo $TRAVIS_BRANCH
+  - echo incomplete stuff, $TRAVIS_BRANCH
   - if [[ $TRAVIS_BRANCH == develop ]] ; then
       echo developmentstuff...;
     fi

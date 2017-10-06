@@ -17,12 +17,13 @@ AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([no-define])
 AM_PROG_AR
 AC_PREFIX_DEFAULT([/usr/local])
+AC_CONFIG_MACRO_DIR([m4])
 
 dnl Checks for programs.
 AC_PROG_CXX(clang++ g++)
 AC_PROG_CC
-AC_PROG_RANLIB
 AC_CHECK_TOOL(AR, ar, :)
+LT_INIT()
 
 dnl Check for debugging option.
 AC_ARG_ENABLE([debug],
@@ -749,6 +750,10 @@ dnl AC_LANG(C++)
 dnl AC_CHECK_HEADERS([Board.h])
 dnl AC_CHECK_LIB(board, fprintf)
 dnl AC_LANG(C)
+
+AC_LANG(C++)
+AC_CHECK_LIB([dl], [dlopen])
+AC_LANG(C)
 
 dnl Check for path transformation.
 case $build_os in

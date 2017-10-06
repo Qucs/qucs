@@ -24,6 +24,8 @@
 
 include ../common.mk
 
+AM_DEFAULT_SOURCE_EXT = .cpp
+
 SUBDIRS = \
 	bitmaps \
 	components diagrams \
@@ -48,12 +50,14 @@ MOCHEADERS = \
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucs_SOURCES = node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
+qucs_SOURCES = \
+  attach.cpp \
+  node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
   qucs.cpp main.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
   viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
   schematic_file.cpp syntax.cpp module.cpp octave_window.cpp qucs_.qrc   \
   messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
-	projectView.cpp
+  projectView.cpp
 
 nodist_qucs_SOURCES = $(MOCFILES)
 
@@ -66,6 +70,9 @@ qucs_LDADD = components/libcomponents.a diagrams/libdiagrams.a \
 noinst_HEADERS = $(MOCHEADERS) main.h wire.h qucsdoc.h element.h node.h \
   wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
   projectView.h printerwriter.h imagewriter.h
+
+# must be installed. but later
+noinst_HEADERS += platform.h
 
 hicolor16dir = ${prefix}/share/icons/hicolor/16x16/apps
 hicolor16_DATA =  bitmaps/hicolor/16x16/apps/qucs.png
@@ -92,6 +99,7 @@ desktop_DATA = qucs.desktop
 
 
 EXTRA_DIST = \
+   $(TESTS) \
 	qucsdigi qucsdigilib qucsdigi.bat qucsdigilib.bat qucsveri qucsveri.bat \
 	$(hicolor16_DATA) $(hicolor22_DATA) $(hicolor32_DATA) $(hicolor48_DATA) \
 	$(hicolor64_DATA) $(hicolor128_DATA) $(hicolor256_DATA) $(hicolor512_DATA) \
@@ -106,6 +114,35 @@ EXTRA_DIST = \
 	bitmaps/qucsrescodes.icns \
 	bitmaps/qucstrans.icns
 
-CLEANFILES = *~ *.rej *.orig qucs_.cpp
+SUFFIXES = .h .moc.cpp
+
+.h.moc.cpp:
+	$(MOC) -o $@ $<
+
+check_LTLIBRARIES = helloworld.la
+helloworld_la_LDFLAGS = -shared -no-undefined -module -avoid-version -rpath /dev/null
+
+if COND_WIN32
+helloworld.dll: %.dll: %.la
+	[ -f $@ ] || $(LN_S) .libs/$$(. .libs/$<; echo $$dlname) .
+helloworld.log: helloworld.dll
+else
+helloworld.so: %.so: %.la
+	[ -f $@ ] || $(LN_S) .libs/$$(. .libs/$<; echo $$dlname) .
+helloworld.log: helloworld.so
+endif
+
+SH_LOG_COMPILER = $(SHELL)
+SH_LOG_FLAGS =
+TEST_EXTENSIONS = .sh
+AM_TESTS_FD_REDIRECT = 9>&2
+
+TESTS = helloworld.sh doesnotexist.sh
+if COND_WIN32
+# it does not work on windoze
+doesnotexist.log: SH_LOG_FLAGS=-c 'exit 77'
+endif
+
+CLEANFILES = *~ *.rej *.orig
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.qm
 DISTCLEANFILES = *.moc.cpp *.qm
