@@ -236,7 +236,8 @@ void spline::construct (void) {
   // second kind of cubic splines
   else if (boundary == SPLINE_BC_PERIODIC) {
     // non-trigdiagonal equations - periodic boundary condition
-    ::std::vector<nr_double_t> z (n+1);
+    //::std::vector<nr_double_t> z (n+1);
+    nr_double_t *z = new nr_double_t[n+1];
     if (n == 2) {
       nr_double_t B = h[0] + h[1];
       nr_double_t A = 2 * B;
@@ -273,7 +274,8 @@ void spline::construct (void) {
     }
 
     f1 = new nr_double_t[n+1];
-    f2 = &z.front (); // reuse storage
+    //f2 = &z.front (); // reuse storage
+    f2 = z;
     f3 = h;
     for (i = n - 1; i >= 0; i--) {
       f1[i] = (f0[i+1] - f0[i]) / h[i] - h[i] * (z[i+1] + 2 * z[i]) / 3;
