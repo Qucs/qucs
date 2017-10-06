@@ -179,6 +179,7 @@ PNG = \
 	rect.png \
 	redo.png \
 	relais.png \
+	RemoveElementTuning.png \
 	resistor.png \
 	resistor_us.png \
 	rfedd.png \
@@ -217,6 +218,7 @@ PNG = \
 	transformer.png \
 	triac.png \
 	truth.png \
+	tune.png \
 	tunneldiode.png \
 	twistedpair.png \
 	undo.png \
