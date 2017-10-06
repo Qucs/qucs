@@ -64,6 +64,7 @@ class stripline : public transline {
   void show_results();
   void getStriplineLength();
   void calculateZ0();
+  double getZ0fromWidth(double);
 };
 
 #endif /* __stripline_H */
