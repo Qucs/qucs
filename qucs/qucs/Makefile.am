@@ -143,6 +143,6 @@ if COND_WIN32
 doesnotexist.log: SH_LOG_FLAGS=-c 'exit 77'
 endif
 
-CLEANFILES = *~ *.rej *.orig
+CLEANFILES = *~ *.rej *.orig qucs_.cpp
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.qm
 DISTCLEANFILES = *.moc.cpp *.qm
