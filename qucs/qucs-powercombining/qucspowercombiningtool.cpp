@@ -1508,6 +1508,7 @@ int QucsPowerCombiningTool::TravellingWave(double Z0, double Freq, int N, bool S
         QString freq_stop = QString("%1%2").arg(1.5*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
         s += QString("<.SP SP1 1 200 200 0 67 0 0 \"lin\" 1 \"%2\" 1 \"%3\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg(freq_start).arg(freq_stop);
         // Equations
+        str = QString("\"S11_dB=dB(S[1,1])\" 1 ");
         for (int i=2;i<=N+1; i++) 
         {
           str += QString("\"S%1%2_dB=dB(S[%1,1])\" 1 ").arg(i).arg(1);
@@ -1704,6 +1705,9 @@ int QucsPowerCombiningTool::Tree(double Z0, double Freq, int N, bool SP_block, b
                     QString freq_start = QString("%1%2").arg((1/N)*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
                     QString freq_stop = QString("%1%2").arg((2+1/N)*FreqlineEdit->text().toDouble()).arg(FreqScaleCombo->currentText());
                     s += QString("<.SP SP1 1 %3 %4 0 67 0 0 \"lin\" 1 \"%1\" 1 \"%2\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg(freq_start).arg(freq_stop).arg(x-200).arg(offset+200);
+                
+                    // Equations
+                    str = QString("\"S11_dB=dB(S[1,1])\" 1 ");
                     for (int i=2;i<=N+1; i++) 
                     {
                       str += QString("\"S%1%2_dB=dB(S[%1,1])\" 1 ").arg(i).arg(1);
