@@ -265,7 +265,7 @@ QucsPowerCombiningTool::QucsPowerCombiningTool()
   VboxMicrostrip->addLayout(hboxMicr8);
 
    QSize sz;
-   QString s1 = ":/bitmaps/Wilkinson.svg";
+   QString s1 = ":/bitmaps/Wilkinson_idealTL.svg";
    QGridLayout * imgLayout = new QGridLayout();
    imgWidget = new QSvgWidget(s1);
    sz = imgWidget->size();
@@ -289,7 +289,7 @@ QucsPowerCombiningTool::QucsPowerCombiningTool()
   connect(TopoCombo, SIGNAL(currentIndexChanged(int)), SLOT(on_TopoCombo_currentIndexChanged(int)));
   connect(MicrostripradioButton, SIGNAL(clicked()), SLOT(on_MicrostripradioButton_clicked()));
   connect(LumpedElementsradioButton, SIGNAL(clicked()), SLOT(on_LCRadioButton_clicked()));
-
+  connect(IdealTLradioButton, SIGNAL(clicked()), SLOT(on_IdealTLRadioButton_clicked()));
 }
 
 //------------------------------------------------
@@ -322,39 +322,83 @@ double QucsPowerCombiningTool::getScaleFreq()
 }
 
 //------------------------------------------------------------------
-// This function changes the window according to the selected topology
-void QucsPowerCombiningTool::on_TopoCombo_currentIndexChanged(int index)
+// Update image
+void QucsPowerCombiningTool::UpdateImage()
 {
+    int index = TopoCombo->currentIndex();
     bool lumpedImplementation = LumpedElementsradioButton->isChecked();
+    bool microstripImplementation = MicrostripradioButton->isChecked();
+    
     //Update image
     switch (index)
     {
        
        case 0: //Wilkinson
-               (lumpedImplementation) ? imgWidget->load(QString(":/bitmaps/WilkinsonLC.svg")) : 
-                                        imgWidget->load(QString(":/bitmaps/Wilkinson.svg"));
+               if (lumpedImplementation)
+               {
+                  imgWidget->load(QString(":/bitmaps/WilkinsonLC.svg"));
+               }
+               else
+               { 
+                (microstripImplementation) ? imgWidget->load(QString(":/bitmaps/Wilkinson_microstrip.svg"))
+                                           : imgWidget->load(QString(":/bitmaps/Wilkinson_idealTL.svg"));
+               }
                break;
        case 1: //Mutistage Wilkinson
-               (lumpedImplementation) ? imgWidget->load(QString(":/bitmaps/MultistageWilkinsonLC.svg")) : 
-                                        imgWidget->load(QString(":/bitmaps/MultistageWilkinson.svg"));
+               if (lumpedImplementation)
+               {
+                  imgWidget->load(QString(":/bitmaps/MultistageWilkinsonLC.svg"));
+               }
+               else
+               {
+                (microstripImplementation) ? imgWidget->load(QString(":/bitmaps/MultistageWilkinson_microstrip.svg"))
+                                           : imgWidget->load(QString(":/bitmaps/MultistageWilkinson_idealTL.svg"));
+               }
+                                       
                break;
        case 2: //Tee
-               imgWidget->load(QString(":/bitmaps/Tee.svg")); break;
+               (microstripImplementation) ? imgWidget->load(QString(":/bitmaps/Tee_microstrip.svg"))
+                                          : imgWidget->load(QString(":/bitmaps/Tee_idealTL.svg")); 
+               break;
        case 3: //Branch-line
-               imgWidget->load(QString(":/bitmaps/Branchline.svg"));break;
+               (microstripImplementation) ? imgWidget->load(QString(":/bitmaps/Branchline_microstrip.svg"))
+                                          : imgWidget->load(QString(":/bitmaps/Branchline_idealTL.svg"));
+               break;
        case 4: //Double-box branch-line
-               imgWidget->load(QString(":/bitmaps/DoubleBoxBranchline.svg"));break;
+               (microstripImplementation) ? imgWidget->load(QString(":/bitmaps/DoubleBoxBranchline_microstrip.svg"))
+                                          : imgWidget->load(QString(":/bitmaps/DoubleBoxBranchline_idealTL.svg"));
+               break;
        case 5: //Bagley power combiner
-               imgWidget->load(QString(":/bitmaps/Bagley.svg"));break;
+               (microstripImplementation) ? imgWidget->load(QString(":/bitmaps/Bagley_microstrip.svg"))
+                                          : imgWidget->load(QString(":/bitmaps/Bagley_idealTL.svg"));
+               break;
        case 6: //Gysel power combiner
-               imgWidget->load(QString(":/bitmaps/Gysel.svg")); break;
+               (microstripImplementation) ? imgWidget->load(QString(":/bitmaps/Gysel_microstrip.svg"))
+                                          : imgWidget->load(QString(":/bitmaps/Gysel_idealTL.svg")); 
+               break;
        // -------------  CORPORATE COMBINERS  -----------------
        case 7: //Travelling wave
-               imgWidget->load(QString(":/bitmaps/TravellingWave.svg")); break;
+               (microstripImplementation) ? imgWidget->load(QString(":/bitmaps/TravellingWave_microstrip.svg"))
+                                          : imgWidget->load(QString(":/bitmaps/TravellingWave_idealTL.svg"));
+               break;
        case 8: //Tree
-               imgWidget->load(QString(":/bitmaps/Tree.svg")); break;   
+               (microstripImplementation) ? imgWidget->load(QString(":/bitmaps/Tree_microstrip.svg"))
+                                          : imgWidget->load(QString(":/bitmaps/Tree_idealTL.svg")); 
+               break;   
     }
+}
 
+
+
+
+//------------------------------------------------------------------
+// This function changes the window according to the selected topology
+void QucsPowerCombiningTool::on_TopoCombo_currentIndexChanged(int index)
+{
+    bool lumpedImplementation = LumpedElementsradioButton->isChecked();
+    
+    UpdateImage();
+    
     // Change settings
     if ((index==0)|(index==2)||(index==3))//Wilkinson, Tee, Branchline
     {
@@ -1873,22 +1917,25 @@ void QucsPowerCombiningTool::getMicrostrip(double Z0, double freq, tSubstrate *s
 
 void QucsPowerCombiningTool::on_MicrostripradioButton_clicked()
 {
+      UpdateImage();
       MicrostripgroupBox->setEnabled(true);
       AlphaLabel->setVisible(true);
       AlphalineEdit->setVisible(true);
       AlphadBLabel->setVisible(true);
+}
 
-      switch (TopoCombo->currentIndex())//Update image
-      { 
-        case 0: imgWidget->load(QString(":/bitmaps/Wilkinson.svg")); break;
-        case 1: imgWidget->load(QString(":/bitmaps/MultistageWilkinson.svg"));
-      }
+void QucsPowerCombiningTool::on_IdealTLRadioButton_clicked()
+{
+      UpdateImage();
+      MicrostripgroupBox->setEnabled(false);
+      AlphaLabel->setVisible(false);
+      AlphalineEdit->setVisible(false);
+      AlphadBLabel->setVisible(false);
 }
 
 void QucsPowerCombiningTool::on_LCRadioButton_clicked()
 {
-      if (TopoCombo->currentIndex() == 0) imgWidget->load(QString(":/bitmaps/WilkinsonLC.svg"));
-      if (TopoCombo->currentIndex() == 1) imgWidget->load(QString(":/bitmaps/MultistageWilkinsonLC.svg")); 
+      UpdateImage();
       MicrostripgroupBox->setEnabled(false);
       
       //Hide the length unit combo
