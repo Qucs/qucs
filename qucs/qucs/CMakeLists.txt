@@ -124,6 +124,7 @@ ADD_SUBDIRECTORY( python )
 ADD_SUBDIRECTORY( paintings )
 
 SET(QUCS_SRCS
+  attach.cpp
   element.cpp	octave_window.cpp	qucsdoc.cpp
   textdoc.cpp  main.cpp	schematic.cpp
   mnemo.cpp	qucs.cpp	viewpainter.cpp
@@ -144,6 +145,7 @@ module.h
 mouseactions.h
 node.h
 octave_window.h
+platform.h
 qucs.h
 qucsdoc.h
 schematic.h
@@ -244,7 +246,7 @@ ADD_EXECUTABLE( qucs MACOSX_BUNDLE WIN32
 #
 # Tell CMake which libraries we need to link our executable against.
 #
-TARGET_LINK_LIBRARIES( qucs  components diagrams dialogs paintings ${QT_LIBRARIES} )
+TARGET_LINK_LIBRARIES( qucs components diagrams dialogs paintings ${QT_LIBRARIES} ${CMAKE_DL_LIBS})
 
 #
 # Prepare the installation
