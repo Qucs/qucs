@@ -209,7 +209,7 @@ int coplanar::synthesize()
   calc();
   Z0_current = Z0;
 
-  error = fabs(Z0_dest - Z0_current);
+  error = std::abs(Z0_dest - Z0_current);
 
   while (error > MAX_ERROR) {
     iteration++;
@@ -242,7 +242,7 @@ int coplanar::synthesize()
     /* compute coplanar parameters */
     calc();
     Z0_current = Z0;
-    error = fabs(Z0_dest - Z0_current);
+    error = std::abs(Z0_dest - Z0_current);
     if (iteration > maxiter)
       break;
   }

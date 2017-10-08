@@ -63,9 +63,14 @@ QString Schematic::createClipboardFile()
 
   // Build element document.
   s += "<Components>\n";
-  for(pc = Components->first(); pc != 0; pc = Components->next())
+  for(pc = Components->first(); pc != 0; pc = Components->next()){
     if(pc->isSelected) {
-      s += pc->save()+"\n";  z++; }
+      QTextStream str(&s);
+      saveComponent(str, pc);
+      s += "\n";
+      ++z;
+    }
+  }
   s += "</Components>\n";
 
   s += "<Wires>\n";
@@ -390,8 +395,11 @@ int Schematic::saveDocument()
   stream << "</Symbol>\n";
 
   stream << "<Components>\n";    // save all components
-  for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next())
-    stream << "  " << pc->save() << "\n";
+  for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()){
+    stream << "  "; // BUG language specific.
+    saveComponent(stream, pc);
+    stream << "\n"; // BUG?
+  }
   stream << "</Components>\n";
 
   stream << "<Wires>\n";    // save all wires
@@ -660,8 +668,9 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
         if(!c->Name.at(z).isDigit()) break;
       c->Name = c->Name.left(z+1);
       List->append(c);
+    }else{
+      simpleInsertComponent(c);
     }
-    else  simpleInsertComponent(c);
   }
 
   QMessageBox::critical(0, QObject::tr("Error"),
@@ -769,6 +778,8 @@ bool Schematic::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
     else if(cstr == "<Curve") d = new CurveDiagram();
     else if(cstr == "<Time") d = new TimingDiagram();
     else if(cstr == "<Truth") d = new TruthDiagram();
+    else if(cstr == "<Phasor") d = new PhasorDiagram();
+    else if(cstr == "<Waveac") d = new Waveac();
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 		   QObject::tr("Format Error:\nUnknown diagram!"));
@@ -939,8 +950,11 @@ QString Schematic::createUndoString(char Op)
   // Build element document.
   QString s = "  \n";
   s.replace(0,1,Op);
-  for(pc = DocComps.first(); pc != 0; pc = DocComps.next())
-    s += pc->save()+"\n";
+  for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+    QTextStream str(&s);
+    saveComponent(str, pc);
+    s += "\n";
+  }
   s += "</>\n";  // short end flag
 
   for(pw = DocWires.first(); pw != 0; pw = DocWires.next())

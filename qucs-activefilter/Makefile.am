@@ -22,6 +22,8 @@
 # Boston, MA 02110-1301, USA.
 #
 
+include ../common.mk
+
 bin_PROGRAMS = qucsactivefilter
 
 dist_man_MANS = qucsactivefilter.1
@@ -31,12 +33,7 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 qucsactivefilter_SOURCES = main.cpp qucsactivefilter.cpp filter.cpp helpdialog.cpp \
 transferfuncdialog.cpp sallenkey.cpp \
-mfbfilter.cpp schcauer.cpp qf_poly.cpp qrc_qucsactivefilter.cpp
-
-qrc_qucsactivefilter.cpp: qucsactivefilter.qrc
-	$(RCC) -o $@ $<
-
-EXTRA_DIST = qucsactivefilter.qrc
+mfbfilter.cpp schcauer.cpp qf_poly.cpp qucsactivefilter_.qrc
 
 nodist_qucsactivefilter_SOURCES = $(MOCFILES)
 
@@ -44,15 +41,27 @@ AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES)
 qucsactivefilter_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 qucsactivefilter_LDADD = $(X11_LIBS) $(QT_LIBS)
 
-noinst_HEADERS = $(MOCHEADERS) qf_matrix.h bessel.h \
+noinst_HEADERS = $(MOCHEADERS) qf_matrix.h bessel.h legendre.h \
                  sallenkey.h filter.h mfbfilter.h \
                  schcauer.h qf_poly.h
 
-SUFFIXES = .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -o $@ $<
-
-CLEANFILES = *~
+CLEANFILES = *~ qucsactivefilter_.cpp
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
 DISTCLEANFILES = *.moc.cpp
+EXTRA_DIST = $(BITMAPS)
+
+BITMAPS = \
+bitmaps/high-pass.svg \
+bitmaps/cauer-bandpass.svg \
+bitmaps/trfunc.png \
+bitmaps/mfb-bandpass.svg \
+bitmaps/sk-lowpass.svg \
+bitmaps/mfb-lowpass.svg \
+bitmaps/bandstop.svg \
+bitmaps/big.qucs.xpm \
+bitmaps/AFR.svg \
+bitmaps/sk-highpass.svg \
+bitmaps/mfb-highpass.svg \
+bitmaps/cauer.svg \
+bitmaps/sk-bandpass.svg \
+bitmaps/bandpass.svg

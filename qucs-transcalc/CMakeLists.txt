@@ -76,7 +76,7 @@ SET( LIB_SRC
   stripline.cpp
 )
 
-SET(RESOURCES qucstrans.qrc)
+SET(RESOURCES qucstrans_.qrc)
 
 QT4_ADD_RESOURCES(RESOURCES_SRCS ${RESOURCES})
 

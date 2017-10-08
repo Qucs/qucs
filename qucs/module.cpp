@@ -194,6 +194,8 @@ void Module::intoCategory (Module * m) {
   REGISTER_COMP_2 (QObject::tr("nonlinear components"),val,inf1,inf2)
 #define REGISTER_NONLINEAR_3(val,inf1,inf2,inf3) \
   REGISTER_COMP_3 (QObject::tr("nonlinear components"),val,inf1,inf2,inf3)
+#define REGISTER_RF_PASSIVE_1(val) \
+  REGISTER_COMP_1 (QObject::tr("RF components"),val)
 #define REGISTER_VERILOGA_1(val) \
   REGISTER_COMP_1 (QObject::tr("verilog-a devices"),val)
 #define REGISTER_VERILOGA_2(val,inf1,inf2) \
@@ -232,15 +234,8 @@ void Module::registerModules (void) {
   REGISTER_LUMPED_1 (symTrafo);
   REGISTER_LUMPED_1 (dcBlock);
   REGISTER_LUMPED_1 (dcFeed);
-  REGISTER_LUMPED_1 (BiasT);
-  REGISTER_LUMPED_1 (Attenuator);
   REGISTER_LUMPED_1 (Amplifier);
-  REGISTER_LUMPED_1 (Isolator);
-  REGISTER_LUMPED_1 (Circulator);
   REGISTER_LUMPED_1 (Gyrator);
-  REGISTER_LUMPED_1 (Phaseshifter);
-  REGISTER_LUMPED_1 (Coupler);
-  REGISTER_LUMPED_1 (Hybrid);
   REGISTER_LUMPED_1 (iProbe);
   REGISTER_LUMPED_1 (vProbe);
   REGISTER_LUMPED_1 (Mutual);
@@ -248,8 +243,6 @@ void Module::registerModules (void) {
   REGISTER_LUMPED_1 (MutualX);
   REGISTER_LUMPED_1 (Switch);
   REGISTER_LUMPED_1 (Relais);
-  REGISTER_LUMPED_1 (RFedd);
-  REGISTER_LUMPED_1 (RFedd2P);
 
   // sources
   REGISTER_SOURCE_1 (Volt_dc);
@@ -279,10 +272,13 @@ void Module::registerModules (void) {
 
   // probes
   REGISTER_PROBE_1 (iProbe);
+  REGISTER_PROBE_1 (Ohmmeter);
   REGISTER_PROBE_1 (vProbe);
+  REGISTER_PROBE_1 (wProbe);
 
   // transmission lines
   REGISTER_TRANS_1 (TLine);
+  REGISTER_TRANS_1 (taperedline);
   REGISTER_TRANS_1 (TLine_4Port);
   REGISTER_TRANS_1 (CoupledTLine);
   REGISTER_TRANS_1 (TwistedPair);
@@ -323,6 +319,21 @@ void Module::registerModules (void) {
   REGISTER_NONLINEAR_1 (Triac);
   REGISTER_NONLINEAR_1 (Thyristor);
   REGISTER_NONLINEAR_1 (TunnelDiode);
+
+  // RF components
+  REGISTER_RF_PASSIVE_1 (indq);
+  REGISTER_RF_PASSIVE_1 (capq);
+  REGISTER_RF_PASSIVE_1 (spiralinductor);
+  REGISTER_RF_PASSIVE_1 (circularloop);
+  REGISTER_RF_PASSIVE_1 (Isolator);
+  REGISTER_RF_PASSIVE_1 (Circulator);
+  REGISTER_RF_PASSIVE_1 (Phaseshifter);
+  REGISTER_RF_PASSIVE_1 (Coupler);
+  REGISTER_RF_PASSIVE_1 (Hybrid);
+  REGISTER_RF_PASSIVE_1 (BiasT);
+  REGISTER_RF_PASSIVE_1 (Attenuator);
+  REGISTER_RF_PASSIVE_1 (RFedd);
+  REGISTER_RF_PASSIVE_1 (RFedd2P);
 
   // verilog-a devices
   REGISTER_VERILOGA_1 (mod_amp);
@@ -406,6 +417,8 @@ void Module::registerModules (void) {
   REGISTER_DIAGRAM_1 (CurveDiagram);
   REGISTER_DIAGRAM_1 (TimingDiagram);
   REGISTER_DIAGRAM_1 (TruthDiagram);
+  REGISTER_DIAGRAM_1 (PhasorDiagram);
+  REGISTER_DIAGRAM_1 (Waveac);
 
   // external simulation
   REGISTER_EXTERNAL_1 (ETR_Sim);

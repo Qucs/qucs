@@ -23,6 +23,8 @@
 # include <config.h>
 #endif
 
+#include <iostream>
+
 #include <stdlib.h>
 #include <ctype.h>
 #include <locale.h>
@@ -128,6 +130,8 @@ bool loadSettings()
     if (settings.contains("TextAntiAliasing")) QucsSettings.TextAntiAliasing = settings.value("TextAntiAliasing").toBool();
     else QucsSettings.TextAntiAliasing = false;
 
+    if(settings.contains("Editor")) QucsSettings.Editor = settings.value("Editor").toString();
+
     QucsSettings.RecentDocs = settings.value("RecentDocs").toString().split("*",QString::SkipEmptyParts);
     QucsSettings.numRecentDocs = QucsSettings.RecentDocs.count();
 
@@ -193,6 +197,7 @@ bool saveApplSettings()
     settings.setValue("IgnoreVersion", QucsSettings.IgnoreFutureVersion);
     settings.setValue("GraphAntiAliasing", QucsSettings.GraphAntiAliasing);
     settings.setValue("TextAntiAliasing", QucsSettings.TextAntiAliasing);
+    settings.setValue("Editor", QucsSettings.Editor);
 
     // Copy the list of directory paths in which Qucs should
     // search for subcircuit schematics from qucsPathList
@@ -243,6 +248,11 @@ void qucsMessageOutput(QtMsgType type, const char *msg)
   OutputDebugStringA(msg);
 #endif
 }
+
+/*!
+ * \brief attaches shared object code
+ */
+void attach(const char* what);
 
 Schematic *openSchematic(QString schematic)
 {
@@ -617,9 +627,13 @@ void createListComponentEntry(){
 
     foreach (Module *Mod, Comps) {
       Element *e = (Mod->info) (Name, File, true);
+		// dangerous. better precheck cast
       Component *c = (Component* ) e;
 
-      QString qucsEntry = c->save();
+		// FIXME: cleanup
+		QTextStream s;
+		c->getSchematic()->saveComponent(s, c);
+      QString qucsEntry = *(s.string());
       fprintf(stdout, "%s; qucs    ; %s\n", c->Model.toAscii().data(), qucsEntry.toAscii().data());
 
       // add dummy ports/wires, avoid segfault
@@ -659,6 +673,7 @@ int main(int argc, char *argv[])
   QucsSettings.largeFontSize = 16.0;
   QucsSettings.maxUndo = 20;
   QucsSettings.NodeWiring = 0;
+  QucsSettings.Editor = "qucs";
 
   // initially center the application
   QApplication a(argc, argv);
@@ -711,7 +726,6 @@ int main(int argc, char *argv[])
   QucsSettings.ExamplesDir = QucsDir.canonicalPath() + "/share/qucs/examples/";
   QucsSettings.DocDir =      QucsDir.canonicalPath() + "/share/qucs/docs/";
 
-  QucsSettings.Editor = "qucs";
 
   /// \todo Make the setting up of all executables below more consistent
   var = getenv("QUCSATOR");
@@ -840,6 +854,7 @@ int main(int argc, char *argv[])
   "  -v, --version  display version information and exit\n"
   "  -n, --netlist  convert Qucs schematic into netlist\n"
   "  -p, --print    print Qucs schematic to file (eps needs inkscape)\n"
+  "  -q, --quit     exit\n"
   "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
   "    --dpi NUMBER                 set dpi value (default 96)\n"
   "    --color [RGB|RGB]            set color mode (default RGB)\n"
@@ -855,8 +870,7 @@ int main(int argc, char *argv[])
   "  -list-entries  list component entry formats for schematic and netlist\n"
   , argv[0]);
       return 0;
-    }
-    else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
+    }else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
 #ifdef GIT
       fprintf(stdout, "Qucs " PACKAGE_VERSION " (" GIT ")" "\n");
 #else
@@ -881,6 +895,12 @@ int main(int argc, char *argv[])
     }
     else if (!strcmp(argv[i], "--orin")) {
       orientation = argv[++i];
+    }
+    else if (!strcmp(argv[i], "-a")) {
+      attach(argv[++i]);
+    }
+    else if(!strcmp(argv[i], "-q")) {
+	exit(0);
     }
     else if (!strcmp(argv[i], "-i")) {
       inputfile = argv[++i];
@@ -935,3 +955,4 @@ int main(int argc, char *argv[])
   //saveApplSettings(QucsMain);
   return result;
 }
+// vim:ts=8:sw=2:noet

@@ -50,7 +50,7 @@ qucslib.h displaydialog.h symbolwidget.h librarydialog.h
 
 QT4_WRAP_CPP( QUCSLIB_MOC_SRCS ${QUCSLIB_MOC_HDRS} )
 
-SET(RESOURCES qucslib.qrc)
+SET(RESOURCES qucslib_.qrc)
 QT4_ADD_RESOURCES(RESOURCES_SRCS ${RESOURCES})
 
 IF(APPLE)

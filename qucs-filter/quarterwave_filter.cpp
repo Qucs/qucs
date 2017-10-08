@@ -1,7 +1,7 @@
 /*
  * quarterwave_filter.cpp - Quarter wavelength filter implementation
  *
- * copyright (C) 2015 Andres Martinez-Mera <andresmartinezmera@gmail.com>
+ * copyright (C) 2017 Andres Martinez-Mera <andresmartinezmera@gmail.com>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,37 +69,35 @@ QString* QuarterWave_Filter::createSchematic(tFilter *Filter, tSubstrate *Substr
 
 
     if(isMicrostrip)
-    {
+    {//Microstrip implementation
        TL_Filter::getMicrostrip(Filter->Impedance, fc, Substrate, width, er_eff);
-      *s += QString("<MLIN MS1 1 %1 180 -26 15 0 0 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg( width).arg(d_lamdba4);
+      *s += QString("<MLIN MS1 1 %1 180 -26 15 0 0 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(num2str(width)).arg(num2str(d_lamdba4));
         if (Filter->Class == CLASS_BANDPASS)
         {
             Z = (pi*Filter->Impedance*bw)/(4*getNormValue(i, Filter));
             TL_Filter::getMicrostrip(Z, fc, Substrate, width, er_eff);
-            *s += QString("<MLIN MS1 1 %1 60 -26 20 0 0 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x+80).arg(width).arg(d_lamdba4);
-            *s += QString("<GND * 1 %1 60 0 0 0 0>\n").arg(x+110);
+            *s += QString("<GND * 1 %1 50 0 0 0 2>\n").arg(x+50);
         }
         if (Filter->Class == CLASS_BANDSTOP)
         {
             Z = (4*Filter->Impedance)/(pi*bw*getNormValue(i, Filter));
             TL_Filter::getMicrostrip(Z, fc, Substrate, width, er_eff);
-            *s += QString("<MLIN MS1 1 %1 60 -26 20 0 0 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x+80).arg(width).arg(d_lamdba4);
         }
+        *s += QString("<MLIN MS1 1 %1 80 15 -15 0 1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x+50).arg(num2str(width)).arg(num2str(d_lamdba4));
     }
-    else
+    else//Transmission line implementation
     {
-      *s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Filter->Impedance).arg(d_lamdba4);
+      *s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Filter->Impedance).arg(num2str(d_lamdba4));
       if (Filter->Class == CLASS_BANDPASS)
       {
           Z = (pi*Filter->Impedance*bw)/(4*getNormValue(i, Filter));
-          *s += QString("<TLIN Line1 1 %1 80 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x+80).arg(Z).arg(d_lamdba4);
-          *s += QString("<GND * 1 %1 80 0 0 0 0>\n").arg(x+110);
+          *s += QString("<GND * 1 %1 50 0 0 0 2>\n").arg(x+50);
       }
       if (Filter->Class == CLASS_BANDSTOP)
       {
           Z = (4*Filter->Impedance)/(pi*bw*getNormValue(i, Filter));
-          *s += QString("<TLIN Line1 1 %1 80 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x+80).arg(Z).arg(d_lamdba4);
       }
+      *s += QString("<TLIN Line1 1 %1 80 15 -15 0 1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x+50).arg(num2str(Z)).arg(num2str(d_lamdba4));
     }
 
 
@@ -108,11 +106,11 @@ QString* QuarterWave_Filter::createSchematic(tFilter *Filter, tSubstrate *Substr
   if (isMicrostrip)
   {
       TL_Filter::getMicrostrip(Filter->Impedance, fc, Substrate, width, er_eff);
-      *s += QString("<MLIN MS1 1 %1 180 -26 15 0 0 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(num2str(width)).arg(d_lamdba4);
+      *s += QString("<MLIN MS1 1 %1 180 -26 15 0 0 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(num2str(width)).arg(num2str(d_lamdba4));
   }
   else
   {
-   *s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Filter->Impedance).arg(d_lamdba4);
+   *s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Filter->Impedance).arg(num2str(d_lamdba4));
   }
   x += 80;
   *s += QString("<Pac P2 1 %1 330 18 -26 0 1 \"2\" 1 \"%2 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(x).arg(Filter->Impedance);
@@ -138,13 +136,11 @@ QString* QuarterWave_Filter::createSchematic(tFilter *Filter, tSubstrate *Substr
   x = 150;
   for(i = 1; i < Filter->Order; i++) {
     *s += QString("<%1 180 %2 180 \"\" 0 0 0>\n").arg(x).arg(x+30);
-    isMicrostrip ? *s += QString("<%1 60 %2 180 \"\" 0 1 0>\n").arg(x+20).arg(x+20):
-                   *s += QString("<%1 80 %2 180 \"\" 0 1 0>\n").arg(x+20).arg(x+20);
+    *s += QString("<%1 110 %2 180 \"\" 0 1 0>\n").arg(x+20).arg(x+20);
     x += 90;
   }
   *s += QString("<%1 180 %2 180 \"\" 0 0 0>\n").arg(x).arg(x+30);
-  isMicrostrip ? *s += QString("<%1 60 %2 180 \"\" 0 1 0>\n").arg(x+20).arg(x+20):
-                 *s += QString("<%1 80 %2 180 \"\" 0 1 0>\n").arg(x+20).arg(x+20);
+  *s += QString("<%1 110 %2 180 \"\" 0 1 0>\n").arg(x+20).arg(x+20);
 
   *s += "</Wires>\n";
 

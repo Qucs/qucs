@@ -74,48 +74,6 @@
 #include "../qucs-lib/qucslib_common.h"
 #include "misc.h"
 
-// icon for unsaved files (diskette)
-const char *smallsave_xpm[] = {
-"16 17 66 1", " 	c None",
-".	c #595963","+	c #E6E6F1","@	c #465460","#	c #FEFEFF",
-"$	c #DEDEEE","%	c #43535F","&	c #D1D1E6","*	c #5E5E66",
-"=	c #FFFFFF","-	c #C5C5DF",";	c #FCF8F9",">	c #BDBDDA",
-",	c #BFBFDC","'	c #C4C4DF",")	c #FBF7F7","!	c #D6D6E9",
-"~	c #CBCBE3","{	c #B5B5D6","]	c #BCBCDA","^	c #C6C6E0",
-"/	c #CFCFE5","(	c #CEC9DC","_	c #D8D8EA",":	c #DADAEB",
-"<	c #313134","[	c #807FB3","}	c #AEAED1","|	c #B7B7D7",
-"1	c #E2E2EF","2	c #9393C0","3	c #E3E3F0","4	c #DDD5E1",
-"5	c #E8E8F3","6	c #2F2F31","7	c #7B7BAF","8	c #8383B5",
-"9	c #151518","0	c #000000","a	c #C0C0DC","b	c #8E8FBD",
-"c	c #8989BA","d	c #E7EEF6","e	c #282829","f	c #6867A1",
-"g	c #7373A9","h	c #A7A7CD","i	c #8080B3","j	c #7B7CB0",
-"k	c #7070A8","l	c #6D6DA5","m	c #6E6EA6","n	c #6969A2",
-"o	c #7A79AF","p	c #DCDCEC","q	c #60609A","r	c #7777AC",
-"s	c #5D5D98","t	c #7676AB","u	c #484785","v	c #575793",
-"w	c #50506A","x	c #8787B8","y	c #53536E","z	c #07070E",
-"A	c #666688",
-"        .       ",
-"       .+.      ",
-"      .+@#.     ",
-"     .$%###.    ",
-"    .&*####=.   ",
-"   .-.#;#####.  ",
-"  .>,'.#)!!!!~. ",
-" .{].'^./(!_:<[.",
-".}|.1./2.3456789",
-"0a.$11.bc.defg9 ",
-" 011h11.ij9kl9  ",
-"  0_1h1h.mno9   ",
-"   0p12h9qr9    ",
-"    0hh9st9     ",
-"     09uv9w     ",
-"      0x9y      ",
-"       zA       "};
-
-const char *empty_xpm[] = {  // provides same height than "smallsave_xpm"
-"1 17 1 1", "  c None", " ", " ", " ", " ", " ",
-" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "};
-
 struct iconCompInfoStruct
 {
   int catIdx; // index of the component Category
@@ -168,7 +126,7 @@ QucsApp::QucsApp()
 
   // creates a document called "untitled"
   Schematic *d = new Schematic(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
+  int i = DocumentTab->addTab(d, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
   DocumentTab->setCurrentIndex(i);
 
   select->setChecked(true);  // switch on the 'select' action
@@ -925,7 +883,7 @@ void QucsApp::initCursorMenu()
   }
   
   APPEND_MENU(ActionCMenuOpen, slotCMenuOpen, "Open")
-  APPEND_MENU(ActionCMenuCopy, slotCMenuCopy, "Duplicate")
+  APPEND_MENU(ActionCMenuCopy, slotCMenuCopy, "Copy file")
   APPEND_MENU(ActionCMenuRename, slotCMenuRename, "Rename")
   APPEND_MENU(ActionCMenuDelete, slotCMenuDelete, "Delete")
   APPEND_MENU(ActionCMenuInsert, slotCMenuInsert, "Insert")
@@ -1192,7 +1150,7 @@ void QucsApp::openProject(const QString& Path)
 
   if(!closeAllFiles()) return;   // close files and ask for saving them
   Schematic *d = new Schematic(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
+  int i = DocumentTab->addTab(d, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
   DocumentTab->setCurrentIndex(i);
 
   view->drawn = false;
@@ -1257,7 +1215,7 @@ void QucsApp::slotMenuProjClose()
 
   if(!closeAllFiles()) return;   // close files and ask for saving them
   Schematic *d = new Schematic(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
+  int i = DocumentTab->addTab(d, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
   DocumentTab->setCurrentIndex(i);
 
   view->drawn = false;
@@ -1380,7 +1338,7 @@ void QucsApp::slotFileNew()
   slotHideEdit(); // disable text edit of component property
 
   Schematic *d = new Schematic(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
+  int i = DocumentTab->addTab(d, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
   DocumentTab->setCurrentIndex(i);
 
   statusBar()->showMessage(tr("Ready."));
@@ -1391,9 +1349,8 @@ void QucsApp::slotTextNew()
 {
   statusBar()->showMessage(tr("Creating new text editor..."));
   slotHideEdit(); // disable text edit of component property
-  TextDoc *d = new TextDoc(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
-  DocumentTab->setCurrentIndex(i);
+
+  editFile("");
 
   statusBar()->showMessage(tr("Ready."));
 }
@@ -1418,11 +1375,11 @@ bool QucsApp::gotoPage(const QString& Name)
   if(Info.suffix() == "sch" || Info.suffix() == "dpl" ||
      Info.suffix() == "sym") {
     d = new Schematic(this, Name);
-    i = DocumentTab->addTab((Schematic *)d, QPixmap(empty_xpm), Info.fileName()); 
+    i = DocumentTab->addTab((Schematic *)d, QPixmap(":/bitmaps/empty.xpm"), Info.fileName());
   }
   else {
     d = new TextDoc(this, Name);
-    i = DocumentTab->addTab((TextDoc *)d, QPixmap(empty_xpm), Info.fileName());
+    i = DocumentTab->addTab((TextDoc *)d, QPixmap(":/bitmaps/empty.xpm"), Info.fileName());
   }
   DocumentTab->setCurrentIndex(i);
 
@@ -1628,7 +1585,7 @@ void QucsApp::slotFileSaveAll()
     if(Doc->DocName.isEmpty())  // make document the current ?
       DocumentTab->setCurrentIndex(No-1);
     if (saveFile(Doc)) { // Hack! TODO: Maybe it's better to let slotFileChanged()
-        DocumentTab->setTabIcon(No-1,QPixmap(empty_xpm)); // know about Tab number?
+        DocumentTab->setTabIcon(No-1,QPixmap(":/bitmaps/empty.xpm")); // know about Tab number?
     }
   }
 
@@ -1691,7 +1648,7 @@ void QucsApp::closeFile(int index)
 
     if(DocumentTab->count() < 1) { // if no document left, create an untitled
       Schematic *d = new Schematic(this, "");
-      DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled")); 
+      DocumentTab->addTab(d, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
       DocumentTab->setCurrentIndex(0);
     }
 
@@ -2169,11 +2126,11 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
     if (ext != "vhd" && ext != "vhdl" && ext != "v" && ext != "va" &&
 	ext != "oct" && ext != "m") {
       d = new Schematic(this, Name);
-      i = DocumentTab->addTab((Schematic *)d, QPixmap(empty_xpm), DataDisplay);
+      i = DocumentTab->addTab((Schematic *)d, QPixmap(":/bitmaps/empty.xpm"), DataDisplay);
     }
     else {
       d = new TextDoc(this, Name);
-      i = DocumentTab->addTab((TextDoc *)d, QPixmap(empty_xpm), DataDisplay);
+      i = DocumentTab->addTab((TextDoc *)d, QPixmap(":/bitmaps/empty.xpm"), DataDisplay);
     }
     DocumentTab->setCurrentIndex(i);
 
@@ -2247,9 +2204,7 @@ void QucsApp::slotOpenContent(const QModelIndex &idx)
   QFileInfo Info(QucsSettings.QucsWorkDir.filePath(filename));
   QString extName = Info.suffix();
 
-  if (extName == "sch" || extName == "dpl" || extName == "vhdl" ||
-      extName == "vhd" || extName == "v" || extName == "va" ||
-      extName == "m" || extName == "oct") {
+  if (extName == "sch" || extName == "dpl") {
     gotoPage(Info.absoluteFilePath());
     updateRecentFilesList(Info.absoluteFilePath());
     slotUpdateRecentFiles();
@@ -2269,10 +2224,14 @@ void QucsApp::slotOpenContent(const QModelIndex &idx)
     return;
   }
 
-  if(extName == "dat") {
-    editFile(Info.absoluteFilePath());  // open datasets with text editor
+  // open text files with text editor
+  if(extName == "dat" || extName == "vhdl" ||
+     extName == "vhd" || extName == "v" || extName == "va" ||
+     extName == "m" || extName == "oct") {
+    editFile(Info.absoluteFilePath());
     return;
   }
+
 
   // File is no Qucs file, so go through list and search a user
   // defined program to open it.
@@ -2685,11 +2644,11 @@ void QucsApp::slotHideEdit()
 }
 
 // -----------------------------------------------------------
-// set document tab icon to smallsave_xpm or empty_xpm
+// set document tab icon to "smallsave.xpm" or "empty.xpm"
 void QucsApp::slotFileChanged(bool changed)
 {
-  DocumentTab->setTabIcon(DocumentTab->currentIndex(),
-      QPixmap((changed)? smallsave_xpm : empty_xpm));
+  QString icon = (changed)? ":/bitmaps/smallsave.xpm" : ":/bitmaps/empty.xpm";
+  DocumentTab->setTabIcon(DocumentTab->currentIndex(), QPixmap(icon));
 }
 
 // -----------------------------------------------------------
