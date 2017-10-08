@@ -16,7 +16,6 @@
  ***************************************************************************/
 
 #include "componentdialog.h"
-#include "main.h"
 #include "qucs.h"
 #include "schematic.h"
 #include "misc.h"

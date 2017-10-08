@@ -25,7 +25,7 @@
 
 #include <cmath>
 #include "misc.h"
-#include "main.h"
+#include "qucs.h"
 
 #include <cstdio>
 #include <QString>

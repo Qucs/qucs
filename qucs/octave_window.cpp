@@ -3,7 +3,7 @@
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 #include "octave_window.h"
-#include "main.h"
+#include "qucs.h"
 #include "misc.h"
 
 #include <QSize>

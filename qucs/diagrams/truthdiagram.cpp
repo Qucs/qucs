@@ -25,7 +25,7 @@
 #include <QFontMetrics>
 
 #include "truthdiagram.h"
-#include "main.h"
+#include "qucs.h"
 
 
 TruthDiagram::TruthDiagram(int _cx, int _cy) : TabDiagram(_cx, _cy)

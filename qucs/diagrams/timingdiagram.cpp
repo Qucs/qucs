@@ -21,7 +21,7 @@
 */
 
 #include "timingdiagram.h"
-#include "main.h"
+#include "qucs.h"
 #include "misc.h"
 
 #include <cmath>

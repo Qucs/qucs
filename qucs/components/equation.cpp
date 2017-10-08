@@ -16,7 +16,7 @@
  ***************************************************************************/
 #include "componentdialog.h"
 #include "equation.h"
-#include "main.h"
+#include "qucs.h"
 
 #include <QFontMetrics>
 

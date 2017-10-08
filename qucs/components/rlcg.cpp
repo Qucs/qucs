@@ -14,7 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "main.h"
+#include "qucs.h"
 #include "rlcg.h"
 
 #include <QFontMetrics>
