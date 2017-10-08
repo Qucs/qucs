@@ -2073,13 +2073,6 @@ void QucsApp::slotTune(bool checked)
 {
     if (checked)
     {
-        // instance of tuner
-        TuningMode = true;
-        QWidget *w = DocumentTab->currentWidget(); // remember from which Tab the tuner was started
-        tunerDia = new TunerDialog(w, this);//The object can be instantiated here since when checked == false the memory will be freed
-
-        slotHideEdit(); // disable text edit of component property
-        workToolbar->setEnabled(false); // disable workToolbar to preserve TuneMouseAction
         if (isTextDocument(w))
         {
             //Probably digital Simulation
@@ -2087,6 +2080,14 @@ void QucsApp::slotTune(bool checked)
                                  "Currently tuning is not supported for this document type", QMessageBox::Ok);
             return;
         }
+        // instance of tuner
+        TuningMode = true;
+        QWidget *w = DocumentTab->currentWidget(); // remember from which Tab the tuner was started
+        tunerDia = new TunerDialog(w, this);//The object can be instantiated here since when checked == false the memory will be freed
+
+        slotHideEdit(); // disable text edit of component property
+        workToolbar->setEnabled(false); // disable workToolbar to preserve TuneMouseAction
+
         MousePressAction = &MouseActions::MPressTune;
         MouseReleaseAction = 0; //While Tune is active release is not needed. This puts Press Action back to normal select
 
