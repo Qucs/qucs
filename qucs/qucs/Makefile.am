@@ -114,11 +114,6 @@ EXTRA_DIST = \
 	bitmaps/qucsrescodes.icns \
 	bitmaps/qucstrans.icns
 
-SUFFIXES = .h .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -o $@ $<
-
 check_LTLIBRARIES = helloworld.la
 helloworld_la_LDFLAGS = -shared -no-undefined -module -avoid-version -rpath /dev/null
 
