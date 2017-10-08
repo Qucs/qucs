@@ -497,7 +497,7 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
 //          ((Wire*)pe)->Label->paintScheme(&painter);
 
   drawn = true;
-  if((Event->button() & Qt::ControlModifier) == 0)
+  if (!Event->modifiers().testFlag(Qt::ControlModifier))
     Doc->setOnGrid(MAx2, MAy2);  // use grid only if CTRL key not pressed
   MAx1 = MAx2 - MAx1;
   MAy1 = MAy2 - MAy1;
@@ -938,9 +938,7 @@ void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent*, float fX, float fY)
 // -----------------------------------------------------------
 void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, float fY)
 {
-  bool Ctrl;
-  if(Event->button() & Qt::ControlModifier) Ctrl = true;
-  else Ctrl = false;
+  bool Ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
   int No=0;
   MAx1 = int(fX);
@@ -972,6 +970,8 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       if(((Diagram*)focusElement)->Name.left(4) != "Rect")
         if(((Diagram*)focusElement)->Name.at(0) != 'T')
           if(((Diagram*)focusElement)->Name != "Curve")
+            if(((Diagram*)focusElement)->Name != "Waveac")
+	      if(((Diagram*)focusElement)->Name != "Phasor")
             isMoveEqual = true;  // diagram must be square
 
       focusElement->Type = isDiagram;
@@ -1544,9 +1544,7 @@ void MouseActions::MPressZoomIn(Schematic *Doc, QMouseEvent*, float fX, float fY
 // ***********************************************************************
 void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
 {
-  bool ctrl;
-  if(Event->button() & Qt::ControlModifier) ctrl = true;
-  else ctrl = false;
+  bool ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
   if(!ctrl) Doc->deselectElements(focusElement);
 
@@ -1572,9 +1570,7 @@ void MouseActions::MReleaseSelect2(Schematic *Doc, QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
 
-  bool Ctrl;
-  if(Event->button() & Qt::ControlModifier) Ctrl = true;
-  else Ctrl = false;
+  bool Ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
   // selects all elements within the rectangle
   Doc->selectElements(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2, Ctrl);

@@ -110,7 +110,8 @@ filter:
 
 \begin{enumerate}
  \item Frequency response approximation type. Butterworth, Chebyshev,
-Inverse Chebyshev,  Cauer (Elliptic) and Bessel filters are available.
+Inverse Chebyshev,  Cauer (Elliptic), Legendre, and Bessel filters are 
+available.
  \item Frequency response parameters: filter gain and bandwidth.
  \item Filter topology. Sallen-Key, Mutifeedback (MFB) and Cauer topologies are
 available.
@@ -146,7 +147,7 @@ Butterworth and Cauer filter. Minimal order that provides required frequency
 domain parameter is used. You don't need define filter order manually for these
 approximations. filtersOrder could not be determined automatically for Bessel
 filter. You should
-define filer order for the Bessel filters manually.
+define filer order for the Bessel and Legendre filters manually.
 
 Frequencies should be defined in Hertz (Hz). Attenuation and ripple should
 be defined in decibels (dB).

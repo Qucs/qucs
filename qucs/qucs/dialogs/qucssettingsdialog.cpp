@@ -124,26 +124,29 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
 
     appSettingsGrid->addWidget(new QLabel(tr("Text editor:"), appSettingsTab) ,5,0);
     editorEdit = new QLineEdit(appSettingsTab);
-    editorEdit->setToolTip(tr("Set to qucs, qucsedit or the path to your favorite text editor."));
+    editorEdit->setToolTip(tr("Default is qucs (built-in editor), or the path to your favorite text editor."));
     appSettingsGrid->addWidget(editorEdit,5,1);
+    QPushButton *editorButt = new QPushButton("Browse");
+    appSettingsGrid->addWidget(editorButt, 5, 2);
+    connect(editorButt, SIGNAL(clicked()), SLOT(slotEditorBrowse()));
 
-    appSettingsGrid->addWidget(new QLabel(tr("Start wiring when clicking open node:"), appSettingsTab) ,6,0);
+    appSettingsGrid->addWidget(new QLabel(tr("Start wiring when clicking open node:"), appSettingsTab),6,0);
     checkWiring = new QCheckBox(appSettingsTab);
     appSettingsGrid->addWidget(checkWiring,6,1);
 
-    appSettingsGrid->addWidget(new QLabel(tr("Load documents from future versions:")));
+    appSettingsGrid->addWidget(new QLabel(tr("Load documents from future versions:")),7,0);
     checkLoadFromFutureVersions = new QCheckBox(appSettingsTab);
     checkLoadFromFutureVersions->setToolTip(tr("Try to load also documents created with newer versions of Qucs."));
     appSettingsGrid->addWidget(checkLoadFromFutureVersions,7,1);
     checkLoadFromFutureVersions->setChecked(QucsSettings.IgnoreFutureVersion);
 
-    appSettingsGrid->addWidget(new QLabel(tr("Draw diagrams with anti-aliasing feature:")));
+    appSettingsGrid->addWidget(new QLabel(tr("Draw diagrams with anti-aliasing feature:")),8,0);
     checkAntiAliasing = new QCheckBox(appSettingsTab);
     checkAntiAliasing->setToolTip(tr("Use anti-aliasing for graphs for a smoother appereance."));
     appSettingsGrid->addWidget(checkAntiAliasing,8,1);
     checkAntiAliasing->setChecked(QucsSettings.GraphAntiAliasing);
 
-    appSettingsGrid->addWidget(new QLabel(tr("Draw text with anti-aliasing feature:")));
+    appSettingsGrid->addWidget(new QLabel(tr("Draw text with anti-aliasing feature:")),9,0);
     checkTextAntiAliasing = new QCheckBox(appSettingsTab);
     checkTextAntiAliasing->setToolTip(tr("Use anti-aliasing for text for a smoother appereance."));
     appSettingsGrid->addWidget(checkTextAntiAliasing,9,1);
@@ -748,7 +751,7 @@ void QucsSettingsDialog::slotDefaultValues()
     ColorTask->setPalette(p);
 
     undoNumEdit->setText("20");
-    editorEdit->setText(QucsSettings.BinDir + "qucs");
+    editorEdit->setText("qucs");
     checkWiring->setChecked(false);
     checkLoadFromFutureVersions->setChecked(false);
     checkAntiAliasing->setChecked(false);
@@ -913,6 +916,17 @@ void QucsSettingsDialog::slotAscoDirBrowse()
 
   if(!d.isEmpty())
     ascoEdit->setText(d);
+}
+
+void QucsSettingsDialog::slotEditorBrowse()
+{
+  QString d = QFileDialog::getOpenFileName(
+              this,
+              tr("Select the text editor"),
+              editorEdit->text(),
+              "All files (*)");
+  if(!d.isEmpty())
+    editorEdit->setText(d);
 }
 
 void QucsSettingsDialog::slotOctaveDirBrowse()

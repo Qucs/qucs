@@ -44,19 +44,20 @@ componentdialog.cpp	inductor.cpp		noise_vv.cpp		vcvs.cpp
 iprobe.cpp		opamp.cpp		verilogfile.cpp		vcresistor.cpp
 coplanar.cpp		ipulse.cpp		opt_sim.cpp		vexp.cpp
 coupler.cpp		irect.cpp		optimizedialog.cpp	vfile.cpp
-cpwgap.cpp		isolator.cpp	vhdlfile.cpp
+cpwgap.cpp		isolator.cpp		ohmmeter.cpp		vhdlfile.cpp
 cpwopen.cpp		jfet.cpp		pad2bit.cpp		volt_ac.cpp
 cpwshort.cpp		jk_flipflop.cpp		pad3bit.cpp		volt_dc.cpp
 cpwstep.cpp		jkff_SR.cpp		pad4bit.cpp		volt_noise.cpp
 ctline.cpp		libcomp.cpp		param_sweep.cpp		vprobe.cpp
 d_flipflop.cpp		log_amp.cpp		phaseshifter.cpp	vpulse.cpp
 dc_sim.cpp		logic_0.cpp		photodiode.cpp		vrect.cpp
-dcblock.cpp		logic_1.cpp		phototransistor.cpp
-dcfeed.cpp		logical_and.cpp		pm_modulator.cpp
-vcresistor.cpp
+dcblock.cpp		logic_1.cpp		phototransistor.cpp	wprobe.cpp
+dcfeed.cpp		logical_and.cpp		pm_modulator.cpp        capq.cpp
+vcresistor.cpp          indq.cpp                spiralinductor.cpp      circularloop.cpp
 vacomponent.cpp
 mutualx.cpp
 circline.cpp
+taperedline.cpp
 )
 
 SET(COMPONENTS_HDRS
@@ -76,10 +77,12 @@ bjt.h
 bjtsub.h
 bondwire.h
 capacitor.h
+capq.h
 cccs.h
 ccvs.h
 circulator.h
 circline.h
+circularloop.h
 coaxialline.h
 comp_1bit.h
 comp_2bit.h
@@ -113,6 +116,7 @@ EKV26MOS.h
 eqndefined.h
 equation.h
 etr_sim.h
+taperedline.h
 fa1b.h
 fa2b.h
 gatedDlatch.h
@@ -126,7 +130,9 @@ hybrid.h
 iexp.h
 ifile.h
 inductor.h
+indq.h
 iprobe.h
+wprobe.h
 ipulse.h
 irect.h
 isolator.h
@@ -170,6 +176,7 @@ nigbt.h
 noise_ii.h
 noise_iv.h
 noise_vv.h
+ohmmeter.h
 opamp.h
 opt_sim.h
 optimizedialog.h
@@ -194,6 +201,7 @@ sp_sim.h
 sparamfile.h
 spicedialog.h
 spicefile.h
+spiralinductor.h
 subcircuit.h
 subcirport.h
 substrate.h

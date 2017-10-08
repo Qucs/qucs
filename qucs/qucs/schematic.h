@@ -313,10 +313,16 @@ private:
   DigMap Signals; // collecting node names for VHDL signal declarations
   QStringList PortTypes;
 
+public: // for now. move to parser asap
+	Component* loadComponent(const QString& _s, Component* c) const;
+
 public:
   bool isAnalog;
   bool isVerilog;
   bool creatingLib;
+
+public: // serializer
+  void saveComponent(QTextStream& s, Component /* FIXME const */* c) const;
 };
 
 #endif

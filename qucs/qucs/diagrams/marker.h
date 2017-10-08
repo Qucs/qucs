@@ -31,6 +31,7 @@ typedef enum{
 	nM_Rad
 } numMode_t;
 
+struct Axis;
 
 class Marker : public Element {
 public:
@@ -40,6 +41,8 @@ public:
 private:
   void    initText(int);
 public:
+  void    fix();
+  QString unit(double);
   void    createText();
   void    makeInvalid();
   bool    moveLeftRight(bool);
@@ -51,12 +54,15 @@ public:
   QString save();
   bool    load(const QString& Line);
   bool    getSelected(int, int);
+  double wavevalY(double ,std::vector<double>& );
   Marker* sameNewOne(Graph*);
   void    getTextSize();
   Graph const* graph() const {return pGraph;}
   int precision() const {return Precision;}
   std::vector<double> const& varPos() const {return VarPos;}
   const Diagram *diag() const;
+  int phasormk(double*,double*,int);
+  void findaxismk();
 public: // power matching stuff. some sort of VarPos (ab?)use
   double  powFreq() const {return VarPos[0];}
   double  powReal() const {return VarDep[0];}
@@ -69,10 +75,12 @@ private:
   std::vector<double> VarPos;   // values the marker is pointing to
   double VarDep[2];   // dependent value
   float  fCX, fCY;  // coordinates for the line from graph to marker body
+  double yt;
 
 public:
   QString Text;     // the string to be displayed in the marker text
   bool transparent; // background shines through marker body
+  Axis const*xA,*yA,*zA;
 
 // private: // not yet, cross-manipulated by MarkerDialog
   int Precision; // number of digits to show

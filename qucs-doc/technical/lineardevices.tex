@@ -5,6 +5,8 @@
 %               Stefan Jahn <stefan@lkcc.org>
 % Copyright (C) 2003, 2004, 2005, 2006
 %               Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
+% Copyright (C) 2017
+%               Andres Martinez-Mera <andresmartinezmera@gmail.com> (Tapered transmission lines)
 %
 % Permission is granted to copy, distribute and/or modify this document
 % under the terms of the GNU Free Documentation License, Version 1.1
@@ -326,6 +328,70 @@ S_{12} = S_{21} = 1-S_{11}
 \end{equation}
 
 An ideal inductor is noise free.
+
+\section{Lossy reactances}
+Because of its physical implementation, both capacitors and inductors exhibit a lossy behaviour which can be assessed in terms of their quality factor. The quality factor, Q, of a reactance is defined as the ratio between the stored energy and the dissipated energy per unit time.
+When using a series resistance $R_s$ to represent the losses, it is also given by
+
+\begin{itemize}
+\item Capacitor: $Q = \frac{1}{\omega C R_s} = \frac{1}{2 \pi f \cdot C \cdot R_s}$
+\item Inductor: $Q = \frac{\omega L}{R_s} = \frac{2 \pi f \cdot L }{R_s}$
+\end{itemize}
+
+note that in general the losses and thus the quality factor are frequency dependent. Some common models for the variation of Q with the frequency are:
+
+\begin{itemize}
+\item Constant: $Q(f) = Q(f_0)$
+\item Linear: $Q(f) = Q(f_0)\cdot (f/f_0)$
+\item Square root: $Q(f) = Q(f_0)\cdot \sqrt{f/f_0}$
+\end{itemize}
+
+
+\subsection{Equivalent circuits and S matrices}
+
+For the lossy components models described above, the scattering parameters (normalized to $Z_0$) can be computed from the S-parameters of a generic series element.
+
+\begin{itemize}
+
+\item Capacitor
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=7cm]{capq}
+\end{center}
+\caption{Equivalent circuit of a lossy capacitor}
+\label{fig:capq_ec}
+\end{figure}
+
+Defining $Y_s = \frac{j \omega C}{1+j \omega C R}$ we have
+
+\begin{equation}
+S_{11} = S_{22} = \frac{1}{1 + y} \qquad , \qquad y = 2 \cdot Z_0 \cdot Y_s\\
+\end{equation}
+\begin{equation}
+S_{12} = S_{21} = 1-S_{11}
+\end{equation}
+
+\item Inductor
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=7cm]{indq}
+\end{center}
+\caption{Equivalent circuit of a lossy inductor}
+\label{fig:indq_ec}
+\end{figure}
+
+With $Zs = R + j \omega L$, the S-parameter matrix is given by
+
+\begin{equation}
+S_{11} = S_{22} = \frac{z}{z + 2} \qquad , \qquad z = \frac{Z_s}{Z_0}\\
+\end{equation}
+\begin{equation}
+S_{12} = S_{21} = 1-S_{11}
+\end{equation}
+
+\end{itemize}
+
+The noise parameters of these components can in general be computed using Bosma's theorem.
 
 
 \section{DC Block}
@@ -2447,6 +2513,202 @@ Y_{e,o} &= \frac{Z_{L,e,o}\cdot Z_0}{D_{e,o}}
 \end{figure}
 \FloatBarrier
 
+\section{Tapered transmission line}
+
+The tapered transmission line is a component used mainly for achieving broadband impedance matching between a load, $Z_L$, and a source impedance, $Z_S$ (both real). It differs from the conventional ideal transmission line in the sense that its characteristic impedance, $Z_0(l)$, depends on the distance from the origin.\\
+
+\noindent The reflection coefficient at a given distance from the origin, $\Gamma(l)$, is given by:
+
+\begin{equation}
+  \Gamma(l) = \frac{(Z_0(l)+\frac{\partial Z_0(l)}{\partial l})-Z_0(l)}{(Z_0(l)+\frac{\partial Z_0(l)}{\partial l})+Z_0(l)} = \frac{\frac{\partial Z_0(l)}{\partial l}}{2 Z_0(l) + \frac{\partial Z_0(l)}{\partial l}}
+\end{equation} 
+
+\noindent Under the assumption that $2Z_0 \gg \frac{\partial Z_0(l)}{\partial l}$:
+
+\begin{equation}
+\Gamma(l) \sim \frac{\frac{\partial Z_0(l)}{\partial l}}{2Z_0(l)}
+\end{equation}
+
+
+\noindent Then, the derivative of the reflection coefficient is given by:
+
+\begin{equation}
+  \frac{\partial \Gamma(l)}{ \partial l} = \frac{\partial \ln(Z_0(l))}{2 \cdot \partial l}
+  \label{eq:DGammaDl}
+\end{equation}
+
+\noindent The \textit{Theory of the small reflections} states that the reflection coefficient of a cascade of N lines of length $l$ each is given by the sum of the reflection coefficients at each junction (\cite{Pozar}, Eq. 5.44):
+
+\begin{equation}
+\Gamma(\beta L) = \sum\limits_{k=0}^N \Gamma_i e^{-2j\beta l \cdot k} \qquad, \qquad L = Nl
+\label{eq:SmallReflectionsTh}
+\end{equation} 
+
+\noindent In the case of a tapered line, the length of the portions of line where the characteristic impedance is constant tend to 0, so the summation in \ref{eq:SmallReflectionsTh} becomes an integral expression as follows:
+
+\begin{equation}
+\Gamma(\beta L) = \int_{0}^{L}  \frac{\partial \Gamma(l)}{\partial l} e^{-2j\beta l} dl = \frac{1}{2} \int_{0}^{L}  \frac{\partial}{\partial l} \ln \left( Z_0(l)\right) e^{-2j\beta l} dl
+\label{eq:ReflectionCoeffGeneralTaper}
+\end{equation}
+
+
+
+\noindent \\The most common types of tapered transmission lines are the following:
+
+\paragraph{Exponential taper}
+
+The characteristic impedance and the reflection coefficient are given by the following expressions:
+
+\begin{equation}
+    Z(l) = Z_0 \cdot e^{\frac{1}{L} \ln \left(\frac{Z_L}{Z_S}\right) l} \;\;\;\;\;\; \forall l \in [0, L]
+\end{equation}
+
+\begin{equation}
+    \Gamma(\beta L) = \frac{1}{2} \ln \left( \frac{Z_L}{Z_S} \right) e^{-j\beta L } \frac{\sin(\beta L)}{\beta L}
+\end{equation}
+
+\paragraph{Triangular taper}
+The characteristic impedance and the reflection coefficient are given by the following expressions:
+
+\begin{equation}
+Z(l) =
+\begin{cases}
+ Z_S e^{2(\frac{l}{L})^2 \ln \left( \frac{Z_L}{Z_S}\right)} & \text{for } 0 \leq l \leq L/2 \\
+ Z_S e^{(4\frac{l}{L} - 2\left( \frac{l}{L} \right)^2 - 1) \ln \left( \frac{Z_L}{Z_S}\right)} & \text{for } L/2 \leq l \leq L \\
+\end{cases}
+\end{equation}
+
+Note that the derivative of the reflection coefficient, computed according to \ref{eq:DGammaDl}, has a \textit{triangular} shape.
+
+\begin{equation}
+ \Gamma(\beta L) = \frac{1}{2} e^{-j\beta L} \ln \left( \frac{Z_L}{Z_S} \right) \left( \frac{\sin(\beta L/2)}{\beta L/2}\right)^{\! 2}
+\end{equation}
+
+\paragraph{Klopfenstein taper}
+
+The characteristic impedance of the Klopfenstein taper satisfies the following condition:
+
+\begin{equation}
+\ln \left( Z(l) \right) = \frac{1}{2} \ln \left( Z_S Z_L\right) + \frac{\Gamma_0}{\cosh(A)} A^2 \phi (2\frac{l}{L} - 1, A) \;\;\;\;\;\;\;\; \forall l \in [0, L]
+\end{equation}
+
+\noindent where
+
+\begin{equation}
+  \phi(x, A) = -\phi(-x, A) = \int_0^x \frac{I_1 \left( A \sqrt{1 - y^2}\right)}{A \sqrt{1 - y^2}} dy \;\;\;\;\;\;\;\;\forall \mid x \mid \leq 1
+\label{eq:phi_x_A}
+\end{equation}
+
+\noindent $I_1(x)$ is the modified Bessel function of the first kind and \textit{A} can be determined from the specified maximum ripple of the Klopfenstein taper, $\Gamma_m$ and the reflection coefficient at zero frequency, $\Gamma_0$:
+
+\begin{align}
+\Gamma_0 & = \frac{Z_L - Z_S}{Z_L + Z_S} \sim \frac{1}{2} \ln \left( \frac{Z_L}{Z_S}\right) \\
+A & = \cosh^{-1}(\frac{\Gamma_0}{\Gamma_m})
+\end{align}
+
+\noindent The reflection coefficient, $\Gamma(\beta L)$, of the Klopfenstein taper is given by the following expression:
+
+\begin{equation}
+\Gamma(\beta L) = \Gamma_0 e^{-j \beta L} \frac{\cos \left (\sqrt{(\beta L)^2 - A^2} \right )}{\cosh(A)} \;\;\;\;\;\;\;\; \forall \beta L > A
+\end{equation}
+
+\noindent The complexity of \ref{eq:phi_x_A} makes it unsuitable for simulation purposes. In this sense, the following procedure reduces significantly the computational cost of evaluating $\phi(x, A)$ \cite{GrossbergKlopfensteinTaper}:\\
+
+\noindent Expanding $I_1(x)$ in power series, $\phi(x, A)$ can be rewritten as:
+
+\begin{equation}
+\phi(x, A) = \int_0^x \frac{1}{2} \sum\limits_{k=0}^{\infty} \frac{\left( \frac{A^2}{4}\right)^{\! k} (1-y^2)^k}{k!(k+1)!} dy, \;\;\;\; y \in [-1, 1]
+\end{equation}
+
+\noindent The series can be integrated term by term and the function above expressed as
+
+\begin{equation}
+\phi(x, A) = \sum\limits_{k=0}^{\infty} a_k \cdot b_k
+\end{equation}
+
+\noindent where
+
+\begin{align}
+a_k & = \frac{A^{2k}}{4^k k! (k+1)!} \\
+b_k & = \frac{1}{2} \int_{0}^{x} (1-y^2)^k dy
+\end{align}
+
+\noindent Finally, the $a_k$ and $b_k$ coefficients can be expressed in terms of the following recursion:
+
+
+\begin{align}
+a_0 & = 1,  \;\;\;\;\;\;\;\;\;\;\;\;\;\; a_k = a_{k-1} \cdot \frac{A^2}{4 k (k+1)} \\
+b_0 & = \frac{x}{2}, \;\;\;\;\;\;\;\;\;\;\;\;\;\; b_k = \frac{\frac{x}{2} (1 - x^2)^k + 2 \cdot k \cdot b_{k-1}}{2 \cdot k + 1}
+\end{align}
+
+\paragraph{Linear}
+The characteristic impedance profile of the linear taper is given by:
+
+\begin{equation}
+Z_0(l) = Z_S + \left( l \cdot \frac{Z_L - Z_S}{L} \right)
+\end{equation}
+
+\noindent The reflection coefficient is calculated using \ref{eq:ReflectionCoeffGeneralTaper},
+
+\begin{equation}
+\Gamma(\beta L) = \frac{1}{2} \int_0^L e^{-j2 \beta l} \frac{\partial}{\partial l} \ln (Z_0 (l)) dl = \frac{1}{2} \int_{0}^L e^{-j2\beta l} \frac{\partial}{\partial l} \ln \left( Z_S + l \cdot \left( \frac{Z_L - Z_S}{L}\right) \right) dl
+\end{equation}
+
+\begin{equation}
+\Gamma(\beta L) = \frac{Z_L - Z_S}{2 L } \int_0^L \frac{e^{-j2 \beta l}}{Z_S + l \left( \frac{Z_L - Z_S}{L}\right)} dl
+\label{eq:GammaLin}
+\end{equation}
+
+\noindent The following equivalence was found using a symbolic mathematical software (like \cite{SageMath}):
+
+\begin{equation}
+ \int \frac{e^{-jAx}}{B+xC} = \frac{e^{jA B} \cdot \mathbb{E}_i \left( -\frac{jA(B+Cx)}{C}\right)}{C}
+ \label{eq:ExpIntegralLinearTaper}
+\end{equation}
+
+\noindent where $\mathbb{E}_i(x) = \int_{x}^{\infty} \frac{e^{-t}}{t} dt$ is the exponential integral. Finally, using \ref{eq:ExpIntegralLinearTaper} in \ref{eq:GammaLin} it is found that:
+
+\begin{equation}
+ \Gamma(\beta L) = \frac{Z_L - Z_S}{2 L} \cdot e^{j 2 \beta Z_S} \cdot \left( \mathbb{E}_i \left( \frac{-j 2 \beta Z_L L}{Z_L-Z_S}\right) - \mathbb{E}_i \left( \frac{-j2 \beta Z_S L}{Z_L - Z_S}\right)\right)
+\end{equation}
+
+\vskip 5mm
+\noindent The following figure shows a comparison of the normalized reflection coefficient between the tapers described above
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=100mm]{ReflectionCoeffsTaper}
+\caption{Comparison of the reflection coefficient between different tapers}
+\label{fig:ReflectionCoeffTapers}
+\end{figure}
+
+
+\noindent In order to calculate the quadripole parameters, the line is discretized into a finite number of slots where the characteristic impedance is supposed to be uniform. The ABCD parameters of each slot is calculated according to \ref{eq:tl_apara} and, finally, the ABCD parameters of the tapered line are obtained as the cascade of these slots:\\
+
+\noindent Let be 
+
+\begin{equation}
+Z_k = Z(l)\rvert_{l = \frac{k \cdot L}{N}}, \;\;\;\;\;\;\;\;\;\;\;\;\;\; \forall k \in [0, N-1]
+\end{equation} 
+
+\noindent the characteristic impedance of the $k^{th}$ slot, where L is the length of the tapered line and N is the number of slots. The ABCD parameters of the $k^{th}$ slot are:
+
+\begin{equation}
+ABCD_k = \begin{pmatrix}
+\cosh{\left(\gamma\cdot dl\right)} & Z_k\cdot \sinh{\left(\gamma\cdot dl\right)}\\
+\sinh{\left(\gamma\cdot dl\right)} / Z_k & \cosh{\left(\gamma\cdot dl\right)}
+\end{pmatrix}
+\end{equation}
+
+
+\noindent where \textit{dl} is the length of the slots and $\gamma$ is the propagation constant. Then, the ABCD parameters of the whole tapered line are:
+
+\begin{equation}
+ABCD = \prod\limits_{k=0}^{N-1} ABCD_k
+\end{equation}
+
+
+\textit{Reference}: \cite{Pozar}, pages 261-271
 
 \section{S-parameter container with additional reference port}
 \label{sec:spfile}

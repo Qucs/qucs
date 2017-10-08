@@ -75,6 +75,10 @@ private slots:
   void slotNumberEntered();
   void slotHHeaderClicked(int headerIdx);
 
+public:
+  void enableButtons();
+  void disableButtons();
+
 protected slots:
     void reject();
     bool eventFilter(QObject *obj, QEvent *event);

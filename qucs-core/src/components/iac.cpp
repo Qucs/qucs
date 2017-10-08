@@ -55,6 +55,16 @@ void iac::initAC (void) {
   nr_complex_t i = qucs::polar (a, deg2rad (p));
   allocMatrixMNA ();
   setI (NODE_1, +i); setI (NODE_2, -i);
+  nr_double_t r = getScaledProperty ("Ri");
+  // Setting the internal resistance
+  if (r != 0.0) {
+    nr_double_t g = 1.0 / r;
+    setVoltageSources (0);
+    setY (NODE_1, NODE_1, +g); setY (NODE_2, NODE_2, +g);
+    setY (NODE_1, NODE_2, -g); setY (NODE_2, NODE_1, -g);
+  }
+
+  // The internal resistance can't be zero
 }
 
 void iac::calcTR (nr_double_t t) {
@@ -76,6 +86,7 @@ PROP_OPT [] = {
   { "Phase", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-360, 360) },
   { "Theta", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
   { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Ri", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
   PROP_NO_PROP };
 struct define_t iac::cirdef =
   { "Iac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

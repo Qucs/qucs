@@ -39,6 +39,8 @@
 #include <QTreeWidgetItem>
 #include <QMutableHashIterator>
 #include <QListWidget>
+#include <QDesktopServices>
+#include <QUrl>
 
 #include "projectView.h"
 #include "main.h"
@@ -652,15 +654,25 @@ void QucsApp::slotSelectMarker()
 extern QString lastDirOpenSave; // to remember last directory and file
 
 // ------------------------------------------------------------------------
-// Is called by slotShowLastMsg(), by slotShowLastNetlist() and from the
-// component edit dialog.
+///
+/// \brief QucsApp::editFile
+/// \param File is the filename, or empty for a new file
+///
+/// Called by :
+/// - slotTextNew()
+/// - slotShowLastMsg()
+/// - slotShowLastNetlist()
+/// - edit properties of components (such as spice, verilog)
+///
 void QucsApp::editFile(const QString& File)
 {
     if ((QucsSettings.Editor.toLower() == "qucs") | QucsSettings.Editor.isEmpty())
     {
         // The Editor is 'qucs' or empty, open a net document tab
         if (File.isEmpty()) {
-            QucsApp::slotTextNew();
+            TextDoc *d = new TextDoc(this, "");
+            int i = DocumentTab->addTab(d, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
+            DocumentTab->setCurrentIndex(i);
         }
         else
         {
@@ -685,46 +697,27 @@ void QucsApp::editFile(const QString& File)
       QString prog;
       QStringList args;
 
-      if (QucsSettings.Editor.toLower().contains("qucsedit")) {
-
-#ifdef __MINGW32__
-  prog = "qucsedit.exe";
-#elif __APPLE__
-  prog = "qucsedit.app/Contents/MacOS/qucsedit";
-#else
-  prog = "qucsedit";
-#endif
-
-        QFileInfo editor(QucsSettings.BinDir + prog);
-        prog = QDir::toNativeSeparators(editor.canonicalFilePath());
-      }
-      else { // user defined editor
-          QFileInfo editor(QucsSettings.Editor);
-          prog = QDir::toNativeSeparators(editor.canonicalFilePath());
-      }
+      QString editorPath = QucsSettings.Editor;
+      QFileInfo editor(editorPath);
+      prog = QDir::toNativeSeparators(editor.canonicalFilePath());
 
       if (!File.isEmpty()) {
           args << File;
       }
 
-      QProcess *QucsEditor = new QProcess();
-      QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-      env.insert("PATH", env.value("PATH") );
-      QucsEditor->setProcessEnvironment(env);
+      QProcess *externalEditor = new QProcess();
+      qDebug() << "Command: " << editorPath << args.join(" ");
+      externalEditor->start(prog, args);
 
-      qDebug() << "Command: " << prog << args.join(" ");
-
-      QucsEditor->start(prog, args);
-
-      if( !QucsEditor->waitForStarted(1000) ) {
-        QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor! \n\n%1").arg(prog));
-        delete QucsEditor;
+      if( !externalEditor->waitForStarted(1000) ) {
+        QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor: \n\n%1").arg(editorPath));
+        delete externalEditor;
         return;
       }
-      qDebug() << QucsEditor->readAllStandardError();
+      qDebug() << externalEditor->readAllStandardError();
 
       // to kill it before qucs ends
-      connect(this, SIGNAL(signalKillEmAll()), QucsEditor, SLOT(kill()));
+      connect(this, SIGNAL(signalKillEmAll()), externalEditor, SLOT(kill()));
     }
 }
 
@@ -844,17 +837,14 @@ void QucsApp::launchTool(const QString& prog, const QString& progDesc, const QSt
   connect(this, SIGNAL(signalKillEmAll()), tool, SLOT(kill()));
 }
 
-
-// --------------------------------------------------------------
-void QucsApp::slotHelpIndex()
+/**
+ * @brief QucsApp::slotHelpOnline
+ * Open default browser poining at the Qucs-Help website.
+ */
+void QucsApp::slotHelpOnline()
 {
-  showHTML("index.html");
-}
-
-// --------------------------------------------------------------
-void QucsApp::slotGettingStarted()
-{
-  showHTML("start.html");
+  QString link = "http://qucs-help.readthedocs.io/";
+  QDesktopServices::openUrl(QUrl(link));
 }
 
 // --------------------------------------------------------------
@@ -862,6 +852,8 @@ void QucsApp::showHTML(const QString& Page)
 {
   launchTool("qucshelp", "help", Page);
 }
+
+
 
 // ---------------------------------------------------------------------
 // Is called when the find action is triggered.

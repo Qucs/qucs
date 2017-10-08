@@ -65,7 +65,7 @@ void SaveDialog::initDialog()
    checkBoxLayout->addWidget(fileView);
    SaveDialogLayout->addWidget(group);
    
-   buttonsLayout = new QHBoxLayout(this);
+   buttonsLayout = new QHBoxLayout();
 
    abortClosingButton = new QPushButton( tr( "Abort Closing" ) );
    buttonsLayout->addWidget( abortClosingButton );

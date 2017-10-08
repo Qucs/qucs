@@ -17,12 +17,13 @@ AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([no-define])
 AM_PROG_AR
 AC_PREFIX_DEFAULT([/usr/local])
+AC_CONFIG_MACRO_DIR([m4])
 
 dnl Checks for programs.
 AC_PROG_CXX(clang++ g++)
 AC_PROG_CC
-AC_PROG_RANLIB
 AC_CHECK_TOOL(AR, ar, :)
+LT_INIT()
 
 dnl Check for debugging option.
 AC_ARG_ENABLE([debug],
@@ -708,22 +709,18 @@ AC_PATH_PROGS(LUPDATE, lupdate-qt4 lupdate, :, [$QT_DIR/bin:$PATH])
 dnl Check for MOC/UIC/RCC support.
 AC_PATH_PROGS(MOC, moc-qt4 moc, :, [$QT_DIR/bin:$PATH])
 AC_PATH_PROGS(UIC, uic-qt4 uic, :, [$QT_DIR/bin:$PATH])
-AC_PATH_PROGS(RCC, rcc, :, [$QT_DIR/bin:$PATH])
+AC_PATH_PROGS(RCC, rcc-qt4 rcc, :, [$QT_DIR/bin:$PATH])
 
 if test "$MOC" = ":"; then
-  AC_MSG_ERROR([
-  The $PACKAGE package needs the 'Qt Meta Object Compiler' to compile properly.
-  Though Qt itself may be properly installed including headers and libraries
-  the 'moc' program is missing.  Possibly you need to install the full
-  development package of Qt.])
+  AC_MSG_ERROR([Need 'moc' to compile, 'moc' is part of Qt])
 fi
 
 if test "$UIC" = ":"; then
-  AC_MSG_ERROR([
-  The $PACKAGE package needs the 'Qt User Interface Compiler' to compile properly.
-  Though Qt itself may be properly installed including headers and libraries
-  the 'uic' program is missing.  Possibly you need to install the full
-  development package of Qt.])
+  AC_MSG_ERROR([Need 'uic' to compile, 'uic' is part of Qt])
+fi
+
+if test "$RCC" = ":"; then
+  AC_MSG_ERROR([Need 'rcc' to compile, 'rcc' is part of Qt])
 fi
 
 dnl check for Qt moveable tabwidgets (introduced in Qt 4.5)
@@ -753,6 +750,10 @@ dnl AC_LANG(C++)
 dnl AC_CHECK_HEADERS([Board.h])
 dnl AC_CHECK_LIB(board, fprintf)
 dnl AC_LANG(C)
+
+AC_LANG(C++)
+AC_CHECK_LIB([dl], [dlopen])
+AC_LANG(C)
 
 dnl Check for path transformation.
 case $build_os in
@@ -788,27 +789,20 @@ AH_TOP([
 dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([Makefile
     contrib/Makefile
+    man/Makefile
     examples/Makefile
-    qucs-edit/Makefile
-    qucs-help/Makefile
-    qucs-help/docs/Makefile
-    qucs-help/docs/en/Makefile
-    qucs-help/docs/de/Makefile
-    qucs-help/docs/es/Makefile
-    qucs-help/docs/fr/Makefile
-    qucs-help/docs/ru/Makefile
-    qucs-help/docs/uk/Makefile
-    qucs-help/docs/cs/Makefile
-    qucs-help/docs/pt/Makefile
     qucs-filter/Makefile
     qucs-activefilter/Makefile
     qucs-transcalc/Makefile
+    qucs-transcalc/bitmaps/Makefile
     qucs-transcalc/examples/Makefile
     qucs-lib/Makefile
     qucs-lib/library/Makefile
     qucs-attenuator/Makefile
+    qucs-attenuator/bitmaps/Makefile
     qucs-rescodes/Makefile
     qucs/Makefile
+    qucs/bitmaps/Makefile
     qucs/octave/Makefile
     qucs/components/Makefile
     qucs/diagrams/Makefile

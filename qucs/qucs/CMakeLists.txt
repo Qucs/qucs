@@ -124,6 +124,7 @@ ADD_SUBDIRECTORY( python )
 ADD_SUBDIRECTORY( paintings )
 
 SET(QUCS_SRCS
+  attach.cpp
   element.cpp	octave_window.cpp	qucsdoc.cpp
   textdoc.cpp  main.cpp	schematic.cpp
   mnemo.cpp	qucs.cpp	viewpainter.cpp
@@ -144,6 +145,7 @@ module.h
 mouseactions.h
 node.h
 octave_window.h
+platform.h
 qucs.h
 qucsdoc.h
 schematic.h
@@ -174,7 +176,7 @@ QT4_WRAP_CPP( QUCS_MOC_SRCS ${QUCS_MOC_HDRS} )
 #
 # generate rules for building source files from bitmap resources
 #
-SET(RESOURCES qucs.qrc)
+SET(RESOURCES qucs_.qrc)
 QT4_ADD_RESOURCES(RESOURCES_SRCS ${RESOURCES})
 
 if(UNIX AND NOT APPLE)
@@ -244,7 +246,7 @@ ADD_EXECUTABLE( qucs MACOSX_BUNDLE WIN32
 #
 # Tell CMake which libraries we need to link our executable against.
 #
-TARGET_LINK_LIBRARIES( qucs  components diagrams dialogs paintings ${QT_LIBRARIES} )
+TARGET_LINK_LIBRARIES( qucs components diagrams dialogs paintings ${QT_LIBRARIES} ${CMAKE_DL_LIBS})
 
 #
 # Prepare the installation
