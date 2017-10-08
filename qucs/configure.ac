@@ -273,7 +273,7 @@ case $host_os in
       /usr/local/include/qt4"
     for path in $paths; do
       if test -f "$path/Qt/qapplication.h"; then
-        QT_INCLUDES="$path -I$path/Qt -I$path/QtGui -I$path/QtCore -I$path/QtSvg -I$path/QtXml -I$path/QtScript"
+        QT_INCLUDES="$path -I$path/Qt -I$path/QtGui -I$path/QtCore -I$path/QtSvg -I$path/QtXml -I$path/QtScript -I$path/QtTest"
         QT_INCLUDES="$QT_INCLUDES -I$path/Qt3Support"
         QT_VER=4
         break
@@ -810,7 +810,9 @@ AC_CONFIG_FILES([Makefile
     qucs/diagrams/Makefile
     qucs/paintings/Makefile
     qucs/dialogs/Makefile
-    translations/Makefile])
+    qucs/tests/Makefile
+    translations/Makefile
+    tests/Makefile])
 
 dnl Check for Git short SHA to tag version
 dnl The release package should also keep it on the config.h

@@ -30,7 +30,8 @@ SUBDIRS = \
 	bitmaps \
 	components diagrams \
 	paintings \
-	dialogs octave
+	dialogs octave \
+	tests
 
 if COND_WIN32
 bin_SCRIPTS = qucsdigi.bat qucsveri.bat qucsdigilib.bat
@@ -113,8 +114,6 @@ EXTRA_DIST = \
 	bitmaps/qucsedit.icns \
 	bitmaps/qucsrescodes.icns \
 	bitmaps/qucstrans.icns
-
-SUFFIXES = .h .moc.cpp
 
 .h.moc.cpp:
 	$(MOC) -o $@ $<
