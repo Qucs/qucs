@@ -105,10 +105,10 @@ before_install:
 install:
   # Setup Linux
   # Set up for Coveralls for GCC (LINUX) only
-  - if [[ $GCC ]]; then pip install cpp-coveralls; fi
+  - if [[ $GCC ]]; then pip install --user cpp-coveralls; fi
 
   # Qucs-Test uses Numpy to compare results
-  - if [[ $LINUX ]]; then pip install --only-binary=numpy,matplotlib numpy matplotlib; fi
+  - if [[ $LINUX ]]; then pip install --user --only-binary=numpy,matplotlib numpy matplotlib; fi
 
   # Setup OSX
   # Installed already: autoconf automake libtool pkg-config
