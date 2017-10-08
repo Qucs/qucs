@@ -2073,6 +2073,7 @@ void QucsApp::slotTune(bool checked)
 {
     if (checked)
     {
+        QWidget *w = DocumentTab->currentWidget(); // remember from which Tab the tuner was started
         if (isTextDocument(w))
         {
             //Probably digital Simulation
@@ -2082,7 +2083,6 @@ void QucsApp::slotTune(bool checked)
         }
         // instance of tuner
         TuningMode = true;
-        QWidget *w = DocumentTab->currentWidget(); // remember from which Tab the tuner was started
         tunerDia = new TunerDialog(w, this);//The object can be instantiated here since when checked == false the memory will be freed
 
         slotHideEdit(); // disable text edit of component property
@@ -2158,23 +2158,43 @@ void QucsApp::slotSimulate(QWidget *w)
 
   if (ext == "dpl")
   {
-      QucsDoc* d;
-      QString _tabToFind = Doc->DataDisplay;
+      // simulation started from Data Display: open referenced schematic
+      QString _tabToFind = Doc->DataDisplay; // name of the referenced schematic
+      QFileInfo Info(QucsSettings.QucsWorkDir.filePath(_tabToFind));
+      int z = 0;
+      QucsDoc *d = findDoc(Info.absoluteFilePath(), &z);  // check if schematic is already open in a Tab
 
-      for (int i = 0; i < DocumentTab->count(); i++)
+      if (d)
       {
-          if (! isTextDocument(DocumentTab->widget(i)))
-          {
-            d = (QucsDoc*)((Schematic*)DocumentTab->widget(i));
-            QFileInfo Info(d->DocName);
-
-
-            if (Info.fileName() == _tabToFind)
-            {
-                //This should be the simulation schematic of this data display
-                w = DocumentTab->widget(i);
-            }
+          // schematic already loaded
+          // this should be the simulation schematic of this data display
+          w = DocumentTab->widget(z);
+      }
+      else
+      {
+          // schematic not yet loaded
+          int i = 0;
+          int No = DocumentTab->currentIndex(); // remember current Tab
+          if(Info.suffix() == "sch" || Info.suffix() == "dpl" ||
+             Info.suffix() == "sym") {
+            d = new Schematic(this, Info.absoluteFilePath());
+            i = DocumentTab->addTab((Schematic *)d, QPixmap(":/bitmaps/empty.xpm"), Info.fileName());
+          } else {
+            d = new TextDoc(this, Info.absoluteFilePath());
+            i = DocumentTab->addTab((TextDoc *)d, QPixmap(":/bitmaps/empty.xpm"), Info.fileName());
           }
+          DocumentTab->setCurrentIndex(i); // temporarily switch to the newly created Tab
+
+          if(d->load()) {
+            // document loaded successfully
+            w = DocumentTab->widget(i);
+          } else {
+            // failed loading document
+            // load() above has already shown a QMessageBox about not being able to load the file
+            delete d;
+            DocumentTab->setCurrentIndex(No);
+          }
+          DocumentTab->setCurrentIndex(No);
       }
   }
 
