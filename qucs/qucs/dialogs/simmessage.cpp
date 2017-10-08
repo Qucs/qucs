@@ -40,7 +40,6 @@ using namespace std;
 #include <QMessageBox>
 
 #include "simmessage.h"
-#include "main.h"
 #include "module.h"
 #include "qucs.h"
 #include "textdoc.h"

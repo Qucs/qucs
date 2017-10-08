@@ -67,7 +67,7 @@ qucs_LDADD = components/libcomponents.a diagrams/libdiagrams.a \
   paintings/libpaintings.a dialogs/libdialogs.a \
   $(X11_LIBS) $(QT_LIBS)
 
-noinst_HEADERS = $(MOCHEADERS) main.h wire.h qucsdoc.h element.h node.h \
+noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
   wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
   projectView.h printerwriter.h imagewriter.h
 

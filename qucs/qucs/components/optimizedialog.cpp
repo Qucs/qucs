@@ -21,7 +21,6 @@
 # include <config.h>
 #endif
 
-#include "main.h"
 #include "qucs.h"
 #include "optimizedialog.h"
 #include "opt_sim.h"

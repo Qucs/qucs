@@ -137,7 +137,6 @@ SET(QUCS_SRCS
 
 SET(QUCS_HDRS
 element.h
-main.h
 messagedock.h
 misc.h
 mnemo.h

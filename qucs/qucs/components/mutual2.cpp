@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "main.h"
+#include "qucs.h"
 #include "mutual2.h"
 
 #include<QFontMetrics>

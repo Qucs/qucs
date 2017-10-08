@@ -43,7 +43,6 @@
 
 #include "qucs.h"
 #include "schematic.h"
-#include "main.h"
 #include "node.h"
 #include "textdoc.h"
 #include "viewpainter.h"

@@ -43,7 +43,6 @@
 #include <QVariant>
 #include <QDebug>
 
-#include "main.h"
 #include "qucs.h"
 #include "qucsdoc.h"
 #include "textdoc.h"
@@ -82,6 +81,17 @@ struct iconCompInfoStruct
 
 Q_DECLARE_METATYPE(iconCompInfoStruct)
 
+// declare extern variables
+tQucsSettings QucsSettings;  // nearly everywhere used
+QString lastDir;    // to remember last directory for several dialogs
+QStringList qucsPathList;
+VersionTriplet QucsVersion; // Qucs version string
+QucsApp *QucsMain = 0;  // the Qucs application itself
+
+
+/*!
+ * \brief QucsApp::QucsApp main application
+ */
 QucsApp::QucsApp()
 {
   setWindowTitle("Qucs " PACKAGE_VERSION);
@@ -2803,4 +2813,151 @@ void QucsApp::slotSaveSchematicToGraphicsFile(bool diagram)
     statusBar()->showMessage(QObject::tr("Successfully exported"), 2000);
   }
   delete writer;
+}
+
+
+// #########################################################################
+// Loads the settings file and stores the settings.
+bool loadSettings()
+{
+    QSettings settings("qucs","qucs");
+
+    if(settings.contains("x"))QucsSettings.x=settings.value("x").toInt();
+    if(settings.contains("y"))QucsSettings.y=settings.value("y").toInt();
+    if(settings.contains("dx"))QucsSettings.dx=settings.value("dx").toInt();
+    if(settings.contains("dy"))QucsSettings.dy=settings.value("dy").toInt();
+    if(settings.contains("font"))QucsSettings.font.fromString(settings.value("font").toString());
+    if(settings.contains("LargeFontSize"))QucsSettings.largeFontSize=settings.value("LargeFontSize").toDouble(); // use toDouble() as it can interpret the string according to the current locale
+    if(settings.contains("maxUndo"))QucsSettings.maxUndo=settings.value("maxUndo").toInt();
+    if(settings.contains("NodeWiring"))QucsSettings.NodeWiring=settings.value("NodeWiring").toInt();
+    if(settings.contains("BGColor"))QucsSettings.BGColor.setNamedColor(settings.value("BGColor").toString());
+    if(settings.contains("Editor"))QucsSettings.Editor=settings.value("Editor").toString();
+    if(settings.contains("FileTypes"))QucsSettings.FileTypes=settings.value("FileTypes").toStringList();
+    if(settings.contains("Language"))QucsSettings.Language=settings.value("Language").toString();
+    if(settings.contains("Comment"))QucsSettings.Comment.setNamedColor(settings.value("Comment").toString());
+    if(settings.contains("String"))QucsSettings.String.setNamedColor(settings.value("String").toString());
+    if(settings.contains("Integer"))QucsSettings.Integer.setNamedColor(settings.value("Integer").toString());
+    if(settings.contains("Real"))QucsSettings.Real.setNamedColor(settings.value("Real").toString());
+    if(settings.contains("Character"))QucsSettings.Character.setNamedColor(settings.value("Character").toString());
+    if(settings.contains("Type"))QucsSettings.Type.setNamedColor(settings.value("Type").toString());
+    if(settings.contains("Attribute"))QucsSettings.Attribute.setNamedColor(settings.value("Attribute").toString());
+    if(settings.contains("Directive"))QucsSettings.Directive.setNamedColor(settings.value("Directive").toString());
+    if(settings.contains("Task"))QucsSettings.Task.setNamedColor(settings.value("Task").toString());
+
+    if(settings.contains("Qucsator"))QucsSettings.Qucsator = settings.value("Qucsator").toString();
+    //if(settings.contains("BinDir"))QucsSettings.BinDir = settings.value("BinDir").toString();
+    //if(settings.contains("LangDir"))QucsSettings.LangDir = settings.value("LangDir").toString();
+    //if(settings.contains("LibDir"))QucsSettings.LibDir = settings.value("LibDir").toString();
+    if(settings.contains("AdmsXmlBinDir"))QucsSettings.AdmsXmlBinDir = settings.value("AdmsXmlBinDir").toString();
+    if(settings.contains("AscoBinDir"))QucsSettings.AscoBinDir = settings.value("AscoBinDir").toString();
+    //if(settings.contains("OctaveDir"))QucsSettings.OctaveDir = settings.value("OctaveDir").toString();
+    //if(settings.contains("ExamplesDir"))QucsSettings.ExamplesDir = settings.value("ExamplesDir").toString();
+    //if(settings.contains("DocDir"))QucsSettings.DocDir = settings.value("DocDir").toString();
+    if(settings.contains("OctaveExecutable")) {
+        QucsSettings.OctaveExecutable = settings.value("OctaveExecutable").toString();
+    } else {
+        if(settings.contains("OctaveBinDir")) {
+            QucsSettings.OctaveExecutable = settings.value("OctaveBinDir").toString() +
+                    QDir::separator() + "octave" + QString(executableSuffix);
+        } else QucsSettings.OctaveExecutable = "octave" + QString(executableSuffix);
+    }
+    if(settings.contains("QucsHomeDir"))
+      if(settings.value("QucsHomeDir").toString() != "")
+         QucsSettings.QucsHomeDir.setPath(settings.value("QucsHomeDir").toString());
+    QucsSettings.QucsWorkDir = QucsSettings.QucsHomeDir;
+
+    if (settings.contains("IgnoreVersion")) QucsSettings.IgnoreFutureVersion = settings.value("IgnoreVersion").toBool();
+    // check also for old setting name with typo...
+    else if (settings.contains("IngnoreVersion")) QucsSettings.IgnoreFutureVersion = settings.value("IngnoreVersion").toBool();
+    else QucsSettings.IgnoreFutureVersion = false;
+
+    if (settings.contains("GraphAntiAliasing")) QucsSettings.GraphAntiAliasing = settings.value("GraphAntiAliasing").toBool();
+    else QucsSettings.GraphAntiAliasing = false;
+
+    if (settings.contains("TextAntiAliasing")) QucsSettings.TextAntiAliasing = settings.value("TextAntiAliasing").toBool();
+    else QucsSettings.TextAntiAliasing = false;
+
+    if(settings.contains("Editor")) QucsSettings.Editor = settings.value("Editor").toString();
+
+    QucsSettings.RecentDocs = settings.value("RecentDocs").toString().split("*",QString::SkipEmptyParts);
+    QucsSettings.numRecentDocs = QucsSettings.RecentDocs.count();
+
+
+    QucsSettings.spiceExtensions << "*.sp" << "*.cir" << "*.spc" << "*.spi";
+
+    // If present read in the list of directory paths in which Qucs should
+    // search for subcircuit schematics
+    int npaths = settings.beginReadArray("Paths");
+    for (int i = 0; i < npaths; ++i)
+    {
+        settings.setArrayIndex(i);
+        QString apath = settings.value("path").toString();
+        qucsPathList.append(apath);
+    }
+    settings.endArray();
+
+    QucsSettings.numRecentDocs = 0;
+
+    return true;
+}
+
+// #########################################################################
+// Saves the settings in the settings file.
+bool saveApplSettings()
+{
+    QSettings settings ("qucs","qucs");
+
+    settings.setValue("x", QucsSettings.x);
+    settings.setValue("y", QucsSettings.y);
+    settings.setValue("dx", QucsSettings.dx);
+    settings.setValue("dy", QucsSettings.dy);
+    settings.setValue("font", QucsSettings.font.toString());
+    // store LargeFontSize as a string, so it will be also human-readable in the settings file (will be a @Variant() otherwise)
+    settings.setValue("LargeFontSize", QString::number(QucsSettings.largeFontSize));
+    settings.setValue("maxUndo", QucsSettings.maxUndo);
+    settings.setValue("NodeWiring", QucsSettings.NodeWiring);
+    settings.setValue("BGColor", QucsSettings.BGColor.name());
+    settings.setValue("Editor", QucsSettings.Editor);
+    settings.setValue("FileTypes", QucsSettings.FileTypes);
+    settings.setValue("Language", QucsSettings.Language);
+    settings.setValue("Comment", QucsSettings.Comment.name());
+    settings.setValue("String", QucsSettings.String.name());
+    settings.setValue("Integer", QucsSettings.Integer.name());
+    settings.setValue("Real", QucsSettings.Real.name());
+    settings.setValue("Character", QucsSettings.Character.name());
+    settings.setValue("Type", QucsSettings.Type.name());
+    settings.setValue("Attribute", QucsSettings.Attribute.name());
+    settings.setValue("Directive", QucsSettings.Directive.name());
+    settings.setValue("Task", QucsSettings.Task.name());
+    //settings.setValue("Qucsator", QucsSettings.Qucsator);
+    //settings.setValue("BinDir", QucsSettings.BinDir);
+    //settings.setValue("LangDir", QucsSettings.LangDir);
+    //settings.setValue("LibDir", QucsSettings.LibDir);
+    settings.setValue("AdmsXmlBinDir", QucsSettings.AdmsXmlBinDir.canonicalPath());
+    settings.setValue("AscoBinDir", QucsSettings.AscoBinDir.canonicalPath());
+    //settings.setValue("OctaveDir", QucsSettings.OctaveDir);
+    //settings.setValue("ExamplesDir", QucsSettings.ExamplesDir);
+    //settings.setValue("DocDir", QucsSettings.DocDir);
+    // settings.setValue("OctaveBinDir", QucsSettings.OctaveBinDir.canonicalPath());
+    settings.setValue("OctaveExecutable",QucsSettings.OctaveExecutable);
+    settings.setValue("QucsHomeDir", QucsSettings.QucsHomeDir.canonicalPath());
+    settings.setValue("IgnoreVersion", QucsSettings.IgnoreFutureVersion);
+    settings.setValue("GraphAntiAliasing", QucsSettings.GraphAntiAliasing);
+    settings.setValue("TextAntiAliasing", QucsSettings.TextAntiAliasing);
+    settings.setValue("Editor", QucsSettings.Editor);
+
+    // Copy the list of directory paths in which Qucs should
+    // search for subcircuit schematics from qucsPathList
+    settings.remove("Paths");
+    settings.beginWriteArray("Paths");
+    int i = 0;
+    foreach(QString path, qucsPathList) {
+         settings.setArrayIndex(i);
+         settings.setValue("path", path);
+         i++;
+     }
+     settings.endArray();
+
+  return true;
+
 }

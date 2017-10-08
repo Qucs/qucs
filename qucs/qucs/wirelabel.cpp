@@ -17,7 +17,7 @@
 #include "wirelabel.h"
 #include "viewpainter.h"
 #include "wire.h"
-#include "main.h"
+#include "qucs.h"
 
 #include <QString>
 #include <QPainter>

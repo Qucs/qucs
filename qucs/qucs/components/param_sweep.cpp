@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "param_sweep.h"
-#include "main.h"
+#include "qucs.h"
 
 
 Param_Sweep::Param_Sweep()

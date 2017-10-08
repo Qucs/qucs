@@ -24,7 +24,7 @@
 #include "marker.h"
 #include "diagram.h"
 #include "graph.h"
-#include "main.h"
+#include "qucs.h"
 
 #include <QString>
 #include <QPainter>

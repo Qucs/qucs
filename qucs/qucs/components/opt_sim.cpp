@@ -22,7 +22,7 @@
 #include <QStringList>
 
 #include "opt_sim.h"
-#include "main.h"
+#include "qucs.h"
 
 
 Optimize_Sim::Optimize_Sim()
