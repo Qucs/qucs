@@ -8,6 +8,11 @@
 #   cmake .. -DCMAKE_INSTALL_PREFIX=/new/install/prefix
 #
 # By default, the prefix is "/usr/local"
+#
+# Tests are enabled by default.
+# To run the tests, try one of these:
+#   make test
+#   env CTEST_OUTPUT_ON_FAILURE=1 make test    # for verbose output
 
 PROJECT(qucs CXX)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
@@ -26,6 +31,9 @@ set(PROJECT_DOMAIN_SECOND "org")
 
 #
 SET(CMAKE_BUILD_TYPE Debug)
+
+# enable testing for current directory and below
+ENABLE_TESTING()
 
 # If Git hash not defined, try to define it
 IF(NOT GIT)
@@ -54,7 +62,7 @@ endif()
 #
 ADD_DEFINITIONS( -DHAVE_CONFIG_H )
 
-FIND_PACKAGE( Qt4 4.6.3 REQUIRED QtCore QtGui Qt3Support QtSvg QtXml QtScript)
+FIND_PACKAGE( Qt4 4.6.3 REQUIRED QtCore QtGui Qt3Support QtSvg QtXml QtScript QtTest)
 INCLUDE( ${QT_USE_FILE} )
 
 #MESSAGE("QT_INCLUDES=[${QT_INCLUDES}]")
@@ -122,6 +130,8 @@ ADD_SUBDIRECTORY( dialogs )
 ADD_SUBDIRECTORY( octave )
 ADD_SUBDIRECTORY( python )
 ADD_SUBDIRECTORY( paintings )
+
+ADD_SUBDIRECTORY( tests )
 
 SET(QUCS_SRCS
   attach.cpp
