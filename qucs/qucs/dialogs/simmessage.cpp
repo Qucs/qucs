@@ -48,12 +48,6 @@ using namespace std;
 #include "components/vhdlfile.h"
 #include "misc.h"
 
-#ifdef __MINGW32__
-#define executableSuffix ".exe"
-#else
-#define executableSuffix ""
-#endif
-
 /*!
  * \brief Create a simulation messages dialog.
  *
