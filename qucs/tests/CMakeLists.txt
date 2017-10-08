@@ -14,3 +14,8 @@ ADD_EXECUTABLE(ElementTests ${ElementTests_SRCS})
 TARGET_LINK_LIBRARIES(ElementTests ${QT_LIBRARIES} schematic)
 ADD_TEST(NAME ElementTests COMMAND ElementTests)
 
+
+SET( ComponentTests_SRCS ComponentTests.cpp)
+ADD_EXECUTABLE(ComponentTests ${ComponentTests_SRCS})
+TARGET_LINK_LIBRARIES(ComponentTests ${QT_LIBRARIES} schematic components diagrams dialogs paintings)
+ADD_TEST(NAME ComponentTests COMMAND ComponentTests)
