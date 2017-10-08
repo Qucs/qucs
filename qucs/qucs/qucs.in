@@ -56,4 +56,4 @@ else
 	  # backwards compatibility
 fi
 
-$dir/qucs.real $*
+$dir/qucs.real "$@"
