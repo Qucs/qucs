@@ -31,7 +31,7 @@
 #include <cmath>
 #include <QGridLayout>
 #include <QVBoxLayout>
-#include "main.h"
+#include "qucs.h"
 #include "textdoc.h"
 #include "schematic.h"
 #include "misc.h"

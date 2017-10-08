@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "digi_sim.h"
-#include "main.h"
+#include "qucs.h"
 
 
 Digi_Sim::Digi_Sim()

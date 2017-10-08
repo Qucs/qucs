@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "main.h"
+#include "qucs.h"
 #include "viewpainter.h"
 #include "diagrams/graph.h"
 

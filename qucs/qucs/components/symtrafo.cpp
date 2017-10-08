@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "main.h"
+#include "qucs.h"
 #include "symtrafo.h"
 
 #include<QFontMetrics>

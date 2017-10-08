@@ -30,7 +30,7 @@
 #include <QProcess>
 #include <QDebug>
 
-#include "main.h"
+#include "qucs.h"
 #include "node.h"
 #include "schematic.h"
 #include "diagrams/diagrams.h"

@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "mstee.h"
-#include "main.h"
+#include "qucs.h"
 
 #include <QFontMetrics>
 

@@ -25,7 +25,7 @@
 #include <QPainter>
 
 #include "tabdiagram.h"
-#include "main.h"
+#include "qucs.h"
 #include <cmath>
 #include "misc.h"
 
