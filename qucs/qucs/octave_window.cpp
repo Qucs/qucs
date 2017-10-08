@@ -18,13 +18,6 @@
 #include <QMessageBox>
 
 
-#ifdef __MINGW32__
-#define executableSuffix ".exe"
-#else
-#define executableSuffix ""
-#endif
-
-
 OctaveWindow::OctaveWindow(QDockWidget *parent_): QWidget()
 {
   QFont font;
