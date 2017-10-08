@@ -55,6 +55,7 @@ matrix:
           packages:
             - *native_deps
             - lcov # lcov is required by configure, only gcov really needed thou
+            - python-tk
 
     - os: linux
       compiler: clang
