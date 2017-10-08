@@ -108,7 +108,7 @@ class TunerDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit TunerDialog(QWidget *parent = 0);
+    explicit TunerDialog(QWidget *_w = 0, QWidget *parent = 0);
     virtual ~TunerDialog();
     void addTunerElement(tunerElement *element);
     bool containsProperty(Property *prop);
@@ -122,6 +122,7 @@ protected:
     virtual void showEvent(QShowEvent *);
 
 private:
+    QWidget *w; // widget holding the Qucs document to be tuned
     QPushButton *closeButton;
     QGridLayout *gbox;
     QList<tunerElement*> *currentElements;

@@ -221,7 +221,7 @@ public slots:
   void slotCMenuInsert();
 
   //Moved slot simulate to Public so that tunerDialog can access
-  void slotSimulate();
+  void slotSimulate(QWidget *w = 0);
 
   void slotUpdateTreeview();
 

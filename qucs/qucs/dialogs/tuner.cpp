@@ -614,8 +614,8 @@ tunerElement::~tunerElement()
 
 
 //Main window. It contains zero or more tunerElement objects
-TunerDialog::TunerDialog(QWidget *parent) :
-    QDialog(parent)
+TunerDialog::TunerDialog(QWidget *_w, QWidget *parent) :
+  w(_w), QDialog(parent)
 {
     setAttribute(Qt::WA_DeleteOnClose);//This attribute forces the widget to be destroyed after closing
     qDebug() << "Tuner::TunerDialog";
@@ -741,7 +741,7 @@ void TunerDialog::slotElementValueUpdated()
 
     progressBar->setVisible(true);
     this->setEnabled(false);
-    QucsMain->slotSimulate();
+    QucsMain->slotSimulate(w);
 }
 
 void TunerDialog::SimulationEnded()
