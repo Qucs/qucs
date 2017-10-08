@@ -126,7 +126,7 @@ ADD_SUBDIRECTORY( paintings )
 SET(QUCS_SRCS
   attach.cpp
   element.cpp	octave_window.cpp	qucsdoc.cpp
-  textdoc.cpp  main.cpp	schematic.cpp
+  textdoc.cpp  schematic.cpp
   mnemo.cpp	qucs.cpp	viewpainter.cpp
   module.cpp	schematic_element.cpp	wire.cpp
   mouseactions.cpp qucs_actions.cpp	schematic_file.cpp
@@ -233,19 +233,18 @@ IF(APPLE)
 ENDIF(APPLE)
 
 
+# create library with schematic relevant code
+ADD_LIBRARY( schematic ${QUCS_HDRS} ${QUCS_SRCS} ${QUCS_MOC_SRCS})
+
 #
 #  CMake's way of creating an executable
 #
-ADD_EXECUTABLE( qucs MACOSX_BUNDLE WIN32
-  ${QUCS_HDRS}
-  ${QUCS_SRCS}
-  ${QUCS_MOC_SRCS}
-  ${RESOURCES_SRCS} )
+ADD_EXECUTABLE( qucs MACOSX_BUNDLE WIN32 main.cpp ${RESOURCES_SRCS} )
 
 #
 # Tell CMake which libraries we need to link our executable against.
 #
-TARGET_LINK_LIBRARIES( qucs components diagrams dialogs paintings ${QT_LIBRARIES} ${CMAKE_DL_LIBS})
+TARGET_LINK_LIBRARIES( qucs schematic components diagrams dialogs paintings ${QT_LIBRARIES} ${CMAKE_DL_LIBS})
 
 #
 # Prepare the installation
