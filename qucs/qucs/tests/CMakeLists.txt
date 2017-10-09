@@ -17,11 +17,11 @@ ADD_TEST(NAME ElementTests COMMAND ElementTests)
 
 SET( ComponentTests_SRCS ComponentTests.cpp)
 ADD_EXECUTABLE(ComponentTests ${ComponentTests_SRCS})
-TARGET_LINK_LIBRARIES(ComponentTests ${QT_LIBRARIES} components schematic diagrams dialogs paintings)
+TARGET_LINK_LIBRARIES(ComponentTests schematic components diagrams schematic dialogs paintings ${QT_LIBRARIES})
 ADD_TEST(NAME ComponentTests COMMAND ComponentTests)
 
 
 SET( SchematicTests_SRCS SchematicTests.cpp)
 ADD_EXECUTABLE(SchematicTests ${SchematicTests_SRCS})
-TARGET_LINK_LIBRARIES(SchematicTests ${QT_LIBRARIES} components schematic diagrams dialogs paintings)
+TARGET_LINK_LIBRARIES(SchematicTests schematic components diagrams schematic dialogs paintings ${QT_LIBRARIES})
 ADD_TEST(NAME SchematicTests COMMAND SchematicTests)
