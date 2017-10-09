@@ -2252,7 +2252,7 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 
   if(sim->showBias == 0) {  // paint dc bias into schematic ?
       // modbykevin should we still close automatically if the window is global?
-    // sim->slotClose();   // close and delete simulation window
+    sim->slotClose();   // close and delete simulation window
     if(w) {  // schematic still open ?
       SweepDialog *Dia = new SweepDialog((Schematic*)sim->DocWidget);
 
@@ -2275,8 +2275,7 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
       }
       else
         slotChangePage(sim->DocName, sim->DataDisplay);
-      // modbykevin: since SimMessage is global should we still close it automatically
-      // sim->slotClose();   // close and delete simulation window
+      sim->slotClose();   // close and delete simulation window
     }
     else
       if(w) if(!isTextDocument (sim->DocWidget))
