@@ -28,6 +28,7 @@
 #include <QRegExp>
 #include <Q3PtrList>
 
+
 class QVBoxLayout;
 class Cross3D;
 class QLabel;
@@ -96,7 +97,7 @@ protected slots:
 
 private:
   void SelectGraph(Graph*);
-
+  QStringList LoadAvailableFreqs();
   Diagram *Diag;
   QString defaultDataSet;
   QString Var2;
@@ -121,7 +122,7 @@ private:
   QLineEdit   *startY, *stepY, *stopY;
   QLineEdit   *startZ, *stepZ, *stopZ;
   QLineEdit   *rotationX, *rotationY, *rotationZ;
-  QLineEdit   *freq;
+  QComboBox   *freqCombobox;
   QLabel      *GridLabel1, *GridLabel2, *Label1, *Label2, *Label3, *Label4;
   QComboBox   *PropertyBox, *GridStyleBox, *yAxisBox;
   QPushButton *ColorButt, *GridColorButt;
