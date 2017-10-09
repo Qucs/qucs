@@ -35,6 +35,7 @@ SUBDIRS = \
 	translations \
 	contrib \
 	examples \
+	tests \
 	$(RELEASEDIRS)
 
 EXTRA_DIST = ar-lib bootstrap depcomp PLATFORMS RELEASE Info.plist \

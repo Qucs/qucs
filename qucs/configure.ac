@@ -20,7 +20,7 @@ AC_PREFIX_DEFAULT([/usr/local])
 AC_CONFIG_MACRO_DIR([m4])
 
 dnl Checks for programs.
-AC_PROG_CXX(clang++ g++)
+AC_PROG_CXX
 AC_PROG_CC
 AC_CHECK_TOOL(AR, ar, :)
 LT_INIT()
@@ -810,6 +810,7 @@ AC_CONFIG_FILES([Makefile
     qucs/diagrams/Makefile
     qucs/paintings/Makefile
     qucs/dialogs/Makefile
+    tests/Makefile
     translations/Makefile])
 
 dnl Check for Git short SHA to tag version
