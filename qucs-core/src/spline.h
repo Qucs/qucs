@@ -48,12 +48,12 @@ class spline
   spline (int);
   spline (tvector<nr_double_t>, tvector<nr_double_t>);
   spline (qucs::vector, qucs::vector);
-  spline (::std::vector<nr_double_t>, ::std::vector<nr_double_t>);
+  spline (std::vector<nr_double_t>, std::vector<nr_double_t>);
   ~spline ();
 
   void vectors (qucs::vector, qucs::vector);
   void vectors (tvector<nr_double_t>, tvector<nr_double_t>);
-  void vectors (::std::vector<nr_double_t>, ::std::vector<nr_double_t>);
+  void vectors (std::vector<nr_double_t>, std::vector<nr_double_t>);
   void vectors (nr_double_t *, nr_double_t *, int);
   void construct (void);
   poly evaluate (nr_double_t);
