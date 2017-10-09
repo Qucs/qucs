@@ -40,3 +40,6 @@ if COND_WIN32
 # it does not work on windoze
 doesnotexist.log: SH_LOG_FLAGS=-c 'exit 77'
 endif
+
+EXTRA_DIST = \
+	$(TESTS)
