@@ -808,6 +808,7 @@ AC_CONFIG_FILES([Makefile
     qucs/diagrams/Makefile
     qucs/paintings/Makefile
     qucs/dialogs/Makefile
+    tests/Makefile
     translations/Makefile])
 
 dnl Check for Git short SHA to tag version

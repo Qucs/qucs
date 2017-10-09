@@ -114,29 +114,6 @@ EXTRA_DIST = \
 	bitmaps/qucsrescodes.icns \
 	bitmaps/qucstrans.icns
 
-check_LTLIBRARIES = helloworld.la
-helloworld_la_LDFLAGS = -shared -no-undefined -module -avoid-version -rpath /dev/null
-
-if COND_WIN32
-helloworld.dll: %.dll: %.la
-	[ -f $@ ] || $(LN_S) .libs/$$(. .libs/$<; echo $$dlname) .
-helloworld.log: helloworld.dll
-else
-helloworld.so: %.so: %.la
-	[ -f $@ ] || $(LN_S) .libs/$$(. .libs/$<; echo $$dlname) .
-helloworld.log: helloworld.so
-endif
-
-SH_LOG_COMPILER = $(SHELL)
-SH_LOG_FLAGS =
-TEST_EXTENSIONS = .sh
-AM_TESTS_FD_REDIRECT = 9>&2
-
-TESTS = helloworld.sh doesnotexist.sh
-if COND_WIN32
-# it does not work on windoze
-doesnotexist.log: SH_LOG_FLAGS=-c 'exit 77'
-endif
 
 CLEANFILES = *~ *.rej *.orig qucs_.cpp
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.qm
