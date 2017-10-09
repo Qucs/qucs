@@ -62,7 +62,8 @@ class QPushButton;
 #define executableSuffix ""
 #endif
 
-static const double pi = 3.1415926535897932384626433832795029;  /* pi   */
+/* pi */
+static const double pi = 3.141592653589793238462643383279502884197169399375105820974944;
 
 struct tQucsSettings {
   int x, y, dx, dy;    // position and size of main window
