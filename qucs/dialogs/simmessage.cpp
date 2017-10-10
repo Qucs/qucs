@@ -594,9 +594,6 @@ void SimMessage::startSimulator()
   QString sep(":");
 #endif
 
-  // append process PATH
-  // insert Qucs bin dir, so ASCO can find qucsator
-  env.insert("PATH", env.value("PATH") + sep + QucsSettings.BinDir );
   SimProcess.setProcessEnvironment(env);
 
   qDebug() << "Command :" << Program << Arguments.join(" ");
