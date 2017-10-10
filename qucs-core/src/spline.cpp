@@ -70,7 +70,7 @@ spline::spline (qucs::vector y, qucs::vector t) {
 }
 
 // Constructor creates an instance of the spline class with tvector data given.
-spline::spline (::std::vector<nr_double_t> y, ::std::vector<nr_double_t> t) {
+spline::spline (std::vector<nr_double_t> y, std::vector<nr_double_t> t) {
   x = f0 = f1 = f2 = f3 = NULL;
   d0 = dn = 0;
   n = 0;
@@ -105,7 +105,7 @@ void spline::vectors (qucs::vector y, qucs::vector t) {
 }
 
 // Pass interpolation datapoints as tvectors.
-void spline::vectors (::std::vector<nr_double_t> y, ::std::vector<nr_double_t> t) {
+void spline::vectors (std::vector<nr_double_t> y, std::vector<nr_double_t> t) {
   int i = (int)t.size ();
   assert ((int)y.size () == i && i >= 3);
 
@@ -236,7 +236,8 @@ void spline::construct (void) {
   // second kind of cubic splines
   else if (boundary == SPLINE_BC_PERIODIC) {
     // non-trigdiagonal equations - periodic boundary condition
-    ::std::vector<nr_double_t> z (n+1);
+    //std::vector<nr_double_t> z (n+1);
+    nr_double_t *z = new nr_double_t[n+1];
     if (n == 2) {
       nr_double_t B = h[0] + h[1];
       nr_double_t A = 2 * B;
@@ -250,9 +251,9 @@ void spline::construct (void) {
     }
     else {
       tridiag<nr_double_t> sys;
-      ::std::vector<nr_double_t> o (n);
-      ::std::vector<nr_double_t> d (n);
-      ::std::vector<nr_double_t> b(&z[1],&z[n]);
+      std::vector<nr_double_t> o (n);
+      std::vector<nr_double_t> d (n);
+      std::vector<nr_double_t> b(&z[1],&z[n]);
       //b.setData (&z[1], n);
       for (i = 0; i < n - 1; i++) {
         o[i] = h[i+1];
@@ -273,7 +274,8 @@ void spline::construct (void) {
     }
 
     f1 = new nr_double_t[n+1];
-    f2 = &z.front (); // reuse storage
+    //f2 = &z.front (); // reuse storage
+    f2 = z;
     f3 = h;
     for (i = n - 1; i >= 0; i--) {
       f1[i] = (f0[i+1] - f0[i]) / h[i] - h[i] * (z[i+1] + 2 * z[i]) / 3;

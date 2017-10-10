@@ -23,6 +23,8 @@
 # include <config.h>
 #endif
 
+#include <iostream>
+
 #include <stdlib.h>
 #include <ctype.h>
 #include <locale.h>
@@ -36,6 +38,7 @@
 #include <QMessageBox>
 #include <QRegExp>
 #include <QtSvg>
+#include <QDebug>
 
 #include "qucs.h"
 #include "main.h"
@@ -45,6 +48,7 @@
 
 #include "schematic.h"
 #include "module.h"
+#include "misc.h"
 
 #include "components/components.h"
 
@@ -63,6 +67,7 @@ tQucsSettings QucsSettings;
 QucsApp *QucsMain = 0;  // the Qucs application itself
 QString lastDir;    // to remember last directory for several dialogs
 QStringList qucsPathList;
+VersionTriplet QucsVersion; // Qucs version string
 
 // #########################################################################
 // Loads the settings file and stores the settings.
@@ -90,7 +95,7 @@ bool loadSettings()
     if(settings.contains("Type"))QucsSettings.Type.setNamedColor(settings.value("Type").toString());
     if(settings.contains("Attribute"))QucsSettings.Attribute.setNamedColor(settings.value("Attribute").toString());
     if(settings.contains("Directive"))QucsSettings.Directive.setNamedColor(settings.value("Directive").toString());
-    if(settings.contains("Task"))QucsSettings.Comment.setNamedColor(settings.value("Task").toString());
+    if(settings.contains("Task"))QucsSettings.Task.setNamedColor(settings.value("Task").toString());
 
     if(settings.contains("Qucsator"))QucsSettings.Qucsator = settings.value("Qucsator").toString();
     //if(settings.contains("BinDir"))QucsSettings.BinDir = settings.value("BinDir").toString();
@@ -101,7 +106,14 @@ bool loadSettings()
     //if(settings.contains("OctaveDir"))QucsSettings.OctaveDir = settings.value("OctaveDir").toString();
     //if(settings.contains("ExamplesDir"))QucsSettings.ExamplesDir = settings.value("ExamplesDir").toString();
     //if(settings.contains("DocDir"))QucsSettings.DocDir = settings.value("DocDir").toString();
-    if(settings.contains("OctaveBinDir"))QucsSettings.OctaveBinDir.setPath(settings.value("OctaveBinDir").toString());
+    if(settings.contains("OctaveExecutable")) {
+        QucsSettings.OctaveExecutable = settings.value("OctaveExecutable").toString();
+    } else {
+        if(settings.contains("OctaveBinDir")) {
+            QucsSettings.OctaveExecutable = settings.value("OctaveBinDir").toString() +
+                    QDir::separator() + "octave" + QString(executableSuffix);
+        } else QucsSettings.OctaveExecutable = "octave" + QString(executableSuffix);
+    }
     if(settings.contains("QucsHomeDir"))
       if(settings.value("QucsHomeDir").toString() != "")
          QucsSettings.QucsHomeDir.setPath(settings.value("QucsHomeDir").toString());
@@ -117,6 +129,8 @@ bool loadSettings()
 
     if (settings.contains("TextAntiAliasing")) QucsSettings.TextAntiAliasing = settings.value("TextAntiAliasing").toBool();
     else QucsSettings.TextAntiAliasing = false;
+
+    if(settings.contains("Editor")) QucsSettings.Editor = settings.value("Editor").toString();
 
     QucsSettings.RecentDocs = settings.value("RecentDocs").toString().split("*",QString::SkipEmptyParts);
     QucsSettings.numRecentDocs = QucsSettings.RecentDocs.count();
@@ -167,7 +181,7 @@ bool saveApplSettings()
     settings.setValue("Type", QucsSettings.Type.name());
     settings.setValue("Attribute", QucsSettings.Attribute.name());
     settings.setValue("Directive", QucsSettings.Directive.name());
-    settings.setValue("Task", QucsSettings.Comment.name());
+    settings.setValue("Task", QucsSettings.Task.name());
     //settings.setValue("Qucsator", QucsSettings.Qucsator);
     //settings.setValue("BinDir", QucsSettings.BinDir);
     //settings.setValue("LangDir", QucsSettings.LangDir);
@@ -177,11 +191,13 @@ bool saveApplSettings()
     //settings.setValue("OctaveDir", QucsSettings.OctaveDir);
     //settings.setValue("ExamplesDir", QucsSettings.ExamplesDir);
     //settings.setValue("DocDir", QucsSettings.DocDir);
-    settings.setValue("OctaveBinDir", QucsSettings.OctaveBinDir.canonicalPath());
+    // settings.setValue("OctaveBinDir", QucsSettings.OctaveBinDir.canonicalPath());
+    settings.setValue("OctaveExecutable",QucsSettings.OctaveExecutable);
     settings.setValue("QucsHomeDir", QucsSettings.QucsHomeDir.canonicalPath());
     settings.setValue("IgnoreVersion", QucsSettings.IgnoreFutureVersion);
     settings.setValue("GraphAntiAliasing", QucsSettings.GraphAntiAliasing);
     settings.setValue("TextAntiAliasing", QucsSettings.TextAntiAliasing);
+    settings.setValue("Editor", QucsSettings.Editor);
 
     // Copy the list of directory paths in which Qucs should
     // search for subcircuit schematics from qucsPathList
@@ -233,16 +249,25 @@ void qucsMessageOutput(QtMsgType type, const char *msg)
 #endif
 }
 
+/*!
+ * \brief attaches shared object code
+ */
+void attach(const char* what);
+
 Schematic *openSchematic(QString schematic)
 {
   qDebug() << "*** try to load schematic :" << schematic;
+
+  // QString to *char
+  QByteArray ba = schematic.toLatin1();
+  const char *c_sch = ba.data();
 
   QFile file(schematic);  // save simulator messages
   if(file.open(QIODevice::ReadOnly)) {
     file.close();
   }
   else {
-    fprintf(stderr, "Error: Could not load schematic %s\n", schematic.ascii());
+    fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
     return NULL;
   }
 
@@ -254,7 +279,7 @@ Schematic *openSchematic(QString schematic)
 
   // load schematic file if possible
   if(!sch->loadDocument()) {
-    fprintf(stderr, "Error: Could not load schematic %s\n", schematic.ascii());
+    fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
     delete sch;
     return NULL;
   }
@@ -270,6 +295,10 @@ int doNetlist(QString schematic, QString netlist)
 
   qDebug() << "*** try to write netlist  :" << netlist;
 
+  // QString to *char
+  QByteArray ba = schematic.toLatin1();
+  const char *c_net = ba.data();
+
   QStringList Collect;
 
   QPlainTextEdit *ErrText = new QPlainTextEdit();  //dummy
@@ -280,7 +309,7 @@ int doNetlist(QString schematic, QString netlist)
 
   NetlistFile.setFileName(netlist);
   if(!NetlistFile.open(QIODevice::WriteOnly)) {
-    fprintf(stderr, "Error: Could not load netlist %s\n", netlist.ascii());
+    fprintf(stderr, "Error: Could not load netlist %s\n", c_net);
     return -1;
   }
 
@@ -289,7 +318,7 @@ int doNetlist(QString schematic, QString netlist)
 
   if(SimPorts < -5) {
     NetlistFile.close();
-    fprintf(stderr, "Error: Could not prepare the netlist...\n");
+    fprintf(stderr, "Error: Could not prepare netlist %s\n", c_net);
     /// \todo better handling for error/warnings
     qCritical() << ErrText->toPlainText();
     return 1;
@@ -545,7 +574,7 @@ void createDocData() {
         QTextStream out(&file);
         out << compData.join("\n");
         file.close();
-        fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(), c->Model.toAscii().data(), file.name().toAscii().data());
+        fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(), c->Model.toAscii().data(), file.fileName().toAscii().data());
 
         QStringList compProps;
         compProps << "# Note: auto-generated file (changes will be lost on update)";
@@ -567,7 +596,7 @@ void createDocData() {
         outProps << compProps.join("\n");
         compProps.clear();
         file.close();
-        fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(), c->Model.toAscii().data(), fileProps.name().toAscii().data());
+        fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(), c->Model.toAscii().data(), fileProps.fileName().toAscii().data());
     } // module
   } // category
   fprintf(stdout, "Created data for %i components from %i categories\n", nComps, nCats);
@@ -598,9 +627,13 @@ void createListComponentEntry(){
 
     foreach (Module *Mod, Comps) {
       Element *e = (Mod->info) (Name, File, true);
+		// dangerous. better precheck cast
       Component *c = (Component* ) e;
 
-      QString qucsEntry = c->save();
+		// FIXME: cleanup
+		QTextStream s;
+		c->getSchematic()->saveComponent(s, c);
+      QString qucsEntry = *(s.string());
       fprintf(stdout, "%s; qucs    ; %s\n", c->Model.toAscii().data(), qucsEntry.toAscii().data());
 
       // add dummy ports/wires, avoid segfault
@@ -632,11 +665,15 @@ void createListComponentEntry(){
 int main(int argc, char *argv[])
 {
   qInstallMsgHandler(qucsMessageOutput);
+  // set the Qucs version string
+  QucsVersion = VersionTriplet(PACKAGE_VERSION);
+
   // apply default settings
   QucsSettings.font = QFont("Helvetica", 12);
   QucsSettings.largeFontSize = 16.0;
   QucsSettings.maxUndo = 20;
   QucsSettings.NodeWiring = 0;
+  QucsSettings.Editor = "qucs";
 
   // initially center the application
   QApplication a(argc, argv);
@@ -647,6 +684,15 @@ int main(int argc, char *argv[])
   QucsSettings.y = h/8;
   QucsSettings.dx = w*3/4;
   QucsSettings.dy = h*3/4;
+
+  // default
+  QucsSettings.QucsHomeDir.setPath(QDir::homePath()+QDir::toNativeSeparators("/.qucs"));
+  QucsSettings.QucsWorkDir.setPath(QucsSettings.QucsHomeDir.canonicalPath());
+
+  // load existing settings (if any)
+  loadSettings();
+
+  // continue to set up overrides or default settings (some are saved on exit)
 
   // check for relocation env variable
   char* var = getenv("QUCSDIR");
@@ -670,14 +716,16 @@ int main(int argc, char *argv[])
 
   QucsSettings.BinDir =      QucsDir.absolutePath() + "/bin/";
   QucsSettings.LangDir =     QucsDir.canonicalPath() + "/share/qucs/lang/";
-  QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
+  var = getenv("QUCS_LIBDIR");
+  if(var != NULL) {
+	  QucsSettings.LibDir = QString(var);
+  }else{
+	  QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
+  }
   QucsSettings.OctaveDir =   QucsDir.canonicalPath() + "/share/qucs/octave/";
-  QucsSettings.ExamplesDir = QucsDir.canonicalPath() + "/share/qucs/docs/examples/";
+  QucsSettings.ExamplesDir = QucsDir.canonicalPath() + "/share/qucs/examples/";
   QucsSettings.DocDir =      QucsDir.canonicalPath() + "/share/qucs/docs/";
 
-  QucsSettings.Editor = "qucs";
-  QucsSettings.QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
-  QucsSettings.QucsWorkDir.setPath(QucsSettings.QucsHomeDir.canonicalPath());
 
   /// \todo Make the setting up of all executables below more consistent
   var = getenv("QUCSATOR");
@@ -734,21 +782,13 @@ int main(int argc, char *argv[])
         QucsSettings.AscoBinDir.setPath(QucsSettings.BinDir);
   }
 
-  var = getenv("OCTAVEBINDIR");
-  if(var != NULL)  {
-      QucsSettings.OctaveBinDir.setPath(QString(var));
+
+  var = getenv("QUCS_OCTAVE");
+  if (var != NULL) {
+      QucsSettings.QucsOctave = QString(var);
+  } else {
+      QucsSettings.QucsOctave.clear();
   }
-  else  {
-#ifdef __MINGW32__
-      QucsSettings.OctaveBinDir.setPath(QString("C:/Software/Octave-3.6.4/bin/"));
-#else
-      QFile octaveExec("/usr/bin/octave");
-      if(octaveExec.exists())QucsSettings.OctaveBinDir.setPath(QString("/usr/bin/"));
-      QFile octaveExec1("/usr/local/bin/octave");
-      if(octaveExec1.exists()) QucsSettings.OctaveBinDir.setPath(QString("/usr/local/bin/"));
-#endif
-  }
-  loadSettings();
 
   if(!QucsSettings.BGColor.isValid())
     QucsSettings.BGColor.setRgb(255, 250, 225);
@@ -782,8 +822,10 @@ int main(int argc, char *argv[])
 
   QTranslator tor( 0 );
   QString lang = QucsSettings.Language;
-  if(lang.isEmpty())
-    lang = QTextCodec::locale();
+  if(lang.isEmpty()) {
+    QLocale loc;
+    lang = loc.name();
+  }
   tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
   a.installTranslator( &tor );
 
@@ -812,6 +854,7 @@ int main(int argc, char *argv[])
   "  -v, --version  display version information and exit\n"
   "  -n, --netlist  convert Qucs schematic into netlist\n"
   "  -p, --print    print Qucs schematic to file (eps needs inkscape)\n"
+  "  -q, --quit     exit\n"
   "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
   "    --dpi NUMBER                 set dpi value (default 96)\n"
   "    --color [RGB|RGB]            set color mode (default RGB)\n"
@@ -827,8 +870,7 @@ int main(int argc, char *argv[])
   "  -list-entries  list component entry formats for schematic and netlist\n"
   , argv[0]);
       return 0;
-    }
-    else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
+    }else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
 #ifdef GIT
       fprintf(stdout, "Qucs " PACKAGE_VERSION " (" GIT ")" "\n");
 #else
@@ -853,6 +895,12 @@ int main(int argc, char *argv[])
     }
     else if (!strcmp(argv[i], "--orin")) {
       orientation = argv[++i];
+    }
+    else if (!strcmp(argv[i], "-a")) {
+      attach(argv[++i]);
+    }
+    else if(!strcmp(argv[i], "-q")) {
+	exit(0);
     }
     else if (!strcmp(argv[i], "-i")) {
       inputfile = argv[++i];
@@ -901,10 +949,10 @@ int main(int argc, char *argv[])
   }
 
   QucsMain = new QucsApp();
-  a.setMainWidget(QucsMain);
   
   QucsMain->show();
   int result = a.exec();
   //saveApplSettings(QucsMain);
   return result;
 }
+// vim:ts=8:sw=2:noet

@@ -22,8 +22,12 @@
 # Boston, MA 02110-1301, USA.  
 #
 
+include $(top_srcdir)/qucstex.mk
+
 EXTRA_DIST = technical.tex l2h-init.cfg $(FIGURES) $(BIBFILE) \
   $(PSFILES) $(MATHFILES) $(MATHHELPS) $(CHAPTERS)
+
+LATEX_ARGS = -interaction=nonstopmode
 
 MATHFILES = mszl.m mscomparezl.m radius.m stabgear.m stabmoulton.m \
   stabbashford.m stabgearex.m coplanarzl.m
@@ -49,7 +53,16 @@ FIGURES = differential.fig biast.fig \
   mscross.fig bondwire.fig tline4p.fig
 PSFILES = MNAexample.eps NLexample.eps CYexample.eps MNAnoise1.eps \
   MNAnoise2.eps Unoise.eps MNAsingular.eps Real_c.eps Real_ec.eps  \
-  Real_r.eps TLpiece.eps
+  Real_r.eps TLpiece.eps QuarterWavelengthFilter.eps               \
+  rectwaveguide.eps circularwaveguide.eps                          \
+  PlanarSpiralInductors.eps CircularLoop.eps PrintedInductorEC.eps \
+  ReflectionCoeffsTaper.eps capq.eps indq.eps \
+  DoubleStubOpen.eps DoubleStubShort.eps \
+  SingleStubOpen.eps SingleStubShort.eps \
+  DoubleStubOpenBalanced.eps DoubleStubShortBalanced.eps \
+  SingleStubOpenBalanced.eps SingleStubShortBalanced.eps \
+  Lsection.eps SmithChart-Lsection.eps SmithChartTL.eps \
+  Smithl8l4.eps CascadedLCsch.eps SmithCascadedLCsections.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PSFRAGTEXS = $(FIGURES:.fig=.tex) $(MATHFILES:.m=.tex)
 PDFFILES = $(FIGURES:.fig=.pdf)
@@ -61,29 +74,22 @@ CHAPTERS = sparameter.tex noisewaves.tex dcanalysis.tex acanalysis.tex \
   hbanalysis.tex grammar-common.tex grammar-qucs.tex grammar-data.tex  \
   hbnoise.tex synthesis.tex transline.tex maths.tex lineardevices.tex
 
-
-technical: technical.dvi technical.ps technical.pdf
-	$(TEX2PDF) technical
-
+#if USE_LATEX2HTML
 html:
 	@tdir="tech/"; rm -rf $$tdir && mkdir $$tdir
 	L2HINIT_NAME='l2h-init.cfg' $(LATEX2HTML) -dir tech technical.tex
 
-technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES)
+# BUG, does not work (on travis)
+#all: html
+
+# TODO: install the html stuff, anyone?!
+# docdata_DATA+=$(LIST_OF_HTMLFILES)
+# install-local: # maybe use this?
+#endif
+
+technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES) $(CHAPTERS)
 
 SUFFIXES = .dvi .tex .pdf .ps .eps .fig .frg .m
-
-.tex.dvi: $(CHAPTERS) $(BIBFILE)
-	$(LATEX) $<
-	$(BIBTEX) $*
-	$(LATEX) $<
-	$(LATEX) -interaction=batchmode $<
-
-.tex.pdf: $(CHAPTERS) $(BIBFILE) $(PDFFILES) $(PDFFIGURES)
-	$(PDFLATEX) $<
-	$(BIBTEX) $*
-	$(PDFLATEX) $<
-	$(PDFLATEX) -interaction=batchmode $<
 
 .fig.eps:
 	$(FIG2DEV) -L eps $< > $@
@@ -94,11 +100,21 @@ SUFFIXES = .dvi .tex .pdf .ps .eps .fig .frg .m
 .fig.frg:
 	$(FIG2DEV) -L frg $< > $@
 
-.eps.pdf:
-	$(EPSTOPDF) $< -o=$@
-
+if USE_OCTAVE
+OCTAVE_PATH = --path $(srcdir)
 .m.eps:
-	$(OCTAVE) $<
+	$(OCTAVE) $(OCTAVE_PATH) $<
+else
+.m.eps:
+	@echo -n not using octave to update "$@".
+	@if [ ! -f $@ ]; then \
+	  echo \ creating dummy.; \
+	  echo "%%BoundingBox: 0 0 138 174" > $@; \
+	else \
+	  echo \ leaving as is.; \
+	  touch $@; \
+	fi
+endif
 
 .dvi.ps:
 	$(DVIPS) $< -o $@

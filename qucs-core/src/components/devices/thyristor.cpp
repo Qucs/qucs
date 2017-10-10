@@ -84,6 +84,9 @@ void thyristor::calcTheModel (bool last) {
   else
     isOn = Ud > Ud_bo;
 
+  nr_double_t Vak = real (getV (NODE_A1) - getV (NODE_A2));
+  isOn *= (Vak > 0.0);
+
   if (Ud >= 80.0) {
     Id *= std::exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
     Ud  = 80.0;

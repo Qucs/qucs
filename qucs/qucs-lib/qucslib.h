@@ -45,6 +45,7 @@ struct tQucsSettings {
 
 extern tQucsSettings QucsSettings;
 extern QDir UserLibDir;
+extern QDir SysLibDir;
 
 class QucsLib : public QMainWindow  {
    Q_OBJECT
@@ -53,9 +54,7 @@ public:
   ~QucsLib();
 
   QListWidget *CompList;
-  QStringList   LibraryComps;
   QComboBox    *Library;
-  QString DefaultSymbol;
 
 private slots:
   void slotAbout();
@@ -64,7 +63,8 @@ private slots:
   void slotCopyToClipBoard();
   void slotShowModel();
   void slotSelectLibrary(int);
-  void slotSearchComponent();
+  void slotSearchComponent(const QString &);
+  void slotSearchClear();
   void slotShowComponent(QListWidgetItem*);
   void slotManageLib();
 
@@ -76,10 +76,11 @@ private:
   QMenu *fileMenu, *helpMenu;
 
   int UserLibCount;
+  int libCurIdx;
   SymbolWidget *Symbol;
   QTextEdit    *CompDescr;
   QVBoxLayout  *all;
-
+  QLineEdit *CompSearch;
 };
 
 #endif /* QUCSLIB_H */

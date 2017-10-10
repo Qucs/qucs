@@ -4,6 +4,7 @@
  ***************************************************************************/
 #include "octave_window.h"
 #include "main.h"
+#include "misc.h"
 
 #include <QSize>
 #include <QColor>
@@ -39,9 +40,9 @@ OctaveWindow::OctaveWindow(QDockWidget *parent_): QWidget()
   output = new QTextEdit(this);
   output->setReadOnly(true);
   output->setUndoRedoEnabled(false);
-  output->setTextFormat(Qt::LogText);
+  output->toPlainText();
   output->setLineWrapMode(QTextEdit::NoWrap);
-  output->setPaletteBackgroundColor(QucsSettings.BGColor);
+  misc::setWidgetBackgroundColor(output, QucsSettings.BGColor);
   allLayout->addWidget(output);
 
   input = new QLineEdit(this);
@@ -84,25 +85,15 @@ bool OctaveWindow::startOctave()
   if(octProcess.state()==QProcess::Running)
     return true;
 
-  QString OctavePath=QucsSettings.OctaveBinDir.canonicalPath();
-
-
   QString Program;
   QStringList Arguments;
 
-  OctavePath = QDir::toNativeSeparators(OctavePath+"/"+"octave"+QString(executableSuffix));
+  QString OctavePath = QDir::toNativeSeparators(QucsSettings.OctaveExecutable);
 
-  QFileInfo progOctave(OctavePath);
+  // Override Octave path by enviroment variable if it is set
+  if (QucsSettings.QucsOctave.isEmpty()) Program = OctavePath;
+  else Program = QucsSettings.QucsOctave;
 
-  if (! progOctave.exists()) {
-      qDebug() << "Octave not found: " << OctavePath;
-      QMessageBox::critical(0, QObject::tr("Error"),
-                            QObject::tr("Octave not found in: %1\n\n"
-                                        "Set the Octave location on the application settings.").arg(OctavePath));
-      return false;
-  }
-
-  Program = OctavePath;
   Arguments << "--no-history" << "-i" << "-f" << "-p"
             << QDir::toNativeSeparators(QucsSettings.OctaveDir); // m-files location
 
@@ -124,10 +115,10 @@ bool OctaveWindow::startOctave()
 
   qDebug() << "Command :" << Program << Arguments.join(" ");
   octProcess.start(Program, Arguments);
+  octProcess.waitForStarted();
 
-  if(octProcess.state()!=QProcess::Running&&
-          octProcess.state()!=QProcess::Starting) {
-    output->setText(tr("ERROR: Cannot start Octave!"));
+  if(octProcess.state()!=QProcess::Running) {
+    output->setText(tr("ERROR: Failed to execute \"%1\"").arg(Program));
     return false;
   }
 
@@ -138,7 +129,7 @@ bool OctaveWindow::startOctave()
 // ------------------------------------------------------------------------
 void OctaveWindow::adjustDirectory()
 {
-  sendCommand("cd \"" + QucsSettings.QucsWorkDir.absPath() + "\"");
+  sendCommand("cd \"" + QucsSettings.QucsWorkDir.absolutePath() + "\"");
 }
 
 // ------------------------------------------------------------------------
@@ -151,14 +142,16 @@ void OctaveWindow::sendCommand(const QString& cmd)
   QString cmdstr = cmd + "\n";
   //output->insertAt(cmdstr, par, idx);
   //output->scrollToBottom();
-  octProcess.write(cmdstr);
+  QByteArray ba = cmdstr.toLatin1();
+  const char *c_cmdstr = ba.data();
+  octProcess.write(c_cmdstr);
 }
 
 // ------------------------------------------------------------------------
 void OctaveWindow::runOctaveScript(const QString& name)
 {
   QFileInfo info(name);
-  sendCommand(info.baseName(true));
+  sendCommand(info.completeBaseName());
 }
 
 // ------------------------------------------------------------------------
@@ -168,7 +161,7 @@ void OctaveWindow::slotSendCommand()
   if(!input->text().trimmed().isEmpty())
     cmdHistory.append(input->text());
   //histIterator = cmdHistory.end();
-  histPosition++;
+  histPosition = cmdHistory.length();
   input->clear();
   qDebug() << cmdHistory << histPosition;
 }
@@ -190,7 +183,7 @@ bool OctaveWindow::eventFilter(QObject *obj, QEvent *event) {
             }
             else if(keyEvent->key() == Qt::Key_PageDown) {
                 //if(histIterator == cmdHistory.end())
-                if(histPosition == cmdHistory.length()-1)
+                if (histPosition >= cmdHistory.length()-1)
                     return false;
                 //histIterator++;
                 histPosition++;

@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="110.419mm"
+   height="61.7361mm"
+   version="1.2"
+   id="svg2"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="LC_Ladder_Tee_LPF.svg">
+  <metadata
+     id="metadata126">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview124"
+     showgrid="false"
+     inkscape:zoom="0.88946048"
+     inkscape:cx="195.62421"
+     inkscape:cy="109.37498"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <title
+     id="title4">Qt Svg Document</title>
+  <desc
+     id="desc6">Generated with Qt</desc>
+  <defs
+     id="defs8" />
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:none;stroke:#000080;stroke-width:2;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Helvetica"
+     id="g16"
+     font-style="normal"
+     font-weight="400"
+     font-size="12">
+    <polyline
+       style="fill:none"
+       id="polyline18"
+       points="145,135 145,145 "
+       vector-effect="none" />
+  </g>
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:none;stroke:#000080;stroke-width:3;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Helvetica"
+     id="g20"
+     font-style="normal"
+     font-weight="400"
+     font-size="12">
+    <polyline
+       style="fill:none"
+       id="polyline22"
+       points="134,145 156,145 "
+       vector-effect="none" />
+    <polyline
+       style="fill:none"
+       id="polyline24"
+       points="138,151 152,151 "
+       vector-effect="none" />
+    <polyline
+       style="fill:none"
+       id="polyline26"
+       points="142,157 148,157 "
+       vector-effect="none" />
+  </g>
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:none;stroke:#000080;stroke-width:3;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Helvetica"
+     id="g28"
+     font-style="normal"
+     font-weight="400"
+     font-size="12" />
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:none;stroke:#000080;stroke-width:2;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Helvetica"
+     id="g30"
+     font-style="normal"
+     font-weight="400"
+     font-size="12">
+    <polyline
+       style="fill:none"
+       id="polyline32"
+       points="45,25 57,25 "
+       vector-effect="none" />
+    <polyline
+       style="fill:none"
+       id="polyline34"
+       points="93,25 105,25 "
+       vector-effect="none" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path36"
+       d="m 69,25 c 0,-3.3137 -2.6863,-6 -6,-6 -3.3137,0 -6,2.6863 -6,6"
+       vector-effect="none" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path38"
+       d="m 81,25 c 0,-3.3137 -2.6863,-6 -6,-6 -3.3137,0 -6,2.6863 -6,6"
+       vector-effect="none" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path40"
+       d="m 93,25 c 0,-3.3137 -2.6863,-6 -6,-6 -3.3137,0 -6,2.6863 -6,6"
+       vector-effect="none" />
+  </g>
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:none;stroke:#000080;stroke-width:2;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Helvetica"
+     id="g42"
+     font-style="normal"
+     font-weight="400"
+     font-size="12" />
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:none;stroke:#000080;stroke-width:2;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Helvetica"
+     id="g44"
+     font-style="normal"
+     font-weight="400"
+     font-size="12">
+    <polyline
+       style="fill:none"
+       id="polyline46"
+       points="185,25 197,25 "
+       vector-effect="none" />
+    <polyline
+       style="fill:none"
+       id="polyline48"
+       points="233,25 245,25 "
+       vector-effect="none" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path50"
+       d="m 209,25 c 0,-3.3137 -2.686,-6 -6,-6 -3.314,0 -6,2.6863 -6,6"
+       vector-effect="none" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path52"
+       d="m 221,25 c 0,-3.3137 -2.686,-6 -6,-6 -3.314,0 -6,2.6863 -6,6"
+       vector-effect="none" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path54"
+       d="m 233,25 c 0,-3.3137 -2.686,-6 -6,-6 -3.314,0 -6,2.6863 -6,6"
+       vector-effect="none" />
+  </g>
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:none;stroke:#000080;stroke-width:2;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Helvetica"
+     id="g56"
+     font-style="normal"
+     font-weight="400"
+     font-size="12" />
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:none;stroke:#000080;stroke-width:4;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Helvetica"
+     id="g58"
+     font-style="normal"
+     font-weight="400"
+     font-size="12">
+    <polyline
+       style="fill:none"
+       id="polyline60"
+       points="134,89 156,89 "
+       vector-effect="none" />
+    <polyline
+       style="fill:none"
+       id="polyline62"
+       points="134,81 156,81 "
+       vector-effect="none" />
+  </g>
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:none;stroke:#000080;stroke-width:2;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Helvetica"
+     id="g64"
+     font-style="normal"
+     font-weight="400"
+     font-size="12">
+    <polyline
+       style="fill:none"
+       id="polyline66"
+       points="145,115 145,89 "
+       vector-effect="none" />
+    <polyline
+       style="fill:none"
+       id="polyline68"
+       points="145,81 145,55 "
+       vector-effect="none" />
+  </g>
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:none;stroke:#000080;stroke-width:2;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Helvetica"
+     id="g70"
+     font-style="normal"
+     font-weight="400"
+     font-size="12" />
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:none;stroke:#000080;stroke-width:2;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Helvetica"
+     id="g72"
+     font-style="normal"
+     font-weight="400"
+     font-size="12">
+    <polyline
+       style="fill:none"
+       id="polyline74"
+       points="145,25 185,25 "
+       vector-effect="none" />
+    <polyline
+       style="fill:none"
+       id="polyline76"
+       points="105,25 145,25 "
+       vector-effect="none" />
+    <polyline
+       style="fill:none"
+       id="polyline78"
+       points="245,25 265,25 "
+       vector-effect="none" />
+    <polyline
+       style="fill:none"
+       id="polyline80"
+       points="15,25 45,25 "
+       vector-effect="none" />
+    <polyline
+       style="fill:none"
+       id="polyline82"
+       points="145,25 145,55 "
+       vector-effect="none" />
+    <polyline
+       style="fill:none"
+       id="polyline84"
+       points="145,115 145,135 "
+       vector-effect="none" />
+  </g>
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:#000080;fill-opacity:1;fill-rule:evenodd;stroke:none;font-family:Helvetica"
+     id="g86"
+     font-style="normal"
+     font-weight="400"
+     font-size="12">
+    <path
+       style="fill-rule:evenodd"
+       inkscape:connector-curvature="0"
+       id="path88"
+       d="m 43,23 4,0 0,4 -4,0 0,-4"
+       vector-effect="non-scaling-stroke" />
+  </g>
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:#000080;fill-opacity:1;fill-rule:evenodd;stroke:none;font-family:Helvetica"
+     id="g90"
+     font-style="normal"
+     font-weight="400"
+     font-size="12">
+    <path
+       style="fill-rule:evenodd"
+       inkscape:connector-curvature="0"
+       id="path92"
+       d="m 103,23 4,0 0,4 -4,0 0,-4"
+       vector-effect="non-scaling-stroke" />
+  </g>
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:#000080;fill-opacity:1;fill-rule:evenodd;stroke:none;font-family:Helvetica"
+     id="g94"
+     font-style="normal"
+     font-weight="400"
+     font-size="12">
+    <path
+       style="fill-rule:evenodd"
+       inkscape:connector-curvature="0"
+       id="path96"
+       d="m 143,133 4,0 0,4 -4,0 0,-4"
+       vector-effect="non-scaling-stroke" />
+  </g>
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:#000080;fill-opacity:1;fill-rule:evenodd;stroke:none;font-family:Helvetica"
+     id="g98"
+     font-style="normal"
+     font-weight="400"
+     font-size="12">
+    <path
+       style="fill-rule:evenodd"
+       inkscape:connector-curvature="0"
+       id="path100"
+       d="m 183,23 4,0 0,4 -4,0 0,-4"
+       vector-effect="non-scaling-stroke" />
+  </g>
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:#000080;fill-opacity:1;fill-rule:evenodd;stroke:none;font-family:Helvetica"
+     id="g102"
+     font-style="normal"
+     font-weight="400"
+     font-size="12">
+    <path
+       style="fill-rule:evenodd"
+       inkscape:connector-curvature="0"
+       id="path104"
+       d="m 243,23 4,0 0,4 -4,0 0,-4"
+       vector-effect="non-scaling-stroke" />
+  </g>
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:#000080;fill-opacity:1;fill-rule:evenodd;stroke:#000080;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Helvetica"
+     id="g106"
+     font-style="normal"
+     font-weight="400"
+     font-size="12">
+    <path
+       style="fill-rule:evenodd"
+       inkscape:connector-curvature="0"
+       id="path108"
+       d="m 148,25 c 0,1.6569 -1.343,3 -3,3 -1.657,0 -3,-1.3431 -3,-3 0,-1.6569 1.343,-3 3,-3 1.657,0 3,1.3431 3,3"
+       vector-effect="none" />
+  </g>
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1;font-family:Helvetica"
+     id="g110"
+     font-style="normal"
+     font-weight="400"
+     font-size="12">
+    <path
+       inkscape:connector-curvature="0"
+       id="path112"
+       d="m 269,25 c 0,2.2091 -1.791,4 -4,4 -2.209,0 -4,-1.7909 -4,-4 0,-2.2091 1.791,-4 4,-4 2.209,0 4,1.7909 4,4"
+       vector-effect="none" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path114"
+       d="m 19,25 c 0,2.2091 -1.7909,4 -4,4 -2.2091,0 -4,-1.7909 -4,-4 0,-2.2091 1.7909,-4 4,-4 2.2091,0 4,1.7909 4,4"
+       vector-effect="none" />
+  </g>
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:#000080;fill-opacity:1;fill-rule:evenodd;stroke:none;font-family:Helvetica"
+     id="g116"
+     font-style="normal"
+     font-weight="400"
+     font-size="12">
+    <path
+       style="fill-rule:evenodd"
+       inkscape:connector-curvature="0"
+       id="path118"
+       d="m 143,113 4,0 0,4 -4,0 0,-4"
+       vector-effect="non-scaling-stroke" />
+  </g>
+  <g
+     style="font-size:12px;font-style:normal;font-weight:400;fill:#000080;fill-opacity:1;fill-rule:evenodd;stroke:none;font-family:Helvetica"
+     id="g120"
+     font-style="normal"
+     font-weight="400"
+     font-size="12">
+    <path
+       style="fill-rule:evenodd"
+       inkscape:connector-curvature="0"
+       id="path122"
+       d="m 143,53 4,0 0,4 -4,0 0,-4"
+       vector-effect="non-scaling-stroke" />
+  </g>
+</svg>

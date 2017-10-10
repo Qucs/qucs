@@ -53,7 +53,7 @@ QString* LC_Filter::createSchematic(tFilter *Filter, bool piType)
     Omega /= cosh(acosh(1.0 / Value) / double(Filter->Order));
   }
 
-  Bandwidth = fabs(Filter->Frequency2 - Filter->Frequency) / Omega;
+  Bandwidth = std::abs(Filter->Frequency2 - Filter->Frequency) / Omega;
   Omega *= 2.0*pi;   // angular frequency
 
   // create the Qucs schematic
@@ -121,7 +121,7 @@ QString* LC_Filter::createSchematic(tFilter *Filter, bool piType)
 
       case CLASS_BANDSTOP:
         Value2 = 1.0 / Omega / Omega / Bandwidth / Value; // transform to bandstop
-        Value *= 0.5 * fabs(Filter->Frequency2/Filter->Frequency - Filter->Frequency/Filter->Frequency2);
+        Value *= 0.5 * std::abs(Filter->Frequency2/Filter->Frequency - Filter->Frequency/Filter->Frequency2);
         if(i & 1) {
           *s += QString("<L L1 1 %1 %2 -26 -44 0 0 \"%3H\" 1>\n").arg(x).arg(yl-35).arg(num2str(Value));
           *s += QString("<C C1 1 %1 %2 -26 10 0 0 \"%3F\" 1>\n").arg(x).arg(yl).arg(num2str(Value2));
@@ -162,7 +162,7 @@ QString* LC_Filter::createSchematic(tFilter *Filter, bool piType)
   else
     Value2 = 10.0 * Filter->Frequency;
   *s += QString("<.SP SP1 1 70 %1 0 67 0 0 \"log\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"201\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg(yc).arg(num2str(Value)).arg(num2str(Value2));
-  *s += QString("<Eqn Eqn1 1 290 %1 -28 15 0 0 \"dBS21=dB(S[2,1])\" 1 \"dBS11=dB(S[1,1])\" 1 \"yes\" 0>\n").arg(yc+10);
+  *s += QString("<Eqn Eqn1 1 290 %1 -28 15 0 0 \"S21_dB=dB(S[2,1])\" 1 \"S11_dB=dB(S[1,1])\" 1 \"yes\" 0>\n").arg(yc+10);
   *s += "</Components>\n";
 
   *s += "<Wires>\n";
@@ -256,7 +256,10 @@ QString* LC_Filter::createSchematic(tFilter *Filter, bool piType)
     }
     else {
       if(Filter->Order & 1)
+       {
+        *s += QString("<%1 240 %2 240 \"\" 0 0 0>\n").arg(x+30).arg(x+70);
         *s += QString("<%1 240 %2 240 \"\" 0 0 0>\n").arg(x+170).arg(x+210);
+       }
       else
         *s += QString("<%1 240 %2 240 \"\" 0 0 0>\n").arg(x+110).arg(x+210);
     }

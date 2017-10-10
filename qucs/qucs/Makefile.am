@@ -22,7 +22,15 @@
 # Boston, MA 02110-1301, USA.
 #
 
-SUBDIRS = components diagrams paintings dialogs octave
+include ../common.mk
+
+AM_DEFAULT_SOURCE_EXT = .cpp
+
+SUBDIRS = \
+	bitmaps \
+	components diagrams \
+	paintings \
+	dialogs octave
 
 if COND_WIN32
 bin_SCRIPTS = qucsdigi.bat qucsveri.bat qucsdigilib.bat
@@ -42,15 +50,14 @@ MOCHEADERS = \
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucs_SOURCES = node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
+qucs_SOURCES = \
+  attach.cpp \
+  node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
   qucs.cpp main.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
   viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
-  schematic_file.cpp syntax.cpp module.cpp octave_window.cpp qrc_qucs.cpp   \
+  schematic_file.cpp syntax.cpp module.cpp octave_window.cpp qucs_.qrc   \
   messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
-	projectView.cpp
-
-qrc_qucs.cpp: qucs.qrc
-	$(RCC) -o $@ $<
+  projectView.cpp
 
 nodist_qucs_SOURCES = $(MOCFILES)
 
@@ -61,7 +68,11 @@ qucs_LDADD = components/libcomponents.a diagrams/libdiagrams.a \
   $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = $(MOCHEADERS) main.h wire.h qucsdoc.h element.h node.h \
-  wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h
+  wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
+  projectView.h printerwriter.h imagewriter.h
+
+# must be installed. but later
+noinst_HEADERS += platform.h
 
 hicolor16dir = ${prefix}/share/icons/hicolor/16x16/apps
 hicolor16_DATA =  bitmaps/hicolor/16x16/apps/qucs.png
@@ -92,12 +103,18 @@ EXTRA_DIST = \
 	$(hicolor16_DATA) $(hicolor22_DATA) $(hicolor32_DATA) $(hicolor48_DATA) \
 	$(hicolor64_DATA) $(hicolor128_DATA) $(hicolor256_DATA) $(hicolor512_DATA) \
 	$(hicolorsc_DATA) $(desktop_DATA)
+	$(hicolorsc_DATA) $(desktop_DATA) \
+	bitmaps/qucs.icns \
+	bitmaps/qucsattenuator.icns \
+	bitmaps/qucsfilter.icns \
+	bitmaps/qucsactivefilter.icns \
+	bitmaps/qucshelp.icns \
+	bitmaps/qucslib.icns \
+	bitmaps/qucsedit.icns \
+	bitmaps/qucsrescodes.icns \
+	bitmaps/qucstrans.icns
 
-SUFFIXES = .moc.cpp .h
 
-.h.moc.cpp:
-	$(MOC) -o $@ $<
-
-CLEANFILES = *~ *.rej *.orig
+CLEANFILES = *~ *.rej *.orig qucs_.cpp
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.qm
 DISTCLEANFILES = *.moc.cpp *.qm

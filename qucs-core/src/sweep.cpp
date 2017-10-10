@@ -140,8 +140,6 @@ void sweep::reverse (void) {
 nr_double_t sweep::next (void) {
   nr_double_t res = data[counter];
   if (++counter >= size) counter = 0;
-  if (size == 1)
-    return parent->getPropertyDouble ("Values");
   return res;
 }
 

@@ -17,14 +17,6 @@ SET(CMAKE_BUILD_TYPE Debug)
 
 ADD_DEFINITIONS( -DHAVE_CONFIG_H )
 
-# define variables
-SET(BINARYDIR "${CMAKE_INSTALL_PREFIX}/bin/")
-SET(BITMAPDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/bitmaps/")
-SET(DOCDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/docs/")
-SET(LANGUAGEDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/lang/")
-SET(LIBRARYDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/library/")
-SET(OCTAVEDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/octave/")
-
 # configure the header config.h
 CONFIGURE_FILE (
     "${PROJECT_SOURCE_DIR}/../config.h.cmake"
@@ -49,16 +41,16 @@ INCLUDE( ${QT_USE_FILE} )
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 
 SET(QUCSLIB_SRCS
-main.cpp qucslib.cpp displaydialog.cpp symbolwidget.cpp searchdialog.cpp librarydialog.cpp
+main.cpp qucslib.cpp displaydialog.cpp symbolwidget.cpp librarydialog.cpp
 )
 
 SET(QUCSLIB_MOC_HDRS
-qucslib.h displaydialog.h symbolwidget.h searchdialog.h librarydialog.h
+qucslib.h displaydialog.h symbolwidget.h librarydialog.h
 )
 
 QT4_WRAP_CPP( QUCSLIB_MOC_SRCS ${QUCSLIB_MOC_HDRS} )
 
-SET(RESOURCES qucslib.qrc)
+SET(RESOURCES qucslib_.qrc)
 QT4_ADD_RESOURCES(RESOURCES_SRCS ${RESOURCES})
 
 IF(APPLE)

@@ -22,9 +22,11 @@
 # Boston, MA 02110-1301, USA.
 #
 
+include ../common.mk
+
 bin_PROGRAMS = qucsattenuator
 
-SUBDIRS =
+SUBDIRS = bitmaps
 
 dist_man_MANS = qucsattenuator.1
 
@@ -32,10 +34,7 @@ MOCHEADERS = qucsattenuator.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 qucsattenuator_SOURCES = main.cpp qucsattenuator.cpp \
-  attenuatorfunc.cpp qrc_qucsattenuator.cpp
-
-qrc_qucsattenuator.cpp: qucsattenuator.qrc
-	$(RCC) -o $@ $<
+  attenuatorfunc.cpp qucsattenuator_.qrc
 
 nodist_qucsattenuator_SOURCES = $(MOCFILES)
 
@@ -45,11 +44,4 @@ qucsattenuator_LDADD = $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = $(MOCHEADERS) attenuatorfunc.h
 
-SUFFIXES = .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -o $@ $<
-
-CLEANFILES = *~
-MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
-DISTCLEANFILES = *.moc.cpp
+CLEANFILES = *~ *_.cpp qucsattenuator.moc.cpp

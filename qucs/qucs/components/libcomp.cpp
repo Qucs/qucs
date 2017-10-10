@@ -86,12 +86,14 @@ int LibComp::loadSection(const QString& Name, QString& Section,
 			 QStringList *Includes)
 {
   QDir Directory(QucsSettings.LibDir);
-  QFile file(Directory.absFilePath(Props.first()->Value + ".lib"));
+  QFile file(Directory.absoluteFilePath(Props.first()->Value + ".lib"));
   if(!file.open(QIODevice::ReadOnly))
     return -1;
 
+  QString libDefaultSymbol;
+
   QTextStream ReadWhole(&file);
-  Section = ReadWhole.read();
+  Section = ReadWhole.readAll();
   file.close();
 
 
@@ -100,19 +102,19 @@ int LibComp::loadSection(const QString& Name, QString& Section,
 
   int Start, End = Section.indexOf(' ', 14);
   if(End < 15) return -3;
-  QString Line = Section.mid(14, End-14);
-  if(!misc::checkVersion(Line)) // wrong version number ?
+  QString Line = Section.mid(14, End-14); // extract version string
+  VersionTriplet LibVersion = VersionTriplet(Line);
+  if (LibVersion > QucsVersion) // wrong version number ?
     return -3;
 
   if(Name == "Symbol") {
-    Start = Section.indexOf("\n<", 14); // if library has default symbol, take it
+    Start = Section.indexOf("\n<", 14); // library has default symbol
     if(Start > 0)
       if(Section.mid(Start+2, 14) == "DefaultSymbol>") {
         Start += 16;
         End = Section.indexOf("\n</DefaultSymbol>", Start);
         if(End < 0)  return -9;
-        Section = Section.mid(Start, End-Start);
-        return 0;
+        libDefaultSymbol = Section.mid(Start, End-Start);
       }
   }
 
@@ -138,7 +140,7 @@ int LibComp::loadSection(const QString& Name, QString& Section,
       if(EndI < 0)  return -11;  // file corrupt
       StartI++; EndI--;
       QString inc = Section.mid(StartI, EndI-StartI);
-      QStringList f = QStringList::split(QRegExp("\"\\s+\""), inc);
+      QStringList f = inc.split(QRegExp("\"\\s+\""));
       for(QStringList::Iterator it = f.begin(); it != f.end(); ++it ) {
 	Includes->append(*it);
       }
@@ -147,7 +149,15 @@ int LibComp::loadSection(const QString& Name, QString& Section,
 
   // search model
   Start = Section.indexOf("<"+Name+">");
-  if(Start < 0)  return -7;  // symbol not found
+  if(Start < 0) {
+    if((Name == "Symbol") && (~libDefaultSymbol.isEmpty())) {
+      // component does not define its own symbol but the library defines a default symbol
+      Section = libDefaultSymbol;
+      return 0;
+    } else {
+      return -7;  // symbol not found
+    }
+  }
   Start = Section.indexOf('\n', Start);
   if(Start < 0)  return -8;  // file corrupt
   while(Section.at(++Start) == ' ') ;
@@ -213,7 +223,7 @@ int LibComp::loadSymbol()
 QString LibComp::getSubcircuitFile()
 {
   QDir Directory(QucsSettings.LibDir);
-  QString FileName = Directory.absFilePath(Props.first()->Value);
+  QString FileName = Directory.absoluteFilePath(Props.first()->Value);
   return misc::properAbsFileName(FileName);
 }
 
@@ -238,7 +248,7 @@ bool LibComp::createSubNetlist(QTextStream *stream, QStringList &FileList,
   for(QStringList::Iterator it = Includes.begin();
       it != Includes.end(); ++it ) {
     QString s = getSubcircuitFile()+"/"+*it;
-    if(FileList.findIndex(s) >= 0) continue;
+    if(FileList.indexOf(s) >= 0) continue;
     FileList.append(s);
 
     // load file and stuff into stream
@@ -248,7 +258,7 @@ bool LibComp::createSubNetlist(QTextStream *stream, QStringList &FileList,
     } else {
       QByteArray FileContent = file.readAll();
       file.close();
-      //?stream->writeRawBytes(FileContent.data(), FileContent.size());
+      //?stream->writeRawBytes(FileContent.value(), FileContent.size());
       (*stream) << FileContent.data();
       qDebug() << "hi from libcomp";
     }

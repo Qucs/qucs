@@ -550,7 +550,7 @@ nr_complex_t limexp (const nr_complex_t z)
 */
 nr_complex_t polar (const nr_double_t mag, const nr_double_t ang )
 {
-#ifdef HAVE_CXX_COMPLEX_POLAR_COMPLEX
+#ifdef HAVE_CXX_COMPLEX_POLAR
     return std::polar (mag, ang);
 #else
     return nr_complex_t (mag * cos (ang), mag * sin (ang));
@@ -568,7 +568,7 @@ nr_complex_t polar (const nr_complex_t a, const nr_complex_t p)
 #ifdef HAVE_CXX_COMPLEX_POLAR_COMPLEX
     return std::polar (a, p);
 #else
-    return a * exp (nr_complex_t (imag (p),-real (p)));
+    return a * exp(nr_complex_t(0.0, 1.0) * p);
 #endif
 }
 

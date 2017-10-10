@@ -33,6 +33,7 @@
 #include "misc.h"
 #include "../dialogs/matchdialog.h" // For r2z function
 
+static const double pi = 3.1415926535897932384626433832795029;  /* pi   */
 
 SmithDiagram::SmithDiagram(int _cx, int _cy, bool ImpMode) : Diagram(_cx, _cy)
 {
@@ -135,21 +136,74 @@ QString SmithDiagram::extraMarkerText(Marker const* m) const
   std::vector<double> const& Pos = m->varPos();
   unsigned nVarPos = pGraph->numAxes();
   assert(nVarPos == Pos.size());
-  double Zr, Zi;
+  double Zr, Zi, Yr, Yi, Ds;
   double Z0 = m->Z0;
   double Precision = m->precision(); // hmmm
+  QString ExtraParamsText;//Variable used for displaying extra marker data (impedance and/or admittance)
 
   Zr = m->powReal();
   Zi = m->powImag();
 
   MatchDialog::r2z(Zr, Zi, Z0);
+  // convert impedance to admittance
+  Yr = Zr; Yi = Zi;
+  MatchDialog::c2p(Yr, Yi);
+  Yr = 1.0 / Yr; // magnitude
+  Yi = -Yi; // angle
+  MatchDialog::p2c(Yr, Yi);
+    
   QString Var = pGraph->Var;
+  QString varName;
 
-  if(Var.startsWith("S")) { // uuh, ooh hack.
-    return "\n"+ Var.replace('S', 'Z')+": " +misc::complexRect(Zr, Zi, Precision);
-  }else{
-    return "\nZ("+ Var+"): " +misc::complexRect(Zr, Zi, Precision);
+  QString valMarkerZ = misc::complexRect(Zr, Zi, Precision);
+  QString valMarkerY = misc::complexRect(Yr, Yi, Precision);
+
+  double omega = 2.0 * pi * m->powFreq();
+  QString extText, unitSymbol;
+
+  if (m->optText & Marker::SHOW_Z) {
+      if(Var.startsWith("S")) { // uuh, ooh hack.
+        varName = 'Z' + Var.mid(1);
+      } else {
+        varName = Var;
+      }
+      ExtraParamsText = "\n" + varName +": " + valMarkerZ + ' ' + QChar(0x2126);
   }
+  
+  if (m->optText & Marker::SHOW_Y) {
+      if(Var.startsWith("S")) { // uuh, ooh hack.
+        varName = 'Y' + Var.mid(1);
+      } else {
+        varName = Var;
+      }
+      ExtraParamsText += "\n" + varName +": " + valMarkerY  + " S";
+  }
+  
+  if (m->optText & Marker::SHOW_ZS) {
+    if (Zi < 0) { // capacitive reactance
+      Ds = -1.0/(omega*Zi); // equivalent series capacitance
+      unitSymbol = "F";
+    } else { // inductive reactance
+      Ds = Zi / omega; // equivalent series inductance
+      unitSymbol = "H";
+    }
+    ExtraParamsText += "\n" + misc::num2str(Zr, Precision) + QChar(0x2126)
+      + "+" + misc::num2str(Ds, Precision) + unitSymbol;
+  }
+
+  if (m->optText & Marker::SHOW_ZP) {
+    if (Yi > 0) { // capacitive susceptance
+      Ds = Yi/omega; // equivalent parallel capacitance
+      unitSymbol = "F";
+    } else { // inductive susceptance
+      Ds = -1.0 / (omega * Yi); // equivalent parallel inductance
+      unitSymbol = "H";
+    }
+    ExtraParamsText += "\n" + misc::num2str(1/Yr, Precision) + QChar(0x2126)
+      + "||" + misc::num2str(Ds, Precision) + unitSymbol;
+  }
+  return ExtraParamsText;
 }
 
 // vim:ts=8:sw=2:noet
+ 

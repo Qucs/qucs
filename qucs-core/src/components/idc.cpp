@@ -48,6 +48,15 @@ void idc::initDC (void) {
   nr_double_t i = getPropertyDouble ("I");
   allocMatrixMNA ();
   setI (NODE_1, +i); setI (NODE_2, -i);
+  nr_double_t r = getScaledProperty ("Ri");
+  // Setting the internal resistance
+  if (r != 0.0) {
+    nr_double_t g = 1.0 / r;
+    setVoltageSources (0);
+    setY (NODE_1, NODE_1, +g); setY (NODE_2, NODE_2, +g);
+    setY (NODE_1, NODE_2, -g); setY (NODE_2, NODE_1, -g);
+  }
+  // The internal resistance can't be zero
 }
 
 void idc::calcDC (void) {
@@ -68,7 +77,8 @@ void idc::initTR (void) {
 // properties
 PROP_REQ [] = {
   { "I", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
-PROP_OPT [] = {
+PROP_OPT [] = { 
+  { "Ri", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
   PROP_NO_PROP };
 struct define_t idc::cirdef =
   { "Idc", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

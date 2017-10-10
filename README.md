@@ -20,6 +20,7 @@ Qucs is an integrated circuit simulator which means you are able to setup a circ
     - <http://qucs.github.io/qucs-doxygen/qucs/index.html>
     - <http://qucs.github.io/qucs-doxygen/qucs-core/index.html>
   - Downloads: <http://sourceforge.net/projects/qucs/files/>
+  - Translation platform: <https://www.transifex.com/qucs/public/>
 
 ## Currently Supported Platforms
   - GNU/Linux
@@ -27,25 +28,36 @@ Qucs is an integrated circuit simulator which means you are able to setup a circ
   - FreeBSD
   - Windows
 
+## Branching strategy for the Git repository
+
+After release 0.0.18 the project started to use the Git flow strategy for branching <http://nvie.com/posts/a-successful-git-branching-model/>.
+
+Under this strategy the following branches can be found in the repository:
+
+  - `master`: contains the latest stable release.
+  - `develop`: contains the latest developments or unstable. This should be the base branch of Pull-Requests or contributions.
+  - `release-x.y.z`: are temporary branches being stabilized for a release. To be merged into `master` and removed.
+  - `[other branches]`: are branches with a good reason to be in the main repository (ease collaboration, use CI facilities).
+
 ## Source Download and Compilation
 
-The source code is available as a tarball for stable releases and Git repository clone for development.
+The source code is available as distribution tarballs and clones of the Git repository.
 
-The release tarball can be downloaded from: <http://sourceforge.net/projects/qucs/files/qucs/>.
-Compilation and install from tarball is expected to work as follows:
+The distributed tarballs can be downloaded from: <http://sourceforge.net/projects/qucs/files/qucs/>.
+Compilation and install from tarball is expected to work as follows (see dependencies below):
 
     tar xvfz qucs[version].tar.gz
     cd qucs[version]
     ./configure
     make install
 
-For the source code clone, use one of the Git repositories (official or mirror):
+All versions of the code may be accessed by cloning one of the Git repositories (the first is updated more frequently):
 
-    git clone git://git.code.sf.net/p/qucs/git
     git clone git://github.com/Qucs/qucs.git
+    git clone git://git.code.sf.net/p/qucs/git
 
-For development conveninence ADMS is provided as a Git submodule.
-To download the ADMS submodule either:
+For test and development qucs-test is provided as a Git submodule.
+To download the submodule either:
 
    * clone submodules recursively:
      * `git clone --recursive [repository]`
@@ -53,7 +65,17 @@ To download the ADMS submodule either:
      * `git submodule init`
      * `git submodule update`
 
+After an initial clone operation, the local copy is set by the default as the `master` branch.
+Branches can be listed and selected with the following commands:
+
+    git branch
+    git checkout [branch name]
+
 Compilation and installation depends on the operation system. See below for an example.
+
+## Contributing to QUCS
+
+Some general contribution guidelines can be found on our Wiki <https://github.com/Qucs/qucs/wiki/Contribution>.
 
 ## Compile instructions Linux (Debian/Ubuntu)
 
@@ -62,41 +84,62 @@ First make sure you have all dependencies installed:
     sudo apt-get install build-essential
     sudo apt-get install libqt4-dev libqt4-qt3support
     sudo apt-get install automake libtool gperf flex bison
+    sudo apt-get install texlive-font-utils octave-epstk
 
-For ADMS
+The ADMS package is necessary. Please [download](https://sourceforge.net/projects/mot-adms/files/adms-source/) the latest tarball and follow the [install](https://github.com/Qucs/ADMS#users-install-from-tarball) instructions. Having `admsXml` on the path should be sufficient.
 
-    sudo apt-get install libxml2 libxml2-dev
-    sudo apt-get install zlib1g zlib1g-dev
-    sudo apt-get install libgd2-xpm-dev
 
-Install Perl modules for ADMS:
+To build the manuals and user documentation further dependencies are needed. Please check the `qucs-doc/README` file.
 
-    sudo apt-get install libxml-libxml-perl
-    sudo apt-get install libgd-perl
 
-Bootstrap (after cloning from git):
-
-    ./bootstrap
-
-Compile qucs:
+Bootstrap and build everything (after cloning):
 
     cd qucs
-    ./configure --enable-maintainer-mode
+    ./bootstrap
+    ./configure
     make
     sudo make install
 
-Compile qucs-core:
+Compile Qucs GUI tools only:
+
+    cd qucs
+    [./bootstrap] #if not executed in the top level
+    ./configure
+    make
+    sudo make install
+
+Compile qucs-core tools only:
 
     cd qucs-core
-    ./configure --enable-maintainer-mode
+    [./bootstrap] #if not executed in the top level
+    ./configure
     make
     sudo make install
+
+Compile qucs-doc documentation only:
+
+    cd qucs-doc
+    [./bootstrap] #if not executed in the top level
+    ./configure
+    make
+    sudo make install
+
+Testing can be executed at the top level with:
+
+    make check
 
 Note:
 
- * Qucs it will be installed by default to `/usr/local/`. This can be modified by passing `--prefix=[some location]` to the `./configure` script.
+ * Qucs will be installed to `/usr/local` by default. You may override this
+   by passing `--prefix=[some location]` to the `./configure` script.
 
- * ADMS can be installed from a released tarball (>= 2.3.0). To use an already available `admsXml` pass the option `--with-mkadms=[path/to/admsXml]` to the `./configure` script
+ * ADMS should be installed e.g. from a released tarball (>= 2.3.0).
+   To use a different `admsXml` pass the option `--with-admsxml=[path/to/]anotherAdmsXml`
+   to `./configure`.
+
+ * The LaTex documentation compilation in qucs-doc can be skipped passing `--disable-doc` to the top level `configure` script.
+
+ * Consider the output of `./configure --help` for more and definitive build options.
 
 
 ## Binary Installation

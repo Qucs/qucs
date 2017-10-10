@@ -23,44 +23,29 @@
 # Boston, MA 02110-1301, USA.
 #
 
+AUTOMAKE=${AUTOMAKE:-automake}
+
 here=`pwd`
 cd `dirname $0`
 
-if [ -e "./deps/adms/bootstrap.sh" ]; then
-  echo "running ADMS bootstrap.sh ..."
-  ./deps/adms/bootstrap.sh "$@"
-else
-  echo "+------------------------------------------------------------+"
-  echo "| Warning: Could not bootstrap ADMS git submodule.           |"
-  echo "|          Script not found: ./deps/adms/bootstrap.sh        |"
-  echo "|                                                            |"
-  echo "| To download the ADMS git submodule you may use:            |"
-  echo "|   $ git submodule init                                     |"
-  echo "|   $ git submodule update                                   |"
-  echo "|                                                            |"
-  echo "| To use an already installed version of ADMS (> 2.3.0)      |"
-  echo "| use the configure option '--with-mkadms=[path/to/]admsXml' |"
-  echo "+------------------------------------------------------------+"
-fi
-
 echo "bootstrapping the qucs-core sources..."
 echo -n "Creating aclocal.m4... "
-${ACLOCAL:-aclocal} -I m4
+${ACLOCAL:-aclocal} -I m4 || exit 1
 echo "done."
 echo -n "Creating config.h.in... "
-autoheader
+${AUTOHEADER:-autoheader} || exit 1
 echo "done."
 echo -n "Libtoolizing... "
+LIBTOOLIZE=${LIBTOOLIZE:-libtoolize}
 case `uname` in
   *Darwin*) LIBTOOLIZE=glibtoolize ;;
-  *)        LIBTOOLIZE=libtoolize ;;
 esac
-$LIBTOOLIZE
+$LIBTOOLIZE || exit 1
 echo "done."
 echo -n "Creating Makefile.in(s)... "
-${AUTOMAKE:-automake} -a -f -c
+$AUTOMAKE -a -f -c || exit 1
 echo "done."
 echo -n "Creating configure... "
-autoconf
+${AUTOCONF:-autoconf} || exit 1
 echo "done"
 

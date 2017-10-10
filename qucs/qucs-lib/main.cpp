@@ -35,6 +35,7 @@
 
 tQucsSettings QucsSettings;
 QDir UserLibDir;
+QDir SysLibDir;
 
 
 // #########################################################################
@@ -42,12 +43,17 @@ QDir UserLibDir;
 bool loadSettings()
 {
     QSettings settings("qucs","qucs");
+    // Qucs Library Tool specific settings
     settings.beginGroup("QucsLib");
     if(settings.contains("x"))QucsSettings.x=settings.value("x").toInt();
     if(settings.contains("y"))QucsSettings.y=settings.value("y").toInt();
     if(settings.contains("dx"))QucsSettings.dx=settings.value("dx").toInt();
     if(settings.contains("dy"))QucsSettings.dy=settings.value("dy").toInt();
     settings.endGroup();
+    // Qucs general settings
+    if(settings.contains("QucsHomeDir"))
+      if(settings.value("QucsHomeDir").toString() != "")
+         QucsSettings.QucsHomeDir.setPath(settings.value("QucsHomeDir").toString());
     if(settings.contains("font"))QucsSettings.font.fromString(settings.value("font").toString());
     if(settings.contains("Language"))QucsSettings.Language=settings.value("Language").toString();
 
@@ -79,30 +85,40 @@ bool saveApplSettings(QucsLib *qucs)
 
 int main(int argc, char *argv[])
 {
+  QApplication a(argc, argv);
+
   // apply default settings
   QucsSettings.x = 100;
   QucsSettings.y = 50;
   QucsSettings.dx = 600;
   QucsSettings.dy = 350;
   QucsSettings.font = QFont("Helvetica", 12);
+  QucsSettings.QucsHomeDir.setPath(QDir::homePath() + "/.qucs");
 
   // is application relocated?
   char * var = getenv ("QUCSDIR");
+  QDir QucsDir;
   if (var != NULL) {
-    QDir QucsDir = QDir (var);
-    QString QucsDirStr = QucsDir.canonicalPath ();
-    QucsSettings.LangDir =
-      QDir::convertSeparators (QucsDirStr + "/share/qucs/lang/");
-    QucsSettings.LibDir =
-      QDir::convertSeparators (QucsDirStr + "/share/qucs/library/");
+    QucsDir = QDir(QString(var));
+    QucsSettings.LangDir =     QucsDir.canonicalPath() + "/share/qucs/lang/";
+    QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
   } else {
-    QucsSettings.LangDir = LANGUAGEDIR;
-    QucsSettings.LibDir = LIBRARYDIR;
+    QString QucsApplicationPath = QCoreApplication::applicationDirPath();
+#ifdef __APPLE__
+    QucsDir = QDir(QucsApplicationPath.section("/bin",0,0));
+#else
+    QucsDir = QDir(QucsApplicationPath);
+    QucsDir.cdUp();
+#endif
+    QucsSettings.LangDir = QucsDir.canonicalPath() + "/share/qucs/lang/";
+    QucsSettings.LibDir  = QucsDir.canonicalPath() + "/share/qucs/library/";
   }
-  UserLibDir.setPath (QDir::homePath()+QDir::convertSeparators ("/.qucs/user_lib"));
+
   loadSettings();
 
-  QApplication a(argc, argv);
+  SysLibDir.setPath(QucsSettings.LibDir);
+  UserLibDir.setPath(QucsSettings.QucsHomeDir.canonicalPath() + "/user_lib/");
+
   a.setFont(QucsSettings.font);
 
   QTranslator tor( 0 );

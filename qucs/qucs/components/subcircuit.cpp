@@ -146,7 +146,7 @@ int Subcircuit::loadSymbol(const QString& DocName)
   // To strongly speed up the file read operation the whole file is
   // read into the memory in one piece.
   QTextStream ReadWhole(&file);
-  QString FileString = ReadWhole.read();
+  QString FileString = ReadWhole.readAll();
   file.close();
   QTextStream stream(&FileString, QIODevice::ReadOnly);
 
@@ -162,7 +162,8 @@ int Subcircuit::loadSymbol(const QString& DocName)
     return -3;
 
   Line = Line.mid(16, Line.length()-17);
-  if(!misc::checkVersion(Line)) // wrong version number ?
+  VersionTriplet SymbolVersion = VersionTriplet(Line);
+  if (SymbolVersion > QucsVersion) // wrong version number ?
     return -4;
 
   // read content *************************

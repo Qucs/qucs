@@ -44,6 +44,8 @@
 #include "cline_filter.h"
 #include "stepz_filter.h"
 #include "quarterwave_filter.h"
+#include "qw_coupled_ring_filter.h"
+#include "ccoupled_shunt_resonators.h"
 
 #include "qf_poly.h"
 #include "qf_filter.h"
@@ -96,12 +98,9 @@ QucsFilter::QucsFilter()
   all  = new QGridLayout();
   all->setSpacing(3);
 
-  // assign layout to central widget
-  centralWidget->setLayout(all);
-
   // ...........................................................
   box1 = new QGroupBox(tr("Filter"), this);
-  all->addWidget(box1,0,0);
+  QHBoxLayout *hbox = new QHBoxLayout();
 
   gbox1 = new QGridLayout();
   gbox1->setSpacing(3);
@@ -113,115 +112,120 @@ QucsFilter::QucsFilter()
   ComboRealize = new QComboBox(this);
   ComboRealize->addItem("LC ladder (pi type)");
   ComboRealize->addItem("LC ladder (tee type)");
-  ComboRealize->addItem("C-coupled transmission lines");
-  ComboRealize->addItem("Microstrip end-coupled");
-  ComboRealize->addItem("Coupled transmission lines");
-  ComboRealize->addItem("Coupled microstrip");
+  ComboRealize->addItem("End coupled transmission lines");
+  ComboRealize->addItem("Parallel coupled transmission lines");
   ComboRealize->addItem("Stepped-impedance");
-  ComboRealize->addItem("Stepped-impedance microstrip");
-  ComboRealize->addItem("Quarter wave");
-  ComboRealize->addItem("Quarter wave microstrip");
+  ComboRealize->addItem("Quarter wave resonators");
+  ComboRealize->addItem("Quarter wave side coupled ring resonator");
+  ComboRealize->addItem("Capacitively coupled shunt resonators");
   ComboRealize->addItem("Equation-defined");
 
   gbox1->addWidget(ComboRealize, 0,1);
   connect(ComboRealize, SIGNAL(activated(int)), SLOT(slotRealizationChanged(int)));
 
+   //Synthesize Microstrip
+  MicrostripcheckBox=new QCheckBox("Microstrip implementation");
+  MicrostripcheckBox->setChecked(false);
+  MicrostripcheckBox->setEnabled(false);
+  gbox1->addWidget(MicrostripcheckBox, 1,0);
+  connect(MicrostripcheckBox, SIGNAL(clicked()), SLOT(on_MicrostripcheckBox_clicked()));
+
   QLabel *Label1 = new QLabel(tr("Filter type:"), this);
-  gbox1->addWidget(Label1, 1,0);
+  gbox1->addWidget(Label1, 2,0);
   ComboType = new QComboBox(this);
   ComboType->addItem("Bessel");
   ComboType->addItem("Butterworth");
   ComboType->addItem("Chebyshev");
   ComboType->addItem("Cauer");
-  gbox1->addWidget(ComboType, 1,1);
+  gbox1->addWidget(ComboType, 2,1);
   connect(ComboType, SIGNAL(activated(int)), SLOT(slotTypeChanged(int)));
 
   QLabel *Label2 = new QLabel(tr("Filter class:"), this);
-  gbox1->addWidget(Label2, 2,0);
+  gbox1->addWidget(Label2, 3,0);
   ComboClass = new QComboBox(this);
   ComboClass->addItem(tr("Low pass"));
   ComboClass->addItem(tr("High pass"));
   ComboClass->addItem(tr("Band pass"));
   ComboClass->addItem(tr("Band stop"));
-  gbox1->addWidget(ComboClass, 2,1);
+  gbox1->addWidget(ComboClass, 3,1);
   connect(ComboClass, SIGNAL(activated(int)), SLOT(slotClassChanged(int)));
 
   IntVal = new QIntValidator(1, 200, this);
   DoubleVal = new QDoubleValidator(this);
 
   LabelOrder = new QLabel(tr("Order:"), this);
-  gbox1->addWidget(LabelOrder, 3,0);
+  gbox1->addWidget(LabelOrder, 4,0);
   EditOrder = new QLineEdit("3", this);
   EditOrder->setValidator(IntVal);
-  gbox1->addWidget(EditOrder, 3,1);
+  gbox1->addWidget(EditOrder, 4,1);
 
   LabelStart = new QLabel(tr("Corner frequency:"), this);
-  gbox1->addWidget(LabelStart, 4,0);
+  gbox1->addWidget(LabelStart, 5,0);
   EditCorner = new QLineEdit("1", this);
   EditCorner->setValidator(DoubleVal);
-  gbox1->addWidget(EditCorner, 4,1);
+  gbox1->addWidget(EditCorner, 5,1);
   ComboCorner = new QComboBox(this);
   ComboCorner->addItem("Hz");
   ComboCorner->addItem("kHz");
   ComboCorner->addItem("MHz");
   ComboCorner->addItem("GHz");
   ComboCorner->setCurrentIndex(3);
-  gbox1->addWidget(ComboCorner, 4,2);
+  gbox1->addWidget(ComboCorner, 5,2);
 
   LabelStop = new QLabel(tr("Stop frequency:"), this);
-  gbox1->addWidget(LabelStop, 5,0);
+  gbox1->addWidget(LabelStop, 6,0);
   EditStop = new QLineEdit("2", this);
   EditStop->setValidator(DoubleVal);
-  gbox1->addWidget(EditStop, 5,1);
+  gbox1->addWidget(EditStop, 6,1);
   ComboStop = new QComboBox(this);
   ComboStop->addItem("Hz");
   ComboStop->addItem("kHz");
   ComboStop->addItem("MHz");
   ComboStop->addItem("GHz");
   ComboStop->setCurrentIndex(3);
-  gbox1->addWidget(ComboStop, 5,2);
+  gbox1->addWidget(ComboStop, 6,2);
 
   LabelBandStop = new QLabel(tr("Stop band frequency:"), this);
-  gbox1->addWidget(LabelBandStop, 6,0);
+  gbox1->addWidget(LabelBandStop, 7,0);
   EditBandStop = new QLineEdit("3", this);
   EditBandStop->setValidator(DoubleVal);
-  gbox1->addWidget(EditBandStop, 6,1);
+  gbox1->addWidget(EditBandStop, 7,1);
   ComboBandStop = new QComboBox(this);
   ComboBandStop->addItem("Hz");
   ComboBandStop->addItem("kHz");
   ComboBandStop->addItem("MHz");
   ComboBandStop->addItem("GHz");
   ComboBandStop->setCurrentIndex(3);
-  gbox1->addWidget(ComboBandStop, 6,2);
+  gbox1->addWidget(ComboBandStop, 7,2);
 
   LabelRipple = new QLabel(tr("Pass band ripple:"), this);
-  gbox1->addWidget(LabelRipple, 7,0);
+  gbox1->addWidget(LabelRipple, 8,0);
   EditRipple = new QLineEdit("1", this);
   EditRipple->setValidator(DoubleVal);
-  gbox1->addWidget(EditRipple, 7,1);
+  gbox1->addWidget(EditRipple, 8,1);
   LabelRipple_dB = new QLabel("dB", this);
-  gbox1->addWidget(LabelRipple_dB, 7,2);
+  gbox1->addWidget(LabelRipple_dB, 8,2);
 
   LabelAtten = new QLabel(tr("Stop band attenuation:"), this);
-  gbox1->addWidget(LabelAtten, 8,0);
+  gbox1->addWidget(LabelAtten, 9,0);
   EditAtten = new QLineEdit("20", this);
   EditAtten->setValidator(DoubleVal);
-  gbox1->addWidget(EditAtten, 8,1);
+  gbox1->addWidget(EditAtten, 9,1);
   LabelAtten_dB = new QLabel("dB", this);
-  gbox1->addWidget(LabelAtten_dB, 8,2);
+  gbox1->addWidget(LabelAtten_dB, 9,2);
 
   LabelImpedance = new QLabel(tr("Impedance:"), this);
-  gbox1->addWidget(LabelImpedance, 9,0);
+  gbox1->addWidget(LabelImpedance, 10,0);
   EditImpedance = new QLineEdit("50", this);
   EditImpedance->setValidator(DoubleVal);
-  gbox1->addWidget(EditImpedance, 9,1);
+  gbox1->addWidget(EditImpedance, 10,1);
   LabelOhm = new QLabel("Ohm", this);
-  gbox1->addWidget(LabelOhm, 9,2);
+  gbox1->addWidget(LabelOhm, 10,2);
 
   // ...........................................................
+
   box2 = new QGroupBox(tr("Microstrip Substrate"), this);
   box2->setEnabled(false);
-  all->addWidget(box2,0,1);
 
   gbox2 = new QGridLayout();
   gbox2->setSpacing(3);
@@ -276,16 +280,42 @@ QucsFilter::QucsFilter()
   QSpacerItem *mySpacer=new QSpacerItem(1,1, QSizePolicy::Minimum, QSizePolicy::Expanding);
   gbox2->addItem(mySpacer, 5, 0, 1, -1);
 
+   QSize sz;
+   boxImage = new QGroupBox(tr("Preview"), this);
+   gboxImage = new QGridLayout();
+   boxImage->setLayout(gboxImage);
+   QString s1 = ":/bitmaps/LC_Ladder_Pi_LPF.svg";
+   imgLayout = new QSvgWidget(s1);
+   sz = imgLayout->size();
+   imgLayout->setFixedSize(.5*sz);
+   gboxImage->addWidget(imgLayout);
+    
+ 
+
   // ...........................................................
+  QVBoxLayout *vboxButtons = new QVBoxLayout();
   QPushButton *ButtonGo = new QPushButton(tr("Calculate and put into Clipboard"), this);
   connect(ButtonGo, SIGNAL(clicked()), SLOT(slotCalculate()));
-  all->addWidget(ButtonGo, 1, 0, 1, -1);
+  vboxButtons->addWidget(ButtonGo);
 
   LabelResult = new QLabel(this);
   ResultState = 100;
   slotShowResult();
   LabelResult->setAlignment(Qt::AlignHCenter);
-  all->addWidget(LabelResult, 2, 0, 1, -1);
+  vboxButtons->addWidget(LabelResult);
+
+  QVBoxLayout *vbox_all = new QVBoxLayout();
+  QVBoxLayout *vboxRealisation = new QVBoxLayout();
+  QVBoxLayout *vboxMicrostrip = new QVBoxLayout();
+
+  vboxRealisation->addWidget(box1);
+  hbox->addLayout(vboxRealisation);
+  vboxMicrostrip->addWidget(box2);
+  vboxMicrostrip->addWidget(boxImage);
+  hbox->addLayout(vboxMicrostrip);
+  vbox_all->addLayout(hbox);
+  vbox_all->addLayout(vboxButtons);
+  centralWidget->setLayout(vbox_all);
 
   // -------  finally set initial state  --------
   slotTypeChanged(0);
@@ -363,32 +393,34 @@ QString * QucsFilter::calculateFilter(struct tFilter * Filter)
     Substrate.minWidth = EditMinWidth->text().toDouble() / 1e3;
     Substrate.maxWidth = EditMaxWidth->text().toDouble() / 1e3;
 
+    //Throw an error for even Chebyshev filters
+    if ((Filter->Type == TYPE_CHEBYSHEV) && (Filter->Order % 2 == 0))
+    {
+      QMessageBox::critical(0, "Error", "Even order Chebyshev can't be realized with passive filters.");
+      return NULL;
+    }
+
+    bool isMicrostrip = MicrostripcheckBox->isChecked();
     switch(ComboRealize->currentIndex()) {
-      case 2:  // C-coupled transmission line filter
-        s = Line_Filter::createSchematic(Filter, &Substrate, false);
+      case 2:  // End coupled transmission line filter
+        s = Line_Filter::createSchematic(Filter, &Substrate, isMicrostrip);
         return s;
-      case 3:  // microstrip end-coupled filter
-        s = Line_Filter::createSchematic(Filter, &Substrate, true);
+      case 3:  // Parallel coupled transmission line filter
+        s = CoupledLine_Filter::createSchematic(Filter, &Substrate, isMicrostrip);
         return s;
-      case 4:  // coupled transmission line filter
-        s = CoupledLine_Filter::createSchematic(Filter, &Substrate, false);
+      case 4:  // stepped-impedance transmission line filter
+        s = StepImpedance_Filter::createSchematic(Filter, &Substrate, isMicrostrip);
         return s;
-      case 5:  // coupled microstrip line filter
-        s = CoupledLine_Filter::createSchematic(Filter, &Substrate, true);
+      case 5: // Quarter wave transmission line filter
+        s = QuarterWave_Filter::createSchematic(Filter, &Substrate, isMicrostrip);
         return s;
-      case 6:  // stepped-impedance transmission line filter
-        s = StepImpedance_Filter::createSchematic(Filter, &Substrate, false);
+      case 6: // Quarter wave side coupled ring resonator transmission
+        s = QW_Coupled_Ring_Filter::createSchematic(Filter, &Substrate, isMicrostrip);
         return s;
-      case 7:  // stepped-impedance microstrip line filter
-        s = StepImpedance_Filter::createSchematic(Filter, &Substrate, true);
+      case 7: // Capacitively coupled shunt resonators
+        s = CCoupled_Shunt_Resonator_Filter::createSchematic(Filter);
         return s;
-      case 8: // Quarter wave transmission line filter
-        s = QuarterWave_Filter::createSchematic(Filter, &Substrate, false);
-        return s;
-      case 9: // Quarter wave microstrip line  filter
-        s = QuarterWave_Filter::createSchematic(Filter, &Substrate, true);
-        return s;
-      case 10:  // equation defined filter
+      case 8:  // equation defined filter
         s = Equation_Filter::createSchematic(Filter);
         return s;
 
@@ -517,6 +549,7 @@ void QucsFilter::slotShowResult()
 // ************************************************************
 void QucsFilter::slotTypeChanged(int index)
 {
+  FlushImage();
   switch(index) {
     case TYPE_BESSEL:
     case TYPE_BUTTERWORTH:
@@ -556,6 +589,7 @@ void QucsFilter::slotTypeChanged(int index)
 // ************************************************************
 void QucsFilter::slotClassChanged(int index)
 {
+  FlushImage();
   switch(index) {
     case CLASS_LOWPASS:
     case CLASS_HIGHPASS:
@@ -569,7 +603,6 @@ void QucsFilter::slotClassChanged(int index)
       LabelStop->setEnabled(true);
       EditStop->setEnabled(true);
       ComboStop->setEnabled(true);
-      LabelStart->setText(tr("Start frequency:"));
       break;
   }
   if (index == CLASS_BANDPASS) {
@@ -582,39 +615,157 @@ void QucsFilter::slotClassChanged(int index)
   }
 }
 
+//---------------------------------------------------------
+// This function updates the preview window
+void QucsFilter::FlushImage()
+{
+  QString s1;
+  bool isMicrostrip = MicrostripcheckBox->isChecked();
+  bool isCauer = (ComboType->currentIndex() == 3);
+   switch(ComboRealize->currentIndex())
+   {
+      case 0://LC pi
+            switch(ComboClass->currentIndex())
+            {
+               case 0: (isCauer) ? s1 = ":/bitmaps/LC_cauer_lowpass.svg" : s1 = ":/bitmaps/LC_Ladder_Pi_LPF.svg"; break;
+               case 1: s1 = ":/bitmaps/LC_Ladder_Pi_HPF.svg"; break;
+               case 2: (isCauer) ? s1 = ":/bitmaps/LC_cauer_bandpass.svg" :  s1 = ":/bitmaps/LC_Ladder_Pi_BPF.svg"; break;
+               case 3: (isCauer) ? s1 = ":/bitmaps/LC_cauer_notch.svg" : s1 = ":/bitmaps/LC_Ladder_Pi_Notch.svg";break;
+            }
+            break;
+      case 1://LC Tee
+            switch(ComboClass->currentIndex())
+            {
+               case 0: (isCauer) ? s1 = ":/bitmaps/LC_cauer_lowpass.svg" : s1 = ":/bitmaps/LC_Ladder_Tee_LPF.svg"; break;
+               case 1: s1 = ":/bitmaps/LC_Ladder_Tee_HPF.svg"; break;
+               case 2: (isCauer) ? s1 = ":/bitmaps/LC_cauer_bandpass.svg" : s1 = ":/bitmaps/LC_Ladder_Tee_BPF.svg"; break;
+               case 3: (isCauer) ? s1 = ":/bitmaps/LC_cauer_notch.svg" : s1 = ":/bitmaps/LC_Ladder_Tee_Notch.svg";break;
+            }
+            break;
+      case 2:
+           (isMicrostrip) ? s1 = ":/bitmaps/CCoupled_Microstrip.svg" : s1 = ":/bitmaps/CCoupled.svg";
+           break;
+      case 3:
+           (isMicrostrip) ? s1 = ":/bitmaps/CCoupled_Lines_Microstrip.svg" : s1 = ":/bitmaps/CCoupled_Lines.svg";
+           break;
+      case 4:
+           (isMicrostrip) ? s1 = ":/bitmaps/Stepped_Impedance_Microstrip.svg" : s1 = ":/bitmaps/Stepped_Impedance_Ideal.svg";
+           break;
+      case 5:
+           switch(ComboClass->currentIndex())
+           {
+               case 2: (isMicrostrip) ? s1 = ":/bitmaps/Quarterwave_Bandpass_Microstrip.svg" : s1 = ":/bitmaps/Quarterwave_Bandpass_Ideal.svg"; break;
+               case 3: (isMicrostrip) ? s1 = ":/bitmaps/Quarterwave_Notch_Microstrip.svg" : s1 = ":/bitmaps/Quarterwave_Notch_Ideal.svg";break;
+           }
+           break;
+      case 6:
+           s1 = ":/bitmaps/Quarterwave_Side_Coupled_Ring.svg";
+           break;
+      case 7:
+           s1 = ":/bitmaps/CCoupled_Shunt_Resonators.svg";
+           break;
+      case 8:
+           s1 = ":/bitmaps/RFEDD.svg";
+           break;
+   }
+   imgLayout->load(s1);
+}
+
 // ************************************************************
 void QucsFilter::slotRealizationChanged(int index)
 {
-  if(index < 2)         // set to LC ladder type?
-    ComboClass->setEnabled(true);
-  else if(index < 6) {  // set to "transmission line" types?
-    // set to bandpass fixed
+  FlushImage();
+
+  if (index < 2)//LC filters
+  {
+     ComboType->clear();
+     ComboType->addItem("Bessel");
+     ComboType->addItem("Butterworth");
+     ComboType->addItem("Chebyshev");
+     ComboType->addItem("Cauer");
+     MicrostripcheckBox->setEnabled(false);
+     MicrostripcheckBox->setChecked(false);
+     box2->setEnabled(false);//Microstrip substrate definition panel
+     ComboClass->setEnabled(true);
+     EditOrder->setEnabled(true);
+     ComboType->setEnabled(true);//The other filters can implement canonical responses
+     LabelStart->setText(tr("Corner frequency:"));
+     LabelStop->setText(tr("Stop frequency:"));
+     return;
+  }
+
+  //Remove Cauer filters from ComboClass since they cannot be implemented with the other topologies
+  //Otherwise, the user may select it and face a number of annoying warnings...
+  ComboType->clear();
+  ComboType->addItem("Bessel");
+  ComboType->addItem("Butterworth");
+  ComboType->addItem("Chebyshev");
+
+
+  //Shared settings for microwave BP filters
+  if ((index == 2) || (index == 3) || (index == 5) || (index == 6))
+  {
+           ComboClass->setCurrentIndex(CLASS_BANDPASS);
+           slotClassChanged(CLASS_BANDPASS);
+           ComboClass->setEnabled(false);
+           MicrostripcheckBox->setEnabled(true);
+           MicrostripcheckBox->setChecked(false);//By default, the microstrip implementation is unchecked
+           box2->setEnabled(false);//Microstrip substrate definition panel
+  }
+  
+  if (index == 4)//Stepped impedance LPF
+  {
+     ComboClass->setCurrentIndex(CLASS_LOWPASS);
+     slotClassChanged(CLASS_LOWPASS);
+     ComboClass->setEnabled(false);
+     MicrostripcheckBox->setEnabled(true);
+     MicrostripcheckBox->setChecked(false);//By default, the microstrip implementation is unchecked
+     box2->setEnabled(false);//Microstrip substrate definition panel
+  }
+
+  if (index == 6)//Quarter wavelength side coupled ring resonator (BP)
+  {
+     ComboType->setEnabled(false);//Conventional frequency responses not available
+     EditOrder->setEnabled(false);//Not possible to modify the order
+     LabelStart->setText("1st transmission zero frequency:");
+     LabelStop->setText("2nd transmission zero frequency:");
+  }
+  else
+  {
+     EditOrder->setEnabled(true);
+     ComboType->setEnabled(true);//The other filters can implement canonical responses
+     LabelStart->setText(tr("Corner frequency:"));
+     LabelStop->setText(tr("Stop frequency:"));
+  }
+
+  //Shared settings for the qw-ring resonator and the capacitively coupled shunt resonators
+  if ((index == 6)||(index == 7))
+  {
+    MicrostripcheckBox->setEnabled(false);//Microstrip implementation does not work...
     ComboClass->setCurrentIndex(CLASS_BANDPASS);
     slotClassChanged(CLASS_BANDPASS);
     ComboClass->setEnabled(false);
   }
-  else if(index < 8) {  // set to "stepped impedance" types?
-    // set to lowpass fixed
-    ComboClass->setCurrentIndex(CLASS_LOWPASS);
-    slotClassChanged(CLASS_LOWPASS);
-    ComboClass->setEnabled(false);
-  }
-  else
-    ComboClass->setEnabled(true);
 
-  if((index == 3)||(index == 5)||(index == 7)||(index == 9))
-    box2->setEnabled(true);
-  else
-    box2->setEnabled(false);
-
-  if ((index == 8)||(index == 9))
+  if (index == 8)//RF EDD filter
   {
-     ComboClass->setCurrentIndex(CLASS_BANDPASS);
-     slotClassChanged(CLASS_BANDPASS);
+     MicrostripcheckBox->setEnabled(false);
+     MicrostripcheckBox->setChecked(false);
+     ComboClass->setEnabled(true);
+     ComboType->setEnabled(true);
   }
+
+} 
+
+void QucsFilter::on_MicrostripcheckBox_clicked()
+{
+    FlushImage();
+    bool microcheck = MicrostripcheckBox->isChecked();
+    box2->setEnabled(microcheck);
 }
 
-// ************************************************************
+
+// **********************************************************
 void QucsFilter::slotTakeEr(const QString& Text)
 {
   // If the ComboBox text was a material property, the material name

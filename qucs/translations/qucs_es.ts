@@ -4,192 +4,7 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../qucs/dialogs/aboutdialog.cpp" line="+55"/>
-        <source>Guilherme Brondani Torri - GUI programmer, Verilog-A dynamic loader</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Mike Brinson - testing, modelling and documentation, tutorial contributor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Richard Crozier - testing, modelling, Octave.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Bastien Roucaries - bondwire and rectangular waveguide model implementation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Frans Schreuder - GUI programmer, release</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Clemens Novak - GUI programmer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Vadim Kuznetsov - filter synthesis (qucs-activefilter), SPICE integration (NGSPICE, Xyce)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>You-Tang Lee (YodaLee) - GUI programmer, Qt4 porter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Claudio Girardi - testing, general fixes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Michael Margraf - founder of the project, GUI programmer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Stefan Jahn - Programmer of simulator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Jens Flucke - webpages and translator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Raimund Jacob - tester and applyer of Stefan&apos;s patches, author of documentation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Vincent Habchi - coplanar line and filter synthesis code, documentation contributor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Toyoyuki Ishikawa - some filter synthesis code and attenuator synthesis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Gopala Krishna A - GUI programmer, Qt4 porter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Helene Parruitte - programmer of the Verilog-AMS interface</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Gunther Kraut - equation solver contributions, exponential sources, author of documentation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Andrea Zonca - temperature model for rectangular waveguide</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>German by Stefan Jahn</source>
-        <translation type="unfinished">Alemán por Stefan Jahn</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Polish by Dariusz Pienkowski</source>
-        <translation type="unfinished">Polaco por Dariusz Pienkowski</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Romanian by Radu Circa</source>
-        <translation type="unfinished">Rumano por Radu Circa</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>French by Vincent Habchi, F5RCS</source>
-        <translation type="unfinished">Francés por Vincent Habchi, F5RC</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Portuguese by Luciano Franca, Helio de Sousa, Guilherme Brondani Torri</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Spanish by Jose L. Redrejo Rodriguez</source>
-        <translation type="unfinished">Español por José L. Redrejo Rodríguez</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Japanese by Toyoyuki Ishikawa</source>
-        <translation type="unfinished">Japonés por Toyoyuki Ishikawa</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Italian by Giorgio Luparia and Claudio Girardi</source>
-        <translation type="unfinished">Italiano por Giorgio Luparia y Claudio Girardi</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Hebrew by Dotan Nahum</source>
-        <translation type="unfinished">Hebreo por Dotan Nahum</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Swedish by Markus Gothe and Peter Landgren</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Turkish by Onur and Ozgur Cobanoglu</source>
-        <translation type="unfinished">Turco por Onur y Ozgur Cobanoglu</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Hungarian by Jozsef Bus</source>
-        <translation type="unfinished">Húngaro por Jozsef Bus</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Russian by Igor Gorbounov</source>
-        <translation type="unfinished">Ruso por Igor Gorbounov</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Czech by Marek Straka and Martin Stejskal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Catalan by Antoni Subirats</source>
-        <translation type="unfinished">Catalán por Antoni Subirats</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Ukrainian by Dystryk</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Arabic by Chabane Noureddine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Kazakh by Erbol Keshubaev</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location filename="../qucs/dialogs/aboutdialog.cpp" line="+106"/>
         <source>About Qucs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -200,22 +15,203 @@
     </message>
     <message>
         <location line="+10"/>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Copyright (C)</source>
-        <translation type="unfinished">Copyright (C)</translation>
+        <translation>Copyright (C)</translation>
     </message>
     <message>
-        <location line="-1"/>
-        <source>by Michael Margraf</source>
-        <translation type="unfinished">por Michael Margraf</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Qucs Team</source>
+        <location line="-84"/>
+        <source>GUI programmer, Verilog-A dynamic loader</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+1"/>
+        <source>testing, modelling and documentation, tutorial contributor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>testing, modelling, Octave.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>bondwire and rectangular waveguide model implementation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>GUI programmer, release</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>filter synthesis (qucs-activefilter), SPICE integration (NGSPICE, Xyce)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>testing, general fixes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>refactoring, modularity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>RF design tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>founder of the project, GUI programmer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Programmer of simulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>webpages and translator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>tester and applyer of Stefan&apos;s patches, author of documentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>coplanar line and filter synthesis code, documentation contributor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>some filter synthesis code and attenuator synthesis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+5"/>
+        <source>GUI programmer, Qt4 porter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-4"/>
+        <source>programmer of the Verilog-AMS interface</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>equation solver contributions, exponential sources, author of documentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>temperature model for rectangular waveguide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>GUI programmer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>German by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Polish by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Romanian by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>French by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Portuguese by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Spanish by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Japanese by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Italian by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hebrew by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Swedish by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Turkish by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hungarian by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Russian by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Czech by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Catalan by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Ukrainian by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Arabic by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Kazakh by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+60"/>
         <source>Home Page</source>
         <translation type="unfinished"></translation>
     </message>
@@ -282,7 +278,7 @@
     <message>
         <location line="+7"/>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;Aceptar</translation>
+        <translation>&amp;Aceptar</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -384,6 +380,19 @@
     </message>
 </context>
 <context>
+    <name>AuxFilesDialog</name>
+    <message>
+        <location filename="../qucs/dialogs/settingsdialog.cpp" line="+359"/>
+        <source>Select</source>
+        <translation type="unfinished">Seleccionar</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+</context>
+<context>
     <name>ChangeDialog</name>
     <message>
         <location filename="../qucs/dialogs/changedialog.cpp" line="+41"/>
@@ -481,7 +490,7 @@
 <context>
     <name>ComponentDialog</name>
     <message>
-        <location filename="../qucs/components/componentdialog.cpp" line="+43"/>
+        <location filename="../qucs/components/componentdialog.cpp" line="+45"/>
         <source>Edit Component Properties</source>
         <translation>Editar las propiedades del componente</translation>
     </message>
@@ -499,12 +508,12 @@
         <location line="+9"/>
         <location line="+16"/>
         <location line="+106"/>
-        <location line="+94"/>
+        <location line="+95"/>
         <source>display in schematic</source>
         <translation>mostrar en el esquema</translation>
     </message>
     <message>
-        <location line="-283"/>
+        <location line="-284"/>
         <source>Simulation:</source>
         <translation>Simulación:</translation>
     </message>
@@ -555,13 +564,13 @@
     </message>
     <message>
         <location line="+9"/>
-        <location line="+1132"/>
+        <location line="+1151"/>
         <location line="+22"/>
         <source>Step:</source>
         <translation>Paso:</translation>
     </message>
     <message>
-        <location line="-1147"/>
+        <location line="-1166"/>
         <source>Number:</source>
         <translation>Número:</translation>
     </message>
@@ -597,7 +606,7 @@
         <translation>Descripción</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+43"/>
         <source>Edit</source>
         <translation>Editar</translation>
     </message>
@@ -607,7 +616,7 @@
         <translation>Examinar</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+15"/>
         <source>Add</source>
         <translation>Añadir</translation>
     </message>
@@ -617,7 +626,7 @@
         <translation>Borrar</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+6"/>
         <source>Move Up</source>
         <translation type="unfinished"></translation>
     </message>
@@ -643,9 +652,9 @@
     </message>
     <message>
         <location line="+29"/>
-        <location line="+74"/>
+        <location line="+92"/>
         <location line="+54"/>
-        <location line="+201"/>
+        <location line="+205"/>
         <location line="+215"/>
         <location line="+167"/>
         <location line="+301"/>
@@ -653,16 +662,16 @@
         <translation>Sí</translation>
     </message>
     <message>
-        <location line="-1010"/>
-        <location line="+74"/>
-        <location line="+255"/>
+        <location line="-1032"/>
+        <location line="+92"/>
+        <location line="+259"/>
         <location line="+378"/>
-        <location line="+305"/>
+        <location line="+306"/>
         <source>no</source>
         <translation>no</translation>
     </message>
     <message>
-        <location line="-365"/>
+        <location line="-366"/>
         <source>Select a file</source>
         <translation>Seleccionar un archivo</translation>
     </message>
@@ -1141,7 +1150,7 @@
     <message>
         <location line="+9"/>
         <source>Browse</source>
-        <translation type="unfinished">Examinar</translation>
+        <translation>Examinar</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -2436,7 +2445,7 @@ Programa de síntexis de filtros</translation>
 <context>
     <name>MatchDialog</name>
     <message>
-        <location filename="../qucs/dialogs/matchdialog.cpp" line="+50"/>
+        <location filename="../qucs/dialogs/matchdialog.cpp" line="+51"/>
         <source>Create Matching Circuit</source>
         <translation>Crear Circuito Equivalente</translation>
     </message>
@@ -2456,23 +2465,23 @@ Programa de síntexis de filtros</translation>
         <translation>Puerto 1</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location line="+6"/>
+        <location line="+4"/>
+        <location line="+7"/>
         <source>ohms</source>
         <translation>ohms</translation>
     </message>
     <message>
-        <location line="-3"/>
+        <location line="-4"/>
         <source>Port 2</source>
         <translation>Puerto 2</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+16"/>
         <source>S Parameter</source>
         <translation>Parámetro S</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Input format</source>
         <translation>Formato de Entrada</translation>
     </message>
@@ -2488,18 +2497,18 @@ Programa de síntexis de filtros</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location line="+134"/>
+        <location line="+162"/>
         <source>S11</source>
         <translation>S11</translation>
     </message>
     <message>
-        <location line="-133"/>
-        <location line="+134"/>
+        <location line="-161"/>
+        <location line="+162"/>
         <source>S21</source>
         <translation>S21</translation>
     </message>
     <message>
-        <location line="-100"/>
+        <location line="-128"/>
         <source>S12</source>
         <translation>S12</translation>
     </message>
@@ -2509,7 +2518,7 @@ Programa de síntexis de filtros</translation>
         <translation>S22</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+54"/>
         <source>Frequency:</source>
         <translation>Frecuencia:</translation>
     </message>
@@ -2524,7 +2533,7 @@ Programa de síntexis de filtros</translation>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+59"/>
         <source>Reflexion Coefficient</source>
         <translation>Coeficiente de Reflexión</translation>
     </message>
@@ -2534,7 +2543,7 @@ Programa de síntexis de filtros</translation>
         <translation>Impedancia (ohms)</translation>
     </message>
     <message>
-        <location line="+221"/>
+        <location line="+244"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
@@ -2567,7 +2576,7 @@ pero es %1!</translation>
 <context>
     <name>MyWidget</name>
     <message>
-        <location filename="../qucs-rescodes/main.cpp" line="+60"/>
+        <location filename="../qucs-rescodes/main.cpp" line="+62"/>
         <source>E&amp;xit</source>
         <translation>&amp;Salir</translation>
     </message>
@@ -2597,7 +2606,7 @@ pero es %1!</translation>
         <translation>&amp;Ayuda</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+69"/>
         <source>About...</source>
         <translation>Acerca de...</translation>
     </message>
@@ -2622,7 +2631,7 @@ Resistor color code computation program
 <context>
     <name>NewProjDialog</name>
     <message>
-        <location filename="../qucs/dialogs/newprojdialog.cpp" line="+30"/>
+        <location filename="../qucs/dialogs/newprojdialog.cpp" line="+31"/>
         <source>Create new project</source>
         <translation>Crear proyecto nuevo</translation>
     </message>
@@ -2632,7 +2641,7 @@ Resistor color code computation program
         <translation>Nombre del Proyecto:</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>open new project</source>
         <translation>abrir proyecto nuevo</translation>
     </message>
@@ -2642,7 +2651,7 @@ Resistor color code computation program
         <translation>Crear</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
@@ -2650,27 +2659,27 @@ Resistor color code computation program
 <context>
     <name>OctaveWindow</name>
     <message>
-        <location filename="../qucs/octave_window.cpp" line="+130"/>
-        <source>ERROR: Cannot start Octave!</source>
+        <location filename="../qucs/octave_window.cpp" line="+120"/>
+        <source>ERROR: Failed to execute &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>OptimizeDialog</name>
     <message>
-        <location filename="../qucs/components/optimizedialog.cpp" line="+55"/>
+        <location filename="../qucs/components/optimizedialog.cpp" line="+57"/>
         <source>Edit Optimization Properties</source>
         <translation>Editar Propiedades de Optimización</translation>
     </message>
     <message>
         <location line="+22"/>
         <location line="+120"/>
-        <location line="+84"/>
+        <location line="+91"/>
         <source>Name:</source>
         <translation>Nombre:</translation>
     </message>
     <message>
-        <location line="-202"/>
+        <location line="-209"/>
         <source>Simulation:</source>
         <translation>Simulación:</translation>
     </message>
@@ -2736,12 +2745,12 @@ Resistor color code computation program
     </message>
     <message>
         <location line="+12"/>
-        <location line="+97"/>
+        <location line="+104"/>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
     <message>
-        <location line="-97"/>
+        <location line="-104"/>
         <location line="+18"/>
         <source>active</source>
         <translation>activo</translation>
@@ -2763,12 +2772,12 @@ Resistor color code computation program
     </message>
     <message>
         <location line="+0"/>
-        <location line="+97"/>
+        <location line="+104"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location line="-54"/>
+        <location line="-61"/>
         <source>initial:</source>
         <translation>inicial:</translation>
     </message>
@@ -2784,33 +2793,82 @@ Resistor color code computation program
     </message>
     <message>
         <location line="+10"/>
-        <location line="+175"/>
-        <location line="+344"/>
+        <location line="+182"/>
+        <location line="+358"/>
         <source>linear double</source>
         <translation>doble lineal</translation>
     </message>
     <message>
-        <location line="-518"/>
-        <location line="+176"/>
-        <location line="+344"/>
+        <location line="-539"/>
+        <location line="+183"/>
+        <location line="+358"/>
         <source>logarithmic double</source>
         <translation>doble logarítmico</translation>
     </message>
     <message>
-        <location line="-519"/>
-        <location line="+177"/>
-        <location line="+344"/>
+        <location line="-540"/>
+        <location line="+184"/>
+        <location line="+358"/>
         <source>linear integer</source>
         <translation>entero lineal</translation>
     </message>
     <message>
-        <location line="-520"/>
-        <location line="+178"/>
+        <location line="-541"/>
+        <location line="+199"/>
         <source>logarithmic integer</source>
         <translation>entero logarítmico</translation>
     </message>
     <message>
-        <location line="-174"/>
+        <location line="-198"/>
+        <location line="+184"/>
+        <location line="+358"/>
+        <source>E3 series</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-541"/>
+        <location line="+185"/>
+        <location line="+358"/>
+        <source>E6 series</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-542"/>
+        <location line="+186"/>
+        <location line="+358"/>
+        <source>E12 series</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-543"/>
+        <location line="+187"/>
+        <location line="+358"/>
+        <source>E24 series</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-544"/>
+        <location line="+188"/>
+        <location line="+358"/>
+        <source>E48 series</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-545"/>
+        <location line="+189"/>
+        <location line="+358"/>
+        <source>E96 series</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-546"/>
+        <location line="+190"/>
+        <location line="+358"/>
+        <source>E192 series</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-544"/>
         <location line="+69"/>
         <source>Add</source>
         <translation>Añadir</translation>
@@ -2848,47 +2906,47 @@ Resistor color code computation program
     </message>
     <message>
         <location line="+4"/>
-        <location line="+131"/>
-        <location line="+354"/>
+        <location line="+145"/>
+        <location line="+368"/>
         <source>minimize</source>
         <translation>minimizar</translation>
     </message>
     <message>
-        <location line="-484"/>
-        <location line="+132"/>
-        <location line="+354"/>
+        <location line="-512"/>
+        <location line="+146"/>
+        <location line="+368"/>
         <source>maximize</source>
         <translation>maximizar</translation>
     </message>
     <message>
-        <location line="-485"/>
-        <location line="+133"/>
-        <location line="+354"/>
+        <location line="-513"/>
+        <location line="+147"/>
+        <location line="+368"/>
         <source>less</source>
         <translation>menos</translation>
     </message>
     <message>
-        <location line="-486"/>
-        <location line="+134"/>
-        <location line="+354"/>
+        <location line="-514"/>
+        <location line="+148"/>
+        <location line="+368"/>
         <source>greater</source>
         <translation>mayor</translation>
     </message>
     <message>
-        <location line="-487"/>
-        <location line="+135"/>
-        <location line="+354"/>
+        <location line="-515"/>
+        <location line="+149"/>
+        <location line="+368"/>
         <source>equal</source>
         <translation>igual</translation>
     </message>
     <message>
-        <location line="-488"/>
-        <location line="+136"/>
+        <location line="-516"/>
+        <location line="+150"/>
         <source>monitor</source>
         <translation>monitor</translation>
     </message>
     <message>
-        <location line="-119"/>
+        <location line="-133"/>
         <source>Goals</source>
         <translation>Objetivos</translation>
     </message>
@@ -2909,7 +2967,7 @@ Resistor color code computation program
     </message>
     <message>
         <location line="+57"/>
-        <location line="+91"/>
+        <location line="+105"/>
         <location line="+34"/>
         <location line="+37"/>
         <location line="+195"/>
@@ -2917,8 +2975,8 @@ Resistor color code computation program
         <translation>Sí</translation>
     </message>
     <message>
-        <location line="-357"/>
-        <location line="+125"/>
+        <location line="-371"/>
+        <location line="+139"/>
         <location line="+37"/>
         <source>no</source>
         <translation>no</translation>
@@ -2948,7 +3006,7 @@ Resistor color code computation program
         <translation>¡EL objetivo &quot;%1&quot; ya está en la lista!</translation>
     </message>
     <message>
-        <location line="+248"/>
+        <location line="+262"/>
         <source>Set precision</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3210,7 +3268,7 @@ Resistor color code computation program
 <context>
     <name>ProjectView</name>
     <message>
-        <location filename="../qucs/projectView.cpp" line="+81"/>
+        <location filename="../qucs/projectView.cpp" line="+77"/>
         <source>Content of %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3528,62 +3586,6 @@ Resistor color code computation program
         <location filename="../qucs/components/gatedDlatch.cpp" line="+33"/>
         <location filename="../qucs/components/greytobinary4bit.cpp" line="+1"/>
         <location filename="../qucs/components/ha1b.cpp" line="+1"/>
-        <location filename="../qucs/components/hic0_full.cpp" line="+67"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location filename="../qucs/components/hic2_full.cpp" line="+58"/>
-        <location line="+62"/>
-        <location line="+66"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+5"/>
-        <location line="+19"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+81"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+81"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+85"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+58"/>
-        <location line="+62"/>
-        <location line="+66"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+5"/>
-        <location line="+19"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+58"/>
-        <location line="+62"/>
-        <location line="+66"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+5"/>
-        <location line="+19"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+64"/>
-        <location line="+62"/>
-        <location line="+66"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+5"/>
-        <location line="+19"/>
         <location filename="../qucs/components/hpribin4bit.cpp" line="+1"/>
         <location filename="../qucs/components/jkff_SR.cpp" line="+33"/>
         <location filename="../qucs/components/MESFET.cpp" line="+69"/>
@@ -3739,10 +3741,6 @@ Resistor color code computation program
     <message>
         <location filename="../qucs/components/bjtsub.cpp" line="-130"/>
         <location filename="../qucs/components/EKV26MOS.cpp" line="-135"/>
-        <location filename="../qucs/components/hic0_full.cpp" line="-68"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-82"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-82"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-86"/>
         <location filename="../qucs/components/jfet.cpp" line="-36"/>
         <location filename="../qucs/components/mosfet_sub.cpp" line="-94"/>
         <source>polarity</source>
@@ -3947,10 +3945,6 @@ Resistor color code computation program
         <location line="+4"/>
         <location filename="../qucs/components/diode.cpp" line="+14"/>
         <location filename="../qucs/components/EKV26MOS.cpp" line="-34"/>
-        <location filename="../qucs/components/hic0_full.cpp" line="+157"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+171"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+171"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+175"/>
         <location filename="../qucs/components/jfet.cpp" line="+30"/>
         <location filename="../qucs/components/MESFET.cpp" line="+78"/>
         <location filename="../qucs/components/mosfet_sub.cpp" line="+88"/>
@@ -4091,1398 +4085,8 @@ Resistor color code computation program
         <translation>Doblez de Cable</translation>
     </message>
     <message>
-        <location filename="../qucs/components/bsim3v34nMOS.cpp" line="+15"/>
-        <source>bsim3v34nMOS verilog device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location filename="../qucs/components/bsim3v34pMOS.cpp" line="+18"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location filename="../qucs/components/bsim4v30nMOS.cpp" line="+19"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location filename="../qucs/components/bsim4v30pMOS.cpp" line="+18"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <source>-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/bsim3v34pMOS.cpp" line="+2"/>
         <location filename="../qucs/components/diac.cpp" line="+6"/>
         <location filename="../qucs/components/EKV26MOS.cpp" line="+7"/>
-        <location filename="../qucs/components/hic0_full.cpp" line="+69"/>
-        <location filename="../qucs/components/hic2_full.cpp" line="+86"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+73"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+84"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+87"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+218"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+86"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+86"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+114"/>
         <location filename="../qucs/components/log_amp.cpp" line="+64"/>
         <location filename="../qucs/components/MESFET.cpp" line="+9"/>
         <location filename="../qucs/components/nigbt.cpp" line="+41"/>
@@ -5493,41 +4097,6 @@ Resistor color code computation program
         <location filename="../qucs/components/triac.cpp" line="+8"/>
         <source>simulation temperature</source>
         <translation>simulación de temperatura</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>bsim3v34nMOS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qucs/components/bsim3v34pMOS.cpp" line="-817"/>
-        <source>bsim3v34pMOS verilog device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+836"/>
-        <source>bsim3v34pMOS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qucs/components/bsim4v30nMOS.cpp" line="-558"/>
-        <source>bsim4v30nMOS verilog device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+577"/>
-        <source>bsim4v30nMOS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qucs/components/bsim4v30pMOS.cpp" line="-557"/>
-        <source>bsim4v30pMOS verilog device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+576"/>
-        <source>bsim4v30pMOS</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qucs/components/capacitor.cpp" line="+23"/>
@@ -5726,11 +4295,9 @@ Resistor color code computation program
     </message>
     <message>
         <location line="+248"/>
-        <location line="+20"/>
-        <location line="+8"/>
+        <location line="+46"/>
         <location filename="../qucs/components/vacomponent.cpp" line="+306"/>
-        <location filename="../qucs/octave_window.cpp" line="-31"/>
-        <location filename="../qucs/qucs_actions.cpp" line="+1251"/>
+        <location filename="../qucs/qucs_actions.cpp" line="+1253"/>
         <location filename="../qucs/schematic_file.cpp" line="+114"/>
         <location line="+18"/>
         <location line="+21"/>
@@ -5756,27 +4323,30 @@ Resistor color code computation program
         <location line="+15"/>
         <location line="+26"/>
         <location line="+54"/>
+        <location filename="../qucs-filter/quarterwave_filter.cpp" line="+51"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location line="-27"/>
+        <location line="-45"/>
         <source>Format Error:
 Wrong line start!</source>
         <translation>Error de Formato:
 ¡Comienzo de línea equivocado!</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+21"/>
         <source>Format Error:
 Unknown component!
 %1
 
-Do you make use of loadable components?</source>
+Do you want to load schematic anyway?
+Unknown components will be replaced 
+by dummy subcircuit placeholders.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+25"/>
         <source>Format Error:
 Wrong &apos;component&apos; line format!</source>
         <translation>Error de Formato:
@@ -6345,142 +4915,6 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+6"/>
         <location line="+84"/>
         <location line="+6"/>
-        <location filename="../qucs/components/hic0_full.cpp" line="-216"/>
-        <location line="+32"/>
-        <location line="+32"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+8"/>
-        <location line="+3"/>
-        <location line="+27"/>
-        <location line="+5"/>
-        <location line="+18"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hic2_full.cpp" line="-173"/>
-        <location line="+10"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+27"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+28"/>
-        <location line="+26"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-234"/>
-        <location line="+3"/>
-        <location line="+36"/>
-        <location line="+7"/>
-        <location line="+32"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+8"/>
-        <location line="+3"/>
-        <location line="+27"/>
-        <location line="+5"/>
-        <location line="+18"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-245"/>
-        <location line="+3"/>
-        <location line="+36"/>
-        <location line="+7"/>
-        <location line="+32"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+8"/>
-        <location line="+3"/>
-        <location line="+27"/>
-        <location line="+5"/>
-        <location line="+18"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-250"/>
-        <location line="+3"/>
-        <location line="+38"/>
-        <location line="+7"/>
-        <location line="+32"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+8"/>
-        <location line="+3"/>
-        <location line="+27"/>
-        <location line="+5"/>
-        <location line="+18"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-173"/>
-        <location line="+10"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+27"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+28"/>
-        <location line="+26"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-173"/>
-        <location line="+10"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+27"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+28"/>
-        <location line="+26"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-201"/>
-        <location line="+10"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+27"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+6"/>
-        <location line="+38"/>
-        <location line="+26"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+14"/>
         <location filename="../qucs/components/log_amp.cpp" line="-29"/>
         <location filename="../qucs/components/logic_0.cpp" line="+28"/>
         <location filename="../qucs/components/logic_1.cpp" line="+28"/>
@@ -6660,10 +5094,6 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../qucs/components/hic2_full.cpp" line="-198"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-198"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-198"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-228"/>
         <location filename="../qucs/components/MESFET.cpp" line="+4"/>
         <location line="+3"/>
         <location line="+3"/>
@@ -6721,14 +5151,6 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../qucs/components/hic0_full.cpp" line="+3"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <location line="+3"/>
         <source>V/K</source>
         <translation>V/K</translation>
     </message>
@@ -6749,52 +5171,6 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="../qucs/components/hic0_full.cpp" line="+3"/>
-        <location line="+12"/>
-        <location line="+3"/>
-        <location line="+11"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hic2_full.cpp" line="+6"/>
-        <location line="+3"/>
-        <location line="+160"/>
-        <location line="+7"/>
-        <location line="+3"/>
-        <location line="+30"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location line="+12"/>
-        <location line="+3"/>
-        <location line="+13"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location line="+12"/>
-        <location line="+3"/>
-        <location line="+13"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <location line="+12"/>
-        <location line="+3"/>
-        <location line="+13"/>
-        <location line="+3"/>
-        <location line="+13"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+6"/>
-        <location line="+3"/>
-        <location line="+160"/>
-        <location line="+7"/>
-        <location line="+3"/>
-        <location line="+30"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+6"/>
-        <location line="+3"/>
-        <location line="+160"/>
-        <location line="+7"/>
-        <location line="+3"/>
-        <location line="+30"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+6"/>
-        <location line="+3"/>
-        <location line="+176"/>
-        <location line="+7"/>
-        <location line="+3"/>
-        <location line="+30"/>
-        <location line="+17"/>
         <source>1/K</source>
         <translation>1/K</translation>
     </message>
@@ -6821,50 +5197,6 @@ Wrong &apos;component&apos; line format!</source>
     <message>
         <location line="+1"/>
         <location line="+3"/>
-        <location filename="../qucs/components/hic0_full.cpp" line="-139"/>
-        <location line="+36"/>
-        <location line="+11"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hic2_full.cpp" line="-197"/>
-        <location line="+3"/>
-        <location line="+11"/>
-        <location line="+3"/>
-        <location line="+16"/>
-        <location line="+84"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-141"/>
-        <location line="+36"/>
-        <location line="+11"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-141"/>
-        <location line="+36"/>
-        <location line="+11"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-154"/>
-        <location line="+36"/>
-        <location line="+11"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-197"/>
-        <location line="+3"/>
-        <location line="+11"/>
-        <location line="+3"/>
-        <location line="+16"/>
-        <location line="+84"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-197"/>
-        <location line="+3"/>
-        <location line="+11"/>
-        <location line="+3"/>
-        <location line="+16"/>
-        <location line="+84"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-230"/>
-        <location line="+3"/>
-        <location line="+11"/>
-        <location line="+3"/>
-        <location line="+16"/>
-        <location line="+84"/>
         <location filename="../qucs/components/log_amp.cpp" line="+3"/>
         <location line="+6"/>
         <location filename="../qucs/components/MESFET.cpp" line="+39"/>
@@ -6954,84 +5286,6 @@ Wrong &apos;component&apos; line format!</source>
     <message>
         <location line="+5"/>
         <location line="+6"/>
-        <location filename="../qucs/components/hic0_full.cpp" line="-121"/>
-        <location line="+10"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location line="+93"/>
-        <location line="+5"/>
-        <location filename="../qucs/components/hic2_full.cpp" line="-182"/>
-        <location line="+11"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location line="+39"/>
-        <location line="+5"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-135"/>
-        <location line="+13"/>
-        <location line="+5"/>
-        <location line="+3"/>
-        <location line="+7"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location line="+100"/>
-        <location line="+5"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-135"/>
-        <location line="+13"/>
-        <location line="+5"/>
-        <location line="+3"/>
-        <location line="+7"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location line="+100"/>
-        <location line="+5"/>
-        <location line="+107"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-139"/>
-        <location line="+17"/>
-        <location line="+5"/>
-        <location line="+3"/>
-        <location line="+7"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location line="+100"/>
-        <location line="+5"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-182"/>
-        <location line="+11"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location line="+39"/>
-        <location line="+5"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-182"/>
-        <location line="+11"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location line="+39"/>
-        <location line="+5"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-188"/>
-        <location line="+17"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location line="+39"/>
-        <location line="+5"/>
-        <location line="+110"/>
         <location filename="../qucs/components/log_amp.cpp" line="-20"/>
         <location line="+3"/>
         <location filename="../qucs/components/MESFET.cpp" line="+62"/>
@@ -7045,62 +5299,6 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="../qucs/components/hic0_full.cpp" line="-93"/>
-        <location line="+44"/>
-        <location line="+11"/>
-        <location line="+43"/>
-        <location line="+11"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hic2_full.cpp" line="+11"/>
-        <location line="+3"/>
-        <location line="+10"/>
-        <location line="+10"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+47"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-100"/>
-        <location line="+51"/>
-        <location line="+11"/>
-        <location line="+43"/>
-        <location line="+11"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-207"/>
-        <location line="+51"/>
-        <location line="+11"/>
-        <location line="+43"/>
-        <location line="+11"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-100"/>
-        <location line="+51"/>
-        <location line="+11"/>
-        <location line="+43"/>
-        <location line="+11"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+11"/>
-        <location line="+3"/>
-        <location line="+10"/>
-        <location line="+10"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+47"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+11"/>
-        <location line="+3"/>
-        <location line="+10"/>
-        <location line="+10"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+47"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-99"/>
-        <location line="+3"/>
-        <location line="+10"/>
-        <location line="+10"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+57"/>
-        <location line="+3"/>
         <location filename="../qucs/components/MESFET.cpp" line="-52"/>
         <location line="+3"/>
         <location line="+3"/>
@@ -7361,2439 +5559,6 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+22"/>
         <source>Harmonic balance</source>
         <translation>Equilibrio armónico</translation>
-    </message>
-    <message>
-        <location filename="../qucs/components/HBT_X.cpp" line="+15"/>
-        <source>HBT model by Ferdinand-Braun-Institut (FBH), Berlin</source>
-        <translation>Modelo HBT por  Ferdinand-Braun-Institut (FBH), Berlin</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <source>Ignored</source>
-        <translation>Ignorado</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Device operating temperature, Celsius</source>
-        <translation>Temperatura de operación del dispositivo, Celsius</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Thermal resistance, K/W</source>
-        <translation>Resistencia térmica, K/W</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hic0_full.cpp" line="+66"/>
-        <location filename="../qucs/components/hic2_full.cpp" line="+69"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+70"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+70"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+84"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="-6"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+69"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+69"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+87"/>
-        <source>Thermal capacitance</source>
-        <translation>Capacidad térmica</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Scaling factor, number of emitter fingers</source>
-        <translation>Factor de escala, número de dedos emisores</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Length of emitter finger, m</source>
-        <translation>Longitud del dedo emisor, m</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Width of emitter finger, m</source>
-        <translation>Anchura del dedo emisor, m</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Forward saturation current density, A/um^2</source>
-        <translation>Densidad de corriente saturada directa, A/um^2</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Forward current emission coefficient</source>
-        <translation>Coeficiente de emisión de corriente directa</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Forward thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation>Energía de activación térmica directa, V, (0==deshabilita la dependencia de la temperatura)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>B-E leakage saturation current density, A/um^2</source>
-        <translation>Densidad de corriente saturada de fuga B-E, A/um^2</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>B-E leakage emission coefficient</source>
-        <translation>Coeficiente de emisión de fuga B-E</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Limiting resistor of B-E leakage diode, Ohm</source>
-        <translation>Resistencia limitadora del diodo de fuga B-E, Ohm</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>B-E leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation>energía de activación térmica de fuga B-E, V, (0 == deshabilita la dependencia de la temperatura)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>2nd B-E leakage saturation current density, A/um^2</source>
-        <translation>2ª densidad de corriente de saturació de fuga,  A/um^2</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>2nd B-E leakage emission coefficient</source>
-        <translation>2º coeficiente de emisión de fuga B-E</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>2nd Limiting resistor of B-E leakage diode, Ohm</source>
-        <translation>2ª resistencia limitadora del diodo de fuga B-E, Ohm</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>2nd B-E leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation>2ª energía de activación térmica de fuga B-E, V, (0 == deshabilita la dependencia de la temperatura)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Reverse saturation current density, A/um^2</source>
-        <translation>Densidad de corriente saturada inversa, A/um^2</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Reverse current emission coefficient</source>
-        <translation>Coeficiente de emisión de corriente inversa</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Reverse thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation>Energía de activación térmica inversa, V, (0==deshabilita la dependencia de la temperatura)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Fraction of Cjc that goes to internal base node</source>
-        <translation>Fracción de Cjc que va al conector interno de la base</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>B-C leakage saturation current density, A/um^2 (0. switches off diode)</source>
-        <translation>Densidad de corriente saturada de fuga B-C, A/um^2 (0 desconecta el diodo)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>B-C leakage emission coefficient (0. switches off diode)</source>
-        <translation>Coeficiente de corriente fuga B-C, A/um^2 (0 desconecta el diodo)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Limiting resistor of B-C leakage diode, Ohm</source>
-        <translation>Resistencia limitadora del diodo de fuga B-C, Ohm</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>B-C leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation>Energía de activación térmica de fuga B-C, V, (0 == deshabilita la dependencia de la temperatura)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Ideal forward beta</source>
-        <translation>Beta directa ideal</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Temperature coefficient of forward current gain, -1/K,  (0 == disables temperature dependence)</source>
-        <translation>Coeficiente de temperatura de la ganancia de corriente directa, -1/K  (0 == deshabilita la depedencia de la temperatura)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Ideal reverse beta</source>
-        <translation>Beta inversa ideal</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Forward Early voltage, V,  (0 == disables Early Effect)</source>
-        <translation>Tensión Early Directa, V.  (0 == deshabilita el Efecto Early)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Reverse Early voltage, V, (0 == disables Early Effect)</source>
-        <translation>Tensión temprana inversa, V (0 == deshabilita el efecto temprano)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Forward high-injection knee current, A, (0 == disables Webster Effect)</source>
-        <translation>Forward high-injection knee current, A, (0 == deshabilita el efecto Webster)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Reverse high-injection knee current, A, (0 == disables Webster Effect)</source>
-        <translation>Reverse high-injection knee current, A, (0 == deshabilita el efecto Webster)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>C-E breakdown exponent, (0 == disables collector break-down)</source>
-        <translation>Exponente de ruptura C-E, (0 == deshabilita la ruptura del colector)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>C-E breakdown voltage, V, (0 == disables collector break-down)</source>
-        <translation>Tensión de ruptura C-E, (0 == deshabilita la ruptura del colector)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>C-E breakdown factor, (0 == disables collector break-down)</source>
-        <translation>Factor de ruptura C-E, (0 == deshabilita la ruptura del colector)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>B-E breakdown voltage, V, (0 == disables emitter break-down)</source>
-        <translation>Tensión de ruptura B-E, (0 == deshabilita la ruptura del emisor)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Ideal reverse transit time, s</source>
-        <translation>Tiempo de transitorio inverso ideal, s</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Extrinsic BC diffusion capacitance, F</source>
-        <translation>Capacidad de difusión BC extrínseca, F</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Ideal forward transit time, s</source>
-        <translation>Tietiempo ideal de tránsito en directa, s</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Temperature coefficient of forward transit time</source>
-        <translation>Coeficiente de temperatura del tiempo transitorio en directa</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Excess transit time coefficient at base push-out</source>
-        <translation>Coeficiente del tiempo de transición en exceso en la salida de la base</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Smoothing parameter for Thcs</source>
-        <translation>Parámetro de suavizado para Thcs</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>B-E zero-bias depletion capacitance, F/um^2</source>
-        <translation>Capacidad de reducción de polarización cero en B-E, F/um^2</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>B-E junction exponential factor</source>
-        <translation>Factor exponencial de la unión B-E</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>B-E junction built-in potential, V</source>
-        <translation>Potencial interno de la unión B-E, V</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>B-C zero-bias depletion capacitance, F/um^2</source>
-        <translation>Capacidad de reducción de polarización cero en B-C, F/um^2</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>B-C junction exponential factor</source>
-        <translation>factor exponencial unión B-C</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>B-C junction built-in potential, V</source>
-        <translation>Potencial interno de la unión B-C, V</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>not used</source>
-        <translation>no usado</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Minimum B-C depletion capacitance (Vbc dependence), F/um^2</source>
-        <translation>Capacidad de reducción B-C mínima (dependiente de Vbc), F/um^2</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Collector current where Cbc reaches Cmin, A/um^2 (0 == disables Cbc reduction)</source>
-        <translation>Corriente de colector cuando Cbc alcanza Cmin, A/um^2 (0 == deshabilita la reducción Cbc)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Fraction of Cmin, lower limit of BC capacitance (Ic dependence)</source>
-        <translation>Fracción de Cmin, límite inferior de la capacidad BC (dependiente de lc)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Onset of base push-out at low voltages, Ohm*um^2 (0 == disables base push-out)</source>
-        <translation>Llegada de la salida de base a tensiones bajas, Ohm*um^2 (0 == deshabilita la salida de base)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Onset of base push-out at high voltages, A/um^2, (0 == disables base push-out)</source>
-        <translation>Llegada de la salida de base a tensiones altas, Ohm*um^2 (0 == deshabilita la salida de base)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Slope of Jk at high currents , Ohm*um^2</source>
-        <translation>Pendiente de JK en corrientes grandes , Ohm*um^2</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Voltage shift of base push-out onset, V</source>
-        <translation>Desplazamiento de tensión al llegar la salida de base, V</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Collector resistance, Ohm/finger</source>
-        <translation>Resistencia del colector, Ohm/finger</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Emitter resistance, Ohm/finger</source>
-        <translation>Resistencia del emisor, Ohm/finger</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Extrinsic base resistance, Ohm/finger</source>
-        <translation>Resistencia de la base extrínseca, Ohm/finger</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Inner Base ohmic resistance, Ohm/finger</source>
-        <translation>Resistencia óhmica de la base interna, Ohm/finger</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Collector inductance, H</source>
-        <translation>Inductancia del colector, H</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Emitter inductance, H</source>
-        <translation>Inductancia del emisor, H</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Base inductance, H</source>
-        <translation>Inductancia de la base, H</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Extrinsic B-C capacitance, F</source>
-        <translation>Capacidad de B-C extrínseca, F</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Extrinsic base capacitance, F</source>
-        <translation>Capacidad de la base extrínseca, F</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Extrinsic collector capacitance, F</source>
-        <translation>Capacidad del colector extrínseca, F</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location line="+12"/>
-        <source>Flicker-noise coefficient</source>
-        <translation>coeficiente de ruido de parpadeo</translation>
-    </message>
-    <message>
-        <location line="-10"/>
-        <location line="+12"/>
-        <source>Flicker-noise exponent</source>
-        <translation>exponente de ruido de parpadeo</translation>
-    </message>
-    <message>
-        <location line="-10"/>
-        <location line="+12"/>
-        <source>Flicker-noise frequency exponent</source>
-        <translation>exponente de la frecuencia del ruido de parpadeo</translation>
-    </message>
-    <message>
-        <location line="-10"/>
-        <source>Burst noise coefficient</source>
-        <translation>Coeficiente de ruido de ráfaga</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Burst noise exponent</source>
-        <translation>Exponente del ruido de ráfaga</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Burst noise corner frequency, Hz</source>
-        <translation>Frecuencia de esquina del ruido de ráfaga, Hz</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Ambient temperature at which the parameters were determined</source>
-        <translation>Temperatura ambiente en la que se determinan los parámetros</translation>
-    </message>
-    <message>
-        <location line="+57"/>
-        <source>FBH HBT</source>
-        <translation>FBH HBT</translation>
-    </message>
-    <message>
-        <location filename="../qucs/components/hic0_full.cpp" line="-220"/>
-        <source>HICUM Level 0 v1.12 verilog device</source>
-        <translation>Componente verilog HICUM Level 0 v1.12</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-233"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-233"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-251"/>
-        <source>(Modified) saturation current</source>
-        <translation>(Modificada) corriente de saturación</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+5"/>
-        <source>Non-ideality coefficient of forward collector current</source>
-        <translation>Coeficiente no ideal de la corriente directa de colector</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>Non-ideality coefficient of reverse collector current</source>
-        <translation>Coeficiente no ideal de la corriente inversa de colector</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location line="+100"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location line="+114"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location line="+114"/>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <location line="+116"/>
-        <location line="+3"/>
-        <source>forward Early voltage (normalization volt.)</source>
-        <translation>Tensión inicial directa (normalización volt.)</translation>
-    </message>
-    <message>
-        <location line="-100"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-111"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-111"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-111"/>
-        <source>forward d.c. high-injection roll-off current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+5"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+5"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+5"/>
-        <source>inverse d.c. high-injection roll-off current</source>
-        <translation>corriente toll-off inversa en cc de alta inyección</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>high-injection correction current</source>
-        <translation>corriente de corrección de alta inyección</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>high-injection correction factor</source>
-        <translation>factor de corrección de alta inyección</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+4"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+7"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+4"/>
-        <source>BE saturation current</source>
-        <translation>corriente de saturación BE</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>BE non-ideality factor</source>
-        <translation>factor no ideal BE</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>BE recombination saturation current</source>
-        <translation>corriente de saturación de recombinación BE</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>BE recombination non-ideality factor</source>
-        <translation>factor no ideal de recombinación BE</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>BC saturation current</source>
-        <translation>corriente de saturación BC</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>BC non-ideality factor</source>
-        <translation>factor no ideal BC</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>Zero-bias BE depletion capacitance</source>
-        <translation>capacidad de deplexión BE de polarización cero</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>BE built-in voltage</source>
-        <translation>tensión adicional BE</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>BE exponent factor</source>
-        <translation>factor exponencial BE</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>Ratio of maximum to zero-bias value</source>
-        <translation>Razón de máximo a valor de polarización cero</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+9"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+9"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+9"/>
-        <source>low current transit time at Vbici=0</source>
-        <translation>tiempo de baja corriente transitoria a Vbici=0</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Base width modulation contribution</source>
-        <translation>Contrubución del ancho de modulación de la basa</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>SCR width modulation contribution</source>
-        <translation>SCR modulación de ancho de contribución</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Storage time in neutral emitter</source>
-        <translation>Tiempo de almacenamiento en punto neutro de emisor</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Exponent factor for emitter transit time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>Saturation time at high current densities</source>
-        <translation>Tiempo de saturación a altas densidades de corriente</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Smoothing factor for current dependence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>Storage time at inverse operation</source>
-        <translation>Tiempo de almacenamiento en inversa</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Low-field collector resistance under emitter</source>
-        <translation>Resistencia de colector en pequeño campo bajo emisor</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Voltage dividing ohmic and satur.region</source>
-        <translation>Zona de división de tensión y saturación</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location line="+25"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location line="+25"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location line="+25"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <location line="+25"/>
-        <source>Punch-through voltage</source>
-        <translation>Tensión de perforación</translation>
-    </message>
-    <message>
-        <location line="-22"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-22"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-22"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-22"/>
-        <source>Saturation voltage</source>
-        <translation>Tensión de saturación</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Total zero-bias BC depletion capacitance</source>
-        <translation>Capacidad total de reducción de polarización cero</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>BC built-in voltage</source>
-        <translation>tensión adicional BC</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>BC exponent factor</source>
-        <translation>factor exponencial BC</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>Punch-through voltage of BC junction</source>
-        <translation>Tensión de perforación de la unión BC</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Zero-bias external BC depletion capacitance</source>
-        <translation>Capacidad de reducción externa de la unión BC de polarización cero</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>External BC built-in voltage</source>
-        <translation>Tensión externa adicional BC</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>External BC exponent factor</source>
-        <translation>Factor exponencial externo de la unión BC</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+5"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+5"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+5"/>
-        <source>Split factor = Cjci0/Cjc0</source>
-        <translation>Factor de separación = Cjci0/Cjc0</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>Internal base resistance at zero-bias</source>
-        <translation>Resistencia de base interna en polarización cero</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+9"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+9"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+9"/>
-        <source>Geometry factor</source>
-        <translation>Factor de geometría</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hic2_full.cpp" line="-202"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="-140"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-202"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-202"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-230"/>
-        <source>External base series resistance</source>
-        <translation>Resistencia serie de base externa</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hic2_full.cpp" line="+11"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+10"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+11"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+11"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+11"/>
-        <source>Emitter series resistance</source>
-        <translation>Resistencia serie del emisor</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hic2_full.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>External collector series resistance</source>
-        <translation>Resistencia serie del colector externo</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hic2_full.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Substrate transistor transfer saturation current</source>
-        <translation>Corriente de saturación de la transferenica sustrato transistor</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Substrate transistor transfer current non-ideality factor</source>
-        <translation>Factor no ideal de transferencia del sustrato de transistor</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>SC saturation current</source>
-        <translation>Corriente de saturación SC</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>SC non-ideality factor</source>
-        <translation>Factor no ideal SC</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>Zero-bias SC depletion capacitance</source>
-        <translation>Capacidad de deplexión SC de polarización cero</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>SC built-in voltage</source>
-        <translation>tensión adicional SC</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>External SC exponent factor</source>
-        <translation>Factor exponencial externo de la unión SC</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>SC punch-through voltage</source>
-        <translation>Tensión de ruptura SC</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Collector-base isolation (overlap) capacitance</source>
-        <translation>Capacidad de aislamiento colector-base (solapamiento)</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Emitter-base oxide capacitance</source>
-        <translation>Capacidad del óxido emisor-base</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Exponent factor</source>
-        <translation>Factor exponencial</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>Prefactor</source>
-        <translation>Prefactor</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>M^(1-AF)</source>
-        <translation>M^(1-AF)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>flicker noise exponent factor</source>
-        <translation>factor exponencial de ruido de centelleo</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>Bandgap-voltage</source>
-        <translation>Salto de tensión entre bandas</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Effective emitter bandgap-voltage</source>
-        <translation>Tensión efectiva de salto de banda de emisor</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Effective collector bandgap-voltage</source>
-        <translation>Tensión efectiva de salto de banda de colector</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Effective substrate bandgap-voltage</source>
-        <translation>Tensión efectiva de salto de banda de sustrato</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Coefficient K1 in T-dependent bandgap equation</source>
-        <translation>Coeficiente K1 en la ecución de salto de banda en función de T</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Coefficient K2 in T-dependent bandgap equation</source>
-        <translation>Coeficiente K2 en la ecución de salto de banda en función de T</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Frist-order TC of tf0</source>
-        <translation>Primera orden TC de tf0</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Second-order TC of tf0</source>
-        <translation>Segunda orden TC de tf0</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+1"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+1"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+1"/>
-        <location line="+44"/>
-        <source>1/K^2</source>
-        <translation>1/K^2</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hic2_full.cpp" line="+173"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-42"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+173"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+173"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+189"/>
-        <source>Exponent coefficient in transfer current temperature dependence</source>
-        <translation>Coeficiente exponencial de transferencia de corriente en función de la temperatura</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>Exponent coefficient in BE junction current temperature dependence</source>
-        <translation>Coeficiente exponencial en función de la temperatura en la corriente de la unión BE</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>TC of epi-collector diffusivity</source>
-        <translation>TC de difusividad epi-colector</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>Relative TC of satur.drift velocity</source>
-        <translation>TC relativo de la deriva de la velocidad de saturación</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Relative TC of vces</source>
-        <translation>TC relativo de vces</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>TC of internal base resistance</source>
-        <translation>TC de la resistencia interna de base</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>TC of external base resistance</source>
-        <translation>TC de la resistencia externa de base</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>TC of external collector resistance</source>
-        <translation>TC de la resistencia externa de colector</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>TC of emitter resistances</source>
-        <translation>TC de resistencias de emisor</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+4"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+4"/>
-        <source>TC of avalanche prefactor</source>
-        <translation>TC de prefactor de avalancha</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>TC of avalanche exponential factor</source>
-        <translation>TC del factor exponencial de avalancha</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+5"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+10"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+19"/>
-        <source>Flag for self-heating calculation</source>
-        <translation>Marcador para el cálculo del autocalentamiento</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hic2_full.cpp" line="+9"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+124"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+9"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+9"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+16"/>
-        <source>Thermal resistance</source>
-        <translation>Resistencia térmica</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../qucs/components/hic2_full.cpp" line="+1"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+1"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+1"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+1"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+1"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+1"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+1"/>
-        <source>K/W</source>
-        <translation>K/W</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+5"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Ws/K</source>
-        <translation>Ws/K</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>Temperature for which parameters are valid</source>
-        <translation>Temperatura a la que los parámetros son válidos</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../qucs/components/hic2_full.cpp" line="+8"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+1"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+1"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+1"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+8"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+8"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+13"/>
-        <source>C</source>
-        <translation>C</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>Temperature change for particular transistor</source>
-        <translation>Temperatura de cambio para transistor específico</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../qucs/components/hic2_full.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+1"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+1"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+1"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>K</source>
-        <translation>K</translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>npn HICUM L0 v1.12</source>
-        <translation>npn HICUM L0 v1.12</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>pnp HICUM L0 v1.12</source>
-        <translation>pnp HICUM L0 v1.12</translation>
-    </message>
-    <message>
-        <location filename="../qucs/components/hic2_full.cpp" line="-288"/>
-        <source>HICUM Level 2 v2.22 verilog device</source>
-        <translation>Dispositivo Verilog HICUM Level 2 v2.22</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="-192"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-285"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-285"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-319"/>
-        <source>GICCR constant</source>
-        <translation>Constante GICCR </translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+1"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+1"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+1"/>
-        <source>A^2s</source>
-        <translation>A^2s</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Zero-bias hole charge</source>
-        <translation>Carga del hueco de polarización Cero</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location line="+59"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+1"/>
-        <location line="+59"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+1"/>
-        <location line="+59"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+1"/>
-        <location line="+65"/>
-        <source>Coul</source>
-        <translation>C</translation>
-    </message>
-    <message>
-        <location line="-57"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-57"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-57"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-63"/>
-        <source>High-current correction for 2D and 3D effects</source>
-        <translation>Corrección de alta corriente para efectos 2D y 3D</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+5"/>
-        <source>Emitter minority charge weighting factor in HBTs</source>
-        <translation>Factor de ponderación de carga del emisor minoritario en HTBs</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Collector minority charge weighting factor in HBTs</source>
-        <translation>Factor de ponderación de carga del colector minoritario en HBTs</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>B-E depletion charge weighting factor in HBTs</source>
-        <translation>Factor de ponderación de carga de la unión B-E en HBTs</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+6"/>
-        <source>B-C depletion charge weighting factor in HBTs</source>
-        <translation>Factor de ponderación de carga de la unión B-C en HBTs</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Internal B-E saturation current</source>
-        <translation>Corriente interna de saturación B-E</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal B-E current ideality factor</source>
-        <translation>Factor ideal de corriente interna B-E</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Internal B-E recombination saturation current</source>
-        <translation>Corriente de saturación de recombinación interna B-E</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal B-E recombination current ideality factor</source>
-        <translation>Factor ideal de corriente de recombinación interna B-E</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Peripheral B-E saturation current</source>
-        <translation>Corriente de saturación periférica B-E</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Peripheral B-E current ideality factor</source>
-        <translation>Factor ideal de corriente periférica B-E</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Peripheral B-E recombination saturation current</source>
-        <translation>Corriente de saturación de recombinación periférica B-E</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Peripheral B-E recombination current ideality factor</source>
-        <translation>Factor ideal de corriente de recombinación periférica B-E</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Non-ideality factor for III-V HBTs</source>
-        <translation>Factor no ideal para III-V HBTs</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Base current recombination time constant at B-C barrier for high forward injection</source>
-        <translation>Constante de tiempo de recombinación de la corriente de base en la unión B-C para polarización directa</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal B-C saturation current</source>
-        <translation>Corriente de saturación interna B-C</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal B-C current ideality factor</source>
-        <translation>Factor ideal de corriente interna B-C</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>External B-C saturation current</source>
-        <translation>Corriente de saturación externa B-C</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>External B-C current ideality factor</source>
-        <translation>Factor ideal de corriente externa B-C</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>B-E tunneling saturation current</source>
-        <translation>Corriente de saturación de túnel B-E</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Exponent factor for tunneling current</source>
-        <translation>Factor exponencial para la corriente de túnel</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Specifies the base node connection for the tunneling current</source>
-        <translation>Especifica el nodo de conexión de base para la corriente de efecto túnel</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Avalanche current factor</source>
-        <translation>Factor de corriente de avalancha</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Exponent factor for avalanche current</source>
-        <translation>Factor exponencial para la corriente de avalancha</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Relative TC for FAVL</source>
-        <translation>TC relativa para FAVL</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Relative TC for QAVL</source>
-        <translation>TC relativa para QAVL</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Zero bias internal base resistance</source>
-        <translation>Resistencia de base interna de polarización Cero</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+4"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+6"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+6"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+6"/>
-        <source>Factor for geometry dependence of emitter current crowding</source>
-        <translation>Factor para la dependencia geométrica de la corriente de avalancha del emisor</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Correction factor for modulation by B-E and B-C space charge layer</source>
-        <translation>Factor de corrección de la modulación por B-E y B-C de la capa de carga espacial</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Ratio of HF shunt to total internal capacitance (lateral NQS effect)</source>
-        <translation>Porcentaje de desviación HF a la capacidad interna total (efecto lateral NQS)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Ration of internal to total minority charge</source>
-        <translation>Porcentaje de la carga interna a minoria total</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+8"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+11"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+11"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+11"/>
-        <source>Forward ideality factor of substrate transfer current</source>
-        <translation>Factor ideal directo de la corriente de transferencia del sustrato</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>C-S diode saturation current</source>
-        <translation>Corriente de saturación del diodo C-S</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Ideality factor of C-S diode current</source>
-        <translation>Factor ideal de la corriente del diodo C-S</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Transit time for forward operation of substrate transistor</source>
-        <translation>Tiempo transitorio para la operación directa del sustrato transistor</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Substrate series resistance</source>
-        <translation>Resistencia serie del sustrato</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Substrate shunt capacitance</source>
-        <translation>Capacidad desviada del sustrato</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal B-E zero-bias depletion capacitance</source>
-        <translation>Capacidad de la unión B-E interna polarizada a cero</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal B-E built-in potential</source>
-        <translation>Potencial físico de la unión interna B-E</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal B-E grading coefficient</source>
-        <translation>Coeficiente de graduación interna B-E</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Ratio of maximum to zero-bias value of internal B-E capacitance</source>
-        <translation>Porcentaje del valor máximo de polarización de la capacidad B-E interna</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Peripheral B-E zero-bias depletion capacitance</source>
-        <translation>Capacidad de deflexión periférica B-E polarizada a cero</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Peripheral B-E built-in potential</source>
-        <translation>Potencial de la unión periférica B-E</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Peripheral B-E grading coefficient</source>
-        <translation>Coeficiente del gradiente periférico B-E</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Ratio of maximum to zero-bias value of peripheral B-E capacitance</source>
-        <translation>Porcentaje del valor máximo de polarización de la capacidad B-E periférica</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Internal B-C zero-bias depletion capacitance</source>
-        <translation>Capacidad de la unión B-C interna polarizada a cero</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal B-C built-in potential</source>
-        <translation>Potencial físico de la unión interna B-C</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal B-C grading coefficient</source>
-        <translation>Coeficiente de graduación interna B-C</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Internal B-C punch-through voltage</source>
-        <translation>Tensión de ruptura interna B-C</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>External B-C zero-bias depletion capacitance</source>
-        <translation>Capacidad de la unión B-C externa polarizada a cero</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>External B-C built-in potential</source>
-        <translation>Potencial de la unión externa B-C</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>External B-C grading coefficient</source>
-        <translation>Coeficiente de graduación externa B-C</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>External B-C punch-through voltage</source>
-        <translation>Tensión de ruptura externa B-C</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Partitioning factor of parasitic B-C cap</source>
-        <translation>Factor de particionado de la capacidad parásita en la unión B-C</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Partitioning factor of parasitic B-E cap</source>
-        <translation>Factor de particionado de la capacidad parásita en la unión B-E</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+4"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>C-S zero-bias depletion capacitance</source>
-        <translation>Capacidad de reducción de la unión C-S polarizada a cero</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>C-S built-in potential</source>
-        <translation>Potencial de la unión C-S</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>C-S grading coefficient</source>
-        <translation>Coeficiente de graduación C-S</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>C-S punch-through voltage</source>
-        <translation>Tensión de ruptura C-S</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Low current forward transit time at VBC=0V</source>
-        <translation>Tiempo de transición de baja intensidad en directa con VBC=0V</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Time constant for base and B-C space charge layer width modulation</source>
-        <translation>Constante de tiempo para la base y capa de carga espacial B-C con modulación</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <source>Time constant for modelling carrier jam at low VCE</source>
-        <translation>Constante de tiempo para modelado de portadora fija con VCE baja</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+6"/>
-        <source>Neutral emitter storage time</source>
-        <translation>Tiempo de almacenamiento de emisor neutro</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Exponent factor for current dependence of neutral emitter storage time</source>
-        <translation>Factor exponencial para la dependencia de corriente del tiempo de almacenamiento de emisor neutro</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Saturation time constant at high current densities</source>
-        <translation>Constante de tiempo de saturación en densidades de corriente altas</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Smoothing factor for current dependence of base and collector transit time</source>
-        <translation>Factor de suavizado para la dependencia de corriente del tiempo de transición de base y colector</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Partitioning factor for base and collector portion</source>
-        <translation>Factor de particionado para la porción de la base y el colector</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Internal collector resistance at low electric field</source>
-        <translation>Resistencia interna del colector en campo eléctrico débil</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Voltage separating ohmic and saturation velocity regime</source>
-        <translation>Régimen de velocidad de saturación y tensión de separación óhmica</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal C-E saturation voltage</source>
-        <translation>Tensión de saturación interna C-E</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Collector punch-through voltage</source>
-        <translation>Tensión de ruptura del colector</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Storage time for inverse operation</source>
-        <translation>Tiempo de almacenamiento para inversa</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+13"/>
-        <source>Total parasitic B-E capacitance</source>
-        <translation>Capacidad parásita total B-E</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Total parasitic B-C capacitance</source>
-        <translation>Capacidad parásita total B-C</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Factor for additional delay time of minority charge</source>
-        <translation>Factor para el tiempo de retardo adicional de aminoración de carga</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Factor for additional delay time of transfer current</source>
-        <translation>Factor para el tiempo de retardo adicional de corriente de transferencia</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Flag for turning on and off of vertical NQS effect</source>
-        <translation>Marca de inflexión ON/OFF de efecto vertical NQS</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Flicker noise coefficient</source>
-        <translation>Coeficiente de ruido parpadeante</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Flicker noise exponent factor</source>
-        <translation>Factor exponencial de ruido parpadeante</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Flag for determining where to tag the flicker noise source</source>
-        <translation>Marca para determinar la etiqueta de la fuente de ruido de parpadeo</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+4"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+8"/>
-        <source>Scaling factor for collector minority charge in direction of emitter width</source>
-        <translation>Factor de escala para la carga de aminoración del colector en la dirección del ancho del emisor</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Scaling factor for collector minority charge in direction of emitter length</source>
-        <translation>Factor de escala para la carga de aminoración del colector en la dirección del largo del emisor</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Bandgap voltage extrapolated to 0 K</source>
-        <translation>Banda de salto de tensión extrapolada a 0 K</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>First order relative TC of parameter T0</source>
-        <translation>TC relativo de primer orden del parámetro T0</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Second order relative TC of parameter T0</source>
-        <translation>TC relativo de segundo orden del parámetro T0</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Temperature exponent for RCI0</source>
-        <translation>Exponente de temperatura para RCI0</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+4"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Relative TC of saturation drift velocity</source>
-        <translation>TC relativa de saturación en la velocidad de deriva</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Relative TC of VCES</source>
-        <translation>TC relativa de VCES</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Temperature exponent of internal base resistance</source>
-        <translation>Exponente de temperatura de la resistencia de base interna</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Temperature exponent of external base resistance</source>
-        <translation>Exponente de temperatura de la resistencia de base externa</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Temperature exponent of external collector resistance</source>
-        <translation>Exponente de temparatura de la resistencia de colector externa</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Temperature exponent of emitter resistance</source>
-        <translation>Exponente de temperatura de la resistencia del emisor</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="-12"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Temperature exponent of mobility in substrate transistor transit time</source>
-        <translation>Exponente de mobilidad de la temperatura en el tiempo de transición del sustrato del transistor</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Effective emitter bandgap voltage</source>
-        <translation>Tensión efectiva de salto de banda de emisor</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Effective collector bandgap voltage</source>
-        <translation>Tensión efectiva de salto de banda de colector</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Effective substrate bandgap voltage</source>
-        <translation>Tensión efectiva de salto de banda de sustrato</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Coefficient K1 in T-dependent band-gap equation</source>
-        <translation>Ecuación de salto de banda del coeficiente K1 en función de T</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Coefficient K2 in T-dependent band-gap equation</source>
-        <translation>Ecuación de salto de banda del coeficiente K2 en función de T</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+4"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+4"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+4"/>
-        <source>Exponent coefficient in B-E junction current temperature dependence</source>
-        <translation>Coeficiente exponencial de corriente en la unióm B-E en función de la temperatura</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+14"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Relative TC of forward current gain for V2.1 model</source>
-        <translation>TC relativa de la ganancia de corriente directa para el modelo V2.1</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+10"/>
-        <source>Flag for turning on and off self-heating effect</source>
-        <translation>Marca de inflexión ON/OFF del efecto de auto-calentamiento</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+6"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+6"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+11"/>
-        <source>J/W</source>
-        <translation>J/W</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Flag for compatibility with v2.1 model (0=v2.1)</source>
-        <translation>Marca par la compatibilidad con el modelo v2.1 (0=v2.1)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+6"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Temperature at which parameters are specified</source>
-        <translation>Temperatura a la que se especifican los parámetros</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Temperature change w.r.t. chip temperature for particular transistor</source>
-        <translation>Temperature change w.r.t. chip temperature for particular transistor</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>HICUM L2 v2.22</source>
-        <translation>Transistores HICUM L2 v2.22</translation>
-    </message>
-    <message>
-        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-245"/>
-        <source>HICUM Level 0 v1.2 verilog device</source>
-        <translation type="unfinished">Dispositivo Verilog HICUM Level 2 v2.1 {0 ?} {1.2 ?}</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-230"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-246"/>
-        <source>reverse Early voltage (normalization volt.)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+6"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+8"/>
-        <source>flag for turning on base related critical current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+10"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+10"/>
-        <source>Smoothing factor for the d.c. injection width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+27"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+27"/>
-        <source>BE charge built-in voltage for d.c. transfer current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
-        <source>charge BE exponent factor for d.c. transfer current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
-        <source>BE capacitance ratio (maximum to zero-bias value) for d.c. transfer current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+160"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+160"/>
-        <source>TC of iqf</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+173"/>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+8"/>
-        <source>Exponent factor for temperature dependent thermal resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+35"/>
-        <source>npn HICUM L0 v1.2</source>
-        <translation type="unfinished">npn HICUM L0 v1.2 {0 ?}</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>pnp HICUM L0 v1.2</source>
-        <translation type="unfinished">pnp HICUM L0 v1.2 {0 ?}</translation>
-    </message>
-    <message>
-        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-236"/>
-        <source>HICUM Level 0 v1.2g verilog device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>high-injection roll-off current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+194"/>
-        <source>TC of iqf (bandgap coefficient of zero bias hole charge)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>TC of avalanche prefactor, identical to alfav of Hicum/L2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>TC of avalanche exponential factor, identical to alqav of Hicum/L2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Emitter part coefficient of the zero bias hole charge temperature variation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Collector part coefficient of the zero bias hole charge temperature variation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Bandgap TC parameter of ver</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Bandgap TC parameter of vef</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Specific recombination current at the BC barrier for high forward injection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>npn HICUM L0 v1.2g</source>
-        <translation type="unfinished">npn HICUM L0 v1.2g {0 ?}</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>pnp HICUM L0 v1.2g</source>
-        <translation type="unfinished">pnp HICUM L0 v1.2g {0 ?}</translation>
-    </message>
-    <message>
-        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-235"/>
-        <source>HICUM Level 0 v1.3 verilog device</source>
-        <translation type="unfinished">Dispositivo Verilog HICUM Level 2 v2.1 {0 ?} {1.3 ?}</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Flag for using third order solution for transfer current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>bias dependence for reverse Early voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+217"/>
-        <source>Flag for turning temperature dependence of tef0 on and off</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>TC of Reverse Early voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>TC of AVER</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Bandgap difference between base and BE-junction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Frist-order TC of iqfh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Second-order TC of iqfh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>npn HICUM L0 v1.3</source>
-        <translation type="unfinished">npn HICUM L0 v1.3 {0 ?}</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>pnp HICUM L0 v1.3</source>
-        <translation type="unfinished">pnp HICUM L0 v1.3 {0 ?}</translation>
-    </message>
-    <message>
-        <location filename="../qucs/components/hicumL2V2p1.cpp" line="-201"/>
-        <source>HICUM Level 2 v2.1 verilog device</source>
-        <translation>Dispositivo Verilog HICUM Level 2 v2.1</translation>
-    </message>
-    <message>
-        <location line="+117"/>
-        <source>Partitioning factor of parasitic B-C capacitance</source>
-        <translation>Factor de particionado de la capacidad parásita B-C</translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>Noise factor for internal base resistance</source>
-        <translation>Factor de ruido para la resistencia de base interna</translation>
-    </message>
-    <message>
-        <location line="+57"/>
-        <source>HICUM L2 v2.1</source>
-        <translation>HICUM L2 v2.1</translation>
-    </message>
-    <message>
-        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-287"/>
-        <source>HICUM Level 2 v2.23 verilog device</source>
-        <translation type="unfinished">Dispositivo Verilog HICUM Level 2 v2.1 {2 ?} {2.23 ?}</translation>
-    </message>
-    <message>
-        <location line="+309"/>
-        <source>HICUM L2 v2.23</source>
-        <translation type="unfinished">HICUM L2 v2.23 {2 ?}</translation>
-    </message>
-    <message>
-        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-287"/>
-        <source>HICUM Level 2 v2.24 verilog device</source>
-        <translation type="unfinished">Dispositivo Verilog HICUM Level 2 v2.1 {2 ?} {2.24 ?}</translation>
-    </message>
-    <message>
-        <location line="+309"/>
-        <source>HICUM L2 v2.24</source>
-        <translation type="unfinished">HICUM L2 v2.24 {2 ?}</translation>
-    </message>
-    <message>
-        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-321"/>
-        <source>hicumL2V2p31n verilog device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Weight factor for the low current minority charge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Parameter describing the slope of hjEi(VBE)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Smoothing parameter for hjEi(VBE) at high voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+160"/>
-        <source>Time constant for modeling carrier jam at low VCE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <source>Barrier voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Normalization parameter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Smoothing parameter for barrier voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>fitting factor for critical current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Flag for turning on and off of correlated noise implementation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Emitter resistance flicker noise coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Emitter resistance flicker noise exponent factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+52"/>
-        <source>Bandgap difference between B and B-E junction used for hjEi0 and hf0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Temperature coefficient for ahjEi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Temperature coefficient for hjEi0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Temperature coefficient for Rth</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>First order relative TC of parameter Rth</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+33"/>
-        <source>HICUM L2 V2.31</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qucs/components/hpribin4bit.cpp" line="-3"/>
@@ -12084,7 +7849,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <location line="+160"/>
-        <location filename="../qucs/schematic_file.cpp" line="+429"/>
+        <location filename="../qucs/schematic_file.cpp" line="+425"/>
         <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
         <translation>ERROR: Sin nombre de archivo en el componente SPICE &quot;%1&quot;.</translation>
     </message>
@@ -12507,10 +8272,14 @@ Wrong &apos;component&apos; line format!</source>
         <translation>Fuente de Corriente Controlada por Tensión</translation>
     </message>
     <message>
-        <location filename="../qucs/components/vcresistor.cpp" line="+23"/>
         <location filename="../qucs/components/vcvs.cpp" line="-42"/>
         <source>voltage controlled voltage source</source>
         <translation>fuente de tensión controlada por tensión</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/vcresistor.cpp" line="+23"/>
+        <source>voltage controlled resistor</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+47"/>
@@ -12546,7 +8315,7 @@ Wrong &apos;component&apos; line format!</source>
     <message>
         <location line="+45"/>
         <location filename="../qucs/components/vhdlfile.cpp" line="+221"/>
-        <location filename="../qucs/schematic_file.cpp" line="+25"/>
+        <location filename="../qucs/schematic_file.cpp" line="+27"/>
         <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
         <translation>ERROR: Sin nombre de archivo en %1 componente &quot;%2&quot;.</translation>
     </message>
@@ -12709,7 +8478,7 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qucs/diagrams/marker.cpp" line="+249"/>
+        <location filename="../qucs/diagrams/marker.cpp" line="+252"/>
         <location filename="../qucs/diagrams/tabdiagram.cpp" line="+256"/>
         <source>invalid</source>
         <translation>inválido</translation>
@@ -12821,7 +8590,7 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qucs/qucs.cpp" line="+2793"/>
+        <location filename="../qucs/qucs.cpp" line="+2836"/>
         <source>Successfully exported</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12844,10 +8613,9 @@ Use PNG, JPEG or SVG graphics!</source>
     </message>
     <message>
         <location filename="../qucs/module.cpp" line="+116"/>
-        <location filename="../qucs/qucs.cpp" line="-2167"/>
-        <location line="+203"/>
-        <location line="+15"/>
-        <location filename="../qucs/qucs_actions.cpp" line="+149"/>
+        <location filename="../qucs/qucs.cpp" line="-2185"/>
+        <location filename="../qucs/qucs_actions.cpp" line="+146"/>
+        <location line="+20"/>
         <source>verilog-a user devices</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12904,14 +8672,14 @@ Use PNG, JPEG or SVG graphics!</source>
     <message>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="../qucs/qucs.cpp" line="+1313"/>
+        <location filename="../qucs/qucs.cpp" line="+1555"/>
         <source>diagrams</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="../qucs/qucs.cpp" line="-1560"/>
+        <location filename="../qucs/qucs.cpp" line="-1600"/>
         <source>paintings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12949,13 +8717,6 @@ Use PNG, JPEG or SVG graphics!</source>
         <location line="+61"/>
         <source>The ground potential cannot be labeled!</source>
         <translation>¡El potencial de tierra no se puede etiquetar!</translation>
-    </message>
-    <message>
-        <location filename="../qucs/octave_window.cpp" line="+1"/>
-        <source>Octave not found in: %1
-
-Set the Octave location on the application settings.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qucs/paintings/arrow.cpp" line="+141"/>
@@ -13018,27 +8779,27 @@ Set the Octave location on the application settings.</source>
         <translation>Editar las propiedades del Rectángulo</translation>
     </message>
     <message>
-        <location filename="../qucs/printerwriter.cpp" line="+96"/>
+        <location filename="../qucs/printerwriter.cpp" line="+97"/>
         <source>Print Document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qucs/qucs_actions.cpp" line="-148"/>
+        <location filename="../qucs/qucs_actions.cpp" line="-165"/>
         <source>Cannot create output file!</source>
         <translation>¡No se pudo crear el archivo de salida!</translation>
     </message>
     <message>
-        <location filename="../qucs/qucs.cpp" line="-434"/>
-        <location line="+977"/>
-        <location line="+69"/>
-        <location line="+122"/>
+        <location filename="../qucs/qucs.cpp" line="-435"/>
+        <location line="+1019"/>
+        <location line="+65"/>
+        <location line="+123"/>
         <location line="+12"/>
-        <location line="+297"/>
+        <location line="+299"/>
         <source>untitled</source>
         <translation>sinTítulo</translation>
     </message>
     <message>
-        <location filename="../qucs/schematic_file.cpp" line="-1255"/>
+        <location filename="../qucs/schematic_file.cpp" line="-1253"/>
         <location line="+707"/>
         <source>Format Error:
 &apos;Painting&apos; field is not closed!</source>
@@ -13177,16 +8938,17 @@ Wrong &apos;painting&apos; line format!</source>
         <translation>Tipo de documento equivocado:</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location filename="../qucs/components/component.cpp" line="-26"/>
+        <location filename="../qucs/schematic_file.cpp" line="+9"/>
         <location filename="../qucs-filter/stepz_filter.cpp" line="+45"/>
         <location filename="../qucs-filter-v2/qf_settings.cpp" line="+90"/>
         <location line="+72"/>
-        <location filename="../qucs-help/main.cpp" line="+104"/>
+        <location filename="../qucs-transcalc/qucstrans.cpp" line="+1088"/>
         <source>Warning</source>
         <translation>Aviso</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location filename="../qucs/schematic_file.cpp" line="+1"/>
         <source>Wrong document version 
 </source>
         <translation type="unfinished"></translation>
@@ -13213,17 +8975,17 @@ Unknown field!</source>
         <translation>ERROR: No puedo cargar el subcircuito &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+37"/>
         <source>WARNING: Skipping library component &quot;%1&quot;.</source>
         <translation>AVISO: Saltando el componente de la biblioteca &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location line="+20"/>
-        <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
-        <translation>ERROR: No puedo cargar el componente de la librería &quot;%1&quot;.</translation>
+        <location line="+17"/>
+        <source>ERROR: &quot;%1&quot;: Cannot load library component &quot;%2&quot; from &quot;%3&quot;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+186"/>
+        <location line="+194"/>
         <source>WARNING: Ignore simulation component in subcircuit &quot;%1&quot;.</source>
         <translation>AVISO: Ignora simulación de componente en el subcircuito &quot;%1&quot;.</translation>
     </message>
@@ -13233,7 +8995,7 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+79"/>
         <source>ERROR: Only one digital simulation allowed.</source>
         <translation>ERROR: Sólo está permitida una simulación digital.</translation>
     </message>
@@ -13316,7 +9078,7 @@ Use:  qucsedit [-r] archivo
         <translation>    -r  abrir archivo para sólo lectura</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+57"/>
         <source>Too long command line argument!
 
 </source>
@@ -13352,7 +9114,6 @@ a substrate with lower permittivity and larger height.
     </message>
     <message>
         <location filename="../qucs-filter-v2/qf_settings.cpp" line="-71"/>
-        <location filename="../qucs-help/main.cpp" line="+1"/>
         <source>Cannot save settings !</source>
         <translation>¡No puedo guardar la configuración!</translation>
     </message>
@@ -13361,11 +9122,23 @@ a substrate with lower permittivity and larger height.
         <source>Cannot save settings file !</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../qucs-filter/quarterwave_filter.cpp" line="+1"/>
+        <source>Quarter wave filters do not allow low-pass nor high-pass masks
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs-transcalc/qucstrans.cpp" line="+1"/>
+        <source>Cannot save GUI settings in
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActiveFilter</name>
     <message>
-        <location filename="../qucs-activefilter/qucsactivefilter.cpp" line="+41"/>
+        <location filename="../qucs-activefilter/qucsactivefilter.cpp" line="+47"/>
         <source>&amp;File</source>
         <translation>&amp;Archivo</translation>
     </message>
@@ -13375,7 +9148,29 @@ a substrate with lower permittivity and larger height.
         <translation>&amp;Salir</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
+        <source>&amp;View</source>
+        <translation>&amp;Ver</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&amp;Console</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Enables/disables the filter calculation console</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Console
+
+Enables/disables the filter calculation console</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>&amp;Help</source>
         <translation>&amp;Ayuda</translation>
     </message>
@@ -13395,30 +9190,30 @@ a substrate with lower permittivity and larger height.
         <translation>Acerca de Qt...</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <location line="+481"/>
+        <location line="+15"/>
+        <location line="+466"/>
         <source>Passband attenuation, Ap (dB)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-480"/>
+        <location line="-465"/>
         <source>Stopband attenuation, As (dB)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+477"/>
-        <source>Cuttof frequency, Fc (Hz)</source>
+        <location line="+462"/>
+        <source>Cutoff frequency, Fc (Hz)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-476"/>
-        <location line="+477"/>
+        <location line="-461"/>
+        <location line="+462"/>
         <source>Stopband frequency, Fs (Hz)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-476"/>
+        <location line="-461"/>
         <source>Passband ripple Rp(dB)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13428,7 +9223,7 @@ a substrate with lower permittivity and larger height.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+18"/>
         <source>Filter order</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13478,12 +9273,51 @@ a substrate with lower permittivity and larger height.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Calculation console</source>
+        <location line="+11"/>
+        <source>Low Pass</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+73"/>
+        <source>General filter amplitude-frequency response</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+141"/>
+        <location line="+23"/>
+        <location line="+21"/>
+        <source>Unable to implement filter with such parameters and topology 
+Change parameters and/or topology and try again!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location line="+2"/>
+        <source>Filter calculation was successful</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Filter calculation terminated with error!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Filter calculation terminated with error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+129"/>
+        <source>Lower cutoff frequency, Fl (Hz)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+55"/>
+        <source>Copyright (C) 2014, 2015 by</source>
+        <translation type="unfinished">Copyright (C) 2005, 2006 por {2014, 2015 ?}</translation>
+    </message>
+    <message>
+        <location line="-463"/>
         <source>Filter topology</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13493,12 +9327,7 @@ a substrate with lower permittivity and larger height.
         <translation>Tipo de filtro:</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>LowPass</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>High Pass</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13524,62 +9353,45 @@ a substrate with lower permittivity and larger height.
     </message>
     <message>
         <location line="+1"/>
-        <location line="+369"/>
+        <location line="+355"/>
         <source>Cauer section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-362"/>
-        <source>General amplitude frequency response</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Filter topology preview (one stage)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+28"/>
+        <location line="-347"/>
         <source>Filter parameters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+24"/>
         <source>Transfer function and Topology</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
-        <source>General filter amplidure-frequency response</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="+41"/>
         <source>Filter topology preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+25"/>
         <source>Filter calculation console</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+10"/>
+        <location line="+319"/>
+        <source>Ready.</source>
+        <translation>Listo.</translation>
+    </message>
+    <message>
+        <location line="-290"/>
         <source>Upper cutoff frequency of band-pass/band-stop filter is
 less than lower. Unable to implement such filter.
 Change parameters and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
-        <location line="+23"/>
-        <location line="+21"/>
-        <source>Unable to implement filter with such parameters and topology 
-Change parapeters and/or topology and try again!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-40"/>
+        <location line="+67"/>
         <source>Unable to use Cauer section for Chebyshev or Butterworth 
 frequency response. Try to use another topology.</source>
         <translation type="unfinished"></translation>
@@ -13596,39 +9408,27 @@ frequency response. Try to use another topology.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>
-Filter calculation was sucessfull</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>
-Filter calculation terminated with error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location line="+140"/>
         <source>Upper cutoff frequency, Fu (Hz)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Lower cuttoff frequency, Fl (Hz)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Transient bandwidth, TW (Hz)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+24"/>
+        <source>Error!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Active filter design</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+26"/>
         <source>About...</source>
         <translation>Acerca de...</translation>
     </message>
@@ -13640,12 +9440,7 @@ Active Filter synthesis program
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Copyright (C) 2014 by</source>
-        <translation type="unfinished">Copyright (C) 2005, 2006 por {2014 ?}</translation>
-    </message>
-    <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>About Qt</source>
         <translation>Acerca de Qt</translation>
     </message>
@@ -13653,7 +9448,7 @@ Active Filter synthesis program
 <context>
     <name>QucsApp</name>
     <message>
-        <location filename="../qucs/qucs.cpp" line="-1516"/>
+        <location filename="../qucs/qucs.cpp" line="-1557"/>
         <source>Schematic</source>
         <translation>Esquema</translation>
     </message>
@@ -13669,42 +9464,42 @@ Active Filter synthesis program
     </message>
     <message>
         <location line="+1"/>
-        <location line="+1354"/>
+        <location line="+1393"/>
         <source>VHDL Sources</source>
         <translation>Fuentes VHDL</translation>
     </message>
     <message>
-        <location line="-1353"/>
-        <location line="+1354"/>
+        <location line="-1392"/>
+        <location line="+1393"/>
         <source>Verilog Sources</source>
         <translation>Fuentes Verilog</translation>
     </message>
     <message>
-        <location line="-1353"/>
-        <location line="+1354"/>
+        <location line="-1392"/>
+        <location line="+1393"/>
         <source>Verilog-A Sources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1353"/>
-        <location line="+1354"/>
+        <location line="-1392"/>
+        <location line="+1393"/>
         <source>Octave Scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1353"/>
+        <location line="-1392"/>
         <source>Spice Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+1355"/>
+        <location line="+1394"/>
         <location filename="../qucs/qucs_actions.cpp" line="-19"/>
         <source>Any File</source>
         <translation>Cualquier Archivo</translation>
     </message>
     <message>
-        <location line="+306"/>
+        <location line="+308"/>
         <source>The schematic search path has been refreshed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13724,7 +9519,7 @@ Active Filter synthesis program
         <translation>Esquemas</translation>
     </message>
     <message>
-        <location line="-2023"/>
+        <location line="-2064"/>
         <source>New</source>
         <translation>Nuevo</translation>
     </message>
@@ -13809,16 +9604,18 @@ Active Filter synthesis program
         <location line="+3"/>
         <location line="+64"/>
         <location line="+3"/>
-        <location line="+492"/>
+        <location line="+527"/>
         <location line="+25"/>
         <location line="+20"/>
         <location line="+19"/>
         <location line="+10"/>
-        <location line="+88"/>
-        <location line="+992"/>
+        <location line="+73"/>
+        <location line="+6"/>
+        <location line="+130"/>
+        <location line="+877"/>
         <location line="+28"/>
         <location line="+72"/>
-        <location line="+314"/>
+        <location line="+312"/>
         <location line="+7"/>
         <location line="+7"/>
         <location line="+7"/>
@@ -13838,7 +9635,7 @@ Active Filter synthesis program
         <translation>Error</translation>
     </message>
     <message>
-        <location line="-2157"/>
+        <location line="-2196"/>
         <location line="+67"/>
         <source>Cannot open &quot;%1&quot;.</source>
         <translation>No puedo abrir &quot;%1&quot;.</translation>
@@ -13850,12 +9647,12 @@ Active Filter synthesis program
         <translation>La librería está corrupta.</translation>
     </message>
     <message>
-        <location line="+160"/>
-        <location line="+461"/>
-        <location line="+70"/>
+        <location line="+177"/>
+        <location line="+479"/>
+        <location line="+73"/>
         <location line="+52"/>
         <location line="+8"/>
-        <location line="+28"/>
+        <location line="+29"/>
         <location line="+11"/>
         <location line="+26"/>
         <location line="+210"/>
@@ -13870,13 +9667,13 @@ Active Filter synthesis program
         <translation>Información</translation>
     </message>
     <message>
-        <location line="-865"/>
+        <location line="-887"/>
         <source>Default icon not found:
  %1.png</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+240"/>
+        <location line="+258"/>
         <source>-port</source>
         <translation>-conexiones</translation>
     </message>
@@ -13887,7 +9684,7 @@ Active Filter synthesis program
     </message>
     <message>
         <location line="+1"/>
-        <location line="+676"/>
+        <location line="+682"/>
         <source>The document contains unsaved changes!
 </source>
         <translation>¡El documento contiene cambios  no guardados!
@@ -13895,7 +9692,7 @@ Active Filter synthesis program
 </translation>
     </message>
     <message>
-        <location line="-675"/>
+        <location line="-681"/>
         <source>Do you want to save the changes before copying?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13906,13 +9703,13 @@ Active Filter synthesis program
     </message>
     <message>
         <location line="+0"/>
-        <location line="+676"/>
+        <location line="+682"/>
         <location filename="../qucs/qucs_init.cpp" line="+66"/>
         <source>&amp;Save</source>
         <translation>&amp;Guardar</translation>
     </message>
     <message>
-        <location line="-654"/>
+        <location line="-660"/>
         <source>Copy file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13944,33 +9741,33 @@ Active Filter synthesis program
     <message>
         <location line="+5"/>
         <location line="+32"/>
-        <location line="+192"/>
+        <location line="+196"/>
         <location line="+230"/>
-        <location line="+491"/>
+        <location line="+493"/>
         <source>Warning</source>
         <translation>Aviso</translation>
     </message>
     <message>
-        <location line="-944"/>
+        <location line="-950"/>
         <source>This will delete the file permanently! Continue ?</source>
         <translation>¡Esto eliminará el archivo para siempre! ¿Continuo?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+455"/>
-        <location line="+368"/>
+        <location line="+459"/>
+        <location line="+370"/>
         <source>No</source>
         <translation>No</translation>
     </message>
     <message>
-        <location line="-823"/>
-        <location line="+455"/>
-        <location line="+368"/>
+        <location line="-829"/>
+        <location line="+459"/>
+        <location line="+370"/>
         <source>Yes</source>
         <translation>Sí</translation>
     </message>
     <message>
-        <location line="-976"/>
+        <location line="-982"/>
         <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14030,12 +9827,11 @@ Active Filter synthesis program
         <translation>¡No puedo crear el directorio del proyecto!</translation>
     </message>
     <message>
-        <location line="+33"/>
         <source>Cannot access project directory: </source>
-        <translation>No puedo acceder al directorio del proyecto:</translation>
+        <translation type="obsolete">No puedo acceder al directorio del proyecto:</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+48"/>
         <location line="+53"/>
         <source> - Project: </source>
         <translation> - Proyecto: </translation>
@@ -14056,13 +9852,26 @@ Active Filter synthesis program
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-177"/>
-        <location line="+185"/>
+        <location line="-180"/>
+        <location line="+188"/>
         <source>Cannot delete file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-265"/>
+        <location line="-665"/>
+        <location line="+97"/>
+        <location line="+3"/>
+        <location line="+92"/>
+        <source>Search results</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-16"/>
+        <source>verilog-a user devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+221"/>
         <source>Cannot copy file to identical name: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14082,7 +9891,22 @@ Active Filter synthesis program
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+243"/>
+        <location line="+103"/>
+        <source>Cannot access project directory: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Project directory name does not end in &apos;_prj&apos;(%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+130"/>
+        <source>Project directory name does not end in &apos;_prj&apos; (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Cannot delete an open project !</source>
         <translation>¡No puedo eliminar un proyecto abierto!</translation>
     </message>
@@ -14131,7 +9955,7 @@ Active Filter synthesis program
         <location line="+5"/>
         <location line="+101"/>
         <location line="+5"/>
-        <location line="+34"/>
+        <location line="+36"/>
         <location line="+54"/>
         <location line="+35"/>
         <location line="+176"/>
@@ -14145,7 +9969,7 @@ Active Filter synthesis program
         <translation>Listo.</translation>
     </message>
     <message>
-        <location line="-549"/>
+        <location line="-551"/>
         <source>Creating new text editor...</source>
         <translation>Creando un nuevo editor de textos...</translation>
     </message>
@@ -14210,12 +10034,12 @@ Active Filter synthesis program
     </message>
     <message>
         <location line="+1"/>
-        <location line="+115"/>
+        <location line="+117"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location line="-106"/>
+        <location line="-108"/>
         <source>Cannot overwrite an open document</source>
         <translation>No puedo sobreescribir un documento abierto</translation>
     </message>
@@ -14230,7 +10054,7 @@ Active Filter synthesis program
         <translation>Guardando todos los archivos...</translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+52"/>
         <source>Closing file...</source>
         <translation>Cerrando el archivo...</translation>
     </message>
@@ -14253,10 +10077,6 @@ Active Filter synthesis program
         <location line="+48"/>
         <source>Open examples directory...</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="obsolete">Aceptar</translation>
     </message>
     <message>
         <location line="+171"/>
@@ -14314,7 +10134,7 @@ Active Filter synthesis program
         <translation>¡No puedo arrancar &quot;%1&quot;!</translation>
     </message>
     <message>
-        <location line="+313"/>
+        <location line="+311"/>
         <source>Could not load S[1,1].</source>
         <translation>No pude cargar S[1,1].</translation>
     </message>
@@ -16208,110 +12028,6 @@ Acerca de Qt por Trolltech</translation>
         <source>Warnings in last simulation! Press F5</source>
         <translation>Avisos en la última simulación! Pulsa F5</translation>
     </message>
-    <message>
-        <source>About...</source>
-        <translation type="obsolete">Acerca de...</translation>
-    </message>
-    <message>
-        <source>Qucs Version</source>
-        <translation type="obsolete">Versión de Qucs</translation>
-    </message>
-    <message>
-        <source>Quite Universal Circuit Simulator</source>
-        <translation type="obsolete">Quite Universal Circuit Simulator</translation>
-    </message>
-    <message>
-        <source>Copyright (C)</source>
-        <translation type="obsolete">Copyright (C)</translation>
-    </message>
-    <message>
-        <source>by Michael Margraf</source>
-        <translation type="obsolete">por Michael Margraf</translation>
-    </message>
-    <message>
-        <source>Simulator by Stefan Jahn</source>
-        <translation type="obsolete">Simulador por Stefan Jahn</translation>
-    </message>
-    <message>
-        <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
-        <translation type="obsolete">Simulador VHDL &apos;FreeHDL&apos; por Edwin Naroska y Marius Vollmer</translation>
-    </message>
-    <message>
-        <source>Special thanks to Jens Flucke and Raimund Jacob</source>
-        <translation type="obsolete">Agradecimiento especial a Jens Flucke y Raimund Jacob</translation>
-    </message>
-    <message>
-        <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
-        <translation type="obsolete">Muchas gracias a Mike Brinson por corregir la salida VHDL</translation>
-    </message>
-    <message>
-        <source>GUI improvements by Gopala Krishna A</source>
-        <translation type="obsolete">Mejoras en el interfaz gráfico por Gopala Krishna A</translation>
-    </message>
-    <message>
-        <source>Verilog-AMS interface by Helene Parruitte</source>
-        <translation type="obsolete">Interfaz Verilog-AMS por Helene Parruitte</translation>
-    </message>
-    <message>
-        <source>Translations:</source>
-        <translation type="obsolete">Traducciones:</translation>
-    </message>
-    <message>
-        <source>German by Stefan Jahn</source>
-        <translation type="obsolete">Alemán por Stefan Jahn</translation>
-    </message>
-    <message>
-        <source>Polish by Dariusz Pienkowski</source>
-        <translation type="obsolete">Polaco por Dariusz Pienkowski</translation>
-    </message>
-    <message>
-        <source>Romanian by Radu Circa</source>
-        <translation type="obsolete">Rumano por Radu Circa</translation>
-    </message>
-    <message>
-        <source>French by Vincent Habchi, F5RCS</source>
-        <translation type="obsolete">Francés por Vincent Habchi, F5RC</translation>
-    </message>
-    <message>
-        <source>Spanish by Jose L. Redrejo Rodriguez</source>
-        <translation type="obsolete">Español por José L. Redrejo Rodríguez</translation>
-    </message>
-    <message>
-        <source>Japanese by Toyoyuki Ishikawa</source>
-        <translation type="obsolete">Japonés por Toyoyuki Ishikawa</translation>
-    </message>
-    <message>
-        <source>Italian by Giorgio Luparia and Claudio Girardi</source>
-        <translation type="obsolete">Italiano por Giorgio Luparia y Claudio Girardi</translation>
-    </message>
-    <message>
-        <source>Hebrew by Dotan Nahum</source>
-        <translation type="obsolete">Hebreo por Dotan Nahum</translation>
-    </message>
-    <message>
-        <source>Swedish by Peter Landgren</source>
-        <translation type="obsolete">Sueco por Peter Landgren</translation>
-    </message>
-    <message>
-        <source>Turkish by Onur and Ozgur Cobanoglu</source>
-        <translation type="obsolete">Turco por Onur y Ozgur Cobanoglu</translation>
-    </message>
-    <message>
-        <source>Hungarian by Jozsef Bus</source>
-        <translation type="obsolete">Húngaro por Jozsef Bus</translation>
-    </message>
-    <message>
-        <source>Russian by Igor Gorbounov</source>
-        <translation type="obsolete">Ruso por Igor Gorbounov</translation>
-    </message>
-    <message>
-        <source>Czech by Marek Straka</source>
-        <translation type="obsolete">Checo por Marek Straka</translation>
-    </message>
-    <message>
-        <source>Catalan by Antoni Subirats</source>
-        <translation type="obsolete">Catalán por Antoni Subirats</translation>
-    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>
@@ -16582,7 +12298,7 @@ Editor de texto muy simple para Qucs
 <context>
     <name>QucsFilter</name>
     <message>
-        <location filename="../qucs-filter/qucsfilter.cpp" line="+64"/>
+        <location filename="../qucs-filter/qucsfilter.cpp" line="+65"/>
         <source>&amp;File</source>
         <translation>&amp;Archivo</translation>
     </message>
@@ -16622,7 +12338,7 @@ Editor de texto muy simple para Qucs
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+18"/>
         <source>Filter type:</source>
         <translation>Tipo de filtro:</translation>
     </message>
@@ -16658,29 +12374,29 @@ Editor de texto muy simple para Qucs
     </message>
     <message>
         <location line="+6"/>
-        <location line="+399"/>
+        <location line="+407"/>
         <source>Corner frequency:</source>
         <translation>Frecuencia de esquina:</translation>
     </message>
     <message>
-        <location line="-386"/>
+        <location line="-394"/>
         <source>Stop frequency:</source>
         <translation>Frecuencia de  paro:</translation>
     </message>
     <message>
         <location line="+13"/>
-        <location line="+384"/>
+        <location line="+392"/>
         <source>Stop band frequency:</source>
         <translation>Frecuencia de la banda de parada:</translation>
     </message>
     <message>
-        <location line="-371"/>
-        <location line="+372"/>
+        <location line="-379"/>
+        <location line="+380"/>
         <source>Pass band ripple:</source>
         <translation>Rizado del paso banda:</translation>
     </message>
     <message>
-        <location line="-364"/>
+        <location line="-372"/>
         <source>Stop band attenuation:</source>
         <translation>Atenuación de la banda de parada:</translation>
     </message>
@@ -16749,19 +12465,19 @@ Programa de síntexis de filtros</translation>
     </message>
     <message>
         <location line="+13"/>
-        <location line="+138"/>
+        <location line="+146"/>
         <location line="+18"/>
         <source>Result:</source>
         <translation>Resultado:</translation>
     </message>
     <message>
-        <location line="-155"/>
+        <location line="-163"/>
         <location line="+1"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location line="+111"/>
+        <location line="+119"/>
         <source>Stop frequency must be greater than start frequency.</source>
         <translation>La frecuencia final debe ser mayor que la frecuencia inicial.</translation>
     </message>
@@ -16805,12 +12521,28 @@ Programa de síntexis de filtros</translation>
 <context>
     <name>QucsHelp</name>
     <message>
-        <location filename="../qucs-help/qucshelp.cpp" line="+50"/>
+        <location filename="../qucs-help/qucshelp.cpp" line="+51"/>
         <source>Qucs Help System</source>
         <translation>Sistema de Ayuda de Qucs</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+16"/>
+        <source>Cannot load Help files.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Cannot find:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Setting QUCSDIR variable might be necessary.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
         <source>&amp;Quit</source>
         <translation>&amp;Salir</translation>
     </message>
@@ -16859,32 +12591,32 @@ Enables/disables the table of contents</source>
 Habilita/deshabilita la tabla de contenidos</translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+41"/>
         <source>&amp;About Qt</source>
         <translation>&amp;Acerca de Qt</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-14"/>
         <source>&amp;File</source>
         <translation>&amp;Archivo</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>&amp;View</source>
         <translation>&amp;Ver</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+9"/>
         <source>&amp;Help</source>
         <translation>&amp;Ayuda</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Contents</source>
         <translation>Contenidos</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+18"/>
         <source>Home</source>
         <translation>Inicio</translation>
     </message>
@@ -16918,17 +12650,22 @@ Habilita/deshabilita la tabla de contenidos</translation>
         <translation>Acerca de</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+25"/>
         <source>Component Selection</source>
         <translation>Selección de Componente</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Search...</source>
-        <translation>Buscar...</translation>
+        <location line="+9"/>
+        <source>Search Lib Components</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+1"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Component</source>
         <translation>Componente</translation>
     </message>
@@ -16943,7 +12680,7 @@ Habilita/deshabilita la tabla de contenidos</translation>
         <translation>Mostrar modelo</translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+72"/>
         <source>About...</source>
         <translation>Acerca de...</translation>
     </message>
@@ -16956,13 +12693,19 @@ Habilita/deshabilita la tabla de contenidos</translation>
     </message>
     <message>
         <location line="+1"/>
+        <source>Copyright (C) 2011-2015 Qucs Team
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Copyright (C) 2005 by Michael Margraf
 </source>
         <translation>Copyright (C) 2005 por Michael Margraf
 </translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+44"/>
         <source>QucsLib Help</source>
         <translation>Ayuda de QucsLib</translation>
     </message>
@@ -16982,14 +12725,17 @@ Habilita/deshabilita la tabla de contenidos</translation>
         <translation>Modelo</translation>
     </message>
     <message>
-        <location line="+12"/>
-        <source>Search result</source>
-        <translation>Resultado de la búsqueda</translation>
+        <location line="+9"/>
+        <location line="+66"/>
+        <location line="+4"/>
+        <location line="+72"/>
+        <source>Search results</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="-108"/>
         <location line="+3"/>
-        <location line="+50"/>
+        <location line="+136"/>
         <location line="+7"/>
         <location line="+9"/>
         <location line="+7"/>
@@ -16998,13 +12744,13 @@ Habilita/deshabilita la tabla de contenidos</translation>
         <translation>Error</translation>
     </message>
     <message>
-        <location line="-83"/>
+        <location line="-169"/>
         <source>Cannot open &quot;%1&quot;.</source>
         <translation>No puedo abrir &quot;%1&quot;.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location line="+50"/>
+        <location line="+136"/>
         <location line="+7"/>
         <location line="+9"/>
         <location line="+7"/>
@@ -17012,26 +12758,11 @@ Habilita/deshabilita la tabla de contenidos</translation>
         <source>Library is corrupt.</source>
         <translation>La librería está corrupta.</translation>
     </message>
-    <message>
-        <location line="-55"/>
-        <source>Search Library Component</source>
-        <translation>Buscar en la Biblioteca de Componentes</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Result</source>
-        <translation>Resultado</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>No appropriate component found.</source>
-        <translation>No se ha encontrado el componente apropiado.</translation>
-    </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>
     <message>
-        <location filename="../qucs/dialogs/qucssettingsdialog.cpp" line="+61"/>
+        <location filename="../qucs/dialogs/qucssettingsdialog.cpp" line="+63"/>
         <source>Edit Qucs Properties</source>
         <translation>Editar las propiedades de Qucs</translation>
     </message>
@@ -17056,117 +12787,117 @@ Habilita/deshabilita la tabla de contenidos</translation>
         <translation>Idioma (usado después de recargar):</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+23"/>
         <source>system language</source>
         <translation>Idioma del sistema</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-1"/>
         <source>English</source>
         <translation>Inglés</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-6"/>
         <source>German</source>
         <translation>Alemán</translation>
     </message>
     <message>
-        <location line="-1"/>
+        <location line="+1"/>
         <source>French</source>
         <translation>Francés</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="-12"/>
         <source>Spanish</source>
         <translation>Español</translation>
     </message>
     <message>
-        <location line="-8"/>
+        <location line="+8"/>
         <source>Italian</source>
         <translation>Italiano</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-3"/>
         <source>Polish</source>
         <translation>Polaco</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-3"/>
         <source>Romanian</source>
         <translation>Rumano</translation>
     </message>
     <message>
-        <location line="-5"/>
+        <location line="+5"/>
         <source>Japanese</source>
         <translation>Japonés</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-8"/>
         <source>Swedish</source>
         <translation>Sueco</translation>
     </message>
     <message>
-        <location line="-10"/>
+        <location line="+10"/>
         <source>Hungarian</source>
         <translation>Húngaro</translation>
     </message>
     <message>
-        <location line="-1"/>
+        <location line="+1"/>
         <source>Hebrew</source>
         <translation>Hebreo</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-6"/>
         <source>Portuguese-BR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-1"/>
         <source>Portuguese-PT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-5"/>
         <source>Turkish</source>
         <translation>Turco</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-1"/>
         <source>Ukrainian</source>
         <translation>Ucraniano</translation>
     </message>
     <message>
-        <location line="-4"/>
+        <location line="+4"/>
         <source>Russian</source>
         <translation>Ruso</translation>
     </message>
     <message>
-        <location line="-13"/>
+        <location line="+13"/>
         <source>Czech</source>
         <translation>Checo</translation>
     </message>
     <message>
-        <location line="-1"/>
+        <location line="+1"/>
         <source>Catalan</source>
         <translation>Catalán</translation>
     </message>
     <message>
-        <location line="-1"/>
+        <location line="+1"/>
         <source>Arabic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-3"/>
         <source>Chinese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="-7"/>
         <source>Kazakh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+16"/>
         <source>Maximum undo operations:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17226,52 +12957,52 @@ Habilita/deshabilita la tabla de contenidos</translation>
         <translation>Colores para el resaltado de sintáxis:</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>Comment</source>
         <translation>Comentario</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+8"/>
         <source>String</source>
         <translation>Texto</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+8"/>
         <source>Integer Number</source>
         <translation>Número Entero</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+8"/>
         <source>Real Number</source>
         <translation>Número Real</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+8"/>
         <source>Character</source>
         <translation>Carácter</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+8"/>
         <source>Data Type</source>
         <translation>Tipo de datos</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+8"/>
         <source>Attribute</source>
         <translation>Atributo</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+8"/>
         <source>Directive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+8"/>
         <source>Task</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+9"/>
         <source>Source Code Editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17348,7 +13079,7 @@ abrir los archivos con el programa apropiado.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+31"/>
         <source>Locations</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17373,7 +13104,7 @@ abrir los archivos con el programa apropiado.</translation>
         <translation>Valores predeterminados</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+59"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
@@ -17383,28 +13114,28 @@ abrir los archivos con el programa apropiado.</translation>
         <translation>¡Ya está registrado este sufijo!</translation>
     </message>
     <message>
-        <location line="+326"/>
+        <location line="+422"/>
         <source>Select the home directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+11"/>
         <source>Select the admsXml bin directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+11"/>
         <source>Select the ASCO bin directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Select the octave bin directory</source>
+        <location line="+10"/>
+        <source>Select the octave executable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+18"/>
-        <location line="+19"/>
+        <location line="+28"/>
+        <location line="+20"/>
         <source>Select a directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17412,7 +13143,7 @@ abrir los archivos con el programa apropiado.</translation>
 <context>
     <name>QucsTranscalc</name>
     <message>
-        <location filename="../qucs-transcalc/qucstrans.cpp" line="+262"/>
+        <location filename="../qucs-transcalc/qucstrans.cpp" line="-827"/>
         <source>&amp;File</source>
         <translation>&amp;Archivo</translation>
     </message>
@@ -17550,13 +13281,13 @@ abrir los archivos con el programa apropiado.</translation>
     <message>
         <location line="+6"/>
         <location line="+571"/>
-        <location line="+157"/>
+        <location line="+171"/>
         <location line="+19"/>
         <source>Ready.</source>
         <translation>Listo.</translation>
     </message>
     <message>
-        <location line="-698"/>
+        <location line="-712"/>
         <location line="+6"/>
         <location line="+6"/>
         <location line="+6"/>
@@ -17865,7 +13596,7 @@ abrir los archivos con el programa apropiado.</translation>
         <translation>Los valores no son consistentes.</translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+132"/>
         <source>Loading file...</source>
         <translation>Cargando archivo...</translation>
     </message>
@@ -18042,7 +13773,7 @@ Edita los símbolos de este esquema</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qucs/schematic_file.cpp" line="-1367"/>
+        <location filename="../qucs/schematic_file.cpp" line="-1373"/>
         <location line="+22"/>
         <source>Error</source>
         <translation>Error</translation>
@@ -18060,7 +13791,7 @@ Set the admsXml location on the application settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1018"/>
+        <location line="+1022"/>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
         <translation>ERROR: No se pudo crear el archivo de biblioteca &quot;%1&quot;.</translation>
     </message>
@@ -18069,83 +13800,46 @@ Set the admsXml location on the application settings.</source>
     <name>SearchDialog</name>
     <message>
         <location filename="../qucs/dialogs/searchdialog.ui" line="+14"/>
-        <location filename="../build/qucs/dialogs/ui_searchdialog.h" line="+145"/>
-        <location filename="../qucs/build/dialogs/ui_searchdialog.h" line="+145"/>
-        <location filename="../qucs/dialogs/ui_searchdialog.h" line="+145"/>
-        <location filename="../qucs-build/dialogs/ui_searchdialog.h" line="+145"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../build/qucs/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs/build/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs-build/dialogs/ui_searchdialog.h" line="+1"/>
         <source>Text to search for</source>
         <translation>Texto de búsqueda</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../build/qucs/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs/build/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs-build/dialogs/ui_searchdialog.h" line="+1"/>
         <source>Text to replace with</source>
         <translation>Texto a reemplazar</translation>
     </message>
     <message>
         <location line="+14"/>
-        <location filename="../build/qucs/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs/build/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs-build/dialogs/ui_searchdialog.h" line="+1"/>
         <source>Ask before replacing</source>
         <translation>Preguntar antes de reemplazar</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location filename="../build/qucs/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs/build/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs-build/dialogs/ui_searchdialog.h" line="+1"/>
         <source>Case sensitive</source>
         <translation>Distingue mayúsculas</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location filename="../build/qucs/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs/build/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs-build/dialogs/ui_searchdialog.h" line="+1"/>
         <source>Whole words only</source>
         <translation>Sólo palabras completas</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location filename="../build/qucs/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs/build/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs-build/dialogs/ui_searchdialog.h" line="+1"/>
         <source>Search backwards</source>
         <translation>Búsqueda inversa</translation>
     </message>
     <message>
         <location line="+13"/>
-        <location filename="../build/qucs/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs/build/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs-build/dialogs/ui_searchdialog.h" line="+1"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="../build/qucs/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs/build/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs-build/dialogs/ui_searchdialog.h" line="+1"/>
-        <location filename="../qucs-lib/searchdialog.cpp" line="+65"/>
         <source>Close</source>
         <translation>Cerrar</translation>
     </message>
@@ -18159,37 +13853,11 @@ Set the admsXml location on the application settings.</source>
         <source>Search Text</source>
         <translation>Texto de Búsqueda</translation>
     </message>
-    <message>
-        <location filename="../qucs-lib/searchdialog.cpp" line="-17"/>
-        <source>The search result contains all components whose
-name contains the search string. All libraries
-are included in the search.</source>
-        <translation>Los resultados de la búsqueda contienen todos los
-componentes cuyos nombres tienen la cadena
-de búsqueda. Todas las librerías están incluidas
-en la búsqueda.</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Search string:</source>
-        <translation>Cadena de búsqueda:</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Search</source>
-        <translation>Buscar</translation>
-    </message>
-    <message>
-        <location line="+91"/>
-        <location line="+1"/>
-        <source>Search result</source>
-        <translation>Resultado de la búsqueda</translation>
-    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../qucs/dialogs/settingsdialog.cpp" line="+44"/>
+        <location filename="../qucs/dialogs/settingsdialog.cpp" line="-312"/>
         <source>Edit File Properties</source>
         <translation>Editar las propiedades del archivo</translation>
     </message>
@@ -18199,12 +13867,19 @@ en la búsqueda.</translation>
         <translation>Conjunto de Datos:</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
+        <location line="+8"/>
+        <location line="+11"/>
+        <source>Browse</source>
+        <translation type="unfinished">Examinar</translation>
+    </message>
+    <message>
+        <location line="-15"/>
         <source>Data Display:</source>
         <translation>Pantalla de Datos:</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <source>open data display after simulation</source>
         <translation>abrir la pantalla de datos después de la simulación</translation>
     </message>
@@ -18214,7 +13889,7 @@ en la búsqueda.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+8"/>
         <source>run script after simulation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18289,7 +13964,7 @@ en la búsqueda.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+15"/>
         <source>Frame</source>
         <translation>Cuadro</translation>
     </message>
@@ -18466,12 +14141,6 @@ en la búsqueda.</translation>
         <source>Simulation aborted by the user!</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Errors:
--------</source>
-        <translation type="obsolete">Errores:
-----------</translation>
-    </message>
 </context>
 <context>
     <name>SpiceDialog</name>
@@ -18615,7 +14284,7 @@ en la búsqueda.</translation>
     <message>
         <location filename="../qucs/components/spicefile.cpp" line="-3"/>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Convirtiendo el archivo SPICE &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -18634,7 +14303,7 @@ en la búsqueda.</translation>
 <context>
     <name>SymbolWidget</name>
     <message>
-        <location filename="../qucs-lib/symbolwidget.cpp" line="+47"/>
+        <location filename="../qucs-lib/symbolwidget.cpp" line="+53"/>
         <source>Symbol:</source>
         <translation>Símbolo:</translation>
     </message>
@@ -18642,6 +14311,13 @@ en la búsqueda.</translation>
         <location line="+4"/>
         <source>! Drag n&apos;Drop me !</source>
         <translation>¡ Arrástrame y suéltame !</translation>
+    </message>
+    <message>
+        <location line="+272"/>
+        <source>Warning: Symbol &apos;%1&apos; missing in Qucs Library.
+Drag and Drop may still work.
+Please contact the developers.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

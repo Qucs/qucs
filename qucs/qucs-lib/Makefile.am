@@ -22,22 +22,21 @@
 # Boston, MA 02110-1301, USA.
 #
 
+include ../common.mk
+
 SUBDIRS = library
 
 bin_PROGRAMS = qucslib
 
 dist_man_MANS = qucslib.1
 
-MOCHEADERS = qucslib.h displaydialog.h symbolwidget.h searchdialog.h \
-	librarydialog.h qucslib_common.h
+MOCHEADERS = qucslib.h displaydialog.h symbolwidget.h librarydialog.h \
+       qucslib_common.h
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 qucslib_SOURCES = main.cpp qucslib.cpp displaydialog.cpp symbolwidget.cpp \
-       searchdialog.cpp librarydialog.cpp qrc_qucslib.cpp
-
-qrc_qucslib.cpp: qucslib.qrc
-	$(RCC) -o $@ $<
+       librarydialog.cpp qucslib_.qrc
 
 nodist_qucslib_SOURCES = $(MOCFILES)
 
@@ -47,11 +46,7 @@ qucslib_LDADD = $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = $(MOCHEADERS)
 
-SUFFIXES = .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -o $@ $<
-
-CLEANFILES = *~
+CLEANFILES = *~ qucslib_.cpp
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
 DISTCLEANFILES = *.moc.cpp
+EXTRA_DIST = bitmaps/home.png bitmaps/big.qucs.xpm

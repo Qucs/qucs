@@ -1,16 +1,22 @@
 #!/bin/sh
 
+[ -d m4 ] || mkdir m4
+
+ACLOCAL=${ACLOCAL:-aclocal}
+AUTOMAKE=${AUTOMAKE:-automake}
+AUTOCONF=${AUTOCONF:-autoconf}
+
 MODULES="qucs-core qucs qucs-doc"
 ACLOCAL_FLAGS=-Im4
 
-echo "Running aclocal..."
-aclocal $ACLOCAL_FLAGS || exit 1
+echo "Running $ACLOCAL..."
+$ACLOCAL $ACLOCAL_FLAGS || exit 1
 
-echo "Running automake..."
-automake -a -c --gnu --add-missing  || exit 1
+echo "Running $AUTOMAKE..."
+$AUTOMAKE -a -c --gnu --add-missing  || exit 1
 
-echo "Running autoconf..."
-autoconf || exit 1
+echo "Running $AUTOCONF..."
+$AUTOCONF || exit 1
 
 if test "x$1" = xhere; then
 	exit 0;
@@ -18,7 +24,7 @@ fi
 
 for i in $MODULES; do
 	( cd $i;
-	  echo autogen in $( pwd )
-	  ./bootstrap || ( echo trouble in $i/autogen.sh; exit 1 )
+	  echo bootstrapping $( pwd )
+	  ./bootstrap || ( echo trouble in $i/bootstrap; exit 1 )
 	) || exit 1
 done

@@ -22,6 +22,7 @@
 #include "filter.h"
 #include "qf_poly.h"
 #include "bessel.h"
+#include "legendre.h"
 
 static const int MaxOrder = 50;
 
@@ -38,26 +39,27 @@ Filter::Filter(Filter::FilterFunc ffunc_, Filter::FType type_, FilterParam par)
         Fl = par.Fl;
         Fu = par.Fu;
         TW = par.TW;
-        BW = fabs(Fu -Fl);
+        BW = std::abs(Fu -Fl);
         F0 = sqrt(Fu*Fl);
         if ((ftype==Filter::BandPass)||
             (ftype==Filter::BandStop)) { // BandPass
             Fc=BW;          // cutoff freq. of LPF prototype
             double  Fs1 = Fu + TW;
-            double  Fs1lp = fabsf(Fs1 - (F0*F0)/Fs1);    // stopband freq. of LPF prototype
+            double  Fs1lp = std::abs(Fs1 - (F0*F0)/Fs1);    // stopband freq. of LPF prototype
             double  Fs2 = Fl - TW;
-            double  Fs2lp = fabsf(Fs2 - (F0*F0)/Fs2);
+            double  Fs2lp = std::abs(Fs2 - (F0*F0)/Fs2);
             Fs = std::min(Fs1lp,Fs2lp);
         }
         Ap = 3.0;        
         qDebug()<<Fc<<Fs;
-        Q = F0/fabs(Fu-Fl);
+        Q = F0/std::abs(Fu-Fl);
     }
 
     Rp = par.Rp;
     As = par.As;
     Kv = par.Kv;
-    if (ffunc==Filter::Bessel) {
+    if ((ffunc==Filter::Bessel)||
+        (ffunc==Filter::Legendre)){
         order = par.order;
     }
 }
@@ -124,6 +126,8 @@ bool Filter::calcFilter()
     case Filter::InvChebyshev : res = calcInvChebyshev();
         break;
     case Filter::Bessel : res = calcBessel();
+        break;
+    case Filter::Legendre : res = calcLegendre();
         break;
     case Filter::User : res = calcUserTrFunc();
         break;
@@ -506,7 +510,7 @@ bool Filter::calcCauer() // from Digital Filter Designer's handbook p.103
         sum += term;
     }
     double  denom = 1.0+2.0*sum;
-    P0 = fabs(numer/denom);
+    P0 = std::abs(numer/denom);
     double  ww = 1.0+k*P0*P0;
     ww = sqrt(ww*(1.0+P0*P0/k));
     int r = (order-(order%2))/2;
@@ -589,6 +593,21 @@ bool Filter::calcBessel()
     return true;
 }
 
+bool Filter::calcLegendre()
+{
+    Poles.clear();
+    Zeros.clear();
+
+    if (order<=0) return false;
+
+    for (int i=0;i<order;i++) {
+        Poles.append(std::complex<float>(LegendrePoles[order-1][2*i],LegendrePoles[order-1][2*i+1]));
+    }
+
+    reformPolesZeros();
+    return true;
+}
+
 bool Filter::calcUserTrFunc()
 {
     if ((!vec_A.isEmpty())&&(!vec_B.isEmpty())) {
@@ -643,6 +662,7 @@ void Filter::reformPolesZeros()
             Poles[Nz-1-i]=tmp;
         }
     }
+
 }
 
 void Filter::set_TrFunc(QVector<long double> a, QVector<long double> b)

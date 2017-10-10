@@ -16,6 +16,7 @@
  ***************************************************************************/
 #include "graphicline.h"
 #include "filldialog.h"
+#include "misc.h"
 #include "schematic.h"
 
 #include <QPainter>
@@ -324,25 +325,27 @@ bool GraphicLine::Dialog()
   bool changed = false;
 
   FillDialog *d = new FillDialog(QObject::tr("Edit Line Properties"), false);
-  d->ColorButt->setPaletteBackgroundColor(Pen.color());
+  misc::setPickerColor(d->ColorButt, Pen.color());
   d->LineWidth->setText(QString::number(Pen.width()));
-  d->StyleBox->setCurrentItem(Pen.style()-1);
+  d->StyleBox->setCurrentIndex(Pen.style()-1);
 
   if(d->exec() == QDialog::Rejected) {
     delete d;
     return false;
   }
 
-  if(Pen.color() != d->ColorButt->paletteBackgroundColor()) {
-    Pen.setColor(d->ColorButt->paletteBackgroundColor());
+  /// \todo deduplicate
+  QColor penColor = misc::getWidgetBackgroundColor(d->ColorButt);
+  if(Pen.color() != penColor) {
+    Pen.setColor(penColor);
     changed = true;
   }
   if(Pen.width()  != d->LineWidth->text().toInt()) {
     Pen.setWidth(d->LineWidth->text().toInt());
     changed = true;
   }
-  if(Pen.style()  != (d->StyleBox->currentItem()+1)) {
-    Pen.setStyle((Qt::PenStyle)(d->StyleBox->currentItem()+1));
+  if(Pen.style()  != (d->StyleBox->currentIndex()+1)) {
+    Pen.setStyle((Qt::PenStyle)(d->StyleBox->currentIndex()+1));
     changed = true;
   }
 

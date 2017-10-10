@@ -72,7 +72,7 @@ MouseActions::MouseActions(QucsApp* App_)
   // initialize menu appearing by right mouse button click on component
   ComponentMenu = new QMenu(QucsMain);
   focusMEvent   = new QMouseEvent(QEvent::MouseButtonPress, QPoint(0,0),
-				  Qt::NoButton, Qt::NoButton);
+                  Qt::NoButton, Qt::NoButton, Qt::NoModifier);
 }
 
 
@@ -240,16 +240,16 @@ void MouseActions::moveElements(Q3PtrList<Element> *movElements, int x, int y)
     if(pe->Type == isWire) {
       pw = (Wire*)pe;   // connected wires are not moved completely
 
-      if(((unsigned long)pw->Port1) > 3) {
+      if(((uintptr_t)pw->Port1) > 3) {
 	pw->x1 += x;  pw->y1 += y;
 	if(pw->Label) { pw->Label->cx += x;  pw->Label->cy += y; }
       }
-      else {  if(long(pw->Port1) & 1) { pw->x1 += x; }
-              if(long(pw->Port1) & 2) { pw->y1 += y; } }
+      else {  if((uintptr_t)(pw->Port1) & 1) { pw->x1 += x; }
+              if((uintptr_t)(pw->Port1) & 2) { pw->y1 += y; } }
 
-      if(((unsigned long)pw->Port2) > 3) { pw->x2 += x;  pw->y2 += y; }
-      else {  if(long(pw->Port2) & 1) pw->x2 += x;
-              if(long(pw->Port2) & 2) pw->y2 += y; }
+      if(((uintptr_t)pw->Port2) > 3) { pw->x2 += x;  pw->y2 += y; }
+      else {  if((uintptr_t)(pw->Port2) & 1) pw->x2 += x;
+              if((uintptr_t)(pw->Port2) & 2) pw->y2 += y; }
 
       if(pw->Label) {      // root of node label must lie on wire
         if(pw->Label->cx < pw->x1) pw->Label->cx = pw->x1;
@@ -311,6 +311,43 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
   Doc->viewport()->update();
 }
 
+/**
+ * @brief draws wire aiming cross on Document view
+ * @param Doc - pointer to Schematics object
+ * @param fx  - document x-coordinate of center
+ * @param fy  - document x-coordinate of center
+ */
+static void paintAim(Schematic *Doc, int fx,int fy){
+	//let we reserve couple of points at the edges of lines for some aesthetics,
+	//and visual check that our calculations has fit the widget window.
+	const int ldelta = 2;
+
+	//left and upper edges of our lines
+	int lx0 = DOC_X_POS(Doc->contentsX()+ldelta);
+	int ly0 = DOC_Y_POS(Doc->contentsY()+ldelta);
+
+	//right and bottom edges
+	int lx1 = DOC_X_POS(Doc->contentsX()+Doc->viewport()->width()-1-ldelta);
+	int ly1 = DOC_Y_POS(Doc->contentsY()+Doc->viewport()->height()-1-ldelta);
+
+	//post line paint events
+	Doc->PostPaintEvent (_Line, lx0, fy, lx1, fy);
+	Doc->PostPaintEvent (_Line, fx, ly0, fx, ly1);
+}
+
+//paint ghost line - horizontal
+static void paintGhostLineH(Schematic *Doc, int fx,int fy, int fxx){
+	Doc->PostPaintEvent (_Line, fx, fy-1, fxx, fy-1);
+	Doc->PostPaintEvent (_Line, fx, fy+1, fxx, fy+1);
+}
+
+//paint ghost line - vertical
+static void paintGhostLineV(Schematic *Doc, int fx, int fy, int fyy){
+	Doc->PostPaintEvent (_Line, fx-1, fy, fx-1, fyy);
+	Doc->PostPaintEvent (_Line, fx+1, fy, fx+1, fyy);
+}
+
+
 // -----------------------------------------------------------
 /**
  * @brief MouseActions::MMoveWire2 Paint wire as it is being drawn with mouse.
@@ -322,14 +359,18 @@ void MouseActions::MMoveWire2(Schematic *Doc, QMouseEvent *Event)
   MAx2  = DOC_X_POS(Event->pos().x());
   MAy2  = DOC_Y_POS(Event->pos().y());
   Doc->setOnGrid(MAx2, MAy2);
+  paintAim(Doc,MAx2,MAy2); //let we paint aim cross
 
+  //because cross slightly masks a wire, let we make wire thicker
+  //better to make it by increasing of pen, but here we cannot access
+  //pen
   if(MAx1 == 0) {
-    Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx3, MAy2); // paint
-    Doc->PostPaintEvent (_Line, MAx3, MAy2, MAx2, MAy2); // paint
+	paintGhostLineV(Doc,MAx3,MAy3,MAy2);
+	paintGhostLineH(Doc,MAx3,MAy2,MAx2);
   }
   else {
-    Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx2, MAy3); // paint
-    Doc->PostPaintEvent (_Line, MAx2, MAy3, MAx2, MAy2); // paint
+	paintGhostLineH(Doc,MAx3,MAy3,MAx2);
+	paintGhostLineV(Doc,MAx2,MAy3,MAy2);
   }
 
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickWire2;
@@ -347,12 +388,9 @@ void MouseActions::MMoveWire1(Schematic *Doc, QMouseEvent *Event)
   MAx3 = DOC_X_POS(Event->pos().x());
   MAy3 = DOC_Y_POS(Event->pos().y());
   Doc->setOnGrid(MAx3, MAy3);
-
-  MAx2  = DOC_X_POS(Doc->viewport()->width());
-  MAy2  = DOC_Y_POS(Doc->viewport()->height());
-
-  Doc->PostPaintEvent (_Line, Doc->ViewX1, MAy3, MAx2, MAy3);
-  Doc->PostPaintEvent (_Line, MAx3, Doc->ViewY1, MAx3, MAy2);
+  paintAim(Doc,MAx3,MAy3);
+  MAx2 = DOC_X_POS(Doc->contentsX()+Doc->viewport()->width()-1-2);
+  MAx2 = DOC_Y_POS(Doc->contentsY()+Doc->viewport()->height()-1-2);
   Doc->viewport()->update();
 }
 
@@ -412,13 +450,13 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
     if(pe->Type == isWire) {
       pw = (Wire*)pe;   // connecting wires are not moved completely
 
-      if(((unsigned long)pw->Port1) > 3) { pw->x1 += MAx1;  pw->y1 += MAy1; }
-      else {  if(long(pw->Port1) & 1) { pw->x1 += MAx1; }
-              if(long(pw->Port1) & 2) { pw->y1 += MAy1; } }
+      if(((uintptr_t)pw->Port1) > 3) { pw->x1 += MAx1;  pw->y1 += MAy1; }
+      else {  if((uintptr_t)(pw->Port1) & 1) { pw->x1 += MAx1; }
+              if((uintptr_t)(pw->Port1) & 2) { pw->y1 += MAy1; } }
 
-      if(((unsigned long)pw->Port2) > 3) { pw->x2 += MAx1;  pw->y2 += MAy1; }
-      else {  if(long(pw->Port2) & 1) pw->x2 += MAx1;
-              if(long(pw->Port2) & 2) pw->y2 += MAy1; }
+      if(((uintptr_t)pw->Port2) > 3) { pw->x2 += MAx1;  pw->y2 += MAy1; }
+      else {  if((uintptr_t)(pw->Port2) & 1) pw->x2 += MAx1;
+              if((uintptr_t)(pw->Port2) & 2) pw->y2 += MAy1; }
 
       if(pw->Label) {      // root of node label must lie on wire
         if(pw->Label->cx < pw->x1) pw->Label->cx = pw->x1;
@@ -459,7 +497,7 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
 //          ((Wire*)pe)->Label->paintScheme(&painter);
 
   drawn = true;
-  if((Event->state() & Qt::ControlModifier) == 0)
+  if (!Event->modifiers().testFlag(Qt::ControlModifier))
     Doc->setOnGrid(MAx2, MAy2);  // use grid only if CTRL key not pressed
   MAx1 = MAx2 - MAx1;
   MAy1 = MAy2 - MAy1;
@@ -737,86 +775,89 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
   while(true) {
     if(focusElement) {
       focusElement->isSelected = true;
-      ComponentMenu->insertItem(
-         QObject::tr("Edit Properties"), QucsMain, SLOT(slotEditElement()));
+      QAction *editProp = new QAction(QObject::tr("Edit Properties"), QucsMain);
+      QucsMain->connect(editProp, SIGNAL(triggered()), SLOT(slotEditElement()));
+      ComponentMenu->addAction(editProp);
 
       if((focusElement->Type & isComponent) == 0) break;
     }
     else {
-/// \todo "exchange like this"
-      //ComponentMenu->addAction(QucsMain->symEdit);
-      //to QucsMain->symEdit->addTo(ComponentMenu);
-      // see http://qt-project.org/doc/qt-4.8/qaction-qt3.html#addTo
-      QucsMain->symEdit->addTo(ComponentMenu);
-      QucsMain->fileSettings->addTo(ComponentMenu);
+      ComponentMenu->addAction(QucsMain->symEdit);
+      ComponentMenu->addAction(QucsMain->fileSettings);
     }
-    if(!QucsMain->moveText->isOn())
-      QucsMain->moveText->addTo(ComponentMenu);
+    if(!QucsMain->moveText->isChecked())
+      ComponentMenu->addAction(QucsMain->moveText);
     break;
   }
   while(true) {
     if(focusElement)
       if(focusElement->Type == isGraph) break;
-    if(!QucsMain->onGrid->isOn())
-      QucsMain->onGrid->addTo(ComponentMenu);
-    QucsMain->editCopy->addTo(ComponentMenu);
-    if(!QucsMain->editPaste->isOn())
-      QucsMain->editPaste->addTo(ComponentMenu);
+    if(!QucsMain->onGrid->isChecked())
+      ComponentMenu->addAction(QucsMain->onGrid);
+    ComponentMenu->addAction(QucsMain->editCopy);
+    if(!QucsMain->editPaste->isChecked())
+      ComponentMenu->addAction(QucsMain->editPaste);
     break;
   }
 
   while (true) {
     if (focusElement) {
       if (focusElement->Type == isDiagram) {
-        ComponentMenu->insertItem(QObject::tr("Export as image"), QucsMain,
-            SLOT(slotSaveDiagramToGraphicsFile()));
+        QAction *imgExport = new QAction(QObject::tr("Export as image"), QucsMain);
+        QucsMain->connect(imgExport, SIGNAL(triggered()), SLOT(slotSaveDiagramToGraphicsFile()));
+        ComponentMenu->addAction(imgExport);
       }
     }
     break;
   }
 
-  if(!QucsMain->editDelete->isOn())
-    QucsMain->editDelete->addTo(ComponentMenu);
+  if(!QucsMain->editDelete->isChecked())
+    ComponentMenu->addAction(QucsMain->editDelete);
   if(focusElement) if(focusElement->Type == isMarker) {
-    ComponentMenu->insertSeparator();
+    ComponentMenu->addSeparator();
     QString s = QObject::tr("power matching");
     if( ((Marker*)focusElement)->pGraph->Var == "Sopt" )
       s = QObject::tr("noise matching");
-    ComponentMenu->insertItem(s, QucsMain, SLOT(slotPowerMatching()));
-    if( ((Marker*)focusElement)->pGraph->Var.left(2) == "S[" )
-      ComponentMenu->insertItem(QObject::tr("2-port matching"), QucsMain,
-                                SLOT(slot2PortMatching()));
+
+    QAction *powerMatch = new QAction(s, QucsMain);
+    QucsMain->connect(powerMatch, SIGNAL(triggered()), SLOT(slotPowerMatching()));
+    ComponentMenu->addAction(powerMatch);
+    if( ((Marker*)focusElement)->pGraph->Var.left(2) == "S[" ) {
+      QAction *power2Match = new QAction(QObject::tr("2-port matching"), QucsMain);
+      QucsMain->connect(power2Match, SIGNAL(triggered()), SLOT(slot2PortMatching()));
+      ComponentMenu->addAction(power2Match);
+    }
   }
   do {
     if(focusElement) {
       if(focusElement->Type == isDiagram) break;
       if(focusElement->Type == isGraph) {
-        QucsMain->graph2csv->addTo(ComponentMenu);
+        ComponentMenu->addAction(QucsMain->graph2csv);
         break;
       }
     }
-    ComponentMenu->insertSeparator();
+    ComponentMenu->addSeparator();
     if(focusElement) if(focusElement->Type & isComponent)
-      if(!QucsMain->editActivate->isOn())
-        QucsMain->editActivate->addTo(ComponentMenu);
-    if(!QucsMain->editRotate->isOn())
-      QucsMain->editRotate->addTo(ComponentMenu);
-    if(!QucsMain->editMirror->isOn())
-      QucsMain->editMirror->addTo(ComponentMenu);
-    if(!QucsMain->editMirrorY->isOn())
-      QucsMain->editMirrorY->addTo(ComponentMenu);
+      if(!QucsMain->editActivate->isChecked())
+        ComponentMenu->addAction(QucsMain->editActivate);
+    if(!QucsMain->editRotate->isChecked())
+      ComponentMenu->addAction(QucsMain->editRotate);
+    if(!QucsMain->editMirror->isChecked())
+      ComponentMenu->addAction(QucsMain->editMirror);
+    if(!QucsMain->editMirrorY->isChecked())
+      ComponentMenu->addAction(QucsMain->editMirrorY);
 
     // right-click menu to go into hierarchy
     if(focusElement) {
       if(focusElement->Type & isComponent)
 	if(((Component*)focusElement)->Model == "Sub")
-	  if(!QucsMain->intoH->isOn())
-	    QucsMain->intoH->addTo(ComponentMenu);
+      if(!QucsMain->intoH->isChecked())
+        ComponentMenu->addAction(QucsMain->intoH);
     }
     // right-click menu to pop out of hierarchy
     if(!focusElement)
-      if(!QucsMain->popH->isOn())
-	QucsMain->popH->addTo(ComponentMenu);
+      if(!QucsMain->popH->isChecked())
+        ComponentMenu->addAction(QucsMain->popH);
   } while(false);
 
   *focusMEvent = *Event;  // remember event for "edit component" action
@@ -897,9 +938,7 @@ void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent*, float fX, float fY)
 // -----------------------------------------------------------
 void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, float fY)
 {
-  bool Ctrl;
-  if(Event->state() & Qt::ControlModifier) Ctrl = true;
-  else Ctrl = false;
+  bool Ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
   int No=0;
   MAx1 = int(fX);
@@ -931,6 +970,8 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       if(((Diagram*)focusElement)->Name.left(4) != "Rect")
         if(((Diagram*)focusElement)->Name.at(0) != 'T')
           if(((Diagram*)focusElement)->Name != "Curve")
+            if(((Diagram*)focusElement)->Name != "Waveac")
+	      if(((Diagram*)focusElement)->Name != "Phasor")
             isMoveEqual = true;  // diagram must be square
 
       focusElement->Type = isDiagram;
@@ -1303,8 +1344,10 @@ void MouseActions::MPressWire1(Schematic *Doc, QMouseEvent*, float fX, float fY)
   //Doc->PostPaintEvent (_DotLine);
   //Doc->PostPaintEvent (_NotRop);
   //if(drawn) {
-    Doc->PostPaintEvent (_Line, 0, MAy3, MAx2, MAy3); // erase old mouse cross
+#if 0  //ALYS - it draws some garbage, not deleted because of possible questions
+	Doc->PostPaintEvent (_Line, 0, MAy3, MAx2, MAy3); // erase old mouse cross
     Doc->PostPaintEvent (_Line, MAx3, 0, MAx3, MAy2);
+#endif
   //}
   //drawn = false;
 
@@ -1312,6 +1355,10 @@ void MouseActions::MPressWire1(Schematic *Doc, QMouseEvent*, float fX, float fY)
   MAx3 = int(fX);
   MAy3 = int(fY);
   Doc->setOnGrid(MAx3, MAy3);
+
+//ALYS - draw aiming cross
+  paintAim(Doc,MAx3, MAy3);
+//#######################
 
   formerAction = 0; // keep wire action active after first wire finished
   QucsMain->MouseMoveAction = &MouseActions::MMoveWire2;
@@ -1366,8 +1413,10 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event, float fX, flo
       }
     }
 
-    Doc->viewport()->update();
-    drawn = false;
+    //ALYS: excessive update. end of function does it.
+	//Doc->viewport()->update();
+
+	drawn = false;
     if(set1 | set2) Doc->setChanged(true, true);
     MAx3 = MAx2;
     MAy3 = MAy2;
@@ -1375,7 +1424,12 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event, float fX, flo
 
    /// \todo document right mouse button changes the wire corner
   case Qt::RightButton :
-    if(MAx1 == 0) {
+
+#if 0
+	//ALYS - old code preserved because isn't clear - what it was???
+	//looks like deletion via painting.
+	//i'll delete it after possible clarification from team
+	if(MAx1 == 0) {
       Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx3, MAy2); // erase old
       Doc->PostPaintEvent (_Line, MAx3, MAy2, MAx2, MAy2); // erase old
     }
@@ -1383,24 +1437,27 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event, float fX, flo
       Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx2, MAy3); // erase old
       Doc->PostPaintEvent (_Line, MAx2, MAy3, MAx2, MAy2); // erase old
     }
+#endif
 
     MAx2  = int(fX);
     MAy2  = int(fY);
     Doc->setOnGrid(MAx2, MAy2);
 
     MAx1 ^= 1;    // change the painting direction of wire corner
-    if(MAx1 == 0) {
-      Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx3, MAy2); // paint
-      Doc->PostPaintEvent (_Line, MAx3, MAy2, MAx2, MAy2); // paint
+	if(MAx1 == 0) {
+		paintGhostLineV(Doc,MAx3,MAy3,MAy2);
+		paintGhostLineH(Doc,MAx3,MAy2,MAx2);
     }
     else {
-      Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx2, MAy3); // paint
-      Doc->PostPaintEvent (_Line, MAx2, MAy3, MAx2, MAy2); // paint
+		paintGhostLineH(Doc,MAx3,MAy3,MAx2);
+		paintGhostLineV(Doc,MAx2,MAy3,MAy2);
     }
     break;
 
   default: ;    // avoids compiler warnings
   }
+
+  paintAim(Doc,MAx2,MAy2); //ALYS - added missed aiming cross
   Doc->viewport()->update();
 }
 
@@ -1487,9 +1544,7 @@ void MouseActions::MPressZoomIn(Schematic *Doc, QMouseEvent*, float fX, float fY
 // ***********************************************************************
 void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
 {
-  bool ctrl;
-  if(Event->state() & Qt::ControlModifier) ctrl = true;
-  else ctrl = false;
+  bool ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
   if(!ctrl) Doc->deselectElements(focusElement);
 
@@ -1515,9 +1570,7 @@ void MouseActions::MReleaseSelect2(Schematic *Doc, QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
 
-  bool Ctrl;
-  if(Event->state() & Qt::ControlModifier) Ctrl = true;
-  else Ctrl = false;
+  bool Ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
   // selects all elements within the rectangle
   Doc->selectElements(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2, Ctrl);
@@ -1717,8 +1770,8 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 	  else pe = NULL;
 	  break;
 	case isDiagram:
-	  Doc->Diagrams->append((Diagram*)pe);
-	  ((Diagram*)pe)->loadGraphData(Info.dirPath() + QDir::separator() +
+      Doc->Diagrams->append((Diagram*)pe);
+      ((Diagram*)pe)->loadGraphData(Info.path() + QDir::separator() +
 					Doc->DataSet);
 	  Doc->enlargeView(pe->cx, pe->cy-pe->y2, pe->cx+pe->x2, pe->cy);
 	  break;
@@ -1936,6 +1989,8 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
     case isHWireLabel:
     case isVWireLabel:
          editLabel(Doc, (WireLabel*)focusElement);
+         // update highlighting, labels may have changed
+         Doc->highlightWireLabels ();
          break;
 
     case isPainting:

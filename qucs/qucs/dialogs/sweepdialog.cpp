@@ -61,7 +61,11 @@ QValidator::State mySpinBox::validate ( QString & text, int & pos ) const
   else return QValidator::Invalid;
 }
 
-
+///
+/// \brief SweepDialog::SweepDialog
+/// \param Doc_
+/// This dialog is launched when the Calculate DC bias is requested
+/// for a project which contains a sweep.
 SweepDialog::SweepDialog(Schematic *Doc_)
 			: QDialog(Doc_)
 {
@@ -84,18 +88,17 @@ SweepDialog::SweepDialog(Schematic *Doc_)
 
   setWindowTitle(tr("Bias Points"));
 
-  int i = 0;
   // ...........................................................
   QGridLayout *all = new QGridLayout(this);//, pGraph->cPointsX.count()+2,2,3,3);
   all->setMargin(5);
   all->setSpacing(5);
-  all->setColStretch(1,5);
+  all->setColumnStretch(1,5);
 
   DataX const *pD;
   mySpinBox *Box;
   
   for(unsigned ii=0; (pD=pGraph->axis(ii)); ++ii) {
-    all->addWidget(new QLabel(pD->Var, this), i,0);
+    all->addWidget(new QLabel(pD->Var, this), 0, 0);
     //cout<<"count: "<<pD->count-1<<", points: "<<*pD->Points<<endl;
     //works only for linear:
     /*double Min = pD->Points[0];
@@ -105,15 +108,15 @@ SweepDialog::SweepDialog(Schematic *Doc_)
     Box = new mySpinBox(Min, Max, Step, pD->Points, this);*/
     Box = new mySpinBox(0, pD->count-1, 1, pD->Points, this);
     Box->setValue(0);  
-    all->addWidget(Box, i++,1);
+    all->addWidget(Box, 0, 1);
     connect(Box, SIGNAL(valueChanged(int)), SLOT(slotNewValue(int)));
     BoxList.append(Box);
   }
 
   // ...........................................................
-  all->setRowStretch(i,5);
+  all->setRowStretch(0,5);
   QPushButton *ButtClose = new QPushButton(tr("Close"), this);
-  all->addMultiCellWidget(ButtClose, i+1,i+1, 0,1);
+  all->addWidget(ButtClose, 1, 0, 1, 5);
   connect(ButtClose, SIGNAL(clicked()), SLOT(accept()));
   show();
 }
@@ -163,7 +166,7 @@ GraphDeque* SweepDialog::setBiasPoints()
   bool hasNoComp;
   GraphDeque *pg = new GraphDeque(NULL, ""); // HACK!
   QFileInfo Info(Doc->DocName);
-  QString DataSet = Info.dirPath() + QDir::separator() + Doc->DataSet;
+  QString DataSet = Info.path() + QDir::separator() + Doc->DataSet;
 
   Node *pn;
   Element *pe;

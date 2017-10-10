@@ -9,7 +9,7 @@
 #
 # By default, the prefix is "/usr/local"
 
-PROJECT(qucs CXX C)
+PROJECT(qucs CXX)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 cmake_policy(VERSION 2.6)
 
@@ -53,16 +53,6 @@ endif()
 
 #
 ADD_DEFINITIONS( -DHAVE_CONFIG_H )
-
-# define variables
-SET(BINARYDIR "${CMAKE_INSTALL_PREFIX}/bin/")
-#SET(BITMAPDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/bitmaps/")
-SET(DOCDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/docs/")
-SET(LIBRARYDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/library/")
-SET(OCTAVEDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/octave/")
-#Add:
-SET(LANGUAGEDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/lang/")
-
 
 FIND_PACKAGE( Qt4 4.6.3 REQUIRED QtCore QtGui Qt3Support QtSvg QtXml QtScript)
 INCLUDE( ${QT_USE_FILE} )
@@ -113,7 +103,17 @@ IF(WIN32)
   ENDIF()
 ENDIF(WIN32)
 
-ADD_DEFINITIONS(${QT_DEFINITIONS})
+ADD_DEFINITIONS(${QT_DEFINITIONS} -DQT3_SUPPORT_WARNINGS)
+
+INCLUDE_DIRECTORIES(
+  ${qucs_SOURCE_DIR}
+  #${qucs_SOURCE_DIR}/bitmaps ->no sources here
+  ${qucs_SOURCE_DIR}/components
+  ${qucs_SOURCE_DIR}/diagrams
+  ${qucs_SOURCE_DIR}/dialogs
+  #${qucs_SOURCE_DIR}/octave ->no sources here
+  ${qucs_SOURCE_DIR}/paintings
+  )
 
 #ADD_SUBDIRECTORY( bitmaps ) -> added as resources
 ADD_SUBDIRECTORY( components )
@@ -124,6 +124,7 @@ ADD_SUBDIRECTORY( python )
 ADD_SUBDIRECTORY( paintings )
 
 SET(QUCS_SRCS
+  attach.cpp
   element.cpp	octave_window.cpp	qucsdoc.cpp
   textdoc.cpp  main.cpp	schematic.cpp
   mnemo.cpp	qucs.cpp	viewpainter.cpp
@@ -144,6 +145,7 @@ module.h
 mouseactions.h
 node.h
 octave_window.h
+platform.h
 qucs.h
 qucsdoc.h
 schematic.h
@@ -174,7 +176,7 @@ QT4_WRAP_CPP( QUCS_MOC_SRCS ${QUCS_MOC_HDRS} )
 #
 # generate rules for building source files from bitmap resources
 #
-SET(RESOURCES qucs.qrc)
+SET(RESOURCES qucs_.qrc)
 QT4_ADD_RESOURCES(RESOURCES_SRCS ${RESOURCES})
 
 if(UNIX AND NOT APPLE)
@@ -244,7 +246,7 @@ ADD_EXECUTABLE( qucs MACOSX_BUNDLE WIN32
 #
 # Tell CMake which libraries we need to link our executable against.
 #
-TARGET_LINK_LIBRARIES( qucs  components diagrams dialogs paintings ${QT_LIBRARIES} )
+TARGET_LINK_LIBRARIES( qucs components diagrams dialogs paintings ${QT_LIBRARIES} ${CMAKE_DL_LIBS})
 
 #
 # Prepare the installation

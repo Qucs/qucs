@@ -63,9 +63,14 @@ QString Schematic::createClipboardFile()
 
   // Build element document.
   s += "<Components>\n";
-  for(pc = Components->first(); pc != 0; pc = Components->next())
+  for(pc = Components->first(); pc != 0; pc = Components->next()){
     if(pc->isSelected) {
-      s += pc->save()+"\n";  z++; }
+      QTextStream str(&s);
+      saveComponent(str, pc);
+      s += "\n";
+      ++z;
+    }
+  }
   s += "</Components>\n";
 
   s += "<Wires>\n";
@@ -126,12 +131,14 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, Q3PtrList<Element> *pe)
   if(Line.left(16) != "<Qucs Schematic ")   // wrong file type ?
     return false;
 
-  QString s = PACKAGE_VERSION;
   Line = Line.mid(16, Line.length()-17);
-  if(Line != s) {  // wrong version number ?
-    QMessageBox::critical(0, QObject::tr("Error"),
-                 QObject::tr("Wrong document version: ")+Line);
-    return false;
+  VersionTriplet DocVersion = VersionTriplet(Line);
+  if (DocVersion > QucsVersion) { // wrong version number ?
+    if (!QucsSettings.IgnoreFutureVersion) {
+      QMessageBox::critical(0, QObject::tr("Error"),
+                            QObject::tr("Wrong document version: %1").arg(DocVersion.toString()));
+      return false;
+    }
   }
 
   // read content in symbol edit mode *************************
@@ -187,7 +194,7 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, Q3PtrList<Element> *pe)
 int Schematic::saveSymbolCpp (void)
 {
   QFileInfo info (DocName);
-  QString cppfile = info.dirPath () + QDir::separator() + DataSet;
+  QString cppfile = info.path () + QDir::separator() + DataSet;
   QFile file (cppfile);
 
   if (!file.open (QIODevice::WriteOnly)) {
@@ -255,8 +262,8 @@ int Schematic::saveSymbolCpp (void)
 int Schematic::saveSymbolJSON()
 {
   QFileInfo info (DocName);
-  QString jsonfile = info.dirPath () + QDir::separator()
-                   + info.baseName() + "_sym.json";
+  QString jsonfile = info.path () + QDir::separator()
+                   + info.completeBaseName() + "_sym.json";
 
   qDebug() << "saveSymbolJson for " << jsonfile;
 
@@ -388,8 +395,11 @@ int Schematic::saveDocument()
   stream << "</Symbol>\n";
 
   stream << "<Components>\n";    // save all components
-  for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next())
-    stream << "  " << pc->save() << "\n";
+  for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()){
+    stream << "  "; // BUG language specific.
+    saveComponent(stream, pc);
+    stream << "\n"; // BUG?
+  }
   stream << "</Components>\n";
 
   stream << "<Wires>\n";    // save all wires
@@ -450,7 +460,7 @@ int Schematic::saveDocument()
       QStringList Arguments;
       Arguments << QDir::toNativeSeparators(vaFile)
                 << "-I" << QDir::toNativeSeparators(include.absolutePath())
-                << "-e" << QDir::toNativeSeparators(include.absFilePath("qucsMODULEguiJSONsymbol.xml"))
+                << "-e" << QDir::toNativeSeparators(include.absoluteFilePath("qucsMODULEguiJSONsymbol.xml"))
                 << "-A" << "dyload";
 
 //      QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
@@ -647,8 +657,9 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
         if(!c->Name.at(z).isDigit()) break;
       c->Name = c->Name.left(z+1);
       List->append(c);
+    }else{
+      simpleInsertComponent(c);
     }
-    else  simpleInsertComponent(c);
   }
 
   QMessageBox::critical(0, QObject::tr("Error"),
@@ -756,6 +767,8 @@ bool Schematic::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
     else if(cstr == "<Curve") d = new CurveDiagram();
     else if(cstr == "<Time") d = new TimingDiagram();
     else if(cstr == "<Truth") d = new TruthDiagram();
+    else if(cstr == "<Phasor") d = new PhasorDiagram();
+    else if(cstr == "<Waveac") d = new Waveac();
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 		   QObject::tr("Format Error:\nUnknown diagram!"));
@@ -865,23 +878,12 @@ bool Schematic::loadDocument()
   }
 
   Line = Line.mid(16, Line.length()-17);
-  if(!misc::checkVersion(Line)) { // wrong version number ?
-
-    QMessageBox::StandardButton result;
-    result = QMessageBox::warning(0,
-                                  QObject::tr("Warning"),
-                                  QObject::tr("Wrong document version \n" +
-                                              DocName + "\n"
-                                              "Try to open it anyway?"),
-                                  QMessageBox::Yes|QMessageBox::No);
-
-    if (result==QMessageBox::No) {
-        file.close();
-        return false;
+  VersionTriplet DocVersion = VersionTriplet(Line);
+  if (DocVersion > QucsVersion) { // wrong version number ?
+    if (!QucsSettings.IgnoreFutureVersion) {
+      QMessageBox::critical(0, QObject::tr("Error"),
+                            QObject::tr("Wrong document version: %1").arg(DocVersion.toString()));
     }
-
-    //QMessageBox::critical(0, QObject::tr("Error"),
-        // QObject::tr("Wrong document version: ")+Line);
   }
 
   // read content *************************
@@ -937,8 +939,11 @@ QString Schematic::createUndoString(char Op)
   // Build element document.
   QString s = "  \n";
   s.replace(0,1,Op);
-  for(pc = DocComps.first(); pc != 0; pc = DocComps.next())
-    s += pc->save()+"\n";
+  for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+    QTextStream str(&s);
+    saveComponent(str, pc);
+    s += "\n";
+  }
   s += "</>\n";  // short end flag
 
   for(pw = DocWires.first(); pw != 0; pw = DocWires.next())
@@ -1082,7 +1087,7 @@ int Schematic::testFile(const QString& DocName)
   // To strongly speed up the file read operation the whole file is
   // read into the memory in one piece.
   QTextStream ReadWhole(&file);
-  QString FileString = ReadWhole.read();
+  QString FileString = ReadWhole.readAll();
   file.close();
   QTextStream stream(&FileString, QIODevice::ReadOnly);
 
@@ -1103,7 +1108,8 @@ int Schematic::testFile(const QString& DocName)
   }
 
   Line = Line.mid(16, Line.length()-17);
-  if(!misc::checkVersion(Line)) { // wrong version number ?
+  VersionTriplet DocVersion = VersionTriplet(Line);
+  if (DocVersion > QucsVersion) { // wrong version number ?
       if (!QucsSettings.IgnoreFutureVersion) {
           file.close();
           return -4;
@@ -1144,7 +1150,7 @@ void Schematic::collectDigitalSignals(void)
     if(it == Signals.end()) { // avoid redeclaration of signal
       Signals.insert(pn->Name, DigSignal(pn->Name, pn->DType));
     } else if (!pn->DType.isEmpty()) {
-      it.data().Type = pn->DType;
+      it.value().Type = pn->DType;
     }
   }
 }
@@ -1245,13 +1251,13 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       SubMap::Iterator it = FileList.find(f);
       if(it != FileList.end())
       {
-        if (!it.data().PortTypes.isEmpty())
+        if (!it.value().PortTypes.isEmpty())
         {
           i = 0;
           // apply in/out signal types of subcircuit
           foreach(Port *pp, pc->Ports)
           {
-            pp->Type = it.data().PortTypes[i];
+            pp->Type = it.value().PortTypes[i];
             pp->Connection->DType = pp->Type;
             i++;
           }
@@ -1295,7 +1301,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
             i++;
         }
         sub.PortTypes = d->PortTypes;
-        FileList.replace(f, sub);
+        FileList.insert(f, sub);
       }
       delete d;
       if(!r)
@@ -1305,32 +1311,28 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       continue;
     } // if(pc->Model == "Sub")
 
-    // handle library symbols
-    if(pc->Model == "Lib") {
+    if(LibComp* lib = dynamic_cast</*const*/LibComp*>(pc)) {
       if(creatingLib) {
 	ErrText->appendPlainText(
 	    QObject::tr("WARNING: Skipping library component \"%1\".").
 	    arg(pc->Name));
 	continue;
       }
-      s = pc->getSubcircuitFile() + "/" + pc->Props.at(1)->Value;
+      QString scfile = pc->getSubcircuitFile();
+      s = scfile + "/" + pc->Props.at(1)->Value;
       SubMap::Iterator it = FileList.find(s);
       if(it != FileList.end())
         continue;   // insert each library subcircuit just one time
       FileList.insert(s, SubFile("LIB", s));
 
-      if(isAnalog)
-	r = ((LibComp*)pc)->createSubNetlist(stream, Collect, 1);
-      else {
-	if(isVerilog)
-	  r = ((LibComp*)pc)->createSubNetlist(stream, Collect, 4);
-	else
-	  r = ((LibComp*)pc)->createSubNetlist(stream, Collect, 2);
-      }
+
+      //FIXME: use different netlister for different purposes
+      unsigned whatisit = isAnalog?1:(isVerilog?4:2);
+      r = lib->createSubNetlist(stream, Collect, whatisit);
       if(!r) {
 	ErrText->appendPlainText(
-	    QObject::tr("ERROR: Cannot load library component \"%1\".").
-	    arg(pc->Name));
+	    QObject::tr("ERROR: \"%1\": Cannot load library component \"%2\" from \"%3\"").
+	    arg(pc->Name, pc->Props.at(1)->Value, scfile));
 	return false;
       }
       continue;
@@ -1355,7 +1357,9 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       SpiceFile *sf = (SpiceFile*)pc;
       r = sf->createSubNetlist(stream);
       ErrText->appendPlainText(sf->getErrorText());
-      if(!r) return false;
+      if(!r){
+        return false;
+      }
       continue;
     }
 
@@ -1383,13 +1387,17 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 	VHDL_File *vf = (VHDL_File*)pc;
 	r = vf->createSubNetlist(stream);
 	ErrText->appendPlainText(vf->getErrorText());
-	if(!r) return false;
+	if(!r) {
+	  return false;
+	}
       }
       if(pc->Model == "Verilog") {
 	Verilog_File *vf = (Verilog_File*)pc;
 	r = vf->createSubNetlist(stream);
 	ErrText->appendPlainText(vf->getErrorText());
-	if(!r) return false;
+	if(!r) {
+	  return false;
+	}
       }
       continue;
     }
@@ -1426,8 +1434,10 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
     }
 
   // go through components
-  if(!throughAllComps(stream, countInit, Collect, ErrText, NumPorts))
+  if(!throughAllComps(stream, countInit, Collect, ErrText, NumPorts)){
+    fprintf(stderr, "Error: Could not go throughAllComps\n");
     return false;
+  }
 
   // work on named nodes first in order to preserve the user given names
   throughAllNodes(true, Collect, countInit);
@@ -1534,13 +1544,13 @@ int NumPorts)
       (*it_name) = pc->Ports.first()->Connection->Name;
       DigMap::Iterator it = Signals.find(*it_name);
       if(it!=Signals.end())
-        (*it_type) = it.data().Type;
+        (*it_type) = it.value().Type;
       // propagate type to port symbol
       pc->Ports.first()->Connection->DType = *it_type;
 
       if(!isAnalog) {
         if (isVerilog) {
-          Signals.erase(*it_name); // remove node name
+          Signals.remove(*it_name); // remove node name
           switch(pc->Props.at(1)->Value.at(0).toLatin1()) {
             case 'a':
               InOutPorts.append(*it_name);
@@ -1554,7 +1564,7 @@ int NumPorts)
         }
         else {
           // remove node name of output port
-          Signals.erase(*it_name);
+          Signals.remove(*it_name);
           switch(pc->Props.at(1)->Value.at(0).toLatin1()) {
             case 'a':
               (*it_name) += " : inout"; // attribute "analog" is "inout"
@@ -1578,8 +1588,8 @@ int NumPorts)
       it_type = SubcircuitPortTypes.begin();
       it_name != SubcircuitPortNames.end(); ) {
     if(*it_name == " ") {
-      it_name = SubcircuitPortNames.remove(it_name);
-      it_type = SubcircuitPortTypes.remove(it_type);
+      it_name = SubcircuitPortNames.erase(it_name);
+      it_type = SubcircuitPortTypes.erase(it_type);
     } else {
       PortTypes.append(*it_type);
       it_name++;
@@ -1685,15 +1695,15 @@ int NumPorts)
           ID_Text *pid = (ID_Text*)pi;
           QList<SubParameter *>::const_iterator it;
 
-          (*tstream) << " generic (";
-
-          for(it = pid->Parameter.constBegin(); it != pid->Parameter.constEnd(); it++) {
-            s = (*it)->Name;
-            QString t = (*it)->Type.isEmpty() ? "real" : (*it)->Type;
-            (*tstream) << s.replace("=", " : "+t+" := ") << ";\n ";
+          if (pid->Parameter.size()) {
+            (*tstream) << " generic (";
+            for(it = pid->Parameter.constBegin(); it != pid->Parameter.constEnd(); it++) {
+              s = (*it)->Name;
+              QString t = (*it)->Type.isEmpty() ? "real" : (*it)->Type;
+              (*tstream) << s.replace("=", " : "+t+" := ") << ";\n ";
+            }
+            (*tstream) << ");\n";
           }
-
-          (*tstream) << ");\n";
           break;
         }
 
@@ -1756,8 +1766,10 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
 //  int Collect_count = Collect.count();   // position for this subcircuit
 
   // TODO: NodeSets have to be put into the subcircuit block.
-  if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts))
+  if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts)){
+    fprintf(stderr, "Error giving NodeNames in createSubNetlist\n");
     return false;
+  }
 
 /*  Example for TODO
       for(it = Collect.at(Collect_count); it != Collect.end(); )
@@ -1851,11 +1863,14 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   }
 
   int countInit = 0;  // counts the nodesets to give them unique names
-  if(!giveNodeNames(&stream, countInit, Collect, ErrText, NumPorts))
+  if(!giveNodeNames(&stream, countInit, Collect, ErrText, NumPorts)){
+    fprintf(stderr, "Error giving NodeNames\n");
     return -10;
+  }
 
-  if(allTypes & isAnalogComponent)
+  if(allTypes & isAnalogComponent){
     return NumPorts;
+  }
 
   if (!isVerilog) {
     stream << VHDL_LIBRARIES;
@@ -1959,3 +1974,5 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
 
   return Time;
 }
+
+// vim:ts=8:sw=2:noet

@@ -41,7 +41,7 @@ In this chapter we will start with a simple example of performing an AC simulati
 
 \begin{figure}[h]
 \begin{center}
-	\includegraphics[angle=0,width=0.4\linewidth]{rc_ac_circuit.eps}
+	\includegraphics[angle=0,width=0.4\linewidth]{rc_ac_circuit}
 	\caption{Circuit}
 	\label{fig:rc_ac_circuit}
 \end{center}
@@ -101,7 +101,7 @@ The saved data from the simulation can be processed via Octave or Python; the ne
 
 \begin{figure}[htb]
 \begin{center}
-  \includegraphics[angle=0,width=0.8\linewidth]{rc_ac.eps}
+  \includegraphics[angle=0,width=0.8\linewidth]{rc_ac}
   \caption{Simulation Result}
   \label{plot:rc_ac_octave}
 \end{center}
@@ -126,7 +126,7 @@ produces a log-log plot of the output voltage versus the frequency. A slightly m
 
 Similar to the octave scripts, Qucs provides a Python script which allows parsing of the generated simulation data file. The code example below shows how to load and parse the data file with Python. The plot using Matplotlib is shown in Fig. \ref{plot:rc_ac_python}.
 
-
+% BUG: cant execute this from here!
 \begin{verbatim}
 
 import numpy as np
@@ -151,7 +151,7 @@ plt.savefig('rc_ac_python.eps') # save plot as eps file
 
 \begin{figure}[h]
 \begin{center}
-  \includegraphics[angle=0,width=0.8\linewidth]{rc_ac_python.eps}
+  \includegraphics[angle=0,width=0.8\linewidth]{rc_ac_python}
   \caption{Simulation Result}
   \label{plot:rc_ac_python}
 \end{center}
@@ -207,7 +207,7 @@ plt.show()
 
 \begin{figure}[h]
 \begin{center}
-  \includegraphics[angle=0,width=0.8\linewidth]{rc_ac_sweep_python.eps}
+  \includegraphics[angle=0,width=0.8\linewidth]{rc_ac_sweep_python}
   \caption{Simulation Result}
   \label{plot:rc_ac_python}
 \end{center}
@@ -233,7 +233,7 @@ Here we have replaced the AC sourc with a voltage source generating pulses and t
 
 \begin{figure}[h]
 \begin{center}
-  \includegraphics[angle=0,width=0.8\linewidth]{rc_ac_tr.eps}
+  \includegraphics[angle=0,width=0.8\linewidth]{rc_ac_tr}
   \caption{Simulation Result}
   \label{plot:rc_ac_tr}
 \end{center}
@@ -430,6 +430,84 @@ Temp & simulation temperature & 26.85 & no \\
 \end{tabular}
 
 
+\subsection{Silicon Controlled Rectifier (SCR)}
+
+\begin{verbatim}
+xxx:Name Node1 Node2 [Parameters]
+\end{verbatim}
+
+
+\begin{tabular}{|l|p{0.5\linewidth}|l|l|}
+\hline
+Parameter & Name & Default Value & Mandatory \\
+\hline
+Vbo & breakover voltage & 400 V & todo \\
+Igt & gate trigger current & 50 uA & todo \\
+Cj0 & parasitic capacitance & 10 pF & todo \\
+Is & saturation current & 1e-10 A & todo \\
+N & emission coefficient & 2 & todo \\
+Ri & intrinsic junction resistance & 10 Ohm & todo \\
+Rg & gate resistance & 5 Ohm & todo \\
+Temp & simulation temperature & 26.85 & todo \\
+\hline
+\end{tabular}
+
+
+\subsection{Triac (Bidirectional Thyristor)}
+
+\begin{verbatim}
+xxx:Name Node1 Node2 [Parameters]
+\end{verbatim}
+
+
+\begin{tabular}{|l|p{0.5\linewidth}|l|l|}
+\hline
+Parameter & Name & Default Value & Mandatory \\
+\hline
+Vbo & (bidirectional) breakover voltage & 400 V & todo \\
+Igt & (bidirectional) gate trigger current & 50 uA & todo \\
+Cj0 & parasitic capacitance & 10 pF & todo \\
+Is & saturation current & 1e-10 A & todo \\
+N & emission coefficient & 2 & todo \\
+Ri & intrinsic junction resistance & 10 Ohm & todo \\
+Rg & gate resistance & 5 Ohm & todo \\
+Temp & simulation temperature & 26.85 & todo \\
+\hline
+\end{tabular}
+
+
+
+\subsection{Resonance Tunnel Diode}
+
+\begin{verbatim}
+xxx:Name Node1 Node2 [Parameters]
+\end{verbatim}
+
+
+\begin{tabular}{|l|p{0.5\linewidth}|l|l|}
+\hline
+Parameter & Name & Default Value & Mandatory \\
+\hline
+Ip & peak current & 4 mA & todo \\
+Iv & valley current & 0.6 mA & todo \\
+Vv & valley voltage & 0.8 V & todo \\
+Wr & resonance energy in Ws & 2.7e-20 & todo \\
+eta & Fermi energy in Ws & 1e-20 & todo \\
+dW & resonance width in Ws & 4.5e-21 & todo \\
+Tmax & maximum of transmission & 0.95 & todo \\
+de & fitting factor for electron density & 0.9 & todo \\
+dv & fitting factor for voltage drop & 2.0 & todo \\
+nv & fitting factor for diode current & 16 & todo \\
+Cj0 & zero-bias depletion capacitance & 80 fF & todo \\
+M & grading coefficient & 0.5 & todo \\
+Vj & junction potential & 0.5 V & todo \\
+te & life-time of electrons & 0.6 ps & todo \\
+Temp & simulation temperature in degree Celsius & 26.85 & todo \\
+Area & default area for diode & 1.0 & todo \\
+\hline
+\end{tabular}
+
+
 \subsection{Junction Field-effect Transistor}
 
 \begin{verbatim}
@@ -528,6 +606,12 @@ Tnom & parameter measurement temperature & 26.85 & no \\
 \end{tabular}
 
 
+%% \tutsection{Verilog Devices}
+
+%% EKV26MOS
+%% HICUM Level 0 v1.12 verilog device
+%% MESFET verilog device
+%% NIGBT verilog device
 
 
 \tutsection{Sources}
@@ -969,12 +1053,6 @@ saveAll & save subcircuit characteristic values into dataset [yes,no] & no & tod
 \hline
 \end{tabular}
 
-
-
-\end{document}
-
-
-
 \subsection{xxx}
 
 \begin{verbatim}
@@ -1071,11 +1149,11 @@ Area & default area for diode & 1.0 & todo \\
 \end{tabular}
 
 
+%% \begin{tabular}{|l|p{0.5\linewidth}|l|l|}
+%% \hline
+%% Parameter & Name & Default Value & Mandatory \\
+%% \hline
+%% L & inductance in Henry & n/a & yes \\
+%% \hline
+%% \end{tabular}
 
-
-\tutsection{Verilog Devices}
-
-EKV26MOS
-HICUM Level 0 v1.12 verilog device
-MESFET verilog device
-NIGBT verilog device

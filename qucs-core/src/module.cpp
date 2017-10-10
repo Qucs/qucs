@@ -164,8 +164,10 @@ void module::registerModules (void) {
   // circuit components
   REGISTER_CIRCUIT (resistor);
   REGISTER_CIRCUIT (capacitor);
+  REGISTER_CIRCUIT (capq);
   REGISTER_CIRCUIT (pac);
   REGISTER_CIRCUIT (inductor);
+  REGISTER_CIRCUIT (indq);
   REGISTER_CIRCUIT (vccs);
   REGISTER_CIRCUIT (cccs);
   REGISTER_CIRCUIT (vcvs);
@@ -200,6 +202,8 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (tline4p);
   REGISTER_CIRCUIT (ctline);
   REGISTER_CIRCUIT (coaxline);
+  REGISTER_CIRCUIT (circline);
+  REGISTER_CIRCUIT (taperedline);
   REGISTER_CIRCUIT (rectline);
   REGISTER_CIRCUIT (twistedpair);
   REGISTER_CIRCUIT (rlcg);
@@ -225,12 +229,16 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (msvia);
   REGISTER_CIRCUIT (msrstub);
   REGISTER_CIRCUIT (bondwire);
+  REGISTER_CIRCUIT (spiralinductor);
+  REGISTER_CIRCUIT (circularloop);
   REGISTER_CIRCUIT (cpwline);
   REGISTER_CIRCUIT (cpwopen);
   REGISTER_CIRCUIT (cpwshort);
   REGISTER_CIRCUIT (cpwgap);
   REGISTER_CIRCUIT (cpwstep);
   REGISTER_CIRCUIT (iprobe);
+  REGISTER_CIRCUIT (ohmmeter);
+  REGISTER_CIRCUIT (wprobe);
   REGISTER_CIRCUIT (vprobe);
   REGISTER_CIRCUIT (jfet);
   REGISTER_CIRCUIT (bjt);
@@ -255,28 +263,16 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (logicxor);
   REGISTER_CIRCUIT (digisource);
   REGISTER_CIRCUIT (buffer);
-  REGISTER_CIRCUIT (hicumL2V2p1);
-  REGISTER_CIRCUIT (HBT_X);
-  REGISTER_CIRCUIT (mod_amp);
-  REGISTER_CIRCUIT (hic2_full);
-  REGISTER_CIRCUIT (log_amp);
-  REGISTER_CIRCUIT (hic0_full);
-  REGISTER_CIRCUIT (potentiometer);
-  REGISTER_CIRCUIT (MESFET);
+
   REGISTER_CIRCUIT (EKV26MOS);
-  REGISTER_CIRCUIT (bsim3v34nMOS);
-  REGISTER_CIRCUIT (bsim3v34pMOS);
-  REGISTER_CIRCUIT (bsim4v30nMOS);
-  REGISTER_CIRCUIT (bsim4v30pMOS);
-  REGISTER_CIRCUIT (hicumL0V1p2);
-  REGISTER_CIRCUIT (hicumL0V1p2g);
-  REGISTER_CIRCUIT (hicumL0V1p3);
-  REGISTER_CIRCUIT (hicumL2V2p23);
-  REGISTER_CIRCUIT (hicumL2V2p24);
-  REGISTER_CIRCUIT (hicumL2V2p31n);
+  REGISTER_CIRCUIT (log_amp);
+  REGISTER_CIRCUIT (mod_amp);
+  REGISTER_CIRCUIT (MESFET);
+  REGISTER_CIRCUIT (nigbt);
   REGISTER_CIRCUIT (photodiode);
   REGISTER_CIRCUIT (phototransistor);
-  REGISTER_CIRCUIT (nigbt);
+  REGISTER_CIRCUIT (potentiometer);
+
   REGISTER_CIRCUIT (dff_SR);
   REGISTER_CIRCUIT (tff_SR);
   REGISTER_CIRCUIT (jkff_SR);
@@ -328,7 +324,7 @@ void module::unregisterModules (void) {
   modules.clear ();
 }
 
-#if DEBUG
+#ifndef NOMODULEPRINT
 // header prefix
 static const char * def_prefix =
 "/*\n"

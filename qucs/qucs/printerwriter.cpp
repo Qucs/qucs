@@ -23,6 +23,7 @@
 #include "printerwriter.h"
 #include "schematic.h"
 #include "textdoc.h"
+#include "qucs.h"
 
 #include <QPrinter>
 #include <QPainter>
@@ -32,9 +33,7 @@ PrinterWriter::PrinterWriter()
 {
   //default setting
   Printer = new QPrinter(QPrinter::HighResolution);
-  Printer->setOptionEnabled(QPrinter::PrintSelection, true);
-  Printer->setOptionEnabled(QPrinter::PrintPageRange, false);
-  Printer->setOptionEnabled(QPrinter::PrintToFile, true);
+
 
   Printer->setPaperSize(QPrinter::A4);
   Printer->setColorMode(QPrinter::Color);
@@ -93,10 +92,12 @@ void
 PrinterWriter::print(QWidget *doc)
 {
   QPrintDialog *dialog = new QPrintDialog(Printer, 0);
+  dialog->setOption(QAbstractPrintDialog::PrintSelection, true);
+  dialog->setOption(QAbstractPrintDialog::PrintPageRange, false);
+  dialog->setOption(QAbstractPrintDialog::PrintToFile, true);
   dialog->setWindowTitle(QObject::tr("Print Document"));
-  dialog->addEnabledOption(QAbstractPrintDialog::PrintSelection);
 
-  if (doc->inherits("QPlainTextEdit"))
+  if (QucsApp::isTextDocument(doc))
   {
     if (dialog->exec() == QDialog::Accepted) {
        static_cast<QPlainTextEdit *>(doc)->print(Printer);
@@ -113,7 +114,7 @@ PrinterWriter::print(QWidget *doc)
         return;
       }
       for (int z = Printer->numCopies(); z > 0; --z) {
-        if (Printer->aborted()) {
+        if (Printer->printerState() == QPrinter::Aborted) {
           break;
         }
 

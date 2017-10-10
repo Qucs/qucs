@@ -1,4 +1,4 @@
-PROJECT(qucs-suite CXX C)
+PROJECT(qucs-suite CXX)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 cmake_policy(VERSION 2.8)
 
@@ -22,25 +22,6 @@ ENDIF()
 message(STATUS "${PROJECT_NAME} ${CMAKE_INSTALL_PREFIX}
     ${qucs-suite_BINARY_DIR}" )
 
-# Build qucs-core (release mode) FIXME
-# * during release the repo directories are flattened
-# * simply adding qucs-core, creates target name collision qucs vs (lib)qucs.
-#  * targets must be globally unique
-# * external_project, does a copy (!)
-#  * this is perfect for 'external' tarbals or repos, but we have the code
-#    already in the tree, can we resolve the collision in another way?
-include(ExternalProject)
-IF(EXISTS ${CMAKE_SOURCE_DIR}/qucs-core )
-  ADD_SUBDIRECTORY( qucs-core )
-  #ExternalProject_Add ( qucs-core
-  #  URL ${qucs-suite_SOURCE_DIR}/qucs-core/
-  #  PREFIX  ${qucs-suite_BINARY_DIR}
-  #  INSTALL_DIR ${CMAKE_INSTALL_DIR}
-  #  INSTALL_COMMAND "make install"
-  #  #CMAKE_ARGS ${qucs-suite_CMAKE_ARGS}
-  #  )
-ENDIF()
-
 FIND_PACKAGE( Qt4 REQUIRED )
 
 SET( QT_USE_QT TRUE )
@@ -55,33 +36,22 @@ SET( QT_DEBUG TRUE)
 
 INCLUDE( ${QT_USE_FILE} )
 
-ADD_DEFINITIONS(${QT_DEFINITIONS})
+ADD_DEFINITIONS(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
 
-INCLUDE_DIRECTORIES(
-        ${CMAKE_SOURCE_DIR}
-        ${CMAKE_SOURCE_DIR}/qucs
-        #${CMAKE_SOURCE_DIR}/bitmaps ->no sources here
-        ${CMAKE_SOURCE_DIR}/components
-        ${CMAKE_SOURCE_DIR}/diagrams
-        ${CMAKE_SOURCE_DIR}/dialogs
-        #${CMAKE_SOURCE_DIR}/octave ->no sources here
-        ${CMAKE_SOURCE_DIR}/paintings
-        )
 
+ADD_SUBDIRECTORY( man )
 ADD_SUBDIRECTORY( qucs )
 ADD_SUBDIRECTORY( qucs-activefilter )
 ADD_SUBDIRECTORY( qucs-attenuator )
 #ADD_SUBDIRECTORY( qucs-doc )
-ADD_SUBDIRECTORY( qucs-edit )
 ADD_SUBDIRECTORY( qucs-filter )
-ADD_SUBDIRECTORY( qucs-help )
 ADD_SUBDIRECTORY( qucs-lib )
 ADD_SUBDIRECTORY( qucs-transcalc )
 ADD_SUBDIRECTORY( qucs-rescodes )
 #ADD_SUBDIRECTORY( examples )
 ADD_SUBDIRECTORY( translations )
 ADD_SUBDIRECTORY( contrib )
-
+ADD_SUBDIRECTORY(qucs-powercombining)
 
 #
 # Custom uninstall target

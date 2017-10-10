@@ -23,6 +23,7 @@
 #include "arrow.h"
 #include "arrowdialog.h"
 #include "schematic.h"
+#include "misc.h"
 #include <cmath>
 
 #include <QPolygon>
@@ -487,11 +488,7 @@ bool Arrow::Dialog()
   ArrowDialog *d = new ArrowDialog();
   d->HeadWidth->setText(QString::number(Width));
   d->HeadLength->setText(QString::number(Height));
-
-  QPalette palette;
-  palette.setColor(d->ColorButt->backgroundRole(), Pen.color());
-  d->ColorButt->setPalette(palette);
-
+  misc::setPickerColor(d->ColorButt, Pen.color());
   d->LineWidth->setText(QString::number(Pen.width()));
   d->SetComboBox(Pen.style());
   d->ArrowStyleBox->setCurrentIndex(Style);
@@ -509,8 +506,10 @@ bool Arrow::Dialog()
     Height = d->HeadLength->text().toDouble();
     changed = true;
   }
-  if(Pen.color() != d->ColorButt->palette().color(d->ColorButt->backgroundRole())) {
-    Pen.setColor(d->ColorButt->palette().color(d->ColorButt->backgroundRole()));
+  /// \todo deduplicate
+  QColor penColor = misc::getWidgetBackgroundColor(d->ColorButt);
+  if(Pen.color() != penColor) {
+    Pen.setColor(penColor);
     changed = true;
   }
   if(Pen.width() != d->LineWidth->text().toInt()) {

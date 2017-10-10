@@ -103,6 +103,17 @@ Marker::Marker(GraphDeque::const_iterator const& pos,
   cy = -cy_;
   fCX = float(cx);
   fCY = float(cy);
+
+  //Default setting for displaying extra parameters. The markers will show the impedance data if the chart is type "Smith".
+  //In the case of having an admittance chart, admittance will be display. 
+  if (diag()->Name == "Smith") {
+    optText = Marker::SHOW_Z;
+  } else if (diag()->Name == "ySmith") {
+    optText = Marker::SHOW_Y;
+  } else {
+    optText = 0;
+  }
+
   if(!pGraph){
     qDebug() << "no Graph in Marker::Marker";
     makeInvalid();
@@ -166,11 +177,74 @@ void Marker::initText(GraphDeque::const_iterator const& pos)
     }
   }
 
+#if 0 // merge fuzz
+  bool isCross = false;
+  int nn, nnn, m, x, y, d, dmin = INT_MAX;
+  DataX const *pD = pGraph->axis(0);
+  px  = pD->Points;
+  nnn = pD->count;
+  DataX const *pDy = pGraph->axis(1);
+  if(pDy) {   // only for 3D diagram
+    nn = pGraph->countY * pD->count;
+    py  = pDy->Points;
+    if(n >= nn) {    // is on cross grid ?
+      isCross = true;
+      n -= nn;
+      n /= nnn;
+      px += (n % nnn);
+      if(pGraph->axis(2))   // more than 2 indep variables ?
+        n  = (n % nnn) + (n / nnn) * nnn * pDy->count;
+      nnn = pDy->count;
+    }
+    else py += (n/pD->count) % pDy->count;
+  }
+
+  // find exact marker position
+  m  = nnn - 1;
+  pz = pGraph->cPointsY + 2*n;
+  if(diag()->Name=="Phasor") m = phasormk(pz,px,nnn);
+  else
+  {
+    for(nn=0; nn<nnn; nn++) {
+      diag()->calcCoordinate(px, pz, py, &fCX, &fCY, pa);
+      ++px;
+      pz += 2;
+      if(isCross) {
+	px--;
+	py++;
+	pz += 2*(pD->count-1);
+      }
+      
+      x = int(fCX+0.5) - cx;
+      y = int(fCY+0.5) - cy;
+      d = x*x + y*y;
+      if(d < dmin) {
+	dmin = d;
+	m = nn;
+      }
+    }
+  }
+  //inittext for waveac is only to find values for VarPos except for VarPos[0]
+  if(diag()->Name=="Waveac") m=0;
+  if(isCross) m *= pD->count;
+  n += m;
+#endif
+
   SplPosX = here;
 
   assert(here<pos->end());
   assert(VarPos.size());
   VarPos[0] = here->getIndep();
+#if 0 // obsolete
+  // gather text of all independent variables
+  nn = n;
+  for(unsigned i=0; (pD = pGraph->axis(i)); ++i) {
+    px = pD->Points + (nn % pD->count);
+    VarPos[i] = *px;
+    Text += pD->Var + ": " + QString::number(VarPos[i],'g',Precision) + "\n";
+    nn /= pD->count;
+  }
+#endif
 
   pGraph->samplePos(pos, VarPos); // FIXME: don't touch VarPos[0]
 
@@ -178,7 +252,40 @@ void Marker::initText(GraphDeque::const_iterator const& pos)
     qDebug() << "BUG" << VarPos[0] << here->getIndep();
   }
 }
+// ---------------------------------------------------------------------
+/*this function finds the VarPos[0] of waveac*/
+#if 0 // BUG
+void Marker::fix()
+{
+  if(!(pGraph->cPointsY)) {
+    makeInvalid();
+    return;
+  }
+  if(diag()->Name!="Waveac") return;
 
+  int nn,x,d,dmin = INT_MAX;
+  Axis const *pa;
+  if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
+  else  pa = &(diag()->zAxis);
+  double Dummy = 0.0;   // needed for 2D graph in 3D diagram
+  double px=0, *py=&Dummy, pz=0;
+  int nnn = 50*diag()->sc;
+  int m  = nnn - 1;
+  
+  for(nn=0; nn<nnn; nn++) {
+      px = diag()->wavevalX(nn);
+      diag()->calcCoordinate(&px, &pz, py, &fCX, &fCY, pa);
+      x = int(fCX+0.5) - cx;
+      d = x*x;
+      if(d < dmin) {
+	dmin = d;
+	m = nn;
+      }
+  }
+  VarPos[0] = diag()->wavevalX(m);
+  
+}
+#endif
 // ---------------------------------------------------------------------
 /*!
  * (should)
@@ -231,6 +338,7 @@ void Marker::createText()
 
   // independent variables
   nVarPos = pGraph->numAxes();
+<<<<<<< HEAD
 
   // BUG? not necessarily needed here.
   auto p = pGraph->findSample(VarPos);
@@ -242,7 +350,21 @@ void Marker::createText()
   if(SplPosX->isPt()){
     VarDep[0] = p.second->getDep().real();
     VarDep[1] = p.second->getDep().imag();
+
+#if 0 //  BUG. wrong place
+  DataX const *pD;
+  if(diag()->Name!="Waveac")
+  {
+    auto p = pGraph->findSample(VarPos);
+    VarDep[0] = p.first;
+    VarDep[1] = p.second;
   }
+  else
+  {
+    VarDep[0] = wavevalY(VarPos[0],VarPos);
+    VarDep[1] = 0;
+  }
+#endif
 
   assignText();
 }
@@ -275,6 +397,14 @@ void Marker::assignText()
   if(VarPos.size() != pGraph->numAxes()){
     qDebug() << "huh, wrong size" << VarPos.size() << pGraph->numAxes();
     VarPos.resize(pGraph->numAxes());
+#if 0 // ??
+  // now actually create text.
+  for(unsigned ii=0; (pD=pGraph->axis(ii)); ++ii) {
+    if(ii==0 && diag()->Name=="Waveac")
+      Text += "Time: " + unit(VarPos[ii]) + "\n";
+    else
+      Text += pD->Var + ": " + QString::number(VarPos[ii],'g',Precision) + "\n";
+#endif
   }
 
   for(unsigned i=0; i<pGraph->numAxes(); ++i) {
@@ -308,8 +438,35 @@ void Marker::assignText()
   if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
   else  pa = &(diag()->zAxis);
   double *pp = &(VarPos[0]);
+#if 0
+    Axis const *pa,*pt;
+  if(diag()->Name=="Phasor")
+  {
+    int z;
+    findaxismk();
+    pt=xA;
+    if(pGraph->yAxisNo == 0)  pa = yA;
+    else  pa = zA;
+    for(z=0;z<diag()->nfreqt;z++)
+    {
+      if(diag()->freq[z]<=VarPos[0]) v=diag()->freq[z];
+      if(diag()->freq[z]==VarPos[0]) break;
 
-  diag()->calcCoordinate(pp, pz, py, &fCX, &fCY, pa);
+    }
+    VarPos[0]=v;
+    pp = &(VarPos[0]);
+#endif
+
+    diag()->calcCoordinatePh(pz, &fCX, &fCY, pa, pt);
+  }
+  else
+  {
+    if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
+    else  pa = &(diag()->zAxis);
+    pp = &(VarPos[0]);
+
+    diag()->calcCoordinate(pp, pz, py, &fCX, &fCY, pa);
+  }
   diag()->finishMarkerCoordinates(fCX, fCY);
 
   cx = int(fCX+0.5);
@@ -394,6 +551,70 @@ bool Marker::moveLeftRight(bool left)
   VarPos[0] = SplPosX->getIndep();
   // other VarPos unchanged
   assignText();
+#if 0 // what's this?!
+  int n;
+  double *px;
+  double x;
+
+  DataX const *pD = pGraph->axis(0);
+  px = pD->Points;
+  if(!px) return false;
+  if(diag()->Name != "Waveac" &&diag()->Name != "Phasor")
+  {
+    for(n=0; n<pD->count; n++) {
+      if(VarPos[0] <= *px) break;
+      px++;
+    }
+    if(n == pD->count) px--;
+
+    if(left) {
+      if(px <= pD->Points) return false;
+      px--;  // one position to the left
+    }
+    else {
+      if(px >= (pD->Points + pD->count - 1)) return false;
+      px++;  // one position to the right
+    }
+    VarPos[0] = *px;
+  }
+  if(diag()->Name == "Waveac")
+  {
+    for(n=0; n < 50*diag()->sc; n++) {
+      x=diag()->wavevalX(n);
+      if(VarPos[0] <= x) break;
+    }
+    if(n == 50*diag()->sc) n--;
+
+    if(left) {
+      if(n <= 0) return false;
+      n--;  // one position to the left
+    }
+    else {
+      if(n >= 50*diag()->sc) return false;
+      n++;  // one position to the right
+    }
+    VarPos[0] = diag()->wavevalX(n);
+  }
+  if(diag()->Name == "Phasor")
+  {
+    for(n=0; n < diag()->nfreqt; n++) {
+      x=diag()->freq[n];
+      if(VarPos[0] == x) break;
+    }
+    if(n == diag()->nfreqt) n = diag()->nfreqt-1;
+
+    if(left) {
+      if(n == 0) return false;
+      n--;  // one position to the left
+    }
+    else {
+      if(n == diag()->nfreqt-1) return false;
+      n++;  // one position to the right
+    }
+    VarPos[0] = diag()->freq[n];
+  }
+  createText();
+#endif
 
   return true;
 }
@@ -546,8 +767,15 @@ QString Marker::save()
 
   s += QString::number(x1) +" "+ QString::number(y1) +" "
       +QString::number(Precision) +" "+ QString::number(numMode);
-  if(transparent)  s += " 1>";
-  else  s += " 0>";
+  if(transparent)  s += " 1";
+  else  s += " 0";
+
+  if (diag()->Name.count("Smith"))//Impedance/admittance smith charts
+  {
+    s += " " + QString::number(optText);
+  }
+
+  s+=">"; 
 
   return s;
 }
@@ -603,6 +831,14 @@ bool Marker::load(const QString& _s)
   if(n == "0")  transparent = false;
   else  transparent = true;
 
+  // for Smith charts; optional parameters to be displayed
+  n  = s.section(' ',7,7);
+  if(n.isEmpty()) return true;  // backward compatibility
+  int numOpt = n.toInt(&ok);
+  if(!ok) return false;
+  
+  optText = static_cast<extraText>(numOpt);
+
   return true;
 }
 
@@ -616,7 +852,26 @@ bool Marker::getSelected(int x_, int y_)
 
   return false;
 }
+// ------------------------------------------------------------------------
+/*will find the y value of a point in time for waveac*/
+double Marker::wavevalY(double xn,std::vector<double>& VarPos)  
+{
+  double n;
+  double af=0.0; //angles
+  double A = 0.0;
+  double yp[2];
 
+  n=VarPos[0];
+  VarPos[0]= diag()->freq[0];
+  auto p = pGraph->findSample(VarPos);
+  yp[0]=p.first;
+  yp[1]=p.second;
+
+  af = atan2 (yp[1],yp[0]);
+  A = sqrt(yp[1]*yp[1] +yp[0]*yp[0]);
+  VarPos[0]=n;
+  return A*sin(2*pi*(diag()->freq[0])*xn + af);
+}
 // ------------------------------------------------------------------------
 /*
  * the diagram this belongs to
@@ -636,6 +891,70 @@ Marker* Marker::sameNewOne(GraphDeque const *pGraph_)
   pm->setGraph(pGraph_);
   return pm;
 }
+// ------------------------------------------------------------------------
+QString Marker::unit(double n)
+{
+  QString value="";
+  if(n < 1e-9)
+  {
+    n/= 1e-9;
+    value.setNum(n);
+    value+= " p";
+  }
+  else if(n < 1e-6)
+  {
+    n/= 1e-9;
+    value.setNum(n);
+    value+= " n";
+  }
+  else if(n < 1e-3)
+  {
+    n/= 1e-6;
+    value.setNum(n);
+    value+= " u";
+  }
+  else if(n < 1)
+  {
+    n/= 1e-3;
+    value.setNum(n);
+    value+= " m";
+  }
+  else
+  {
+    value.setNum(n);
+  }
+  return value;
+
+}
+int Marker::phasormk(double *pz,double *px,int max)
+{
+  int m,n,nn,x,y,d,dmin = INT_MAX;
+  Axis const *pa,*pt;
+
+  findaxismk();
+  pt=xA;
+  if(pGraph->yAxisNo == 0)  pa = yA;
+  else  pa = zA;
+
+  for(nn=0; nn<max; nn++) {
+    for(n=0;n<diag()->nfreqt;n++)
+    {
+      if(diag()->freq[n]==*px) break;
+    }
+    if(n < diag()->nfreqt) diag()->calcCoordinatePh(pz, &fCX, &fCY, pa, pt);
+    ++px;
+    pz += 2;
+      
+    x = int(fCX+0.5) - cx;
+    y = int(fCY+0.5) - cy;
+    d = x*x + y*y;
+    if(d < dmin) {
+      dmin = d;
+      m = nn;
+    }
+  }
+  return m;
+}
 
 // ------------------------------------------------------------------------
 void Marker::setGraph(GraphDeque const *d)
@@ -646,4 +965,40 @@ void Marker::setGraph(GraphDeque const *d)
 //  SplPosX = invalid
 }
 
+#if 0 // ?!
+void Marker::findaxismk()
+{
+  QString var = pGraph->Var;
+    
+    xA = &(diag()->xAxis);
+    yA = &(diag()->yAxis);
+    zA = &(diag()->zAxis);
+
+    if(var.indexOf(".v",0,Qt::CaseSensitive) != -1)
+    {
+      xA = &(diag()->xAxisV);
+      yA = &(diag()->yAxisV);
+      zA = &(diag()->zAxisV);
+    }
+    else if(var.indexOf(".i",0,Qt::CaseSensitive) != -1)
+    {
+      xA = &(diag()->xAxisI);
+      yA = &(diag()->yAxisI);
+      zA = &(diag()->zAxisI);
+    }
+    else if(var.indexOf(".S",0,Qt::CaseSensitive) != -1)
+    {
+      xA = &(diag()->xAxisP);
+      yA = &(diag()->yAxisP);
+      zA = &(diag()->zAxisP);
+    }
+    else if(var.indexOf(".Ohm",0,Qt::CaseSensitive) != -1)
+    {
+      xA = &(diag()->xAxisZ);
+      yA = &(diag()->yAxisZ);
+      zA = &(diag()->zAxisZ);
+    }
+
+}
+#endif
 // vim:ts=8:sw=2:noet

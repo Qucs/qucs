@@ -43,6 +43,8 @@ private:
   void initText(GraphDeque::const_iterator const&);
   void assignText();
 public:
+  void    fix();
+  QString unit(double);
   void    createText();
   void    makeInvalid();
   bool    moveLeftRight(bool);
@@ -56,12 +58,15 @@ public:
   bool    getSelected(int, int);
   Marker* sameNewOne(GraphDeque const*);
   void setGraph(GraphDeque const*);
+  // double wavevalY(double ,std::vector<double>& ); // BUG
   void    getTextSize();
   GraphDeque const* graph() const {return pGraph;}
   int precision() const {return Precision;}
   std::vector<double> const& varPos() const {return VarPos;}
   const Diagram *diag() const;
   GraphDeque::MarkerPos splPos() const;
+  int phasormk(double*,double*,int);
+  void findaxismk();
 public: // power matching stuff. some sort of VarPos (ab?)use
   double  powFreq() const {return VarPos[0];}
   double  powReal() const {return VarDep[0];}
@@ -80,6 +85,7 @@ private:
 public:
   QString Text;     // the string to be displayed in the marker text
   bool transparent; // background shines through marker body
+  Axis const*xA,*yA,*zA;
 
 // private: // not yet, cross-manipulated by MarkerDialog
   int Precision; // number of digits to show
@@ -88,6 +94,17 @@ public:
 public: // shouldn't be there, cross-manipulated by MarkerDialog
         // to be implemented within SmithDiagram.
 	double Z0;		//Only used in smith chart marker, to convert S to Z
+
+  // These flags indicate the optional parameters to be displayed
+  // Currently used only for Smith charts
+  enum extraText {
+    SHOW_Z  = 0x01,
+    SHOW_Y  = 0x02,
+    SHOW_ZS = 0x04,
+    SHOW_ZP = 0x08
+  };
+
+  unsigned optText;  // selected optional parameters
 };
 
 #endif

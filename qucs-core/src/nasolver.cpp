@@ -22,10 +22,12 @@
  *
  */
 
-// the types required for qucs library files are defined
-// in qucs_typedefs.h, created by configure from
-// qucs_typedefs.h.in
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#else
+// BUG
 #include "qucs_typedefs.h"
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1354,10 +1356,41 @@ void nasolver<nr_type_t>::saveResults (const std::string &volts, const std::stri
             if (!c->isProbe ()) continue;
             if (!c->getSubcircuit().empty() && !(saveOPs & SAVE_ALL)) continue;
             if (volts != "vn")
-                c->saveOperatingPoints ();	    
+                c->saveOperatingPoints ();
 	    std::string n = createOP (c->getName (), volts);
             saveVariable (n, nr_complex_t (c->getOperatingPoint ("Vr"),
-                                   c->getOperatingPoint ("Vi")), f);
+            c->getOperatingPoint ("Vi")), f);
+
+	    //add watt probe data
+	    c->calcOperatingPoints ();
+	    for (auto ops: c->getOperatingPoints ())
+            {
+		//It will only get values if none of the strings are 0
+		//Once again most of this is adapted from Vprobe and Iprobe
+                operatingpoint &p = ops.second;
+	        if (strcmp(p.getName(), "Vi") == 0) continue;
+                if (strcmp(p.getName(), "VAi") == 0) continue;
+	        if (strcmp(p.getName(), "Vr") == 0) continue;
+		if (strcmp(p.getName(), "VAr") == 0)
+		{
+              	    std::string n = createOP(c->getName(), "S");
+              	    saveVariable (n, nr_complex_t (c->getOperatingPoint ("VAr"),
+                    c->getOperatingPoint ("VAi")), f);
+		   continue;
+		}
+	        //add ohmmeter data
+           	if (strcmp(p.getName(), "X") == 0)  continue;
+           	if (strcmp(p.getName(), "R") == 0) {//create values for ohmmeter
+	      	    std::string n = createOP (c->getName (), "Ohm");
+              	    saveVariable (n, nr_complex_t (c->getOperatingPoint ("R"),
+		    c->getOperatingPoint ("X")), f);
+		    continue;
+	   	}
+           	
+           	std::string n = createOP(c->getName(), p.getName());
+           	saveVariable(n, p.getValue(), f);
+       	    }	    
+	    	    
         }
     }
 

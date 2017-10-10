@@ -67,7 +67,7 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
   setWindowTitle(tr("Qucs Simulation Messages"));
   QucsDoc *Doc;
   DocWidget = w;
-  if(DocWidget->inherits("QTextEdit"))
+  if(QucsApp::isTextDocument(DocWidget))
     Doc = (QucsDoc*) ((TextDoc*)DocWidget);
   else
     Doc = (QucsDoc*) ((Schematic*)DocWidget);
@@ -76,7 +76,7 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
   DataDisplay = Doc->DataDisplay;
   Script = Doc->Script;
   QFileInfo Info(DocName);
-  DataSet = QDir::convertSeparators(Info.path()) +
+  DataSet = QDir::toNativeSeparators(Info.path()) +
     QDir::separator() + Doc->DataSet;
   showBias = Doc->showBias;     // save some settings as the document...
   SimOpenDpl = Doc->SimOpenDpl; // ...could be closed during the simulation.
@@ -179,7 +179,7 @@ bool SimMessage::startProcess()
 
   Stream.setDevice(&NetlistFile);
 
-  if(!DocWidget->inherits("QTextEdit")) {
+  if(!QucsApp::isTextDocument(DocWidget)) {
     SimPorts =
        ((Schematic*)DocWidget)->prepareNetlist(Stream, Collect, ErrText);
     if(SimPorts < -5) {
@@ -326,7 +326,7 @@ void SimMessage::slotFinishSpiceNetlist(int status )
 #ifdef __MINGW32__
 #include <windows.h>
 static QString pathName(QString longpath) {
-  const char * lpath = QDir::convertSeparators(longpath).ascii();
+  const char * lpath = QDir::toNativeSeparators(longpath).toAscii();
   char spath[2048];
   int len = GetShortPathNameA(lpath,spath,sizeof(spath)-1);
   spath[len] = '\0';
@@ -350,7 +350,7 @@ void SimMessage::startSimulator()
 
   QString SimTime;
   QStringList Arguments;
-  QString SimPath = QDir::convertSeparators (QucsSettings.QucsHomeDir.absolutePath());
+  QString SimPath = QDir::toNativeSeparators(QucsSettings.QucsHomeDir.absolutePath());
 #ifdef __MINGW32__
   QString QucsDigiLib = "qucsdigilib.bat";
   QString QucsDigi = "qucsdigi.bat";
@@ -365,7 +365,7 @@ void SimMessage::startSimulator()
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
 
   // Simulate text window.
-  if(DocWidget->inherits("QTextEdit")) {
+  if(QucsApp::isTextDocument(DocWidget)) {
 
     TextDoc * Doc = (TextDoc*)DocWidget;
 
@@ -408,7 +408,7 @@ void SimMessage::startSimulator()
       QString entity = VInfo.EntityName.toLower();
       QString lib = Doc->Library.toLower();
       if (lib.isEmpty()) lib = "work";
-      QString dir = QDir::convertSeparators (QucsSettings.QucsHomeDir.path());
+      QString dir = QDir::toNativeSeparators(QucsSettings.QucsHomeDir.path());
       QDir vhdlDir(dir);
       if(!vhdlDir.exists("vhdl"))
 	if(!vhdlDir.mkdir("vhdl")) {

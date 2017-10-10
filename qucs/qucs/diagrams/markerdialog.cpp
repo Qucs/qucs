@@ -27,7 +27,7 @@
 
 
 MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent)
-                     : QDialog(parent, 0, FALSE, Qt::WDestructiveClose)
+                     : QDialog(parent, Qt::WDestructiveClose)
 {
   setWindowTitle(tr("Edit Marker Properties"));
   pMarker = pm_;
@@ -42,28 +42,46 @@ MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent)
   g->addWidget(Precision, 0, 1);
 
   NumberBox = new QComboBox();
-  NumberBox->insertItem(tr("real/imaginary"));
-  NumberBox->insertItem(tr("magnitude/angle (degree)"));
-  NumberBox->insertItem(tr("magnitude/angle (radian)"));
-  NumberBox->setCurrentItem(pMarker->numMode);
+  NumberBox->addItem(tr("real/imaginary"));
+  NumberBox->addItem(tr("magnitude/angle (degree)"));
+  NumberBox->addItem(tr("magnitude/angle (radian)"));
+  NumberBox->setCurrentIndex(pMarker->numMode);
 
   g->addWidget(new QLabel(tr("Number Notation: ")), 1,0);
   g->addWidget(NumberBox, 1, 1);
 
   assert(pMarker->diag());
-  if(pMarker->diag()->Name=="Smith") // BUG
+  if(pMarker->diag()->Name.count("Smith")) // BUG
   {
     //S parameter also displayed as Z, need Z0 here
-		SourceImpedance = new QLineEdit();
-  	SourceImpedance->setText(QString::number(pMarker->Z0));
+    SourceImpedance = new QLineEdit();
+    SourceImpedance->setText(QString::number(pMarker->Z0));
 
-		g->addWidget(new QLabel(tr("Z0: ")), 2,0);
-		g->addWidget(SourceImpedance,2,1);
-	}
+    g->addWidget(new QLabel(tr("Z0: ")), 2,0);
+    g->addWidget(SourceImpedance,2,1);
+    ZYSelectBox = new QWidget();
+    QGridLayout *gridZY = new QGridLayout();
+    ZCheckBox = new QCheckBox("Impedance");
+    YCheckBox = new QCheckBox("Admittance");
+    ZSCheckBox = new QCheckBox("Series eq. circuit");
+    ZPCheckBox = new QCheckBox("Parallel eq. circuit");    
+    gridZY->addWidget(ZCheckBox, 0, 0);
+    gridZY->addWidget(YCheckBox, 0, 1);
+    gridZY->addWidget(ZSCheckBox, 1, 0);
+    gridZY->addWidget(ZPCheckBox, 1, 1);
+    ZCheckBox->setChecked(pMarker->optText & Marker::SHOW_Z);
+    YCheckBox->setChecked(pMarker->optText & Marker::SHOW_Y);
+    ZSCheckBox->setChecked(pMarker->optText & Marker::SHOW_ZS);
+    ZPCheckBox->setChecked(pMarker->optText & Marker::SHOW_ZP);
+    ZYSelectBox->setLayout(gridZY);
+
+    g->addWidget(new QLabel("Extra parameters"),3,0);
+    g->addWidget(ZYSelectBox,3,1);
+   }
   
   TransBox = new QCheckBox(tr("transparent"));
   TransBox->setChecked(pMarker->transparent);
-  g->addMultiCellWidget(TransBox,3,3,0,1);
+  g->addWidget(TransBox,4,0);
 
   // first => activated by pressing RETURN
   QPushButton *ButtOK = new QPushButton(tr("OK"));
@@ -76,7 +94,7 @@ MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent)
   b->setSpacing(5);
   b->addWidget(ButtOK);
   b->addWidget(ButtCancel);
-  g->addMultiCellLayout(b,4,4,0,1);
+  g->addLayout(b,5,0,1,2);
 
   this->setLayout(g);
 }
@@ -95,17 +113,26 @@ void MarkerDialog::slotAcceptValues()
     changed = true;
   }
   assert(pMarker->diag());
-  if(pMarker->diag()->Name=="Smith") // BUG: need generic MarkerDialog.
-	{
-			double SrcImp = SourceImpedance->text().toDouble();
-			if(SrcImp != pMarker->Z0)
-			{
-					pMarker->Z0 = SrcImp;
-					changed = true;
-			}
-	}
-  if(NumberBox->currentItem() != pMarker->numMode) {
-    pMarker->numMode = NumberBox->currentItem();
+
+   if(pMarker->diag()->Name.count("Smith")) // BUG: need generic MarkerDialog.
+   {
+      double SrcImp = SourceImpedance->text().toDouble();
+      if(SrcImp != pMarker->Z0)
+      {
+	pMarker->Z0 = SrcImp;
+      }
+    //Update extra marker data display settings
+      pMarker->optText =
+        (ZCheckBox->isChecked()) * Marker::SHOW_Z +
+        (YCheckBox->isChecked()) * Marker::SHOW_Y +
+        (ZSCheckBox->isChecked()) * Marker::SHOW_ZS +
+        (ZPCheckBox->isChecked()) * Marker::SHOW_ZP;
+
+    changed = true;
+   }
+
+  if(NumberBox->currentIndex() != pMarker->numMode) {
+    pMarker->numMode = NumberBox->currentIndex();
     changed = true;
   }
   if(TransBox->isChecked() != pMarker->transparent) {

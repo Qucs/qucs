@@ -25,6 +25,7 @@
 
 class QucsTranscalc;
 
+
 class transline {
  public:
   transline ();

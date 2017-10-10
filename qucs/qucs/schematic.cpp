@@ -53,6 +53,7 @@
 #include "components/vhdlfile.h"
 #include "components/verilogfile.h"
 #include "components/vafile.h"
+#include "misc.h"
 
 // just dummies for empty lists
 Q3PtrList<Wire>      SymbolWires;
@@ -102,7 +103,7 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
 
   setVScrollBarMode(Q3ScrollView::AlwaysOn);
   setHScrollBarMode(Q3ScrollView::AlwaysOn);
-  viewport()->setPaletteBackgroundColor(QucsSettings.BGColor);
+  misc::setWidgetBackgroundColor(viewport(), QucsSettings.BGColor);
   viewport()->setMouseTracking(true);
   viewport()->setAcceptDrops(true);  // enable drag'n drop
 
@@ -707,7 +708,8 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
 
         selected = pd->isSelected;
         pd->isSelected = false;
-        pd->paint(p);  // paint all selected diagrams with graphs and markers
+        pd->paintDiagram(p);  // paint all selected diagrams with graphs and markers
+        pd->paintMarkers(p,printAll);
         pd->isSelected = selected;
 
         // revert selection of graphs and markers
@@ -974,10 +976,11 @@ void Schematic::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
 
     pl = pw->Label;
     if(pl) {     // check position of wire label
-      if(pl->x1 < xmin)  xmin = pl->x1;
-      if((pl->x1+pl->x2) > xmax)  xmax = pl->x1 + pl->x2;
-      if(pl->y1 > ymax)  ymax = pl->y1;
-      if((pl->y1-pl->y2) < ymin)  ymin = pl->y1 - pl->y2;
+        pl->getLabelBounding(x1,y1,x2,y2);
+        if(x1 < xmin) xmin = x1;
+        if(x2 > xmax) xmax = x2;
+        if(y1 < ymin) ymin = y1;
+        if(y2 > ymax) ymax = y2;
     }
   }
 
@@ -985,10 +988,11 @@ void Schematic::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
   for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
     pl = pn->Label;
     if(pl) {     // check position of node label
-      if(pl->x1 < xmin)  xmin = pl->x1;
-      if((pl->x1+pl->x2) > xmax)  xmax = pl->x1 + pl->x2;
-      if(pl->y1 > ymax)  ymax = pl->y1;
-      if((pl->y1-pl->y2) < ymin)  ymin = pl->y1 - pl->y2;
+        pl->getLabelBounding(x1,y1,x2,y2);
+        if(x1 < xmin) xmin = x1;
+        if(x2 > xmax) xmax = x2;
+        if(y1 < ymin) ymin = y1;
+        if(y2 > ymax) ymax = y2;
     }
   }
 
@@ -1880,7 +1884,8 @@ void Schematic::switchPaintMode()
 void Schematic::contentsWheelEvent(QWheelEvent *Event)
 {
   App->editText->setHidden(true);  // disable edit of component property
-  int delta = Event->delta() >> 1;     // use smaller steps
+  // use smaller steps; typically the returned delta() is a multiple of 120
+  int delta = Event->delta() >> 1;
 
   // ...................................................................
   if((Event->modifiers() & Qt::ShiftModifier) ||
@@ -1892,9 +1897,9 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
   }
   // ...................................................................
   else if(Event->modifiers() & Qt::ControlModifier) {  // use mouse wheel to zoom ?
-      float Scaling;
-      if(delta < 0) Scaling = float(delta)/-60.0/1.1;
-      else Scaling = 1.1*60.0/float(delta);
+      // zoom factor scaled according to the wheel delta, to accomodate
+      //  values different from 60 (slower or faster zoom)
+      float Scaling = pow(1.1, delta/60.0);
       zoom(Scaling);
       Scaling -= 1.0;
       scrollBy( int(Scaling * float(Event->pos().x())),
@@ -2076,7 +2081,7 @@ void Schematic::contentsDropEvent(QDropEvent *Event)
 
     // URI:  file:/home/linuxuser/Desktop/example.sch
     foreach(QUrl url, urls) {
-      App->gotoPage(QDir::convertSeparators(url.toLocalFile()));
+      App->gotoPage(QDir::toNativeSeparators(url.toLocalFile()));
     }
 
     d->DocChanged = changed;
@@ -2182,6 +2187,7 @@ void Schematic::contentsDragMoveEvent(QDragMoveEvent *Event)
   Event->accept();
 }
 
+#if 0 // what is this?!
 void Schematic::getSelAreaWidthAndHeight(int &wsel, int &hsel, int& xmin_sel_, int& ymin_sel_)
 {
     int xmin= INT_MAX,
@@ -2257,5 +2263,6 @@ void Schematic::getSelAreaWidthAndHeight(int &wsel, int &hsel, int& xmin_sel_, i
     xmin_sel_ = xmin;
     ymin_sel_ = ymin;
 }
+#endif
 
 // vim:ts=8:sw=2:noet

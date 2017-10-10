@@ -22,6 +22,8 @@
 # Boston, MA 02110-1301, USA.
 #
 
+include ../common.mk
+
 noinst_PROGRAMS = qucsfilter
 
 MOCHEADERS = qf_dialog.h qf_box.h
@@ -47,11 +49,7 @@ qucsfilter_SOURCES = qf_api.cpp\
        qf_settings.cpp\
        qf_dialog.cpp\
        qf_box.cpp\
-       qrc_qucsfilter.cpp
-
-
-qrc_qucsfilter.cpp: qucsfilter.qrc
-	$(RCC) -o $@ $<
+       qucsfilter.qrc
 
 nodist_qucsfilter_SOURCES = $(MOCFILES)
 
@@ -78,11 +76,6 @@ noinst_HEADERS = $(MOCHEADERS) \
        qf_transform.h\
        qf_settings.h\
        qf_zigzag.h
-
-SUFFIXES = .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -o $@ $<
 
 CLEANFILES = *~
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp

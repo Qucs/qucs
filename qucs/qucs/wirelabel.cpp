@@ -106,22 +106,25 @@ bool WireLabel::getSelected(int x, int y)
 // ----------------------------------------------------------------
 void WireLabel::paint(ViewPainter *p)
 {
-  QFont font = p->Painter->font();
+  QFont f = p->Painter->font(); // save current font
+  QFont newFont = f;
+
   if (isHighlighted)
   {
 //    QColor highlightfill (Qt::blue);
 //    highlightfill.setAlpha(50);
 //    p->fillRect(x1-1, y1-1, x2, y2, highlightfill);
     p->Painter->setPen(QPen(Qt::darkBlue,3));
-    font.setWeight (QFont::DemiBold);
+    newFont.setWeight (QFont::Bold);
   }
   else
   {
-    font.setWeight (QFont::Normal);
+    newFont.setWeight (QFont::Normal);
     p->Painter->setPen(QPen(Qt::black,1));
   }
-  p->Painter->setFont (font);
+  p->Painter->setFont (newFont);
   x2 = p->drawText(Name, x1, y1, &y2);
+  p->Painter->setFont(f); // restore old font
 
   int xpaint=0, ypaint=4, phi=0;
   switch(Type) {
@@ -215,4 +218,14 @@ QString WireLabel::save()
 	  +  QString::number(x1)+" "+QString::number(y1)+" 0 \""
 	  +  initValue+"\">";
   return s;
+}
+
+
+void WireLabel::getLabelBounding(int& _xmin, int& _ymin, int& _xmax, int& _ymax)
+{
+    _xmin = std::min(x1,x1+(x2+6));
+    _xmax = std::max(x1,x1+(x2+6));
+    _ymin = std::min(y1,y1+(y2+6));
+    _ymax = std::max(y1,y1+(y2+5));
+    _ymax = std::max(cy,_ymax);
 }

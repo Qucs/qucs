@@ -34,14 +34,14 @@ FOREACH( type ${ParserTypes} )
   ADD_CUSTOM_COMMAND(
     OUTPUT ${BO_${type}}
     COMMAND ${BISON_EXECUTABLE}
-              --defines=${CMAKE_CURRENT_BINARY_DIR}/tokens_${type}.h
+              --defines=${CMAKE_CURRENT_BINARY_DIR}/parse_${type}.hpp
               --output=${CMAKE_CURRENT_BINARY_DIR/}parse_${type}.cpp
-              ${CMAKE_CURRENT_SOURCE_DIR}/parse_${type}.y
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/parse_${type}.y
+              ${CMAKE_CURRENT_SOURCE_DIR}/parse_${type}.ypp
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/parse_${type}.ypp
     )
 
   # Create custom Flex
-  SET(FI_${type} ${CMAKE_CURRENT_SOURCE_DIR}/scan_${type}.l )
+  SET(FI_${type} ${CMAKE_CURRENT_SOURCE_DIR}/scan_${type}.lpp )
   SET(FO_${type} ${CMAKE_CURRENT_BINARY_DIR}/scan_${type}.cpp )
   ADD_CUSTOM_COMMAND(
     OUTPUT ${FO_${type}}

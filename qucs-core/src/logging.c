@@ -26,11 +26,15 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
+
 #include <stdlib.h>
 #include <stdarg.h>
 
 #include "logging.h"
+
+/* Both of the log level dependent FILE streams. */
+FILE * file_status = NULL;
+FILE * file_error = NULL;
 
 /* This function prints the given messages format and the appropriate
    arguments to a FILE stream depending on the given log level. */
@@ -52,9 +56,10 @@ void loginit (void) {
   file_error = file_status = stderr;
 }
 
-/* Both of the log level dependent FILE streams. */
-FILE * file_status = NULL;
-FILE * file_error = NULL;
+/* Customize logging. */
+void redirect_status_to_stdout(){
+	file_status = stdout;
+}
 
 /* Last number of '*' in the progress bar. */
 int progressbar_last = 0;

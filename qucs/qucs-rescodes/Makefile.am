@@ -22,6 +22,8 @@
 # Boston, MA 02110-1301, USA.
 #
 
+include ../common.mk
+
 bin_PROGRAMS = qucsrescodes
 
 #dist_man_MANS = qucsattenuator.1
@@ -30,17 +32,14 @@ MOCHEADERS = helpdialog.h mycolorbox.h myresistancebox.h mywidget.h qresistor.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 qucsrescodes_SOURCES = \
-  main.cpp \
+	main.cpp \
 	helpdialog.cpp \
-  mycolorbox.cpp \
+	mycolorbox.cpp \
 	myresistancebox.cpp \
 	notation.cpp \
 	qresistor.cpp \
 	resistor.cpp \
-  qrc_qucsrescodes.cpp
-
-qrc_qucsrescodes.cpp: qucsrescodes.qrc
-	$(RCC) -o $@ $<
+	qucsrescodes.qrc
 
 nodist_qucsrescodes_SOURCES = $(MOCFILES)
 
@@ -50,9 +49,11 @@ qucsrescodes_LDADD = $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = $(MOCHEADERS) classproto.h
 
-.h.moc.cpp:
-	$(MOC) -o $@ $<
-
-CLEANFILES = *~
+CLEANFILES = *~ qucsrescodes.cpp
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
 DISTCLEANFILES = *.moc.cpp
+EXTRA_DIST = ${BITMAPS}
+BITMAPS = \
+	bitmaps/next.png \
+	bitmaps/previous.png \
+	bitmaps/big.qucs.xpm

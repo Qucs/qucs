@@ -116,7 +116,7 @@ int main (int argc, char ** argv) {
     }
     else if (!strcmp (argv[i], "-o")) {
       outfile = argv[++i];
-      file_status = stdout;
+      redirect_status_to_stdout();
     }
     else if (!strcmp (argv[i], "-b") || !strcmp (argv[i], "--bar")) {
       progressbar_enable = 1;
@@ -147,7 +147,7 @@ int main (int argc, char ** argv) {
   // create static modules
   module::registerModules ();
 
-#if DEBUG
+#ifndef NOMODULEPRINT
   // emit C-code for available definitions if requested and exit
   if (listing) {
     module::print ();

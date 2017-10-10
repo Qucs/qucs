@@ -22,10 +22,12 @@
  *
  */
 
-// the types required for qucs library files are defined
-// in qucs_typedefs.h, created by configure from
-// qucs_typedefs.h.in
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#else
+// BUG
 #include "qucs_typedefs.h"
+#endif
 
 #include <assert.h>
 #include <time.h>
@@ -1243,7 +1245,7 @@ void eqnsys<nr_type_t>::chop_svd (void) {
   nr_double_t Max, Min;
   Max = 0.0;
   for (c = 0; c < N; c++) if (fabs (S_(c)) > Max) Max = fabs (S_(c));
-  Min = Max * std::numeric_limits<nr_double_t>::max();
+  Min = Max * std::numeric_limits<nr_double_t>::epsilon();
   for (c = 0; c < N; c++) if (fabs (S_(c)) < Min) S_(c) = 0.0;
 }
 

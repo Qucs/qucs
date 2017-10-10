@@ -67,6 +67,7 @@ public:
   QucsDoc *getDoc(int No=-1);
   QucsDoc* findDoc (QString, int * Pos = 0);
   QString fileType (const QString&);
+  static bool isTextDocument(QWidget *);
 
   QString ProjName;   // name of the project, that is open
   QHash<QString,QString> schNameHash; // QHash for the schematic files lookup
@@ -86,7 +87,7 @@ protected:
 
 public slots:
   void slotFileNew();     // generate a new schematic in the view TabBar
-  void slotTextNew();     // generate a new text editor in the view TabBar
+  void slotTextNew();     // edit text in the built editor or user defined editor
   void slotFileOpen();    // open a document
   void slotFileSave();    // save a document
   void slotFileSaveAs();  // save a document under a different filename
@@ -131,9 +132,11 @@ public slots:
   void slotCMenuInsert();
 
   void slotUpdateTreeview();
+
+  void slotMenuProjClose();
+
 private slots:
   void slotMenuProjOpen();
-  void slotMenuProjClose();
   void slotMenuProjDel();
   void slotListProjOpen(const QModelIndex &);
   void slotSelectSubcircuit(const QModelIndex &);
@@ -195,6 +198,7 @@ private:
   QString  QucsFileFilter;
   QFileSystemModel *m_homeDirModel;
   QFileSystemModel *m_projModel;
+  int ccCurIdx; // CompChooser current index (used during search)
 
 // ********** Methods ***************************************************
   void initView();
@@ -211,7 +215,6 @@ private:
   void switchEditMode(bool);
   void changeSchematicSymbolMode(Schematic*);
   bool recurRemove(const QString &);
-  bool isTextDocument(QWidget *);
   void closeFile(int);
 
   void updateRecentFilesList(QString s);
@@ -287,10 +290,10 @@ public:
   QAction *insWire, *insLabel, *insGround, *insPort, *insEquation, *magPlus,
           *editRotate, *editMirror, *editMirrorY, *editPaste, *select,
           *editActivate, *wire, *editDelete, *setMarker, *onGrid, *moveText,
-          *helpIndex, *helpGetStart, *callEditor, *callFilter, *callLine, *callActiveFilter,
+          *helpOnline, *callEditor, *callFilter, *callLine, *callActiveFilter,
           *showMsg, *showNet, *alignTop, *alignBottom, *alignLeft, *alignRight,
           *distrHor, *distrVert, *selectAll, *callLib, *callMatch, *changeProps,
-          *addToProj, *editFind, *insEntity, *selectMarker,
+          *addToProj, *editFind, *insEntity, *selectMarker, *callPowerComb,
           *createLib, *importData, *graph2csv, *createPkg, *extractPkg,
           *callAtt, *callRes, *centerHor, *centerVert, *loadModule, *buildModule;
 
@@ -338,8 +341,8 @@ public slots:
   void slotCallMatch();
   void slotCallAtt();
   void slotCallRes();
-  void slotHelpIndex();       // shows a HTML docu: Help Index
-  void slotGettingStarted();  // shows a HTML docu: Getting started
+  void slotHelpOnline();
+  void slotCallPowerComb();
   void slotChangeProps();
   void slotAddToProject();
   void slotApplyCompText();

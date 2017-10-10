@@ -37,6 +37,10 @@
 #include <QComboBox>
 #include <QDockWidget>
 #include <QTreeWidgetItem>
+#include <QMutableHashIterator>
+#include <QListWidget>
+#include <QDesktopServices>
+#include <QUrl>
 
 #include "projectView.h"
 #include "main.h"
@@ -57,6 +61,7 @@
 #include "dialogs/packagedialog.h"
 #include "dialogs/aboutdialog.h"
 #include "module.h"
+#include "misc.h"
 
 // for editing component name on schematic
 QRegExp  Expr_CompProp;
@@ -78,7 +83,7 @@ bool QucsApp::performToggleAction(bool on, QAction *Action,
     return false;
   }
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   do {
     if(Function) if((Doc->*Function)()) {
       Action->blockSignals(true);
@@ -145,13 +150,13 @@ void QucsApp::slotEditMirrorY(bool on)
 // \todo update the status or tooltip message
 void QucsApp::slotEditActivate (bool on)
 {
-  TextDoc * Doc = (TextDoc *) DocumentTab->currentPage ();
+  TextDoc * Doc = (TextDoc *) DocumentTab->currentWidget ();
   if (isTextDocument (Doc)) {
     //TODO Doc->clearParagraphBackground (Doc->tmpPosX);
     Doc->commentSelected ();
 
     editActivate->blockSignals (true);
-    editActivate->setOn (false);  // release toolbar button
+    editActivate->setChecked(false);  // release toolbar button
     editActivate->blockSignals (false);
   }
   else
@@ -164,7 +169,7 @@ void QucsApp::slotEditActivate (bool on)
 // Is called if "Delete"-Button is pressed.
 void QucsApp::slotEditDelete(bool on)
 {
-  TextDoc *Doc = (TextDoc*)DocumentTab->currentPage();
+  TextDoc *Doc = (TextDoc*)DocumentTab->currentWidget();
   if(isTextDocument(Doc)) {
     Doc->viewport()->setFocus();
     //Doc->del();
@@ -213,7 +218,7 @@ void QucsApp::slotMoveText(bool on)
 // Is called, when "Zoom in" action is triggered.
 void QucsApp::slotZoomIn(bool on)
 {
-  TextDoc *Doc = (TextDoc*)DocumentTab->currentPage();
+  TextDoc *Doc = (TextDoc*)DocumentTab->currentWidget();
   if(isTextDocument(Doc)) {
     Doc->zoomBy(1.5f);
     magPlus->blockSignals(true);
@@ -236,7 +241,7 @@ void QucsApp::slotEscape()
 // Is called when the select toolbar button is pressed.
 void QucsApp::slotSelect(bool on)
 {
-  QWidget *w = DocumentTab->currentPage();
+  QWidget *w = DocumentTab->currentWidget();
   if(isTextDocument(w)) {
     ((TextDoc*)w)->viewport()->setFocus();
       select->blockSignals(true);
@@ -246,7 +251,7 @@ void QucsApp::slotSelect(bool on)
   }
 
   // goto to insertWire mode if ESC pressed during wiring
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(MouseMoveAction == &MouseActions::MMoveWire2) {
     MouseMoveAction = &MouseActions::MMoveWire1;
     MousePressAction = &MouseActions::MPressWire1;
@@ -268,39 +273,39 @@ void QucsApp::slotSelect(bool on)
 // --------------------------------------------------------------------
 void QucsApp::slotEditCut()
 {
-  statusBar()->message(tr("Cutting selection..."));
+  statusBar()->showMessage(tr("Cutting selection..."));
   slotHideEdit(); // disable text edit of component property
 
-  QWidget *Doc = DocumentTab->currentPage();
+  QWidget *Doc = DocumentTab->currentWidget();
   if(isTextDocument (Doc)) {
     ((TextDoc *)Doc)->cut();
   } else {
     ((Schematic *)Doc)->cut();
   }
 
-  statusBar()->message(tr("Ready."));
+  statusBar()->showMessage(tr("Ready."));
 }
 
 // --------------------------------------------------------------------
 void QucsApp::slotEditCopy()
 {
-  statusBar()->message(tr("Copying selection to clipboard..."));
+  statusBar()->showMessage(tr("Copying selection to clipboard..."));
 
-  QWidget *Doc = DocumentTab->currentPage();
+  QWidget *Doc = DocumentTab->currentWidget();
   if(isTextDocument (Doc)) {
     ((TextDoc *)Doc)->copy();
   } else {
     ((Schematic *)Doc)->copy();
   }
 
-  statusBar()->message(tr("Ready."));
+  statusBar()->showMessage(tr("Ready."));
 }
 
 // -----------------------------------------------------------------------
 void QucsApp::slotEditPaste(bool on)
 {
   // get the current document
-  QWidget *Doc = DocumentTab->currentPage();
+  QWidget *Doc = DocumentTab->currentWidget();
 
   // if the current document is a text document paste in
   // the contents of the clipboard as text
@@ -359,7 +364,7 @@ void QucsApp::slotEditPaste(bool on)
 // -----------------------------------------------------------------------
 void QucsApp::slotInsertEntity ()
 {
-  TextDoc * Doc = (TextDoc *) DocumentTab->currentPage ();
+  TextDoc * Doc = (TextDoc *) DocumentTab->currentWidget ();
   Doc->viewport()->setFocus ();
   //TODO Doc->clearParagraphBackground (Doc->tmpPosX);
   Doc->insertSkeleton ();
@@ -397,7 +402,7 @@ void QucsApp::slotInsertEquation(bool on)
 
   view->selElem = new Equation();
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(view->drawn) Doc->viewport()->update();
   view->drawn = false;
   MouseMoveAction = &MouseActions::MMoveElement;
@@ -430,7 +435,7 @@ void QucsApp::slotInsertGround(bool on)
 
   view->selElem = new Ground();
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(view->drawn) Doc->viewport()->update();
   view->drawn = false;
   MouseMoveAction = &MouseActions::MMoveElement;
@@ -463,7 +468,7 @@ void QucsApp::slotInsertPort(bool on)
 
   view->selElem = new SubCirPort();
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(view->drawn) Doc->viewport()->update();
   view->drawn = false;
   MouseMoveAction = &MouseActions::MMoveElement;
@@ -474,7 +479,7 @@ void QucsApp::slotInsertPort(bool on)
 // Is called, when "Undo"-Button is pressed.
 void QucsApp::slotEditUndo()
 {
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(isTextDocument(Doc)) {
     ((TextDoc*)Doc)->viewport()->setFocus();
     ((TextDoc*)Doc)->undo();
@@ -492,7 +497,7 @@ void QucsApp::slotEditUndo()
 // Is called, when "Undo"-Button is pressed.
 void QucsApp::slotEditRedo()
 {
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(isTextDocument(Doc)) {
     ((TextDoc*)Doc)->viewport()->setFocus();
     ((TextDoc*)Doc)->redo();
@@ -512,7 +517,7 @@ void QucsApp::slotAlignTop()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(!Doc->aligning(0))
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
@@ -526,7 +531,7 @@ void QucsApp::slotAlignBottom()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(!Doc->aligning(1))
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
@@ -540,7 +545,7 @@ void QucsApp::slotAlignLeft()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(!Doc->aligning(2))
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
@@ -554,7 +559,7 @@ void QucsApp::slotAlignRight()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(!Doc->aligning(3))
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
@@ -568,7 +573,7 @@ void QucsApp::slotDistribHoriz()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   Doc->distributeHorizontal();
   Doc->viewport()->update();
   view->drawn = false;
@@ -580,7 +585,7 @@ void QucsApp::slotDistribVert()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   Doc->distributeVertical();
   Doc->viewport()->update();
   view->drawn = false;
@@ -592,7 +597,7 @@ void QucsApp::slotCenterHorizontal()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(!Doc->aligning(4))
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
@@ -606,7 +611,7 @@ void QucsApp::slotCenterVertical()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(!Doc->aligning(5))
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
@@ -620,7 +625,7 @@ void QucsApp::slotSelectAll()
 {
   slotHideEdit(); // disable text edit of component property
 
-  QWidget *Doc = DocumentTab->currentPage();
+  QWidget *Doc = DocumentTab->currentWidget();
   if(isTextDocument(Doc)) {
     ((TextDoc*)Doc)->viewport()->setFocus();
     //((TextDoc*)Doc)->selectAll(true);
@@ -639,7 +644,7 @@ void QucsApp::slotSelectMarker()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   Doc->selectMarkers();
   Doc->viewport()->update();
   view->drawn = false;
@@ -649,30 +654,40 @@ void QucsApp::slotSelectMarker()
 extern QString lastDirOpenSave; // to remember last directory and file
 
 // ------------------------------------------------------------------------
-// Is called by slotShowLastMsg(), by slotShowLastNetlist() and from the
-// component edit dialog.
+///
+/// \brief QucsApp::editFile
+/// \param File is the filename, or empty for a new file
+///
+/// Called by :
+/// - slotTextNew()
+/// - slotShowLastMsg()
+/// - slotShowLastNetlist()
+/// - edit properties of components (such as spice, verilog)
+///
 void QucsApp::editFile(const QString& File)
 {
     if ((QucsSettings.Editor.toLower() == "qucs") | QucsSettings.Editor.isEmpty())
     {
         // The Editor is 'qucs' or empty, open a net document tab
         if (File.isEmpty()) {
-            QucsApp::slotTextNew();
+            TextDoc *d = new TextDoc(this, "");
+            int i = DocumentTab->addTab(d, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
+            DocumentTab->setCurrentIndex(i);
         }
         else
         {
             slotHideEdit(); // disable text edit of component property
 
-            statusBar()->message(tr("Opening file..."));
+            statusBar()->showMessage(tr("Opening file..."));
 
             QFileInfo finfo(File);
 
             if(!finfo.exists())
-                statusBar()->message(tr("Opening aborted, file not found."), 2000);
+                statusBar()->showMessage(tr("Opening aborted, file not found."), 2000);
             else {
                 gotoPage(File);
                 lastDirOpenSave = File;   // remember last directory and file
-                statusBar()->message(tr("Ready."));
+                statusBar()->showMessage(tr("Ready."));
             }
         }
     }
@@ -682,46 +697,27 @@ void QucsApp::editFile(const QString& File)
       QString prog;
       QStringList args;
 
-      if (QucsSettings.Editor.toLower().contains("qucsedit")) {
-
-#ifdef __MINGW32__
-  prog = "qucsedit.exe";
-#elif __APPLE__
-  prog = "qucsedit.app/Contents/MacOS/qucsedit";
-#else
-  prog = "qucsedit";
-#endif
-
-        QFileInfo editor(QucsSettings.BinDir + prog);
-        prog = QDir::toNativeSeparators(editor.canonicalFilePath());
-      }
-      else { // user defined editor
-          QFileInfo editor(QucsSettings.Editor);
-          prog = QDir::toNativeSeparators(editor.canonicalFilePath());
-      }
+      QString editorPath = QucsSettings.Editor;
+      QFileInfo editor(editorPath);
+      prog = QDir::toNativeSeparators(editor.canonicalFilePath());
 
       if (!File.isEmpty()) {
           args << File;
       }
 
-      QProcess *QucsEditor = new QProcess();
-      QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-      env.insert("PATH", env.value("PATH") );
-      QucsEditor->setProcessEnvironment(env);
+      QProcess *externalEditor = new QProcess();
+      qDebug() << "Command: " << editorPath << args.join(" ");
+      externalEditor->start(prog, args);
 
-      qDebug() << "Command: " << prog << args.join(" ");
-
-      QucsEditor->start(prog, args);
-
-      if( !QucsEditor->waitForStarted(1000) ) {
-        QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor! \n\n%1").arg(prog));
-        delete QucsEditor;
+      if( !externalEditor->waitForStarted(1000) ) {
+        QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor: \n\n%1").arg(editorPath));
+        delete externalEditor;
         return;
       }
-      qDebug() << QucsEditor->readAllStandardError();
+      qDebug() << externalEditor->readAllStandardError();
 
       // to kill it before qucs ends
-      connect(this, SIGNAL(signalKillEmAll()), QucsEditor, SLOT(kill()));
+      connect(this, SIGNAL(signalKillEmAll()), externalEditor, SLOT(kill()));
     }
 }
 
@@ -794,6 +790,14 @@ void QucsApp::slotCallRes()
   launchTool("qucsrescodes", "resistor color code calculation");
 }
 
+//-------------------------------------------------------------------
+// It starts the power combining synthesis tool
+void QucsApp::slotCallPowerComb()
+{
+  launchTool("qucspowercombining", "Power combiner synthesis");
+}
+
+
 /*!
  * \brief launch an external application passing arguments
  *
@@ -827,17 +831,14 @@ void QucsApp::launchTool(const QString& prog, const QString& progDesc, const QSt
   connect(this, SIGNAL(signalKillEmAll()), tool, SLOT(kill()));
 }
 
-
-// --------------------------------------------------------------
-void QucsApp::slotHelpIndex()
+/**
+ * @brief QucsApp::slotHelpOnline
+ * Open default browser poining at the Qucs-Help website.
+ */
+void QucsApp::slotHelpOnline()
 {
-  showHTML("index.html");
-}
-
-// --------------------------------------------------------------
-void QucsApp::slotGettingStarted()
-{
-  showHTML("start.html");
+  QString link = "http://qucs-help.readthedocs.io/";
+  QDesktopServices::openUrl(QUrl(link));
 }
 
 // --------------------------------------------------------------
@@ -846,18 +847,20 @@ void QucsApp::showHTML(const QString& Page)
   launchTool("qucshelp", "help", Page);
 }
 
+
+
 // ---------------------------------------------------------------------
 // Is called when the find action is triggered.
 void QucsApp::slotEditFind()
 {
-  SearchDia->initSearch(DocumentTab->currentPage(),
-      ((TextDoc *)DocumentTab->currentPage())->textCursor().selectedText(), false);
+  SearchDia->initSearch(DocumentTab->currentWidget(),
+      ((TextDoc *)DocumentTab->currentWidget())->textCursor().selectedText(), false);
 }
 
 // --------------------------------------------------------------
 void QucsApp::slotChangeProps()
 {
-  QWidget *Doc = DocumentTab->currentPage();
+  QWidget *Doc = DocumentTab->currentWidget();
   if(isTextDocument(Doc)) {
     ((TextDoc*)Doc)->viewport()->setFocus();
 
@@ -888,7 +891,7 @@ void QucsApp::slotAddToProject()
     lastDir.isEmpty() ? QString(".") : lastDir, QucsFileFilter);
 
   if(List.isEmpty()) {
-    statusBar()->message(tr("No files copied."), 2000);
+    statusBar()->showMessage(tr("No files copied."), 2000);
     return;
   }
 
@@ -899,7 +902,7 @@ void QucsApp::slotAddToProject()
   QStringList FileList = List;  // make a copy as recommended by Qt
   QStringList::Iterator it = FileList.begin();
   QFileInfo Info(*it);
-  lastDir = Info.dirPath(true);  // remember last directory
+  lastDir = Info.absolutePath();  // remember last directory
 
   // copy all files to project directory
   int Num;
@@ -907,7 +910,7 @@ void QucsApp::slotAddToProject()
   while(it != FileList.end()) {
     Info.setFile(*it);
     origFile.setFileName(*it);
-    destFile.setFileName(QucsSettings.QucsWorkDir.absPath() +
+    destFile.setFileName(QucsSettings.QucsWorkDir.absolutePath() +
                      QDir::separator() + Info.fileName());
 
     if(!origFile.open(QIODevice::ReadOnly)) {
@@ -935,12 +938,12 @@ void QucsApp::slotAddToProject()
 
     // copy data
     do {
-      Num = origFile.readBlock(Buffer, 0x10000);
+      Num = origFile.read(Buffer, 0x10000);
       if(Num < 0) {
         QMessageBox::critical(this, tr("Error"), tr("Cannot read \"%1\" !").arg(*it));
         break;
       }
-      Num = destFile.writeBlock(Buffer, Num);
+      Num = destFile.write(Buffer, Num);
       if(Num < 0) {
         QMessageBox::critical(this, tr("Error"), tr("Cannot write \"%1\" !").arg(*it));
         break;
@@ -954,7 +957,7 @@ void QucsApp::slotAddToProject()
 
   free(Buffer);
   slotUpdateTreeview();
-  statusBar()->message(tr("Ready."));
+  statusBar()->showMessage(tr("Ready."));
 }
 
 // -----------------------------------------------------------
@@ -967,18 +970,18 @@ void QucsApp::slotCursorLeft(bool left)
   if(!editText->isHidden()) return;  // for edit of component property ?
 
   Q3PtrList<Element> movingElements;
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   int markerCount = Doc->copySelectedElements(&movingElements);
 
   if((movingElements.count() - markerCount) < 1) {
     if(markerCount > 0) {  // only move marker if nothing else selected
       Doc->markerLeftRight(left, &movingElements);
     } else if(left) {
-      if(Doc->scrollLeft(Doc->horizontalScrollBar()->lineStep()))
-        Doc->scrollBy(-Doc->horizontalScrollBar()->lineStep(), 0);
+      if(Doc->scrollLeft(Doc->horizontalScrollBar()->singleStep()))
+        Doc->scrollBy(-Doc->horizontalScrollBar()->singleStep(), 0);
     }else{ // right
-      if(Doc->scrollRight(-Doc->horizontalScrollBar()->lineStep()))
-        Doc->scrollBy(Doc->horizontalScrollBar()->lineStep(), 0);
+      if(Doc->scrollRight(-Doc->horizontalScrollBar()->singleStep()))
+        Doc->scrollBy(Doc->horizontalScrollBar()->singleStep(), 0);
     }
 
     Doc->viewport()->update();
@@ -1003,10 +1006,10 @@ void QucsApp::slotCursorUp(bool up)
     if(Begin < 0) return;  // no selection list ?
     int End = pp->Description.indexOf(editText->text(), Begin); // current
     if(End < 0) return;  // should never happen
-    End = pp->Description.findRev(',', End);
+    End = pp->Description.lastIndexOf(',', End);
     if(End < Begin) return;  // was first item ?
     End--;
-    int Pos = pp->Description.findRev(',', End);
+    int Pos = pp->Description.lastIndexOf(',', End);
     if(Pos < Begin) Pos = Begin;   // is first item ?
     Pos++;
     if(pp->Description.at(Pos) == ' ') Pos++; // remove leading space
@@ -1036,18 +1039,18 @@ void QucsApp::slotCursorUp(bool up)
   }
 
   Q3PtrList<Element> movingElements;
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   int markerCount = Doc->copySelectedElements(&movingElements);
 
   if((movingElements.count() - markerCount) < 1) { // all selections are markers
     if(markerCount > 0) {  // only move marker if nothing else selected
       Doc->markerUpDown(up, &movingElements);
     } else if(up) { // nothing selected at all
-      if(Doc->scrollUp(Doc->verticalScrollBar()->lineStep()))
-        Doc->scrollBy(0, -Doc->verticalScrollBar()->lineStep());
+      if(Doc->scrollUp(Doc->verticalScrollBar()->singleStep()))
+        Doc->scrollBy(0, -Doc->verticalScrollBar()->singleStep());
     } else { // down
-      if(Doc->scrollDown(-Doc->verticalScrollBar()->lineStep()))
-        Doc->scrollBy(0, Doc->verticalScrollBar()->lineStep());
+      if(Doc->scrollDown(-Doc->verticalScrollBar()->singleStep()))
+        Doc->scrollBy(0, Doc->verticalScrollBar()->singleStep());
     }
 
     Doc->viewport()->update();
@@ -1068,8 +1071,8 @@ void QucsApp::slotApplyCompText()
 {
   QString s;
   QFont f = QucsSettings.font;
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  f.setPointSizeFloat( Doc->Scale * float(f.pointSize()) );
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
+  f.setPointSizeF(Doc->Scale * float(f.pointSize()) );
   editText->setFont(f);
 
   Property  *pp = 0;
@@ -1165,10 +1168,14 @@ void QucsApp::slotApplyCompText()
   z = editText->fontMetrics().lineSpacing();
   view->MAy2 += n*z;
   editText->setText(s);
-  editText->setPaletteBackgroundColor(QucsSettings.BGColor);
+  misc::setWidgetBackgroundColor(editText, QucsSettings.BGColor);
   editText->setFocus();
   editText->selectAll();
-  editText->reparent(Doc->viewport(), 0, QPoint(view->MAx2, view->MAy2), true);
+  // make QLineEdit editable on mouse click
+  QPoint p = QPoint(view->MAx2, view->MAy2);
+  editText->setParent(Doc->viewport());
+  editText->setGeometry(p.x(), p.y(), editText->width(), editText->height());
+  editText->show();
 }
 
 // -----------------------------------------------------------
@@ -1236,8 +1243,8 @@ void QucsApp::slotExportGraphAsCsv()
     return;
 
   QFileInfo Info(s);
-  lastDir = Info.dirPath(true);  // remember last directory
-  if(Info.extension().isEmpty())
+  lastDir = Info.absolutePath();  // remember last directory
+  if(Info.suffix().isEmpty())
     s += ".csv";
 
   QFile File(s);
@@ -1390,20 +1397,13 @@ void QucsApp::slotLoadModule()
       // dialog should populate acording to checkboxes
       // build vaComponents QMap
 
-      // remove all modules before registering/loaded again
-      // look for modules in the category,
-      // \todo investigate if it is leaking objects somewhere
-      QStringList removeList;
-      QHashIterator<QString, Module *> it( Module::Modules );
+      // remove all previously registered modules
+      QMutableHashIterator<QString, Module *> it( Module::Modules );
       while(it.hasNext()) {
         it.next();
         if (it.value()->category == QObject::tr("verilog-a user devices")) {
-          removeList << it.key();
-          delete it.value();
+          it.remove();
         }
-      }
-      for (int i = 0; i < removeList.size(); ++i){
-        Module::Modules.remove(removeList.at(i));
       }
 
       if (! Module::vaComponents.isEmpty()) {
@@ -1414,10 +1414,18 @@ void QucsApp::slotLoadModule()
         // pick up new category 'verilog-a user components' from `Module::category`
         //set new category into view
         QucsApp::fillComboBox(true);
-        CompChoose->setCurrentItem(CompChoose->count()-1);
+        CompChoose->setCurrentIndex(CompChoose->count()-1);
         slotSetCompView(CompChoose->count()-1);
 
         // icons of dynamically registered components ready to be dragged
+      }
+      else {
+        // remove any previously registerd icons from the listview
+        int foundCat = CompChoose->findText(QObject::tr("verilog-a user devices"));
+        if (foundCat != -1) {
+          CompChoose->setCurrentIndex(foundCat);
+          CompComps->clear();
+        }
       }
     }
 

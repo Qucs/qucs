@@ -30,7 +30,7 @@ class QIntValidator;
 class ArrowDialog : public QDialog  {
 Q_OBJECT
 public:
-  ArrowDialog(QWidget *parent=0, const char *name=0);
+  ArrowDialog(QWidget *parent=0);
  ~ArrowDialog();
 
   void SetComboBox(Qt::PenStyle);
