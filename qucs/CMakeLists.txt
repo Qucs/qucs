@@ -188,6 +188,7 @@ QT4_WRAP_CPP( QUCS_MOC_SRCS ${QUCS_MOC_HDRS} )
 SET(RESOURCES qucs_.qrc)
 QT4_ADD_RESOURCES(RESOURCES_SRCS ${RESOURCES})
 
+
 if(UNIX AND NOT APPLE)
 
     SET(ICON16 bitmaps/hicolor/16x16/apps/qucs.png )
@@ -214,9 +215,6 @@ if(UNIX AND NOT APPLE)
     INSTALL( FILES ${DESKTOP} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
 endif()
 
-
-
-
 #
 # configure Apple bundle information
 #
@@ -242,19 +240,27 @@ IF(APPLE)
   #SET(RESOURCES_SRCS ${RESOURCES_SRCS} ${LANG_SRCS})
 ENDIF(APPLE)
 
+# schematic library
+ADD_LIBRARY( coreSchematic OBJECT ${QUCS_SRCS} ${QUCS_MOC_SRCS})
 
-# create library with schematic relevant code
-ADD_LIBRARY( schematic ${QUCS_HDRS} ${QUCS_SRCS} ${QUCS_MOC_SRCS})
+# create shared library
+ADD_LIBRARY( schematic SHARED
+  $<TARGET_OBJECTS:coreSchematic>
+  $<TARGET_OBJECTS:components>
+  $<TARGET_OBJECTS:diagrams>
+  $<TARGET_OBJECTS:dialogs>
+  $<TARGET_OBJECTS:paintings>
+)
+
+# link system libraries
+TARGET_LINK_LIBRARIES( schematic ${QT_LIBRARIES} ${CMAKE_DL_LIBS})
 
 #
 #  CMake's way of creating an executable
 #
 ADD_EXECUTABLE( qucs MACOSX_BUNDLE WIN32 main.cpp ${RESOURCES_SRCS} )
 
-#
-# Tell CMake which libraries we need to link our executable against.
-#
-TARGET_LINK_LIBRARIES( qucs schematic components diagrams schematic dialogs paintings ${QT_LIBRARIES} ${CMAKE_DL_LIBS})
+TARGET_LINK_LIBRARIES( qucs schematic )
 
 #
 # Prepare the installation
