@@ -386,7 +386,7 @@ bool EllipseArc::Dialog()
   bool changed = false;
 
   FillDialog *d = new FillDialog(QObject::tr("Edit Arc Properties"), false);
-  misc::setWidgetBackgroundColor(d->ColorButt, Pen.color());
+  misc::setPickerColor(d->ColorButt, Pen.color());
   d->LineWidth->setText(QString::number(Pen.width()));
   d->StyleBox->setCurrentIndex(Pen.style()-1);
 
