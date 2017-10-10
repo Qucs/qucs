@@ -372,10 +372,10 @@ bool Ellipse::Dialog()
   bool changed = false;
 
   FillDialog *d = new FillDialog(QObject::tr("Edit Ellipse Properties"));
-  misc::setWidgetBackgroundColor(d->ColorButt, Pen.color());
+  misc::setPickerColor(d->ColorButt, Pen.color());
   d->LineWidth->setText(QString::number(Pen.width()));
   d->StyleBox->setCurrentIndex(Pen.style()-1);
-  misc::setWidgetBackgroundColor(d->FillColorButt, Brush.color());
+  misc::setPickerColor(d->FillColorButt, Brush.color());
   d->FillStyleBox->setCurrentIndex(Brush.style());
   d->CheckFilled->setChecked(filled);
   d->slotCheckFilled(filled);

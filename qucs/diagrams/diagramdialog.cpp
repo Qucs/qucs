@@ -213,7 +213,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   else if(Diag->Name != "Truth") {
     Label1 = new QLabel(tr("Color:"));
     Box2Layout->addWidget(Label1);
-    ColorButt = new QPushButton("   ");
+    ColorButt = new QPushButton("");
     Box2Layout->addWidget(ColorButt);
     ColorButt->setMinimumWidth(50);
     ColorButt->setEnabled(false);
@@ -391,11 +391,11 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
 
       GridLabel1 = new QLabel(tr("Grid Color:"),Tab2);
       gp->addWidget(GridLabel1, Row, 0);
-      GridColorButt = new QPushButton("        ",Tab2);
+      GridColorButt = new QPushButton("",Tab2);
       connect(GridColorButt, SIGNAL(clicked()), SLOT(slotSetGridColor()));
       gp->addWidget(GridColorButt, Row, 1);
       Row++;
-      misc::setWidgetBackgroundColor(GridColorButt, Diag->GridPen.color());
+      misc::setPickerColor(GridColorButt, Diag->GridPen.color());
 
       GridLabel2 = new QLabel(tr("Grid Style: "), Tab2);
       gp->addWidget(GridLabel2, Row, 0);
@@ -753,9 +753,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   if(ColorButt) {
     if(!currentGraph) {
       QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
-      QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
-      ColorButt->setStyleSheet(stylesheet);
-      misc::setWidgetBackgroundColor(ColorButt, selectedColor);
+      misc::setPickerColor(ColorButt, selectedColor);
     }
   }
   if(Diag->Name == "Phasor")
@@ -960,9 +958,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
         g->Color = misc::getWidgetBackgroundColor(ColorButt);
         g->Thick = Property2->text().toInt();
         QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
-        QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
-        ColorButt->setStyleSheet(stylesheet);
-        misc::setWidgetBackgroundColor(ColorButt, selectedColor);
+        misc::setPickerColor(ColorButt, selectedColor);
         if(g->Var.right(3) == ".Vb")   // harmonic balance output ?
           if(PropertyBox->count() >= GRAPHSTYLE_ARROW)
             PropertyBox->setCurrentIndex(GRAPHSTYLE_ARROW);
@@ -1024,9 +1020,7 @@ void DiagramDialog::SelectGraph(Graph *g)
   if(Diag->Name != "Tab") {
     if(Diag->Name != "Truth") {
       Property2->setText(QString::number(g->Thick));
-      QString stylesheet = QString("QPushButton {background-color: %1};").arg(g->Color.name());
-      ColorButt->setStyleSheet(stylesheet);
-      misc::setWidgetBackgroundColor(ColorButt, g->Color);
+      misc::setPickerColor(ColorButt, g->Color);
       PropertyBox->setCurrentIndex(g->Style);
       if(yAxisBox) {
         yAxisBox->setCurrentIndex(g->yAxisNo);
@@ -1087,9 +1081,7 @@ void DiagramDialog::slotDeleteGraph()
   if(Diag->Name != "Tab") {
     if(Diag->Name != "Truth") {
       QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
-      QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
-      ColorButt->setStyleSheet(stylesheet);
-      misc::setWidgetBackgroundColor(ColorButt, selectedColor);
+      misc::setPickerColor(ColorButt, selectedColor);
       Property2->setText("0");
       if(yAxisBox) {
         yAxisBox->setCurrentIndex(0);
@@ -1346,9 +1338,7 @@ void DiagramDialog::slotSetColor()
   QColor c = QColorDialog::getColor(
               misc::getWidgetBackgroundColor(ColorButt),this);
   if(!c.isValid()) return;
-  QString stylesheet = QString("QPushButton {background-color: %1};").arg(c.name());
-  ColorButt->setStyleSheet(stylesheet);
-  misc::setWidgetBackgroundColor(ColorButt, c);
+  misc::setPickerColor(ColorButt, c);
 
   int i = GraphList->currentRow();
   if(i < 0) return;   // return, if no item selected
@@ -1365,7 +1355,7 @@ void DiagramDialog::slotSetGridColor()
   QColor c = QColorDialog::getColor(
               misc::getWidgetBackgroundColor(GridColorButt),this);
   if(!c.isValid()) return;
-  misc::setWidgetBackgroundColor(GridColorButt, c);
+  misc::setPickerColor(GridColorButt, c);
   changed = true;
 }
 
