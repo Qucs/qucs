@@ -31,7 +31,7 @@
 #include <QHBoxLayout>
 
 
-GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
+GraphicTextDialog::GraphicTextDialog(QWidget *parent)
                                   : QDialog(parent)
 {
   setWindowTitle(tr("Edit Text Properties"));
