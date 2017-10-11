@@ -37,7 +37,6 @@
 #include <QLineEdit>
 #include <QCheckBox>
 #include <QSlider>
-#include <QComboBox>
 #include <QListWidget>
 #include <QTableWidget>
 #include <QPainter>
@@ -46,6 +45,7 @@
 #include <QHeaderView>
 #include <QDir>
 #include <QDebug>
+#include <QComboBox>
 
 
 #define CROSS3D_SIZE   30
@@ -213,7 +213,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   else if(Diag->Name != "Truth") {
     Label1 = new QLabel(tr("Color:"));
     Box2Layout->addWidget(Label1);
-    ColorButt = new QPushButton("   ");
+    ColorButt = new QPushButton("");
     Box2Layout->addWidget(ColorButt);
     ColorButt->setMinimumWidth(50);
     ColorButt->setEnabled(false);
@@ -306,17 +306,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     DataGroupLayout->addWidget(inputZ);
     connect(inputZ, SIGNAL(stateChanged(int)), SLOT(PhasorvalZ(int)));
   }
-  //for Phasor and waveac,it will have a new input for frequency
-  if(Diag->Name == "Phasor" || Diag->Name == "Waveac") 
-  {
-    DataGroupLayout->addWidget(new QLabel(tr("frequency in Hertz")));
-    freq = new QLineEdit();
-    DataGroupLayout->addWidget(freq);
-    freq->setValidator(Validator);
-    if(Diag->sfreq.isEmpty())
-      Diag->sfreq = "0 Hz";
-    freq->setText(Diag->sfreq);
-  }
+
   if(Diag->Name != "Phasor")
   {
     Name=Diag->Name;
@@ -401,11 +391,11 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
 
       GridLabel1 = new QLabel(tr("Grid Color:"),Tab2);
       gp->addWidget(GridLabel1, Row, 0);
-      GridColorButt = new QPushButton("        ",Tab2);
+      GridColorButt = new QPushButton("",Tab2);
       connect(GridColorButt, SIGNAL(clicked()), SLOT(slotSetGridColor()));
       gp->addWidget(GridColorButt, Row, 1);
       Row++;
-      misc::setWidgetBackgroundColor(GridColorButt, Diag->GridPen.color());
+      misc::setPickerColor(GridColorButt, Diag->GridPen.color());
 
       GridLabel2 = new QLabel(tr("Grid Style: "), Tab2);
       gp->addWidget(GridLabel2, Row, 0);
@@ -763,9 +753,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   if(ColorButt) {
     if(!currentGraph) {
       QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
-      QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
-      ColorButt->setStyleSheet(stylesheet);
-      misc::setWidgetBackgroundColor(ColorButt, selectedColor);
+      misc::setPickerColor(ColorButt, selectedColor);
     }
   }
   if(Diag->Name == "Phasor")
@@ -774,6 +762,30 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
       if(testvar(".i")) inputI->setChecked(true);
       if(testvar(".S")) inputP->setChecked(true);
       if(testvar(".Ohm")) inputZ->setChecked(true);
+  }
+
+  if(Diag->Name == "Phasor" || Diag->Name == "Waveac") 
+  {
+    DataGroupLayout->addWidget(new QLabel(tr("Frequency")));
+    freqCombobox = new QComboBox();
+    DataGroupLayout->addWidget(freqCombobox);
+    freqCombobox->setValidator(Validator);
+    QStringList data = LoadAvailableFreqs();
+    freqCombobox->addItems(data);
+    
+    //Find the current index
+    int current_index=0;
+    QString current_freq = Diag->sfreq;
+    current_freq.remove(";");
+    for (int i = 0; i < data.length(); i++)
+    {
+       if (data.at(i) == current_freq)
+       {
+         current_index = i;
+         break;
+       }
+    }
+    freqCombobox->setCurrentIndex(current_index);
   }
 }
 
@@ -784,6 +796,40 @@ DiagramDialog::~DiagramDialog()
   delete ValDouble;
   delete Validator;
 }
+
+QStringList DiagramDialog::LoadAvailableFreqs()
+{
+  QFileInfo Info(defaultDataSet);
+  QString DocName = ChooseData->currentText()+".dat";
+  QStringList AvailableFreqs;
+  QFile file(Info.path() + QDir::separator() + DocName);
+  if(!file.open(QIODevice::ReadOnly)) {qDebug() <<Info.path() + QDir::separator() + DocName;
+    return AvailableFreqs;
+  }
+
+  QTextStream in(&file);
+  QString line;
+  while (!in.atEnd())
+  {
+    line = in.readLine();
+    if (line.indexOf("<indep acfrequency") != -1)
+    {
+      line = in.readLine();
+      while(line != "</indep>")
+      {
+       //The list of frequencies stored in the dataset use the scientific format, so they
+       //need to be converted into human readable format
+       AvailableFreqs.append(QString("%1Hz").arg(misc::num2str(line.toDouble())));
+       line = in.readLine();
+      }
+      break;
+    }
+  }
+  file.close();
+  return AvailableFreqs;
+}
+
+
 
 // --------------------------------------------------------------------------
 void DiagramDialog::slotReadVars(int)
@@ -872,6 +918,7 @@ void DiagramDialog::slotReadVars(int)
   } while(i > 0);
   // sorting should be enabled only after adding items
   ChooseVars->setSortingEnabled(true);
+  LoadAvailableFreqs();
 }
 
 // ------------------------------------------------------------------------
@@ -911,9 +958,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
         g->Color = misc::getWidgetBackgroundColor(ColorButt);
         g->Thick = Property2->text().toInt();
         QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
-        QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
-        ColorButt->setStyleSheet(stylesheet);
-        misc::setWidgetBackgroundColor(ColorButt, selectedColor);
+        misc::setPickerColor(ColorButt, selectedColor);
         if(g->Var.right(3) == ".Vb")   // harmonic balance output ?
           if(PropertyBox->count() >= GRAPHSTYLE_ARROW)
             PropertyBox->setCurrentIndex(GRAPHSTYLE_ARROW);
@@ -975,9 +1020,7 @@ void DiagramDialog::SelectGraph(Graph *g)
   if(Diag->Name != "Tab") {
     if(Diag->Name != "Truth") {
       Property2->setText(QString::number(g->Thick));
-      QString stylesheet = QString("QPushButton {background-color: %1};").arg(g->Color.name());
-      ColorButt->setStyleSheet(stylesheet);
-      misc::setWidgetBackgroundColor(ColorButt, g->Color);
+      misc::setPickerColor(ColorButt, g->Color);
       PropertyBox->setCurrentIndex(g->Style);
       if(yAxisBox) {
         yAxisBox->setCurrentIndex(g->yAxisNo);
@@ -1038,9 +1081,7 @@ void DiagramDialog::slotDeleteGraph()
   if(Diag->Name != "Tab") {
     if(Diag->Name != "Truth") {
       QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
-      QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
-      ColorButt->setStyleSheet(stylesheet);
-      misc::setWidgetBackgroundColor(ColorButt, selectedColor);
+      misc::setPickerColor(ColorButt, selectedColor);
       Property2->setText("0");
       if(yAxisBox) {
         yAxisBox->setCurrentIndex(0);
@@ -1184,8 +1225,8 @@ void DiagramDialog::slotApply()
     // Use string compares for all floating point numbers, in
     // order to avoid rounding problems.
     if(Diag->Name == "Phasor" || Diag->Name == "Waveac")
-      if(Diag->sfreq != freq->text()) {
-	 Diag->sfreq = freq->text();
+      if(Diag->sfreq != freqCombobox->currentText()) {
+	 Diag->sfreq = freqCombobox->currentText();
 	  changed = true;
       }
     if(QString::number(Diag->xAxis.limit_min) != startX->text()) {
@@ -1297,9 +1338,7 @@ void DiagramDialog::slotSetColor()
   QColor c = QColorDialog::getColor(
               misc::getWidgetBackgroundColor(ColorButt),this);
   if(!c.isValid()) return;
-  QString stylesheet = QString("QPushButton {background-color: %1};").arg(c.name());
-  ColorButt->setStyleSheet(stylesheet);
-  misc::setWidgetBackgroundColor(ColorButt, c);
+  misc::setPickerColor(ColorButt, c);
 
   int i = GraphList->currentRow();
   if(i < 0) return;   // return, if no item selected
@@ -1316,7 +1355,7 @@ void DiagramDialog::slotSetGridColor()
   QColor c = QColorDialog::getColor(
               misc::getWidgetBackgroundColor(GridColorButt),this);
   if(!c.isValid()) return;
-  misc::setWidgetBackgroundColor(GridColorButt, c);
+  misc::setPickerColor(GridColorButt, c);
   changed = true;
 }
 
