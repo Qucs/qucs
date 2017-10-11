@@ -754,9 +754,11 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, GraphDeque *currentGra
       QColor selectedColor(DefaultColors[GraphDequeList->count()%NumDefaultColors]);
       QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
       ColorButt->setStyleSheet(stylesheet);
-      ColorButt->setPaletteBackgroundColor(selectedColor);
+      misc::setPickerColor(ColorButt, selectedColor);
     }
   }
+#if 0 // wtf?!
+  that seems to belong to phasor.cpp
   if(Diag->Name == "Phasor")
     {
       if(testvar(".v")) inputV->setChecked(true);
@@ -788,6 +790,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, GraphDeque *currentGra
     }
     freqCombobox->setCurrentIndex(current_index);
   }
+#endif
 }
 
 DiagramDialog::~DiagramDialog()
@@ -798,6 +801,7 @@ DiagramDialog::~DiagramDialog()
   delete Validator;
 }
 
+#if 0 // whats this?!
 QStringList DiagramDialog::LoadAvailableFreqs()
 {
   QFileInfo Info(defaultDataSet);
@@ -829,6 +833,7 @@ QStringList DiagramDialog::LoadAvailableFreqs()
   file.close();
   return AvailableFreqs;
 }
+#endif
 
 
 
@@ -919,8 +924,8 @@ void DiagramDialog::slotReadVars(int)
   } while(i > 0);
   // sorting should be enabled only after adding items
   ChooseVars->setSortingEnabled(true);
-  LoadAvailableFreqs();
-}
+//  LoadAvailableFreqs(); incomplete
+} // DiagramDialog::slotReadVars
 
 // ------------------------------------------------------------------------
 // Inserts the double-clicked variable into the Graph Input Line at the
@@ -961,7 +966,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
         QColor selectedColor(DefaultColors[GraphDequeList->count()%NumDefaultColors]);
         QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
         ColorButt->setStyleSheet(stylesheet);
-        ColorButt->setPaletteBackgroundColor(selectedColor);
+	misc::setPickerColor(ColorButt, selectedColor);
         if(g->Var.right(3) == ".Vb")   // harmonic balance output ?
           if(PropertyBox->count() >= GRAPHSTYLE_ARROW)
             PropertyBox->setCurrentIndex(GRAPHSTYLE_ARROW);
@@ -1091,7 +1096,7 @@ void DiagramDialog::slotDeleteGraph()
       QColor selectedColor(DefaultColors[GraphDequeList->count()%NumDefaultColors]);
       QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
       ColorButt->setStyleSheet(stylesheet);
-      ColorButt->setPaletteBackgroundColor(selectedColor);
+      misc::setPickerColor(ColorButt, selectedColor);
       Property2->setText("0");
       if(yAxisBox) {
         yAxisBox->setCurrentIndex(0);
@@ -1603,6 +1608,9 @@ void DiagramDialog::slotEditRotZ(const QString& Text)
   DiagCross->rotZ = Text.toFloat() * pi/180.0;
   DiagCross->update();
 }
+
+// BUG: phasor code
+#if 0
 /*if the checkbox 'V' change stated*/
 void DiagramDialog::PhasorvalV(int state)
 {
@@ -1643,6 +1651,9 @@ void DiagramDialog::PhasorvalZ(int state)
     remvar(".Ohm");//if uncheck remove graph of type ".Ohm"
   }
 }
+#endif
+
+#if 0 // does not work
 /*this function will find graph of a certain type and place on screen*/
 void DiagramDialog::addvar(QString a)
 {
@@ -1735,4 +1746,5 @@ bool DiagramDialog::testvar (QString a)
   }
     return false;
 }
+#endif
 // vim:ts=8:sw=2:noet

@@ -338,7 +338,6 @@ void Marker::createText()
 
   // independent variables
   nVarPos = pGraph->numAxes();
-<<<<<<< HEAD
 
   // BUG? not necessarily needed here.
   auto p = pGraph->findSample(VarPos);
@@ -350,6 +349,7 @@ void Marker::createText()
   if(SplPosX->isPt()){
     VarDep[0] = p.second->getDep().real();
     VarDep[1] = p.second->getDep().imag();
+  }
 
 #if 0 //  BUG. wrong place
   DataX const *pD;
@@ -440,7 +440,7 @@ void Marker::assignText()
   double *pp = &(VarPos[0]);
 #if 0
     Axis const *pa,*pt;
-  if(diag()->Name=="Phasor")
+  if(diag()->Name=="Phasor") // no phasor code here
   {
     int z;
     findaxismk();
@@ -455,11 +455,11 @@ void Marker::assignText()
     }
     VarPos[0]=v;
     pp = &(VarPos[0]);
-#endif
 
     diag()->calcCoordinatePh(pz, &fCX, &fCY, pa, pt);
   }
   else
+#endif
   {
     if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
     else  pa = &(diag()->zAxis);
@@ -854,6 +854,7 @@ bool Marker::getSelected(int x_, int y_)
 }
 // ------------------------------------------------------------------------
 /*will find the y value of a point in time for waveac*/
+#if 0 // wrong file
 double Marker::wavevalY(double xn,std::vector<double>& VarPos)  
 {
   double n;
@@ -872,6 +873,7 @@ double Marker::wavevalY(double xn,std::vector<double>& VarPos)
   VarPos[0]=n;
   return A*sin(2*pi*(diag()->freq[0])*xn + af);
 }
+#endif
 // ------------------------------------------------------------------------
 /*
  * the diagram this belongs to
@@ -926,6 +928,7 @@ QString Marker::unit(double n)
   return value;
 
 }
+#if 0 // is this phasor code?!
 int Marker::phasormk(double *pz,double *px,int max)
 {
   int m,n,nn,x,y,d,dmin = INT_MAX;
@@ -955,6 +958,7 @@ int Marker::phasormk(double *pz,double *px,int max)
   }
   return m;
 }
+#endif
 
 // ------------------------------------------------------------------------
 void Marker::setGraph(GraphDeque const *d)

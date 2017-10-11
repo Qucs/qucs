@@ -76,7 +76,8 @@ public:
   
   virtual void paint(ViewPainter*);
   virtual void paintDiagram(ViewPainter* p);
-  void paintMarkers(ViewPainter* p, bool paintAll = true);
+  // // doesn't work
+  // void paintMarkers(ViewPainter* p, bool paintAll = true);
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
   void    paintScheme(Schematic*);

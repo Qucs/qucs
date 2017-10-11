@@ -84,13 +84,17 @@ private slots:
   void slotEditRotX(const QString&);
   void slotEditRotY(const QString&);
   void slotEditRotZ(const QString&);
-  void PhasorvalV(int);
-  void PhasorvalI(int);
-  void PhasorvalP(int);
-  void PhasorvalZ(int);
-  void addvar(QString);
-  void remvar(QString);
-  bool testvar(QString);
+
+  // BUG: this is phasor
+//  void PhasorvalV(int);
+//  void PhasorvalI(int);
+//  void PhasorvalP(int);
+//  void PhasorvalZ(int);
+
+//  what's this? probably not needed.
+//  void addvar(QString);
+//  void remvar(QString);
+//  bool testvar(QString);
 
 protected slots:
     void reject();

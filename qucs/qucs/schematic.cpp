@@ -708,8 +708,11 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
 
         selected = pd->isSelected;
         pd->isSelected = false;
+ //       pd->paint(p); why not?
         pd->paintDiagram(p);  // paint all selected diagrams with graphs and markers
-        pd->paintMarkers(p,printAll);
+
+	// bug: markers are part of diagram
+//        pd->paintMarkers(p,printAll);
         pd->isSelected = selected;
 
         // revert selection of graphs and markers

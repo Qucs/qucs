@@ -110,6 +110,7 @@ void GraphDeque::paintLines(ViewPainter *p, int x0, int y0)
   }
 }
 // ---------------------------------------------------------------------
+#if 0
 /*paint function for phasor diagram*/
 void Graph::paintvect(ViewPainter *p, int x0, int y0)
 {
@@ -129,6 +130,7 @@ void Graph::paintvect(ViewPainter *p, int x0, int y0)
   p->Painter->setPen(QPen(QColor(Color), Thick*p->PrintScale, Qt::SolidLine));
   drawvect(x0, y0, p);
 }
+#endif
 // ---------------------------------------------------------------------
 QString GraphDeque::save()
 {
@@ -290,6 +292,7 @@ GraphDeque::const_iterator GraphDeque::getSelected(int x, int y) const
 /*it's a select function for phasordiagram that with the 2 points of the vector 
 creates a linear equation and find if the point is in that equation*/
 
+#if 0
 int Graph::getSelectedP(int x, int y)
 {
 
@@ -341,6 +344,7 @@ int Graph::getSelectedP(int x, int y)
   return -1;
 
 }
+#endif
 // -----------------------------------------------------------------------
 // Creates a new graph and copies all the properties into it.
 GraphDeque* GraphDeque::sameNewOne()

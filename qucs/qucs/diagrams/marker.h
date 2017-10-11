@@ -65,8 +65,10 @@ public:
   std::vector<double> const& varPos() const {return VarPos;}
   const Diagram *diag() const;
   GraphDeque::MarkerPos splPos() const;
-  int phasormk(double*,double*,int);
-  void findaxismk();
+
+  // BUG. there is nothing to find here.
+//  int phasormk(double*,double*,int);
+//  void findaxismk();
 public: // power matching stuff. some sort of VarPos (ab?)use
   double  powFreq() const {return VarPos[0];}
   double  powReal() const {return VarDep[0];}

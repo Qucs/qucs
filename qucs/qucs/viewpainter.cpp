@@ -169,6 +169,8 @@ void GraphDeque::drawLines(int x0, int y0, ViewPainter *p) const
   }
 }
 // -------------------------------------------------------------
+#if 0 // phasor diagram draws phasor diagram. not here.
+
 //draws the vectors of phasor diagram
 void Graph::drawvect(int x0, int y0, ViewPainter *p) const
 {
@@ -224,6 +226,7 @@ void Graph::drawvect(int x0, int y0, ViewPainter *p) const
   }
 
 }
+#endif
 // -------------------------------------------------------------
 void GraphDeque::drawStarSymbols(int x0i, int y0i, ViewPainter *p) const
 {

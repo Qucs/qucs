@@ -356,6 +356,8 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
 
 
 
+#if 0 // what is this?
+		// can't access "Graph"s from outside diagram
         if (pd->isSelected) {
             int x1,y1,x2,y2;
             pd->Bounding(x1,y1,x2,y2);
@@ -371,6 +373,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
                 }
             }
         }
+#endif
     }
 
     for(Painting *pp = sch->Paintings->first(); pp != 0; pp = sch->Paintings->next()) {

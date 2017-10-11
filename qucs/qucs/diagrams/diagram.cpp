@@ -124,9 +124,10 @@ void Diagram::paint(ViewPainter *p)
         QMatrix(pt->mCos, -pt->mSin, pt->mSin, pt->mCos,
                  p->DX + float(cx+pt->x) * p->Scale,
                  p->DY + float(cy-pt->y) * p->Scale));
+  }
 
     // paintDiagram(p); incomplete
-    paintMarkers(p);
+    // paintMarkers(p); ??
 }
 
 void Diagram::paintDiagram(ViewPainter *p)
@@ -183,6 +184,7 @@ void Diagram::paintDiagram(ViewPainter *p)
     }
 }
 
+#if 0 // does not work
 void Diagram::paintMarkers(ViewPainter *p, bool paintAll)
 {
     // draw markers last, so they are at the top of painting layers
@@ -190,6 +192,7 @@ void Diagram::paintMarkers(ViewPainter *p, bool paintAll)
       foreach(Marker *pm, pg->Markers)
           if ((pm->Type & 1)||paintAll) pm->paint(p, cx, cy);
 }
+#endif
 
 // ------------------------------------------------------------
 void Diagram::paintScheme(Schematic *p)
@@ -242,11 +245,12 @@ void Diagram::createAxisLabels()
 	    if(w > wmax)  wmax = w;
   	    Texts.append(new Text(x-w, y, "Time", pg->Color, 12.0));
 	  }
-#endif
 	}
+	else
+#endif
 	//phasor diagram will show the frequency that is working and the names and value 
         //of the display vectors below of the diagram 
-	else
+#if 0 // BUG. this is diagram.cpp
 	{
 	  if(pg->yAxisNo != 0)  continue;
 	  if(pg->cPointsY) {
@@ -278,6 +282,7 @@ void Diagram::createAxisLabels()
 	    }
 	  }
 	}
+#endif
     }
   }
   else {
@@ -782,6 +787,7 @@ void Diagram::getAxisLimits(GraphDeque const* pg)
   p = pg->cPointsY;
   if(p == 0) return;    // if no data => invalid
   //phasor diagram and waveac have different ways to determing the limits
+#if 0 // wtf? this is diagram.cpp
   if(Name == "Phasor" || Name == "Waveac")
   {  //find what type is the graph(voltage,current,electric power or electrical impedance)
     findaxisA(pg);
@@ -871,6 +877,8 @@ void Diagram::getAxisLimits(GraphDeque const* pg)
       }
     }
   }
+  }
+#endif
 }
 
 // --------------------------------------------------------------------------
@@ -2274,7 +2282,8 @@ void Diagram::phasorscale()
   zAxisV.max = zAxisI.max = zAxisP.max = zAxisZ.max = -DBL_MAX;
 }
 /*for phasor diagram while detect with type of graph it is (voltage, current....) and save in the auxiliary axis */
-void Diagram::findaxisA(Graph *g) 
+#if 0 // this seems to be phasor code again?!
+void Diagram::findaxisA(Graph *g)
 {
     QString var = g->Var;
     
@@ -2307,8 +2316,10 @@ void Diagram::findaxisA(Graph *g)
       zAxisA = &zAxisZ;
     }
 }
+#endif
 
 /*will determine the value of the graph for one frequency*/
+#if 0 // no. not here
 bool Diagram::findmatch(Graph *g , int m)
 {
   double *px;
@@ -2317,7 +2328,7 @@ bool Diagram::findmatch(Graph *g , int m)
   if(freq <= (double*) 0)
   {
     freq=0;
-    sfreq = "0 Hz";
+    sfreq = "0 Hz"; // <== this is not diagram code
     return false;
   } 
 	px = g->axis(0)->Points;
@@ -2333,9 +2344,11 @@ bool Diagram::findmatch(Graph *g , int m)
   return false;
 
 }
+#endif
 
 /*will read the values receive and find if is one the values determined by AC and remove repeated number.
    if there isn't any value that match will find the closest number and replace*/
+#if 0 // incomplete. code. so what?!
 void Diagram::findfreq(Graph *g)
 {
   if(freq!=nullptr) delete[] freq;
@@ -2497,6 +2510,7 @@ end:
 
   
 }
+#endif
 
 /* for phasor will find the biggest absolute value of all max limits and replace the others*/
 void Diagram::setlimitsphasor(Axis *x ,Axis *y)
