@@ -2244,7 +2244,6 @@ void QucsApp::slotOpenContent(const QModelIndex &idx)
       QProcess *Program = new QProcess();
       //Program->setCommunication(0);
       QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-      env.insert("PATH", env.value("PATH") );
       Program->setProcessEnvironment(env);
       Program->start(com.join(" "));
       if(Program->state()!=QProcess::Running&&

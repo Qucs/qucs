@@ -1496,7 +1496,6 @@ void QucsApp::slotBuildModule()
               << QString("MODEL=%1").arg(vaModule);
 
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-    env.insert("PATH", env.value("PATH") );
     builder->setProcessEnvironment(env);
 
     // prepend command to log

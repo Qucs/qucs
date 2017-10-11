@@ -464,7 +464,6 @@ int Schematic::saveDocument()
                 << "-A" << "dyload";
 
 //      QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-//      env.insert("PATH", env.value("PATH") );
 
       QFile file(admsXml);
       if ( !file.exists() ){
