@@ -200,9 +200,7 @@ void QucsApp::initView()
   editText->setFrame(false);
   editText->setHidden(true);
 
-  QPalette p = palette();
-  p.setColor(backgroundRole(), QucsSettings.BGColor);
-  editText->setPalette(p);
+  misc::setWidgetBackgroundColor(editText, QucsSettings.BGColor);
 
   connect(editText, SIGNAL(returnPressed()), SLOT(slotApplyCompText()));
   connect(editText, SIGNAL(textChanged(const QString&)),

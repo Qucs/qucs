@@ -54,8 +54,8 @@ FillDialog::FillDialog(const QString& _Caption, bool show, QWidget *parent)
   gp1->addWidget(LineWidth, 0,1);
 
   gp1->addWidget(new QLabel(tr("Line Color: "), Tab1), 1,0);
-  ColorButt = new QPushButton("        ",Tab1);
-  misc::setWidgetBackgroundColor(ColorButt, QColor(0,0,0));
+  ColorButt = new QPushButton("",Tab1);
+  misc::setPickerColor(ColorButt, QColor(0,0,0));
   connect(ColorButt, SIGNAL(clicked()), SLOT(slotSetColor()));
   gp1->addWidget(ColorButt, 1,1);
 
@@ -84,8 +84,8 @@ if(show) {
 
   FillLabel1 = new QLabel(tr("Fill Color: "), Tab2);
   gp2->addWidget(FillLabel1, 1,0);
-  FillColorButt = new QPushButton("        ", Tab2);
-  misc::setWidgetBackgroundColor(FillColorButt, QColor(0,0,0));
+  FillColorButt = new QPushButton("", Tab2);
+  misc::setPickerColor(FillColorButt, QColor(0,0,0));
   connect(FillColorButt, SIGNAL(clicked()), SLOT(slotSetFillColor()));
   gp2->addWidget(FillColorButt, 1,1);
 
@@ -146,7 +146,7 @@ void FillDialog::slotSetColor()
   QColor c = QColorDialog::getColor(
               misc::getWidgetBackgroundColor(ColorButt),this);
   if(c.isValid())
-    misc::setWidgetBackgroundColor(ColorButt, c);
+    misc::setPickerColor(ColorButt, c);
 }
 
 // --------------------------------------------------------------------------
@@ -154,7 +154,7 @@ void FillDialog::slotSetFillColor()
 {
   QColor c = QColorDialog::getColor(
               misc::getWidgetBackgroundColor(FillColorButt),this);
-  misc::setWidgetBackgroundColor(FillColorButt, c);
+  misc::setPickerColor(FillColorButt, c);
 }
 
 // --------------------------------------------------------------------------

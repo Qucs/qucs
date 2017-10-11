@@ -54,8 +54,8 @@ ArrowDialog::ArrowDialog(QWidget *parent) : QDialog(parent)
 
 
   all->addWidget(new QLabel(tr("Line color: "), this), 1,0);
-  ColorButt = new QPushButton("    ",this);
-  misc::setWidgetBackgroundColor(ColorButt, QColor(0,0,0));
+  ColorButt = new QPushButton("",this);
+  misc::setPickerColor(ColorButt, QColor(0,0,0));
   connect(ColorButt, SIGNAL(clicked()), SLOT(slotSetColor()));
   all->addWidget(ColorButt, 1,1);
 
@@ -114,7 +114,7 @@ void ArrowDialog::slotSetColor()
   QColor c = QColorDialog::getColor(
                misc::getWidgetBackgroundColor(ColorButt), this);
   if(c.isValid())
-      misc::setWidgetBackgroundColor(ColorButt, c);
+      misc::setPickerColor(ColorButt, c);
 }
 
 // --------------------------------------------------------------------------

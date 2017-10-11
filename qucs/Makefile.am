@@ -32,9 +32,11 @@ SUBDIRS = \
 	qucs-lib \
 	qucs-rescodes \
 	qucs-transcalc \
+        qucs-powercombining \
 	translations \
 	contrib \
 	examples \
+	tests \
 	$(RELEASEDIRS)
 
 subdirs:
@@ -55,6 +57,7 @@ app_PROGS = $(top_builddir)/qucs/qucs \
   $(top_builddir)/qucs-lib/qucslib \
   $(top_builddir)/qucs-edit/qucsedit \
   $(top_builddir)/qucs-rescodes/qucsrescodes \
+  $(top_builddir)/qucs-powercombining/qucspowercombining \
   $(top_builddir)/qucs-transcalc/qucstrans
 
 install-exec-hook: mac-install-apps mac-deploy-framework
@@ -80,6 +83,7 @@ mac-install-apps:
 	  qucslib)	  desc="Qucs Library";; \
 	  qucsedit)	  desc="Qucs Editor";; \
 	  qucrescodes)	  desc="Qucs Resistor codes";; \
+          qucspowercombining)	  desc="Qucs Power combining";; \
 	  qucstrans)	  desc="Qucs Transcalc";; \
 	esac && \
 	cat $(srcdir)/Info.plist | \

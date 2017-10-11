@@ -383,9 +383,11 @@ int Diagram::regionCode(float x, float y) const
 // Is virtual. This one is for round diagrams only.
 bool Diagram::insideDiagram(float x, float y) const
 {
-  float R = float(x2)/2.0 + 1.0; // +1 seems better (graph sometimes little outside)
+  float R = x2/2.0;
   x -= R;
   y -= R;
+  R += 1.0; // +1 seems better ? (allow graph to go a little outside)
+  //qDebug() << "insideDiagram" << x << y << R << (x*x + y*y- R*R);
   return ((x*x + y*y) <= R*R);
 }
 
