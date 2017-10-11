@@ -42,6 +42,8 @@ AM_CONDITIONAL(COND_MACOSX, test x$MACOSX = xyes)
 # Checks for library functions.
 
 # Create Output
+PYTHON=python
+AC_SUBST([PYTHON])
 
 AC_CONFIG_SUBDIRS([qucs
                    qucs-core])
