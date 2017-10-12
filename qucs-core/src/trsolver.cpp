@@ -146,7 +146,6 @@ int trsolver::dcAnalysis (void)
         logprint (LOG_ERROR, "WARNING: %s: %s analysis failed, using line search "
                   "fallback\n", getName (), getDescription ().c_str());
         applyNodeset ();
-        restart ();
         error = solve_nonlinear ();
         break;
     default:
@@ -276,7 +275,7 @@ int trsolver::solve (void)
             // restart Newton iteration
             if (rejected)
             {
-                restart ();      // restart non-linear devices
+                restartNR ();      // restart non-linear devices
                 rejected = 0;
             }
 
@@ -790,17 +789,6 @@ void trsolver::calcTR (trsolver * self)
     for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
     {
         c->calcTR (self->current);
-    }
-}
-
-/* Goes through the list of non-linear circuit objects and runs its
-   restartDC() function. */
-void trsolver::restart (void)
-{
-    circuit * root = subnet->getRoot ();
-    for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
-    {
-        if (c->isNonLinear ()) c->restartDC ();
     }
 }
 

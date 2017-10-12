@@ -75,6 +75,7 @@ matrix:
             - texlive-font-utils
             - ps2eps
             - pgf
+            - python-tk
 
     - os: osx
       # Qt 4.8.7 official installer works up to OSX 10.10 or xcode6.4
