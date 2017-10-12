@@ -448,6 +448,15 @@ int Schematic::saveDocument()
 #else
       admsXml = QDir::toNativeSeparators(admsXml+"/"+"admsXml");
 #endif
+      // BUG: duplicated from qucs_actions.cpp
+      char const* var = getenv("QUCS_USE_PATH");
+      if(var != NULL) {
+	// just use PATH. this is currently bound to a contition, to maintain
+	// backwards compatibility with QUCSDIR
+	qDebug() << "QUCS_USE_PATH";
+	admsXml = "admsXml";
+      }else{
+      }
 
       QString workDir = QucsSettings.QucsWorkDir.absolutePath();
 
@@ -466,7 +475,9 @@ int Schematic::saveDocument()
 //      QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
 
       QFile file(admsXml);
-      if ( !file.exists() ){
+      if(var) {
+	// don't do this. it will always report an error.
+      }else if ( !file.exists() ){
         QMessageBox::critical(this, tr("Error"),
                               tr("Program admsXml not found: %1\n\n"
                                   "Set the admsXml location on the application settings.").arg(admsXml));
