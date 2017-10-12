@@ -400,7 +400,8 @@ public:
           *createLib, *importData, *graph2csv, *createPkg, *extractPkg,
           *callAtt, *callRes, *centerHor, *centerVert, *loadModule, *buildModule;
 
-public slots:
+public slots: // BUG. why is this here?
+	           // what if a plugin wants to add menu items?
   void slotEditRotate(bool);  // rotate the selected items
   void slotEditMirrorX(bool); // mirror the selected items about X axis
   void slotEditMirrorY(bool); // mirror the selected items about Y axis
@@ -461,6 +462,7 @@ private slots:
   void slotResizePropEdit(const QString&);
   void slotCreateLib();
   void slotImportData();
+  void slotExportSchematic();
   void slotExportGraphAsCsv();
   void slotCreatePackage();
   void slotExtractPackage();
