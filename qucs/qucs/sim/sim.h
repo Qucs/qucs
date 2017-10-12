@@ -20,6 +20,7 @@
 class NetLang;
 class Component;
 
+#include "object.h"
 #include <assert.h>
 #include <command.h>
 #include <components/component.h>

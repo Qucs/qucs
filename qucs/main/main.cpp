@@ -803,8 +803,9 @@ int main(int argc, char *argv[])
     netlang = sd->netLang();
   }
   if(!netlang){
+    // TODO: io_error...
     std::cerr << "Error: Cannot find language for "
-              << std::string(netlang_name) << "\n";
+              << netlang_name.toStdString() << "\n";
     return -1;
   }
 

@@ -450,8 +450,8 @@ void SimMessage::startSimulator()
     Stream << '\n';
 
     isVerilog = ((Schematic*)DocWidget)->isVerilog;
-    auto sd = simulator_dispatcher["qucsator"];
-    assert(sd);
+    Simulator const* sd=simulator_dispatcher["qucsator"];
+    assert(sd); //for now.
     auto nl = sd->netLang();
     assert(nl);
     SimTime = ((Schematic*)DocWidget)->createNetlist(Stream, SimPorts, nl);
