@@ -223,6 +223,7 @@ inline int parseComponentLibrary (QString libPath, ComponentLibrary &library, LI
     QString filename = getLibAbsPath(libPath);
 
     QFile file (filename);
+    qDebug() << "trying to read" << filename;
 
     if(!file.open(QIODevice::ReadOnly))
     {

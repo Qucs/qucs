@@ -809,20 +809,34 @@ void QucsApp::launchTool(const QString& prog, const QString& progDesc, const QSt
   QProcess *tool = new QProcess();
 
 #ifdef __MINGW32__
-  QString cmd = QDir::toNativeSeparators("\""+QucsSettings.BinDir + prog + ".exe\"") + " " + args;
+  QString cmd = QDir::toNativeSeparators("\""+QucsSettings.BinDir + prog + ".exe\"");
 #elif __APPLE__
-  QString cmd = QDir::toNativeSeparators(QucsSettings.BinDir + prog + ".app/Contents/MacOS/" + prog) + " " + args;
+  QString cmd = QDir::toNativeSeparators(QucsSettings.BinDir + prog + ".app/Contents/MacOS/" + prog);
 #else
-  QString cmd = QDir::toNativeSeparators(QucsSettings.BinDir + prog) + " " + args;
+  QString cmd = QDir::toNativeSeparators(QucsSettings.BinDir + prog);
 #endif
 
-  tool->setWorkingDirectory(QucsSettings.BinDir);
-  qDebug() << "Command :" << cmd;
-  tool->start(cmd);
+  char const* var = getenv("QUCS_USE_PATH");
+  if(var != NULL) {
+    // just use PATH. this is currently bound to a contition, to maintain
+    // backwards compatibility with QUCSDIR
+    qDebug() << "QUCS_USE_PATH";
+    cmd = prog;
+  }else{
+    // don't know what this is about. doesn't make sense in the case above.
+    // (and in all other cases i can think of)
+    tool->setWorkingDirectory(QucsSettings.BinDir);
+  }
+
+  qDebug() << "Command :" << cmd + " " + args;
+
+  // FIXME: use start(const QString& program, const QStringList& arguments);
+  tool->start(cmd + " " + args);
   
+  // BUG: use signals. see QUCSATOR invocation
   if(!tool->waitForStarted(1000) ) {
     QMessageBox::critical(this, tr("Error"),
-                          tr("Cannot start %1 program! \n\n(%2)").arg(progDesc, cmd));
+	tr("Cannot start %1 program! \n\n(%2)").arg(progDesc, cmd + " " + args));
     delete tool;
     return;
   }
