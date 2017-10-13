@@ -38,7 +38,7 @@ GTEST_TESTS = libqucsUnitTest
 if USE_GTEST
 GTEST_LIBQUCS = libqucsUnitTest
 check_PROGRAMS = $(GTEST_LIBQUCS)
-libqucsUnitTest_LDADD = $(top_builddir)/src/libqucs.la
+libqucsUnitTest_LDADD = $(top_builddir)/src/libqucsator.la
 libqucsUnitTest_CPPFLAGS = $(AM_CPPFLAGS) @GTEST_CPPFLAGS@ \
                            -DGTEST_HAS_PTHREAD=0
 libqucsUnitTest_SOURCES = testMain.cpp \

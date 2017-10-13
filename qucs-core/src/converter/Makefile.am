@@ -24,7 +24,7 @@
 
 bin_PROGRAMS = qucsconv
 
-qucsconv_LDADD = ../libqucs.la ../math/libqucsmath.la
+qucsconv_LDADD = ../libqucsator.la ../math/libqucsmath.la
 
 qucsconv_LDFLAGS = -Wl,-rpath,$(libdir)
 
