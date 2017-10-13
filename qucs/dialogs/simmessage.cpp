@@ -40,7 +40,6 @@ using namespace std;
 #include <QMessageBox>
 
 #include "simmessage.h"
-#include "main.h"
 #include "module.h"
 #include "qucs.h"
 #include "textdoc.h"
@@ -48,12 +47,6 @@ using namespace std;
 #include "components/opt_sim.h"
 #include "components/vhdlfile.h"
 #include "misc.h"
-
-#ifdef __MINGW32__
-#define executableSuffix ".exe"
-#else
-#define executableSuffix ""
-#endif
 
 /*!
  * \brief Create a simulation messages dialog.

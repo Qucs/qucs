@@ -17,7 +17,6 @@
  *                                                                         *
  ***************************************************************************/
 #include "qucs.h"
-#include "main.h"
 #include "node.h"
 #include "schematic.h"
 #include "mouseactions.h"

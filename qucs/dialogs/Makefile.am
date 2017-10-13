@@ -22,7 +22,7 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-noinst_LIBRARIES = libdialogs.a
+noinst_LTLIBRARIES = libdialogs.la
 
 MOCHEADERS = settingsdialog.h simmessage.h qucssettingsdialog.h      \
      labeldialog.h changedialog.h matchdialog.h digisettingsdialog.h \
@@ -36,14 +36,14 @@ UICFILES = ui_searchdialog.h
 
 BUILT_SOURCES = $(UICFILES)
 
-libdialogs_a_SOURCES = settingsdialog.cpp newprojdialog.cpp \
+libdialogs_la_SOURCES = settingsdialog.cpp newprojdialog.cpp \
      simmessage.cpp qucssettingsdialog.cpp labeldialog.cpp changedialog.cpp \
      matchdialog.cpp sweepdialog.cpp digisettingsdialog.cpp searchdialog.cpp \
      librarydialog.cpp importdialog.cpp packagedialog.cpp \
      savedialog.cpp vasettingsdialog.cpp exportdialog.cpp loaddialog.cpp \
      aboutdialog.cpp
 
-nodist_libdialogs_a_SOURCES = $(MOCFILES)
+nodist_libdialogs_la_SOURCES = $(MOCFILES)
 
 noinst_HEADERS = $(MOCHEADERS) $(UIHEADERS)
 
