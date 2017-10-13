@@ -187,6 +187,7 @@ void SchCauer::calcBandPass()
 
         cnt++;
     }
+    Q_UNUSED(R7);
 }
 
 void SchCauer::calcBandStop()
