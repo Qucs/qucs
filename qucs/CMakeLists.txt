@@ -254,7 +254,7 @@ ENDIF(APPLE)
 ADD_LIBRARY( coreSchematic OBJECT ${QUCS_SRCS} ${QUCS_MOC_SRCS})
 
 # create shared library
-ADD_LIBRARY( schematic SHARED
+ADD_LIBRARY( qucsschematic SHARED
   $<TARGET_OBJECTS:coreSchematic>
   $<TARGET_OBJECTS:components>
   $<TARGET_OBJECTS:diagrams>
@@ -263,14 +263,14 @@ ADD_LIBRARY( schematic SHARED
 )
 
 # link system libraries
-TARGET_LINK_LIBRARIES( schematic ${QT_LIBRARIES} ${CMAKE_DL_LIBS})
+TARGET_LINK_LIBRARIES( qucsschematic ${QT_LIBRARIES} ${CMAKE_DL_LIBS})
 
 #
 #  CMake's way of creating an executable
 #
 ADD_EXECUTABLE( qucs MACOSX_BUNDLE WIN32 main.cpp ${RESOURCES_SRCS} )
 
-TARGET_LINK_LIBRARIES( qucs schematic )
+TARGET_LINK_LIBRARIES( qucs qucsschematic )
 
 #
 # Prepare the installation
@@ -296,6 +296,13 @@ INSTALL(TARGETS qucs
     BUNDLE DESTINATION bin COMPONENT Runtime
     RUNTIME DESTINATION bin COMPONENT Runtime
     )
+
+# set Windows runtime location for libqucschematic
+# See: http://www.cmake.org/pipermail/cmake/2010-June/037461.html
+INSTALL(TARGETS qucsschematic
+     RUNTIME DESTINATION bin COMPONENT runtime
+     ARCHIVE DESTINATION lib COMPONENT devel
+     LIBRARY DESTINATION lib COMPONENT library)
 
 #
 # Install needed Qt plugins by copying directories from the qt installation
