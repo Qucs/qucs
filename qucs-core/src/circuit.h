@@ -133,7 +133,7 @@ class circuit : public object, public integrator
   virtual void initAC (void) { allocMatrixMNA (); }
   virtual void initAC2 (void) { }//only used in ohmmeter.cpp
   virtual void setstate (int) { } //only used in ohmmeter.cpp
-  virtual int getstate () { }//only used in ohmmeter.cpp
+  virtual int getstate () { return 0; }; //only used in ohmmeter.cpp
   virtual void calcAC (nr_double_t) { }
   virtual void initTR (void) { allocMatrixMNA (); }
   virtual void calcTR (nr_double_t) { }

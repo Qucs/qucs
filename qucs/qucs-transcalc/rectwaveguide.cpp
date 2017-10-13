@@ -75,12 +75,11 @@ double rectwaveguide::fc (int m, int n)
  */
 double rectwaveguide::alphac ()
 {
-  double Rs, k, f_c;
+  double Rs, f_c;
   double ac;
   short m, n, mmax, nmax;
 
   Rs = sqrt ((pi * f * mur * MU0) / sigma);
-  k = kval ();
   ac = 0.0;
   mmax = (int) floor (f / fc (1,0));
   nmax = mmax;

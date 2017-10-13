@@ -94,13 +94,10 @@ void coplanar::calc()
 
   // adds effect of strip thickness
   if (t > 0) {
-    double d, se, We, ke, qe;
+    double d, ke, qe;
     d  = (t * 1.25 / pi) * (1 + log (4 * pi * w / t));
-    se = s - d;
-    We = w + d;
 
     // modifies k1 accordingly (k1 = ke)
-    //ke = We / (We + se + se); 
     ke = k1 + (1 - k1 * k1) * d / 2 / s;
     qe = KoverKp(ke);
     // backside is metal

@@ -995,6 +995,7 @@ void QucsTranscalc::slotQuit()
   tmp = y();		// ... set them correctly before closing the ...
   tmp = width();	// dialog !!!  Otherwise the frame of the window ...
   tmp = height();	// will not be recognized (a X11 problem).
+  Q_UNUSED(tmp);
 
   storeValues ();
   qApp->quit();
@@ -1007,6 +1008,7 @@ void QucsTranscalc::closeEvent(QCloseEvent *Event)
   tmp = y();		// ... set them correctly before closing the ...
   tmp = width();	// dialog !!!  Otherwise the frame of the window ...
   tmp = height();	// will not be recognized (a X11 problem).
+  Q_UNUSED(tmp);
 
   storeValues ();
   Event->accept();
