@@ -19,7 +19,6 @@
 # include <config.h>
 #endif
 
-#include "main.h"
 #include "qucs.h"
 #include "octave_window.h"
 #include "misc.h"

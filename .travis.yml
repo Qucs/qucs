@@ -206,6 +206,7 @@ script:
       cd build;
       cmake ..;
       make;
+      make test;
     fi
 
   - echo $TRAVIS_BRANCH

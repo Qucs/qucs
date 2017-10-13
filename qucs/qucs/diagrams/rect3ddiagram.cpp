@@ -34,7 +34,7 @@
 #endif
 
 #include "rect3ddiagram.h"
-#include "main.h"
+#include "qucs.h"
 #include "misc.h"
 
 Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)

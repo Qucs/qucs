@@ -18,7 +18,6 @@
 #include "settingsdialog.h"
 
 #include "node.h"
-#include "main.h"
 #include "qucs.h"
 #include "mnemo.h"
 #include "schematic.h"

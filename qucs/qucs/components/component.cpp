@@ -20,7 +20,6 @@
 #include "componentdialog.h"
 #include "components.h"
 #include "node.h"
-#include "main.h"
 #include "qucs.h"
 #include "schematic.h"
 #include "viewpainter.h"

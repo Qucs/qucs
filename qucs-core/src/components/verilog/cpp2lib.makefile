@@ -25,7 +25,7 @@ PREFIX=
 INC=$(PREFIX)/include/qucs-core
 
 # Link to Qucs library
-LIBS=-lqucs
+LIBS=-lqucsator
 
 ifeq ($(OS),Windows_NT)
   DLLEXT=.dll

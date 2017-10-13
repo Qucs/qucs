@@ -3,7 +3,7 @@
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 #include "octave_window.h"
-#include "main.h"
+#include "qucs.h"
 #include "misc.h"
 
 #include <QSize>
@@ -16,13 +16,6 @@
 #include <QDockWidget>
 #include <QDebug>
 #include <QMessageBox>
-
-
-#ifdef __MINGW32__
-#define executableSuffix ".exe"
-#else
-#define executableSuffix ""
-#endif
 
 
 OctaveWindow::OctaveWindow(QDockWidget *parent_): QWidget()

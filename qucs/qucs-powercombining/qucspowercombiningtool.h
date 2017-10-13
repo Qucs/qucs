@@ -40,7 +40,6 @@ struct tSubstrate {
 
 static const double Z_FIELD = 376.73031346958504364963;
 static const double SPEED_OF_LIGHT = 299792458.0;
-static const double pi = 3.141592653589793238462643383279502884197169399375105820974944;
 
 /*! coth function */
 static inline double coth(const double x) {

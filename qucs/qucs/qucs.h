@@ -22,6 +22,7 @@
 #include <QString>
 #include <QHash>
 #include <QStack>
+#include <QDir>
 
 class QucsDoc;
 class Schematic;
@@ -31,6 +32,8 @@ class SearchDialog;
 class OctaveWindow;
 class MessageDock;
 class ProjectView;
+class VersionTriplet;
+class QucsApp;
 
 class QLabel;
 class QAction;
@@ -53,6 +56,72 @@ class QFileSystemModel;
 class QModelIndex;
 class QPushButton;
 
+#ifdef __MINGW32__
+#define executableSuffix ".exe"
+#else
+#define executableSuffix ""
+#endif
+
+/* pi */
+static const double pi = 3.141592653589793238462643383279502884197169399375105820974944;
+
+struct tQucsSettings {
+  int x, y, dx, dy;    // position and size of main window
+  QFont font;
+  float largeFontSize;
+  QColor BGColor;      // background color of view area
+  QString Language;
+
+  // syntax highlighting
+  QColor Comment, String, Integer, Real, Character, Type,
+    Attribute, Directive, Task;
+
+  unsigned int maxUndo;    // size of undo stack
+  QString Editor;
+  QString Qucsator;
+  QString Qucsconv;
+  QString BinDir;
+  QString LangDir;
+  QString LibDir;
+  QString OctaveDir;  // m-files location
+  QString ExamplesDir;
+  QString DocDir;
+
+  unsigned int NodeWiring;
+  QDir QucsWorkDir;
+  QDir QucsHomeDir;
+  QDir AdmsXmlBinDir;  // dir of admsXml executable
+  QDir AscoBinDir;     // dir of asco executable
+  // QDir OctaveBinDir;   // dir of octave executable
+  QString OctaveExecutable; // OctaveExecutable location
+  QString QucsOctave; // OUCS_OCTAVE variable
+
+  // registered filename extensions with program to open the file
+  QStringList FileTypes;
+
+  // List of extensions used for spice files
+  QStringList spiceExtensions;
+
+  unsigned int numRecentDocs;
+  QStringList RecentDocs;
+
+  bool IgnoreFutureVersion;
+  bool GraphAntiAliasing;
+  bool TextAntiAliasing;
+};
+
+// extern because nearly everywhere used
+extern tQucsSettings QucsSettings;  // extern because nearly everywhere used
+extern QString lastDir;    // to remember last directory for several dialogs
+extern QStringList qucsPathList;
+extern VersionTriplet QucsVersion;
+extern QucsApp *QucsMain;  // the Qucs application itself
+
+// TODO move these inside the QucsApp class?
+bool loadSettings();
+bool saveApplSettings();
+
+// function pointers used with mouse actions handling
 typedef bool (Schematic::*pToggleFunc) ();
 typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
 typedef void (MouseActions::*pMouseFunc2) (Schematic*, QMouseEvent*, float, float);

@@ -22,6 +22,8 @@
 #include <QHash>
 #include <QMap>
 
+class Element;
+
 // function typedefs for circuits and analyses
 typedef Element * (* pInfoFunc) (QString&, char * &, bool);
 typedef Element * (* pInfoVAFunc) (QString&, QString&, bool, QString);
