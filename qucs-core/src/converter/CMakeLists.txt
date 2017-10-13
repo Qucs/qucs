@@ -74,7 +74,7 @@ ADD_EXECUTABLE(qucsconv ${QUCSCONV_SRC} ${conv_generated} )
 
 ADD_DEPENDENCIES(qucsconv defs)
 
-TARGET_LINK_LIBRARIES(qucsconv libqucs)
+TARGET_LINK_LIBRARIES(qucsconv libqucsator)
 
 #
 # Handle installation
