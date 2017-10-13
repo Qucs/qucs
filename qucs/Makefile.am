@@ -60,9 +60,9 @@ MOCHEADERS = \
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-noinst_LTLIBRARIES = libschematic.la
+noinst_LTLIBRARIES = libqucsschematic.la
 
-libschematic_la_SOURCES= \
+libqucsschematic_la_SOURCES= \
   attach.cpp \
   node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
   qucs.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
@@ -71,16 +71,16 @@ libschematic_la_SOURCES= \
   messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
   projectView.cpp
 
-nodist_libschematic_la_SOURCES = $(MOCFILES)
+nodist_libqucsschematic_la_SOURCES = $(MOCFILES)
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs-lib
-libschematic_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
-libschematic_la_LIBADD = components/libcomponents.la diagrams/libdiagrams.la \
+libqucsschematic_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
+libqucsschematic_la_LIBADD = components/libcomponents.la diagrams/libdiagrams.la \
   paintings/libpaintings.la dialogs/libdialogs.la \
   $(X11_LIBS) $(QT_LIBS)
 
 
-qucs_real_LDADD = libschematic.la
+qucs_real_LDADD = libqucsschematic.la
 
 qucs_real_LDFLAGS = $(QT_LDFLAGS)
 
