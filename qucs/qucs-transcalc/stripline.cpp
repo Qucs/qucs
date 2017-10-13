@@ -178,12 +178,11 @@ int stripline::synthesize ()
 
   double Wi = (A1 - A2)*(2*h-t);//Width given by the zero-thickness approximation (Initial guess for the refinement)
  
-  double Zi, diff_Zi, Zi__;
+  double Zi;
   double dW = Wi*1e-4;//Differential width
-  double err = std::abs(Zi - Z0);//Error metric: Norm-1
   unsigned int MAX_ITER = 100, iter = 0;
   double MAX_ERR = 1e-5;
-  double slope, Zi_1 = 0, Zi_diff, step;
+  double Zi_1 = 0, Zi_diff, step;
 
 
   // The Newton-Raphson method is employed to refine the width given by the zero-thickness approximation with the analysis formulae.
