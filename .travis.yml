@@ -124,20 +124,11 @@ install:
       pip install matplotlib;
       brew install ccache;
       export PATH="/usr/local/opt/ccache/libexec:$PATH";
-    fi
-
-  # Use tap for ADMS
-  - if [[ $OSX ]]; then
+      brew tap cartr/qt4;
+      brew tap-pin cartr/qt4;
+      brew install qt@4;
       brew tap guitorri/tap;
       brew install adms;
-    fi
-
-  # The Qt4 brew bottles from github.com/cartr/homebrew-qt4 do not include Qt3Support
-  # Below is a rebuild bottle that does include Qt3Support, skip-relocate to manually install into cellar
-  - if [[ $OSX ]]; then
-      curl -L -O https://dl.bintray.com/guitorri/qucs/qt-4.8.7_3.sierra.bottle.2.tar.gz ;
-      tar -C $(brew --cellar) -xvf qt-4.8.7_3.sierra.bottle.2.tar.gz ;
-      brew link --force qt ;
     fi
 
 before_script:
