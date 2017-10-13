@@ -23,12 +23,12 @@
 # Boston, MA 02110-1301, USA.
 #
 
-noinst_LIBRARIES = libcomponents.a
+noinst_LTLIBRARIES = libcomponents.la
 
 MOCHEADERS = componentdialog.h spicedialog.h optimizedialog.h spicefile.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
+libcomponents_la_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   vcvs.cpp vccs.cpp tr_sim.cpp tline.cpp substrate.cpp sp_sim.cpp             \
   param_sweep.cpp mstee.cpp msstep.cpp msline.cpp mscross.cpp mscoupled.cpp mslange.cpp   \
   mscorner.cpp hb_sim.cpp diode.cpp dc_sim.cpp coplanar.cpp ccvs.cpp cccs.cpp \
@@ -63,7 +63,7 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   mutualx.cpp circline.cpp ohmmeter.cpp taperedline.cpp     \
   capq.cpp indq.cpp spiralinductor.cpp circularloop.cpp
 
-nodist_libcomponents_a_SOURCES = $(MOCFILES)
+nodist_libcomponents_la_SOURCES = $(MOCFILES)
 
 noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   inductor.h biast.h dcblock.h dcfeed.h ground.h subcirport.h symtrafo.h      \

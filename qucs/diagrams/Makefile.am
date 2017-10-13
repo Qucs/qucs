@@ -22,17 +22,17 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-noinst_LIBRARIES = libdiagrams.a
+noinst_LTLIBRARIES = libdiagrams.la
 
 MOCHEADERS = diagramdialog.h markerdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-libdiagrams_a_SOURCES = tabdiagram.cpp smithdiagram.cpp rectdiagram.cpp \
+libdiagrams_la_SOURCES = tabdiagram.cpp smithdiagram.cpp rectdiagram.cpp \
   polardiagram.cpp graph.cpp diagramdialog.cpp diagram.cpp marker.cpp   \
   markerdialog.cpp psdiagram.cpp rect3ddiagram.cpp curvediagram.cpp     \
   timingdiagram.cpp truthdiagram.cpp phasordiagram.cpp waveac.cpp
 
-nodist_libdiagrams_a_SOURCES = $(MOCFILES)
+nodist_libdiagrams_la_SOURCES = $(MOCFILES)
 
 noinst_HEADERS = $(MOCHEADERS) diagram.h graph.h polardiagram.h rectdiagram.h \
   smithdiagram.h tabdiagram.h diagrams.h marker.h psdiagram.h rect3ddiagram.h \
