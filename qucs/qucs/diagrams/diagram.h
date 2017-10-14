@@ -72,7 +72,9 @@ public:
   virtual QString extraMarkerText(Marker const*) const {return "";}
   
   virtual void paint(ViewPainter*);
+protected: // strictly internal
   virtual void paintDiagram(ViewPainter* p);
+public:
   void paintMarkers(ViewPainter* p, bool paintAll = true);
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);

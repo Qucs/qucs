@@ -96,7 +96,7 @@ Diagram::~Diagram()
 }
 
 /*!
-   Paint function for most diagrams (cartesian, smith, polar, ...)
+   Paint function for few diagrams (cartesian, smith, polar, ...)
 */
 void Diagram::paint(ViewPainter *p)
 {
