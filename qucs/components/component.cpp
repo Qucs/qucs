@@ -636,7 +636,6 @@ QString Component::netlist()
   }
 
   s += '\n';
-  s += '\n';
 
   return s;
 }
