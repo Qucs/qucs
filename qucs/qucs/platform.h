@@ -1,22 +1,22 @@
 /***************************************************************************
                                 platform.h
                                 ----------
-    begin                : yes
-    copyright            : 2016 by Felix Salfelder
-    email                : felix@salfelder.org
+    copyright            : QUCS team
+    author               : 2016-2018 Felix Salfelder
+                           2009 Albert Davis
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-// platform dependent definitions
-// inspired by gnucap md.h
+// platform dependent definitions, mainly for non-POSIX systems
+// essentially gnucap md.h, "machine dependent" header.
 
 #ifndef PLATFORM_H_INCLUDED
 #define PLATFORM_H_INCLUDED
@@ -84,7 +84,7 @@ inline void dlclose(void* h)
   FreeLibrary((HINSTANCE)h);
 }
 
-#if 0 // not yet
+#if 1 // not yet
 inline char* dlerror()
 {
   static LPVOID lpMsgBuf = NULL;
@@ -106,7 +106,7 @@ inline char* dlerror()
 		0, NULL);
   return (char*)lpMsgBuf;
 }
-#endif
+#endif // windows stuff
 #define RTLD_LAZY       0x00001 /* Lazy function call binding.  */
 #define RTLD_NOW        0x00002 /* Immediate function call binding.  */
 #define RTLD_BINDING_MASK   0x3 /* Mask of binding time value.  */

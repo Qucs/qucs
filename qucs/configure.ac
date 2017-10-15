@@ -24,7 +24,7 @@ dnl Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
 AC_CHECK_TOOL(AR, ar, :)
-LT_INIT()
+LT_INIT([win32-dll])
 
 PKG_CONFIG=pkg-config
 
@@ -215,7 +215,7 @@ case $host_os in
     dnl Set Clang
     if test "$CXX -dM -E - < /dev/null | grep __clang__" ; then
       CFLAGS="$CFLAGS -pipe"
-      CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -Wno-deprecated-register"
+      CXXFLAGS="$CXXFLAGS -pipe -Wno-deprecated-register"
       LDDFLAGS="$LDDFLAGS"
       use_CLANG="yes"
     fi
@@ -223,7 +223,7 @@ case $host_os in
     dnl Set GCC.
     if test "x$use_CLANG" != "xyes" -a "x$GCC" = "xyes" ; then
       CFLAGS="$CFLAGS -pipe"
-      CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new"
+      CXXFLAGS="$CXXFLAGS -pipe -fno-check-new"
       if test x$WIN32 = xyes; then
         CXXFLAGS="$CXXFLAGS"
       fi
@@ -808,6 +808,7 @@ AH_TOP([
 dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([Makefile
     contrib/Makefile
+    main/Makefile
     man/Makefile
     examples/Makefile
     qucs-filter/Makefile
@@ -828,6 +829,7 @@ AC_CONFIG_FILES([Makefile
     qucs/diagrams/Makefile
     qucs/paintings/Makefile
     qucs/dialogs/Makefile
+    qucs/sim/Makefile
     qucs/tests/Makefile
     tests/Makefile
     translations/Makefile
@@ -843,7 +845,7 @@ AC_CONFIG_FILES([Makefile
     qucs-transcalc/qucstrans.1
     qucs-powercombining/qucspowercombining.1])
 
-AC_CONFIG_FILES([qucs/qucs], [chmod +x qucs/qucs])
+AC_CONFIG_FILES([main/qucs], [chmod +x main/qucs])
 
 dnl Check for Git short SHA to tag version
 dnl The release package should also keep it on the config.h

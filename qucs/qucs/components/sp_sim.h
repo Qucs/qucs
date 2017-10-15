@@ -18,10 +18,10 @@
 #ifndef SP_SIM_H
 #define SP_SIM_H
 
-#include "component.h"
+#include "command.h"
 
 
-class SP_Sim : public Component  {
+class SP_Sim : public Command  {
 public:
   SP_Sim();
   ~SP_Sim();

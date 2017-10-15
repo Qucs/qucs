@@ -16,6 +16,7 @@
  ***************************************************************************/
 #include "dc_sim.h"
 #include "qucs.h"
+#include "globals.h"
 
 
 DC_Sim::DC_Sim()
@@ -40,7 +41,7 @@ DC_Sim::DC_Sim()
 
   tx = 0;
   ty = y2+1;
-  Model = ".DC";
+  Model = "DC";
   Name  = "DC";
 
   Props.append(new Property("Temp", "26.85", false,
@@ -84,3 +85,10 @@ Element* DC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new DC_Sim();
   return 0;
 }
+
+#if 0 // not yet
+namespace{
+DC_Sim p;
+Dispatcher<Command>::INSTALL d(&command_dispatcher, "DC", &p);
+}
+#endif

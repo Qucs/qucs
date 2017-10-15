@@ -34,6 +34,7 @@
 #include "diagrams/diagram.h"
 #include "paintings/painting.h"
 #include "components/component.h"
+#include "sim/sim.h"
 
 #include <Q3ScrollView>
 #include <Q3PtrList>
@@ -295,13 +296,15 @@ private:
    *****  and their pointers. ("DocComps", "Components" etc.)     *****
    ******************************************************************** */
 
-public:
+public: // TODO: move out of the way, perhaps to SchematicNetlist,
+        // SchematicModel or so.
   static int testFile(const QString &);
-  bool createLibNetlist(QTextStream*, QPlainTextEdit*, int);
-  bool createSubNetlist(QTextStream *, int&, QStringList&, QPlainTextEdit*, int);
+  bool createLibNetlist(QTextStream*, QPlainTextEdit*, int, NetLang const& nl);
+  bool createSubNetlist(QTextStream *, int&, QStringList&, QPlainTextEdit*, int,
+		  const NetLang& nl);
   void createSubNetlistPlain(QTextStream*, QPlainTextEdit*, int);
-  int  prepareNetlist(QTextStream&, QStringList&, QPlainTextEdit*);
-  QString createNetlist(QTextStream&, int);
+  int  prepareNetlist(QTextStream&, QStringList&, QPlainTextEdit*, const NetLang&);
+  QString createNetlist(QTextStream&, int, NetLang const&);
   bool loadDocument();
   void highlightWireLabels (void);
 
@@ -329,10 +332,12 @@ private:
   void throughAllNodes(bool, QStringList&, int&);
   void propagateNode(QStringList&, int&, Node*);
   void collectDigitalSignals(void);
-  bool giveNodeNames(QTextStream *, int&, QStringList&, QPlainTextEdit*, int);
-  void beginNetlistDigital(QTextStream &);
-  void endNetlistDigital(QTextStream &);
-  bool throughAllComps(QTextStream *, int&, QStringList&, QPlainTextEdit *, int);
+  bool giveNodeNames(QTextStream *, int&, QStringList&, QPlainTextEdit*,
+		  int, NetLang const&);
+  void beginNetlistDigital(QTextStream &, NetLang const&);
+  void endNetlistDigital(QTextStream &, NetLang const&);
+  bool throughAllComps(QTextStream *, int&, QStringList&, QPlainTextEdit *,
+		  int, NetLang const&);
 
   DigMap Signals; // collecting node names for VHDL signal declarations
   QStringList PortTypes;
