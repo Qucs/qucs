@@ -35,7 +35,7 @@ TR_Sim::TR_Sim()
 
   tx = 0;
   ty = y2+1;
-  Model = ".TR";
+  Model = "TR";
   Name  = "TR";
 
   // The index of the first 4 properties must not changed. Used in recreate().

@@ -99,7 +99,7 @@ Element* SPEmbed::info2(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString SPEmbed::getSubcircuitFile()
+QString SPEmbed::getSubcircuitFile() const
 {
   // construct full filename
   QString FileName = Props.getFirst()->Value;
@@ -107,7 +107,7 @@ QString SPEmbed::getSubcircuitFile()
 }
 
 // -------------------------------------------------------
-QString SPEmbed::netlist()
+QString SPEmbed::netlist() const
 {
   QString s = Model+":"+Name;
 

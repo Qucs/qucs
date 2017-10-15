@@ -31,10 +31,10 @@ public:
   Component* newOne();
 
   bool createSubNetlist(QTextStream *, QStringList&, int type=1);
-  QString getSubcircuitFile();
+  QString getSubcircuitFile() const;
 
 protected:
-  QString netlist();
+  QString netlist() const;
   QString vhdlCode(int);
   QString verilogCode(int);
   void createSymbol();
@@ -42,7 +42,7 @@ protected:
 private:
   int  loadSymbol();
   int  loadSection(const QString&, QString&, QStringList* i=0);
-  QString createType();
+  QString createType() const;
 };
 
 #endif

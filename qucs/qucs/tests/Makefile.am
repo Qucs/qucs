@@ -16,14 +16,22 @@
 # Boston, MA 02110-1301, USA.
 #
 
-AM_CPPFLAGS = -I${srcdir}/.. ${QT_CFLAGS} ${QTest_CFLAGS}
+AM_CPPFLAGS = -I${srcdir}/.. ${QT_CFLAGS} ${QTest_CFLAGS} -DPIC
 AM_DEFAULT_SOURCE_EXT = .cpp
+AM_CXXFLAGS = -fPIC
+AM_LDFLAGS = -Wl,--no-as-needed
 
 if COND_WIN32
 check_PROGRAMS =
 else
 check_PROGRAMS = SchematicTests ElementTests ComponentTests
 endif
+
+PLUGINS = \
+	../components/libcomponents.la \
+	../diagrams/libdiagrams.la \
+	../paintings/libpaintings.la \
+	../dialogs/libdialogs.la
 
 SchematicTests_SOURCES = SchematicTests.cpp SchematicTests.moc.cpp
 
@@ -34,13 +42,16 @@ ComponentTests_SOURCES = ComponentTests.cpp ComponentTests.moc.cpp
 ComponentTests_CPPFLAGS = ${AM_CPPFLAGS}
 
 SchematicTests_LDADD = \
-	../libqucsschematic.la ${QT_LIBS} ${QTest_LIBS}
+	../libqucs.la \
+	../libqucsschematic.la ${PLUGINS} ${QT_LIBS} ${QTest_LIBS} ../libqucs.la
 
 ElementTests_LDADD = \
-	../libqucsschematic.la ${QT_LIBS} ${QTest_LIBS}
+	../libqucs.la \
+	../libqucsschematic.la ${PLUGINS} ${QT_LIBS} ${QTest_LIBS} ../libqucs.la
 
 ComponentTests_LDADD = \
-	../libqucsschematic.la ${QT_LIBS} ${QTest_LIBS}
+	../libqucs.la \
+	../libqucsschematic.la ${PLUGINS} ${QT_LIBS} ${QTest_LIBS} ../libqucs.la
 
 MOCFILES = ${check_PROGRAMS:%=%.moc.cpp}
 BUILT_SOURCES = ${MOCFILES}

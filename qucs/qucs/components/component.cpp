@@ -19,12 +19,15 @@
 
 #include "componentdialog.h"
 #include "components.h"
+#include "command.h"
 #include "node.h"
 #include "qucs.h"
 #include "schematic.h"
 #include "viewpainter.h"
 #include "module.h"
 #include "misc.h"
+#include "io_trace.h"
+#include "globals.h"
 
 #include <QPen>
 #include <QString>
@@ -63,7 +66,7 @@ Component::Component()
 }
 
 // -------------------------------------------------------
-Component* Component::newOne()
+Component* Component::newOne() /* BUG const */
 {
   return new Component();
 }
@@ -188,7 +191,8 @@ void Component::paint(ViewPainter *p)
   int x, y, a, b, xb, yb;
   QFont f = p->Painter->font();   // save current font
   QFont newFont = f;
-  if(Model.at(0) == '.') {   // is simulation component (dc, ac, ...)
+  if(dynamic_cast<Command const*>(this)) {
+    assert(Model.at(0) == '.');
     newFont.setPointSizeF(p->Scale * Texts.first()->Size);
     newFont.setWeight(QFont::DemiBold);
     p->Painter->setFont(newFont);
@@ -217,8 +221,9 @@ void Component::paint(ViewPainter *p)
     p->Painter->drawLine(x+xb-1, y+yb, a+xb,   b+yb);
     p->Painter->drawLine(x+xb-1, y+yb, x+xb-1, y);
     p->Painter->drawLine(x+xb-1, y,    a+xb,   b);
-  }
-  else {    // normal components go here
+  }else{    // normal components go here
+    qDebug() << "normal component?";
+    assert(Model.at(0) != '.');
 
     // paint all lines
     foreach(Line *p1, Lines) {
@@ -317,7 +322,7 @@ void Component::paint(ViewPainter *p)
 void Component::paintScheme(Schematic *p)
 {
   // qDebug() << "paintScheme" << Model;
-  if(Model.at(0) == '.') {   // is simulation component (dc, ac, ...)
+  if(dynamic_cast<Command const*>(this)) { // FIXME: separate Commands from Components
     int a, b, xb, yb;
     QFont newFont = p->font();
 
@@ -612,54 +617,21 @@ void Component::mirrorY()
 }
 
 // -------------------------------------------------------
-QString Component::netlist()
+/*!
+ * obsolete function. still used for some special components
+ * just indicate that it's obsolete, so the netlister knows.
+ */
+class obsolete_exception : public std::exception{
+  public:
+    obsolete_exception(std::string const& w):_what(w){}
+    const char* what() const noexcept{return _what.c_str();}
+  private:
+    std::string _what;
+};
+QString Component::netlist() const
 {
-  QString s = Model+":"+Name;
-  int i=-1;
-  // output all node names
-  // This only works in cases where the resistor would be a series
-  // with the component, as for the other components, they're accounted
-  // as a resistor as well, and the changes were made to their .cpp
-  foreach(Port *p1, Ports){
-    i++;
-    s += " " + p1->Connection->Name;   // node names
-  }
-
-  // output all properties
-  for (Property *p2 = Props.first(); p2 != 0; p2 = Props.next()){
-    if (p2->Name != "Symbol"){
-      s += " " + p2->Name + "=\"" + p2->Value + "\"";
-    }else{
-      // BUG: what is this?
-      // doing name dependent stuff
-    }
-  }
-
-  s += '\n';
-
-  return s;
-}
-
-// -------------------------------------------------------
-QString Component::getNetlist()
-{
-  switch(isActive) {
-    case COMP_IS_ACTIVE:
-      return netlist();
-    case COMP_IS_OPEN:
-      return QString("");
-  }
-
-  // Component is shortened.
-  int z=0;
-  QListIterator<Port *> iport(Ports);
-  Port *pp = iport.next();
-  QString Node1 = pp->Connection->Name;
-  QString s = "";
-  while (iport.hasNext())
-    s += "R:" + Name + "." + QString::number(z++) + " " +
-      Node1 + " " + iport.next()->Connection->Name + " R=\"0\"\n";
-  return s;
+  throw obsolete_exception("tried to use obsolete netlister");
+  return "obsolete";
 }
 
 // -------------------------------------------------------
@@ -738,8 +710,11 @@ void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
   }
   qDebug (doc.toString());
 #endif
-  // s << "  "; ??
-  s << "<" << c->obsolete_model_hack();
+  s << "<";
+  if(dynamic_cast<Command const*>(this)){ // FIXME: separate Commands from Components
+    s << ".";
+  }
+  s << c->obsolete_model_hack();
 
   s << " ";
   if(c->name().isEmpty()){
@@ -831,8 +806,7 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   tty = n.toInt(&ok);
   if(!ok) return NULL;
 
-  if(c->obsolete_model_hack().at(0) != '.') {  // is simulation component (dc, ac, ...) ?
-
+  if(!dynamic_cast<Command const*>(c)) {
     n  = s.section(' ',7,7);    // mirroredX
     if(n.toInt(&ok) == 1){
       c->mirrorX();
@@ -847,6 +821,8 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
     for(int z=c->rotated; z<tmp; z++){
       c->rotate();
     }
+  }else{
+    // assert(c->obsolete_model_hack().at(0) == '.');
   }
 
   c->tx = ttx;
@@ -1366,7 +1342,7 @@ GateComponent::GateComponent()
 }
 
 // -------------------------------------------------------
-QString GateComponent::netlist()
+QString GateComponent::netlist() const
 {
   QString s = Model+":"+Name;
 
@@ -1599,6 +1575,7 @@ void GateComponent::createSymbol()
 // FIXME:
 // must be Component* SomeParserClass::getComponent(QString& Line)
 // better: Component* SomeParserClass::getComponent(SomeDataStream& s)
+// BUG: loads component into schematic.
 Component* getComponentFromName(QString& Line, Schematic* p)
 {
   Component *c = 0;
@@ -1612,6 +1589,15 @@ Component* getComponentFromName(QString& Line, Schematic* p)
 
   QString cstr = Line.section (' ',0,0); // component type
   cstr.remove (0,1);    // remove leading "<"
+#if 0 // not yet.
+  if(cstr[0]=='.'){
+    Command const* p=command_dispatcher[cstr.toStdString().c_str()+1];
+    if(p){
+      c = p->clone();
+    }else{
+    }
+  }else
+#endif
   if (cstr == "Lib") c = new LibComp ();
   else if (cstr == "Eqn") c = new Equation ();
   else if (cstr == "SPICE") c = new SpiceFile();
@@ -1658,6 +1644,7 @@ Component* getComponentFromName(QString& Line, Schematic* p)
 	QObject::tr("Format Error:\nWrong 'component' line format!"));
     delete c;
     return 0;
+  }else{
   }
 
   cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)

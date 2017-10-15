@@ -65,7 +65,7 @@ Element* Switch::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString Switch::netlist()
+QString Switch::netlist() const
 {
   QString s = Model+":"+Name;
 

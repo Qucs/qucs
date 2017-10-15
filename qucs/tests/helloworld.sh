@@ -1,7 +1,14 @@
 #!/bin/sh
 # testing basic module loading and unloading.
 
-text=$(../qucs/qucs -a ./helloworld -q | \
+QUCS=../main/qucs
+
+if [ ! -x ${QUCS} ]; then
+	echo ${QUCS} does not exist
+   exit 1
+fi
+
+text=$( ${QUCS} -a ./helloworld -q | \
        tr '\n' '|' | tr '\r' '|' | \
        awk -F"|" '{print $1 $2 $3;}' )
 

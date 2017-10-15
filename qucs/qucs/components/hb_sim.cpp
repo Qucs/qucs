@@ -35,7 +35,7 @@ HB_Sim::HB_Sim()
 
   tx = 0;
   ty = y2+1;
-  Model = ".HB";
+  Model = "HB";
   Name  = "HB";
 
   Props.append(new Property("f", "1 GHz", false,

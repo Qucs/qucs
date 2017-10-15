@@ -26,6 +26,7 @@
 #include "paintings/paintings.h"
 #include "diagrams/diagrams.h"
 #include "module.h"
+#include "io_trace.h"
 
 // Global category and component lists.
 QHash<QString, Module *> Module::Modules;
@@ -75,7 +76,17 @@ void Module::registerComponent (QString category, pInfoFunc info) {
 
 // Returns instantiated component based on the given "Model" name.  If
 // there is no such component registers the function returns NULL.
-Component * Module::getComponent (QString Model) {
+// BUG: also gets non-components.
+Component * Module::getComponent (QString Model)
+{
+  if(Model.data()[0] == '.'){
+	 incomplete();
+
+	 qDebug() << "not a command?" << Model;
+	 // this is not a component. d'uh
+    Model=QString(Model.data()+1);
+  }else{
+  }
   if ( Modules.contains(Model)) {
     Module *m = Modules.find(Model).value();
     QString Name;
@@ -86,6 +97,8 @@ Component * Module::getComponent (QString Model) {
               vacomponent::info (Name, vaBitmap, true, vaComponents[Model]);
     else
       return (Component *) m->info (Name, File, true);
+  }else{
+	  qDebug() << "it's not there";
   }
   return 0;
 }

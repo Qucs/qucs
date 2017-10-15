@@ -24,7 +24,7 @@ dnl Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
 AC_CHECK_TOOL(AR, ar, :)
-LT_INIT()
+LT_INIT([win32-dll])
 
 PKG_PROG_PKG_CONFIG
 
@@ -246,10 +246,30 @@ fi # if pkg-config exists
       dnl Enable C++11 support
       CXXFLAGS="$CXXFLAGS -std=c++0x"
 
+dnl Platform specific, find libraries, setup compiler flags
+case $host_os in
+  *linux* | *cygwin* | *mingw* | *msys* | *bsd* )
+
+    dnl Set Clang
+    if test "$CXX -dM -E - < /dev/null | grep __clang__" ; then
+      CFLAGS="$CFLAGS -pipe"
+      CXXFLAGS="$CXXFLAGS -pipe -Wno-deprecated-register"
+      LDDFLAGS="$LDDFLAGS"
+      use_CLANG="yes"
+    fi
+
+    dnl Set GCC.
+    if test "x$use_CLANG" != "xyes" -a "x$GCC" = "xyes" ; then
+      CFLAGS="$CFLAGS -pipe"
+      CXXFLAGS="$CXXFLAGS -pipe -fno-check-new"
+      if test x$WIN32 = xyes; then
+        CXXFLAGS="$CXXFLAGS"
+      fi
+    fi
+esac
+
 # use pkg-config, if it exists
 if test "x$PKG_CONFIG" != "x"; then
-
-      PKG_CHECK_MODULES([QTest], [${qt_name}Test])
 
       PKG_CHECK_MODULES([QT], [${qt_name}Core ${qt_name}Gui ${qt_name}Script ${qt_name}Svg ${qt_name}Xml Qt3Support], [
         QT_CFLAGS="$QT_CFLAGS $QT_DEF -DQT_DEPRECATED_WARNINGS -D_REENTRANT"
@@ -798,6 +818,7 @@ AH_TOP([
 dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([Makefile
     contrib/Makefile
+    main/Makefile
     man/Makefile
     examples/Makefile
     qucs-filter/Makefile
@@ -818,6 +839,7 @@ AC_CONFIG_FILES([Makefile
     qucs/diagrams/Makefile
     qucs/paintings/Makefile
     qucs/dialogs/Makefile
+    qucs/sim/Makefile
     qucs/tests/Makefile
     tests/Makefile
     translations/Makefile
@@ -833,7 +855,7 @@ AC_CONFIG_FILES([Makefile
     qucs-transcalc/qucstrans.1
     qucs-powercombining/qucspowercombining.1])
 
-AC_CONFIG_FILES([qucs/qucs], [chmod +x qucs/qucs])
+AC_CONFIG_FILES([main/qucs], [chmod +x main/qucs])
 
 dnl Check for Git short SHA to tag version
 dnl The release package should also keep it on the config.h
