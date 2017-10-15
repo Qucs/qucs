@@ -22,7 +22,10 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-noinst_LTLIBRARIES = libdialogs.la
+# private library
+qucsdir=${pkglibdir}
+
+qucs_LTLIBRARIES = libdialogs.la
 
 MOCHEADERS = settingsdialog.h simmessage.h qucssettingsdialog.h      \
      labeldialog.h changedialog.h matchdialog.h digisettingsdialog.h \
@@ -38,6 +41,7 @@ UICFILES = ui_searchdialog.h
 
 BUILT_SOURCES = $(UICFILES)
 
+libdialogs_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 libdialogs_la_SOURCES = settingsdialog.cpp newprojdialog.cpp \
      simmessage.cpp qucssettingsdialog.cpp labeldialog.cpp changedialog.cpp \
      matchdialog.cpp sweepdialog.cpp digisettingsdialog.cpp searchdialog.cpp \

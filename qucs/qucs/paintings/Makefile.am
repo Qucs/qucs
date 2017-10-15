@@ -22,11 +22,15 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-noinst_LTLIBRARIES = libpaintings.la
+#private library
+qucsdir=${pkglibdir}
+
+qucs_LTLIBRARIES = libpaintings.la
 
 MOCHEADERS = arrowdialog.h graphictextdialog.h filldialog.h id_dialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
+libpaintings_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 libpaintings_la_SOURCES = rectangle.cpp painting.cpp arrow.cpp  \
   graphictextdialog.cpp graphictext.cpp graphicline.cpp ellipse.cpp           \
   arrowdialog.cpp filldialog.cpp portsymbol.cpp ellipsearc.cpp id_text.cpp    \
