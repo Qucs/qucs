@@ -40,7 +40,7 @@ AC_Sim::AC_Sim()
 
   tx = 0;
   ty = y2+1;
-  Model = ".AC";
+  Model = "AC";
   Name  = "AC";
 
   // The index of the first 4 properties must not changed. Used in recreate().

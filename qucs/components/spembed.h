@@ -30,10 +30,10 @@ public:
   static Element* info1(QString&, char* &, bool getNewOne=false);
   static Element* info2(QString&, char* &, bool getNewOne=false);
 
-  QString getSubcircuitFile();
+  QString getSubcircuitFile() const;
 
 protected:
-  QString netlist();
+  QString netlist() const;
   void createSymbol();
 };
 

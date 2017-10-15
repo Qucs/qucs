@@ -18,21 +18,21 @@
 #ifndef OPT_SIM_H
 #define OPT_SIM_H
 
-#include "component.h"
+#include "command.h"
 
 
-class Optimize_Sim : public Component  {
+class Optimize_Sim : public Command  {
 public:
   Optimize_Sim();
  ~Optimize_Sim();
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  bool createASCOFiles();
+  bool createASCOFiles() const;
   bool createASCOnetlist();
   bool loadASCOout();
 
 protected:
-  QString netlist();
+  QString netlist() const;
 };
 
 #endif

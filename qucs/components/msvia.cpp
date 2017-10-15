@@ -70,7 +70,7 @@ Element* MSvia::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString MSvia::netlist()
+QString MSvia::netlist() const
 {
   QString s = Model+":"+Name;
 

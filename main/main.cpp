@@ -50,12 +50,11 @@
 #include "misc.h"
 
 #include "components/components.h"
+#include "globals.h"
 
 #ifdef _WIN32
 #include <Windows.h>  //for OutputDebugString
 #endif
-
-// void attach(const char*); not yet.
 
 /*!
  * \brief qucsMessageOutput handles qDebug, qWarning, qCritical, qFatal.
@@ -96,7 +95,9 @@ void qucsMessageOutput(QtMsgType type, const char *msg)
  */
 void attach(const char* what);
 
-Schematic *openSchematic(QString schematic)
+// BUG: not here.
+// possibly use SchematicModel(QString Filename, Lang...)
+Schematic *newSchematic(QString schematic)
 {
   qDebug() << "*** try to load schematic :" << schematic;
 
@@ -114,10 +115,10 @@ Schematic *openSchematic(QString schematic)
   }
 
   // populate Modules list
-  Module::registerModules ();
+  Module::registerModules (); // BUG: on startup
 
   // new schematic from file
-  Schematic *sch = new Schematic(0, schematic);
+  Schematic *sch = new Schematic(0 /* no app */, schematic);
 
   // load schematic file if possible
   if(!sch->loadDocument()) {
@@ -128,9 +129,9 @@ Schematic *openSchematic(QString schematic)
   return sch;
 }
 
-int doNetlist(QString schematic, QString netlist)
+int doNetlist(QString schematic, QString netlist, NetLang const& nl)
 {
-  Schematic *sch = openSchematic(schematic);
+  Schematic *sch = newSchematic(schematic);
   if (sch == NULL) {
     return 1;
   }
@@ -156,7 +157,8 @@ int doNetlist(QString schematic, QString netlist)
   }
 
   Stream.setDevice(&NetlistFile);
-  int SimPorts = sch->prepareNetlist(Stream, Collect, ErrText);
+  int SimPorts = sch->prepareNetlist(Stream, Collect, ErrText, nl);
+  qDebug() << "done prep\n";
 
   if(SimPorts < -5) {
     NetlistFile.close();
@@ -180,7 +182,7 @@ int doNetlist(QString schematic, QString netlist)
 
   Stream << '\n';
 
-  QString SimTime = sch->createNetlist(Stream, SimPorts);
+  QString SimTime = sch->createNetlist(Stream, SimPorts, nl);
   delete(sch);
 
   NetlistFile.close();
@@ -191,7 +193,7 @@ int doNetlist(QString schematic, QString netlist)
 int doPrint(QString schematic, QString printFile,
     QString page, int dpi, QString color, QString orientation)
 {
-  Schematic *sch = openSchematic(schematic);
+  Schematic *sch = newSchematic(schematic);
   if (sch == NULL) {
     return 1;
   }
@@ -518,7 +520,14 @@ int main(int argc, char *argv[])
   QucsSettings.Editor = "qucs";
 
   // initially center the application
+
+  QFile qf(":/bitmaps/doesnotexist.png");
+  assert(!qf.exists());
+  QFile qfl(":/bitmaps/line.png");
+  assert(qfl.exists());
+
   QApplication a(argc, argv);
+//  Q_INIT_RESOURCE();
   QDesktopWidget *d = a.desktop();
   int w = d->width();
   int h = d->height();
@@ -568,6 +577,15 @@ int main(int argc, char *argv[])
   QucsSettings.ExamplesDir = QucsDir.canonicalPath() + "/share/qucs/examples/";
   QucsSettings.DocDir =      QucsDir.canonicalPath() + "/share/qucs/docs/";
 
+  // TODO: cleanup
+  const char* ppenv=getenv("QUCS_PLUGPATH");
+  std::string plugpath;
+  if(!ppenv){
+    plugpath = QUCS_PLUGPATH;
+  }else{
+    plugpath=ppenv;
+  }
+  attach((plugpath + "/qucsator").c_str());
 
   /// \todo Make the setting up of all executables below more consistent
   var = getenv("QUCSATOR");
@@ -684,18 +702,19 @@ int main(int argc, char *argv[])
   int dpi = 96;
   QString color = "RGB";
   QString orientation = "portrait";
+  std::string default_simulator = "qucsator"; // FIXME: get from rc? maybe from environment?
+  std::string netlang_name = default_simulator;
 
   // simple command line parser
   for (int i = 1; i < argc; ++i) {
     if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
       fprintf(stdout,
-  "Usage: %s [-hv] \n"
-  "       qucs -n -i FILENAME -o FILENAME\n"
-  "       qucs -p -i FILENAME -o FILENAME.[pdf|png|svg|eps] \n\n"
+  "Usage: %s [COMMAND] [OPTIONS]\n\n"
+  "Commands:\n"
   "  -h, --help     display this help and exit\n"
   "  -v, --version  display version information and exit\n"
-  "  -n, --netlist  convert Qucs schematic into netlist\n"
-  "  -p, --print    print Qucs schematic to file (eps needs inkscape)\n"
+  "  -n, --netlist  convert Qucs schematic into netlist, requires -i, -o\n"
+  "  -p, --print    print Qucs schematic to file, requires -i, -o (eps needs inkscape)\n"
   "  -q, --quit     exit\n"
   "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
   "    --dpi NUMBER                 set dpi value (default 96)\n"
@@ -710,7 +729,15 @@ int main(int argc, char *argv[])
   "                   - CSV file with component data ([comp#]_data.csv)\n"
   "                   - CSV file with component properties. ([comp#]_props.csv)\n"
   "  -list-entries  list component entry formats for schematic and netlist\n"
-  , argv[0]);
+  "Options:\n"
+  "  -i FILENAME    use file as input schematic\n"
+  "  -o FILENAME    use file as output netlist\n"
+  "  -l NETLANG     language to be used by netlister, can be a simulator name\n"
+  "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
+  "    --dpi NUMBER                 set dpi value (default 96)\n"
+  "    --color [RGB|RGB]            set color mode (default RGB)\n"
+  "    --orin [portrait|landscape]  set orientation (default portraid)\n"
+  ,argv[0]);
       return 0;
     }else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
 #ifdef GIT
@@ -750,6 +777,9 @@ int main(int argc, char *argv[])
     else if (!strcmp(argv[i], "-o")) {
       outputfile = argv[++i];
     }
+    else if (!strcmp(argv[i], "-l")) {
+      netlang_name = argv[++i];
+    }
     else if(!strcmp(argv[i], "-icons")) {
       createIcons();
       return 0;
@@ -768,6 +798,20 @@ int main(int argc, char *argv[])
     }
   }
 
+  NetLang const* netlang;
+  if((netlang = netlang_dispatcher[netlang_name])){
+    // just use it.
+  }else if(auto sd = simulator_dispatcher[netlang_name]){
+    // ask a simulator.
+    netlang = sd->netLang();
+  }
+  if(!netlang){
+    // TODO: io_error...
+    std::cerr << "Error: Cannot find language for "
+              << netlang_name << "\n";
+    return -1;
+  }
+
   // check operation and its required arguments
   if (netlist_flag and print_flag) {
     fprintf(stderr, "Error: --print and --netlist cannot be used together\n");
@@ -783,7 +827,7 @@ int main(int argc, char *argv[])
     }
     // create netlist from schematic
     if (netlist_flag) {
-      return doNetlist(inputfile, outputfile);
+      return doNetlist(inputfile, outputfile, *netlang);
     } else if (print_flag) {
       return doPrint(inputfile, outputfile,
           page, dpi, color, orientation);

@@ -38,7 +38,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
 
 protected:
-  QString netlist();
+  QString netlist() const;
 };
 
 #endif

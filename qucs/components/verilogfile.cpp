@@ -159,7 +159,7 @@ void Verilog_File::createSymbol()
 }
 
 // -------------------------------------------------------
-QString Verilog_File::getSubcircuitFile()
+QString Verilog_File::getSubcircuitFile() const
 {
   // construct full filename
   QString FileName = Props.getFirst()->Value;

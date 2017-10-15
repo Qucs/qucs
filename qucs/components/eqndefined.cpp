@@ -69,7 +69,7 @@ Element* EqnDefined::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString EqnDefined::netlist()
+QString EqnDefined::netlist() const
 {
   QString s = Model+":"+Name;
   QString e = "\n";

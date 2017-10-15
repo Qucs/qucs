@@ -16,6 +16,7 @@
  ***************************************************************************/
 #include "sp_sim.h"
 #include "qucs.h"
+#include "globals.h"
 
 
 SP_Sim::SP_Sim()
@@ -39,7 +40,7 @@ SP_Sim::SP_Sim()
 
   tx = 0;
   ty = y2+1;
-  Model = ".SP";
+  Model = "SP";
   Name  = "SP";
 
   // The index of the first 4 properties must not changed. Used in recreate().
@@ -103,3 +104,11 @@ void SP_Sim::recreate(Schematic*)
     Props.next()->Name = "Points";
   }
 }
+
+#if 0 // not yet
+namespace{
+SP_Sim p;
+Dispatcher<Command>::INSTALL d(&command_dispatcher, "SP", &p);
+}
+#endif
+

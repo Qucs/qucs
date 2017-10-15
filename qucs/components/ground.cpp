@@ -61,7 +61,7 @@ Element* Ground::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString Ground::netlist()
+QString Ground::netlist() const
 {
   return QString("");
 }

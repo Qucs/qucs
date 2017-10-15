@@ -36,7 +36,7 @@ Digi_Sim::Digi_Sim()
 
   tx = 0;
   ty = y2+1;
-  Model = ".Digi";
+  Model = "Digi";
   Name  = "Digi";
 
   // Property list must keeps its order !

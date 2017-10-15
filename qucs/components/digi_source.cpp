@@ -80,7 +80,7 @@ Element* Digi_Source::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString Digi_Source::netlist()
+QString Digi_Source::netlist() const
 {
   QString s = Model+":"+Name;
 

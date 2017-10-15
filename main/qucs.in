@@ -38,6 +38,11 @@ if [ -z "$QUCS_LIBRARY" ]; then
 	QUCS_LIBRARY="$top_src/qucs-lib/library";
 fi
 
+# TODO: findfile
+if [ -z "$QUCS_PLUGPATH" ]; then
+	QUCS_PLUGPATH="$top/qucs/sim/.libs";
+fi
+
 subdirs="$( make -C $top subdirs )"
 if [ 0 -ne $? ]; then
 	echo could not obtain list ob subdirectories >&2
@@ -52,6 +57,7 @@ if [ -z "$QUCSDIR" ]; then
 	export QUCSATOR
 	export QUCSCONV
 	export QUCS_LIBRARY
+	export QUCS_PLUGPATH
 	# rely on path, forget about QUCSDIR
 	# this is *not* a user variable. don't touch.
 	export QUCS_USE_PATH=yes

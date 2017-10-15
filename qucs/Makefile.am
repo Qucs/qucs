@@ -27,30 +27,30 @@ include ../common.mk
 AM_DEFAULT_SOURCE_EXT = .cpp
 
 SUBDIRS = \
+	. \
 	bitmaps \
 	components diagrams \
 	paintings \
 	dialogs \
 	octave \
+	sim \
 	tests
 
 all-local: qucs
 
+qucs: Makefile
+	echo '#!/bin/sh' > $@
+	echo 'exec ${abs_top_builddir}/main/qucs "$$@"' >> $@
+	chmod +x $@
+
+// todo: move to configure
 if COND_WIN32
-bin_SCRIPTS = qucsdigi.bat qucsveri.bat qucsdigilib.bat
+BAT_EXT = .bat
 else
-bin_SCRIPTS = qucsdigi qucsveri qucsdigilib
+BAT_EXT =
 endif
 
-qucs_appledir = $(bindir)/qucs.app/Contents/MacOS/
-
-if COND_MACOSX
-qucs_apple_PROGRAMS = qucs.real
-else
-endif
-
-bin_PROGRAMS = qucs.real
-transform=s&\.real$$&&;$(program_transform_name)
+bin_SCRIPTS = qucsdigi${BAT_EXT} qucsveri${BAT_EXT} qucsdigilib${BAT_EXT}
 
 MOCHEADERS = \
   messagedock.h \
@@ -62,12 +62,17 @@ MOCHEADERS = \
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-noinst_LTLIBRARIES = libqucsschematic.la
+pqucsdir=${pkglibdir}
+pqucs_LTLIBRARIES = \
+	libqucs.la \
+	libqucsschematic.la
 
-libqucsschematic_la_SOURCES= \
+libqucs_la_SOURCES = \
 	attach.cpp \
 	element.cpp \
+	globals.cpp \
 	imagewriter.cpp \
+	io_error.cpp \
 	messagedock.cpp \
 	misc.cpp \
 	mnemo.cpp \
@@ -88,35 +93,44 @@ libqucsschematic_la_SOURCES= \
 	textdoc.cpp \
 	viewpainter.cpp \
 	wire.cpp \
-	wirelabel.cpp \
+	wirelabel.cpp
 
-nodist_libqucsschematic_la_SOURCES = $(MOCFILES)
+libqucs_la_SOURCES += qucs_.qrc
+
+libqucsschematic_la_SOURCES += $(MOCFILES)
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs-lib
 libqucsschematic_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 
+# these are not plugins yet. but there's hope.
 # TODO:
-# - parts must go to libqucs
-# - other parts need to be loaded at run time
+# - cleanup
+# - use attach, do not mention here.
+PLUGINS = \
+	components/libcomponents.la diagrams/libdiagrams.la \
+	paintings/libpaintings.la dialogs/libdialogs.la
+
+if COND_WIN32
 libqucsschematic_la_LIBADD = \
- components/libcomponents.la diagrams/libdiagrams.la \
-  paintings/libpaintings.la dialogs/libdialogs.la
-
-# why this? qucs_real_LDADD does not seem to work on windows (yet?)
-libqucsschematic_la_LIBADD += \
-  $(X11_LIBS) $(QT_LIBS)
-
-qucs_real_LDFLAGS = $(QT_LIBS)
-qucs_real_SOURCES = main.cpp qucs_.qrc
-qucs_real_LDADD = \
-	libqucsschematic.la
+	libqucs.la \
+	$(X11_LIBS) \
+	$(QT_LIBS)
+else
+# link order hack?
+libqucsschematic_la_LIBADD = # libqucsgui.la
+endif
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
   wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
-  projectView.h printerwriter.h imagewriter.h
+  projectView.h printerwriter.h imagewriter.h command.h
 
 # must be installed. but later
-noinst_HEADERS += platform.h
+noinst_HEADERS += \
+	globals.h \
+	io_trace.h \
+	l_dispatcher.h \
+	object.h \
+	platform.h
 
 hicolor16dir = ${prefix}/share/icons/hicolor/16x16/apps
 hicolor16_DATA =  bitmaps/hicolor/16x16/apps/qucs.png
@@ -158,6 +172,6 @@ EXTRA_DIST = \
 	bitmaps/qucstrans.icns
 
 
-CLEANFILES = *~ *.rej *.orig qucs_.cpp *.moc.cpp
+CLEANFILES = *~ *.rej *.orig qucs_.cpp *.moc.cpp qucs
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.qm
 DISTCLEANFILES = *.qm

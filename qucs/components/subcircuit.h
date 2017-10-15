@@ -21,6 +21,7 @@
 #include "component.h"
 
 
+// BUG: must derive from subckt_model (or so)
 class Subcircuit : public MultiViewComponent  {
 public:
   Subcircuit();
@@ -28,10 +29,10 @@ public:
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
 
-  QString getSubcircuitFile();
+  QString getSubcircuitFile() const;
 
 protected:
-  QString netlist();
+  QString netlist() const;
   QString vhdlCode(int);
   QString verilogCode(int);
   void createSymbol();
