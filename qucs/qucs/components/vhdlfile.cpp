@@ -202,7 +202,7 @@ void VHDL_File::createSymbol()
 }
 
 // -------------------------------------------------------
-QString VHDL_File::getSubcircuitFile()
+QString VHDL_File::getSubcircuitFile() const
 {
   // construct full filename
   QString FileName = Props.getFirst()->Value;

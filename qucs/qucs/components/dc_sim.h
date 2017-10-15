@@ -18,10 +18,10 @@
 #ifndef DC_SIM_H
 #define DC_SIM_H
 
-#include "component.h"
+#include "command.h"
 
 
-class DC_Sim : public Component  {
+class DC_Sim : public Command  {
 public:
   DC_Sim();
   ~DC_Sim();

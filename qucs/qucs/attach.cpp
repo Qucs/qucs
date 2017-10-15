@@ -47,7 +47,8 @@ class plugins{
       if (handle) {
 	attach_list[what] = handle;
       }else{
-	std::cerr << "failed to attach\n";
+	std::cerr << "failed to attach " << what << "\n";
+	std::cerr << dlerror() << "\n";
 	exit(1); // temporary, should actually throw.
 //	throw Exception_something(dlerror());
       }

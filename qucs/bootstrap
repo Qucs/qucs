@@ -27,6 +27,11 @@ case `uname` in
   *Darwin*) LIBTOOLIZE=glibtoolize ;;
 esac
 
+case `uname` in
+  *Darwin*) LIBTOOLIZE=glibtoolize ;;
+  *) LIBTOOLIZE=libtoolize ;;
+esac
+
 echo -n "Creating aclocal.m4... "
 ${ACLOCAL:-aclocal} -I m4
 echo "done."

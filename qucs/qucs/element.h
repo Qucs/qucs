@@ -39,6 +39,7 @@
 
 #include <QPen>
 #include <QBrush>
+#include "object.h"
 
 class Node;
 class QPainter;
@@ -72,10 +73,11 @@ struct Area {
 struct Port {
   Port() {};
   Port(int _x, int _y, bool _avail=true) : x(_x), y(_y), avail(_avail) {
-    Type=""; Connection=0;};
+    Type=""; Name=""; Connection=0;};
   int   x, y;
   bool  avail;
   QString Type;
+  QString Name;
   Node *Connection;
 };
 
@@ -139,7 +141,7 @@ struct Property {
   *
   *
   */
-class Element {
+class Element : public Object {
 public:
   Element();
   virtual ~Element();

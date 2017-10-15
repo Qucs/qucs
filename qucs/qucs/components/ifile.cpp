@@ -80,7 +80,7 @@ Element* iFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString iFile::getSubcircuitFile()
+QString iFile::getSubcircuitFile() const
 {
   // construct full filename
   QString FileName = Props.getFirst()->Value;
@@ -88,7 +88,7 @@ QString iFile::getSubcircuitFile()
 }
 
 // -------------------------------------------------------
-QString iFile::netlist()
+QString iFile::netlist() const
 {
   QString s = Model+":"+Name;
 

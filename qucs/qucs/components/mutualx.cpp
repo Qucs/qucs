@@ -72,7 +72,7 @@ Component* MutualX::newOne()
     return p;
 }
 
-QString MutualX::netlist()
+QString MutualX::netlist() const
 {
     QString s = Model + ":" + Name;
 

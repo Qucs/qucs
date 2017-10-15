@@ -2059,8 +2059,8 @@ bool Schematic::deleteElements()
     while(pp != 0)      // test all paintings
     {
         if(pp->isSelected)
-            if(pp->Name.at(0) != '.')    // do not delete "PortSym", "ID_text"
-            {
+            if(pp->Name.at(0) != '.'){
+	      // do not delete "PortSym", "ID_text"
                 sel = true;
                 Paintings->remove();
                 pp = Paintings->current();

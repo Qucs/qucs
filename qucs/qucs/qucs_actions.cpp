@@ -1229,6 +1229,24 @@ void QucsApp::slotImportData()
 }
 
 // -----------------------------------------------------------
+void QucsApp::slotExportSchematic()
+{
+  //incomplete();
+
+  // dlg A;
+  // for netlisters n
+  // A.somehow_add(n)
+  //
+  // dlg.show
+  //
+  // if dlg.selected_netlister->has_options
+  //
+  // display(optionsdialog(dlg.selected_netlister.options)
+  
+  // unless abort
+  // do_the_export(netlister,filename);
+}
+// -----------------------------------------------------------
 void QucsApp::slotExportGraphAsCsv()
 {
   slotHideEdit(); // disable text edit of component property

@@ -35,7 +35,7 @@ ETR_Sim::ETR_Sim()
 
   tx = 0;
   ty = y2+1;
-  Model = ".ETR";
+  Model = "ETR";
   Name  = "ETR";
 
   Props.append(new Property("IntegrationMethod", "Trapezoidal", false,

@@ -50,13 +50,13 @@ addons:
 
 matrix:
   include:
-    - os: linux
-      compiler: gcc
-      env: BUILD=cmake
-      addons:
-        apt:
-          packages:
-            - *native_deps
+#    - os: linux
+#      compiler: gcc
+#      env: BUILD=cmake
+#      addons:
+#        apt:
+#          packages:
+#            - *native_deps
 
     - os: linux
       compiler: gcc

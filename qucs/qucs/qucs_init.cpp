@@ -35,6 +35,8 @@
 #include <QMessageBox>
 #include <QApplication>
 
+#include <assert.h>
+
 /**
  * @brief QucsApp::initActions Initializes all QActions of the application
  */
@@ -44,7 +46,9 @@ void QucsApp::initActions()
 
   // note: first argument of QAction() for backward compatibility Qt < 3.2
 
-  fileNew = new QAction(QIcon((":/bitmaps/filenew.png")), tr("Document"), this);
+  QIcon fileNewIcon(":/bitmaps/filenew.png");
+  assert(!fileNewIcon.isNull());
+  fileNew = new QAction(fileNewIcon, tr("Document"), this);
   fileNew->setShortcut(Qt::CTRL+Qt::Key_N);
   fileNew->setStatusTip(tr("Creates a new document"));
   fileNew->setWhatsThis(
@@ -291,11 +295,20 @@ void QucsApp::initActions()
   editFind->setWhatsThis(tr("Find\n\nSearches for a piece of text"));
   connect(editFind, SIGNAL(triggered()), SLOT(slotEditFind()));
 
+#if 0 // not yet?
+  // not to be confused with "save".
+  // should be just export, ask for file format and provide some options
+  exportSchematic = new QAction(tr("Export..."),this);
+  connect(exportSchematic,SIGNAL(triggered()),SLOT(slotExportSchematic()));
+#endif
+
   // to ease usage with notebooks, backspace can also be used to delete
   // currently not supported
   //mainAccel->connectItem(mainAccel->insertItem(Qt::Key_Backspace),
   //                       editDelete, SLOT(toggle()) );
 
+  // will be obsolete, once Export works. this is just export with some image
+  // file format target.
   exportAsImage = new QAction(tr("Export as image..."),this);
   connect(exportAsImage,SIGNAL(triggered()),SLOT(slotSaveSchematicToGraphicsFile()));
   exportAsImage->setStatusTip(tr("Exports the current document to an image file"));
@@ -332,6 +345,7 @@ void QucsApp::initActions()
   projNew->setWhatsThis(tr("New Project\n\nCreates a new project"));
   connect(projNew, SIGNAL(triggered()), SLOT(slotButtonProjNew()));
 
+  // why this? let's just "Open"
   projOpen = new QAction(tr("&Open Project..."), this);
 	projOpen->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_O);
   projOpen->setStatusTip(tr("Opens an existing project"));
@@ -371,6 +385,7 @@ void QucsApp::initActions()
     tr("Create Package\n\nCreate compressed Package from complete Projects"));
   connect(createPkg, SIGNAL(triggered()), SLOT(slotCreatePackage()));
 
+  // what's this? a gunzip ui? should be advertised as such.
   extractPkg = new QAction(tr("E&xtract Package..."),  this);
   extractPkg->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_X);
   extractPkg->setStatusTip(tr("Install Content of a Package"));
@@ -378,6 +393,8 @@ void QucsApp::initActions()
 	tr("Extract Package\n\nInstall Content of a Package"));
   connect(extractPkg, SIGNAL(triggered()), SLOT(slotExtractPackage()));
 
+  // this is incomplete. what is "data file"?
+  // note we have "Export..." above
   importData = new QAction(tr("&Import/Export Data..."), this);
   importData->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_I);
   importData->setStatusTip(tr("Convert data file"));
@@ -385,6 +402,8 @@ void QucsApp::initActions()
 	tr("Import/Export Data\n\nConvert data file to various file formats"));
   connect(importData, SIGNAL(triggered()), SLOT(slotImportData()));
 
+  // we need to ask the simulator for data. maybe this should go to the simulator menu
+  // (later)
   graph2csv = new QAction(tr("Export to &CSV..."), this);
   graph2csv->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_C);
   graph2csv->setStatusTip(tr("Convert graph data to CSV file"));

@@ -25,6 +25,7 @@
 #include <QMutex>
 
 #include <limits.h>
+#include <io_trace.h>
 
 
 
@@ -198,7 +199,8 @@ int Subcircuit::loadSymbol(const QString& DocName)
 }
 
 // -------------------------------------------------------
-QString Subcircuit::netlist()
+// BUG: obsolete callback
+QString Subcircuit::netlist() const
 {
   QString s = Model+":"+Name;
 
@@ -279,7 +281,7 @@ QString Subcircuit::verilogCode(int)
 }
 
 // -------------------------------------------------------
-QString Subcircuit::getSubcircuitFile()
+QString Subcircuit::getSubcircuitFile() const
 {
   // construct full filename
   QString FileName = Props.getFirst()->Value;

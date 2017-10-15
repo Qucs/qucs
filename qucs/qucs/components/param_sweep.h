@@ -18,10 +18,10 @@
 #ifndef PARAM_SWEEP_H
 #define PARAM_SWEEP_H
 
-#include "component.h"
+#include "command.h"
 
 
-class Param_Sweep : public Component  {
+class Param_Sweep : public Command  {
 public:
   Param_Sweep();
   ~Param_Sweep();

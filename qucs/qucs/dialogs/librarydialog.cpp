@@ -47,6 +47,7 @@
 #include "librarydialog.h"
 #include "qucs.h"
 #include "schematic.h"
+#include "globals.h"
 
 extern SubMap FileList;
 
@@ -410,6 +411,7 @@ void LibraryDialog::slotUpdateDescription()
 }
 
 // ---------------------------------------------------------------
+// what is being saved here?
 void LibraryDialog::slotSave()
 {
   stackedWidgets->setCurrentIndex(2); //message window
@@ -421,6 +423,14 @@ void LibraryDialog::slotSave()
     ErrText->appendPlainText(tr("Error: Cannot create library!"));
     return;
   }
+
+
+// BUG: where is the language specified?
+// BUG: wrong place for header here
+	auto nlp=netlang_dispatcher["qucsator"];
+	assert(nlp);
+	NetLang const& nl=*nlp;
+
   QTextStream Stream;
   Stream.setDevice(&LibFile);
   Stream << "<Qucs Library " PACKAGE_VERSION " \""
@@ -460,7 +470,7 @@ void LibraryDialog::slotSave()
 
     ErrText->insertPlainText("\n");
     ErrText->insertPlainText(tr("Creating Qucs netlist.\n"));
-    ret = Doc->createLibNetlist(&ts, ErrText, -1);
+    ret = Doc->createLibNetlist(&ts, ErrText, -1, nl);
     if(ret) {
       intoStream(Stream, tmp, "Model");
       int error = 0;
@@ -498,7 +508,7 @@ void LibraryDialog::slotSave()
 
     ErrText->insertPlainText("\n");
     ErrText->insertPlainText(tr("Creating Verilog netlist.\n"));
-    ret = Doc->createLibNetlist(&ts, ErrText, 0);
+    ret = Doc->createLibNetlist(&ts, ErrText, 0, nl);
     if(ret) {
       intoStream(Stream, tmp, "VerilogModel");
       int error = 0;
@@ -535,7 +545,7 @@ void LibraryDialog::slotSave()
     Doc->isAnalog = false;
 
     ErrText->insertPlainText(tr("Creating VHDL netlist.\n"));
-    ret = Doc->createLibNetlist(&ts, ErrText, 0);
+    ret = Doc->createLibNetlist(&ts, ErrText, 0, nl);
     if(ret) {
       intoStream(Stream, tmp, "VHDLModel");
       int error = 0;

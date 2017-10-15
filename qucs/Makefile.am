@@ -36,6 +36,7 @@ SUBDIRS = \
 	translations \
 	contrib \
 	examples \
+	main \
 	tests \
 	$(RELEASEDIRS)
 

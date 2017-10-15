@@ -18,10 +18,10 @@
 #ifndef HB_SIM_H
 #define HB_SIM_H
 
-#include "component.h"
+#include "command.h"
 
 
-class HB_Sim : public Component  {
+class HB_Sim : public Command {
 public:
   HB_Sim();
   ~HB_Sim();
