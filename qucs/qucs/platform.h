@@ -20,6 +20,8 @@
 
 #ifndef PLATFORM_H_INCLUDED
 #define PLATFORM_H_INCLUDED
+
+#include <string>
 /*--------------------------------------------------------------------------*/
 /* autoconf stuff */
 #ifdef HAVE_CONFIG_H
@@ -27,19 +29,8 @@
 #endif
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-#if 0 // not yet.
-#define	ENDDIR		"/"
-#define PATHSEP		':'
-#define DEFAULT_PLUGINS "qucs-default-plugins.so"
-#define SYSTEMSTARTFILE	"gnucap.rc"
-#define SYSTEMSTARTPATH	OS::getenv("QUCS_STARTPATH")
-#define USERSTARTFILE	".gnucaprc"
-#define	USERSTARTPATH	OS::getenv("HOME")
-#define SHELL		OS::getenv("SHELL")
-#endif
-/*--------------------------------------------------------------------------*/
 /* machine and compiler patches */
-#if defined(__MINGW32__)
+#if defined(__MINGW32__) // perhaps also if _WIN32?
   // #define SIGSETJMP_IS_BROKEN not yet required.
   #define MS_DLL
 #endif
@@ -66,15 +57,18 @@
 // Microsoft DLL hacks -- thanks to Holger Vogt and Cesar Strauss for the info
 // Make the MS DLL functions look like the posix ones.
 #define SOEXT ".dll"
+#define Arc HIDE_Arc
 #include <windows.h>
+#undef Arc
 #include <stdlib.h>
+#include <string.h>
 #undef min
 #undef max
 #undef INTERFACE
-  #ifdef MAKE_DLL
-    #define INTERFACE __declspec(dllimport)
-  #else
+  #ifdef DLL_EXPORT
     #define INTERFACE __declspec(dllexport)
+  #else
+    #define INTERFACE
   #endif
 
 inline void* dlopen(const char* f, int)
@@ -90,6 +84,7 @@ inline void dlclose(void* h)
   FreeLibrary((HINSTANCE)h);
 }
 
+#if 0 // not yet
 inline char* dlerror()
 {
   static LPVOID lpMsgBuf = NULL;
@@ -111,6 +106,7 @@ inline char* dlerror()
 		0, NULL);
   return (char*)lpMsgBuf;
 }
+#endif
 #define RTLD_LAZY       0x00001 /* Lazy function call binding.  */
 #define RTLD_NOW        0x00002 /* Immediate function call binding.  */
 #define RTLD_BINDING_MASK   0x3 /* Mask of binding time value.  */
@@ -119,7 +115,8 @@ inline char* dlerror()
 #define RTLD_GLOBAL     0x00100
 #define RTLD_LOCAL      0
 #define RTLD_NODELETE   0x01000
-#endif
+
+#endif // defined(MS_DLL)
 
 #if defined(SIGSETJMP_IS_BROKEN)
   #undef sigjmp_buf
