@@ -36,11 +36,14 @@ SUBDIRS = \
 
 all-local: qucs
 
+// todo: move to configure
 if COND_WIN32
-bin_SCRIPTS = qucsdigi.bat qucsveri.bat qucsdigilib.bat
+BAT_EXT = .bat
 else
-bin_SCRIPTS = qucsdigi qucsveri qucsdigilib
+BAT_EXT =
 endif
+
+bin_SCRIPTS = qucsdigi${BAT_EXT} qucsveri${BAT_EXT} qucsdigilib${BAT_EXT}
 
 qucs_appledir = $(bindir)/qucs.app/Contents/MacOS/
 
@@ -65,7 +68,10 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 pqucsdir=${pkglibdir}
 pqucs_LTLIBRARIES = libqucsschematic.la
 
-libqucsschematic_la_SOURCES= \
+# TODO:
+# - parts must go to libqucs
+# - other parts need to be loaded at run time
+libqucsschematic_la_SOURCES = \
   attach.cpp \
   node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
   qucs.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
@@ -79,15 +85,19 @@ libqucsschematic_la_SOURCES += $(MOCFILES)
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs-lib
 libqucsschematic_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 
+# these are not plugins yet. but there's hope.
 # TODO:
-# - parts must go to libqucs
-# - other parts need to be loaded at run time
+# - cleanup
+# - use attach, do not mention here.
+PLUGINS = \
+	components/libcomponents.la diagrams/libdiagrams.la \
+	paintings/libpaintings.la dialogs/libdialogs.la
+
 if COND_WIN32
 libqucsschematic_la_LIBADD = \
- components/libcomponents.la diagrams/libdiagrams.la \
-  paintings/libpaintings.la dialogs/libdialogs.la
-libqucsschematic_la_LIBADD += \
-  $(X11_LIBS) $(QT_LIBS)
+   ${PLUGINS} \
+	$(X11_LIBS) \
+	$(QT_LIBS)
 else
 libqucsschematic_la_LIBADD =
 endif
@@ -96,15 +106,14 @@ endif
 
 qucs_real_LDFLAGS = $(QT_LIBS)
 qucs_real_SOURCES = main.cpp qucs_.qrc
+if COND_WIN32
 qucs_real_LDADD = \
 	libqucsschematic.la
-if !COND_WIN32
-qucs_real_LDADD += \
- components/libcomponents.la diagrams/libdiagrams.la \
-  paintings/libpaintings.la dialogs/libdialogs.la \
-  $(X11_LIBS) $(QT_LIBS)
+else
+qucs_real_LDADD = \
+	libqucsschematic.la ${PLUGINS} \
+	$(X11_LIBS) $(QT_LIBS)
 endif
-
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
   wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
