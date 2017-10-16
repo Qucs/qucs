@@ -67,7 +67,7 @@ libqucsschematic_la_SOURCES= \
   node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
   qucs.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
   viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
-  schematic_file.cpp syntax.cpp module.cpp octave_window.cpp qucs_.qrc   \
+  schematic_file.cpp syntax.cpp module.cpp octave_window.cpp \
   messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
   projectView.cpp
 
@@ -84,7 +84,7 @@ qucs_real_LDADD = libqucsschematic.la
 
 qucs_real_LDFLAGS = $(QT_LDFLAGS)
 
-qucs_real_SOURCES = main.cpp
+qucs_real_SOURCES = main.cpp qucs_.qrc
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
   wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
