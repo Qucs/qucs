@@ -22,9 +22,6 @@ vProbe::vProbe()
 {
   Description = QObject::tr("voltage probe");
 
-  Props.append(new Property("Ri", "0 Ohm", false,
-		QObject::tr("Internal resistance, (0 : disable)")));
-
   Lines.append(new Line(-20,-31, 20,-31,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-20,  9, 20,  9,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-20,-31,-20,  9,QPen(Qt::darkBlue,2)));
@@ -41,7 +38,7 @@ vProbe::vProbe()
   Lines.append(new Line(-10,  0,-10,  6,QPen(Qt::red,2)));
   Lines.append(new Line(-13,  3, -7,  3,QPen(Qt::red,2)));
   Lines.append(new Line(  7,  3, 13,  3,QPen(Qt::black,2)));
-  
+
   Lines.append(new Line(-10,  9,-10, 20,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 10,  9, 10, 20,QPen(Qt::darkBlue,2)));
   Ports.append(new Port(-10, 20));
