@@ -67,7 +67,7 @@ libqucsschematic_la_SOURCES= \
   node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
   qucs.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
   viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
-  schematic_file.cpp syntax.cpp module.cpp octave_window.cpp qucs_.qrc   \
+  schematic_file.cpp syntax.cpp module.cpp octave_window.cpp \
   messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
   projectView.cpp
 
@@ -75,16 +75,22 @@ nodist_libqucsschematic_la_SOURCES = $(MOCFILES)
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs-lib
 libqucsschematic_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
-libqucsschematic_la_LIBADD = components/libcomponents.la diagrams/libdiagrams.la \
-  paintings/libpaintings.la dialogs/libdialogs.la \
+
+# TODO:
+# - parts must go to libqucs
+# - other parts need to be loaded at run time
+libqucsschematic_la_LIBADD = \
+ components/libcomponents.la diagrams/libdiagrams.la \
+  paintings/libpaintings.la dialogs/libdialogs.la
+
+# why this? qucs_real_LDADD does not seem to work on windows (yet?)
+libqucsschematic_la_LIBADD += \
   $(X11_LIBS) $(QT_LIBS)
 
-
-qucs_real_LDADD = libqucsschematic.la
-
 qucs_real_LDFLAGS = $(QT_LDFLAGS)
-
-qucs_real_SOURCES = main.cpp
+qucs_real_SOURCES = main.cpp qucs_.qrc
+qucs_real_LDADD = \
+	libqucsschematic.la
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
   wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
