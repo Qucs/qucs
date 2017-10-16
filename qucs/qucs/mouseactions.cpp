@@ -1648,11 +1648,12 @@ void MouseActions::MReleaseResizeDiagram(Schematic *Doc, QMouseEvent *Event)
 
   Diagram *pd = (Diagram*)focusElement;
   pd->updateGraphData();
-  foreach(Graph *pg, pd->Graphs)
+  for(auto pg : pd->GraphDeques) {
     foreach(Marker *pm, pg->Markers) {
       pm->x1 += MAx3;      // correct changes due to move of diagram corner
       pm->y1 += MAy3;
     }
+  }
 
   int x1, x2, y1, y2;
   pd->Bounding(x1, x2, y1, y2);
@@ -1897,7 +1898,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 
 //  qDebug() << "+focusElement->Type" << focusElement->Type;
 
-  Graph *pg;
+  GraphDeque *pg;
   Component *c;
   Diagram *dia;
   DiagramDialog *ddia;
@@ -1966,10 +1967,10 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 	 break;
 
     case isGraph :
-	 pg = (Graph*)focusElement;
+	 pg = (GraphDeque*)focusElement;
 	 // searching diagram for this graph
 	 for(dia = Doc->Diagrams->last(); dia != 0; dia = Doc->Diagrams->prev())
-	   if(dia->Graphs.indexOf(pg) >= 0)
+	   if(dia->GraphDeques.indexOf(pg) >= 0)
 	     break;
 	 if(!dia) break;
 

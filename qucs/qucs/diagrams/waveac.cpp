@@ -217,6 +217,7 @@ Frame:
 
 void Waveac::calcData(Graph *g)
 {
+#if 0 // see phasor
   double *pz = g->cPointsY;
   if(!pz)  return;
   if(g->numAxes() < 1) return;
@@ -295,6 +296,7 @@ void Waveac::calcData(Graph *g)
   p->setGraphEnd();
   return;
   
+#endif
 }
 
 // ------------------------------------------------------------

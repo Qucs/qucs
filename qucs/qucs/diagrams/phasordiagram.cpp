@@ -192,6 +192,8 @@ void PhasorDiagram::calcRestAxis(Axis *xA, Axis *yA , Axis *zA)
 
 void PhasorDiagram::calcData(Graph *g)
 {
+//incomplete. nothing to calc here
+#if 0
   double *pz = g->cPointsY;
   if(!pz)  return;
   if(g->numAxes() < 1) return;
@@ -272,6 +274,7 @@ void PhasorDiagram::calcData(Graph *g)
   }
   p->setGraphEnd();
   return;
+#endif
 }
 
 Diagram* PhasorDiagram::newOne()

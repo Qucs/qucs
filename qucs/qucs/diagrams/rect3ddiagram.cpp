@@ -21,6 +21,7 @@
 */
 
 #include <QFontMetrics>
+#include <QDebug>
 
 #if HAVE_CONFIG_H
 # include <config.h>
@@ -37,6 +38,35 @@
 #include "qucs.h"
 #include "misc.h"
 
+// Enlarge memory block if neccessary.
+#undef FIT_MEMORY_SIZE
+#define  FIT_MEMORY_SIZE  \
+  if(p >= p_end) {     \
+    int pos = p - g->_begin(); \
+    assert(pos<Size); \
+  }
+
+#if 0
+    Size += 256;        \
+    g->resizeScrPoints(Size); \
+    p = g->_begin() + pos; \
+    p_end = g->_begin() + (Size - 9);
+#endif
+
+struct tPoint3D {
+  int   x, y;
+  int   No, done;
+  double indep;
+  double dep[2]; // BUG: complex
+};
+struct tPointZ {
+  float z;
+  int   No, NoCross;
+};
+struct tBound{
+  int min, max;
+};
+
 Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
   x1 = 10;     // position of label text
@@ -47,7 +77,7 @@ Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 
   Mem = pMem = 0;  // auxiliary buffer for hidden lines
 
-  Name = "Rect3D"; // BUG
+  Name = "Rect3D"; // BUG, don't use names. use types.
   // symbolic diagram painting
   Lines.append(new Line(0, 0, cx,  0, QPen(Qt::black,0)));
   Lines.append(new Line(0, 0,  0, cy, QPen(Qt::black,0)));
@@ -135,7 +165,9 @@ int Rect3DDiagram::calcCross(int *Xses, int *Yses)
 }
 
 // ------------------------------------------------------------
-// Is needed for markers.
+/*!
+ * compute screen coordinates, e.g. for markers
+ */
 void Rect3DDiagram::calcCoordinate(const double* xD, const double* zD, const double* yD,
                                    float *px, float *py, Axis const*) const
 {
@@ -381,18 +413,24 @@ int Rect3DDiagram::comparePointZ(const void *Point1, const void *Point2)
 }
 
 // --------------------------------------------------------------
-// Removes the invisible parts of the graph.
+/*!
+ * does what "calcData" is meant to do
+ * also removes the invisible parts of the graph.
+ */
 void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
 {
   double Dummy = 0.0;  // number for 1-dimensional data in 3D cartesian
   double *px, *py, *pz;
+  // temporarily disabled. does not work.
+  hideLines = false;
 
   tPoint3D *p;
   int i, j, z, dx, dy, Size=0;
   // pre-calculate buffer size to avoid reallocations in the first step
-  foreach(Graph *g, Graphs)
+  for(auto g : GraphDeques) {
     if(g->cPointsY)
       Size += g->axis(0)->count * g->countY;
+  }
 
   // "Mem" should be the last malloc to simplify realloc
   // multiplicator 'malloc_8xsize' added
@@ -410,7 +448,7 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
   tPointZ *zp = zMem, *zp_tmp;
 
   // ...............................................................
-  foreach(Graph *g, Graphs) {
+  for(auto g : GraphDeques) {
 
     pz = g->cPointsY;
     if(!pz) continue;
@@ -430,7 +468,12 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
       px = g->axis(0)->Points;
     
       for(j=dx; j>0; j--) { // x coordinates
-        calcCoordinate3D(*(px++), *py, *pz, *(pz+1), pMem++, zp++);
+        calcCoordinate3D(*px, *py, *pz, *(pz+1), pMem, zp++);
+	pMem->indep = *px;
+	pMem->dep[0] = pz[0]; // BUG:
+	pMem->dep[1] = pz[1]; // only complex data here.
+	++px;
+	++pMem;
         pz += 2;
       }
 
@@ -533,7 +576,7 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
   tPoint3D *MemEnd = Mem + malloc_8xsize*2*Size - 5;   // limit of buffer
 
   zp = zMem;
-  foreach(Graph *g, Graphs) {
+  for(auto g : GraphDeques) {
     if(!g->cPointsY) continue;
     dx = g->axis(0)->count;
     if(g->countY > 1)  dy = g->axis(1)->count;
@@ -787,7 +830,7 @@ void Rect3DDiagram::createAxis(Axis *Axis, bool Right,
   y = y1_ - int(double(valid)*cos_phi);
   if(Axis->Label.isEmpty()) {
     // write all labels ----------------------------------------
-    foreach(Graph *pg, Graphs) {
+    for(auto pg : GraphDeques) {
       if(Axis != &zAxis) {
         if(!pg->cPointsY)  continue;
         if(valid < 0) {
@@ -973,8 +1016,12 @@ Frame:   // jump here if error occurred (e.g. impossible log boundings)
 }
 
 // ------------------------------------------------------------
-// g->Points must already be empty!!!
-void Rect3DDiagram::calcData(Graph *g)
+/*!
+ * does not calculate
+ * copies data from pMem to graphDeque
+ * this is redundant, but currently required
+ */
+void Rect3DDiagram::calcData(GraphDeque *g)
 {
   if(!pMem)  return;
   if(!g->cPointsY) return;
@@ -983,13 +1030,14 @@ void Rect3DDiagram::calcData(Graph *g)
   Size *= 2;  // memory for cross grid lines
 
   g->resizeScrPoints(Size);
-  auto p = g->begin();
-  auto p_end = g->begin();
+  auto p = g->_begin();
+  auto p_end = g->_begin();
   p_end += Size - 9;   // limit of buffer
 
 
   p->setStrokeEnd();
   ++p;
+  auto graphbegin = p;
   switch(g->Style) {
     case GRAPHSTYLE_SOLID:
     case GRAPHSTYLE_DASH:
@@ -1006,13 +1054,29 @@ void Rect3DDiagram::calcData(Graph *g)
               }
               else  break;
 	    }
+	  int pos = p - g->_begin();
+	  if(pos>=Size){
+	    qDebug() << pos << Size << "too many";
+	  }
           FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+	  p->setIndep(pMem->indep);
+	  p->setDep(cplx_t(pMem->dep[0], pMem->dep[1]));
 	  (p++)->setScr(pMem->x, pMem->y);
           break;
         }
 
+	int pos = p - g->_begin();
+	if(pos>=Size){
+	  qDebug() << pos << Size << "too many";
+	}
         FIT_MEMORY_SIZE;  // need to enlarge memory block ?
-        if(pMem->done & 8)  (p++)->setBranchEnd();
+        if(pMem->done & 8) {
+	  qDebug() << "pushback 3d" << p-graphbegin;
+	  g->push_back(Graph(graphbegin, p)); // BUG: push back 3D Graph
+	                                      // (not implemented!)
+	  (p++)->setBranchEnd();
+	  graphbegin = p;
+	}
 
         if(pMem->done & 4)   // point invisible ?
           if((p-1)->isPt())
@@ -1024,6 +1088,7 @@ void Rect3DDiagram::calcData(Graph *g)
 
     default:  // symbol (e.g. star) at each point **********************
       do {
+	graphbegin = p;
         while(1) {
           if(pMem->done & 11)    // is grid point ?
             if(pMem->done & 4) { // is hidden
@@ -1034,12 +1099,17 @@ void Rect3DDiagram::calcData(Graph *g)
               else  break;
 	    }
 
+	  p->setIndep(pMem->indep);
+	  p->setDep(cplx_t(pMem->dep[0], pMem->dep[1]));
           (p++)->setScr(pMem->x, pMem->y);
           break;
         }
 
-        if(pMem->done & 8)
+        if(pMem->done & 8) {
+	  g->push_back(Graph(graphbegin, p));
+	  graphbegin = p;
           (p++)->setBranchEnd();
+	}
       } while(((pMem++)->done & 512) == 0);
       p->setGraphEnd();
   }

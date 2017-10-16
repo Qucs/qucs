@@ -1277,7 +1277,7 @@ void QucsApp::slotExportGraphAsCsv()
 
 
   DataX const *pD;
-  Graph *g = (Graph*)view->focusElement;
+  GraphDeque *g = (GraphDeque*)view->focusElement;
   // First output the names of independent and dependent variables.
   for(unsigned ii=0; (pD=g->axis(ii)); ++ii)
     Stream << '\"' << pD->Var << "\";";

@@ -98,8 +98,36 @@ Diagram::~Diagram()
 */
 void Diagram::paint(ViewPainter *p)
 {
-    paintDiagram(p);
-    paintMarkers(p);
+  // paint all lines
+  foreach(Line *pl, Lines) {
+    p->Painter->setPen(pl->style);
+    p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
+  }
+
+  // paint all arcs (1 pixel larger to compensate for strange circle method)
+  foreach(Arc *pa, Arcs) {
+    p->Painter->setPen(pa->style);
+    p->drawArc(cx+pa->x, cy-pa->y, pa->w, pa->h, pa->angle, pa->arclen);
+  }
+
+  // draw graphs from all graphLists
+  for(auto pg : GraphDeques)
+    pg->paint(p, cx, cy);
+
+  // keep track of painter state
+  p->Painter->save();
+
+  // write whole text (axis label inclusively)
+  QMatrix wm = p->Painter->worldMatrix();
+  foreach(Text *pt, Texts) {
+    p->Painter->setWorldMatrix(
+        QMatrix(pt->mCos, -pt->mSin, pt->mSin, pt->mCos,
+                 p->DX + float(cx+pt->x) * p->Scale,
+                 p->DY + float(cy-pt->y) * p->Scale));
+  }
+
+    // paintDiagram(p); incomplete
+    // paintMarkers(p); ??
 }
 
 void Diagram::paintDiagram(ViewPainter *p)
@@ -116,18 +144,10 @@ void Diagram::paintDiagram(ViewPainter *p)
       p->drawArc(cx+pa->x, cy-pa->y, pa->w, pa->h, pa->angle, pa->arclen);
     }
 
-    // draw all graphs
-  foreach(Graph *pg, Graphs)
-  {
-    if(Name=="Phasor")//phasor diagram uses another way to draw
-    {
-      pg->paintvect(p, cx, cy);
-    }
-    else
-      pg->paint(p, cx, cy);
-  }
-    // keep track of painter state
-    p->Painter->save();
+  // draw markers last, so they are at the top of painting layers
+  for(auto pg : GraphDeques)
+    foreach(Marker *pm, pg->Markers)
+      pm->paint(p, cx, cy);
 
     // write whole text (axis label inclusively)
     QMatrix wm = p->Painter->worldMatrix();
@@ -164,6 +184,7 @@ void Diagram::paintDiagram(ViewPainter *p)
     }
 }
 
+#if 0 // does not work
 void Diagram::paintMarkers(ViewPainter *p, bool paintAll)
 {
     // draw markers last, so they are at the top of painting layers
@@ -171,6 +192,7 @@ void Diagram::paintMarkers(ViewPainter *p, bool paintAll)
       foreach(Marker *pm, pg->Markers)
           if ((pm->Type & 1)||paintAll) pm->paint(p, cx, cy);
 }
+#endif
 
 // ------------------------------------------------------------
 void Diagram::paintScheme(Schematic *p)
@@ -194,23 +216,22 @@ void Diagram::createAxisLabels()
   y = -y1;
   if(xAxis.Label.isEmpty()) {
     // write all x labels ----------------------------------------
-    foreach(Graph *pg, Graphs) {
-	if(Name != "Phasor")
-	{
-	  DataX const *pD = pg->axis(0);
-	  if(!pD) continue;
-	  y -= LineSpacing;
-	  if(Name[0] != 'C' && Name != "Waveac") {   // locus curve ?
-	    w = metrics.width(pD->Var) >> 1;
-	    if(w > wmax)  wmax = w;
-	    Texts.append(new Text(x-w, y, pD->Var, pg->Color, 12.0));
-	  }
-	  if(Name[0] == 'C') {
-  	    w = metrics.width("real("+pg->Var+")") >> 1;
-	    if(w > wmax)  wmax = w;
-  	    Texts.append(new Text(x-w, y, "real("+pg->Var+")",
+    for(auto pg : GraphDeques) {
+	DataX const *pD = pg->axis(0);
+	if(!pD) continue;
+	y -= LineSpacing;
+	if(Name[0] != 'C') {   // locus curve ?
+	  w = metrics.width(pD->Var) >> 1;
+	  if(w > wmax)  wmax = w;
+	  Texts.append(new Text(x-w, y, pD->Var, pg->Color, 12.0));
+	}
+	else {
+          w = metrics.width("real("+pg->Var+")") >> 1;
+	  if(w > wmax)  wmax = w;
+          Texts.append(new Text(x-w, y, "real("+pg->Var+")",
                                 pg->Color, 12.0));
 	  }
+#if 0 // BUG, what's this?
 	  if(Name == "Waveac")
 	  {
 	    if(y == -y1 - LineSpacing)
@@ -225,9 +246,11 @@ void Diagram::createAxisLabels()
   	    Texts.append(new Text(x-w, y, "Time", pg->Color, 12.0));
 	  }
 	}
+	else
+#endif
 	//phasor diagram will show the frequency that is working and the names and value 
         //of the display vectors below of the diagram 
-	else
+#if 0 // BUG. this is diagram.cpp
 	{
 	  if(pg->yAxisNo != 0)  continue;
 	  if(pg->cPointsY) {
@@ -259,6 +282,7 @@ void Diagram::createAxisLabels()
 	    }
 	  }
 	}
+#endif
     }
   }
   else {
@@ -280,7 +304,7 @@ void Diagram::createAxisLabels()
   y = y2>>1;
   if(yAxis.Label.isEmpty()) {
     // draw left y-label for all graphs ------------------------------
-    foreach(Graph *pg, Graphs) {
+    for(auto pg : GraphDeques) {
       if(pg->yAxisNo != 0)  continue;
       if(pg->cPointsY) {
         if(Name == "Phasor") continue;
@@ -319,7 +343,7 @@ void Diagram::createAxisLabels()
   y = y2>>1;
   if(zAxis.Label.isEmpty()) {
     // draw right y-label for all graphs ------------------------------
-    foreach(Graph *pg, Graphs) {
+    for(auto pg : GraphDeques) {
       if(pg->yAxisNo != 1)  continue;
       if(pg->cPointsY) {
         if(Name == "Phasor") continue;
@@ -363,6 +387,15 @@ void Diagram::createAxisLabels()
 }
 
 // ------------------------------------------------------------
+/*! region code.
+ *    y
+ *    ^
+ *  9 | 8 |10
+ *  --+---+--
+ *  1 |vis| 2
+ *  --o---+---> x
+ *  5 | 4 | 6
+ */
 int Diagram::regionCode(float x, float y) const
 {
   int code=0;   // code for clipping
@@ -398,11 +431,12 @@ Marker* Diagram::setMarker(int x, int y)
 {
   if(getSelected(x, y)) {
     // test all graphs of the diagram
-    foreach(Graph *pg,Graphs) {
-      int n  = pg->getSelected(x-cx, cy-y); // sic!
-      if(n >= 0) {
+    for(auto pg : GraphDeques) {
+      GraphDeque::const_iterator n = pg->getSelected(x-cx, cy-y);
+      if(n != pg->end()) {
 	assert(pg->parentDiagram() == this);
-	Marker *pm = new Marker(pg, n, x-cx, y-cy);
+
+	Marker *pm = new Marker(n, pg, x-cx, y-cy);
 	pg->Markers.append(pm);
 	return pm;
       }
@@ -412,8 +446,9 @@ Marker* Diagram::setMarker(int x, int y)
 }
 
 /*!
-   Cohen-Sutherland clipping algorithm
-*/
+ * Cohen-Sutherland clipping algorithm
+ * FIXME: can Qt do this?
+ */
 void Diagram::rectClip(Graph::iterator &p) const
 {
   int code, z=0;
@@ -423,13 +458,20 @@ void Diagram::rectClip(Graph::iterator &p) const
 
   int code1 = regionCode(x_1, y_1);
   int code2 = regionCode(x_2, y_2);
-  if((code1 | code2) == 0)  return;  // line completly inside ?
+  if((code1 | code2) == 0) return; // line completly inside
+
+  // hmm maybe we should update endpoint data when clipping?
+  //double a_1 = (p-2)->getIndep();
+  //cplx_t d_1 = (p-2)->getDep();
+
+  double a_2 = (p-1)->getIndep();
+  cplx_t d_2 = (p-1)->getDep();
 
   if(code1 != 0) if((p-3)->isPt()) {
     p++;
     (p-3)->setStrokeEnd();
   }
-  if(code1 & code2)   // line not visible at all ?
+  if(code1 & code2) // line not visible at all
     goto endWithHidden;
 
   if(code2 != 0) {
@@ -440,26 +482,29 @@ void Diagram::rectClip(Graph::iterator &p) const
 
 
   for(;;) {
-    if((code1 | code2) == 0) break;  // line completly inside ?
+    if((code1 | code2) == 0) break; // line completly inside
 
     if(code1)  code = code1;
     else  code = code2;
 
-    dx = x_2 - x_1;  // dx and dy never equals zero !
+    dx = x_2 - x_1;
+    assert(dx);
     dy = y_2 - y_1;
-    if(code & 1) {
+    if(code & 1) { // too left
       y = y_1 - dy * x_1 / dx;
       x = 0.0;
     }
-    else if(code & 2) {
+    else if(code & 2) { // too right
       y = y_1 + dy * (x2-x_1) / dx;
       x = float(x2);
     }
-    else if(code & 4) {
+    else if(code & 4) { // too low
+      assert(dy);
       x = x_1 - dx * y_1 / dy;
       y = 0.0;
     }
-    else if(code & 8) {
+    else if(code & 8) { // too high
+      assert(dy);
       x = x_1 + dx * (y2-y_1) / dy;
       y = float(y2);
     }
@@ -478,19 +523,23 @@ void Diagram::rectClip(Graph::iterator &p) const
       goto endWithHidden; // line not visible at all ?
   }
 
+  // todo: update data
   (p-2)->setScr(x_1, y_1);
   (p-1)->setScr(x_2, y_2);
   p += z;
   return;
 
-endWithHidden:
+endWithHidden: // forget endpoint of invisible segment
     (p-2)->setScr(x_2, y_2);
-    p -= 1;
+    (p-2)->setIndep(a_2);
+    (p-2)->setDep(d_2);
+    --p;
 }
 
 /*!
-   Clipping for round diagrams (smith, polar, ...)
-*/
+ * Clipping for round diagrams (smith, polar, ...)
+ * FIXME: can Qt do this?
+ */
 void Diagram::clip(Graph::iterator &p) const
 {
   float R = float(x2) / 2.0;
@@ -554,8 +603,8 @@ void Diagram::clip(Graph::iterator &p) const
 
 // ------------------------------------------------------------
 // g->Points must already be empty!!!
-// is this a Graph Member?
-void Diagram::calcData(Graph *g)
+// is this a GraphDeque Member?
+void Diagram::calcData(GraphDeque *g)
 {
   double *px;
   double *pz = g->cPointsY;
@@ -572,12 +621,13 @@ void Diagram::calcData(Graph *g)
   double *py = &Dummy;
 
   g->resizeScrPoints(Size);
-  auto p = g->begin();
-  auto p_end = g->begin();
+  auto p = g->_begin();
+  auto graphbegin = p;
+  auto p_end = g->_begin();
   p_end += Size - 9;   // limit of buffer
   p->setStrokeEnd();
   ++p;
-  assert(p!=g->end());
+  assert(p!=g->_end());
 
   Axis *pa;
   if(g->yAxisNo == 0)  pa = &yAxis;
@@ -588,16 +638,20 @@ void Diagram::calcData(Graph *g)
     case GRAPHSTYLE_DASH:
     case GRAPHSTYLE_DOT:
     case GRAPHSTYLE_LONGDASH:
-
       for(i=g->countY; i>0; i--) {  // every branch of curves
+	graphbegin = p;
 	px = g->axis(0)->Points;
 	calcCoordinateP(px, pz, py, p, pa);
+	p->setIndep(*px);
+	p->setDep(cplx_t(pz[0], pz[1]));
 	++px;
 	pz += 2;
 	++p;
 	for(z=g->axis(0)->count-1; z>0; z--) {  // every point
 	  FIT_MEMORY_SIZE;  // need to enlarge memory block ?
 	  calcCoordinateP(px, pz, py, p, pa);
+	  p->setIndep(*px);
+	  p->setDep(cplx_t(pz[0], pz[1]));
 	  ++px;
 	  pz += 2;
 	  ++p;
@@ -610,6 +664,8 @@ void Diagram::calcData(Graph *g)
 	  if((!(p-1)->isPt()))
 	    --p; // erase last hidden point
 	}
+	g->push_back(Graph(graphbegin, p));
+	assert(g->back().begin()>=g->_begin());
 	(p++)->setBranchEnd();
       }
 
@@ -619,29 +675,33 @@ p = g->Points;
 qDebug("\n****** p=%p", p);
 for(int zz=0; zz<z; zz+=2)
   qDebug("c: %d/%d", *(p+zz), *(p+zz+1));*/
-      return;
+      break;
 
     default:  // symbol (e.g. star) at each point **********************
+      // FIXME: WET. merge into case above. only difference: bounds check.
       for(i=g->countY; i>0; i--) {  // every branch of curves
+	graphbegin = p;
         px = g->axis(0)->Points;
         for(z=g->axis(0)->count; z>0; z--) {  // every point
           calcCoordinateP(px, pz, py, p, pa);
+	  p->setIndep(*px);
+	  p->setDep(cplx_t(pz[0], pz[1]));
           ++px;
           pz += 2;
           if(insideDiagramP(p))    // within diagram ?
             ++p;
         }
+	g->push_back(Graph(graphbegin, p));
 	(p++)->setBranchEnd();
-	assert(p!=g->end());
+	assert(p!=g->_end());
       }
       (p++)->setGraphEnd();
 /*qDebug("\n******");
 for(int zz=0; zz<60; zz+=2)
   qDebug("c: %d/%d", *(g->Points+zz), *(g->Points+zz+1));*/
-      return;
   }
 
-  // unreachable
+//  g->invalidateMarkers();
 }
 
 // -------------------------------------------------------
@@ -685,7 +745,7 @@ bool Diagram::resizeTouched(float fX, float fY, float len)
 }
 
 // --------------------------------------------------------------------------
-void Diagram::getAxisLimits(Graph *pg)
+void Diagram::getAxisLimits(GraphDeque const* pg)
 {
   // FIXME: Graph should know the limits. but it doesn't yet.
   //        we should only copy here. better: just wrap, dont use {x,y,z}Axis
@@ -695,7 +755,7 @@ void Diagram::getAxisLimits(Graph *pg)
   DataX const *pD = pg->axis(0);
   if(pD == 0) return;
 
-  if(Name[0] != 'C' && Name != "Phasor" && Name != "Waveac") {   // not for location curves
+  if(Name[0] != 'C') { // BUG: inherit properly.
     p = pD->Points;
     for(z=pD->count; z>0; z--) { // check x coordinates (1. dimension)
       x = *(p++);
@@ -706,7 +766,7 @@ void Diagram::getAxisLimits(Graph *pg)
     }
   }
 
-  if(Name == "Rect3D") {
+  if(Name == "Rect3D") { // BUG: inherit properly.
     DataX const *pDy = pg->axis(1);
     if(pDy) {
       p = pDy->Points;
@@ -727,6 +787,7 @@ void Diagram::getAxisLimits(Graph *pg)
   p = pg->cPointsY;
   if(p == 0) return;    // if no data => invalid
   //phasor diagram and waveac have different ways to determing the limits
+#if 0 // wtf? this is diagram.cpp
   if(Name == "Phasor" || Name == "Waveac")
   {  //find what type is the graph(voltage,current,electric power or electrical impedance)
     findaxisA(pg);
@@ -816,6 +877,8 @@ void Diagram::getAxisLimits(Graph *pg)
       }
     }
   }
+  }
+#endif
 }
 
 // --------------------------------------------------------------------------
@@ -834,14 +897,18 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
     phasorscale();
 
   int No=0;
-  foreach(Graph *pg, Graphs) {
+  for(auto pg : GraphDeques) {
     qDebug() << "load GraphData load" << defaultDataSet << pg->Var;
-    if(pg->loadDatFile(defaultDataSet) != 1)   // load data, determine max/min values
+    if(pg->loadDatFile(defaultDataSet) != 1) {   // load data, determine max/min values
       No++;
+//      pg->refreshMarkers();
+    }
     getAxisLimits(pg);
   }
 
+//  qDebug() << "dataset changes" << No;
   if(No <= 0) {   // All dataset files unchanged ?
+    qDebug() << "unchanged";
     yAxis.numGraphs = yNum;  // rebuild scrollbar position
     zAxis.numGraphs = zNum;
 
@@ -877,8 +944,9 @@ void Diagram::recalcGraphData()
     phasorscale();
 
   // get maximum and minimum values
-  foreach(Graph *pg, Graphs)
+  for(auto pg : GraphDeques) {
     getAxisLimits(pg);
+  }
 
   if(xAxis.min > xAxis.max) {
     xAxis.min = 0.0;
@@ -903,13 +971,17 @@ void Diagram::recalcGraphData()
 // ------------------------------------------------------------------------
 void Diagram::updateGraphData()
 {
+  qDebug() << "Diagram::updateGraphData";
   int valid = calcDiagram();   // do not calculate graph data if invalid
 
-  foreach(Graph *pg, Graphs) {
+  for(auto pg : GraphDeques) {
     pg->clear();
-    if((valid & (pg->yAxisNo+1)) != 0)
+    if((valid & (pg->yAxisNo+1)) != 0) {
       calcData(pg);   // calculate screen coordinates
-    else if(pg->cPointsY) {
+      qDebug() << "done calcData...";
+// ??      pg->invalidateMarkers(); not here.
+    }else if(pg->cPointsY) {
+      qDebug() << "updateGraphData graph write?!"; // shouldn't pGraph be const?
       delete[] pg->cPointsY;
       pg->cPointsY = 0;
     }
@@ -917,23 +989,23 @@ void Diagram::updateGraphData()
 
   createAxisLabels();  // virtual function
 
+  qDebug() << "updataGraphData, renew markers...";
   // Setting markers must be done last, because in 3D diagram "Mem"
   // is released in "createAxisLabels()".
-  foreach(Graph *pg, Graphs){
+  for(auto pg : GraphDeques) {
     pg->createMarkerText();
   }
+  qDebug() << "done Diagram::updateGraphData";
 }
 
 // --------------------------------------------------------------------------
 /*!
  * does not (yet) load a dat file. only part of it.
  * this way, it would belong to graph.cpp. but it's too obsolete, lets see..
- *
- * FIXME: must invalidate markers.
  */
-int Graph::loadDatFile(const QString& fileName)
+int GraphDeque::loadDatFile(const QString& fileName)
 {
-  Graph* g = this;
+  GraphDeque* g = this;
   QFile file;
   QString Variable;
   QFileInfo Info(fileName);
@@ -1172,7 +1244,7 @@ if(Variable.right(3) != ".X ") { // not "digital"
 /*!
    Reads the data of an independent variable. Returns the number of points.
 */
-int Graph::loadIndepVarData(const QString& Variable,
+int GraphDeque::loadIndepVarData(const QString& Variable,
 			      char *FileString, DataX* pD)
 {
   bool isIndep = false;
@@ -1260,9 +1332,9 @@ int Graph::loadIndepVarData(const QString& Variable,
 }
 
 /*!
-   Checks if the two graphs have the same independent variables.
+   Checks if the two graph lists share the independent variables.
 */
-bool Diagram::sameDependencies(Graph const*g1, Graph const*g2) const
+bool Diagram::sameDependencies(GraphDeque const*g1, GraphDeque const*g2) const
 {
   // FIXME
   // return g1->same(*g2);
@@ -1367,7 +1439,7 @@ QString Diagram::save()
   // labels can contain spaces -> must be last items in the line
   s += " \""+xAxis.Label+"\" \""+yAxis.Label+"\" \""+zAxis.Label+"\" \""+sfreq+"\">\n";
 
-  foreach(Graph *pg, Graphs)
+  for(auto pg : GraphDeques)
     s += pg->save()+"\n";
 
   s += "  </"+Name+">";
@@ -1492,7 +1564,7 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   zAxis.Label = s.section('"',5,5);   // yLabel right
   sfreq = s.section('"',7,7);   // frequency for phasor and waveac
 
-  Graph *pg;
+  GraphDeque *pg;
   // .......................................................
   // load graphs of the diagram
   while(!stream->atEnd()) {
@@ -1505,10 +1577,10 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
 
       // .......................................................
       // load markers of the diagram
-      pg = Graphs.last();
+      pg = GraphDeques.last();
       if(!pg)  return false;
       assert(pg->parentDiagram() == this);
-      Marker *pm = new Marker(pg);
+      Marker *pm = new Marker(pg->end(), pg);
       if(!pm->load(s)) {
 	delete pm;
 	return false;
@@ -1517,12 +1589,12 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
       continue;
     }
 
-    pg = new Graph(this);
+    pg = new GraphDeque(this);
     if(!pg->load(s)) {
       delete pg;
       return false;
     }
-    Graphs.append(pg);
+    GraphDeques.append(pg);
   }
 
   return false;   // end tag missing
@@ -2210,7 +2282,8 @@ void Diagram::phasorscale()
   zAxisV.max = zAxisI.max = zAxisP.max = zAxisZ.max = -DBL_MAX;
 }
 /*for phasor diagram while detect with type of graph it is (voltage, current....) and save in the auxiliary axis */
-void Diagram::findaxisA(Graph *g) 
+#if 0 // this seems to be phasor code again?!
+void Diagram::findaxisA(Graph *g)
 {
     QString var = g->Var;
     
@@ -2243,8 +2316,10 @@ void Diagram::findaxisA(Graph *g)
       zAxisA = &zAxisZ;
     }
 }
+#endif
 
 /*will determine the value of the graph for one frequency*/
+#if 0 // no. not here
 bool Diagram::findmatch(Graph *g , int m)
 {
   double *px;
@@ -2253,7 +2328,7 @@ bool Diagram::findmatch(Graph *g , int m)
   if(freq <= (double*) 0)
   {
     freq=0;
-    sfreq = "0 Hz";
+    sfreq = "0 Hz"; // <== this is not diagram code
     return false;
   } 
 	px = g->axis(0)->Points;
@@ -2269,9 +2344,11 @@ bool Diagram::findmatch(Graph *g , int m)
   return false;
 
 }
+#endif
 
 /*will read the values receive and find if is one the values determined by AC and remove repeated number.
    if there isn't any value that match will find the closest number and replace*/
+#if 0 // incomplete. code. so what?!
 void Diagram::findfreq(Graph *g)
 {
   if(freq!=nullptr) delete[] freq;
@@ -2433,6 +2510,7 @@ end:
 
   
 }
+#endif
 
 /* for phasor will find the biggest absolute value of all max limits and replace the others*/
 void Diagram::setlimitsphasor(Axis *x ,Axis *y)

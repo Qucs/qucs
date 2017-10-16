@@ -36,7 +36,42 @@
 
 #include "misc.h"
 
+#define CHECK_MARKER \
+  if(pGraph){ \
+    assert(SplPosD>=pGraph->begin()); \
+    assert(SplPosD<=pGraph->end()); \
+    if(SplPosD!=pGraph->end()){ \
+      assert(SplPosX>=pGraph->_begin()); \
+      assert(SplPosX<=pGraph->_end()); \
+      assert(SplPosD->begin()>=pGraph->_begin()); \
+      assert(SplPosD->end()<=pGraph->_end()); \
+      if(SplPosX!=SplPosD->end()){ \
+	assert(SplPosX>=SplPosD->begin()); \
+	assert(SplPosX<=SplPosD->end()); \
+	assert(SplPosX->isPt()); \
+      } \
+    } \
+  }
+
 static double default_Z0=50;
+
+/*!
+ * copy a marker
+ */
+Marker::Marker(const Marker& m) :
+    Element(m),
+    pGraph(m.pGraph),
+    VarPos(m.VarPos),
+//    SplPosD(m.SplPosD),
+//    SplPosX(m.SplPosX),
+    Text(m.Text),
+    transparent(m.transparent),
+    Precision(m.Precision),
+    numMode(m.numMode)
+{
+  qDebug() << "cloning Marker";
+  SplPosD = pGraph->end();
+}
 
 /*!
  * create a marker based on click position and
@@ -44,17 +79,25 @@ static double default_Z0=50;
  *
  * the click position is used to compute the marker position. currently, the
  * marker position is the sampling point closest to the click.
+ *
+ * redundant: why not pass a GraphDeque::MarkerPos?!
  */
-
-Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
+Marker::Marker(GraphDeque::const_iterator const& pos,
+               GraphDeque const *pg_,
+               int cx_, int cy_) :
   Element(),
   pGraph(pg_),
+  SplPosD(pos),
   Precision(3),
   numMode(0),
   Z0(default_Z0) // BUG: see declaration.
 {
   Type = isMarker;
   isSelected = transparent = false;
+
+  if(pGraph){ // tmp hack
+    SplPosX = pGraph->_end();
+  }
 
   cx =  cx_;
   cy = -cy_;
@@ -72,12 +115,19 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
   }
 
   if(!pGraph){
+    qDebug() << "no Graph in Marker::Marker";
     makeInvalid();
+  }else if(pGraph->begin()==pGraph->end()) {
+    qDebug() << "no data in pGraph";
   }else{
-    initText(branchNo);   // finally create marker
-    fix();
+    VarPos.resize(pGraph->numAxes());
+    initText(pos);
+    assert(pGraph->begin()<=pos);
+    assert(pos<=pGraph->end());
     createText();
   }
+
+  CHECK_MARKER
 
   x1 =  cx + 60;
   y1 = -cy - 60;
@@ -90,26 +140,44 @@ Marker::~Marker()
 
 // ---------------------------------------------------------------------
 /*!
- * compute VarPos from branch number n and click position (cx, cy)
- * this is done by recreating branch samples and comparing against click
- *
- * FIXME: should use ScrPoints instead. do not call calcCoordinate from here!
+ * compute VarPos from Graph instance and click position (cx, cy)
+ * FIXME: (should this) use sample from findSample?
  */
-void Marker::initText(int n)
+void Marker::initText(GraphDeque::const_iterator const& pos)
 {
-  if(pGraph->isEmpty()) {
-      makeInvalid();
-      return;
-  }
-
+  assert(pGraph);
+  assert(pos>=pGraph->begin());
+  assert(pos<=pGraph->end());
   Axis const *pa;
   assert(diag());
   if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
   else  pa = &(diag()->zAxis);
-  double Dummy = 0.0;   // needed for 2D graph in 3D diagram
-  double *px, *py=&Dummy, *pz;
-  Text = "";
+  SplPosD = pos;
 
+  int x, y, d, dmin = INT_MAX;
+
+  Graph::const_iterator here = pos->begin();
+
+  assert(here>=pGraph->_begin());
+  for(auto spl=pos->begin(); spl!=pos->end(); ++spl) {
+    if(!spl->isPt()){
+      qDebug() << "BUG in calcData? bogus data in spl";
+      continue;
+    }
+    // diag()->calcCoordinate(px, pz, py, &fCX, &fCY, pa);
+    fCX = spl->getScrX();
+    fCY = spl->getScrY();
+
+    x = int(fCX+0.5) - cx;
+    y = int(fCY+0.5) - cy;
+    d = x*x + y*y;
+    if(d < dmin) {
+      dmin = d;
+      here = spl;
+    }
+  }
+
+#if 0 // merge fuzz
   bool isCross = false;
   int nn, nnn, m, x, y, d, dmin = INT_MAX;
   DataX const *pD = pGraph->axis(0);
@@ -160,13 +228,14 @@ void Marker::initText(int n)
   if(diag()->Name=="Waveac") m=0;
   if(isCross) m *= pD->count;
   n += m;
+#endif
 
-  // why check over and over again?! do in the right place and just assert otherwise.
-  if(VarPos.size() != pGraph->numAxes()){
-    qDebug() << "huh, wrong size" << VarPos.size() << pGraph->numAxes();
-    VarPos.resize(pGraph->numAxes());
-  }
+  SplPosX = here;
 
+  assert(here<pos->end());
+  assert(VarPos.size());
+  VarPos[0] = here->getIndep();
+#if 0 // obsolete
   // gather text of all independent variables
   nn = n;
   for(unsigned i=0; (pD = pGraph->axis(i)); ++i) {
@@ -175,11 +244,17 @@ void Marker::initText(int n)
     Text += pD->Var + ": " + QString::number(VarPos[i],'g',Precision) + "\n";
     nn /= pD->count;
   }
+#endif
 
-  // createText();
+  pGraph->samplePos(pos, VarPos); // FIXME: don't touch VarPos[0]
+
+  if(VarPos[0] != here->getIndep()){
+    qDebug() << "BUG" << VarPos[0] << here->getIndep();
+  }
 }
 // ---------------------------------------------------------------------
 /*this function finds the VarPos[0] of waveac*/
+#if 0 // BUG
 void Marker::fix()
 {
   if(!(pGraph->cPointsY)) {
@@ -210,6 +285,7 @@ void Marker::fix()
   VarPos[0] = diag()->wavevalX(m);
   
 }
+#endif
 // ---------------------------------------------------------------------
 /*!
  * (should)
@@ -218,10 +294,34 @@ void Marker::fix()
  */
 void Marker::createText()
 {
+  assert(pGraph);
   if(!(pGraph->cPointsY)) {
     makeInvalid();
     return;
+  }else if(SplPosD == pGraph->end()){ // here?!
+    qDebug() << "invalid marker" << pGraph->numAxes();
+    for(auto x : VarPos){
+      qDebug() << x;
+    }
+    GraphDeque::MarkerPos P = pGraph->findSample(VarPos);
+    SplPosD = P.first;
+    SplPosX = P.second;
+    VarDep[0] = SplPosX->getDep().real();
+    VarDep[1] = SplPosX->getDep().imag();
   }
+
+
+  if(splPos().second<pGraph->_begin()){
+  }else if(splPos().second>=pGraph->_end()){
+    qDebug() << "bogus marker end";
+  }else{
+  }
+
+#if 0 // not yet. marker pos can be invalid here.
+  assert(pGraph->begin()<=pGraph->end());
+  assert(pGraph->begin()<=SplPosD);
+  assert(SplPosD<=pGraph->end());
+#endif
 
   unsigned nVarPos = VarPos.size();
 
@@ -237,9 +337,21 @@ void Marker::createText()
   }
 
   // independent variables
-  Text = "";
-  double *pp;
   nVarPos = pGraph->numAxes();
+
+  // BUG? not necessarily needed here.
+  auto p = pGraph->findSample(VarPos);
+  SplPosD = p.first;
+  SplPosX = p.second;
+
+  CHECK_MARKER
+
+  if(SplPosX->isPt()){
+    VarDep[0] = p.second->getDep().real();
+    VarDep[1] = p.second->getDep().imag();
+  }
+
+#if 0 //  BUG. wrong place
   DataX const *pD;
   if(diag()->Name!="Waveac")
   {
@@ -252,43 +364,83 @@ void Marker::createText()
     VarDep[0] = wavevalY(VarPos[0],VarPos);
     VarDep[1] = 0;
   }
+#endif
 
+  assignText();
+}
+
+/*!
+ * turn SplPosX, VarPos[1+] into Text
+ * (recheck: use SplPos{X,Y} only?)
+ */
+void Marker::assignText()
+{
   double v=0.;   // needed for 2D graph in 3D diagram
   double *py=&v;
-  pD = pGraph->axis(0);
   if(pGraph->axis(1)) {
     *py = VarPos[1];
   }else{
     qDebug() << *py << "is not" << VarPos[1]; // does it really matter?!
   }
 
-  double pz[2];
-  pz[0] = VarDep[0];
-  pz[1] = VarDep[1];
+  Text = "";
+  assert(pGraph);
+  if(pGraph->isEmpty()) {
+    qDebug() << "empty";
+    makeInvalid();
+    return;
+  }
+  assert(pGraph->begin()<=SplPosD);
+  assert(SplPosD<=pGraph->end());
 
+  // why check over and over again?! do in the right place and just assert otherwise.
+  if(VarPos.size() != pGraph->numAxes()){
+    qDebug() << "huh, wrong size" << VarPos.size() << pGraph->numAxes();
+    VarPos.resize(pGraph->numAxes());
+#if 0 // ??
   // now actually create text.
   for(unsigned ii=0; (pD=pGraph->axis(ii)); ++ii) {
     if(ii==0 && diag()->Name=="Waveac")
       Text += "Time: " + unit(VarPos[ii]) + "\n";
     else
       Text += pD->Var + ": " + QString::number(VarPos[ii],'g',Precision) + "\n";
+#endif
   }
 
-  Text += pGraph->Var + ": ";
-  switch(numMode) {
-    case nM_Rect: Text += misc::complexRect(*pz, *(pz+1), Precision);
-      break;
-    case nM_Deg: Text += misc::complexDeg(*pz, *(pz+1), Precision);
-      break;
-    case nM_Rad: Text += misc::complexRad(*pz, *(pz+1), Precision);
-      break;
+  for(unsigned i=0; i<pGraph->numAxes(); ++i) {
+    Text += pGraph->axisName(i) + ": " + QString::number(VarPos[i],'g',Precision) + "\n";
   }
 
-  assert(diag());
-  Text += diag()->extraMarkerText(this);
 
+  double pz[2];
+  if (SplPosX->isPt()){
+    pz[0] = SplPosX->getDep().real();
+    pz[1] = SplPosX->getDep().imag();
+
+    Text += pGraph->Var + ": ";
+    switch(numMode) {
+      case nM_Rect: Text += misc::complexRect(*pz, *(pz+1), Precision);
+		    break;
+      case nM_Deg: Text += misc::complexDeg(*pz, *(pz+1), Precision);
+		   break;
+      case nM_Rad: Text += misc::complexRad(*pz, *(pz+1), Precision);
+		   break;
+    }
+    assert(diag());
+    Text += diag()->extraMarkerText(this);
+  }else{
+    Text+="NA"; // BUG?
+    pz[0] = 1e-3;
+    pz[1] = 1e-3;
+  }
+
+  Axis const *pa;
+  if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
+  else  pa = &(diag()->zAxis);
+  double *pp = &(VarPos[0]);
+#if 0
     Axis const *pa,*pt;
-  if(diag()->Name=="Phasor")
+  if(diag()->Name=="Phasor") // no phasor code here
   {
     int z;
     findaxismk();
@@ -307,6 +459,7 @@ void Marker::createText()
     diag()->calcCoordinatePh(pz, &fCX, &fCY, pa, pt);
   }
   else
+#endif
   {
     if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
     else  pa = &(diag()->zAxis);
@@ -322,8 +475,24 @@ void Marker::createText()
 }
 
 // ---------------------------------------------------------------------
+/*!
+ * retrieve sample marker position in terms of sampling iterator from marker
+ */
+GraphDeque::MarkerPos Marker::splPos() const
+{
+  return GraphDeque::MarkerPos(SplPosD, SplPosX);
+}
+
+// ---------------------------------------------------------------------
 void Marker::makeInvalid()
 {
+  if(pGraph){
+    qDebug() << "resetting SplPos";
+    SplPosD = pGraph->end();
+    assert(SplPosD>=pGraph->begin());
+  }else{
+    qDebug() << "theres no graph to invalidate marker, BUG?";
+  }
   fCX = fCY = -1e3; // invalid coordinates
   assert(diag());
   diag()->finishMarkerCoordinates(fCX, fCY); // leave to diagram
@@ -332,6 +501,12 @@ void Marker::makeInvalid()
 
   Text = QObject::tr("invalid");
   getTextSize();
+
+  qDebug() << "marker is now invalid" << VarPos.size();
+  if(pGraph){
+    assert(SplPosD>=pGraph->begin());
+    assert(SplPosD<=pGraph->end());
+  }
 }
 
 // ---------------------------------------------------------------------
@@ -347,6 +522,36 @@ void Marker::getTextSize()
 // ---------------------------------------------------------------------
 bool Marker::moveLeftRight(bool left)
 {
+  assert(pGraph);
+  assert(SplPosD>=pGraph->begin());
+  assert(SplPosD<=pGraph->end());
+
+  if(SplPosD==pGraph->end()) {
+    // invalid marker
+    return false;
+  }else if(SplPosX==SplPosD->end()) {
+    // oops?
+    return false;
+  }
+
+  CHECK_MARKER
+
+  if(left) {
+    if(SplPosX == SplPosD->begin()) return false;
+    if((SplPosX-1)->isStrokeEnd()) return false;
+    --SplPosX;
+    assert(!SplPosX->isStrokeEnd());
+  } else {
+    if(SplPosX == SplPosD->end()) return false; // reachable?
+    if(SplPosX+1 == SplPosD->end()) return false;
+    if(SplPosX->isStrokeEnd()) return false;
+    ++SplPosX;
+    assert(SplPosX != SplPosD->end());
+  }
+  VarPos[0] = SplPosX->getIndep();
+  // other VarPos unchanged
+  assignText();
+#if 0 // what's this?!
   int n;
   double *px;
   double x;
@@ -409,6 +614,7 @@ bool Marker::moveLeftRight(bool left)
     VarPos[0] = diag()->freq[n];
   }
   createText();
+#endif
 
   return true;
 }
@@ -416,54 +622,28 @@ bool Marker::moveLeftRight(bool left)
 // ---------------------------------------------------------------------
 bool Marker::moveUpDown(bool up)
 {
-  int n, i=0;
-  double *px;
-
   DataX const *pD = pGraph->axis(0);
   if(!pD) return false;
-
-  if(up) {  // move upwards ? **********************
-    do {
-      pD = pGraph->axis(++i);
-      if(!pD) return false;
-      px = pD->Points;
-      if(!px) return false;
-      for(n=1; n<pD->count; n++) {  // go through all data points
-        if(fabs(VarPos[i]-(*px)) < fabs(VarPos[i]-(*(px+1)))) break;
-        px++;
-      }
-
-    } while(px >= (pD->Points + pD->count - 1));  // go to next dimension ?
-
-    px++;  // one position up
-    VarPos[i] = *px;
-    while(i > 1) {
-      pD = pGraph->axis(--i);
-      VarPos[i] = *(pD->Points);
-    }
+  assert(SplPosD>=pGraph->begin());
+  assert(SplPosD<=pGraph->end());
+  if(SplPosD==pGraph->end()){
+    // is this reachable?
+    return false;
   }
-  else {  // move downwards **********************
-    do {
-      pD = pGraph->axis(++i);
-      if(!pD) return false;
-      px = pD->Points;
-      if(!px) return false;
-      for(n=0; n<pD->count; n++) {
-        if(fabs(VarPos[i]-(*px)) < fabs(VarPos[i]-(*(px+1)))) break;
-        px++;
-      }
 
-    } while(px <= pD->Points);  // go to next dimension ?
-
-    px--;  // one position down
-    VarPos[i] = *px;
-    while(i > 1) {
-      pD = pGraph->axis(--i);
-      VarPos[i] = *(pD->Points + pD->count - 1);
-    }
+  unsigned X = SplPosX - SplPosD->begin();
+  if(up) {
+    if(SplPosD+1==pGraph->end()) return false;
+    ++SplPosD;
+  } else {  // down
+    if(SplPosD==pGraph->begin()) return false;
+    --SplPosD;
   }
-  createText();
 
+  SplPosX = SplPosD->begin() + X; // BUG: needs rectangular grid.
+  VarPos[0] = SplPosX->getIndep();
+  pGraph->samplePos(SplPosD, VarPos);
+  assignText();
   return true;
 }
 
@@ -627,6 +807,9 @@ bool Marker::load(const QString& _s)
     i = j+1;
   } while(j >= 0);
 
+  VarDep[1] = VarPos.back(); VarPos.pop_back();
+  VarDep[0] = VarPos.back(); VarPos.pop_back();
+
   n  = s.section(' ',2,2);    // x1
   x1 = n.toInt(&ok);
   if(!ok) return false;
@@ -671,6 +854,7 @@ bool Marker::getSelected(int x_, int y_)
 }
 // ------------------------------------------------------------------------
 /*will find the y value of a point in time for waveac*/
+#if 0 // wrong file
 double Marker::wavevalY(double xn,std::vector<double>& VarPos)  
 {
   double n;
@@ -689,6 +873,7 @@ double Marker::wavevalY(double xn,std::vector<double>& VarPos)
   VarPos[0]=n;
   return A*sin(2*pi*(diag()->freq[0])*xn + af);
 }
+#endif
 // ------------------------------------------------------------------------
 /*
  * the diagram this belongs to
@@ -700,20 +885,12 @@ const Diagram* Marker::diag() const
 }
 
 // ------------------------------------------------------------------------
-Marker* Marker::sameNewOne(Graph *pGraph_)
+Marker* Marker::sameNewOne(GraphDeque const *pGraph_)
 {
-  Marker *pm = new Marker(pGraph_, 0, cx ,cy);
-
-  pm->x1 = x1;  pm->y1 = y1;
-  pm->x2 = x2;  pm->y2 = y2;
-
-  pm->VarPos = VarPos;
-
-  pm->Text        = Text;
-  pm->transparent = transparent;
-  pm->Precision   = Precision;
-  pm->numMode     = numMode;
-
+  assert(pGraph_);
+  CHECK_MARKER
+  Marker *pm = new Marker(*this);
+  pm->setGraph(pGraph_);
   return pm;
 }
 // ------------------------------------------------------------------------
@@ -751,6 +928,7 @@ QString Marker::unit(double n)
   return value;
 
 }
+#if 0 // is this phasor code?!
 int Marker::phasormk(double *pz,double *px,int max)
 {
   int m,n,nn,x,y,d,dmin = INT_MAX;
@@ -780,7 +958,18 @@ int Marker::phasormk(double *pz,double *px,int max)
   }
   return m;
 }
+#endif
 
+// ------------------------------------------------------------------------
+void Marker::setGraph(GraphDeque const *d)
+{
+  pGraph = d;
+  assert(d);
+  SplPosD = d->end();
+//  SplPosX = invalid
+}
+
+#if 0 // ?!
 void Marker::findaxismk()
 {
   QString var = pGraph->Var;
@@ -815,4 +1004,5 @@ void Marker::findaxismk()
     }
 
 }
+#endif
 // vim:ts=8:sw=2:noet

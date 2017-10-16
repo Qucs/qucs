@@ -45,7 +45,7 @@ class DiagramDialog : public QDialog  {
 Q_OBJECT
 public:
   DiagramDialog(Diagram *d, QWidget *parent=0,
-		Graph *currentGraph=0);
+		GraphDeque *currentGraph=0);
   ~DiagramDialog();
 
   bool loadVarData(const QString&);
@@ -80,20 +80,24 @@ private slots:
   void slotEditRotX(const QString&);
   void slotEditRotY(const QString&);
   void slotEditRotZ(const QString&);
-  void PhasorvalV(int);
-  void PhasorvalI(int);
-  void PhasorvalP(int);
-  void PhasorvalZ(int);
-  void addvar(QString);
-  void remvar(QString);
-  bool testvar(QString);
+
+  // BUG: this is phasor
+//  void PhasorvalV(int);
+//  void PhasorvalI(int);
+//  void PhasorvalP(int);
+//  void PhasorvalZ(int);
+
+//  what's this? probably not needed.
+//  void addvar(QString);
+//  void remvar(QString);
+//  bool testvar(QString);
 
 protected slots:
     void reject();
 
 private:
-  void SelectGraph(Graph*);
-  QStringList LoadAvailableFreqs();
+  void SelectGraph(GraphDeque*);
+//   QStringList LoadAvailableFreqs(); //??
   Diagram *Diag;
   QString defaultDataSet;
   QString Var2;
@@ -107,7 +111,7 @@ private:
 
   QComboBox *ChooseData;
   QTableWidget *ChooseVars;
-  QListWidget  *GraphList;
+  QListWidget  *GraphDequeList;
 
   QVBoxLayout *all;   // the mother of all widgets
   QLineEdit   *GraphInput, *Property2, *xLabel, *ylLabel, *yrLabel;
@@ -125,7 +129,7 @@ private:
   QSlider     *SliderRotX, *SliderRotY, *SliderRotZ;
   Cross3D     *DiagCross;
   bool changed, transfer, toTake;
-  Q3PtrList<Graph>  Graphs;
+  Q3PtrList<GraphDeque>  GraphDeques; // FIXME maybe QList?
 };
 
 #endif

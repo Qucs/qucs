@@ -105,11 +105,10 @@ static const QRgb DefaultColors[]
 static const int NumDefaultColors = 8;
 
 
-DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
+DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, GraphDeque *currentGraphDeque)
                     : QDialog(parent, Qt::WDestructiveClose)
 {
   Diag = d;
-  Graphs.setAutoDelete(true);
   copyDiagramGraphs();   // make a copy of all graphs
   if(parent){
 	  const Schematic* s = dynamic_cast<const Schematic*>(parent);
@@ -337,10 +336,10 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   Box1Layout->addWidget(GraphGroup);
   QVBoxLayout *GraphGroupLayout = new QVBoxLayout();
   GraphGroup->setLayout(GraphGroupLayout);
-  GraphList = new QListWidget();
-  GraphGroupLayout->addWidget(GraphList);
-  connect(GraphList, SIGNAL(itemClicked(QListWidgetItem*)), SLOT(slotSelectGraph(QListWidgetItem*)));
-  connect(GraphList, SIGNAL(itemDoubleClicked(QListWidgetItem*)), SLOT(slotDeleteGraph()));
+  GraphDequeList = new QListWidget();
+  GraphGroupLayout->addWidget(GraphDequeList);
+  connect(GraphDequeList, SIGNAL(itemClicked(QListWidgetItem*)), SLOT(slotSelectGraph(QListWidgetItem*)));
+  connect(GraphDequeList, SIGNAL(itemDoubleClicked(QListWidgetItem*)), SLOT(slotDeleteGraph()));
   QPushButton *NewButt = new QPushButton(tr("New Graph"));
   GraphGroupLayout->addWidget(NewButt);
   connect(NewButt, SIGNAL(clicked()), SLOT(slotNewGraph()));
@@ -741,21 +740,25 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   // ...........................................................
   // put all graphs into the ListBox
   Row = 0;
-  foreach(Graph *pg, Diag->Graphs) {
-    GraphList->insertItem(Row, pg->Var);
-    if(pg == currentGraph) {
-      GraphList->setCurrentRow(Row);   // select current graph
-      SelectGraph(currentGraph);
+  for(auto pg : Diag->graphLists()) {
+    GraphDequeList->insertItem(Row, pg->Var);
+    if(pg == currentGraphDeque) {
+      GraphDequeList->setCurrentRow(Row);   // select current graphList
+      SelectGraph(currentGraphDeque);
     }
     Row++;
   }
 
   if(ColorButt) {
-    if(!currentGraph) {
-      QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
+    if(!currentGraphDeque) {
+      QColor selectedColor(DefaultColors[GraphDequeList->count()%NumDefaultColors]);
+      QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
+      ColorButt->setStyleSheet(stylesheet);
       misc::setPickerColor(ColorButt, selectedColor);
     }
   }
+#if 0 // wtf?!
+  that seems to belong to phasor.cpp
   if(Diag->Name == "Phasor")
     {
       if(testvar(".v")) inputV->setChecked(true);
@@ -787,6 +790,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     }
     freqCombobox->setCurrentIndex(current_index);
   }
+#endif
 }
 
 DiagramDialog::~DiagramDialog()
@@ -797,6 +801,7 @@ DiagramDialog::~DiagramDialog()
   delete Validator;
 }
 
+#if 0 // whats this?!
 QStringList DiagramDialog::LoadAvailableFreqs()
 {
   QFileInfo Info(defaultDataSet);
@@ -828,6 +833,7 @@ QStringList DiagramDialog::LoadAvailableFreqs()
   file.close();
   return AvailableFreqs;
 }
+#endif
 
 
 
@@ -918,8 +924,8 @@ void DiagramDialog::slotReadVars(int)
   } while(i > 0);
   // sorting should be enabled only after adding items
   ChooseVars->setSortingEnabled(true);
-  LoadAvailableFreqs();
-}
+//  LoadAvailableFreqs(); incomplete
+} // DiagramDialog::slotReadVars
 
 // ------------------------------------------------------------------------
 // Inserts the double-clicked variable into the Graph Input Line at the
@@ -948,17 +954,19 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
   GraphInput->setText(s1);
 
   //if(s.isEmpty()) {
-    GraphList->addItem(GraphInput->text());////insertItem(i, GraphInput->text());
-    GraphList->setCurrentRow(GraphList->count()-1);
+    GraphDequeList->addItem(GraphInput->text());////insertItem(i, GraphInput->text());
+    GraphDequeList->setCurrentRow(GraphDequeList->count()-1);
 
-    Graph *g = new Graph(Diag, GraphInput->text());   // create a new graph
+    GraphDeque *g = new GraphDeque(Diag, GraphInput->text());   // create a new graph
 
     if(Diag->Name != "Tab") {
       if(Diag->Name != "Truth") {
         g->Color = misc::getWidgetBackgroundColor(ColorButt);
         g->Thick = Property2->text().toInt();
-        QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
-        misc::setPickerColor(ColorButt, selectedColor);
+        QColor selectedColor(DefaultColors[GraphDequeList->count()%NumDefaultColors]);
+        QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
+        ColorButt->setStyleSheet(stylesheet);
+	misc::setPickerColor(ColorButt, selectedColor);
         if(g->Var.right(3) == ".Vb")   // harmonic balance output ?
           if(PropertyBox->count() >= GRAPHSTYLE_ARROW)
             PropertyBox->setCurrentIndex(GRAPHSTYLE_ARROW);
@@ -980,7 +988,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
       g->numMode   = PropertyBox->currentIndex();
     }
 
-    Graphs.append(g);
+    GraphDeques.append(g);
     changed = true;
     toTake  = true;
   //}
@@ -1001,17 +1009,17 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 void DiagramDialog::slotSelectGraph(QListWidgetItem *item)
 {
   if(item == 0) {
-    GraphList->clearSelection();
+    GraphDequeList->clearSelection();
     return;
   }
 
-  SelectGraph (Graphs.at (GraphList->currentRow()));
+  SelectGraph (GraphDeques.at (GraphDequeList->currentRow()));
 }
 
 /*!
-  Puts the text of the selected graph into the line edit.
+  Puts the text of the selected graph list into the line edit.
 */
-void DiagramDialog::SelectGraph(Graph *g)
+void DiagramDialog::SelectGraph(GraphDeque *g)
 {
   GraphInput->blockSignals(true);
   GraphInput->setText(g->Var);
@@ -1051,6 +1059,10 @@ void DiagramDialog::SelectGraph(Graph *g)
 */
 void DiagramDialog::slotDeleteGraph()
 {
+  int i = GraphDequeList->currentRow();
+  if(i < 0) return;   // return, if no item selected
+
+#if 0 // BUG, what's this mess?
   int i;
   if(Diag->Name != "Phasor" || Var2 != ".a")
   {
@@ -1062,25 +1074,28 @@ void DiagramDialog::slotDeleteGraph()
     i = loc;
     if(i < 0) return;
   }
+#endif
 
-  GraphList->takeItem(i);
-  Graphs.remove(i);
+  GraphDequeList->takeItem(i);
+  GraphDeques.remove(i);
 
   int k=0;
-  if (GraphList->count()!=0) {
-      if (i>(GraphList->count()-1)) {
-          k = GraphList->count()-1;
+  if (GraphDequeList->count()!=0) {
+      if (i>(GraphDequeList->count()-1)) {
+          k = GraphDequeList->count()-1;
       } else {
           k=i;
       }
-      GraphInput->setText(GraphList->item(k)->text());
+      GraphInput->setText(GraphDequeList->item(k)->text());
   } else {
       GraphInput->setText("");  // erase input line and back to default values
   }
 
   if(Diag->Name != "Tab") {
     if(Diag->Name != "Truth") {
-      QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
+      QColor selectedColor(DefaultColors[GraphDequeList->count()%NumDefaultColors]);
+      QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
+      ColorButt->setStyleSheet(stylesheet);
       misc::setPickerColor(ColorButt, selectedColor);
       Property2->setText("0");
       if(yAxisBox) {
@@ -1113,9 +1128,9 @@ void DiagramDialog::slotNewGraph()
   assert(Diag);
   if(GraphInput->text().isEmpty()) return;
 
-  GraphList->addItem(GraphInput->text());
+  GraphDequeList->addItem(GraphInput->text());
 
-  Graph *g = new Graph(Diag, GraphInput->text());
+  GraphDeque *g = new GraphDeque(Diag, GraphInput->text());
 // FIXME: call  Diag->whateverelse();
   if(Diag->Name != "Tab") { // BUG
     if(Diag->Name != "Truth") { // BUG
@@ -1131,7 +1146,7 @@ void DiagramDialog::slotNewGraph()
     g->Precision = Property2->text().toInt();
     g->numMode   = PropertyBox->currentIndex();
   }
-  Graphs.append(g);
+  GraphDeques.append(g);
   changed = true;
   toTake  = false;
 }
@@ -1301,12 +1316,13 @@ void DiagramDialog::slotApply()
 
   }   // of "if(Diag->Name != "Tab")"
 
-  Diag->Graphs.clear();   // delete the graphs
-  Graphs.setAutoDelete(false);
-  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
-    Diag->Graphs.append(pg);  // transfer the new graphs to diagram
-  Graphs.clear();
-  Graphs.setAutoDelete(true);
+  Diag->GraphDeques.clear();
+  GraphDeques.setAutoDelete(false);
+  for(GraphDeque *pg = GraphDeques.first(); pg != 0; pg = GraphDeques.next()) {
+    Diag->GraphDeques.append(pg);  // transfer the new graphs to diagram
+  }
+  GraphDeques.clear();
+  GraphDeques.setAutoDelete(true);
 
   Diag->loadGraphData(defaultDataSet);
   ((Schematic*)parent())->viewport()->repaint();
@@ -1340,10 +1356,10 @@ void DiagramDialog::slotSetColor()
   if(!c.isValid()) return;
   misc::setPickerColor(ColorButt, c);
 
-  int i = GraphList->currentRow();
+  int i = GraphDequeList->currentRow();
   if(i < 0) return;   // return, if no item selected
 
-  Graph *g = Graphs.at(i);
+  GraphDeque *g = GraphDeques.at(i);
   g->Color = c;
   changed = true;
   toTake  = false;
@@ -1364,12 +1380,12 @@ void DiagramDialog::slotSetGridColor()
 */
 void DiagramDialog::slotResetToTake(const QString& s)
 {
-  int i = GraphList->currentRow();
+  int i = GraphDequeList->currentRow();
   if(i < 0) return;   // return, if no item selected
 
-  Graph *g = Graphs.at(i);
+  GraphDeque *g = GraphDeques.at(i);
   g->Var = s;
-  // \todo GraphList->changeItem(s, i);   // must done after the graph settings !!!
+  // \todo GraphDeque->changeItem(s, i);   // must done after the graph settings !!!
   changed = true;
   toTake  = false;
 }
@@ -1379,10 +1395,10 @@ void DiagramDialog::slotResetToTake(const QString& s)
 */
 void DiagramDialog::slotSetProp2(const QString& s)
 {
-  int i = GraphList->currentRow();
+  int i = GraphDequeList->currentRow();
   if(i < 0) return;   // return, if no item selected
 
-  Graph *g = Graphs.at(i);
+  GraphDeque *g = GraphDeques.at(i);
   if(Diag->Name == "Tab") g->Precision = s.toInt();
   else  g->Thick = s.toInt();
   changed = true;
@@ -1394,10 +1410,10 @@ void DiagramDialog::slotSetProp2(const QString& s)
 */
 void DiagramDialog::slotSetNumMode(int Mode)
 {
-  int i = GraphList->currentRow();
+  int i = GraphDequeList->currentRow();
   if(i < 0) return;   // return, if no item selected
 
-  Graph *g = Graphs.at(i);
+  GraphDeque *g = GraphDeques.at(i);
   g->numMode = Mode;
   changed = true;
   toTake  = false;
@@ -1427,10 +1443,10 @@ void DiagramDialog::slotSetGridBox(int state)
 */
 void DiagramDialog::slotSetGraphStyle(int style)
 {
-  int i = GraphList->currentRow();
+  int i = GraphDequeList->currentRow();
   if(i < 0) return;   // return, if no item selected
 
-  Graph *g = Graphs.at(i);
+  GraphDeque *g = GraphDeques.at(i);
   g->Style = toGraphStyle(style);
   assert(g->Style!=GRAPHSTYLE_INVALID);
   changed = true;
@@ -1442,8 +1458,9 @@ void DiagramDialog::slotSetGraphStyle(int style)
 */
 void DiagramDialog::copyDiagramGraphs()
 {
-  foreach(Graph *pg, Diag->Graphs)
-    Graphs.append(pg->sameNewOne());
+  foreach(GraphDeque *pg, Diag->GraphDeques) {
+    GraphDeques.append(pg->sameNewOne());
+  }
 }
 
 /*!
@@ -1451,10 +1468,10 @@ void DiagramDialog::copyDiagramGraphs()
 */
 void DiagramDialog::slotSetYAxis(int axis)
 {
-  int i = GraphList->currentRow();
+  int i = GraphDequeList->currentRow();
   if(i < 0) return;   // return, if no item selected
 
-  Graph *g = Graphs.at(i);
+  GraphDeque *g = GraphDeques.at(i);
   g->yAxisNo = axis;
   changed = true;
   toTake  = false;
@@ -1591,6 +1608,9 @@ void DiagramDialog::slotEditRotZ(const QString& Text)
   DiagCross->rotZ = Text.toFloat() * pi/180.0;
   DiagCross->update();
 }
+
+// BUG: phasor code
+#if 0
 /*if the checkbox 'V' change stated*/
 void DiagramDialog::PhasorvalV(int state)
 {
@@ -1631,6 +1651,9 @@ void DiagramDialog::PhasorvalZ(int state)
     remvar(".Ohm");//if uncheck remove graph of type ".Ohm"
   }
 }
+#endif
+
+#if 0 // does not work
 /*this function will find graph of a certain type and place on screen*/
 void DiagramDialog::addvar(QString a)
 {
@@ -1723,4 +1746,5 @@ bool DiagramDialog::testvar (QString a)
   }
     return false;
 }
+#endif
 // vim:ts=8:sw=2:noet
