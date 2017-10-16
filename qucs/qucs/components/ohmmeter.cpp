@@ -46,8 +46,8 @@ Ohmmeter::Ohmmeter()
 
   //Underlined Zed
   QString tmp = QString::fromUtf8("\u005A");
-  Texts.append(new Text(-6, -32, tmp,Qt::darkBlue,12));
-  Lines.append(new Line(-6, -12, 4, -12,QPen(Qt::darkBlue,1)));
+  Texts.append(new Text(-4, -24, tmp,Qt::darkBlue,12));
+  Lines.append(new Line(-4, -12, 4, -12,QPen(Qt::darkBlue,1)));
 
   x1 = -24; y1 = -35;
   x2 =  24; y2 =  20;
