@@ -38,6 +38,7 @@ AC_ARG_ENABLE([debug],
 if test "$enable_qucs_gui_debug" = yes; then
   AC_DEFINE(DEBUG, 1, [Enable debug build.])
   QT_DEF="-DQT_DEBUG"
+  CXXFLAGS="$CXXFLAGS -g -O0"
 else
   AC_DEFINE(NDEBUG, 1, [Disable debug build.])
   QT_DEF="-DQT_NO_DEBUG -DQT_NO_DEBUG_OUTPUT"
