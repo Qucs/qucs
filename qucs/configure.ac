@@ -24,7 +24,7 @@ dnl Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
 AC_CHECK_TOOL(AR, ar, :)
-LT_INIT()
+LT_INIT([win32-dll])
 
 PKG_CONFIG=pkg-config
 
