@@ -2,8 +2,8 @@
  * wprobe.cpp - Construction of the Wattmeter Probe
  *
  * Copyright (C) 2015, Pedro Macedo
- *		 2017, Alberto Silva, 1120196@isep.ipp.pt	
- *		
+ *		 2017, Alberto Silva, 1120196@isep.ipp.pt
+ *
  * This file is part of Qucs
  *
  * Qucs is free software; you can redistribute it and/or modify
@@ -27,11 +27,6 @@
 wProbe::wProbe()
 {
   Description = QObject::tr("power probe");
-
-  Props.append(new Property("Riv", "0 Ohm", false,
-		QObject::tr("Voltage probe internal resistor, (0 : disable)")));
-  Props.append(new Property("Rii", "0 Ohm", false,
-		QObject::tr("Current probe internal resistor, (0 : disable)")));
 
 //Large box
   Lines.append(new Line(-20,-33, 20,-33,QPen(Qt::darkBlue,2)));

@@ -42,8 +42,6 @@ Ampere_dc::Ampere_dc()
 
   Props.append(new Property("I", "1 mA", true,
 		QObject::tr("current in Ampere")));
-  Props.append(new Property("Ri", "0 Ohm", false,
-		QObject::tr("Internal resistance, (0 : disable)")));
 
   rotate();  // fix historical flaw
 }

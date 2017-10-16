@@ -43,8 +43,6 @@ Volt_dc::Volt_dc()
 
   Props.append(new Property("U", "1 V", true,
 		QObject::tr("voltage in Volts")));
-  Props.append(new Property("Ri", "0 Ohm", false,
-		QObject::tr("Internal resistance, (0 : disable)")));
 
   rotate();  // fix historical flaw
 }
