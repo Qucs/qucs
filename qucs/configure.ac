@@ -36,20 +36,11 @@ AC_ARG_ENABLE([debug],
    esac],
   [enable_qucs_gui_debug="no"])
 if test "$enable_qucs_gui_debug" = yes; then
-  AC_DEFINE(DEBUG, 1, [Define if debug output should be supported.])
+  AC_DEFINE(DEBUG, 1, [Enable debug build.])
   QT_DEF="-DQT_DEBUG"
 else
-  AC_DEFINE(NDEBUG, 1, [Define if debug code should be suppressed.])
+  AC_DEFINE(NDEBUG, 1, [Disable debug build.])
   QT_DEF="-DQT_NO_DEBUG -DQT_NO_DEBUG_OUTPUT"
-  if test "x$GCC" = xyes; then
-    CFLAGS="`echo $CFLAGS | sed -e 's/\-g //g'`"
-    CXXFLAGS="`echo $CXXFLAGS | sed -e 's/\-g //g'`"
-# disable stripping (debian bug #437876)
-#    case $host_os in
-#      *darwin*) LDFLAGS="$LDFLAGS" ;;
-#      *)        LDFLAGS="$LDFLAGS -s" ;;
-#    esac
-  fi
 fi
 
 dnl Check for Linux
