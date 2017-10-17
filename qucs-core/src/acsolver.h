@@ -50,7 +50,6 @@ class acsolver : public nasolver<nr_complex_t>
   sweep * swp;
   nr_double_t freq;
   int noise;
-  int ohm;
   tvector<nr_double_t> * xn;
 };
 
