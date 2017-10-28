@@ -3406,6 +3406,41 @@ constant * evaluate::cumprod_v (constant * args) {
   _RETV (cumprod (*v1));
 }
 
+// ************** smoothing ****************
+constant * evaluate::smooth_d_d (constant * args) {
+  _ARD0 (y);
+  _ARD1 (a);
+  _DEFD ();
+  if (a < 0 || a > 100) {
+    THROW_MATH_EXCEPTION ("smooth: aperture percentage a must be "
+			  "between 0 and 100");
+  }
+  _RETD (y);
+}
+
+constant * evaluate::smooth_c_d (constant * args) {
+  _ARC0 (y);
+  _ARD1 (a);
+  _DEFC ();
+  if (a < 0 || a > 100) {
+    THROW_MATH_EXCEPTION ("smooth: aperture percentage a must be "
+			  "between 0 and 100");
+  }
+  _RETC (*y);
+}
+
+constant * evaluate::smooth_v_d (constant * args) {
+  _ARV0 (y);
+  _ARD1 (a);
+  _DEFV ();
+  if (a < 0 || a > 100) {
+    THROW_MATH_EXCEPTION ("smooth: aperture percentage a must be "
+			  "between 0 and 100");
+    __RETV ();
+  }
+  _RETV (smooth (*y, a));
+}
+
 // ******************* rms *********************
 constant * evaluate::rms_d (constant * args) {
   _ARD0 (d1);

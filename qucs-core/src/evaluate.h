@@ -642,6 +642,10 @@ public:
   static constant * cumprod_c (constant *);
   static constant * cumprod_v (constant *);
 
+  static constant * smooth_d_d  (constant *);
+  static constant * smooth_c_d  (constant *);
+  static constant * smooth_v_d  (constant *);
+
   static constant * i0_d   (constant *);
   static constant * i0_c   (constant *);
   static constant * i0_v   (constant *);
