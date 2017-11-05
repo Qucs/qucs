@@ -147,7 +147,6 @@ PNG = \
 	npnsub.png \
 	npnsub_therm.png \
 	npn_therm.png \
-	ohmmeter.png \
 	opamp.png \
 	optimize.png \
 	or.png \
