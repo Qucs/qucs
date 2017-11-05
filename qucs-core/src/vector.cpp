@@ -1260,6 +1260,28 @@ vector runavg (vector v, const int n) {
   return result;
 }
 
+// smooth a vector over an aperture a
+// done extending the vector endpoints and using a two-sided moving average
+// moving average length is always odd
+vector smooth(vector v, nr_double_t a) {
+  int len = v.getSize (), i;
+  int t2 = floor(len/2 * a / 100); // moving average is over 2*t2+1 elements
+  // auxiliary vector, extend original vector at beginning and end
+  int extvlen = len + 2 * t2;
+  vector extv(extvlen), result (len);
+  // fill auxiliary vector
+  for (i = 0; i < extvlen; i++) {
+    if (i < t2) {
+      extv.set (v(0), i);
+    } else if (i >= (len + t2)) {
+      extv.set (v(len-1), i);
+    } else {
+      extv.set (v(i - t2), i);
+    }
+  }
+  return runavg(extv, 2*t2+1);
+}
+
 #ifdef DEBUG
 // Debug function: Prints the vector object.
 void vector::print (void) {

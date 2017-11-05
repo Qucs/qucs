@@ -5436,7 +5436,7 @@ is located nearest to the x-value \textit{xval}; therefore the vector
 
 
 \newpage
-\tutsubsubsection{\label{sub:Differentiation-and-Integration}Differentiation and Integration}
+\tutsubsubsection{\label{sub:Differentiation-Integration-and-Smoothing}Differentiation, Integration and Smoothing}
 
 \subsubsection*{\hypertarget{ddx}{}{\Large ddx\index{ddx}()}}
 
@@ -5614,7 +5614,7 @@ $\surd$\tabularnewline
 \begin{description}
 \item [Description]~
 \end{description}
-This function numerically integrates a vector \textit{x} with respect
+This function numerically integrates a vector \textit{y} with respect
 to a differential \textit{h}. The integration method is according
 to the trapezoidal rule:
 
@@ -5637,6 +5637,81 @@ using 101 points:
 \end{description}
 \textcolor{blue}{\hyperlink{diff}{diff()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{sum}{sum()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{max}{max()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{min}{min()}}
+
+
+\newpage
+\subsubsection*{\hypertarget{smooth}{}{\Large smooth\index{smooth}()}}
+
+
+\paragraph{\label{par:Smooth}Smooth vector.}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+z=smooth(y,a)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required\tabularnewline
+\hline
+\hline 
+y&
+$\mathbb{R}$, $\mathbb{C}$, $\mathbb{R}^{n}$, $\mathbb{C}^{n}$&
+$\left]-\infty,+\infty\right[$&
+$\surd$\tabularnewline
+\hline 
+a&
+$\mathbb{R}$&
+$\left[0,100\right]$&
+$\surd$\tabularnewline
+\hline
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function smooths a vector \textit{y} over the aperture
+\textit{a}. The aperture is expressed as percentage of the input vector length. 
+The smoothing is done using a two-sided moving average filter having a length $2t+1$,
+with
+
+\medskip{}
+$t=$${\displaystyle 2 \lfloor \frac{n}{2} \frac{a}{100} \rfloor }$
+\medskip{}
+
+The two-sided moving average filtering is defined as
+
+\medskip{}
+For $y\in$$\mathbb{C}^{n}$: $z_{k}=$${\displaystyle \frac{1}{2t+1} \sum\limits _{j=-t}^{t}v_{k+j}}$,\;
+$1\leq k\leq n,\; v_{i}=\left\{ \begin{array}{ll}
+y_{1} & \mathrm{for}\: i < 1\\
+y_{i} & \mathrm{for}\: 1 \leq i \leq n\\
+y_{n} & \mathrm{for}\: i > n\end{array}\right.$
+\medskip{}
+
+note that the input vector is extended by assuming it keeps a constant value outside its definition range.
+
+For \textit{y} being a real or complex number, \textit{y} itself is returned.
+
+\medskip{}\medskip{}
+
+\begin{description}
+\item [Example]~
+\end{description}
+\begin{lyxlist}{00.00.0000}
+\item [\texttt{z=smooth([1,0,0,0,0,1,0,0,0,0,1], 20)}]
+\end{lyxlist}
+returns $\left[0.667,0.333,0,0,0.333,0.333,0.333,0,0,0.333,0.667\right]^T$; the 20~\% aperture window gives a 3-point moving average, for this vector length.
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{runavg}{runavg()}}
 
 
 \newpage
