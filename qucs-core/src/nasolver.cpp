@@ -1380,14 +1380,6 @@ void nasolver<nr_type_t>::saveResults (const std::string &volts, const std::stri
                     c->getOperatingPoint ("VAi")), f);
 		   continue;
 		}
-	        //add ohmmeter data
-           	if (strcmp(p.getName(), "X") == 0)  continue;
-           	if (strcmp(p.getName(), "R") == 0) {//create values for ohmmeter
-	      	    std::string n = createOP (c->getName (), "Ohm");
-              	    saveVariable (n, nr_complex_t (c->getOperatingPoint ("R"),
-		    c->getOperatingPoint ("X")), f);
-		    continue;
-	   	}
            	
            	std::string n = createOP(c->getName(), p.getName());
            	saveVariable(n, p.getValue(), f);

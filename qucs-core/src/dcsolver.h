@@ -44,7 +44,6 @@ class dcsolver : public nasolver<nr_double_t>
 
  private:
   int saveOPs;
-  int ohm;
 };
 
 } // namespace qucs
