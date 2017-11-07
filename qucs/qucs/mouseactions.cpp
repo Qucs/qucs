@@ -426,8 +426,19 @@ void MouseActions::MMoveResizePainting(Schematic *Doc, QMouseEvent *Event)
   ((Painting*)focusElement)->MouseResizeMoving(MAx1, MAy1, Doc);
 }
 
-// -----------------------------------------------------------
-// Moves components by keeping the mouse button pressed.
+/*!
+ * \brief MouseActions::MMoveMoving
+ *  Moves components by keeping the mouse button pressed.
+ *
+ * \param Doc is a pointer to a Schematic
+ * \param Event is a QMouseEvent
+ *
+ *  Set Event to grid.
+ *  Copy elements being moved into a movingElements list.
+ *  Handle dx/dy of Wires (Nodes and Labels) in movingElements.
+ *  Handle center of other Elements in movingElements.
+ *  Set next Move and Release actions.
+ */
 void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
 {
 
@@ -435,6 +446,7 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
   MAy2 = DOC_Y_POS(Event->pos().y());
 
   Doc->setOnGrid(MAx2, MAy2);
+  /// MAx1, MAy1 set on MPressSelect (?)
   MAx3 = MAx1 = MAx2 - MAx1;
   MAy3 = MAy1 = MAy2 - MAy1;
 
