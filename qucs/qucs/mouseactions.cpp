@@ -920,6 +920,32 @@ void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent*, float fX, float fY)
 }
 
 // -----------------------------------------------------------
+/*!
+ * \brief MouseActions::MPressSelect
+ * \param Doc
+ * \param Event
+ * \param fX
+ * \param fY
+ *
+ * Event handler, in Select mode use presses on the View.
+ *
+ * Detect if Control modifier is in use.
+ *
+ * Get the selected element (if any) into focusElement.
+ *
+ * Set next actions (Release, Move, Press, DoubleClick, ...) for ElemType
+ *   - isPaintingResize
+ *   - isDiagramResize
+ *   - isDiagramHScroll
+ *   - isDiagramVScroll
+ *   - isComponentText
+ *   - isNode
+ * and return
+ *
+ * For all other ElemType.
+ * If no focusElement, set next actions to create selection box.
+ * If focusElement, set next actions to move selected element.
+ */
 void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, float fY)
 {
   bool Ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
