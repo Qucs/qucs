@@ -1282,6 +1282,12 @@ vector smooth(vector v, nr_double_t a) {
   return runavg(extv, 2*t2+1);
 }
 
+//Ths function calculates the group delay from the svec=S[i,j] and frequency vectors
+vector groupdelay(vector svec, vector freq)
+{
+ return -diff(unwrap(arg(svec)), (2*pi)*(freq));
+}
+
 #ifdef DEBUG
 // Debug function: Prints the vector object.
 void vector::print (void) {

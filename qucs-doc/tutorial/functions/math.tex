@@ -5711,7 +5711,8 @@ returns $\left[0.667,0.333,0,0,0.333,0.333,0.333,0,0,0.333,0.667\right]^T$; the 
 \begin{description}
 \item [See~also]~
 \end{description}
-\textcolor{blue}{\hyperlink{runavg}{runavg()}}
+\textcolor{blue}{\hyperlink{runavg}{runavg()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{groupdelay}{groupdelay()}}
 
 
 \newpage
@@ -6324,3 +6325,62 @@ is assumed.
 \end{description}
 \textcolor{blue}{\hyperlink{dft}{dft()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{ifft}{ifft()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{fft}{fft()}}
+
+\newpage
+\subsubsection*{\hypertarget{groupdelay}{}{\Large groupdelay\index{groupdelay}()}}
+\paragraph{\label{par:groupdelay}Group delay calculation.}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=groupdelay(S,P2, P1)
+
+y=groupdelay(S)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required&
+Default\tabularnewline
+\hline
+\hline 
+S&
+$\mathbb{R}^{nxnxp}, \mathbb{C}^{nxnxp}, \mathbb{R}^{p}, \mathbb{C}^{p}$&
+$\left]-\infty,+\infty\right[$&
+$\surd$&
+\tabularnewline
+\hline 
+P2&
+$\mathbb{N}$&
+$\left[1,+\infty\right[$&
+&
+2\tabularnewline
+\hline 
+P1&
+$\mathbb{N}$&
+$\left[1,+\infty\right[$&
+&
+1\tabularnewline
+\hline
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function calculates the delay group between ports P2 and P1 such that:
+
+\begin{equation}
+  \tau(f) =  -\frac{1}{2 \pi}\frac{\partial \phi(f)}{\partial f}
+\end{equation}
+
+where $\phi(f) = \angle S_{P2, P1}(f)$, $S_{P2, P1}(f)$ is the element (P2, P1) of the S matrix and $f$ is the dependency vector of S.
+
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{smooth}{smooth()}}
