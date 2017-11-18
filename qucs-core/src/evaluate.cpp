@@ -3441,6 +3441,77 @@ constant * evaluate::smooth_v_d (constant * args) {
   _RETV (smooth (*y, a));
 }
 
+// Calculates the delay group between two ports specified by the user
+constant * evaluate::groupdelay_mv_i_i (constant * args) {
+  _ARMV0 (S);
+  int index1 = D (_ARES(1))-1;//Input port
+  int index2 = D (_ARES(2))-1;//Output port
+  _DEFV ();
+  
+  strlist * deps = _ARG(0)->collectDataDependencies ();  
+  if (!deps || deps->length () != 1) {//Check there's an unique dependency
+    THROW_MATH_EXCEPTION ("Not an appropriate dependent data vector");
+    _RETC (0.0);
+  }
+  qucs::vector * freq = SOLVEE(0)->getDataVector (deps->get (0));
+
+  //Check if the length of S matvec and the freq vector are the same.
+  if (freq->getSize() != S->getSize()) {
+    THROW_MATH_EXCEPTION ("The S matrix and the frequency vector must have the same length");
+    __RETV ();
+  }
+  //Check if the input matrix is square
+  if (S->getRows() != S->getCols())
+  {
+    THROW_MATH_EXCEPTION ("The S matrix must be square");
+    __RETV ();
+  }
+
+  //Check if the port numbers are valid
+  if ((index1 < 0) || (index1 > S->getRows()-1))
+  {
+    THROW_MATH_EXCEPTION ("The 3rd argument must be a valid port number");
+    __RETV ();
+  }
+  if ((index2 < 0) || (index2 > S->getRows()-1))
+  {
+    THROW_MATH_EXCEPTION ("The 4th argument must be a valid port number");
+    __RETV ();
+  }
+
+  qucs::vector svec = S->get (index1, index2);
+  _RETV (groupdelay(svec, *freq));
+}
+
+
+constant * evaluate::groupdelay_mv (constant * args) {
+  _ARMV0 (S);
+  _DEFV ();
+  qucs::vector svec = S->get (1, 0);
+  
+  strlist * deps = _ARG(0)->collectDataDependencies ();  
+  if (!deps || deps->length () != 1) {//Check there's an unique dependency
+    THROW_MATH_EXCEPTION ("Not an appropriate dependent data vector");
+    _RETC (0.0);
+  }
+
+  qucs::vector * freq = SOLVEE(0)->getDataVector (deps->get (0));
+  _RETV (groupdelay(svec, *freq));
+}
+
+constant * evaluate::groupdelay_v (constant * args) {
+  _ARV0 (svec);
+  _DEFV ();
+  
+  strlist * deps = _ARG(0)->collectDataDependencies ();  
+  if (!deps || deps->length () != 1) {//Check there's an unique dependency
+    THROW_MATH_EXCEPTION ("Not an appropriate dependent data vector");
+    _RETC (0.0);
+  }
+  qucs::vector * freq = SOLVEE(0)->getDataVector (deps->get (0));
+  _RETV (groupdelay(*svec, *freq));
+}
+
 // ******************* rms *********************
 constant * evaluate::rms_d (constant * args) {
   _ARD0 (d1);
