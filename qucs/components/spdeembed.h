@@ -1,5 +1,5 @@
 /*
- * sp2deembed.cpp - two-port S-parameters de-embedding component
+ * spdeembed.h - two-port S-parameters de-embedding component
  *
  * Copyright (C) 2017 Qucs Team
  * based on sparamfile.h, (C) 2003 by Michael Margraf
