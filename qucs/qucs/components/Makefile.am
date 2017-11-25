@@ -61,7 +61,7 @@ libcomponents_la_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   hybrid.cpp ctline.cpp tunneldiode.cpp \
   etr_sim.cpp ecvs.cpp vcresistor.cpp vacomponent.cpp       \
   mutualx.cpp circline.cpp taperedline.cpp     \
-  capq.cpp indq.cpp spiralinductor.cpp circularloop.cpp sp2deembed.cpp
+  capq.cpp indq.cpp spiralinductor.cpp circularloop.cpp spdeembed.cpp
 
 nodist_libcomponents_la_SOURCES = $(MOCFILES)
 
@@ -92,7 +92,7 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   vafile.h hybrid.h ctline.h tunneldiode.h      \
   etr_sim.h ecvs.h vcresistor.h vacomponent.h   \
   mutualx.h circline.h taperedline.h \
-  capq.h indq.h spiralinductor.h circularloop.h sp2deembed.h
+  capq.h indq.h spiralinductor.h circularloop.h spdeembed.h
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 
