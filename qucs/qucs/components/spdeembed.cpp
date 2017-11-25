@@ -1,5 +1,5 @@
 /*
- * spdeembed.cpp - two-port S-parameters de-embedding component
+ * spdeembed.cpp - N-port S-parameters de-embedding component
  *
  * Copyright (C) 2017 Qucs Team
  * based on sparamfile.cpp, (C) 2003 by Michael Margraf
@@ -29,7 +29,7 @@
 #include <QFileInfo>
 
 
-SP2DeEmbed::SP2DeEmbed()
+SPDeEmbed::SPDeEmbed()
 {
   Description = QObject::tr("S parameter file de-embedding");
   Model = "SPDfile";
@@ -46,31 +46,67 @@ SP2DeEmbed::SP2DeEmbed()
 		QObject::tr("representation during DC analysis")+
 			    " [open, short, shortall, unspecified]"));
 
+  // must be the last property !!!
+  Props.append(new Property("Ports", "2", false,
+		QObject::tr("number of ports")));
+
   createSymbol();
 }
 
 // -------------------------------------------------------
-Component* SP2DeEmbed::newOne()
+Component* SPDeEmbed::newOne()
 {
-  SP2DeEmbed* p = new SP2DeEmbed();
+  SPDeEmbed* p = new SPDeEmbed();
+  p->Props.getLast()->Value = Props.getLast()->Value;
+  p->recreate(0);
   return p;
 }
 
-Element* SP2DeEmbed::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* SPDeEmbed::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("2-port S parameter file de-embedding");
-  BitmapFile = (char *) "spdfile2";
+  // "de-embedding" at the beginning, so it's always visible in the component dock
+  // to help distinguish it from the regular embedding component
+  Name = QObject::tr("de-embedding n-port S parameter file");
+  BitmapFile = (char *) "spdfile6";
 
   if(getNewOne) {
-    SP2DeEmbed* p = new SP2DeEmbed();
-    p->Props.getFirst()->Value = "test.s2p";
+    SPDeEmbed* p = new SPDeEmbed();
+    p->Props.getFirst()->Value = "test.s6p";
+    p->Props.getLast()->Value = "6";
+    p->recreate(0);
     return p;
   }
   return 0;
 }
 
 // -------------------------------------------------------
-QString SP2DeEmbed::getSubcircuitFile()
+Element* SPDeEmbed::info2(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("de-embedding 2-port S parameter file");
+  BitmapFile = (char *) "spdfile2";
+
+  if(getNewOne)  return new SPDeEmbed();
+  return 0;
+}
+
+// -------------------------------------------------------
+Element* SPDeEmbed::info4(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("de-embedding 4-port S parameter file");
+  BitmapFile = (char *) "spdfile4";
+
+  if(getNewOne) {
+    SPDeEmbed* p = new SPDeEmbed();
+    p->Props.getFirst()->Value = "test.s4p";
+    p->Props.getLast()->Value = "4";
+    p->recreate(0);
+    return p;
+  }
+  return 0;
+}
+
+// -------------------------------------------------------
+QString SPDeEmbed::getSubcircuitFile()
 {
   // construct full filename
   QString FileName = Props.getFirst()->Value;
@@ -78,7 +114,7 @@ QString SP2DeEmbed::getSubcircuitFile()
 }
 
 // -------------------------------------------------------
-QString SP2DeEmbed::netlist()
+QString SPDeEmbed::netlist()
 {
   QString s = Model+":"+Name;
 
@@ -106,7 +142,7 @@ QString SP2DeEmbed::netlist()
 }
 
 // -------------------------------------------------------
-void SP2DeEmbed::createSymbol()
+void SPDeEmbed::createSymbol()
 {
   QFont Font(QucsSettings.font); // default application font
   // symbol text is smaller (10 pt default)
@@ -117,7 +153,17 @@ void SP2DeEmbed::createSymbol()
   QString stmp;
 
   int w, PortDistance = 60;
-  int Num = 2;
+  int Num = Props.getLast()->Value.toInt();
+
+  // adjust number of ports
+  // force even port number
+  Num = 2 * (Num / 2);
+  if(Num < 2) Num = 2;
+  else if(Num > 8) {
+    PortDistance = 20;
+    if(Num > 40) Num = 40;
+  }
+  Props.getLast()->Value = QString::number(Num);
 
   // draw symbol outline
   int h = (PortDistance/2)*((Num-1)/2) + 15;
