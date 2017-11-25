@@ -121,7 +121,7 @@ matrix::matrix (int s)  {
   data = (s > 0) ? new nr_complex_t[s * s] : NULL;
 }
 
-/* \brief Creates a matrix
+/*!\brief Creates a matrix
 
    Constructor creates an unnamed instance of the matrix class with a
    certain number of rows and columns.
@@ -136,7 +136,7 @@ matrix::matrix (int r, int c)  {
   data = (r > 0 && c > 0) ? new nr_complex_t[r * c] : NULL;
 }
 
-/* \brief copy constructor
+/*!\brief copy constructor
 
    The copy constructor creates a new instance based on the given
    matrix object.
@@ -179,7 +179,7 @@ const matrix& matrix::operator=(const matrix & m) {
   return *this;
 }
 
-/*!\bried Destructor
+/*!\brief Destructor
 
    Destructor deletes a matrix object.
 */
