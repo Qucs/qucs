@@ -53,7 +53,7 @@ $I_C=40\,\einh{mA}$, since here we find a good compromise between gain (a
 little less then 24\,dB) and minimum Noise figure, which can be as low
 as $F_{min}=1.5\,\einh{dB}$. Thus, $V_{CE}=3\,\einh{V},\ I_{C}=40\,\einh{mA}$
 will be the operating point. The S-Parameter performance for this is
-found in the file {\tt BFP450\_3V040M.S2P}, available from the
+found in the file \texttt{BFP450\_3V040M.S2P}, available from the
 web-page. This file is (also) human readable with any text editor and
 contains the scattering- and noise parameters for the device at the
 chosen operation point. The organisation is as follows:
@@ -75,9 +75,9 @@ chosen operation point. The organisation is as follows:
 \end{verbatim}
 
 the '!' is nothing but the start of a comment, but '\#' shows the
-units and parameters, as it is here: Frequency in {\tt GHz} and then
-{\tt S}-Parameters in {\tt M}agnitude and {\tt A}ngle normalized to
-{\tt R}esistance of {\tt 50}$\,\Omega$. In the lower section the noise
+units and parameters, as it is here: Frequency in \texttt{GHz} and then
+\texttt{S}-Parameters in \texttt{M}agnitude and \texttt{A}ngle normalized to
+\texttt{R}esistance of \texttt{50}$\,\Omega$. In the lower section the noise
 parameters are given as minimum noise figure (in dB), the optimum
 reflection coefficient that the input port of the device should see in
 order to exhibit this minimum noise performance, and the normalized
@@ -99,10 +99,10 @@ Now back to the real design (Fig.~\ref{fig:bfp450_1_sch}): In a first step,
 we will use this file and observe the performance graphically. For
 this proceed as follows:
 \begin{enumerate}
-\item Open a new project (e.g. {\tt S\_PARAM\_AMP})
-\item open a new schematic (e.g. {\tt BFP450\_1.sch})
+\item Open a new project (e.g. \texttt{S\_PARAM\_AMP})
+\item open a new schematic (e.g. \texttt{BFP450\_1.sch})
 \item copy the a.m. .s2p-file into the project's directory
-\item Set up a schematic ({\tt BFP450\_1.sch}) with 
+\item Set up a schematic (\texttt{BFP450\_1.sch}) with
   \begin{enumerate}
   \item two signal sources (as ports)
   \item one 2-port S-Parameter file component
@@ -151,7 +151,7 @@ design this omission might be dangerous.
 
 \tutsubsection{Choice of Gain, Noise and Reflection}
 
-{\bf Caution:} When working with 'Circles' make sure you only have
+\textbf{Caution:} When working with 'Circles' make sure you only have
 one two-port with P1 and P2 (in- and output) in the schematic,
 otherwise the equations may fail to work.
 
@@ -215,7 +215,7 @@ QUCS. However, since we want to transform the 50\,$\Omega$ port
 impedance of P1 into the above reflection, the Matching-Circuit Tool
 needs to be tricked. That is easy, we just calculate the matching
 circuit for the complex conjugate (i.e. the negative angle) for it. It
-is suggested to do these steps in a new schematic called {\tt
+is suggested to do these steps in a new schematic called \texttt{
   BFP450\_2.sch}. The circuit is a simple LC-network
 (Fig.\ref{fig:bfp450_1a_match}, left side), check if it works, if you
 wish. A good check is to display the same Smith-chart (for the input
@@ -348,7 +348,7 @@ DC, AC, and transient analyses.
 \end{figure}
 
 In a first step, rename the .txt-file to .cir and then use the
-'Circuit' from QUCS-file components in a new schematic (e.g. {\tt
+'Circuit' from QUCS-file components in a new schematic (e.g. \texttt{
   bfp450\_dc.sch}). Connect the component to the .cir-file and add 
 DC-voltages $UBE$ and $UCE$ to Base (port 2) and Collector (port 1)
 properly ground ref and port 1 as well as the supplies. Add current
@@ -377,7 +377,7 @@ sheet (Fig.~\ref{fig:bfp450_dc}).
 An AC-small signal analysis (Fig.~\ref{fig:bfp450_ac_sch}) shall be
 used to verify the S-Parameter results. For this the entire
 S-Parameter circuit including both matching and biasing networks shall
-be copied to a new schematic (e.g. {\tt bfp450\_ac.sch}). The
+be copied to a new schematic (e.g. \texttt{bfp450\_ac.sch}). The
 S-Parameter 2-port must be replaced by a properly grounded 'Circuit'
 file component and port one is replaced by an AC-source (V=0.0001\,V)
 in series with 50\,$\Omega$. The output measurement port is replaced
@@ -453,11 +453,11 @@ only $20\,\einh{mW}$ of DC power requirement.
   \label{fig:vmmk1218_1_sch}
 \end{figure}
 
-Let's go for it and check the S-Parameters {\tt VMMK1218\_2V20mA}. A
+Let's go for it and check the S-Parameters \texttt{VMMK1218\_2V20mA}. A
 quick check on the S-Parameters and stability shows that the device is
 (slightly) conditionally stable ($K<1$) at 11\,GHz, stable above, but
 just a mess at low frequencies. To simulate this, you may copy the
-schematic {\tt bfp450\_1.sch} to {\tt vmmk1218\_1.sch} and adjust the
+schematic \texttt{bfp450\_1.sch} to \texttt{vmmk1218\_1.sch} and adjust the
 S-Parameter file as well as the frequency range. A first note of
 caution is required here, since at 11\,GHz the wave is short, we will
 not be able to connect the source to ground ideally. The recommended
@@ -521,7 +521,7 @@ performance (Fig~\ref{fig:vmmk1218_1_source}).
   \label{fig:vmmk1218_match_result}
 \end{figure}
 
-So in a new file {\tt vmmk1218\_2.sch}
+So in a new file \texttt{vmmk1218\_2.sch}
 (Fig.~\ref{fig:vmmk1218_matching}) the input and output match can be
 designed. At input we go for noise figure of $F=1.2(=0.79\,\einh{dB})$
 and $GA=14$ which requires transforming the $50\,\Omega$ signal source
@@ -635,7 +635,7 @@ to zero.
 
 The source must be as well connected to ground as possible. The
 footprint as given in the datasheet is used and the same substrate as
-before is used. The circuit can be found in {\tt atf36163\_1.sch} and
+before is used. The circuit can be found in \texttt{atf36163\_1.sch} and
 is depicted later in Fig.~\ref{fig:dual1_sch}.
 
 \tutsubsection{2. Stage: Matching Circuits}
@@ -708,7 +708,7 @@ $2\,\Omega$ suffice for stability.
   \label{fig:dual1_result}
 \end{figure}
 
-The schematic {\tt dual\_1.sch} is shown if Fig.~\ref{fig:dual1_sch}
+The schematic \texttt{dual\_1.sch} is shown if Fig.~\ref{fig:dual1_sch}
 and results are in Fig.~\ref{fig:dual1_result}. The amplifier is
 absolutely stable at all frequencies, noise figure is below
 $0.9\,\einh{dB}$, output match almost perfect (better that
@@ -790,7 +790,7 @@ develop linear amplifiers in different technologies.
 
 
 \begin{thebibliography}{1}
-\bibitem{qucs}	 { Michael Margraf and Stefan Jahn and Jens Flucke and Raimund Jacob and Vincent Habchi and Toyoyuki Ishikawa and Gopala Krishna A  and Mike Brinson  and Helene Parruitte and Bastien Roucaries and  Gunther Kraut and Andrea Zonca },	 {Quite Universal Circuit Simulator (QUCS)},
+\bibitem{qucs}	 {Michael Margraf and Stefan Jahn and Jens Flucke and Raimund Jacob and Vincent Habchi and Toyoyuki Ishikawa and Gopala Krishna A  and Mike Brinson  and Helene Parruitte and Bastien Roucaries and  Gunther Kraut and Andrea Zonca },	 {Quite Universal Circuit Simulator (QUCS)},
    {2013},
    \url{http://qucs.sourceforge.net/},
    {called on 2013-01-16}
