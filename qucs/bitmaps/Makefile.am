@@ -190,6 +190,8 @@ PNG = \
 	source.png \
 	sparameter.png \
 	spdfile2.png \
+	spdfile4.png \
+	spdfile6.png \
 	spfile1.png \
 	spfile2.png \
 	spfile3.png \

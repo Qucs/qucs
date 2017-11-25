@@ -21,18 +21,20 @@
  *
  */
 
-#ifndef SP2DEEMBED_H
-#define SP2DEEMBED_H
+#ifndef SPDEEMBED_H
+#define SPDEEMBED_H
 
 #include "component.h"
 
 
-class SP2DeEmbed : public Component  {
+class SPDeEmbed : public MultiViewComponent  {
 public:
-  SP2DeEmbed();
- ~SP2DeEmbed() {};
+  SPDeEmbed();
+ ~SPDeEmbed() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
+  static Element* info2(QString&, char* &, bool getNewOne=false);
+  static Element* info4(QString&, char* &, bool getNewOne=false);
 
   QString getSubcircuitFile();
 
@@ -41,4 +43,4 @@ protected:
   void createSymbol();
 };
 
-#endif /* SP2DEEMBED_H */
+#endif /* SPDEEMBED_H */
