@@ -1619,7 +1619,7 @@ Component* getComponentFromName(QString& Line, Schematic* p)
   else if (cstr == "Rus") c = new Resistor (false);  // backward compatible
   else if (cstr.left (6) == "SPfile" && cstr != "SPfile") {
     // backward compatible
-    c = new SParamFile ();
+    c = new SPEmbed ();
     c->Props.getLast()->Value = cstr.mid (6);
   }else{
 	  // FIXME: fetch proto from dictionary.
