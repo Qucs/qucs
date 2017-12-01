@@ -1,5 +1,5 @@
 /***************************************************************************
-                                sparamfile.h
+                                spembed.h
                                --------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
@@ -15,16 +15,16 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef SPARAMFILE_H
-#define SPARAMFILE_H
+#ifndef SPEMBED_H
+#define SPEMBED_H
 
 #include "component.h"
 
 
-class SParamFile : public MultiViewComponent  {
+class SPEmbed : public MultiViewComponent  {
 public:
-  SParamFile();
- ~SParamFile() {};
+  SPEmbed();
+ ~SPEmbed() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info1(QString&, char* &, bool getNewOne=false);
