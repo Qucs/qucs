@@ -314,8 +314,21 @@ void Marker::createText()
 
     diag()->calcCoordinate(pp, pz, py, &fCX, &fCY, pa);
   }
-  diag()->finishMarkerCoordinates(fCX, fCY);
-
+  
+  if(diag()->Name=="Rect")
+  { //In the case of the Cartesian diagram, this code checks if the point the marker is pointing outside the diagram boundaries and, in
+    //such case "point_outside_graph" is set to "true" in order to paint a red square at paint().
+    float fx = fCX, fy = fCY;
+    point_outside_graph = false;
+    if (diag()->regionCode(fCX, fCY) == 8) point_outside_graph = true, fCY = diag()->y2;//The marker points above the upper limit
+    if (diag()->regionCode(fCX, fCY) == 4) point_outside_graph = true, fCY = 0;//The marker points below the lower limit
+    
+  }
+  else
+  {
+    diag()->finishMarkerCoordinates(fCX, fCY);
+  }
+  
   cx = int(fCX+0.5);
   cy = int(fCY+0.5);
   getTextSize();
@@ -516,6 +529,13 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
   fx2 = (float(x0)+fCX)*p->Scale + p->DX;
   fy2 = (float(y0)-fCY)*p->Scale + p->DY;
   p->Painter->drawLine(x1_, y1_, TO_INT(fx2), TO_INT(fy2));
+
+  if (point_outside_graph)
+  {//Let's draw a symbol to emphasize the point is outside the graph
+     QPen pen(QColor(Qt::red), 7);
+     p->Painter->setPen(pen);
+     p->Painter->drawPoint(fx2, fy2);
+  }
 
   if(isSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
