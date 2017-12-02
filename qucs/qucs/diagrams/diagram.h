@@ -122,7 +122,6 @@ public:
 
   bool hideLines;       // for "Rect3D": hide invisible lines ?
   int rotX, rotY, rotZ; // for "Rect3D": rotation around x, y and z axis
-  int  regionCode(float, float) const;
 
 protected:
   void calcSmithAxisScale(Axis*, int&, int&);
@@ -135,6 +134,7 @@ protected:
   bool calcYAxis(Axis*, int);
   virtual void createAxisLabels();
 
+  int  regionCode(float, float) const;
   virtual void clip(Graph::iterator &) const;
   void rectClip(Graph::iterator &) const;
 
