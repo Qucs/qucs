@@ -100,12 +100,6 @@ Diagram::~Diagram()
 */
 void Diagram::paint(ViewPainter *p)
 {
-    paintDiagram(p);
-    paintMarkers(p);
-}
-
-void Diagram::paintDiagram(ViewPainter *p)
-{
     // paint all lines
     foreach(Line *pl, Lines) {
       p->Painter->setPen(pl->style);
@@ -159,10 +153,7 @@ void Diagram::paintDiagram(ViewPainter *p)
       p->drawResizeRect(cx+x2, cy-y2);
       p->drawResizeRect(cx+x2, cy);
     }
-}
 
-void Diagram::paintMarkers(ViewPainter *p)
-{
     // draw markers last, so they are at the top of painting layers
     foreach(Graph *pg, Graphs)
       foreach(Marker *pm, pg->Markers)

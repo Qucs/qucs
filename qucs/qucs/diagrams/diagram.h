@@ -72,9 +72,6 @@ public:
   virtual QString extraMarkerText(Marker const*) const {return "";}
   
   virtual void paint(ViewPainter*);
-protected: // strictly internal
-  virtual void paintDiagram(ViewPainter* p);
-  void paintMarkers(ViewPainter* p);
 public:
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
