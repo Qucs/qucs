@@ -82,6 +82,7 @@ public:
   QString Text;     // the string to be displayed in the marker text
   bool transparent; // background shines through marker body
   Axis const*xA,*yA,*zA;
+  bool isHidden = false; // to hide marker while printing, if not selected
 
 // private: // not yet, cross-manipulated by MarkerDialog
   int Precision; // number of digits to show

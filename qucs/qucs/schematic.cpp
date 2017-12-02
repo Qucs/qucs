@@ -697,12 +697,18 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
       if(pd->isSelected || printAll) {
         // if graph or marker is selected, deselect during printing
         foreach(Graph *pg, pd->Graphs) {
-      if(pg->isSelected)  pg->Type |= 1;  // remember selection
-      pg->isSelected = false;
-      foreach(Marker *pm, pg->Markers) {
-        if(pm->isSelected)  pm->Type |= 1;  // remember selection
-        pm->isSelected = false;
-      }
+          if(pg->isSelected)  pg->Type |= 1;  // remember selection
+          pg->isSelected = false;
+          foreach(Marker *pm, pg->Markers) {
+            if(pm->isSelected) {
+              pm->Type |= 1;  // remember selection
+            } else {
+              if (!printAll)
+                // if not printing all, hide non-selected markers
+                pm->isHidden = true;
+            }
+            pm->isSelected = false;
+          }
         }
 
         selected = pd->isSelected;
@@ -712,12 +718,13 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
 
         // revert selection of graphs and markers
         foreach(Graph *pg, pd->Graphs) {
-      if(pg->Type & 1)  pg->isSelected = true;
-      pg->Type &= -2;
-      foreach(Marker *pm, pg->Markers) {
-        if(pm->Type & 1)  pm->isSelected = true;
-        pm->Type &= -2;
-      }
+          if(pg->Type & 1)  pg->isSelected = true;
+          pg->Type &= -2;
+          foreach(Marker *pm, pg->Markers) {
+            if(pm->Type & 1)  pm->isSelected = true;
+            pm->Type &= -2;
+            pm->isHidden = false; // make all markers visible again
+          }
         }
       }
 
