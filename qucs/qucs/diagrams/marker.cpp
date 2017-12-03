@@ -314,7 +314,7 @@ void Marker::createText()
 
     diag()->calcCoordinate(pp, pz, py, &fCX, &fCY, pa);
   }
-  diag()->finishMarkerCoordinates(fCX, fCY);
+  diag()->finishMarkerCoordinates(this);
 
   cx = int(fCX+0.5);
   cy = int(fCY+0.5);
@@ -326,7 +326,7 @@ void Marker::makeInvalid()
 {
   fCX = fCY = -1e3; // invalid coordinates
   assert(diag());
-  diag()->finishMarkerCoordinates(fCX, fCY); // leave to diagram
+  diag()->finishMarkerCoordinates(this); // leave to diagram
   cx = int(fCX+0.5);
   cy = int(fCY+0.5);
 

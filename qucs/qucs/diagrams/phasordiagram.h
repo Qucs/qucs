@@ -37,7 +37,7 @@ public:
   int  calcDiagram();
   void calcLimits();
   void calcCoordinatePh(const double*, float*, float*, Axis const*, Axis const*) const;
-  void finishMarkerCoordinates(float&, float&) const;
+  void finishMarkerCoordinates(Marker*) const;
   void calcRestAxis(Axis* , Axis* , Axis*);
 
 protected:

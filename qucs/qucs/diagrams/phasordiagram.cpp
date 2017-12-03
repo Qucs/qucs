@@ -53,10 +53,10 @@ PhasorDiagram::~PhasorDiagram()
 {
 }
 // --------------------------------------------------------------
-void PhasorDiagram::finishMarkerCoordinates(float& fCX, float& fCY) const
+void PhasorDiagram::finishMarkerCoordinates(Marker *m) const
 {
-  if(!insideDiagram(fCX, fCY)) {
-	  fCX = fCY = 0.0;
+  if(!insideDiagram(m->fCX, m->fCY)) {
+	  m->fCX = m->fCY = 0.0;
   }
 }
 

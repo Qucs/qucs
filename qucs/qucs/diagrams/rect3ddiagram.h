@@ -47,7 +47,7 @@ public:
   int  calcDiagram();
   void calcLimits();
   void calcCoordinate(const double*, const double*, const double*, float*, float*, Axis const*) const;
-  void finishMarkerCoordinates(float&, float&) const;
+  void finishMarkerCoordinates(Marker*) const;
 
   void createAxisLabels();
   bool insideDiagram(float, float) const;

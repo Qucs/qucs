@@ -1320,11 +1320,11 @@ Diagram* Diagram::newOne()
 }
 
 // ------------------------------------------------------------
-void Diagram::finishMarkerCoordinates(float& fCX, float& fCY) const
+void Diagram::finishMarkerCoordinates(Marker *m) const
 {
-  if(!insideDiagram(fCX, fCY)) {
-      fCX = float(x2 >> 1);
-      fCY = float(y2 >> 1);
+  if(!insideDiagram(m->fCX, m->fCY)) {
+      m->fCX = float(x2 >> 1);
+      m->fCY = float(y2 >> 1);
   }
 }
 
