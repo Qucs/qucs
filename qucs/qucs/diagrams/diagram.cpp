@@ -1322,11 +1322,16 @@ Diagram* Diagram::newOne()
 // ------------------------------------------------------------
 void Diagram::finishMarkerCoordinates(Marker *m) const
 {
-  // for round diagrams: if marker is outside its coordinates
-  // are reset to the diagram center
+  // for round diagrams: if marker is outside it's placed
+  // on the diagram border, keeping its angle
   if(!insideDiagram(m->fCX, m->fCY)) {
-      m->fCX = float(x2 >> 1);
-      m->fCY = float(y2 >> 1);
+    float R = x2/2.0; // diagram radius and also coordinate of center
+    float ma = atan2(m->fCY-R, m->fCX-R);
+    m->fCX = R * (1 + cos(ma));
+    m->fCY = R * (1 + sin(ma));
+    m->outside_graph = true;
+  } else {
+     m->outside_graph = false;
   }
 }
 
