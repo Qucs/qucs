@@ -517,6 +517,13 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
   fy2 = (float(y0)-fCY)*p->Scale + p->DY;
   p->Painter->drawLine(x1_, y1_, TO_INT(fx2), TO_INT(fy2));
 
+  if (outside_graph) // set by Diagram::finishMarkerCoordinates()
+  {//Let's draw a symbol to emphasize the point is outside the graph
+    QPen pen(QColor(Qt::red), 7);
+    p->Painter->setPen(pen);
+    p->Painter->drawPoint(fx2, fy2);
+  }
+
   if(isSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(x0+x1-3, y0+y1-3, x2+6, y2+6);

@@ -85,9 +85,23 @@ void RectDiagram::calcCoordinate(const double* xD, const double* yD, const doubl
 // --------------------------------------------------------------
 void RectDiagram::finishMarkerCoordinates(Marker* m) const
 {
-  if(!insideDiagram(m->fCX, m->fCY)) {
-	  m->fCX = m->fCY = 0.0;
+  // In the case of the Cartesian diagram, this code checks if the point
+  // the marker is pointing outside the diagram boundaries and, in
+  // such case "point_outside_graph" is set to "true" in order to paint
+  // a red square at paint().
+  if (regionCode(m->fCX, m->fCY) == 8) {
+    m->fCY = y2; // The marker points above the upper limit
+    m->outside_graph = true;
+    return;
   }
+  
+  if (regionCode(m->fCX, m->fCY) == 4) {
+    m->fCY = 0;  // The marker points below the lower limit
+    m->outside_graph = true;
+    return;
+  }
+
+  m->outside_graph = false;
 }
 
 // --------------------------------------------------------------

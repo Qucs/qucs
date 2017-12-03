@@ -1322,6 +1322,8 @@ Diagram* Diagram::newOne()
 // ------------------------------------------------------------
 void Diagram::finishMarkerCoordinates(Marker *m) const
 {
+  // for round diagrams: if marker is outside its coordinates
+  // are reset to the diagram center
   if(!insideDiagram(m->fCX, m->fCY)) {
       m->fCX = float(x2 >> 1);
       m->fCY = float(y2 >> 1);

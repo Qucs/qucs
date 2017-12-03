@@ -77,6 +77,7 @@ private:
 
 public:
   float  fCX, fCY;  // coordinates for the line from graph to marker body
+  bool outside_graph = false;//Indicates whether the point is inside the graph or not
   QString Text;     // the string to be displayed in the marker text
   bool transparent; // background shines through marker body
   Axis const*xA,*yA,*zA;
