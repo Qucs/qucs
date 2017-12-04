@@ -1912,7 +1912,7 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
     // start from the last to omit re-appended components
     Schematic *Doc = (Schematic*)w;
     for(Component *pc=Doc->Components->last(); pc!=0; ) {
-      if(pc->Model == Model) {
+      if(pc->obsolete_model_hack() == Model) { // BUG
         File = pc->Props.getFirst()->Value;
         if((File == pathName) || (File == Name)) {
           pc_tmp = Doc->Components->prev();

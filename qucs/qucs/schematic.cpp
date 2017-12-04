@@ -1575,8 +1575,7 @@ int Schematic::adjustPortNumbers()
       // go through all components in a schematic
       for(Component *pc = DocComps.first(); pc!=0; pc = DocComps.next())
       {
-         if(pc->Model == "Port")
-         {
+         if(pc->obsolete_model_hack() == "Port") { // BUG. move to device.
              countPort++;
 
              Str = pc->Props.getFirst()->Value;
@@ -1591,11 +1590,11 @@ int Schematic::adjustPortNumbers()
 
              if(pp)
              {
-                 ((PortSymbol*)pp)->nameStr = pc->Name;
+                 ((PortSymbol*)pp)->nameStr = pc->name_hack();
              }
              else
              {
-                 SymbolPaints.append(new PortSymbol(x1, y2, Str, pc->Name));
+                 SymbolPaints.append(new PortSymbol(x1, y2, Str, pc->name_hack()));
                  y2 += 40;
              }
           }

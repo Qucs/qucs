@@ -150,7 +150,7 @@ SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
   all->addLayout(hbottom);
 
   // ------------------------------------------------------------
-  CompNameEdit->setText(Comp->Name);
+  CompNameEdit->setText(Comp->name_hack());
   changed = false;
 
   // insert all properties into the ListBox
@@ -206,18 +206,18 @@ void SpiceDialog::reject()
 void SpiceDialog::slotButtApply()
 {
   Component *pc;
-  if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->Name);
-  else if(CompNameEdit->text() != Comp->Name)
+  if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->name_hack());
+  else if(CompNameEdit->text() != Comp->name_hack())
   {
     for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next())
-      if(pc->Name == CompNameEdit->text()) {
+      if(pc->name_hack() == CompNameEdit->text()) {
         break;  // found component with the same name ?
       }
     if (pc) {
-      CompNameEdit->setText(Comp->Name);
+      CompNameEdit->setText(Comp->name_hack());
     }
     else {
-      Comp->Name = CompNameEdit->text();
+      Comp->obsolete_name_override_hack( CompNameEdit->text() );
       changed = true;
     }
   }

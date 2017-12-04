@@ -2454,11 +2454,11 @@ void Schematic::setComponentNumber(Component *c)
 
     int n=1;
     QString s = pp->Value;
-    QString cSign = c->Model;
+    QString cSign = c->obsolete_model_hack();
     Component *pc;
     // First look, if the port number already exists.
     for(pc = Components->first(); pc != 0; pc = Components->next())
-        if(pc->Model == cSign)
+        if(pc->obsolete_model_hack() == cSign)
             if(pc->Props.getFirst()->Value == s) break;
     if(!pc) return;   // was port number not yet in use ?
 
@@ -2468,7 +2468,7 @@ void Schematic::setComponentNumber(Component *c)
         s  = QString::number(n);
         // look for existing ports and their numbers
         for(pc = Components->first(); pc != 0; pc = Components->next())
-            if(pc->Model == cSign)
+            if(pc->obsolete_model_hack() == cSign)
                 if(pc->Props.getFirst()->Value == s) break;
 
         n++;
@@ -2525,16 +2525,15 @@ void Schematic::insertRawComponent(Component *c, bool noOptimize)
     Components->append(c);
 
     // a ground symbol erases an existing label on the wire line
-    if(c->Model == "GND")
-    {
-        c->Model = "x";    // prevent that this ground is found as label
+    if(c->obsolete_model_hack() == "GND") { // BUG.
+        c->gnd_obsolete_model_override_hack("x");
         Element *pe = getWireLabel(c->Ports.first()->Connection);
         if(pe) if((pe->Type & isComponent) == 0)
             {
                 delete ((Conductor*)pe)->Label;
                 ((Conductor*)pe)->Label = 0;
             }
-        c->Model = "GND";    // rebuild component model
+        c->gnd_obsolete_model_override_hack("GND");
     }
 }
 
@@ -2562,9 +2561,9 @@ void Schematic::recreateComponent(Component *Comp)
 
     int x = Comp->tx, y = Comp->ty;
     int x1 = Comp->x1, x2 = Comp->x2, y1 = Comp->y1, y2 = Comp->y2;
-    QString tmp = Comp->Name;    // is sometimes changed by "recreate"
+    QString tmp = Comp->name_hack();    // is sometimes changed by "recreate"
     Comp->recreate(this);   // to apply changes to the schematic symbol
-    Comp->Name = tmp;
+    Comp->obsolete_name_override_hack(tmp);
     if(x < x1)
         x += Comp->x1 - x1;
     else if(x > x2)
@@ -2609,20 +2608,18 @@ void Schematic::insertComponent(Component *c)
 
     bool ok;
     QString s;
-    int  max=1, len = c->Name.length(), z;
-    if(c->Name.isEmpty())
-    {
+    int  max=1, len = c->name_hack().length(), z;
+    if(c->name_hack().isEmpty()) { // BUG
         // a ground symbol erases an existing label on the wire line
-        if(c->Model == "GND")
-        {
-            c->Model = "x";    // prevent that this ground is found as label
+        if(c->obsolete_model_hack() == "GND") { // BUG
+            c->gnd_obsolete_model_override_hack("x");
             Element *pe = getWireLabel(c->Ports.first()->Connection);
             if(pe) if((pe->Type & isComponent) == 0)
                 {
                     delete ((Conductor*)pe)->Label;
                     ((Conductor*)pe)->Label = 0;
                 }
-            c->Model = "GND";    // rebuild component model
+            c->gnd_obsolete_model_override_hack("GND");
         }
     }
     else
@@ -2630,13 +2627,14 @@ void Schematic::insertComponent(Component *c)
         // determines the name by looking for names with the same
         // prefix and increment the number
         for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-            if(pc->Name.left(len) == c->Name)
+            if(pc->name_hack().left(len) == c->name_hack())
             {
-                s = pc->Name.right(pc->Name.length()-len);
+                s = pc->name_hack().right(pc->name_hack().length()-len);
                 z = s.toInt(&ok);
                 if(ok) if(z >= max) max = z + 1;
             }
-        c->Name += QString::number(max);  // create name with new number
+        c->obsolete_name_override_hack(
+	    c->name_hack() + QString::number(max));  // create name with new number
     }
 
     setComponentNumber(c); // important for power sources and subcircuit ports
@@ -2676,8 +2674,10 @@ void Schematic::activateCompsWithinRect(int x1, int y1, int x2, int y2)
                             a &= 1;
                             pc->isActive = a;    // change "active status"
                             if(a == COMP_IS_ACTIVE)  // only for active (not shorten)
-                                if(pc->Model == "GND")  // if existing, delete label on wire line
+                                if(pc->obsolete_model_hack() == "GND"){
+				  // if existing, delete label on wire line
                                     oneLabel(pc->Ports.first()->Connection);
+				}
                         }
                         changed = true;
                     }
@@ -2707,8 +2707,10 @@ bool Schematic::activateSpecifiedComponent(int x, int y)
                             a &= 1;
                             pc->isActive = a;    // change "active status"
                             if(a == COMP_IS_ACTIVE)  // only for active (not shorten)
-                                if(pc->Model == "GND")  // if existing, delete label on wire line
+                                if(pc->obsolete_model_hack() == "GND"){
+				  // if existing, delete label on wire line
                                     oneLabel(pc->Ports.first()->Connection);
+				}
                         }
                         setChanged(true, true);
                         return true;
@@ -2737,8 +2739,10 @@ bool Schematic::activateSelectedComponents()
                 a &= 1;
                 pc->isActive = a;    // change "active status"
                 if(a == COMP_IS_ACTIVE)  // only for active (not shorten)
-                    if(pc->Model == "GND")  // if existing, delete label on wire line
+                    if(pc->obsolete_model_hack() == "GND"){
+		      // if existing, delete label on wire line
                         oneLabel(pc->Ports.first()->Connection);
+		    }
             }
             sel = true;
         }
@@ -2817,9 +2821,11 @@ Component* Schematic::searchSelSubcircuit()
     for(Component *pc = Components->first(); pc != 0; pc = Components->next())
     {
         if(!pc->isSelected) continue;
-        if(pc->Model != "Sub")
-            if(pc->Model != "VHDL")
-                if(pc->Model != "Verilog") continue;
+
+        if(pc->obsolete_model_hack() != "Sub"){
+            if(pc->obsolete_model_hack() != "VHDL")
+                if(pc->obsolete_model_hack() != "Verilog") continue;
+	}
 
         if(sub != 0) return 0;    // more than one subcircuit selected
         sub = pc;
@@ -2988,7 +2994,7 @@ void Schematic::oneLabel(Node *n1)
             if(pe->Type != isWire)
             {
                 if(((Component*)pe)->isActive == COMP_IS_ACTIVE)
-                    if(((Component*)pe)->Model == "GND")
+                    if(((Component*)pe)->obsolete_model_hack() == "GND")
                     {
                         named = true;
                         if(pl)
@@ -3082,7 +3088,7 @@ Element* Schematic::getWireLabel(Node *pn_)
                 if(pe->Type != isWire)
                 {
                     if(((Component*)pe)->isActive == COMP_IS_ACTIVE)
-                        if(((Component*)pe)->Model == "GND") return pe;
+                        if(((Component*)pe)->obsolete_model_hack() == "GND") return pe;
                     continue;
                 }
 
