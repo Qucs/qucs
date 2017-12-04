@@ -398,9 +398,9 @@ void createDocData() {
 
         compData << "# Note: auto-generated file (changes will be lost on update)";
         compData << "Caption; "           + Name;
-        compData << "Description; "       + c->Description;
-        compData << "Identifier; ``"      + c->Model + "``"; // backticks for reST verbatim
-        compData << "Default name; ``"    + c->Name  + "``";
+        compData << "Description; "       + c->description();
+        compData << "Identifier; ``"      + c->obsolete_model_hack() + "``"; // backticks for reST verbatim
+        compData << "Default name; ``"    + c->name_hack()  + "``";
         compData << "Type; "              + typeMap.value(c->Type);
         compData << "Bitmap file; "       + QString(File);
         compData << "Properties; "        + QString::number(c->Props.count());
@@ -416,7 +416,7 @@ void createDocData() {
         QTextStream out(&file);
         out << compData.join("\n");
         file.close();
-        fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(), c->Model.toAscii().data(), file.fileName().toAscii().data());
+        fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(), c->obsolete_model_hack().toAscii().data(), file.fileName().toAscii().data());
 
         QStringList compProps;
         compProps << "# Note: auto-generated file (changes will be lost on update)";
@@ -438,7 +438,7 @@ void createDocData() {
         outProps << compProps.join("\n");
         compProps.clear();
         file.close();
-        fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(), c->Model.toAscii().data(), fileProps.fileName().toAscii().data());
+        fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(), c->obsolete_model_hack().toAscii().data(), fileProps.fileName().toAscii().data());
     } // module
   } // category
   fprintf(stdout, "Created data for %i components from %i categories\n", nComps, nCats);
@@ -476,7 +476,7 @@ void createListComponentEntry(){
 		QTextStream s;
 		c->getSchematic()->saveComponent(s, c);
       QString qucsEntry = *(s.string());
-      fprintf(stdout, "%s; qucs    ; %s\n", c->Model.toAscii().data(), qucsEntry.toAscii().data());
+      fprintf(stdout, "%s; qucs    ; %s\n", c->obsolete_model_hack().toAscii().data(), qucsEntry.toAscii().data());
 
       // add dummy ports/wires, avoid segfault
       int port = 0;
@@ -488,13 +488,13 @@ void createListComponentEntry(){
       }
 
       // skip Subcircuit, segfault, there is nothing to netlist
-      if (c->Model == "Sub" or c->Model == ".Opt") {
-        fprintf(stdout, "WARNING, qucsator netlist not generated for %s\n\n", c->Model.toAscii().data());
+      if (c->obsolete_model_hack() == "Sub" or c->obsolete_model_hack() == ".Opt") {
+        fprintf(stdout, "WARNING, qucsator netlist not generated for %s\n\n", c->obsolete_model_hack().toAscii().data());
         continue;
       }
 
       QString qucsatorEntry = c->getNetlist();
-      fprintf(stdout, "%s; qucsator; %s\n", c->Model.toAscii().data(), qucsatorEntry.toAscii().data());
+      fprintf(stdout, "%s; qucsator; %s\n", c->obsolete_model_hack().toAscii().data(), qucsatorEntry.toAscii().data());
       } // module
     } // category
 }

@@ -739,13 +739,13 @@ void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
   qDebug (doc.toString());
 #endif
   // s << "  "; ??
-  s << "<" << c->Model;
+  s << "<" << c->obsolete_model_hack();
 
   s << " ";
-  if(c->Name.isEmpty()){
+  if(c->name_hack().isEmpty()){
     s << "*";
   }else{
-    s << c->Name;
+    s << c->name_hack();
   }
   s << " ";
 
@@ -799,9 +799,10 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   s = s.mid(1, s.length()-2);   // cut off start and end character
 
   QString n;
-  c->Name = s.section(' ',1,1);    // Name
-  if(c->Name == "*"){
-	  c->Name = "";
+  if(c->name_hack() == "*"){
+    c->obsolete_name_override_hack("");
+  }else{
+    c->obsolete_name_override_hack(s.section(' ',1,1));
   }
 
   n  = s.section(' ',2,2);      // isActive
@@ -832,7 +833,7 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   tty = n.toInt(&ok);
   if(!ok) return NULL;
 
-  if(c->Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
+  if(c->obsolete_model_hack().at(0) != '.') {  // is simulation component (dc, ac, ...) ?
 
     n  = s.section(' ',7,7);    // mirroredX
     if(n.toInt(&ok) == 1){
@@ -853,7 +854,7 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   c->tx = ttx;
   c->ty = tty; // restore text position (was changed by rotate/mirror)
 
-  QString Model = c->Model; // BUG: don't use names
+  QString Model = c->obsolete_model_hack(); // BUG: don't use names
 
   unsigned int z=0, counts = s.count('"');
   // FIXME. use c->paramCount()
@@ -1661,11 +1662,11 @@ Component* getComponentFromName(QString& Line, Schematic* p)
     return 0;
   }
 
-  cstr = c->Name;   // is perhaps changed in "recreate" (e.g. subcircuit)
+  cstr = c->name_hack();   // is perhaps changed in "recreate" (e.g. subcircuit)
   int x = c->tx, y = c->ty;
   c->setSchematic (p);
   c->recreate(0);
-  c->Name = cstr;
+  c->obsolete_name_override_hack(cstr);
   c->tx = x;  c->ty = y;
   return c;
 }
