@@ -34,8 +34,6 @@ SUBDIRS = \
 	octave \
 	tests
 
-all-local: qucs
-
 // todo: move to configure
 if COND_WIN32
 BAT_EXT = .bat
