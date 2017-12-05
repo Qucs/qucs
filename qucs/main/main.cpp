@@ -518,7 +518,14 @@ int main(int argc, char *argv[])
   QucsSettings.Editor = "qucs";
 
   // initially center the application
+
+  QFile qf(":/bitmaps/doesnotexist.png");
+  assert(!qf.exists());
+  QFile qfl(":/bitmaps/line.png");
+  assert(qfl.exists());
+
   QApplication a(argc, argv);
+//  Q_INIT_RESOURCE();
   QDesktopWidget *d = a.desktop();
   int w = d->width();
   int h = d->height();

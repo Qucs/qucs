@@ -54,7 +54,9 @@ MOCHEADERS = \
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 pqucsdir=${pkglibdir}
-pqucs_LTLIBRARIES = libqucsschematic.la
+pqucs_LTLIBRARIES = \
+	libqucsschematic.la \
+	libqucsgui.la
 
 # TODO:
 # - parts must go to libqucs
@@ -67,6 +69,8 @@ libqucsschematic_la_SOURCES = \
   schematic_file.cpp syntax.cpp module.cpp octave_window.cpp \
   messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
   projectView.cpp
+
+libqucsgui_la_SOURCES = qucs_.qrc
 
 libqucsschematic_la_SOURCES += $(MOCFILES)
 
@@ -83,11 +87,13 @@ PLUGINS = \
 
 if COND_WIN32
 libqucsschematic_la_LIBADD = \
+	libqucsgui.la \
    ${PLUGINS} \
 	$(X11_LIBS) \
 	$(QT_LIBS)
 else
-libqucsschematic_la_LIBADD =
+# link order hack?
+libqucsschematic_la_LIBADD = libqucsgui.la
 endif
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \

@@ -6,7 +6,7 @@ include ../common.mk
 # why this? qucs_real_LDADD does not seem to work on windows (yet?)
 
 qucs_real_LDFLAGS = $(QT_LDFLAGS)
-qucs_real_SOURCES = main.cpp qucs_.qrc
+qucs_real_SOURCES = main.cpp # qucs_.qrc
 qucs_real_CPPFLAGS = ${AM_CPPFLAGS} $(QT_INCLUDES) -I${top_srcdir}/qucs
 
 # these are not plugins yet. but there's hope.
@@ -19,11 +19,14 @@ PLUGINS = \
 	../qucs/paintings/libpaintings.la \
 	../qucs/dialogs/libdialogs.la
 
+
 if COND_WIN32
 qucs_real_LDADD = \
+../qucs/libqucsgui.la \
 	../qucs/libqucsschematic.la ${PLUGINS}
 else
 qucs_real_LDADD = \
+../qucs/libqucsgui.la \
 	../qucs/libqucsschematic.la ${PLUGINS} \
 	$(X11_LIBS) $(QT_LIBS)
 endif
@@ -37,9 +40,3 @@ bin_PROGRAMS = qucs.real
 transform=s&\.real$$&&;$(program_transform_name)
 
 CLEANFILES = qucs_.cpp
-
-# BUG: rcc does not let me specify search path (!?)
-.qrc.cpp:
-	-${LN_S} ${top_srcdir}/qucs/bitmaps
-	cp $< $(shell basename $<).TMP
-	$(RCC) -o $@ $(shell basename $<).TMP
