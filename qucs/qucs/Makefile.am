@@ -45,16 +45,6 @@ endif
 
 bin_SCRIPTS = qucsdigi${BAT_EXT} qucsveri${BAT_EXT} qucsdigilib${BAT_EXT}
 
-qucs_appledir = $(bindir)/qucs.app/Contents/MacOS/
-
-if COND_MACOSX
-qucs_apple_PROGRAMS = qucs.real
-else
-endif
-
-bin_PROGRAMS = qucs.real
-transform=s&\.real$$&&;$(program_transform_name)
-
 MOCHEADERS = \
   messagedock.h \
   octave_window.h \
@@ -100,19 +90,6 @@ libqucsschematic_la_LIBADD = \
 	$(QT_LIBS)
 else
 libqucsschematic_la_LIBADD =
-endif
-
-# why this? qucs_real_LDADD does not seem to work on windows (yet?)
-
-qucs_real_LDFLAGS = $(QT_LIBS)
-qucs_real_SOURCES = main.cpp qucs_.qrc
-if COND_WIN32
-qucs_real_LDADD = \
-	libqucsschematic.la
-else
-qucs_real_LDADD = \
-	libqucsschematic.la ${PLUGINS} \
-	$(X11_LIBS) $(QT_LIBS)
 endif
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
