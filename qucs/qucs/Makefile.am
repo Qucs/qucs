@@ -35,6 +35,13 @@ SUBDIRS = \
 	octave \
 	tests
 
+all-local: qucs
+
+qucs:
+	echo '#!/bin/sh' > $@
+	echo 'exec ../main/qucs "$@"' >> $@
+	chmod +x !$
+
 // todo: move to configure
 if COND_WIN32
 BAT_EXT = .bat
