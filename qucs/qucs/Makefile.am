@@ -89,7 +89,6 @@ PLUGINS = \
 if COND_WIN32
 libqucsschematic_la_LIBADD = \
 	libqucsgui.la \
-   ${PLUGINS} \
 	$(X11_LIBS) \
 	$(QT_LIBS)
 else
