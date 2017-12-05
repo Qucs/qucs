@@ -69,6 +69,10 @@ libcomponents_la_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
 
 nodist_libcomponents_la_SOURCES = $(MOCFILES)
 
+if COND_WIN32
+libcomponents_la_LIBADD = ../libqucsschematic.la
+endif
+
 noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   inductor.h biast.h dcblock.h dcfeed.h ground.h subcirport.h symtrafo.h      \
   transformer.h ampere_dc.h attenuator.h circulator.h equation.h isolator.h   \

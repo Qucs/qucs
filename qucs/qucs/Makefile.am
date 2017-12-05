@@ -27,6 +27,7 @@ include ../common.mk
 AM_DEFAULT_SOURCE_EXT = .cpp
 
 SUBDIRS = \
+			 . \
 	bitmaps \
 	components diagrams \
 	paintings \

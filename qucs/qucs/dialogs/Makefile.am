@@ -49,6 +49,10 @@ libdialogs_la_SOURCES = settingsdialog.cpp newprojdialog.cpp \
      savedialog.cpp vasettingsdialog.cpp exportdialog.cpp loaddialog.cpp \
      aboutdialog.cpp
 
+if COND_WIN32
+libdialogs_la_LIBADD = ../libqucsschematic.la
+endif
+
 nodist_libdialogs_la_SOURCES = $(MOCFILES)
 
 noinst_HEADERS = $(MOCHEADERS) $(UIHEADERS)
