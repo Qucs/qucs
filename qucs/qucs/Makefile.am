@@ -93,7 +93,7 @@ libqucsschematic_la_LIBADD = \
 	$(QT_LIBS)
 else
 # link order hack?
-libqucsschematic_la_LIBADD = libqucsgui.la
+libqucsschematic_la_LIBADD = # libqucsgui.la
 endif
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \

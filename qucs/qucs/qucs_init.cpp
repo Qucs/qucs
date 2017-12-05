@@ -35,6 +35,8 @@
 #include <QMessageBox>
 #include <QApplication>
 
+#include <assert.h>
+
 /**
  * @brief QucsApp::initActions Initializes all QActions of the application
  */
@@ -44,7 +46,9 @@ void QucsApp::initActions()
 
   // note: first argument of QAction() for backward compatibility Qt < 3.2
 
-  fileNew = new QAction(QIcon((":/bitmaps/filenew.png")), tr("Document"), this);
+  QIcon fileNewIcon(":/bitmaps/filenew.png");
+  assert(!fileNewIcon.isNull());
+  fileNew = new QAction(fileNewIcon, tr("Document"), this);
   fileNew->setShortcut(Qt::CTRL+Qt::Key_N);
   fileNew->setStatusTip(tr("Creates a new document"));
   fileNew->setWhatsThis(
