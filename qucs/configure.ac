@@ -844,7 +844,7 @@ AC_CONFIG_FILES([Makefile
     qucs-transcalc/qucstrans.1
     qucs-powercombining/qucspowercombining.1])
 
-AC_CONFIG_FILES([qucs/qucs], [chmod +x qucs/qucs])
+AC_CONFIG_FILES([main/qucs], [chmod +x main/qucs])
 
 dnl Check for Git short SHA to tag version
 dnl The release package should also keep it on the config.h
