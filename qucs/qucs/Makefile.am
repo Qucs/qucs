@@ -37,9 +37,9 @@ SUBDIRS = \
 
 all-local: qucs
 
-qucs:
+qucs: Makefile
 	echo '#!/bin/sh' > $@
-	echo 'exec ../main/qucs "$@"' >> $@
+	echo 'exec ${abs_top_builddir}/main/qucs "$$@"' >> $@
 	chmod +x $@
 
 // todo: move to configure
