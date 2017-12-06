@@ -40,7 +40,7 @@ all-local: qucs
 qucs:
 	echo '#!/bin/sh' > $@
 	echo 'exec ../main/qucs "$@"' >> $@
-	chmod +x !$
+	chmod +x $@
 
 // todo: move to configure
 if COND_WIN32
