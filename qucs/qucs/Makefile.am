@@ -150,6 +150,6 @@ EXTRA_DIST = \
 	bitmaps/qucstrans.icns
 
 
-CLEANFILES = *~ *.rej *.orig qucs_.cpp *.moc.cpp
+CLEANFILES = *~ *.rej *.orig qucs_.cpp *.moc.cpp qucs
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.qm
 DISTCLEANFILES = *.qm
