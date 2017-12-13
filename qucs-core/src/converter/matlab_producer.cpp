@@ -80,17 +80,18 @@ static void matlab_header (int32_t rows, int32_t cols, const char * name) {
   int32_t len = strlen (name) + 1;
   fwrite (&len, sizeof (int32_t), 1, matlab_out);
 
-  char * p = strdup(name);
+  char * ns = strdup(name);
+  char * p = ns;
   // data name
   if (matlab_symbols) {
     // convert to valid Matlab identifiers
-    for (unsigned int i = 0; i < strlen (name); i++, p++) {
+    for (unsigned int i = 0; i < strlen (ns); i++, p++) {
       if (!isalnum (*p) && *p != '_')
 	*p = '_';
     }
   }
-  fwrite (p, 1, len, matlab_out);
-  free(p);
+  fwrite (ns, 1, len, matlab_out);
+  free(ns);
 }
 
 // Writes a Matlab v4 vector.
