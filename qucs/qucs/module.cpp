@@ -393,7 +393,8 @@ void Module::registerModules (void) {
 
   // file components
   REGISTER_FILE_1 (SpiceFile);
-  REGISTER_FILE_3 (SParamFile, info1, info2, info);
+  REGISTER_FILE_3 (SPEmbed, info1, info2, info);
+  REGISTER_FILE_3 (SPDeEmbed, info2, info4, info);
   REGISTER_FILE_1 (Subcircuit);
 
   // simulations

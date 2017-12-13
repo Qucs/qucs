@@ -241,7 +241,8 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (vprobe);
   REGISTER_CIRCUIT (jfet);
   REGISTER_CIRCUIT (bjt);
-  REGISTER_CIRCUIT (spfile);
+  REGISTER_CIRCUIT (spembed);
+  REGISTER_CIRCUIT (spdeembed);
   REGISTER_CIRCUIT (vnoise);
   REGISTER_CIRCUIT (inoise);
   REGISTER_CIRCUIT (mosfet);

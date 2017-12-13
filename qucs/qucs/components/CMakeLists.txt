@@ -19,7 +19,7 @@ ampere_dc.cpp		ecvs.cpp
 source_ac.cpp
 ampere_noise.cpp	equation.cpp		mosfet.cpp		sp_sim.cpp
 amplifier.cpp		etr_sim.cpp
-			fa1b.cpp		mosfet_sub.cpp		sparamfile.cpp
+			fa1b.cpp		mosfet_sub.cpp		spembed.cpp
 andor4x2.cpp		fa2b.cpp		mscorner.cpp		spicedialog.cpp
 andor4x3.cpp		gatedDlatch.cpp		mscoupled.cpp
 andor4x4.cpp		greytobinary4bit.cpp	mscross.cpp		spicefile.cpp
@@ -54,10 +54,8 @@ dc_sim.cpp		logic_0.cpp		photodiode.cpp		vrect.cpp
 dcblock.cpp		logic_1.cpp		phototransistor.cpp	wprobe.cpp
 dcfeed.cpp		logical_and.cpp		pm_modulator.cpp        capq.cpp
 vcresistor.cpp          indq.cpp                spiralinductor.cpp      circularloop.cpp
-vacomponent.cpp
-mutualx.cpp
-circline.cpp
-taperedline.cpp
+vacomponent.cpp		mutualx.cpp		circline.cpp		taperedline.cpp
+spdeembed.cpp
 )
 
 SET(COMPONENTS_HDRS
@@ -197,7 +195,8 @@ rlcg.h
 rs_flipflop.h
 source_ac.h
 sp_sim.h
-sparamfile.h
+spdeembed.h
+spembed.h
 spicedialog.h
 spicefile.h
 spiralinductor.h

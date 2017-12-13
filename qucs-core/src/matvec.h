@@ -22,6 +22,11 @@
  *
  */
 
+/*!
+ * \file matvec.h
+ * \brief vector of matrices class header file
+ */
+
 #ifndef __MATVEC_H__
 #define __MATVEC_H__
 
@@ -161,11 +166,11 @@ class matvec
   friend matvec ytoz (matvec);
 
  private:
-  int size;
-  int rows;
-  int cols;
-  char * name;
-  matrix * data;
+  int size; /*! number of matrices  */
+  int rows; /*! Number of rows of each matrix */
+  int cols; /*! Number of columns of each matrix */
+  char * name; /*! Name of the matrix array (optional) */
+  matrix * data; /*! matrix (used as array) of data matrices */
 };
 
 } // namespace qucs

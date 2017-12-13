@@ -88,6 +88,7 @@ enum circuit_type {
   CIR_WPROBE,
   CIR_VPROBE,
   CIR_SPFILE,
+  CIR_SPDFILE,
   CIR_VPULSE,
   CIR_IPULSE,
   CIR_VRECT,

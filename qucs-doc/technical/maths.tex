@@ -502,7 +502,7 @@ G &
 \end{figure}
 \FloatBarrier
 
-There are two different matrix forms for the correlations between the
+There are two main different matrix forms for the correlations between the
 quantities at the transmission twoport shown in
 fig. \ref{fig:twoportab}.
 
@@ -527,12 +527,17 @@ fig. \ref{fig:twoportab}.
 \end{pmatrix}
 \end{equation}
 
+the S-parameters matrix relates the output waves ${b}_{n}$ (dependent variables) and the input waves ${a}_{n}$ (independent variables) and is customarily defined with the waves ports in ascending order.
+
 \item T-parameters (also called transfer scattering parameters)
+
+one definition of the T-parameters is
+
 \begin{equation}
 \label{eq:tparamdef}
 \begin{pmatrix}
-\underline{a}_{1}\\
-\underline{b}_{1}
+\underline{b}_{1}\\
+\underline{a}_{1}
 \end{pmatrix}
 =
 \begin{pmatrix}
@@ -541,21 +546,17 @@ fig. \ref{fig:twoportab}.
 \end{pmatrix}
 \cdot
 \begin{pmatrix}
-\underline{b}_{2}\\
-\underline{a}_{2}
+\underline{a}_{2}\\
+\underline{b}_{2}
 \end{pmatrix}
 \end{equation}
 
+here the T-parameters relate the input \textit{port} waves and the output \textit{port} waves. Note that there are other possible definitions, depending on the choice of the dependent and independent variables and on the ports ordering used.
+
 \end{itemize}
 
-When connecting cascaded twoports it is possible to compute the
-resulting transfer scattering parameters by the following equation.
-\begin{equation}
-T = T_1 \cdot T_2
-\end{equation}
-
 According to Janusz A. Dobrowolski \cite{Dobrowolski} the following
-table contains the matrix transformation formulas.
+table contains the matrix transformation formulas for the T parameters definition above.
 
 \addvspace{12pt}
 
@@ -574,6 +575,321 @@ T &
 $\begin{array}{cc}T_{11}&T_{12}\vspace{4pt}\\T_{21}&T_{22}\end{array}$\\
 \hline
 \end{tabular}
+
+\addvspace{12pt}
+
+The T-parameters matrix allows to easily obtain the overall network response of a network cascade, a process called \textit{embedding}. For the two cascaded twoports of fig. \ref{fig:twoportcascade}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[height=3cm]{twoportcascade}
+\end{center}
+\caption{twoport cascade}
+\label{fig:twoportcascade}
+\end{figure}
+\FloatBarrier
+
+the relationships between the various waves at the networks ports can be written as
+
+\begin{equation}
+\begin{pmatrix}
+\underline{b}_{1}\\
+\underline{a}_{1}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\underline{T_U}_{11} & \underline{T_U}_{12}\\
+\underline{T_U}_{21} & \underline{T_U}_{22}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\underline{a}_{2}\\
+\underline{b}_{2}
+\end{pmatrix}
+\quad
+\textrm{and}
+\quad
+\begin{pmatrix}
+\underline{b}_{3}\\
+\underline{a}_{3}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\underline{T_V}_{11} & \underline{T_V}_{12}\\
+\underline{T_V}_{21} & \underline{T_V}_{22}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\underline{a}_{4}\\
+\underline{b}_{4}
+\end{pmatrix}
+\end{equation}
+
+since the output waves of the twoport U are the input waves of the twoport V, that is
+
+\begin{equation}
+\begin{pmatrix}
+\underline{a}_{2}\\
+\underline{b}_{2}
+\end{pmatrix}
+=\begin{pmatrix}
+\underline{b}_{3}\\
+\underline{a}_{3}
+\end{pmatrix}
+\end{equation}
+
+the relationship between the input port waves and the output port waves of the cascade connection can be written
+
+\begin{equation}
+\begin{pmatrix}
+\underline{b}_{1}\\
+\underline{a}_{1}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\underline{T_U}_{11} & \underline{T_U}_{12}\\
+\underline{T_U}_{21} & \underline{T_U}_{22}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\underline{T_V}_{11} & \underline{T_V}_{12}\\
+\underline{T_V}_{21} & \underline{T_V}_{22}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\underline{a}_{4}\\
+\underline{b}_{4}
+\end{pmatrix}
+\end{equation}
+
+from which follows that the overall transfer scattering parameters matrix $T$ is given by
+
+\begin{equation}
+\label{eqn:Tcascade}
+\underline{T} = \underline{T_U} \cdot \underline{T_V}
+\end{equation}
+
+Similarly, for the cascade of any number of twoports the overall T-parameters matrix is simply given by the product of the individual networks T parameters.\\
+Incidentally, note that the cascade response can also be computed directly from the individual networks S parameters using the Redheffer \textit{star product} \cite{Redheffer}.
+
+\subsubsection{De-embedding}
+%\addcontentsline{toc}{subsubsection}{De-embedding}
+
+In practice is also often useful to be able to remove the effect of a network in a network cascade, a process which is called \textit{de-embedding}. This can also be done using the T-parameters matrix: from the overall transfer scattering parameters \underline{T} given by eq.~\eqref{eqn:Tcascade} the T-parameters matrix of the network V can be obtained from
+
+\begin{equation}
+\label{eqn:Tdeembedding}
+\underline{T_V} = \underline{T_U^{-1}} \cdot \underline{T}
+\end{equation}
+
+which can be seen as the result of cascading the inverse network (or \textit{anti-network}) of U with the original composite network.\\
+For a twoport, the S-parameters matrix of the inverse network of U is
+
+\begin{equation}
+\underline{S_U^{(inv)}}
+=
+\frac{1}{\Delta S_U}
+\begin{pmatrix}
+\underline{S_U}_{11} & -\underline{S_U}_{21}\\
+-\underline{S_U}_{12} & \underline{S_U}_{22}\\
+\end{pmatrix}
+\end{equation}
+
+\subsubsection{Four- and N-port matrix conversion based on signal waves}
+%\addcontentsline{toc}{subsubsection}{Four-Port matrix conversion based on signal waves}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[height=4cm]{fourportab}
+\end{center}
+\caption{four-port network definition using signal waves}
+\label{fig:fourportab}
+\end{figure}
+\FloatBarrier
+
+Similarly to the two-port case, two main matrix forms are used to express the relationships between the signal waves for network with four or more ports:
+
+\begin{itemize}
+
+\item S-parameters (scattering parameters), relating the output waves ${b}_{n}$ to the input waves ${a}_{n}$
+\begin{equation}
+\label{eq:sparam4def}
+\begin{pmatrix}
+\underline{b}_{1}\\
+\underline{b}_{2}\\
+\underline{b}_{3}\\
+\underline{b}_{4}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\underline{S}_{11} & \underline{S}_{12} & \underline{S}_{13} & \underline{S}_{14}\\
+\underline{S}_{21} & \underline{S}_{22} & \underline{S}_{23} & \underline{S}_{24}\\
+\underline{S}_{31} & \underline{S}_{32} & \underline{S}_{33} & \underline{S}_{34}\\
+\underline{S}_{41} & \underline{S}_{42} & \underline{S}_{43} & \underline{S}_{44}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\underline{a}_{1}\\
+\underline{a}_{2}\\
+\underline{a}_{3}\\
+\underline{a}_{4}
+\end{pmatrix}
+\end{equation}
+
+customarily defined with the waves ports in ascending order.
+
+\item T-parameters (transfer scattering parameters), relating the input \textit{ports} waves and the output \textit{ports} waves
+
+one definition of the T-parameters is
+
+\begin{equation}
+\label{eq:tparam4def}
+\begin{pmatrix}
+\underline{b}_{1}\\
+\underline{b}_{2}\\
+\underline{a}_{1}\\
+\underline{a}_{2}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\underline{T}_{11} & \underline{T}_{12} & \underline{T}_{13} & \underline{T}_{14}\\
+\underline{T}_{21} & \underline{T}_{22} & \underline{T}_{23} & \underline{T}_{24}\\
+\underline{T}_{31} & \underline{T}_{32} & \underline{T}_{33} & \underline{T}_{34}\\
+\underline{T}_{41} & \underline{T}_{42} & \underline{T}_{43} & \underline{T}_{44}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\underline{a}_{3}\\
+\underline{a}_{4}\\
+\underline{b}_{3}\\
+\underline{b}_{4}
+\end{pmatrix}
+\end{equation}
+
+this is just one of the possible definitions for a transfer scattering parameter matrix; a different choice of the dependent and independent variables and of the ports ordering will give a different definition.
+
+\end{itemize}
+
+To convert between the S-parameters and T-parameters matrices the left- and right-side waves are first grouped together
+
+\begin{equation}
+\underline{b_l}\\
+=
+\begin{pmatrix}
+\underline{b}_{1}\\
+\underline{b}_{2}\\
+\end{pmatrix}
+\quad , \quad
+\underline{b_r}\\
+=
+\begin{pmatrix}
+\underline{b}_{3}\\
+\underline{b}_{4}\\
+\end{pmatrix}
+\quad , \quad
+\underline{a_l}\\
+=
+\begin{pmatrix}
+\underline{a}_{1}\\
+\underline{a}_{2}\\
+\end{pmatrix}
+\quad , \quad
+\underline{a_r}\\
+=
+\begin{pmatrix}
+\underline{a}_{3}\\
+\underline{a}_{4}\\
+\end{pmatrix}
+\end{equation}
+
+so that the S-parameters matrix can be written also as
+
+\begin{equation}
+\label{eq:sparamoedef}
+\begin{pmatrix}
+\underline{b_l}\\
+\underline{b_r}\\
+\end{pmatrix}
+=
+\begin{pmatrix}
+\underline{S_{ll}} & \underline{S_{lr}}\\
+\underline{S_{rl}} & \underline{S_{rr}}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\underline{a_l}\\
+\underline{a_r}
+\end{pmatrix}
+\end{equation}
+
+By grouping the left and right \textit{ports}, the transfer scattering parameters matrix is obtained
+
+\begin{equation}
+\label{eq:tparamoedef}
+\begin{pmatrix}
+\underline{b_l}\\
+\underline{a_l}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\underline{T_{11}} & \underline{T_{12}}\\
+\underline{T_{21}} & \underline{T_{22}}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\underline{a_r}\\
+\underline{b_r}
+\end{pmatrix}
+\end{equation}
+
+and from eq.~\eqref{eq:sparamoedef} and eq.~\eqref{eq:tparamoedef} the relationship between the two matrix representation can be derived.
+
+\begin{equation}
+\label{eq:toesoe}
+\begin{pmatrix}
+\underline{T_{11}} & \underline{T_{12}}\\
+\underline{T_{21}} & \underline{T_{22}}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\underline{S_{lr}} - \underline{S_{ll}}\underline{S_{rl}}^{\!\!\!\!-1}\underline{S_{rr}} & \underline{S_{ll}}\underline{S_{rl}}^{\!\!\!\!-1}\\
+- \underline{S_{rl}}^{\!\!\!\!-1}\underline{S_{rr}} & \underline{S_{rl}}^{\!\!\!\!-1}
+\end{pmatrix}
+\end{equation}
+
+and
+
+\begin{equation}
+\label{eq:soetoe}
+\begin{pmatrix}
+\underline{S_{ll}} & \underline{S_{lr}}\\
+\underline{S_{rl}} & \underline{S_{rr}}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\underline{T_{12}}\underline{T_{22}}^{\!\!\!\!-1} & \underline{T_{11}} - \underline{T_{12}}\underline{T_{22}}^{\!\!\!\!-1}\underline{T_{21}}\\
+\underline{T_{22}}^{\!\!\!\!-1} & - \underline{T_{22}}^{\!\!\!\!-1}\underline{T_{21}} 
+\end{pmatrix}
+\end{equation}
+
+The S-parameters matrix of the anti-network can be computed by first inverting blockwise the T matrix \eqref{eq:toesoe} and then calculating the corresponding S-parameters matrix using eq.~\eqref{eq:soetoe}. The resulting expression is
+
+\begin{equation}
+\label{eq:sinvoe}
+\underline{S^{(inv)}}
+=
+\begin{pmatrix}
+\underline{S_{ll}^{(inv)}} & \underline{S_{lr}^{(inv)}}\\
+\underline{S_{rl}^{(inv)}} & \underline{S_{rr}^{(inv)}}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\left(\underline{S_{rr}} - \underline{S_{rl}}\underline{S_{ll}}^{\!\!\!\!-1}\underline{S_{lr}}\right)^{-1} & \left(\underline{S_{lr}} - \underline{S_{ll}}\underline{S_{rl}}^{\!\!\!\!-1}\underline{S_{rr}}\right)^{-1}\\
+\left(\underline{S_{rl}} - \underline{S_{rr}}\underline{S_{lr}}^{\!\!\!\!-1}\underline{S_{ll}}\right)^{-1} & \left(\underline{S_{ll}} - \underline{S_{lr}}\underline{S_{rr}}^{\!\!\!\!-1}\underline{S_{rl}}\right)^{-1}
+\end{pmatrix}
+\end{equation}
+
+The above expressions represent the general formulas for converting between multiport S and T parameters and for computing the S parameters of the anti-network. Note that these reduce to the formulas shown previously for the two-port case and can be extended to any network having an even number of ports.
 
 \subsubsection{Mixed Two-Port matrix conversions}
 %\addcontentsline{toc}{subsubsection}{Mixed Two-Port matrix conversions}

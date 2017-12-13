@@ -1,5 +1,5 @@
 /***************************************************************************
-                               sparamfile.cpp
+                               spembed.cpp
                               ----------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
@@ -14,7 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "sparamfile.h"
+#include "spembed.h"
 #include "qucs.h"
 #include "schematic.h"
 #include "misc.h"
@@ -22,9 +22,9 @@
 #include <QFileInfo>
 
 
-SParamFile::SParamFile()
+SPEmbed::SPEmbed()
 {
-  Description = QObject::tr("S parameter file");
+  Description = QObject::tr("S parameter file embedding");
 
   Model = "SPfile";
   Name  = "X";
@@ -48,22 +48,22 @@ SParamFile::SParamFile()
 }
 
 // -------------------------------------------------------
-Component* SParamFile::newOne()
+Component* SPEmbed::newOne()
 {
-  SParamFile* p = new SParamFile();
+  SPEmbed* p = new SPEmbed();
   p->Props.getLast()->Value = Props.getLast()->Value;
   p->recreate(0);
   return p;
 }
 
 // -------------------------------------------------------
-Element* SParamFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* SPEmbed::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("n-port S parameter file");
   BitmapFile = (char *) "spfile3";
 
   if(getNewOne) {
-    SParamFile* p = new SParamFile();
+    SPEmbed* p = new SPEmbed();
     p->Props.getFirst()->Value = "test.s3p";
     p->Props.getLast()->Value = "3";
     p->recreate(0);
@@ -73,23 +73,23 @@ Element* SParamFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-Element* SParamFile::info1(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* SPEmbed::info1(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("1-port S parameter file");
   BitmapFile = (char *) "spfile1";
 
-  if(getNewOne)  return new SParamFile();
+  if(getNewOne)  return new SPEmbed();
   return 0;
 }
 
 // -------------------------------------------------------
-Element* SParamFile::info2(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* SPEmbed::info2(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("2-port S parameter file");
   BitmapFile = (char *) "spfile2";
 
   if(getNewOne) {
-    SParamFile* p = new SParamFile();
+    SPEmbed* p = new SPEmbed();
     p->Props.getFirst()->Value = "test.s2p";
     p->Props.getLast()->Value = "2";
     p->recreate(0);
@@ -99,7 +99,7 @@ Element* SParamFile::info2(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString SParamFile::getSubcircuitFile()
+QString SPEmbed::getSubcircuitFile()
 {
   // construct full filename
   QString FileName = Props.getFirst()->Value;
@@ -107,7 +107,7 @@ QString SParamFile::getSubcircuitFile()
 }
 
 // -------------------------------------------------------
-QString SParamFile::netlist()
+QString SPEmbed::netlist()
 {
   QString s = Model+":"+Name;
 
@@ -135,7 +135,7 @@ QString SParamFile::netlist()
 }
 
 // -------------------------------------------------------
-void SParamFile::createSymbol()
+void SPEmbed::createSymbol()
 {
   QFont Font(QucsSettings.font); // default application font
   // symbol text is smaller (10 pt default)
