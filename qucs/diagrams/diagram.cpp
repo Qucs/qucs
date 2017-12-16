@@ -72,10 +72,12 @@ Diagram::Diagram(int _cx, int _cy)
   xAxis.limit_max = yAxis.limit_max = zAxis.limit_max = 1.0;
   xAxis.step = yAxis.step = zAxis.step = 1.0;
   xAxis.autoScale = yAxis.autoScale = zAxis.autoScale = true;
+
+  /* CODE RELATED TO THE PHASOR DIAGRAM
   //used in phasor diagram, scales for Volts, Ampere, Watts and Ohms
   xAxisI = xAxisV = xAxisP = xAxisZ = xAxis;
   yAxisI = yAxisV = yAxisP = yAxisZ = yAxis;
-  zAxisI = zAxisV = zAxisP = zAxisZ = zAxis;
+  zAxisI = zAxisV = zAxisP = zAxisZ = zAxis;*/
 
   rotX = 315;  // for 3D diagram
   rotY = 0;
@@ -119,11 +121,6 @@ void Diagram::paintDiagram(ViewPainter *p)
     // draw all graphs
   foreach(Graph *pg, Graphs)
   {
-    if(Name=="Phasor")//phasor diagram uses another way to draw
-    {
-      pg->paintvect(p, cx, cy);
-    }
-    else
       pg->paint(p, cx, cy);
   }
     // keep track of painter state
@@ -195,12 +192,10 @@ void Diagram::createAxisLabels()
   if(xAxis.Label.isEmpty()) {
     // write all x labels ----------------------------------------
     foreach(Graph *pg, Graphs) {
-	if(Name != "Phasor")
-	{
 	  DataX const *pD = pg->axis(0);
 	  if(!pD) continue;
 	  y -= LineSpacing;
-	  if(Name[0] != 'C' && Name != "Waveac") {   // locus curve ?
+      if(Name[0] != 'C') {   // locus curve ?
 	    w = metrics.width(pD->Var) >> 1;
 	    if(w > wmax)  wmax = w;
 	    Texts.append(new Text(x-w, y, pD->Var, pg->Color, 12.0));
@@ -211,54 +206,6 @@ void Diagram::createAxisLabels()
   	    Texts.append(new Text(x-w, y, "real("+pg->Var+")",
                                 pg->Color, 12.0));
 	  }
-	  if(Name == "Waveac")
-	  {
-	    if(y == -y1 - LineSpacing)
-	    {
-	      w = metrics.width("Frequency: " + sfreq) >> 1;
-	      if(w > wmax)  wmax = w;
-	      Texts.append(new Text(x-w, y, "Frequency - " + sfreq, Qt::black, 12.0));
-	      y -= LineSpacing;
-	    }  
-	    w = metrics.width("Time") >> 1;
-	    if(w > wmax)  wmax = w;
-  	    Texts.append(new Text(x-w, y, "Time", pg->Color, 12.0));
-	  }
-	}
-	//phasor diagram will show the frequency that is working and the names and value 
-        //of the display vectors below of the diagram 
-	else
-	{
-	  if(pg->yAxisNo != 0)  continue;
-	  if(pg->cPointsY) {
-	    y -= LineSpacing;
-	    if(y == -y1 - LineSpacing)
-	    {
-	      w = metrics.width("Frequency: " + sfreq) >> 1;
-	      if(w > wmax)  wmax = w;
-	      Texts.append(new Text(x-w, y, "Frequency - " + sfreq, Qt::black, 12.0));
-	      y -= LineSpacing;
-	    }
-	    nfreqa=0;
-	    if(!findmatch(pg,0) || (pg->countY) > 1 || nfreqt>1)
-	    {
-	      w = metrics.width(pg->Var) >> 1;
-	      if(w > wmax)  wmax = w;
-		Texts.append(new Text(x-w, y, pg->Var, pg->Color, 12.0));
-	    }
-	    else
-	    {
-	      double *pz;
-	      findmatch(pg,0);
-	      pz = pg->gy;
-	      Str = misc::complexDeg (*pz, *(pz+1), pg->Precision);
-	      w = metrics.width(pg->Var+" - "+Str) >> 1;
-	      if(w > wmax)  wmax = w;
-  		  Texts.append(new Text(x-w, y, pg->Var+" - "+Str,
-                        	  pg->Color, 12.0));
-	    }
-	  }
-	}
     }
   }
   else {
@@ -283,7 +230,6 @@ void Diagram::createAxisLabels()
     foreach(Graph *pg, Graphs) {
       if(pg->yAxisNo != 0)  continue;
       if(pg->cPointsY) {
-        if(Name == "Phasor") continue;
 	if(Name[0] != 'C') {   // location curve ?
           w = metrics.width(pg->Var) >> 1;
           if(w > wmax)  wmax = w;
@@ -322,7 +268,6 @@ void Diagram::createAxisLabels()
     foreach(Graph *pg, Graphs) {
       if(pg->yAxisNo != 1)  continue;
       if(pg->cPointsY) {
-        if(Name == "Phasor") continue;
 	if(Name[0] != 'C') {   // location curve ?
           w = metrics.width(pg->Var) >> 1;
           if(w > wmax)  wmax = w;
@@ -695,7 +640,7 @@ void Diagram::getAxisLimits(Graph *pg)
   DataX const *pD = pg->axis(0);
   if(pD == 0) return;
 
-  if(Name[0] != 'C' && Name != "Phasor" && Name != "Waveac") {   // not for location curves
+  if(Name[0] != 'C') {   // not for location curves
     p = pD->Points;
     for(z=pD->count; z>0; z--) { // check x coordinates (1. dimension)
       x = *(p++);
@@ -726,74 +671,6 @@ void Diagram::getAxisLimits(Graph *pg)
   (pa->numGraphs)++;    // count graphs
   p = pg->cPointsY;
   if(p == 0) return;    // if no data => invalid
-  //phasor diagram and waveac have different ways to determing the limits
-  if(Name == "Phasor" || Name == "Waveac")
-  {  //find what type is the graph(voltage,current,electric power or electrical impedance)
-    findaxisA(pg);
-    if(pg->yAxisNo == 0)  pA = yAxisA;
-    else  pA = zAxisA;
-    nfreqt=0;
-    findfreq(pg);
-    if(Name == "Waveac")
-    {
-      nfreqa=0;
-      for(z=0;z<pg->countY; z++) {  // every branch of curves
-	if(!findmatch(pg,z)) break;
-	  p=pg->gy;
-	
-	x = *(p++);
-	y = *(p++);
-	x = sqrt(x*x+y*y);
-	if(std::isfinite(x)) {
-	  if(fabs(x) > pa->max) pa->max = fabs(x);
-	  pa->min = -pa->max;
-	}
-	if(freq[0]>0)
-	  xAxis.max = 1.0/freq[0];
-	else
-	  xAxis.max = 1.0;
-
-	xAxis.min = 0.0;
-      }
-      return;
-    }
-    //if the frequency writen is in the ac simulation it will analyse the global limits
-    //and the limits for that type 
-    for(i=0;i<nfreqt;i++)
-    {
-      nfreqa=i;
-      //for(z=pg->countY*pD->count; z>0; z--) {
-      for(z=0;z<pg->countY; z++) {  // every branch of curves
-	if(!findmatch(pg,z)) break;
-	p=pg->gy;
-      
-	x = *(p++);
-	y = *(p++);
-	if(Name == "Phasor")
-	{
-	  if(std::isfinite(x)) {
-	    if(x > xAxisA->max) xAxisA->max = x;
-	    if(x < xAxisA->min) xAxisA->min = x;
-	    if(x > xAxis.max) xAxis.max = x;
-	    if(x < xAxis.min) xAxis.min = x;
-	  }
-	  if(std::isfinite(y)) {
-	    if(y > pA->max) pA->max = y;
-	    if(y < pA->min) pA->min = y;
-	    if(y > pa->max) pa->max = y;
-	    if(y < pa->min) pa->min = y;
-	  }	     
-	}	
-      }
-      if(Name == "Phasor")
-      {
-	setlimitsphasor(&xAxis,pa);
-	setlimitsphasor(xAxisA,pA); 
-
-      }
-     }
-     return;
-  }
   for(z=pg->countY*pD->count; z>0; z--) {  // check every y coordinate
     x = *(p++);
     y = *(p++);
@@ -829,9 +706,6 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
   double xmax = xAxis.max, ymax = yAxis.max, zmax = zAxis.max;
   yAxis.min = zAxis.min = xAxis.min =  DBL_MAX;
   yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
-
-  if(Name == "Phasor")
-    phasorscale();
 
   int No=0;
   foreach(Graph *pg, Graphs) {
@@ -872,9 +746,6 @@ void Diagram::recalcGraphData()
   yAxis.min = zAxis.min = xAxis.min =  DBL_MAX;
   yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
   yAxis.numGraphs = zAxis.numGraphs = 0;
-
-  if(Name == "Phasor")
-    phasorscale();
 
   // get maximum and minimum values
   foreach(Graph *pg, Graphs)
@@ -1490,7 +1361,6 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   xAxis.Label = s.section('"',1,1);   // xLabel
   yAxis.Label = s.section('"',3,3);   // yLabel left
   zAxis.Label = s.section('"',5,5);   // yLabel right
-  sfreq = s.section('"',7,7);   // frequency for phasor and waveac
 
   Graph *pg;
   // .......................................................
@@ -1818,7 +1688,7 @@ if(Axis->autoScale) {
       Axis->low = Axis->min - fabs(Axis->min);
     }
   }
-  else if((Axis != &xAxis) || Name == "Phasor") {
+  else if((Axis != &xAxis)) {
     // keep a small bounding between graph and  diagram limit
     Axis->up  = Axis->max + 0.1*(Axis->max-Axis->min);
     Axis->low = Axis->min - 0.1*(Axis->max-Axis->min);
@@ -2076,16 +1946,14 @@ else {  // not logarithmical
     if(fabs(GridNum) < 0.01*pow(10.0, Expo)) GridNum = 0.0;// make 0 really 0
     tmp = misc::StringNiceNum(GridNum);
 
-    if(Name != "Phasor")
-    {
-      w = metrics.width(tmp);  // width of text
+     w = metrics.width(tmp);  // width of text
       if(maxWidth < w) maxWidth = w;
       if(x0 > 0)
 	Texts.append(new Text(x0+8, z-6, tmp));  // text aligned left
       else
 	Texts.append(new Text(-w-7, z-6, tmp));  // text aligned right
       GridNum += GridStep;
-    }
+
 
     if(Axis->GridOn)  if(z < y2)  if(z > 0)
       Lines.prepend(new Line(0, z, x2, z, GridPen));  // y grid
@@ -2113,8 +1981,10 @@ void Diagram::calcCoordinateP (const double*x, const double*y, const double*z, G
   p->setScr(f1, f2);
 };
 
-/*only for phasor diagram detect if the points are in the diagram, 
-  if not tell with are the limits that the point has passed*/
+
+/* PHASOR AND WAVEAC RELATED CODE
+//only for phasor diagram detect if the points are in the diagram,
+//  if not tell with are the limits that the point has passed
 bool Diagram::insideDiagramPh(Graph::iterator const& p ,float* xn, float* yn) const 
 {
   float f1 = p->getScrX();
@@ -2138,9 +2008,9 @@ bool Diagram::insideDiagramPh(Graph::iterator const& p ,float* xn, float* yn) co
 
   return ((xa == f1)&&(ya == f2));
 }
-/*for phasor if the original point isn't in diagram with the limits calculated in insideDiagramPh 
-  will create a point inside the diagram if possible */
-bool Diagram::newcoordinate(Graph::iterator const& p,float* xn, float* yn) const //aqui
+//for phasor if the original point isn't in diagram with the limits calculated in insideDiagramPh
+//  will create a point inside the diagram if possible
+bool Diagram::newcoordinate(Graph::iterator const& p,float* xn, float* yn) const
 {
   float f1 = (p-1)->getScrX();
   float f2 = (p-1)->getScrY();
@@ -2199,7 +2069,7 @@ bool Diagram::newcoordinate(Graph::iterator const& p,float* xn, float* yn) const
 	
   }  
 }
-/*scales use in phasor and waveac this function only reset the value of the limits every scale*/
+//scales use in phasor and waveac this function only reset the value of the limits every scale
 void Diagram::phasorscale() 
 {
   xAxisV.min = xAxisI.min = xAxisP.min = xAxisZ.min = DBL_MAX;
@@ -2209,7 +2079,7 @@ void Diagram::phasorscale()
   zAxisV.min = zAxisI.min = zAxisP.min = zAxisZ.min = DBL_MAX;
   zAxisV.max = zAxisI.max = zAxisP.max = zAxisZ.max = -DBL_MAX;
 }
-/*for phasor diagram while detect with type of graph it is (voltage, current....) and save in the auxiliary axis */
+//for phasor diagram while detect with type of graph it is (voltage, current....) and save in the auxiliary axis
 void Diagram::findaxisA(Graph *g) 
 {
     QString var = g->Var;
@@ -2244,7 +2114,7 @@ void Diagram::findaxisA(Graph *g)
     }
 }
 
-/*will determine the value of the graph for one frequency*/
+//will determine the value of the graph for one frequency
 bool Diagram::findmatch(Graph *g , int m)
 {
   double *px;
@@ -2270,8 +2140,8 @@ bool Diagram::findmatch(Graph *g , int m)
 
 }
 
-/*will read the values receive and find if is one the values determined by AC and remove repeated number.
-   if there isn't any value that match will find the closest number and replace*/
+//  will read the values receive and find if is one the values determined by AC and remove repeated number.
+//  if there isn't any value that match will find the closest number and replace
 void Diagram::findfreq(Graph *g)
 {
   if(freq!=nullptr) delete[] freq;
@@ -2434,7 +2304,7 @@ end:
   
 }
 
-/* for phasor will find the biggest absolute value of all max limits and replace the others*/
+// for phasor will find the biggest absolute value of all max limits and replace the others
 void Diagram::setlimitsphasor(Axis *x ,Axis *y)
 {
   double yrx,yrn,yix,yin;
@@ -2462,9 +2332,9 @@ void Diagram::setlimitsphasor(Axis *x ,Axis *y)
 
 }
 
-/*for marker of waveac to find the value of x */
+//for marker of waveac to find the value of x
 double Diagram::wavevalX(int i) const
 {
     return i*xAxis.up/(sc*50); 
 }
-// vim:ts=8:sw=2:noet
+*/
