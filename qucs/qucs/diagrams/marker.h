@@ -41,7 +41,10 @@ public:
 private:
   void    initText(int);
 public:
+  /* RELATED TO THE PHASOR DIAGRAM CODE
   void    fix();
+  int phasormk(double*,double*,int);
+  void findaxismk();*/
   QString unit(double);
   void    createText();
   void    makeInvalid();
@@ -61,8 +64,7 @@ public:
   int precision() const {return Precision;}
   std::vector<double> const& varPos() const {return VarPos;}
   const Diagram *diag() const;
-  int phasormk(double*,double*,int);
-  void findaxismk();
+
 public: // power matching stuff. some sort of VarPos (ab?)use
   double  powFreq() const {return VarPos[0];}
   double  powReal() const {return VarDep[0];}
