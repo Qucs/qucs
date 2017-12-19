@@ -164,7 +164,8 @@ protected:
   void closeEvent(QCloseEvent*);
 
 public slots:
-  void slotFileNew();     // generate a new schematic in the view TabBar
+  void slotFileNew(bool enableOpenDpl=true); // generate a new schematic in the view TabBar
+  void slotFileNewNoDD(); // as above, but with "open Data Display" unchecked
   void slotTextNew();     // edit text in the built editor or user defined editor
   void slotFileOpen();    // open a document
   void slotFileSave();    // save a document
@@ -246,7 +247,7 @@ public:
   // corresponding actions
   QAction *ActionCMenuOpen, *ActionCMenuCopy, *ActionCMenuRename, *ActionCMenuDelete, *ActionCMenuInsert;
 
-  QAction *fileNew, *textNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
+  QAction *fileNew, *fileNewNoDD, *textNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
           *fileSaveAll, *fileClose, *fileExamples, *fileSettings, *filePrint, *fileQuit,
           *projNew, *projOpen, *projDel, *projClose, *applSettings, *refreshSchPath,
           *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintFit,
