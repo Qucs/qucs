@@ -1670,6 +1670,19 @@ void QucsApp::closeFile(int index)
  */
 bool QucsApp::closeAllFiles(int exceptTab)
 {
+  return closeTabsRange(0, DocumentTab->count()-1, exceptTab);
+}
+
+/**
+ * @brief close Tabs in a specified range, optionally skipping a specified one
+ * @param startTab first tab to be closed
+ * @param stoptTab last tab to be closed
+ * @param exceptTab tab to leave open, none if not specified
+ */
+bool QucsApp::closeTabsRange(int startTab, int stopTab, int exceptTab)
+{
+  if (stopTab < startTab)
+    return false;
   // document to keep open, if any
   QucsDoc *docToKeep = 0;
   if (exceptTab >= 0) {
@@ -1678,7 +1691,10 @@ bool QucsApp::closeAllFiles(int exceptTab)
 
   SaveDialog *sd = new SaveDialog(this);
   sd->setApp(this);
-  for(int i=0; i < DocumentTab->count(); ++i) {
+  Q_ASSERT(startTab >= 0);
+  Q_ASSERT(stopTab < DocumentTab->count());
+
+  for(int i=startTab; i <= stopTab; ++i) {
     QucsDoc *doc = getDoc(i);
     if ((doc->DocChanged) && (doc != docToKeep))
       sd->addUnsavedDoc(doc);
@@ -1691,19 +1707,38 @@ bool QucsApp::closeAllFiles(int exceptTab)
     return false;
   // remove documents
   QucsDoc *doc = 0;
+  QucsDoc *stopDoc = getDoc(stopTab);
   int i = 0;
-  while (i < DocumentTab->count()) {
-    if ((doc=getDoc(i)) == docToKeep) {
+  do {
+    doc = getDoc(startTab+i);
+    if (doc == docToKeep) {
       i++; // skip to next doc
     } else {
       delete doc;
     }
-  }
+  } while (doc != stopDoc);
 
   switchEditMode(true);   // set schematic edit mode
   return true;
 }
 
+/**
+ * @brief close all documents to the left of the specified one
+ * @param index reference tab
+ */
+bool QucsApp::closeAllLeft(int index)
+{
+  return closeTabsRange(0, index-1);
+}
+
+/**
+ * @brief close all documents to the right of the specified one
+ * @param index reference tab
+ */
+bool QucsApp::closeAllRight(int index)
+{
+  return closeTabsRange(index+1, DocumentTab->count()-1);
+}
 
 void QucsApp::slotFileExamples()
 {
@@ -2940,7 +2975,9 @@ void ContextMenuTabWidget::showContextMenu(const QPoint& point)
   }
 
   APPEND_MENU(ActionCxMenuClose, slotCxMenuClose, "Close")
-  APPEND_MENU(ActionCxMenuCloseOthers, slotCxMenuCloseOthers, "Close other Tabs")
+  APPEND_MENU(ActionCxMenuCloseOthers, slotCxMenuCloseOthers, "Close all but this")
+  APPEND_MENU(ActionCxMenuCloseOthers, slotCxMenuCloseLeft, "Close all to the left")
+  APPEND_MENU(ActionCxMenuCloseOthers, slotCxMenuCloseRight, "Close all to the right")
   APPEND_MENU(ActionCxMenuCloseAll, slotCxMenuCloseAll, "Close all")
 #undef APPEND_MENU
 
@@ -2958,6 +2995,18 @@ void ContextMenuTabWidget::slotCxMenuCloseOthers()
 {
   // close all tabs, except the one where the context menu was opened
   App->closeAllFiles(contextTabIndex);
+}
+
+void ContextMenuTabWidget::slotCxMenuCloseLeft()
+{
+  // close all tabs to the left of the current one
+  App->closeAllLeft(contextTabIndex);
+}
+
+void ContextMenuTabWidget::slotCxMenuCloseRight()
+{
+  // close all tabs to the right of the current one
+  App->closeAllRight(contextTabIndex);
 }
 
 void ContextMenuTabWidget::slotCxMenuCloseAll()
