@@ -472,6 +472,8 @@ private slots:
   void slotCxMenuCloseAll();
   void slotCxMenuCloseRight();
   void slotCxMenuCloseLeft();
+  void slotCxMenuCopyPath();
+  void slotCxMenuOpenFolder();
 };
 
 #endif /* QUCS_H */
