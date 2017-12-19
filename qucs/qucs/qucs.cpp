@@ -1340,16 +1340,22 @@ void QucsApp::slotButtonProjDel()
 // #####  documents.                                          #####
 // ################################################################
 
-void QucsApp::slotFileNew()
+void QucsApp::slotFileNew(bool enableOpenDpl)
 {
   statusBar()->showMessage(tr("Creating new schematic..."));
   slotHideEdit(); // disable text edit of component property
 
   Schematic *d = new Schematic(this, "");
+  d->SimOpenDpl = enableOpenDpl;
   int i = DocumentTab->addTab(d, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
   DocumentTab->setCurrentIndex(i);
 
   statusBar()->showMessage(tr("Ready."));
+}
+
+void QucsApp::slotFileNewNoDD()
+{
+  slotFileNew(false);
 }
 
 // --------------------------------------------------------------

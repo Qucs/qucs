@@ -44,14 +44,20 @@ void QucsApp::initActions()
 
   // note: first argument of QAction() for backward compatibility Qt < 3.2
 
-  fileNew = new QAction(QIcon((":/bitmaps/filenew.png")), tr("&New"), this);
+  fileNew = new QAction(QIcon((":/bitmaps/filenew.png")), tr("Document"), this);
   fileNew->setShortcut(Qt::CTRL+Qt::Key_N);
   fileNew->setStatusTip(tr("Creates a new document"));
   fileNew->setWhatsThis(
 	        tr("New\n\nCreates a new schematic or data display document"));
   connect(fileNew, SIGNAL(triggered()), SLOT(slotFileNew()));
 
-  textNew = new QAction(QIcon((":/bitmaps/textnew.png")), tr("New &Text"), this);
+  fileNewNoDD = new QAction(QIcon((":/bitmaps/filenew.png")), tr("Stand-alone Document"), this);
+  fileNewNoDD->setStatusTip(tr("Creates a new stand-alone document"));
+  fileNewNoDD->setWhatsThis(
+	        tr("New\n\nCreates a new stand-alone schematic or data display document"));
+  connect(fileNewNoDD, SIGNAL(triggered()), SLOT(slotFileNewNoDD()));
+
+  textNew = new QAction(QIcon((":/bitmaps/textnew.png")), tr("&Text Document"), this);
   textNew->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_V);
   textNew->setStatusTip(tr("Creates a new text document"));
   textNew->setWhatsThis(tr("New Text\n\nCreates a new text document"));
@@ -667,8 +673,13 @@ void QucsApp::initActions()
 void QucsApp::initMenuBar()
 {
   fileMenu = new QMenu(tr("&File"));  // menuBar entry fileMenu
-  fileMenu->addAction(fileNew);
-  fileMenu->addAction(textNew);
+
+  QMenu *newFileMenu = new QMenu(tr("New"), fileMenu);
+  newFileMenu->addAction(fileNew);
+  newFileMenu->addAction(fileNewNoDD);
+  newFileMenu->addAction(textNew);
+  fileMenu->addMenu(newFileMenu);
+  
   fileMenu->addAction(fileOpen);
   fileMenu->addAction(fileClose);
 
