@@ -171,7 +171,11 @@ public slots:
   void slotFileSave();    // save a document
   void slotFileSaveAs();  // save a document under a different filename
   void slotFileSaveAll(); // save all open documents
-  void slotFileClose();   // close the actual file
+  void slotFileClose();   // close the current file
+  void slotFileCloseOthers();   // close all documents except the current one
+  void slotFileCloseAllLeft();  // close all documents to the left of the current one
+  void slotFileCloseAllRight(); // close all documents to the right of the current one
+  void slotFileCloseAll();      //  close all documents
   void slotFileExamples();   // show the examples in a file browser
   void slotHelpTutorial();   // Open a pdf tutorial
   void slotHelpReport();   // Open a pdf report
@@ -248,7 +252,8 @@ public:
   QAction *ActionCMenuOpen, *ActionCMenuCopy, *ActionCMenuRename, *ActionCMenuDelete, *ActionCMenuInsert;
 
   QAction *fileNew, *fileNewNoDD, *textNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
-          *fileSaveAll, *fileClose, *fileExamples, *fileSettings, *filePrint, *fileQuit,
+          *fileSaveAll, *fileClose, *fileCloseOthers, *fileCloseAllLeft, *fileCloseAllRight,
+          *fileCloseAll, *fileExamples, *fileSettings, *filePrint, *fileQuit,
           *projNew, *projOpen, *projDel, *projClose, *applSettings, *refreshSchPath,
           *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintFit,
           *symEdit, *intoH, *popH, *simulate, *dpl_sch, *undo, *redo, *dcbias;
