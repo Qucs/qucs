@@ -1635,6 +1635,34 @@ void QucsApp::slotFileClose(int index)
     closeFile(index);
 }
 
+// Close all documents except the current one
+void QucsApp::slotFileCloseOthers()
+{
+  closeAllFiles(DocumentTab->currentIndex());
+}
+
+// Close all documents to the left of the current one
+void QucsApp::slotFileCloseAllLeft()
+{
+  closeAllLeft(DocumentTab->currentIndex());
+}
+
+// Close all documents to the right of the current one
+void QucsApp::slotFileCloseAllRight()
+{
+  closeAllRight(DocumentTab->currentIndex());
+}
+
+// Close all documents
+void QucsApp::slotFileCloseAll()
+{
+  // close all tabs
+  closeAllFiles();
+  // create empty schematic
+  slotFileNew();
+}
+
+//
 // --------------------------------------------------------------
 // Common function to close a file tab specified by its index
 // checking for changes in the file before doing so. If called
@@ -3020,10 +3048,7 @@ void ContextMenuTabWidget::slotCxMenuCloseRight()
 
 void ContextMenuTabWidget::slotCxMenuCloseAll()
 {
-  // close all tabs
-  App->closeAllFiles();
-  // create empty schematic
-  App->slotFileNew();
+  App->slotFileCloseAll();
 }
 
 void ContextMenuTabWidget::slotCxMenuCopyPath()
