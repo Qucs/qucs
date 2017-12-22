@@ -347,13 +347,10 @@ void QucsApp::initView()
 
   messageDock = new MessageDock(this);
 
-  // initial home directory model
-  m_homeDirModel = new QFileSystemModel(this);
-  QStringList filters;
-  filters << "*_prj";
-  m_homeDirModel->setNameFilters(filters);
-  m_homeDirModel->setNameFilterDisables(false);
-  m_homeDirModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
+  // initial projects directory model
+  m_homeDirModel = new QucsFileSystemModel(this);
+  // show all directories (project and non-project)
+  m_homeDirModel->setFilter(QDir::NoDot | QDir::AllDirs);
 
   // ............................................
   readProjects(); // reads all projects and inserts them into the ListBox
@@ -1207,8 +1204,19 @@ void QucsApp::slotButtonProjOpen()
 // Is called when project is double-clicked to open it.
 void QucsApp::slotListProjOpen(const QModelIndex &idx)
 {
-  openProject(QucsSettings.QucsHomeDir.filePath(
-      idx.data().toString()));
+  QString dName = idx.data().toString();
+  if (dName.endsWith("_prj")) { // it's a Qucs project
+    openProject(QucsSettings.QucsHomeDir.filePath(dName));
+  } else { // it's a normal directory
+    // close all open files, asking the user whether to save the modified ones
+    // if user aborts closing, just return
+    if(!closeAllFiles()) return;
+    QucsSettings.QucsHomeDir = QucsSettings.QucsHomeDir.filePath(dName);
+    slotMenuProjClose();
+    readProjects();
+    slotUpdateTreeview();
+    repaint();
+  }
 }
 
 // ----------------------------------------------------------
@@ -3144,4 +3152,17 @@ bool saveApplSettings()
 
   return true;
 
+}
+
+QVariant QucsFileSystemModel::data( const QModelIndex& index, int role ) const
+{
+  if (role == Qt::DecorationRole) { // it's an icon
+    QString dName = fileName(index);
+    if (dName.endsWith("_prj")) { // it's a Qucs project
+      // for some reason SVG does not always work on Windows, so use PNG
+      return QIcon(":bitmaps/hicolor/128x128/apps/qucs.png");
+    }
+  }
+  // return default system icon
+  return QFileSystemModel::data(index, role);
 }
