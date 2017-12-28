@@ -39,6 +39,7 @@ SUBDIRS = \
 	tests \
 	$(RELEASEDIRS)
 
+# used in qucs.in wrapper, to compile PATH
 subdirs:
 	@echo $(SUBDIRS)
 
