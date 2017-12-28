@@ -38,7 +38,12 @@ if [ -z "$QUCS_LIBRARY" ]; then
 	QUCS_LIBRARY="$top_src/qucs-lib/library";
 fi
 
-for i in $( make subdirs ); do
+subdirs="$( make -C $top subdirs )"
+if [ 0 -ne $? ]; then
+	echo could not obtain list ob subdirectories >&2
+fi
+
+for i in $subdirs; do
 	PATH="$top/$i:$PATH"
 done
 
