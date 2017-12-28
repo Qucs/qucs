@@ -52,6 +52,7 @@ void QucsApp::initActions()
   connect(fileNew, SIGNAL(triggered()), SLOT(slotFileNew()));
 
   fileNewNoDD = new QAction(QIcon((":/bitmaps/filenew.png")), tr("Stand-alone Document"), this);
+  fileNewNoDD->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_H);
   fileNewNoDD->setStatusTip(tr("Creates a new stand-alone document"));
   fileNewNoDD->setWhatsThis(
 	        tr("New\n\nCreates a new stand-alone schematic or data display document"));
