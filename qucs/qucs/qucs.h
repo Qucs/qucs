@@ -179,6 +179,7 @@ public slots:
   void slotFileCloseAllRight(); // close all documents to the right of the current one
   void slotFileCloseAll();      //  close all documents
   void slotFileExamples();   // show the examples in a file browser
+  void slotCopyExamples(); //copy Examples in the user workspace
   void slotHelpTutorial();   // Open a pdf tutorial
   void slotHelpReport();   // Open a pdf report
   void slotHelpTechnical();   // Open a pdf technical document
@@ -255,7 +256,7 @@ public:
 
   QAction *fileNew, *fileNewNoDD, *textNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
           *fileSaveAll, *fileClose, *fileCloseOthers, *fileCloseAllLeft, *fileCloseAllRight,
-          *fileCloseAll, *fileExamples, *fileSettings, *filePrint, *fileQuit,
+          *fileCloseAll, *fileExamples, *fileSettings, *filePrint, *fileQuit, *copyExamples,
           *projNew, *projOpen, *projDel, *projClose, *applSettings, *refreshSchPath,
           *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintFit,
           *symEdit, *intoH, *popH, *simulate, *dpl_sch, *undo, *redo, *dcbias;
@@ -306,6 +307,10 @@ private:
   void updateRecentFilesList(QString s);
   void successExportMessages(bool ok);
   void fillLibrariesTreeView (void);
+
+  int cpDir(const QString &, const QString &);
+  bool rmDir(const QString &);
+
 
 public:
 
@@ -489,3 +494,4 @@ private slots:
 };
 
 #endif /* QUCS_H */
+

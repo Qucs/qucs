@@ -40,6 +40,7 @@
 #include <QVector>
 #include <QStringList>
 #include <QFileInfo>
+#include <QMessageBox>
 
 class QTextStream;
 class QTextEdit;

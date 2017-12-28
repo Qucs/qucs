@@ -2183,4 +2183,3 @@ void Schematic::contentsDragMoveEvent(QDragMoveEvent *Event)
 
   Event->accept();
 }
-

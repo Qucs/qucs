@@ -254,7 +254,7 @@ void QucsApp::initView()
   TabView->addTab(Content, tr("Content"));
   TabView->setTabToolTip(TabView->indexOf(Content), tr("content of current project"));
 
-  connect(Content, SIGNAL(clicked(const QModelIndex &)), 
+  connect(Content, SIGNAL(clicked(const QModelIndex &)),
           SLOT(slotSelectSubcircuit(const QModelIndex &)));
 
   connect(Content, SIGNAL(doubleClicked(const QModelIndex &)),
@@ -887,7 +887,7 @@ void QucsApp::initCursorMenu()
   connect(action, SIGNAL(triggered()), SLOT(slot())); \
   ContentMenu->addAction(action); \
   }
-  
+
   APPEND_MENU(ActionCMenuOpen, slotCMenuOpen, "Open")
   APPEND_MENU(ActionCMenuCopy, slotCMenuCopy, "Copy file")
   APPEND_MENU(ActionCMenuRename, slotCMenuRename, "Rename")
@@ -900,7 +900,7 @@ void QucsApp::initCursorMenu()
 
 // ----------------------------------------------------------
 // Shows the menu.
-void QucsApp::slotShowContentMenu(const QPoint& pos) 
+void QucsApp::slotShowContentMenu(const QPoint& pos)
 {
   QModelIndex idx = Content->indexAt(pos);
   if (idx.isValid() && idx.parent().isValid()) {
@@ -908,7 +908,7 @@ void QucsApp::slotShowContentMenu(const QPoint& pos)
         idx.sibling(idx.row(), 1).data().toString().contains(tr("-port"))
     );
     ContentMenu->popup(Content->mapToGlobal(pos));
-  }    
+  }
 }
 
 // ----------------------------------------------------------
@@ -958,8 +958,8 @@ void QucsApp::slotCMenuCopy()
   QucsDoc *d = findDoc(file, &z);
   if (d != NULL && d->DocChanged) {
     DocumentTab->setCurrentIndex(z);
-    int ret = QMessageBox::question(this, tr("Copying Qucs document"), 
-        tr("The document contains unsaved changes!\n") + 
+    int ret = QMessageBox::question(this, tr("Copying Qucs document"),
+        tr("The document contains unsaved changes!\n") +
         tr("Do you want to save the changes before copying?"),
         tr("&Ignore"), tr("&Save"), 0, 1);
     if (ret == 1) {
@@ -1035,7 +1035,7 @@ void QucsApp::slotCMenuRename()
   bool ok;
   QString s = QInputDialog::getText(this, tr("Rename file"), tr("Enter new filename:"), QLineEdit::Normal, base, &ok);
 
-  if(ok && !s.isEmpty()) { 
+  if(ok && !s.isEmpty()) {
     if (!s.endsWith(suffix)) {
       s += QString(".") + suffix;
     }
@@ -1197,7 +1197,7 @@ void QucsApp::slotButtonProjOpen()
   QModelIndex idx = Projects->currentIndex();
   if (!idx.isValid()) {
     QMessageBox::information(this, tr("Info"),
-				tr("No project is selected !"));
+                tr("No project is selected !"));
   } else {
     slotListProjOpen(idx);
   }
@@ -1233,6 +1233,63 @@ void QucsApp::slotMenuProjClose()
   ProjName = "";
 }
 
+// Remove the specified directory
+bool QucsApp::rmDir(const QString &dirPath)
+{
+    QDir dir(dirPath);
+    if (!dir.exists())
+        return true;
+    foreach(const QFileInfo &info, dir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot)) {
+        if (info.isDir()) {
+            if (!rmDir(info.filePath()))
+                return false;
+        } else {
+            if (!dir.remove(info.fileName()))
+                return false;
+        }
+    }
+    QDir parentDir(QFileInfo(dirPath).path());
+    return parentDir.rmdir(QFileInfo(dirPath).fileName());
+}
+
+
+int QucsApp::cpDir(const QString &srcPath, const QString &dstPath)
+{
+    //Check if the directory already exists. In that case, pop up a message asking for replacing it
+    QDir dir(dstPath);
+    if (dir.exists())
+    {
+        if(QMessageBox::information(this, tr("Info"),
+              tr("The directory already exists!")+"\n"+tr("Replace it?"),
+              tr("&Yes"), tr("&No"), 0,1,1))
+          return -1;
+    }
+
+    rmDir(dstPath);//Remove the destination directory (if exists)
+
+    QDir parentDstDir(QFileInfo(dstPath).path());
+    if (!parentDstDir.mkdir(QFileInfo(dstPath).fileName()))
+        return false;
+
+    QDir srcDir(srcPath);
+    foreach(const QFileInfo &info, srcDir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot)) {
+        QString srcItemPath = srcPath + "/" + info.fileName();
+        QString dstItemPath = dstPath + "/" + info.fileName();
+        if (info.isDir()) {
+            if (!cpDir(srcItemPath, dstItemPath)) {
+                return false;
+            }
+        } else if (info.isFile()) {
+            if (!QFile::copy(srcItemPath, dstItemPath)) {
+                return false;
+            }
+        } else {
+            qDebug() << "Unhandled item" << info.filePath() << "in cpDir";
+        }
+    }
+    return 0;
+}
+
 // remove a directory recursively
 bool QucsApp::recurRemove(const QString &Path)
 {
@@ -1240,7 +1297,7 @@ bool QucsApp::recurRemove(const QString &Path)
   QDir projDir = QDir(Path);
 
   if (projDir.exists(Path)) {
-    Q_FOREACH(QFileInfo info, 
+    Q_FOREACH(QFileInfo info,
         projDir.entryInfoList(
             QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::AllEntries, QDir::DirsFirst)) {
       if (info.isDir()) {
@@ -1378,6 +1435,8 @@ bool QucsApp::gotoPage(const QString& Name)
   }
 
   QFileInfo Info(Name);
+  QString filename = Info.fileName();
+  QString icon = ":/bitmaps/empty.xpm";//Default icon (empty icon)
   if(Info.suffix() == "sch" || Info.suffix() == "dpl" ||
      Info.suffix() == "sym") {
     d = DocumentTab->createEmptySchematic(Name);
@@ -1490,12 +1549,12 @@ bool QucsApp::saveAs()
 
     if(isTextDocument (w))
       Filter = tr("VHDL Sources")+" (*.vhdl *.vhd);;" +
-	       tr("Verilog Sources")+" (*.v);;"+
-	       tr("Verilog-A Sources")+" (*.va);;"+
-	       tr("Octave Scripts")+" (*.m *.oct);;"+
-	       tr("Qucs Netlist")+" (*.net *.qnet);;"+
-	       tr("Plain Text")+" (*.txt);;"+
-	       tr("Any File")+" (*)";
+           tr("Verilog Sources")+" (*.v);;"+
+           tr("Verilog-A Sources")+" (*.va);;"+
+           tr("Octave Scripts")+" (*.m *.oct);;"+
+           tr("Qucs Netlist")+" (*.net *.qnet);;"+
+           tr("Plain Text")+" (*.txt);;"+
+           tr("Any File")+" (*)";
     else
       Filter = QucsFileFilter;
 
@@ -1519,9 +1578,9 @@ bool QucsApp::saveAs()
     Info.setFile(s);
     if(QFile::exists(s)) {
       n = QMessageBox::warning(this, tr("Warning"),
-		tr("The file '")+Info.fileName()+tr("' already exists!\n")+
-		tr("Saving will overwrite the old one! Continue?"),
-		tr("No"), tr("Yes"), tr("Cancel"));
+        tr("The file '")+Info.fileName()+tr("' already exists!\n")+
+        tr("Saving will overwrite the old one! Continue?"),
+        tr("No"), tr("Yes"), tr("Cancel"));
       if(n == 2) return false;    // cancel
       if(n == 0) continue;
     }
@@ -1530,7 +1589,7 @@ bool QucsApp::saveAs()
     QucsDoc * d = findDoc (s);
     if(d) {
       QMessageBox::information(this, tr("Info"),
-		tr("Cannot overwrite an open document"));
+        tr("Cannot overwrite an open document"));
       return false;
     }
 
@@ -1763,9 +1822,30 @@ bool QucsApp::closeAllRight(int index)
 void QucsApp::slotFileExamples()
 {
   statusBar()->showMessage(tr("Open examples directory..."));
+
+  //Throw informative window
+  QString message = "The examples are located in a read-only directory, so it will not be possible to perform simulations nor save changes.";
+  QMessageBox::information(this, tr("Info"), message, tr("&Ok"));
+
   // pass the QUrl representation of a local file
   QDesktopServices::openUrl(QUrl::fromLocalFile(QucsSettings.ExamplesDir));
   statusBar()->showMessage(tr("Ready."));
+}
+
+// Function handler for copying the examples
+void QucsApp::slotCopyExamples()
+{
+    QString dst = QucsSettings.QucsHomeDir.absolutePath()+"/Examples_prj", message;
+    if(cpDir(QucsSettings.ExamplesDir, dst) == 0)
+    {//Success
+        message = QString("The 'Examples' directory was copied in %1").arg(dst);
+    }
+    else
+    {//The copy failed
+        message = "The 'Examples' directory was not copied";
+    }
+
+    QMessageBox::information(this, tr("Info"), message, tr("&Ok"));
 }
 
 void QucsApp::slotHelpTutorial()
@@ -2074,7 +2154,7 @@ void QucsApp::slotSimulate()
     if(Doc->SimTime.isEmpty() && ((TextDoc*)Doc)->simulation) {
       DigiSettingsDialog *d = new DigiSettingsDialog((TextDoc*)Doc);
       if(d->exec() == QDialog::Rejected)
-	return;
+    return;
     }
   }
   else
@@ -2111,9 +2191,9 @@ void QucsApp::slotSimulate()
   // disconnect is automatically performed, if one of the involved objects
   // is destroyed !
   connect(sim, SIGNAL(SimulationEnded(int, SimMessage*)), this,
-		SLOT(slotAfterSimulation(int, SimMessage*)));
+        SLOT(slotAfterSimulation(int, SimMessage*)));
   connect(sim, SIGNAL(displayDataPage(QString&, QString&)),
-		this, SLOT(slotChangePage(QString&, QString&)));
+        this, SLOT(slotChangePage(QString&, QString&)));
 
   sim->show();
   if(!sim->startProcess()) return;
@@ -2155,18 +2235,18 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
     if(sim->SimOpenDpl) {
       // switch to data display
       if(sim->DataDisplay.right(2) == ".m" ||
-	 sim->DataDisplay.right(4) == ".oct") {  // Is it an Octave script?
-	octave->startOctave();
-	octave->runOctaveScript(sim->DataDisplay);
+     sim->DataDisplay.right(4) == ".oct") {  // Is it an Octave script?
+    octave->startOctave();
+    octave->runOctaveScript(sim->DataDisplay);
       }
       else
-	slotChangePage(sim->DocName, sim->DataDisplay);
+    slotChangePage(sim->DocName, sim->DataDisplay);
       sim->slotClose();   // close and delete simulation window
     }
     else
       if(w) if(!isTextDocument (sim->DocWidget))
-	// load recent simulation data (if document is still open)
-	((Schematic*)sim->DocWidget)->reloadGraphs();
+    // load recent simulation data (if document is still open)
+    ((Schematic*)sim->DocWidget)->reloadGraphs();
   }
 
   if(!isTextDocument (sim->DocWidget))
@@ -2875,7 +2955,6 @@ void QucsApp::slotSaveSchematicToGraphicsFile(bool diagram)
   }
   delete writer;
 }
-
 
 // #########################################################################
 // Loads the settings file and stores the settings.

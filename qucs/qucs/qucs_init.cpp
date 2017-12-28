@@ -132,6 +132,13 @@ void QucsApp::initActions()
   connect(fileExamples, SIGNAL(triggered()), SLOT(slotFileExamples()));
 
 
+  copyExamples = new QAction(tr("&Copy the examples in the user workspace"), this);
+  copyExamples->setStatusTip(tr("Copy the whole Examples folder in the user workspace"));
+  copyExamples->setWhatsThis(
+            tr("Examples\n\nCopy the whole Examples folder in the user workspace"));
+  connect(copyExamples, SIGNAL(triggered()), SLOT(slotCopyExamples()));
+
+
   symEdit = new QAction(tr("&Edit Circuit Symbol"), this);
   symEdit->setShortcut(Qt::Key_F9);
   symEdit->setStatusTip(tr("Edits the symbol for this schematic"));
@@ -728,6 +735,7 @@ void QucsApp::initMenuBar()
   fileMenu->addAction(filePrintFit);
   fileMenu->addSeparator();
   fileMenu->addAction(fileExamples);
+  fileMenu->addAction(copyExamples);
   fileMenu->addSeparator();
   fileMenu->addAction(fileSettings);
   fileMenu->addAction(symEdit);

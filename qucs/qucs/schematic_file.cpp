@@ -347,9 +347,10 @@ int Schematic::saveSymbolJSON()
 int Schematic::saveDocument()
 {
   QFile file(DocName);
+
   if(!file.open(QIODevice::WriteOnly)) {
-    QMessageBox::critical(0, QObject::tr("Error"),
-				QObject::tr("Cannot save document!"));
+    QMessageBox::critical(this, QObject::tr("Error"),
+                                   QObject::tr("Cannot save document!"));
     return -1;
   }
 
