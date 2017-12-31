@@ -31,6 +31,7 @@
 
 class QucsDoc;
 class Schematic;
+class TextDoc;
 class SimMessage;
 class MouseActions;
 class SearchDialog;
@@ -467,6 +468,9 @@ class ContextMenuTabWidget : public QTabWidget
   Q_OBJECT
 public:
   ContextMenuTabWidget(QucsApp *parent = 0);
+  Schematic *createEmptySchematic(const QString &name);
+  TextDoc *createEmptyTextDoc(const QString &name);
+  void setSaveIcon(bool state=true, int index=-1);
 public slots:
   void showContextMenu(const QPoint& point);
 private:
