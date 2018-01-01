@@ -314,7 +314,6 @@ void Marker::createText()
 
     diag()->calcCoordinate(pp, pz, py, &fCX, &fCY, pa);
   }
-  diag()->finishMarkerCoordinates(this);
 
   cx = int(fCX+0.5);
   cy = int(fCY+0.5);
@@ -325,8 +324,6 @@ void Marker::createText()
 void Marker::makeInvalid()
 {
   fCX = fCY = -1e3; // invalid coordinates
-  assert(diag());
-  diag()->finishMarkerCoordinates(this); // leave to diagram
   cx = int(fCX+0.5);
   cy = int(fCY+0.5);
 
@@ -502,6 +499,11 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
 
   int x1_, y1_;
   p->map(x0+x1, y0+y1, x1_, y1_);
+  // limit coordinates to diagram boundary
+  float tCX = fCX, tCY = fCY;
+  bool outside_diagram_boundaries = diag()->clipCoordinates(tCX, tCY);
+  cx = int(tCX+0.5);
+  cy = int(tCY+0.5);
   // which corner of rectangle should be connected to line ?
   if(cx < x1+(x2>>1)) {
     if(-cy >= y1+(y2>>1))
@@ -513,11 +515,11 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
       y1_ += y2_ - 1;
   }
   float fx2, fy2;
-  fx2 = (float(x0)+fCX)*p->Scale + p->DX;
-  fy2 = (float(y0)-fCY)*p->Scale + p->DY;
+  fx2 = (float(x0)+tCX)*p->Scale + p->DX;
+  fy2 = (float(y0)-tCY)*p->Scale + p->DY;
   p->Painter->drawLine(x1_, y1_, TO_INT(fx2), TO_INT(fy2));
 
-  if (outside_graph) // set by Diagram::finishMarkerCoordinates()
+  if (outside_diagram_boundaries)
   {//Let's draw a symbol to emphasize the point is outside the graph
     QPen pen(QColor(Qt::red), 7);
     p->Painter->setPen(pen);

@@ -74,11 +74,14 @@ void CurveDiagram::calcCoordinate(const double*, const double* yD, const double*
 }
 
 // --------------------------------------------------------------
-void CurveDiagram::finishMarkerCoordinates(Marker *m) const
+bool CurveDiagram::clipCoordinates(float &fCX, float& fCY) const
 {
-  if(!insideDiagram(m->fCX, m->fCY)) {
-	  m->fCX = m->fCY = 0.0;
+  if(!insideDiagram(fCX, fCY)) {
+    return false;
   }
+
+  fCX = fCY = 0.0;
+  return true;
 }
 
 // ------------------------------------------------------------

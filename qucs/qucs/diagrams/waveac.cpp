@@ -66,11 +66,14 @@ void Waveac::calcCoordinate(const double* xD, const double* yD, const double*,
 }
 
 // --------------------------------------------------------------
-void Waveac::finishMarkerCoordinates(Marker *m) const
+bool Waveac::clipCoordinates(float &fCX, float& fCY) const
 {
-  if(!insideDiagram(m->fCX, m->fCY)) {
-	  m->fCX = m->fCY = 0.0;
+  if(insideDiagram(fCX, fCY)) {
+    return false;
   }
+
+  fCX = fCY = 0.0;
+  return true;
 }
 
 // --------------------------------------------------------------

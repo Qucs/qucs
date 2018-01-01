@@ -38,7 +38,7 @@ public:
   int  calcDiagram();
   void calcLimits();
   void calcCoordinate(const double*, const double*, const double*, float*, float*, Axis const*) const;
-  void finishMarkerCoordinates(Marker*) const;
+  bool clipCoordinates(float &fCX, float& fCY) const;
   bool insideDiagram(float, float) const;
 
 protected:

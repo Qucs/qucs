@@ -363,6 +363,11 @@ void Diagram::createAxisLabels()
 }
 
 // ------------------------------------------------------------
+// compute outcodes for the Cohen-Sutherland algorithm
+//             left central right
+//        top  1001   1000   1010
+//    central  0001   0000   0010
+//     bottom  0101   0100   0110
 int Diagram::regionCode(float x, float y) const
 {
   int code=0;   // code for clipping
@@ -1320,19 +1325,20 @@ Diagram* Diagram::newOne()
 }
 
 // ------------------------------------------------------------
-void Diagram::finishMarkerCoordinates(Marker *m) const
+bool Diagram::clipCoordinates(float &fCX, float& fCY) const
 {
   // for round diagrams: if marker is outside it's placed
   // on the diagram border, keeping its angle
-  if(!insideDiagram(m->fCX, m->fCY)) {
-    float R = x2/2.0; // diagram radius and also coordinate of center
-    float ma = atan2(m->fCY-R, m->fCX-R);
-    m->fCX = R * (1 + cos(ma));
-    m->fCY = R * (1 + sin(ma));
-    m->outside_graph = true;
-  } else {
-     m->outside_graph = false;
+  // return true if coordinates were modified
+  if(insideDiagram(fCX, fCY)) {
+    return false;
   }
+
+  float R = x2/2.0; // diagram radius and also coordinate of center
+  float ma = atan2(fCY-R, fCX-R);
+  fCX = R * (1 + cos(ma));
+  fCY = R * (1 + sin(ma));
+  return true;
 }
 
 // ------------------------------------------------------------
