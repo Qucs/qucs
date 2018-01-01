@@ -140,6 +140,15 @@ protected:
 
   virtual void calcData(Graph*);
 
+  // enums for the Cohen-Sutherland algorithm outcodes
+  enum CS_REGION : char {
+    CS_INSIDE = 0, // 0000
+    CS_LEFT = 1,   // 0001
+    CS_RIGHT = 2,  // 0010
+    CS_BOTTOM = 4, // 0100
+    CS_TOP = 8    // 1000
+  };
+
 private:
   int Bounding_x1, Bounding_x2, Bounding_y1, Bounding_y2;
 };

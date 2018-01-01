@@ -303,7 +303,7 @@ void Waveac::calcData(Graph *g)
 // ------------------------------------------------------------
 bool Waveac::insideDiagram(float x, float y) const
 {
-  return (regionCode(x, y) == 0);
+  return (regionCode(x, y) == CS_INSIDE);
 }
 
 // ------------------------------------------------------------

@@ -372,14 +372,14 @@ int Diagram::regionCode(float x, float y) const
 {
   int code=0;   // code for clipping
   if(x < 0.0)
-    code |= 1;
+    code |= CS_LEFT;
   else if(x > float(x2))  // compare as float to avoid integer overflow
-    code |= 2;
+    code |= CS_RIGHT;
 
   if(y < 0.0)
-    code |= 4;
+    code |= CS_BOTTOM;
   else if(y > float(y2))  // compare as float to avoid integer overflow
-    code |= 8;
+    code |= CS_TOP;
 
   return code;
 }
@@ -428,16 +428,16 @@ void Diagram::rectClip(Graph::iterator &p) const
 
   int code1 = regionCode(x_1, y_1);
   int code2 = regionCode(x_2, y_2);
-  if((code1 | code2) == 0)  return;  // line completly inside ?
+  if((code1 | code2) == CS_INSIDE)  return;  // line completly inside ?
 
-  if(code1 != 0) if((p-3)->isPt()) {
+  if(code1 != CS_INSIDE) if((p-3)->isPt()) {
     p++;
     (p-3)->setStrokeEnd();
   }
   if(code1 & code2)   // line not visible at all ?
     goto endWithHidden;
 
-  if(code2 != 0) {
+  if(code2 != CS_INSIDE) {
     p->setStrokeEnd();
     (p+1)->setScr(x_2, y_2);
     z += 2;
@@ -445,26 +445,26 @@ void Diagram::rectClip(Graph::iterator &p) const
 
 
   for(;;) {
-    if((code1 | code2) == 0) break;  // line completly inside ?
+    if((code1 | code2) == CS_INSIDE) break;  // line completly inside ?
 
     if(code1)  code = code1;
     else  code = code2;
 
     dx = x_2 - x_1;  // dx and dy never equals zero !
     dy = y_2 - y_1;
-    if(code & 1) {
+    if(code & CS_LEFT) {
       y = y_1 - dy * x_1 / dx;
       x = 0.0;
     }
-    else if(code & 2) {
+    else if(code & CS_RIGHT) {
       y = y_1 + dy * (x2-x_1) / dx;
       x = float(x2);
     }
-    else if(code & 4) {
+    else if(code & CS_BOTTOM) {
       x = x_1 - dx * y_1 / dy;
       y = 0.0;
     }
-    else if(code & 8) {
+    else if(code & CS_TOP) {
       x = x_1 + dx * (y2-y_1) / dy;
       y = float(y2);
     }
@@ -529,12 +529,12 @@ void Diagram::clip(Graph::iterator &p) const
     return;
   }
 
-  int code = 0;
+  int code = CS_INSIDE;
   R   = sqrt(F);
   dt1 = C - R;
   if((dt1 > 0.0) && (dt1 < D)) { // intersection outside start/end point ?
     (p-2)->setScr(x_1 - x*dt1 / D, y_1 - y*dt1 / D);
-    code |= 1;
+    code |= CS_LEFT;
   }
   else {
     (p-2)->setScr(x_1, y_1);
@@ -545,11 +545,11 @@ void Diagram::clip(Graph::iterator &p) const
     (p-1)->setScr(x_1 - x*dt2 / D, y_1 - y*dt2 / D);
     p->setStrokeEnd();
     p += 2;
-    code |= 2;
+    code |= CS_RIGHT;
   }
   (p-1)->setScr(x_2, y_2);
 
-  if(code == 0) {   // intersections both lie outside ?
+  if(code == CS_INSIDE) {   // intersections both lie outside ?
     (p-2)->setScr(x_2, y_2);
     --p;
   }
