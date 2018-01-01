@@ -157,7 +157,7 @@ void Diagram::paint(ViewPainter *p)
     // draw markers last, so they are at the top of painting layers
     foreach(Graph *pg, Graphs)
       foreach(Marker *pm, pg->Markers)
-          if (!pm->isHidden) pm->paint(p, cx, cy);
+          pm->paint(p, cx, cy);
 }
 
 // ------------------------------------------------------------

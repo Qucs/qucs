@@ -65,6 +65,8 @@ public:
   std::vector<double> const& varPos() const {return VarPos;}
   const Diagram *diag() const;
 
+  void hide() {hidden = true;};
+  void unHide() {hidden = false;};
 public: // power matching stuff. some sort of VarPos (ab?)use
   double  powFreq() const {return VarPos[0];}
   double  powReal() const {return VarDep[0];}
@@ -77,12 +79,12 @@ private:
   std::vector<double> VarPos;   // values the marker is pointing to
   double VarDep[2];   // dependent value
   float  fCX, fCY;  // coordinates for the line from graph to marker body
+  bool hidden = false; // to hide marker while printing, if not selected
 
 public:
   QString Text;     // the string to be displayed in the marker text
   bool transparent; // background shines through marker body
   Axis const*xA,*yA,*zA;
-  bool isHidden = false; // to hide marker while printing, if not selected
 
 // private: // not yet, cross-manipulated by MarkerDialog
   int Precision; // number of digits to show

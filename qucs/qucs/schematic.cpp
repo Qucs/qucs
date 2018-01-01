@@ -705,7 +705,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
             } else {
               if (!printAll)
                 // if not printing all, hide non-selected markers
-                pm->isHidden = true;
+                pm->hide();
             }
             pm->isSelected = false;
           }
@@ -723,7 +723,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
           foreach(Marker *pm, pg->Markers) {
             if(pm->Type & 1)  pm->isSelected = true;
             pm->Type &= -2;
-            pm->isHidden = false; // make all markers visible again
+            pm->unHide(); // make all markers visible again
           }
         }
       }

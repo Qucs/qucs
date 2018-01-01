@@ -413,6 +413,9 @@ bool Marker::moveUpDown(bool up)
 // ---------------------------------------------------------------------
 void Marker::paint(ViewPainter *p, int x0, int y0)
 {
+  if (hidden) // marker is hidden
+    return;  // don't paint it
+
   // keep track of painter state
   p->Painter->save();
 
