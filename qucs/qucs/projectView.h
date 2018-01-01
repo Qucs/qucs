@@ -55,6 +55,7 @@ private:
   bool m_valid;
   QString m_projPath;
   QString m_projName;
+  QString ReadDescription(QString);
 };
 
 #endif /* PROJECTVIEW_H_ */
