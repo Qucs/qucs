@@ -76,7 +76,7 @@ void CurveDiagram::calcCoordinate(const double*, const double* yD, const double*
 // --------------------------------------------------------------
 bool CurveDiagram::clipCoordinates(float &fCX, float& fCY) const
 {
-  if(!insideDiagram(fCX, fCY)) {
+  if(insideDiagram(fCX, fCY)) {
     return false;
   }
 
