@@ -89,24 +89,25 @@ bool RectDiagram::clipCoordinates(float &fCX, float& fCY) const
   // the marker is pointing outside the diagram boundaries and, in
   // such case it clips the given coordinates to the diagram border
   // and returns true
-  if (regionCode(fCX, fCY) == CS_TOP) {
-    fCY = y2; // The marker points above the upper limit
-    return true;
-  }
-  if (regionCode(fCX, fCY) == CS_BOTTOM) {
-    fCY = 0;  // The marker points below the lower limit
-    return true;
-  }
-  if (regionCode(fCX, fCY) == CS_LEFT) {
-    fCX = 0;  // The marker points below the left limit
-    return true;
-  }
-  if (regionCode(fCX, fCY) == CS_RIGHT) {
-    fCX = x2;  // The marker points above the right limit
-    return true;
+  int rc = regionCode(fCX, fCY);
+
+  if (rc == CS_INSIDE) {
+    return false;
   }
 
-  return false;
+  if (rc & CS_TOP) {
+    fCY = y2; // The marker points above the upper limit
+  }
+  if (rc & CS_BOTTOM) {
+    fCY = 0;  // The marker points below the lower limit
+  }
+  if (rc & CS_LEFT) {
+    fCX = 0;  // The marker points below the left limit
+  }
+  if (rc & CS_RIGHT) {
+    fCX = x2;  // The marker points above the right limit
+  }
+  return true;
 }
 
 // --------------------------------------------------------------
