@@ -999,7 +999,7 @@ void Schematic::highlightWireLabels ()
 //     while ((pwouter = itwouter.current()) != 0)
 //     {
 //         ++itwouter;
-    for(Wire *pwouter = Wires->first(); pwouter = Wires->next(); )
+    for(Wire *pwouter = Wires->first(); (pwouter = Wires->next()); )
     {
         // get any label associated with the wire
         pltestouter = pwouter->Label;
@@ -1014,7 +1014,7 @@ void Schematic::highlightWireLabels ()
 //                 while ((pwinner = itwinner.current()) != 0)
 //                 {
 //                     ++itwinner;
-                for(Wire *pwinner = Wires->first(); pwinner = Wires->next(); ) 
+                for(Wire *pwinner = Wires->first(); (pwinner = Wires->next()); ) 
                 {
                     pltestinner = pwinner->Label; // test any label associated with the wire
                     if (pltestinner)
@@ -1037,7 +1037,7 @@ void Schematic::highlightWireLabels ()
 //                 while ((pninner = itninner.current()) != 0)
 //                 {
 //                     ++itninner;
-                for(Node *pninner = Nodes->first(); pninner = Nodes->next(); )
+                for(Node *pninner = Nodes->first(); (pninner = Nodes->next()); )
                 {
                     pltestinner = pninner->Label; // test any label associated with the node
                     if (pltestinner)
@@ -1063,7 +1063,7 @@ void Schematic::highlightWireLabels ()
 //     while ((pnouter = itnouter.current()) != 0)
 //     {
 //         ++itnouter;
-    for(Node *pnouter = Nodes->first(); pnouter = Nodes->next(); )
+    for(Node *pnouter = Nodes->first(); (pnouter = Nodes->next()); )
     {
         // get any label associated with the node
         pltestouter = pnouter->Label;
@@ -1078,7 +1078,7 @@ void Schematic::highlightWireLabels ()
 //                 while ((pwinner = itwinner.current()) != 0)
 //                 {
 //                     ++itwinner;
-                for(Wire *pwinner = Wires->first(); pwinner = Wires->next(); )
+                for(Wire *pwinner = Wires->first(); (pwinner = Wires->next()); )
                 {
                     pltestinner = pwinner->Label; // test any label associated with the wire
                     if (pltestinner)
@@ -1097,7 +1097,7 @@ void Schematic::highlightWireLabels ()
 //                 while ((pninner = itninner.current()) != 0)
 //                 {
 //                     ++itninner;
-                for(Node *pninner = Nodes->first(); pninner = Nodes->next(); )
+                for(Node *pninner = Nodes->first(); (pninner = Nodes->next()); )
                 {
                     pltestinner = pninner->Label; // test any label associated with the node
                     if (pltestinner)

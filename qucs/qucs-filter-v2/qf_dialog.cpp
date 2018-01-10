@@ -71,19 +71,19 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
   QWidget *Tab1 = new QWidget(t);
   QGridLayout *gp1 = new QGridLayout(Tab1,12,6,5,5);
 
-  FilterName = new QComboBox(FALSE, Tab1);
+  FilterName = new QComboBox(false, Tab1);
   gp1->addWidget(FilterName,0,0);
-  TformName = new QComboBox(FALSE, Tab1);
+  TformName = new QComboBox(false, Tab1);
   gp1->addWidget(TformName,0,1);
 
   OrderBox = new QCheckBox(tr("Specify order"), Tab1);
   gp1->addWidget(OrderBox,1,0);
   QHBox *h1 = new QHBox(Tab1);
   h1->setSpacing (5);
-  OrderCombo = new QComboBox(FALSE, h1);
-  OrderCombo->setEnabled(TRUE);
-  SubOrderCombo = new QComboBox(FALSE, h1);
-  SubOrderCombo->setEnabled(FALSE);
+  OrderCombo = new QComboBox(false, h1);
+  OrderCombo->setEnabled(true);
+  SubOrderCombo = new QComboBox(false, h1);
+  SubOrderCombo->setEnabled(false);
   SubOrderCombo->insertItem( tr( "b" ) );
   SubOrderCombo->insertItem( tr( "c" ) );
   gp1->addWidget(h1,1,1);
@@ -132,7 +132,7 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
   gp1->addWidget(StopbandLabel,5,0);
   EnterStopband = new QLineEdit(Tab1);
   gp1->addWidget(EnterStopband,5,1);
-  StopbandCombo = new QComboBox(FALSE, Tab1);
+  StopbandCombo = new QComboBox(false, Tab1);
   StopbandCombo->insertItem( tr( "Hz" ) );
   StopbandCombo->insertItem( tr( "kHz" ) );
   StopbandCombo->insertItem( tr( "MHz" ) );
@@ -140,12 +140,12 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
   gp1->addWidget(StopbandCombo,5,2);
 
   BandwidthLabel = new QLabel(tr("Bandwidth"),Tab1);
-  BandwidthLabel->setEnabled(FALSE);
+  BandwidthLabel->setEnabled(false);
   gp1->addWidget(BandwidthLabel,4,0);
   EnterBandwidth = new QLineEdit(Tab1);
   gp1->addWidget(EnterBandwidth,4,1);
-  BandwidthCombo = new QComboBox(FALSE, Tab1);
-  BandwidthCombo->setEnabled(FALSE);
+  BandwidthCombo = new QComboBox(false, Tab1);
+  BandwidthCombo->setEnabled(false);
   BandwidthCombo->insertItem( tr( "Hz" ) );
   BandwidthCombo->insertItem( tr( "kHz" ) );
   BandwidthCombo->insertItem( tr( "MHz" ) );
@@ -162,16 +162,16 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
   DualBox = new QCheckBox(tr("dual"),Tab1);
   gp1->addMultiCellWidget(DualBox,8,8,0,2);
   CauerPoleBox = new QCheckBox(tr("Stopband is first pole"),Tab1);
-  CauerPoleBox->setEnabled(FALSE);
+  CauerPoleBox->setEnabled(false);
   gp1->addMultiCellWidget(CauerPoleBox,9,9,0,2);
   OptimizeCauerBox = new QCheckBox(tr("Optimize cauer"),Tab1);
-  OptimizeCauerBox->setEnabled(FALSE);
+  OptimizeCauerBox->setEnabled(false);
   gp1->addMultiCellWidget(OptimizeCauerBox,10,10,0,2);
   EqualInductorBox = new QCheckBox(tr("Equal inductors"),Tab1);
-  EqualInductorBox->setEnabled(FALSE);
+  EqualInductorBox->setEnabled(false);
   gp1->addMultiCellWidget(EqualInductorBox,8,8,3,5);
   UseCrossBox = new QCheckBox(tr("+ rather than T"),Tab1);
-  UseCrossBox->setEnabled(FALSE);
+  UseCrossBox->setEnabled(false);
   gp1->addMultiCellWidget(UseCrossBox,9,9,3,5);
 
   Cboxes = new QVButtonGroup(tr("Optimize C"),Tab1);
@@ -208,7 +208,7 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
 
   cancelButton = new QPushButton(tr("Exit"),Butts);
   okButton = new QPushButton(tr("Calculate"),Butts);
-  okButton->setEnabled(FALSE);
+  okButton->setEnabled(false);
 
   // signals and slots connections
   connect( cancelButton, SIGNAL( clicked() ), this, SLOT( reject() ) );
