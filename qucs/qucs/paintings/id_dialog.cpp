@@ -62,8 +62,13 @@ ID_Dialog::ID_Dialog(ID_Text *idText_)
   ParamTable->horizontalHeader()->setStretchLastSection(true);
   // set automatic resize so all content will be visible, 
   //  horizontal scrollbar will appear if table becomes too large
+#if QT_VERSION < 0x050000
   ParamTable->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
   ParamTable->horizontalHeader()->setClickable(false); // no action when clicking on the header 
+#else
+  ParamTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+  ParamTable->horizontalHeader()->setSectionsClickable(false); // no action when clicking on the header 
+#endif
   ParamTable->verticalHeader()->hide();
   ParamTable->setColumnCount(5);
   ParamTable->setHorizontalHeaderLabels(
