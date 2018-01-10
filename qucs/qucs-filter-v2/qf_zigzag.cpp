@@ -15,7 +15,7 @@
 #include "qf_tform.h"
 #include "qf_zigzag.h"
 //Added by qt3to4:
-#include <Q3TextStream>
+#include <QTextStream>
 
 #undef	  _QF_ZIGZAG_DEBUG
 
@@ -76,7 +76,7 @@ void qf_zigzag::synth_zz (qf_cauer* F) {
 
 #ifdef	_QF_ZIGZAG_DEBUG
   QString  * buf = new QString ();
-  Q3TextStream *CD = new Q3TextStream (* buf, QIODevice::ReadWrite);
+  QTextStream *CD = new QTextStream (* buf, QIODevice::ReadWrite);
   (F -> lcmp). dump_all (* CD);
   std::cout << buf -> data (); 
   std::cout. flush ();
@@ -344,7 +344,7 @@ void qf_zigzag::synth_zz (qf_cauer* F) {
   Tspec -> r2 = Tspec -> r1 * pts2 * tp[m] * tp[m];
 }
 
-void qf_zigzag::dump (Q3TextStream& out) {
+void qf_zigzag::dump (QTextStream& out) {
 
   lcmp.tx = qf_filter_apis [Tspec -> filter] -> name + " zigzag filter" + 
     " of order " + QString::number(Tspec -> ord);
