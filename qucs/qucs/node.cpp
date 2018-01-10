@@ -37,7 +37,11 @@ Node::Node(int _x, int _y)
   cy = _y;
 
   setFlags(ItemIsSelectable|ItemIsMovable);
+#if QT_VERSION < 0x050000
   setAcceptsHoverEvents(true);
+#else
+  setAcceptHoverEvents(true);
+#endif
 }
 
 Node::~Node()

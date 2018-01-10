@@ -62,8 +62,12 @@ Component::Component()
 
   containingSchematic = NULL;
 
-   setFlags(ItemIsSelectable|ItemIsMovable);
-   setAcceptsHoverEvents(true);
+  setFlags(ItemIsSelectable|ItemIsMovable);
+#if QT_VERSION < 0x050000
+  setAcceptsHoverEvents(true);
+#else
+  setAcceptHoverEvents(true);
+#endif
 }
 
 // -------------------------------------------------------
