@@ -84,7 +84,7 @@ public:
 	  // BUG. do not use
 	  return Model;
   }
-  QString const& name_hack() const{
+  QString const& name() const{
 	  // yikes. this should not be necessary
 	  return Name;
   }

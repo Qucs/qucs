@@ -238,7 +238,7 @@ Graph* SweepDialog::setBiasPoints()
         pn = pc->Ports.at(1)->Connection;
 
       pn->x1 = 0x10;   // mark current
-      pg->Var = pc->name_hack() + ".I";
+      pg->Var = pc->name() + ".I";
       pg->lastLoaded = QDateTime(); // Note 1 at the start of this function
       if(pg->loadDatFile(DataSet) == 2) {
         pn->Name = misc::num2str(*(pg->cPointsY)) + "A";

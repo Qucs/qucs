@@ -1233,7 +1233,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
   if(selElem->Type & isComponent) {
     Component *Comp = (Component*)selElem;
 //    qDebug() << "+-+ got to switch:" << Comp->Name;
-    QString entryName = Comp->name_hack();
+    QString entryName = Comp->name();
 
     switch(Event->button()) {
       case Qt::LeftButton :
@@ -1264,7 +1264,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
       QString filename = Module::vaComponents[entryName];
 //      qDebug() << "   ===+ recast";
       Comp = dynamic_cast<vacomponent*>(Comp)->newOne(filename); //va component
-      qDebug() << "   => recast = Comp;" << Comp->name_hack() << "filename: " << filename;
+      qDebug() << "   => recast = Comp;" << Comp->name() << "filename: " << filename;
     }
     else {
 	  Comp = Comp->newOne(); // static component is used, so create a new one
