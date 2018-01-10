@@ -106,9 +106,10 @@ static const int NumDefaultColors = 8;
 
 
 DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
-                    : QDialog(parent, Qt::WDestructiveClose)
+                    : QDialog(parent)
 {
   Diag = d;
+  setAttribute(Qt::WA_DeleteOnClose);
   Graphs.setAutoDelete(true);
   copyDiagramGraphs();   // make a copy of all graphs
   if(parent){

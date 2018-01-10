@@ -705,7 +705,7 @@ int Rect3DDiagram::calcAxis(Axis *Axis, int x, int y,
       
       xLen = int(ystepD * cos(phi) + 0.5) + x;
       yLen = int(ystepD * sin(phi) + 0.5) + y;
-      if(Qt::DockRight)
+      if(Qt::RightDockWidgetArea)
 	Texts.append(new Text(xLen+3+gx, yLen-6+gy, tmp));
       else
 	Texts.append(new Text(xLen-w-2-gx, yLen-6-gy, tmp));
@@ -738,7 +738,7 @@ int Rect3DDiagram::calcAxis(Axis *Axis, int x, int y,
       
       w = metrics.width(tmp);  // width of text
       if(maxWidth < w) maxWidth = w;
-      if(Qt::DockRight)
+      if(Qt::RightDockWidgetArea)
 	Texts.append(new Text(x+3+gx, y-6+gy, tmp)); // place text right
       else
 	Texts.append(new Text(x-w-2-gx, y-6-gy, tmp)); // place left
@@ -774,7 +774,7 @@ void Rect3DDiagram::createAxis(Axis *Axis, bool Right,
   cos_phi = sqrt(double(x*x) + double(y*y));
   phi = atan2(double(y), double(x));
   
-  valid = calcAxis(Axis, x1_, y1_, cos_phi, phi, Qt::DockRight); // axis numbering
+  valid = calcAxis(Axis, x1_, y1_, cos_phi, phi, Qt::RightDockWidgetArea); // axis numbering
   z = (int)cos_phi;
   cos_phi = cos(phi);
   sin_phi = sin(phi);

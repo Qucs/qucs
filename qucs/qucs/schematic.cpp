@@ -19,6 +19,7 @@
 #include <limits.h>
 
 #include <QFileInfo>
+#include <QMimeData>
 #include <QPrinter>
 #include <QPaintDevice>
 #include <QDir>
@@ -2048,10 +2049,11 @@ void Schematic::contentsDragEnterEvent(QDragEnterEvent *Event)
   }
 
 
-  if(Event->format(1) == 0) {  // only one MIME type ?
+//   if(Event->format(1) == 0) {  // only one MIME type ?
 
     // drag component from listview
-    if(Event->provides("application/x-qabstractitemmodeldatalist")) {
+//     if(Event->provides("application/x-qabstractitemmodeldatalist")) {
+    if(Event->mimeData()->hasFormat("application/x-qabstractitemmodeldatalist")) {
       QListWidgetItem *Item = App->CompComps->currentItem();
       if(Item) {
         formerAction = App->activeAction;
@@ -2063,7 +2065,7 @@ void Schematic::contentsDragEnterEvent(QDragEnterEvent *Event)
         return;
       }
     }
-  }
+//   }
 
   Event->ignore();
 }

@@ -175,7 +175,7 @@ int PackageDialog::insertFile(const QString& FileName, QFile& File,
     return -1;
   }
 
-  Q_ULONG Count = File.size();
+  qulonglong Count = File.size();
   char *p = (char*)malloc(Count+FileName.length()+2);
   strcpy(p, FileName.toLatin1());
   File.read(p+FileName.length()+1, Count);
@@ -201,7 +201,7 @@ int PackageDialog::insertDirectory(const QString& DirName,
   QStringList::iterator it;
   for(it = Entries.begin(); it != Entries.end(); ++it) {
     File.setFileName(myDir.absoluteFilePath(*it));
-    Stream << Q_UINT32(CODE_FILE);
+    Stream << quint32(CODE_FILE);
     if(insertFile(*it, File, Stream) < 0)
       return -1;
   }
@@ -211,10 +211,10 @@ int PackageDialog::insertDirectory(const QString& DirName,
   Entries.pop_front();  // delete "." from list
   Entries.pop_front();  // delete ".." from list
   for(it = Entries.begin(); it != Entries.end(); ++it) {
-    Stream << Q_UINT32(CODE_DIR) << (*it).toLatin1();
+    Stream << quint32(CODE_DIR) << (*it).toLatin1();
     if(insertDirectory(myDir.absolutePath()+QDir::separator()+(*it), Stream) < 0)
       return -1;
-    Stream << Q_UINT32(CODE_DIR_END) << Q_UINT32(0);
+    Stream << quint32(CODE_DIR_END) << quint32(0);
   }
   return 0;
 }
@@ -228,7 +228,7 @@ int PackageDialog::insertLibraries(QDataStream& Stream)
   QStringList::iterator it;
   for(it = Entries.begin(); it != Entries.end(); ++it) {
     File.setFileName(myDir.absoluteFilePath(*it));
-    Stream << Q_UINT32(CODE_LIBRARY);
+    Stream << quint32(CODE_LIBRARY);
     if(insertFile(*it, File, Stream) < 0)
       return -1;
   }
@@ -291,14 +291,14 @@ void PackageDialog::slotCreate()
     p = i.next();
     if(p->isChecked()) {
       s = p->text() + "_prj";
-      Stream << Q_UINT32(CODE_DIR) << s.toLatin1();
+      Stream << quint32(CODE_DIR) << s.toLatin1();
       s = QucsSettings.QucsHomeDir.absolutePath() + QDir::separator() + s;
       if(insertDirectory(s, Stream) < 0) {
         PkgFile.close();
         PkgFile.remove();
         return;
       }
-      Stream << Q_UINT32(CODE_DIR_END) << Q_UINT32(0);
+      Stream << quint32(CODE_DIR_END) << quint32(0);
     }
   }
 
@@ -313,8 +313,8 @@ void PackageDialog::slotCreate()
   // Calculate checksum and write it to package file.
   PkgFile.seek(0);
   QByteArray Content = PkgFile.readAll();
-  Q_UINT16 Checksum = qChecksum(Content.data(), Content.size());
-  PkgFile.seek(HEADER_LENGTH-sizeof(Q_UINT16));
+  quint16 Checksum = qChecksum(Content.data(), Content.size());
+  PkgFile.seek(HEADER_LENGTH-sizeof(quint16));
   Stream << Checksum;
   PkgFile.close();
 
@@ -361,8 +361,8 @@ void PackageDialog::extractPackage()
   QDir currDir = QucsSettings.QucsHomeDir;
   QString Version;
   VersionTriplet PackageVersion;
-  Q_UINT16 Checksum;
-  Q_UINT32 Code, Length;
+  quint16 Checksum;
+  quint32 Code, Length;
 
   // First read and check header.
   QByteArray Content = PkgFile.readAll();
@@ -381,7 +381,7 @@ void PackageDialog::extractPackage()
   // checksum correct ?
   PkgFile.seek(HEADER_LENGTH-2);
   Stream >> Checksum;
-  *((Q_UINT16*)(Content.data()+HEADER_LENGTH-2)) = 0;
+  *((quint16*)(Content.data()+HEADER_LENGTH-2)) = 0;
   if(Checksum != qChecksum(Content.data(), Content.size())) {
     MsgText->append(tr("ERROR: Checksum mismatch!"));
     goto ErrorEnd;
@@ -427,7 +427,7 @@ ErrorEnd:
 }
 
 // ---------------------------------------------------------------
-int PackageDialog::extractDirectory(QFile& PkgFile, Q_UINT32 Count, QDir& currDir)
+int PackageDialog::extractDirectory(QFile& PkgFile, quint32 Count, QDir& currDir)
 {
   char *p = (char*)malloc(Count);
   PkgFile.read(p, Count);
@@ -449,7 +449,7 @@ int PackageDialog::extractDirectory(QFile& PkgFile, Q_UINT32 Count, QDir& currDi
 }
 
 // ---------------------------------------------------------------
-int PackageDialog::extractFile(QFile& PkgFile, Q_UINT32 Count, QDir& currDir)
+int PackageDialog::extractFile(QFile& PkgFile, quint32 Count, QDir& currDir)
 {
   char *p = (char*)malloc(Count);
   PkgFile.read(p, Count);
@@ -470,7 +470,7 @@ int PackageDialog::extractFile(QFile& PkgFile, Q_UINT32 Count, QDir& currDir)
 }
 
 // ---------------------------------------------------------------
-int PackageDialog::extractLibrary(QFile& PkgFile, Q_UINT32 Count)
+int PackageDialog::extractLibrary(QFile& PkgFile, quint32 Count)
 {
   char *p = (char*)malloc(Count);
   PkgFile.read(p, Count);
