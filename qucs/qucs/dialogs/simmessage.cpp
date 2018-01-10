@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <iostream>
 using namespace std;
+#include <QTextBlock>
 #include <QLabel>
 #include <QGroupBox>
 #include <QTimer>
@@ -319,7 +320,7 @@ void SimMessage::slotFinishSpiceNetlist(int status )
 #ifdef __MINGW32__
 #include <windows.h>
 static QString pathName(QString longpath) {
-  const char * lpath = QDir::toNativeSeparators(longpath).toAscii();
+  const char * lpath = QDir::toNativeSeparators(longpath).toLatin1();
   char spath[2048];
   int len = GetShortPathNameA(lpath,spath,sizeof(spath)-1);
   spath[len] = '\0';
@@ -424,7 +425,7 @@ void SimMessage::startSimulator()
 			.arg(destFile.fileName()));
 	return;
       }
-      destFile.write(text.toAscii(), text.length());
+      destFile.write(text.toLatin1(), text.length());
       destFile.close();
       Program = pathName(QucsSettings.BinDir + QucsDigiLib);
       Arguments << QucsSettings.QucsHomeDir.filePath("netlist.txt")
