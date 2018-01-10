@@ -5,7 +5,7 @@
 # include "qf_filter.h"
 # include "qf_tform.h"
 //Added by qt3to4:
-#include <Q3TextStream>
+#include <QTextStream>
 
 // Validation functions
 
@@ -118,7 +118,7 @@ qf_bandstop::qf_bandstop (qf_spec* Tspec):   qf_tform (Tspec) {
 
 // Dump functions
 
-void qf_nonetf::dump (Q3TextStream& out) {
+void qf_nonetf::dump (QTextStream& out) {
 
   lcmp.tx = qf_filter_apis [Tspec -> filter] -> name +
     " of order " + QString::number(Tspec -> ord) + Tspec -> subord;
@@ -128,7 +128,7 @@ void qf_nonetf::dump (Q3TextStream& out) {
   lcmp.dump_all (out);
 }
 
-void qf_lowpass::dump (Q3TextStream& out) {
+void qf_lowpass::dump (QTextStream& out) {
 
   lcmp.tx = qf_filter_apis [Tspec -> filter] -> name + " low-pass filter" + 
     " of order " + QString::number(Tspec -> ord) + Tspec -> subord;
@@ -138,7 +138,7 @@ void qf_lowpass::dump (Q3TextStream& out) {
   lcmp.dump_all (out);
 }
 
-void qf_highpass::dump (Q3TextStream& out) {
+void qf_highpass::dump (QTextStream& out) {
 
   lcmp.tx = qf_filter_apis [Tspec -> filter] -> name + " high-pass filter" + 
     " of order " + QString::number(Tspec -> ord) + Tspec -> subord;
@@ -148,7 +148,7 @@ void qf_highpass::dump (Q3TextStream& out) {
   lcmp.dump_all (out);
 }
 
-void qf_bandpass::dump (Q3TextStream& out) {
+void qf_bandpass::dump (QTextStream& out) {
 
   lcmp.tx = qf_filter_apis [Tspec -> filter] -> name + " band-pass filter" + 
     " of order " + QString::number(Tspec -> ord) + Tspec -> subord;
@@ -158,7 +158,7 @@ void qf_bandpass::dump (Q3TextStream& out) {
   lcmp.dump_all (out);
 }
 
-void qf_bandstop::dump (Q3TextStream& out) {
+void qf_bandstop::dump (QTextStream& out) {
 
   lcmp.tx = qf_filter_apis [Tspec -> filter] -> name + " band-stop filter" + 
     " of order " + QString::number(Tspec -> ord) + Tspec -> subord;

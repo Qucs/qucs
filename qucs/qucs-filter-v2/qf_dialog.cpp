@@ -30,13 +30,13 @@
 #include <QRadioButton>
 #include <Q3ButtonGroup>
 #include <QPushButton>
-#include <Q3HBox>
+#include <QHBox>
 #include <QMessageBox>
 
 #include "qf_dialog.h"
 //Added by qt3to4:
 #include <Q3GridLayout>
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 
 FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
 {
@@ -44,7 +44,7 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
   setIcon (QPixmap(":/bitmaps/big.qucs.xpm"));
   setCaption("Qucs Filter " PACKAGE_VERSION);
 
-  all = new Q3VBoxLayout(this);
+  all = new QVBoxLayout(this);
 
   // --------  create menubar  -------------------
   Q3PopupMenu *fileMenu = new Q3PopupMenu();
@@ -78,7 +78,7 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
 
   OrderBox = new QCheckBox(tr("Specify order"), Tab1);
   gp1->addWidget(OrderBox,1,0);
-  Q3HBox *h1 = new Q3HBox(Tab1);
+  QHBox *h1 = new QHBox(Tab1);
   h1->setSpacing (5);
   OrderCombo = new QComboBox(FALSE, h1);
   OrderCombo->setEnabled(TRUE);
@@ -201,7 +201,7 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
 
   // ...........................................................
   // buttons on the bottom of the dialog (independent of the TabWidget)
-  Q3HBox *Butts = new Q3HBox(this);
+  QHBox *Butts = new QHBox(this);
   Butts->setSpacing(3);
   Butts->setMargin(3);
   all->addWidget(Butts);
