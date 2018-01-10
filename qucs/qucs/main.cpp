@@ -69,8 +69,14 @@
  * <http://qt-project.org/doc/qt-4.8/debug.html#warning-and-debugging-messages>
  * <http://qt-project.org/doc/qt-4.8/qtglobal.html#qInstallMsgHandler>
  */
+#if QT_VERSION < 0x050000
 void qucsMessageOutput(QtMsgType type, const char *msg)
 {
+#else
+void qucsMessageOutput(QtMsgType type, const QMessageLogContext &, const QString & str)
+{
+  const char * msg = str.toUtf8().data();
+#endif
   switch (type) {
   case QtDebugMsg:
     fprintf(stderr, "Debug: %s\n", msg);
@@ -506,7 +512,13 @@ void createListComponentEntry(){
 // #########################################################################
 int main(int argc, char *argv[])
 {
+
+	// BUG. platform.h
+#if QT_VERSION < 0x050000
   qInstallMsgHandler(qucsMessageOutput);
+#else
+  qInstallMessageHandler(qucsMessageOutput);
+#endif
   // set the Qucs version string
   QucsVersion = VersionTriplet(PACKAGE_VERSION);
 

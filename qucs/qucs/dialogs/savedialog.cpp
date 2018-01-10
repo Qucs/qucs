@@ -79,7 +79,11 @@ void SaveDialog::initDialog()
    saveSelectedButton->setDefault(true);
    buttonsLayout->addWidget( saveSelectedButton );
    SaveDialogLayout->addLayout( buttonsLayout );
+#if QT_VERSION_MAJOR == 4
    languageChange();
+#else
+   // TODO for Qt5 ??
+#endif
    resize( QSize(500, 300).expandedTo(minimumSizeHint()) );
    //clearWState( Qt::WA_WState_Polished );
    setAttribute(Qt::WA_WState_Polished, false);

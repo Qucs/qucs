@@ -251,8 +251,14 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
     item2->setText(tr("Program"));
 
     fileTypesTableWidget->horizontalHeader()->setStretchLastSection(true);
+	 // BUG. platform.h?
+#if QT_VERSION < 0x050000
     fileTypesTableWidget->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
     fileTypesTableWidget->horizontalHeader()->setClickable(false); // no action when clicking on the header
+#else
+    fileTypesTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    fileTypesTableWidget->horizontalHeader()->setSectionsClickable(false); // no action when clicking on the header
+#endif
     fileTypesTableWidget->verticalHeader()->hide();
     connect(fileTypesTableWidget, SIGNAL(cellClicked(int,int)), SLOT(slotTableClicked(int,int)));
     fileTypesGrid->addWidget(fileTypesTableWidget,1,0,3,1);
@@ -344,7 +350,12 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
 
     pathsTableWidget->horizontalHeader()->setStretchLastSection(true);
     // avoid drawing header text in bold when some data is selected
+	 // // BUG. again.
+#if QT_VERSION < 0x050000
     pathsTableWidget->horizontalHeader()->setClickable(false);
+#else
+    pathsTableWidget->horizontalHeader()->setSectionsClickable(false);
+#endif
 
     pathsTableWidget->verticalHeader()->hide();
     // allow multiple items to be selected
