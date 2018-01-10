@@ -2561,7 +2561,7 @@ void Schematic::recreateComponent(Component *Comp)
 
     int x = Comp->tx, y = Comp->ty;
     int x1 = Comp->x1, x2 = Comp->x2, y1 = Comp->y1, y2 = Comp->y2;
-    QString tmp = Comp->name_hack();    // is sometimes changed by "recreate"
+    QString tmp = Comp->name();    // is sometimes changed by "recreate"
     Comp->recreate(this);   // to apply changes to the schematic symbol
     Comp->obsolete_name_override_hack(tmp);
     if(x < x1)
@@ -2608,8 +2608,8 @@ void Schematic::insertComponent(Component *c)
 
     bool ok;
     QString s;
-    int  max=1, len = c->name_hack().length(), z;
-    if(c->name_hack().isEmpty()) { // BUG
+    int  max=1, len = c->name().length(), z;
+    if(c->name().isEmpty()) { // BUG
         // a ground symbol erases an existing label on the wire line
         if(c->obsolete_model_hack() == "GND") { // BUG
             c->gnd_obsolete_model_override_hack("x");
@@ -2627,14 +2627,14 @@ void Schematic::insertComponent(Component *c)
         // determines the name by looking for names with the same
         // prefix and increment the number
         for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-            if(pc->name_hack().left(len) == c->name_hack())
+            if(pc->name().left(len) == c->name())
             {
-                s = pc->name_hack().right(pc->name_hack().length()-len);
+                s = pc->name().right(pc->name().length()-len);
                 z = s.toInt(&ok);
                 if(ok) if(z >= max) max = z + 1;
             }
         c->obsolete_name_override_hack(
-	    c->name_hack() + QString::number(max));  // create name with new number
+	    c->name() + QString::number(max));  // create name with new number
     }
 
     setComponentNumber(c); // important for power sources and subcircuit ports

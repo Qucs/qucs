@@ -172,10 +172,10 @@ void ChangeDialog::slotButtReplace()
   // search through all components
   for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next()) {
     if(matches(pc->obsolete_model_hack())) {
-      if(Expr.indexIn(pc->name_hack()) >= 0)
+      if(Expr.indexIn(pc->name()) >= 0)
         for(Property *pp = pc->Props.first(); pp!=0; pp = pc->Props.next())
           if(pp->Name == PropNameEdit->currentText()) {
-            pb = new QCheckBox(pc->name_hack());
+            pb = new QCheckBox(pc->name());
             Dia_Box->addWidget(pb);
             pList.append(pb);
             pb->setChecked(true);
@@ -213,7 +213,7 @@ void ChangeDialog::slotButtReplace()
     if(!pb->isChecked())  continue;
 
     for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next()) {
-      if(pb->text() != pc->name_hack())  continue;
+      if(pb->text() != pc->name())  continue;
 
       for(Property *pp = pc->Props.first(); pp!=0; pp = pc->Props.next()) {
         if(pp->Name != PropNameEdit->currentText())  continue;

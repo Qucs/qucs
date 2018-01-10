@@ -349,7 +349,7 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
   for(pc=Doc->Components->first(); pc!=0; pc=Doc->Components->next())
     if(pc != Comp)
       if(pc->obsolete_model_hack()[0] == '.' && pc->obsolete_model_hack() != ".Opt")
-        SimEdit->insertItem(SimEdit->count(), pc->name_hack());
+        SimEdit->insertItem(SimEdit->count(), pc->name());
 
   Property *pp;
   pp = Comp->Props.at(0);
@@ -376,7 +376,7 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
     CostConEdit->setText(pp->Value.section('|',9,9));
   }
 
-  NameEdit->setText(Comp->name_hack());
+  NameEdit->setText(Comp->name());
 
   QTableWidgetItem *item;
   for(pp = Comp->Props.at(2); pp != 0; pp = Comp->Props.next()) {
@@ -720,14 +720,14 @@ void OptimizeDialog::slotApply()
 {
   Component *pc;
   if(NameEdit->text().isEmpty())
-    NameEdit->setText(Comp->name_hack());
+    NameEdit->setText(Comp->name());
   else
-  if(NameEdit->text() != Comp->name_hack()) {
+  if(NameEdit->text() != Comp->name()) {
     for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next())
-      if(pc->name_hack() == NameEdit->text())
+      if(pc->name() == NameEdit->text())
         break;  // found component with the same name ?
     if(pc)
-      NameEdit->setText(Comp->name_hack());
+      NameEdit->setText(Comp->name());
     else {
       Comp->obsolete_name_override_hack(NameEdit->text());
       changed = true;

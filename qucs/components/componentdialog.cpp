@@ -181,7 +181,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
 	// insert all schematic available simulations in the Simulation combo box
         if(pc != Comp)
           if(pc->obsolete_model_hack()[0] == '.')
-            comboSim->insertItem(comboSim->count(), pc->name_hack());
+            comboSim->insertItem(comboSim->count(), pc->name());
       }
       qDebug() << "[]" << Comp->Props.first()->Value;
       // set selected simulations in combo box to the currently used one
@@ -416,7 +416,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   connect(cancel, SIGNAL(clicked()), SLOT(slotButtCancel()));
 
   // ------------------------------------------------------------
-  CompNameEdit->setText(Comp->name_hack());
+  CompNameEdit->setText(Comp->name());
   showName->setChecked(Comp->showName);
   changed = false;
 
@@ -823,13 +823,13 @@ void ComponentDialog::slotApplyInput()
 
   QString tmp;
   Component *pc;
-  if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->name_hack());
+  if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->name());
   else
-  if(CompNameEdit->text() != Comp->name_hack()) {
+  if(CompNameEdit->text() != Comp->name()) {
     for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next())
-      if(pc->name_hack() == CompNameEdit->text())
+      if(pc->name() == CompNameEdit->text())
         break;  // found component with the same name ?
-    if(pc)  CompNameEdit->setText(Comp->name_hack());
+    if(pc)  CompNameEdit->setText(Comp->name());
     else {
       Comp->obsolete_name_override_hack(CompNameEdit->text());
       changed = true;

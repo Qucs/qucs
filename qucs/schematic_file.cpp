@@ -663,9 +663,9 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
 
     if(List) {  // "paste" ?
       int z;
-      for(z=c->name_hack().length()-1; z>=0; z--) // cut off number of component name
-        if(!c->name_hack().at(z).isDigit()) break;
-      c->obsolete_name_override_hack(c->name_hack().left(z+1));
+      for(z=c->name().length()-1; z>=0; z--) // cut off number of component name
+        if(!c->name().at(z).isDigit()) break;
+      c->obsolete_name_override_hack(c->name().left(z+1));
       List->append(c);
     }else{
       simpleInsertComponent(c);
@@ -1235,12 +1235,12 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
     // check analog/digital typed components
     if(isAnalog) {
       if((pc->Type & isAnalogComponent) == 0) {
-        ErrText->appendPlainText(QObject::tr("ERROR: Component \"%1\" has no analog model.").arg(pc->name_hack() ));
+        ErrText->appendPlainText(QObject::tr("ERROR: Component \"%1\" has no analog model.").arg(pc->name() ));
         return false;
       }
     } else {
       if((pc->Type & isDigitalComponent) == 0) {
-        ErrText->appendPlainText(QObject::tr("ERROR: Component \"%1\" has no digital model.").arg(pc->name_hack() ));
+        ErrText->appendPlainText(QObject::tr("ERROR: Component \"%1\" has no digital model.").arg(pc->name() ));
         return false;
       }
     }
@@ -1325,7 +1325,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       if(creatingLib) {
 	ErrText->appendPlainText(
 	    QObject::tr("WARNING: Skipping library component \"%1\".").
-	    arg(pc->name_hack()));
+	    arg(pc->name()));
 	continue;
       }
       QString scfile = pc->getSubcircuitFile();
@@ -1342,7 +1342,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       if(!r) {
 	ErrText->appendPlainText(
 	    QObject::tr("ERROR: \"%1\": Cannot load library component \"%2\" from \"%3\"").
-	    arg(pc->name_hack(), pc->Props.at(1)->Value, scfile));
+	    arg(pc->name(), pc->Props.at(1)->Value, scfile));
 	return false;
       }
       continue;
@@ -1355,7 +1355,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       pc->setSchematic (this);
       if(s.isEmpty()) {
         ErrText->appendPlainText(QObject::tr("ERROR: No file name in SPICE component \"%1\".").
-                        arg(pc->name_hack()));
+                        arg(pc->name()));
         return false;
       }
       QString f = pc->getSubcircuitFile();
@@ -1383,7 +1383,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       if(s.isEmpty()) {
         ErrText->appendPlainText(QObject::tr("ERROR: No file name in %1 component \"%2\".").
 			arg(pc->obsolete_model_hack()).
-                        arg(pc->name_hack()));
+                        arg(pc->name()));
         return false;
       }
       QString f = pc->getSubcircuitFile();
@@ -1737,7 +1737,7 @@ int NumPorts)
         if(pc->obsolete_model_hack() == "Eqn") {
           ErrText->appendPlainText(
                       QObject::tr("WARNING: Equations in \"%1\" are 'time' typed.").
-          arg(pc->name_hack()));
+          arg(pc->name()));
           (*tstream) << pc->get_VHDL_Code(NumPorts);
         }
       }
@@ -1960,9 +1960,9 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
         } else {
           Time = pc->Props.at(1)->Value;
 	  if (isVerilog) {
-	    if(!misc::Verilog_Time(Time, pc->name_hack())) return Time;
+	    if(!misc::Verilog_Time(Time, pc->name())) return Time;
 	  } else {
-	    if(!misc::VHDL_Time(Time, pc->name_hack())) return Time;  // wrong time format
+	    if(!misc::VHDL_Time(Time, pc->name())) return Time;  // wrong time format
 	  }
         }
       }

@@ -1107,16 +1107,16 @@ void QucsApp::slotApplyCompText()
 
   pp = 0;
   if(view->MAx3 > 0)  pp = pc->Props.at(view->MAx3-1); // current property
-  else s = pc->name_hack();
+  else s = pc->name();
 
   if(!editText->isHidden()) {   // is called the first time ?
     // no -> apply value to current property
     if(view->MAx3 == 0) {   // component name ?
       Component *pc2;
       if(!editText->text().isEmpty())
-        if(pc->name_hack() != editText->text()) {
+        if(pc->name() != editText->text()) {
           for(pc2 = Doc->Components->first(); pc2!=0; pc2 = Doc->Components->next())
-            if(pc2->name_hack() == editText->text())
+            if(pc2->name() == editText->text())
               break;  // found component with the same name ?
           if(!pc2) {
             pc->obsolete_name_override_hack( editText->text() );

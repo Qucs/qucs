@@ -1590,11 +1590,11 @@ int Schematic::adjustPortNumbers()
 
              if(pp)
              {
-                 ((PortSymbol*)pp)->nameStr = pc->name_hack();
+                 ((PortSymbol*)pp)->nameStr = pc->name();
              }
              else
              {
-                 SymbolPaints.append(new PortSymbol(x1, y2, Str, pc->name_hack()));
+                 SymbolPaints.append(new PortSymbol(x1, y2, Str, pc->name()));
                  y2 += 40;
              }
           }

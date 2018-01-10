@@ -400,7 +400,7 @@ void createDocData() {
         compData << "Caption; "           + Name;
         compData << "Description; "       + c->description();
         compData << "Identifier; ``"      + c->obsolete_model_hack() + "``"; // backticks for reST verbatim
-        compData << "Default name; ``"    + c->name_hack()  + "``";
+        compData << "Default name; ``"    + c->name()  + "``";
         compData << "Type; "              + typeMap.value(c->Type);
         compData << "Bitmap file; "       + QString(File);
         compData << "Properties; "        + QString::number(c->Props.count());

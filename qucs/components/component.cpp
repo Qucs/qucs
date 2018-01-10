@@ -742,10 +742,10 @@ void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
   s << "<" << c->obsolete_model_hack();
 
   s << " ";
-  if(c->name_hack().isEmpty()){
+  if(c->name().isEmpty()){
     s << "*";
   }else{
-    s << c->name_hack();
+    s << c->name();
   }
   s << " ";
 
@@ -799,7 +799,7 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   s = s.mid(1, s.length()-2);   // cut off start and end character
 
   QString n;
-  if(c->name_hack() == "*"){
+  if(c->name() == "*"){
     c->obsolete_name_override_hack("");
   }else{
     c->obsolete_name_override_hack(s.section(' ',1,1));
@@ -1662,7 +1662,7 @@ Component* getComponentFromName(QString& Line, Schematic* p)
     return 0;
   }
 
-  cstr = c->name_hack();   // is perhaps changed in "recreate" (e.g. subcircuit)
+  cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
   int x = c->tx, y = c->ty;
   c->setSchematic (p);
   c->recreate(0);
