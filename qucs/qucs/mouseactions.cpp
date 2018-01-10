@@ -770,7 +770,7 @@ void MouseActions::MMoveZoomIn(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
 {
-  focusElement = dynamic_cast<Element*>(Doc->scene->itemAt(Event->pos()));
+  focusElement = dynamic_cast<Element*>(Doc->scene->itemAt(Event->pos(), QTransform()));
 
   if(focusElement)  // remove special function (4 least significant bits)
     focusElement->ElemType &= isSpecialMask;
@@ -988,7 +988,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
   MAy1 = pos.y();
 
   // FIXME Ctrl + press to select multiple is not working
-  focusElement = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos())));
+  focusElement = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform() ));
 
   isMoveEqual = false;   // moving not neccessarily square
 
@@ -1149,7 +1149,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent* Event)
 {
-  Element *pe = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos())));
+  Element *pe = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(pe)
   {
     pe->ElemSelected = true;
@@ -1196,14 +1196,14 @@ void MouseActions::MPressActivate(Schematic *Doc, QMouseEvent* Event)
 void MouseActions::MPressMirrorX(Schematic *Doc, QMouseEvent* Event)
 {
   // no use in mirroring wires or diagrams
-  Component *c = dynamic_cast<Component*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos())));
+  Component *c = dynamic_cast<Component*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(c) {
     if(c->Ports.count() < 1) return;  // only mirror components with ports
     c->mirrorX();
     Doc->setCompPorts(c);
   }
   else {
-    Painting *p = dynamic_cast<Painting*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos())));
+    Painting *p = dynamic_cast<Painting*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
     if(p == 0) return;
     p->mirrorX();
   }
@@ -1224,14 +1224,14 @@ void MouseActions::MPressMirrorX(Schematic *Doc, QMouseEvent* Event)
 void MouseActions::MPressMirrorY(Schematic *Doc, QMouseEvent* Event)
 {
   // no use in mirroring wires or diagrams
-  Component *c = dynamic_cast<Component*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos())));
+  Component *c = dynamic_cast<Component*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(c) {
     if(c->Ports.count() < 1) return;  // only mirror components with ports
     c->mirrorY();
     Doc->setCompPorts(c);
   }
   else {
-    Painting *p = dynamic_cast<Painting*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos())));
+    Painting *p = dynamic_cast<Painting*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
     if(p == 0) return;
     p->mirrorY();
   }
@@ -1252,7 +1252,7 @@ void MouseActions::MPressMirrorY(Schematic *Doc, QMouseEvent* Event)
  */
 void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
 {
-  Element *e = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos())));
+  Element *e = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(e == 0) return;
   e->ElemType &= isSpecialMask;  // remove special functions
 
@@ -1399,7 +1399,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event)
     if(Event->button() != Qt::LeftButton) return;
 
     Diagram *Diag = (Diagram*)selElem;
-    // dialog is Qt::WDestructiveClose !!!
+    // dialog is Qt::WA_DeleteOnClose !!!
     DiagramDialog *dia =
        new DiagramDialog(Diag, Doc);
     // don't insert if dialog canceled
@@ -1620,7 +1620,7 @@ void MouseActions::MPressMarker(Schematic *Doc, QMouseEvent* Event)
  */
 void MouseActions::MPressOnGrid(Schematic *Doc, QMouseEvent* Event)
 {
-  Element *pe = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos())));
+  Element *pe = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(pe)
   {
     pe->ElemType &= isSpecialMask;  // remove special functions (4 lowest bits)
@@ -2115,13 +2115,15 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 	   return;
 	 }else if(c->obsolete_model_hack() == "SPICE") { // BUG. use cast
            SpiceDialog *sd = new SpiceDialog(App, (SpiceFile*)c, Doc);
-           if(sd->exec() != 1) break;   // dialog is WDestructiveClose
-         } else if(c->obsolete_model_hack() == ".Opt") { // BUG again...
+           if(sd->exec() != 1) break;   // dialog is WA_DeleteOnClose
+         }
+         else if(c->obsolete_model_hack() == ".Opt") {
            OptimizeDialog *od = new OptimizeDialog((Optimize_Sim*)c, Doc);
-           if(od->exec() != 1) break;   // dialog is WDestructiveClose
-         } else {
+           if(od->exec() != 1) break;   // dialog is WA_DeleteOnClose
+         }
+         else {
            ComponentDialog * cd = new ComponentDialog(c, Doc);
-           if(cd->exec() != 1) break;   // dialog is WDestructiveClose
+           if(cd->exec() != 1) break;   // dialog is WA_DeleteOnClose
 
            Doc->Components->findRef(c);
            Doc->Components->take();
@@ -2154,7 +2156,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 	 }
 
 	 ddia = new DiagramDialog(dia, Doc);
-         if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
+         if(ddia->exec() != QDialog::Rejected)   // is WA_DeleteOnClose
            Doc->setChanged(true, true);
 
 	 dia->Bounding(x1, x2, y1, y2);
@@ -2171,7 +2173,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 
 
 	 ddia = new DiagramDialog(dia, Doc, pg);
-	 if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
+	 if(ddia->exec() != QDialog::Rejected)   // is WA_DeleteOnClose
 	   Doc->setChanged(true, true);
          break;
 

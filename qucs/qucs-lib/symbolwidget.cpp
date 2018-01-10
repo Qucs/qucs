@@ -22,7 +22,7 @@
 #include <QPaintEvent>
 #include <QPixmap>
 #include <QMouseEvent>
-#include <QTextIStream>
+#include <QTextStream>
 #include <QMimeData>
 #include <QDrag>
 #include <QTextStream>
