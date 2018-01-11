@@ -52,7 +52,7 @@ private:
   //QVBox *Dia_Box;
   QLabel *theLabel;
   QLineEdit *NameEdit;
-  //Q3VButtonGroup  *toggleGroup;
+  //QVButtonGroup  *toggleGroup;
   QGroupBox *Group;
   QPushButton *ButtDelete, *ButtRename, *ButtClose;
 
