@@ -6,7 +6,7 @@
 #include <QTextStream>
 #include <QObject>
 #include <QApplication>
-#include <Q3TextEdit>
+#include <QTextEdit>
 #include <QDir>
 #include <QTextCodec>
 #include <QClipboard>
