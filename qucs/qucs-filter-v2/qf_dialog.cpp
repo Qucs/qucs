@@ -19,7 +19,7 @@
 # include <config.h>
 #endif
 
-#include <Q3PopupMenu>
+#include <QPopupMenu>
 #include <QMenuBar>
 #include <QLayout>
 #include <QTabWidget>
@@ -28,14 +28,14 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QRadioButton>
-#include <Q3ButtonGroup>
+#include <QButtonGroup>
 #include <QPushButton>
 #include <QHBox>
 #include <QMessageBox>
 
 #include "qf_dialog.h"
 //Added by qt3to4:
-#include <Q3GridLayout>
+#include <QGridLayout>
 #include <QVBoxLayout>
 
 FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
@@ -47,10 +47,10 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
   all = new QVBoxLayout(this);
 
   // --------  create menubar  -------------------
-  Q3PopupMenu *fileMenu = new Q3PopupMenu();
+  QPopupMenu *fileMenu = new QPopupMenu();
   fileMenu->insertItem(tr("E&xit"), this, SLOT(slotQuit()), Qt::CTRL+Qt::Key_Q);
 
-  Q3PopupMenu *helpMenu = new Q3PopupMenu();
+  QPopupMenu *helpMenu = new QPopupMenu();
   helpMenu->insertItem(
                 tr("&About Qucs Filter..."), this, SLOT(slotHelpAbout()), 0);
   helpMenu->insertItem(tr("About Qt..."), this, SLOT(slotHelpAboutQt()), 0);
@@ -69,7 +69,7 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
 
   // ...........................................................
   QWidget *Tab1 = new QWidget(t);
-  Q3GridLayout *gp1 = new Q3GridLayout(Tab1,12,6,5,5);
+  QGridLayout *gp1 = new QGridLayout(Tab1,12,6,5,5);
 
   FilterName = new QComboBox(FALSE, Tab1);
   gp1->addWidget(FilterName,0,0);
@@ -174,13 +174,13 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
   UseCrossBox->setEnabled(FALSE);
   gp1->addMultiCellWidget(UseCrossBox,9,9,3,5);
 
-  Cboxes = new Q3VButtonGroup(tr("Optimize C"),Tab1);
+  Cboxes = new QVButtonGroup(tr("Optimize C"),Tab1);
   Cmin = new QRadioButton(tr("Cmin"),Cboxes);
   Cmax = new QRadioButton(tr("Cmax"),Cboxes);
   NoC = new QRadioButton(tr("noC"),Cboxes);
   gp1->addMultiCellWidget(Cboxes,11,11,0,2);
 
-  Lboxes = new Q3VButtonGroup(tr("Optimize L"),Tab1);
+  Lboxes = new QVButtonGroup(tr("Optimize L"),Tab1);
   Lmin = new QRadioButton(tr("Lmin"),Lboxes);
   Lmax = new QRadioButton(tr("Lmax"),Lboxes);
   NoL = new QRadioButton(tr("noL"),Lboxes);
