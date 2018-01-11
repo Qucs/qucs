@@ -24,14 +24,21 @@
 #include <QStack>
 #include <QDir>
 
+/**
+ * @file qucs.h
+ * @brief definition of the main Qucs application class and other helper classes
+ */
+
 class QucsDoc;
 class Schematic;
+class TextDoc;
 class SimMessage;
 class MouseActions;
 class SearchDialog;
 class OctaveWindow;
 class MessageDock;
 class ProjectView;
+class ContextMenuTabWidget;
 class VersionTriplet;
 class QucsApp;
 
@@ -131,7 +138,10 @@ class QucsApp : public QMainWindow {
 public:
   QucsApp();
  ~QucsApp();
-  bool closeAllFiles();
+  bool closeTabsRange(int startTab, int stopTab, int exceptTab = -1);
+  bool closeAllFiles(int exceptTab = -1);
+  bool closeAllLeft(int);
+  bool closeAllRight(int);
   bool gotoPage(const QString&);   // to load a document
   QucsDoc *getDoc(int No=-1);
   QucsDoc* findDoc (QString, int * Pos = 0);
@@ -155,13 +165,18 @@ protected:
   void closeEvent(QCloseEvent*);
 
 public slots:
-  void slotFileNew();     // generate a new schematic in the view TabBar
+  void slotFileNew(bool enableOpenDpl=true); // generate a new schematic in the view TabBar
+  void slotFileNewNoDD(); // as above, but with "open Data Display" unchecked
   void slotTextNew();     // edit text in the built editor or user defined editor
   void slotFileOpen();    // open a document
   void slotFileSave();    // save a document
   void slotFileSaveAs();  // save a document under a different filename
   void slotFileSaveAll(); // save all open documents
-  void slotFileClose();   // close the actual file
+  void slotFileClose();   // close the current file
+  void slotFileCloseOthers();   // close all documents except the current one
+  void slotFileCloseAllLeft();  // close all documents to the left of the current one
+  void slotFileCloseAllRight(); // close all documents to the right of the current one
+  void slotFileCloseAll();      //  close all documents
   void slotFileExamples();   // show the examples in a file browser
   void slotHelpTutorial();   // Open a pdf tutorial
   void slotHelpReport();   // Open a pdf report
@@ -227,7 +242,7 @@ signals:
 
 public:
   MouseActions *view;
-  QTabWidget *DocumentTab;
+  ContextMenuTabWidget *DocumentTab;
   QListWidget *CompComps;
   QTreeWidget *libTreeWidget;
 
@@ -237,8 +252,9 @@ public:
   // corresponding actions
   QAction *ActionCMenuOpen, *ActionCMenuCopy, *ActionCMenuRename, *ActionCMenuDelete, *ActionCMenuInsert;
 
-  QAction *fileNew, *textNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
-          *fileSaveAll, *fileClose, *fileExamples, *fileSettings, *filePrint, *fileQuit,
+  QAction *fileNew, *fileNewNoDD, *textNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
+          *fileSaveAll, *fileClose, *fileCloseOthers, *fileCloseAllLeft, *fileCloseAllRight,
+          *fileCloseAll, *fileExamples, *fileSettings, *filePrint, *fileQuit,
           *projNew, *projOpen, *projDel, *projClose, *applSettings, *refreshSchPath,
           *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintFit,
           *symEdit, *intoH, *popH, *simulate, *dpl_sch, *undo, *redo, *dcbias;
@@ -441,6 +457,34 @@ private:
   void launchTool(const QString&, const QString&, const QString& = ""); // tool, description and args
   friend class SaveDialog;
   QString lastExportFilename;
+};
+
+/**
+ * @brief a QTabWidget with context menu for tabs
+ *
+ */
+class ContextMenuTabWidget : public QTabWidget
+{
+  Q_OBJECT
+public:
+  ContextMenuTabWidget(QucsApp *parent = 0);
+  Schematic *createEmptySchematic(const QString &name);
+  TextDoc *createEmptyTextDoc(const QString &name);
+  void setSaveIcon(bool state=true, int index=-1);
+public slots:
+  void showContextMenu(const QPoint& point);
+private:
+  int contextTabIndex; // index of tab where context menu was opened
+  QString docName; // name of the document where context menu was opened
+  QucsApp *App; // the main application - parent widget
+private slots:
+  void slotCxMenuClose();
+  void slotCxMenuCloseOthers();
+  void slotCxMenuCloseAll();
+  void slotCxMenuCloseRight();
+  void slotCxMenuCloseLeft();
+  void slotCxMenuCopyPath();
+  void slotCxMenuOpenFolder();
 };
 
 #endif /* QUCS_H */

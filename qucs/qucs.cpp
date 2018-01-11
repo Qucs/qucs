@@ -135,9 +135,7 @@ QucsApp::QucsApp()
   SearchDia = new SearchDialog(this);
 
   // creates a document called "untitled"
-  Schematic *d = new Schematic(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
-  DocumentTab->setCurrentIndex(i);
+  DocumentTab->createEmptySchematic("");
 
   select->setChecked(true);  // switch on the 'select' action
   switchSchematicDoc(true);  // "untitled" document is schematic
@@ -182,7 +180,7 @@ void QucsApp::initView()
   setWindowIcon (QPixmap(":/bitmaps/big.qucs.xpm"));
 #endif
 
-  DocumentTab = new QTabWidget(this);
+  DocumentTab = new ContextMenuTabWidget(this);
   setCentralWidget(DocumentTab);
 
   connect(DocumentTab,
@@ -1157,9 +1155,7 @@ void QucsApp::openProject(const QString& Path)
   }
 
   if(!closeAllFiles()) return;   // close files and ask for saving them
-  Schematic *d = new Schematic(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
-  DocumentTab->setCurrentIndex(i);
+  DocumentTab->createEmptySchematic("");
 
   view->drawn = false;
 
@@ -1222,9 +1218,7 @@ void QucsApp::slotMenuProjClose()
   slotHideEdit(); // disable text edit of component property
 
   if(!closeAllFiles()) return;   // close files and ask for saving them
-  Schematic *d = new Schematic(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
-  DocumentTab->setCurrentIndex(i);
+  DocumentTab->createEmptySchematic("");
 
   view->drawn = false;
 
@@ -1340,16 +1334,20 @@ void QucsApp::slotButtonProjDel()
 // #####  documents.                                          #####
 // ################################################################
 
-void QucsApp::slotFileNew()
+void QucsApp::slotFileNew(bool enableOpenDpl)
 {
   statusBar()->showMessage(tr("Creating new schematic..."));
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *d = new Schematic(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
-  DocumentTab->setCurrentIndex(i);
+  Schematic *d = DocumentTab->createEmptySchematic("");
+  d->SimOpenDpl = enableOpenDpl;
 
   statusBar()->showMessage(tr("Ready."));
+}
+
+void QucsApp::slotFileNewNoDD()
+{
+  slotFileNew(false);
 }
 
 // --------------------------------------------------------------
@@ -1382,14 +1380,10 @@ bool QucsApp::gotoPage(const QString& Name)
   QFileInfo Info(Name);
   if(Info.suffix() == "sch" || Info.suffix() == "dpl" ||
      Info.suffix() == "sym") {
-    d = new Schematic(this, Name);
-    i = DocumentTab->addTab((Schematic *)d, QPixmap(":/bitmaps/empty.xpm"), Info.fileName());
+    d = DocumentTab->createEmptySchematic(Name);
+  } else {
+    d = DocumentTab->createEmptyTextDoc(Name);
   }
-  else {
-    d = new TextDoc(this, Name);
-    i = DocumentTab->addTab((TextDoc *)d, QPixmap(":/bitmaps/empty.xpm"), Info.fileName());
-  }
-  DocumentTab->setCurrentIndex(i);
 
   if(!d->load()) {    // load document if possible
     delete d;
@@ -1592,9 +1586,9 @@ void QucsApp::slotFileSaveAll()
   while((Doc=getDoc(No++)) != 0) {
     if(Doc->DocName.isEmpty())  // make document the current ?
       DocumentTab->setCurrentIndex(No-1);
-    if (saveFile(Doc)) { // Hack! TODO: Maybe it's better to let slotFileChanged()
-        DocumentTab->setTabIcon(No-1,QPixmap(":/bitmaps/empty.xpm")); // know about Tab number?
-    }
+    // Hack! TODO: Maybe it's better to let slotFileChanged() know about Tab number?
+    //   if saving was successful, turn off "saving needed" icon
+    DocumentTab->setSaveIcon(!saveFile(Doc), No-1);
   }
 
   DocumentTab->blockSignals(false);
@@ -1629,6 +1623,34 @@ void QucsApp::slotFileClose(int index)
     closeFile(index);
 }
 
+// Close all documents except the current one
+void QucsApp::slotFileCloseOthers()
+{
+  closeAllFiles(DocumentTab->currentIndex());
+}
+
+// Close all documents to the left of the current one
+void QucsApp::slotFileCloseAllLeft()
+{
+  closeAllLeft(DocumentTab->currentIndex());
+}
+
+// Close all documents to the right of the current one
+void QucsApp::slotFileCloseAllRight()
+{
+  closeAllRight(DocumentTab->currentIndex());
+}
+
+// Close all documents
+void QucsApp::slotFileCloseAll()
+{
+  // close all tabs
+  closeAllFiles();
+  // create empty schematic
+  slotFileNew();
+}
+
+//
 // --------------------------------------------------------------
 // Common function to close a file tab specified by its index
 // checking for changes in the file before doing so. If called
@@ -1655,23 +1677,46 @@ void QucsApp::closeFile(int index)
     delete Doc;
 
     if(DocumentTab->count() < 1) { // if no document left, create an untitled
-      Schematic *d = new Schematic(this, "");
-      DocumentTab->addTab(d, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
-      DocumentTab->setCurrentIndex(0);
+      DocumentTab->createEmptySchematic("");
     }
 
     statusBar()->showMessage(tr("Ready."));
 }
 
 
-// --------------------------------------------------------------
-bool QucsApp::closeAllFiles()
+/**
+ * @brief close all open documents - except a specified one, optionally
+ * @param exceptTab tab to leave open, none if not specified
+ */
+bool QucsApp::closeAllFiles(int exceptTab)
 {
+  return closeTabsRange(0, DocumentTab->count()-1, exceptTab);
+}
+
+/**
+ * @brief close Tabs in a specified range, optionally skipping a specified one
+ * @param startTab first tab to be closed
+ * @param stoptTab last tab to be closed
+ * @param exceptTab tab to leave open, none if not specified
+ */
+bool QucsApp::closeTabsRange(int startTab, int stopTab, int exceptTab)
+{
+  if (stopTab < startTab)
+    return false;
+  // document to keep open, if any
+  QucsDoc *docToKeep = 0;
+  if (exceptTab >= 0) {
+    docToKeep = getDoc(exceptTab);
+  }
+
   SaveDialog *sd = new SaveDialog(this);
   sd->setApp(this);
-  for(int i=0; i < DocumentTab->count(); ++i) {
+  Q_ASSERT(startTab >= 0);
+  Q_ASSERT(stopTab < DocumentTab->count());
+
+  for(int i=startTab; i <= stopTab; ++i) {
     QucsDoc *doc = getDoc(i);
-    if(doc->DocChanged)
+    if ((doc->DocChanged) && (doc != docToKeep))
       sd->addUnsavedDoc(doc);
   }
   int Result = SaveDialog::DontSave;
@@ -1680,15 +1725,40 @@ bool QucsApp::closeAllFiles()
   delete sd;
   if(Result == SaveDialog::AbortClosing)
     return false;
+  // remove documents
   QucsDoc *doc = 0;
-  while((doc = getDoc()) != 0)
-	delete doc;
-
+  QucsDoc *stopDoc = getDoc(stopTab);
+  int i = 0;
+  do {
+    doc = getDoc(startTab+i);
+    if (doc == docToKeep) {
+      i++; // skip to next doc
+    } else {
+      delete doc;
+    }
+  } while (doc != stopDoc);
 
   switchEditMode(true);   // set schematic edit mode
   return true;
 }
 
+/**
+ * @brief close all documents to the left of the specified one
+ * @param index reference tab
+ */
+bool QucsApp::closeAllLeft(int index)
+{
+  return closeTabsRange(0, index-1);
+}
+
+/**
+ * @brief close all documents to the right of the specified one
+ * @param index reference tab
+ */
+bool QucsApp::closeAllRight(int index)
+{
+  return closeTabsRange(index+1, DocumentTab->count()-1);
+}
 
 void QucsApp::slotFileExamples()
 {
@@ -2130,17 +2200,12 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
   else {   // no open page found ?
     QString ext = QucsDoc::fileSuffix (DataDisplay);
 
-    int i = 0;
     if (ext != "vhd" && ext != "vhdl" && ext != "v" && ext != "va" &&
 	ext != "oct" && ext != "m") {
-      d = new Schematic(this, Name);
-      i = DocumentTab->addTab((Schematic *)d, QPixmap(":/bitmaps/empty.xpm"), DataDisplay);
+      d = DocumentTab->createEmptySchematic(Name);
+    } else {
+      d = DocumentTab->createEmptyTextDoc(Name);
     }
-    else {
-      d = new TextDoc(this, Name);
-      i = DocumentTab->addTab((TextDoc *)d, QPixmap(":/bitmaps/empty.xpm"), DataDisplay);
-    }
-    DocumentTab->setCurrentIndex(i);
 
     QFile file(Name);
     if(file.open(QIODevice::ReadOnly)) {      // try to load document
@@ -2654,8 +2719,7 @@ void QucsApp::slotHideEdit()
 // set document tab icon to "smallsave.xpm" or "empty.xpm"
 void QucsApp::slotFileChanged(bool changed)
 {
-  QString icon = (changed)? ":/bitmaps/smallsave.xpm" : ":/bitmaps/empty.xpm";
-  DocumentTab->setTabIcon(DocumentTab->currentIndex(), QPixmap(icon));
+  DocumentTab->setSaveIcon(changed);
 }
 
 // -----------------------------------------------------------
@@ -2896,6 +2960,126 @@ bool loadSettings()
     QucsSettings.numRecentDocs = 0;
 
     return true;
+}
+
+ContextMenuTabWidget::ContextMenuTabWidget(QucsApp *parent) : QTabWidget(parent)
+{
+  App = parent;
+  setContextMenuPolicy(Qt::CustomContextMenu);
+  connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint&)));
+}
+
+void ContextMenuTabWidget::showContextMenu(const QPoint& point)
+{
+  if (point.isNull()) {
+    qDebug() << "ContextMenuTabWidget::showContextMenu() : point is null!";
+    return;
+  }
+
+  contextTabIndex = tabBar()->tabAt(point);
+  qDebug() << "contextTabIndex =" << contextTabIndex;
+  if (contextTabIndex >= 0) { // clicked over a tab
+    QMenu menu(this);
+
+    // get the document where the context menu was opened
+    QucsDoc *d = App->getDoc(contextTabIndex);
+    // save the document name (full path)
+    docName = d->DocName;
+
+#define APPEND_MENU(action, slot, text)         \
+  QAction *action = new QAction(tr(text), &menu);    \
+  connect(action, SIGNAL(triggered()), SLOT(slot())); \
+  menu.addAction(action);
+
+  APPEND_MENU(ActionCxMenuClose, slotCxMenuClose, "Close")
+  APPEND_MENU(ActionCxMenuCloseOthers, slotCxMenuCloseOthers, "Close all but this")
+  APPEND_MENU(ActionCxMenuCloseLeft, slotCxMenuCloseLeft, "Close all to the left")
+  APPEND_MENU(ActionCxMenuCloseRight, slotCxMenuCloseRight, "Close all to the right")
+  APPEND_MENU(ActionCxMenuCloseAll, slotCxMenuCloseAll, "Close all")
+  menu.addSeparator();
+  APPEND_MENU(ActionCxMenuCopyPath, slotCxMenuCopyPath, "Copy full path")
+  APPEND_MENU(ActionCxMenuOpenFolder, slotCxMenuOpenFolder, "Open containing folder")
+#undef APPEND_MENU
+
+    // a not-yet-saved document does not have a name/full path
+    // so copying full path or opening containing folder does not make sense
+    ActionCxMenuCopyPath->setEnabled(!docName.isEmpty());
+    ActionCxMenuOpenFolder->setEnabled(!docName.isEmpty());
+
+    menu.exec(tabBar()->mapToGlobal(point));
+  }
+}
+
+Schematic *ContextMenuTabWidget::createEmptySchematic(const QString &name)
+{
+  // create a schematic
+  QFileInfo Info(name);
+  Schematic *d = new Schematic(App, name);
+  int i = addTab(d, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
+  setCurrentIndex(i);
+  return d;
+}
+
+TextDoc *ContextMenuTabWidget::createEmptyTextDoc(const QString &name)
+{
+  // create a text document
+  QFileInfo Info(name);
+  TextDoc *d = new TextDoc(App, name);
+  int i = addTab(d, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
+  setCurrentIndex(i);
+  return d;
+}
+
+void ContextMenuTabWidget::setSaveIcon(bool state, int index)
+{
+  // set document tab icon to "smallsave.xpm" or "empty.xpm"
+  QString icon = (state)? ":/bitmaps/smallsave.xpm" : ":/bitmaps/empty.xpm";
+  if (index < 0) {
+    index = currentIndex();
+  }
+  setTabIcon(index, QPixmap(icon));
+}
+
+void ContextMenuTabWidget::slotCxMenuClose()
+{
+  // close tab where the context menu was opened
+  App->slotFileClose(contextTabIndex);
+}
+
+void ContextMenuTabWidget::slotCxMenuCloseOthers()
+{
+  // close all tabs, except the one where the context menu was opened
+  App->closeAllFiles(contextTabIndex);
+}
+
+void ContextMenuTabWidget::slotCxMenuCloseLeft()
+{
+  // close all tabs to the left of the current one
+  App->closeAllLeft(contextTabIndex);
+}
+
+void ContextMenuTabWidget::slotCxMenuCloseRight()
+{
+  // close all tabs to the right of the current one
+  App->closeAllRight(contextTabIndex);
+}
+
+void ContextMenuTabWidget::slotCxMenuCloseAll()
+{
+  App->slotFileCloseAll();
+}
+
+void ContextMenuTabWidget::slotCxMenuCopyPath()
+{
+  // copy the document full path to the clipboard
+  QClipboard *cb = QApplication::clipboard();
+  cb->setText(docName);
+}
+
+void ContextMenuTabWidget::slotCxMenuOpenFolder()
+{
+  QFileInfo Info(docName);
+  QDesktopServices::openUrl(QUrl::fromLocalFile(Info.canonicalPath()));
 }
 
 // #########################################################################

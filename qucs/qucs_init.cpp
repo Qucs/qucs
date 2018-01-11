@@ -44,14 +44,21 @@ void QucsApp::initActions()
 
   // note: first argument of QAction() for backward compatibility Qt < 3.2
 
-  fileNew = new QAction(QIcon((":/bitmaps/filenew.png")), tr("&New"), this);
+  fileNew = new QAction(QIcon((":/bitmaps/filenew.png")), tr("Document"), this);
   fileNew->setShortcut(Qt::CTRL+Qt::Key_N);
   fileNew->setStatusTip(tr("Creates a new document"));
   fileNew->setWhatsThis(
 	        tr("New\n\nCreates a new schematic or data display document"));
   connect(fileNew, SIGNAL(triggered()), SLOT(slotFileNew()));
 
-  textNew = new QAction(QIcon((":/bitmaps/textnew.png")), tr("New &Text"), this);
+  fileNewNoDD = new QAction(QIcon((":/bitmaps/filenew.png")), tr("Stand-alone Document"), this);
+  fileNewNoDD->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_H);
+  fileNewNoDD->setStatusTip(tr("Creates a new stand-alone document"));
+  fileNewNoDD->setWhatsThis(
+	        tr("New\n\nCreates a new stand-alone schematic or data display document"));
+  connect(fileNewNoDD, SIGNAL(triggered()), SLOT(slotFileNewNoDD()));
+
+  textNew = new QAction(QIcon((":/bitmaps/textnew.png")), tr("&Text Document"), this);
   textNew->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_V);
   textNew->setStatusTip(tr("Creates a new text document"));
   textNew->setWhatsThis(tr("New Text\n\nCreates a new text document"));
@@ -88,6 +95,26 @@ void QucsApp::initActions()
   fileClose->setStatusTip(tr("Closes the current document"));
   fileClose->setWhatsThis(tr("Close File\n\nCloses the current document"));
   connect(fileClose, SIGNAL(triggered()), SLOT(slotFileClose()));
+
+  fileCloseOthers = new QAction(QIcon((":/bitmaps/fileclose.png")), tr("Close all but current"), this);
+  fileCloseOthers->setStatusTip(tr("Closes all documents except the current one"));
+  fileCloseOthers->setWhatsThis(tr("Close all but current\n\nCloses all documents except the current one"));
+  connect(fileCloseOthers, SIGNAL(triggered()), SLOT(slotFileCloseOthers()));
+
+  fileCloseAllLeft = new QAction(QIcon((":/bitmaps/fileclose.png")), tr("Close all left"), this);
+  fileCloseAllLeft->setStatusTip(tr("Closes all documents to the left of the current one"));
+  fileCloseAllLeft->setWhatsThis(tr("Close all left\n\nCloses all documents to the left of the current one"));
+  connect(fileCloseAllLeft, SIGNAL(triggered()), SLOT(slotFileCloseAllLeft()));
+
+  fileCloseAllRight = new QAction(QIcon((":/bitmaps/fileclose.png")), tr("Close all right"), this);
+  fileCloseAllRight->setStatusTip(tr("Closes all documents to the right of the current one"));
+  fileCloseAllRight->setWhatsThis(tr("Close all right\n\nCloses all documents to the right of the current one"));
+  connect(fileCloseAllRight, SIGNAL(triggered()), SLOT(slotFileCloseAllRight()));
+
+  fileCloseAll = new QAction(QIcon((":/bitmaps/fileclose.png")), tr("Close &All"), this);
+  fileCloseAll->setStatusTip(tr("Closes all documents"));
+  fileCloseAll->setWhatsThis(tr("Close All\n\nCloses all documents"));
+  connect(fileCloseAll, SIGNAL(triggered()), SLOT(slotFileCloseAll()));
 
   for (int i = 0; i < MaxRecentFiles; ++i) {
     fileRecentAction[i] = new QAction(this);
@@ -667,10 +694,22 @@ void QucsApp::initActions()
 void QucsApp::initMenuBar()
 {
   fileMenu = new QMenu(tr("&File"));  // menuBar entry fileMenu
-  fileMenu->addAction(fileNew);
-  fileMenu->addAction(textNew);
+
+  QMenu *newFileMenu = new QMenu(tr("New"), fileMenu);
+  newFileMenu->addAction(fileNew);
+  newFileMenu->addAction(fileNewNoDD);
+  newFileMenu->addAction(textNew);
+  fileMenu->addMenu(newFileMenu);
+
   fileMenu->addAction(fileOpen);
-  fileMenu->addAction(fileClose);
+
+  QMenu *closeFileMenu = new QMenu(tr("Close"), fileMenu);
+  closeFileMenu->addAction(fileClose);
+  closeFileMenu->addAction(fileCloseOthers);
+  closeFileMenu->addAction(fileCloseAllLeft);
+  closeFileMenu->addAction(fileCloseAllRight);
+  closeFileMenu->addAction(fileCloseAll);
+  fileMenu->addMenu(closeFileMenu);
 
   recentFilesMenu = new QMenu(tr("Open Recent"),fileMenu);
   fileMenu->addMenu(recentFilesMenu);
