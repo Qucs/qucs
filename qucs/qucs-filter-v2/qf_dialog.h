@@ -29,7 +29,7 @@ class QComboBox;
 class QLabel;
 class QCheckBox;
 class QRadioButton;
-class Q3VButtonGroup;
+class QVButtonGroup;
 class QPushButton;
 class QWidget;
 
@@ -60,7 +60,7 @@ public:
  QCheckBox * OrderBox, * DualBox, * CauerPoleBox, * OptimizeCauerBox,
    * EqualInductorBox, * UseCrossBox;
  QRadioButton * Cmax, * Cmin, * NoC, * Lmin, * NoL, * Lmax;
- Q3VButtonGroup * Lboxes, * Cboxes;
+ QVButtonGroup * Lboxes, * Cboxes;
 };
 
 #endif
