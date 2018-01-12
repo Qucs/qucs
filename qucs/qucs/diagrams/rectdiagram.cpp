@@ -83,17 +83,13 @@ void RectDiagram::calcCoordinate(const double* xD, const double* yD, const doubl
 }
 
 // --------------------------------------------------------------
-bool RectDiagram::clipCoordinates(float &fCX, float& fCY) const
+void RectDiagram::finishMarkerCoordinates(float &fCX, float& fCY) const
 {
   // In the case of the Cartesian diagram, this code checks if the point
   // the marker is pointing outside the diagram boundaries and, in
   // such case it clips the given coordinates to the diagram border
   // and returns true
   int rc = regionCode(fCX, fCY);
-
-  if (rc == CS_INSIDE) {
-    return false;
-  }
 
   if (rc & CS_TOP) {
     fCY = y2; // The marker points above the upper limit
@@ -107,7 +103,6 @@ bool RectDiagram::clipCoordinates(float &fCX, float& fCY) const
   if (rc & CS_RIGHT) {
     fCX = x2;  // The marker points above the right limit
   }
-  return true;
 }
 
 // --------------------------------------------------------------

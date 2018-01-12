@@ -67,7 +67,7 @@ public:
                (const double*, const double*, const double*, float*, float*, Axis const*) const {};
   void calcCoordinateP (const double*x, const double*y, const double*z, Graph::iterator& p, Axis const* A) const;
   virtual void calcCoordinatePh(const double*, float*, float*, Axis const*, Axis const*) const{};
-  virtual bool clipCoordinates(float &fCX, float& fCY) const;
+  virtual void finishMarkerCoordinates(float &fCX, float& fCY) const;
   virtual void calcLimits() {};
   virtual QString extraMarkerText(Marker const*) const {return "";}
   

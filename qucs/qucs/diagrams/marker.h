@@ -75,6 +75,7 @@ private:
   std::vector<double> VarPos;   // values the marker is pointing to
   double VarDep[2];   // dependent value
   float  fCX, fCY;  // coordinates for the line from graph to marker body
+  bool outside_diagram_boundaries; // marker coordinates (would) point outside diagram?
 
 public:
   QString Text;     // the string to be displayed in the marker text

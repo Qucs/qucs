@@ -1325,20 +1325,17 @@ Diagram* Diagram::newOne()
 }
 
 // ------------------------------------------------------------
-bool Diagram::clipCoordinates(float &fCX, float& fCY) const
+void Diagram::finishMarkerCoordinates(float &fCX, float& fCY) const
 {
   // for round diagrams: if marker is outside it's placed
   // on the diagram border, keeping its angle
   // return true if coordinates were modified
-  if(insideDiagram(fCX, fCY)) {
-    return false;
+  if(!insideDiagram(fCX, fCY)) {
+    float R = x2/2.0; // diagram radius and also coordinate of center
+    float ma = atan2(fCY-R, fCX-R);
+    fCX = R * (1 + cos(ma));
+    fCY = R * (1 + sin(ma));
   }
-
-  float R = x2/2.0; // diagram radius and also coordinate of center
-  float ma = atan2(fCY-R, fCX-R);
-  fCX = R * (1 + cos(ma));
-  fCY = R * (1 + sin(ma));
-  return true;
 }
 
 // ------------------------------------------------------------

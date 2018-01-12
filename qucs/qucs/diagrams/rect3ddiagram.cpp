@@ -188,14 +188,11 @@ void Rect3DDiagram::calcCoordinate(const double* xD, const double* zD, const dou
 }
 
 // --------------------------------------------------------------
-bool Rect3DDiagram::clipCoordinates(float &fCX, float& fCY) const
+void Rect3DDiagram::finishMarkerCoordinates(float &fCX, float& fCY) const
 {
-  if(insideDiagram(fCX, fCY)) {
-    return false;
+  if(!insideDiagram(fCX, fCY)) {
+    fCX = fCY = 0.0;
   }
-
-  fCX = fCY = 0.0;
-  return true;
 }
 
 // ------------------------------------------------------------

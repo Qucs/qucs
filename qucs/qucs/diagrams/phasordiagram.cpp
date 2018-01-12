@@ -53,14 +53,11 @@ PhasorDiagram::~PhasorDiagram()
 {
 }
 // --------------------------------------------------------------
-bool PhasorDiagram::clipCoordinates(float &fCX, float& fCY) const
+void PhasorDiagram::finishMarkerCoordinates(float &fCX, float& fCY) const
 {
-  if(insideDiagram(fCX, fCY)) {
-    return false;
+  if(!insideDiagram(fCX, fCY)) {
+    fCX = fCY = 0.0;
   }
-
-  fCX = fCY = 0.0;
-  return true;
 }
 
 // ------------------------------------------------------------
