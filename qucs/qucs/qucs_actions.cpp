@@ -26,7 +26,6 @@
 #include <limits.h>
 
 #include <QProcess>
-#include <Q3PtrList>
 #include <QRegExpValidator>
 #include <QLineEdit>
 #include <QAction>
@@ -1015,6 +1014,7 @@ void QucsApp::slotCursorLeft(bool left)
   if(!editText->isHidden()) return;  // for edit of component property ?
 
   TODO("Fix scrollling");
+  /** \todo
   Q3PtrList<Element> movingElements;
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   int markerCount = Doc->copySelectedElements(&movingElements);
@@ -1122,6 +1122,8 @@ void QucsApp::slotCursorUp(bool up)
     return;
   }
 
+  TODO("Fix scrolling");
+  /** \todo
   Q3PtrList<Element> movingElements;
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   int markerCount = Doc->copySelectedElements(&movingElements);

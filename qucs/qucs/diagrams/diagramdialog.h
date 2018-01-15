@@ -22,7 +22,6 @@
 
 #include <QDialog>
 #include <QRegExp>
-#include <Q3PtrList>
 
 class QVBoxLayout;
 class Cross3D;

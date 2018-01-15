@@ -24,7 +24,6 @@
 #include <QDir>
 #include <QTextStream>
 #include <QDragLeaveEvent>
-#include <Q3PtrList>
 #include <QPixmap>
 #include <QDragEnterEvent>
 #include <QDragMoveEvent>

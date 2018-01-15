@@ -20,7 +20,6 @@
 
 #include "element.h"
 
-#include <Q3PtrList>
 
 class Wire;
 class Schematic;

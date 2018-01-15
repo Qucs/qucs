@@ -26,8 +26,6 @@
 
 #include "element.h"
 
-class ViewPainter;
-
 class Node : public Conductor {
 public:
   Node(int, int);

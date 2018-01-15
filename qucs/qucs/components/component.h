@@ -18,7 +18,6 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include "container.h"
 #include "element.h"
 
 class Schematic;

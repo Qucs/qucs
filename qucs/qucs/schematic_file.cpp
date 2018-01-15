@@ -24,7 +24,6 @@
 #include <QDir>
 #include <QStringList>
 #include <QPlainTextEdit>
-#include <Q3PtrList>
 #include <QTextStream>
 #include <QList>
 #include <QProcess>
@@ -1297,10 +1296,11 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
   QString s;
 
   // give the ground nodes the name "gnd", and insert subcircuits etc.
-  Q3PtrListIterator<Component> it(DocComps);
-  Component *pc;
-  while((pc = it.current()) != 0) {
-    ++it;
+//   PtrList<Component>::iterator it(DocComps);
+//   Component *pc;
+//   while((pc = it.current()) != 0) {
+//     ++it;
+  for(Component *pc = DocComps.first(); (pc = DocComps.next()) != 0; ) {
     if(pc->isActive != COMP_IS_ACTIVE) continue;
 
     // check analog/digital typed components
