@@ -27,6 +27,7 @@
 #include "element.h"
 #include "qt_compat.h"
 
+
 class Node : public Conductor {
 public:
   Node(int, int);

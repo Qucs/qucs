@@ -427,12 +427,12 @@ void createDocData() {
         QStringList compProps;
         compProps << "# Note: auto-generated file (changes will be lost on update)";
         compProps << QString("# %1; %2; %3; %4").arg(  "Name", "Value", "Display", "Description");
-        foreach(Property *prop, c->Props) {
+        foreach(Property prop, c->Props) {
           compProps << QString("%1; \"%2\"; %3; \"%4\"").arg(
-                         prop->Name,
-                         prop->Value,
-                         prop->display?"yes":"no",
-                         prop->Description.replace("\"","\"\"")); // escape quote in quote
+                         prop.Name,
+                         prop.Value,
+                         prop.display?"yes":"no",
+                         prop.Description.replace("\"","\"\"")); // escape quote in quote
         }
 
         // 001_props.csv - CSV file with component properties
