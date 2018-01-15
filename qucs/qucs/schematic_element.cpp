@@ -929,10 +929,10 @@ Marker* Schematic::setMarker(int x, int y)
 // Moves the marker pointer left/right on the graph.
 void Schematic::markerLeftRight(bool left, Q3PtrList<Element> *Elements)
 {
+    Marker *pm;
     bool acted = false;
-    for(auto i : *Elements) {
-        Marker* pm = prechecked_cast<Marker*>(i);
-        assert(pm);
+    for(pm = (Marker*)Elements->first(); pm!=0; pm = (Marker*)Elements->next())
+    {
         if(pm->moveLeftRight(left))
             acted = true;
     }

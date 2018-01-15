@@ -21,6 +21,7 @@
 #include "element.h"
 #include "qt_compat.h"
 
+
 class Wire;
 class Schematic;
 class QPainter;
