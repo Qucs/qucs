@@ -579,7 +579,7 @@ void MouseActions::MMoveDelete(Schematic *Doc, QMouseEvent *Event)
   MAy3 = pos.y();
 
   Doc->mouseCursor->setCursorType(MouseCursor::CursorDelete);
-  Doc->mouseCursor->setPos(Event->pos());
+  Doc->mouseCursor->setPos(pos);
 }
 
 
@@ -595,7 +595,7 @@ void MouseActions::MMoveLabel(Schematic *Doc, QMouseEvent *Event)
   MAy3 = pos.y();
 
   Doc->mouseCursor->setCursorType(MouseCursor::CursorLabel);
-  Doc->mouseCursor->setPos(Event->pos());
+  Doc->mouseCursor->setPos(pos);
 }
 
 
@@ -611,7 +611,7 @@ void MouseActions::MMoveMarker(Schematic *Doc, QMouseEvent *Event)
   MAy3 = pos.y();
 
   Doc->mouseCursor->setCursorType(MouseCursor::CursorMarker);
-  Doc->mouseCursor->setPos(Event->pos());
+  Doc->mouseCursor->setPos(pos);
 }
 
 
@@ -627,7 +627,7 @@ void MouseActions::MMoveMirrorY(Schematic *Doc, QMouseEvent *Event)
   MAy3 = pos.y();
 
   Doc->mouseCursor->setCursorType(MouseCursor::CursorMirrorX);
-  Doc->mouseCursor->setPos(Event->pos());
+  Doc->mouseCursor->setPos(pos);
 }
 
 
@@ -643,7 +643,7 @@ void MouseActions::MMoveMirrorX(Schematic *Doc, QMouseEvent *Event)
   MAy3 = pos.y();
 
   Doc->mouseCursor->setCursorType(MouseCursor::CursorMirrorY);
-  Doc->mouseCursor->setPos(Event->pos());
+  Doc->mouseCursor->setPos(pos);
 }
 
 /**
@@ -658,7 +658,7 @@ void MouseActions::MMoveRotate(Schematic *Doc, QMouseEvent *Event)
   MAy3 = pos.y();
 
   Doc->mouseCursor->setCursorType(MouseCursor::CursorRotate);
-  Doc->mouseCursor->setPos(Event->pos());
+  Doc->mouseCursor->setPos(pos);
 }
 
 
@@ -674,7 +674,7 @@ void MouseActions::MMoveActivate(Schematic *Doc, QMouseEvent *Event)
   MAy3 = pos.y();
 
   Doc->mouseCursor->setCursorType(MouseCursor::CursorActivate);
-  Doc->mouseCursor->setPos(Event->pos());
+  Doc->mouseCursor->setPos(pos);
 }
 
 
@@ -690,7 +690,7 @@ void MouseActions::MMoveOnGrid(Schematic *Doc, QMouseEvent *Event)
   MAy3 = pos.y();
 
   Doc->mouseCursor->setCursorType(MouseCursor::CursorOnGrid);
-  Doc->mouseCursor->setPos(Event->pos());
+  Doc->mouseCursor->setPos(pos);
 }
 
 
@@ -706,7 +706,7 @@ void MouseActions::MMoveMoveTextB(Schematic *Doc, QMouseEvent *Event)
   MAy3 = pos.y();
 
   Doc->mouseCursor->setCursorType(MouseCursor::CursorMoveTextB);
-  Doc->mouseCursor->setPos(Event->pos());
+  Doc->mouseCursor->setPos(pos);
 }
 
 
@@ -730,7 +730,7 @@ void MouseActions::MMoveMoveText(Schematic *Doc, QMouseEvent *Event)
    * This is not really a cursor, isn't it more down to the paint() of the text?
   */
   Doc->mouseCursor->setCursorType(MouseCursor::CursorMoveText);
-  Doc->mouseCursor->setPos(Event->pos());
+  Doc->mouseCursor->setPos(pos);
 }
 
 
