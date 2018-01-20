@@ -750,6 +750,19 @@ void Schematic::zoomReset()
   */
 }
 
+/*!
+ * \brief Schematic::zoomOut
+ * Decrease zoom 50% steps
+ * Limit zoom out to  10%
+ */
+void Schematic::zoomOut()
+{
+  qDebug() << matrix();
+  if (matrix().m11() > 0.1 && matrix().m22() > 0.1) {
+    scale(1/1.5, 1/1.5);
+  }
+}
+
 // -----------------------------------------------------------
 // Enlarge the viewport area if the coordinates x1-x2/y1-y2 exceed the
 // visible area.

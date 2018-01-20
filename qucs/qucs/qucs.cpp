@@ -2060,7 +2060,7 @@ void QucsApp::slotZoomReset()
 void QucsApp::slotZoomOut()
 {
   slotHideEdit(); // disable text edit of component property
-  getDoc()->zoomBy(0.5f);
+  getDoc()->zoomOut();
 }
 
 
