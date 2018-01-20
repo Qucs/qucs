@@ -2050,7 +2050,7 @@ void QucsApp::slotShowAll()
 
 // -----------------------------------------------------------
 // Sets the scale factor to 1.
-void QucsApp::slotShowOne()
+void QucsApp::slotZoomReset()
 {
   slotHideEdit(); // disable text edit of component property
   getDoc()->zoomReset();

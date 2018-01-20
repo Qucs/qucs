@@ -195,7 +195,7 @@ public slots:
   void slotPopHierarchy();
 
   void slotShowAll();
-  void slotShowOne();
+  void slotZoomReset();
   void slotZoomOut(); // Zoom out by 2
 
   void slotToPage();
