@@ -54,7 +54,7 @@ public:
   bool  load ();
   int   save ();
   float zoomBy (float);
-  void  showNoZoom ();
+  void  zoomReset ();
   void  becomeCurrent (bool);
   bool  loadSimulationTime (QString&);
   void  commentSelected ();
