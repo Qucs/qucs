@@ -462,6 +462,17 @@ void TextDoc::zoomOut()
 }
 
 /*!
+ * \brief TextDoc::zoomIn
+ * Increase font by 50%
+ */
+void TextDoc::zoomIn()
+{
+  QFont f = document()->defaultFont();
+  f.setPointSize(f.pointSize()*1.5);
+  document()->setDefaultFont(f);
+}
+
+/*!
  * \brief TextDoc::loadSimulationTime set SimTime member variable
  * \param Time string  with simulation time
  * \return true if SimTime is set

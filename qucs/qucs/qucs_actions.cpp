@@ -219,14 +219,16 @@ void QucsApp::slotZoomIn(bool on)
 {
   TextDoc *Doc = (TextDoc*)DocumentTab->currentWidget();
   if(isTextDocument(Doc)) {
-    Doc->zoomBy(1.5f);
+    Doc->zoomIn();
     magPlus->blockSignals(true);
     magPlus->setChecked(false);
     magPlus->blockSignals(false);
   }
-  else
+  else {
+    // handle zoom in (under cursor) or zoon to rectangle
     performToggleAction(on, magPlus, 0,
-		&MouseActions::MMoveZoomIn, &MouseActions::MPressZoomIn);
+                        &MouseActions::MMoveZoomIn, &MouseActions::MPressZoomIn);
+  }
 }
 
 
