@@ -31,6 +31,8 @@ MouseCursor::MouseCursor()
 {
   // default
   cursorType = NoCursor;
+
+  setFlags(ItemIgnoresTransformations);
 }
 
 QRectF MouseCursor::boundingRect() const
