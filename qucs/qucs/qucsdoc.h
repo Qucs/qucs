@@ -36,7 +36,7 @@ public:
   virtual void  print(QPrinter*, QPainter*, bool, bool) {}
   virtual void  becomeCurrent(bool) {}
   virtual float zoomBy(float) { return 1.0; }
-  virtual void  showAll() {}
+  virtual void  zoomFit() {}
   virtual void  zoomReset() {}
   virtual void  zoomOut() {}
   virtual void  zoomIn() {}

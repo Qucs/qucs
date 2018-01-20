@@ -689,9 +689,9 @@ float Schematic::zoomBy(float s)
  * proposal:
  * Fit whatever is large. treat frame as an item. if item ouside, fit them.
  */
-void Schematic::showAll()
+void Schematic::zoomFit()
 {
-  TODO("Fix showAll");
+  TODO("Fix zoomFit");
   // stub. as of now 5 items are added:
   // 2 for origin cross, grid, frame, mouse cursor
   // fit in view seems to fail if things are not on x>0, y>0.
