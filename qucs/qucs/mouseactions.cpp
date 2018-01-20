@@ -401,13 +401,16 @@ void MouseActions::MMoveWire1(Schematic *Doc, QMouseEvent *Event)
  * @brief MouseActions::MMoveSelect Paints a rectangle for select area.
  * @param Doc
  * @param Event
+ * Set size of selection box.
+ * Relative to first mouse press location stored in MAx1, MAy1.
+ * Box size is set on MAx2, MAy2.
  */
 void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
 {
   //qDebug() << "MMoveSelect " << "select area";
-  // size of selection box
-  MAx2 = DOC_X_POS(Event->pos().x()) - MAx1;
-  MAy2 = DOC_Y_POS(Event->pos().y()) - MAy1;
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx2 = pos.x() - MAx1;
+  MAy2 = pos.y() - MAy1;
   if(isMoveEqual) {    // x and y size must be equal ?
     if(abs(MAx2) > abs(MAy2)) {
       if(MAx2<0) MAx2 = -abs(MAy2); else MAx2 = abs(MAy2);
@@ -415,7 +418,7 @@ void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
     else { if(MAy2<0) MAy2 = -abs(MAx2); else MAy2 = abs(MAx2); }
   }
 
-  /// \todo Doc->PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);
+  TODO("draw selection ruberband");
 }
 
 // -----------------------------------------------------------
@@ -1570,7 +1573,7 @@ void MouseActions::MPressZoomIn(Schematic *Doc, QMouseEvent*, float fX, float fY
   qDebug() << "zoom into box";
   MAx1 = int(fX);
   MAy1 = int(fY);
-  MAx2 = 0;  // rectangle size
+  MAx2 = 0;  // clear rectangle size
   MAy2 = 0;
 
   QucsMain->MouseMoveAction = &MouseActions::MMoveSelect;
@@ -1891,53 +1894,75 @@ void MouseActions::MReleaseMoveText(Schematic *Doc, QMouseEvent *Event)
   Doc->setChanged(true, true);
 }
 
-// -----------------------------------------------------------
 /*!
  * \brief MouseActions::MReleaseZoomIn
  * \param Doc
  * \param Event
- * Handle zoom in
- * Handle Zoom fit to rectangle
+ * Handle zoom in for mouse press or small selection box, center on event position.
+ * Handle zoom fit to rectangle. Limited to 500% zoom in.
  */
 void MouseActions::MReleaseZoomIn(Schematic *Doc, QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
 
-  // stub, enable simple zoom on click
-  Doc->zoomIn();
+  // position of the curson when released
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx1 = int(pos.x());
+  MAy1 = int(pos.y());
 
-  MAx1 = Event->pos().x();
-  MAy1 = Event->pos().y();
+  // size of selection rectangle, relative to release position
+  // cleared by MPressZoomIn
+  // set by MMoveSelect
   float DX = float(MAx2);
   float DY = float(MAy2);
 
-  qDebug() << MAx1 << MAy1 << MAx2 << MAy2;
-
-  TODO("Sort out contentsX");
-  /**
-  float initialScale = Doc->Scale;
-  float scale = 1;
-  float xShift = 0;
-  float yShift = 0;
-  if((Doc->Scale * DX) < 6.0) {
-    // a simple click zooms by constant factor
-    scale = Doc->zoom(1.5)/initialScale;
-
-    xShift = scale * Event->pos().x();
-    yShift = scale * Event->pos().y();
+  // legacy: why 6.0? if narrow X selection, handle as single click?
+  //if((Doc->Scale * std::abs(DX)) < 6.0) {
+  if (std::abs(DX) < 10 | std::abs(DY) < 10) {
+    // if zoom box too small, handle as simple zoomIn
+    Doc->zoomIn();
+    // center to event position
+    Doc->centerOn( Doc->mapToScene( Event->pos()) );
   } else {
-    float xScale = float(Doc->visibleWidth())  / std::abs(DX);
-    float yScale = float(Doc->visibleHeight()) / std::abs(DY);
-    scale = qMin(xScale, yScale)/initialScale;
-    scale = Doc->zoom(scale)/initialScale;
+    // zoom to selection rectangle
 
-    xShift = scale * (MAx1 - 0.5*DX);
-    yShift = scale * (MAy1 - 0.5*DY);
+    // figure out position of top left corner of zoom box
+    // zoom box size (DX, DY) it relative to release event (MAx1, MAx2)
+    float xtop;
+    float ytop;
+
+    if (DX > 0) { // drag right
+      xtop = MAx1 - std::abs( DX );
+    } else { // drag left
+      xtop = MAx1;
+    }
+
+    if (DY > 0) { // drag down
+      ytop = MAy1 - std::abs( DY );
+    } else  { // drag up
+      ytop = MAy1;
+    }
+
+    // zoom box
+    QRect rect = QRect(xtop, ytop, std::abs(DX), std::abs(DY));
+
+    // try to fit rectangle to view
+    float xRatio = Doc->rect().width() / std::abs(DX);
+    float yRatio = Doc->rect().height() / std::abs(DY);
+    float minScale = qMin(xRatio, yRatio)/Doc->Scale;
+
+    // scale and center
+    qDebug() << "minScale" << minScale;
+    //! limit max zoom to 500% \sa Schematic::zoomIn
+    if (minScale > 5)
+      minScale = 5;
+    Doc->scale(minScale, minScale);
+    Doc->centerOn( rect.center() );
+
+    // update
+    Doc->Scale = Doc->matrix().m11();
   }
-  xShift -= (0.5*Doc->visibleWidth() + Doc->contentsX());
-  yShift -= (0.5*Doc->visibleHeight() + Doc->contentsY());
-  Doc->scrollBy(xShift, yShift);
-  */
+
   QucsMain->MouseMoveAction = &MouseActions::MMoveZoomIn;
   QucsMain->MouseReleaseAction = 0;
   Doc->releaseKeyboard();  // allow keyboard inputs again
