@@ -969,7 +969,6 @@ void QucsApp::slotAddToProject()
   }
 
   free(Buffer);
-  slotUpdateTreeview();
   statusBar()->showMessage(tr("Ready."));
 }
 
@@ -1226,8 +1225,7 @@ void QucsApp::slotImportData()
   }
 
   ImportDialog *d = new ImportDialog(this);
-  if(d->exec() == QDialog::Accepted)
-    slotUpdateTreeview();
+  d->exec();
 }
 
 // -----------------------------------------------------------

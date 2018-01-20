@@ -216,8 +216,6 @@ public slots:
   void slotCMenuDelete();
   void slotCMenuInsert();
 
-  void slotUpdateTreeview();
-
   void slotMenuProjClose();
 
 private slots:
