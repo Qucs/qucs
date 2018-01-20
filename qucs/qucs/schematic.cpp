@@ -643,42 +643,7 @@ void Schematic::paintSchToViewpainter(QPainter *p, bool printAll, bool toImage, 
     */
 }
 
-// -----------------------------------------------------------
-//! set the scale factor, limit it, do the scaling/resize
-float Schematic::zoom(float s)
-{
-  Scale *= s;
-  if(Scale > 10.0) Scale = 10.0f;
-  if(Scale < 0.1) Scale = 0.1f;
 
-  // "resizeContents()" performs an immediate repaint. So, set widget
-  // to hidden. This causes some flicker, but it is still nicer.
-  viewport()->setHidden(true);
-//  setHidden(true);
-  TODO("Fix resizeContents");
-  /// todo resizeContents(int(Scale*float(ViewX2 - ViewX1)),
-  ///               int(Scale*float(ViewY2 - ViewY1)));
-//  setHidden(false);
-  viewport()->setHidden(false);
-
-  viewport()->update();
-  App->view->drawn = false;
-  return Scale;
-}
-
-// -----------------------------------------------------------
-//! call funcion to zoom/scale, center the new view
-float Schematic::zoomBy(float s)
-{
-  zoom(s);
-  s -= 1.0;
-  TODO("Fix contentsX");
-  /// todo scrollBy( int(s * float(contentsX()+visibleWidth()/2)),
-  ///          int(s * float(contentsY()+visibleHeight()/2)) );
-  return Scale;
-}
-
-// ---------------------------------------------------
 /*!
  *
  *
@@ -1259,7 +1224,7 @@ bool Schematic::load()
   if(ViewY1 > UsedY1)  ViewY1 = UsedY1;
   if(ViewX2 < UsedX2)  ViewX2 = UsedX2;
   if(ViewY2 < UsedY2)  ViewY2 = UsedY2;
-  zoom(1.0f);
+  zoomReset();
   TODO("Fix setContentsPos");
   /// \todo setContentsPos(tmpViewX1, tmpViewY1);
   tmpViewX1 = tmpViewY1 = -200;   // was used as temporary cache

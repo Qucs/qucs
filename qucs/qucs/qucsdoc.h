@@ -35,7 +35,6 @@ public:
   virtual int   save() { return 0; }
   virtual void  print(QPrinter*, QPainter*, bool, bool) {}
   virtual void  becomeCurrent(bool) {}
-  virtual float zoomBy(float) { return 1.0; }
   virtual void  zoomFit() {}
   virtual void  zoomReset() {}
   virtual void  zoomOut() {}
