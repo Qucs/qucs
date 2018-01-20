@@ -644,6 +644,7 @@ void Schematic::paintSchToViewpainter(QPainter *p, bool printAll, bool toImage, 
 }
 
 // -----------------------------------------------------------
+//! set the scale factor, limit it, do the scaling/resize
 float Schematic::zoom(float s)
 {
   Scale *= s;
@@ -666,6 +667,7 @@ float Schematic::zoom(float s)
 }
 
 // -----------------------------------------------------------
+//! call funcion to zoom/scale, center the new view
 float Schematic::zoomBy(float s)
 {
   zoom(s);
@@ -677,6 +679,8 @@ float Schematic::zoomBy(float s)
 }
 
 // ---------------------------------------------------
+//! fit view to used area (area which has components?)
+//! see Used?? and View?? variables
 void Schematic::showAll()
 {
   TODO("Fix showAll");
