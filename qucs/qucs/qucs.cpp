@@ -2052,7 +2052,7 @@ void QucsApp::slotPopHierarchy()
 void QucsApp::slotShowAll()
 {
   slotHideEdit(); // disable text edit of component property
-  getDoc()->showAll();
+  getDoc()->zoomFit();
 }
 
 // -----------------------------------------------------------
