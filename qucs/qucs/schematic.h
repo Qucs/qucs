@@ -115,8 +115,9 @@ public:
   float zoom(float);
   float zoomBy(float);
   void  showAll();
-  void  showNoZoom();
+  void  zoomReset();
   void  enlargeView(int, int, int, int);
+
   void  switchPaintMode();
   int   adjustPortNumbers();
   void  reloadGraphs();
