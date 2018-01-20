@@ -707,10 +707,19 @@ void Schematic::showAll()
 }
 
 // ---------------------------------------------------
+/*!
+ * \brief Schematic::zoomReset
+ * Reset zoom scale to 100%.
+ */
 void Schematic::zoomReset()
 {
   Scale = 1.0;
 
+  resetMatrix();
+  scale(1.0, 1.0);
+
+  TODO("fix Used and View variables");
+  /*
   int x1 = UsedX1;
   int y1 = UsedY1;
   int x2 = UsedX2;
@@ -734,6 +743,7 @@ void Schematic::zoomReset()
   ///\todo resizeContents(x2-x1+80, y2-y1+80);
   viewport()->update();
   App->view->drawn = false;
+  */
 }
 
 // -----------------------------------------------------------
