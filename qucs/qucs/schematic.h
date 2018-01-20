@@ -116,6 +116,7 @@ public:
   float zoomBy(float);
   void  showAll();
   void  zoomReset();
+  void  zoomOut();
   void  enlargeView(int, int, int, int);
 
   void  switchPaintMode();

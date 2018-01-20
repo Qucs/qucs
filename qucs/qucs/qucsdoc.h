@@ -38,6 +38,7 @@ public:
   virtual float zoomBy(float) { return 1.0; }
   virtual void  showAll() {}
   virtual void  zoomReset() {}
+  virtual void  zoomOut() {}
 
   static QString fileSuffix (const QString&);
   QString fileSuffix (void);
