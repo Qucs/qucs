@@ -112,8 +112,6 @@ public:
   void  setOnGrid(int&, int&);
   bool  elementsOnGrid();
 
-  float zoom(float);
-  float zoomBy(float);
   void  zoomFit();
   void  zoomReset();
   void  zoomOut();

@@ -53,7 +53,6 @@ public:
   void  setName (const QString&);
   bool  load ();
   int   save ();
-  float zoomBy (float);
   void  zoomReset ();
   void  zoomOut();
   void  zoomIn();
