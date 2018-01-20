@@ -679,12 +679,29 @@ float Schematic::zoomBy(float s)
 }
 
 // ---------------------------------------------------
-//! fit view to used area (area which has components?)
-//! see Used?? and View?? variables
+/*!
+ *
+ *
+ * fit view to used area (area which has components?)
+ * see Used?? and View?? variables
+ * legacy:
+ * Tries to fit items on the view, if any. It ignores the page frame.
+ * proposal:
+ * Fit whatever is large. treat frame as an item. if item ouside, fit them.
+ */
 void Schematic::showAll()
 {
   TODO("Fix showAll");
-  fitInView(this->sceneRect(), Qt::KeepAspectRatio);
+  // stub. as of now 5 items are added:
+  // 2 for origin cross, grid, frame, mouse cursor
+  // fit in view seems to fail if things are not on x>0, y>0.
+  // might have to do with the setSceneRect which needs to be enlarged?
+  qDebug() << scene->itemsBoundingRect();
+  qDebug() << scene->items().size();
+  if (scene->items().size() > 5) {
+    fitInView(this->scene->itemsBoundingRect(), Qt::KeepAspectRatio);
+  }
+
   /// \todo showAll
   /*
   sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
