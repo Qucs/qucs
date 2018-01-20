@@ -50,9 +50,6 @@
 #include <stdlib.h>
 
 
-#define  SCR_X_POS(x)  int(float(x - Doc->ViewX1) * Doc->Scale)
-#define  SCR_Y_POS(y)  int(float(y - Doc->ViewY1) * Doc->Scale)
-
 QAction *formerAction;   // remember action before drag n'drop etc.
 
 
