@@ -2060,7 +2060,7 @@ void QucsApp::slotShowAll()
 void QucsApp::slotShowOne()
 {
   slotHideEdit(); // disable text edit of component property
-  getDoc()->showNoZoom();
+  getDoc()->zoomReset();
 }
 
 // -----------------------------------------------------------

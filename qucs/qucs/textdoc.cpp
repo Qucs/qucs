@@ -439,9 +439,9 @@ float TextDoc::zoomBy(float s)
 }
 
 /*!
- * \brief TextDoc::showNoZoom resets the font scaling
+ * \brief TextDoc::zoomReset resets the font scaling
  */
-void TextDoc::showNoZoom()
+void TextDoc::zoomReset()
 {
   TextFont = QFont("Courier New");
   TextFont.setPointSize(QucsSettings.font.pointSize()-1);
