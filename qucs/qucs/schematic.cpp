@@ -707,7 +707,7 @@ void Schematic::showAll()
 }
 
 // ---------------------------------------------------
-void Schematic::showNoZoom()
+void Schematic::zoomReset()
 {
   Scale = 1.0;
 
