@@ -759,8 +759,12 @@ void Schematic::zoomOut()
 {
   qDebug() << matrix();
   if (matrix().m11() > 0.1 && matrix().m22() > 0.1) {
-    scale(1/1.5, 1/1.5);
+    scale(0.5, 0.5);
   }
+  qDebug() << matrix();
+
+  // keep track of scale
+  Scale = matrix().m11();
 }
 
 /*!
@@ -774,7 +778,10 @@ void Schematic::zoomIn()
   if (matrix().m11() < 5 && matrix().m22() < 5) {
     scale(1.5, 1.5);
   }
+  qDebug() << matrix();
 
+  // keep track of scale
+  Scale = matrix().m11();
 }
 
 // -----------------------------------------------------------
