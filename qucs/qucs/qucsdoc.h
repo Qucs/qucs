@@ -39,6 +39,7 @@ public:
   virtual void  showAll() {}
   virtual void  zoomReset() {}
   virtual void  zoomOut() {}
+  virtual void  zoomIn() {}
 
   static QString fileSuffix (const QString&);
   QString fileSuffix (void);
