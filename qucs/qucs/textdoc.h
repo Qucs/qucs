@@ -56,6 +56,7 @@ public:
   float zoomBy (float);
   void  zoomReset ();
   void  zoomOut();
+  void  zoomIn();
   void  becomeCurrent (bool);
   bool  loadSimulationTime (QString&);
   void  commentSelected ();

@@ -117,6 +117,7 @@ public:
   void  showAll();
   void  zoomReset();
   void  zoomOut();
+  void  zoomIn();
   void  enlargeView(int, int, int, int);
 
   void  switchPaintMode();
