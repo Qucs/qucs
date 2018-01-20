@@ -405,6 +405,7 @@ void MouseActions::MMoveWire1(Schematic *Doc, QMouseEvent *Event)
 void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
 {
   //qDebug() << "MMoveSelect " << "select area";
+  // size of selection box
   MAx2 = DOC_X_POS(Event->pos().x()) - MAx1;
   MAy2 = DOC_Y_POS(Event->pos().y()) - MAy1;
   if(isMoveEqual) {    // x and y size must be equal ?
@@ -1891,17 +1892,29 @@ void MouseActions::MReleaseMoveText(Schematic *Doc, QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
+/*!
+ * \brief MouseActions::MReleaseZoomIn
+ * \param Doc
+ * \param Event
+ * Handle zoom in
+ * Handle Zoom fit to rectangle
+ */
 void MouseActions::MReleaseZoomIn(Schematic *Doc, QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
 
+  // stub, enable simple zoom on click
+  Doc->zoomIn();
+
   MAx1 = Event->pos().x();
   MAy1 = Event->pos().y();
-  TODO("Sort out contentsX");
-  /**
   float DX = float(MAx2);
   float DY = float(MAy2);
 
+  qDebug() << MAx1 << MAy1 << MAx2 << MAy2;
+
+  TODO("Sort out contentsX");
+  /**
   float initialScale = Doc->Scale;
   float scale = 1;
   float xShift = 0;
