@@ -417,28 +417,6 @@ int TextDoc::save ()
 }
 
 /*!
- * \brief TextDoc::zoomBy increases/decreases the text font size.
- * \param s font size scaling factor
- * \return (required) final scale
- *
- * \fixme is the return value being saved on the saveSettings() ?
- */
-float TextDoc::zoomBy(float s)
-{
-  if(s == 2.0) {
-      QFont f = document()->defaultFont();
-      f.setPointSize(f.pointSize()*2);
-      document()->setDefaultFont(f);
-  }
-  else {
-      QFont f = document()->defaultFont();
-      f.setPointSize(f.pointSize()*s);
-      document()->setDefaultFont(f);
-  }
-  return Scale;
-}
-
-/*!
  * \brief TextDoc::zoomReset resets the font scaling
  */
 void TextDoc::zoomReset()
