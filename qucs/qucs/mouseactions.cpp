@@ -50,9 +50,6 @@
 #include <stdlib.h>
 
 
-#define  DOC_X_FPOS    (float(Event->pos().x())/Doc->Scale + float(Doc->ViewX1))
-#define  DOC_Y_FPOS    (float(Event->pos().y())/Doc->Scale + float(Doc->ViewY1))
-
 #define  SCR_X_POS(x)  int(float(x - Doc->ViewX1) * Doc->Scale)
 #define  SCR_Y_POS(y)  int(float(y - Doc->ViewY1) * Doc->Scale)
 
@@ -2005,7 +2002,10 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
   int x1, y1, x2, y2;
 
   QFileInfo Info(Doc->DocName);
-  float fX = DOC_X_FPOS, fY = DOC_Y_FPOS;
+
+  QPointF pos = Doc->mapToScene(Event->pos());
+  float fX = pos.x();
+  float fY = pos.y();
 
   switch(focusElement->ElemType) {
     case isComponent:
@@ -2127,7 +2127,9 @@ void MouseActions::MDoubleClickSelect(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MDoubleClickWire2(Schematic *Doc, QMouseEvent *Event)
 {
-  MPressWire2(Doc, Event, DOC_X_FPOS, DOC_Y_FPOS);
+  QPointF pos = Doc->mapToScene(Event->pos());
+
+  MPressWire2(Doc, Event, pos.x(), pos.y());
 
   if(formerAction)
     QucsMain->select->setChecked(true);  // restore old action
