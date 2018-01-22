@@ -42,6 +42,7 @@
 #include <QStringList>
 #include <QFileInfo>
 
+class SchematicScene;
 class QTextStream;
 class QTextEdit;
 class QPlainTextEdit;
