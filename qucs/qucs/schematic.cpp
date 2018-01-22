@@ -43,6 +43,7 @@
 #include <QScrollBar>
 
 #include "qucs.h"
+#include "schematicscene.h"
 #include "schematic.h"
 #include "node.h"
 #include "textdoc.h"
@@ -95,7 +96,7 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   creatingLib = false;
 
   // create and set current scene
-  scene = new QGraphicsScene;
+  scene = new SchematicScene(this);
   this->setScene(scene);
 
   // add a Frame to the schematic
