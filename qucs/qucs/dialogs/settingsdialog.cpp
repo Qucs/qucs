@@ -21,6 +21,7 @@
 #include "qucs.h"
 #include "mnemo.h"
 #include "schematic.h"
+#include "schematicscene.h"
 
 #include <QGridLayout>
 #include <QVBoxLayout>

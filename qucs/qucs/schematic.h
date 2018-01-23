@@ -140,8 +140,8 @@ public:
   bool scrollLeft(int);
   bool scrollRight(int);
 
-  // schematic Scene for this QGraphicsView
-  QGraphicsScene *scene;
+  // schematic Scene for this View
+  SchematicScene *scene;
 
   // schematic frame item
   Frame *schematicFrame;
