@@ -47,6 +47,7 @@
 #include "qucsdoc.h"
 #include "textdoc.h"
 #include "schematic.h"
+#include "schematicscene.h"
 #include "mouseactions.h"
 #include "messagedock.h"
 #include "wire.h"

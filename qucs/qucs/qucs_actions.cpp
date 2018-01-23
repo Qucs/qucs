@@ -45,6 +45,7 @@
 #include "projectView.h"
 #include "qucs.h"
 #include "schematic.h"
+#include "schematicscene.h"
 #include "textdoc.h"
 #include "mouseactions.h"
 #include "messagedock.h"

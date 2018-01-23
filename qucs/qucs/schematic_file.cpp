@@ -33,6 +33,7 @@
 #include "qucs.h"
 #include "node.h"
 #include "schematic.h"
+#include "schematicscene.h"
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
 #include "components/spicefile.h"
