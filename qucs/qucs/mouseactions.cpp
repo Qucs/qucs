@@ -627,7 +627,7 @@ void MouseActions::MMoveMirrorY(Schematic *Doc, QMouseEvent *Event)
   MAx3 = pos.x();
   MAy3 = pos.y();
 
-  Doc->mouseCursor->setCursorType(MouseCursor::CursorMirrorX);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorMirrorY);
   Doc->mouseCursor->setPos(pos);
 }
 
@@ -643,7 +643,7 @@ void MouseActions::MMoveMirrorX(Schematic *Doc, QMouseEvent *Event)
   MAx3 = pos.x();
   MAy3 = pos.y();
 
-  Doc->mouseCursor->setCursorType(MouseCursor::CursorMirrorY);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorMirrorX);
   Doc->mouseCursor->setPos(pos);
 }
 
