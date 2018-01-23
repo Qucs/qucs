@@ -670,6 +670,9 @@ void Schematic::zoomFit()
     fitInView(this->scene->itemsBoundingRect(), Qt::KeepAspectRatio);
   }
 
+  // keep track of scale
+  Scale = matrix().m11();
+
   /// \todo showAll
   /*
   sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
