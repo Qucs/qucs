@@ -21,8 +21,8 @@
  *
  */
 
-
 #include "schematicscene.h"
+#include "schematic.h"
 
 #include <QPainter>
 
@@ -52,7 +52,22 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
   int GridX = 10;
   int GridY = 10;
 
-  // Extrema grid points
+  // Get associated view, assume single view
+  Schematic *v = static_cast<Schematic *>(views().at(0));
+
+  // When scaling, adjust visible grid spacing
+  float scale = v->Scale;
+  if(scale < 1) {
+      if(scale > 0.5) {
+          GridX *= 4;
+          GridY *= 4;
+      } else {
+          GridX *= 16;
+          GridY *= 16;
+      }
+  }
+
+  // Grid limits
   qreal left = int(rect.left()) - (int(rect.left()) % GridX);
   qreal top = int(rect.top()) - (int(rect.top()) % GridY);
   qreal right = int(rect.right()) - (int(rect.right()) % GridX);
