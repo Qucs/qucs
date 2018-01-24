@@ -660,13 +660,12 @@ void Schematic::paintSchToViewpainter(QPainter *p, bool printAll, bool toImage, 
 void Schematic::zoomFit()
 {
   TODO("Fix zoomFit");
-  // stub. as of now 5 items are added:
-  // 2 for origin cross, grid, frame, mouse cursor
-  // fit in view seems to fail if things are not on x>0, y>0.
-  // might have to do with the setSceneRect which needs to be enlarged?
-  qDebug() << scene->itemsBoundingRect();
-  qDebug() << scene->items().size();
-  if (scene->items().size() > 5) {
+  // stub
+  // the scroll only works inside the scene bounding rect.
+  /// \todo how to do the 'infinite' scrolling canvas?
+  qDebug() << "scene itemsBoundingRect:" << scene->itemsBoundingRect();
+  qDebug() << "scene item count:" << scene->items().size();
+  if (scene->items().size()) {
     fitInView(this->scene->itemsBoundingRect(), Qt::KeepAspectRatio);
   }
 
@@ -675,6 +674,7 @@ void Schematic::zoomFit()
 
   /// \todo showAll
   /*
+  // if no items set max possible size of scene?
   sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
   if(UsedX1 == 0)
     if(UsedX2 == 0)
@@ -685,6 +685,7 @@ void Schematic::zoomFit()
     return;
   }
 
+  //make view 40 units larger than scene on each side?
   float xScale = float(visibleWidth()) / float(UsedX2-UsedX1+80);
   float yScale = float(visibleHeight()) / float(UsedY2-UsedY1+80);
   if(xScale > yScale) xScale = yScale;
