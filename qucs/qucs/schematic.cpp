@@ -108,7 +108,9 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
 
   // add a MouseCursor to the scene
   mouseCursor = new MouseCursor();
-  scene->addItem(mouseCursor);
+  /// \todo MouseCursor should return a QCursor from a pixmap.
+  /// Otherwise, with a QGraphicsItem it does not update fast enought.
+  //scene->addItem(mouseCursor);
 
   this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
