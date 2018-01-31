@@ -41,6 +41,7 @@
 #include <QListWidget>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QScrollBar>
 
 #include "projectView.h"
 #include "qucs.h"
@@ -1023,7 +1024,40 @@ void QucsApp::slotCursorLeft(bool left)
   */
 }
 
-// -----------------------------------------------------------
+/*!
+ * \brief QucsApp::slotCursorUp
+ * \param up is used to toggle between up or down
+ *  Handle key press up or down depending on selection.
+ *
+ *  Do nothing if QLineEdit used for edit is hidden
+ *  Do nothing if Component name is selected, MAx3 is set on MPressSelect / slotApplyCompText
+ *  \todo avoid MAx3 reuse here
+ *  If up
+ *    get number of selected property MAx3 (\sa slotApplyCompText)
+ *    if property not a list return
+ *    check index of current text in QLineEdit
+ *    if first, return
+ *    else decrement index, set above current on QLineEdit and select all
+ *  If down
+ *    get number of selected property MAx3 (\sa slotApplyCompText)
+ *    if property not a list return
+ *    check index of current text in QLineEdit
+ *    if last, return
+ *    else increment index, set below current on QLineEdit and select all
+ *
+ *
+ *  Check for things \sa movingElements
+ *
+ *  If nothing or marker selected, move markers
+ *  If nothing and up, scroll up
+ *  If nothing and down, scroll down
+ *
+ *  If something selected
+ *  \sa moveElements and snap to grid
+ *  flag in MAx3
+ *  \sa endElementMoving, reinserts all elements moved back into schematic (why?)
+ *
+ */
 void QucsApp::slotCursorUp(bool up)
 {
   if(editText->isHidden()) {  // for edit of component property ?
@@ -1067,8 +1101,7 @@ void QucsApp::slotCursorUp(bool up)
     return;
   }
 
-  TODO("Fix scrolling");
-  /** \todo
+  TODO("Fix scrollUp");
   Q3PtrList<Element> movingElements;
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   int markerCount = Doc->copySelectedElements(&movingElements);
@@ -1077,11 +1110,15 @@ void QucsApp::slotCursorUp(bool up)
     if(markerCount > 0) {  // only move marker if nothing else selected
       Doc->markerUpDown(up, &movingElements);
     } else if(up) { // nothing selected at all
-      if(Doc->scrollUp(Doc->verticalScrollBar()->singleStep()))
-        Doc->scrollBy(0, -Doc->verticalScrollBar()->singleStep());
+      if(Doc->scrollUp(Doc->verticalScrollBar()->singleStep())) {
+        //Doc->scrollBy(0, -Doc->verticalScrollBar()->singleStep());
+        qDebug() << "scrool up";
+      }
     } else { // down
-      if(Doc->scrollDown(-Doc->verticalScrollBar()->singleStep()))
-        Doc->scrollBy(0, Doc->verticalScrollBar()->singleStep());
+      if(Doc->scrollDown(-Doc->verticalScrollBar()->singleStep())) {
+        //Doc->scrollBy(0, Doc->verticalScrollBar()->singleStep());
+        qDebug() << "scrool down";
+      }
     }
 
     Doc->viewport()->update();
@@ -1092,7 +1129,6 @@ void QucsApp::slotCursorUp(bool up)
     view->MAx3 = 1;  // sign for moved elements
     view->endElementMoving(Doc, &movingElements);
   }
-  */
 }
 
 // -----------------------------------------------------------
