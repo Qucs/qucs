@@ -152,10 +152,6 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     NameY = tr("y-Axis");
     NameZ = tr("z-Axis");
   }
-  else if(Diag->Name == "Phasor") {
-    NameY = tr("left Axis");
-    NameZ = tr("right Axis");
-  }
   
   all = new QVBoxLayout(this); // to provide neccessary size
   QTabWidget *t = new QTabWidget();
@@ -226,17 +222,16 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     PropertyBox = new QComboBox();
     Box2Layout->addWidget(PropertyBox);
     PropertyBox->addItem(tr("solid line"));
-    if(Diag->Name != "Phasor")
-    {
-      PropertyBox->addItem(tr("dash line"));
-      PropertyBox->addItem(tr("dot line"));
-      if(Diag->Name != "Time") {
-        PropertyBox->addItem(tr("long dash line"));
-        PropertyBox->addItem(tr("stars"));
-        PropertyBox->addItem(tr("circles"));
-        PropertyBox->addItem(tr("arrows"));
-      }
+
+    PropertyBox->addItem(tr("dash line"));
+    PropertyBox->addItem(tr("dot line"));
+    if(Diag->Name != "Time") {
+      PropertyBox->addItem(tr("long dash line"));
+      PropertyBox->addItem(tr("stars"));
+      PropertyBox->addItem(tr("circles"));
+      PropertyBox->addItem(tr("arrows"));
     }
+
     connect(PropertyBox, SIGNAL(activated(int)),
 			 SLOT(slotSetGraphStyle(int)));
     Box2Layout->setStretchFactor(new QWidget(Box2), 5); // stretchable placeholder
@@ -250,8 +245,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     Property2->setMaxLength(2);
     Property2->setText("0");
 
-    if((Diag->Name=="Rect") || (Diag->Name=="PS") || (Diag->Name=="SP") || (Diag->Name=="Curve") 
-|| (Diag->Name=="Phasor") ) {
+    if((Diag->Name=="Rect") || (Diag->Name=="PS") || (Diag->Name=="SP") || (Diag->Name=="Curve")) {
       Label4 = new QLabel(tr("y-Axis:"));
       Box2Layout->addWidget(Label4);
       Label4->setEnabled(false);
@@ -290,35 +284,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
 
   // todo: replace by QTableWidget
   // see https://gist.github.com/ClemensFMN/8955411
-  //instead of a menu with all graphs available will show 4 checkbox for 4 types of graph(voltage,current,eletric power and eletric impedance)
-  if(Diag->Name == "Phasor")
-  {
-    inputV = new QCheckBox(tr("V"));//, PHBox1);
-    DataGroupLayout->addWidget(inputV);
-    connect(inputV, SIGNAL(stateChanged(int)), SLOT(PhasorvalV(int)));
-    inputI = new QCheckBox(tr("I"));//, PHBox1);
-    DataGroupLayout->addWidget(inputI);
-    connect(inputI, SIGNAL(stateChanged(int)), SLOT(PhasorvalI(int)));
-    inputP = new QCheckBox(tr("P"));//, PHBox1);
-    DataGroupLayout->addWidget(inputP);
-    connect(inputP, SIGNAL(stateChanged(int)), SLOT(PhasorvalP(int)));
-    inputZ = new QCheckBox(tr("Z"));//, PHBox1);
-    DataGroupLayout->addWidget(inputZ);
-    connect(inputZ, SIGNAL(stateChanged(int)), SLOT(PhasorvalZ(int)));
-  }
-  //for Phasor and waveac,it will have a new input for frequency
-  if(Diag->Name == "Phasor" || Diag->Name == "Waveac") 
-  {
-    DataGroupLayout->addWidget(new QLabel(tr("frequency in Hertz")));
-    freq = new QLineEdit();
-    DataGroupLayout->addWidget(freq);
-    freq->setValidator(Validator);
-    if(Diag->sfreq.isEmpty())
-      Diag->sfreq = "0 Hz";
-    freq->setText(Diag->sfreq);
-  }
-  if(Diag->Name != "Phasor")
-  {
+
     Name=Diag->Name;
     connect(ChooseData, SIGNAL(activated(int)), SLOT(slotReadVars(int)));
     ChooseVars = new QTableWidget(1, 3);
@@ -341,7 +307,6 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     ChooseVars->setHorizontalHeaderLabels(headers);
 
     connect(ChooseVars, SIGNAL(itemDoubleClicked(QTableWidgetItem*)), SLOT(slotTakeVar(QTableWidgetItem*)));
-  }
 
   QGroupBox *GraphGroup = new QGroupBox(tr("Graph"));
   Box1Layout->addWidget(GraphGroup);
@@ -702,7 +667,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
        axisZ->setEnabled(false);
     }
     if(Diag->Name.left(4) != "Rect")   // cartesian 2D and 3D
-       if((Diag->Name != "Curve") && (Diag->Name != "Phasor") && (Diag->Name != "Waveac")) {
+       if((Diag->Name != "Curve")) {
         axisX->setEnabled(false);
         startY->setEnabled(false);
         startZ->setEnabled(false);
@@ -744,9 +709,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
       // default dataset should be the current
       ChooseData->setCurrentIndex(ChooseData->count()-1);
   }
-
-  if(Diag->Name != "Phasor")
-    slotReadVars(0);  // put variables into the ListView
+  slotReadVars(0);  // put variables into the ListView
 
   // ...........................................................
   // put all graphs into the ListBox
@@ -765,13 +728,6 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
       QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
       misc::setPickerColor(ColorButt, selectedColor);
     }
-  }
-  if(Diag->Name == "Phasor")
-    {
-      if(testvar(".v")) inputV->setChecked(true);
-      if(testvar(".i")) inputI->setChecked(true);
-      if(testvar(".S")) inputP->setChecked(true);
-      if(testvar(".Ohm")) inputZ->setChecked(true);
   }
 }
 
@@ -795,7 +751,7 @@ void DiagramDialog::slotReadVars(int)
   }
 
   QString Line, tmp, Var;
-  int varNumber = 0,l=0;
+  int varNumber = 0;
   // reading the file as a whole improves speed very much, also using
   // a QByteArray rather than a QString
   QByteArray FileString = file.readAll();
@@ -814,25 +770,9 @@ void DiagramDialog::slotReadVars(int)
     i = FileString.indexOf('<', j)+1;
 
     Var = Line.section(' ', 1, 1).remove('>');
-    //waveac only shows voltage(".v") and current(".i")
     if(Var.length()>0)
-    {
-      
-      if(Name=="Waveac")
-      {
-	l = Var.indexOf(".i",0,Qt::CaseSensitive);
-	if(l==-1)
-	{
-	  QString a =".v";
-	  l = Var.indexOf(a,0,Qt::CaseSensitive);
-	  if(l!=-1 && Var.size() != (l + a.size()))
-	    l=-1;
-	}
-	  
-      } 
-      if(l == -1) continue;
       if(Var.at(0) == '_')  continue;
-    }
+
 
     if(Line.left(3) == "dep") {
       tmp = Line.section(' ', 2);
@@ -885,13 +825,8 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
   //QString s="";
   //QString s1 = Item->text();
   QString s1;
-  if(Diag->Name != "Phasor")
-  {
-     int row = Item->row();
-     s1 = ChooseVars->item(row, 0)->text();
-  }
-  else
-     s1 = Var2;
+  int row = Item->row();
+  s1 = ChooseVars->item(row, 0)->text();
 
   QFileInfo Info(defaultDataSet);
   if(ChooseData->currentText() != Info.completeBaseName())
@@ -1175,11 +1110,6 @@ void DiagramDialog::slotApply()
 
     // Use string compares for all floating point numbers, in
     // order to avoid rounding problems.
-    if(Diag->Name == "Phasor" || Diag->Name == "Waveac")
-      if(Diag->sfreq != freq->text()) {
-	 Diag->sfreq = freq->text();
-	  changed = true;
-      }
     if(QString::number(Diag->xAxis.limit_min) != startX->text()) {
       Diag->xAxis.limit_min = startX->text().toDouble();
       changed = true;
@@ -1415,7 +1345,7 @@ void DiagramDialog::slotSetYAxis(int axis)
 void DiagramDialog::slotManualX(int state)
 {
   if(state == 2) {
-    if((Diag->Name.left(4) == "Rect") || (Diag->Name == "Curve")||(Diag->Name=="Phasor")  || (Diag->Name=="Waveac"))
+    if((Diag->Name.left(4) == "Rect") || (Diag->Name == "Curve"))
       startX->setEnabled(true);
     stopX->setEnabled(true);
     if(GridLogX) if(GridLogX->isChecked())  return;
@@ -1542,7 +1472,9 @@ void DiagramDialog::slotEditRotZ(const QString& Text)
   DiagCross->rotZ = Text.toFloat() * pi/180.0;
   DiagCross->update();
 }
-/*if the checkbox 'V' change stated*/
+
+/* RELATED TO PHASOR AND WAVEAC DIAGRAMS
+// if the checkbox 'V' change stated
 void DiagramDialog::PhasorvalV(int state)
 {
   if(state == 2) {//if check add graph of type ".v" if exist
@@ -1552,7 +1484,8 @@ void DiagramDialog::PhasorvalV(int state)
     remvar(".v");
   }
 }
-/*if the checkbox 'I' change stated*/
+
+// if the checkbox 'I' change stated
 void DiagramDialog::PhasorvalI(int state)
 {
   if(state == 2) {//if check add graph of type ".i" if exist
@@ -1562,7 +1495,8 @@ void DiagramDialog::PhasorvalI(int state)
     remvar(".i");
   }
 }
-/*if the checkbox 'P' change stated*/
+
+//if the checkbox 'P' change stated
 void DiagramDialog::PhasorvalP(int state)
 {
   if(state == 2) {//if check add graph of type ".S" if exist
@@ -1572,7 +1506,7 @@ void DiagramDialog::PhasorvalP(int state)
     remvar(".S");
   }
 }
-/*if the checkbox 'Z' change stated*/
+//if the checkbox 'Z' change stated
 void DiagramDialog::PhasorvalZ(int state)
 {
   if(state == 2) {//if check add graph of type ".Ohm" if exist
@@ -1582,7 +1516,8 @@ void DiagramDialog::PhasorvalZ(int state)
     remvar(".Ohm");//if uncheck remove graph of type ".Ohm"
   }
 }
-/*this function will find graph of a certain type and place on screen*/
+
+//this function will find graph of a certain type and place on screen
 void DiagramDialog::addvar(QString a)
 {
   QFileInfo Info(defaultDataSet);
@@ -1637,7 +1572,8 @@ void DiagramDialog::addvar(QString a)
   } while(i > 0);
   
 }
-/*will locate if exist a graph on screen that match the type and removes*/
+
+//will locate if exist a graph on screen that match the type and removes
 void DiagramDialog::remvar(QString a)
 {
     loc = -1;
@@ -1659,7 +1595,8 @@ void DiagramDialog::remvar(QString a)
     Var2="";
 
 }
-/*checks if a type of graph is on screen*/
+
+//checks if a type of graph is on screen
 bool DiagramDialog::testvar (QString a)
 {
   QString Var;
@@ -1674,4 +1611,4 @@ bool DiagramDialog::testvar (QString a)
   }
     return false;
 }
-// vim:ts=8:sw=2:noet
+*/
