@@ -75,7 +75,7 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
     makeInvalid();
   }else{
     initText(branchNo);   // finally create marker
-    fix();
+    //fix();//RELATED TO THE PHASOR DIAGRAM CODE
     createText();
   }
 
@@ -134,9 +134,7 @@ void Marker::initText(int n)
   // find exact marker position
   m  = nnn - 1;
   pz = pGraph->cPointsY + 2*n;
-  if(diag()->Name=="Phasor") m = phasormk(pz,px,nnn);
-  else
-  {
+
     for(nn=0; nn<nnn; nn++) {
       diag()->calcCoordinate(px, pz, py, &fCX, &fCY, pa);
       ++px;
@@ -155,9 +153,7 @@ void Marker::initText(int n)
 	m = nn;
       }
     }
-  }
-  //inittext for waveac is only to find values for VarPos except for VarPos[0]
-  if(diag()->Name=="Waveac") m=0;
+
   if(isCross) m *= pD->count;
   n += m;
 
@@ -178,8 +174,9 @@ void Marker::initText(int n)
 
   // createText();
 }
-// ---------------------------------------------------------------------
-/*this function finds the VarPos[0] of waveac*/
+
+/* RELATED TO THE PHASOR DIAGRAM CODE
+//this function finds the VarPos[0] of waveac
 void Marker::fix()
 {
   if(!(pGraph->cPointsY)) {
@@ -210,6 +207,8 @@ void Marker::fix()
   VarPos[0] = diag()->wavevalX(m);
   
 }
+*/
+
 // ---------------------------------------------------------------------
 /*!
  * (should)
@@ -288,32 +287,13 @@ void Marker::createText()
   Text += diag()->extraMarkerText(this);
 
     Axis const *pa,*pt;
-  if(diag()->Name=="Phasor")
-  {
-    int z;
-    findaxismk();
-    pt=xA;
-    if(pGraph->yAxisNo == 0)  pa = yA;
-    else  pa = zA;
-    for(z=0;z<diag()->nfreqt;z++)
-    {
-      if(diag()->freq[z]<=VarPos[0]) v=diag()->freq[z];
-      if(diag()->freq[z]==VarPos[0]) break;
 
-    }
-    VarPos[0]=v;
-    pp = &(VarPos[0]);
-
-    diag()->calcCoordinatePh(pz, &fCX, &fCY, pa, pt);
-  }
-  else
-  {
     if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
     else  pa = &(diag()->zAxis);
     pp = &(VarPos[0]);
 
     diag()->calcCoordinate(pp, pz, py, &fCX, &fCY, pa);
-  }
+
   diag()->finishMarkerCoordinates(fCX, fCY);
 
   cx = int(fCX+0.5);
@@ -354,8 +334,7 @@ bool Marker::moveLeftRight(bool left)
   DataX const *pD = pGraph->axis(0);
   px = pD->Points;
   if(!px) return false;
-  if(diag()->Name != "Waveac" &&diag()->Name != "Phasor")
-  {
+
     for(n=0; n<pD->count; n++) {
       if(VarPos[0] <= *px) break;
       px++;
@@ -371,43 +350,7 @@ bool Marker::moveLeftRight(bool left)
       px++;  // one position to the right
     }
     VarPos[0] = *px;
-  }
-  if(diag()->Name == "Waveac")
-  {
-    for(n=0; n < 50*diag()->sc; n++) {
-      x=diag()->wavevalX(n);
-      if(VarPos[0] <= x) break;
-    }
-    if(n == 50*diag()->sc) n--;
 
-    if(left) {
-      if(n <= 0) return false;
-      n--;  // one position to the left
-    }
-    else {
-      if(n >= 50*diag()->sc) return false;
-      n++;  // one position to the right
-    }
-    VarPos[0] = diag()->wavevalX(n);
-  }
-  if(diag()->Name == "Phasor")
-  {
-    for(n=0; n < diag()->nfreqt; n++) {
-      x=diag()->freq[n];
-      if(VarPos[0] == x) break;
-    }
-    if(n == diag()->nfreqt) n = diag()->nfreqt-1;
-
-    if(left) {
-      if(n == 0) return false;
-      n--;  // one position to the left
-    }
-    else {
-      if(n == diag()->nfreqt-1) return false;
-      n++;  // one position to the right
-    }
-    VarPos[0] = diag()->freq[n];
-  }
   createText();
 
   return true;
@@ -751,6 +694,8 @@ QString Marker::unit(double n)
   return value;
 
 }
+
+/* RELATED TO THE PHASOR DIAGRAM CODE
 int Marker::phasormk(double *pz,double *px,int max)
 {
   int m,n,nn,x,y,d,dmin = INT_MAX;
@@ -815,4 +760,4 @@ void Marker::findaxismk()
     }
 
 }
-// vim:ts=8:sw=2:noet
+*/

@@ -96,12 +96,13 @@ public:
 
   bool insideDiagramPh(Graph::iterator const& , float*, float*) const;
   bool newcoordinate(Graph::iterator const& , float*, float*) const;
+  /* PHASOR AND WAVEAC RELATED
   void phasorscale();
   void findaxisA(Graph*);
   bool findmatch(Graph* , int);
   void findfreq(Graph*);
   void setlimitsphasor(Axis* ,Axis*);
-  double wavevalX(int) const;
+  double wavevalX(int) const;*/
 
   QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   QPen    GridPen;
@@ -116,8 +117,10 @@ public:
   int nfreqt,nfreqa;
   int x3, y3, sc;
   Axis  xAxis, yAxis, zAxis;   // axes (x, y left, y right)
+
+  /* PHASOR DIAGRAM RELATED
   Axis  xAxisV, yAxisV, zAxisV, xAxisI, yAxisI, zAxisI, xAxisP, yAxisP, zAxisP, xAxisZ, yAxisZ,
- zAxisZ, *xAxisA, *yAxisA, *zAxisA;//for Phasor diagram
+ zAxisZ, *xAxisA, *yAxisA, *zAxisA;*/
   int State;  // to remember which resize area was touched
 
   bool hideLines;       // for "Rect3D": hide invisible lines ?
