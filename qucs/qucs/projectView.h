@@ -26,6 +26,7 @@
 
 #include <QTreeView>
 #include <QString>
+#include "qucs.h"
 
 #define APPEND_ROW(parent, data) \
 ({ \
