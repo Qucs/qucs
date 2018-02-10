@@ -25,7 +25,7 @@
 /*!\file capacitor.cpp
    \brief capacitor class implementation
 
-   A capacitor is a passive device that strore electric energy
+   A capacitor is a passive device that stores electric energy
 */
 
 
