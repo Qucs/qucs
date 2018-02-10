@@ -727,7 +727,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, GraphDeque *currentGra
       QColor selectedColor(DefaultColors[GraphDequeList->count()%NumDefaultColors]);
       QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
       ColorButt->setStyleSheet(stylesheet);
-      ColorButt->setPaletteBackgroundColor(selectedColor);
+      misc::setWidgetBackgroundColor(ColorButt, selectedColor);
     }
   }
 }
