@@ -24,7 +24,7 @@ Capacitor::Capacitor()
 
   Props.append(new Property("C", "1 pF", true,
 		QObject::tr("capacitance in Farad")));
-  Props.append(new Property("V", "", false,
+  Props.append(new Property("Vinit", "", false,
 		QObject::tr("initial voltage for transient simulation")));
   Props.append(new Property("Symbol", "neutral", false,
 	QObject::tr("schematic symbol")+" [neutral, polar]"));
