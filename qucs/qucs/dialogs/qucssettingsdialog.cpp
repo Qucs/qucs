@@ -153,6 +153,13 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
     appSettingsGrid->addWidget(checkTextAntiAliasing,9,1);
     checkTextAntiAliasing->setChecked(QucsSettings.TextAntiAliasing);
 
+    appSettingsGrid->addWidget(new QLabel(tr("Show schematic description in the project tree")),10,0);
+    checkShowSchematicDescription = new QCheckBox(appSettingsTab);
+    checkShowSchematicDescription->setToolTip(tr("Show schematic description when hovering the mouse over the file"));
+    appSettingsGrid->addWidget(checkShowSchematicDescription,10,1);
+    checkShowSchematicDescription->setChecked(QucsSettings.ShowDescriptionProjectTree);
+
+
     t->addTab(appSettingsTab, tr("Settings"));
 
     // ...........................................................
@@ -631,6 +638,12 @@ void QucsSettingsDialog::slotApply()
       changed = true;
     }
 
+    if (QucsSettings.ShowDescriptionProjectTree != checkShowSchematicDescription->isChecked())
+    {
+      QucsSettings.ShowDescriptionProjectTree = checkShowSchematicDescription->isChecked();
+      changed = true;
+    }
+
     // use toDouble() as it can interpret the string according to the current locale
     if (QucsSettings.largeFontSize != LargeFontSizeEdit->text().toDouble(&ok))
     {
@@ -723,6 +736,7 @@ void QucsSettingsDialog::slotDefaultValues()
     checkLoadFromFutureVersions->setChecked(false);
     checkAntiAliasing->setChecked(false);
     checkTextAntiAliasing->setChecked(true);
+    checkShowSchematicDescription->setChecked(false);
 }
 
 // -----------------------------------------------------------

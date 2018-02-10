@@ -108,8 +108,11 @@ ProjectView::refresh()
 
     columnData.clear();
     QStandardItem * d = new QStandardItem(fileName);
-    QString description = ReadDescription(workPath.absoluteFilePath(fileName));
-    d->setToolTip(description);
+    if (QucsSettings.ShowDescriptionProjectTree)
+    {
+       QString description = ReadDescription(workPath.absoluteFilePath(fileName));
+       d->setToolTip(description);
+    }
     columnData.append(d);
 
     if(extName == "dat") {

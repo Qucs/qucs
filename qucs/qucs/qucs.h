@@ -108,6 +108,7 @@ struct tQucsSettings {
   bool IgnoreFutureVersion;
   bool GraphAntiAliasing;
   bool TextAntiAliasing;
+  bool ShowDescriptionProjectTree;
 };
 
 // extern because nearly everywhere used
