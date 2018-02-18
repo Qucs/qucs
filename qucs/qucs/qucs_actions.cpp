@@ -1101,7 +1101,6 @@ void QucsApp::slotCursorUp(bool up)
     return;
   }
 
-  TODO("Fix scrollUp");
   Q3PtrList<Element> movingElements;
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   int markerCount = Doc->copySelectedElements(&movingElements);
@@ -1109,22 +1108,25 @@ void QucsApp::slotCursorUp(bool up)
   if((movingElements.count() - markerCount) < 1) { // all selections are markers
     if(markerCount > 0) {  // only move marker if nothing else selected
       Doc->markerUpDown(up, &movingElements);
-    } else if(up) { // nothing selected at all
-      if(Doc->scrollUp(Doc->verticalScrollBar()->singleStep())) {
-        //Doc->scrollBy(0, -Doc->verticalScrollBar()->singleStep());
-        qDebug() << "scrool up";
+    }
+    else { // nothing selected at all
+      QScrollBar* const vBar = Doc->verticalScrollBar();
+      if(up) {
+        if(Doc->scrollUp(vBar->singleStep())) {
+          vBar->setValue(vBar->value() - vBar->singleStep());
+        }
       }
-    } else { // down
-      if(Doc->scrollDown(-Doc->verticalScrollBar()->singleStep())) {
-        //Doc->scrollBy(0, Doc->verticalScrollBar()->singleStep());
-        qDebug() << "scrool down";
+      else { // down
+        if(Doc->scrollDown(-vBar->singleStep())) {
+          vBar->setValue(vBar->value() + vBar->singleStep());
+        }
       }
     }
-
     Doc->viewport()->update();
     view->drawn = false;
     return;
-  }else{ // some random selection, put it back
+  }
+  else{ // some random selection, put it back
     view->moveElements(&movingElements, 0, ((up)?-1:1) * Doc->GridY);
     view->MAx3 = 1;  // sign for moved elements
     view->endElementMoving(Doc, &movingElements);
