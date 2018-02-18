@@ -1880,7 +1880,7 @@ bool Schematic::scrollDown(int step)
 // area accordingly.
 bool Schematic::scrollLeft(int step)
 {
-  TODO("Fix scroll");
+  TODO("Fix scrollLeft");
   /**
   int diff;
 
@@ -1908,7 +1908,7 @@ bool Schematic::scrollLeft(int step)
 bool Schematic::scrollRight(int step)
 {
 
-  TODO("Fix scroll");
+  TODO("Fix scrollRight");
   /**
   int diff;
 
