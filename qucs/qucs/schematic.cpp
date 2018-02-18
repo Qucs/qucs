@@ -99,6 +99,13 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   scene = new SchematicScene(this);
   this->setScene(scene);
 
+  // to be able to scroll, scene must be larger than view
+  /// \todo for the intinite schematic, scene mulst alwas be larger than view
+  /// when items are added on the border, increase size of scene/view
+  /// move to constructor
+  setSceneRect(-2000, -2000, 4000, 4000);
+
+
   // add a Frame to the schematic
   schematicFrame =  new Frame();
   /// \todo Frame should be part of the drawBackground (?)
