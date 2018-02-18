@@ -987,7 +987,14 @@ void QucsApp::slotAddToProject()
   statusBar()->showMessage(tr("Ready."));
 }
 
-// -----------------------------------------------------------
+/*!
+ * \brief QucsApp::slotCursorLeft
+ * \param left is used to toggle between left or right.
+ *  Handle key press left or right depending on selection.
+ *
+ *  \sa slotCursorUp
+ *
+ */
 void QucsApp::slotCursorLeft(bool left)
 {
   int sign = 1;
@@ -997,7 +1004,6 @@ void QucsApp::slotCursorLeft(bool left)
   if(!editText->isHidden()) return;  // for edit of component property ?
 
   TODO("Fix scrollling");
-  /** \todo
   Q3PtrList<Element> movingElements;
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   int markerCount = Doc->copySelectedElements(&movingElements);
@@ -1005,14 +1011,18 @@ void QucsApp::slotCursorLeft(bool left)
   if((movingElements.count() - markerCount) < 1) {
     if(markerCount > 0) {  // only move marker if nothing else selected
       Doc->markerLeftRight(left, &movingElements);
-    } else if(left) {
-      if(Doc->scrollLeft(Doc->horizontalScrollBar()->singleStep()))
-        Doc->scrollBy(-Doc->horizontalScrollBar()->singleStep(), 0);
-    }else{ // right
-      if(Doc->scrollRight(-Doc->horizontalScrollBar()->singleStep()))
-        Doc->scrollBy(Doc->horizontalScrollBar()->singleStep(), 0);
     }
-
+    else {
+      QScrollBar* const hBar = Doc->horizontalScrollBar();
+      if(left) {
+        if(Doc->scrollLeft(hBar->singleStep()))
+          hBar->setValue(hBar->value() - hBar->singleStep());
+      }
+      else{ // right
+        if(Doc->scrollRight(-hBar->singleStep()))
+          hBar->setValue(hBar->value() + hBar->singleStep());
+      }
+    }
     Doc->viewport()->update();
     view->drawn = false;
     return;
@@ -1021,7 +1031,6 @@ void QucsApp::slotCursorLeft(bool left)
     view->MAx3 = 1;  // sign for moved elements
     view->endElementMoving(Doc, &movingElements);
   }
-  */
 }
 
 /*!
