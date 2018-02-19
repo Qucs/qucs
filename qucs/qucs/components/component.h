@@ -43,6 +43,9 @@ public:
   void    paintScheme(QPainter* painter);
   void    print(QPainter*, float);
 
+  void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+  void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
   int     textSize(int&, int&);

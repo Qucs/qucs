@@ -61,6 +61,7 @@ Component::Component()
   containingSchematic = NULL;
 
    setFlags(ItemIsSelectable|ItemIsMovable);
+   setAcceptsHoverEvents(true);
 }
 
 // -------------------------------------------------------
@@ -470,6 +471,16 @@ void Component::print(QPainter *p, float FontScale)
 
  foreach(Text *pt, Texts)
     pt->Size /= FontScale;
+}
+
+void Component::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+  qDebug() << "hoverEnter" << this->Name;
+}
+
+void Component::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
+  qDebug() << "hoverLeave" << this->Name;
 }
 
 // -------------------------------------------------------
