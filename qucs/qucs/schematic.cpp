@@ -391,6 +391,10 @@ void Schematic::mousePressEvent(QMouseEvent *Event)
 
   if(App->MousePressAction)
     (App->view->*(App->MousePressAction))(this, Event, x, y);
+
+  // propagate event to parent class
+  // needed to reach QGraphicsItem
+  QGraphicsView::mousePressEvent(Event);
 }
 
 // -----------------------------------------------------------
