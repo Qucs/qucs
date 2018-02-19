@@ -476,11 +476,34 @@ void Component::print(QPainter *p, float FontScale)
 void Component::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
   qDebug() << "hoverEnter" << this->Name;
+  boundingBoxColor = QPen(Qt::blue,2);
+
+  // show properties as tooltip
+  QString str = QString(
+    "Description : %1\n"
+    "Name        : %2\n"
+    "Model       : %3\n"
+    "Ports       : %4\n"
+    "Props       : %5\n"
+    "mirroredX   : %6\n"
+    "rotated     : %7\n"
+    "isActive    : %8")
+       .arg(Description)
+       .arg(Name)
+       .arg(Model)
+       .arg(QString::number(Ports.size()))
+       .arg(QString::number(Props.count()))
+       .arg(QString::number(mirroredX))
+       .arg(QString::number(rotated))
+       .arg(QString::number(isActive));
+
+  setToolTip(str);
 }
 
 void Component::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
   qDebug() << "hoverLeave" << this->Name;
+  boundingBoxColor = QPen(Qt::magenta,1);
 }
 
 // -------------------------------------------------------
