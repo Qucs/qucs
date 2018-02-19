@@ -487,7 +487,9 @@ void Component::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
     "Props       : %5\n"
     "mirroredX   : %6\n"
     "rotated     : %7\n"
-    "isActive    : %8")
+    "isActive    : %8\n"
+    "cx,cy       : %9, %10"
+     )
        .arg(Description)
        .arg(Name)
        .arg(Model)
@@ -495,7 +497,9 @@ void Component::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
        .arg(QString::number(Props.count()))
        .arg(QString::number(mirroredX))
        .arg(QString::number(rotated))
-       .arg(QString::number(isActive));
+       .arg(QString::number(isActive))
+       .arg(QString::number(cx))
+       .arg(QString::number(cy));
 
   setToolTip(str);
 }
