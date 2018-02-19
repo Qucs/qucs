@@ -348,6 +348,10 @@ void Schematic::mouseMoveEvent(QMouseEvent *Event)
   emit signalCursorPosChanged(pos.x(), pos.y());
   if(App->MouseMoveAction)
     (App->view->*(App->MouseMoveAction))(this, Event);
+
+  // propagate event to parent class
+  // needed for HoverEvent to work
+  QGraphicsView::mouseMoveEvent(Event);
 }
 
 
