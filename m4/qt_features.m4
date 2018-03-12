@@ -20,7 +20,7 @@ AC_DEFUN([QUCS_CHECK_FUNC_QTABWIDGET_SETMOVABLE], [
     [qucs_cv_func_qtabwidget_setmovable],
     [AC_LANG_PUSH(C++)
     ac_qucs_save_CPPFLAGS="$CPPFLAGS"
-    CPPFLAGS="$QT_INCLUDES $CPPFLAGS"
+    CPPFLAGS="$QT_CFLAGS $CPPFLAGS"
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
         #include <QTabWidget>
         class tab_widget : public QTabWidget

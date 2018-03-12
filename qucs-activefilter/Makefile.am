@@ -37,8 +37,8 @@ mfbfilter.cpp schcauer.cpp qf_poly.cpp qucsactivefilter_.qrc
 
 nodist_qucsactivefilter_SOURCES = $(MOCFILES)
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES)
-qucsactivefilter_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS)
+qucsactivefilter_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 qucsactivefilter_LDADD = $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = $(MOCHEADERS) qf_matrix.h bessel.h legendre.h \
