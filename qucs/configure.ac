@@ -242,6 +242,15 @@ case $host_os in
     dnl Enable C++11 support
     CXXFLAGS="$CXXFLAGS -std=c++0x"
 
+    PKG_CHECK_MODULES([QT], [QtCore QtGui QtScript QtSvg QtXml Qt3Support], [
+      QT_CFLAGS="$QT_CFLAGS $QT_DEF -DQT3_SUPPORT_WARNINGS -DQT_DEPRECATED_WARNINGS -DQT_THREAD_SUPPORT -D_REENTRANT"
+      case $host_os in
+        *freebsd*) QT_LIBS="$QT_LIBS -pthread" ;;
+        *mingw* | *msys*) QT_CFLAGS="$QT_CFLAGS -mthreads -DQT_DLL -DUNICODE" ;;
+      esac
+    ], [
+      # Fallback to old logic if pkg-config should fail
+
     dnl handle provided QTDIR environment variable
     dnl   in Slackware when both Qt3 at Qt4 are installed the Qt4 path
     dnl   is in QT4DIR while QTDIR contains the path to Qt3
@@ -277,7 +286,8 @@ case $host_os in
     else
       AC_MSG_ERROR([not found])
     fi
-    AC_SUBST(QT_INCLUDES)
+    QT_CFLAGS="${QT_INCLUDES}"
+    AC_SUBST(QT_CFLAGS)
 
     dnl Check for multi-threaded option.
     AC_ARG_ENABLE([mt],
@@ -328,14 +338,14 @@ case $host_os in
       save_CXXFLAGS="$CXXFLAGS"
       LIBS="$LIBS $X11_LIBS $QT_LIB"
       LDFLAGS="$LDFLAGS $X11_LDFLAGS $QT_LDF"
-      CXXFLAGS="$CXXFLAGS $X11_INCLUDES $QT_INCLUDES $QT_INC"
+      CXXFLAGS="$CXXFLAGS $X11_INCLUDES $QT_CFLAGS $QT_INC"
       AC_LINK_IFELSE(
           [AC_LANG_SOURCE([#include <Qt/qapplication.h>
                            int main (int argc, char ** argv) {
                            QApplication a (argc, argv); a.exec (); return 0; }])],
                            [
                                  # QT_LDFLAGS="$path";
-                                 QT_INCLUDES="$QT_INCLUDES $QT_INC";
+                                 QT_CFLAGS="$QT_CFLAGS $QT_INC";
                                  break;
                            ]
       )
@@ -359,6 +369,8 @@ case $host_os in
 #     else
 #       AC_MSG_ERROR([not found])
 #     fi
+
+    ]) # End of fallback Qt4 logic
     ;;
 
   *darwin* )
@@ -731,7 +743,7 @@ if test "$enable_qucs_gui_debug" = yes; then
  fi
 fi
 
-AC_SUBST(QT_LDFLAGS)
+QT_LIBS="${QT_LIBS} ${QT_LDFLAGS}"
 AC_SUBST(QT_LIBS)
 AC_SUBST(QT_MOC)
 AC_LANG(C)
@@ -840,6 +852,7 @@ Configure Information:
 
   Prefix          : $prefix
   QTDIR           : $QT_DIR
+  QT_CFLAGS       : $QT_CFLAGS
   QT_LIBS         : $QT_LIBS
   QT_DEF          : $QT_DEF
   QT_LDFLAGS      : $QT_LDFLAGS

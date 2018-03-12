@@ -52,8 +52,8 @@ qucsfilter_SOURCES =  \
 
 nodist_qucsfilter_SOURCES = $(MOCFILES)
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES)
-qucsfilter_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS)
+qucsfilter_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 qucsfilter_LDADD = $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = \
