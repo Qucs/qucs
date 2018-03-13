@@ -73,8 +73,8 @@ libqucsschematic_la_SOURCES= \
 
 nodist_libqucsschematic_la_SOURCES = $(MOCFILES)
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs-lib
-libqucsschematic_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs-lib
+libqucsschematic_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 
 # TODO:
 # - parts must go to libqucs
@@ -87,7 +87,7 @@ libqucsschematic_la_LIBADD = \
 libqucsschematic_la_LIBADD += \
   $(X11_LIBS) $(QT_LIBS)
 
-qucs_real_LDFLAGS = $(QT_LDFLAGS)
+qucs_real_LDFLAGS = $(QT_LIBS)
 qucs_real_SOURCES = main.cpp qucs_.qrc
 qucs_real_LDADD = \
 	libqucsschematic.la

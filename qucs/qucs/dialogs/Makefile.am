@@ -47,7 +47,7 @@ nodist_libdialogs_la_SOURCES = $(MOCFILES)
 
 noinst_HEADERS = $(MOCHEADERS) $(UIHEADERS)
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
 
 SUFFIXES = .moc.cpp
 

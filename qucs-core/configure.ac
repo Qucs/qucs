@@ -253,13 +253,15 @@ case $host_os in
   dnl Set Clang
   AS_IF([test "x$ax_cv_cxx_compiler_vendor" = "xclang"],
 	[CFLAGS="$CFLAGS -pipe"
-	 CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -ldl -D__STRICT_ANSI__"
+	 CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -D__STRICT_ANSI__"
+	 LDFLAGS="$LDFLAGS -ldl"
 	 use_CLANG="yes"],[])
 
   dnl Set GCC
   AS_IF([test "x$use_CLANG" != "xyes" -a "x$GCC" = "xyes"],
 	[CFLAGS="$CFLAGS -pipe"
-	 CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new -ldl -rdynamic"],[])
+	 CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new -ldl -rdynamic"
+	 LDFLAGS="$LDFLAGS -ldl"],[])
 
   if test "$enable_debug" = yes; then
     CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
