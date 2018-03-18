@@ -79,8 +79,8 @@ matrix:
 
     - os: osx
       # Qt 4.8.7 official installer works up to OSX 10.10 or xcode6.4
-      # Use rebuilt (with Qt3Support) homebrew bottle for OSX 10.12 or xcode8.2
-      osx_image: xcode8.2
+      # Use bottle (with Qt3Support) from cartr/qt4
+      osx_image: xcode8.3
       compiler: clang
       env: BUILD=autotools
 
@@ -120,7 +120,8 @@ install:
       brew link --force flex;
       brew install bison;
       brew link --force bison;
-      brew install python;
+      brew install python@2;
+      brew link --overwrite python@2;
       pip install matplotlib;
       brew install ccache;
       export PATH="/usr/local/opt/ccache/libexec:$PATH";
@@ -185,7 +186,7 @@ script:
   - ./bootstrap
 
   - if [[ $OSX ]]; then
-      ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc || travis_terminate 1;
+      ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc PYTHON=python2 || travis_terminate 1;
       make || travis_terminate 1;
       make qucscheck || travis_terminate 1;
     fi
