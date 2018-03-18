@@ -25,6 +25,9 @@ AC_PROG_CC
 AC_CHECK_TOOL(AR, ar, :)
 LT_INIT()
 
+# llvm spams the log, breaks CI
+CXXFLAGS="$CXXFLAGS -Wno-unused-command-line-argument"
+
 dnl Check for debugging option.
 AC_ARG_ENABLE([debug],
   AC_HELP_STRING([--enable-debug],
@@ -242,6 +245,7 @@ case $host_os in
     dnl Enable C++11 support
     CXXFLAGS="$CXXFLAGS -std=c++0x"
 
+    # hmm. QT_CFLAGS contains CPPFLAGS?
     PKG_CHECK_MODULES([QT], [QtCore QtGui QtScript QtSvg QtXml Qt3Support], [
       QT_CFLAGS="$QT_CFLAGS $QT_DEF -DQT3_SUPPORT_WARNINGS -DQT_DEPRECATED_WARNINGS -DQT_THREAD_SUPPORT -D_REENTRANT"
       case $host_os in
@@ -287,7 +291,6 @@ case $host_os in
         AC_MSG_ERROR([not found])
       fi
       QT_CFLAGS="${QT_INCLUDES}"
-      AC_SUBST(QT_CFLAGS)
 
       dnl Check for multi-threaded option.
       AC_ARG_ENABLE([mt],
@@ -300,6 +303,7 @@ case $host_os in
            enable_mt="no"
          fi])
       if test "$enable_mt" = yes; then
+	# BUG: why did we ask pkg-config, and then this?
         QT_LDF=""
         QT_LIB="-lQtCore -lQtGui -lQtXml -lQt3Support -lQtSvg -lQtScript"
         QT_INC="$QT_DEF -DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS -DQT_DEPRECATED_WARNINGS -DQT_THREAD_SUPPORT -D_REENTRANT"
@@ -310,12 +314,14 @@ case $host_os in
         QT_MTS="multi-threaded"
       else
         QT_LDF=""
+	# BUG: why did we ask pkg-config, and then this?
         QT_LIB="-lQtCore -lQtGui -lQtXml -lQt3Support -lQtSvg -lQtScript"
         QT_INC="$QT_DEF"
         QT_MTS="non-threaded"
       fi
       case $host_os in
         *mingw* | *msys*)
+	# BUG: why did we ask pkg-config, and then this?
         QT_LIB="-lQtCore4 -lQtGui4 -lQtXml4 -lQt3Support4 -lQtSvg4 -lQtScript4"
         QT_INC="$QT_INC -DQT_DLL -DUNICODE"
         QT_LDF="$QT_LDF -mwindows"
@@ -338,6 +344,7 @@ case $host_os in
         save_CXXFLAGS="$CXXFLAGS"
         LIBS="$LIBS $X11_LIBS $QT_LIB"
         LDFLAGS="$LDFLAGS $X11_LDFLAGS $QT_LDF"
+	# nonsense, but temporary
         CXXFLAGS="$CXXFLAGS $X11_INCLUDES $QT_CFLAGS $QT_INC"
         AC_LINK_IFELSE(
             [AC_LANG_SOURCE([#include <Qt/qapplication.h>
@@ -743,8 +750,9 @@ if test "$enable_qucs_gui_debug" = yes; then
  fi
 fi
 
-QT_LIBS="${QT_LIBS} ${QT_LDFLAGS}"
 AC_SUBST(QT_LIBS)
+AC_SUBST(QT_CFLAGS)
+AC_SUBST(QT_LDFLAGS)
 AC_SUBST(QT_MOC)
 AC_LANG(C)
 

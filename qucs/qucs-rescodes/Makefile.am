@@ -44,7 +44,7 @@ qucsrescodes_SOURCES = \
 nodist_qucsrescodes_SOURCES = $(MOCFILES)
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS)
-qucsrescodes_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
+qucsrescodes_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 qucsrescodes_LDADD = $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = $(MOCHEADERS) classproto.h
