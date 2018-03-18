@@ -169,9 +169,9 @@ script:
   # Build ADMS from release (avoid need of Perl and its modules)
   #   install locally to avoid using sudo, add local bin/ to PATH so the Qucs configure can find it
   - if [[ $LINUX ]]; then
-      wget http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.6.tar.gz -O /tmp/adms-2.3.6.tar.gz;
+      wget http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.6.tar.gz -O /tmp/adms-2.3.6.tar.gz  || travis_terminate 1;
       tar -xzvf /tmp/adms-2.3.6.tar.gz;
-      cd adms-2.3.6 && ./configure --prefix=$HOME && make && make install && cd ..;
+      cd adms-2.3.6 && ./configure --prefix=$HOME && make && make install && cd .. || travis_terminate 1;
       export PATH=$HOME/bin:$PATH;
     fi
 
@@ -185,28 +185,28 @@ script:
   - ./bootstrap
 
   - if [[ $OSX ]]; then
-      ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc;
-      make;
-      make qucscheck;
+      ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc || travis_terminate 1;
+      make || travis_terminate 1;
+      make qucscheck || travis_terminate 1;
     fi
 
     if [[ $LINUX && $AUTOTOOLS && $CLANG ]]; then
-      ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --enable-doc;
-      make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --enable-doc";
+      ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --enable-doc || travis_terminate 1;
+      make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --enable-doc" || travis_terminate 1;
     fi
 
    if [[ $LINUX && $AUTOTOOLS && $GCC ]]; then
-      ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc;
-      make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --disable-dependency-tracking --disable-doc";
+      ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc || travis_terminate 1;
+      make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --disable-dependency-tracking --disable-doc" || travis_terminate 1;
     fi
 
   # with cmake build only
   - if [[ $CMAKE ]]; then
       mkdir build;
       cd build;
-      cmake ..;
-      make;
-      make test;
+      cmake .. || travis_terminate 1;
+      make || travis_terminate 1;
+      make test || travis_terminate 1;
     fi
 
   - echo $TRAVIS_BRANCH
@@ -218,4 +218,4 @@ script:
     fi
 
   - ccache --show-stats
-  
+
