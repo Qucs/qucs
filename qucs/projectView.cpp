@@ -183,6 +183,7 @@ QString ProjectView::ReadDescription(QString file)
         }
     } while (!line.isNull());
 
+    description.replace("\\n", "<br>");
     QucsDocument.close();
     if (description == "Title") description = "";//Prevent schematics without description from showing "Title" in the tooltip
     return description;
