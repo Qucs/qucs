@@ -2940,6 +2940,8 @@ bool loadSettings()
 
     if(settings.contains("Editor")) QucsSettings.Editor = settings.value("Editor").toString();
 
+    if(settings.contains("ShowDescription")) QucsSettings.ShowDescriptionProjectTree = settings.value("ShowDescription").toBool();
+
     QucsSettings.RecentDocs = settings.value("RecentDocs").toString().split("*",QString::SkipEmptyParts);
     QucsSettings.numRecentDocs = QucsSettings.RecentDocs.count();
 
@@ -3126,6 +3128,7 @@ bool saveApplSettings()
     settings.setValue("GraphAntiAliasing", QucsSettings.GraphAntiAliasing);
     settings.setValue("TextAntiAliasing", QucsSettings.TextAntiAliasing);
     settings.setValue("Editor", QucsSettings.Editor);
+    settings.setValue("ShowDescription", QucsSettings.ShowDescriptionProjectTree);
 
     // Copy the list of directory paths in which Qucs should
     // search for subcircuit schematics from qucsPathList
