@@ -17,7 +17,7 @@
 
 #include "qucsshortcutdialog.h"
 #include "keysequenceedit.h"
-#include "main.h"
+#include "qucs.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>

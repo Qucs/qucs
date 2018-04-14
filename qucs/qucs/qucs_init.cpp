@@ -43,6 +43,7 @@ setDefaultShortcut()
 
   QMap<QString, QString> *filemap = new QMap<QString, QString>;
   filemap->insert("New", QString(QKeySequence(Qt::CTRL+Qt::Key_N)));
+  filemap->insert("New Stand-alone schematic or data display", QString(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_H)));
   filemap->insert("New Text", QString(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_V)));
   filemap->insert("Open", QString(QKeySequence(Qt::CTRL+Qt::Key_O)));
   filemap->insert("Close", QString(QKeySequence(Qt::CTRL+Qt::Key_W)));
@@ -278,8 +279,6 @@ QucsApp::slotSetAllShortcut()
   viewOctaveDock->setShortcut(QKeySequence(map->value("Octave Window")));
 
   map = vec->at(8).second; //Help
-  helpIndex    ->setShortcut(QKeySequence(map->value("Help Index")));
-  helpGetStart->setShortcut(QKeySequence(map->value("Getting Started")));
   helpAboutApp->setShortcut(QKeySequence(map->value("About Qucs")));
   helpAboutQt  ->setShortcut(QKeySequence(map->value("About Qt")));
 }
