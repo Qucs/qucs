@@ -229,7 +229,7 @@ QucsShortcutDialog::slotImport()
     if (line != "<Qucs Shortcut>") {
       file.close();
       QMessageBox::critical(0, tr("Error"),
-        tr("Wrong document type: "+filename));
+        tr("Wrong document type: ")+filename);
       return;
     }
 
@@ -246,7 +246,7 @@ QucsShortcutDialog::slotImport()
     menu_it = QucsSettings.Shortcut.begin();
     while (!stream.atEnd()) {
       line = stream.readLine();
-      line = line.stripWhiteSpace();
+      line = line.trimmed();
       if (line.isEmpty()) { continue; }
 
       if (line.startsWith("Menu")) {
@@ -287,8 +287,6 @@ QucsShortcutDialog::slotImport()
 void
 QucsShortcutDialog::slotExport()
 {
-  QString filename;
-
   QFileDialog *sd = new QFileDialog;
   sd->setDefaultSuffix("shortcutmap");
   sd->setDirectory(".");
