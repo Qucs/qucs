@@ -7,7 +7,7 @@ include ../common.mk
 
 qucs_real_LDFLAGS = $(QT_LDFLAGS)
 qucs_real_SOURCES = main.cpp # qucs_.qrc
-qucs_real_CPPFLAGS = ${AM_CPPFLAGS} $(QT_INCLUDES) -I${top_srcdir}/qucs
+qucs_real_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) -I${top_srcdir}/qucs
 
 # these are not plugins yet. but there's hope.
 # TODO:
