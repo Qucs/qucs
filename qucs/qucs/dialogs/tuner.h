@@ -63,7 +63,7 @@ class tunerElement : public QWidget
         float getStep(bool &);
         QString originalValue;//OriginalValue and numValue need to be public since they need to be accessed by tunerDialog when checking if the initial value was modified
         float numValue;
-
+        Component *c;
 
         virtual ~tunerElement();
     signals:
@@ -118,6 +118,7 @@ signals:
     void addTunerElement(Element *e);
 public slots:
     void slotResetTunerDialog();
+    void slotComponentDeleted(Component *);
 protected:
     virtual void showEvent(QShowEvent *);
 

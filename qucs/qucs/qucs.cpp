@@ -2084,6 +2084,11 @@ void QucsApp::slotTune(bool checked)
         // instance of tuner
         TuningMode = true;
         tunerDia = new TunerDialog(w, this);//The object can be instantiated here since when checked == false the memory will be freed
+        // inform the Tuner Dialog when a component is deleted
+        Schematic *d = dynamic_cast<Schematic*>(w);
+        assert(d);
+        connect(d, SIGNAL(signalComponentDeleted(Component *)),
+                tunerDia, SLOT(slotComponentDeleted(Component *)));
 
         slotHideEdit(); // disable text edit of component property
         workToolbar->setEnabled(false); // disable workToolbar to preserve TuneMouseAction

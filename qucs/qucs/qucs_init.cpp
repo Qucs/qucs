@@ -1103,4 +1103,3 @@ void QucsApp::slotToggleOctave(bool on)
   viewOctaveDock->setChecked(on);
   viewOctaveDock->blockSignals(false);
 }
-

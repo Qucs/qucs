@@ -2860,6 +2860,7 @@ void Schematic::deleteComp(Component *c)
             break;
         }
 
+    emit signalComponentDeleted(c);
     Components->removeRef(c);   // delete component
 }
 

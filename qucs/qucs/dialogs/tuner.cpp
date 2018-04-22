@@ -36,7 +36,7 @@ bool checkProperty(Component *component, Property *pp)
 }
 
 tunerElement::tunerElement(QWidget *parent, Component *component, Property *pp, int selectedPropertyId)
-    : QWidget(parent)
+  : QWidget(parent), c(component)
 {
     QStringList ScaleFactorList;
     ScaleFactorList << "f" << "p" << "n" << "u" << "m" << "" << "k" << "M" << "G";
@@ -717,6 +717,16 @@ void TunerDialog::addTunerElement(tunerElement *element)
         msgBox.exec();
     }
    info->clearMessage();//The user has already selected a component. It makes no longer sense to display the help message
+}
+
+// Remove tuner element(s) for a component
+void TunerDialog::slotComponentDeleted(Component *c)
+{
+  // remove elements related to the component
+  for(int i = currentElements->count()-1; i >= 0; --i) {
+    if (currentElements->at(i)->c == c)
+      slotRemoveTunerElement(currentElements->at(i));
+  }
 }
 
 void TunerDialog::slotRemoveTunerElement(tunerElement *e)
