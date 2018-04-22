@@ -615,7 +615,7 @@ tunerElement::~tunerElement()
 
 //Main window. It contains zero or more tunerElement objects
 TunerDialog::TunerDialog(QWidget *_w, QWidget *parent) :
-  w(_w), QDialog(parent)
+ QDialog(parent), w(_w)
 {
     setAttribute(Qt::WA_DeleteOnClose);//This attribute forces the widget to be destroyed after closing
     qDebug() << "Tuner::TunerDialog";
