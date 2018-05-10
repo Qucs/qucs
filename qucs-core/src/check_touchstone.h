@@ -45,6 +45,7 @@ namespace qucs {
 }
 
 extern qucs::dataset * touchstone_result;
+extern qucs::vector  * touchstone_line;
 extern qucs::vector  * touchstone_vector;
 extern qucs::strlist * touchstone_idents;
 
