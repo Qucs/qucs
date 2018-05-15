@@ -71,3 +71,17 @@ QString QucsDoc::fileBase (void) {
   return fileBase (DocName);
 }
 
+// Returns a boolean flag indicating if the document has write permissions
+bool QucsDoc::isreadonly()
+{
+    if (DocName.isEmpty())
+    {//The file wasn't created yet
+     return false;
+    }
+    else
+    {
+      QFileInfo Info(DocName);
+      if (!Info.exists()) return false;//In case the file doesn't exist, we cannot say that's read-only.
+      return !Info.isWritable();//Unfortunately, !Info.isWritable() is true in that case, so we need to check Info.exists() first
+    }
+}

@@ -43,6 +43,7 @@ public:
   QString fileSuffix (void);
   static QString fileBase (const QString&);
   QString fileBase (void);
+  bool isreadonly();
 
   QString DocName;
   QString DataSet;     // name of the default dataset

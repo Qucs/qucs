@@ -1436,7 +1436,7 @@ bool QucsApp::saveFile(QucsDoc *Doc)
     return saveAs();
 
   int Result = Doc->save();
-  if(Result < 0)  return false;
+  if(Result < 0)  return saveAs();
 
   updatePortNumber(Doc, Result);
   slotUpdateTreeview();
@@ -3016,8 +3016,14 @@ Schematic *ContextMenuTabWidget::createEmptySchematic(const QString &name)
 {
   // create a schematic
   QFileInfo Info(name);
+  QString filename = Info.fileName();
   Schematic *d = new Schematic(App, name);
-  int i = addTab(d, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
+  if (d->isreadonly())
+   {// If the file is not writable, then add [READ-ONLY] to the tab title.
+    // The document can be edited but not saved.
+       filename += " [READ-ONLY]";
+   }
+  int i = addTab(d, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : filename);
   setCurrentIndex(i);
   return d;
 }
@@ -3026,8 +3032,14 @@ TextDoc *ContextMenuTabWidget::createEmptyTextDoc(const QString &name)
 {
   // create a text document
   QFileInfo Info(name);
+  QString filename = Info.fileName();
   TextDoc *d = new TextDoc(App, name);
-  int i = addTab(d, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
+  if (d->isreadonly())
+   {// If the file is not writable, then add [READ-ONLY] to the tab title.
+    // The document can be edited but not saved.
+       filename += " [READ-ONLY]";
+   }
+  int i = addTab(d, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : filename);
   setCurrentIndex(i);
   return d;
 }
