@@ -1810,8 +1810,10 @@ void QucsApp::slotChangeView(QWidget *w)
   }
   // for schematic documents
   else {
+    assert(w);
     Schematic *d = (Schematic*)w;
     Doc = (QucsDoc*)d;
+    assert(Doc);
     magAll->setDisabled(false);
     // already in schematic?
     if(cursorLeft->isEnabled()) {
@@ -1910,7 +1912,9 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
     if(isTextDocument (w))  continue;
 
     // start from the last to omit re-appended components
+    assert(w);
     Schematic *Doc = (Schematic*)w;
+    assert(Doc);
     for(Component *pc=Doc->Components->last(); pc!=0; ) {
       if(pc->Model == Model) {
         File = pc->Props.getFirst()->Value;
@@ -2005,7 +2009,11 @@ void QucsApp::slotIntoHierarchy()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
+  assert(DocumentTab);
+  QWidget *w = DocumentTab->currentWidget();
+  Schematic *Doc = dynamic_cast<Schematic*>(w);
+  assert(Doc);
+
   Component *pc = Doc->searchSelSubcircuit();
   if(pc == 0) { return; }
 
@@ -2070,7 +2078,9 @@ void QucsApp::slotSimulate()
   QucsDoc *Doc;
   QWidget *w = DocumentTab->currentWidget();
   if(isTextDocument (w)) {
+    assert(w);
     Doc = (QucsDoc*)((TextDoc*)w);
+    assert(Doc);
     if(Doc->SimTime.isEmpty() && ((TextDoc*)Doc)->simulation) {
       DigiSettingsDialog *d = new DigiSettingsDialog((TextDoc*)Doc);
       if(d->exec() == QDialog::Rejected)
@@ -2409,7 +2419,10 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
 void QucsApp::slotSelectLibComponent(QTreeWidgetItem *item)
 {
     // get the current document
-    Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
+    assert(DocumentTab);
+    QWidget *w = DocumentTab->currentWidget();
+    Schematic *Doc = dynamic_cast<Schematic*>(w);
+    assert(Doc);
 
     // if the current document is a schematic activate the paste
     if(!isTextDocument(Doc))
@@ -2541,6 +2554,7 @@ bool QucsApp::isTextDocument(QWidget *w) {
 // symbol.
 void QucsApp::slotSymbolEdit()
 {
+  assert(DocumentTab);
   QWidget *w = DocumentTab->currentWidget();
 
   // in a text document (e.g. VHDL)
@@ -2560,7 +2574,8 @@ void QucsApp::slotSymbolEdit()
     slotChangePage(TDoc->DocName,TDoc->DataDisplay);
 
     // set 'DataDisplay' document of symbol file to original text file
-    Schematic *SDoc = (Schematic*)DocumentTab->currentWidget();
+    Schematic *SDoc = dynamic_cast<Schematic*>(w);
+    assert(SDoc);
     SDoc->DataDisplay = Info.fileName();
 
     // change into symbol mode
@@ -2574,7 +2589,8 @@ void QucsApp::slotSymbolEdit()
   }
   // in a normal schematic, data display or symbol file
   else {
-    Schematic *SDoc = (Schematic*)w;
+     Schematic *SDoc = dynamic_cast<Schematic*>(w);
+     assert(SDoc);
     // in a symbol file
     if(SDoc->DocName.right(4) == ".sym") {
       slotChangePage(SDoc->DocName, SDoc->DataDisplay);
@@ -2623,7 +2639,12 @@ void QucsApp::slot2PortMatching()
   Marker *pm = (Marker*)view->focusElement;
 
   QString DataSet;
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
+
+  assert(DocumentTab);
+  QWidget *w = DocumentTab->currentWidget();
+  Schematic *Doc = dynamic_cast<Schematic*>(w);
+  assert(Doc);
+
   int z = pm->pGraph->Var.indexOf(':');
   if(z <= 0)  DataSet = Doc->DataSet;
   else  DataSet = pm->pGraph->Var.mid(z+1);
@@ -2703,7 +2724,13 @@ void QucsApp::slot2PortMatching()
 void QucsApp::slotEditElement()
 {
   if(view->focusMEvent)
-    view->editElement((Schematic*)DocumentTab->currentWidget(), view->focusMEvent);
+  {
+     assert(DocumentTab);
+     QWidget *w = DocumentTab->currentWidget();
+     Schematic * sch = dynamic_cast<Schematic*>(w);
+     assert(sch);
+     view->editElement(sch, view->focusMEvent);
+   }
 }
 
 // -----------------------------------------------------------
