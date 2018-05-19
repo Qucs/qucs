@@ -27,7 +27,7 @@ install:
   - bash -lc "pacman --noconfirm --sync pacman-mirrors"
   - bash -lc "pacman --noconfirm -S autoconf automake bison flex"
   - bash -lc "pacman --noconfirm -S mingw-w64-%MARCH%-qt4"
-  
+
   # Set compiler (64bit)
   - set "CC=/c/msys64/mingw%MBITS%/bin/gcc.exe"
   - set "CXX=/c/msys64/mingw%MBITS%/bin/g++.exe"
@@ -80,7 +80,7 @@ build_script:
   - cp %QTDIR%\bin\zlib1.dll %QUCSDIR%\bin
 
   - if "%MSYSTEM%" == "MINGW32" (cp %QTDIR%\bin\libgcc_s_dw2-1.dll %QUCSDIR%\bin) else (cp %QTDIR%\bin\libgcc_s_seh-1.dll %QUCSDIR%\bin)
-  
+
   # Run from windows cmd
   - cd %QUCSDIR%\bin
   - qucs.exe -v
@@ -90,7 +90,7 @@ build_script:
   # * one could zip the %QUCSDIR% and use it for testing
   # * perhaps it is best we finish the top level 'make dist',
   #   doing so it is easier to create tarballs, build the binaries from it and distribute both.
-  
+
 after_build:
   #  artifacts path is always relative to build folder, so put the zip there
   - 7z a %APPVEYOR_BUILD_FOLDER%\qucs-win%MBITS%.zip %QUCSDIR%
@@ -103,4 +103,3 @@ artifacts:
 #on_failure:
 #  - bash -lc "exec 0</dev/null && cat $APPVEYOR_BUILD_FOLDER/qucs/config.log"
 #  - ps: Get-ChildItem .\*.log -Recurse | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
-
