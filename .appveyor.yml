@@ -42,8 +42,8 @@ build_script:
   # Download, build and install ADMS
   - bash -lc "exec 0</dev/null && wget.exe http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.6.tar.gz"
   - bash -lc "exec 0</dev/null && tar xvfz adms-2.3.6.tar.gz"
-  - bash -lc "exec 0</dev/null && cd adms-2.3.6/ && ./configure && make install && cd -"
-  - bash -lc "exec 0</dev/null && admsXml -h"
+  - bash -lc "exec 0</dev/null && cd adms-2.3.6/ && ./configure --prefix=/c/qucs-win%MBITS% && make install && cd -"
+  - bash -lc "exec 0</dev/null && cd /c/qucs-win%MBITS%/bin && ./admsXml -h"
 
   ## Build Qucs-GUI applications and install
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && ./bootstrap"
@@ -53,7 +53,7 @@ build_script:
 
   ## Build Qucs-core and install
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && ./bootstrap"
-  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && ./configure --prefix=/c/qucs-win%MBITS% --with-mkadms=`which admsXml` --disable-dependency-tracking"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && ./configure --prefix=/c/qucs-win%MBITS% --with-mkadms=/c/qucs-win%MBITS%/bin/admsXml --disable-dependency-tracking"
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && make -j2 install"
   - bash -lc "exec 0</dev/null && cd /c/qucs-win%MBITS%/bin && ./qucsator -v"
 
@@ -92,7 +92,6 @@ build_script:
   #   doing so it is easier to create tarballs, build the binaries from it and distribute both.
 
 after_build:
-  #  artifacts path is always relative to build folder, so put the zip there
   - 7z a %APPVEYOR_BUILD_FOLDER%\qucs-win%MBITS%.zip %QUCSDIR%
 
 artifacts:
