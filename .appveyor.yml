@@ -10,6 +10,11 @@ environment:
 platform:
   - x64
 
+skip_commits:
+  files:
+    - .travis.yml
+    - '*.md'
+
 #cache:
 #  - C:\msys64\var\cache\pacman\pkg\mingw-w64-x86_64-qt4* -> .appveyor.yml
 
