@@ -1,7 +1,6 @@
 PROJECT(QucsWidebandMatching CXX C)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 cmake_policy(VERSION 2.6)
-
 FIND_PACKAGE(Qt4 COMPONENTS QtSvg QtGui QtCore)
 INCLUDE(${QT_USE_FILE})
 # use top VERSION file
@@ -21,7 +20,7 @@ ADD_DEFINITIONS( -DHAVE_CONFIG_H )
 
 # define variables
 SET(BINARYDIR "${CMAKE_INSTALL_PREFIX}/bin/")
-#SET(BITMAPDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/bitmaps/")
+SET(BITMAPDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/bitmaps/")
 SET(DOCDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/docs/")
 SET(LANGUAGEDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/lang/")
 SET(LIBRARYDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/library/")
@@ -53,8 +52,9 @@ ADD_DEFINITIONS(${QT_DEFINITIONS})
 #ADD_SUBDIRECTORY( bitmaps ) -> added as resources
 
 SET( wb_matching_sources main.cpp ui.cpp io.cpp MathOperations.cpp mat.cpp sparengine.cpp GRABIM.cpp)
+SET( wb_matching_headers io.h MathOperations.h mat.h sparengine.h GRABIM.h)
 
-SET( wb_matching_moc_headers ui.h io.h MathOperations.h mat.h sparengine.h GRABIM.h)
+SET( wb_matching_moc_headers ui.h)
 
 QT4_WRAP_CPP( wb_matching_moc_sources ${wb_matching_moc_headers} )
 
@@ -83,6 +83,8 @@ ENDIF(APPLE)
 ADD_EXECUTABLE( QucsWidebandMatching MACOSX_BUNDLE WIN32
   ${}
   ${wb_matching_moc_sources}
+  ${wb_matching_sources}
+  ${wb_matching_headers}
   ${RESOURCES_SRCS} )
 
 TARGET_LINK_LIBRARIES( QucsWidebandMatching ${QT_LIBRARIES} )

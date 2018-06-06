@@ -34,11 +34,10 @@ EXTRA_DIST = QucsWidebandMatching.qrc
 qrc_QucsWidebandMatching.cpp: QucsWidebandMatching.qrc
 	$(RCC) -o $@ $<
 
-
 nodist_QucsWidebandMatching_SOURCES = $(MOCFILES)
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES) 
-QucsWidebandMatching_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS)
+QucsWidebandMatching_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 QucsWidebandMatching_LDADD = $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = $(MOCHEADERS)

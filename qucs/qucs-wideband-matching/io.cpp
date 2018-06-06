@@ -332,7 +332,7 @@ int IO::loadS2Pdata(std::string filepath)
     }
     std::string line;
     double freq_scale = 1;
-    double Zref = 50;
+    //double Zref = 50;
 
     std::getline(s2pfile, line);
     while(line.compare(0, 1, "#"))//Looking for # field
@@ -623,7 +623,7 @@ int IO::ResampleImpedances()
    Zin_maxg.resize(C1.size());
    Zout_maxg.resize(C1.size());
    //The sign of the square root must be chosen for each frequency so here we cannot apply vector operations
-   for (int i = 0; i < C1.size(); i++)
+   for (unsigned int i = 0; i < C1.size(); i++)
    {
       gamma_S = (B1[i]-sqrt(B1[i]*B1[i] - 4.*abs(C1[i])*abs(C1[i])))/(2.*C1[i]);
       gamma_L = (B2[i]-sqrt(B2[i]*B2[i] - 4.*abs(C2[i])*abs(C2[i])))/(2.*C2[i]);
