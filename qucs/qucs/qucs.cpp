@@ -353,6 +353,19 @@ void QucsApp::initView()
   m_homeDirModel->setFilter(QDir::NoDot | QDir::AllDirs);
 
   // ............................................
+  QString path = QucsSettings.QucsHomeDir.absolutePath();
+  QDir ProjDir(path);
+  // initial projects directory is the Qucs home directory
+  QucsSettings.projsDir = path;
+
+  // create home dir if not exist
+  if(!ProjDir.exists()) {
+    if(!ProjDir.mkdir(path)) {
+      QMessageBox::warning(this, tr("Warning"),
+          tr("Cannot create work directory !"));
+      return;
+    }
+  }
   readProjects(); // reads all projects and inserts them into the ListBox
 }
 
@@ -1088,17 +1101,7 @@ void QucsApp::slotCMenuInsert()
 // Checks for qucs directory and reads all existing Qucs projects.
 void QucsApp::readProjects()
 {
-  QString path = QucsSettings.QucsHomeDir.absolutePath();
-  QDir ProjDir(path);
-
-  // create home dir if not exist
-  if(!ProjDir.exists()) {
-    if(!ProjDir.mkdir(path)) {
-      QMessageBox::warning(this, tr("Warning"),
-          tr("Cannot create work directory !"));
-      return;
-    }
-  }
+  QString path = QucsSettings.projsDir.absolutePath();
   m_homeDirModel->setRootPath(path);
   Projects->setModel(m_homeDirModel);
   Projects->setRootIndex(m_homeDirModel->index(path));
@@ -1113,7 +1116,7 @@ void QucsApp::slotButtonProjNew()
   NewProjDialog *d = new NewProjDialog(this);
   if(d->exec() != QDialog::Accepted) return;
 
-  QDir projDir(QucsSettings.QucsHomeDir.path());
+  QDir projDir(QucsSettings.projsDir.path());
   QString name = d->ProjName->text();
   bool open = d->OpenProj->isChecked();
 
@@ -1126,7 +1129,7 @@ void QucsApp::slotButtonProjNew()
         tr("Cannot create project directory !"));
   }
   if(open) {
-    openProject(QucsSettings.QucsHomeDir.filePath(name));
+    openProject(QucsSettings.projsDir.filePath(name));
   }
 }
 
@@ -1178,7 +1181,7 @@ void QucsApp::slotMenuProjOpen()
 {
   QString d = QFileDialog::getExistingDirectory(
       this, tr("Choose Project Directory for Opening"),
-      QucsSettings.QucsHomeDir.path(),
+      QucsSettings.projsDir.path(),
       QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
   if(d.isEmpty()) return;
 
@@ -1206,13 +1209,10 @@ void QucsApp::slotListProjOpen(const QModelIndex &idx)
 {
   QString dName = idx.data().toString();
   if (dName.endsWith("_prj")) { // it's a Qucs project
-    openProject(QucsSettings.QucsHomeDir.filePath(dName));
+    openProject(QucsSettings.projsDir.filePath(dName));
   } else { // it's a normal directory
-    // close all open files, asking the user whether to save the modified ones
-    // if user aborts closing, just return
-    if(!closeAllFiles()) return;
-    QucsSettings.QucsHomeDir = QucsSettings.QucsHomeDir.filePath(dName);
-    slotMenuProjClose();
+    // change projects directory to the selected one
+    QucsSettings.projsDir = QucsSettings.projsDir.filePath(dName);
     readProjects();
     slotUpdateTreeview();
     repaint();
@@ -1315,7 +1315,7 @@ void QucsApp::slotMenuProjDel()
 {
   QString d = QFileDialog::getExistingDirectory(
       this, tr("Choose Project Directory for Deleting"),
-      QucsSettings.QucsHomeDir.path(),
+      QucsSettings.projsDir.path(),
       QFileDialog::ShowDirsOnly
       | QFileDialog::DontResolveSymlinks);
 
@@ -1333,7 +1333,7 @@ void QucsApp::slotButtonProjDel()
     return;
   }
 
-  deleteProject(QucsSettings.QucsHomeDir.filePath(idx.data().toString()));
+  deleteProject(QucsSettings.projsDir.filePath(idx.data().toString()));
 }
 
 
@@ -2930,6 +2930,7 @@ bool loadSettings()
                     QDir::separator() + "octave" + QString(executableSuffix);
         } else QucsSettings.OctaveExecutable = "octave" + QString(executableSuffix);
     }
+
     if(settings.contains("QucsHomeDir"))
       if(settings.value("QucsHomeDir").toString() != "")
          QucsSettings.QucsHomeDir.setPath(settings.value("QucsHomeDir").toString());
