@@ -96,7 +96,8 @@ struct tQucsSettings {
 
   unsigned int NodeWiring;
   QDir QucsWorkDir; // Qucs user directory where user currently works (usually QucsHomeDir or subdir)
-  QDir QucsHomeDir; // Qucs user directory where all projects are located
+  QDir QucsHomeDir; // Qucs initial user projects directory
+  QDir projsDir; // current user directory where projects are located
   QDir AdmsXmlBinDir;  // dir of admsXml executable
   QDir AscoBinDir;     // dir of asco executable
   // QDir OctaveBinDir;   // dir of octave executable
