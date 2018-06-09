@@ -24,6 +24,7 @@
 #include <QStack>
 #include <QDir>
 #include <QFileSystemModel>
+#include <QSortFilterProxyModel>
 
 /**
  * @file qucs.h
@@ -140,6 +141,15 @@ class QucsFileSystemModel : public QFileSystemModel {
 public:
   QucsFileSystemModel(QObject* parent = 0) : QFileSystemModel(parent) {};
   QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
+};
+
+class QucsSortFilterProxyModel : public QSortFilterProxyModel {
+  Q_OBJECT
+
+public:
+  QucsSortFilterProxyModel(QObject *parent = 0) : QSortFilterProxyModel(parent) {};
+protected:
+  bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
 };
 
 class QucsApp : public QMainWindow {
@@ -291,6 +301,7 @@ private:
   QStack<QString> HierarchyHistory; // keeps track of "go into subcircuit"
   QString  QucsFileFilter;
   QucsFileSystemModel *m_homeDirModel;
+  QucsSortFilterProxyModel *m_proxyModel;
   QFileSystemModel *m_projModel;
   int ccCurIdx; // CompChooser current index (used during search)
 
