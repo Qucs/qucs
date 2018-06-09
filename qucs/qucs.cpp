@@ -349,6 +349,8 @@ void QucsApp::initView()
 
   // initial projects directory model
   m_homeDirModel = new QucsFileSystemModel(this);
+  m_proxyModel = new QucsSortFilterProxyModel();
+  //m_proxyModel->setDynamicSortFilter(true);
   // show all directories (project and non-project)
   m_homeDirModel->setFilter(QDir::NoDot | QDir::AllDirs);
 
@@ -1102,9 +1104,25 @@ void QucsApp::slotCMenuInsert()
 void QucsApp::readProjects()
 {
   QString path = QucsSettings.projsDir.absolutePath();
-  m_homeDirModel->setRootPath(path);
-  Projects->setModel(m_homeDirModel);
-  Projects->setRootIndex(m_homeDirModel->index(path));
+  QString homepath = QucsSettings.QucsHomeDir.absolutePath();
+
+  if (path == homepath) {
+    // in Qucs Home, disallow further up in the dirs tree
+    m_homeDirModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
+  } else {
+    m_homeDirModel->setFilter(QDir::NoDot | QDir::AllDirs);
+  }
+
+  // set the root path
+  QModelIndex rootModelIndex = m_homeDirModel->setRootPath(path);
+  // assign the model to the proxy and the proxy to the view
+  m_proxyModel->setSourceModel(m_homeDirModel);
+  m_proxyModel->setSortCaseSensitivity(Qt::CaseInsensitive);
+  // sort by first column (file name, only column show in the QListView)
+  m_proxyModel->sort(0);
+  Projects->setModel(m_proxyModel);
+  // fix the listview on the root path of the model
+  Projects->setRootIndex(m_proxyModel->mapFromSource(rootModelIndex));
 }
 
 // ----------------------------------------------------------
@@ -3166,4 +3184,45 @@ QVariant QucsFileSystemModel::data( const QModelIndex& index, int role ) const
   }
   // return default system icon
   return QFileSystemModel::data(index, role);
+}
+
+// function below is adapted from https://stackoverflow.com/questions/10789284/qfilesystemmodel-sorting-dirsfirst
+bool QucsSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
+{
+  // if sorting by file names column
+  if (sortColumn() == 0) {
+    QucsFileSystemModel *model = qobject_cast<QucsFileSystemModel*>(sourceModel());
+    // get the current sort order (do we need this ?)
+    bool asc = sortOrder() == Qt::AscendingOrder ? true : false;
+
+    QFileInfo leftFileInfo = model->fileInfo(left);
+    QFileInfo rightFileInfo = model->fileInfo(right);
+    QString leftFileName = model->fileName(left);
+    QString rightFileName = model->fileName(right);
+
+    // If DotAndDot move in the beginning
+    if (sourceModel()->data(left).toString() == "..")
+      return asc;
+    if (sourceModel()->data(right).toString() == "..")
+      return !asc;
+
+    // move dirs upper
+    if (!leftFileInfo.isDir() && rightFileInfo.isDir()) {
+      return !asc;
+    }
+    if (leftFileInfo.isDir() && !rightFileInfo.isDir()) {
+      return asc;
+    }
+    // move dirs ending in '_prj' upper
+    if (leftFileInfo.isDir() && rightFileInfo.isDir()) {
+      if (!leftFileName.endsWith("_prj") && rightFileName.endsWith("_prj")) {
+        return !asc;
+      }
+      if (leftFileName.endsWith("_prj") && !rightFileName.endsWith("_prj")) {
+        return asc;
+      }
+    }
+  }
+
+  return QSortFilterProxyModel::lessThan(left, right);
 }
