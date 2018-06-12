@@ -390,16 +390,49 @@ bool Marker::moveLeftRight(bool left)
 
   CHECK_MARKER
 
+  // this is mad. split into moveLeft and moveRight.
+  // get rid of "markers", but how?
+
   if(left) {
     if(SplPosX == SplPosD->begin()) return false;
     if((SplPosX-1)->isStrokeEnd()) return false;
-    --SplPosX;
+
+    if(SplPosX == SplPosD->begin()){
+      //nothing to do
+    }else{
+      --SplPosX;
+      if(SplPosX == SplPosD->begin()){
+	// done?
+      }else if(!SplPosX->isPt()){
+	// try another time.
+	--SplPosX;
+      }
+    }
+
     assert(!SplPosX->isStrokeEnd());
   } else {
     if(SplPosX == SplPosD->end()) return false; // reachable?
     if(SplPosX+1 == SplPosD->end()) return false;
     if(SplPosX->isStrokeEnd()) return false;
-    ++SplPosX;
+
+    if(SplPosX == SplPosD->end()){
+      // nothing to do.
+    }else if(!SplPosX->isPt()){
+      // out of range, somethings wrong?!
+      // warn? throw? assert?
+    } else {
+      // we are in the middle of it
+      ++SplPosX;
+      if(SplPosX == SplPosD->end()){
+	// nothing else to do.
+      }else if(SplPosX->isPt()){
+	/// good. lets use this.
+      }else{
+	++SplPosX;
+	// do we want separators just before end?
+	assert(SplPosX == SplPosD->end() || SplPosX->isPt());
+      }
+    }
     assert(SplPosX != SplPosD->end());
   }
   VarPos[0] = SplPosX->getIndep();
