@@ -18,6 +18,8 @@
  * \file misc.h
  * \Declaration of some miscellaneous function
  */
+#ifndef MISC_H
+#define MISC_H
 
 #include <QWidget>
 #include <QPalette>
@@ -94,3 +96,5 @@ class VersionTriplet {
  private:
   int major, minor, patch;
 };
+
+#endif

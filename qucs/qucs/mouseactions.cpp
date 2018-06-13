@@ -32,6 +32,7 @@
 #include "diagrams/tabdiagram.h"
 #include "diagrams/timingdiagram.h"
 #include "dialogs/labeldialog.h"
+#include "dialogs/tuner.h"
 
 #include <QTextStream>
 #include <Q3PtrList>
@@ -947,7 +948,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
 
   if(focusElement)
     // print define value in hex, see element.h
-    qDebug() << "MPressSelect: focusElement->Type" <<  QString("0x%1").arg(focusElement->Type, 0, 16);
+    qDebug() << "MPressSelect: focusElement->Type" <<  QString("0x%1").arg(focusElement->Type, 0, 16) << ", No " << No;
   else
     qDebug() << "MPressSelect";
 
@@ -1091,6 +1092,58 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
   Doc->highlightWireLabels ();
 }
 
+void MouseActions::MPressTune(Schematic *Doc, QMouseEvent *Event, float fX, float fY)
+{
+    Q_UNUSED(Event);
+    int No=0;
+    MAx1 = int(fX);
+    MAy1 = int(fY);
+    focusElement = Doc->selectElement(fX, fY, false, &No);
+    isMoveEqual = false;   // moving not neccessarily square
+
+    if(focusElement)
+      // print define value in hex, see element.h
+      qDebug() << "MPressTune: focusElement->Type" <<  QString("0x%1").arg(focusElement->Type, 0, 16);
+    else
+      qDebug() << "MPressTune";
+
+    if(focusElement && App->TuningMode)
+    {
+        switch(focusElement->Type)
+        {
+        case isComponentText:  // property text of component ?
+            focusElement->Type &= (~isComponentText) | isComponent;
+            Component *pc = (Component*)focusElement;
+            Property *pp = 0;
+            if(!pc) return;  // should never happen
+
+            // current property
+            if (No > 0) {
+                No--;// No counts also the on/screen component Name, so subtract 1 to get the actual property number
+                pp = pc->Props.at(No);
+            }
+            if (!pp) return; // should not happen
+
+            if (! App->tunerDia->containsProperty(pp) )
+            {
+                if (checkProperty(pc, pp))
+                {
+                    tunerElement *tune = new tunerElement(App->tunerDia, pc, pp, No);
+                    if (tune != NULL) App->tunerDia->addTunerElement(tune);//Tunable property
+                }
+                else
+                {
+                    QMessageBox::warning(0,
+                                         "Property not correct",
+                                         "You selected a non-tunable property",
+                                         QMessageBox::Ok);
+                    return;
+                }
+            }
+            return;
+        }
+    }
+}
 // -----------------------------------------------------------
 void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent*, float fX, float fY)
 {

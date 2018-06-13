@@ -42,6 +42,7 @@
 #include <QSettings>
 #include <QVariant>
 #include <QDebug>
+#include <QToolBar>
 
 #include "qucs.h"
 #include "qucsdoc.h"
@@ -67,6 +68,7 @@
 #include "dialogs/matchdialog.h"
 #include "dialogs/simmessage.h"
 #include "dialogs/exportdialog.h"
+#include "dialogs/tuner.h"
 #include "octave_window.h"
 #include "printerwriter.h"
 #include "imagewriter.h"
@@ -133,6 +135,8 @@ QucsApp::QucsApp()
 
   // instance of small text search dialog
   SearchDia = new SearchDialog(this);
+
+  TuningMode = false;//Force tuning mode to false
 
   // creates a document called "untitled"
   DocumentTab->createEmptySchematic("");
@@ -254,7 +258,7 @@ void QucsApp::initView()
   TabView->addTab(Content, tr("Content"));
   TabView->setTabToolTip(TabView->indexOf(Content), tr("content of current project"));
 
-  connect(Content, SIGNAL(clicked(const QModelIndex &)), 
+  connect(Content, SIGNAL(clicked(const QModelIndex &)),
           SLOT(slotSelectSubcircuit(const QModelIndex &)));
 
   connect(Content, SIGNAL(doubleClicked(const QModelIndex &)),
@@ -887,7 +891,7 @@ void QucsApp::initCursorMenu()
   connect(action, SIGNAL(triggered()), SLOT(slot())); \
   ContentMenu->addAction(action); \
   }
-  
+
   APPEND_MENU(ActionCMenuOpen, slotCMenuOpen, "Open")
   APPEND_MENU(ActionCMenuCopy, slotCMenuCopy, "Copy file")
   APPEND_MENU(ActionCMenuRename, slotCMenuRename, "Rename")
@@ -900,7 +904,7 @@ void QucsApp::initCursorMenu()
 
 // ----------------------------------------------------------
 // Shows the menu.
-void QucsApp::slotShowContentMenu(const QPoint& pos) 
+void QucsApp::slotShowContentMenu(const QPoint& pos)
 {
   QModelIndex idx = Content->indexAt(pos);
   if (idx.isValid() && idx.parent().isValid()) {
@@ -908,7 +912,7 @@ void QucsApp::slotShowContentMenu(const QPoint& pos)
         idx.sibling(idx.row(), 1).data().toString().contains(tr("-port"))
     );
     ContentMenu->popup(Content->mapToGlobal(pos));
-  }    
+  }
 }
 
 // ----------------------------------------------------------
@@ -958,8 +962,8 @@ void QucsApp::slotCMenuCopy()
   QucsDoc *d = findDoc(file, &z);
   if (d != NULL && d->DocChanged) {
     DocumentTab->setCurrentIndex(z);
-    int ret = QMessageBox::question(this, tr("Copying Qucs document"), 
-        tr("The document contains unsaved changes!\n") + 
+    int ret = QMessageBox::question(this, tr("Copying Qucs document"),
+        tr("The document contains unsaved changes!\n") +
         tr("Do you want to save the changes before copying?"),
         tr("&Ignore"), tr("&Save"), 0, 1);
     if (ret == 1) {
@@ -1035,7 +1039,7 @@ void QucsApp::slotCMenuRename()
   bool ok;
   QString s = QInputDialog::getText(this, tr("Rename file"), tr("Enter new filename:"), QLineEdit::Normal, base, &ok);
 
-  if(ok && !s.isEmpty()) { 
+  if(ok && !s.isEmpty()) {
     if (!s.endsWith(suffix)) {
       s += QString(".") + suffix;
     }
@@ -1197,7 +1201,7 @@ void QucsApp::slotButtonProjOpen()
   QModelIndex idx = Projects->currentIndex();
   if (!idx.isValid()) {
     QMessageBox::information(this, tr("Info"),
-				tr("No project is selected !"));
+                tr("No project is selected !"));
   } else {
     slotListProjOpen(idx);
   }
@@ -1240,7 +1244,7 @@ bool QucsApp::recurRemove(const QString &Path)
   QDir projDir = QDir(Path);
 
   if (projDir.exists(Path)) {
-    Q_FOREACH(QFileInfo info, 
+    Q_FOREACH(QFileInfo info,
         projDir.entryInfoList(
             QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::AllEntries, QDir::DirsFirst)) {
       if (info.isDir()) {
@@ -1490,12 +1494,12 @@ bool QucsApp::saveAs()
 
     if(isTextDocument (w))
       Filter = tr("VHDL Sources")+" (*.vhdl *.vhd);;" +
-	       tr("Verilog Sources")+" (*.v);;"+
-	       tr("Verilog-A Sources")+" (*.va);;"+
-	       tr("Octave Scripts")+" (*.m *.oct);;"+
-	       tr("Qucs Netlist")+" (*.net *.qnet);;"+
-	       tr("Plain Text")+" (*.txt);;"+
-	       tr("Any File")+" (*)";
+           tr("Verilog Sources")+" (*.v);;"+
+           tr("Verilog-A Sources")+" (*.va);;"+
+           tr("Octave Scripts")+" (*.m *.oct);;"+
+           tr("Qucs Netlist")+" (*.net *.qnet);;"+
+           tr("Plain Text")+" (*.txt);;"+
+           tr("Any File")+" (*)";
     else
       Filter = QucsFileFilter;
 
@@ -1519,9 +1523,9 @@ bool QucsApp::saveAs()
     Info.setFile(s);
     if(QFile::exists(s)) {
       n = QMessageBox::warning(this, tr("Warning"),
-		tr("The file '")+Info.fileName()+tr("' already exists!\n")+
-		tr("Saving will overwrite the old one! Continue?"),
-		tr("No"), tr("Yes"), tr("Cancel"));
+        tr("The file '")+Info.fileName()+tr("' already exists!\n")+
+        tr("Saving will overwrite the old one! Continue?"),
+        tr("No"), tr("Yes"), tr("Cancel"));
       if(n == 2) return false;    // cancel
       if(n == 0) continue;
     }
@@ -1530,7 +1534,7 @@ bool QucsApp::saveAs()
     QucsDoc * d = findDoc (s);
     if(d) {
       QMessageBox::information(this, tr("Info"),
-		tr("Cannot overwrite an open document"));
+        tr("Cannot overwrite an open document"));
       return false;
     }
 
@@ -1621,6 +1625,9 @@ void QucsApp::slotFileClose(int index)
 {
     // Call closeFile with a specific tab index
     closeFile(index);
+
+    // Reset Tunerdialog
+    if (TuningMode) tunerDia->slotResetTunerDialog();
 }
 
 // Close all documents except the current one
@@ -2058,23 +2065,69 @@ void QucsApp::slotZoomOut()
   getDoc()->zoomBy(0.5f);
 }
 
+/*!
+ * \brief QucsApp::slotTune
+ *  is called when the tune toolbar button is pressed.
+ */
+void QucsApp::slotTune(bool checked)
+{
+    if (checked)
+    {
+        QWidget *w = DocumentTab->currentWidget(); // remember from which Tab the tuner was started
+        if (isTextDocument(w))
+        {
+            //Probably digital Simulation
+            QMessageBox::warning(this, "Not implemented",
+                                 "Currently tuning is not supported for this document type", QMessageBox::Ok);
+            return;
+        }
+        // instance of tuner
+        TuningMode = true;
+        tunerDia = new TunerDialog(w, this);//The object can be instantiated here since when checked == false the memory will be freed
+        // inform the Tuner Dialog when a component is deleted
+        Schematic *d = dynamic_cast<Schematic*>(w);
+        assert(d);
+        connect(d, SIGNAL(signalComponentDeleted(Component *)),
+                tunerDia, SLOT(slotComponentDeleted(Component *)));
+
+        slotHideEdit(); // disable text edit of component property
+        workToolbar->setEnabled(false); // disable workToolbar to preserve TuneMouseAction
+
+        MousePressAction = &MouseActions::MPressTune;
+        MouseReleaseAction = 0; //While Tune is active release is not needed. This puts Press Action back to normal select
+
+        tunerDia->show();
+    }
+    else
+    {
+        this->workToolbar->setEnabled(true);
+
+        // MouseActions are reset in closing of tunerDialog class
+        tunerDia->close();//According to QWidget documentation (http://doc.qt.io/qt-4.8/qwidget.html#close),
+                          //the object is removed since it has the Qt::WA_DeleteOnClose flag
+        TuningMode = false;
+    }
+}
 
 /*!
  * \brief QucsApp::slotSimulate
  *  is called when the simulate toolbar button is pressed.
  */
-void QucsApp::slotSimulate()
+void QucsApp::slotSimulate(QWidget *w)
 {
   slotHideEdit(); // disable text edit of component property
 
   QucsDoc *Doc;
-  QWidget *w = DocumentTab->currentWidget();
+
+  if (!w) // if no Tab is specified, use the current one
+    w = DocumentTab->currentWidget();
+
   if(isTextDocument (w)) {
     Doc = (QucsDoc*)((TextDoc*)w);
     if(Doc->SimTime.isEmpty() && ((TextDoc*)Doc)->simulation) {
       DigiSettingsDialog *d = new DigiSettingsDialog((TextDoc*)Doc);
       if(d->exec() == QDialog::Rejected)
-	return;
+    return;
     }
   }
   else
@@ -2085,6 +2138,7 @@ void QucsApp::slotSimulate()
 
   // Perhaps the document was modified from another program ?
   QFileInfo Info(Doc->DocName);
+  QString ext = Info.suffix();
   if(Doc->lastSaved.isValid()) {
     if(Doc->lastSaved < Info.lastModified()) {
       int No = QMessageBox::warning(this, tr("Warning"),
@@ -2107,16 +2161,72 @@ void QucsApp::slotSimulate()
     return;
   }
 
+  if (ext == "dpl")
+  {
+      // simulation started from Data Display: open referenced schematic
+      QString _tabToFind = Doc->DataDisplay; // name of the referenced schematic
+      QFileInfo Info(QucsSettings.QucsWorkDir.filePath(_tabToFind));
+      int z = 0;
+      QucsDoc *d = findDoc(Info.absoluteFilePath(), &z);  // check if schematic is already open in a Tab
+
+      if (d)
+      {
+          // schematic already loaded
+          // this should be the simulation schematic of this data display
+          w = DocumentTab->widget(z);
+      }
+      else
+      {
+          // schematic not yet loaded
+          int i = 0;
+          int No = DocumentTab->currentIndex(); // remember current Tab
+          if(Info.suffix() == "sch" || Info.suffix() == "dpl" ||
+             Info.suffix() == "sym") {
+            d = new Schematic(this, Info.absoluteFilePath());
+            i = DocumentTab->addTab((Schematic *)d, QPixmap(":/bitmaps/empty.xpm"), Info.fileName());
+          } else {
+            d = new TextDoc(this, Info.absoluteFilePath());
+            i = DocumentTab->addTab((TextDoc *)d, QPixmap(":/bitmaps/empty.xpm"), Info.fileName());
+          }
+          DocumentTab->setCurrentIndex(i); // temporarily switch to the newly created Tab
+
+          if(d->load()) {
+            // document loaded successfully
+            w = DocumentTab->widget(i);
+          } else {
+            // failed loading document
+            // load() above has already shown a QMessageBox about not being able to load the file
+            delete d;
+            DocumentTab->setCurrentIndex(No);
+          }
+          DocumentTab->setCurrentIndex(No);
+      }
+  }
+
   SimMessage *sim = new SimMessage(w, this);
+  sim->setDocWidget(w);
+
   // disconnect is automatically performed, if one of the involved objects
   // is destroyed !
   connect(sim, SIGNAL(SimulationEnded(int, SimMessage*)), this,
-		SLOT(slotAfterSimulation(int, SimMessage*)));
+        SLOT(slotAfterSimulation(int, SimMessage*)));
   connect(sim, SIGNAL(displayDataPage(QString&, QString&)),
-		this, SLOT(slotChangePage(QString&, QString&)));
+        this, SLOT(slotChangePage(QString&, QString&)));
 
-  sim->show();
-  if(!sim->startProcess()) return;
+  if (TuningMode == true)
+  {
+   connect(sim, SIGNAL(progressBarChanged(int)), tunerDia, SLOT(slotUpdateProgressBar(int)));
+  }
+  else
+  {//It doesn't make sense to connect the slot outside the tuning mode
+     sim->show();
+  }
+
+  if(!sim->startProcess())
+  {
+      if (TuningMode == true) sim->show();//The message window is hidden when the tuning mode is active, but in case of error such window pops up
+      return;
+  }
 
   // to kill it before qucs ends
   connect(this, SIGNAL(signalKillEmAll()), sim, SLOT(slotClose()));
@@ -2126,7 +2236,15 @@ void QucsApp::slotSimulate()
 // Is called after the simulation process terminates.
 void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 {
-  if(Status != 0) return;  // errors ocurred ?
+  if(Status != 0)
+  {// errors ocurred ?
+      if (TuningMode)
+      {
+          sim->show();
+          tunerDia->SimulationEnded();
+      }
+   return;
+  }
 
   if(sim->ErrText->document()->lineCount() > 1)   // were there warnings ?
     slotShowWarnings();
@@ -2138,6 +2256,7 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
       break;
 
   if(sim->showBias == 0) {  // paint dc bias into schematic ?
+      // modbykevin should we still close automatically if the window is global?
     sim->slotClose();   // close and delete simulation window
     if(w) {  // schematic still open ?
       SweepDialog *Dia = new SweepDialog((Schematic*)sim->DocWidget);
@@ -2155,23 +2274,32 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
     if(sim->SimOpenDpl) {
       // switch to data display
       if(sim->DataDisplay.right(2) == ".m" ||
-	 sim->DataDisplay.right(4) == ".oct") {  // Is it an Octave script?
-	octave->startOctave();
-	octave->runOctaveScript(sim->DataDisplay);
+     sim->DataDisplay.right(4) == ".oct") {  // Is it an Octave script?
+    octave->startOctave();
+    octave->runOctaveScript(sim->DataDisplay);
       }
       else
-	slotChangePage(sim->DocName, sim->DataDisplay);
+        slotChangePage(sim->DocName, sim->DataDisplay);
       sim->slotClose();   // close and delete simulation window
     }
     else
       if(w) if(!isTextDocument (sim->DocWidget))
-	// load recent simulation data (if document is still open)
-	((Schematic*)sim->DocWidget)->reloadGraphs();
+    // load recent simulation data (if document is still open)
+    ((Schematic*)sim->DocWidget)->reloadGraphs();
   }
 
   if(!isTextDocument (sim->DocWidget))
-    ((Schematic*)sim->DocWidget)->viewport()->update();
+  {
+    //((Schematic*)sim->DocWidget)->viewport()->update();
+      ((Schematic*)DocumentTab->currentWidget())->viewport()->update();
+  }
 
+  // Kill the simulation process, otherwise we have 200+++ sims in the background
+  if(TuningMode)
+  {
+      sim->slotClose();
+      tunerDia->SimulationEnded();
+  }
 }
 
 // ------------------------------------------------------------------------
@@ -2201,7 +2329,7 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
     QString ext = QucsDoc::fileSuffix (DataDisplay);
 
     if (ext != "vhd" && ext != "vhdl" && ext != "v" && ext != "va" &&
-	ext != "oct" && ext != "m") {
+    ext != "oct" && ext != "m") {
       d = DocumentTab->createEmptySchematic(Name);
     } else {
       d = DocumentTab->createEmptyTextDoc(Name);

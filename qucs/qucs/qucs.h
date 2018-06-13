@@ -39,6 +39,8 @@ class OctaveWindow;
 class MessageDock;
 class ProjectView;
 class ContextMenuTabWidget;
+class TunerDialog;
+class tunerElement;
 class VersionTriplet;
 class QucsApp;
 
@@ -155,6 +157,8 @@ public:
 
   QLineEdit *editText;  // for edit component properties on schematic
   SearchDialog *SearchDia;  // global in order to keep values
+  TunerDialog *tunerDia; // global in order to keep values
+  SimMessage *sim; // global in order to keep values
 
   // current mouse methods
   void (MouseActions::*MouseMoveAction) (Schematic*, QMouseEvent*);
@@ -216,6 +220,9 @@ public slots:
   void slotCMenuDelete();
   void slotCMenuInsert();
 
+  //Moved slot simulate to Public so that tunerDialog can access
+  void slotSimulate(QWidget *w = 0);
+
   void slotUpdateTreeview();
 
   void slotMenuProjClose();
@@ -232,7 +239,8 @@ private slots:
   void slotButtonProjOpen();
   void slotButtonProjDel();
   void slotChangeView(QWidget*);
-  void slotSimulate();
+  void slotTune(bool checked);
+
   void slotAfterSimulation(int, SimMessage*);
   void slotDCbias();
   void slotChangePage(QString&, QString&);
@@ -246,6 +254,8 @@ public:
   ContextMenuTabWidget *DocumentTab;
   QListWidget *CompComps;
   QTreeWidget *libTreeWidget;
+  bool TuningMode;//Indicates whether the tuning mode is activated or not. It is public in order to let mouseactions.cpp to access it directly w/o implementing a getter function
+
 
   // menu appearing by right mouse button click on content listview
   QMenu *ContentMenu;
@@ -258,7 +268,7 @@ public:
           *fileCloseAll, *fileExamples, *fileSettings, *filePrint, *fileQuit,
           *projNew, *projOpen, *projDel, *projClose, *applSettings, *refreshSchPath,
           *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintFit,
-          *symEdit, *intoH, *popH, *simulate, *dpl_sch, *undo, *redo, *dcbias;
+          *symEdit, *intoH, *popH, *simulate, *tune, *dpl_sch, *undo, *redo, *dcbias;
 
   QAction *exportAsImage;
 
