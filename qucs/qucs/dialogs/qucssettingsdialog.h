@@ -20,11 +20,14 @@
 #define QUCSSETTINGSDIALOG_H
 
 #include "qucs.h"
+#include "qucsshortcutdialog.h"
 
 #include <QDialog>
 #include <QFont>
 #include <QRegExp>
 #include <QVBoxLayout>
+
+class QucsShortcutDialog;
 
 class QLineEdit;
 class QCheckBox;
@@ -48,6 +51,7 @@ private slots:
     void slotApply();
     void slotFontDialog();
     void slotBGColorDialog();
+    void slotShortcutDialog();
     void slotDefaultValues();
     void slotAddFileType();
     void slotRemoveFileType();
@@ -82,7 +86,7 @@ public:
               *checkAntiAliasing, *checkTextAntiAliasing,
               *checkShowSchematicDescription;
     QComboBox *LanguageCombo;
-    QPushButton *FontButton, *BGColorButton;
+    QPushButton *FontButton, *BGColorButton, *ShortcutButton;
     QLineEdit *LargeFontSizeEdit, *undoNumEdit, *editorEdit, *Input_Suffix,
               *Input_Program, *homeEdit, *admsXmlEdit, *ascoEdit, *octaveEdit;
     QTableWidget *fileTypesTableWidget, *pathsTableWidget;
@@ -98,6 +102,7 @@ public:
     QRegExp Expr;
     QRegExpValidator *Validator;
 
+    QucsShortcutDialog *shortcutDialog;
 private:
     QStringList currentPaths;
     

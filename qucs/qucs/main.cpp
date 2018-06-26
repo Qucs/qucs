@@ -632,6 +632,8 @@ int main(int argc, char *argv[])
       QucsSettings.QucsOctave.clear();
   }
 
+  setDefaultShortcut();
+
   if(!QucsSettings.BGColor.isValid())
     QucsSettings.BGColor.setRgb(255, 250, 225);
 
@@ -797,4 +799,3 @@ int main(int argc, char *argv[])
   //saveApplSettings(QucsMain);
   return result;
 }
-// vim:ts=8:sw=2:noet

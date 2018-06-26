@@ -159,6 +159,10 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
     appSettingsGrid->addWidget(checkShowSchematicDescription,10,1);
     checkShowSchematicDescription->setChecked(QucsSettings.ShowDescriptionProjectTree);
 
+    appSettingsGrid->addWidget(new QLabel(tr("Set custom shortcut:")),11,0);
+    ShortcutButton = new QPushButton(appSettingsTab);
+    connect(ShortcutButton, SIGNAL(clicked()), SLOT(slotShortcutDialog()));
+    appSettingsGrid->addWidget(ShortcutButton,11,1);
 
     t->addTab(appSettingsTab, tr("Settings"));
 
@@ -404,7 +408,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
     LargeFontSizeEdit->setText(s);
 
     misc::setPickerColor(BGColorButton, QucsSettings.BGColor);
-
+    ShortcutButton->setText("Custom Shortcut");
     undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
     editorEdit->setText(QucsSettings.Editor);
     checkWiring->setChecked(QucsSettings.NodeWiring);
@@ -419,6 +423,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
     ascoEdit->setText(QucsSettings.AscoBinDir.canonicalPath());
     octaveEdit->setText(QucsSettings.OctaveExecutable);
 
+    shortcutDialog = NULL;
 
     resize(300, 200);
 }
@@ -698,6 +703,15 @@ void QucsSettingsDialog::slotBGColorDialog()
     if(c.isValid()) {
         misc::setPickerColor(BGColorButton, c);
     }
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotShortcutDialog()
+{
+  if (!shortcutDialog) {
+    shortcutDialog = new QucsShortcutDialog(App);
+  }
+  shortcutDialog->exec();
 }
 
 // -----------------------------------------------------------

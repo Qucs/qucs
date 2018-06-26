@@ -116,6 +116,9 @@ struct tQucsSettings {
   bool GraphAntiAliasing;
   bool TextAntiAliasing;
   bool ShowDescriptionProjectTree;
+
+  //shortcut
+  QVector<QPair<QString, QMap<QString, QString>* > > Shortcut;
 };
 
 // extern because nearly everywhere used
@@ -126,6 +129,8 @@ extern VersionTriplet QucsVersion;
 extern QucsApp *QucsMain;  // the Qucs application itself
 
 // TODO move these inside the QucsApp class?
+void setDefaultShortcut();
+void clearShortcutMap();
 bool loadSettings();
 bool saveApplSettings();
 
@@ -321,6 +326,7 @@ public:
    ************************************************** */
 
 public slots:
+  void slotSetAllShortcut();
   void slotShowWarnings();
   void slotResetWarnings();
   void printCursorPosition(int, int);
