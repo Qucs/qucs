@@ -757,12 +757,19 @@ void MouseActions::MMoveZoomIn(Schematic *Doc, QMouseEvent *Event)
 // **********                                                    **********
 // ************************************************************************
 
-// Is called from several MousePress functions to show right button menu.
+/*!
+ * \brief MouseActions::rightPressMenu
+ * \param Doc
+ * \param Event
+ * \param fX
+ * \param fY
+ * Is called from several MousePress functions to show right button menu.
+ */
 void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, float fY)
 {
   MAx1 = int(fX);
   MAy1 = int(fY);
-  focusElement = Doc->selectElement(fX, fY, false);
+  focusElement = dynamic_cast<Element*>(Doc->scene->itemAt(Event->pos()));
 
   if(focusElement)  // remove special function (4 least significant bits)
     focusElement->ElemType &= isSpecialMask;
@@ -967,7 +974,9 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
   int No=0;
   MAx1 = int(fX);
   MAy1 = int(fY);
-  focusElement = Doc->selectElement(fX, fY, Ctrl, &No);
+  // FIXME Ctrl + press to select multiple is not working
+  focusElement = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos())));
+
   isMoveEqual = false;   // moving not neccessarily square
 
   if(focusElement)
@@ -1116,10 +1125,18 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
   Doc->highlightWireLabels ();
 }
 
-// -----------------------------------------------------------
-void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent*, float fX, float fY)
+/*!
+ * \brief MouseActions::MPressDelete
+ * \param Doc
+ * \param Event
+ * \param fX
+ * \param fY
+ *
+ * Delete item under mouse press location.
+ */
+void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent* Event, float fX, float fY)
 {
-  Element *pe = Doc->selectElement(fX, fY, false);
+  Element *pe = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos())));
   if(pe)
   {
     pe->ElemSelected = true;
@@ -1190,10 +1207,18 @@ void MouseActions::MPressMirrorY(Schematic *Doc, QMouseEvent*, float fX, float f
   Doc->setChanged(true, true);
 }
 
-// -----------------------------------------------------------
-void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent*, float fX, float fY)
+/*!
+ * \brief MouseActions::MPressRotate
+ * \param Doc
+ * \param Event
+ * \param fX
+ * \param fY
+ *
+ * Rotate element under mouse press location
+ */
+void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event, float fX, float fY)
 {
-  Element *e = Doc->selectElement(int(fX), int(fY), false);
+  Element *e = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos())));
   if(e == 0) return;
   e->ElemType &= isSpecialMask;  // remove special functions
 
@@ -1537,9 +1562,9 @@ void MouseActions::MPressMarker(Schematic *Doc, QMouseEvent*, float fX, float fY
 }
 
 // -----------------------------------------------------------
-void MouseActions::MPressOnGrid(Schematic *Doc, QMouseEvent*, float fX, float fY)
+void MouseActions::MPressOnGrid(Schematic *Doc, QMouseEvent* Event, float fX, float fY)
 {
-  Element *pe = Doc->selectElement(fX, fY, false);
+  Element *pe = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos())));
   if(pe)
   {
     pe->ElemType &= isSpecialMask;  // remove special functions (4 lowest bits)
