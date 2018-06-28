@@ -2841,17 +2841,6 @@ void Schematic::copyLabels(int& x1, int& y1, int& x2, int& y2,
    *****                                                         *****
    ******************************************************************* */
 
-Painting* Schematic::selectedPainting(float fX, float fY)
-{
-    float Corr = 5.0 / Scale; // size of line select
-
-    for(Painting *pp = Paintings->first(); pp != 0; pp = Paintings->next())
-        if(pp->getSelected(fX, fY, Corr))
-            return pp;
-
-    return 0;
-}
-
 // ---------------------------------------------------
 void Schematic::copyPaintings(int& x1, int& y1, int& x2, int& y2,
                               QList<Element *> *ElementCache)

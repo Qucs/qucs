@@ -1182,7 +1182,7 @@ void MouseActions::MPressMirrorX(Schematic *Doc, QMouseEvent* Event, float fX, f
     Doc->setCompPorts(c);
   }
   else {
-    Painting *p = Doc->selectedPainting(fX, fY);
+    Painting *p = dynamic_cast<Painting*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos())));
     if(p == 0) return;
     p->mirrorX();
   }
@@ -1210,7 +1210,7 @@ void MouseActions::MPressMirrorY(Schematic *Doc, QMouseEvent* Event, float fX, f
     Doc->setCompPorts(c);
   }
   else {
-    Painting *p = Doc->selectedPainting(fX, fY);
+    Painting *p = dynamic_cast<Painting*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos())));
     if(p == 0) return;
     p->mirrorY();
   }
