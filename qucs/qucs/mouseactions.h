@@ -80,6 +80,7 @@ public:
   void MMoveZoomIn(Schematic*, QMouseEvent*);
   void MMoveScrollBar(Schematic*, QMouseEvent*);
 
+  // FIXME several of the float, float are unused, deprecated
   void MPressSelect(Schematic*, QMouseEvent*, float, float);
   void MPressDelete(Schematic*, QMouseEvent*, float, float);
   void MPressActivate(Schematic*, QMouseEvent*, float, float);

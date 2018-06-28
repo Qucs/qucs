@@ -245,7 +245,6 @@ public:
   void    markerLeftRight(bool, Q3PtrList<Element>*);
   void    markerUpDown(bool, Q3PtrList<Element>*);
 
-  Element* selectElement(float, float, bool, int *index=0);
   void     deselectElements(Element*);
   int      selectElements(int, int, int, int, bool);
   void     selectMarkers();
