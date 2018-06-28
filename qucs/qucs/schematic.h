@@ -273,7 +273,6 @@ public:
   void     insertNodeLabel(WireLabel*);
   void     copyLabels(int&, int&, int&, int&, QList<Element *> *);
 
-  Painting* selectedPainting(float, float);
   void      copyPaintings(int&, int&, int&, int&, QList<Element *> *);
 
 
