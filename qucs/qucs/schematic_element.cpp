@@ -2508,16 +2508,6 @@ Component* Schematic::searchSelSubcircuit()
     return sub;
 }
 
-// ---------------------------------------------------
-Component* Schematic::selectedComponent(int x, int y)
-{
-    // test all components
-    for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-        if(pc->getSelected(x, y))
-            return pc;
-
-    return 0;
-}
 
 // ---------------------------------------------------
 // Deletes the component 'c'.
