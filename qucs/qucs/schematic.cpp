@@ -119,6 +119,8 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   /// Otherwise, with a QGraphicsItem it does not update fast enought.
   //scene->addItem(mouseCursor);
 
+  setDragMode(QGraphicsView::RubberBandDrag);
+
   this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
