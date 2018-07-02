@@ -154,6 +154,7 @@ QucsAttenuator::QucsAttenuator()
   QSpinBox_InputPower = new QDoubleSpinBox(0);
   QSpinBox_InputPower->setMinimum(-1e3);
   QSpinBox_InputPower->setMaximum(1e5);
+  connect(QSpinBox_InputPower, SIGNAL(valueChanged(double)), this, SLOT(slotCalculate()));
   inGrid->addWidget(QSpinBox_InputPower, 4,1);
   QStringList powerunits;
   powerunits.append("mW");
@@ -179,7 +180,7 @@ QucsAttenuator::QucsAttenuator()
 
   vboxRight->addWidget(InputGroup);
 
-  Calculate = new QPushButton(tr("Calculate and put into Clipboard"));
+  Calculate = new QPushButton(tr("Put into Clipboard"));
   connect(Calculate, SIGNAL(clicked()), SLOT(slotCalculate()));
 
   vboxRight->addWidget(Calculate);
@@ -307,7 +308,7 @@ QucsAttenuator::QucsAttenuator()
   vbox->addWidget(LabelResult);
 
   centralWidget->setLayout(vbox);
-
+  slotCalculate();
 }
 
 QucsAttenuator::~QucsAttenuator()
@@ -368,6 +369,7 @@ void QucsAttenuator::slotSetText_Zin( const QString &text )
     lineEdit_Zout->setText( text );
     lineEdit_Zout->blockSignals( FALSE );
   }
+  slotCalculate();
 }
 
 void QucsAttenuator::slotSetText_Zout( const QString &text )
@@ -377,6 +379,7 @@ void QucsAttenuator::slotSetText_Zout( const QString &text )
     lineEdit_Zin->setText( text );
     lineEdit_Zin->blockSignals( FALSE );
   }
+  slotCalculate();
 }
 
 void QucsAttenuator::slotTopologyChanged()
@@ -463,6 +466,7 @@ void QucsAttenuator::slotTopologyChanged()
     break;
     }
     adjustSize();
+    slotCalculate();
 }
 
 void QucsAttenuator::slotCalculate()
@@ -528,6 +532,7 @@ void QucsAttenuator::slot_ComboInputPowerUnits_Changed(const QString& new_units)
       QSpinBox_InputPower->setMinimum(0);
    else//dB units
       QSpinBox_InputPower->setMinimum(-1e3);
+   slotCalculate();
 }
 
 //This function is called when the units of the power dissipated by R1 are changed
