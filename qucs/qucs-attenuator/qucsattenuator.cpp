@@ -594,6 +594,23 @@ void QucsAttenuator::slot_ComboR3PowerUnits_Changed(const QString& new_units)
    lineEdit_R3_Pdiss->setValidator(DoubleValPower);
 }
 
+//This function is caled when the units of the power dissipated by R4 are changed
+void QucsAttenuator::slot_ComboR4PowerUnits_Changed(const QString& new_units)
+{
+   //Convert power
+   double P = lineEdit_R4_Pdiss->text().toDouble();
+   P =ConvertPowerUnits(P, LastUnits[0], new_units);
+   lineEdit_R4_Pdiss->setText(QString("%1").arg(P));
+   LastUnits[0] = new_units;
+
+   //Change lineedit input policy
+   if ((new_units == "W") || (new_units == "mW"))
+      DoubleValPower->setBottom(0);
+   else//dB units
+      DoubleValPower->setBottom(-1e9);
+   lineEdit_R4_Pdiss->setValidator(DoubleValPower);
+}
+
 // This function performs the power units conversion. It receives two arguments: the original units and the
 // new units.
 double QucsAttenuator::ConvertPowerUnits(double Pin, QString from_units, QString to_units)

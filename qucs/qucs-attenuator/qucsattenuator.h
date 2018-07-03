@@ -59,6 +59,7 @@ class QucsAttenuator : public QMainWindow
   void slot_ComboR1PowerUnits_Changed(const QString&);
   void slot_ComboR2PowerUnits_Changed(const QString&);
   void slot_ComboR3PowerUnits_Changed(const QString&);
+  void slot_ComboR4PowerUnits_Changed(const QString&);
 
  private:
   QComboBox *ComboTopology;
