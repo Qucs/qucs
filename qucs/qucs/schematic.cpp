@@ -373,13 +373,6 @@ void Schematic::mousePressEvent(QMouseEvent *Event)
   if(App->MouseReleaseAction == &MouseActions::MReleasePaste)
     return;
 
-  /// \todo same as DOC_X_FPOS
-  //float x = float(Event->pos().x())/Scale + float(ViewX1);
-  //float y = float(Event->pos().y())/Scale + float(ViewY1);
-  QPointF pos = mapToScene(Event->pos());
-  float x = pos.x();
-  float y = pos.y();
-
   if(Event->button() != Qt::LeftButton)
     if(App->MousePressAction != &MouseActions::MPressElement)
       if(App->MousePressAction != &MouseActions::MPressWire2) {
@@ -392,7 +385,7 @@ void Schematic::mousePressEvent(QMouseEvent *Event)
       }
 
   if(App->MousePressAction)
-    (App->view->*(App->MousePressAction))(this, Event, x, y);
+    (App->view->*(App->MousePressAction))(this, Event);
 
   // propagate event to parent class
   // needed to reach QGraphicsItem
@@ -1624,6 +1617,7 @@ bool Schematic::redo()
 
 // ---------------------------------------------------
 // Sets selected elements on grid.
+/// \bug pass list of selected instead of searching for them.
 bool Schematic::elementsOnGrid()
 {
   int x, y, No;
@@ -2014,10 +2008,8 @@ void Schematic::contentsDropEvent(QDropEvent *Event)
 
   QMouseEvent e(QEvent::MouseButtonPress, Event->pos(),
                 Qt::LeftButton, Qt::NoButton, Qt::NoModifier);
-  int x = int(Event->pos().x()/Scale) + ViewX1;
-  int y = int(Event->pos().y()/Scale) + ViewY1;
 
-  App->view->MPressElement(this, &e, x, y);
+  App->view->MPressElement(this, &e);
 
   if(App->view->selElem) delete App->view->selElem;
   App->view->selElem = 0;  // no component selected
