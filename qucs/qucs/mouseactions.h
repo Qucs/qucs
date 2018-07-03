@@ -113,7 +113,7 @@ public:
   void moveElements(Schematic*, int&, int&);
   void moveElements(Q3PtrList<Element>*, int, int);
   void endElementMoving(Schematic*, Q3PtrList<Element>*);
-  void rightPressMenu(Schematic*, QMouseEvent*, float, float);
+  void rightPressMenu(Schematic*, QMouseEvent*);
 };
 
 #endif
