@@ -548,9 +548,9 @@ void QucsAttenuator::slot_ComboR1PowerUnits_Changed(const QString& new_units)
 {
    //Convert power
    double P = lineEdit_R1_Pdiss->text().toDouble();
-   P =ConvertPowerUnits(P, LastUnits[0], new_units);
+   P =ConvertPowerUnits(P, LastUnits[1], new_units);
    lineEdit_R1_Pdiss->setText(QString("%1").arg(P));
-   LastUnits[0] = new_units;
+   LastUnits[1] = new_units;
 
    //Change lineedit input policy
    if ((new_units == "W") || (new_units == "mW"))
@@ -565,9 +565,9 @@ void QucsAttenuator::slot_ComboR2PowerUnits_Changed(const QString& new_units)
 {
    //Convert power
    double P = lineEdit_R2_Pdiss->text().toDouble();
-   P =ConvertPowerUnits(P, LastUnits[0], new_units);
+   P =ConvertPowerUnits(P, LastUnits[2], new_units);
    lineEdit_R2_Pdiss->setText(QString("%1").arg(P));
-   LastUnits[0] = new_units;
+   LastUnits[2] = new_units;
 
    //Change lineedit input policy
    if ((new_units == "W") || (new_units == "mW"))
@@ -582,9 +582,9 @@ void QucsAttenuator::slot_ComboR3PowerUnits_Changed(const QString& new_units)
 {
    //Convert power
    double P = lineEdit_R3_Pdiss->text().toDouble();
-   P =ConvertPowerUnits(P, LastUnits[0], new_units);
+   P =ConvertPowerUnits(P, LastUnits[3], new_units);
    lineEdit_R3_Pdiss->setText(QString("%1").arg(P));
-   LastUnits[0] = new_units;
+   LastUnits[3] = new_units;
 
    //Change lineedit input policy
    if ((new_units == "W") || (new_units == "mW"))
@@ -599,9 +599,9 @@ void QucsAttenuator::slot_ComboR4PowerUnits_Changed(const QString& new_units)
 {
    //Convert power
    double P = lineEdit_R4_Pdiss->text().toDouble();
-   P =ConvertPowerUnits(P, LastUnits[0], new_units);
+   P =ConvertPowerUnits(P, LastUnits[4], new_units);
    lineEdit_R4_Pdiss->setText(QString("%1").arg(P));
-   LastUnits[0] = new_units;
+   LastUnits[4] = new_units;
 
    //Change lineedit input policy
    if ((new_units == "W") || (new_units == "mW"))
