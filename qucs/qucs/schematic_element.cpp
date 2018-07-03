@@ -2319,6 +2319,7 @@ void Schematic::insertComponent(Component *c)
 }
 
 // ---------------------------------------------------
+/// \bug avoid linear search, pass rubberband selection or arbitrary list of selected items
 void Schematic::activateCompsWithinRect(int x1, int y1, int x2, int y2)
 {
     bool changed = false;
@@ -2364,6 +2365,7 @@ void Schematic::activateCompsWithinRect(int x1, int y1, int x2, int y2)
 }
 
 // ---------------------------------------------------
+/// \bug avoid linear search, pass item under mouse event directly
 bool Schematic::activateSpecifiedComponent(int x, int y)
 {
     int x1, y1, x2, y2, a;
@@ -2468,6 +2470,7 @@ void Schematic::setCompPorts(Component *pc)
 
 // ---------------------------------------------------
 // Returns a pointer of the component on whose text x/y points.
+/// \bug replace with itemAt, find parent of label
 Component* Schematic::selectCompText(int x_, int y_, int& w, int& h)
 {
     int a, b, dx, dy;
