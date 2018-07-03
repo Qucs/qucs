@@ -384,7 +384,7 @@ void Schematic::mousePressEvent(QMouseEvent *Event)
     if(App->MousePressAction != &MouseActions::MPressElement)
       if(App->MousePressAction != &MouseActions::MPressWire2) {
         // show menu on right mouse button
-        App->view->rightPressMenu(this, Event, x, y);
+        App->view->rightPressMenu(this, Event);
         if(App->MouseReleaseAction)
            // Is not called automatically because menu has focus.
           (App->view->*(App->MouseReleaseAction))(this, Event);

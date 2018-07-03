@@ -763,12 +763,11 @@ void MouseActions::MMoveZoomIn(Schematic *Doc, QMouseEvent *Event)
  * \param Event
  * \param fX
  * \param fY
- * Is called from several MousePress functions to show right button menu.
+ * Terminal action, called from mousePressEvent show right button menu.
+ * The right button menu is defined based on the location of the Event.
  */
-void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, float fY)
+void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
 {
-  MAx1 = int(fX);
-  MAy1 = int(fY);
   focusElement = dynamic_cast<Element*>(Doc->scene->itemAt(Event->pos()));
 
   if(focusElement)  // remove special function (4 least significant bits)
