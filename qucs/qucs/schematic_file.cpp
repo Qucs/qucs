@@ -24,7 +24,7 @@
 #include <QDir>
 #include <QStringList>
 #include <QPlainTextEdit>
-#include <Q3PtrList>
+#include "qt_compat.h"
 #include <QTextStream>
 #include <QList>
 #include <QProcess>

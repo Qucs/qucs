@@ -17,6 +17,7 @@
 #include "globals.h"
 #include "module.h"
 #include "qucs.h"
+#include <assert.h>
 
 namespace{
 
@@ -92,9 +93,10 @@ void Param_Sweep::recreate(Schematic*)
     pp->Name = "Symbol";
     pp->display = false;
     Props.next()->Name = "Values";
-  }
-  else {
-    Props.next()->Name = "Start";
+  }else{
+    auto P=Props.next();
+	 assert(P);
+    P->Name = "Start";
     Props.next()->Name = "Stop";
     Props.next()->Name = "Points";
   }

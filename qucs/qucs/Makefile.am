@@ -155,10 +155,12 @@ else
 libqucsschematic_la_LIBADD = libqucs.la
 endif
 
-noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
-					  symbol.h\
-  wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
-  projectView.h printerwriter.h imagewriter.h command.h
+noinst_HEADERS = \
+	$(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
+	symbol.h\
+	qt_compat.h \
+	wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
+	projectView.h printerwriter.h imagewriter.h command.h
 
 # must be installed. but later
 noinst_HEADERS += \

@@ -19,8 +19,7 @@
 #define MOUSEACTIONS_H
 
 #include "element.h"
-
-#include <Q3PtrList>
+#include "qt_compat.h"
 
 class Wire;
 class Schematic;
@@ -30,7 +29,6 @@ class QMouseEvent;
 class QucsApp;
 
 extern QAction *formerAction;
-
 
 class MouseActions {
 public:
