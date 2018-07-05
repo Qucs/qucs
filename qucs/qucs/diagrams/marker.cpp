@@ -390,14 +390,18 @@ bool Marker::moveLeftRight(bool left)
   // get rid of "markers", but how?
 
   if(left) {
-    if(SplPosX == SplPosD->begin()) return false;
-    if((SplPosX-1)->isStrokeEnd()) return false;
-
     if(SplPosX == SplPosD->begin()){
+      return false;
+    }else if((SplPosX-1)->isStrokeEnd()){
+      qDebug() << "stroke end to the left";
+      return false;
+    }else if(SplPosX == SplPosD->begin()){
       //nothing to do
     }else{
+      qDebug() << "moving left";
       --SplPosX;
       if(SplPosX == SplPosD->begin()){
+	qDebug() << "end";
 	// done?
       }else if(!SplPosX->isPt()){
 	// try another time.
@@ -407,17 +411,23 @@ bool Marker::moveLeftRight(bool left)
 
     assert(!SplPosX->isStrokeEnd());
   } else {
-    if(SplPosX == SplPosD->end()) return false; // reachable?
-    if(SplPosX+1 == SplPosD->end()) return false;
-    if(SplPosX->isStrokeEnd()) return false;
-
+    // !left. probably right.
     if(SplPosX == SplPosD->end()){
-      // nothing to do.
+      qDebug() << "end. strange!";
+      return false; // reachable?
+    }else if(SplPosX+1 == SplPosD->end()){
+      qDebug() << "at end. not moving.";
+      return false;
+    }else if(SplPosX->isStrokeEnd()){
+      qDebug() << "stroke end...?";
+      return false;
     }else if(!SplPosX->isPt()){
+      qDebug() << "BUG, not a point?";
       // out of range, somethings wrong?!
       // warn? throw? assert?
     } else {
       // we are in the middle of it
+      qDebug() << "moving right";
       ++SplPosX;
       if(SplPosX == SplPosD->end()){
 	// nothing else to do.
