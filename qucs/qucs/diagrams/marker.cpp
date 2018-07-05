@@ -148,10 +148,7 @@ void Marker::initText(GraphDeque::const_iterator const& pos)
   assert(pGraph);
   assert(pos>=pGraph->begin());
   assert(pos<=pGraph->end());
-  Axis const *pa;
   assert(diag());
-  if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
-  else  pa = &(diag()->zAxis);
   SplPosD = pos;
 
   int x, y, d, dmin = INT_MAX;
@@ -164,7 +161,6 @@ void Marker::initText(GraphDeque::const_iterator const& pos)
       qDebug() << "BUG in calcData? bogus data in spl";
       continue;
     }
-    // diag()->calcCoordinate(px, pz, py, &fCX, &fCY, pa);
     fCX = spl->getScrX();
     fCY = spl->getScrY();
 
