@@ -24,7 +24,6 @@
 
 #include <cmath>
 #include <QColor>
-#include <Q3PtrList>
 #include <QDateTime>
 
 #include <assert.h>

@@ -18,9 +18,8 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include <Q3PtrList>
-
 #include "element.h"
+#include "container.h" // BUG. Props is a propertyList
 
 class Schematic;
 class ViewPainter;
