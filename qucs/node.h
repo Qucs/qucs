@@ -19,8 +19,7 @@
 #define NODE_H
 
 #include "element.h"
-
-#include <Q3PtrList>
+#include "qt_compat.h"
 
 class ViewPainter;
 
