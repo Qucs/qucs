@@ -392,11 +392,6 @@ bool Marker::moveLeftRight(bool left)
   if(left) {
     if(SplPosX == SplPosD->begin()){
       return false;
-    }else if((SplPosX-1)->isStrokeEnd()){
-      qDebug() << "stroke end to the left";
-      return false;
-    }else if(SplPosX == SplPosD->begin()){
-      //nothing to do
     }else{
       qDebug() << "moving left";
       --SplPosX;
