@@ -37,7 +37,7 @@
 #include "sim/sim.h"
 
 #include <Q3ScrollView>
-#include <Q3PtrList>
+#include "qt_compat.h"
 #include <QVector>
 #include <QStringList>
 #include <QFileInfo>

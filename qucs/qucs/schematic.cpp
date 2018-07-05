@@ -23,7 +23,7 @@
 #include <QDir>
 #include <QTextStream>
 #include <QDragLeaveEvent>
-#include <Q3PtrList>
+#include "qt_compat.h"
 #include <QPixmap>
 #include <QDragEnterEvent>
 #include <QDragMoveEvent>
@@ -53,6 +53,8 @@
 #include "components/vafile.h"
 #include "misc.h"
 #include "globals.h"
+
+#include "qt_compat.h"
 
 // just dummies for empty lists
 WireList      SymbolWires;
