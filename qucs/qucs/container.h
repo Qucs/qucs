@@ -19,6 +19,12 @@
 #include <QList>
 #include <QDebug>
 
+// TODO: trace.h
+#include <iostream>
+#define incomplete() ( \
+    std::cerr << "@@#\n@@@\nincomplete:" \
+              << __FILE__ << ":" << __LINE__ << ":" << __func__ << "\n" )
+
 // implement Q3Ptrlist for use in old code.
 // just don't use it in new code.
 template <class T>
@@ -59,28 +65,28 @@ public:
     void append(T *t) {
         localList.append(t);
     };
-    int contains(T *t) {
-        qDebug() << "contains";
+    int contains(T *) {
+		 incomplete();
         return -1;
     };
-     int findNext(T *t) {
-        qDebug() << "findNext";
+     int findNext(T *) {
+		 incomplete();
         return -1;
     };
-    int findNextRef(T *t) {
-        qDebug() << "findNextRef";
+    int findNextRef(T *) {
+		 incomplete();
         return -1;
     };
     bool isEmpty() {
-        qDebug() << "isEmpty";
+		 incomplete();
         return false;
     };
     int findPrev() {
-        qDebug() << "findPrev";
+		 incomplete();
         return -1;
     };
-    bool replace(int idx, T *t) {
-        qDebug() << "replace";
+    bool replace(int, T*) {
+		 incomplete();
         return true;
     };
     int containsRef(T *t) { // 
