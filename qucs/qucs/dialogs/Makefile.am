@@ -59,6 +59,5 @@ ui_searchdialog.h: searchdialog.ui
 
 EXTRA_DIST = searchdialog.ui
 
-CLEANFILES = *~
-MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
-DISTCLEANFILES = *.moc.cpp ui_*.h
+CLEANFILES = *~ *.moc.cpp ui_*.h
+MAINTAINERCLEANFILES = Makefile.in
