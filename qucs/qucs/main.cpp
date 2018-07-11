@@ -90,6 +90,12 @@ void qucsMessageOutput(QtMsgType type, const QMessageLogContext &, const QString
   case QtFatalMsg:
     fprintf(stderr, "Fatal: %s\n", msg);
     abort();
+#if QT_VERSION > 0x050000
+  case QtInfoMsg:
+    fprintf(stderr, "Info: %s\n", msg);
+    break;
+
+#endif
   }
 
 #ifdef _WIN32
