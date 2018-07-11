@@ -36,7 +36,7 @@
 #include "frame.h"
 #include "mousecursor.h"
 
-#include <Q3ScrollView>
+#include <QGraphicsView>
 #include "qt_compat.h"
 #include <QVector>
 #include <QStringList>
