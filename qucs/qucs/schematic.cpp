@@ -762,58 +762,6 @@ void Schematic::setOnGrid(int& x, int& y)
 }
 
 // ---------------------------------------------------
-void Schematic::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
-{
-  if(!GridOn) return;
-
-  p->Painter->setPen(QPen(Qt::black,0));
-  int dx = -int(Scale*float(ViewX1)) - cX;
-  int dy = -int(Scale*float(ViewY1)) - cY;
-  p->Painter->drawLine(-3+dx, dy, 4+dx, dy); // small cross at origin
-  p->Painter->drawLine( dx,-3+dy, dx, 4+dy);
-
-
-  int x1  = int(float(cX)/Scale) + ViewX1;
-  int y1  = int(float(cY)/Scale) + ViewY1;
-
-  /// \todo setting the center of rotation on the grid causes the center to move when doing multiple rotations when it is not already on the grid. Should not force the center but force the component alignment after rotation.
-  setOnGrid(x1, y1);
-  if(x1<0) x1 -= GridX - 1;
-  else x1 += GridX;
-  x1 -= x1 % (GridX << 1);
-
-  if(y1<0) y1 -= GridY - 1;
-  else y1 += GridY;
-  y1 -= y1 % (GridY << 1);
-
-  float X, Y, Y0, DX, DY;
-  X = float(x1)*Scale + p->DX;
-  Y = Y0 = float(y1)*Scale + p->DY;
-  x1 = X > 0.0 ? int(X + 0.5) : int(X - 0.5);
-  y1 = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
-
-
-  int xEnd = x1 + Width;
-  int yEnd = y1 + Height;
-  DX = float(GridX << 1) * Scale;   // every second grid a point
-  DY = float(GridY << 1) * Scale;
-  while(DX <= 8.0)  DX *= 1.5;  // if too narrow, every third grid a point
-  while(DY <= 8.0)  DY *= 1.5;  // if too narrow, every third grid a point
-
-  while(x1 < xEnd) {
-    Y = Y0;
-    y1 = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
-    while(y1 < yEnd) {
-      p->Painter->drawPoint(x1, y1);    // paint grid
-      Y += DY;
-      y1 = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
-    }
-    X += DX;
-    x1 = X > 0.0 ? int(X + 0.5) : int(X - 0.5);
-  }
-}
-
-// ---------------------------------------------------
 // Correction factor for unproportional font scaling.
 float Schematic::textCorr()
 {

@@ -100,7 +100,6 @@ public:
 
   void setName(const QString&);
   void setChanged(bool, bool fillStack=false, char Op='*');
-  void paintGrid(ViewPainter*, int, int, int, int);
   void print(QPrinter*, QPainter*, bool, bool);
 
   void paintInit(QPainter*, float, int, int, int, int, float FontScale_=0.0, float PrintScale=1.0);
