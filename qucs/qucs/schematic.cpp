@@ -20,6 +20,7 @@
 
 #include <QFileInfo>
 #include <QMimeData>
+
 #include <QPrinter>
 #include <QPaintDevice>
 #include <QDir>
