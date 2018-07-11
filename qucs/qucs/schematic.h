@@ -37,7 +37,6 @@
 #include "mousecursor.h"
 
 #include <QGraphicsView>
-#include <Q3PtrList>
 #include <QVector>
 #include <QStringList>
 #include <QFileInfo>

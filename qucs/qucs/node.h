@@ -26,7 +26,7 @@
 
 #include "element.h"
 
-#include <Q3PtrList>
+class ViewPainter;
 
 class Node : public Conductor {
 public:

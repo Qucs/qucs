@@ -18,8 +18,7 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include <Q3PtrList>
-
+#include "container.h"
 #include "element.h"
 
 class Schematic;
