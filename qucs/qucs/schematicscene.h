@@ -27,11 +27,15 @@
 
 class SchematicScene : public QGraphicsScene
 {
+Q_OBJECT
 public:
   SchematicScene (QObject *);
   virtual ~SchematicScene ();
 
 private:
+
+protected:
+  void drawBackground(QPainter *painter, const QRectF& rect);
 };
 
 #endif /* SCHEMATICSCENE_H_ */
