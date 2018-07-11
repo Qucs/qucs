@@ -25,6 +25,18 @@ AC_PROG_CC
 AC_CHECK_TOOL(AR, ar, :)
 LT_INIT()
 
+PKG_CONFIG=pkg-config
+
+AC_ARG_WITH(qt_name,
+    AS_HELP_STRING([--with-qt-name],
+        [Use a specific Qt for building. @<:@default=Qt@:>@])
+    [ Various platforms provide Qt, Qt4 and/or Qt5 ] )
+
+qt_name=Qt
+
+AS_IF( [ test -n "$with_qt_name" ],
+       [ qt_name=$with_qt_name ] )
+
 dnl Check for debugging option.
 AC_ARG_ENABLE([debug],
   AC_HELP_STRING([--enable-debug],
@@ -173,6 +185,24 @@ AC_ARG_WITH(macosx-version-max-allowed,
     ],
 ,)
 
+
+if ! `$PKG_CONFIG --atleast-version=4.6.0 QtCore`; then
+   AC_MSG_ERROR([Qt >= 4.6.0 is required.])
+fi
+
+UIC=`$PKG_CONFIG --variable uic_location ${qt_name}Core`
+MOC=`$PKG_CONFIG --variable moc_location ${qt_name}Core`
+RCC=`$PKG_CONFIG --variable rcc_location ${qt_name}Core`
+
+
+dnl this might not work, because moc-qt5 does not work for qt4
+#AC_CHECK_PROGS(MOC, [moc-qt5 moc-qt4 moc])
+#AC_CHECK_PROGS(UIC, [uic-qt5 uic-qt4 uic])
+#AC_CHECK_PROGS(RCC, [rcc])
+#if test -z "$MOC" || test -z "$UIC" || test -z "$RCC"; then
+#  AC_MSG_ERROR([Qt utility programs moc, uic, and rcc are required.])
+#fi
+
 dnl Platform specific, find libraries, setup compiler flags
 case $host_os in
   *linux* | *cygwin* | *mingw* | *msys* | *bsd* )
@@ -202,14 +232,17 @@ case $host_os in
     dnl Enable C++11 support
     CXXFLAGS="$CXXFLAGS -std=c++0x"
 
-    PKG_CHECK_MODULES([QT], [QtCore QtGui QtScript QtSvg QtXml Qt3Support], [
+    PKG_CHECK_MODULES([QT], [${qt_name}Core ${qt_name}Gui ${qt_name}Script ${qt_name}Svg ${qt_name}Xml, Qt3Support ], [
       QT_CFLAGS="$QT_CFLAGS $QT_DEF -DQT3_SUPPORT_WARNINGS -DQT_DEPRECATED_WARNINGS -DQT_THREAD_SUPPORT -D_REENTRANT"
       case $host_os in
         *freebsd*) QT_LIBS="$QT_LIBS -pthread" ;;
         *mingw* | *msys*) QT_CFLAGS="$QT_CFLAGS -mthreads -DQT_DLL -DUNICODE" ;;
       esac
     ], [
+      AC_MSG_ERROR([pkgconfig did not work, see config.log])
       # Fallback to old logic if pkg-config should fail
+      # this could work in principle, hands up, if you want to use it.
+      # (in any case it will hide the error above, which is bad)
 
       dnl handle provided QTDIR environment variable
       dnl   in Slackware when both Qt3 at Qt4 are installed the Qt4 path
@@ -673,9 +706,9 @@ AC_PATH_PROGS(LRELEASE, lrelease-qt4 lrelease, :, [$QT_DIR/bin:$PATH])
 AC_PATH_PROGS(LUPDATE, lupdate-qt4 lupdate, :, [$QT_DIR/bin:$PATH])
 
 dnl Check for MOC/UIC/RCC support.
-AC_PATH_PROGS(MOC, moc-qt4 moc, :, [$QT_DIR/bin:$PATH])
-AC_PATH_PROGS(UIC, uic-qt4 uic, :, [$QT_DIR/bin:$PATH])
-AC_PATH_PROGS(RCC, rcc-qt4 rcc, :, [$QT_DIR/bin:$PATH])
+AC_PATH_PROGS(MOC, $MOC, :)
+AC_PATH_PROGS(UIC, $UIC, :)
+AC_PATH_PROGS(RCC, $RCC, :)
 
 if test "$MOC" = ":"; then
   AC_MSG_ERROR([Need 'moc' to compile, 'moc' is part of Qt])
@@ -802,6 +835,9 @@ AC_MSG_RESULT([ $PACKAGE version $VERSION ($GIT) configured successfully.])
 AC_MSG_RESULT([
 Configure Information:
   C++ Compiler    : $CXX
+  MOC             : $MOC
+  UIC             : $UIC
+  RCC             : $RCC
     DEFS          :   $DEFS
     CPPFLAGS      :   $CPPFLAGS
     CXXFLAGS      :   $CXXFLAGS
