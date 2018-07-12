@@ -81,24 +81,16 @@ elseif(COMPILER_SUPPORTS_CXX0X)
 else()
     message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
-    
+
 #
 ADD_DEFINITIONS( -DHAVE_CONFIG_H )
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
 
 IF(${USE_QT_VERSION} MATCHES "4")
-    IF(DISABLE_QT3_SUPPORT)
-        FIND_PACKAGE( Qt4 REQUIRED QtCore QtGui QtSvg QtXml QtScript QtTest)
-        message(STATUS "disable qt3 support classes(): ${DISABLE_QT3_SUPPORT}")
-        ADD_DEFINITIONS(${QT_DEFINITIONS} -DNO_QT3SUPPORT -DDISABLE_QT3SUPPORT)
-    ELSE()
-        FIND_PACKAGE( Qt4 REQUIRED QtCore QtGui Qt3Support QtSvg QtXml QtScript QtTest)
-        ADD_DEFINITIONS(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS -DQT3_SUPPORT_WARNINGS)
-    ENDIF()
-    
+    FIND_PACKAGE( Qt4 REQUIRED QtCore QtGui QtSvg QtXml QtScript QtTest)
     INCLUDE( ${QT_USE_FILE} )
-#     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11
+    ADD_DEFINITIONS(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
 ELSE()
     FIND_PACKAGE(Qt5 COMPONENTS Core Gui Widgets Svg Xml Script PrintSupport Test REQUIRED QUIET)
     INCLUDE_DIRECTORIES(
@@ -177,7 +169,6 @@ IF (UNIX AND NOT APPLE)
 ENDIF()
 
 
-ADD_DEFINITIONS(${QT_DEFINITIONS} -DQT3_SUPPORT_WARNINGS)
 
 INCLUDE_DIRECTORIES(
   ${qucs_SOURCE_DIR}
