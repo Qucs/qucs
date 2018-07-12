@@ -41,7 +41,21 @@ matrix:
   include:
     - os: linux
       compiler: gcc
-      env: BUILD=cmake
+      env: BUILD=cmake QT=qt5
+      addons:
+        apt:
+          packages:
+            - *native_deps
+            - qt5-default
+            - qtbase5-dev
+            - qttools5-dev-tools
+            - qttools5-dev
+            - qtscript5-dev
+            - libqt5svg5-dev
+
+    - os: linux
+      compiler: gcc
+      env: BUILD=cmake QT=qt4
       addons:
         apt:
           packages:
@@ -97,6 +111,8 @@ before_install:
   - if [[ $CC == clang ]]; then CLANG=true; fi
   - if [[ $BUILD == autotools ]]; then AUTOTOOLS=true; fi
   - if [[ $BUILD == cmake ]]; then CMAKE=true; fi
+  - if [[ $QT == qt5 ]]; then QT5=true; fi
+  - if [[ $QT == qt4 ]]; then QT4=true; fi
 
   - if [[ $TRAVIS_BRANCH == master ]] ; then MASTER=true; fi
 
@@ -202,10 +218,19 @@ script:
     fi
 
   # with cmake build only
-  - if [[ $CMAKE ]]; then
+  - if [[ $CMAKE && $QT5 ]]; then
       mkdir build;
       cd build;
-      cmake .. || travis_terminate 1;
+      cmake .. -DUSE_QT5=ON || travis_terminate 1;
+      make || travis_terminate 1;
+      make test || travis_terminate 1;
+    fi
+
+  # with cmake build only
+  - if [[ $CMAKE && $QT4 ]]; then
+      mkdir build;
+      cd build;
+      cmake .. -DUSE_QT5=OFF || travis_terminate 1;
       make || travis_terminate 1;
       make test || travis_terminate 1;
     fi
