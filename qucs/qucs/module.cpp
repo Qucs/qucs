@@ -244,30 +244,36 @@ void Module::registerModules (void) {
   REGISTER_LUMPED_1 (Switch);
   REGISTER_LUMPED_1 (Relais);
 
-//  REGISTER_SOURCE_1 (Volt_dc); // CRASHES
+#if 0 // CRASHES
+  REGISTER_SOURCE_1 (Volt_dc);
   REGISTER_SOURCE_1 (Ampere_dc);
   REGISTER_SOURCE_1 (Volt_ac);
   REGISTER_SOURCE_1 (Ampere_ac);
   REGISTER_SOURCE_1 (Source_ac);
   REGISTER_SOURCE_1 (Volt_noise);
   REGISTER_SOURCE_1 (Ampere_noise);
+#endif
   REGISTER_SOURCE_1 (VCCS);
   REGISTER_SOURCE_1 (CCCS);
   REGISTER_SOURCE_1 (VCVS);
   REGISTER_SOURCE_1 (CCVS);
+#if 0 // CRASH
   REGISTER_SOURCE_1 (vPulse);
   REGISTER_SOURCE_1 (iPulse);
   REGISTER_SOURCE_1 (vRect);
   REGISTER_SOURCE_1 (iRect);
+#endif
   REGISTER_SOURCE_1 (Noise_ii);
   REGISTER_SOURCE_1 (Noise_vv);
   REGISTER_SOURCE_1 (Noise_iv);
   REGISTER_SOURCE_1 (AM_Modulator);
   REGISTER_SOURCE_1 (PM_Modulator);
+#if 0
   REGISTER_SOURCE_1 (iExp);
   REGISTER_SOURCE_1 (vExp);
   REGISTER_SOURCE_1 (vFile);
   REGISTER_SOURCE_1 (iFile);
+#endif
 
   // probes
   REGISTER_PROBE_1 (iProbe);
@@ -283,7 +289,7 @@ void Module::registerModules (void) {
   REGISTER_TRANS_1 (CoaxialLine);
   REGISTER_TRANS_1 (CircLine);
   REGISTER_TRANS_1 (RectLine);
-  REGISTER_TRANS_1 (RLCG);
+  //REGISTER_TRANS_1 (RLCG); CRASH
   REGISTER_TRANS_1 (Substrate);
   REGISTER_TRANS_1 (MSline);
   REGISTER_TRANS_1 (MScoupled);
@@ -291,7 +297,7 @@ void Module::registerModules (void) {
   REGISTER_TRANS_1 (MScorner);
   REGISTER_TRANS_1 (MSmbend);
   REGISTER_TRANS_1 (MSstep);
-  REGISTER_TRANS_1 (MStee);
+  //REGISTER_TRANS_1 (MStee);
   REGISTER_TRANS_1 (MScross);
   REGISTER_TRANS_1 (MSopen);
   REGISTER_TRANS_1 (MSgap);
@@ -312,7 +318,7 @@ void Module::registerModules (void) {
   REGISTER_NONLINEAR_3 (MOSFET, info, info_p, info_depl);
   REGISTER_NONLINEAR_3 (MOSFET_sub, info, info_p, info_depl);
   REGISTER_NONLINEAR_1 (OpAmp);
-  REGISTER_NONLINEAR_1 (EqnDefined);
+  // REGISTER_NONLINEAR_1 (EqnDefined);
   REGISTER_NONLINEAR_1 (Diac);
   REGISTER_NONLINEAR_1 (Triac);
   REGISTER_NONLINEAR_1 (Thyristor);
@@ -330,8 +336,9 @@ void Module::registerModules (void) {
   REGISTER_RF_PASSIVE_1 (Hybrid);
   REGISTER_RF_PASSIVE_1 (BiasT);
   REGISTER_RF_PASSIVE_1 (Attenuator);
-  REGISTER_RF_PASSIVE_1 (RFedd);
-  REGISTER_RF_PASSIVE_1 (RFedd2P);
+  // REGISTER_RF_PASSIVE_1 (RFedd); // CRASH
+  // REGISTER_RF_PASSIVE_1 (RFedd2P); // CRASH
+
 
   // verilog-a devices
   REGISTER_VERILOGA_1 (mod_amp);
@@ -386,14 +393,14 @@ void Module::registerModules (void) {
   REGISTER_DIGITAL_1 (comp_2bit);
   REGISTER_DIGITAL_1 (comp_4bit);
   REGISTER_DIGITAL_1 (hpribin4bit);
-  REGISTER_DIGITAL_1 (VHDL_File);
-  REGISTER_DIGITAL_1 (Verilog_File);
+  // REGISTER_DIGITAL_1 (VHDL_File); // CRASH
+  //REGISTER_DIGITAL_1 (Verilog_File); // CRASH
   REGISTER_DIGITAL_1 (Digi_Sim);
 
   // file components
-  REGISTER_FILE_1 (SpiceFile);
-  REGISTER_FILE_3 (SPEmbed, info1, info2, info);
-  REGISTER_FILE_3 (SPDeEmbed, info2, info4, info);
+  // REGISTER_FILE_1 (SpiceFile); // CRASH
+  // REGISTER_FILE_3 (SPEmbed, info1, info2, info); // CRASH
+  // REGISTER_FILE_3 (SPDeEmbed, info2, info4, info); // CRASH
   REGISTER_FILE_1 (Subcircuit);
 
   // simulations
@@ -421,7 +428,7 @@ void Module::registerModules (void) {
 
   // external simulation
   REGISTER_EXTERNAL_1 (ETR_Sim);
-  REGISTER_EXTERNAL_1 (ecvs);
+  // REGISTER_EXTERNAL_1 (ecvs); // CRASH
 
   // paintings
   REGISTER_PAINT_1 (GraphicLine);
