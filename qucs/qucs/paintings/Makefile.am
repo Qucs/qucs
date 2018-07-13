@@ -27,6 +27,8 @@ qucsdir=${pkglibdir}
 
 qucs_LTLIBRARIES = libpaintings.la
 
+include ../../common.mk
+
 MOCHEADERS = arrowdialog.h graphictextdialog.h filldialog.h id_dialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
@@ -42,11 +44,6 @@ noinst_HEADERS = $(MOCHEADERS) arrow.h ellipse.h graphicline.h graphictext.h  \
   painting.h paintings.h rectangle.h portsymbol.h ellipsearc.h id_text.h
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
-
-SUFFIXES = .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -o $@ $<
 
 CLEANFILES = *~ *.moc.cpp
 MAINTAINERCLEANFILES = Makefile.in
