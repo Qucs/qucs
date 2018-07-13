@@ -26,6 +26,8 @@ bin_PROGRAMS = qucspowercombining
 MOCHEADERS = qucspowercombiningtool.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
+include ../common.mk
+
 qucspowercombining_SOURCES = main.cpp qucspowercombiningtool.cpp qrc_qucspowercombining.cpp
 
 EXTRA_DIST = qucspowercombining.qrc
@@ -39,11 +41,6 @@ qucspowercombining_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 qucspowercombining_LDADD = $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = $(MOCHEADERS)
-
-SUFFIXES = .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -o $@ $<
 
 CLEANFILES = *~
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
