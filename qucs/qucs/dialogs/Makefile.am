@@ -24,6 +24,8 @@
 
 noinst_LTLIBRARIES = libdialogs.la
 
+include ../../common.mk
+
 MOCHEADERS = settingsdialog.h simmessage.h qucssettingsdialog.h      \
      labeldialog.h changedialog.h matchdialog.h digisettingsdialog.h \
      sweepdialog.h searchdialog.h librarydialog.h importdialog.h     \
