@@ -231,7 +231,7 @@ void Module::registerModules (void) {
   REGISTER_LUMPED_1 (Ground);
   REGISTER_LUMPED_1 (SubCirPort);
   REGISTER_LUMPED_1 (Transformer);
-  REGISTER_LUMPED_1 (symTrafo);
+//  REGISTER_LUMPED_1 (symTrafo); // CRASHES, see symtrafo.cpp
   REGISTER_LUMPED_1 (dcBlock);
   REGISTER_LUMPED_1 (dcFeed);
   REGISTER_LUMPED_1 (Amplifier);
@@ -239,13 +239,12 @@ void Module::registerModules (void) {
   REGISTER_LUMPED_1 (iProbe);
   REGISTER_LUMPED_1 (vProbe);
   REGISTER_LUMPED_1 (Mutual);
-  REGISTER_LUMPED_1 (Mutual2);
+//  REGISTER_LUMPED_1 (Mutual2); CRASHES, see mutual.cpp
   REGISTER_LUMPED_1 (MutualX);
   REGISTER_LUMPED_1 (Switch);
   REGISTER_LUMPED_1 (Relais);
 
-  // sources
-  REGISTER_SOURCE_1 (Volt_dc);
+//  REGISTER_SOURCE_1 (Volt_dc); // CRASHES
   REGISTER_SOURCE_1 (Ampere_dc);
   REGISTER_SOURCE_1 (Volt_ac);
   REGISTER_SOURCE_1 (Ampere_ac);

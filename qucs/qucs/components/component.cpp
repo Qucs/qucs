@@ -464,7 +464,9 @@ void Component::rotate()
   QFontMetrics  metrics(QucsSettings.font, 0);   // get size of text
   dx = dy = 0;
   if(showName) {
-    dx = metrics.width(Name);
+    qDebug() << "somefontstuff" << Name;
+    dx = metrics.width(Name); // CRASH
+    qDebug() << "somefontstuff" << Name;
     dy = metrics.lineSpacing();
   }
   for(Property *pp = Props.first(); pp != 0; pp = Props.next())
