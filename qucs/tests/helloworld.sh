@@ -1,6 +1,8 @@
 #!/bin/sh
 # testing basic module loading and unloading.
 
+export -n DISPLAY
+
 text=$(../qucs/qucs -a ./helloworld -q | \
        tr '\n' '|' | tr '\r' '|' | \
        awk -F"|" '{print $1 $2 $3;}' )
