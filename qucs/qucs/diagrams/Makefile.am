@@ -24,6 +24,8 @@
 
 noinst_LTLIBRARIES = libdiagrams.la
 
+include ../../common.mk
+
 MOCHEADERS = diagramdialog.h markerdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
@@ -41,11 +43,6 @@ noinst_HEADERS = $(MOCHEADERS) diagram.h graph.h polardiagram.h rectdiagram.h \
 #phasordiagram.h waveac.h
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
-
-SUFFIXES = .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -o $@ $<
 
 CLEANFILES = *~ *.moc.cpp
 MAINTAINERCLEANFILES = Makefile.in
