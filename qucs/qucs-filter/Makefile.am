@@ -21,15 +21,15 @@
 # the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
 # Boston, MA 02110-1301, USA.
 #
+#
+MOCHEADERS = qucsfilter.h helpdialog.h
+MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 include ../common.mk
 
 bin_PROGRAMS = qucsfilter
 
 dist_man_MANS = qucsfilter.1
-
-MOCHEADERS = qucsfilter.h helpdialog.h
-MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 qucsfilter_SOURCES =  \
 	eqn_filter.cpp \

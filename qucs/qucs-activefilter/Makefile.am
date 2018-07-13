@@ -22,14 +22,14 @@
 # Boston, MA 02110-1301, USA.
 #
 
+MOCHEADERS = qucsactivefilter.h transferfuncdialog.h helpdialog.h
+MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
+
 include ../common.mk
 
 bin_PROGRAMS = qucsactivefilter
 
 dist_man_MANS = qucsactivefilter.1
-
-MOCHEADERS = qucsactivefilter.h transferfuncdialog.h helpdialog.h
-MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 qucsactivefilter_SOURCES = main.cpp qucsactivefilter.cpp filter.cpp helpdialog.cpp \
 transferfuncdialog.cpp sallenkey.cpp \
