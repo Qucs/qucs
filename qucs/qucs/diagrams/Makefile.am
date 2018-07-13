@@ -27,6 +27,9 @@ qucsdir=${pkglibdir}
 
 qucs_LTLIBRARIES = libdiagrams.la
 
+include ../../common.mk
+
+# MOCHEADERS = diagramdialog.h markerdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 libdiagrams_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
@@ -45,11 +48,6 @@ noinst_HEADERS = $(MOCHEADERS) graph.h polardiagram.h rectdiagram.h \
 #phasordiagram.h waveac.h
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
-
-SUFFIXES = .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -o $@ $<
 
 CLEANFILES = *~ *.moc.cpp
 MAINTAINERCLEANFILES = Makefile.in
