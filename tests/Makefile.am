@@ -16,9 +16,16 @@
 # Boston, MA 02110-1301, USA.
 #
 
+examplesdir=$(srcdir)/../../qucs/examples
+
 AM_DEFAULT_SOURCE_EXT = .cpp
 check_LTLIBRARIES = helloworld.la
 helloworld_la_LDFLAGS = -shared -no-undefined -module -avoid-version -rpath /dev/null
+AM_TESTS_ENVIRONMENT = \
+    export PATH='../qucs:$(PATH)' \
+    export QUCS='qucs' \
+    srcdir='$(srcdir)' \
+    examplesdir='$(examplesdir)';
 
 if COND_WIN32
 helloworld.dll: %.dll: %.la
@@ -35,7 +42,11 @@ SH_LOG_FLAGS =
 TEST_EXTENSIONS = .sh
 AM_TESTS_FD_REDIRECT = 9>&2
 
-TESTS = helloworld.sh doesnotexist.sh
+TESTS = \
+	helloworld.sh \
+	doesnotexist.sh \
+	netlist.sh
+
 if COND_WIN32
 # it does not work on windoze
 doesnotexist.log: SH_LOG_FLAGS=-c 'exit 77'
@@ -43,3 +54,5 @@ endif
 
 EXTRA_DIST = \
 	$(TESTS)
+
+CLEANFILES = *.out
