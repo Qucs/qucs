@@ -64,6 +64,7 @@ ComponentList SymbolComps;
 Schematic::Schematic(QucsApp *App_, const QString& Name_)
     : QucsDoc(App_, Name_)
 {
+	qDebug() << "Schematic::Schematic";
   symbolMode = false;
 
   // ...........................................................
@@ -99,6 +100,7 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   Frame_Text1 = tr("Drawn By:");
   Frame_Text2 = tr("Date:");
   Frame_Text3 = tr("Revision:");
+	qDebug() << "Schematic::Schematic";
 
   setVScrollBarMode(Q3ScrollView::AlwaysOn);
   setHScrollBarMode(Q3ScrollView::AlwaysOn);

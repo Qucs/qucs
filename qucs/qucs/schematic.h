@@ -92,6 +92,7 @@ class ComponentList : public Q3PtrList<Component> {
 class PaintingList : public Q3PtrList<Painting> {
 };
 
+// BUG?
 class Schematic : public Q3ScrollView, public QucsDoc {
   Q_OBJECT
 public:

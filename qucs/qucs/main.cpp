@@ -113,12 +113,16 @@ Schematic *openSchematic(QString schematic)
     return NULL;
   }
 
+  qDebug() << "*** pop modules";
+
   // populate Modules list
   Module::registerModules ();
 
   // new schematic from file
+  qDebug() << "*** creating schematic";
   Schematic *sch = new Schematic(0, schematic);
 
+  qDebug() << "*** load Document";
   // load schematic file if possible
   if(!sch->loadDocument()) {
     fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
@@ -517,6 +521,16 @@ int main(int argc, char *argv[])
   QString inputfile;
   QString outputfile;
 
+  // set the Qucs version string, here?
+  QucsVersion = VersionTriplet(PACKAGE_VERSION);
+
+  // apply default settings
+  QucsSettings.font = QFont("Helvetica", 12);
+  QucsSettings.largeFontSize = 16.0;
+  QucsSettings.maxUndo = 20;
+  QucsSettings.NodeWiring = 0;
+  QucsSettings.Editor = "qucs";
+
   for (int i = 1; i < argc; ++i) {
     if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
       fprintf(stdout,
@@ -621,15 +635,6 @@ int main(int argc, char *argv[])
     }
   }
   qInstallMsgHandler(qucsMessageOutput);
-  // set the Qucs version string
-  QucsVersion = VersionTriplet(PACKAGE_VERSION);
-
-  // apply default settings
-  QucsSettings.font = QFont("Helvetica", 12);
-  QucsSettings.largeFontSize = 16.0;
-  QucsSettings.maxUndo = 20;
-  QucsSettings.NodeWiring = 0;
-  QucsSettings.Editor = "qucs";
 
   // initially center the application
   QApplication a(argc, argv);

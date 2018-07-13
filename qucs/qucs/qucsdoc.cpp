@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include <QFileInfo>
+#include <QDebug>
 
 #include "qucsdoc.h"
 #include "qucs.h"
@@ -23,6 +24,7 @@
 
 QucsDoc::QucsDoc(QucsApp *App_, const QString& Name_)
 {
+	qDebug() << "QucsDoc::QucsDoc";
   App = App_;
 
   GridOn = true;
@@ -47,6 +49,7 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& Name_)
   }
   SimOpenDpl = true;
   SimRunScript = false;
+	qDebug() << "QucsDoc::QucsDoc";
 
   DocChanged = false;
   showBias = -1;  // don't show DC bias (currently for "Schematic" only)
