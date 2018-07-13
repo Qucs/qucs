@@ -225,8 +225,12 @@ script:
   - if [[ $LINUX && $AUTOTOOLS && $QT4 && $GCC ]]; then
       ./bootstrap;
       ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc || travis_terminate 1;
+      make check || travis_terminate 1;
+   fi
+
+   if [[ $LINUX && $AUTOTOOLS && $GCC ]]; then
       make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --disable-dependency-tracking --disable-doc" || travis_terminate 1;
-    fi
+   fi
 
   - if [[ $LINUX && $CMAKE && $QT5 ]]; then
       mkdir build;
