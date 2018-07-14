@@ -213,7 +213,7 @@ void QucsApp::initView()
   connect(editText, SIGNAL(returnPressed()), SLOT(slotApplyCompText()));
   connect(editText, SIGNAL(textChanged(const QString&)),
           SLOT(slotResizePropEdit(const QString&)));
-  connect(editText, SIGNAL(lostFocus()), SLOT(slotHideEdit()));
+  connect(editText, SIGNAL(editingFinished()), SLOT(slotHideEdit()));
 
   // ----------------------------------------------------------
   // "Project Tab" of the left QTabWidget
