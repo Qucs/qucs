@@ -176,8 +176,8 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
 
 
     if(Comp->obsolete_model_hack() == ".SW") {   // parameter sweep
-      Component *pc;
-      for(pc=Doc->Components->first(); pc!=0; pc=Doc->Components->next()) {
+      for(ComponentList::const_iterator pi=Doc->components().begin(); pi!=Doc->components().end(); ++pi) {
+        Component const* pc=*pi;
 	// insert all schematic available simulations in the Simulation combo box
         if(pc != Comp)
           if(pc->obsolete_model_hack()[0] == '.')
@@ -1488,3 +1488,6 @@ void ComponentDialog::enableButtons()
   ButtUp->setEnabled(true);
   ButtDown->setEnabled(true);
 }
+
+
+// vim:ts=8:sw=2:et
