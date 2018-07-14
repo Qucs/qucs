@@ -184,8 +184,7 @@ void QucsApp::initView()
   DocumentTab = new ContextMenuTabWidget(this);
   setCentralWidget(DocumentTab);
 
-  connect(DocumentTab,
-          SIGNAL(currentChanged(QWidget*)), SLOT(slotChangeView(QWidget*)));
+  connect(DocumentTab, SIGNAL(currentChanged(int)), SLOT(slotChangeView(int)));
 
   // Give every tab a close button, and connect the button's signal to
   // slotFileClose
@@ -1396,7 +1395,7 @@ bool QucsApp::gotoPage(const QString& Name)
     view->drawn = false;
     return false;
   }
-  slotChangeView(DocumentTab->currentWidget());
+  slotChangeView(DocumentTab->currentIndex());
 
   // if only an untitled document was open -> close it
   if(getDoc(0)->DocName.isEmpty())
@@ -1805,8 +1804,10 @@ void QucsApp::slotHelpReport()
 
 // --------------------------------------------------------------
 // Is called when another document is selected via the TabBar.
-void QucsApp::slotChangeView(QWidget *w)
+void QucsApp::slotChangeView(int index)
 {
+
+  QWidget *w = DocumentTab->widget(index);
 
   editText->setHidden (true); // disable text edit of component property
   QucsDoc * Doc;
