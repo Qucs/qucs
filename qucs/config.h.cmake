@@ -4,4 +4,3 @@
 
 #define GIT "@GIT@"
 
-#define QT_VERSION_MAJOR @USE_QT_VERSION@

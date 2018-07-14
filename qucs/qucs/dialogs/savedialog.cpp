@@ -79,7 +79,7 @@ void SaveDialog::initDialog()
    saveSelectedButton->setDefault(true);
    buttonsLayout->addWidget( saveSelectedButton );
    SaveDialogLayout->addLayout( buttonsLayout );
-#if QT_VERSION_MAJOR == 4
+#if QT_VERSION < 0x050000
    languageChange();
 #else
    // TODO for Qt5 ??
