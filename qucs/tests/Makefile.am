@@ -21,8 +21,12 @@ AM_CXXFLAGS = -fPIC
 examplesdir=$(srcdir)/../examples
 
 AM_DEFAULT_SOURCE_EXT = .cpp
-check_LTLIBRARIES = helloworld.la
+check_LTLIBRARIES = helloworld.la element.la
+
 helloworld_la_LDFLAGS = -shared -no-undefined -module -avoid-version -rpath /dev/null
+element_la_LDFLAGS = -shared -no-undefined -module -avoid-version -rpath /dev/null
+element_la_CPPFLAGS = ${AM_CPPFLAGS}  $(QT_CFLAGS)
+
 AM_TESTS_ENVIRONMENT = \
     export PATH='../qucs:$(PATH)' \
 	 REDIRECT='exec 2>&9'\
@@ -36,10 +40,14 @@ if COND_WIN32
 helloworld.dll: %.dll: %.la
 	[ -f $@ ] || $(LN_S) .libs/$$(. .libs/$<; echo $$dlname) .
 helloworld.log: helloworld.dll
+element.dll: %.dll: %.la
+	[ -f $@ ] || $(LN_S) .libs/$$(. .libs/$<; echo $$dlname) .
+element.log: element.dll
 else
-helloworld.so: %.so: %.la
+element.so helloworld.so: %.so: %.la
 	[ -f $@ ] || $(LN_S) .libs/$$(. .libs/$<; echo $$dlname) .
 helloworld.log: helloworld.so
+element.log: element.so
 endif
 
 SH_LOG_COMPILER = $(SHELL)
@@ -53,6 +61,7 @@ TESTS = \
 
 SH_TESTS = \
 	helloworld.sh \
+	element.sh \
 	doesnotexist.sh \
 	lce.sh \
 	netlist.sh \
