@@ -55,10 +55,10 @@
 #include "misc.h"
 
 // just dummies for empty lists
-Q3PtrList<Wire>      SymbolWires;
-Q3PtrList<Node>      SymbolNodes;
-Q3PtrList<Diagram>   SymbolDiags;
-Q3PtrList<Component> SymbolComps;
+WireList      SymbolWires;
+NodeList      SymbolNodes;
+DiagramList   SymbolDiags;
+ComponentList SymbolComps;
 
 
 Schematic::Schematic(QucsApp *App_, const QString& Name_)

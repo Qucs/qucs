@@ -75,6 +75,22 @@ struct SubFile {
 };
 typedef QMap<QString, SubFile> SubMap;
 
+// TODO: refactor here
+class WireList : public Q3PtrList<Wire> {
+};
+// TODO: refactor here
+class NodeList : public Q3PtrList<Node> {
+};
+// TODO: refactor here
+class DiagramList : public Q3PtrList<Diagram> {
+};
+// TODO: refactor here
+class ComponentList : public Q3PtrList<Component> {
+};
+// TODO: refactor here
+class PaintingList : public Q3PtrList<Painting> {
+};
+
 class Schematic : public Q3ScrollView, public QucsDoc {
   Q_OBJECT
 public:
@@ -127,13 +143,14 @@ public:
 
   // The pointers points to the current lists, either to the schematic
   // elements "Doc..." or to the symbol elements "SymbolPaints".
-  Q3PtrList<Wire>      *Wires, DocWires;
-  Q3PtrList<Node>      *Nodes, DocNodes;
-  Q3PtrList<Diagram>   *Diagrams, DocDiags;
-  Q3PtrList<Painting>  *Paintings, DocPaints;
-  Q3PtrList<Component> *Components, DocComps;
+// private: //TODO. one at a time.
+  WireList      *Wires, DocWires;
+  NodeList      *Nodes, DocNodes;
+  DiagramList   *Diagrams, DocDiags;
+  PaintingList  *Paintings, DocPaints;
+  ComponentList *Components, DocComps;
 
-  Q3PtrList<Painting>  SymbolPaints;  // symbol definition for subcircuit
+  PaintingList  SymbolPaints;  // symbol definition for subcircuit
 
   QList<PostedPaintEvent>   PostedPaintEvents;
   bool symbolMode;  // true if in symbol painting mode
