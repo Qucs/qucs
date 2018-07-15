@@ -64,7 +64,7 @@ matrix:
 
     - os: linux
       compiler: gcc
-      env: BUILD=autotools
+      env: BUILD=autotools QT=qt4
       addons:
         apt:
           packages:
@@ -74,7 +74,7 @@ matrix:
 
     - os: linux
       compiler: clang
-      env: BUILD=autotools
+      env: BUILD=autotools QT=qt4
       addons:
         apt:
           packages:
@@ -102,7 +102,7 @@ matrix:
       # Use bottle (with Qt3Support) from cartr/qt4
       osx_image: xcode8.3
       compiler: clang
-      env: BUILD=autotools
+      env: BUILD=autotools QT=qt4
 
 # Set secure environment with encrypted string containing GIT_NAME, GIT_EMAIL and GH_TOKEN
 env:
@@ -209,21 +209,21 @@ script:
   # enable parallel make after building ADMS
   - export MAKEFLAGS="-j2"
 
-  # run all checks
-  - ./bootstrap
-
-  - if [[ $OSX && $AUTOTOOLS]]; then
+  - if [[ $OSX && $AUTOTOOLS && $QT4 ]]; then
+      ./bootstrap;
       ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc PYTHON=python2 || travis_terminate 1;
       make || travis_terminate 1;
       make qucscheck || travis_terminate 1;
     fi
 
-    if [[ $LINUX && $AUTOTOOLS && $CLANG ]]; then
+  - if [[ $LINUX && $AUTOTOOLS && $QT4 && $CLANG ]]; then
+      ./bootstrap;
       ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --enable-doc || travis_terminate 1;
       make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --enable-doc" || travis_terminate 1;
     fi
 
-   if [[ $LINUX && $AUTOTOOLS && $GCC ]]; then
+  - if [[ $LINUX && $AUTOTOOLS && $QT4 && $GCC ]]; then
+      ./bootstrap;
       ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc || travis_terminate 1;
       make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --disable-dependency-tracking --disable-doc" || travis_terminate 1;
     fi
@@ -244,6 +244,7 @@ script:
       cmake .. -DUSE_QT5=OFF || travis_terminate 1;
       make || travis_terminate 1;
       make test || travis_terminate 1;
+    fi
 
   - if [[ $OSX && $CMAKE && $QT5 ]]; then
       export Qt5_DIR=`brew --prefix qt`;
