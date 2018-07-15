@@ -45,4 +45,6 @@ include ../../common.mk
 TESTS = ${check_PROGRAMS}
 XFAIL_TESTS = SchematicTests
 
-EXTRA_DIST=SchematicTests.h ElementTests.h ComponentTests.h
+EXTRA_DIST = SchematicTests.h ElementTests.h ComponentTests.h
+
+CLEANFILES = *core
