@@ -32,6 +32,8 @@ MOCHEADERS = settingsdialog.h simmessage.h qucssettingsdialog.h      \
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
+include ../../common.mk
+
 UICFILES = ui_searchdialog.h
 
 BUILT_SOURCES = $(UICFILES)
@@ -49,16 +51,13 @@ noinst_HEADERS = $(MOCHEADERS) $(UIHEADERS)
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
 
-SUFFIXES = .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -o $@ $<
-
+# common?!
 ui_searchdialog.h: searchdialog.ui
 	$(UIC) -o $@ $<
 
+ui_searchdialog.h: $(top_builddir)/qt_version
+
 EXTRA_DIST = searchdialog.ui
 
-CLEANFILES = *~
-MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
-DISTCLEANFILES = *.moc.cpp ui_*.h
+CLEANFILES = *~ *.moc.cpp ui_*.h
+MAINTAINERCLEANFILES = Makefile.in
