@@ -663,9 +663,9 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
 
     if(List) {  // "paste" ?
       int z;
-      for(z=c->Name.length()-1; z>=0; z--) // cut off number of component name
-        if(!c->Name.at(z).isDigit()) break;
-      c->Name = c->Name.left(z+1);
+      for(z=c->name().length()-1; z>=0; z--) // cut off number of component name
+        if(!c->name().at(z).isDigit()) break;
+      c->obsolete_name_override_hack(c->name().left(z+1));
       List->append(c);
     }else{
       simpleInsertComponent(c);
@@ -1235,24 +1235,24 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
     // check analog/digital typed components
     if(isAnalog) {
       if((pc->Type & isAnalogComponent) == 0) {
-        ErrText->appendPlainText(QObject::tr("ERROR: Component \"%1\" has no analog model.").arg(pc->Name));
+        ErrText->appendPlainText(QObject::tr("ERROR: Component \"%1\" has no analog model.").arg(pc->name() ));
         return false;
       }
     } else {
       if((pc->Type & isDigitalComponent) == 0) {
-        ErrText->appendPlainText(QObject::tr("ERROR: Component \"%1\" has no digital model.").arg(pc->Name));
+        ErrText->appendPlainText(QObject::tr("ERROR: Component \"%1\" has no digital model.").arg(pc->name() ));
         return false;
       }
     }
 
     // handle ground symbol
-    if(pc->Model == "GND") {
+    if(pc->obsolete_model_hack() == "GND") { // BUG.
       pc->Ports.first()->Connection->Name = "gnd";
       continue;
     }
 
     // handle subcircuits
-    if(pc->Model == "Sub")
+    if(pc->obsolete_model_hack() == "Sub")
     {
       int i;
       // tell the subcircuit it belongs to this schematic
@@ -1325,7 +1325,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       if(creatingLib) {
 	ErrText->appendPlainText(
 	    QObject::tr("WARNING: Skipping library component \"%1\".").
-	    arg(pc->Name));
+	    arg(pc->name()));
 	continue;
       }
       QString scfile = pc->getSubcircuitFile();
@@ -1342,20 +1342,20 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       if(!r) {
 	ErrText->appendPlainText(
 	    QObject::tr("ERROR: \"%1\": Cannot load library component \"%2\" from \"%3\"").
-	    arg(pc->Name, pc->Props.at(1)->Value, scfile));
+	    arg(pc->name(), pc->Props.at(1)->Value, scfile));
 	return false;
       }
       continue;
     }
 
     // handle SPICE subcircuit components
-    if(pc->Model == "SPICE") {
+    if(pc->obsolete_model_hack() == "SPICE") { // BUG
       s = pc->Props.first()->Value;
       // tell the spice component it belongs to this schematic
       pc->setSchematic (this);
       if(s.isEmpty()) {
         ErrText->appendPlainText(QObject::tr("ERROR: No file name in SPICE component \"%1\".").
-                        arg(pc->Name));
+                        arg(pc->name()));
         return false;
       }
       QString f = pc->getSubcircuitFile();
@@ -1374,26 +1374,26 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
     }
 
     // handle digital file subcircuits
-    if(pc->Model == "VHDL" || pc->Model == "Verilog") {
-      if(isVerilog && pc->Model == "VHDL")
+    if(pc->obsolete_model_hack() == "VHDL" || pc->obsolete_model_hack() == "Verilog") {
+      if(isVerilog && pc->obsolete_model_hack() == "VHDL")
 	continue;
-      if(!isVerilog && pc->Model == "Verilog")
+      if(!isVerilog && pc->obsolete_model_hack() == "Verilog")
 	continue;
       s = pc->Props.getFirst()->Value;
       if(s.isEmpty()) {
         ErrText->appendPlainText(QObject::tr("ERROR: No file name in %1 component \"%2\".").
-			arg(pc->Model).
-                        arg(pc->Name));
+			arg(pc->obsolete_model_hack()).
+                        arg(pc->name()));
         return false;
       }
       QString f = pc->getSubcircuitFile();
       SubMap::Iterator it = FileList.find(f);
       if(it != FileList.end())
         continue;   // insert each vhdl/verilog component just one time
-      s = ((pc->Model == "VHDL") ? "VHD" : "VER");
+      s = ((pc->obsolete_model_hack() == "VHDL") ? "VHD" : "VER");
       FileList.insert(f, SubFile(s, f));
 
-      if(pc->Model == "VHDL") {
+      if(pc->obsolete_model_hack() == "VHDL") {
 	VHDL_File *vf = (VHDL_File*)pc;
 	r = vf->createSubNetlist(stream);
 	ErrText->appendPlainText(vf->getErrorText());
@@ -1401,7 +1401,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 	  return false;
 	}
       }
-      if(pc->Model == "Verilog") {
+      if(pc->obsolete_model_hack() == "Verilog") {
 	Verilog_File *vf = (Verilog_File*)pc;
 	r = vf->createSubNetlist(stream);
 	ErrText->appendPlainText(vf->getErrorText());
@@ -1533,12 +1533,12 @@ int NumPorts)
   // "SubcircuitPortNames"
   PortTypes.clear();
   for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
-    if(pc->Model.at(0) == '.') { // no simulations in subcircuits
+    if(pc->obsolete_model_hack().at(0) == '.') { // no simulations in subcircuits
       ErrText->appendPlainText(
         QObject::tr("WARNING: Ignore simulation component in subcircuit \"%1\".").arg(DocName)+"\n");
       continue;
     }
-    else if(pc->Model == "Port") {
+    else if(pc->obsolete_model_hack() == "Port") {
       i = pc->Props.first()->Value.toInt();
       for(z=SubcircuitPortNames.size(); z<i; z++) { // add empty port names
         SubcircuitPortNames.append(" ");
@@ -1673,7 +1673,7 @@ int NumPorts)
 
       // write all equations into netlist file
       for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
-        if(pc->Model == "Eqn") {
+        if(pc->obsolete_model_hack() == "Eqn") {
           (*tstream) << pc->get_Verilog_Code(NumPorts);
         }
       }
@@ -1683,7 +1683,7 @@ int NumPorts)
 
       // write all components into netlist file
       for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
-        if(pc->Model != "Eqn") {
+        if(pc->obsolete_model_hack() != "Eqn") {
           s = pc->get_Verilog_Code(NumPorts);
           if(s.length()>0 && s.at(0) == '\xA7') {  //section symbol
             ErrText->appendPlainText(s.mid(1));
@@ -1734,10 +1734,10 @@ int NumPorts)
 
       // write all equations into netlist file
       for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
-        if(pc->Model == "Eqn") {
+        if(pc->obsolete_model_hack() == "Eqn") {
           ErrText->appendPlainText(
                       QObject::tr("WARNING: Equations in \"%1\" are 'time' typed.").
-          arg(pc->Name));
+          arg(pc->name()));
           (*tstream) << pc->get_VHDL_Code(NumPorts);
         }
       }
@@ -1749,7 +1749,7 @@ int NumPorts)
 
       // write all components into netlist file
       for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
-        if(pc->Model != "Eqn") {
+        if(pc->obsolete_model_hack() != "Eqn") {
             s = pc->get_VHDL_Code(NumPorts);
             if(s.length()>0 && s.at(0) == '\xA7') {  //section symbol
               ErrText->appendPlainText(s.mid(1));
@@ -1811,8 +1811,8 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   // Detect simulation domain (analog/digital) by looking at component types.
   for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
     if(pc->isActive == COMP_IS_OPEN) continue;
-    if(pc->Model.at(0) == '.') {
-      if(pc->Model == ".Digi") {
+    if(pc->obsolete_model_hack().at(0) == '.') {
+      if(pc->obsolete_model_hack() == ".Digi") {
         if(allTypes & isDigitalComponent) {
           ErrText->appendPlainText(
              QObject::tr("ERROR: Only one digital simulation allowed."));
@@ -1832,7 +1832,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
         return -10;
       }
     }
-    else if(pc->Model == "DigiSource") NumPorts++;
+    else if(pc->obsolete_model_hack() == "DigiSource") NumPorts++;
   }
 
   if((allTypes & isAnalogComponent) == 0) {
@@ -1951,7 +1951,7 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
       s = pc->getNetlist();
     }
     else {
-      if(pc->Model == ".Digi" && pc->isActive) {  // simulation component ?
+      if(pc->obsolete_model_hack() == ".Digi" && pc->isActive) {  // simulation component ?
         if(NumPorts > 0) { // truth table simulation ?
 	  if (isVerilog)
 	    Time = QString::number((1 << NumPorts));
@@ -1960,9 +1960,9 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
         } else {
           Time = pc->Props.at(1)->Value;
 	  if (isVerilog) {
-	    if(!misc::Verilog_Time(Time, pc->Name)) return Time;
+	    if(!misc::Verilog_Time(Time, pc->name())) return Time;
 	  } else {
-	    if(!misc::VHDL_Time(Time, pc->Name)) return Time;  // wrong time format
+	    if(!misc::VHDL_Time(Time, pc->name())) return Time;  // wrong time format
 	  }
         }
       }

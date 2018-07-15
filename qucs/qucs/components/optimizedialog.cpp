@@ -348,8 +348,8 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
   Component *pc;
   for(pc=Doc->Components->first(); pc!=0; pc=Doc->Components->next())
     if(pc != Comp)
-      if(pc->Model[0] == '.' && pc->Model != ".Opt")
-        SimEdit->insertItem(SimEdit->count(), pc->Name);
+      if(pc->obsolete_model_hack()[0] == '.' && pc->obsolete_model_hack() != ".Opt")
+        SimEdit->insertItem(SimEdit->count(), pc->name());
 
   Property *pp;
   pp = Comp->Props.at(0);
@@ -376,11 +376,11 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
     CostConEdit->setText(pp->Value.section('|',9,9));
   }
 
-  NameEdit->setText(Comp->Name);
+  NameEdit->setText(Comp->name());
 
   QTableWidgetItem *item;
   for(pp = Comp->Props.at(2); pp != 0; pp = Comp->Props.next()) {
-    if(pp->Name == "Var") {
+    if(pp->Name == "Var") { // BUG
       QStringList ValueSplit = pp->Value.split("|");
       int row = VarTable->rowCount();
       VarTable->insertRow(row);
@@ -433,7 +433,7 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
       item->setFlags(item->flags() & ~Qt::ItemIsEditable);
       VarTable->setItem(row, 5, item);
     }
-    if(pp->Name == "Goal") {
+    if(pp->Name == "Goal") { // BUG
       QStringList GoalSplit = pp->Value.split("|");
       int row = GoalTable->rowCount();
       GoalTable->insertRow(row);
@@ -720,16 +720,16 @@ void OptimizeDialog::slotApply()
 {
   Component *pc;
   if(NameEdit->text().isEmpty())
-    NameEdit->setText(Comp->Name);
+    NameEdit->setText(Comp->name());
   else
-  if(NameEdit->text() != Comp->Name) {
+  if(NameEdit->text() != Comp->name()) {
     for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next())
-      if(pc->Name == NameEdit->text())
+      if(pc->name() == NameEdit->text())
         break;  // found component with the same name ?
     if(pc)
-      NameEdit->setText(Comp->Name);
+      NameEdit->setText(Comp->name());
     else {
-      Comp->Name = NameEdit->text();
+      Comp->obsolete_name_override_hack(NameEdit->text());
       changed = true;
     }
   }

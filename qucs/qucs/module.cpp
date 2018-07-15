@@ -64,7 +64,7 @@ void Module::registerComponent (QString category, pInfoFunc info) {
   QString Name, Model;
   char * File;
   Component * c = (Component *) info (Name, File, true);
-  Model = c->Model;
+  Model = c->obsolete_model_hack();
   delete c;
 
   // put into category and the component hash
@@ -123,7 +123,7 @@ void Module::registerDynamicComponents()
 //     char * File;
      Component * c = (Component *)
              vacomponent::info (Name, vaBitmap, true, vaComponents[i.key()]);
-     Model = c->Model;
+     Model = c->obsolete_model_hack();
      delete c;
 
      // put into category and the component hash
