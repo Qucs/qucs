@@ -30,7 +30,9 @@ SUBDIRS = \
 	bitmaps \
 	components diagrams \
 	paintings \
-	dialogs octave
+	dialogs \
+	octave \
+	tests
 
 all-local: qucs
 
