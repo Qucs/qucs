@@ -44,6 +44,5 @@ SUFFIXES = .moc.cpp
 .h.moc.cpp:
 	$(MOC) -o $@ $<
 
-CLEANFILES = *~
-MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
-DISTCLEANFILES = *.moc.cpp
+CLEANFILES = *~ *.moc.cpp
+MAINTAINERCLEANFILES = Makefile.in
