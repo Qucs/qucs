@@ -18,7 +18,12 @@
 
 AM_CPPFLAGS = -I${srcdir}/.. ${QT_CFLAGS} ${QTest_CFLAGS}
 AM_DEFAULT_SOURCE_EXT = .cpp
+
+if COND_WIN32
+check_PROGRAMS =
+else
 check_PROGRAMS = SchematicTests ElementTests ComponentTests
+endif
 
 SchematicTests_SOURCES = SchematicTests.cpp SchematicTests.moc.cpp
 
@@ -42,8 +47,13 @@ BUILT_SOURCES = ${MOCFILES}
 
 include ../../common.mk
 
+if COND_WIN32
+TESTS =
+XFAIL_TESTS =
+else
 TESTS = ${check_PROGRAMS}
 XFAIL_TESTS = SchematicTests
+endif
 
 EXTRA_DIST = SchematicTests.h ElementTests.h ComponentTests.h
 
