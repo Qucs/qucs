@@ -24,10 +24,9 @@
 
 #include <QTest>
 
-class ElementTests : public QObject {
-  Q_OBJECT
-private slots:
-  void testConstructor() {
+#include "ElementTests.h"
+
+void ElementTests::testConstructor() {
     Element *e = new Element();
     // check defaults
     QCOMPARE(e->Type, isDummyElement);
@@ -38,8 +37,6 @@ private slots:
     QCOMPARE(e->y1, 0);
     QCOMPARE(e->x2, 0);
     QCOMPARE(e->y2, 0);
-   }
-};
+}
 
 QTEST_MAIN(ElementTests)
-#include "ElementTests.moc"

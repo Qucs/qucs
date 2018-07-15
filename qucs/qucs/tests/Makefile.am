@@ -16,19 +16,33 @@
 # Boston, MA 02110-1301, USA.
 #
 
+AM_CPPFLAGS = -I${srcdir}/.. ${QT_CFLAGS} ${QTest_CFLAGS}
 AM_DEFAULT_SOURCE_EXT = .cpp
-check_PROGRAMS = SchematicTests
+check_PROGRAMS = SchematicTests ElementTests ComponentTests
+
 SchematicTests_SOURCES = SchematicTests.cpp SchematicTests.moc.cpp
+
+ElementTests_SOURCES = ElementTests.cpp ElementTests.moc.cpp
+ElementTests_CPPFLAGS = ${AM_CPPFLAGS}
+
+ComponentTests_SOURCES = ComponentTests.cpp ComponentTests.moc.cpp
+ComponentTests_CPPFLAGS = ${AM_CPPFLAGS}
 
 SchematicTests_LDADD = \
 	../libqucsschematic.la ${QT_LIBS} ${QTest_LIBS}
 
-MOCFILES = SchematicTests.moc.cpp
-BUILT_SOURCES=${MOCFILES}
+ElementTests_LDADD = \
+	../libqucsschematic.la ${QT_LIBS} ${QTest_LIBS}
+
+ComponentTests_LDADD = \
+	../libqucsschematic.la ${QT_LIBS} ${QTest_LIBS}
+
+MOCFILES = ${check_PROGRAMS:%=%.moc.cpp}
+BUILT_SOURCES = ${MOCFILES}
 
 include ../../common.mk
 
-AM_CPPFLAGS = -I${srcdir}/.. ${QT_CFLAGS} ${QTest_CFLAGS}
-
 TESTS = ${check_PROGRAMS}
-EXTRA_DIST=SchematicTests.h
+XFAIL_TESTS = SchematicTests
+
+EXTRA_DIST=SchematicTests.h ElementTests.h ComponentTests.h
