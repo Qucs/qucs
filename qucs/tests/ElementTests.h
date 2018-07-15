@@ -1,5 +1,5 @@
 /*
- * ComponentTests.cpp - Unit tests for the Component class
+ * ElementTests.cpp - Unit tests for the Element class
  *
  * Copyright (C) 2017, Guilherme Brondani Torri, <guitorri@gmail.com>
  *
@@ -20,17 +20,12 @@
  *
  */
 
-#include "components/component.h"
-#include "ComponentTests.h"
+#pragma once
 
 #include <QTest>
 
-void ComponentTests::testConstructor() {
-    Component *c = new Component();
-    QCOMPARE(c->Type, isAnalogComponent);
-    QCOMPARE(c->isSelected, false);
-    QCOMPARE(c->cx, 0);
-    QCOMPARE(c->cy, 0);
-}
-
-QTEST_MAIN(ComponentTests)
+class ElementTests : public QObject {
+  Q_OBJECT
+private slots:
+  void testConstructor();
+};
