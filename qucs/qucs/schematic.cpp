@@ -1047,25 +1047,17 @@ bool Schematic::rotateElements()
   y1 = (y1+y2) >> 1;
   //setOnGrid(x1, y1);
 
-
-  Wire *pw;
   Painting  *pp;
-  Component *pc;
   WireLabel *pl;
   // re-insert elements
   foreach(Element *pe, ElementCache)
-    switch(pe->Type) {
-      case isComponent:
-      case isAnalogComponent:
-      case isDigitalComponent:
+    int t=pe->Type;
+    if( Component pe=dynamic_cast<Component*>(pc) ){
         pc = (Component*)pe;
         pc->rotate();   //rotate component !before! rotating its center
         pc->setCenter(pc->cy - y1 + x1, x1 - pc->cx + y1);
         insertRawComponent(pc);
-        break;
-
-      case isWire:
-        pw = (Wire*)pe;
+    }else if(Wire* pw=dynamic_cast<Wire*>(pe)){
         x2 = pw->x1;
         pw->x1 = pw->y1 - y1 + x1;
         pw->y1 = x1 - x2 + y1;
@@ -1083,16 +1075,12 @@ bool Schematic::rotateElements()
         }
         insertWire(pw);
         break;
-
-      case isHWireLabel:
-      case isVWireLabel:
-	pl = (WireLabel*)pe;
+    }else if(WireLabel* pl=dynamic_cast<WireLabel>(pe)){
+      if(pl != isNodeLabel){ // yikes.
 	x2 = pl->x1;
 	pl->x1 = pl->y1 - y1 + x1;
 	pl->y1 = x1 - x2 + y1;
-	break;
-      case isNodeLabel:
-	pl = (WireLabel*)pe;
+      }else{
 	if(pl->pOwner == 0) {
 	  x2 = pl->x1;
 	  pl->x1 = pl->y1 - y1 + x1;
@@ -1102,18 +1090,16 @@ bool Schematic::rotateElements()
 	pl->cx = pl->cy - y1 + x1;
 	pl->cy = x1 - x2 + y1;
 	insertNodeLabel(pl);
-	break;
-
-      case isPainting:
-        pp = (Painting*)pe;
+      }
+    }else if(Painting* pp=dynamic_cast<Painting>(pe)){
         pp->rotate();   // rotate painting !before! rotating its center
         pp->getCenter(x2, y2);
         //qDebug("pp->getCenter(x2, y2): (%i,%i)\n", x2, y2);
         //qDebug("(x1,y1) (x2,y2): (%i,%i) (%i,%i)\n", x1,y1,x2,y2);
         pp->setCenter(y2-y1 + x1, x1-x2 + y1);
         Paintings->append(pp);
-        break;
-      default: ;
+    }else{
+      qDebug()<<"BUG in rotateElements";
     }
 
   ElementCache.clear();
@@ -2183,3 +2169,4 @@ void Schematic::contentsDragMoveEvent(QDragMoveEvent *Event)
   Event->accept();
 }
 
+// vim:ts=8:sw=2:et
