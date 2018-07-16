@@ -167,35 +167,6 @@ public:
   bool drawScheme; // inform paint method to draw element or its outline
 };
 
-class GraphicsElement : public QGraphicsItem {
-private:
-	GraphicsElement(){}
-public:
-	explicit GraphicsElement(Element* e)
-		: _e(e)
-	{
-		assert(_e);
-	}
-	~GraphicsElement(){ delete _e; }
-private: // later: Qgraphics virtual overrides
-//  void paint() { assert(_e); _e->paint(); }
-//  void paintScheme(Schematic *s) { assert(_e); _e->paintScheme(s); }
-  void paintScheme(QPainter *p) { assert(_e); _e->paintScheme(p); }
-  void setCenter(int i, int j, bool relative=false){
-	  assert(_e);
-	  _e->setCenter(i, j, relative);
-  }
-  void getCenter(int& i, int& j){
-	  assert(_e);
-	  _e->getCenter(i, j);
-  }
-public:
-  Element* operator->(){ assert(_e); return _e; }
-  Element const* operator->() const{ assert(_e); return _e; }
-private: // owned elements
-  Element* _e;
-};
-
 
 /** \class Conductor
   * \brief label for Node and Wire classes

@@ -19,6 +19,7 @@
 #include "qucs.h"
 #include "node.h"
 #include "schematic.h"
+#include "element.h" // HMM. move graphicsElement to schematicscene?
 #include "schematicscene.h"
 #include "misc.h"
 #include "mouseactions.h"
@@ -280,7 +281,8 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
 
   // while moving, add selElem only once to scene
   if(!drawn) {
-    Doc->scene->addItem(selElem);
+    GraphicsElement* ge=new GraphicsElement(selElem);
+    Doc->scene->addItem(ge);
     drawn = true;
     selElem->drawScheme = true;
   }
@@ -1346,8 +1348,11 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event)
 	gx = x;
 	gy = y;
 	Doc->setOnGrid(gx, gy);
-	Comp->setPos(gx,gy);
-	Doc->scene->addItem(Comp);
+	{
+	GraphicsElement* gc=new GraphicsElement(Comp);
+	gc->setPos(gx,gy);
+	Doc->scene->addItem(gc); // take ownership? (does that make sense?!)
+	}
 	/// clear flag, paint whole Element, not just outline
 	Comp->drawScheme = false;
 

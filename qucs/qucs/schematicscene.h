@@ -25,6 +25,7 @@
 
 #include <QGraphicsScene>
 
+// why is Schematic a QGraphics thingy as well?
 class SchematicScene : public QGraphicsScene
 {
 Q_OBJECT
@@ -36,6 +37,46 @@ private:
 
 protected:
   void drawBackground(QPainter *painter, const QRectF& rect);
+};
+
+// moved from element.h
+class GraphicsElement : public QGraphicsItem {
+private:
+	GraphicsElement(){}
+public:
+	explicit GraphicsElement(Element* e)
+		: _e(e)
+	{
+		assert(_e);
+	}
+	~GraphicsElement(){ delete _e; }
+private: // later: Qgraphics virtual overrides
+//  void paint() { assert(_e); _e->paint(); }
+//  void paintScheme(Schematic *s) { assert(_e); _e->paintScheme(s); }
+  void paintScheme(QPainter *p) { assert(_e); _e->paintScheme(p); }
+  void setCenter(int i, int j, bool relative=false){
+	  assert(_e);
+	  _e->setCenter(i, j, relative);
+  }
+  void getCenter(int& i, int& j){
+	  assert(_e);
+	  _e->getCenter(i, j);
+  }
+  QRectF boundingRect() const {return _e->boundingRect(); }
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0){
+	  assert(_e);
+	  return _e->paint(painter, option, widget);
+  }
+
+  // TODO: move coordinate stuff here.
+//  void setPos(int a, int b){
+//     _e->setPos(a, b);
+//  }
+public:
+  Element* operator->(){ assert(_e); return _e; }
+  Element const* operator->() const{ assert(_e); return _e; }
+private: // owned elements
+  Element* _e;
 };
 
 #endif /* SCHEMATICSCENE_H_ */
