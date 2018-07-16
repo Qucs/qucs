@@ -1925,6 +1925,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
            ComponentDialog * cd = new ComponentDialog(c, Doc);
            if(cd->exec() != 1) break;   // dialog is WDestructiveClose
 
+	   // TODO
            Doc->Components->findRef(c);
            Doc->Components->take();
            Doc->setComponentNumber(c); // for ports/power sources

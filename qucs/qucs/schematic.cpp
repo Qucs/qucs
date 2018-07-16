@@ -1047,13 +1047,9 @@ bool Schematic::rotateElements()
   y1 = (y1+y2) >> 1;
   //setOnGrid(x1, y1);
 
-  Painting  *pp;
-  WireLabel *pl;
   // re-insert elements
-  foreach(Element *pe, ElementCache)
-    int t=pe->Type;
-    if( Component pe=dynamic_cast<Component*>(pc) ){
-        pc = (Component*)pe;
+  foreach(Element *pe, ElementCache){
+    if( Component* pc=dynamic_cast<Component*>(pe) ){
         pc->rotate();   //rotate component !before! rotating its center
         pc->setCenter(pc->cy - y1 + x1, x1 - pc->cx + y1);
         insertRawComponent(pc);
@@ -1064,7 +1060,7 @@ bool Schematic::rotateElements()
         x2 = pw->x2;
         pw->x2 = pw->y2 - y1 + x1;
         pw->y2 = x1 - x2 + y1;
-        pl = pw->Label;
+        WireLabel *pl=pw->Label;
         if(pl) {
           x2 = pl->cx;
           pl->cx = pl->cy - y1 + x1;
@@ -1075,8 +1071,9 @@ bool Schematic::rotateElements()
         }
         insertWire(pw);
         break;
-    }else if(WireLabel* pl=dynamic_cast<WireLabel>(pe)){
-      if(pl != isNodeLabel){ // yikes.
+    }else if(WireLabel* pl=dynamic_cast<WireLabel*>(pe)){
+      int t=pe->Type;
+      if(t != isNodeLabel){ // yikes.
 	x2 = pl->x1;
 	pl->x1 = pl->y1 - y1 + x1;
 	pl->y1 = x1 - x2 + y1;
@@ -1091,7 +1088,7 @@ bool Schematic::rotateElements()
 	pl->cy = x1 - x2 + y1;
 	insertNodeLabel(pl);
       }
-    }else if(Painting* pp=dynamic_cast<Painting>(pe)){
+    }else if(Painting* pp=dynamic_cast<Painting*>(pe)){
         pp->rotate();   // rotate painting !before! rotating its center
         pp->getCenter(x2, y2);
         //qDebug("pp->getCenter(x2, y2): (%i,%i)\n", x2, y2);
@@ -1101,6 +1098,7 @@ bool Schematic::rotateElements()
     }else{
       qDebug()<<"BUG in rotateElements";
     }
+  }
 
   ElementCache.clear();
 
