@@ -62,11 +62,15 @@ Component::Component() : Element()
   Props.setAutoDelete(true);
 
   containingSchematic = NULL;
-  // setFlags(ItemIsSelectable|ItemIsMovable);
+
+  incomplete();
+#if 0
+  setFlags(ItemIsSelectable|ItemIsMovable);
 #if QT_VERSION < 0x050000
   setAcceptsHoverEvents(true);
 #else
   setAcceptHoverEvents(true);
+#endif
 #endif
 
 }
@@ -249,7 +253,7 @@ void Component::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, Q
     //  diagonal line
     //
     // 1 ----- 2
-    // | .c    | \\
+    // | .c    | \
     // |       |  5
     // 4 ----- 3  |
     //   \      \ |
@@ -509,7 +513,8 @@ void Component::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
        .arg(QString::number(cx))
        .arg(QString::number(cy));
 
-  setToolTip(str);
+  incomplete();
+  // setToolTip(str);
 }
 
 void Component::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)

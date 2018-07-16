@@ -88,8 +88,9 @@ Diagram::Diagram(int _cx, int _cy)
   ElemSelected = false;
   GridPen = QPen(Qt::lightGray,0);
 
-  setFlags(ItemIsSelectable|ItemIsMovable);
-  setAcceptHoverEvents(true);
+  incomplete();
+  // setFlags(ItemIsSelectable|ItemIsMovable);
+  // setAcceptHoverEvents(true);
 }
 
 Diagram::~Diagram()
@@ -151,7 +152,8 @@ void Diagram::paintDiagram(QPainter *painter)
   }
 
   // draw all graphs
-  foreach(Graph *pg, Graphs) {
+  foreach(auto& pp, Graphs) {
+	  auto pg=*pp;
 #ifdef QT_DEBUG
     //
     painter->setPen(QPen(Qt::darkGreen,2));
@@ -159,7 +161,8 @@ void Diagram::paintDiagram(QPainter *painter)
     painter->drawLine(cx,cy-20,cx,cy+20);
 #endif
     // set Diagram as parent of Graph, parent takes care of paint
-    pg->setParentItem(this);
+	 incomplete();
+    // pg->setParentItem(this);
   }
 
   /// \todo text rotation
@@ -389,7 +392,8 @@ Marker* Diagram::setMarker(int x, int y)
 	Marker *pm = new Marker(pg, n, x-cx, y-cy);
 	pg->Markers.append(pm);
 	//set Diagram as parent of Marker, handle Marker::paint()
-	pm->setParentItem(this);
+	incomplete();
+	// pm->setParentItem(this);
 	return pm;
       }
     }
@@ -1426,7 +1430,8 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
       }
       pg->Markers.append(pm);
       //set Diagram as parent of Marker, handle Marker::paint()
-      pm->setParentItem(this);
+		incomplete();
+      // pm->setParentItem(this);
       continue;
     }
 
