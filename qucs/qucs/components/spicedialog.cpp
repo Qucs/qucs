@@ -205,18 +205,13 @@ void SpiceDialog::reject()
 // Is called, if the "Apply"-button is pressed.
 void SpiceDialog::slotButtApply()
 {
-  Component *pc;
   if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->name());
   else if(CompNameEdit->text() != Comp->name())
   {
-    for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next())
-      if(pc->name() == CompNameEdit->text()) {
-        break;  // found component with the same name ?
-      }
-    if (pc) {
+	  ComponentList::const_iterator f=Doc->components().find(Comp->name());
+	  if (f!=Doc->components().end()){
       CompNameEdit->setText(Comp->name());
-    }
-    else {
+	  } else {
       Comp->obsolete_name_override_hack( CompNameEdit->text() );
       changed = true;
     }

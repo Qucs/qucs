@@ -822,13 +822,20 @@ void ComponentDialog::slotApplyInput()
   }
 
   QString tmp;
-  Component *pc;
   if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->name());
   else
   if(CompNameEdit->text() != Comp->name()) {
-    for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next())
-      if(pc->name() == CompNameEdit->text())
+    Component *pc=nullptr;
+    // TODO: find_component.
+    for(ComponentList::const_iterator ci=Doc->components().begin();
+        ci!=Doc->components().end(); ++ci){
+      pc=*ci;
+      if(pc->name() == CompNameEdit->text()){
         break;  // found component with the same name ?
+      }else{
+        pc = nullptr;
+      }
+    }
     if(pc)  CompNameEdit->setText(Comp->name());
     else {
       Comp->obsolete_name_override_hack(CompNameEdit->text());

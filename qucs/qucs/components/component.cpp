@@ -1309,7 +1309,7 @@ void Component::copyComponent(Component *pc)
 void MultiViewComponent::recreate(Schematic *Doc)
 {
   if(Doc) {
-    Doc->Components->setAutoDelete(false);
+    Doc->components().setAutoDelete(false);
     Doc->deleteComp(this);
   }
 
@@ -1337,7 +1337,7 @@ void MultiViewComponent::recreate(Schematic *Doc)
 
   if(Doc) {
     Doc->insertRawComponent(this);
-    Doc->Components->setAutoDelete(true);
+    Doc->components().setAutoDelete(true);
   }
 }
 

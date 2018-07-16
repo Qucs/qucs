@@ -596,11 +596,13 @@ void SimMessage::startSimulator()
 
 // ------------------------------------------------------------------------
 Component * SimMessage::findOptimization(Schematic *Doc) {
-  Component *pc;
-  for(pc=Doc->Components->first(); pc!=0; pc=Doc->Components->next())
+  for(ComponentList::iterator ci=Doc->components().begin();
+        ci!=Doc->components().end(); ++ci){
+  Component* pc=*ci;
     if(pc->isActive)
       if(pc->obsolete_model_hack() == ".Opt")
 	return pc;
+  }
   return NULL;
 }
 
