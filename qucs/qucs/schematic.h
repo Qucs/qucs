@@ -86,7 +86,18 @@ class DiagramList : public Q3PtrList<Diagram> {
 };
 // TODO: refactor here
 class ComponentList : public Q3PtrList<Component> {
+public:
+	typedef Q3PtrList<Component>::const_iterator const_iterator;
+public:
 	// void first(){} // GOAL: hide, still compile.
+	const_iterator find(QString const&n){
+		for(const_iterator i=begin(); i!=end(); ++i){
+			if((*i)->name()==n){
+				return i;
+			}
+		}
+		return end();
+	}
 };
 // TODO: refactor here
 class PaintingList : public Q3PtrList<Painting> {
@@ -149,9 +160,15 @@ public:
   NodeList      *Nodes, DocNodes;
   DiagramList   *Diagrams, DocDiags;
   PaintingList  *Paintings, DocPaints;
+//private: // not yet
   ComponentList *Components, DocComps;
 
-  // TODO: const access
+public:
+  ComponentList const& components() const{
+	  assert(Components);
+	  return *Components;
+  }
+  // TODO: avoid mutable access
   ComponentList& components(){
 	  assert(Components);
 	  return *Components;
