@@ -2033,7 +2033,7 @@ void MouseActions::MReleaseZoomIn(Schematic *Doc, QMouseEvent *Event)
 
   // legacy: why 6.0? if narrow X selection, handle as single click?
   //if((Doc->Scale * std::abs(DX)) < 6.0) {
-  if (std::abs(DX) < 10 | std::abs(DY) < 10) {
+  if ((std::abs(DX) < 10) || (std::abs(DY) < 10)) {
     // if zoom box too small, handle as simple zoomIn
     Doc->zoomIn();
     // center to event position

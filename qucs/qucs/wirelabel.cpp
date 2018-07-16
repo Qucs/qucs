@@ -35,11 +35,14 @@ WireLabel::WireLabel(const QString& _Name, int _cx, int _cy,
   ElemSelected = false;
   isHighlighted = false;
 
+ incomplete(); // GraphicsElement.
+#if 0
   setFlags(ItemIsSelectable|ItemIsMovable);
 #if QT_VERSION < 0x050000
   setAcceptsHoverEvents(true);
 #else
   setAcceptHoverEvents(true);
+#endif
 #endif
 }
 

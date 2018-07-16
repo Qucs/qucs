@@ -80,3 +80,16 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
           painter->drawPoint(x, y);
 }
 
+void SchematicScene::addItem(Element*x){
+	addItem(new GraphicsElement(x));
+}
+
+void SchematicScene::removeItem(Element const*){
+	incomplete();
+}
+
+// ===============================================
+//
+GraphicsElement::~GraphicsElement(){
+	 delete _e;
+}

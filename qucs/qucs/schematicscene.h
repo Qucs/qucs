@@ -24,6 +24,10 @@
 #define SCHEMATICSCENE_H_ value
 
 #include <QGraphicsScene>
+#include <QGraphicsItem>
+#include <assert.h>
+
+class Element;
 
 // why is Schematic a QGraphics thingy as well?
 class SchematicScene : public QGraphicsScene
@@ -33,11 +37,21 @@ public:
   SchematicScene (QObject *);
   virtual ~SchematicScene ();
 
+  void removeItem(Element const*);
+  void addItem(Element*);
+  void addItem(QGraphicsItem* x){
+	  QGraphicsScene::addItem(x);
+  }
+
 private:
 
 protected:
   void drawBackground(QPainter *painter, const QRectF& rect);
 };
+
+// TODO: move implementation to .cpp
+
+#include "element.h" // HACK
 
 // moved from element.h
 class GraphicsElement : public QGraphicsItem {
@@ -49,7 +63,7 @@ public:
 	{
 		assert(_e);
 	}
-	~GraphicsElement(){ delete _e; }
+	~GraphicsElement();
 private: // later: Qgraphics virtual overrides
 //  void paint() { assert(_e); _e->paint(); }
 //  void paintScheme(Schematic *s) { assert(_e); _e->paintScheme(s); }

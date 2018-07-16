@@ -645,7 +645,7 @@ void Schematic::simpleInsertComponent(Component *c)
       DocNodes.append(pn);
 
       // add Node to scene
-      scene->addItem(pn);
+      scene->addItem( new GraphicsElement(pn) );
     }
     pn->Connections.append(c);  // connect schematic node to component node
     if (!pp->Type.isEmpty()) {
@@ -689,7 +689,9 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
 
     // set component location
     QPointF center(c->cx, c->cy);
-    c->setPos(center);
+
+    incomplete();
+//    c->setPos(center); // what is this?
 
     if(List) {  // "paste" ?
       int z;
