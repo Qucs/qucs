@@ -62,13 +62,13 @@ Component::Component() : Element()
   Props.setAutoDelete(true);
 
   containingSchematic = NULL;
-
-  setFlags(ItemIsSelectable|ItemIsMovable);
+  // setFlags(ItemIsSelectable|ItemIsMovable);
 #if QT_VERSION < 0x050000
   setAcceptsHoverEvents(true);
 #else
   setAcceptHoverEvents(true);
 #endif
+
 }
 
 // -------------------------------------------------------
@@ -249,7 +249,7 @@ void Component::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, Q
     //  diagonal line
     //
     // 1 ----- 2
-    // | .c    | \
+    // | .c    | \\
     // |       |  5
     // 4 ----- 3  |
     //   \      \ |

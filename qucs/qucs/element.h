@@ -142,7 +142,7 @@ struct Property {
   * Element and its derived classes can be used in the QGraphicsView canvas.
   *
   */
-class Element : public QGraphicsItem{
+class Element {
 protected:
   Element(); // Element is an abstract basetype. hence we hide the constructors.
 public:
