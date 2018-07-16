@@ -40,6 +40,8 @@
 #include <QPen>
 #include <QBrush>
 
+#include <assert.h>
+
 class Node;
 class QPainter;
 class WireLabel;
@@ -133,6 +135,8 @@ struct Property {
 #define isDiagramHScroll   0x8002
 #define isDiagramVScroll   0x8003
 
+class GraphicsElement;
+
 
 /** \class Element
   * \brief Superclass of all schematic drawing elements
@@ -152,6 +156,34 @@ public:
   bool isSelected;
   int  Type;    // whether it is Component, Wire, ...
   int  cx, cy, x1, y1, x2, y2;  // center and relative boundings
+};
+
+class GraphicsElement  /* Qt5 : public QGraphics */ {
+private:
+	GraphicsElement(){}
+public:
+	explicit GraphicsElement(Element* e)
+		: _e(e)
+	{
+		assert(_e);
+	}
+	~GraphicsElement(){ delete _e; }
+private: // later: Qgraphics virtual overrides
+  void paintScheme(Schematic *s) { assert(_e); _e->paintScheme(s); }
+  void paintScheme(QPainter *p) { assert(_e); _e->paintScheme(p); }
+  void setCenter(int i, int j, bool relative=false){
+	  assert(_e);
+	  _e->setCenter(i, j, relative);
+  }
+  void getCenter(int& i, int& j){
+	  assert(_e);
+	  _e->getCenter(i, j);
+  }
+public:
+  Element* operator->(){ assert(_e); return _e; }
+  Element const* operator->() const{ assert(_e); return _e; }
+private: // owned elements
+  Element* _e;
 };
 
 
