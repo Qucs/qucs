@@ -4,6 +4,7 @@
 #include "SchematicTests.h"
 
 #include <QTest>
+#include <QApplication>
 
 void SchematicTests::testConstructor()
 {
@@ -26,6 +27,11 @@ void SchematicTests::testConstructor()
     QCOMPARE(sch->DocName, Info.absoluteFilePath());
 }
 
-QTEST_MAIN(SchematicTests)
+// QTEST_MAIN(SchematicTests)
+int main(int argc, char *argv[])
+{
+  QApplication a(argc, argv);
+  SchematicTests t();
+}
 
 // vim:ts=8:sw=2:
