@@ -49,10 +49,8 @@ include ../../common.mk
 
 if COND_WIN32
 TESTS =
-XFAIL_TESTS =
 else
 TESTS = ${check_PROGRAMS}
-XFAIL_TESTS = SchematicTests
 endif
 
 EXTRA_DIST = SchematicTests.h ElementTests.h ComponentTests.h
