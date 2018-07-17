@@ -93,7 +93,7 @@ class PaintingList : public Q3PtrList<Painting> {
 };
 
 // BUG?
-class Schematic : public Q3ScrollView, public QucsDoc {
+class Schematic : public QucsDoc {
   Q_OBJECT
 public:
   Schematic(QucsApp*, const QString&);
