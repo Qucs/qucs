@@ -24,6 +24,13 @@
 #define incomplete() ( \
     std::cerr << "@@#\n@@@\nincomplete:" \
               << __FILE__ << ":" << __LINE__ << ":" << __func__ << "\n" )
+#ifdef DO_TRACE
+#define untested() ( std::cerr <<  "@@#\n@@@:"<< __FILE__ << ":"<< __LINE__ \
+          <<":" << __func__ << "\n" )
+#else
+#define untested()
+#endif
+#define itested()
 
 // implement Q3Ptrlist for use in old code.
 // just don't use it in new code.
@@ -34,195 +41,220 @@ public:
 	typedef typename container_type::const_iterator const_iterator;
 	typedef typename container_type::iterator iterator;
 public:
-    Q3PtrList() { };
-    Q3PtrList(const T &val) { localList(val); cur = -1; autodelete =false; };
-    ~Q3PtrList() { localList.clear(); };
-    T* at(unsigned int i) {
-        if (i < (unsigned int)localList.count()) {
-            return localList[i];
-        }
-        else {
-            return NULL;
-        }
-    };
-    int at() {
-        return cur;
-    };
-    void setAutoDelete(bool b) {
-        autodelete = b;
-    };
-    T* first() {   // pointer to first element
-        cur = 0;
-        if (localList.count() == 0)
-            return 0;
-        return localList[cur];
-    };
-    T* last() {    // pointer to last element
-        if (localList.count()) {
-            cur = localList.count() -1;
-            return localList[cur];
-        }
-        else {
-            return 0;
-        }
-    };
-    void append(T *t) {
-        localList.append(t);
-    };
-    int contains(T *) {
-		 incomplete();
-        return -1;
-    };
-     int findNext(T *) {
-		 incomplete();
-        return -1;
-    };
-    int findNextRef(T *) {
-		 incomplete();
-        return -1;
-    };
-    bool isEmpty() {
-		 incomplete();
-        return false;
-    };
-    int findPrev() {
-		 incomplete();
-        return -1;
-    };
-    bool replace(int, T*) {
-		 incomplete();
-        return true;
-    };
-    int containsRef(T *t) { // 
-        int n = 0;
-        for (int i = 0; i < localList.count(); i++){
-            if (t == localList[i]) {
-                n++;
-            }
-        }
-        return n;
-    };
-    int findRef(T *t) { //
-        for (int i = 0; i < localList.count(); i++){
-            if (t == localList[i]) {
-                return i;
-            }
-        }
-        return -1;
-    };
-    bool removeRef(T *t) { //
-        int nr = findRef(t);
-        if (nr >= 0) {
-            remove(nr);
-            return true;
-        }
-        return false;
-    };
-    void prepend(T *t) {
-        localList.insert(0, t);
-    };
-    T* take(uint index) { // 
-        return localList.takeAt(index);
-    };
-    T* take() { // 
-        if (cur != -1){
-            return localList.takeAt(cur);
-        }
-        else {
-            return 0;
-        }
-    };
-    T* getFirst() {
-        return localList.first();
-    };
-    T* getLast() {
-        return localList.last();
-    };
-    T* next() {    // get pointer to next element, correct the current
-        if (cur >= 0 && cur < localList.count() - 1) {
-            cur++;
-            return localList[cur];
-        }
-        else {
-            return 0;
-        }
-    };
-    T* prev() {    // get pointer to prev element, correct the current
-        if (cur == 0) {
-            return 0;
-        }
-        if (cur > 0 && cur < localList.count()) {
-            cur--;
-            return localList[cur];
-        }
-        else {
-            return 0;
-        }
-    };
-    T* current() { // get pointer to current element
-        if (cur >= 0 && cur < localList.count()) {
-            return localList[cur];
-        }
-        else {
-            return 0;
-        }
-    };
-    unsigned int count() {
-        return (unsigned int)localList.count();
-    };
-    void remove(int i) { //
-        if (i >= 0 && i < localList.count()) {
-            localList.removeAt(i);
-        }
-    };
-    void remove() { // remove the current element
-        if (cur >= 0 && cur < localList.count()) {
-            localList.removeAt(cur);
-        }
-    };
-    void removeLast() { 
-        int c = localList.count() -1;
-        if (c >= 0) {
-            localList.removeAt(c);
-        }
-    };
-    void removeFirst() { 
-        int c = localList.count() -1;
-        if (c >= 0) {
-            localList.removeAt(0);
-        }
-    };
-    void insert(unsigned int i, T *t) { // 
-        localList.insert(i, t);
-    };
-    int find(T *t) {
-        for (int i = 0; i < localList.count(); i++){
-            if (t == localList[i]) {
-                return i;
-            }
-        }
-        return -1;
-    };
-	 const_iterator begin() const{
-		 return localList.begin();
-	 }
-	 const_iterator end() const{
-		 return localList.end();
-	 }
-	 iterator begin(){
-		 return localList.begin();
-	 }
-	 iterator end(){
-		 return localList.end();
-	 }
-	 void clear(){
-		 return localList.clear();
-	 }
+	Q3PtrList() : _autodelete(false) { };
+	Q3PtrList(const T &val) : _autodelete(false) { untested();
+		localList(val);
+		cur = localList.end();
+	};
+	~Q3PtrList() { untested();
+		if(_autodelete){ untested();
+			incomplete();
+		}else{ untested();
+		}
+	};
+	T* at(unsigned int i) { untested();
+		if (i < (unsigned int)localList.count()) { untested();
+			cur = localList.begin()+i;
+			return *cur;
+		} else { untested();
+			cur = localList.end();
+			return nullptr;
+		}
+	};
+	int at() { untested();
+		incomplete();
+		return -1;
+	};
+	void setAutoDelete(bool b) { untested();
+		_autodelete = b;
+	};
+	T* first() {   // pointer to first element
+		cur = localList.begin();
+		if (localList.count() == 0)
+			return nullptr;
+		return *cur;
+	};
+	T* last() {    // pointer to last element
+		if (localList.count()) { untested();
+			cur = localList.end()-1; // yikes. no rbegin. use std::list?!
+			return *cur;
+		} else { untested();
+			return nullptr;
+		}
+	};
+	void append(T *t) { untested();
+		localList.append(t);
+	};
+	int contains(T *) { untested();
+		incomplete();
+		return -1;
+	};
+	int findNext(T *) { untested();
+		incomplete();
+		return -1;
+	};
+	int findNextRef(T *) { untested();
+		incomplete();
+		return -1;
+	};
+	bool isEmpty() { untested();
+		incomplete();
+		return false;
+	};
+	int findPrev() { untested();
+		incomplete();
+		return -1;
+	};
+	bool replace(int, T*) { untested();
+		incomplete();
+		return true;
+	};
+	int containsRef(T *t) { untested();
+		int n = 0;
+		for (int i = 0; i < localList.count(); i++){ untested();
+			if (t == localList[i]) { untested();
+				n++;
+			}
+		}
+		return n;
+	};
+	int findRef(T *t) { untested();
+		auto i=0;
+		for (cur=localList.begin(); cur!=localList.end(); ++cur){
+			if (t == *cur){
+				return i;
+			}
+			++i;
+		}
+		return -1;
+	};
+	bool removeRef(T *t) { untested();
+		int nr = findRef(t);
+		if (nr >= 0) { untested();
+			remove(nr);
+			return true;
+		}
+		return false;
+	};
+	void prepend(T *t) { untested();
+		localList.insert(0, t);
+	};
+	T* take(uint index) { untested();
+		return localList.takeAt(index);
+	};
+	T* take() { untested();
+		if (cur != localList.end()){ untested();
+			auto t=*cur;
+			auto newcur=cur;
+			++newcur;
+			localList.erase(cur);
+			cur=newcur;
+			return t;
+		} else { untested();
+			return nullptr;
+		}
+	};
+	T* getFirst() { itested();
+		return localList.first();
+	};
+	T* getLast() { itested();
+		return localList.last();
+	};
+	T* next() {    // get pointer to next element, correct the current
+		if (cur == localList.end()){ untested();
+			return nullptr;
+		}else{ untested();
+			cur++;
+			if (cur==localList.end()){ untested();
+				return nullptr;
+			}else{ untested();
+				return *cur;
+			}
+		}
+	};
+	T* prev() {    // get pointer to prev element, correct the current
+		if (cur == localList.end()) { untested();
+			return nullptr;
+		}else if (cur == localList.begin()){ untested();
+			cur=localList.end();
+			return nullptr;
+		}else{ untested();
+			cur--;
+			return *cur;
+		}
+	};
+	T* current() { // get pointer to current element
+		if (cur==localList.end()){ untested();
+			return nullptr;
+		}else{ untested();
+			return *cur;
+		}
+	};
+	unsigned int count() { untested();
+		return (unsigned int)localList.count();
+	};
+	void remove(int i) { //
+		if (i >= 0 && i < localList.count()) { untested();
+			localList.removeAt(i);
+		}
+	};
+	void remove() { // remove the current element
+		if (cur!=localList.end()){ untested();
+			auto next=cur;
+			++next;
+			if(_autodelete){ untested();
+				delete *cur;
+			}
+			localList.erase(cur);
+		}else{ untested();
+		}
+	};
+	void removeLast() { untested();
+		int c = localList.count() -1;
+		if (c >= 0) { untested();
+			localList.removeAt(c);
+		}
+	};
+	void removeFirst() { untested();
+		int c = localList.count() -1;
+		if (c >= 0) { untested();
+			localList.removeAt(0);
+		}
+	};
+	void insert(unsigned int i, T *t) { untested();
+		localList.insert(i, t);
+		cur=localList.begin()+i;
+	};
+	int find(T *t) { untested();
+		for (int i = 0; i < localList.count(); i++){ untested();
+			if (t == localList[i]) { untested();
+				return i;
+			}
+		}
+		return -1;
+	};
+	const_iterator begin() const{ untested();
+		return localList.begin();
+	}
+	const_iterator end() const{ untested();
+		return localList.end();
+	}
+	iterator begin(){ untested();
+		return localList.begin();
+	}
+	iterator end(){ untested();
+		return localList.end();
+	}
+	void clear(){ untested();
+		return localList.clear();
+	}
 
 private:
-    QList<T*> localList; // why not std::list!?
-    bool autodelete;
-    int cur; // current element number, bug, why not iterator?!
+	QList<T*> localList; // why not std::list!?
+	bool _autodelete;
+	typename QList<T*>::iterator cur;
 };
 
 #endif
+
+//vim:ts=8:sw=4:et
