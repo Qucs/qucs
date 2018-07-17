@@ -25,6 +25,7 @@
 #include "schematic.h"
 
 #include <QPainter>
+#include <QGraphicsItem>
 
 SchematicScene::SchematicScene(QObject *parent) :
   QGraphicsScene(parent)
@@ -80,11 +81,23 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
           painter->drawPoint(x, y);
 }
 
-void SchematicScene::addItem(Element*x){
-	addItem(new GraphicsElement(x));
+void SchematicScene::addItem(Element*e)
+{
+	GraphicsElement* x=new GraphicsElement(e);
+	x->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
+#if QT_VERSION < 0x050000
+	x->setAcceptsHoverEvents(true);
+#else
+	x->setAcceptHoverEvents(true);
+#endif
+
+	addItem(x);
 }
 
-void SchematicScene::removeItem(Element const*){
+void SchematicScene::removeItem(Element const* e)
+{
+	QGraphicsScene::removeItem(e);
+	// find element
 	incomplete();
 }
 

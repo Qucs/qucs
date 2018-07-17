@@ -1992,6 +1992,7 @@ void Schematic::contentsDragEnterEvent(QDragEnterEvent *Event)
       QListWidgetItem *Item = App->CompComps->currentItem();
       if(Item) {
         formerAction = App->activeAction;
+		  incomplete();
         App->slotSelectComponent(Item);  // also sets drawn=false
         App->MouseMoveAction = 0;
         App->MousePressAction = 0;

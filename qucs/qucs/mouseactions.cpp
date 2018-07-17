@@ -281,14 +281,15 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
 
   // while moving, add selElem only once to scene
   if(!drawn) {
-    GraphicsElement* ge=new GraphicsElement(selElem);
-    Doc->scene->addItem(ge);
+//    GraphicsElement* ge=new GraphicsElement(selElem);
+    Doc->scene->addItem(selElem); // add it back?
     drawn = true;
-    selElem->drawScheme = true;
+    incomplete();
+    // selElem->drawScheme = true;
   }
 
   // Painting handle the tracking of the mouse movement
-  if(selElem->ElemType == isPainting) {
+  if(selElem->type() == isPainting) {
     // propagate mouse move event
     // it takes care of setCenter
     ((Painting*)selElem)->MouseMoving(Doc, x, y, gx, gy,
@@ -775,7 +776,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
   focusElement = dynamic_cast<Element*>(Doc->scene->itemAt(Event->pos(), QTransform()));
 
   if(focusElement)  // remove special function (4 least significant bits)
-    focusElement->ElemType &= isSpecialMask;
+    focusElement->type() &= isSpecialMask;
 
 
   // define menu
