@@ -76,6 +76,10 @@ class QucsAttenuator : public QMainWindow
   QCheckBox *SparBoxCheckbox, *minR_Reflection_Att;
   QStringList LastUnits;
 
+  //Quarter-wave attenuators
+  QLabel *Label_Freq;
+  QComboBox *Combo_FreqUnits;
+  QDoubleSpinBox *QSpinBox_Freq;
 };
 
 #endif

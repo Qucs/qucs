@@ -17,6 +17,9 @@
 #define TEE_TYPE 1
 #define BRIDGE_TYPE 2
 #define REFLECTION_TYPE 3
+#define QW_SERIES_TYPE 4
+
+#define C0 299792458
 
 #include <cmath>
 
@@ -39,6 +42,7 @@ struct tagATT
   bool minR; //The reflection attenuator can be designed using two different resistor values. The first one is such
              //as R < Z0 whereas the other is such as R > Z0. This field is just a flag to indicate what solution
              //qucsattenuator should use.
+  double freq;//Central frequency for quarter-wavelength attenuators
 };
 
 class QString;
@@ -51,8 +55,9 @@ class QUCS_Att
 
   int Calc(tagATT*);
   static QString* createSchematic(tagATT*, bool);
-
-
 };
+
+QString RoundVariablePrecision(double);
+QString ConvertLengthFromM(double);
 
 #endif

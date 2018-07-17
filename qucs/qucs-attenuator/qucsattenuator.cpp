@@ -87,6 +87,7 @@ QucsAttenuator::QucsAttenuator()
   ComboTopology->insertItem(2, "Tee");
   ComboTopology->insertItem(3, "Bridged Tee");
   ComboTopology->insertItem(4, "Reflection attenuator");
+  ComboTopology->insertItem(5, "Quarter-wave series");
   connect(ComboTopology, SIGNAL(activated(int)), SLOT(slotTopologyChanged()));
   topoGrid->addWidget(ComboTopology, 1,0,1,2);
 
@@ -156,6 +157,7 @@ QucsAttenuator::QucsAttenuator()
   LabelImp2_Ohm = new QLabel(QChar(0xa9, 0x03), InputGroup);
   inGrid->addWidget(LabelImp2_Ohm, 3,2);
 
+  //Input power
   Label_Pin = new  QLabel(tr("Pin:"), InputGroup);
   Label_Pin->setWhatsThis("Input power");
   inGrid->addWidget(Label_Pin, 4,0);
@@ -180,9 +182,34 @@ QucsAttenuator::QucsAttenuator()
       SLOT(slot_ComboInputPowerUnits_Changed(const QString&)) );
   inGrid->addWidget(Combo_InputPowerUnits, 4,2);
 
+  //Central frequency
+  Label_Freq = new QLabel(tr("Freq:"), InputGroup);
+  Label_Freq->setWhatsThis("Central frequency");
+  Label_Freq->hide();
+  inGrid->addWidget(Label_Freq, 5,0);
+  QSpinBox_Freq = new QDoubleSpinBox(0);
+  QSpinBox_Freq->setMinimum(0.1);
+  QSpinBox_Freq->setMaximum(1e5);
+  QSpinBox_Freq->setValue(1500);
+  QSpinBox_Freq->hide();
+  connect(QSpinBox_Freq, SIGNAL(valueChanged(double)), this, SLOT(slotCalculate()));
+  inGrid->addWidget(QSpinBox_Freq, 5,1);
+  QStringList frequnits;
+  frequnits.append("GHz");
+  frequnits.append("MHz");
+  frequnits.append("kHz");
+  frequnits.append("Hz");
+  Combo_FreqUnits = new QComboBox();
+  Combo_FreqUnits->addItems(frequnits);
+  Combo_FreqUnits->setCurrentIndex(1);//MHz
+  Combo_FreqUnits->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
+  Combo_FreqUnits->hide();
+  inGrid->addWidget(Combo_FreqUnits, 5,2);
+
+  //Option for the Reflection attenuator
   minR_Reflection_Att = new QCheckBox("Use R > Z0");
   minR_Reflection_Att->hide();
-  inGrid->addWidget(minR_Reflection_Att, 5,0);
+  inGrid->addWidget(minR_Reflection_Att, 6,0);
 
   InputGroup->setLayout(inGrid);
 
@@ -411,6 +438,9 @@ void QucsAttenuator::slotTopologyChanged()
       lineEdit_R4_Pdiss->hide();
       ComboR4_PowerUnits->hide();
       minR_Reflection_Att->hide();
+      Label_Freq->hide();
+      QSpinBox_Freq->hide();
+      Combo_FreqUnits->hide();
       break;
     case TEE_TYPE:
       pixTopology->setPixmap(QPixmap((":/bitmaps/att_tee.png")));
@@ -429,6 +459,9 @@ void QucsAttenuator::slotTopologyChanged()
       lineEdit_R4_Pdiss->hide();
       ComboR4_PowerUnits->hide();
       minR_Reflection_Att->hide();
+      Label_Freq->hide();
+      QSpinBox_Freq->hide();
+      Combo_FreqUnits->hide();
       break;
     case BRIDGE_TYPE:
       pixTopology->setPixmap(QPixmap((":/bitmaps/att_bridge.png")));
@@ -451,6 +484,9 @@ void QucsAttenuator::slotTopologyChanged()
       ComboR4_PowerUnits->show();
       QSpinBox_Zout->setValue(QSpinBox_Zin->value());
       minR_Reflection_Att->hide();
+      Label_Freq->hide();
+      QSpinBox_Freq->hide();
+      Combo_FreqUnits->hide();
       break;
     case REFLECTION_TYPE:
       pixTopology->setPixmap(QPixmap((":/bitmaps/att_reflection.png")));
@@ -471,7 +507,33 @@ void QucsAttenuator::slotTopologyChanged()
       ComboR4_PowerUnits->hide();
       QSpinBox_Zout->setValue(QSpinBox_Zin->value());
       minR_Reflection_Att->show();
-    break;
+      Label_Freq->hide();
+      QSpinBox_Freq->hide();
+      Combo_FreqUnits->hide();
+      break;
+    case QW_SERIES_TYPE:
+      pixTopology->setPixmap(QPixmap((":/bitmaps/qw_series.png")));
+      LabelImp1->setText("Z0:");
+      LabelImp2->hide();
+      QSpinBox_Zout->hide();
+      LabelImp2_Ohm->hide();
+      LabelR2->setText("R2:");
+      LabelR3->show();
+      LabelR3->setText("R3:");
+      LabelR4->hide();
+      lineEdit_R3->show();
+      lineEdit_R4->hide();
+      LabelR4_Ohm->hide();
+      LabelR3_Ohm->show();
+      lineEdit_R3_Pdiss->show();
+      lineEdit_R4_Pdiss->hide();
+      ComboR3_PowerUnits->show();
+      ComboR4_PowerUnits->hide();
+      minR_Reflection_Att->hide();
+      Label_Freq->show();
+      QSpinBox_Freq->show();
+      Combo_FreqUnits->show();
+      break;
     }
     adjustSize();
     slotCalculate();
@@ -490,6 +552,11 @@ void QucsAttenuator::slotCalculate()
     Values.Zin = QSpinBox_Zin->value();
     Values.Zout = QSpinBox_Zout->value();
     Values.minR = minR_Reflection_Att->isChecked();
+    Values.freq = QSpinBox_Freq->value();
+    //Frequency scale
+    if (Combo_FreqUnits->currentText() == "GHz") Values.freq*=1e9;
+    else if (Combo_FreqUnits->currentText() == "MHz") Values.freq*=1e6;
+         else if (Combo_FreqUnits->currentText() == "kHz") Values.freq*=1e3;
 
     //Calculate the input power
     Values.Pin = ConvertPowerUnits(QSpinBox_InputPower->value(), Combo_InputPowerUnits->currentText(), "W");
