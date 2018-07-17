@@ -1283,8 +1283,8 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
   // give the ground nodes the name "gnd", and insert subcircuits etc.
   Q3PtrListIterator<Component> it(DocComps);
   Component *pc;
-  while((pc = it.current()) != 0) {
-    ++it;
+  for(auto it=DocComps->begin(); it!=DocComps->end(); ++it) {
+    pc = *it.current();
     if(pc->isActive != COMP_IS_ACTIVE) continue;
 
     // check analog/digital typed components
