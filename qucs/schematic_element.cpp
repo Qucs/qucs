@@ -1317,11 +1317,9 @@ void Schematic::highlightWireLabels ()
 	
     // Then test every wire's label to see if we need to highlight it
     // and matching labels on wires and nodes
-    Q3PtrListIterator<Wire> itwouter(*Wires);
-    Wire *pwouter;
-    while ((pwouter = itwouter.current()) != 0)
-    {
-        ++itwouter;
+    for(auto it=Wires->begin(); it!=Wires->end(); ++it) {
+	Wire* pwouter = *it;
+
         // get any label associated with the wire
         pltestouter = pwouter->Label;
         if (pltestouter)
@@ -1330,11 +1328,9 @@ void Schematic::highlightWireLabels ()
             {
                 bool hiLightOuter = false;
                 // Search for matching labels on wires
-                Q3PtrListIterator<Wire> itwinner(*Wires);
-                Wire *pwinner;
-                while ((pwinner = itwinner.current()) != 0)
-                {
-                    ++itwinner;
+		for(auto iit=Wires->begin(); iit!=Wires->end(); ++iit) {
+		    Wire* pwinner = *iit;
+
                     pltestinner = pwinner->Label; // test any label associated with the wire
                     if (pltestinner)
                     {
@@ -1351,11 +1347,10 @@ void Schematic::highlightWireLabels ()
                     }
                 }
                 // Search for matching labels on nodes
-                Q3PtrListIterator<Node> itninner(*Nodes);
-                Node *pninner;
-                while ((pninner = itninner.current()) != 0)
-                {
-                    ++itninner;
+
+		for(auto iit=Nodes->begin(); iit!=Nodes->end(); ++iit) {
+		    Node* pninner = *iit;
+
                     pltestinner = pninner->Label; // test any label associated with the node
                     if (pltestinner)
                     {
@@ -1375,11 +1370,9 @@ void Schematic::highlightWireLabels ()
     // Same as above but for nodes labels:
     // test every node label to see if we need to highlight it
     // and matching labels on wires and nodes
-    Q3PtrListIterator<Node> itnouter(*Nodes);
-    Node *pnouter;
-    while ((pnouter = itnouter.current()) != 0)
-    {
-        ++itnouter;
+    for(auto iit=Nodes->begin(); iit!=Nodes->end(); ++iit) {
+	Node* pnouter = *iit;
+
         // get any label associated with the node
         pltestouter = pnouter->Label;
         if (pltestouter)
@@ -1388,11 +1381,9 @@ void Schematic::highlightWireLabels ()
             {
                 bool hiLightOuter = false;
                 // Search for matching labels on wires
-                Q3PtrListIterator<Wire> itwinner(*Wires);
-                Wire *pwinner;
-                while ((pwinner = itwinner.current()) != 0)
-                {
-                    ++itwinner;
+		for(auto iit=Wires->begin(); iit!=Wires->end(); ++iit) {
+		    Wire* pwinner = *iit;
+
                     pltestinner = pwinner->Label; // test any label associated with the wire
                     if (pltestinner)
                     {
@@ -1405,11 +1396,9 @@ void Schematic::highlightWireLabels ()
                     }
                 }
                 // Search for matching labels on nodes
-                Q3PtrListIterator<Node> itninner(*Nodes);
-                Node *pninner;
-                while ((pninner = itninner.current()) != 0)
-                {
-                    ++itninner;
+		for(auto iit=Nodes->begin(); iit!=Nodes->end(); ++iit) {
+		    Node* pninner = *iit;
+
                     pltestinner = pninner->Label; // test any label associated with the node
                     if (pltestinner)
                     {
