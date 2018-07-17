@@ -46,17 +46,17 @@ public:
 		localList(val);
 		cur = localList.end();
 	};
-	~Q3PtrList() { untested();
-		if(_autodelete){ untested();
+	~Q3PtrList() {
+		if(_autodelete){
 			incomplete();
-		}else{ untested();
+		}else{
 		}
 	};
-	T* at(unsigned int i) { untested();
-		if (i < (unsigned int)localList.count()) { untested();
+	T* at(unsigned int i) {
+		if (i < (unsigned int)localList.count()) {
 			cur = localList.begin()+i;
 			return *cur;
-		} else { untested();
+		} else {
 			cur = localList.end();
 			return nullptr;
 		}
@@ -65,7 +65,7 @@ public:
 		incomplete();
 		return -1;
 	};
-	void setAutoDelete(bool b) { untested();
+	void setAutoDelete(bool b) {
 		_autodelete = b;
 	};
 	T* first() {   // pointer to first element
@@ -82,7 +82,7 @@ public:
 			return nullptr;
 		}
 	};
-	void append(T *t) { untested();
+	void append(T *t) {
 		localList.append(t);
 	};
 	int contains(T *) { untested();
@@ -118,7 +118,7 @@ public:
 		}
 		return n;
 	};
-	int findRef(T *t) { untested();
+	int findRef(T *t) {
 		auto i=0;
 		for (cur=localList.begin(); cur!=localList.end(); ++cur){
 			if (t == *cur){
@@ -163,11 +163,11 @@ public:
 	T* next() {    // get pointer to next element, correct the current
 		if (cur == localList.end()){ untested();
 			return nullptr;
-		}else{ untested();
+		}else{
 			cur++;
-			if (cur==localList.end()){ untested();
+			if (cur==localList.end()){
 				return nullptr;
-			}else{ untested();
+			}else{
 				return *cur;
 			}
 		}
@@ -190,7 +190,7 @@ public:
 			return *cur;
 		}
 	};
-	unsigned int count() { untested();
+	unsigned int count() {
 		return (unsigned int)localList.count();
 	};
 	void remove(int i) { //
@@ -239,13 +239,13 @@ public:
 	const_iterator end() const{ untested();
 		return localList.end();
 	}
-	iterator begin(){ untested();
+	iterator begin(){
 		return localList.begin();
 	}
-	iterator end(){ untested();
+	iterator end(){
 		return localList.end();
 	}
-	void clear(){ untested();
+	void clear(){
 		return localList.clear();
 	}
 
