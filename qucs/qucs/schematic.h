@@ -86,7 +86,6 @@ class DiagramList : public Q3PtrList<Diagram> {
 };
 // TODO: refactor here
 class ComponentList : public Q3PtrList<Component> {
-	// void first(){} // GOAL: hide, still compile.
 };
 // TODO: refactor here
 class PaintingList : public Q3PtrList<Painting> {
@@ -154,12 +153,6 @@ public:
   DiagramList   *Diagrams, DocDiags;
   PaintingList  *Paintings, DocPaints;
   ComponentList *Components, DocComps;
-
-  // TODO: const access
-  ComponentList& components(){
-	  assert(Components);
-	  return *Components;
-  }
 
   PaintingList  SymbolPaints;  // symbol definition for subcircuit
 
