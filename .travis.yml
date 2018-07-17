@@ -228,7 +228,6 @@ script:
       make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --disable-dependency-tracking --disable-doc" || travis_terminate 1;
     fi
 
-  # with cmake build only
   - if [[ $LINUX && $CMAKE && $QT5 ]]; then
       mkdir build;
       cd build;
@@ -237,7 +236,6 @@ script:
       make test || travis_terminate 1;
     fi
 
-  # with cmake build only
   - if [[ $LINUX && $CMAKE && $QT4 ]]; then
       mkdir build;
       cd build;
