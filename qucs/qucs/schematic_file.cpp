@@ -1582,7 +1582,7 @@ int NumPorts)
             case 'o': // output ports need workaround
               Signals.insert(*it_name, DigSignal(*it_name, *it_type));
               (*it_name) = "net_out" + (*it_name);
-              // no "break;" here !!!
+              // fall through
             default:
               (*it_name) += " : " + pc->Props.at(1)->Value;
           }
