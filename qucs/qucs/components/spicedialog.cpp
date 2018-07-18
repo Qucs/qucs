@@ -40,6 +40,7 @@
 SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
     : QDialog(d)
 {
+  setAttribute(Qt::WA_DeleteOnClose);
   App = App_; // pointer to main application
 
   setAttribute(Qt::WA_DeleteOnClose);
