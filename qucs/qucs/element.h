@@ -41,7 +41,7 @@
 #include <QPen>
 #include <QBrush>
 #include <QDebug>
-#include "container.h"
+#include "qt_compat.h"
 
 class Node;
 class QPainter;
@@ -156,12 +156,12 @@ public:
   virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
 
 public:
-  bool selected() const { return elemSelected; }
+  bool isSelected() const { return ElemSelected; }
   // BUG: use dynamic_cast to obtain type
-  bool elemType() const { return elemType; }
+  bool elemType() const { return ElemType; }
 
-  bool elemSelected;
-  int  elemType;    // BUG. obsolete.
+  bool ElemSelected;
+  int  ElemType;    // BUG. obsolete.
   int  cx, cy, x1, y1, x2, y2;  // center and relative boundings
   bool drawScheme; // inform paint method to draw element or its outline
 };

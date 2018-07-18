@@ -374,7 +374,8 @@ void Component::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, Q
   }
 
   // write all properties
-  foreach(Property p, Props) {
+  for(Property* pp : Props) {
+    Property p=*pp;
     if(p.display) {
       painter->drawText(tx, ty+y, 0, 0, Qt::TextDontClip, p.Name+"="+p.Value);
       y += painter->fontMetrics().lineSpacing();
