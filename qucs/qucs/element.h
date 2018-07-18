@@ -41,7 +41,7 @@
 #include <QPen>
 #include <QBrush>
 #include <QDebug>
-#include "container.h"
+#include "qt_compat.h"
 
 class Node;
 class QPainter;
