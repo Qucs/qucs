@@ -50,7 +50,7 @@ Node::~Node()
 
 QRectF Node::boundingRect() const
 {
-  return *(new QRect(cx-4,cy-4,8,8) );
+  return QRect(cx-4,cy-4,8,8);
 }
 
 void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)

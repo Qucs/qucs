@@ -47,7 +47,7 @@ QRectF PortSymbol::boundingRect() const
   int _y1 = cy+y1;
   int _x2 = cx+x1+x2;
   int _y2 = cy+y1+y2;
-  return *(new QRectF( _x1, _y1, _x2 - _x1, _y2 - _y1));
+  return QRectF( _x1, _y1, _x2 - _x1, _y2 - _y1);
 }
 
 void PortSymbol::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)

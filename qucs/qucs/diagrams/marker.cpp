@@ -86,7 +86,7 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
 
 QRectF Marker::boundingRect() const
 {
-  return *(new QRectF(diag()->cx+x1-3, diag()->cy+y1-3, x2+6, y2+6));
+  return QRectF(diag()->cx+x1-3, diag()->cy+y1-3, x2+6, y2+6);
 }
 
 // ---------------------------------------------------------------------

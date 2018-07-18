@@ -44,7 +44,7 @@ Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2)
 
 QRectF Wire::boundingRect() const
 {
-  return *(new QRect(x1, y1, x2-x1, y2-y1) );
+  return QRectF(x1, y1, x2-x1, y2-y1);
 }
 
 // ----------------------------------------------------------------
