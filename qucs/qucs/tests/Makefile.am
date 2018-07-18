@@ -66,4 +66,4 @@ endif
 
 EXTRA_DIST = SchematicTests.h ElementTests.h ComponentTests.h
 
-CLEANFILES = *core
+CLEANFILES = *core *.moc.cpp
