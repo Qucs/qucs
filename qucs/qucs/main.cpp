@@ -433,7 +433,9 @@ void createDocData() {
         QStringList compProps;
         compProps << "# Note: auto-generated file (changes will be lost on update)";
         compProps << QString("# %1; %2; %3; %4").arg(  "Name", "Value", "Display", "Description");
-        foreach(Property prop, c->Props) {
+	assert(c);
+	for(Property* pp : c->Props) {
+	  Property prop=*pp;
           compProps << QString("%1; \"%2\"; %3; \"%4\"").arg(
                          prop.Name,
                          prop.Value,
