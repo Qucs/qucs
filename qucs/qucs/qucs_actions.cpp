@@ -41,6 +41,7 @@
 #include <QListWidget>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QScrollBar>
 
 #include "projectView.h"
 #include "qucs.h"
@@ -1160,10 +1161,10 @@ void QucsApp::slotApplyCompText()
     s = pp->Value;
   editText->setMinimumWidth(editText->fontMetrics().width(s)+4);
 
-
-  Doc->contentsToViewport(int(Doc->Scale * float(view->MAx1 - Doc->ViewX1)),
-			 int(Doc->Scale * float(view->MAy1 - Doc->ViewY1)),
-			 view->MAx2, view->MAy2);
+incomplete(); // hopefully we don't need it.
+//  Doc->contentsToViewport(int(Doc->Scale * float(view->MAx1 - Doc->ViewX1)),
+//			 int(Doc->Scale * float(view->MAy1 - Doc->ViewY1)),
+//			 view->MAx2, view->MAy2);
   editText->setReadOnly(false);
   if(pp) {  // is it a property ?
     s = pp->Value;

@@ -38,8 +38,9 @@
 
 
 SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
-    : QDialog(d, Qt::WDestructiveClose)
+    : QDialog(d)
 {
+  setAttribute(Qt::WA_DeleteOnClose);
   App = App_; // pointer to main application
 
   resize(400, 250);

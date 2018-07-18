@@ -806,8 +806,9 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
     return;
   }
 
-  if(view->drawn)
-    ((Q3ScrollView*)DocumentTab->currentWidget())->viewport()->update();
+  incomplete();
+  // if(view->drawn)
+  //  ((Q3ScrollView*)DocumentTab->currentWidget())->viewport()->update();
   view->drawn = false;
 
   // toggle last toolbar button off
@@ -1596,9 +1597,11 @@ void QucsApp::slotFileSaveAll()
   // TextDoc has no viewport, it needs no update.
   QString tabType = DocumentTab->currentWidget()->metaObject()->className();
 
-  if (tabType == "Schematic") {
-    ((Q3ScrollView*)DocumentTab->currentWidget())->viewport()->update();
-  }
+  incomplete();
+//  if (tabType == "Schematic") {
+//  // this cast is a bad idea.
+//    ((Q3ScrollView*)DocumentTab->currentWidget())->viewport()->update();
+//  }
   view->drawn = false;
   statusBar()->showMessage(tr("Ready."));
 
@@ -2395,8 +2398,10 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
   Comp->recreate(0);
   view->selElem = Comp;
 
-  if(view->drawn)
-    ((Q3ScrollView*)DocumentTab->currentWidget())->viewport()->update();
+  incomplete();
+//  if(view->drawn)
+//  // this cst is a bad idea.
+//    ((Q3ScrollView*)DocumentTab->currentWidget())->viewport()->update();
   view->drawn = false;
   MouseMoveAction = &MouseActions::MMoveElement;
   MousePressAction = &MouseActions::MPressElement;

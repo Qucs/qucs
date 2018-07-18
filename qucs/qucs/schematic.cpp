@@ -100,8 +100,9 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   Frame_Text2 = tr("Date:");
   Frame_Text3 = tr("Revision:");
 
-  setVScrollBarMode(Q3ScrollView::AlwaysOn);
-  setHScrollBarMode(Q3ScrollView::AlwaysOn);
+  incomplete();
+  // setVScrollBarMode(Q3ScrollView::AlwaysOn);
+  // setHScrollBarMode(Q3ScrollView::AlwaysOn);
   misc::setWidgetBackgroundColor(viewport(), QucsSettings.BGColor);
   viewport()->setMouseTracking(true);
   viewport()->setAcceptDrops(true);  // enable drag'n drop
@@ -755,8 +756,9 @@ float Schematic::zoom(float s)
   // to hidden. This causes some flicker, but it is still nicer.
   viewport()->setHidden(true);
 //  setHidden(true);
-  resizeContents(int(Scale*float(ViewX2 - ViewX1)),
-                 int(Scale*float(ViewY2 - ViewY1)));
+  // perhaps we don't need this? Guilherme has removed it...
+  //resizeContents(int(Scale*float(ViewX2 - ViewX1)),
+  //                int(Scale*float(ViewY2 - ViewY1)));
 //  setHidden(false);
   viewport()->setHidden(false);
 
@@ -824,7 +826,8 @@ void Schematic::showNoZoom()
   ViewY1 = y1-40;
   ViewX2 = x2+40;
   ViewY2 = y2+40;
-  resizeContents(x2-x1+80, y2-y1+80);
+  incomplete();
+  // resizeContents(x2-x1+80, y2-y1+80);
   viewport()->update();
   App->view->drawn = false;
 }
@@ -851,9 +854,10 @@ void Schematic::enlargeView(int x1, int y1, int x2, int y2)
   if(x2 > ViewX2) ViewX2 = x2+40;
   if(y2 > ViewY2) ViewY2 = y2+40;
 
-  resizeContents(int(Scale*float(ViewX2 - ViewX1)),
-		int(Scale*float(ViewY2 - ViewY1)));
-  scrollBy(dx,dy);
+  incomplete();
+  //resizeContents(int(Scale*float(ViewX2 - ViewX1)),
+	//	int(Scale*float(ViewY2 - ViewY1)));
+  //scrollBy(dx,dy);
 }
 
 // ---------------------------------------------------
@@ -1339,7 +1343,8 @@ bool Schematic::load()
   if(ViewX2 < UsedX2)  ViewX2 = UsedX2;
   if(ViewY2 < UsedY2)  ViewY2 = UsedY2;
   zoom(1.0f);
-  setContentsPos(tmpViewX1, tmpViewY1);
+  incomplete();
+  // setContentsPos(tmpViewX1, tmpViewY1);
   tmpViewX1 = tmpViewY1 = -200;   // was used as temporary cache
   return true;
 }
@@ -1858,7 +1863,8 @@ void Schematic::switchPaintMode()
   temp = Scale; Scale  = tmpScale;  tmpScale  = temp;
   tmp = contentsX();
   t2  = contentsY();
-  setContentsPos(tmpPosX, tmpPosY);
+  incomplete();
+  // setContentsPos(tmpPosX, tmpPosY);
   tmpPosX = tmp;
   tmpPosY = t2;
   tmp = ViewX1; ViewX1 = tmpViewX1; tmpViewX1 = tmp;
@@ -2019,7 +2025,9 @@ bool Schematic::scrollRight(int step)
 void Schematic::slotScrollUp()
 {
   App->editText->setHidden(true);  // disable edit of component property
-  scrollUp(verticalScrollBar()->singleStep());
+  // perhaps not needed?
+  incomplete();
+//  scrollUp(verticalScrollBar()->singleStep());
   viewport()->update(); // because QScrollView thinks nothing has changed
   App->view->drawn = false;
 }
@@ -2029,7 +2037,9 @@ void Schematic::slotScrollUp()
 void Schematic::slotScrollDown()
 {
   App->editText->setHidden(true);  // disable edit of component property
-  scrollDown(-verticalScrollBar()->singleStep());
+  // perhaps not needed?
+  incomplete();
+  // scrollDown(-verticalScrollBar()->singleStep());
   viewport()->update(); // because QScrollView thinks nothing has changed
   App->view->drawn = false;
 }
@@ -2039,7 +2049,9 @@ void Schematic::slotScrollDown()
 void Schematic::slotScrollLeft()
 {
   App->editText->setHidden(true);  // disable edit of component property
-  scrollLeft(horizontalScrollBar()->singleStep());
+  // perhaps not needed?
+  incomplete();
+//  scrollLeft(horizontalScrollBar()->singleStep());
   viewport()->update(); // because QScrollView thinks nothing has changed
   App->view->drawn = false;
 }
@@ -2049,7 +2061,9 @@ void Schematic::slotScrollLeft()
 void Schematic::slotScrollRight()
 {
   App->editText->setHidden(true);  // disable edit of component property
-  scrollRight(-horizontalScrollBar()->singleStep());
+  // perhaps not needed?
+  incomplete();
+  // scrollRight(-horizontalScrollBar()->singleStep());
   viewport()->update(); // because QScrollView thinks nothing has changed
   App->view->drawn = false;
 }
