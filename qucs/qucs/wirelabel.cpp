@@ -45,7 +45,7 @@ WireLabel::WireLabel(const QString& _Name, int _cx, int _cy,
 
 QRectF WireLabel::boundingRect() const
 {
-  return *(new QRectF(x1,y1,x2,y2));
+  return QRectF(x1,y1,x2,y2);
 }
 
 // ----------------------------------------------------------------

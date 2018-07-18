@@ -38,7 +38,7 @@ MouseCursor::MouseCursor()
 QRectF MouseCursor::boundingRect() const
 {
   /// \todo return size based on scene boundaries
-  return *(new QRectF(0, 0, 0, 0));
+  return QRectF(0, 0, 0, 0);
 }
 
 void MouseCursor::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)

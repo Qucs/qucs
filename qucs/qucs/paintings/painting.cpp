@@ -24,7 +24,7 @@ Painting::Painting()
 
 QRectF Painting::boundingRect() const
 {
-  return *(new QRectF(x1, y1, x2-x1, y2-y1));
+  return QRectF(x1, y1, x2-x1, y2-y1);
 }
 
 void Painting::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
