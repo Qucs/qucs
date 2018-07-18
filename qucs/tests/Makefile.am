@@ -55,4 +55,4 @@ endif
 EXTRA_DIST = \
 	$(TESTS)
 
-CLEANFILES = *.out
+CLEANFILES = *.out *core

@@ -236,6 +236,7 @@ case $host_os in
 
     dnl Enable C++11 support
     CXXFLAGS="$CXXFLAGS -std=c++0x"
+    PKG_CHECK_MODULES([QTest], [${qt_name}Test ])
 
     PKG_CHECK_MODULES([QT], [${qt_name}Core ${qt_name}Gui ${qt_name}Script ${qt_name}Svg ${qt_name}Xml Qt3Support], [
       QT_CFLAGS="$QT_CFLAGS $QT_DEF -DQT_DEPRECATED_WARNINGS -DQT_THREAD_SUPPORT -D_REENTRANT"
@@ -823,6 +824,7 @@ AC_CONFIG_FILES([Makefile
     qucs/diagrams/Makefile
     qucs/paintings/Makefile
     qucs/dialogs/Makefile
+    qucs/tests/Makefile
     tests/Makefile
     translations/Makefile])
 

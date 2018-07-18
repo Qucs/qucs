@@ -1,13 +1,13 @@
 
 #include "qucs.h"
 #include "schematic.h"
+#include "SchematicTests.h"
 
 #include <QTest>
+#include <QApplication>
 
-class SchematicTests : public QObject {
-  Q_OBJECT
-private slots:
-  void testConstructor() {
+void SchematicTests::testConstructor()
+{
 
     QucsApp *app = new QucsApp();
 
@@ -25,8 +25,13 @@ private slots:
     // go up to QucsDoc, make up name with absolute path
     QFileInfo Info(name);
     QCOMPARE(sch->DocName, Info.absoluteFilePath());
-   }
-};
+}
 
-QTEST_MAIN(SchematicTests)
-#include "SchematicTests.moc"
+// QTEST_MAIN(SchematicTests)
+int main(int argc, char *argv[])
+{
+  QApplication a(argc, argv);
+  SchematicTests t();
+}
+
+// vim:ts=8:sw=2:

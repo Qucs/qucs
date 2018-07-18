@@ -20,17 +20,12 @@
  *
  */
 
-#include "components/component.h"
-#include "ComponentTests.h"
+#pragma once
 
 #include <QTest>
 
-void ComponentTests::testConstructor() {
-    Component *c = new Component();
-    QCOMPARE(c->Type, isAnalogComponent);
-    QCOMPARE(c->isSelected, false);
-    QCOMPARE(c->cx, 0);
-    QCOMPARE(c->cy, 0);
-}
-
-QTEST_MAIN(ComponentTests)
+class ComponentTests : public QObject {
+  Q_OBJECT
+private slots:
+  void testConstructor();
+};
