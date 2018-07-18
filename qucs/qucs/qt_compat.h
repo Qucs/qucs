@@ -52,7 +52,9 @@ public:
 	};
 	~Q3PtrList() {
 		if(_autodelete){
-			incomplete();
+			for(auto x : localList){
+				delete x;
+			}
 		}else{
 		}
 	};
