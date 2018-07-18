@@ -26,7 +26,7 @@
 #include <limits.h>
 
 #include <QProcess>
-#include "container.h"
+#include "qt_compat.h"
 #include <QRegExpValidator>
 #include <QLineEdit>
 #include <QAction>

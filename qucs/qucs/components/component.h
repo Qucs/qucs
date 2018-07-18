@@ -19,7 +19,7 @@
 #define COMPONENT_H
 
 #include "element.h"
-#include "container.h" // BUG. Props is a propertyList
+#include "qt_compat.h"
 
 class Schematic;
 class ViewPainter;

@@ -13,6 +13,10 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+// provide a compatibility layer between different qt releases for qucs.
+//
+// collect all QT_VERSION dependent code here.
+
 #ifndef QUCS_CONTAINER_H
 #define QUCS_CONTAINER_H
 
