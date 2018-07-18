@@ -261,6 +261,14 @@ private:
 	typename QList<T*>::iterator cur;
 };
 
+// =====
+
+#define DockRight RightDockWidgetArea
+#define Q_UINT16 quint16
+#define Q_UINT32 quint32
+#define Q_ULONG qulonglong
+#define IO_WriteOnly QIODevice::WriteOnly
+
 #endif
 
 //vim:ts=8:sw=4:et

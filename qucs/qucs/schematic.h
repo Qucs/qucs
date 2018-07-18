@@ -181,6 +181,34 @@ public:
   /*! \brief Set reference to file (schematic) */
   void setFileInfo(QString FileName) { FileInfo = QFileInfo(FileName); }
 
+public: // ideally move to qt_compat
+  int contentsX() const{
+    return contentsRect().left();
+  }
+  int contentsY() const{
+    return contentsRect().bottom();
+  }
+  int contentsWidth() const{
+    return contentsRect().right() - contentsRect().left();
+  }
+  int contentsHeight() const{
+    return contentsRect().bottom() - contentsRect().top();
+  }
+  int visibleWidth() const{
+	  incomplete();
+    return contentsRect().right() - contentsRect().left();
+  }
+  int visibleHeight() const{
+	  incomplete();
+    return contentsRect().bottom() - contentsRect().top();
+  }
+  void scrollBy(int x, int y){
+	  return scrollContentsBy(x, y);
+  }
+  void resizeContents(int, int){
+	  incomplete();
+  }
+
 signals:
   void signalCursorPosChanged(int, int);
   void signalUndoState(bool);
