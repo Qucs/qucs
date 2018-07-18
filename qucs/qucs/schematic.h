@@ -156,6 +156,8 @@ public:
   // The pointers points to the current lists, either to the schematic
   // elements "Doc..." or to the symbol elements "SymbolPaints".
 // private: //TODO. one at a time.
+            // TODO: these containers need to go to a SchematicModel class.
+
   WireList      *Wires, DocWires;
   NodeList      *Nodes, DocNodes;
   DiagramList   *Diagrams, DocDiags;
