@@ -105,7 +105,7 @@ QRectF Diagram::boundingRect() const
   int _y1 = cy - y2 - Bounding_y2;
   int _x2 = cx + x2 + Bounding_x2;
   int _y2 = cy - Bounding_y1;
-  return *(new QRectF( _x1, _y1, _x2 - _x1, _y2 - _y1));
+  return QRectF( _x1, _y1, _x2 - _x1, _y2 - _y1);
 }
 
 /*!
