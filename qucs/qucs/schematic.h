@@ -36,7 +36,7 @@
 #include "components/component.h"
 
 #include <Q3ScrollView>
-#include "container.h"
+#include "qt_compat.h"
 #include <QVector>
 #include <QStringList>
 #include <QFileInfo>

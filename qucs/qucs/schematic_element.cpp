@@ -18,7 +18,7 @@
 #include <limits.h>
 
 #include "schematic.h"
-#include "container.h"
+#include "qt_compat.h"
 #include <QDebug>
 
 
