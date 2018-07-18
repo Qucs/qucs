@@ -34,7 +34,7 @@
 #include "dialogs/labeldialog.h"
 
 #include <QTextStream>
-#include "container.h"
+#include "qt_compat.h"
 #include <QMouseEvent>
 #include <QClipboard>
 #include <QApplication>

@@ -22,7 +22,7 @@
 
 #include <QDialog>
 #include <QRegExp>
-#include "container.h"
+#include "qt_compat.h"
 
 class QVBoxLayout;
 class Cross3D;

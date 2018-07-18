@@ -19,7 +19,7 @@
 #define NODE_H
 
 #include "element.h"
-#include "container.h"
+#include "qt_compat.h"
 
 class ViewPainter;
 

@@ -24,7 +24,7 @@
 #include <QDir>
 #include <QTextStream>
 #include <QDragLeaveEvent>
-#include "container.h"
+#include "qt_compat.h"
 #include <QPixmap>
 #include <QDragEnterEvent>
 #include <QDragMoveEvent>
