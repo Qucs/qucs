@@ -43,6 +43,7 @@
 #include <QFileInfo>
 
 class SchematicScene;
+class GraphicsElement;
 class QTextStream;
 class QTextEdit;
 class QPlainTextEdit;
@@ -266,7 +267,7 @@ public:
   void    markerLeftRight(bool, Q3PtrList<Element>*);
   void    markerUpDown(bool, Q3PtrList<Element>*);
 
-  void     deselectElements(Element*);
+  void     deselectElements(GraphicsElement*);
   int      selectElements(int, int, int, int, bool);
   void     selectMarkers();
   void     newMovingWires(Q3PtrList<Element>*, Node*, int);

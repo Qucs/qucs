@@ -28,6 +28,10 @@ class ComponentDialog;
 
 class Component : public Element {
 public:
+	enum{
+		isComponent = 0x30000
+	};
+public:
   Component();
   virtual ~Component() {};
 

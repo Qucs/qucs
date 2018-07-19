@@ -23,6 +23,7 @@
 
 #include "schematicscene.h"
 #include "schematic.h"
+#include "component.h"
 
 #include <QPainter>
 #include <QGraphicsItem>
@@ -105,4 +106,7 @@ void SchematicScene::removeItem(Element const* e)
 //
 GraphicsElement::~GraphicsElement(){
 	 delete _e;
+}
+bool GraphicsElement::isComponent() const{
+  return dynamic_cast<Component const*>(_e);
 }

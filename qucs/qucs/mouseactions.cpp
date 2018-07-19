@@ -184,7 +184,7 @@ void MouseActions::endElementMoving(Schematic *Doc, Q3PtrList<Element> *movEleme
       case isPainting:
 	Doc->Paintings->append((Painting*)pe);
 	break;
-      case isComponent:
+      case isComponent_:
       case isAnalogComponent:
       case isDigitalComponent:
 	Doc->insertRawComponent((Component*)pe, false);
@@ -800,7 +800,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
       QucsMain->connect(editProp, SIGNAL(triggered()), SLOT(slotEditElement()));
       ComponentMenu->addAction(editProp);
 
-      if((focusElement->ElemType & isComponent) == 0){
+      if(!focusElement->isComponent()){
       }else if(!QucsMain->moveText->isChecked()){
 	  ComponentMenu->addAction(QucsMain->moveText);
       }else{
@@ -808,8 +808,12 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
     }
   }
   while(true) {
-    if(focusElement)
-      if(focusElement->ElemType == isGraph) break;
+    if(focusElement){
+      if(dynamic_cast<Graph const*>(focusElement->operator->())){
+	break;
+      }else{
+      }
+    }
     if(!QucsMain->onGrid->isChecked())
       ComponentMenu->addAction(QucsMain->onGrid);
     ComponentMenu->addAction(QucsMain->editCopy);
@@ -820,7 +824,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
 
   while (true) {
     if (focusElement) {
-      if (focusElement->ElemType == isDiagram) {
+      if(dynamic_cast<Diagram const*>(focusElement->operator->())){
         QAction *imgExport = new QAction(QObject::tr("Export as image"), QucsMain);
         QucsMain->connect(imgExport, SIGNAL(triggered()), SLOT(slotSaveDiagramToGraphicsFile()));
         ComponentMenu->addAction(imgExport);
@@ -831,7 +835,8 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
 
   if(!QucsMain->editDelete->isChecked())
     ComponentMenu->addAction(QucsMain->editDelete);
-  if(focusElement) if(focusElement->ElemType == isMarker) {
+  if(focusElement)
+    if(dynamic_cast<Marker const*>(focusElement->operator->())){
     ComponentMenu->addSeparator();
     QString s = QObject::tr("power matching");
     if( ((Marker*)focusElement)->pGraph->Var == "Sopt" )
@@ -848,16 +853,21 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
   }
   do {
     if(focusElement) {
-      if(focusElement->ElemType == isDiagram) break;
-      if(focusElement->ElemType == isGraph) {
+      if(dynamic_cast<Diagram const*>(focusElement->operator->())){
+       	break;
+      }else if(dynamic_cast<Graph const*>(focusElement->operator->())){
         ComponentMenu->addAction(QucsMain->graph2csv);
         break;
       }
     }
     ComponentMenu->addSeparator();
-    if(focusElement) if(focusElement->ElemType & isComponent)
-      if(!QucsMain->editActivate->isChecked())
+    if(!focusElement){
+    }else if(dynamic_cast<Component const*>(focusElement->operator->())){
+      if(!QucsMain->editActivate->isChecked()){
         ComponentMenu->addAction(QucsMain->editActivate);
+      }else{
+      }
+    }
     if(!QucsMain->editRotate->isChecked())
       ComponentMenu->addAction(QucsMain->editRotate);
     if(!QucsMain->editMirror->isChecked())
@@ -867,10 +877,13 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
 
     // right-click menu to go into hierarchy
     if(focusElement) {
-      if(focusElement->elemType() & isComponent)
-	if(((Component*)focusElement)->obsolete_model_hack() == "Sub")
-      if(!QucsMain->intoH->isChecked())
-        ComponentMenu->addAction(QucsMain->intoH);
+      if(Component const* p=dynamic_cast<Component const*>(focusElement->operator->())){
+	if(p->obsolete_model_hack() == "Sub"){ // use cast!?
+	  if(!QucsMain->intoH->isChecked()){
+	    ComponentMenu->addAction(QucsMain->intoH);
+	  }
+	}
+      }
     }
     // right-click menu to pop out of hierarchy
     if(!focusElement)
@@ -910,7 +923,7 @@ void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent* Event)
   if(pw) pe = Doc->getWireLabel(pw->Port1);
   else pe = Doc->getWireLabel(pn);
   if(pe) {
-    if(pe->ElemType & isComponent) {
+    if(pe->ElemType & isComponent_) {
       QMessageBox::information(0, QObject::tr("Info"),
                  QObject::tr("The ground potential cannot be labeled!"));
       return;
@@ -1000,16 +1013,19 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
   MAy1 = pos.y();
 
   // FIXME Ctrl + press to select multiple is not working
-  focusElement = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform() ));
+  focusElement = dynamic_cast<GraphicsElement*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform() ));
 
   isMoveEqual = false;   // moving not neccessarily square
 
-  if(focusElement)
+  if(focusElement){
     // print define value in hex, see element.h
-    qDebug() << "MPressSelect: focusElement->Type" <<  QString("0x%1").arg(focusElement->ElemType, 0, 16);
-  else
+//    qDebug() << "MPressSelect: focusElement->Type" <<  QString("0x%1").arg(focusElement->ElemType, 0, 16);
+  }else{
     qDebug() << "MPressSelect";
+  }
 
+  incomplete();
+#if 0 // GAAH. mouse actions are encoded as elements
   if(focusElement)
   switch(focusElement->ElemType)
   {
@@ -1121,6 +1137,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
         return;
       }
   }
+#endif
 
   QucsMain->MousePressAction = 0;
   QucsMain->MouseDoubleClickAction = 0;
@@ -1139,9 +1156,11 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
     // element could be moved
     if(!Ctrl)
     {
-      if(!focusElement->ElemSelected)// Don't move selected elements if clicked
+      if(!focusElement->isSelected()){
+	// Don't move selected elements if clicked
         Doc->deselectElements(focusElement); // element was not selected.
-      focusElement->ElemSelected = true;
+      }
+      focusElement->setSelected(true);
     }
     Doc->setOnGrid(MAx1, MAy1);
     QucsMain->MouseMoveAction = &MouseActions::MMoveMoving;
@@ -1273,7 +1292,7 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
   int x1, y1, x2, y2;
 //  e->isSelected = false;
   switch(e->ElemType) {
-    case isComponent:
+    case isComponent_:
     case isAnalogComponent:
     case isDigitalComponent:
       if(((Component*)e)->Ports.count() < 1)
@@ -1339,8 +1358,8 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event)
 
   int x1, y1, x2, y2, rot;
   int gx, gy;
-  if(selElem->ElemType & isComponent) {
-    Component *Comp = (Component*)selElem;
+  if(Component* Comp=dynamic_cast<Component*>(selElem->operator->())){
+
 //    qDebug() << "+-+ got to switch:" << Comp->Name;
     QString entryName = Comp->name();
 
@@ -1404,16 +1423,18 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event)
     }
 
     // keep current Element selected
-    selElem = Comp;
+    incomplete();
+//    selElem = Comp;
     // get ready to paint selElem scheme on next move event
     drawn = false;
-    return;
-  } // isComponent
+    return; // yikes.
 
-  else if(selElem->ElemType == isDiagram) {
-    if(Event->button() != Qt::LeftButton) return;
+  }else if(Diagram* Diag=dynamic_cast<Diagram*>(selElem->operator->())){
+    if(Event->button() != Qt::LeftButton){
+      return;
+    }else{
+    }
 
-    Diagram *Diag = (Diagram*)selElem;
     // dialog is Qt::WA_DeleteOnClose !!!
     DiagramDialog *dia =
        new DiagramDialog(Diag, Doc);
@@ -1426,19 +1447,20 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event)
     // add to list
     Doc->Diagrams->append(Diag);
     // clear flag, draw whole Diagram, not only scheme
-    selElem->drawScheme = false;
+    incomplete();
+  //  selElem->drawScheme = false;
     /// \todo Doc->enlargeView(Diag->cx, Diag->cy-Diag->y2, Diag->cx+Diag->x2, Diag->cy);
     Doc->setChanged(true, true);   // document has been changed
     Doc->viewport()->update();
     // the selEleme is used, so create a new one;
     Diag = Diag->newOne();
-    selElem = Diag;
+
+    incomplete(); // what happened to Diag?
+    // selElem = Diag;
     // clear draw flag to trigger new insert on MMoveElement
     drawn = false;
     return;
-  } // isDiagram
-
-  else if(selElem->ElemType == isPainting) {
+  }else if(Painting* pnt=dynamic_cast<Painting*>(selElem->operator->())){
     // propagate press event
     bool finalPress = ((Painting*)selElem)->MousePressing();
 
@@ -1449,13 +1471,15 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event)
     // Note that MMoveElement keeps snapping to grid and updatig cx,cy
     if( finalPress )  {
       // add Element to list
-      Doc->Paintings->append((Painting*)selElem);
+      Doc->Paintings->append(pnt);
       // clear scheme flag
-      selElem->drawScheme = false;
+      incomplete();
+      // selElem->drawScheme = false;
       // mark document as changed
       Doc->setChanged(true, true);
       // keep a new Element selected
-      selElem = ((Painting*)selElem)->newOne();
+      incomplete();
+      // selElem = ((Painting*)selElem)->newOne();
       // clear draw flag to trigger new insert on MMoveElement
       drawn = false;
 
@@ -1713,11 +1737,15 @@ void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
 
   if(!ctrl) Doc->deselectElements(focusElement);
 
-  if(focusElement)  if(Event->button() == Qt::LeftButton)
-    if(focusElement->ElemType == isWire) {
-      Doc->selectWireLine(focusElement, ((Wire*)focusElement)->Port1, ctrl);
-      Doc->selectWireLine(focusElement, ((Wire*)focusElement)->Port2, ctrl);
+  if(!focusElement){
+  }else if(Event->button() == Qt::LeftButton){
+  //  if(focusElement->ElemType == isWire) 
+    if(Wire* w=dynamic_cast<Wire*>(selElem->operator->())){
+      Doc->selectWireLine(w, w->Port1, ctrl);
+      Doc->selectWireLine(w, w->Port2, ctrl);
+    }else{
     }
+  }
 
   Doc->releaseKeyboard();  // allow keyboard inputs again
   QucsMain->MousePressAction = &MouseActions::MPressSelect;

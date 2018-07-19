@@ -21,7 +21,7 @@
  */
 
 #ifndef SCHEMATICSCENE_H_
-#define SCHEMATICSCENE_H_ value
+#define SCHEMATICSCENE_H_
 
 #include <QGraphicsScene>
 #include <QGraphicsItem>
@@ -89,6 +89,7 @@ public:
 	  assert(_e);
 	  _e->getCenter(i, j);
   }
+  bool isComponent() const;
 private: // owned elements
   Element* _e;
 };

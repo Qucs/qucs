@@ -110,7 +110,7 @@ struct Property {
 #define isDummyElement    0
 #define isSpecialMask    -16
 
-#define isComponent        0x30000
+#define isComponent_        0x30000
 #define isComponentText    0x30002
 #define isAnalogComponent  0x10000
 #define isDigitalComponent 0x20000
@@ -143,8 +143,9 @@ struct Property {
   *
   */
 class Element {
-protected:
-  Element(); // Element is an abstract basetype. hence we hide the constructors.
+protected: // Element is an abstract basetype. hence we hide the constructors.
+  Element();
+  Element(const Element&);
 public:
   virtual ~Element();
 
