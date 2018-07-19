@@ -58,6 +58,7 @@
 // Make the MS DLL functions look like the posix ones.
 #define SOEXT ".dll"
 #define Arc HIDE_Arc
+#define UNICODE
 #include <windows.h>
 #undef Arc
 #include <stdlib.h>
