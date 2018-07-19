@@ -43,8 +43,9 @@
  * \class Component
  * \brief The Component class implements a generic analog component
  */
-Component::Component()
+Component::Component() : Element()
 {
+  qDebug() << "constructing Componet" << this;
   ElemType = isAnalogComponent;
 
   mirroredX = false;
