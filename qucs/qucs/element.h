@@ -143,8 +143,9 @@ struct Property {
   *
   */
 class Element : public QGraphicsItem{
+protected:
+  Element(); // Element is an abstract basetype. hence we hide the constructors.
 public:
-  Element();
   virtual ~Element();
 
   virtual void paintScheme(QPainter *);
@@ -158,7 +159,7 @@ public:
 public:
   bool isSelected() const { return ElemSelected; }
   // BUG: use dynamic_cast to obtain type
-  bool elemType() const { return ElemType; }
+  int elemType() const { return ElemType; }
 
   bool ElemSelected;
   int  ElemType;    // BUG. obsolete.
