@@ -146,19 +146,6 @@ IF(NOT WIN32)
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
 ENDIF()
 
-# For some reason, on Windows QT_LIBRARIES point to static(?) .a libs
-# which do not provide the needed symbols. They are found on
-# the .dll libraries.
-IF(WIN32)
-  LINK_DIRECTORIES("${QT_BINARY_DIR}")
-
-  if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(QT_LIBRARIES QtCored4 QtGuid4 Qt3Supportd4 QtSvgd4 QtXmld4 QtScriptd4)
-  else()
-    set(QT_LIBRARIES QtCore4 QtGui4 Qt3Support4 QtSvg4 QtXml4 QtScript4)
-  ENDIF()
-ENDIF(WIN32)
-
 #
 # Set position independed code PIC
 #
