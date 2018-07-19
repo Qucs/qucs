@@ -773,17 +773,23 @@ void MouseActions::MMoveZoomIn(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
 {
-  focusElement = dynamic_cast<Element*>(Doc->scene->itemAt(Event->pos(), QTransform()));
+  focusElement = dynamic_cast<GraphicsElement*>(Doc->scene->itemAt(Event->pos(), QTransform()));
 
-  if(focusElement)  // remove special function (4 least significant bits)
-    focusElement->type() &= isSpecialMask;
+  if(focusElement){
+    // remove special function (4 least significant bits)
+    incomplete(); // BUG: make isSpecialMask must be explicit in GraphicsElement
+    // focusElement->elemType &= isSpecialMask;
+  }else{
+    // what else could it be?
+    incomplete();
+  }
 
 
   // define menu
   ComponentMenu->clear();
   while(true) {
     if(focusElement) {
-      focusElement->ElemSelected = true;
+      focusElement->setSelected(true);
       QAction *editProp = new QAction(QObject::tr("Edit Properties"), QucsMain);
       QucsMain->connect(editProp, SIGNAL(triggered()), SLOT(slotEditElement()));
       ComponentMenu->addAction(editProp);
