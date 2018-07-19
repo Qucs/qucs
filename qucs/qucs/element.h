@@ -145,8 +145,9 @@ struct Property {
   *
   */
 class Element : public QGraphicsItem{
+protected:
+  Element(); // Element is an abstract basetype. hence we hide the constructors.
 public:
-  Element();
   virtual ~Element();
 
   // TODO: remove.

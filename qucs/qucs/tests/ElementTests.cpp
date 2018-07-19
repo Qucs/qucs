@@ -27,16 +27,7 @@
 #include "ElementTests.h"
 
 void ElementTests::testConstructor() {
-    Element *e = new Element();
-    // check defaults
-    QCOMPARE(int( e->Type ), isDummyElement);
-    QCOMPARE(e->ElemSelected, false);
-    QCOMPARE(e->cx, 0);
-    QCOMPARE(e->cy, 0);
-    QCOMPARE(e->x1, 0);
-    QCOMPARE(e->y1, 0);
-    QCOMPARE(e->x2, 0);
-    QCOMPARE(e->y2, 0);
+	// there is nothing here. cannot test an abstract class.
 }
 
 QTEST_MAIN(ElementTests)
