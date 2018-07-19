@@ -115,6 +115,20 @@ int QUCS_Att::Calc(tagATT *ATT)
          ATT->PR3 = ATT->PR1;
          break;
       }
+      case QW_SHUNT_TYPE:
+      {
+         //Design equations
+         L = pow(10, 0.05*ATT->Attenuation);
+         ATT->R1  = ATT->Zin*(L-1);
+         ATT->R2 = ATT->Zin;
+         ATT->R3 = ATT->R1;
+         ATT->R4 = 0.25*C0/ATT->freq;//lambda/4
+         //Power dissipation.
+         ATT->PR1 = ATT->Pin*ATT->R1*ATT->Zin/pow(ATT->R1 + ATT->Zin,2);
+         ATT->PR2 = ATT->Pin*ATT->Zin*ATT->Zin/pow(ATT->R1 + ATT->Zin,2);
+         ATT->PR3 = ATT->PR1;
+         break;
+      }
 	}
       return 0;
     }
@@ -423,7 +437,7 @@ QString* QUCS_Att::createSchematic(tagATT *ATT, bool SP_box)
       *s += "<Diagrams>\n";
       *s += "</Diagrams>\n";
       *s += "<Paintings>\n";
-      *s += QString("<Text 120 -120 12 #000000 0 \"%1 dB Quarter-Wave series Attenuator\">\n").arg(ATT->Attenuation);
+      *s += QString("<Text 120 -120 12 #000000 0 \"%1 dB Quarter-Wave series attenuator\">\n").arg(ATT->Attenuation);
       if (!SP_box)
       {// If the SP simulation box option is activated, then the input and output ports are attached.
        // Thus, it doesn't make sense to have a text field indicating the input/output impedance
@@ -432,6 +446,76 @@ QString* QUCS_Att::createSchematic(tagATT *ATT, bool SP_box)
       }
       *s += "</Paintings>\n";
       break;
+
+  case QW_SHUNT_TYPE:
+   *s += QString("<TLIN Line1 1 200 60 20 -35 0 1 \"%1 Ohm\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(ATT->Zin).arg(ConvertLengthFromM(ATT->R4));
+   *s += QString("<R R1 1 160 150 -100 -26 0 1 \"%1 Ohm\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(RoundVariablePrecision(ATT->R1));
+   *s += "<GND * 1 160 180 0 0 0 0>\n";
+   *s += QString("<R R1 1 240 150 15 -26 0 1 \"%1 Ohm\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(RoundVariablePrecision(ATT->Zin));
+   *s += "<GND * 1 240 180 0 0 0 0>\n";
+   *s += QString("<R R1 1 300 0 -30 -60 0 0 \"%1 Ohm\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(RoundVariablePrecision(ATT->R1));
+
+   if (SP_box)
+   {
+     // S-parameter simulation block
+     //-----------------------------
+     // The quarter-wave line is a narrowband device... so let's set the SP sweep from f0/2 to 3*f0/2
+     QString freq_start = QString("%1").arg(0.5*ATT->freq*1e-6);//MHz
+     QString freq_stop = QString("%1").arg(1.5*ATT->freq*1e-6);//MHz
+     *s += QString("<.SP SP1 1 100 270 0 83 0 0 \"lin\" 1 \"%1 MHz\" 1 \"%2 MHz\" 1 \"200\" 1 \"no\" 0 \"1\" 0 \"2\" 0 \"no\" 0 \"no\" 0>\n").arg(freq_start).arg(freq_stop);
+
+     // Equations
+     *s += "<Eqn Eqn1 1 320 270 -32 19 0 0 \"S21_dB=dB(S[2,1])\" 1 \"S11_dB=dB(S[1,1])\" 1 \"S22_dB=dB(S[2,2])\" 1 \"yes\" 0>\n";
+
+     // Input term
+     *s += QString("<Pac P1 1 0 150 -100 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n").arg(ATT->Zin);
+     *s += "<GND * 1 0 180 0 0 0 0>\n";
+
+     // Output term
+     *s += QString("<Pac P1 1 500 150 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n").arg(ATT->Zout);
+     *s += "<GND * 1 500 180 0 0 0 0>\n";
+   }
+   *s += "</Components>\n";
+
+   *s += "<Wires>\n";
+   *s += "<160 120 160 105 \"\" 0 0 0 \"\">\n";//First resistor to qw line
+   *s += "<160 105 200 105 \"\" 0 0 0 \"\">\n";//First resistor to qw line
+
+   *s += "<240 120 240 105 \"\" 0 0 0 \"\">\n";//Second resistor to qw line
+   *s += "<240 105 200 105 \"\" 0 0 0 \"\">\n";//First resistor to qw line
+
+   *s += "<200 105 200 90 \"\" 0 0 0 \"\">\n";//Connect the previous wires to the line
+
+   *s += "<200 30 200 0 \"\" 0 0 0 \"\">\n";//Connect qw line to main branch
+   *s += "<200 0 270 0 \"\" 0 0 0 \"\">\n";//qw line to series resistor
+
+   *s += "<120 0 200 0 \"\" 0 0 0 \"\">\n";//Input port
+   *s += "<330 0 410 0 \"\" 0 0 0 \"\">\n";//Output port
+
+
+   if (SP_box)
+   {
+       //Term 1 to input port
+       *s += "<0 120 0 0 \"\" 0 0 0 \"\">\n";
+       *s += "<0 0 120 0 \"\" 0 0 0 \"\">\n";
+
+       //Term 2 to output port
+       *s += "<500 120 500 0 \"\" 0 0 0 \"\">\n";
+       *s += "<410 0 500 0 \"\" 0 0 0 \"\">\n";
+   }
+   *s += "</Wires>\n";
+   *s += "<Diagrams>\n";
+   *s += "</Diagrams>\n";
+   *s += "<Paintings>\n";
+   *s += QString("<Text 120 -120 12 #000000 0 \"%1 dB Quarter-Wave shunt attenuator\">\n").arg(ATT->Attenuation);
+   if (!SP_box)
+   {// If the SP simulation box option is activated, then the input and output ports are attached.
+    // Thus, it doesn't make sense to have a text field indicating the input/output impedance
+       *s += QString("<Text 50 -30 10 #000000 0 \"Z1: %1 Ohm\">\n").arg(ATT->Zin);
+       *s += QString("<Text 390 -30 10 #000000 0 \"Z2: %1 Ohm\">\n").arg(ATT->Zout);
+   }
+   *s += "</Paintings>\n";
+   break;
     }
 
   return s;

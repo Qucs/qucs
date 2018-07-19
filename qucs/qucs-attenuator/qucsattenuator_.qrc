@@ -6,5 +6,6 @@
         <file>bitmaps/big.qucs.xpm</file>
         <file>bitmaps/att_reflection.png</file>
         <file>bitmaps/qw_series.png</file>
+        <file>bitmaps/qw_shunt.png</file>
     </qresource>
 </RCC>

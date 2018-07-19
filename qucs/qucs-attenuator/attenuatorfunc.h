@@ -18,6 +18,7 @@
 #define BRIDGE_TYPE 2
 #define REFLECTION_TYPE 3
 #define QW_SERIES_TYPE 4
+#define QW_SHUNT_TYPE 5
 
 #define C0 299792458
 

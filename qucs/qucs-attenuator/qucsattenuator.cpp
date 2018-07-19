@@ -88,6 +88,7 @@ QucsAttenuator::QucsAttenuator()
   ComboTopology->insertItem(3, "Bridged Tee");
   ComboTopology->insertItem(4, "Reflection attenuator");
   ComboTopology->insertItem(5, "Quarter-wave series");
+  ComboTopology->insertItem(6, "Quarter-wave shunt");
   connect(ComboTopology, SIGNAL(activated(int)), SLOT(slotTopologyChanged()));
   topoGrid->addWidget(ComboTopology, 1,0,1,2);
 
@@ -513,6 +514,29 @@ void QucsAttenuator::slotTopologyChanged()
       break;
     case QW_SERIES_TYPE:
       pixTopology->setPixmap(QPixmap((":/bitmaps/qw_series.png")));
+      LabelImp1->setText("Z0:");
+      LabelImp2->hide();
+      QSpinBox_Zout->hide();
+      LabelImp2_Ohm->hide();
+      LabelR2->setText("R2:");
+      LabelR3->show();
+      LabelR3->setText("R3:");
+      LabelR4->hide();
+      lineEdit_R3->show();
+      lineEdit_R4->hide();
+      LabelR4_Ohm->hide();
+      LabelR3_Ohm->show();
+      lineEdit_R3_Pdiss->show();
+      lineEdit_R4_Pdiss->hide();
+      ComboR3_PowerUnits->show();
+      ComboR4_PowerUnits->hide();
+      minR_Reflection_Att->hide();
+      Label_Freq->show();
+      QSpinBox_Freq->show();
+      Combo_FreqUnits->show();
+      break;
+   case QW_SHUNT_TYPE:
+      pixTopology->setPixmap(QPixmap((":/bitmaps/qw_shunt.png")));
       LabelImp1->setText("Z0:");
       LabelImp2->hide();
       QSpinBox_Zout->hide();
