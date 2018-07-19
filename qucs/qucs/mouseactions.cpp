@@ -787,22 +787,25 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
 
   // define menu
   ComponentMenu->clear();
-  while(true) {
-    if(focusElement) {
+  {
+    if(!focusElement) {
+      ComponentMenu->addAction(QucsMain->symEdit);
+      ComponentMenu->addAction(QucsMain->fileSettings);
+      if(!QucsMain->moveText->isChecked()){
+	ComponentMenu->addAction(QucsMain->moveText);
+      }
+    }else{
       focusElement->setSelected(true);
       QAction *editProp = new QAction(QObject::tr("Edit Properties"), QucsMain);
       QucsMain->connect(editProp, SIGNAL(triggered()), SLOT(slotEditElement()));
       ComponentMenu->addAction(editProp);
 
-      if((focusElement->ElemType & isComponent) == 0) break;
+      if((focusElement->ElemType & isComponent) == 0){
+      }else if(!QucsMain->moveText->isChecked()){
+	  ComponentMenu->addAction(QucsMain->moveText);
+      }else{
+      }
     }
-    else {
-      ComponentMenu->addAction(QucsMain->symEdit);
-      ComponentMenu->addAction(QucsMain->fileSettings);
-    }
-    if(!QucsMain->moveText->isChecked())
-      ComponentMenu->addAction(QucsMain->moveText);
-    break;
   }
   while(true) {
     if(focusElement)
