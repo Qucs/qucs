@@ -25,8 +25,8 @@
 
 #include "trace.h"
 
-// partly implement Q3Ptrlist, see Qt3 documentation.
-// just don't use it in new code, remove what is no longer used.
+// implement Q3Ptrlist for use in old code.
+// just don't use it in new code.
 template <class T>
 class Q3PtrList {
 public:
@@ -64,7 +64,7 @@ public:
 	void setAutoDelete(bool b) {
 		_autodelete = b;
 	};
-	T* first() {
+	T* first() {   // pointer to first element
 		cur = localList.begin();
 		if (localList.size() == 0)
 			return nullptr;
@@ -160,7 +160,7 @@ public:
 	T* getLast() { itested();
 		return localList.back();
 	};
-	T* next() {
+	T* next() {    // get pointer to next element, correct the current
 		if (cur == localList.end()){ untested();
 			return nullptr;
 		}else{
@@ -172,7 +172,7 @@ public:
 			}
 		}
 	};
-	T* prev() {
+	T* prev() {    // get pointer to prev element, correct the current
 		if (cur == localList.end()) { untested();
 			return nullptr;
 		}else if (cur == localList.begin()){ untested();
@@ -183,7 +183,7 @@ public:
 			return *cur;
 		}
 	};
-	T* current() {
+	T* current() { // get pointer to current element
 		if (cur==localList.end()){ untested();
 			return nullptr;
 		}else{ untested();

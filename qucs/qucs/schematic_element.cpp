@@ -609,6 +609,9 @@ int Schematic::insertWire(Wire *w)
 
     Wires->append(w);    // add wire to the schematic
 
+
+
+
     int  n1, n2;
     Wire *pw, *nw;
     Node *pn, *pn2;
@@ -616,33 +619,37 @@ int Schematic::insertWire(Wire *w)
     // ................................................................
     // Check if the new line covers existing nodes.
     // In order to also check new appearing wires -> use "for"-loop
-    assert(Nodes);
-    assert(Wires);
-    // this looks like it is not a loop at all.
-    // check: what are the findRef calls really doing, and why?
-    for(pw=Wires->current(); pw!=nullptr; pw=Wires->next()){
-        for(pn=Nodes->first(); pn!=0; ){
-            if(pn->cx == pw->x1) {
-                if(pn->cy <= pw->y1) {
+    for(pw = Wires->current(); pw != 0; pw = Wires->next())
+        for(pn = Nodes->first(); pn != 0; )    // check every node
+        {
+            if(pn->cx == pw->x1)
+            {
+                if(pn->cy <= pw->y1)
+                {
                     pn = Nodes->next();
                     continue;
-                }else if(pn->cy >= pw->y2) {
+                }
+                if(pn->cy >= pw->y2)
+                {
                     pn = Nodes->next();
                     continue;
-                }else{
-		  // do more stuff below.
-		}
-            }else if(pn->cy == pw->y1){
-                if(pn->cx <= pw->x1) {
+                }
+            }
+            else if(pn->cy == pw->y1)
+            {
+                if(pn->cx <= pw->x1)
+                {
                     pn = Nodes->next();
                     continue;
-                }else if(pn->cx >= pw->x2) {
+                }
+                if(pn->cx >= pw->x2)
+                {
                     pn = Nodes->next();
                     continue;
-                }else{
-		  // do more stuff below.
-		}
-            }else{
+                }
+            }
+            else
+            {
                 pn = Nodes->next();
                 continue;
             }
@@ -684,7 +691,7 @@ int Schematic::insertWire(Wire *w)
                         pw->Label->pOwner = pw;
                     }
                     Wires->removeRef(nw);    // delete wire
-                    Wires->findRef(pw);      // is this a hidden loop condition?!
+                    Wires->findRef(pw);      // set back to current wire
                 }
                 break;
             }
@@ -696,7 +703,7 @@ int Schematic::insertWire(Wire *w)
                 nw = new Wire(pw->x1, pw->y1, pn->cx, pn->cy, pw->Port1, pn);
                 pn->Connections.append(nw);
                 Wires->append(nw);
-                Wires->findRef(pw); // hidden loop conditional?
+                Wires->findRef(pw);
                 pw->Port1->Connections.append(nw);
             }
             pw->Port1->Connections.removeRef(pw);
@@ -707,7 +714,6 @@ int Schematic::insertWire(Wire *w)
 
             pn = Nodes->next();
         }
-    }
 
     if (Wires->containsRef (w))  // if two wire lines with different labels ...
         oneLabel(w->Port1);       // ... are connected, delete one label
