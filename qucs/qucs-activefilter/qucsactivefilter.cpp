@@ -117,15 +117,15 @@ QucsActiveFilter::QucsActiveFilter(QWidget *parent)
 
     lblTyp = new QLabel(tr("Approximation type:"));
     cbxFilterFunc = new QComboBox;
-    QStringList lst2;
-    lst2<<tr("Butterworth")
+    QStringList strlist2;
+    strlist2<<tr("Butterworth")
         <<tr("Chebyshev")
         <<tr("Inverse Chebyshev")
         <<tr("Cauer (Elliptic)")
         <<tr("Bessel")
         <<tr("Legendre")
         <<tr("User defined");
-    cbxFilterFunc->addItems(lst2);
+    cbxFilterFunc->addItems(strlist2);
     connect(cbxFilterFunc,SIGNAL(currentIndexChanged(int)),this,SLOT(slotSwitchParameters()));
 
     btnDefineTransferFunc = new QPushButton(tr("Manually define transfer function"));
@@ -142,12 +142,12 @@ QucsActiveFilter::QucsActiveFilter(QWidget *parent)
     lblSch = new QLabel(tr("Filter topology"));
     lblResp = new QLabel(tr("Filter type:"));
     cbxResponse = new QComboBox;
-    QStringList lst3;
-    lst3<<tr("Low Pass")
+    QStringList strlist3;
+    strlist3<<tr("Low Pass")
         <<tr("High Pass")
         <<tr("Band Pass")
         <<tr("Band Stop");
-    cbxResponse->addItems(lst3);
+    cbxResponse->addItems(strlist3);
     connect(cbxResponse,SIGNAL(currentIndexChanged(int)),this,SLOT(slotUpdateResponse()));
     connect(cbxResponse,SIGNAL(currentIndexChanged(int)),this,SLOT(slotUpdateSchematic()));
     connect(cbxResponse,SIGNAL(currentIndexChanged(int)),this,SLOT(slotSetLabels()));

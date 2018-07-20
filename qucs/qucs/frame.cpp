@@ -41,7 +41,7 @@ Frame::Frame()
 QRectF Frame::boundingRect() const
 {
   /// \todo return size based on item boundaries
-  return *(new QRectF(0, 0, Width, Height));
+  return QRectF(0, 0, Width, Height);
 }
 
 void Frame::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)

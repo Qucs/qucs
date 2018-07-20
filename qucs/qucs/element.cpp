@@ -43,7 +43,7 @@ void Element::getCenter(int&, int&)
 
 QRectF Element::boundingRect() const
 {
-  return *(new QRectF(x1, y1, x2-x1, y2-y1));
+  return QRectF(x1, y1, x2-x1, y2-y1);
 }
 
 void Element::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)

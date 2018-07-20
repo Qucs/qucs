@@ -60,7 +60,7 @@ void Graph::createMarkerText() const
 
 QRectF Graph::boundingRect() const
 {
-  return *(new QRectF());
+  return QRectF();
 }
 
 // ---------------------------------------------------------------------

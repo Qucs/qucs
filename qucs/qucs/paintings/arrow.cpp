@@ -57,7 +57,7 @@ QRectF Arrow::boundingRect() const
 
   if(y2 < 0) { _y1 = cy+y2; _y2 = cy; }
   else { _y1 = cy; _y2 = cy+y2; }
-  return *(new QRectF(_x1, _y1, _x2-_x1, _y2-_y1));
+  return QRectF(_x1, _y1, _x2-_x1, _y2-_y1);
 }
 
 

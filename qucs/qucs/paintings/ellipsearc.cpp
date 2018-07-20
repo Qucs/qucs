@@ -37,7 +37,7 @@ EllipseArc::EllipseArc()
 
 QRectF EllipseArc::boundingRect() const
 {
-  return *(new QRectF(cx+x1, cy+y1, x2-x1, y2-y1));
+  return QRectF(cx+x1, cy+y1, x2-x1, y2-y1);
 }
 
 void EllipseArc::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)

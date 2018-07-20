@@ -836,96 +836,21 @@ float Schematic::textCorr()
   return (Scale / float(metrics.lineSpacing()));
 }
 
-// ---------------------------------------------------
+/*!
+ * \brief Schematic::sizeOfAll return scene rectangle, bbox of elements
+ * \param xmin
+ * \param ymin
+ * \param xmax
+ * \param ymax
+ */
 void Schematic::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
 {
-  xmin=INT_MAX;
-  ymin=INT_MAX;
-  xmax=INT_MIN;
-  ymax=INT_MIN;
-  Component *pc;
-  Diagram *pd;
-  Wire *pw;
-  WireLabel *pl;
-  Painting *pp;
-
-  if(Components->isEmpty())
-    if(Wires->isEmpty())
-      if(Diagrams->isEmpty())
-        if(Paintings->isEmpty()) {
-          xmin = xmax = 0;
-          ymin = ymax = 0;
-          return;
-        }
-
-
-  float Corr = textCorr();
-  int x1, y1, x2, y2;
-  // find boundings of all components
-  for(pc = Components->first(); pc != 0; pc = Components->next()) {
-    pc->entireBounds(x1, y1, x2, y2, Corr);
-    if(x1 < xmin) xmin = x1;
-    if(x2 > xmax) xmax = x2;
-    if(y1 < ymin) ymin = y1;
-    if(y2 > ymax) ymax = y2;
-  }
-
-  // find boundings of all wires
-  for(pw = Wires->first(); pw != 0; pw = Wires->next()) {
-    if(pw->x1 < xmin) xmin = pw->x1;
-    if(pw->x2 > xmax) xmax = pw->x2;
-    if(pw->y1 < ymin) ymin = pw->y1;
-    if(pw->y2 > ymax) ymax = pw->y2;
-
-    pl = pw->Label;
-    if(pl) {     // check position of wire label
-        pl->getLabelBounding(x1,y1,x2,y2);
-        if(x1 < xmin) xmin = x1;
-        if(x2 > xmax) xmax = x2;
-        if(y1 < ymin) ymin = y1;
-        if(y2 > ymax) ymax = y2;
-    }
-  }
-
-  // find boundings of all node labels
-  for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
-    pl = pn->Label;
-    if(pl) {     // check position of node label
-        pl->getLabelBounding(x1,y1,x2,y2);
-        if(x1 < xmin) xmin = x1;
-        if(x2 > xmax) xmax = x2;
-        if(y1 < ymin) ymin = y1;
-        if(y2 > ymax) ymax = y2;
-    }
-  }
-
-  // find boundings of all diagrams
-  for(pd = Diagrams->first(); pd != 0; pd = Diagrams->next()) {
-    pd->Bounding(x1, y1, x2, y2);
-    if(x1 < xmin) xmin = x1;
-    if(x2 > xmax) xmax = x2;
-    if(y1 < ymin) ymin = y1;
-    if(y2 > ymax) ymax = y2;
-
-    foreach(Graph *pg, pd->Graphs)
-      // test all markers of diagram
-      foreach(Marker *pm, pg->Markers) {
-        pm->Bounding(x1, y1, x2, y2);
-        if(x1 < xmin) xmin = x1;
-        if(x2 > xmax) xmax = x2;
-        if(y1 < ymin) ymin = y1;
-        if(y2 > ymax) ymax = y2;
-      }
-  }
-
-  // find boundings of all Paintings
-  for(pp = Paintings->first(); pp != 0; pp = Paintings->next()) {
-    pp->Bounding(x1, y1, x2, y2);
-    if(x1 < xmin) xmin = x1;
-    if(x2 > xmax) xmax = x2;
-    if(y1 < ymin) ymin = y1;
-    if(y2 > ymax) ymax = y2;
-  }
+  QRect box = scene->sceneRect().toRect();
+  xmin = box.x();
+  ymin = box.y();
+  xmax = box.x() + box.width();
+  ymax = box.y() + box.height();
+  return;
 }
 
 // ---------------------------------------------------

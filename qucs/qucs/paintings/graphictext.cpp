@@ -43,7 +43,7 @@ GraphicText::GraphicText()
 
 QRectF GraphicText::boundingRect() const
 {
-  return *(new QRectF(cx, cy, x2, -y2));
+  return QRectF(cx, cy, x2, -y2);
 }
 
 void GraphicText::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
