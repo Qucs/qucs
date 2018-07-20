@@ -52,6 +52,7 @@ if test "$enable_qucs_gui_debug" = yes; then
   AC_DEFINE(DEBUG, 1, [Enable debug build.])
   QT_DEF="-DQT_DEBUG"
   CXXFLAGS="$CXXFLAGS -g -O0"
+  CPPFLAGS="$CPPFLAGS -DTRACE_UNTESTED"
 else
   AC_DEFINE(NDEBUG, 1, [Disable debug build.])
   QT_DEF="-DQT_NO_DEBUG -DQT_NO_DEBUG_OUTPUT"
@@ -443,6 +444,7 @@ AS_IF([test $QT_MAJOR_VERSION -ge 5],
     QT_LIBS="${QT_LIBS} ${QT_LDFLAGS}"
 
     if test "$enable_qucs_gui_debug" = yes; then
+      # BUG. -W and -Wall are not CPPFLAGS
       CPPFLAGS="$CPPFLAGS -W -Wall"
     fi
 
