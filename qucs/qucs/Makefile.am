@@ -157,7 +157,8 @@ endif
 
 noinst_HEADERS = \
 	$(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
-	symbol.h\
+	symbol.h \
+	trace.h \
 	qt_compat.h \
 	wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
 	projectView.h printerwriter.h imagewriter.h command.h

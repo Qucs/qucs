@@ -52,6 +52,7 @@ if test "$enable_qucs_gui_debug" = yes; then
   AC_DEFINE(DEBUG, 1, [Enable debug build.])
   QT_DEF="-DQT_DEBUG"
   CXXFLAGS="$CXXFLAGS -g -O0"
+  CPPFLAGS="$CPPFLAGS -DTRACE_UNTESTED"
 else
   AC_DEFINE(NDEBUG, 1, [Disable debug build.])
   QT_DEF="-DQT_NO_DEBUG -DQT_NO_DEBUG_OUTPUT"
@@ -434,6 +435,7 @@ case $host_os in
     QT_LDFLAGS="$QT_LDFLAGS -headerpad_max_install_names"
 
     if test "$enable_qucs_gui_debug" = yes; then
+      # BUG. -W and -Wall are not CPPFLAGS
       CPPFLAGS="$CPPFLAGS -W -Wall"
     fi
 
