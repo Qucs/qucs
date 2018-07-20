@@ -36,8 +36,8 @@
 #endif
 #define itested()
 
-// implement Q3Ptrlist for use in old code.
-// just don't use it in new code.
+// partly implement Q3Ptrlist, see Qt3 documentation.
+// just don't use it in new code, remove what is no longer used.
 template <class T>
 class Q3PtrList {
 public:
@@ -74,13 +74,13 @@ public:
 	void setAutoDelete(bool b) {
 		_autodelete = b;
 	};
-	T* first() {   // pointer to first element
+	T* first() {
 		cur = localList.begin();
 		if (localList.count() == 0)
 			return nullptr;
 		return *cur;
 	};
-	T* last() {    // pointer to last element
+	T* last() {
 		if (localList.count()) { untested();
 			cur = localList.end()-1; // yikes. no rbegin. use std::list?!
 			return *cur;
@@ -90,6 +90,7 @@ public:
 	};
 	void append(T *t) {
 		localList.append(t);
+		cur = localList.end()-1; // yikes. no rbegin. use std::list?!
 	};
 	int contains(T *) { untested();
 		incomplete();
@@ -166,7 +167,7 @@ public:
 	T* getLast() { itested();
 		return localList.last();
 	};
-	T* next() {    // get pointer to next element, correct the current
+	T* next() {
 		if (cur == localList.end()){ untested();
 			return nullptr;
 		}else{
@@ -178,7 +179,7 @@ public:
 			}
 		}
 	};
-	T* prev() {    // get pointer to prev element, correct the current
+	T* prev() {
 		if (cur == localList.end()) { untested();
 			return nullptr;
 		}else if (cur == localList.begin()){ untested();
@@ -189,7 +190,7 @@ public:
 			return *cur;
 		}
 	};
-	T* current() { // get pointer to current element
+	T* current() {
 		if (cur==localList.end()){ untested();
 			return nullptr;
 		}else{ untested();
@@ -210,6 +211,7 @@ public:
 			++next;
 			if(_autodelete){ untested();
 				delete *cur;
+			}else{
 			}
 			localList.erase(cur);
 		}else{ untested();
