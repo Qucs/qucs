@@ -115,7 +115,6 @@ struct Property {
 #define isAnalogComponent  0x10000
 #define isDigitalComponent 0x20000
 
-// these are normal types. always use dynamic_cast instead.
 #define isGraph            0x0020
 #define isNode             0x0040
 #define isMarker           0x0080
@@ -132,7 +131,6 @@ struct Property {
 #define isHMovingLabel     0x4002
 #define isVMovingLabel     0x4004
 
-// this is weird. some of these elemments are actually mousecommands
 #define isDiagram          0x8000
 #define isDiagramResize    0x8001
 #define isDiagramHScroll   0x8002
@@ -150,12 +148,6 @@ protected:
 public:
   virtual ~Element();
 
-  // TODO: remove.
-  // use this for now, in places where "Type" has been accessed directly
-  int elemType() const{
-	  return Type;
-  }
-
   virtual void paintScheme(QPainter *);
 
   virtual void setCenter(int, int, bool relative=false);
@@ -165,10 +157,12 @@ public:
   virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
 
 public:
-  bool isSelected() const { return Selected; }
+  bool isSelected() const { return ElemSelected; }
+  // BUG: use dynamic_cast to obtain type
+  int elemType() const { return ElemType; }
 
-  bool Selected;
-  int  Type;    // BUG. obsolete.
+  bool ElemSelected;
+  int  ElemType;    // BUG. obsolete.
   int  cx, cy, x1, y1, x2, y2;  // center and relative boundings
   bool drawScheme; // inform paint method to draw element or its outline
 };
