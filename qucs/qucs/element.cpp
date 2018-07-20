@@ -48,4 +48,5 @@ QRectF Element::boundingRect() const
 
 void Element::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
+	//BUG?
 }

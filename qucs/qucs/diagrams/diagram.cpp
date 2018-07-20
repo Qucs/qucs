@@ -209,6 +209,7 @@ void Diagram::paintDiagram(QPainter *painter)
 
 void Diagram::paintMarkers(QPainter *p, bool paintAll)
 {
+	incomplete();
     /** \todo Diagram::paintMarkers
     // draw markers last, so they are at the top of painting layers
     foreach(Graph *pg, Graphs)

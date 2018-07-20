@@ -57,6 +57,7 @@ void TabDiagram::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, 
     painter->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
   }
   /// \todo TabDiagram::paint
+  incomplete();
   /*
     p->Painter->setPen(pl->style);
     p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
