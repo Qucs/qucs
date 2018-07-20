@@ -23,18 +23,7 @@
 #include <QList>
 #include <QDebug>
 
-// TODO: trace.h
-#include <iostream>
-#define incomplete() ( \
-    std::cerr << "@@#\n@@@\nincomplete:" \
-              << __FILE__ << ":" << __LINE__ << ":" << __func__ << "\n" )
-#ifdef DO_TRACE
-#define untested() ( std::cerr <<  "@@#\n@@@:"<< __FILE__ << ":"<< __LINE__ \
-          <<":" << __func__ << "\n" )
-#else
-#define untested()
-#endif
-#define itested()
+#include "trace.h"
 
 // partly implement Q3Ptrlist, see Qt3 documentation.
 // just don't use it in new code, remove what is no longer used.
