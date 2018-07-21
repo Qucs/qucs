@@ -215,6 +215,7 @@ QucsAttenuator::QucsAttenuator()
   //Option for transforming a quarter wavelength transmission line into its lumped element equivalent
   Check_QW_CLC = new QCheckBox("Use lumped components");
   Check_QW_CLC->hide();
+  connect(Check_QW_CLC, SIGNAL(clicked(bool)), this, SLOT(slotTopologyChanged()));
   inGrid->addWidget(Check_QW_CLC, 7,0);
 
   InputGroup->setLayout(inGrid);
@@ -524,7 +525,8 @@ void QucsAttenuator::slotTopologyChanged()
       Combo_FreqUnits->hide();
       break;
     case QW_SERIES_TYPE:
-      pixTopology->setPixmap(QPixmap((":/bitmaps/qw_series.png")));
+      if (Check_QW_CLC->isChecked()) pixTopology->setPixmap(QPixmap((":/bitmaps/qw_series_CLC.png")));
+      else pixTopology->setPixmap(QPixmap((":/bitmaps/qw_series.png")));
       LabelImp1->setText("Z0:");
       LabelImp2->hide();
       QSpinBox_Zout->hide();
@@ -548,7 +550,8 @@ void QucsAttenuator::slotTopologyChanged()
       Combo_FreqUnits->show();
       break;
    case QW_SHUNT_TYPE:
-      pixTopology->setPixmap(QPixmap((":/bitmaps/qw_shunt.png")));
+      if (Check_QW_CLC->isChecked()) pixTopology->setPixmap(QPixmap((":/bitmaps/qw_shunt_CLC.png")));
+      else pixTopology->setPixmap(QPixmap((":/bitmaps/qw_shunt.png")));
       LabelImp1->setText("Z0:");
       LabelImp2->hide();
       QSpinBox_Zout->hide();
