@@ -1,1 +1,1 @@
-@QT_VERSION@
+#undef QT_VERSION_STRING
