@@ -80,6 +80,7 @@ class QucsAttenuator : public QMainWindow
   QLabel *Label_Freq;
   QComboBox *Combo_FreqUnits;
   QDoubleSpinBox *QSpinBox_Freq;
+  QCheckBox *Check_QW_CLC;
 };
 
 #endif

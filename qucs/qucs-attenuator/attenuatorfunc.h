@@ -21,6 +21,7 @@
 #define QW_SHUNT_TYPE 5
 
 #define C0 299792458
+#define PI 3.141592653589793238462643383279502884197169399375105820974944592307816406286
 
 #include <cmath>
 
@@ -43,6 +44,8 @@ struct tagATT
   bool minR; //The reflection attenuator can be designed using two different resistor values. The first one is such
              //as R < Z0 whereas the other is such as R > Z0. This field is just a flag to indicate what solution
              //qucsattenuator should use.
+  bool useLumped;//Used only in the quarter wave attenuators. It indicates that the program must replace the
+                 //qw line by its lumped element equivalent (CLC)
   double freq;//Central frequency for quarter-wavelength attenuators
 };
 
@@ -60,5 +63,5 @@ class QUCS_Att
 
 QString RoundVariablePrecision(double);
 QString ConvertLengthFromM(double);
-
+QString num2str(double);
 #endif

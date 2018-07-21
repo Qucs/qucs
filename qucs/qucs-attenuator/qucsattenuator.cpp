@@ -212,12 +212,19 @@ QucsAttenuator::QucsAttenuator()
   minR_Reflection_Att->hide();
   inGrid->addWidget(minR_Reflection_Att, 6,0);
 
+  //Option for transforming a quarter wavelength transmission line into its lumped element equivalent
+  Check_QW_CLC = new QCheckBox("Use lumped components");
+  Check_QW_CLC->hide();
+  inGrid->addWidget(Check_QW_CLC, 7,0);
+
   InputGroup->setLayout(inGrid);
 
   vboxRight->addWidget(InputGroup);
 
   Calculate = new QPushButton(tr("Put into Clipboard"));
   connect(Calculate, SIGNAL(clicked()), SLOT(slotCalculate()));
+
+
 
   vboxRight->addWidget(Calculate);
 
@@ -439,6 +446,7 @@ void QucsAttenuator::slotTopologyChanged()
       lineEdit_R4_Pdiss->hide();
       ComboR4_PowerUnits->hide();
       minR_Reflection_Att->hide();
+      Check_QW_CLC->hide();
       Label_Freq->hide();
       QSpinBox_Freq->hide();
       Combo_FreqUnits->hide();
@@ -460,6 +468,7 @@ void QucsAttenuator::slotTopologyChanged()
       lineEdit_R4_Pdiss->hide();
       ComboR4_PowerUnits->hide();
       minR_Reflection_Att->hide();
+      Check_QW_CLC->hide();
       Label_Freq->hide();
       QSpinBox_Freq->hide();
       Combo_FreqUnits->hide();
@@ -485,6 +494,7 @@ void QucsAttenuator::slotTopologyChanged()
       ComboR4_PowerUnits->show();
       QSpinBox_Zout->setValue(QSpinBox_Zin->value());
       minR_Reflection_Att->hide();
+      Check_QW_CLC->hide();
       Label_Freq->hide();
       QSpinBox_Freq->hide();
       Combo_FreqUnits->hide();
@@ -508,6 +518,7 @@ void QucsAttenuator::slotTopologyChanged()
       ComboR4_PowerUnits->hide();
       QSpinBox_Zout->setValue(QSpinBox_Zin->value());
       minR_Reflection_Att->show();
+      Check_QW_CLC->hide();
       Label_Freq->hide();
       QSpinBox_Freq->hide();
       Combo_FreqUnits->hide();
@@ -531,6 +542,7 @@ void QucsAttenuator::slotTopologyChanged()
       ComboR3_PowerUnits->show();
       ComboR4_PowerUnits->hide();
       minR_Reflection_Att->hide();
+      Check_QW_CLC->show();
       Label_Freq->show();
       QSpinBox_Freq->show();
       Combo_FreqUnits->show();
@@ -554,6 +566,7 @@ void QucsAttenuator::slotTopologyChanged()
       ComboR3_PowerUnits->show();
       ComboR4_PowerUnits->hide();
       minR_Reflection_Att->hide();
+      Check_QW_CLC->show();
       Label_Freq->show();
       QSpinBox_Freq->show();
       Combo_FreqUnits->show();
@@ -577,6 +590,8 @@ void QucsAttenuator::slotCalculate()
     Values.Zout = QSpinBox_Zout->value();
     Values.minR = minR_Reflection_Att->isChecked();
     Values.freq = QSpinBox_Freq->value();
+    Values.useLumped = Check_QW_CLC->isChecked();
+
     //Frequency scale
     if (Combo_FreqUnits->currentText() == "GHz") Values.freq*=1e9;
     else if (Combo_FreqUnits->currentText() == "MHz") Values.freq*=1e6;

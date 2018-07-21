@@ -387,7 +387,20 @@ QString* QUCS_Att::createSchematic(tagATT *ATT, bool SP_box)
       break;
 
      case QW_SERIES_TYPE:
-      *s += QString("<TLIN Line1 1 250 0 -38 -75 0 0 \"%1 Ohm\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(ATT->Zin).arg(ConvertLengthFromM(ATT->R4));
+
+      if (ATT->useLumped)
+      {
+        double w = 2*PI*ATT->freq;
+        *s += QString("<L L1 1 250 0 -40 -60 0 0 \"%1H\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(num2str(ATT->Zin/w));
+        *s += QString("<C C1 1 180 -60 -80 -20 0 1 \"%1F\" 1 \"\" 0 \"neutral\" 0>\n").arg(num2str(1/(ATT->Zin*w)));
+        *s += "<GND * 1 180 -90 0 0 1 0>\n";
+        *s += QString("<C C1 1 320 -60 20 -20 0 1 \"%1F\" 1 \"\" 0 \"neutral\" 0>\n").arg(num2str(1/(ATT->Zin*w)));
+        *s += "<GND * 1 320 -90 0 0 1 0>\n";
+      }
+      else
+      {
+          *s += QString("<TLIN Line1 1 250 0 -38 -75 0 0 \"%1 Ohm\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(ATT->Zin).arg(ConvertLengthFromM(ATT->R4));
+      }
       *s += QString("<R R1 1 100 50 15 -26 0 1 \"%1 Ohm\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(RoundVariablePrecision(ATT->R1));
       *s += QString("<R R1 1 100 150 15 -26 0 1 \"%1 Ohm\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(RoundVariablePrecision(ATT->Zin));
       *s += "<GND * 1 100 180 0 0 0 0>\n";
@@ -433,11 +446,21 @@ QString* QUCS_Att::createSchematic(tagATT *ATT, bool SP_box)
           *s += "<500 120 500 0 \"\" 0 0 0 \"\">\n";
           *s += "<450 0 500 0 \"\" 0 0 0 \"\">\n";
       }
+      if (ATT->useLumped)
+      {//Add extra wiring to connect the shunt capacitors to the main line
+          *s += "<180 -30 180 0 \"\" 0 0 0 \"\">\n";
+          *s += "<320 -30 320 0 \"\" 0 0 0 \"\">\n";
+      }
+
       *s += "</Wires>\n";
       *s += "<Diagrams>\n";
       *s += "</Diagrams>\n";
       *s += "<Paintings>\n";
-      *s += QString("<Text 120 -120 12 #000000 0 \"%1 dB Quarter-Wave series attenuator\">\n").arg(ATT->Attenuation);
+
+      //In the case of the Pi-equivalent of the quarter wavelength line it is needed to put the title slighly higher.
+      if (ATT->useLumped) *s += QString("<Text 120 -140 12 #000000 0 \"%1 dB Quarter-Wave series attenuator\">\n").arg(ATT->Attenuation);
+      else *s += QString("<Text 120 -120 12 #000000 0 \"%1 dB Quarter-Wave series attenuator\">\n").arg(ATT->Attenuation);
+
       if (!SP_box)
       {// If the SP simulation box option is activated, then the input and output ports are attached.
        // Thus, it doesn't make sense to have a text field indicating the input/output impedance
@@ -448,32 +471,44 @@ QString* QUCS_Att::createSchematic(tagATT *ATT, bool SP_box)
       break;
 
   case QW_SHUNT_TYPE:
-   *s += QString("<TLIN Line1 1 200 60 20 -35 0 1 \"%1 Ohm\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(ATT->Zin).arg(ConvertLengthFromM(ATT->R4));
-   *s += QString("<R R1 1 160 150 -100 -26 0 1 \"%1 Ohm\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(RoundVariablePrecision(ATT->R1));
-   *s += "<GND * 1 160 180 0 0 0 0>\n";
-   *s += QString("<R R1 1 240 150 15 -26 0 1 \"%1 Ohm\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(RoundVariablePrecision(ATT->Zin));
-   *s += "<GND * 1 240 180 0 0 0 0>\n";
-   *s += QString("<R R1 1 300 0 -30 -60 0 0 \"%1 Ohm\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(RoundVariablePrecision(ATT->R1));
+      if (ATT->useLumped)
+      {
+        double w = 2*PI*ATT->freq;
+        *s += QString("<L L1 1 200 60 20 -35 0 1 \"%1H\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(num2str(ATT->Zin/w));
+        *s += QString("<C C1 1 200 -60 -80 -20 0 1 \"%1F\" 1 \"\" 0 \"neutral\" 0>\n").arg(num2str(1/(ATT->Zin*w)));
+        *s += "<GND * 1 200 -90 0 0 1 0>\n";
+        *s += QString("<C C1 1 320 150 0 60 0 1 \"%1F\" 1 \"\" 0 \"neutral\" 0>\n").arg(num2str(1/(ATT->Zin*w)));
+        *s += "<GND * 1 320 180 0 0 0 0>\n";
+      }
+      else
+      {
+        *s += QString("<TLIN Line1 1 200 60 20 -35 0 1 \"%1 Ohm\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(ATT->Zin).arg(ConvertLengthFromM(ATT->R4));
+      }
+      *s += QString("<R R1 1 160 150 -40 60 0 1 \"%1 Ohm\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(RoundVariablePrecision(ATT->R1));
+      *s += "<GND * 1 160 180 0 0 0 0>\n";
+      *s += QString("<R R1 1 240 150 -20 60 0 1 \"%1 Ohm\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(RoundVariablePrecision(ATT->Zin));
+      *s += "<GND * 1 240 180 0 0 0 0>\n";
+      *s += QString("<R R1 1 300 0 -30 -60 0 0 \"%1 Ohm\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(RoundVariablePrecision(ATT->R1));
 
-   if (SP_box)
-   {
-     // S-parameter simulation block
-     //-----------------------------
-     // The quarter-wave line is a narrowband device... so let's set the SP sweep from f0/2 to 3*f0/2
-     QString freq_start = QString("%1").arg(0.5*ATT->freq*1e-6);//MHz
-     QString freq_stop = QString("%1").arg(1.5*ATT->freq*1e-6);//MHz
-     *s += QString("<.SP SP1 1 100 270 0 83 0 0 \"lin\" 1 \"%1 MHz\" 1 \"%2 MHz\" 1 \"200\" 1 \"no\" 0 \"1\" 0 \"2\" 0 \"no\" 0 \"no\" 0>\n").arg(freq_start).arg(freq_stop);
+      if (SP_box)
+      {
+      // S-parameter simulation block
+      //-----------------------------
+      // The quarter-wave line is a narrowband device... so let's set the SP sweep from f0/2 to 3*f0/2
+      QString freq_start = QString("%1").arg(0.5*ATT->freq*1e-6);//MHz
+      QString freq_stop = QString("%1").arg(1.5*ATT->freq*1e-6);//MHz
+      *s += QString("<.SP SP1 1 100 270 0 83 0 0 \"lin\" 1 \"%1 MHz\" 1 \"%2 MHz\" 1 \"200\" 1 \"no\" 0 \"1\" 0 \"2\" 0 \"no\" 0 \"no\" 0>\n").arg(freq_start).arg(freq_stop);
 
-     // Equations
-     *s += "<Eqn Eqn1 1 320 270 -32 19 0 0 \"S21_dB=dB(S[2,1])\" 1 \"S11_dB=dB(S[1,1])\" 1 \"S22_dB=dB(S[2,2])\" 1 \"yes\" 0>\n";
+      // Equations
+      *s += "<Eqn Eqn1 1 320 270 -32 19 0 0 \"S21_dB=dB(S[2,1])\" 1 \"S11_dB=dB(S[1,1])\" 1 \"S22_dB=dB(S[2,2])\" 1 \"yes\" 0>\n";
 
-     // Input term
-     *s += QString("<Pac P1 1 0 150 -100 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n").arg(ATT->Zin);
-     *s += "<GND * 1 0 180 0 0 0 0>\n";
+      // Input term
+      *s += QString("<Pac P1 1 0 150 -100 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n").arg(ATT->Zin);
+      *s += "<GND * 1 0 180 0 0 0 0>\n";
 
-     // Output term
-     *s += QString("<Pac P1 1 500 150 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n").arg(ATT->Zout);
-     *s += "<GND * 1 500 180 0 0 0 0>\n";
+      // Output term
+      *s += QString("<Pac P1 1 500 150 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n").arg(ATT->Zout);
+      *s += "<GND * 1 500 180 0 0 0 0>\n";
    }
    *s += "</Components>\n";
 
@@ -503,11 +538,23 @@ QString* QUCS_Att::createSchematic(tagATT *ATT, bool SP_box)
        *s += "<500 120 500 0 \"\" 0 0 0 \"\">\n";
        *s += "<410 0 500 0 \"\" 0 0 0 \"\">\n";
    }
+
+   if (ATT->useLumped)
+   {//Add extra wiring to connect the shunt capacitors
+       *s += "<320 120 320 105 \"\" 0 0 0 \"\">\n";
+       *s += "<320 105 180 105 \"\" 0 0 0 \"\">\n";
+
+       *s += "<200 -30 200 0 \"\" 0 0 0 \"\">\n";
+   }
    *s += "</Wires>\n";
    *s += "<Diagrams>\n";
    *s += "</Diagrams>\n";
    *s += "<Paintings>\n";
-   *s += QString("<Text 120 -120 12 #000000 0 \"%1 dB Quarter-Wave shunt attenuator\">\n").arg(ATT->Attenuation);
+
+   //Put the title a little bit higher because of the shunt cpa
+   if (ATT->useLumped) *s += QString("<Text 120 -140 12 #000000 0 \"%1 dB Quarter-Wave shunt attenuator\">\n").arg(ATT->Attenuation);
+   else *s += QString("<Text 120 -120 12 #000000 0 \"%1 dB Quarter-Wave shunt attenuator\">\n").arg(ATT->Attenuation);
+
    if (!SP_box)
    {// If the SP simulation box option is activated, then the input and output ports are attached.
     // Thus, it doesn't make sense to have a text field indicating the input/output impedance
@@ -625,4 +672,38 @@ QString RoundVariablePrecision(double val)
   int precision = 0;//By default, it takes 2 decimal places
   while (val*pow(10, precision) < 100) precision++;//Adds another decimal place if the conversion is less than 0.1, 0.01, etc
   return QString::number(val, 'F', precision);// Round to 'precision' decimals.
+}
+
+
+//COPIED FROM QUCS-POWERCOMBINING TOOL
+// Converts a double number into string adding the corresponding prefix
+QString num2str(double Num)
+{
+  char c = 0;
+  double cal = fabs(Num);
+  if(cal > 1e-20) {
+    cal = log10(cal) / 3.0;
+    if(cal < -0.2)  cal -= 0.98;
+    int Expo = int(cal);
+
+    if(Expo >= -5) if(Expo <= 4)
+      switch(Expo) {
+        case -5: c = 'f'; break;
+        case -4: c = 'p'; break;
+        case -3: c = 'n'; break;
+        case -2: c = 'u'; break;
+        case -1: c = 'm'; break;
+        case  1: c = 'k'; break;
+        case  2: c = 'M'; break;
+        case  3: c = 'G'; break;
+        case  4: c = 'T'; break;
+      }
+
+    if(c)  Num /= pow(10.0, double(3*Expo));
+  }
+
+  QString Str = RoundVariablePrecision(Num);
+  if(c)  Str += c;
+
+  return Str;
 }
