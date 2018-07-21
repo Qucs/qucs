@@ -24,9 +24,11 @@ int QUCS_Att::Calc(tagATT *ATT)
 {
   double Lmin, L, A;
   L = pow(10, ATT->Attenuation / 10);
-
   A = (L + 1) / (L - 1);
 
+  //Check minumum attenuation for Pi and Tee type attenuators
+  if ((ATT->Topology == PI_TYPE) || (ATT->Topology == TEE_TYPE))
+  {
   if(ATT->Zin > ATT->Zout)
     {
       Lmin = (2 * ATT->Zin / ATT->Zout) - 1 + 2 * 
@@ -43,9 +45,9 @@ int QUCS_Att::Calc(tagATT *ATT)
     {
       return -1;
     }
-  else
-    {
-      switch(ATT->Topology)
+  }
+
+    switch(ATT->Topology)
 	{
 	case PI_TYPE:
 	  {
@@ -130,8 +132,7 @@ int QUCS_Att::Calc(tagATT *ATT)
          break;
       }
 	}
-      return 0;
-    }
+    return 0;
 }
 
 //This function creates the schematic. It receives the attenuator resistor values (tagATT * ATT) and bool flag to include a S-parameter box in the schematic
