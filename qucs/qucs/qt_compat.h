@@ -294,6 +294,9 @@ private:
 	iterator cur;
 };
 
+// select qt3 code
+#define USE_SCROLLVIEW
+
 #endif
 
 //vim:ts=8:sw=4:et

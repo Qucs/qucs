@@ -53,6 +53,7 @@
 #include "components/verilogfile.h"
 #include "components/vafile.h"
 #include "misc.h"
+#include "trace.h"
 
 // just dummies for empty lists
 WireList      SymbolWires;
@@ -535,20 +536,40 @@ void Schematic::contentsMousePressEvent(QMouseEvent *Event)
 
   float x = float(Event->pos().x())/Scale + float(ViewX1);
   float y = float(Event->pos().y())/Scale + float(ViewY1);
+  QPoint p(x, y);
 
-  if(Event->button() != Qt::LeftButton)
-    if(App->MousePressAction != &MouseActions::MPressElement)
-      if(App->MousePressAction != &MouseActions::MPressWire2) {
+  qDebug() << "nestedEvent?"; // this does not work right. need both...
+  QMouseEvent nestedEvent(Event->type(), Event->pos(), Event->globalPos(),
+      Event->button(), Event->buttons(), Event->modifiers());
+
+  if(Event->button() != Qt::LeftButton){
+    if(App->MousePressAction == &MouseActions::MPressElement){
+    }else if(App->MousePressAction != &MouseActions::MPressWire2) {
         // show menu on right mouse button
-        App->view->rightPressMenu(this, Event, x, y);
-        if(App->MouseReleaseAction)
+        App->view->rightPressMenu(this, Event);
+        if(App->MouseReleaseAction){
            // Is not called automatically because menu has focus.
-          (App->view->*(App->MouseReleaseAction))(this, Event);
+          (App->view->*(App->MouseReleaseAction))(this, &nestedEvent);
+        }
         return;
-      }
+    }else{
+    }
+  }
 
-  if(App->MousePressAction)
-    (App->view->*(App->MousePressAction))(this, Event, x, y);
+  if(App->MousePressAction){
+    qDebug() << "nestedEvent Action?";
+    // // does not make sense.
+    // try and figure out what events are nested here.
+    if(App->MousePressAction == &MouseActions::MPressElement){ untested();
+    }else if(App->MousePressAction == &MouseActions::MPressWire2){ untested();
+    }else if(App->MousePressAction == &MouseActions::MPressWire1){ untested();
+    }else if(App->MousePressAction == &MouseActions::MPressSelect){ itested();
+    }else if(App->MousePressAction == &MouseActions::MReleasePaste){ untested();
+    }else{ untested();
+    }
+    (App->view->*(App->MousePressAction))(this, &nestedEvent);
+  }else{
+  }
 }
 
 // -----------------------------------------------------------
@@ -2096,18 +2117,23 @@ void Schematic::contentsDropEvent(QDropEvent *Event)
   }
 
 
-  QMouseEvent e(QEvent::MouseButtonPress, Event->pos(),
-                Qt::LeftButton, Qt::NoButton, Qt::NoModifier);
   int x = int(Event->pos().x()/Scale) + ViewX1;
   int y = int(Event->pos().y()/Scale) + ViewY1;
+  QPoint p(x, y);
 
-  App->view->MPressElement(this, &e, x, y);
+  qDebug() << "nestedEvent e?";
+  QMouseEvent e(QEvent::MouseButtonPress, p,
+                Qt::LeftButton, Qt::NoButton, Qt::NoModifier);
+
+  App->view->MPressElement(this, &e);
 
   if(App->view->selElem) delete App->view->selElem;
   App->view->selElem = 0;  // no component selected
 
-  if(formerAction)
+  if(formerAction){
     formerAction->setChecked(true);  // restore old action
+  }else{
+  }
 }
 
 // ---------------------------------------------------
@@ -2193,5 +2219,17 @@ void Schematic::contentsDragMoveEvent(QDragMoveEvent *Event)
 
   Event->accept();
 }
+
+// ---------------------------------------------------
+#ifdef USE_SCROLLVIEW
+QPointF Schematic::mapToScene(QPoint const& p)
+{
+  float fX=float(p.x())/Scale + float(ViewX1);
+  float fY=float(p.y())/Scale + float(ViewY1);
+
+  return QPointF(fX, fY);
+}
+#endif
+
 
 // vim:ts=8:sw=2:noet

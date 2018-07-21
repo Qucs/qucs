@@ -142,21 +142,21 @@ public:
   void MMoveZoomIn(Schematic*, QMouseEvent*);
   void MMoveScrollBar(Schematic*, QMouseEvent*);
 
-  void MPressSelect(Schematic*, QMouseEvent*, float, float);
-  void MPressDelete(Schematic*, QMouseEvent*, float, float);
-  void MPressActivate(Schematic*, QMouseEvent*, float, float);
-  void MPressMirrorX(Schematic*, QMouseEvent*, float, float);
-  void MPressMirrorY(Schematic*, QMouseEvent*, float, float);
-  void MPressRotate(Schematic*, QMouseEvent*, float, float);
-  void MPressElement(Schematic*, QMouseEvent*, float, float);
-  void MPressLabel(Schematic*, QMouseEvent*, float, float);
-  void MPressWire1(Schematic*, QMouseEvent*, float, float);
-  void MPressWire2(Schematic*, QMouseEvent*, float, float);
-  void MPressPainting(Schematic*, QMouseEvent*, float, float);
-  void MPressMarker(Schematic*, QMouseEvent*, float, float);
-  void MPressOnGrid(Schematic*, QMouseEvent*, float, float);
-  void MPressMoveText(Schematic*, QMouseEvent*, float, float);
-  void MPressZoomIn(Schematic*, QMouseEvent*, float, float);
+  void MPressSelect(Schematic*, QMouseEvent*);
+  void MPressDelete(Schematic*, QMouseEvent*);
+  void MPressActivate(Schematic*, QMouseEvent*);
+  void MPressMirrorX(Schematic*, QMouseEvent*);
+  void MPressMirrorY(Schematic*, QMouseEvent*);
+  void MPressRotate(Schematic*, QMouseEvent*);
+  void MPressElement(Schematic*, QMouseEvent*);
+  void MPressLabel(Schematic*, QMouseEvent*);
+  void MPressWire1(Schematic*, QMouseEvent*);
+  void MPressWire2(Schematic*, QMouseEvent*);
+  void MPressPainting(Schematic*, QMouseEvent*);
+  void MPressMarker(Schematic*, QMouseEvent*);
+  void MPressOnGrid(Schematic*, QMouseEvent*);
+  void MPressMoveText(Schematic*, QMouseEvent*);
+  void MPressZoomIn(Schematic*, QMouseEvent*);
 
   void MDoubleClickSelect(Schematic*, QMouseEvent*);
   void MDoubleClickWire2(Schematic*, QMouseEvent*);
@@ -176,7 +176,7 @@ public:
   void moveElements(Schematic*, int&, int&);
   void moveElements(Q3PtrList<Element>*, int, int);
   void endElementMoving(Schematic*, Q3PtrList<Element>*);
-  void rightPressMenu(Schematic*, QMouseEvent*, float, float);
+  void rightPressMenu(Schematic*, QMouseEvent*);
 };
 
 #endif
