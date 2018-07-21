@@ -968,6 +968,13 @@ void Schematic::markerUpDown(bool up, Q3PtrList<Element> *Elements)
 */
 Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
 {
+  // something like
+   // dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform())
+   //
+   // THIS IS MISLEADING. it is also used to generate mouse actions.
+   // we need something that produces actions, not Elements
+   // actions will be needed to implement the undo stack... etcpp
+
     int n, x = int(fX), y = int(fY);
     Element *pe_1st = 0;
     Element *pe_sel = 0;
