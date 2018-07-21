@@ -8,8 +8,11 @@ m4_define([QUCS_VERSION], m4_esyscmd([tr -d '\n' < VERSION]))
 
 AC_INIT([qucs], [QUCS_VERSION], [qucs-bugs@lists.sourceforge.net], [], [https://sf.net/p/qucs])
 AC_CONFIG_SRCDIR([qucs/qucs.cpp])
-AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_HEADERS([qt_version])
+
+# qt_version is not really a config header. it is touched whenever the
+# QT_VERSION changes, triggers moc recompilation
+AC_CONFIG_HEADER([config.h qt_version])
+
 AC_CONFIG_AUX_DIR([.])
 
 AC_CANONICAL_BUILD
@@ -204,7 +207,8 @@ RCC_=`$PKG_CONFIG --variable rcc_location ${qt_name}Core`
 UIC_=`$PKG_CONFIG --variable uic_location ${qt_name}Core`
 MOC_=`$PKG_CONFIG --variable moc_location ${qt_name}Core`
 QT_VERSION=`$PKG_CONFIG --modversion ${qt_name}Core`
-AC_SUBST([QT_VERSION])
+AC_DEFINE_UNQUOTED([QT_VERSION_STRING], ["$QT_VERSION"],
+		   [version string for stamping purposes])
 
 # empty for Qt4
 QT_BINPATH=`$PKG_CONFIG --variable host_bins ${qt_name}Core`
