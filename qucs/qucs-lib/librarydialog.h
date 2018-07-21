@@ -49,7 +49,7 @@ private:
   QList <QRadioButton*>  radioButton;
 
   QVBoxLayout *all;   // the mother of all widgets
-  //QVBox *Dia_Box;
+  //Q3VBox *Dia_Box;
   QLabel *theLabel;
   QLineEdit *NameEdit;
   //QVButtonGroup  *toggleGroup;

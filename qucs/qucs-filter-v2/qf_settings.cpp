@@ -22,7 +22,7 @@
 #include "qf_box.h"
 #include "qf_settings.h"
 //Added by qt3to4:
-#include <QTextStream>
+#include <Q3TextStream>
 
 struct tQucsSettings QucsSettings;
 
@@ -36,7 +36,7 @@ bool loadSettings (void)
   if(!file.open(QIODevice::ReadOnly))
     result = false; // settings file doesn't exist
   else {
-    QTextStream stream(&file);
+    Q3TextStream stream(&file);
     QString Line, Setting;
     while(!stream.atEnd()) {
       Line = stream.readLine();
@@ -60,7 +60,7 @@ bool loadSettings (void)
   if(!file.open(QIODevice::ReadOnly))
     result = true; // qucs settings not necessary
   else {
-    QTextStream stream(&file);
+    Q3TextStream stream(&file);
     QString Line, Setting;
     while(!stream.atEnd()) {
       Line = stream.readLine();
@@ -93,7 +93,7 @@ bool saveSettings(qf_box *qucs)
   }
 
   QString Line;
-  QTextStream stream(&file);
+  Q3TextStream stream(&file);
 
   stream << "Settings file, Qucs Filter " PACKAGE_VERSION "\n"
 	 << "FilterWindow=" << qucs->x() << ',' << qucs->y() << '\n';
@@ -164,7 +164,7 @@ bool saveXmlSettings (qf_box * qucs)
     return false;
   }
 
-  QTextStream str (&file);
+  Q3TextStream str (&file);
   str << doc.toString ();
   file.close ();
   return true;

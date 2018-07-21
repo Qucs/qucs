@@ -30,7 +30,7 @@
 #include <QRadioButton>
 #include <QButtonGroup>
 #include <QPushButton>
-#include <QHBox>
+#include <Q3HBox>
 #include <QMessageBox>
 
 #include "qf_dialog.h"
@@ -44,7 +44,7 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
   setIcon (QPixmap(":/bitmaps/big.qucs.xpm"));
   setCaption("Qucs Filter " PACKAGE_VERSION);
 
-  all = new QVBoxLayout(this);
+  all = new Q3VBoxLayout(this);
 
   // --------  create menubar  -------------------
   QPopupMenu *fileMenu = new QPopupMenu();
@@ -78,7 +78,7 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
 
   OrderBox = new QCheckBox(tr("Specify order"), Tab1);
   gp1->addWidget(OrderBox,1,0);
-  QHBox *h1 = new QHBox(Tab1);
+  Q3HBox *h1 = new Q3HBox(Tab1);
   h1->setSpacing (5);
   OrderCombo = new QComboBox(false, h1);
   OrderCombo->setEnabled(true);
@@ -201,7 +201,7 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
 
   // ...........................................................
   // buttons on the bottom of the dialog (independent of the TabWidget)
-  QHBox *Butts = new QHBox(this);
+  Q3HBox *Butts = new Q3HBox(this);
   Butts->setSpacing(3);
   Butts->setMargin(3);
   all->addWidget(Butts);

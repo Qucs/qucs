@@ -20,10 +20,10 @@
 
 #include <QDialog>
 //Added by qt3to4:
-#include <QVBoxLayout>
+#include <Q3VBoxLayout>
 #include <QLabel>
 
-class QVBoxLayout;
+class Q3VBoxLayout;
 class QLineEdit;
 class QComboBox;
 class QLabel;
@@ -51,7 +51,7 @@ public:
  QPushButton * okButton, * cancelButton; 
  QLineEdit * EnterCutoff, * EnterZin, * EnterZout, * EnterStopband,
   * EnterAngle, * EnterBandwidth, * EnterAttenuation, * EnterRipple;
- QVBoxLayout * all;
+ Q3VBoxLayout * all;
  QComboBox * CutoffCombo, * StopbandCombo, * FilterName, * TformName,
    * OrderCombo, * SubOrderCombo, * BandwidthCombo;
  QLabel * CutoffLabel, * ZinLabel, * OhmLabel, * ZoutLabel, * OhmLabel_2,
