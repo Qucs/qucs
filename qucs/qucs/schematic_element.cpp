@@ -966,7 +966,7 @@ void Schematic::markerUpDown(bool up, Q3PtrList<Element> *Elements)
    as right-clicking on a selected element to get a context
    menu.
 */
-Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
+Element* Schematic::selectElement(QPoint const& xy, bool flag, int *index)
 {
   // something like
    // dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform())
@@ -975,7 +975,13 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
    // we need something that produces actions, not Elements
    // actions will be needed to implement the undo stack... etcpp
 
-    int n, x = int(fX), y = int(fY);
+    int n;
+
+    QPointF pos=mapToScene(xy);
+    float fX=pos.x();
+    float fY=pos.y();
+    int x=int(fX);
+    int y=int(fY);
     Element *pe_1st = 0;
     Element *pe_sel = 0;
     WireLabel *pl = 0;
