@@ -972,10 +972,14 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
   else
     qDebug() << "MPressSelect";
 
-  if(focusElement)
-  switch(focusElement->Type)
-  {
-    case isPaintingResize:  // resize painting ?
+  if(!focusElement){
+  }else if(focusElement->Type == isDiagramHScroll){
+      MAy1 = MAx1;
+  }else{
+  }
+
+  if(!focusElement){
+  }else if(focusElement->Type == isPaintingResize){
       focusElement->Type = isPainting;
       QucsMain->MouseReleaseAction = &MouseActions::MReleaseResizePainting;
       QucsMain->MouseMoveAction = &MouseActions::MMoveResizePainting;
@@ -985,8 +989,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       // Update matching wire label highlighting
       Doc->highlightWireLabels ();
       return;
-
-    case isDiagramResize:  // resize diagram ? why is this not a mouseaction?
+  }else if(focusElement->Type == isDiagramResize){
       if(((Diagram*)focusElement)->Name.left(4) != "Rect")
         if(((Diagram*)focusElement)->Name.at(0) != 'T')
           if(((Diagram*)focusElement)->Name != "Curve")
@@ -1017,12 +1020,10 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       Doc->highlightWireLabels ();
       return;
 
-    case isDiagramHScroll:  // scroll in tabular ?
-      MAy1 = MAx1;
-      // fall through
+  }else if(focusElement->Type == isDiagramHScroll
+   || focusElement->Type == isDiagramVScroll){
 
-    case isDiagramVScroll:
-      focusElement->Type = isDiagram;
+      focusElement->Type = isDiagram; // reset happens here. FIXME.
 
       No = ((TabDiagram*)focusElement)->scroll(MAy1);
 
@@ -1049,7 +1050,8 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       drawn = false;
       return;
 
-    case isComponentText:  // property text of component ?
+  }else if(focusElement->Type == isComponentText){
+
       focusElement->Type &= (~isComponentText) | isComponent;
 
       MAx3 = No;
@@ -1058,7 +1060,8 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       Doc->highlightWireLabels ();
       return;
 
-    case isNode:
+  }else if(focusElement->Type == isNode){
+      assert(dynamic_cast<Node*>(focusElement));
       if (QucsSettings.NodeWiring)
       {
         MAx1 = 0;   // paint wire corner first up, then left/right
@@ -1083,6 +1086,9 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
         Doc->highlightWireLabels ();
         return;
       }
+  }else{
+    // default case
+    // unreachable?
   }
 
   QucsMain->MousePressAction = 0;
