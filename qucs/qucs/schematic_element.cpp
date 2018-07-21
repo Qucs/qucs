@@ -982,107 +982,81 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
     float Corr = textCorr(); // for selecting text
 
     // test all nodes and their labels
-    for(Node *pn = Nodes->last(); pn != 0; pn = Nodes->prev())
-    {
-        if(!flag)
-        {
-            // The element cannot be deselected
-            if(index)
-            {
-                // 'index' is only true if called from MouseActions::MPressSelect()
-                if(pn->getSelected(x, y))
-                {
-                    // Return the node pointer, as the selection cannot change
-                    return pn;
-                }
-            }
+    for(Node *pn = Nodes->last(); pn != 0; pn = Nodes->prev()) {
+        if(flag) {
+            // The element can be deselected
+	}else if(!index) {
+	    // 'index' is only true if called from MouseActions::MPressSelect()
+	}else if(pn->getSelected(x, y)) {
+	    // Return the node pointer, as the selection cannot change
+	    return pn;
         }
 
         pl = pn->Label; // Get any wire label associated with the Node
-        if(pl)
-        {
-            if(pl->getSelected(x, y))
-            {
-                if(flag)
-                {
+        if(!pl) {
+	}else if(pl->getSelected(x, y)) {
+                if(flag) {
                     // The element can be deselected, so toggle its isSelected member
                     // TODO: I don't see a need for the xor here, a simple ! on the current value
                     // would be clearer and have the same effect?
                     pl->toggleSelected();
                     return pl;
-                }
-                if(pe_sel)
-                {
+                }else if(pe_sel) {
                     // There is another currently
                     pe_sel->setSelected(false);
                     return pl;
-                }
-                if(pe_1st == 0)
-                {
+                }else if(pe_1st == 0) {
                     // give access to elements lying beneath by storing this label.
                     // If no label pointer (or other element) has previously been
                     // stored, the current label pointer is stored here.
                     // pe_1st is returned if no other selected element
                     pe_1st = pl;
-                }
-                if(pl->isSelected())
-                {
+                }else{
+		}
+
+                if(pl->isSelected()) {
                     // if current label is already selected, store a pointer to it.
                     // This can be used to cycle through
                     pe_sel = pl;
                 }
             }
-        }
     }
 
     // test all wires and wire labels
-    for(Wire *pw = Wires->last(); pw != 0; pw = Wires->prev())
-    {
-        if(pw->getSelected(x, y))
-        {
-            if(flag)
-            {
+    for(Wire *pw = Wires->last(); pw != 0; pw = Wires->prev()) {
+        if(pw->getSelected(x, y)) {
+            if(flag) {
                 // The element can be deselected
                 pw->toggleSelected();
                 return pw;
-            }
-            if(pe_sel)
-            {
+            }else if(pe_sel) {
                 pe_sel->setSelected(false);
                 return pw;
-            }
-            if(pe_1st == 0)
-            {
+            }else if(pe_1st == 0) {
                 pe_1st = pw;   // give access to elements lying beneath
-            }
-            if(pw->isSelected())
-            {
+            }else{
+	    }
+            if(pw->isSelected()) {
                 pe_sel = pw;
             }
-        }
+        }else{
+	}
         pl = pw->Label; // test any label associated with the wire
-        if(pl)
-        {
-            if(pl->getSelected(x, y))
-            {
-                if(flag)
-                {
+        if(pl) {
+            if(pl->getSelected(x, y)) {
+                if(flag) {
                     // The element can be deselected
                     pl->toggleSelected();
                     return pl;
-                }
-                if(pe_sel)
-                {
+                }else if(pe_sel) {
                     pe_sel->setSelected(false);
                     return pl;
                 }
-                if(pe_1st == 0)
-                {
+                if(pe_1st == 0) {
                     // give access to elements lying beneath
                     pe_1st = pl;
                 }
-                if(pl->isSelected())
-                {
+                if(pl->isSelected()) {
                     pe_sel = pl;
                 }
             }
@@ -1090,35 +1064,26 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
     }
 
     // test all components
-    for(Component *pc = Components->last(); pc != 0; pc = Components->prev())
-    {
-        if(pc->getSelected(x, y))
-        {
-            if(flag)
-            {
+    for(Component *pc = Components->last(); pc != 0; pc = Components->prev()) {
+        if(pc->getSelected(x, y)) {
+            if(flag) {
                 // The element can be deselected
                 pc->toggleSelected();
                 return pc;
-            }
-            if(pe_sel)
-            {
+            }else if(pe_sel) {
                 pe_sel->setSelected(false);
                 return pc;
-            }
-            if(pe_1st == 0)
-            {
+            }else if(pe_1st == 0) {
+		// give access to elements lying beneath
                 pe_1st = pc;
-            }  // give access to elements lying beneath
-            if(pc->isSelected())
-            {
+            } if(pc->isSelected()) {
                 pe_sel = pc;
-            }
-        }
-        else
-        {
+            }else{
+	    }
+        }else{
             n = pc->getTextSelected(x, y, Corr);
-            if(n >= 0)     // was property text clicked ?
-            {
+	    // was property text clicked ?
+            if(n >= 0) {
                 pc->Type = isComponentText;
                 if(index)  *index = n;
                 return pc;
