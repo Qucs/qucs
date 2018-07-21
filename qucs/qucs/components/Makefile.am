@@ -24,11 +24,14 @@
 # Boston, MA 02110-1301, USA.
 #
 
+
 # private library
 qucsdir=${pkglibdir}
 
 MOCHEADERS =
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
+
+include ../../common.mk
 
 plugindir = ${pkglibdir}
 plugin_LTLIBRARIES = qucs-default-components.la
