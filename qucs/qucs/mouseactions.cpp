@@ -986,7 +986,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       Doc->highlightWireLabels ();
       return;
 
-    case isDiagramResize:  // resize diagram ?
+    case isDiagramResize:  // resize diagram ? why is this not a mouseaction?
       if(((Diagram*)focusElement)->name().left(4) != "Rect")
         if(((Diagram*)focusElement)->name().at(0) != 'T')
           if(((Diagram*)focusElement)->name() != "Curve")

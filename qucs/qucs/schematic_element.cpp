@@ -1162,16 +1162,14 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
         }
 
         // resize area clicked ?
-        if(pd->isSelected())
-        {
-            if(pd->resizeTouched(fX, fY, Corr))
-            {
-                if(pe_1st == 0)
-                {
-                    pd->Type = isDiagramResize;
-                    return pd;
-                }
-            }
+        if(!pd->isSelected()){
+          // why do we visit non-selected diagrams?!
+        }else if(!pd->resizeTouched(fX, fY, Corr)){
+          // check: what does it mean?
+        }else if(pe_1st == 0) {
+          pd->Type = isDiagramResize;
+          return pd; // FIXME.
+        }else{
         }
 
         if(pd->getSelected(x, y))
