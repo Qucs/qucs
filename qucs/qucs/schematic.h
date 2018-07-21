@@ -209,6 +209,11 @@ protected:
   void contentsDragLeaveEvent(QDragLeaveEvent*);
   void contentsDragMoveEvent(QDragMoveEvent*);
 
+public:
+#ifdef USE_SCROLLVIEW
+  QPointF mapToScene(QPoint const& p);
+#endif
+
 protected slots:
   void slotScrollUp();
   void slotScrollDown();
@@ -248,7 +253,7 @@ public:
   void    markerLeftRight(bool, Q3PtrList<Element>*);
   void    markerUpDown(bool, Q3PtrList<Element>*);
 
-  Element* selectElement(float, float, bool, int *index=0);
+  Element* selectElement(QPoint const&, bool, int *index=0);
   ElementGraphics itemAt(float, float);
   void     deselectElements(Element*);
   int      selectElements(int, int, int, int, bool);
