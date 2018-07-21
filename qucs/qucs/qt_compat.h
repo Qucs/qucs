@@ -301,6 +301,12 @@ private:
 #define Q_UINT32 quint32
 #define Q_ULONG qulonglong
 #define IO_WriteOnly QIODevice::WriteOnly
+#define WFlags WindowFlags
+
+#if QT_VERSION >= 0x050000
+#define TRUE true
+#define FALSE false
+#endif
 
 #endif
 

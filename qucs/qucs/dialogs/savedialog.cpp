@@ -31,6 +31,8 @@
 #include <QGroupBox>
 #include <QListWidgetItem>
 
+#include "qt_compat.h"
+
 SaveDialog::SaveDialog( QWidget* parent, const char* name, bool modal, Qt::WFlags fl )
    : QDialog( parent, fl ),unsavedDocs()
 {

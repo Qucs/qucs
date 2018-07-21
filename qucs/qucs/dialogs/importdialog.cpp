@@ -27,6 +27,7 @@
 
 #include "importdialog.h"
 #include "qucs.h"
+#include "qt_compat.h"
 
 
 ImportDialog::ImportDialog(QWidget *parent)

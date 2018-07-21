@@ -28,6 +28,7 @@
 #include <QBoxLayout>
 #include <QLabel>
 #include <QCheckBox>
+#include "qt_compat.h"
 
 class QBoxLayout;
 class QBoxLayout;

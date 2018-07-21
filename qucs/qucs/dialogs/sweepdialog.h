@@ -26,6 +26,7 @@
 #include <QGridLayout>
 
 #include "node.h"
+#include "qt_compat.h"
 
 class Graph;
 class Schematic;

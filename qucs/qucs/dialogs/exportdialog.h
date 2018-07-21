@@ -18,6 +18,7 @@
 #define EXPORTDIALOG_H
 
 #include <QDialog>
+#include "qt_compat.h"
 
 class QLabel;
 class QCheckBox;
