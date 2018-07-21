@@ -134,7 +134,7 @@ bool saveApplSettings();
 // function pointers used with mouse actions handling
 typedef bool (Schematic::*pToggleFunc) ();
 typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
-typedef void (MouseActions::*pMouseFunc2) (Schematic*, QMouseEvent*, float, float);
+typedef void (MouseActions::*pMouseFunc2) (Schematic*, QMouseEvent*);
 
 class QucsFileSystemModel : public QFileSystemModel {
   Q_OBJECT
@@ -176,7 +176,7 @@ public:
 
   // current mouse methods
   void (MouseActions::*MouseMoveAction) (Schematic*, QMouseEvent*);
-  void (MouseActions::*MousePressAction) (Schematic*, QMouseEvent*, float, float);
+  void (MouseActions::*MousePressAction) (Schematic*, QMouseEvent*);
   void (MouseActions::*MouseDoubleClickAction) (Schematic*, QMouseEvent*);
   void (MouseActions::*MouseReleaseAction) (Schematic*, QMouseEvent*);
 
