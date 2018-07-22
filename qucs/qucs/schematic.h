@@ -34,6 +34,7 @@
 #include "diagrams/diagram.h"
 #include "paintings/painting.h"
 #include "components/component.h"
+#include "schematic_scene.h"
 
 #include <Q3ScrollView>
 #include "qt_compat.h"
@@ -247,6 +248,7 @@ public:
   void    markerUpDown(bool, Q3PtrList<Element>*);
 
   Element* selectElement(float, float, bool, int *index=0);
+  ElementGraphics itemAt(float, float);
   void     deselectElements(Element*);
   int      selectElements(int, int, int, int, bool);
   void     selectMarkers();
