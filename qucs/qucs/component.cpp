@@ -123,8 +123,13 @@ void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2, float Corr)
 // -------------------------------------------------------
 void Component::setCenter(int x, int y, bool relative)
 {
-  if(relative) { cx += x;  cy += y; }
-  else { cx = x;  cy = y; }
+  if(relative) {
+    cx += x;
+    cy += y;
+  } else {
+    cx = x;
+    cy = y;
+  }
 }
 
 // -------------------------------------------------------
@@ -783,11 +788,11 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   }
 
   n  = s.section(' ',3,3);    // cx
-  c->cx = n.toInt(&ok);
+  c->obsolete_set("cx", n.toInt(&ok));
   if(!ok) return NULL;
 
   n  = s.section(' ',4,4);    // cy
-  c->cy = n.toInt(&ok);
+  c->obsolete_set("cy", n.toInt(&ok));
   if(!ok) return NULL;
 
   n  = s.section(' ',5,5);    // tx
