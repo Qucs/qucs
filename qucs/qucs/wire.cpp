@@ -55,11 +55,14 @@ void Wire::rotate()
   y2  = ym - tmp + xm;
 
   if(Label) {
-    tmp = Label->cx;
-    Label->cx = xm + Label->cy - ym;
-    Label->cy = ym - tmp + xm;
-    if(Label->Type == isHWireLabel) Label->Type = isVWireLabel;
-    else Label->Type = isHWireLabel;
+    tmp = Label->cx_();
+    Label->moveTo(xm + Label->cy_() - ym, ym - tmp + xm);
+    if(Label->Type == isHWireLabel){
+		 // Label->setV(); // something like that, don't abuse type.
+		 Label->Type = isVWireLabel;
+	 } else {
+		 Label->Type = isHWireLabel;
+	 }
   }
 }
 
@@ -149,8 +152,8 @@ QString Wire::save()
           s += " "+QString::number(x2)+" "+QString::number(y2);
   if(Label) {
           s += " \""+Label->Name+"\" ";
-          s += QString::number(Label->x1)+" "+QString::number(Label->y1)+" ";
-          s += QString::number(Label->cx-x1 + Label->cy-y1);
+          s += QString::number(Label->x1_())+" "+QString::number(Label->y1_())+" ";
+          s += QString::number(Label->cx_()-x1 + Label->cy_()-y1);
           s += " \""+Label->initValue+"\">";
   }
   else { s += " \"\" 0 0 0 \"\">"; }
