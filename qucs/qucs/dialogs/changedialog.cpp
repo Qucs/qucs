@@ -220,9 +220,9 @@ void ChangeDialog::slotButtReplace()
 
         int tx_Dist, ty_Dist, tmp;
         pc->textSize(tx_Dist, ty_Dist);
-        tmp = pc->tx+tx_Dist - pc->x1;
+        tmp = pc->tx+tx_Dist - pc->x1_();
         if((tmp > 0) || (tmp < -6))  tx_Dist = 0; // remember text position
-        tmp = pc->ty+ty_Dist - pc->y1;
+        tmp = pc->ty+ty_Dist - pc->y1_();
         if((tmp > 0) || (tmp < -6))  ty_Dist = 0;
 
         pp->Value = NewValueEdit->text();

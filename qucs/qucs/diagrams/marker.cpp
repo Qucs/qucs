@@ -470,8 +470,8 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
 void Marker::paintScheme(QPainter *p)
 {
   assert(diag());
-  int x0 = diag()->cx;
-  int y0 = diag()->cy;
+  int x0 = diag()->cx_();
+  int y0 = diag()->cy_();
   p->drawRect(x0+x1, y0+y1, x2, y2);
 
   // which corner of rectangle should be connected to line ?
@@ -504,10 +504,10 @@ void Marker::setCenter(int x, int y, bool relative)
 void Marker::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
   if(diag()) {
-    _x1 = diag()->cx + x1;
-    _y1 = diag()->cy + y1;
-    _x2 = diag()->cx + x1+x2;
-    _y2 = diag()->cy + y1+y2;
+    _x1 = diag()->cx_() + x1;
+    _y1 = diag()->cy_() + y1;
+    _x2 = diag()->cx_() + x1+x2;
+    _y2 = diag()->cy_() + y1+y2;
   }
   else {
     _x1 = x1;
