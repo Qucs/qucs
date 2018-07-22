@@ -172,7 +172,7 @@ public: // BUG
   bool Selected;
   int  Type;    // whether it is Component, Wire, ...
 
-// protected: not yet
+protected:
   int  cx, cy, x1, y1, x2, y2;  // center and relative boundings. TODO: move.
 };
 
