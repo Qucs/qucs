@@ -1238,23 +1238,19 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
 
   WireLabel *pl;
   int x1, y1, x2, y2;
-  auto W=dynamic_cast<Wire*>(e);
 //  e->isSelected = false;
-  switch(e->Type) {
-    case isComponent:
-    case isAnalogComponent:
-    case isDigitalComponent:
-      if(((Component*)e)->Ports.count() < 1)
-        break;  // do not rotate components without ports
-      ((Component*)e)->rotate();
-      Doc->setCompPorts((Component*)e);
+//  ideally, this is just an element call.
+  if(auto c=component(e)){
+    if(c->Ports.count() < 1){
+      //break;  // do not rotate components without ports
+    }else{
+      c->rotate();
+      Doc->setCompPorts(c);
       // enlarge viewarea if component lies outside the view
       ((Component*)e)->entireBounds(x1,y1,x2,y2, Doc->textCorr());
       Doc->enlargeView(x1, y1, x2, y2);
-      break;
-
-    case isWire:
-      assert(W);
+    }
+  }else if(auto W=wire(e)){
       pl = W->Label;
       W->Label = 0;    // prevent label to be deleted
       Doc->Wires->setAutoDelete(false);
@@ -1268,18 +1264,16 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
       Doc->Wires->setAutoDelete(true);
       if (Doc->Wires->containsRef ((Wire*)e)){
         Doc->enlargeView(e->x1_(), e->y1_(), e->x2_(), e->y2_());
+      }else{
       }
-      break;
-
-    case isPainting:
+  }else if(auto P=painting(e)){
       ((Painting*)e)->rotate();
       // enlarge viewarea if component lies outside the view
       ((Painting*)e)->Bounding(x1,y1,x2,y2);
       Doc->enlargeView(x1, y1, x2, y2);
-      break;
-
-    default:
-      return;
+  }else{
+    qDebug()<<"dont know how to rotate this thing\n";
+    return;
   }
   Doc->viewport()->update();
   drawn = false;
