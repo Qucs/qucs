@@ -71,6 +71,7 @@ MOCHEADERS = \
   octave_window.h \
   projectView.h \
   schematic.h \
+  schematic_scene.h \
   textdoc.h \
   schematic_dialog.h \
   qucs.h
