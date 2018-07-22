@@ -119,11 +119,6 @@ void Wire::paint(ViewPainter *p)
   }
 }
 
-// ----------------------------------------------------------------
-bool Wire::isHorizontal()
-{
-  return (y1 == y2);
-}
 
 // ----------------------------------------------------------------
 void Wire::setName(const QString& Name_, const QString& Value_, int delta_, int x_, int y_)
