@@ -144,6 +144,16 @@ public:
   Element();
   virtual ~Element();
 
+public: // make old variables accessible
+	int const& cx_() const { return cx; }
+	int const& cy_() const { return cy; }
+	int const& x1_() const { return x1; }
+	int const& y1_() const { return y1; }
+	int const& x2_() const { return x2; }
+	int const& y2_() const { return y2; }
+	void snapToGrid(Schematic& s);
+
+public: // other stuff
   virtual void paintScheme(Schematic *);
   virtual void paintScheme(QPainter *);
   virtual void setCenter(int, int, bool relative=false);
@@ -161,7 +171,9 @@ public:
 public: // BUG
   bool Selected;
   int  Type;    // whether it is Component, Wire, ...
-  int  cx, cy, x1, y1, x2, y2;  // center and relative boundings
+
+// protected: not yet
+  int  cx, cy, x1, y1, x2, y2;  // center and relative boundings. TODO: move.
 };
 
 

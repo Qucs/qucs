@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "element.h"
+#include "schematic.h"
 
 Element::Element() :
 	Selected(false)
@@ -42,4 +43,8 @@ void Element::setCenter(int, int, bool)
 
 void Element::getCenter(int&, int&)
 {
+}
+
+void Element::snapToGrid(Schematic& s){
+    s.setOnGrid(cx, cy);
 }
