@@ -1104,8 +1104,8 @@ void QucsApp::slotApplyCompText()
   Property  *pp = 0;
   Component *pc = (Component*)view->focusElement;
   if(!pc) return;  // should never happen
-  view->MAx1 = pc->cx + pc->tx;
-  view->MAy1 = pc->cy + pc->ty;
+  view->MAx1 = pc->cx_() + pc->tx;
+  view->MAy1 = pc->cy_() + pc->ty;
 
   int z, n=0;  // "n" is number of property on screen
   pp = pc->Props.first();
