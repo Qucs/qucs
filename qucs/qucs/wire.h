@@ -44,7 +44,19 @@ public:
   void    rotate();
   QString save();
   bool    load(const QString&);
-  bool    isHorizontal();
+  bool    isHorizontal() const { return (y1 == y2);}
+
+public: // FIXME, these are still around.
+	//int & cx__() { return cx; }
+	//int & cy__() { return cy; }
+	int & x1__() { return x1; }
+	int & y1__() { return y1; }
+	int & x2__() { return x2; }
+	int & y2__() { return y2; }
+
+public: // stuff used in mouseactions.
+  void move1(int x, int y){ x1+=x; y1+=y; }
+  void move2(int x, int y){ x2+=x; y2+=y; }
 };
 
 #endif

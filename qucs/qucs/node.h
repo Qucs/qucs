@@ -37,6 +37,20 @@ public:
   QString Name;  // node name used by creation of netlist
   QString DType; // type of node (used by digital files)
   int State;	 // remember some things during some operations
+
+public: // protected coordinate abuse
+  void markUnChecked(){
+	  y1=0;
+  }
+  void markChecked(){
+	  y1=1;
+  }
+  void reset_something(){
+	  x1=0;
+  }
+  void set_something(int x){
+	  x1|=x;
+  }
 };
 
 #endif
