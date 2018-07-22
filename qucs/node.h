@@ -75,6 +75,20 @@ private:
 
 public: // BUG
   int State;	 // remember some things during some operations, BUG
+
+public: // protected coordinate abuse
+  void markUnChecked(){
+	  y1=0;
+  }
+  void markChecked(){
+	  y1=1;
+  }
+  void reset_something(){
+	  x1=0;
+  }
+  void set_something(int x){
+	  x1|=x;
+  }
 };
 
 #endif
