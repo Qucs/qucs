@@ -146,9 +146,8 @@ void SweepDialog::slotNewValue(int)
   QList<double *>::const_iterator value_it = ValueList.begin();
   for(node_it = NodeList.begin(); node_it != NodeList.end(); node_it++) {
     qDebug() << "SweepDialog::slotNewValue:(*node_it)->Name:" << (*node_it)->name();
-	 incomplete();
-	 // (*node_it)->name() = misc::num2str(*((*value_it)+Index));
-    // (*node_it)->name() += ((*node_it)->x1 & 0x10)? "A" : "V";
+    (*node_it)->setName(misc::num2str(*((*value_it)+Index));
+                        + ((*node_it)->x1_() & 0x10)? "A" : "V")
     value_it++;
   }
 
@@ -183,7 +182,8 @@ Graph* SweepDialog::setBiasPoints()
   for(pn = Doc->Nodes->first(); pn != 0; pn = Doc->Nodes->next()) {
     if(pn->name().isEmpty()) continue;
 
-    pn->x1 = 0;
+<<<<<<< HEAD
+    pn->reset_something();
     if(pn->connectionsCount() < 2) {
       // pn->Name = "";  // no text at open nodes
 		//                  // too late. d'uh
@@ -194,14 +194,19 @@ Graph* SweepDialog::setBiasPoints()
       for(auto i : pn->connections()){
         pe = i;
         if(pe->Type == isWire) {
-          if( ((Wire*)pe)->isHorizontal() )  pn->x1 |= 2;
+          if( w->isHorizontal() ) {
+				 pn->set_something(2);
+			 }
         }else {
           if( ((Component*)pe)->obsolete_model_hack() == "GND" ) { // BUG
             hasNoComp = true;   // no text at ground symbol
             break;
           }
 
-          if(pn->cx < pe->cx)  pn->x1 |= 1;  // to the right is no room
+		  	 // to the right is no room
+          if(pn->cx_() < pe->cx_()){
+			  	 pn->set_something(1);
+			 }
           hasNoComp = false;
         }
 		}
@@ -244,7 +249,8 @@ Graph* SweepDialog::setBiasPoints()
       if(!pn->name().isEmpty())   // preserve node voltage ?
         pn = pc->Ports.at(1)->Connection;
 
-      pn->x1 = 0x10;   // mark current
+      pn->reset_something();
+      pn->set_something(0x10);   // mark current
       pg->Var = pc->name() + ".I";
       pg->lastLoaded = QDateTime(); // Note 1 at the start of this function
       if(pg->loadDatFile(DataSet) == 2) {
@@ -259,10 +265,16 @@ Graph* SweepDialog::setBiasPoints()
       for(auto i: pn->connections()){
 			pe=i;
         if(pe->Type == isWire) {
-          if( ((Wire*)pe)->isHorizontal() )  pn->x1 |= 2;
+          if( ((Wire*)pe)->isHorizontal() ){
+             pn->set_something(2);
+          }else{
+          }
         }
         else {
-          if(pn->cx < pe->cx)  pn->x1 |= 1;  // to the right is no room
+          if(pn->cx_() < pe->cx_()) {
+            // to the right is no room
+             pn->set_something(1);
+          }
         }
 		}
     }
