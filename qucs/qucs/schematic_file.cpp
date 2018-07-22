@@ -228,8 +228,8 @@ int Schematic::saveSymbolCpp (void)
     if (pp->Name == ".PortSym ") {
       if (((PortSymbol*)pp)->numberStr.toInt() > maxNum)
 	maxNum = ((PortSymbol*)pp)->numberStr.toInt();
-      x1 = ((PortSymbol*)pp)->cx;
-      y1 = ((PortSymbol*)pp)->cy;
+      x1 = ((PortSymbol*)pp)->cx_();
+      y1 = ((PortSymbol*)pp)->cy_();
       if (x1 < xmin) xmin = x1;
       if (x1 > xmax) xmax = x1;
       if (y1 < ymin) ymin = y1;
@@ -304,8 +304,8 @@ int Schematic::saveSymbolJSON()
     if (pp->Name == ".PortSym ") {
       if (((PortSymbol*)pp)->numberStr.toInt() > maxNum)
 	maxNum = ((PortSymbol*)pp)->numberStr.toInt();
-      x1 = ((PortSymbol*)pp)->cx;
-      y1 = ((PortSymbol*)pp)->cy;
+      x1 = ((PortSymbol*)pp)->cx_();
+      y1 = ((PortSymbol*)pp)->cy_();
       if (x1 < xmin) xmin = x1;
       if (x1 > xmax) xmax = x1;
       if (y1 < ymin) ymin = y1;
@@ -625,12 +625,12 @@ void Schematic::simpleInsertComponent(Component *c)
   int x, y;
   // connect every node of component
   foreach(Port *pp, c->Ports) {
-    x = pp->x+c->cx;
-    y = pp->y+c->cy;
+    x = pp->x+c->cx_();
+    y = pp->y+c->cy_();
 
     // check if new node lies upon existing node
     for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next()){
-      if(pn->cx == x) if(pn->cy == y) {
+      if(pn->cx_() == x) if(pn->cy_() == y) {
 // 	if (!pn->DType.isEmpty()) {
 // 	  pp->Type = pn->DType;
 // 	}
@@ -724,14 +724,14 @@ void Schematic::simpleInsertWire(Wire *pw)
   Node *pn;
   // check if first wire node lies upon existing node
   for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
-    if(pn->cx == pw->x1) if(pn->cy == pw->y1) break;
+    if(pn->cx_() == pw->x1_()) if(pn->cy_() == pw->y1_()) break;
 
   if(!pn) {   // create new node, if no existing one lies at this position
-    pn = new Node(pw->x1, pw->y1);
+    pn = new Node(pw->x1_(), pw->y1_());
     DocNodes.append(pn);
   }
 
-  if(pw->x1 == pw->x2) if(pw->y1 == pw->y2) {
+  if(pw->x1_() == pw->x2_()) if(pw->y1_() == pw->y2_()) {
     pn->Label = pw->Label;   // wire with length zero are just node labels
     if (pn->Label) {
       pn->Label->Type = isNodeLabel;
@@ -745,10 +745,10 @@ void Schematic::simpleInsertWire(Wire *pw)
 
   // check if second wire node lies upon existing node
   for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
-    if(pn->cx == pw->x2) if(pn->cy == pw->y2) break;
+    if(pn->cx_() == pw->x2_()) if(pn->cy_() == pw->y2_()) break;
 
   if(!pn) {   // create new node, if no existing one lies at this position
-    pn = new Node(pw->x2, pw->y2);
+    pn = new Node(pw->x2_(), pw->y2_());
     DocNodes.append(pn);
   }
   pn->Connections.append(pw);  // connect schematic node to component node
@@ -777,7 +777,7 @@ bool Schematic::loadWires(QTextStream *stream, Q3PtrList<Element> *List)
       return false;
     }
     if(List) {
-      if(w->x1 == w->x2) if(w->y1 == w->y2) if(w->Label) {
+      if(w->x1_() == w->x2_()) if(w->y1_() == w->y2_()) if(w->Label) {
 	w->Label->Type = isMovingLabel;
 	List->append(w->Label);
 	delete w;
