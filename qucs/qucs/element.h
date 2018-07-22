@@ -159,6 +159,16 @@ public:
   Element();
   virtual ~Element();
 
+public: // make old variables accessible
+	int const& cx_() const { return cx; }
+	int const& cy_() const { return cy; }
+	int const& x1_() const { return x1; }
+	int const& y1_() const { return y1; }
+	int const& x2_() const { return x2; }
+	int const& y2_() const { return y2; }
+	void snapToGrid(Schematic& s);
+
+public: // other stuff
   virtual void paintScheme(Schematic *) const; // obsolete?
   virtual void paintScheme(QPainter *) const; // obsolete?
   virtual void draw(QPainter&) { incomplete(); }

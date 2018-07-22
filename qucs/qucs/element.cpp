@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "element.h"
+#include "schematic.h"
 
 Element::Element() :
 	Selected(false)
@@ -45,9 +46,13 @@ void Element::getCenter(int&, int&)
 {
 }
 
-void Element::paint(ViewPainter*) // BUG: const
+void Element::paint(ViewPainter*) const
 {
 	incomplete();
+}
+
+void Element::snapToGrid(Schematic& s){
+    s.setOnGrid(cx, cy);
 }
 
 // legacy stuff. pretend that Element points to an Element
