@@ -2500,6 +2500,13 @@ Component* Schematic::searchSelSubcircuit()
     return sub;
 }
 
+// ---------------------------------------------------
+Component* Schematic::selectedComponent(int x, int y)
+{
+    /*Graphics*/ Element *c = Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform());
+
+    return dynamic_cast<Component*>(c);
+}
 
 // ---------------------------------------------------
 // Deletes the component 'c'.
