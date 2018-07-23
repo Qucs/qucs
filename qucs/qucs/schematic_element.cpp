@@ -3170,6 +3170,7 @@ void Schematic::copyLabels(int& x1, int& y1, int& x2, int& y2,
    *****                                                         *****
    ******************************************************************* */
 
+// don't use this.
 Painting* Schematic::selectedPainting(float fX, float fY)
 {
     float Corr = 5.0 / Scale; // size of line select

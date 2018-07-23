@@ -1179,14 +1179,16 @@ void MouseActions::MPressMirrorX(Schematic *Doc, QMouseEvent*, float fX, float f
 void MouseActions::MPressMirrorY(Schematic *Doc, QMouseEvent*, float fX, float fY)
 {
   // no use in mirroring wires or diagrams
-  Component *c = Doc->selectedComponent(int(fX), int(fY));
-  if(c) {
+  auto *I = Doc->itemAt(int(fX), int(fY));
+  if(auto c=component(I)) {
     if(c->Ports.count() < 1) return;  // only mirror components with ports
     c->mirrorY();
     Doc->setCompPorts(c);
   }else if(auto p=painting(I)) {
     if(p == 0) return;
     p->mirrorY();
+  }else{
+    // missed something.
   }
 
   Doc->viewport()->update();
