@@ -24,8 +24,6 @@
 
 noinst_LTLIBRARIES = libpaintings.la
 
-include ../../common.mk
-
 MOCHEADERS = arrowdialog.h graphictextdialog.h filldialog.h id_dialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 

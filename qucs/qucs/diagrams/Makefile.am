@@ -24,8 +24,6 @@
 
 noinst_LTLIBRARIES = libdiagrams.la
 
-include ../../common.mk
-
 MOCHEADERS = diagramdialog.h markerdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
