@@ -93,6 +93,12 @@ class ComponentList : public Q3PtrList<Component> {
 class PaintingList : public Q3PtrList<Painting> {
 };
 
+#if QT_VERSION < 0x050000
+typedef Element* ElementGraphics;
+#else
+class ElementGraphics;
+#endif
+
 class Schematic : public Q3ScrollView, public QucsDoc {
   Q_OBJECT
 public:
