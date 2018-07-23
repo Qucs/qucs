@@ -46,6 +46,7 @@
 #include <limits.h>
 #include <stdlib.h>
 #include "trace.h"
+#include "schematicscene.h" // underscore?
 
 
 #define  DOC_X_POS(x)  (int(float(x)/Doc->Scale) + Doc->ViewX1)
@@ -1266,9 +1267,9 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
       }else{
       }
   }else if(auto P=painting(e)){
-      ((Painting*)e)->rotate();
+      P->rotate();
       // enlarge viewarea if component lies outside the view
-      ((Painting*)e)->Bounding(x1,y1,x2,y2);
+      P->Bounding(x1,y1,x2,y2);
       Doc->enlargeView(x1, y1, x2, y2);
   }else{
     qDebug()<<"dont know how to rotate this thing\n";
