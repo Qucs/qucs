@@ -2601,6 +2601,10 @@ void QucsApp::slotSymbolEdit()
 // -----------------------------------------------------------
 void QucsApp::slotPowerMatching()
 {
+#if 0
+
+	// not here.
+
   if(!view->focusElement) return;
   if(view->focusElement->Type != isMarker) return;
   Marker *pm = (Marker*)view->focusElement;
@@ -2620,11 +2624,15 @@ void QucsApp::slotPowerMatching()
   slotToPage();
   if(Dia->exec() != QDialog::Accepted)
     return;
+#endif
 }
 
 // -----------------------------------------------------------
 void QucsApp::slot2PortMatching()
 {
+#if 0
+
+	// not here
   if(!view->focusElement) return;
   if(view->focusElement->Type != isMarker) return;
   Marker *pm = (Marker*)view->focusElement;
@@ -2703,6 +2711,8 @@ void QucsApp::slot2PortMatching()
   slotToPage();
   if(Dia->exec() != QDialog::Accepted)
     return;
+
+#endif
 }
 
 // -----------------------------------------------------------

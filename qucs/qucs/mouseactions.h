@@ -119,7 +119,7 @@ public:
 private:
   // former Schematic::selectElement
   // but that does not work, because ElementMouseAction lives here.
-  ElementMouseAction selectElement(float, float, bool, int *index=0);
+  ElementMouseAction selectElement(Schematic*, float, float, bool, int *index=0);
 
 private:
   bool isMoveEqual;
