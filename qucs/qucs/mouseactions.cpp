@@ -29,7 +29,6 @@
 #include "components/vacomponent.h"
 #include "diagrams/diagramdialog.h"
 #include "diagrams/markerdialog.h"
-#include "diagrams/timingdiagram.h"
 #include "dialogs/labeldialog.h"
 
 #include <QTextStream>
@@ -1037,7 +1036,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
 
       focusElement->Type = isDiagram; // reset happens here. FIXME.
 
-      No = ((TabDiagram*)focusElement)->scroll(MAy1);
+      No = ((Diagram*)focusElement)->scroll(MAy1);
 
       switch(No)
       {
@@ -1051,7 +1050,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
           Doc->grabKeyboard();  // no keyboard inputs during move actions
 
           // Remember inital scroll bar position.
-          MAx2 = int(((TabDiagram*)focusElement)->xAxis.limit_min);
+          MAx2 = int(((Diagram*)focusElement)->xAxis_limit_min());
           // Update matching wire label highlighting
           Doc->highlightWireLabels ();
           return;
@@ -2042,14 +2041,14 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
          if(dia->Name.at(0) == 'T') { // don't open dialog on scrollbar
            if(dia->Name == "Time") {
              if(dia->cy_() < int(fY)) {
-	       if(((TimingDiagram*)focusElement)->scroll(MAx1))
+	       if(((Diagram*)focusElement)->scroll(MAx1))
 	         Doc->setChanged(true, true, 'm'); // 'm' = only the first time
 	       break;
              }
 	   }
            else {
              if(dia->cx_() > int(fX)) {
-	       if(((TabDiagram*)focusElement)->scroll(MAy1))
+	       if(((Diagram*)focusElement)->scroll(MAy1))
 	         Doc->setChanged(true, true, 'm'); // 'm' = only the first time
 	       break;
              }

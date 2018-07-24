@@ -145,6 +145,10 @@ protected:
 
 public: // from mouseactions.cpp
   virtual bool scrollTo(int, int, int){return false;}
+  virtual int scroll(int){return 0;}
+  virtual int xAxis_limit_min() const{
+	  return xAxis.limit_min;
+  }
 
 public: // FIXME, these are still around.
 	int & cx__() { return cx; }
