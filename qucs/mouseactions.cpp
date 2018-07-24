@@ -1184,9 +1184,7 @@ void MouseActions::MPressMirrorY(Schematic *Doc, QMouseEvent*, float fX, float f
     if(c->Ports.count() < 1) return;  // only mirror components with ports
     c->mirrorY();
     Doc->setCompPorts(c);
-  }
-  else {
-    Painting *p = Doc->selectedPainting(fX, fY);
+  }else if(auto p=painting(I)) {
     if(p == 0) return;
     p->mirrorY();
   }
