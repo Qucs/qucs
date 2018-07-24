@@ -437,7 +437,13 @@ void MouseActions::MMoveResizePainting(Schematic *Doc, QMouseEvent *Event)
   MAx1 = DOC_X_POS(Event->pos().x());
   MAy1 = DOC_Y_POS(Event->pos().y());
   Doc->setOnGrid(MAx1, MAy1);
-  ((Painting*)focusElement)->MouseResizeMoving(MAx1, MAy1, Doc);
+
+  if(auto p=painting(focusElement)){
+    p->MouseResizeMoving(MAx1, MAy1, Doc);
+  }else{
+    // why not always?
+    // e->MouseResizeMoving(MAx1, MAy1, Doc);
+  }
 }
 
 // -----------------------------------------------------------
@@ -787,7 +793,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
 
   MAx1 = int(fX);
   MAy1 = int(fY);
-  focusElement = Doc->selectElement(Event->pos(), false);
+  focusElement = selectElement(Doc, Event->pos(), false);
 
   if(focusElement)  // remove special function (4 least significant bits)
     focusElement->Type &= isSpecialMask;
@@ -1235,7 +1241,8 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
   float fX=pos.x();
   float fY=pos.y();
 
-  Element *e = Doc->selectElement(Event->pos(), false);
+  // why is this not part of the event?
+  ElementMouseAction e = selectElement(Doc, Event->pos(), false);
   if(e == 0) return;
   e->Type &= isSpecialMask;  // remove special functions
 
