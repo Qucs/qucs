@@ -143,6 +143,9 @@ protected:
 
   virtual void calcData(Graph*);
 
+public: // from mouseactions.cpp
+  virtual bool scrollTo(int, int, int){return false;}
+
 public: // FIXME, these are still around.
 	int & cx__() { return cx; }
 	int & cy__() { return cy; }

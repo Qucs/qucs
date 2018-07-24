@@ -29,7 +29,6 @@
 #include "components/vacomponent.h"
 #include "diagrams/diagramdialog.h"
 #include "diagrams/markerdialog.h"
-#include "diagrams/tabdiagram.h"
 #include "diagrams/timingdiagram.h"
 #include "dialogs/labeldialog.h"
 
@@ -559,7 +558,7 @@ void MouseActions::MMovePaste(Schematic *Doc, QMouseEvent *Event)
 // Moves scroll bar of diagram (e.g. tabular) according the mouse cursor.
 void MouseActions::MMoveScrollBar(Schematic *Doc, QMouseEvent *Event)
 {
-  TabDiagram *d = (TabDiagram*)focusElement;
+  Diagram *d = diagram(focusElement);
   int x = DOC_X_POS(Event->pos().x());
   int y = DOC_Y_POS(Event->pos().y());
 

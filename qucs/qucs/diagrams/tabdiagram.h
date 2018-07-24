@@ -32,7 +32,7 @@ public:
   virtual void paintDiagram(ViewPainter *p);
   virtual int calcDiagram();
   virtual int scroll(int);
-  virtual bool scrollTo(int, int, int);
+  bool scrollTo(int, int, int);
 
   void createAxisLabels() {};   // no labels in this diagram
 
