@@ -21,6 +21,7 @@
 #include "element.h"
 #include "qt_compat.h"
 
+
 // a mouse action on an element.
 // formerly, a mouse action was implemented by means of messing with element
 // internals.
@@ -105,7 +106,7 @@ public:
 
   bool drawn;  // indicates whether the scheme element was drawn last time
   Element *selElem;  // component/diagram/painting selected in IconView
-  Element *focusElement;
+  ElementMouseAction focusElement; // BUG: use focusMEvent instead
   QMouseEvent *focusMEvent;
 
   int  MAx1, MAy1,MAx2, MAy2, MAx3, MAy3;  // cache for mouse movements
@@ -114,6 +115,11 @@ public:
 
   // menu appearing by right mouse button click on component
   QMenu *ComponentMenu;
+
+private:
+  // former Schematic::selectElement
+  // but that does not work, because ElementMouseAction lives here.
+  ElementMouseAction selectElement(float, float, bool, int *index=0);
 
 private:
   bool isMoveEqual;
@@ -178,5 +184,6 @@ public:
   void endElementMoving(Schematic*, Q3PtrList<Element>*);
   void rightPressMenu(Schematic*, QMouseEvent*);
 };
+
 
 #endif
