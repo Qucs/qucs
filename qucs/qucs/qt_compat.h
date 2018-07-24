@@ -154,10 +154,10 @@ public:
 			return nullptr;
 		}
 	};
-	T* getFirst() { untested();
+	T* getFirst() { itested();
 		return localList.front();
 	};
-	T* getLast() { untested();
+	T* getLast() { itested();
 		return localList.back();
 	};
 	T* next() {
