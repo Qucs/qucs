@@ -83,14 +83,12 @@ bool QucsApp::performToggleAction(bool on, QAction *Action,
   }
 
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  do {
-    if(Function) if((Doc->*Function)()) {
+  if(Function && (Doc->*Function)()) {
       Action->blockSignals(true);
       Action->setChecked(false);  // release toolbar button
       Action->blockSignals(false);
       Doc->viewport()->update();
-      break;
-    }
+  }else{
 
     if(activeAction) {
       activeAction->blockSignals(true); // do not call toggle slot
@@ -104,7 +102,7 @@ bool QucsApp::performToggleAction(bool on, QAction *Action,
     MouseReleaseAction = 0;
     MouseDoubleClickAction = 0;
 
-  } while(false);   // to perform "break"
+  }
 
   Doc->viewport()->update();
   view->drawn = false;
