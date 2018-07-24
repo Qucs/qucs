@@ -957,8 +957,8 @@ void Schematic::markerUpDown(bool up, Q3PtrList<Element> *Elements)
    *****                                                         *****
    ******************************************************************* */
 
-/* Selects the element that contains the coordinates x/y.
-   Returns the pointer to the element.
+/* Selects a mouse action. onluy called from mouseaction.cpp
+   Returns a mouse action.
 
    If 'flag' is true, the element can be deselected. If
    'flag' is false the element cannot be deselected. The
@@ -966,7 +966,7 @@ void Schematic::markerUpDown(bool up, Q3PtrList<Element> *Elements)
    as right-clicking on a selected element to get a context
    menu.
 */
-Element* Schematic::selectElement(QPoint const& xy, bool flag, int *index)
+MouseAction Schematic::selectElement(QPoint const& xy, bool flag, int *index)
 {
   // something like
    // dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform())
@@ -1427,9 +1427,15 @@ void Schematic::deselectElements(Element *e)
 }
 
 // ---------------------------------------------------
-// Selects elements that lie within the rectangle x1/y1, x2/y2.
+// flags elements that lie within the rectangle x1/y1, x2/y2.
+// return the number of elements selected.
 int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
 {
+#if QT_VERSION >= 0x050000
+    //do something smarter
+    incomplete();
+    return 0;
+#endif
     int  z=0;   // counts selected elements
     int  cx1, cy1, cx2, cy2;
 
@@ -1588,6 +1594,7 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
     }
 
     return z;
+#endif
 }
 
 // ---------------------------------------------------

@@ -59,11 +59,11 @@ QAction *formerAction;   // remember action before drag n'drop etc.
 
 
 MouseActions::MouseActions(QucsApp* App_)
+  : App(App_)
 {
-  App = App_; // pointer to main app
   selElem  = 0;  // no component/diagram is selected
   isMoveEqual = false;  // mouse cursor move x and y the same way
-  focusElement = 0; //element being interacted with mouse
+  focusElement.clear(); //element being interacted with mouse
 
   // ...............................................................
   // initialize menu appearing by right mouse button click on component
@@ -836,28 +836,32 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
 
   if(!QucsMain->editDelete->isChecked())
     ComponentMenu->addAction(QucsMain->editDelete);
-  if(focusElement) if(focusElement->Type == isMarker) {
+  if(!focusElement){
+  }else if(auto m=focusElement->marker()) {
     ComponentMenu->addSeparator();
     QString s = QObject::tr("power matching");
-    if( ((Marker*)focusElement)->pGraph->Var == "Sopt" )
+    if(m->pGraph->Var == "Sopt" ){ // BUG
       s = QObject::tr("noise matching");
+    }
 
     QAction *powerMatch = new QAction(s, QucsMain);
     QucsMain->connect(powerMatch, SIGNAL(triggered()), SLOT(slotPowerMatching()));
     ComponentMenu->addAction(powerMatch);
-    if( ((Marker*)focusElement)->pGraph->Var.left(2) == "S[" ) {
+    if(m->pGraph->Var.left(2) == "S[" ) { // BUG
       QAction *power2Match = new QAction(QObject::tr("2-port matching"), QucsMain);
       QucsMain->connect(power2Match, SIGNAL(triggered()), SLOT(slot2PortMatching()));
       ComponentMenu->addAction(power2Match);
+    }else{
     }
   }
   do {
-    if(focusElement) {
-      if(focusElement->Type == isDiagram) break;
-      if(focusElement->Type == isGraph) {
+    if(!focusElement) {
+    }else if(focusElement->diagram()){
+      break;
+    }else if(focusElement->graph()){
         ComponentMenu->addAction(QucsMain->graph2csv);
         break;
-      }
+    }else{
     }
     ComponentMenu->addSeparator();
     if(focusElement) if(focusElement->Type & isComponent)
