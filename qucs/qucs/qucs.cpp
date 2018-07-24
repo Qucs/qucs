@@ -2734,8 +2734,11 @@ void QucsApp::slot2PortMatching()
 // Is called if the "edit" action is clicked on right mouse button menu.
 void QucsApp::slotEditElement()
 {
-  if(view->focusMEvent)
+  if(view->focusMEvent){
     view->editElement((Schematic*)DocumentTab->currentWidget(), view->focusMEvent);
+  }else{
+	 // ?!
+  }
 }
 
 // -----------------------------------------------------------
