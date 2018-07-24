@@ -90,10 +90,6 @@ public:
 		incomplete();
 		return -1;
 	};
-	int findNextRef(T *) { untested();
-		incomplete();
-		return -1;
-	};
 	bool isEmpty() { untested();
 		incomplete();
 		return false;
@@ -243,6 +239,7 @@ public:
 		std::advance(cur, i);
 		cur=localList.insert(cur, t);
 	};
+#if 0
    // check: this doesn't look right
 	int find(T *t) { untested();
 		incomplete();
@@ -259,6 +256,7 @@ public:
 		// }
 		// return -1;
 	};
+#endif
 	const_iterator begin() const{ untested();
 		return localList.begin();
 	}

@@ -428,7 +428,14 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
 
   /*! Insert all \a Comp properties into the dialog \a prop list */
   int row=0; // row counter
-  for(Property *p = Comp->Props.at(Comp->Props.find(pp)+1); p != 0; p = Comp->Props.next()) {
+  Comp->Props.findRef(pp);
+  Property *p=Comp->Props.current();
+  if(p){
+    p = Comp->Props.next();
+  }else{
+    p = Comp->Props.first();
+  }
+  for(; p!=nullptr; p=Comp->Props.next()) {
 
       // do not insert if already on first tab
       // this is the reason it was originally from back to front...
