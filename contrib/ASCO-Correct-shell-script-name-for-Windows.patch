@@ -1,0 +1,29 @@
+From 7dbb0973bbba67b69a475f55b0e604eb151b97f9 Mon Sep 17 00:00:00 2001
+From: in3otd <in3otd@qsl.net>
+Date: Sun, 22 Jul 2018 07:44:36 +0200
+Subject: [PATCH] Correct shell script name for Windows
+
+because of the different path separator needed.
+Besides, modify also the script extension, as a a file with a .sh extension
+is considered to be a MinGW shell script and executed using the MinGW shell
+causing unnecessary delay and a spurious shell window to open.
+---
+ errfunc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/errfunc.c b/errfunc.c
+index 120fa5e..d79a534 100644
+--- a/errfunc.c
++++ b/errfunc.c
+@@ -637,7 +637,7 @@ double errfunc(char *filename, double *x)
+ 			#ifndef __MINGW32__
+ 			sprintf(lkk, "nice -n 19 ./general.sh %s %s", hostname, hostname);
+ 			#else
+-			sprintf(lkk, "./general.sh %s %s", hostname, hostname);
++			sprintf(lkk, ".\\general.bat %s %s", hostname, hostname);
+ 			#endif
+ 			break;
+ 		default:
+-- 
+2.9.0
+
