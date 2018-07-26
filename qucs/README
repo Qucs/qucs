@@ -34,8 +34,9 @@ http://qucs.sourceforge.net
 Requirements
 ============
 
-Qucs needs Qt(R) by Digia(R) <http://www.digia.com>.
-This current version is known to work with Qt 4.6 and later.
+Qucs needs Qt version 4.6 or later. For simplicity, the Qt configuration is
+currently obtained through pkg-config, which you need to install in addition
+to Qt.
 
 
 Installation
