@@ -1687,9 +1687,14 @@ void QucsApp::closeFile(int index)
 /**
  * @brief close all open documents - except a specified one, optionally
  * @param exceptTab tab to leave open, none if not specified
+ *
+ * @return true if all files were succesfully closed
  */
 bool QucsApp::closeAllFiles(int exceptTab)
 {
+  if (DocumentTab->count() == 0) // no open tabs
+    return true;
+
   return closeTabsRange(0, DocumentTab->count()-1, exceptTab);
 }
 
@@ -1698,6 +1703,8 @@ bool QucsApp::closeAllFiles(int exceptTab)
  * @param startTab first tab to be closed
  * @param stoptTab last tab to be closed
  * @param exceptTab tab to leave open, none if not specified
+ *
+ * @return true if all requested tabs were succesfully closed
  */
 bool QucsApp::closeTabsRange(int startTab, int stopTab, int exceptTab)
 {
