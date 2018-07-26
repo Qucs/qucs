@@ -16,7 +16,7 @@
 # Boston, MA 02110-1301, USA.
 #
 
-examplesdir=$(srcdir)/../../qucs/examples
+examplesdir=$(srcdir)/../examples
 
 AM_DEFAULT_SOURCE_EXT = .cpp
 check_LTLIBRARIES = helloworld.la
