@@ -224,6 +224,7 @@ public:
   void rightPressMenu(Schematic*, QMouseEvent*);
 };
 
+Element* element(ElementMouseAction);
 Component* component(ElementMouseAction);
 Wire* wire(ElementMouseAction);
 WireLabel* wireLabel(ElementMouseAction);
