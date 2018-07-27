@@ -1387,6 +1387,7 @@ void Schematic::highlightWireLabels ()
 
 // ---------------------------------------------------
 // Deselects all elements except 'e'.
+// bug: why do we not have a list of selected elements?!
 void Schematic::deselectElements(Element *e)
 {
     // test all components
