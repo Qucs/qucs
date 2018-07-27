@@ -795,8 +795,12 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
   MAy1 = int(fY);
   focusElement = selectElement(Doc, Event->pos(), false);
 
-  if(focusElement)  // remove special function (4 least significant bits)
-    focusElement->Type &= isSpecialMask;
+  if(focusElement){  // remove special function (4 least significant bits)
+    incomplete();
+    // what's this??
+    // focusElement->Type &= isSpecialMask;
+  }else{
+  }
 
 
   // define menu
