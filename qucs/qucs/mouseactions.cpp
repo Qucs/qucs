@@ -1333,23 +1333,19 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
     if(dia->exec() == QDialog::Rejected) {  // don't insert if dialog canceled
       Doc->viewport()->update();
       drawn = false;
-      return;
+    }else{
+
+      Doc->Diagrams->append(Diag);
+      Doc->enlargeView(Diag->cx_(), Diag->cy_()-Diag->y2_(), Diag->cx_()+Diag->x2_(), Diag->cy_());
+      Doc->setChanged(true, true);   // document has been changed
+
+      Doc->viewport()->repaint();
+      Diag = Diag->newOne(); // the component is used, so create a new one
+      Diag->paintScheme(Doc);
+      selElem = Diag;
     }
 
-    Doc->Diagrams->append(Diag);
-    Doc->enlargeView(Diag->cx_(), Diag->cy_()-Diag->y2_(), Diag->cx_()+Diag->x2_(), Diag->cy_());
-    Doc->setChanged(true, true);   // document has been changed
-
-    Doc->viewport()->repaint();
-    Diag = Diag->newOne(); // the component is used, so create a new one
-    Diag->paintScheme(Doc);
-    selElem = Diag;
-    return;
-  }  // of "if(isDiagram)"
-
-
-  // ***********  it is a painting !!!
-  if(((Painting*)selElem)->MousePressing()) {
+  }else if(((Painting*)selElem)->MousePressing()) {
     Doc->Paintings->append((Painting*)selElem);
     ((Painting*)selElem)->Bounding(x1,y1,x2,y2);
     //Doc->enlargeView(x1, y1, x2, y2);
