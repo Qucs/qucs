@@ -33,11 +33,18 @@ public:
 	}
 public:
 	Element* element() { return _e; }
+	Element const* element() const { return _e; }
 
 	void clear(){
 		_e=nullptr;
 	}
 public: // compat with old code
+	bool operator==(Element const* e) const{
+		return _e==e;
+	}
+	bool operator!=(Element const* e) const{
+		return _e!=e;
+	}
 	operator bool() const{
 		return _e;
 	}
@@ -74,18 +81,49 @@ private:
   Element* _e;
 };
 
+class Wire;
+class Label;
+
 // enable access to attached elements.
 // this might be temporary
-inline Painting* painting(ElementMouseAction ema)
+inline Element* element(ElementMouseAction e)
 {
-	return painting(ema.element());
+  return e.element();
 }
-inline Diagram* diagram(ElementMouseAction ema)
+inline Component* component(ElementMouseAction e)
 {
-	return diagram(ema.element());
+  return component(element(e));
 }
+inline Wire* wire(ElementMouseAction e)
+{
+  return wire(element(e));
+}
+inline WireLabel* wireLabel(ElementMouseAction e)
+{
+  return wireLabel(element(e));
+}
+inline Diagram* diagram(ElementMouseAction e)
+{
+  return diagram(element(e));
+}
+inline Painting* painting(ElementMouseAction e)
+{
+  return painting(element(e));
+}
+inline Graph* graph(ElementMouseAction e)
+{
+  return graph(element(e));
+}
+inline Marker* marker(ElementMouseAction e)
+{
+  return marker(element(e));
+}
+inline Node* node(ElementMouseAction e)
+{
+  return node(element(e));
+}
+Label* label(ElementMouseAction e);
 
-class Wire;
 class Schematic;
 class QPainter;
 class QMenu;
@@ -185,5 +223,13 @@ public:
   void rightPressMenu(Schematic*, QMouseEvent*);
 };
 
+Component* component(ElementMouseAction);
+Wire* wire(ElementMouseAction);
+WireLabel* wireLabel(ElementMouseAction);
+Diagram* diagram(ElementMouseAction);
+Painting* painting(ElementMouseAction);
+Graph* graph(ElementMouseAction);
+Marker* marker(ElementMouseAction);
+Node* node(ElementMouseAction);
 
 #endif
