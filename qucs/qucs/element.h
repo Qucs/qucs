@@ -168,6 +168,9 @@ public: // make old variables accessible
 	int const& y2_() const { return y2; }
 	void snapToGrid(Schematic& s);
 
+	void setObsoleteType(int t){
+		Type = t;
+	}
 public: // other stuff
   virtual void paintScheme(Schematic *) const; // obsolete?
   virtual void paintScheme(QPainter *) const; // obsolete?
@@ -226,6 +229,13 @@ class Painting;
 class Graph;
 class Marker;
 
+Component const* component(Element const*);
+Wire const* wire(Element const*);
+WireLabel const* wireLabel(Element const*);
+Diagram const* diagram(Element const*);
+Painting const* painting(Element const*);
+Graph const* graph(Element const*);
+
 Component* component(Element*);
 Command* command(Element*);
 inline Element*& element(Element*& x){return x;}
@@ -236,4 +246,5 @@ Painting* painting(Element*);
 Graph* graph(Element*);
 Marker* marker(Element*);
 Node* node(Element*);
+
 #endif
