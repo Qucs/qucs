@@ -812,7 +812,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
       QucsMain->connect(editProp, SIGNAL(triggered()), SLOT(slotEditElement()));
       ComponentMenu->addAction(editProp);
 
-      if(!focusElement.component(){
+      if(!component(focusElement)){
       }else if(!QucsMain->moveText->isChecked()){
 	ComponentMenu->addAction(QucsMain->moveText);
       }else{
