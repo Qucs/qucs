@@ -828,9 +828,12 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
     }
   }
 
+  // possibly, we just want to call focuselement->somethign_menu() ?!
   while(true) {
-    if(focusElement)
-      if(focusElement->Type == isGraph) break;
+    if(focusElement){
+      if(graph(focusElement)) break;
+    }else{
+    }
     if(!QucsMain->onGrid->isChecked())
       ComponentMenu->addAction(QucsMain->onGrid);
     ComponentMenu->addAction(QucsMain->editCopy);
@@ -839,6 +842,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
     break;
   }
 
+  // possibly, we just want to call focuselement->rightMenuAction() ?!
   while (true) {
     if (focusElement) {
       if (focusElement->Type == isDiagram) {
@@ -850,8 +854,11 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
     break;
   }
 
-  if(!QucsMain->editDelete->isChecked())
+  if(!QucsMain->editDelete->isChecked()){
+    // still ElementGraphics->rightMenuAction?!
     ComponentMenu->addAction(QucsMain->editDelete);
+  }
+
   if(!focusElement){
   }else if(auto m=focusElement->marker()) {
     ComponentMenu->addSeparator();
