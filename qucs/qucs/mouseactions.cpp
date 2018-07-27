@@ -1400,34 +1400,9 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event)
     return;
 
   }  // of "if(isComponent)"
-  else if(selElem->Type == isDiagram) { // BUG
-    if(Event->button() != Qt::LeftButton){
-      incomplete();
-      return;
-    }else{
-    }
+  else if(auto d=diagram(selElem)) {
 
-    Diagram *Diag = (Diagram*)selElem;
-    Diag->MPressElement();
-
-    QFileInfo Info(Doc->DocName);
-    // dialog is Qt::WDestructiveClose !!!
-    DiagramDialog *dia = new DiagramDialog(Diag, Doc);
-
-    if(dia->exec() == QDialog::Rejected) {  // don't insert if dialog canceled
-      Doc->viewport()->update();
-      drawn = false;
-    }else{
-
-      Doc->Diagrams->append(Diag);
-      Doc->enlargeView(Diag->cx_(), Diag->cy_()-Diag->y2_(), Diag->cx_()+Diag->x2_(), Diag->cy_());
-      Doc->setChanged(true, true);   // document has been changed
-
-      Doc->viewport()->repaint();
-      Diag = Diag->newOne(); // the component is used, so create a new one
-      Diag->paintScheme(Doc);
-      selElem = Diag;
-    }
+    d->pressElement(Doc, element(selElem), Event);
 
   }else if(((Painting*)selElem)->MousePressing()) {
     Doc->Paintings->append((Painting*)selElem);
@@ -1610,7 +1585,7 @@ void MouseActions::MPressOnGrid(Schematic *Doc, QMouseEvent* Event)
   float fX=pos.x();
   float fY=pos.y();
 
-  Element *pe = Doc->selectElement(Event->pos(), false);
+  auto pe = selectElement(Doc, Event->pos(), false);
   if(pe)
   {
     pe->Type &= isSpecialMask;  // remove special functions (4 lowest bits)
