@@ -36,11 +36,12 @@
 #include <locale.h>
 
 #include "diagram.h"
+#include "diagramdialog.h"
 #include "qucs.h"
 #include "mnemo.h"
 #include "schematic.h"
 
-#include "rect3ddiagram.h"
+#include "rect3ddiagram.h" // BUG
 #include "misc.h"
 
 #include <QTextStream>
@@ -50,6 +51,7 @@
 #include <QPainter>
 #include <QDebug>
 #include <QString>
+#include <QMouseEvent>
 
 Diagram::Diagram(int _cx, int _cy)
 {
@@ -2337,3 +2339,35 @@ double Diagram::wavevalX(int i) const
     return i*xAxis.up/(sc*50); 
 }
 */
+
+bool Diagram::pressElement(Schematic* Doc, Element*& selElem, QMouseEvent* Event)
+{
+
+	if(Event->button() != Qt::LeftButton){ untested();
+	  	return false; // sets drawn to false! (correct?)
+	}else{
+	}
+
+	Diagram *Diag = this;
+	QFileInfo Info(Doc->DocName);
+	// dialog is Qt::WDestructiveClose !!!
+	DiagramDialog *dia = new DiagramDialog(Diag, Doc);
+
+	bool drawn=true;
+	if(dia->exec() == QDialog::Rejected) {  // don't insert if dialog canceled
+		Doc->viewport()->update();
+		drawn = false;
+	}else{
+
+		Doc->Diagrams->append(Diag);
+		Doc->enlargeView(Diag->cx_(), Diag->cy_()-Diag->y2_(), Diag->cx_()+Diag->x2_(), Diag->cy_());
+		Doc->setChanged(true, true);   // document has been changed
+
+		Doc->viewport()->repaint();
+		Diag = Diag->newOne(); // the component is used, so create a new one
+		Diag->paintScheme(Doc);
+		selElem = Diag;
+	}
+
+	return drawn;
+}

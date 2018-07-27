@@ -43,6 +43,8 @@
     p_end = g->begin() + (Size - 9); \
   }
 
+class QMouseEvent;
+
 struct Axis {
   double  min, max; // least and greatest values of all graph data
   double  low, up;  // the limits of the diagram
@@ -149,6 +151,9 @@ public: // from mouseactions.cpp
   virtual int xAxis_limit_min() const{
 	  return xAxis.limit_min;
   }
+
+  // returns drawn, for now.
+  bool pressElement(Schematic* Doc, Element*& selElem, QMouseEvent* Event);
 
 public: // FIXME, these are still around.
 	int & cx__() { return cx; }
