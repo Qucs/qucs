@@ -1166,7 +1166,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
     {
       if(!focusElement->isSelected()) {
 	// Don't move selected elements if clicked
-        Doc->deselectElements(focusElement); // element was not selected.
+        deselectElements(Doc, focusElement); // element was not selected.
       }else{
       }
       focusElement->setSelected();
@@ -1185,7 +1185,7 @@ void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent* Event)
   float fX=pos.x();
   float fY=pos.y();
 
-  Element *pe = Doc->selectElement(Event->pos(), false); // BUG
+  ElementMouseAction pe = selectElement(Doc, Event->pos(), false); // BUG
   if(pe)
   {
     pe->setSelected();
@@ -1292,14 +1292,14 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
       c->rotate();
       Doc->setCompPorts(c);
       // enlarge viewarea if component lies outside the view
-      ((Component*)e)->entireBounds(x1,y1,x2,y2, Doc->textCorr());
+      c->entireBounds(x1,y1,x2,y2, Doc->textCorr());
       Doc->enlargeView(x1, y1, x2, y2);
     }
   }else if(auto W=wire(e)){
       pl = W->Label;
       W->Label = 0;    // prevent label to be deleted
       Doc->Wires->setAutoDelete(false);
-      Doc->deleteWire((Wire*)e);
+      Doc->deleteWire(W);
       W->Label = pl;
       W->rotate();
       Doc->setOnGrid(W->x1__(), W->y1__());
@@ -1307,7 +1307,7 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
       if(pl)  Doc->setOnGrid(pl->cx__(), pl->cy__());
       Doc->insertWire(W);
       Doc->Wires->setAutoDelete(true);
-      if (Doc->Wires->containsRef ((Wire*)e)){
+      if (Doc->Wires->containsRef (W)){
         Doc->enlargeView(e->x1_(), e->y1_(), e->x2_(), e->y2_());
       }else{
       }
@@ -1405,8 +1405,8 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event)
     Diagram *Diag = (Diagram*)selElem;
     QFileInfo Info(Doc->DocName);
     // dialog is Qt::WDestructiveClose !!!
-    DiagramDialog *dia =
-       new DiagramDialog(Diag, Doc);
+    DiagramDialog *dia = new DiagramDialog(Diag, Doc);
+
     if(dia->exec() == QDialog::Rejected) {  // don't insert if dialog canceled
       Doc->viewport()->update();
       drawn = false;
