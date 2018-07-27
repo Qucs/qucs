@@ -27,7 +27,6 @@
 #include "components/optimizedialog.h"
 #include "components/componentdialog.h"
 #include "components/vacomponent.h"
-#include "diagrams/diagramdialog.h"
 #include "diagrams/markerdialog.h"
 #include "dialogs/labeldialog.h"
 
@@ -843,15 +842,15 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
   }
 
   // possibly, we just want to call focuselement->rightMenuAction() ?!
-  while (true) {
+  {
     if (focusElement) {
-      if (focusElement->Type == isDiagram) {
+      if (diagram(focusElement)) {
         QAction *imgExport = new QAction(QObject::tr("Export as image"), QucsMain);
         QucsMain->connect(imgExport, SIGNAL(triggered()), SLOT(slotSaveDiagramToGraphicsFile()));
         ComponentMenu->addAction(imgExport);
+      }else{
       }
     }
-    break;
   }
 
   if(!QucsMain->editDelete->isChecked()){
@@ -860,7 +859,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
   }
 
   if(!focusElement){
-  }else if(auto m=focusElement->marker()) {
+  }else if(auto m=marker(focusElement)) {
     ComponentMenu->addSeparator();
     QString s = QObject::tr("power matching");
     if(m->pGraph->Var == "Sopt" ){ // BUG
@@ -879,15 +878,15 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
   }
   do {
     if(!focusElement) {
-    }else if(focusElement->diagram()){
+    }else if(diagram(focusElement)){
       break;
-    }else if(focusElement->graph()){
+    }else if(graph(focusElement)){
         ComponentMenu->addAction(QucsMain->graph2csv);
         break;
     }else{
     }
     ComponentMenu->addSeparator();
-    if(focusElement) if(focusElement->Type & isComponent)
+    if(focusElement) if(component(focusElement))
       if(!QucsMain->editActivate->isChecked())
         ComponentMenu->addAction(QucsMain->editActivate);
     if(!QucsMain->editRotate->isChecked())
@@ -899,10 +898,12 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
 
     // right-click menu to go into hierarchy
     if(focusElement) {
-      if(focusElement->Type & isComponent)
-	if(((Component*)focusElement)->obsolete_model_hack() == "Sub")
-      if(!QucsMain->intoH->isChecked())
-        ComponentMenu->addAction(QucsMain->intoH);
+      if(auto c=component(focusElement)){
+      if(c->obsolete_model_hack() != "Sub"){
+      }else if(!QucsMain->intoH->isChecked())
+	// BUG: c->addAction.. later.
+	ComponentMenu->addAction(QucsMain->intoH);
+      }
     }
     // right-click menu to pop out of hierarchy
     if(!focusElement)
@@ -1002,20 +1003,25 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
   int No=0;
   MAx1 = int(fX);
   MAy1 = int(fY);
-  focusElement = Doc->selectElement(Event->pos(), Ctrl, &No);
+  focusElement = selectElement(Doc, Event->pos(), Ctrl, &No);
   isMoveEqual = false;   // moving not neccessarily square
 
-  if(focusElement)
+  if(focusElement){
     // print define value in hex, see element.h
-    qDebug() << "MPressSelect: focusElement->Type" <<  QString("0x%1").arg(focusElement->Type, 0, 16);
-  else
+    //qDebug() << "MPressSelect: focusElement->Type" <<  QString("0x%1").arg(focusElement->Type, 0, 16);
+  }else{
     qDebug() << "MPressSelect";
+  }
 
+  incomplete(); //this does not add up.
+#if 0
   if(!focusElement){
   }else if(focusElement->Type == isDiagramHScroll){
+    // BUG: move to selectElement? what is MAy1?!
       MAy1 = MAx1;
   }else{
   }
+#endif
 
   if(!focusElement){
   }else if(focusElement->Type == isPaintingResize){
@@ -1029,26 +1035,35 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
       Doc->highlightWireLabels ();
       return;
   }else if(focusElement->Type == isDiagramResize){
+#if 0
       if(((Diagram*)focusElement)->Name.left(4) != "Rect")
         if(((Diagram*)focusElement)->Name.at(0) != 'T')
           if(((Diagram*)focusElement)->Name != "Curve")
            /* if(((Diagram*)focusElement)->Name != "Waveac")
           if(((Diagram*)focusElement)->Name != "Phasor")*/
             isMoveEqual = true;  // diagram must be square
+#endif
 
       focusElement->Type = isDiagram;
       MAx1 = focusElement->cx_();
       MAx2 = focusElement->x2_();
-      if(((Diagram*)focusElement)->State & 1) {
-        MAx1 += MAx2;
-        MAx2 *= -1;
-      }
+
+#if 0
+      focusElement->someDiagramStateCallback()
+
+	// old:
+     // if(diagram(focusElement)->State & 1) {
+     //   MAx1 += MAx2;
+     //   MAx2 *= -1;
+     // }
+
       MAy1 =  focusElement->cy_();
       MAy2 = -focusElement->y2_();
       if(((Diagram*)focusElement)->State & 2) {
         MAy1 += MAy2;
         MAy2 *= -1;
       }
+#endif
 
       QucsMain->MouseReleaseAction = &MouseActions::MReleaseResizeDiagram;
       QucsMain->MouseMoveAction = &MouseActions::MMoveSelect;
@@ -1064,7 +1079,9 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
 
       focusElement->Type = isDiagram; // reset happens here. FIXME.
 
-      No = ((Diagram*)focusElement)->scroll(MAy1);
+      auto d=diagram(focusElement); // is this necessary?!
+      assert(d);
+      No = d->scroll(MAy1);
 
       switch(No)
       {
@@ -1078,7 +1095,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
           Doc->grabKeyboard();  // no keyboard inputs during move actions
 
           // Remember inital scroll bar position.
-          MAx2 = int(((Diagram*)focusElement)->xAxis_limit_min());
+          MAx2 = int(d->xAxis_limit_min());
           // Update matching wire label highlighting
           Doc->highlightWireLabels ();
           return;
@@ -1099,10 +1116,9 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
       Doc->highlightWireLabels ();
       return;
 
-  }else if(focusElement->Type == isNode){
-      assert(dynamic_cast<Node*>(focusElement));
-      if (QucsSettings.NodeWiring)
-      {
+  }else if(auto n=node(focusElement)){
+      if (QucsSettings.NodeWiring) {
+
         MAx1 = 0;   // paint wire corner first up, then left/right
         MAx3 = focusElement->cx_();  // works even if node is not on grid
         MAy3 = focusElement->cy_();
@@ -1124,6 +1140,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
         // Update matching wire label highlighting
         Doc->highlightWireLabels ();
         return;
+      }else{
       }
   }else{
     // default case
