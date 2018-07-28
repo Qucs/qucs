@@ -180,6 +180,16 @@ public:
 
 //private: FIXME
   bool isSelected;
+public:
+  void setSelected(bool b=true){
+	  Selected = b;
+  }
+  void toggleSelected(){
+	  Selected = !Selected;
+  }
+  bool isSelected() const{return Selected;}
+
+public: // BUG
   int  Type;    // whether it is Component, Wire, ...
   int  cx, cy, x1, y1;
   

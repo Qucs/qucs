@@ -38,7 +38,6 @@ GraphicLine::GraphicLine()
 void GraphicLine::setSomeStuff(int cx_, int cy_, int x2_, int y2_, QPen Pen_)
 {
   Name = "Line ";
-  isSelected = false;
   Pen = Pen_;
   cx = cx_;
   cy = cy_;
@@ -54,7 +53,7 @@ GraphicLine::~GraphicLine()
 // --------------------------------------------------------------------------
 void GraphicLine::paint(ViewPainter *p)
 {
-  if(isSelected) {
+  if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
     p->drawLine(cx, cy, cx+x2, cy+y2);
     p->Painter->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
