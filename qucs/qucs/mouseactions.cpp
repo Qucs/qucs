@@ -58,7 +58,8 @@ QAction *formerAction;   // remember action before drag n'drop etc.
 
 
 MouseActions::MouseActions(QucsApp* App_)
-  : App(App_)
+  : focusElement(nullptr), // hmm
+    App(App_)
 {
   selElem  = 0;  // no component/diagram is selected
   isMoveEqual = false;  // mouse cursor move x and y the same way
@@ -1609,9 +1610,9 @@ void MouseActions::MPressMoveText(Schematic *Doc, QMouseEvent* Event)
 
   MAx1 = int(fX);
   MAy1 = int(fY);
-  focusElement = Doc->selectCompText(MAx1, MAy1, MAx2, MAy2);
+  focusElement = ElementMouseAction( selectCompText(Doc, MAx1, MAy1, MAx2, MAy2) );
 
-  auto C=dynamic_cast<Component*>(focusElement);
+  auto C=component(focusElement);
 
   if(focusElement) {
     MAx3 = MAx1;
@@ -1656,12 +1657,15 @@ void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
 {
   bool ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
-  if(!ctrl) Doc->deselectElements(focusElement);
+  if(!ctrl) {
+    deselectElements(Doc, focusElement);
+  }else{
+  }
 
   if(focusElement)  if(Event->button() == Qt::LeftButton)
-    if(focusElement->Type == isWire) {
-      Doc->selectWireLine(focusElement, ((Wire*)focusElement)->Port1, ctrl);
-      Doc->selectWireLine(focusElement, ((Wire*)focusElement)->Port2, ctrl);
+    if(auto w=wire(focusElement)) {
+      Doc->selectWireLine(element(focusElement), w->Port1, ctrl);
+      Doc->selectWireLine(element(focusElement), w->Port2, ctrl);
     }
 
   Doc->releaseKeyboard();  // allow keyboard inputs again
@@ -1733,7 +1737,7 @@ void MouseActions::MReleaseResizeDiagram(Schematic *Doc, QMouseEvent *Event)
   if(Event->button() != Qt::LeftButton){
     return;
   }
-  Diagram* d=dynamic_cast<Diagram*>(focusElement);
+  Diagram* d=diagram(focusElement);
   if(!d){
     assert(false && "we are in trouble here");
     return;
@@ -1962,8 +1966,11 @@ void MouseActions::MReleaseMoveText(Schematic *Doc, QMouseEvent *Event)
   QucsMain->MouseReleaseAction = 0;
   Doc->releaseKeyboard();  // allow keyboard inputs again
 
-  ((Component*)focusElement)->tx = MAx1 - ((Component*)focusElement)->cx_();
-  ((Component*)focusElement)->ty = MAy1 - ((Component*)focusElement)->cy_();
+  auto c=component(focusElement);
+  assert(c);
+
+  c->tx = MAx1 - c->cx_();
+  c->ty = MAy1 - c->cy_();
   Doc->viewport()->update();
   drawn = false;
   Doc->setChanged(true, true);
@@ -2024,7 +2031,6 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
   Graph *pg;
   Component *c;
   Diagram *dia;
-  DiagramDialog *ddia;
   MarkerDialog *mdia;
   int x1, y1, x2, y2;
 

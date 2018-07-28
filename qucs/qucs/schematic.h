@@ -276,7 +276,6 @@ public:
 
   Element* selectElement(QPoint const&, bool, int *index=0);
   ElementGraphics itemAt(float, float);
-  void     deselectElements(Element*);
   int      selectElements(int, int, int, int, bool);
   void     selectMarkers();
   void     newMovingWires(Q3PtrList<Element>*, Node*, int);
@@ -294,7 +293,6 @@ public:
   bool       activateSpecifiedComponent(int, int);
   bool       activateSelectedComponents();
   void       setCompPorts(Component*);
-  Component* selectCompText(int, int, int&, int&);
   Component* searchSelSubcircuit();
   Component* selectedComponent(int, int);
   void       deleteComp(Component*);
