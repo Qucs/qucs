@@ -1026,7 +1026,7 @@ void QucsApp::slotCursorUp(bool up)
   if(editText->isHidden()) {  // for edit of component property ?
   }else if(up){
     if(view->MAx3 == 0) return;  // edit component namen ?
-    Component *pc = (Component*)view->focusElement;
+    Component *pc = component(view->focusElement);
     Property *pp = pc->Props.at(view->MAx3-1);  // current property
     int Begin = pp->Description.indexOf('[');
     if(Begin < 0) return;  // no selection list ?
@@ -1044,7 +1044,7 @@ void QucsApp::slotCursorUp(bool up)
     return;
   }else{ // down
     if(view->MAx3 == 0) return;  // edit component namen ?
-    Component *pc = (Component*)view->focusElement;
+    Component *pc = component(view->focusElement);
     Property *pp = pc->Props.at(view->MAx3-1);  // current property
     int Pos = pp->Description.indexOf('[');
     if(Pos < 0) return;  // no selection list ?
@@ -1102,7 +1102,7 @@ void QucsApp::slotApplyCompText()
   editText->setFont(f);
 
   Property  *pp = 0;
-  Component *pc = (Component*)view->focusElement;
+  Component *pc = component(view->focusElement);
   if(!pc) return;  // should never happen
   view->MAx1 = pc->cx_() + pc->tx;
   view->MAy1 = pc->cy_() + pc->ty;
@@ -1266,9 +1266,11 @@ void QucsApp::slotExportGraphAsCsv()
   slotHideEdit(); // disable text edit of component property
 
   for(;;) {
-    if(view->focusElement)
-      if(view->focusElement->Type == isGraph)
+    if(!view->focusElement){
+    }else if(graph(view->focusElement)){
         break;
+    }else{
+    }
 
     QMessageBox::critical(this, tr("Error"), tr("Please select a diagram graph!"));
     return;
@@ -1307,10 +1309,11 @@ void QucsApp::slotExportGraphAsCsv()
 
 
   DataX const *pD;
-  Graph *g = (Graph*)view->focusElement;
+  Graph const*g = graph(view->focusElement);
   // First output the names of independent and dependent variables.
-  for(unsigned ii=0; (pD=g->axis(ii)); ++ii)
+  for(unsigned ii=0; (pD=g->axis(ii)); ++ii){
     Stream << '\"' << pD->Var << "\";";
+  }
   Stream << "\"r " << g->Var << "\";\"i " << g->Var << "\"\n";
 
 
