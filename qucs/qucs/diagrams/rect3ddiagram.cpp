@@ -707,7 +707,7 @@ int Rect3DDiagram::calcAxis(Axis *Axis, int x, int y,
 	  Texts.append(new Text(xLen+3+gx, yLen-6+gy, tmp));
       // it seems that the text used to have a left/right alignment
 	  //Texts.append(new Text(xLen-w-2-gx, yLen-6-gy, tmp));
-      
+
       // short grid marks
       Lines.append(new Line(xLen-gx, yLen-gy, xLen+gx, yLen+gy,
 			    QPen(Qt::black,0)));
