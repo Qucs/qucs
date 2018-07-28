@@ -257,8 +257,9 @@ void ImportDialog::slotImport()
   qDebug() << "Command:" << Program << CommandLine.join(" ");
   Process.start(Program, CommandLine);
   
-  if(Process.Running==0)
+  if(Process.Running==0){
     MsgText->appendPlainText(tr("ERROR: Cannot start converter!"));
+  }
 }
 
 // ------------------------------------------------------------------------
