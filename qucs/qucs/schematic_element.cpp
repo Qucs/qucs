@@ -18,6 +18,7 @@
 #include <limits.h>
 
 #include "schematic.h"
+#include "mouseactions.h"
 #include "qt_compat.h"
 #include <QDebug>
 
@@ -966,7 +967,8 @@ void Schematic::markerUpDown(bool up, Q3PtrList<Element> *Elements)
    as right-clicking on a selected element to get a context
    menu.
 */
-MouseAction Schematic::selectElement(QPoint const& xy, bool flag, int *index)
+ElementMouseAction MouseActions::selectElement(Schematic* Doc,
+	QPoint const& xy, bool flag, int *index)
 {
   // something like
    // dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform())
@@ -985,17 +987,17 @@ MouseAction Schematic::selectElement(QPoint const& xy, bool flag, int *index)
     Element *pe_1st = 0;
     Element *pe_sel = 0;
     WireLabel *pl = 0;
-    float Corr = textCorr(); // for selecting text
+    float Corr = Doc->textCorr(); // ??
 
     // test all nodes and their labels
-    for(Node *pn = Nodes->last(); pn != 0; pn = Nodes->prev()) {
+    for(Node *pn = Doc->nodes().last(); pn != 0; pn = Doc->nodes().prev()) {
         if(flag) {
             // The element can be deselected
 	}else if(!index) {
 	    // 'index' is only true if called from MouseActions::MPressSelect()
 	}else if(pn->getSelected(x, y)) {
 	    // Return the node pointer, as the selection cannot change
-	    return pn;
+	    return ElementMouseAction(pn);
         }
 
         pl = pn->Label; // Get any wire label associated with the Node
@@ -1006,11 +1008,11 @@ MouseAction Schematic::selectElement(QPoint const& xy, bool flag, int *index)
                     // TODO: I don't see a need for the xor here, a simple ! on the current value
                     // would be clearer and have the same effect?
                     pl->toggleSelected();
-                    return pl;
+                    return ElementMouseAction(pl);
                 }else if(pe_sel) {
                     // There is another currently
                     pe_sel->setSelected(false);
-                    return pl;
+                    return ElementMouseAction(pl);
                 }else if(pe_1st == 0) {
                     // give access to elements lying beneath by storing this label.
                     // If no label pointer (or other element) has previously been
@@ -1029,15 +1031,15 @@ MouseAction Schematic::selectElement(QPoint const& xy, bool flag, int *index)
     }
 
     // test all wires and wire labels
-    for(Wire *pw = Wires->last(); pw != 0; pw = Wires->prev()) {
+    for(Wire *pw=Doc->wires().last(); pw != 0; pw = Doc->wires().prev()) {
         if(pw->getSelected(x, y)) {
             if(flag) {
                 // The element can be deselected
                 pw->toggleSelected();
-                return pw;
+                return ElementMouseAction(pw);
             }else if(pe_sel) {
                 pe_sel->setSelected(false);
-                return pw;
+                return ElementMouseAction(pw);
             }else if(pe_1st == 0) {
                 pe_1st = pw;   // give access to elements lying beneath
             }else{
@@ -1053,10 +1055,10 @@ MouseAction Schematic::selectElement(QPoint const& xy, bool flag, int *index)
                 if(flag) {
                     // The element can be deselected
                     pl->toggleSelected();
-                    return pl;
+                    return ElementMouseAction(pl);
                 }else if(pe_sel) {
-                    pe_sel->setSelected(false);
-                    return pl;
+                    pe_sel->isSelected = false;
+                    return ElementMouseAction(pl);
                 }
                 if(pe_1st == 0) {
                     // give access to elements lying beneath
@@ -1070,15 +1072,15 @@ MouseAction Schematic::selectElement(QPoint const& xy, bool flag, int *index)
     }
 
     // test all components
-    for(Component *pc = Components->last(); pc != 0; pc = Components->prev()) {
+    for(Component *pc=Doc->components().last(); pc!=nullptr; pc=Doc->components().prev()) {
         if(pc->getSelected(x, y)) {
             if(flag) {
                 // The element can be deselected
                 pc->toggleSelected();
-                return pc;
+                return ElementMouseAction(pc);
             }else if(pe_sel) {
                 pe_sel->setSelected(false);
-                return pc;
+                return ElementMouseAction(pc);
             }else if(pe_1st == 0) {
 		// give access to elements lying beneath
                 pe_1st = pc;
@@ -1092,18 +1094,16 @@ MouseAction Schematic::selectElement(QPoint const& xy, bool flag, int *index)
             if(n >= 0) {
                 pc->Type = isComponentText;
                 if(index)  *index = n;
-                return pc;
+                return ElementMouseAction(pc);
             }
         }
     }
 
-    Corr = 5.0 / Scale;  // size of line select and area for resizing
+    Corr = 5.0 / Doc->Scale;  // size of line select and area for resizing
     // test all diagrams
-    for(Diagram *pd = Diagrams->last(); pd != 0; pd = Diagrams->prev())
-    {
+    for(Diagram *pd = Doc->diagrams().last(); pd!=nullptr; pd=Doc->diagrams().prev()) {
 
-        foreach(Graph *pg, pd->Graphs)
-        {
+        foreach(Graph *pg, pd->Graphs) {
             // test markers of graphs
             foreach(Marker *pm, pg->Markers)
             {
@@ -1113,12 +1113,12 @@ MouseAction Schematic::selectElement(QPoint const& xy, bool flag, int *index)
                     {
                         // The element can be deselected
                         pm->toggleSelected();
-                        return pm;
+                        return ElementMouseAction(pm);
                     }
                     if(pe_sel)
                     {
                         pe_sel->setSelected(false);
-                        return pm;
+                        return ElementMouseAction(pm);
                     }
                     if(pe_1st == 0)
                     {
@@ -1138,8 +1138,9 @@ MouseAction Schematic::selectElement(QPoint const& xy, bool flag, int *index)
         }else if(!pd->resizeTouched(fX, fY, Corr)){
           // check: what does it mean?
         }else if(pe_1st == 0) {
-          pd->Type = isDiagramResize;
-          return pd; // FIXME.
+	  ElementMouseAction A(pd);
+	  A->setObsoleteType(isDiagramResize);
+	  return A;
         }else{
         }
 
@@ -1152,16 +1153,18 @@ MouseAction Schematic::selectElement(QPoint const& xy, bool flag, int *index)
                     if(y > pd->cy_())
                     {
                         if(x < pd->cx_()+pd->xAxis.numGraphs) continue;
-                        pd->Type = isDiagramHScroll;
-                        return pd;
+                        ElementMouseAction A(pd);
+                        A->setObsoleteType(isDiagramHScroll);
+                        return A;
                     }
                 }
                 else
                 {
                     if(x < pd->cx_())        // clicked on scroll bar ?
                     {
-                        pd->Type = isDiagramVScroll;
-                        return pd;
+                        ElementMouseAction A(pd);
+                        A->setObsoleteType(isDiagramVScroll);
+                        return A;
                     }
                 }
             }
@@ -1171,19 +1174,16 @@ MouseAction Schematic::selectElement(QPoint const& xy, bool flag, int *index)
             {
                 if(pg->getSelected(x-pd->cx_(), pd->cy_()-y) >= 0)
                 {
-                    if(flag)
-                    {
+                    if(flag) {
                         // The element can be deselected
                         pg->toggleSelected();
+
+                        ElementMouseAction A(pg);
+                        return A;
+                    }else if(pe_sel) {
+                        pe_sel->isSelected = false;
                         return pg;
-                    }
-                    if(pe_sel)
-                    {
-                        pe_sel->setSelected(false);
-                        return pg;
-                    }
-                    if(pe_1st == 0)
-                    {
+                    }else if(pe_1st == 0) {
                         pe_1st = pg;   // access to elements lying beneath
                     }
                     if(pg->isSelected())
@@ -1595,7 +1595,6 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
     }
 
     return z;
-#endif
 }
 
 // ---------------------------------------------------
@@ -2798,11 +2797,10 @@ void Schematic::setCompPorts(Component *pc)
 
 // ---------------------------------------------------
 // Returns a pointer of the component on whose text x/y points.
-Component* Schematic::selectCompText(int x_, int y_, int& w, int& h)
+Component* MouseActions::selectCompText(Schematic* Doc, int x_, int y_, int& w, int& h)
 {
     int a, b, dx, dy;
-    for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-    {
+    for(auto *pc : Doc->components()) {
         a = pc->cx_() + pc->tx;
         if(x_ < a)  continue;
         b = pc->cx_() + pc->ty;
