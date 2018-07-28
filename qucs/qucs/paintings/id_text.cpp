@@ -27,10 +27,9 @@ Dispatcher<Painting>::INSTALL p(&painting_dispatcher, ".ID", &D);
 Module::INSTALL pp("paintings", &D);
 }
 
-ID_Text::ID_Text(int cx_, int cy_)
+ID_Text::ID_Text(int cx_, int cy_) : Painting()
 {
   Name = ".ID ";
-  isSelected = false;
   cx = cx_;
   cy = cy_;
   x2 = y2 = 20;
@@ -67,7 +66,7 @@ void ID_Text::paint(ViewPainter *p)
     }
   }
 
-  if(isSelected) {
+  if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->Painter->drawRoundRect(x-4, y-4, x2+8, y2+8);
   }

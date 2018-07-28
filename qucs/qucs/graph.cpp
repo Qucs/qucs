@@ -36,7 +36,6 @@ Graph::Graph(Diagram const* d, const QString& _Line) :
   Thick  = numMode = 0;
   Color  = 0x0000ff;   // blue
   Precision  = 3;
-  isSelected = false;
   yAxisNo = 0;   // left y axis
 
   cPointsY = 0;
@@ -63,7 +62,7 @@ void Graph::paint(ViewPainter *p, int x0, int y0)
   if(!ScrPoints.size())
     return;
 
-  if(isSelected) {
+  if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,Thick*p->PrintScale+4));
     paintLines(p, x0, y0);
 
@@ -101,7 +100,7 @@ void Graph::paintvect(ViewPainter *p, int x0, int y0)
     if(!ScrPoints.size())
     return;
 
-  if(isSelected) {
+  if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,Thick*p->PrintScale+4));
     drawvect(x0, y0, p);
 

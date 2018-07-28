@@ -23,7 +23,7 @@
 #include <QPainter>
 
 WireLabel::WireLabel(const QString& _Name, int _cx, int _cy,
-                     int _x1, int _y1, int _Type)
+                     int _x1, int _y1, int _Type) : Element()
 {
   cx = _cx;
   cy = _cy;
@@ -33,7 +33,6 @@ WireLabel::WireLabel(const QString& _Name, int _cx, int _cy,
   initValue = "";
 
   Type = _Type;
-  isSelected = false;
   isHighlighted = false;
 }
 
@@ -186,8 +185,7 @@ void WireLabel::paint(ViewPainter *p)
   x2 = int(double(x2) / p->Scale);
   y2 = int(double(y2) / p->Scale);
 
-  if(isSelected)
-  {
+  if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(x1-2, y1-2, x2+6, y2+5);
   }
