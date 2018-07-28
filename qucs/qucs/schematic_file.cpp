@@ -64,7 +64,7 @@ QString Schematic::createClipboardFile()
   // Build element document.
   s += "<Components>\n";
   for(pc = Components->first(); pc != 0; pc = Components->next()){
-    if(pc->isSelected) {
+    if(pc->isSelected()) {
       QTextStream str(&s);
       saveComponent(str, pc);
       s += "\n";
@@ -75,28 +75,28 @@ QString Schematic::createClipboardFile()
 
   s += "<Wires>\n";
   for(pw = Wires->first(); pw != 0; pw = Wires->next())
-    if(pw->isSelected) {
+    if(pw->isSelected()) {
       z++;
-      if(pw->Label) if(!pw->Label->isSelected) {
+      if(pw->Label) if(!pw->Label->isSelected()) {
 	s += pw->save().section('"', 0, 0)+"\"\" 0 0 0>\n";
 	continue;
       }
       s += pw->save()+"\n";
     }
   for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
-    if(pn->Label) if(pn->Label->isSelected) {
+    if(pn->Label) if(pn->Label->isSelected()) {
       s += pn->Label->save()+"\n";  z++; }
   s += "</Wires>\n";
 
   s += "<Diagrams>\n";
   for(pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
-    if(pd->isSelected) {
+    if(pd->isSelected()) {
       s += pd->save()+"\n";  z++; }
   s += "</Diagrams>\n";
 
   s += "<Paintings>\n";
   for(pp = Paintings->first(); pp != 0; pp = Paintings->next())
-    if(pp->isSelected)
+    if(pp->isSelected())
       if(pp->Name.at(0) != '.') {  // subcircuit specific -> do not copy
         s += "<"+pp->save()+">\n";  z++; }
   s += "</Paintings>\n";

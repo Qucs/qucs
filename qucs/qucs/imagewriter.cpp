@@ -311,7 +311,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
         ymax= INT_MIN;
 
      for(Component *pc = sch->Components->first(); pc != 0; pc = sch->Components->next()) {
-         if (pc->isSelected) {
+         if (pc->isSelected()) {
            int x1,y1,x2,y2;
            pc->entireBounds(x1,y1,x2,y2,sch->textCorr());
            updateMinMax(xmin,xmax,ymin,ymax,x1,x2,y1,y2);
@@ -320,7 +320,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
 
     for(Wire *pw = sch->Wires->first(); pw != 0; pw = sch->Wires->next()) {
 
-        if (pw->isSelected) {
+        if (pw->isSelected()) {
             if(pw->x1 < xmin) xmin = pw->x1;
             if(pw->x2 > xmax) xmax = pw->x2;
             if(pw->y1 < ymin) ymin = pw->y1;
@@ -329,7 +329,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
         }
         if (pw->Label) {
           WireLabel *pl = pw->Label;
-          if (pl->isSelected) {
+          if (pl->isSelected()) {
             int x1,y1,x2,y2;
             pl->getLabelBounding(x1,y1,x2,y2);
             qDebug()<<x1<<y1<<x2<<y2;
@@ -341,7 +341,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
     for(Node *pn = sch->Nodes->first(); pn != 0; pn = sch->Nodes->next()) {
         WireLabel *pl = pn->Label;
         if(pl) {     // check position of node label
-            if (pl->isSelected) {
+            if (pl->isSelected()) {
                 int x1,x2,y1,y2;
                 pl->getLabelBounding(x1,y1,x2,y2);
                 if(x1 < xmin) xmin = x1;
@@ -356,14 +356,14 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
 
 
 
-        if (pd->isSelected) {
+        if (pd->isSelected()) {
             int x1,y1,x2,y2;
             pd->Bounding(x1,y1,x2,y2);
             updateMinMax(xmin,xmax,ymin,ymax,x1,x2,y1,y2);
 
             foreach (Graph *pg, pd->Graphs) {
                 foreach (Marker *pm, pg->Markers) {
-                    if (pm->isSelected) {
+                    if (pm->isSelected()) {
                         int x1,y1,x2,y2;
                         pm->Bounding(x1,y1,x2,y2);
                         updateMinMax(xmin,xmax,ymin,ymax,x1,x2,y1,y2);
@@ -375,7 +375,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
 
     for(Painting *pp = sch->Paintings->first(); pp != 0; pp = sch->Paintings->next()) {
 
-       if (pp->isSelected) {
+       if (pp->isSelected()) {
            int x1,y1,x2,y2;
            pp->Bounding(x1,y1,x2,y2);
            updateMinMax(xmin,xmax,ymin,ymax,x1,x2,y1,y2);

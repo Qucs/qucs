@@ -17,10 +17,10 @@
 
 #include "element.h"
 
-Element::Element()
+Element::Element() :
+	Selected(false)
 {
   Type = isDummyElement;
-  isSelected = false;
   cx = cy = x1 = y1 = x2 = y2 = 0;
 }
 

@@ -642,81 +642,81 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
     }
 
     for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-      if(pc->isSelected || printAll) {
-        selected = pc->isSelected;
-        pc->isSelected = false;
+      if(pc->isSelected() || printAll) {
+        selected = pc->isSelected();
+        pc->setSelected(false);
         if (toImage) {
             pc->paint(p);
         } else {
             pc->print(p, (float)screenDpiX / (float)printerDpiX);
         }
-        pc->isSelected = selected;
+        pc->setSelected(selected);
       }
 
     for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next()) {
-      if(pw->isSelected || printAll) {
-        selected = pw->isSelected;
-        pw->isSelected = false;
+      if(pw->isSelected() || printAll) {
+        selected = pw->isSelected();
+        pw->setSelected(false);
         pw->paint(p);   // paint all selected wires
-        pw->isSelected = selected;
+        pw->setSelected(selected);
       }
       if(pw->Label)
-        if(pw->Label->isSelected || printAll) {
-          selected = pw->Label->isSelected;
-          pw->Label->isSelected = false;
+        if(pw->Label->isSelected() || printAll) {
+          selected = pw->Label->isSelected();
+          pw->Label->setSelected(false);
           pw->Label->paint(p);
-          pw->Label->isSelected = selected;
+          pw->Label->setSelected(selected);
         }
     }
 
     Element *pe;
     for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
       for(pe = pn->Connections.first(); pe != 0; pe = pn->Connections.next())
-        if(pe->isSelected || printAll) {
+        if(pe->isSelected() || printAll) {
           pn->paint(p); // paint all nodes with selected elements
           break;
         }
       if(pn->Label)
-        if(pn->Label->isSelected || printAll) {
-          selected = pn->Label->isSelected;
-          pn->Label->isSelected = false;
+        if(pn->Label->isSelected() || printAll) {
+          selected = pn->Label->isSelected();
+          pn->Label->setSelected(false);
           pn->Label->paint(p);
-          pn->Label->isSelected = selected;
+          pn->Label->setSelected(selected);
         }
     }
 
     for(Painting *pp = Paintings->first(); pp != 0; pp = Paintings->next())
-      if(pp->isSelected || printAll) {
-        selected = pp->isSelected;
-        pp->isSelected = false;
+      if(pp->isSelected() || printAll) {
+        selected = pp->isSelected();
+        pp->setSelected(false);
         pp->paint(p);   // paint all selected paintings
-        pp->isSelected = selected;
+        pp->setSelected(selected);
       }
 
     for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
-      if(pd->isSelected || printAll) {
+      if(pd->isSelected() || printAll) {
         // if graph or marker is selected, deselect during printing
         foreach(Graph *pg, pd->Graphs) {
-      if(pg->isSelected)  pg->Type |= 1;  // remember selection
-      pg->isSelected = false;
+      if(pg->isSelected())  pg->Type |= 1;  // remember selection
+      pg->setSelected(false);
       foreach(Marker *pm, pg->Markers) {
-        if(pm->isSelected)  pm->Type |= 1;  // remember selection
-        pm->isSelected = false;
+        if(pm->isSelected())  pm->Type |= 1;  // remember selection
+        pm->setSelected(false);
       }
         }
 
-        selected = pd->isSelected;
-        pd->isSelected = false;
+        selected = pd->isSelected();
+        pd->setSelected(false);
         pd->paintDiagram(p);  // paint all selected diagrams with graphs and markers
         pd->paintMarkers(p,printAll);
-        pd->isSelected = selected;
+        pd->setSelected(selected);
 
         // revert selection of graphs and markers
         foreach(Graph *pg, pd->Graphs) {
-      if(pg->Type & 1)  pg->isSelected = true;
+      if(pg->Type & 1)  pg->setSelected();
       pg->Type &= -2;
       foreach(Marker *pm, pg->Markers) {
-        if(pm->Type & 1)  pm->isSelected = true;
+        if(pm->Type & 1)  pm->setSelected();
         pm->Type &= -2;
       }
         }
@@ -1723,7 +1723,7 @@ bool Schematic::elementsOnGrid()
   // test all components
   Components->setAutoDelete(false);
   for(Component *pc = Components->last(); pc != 0; pc = Components->prev())
-    if(pc->isSelected) {
+    if(pc->isSelected()) {
 
       // rescue non-selected node labels
       foreach(Port *pp, pc->Ports)
@@ -1741,7 +1741,7 @@ bool Schematic::elementsOnGrid()
       setOnGrid(pc->cx, pc->cy);
       insertRawComponent(pc);
       Components->at(No);   // restore current list position
-      pc->isSelected = false;
+      pc->setSelected(false);
       count = true;
 
       x -= pc->cx;
@@ -1761,7 +1761,7 @@ bool Schematic::elementsOnGrid()
     pl = pw->Label;
     pw->Label = 0;
 
-    if(pw->isSelected) {
+    if(pw->isSelected()) {
       // rescue non-selected node label
       pLabel = 0;
       if(pw->Port1->Label) {
@@ -1783,7 +1783,7 @@ bool Schematic::elementsOnGrid()
       setOnGrid(pw->x2, pw->y2);
       insertWire(pw);
       Wires->at(No);   // restore current list position
-      pw->isSelected = false;
+      pw->setSelected(false);
       count = true;
       if(pl)
         setOnGrid(pl->cx, pl->cy);
@@ -1796,9 +1796,9 @@ bool Schematic::elementsOnGrid()
 
     if(pl) {
       pw->Label = pl;
-      if(pl->isSelected) {
+      if(pl->isSelected()) {
         setOnGrid(pl->x1, pl->y1);
-        pl->isSelected = false;
+        pl->setSelected(false);
         count = true;
       }
     }
@@ -1808,39 +1808,39 @@ bool Schematic::elementsOnGrid()
   // test all node labels
   for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
     if(pn->Label)
-      if(pn->Label->isSelected) {
+      if(pn->Label->isSelected()) {
         setOnGrid(pn->Label->x1, pn->Label->y1);
-        pn->Label->isSelected = false;
+        pn->Label->setSelected(false);
         count = true;
       }
 
   // test all diagrams
   for(Diagram *pd = Diagrams->last(); pd != 0; pd = Diagrams->prev()) {
-    if(pd->isSelected) {
+    if(pd->isSelected()) {
       setOnGrid(pd->cx, pd->cy);
-      pd->isSelected = false;
+      pd->setSelected(false);
       count = true;
     }
 
     foreach(Graph *pg,pd->Graphs)
       // test markers of diagram
       foreach(Marker *pm, pg->Markers)
-        if(pm->isSelected) {
+        if(pm->isSelected()) {
 	  x = pm->x1 + pd->cx;
 	  y = pm->y1 + pd->cy;
 	  setOnGrid(x, y);
 	  pm->x1 = x - pd->cx;
 	  pm->y1 = y - pd->cy;
-	  pm->isSelected = false;
+	  pm->setSelected(false);
 	  count = true;
         }
   }
 
   // test all paintings
   for(Painting *pa = Paintings->last(); pa != 0; pa = Paintings->prev())
-    if(pa->isSelected) {
+    if(pa->isSelected()) {
       setOnGrid(pa->cx, pa->cy);
-      pa->isSelected = false;
+      pa->setSelected(false);
       count = true;
     }
 
@@ -2183,3 +2183,4 @@ void Schematic::contentsDragMoveEvent(QDragMoveEvent *Event)
   Event->accept();
 }
 
+// vim:ts=8:sw=2:noet

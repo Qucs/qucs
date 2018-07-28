@@ -180,7 +180,7 @@ void MouseActions::endElementMoving(Schematic *Doc, Q3PtrList<Element> *movEleme
 {
   Element *pe;
   for(pe = movElements->first(); pe!=0; pe = movElements->next()) {
-//    pe->isSelected = false;  // deselect first (maybe afterwards pe == NULL)
+//    pe->setSelected(false);  // deselect first (maybe afterwards pe == NULL)
     switch(pe->Type) { // FIXME: use casts.
       case isWire:
         if(pe->x1 == pe->x2)
@@ -773,7 +773,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
   ComponentMenu->clear();
   while(true) {
     if(focusElement) {
-      focusElement->isSelected = true;
+      focusElement->setSelected();
       QAction *editProp = new QAction(QObject::tr("Edit Properties"), QucsMain);
       QucsMain->connect(editProp, SIGNAL(triggered()), SLOT(slotEditElement()));
       ComponentMenu->addAction(editProp);
@@ -1080,9 +1080,12 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
     // element could be moved
     if(!Ctrl)
     {
-      if(!focusElement->isSelected)// Don't move selected elements if clicked
+      if(!focusElement->isSelected()) {
+	// Don't move selected elements if clicked
         Doc->deselectElements(focusElement); // element was not selected.
-      focusElement->isSelected = true;
+      }else{
+      }
+      focusElement->setSelected();
     }
     Doc->setOnGrid(MAx1, MAy1);
     QucsMain->MouseMoveAction = &MouseActions::MMoveMoving;
@@ -1097,7 +1100,7 @@ void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent*, float fX, float fY
   Element *pe = Doc->selectElement(fX, fY, false);
   if(pe)
   {
-    pe->isSelected = true;
+    pe->setSelected();
     Doc->deleteElements();
 
     Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
@@ -1175,7 +1178,7 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent*, float fX, float fY
 
   WireLabel *pl;
   int x1, y1, x2, y2;
-//  e->isSelected = false;
+//  e->setSelected(false);
   switch(e->Type) {
     case isComponent:
     case isAnalogComponent:
@@ -1487,7 +1490,7 @@ void MouseActions::MPressOnGrid(Schematic *Doc, QMouseEvent*, float fX, float fY
     pe->Type &= isSpecialMask;  // remove special functions (4 lowest bits)
 
     // onGrid is toggle action -> no other element can be selected
-    pe->isSelected = true;
+    pe->setSelected();
     Doc->elementsOnGrid();
 
     Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
@@ -1758,7 +1761,7 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
   case Qt::LeftButton :
     // insert all moved elements into document
     for(pe = movingElements.first(); pe!=0; pe = movingElements.next()) {
-      pe->isSelected = false;
+      pe->setSelected(false);
       switch(pe->Type) {
 	case isWire:
 	  if(pe->x1 == pe->x2) if(pe->y1 == pe->y2)  break;

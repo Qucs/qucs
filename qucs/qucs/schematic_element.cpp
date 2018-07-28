@@ -725,8 +725,8 @@ void Schematic::selectWireLine(Element *pe, Node *pn, bool ctrl)
         else  pe = pn->Connections.first();
 
         if(pe->Type != isWire) break;
-        if(ctrl) pe->isSelected ^= ctrl;
-        else pe->isSelected = true;
+        if(ctrl) pe->toggleSelected();
+        else pe->setSelected();
 
         if(((Wire*)pe)->Port1 == pn)  pn = ((Wire*)pe)->Port2;
         else  pn = ((Wire*)pe)->Port1;
@@ -749,7 +749,7 @@ Wire* Schematic::selectedWire(int x, int y)
 Wire* Schematic::splitWire(Wire *pw, Node *pn)
 {
     Wire *newWire = new Wire(pn->cx, pn->cy, pw->x2, pw->y2, pn, pw->Port2);
-    newWire->isSelected = pw->isSelected;
+    newWire->setSelected(pw->isSelected());
 
     pw->x2 = pn->cx;
     pw->y2 = pn->cy;
@@ -861,7 +861,7 @@ int Schematic::copyWires(int& x1, int& y1, int& x2, int& y2,
     Wire *pw;
     WireLabel *pl;
     for(pw = Wires->first(); pw != 0; )  // find bounds of all selected wires
-        if(pw->isSelected)
+        if(pw->isSelected())
         {
             if(pw->x1 < x1) x1 = pw->x1;
             if(pw->x2 > x2) x2 = pw->x2;
@@ -1006,13 +1006,13 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
                     // The element can be deselected, so toggle its isSelected member
                     // TODO: I don't see a need for the xor here, a simple ! on the current value
                     // would be clearer and have the same effect?
-                    pl->isSelected ^= flag;
+                    pl->toggleSelected();
                     return pl;
                 }
                 if(pe_sel)
                 {
                     // There is another currently
-                    pe_sel->isSelected = false;
+                    pe_sel->setSelected(false);
                     return pl;
                 }
                 if(pe_1st == 0)
@@ -1023,7 +1023,7 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
                     // pe_1st is returned if no other selected element
                     pe_1st = pl;
                 }
-                if(pl->isSelected)
+                if(pl->isSelected())
                 {
                     // if current label is already selected, store a pointer to it.
                     // This can be used to cycle through
@@ -1041,19 +1041,19 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
             if(flag)
             {
                 // The element can be deselected
-                pw->isSelected ^= flag;
+                pw->toggleSelected();
                 return pw;
             }
             if(pe_sel)
             {
-                pe_sel->isSelected = false;
+                pe_sel->setSelected(false);
                 return pw;
             }
             if(pe_1st == 0)
             {
                 pe_1st = pw;   // give access to elements lying beneath
             }
-            if(pw->isSelected)
+            if(pw->isSelected())
             {
                 pe_sel = pw;
             }
@@ -1066,12 +1066,12 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
                 if(flag)
                 {
                     // The element can be deselected
-                    pl->isSelected ^= flag;
+                    pl->toggleSelected();
                     return pl;
                 }
                 if(pe_sel)
                 {
-                    pe_sel->isSelected = false;
+                    pe_sel->setSelected(false);
                     return pl;
                 }
                 if(pe_1st == 0)
@@ -1079,7 +1079,7 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
                     // give access to elements lying beneath
                     pe_1st = pl;
                 }
-                if(pl->isSelected)
+                if(pl->isSelected())
                 {
                     pe_sel = pl;
                 }
@@ -1095,19 +1095,19 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
             if(flag)
             {
                 // The element can be deselected
-                pc->isSelected ^= flag;
+                pc->toggleSelected();
                 return pc;
             }
             if(pe_sel)
             {
-                pe_sel->isSelected = false;
+                pe_sel->setSelected(false);
                 return pc;
             }
             if(pe_1st == 0)
             {
                 pe_1st = pc;
             }  // give access to elements lying beneath
-            if(pc->isSelected)
+            if(pc->isSelected())
             {
                 pe_sel = pc;
             }
@@ -1139,19 +1139,19 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
                     if(flag)
                     {
                         // The element can be deselected
-                        pm->isSelected ^= flag;
+                        pm->toggleSelected();
                         return pm;
                     }
                     if(pe_sel)
                     {
-                        pe_sel->isSelected = false;
+                        pe_sel->setSelected(false);
                         return pm;
                     }
                     if(pe_1st == 0)
                     {
                         pe_1st = pm;   // give access to elements beneath
                     }
-                    if(pm->isSelected)
+                    if(pm->isSelected())
                     {
                         pe_sel = pm;
                     }
@@ -1160,7 +1160,7 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
         }
 
         // resize area clicked ?
-        if(pd->isSelected)
+        if(pd->isSelected())
         {
             if(pd->resizeTouched(fX, fY, Corr))
             {
@@ -1203,19 +1203,19 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
                     if(flag)
                     {
                         // The element can be deselected
-                        pg->isSelected ^= flag;
+                        pg->toggleSelected();
                         return pg;
                     }
                     if(pe_sel)
                     {
-                        pe_sel->isSelected = false;
+                        pe_sel->setSelected(false);
                         return pg;
                     }
                     if(pe_1st == 0)
                     {
                         pe_1st = pg;   // access to elements lying beneath
                     }
-                    if(pg->isSelected)
+                    if(pg->isSelected())
                     {
                         pe_sel = pg;
                     }
@@ -1225,19 +1225,19 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
             if(flag)
             {
                 // The element can be deselected
-                pd->isSelected ^= flag;
+                pd->toggleSelected();
                 return pd;
             }
             if(pe_sel)
             {
-                pe_sel->isSelected = false;
+                pe_sel->setSelected(false);
                 return pd;
             }
             if(pe_1st == 0)
             {
                 pe_1st = pd;    // give access to elements lying beneath
             }
-            if(pd->isSelected)
+            if(pd->isSelected())
             {
                 pe_sel = pd;
             }
@@ -1247,7 +1247,7 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
     // test all paintings
     for(Painting *pp = Paintings->last(); pp != 0; pp = Paintings->prev())
     {
-        if(pp->isSelected)
+        if(pp->isSelected())
         {
             if(pp->resizeTouched(fX, fY, Corr))
             {
@@ -1264,19 +1264,19 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
             if(flag)
             {
                 // The element can be deselected
-                pp->isSelected ^= flag;
+                pp->toggleSelected();
                 return pp;
             }
             if(pe_sel)
             {
-                pe_sel->isSelected = false;
+                pe_sel->setSelected(false);
                 return pp;
             }
             if(pe_1st == 0)
             {
                 pe_1st = pp;    // give access to elements lying beneath
             }
-            if(pp->isSelected)
+            if(pp->isSelected())
             {
                 pe_sel = pp;
             }
@@ -1319,8 +1319,7 @@ void Schematic::highlightWireLabels ()
         pltestouter = pwouter->Label;
         if (pltestouter)
         {
-            if (pltestouter->isSelected)
-            {
+            if (pltestouter->isSelected()) {
                 bool hiLightOuter = false;
                 // Search for matching labels on wires
 		for(auto iit=Wires->begin(); iit!=Wires->end(); ++iit) {
@@ -1372,8 +1371,7 @@ void Schematic::highlightWireLabels ()
         pltestouter = pnouter->Label;
         if (pltestouter)
         {
-            if (pltestouter->isSelected)
-            {
+            if (pltestouter->isSelected()) {
                 bool hiLightOuter = false;
                 // Search for matching labels on wires
 		for(auto iit=Wires->begin(); iit!=Wires->end(); ++iit) {
@@ -1422,39 +1420,39 @@ void Schematic::deselectElements(Element *e)
 {
     // test all components
     for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-        if(e != pc)  pc->isSelected = false;
+        if(e != pc)  pc->setSelected(false);
 
     // test all wires
     for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())
     {
-        if(e != pw)  pw->isSelected = false;
-        if(pw->Label) if(pw->Label != e)  pw->Label->isSelected = false;
+        if(e != pw)  pw->setSelected(false);
+        if(pw->Label) if(pw->Label != e)  pw->Label->setSelected(false);
     }
 
     // test all node labels
     for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
-        if(pn->Label) if(pn->Label != e)  pn->Label->isSelected = false;
+        if(pn->Label) if(pn->Label != e)  pn->Label->setSelected(false);
 
     // test all diagrams
     for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
     {
-        if(e != pd)  pd->isSelected = false;
+        if(e != pd)  pd->setSelected(false);
 
         // test graphs of diagram
         foreach(Graph *pg, pd->Graphs)
         {
-            if(e != pg) pg->isSelected = false;
+            if(e != pg) pg->setSelected(false);
 
             // test markers of graph
             foreach(Marker *pm, pg->Markers)
-                if(e != pm) pm->isSelected = false;
+                if(e != pm) pm->setSelected(false);
         }
 
     }
 
     // test all paintings
     for(Painting *pp = Paintings->first(); pp != 0; pp = Paintings->next())
-        if(e != pp)  pp->isSelected = false;
+        if(e != pp)  pp->setSelected(false);
 }
 
 // ---------------------------------------------------
@@ -1480,11 +1478,15 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
         pc->Bounding(cx1, cy1, cx2, cy2);
         if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2)
                     {
-                        pc->isSelected = true;
+                        pc->setSelected();
                         z++;
                         continue;
                     }
-        if(pc->isSelected &= flag) z++;
+        if(!flag){
+	  pc->setSelected(false);
+	}else if(pc->isSelected()){
+	  z++;
+	}
     }
 
 
@@ -1493,11 +1495,15 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
     {
         if(pw->x1 >= x1) if(pw->x2 <= x2) if(pw->y1 >= y1) if(pw->y2 <= y2)
                     {
-                        pw->isSelected = true;
+                        pw->setSelected();
                         z++;
                         continue;
                     }
-        if(pw->isSelected &= flag) z++;
+        if(!flag){
+	  pw->setSelected(false);
+	}else if(pw->isSelected()){
+	  z++;
+	}
     }
 
 
@@ -1511,11 +1517,15 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
             if(pl->x1 >= x1) if((pl->x1+pl->x2) <= x2)
                     if(pl->y1 >= y1) if((pl->y1+pl->y2) <= y2)
                         {
-                            pl->isSelected = true;
+                            pl->setSelected();
                             z++;
                             continue;
                         }
-            if(pl->isSelected &= flag) z++;
+	    if(!flag){
+	      pl->setSelected(false);
+	    }else if(pl->isSelected()){
+	      z++;
+	    }
         }
     }
 
@@ -1529,11 +1539,15 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
             if(pl->x1 >= x1) if((pl->x1+pl->x2) <= x2)
                     if((pl->y1-pl->y2) >= y1) if(pl->y1 <= y2)
                         {
-                            pl->isSelected = true;
+                            pl->setSelected();
                             z++;
                             continue;
                         }
-            if(pl->isSelected &= flag) z++;
+	    if(!flag){
+	      pl->setSelected(false);
+	    }else if(pl->isSelected()){
+	      z++;
+	    }
         }
     }
 
@@ -1544,7 +1558,11 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
         // test graphs of diagram
         foreach(Graph *pg, pd->Graphs)
         {
-            if(pg->isSelected &= flag) z++;
+	    if(!flag){
+	      pg->setSelected(false);
+	    }else if(pg->isSelected()){
+	      z++;
+	    }
 
             // test markers of graph
             foreach(Marker *pm, pg->Markers)
@@ -1552,11 +1570,15 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
                 pm->Bounding(cx1, cy1, cx2, cy2);
                 if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2)
                             {
-                                pm->isSelected = true;
+                                pm->setSelected();
                                 z++;
                                 continue;
                             }
-                if(pm->isSelected &= flag) z++;
+		if(!flag){
+		  pm->setSelected(false);
+		}else if(pm->isSelected()){
+		  z++;
+		}
             }
         }
 
@@ -1564,11 +1586,15 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
         pd->Bounding(cx1, cy1, cx2, cy2);
         if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2)
                     {
-                        pd->isSelected = true;
+                        pd->setSelected();
                         z++;
                         continue;
                     }
-        if(pd->isSelected &= flag) z++;
+	if(!flag){
+	  pd->setSelected(false);
+	}else if(pd->isSelected()){
+	  z++;
+	}
     }
 
     // test all paintings *******************************************
@@ -1577,11 +1603,15 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
         pp->Bounding(cx1, cy1, cx2, cy2);
         if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2)
                     {
-                        pp->isSelected = true;
+                        pp->setSelected();
                         z++;
                         continue;
                     }
-        if(pp->isSelected &= flag) z++;
+	if(!flag){
+	  pp->setSelected(false);
+	}else if(pp->isSelected()){
+	  z++;
+	}
     }
 
     return z;
@@ -1594,7 +1624,7 @@ void Schematic::selectMarkers()
     for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
         foreach(Graph *pg, pd->Graphs)
             foreach(Marker *pm, pg->Markers)
-                pm->isSelected = true;
+                pm->setSelected();
 }
 
 // ---------------------------------------------------
@@ -1736,7 +1766,7 @@ int Schematic::copySelectedElements(Q3PtrList<Element> *p)
     // test all components *********************************
     // Insert components before wires in order to prevent short-cut removal.
     for(pc = Components->first(); pc != 0; )
-        if(pc->isSelected)
+        if(pc->isSelected())
         {
             p->append(pc);
             count++;
@@ -1756,10 +1786,10 @@ int Schematic::copySelectedElements(Q3PtrList<Element> *p)
     // test all wires and wire labels ***********************
     for(pw = Wires->first(); pw != 0; )
     {
-        if(pw->Label) if(pw->Label->isSelected)
+        if(pw->Label) if(pw->Label->isSelected())
                 p->append(pw->Label);
 
-        if(pw->isSelected)
+        if(pw->isSelected())
         {
             p->append(pw);
 
@@ -1788,7 +1818,7 @@ int Schematic::copySelectedElements(Q3PtrList<Element> *p)
     }
 
     for(pe = (Element*)pc; pe != 0; pe = p->next())  // new wires
-        if(pe->isSelected)
+        if(pe->isSelected())
             break;
 
     for(pw = (Wire*)pe; pw != 0; pw = (Wire*)p->next())
@@ -1836,13 +1866,13 @@ int Schematic::copySelectedElements(Q3PtrList<Element> *p)
     // test all node labels
     // do this last to avoid double copying
     for(pn = Nodes->first(); pn != 0; pn = Nodes->next())
-        if(pn->Label) if(pn->Label->isSelected)
+        if(pn->Label) if(pn->Label->isSelected())
                 p->append(pn->Label);
 
 
     // test all paintings **********************************
     for(Painting *ppa = Paintings->first(); ppa != 0; )
-        if(ppa->isSelected)
+        if(ppa->isSelected())
         {
             p->append(ppa);
             Paintings->take();
@@ -1853,7 +1883,7 @@ int Schematic::copySelectedElements(Q3PtrList<Element> *p)
     count = 0;  // count markers now
     // test all diagrams **********************************
     for(pd = Diagrams->first(); pd != 0; )
-        if(pd->isSelected)
+        if(pd->isSelected())
         {
             p->append(pd);
             Diagrams->take();
@@ -1868,7 +1898,7 @@ int Schematic::copySelectedElements(Q3PtrList<Element> *p)
                 while (im.hasNext())
                 {
                     pm = im.next();
-                    if(pm->isSelected)
+                    if(pm->isSelected())
                     {
                         count++;
                         p->append(pm);
@@ -1921,7 +1951,7 @@ int Schematic::copyElements(int& x1, int& y1, int& x2, int& y2,
 
     // find upper most selected diagram
     for(Diagram *pd = Diagrams->last(); pd != 0; pd = Diagrams->prev())
-        if(pd->isSelected)
+        if(pd->isSelected())
         {
             pd->Bounding(bx1, by1, bx2, by2);
             if(bx1 < x1) x1 = bx1;
@@ -1933,7 +1963,7 @@ int Schematic::copyElements(int& x1, int& y1, int& x2, int& y2,
         }
     // find upper most selected painting
     for(Painting *pp = Paintings->last(); pp != 0; pp = Paintings->prev())
-        if(pp->isSelected)
+        if(pp->isSelected())
         {
             pp->Bounding(bx1, by1, bx2, by2);
             if(bx1 < x1) x1 = bx1;
@@ -1955,7 +1985,7 @@ bool Schematic::deleteElements()
 
     Component *pc = Components->first();
     while(pc != 0)      // all selected component
-        if(pc->isSelected)
+        if(pc->isSelected())
         {
             deleteComp(pc);
             pc = Components->current();
@@ -1967,14 +1997,14 @@ bool Schematic::deleteElements()
     while(pw != 0)        // all selected wires and their labels
     {
         if(pw->Label)
-            if(pw->Label->isSelected)
+            if(pw->Label->isSelected())
             {
                 delete pw->Label;
                 pw->Label = 0;
                 sel = true;
             }
 
-        if(pw->isSelected)
+        if(pw->isSelected())
         {
             deleteWire(pw);
             pw = Wires->current();
@@ -1986,7 +2016,7 @@ bool Schematic::deleteElements()
     // all selected labels on nodes ***************************
     for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
         if(pn->Label)
-            if(pn->Label->isSelected)
+            if(pn->Label->isSelected())
             {
                 delete pn->Label;
                 pn->Label = 0;
@@ -1995,7 +2025,7 @@ bool Schematic::deleteElements()
 
     Diagram *pd = Diagrams->first();
     while(pd != 0)      // test all diagrams
-        if(pd->isSelected)
+        if(pd->isSelected())
         {
             Diagrams->remove();
             pd = Diagrams->current();
@@ -2018,14 +2048,14 @@ bool Schematic::deleteElements()
                 while (im.hasNext())
                 {
                     pm = im.next();
-                    if(pm->isSelected)
+                    if(pm->isSelected())
                     {
                         im.remove();
                         sel = true;
                     }
                 }
 
-                if(pg->isSelected)
+                if(pg->isSelected())
                 {
                     ig.remove();
                     sel = wasGraphDeleted = true;
@@ -2041,7 +2071,7 @@ bool Schematic::deleteElements()
     Painting *pp = Paintings->first();
     while(pp != 0)      // test all paintings
     {
-        if(pp->isSelected)
+        if(pp->isSelected())
             if(pp->Name.at(0) != '.')    // do not delete "PortSym", "ID_text"
             {
                 sel = true;
@@ -2708,7 +2738,7 @@ bool Schematic::activateSelectedComponents()
     int a;
     bool sel = false;
     for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-        if(pc->isSelected)
+        if(pc->isSelected())
         {
             a = pc->isActive - 1;
 
@@ -2803,7 +2833,7 @@ Component* Schematic::searchSelSubcircuit()
     // test all components
     for(Component *pc = Components->first(); pc != 0; pc = Components->next())
     {
-        if(!pc->isSelected) continue;
+        if(!pc->isSelected()) continue;
 
         if(pc->obsolete_model_hack() != "Sub"){
             if(pc->obsolete_model_hack() != "VHDL")
@@ -2861,7 +2891,7 @@ int Schematic::copyComponents(int& x1, int& y1, int& x2, int& y2,
     // find bounds of all selected components
     for(pc = Components->first(); pc != 0; )
     {
-        if(pc->isSelected)
+        if(pc->isSelected())
         {
             pc->Bounding(bx1, by1, bx2, by2);  // is needed because of "distribute
             if(bx1 < x1) x1 = bx1;             // uniformly"
@@ -2904,7 +2934,7 @@ void Schematic::copyComponents2(int& x1, int& y1, int& x2, int& y2,
     // find bounds of all selected components
     for(pc = Components->first(); pc != 0; )
     {
-        if(pc->isSelected)
+        if(pc->isSelected())
         {
             // is better for unsymmetrical components
             if(pc->cx < x1)  x1 = pc->cx;
@@ -3126,7 +3156,7 @@ void Schematic::copyLabels(int& x1, int& y1, int& x2, int& y2,
     for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())
     {
         pl = pw->Label;
-        if(pl) if(pl->isSelected)
+        if(pl) if(pl->isSelected())
             {
                 if(pl->x1 < x1) x1 = pl->x1;
                 if(pl->y1-pl->y2 < y1) y1 = pl->y1-pl->y2;
@@ -3139,7 +3169,7 @@ void Schematic::copyLabels(int& x1, int& y1, int& x2, int& y2,
     for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
     {
         pl = pn->Label;
-        if(pl) if(pl->isSelected)
+        if(pl) if(pl->isSelected())
             {
                 if(pl->x1 < x1) x1 = pl->x1;
                 if(pl->y1-pl->y2 < y1) y1 = pl->y1-pl->y2;
@@ -3178,7 +3208,7 @@ void Schematic::copyPaintings(int& x1, int& y1, int& x2, int& y2,
     int bx1, by1, bx2, by2;
     // find boundings of all selected paintings
     for(pp = Paintings->first(); pp != 0; )
-        if(pp->isSelected)
+        if(pp->isSelected())
         {
             pp->Bounding(bx1, by1, bx2, by2);
             if(bx1 < x1) x1 = bx1;

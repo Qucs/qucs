@@ -19,6 +19,7 @@
 #include <QPainter>
 
 Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2)
+	: Conductor()
 {
   cx = 0;
   cy = 0;
@@ -31,7 +32,6 @@ Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2)
   Label  = 0;
 
   Type = isWire;
-  isSelected = false;
 }
 
 Wire::~Wire()
@@ -107,7 +107,7 @@ void Wire::paintScheme(QPainter *p)
 // ----------------------------------------------------------------
 void Wire::paint(ViewPainter *p)
 {
-  if(isSelected) {
+  if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,6));
     p->drawLine(x1, y1, x2, y2);
     p->Painter->setPen(QPen(Qt::lightGray,2));
