@@ -705,10 +705,11 @@ int Rect3DDiagram::calcAxis(Axis *Axis, int x, int y,
       
       xLen = int(ystepD * cos(phi) + 0.5) + x;
       yLen = int(ystepD * sin(phi) + 0.5) + y;
-      if(Qt::DockRight!=0)
+      if(Qt::DockRight!=0){
 	Texts.append(new Text(xLen+3+gx, yLen-6+gy, tmp));
-      else
+      }else{
 	Texts.append(new Text(xLen-w-2-gx, yLen-6-gy, tmp));
+      }
       
       // short grid marks
       Lines.append(new Line(xLen-gx, yLen-gy, xLen+gx, yLen+gy,
