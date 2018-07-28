@@ -1154,7 +1154,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
   Doc->viewport()->update();
   drawn = false;
 
-  if(focusElement == 0) {
+  if(!focusElement) {
     MAx2 = 0;  // if not clicking on an element => open a rectangle
     MAy2 = 0;
     QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect2;
@@ -1273,8 +1273,8 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
   // QPointF pos=Doc->mapToScene(Event->pos());
 
   // why is this not part of the event?
-  ElementMouseAction e = selectElement(Doc, Event->pos(), false);
-  if(e == 0) return;
+  ElementMouseAction e=selectElement(Doc, Event->pos(), false);
+  if(!e) return;
   e->Type &= isSpecialMask;  // remove special functions
 
 
@@ -2016,7 +2016,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 { untested();
 //    qDebug() << "+double click, editElement";
 
-  if(focusElement == 0) return;
+  if(!focusElement) return;
 
 //  qDebug() << "+focusElement->Type" << focusElement->Type;
 
