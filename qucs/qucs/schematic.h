@@ -157,6 +157,22 @@ public:
 	  assert(Components);
 	  return *Components;
   }
+  NodeList& nodes() const{
+	  assert(Nodes);
+	  return *Nodes;
+  }
+  WireList& wires() const{
+	  assert(Wires);
+	  return *Wires;
+  }
+  DiagramList& diagrams() const{
+	  assert(Diagrams);
+	  return *Diagrams;
+  }
+  PaintingList& paintings() const{
+	  assert(Paintings);
+	  return *Paintings;
+  }
 
   PaintingList  SymbolPaints;  // symbol definition for subcircuit
 
