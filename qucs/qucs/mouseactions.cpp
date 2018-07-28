@@ -2040,98 +2040,92 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
   float fX=pos.x();
   float fY=pos.y();
 
-  switch(focusElement->Type) {
-    case isComponent:
-    case isAnalogComponent:
-    case isDigitalComponent:
-         c = (Component*)focusElement;
+  // BUG. move to respective classes. 1 at a time...
+  if(auto c=component(focusElement)){
 //         qDebug() << "cast focusElement into" << c->Name;
+         bool done=false;
          if(c->obsolete_model_hack() == "GND") { // BUG
 	   return;
 	 }else if(c->obsolete_model_hack() == "SPICE") { // BUG. use cast
            SpiceDialog *sd = new SpiceDialog(App, (SpiceFile*)c, Doc);
-           if(sd->exec() != 1) break;   // dialog is WDestructiveClose
+           if(sd->exec() != 1) done=true;   // dialog is WDestructiveClose
          } else if(c->obsolete_model_hack() == ".Opt") { // BUG again...
            OptimizeDialog *od = new OptimizeDialog((Optimize_Sim*)c, Doc);
-           if(od->exec() != 1) break;   // dialog is WDestructiveClose
+           if(od->exec() != 1) done=true;   // dialog is WDestructiveClose
          } else {
            ComponentDialog * cd = new ComponentDialog(c, Doc);
-           if(cd->exec() != 1) break;   // dialog is WDestructiveClose
-
-           Doc->Components->findRef(c);
-           Doc->Components->take();
-           Doc->setComponentNumber(c); // for ports/power sources
-           Doc->Components->append(c);
+           if(cd->exec() != 1){
+	     done=true;   // dialog is WDestructiveClose
+	   }else{
+	     Doc->Components->findRef(c);
+	     Doc->Components->take();
+	     Doc->setComponentNumber(c); // for ports/power sources
+	     Doc->Components->append(c);
+	   }
          }
 
-         Doc->setChanged(true, true);
-         c->entireBounds(x1,y1,x2,y2, Doc->textCorr());
-         Doc->enlargeView(x1,y1,x2,y2);
-         break;
-
-    case isDiagram :
-         dia = (Diagram*)focusElement;
+	 if(!done){
+	   Doc->setChanged(true, true);
+	   c->entireBounds(x1,y1,x2,y2, Doc->textCorr());
+	   Doc->enlargeView(x1,y1,x2,y2);
+	 }else{
+	 }
+  }else if(auto dia=diagram(focusElement)){
+         bool done=false;
          if(dia->Name.at(0) == 'T') { // don't open dialog on scrollbar
            if(dia->Name == "Time") {
              if(dia->cy_() < int(fY)) {
-	       if(((Diagram*)focusElement)->scroll(MAx1))
+	       if(dia->scroll(MAx1))
 	         Doc->setChanged(true, true, 'm'); // 'm' = only the first time
-	       break;
+	       done=true;
              }
-	   }
-           else {
-             if(dia->cx_() > int(fX)) {
-	       if(((Diagram*)focusElement)->scroll(MAy1))
+	   }else if(dia->cx_() > int(fX)) {
+	       if(dia->scroll(MAy1)){
 	         Doc->setChanged(true, true, 'm'); // 'm' = only the first time
-	       break;
-             }
+	       }
+	       done=true;
 	   }
 	 }
 
-	 ddia = new DiagramDialog(dia, Doc);
-         if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
-           Doc->setChanged(true, true);
+	 if(!done){
+	   auto ddia=new DiagramDialog(dia, Doc);
+	   if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
+	     Doc->setChanged(true, true);
 
-	 dia->Bounding(x1, x2, y1, y2);
-	 Doc->enlargeView(x1, x2, y1, y2);
-	 break;
-
-    case isGraph :
-	 pg = (Graph*)focusElement;
+	   dia->Bounding(x1, x2, y1, y2);
+	   Doc->enlargeView(x1, x2, y1, y2);
+	 }else{
+	 }
+  }else if(auto pg=graph(focusElement)){
 	 // searching diagram for this graph
 	 for(dia = Doc->Diagrams->last(); dia != 0; dia = Doc->Diagrams->prev())
 	   if(dia->Graphs.indexOf(pg) >= 0)
 	     break;
-	 if(!dia) break;
 
+	 if(dia){
 
 	 ddia = new DiagramDialog(dia, Doc, pg);
 	 if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
 	   Doc->setChanged(true, true);
-         break;
+	 }else{
+	 }
 
-    case isWire:
+  }else if(auto w=wire(selectElement)){
          MPressLabel(Doc, Event);
-         break;
 
-    case isNodeLabel:
-    case isHWireLabel:
-    case isVWireLabel:
+  }else if(auto l=label(selectElement)){
          editLabel(Doc, (WireLabel*)focusElement);
          // update highlighting, labels may have changed
          Doc->highlightWireLabels ();
-         break;
+  }else if(auto p=painting(selectElement)){
 
-    case isPainting:
-         if( ((Painting*)focusElement)->Dialog() )
+         if( p->Dialog() )
            Doc->setChanged(true, true);
-         break;
 
-    case isMarker:
-         mdia = new MarkerDialog((Marker*)focusElement, Doc);
+  }else if(auto m=marker(selectElement)){
+         mdia = new MarkerDialog(m, Doc);
          if(mdia->exec() > 1)
            Doc->setChanged(true, true);
-         break;
   }
 
   // Very strange: Now an open VHDL editor gets all the keyboard input !?!
