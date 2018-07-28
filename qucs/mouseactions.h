@@ -21,6 +21,69 @@
 #include "element.h"
 #include "qt_compat.h"
 
+// a mouse action on an element.
+// formerly, a mouse action was implemented by means of messing with element
+// internals.
+class ElementMouseAction {
+public:
+	explicit ElementMouseAction(Element* e)
+		: _e(e)
+	{
+	}
+public:
+	Element* element() { return _e; }
+
+	void clear(){
+		_e=nullptr;
+	}
+public: // compat with old code
+	operator bool() const{
+		return _e;
+	}
+	void setSelected() const{
+		incomplete();
+	}
+	bool isSelected() const{
+		incomplete();
+		return false;
+	}
+
+public: // access coordinates from old code.
+	     // newer code might use Qt conventions...?
+	int const& cx_() const { assert(_e); return _e->cx_(); }
+	int const& cy_() const { assert(_e); return _e->cy_(); }
+	int const& x1_() const { assert(_e); return _e->x1_(); }
+	int const& y1_() const { assert(_e); return _e->y1_(); }
+	int const& x2_() const { assert(_e); return _e->x2_(); }
+	int const& y2_() const { assert(_e); return _e->y2_(); }
+public:
+	// don't use. just to compile
+	int Type; // BUG BUG
+	ElementMouseAction* operator->(){
+		unreachable(); // complain loudly.
+		return this;
+	}
+	void setObsoleteType(int t){
+		_action_type = t;
+	}
+
+private:
+	int _action_type; // the legacy way.
+	                  //  might need cleanup
+  Element* _e;
+};
+
+// enable access to attached elements.
+// this might be temporary
+inline Painting* painting(ElementMouseAction ema)
+{
+	return painting(ema.element());
+}
+inline Diagram* diagram(ElementMouseAction ema)
+{
+	return diagram(ema.element());
+}
+
 class Wire;
 class Schematic;
 class QPainter;
