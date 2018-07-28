@@ -109,7 +109,7 @@ void TimingDiagram::paintDiagram(ViewPainter *p)
   }
 
 
-  if(isSelected) {
+  if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRect(cx-5, cy-y2-5, x2+10, y2+10);
     p->Painter->setPen(QPen(Qt::darkRed,2));

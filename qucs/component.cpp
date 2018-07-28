@@ -52,7 +52,6 @@ Component::Component()
 
   mirroredX = false;
   rotated = 0;
-  isSelected = false;
   isActive = COMP_IS_ACTIVE;
   showName = true;
 
@@ -309,7 +308,7 @@ void Component::paint(ViewPainter *p)
   }
 
   // draw component bounding box
-  if(isSelected) {
+  if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(cx+x1, cy+y1, x2-x1, y2-y1);
   }

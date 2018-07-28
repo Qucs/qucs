@@ -35,10 +35,9 @@ Dispatcher<Painting>::INSTALL p(&painting_dispatcher, "Text", &D);
 Module::INSTALL pp("paintings", &D);
 }
 
-GraphicText::GraphicText()
+GraphicText::GraphicText() : Painting()
 {
   Name = "Text ";
-  isSelected = false;
   Color = QColor(0,0,0);
   Font = QucsSettings.font;
   cx = cy = 0;
@@ -77,7 +76,7 @@ void GraphicText::paint(ViewPainter *p)
   int w, h;
   w = p->drawTextMapped(Text, 0, 0, &h);
 
-  if(isSelected) {
+  if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->Painter->drawRect(-3, -2, w+6, h+5);
   }

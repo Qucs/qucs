@@ -85,7 +85,6 @@ Diagram::Diagram(int _cx, int _cy)
   hideLines = true;  // hide invisible lines
 
   Type = isDiagram;
-  isSelected = false;
   GridPen = QPen(Qt::lightGray,0);
 }
 
@@ -144,7 +143,7 @@ void Diagram::paintDiagram(ViewPainter *p)
     p->Painter->restore();
 
 
-    if(isSelected) {
+    if(isSelected()) {
       int x_, y_;
       float fx_, fy_;
       p->map(cx, cy-y2, x_, y_);
