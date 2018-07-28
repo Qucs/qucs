@@ -225,6 +225,8 @@ public:
   void rightPressMenu(Schematic*, QMouseEvent*);
 };
 
+class Label;
+
 Element* element(ElementMouseAction);
 Component* component(ElementMouseAction);
 Wire* wire(ElementMouseAction);
@@ -234,5 +236,7 @@ Painting* painting(ElementMouseAction);
 Graph* graph(ElementMouseAction);
 Marker* marker(ElementMouseAction);
 Node* node(ElementMouseAction);
+Label* label(ElementMouseAction);
+WireLabel* wireLabel(ElementMouseAction);
 
 #endif

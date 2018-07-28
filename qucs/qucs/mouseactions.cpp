@@ -2080,41 +2080,48 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 	 }
 
 	 if(!done){
+	   incomplete();
+#if 0
 	   auto ddia=new DiagramDialog(dia, Doc);
 	   if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
 	     Doc->setChanged(true, true);
 
 	   dia->Bounding(x1, x2, y1, y2);
 	   Doc->enlargeView(x1, x2, y1, y2);
+#endif
 	 }else{
 	 }
   }else if(auto pg=graph(focusElement)){
 	 // searching diagram for this graph
+	 // BUG: a graph should know its parent.
 	 for(dia = Doc->Diagrams->last(); dia != 0; dia = Doc->Diagrams->prev())
 	   if(dia->Graphs.indexOf(pg) >= 0)
 	     break;
 
 	 if(dia){
 
-	 ddia = new DiagramDialog(dia, Doc, pg);
-	 if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
-	   Doc->setChanged(true, true);
+	   incomplete();
+#if 0
+	   ddia = new DiagramDialog(dia, Doc, pg);
+	   if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
+	     Doc->setChanged(true, true);
+#endif
 	 }else{
 	 }
 
-  }else if(auto w=wire(selectElement)){
+  }else if(auto w=wire(focusElement)){
          MPressLabel(Doc, Event);
 
-  }else if(auto l=label(selectElement)){
-         editLabel(Doc, (WireLabel*)focusElement);
+  }else if(auto l=wireLabel(focusElement)){
+         editLabel(Doc, l);
          // update highlighting, labels may have changed
          Doc->highlightWireLabels ();
-  }else if(auto p=painting(selectElement)){
+  }else if(auto p=painting(focusElement)){
 
          if( p->Dialog() )
            Doc->setChanged(true, true);
 
-  }else if(auto m=marker(selectElement)){
+  }else if(auto m=marker(focusElement)){
          mdia = new MarkerDialog(m, Doc);
          if(mdia->exec() > 1)
            Doc->setChanged(true, true);
