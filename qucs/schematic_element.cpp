@@ -1057,7 +1057,7 @@ ElementMouseAction MouseActions::selectElement(Schematic* Doc,
                     pl->toggleSelected();
                     return ElementMouseAction(pl);
                 }else if(pe_sel) {
-                    pe_sel->isSelected = false;
+                    pe_sel->setSelected(false);
                     return ElementMouseAction(pl);
                 }
                 if(pe_1st == 0) {
@@ -1181,8 +1181,8 @@ ElementMouseAction MouseActions::selectElement(Schematic* Doc,
                         ElementMouseAction A(pg);
                         return A;
                     }else if(pe_sel) {
-                        pe_sel->isSelected = false;
-                        return pg;
+			pe_sel->setSelected(false);
+                        return ElementMouseAction(pg);
                     }else if(pe_1st == 0) {
                         pe_1st = pg;   // access to elements lying beneath
                     }
@@ -1197,12 +1197,12 @@ ElementMouseAction MouseActions::selectElement(Schematic* Doc,
             {
                 // The element can be deselected
                 pd->toggleSelected();
-                return pd;
+                return ElementMouseAction(pd);
             }
             if(pe_sel)
             {
                 pe_sel->setSelected(false);
-                return pd;
+                return ElementMouseAction(pd);
             }
             if(pe_1st == 0)
             {
@@ -1216,7 +1216,7 @@ ElementMouseAction MouseActions::selectElement(Schematic* Doc,
     }
 
     // test all paintings
-    for(Painting *pp = Paintings->last(); pp != 0; pp = Paintings->prev())
+    for(Painting *pp = Doc->paintings().last(); pp!=nullptr; pp=Doc->paintings().prev())
     {
         if(pp->isSelected())
         {
@@ -1225,7 +1225,7 @@ ElementMouseAction MouseActions::selectElement(Schematic* Doc,
                 if(pe_1st == 0)
                 {
                     pp->Type = isPaintingResize;
-                    return pp;
+                    return ElementMouseAction(pp);
                 }
             }
         }
@@ -1236,12 +1236,12 @@ ElementMouseAction MouseActions::selectElement(Schematic* Doc,
             {
                 // The element can be deselected
                 pp->toggleSelected();
-                return pp;
+                return ElementMouseAction(pp);
             }
             if(pe_sel)
             {
                 pe_sel->setSelected(false);
-                return pp;
+                return ElementMouseAction(pp);
             }
             if(pe_1st == 0)
             {
@@ -1254,7 +1254,7 @@ ElementMouseAction MouseActions::selectElement(Schematic* Doc,
         }
     }
 
-    return pe_1st;
+    return ElementMouseAction(pe_1st);
 }
 
 void Schematic::highlightWireLabels ()
@@ -1388,25 +1388,26 @@ void Schematic::highlightWireLabels ()
 // ---------------------------------------------------
 // Deselects all elements except 'e'.
 // bug: why do we not have a list of selected elements?!
-void Schematic::deselectElements(Element *e)
+void MouseActions::deselectElements(Schematic* Doc, ElementMouseAction e)
 {
     // test all components
-    for(Component *pc = Components->first(); pc != 0; pc = Components->next())
+    for(auto* pc : Doc->components()){
         if(e != pc)  pc->setSelected(false);
+    }
 
     // test all wires
-    for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())
-    {
+    for(auto *pw : Doc->wires()) {
         if(e != pw)  pw->setSelected(false);
-        if(pw->Label) if(pw->Label != e)  pw->Label->setSelected(false);
+        if(pw->Label) if(e != pw->Label)  pw->Label->setSelected(false);
     }
 
     // test all node labels
-    for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
-        if(pn->Label) if(pn->Label != e)  pn->Label->setSelected(false);
+    for(auto *pn : Doc->nodes()){
+        if(pn->Label) if(e != pn->Label)  pn->Label->setSelected(false);
+    }
 
     // test all diagrams
-    for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
+    for(auto *pd : Doc->diagrams())
     {
         if(e != pd)  pd->setSelected(false);
 
@@ -1423,8 +1424,9 @@ void Schematic::deselectElements(Element *e)
     }
 
     // test all paintings
-    for(Painting *pp = Paintings->first(); pp != 0; pp = Paintings->next())
+    for(auto *pp : Doc->paintings()){
         if(e != pp)  pp->setSelected(false);
+    }
 }
 
 // ---------------------------------------------------
