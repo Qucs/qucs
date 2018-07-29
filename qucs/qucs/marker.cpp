@@ -285,7 +285,7 @@ void Marker::createText()
   assert(diag());
   Text += diag()->extraMarkerText(this);
 
-    Axis const *pa,*pt;
+    Axis const *pa;
 
     if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
     else  pa = &(diag()->zAxis);
@@ -328,7 +328,6 @@ bool Marker::moveLeftRight(bool left)
 {
   int n;
   double *px;
-  double x;
 
   DataX const *pD = pGraph->axis(0);
   px = pD->Points;

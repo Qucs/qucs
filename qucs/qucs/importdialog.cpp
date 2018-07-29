@@ -257,7 +257,7 @@ void ImportDialog::slotImport()
   qDebug() << "Command:" << Program << CommandLine.join(" ");
   Process.start(Program, CommandLine);
   
-  if(!Process.Running)
+  if(Process.Running==0)
     MsgText->appendPlainText(tr("ERROR: Cannot start converter!"));
 }
 
@@ -287,7 +287,7 @@ void ImportDialog::slotType(int index)
 // ------------------------------------------------------------------------
 void ImportDialog::slotAbort()
 {
-  if(Process.Running)  Process.kill();
+  if(Process.Running!=0)  Process.kill();
   AbortButt->setDisabled(true);
   ImportButt->setDisabled(false);
 }
