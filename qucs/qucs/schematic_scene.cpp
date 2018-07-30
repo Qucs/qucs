@@ -5,7 +5,7 @@
 // ---------------------------------------------------
 // forward to graphicscene, once it is there.
 // scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()
-ElementGraphics Schematic::itemAt(int x, int y)
+ElementGraphics Schematic::itemAt(float x, float y)
 {
     for(Component *pc = Components->first(); pc != 0; pc = Components->next())
         if(pc->getSelected(x, y))

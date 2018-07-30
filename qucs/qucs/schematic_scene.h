@@ -1,5 +1,5 @@
 /*
- * schematicscene.h - define schematic scene
+ * schematic_scene.h - define schematic scene
  *
  * Copyright (C) 2014, Yodalee, lc85301@gmail.com
  *               2018, Felix Salfelder
