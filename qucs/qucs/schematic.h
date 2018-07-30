@@ -36,7 +36,12 @@
 #include "components/component.h"
 #include "schematic_scene.h"
 
+#ifdef USE_SCROLLVIEW
 #include <Q3ScrollView>
+#else
+#include <QGraphicsView>
+#endif
+
 #include "qt_compat.h"
 #include <QVector>
 #include <QStringList>
