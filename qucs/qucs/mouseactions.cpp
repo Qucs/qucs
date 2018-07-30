@@ -1196,6 +1196,9 @@ void MouseActions::MPressActivate(Schematic *Doc, QMouseEvent* Event)
 void MouseActions::MPressMirrorX(Schematic *Doc, QMouseEvent* Event)
 {
   // no use in mirroring wires or diagrams
+  QPointF pos = Doc->mapToScene(Event->pos());
+  float fX = pos.x();
+  float fY = pos.y();
   Component *c = Doc->selectedComponent(int(fX), int(fY));
 
   if(c) {
@@ -1213,7 +1216,6 @@ void MouseActions::MPressMirrorX(Schematic *Doc, QMouseEvent* Event)
   Doc->setChanged(true, true);
 }
 
-<<<<<<< HEAD
 /*!
  * \brief MouseActions::MPressMirrorY
  * \param Doc
@@ -1224,15 +1226,11 @@ void MouseActions::MPressMirrorX(Schematic *Doc, QMouseEvent* Event)
  */
 void MouseActions::MPressMirrorY(Schematic *Doc, QMouseEvent* Event)
 {
-  // no use in mirroring wires or diagrams
-  Component *c = dynamic_cast<Component*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
-=======
-// -----------------------------------------------------------
-void MouseActions::MPressMirrorY(Schematic *Doc, QMouseEvent*, float fX, float fY)
-{
-  // no use in mirroring wires or diagrams
+  QPointF pos = Doc->mapToScene(Event->pos());
+  float fX = pos.x();
+  float fY = pos.y();
+
   Component *c = Doc->selectedComponent(int(fX), int(fY));
->>>>>>> parent of 55d8fe784... Remove selectedComponent
   if(c) {
     if(c->Ports.count() < 1) return;  // only mirror components with ports
     c->mirrorY();
