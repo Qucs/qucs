@@ -28,6 +28,8 @@
 #include <QGraphicsItem>
 #include <assert.h>
 
+#include "viewpainter.h"
+
 class Element;
 
 #if 0
@@ -55,12 +57,13 @@ protected:
                      // also: this relates to scene, but is this the right place?
 							// (having other problems, still)
 
-// A graphics element on the screen.
-// kind of smart-pointer/proxy.
-#if 1 // not yet
+#if QT_VERSION < 0x050000
+// use naked pointer, as legacy qucs does.
 typedef Element ElementGraphics;
 #else
-class ElementGraphics : public QObject {
+// A graphics element on the screen.
+// kind of smart-pointer/proxy.
+class ElementGraphics : public QGraphicsItem {
 private:
 	ElementGraphics(){}
 public:
@@ -100,17 +103,17 @@ private:
   Element* _e;
 }; // ElementGraphics
 
-Component const* component(ElementGraphics const);
-Wire const* wire(ElementGraphics const);
-WireLabel const* wireLabel(ElementGraphics const);
-Diagram const* diagram(ElementGraphics const);
-Painting const* painting(ElementGraphics const);
+Component const* const_component(ElementGraphics const);
+Wire const* const_wire(ElementGraphics const);
+WireLabel const* const_wireLabel(ElementGraphics const);
+Diagram const* const_diagram(ElementGraphics const);
+Painting const* const_painting(ElementGraphics const);
 
-Component* component(ElementGraphics);
-Wire* wire(ElementGraphics);
-WireLabel* wireLabel(ElementGraphics);
-Diagram* diagram(ElementGraphics);
-Painting* painting(ElementGraphics);
+Component* component(ElementGraphics*);
+Wire* wire(ElementGraphics*);
+WireLabel* wireLabel(ElementGraphics*);
+Diagram* diagram(ElementGraphics*);
+Painting* painting(ElementGraphics*);
 #endif
 
 
