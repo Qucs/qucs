@@ -4,19 +4,28 @@
 
 // ---------------------------------------------------
 // forward to graphicscene, once it is there.
-// scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()
 ElementGraphics* Schematic::itemAt(float x, float y)
 {
-    for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-        if(pc->getSelected(x, y))
-            return (ElementGraphics*)(pc);
+#if QT_VERSION >= 0x050000
+	QPointF p(x, y);
+	QGraphicsItem* I=scene()->itemAt(p, QTransform());
+	if(ElementGraphics* G=dynamic_cast<ElementGraphics*>(I)){
+		return G;
+	}else{
+		return nullptr;
+	}
+#else
+	for(Component *pc = Components->first(); pc != 0; pc = Components->next())
+		if(pc->getSelected(x, y))
+			return (ElementGraphics*)(pc);
 
-    float Corr = 5.0 / Scale; // size of line select
+	float Corr = 5.0 / Scale; // size of line select
 
     for(Painting *pp = Paintings->first(); pp != 0; pp = Paintings->next())
         if(pp->getSelected(x, y, Corr))
             return (ElementGraphics*)(pp);
 
-    incomplete(); // also select the other stuff.
-    return nullptr;
+	incomplete(); // also select the other stuff.
+	return nullptr;
+#endif
 }
