@@ -45,7 +45,7 @@
 #include <limits.h>
 #include <stdlib.h>
 #include "trace.h"
-#include "schematicscene.h" // underscore?
+#include "schematic_scene.h"
 
 
 #define  DOC_X_POS(x)  (int(float(x)/Doc->Scale) + Doc->ViewX1)
