@@ -30,7 +30,12 @@
 #include "schematic_model.h"
 #include "schematic_lang.h"
 
+#ifdef USE_SCROLLVIEW
 #include <Q3ScrollView>
+#else
+#include <QGraphicsView>
+#endif
+
 #include "qt_compat.h"
 #include <QVector>
 #include <QStringList>
@@ -77,7 +82,7 @@ struct SubFile {
 };
 typedef QMap<QString, SubFile> SubMap;
 
-#if QT_VERSION < 0x050000
+#if QT_MAJOR_VERSION < 5
 typedef Element ElementGraphics;
 #define SchematicBase Q3ScrollView
 #else
