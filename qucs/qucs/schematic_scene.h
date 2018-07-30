@@ -28,6 +28,8 @@
 #include <QGraphicsItem>
 #include <assert.h>
 
+#include "viewpainter.h"
+
 class Element;
 
 #if 0
@@ -101,17 +103,17 @@ private:
   Element* _e;
 }; // ElementGraphics
 
-Component const* component(ElementGraphics const);
-Wire const* wire(ElementGraphics const);
-WireLabel const* wireLabel(ElementGraphics const);
-Diagram const* diagram(ElementGraphics const);
-Painting const* painting(ElementGraphics const);
+Component const* const_component(ElementGraphics const);
+Wire const* const_wire(ElementGraphics const);
+WireLabel const* const_wireLabel(ElementGraphics const);
+Diagram const* const_diagram(ElementGraphics const);
+Painting const* const_painting(ElementGraphics const);
 
-Component* component(ElementGraphics);
-Wire* wire(ElementGraphics);
-WireLabel* wireLabel(ElementGraphics);
-Diagram* diagram(ElementGraphics);
-Painting* painting(ElementGraphics);
+Component* component(ElementGraphics*);
+Wire* wire(ElementGraphics*);
+WireLabel* wireLabel(ElementGraphics*);
+Diagram* diagram(ElementGraphics*);
+Painting* painting(ElementGraphics*);
 #endif
 
 
