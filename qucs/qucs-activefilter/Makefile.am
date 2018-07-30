@@ -45,9 +45,8 @@ noinst_HEADERS = $(MOCHEADERS) qf_matrix.h bessel.h legendre.h \
                  sallenkey.h filter.h mfbfilter.h \
                  schcauer.h qf_poly.h
 
-CLEANFILES = *~ qucsactivefilter_.cpp
-MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
-DISTCLEANFILES = *.moc.cpp
+CLEANFILES = *~ qucsactivefilter_.cpp *.moc.cpp
+MAINTAINERCLEANFILES = Makefile.in
 EXTRA_DIST = $(BITMAPS)
 
 BITMAPS = \

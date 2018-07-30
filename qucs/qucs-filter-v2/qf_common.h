@@ -16,7 +16,7 @@
 #include <iomanip>
 #include <string>
 #include <typeinfo>
-#include <QTextStream>
+#include <Q3TextStream>
 
 
 static const double pi   = 3.1415926535897932384626433832795029;  /* pi   */

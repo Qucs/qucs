@@ -25,6 +25,7 @@
 #include <QCheckBox>
 #include <QVBoxLayout>
 #include <QDir>
+#include "qt_compat.h"
 
 class QucsApp;
 class QString;
@@ -54,9 +55,9 @@ private:
   int insertDirectory(const QString&, QDataStream&);
   int insertLibraries(QDataStream&);
 
-  int extractFile(QFile&, quint32, QDir&);
-  int extractDirectory(QFile&, quint32, QDir&);
-  int extractLibrary(QFile&, quint32);
+  int extractFile(QFile&, Q_UINT32, QDir&);
+  int extractDirectory(QFile&, Q_UINT32, QDir&);
+  int extractLibrary(QFile&, Q_UINT32);
 
   QVBoxLayout *all;   // the mother of all widgets
   QLineEdit *NameEdit;

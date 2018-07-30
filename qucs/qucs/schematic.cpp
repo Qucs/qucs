@@ -20,6 +20,7 @@
 
 #include <QFileInfo>
 #include <QMimeData>
+
 #include <QPrinter>
 #include <QPaintDevice>
 #include <QDir>
@@ -1691,7 +1692,8 @@ void Schematic::switchPaintMode()
   temp = Scale; Scale  = tmpScale;  tmpScale  = temp;
   tmp = contentsX();
   t2  = contentsY();
-  setContentsPos(tmpPosX, tmpPosY);
+  incomplete();
+  // setContentsPos(tmpPosX, tmpPosY);
   tmpPosX = tmp;
   tmpPosY = t2;
   tmp = ViewX1; ViewX1 = tmpViewX1; tmpViewX1 = tmp;
@@ -1866,7 +1868,9 @@ bool Schematic::scrollRight(int step)
 void Schematic::slotScrollUp()
 {
   App->editText->setHidden(true);  // disable edit of component property
-  scrollUp(verticalScrollBar()->singleStep());
+  // perhaps not needed?
+  incomplete();
+//  scrollUp(verticalScrollBar()->singleStep());
   viewport()->update(); // because QScrollView thinks nothing has changed
   App->view->drawn = false;
 }
@@ -1876,7 +1880,9 @@ void Schematic::slotScrollUp()
 void Schematic::slotScrollDown()
 {
   App->editText->setHidden(true);  // disable edit of component property
-  scrollDown(-verticalScrollBar()->singleStep());
+  // perhaps not needed?
+  incomplete();
+  // scrollDown(-verticalScrollBar()->singleStep());
   viewport()->update(); // because QScrollView thinks nothing has changed
   App->view->drawn = false;
 }
@@ -1886,7 +1892,9 @@ void Schematic::slotScrollDown()
 void Schematic::slotScrollLeft()
 {
   App->editText->setHidden(true);  // disable edit of component property
-  scrollLeft(horizontalScrollBar()->singleStep());
+  // perhaps not needed?
+  incomplete();
+//  scrollLeft(horizontalScrollBar()->singleStep());
   viewport()->update(); // because QScrollView thinks nothing has changed
   App->view->drawn = false;
 }
@@ -1896,7 +1904,9 @@ void Schematic::slotScrollLeft()
 void Schematic::slotScrollRight()
 {
   App->editText->setHidden(true);  // disable edit of component property
-  scrollRight(-horizontalScrollBar()->singleStep());
+  // perhaps not needed?
+  incomplete();
+  // scrollRight(-horizontalScrollBar()->singleStep());
   viewport()->update(); // because QScrollView thinks nothing has changed
   App->view->drawn = false;
 }

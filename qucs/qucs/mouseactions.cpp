@@ -1196,13 +1196,16 @@ void MouseActions::MPressActivate(Schematic *Doc, QMouseEvent* Event)
 void MouseActions::MPressMirrorX(Schematic *Doc, QMouseEvent* Event)
 {
   // no use in mirroring wires or diagrams
-  Component *c = dynamic_cast<Component*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
+  QPointF pos = Doc->mapToScene(Event->pos());
+  float fX = pos.x();
+  float fY = pos.y();
+  Component *c = Doc->selectedComponent(int(fX), int(fY));
+
   if(c) {
     if(c->Ports.count() < 1) return;  // only mirror components with ports
     c->mirrorX();
     Doc->setCompPorts(c);
-  }
-  else {
+  }else{
     Painting *p = dynamic_cast<Painting*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
     if(p == 0) return;
     p->mirrorX();
@@ -1223,8 +1226,11 @@ void MouseActions::MPressMirrorX(Schematic *Doc, QMouseEvent* Event)
  */
 void MouseActions::MPressMirrorY(Schematic *Doc, QMouseEvent* Event)
 {
-  // no use in mirroring wires or diagrams
-  Component *c = dynamic_cast<Component*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
+  QPointF pos = Doc->mapToScene(Event->pos());
+  float fX = pos.x();
+  float fY = pos.y();
+
+  Component *c = Doc->selectedComponent(int(fX), int(fY));
   if(c) {
     if(c->Ports.count() < 1) return;  // only mirror components with ports
     c->mirrorY();

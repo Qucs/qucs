@@ -25,8 +25,8 @@
 #include "textdoc.h"
 #include "qucs.h"
 
-#include <QPrinter>
 #include <QPainter>
+#include <QPrinter>
 #include <QPrintDialog>
 
 PrinterWriter::PrinterWriter()

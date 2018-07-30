@@ -99,7 +99,7 @@ qucs_real_LDADD = \
 	libqucsschematic.la
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
-	qt_compat.h \
+	qt_compat.h trace.h \
   wirelabel.h mnemo.h mouseactions.h syntax.h module.h misc.h \
   frame.h \
 	mousecursor.h \

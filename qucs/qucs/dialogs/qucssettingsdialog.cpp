@@ -667,8 +667,9 @@ void QucsSettingsDialog::slotApply()
     // if QucsHome is changed, refresh projects tree
     // do this after updating the other paths
     if (homeDirChanged) {;
-      // files were actuallt closed above, this will refresh the projects tree
+      // files were actually closed above, this will refresh the projects tree
       // and create an empty schematic
+      // (this could likely be simplified once the automatic Project Content Tab refresh is implemented)
       App->slotMenuProjClose();
       changed = true;
     }
