@@ -23,20 +23,29 @@
 #include "element.h"
 
 #include <QTest>
+#include <QDebug>
 
 #include "ElementTests.h"
+class testElement : public Element{
+public:
+	testElement() : Element() {
+		setSelected(false);
+		qDebug() << cx;
+	}
+};
 
 void ElementTests::testConstructor() {
-    Element *e = new Element();
+	 Element *e = new testElement();
     // check defaults
-    QCOMPARE(e->Type, isDummyElement);
-    QCOMPARE(e->isSelected, false);
-    QCOMPARE(e->cx, 0);
-    QCOMPARE(e->cy, 0);
-    QCOMPARE(e->x1, 0);
-    QCOMPARE(e->y1, 0);
-    QCOMPARE(e->x2, 0);
-    QCOMPARE(e->y2, 0);
+//    QCOMPARE(int( e->elemType() ), isDummyElement);
+    QCOMPARE(e->isSelected(), false);
+	 qDebug() << e->cx_();
+    QCOMPARE(e->cx_(), 0);
+    QCOMPARE(e->cy_(), 0);
+    QCOMPARE(e->x1_(), 0);
+    QCOMPARE(e->y1_(), 0);
+    QCOMPARE(e->x2_(), 0);
+    QCOMPARE(e->y2_(), 0);
 }
 
 QTEST_MAIN(ElementTests)
