@@ -1250,7 +1250,7 @@ void MouseActions::MPressMirrorY(Schematic *Doc, QMouseEvent* Event)
   float fY=pos.y();
 
   // no use in mirroring wires or diagrams
-  auto *I = Doc->itemAt(int(fX), int(fY));
+  auto I = Doc->itemAt(int(fX), int(fY));
   if(auto c=component(I)) {
     if(c->Ports.count() < 1) return;  // only mirror components with ports
     c->mirrorY();
