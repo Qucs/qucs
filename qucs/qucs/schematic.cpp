@@ -106,8 +106,13 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   Frame_Text2 = tr("Date:");
   Frame_Text3 = tr("Revision:");
 
+#ifdef USE_SCROLLVIEW
+  setVScrollBarMode(Q3ScrollView::AlwaysOn);
+  setHScrollBarMode(Q3ScrollView::AlwaysOn);
+#else
   this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+#endif
 
   misc::setWidgetBackgroundColor(viewport(), QucsSettings.BGColor);
   viewport()->setMouseTracking(true);
@@ -819,10 +824,8 @@ float Schematic::zoomBy(float s)
 // ---------------------------------------------------
 void Schematic::showAll()
 {
-  TODO("Fix showAll");
-  fitInView(this->sceneRect(), Qt::KeepAspectRatio);
-  /// \todo showAll
-  /*
+
+#ifdef USE_SCROLLVIEW
   sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
   if(UsedX1 == 0)
     if(UsedX2 == 0)
@@ -843,7 +846,10 @@ void Schematic::showAll()
   ViewX2 = UsedX2 + 40;
   ViewY2 = UsedY2 + 40;
   zoom(xScale);
-  */
+#else
+  fitInView(this->sceneRect(), Qt::KeepAspectRatio);
+  incomplete();
+#endif
 }
 
 // ---------------------------------------------------
@@ -2040,8 +2046,7 @@ bool Schematic::scrollDown(int step)
 // area accordingly.
 bool Schematic::scrollLeft(int step)
 {
-  TODO("Fix scroll");
-  /**
+#ifdef USE_SCROLLVIEW
   int diff;
 
   diff = contentsX() - step;
@@ -2058,7 +2063,9 @@ bool Schematic::scrollLeft(int step)
     resizeContents(contentsWidth()-diff, contentsHeight());
     ViewX2 -= diff;
   }
-  */
+#else
+  incomplete();
+#endif
   return true;
 }
 
@@ -2067,9 +2074,7 @@ bool Schematic::scrollLeft(int step)
 // view area accordingly. ("step" must be negative!)
 bool Schematic::scrollRight(int step)
 {
-
-  TODO("Fix scroll");
-  /**
+#ifdef USE_SCROLLVIEW
   int diff;
 
   diff = contentsWidth() - contentsX()-visibleWidth() + step;
@@ -2087,7 +2092,9 @@ bool Schematic::scrollRight(int step)
     ViewX1 -= diff;
     return false;
   }
-  */
+#else
+  incomplete();
+#endif
   return true;
 }
 
@@ -2297,18 +2304,6 @@ QPointF Schematic::mapToScene(QPoint const& p)
 {
   float fX=float(p.x())/Scale + float(ViewX1);
   float fY=float(p.y())/Scale + float(ViewY1);
-
-  return QPointF(fX, fY);
-}
-#endif
-
-
-// ---------------------------------------------------
-#ifdef USE_SCROLLVIEW
-QPointF Schematic::mapToScene(QPoint const& p)
-{
-  float fX=float(p.x())/Scale + float(ViewX1);
-  float fY=float(p.x())/Scale + float(ViewY1);
 
   return QPointF(fX, fY);
 }
