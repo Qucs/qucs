@@ -180,8 +180,10 @@ void OptimizeDialog::attach(Object*)
       QStringList() << tr("Name") << tr("active") << tr("initial") << tr("min") << tr("max") << tr("Type"));
   VarTable->setSortingEnabled(false);
   VarTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+#if QT_VERSION < 0x050000
   VarTable->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
   VarTable->horizontalHeader()->setClickable(false); // no action when clicking on the header 
+#endif
 
   // right-click on the table header to open the context menu
   VarTable->horizontalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
