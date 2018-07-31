@@ -32,7 +32,7 @@
 
 class Element;
 
-#if 0
+#ifndef USE_SCROLLVIEW
 class SchematicScene : public QGraphicsScene
 {
 Q_OBJECT
@@ -41,7 +41,7 @@ public:
   virtual ~SchematicScene ();
 
   // void removeItem(Element const*);
-  void addItem(Element*);
+//  void addItem(ElementGraphics*);
   void addItem(QGraphicsItem* x){
 	  QGraphicsScene::addItem(x);
   }
