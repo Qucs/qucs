@@ -22,7 +22,11 @@
 #include <QPaintEvent>
 #include <QPixmap>
 #include <QMouseEvent>
+#if QT_VERSION < 0x050000
 #include <QTextIStream>
+#else
+#include <QTextStream>
+#endif
 #include <QMimeData>
 #include <QDrag>
 #include <QTextStream>
