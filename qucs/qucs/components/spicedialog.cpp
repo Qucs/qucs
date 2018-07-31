@@ -38,9 +38,11 @@
 
 
 SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
-    : QDialog(d, Qt::WDestructiveClose)
+    : QDialog(d)
 {
   App = App_; // pointer to main application
+
+  setAttribute(Qt::WA_DeleteOnClose);
 
   resize(400, 250);
   setWindowTitle(tr("Edit SPICE Component Properties"));
