@@ -36,10 +36,11 @@ install_element_stub p1 (&e);
 }
 
 // this is fixed in #742
+// (here for now, because libraries are not accessible)
 Element::Element(){}
 Element::~Element(){}
 void Element::paintScheme(Schematic*){}
 void Element::paintScheme(QPainter*){}
 void Element::setCenter(int, int, bool){}
 void Element::getCenter(int&, int&){}
-
+void Element::paint(ViewPainter*){}
