@@ -118,6 +118,7 @@ void DiagramDialog::attach(Object* d)
 	assert(d);
   Diag = prechecked_cast<Diagram*>(d);
   assert(Diag);
+  setAttribute(Qt::WA_DeleteOnClose);
   Graphs.setAutoDelete(true);
   copyDiagramGraphs();   // make a copy of all graphs
   if(schematic()){
