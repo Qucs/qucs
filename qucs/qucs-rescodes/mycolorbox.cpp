@@ -26,6 +26,8 @@
 #include <map>
 #include <string>
 
+#include "../qucs/qt_compat.h"
+
 MyColorBox::MyColorBox( QWidget *parent )
 : QGroupBox("Colour Codes" ,parent)
 {
