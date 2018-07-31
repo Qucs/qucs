@@ -38,6 +38,7 @@ using namespace std;
 #include <QProgressBar>
 #include <QDebug>
 #include <QMessageBox>
+#include <QTextBlock>
 
 #include "simmessage.h"
 #include "module.h"

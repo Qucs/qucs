@@ -27,11 +27,13 @@
 
 
 MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent)
-                     : QDialog(parent, Qt::WDestructiveClose)
+                     : QDialog(parent)
 {
   setWindowTitle(tr("Edit Marker Properties"));
   pMarker = pm_;
 
+  setAttribute(Qt::WA_DeleteOnClose);
+  
   QGridLayout *g = new QGridLayout;
 
   Precision = new QLineEdit();
