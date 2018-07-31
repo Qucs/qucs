@@ -31,6 +31,8 @@
 #include <QPushButton>
 #include <QMessageBox>
 
+#include "qt_compat.h"
+
 
 ID_Dialog::ID_Dialog(ID_Text *idText_)
 {
