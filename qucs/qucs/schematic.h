@@ -101,7 +101,7 @@ public:
 	void sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const;
 };
 
-#if QT_VERSION < 0x050000
+#if QT_MAJOR_VERSION < 5
 typedef Element ElementGraphics;
 #define SchematicBase Q3ScrollView
 #else
