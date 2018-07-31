@@ -19,7 +19,6 @@
 #include <limits.h>
 
 #include <QFileInfo>
-#include <QPrinter>
 #include <QPaintDevice>
 #include <QDir>
 #include <QTextStream>
@@ -58,6 +57,8 @@
 #include "trace.h"
 
 #include "qt_compat.h"
+
+class QPrinter;
 
 // just dummies for empty lists
 WireList      SymbolWires;
