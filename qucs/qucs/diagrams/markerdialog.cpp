@@ -40,6 +40,8 @@ void MarkerDialog::attach(Object *pm_)
   pMarker = prechecked_cast<Marker*>(pm_);
   assert(pMarker);
 
+  setAttribute(Qt::WA_DeleteOnClose);
+  
   QGridLayout *g = new QGridLayout;
 
   Precision = new QLineEdit();
