@@ -47,7 +47,7 @@ void Element::getCenter(int&, int&)
 
 void Element::paint(ViewPainter*) const
 {
-	incomplete();
+	unreachable();
 }
 
 void Element::snapToGrid(Schematic& s){
