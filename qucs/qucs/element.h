@@ -150,6 +150,7 @@ class Painting;
 class Graph;
 class Marker;
 class Node;
+class ViewPainter;
 
 class Element {
 public:
@@ -173,6 +174,7 @@ public: // other stuff
   virtual void paintScheme(QPainter *);
   virtual void setCenter(int, int, bool relative=false);
   virtual void getCenter(int&, int&);
+  virtual void paint(ViewPainter*);
 
 public:
   void setSelected(bool b=true){
