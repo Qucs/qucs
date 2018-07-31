@@ -806,8 +806,10 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
     return;
   }
 
-  if(view->drawn)
-    ((QGraphicsView*)DocumentTab->currentWidget())->viewport()->update();
+  if(view->drawn){
+    ((SchematicBase*)DocumentTab->currentWidget())->viewport()->update();
+  }else{
+  }
   view->drawn = false;
 
   // toggle last toolbar button off
@@ -1597,7 +1599,7 @@ void QucsApp::slotFileSaveAll()
   QString tabType = DocumentTab->currentWidget()->metaObject()->className();
 
   if (tabType == "Schematic") {
-    ((QGraphicsView*)DocumentTab->currentWidget())->viewport()->update();
+    ((SchematicBase*)DocumentTab->currentWidget())->viewport()->update();
   }
   view->drawn = false;
   statusBar()->showMessage(tr("Ready."));
@@ -2019,6 +2021,7 @@ void QucsApp::slotIntoHierarchy()
   QString s = pc->getSubcircuitFile();
   if(!gotoPage(s)) { return; }
 
+  // BUG: this complains about some malloc in qvector (not without a reason)
   HierarchyHistory.push(Doc->DocName); //remember for the way back
   popH->setEnabled(true);
 }
@@ -2402,8 +2405,10 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
   Comp->recreate(0);
   view->selElem = Comp;
 
-  if(view->drawn)
-    ((QGraphicsView*)DocumentTab->currentWidget())->viewport()->update();
+  if(view->drawn){
+    ((SchematicBase*)DocumentTab->currentWidget())->viewport()->update();
+  }else{
+  }
   view->drawn = false;
   MouseMoveAction = &MouseActions::MMoveElement;
   MousePressAction = &MouseActions::MPressElement;
