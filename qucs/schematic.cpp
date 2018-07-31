@@ -99,7 +99,10 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   FrameText[2] = tr("Date:");
   FrameText[3] = tr("Revision:");
 
-#ifndef USE_SCROLLVIEW
+#ifdef USE_SCROLLVIEW
+  setVScrollBarMode(Q3ScrollView::AlwaysOn);
+  setHScrollBarMode(Q3ScrollView::AlwaysOn);
+#else
   this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 #endif
