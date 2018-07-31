@@ -145,6 +145,17 @@ class NetLang;
 class ViewPainter;
 
 static QString incomplete_description="incomplete_description";
+// will be gone soon.
+class Component;
+class Wire;
+class Label;
+class WireLabel;
+class Diagram;
+class Painting;
+class Graph;
+class Marker;
+class Node;
+class ViewPainter;
 
 class Element : public Object {
 public:

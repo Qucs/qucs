@@ -18,7 +18,6 @@
 #include <limits.h>
 
 #include <QFileInfo>
-#include <QPrinter>
 #include <QPaintDevice>
 #include <QDir>
 #include <QTextStream>
@@ -58,6 +57,8 @@
 #include "trace.h"
 
 #include "qt_compat.h"
+
+class QPrinter;
 
 // just dummies for empty lists
 WireList      SymbolWires;
@@ -417,10 +418,11 @@ void Schematic::paintFrame(ViewPainter *p)
 }
 
 // -----------------------------------------------------------
+#if QT_VERSION < 0x050000
 // Is called when the content (schematic or data display) has to be drawn.
-#ifdef USE_SCROLLVIEW
 void Schematic::drawContents(QPainter *p, int, int, int, int)
 {
+  // no longer used.
   ViewPainter Painter;
 
   Painter.init(p, Scale, -ViewX1, -ViewY1, contentsX(), contentsY());
@@ -540,7 +542,6 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
 
   }
   PostedPaintEvents.clear();
-
 }
 #endif
 
@@ -623,6 +624,9 @@ void Schematic::contentsMouseDoubleClickEvent(QMouseEvent *Event)
 // -----------------------------------------------------------
 void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPage)
 {
+#if QT_VERSION > 0x050000
+  incomplete(); // does not work with qt5
+#else
   QPaintDevice *pdevice = Painter->device();
   float printerDpiX = (float)pdevice->logicalDpiX();
   float printerDpiY = (float)pdevice->logicalDpiY();
@@ -684,6 +688,7 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
   paintSchToViewpainter(&p,printAll,false,screenDpiX,printerDpiX);
 
   Painter->setFont(oldFont);
+#endif
 }
 
 

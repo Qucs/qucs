@@ -17,12 +17,15 @@
 
 #include "qucs.h"
 #include "viewpainter.h"
+#include "qt_compat.h"
 #include "diagrams/graph.h"
 
 #include <QPainter>
 #include <QFont>
 #include <QDebug>
 #include <QPolygon>
+
+#ifdef USE_SCROLLVIEW
 
 ViewPainter::ViewPainter(QPainter *p)
 {
@@ -66,6 +69,8 @@ void ViewPainter::init(QPainter *p, float Scale_, int DX_, int DY_,
   p->setRenderHints(hints);
 }
 
+#endif
+
 // -------------------------------------------------------------
 void ViewPainter::map(int x1, int y1, int& x, int& y)
 {
@@ -75,6 +80,8 @@ void ViewPainter::map(int x1, int y1, int& x, int& y)
   z = float(y1)*Scale + DY;
   y = TO_INT(z);
 }
+
+#ifdef USE_SCROLLVIEW
 
 // -------------------------------------------------------------
 void ViewPainter::drawPoint(int x1i, int y1i)
@@ -98,10 +105,22 @@ void ViewPainter::drawLine(int x1i, int y1i, int x2i, int y2i)
   Painter->drawLine(QLineF(x1, y1, x2, y2));
 }
 
+#else
+
+ViewPainter::ViewPainter(QPainter* p)
+  : Painter(p),
+  Scale(1.f),
+  PrintScale(1.f),
+  FontScale(1.f),
+  DX(0.), DY(0.),
+  LineSpacing(p->fontMetrics().lineSpacing())
+{
+}
+
+#endif
+
 // -------------------------------------------------------------
-/*!
- * draw a (line) graph from screen coord pairs
- */
+// FIXME. graph.cpp (or so)
 void Graph::drawLines(int x0, int y0, ViewPainter *p) const
 {
   float DX_, DY_;
@@ -169,6 +188,8 @@ void Graph::drawLines(int x0, int y0, ViewPainter *p) const
     Painter->drawPath(path);
   }
 }
+
+#ifdef USE_SCROLLVIEW
 // -------------------------------------------------------------
 //draws the vectors of phasor diagram
 void Graph::drawvect(int x0, int y0, ViewPainter *p) const
@@ -225,6 +246,7 @@ void Graph::drawvect(int x0, int y0, ViewPainter *p) const
   }
 
 }
+#endif
 // -------------------------------------------------------------
 void Graph::drawStarSymbols(int x0i, int y0i, ViewPainter *p) const
 {
@@ -312,6 +334,8 @@ void Graph::drawArrowSymbols(int x0i, int y0i, ViewPainter *p) const
     else  pp++;
   }
 }
+
+#if QT_VERSION < 0x050000
 
 // -------------------------------------------------------------
 void ViewPainter::drawRect(int x1i, int y1i, int dxi, int dyi)
@@ -502,5 +526,14 @@ void ViewPainter::drawResizeRect(int x1i, int y1i)
 
   Painter->drawRect(QRectF(x1-5, y1-5, 10, 10));
 }
+
+#else // qt5
+
+void ViewPainter::drawResizeRect(int x1, int y1)
+{
+  Painter->drawRect(QRectF(x1-5, y1-5, 10, 10));
+}
+
+#endif
 
 // vim:ts=8:sw=2:noet
