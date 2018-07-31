@@ -31,6 +31,6 @@ SUFFIXES = .qrc
 SUFFIXES += .moc.cpp
 
 .h.moc.cpp:
-	$(MOC) -o $@ $<
+	$(MOC) -DQT_MAJOR_VERSION=${QT_MAJOR_VERSION} -o $@ $<
 
 $(MOCFILES): $(top_builddir)/qt_version
