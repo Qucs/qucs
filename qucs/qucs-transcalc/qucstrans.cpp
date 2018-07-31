@@ -65,6 +65,8 @@
 #include "c_microstrip.h"
 #include "stripline.h"
 
+#include "../qucs/qt_compat.h"
+
 // Defines maximum number of entries in each property category.
 static const int TransMaxBox[MAX_TRANS_BOXES] = { 9, 1, 4, 3 };
 
