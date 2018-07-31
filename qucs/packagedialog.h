@@ -26,6 +26,8 @@
 #include <QVBoxLayout>
 #include <QDir>
 
+#include "qt_compat.h"
+
 class QucsApp;
 class QString;
 class QLineEdit;

@@ -36,6 +36,7 @@
 #include "rect3ddiagram.h"
 #include "qucs.h"
 #include "misc.h"
+#include "qt_compat.h"
 
 Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {

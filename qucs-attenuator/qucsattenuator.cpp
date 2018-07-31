@@ -35,6 +35,7 @@
 #include <QApplication>
 #include <QDebug>
 
+#include "../qucs/qt_compat.h"
 
 QucsAttenuator::QucsAttenuator()
 {
