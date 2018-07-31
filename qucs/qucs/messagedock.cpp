@@ -23,6 +23,7 @@
 
 #include <QDockWidget>
 #include <QDebug>
+#include <QTextBlock>
 
 /*!
  * \file messagedock.cpp
