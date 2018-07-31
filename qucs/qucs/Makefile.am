@@ -57,6 +57,7 @@ MOCHEADERS = \
   octave_window.h \
   projectView.h \
   schematic.h \
+  schematicscene.h \
   textdoc.h \
   qucs.h
 
@@ -68,10 +69,13 @@ libqucsschematic_la_SOURCES= \
   attach.cpp \
   node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
   qucs.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
-  viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
+  mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
   schematic_file.cpp syntax.cpp module.cpp octave_window.cpp \
   messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
-  projectView.cpp
+	projectView.cpp \
+	frame.cpp \
+	mousecursor.cpp \
+    schematicscene.cpp
 
 nodist_libqucsschematic_la_SOURCES = $(MOCFILES)
 
@@ -95,7 +99,10 @@ qucs_real_LDADD = \
 	libqucsschematic.la
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
-  wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
+	qt_compat.h \
+  wirelabel.h mnemo.h mouseactions.h syntax.h module.h misc.h \
+  frame.h \
+	mousecursor.h \
   projectView.h printerwriter.h imagewriter.h
 
 # must be installed. but later

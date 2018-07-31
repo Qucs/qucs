@@ -23,7 +23,7 @@
 ID_Text::ID_Text(int cx_, int cy_)
 {
   Name = ".ID ";
-  isSelected = false;
+  ElemSelected = false;
   cx = cx_;
   cy = cy_;
   x2 = y2 = 20;
@@ -31,20 +31,25 @@ ID_Text::ID_Text(int cx_, int cy_)
   Prefix = "SUB";
 }
 
-ID_Text::~ID_Text()
+QRectF ID_Text::boundingRect() const
 {
+  return QRectF(x1, y1, x2-x1, y2-y1);
 }
 
-// --------------------------------------------------------------------------
-void ID_Text::paint(ViewPainter *p)
+void ID_Text::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
-  int x, y;
-  p->Painter->setPen(QPen(Qt::black,1));
-  p->map(cx, cy, x, y);
+  /// \todo draw subcircuit symbol id on move
+  // draw mouse decoration
+  //if(drawScheme)
+  //  painter->drawRect(cx, cy, x2, y2);
+
+  /// \todo finish porting ID_text::paint()
+  painter->setPen(QPen(Qt::black,1));
 
   QRect r;
-  p->Painter->drawText(QRect(x, y, 0, 0), Qt::TextDontClip, Prefix, &r);
+  painter->drawText(QRect(cx, cy, 0, 0), Qt::TextDontClip, Prefix, &r);
   x2 = r.width();
+  /*
   y2 = p->LineSpacing;
 
   p->Painter->drawText(QRect(x, y+y2, 0, 0), Qt::TextDontClip, "File=name", &r);
@@ -60,19 +65,14 @@ void ID_Text::paint(ViewPainter *p)
     }
   }
 
-  if(isSelected) {
+  if(ElemSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->Painter->drawRoundRect(x-4, y-4, x2+8, y2+8);
   }
 
   x2 = int(float(x2) / p->Scale);
   y2 = int(float(y2) / p->Scale);
-}
-
-// --------------------------------------------------------------------------
-void ID_Text::paintScheme(Schematic *p)
-{
-  p->PostPaintEvent(_Rect, cx, cy, x2, y2);
+  */
 }
 
 // --------------------------------------------------------------------------

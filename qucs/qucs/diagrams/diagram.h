@@ -21,7 +21,6 @@
 #include "graph.h"
 #include "marker.h"
 #include "element.h"
-#include "viewpainter.h"
 
 #include <QFile>
 #include <QTextStream>
@@ -62,21 +61,22 @@ public:
   virtual ~Diagram();
 
   virtual Diagram* newOne();
-  virtual int  calcDiagram() { return 0; };
+  virtual int  calcDiagram() { return 0; }
   virtual void calcCoordinate
-               (const double*, const double*, const double*, float*, float*, Axis const*) const {};
+               (const double*, const double*, const double*, float*, float*, Axis const*) const {}
   void calcCoordinateP (const double*x, const double*y, const double*z, Graph::iterator& p, Axis const* A) const;
-  virtual void calcCoordinatePh(const double*, float*, float*, Axis const*, Axis const*) const{};
+  virtual void calcCoordinatePh(const double*, float*, float*, Axis const*, Axis const*) const{}
   virtual void finishMarkerCoordinates(float&, float&) const;
-  virtual void calcLimits() {};
+  virtual void calcLimits() {}
   virtual QString extraMarkerText(Marker const*) const {return "";}
   
-  virtual void paint(ViewPainter*);
-  virtual void paintDiagram(ViewPainter* p);
-  void paintMarkers(ViewPainter* p, bool paintAll = true);
+  virtual QRectF boundingRect() const;
+  void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
+  void paintDiagram(QPainter* painter);
+  void paintMarkers(QPainter* p, bool paintAll = true);
+
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
-  void    paintScheme(Schematic*);
   void    Bounding(int&, int&, int&, int&);
   bool    getSelected(int, int);
   bool    resizeTouched(float, float, float);

@@ -27,6 +27,9 @@
 
 class QString;
 
+#define TODO(msg) qDebug() << "TODO" << msg << __FILE__ << __LINE__ << __func__;
+
+
 namespace misc {
   QString complexRect(double, double, int Precision=3);
   QString complexDeg (double, double, int Precision=3);

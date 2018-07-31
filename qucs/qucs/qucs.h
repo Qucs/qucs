@@ -130,9 +130,9 @@ bool loadSettings();
 bool saveApplSettings();
 
 // function pointers used with mouse actions handling
+/// function pointers used to handle mouse actions
 typedef bool (Schematic::*pToggleFunc) ();
 typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
-typedef void (MouseActions::*pMouseFunc2) (Schematic*, QMouseEvent*, float, float);
 
 class QucsApp : public QMainWindow {
   Q_OBJECT
@@ -158,7 +158,7 @@ public:
 
   // current mouse methods
   void (MouseActions::*MouseMoveAction) (Schematic*, QMouseEvent*);
-  void (MouseActions::*MousePressAction) (Schematic*, QMouseEvent*, float, float);
+  void (MouseActions::*MousePressAction) (Schematic*, QMouseEvent*);
   void (MouseActions::*MouseDoubleClickAction) (Schematic*, QMouseEvent*);
   void (MouseActions::*MouseReleaseAction) (Schematic*, QMouseEvent*);
 
@@ -195,7 +195,7 @@ public slots:
   void slotPopHierarchy();
 
   void slotShowAll();
-  void slotShowOne();
+  void slotZoomReset();
   void slotZoomOut(); // Zoom out by 2
 
   void slotToPage();
@@ -231,7 +231,7 @@ private slots:
   void slotButtonProjNew();
   void slotButtonProjOpen();
   void slotButtonProjDel();
-  void slotChangeView(QWidget*);
+  void slotChangeView(int index);
   void slotSimulate();
   void slotAfterSimulation(int, SimMessage*);
   void slotDCbias();
@@ -454,7 +454,7 @@ private slots:
 
 private:
   void showHTML(const QString&);
-  bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2);
+  bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc);
   void launchTool(const QString&, const QString&, const QString& = ""); // tool, description and args
   friend class SaveDialog;
   QString lastExportFilename;

@@ -29,7 +29,7 @@
 
 LibComp::LibComp()
 {
-  Type = isComponent;   // both analog and digital
+  ElemType = isComponent;   // both analog and digital
   Description = QObject::tr("Component taken from Qucs library");
 
   Ports.append(new Port(0,  0));  // dummy port because of being device
@@ -149,7 +149,7 @@ int LibComp::loadSection(const QString& Name, QString& Section,
   // search model
   Start = Section.indexOf("<"+Name+">");
   if(Start < 0) {
-    if((Name == "Symbol") && (~libDefaultSymbol.isEmpty())) {
+    if((Name == "Symbol") && (!libDefaultSymbol.isEmpty())) {
       // component does not define its own symbol but the library defines a default symbol
       Section = libDefaultSymbol;
       return 0;

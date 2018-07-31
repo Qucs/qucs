@@ -256,7 +256,7 @@ void TextDoc::becomeCurrent (bool)
 
 bool TextDoc::baseSearch(const QString &str, bool CaseSensitive, bool wordOnly, bool backward)
 {
-  QFlag flag = 0;
+  QTextDocument::FindFlags flag = 0;
   bool finded;
 
   if (CaseSensitive) {
@@ -417,37 +417,37 @@ int TextDoc::save ()
 }
 
 /*!
- * \brief TextDoc::zoomBy increases/decreases the text font size.
- * \param s font size scaling factor
- * \return (required) final scale
- *
- * \fixme is the return value being saved on the saveSettings() ?
+ * \brief TextDoc::zoomReset resets the font scaling
  */
-float TextDoc::zoomBy(float s)
-{
-  if(s == 2.0) {
-      QFont f = document()->defaultFont();
-      f.setPointSize(f.pointSize()*2);
-      document()->setDefaultFont(f);
-  }
-  else {
-      QFont f = document()->defaultFont();
-      f.setPointSize(f.pointSize()*s);
-      document()->setDefaultFont(f);
-  }
-  return Scale;
-}
-
-/*!
- * \brief TextDoc::showNoZoom resets the font scaling
- */
-void TextDoc::showNoZoom()
+void TextDoc::zoomReset()
 {
   TextFont = QFont("Courier New");
   TextFont.setPointSize(QucsSettings.font.pointSize()-1);
   TextFont.setStyleHint(QFont::Courier);
   TextFont.setFixedPitch(true);
   document()->setDefaultFont(TextFont);
+}
+
+/*!
+ * \brief TextDoc::zoomOut
+ * Decrease font by 50%
+ */
+void TextDoc::zoomOut()
+{
+  QFont f = document()->defaultFont();
+  f.setPointSize(f.pointSize()*0.5);
+  document()->setDefaultFont(f);
+}
+
+/*!
+ * \brief TextDoc::zoomIn
+ * Increase font by 50%
+ */
+void TextDoc::zoomIn()
+{
+  QFont f = document()->defaultFont();
+  f.setPointSize(f.pointSize()*1.5);
+  document()->setDefaultFont(f);
 }
 
 /*!

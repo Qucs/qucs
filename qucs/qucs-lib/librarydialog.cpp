@@ -54,7 +54,7 @@ LibraryDialog::LibraryDialog(QWidget *App_) : QDialog(App_)
 /* TODO insert the group of radio buttons into an scrollable area
   Q3ScrollView *Dia_Scroll = new Q3ScrollView(Group);
   Dia_Scroll->setMargin(5);
-  Dia_Box = new Q3VBox(Dia_Scroll->viewport());
+  Dia_Box = new QVBox(Dia_Scroll->viewport());
   Dia_Scroll->addChild(Dia_Box);
 */
   QHBoxLayout *h1 = new QHBoxLayout();

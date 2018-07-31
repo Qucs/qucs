@@ -24,7 +24,7 @@
 #include <QDir>
 #include <QStringList>
 #include <QPlainTextEdit>
-#include <Q3PtrList>
+#include "qt_compat.h"
 #include <QTextStream>
 #include <QList>
 #include <QProcess>
@@ -33,6 +33,7 @@
 #include "qucs.h"
 #include "node.h"
 #include "schematic.h"
+#include "schematicscene.h"
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
 #include "components/spicefile.h"
@@ -64,7 +65,7 @@ QString Schematic::createClipboardFile()
   // Build element document.
   s += "<Components>\n";
   for(pc = Components->first(); pc != 0; pc = Components->next()){
-    if(pc->isSelected) {
+    if(pc->ElemSelected) {
       QTextStream str(&s);
       saveComponent(str, pc);
       s += "\n";
@@ -75,28 +76,28 @@ QString Schematic::createClipboardFile()
 
   s += "<Wires>\n";
   for(pw = Wires->first(); pw != 0; pw = Wires->next())
-    if(pw->isSelected) {
+    if(pw->ElemSelected) {
       z++;
-      if(pw->Label) if(!pw->Label->isSelected) {
+      if(pw->Label) if(!pw->Label->ElemSelected) {
 	s += pw->save().section('"', 0, 0)+"\"\" 0 0 0>\n";
 	continue;
       }
       s += pw->save()+"\n";
     }
   for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
-    if(pn->Label) if(pn->Label->isSelected) {
+    if(pn->Label) if(pn->Label->ElemSelected) {
       s += pn->Label->save()+"\n";  z++; }
   s += "</Wires>\n";
 
   s += "<Diagrams>\n";
   for(pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
-    if(pd->isSelected) {
+    if(pd->ElemSelected) {
       s += pd->save()+"\n";  z++; }
   s += "</Diagrams>\n";
 
   s += "<Paintings>\n";
   for(pp = Paintings->first(); pp != 0; pp = Paintings->next())
-    if(pp->isSelected)
+    if(pp->ElemSelected)
       if(pp->Name.at(0) != '.') {  // subcircuit specific -> do not copy
         s += "<"+pp->save()+">\n";  z++; }
   s += "</Paintings>\n";
@@ -365,8 +366,10 @@ int Schematic::saveDocument()
   }
   else {
     stream << "  <View=" << ViewX1<<","<<ViewY1<<","
-			 << ViewX2<<","<<ViewY2<< ",";
-    stream << Scale <<","<<contentsX()<<","<<contentsY() << ">\n";
+                         << ViewX2<<","<<ViewY2<< ",";
+    TODO("Fix contentsX");
+    /// \todo  stream << Scale <<","<<contentsX()<<","<<contentsY() << ">\n";
+    stream << Scale <<","<< 0 <<","<< 0 << ">\n";
   }
   stream << "  <Grid=" << GridX<<","<<GridY<<","
 			<< GridOn << ">\n";
@@ -375,16 +378,16 @@ int Schematic::saveDocument()
   stream << "  <OpenDisplay=" << SimOpenDpl << ">\n";
   stream << "  <Script=" << Script << ">\n";
   stream << "  <RunScript=" << SimRunScript << ">\n";
-  stream << "  <showFrame=" << showFrame << ">\n";
+  stream << "  <showFrame=" << schematicFrame->PageType << ">\n";
 
   QString t;
-  misc::convert2ASCII(t = Frame_Text0);
+  misc::convert2ASCII(t = schematicFrame->Title);
   stream << "  <FrameText0=" << t << ">\n";
-  misc::convert2ASCII(t = Frame_Text1);
+  misc::convert2ASCII(t = schematicFrame->Author);
   stream << "  <FrameText1=" << t << ">\n";
-  misc::convert2ASCII(t = Frame_Text2);
+  misc::convert2ASCII(t = schematicFrame->Date);
   stream << "  <FrameText2=" << t << ">\n";
-  misc::convert2ASCII(t = Frame_Text3);
+  misc::convert2ASCII(t = schematicFrame->Revision);
   stream << "  <FrameText3=" << t << ">\n";
   stream << "</Properties>\n";
 
@@ -586,11 +589,11 @@ bool Schematic::loadProperties(QTextStream *stream)
 		if(nstr.toInt(&ok) == 0) SimRunScript = false;
 		else SimRunScript = true;
     else if(cstr == "showFrame")
-		showFrame = nstr.at(0).toLatin1() - '0';
-    else if(cstr == "FrameText0") misc::convert2Unicode(Frame_Text0 = nstr);
-    else if(cstr == "FrameText1") misc::convert2Unicode(Frame_Text1 = nstr);
-    else if(cstr == "FrameText2") misc::convert2Unicode(Frame_Text2 = nstr);
-    else if(cstr == "FrameText3") misc::convert2Unicode(Frame_Text3 = nstr);
+                schematicFrame->PageType= nstr.at(0).toLatin1() - '0';
+    else if(cstr == "FrameText0") misc::convert2Unicode(schematicFrame->Title = nstr);
+    else if(cstr == "FrameText1") misc::convert2Unicode(schematicFrame->Author = nstr);
+    else if(cstr == "FrameText2") misc::convert2Unicode(schematicFrame->Date = nstr);
+    else if(cstr == "FrameText3") misc::convert2Unicode(schematicFrame->Revision= nstr);
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 	   QObject::tr("Format Error:\nUnknown property: ")+cstr);
@@ -608,8 +611,14 @@ bool Schematic::loadProperties(QTextStream *stream)
   return false;
 }
 
-// ---------------------------------------------------
-// Inserts a component without performing logic for wire optimization.
+/*!
+ * @brief Schematic::simpleInsertComponent
+ *
+ * Inserts a component without performing logic for wire optimization.
+ * Used when loading from a schematic file.
+ *
+ * @param c is pointing to the component to be inserted.
+ */
 void Schematic::simpleInsertComponent(Component *c)
 {
   Node *pn;
@@ -634,6 +643,9 @@ void Schematic::simpleInsertComponent(Component *c)
     if(pn == 0) { // create new node, if no existing one lies at this position
       pn = new Node(x, y);
       DocNodes.append(pn);
+
+      // add Node to scene
+      scene->addItem( new GraphicsElement(pn) );
     }
     pn->Connections.append(c);  // connect schematic node to component node
     if (!pp->Type.isEmpty()) {
@@ -644,9 +656,23 @@ void Schematic::simpleInsertComponent(Component *c)
   }
 
   DocComps.append(c);
+  // add Component to scene
+  scene->addItem(c);
 }
 
 // -------------------------------------------------------------
+/*!
+ * \brief Schematic::loadComponents
+ * \param stream File being loaded
+ * \param List add read Component to a list of pointers
+ * \return Error if Component fielt could not be open
+ *
+ * Parse components from the input stream.
+ * If a list pointer is provided, a list of pointers to Components
+ * ( comming from paste? ) is created and passed by reference.
+ * Otherwise insert component into database and graphics scene.
+ *
+ */
 bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
 {
   QString Line, cstr;
@@ -661,13 +687,21 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
     c = getComponentFromName(Line, this);
     if(!c) return false;
 
+    // set component location
+    QPointF center(c->cx, c->cy);
+
+    incomplete();
+//    c->setPos(center); // what is this?
+
     if(List) {  // "paste" ?
       int z;
       for(z=c->name().length()-1; z>=0; z--) // cut off number of component name
         if(!c->name().at(z).isDigit()) break;
       c->obsolete_name_override_hack(c->name().left(z+1));
       List->append(c);
-    }else{
+    }
+    else  {
+      // insert component into database and scene
       simpleInsertComponent(c);
     }
   }
@@ -677,44 +711,73 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
   return false;
 }
 
-// -------------------------------------------------------------
-// Inserts a wire without performing logic for optimizing.
+/*!
+ * \brief Schematic::simpleInsertWire
+ * \param pw
+ * Inserts a wire without performing logic for optimizing.
+ * \todo similar to insertNode
+ *
+ * - check for node 1 overlap
+ * - check for zero length wire
+ * - add node label (at wire corner) to scene
+ * - check for node 2 overlap
+ * - add nodes to list
+ * - add nodes to scene
+ * - add wire to list
+ * - add wire to scene
+ * - add wire label to scene
+ *
+ */
 void Schematic::simpleInsertWire(Wire *pw)
 {
-  Node *pn;
-  // check if first wire node lies upon existing node
-  for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
-    if(pn->cx == pw->x1) if(pn->cy == pw->y1) break;
+  Node *pn1 = 0;
+  Node *pn2 = 0;
 
-  if(!pn) {   // create new node, if no existing one lies at this position
-    pn = new Node(pw->x1, pw->y1);
-    DocNodes.append(pn);
+  // check if first wire node lies upon existing node
+  for(pn1 = DocNodes.first(); pn1 != 0; pn1 = DocNodes.next())
+    if(pn1->cx == pw->x1) if(pn1->cy == pw->y1) break;
+
+  // create new node, if no existing one lies at this position
+  if(!pn1) {
+    pn1 = new Node(pw->x1, pw->y1);
+    DocNodes.append(pn1);
   }
 
+  // check for zero length wire
   if(pw->x1 == pw->x2) if(pw->y1 == pw->y2) {
-    pn->Label = pw->Label;   // wire with length zero are just node labels
-    if (pn->Label) {
-      pn->Label->Type = isNodeLabel;
-      pn->Label->pOwner = pn;
+    pn1->Label = pw->Label;   // wire with length zero are just node labels
+    if (pn1->Label) {
+      pn1->Label->ElemType = isNodeLabel;
+      pn1->Label->pOwner = pn1;
+      // add WireLabel to scene
+      scene->addItem(pn1->Label);
     }
     delete pw;           // delete wire because this is not a wire
     return;
   }
-  pn->Connections.append(pw);  // connect schematic node to component node
-  pw->Port1 = pn;
+  pn1->Connections.append(pw);  // connect schematic node to component node
+  pw->Port1 = pn1;
 
   // check if second wire node lies upon existing node
-  for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
-    if(pn->cx == pw->x2) if(pn->cy == pw->y2) break;
+  for(pn2 = DocNodes.first(); pn2 != 0; pn2 = DocNodes.next())
+    if(pn2->cx == pw->x2) if(pn2->cy == pw->y2) break;
 
-  if(!pn) {   // create new node, if no existing one lies at this position
-    pn = new Node(pw->x2, pw->y2);
-    DocNodes.append(pn);
+  if(!pn2) {   // create new node, if no existing one lies at this position
+    pn2 = new Node(pw->x2, pw->y2);
+    DocNodes.append(pn2);
   }
-  pn->Connections.append(pw);  // connect schematic node to component node
-  pw->Port2 = pn;
+  pn2->Connections.append(pw);  // connect schematic node to component node
+  pw->Port2 = pn2;
 
   DocWires.append(pw);
+
+  scene->addItem(pn1);
+  scene->addItem(pn2);
+  scene->addItem(pw);
+
+  if(pw->Label) {
+    scene->addItem(pw->Label);
+  }
 }
 
 // -------------------------------------------------------------
@@ -738,7 +801,7 @@ bool Schematic::loadWires(QTextStream *stream, Q3PtrList<Element> *List)
     }
     if(List) {
       if(w->x1 == w->x2) if(w->y1 == w->y2) if(w->Label) {
-	w->Label->Type = isMovingLabel;
+        w->Label->ElemType = isMovingLabel;
 	List->append(w->Label);
 	delete w;
 	continue;
@@ -792,6 +855,11 @@ bool Schematic::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
       return false;
     }
     List->append(d);
+
+  qDebug() << __FUNCTION__ << d->Name;
+  /// insert diagram into the scene
+  scene->addItem(d);
+  scene->update();
   }
 
   QMessageBox::critical(0, QObject::tr("Error"),
@@ -839,6 +907,11 @@ bool Schematic::loadPaintings(QTextStream *stream, Q3PtrList<Painting> *List)
       return false;
     }
     List->append(p);
+
+    qDebug() << __FUNCTION__ << p->Name;
+    /// insert Paiting into the scene
+    scene->addItem(p);
+    scene->update();
   }
 
   QMessageBox::critical(0, QObject::tr("Error"),
@@ -1179,7 +1252,7 @@ void Schematic::propagateNode(QStringList& Collect,
   Cons.append(pn);
   for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
     for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
-      if(pe->Type == isWire) {
+      if(pe->ElemType == isWire) {
 	pw = (Wire*)pe;
 	if(p2 != pw->Port1) {
 	  if(pw->Port1->Name.isEmpty()) {
@@ -1226,21 +1299,20 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
   QString s;
 
   // give the ground nodes the name "gnd", and insert subcircuits etc.
-  Q3PtrListIterator<Component> it(DocComps);
-  Component *pc;
-  while((pc = it.current()) != 0) {
-    ++it;
+  for(auto it=DocComps.begin(); it!=DocComps.end(); ++it) {
+    Component *pc=*it;
+
     if(pc->isActive != COMP_IS_ACTIVE) continue;
 
     // check analog/digital typed components
     if(isAnalog) {
-      if((pc->Type & isAnalogComponent) == 0) {
-        ErrText->appendPlainText(QObject::tr("ERROR: Component \"%1\" has no analog model.").arg(pc->name() ));
+      if((pc->type() & isAnalogComponent) == 0) {
+        ErrText->appendPlainText(QObject::tr("ERROR: Component \"%1\" has no analog model.").arg(pc->name()));
         return false;
       }
     } else {
-      if((pc->Type & isDigitalComponent) == 0) {
-        ErrText->appendPlainText(QObject::tr("ERROR: Component \"%1\" has no digital model.").arg(pc->name() ));
+      if((pc->type() & isDigitalComponent) == 0) {
+        ErrText->appendPlainText(QObject::tr("ERROR: Component \"%1\" has no digital model.").arg(pc->name()));
         return false;
       }
     }
@@ -1522,7 +1594,7 @@ int NumPorts)
   if(creatingLib) {
     QString f = misc::properAbsFileName(DocName) + ".lst";
     ofile.setFileName(f);
-    if(!ofile.open(IO_WriteOnly)) {
+    if(!ofile.open(QIODevice::WriteOnly)) {
       ErrText->appendPlainText(tr("ERROR: Cannot create library file \"%s\".").arg(f));
       return;
     }
@@ -1582,7 +1654,7 @@ int NumPorts)
             case 'o': // output ports need workaround
               Signals.insert(*it_name, DigSignal(*it_name, *it_type));
               (*it_name) = "net_out" + (*it_name);
-              // no "break;" here !!!
+              // fall through
             default:
               (*it_name) += " : " + pc->Props.at(1)->Value;
           }

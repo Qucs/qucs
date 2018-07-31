@@ -28,9 +28,10 @@
 class GraphicText : public Painting  {
 public:
   GraphicText();
- ~GraphicText();
+  virtual ~GraphicText() {}
 
-  void paintScheme(Schematic*);
+  QRectF boundingRect() const;
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
@@ -40,7 +41,6 @@ public:
   QString save();
   QString saveCpp();
   QString saveJSON();
-  void paint(ViewPainter*);
   void MouseMoving(Schematic*, int, int, int, int, Schematic*, int, int, bool);
   bool MousePressing();
   bool getSelected(float, float, float);
@@ -55,6 +55,8 @@ public:
   QFont    Font;
   QString  Text;
   int      Angle;
+
+  int ex, ey; // used to track position of mouse move event
 };
 
 #endif

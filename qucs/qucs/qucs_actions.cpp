@@ -26,7 +26,7 @@
 #include <limits.h>
 
 #include <QProcess>
-#include <Q3PtrList>
+#include "qt_compat.h"
 #include <QRegExpValidator>
 #include <QLineEdit>
 #include <QAction>
@@ -41,10 +41,12 @@
 #include <QListWidget>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QScrollBar>
 
 #include "projectView.h"
 #include "qucs.h"
 #include "schematic.h"
+#include "schematicscene.h"
 #include "textdoc.h"
 #include "mouseactions.h"
 #include "messagedock.h"
@@ -66,10 +68,21 @@
 QRegExp  Expr_CompProp;
 QRegExpValidator Val_CompProp(Expr_CompProp, 0);
 
-// -----------------------------------------------------------------------
-// This function is called from all toggle actions.
+
+/*!
+ * \brief QucsApp::performToggleAction
+ * \param on
+ * \param Action
+ * \param Function
+ * \param MouseMove
+ * \param MousePress
+ * \return
+ * This function is called from all toggle actions.
+ * Used in combination with slots to set function pointers to the methods
+ * that serve the mouse actions, ie. press, move, release, double click.
+ */
 bool QucsApp::performToggleAction(bool on, QAction *Action,
-	pToggleFunc Function, pMouseFunc MouseMove, pMouseFunc2 MousePress)
+        pToggleFunc Function, pMouseFunc MouseMove, pMouseFunc MousePress)
 {
   slotHideEdit(); // disable text edit of component property
 
@@ -219,20 +232,22 @@ void QucsApp::slotZoomIn(bool on)
 {
   TextDoc *Doc = (TextDoc*)DocumentTab->currentWidget();
   if(isTextDocument(Doc)) {
-    Doc->zoomBy(1.5f);
+    Doc->zoomIn();
     magPlus->blockSignals(true);
     magPlus->setChecked(false);
     magPlus->blockSignals(false);
   }
-  else
+  else {
+    // handle zoom in (under cursor) or zoon to rectangle
     performToggleAction(on, magPlus, 0,
-		&MouseActions::MMoveZoomIn, &MouseActions::MPressZoomIn);
+                        &MouseActions::MMoveZoomIn, &MouseActions::MPressZoomIn);
+  }
 }
 
 
 void QucsApp::slotEscape()
 {
-    select->setChecked(true);
+    select->setChecked(true); // trigger slotSelect
     slotSearchClear();
 }
 
@@ -262,6 +277,16 @@ void QucsApp::slotSelect(bool on)
     select->blockSignals(false);
     return;
   }
+
+  // remove from scene and delete previously selected elements
+  if(view->selElem != 0)  {
+      Doc->scene->removeItem(view->selElem);
+      delete view->selElem;
+      view->selElem = 0;
+  }
+
+  // reset mouse cursor
+  Doc->mouseCursor->setCursorType(MouseCursor::NoCursor);
 
   if(performToggleAction(on, select, 0, 0, &MouseActions::MPressSelect)) {
     MouseReleaseAction = &MouseActions::MReleaseSelect;
@@ -973,7 +998,14 @@ void QucsApp::slotAddToProject()
   statusBar()->showMessage(tr("Ready."));
 }
 
-// -----------------------------------------------------------
+/*!
+ * \brief QucsApp::slotCursorLeft
+ * \param left is used to toggle between left or right.
+ *  Handle key press left or right depending on selection.
+ *
+ *  \sa slotCursorUp
+ *
+ */
 void QucsApp::slotCursorLeft(bool left)
 {
   int sign = 1;
@@ -982,6 +1014,8 @@ void QucsApp::slotCursorLeft(bool left)
   }
   if(!editText->isHidden()) return;  // for edit of component property ?
 
+  TODO("Fix scrollling");
+  /** \todo
   Q3PtrList<Element> movingElements;
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   int markerCount = Doc->copySelectedElements(&movingElements);
@@ -989,14 +1023,18 @@ void QucsApp::slotCursorLeft(bool left)
   if((movingElements.count() - markerCount) < 1) {
     if(markerCount > 0) {  // only move marker if nothing else selected
       Doc->markerLeftRight(left, &movingElements);
-    } else if(left) {
-      if(Doc->scrollLeft(Doc->horizontalScrollBar()->singleStep()))
-        Doc->scrollBy(-Doc->horizontalScrollBar()->singleStep(), 0);
-    }else{ // right
-      if(Doc->scrollRight(-Doc->horizontalScrollBar()->singleStep()))
-        Doc->scrollBy(Doc->horizontalScrollBar()->singleStep(), 0);
     }
-
+    else {
+      QScrollBar* const hBar = Doc->horizontalScrollBar();
+      if(left) {
+        if(Doc->scrollLeft(hBar->singleStep()))
+          hBar->setValue(hBar->value() - hBar->singleStep());
+      }
+      else{ // right
+        if(Doc->scrollRight(-hBar->singleStep()))
+          hBar->setValue(hBar->value() + hBar->singleStep());
+      }
+    }
     Doc->viewport()->update();
     view->drawn = false;
     return;
@@ -1005,9 +1043,43 @@ void QucsApp::slotCursorLeft(bool left)
     view->MAx3 = 1;  // sign for moved elements
     view->endElementMoving(Doc, &movingElements);
   }
+  */
 }
 
-// -----------------------------------------------------------
+/*!
+ * \brief QucsApp::slotCursorUp
+ * \param up is used to toggle between up or down
+ *  Handle key press up or down depending on selection.
+ *
+ *  Do nothing if QLineEdit used for edit is hidden
+ *  Do nothing if Component name is selected, MAx3 is set on MPressSelect / slotApplyCompText
+ *  \todo avoid MAx3 reuse here
+ *  If up
+ *    get number of selected property MAx3 (\sa slotApplyCompText)
+ *    if property not a list return
+ *    check index of current text in QLineEdit
+ *    if first, return
+ *    else decrement index, set above current on QLineEdit and select all
+ *  If down
+ *    get number of selected property MAx3 (\sa slotApplyCompText)
+ *    if property not a list return
+ *    check index of current text in QLineEdit
+ *    if last, return
+ *    else increment index, set below current on QLineEdit and select all
+ *
+ *
+ *  Check for things \sa movingElements
+ *
+ *  If nothing or marker selected, move markers
+ *  If nothing and up, scroll up
+ *  If nothing and down, scroll down
+ *
+ *  If something selected
+ *  \sa moveElements and snap to grid
+ *  flag in MAx3
+ *  \sa endElementMoving, reinserts all elements moved back into schematic (why?)
+ *
+ */
 void QucsApp::slotCursorUp(bool up)
 {
   if(editText->isHidden()) {  // for edit of component property ?
@@ -1051,6 +1123,8 @@ void QucsApp::slotCursorUp(bool up)
     return;
   }
 
+  TODO("Fix scrolling");
+  /** \todo
   Q3PtrList<Element> movingElements;
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   int markerCount = Doc->copySelectedElements(&movingElements);
@@ -1058,22 +1132,30 @@ void QucsApp::slotCursorUp(bool up)
   if((movingElements.count() - markerCount) < 1) { // all selections are markers
     if(markerCount > 0) {  // only move marker if nothing else selected
       Doc->markerUpDown(up, &movingElements);
-    } else if(up) { // nothing selected at all
-      if(Doc->scrollUp(Doc->verticalScrollBar()->singleStep()))
-        Doc->scrollBy(0, -Doc->verticalScrollBar()->singleStep());
-    } else { // down
-      if(Doc->scrollDown(-Doc->verticalScrollBar()->singleStep()))
-        Doc->scrollBy(0, Doc->verticalScrollBar()->singleStep());
     }
-
+    else { // nothing selected at all
+      QScrollBar* const vBar = Doc->verticalScrollBar();
+      if(up) {
+        if(Doc->scrollUp(vBar->singleStep())) {
+          vBar->setValue(vBar->value() - vBar->singleStep());
+        }
+      }
+      else { // down
+        if(Doc->scrollDown(-vBar->singleStep())) {
+          vBar->setValue(vBar->value() + vBar->singleStep());
+        }
+      }
+    }
     Doc->viewport()->update();
     view->drawn = false;
     return;
-  }else{ // some random selection, put it back
+  }
+  else{ // some random selection, put it back
     view->moveElements(&movingElements, 0, ((up)?-1:1) * Doc->GridY);
     view->MAx3 = 1;  // sign for moved elements
     view->endElementMoving(Doc, &movingElements);
   }
+  */
 }
 
 // -----------------------------------------------------------
@@ -1161,9 +1243,11 @@ void QucsApp::slotApplyCompText()
   editText->setMinimumWidth(editText->fontMetrics().width(s)+4);
 
 
-  Doc->contentsToViewport(int(Doc->Scale * float(view->MAx1 - Doc->ViewX1)),
-			 int(Doc->Scale * float(view->MAy1 - Doc->ViewY1)),
-			 view->MAx2, view->MAy2);
+  TODO("Need to map contentsToViewport?");
+  /// \todo Doc->contentsToViewport(int(Doc->Scale * float(view->MAx1 - Doc->ViewX1)),
+  ///			 int(Doc->Scale * float(view->MAy1 - Doc->ViewY1)),
+  ///	 view->MAx2, view->MAy2);
+
   editText->setReadOnly(false);
   if(pp) {  // is it a property ?
     s = pp->Value;
@@ -1237,7 +1321,7 @@ void QucsApp::slotExportGraphAsCsv()
 
   for(;;) {
     if(view->focusElement)
-      if(view->focusElement->Type == isGraph)
+      if(view->focusElement->ElemType == isGraph)
         break;
 
     QMessageBox::critical(this, tr("Error"), tr("Please select a diagram graph!"));

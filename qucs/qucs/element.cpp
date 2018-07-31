@@ -18,17 +18,15 @@
 #include "element.h"
 
 Element::Element()
+	: cx(0), cy(0), x1(0), y1(0), x2(0), y2(0)
 {
-  Type = isDummyElement;
-  isSelected = false;
-  cx = cy = x1 = y1 = x2 = y2 = 0;
+  qDebug() << "Element::Element" << cx;
+  ElemType = isDummyElement;
+  ElemSelected = false;
+  drawScheme = false;
 }
 
 Element::~Element()
-{
-}
-
-void Element::paintScheme(Schematic *)
 {
 }
 
@@ -42,4 +40,14 @@ void Element::setCenter(int, int, bool)
 
 void Element::getCenter(int&, int&)
 {
+}
+
+QRectF Element::boundingRect() const
+{
+  return QRectF(x1, y1, x2-x1, y2-y1);
+}
+
+void Element::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
+{
+	//BUG?
 }

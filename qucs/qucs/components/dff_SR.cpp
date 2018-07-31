@@ -21,7 +21,7 @@
 
 dff_SR::dff_SR()
 {
-  Type = isComponent; // Analogue and digital component.
+  ElemType = isComponent; // Analogue and digital component.
   Description = QObject::tr ("D flip flop with set and reset verilog device");
 
   Props.append (new Property ("TR_H", "6", false,

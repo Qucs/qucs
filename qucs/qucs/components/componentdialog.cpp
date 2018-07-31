@@ -176,8 +176,8 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
 
 
     if(Comp->obsolete_model_hack() == ".SW") {   // parameter sweep
-      for(ComponentList::const_iterator pi=Doc->components().begin(); pi!=Doc->components().end(); ++pi) {
-        Component const* pc=*pi;
+      Component *pc;
+      for(pc=Doc->Components->first(); pc!=0; pc=Doc->Components->next()) {
 	// insert all schematic available simulations in the Simulation combo box
         if(pc != Comp)
           if(pc->obsolete_model_hack()[0] == '.')
@@ -308,8 +308,13 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   prop->horizontalHeader()->setStretchLastSection(true);
   // set automatic resize so all content will be visible, 
   //  horizontal scrollbar will appear if table becomes too large
+#if QT_VERSION < 0x050000
   prop->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
   prop->horizontalHeader()->setClickable(false); // no action when clicking on the header 
+#else
+  prop->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+  prop->horizontalHeader()->setSectionsClickable(false); // no action when clicking on the header 
+#endif
 
   connect(prop->horizontalHeader(),SIGNAL(sectionDoubleClicked(int)),
               this, SLOT(slotHHeaderClicked(int)));
@@ -1488,6 +1493,3 @@ void ComponentDialog::enableButtons()
   ButtUp->setEnabled(true);
   ButtDown->setEnabled(true);
 }
-
-
-// vim:ts=8:sw=2:et

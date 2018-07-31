@@ -65,12 +65,10 @@ ImageWriter::noGuiPrint(QWidget *doc, QString printFile, QString color)
     svg1->setSize(QSize(1.12*w, h));
     QPainter *p = new QPainter(svg1);
     p->fillRect(0, 0, svg1->size().width(), svg1->size().height(), Qt::white);
-    ViewPainter *vp = new ViewPainter(p);
-    vp->init(p, 1.0, 0, 0, xmin-bourder/2, ymin-bourder/2, 1.0, 1.0);
 
-    sch->paintSchToViewpainter(vp,true,true);
+    sch->paintInit(p, 1.0, 0, 0, xmin-bourder/2, ymin-bourder/2, 1.0, 1.0);
+    sch->paintSchToViewpainter(p,true,true);
 
-    delete vp;
     delete p;
     delete svg1;
 
@@ -102,14 +100,12 @@ ImageWriter::noGuiPrint(QWidget *doc, QString printFile, QString color)
 
     QPainter* p = new QPainter(img);
     p->fillRect(0, 0, w, h, Qt::white);
-    ViewPainter* vp = new ViewPainter(p);
-    vp->init(p, scal, 0, 0, xmin*scal-bourder/2, ymin*scal-bourder/2, scal,scal);
 
-    sch->paintSchToViewpainter(vp,true,true);
+    sch->paintInit(p, scal, 0, 0, xmin*scal-bourder/2, ymin*scal-bourder/2, scal,scal);
+    sch->paintSchToViewpainter(p,true,true);
 
     img->save(printFile);
 
-    delete vp;
     delete p;
     delete img;
   } else {
@@ -204,15 +200,12 @@ int ImageWriter::print(QWidget *doc)
 
         QPainter* p = new QPainter(img);
         p->fillRect(0, 0, w, h, Qt::white);
-        ViewPainter* vp = new ViewPainter(p);
-        vp->init(p, scal, 0, 0, 
-            xmin*scal-border/2, ymin*scal-border/2, scal, scal);
 
-        sch->paintSchToViewpainter(vp, exportAll, true);
+        sch->paintInit(p, scal, 0, 0, xmin*scal-border/2, ymin*scal-border/2, scal, scal);
+        sch->paintSchToViewpainter(p, exportAll, true);
 
         img->save(filename);
 
-        delete vp;
         delete p;
         delete img;
       } 
@@ -230,11 +223,9 @@ int ImageWriter::print(QWidget *doc)
         QPainter *p = new QPainter(svgwriter);
         p->fillRect(0, 0, svgwriter->size().width(), svgwriter->size().height(), Qt::white);
 
-        ViewPainter *vp = new ViewPainter(p);
-        vp->init(p, 1.0, 0, 0, xmin-border/2, ymin-border/2, 1.0, 1.0);
-        sch->paintSchToViewpainter(vp,exportAll,true);
+        sch->paintInit(p, 1.0, 0, 0, xmin-border/2, ymin-border/2, 1.0, 1.0);
+        sch->paintSchToViewpainter(p,exportAll,true);
 
-        delete vp;
         delete p;
         delete svgwriter;
 
@@ -295,7 +286,7 @@ void ImageWriter::getSchWidthAndHeight(Schematic *sch, int &w, int &h, int &xmin
     h = abs(ymax - ymin);
 
     int f_w, f_h;
-    if (sch->sizeOfFrame(f_w,f_h)) {
+    if (sch->schematicFrame->sizeOfFrame(f_w,f_h)) {
         xmin = std::min(0,xmin); // For components
         ymin = std::min(0,ymin); // that fall out of frame
         w = abs(std::max(f_w,sch->UsedX2) - xmin);
@@ -311,7 +302,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
         ymax= INT_MIN;
 
      for(Component *pc = sch->Components->first(); pc != 0; pc = sch->Components->next()) {
-         if (pc->isSelected) {
+         if (pc->ElemSelected) {
            int x1,y1,x2,y2;
            pc->entireBounds(x1,y1,x2,y2,sch->textCorr());
            updateMinMax(xmin,xmax,ymin,ymax,x1,x2,y1,y2);
@@ -320,7 +311,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
 
     for(Wire *pw = sch->Wires->first(); pw != 0; pw = sch->Wires->next()) {
 
-        if (pw->isSelected) {
+        if (pw->ElemSelected) {
             if(pw->x1 < xmin) xmin = pw->x1;
             if(pw->x2 > xmax) xmax = pw->x2;
             if(pw->y1 < ymin) ymin = pw->y1;
@@ -329,7 +320,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
         }
         if (pw->Label) {
           WireLabel *pl = pw->Label;
-          if (pl->isSelected) {
+          if (pl->ElemSelected) {
             int x1,y1,x2,y2;
             pl->getLabelBounding(x1,y1,x2,y2);
             qDebug()<<x1<<y1<<x2<<y2;
@@ -341,7 +332,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
     for(Node *pn = sch->Nodes->first(); pn != 0; pn = sch->Nodes->next()) {
         WireLabel *pl = pn->Label;
         if(pl) {     // check position of node label
-            if (pl->isSelected) {
+            if (pl->ElemSelected) {
                 int x1,x2,y1,y2;
                 pl->getLabelBounding(x1,y1,x2,y2);
                 if(x1 < xmin) xmin = x1;
@@ -356,14 +347,14 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
 
 
 
-        if (pd->isSelected) {
+        if (pd->ElemSelected) {
             int x1,y1,x2,y2;
             pd->Bounding(x1,y1,x2,y2);
             updateMinMax(xmin,xmax,ymin,ymax,x1,x2,y1,y2);
 
             foreach (Graph *pg, pd->Graphs) {
                 foreach (Marker *pm, pg->Markers) {
-                    if (pm->isSelected) {
+                    if (pm->ElemSelected) {
                         int x1,y1,x2,y2;
                         pm->Bounding(x1,y1,x2,y2);
                         updateMinMax(xmin,xmax,ymin,ymax,x1,x2,y1,y2);
@@ -375,7 +366,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
 
     for(Painting *pp = sch->Paintings->first(); pp != 0; pp = sch->Paintings->next()) {
 
-       if (pp->isSelected) {
+       if (pp->ElemSelected) {
            int x1,y1,x2,y2;
            pp->Bounding(x1,y1,x2,y2);
            updateMinMax(xmin,xmax,ymin,ymax,x1,x2,y1,y2);

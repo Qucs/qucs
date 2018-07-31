@@ -18,17 +18,19 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include <Q3PtrList>
-
 #include "element.h"
+#include "qt_compat.h"
 
 class Schematic;
-class ViewPainter;
 class QString;
 class QPen;
 class ComponentDialog;
 
 class Component : public Element {
+public:
+	enum{
+		isComponent = 0x30000
+	};
 public:
   Component();
   virtual ~Component() {};
@@ -38,9 +40,15 @@ public:
   QString getNetlist();
   QString get_VHDL_Code(int);
   QString get_Verilog_Code(int);
-  void    paint(ViewPainter*);
-  void    paintScheme(Schematic*);
-  void    print(ViewPainter*, float);
+
+  QRectF  boundingRect() const;
+  void    paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
+  void    paintScheme(QPainter* painter);
+  void    print(QPainter*, float);
+
+  void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+  void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
   int     textSize(int&, int&);
@@ -52,6 +60,10 @@ public:
   void    mirrorX();  // mirror about X axis
   void    mirrorY();  // mirror about Y axis
   bool    load(const QString&);
+
+  /// \todo remove temporary stuff
+  // default pen used to draw the bounding box
+  QPen boundingBoxColor = QPen(Qt::magenta,1);
 
   // to hold track of the component appearance for saving and copying
   bool mirroredX;   // is it mirrored about X axis or not

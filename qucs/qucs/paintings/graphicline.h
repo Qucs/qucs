@@ -27,9 +27,10 @@ class GraphicLine : public Painting  {
 public:
   GraphicLine(int cx_=0, int cy_=0, int x2_=0, int y2_=0,
               QPen Pen_=QPen(QColor()));
- ~GraphicLine();
+  virtual ~GraphicLine() {}
 
-  void paintScheme(Schematic*);
+  QRectF boundingRect() const;
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
@@ -39,7 +40,6 @@ public:
   QString save();
   QString saveCpp();
   QString saveJSON();
-  void paint(ViewPainter*);
   void MouseMoving(Schematic*, int, int, int, int, Schematic*, int, int, bool);
   bool MousePressing();
   bool getSelected(float, float, float);
@@ -53,6 +53,8 @@ public:
   bool Dialog();
 
   QPen   Pen;
+
+  int ex, ey; // used to track position of mouse move event
 };
 
 #endif

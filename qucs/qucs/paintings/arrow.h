@@ -26,10 +26,11 @@
 class Arrow : public Painting  {
 public:
   Arrow();
- ~Arrow();
+  virtual ~Arrow() {}
 
-  void paint(ViewPainter*);
-  void paintScheme(Schematic*);
+  QRectF boundingRect() const;
+
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
@@ -58,6 +59,8 @@ public:
   double Height, Width;  // size of the arrow head
   double Length, beta;
   int    xp1, yp1, xp2, yp2;   // coordinates to paint the arrow head
+
+  int ex, ey; // used to track position of mouse move event
 };
 
 #endif

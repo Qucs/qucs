@@ -15,8 +15,14 @@
  *                                                                         *
  ***************************************************************************/
 
-
 #include "transferfuncdialog.h"
+
+#include <QLabel>
+#include <QTableWidget>
+#include <QPushButton>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+
 
 TransferFuncDialog::TransferFuncDialog(QVector<long double> &a, QVector<long double> &b, QWidget *parent) :
     QDialog(parent)

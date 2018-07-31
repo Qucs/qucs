@@ -16,7 +16,6 @@
  ***************************************************************************/
 #include "qucs.h"
 #include "mnemo.h"
-#include "viewpainter.h"
 #include "graphictext.h"
 #include "graphictextdialog.h"
 #include "schematic.h"
@@ -32,7 +31,7 @@
 GraphicText::GraphicText()
 {
   Name = "Text ";
-  isSelected = false;
+  ElemSelected = false;
   Color = QColor(0,0,0);
   Font = QucsSettings.font;
   cx = cy = 0;
@@ -41,66 +40,65 @@ GraphicText::GraphicText()
   Angle = 0;
 }
 
-GraphicText::~GraphicText()
+
+QRectF GraphicText::boundingRect() const
 {
+  return QRectF(cx, cy, x2, -y2);
 }
 
-// -----------------------------------------------------------------------
-void GraphicText::paint(ViewPainter *p)
+void GraphicText::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
+
+  if(drawScheme) {
+    painter->drawLine(ex+x1+15, ey+y1+15, ex+x1+20, ey+y1);
+    painter->drawLine(ex+x1+26, ey+y1+15, ex+x1+21, ey+y1);
+    painter->drawLine(ex+x1+17, ey+y1+8,  ex+x1+23, ey+y1+8);
+  }
+
+  /// \todo finish porting of GraphicText::paint
   // keep track of painter state
-  p->Painter->save();
+  //p->Painter->save();
 
-  QMatrix wm = p->Painter->worldMatrix();
-  QMatrix Mat(1.0, 0.0, 0.0, 1.0, p->DX + float(cx) * p->Scale,
-				   p->DY + float(cy) * p->Scale);
-  p->Painter->setWorldMatrix(Mat);
-  p->Painter->rotate(-Angle);   // automatically enables transformation
+  //QMatrix wm = p->Painter->worldMatrix();
+  //QMatrix Mat(1.0, 0.0, 0.0, 1.0, p->DX + float(cx) * p->Scale,
+  //                                 p->DY + float(cy) * p->Scale);
+  //p->Painter->setWorldMatrix(Mat);
+  //p->Painter->rotate(-Angle);   // automatically enables transformation
 
-  int Size = Font.pointSize();
-  Font.setPointSizeF( p->FontScale * float(Size) );
+  //int Size = Font.pointSize();
+  //Font.setPointSizeF( p->FontScale * float(Size) );
 
-  QFont f = p->Painter->font();
-  p->Painter->setPen(Color);
-  p->Painter->setFont(Font);
+  //QFont f = p->Painter->font();
+  //p->Painter->setPen(Color);
+  //p->Painter->setFont(Font);
 
   // Because of a bug in Qt 3.1, drawing this text is dangerous, if it
   // contains linefeeds. Qt has problems with linefeeds. It remembers the
   // last font metrics (within the font ???) and does not calculate it again.
   // The error often appears at a very different drawText function !!!
-  int w, h;
-  w = p->drawTextMapped(Text, 0, 0, &h);
+  // int w, h;
+  //w = p->drawTextMapped(Text, 0, 0, &h);
+  painter->drawText(cx,cy,Text);
 
-  if(isSelected) {
-    p->Painter->setPen(QPen(Qt::darkGray,3));
-    p->Painter->drawRect(-3, -2, w+6, h+5);
+  if(isSelected()) {
+    painter->setPen(QPen(Qt::darkGray,3));
+    //painter->drawRect(-3, -2, w+6, h+5);
+    painter->drawRect(boundingRect());
+
   }
 
-  Font.setPointSize(Size);   // restore real font size
-  p->Painter->setWorldMatrix(wm);
-  p->Painter->setWorldMatrixEnabled(false);
+  //Font.setPointSize(Size);   // restore real font size
+  //p->Painter->setWorldMatrix(wm);
+  //p->Painter->setWorldMatrixEnabled(false);
 
   // restore painter state
-  p->Painter->restore();
+  //p->Painter->restore();
 
-  x2 = int(float(w) / p->Scale);
-  y2 = int(float(h) / p->Scale);
-  p->Painter->setFont(f);
+  //x2 = int(float(w) / p->Scale);
+  //y2 = int(float(h) / p->Scale);
+  //p->Painter->setFont(f);
 }
 
-// -----------------------------------------------------------------------
-void GraphicText::paintScheme(Schematic *p)
-{
-  // FIXME #warning QMatrix wm = p->worldMatrix();
-  // FIXME #warning QMatrix Mat (wm.m11(), 0.0, 0.0, wm.m22(),
-// FIXME #warning 		wm.dx() + double(cx) * wm.m11(),
-// FIXME #warning 		wm.dy() + double(cy) * wm.m22());
-  // FIXME #warning p->setWorldMatrix(Mat);
-  // FIXME #warning p->rotate(-Angle);
-  p->PostPaintEvent(_Rect, 0, 0, x2, y2);
-
-  // FIXME #warning p->setWorldMatrix(wm);
-}
 
 // ------------------------------------------------------------------------
 void GraphicText::getCenter(int& x, int &y)
@@ -223,20 +221,15 @@ void GraphicText::MouseMoving(
 	Schematic*, int, int, int gx, int gy,
 	Schematic *p, int x, int y, bool drawn)
 {
-  // FIXME #warning p->setPen(Qt::SolidLine);
-  if(drawn) {
-    p->PostPaintEvent(_Line, x1+15, y1+15, x1+20, y1,0,0,true);  // erase old cursor symbol
-    p->PostPaintEvent(_Line, x1+26, y1+15, x1+21, y1,0,0,true);
-    p->PostPaintEvent(_Line, x1+17, y1+8,  x1+23, y1+8,0,0,true);
-  }
-  x1 = x;
-  y1 = y;
-  p->PostPaintEvent(_Line, x1+15, y1+15, x1+20, y1,0,0,true);  // paint new cursor symbol
-  p->PostPaintEvent(_Line, x1+26, y1+15, x1+21, y1,0,0,true);
-  p->PostPaintEvent(_Line, x1+17, y1+8,  x1+23, y1+8,0,0,true);
+  ///\todo x1 = x;
+  //y1 = y;
 
   cx = gx;
   cy = gy;
+
+  // track mouse move event to show scheme
+  ex = x;
+  ey = y;
 }
 
 // ------------------------------------------------------------------------

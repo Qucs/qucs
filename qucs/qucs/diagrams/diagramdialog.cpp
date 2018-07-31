@@ -106,9 +106,12 @@ static const int NumDefaultColors = 8;
 
 
 DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
-                    : QDialog(parent, Qt::WDestructiveClose)
+                    : QDialog(parent)
 {
+  setAttribute(Qt::WA_DeleteOnClose);
+
   Diag = d;
+  setAttribute(Qt::WA_DeleteOnClose);
   Graphs.setAutoDelete(true);
   copyDiagramGraphs();   // make a copy of all graphs
   if(parent){
@@ -290,7 +293,11 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     ChooseVars = new QTableWidget(1, 3);
     ChooseVars->verticalHeader()->setVisible(false);
     ChooseVars->horizontalHeader()->setStretchLastSection(true);
+#if QT_VERSION < 0x050000
     ChooseVars->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+#else
+    ChooseVars->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+#endif
     // make sure sorting is disabled before inserting items
     ChooseVars->setSortingEnabled(false);
     ChooseVars->horizontalHeader()->setSortIndicatorShown(true);

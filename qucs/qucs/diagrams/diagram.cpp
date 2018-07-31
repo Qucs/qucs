@@ -84,9 +84,13 @@ Diagram::Diagram(int _cx, int _cy)
   rotZ = 225;
   hideLines = true;  // hide invisible lines
 
-  Type = isDiagram;
-  isSelected = false;
+  ElemType = isDiagram;
+  ElemSelected = false;
   GridPen = QPen(Qt::lightGray,0);
+
+  incomplete();
+  // setFlags(ItemIsSelectable|ItemIsMovable);
+  // setAcceptHoverEvents(true);
 }
 
 Diagram::~Diagram()
@@ -95,84 +99,123 @@ Diagram::~Diagram()
   freq= nullptr;
 }
 
+/// see bounding
+QRectF Diagram::boundingRect() const
+{
+  int _x1 = cx - Bounding_x1;
+  int _y1 = cy - y2 - Bounding_y2;
+  int _x2 = cx + x2 + Bounding_x2;
+  int _y2 = cy - Bounding_y1;
+  return QRectF( _x1, _y1, _x2 - _x1, _y2 - _y1);
+}
+
 /*!
    Paint function for most diagrams (cartesian, smith, polar, ...)
 */
-void Diagram::paint(ViewPainter *p)
+void Diagram::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
-    paintDiagram(p);
-    paintMarkers(p);
-}
+  Q_UNUSED(item);
+  Q_UNUSED(widget);
 
-void Diagram::paintDiagram(ViewPainter *p)
-{
-    // paint all lines
-    foreach(Line *pl, Lines) {
-      p->Painter->setPen(pl->style);
-      p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
-    }
-
-    // paint all arcs (1 pixel larger to compensate for strange circle method)
-    foreach(Arc *pa, Arcs) {
-      p->Painter->setPen(pa->style);
-      p->drawArc(cx+pa->x, cy-pa->y, pa->w, pa->h, pa->angle, pa->arclen);
-    }
-
-    // draw all graphs
-  foreach(Graph *pg, Graphs)
-  {
-      pg->paint(p, cx, cy);
+  // outline on insert mode
+  if(drawScheme) {
+    painter->drawRect(cx, cy-y2, x2, y2);
+    return;
   }
-    // keep track of painter state
-    p->Painter->save();
 
-    // write whole text (axis label inclusively)
-    QMatrix wm = p->Painter->worldMatrix();
-    foreach(Text *pt, Texts) {
-      p->Painter->setWorldMatrix(
-          QMatrix(pt->mCos, -pt->mSin, pt->mSin, pt->mCos,
-                   p->DX + float(cx+pt->x) * p->Scale,
-                   p->DY + float(cy-pt->y) * p->Scale));
+  paintDiagram(painter);
+  paintMarkers(painter);
 
-      p->Painter->setPen(pt->Color);
-      p->Painter->drawText(QPoint(0, 0), pt->s);
-    }
-    p->Painter->setWorldMatrix(wm);
-    p->Painter->setWorldMatrixEnabled(false);
+#ifdef QT_DEBUG
+  painter->setPen(QPen(Qt::darkMagenta,1));
+  painter->drawRect(boundingRect());
+#endif
 
-    // restore painter state
-    p->Painter->restore();
-
-
-    if(isSelected) {
-      int x_, y_;
-      float fx_, fy_;
-      p->map(cx, cy-y2, x_, y_);
-      fx_ = float(x2)*p->Scale + 10;
-      fy_ = float(y2)*p->Scale + 10;
-
-      p->Painter->setPen(QPen(Qt::darkGray,3));
-      p->Painter->drawRect(x_-5, y_-5, TO_INT(fx_), TO_INT(fy_));
-      p->Painter->setPen(QPen(Qt::darkRed,2));
-      p->drawResizeRect(cx, cy-y2);  // markers for changing the size
-      p->drawResizeRect(cx, cy);
-      p->drawResizeRect(cx+x2, cy-y2);
-      p->drawResizeRect(cx+x2, cy);
-    }
 }
 
-void Diagram::paintMarkers(ViewPainter *p, bool paintAll)
+void Diagram::paintDiagram(QPainter *painter)
 {
+  // paint all lines
+  foreach(Line *pl, Lines) {
+    QPen pen(pl->style);
+    pen.setCosmetic(true); // do not scale thickness
+    painter->setPen(pen);
+    painter->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
+  }
+
+  // paint all arcs
+  foreach(Arc *pa, Arcs) {
+    QPen pen(pa->style);
+    pen.setCosmetic(true); // do not scale thickness
+    painter->setPen(pen);
+    painter->drawArc(cx+pa->x, cy-pa->y, pa->w, pa->h, pa->angle, pa->arclen);
+  }
+
+  // draw all graphs
+  foreach(auto& pp, Graphs) {
+	  auto pg=*pp;
+#ifdef QT_DEBUG
+    //
+    painter->setPen(QPen(Qt::darkGreen,2));
+    painter->drawLine(cx-20,cy,cx+20,cy);
+    painter->drawLine(cx,cy-20,cx,cy+20);
+#endif
+    // set Diagram as parent of Graph, parent takes care of paint
+	 incomplete();
+    // pg->setParentItem(this);
+  }
+
+  /// \todo text rotation
+  // keep track of painter state
+  //painter->Painter->save();
+
+  // write whole text (axis label inclusively)
+  //QMatrix wm = painter->Painter->worldMatrix();
+  foreach(Text *pt, Texts) {
+    //qDebug() << "Diagram Texts" << pt->s << pt->mCos << pt->mSin << pt->x << pt->y;
+    /*
+    painter->Painter->setWorldMatrix(
+        QMatrix(pt->mCos, -pt->mSin, pt->mSin, pt->mCos,
+                 painter->DX + float(cx+pt->x) * painter->Scale,
+                 painter->DY + float(cy-pt->y) * painter->Scale));
+*/
+    painter->setPen(pt->Color);
+    painter->drawText(cx+pt->x, cy-pt->y, pt->s);
+  }
+  //painter->Painter->setWorldMatrix(wm);
+  //painter->Painter->setWorldMatrixEnabled(false);
+
+  // restore painter state
+  //painter->Painter->restore();
+
+  if (isSelected()) {
+    // draw component bounding box
+    painter->setPen(QPen(Qt::darkGray,3));
+    painter->drawRoundedRect(boundingRect(), 5.0, 5.0);
+
+    /// \todo Draw outline and resize handles
+    // See:
+    // - http://www.davidwdrell.net/wordpress/?page_id=46
+    // - https://forum.qt.io/topic/7776/resize-a-qgraphicsitem-into-a-qgraphicsscene/2
+    painter->setPen(QPen(Qt::darkGray,3));
+    painter->drawRect(cx-5, cy-y2-5, x2+10, y2+10);
+    painter->setPen(QPen(Qt::darkRed,2));
+    painter->drawRect(cx-5,    cy-y2-5, 10, 10);  // markers for changing the size
+    painter->drawRect(cx-5,    cy-5,    10, 10);
+    painter->drawRect(cx+x2-5, cy-y2-5, 10, 10);
+    painter->drawRect(cx+x2-5, cy-5,    10, 10);
+  }
+}
+
+void Diagram::paintMarkers(QPainter *p, bool paintAll)
+{
+	incomplete();
+    /** \todo Diagram::paintMarkers
     // draw markers last, so they are at the top of painting layers
     foreach(Graph *pg, Graphs)
       foreach(Marker *pm, pg->Markers)
-          if ((pm->Type & 1)||paintAll) pm->paint(p, cx, cy);
-}
-
-// ------------------------------------------------------------
-void Diagram::paintScheme(Schematic *p)
-{
-  p->PostPaintEvent(_Rect, cx, cy-y2, x2, y2);
+          if ((pm->ElemType & 1)||paintAll) pm->paint(p, cx, cy);
+    */
 }
 
 /*!
@@ -349,6 +392,9 @@ Marker* Diagram::setMarker(int x, int y)
 	assert(pg->parentDiagram() == this);
 	Marker *pm = new Marker(pg, n, x-cx, y-cy);
 	pg->Markers.append(pm);
+	//set Diagram as parent of Marker, handle Marker::paint()
+	incomplete();
+	// pm->setParentItem(this);
 	return pm;
       }
     }
@@ -634,7 +680,7 @@ void Diagram::getAxisLimits(Graph *pg)
 {
   // FIXME: Graph should know the limits. but it doesn't yet.
   //        we should only copy here. better: just wrap, dont use {x,y,z}Axis
-  int z,i=0;
+  int z;
   double x, y, *p;
   QString var, find;
   DataX const *pD = pg->axis(0);
@@ -665,7 +711,7 @@ void Diagram::getAxisLimits(Graph *pg)
     }
   }
 
-  Axis *pa, *pA;
+  Axis *pa;
   if(pg->yAxisNo == 0)  pa = &yAxis;
   else  pa = &zAxis;
   (pa->numGraphs)++;    // count graphs
@@ -1384,6 +1430,9 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
 	return false;
       }
       pg->Markers.append(pm);
+      //set Diagram as parent of Marker, handle Marker::paint()
+		incomplete();
+      // pm->setParentItem(this);
       continue;
     }
 

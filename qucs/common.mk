@@ -32,3 +32,5 @@ SUFFIXES += .moc.cpp
 
 .h.moc.cpp:
 	$(MOC) -o $@ $<
+
+$(MOCFILES): $(top_builddir)/qt_version

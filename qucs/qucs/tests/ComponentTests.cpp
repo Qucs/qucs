@@ -24,13 +24,25 @@
 #include "ComponentTests.h"
 
 #include <QTest>
+#include <QDebug>
+
+class testComponent : public Component{
+public:
+	testComponent() : Component() {
+	}
+};
 
 void ComponentTests::testConstructor() {
-    Component *c = new Component();
-    QCOMPARE(c->Type, isAnalogComponent);
-    QCOMPARE(c->isSelected, false);
+    Component *c = new testComponent();
+	 qDebug() << "Comp" << c << c->elemType();
+    QCOMPARE(static_cast<int>( c->elemType() ),  isAnalogComponent );
+    QCOMPARE(c->ElemSelected, false);
     QCOMPARE(c->cx, 0);
     QCOMPARE(c->cy, 0);
 }
 
 QTEST_MAIN(ComponentTests)
+// int main(){
+// 	ComponentTests t;
+// 	t.testConstructor();
+// }

@@ -412,7 +412,7 @@ void QucsApp::initActions()
   magOne->setShortcut(Qt::Key_1);
   magOne->setStatusTip(tr("Views without magnification"));
   magOne->setWhatsThis(tr("View 1:1\n\nShows the page content without magnification"));
-  connect(magOne, SIGNAL(triggered()), SLOT(slotShowOne()));
+  connect(magOne, SIGNAL(triggered()), SLOT(slotZoomReset()));
 
   magPlus = new QAction(QIcon((":/bitmaps/viewmag+.png")),	tr("Zoom in"), this);
   magPlus->setShortcut(Qt::Key_Plus);

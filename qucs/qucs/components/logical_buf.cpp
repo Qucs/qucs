@@ -22,7 +22,7 @@
 
 Logical_Buf::Logical_Buf()
 {
-  Type = isComponent;   // both analog and digital
+  ElemType = isComponent;   // both analog and digital
   Description = QObject::tr("logical buffer");
 
   // the list order must be preserved !!!

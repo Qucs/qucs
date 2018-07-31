@@ -21,7 +21,7 @@
 
 comp_4bit::comp_4bit()
 {
-  Type = isComponent; // Analogue and digital component.
+  ElemType = isComponent; // Analogue and digital component.
   Description = QObject::tr ("4bit comparator verilog device");
 
   Props.append (new Property ("TR", "6", false,

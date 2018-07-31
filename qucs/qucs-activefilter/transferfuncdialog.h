@@ -20,6 +20,12 @@
 
 #include <QWidget>
 #include <QtGui>
+#include <QDialog>
+
+class QTableWidget;
+class QHBoxLayout;
+class QVBoxLayout;
+class QLabel;
 
 class TransferFuncDialog : public QDialog
 {

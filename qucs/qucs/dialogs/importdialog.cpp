@@ -98,7 +98,9 @@ ImportDialog::ImportDialog(QWidget *parent)
 
 ImportDialog::~ImportDialog()
 {
-  if(Process.Running)  Process.kill();
+  if(Process.Running!=0){
+	  Process.kill();
+  }
   delete all;
 }
 

@@ -28,7 +28,7 @@
 Rectangle::Rectangle(bool _filled)
 {
   Name = "Rectangle ";
-  isSelected = false;
+  ElemSelected = false;
   Pen = QPen(QColor());
   Brush = QBrush(Qt::lightGray);
   filled = _filled;
@@ -37,38 +37,52 @@ Rectangle::Rectangle(bool _filled)
   y1 = y2 = 0;
 }
 
-Rectangle::~Rectangle()
+QRectF Rectangle::boundingRect() const
 {
+  return QRectF(cx+x1, cy+y1, x2-x1, y2-y1);
 }
 
-// --------------------------------------------------------------------------
-void Rectangle::paint(ViewPainter *p)
+void Rectangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
-  if(isSelected) {
-    p->Painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
-    if(filled)  p->Painter->setBrush(Brush);
-    p->drawRect(cx, cy, x2, y2);
-    p->Painter->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
-    p->Painter->setBrush(Qt::NoBrush);
-    p->drawRect(cx, cy, x2, y2);
-
-    p->Painter->setPen(QPen(Qt::darkRed,2));
-    p->drawResizeRect(cx, cy+y2);  // markers for changing the size
-    p->drawResizeRect(cx, cy);
-    p->drawResizeRect(cx+x2, cy+y2);
-    p->drawResizeRect(cx+x2, cy);
+  // paint mouse decoration
+  if(drawScheme) {
+    painter->drawRect(ex+13, ey, 18, 12);
+    if(filled) {   // hatched ?
+      painter->drawLine(ex+14, ey+6, ex+19, ey+1);
+      painter->drawLine(ex+26, ey+1, ex+17, ey+10);
+      painter->drawLine(ex+29, ey+5, ex+24, ey+10);
+    }
+    // preview rectangle after first press
+    if(State == 1) {
+      painter->drawRect(x1, y1, x2-x1, y2-y1);
+      return;
+    }
     return;
   }
-  p->Painter->setPen(Pen);
-  if(filled)  p->Painter->setBrush(Brush);
-  p->drawRect(cx, cy, x2, y2);
-  p->Painter->setBrush(Qt::NoBrush); // no filling for the next paintings
-}
 
-// --------------------------------------------------------------------------
-void Rectangle::paintScheme(Schematic *p)
-{
-  p->PostPaintEvent(_Rect, cx, cy, x2, y2);
+
+  if(isSelected()) {
+    painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
+    if(filled)
+      painter->setBrush(Brush);
+    painter->drawRect(cx, cy, x2, y2);
+    painter->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
+    painter->setBrush(Qt::NoBrush);
+    painter->drawRect(cx, cy, x2, y2);
+
+    painter->setPen(QPen(Qt::darkRed,2));
+    painter->drawRect(cx-5,    cy+y2-5, 10, 10);  // markers for changing the size
+    painter->drawRect(cx-5,    cy-5,    10, 10);
+    painter->drawRect(cx+x2-5, cy+y2-5, 10, 10);
+    painter->drawRect(cx+x2-5, cy-5,    10, 10);
+    return;
+  }
+
+  painter->setPen(Pen);
+  if(filled)
+    painter->setBrush(Brush);
+  painter->drawRect(cx, cy, x2, y2);
+  painter->setBrush(Qt::NoBrush); // no filling for the next paintings
 }
 
 // --------------------------------------------------------------------------
@@ -89,7 +103,9 @@ void Rectangle::setCenter(int x, int y, bool relative)
 // --------------------------------------------------------------------------
 Painting* Rectangle::newOne()
 {
-  return new Rectangle();
+  Rectangle* newOne = new Rectangle();
+  newOne->filled = filled;
+  return newOne;
 }
 
 // --------------------------------------------------------------------------
@@ -237,7 +253,6 @@ bool Rectangle::resizeTouched(float fX, float fY, float len)
 // Mouse move action during resize.
 void Rectangle::MouseResizeMoving(int x, int y, Schematic *p)
 {
-  paintScheme(p);  // erase old painting
   switch(State) {
     case 0: x2 = x-cx; y2 = y-cy; // lower right corner
 	    break;
@@ -250,8 +265,6 @@ void Rectangle::MouseResizeMoving(int x, int y, Schematic *p)
   }
   if(x2 < 0) { State ^= 1; x2 *= -1; cx -= x2; }
   if(y2 < 0) { State ^= 2; y2 *= -1; cy -= y2; }
-
-  paintScheme(p);  // paint new painting
 }
 
 // --------------------------------------------------------------------------
@@ -261,34 +274,18 @@ void Rectangle::MouseMoving(
 	Schematic *paintScale, int, int, int gx, int gy,
 	Schematic *p, int x, int y, bool drawn)
 {
-  if(State > 0) {
-    if(State > 1)
-      paintScale->PostPaintEvent(_Rect,x1, y1, x2-x1, y2-y1);  // erase old painting
-    State++;
+  if(State > 0) { // after first press
     x2 = gx;
     y2 = gy;
-    paintScale->PostPaintEvent(_Rect,x1, y1, x2-x1, y2-y1);  // paint new rectangle
   }
   else { x2 = gx; y2 = gy; }
 
-
-  // FIXME #warning p->setPen(Qt::SolidLine);
-  if(drawn) {
-    p->PostPaintEvent(_Rect, cx+13, cy, 18, 12,0,0,true);  // erase old cursor symbol
-    if(filled) {   // hatched ?
-      p->PostPaintEvent(_Line, cx+14, cy+6, cx+19, cy+1,0,0,true);
-      p->PostPaintEvent(_Line, cx+26, cy+1, cx+17, cy+10,0,0,true);
-      p->PostPaintEvent(_Line, cx+29, cy+5, cx+24, cy+10,0,0,true);
-    }
-  }
   cx = x;
   cy = y;
-  p->PostPaintEvent(_Rect,cx+13, cy, 18, 12,0,0,true);  // paint new cursor symbol
-  if(filled) {   // hatched ?
-    p->PostPaintEvent(_Line, cx+14, cy+6, cx+19, cy+1,0,0,true);
-    p->PostPaintEvent(_Line, cx+26, cy+1, cx+17, cy+10,0,0,true);
-    p->PostPaintEvent(_Line, cx+29, cy+5, cx+24, cy+10,0,0,true);
-  }
+
+  // track mouse move event to show scheme
+  ex = x;
+  ey = y;
 }
 
 // --------------------------------------------------------------------------
@@ -299,7 +296,7 @@ bool Rectangle::MousePressing()
     x1 = x2;
     y1 = y2;    // first corner is determined
   }
-  else {
+  else if(State == 2){
     if(x1 < x2) { cx = x1; x2 = x2-x1; } // cx/cy to upper left corner
     else { cx = x2; x2 = x1-x2; }
     if(y1 < y2) { cy = y1; y2 = y2-y1; }

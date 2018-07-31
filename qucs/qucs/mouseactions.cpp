@@ -19,6 +19,9 @@
 #include "qucs.h"
 #include "node.h"
 #include "schematic.h"
+#include "element.h" // HMM. move graphicsElement to schematicscene?
+#include "schematicscene.h"
+#include "misc.h"
 #include "mouseactions.h"
 #include "module.h"
 #include "components/component.h"
@@ -34,7 +37,7 @@
 #include "dialogs/labeldialog.h"
 
 #include <QTextStream>
-#include <Q3PtrList>
+#include "qt_compat.h"
 #include <QMouseEvent>
 #include <QClipboard>
 #include <QApplication>
@@ -48,14 +51,6 @@
 #include <limits.h>
 #include <stdlib.h>
 
-
-#define  DOC_X_POS(x)  (int(float(x)/Doc->Scale) + Doc->ViewX1)
-#define  DOC_Y_POS(y)  (int(float(y)/Doc->Scale) + Doc->ViewY1)
-#define  DOC_X_FPOS    (float(Event->pos().x())/Doc->Scale + float(Doc->ViewX1))
-#define  DOC_Y_FPOS    (float(Event->pos().y())/Doc->Scale + float(Doc->ViewY1))
-
-#define  SCR_X_POS(x)  int(float(x - Doc->ViewX1) * Doc->Scale)
-#define  SCR_Y_POS(y)  int(float(y - Doc->ViewY1) * Doc->Scale)
 
 QAction *formerAction;   // remember action before drag n'drop etc.
 
@@ -82,19 +77,6 @@ MouseActions::~MouseActions()
 }
 
 // -----------------------------------------------------------
-void MouseActions::setPainter(Schematic *Doc)
-{
-  // contents to viewport transformation
-
-  Doc->PostPaintEvent(_Translate,-Doc->contentsX(), -Doc->contentsY());
-  Doc->PostPaintEvent(_Scale,Doc->Scale, Doc->Scale);
-  Doc->PostPaintEvent(_Translate,-Doc->ViewX1, -Doc->ViewY1);
-  Doc->PostPaintEvent(_DotLine);
-  Doc->PostPaintEvent(_NotRop);
-
-}
-
-// -----------------------------------------------------------
 bool MouseActions::pasteElements(Schematic *Doc)
 {
   QClipboard *cb = QApplication::clipboard();   // get system clipboard
@@ -109,7 +91,7 @@ bool MouseActions::pasteElements(Schematic *Doc)
   xmax = ymax = INT_MIN;
   // First, get the max and min coordinates of all selected elements.
   for(pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
-    if(pe->Type == isWire) {
+    if(pe->ElemType == isWire) {
       if(pe->x1 < xmin) xmin = pe->x1;
       if(pe->x2 > xmax) xmax = pe->x2;
       if(pe->y1 < ymin) ymin = pe->y1;
@@ -129,7 +111,7 @@ bool MouseActions::pasteElements(Schematic *Doc)
 
   // moving with mouse cursor in the midpoint
   for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
-    if(pe->Type & isLabel) {
+    if(pe->ElemType & isLabel) {
       pe->cx += xmin;  pe->x1 += xmin;
       pe->cy += ymin;  pe->y1 += ymin;
     }
@@ -181,7 +163,7 @@ void MouseActions::endElementMoving(Schematic *Doc, Q3PtrList<Element> *movEleme
   Element *pe;
   for(pe = movElements->first(); pe!=0; pe = movElements->next()) {
 //    pe->isSelected = false;  // deselect first (maybe afterwards pe == NULL)
-    switch(pe->Type) { // FIXME: use casts.
+    switch(pe->ElemType) { // FIXME: use casts.
       case isWire:
         if(pe->x1 == pe->x2)
           if(pe->y1 == pe->y2) {
@@ -202,7 +184,7 @@ void MouseActions::endElementMoving(Schematic *Doc, Q3PtrList<Element> *movEleme
       case isPainting:
 	Doc->Paintings->append((Painting*)pe);
 	break;
-      case isComponent:
+      case isComponent_:
       case isAnalogComponent:
       case isDigitalComponent:
 	Doc->insertRawComponent((Component*)pe, false);
@@ -236,7 +218,7 @@ void MouseActions::moveElements(Q3PtrList<Element> *movElements, int x, int y)
   Wire *pw;
   Element *pe;
   for(pe = movElements->first(); pe != 0; pe = movElements->next()) {
-    if(pe->Type == isWire) {
+    if(pe->ElemType == isWire) {
       pw = (Wire*)pe;   // connected wires are not moved completely
 
       if(((uintptr_t)pw->Port1) > 3) {
@@ -268,54 +250,68 @@ void MouseActions::moveElements(Q3PtrList<Element> *movElements, int x, int y)
 // **********       Functions for serving mouse moving          **********
 // **********                                                   **********
 // ***********************************************************************
+
+/*!
+ * \brief MouseActions::MMoveElement
+ * \param Doc
+ * \param Event
+ *
+ * Event handler, an Element selected for insertion is moved
+ * on the View.
+ *
+ * Set the mouse decoration/cursor to represent the selElem.
+ * Motion snaps to grid points.
+ *
+ * selElem is an Element object, see QucsApp::slotSelectComponent and
+ * other similar slots.
+ *
+ * When mouse moves over the scene, the Element must be added and
+ * updated acordingly.
+ */
 void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
 {
   if(selElem == 0) return;
 
-//  qDebug() << "MMoveElement got selElem";
-
-  int x  = Event->pos().x();
-  int y  = Event->pos().y();
-  int fx = DOC_X_POS(x);
-  int fy = DOC_Y_POS(y);
-  int gx = fx;
-  int gy = fy;
+  QPointF pos = Doc->mapToScene(Event->pos());
+  int x = pos.x();
+  int y = pos.y();
+  int gx = x;
+  int gy = y;
   Doc->setOnGrid(gx, gy);
 
+  // while moving, add selElem only once to scene
+  if(!drawn) {
+//    GraphicsElement* ge=new GraphicsElement(selElem);
+    Doc->scene->addItem(selElem); // add it back?
+    drawn = true;
+    incomplete();
+    // selElem->drawScheme = true;
+  }
 
-  //QPainter painter(Doc->viewport());
-  setPainter(Doc);
-
-  if(selElem->Type == isPainting) {
-    Doc->PostPaintEvent (_NotRop, 0,0,0,0);
-    x -= Doc->contentsX();
-    y -= Doc->contentsY();
+  // Painting handle the tracking of the mouse movement
+  if(selElem->type() == isPainting) {
+    // propagate mouse move event
+    // it takes care of setCenter
     ((Painting*)selElem)->MouseMoving(Doc, x, y, gx, gy,
                                        Doc, x, y, drawn);
-    drawn = true;
-    Doc->viewport()->update();
     return;
-  }  // of "if(isPainting)"
+  }
 
-
-  // ********** it is a component or diagram
-  if(drawn) selElem->paintScheme(Doc); // erase old scheme
-  drawn = true;
-
-//  Component *comp = (Component*)selElem;
-  //qDebug() << "desc" << comp->Description << "gx" << gx << "gy" << gy;
-
+  // Default to Component or Diagram
+  // move Element with the cursor
   selElem->setCenter(gx, gy);
-  selElem->paintScheme(Doc); // paint scheme at new position
-  Doc->viewport()->update();
+
 }
+
 
 /**
  * @brief draws wire aiming cross on Document view
  * @param Doc - pointer to Schematics object
  * @param fx  - document x-coordinate of center
  * @param fy  - document x-coordinate of center
- */
+ *
+ *  \todo Move aim (crosshair) to separate class
+ *
 static void paintAim(Schematic *Doc, int fx,int fy){
 	//let we reserve couple of points at the edges of lines for some aesthetics,
 	//and visual check that our calculations has fit the widget window.
@@ -345,6 +341,7 @@ static void paintGhostLineV(Schematic *Doc, int fx, int fy, int fyy){
 	Doc->PostPaintEvent (_Line, fx-1, fy, fx-1, fyy);
 	Doc->PostPaintEvent (_Line, fx+1, fy, fx+1, fyy);
 }
+*/
 
 
 // -----------------------------------------------------------
@@ -355,10 +352,13 @@ static void paintGhostLineV(Schematic *Doc, int fx, int fy, int fyy){
  */
 void MouseActions::MMoveWire2(Schematic *Doc, QMouseEvent *Event)
 {
-  MAx2  = DOC_X_POS(Event->pos().x());
-  MAy2  = DOC_Y_POS(Event->pos().y());
+  TODO("check MMoveWire2");
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx2  = pos.x();
+  MAy2  = pos.y();
   Doc->setOnGrid(MAx2, MAy2);
-  paintAim(Doc,MAx2,MAy2); //let we paint aim cross
+  /// \todo paint aim
+  /*paintAim(Doc,MAx2,MAy2); //let we paint aim cross
 
   //because cross slightly masks a wire, let we make wire thicker
   //better to make it by increasing of pen, but here we cannot access
@@ -371,7 +371,7 @@ void MouseActions::MMoveWire2(Schematic *Doc, QMouseEvent *Event)
 	paintGhostLineH(Doc,MAx3,MAy3,MAx2);
 	paintGhostLineV(Doc,MAx2,MAy3,MAy2);
   }
-
+  */
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickWire2;
   Doc->viewport()->update();
 }
@@ -384,12 +384,14 @@ void MouseActions::MMoveWire2(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MMoveWire1(Schematic *Doc, QMouseEvent *Event)
 {
-  MAx3 = DOC_X_POS(Event->pos().x());
-  MAy3 = DOC_Y_POS(Event->pos().y());
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx3 = pos.x();
+  MAy3 = pos.y();
   Doc->setOnGrid(MAx3, MAy3);
-  paintAim(Doc,MAx3,MAy3);
-  MAx2 = DOC_X_POS(Doc->contentsX()+Doc->viewport()->width()-1-2);
-  MAx2 = DOC_Y_POS(Doc->contentsY()+Doc->viewport()->height()-1-2);
+  /// \todo paint aim
+  //paintAim(Doc,MAx3,MAy3);
+  //MAx2 = DOC_X_POS(Doc->contentsX()+Doc->viewport()->width()-1-2);
+  //MAx2 = DOC_Y_POS(Doc->contentsY()+Doc->viewport()->height()-1-2);
   Doc->viewport()->update();
 }
 
@@ -398,12 +400,16 @@ void MouseActions::MMoveWire1(Schematic *Doc, QMouseEvent *Event)
  * @brief MouseActions::MMoveSelect Paints a rectangle for select area.
  * @param Doc
  * @param Event
+ * Set size of selection box.
+ * Relative to first mouse press location stored in MAx1, MAy1.
+ * Box size is set on MAx2, MAy2.
  */
 void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
 {
   //qDebug() << "MMoveSelect " << "select area";
-  MAx2 = DOC_X_POS(Event->pos().x()) - MAx1;
-  MAy2 = DOC_Y_POS(Event->pos().y()) - MAy1;
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx2 = pos.x() - MAx1;
+  MAy2 = pos.y() - MAy1;
   if(isMoveEqual) {    // x and y size must be equal ?
     if(abs(MAx2) > abs(MAy2)) {
       if(MAx2<0) MAx2 = -abs(MAy2); else MAx2 = abs(MAy2);
@@ -411,31 +417,40 @@ void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
     else { if(MAy2<0) MAy2 = -abs(MAx2); else MAy2 = abs(MAx2); }
   }
 
-  Doc->PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);
+  TODO("draw selection ruberband");
 }
 
 // -----------------------------------------------------------
 void MouseActions::MMoveResizePainting(Schematic *Doc, QMouseEvent *Event)
 {
-  setPainter(Doc);
-
-  MAx1 = DOC_X_POS(Event->pos().x());
-  MAy1 = DOC_Y_POS(Event->pos().y());
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx1 = pos.x();
+  MAy1 = pos.y();
   Doc->setOnGrid(MAx1, MAy1);
   ((Painting*)focusElement)->MouseResizeMoving(MAx1, MAy1, Doc);
 }
 
-// -----------------------------------------------------------
-// Moves components by keeping the mouse button pressed.
+/*!
+ * \brief MouseActions::MMoveMoving
+ *  Moves components by keeping the mouse button pressed.
+ *
+ * \param Doc is a pointer to a Schematic
+ * \param Event is a QMouseEvent
+ *
+ *  Set Event to grid.
+ *  Copy elements being moved into a movingElements list.
+ *  Handle dx/dy of Wires (Nodes and Labels) in movingElements.
+ *  Handle center of other Elements in movingElements.
+ *  Set next Move and Release actions.
+ */
 void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
 {
-
-  setPainter(Doc);
-
-  MAx2 = DOC_X_POS(Event->pos().x());
-  MAy2 = DOC_Y_POS(Event->pos().y());
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx2 = pos.x();
+  MAy2 = pos.y();
 
   Doc->setOnGrid(MAx2, MAy2);
+  /// MAx1, MAy1 set on MPressSelect (?)
   MAx3 = MAx1 = MAx2 - MAx1;
   MAy3 = MAy1 = MAy2 - MAy1;
 
@@ -446,7 +461,7 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
   Wire *pw;
   // Changes the position of all moving elements by dx/dy
   for(Element *pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
-    if(pe->Type == isWire) {
+    if(pe->ElemType == isWire) {
       pw = (Wire*)pe;   // connecting wires are not moved completely
 
       if(((uintptr_t)pw->Port1) > 3) { pw->x1 += MAx1;  pw->y1 += MAy1; }
@@ -467,7 +482,7 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
     }
     else pe->setCenter(MAx1, MAy1, true);
 
-  pe->paintScheme(Doc);
+  /// \todo pe->paintScheme(Doc);
   }
 
   drawn = true;
@@ -482,15 +497,14 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
 // Moves components by keeping the mouse button pressed.
 void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
 {
-  setPainter(Doc);
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx2 = pos.x();
+  MAy2 = pos.y();
 
-  MAx2 = DOC_X_POS(Event->pos().x());
-  MAy2 = DOC_Y_POS(Event->pos().y());
-
-  Element *pe;
-  if(drawn) // erase old scheme
-    for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
-      pe->paintScheme(Doc);
+  //Element *pe;
+  //if(drawn) // erase old scheme
+    //for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
+      ///\todo pe->paintScheme(Doc);
 //      if(pe->Type == isWire)  if(((Wire*)pe)->Label)
 //        if(!((Wire*)pe)->Label->isSelected)
 //          ((Wire*)pe)->Label->paintScheme(&painter);
@@ -505,8 +519,8 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
   moveElements(&movingElements, MAx1, MAy1);  // moves elements by MAx1/MAy1
 
   // paint afterwards to avoid conflict between wire and label painting
-  for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
-    pe->paintScheme(Doc);
+  //for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
+    ///\ todo pe->paintScheme(Doc);
 //    if(pe->Type == isWire)  if(((Wire*)pe)->Label)
 //      if(!((Wire*)pe)->Label->isSelected)
 //        ((Wire*)pe)->Label->paintScheme(&painter);
@@ -523,8 +537,9 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MMovePaste(Schematic *Doc, QMouseEvent *Event)
 {
-  MAx1 = DOC_X_POS(Event->pos().x());
-  MAy1 = DOC_Y_POS(Event->pos().y());
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx1 = pos.x();
+  MAy1 = pos.y();
   moveElements(Doc,MAx1,MAy1);
   paintElementsScheme(Doc);
 
@@ -538,8 +553,9 @@ void MouseActions::MMovePaste(Schematic *Doc, QMouseEvent *Event)
 void MouseActions::MMoveScrollBar(Schematic *Doc, QMouseEvent *Event)
 {
   TabDiagram *d = (TabDiagram*)focusElement;
-  int x = DOC_X_POS(Event->pos().x());
-  int y = DOC_Y_POS(Event->pos().y());
+  QPointF pos = Doc->mapToScene(Event->pos());
+  int x = pos.x();
+  int y = pos.y();
 
   if(d->scrollTo(MAx2, x - MAx1, y - MAy1)) {
     Doc->setChanged(true, true, 'm'); // 'm' = only the first time
@@ -563,12 +579,12 @@ void MouseActions::MMoveScrollBar(Schematic *Doc, QMouseEvent *Event)
 */
 void MouseActions::MMoveDelete(Schematic *Doc, QMouseEvent *Event)
 {
-  MAx3  = DOC_X_POS(Event->pos().x());
-  MAy3  = DOC_Y_POS(Event->pos().y());
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx3 = pos.x();
+  MAy3 = pos.y();
 
-  // cannot draw on the viewport, it is displaced by the size of dock and toolbar
-  Doc->PostPaintEvent (_Line, MAx3-15, MAy3-15, MAx3+15, MAy3+15,0,0,false);
-  Doc->PostPaintEvent (_Line, MAx3-15, MAy3+15, MAx3+15, MAy3-15,0,0,false);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorDelete);
+  Doc->mouseCursor->setPos(pos);
 }
 
 
@@ -579,18 +595,12 @@ void MouseActions::MMoveDelete(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MMoveLabel(Schematic *Doc, QMouseEvent *Event)
 {
-  MAx3  = DOC_X_POS(Event->pos().x());
-  MAy3  = DOC_Y_POS(Event->pos().y());
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx3 = pos.x();
+  MAy3 = pos.y();
 
-  // paint marker
-  Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx3+10, MAy3-10);
-  Doc->PostPaintEvent (_Line, MAx3+10, MAy3-10, MAx3+20, MAy3-10);
-  Doc->PostPaintEvent (_Line, MAx3+10, MAy3-10, MAx3+10, MAy3-17);
-
-  // paint A
-  Doc->PostPaintEvent (_Line, MAx3+12, MAy3-12, MAx3+15, MAy3-23);
-  Doc->PostPaintEvent (_Line, MAx3+14, MAy3-17, MAx3+17, MAy3-17);
-  Doc->PostPaintEvent (_Line, MAx3+19, MAy3-12, MAx3+16, MAy3-23);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorLabel);
+  Doc->mouseCursor->setPos(pos);
 }
 
 
@@ -601,12 +611,12 @@ void MouseActions::MMoveLabel(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MMoveMarker(Schematic *Doc, QMouseEvent *Event)
 {
-  MAx3  = DOC_X_POS(Event->pos().x());
-  MAy3  = DOC_Y_POS(Event->pos().y());
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx3 = pos.x();
+  MAy3 = pos.y();
 
-  Doc->PostPaintEvent (_Line, MAx3, MAy3-2, MAx3-8, MAy3-10);
-  Doc->PostPaintEvent (_Line, MAx3+1, MAy3-3, MAx3+8, MAy3-10);
-  Doc->PostPaintEvent (_Line, MAx3-7, MAy3-10, MAx3+7, MAy3-10);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorMarker);
+  Doc->mouseCursor->setPos(pos);
 }
 
 
@@ -617,14 +627,12 @@ void MouseActions::MMoveMarker(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MMoveMirrorY(Schematic *Doc, QMouseEvent *Event)
 {
-  MAx3  = DOC_X_POS(Event->pos().x());
-  MAy3  = DOC_Y_POS(Event->pos().y());
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx3 = pos.x();
+  MAy3 = pos.y();
 
-  Doc->PostPaintEvent (_Line, MAx3-11, MAy3-4, MAx3-9, MAy3-9);
-  Doc->PostPaintEvent (_Line, MAx3-11, MAy3-3, MAx3-6, MAy3-3);
-  Doc->PostPaintEvent (_Line, MAx3+11, MAy3-4, MAx3+9, MAy3-9);
-  Doc->PostPaintEvent (_Line, MAx3+11, MAy3-3, MAx3+6, MAy3-3);
-  Doc->PostPaintEvent (_Arc, MAx3-10, MAy3-8, 21, 10, 16*20, 16*140,false);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorMirrorY);
+  Doc->mouseCursor->setPos(pos);
 }
 
 
@@ -635,29 +643,27 @@ void MouseActions::MMoveMirrorY(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MMoveMirrorX(Schematic *Doc, QMouseEvent *Event)
 {
-  MAx3  = DOC_X_POS(Event->pos().x());
-  MAy3  = DOC_Y_POS(Event->pos().y());
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx3 = pos.x();
+  MAy3 = pos.y();
 
-  Doc->PostPaintEvent (_Line, MAx3-4, MAy3-11, MAx3-9, MAy3-9);
-  Doc->PostPaintEvent (_Line, MAx3-3, MAy3-11, MAx3-3, MAy3-6);
-  Doc->PostPaintEvent (_Line, MAx3-4, MAy3+11, MAx3-9, MAy3+9);
-  Doc->PostPaintEvent (_Line, MAx3-3, MAy3+11, MAx3-3, MAy3+6);
-  Doc->PostPaintEvent (_Arc, MAx3-8, MAy3-10, 10, 21, 16*110, 16*140,false);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorMirrorX);
+  Doc->mouseCursor->setPos(pos);
 }
 
 /**
- * @brief MouseActions::MMoveMirrorX Paints "rotate" mouse cursor
+ * @brief MouseActions::MMoveRotate Paints "rotate" mouse cursor
  * @param Doc
  * @param Event
  */
 void MouseActions::MMoveRotate(Schematic *Doc, QMouseEvent *Event)
 {
-  MAx3  = DOC_X_POS(Event->pos().x());
-  MAy3  = DOC_Y_POS(Event->pos().y());
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx3 = pos.x();
+  MAy3 = pos.y();
 
-  Doc->PostPaintEvent (_Line, MAx3-6, MAy3+8, MAx3-6, MAy3+1);
-  Doc->PostPaintEvent (_Line, MAx3-7, MAy3+8, MAx3-12, MAy3+8);
-  Doc->PostPaintEvent (_Arc, MAx3-10, MAy3-10, 21, 21, -16*20, 16*240,false);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorRotate);
+  Doc->mouseCursor->setPos(pos);
 }
 
 
@@ -668,12 +674,12 @@ void MouseActions::MMoveRotate(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MMoveActivate(Schematic *Doc, QMouseEvent *Event)
 {
-  MAx3  = DOC_X_POS(Event->pos().x());
-  MAy3  = DOC_Y_POS(Event->pos().y());
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx3 = pos.x();
+  MAy3 = pos.y();
 
-  Doc->PostPaintEvent (_Rect, MAx3, MAy3-9, 14, 10);
-  Doc->PostPaintEvent (_Line, MAx3, MAy3-9, MAx3+13, MAy3);
-  Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx3+13, MAy3-9);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorActivate);
+  Doc->mouseCursor->setPos(pos);
 }
 
 
@@ -684,15 +690,12 @@ void MouseActions::MMoveActivate(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MMoveOnGrid(Schematic *Doc, QMouseEvent *Event)
 {
-  MAx3  = DOC_X_POS(Event->pos().x());
-  MAy3  = DOC_Y_POS(Event->pos().y());
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx3 = pos.x();
+  MAy3 = pos.y();
 
-  Doc->PostPaintEvent (_Line, MAx3+10, MAy3+ 3, MAx3+25, MAy3+3);
-  Doc->PostPaintEvent (_Line, MAx3+10, MAy3+ 7, MAx3+25, MAy3+7);
-  Doc->PostPaintEvent (_Line, MAx3+10, MAy3+11, MAx3+25, MAy3+11);
-  Doc->PostPaintEvent (_Line, MAx3+13, MAy3, MAx3+13, MAy3+15);
-  Doc->PostPaintEvent (_Line, MAx3+17, MAy3, MAx3+17, MAy3+15);
-  Doc->PostPaintEvent (_Line, MAx3+21, MAy3, MAx3+21, MAy3+15);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorOnGrid);
+  Doc->mouseCursor->setPos(pos);
 }
 
 
@@ -703,17 +706,12 @@ void MouseActions::MMoveOnGrid(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MMoveMoveTextB(Schematic *Doc, QMouseEvent *Event)
 {
-  MAx3  = DOC_X_POS(Event->pos().x());
-  MAy3  = DOC_Y_POS(Event->pos().y());
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx3 = pos.x();
+  MAy3 = pos.y();
 
-  Doc->PostPaintEvent (_Line, MAx3+14, MAy3   , MAx3+16, MAy3);
-  Doc->PostPaintEvent (_Line, MAx3+23, MAy3   , MAx3+25, MAy3);
-  Doc->PostPaintEvent (_Line, MAx3+13, MAy3   , MAx3+13, MAy3+ 3);
-  Doc->PostPaintEvent (_Line, MAx3+13, MAy3+ 7, MAx3+13, MAy3+10);
-  Doc->PostPaintEvent (_Line, MAx3+14, MAy3+10, MAx3+16, MAy3+10);
-  Doc->PostPaintEvent (_Line, MAx3+23, MAy3+10, MAx3+25, MAy3+10);
-  Doc->PostPaintEvent (_Line, MAx3+26, MAy3   , MAx3+26, MAy3+ 3);
-  Doc->PostPaintEvent (_Line, MAx3+26, MAy3+ 7, MAx3+26, MAy3+10);
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorMoveTextB);
+  Doc->mouseCursor->setPos(pos);
 }
 
 
@@ -724,14 +722,21 @@ void MouseActions::MMoveMoveTextB(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MMoveMoveText(Schematic *Doc, QMouseEvent *Event)
 {
-  int newX = DOC_X_POS(Event->pos().x());
-  int newY = DOC_Y_POS(Event->pos().y());
+  QPointF pos = Doc->mapToScene(Event->pos());
+  int newX = pos.x();
+  int newY = pos.y();
+  /// \bug get rid of global temp postion vars
   MAx1 += newX - MAx3;
   MAy1 += newY - MAy3;
   MAx3  = newX;
   MAy3  = newY;
 
-  Doc->PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);
+  /// \todo Doc->PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);
+  /* MPressMoveText sets the MAxy cache vars, this was supposed to draw a rectangle
+   * This is not really a cursor, isn't it more down to the paint() of the text?
+  */
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorMoveText);
+  Doc->mouseCursor->setPos(pos);
 }
 
 
@@ -742,13 +747,12 @@ void MouseActions::MMoveMoveText(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MMoveZoomIn(Schematic *Doc, QMouseEvent *Event)
 {
-  MAx3  = DOC_X_POS(Event->pos().x());
-  MAy3  = DOC_Y_POS(Event->pos().y());
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx3  = pos.x();
+  MAy3  = pos.y();
 
-  Doc->PostPaintEvent (_Line, MAx3+14, MAy3   , MAx3+22, MAy3);
-  Doc->PostPaintEvent (_Line, MAx3+18, MAy3-4 , MAx3+18, MAy3+4);
-  Doc->PostPaintEvent (_Ellipse, MAx3+12, MAy3-6, 13, 13,0,0,false);
-  Doc->viewport()->update();
+  Doc->mouseCursor->setCursorType(MouseCursor::CursorZoomIn);
+  Doc->mouseCursor->setPos(pos);
 }
 
 
@@ -758,39 +762,58 @@ void MouseActions::MMoveZoomIn(Schematic *Doc, QMouseEvent *Event)
 // **********                                                    **********
 // ************************************************************************
 
-// Is called from several MousePress functions to show right button menu.
-void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, float fY)
+/*!
+ * \brief MouseActions::rightPressMenu
+ * \param Doc
+ * \param Event
+ * \param fX
+ * \param fY
+ * Terminal action, called from mousePressEvent show right button menu.
+ * The right button menu is defined based on the location of the Event.
+ */
+void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
 {
-  MAx1 = int(fX);
-  MAy1 = int(fY);
-  focusElement = Doc->selectElement(fX, fY, false);
+  focusElement = dynamic_cast<GraphicsElement*>(Doc->scene->itemAt(Event->pos(), QTransform()));
 
-  if(focusElement)  // remove special function (4 least significant bits)
-    focusElement->Type &= isSpecialMask;
+  if(focusElement){
+    // remove special function (4 least significant bits)
+    incomplete(); // BUG: make isSpecialMask must be explicit in GraphicsElement
+    // focusElement->elemType &= isSpecialMask;
+  }else{
+    // what else could it be?
+    incomplete();
+  }
 
 
   // define menu
   ComponentMenu->clear();
-  while(true) {
-    if(focusElement) {
-      focusElement->isSelected = true;
+  {
+    if(!focusElement) {
+      ComponentMenu->addAction(QucsMain->symEdit);
+      ComponentMenu->addAction(QucsMain->fileSettings);
+      if(!QucsMain->moveText->isChecked()){
+	ComponentMenu->addAction(QucsMain->moveText);
+      }
+    }else{
+      focusElement->setSelected(true);
       QAction *editProp = new QAction(QObject::tr("Edit Properties"), QucsMain);
       QucsMain->connect(editProp, SIGNAL(triggered()), SLOT(slotEditElement()));
       ComponentMenu->addAction(editProp);
 
-      if((focusElement->Type & isComponent) == 0) break;
+      if(!focusElement->isComponent()){
+      }else if(!QucsMain->moveText->isChecked()){
+	  ComponentMenu->addAction(QucsMain->moveText);
+      }else{
+      }
     }
-    else {
-      ComponentMenu->addAction(QucsMain->symEdit);
-      ComponentMenu->addAction(QucsMain->fileSettings);
-    }
-    if(!QucsMain->moveText->isChecked())
-      ComponentMenu->addAction(QucsMain->moveText);
-    break;
   }
   while(true) {
-    if(focusElement)
-      if(focusElement->Type == isGraph) break;
+    if(focusElement){
+      if(dynamic_cast<Graph const*>(focusElement->operator->())){
+	break;
+      }else{
+      }
+    }
     if(!QucsMain->onGrid->isChecked())
       ComponentMenu->addAction(QucsMain->onGrid);
     ComponentMenu->addAction(QucsMain->editCopy);
@@ -801,7 +824,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
 
   while (true) {
     if (focusElement) {
-      if (focusElement->Type == isDiagram) {
+      if(dynamic_cast<Diagram const*>(focusElement->operator->())){
         QAction *imgExport = new QAction(QObject::tr("Export as image"), QucsMain);
         QucsMain->connect(imgExport, SIGNAL(triggered()), SLOT(slotSaveDiagramToGraphicsFile()));
         ComponentMenu->addAction(imgExport);
@@ -812,7 +835,8 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
 
   if(!QucsMain->editDelete->isChecked())
     ComponentMenu->addAction(QucsMain->editDelete);
-  if(focusElement) if(focusElement->Type == isMarker) {
+  if(focusElement)
+    if(dynamic_cast<Marker const*>(focusElement->operator->())){
     ComponentMenu->addSeparator();
     QString s = QObject::tr("power matching");
     if( ((Marker*)focusElement)->pGraph->Var == "Sopt" )
@@ -829,16 +853,21 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
   }
   do {
     if(focusElement) {
-      if(focusElement->Type == isDiagram) break;
-      if(focusElement->Type == isGraph) {
+      if(dynamic_cast<Diagram const*>(focusElement->operator->())){
+       	break;
+      }else if(dynamic_cast<Graph const*>(focusElement->operator->())){
         ComponentMenu->addAction(QucsMain->graph2csv);
         break;
       }
     }
     ComponentMenu->addSeparator();
-    if(focusElement) if(focusElement->Type & isComponent)
-      if(!QucsMain->editActivate->isChecked())
+    if(!focusElement){
+    }else if(dynamic_cast<Component const*>(focusElement->operator->())){
+      if(!QucsMain->editActivate->isChecked()){
         ComponentMenu->addAction(QucsMain->editActivate);
+      }else{
+      }
+    }
     if(!QucsMain->editRotate->isChecked())
       ComponentMenu->addAction(QucsMain->editRotate);
     if(!QucsMain->editMirror->isChecked())
@@ -848,10 +877,13 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
 
     // right-click menu to go into hierarchy
     if(focusElement) {
-      if(focusElement->Type & isComponent)
-	if(((Component*)focusElement)->obsolete_model_hack() == "Sub")
-      if(!QucsMain->intoH->isChecked())
-        ComponentMenu->addAction(QucsMain->intoH);
+      if(Component const* p=dynamic_cast<Component const*>(focusElement->operator->())){
+	if(p->obsolete_model_hack() == "Sub"){ // use cast!?
+	  if(!QucsMain->intoH->isChecked()){
+	    ComponentMenu->addAction(QucsMain->intoH);
+	  }
+	}
+      }
     }
     // right-click menu to pop out of hierarchy
     if(!focusElement)
@@ -865,10 +897,18 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
   drawn = false;
 }
 
-// -----------------------------------------------------------
-void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent*, float fX, float fY)
+/*!
+ * \brief MouseActions::MPressLabel
+ * \param Doc
+ * \param Event
+ * Handle selection of nodes and nodelabels
+ */
+void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent* Event)
 {
-  int x = int(fX), y = int(fY);
+  QPointF pos = Doc->mapToScene(Event->pos());
+  float x = pos.x();
+  float y = pos.y();
+
   Wire *pw = 0;
   WireLabel *pl=0;
   Node *pn = Doc->selectedNode(x, y);
@@ -883,7 +923,7 @@ void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent*, float fX, float fY)
   if(pw) pe = Doc->getWireLabel(pw->Port1);
   else pe = Doc->getWireLabel(pn);
   if(pe) {
-    if(pe->Type & isComponent) {
+    if(pe->ElemType & isComponent_) {
       QMessageBox::information(0, QObject::tr("Info"),
                  QObject::tr("The ground potential cannot be labeled!"));
       return;
@@ -935,27 +975,62 @@ void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent*, float fX, float fY)
 }
 
 // -----------------------------------------------------------
-void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, float fY)
+/*!
+ * \brief MouseActions::MPressSelect
+ * \param Doc
+ * \param Event
+ * \param fX
+ * \param fY
+ *
+ * Event handler, in Select mode use presses on the View.
+ *
+ * Detect if Control modifier is in use.
+ *
+ * Get the selected element (if any) into focusElement.
+ *
+ * Set next actions (Release, Move, Press, DoubleClick, ...) for ElemType
+ *   - isPaintingResize
+ *   - isDiagramResize
+ *   - isDiagramHScroll
+ *   - isDiagramVScroll
+ *   - isComponentText
+ *   - isNode
+ * and return
+ *
+ * For all other ElemType.
+ * If no focusElement, set next actions to create selection box.
+ * If focusElement, set next actions to move selected element.
+ */
+void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
 {
   bool Ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
   int No=0;
-  MAx1 = int(fX);
-  MAy1 = int(fY);
-  focusElement = Doc->selectElement(fX, fY, Ctrl, &No);
+
+  /// \todo check where MAx1, MAy1 is reused (ie. during move or release)
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx1 = pos.x();
+  MAy1 = pos.y();
+
+  // FIXME Ctrl + press to select multiple is not working
+  focusElement = dynamic_cast<GraphicsElement*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform() ));
+
   isMoveEqual = false;   // moving not neccessarily square
 
-  if(focusElement)
+  if(focusElement){
     // print define value in hex, see element.h
-    qDebug() << "MPressSelect: focusElement->Type" <<  QString("0x%1").arg(focusElement->Type, 0, 16);
-  else
+//    qDebug() << "MPressSelect: focusElement->Type" <<  QString("0x%1").arg(focusElement->ElemType, 0, 16);
+  }else{
     qDebug() << "MPressSelect";
+  }
 
+  incomplete();
+#if 0 // GAAH. mouse actions are encoded as elements
   if(focusElement)
-  switch(focusElement->Type)
+  switch(focusElement->ElemType)
   {
     case isPaintingResize:  // resize painting ?
-      focusElement->Type = isPainting;
+      focusElement->ElemType = isPainting;
       QucsMain->MouseReleaseAction = &MouseActions::MReleaseResizePainting;
       QucsMain->MouseMoveAction = &MouseActions::MMoveResizePainting;
       QucsMain->MousePressAction = 0;
@@ -973,7 +1048,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
           if(((Diagram*)focusElement)->Name != "Phasor")*/
             isMoveEqual = true;  // diagram must be square
 
-      focusElement->Type = isDiagram;
+      focusElement->ElemType = isDiagram;
       MAx1 = focusElement->cx;
       MAx2 = focusElement->x2;
       if(((Diagram*)focusElement)->State & 1) {
@@ -1000,7 +1075,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       MAy1 = MAx1;
 
     case isDiagramVScroll:
-      focusElement->Type = isDiagram;
+      focusElement->ElemType = isDiagram;
 
       No = ((TabDiagram*)focusElement)->scroll(MAy1);
 
@@ -1028,7 +1103,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       return;
 
     case isComponentText:  // property text of component ?
-      focusElement->Type &= (~isComponentText) | isComponent;
+      focusElement->ElemType &= (~isComponentText) | isComponent;
 
       MAx3 = No;
       QucsMain->slotApplyCompText();
@@ -1062,6 +1137,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
         return;
       }
   }
+#endif
 
   QucsMain->MousePressAction = 0;
   QucsMain->MouseDoubleClickAction = 0;
@@ -1080,9 +1156,11 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
     // element could be moved
     if(!Ctrl)
     {
-      if(!focusElement->isSelected)// Don't move selected elements if clicked
+      if(!focusElement->isSelected()){
+	// Don't move selected elements if clicked
         Doc->deselectElements(focusElement); // element was not selected.
-      focusElement->isSelected = true;
+      }
+      focusElement->setSelected(true);
     }
     Doc->setOnGrid(MAx1, MAy1);
     QucsMain->MouseMoveAction = &MouseActions::MMoveMoving;
@@ -1091,13 +1169,21 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
   Doc->highlightWireLabels ();
 }
 
-// -----------------------------------------------------------
-void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent*, float fX, float fY)
+/*!
+ * \brief MouseActions::MPressDelete
+ * \param Doc
+ * \param Event
+ * \param fX
+ * \param fY
+ *
+ * Delete item under mouse press location.
+ */
+void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent* Event)
 {
-  Element *pe = Doc->selectElement(fX, fY, false);
+  Element *pe = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(pe)
   {
-    pe->isSelected = true;
+    pe->ElemSelected = true;
     Doc->deleteElements();
 
     Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
@@ -1106,14 +1192,22 @@ void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent*, float fX, float fY
   }
 }
 
-// -----------------------------------------------------------
-void MouseActions::MPressActivate(Schematic *Doc, QMouseEvent*, float fX, float fY)
+/*!
+ * \brief MouseActions::MPressActivate
+ * \param Doc
+ * \param Event
+ * Handle (De)Activate action, cycle component under mouse event to open, active or shorted.
+ */
+void MouseActions::MPressActivate(Schematic *Doc, QMouseEvent* Event)
 {
-  MAx1 = int(fX);
-  MAy1 = int(fY);
+  /// \todo check if MAx1 MAy1 are bein reused (ie during Move or Release)
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx1 = pos.x();
+  MAy1 = pos.y();
   if(!Doc->activateSpecifiedComponent(MAx1, MAy1)) {
 //    if(Event->button() != Qt::LeftButton) return;
-    MAx2 = 0;  // if not clicking on a component => open a rectangle
+    /// \bug get rid of these globals
+    MAx2 = 0;  // if not clicking on a component => open a rectangle, updated by Move
     MAy2 = 0;
     QucsMain->MousePressAction = 0;
     QucsMain->MouseReleaseAction = &MouseActions::MReleaseActivate;
@@ -1123,18 +1217,24 @@ void MouseActions::MPressActivate(Schematic *Doc, QMouseEvent*, float fX, float 
   drawn = false;
 }
 
-// -----------------------------------------------------------
-void MouseActions::MPressMirrorX(Schematic *Doc, QMouseEvent*, float fX, float fY)
+/*!
+ * \brief MouseActions::MPressMirrorX
+ * \param Doc
+ * \param fX
+ * \param fY
+ * Mirror components with ports vertically
+ */
+void MouseActions::MPressMirrorX(Schematic *Doc, QMouseEvent* Event)
 {
   // no use in mirroring wires or diagrams
-  Component *c = Doc->selectedComponent(int(fX), int(fY));
+  Component *c = dynamic_cast<Component*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(c) {
     if(c->Ports.count() < 1) return;  // only mirror components with ports
     c->mirrorX();
     Doc->setCompPorts(c);
   }
   else {
-    Painting *p = Doc->selectedPainting(fX, fY);
+    Painting *p = dynamic_cast<Painting*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
     if(p == 0) return;
     p->mirrorX();
   }
@@ -1144,18 +1244,25 @@ void MouseActions::MPressMirrorX(Schematic *Doc, QMouseEvent*, float fX, float f
   Doc->setChanged(true, true);
 }
 
-// -----------------------------------------------------------
-void MouseActions::MPressMirrorY(Schematic *Doc, QMouseEvent*, float fX, float fY)
+/*!
+ * \brief MouseActions::MPressMirrorY
+ * \param Doc
+ * \param Event
+ * \param fX
+ * \param fY
+ * Mirror components with ports horizontally
+ */
+void MouseActions::MPressMirrorY(Schematic *Doc, QMouseEvent* Event)
 {
   // no use in mirroring wires or diagrams
-  Component *c = Doc->selectedComponent(int(fX), int(fY));
+  Component *c = dynamic_cast<Component*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(c) {
     if(c->Ports.count() < 1) return;  // only mirror components with ports
     c->mirrorY();
     Doc->setCompPorts(c);
   }
   else {
-    Painting *p = Doc->selectedPainting(fX, fY);
+    Painting *p = dynamic_cast<Painting*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
     if(p == 0) return;
     p->mirrorY();
   }
@@ -1165,19 +1272,27 @@ void MouseActions::MPressMirrorY(Schematic *Doc, QMouseEvent*, float fX, float f
   Doc->setChanged(true, true);
 }
 
-// -----------------------------------------------------------
-void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent*, float fX, float fY)
+/*!
+ * \brief MouseActions::MPressRotate
+ * \param Doc
+ * \param Event
+ * \param fX
+ * \param fY
+ *
+ * Rotate element under mouse press location
+ */
+void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
 {
-  Element *e = Doc->selectElement(int(fX), int(fY), false);
+  Element *e = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(e == 0) return;
-  e->Type &= isSpecialMask;  // remove special functions
+  e->ElemType &= isSpecialMask;  // remove special functions
 
 
   WireLabel *pl;
   int x1, y1, x2, y2;
 //  e->isSelected = false;
-  switch(e->Type) {
-    case isComponent:
+  switch(e->ElemType) {
+    case isComponent_:
     case isAnalogComponent:
     case isDigitalComponent:
       if(((Component*)e)->Ports.count() < 1)
@@ -1220,18 +1335,31 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent*, float fX, float fY
   Doc->setChanged(true, true);
 }
 
-// -----------------------------------------------------------
-// insert component, diagram, painting into schematic ?!
-void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, float)
+/*!
+ * \brief MouseActions::MPressElement
+ * \param Doc
+ * \param Event
+ * \param x
+ * \param y
+ *
+ * Event handler, an Element is selected for insersion and a mouse
+ * press takes place on the View.
+ *
+ * Handle the insertion of Elements, component, diagram and painting
+ * into the schematic.
+ */
+void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event)
 {
   if(selElem == 0) return;
-  //QPainter painter(Doc->viewport());
-  //setPainter(Doc, &painter);
 
+  QPointF pos = Doc->mapToScene(Event->pos());
+  float x = pos.x();
+  float y = pos.y();
 
   int x1, y1, x2, y2, rot;
-  if(selElem->Type & isComponent) {
-    Component *Comp = (Component*)selElem;
+  int gx, gy;
+  if(Component* Comp=dynamic_cast<Component*>(selElem->operator->())){
+
 //    qDebug() << "+-+ got to switch:" << Comp->Name;
     QString entryName = Comp->name();
 
@@ -1242,33 +1370,43 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
 	// part of
 	Comp->setSchematic (Doc);
 	Comp->textSize(x1, y1);
+
+	/// insert Component into scene
+	/// snap to grid points
+	/// set center position before nodes are inserted (?)
+	gx = x;
+	gy = y;
+	Doc->setOnGrid(gx, gy);
+	{
+	GraphicsElement* gc=new GraphicsElement(Comp);
+	gc->setPos(gx,gy);
+	Doc->scene->addItem(gc); // take ownership? (does that make sense?!)
+	}
+	/// clear flag, paint whole Element, not just outline
+	Comp->drawScheme = false;
+
+	// Note: insertCopmponents does increment  name1 -> name2
 	Doc->insertComponent(Comp);
 	Comp->textSize(x2, y2);
 	if(Comp->tx < Comp->x1) Comp->tx -= x2 - x1;
-
-    // Note: insertCopmponents does increment  name1 -> name2
-//    qDebug() << "  +-+ got to insert:" << Comp->Name;
 
 	// enlarge viewarea if component lies outside the view
 	Comp->entireBounds(x1,y1,x2,y2, Doc->textCorr());
 	Doc->enlargeView(x1, y1, x2, y2);
 
-	drawn = false;
 	Doc->viewport()->update();
 	Doc->setChanged(true, true);
 	rot = Comp->rotated;
 
-    // handle static and dynamic components
-//    QucsApp::CompChoose;
-    if (Module::vaComponents.contains(entryName)){
-      QString filename = Module::vaComponents[entryName];
-//      qDebug() << "   ===+ recast";
-      Comp = dynamic_cast<vacomponent*>(Comp)->newOne(filename); //va component
-      qDebug() << "   => recast = Comp;" << Comp->name() << "filename: " << filename;
-    }
-    else {
+	// handle static and dynamic components
+	if (Module::vaComponents.contains(entryName)){
+	  QString filename = Module::vaComponents[entryName];
+	  Comp = dynamic_cast<vacomponent*>(Comp)->newOne(filename); //va component
+	  qDebug() << "   => recast = Comp;" << Comp->name() << "filename: " << filename;
+	}
+	else {
 	  Comp = Comp->newOne(); // static component is used, so create a new one
-    }
+	}
 	rot -= Comp->rotated;
 	rot &= 3;
 	while(rot--) Comp->rotate(); // keep last rotation for single component
@@ -1277,58 +1415,79 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
       case Qt::RightButton :  // right mouse button rotates the component
 	if(Comp->Ports.count() == 0)
 	  break;  // do not rotate components without ports
-	Comp->paintScheme(Doc); // erase old component scheme
 	Comp->rotate();
-	Comp->paintScheme(Doc); // paint new component scheme
+	Doc->viewport()->update();
 	break;
 
       default: ;   // avoids compiler warnings
     }
-//    qDebug() << "   => selElem = Comp;" << Comp->Name;
-    // comp it geting empty
-    selElem = Comp;
-    return;
 
-  }  // of "if(isComponent)"
-  else if(selElem->Type == isDiagram) {
-    if(Event->button() != Qt::LeftButton) return;
+    // keep current Element selected
+    incomplete();
+//    selElem = Comp;
+    // get ready to paint selElem scheme on next move event
+    drawn = false;
+    return; // yikes.
 
-    Diagram *Diag = (Diagram*)selElem;
-    QFileInfo Info(Doc->DocName);
-    // dialog is Qt::WDestructiveClose !!!
+  }else if(Diagram* Diag=dynamic_cast<Diagram*>(selElem->operator->())){
+    if(Event->button() != Qt::LeftButton){
+      return;
+    }else{
+    }
+
+    // dialog is Qt::WA_DeleteOnClose !!!
     DiagramDialog *dia =
        new DiagramDialog(Diag, Doc);
-    if(dia->exec() == QDialog::Rejected) {  // don't insert if dialog canceled
+    // don't insert if dialog canceled
+    if(dia->exec() == QDialog::Rejected) {
       Doc->viewport()->update();
       drawn = false;
       return;
     }
-
+    // add to list
     Doc->Diagrams->append(Diag);
-    Doc->enlargeView(Diag->cx, Diag->cy-Diag->y2, Diag->cx+Diag->x2, Diag->cy);
+    // clear flag, draw whole Diagram, not only scheme
+    incomplete();
+  //  selElem->drawScheme = false;
+    /// \todo Doc->enlargeView(Diag->cx, Diag->cy-Diag->y2, Diag->cx+Diag->x2, Diag->cy);
     Doc->setChanged(true, true);   // document has been changed
-
-    Doc->viewport()->repaint();
-    Diag = Diag->newOne(); // the component is used, so create a new one
-    Diag->paintScheme(Doc);
-    selElem = Diag;
-    return;
-  }  // of "if(isDiagram)"
-
-
-  // ***********  it is a painting !!!
-  if(((Painting*)selElem)->MousePressing()) {
-    Doc->Paintings->append((Painting*)selElem);
-    ((Painting*)selElem)->Bounding(x1,y1,x2,y2);
-    //Doc->enlargeView(x1, y1, x2, y2);
-    selElem = ((Painting*)selElem)->newOne();
-
     Doc->viewport()->update();
-    Doc->setChanged(true, true);
+    // the selEleme is used, so create a new one;
+    Diag = Diag->newOne();
 
-    MMoveElement(Doc, Event);  // needed before next mouse pressing
+    incomplete(); // what happened to Diag?
+    // selElem = Diag;
+    // clear draw flag to trigger new insert on MMoveElement
     drawn = false;
-  }
+    return;
+  }else if(Painting* pnt=dynamic_cast<Painting*>(selElem->operator->())){
+    // propagate press event
+    bool finalPress = ((Painting*)selElem)->MousePressing();
+
+    // wait till all press events took place
+    // 1 press: graphictext
+    // 2 press: line, arrow, ellipse, rectangle
+    // 4 press: ellipsearc
+    // Note that MMoveElement keeps snapping to grid and updatig cx,cy
+    if( finalPress )  {
+      // add Element to list
+      Doc->Paintings->append(pnt);
+      // clear scheme flag
+      incomplete();
+      // selElem->drawScheme = false;
+      // mark document as changed
+      Doc->setChanged(true, true);
+      // keep a new Element selected
+      incomplete();
+      // selElem = ((Painting*)selElem)->newOne();
+      // clear draw flag to trigger new insert on MMoveElement
+      drawn = false;
+
+      Doc->viewport()->update();
+      /// \todo fit view
+      //Doc->enlargeView(x1, y1, x2, y2);
+    }
+  } // isPainting
 }
 
 
@@ -1338,8 +1497,9 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
  * @param fX
  * @param fY
  */
-void MouseActions::MPressWire1(Schematic *Doc, QMouseEvent*, float fX, float fY)
+void MouseActions::MPressWire1(Schematic *Doc, QMouseEvent* Event)
 {
+  TODO("check MPressWire1");
   //Doc->PostPaintEvent (_DotLine);
   //Doc->PostPaintEvent (_NotRop);
   //if(drawn) {
@@ -1350,13 +1510,15 @@ void MouseActions::MPressWire1(Schematic *Doc, QMouseEvent*, float fX, float fY)
   //}
   //drawn = false;
 
+  /// \bug get rid of global position temp vars
   MAx1 = 0;   // paint wire corner first up, then left/right
-  MAx3 = int(fX);
-  MAy3 = int(fY);
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx3 = pos.x();
+  MAy3 = pos.y();
   Doc->setOnGrid(MAx3, MAy3);
 
 //ALYS - draw aiming cross
-  paintAim(Doc,MAx3, MAy3);
+  /// \todo paintAim(Doc,MAx3, MAy3);
 //#######################
 
   formerAction = 0; // keep wire action active after first wire finished
@@ -1375,9 +1537,11 @@ void MouseActions::MPressWire1(Schematic *Doc, QMouseEvent*, float fX, float fY)
  * @param fX
  * @param fY
  */
-void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event, float fX, float fY)
+void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event)
 {
-
+  TODO("check MPressWire2");
+  // needed inside the case
+  QPointF pos = Doc->mapToScene(Event->pos());
   int set1 = 0, set2 = 0;
   switch(Event->button()) {
   case Qt::LeftButton :
@@ -1421,8 +1585,10 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event, float fX, flo
     MAy3 = MAy2;
     break;
 
+
    /// \todo document right mouse button changes the wire corner
   case Qt::RightButton :
+      TODO("Sort out paintAim and GhostLine")
 
 #if 0
 	//ALYS - old code preserved because isn't clear - what it was???
@@ -1438,35 +1604,42 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event, float fX, flo
     }
 #endif
 
-    MAx2  = int(fX);
-    MAy2  = int(fY);
+    /// \bug get rid of global temp position vars
+    MAx2  = int(pos.x());
+    MAy2  = int(pos.y());
     Doc->setOnGrid(MAx2, MAy2);
 
     MAx1 ^= 1;    // change the painting direction of wire corner
 	if(MAx1 == 0) {
-		paintGhostLineV(Doc,MAx3,MAy3,MAy2);
-		paintGhostLineH(Doc,MAx3,MAy2,MAx2);
+		/// \todo paintGhostLineV(Doc,MAx3,MAy3,MAy2);
+		///paintGhostLineH(Doc,MAx3,MAy2,MAx2);
     }
     else {
-		paintGhostLineH(Doc,MAx3,MAy3,MAx2);
-		paintGhostLineV(Doc,MAx2,MAy3,MAy2);
+                /// \todo paintGhostLineH(Doc,MAx3,MAy3,MAx2);
+                //paintGhostLineV(Doc,MAx2,MAy3,MAy2);
     }
     break;
 
   default: ;    // avoids compiler warnings
   }
 
-  paintAim(Doc,MAx2,MAy2); //ALYS - added missed aiming cross
+  /// \todo paintAim(Doc,MAx2,MAy2); //ALYS - added missed aiming cross
   Doc->viewport()->update();
 }
 
-// -----------------------------------------------------------
-// Is called for setting a marker on a diagram's graph
-void MouseActions::MPressMarker(Schematic *Doc, QMouseEvent*, float fX, float fY)
+/*!
+ * \brief MouseActions::MPressMarker
+ * \param Doc
+ * \param Event
+ *  Terminal handler, called for setting a marker on a diagram's graph
+ */
+void MouseActions::MPressMarker(Schematic *Doc, QMouseEvent* Event)
 {
-  MAx1 = int(fX);
-  MAy1 = int(fY);
-  Marker *pm = Doc->setMarker(MAx1, MAy1);
+  QPointF pos = Doc->mapToScene(Event->pos());
+  float x = pos.x();
+  float y = pos.y();
+  /// \bug does it need to be int?
+  Marker *pm = Doc->setMarker(int(x), int(y));
 
   if(pm) {
     assert(pm->diag());
@@ -1478,16 +1651,21 @@ void MouseActions::MPressMarker(Schematic *Doc, QMouseEvent*, float fX, float fY
   drawn = false;
 }
 
-// -----------------------------------------------------------
-void MouseActions::MPressOnGrid(Schematic *Doc, QMouseEvent*, float fX, float fY)
+/*!
+ * \brief MouseActions::MPressOnGrid
+ * \param Doc
+ * \param Event
+ * Called when press combined with set on grid action in use.
+ */
+void MouseActions::MPressOnGrid(Schematic *Doc, QMouseEvent* Event)
 {
-  Element *pe = Doc->selectElement(fX, fY, false);
+  Element *pe = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(pe)
   {
-    pe->Type &= isSpecialMask;  // remove special functions (4 lowest bits)
+    pe->ElemType &= isSpecialMask;  // remove special functions (4 lowest bits)
 
     // onGrid is toggle action -> no other element can be selected
-    pe->isSelected = true;
+    pe->ElemSelected = true;
     Doc->elementsOnGrid();
 
     Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
@@ -1500,10 +1678,18 @@ void MouseActions::MPressOnGrid(Schematic *Doc, QMouseEvent*, float fX, float fY
 }
 
 // -----------------------------------------------------------
-void MouseActions::MPressMoveText(Schematic *Doc, QMouseEvent*, float fX, float fY)
+/*!
+ * \brief MouseActions::MPressMoveText
+ * \param Doc
+ * \param Event
+ * Handle press for moving component text label
+ */
+void MouseActions::MPressMoveText(Schematic *Doc, QMouseEvent* Event)
 {
-  MAx1 = int(fX);
-  MAy1 = int(fY);
+  /// \bug get rid of MA?? position temp vars and return by reference
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx1 = int(pos.x());
+  MAy1 = int(pos.y());
   focusElement = Doc->selectCompText(MAx1, MAy1, MAx2, MAy2);
 
   if(focusElement) {
@@ -1520,12 +1706,16 @@ void MouseActions::MPressMoveText(Schematic *Doc, QMouseEvent*, float fX, float 
 }
 
 // -----------------------------------------------------------
-void MouseActions::MPressZoomIn(Schematic *Doc, QMouseEvent*, float fX, float fY)
+void MouseActions::MPressZoomIn(Schematic *Doc, QMouseEvent* Event)
 {
   qDebug() << "zoom into box";
-  MAx1 = int(fX);
-  MAy1 = int(fY);
-  MAx2 = 0;  // rectangle size
+  QPointF pos = Doc->mapToScene(Event->pos());
+  float x = pos.x();
+  float y = pos.y();
+  /// \bug get rid of MA?? global pos vars
+  MAx1 = int(x);
+  MAy1 = int(y);
+  MAx2 = 0;  // clear rectangle size
   MAy2 = 0;
 
   QucsMain->MouseMoveAction = &MouseActions::MMoveSelect;
@@ -1547,11 +1737,15 @@ void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
 
   if(!ctrl) Doc->deselectElements(focusElement);
 
-  if(focusElement)  if(Event->button() == Qt::LeftButton)
-    if(focusElement->Type == isWire) {
-      Doc->selectWireLine(focusElement, ((Wire*)focusElement)->Port1, ctrl);
-      Doc->selectWireLine(focusElement, ((Wire*)focusElement)->Port2, ctrl);
+  if(!focusElement){
+  }else if(Event->button() == Qt::LeftButton){
+  //  if(focusElement->ElemType == isWire) 
+    if(Wire* w=dynamic_cast<Wire*>(selElem->operator->())){
+      Doc->selectWireLine(w, w->Port1, ctrl);
+      Doc->selectWireLine(w, w->Port2, ctrl);
+    }else{
     }
+  }
 
   Doc->releaseKeyboard();  // allow keyboard inputs again
   QucsMain->MousePressAction = &MouseActions::MPressSelect;
@@ -1584,12 +1778,18 @@ void MouseActions::MReleaseSelect2(Schematic *Doc, QMouseEvent *Event)
   drawn = false;
 }
 
-// -----------------------------------------------------------
+/*!
+ * \brief MouseActions::MReleaseActivate
+ * \param Doc
+ * \param Event
+ * On relase, cycle elements inside press and release events bounding box.
+ */
 void MouseActions::MReleaseActivate(Schematic *Doc, QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
 
   // activates all components within the rectangle
+  /// \bug get rid of globals, use rubberband instead
   Doc->activateCompsWithinRect(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2);
 
   QucsMain->MouseMoveAction = &MouseActions::MMoveActivate;
@@ -1688,9 +1888,11 @@ void MouseActions::MReleaseResizePainting(Schematic *Doc, QMouseEvent *Event)
 // -----------------------------------------------------------
 void MouseActions::paintElementsScheme(Schematic *p)
 {
-  Element *pe;
-  for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
-    pe->paintScheme(p);
+  TODO("is paintElementsScheme needed?")
+  //Element *pe;
+  //for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
+    /// \todo drawScheme maybe? pe->paintScheme(p);
+
 }
 
 // -----------------------------------------------------------
@@ -1700,7 +1902,7 @@ void MouseActions::moveElements(Schematic *Doc, int& x1, int& y1)
   Doc->setOnGrid(x1, y1);
 
   for(pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
-    if(pe->Type & isLabel) {
+    if(pe->ElemType & isLabel) {
       pe->cx += x1;  pe->x1 += x1;
       pe->cy += y1;  pe->y1 += y1;
     }
@@ -1717,7 +1919,7 @@ void MouseActions::rotateElements(Schematic *Doc, int& x1, int& y1)
   Doc->setOnGrid(x1, y1);
 
   for(pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
-    switch(pe->Type) {
+    switch(pe->ElemType) {
     case isComponent:
     case isAnalogComponent:
     case isDigitalComponent:
@@ -1751,15 +1953,15 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 {
   int x1, y1, x2, y2, rot;
   QFileInfo Info(Doc->DocName);
-  //QPainter painter(Doc->viewport());
+  QPointF pos = Doc->mapToScene(Event->pos());
 
   Element *pe;
   switch(Event->button()) {
   case Qt::LeftButton :
     // insert all moved elements into document
     for(pe = movingElements.first(); pe!=0; pe = movingElements.next()) {
-      pe->isSelected = false;
-      switch(pe->Type) {
+      pe->ElemSelected = false;
+      switch(pe->ElemType) {
 	case isWire:
 	  if(pe->x1 == pe->x2) if(pe->y1 == pe->y2)  break;
 	  Doc->insertWire((Wire*)pe);
@@ -1779,7 +1981,7 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 	  Doc->enlargeView(x1, y1, x2, y2);
 	  break;
 	case isMovingLabel:
-	  pe->Type = isNodeLabel;
+	  pe->ElemType = isNodeLabel;
 	  Doc->placeNodeLabel((WireLabel*)pe);
 	  break;
 	case isComponent:
@@ -1810,14 +2012,13 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 
   // ............................................................
   case Qt::RightButton :  // right button rotates the elements
-    //setPainter(Doc, &painter);
 
     if(drawn) // erase old scheme
       paintElementsScheme(Doc);
     drawn = true;
 
-    x1 = DOC_X_POS(Event->pos().x());
-    y1 = DOC_Y_POS(Event->pos().y());
+    x1 = pos.x();
+    y1 = pos.y();
     rotateElements(Doc,x1,y1);
     paintElementsScheme(Doc);
     // save rotation
@@ -1838,6 +2039,7 @@ void MouseActions::MReleaseMoveText(Schematic *Doc, QMouseEvent *Event)
   QucsMain->MouseReleaseAction = 0;
   Doc->releaseKeyboard();  // allow keyboard inputs again
 
+  /// \bug get rid of global temp position vars
   ((Component*)focusElement)->tx = MAx1 - ((Component*)focusElement)->cx;
   ((Component*)focusElement)->ty = MAy1 - ((Component*)focusElement)->cy;
   Doc->viewport()->update();
@@ -1845,38 +2047,74 @@ void MouseActions::MReleaseMoveText(Schematic *Doc, QMouseEvent *Event)
   Doc->setChanged(true, true);
 }
 
-// -----------------------------------------------------------
+/*!
+ * \brief MouseActions::MReleaseZoomIn
+ * \param Doc
+ * \param Event
+ * Handle zoom in for mouse press or small selection box, center on event position.
+ * Handle zoom fit to rectangle. Limited to 500% zoom in.
+ */
 void MouseActions::MReleaseZoomIn(Schematic *Doc, QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
 
-  MAx1 = Event->pos().x();
-  MAy1 = Event->pos().y();
+  // position of the curson when released
+  QPointF pos = Doc->mapToScene(Event->pos());
+  MAx1 = int(pos.x());
+  MAy1 = int(pos.y());
+
+  // size of selection rectangle, relative to release position
+  // cleared by MPressZoomIn
+  // set by MMoveSelect
   float DX = float(MAx2);
   float DY = float(MAy2);
 
-  float initialScale = Doc->Scale;
-  float scale = 1;
-  float xShift = 0;
-  float yShift = 0;
-  if((Doc->Scale * DX) < 6.0) {
-    // a simple click zooms by constant factor
-    scale = Doc->zoom(1.5)/initialScale;
-
-    xShift = scale * Event->pos().x();
-    yShift = scale * Event->pos().y();
+  // legacy: why 6.0? if narrow X selection, handle as single click?
+  //if((Doc->Scale * std::abs(DX)) < 6.0) {
+  if ((std::abs(DX) < 10) || (std::abs(DY) < 10)) {
+    // if zoom box too small, handle as simple zoomIn
+    Doc->zoomIn();
+    // center to event position
+    Doc->centerOn( Doc->mapToScene( Event->pos()) );
   } else {
-    float xScale = float(Doc->visibleWidth())  / std::abs(DX);
-    float yScale = float(Doc->visibleHeight()) / std::abs(DY);
-    scale = qMin(xScale, yScale)/initialScale;
-    scale = Doc->zoom(scale)/initialScale;
+    // zoom to selection rectangle
 
-    xShift = scale * (MAx1 - 0.5*DX);
-    yShift = scale * (MAy1 - 0.5*DY);
+    // figure out position of top left corner of zoom box
+    // zoom box size (DX, DY) it relative to release event (MAx1, MAx2)
+    float xtop;
+    float ytop;
+
+    if (DX > 0) { // drag right
+      xtop = MAx1 - std::abs( DX );
+    } else { // drag left
+      xtop = MAx1;
+    }
+
+    if (DY > 0) { // drag down
+      ytop = MAy1 - std::abs( DY );
+    } else  { // drag up
+      ytop = MAy1;
+    }
+
+    // zoom box
+    QRect rect = QRect(xtop, ytop, std::abs(DX), std::abs(DY));
+
+    // try to fit rectangle to view
+    float xRatio = Doc->rect().width() / std::abs(DX);
+    float yRatio = Doc->rect().height() / std::abs(DY);
+    float minScale = qMin(xRatio, yRatio)/Doc->Scale;
+
+    // scale and center
+    qDebug() << "minScale" << minScale;
+    //! limit max zoom to 500% \sa Schematic::zoomIn
+    if (minScale > 5)
+      minScale = 5;
+    Doc->scale(minScale, minScale);
+    Doc->centerOn( rect.center() );
+
+    // update
+    Doc->Scale = Doc->matrix().m11();
   }
-  xShift -= (0.5*Doc->visibleWidth() + Doc->contentsX());
-  yShift -= (0.5*Doc->visibleHeight() + Doc->contentsY());
-  Doc->scrollBy(xShift, yShift);
 
   QucsMain->MouseMoveAction = &MouseActions::MMoveZoomIn;
   QucsMain->MouseReleaseAction = 0;
@@ -1905,9 +2143,12 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
   int x1, y1, x2, y2;
 
   QFileInfo Info(Doc->DocName);
-  float fX = DOC_X_FPOS, fY = DOC_Y_FPOS;
 
-  switch(focusElement->Type) {
+  QPointF pos = Doc->mapToScene(Event->pos());
+  float fX = pos.x();
+  float fY = pos.y();
+
+  switch(focusElement->ElemType) {
     case isComponent:
     case isAnalogComponent:
     case isDigitalComponent:
@@ -1917,13 +2158,15 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 	   return;
 	 }else if(c->obsolete_model_hack() == "SPICE") { // BUG. use cast
            SpiceDialog *sd = new SpiceDialog(App, (SpiceFile*)c, Doc);
-           if(sd->exec() != 1) break;   // dialog is WDestructiveClose
-         } else if(c->obsolete_model_hack() == ".Opt") { // BUG again...
+           if(sd->exec() != 1) break;   // dialog is WA_DeleteOnClose
+         }
+         else if(c->obsolete_model_hack() == ".Opt") {
            OptimizeDialog *od = new OptimizeDialog((Optimize_Sim*)c, Doc);
-           if(od->exec() != 1) break;   // dialog is WDestructiveClose
-         } else {
+           if(od->exec() != 1) break;   // dialog is WA_DeleteOnClose
+         }
+         else {
            ComponentDialog * cd = new ComponentDialog(c, Doc);
-           if(cd->exec() != 1) break;   // dialog is WDestructiveClose
+           if(cd->exec() != 1) break;   // dialog is WA_DeleteOnClose
 
            Doc->Components->findRef(c);
            Doc->Components->take();
@@ -1956,7 +2199,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 	 }
 
 	 ddia = new DiagramDialog(dia, Doc);
-         if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
+         if(ddia->exec() != QDialog::Rejected)   // is WA_DeleteOnClose
            Doc->setChanged(true, true);
 
 	 dia->Bounding(x1, x2, y1, y2);
@@ -1973,12 +2216,12 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 
 
 	 ddia = new DiagramDialog(dia, Doc, pg);
-	 if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
+	 if(ddia->exec() != QDialog::Rejected)   // is WA_DeleteOnClose
 	   Doc->setChanged(true, true);
          break;
 
     case isWire:
-         MPressLabel(Doc, Event, fX, fY);
+         MPressLabel(Doc, Event);
          break;
 
     case isNodeLabel:
@@ -2027,7 +2270,8 @@ void MouseActions::MDoubleClickSelect(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MDoubleClickWire2(Schematic *Doc, QMouseEvent *Event)
 {
-  MPressWire2(Doc, Event, DOC_X_FPOS, DOC_Y_FPOS);
+
+  MPressWire2(Doc, Event);
 
   if(formerAction)
     QucsMain->select->setChecked(true);  // restore old action

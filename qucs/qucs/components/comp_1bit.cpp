@@ -21,7 +21,7 @@
 
 comp_1bit::comp_1bit()
 {
-  Type = isComponent; // Analogue and digital component.
+  ElemType = isComponent; // Analogue and digital component.
   Description = QObject::tr ("1bit comparator verilog device");
 
   Props.append (new Property ("TR", "6", false,

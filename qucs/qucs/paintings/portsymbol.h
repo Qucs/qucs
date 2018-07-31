@@ -26,9 +26,11 @@ class PortSymbol : public Painting  {
 public:
   PortSymbol(int cx_=0, int cy_=0, const QString& numberStr_="1",
                                    const QString& nameStr_="");
- ~PortSymbol();
+  virtual ~PortSymbol() {}
 
-  void paintScheme(Schematic*);
+  QRectF boundingRect() const;
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
+
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
@@ -36,7 +38,6 @@ public:
   QString save();
   QString saveCpp();
   QString saveJSON();
-  void paint(ViewPainter*);
   bool getSelected(float, float, float);
   void Bounding(int&, int&, int&, int&);
 

@@ -26,6 +26,6 @@
 
 class ComponentTests : public QObject {
   Q_OBJECT
-private slots:
+public:
   void testConstructor();
 };

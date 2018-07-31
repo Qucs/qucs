@@ -47,6 +47,7 @@
 #include "qucsdoc.h"
 #include "textdoc.h"
 #include "schematic.h"
+#include "schematicscene.h"
 #include "mouseactions.h"
 #include "messagedock.h"
 #include "wire.h"
@@ -183,18 +184,16 @@ void QucsApp::initView()
   DocumentTab = new ContextMenuTabWidget(this);
   setCentralWidget(DocumentTab);
 
-  connect(DocumentTab,
-          SIGNAL(currentChanged(QWidget*)), SLOT(slotChangeView(QWidget*)));
+  connect(DocumentTab, SIGNAL(currentChanged(int)), SLOT(slotChangeView(int)));
 
   // Give every tab a close button, and connect the button's signal to
   // slotFileClose
   DocumentTab->setTabsClosable(true);
   connect(DocumentTab,
           SIGNAL(tabCloseRequested(int)), SLOT(slotFileClose(int)));
-#ifdef HAVE_QTABWIDGET_SETMOVABLE
+
   // make tabs draggable if supported
   DocumentTab->setMovable (true);
-#endif
 
   dock = new QDockWidget(tr("Main Dock"),this);
   TabView = new QTabWidget(dock);
@@ -213,7 +212,7 @@ void QucsApp::initView()
   connect(editText, SIGNAL(returnPressed()), SLOT(slotApplyCompText()));
   connect(editText, SIGNAL(textChanged(const QString&)),
           SLOT(slotResizePropEdit(const QString&)));
-  connect(editText, SIGNAL(lostFocus()), SLOT(slotHideEdit()));
+  connect(editText, SIGNAL(editingFinished()), SLOT(slotHideEdit()));
 
   // ----------------------------------------------------------
   // "Project Tab" of the left QTabWidget
@@ -797,8 +796,13 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
 {
   slotHideEdit(); // disable text edit of component property
 
-  // delete previously selected elements
-  if(view->selElem != 0)  delete view->selElem;
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
+
+  // remove from scene and delete previously selected elements
+  if(view->selElem != 0)  {
+      Doc->scene->removeItem(view->selElem);
+      delete view->selElem;
+  }
   view->selElem  = 0;   // no component/diagram/painting selected
 
   if(item == 0) {   // mouse button pressed not over an item ?
@@ -807,7 +811,7 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   }
 
   if(view->drawn)
-    ((Q3ScrollView*)DocumentTab->currentWidget())->viewport()->update();
+    ((QGraphicsView*)DocumentTab->currentWidget())->viewport()->update();
   view->drawn = false;
 
   // toggle last toolbar button off
@@ -1391,7 +1395,7 @@ bool QucsApp::gotoPage(const QString& Name)
     view->drawn = false;
     return false;
   }
-  slotChangeView(DocumentTab->currentWidget());
+  slotChangeView(DocumentTab->currentIndex());
 
   // if only an untitled document was open -> close it
   if(getDoc(0)->DocName.isEmpty())
@@ -1597,7 +1601,7 @@ void QucsApp::slotFileSaveAll()
   QString tabType = DocumentTab->currentWidget()->metaObject()->className();
 
   if (tabType == "Schematic") {
-    ((Q3ScrollView*)DocumentTab->currentWidget())->viewport()->update();
+    ((QGraphicsView*)DocumentTab->currentWidget())->viewport()->update();
   }
   view->drawn = false;
   statusBar()->showMessage(tr("Ready."));
@@ -1800,8 +1804,10 @@ void QucsApp::slotHelpReport()
 
 // --------------------------------------------------------------
 // Is called when another document is selected via the TabBar.
-void QucsApp::slotChangeView(QWidget *w)
+void QucsApp::slotChangeView(int index)
 {
+
+  QWidget *w = DocumentTab->widget(index);
 
   editText->setHidden (true); // disable text edit of component property
   QucsDoc * Doc;
@@ -2047,22 +2053,22 @@ void QucsApp::slotPopHierarchy()
 void QucsApp::slotShowAll()
 {
   slotHideEdit(); // disable text edit of component property
-  getDoc()->showAll();
+  getDoc()->zoomFit();
 }
 
 // -----------------------------------------------------------
 // Sets the scale factor to 1.
-void QucsApp::slotShowOne()
+void QucsApp::slotZoomReset()
 {
   slotHideEdit(); // disable text edit of component property
-  getDoc()->showNoZoom();
+  getDoc()->zoomReset();
 }
 
 // -----------------------------------------------------------
 void QucsApp::slotZoomOut()
 {
   slotHideEdit(); // disable text edit of component property
-  getDoc()->zoomBy(0.5f);
+  getDoc()->zoomOut();
 }
 
 
@@ -2403,7 +2409,7 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
   view->selElem = Comp;
 
   if(view->drawn)
-    ((Q3ScrollView*)DocumentTab->currentWidget())->viewport()->update();
+    ((QGraphicsView*)DocumentTab->currentWidget())->viewport()->update();
   view->drawn = false;
   MouseMoveAction = &MouseActions::MMoveElement;
   MousePressAction = &MouseActions::MPressElement;
@@ -2602,7 +2608,7 @@ void QucsApp::slotSymbolEdit()
 void QucsApp::slotPowerMatching()
 {
   if(!view->focusElement) return;
-  if(view->focusElement->Type != isMarker) return;
+  if(view->focusElement->ElemType != isMarker) return;
   Marker *pm = (Marker*)view->focusElement;
 
 //  double Z0 = 50.0;
@@ -2626,7 +2632,7 @@ void QucsApp::slotPowerMatching()
 void QucsApp::slot2PortMatching()
 {
   if(!view->focusElement) return;
-  if(view->focusElement->Type != isMarker) return;
+  if(view->focusElement->ElemType != isMarker) return;
   Marker *pm = (Marker*)view->focusElement;
 
   QString DataSet;

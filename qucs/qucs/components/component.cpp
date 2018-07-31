@@ -22,7 +22,6 @@
 #include "node.h"
 #include "qucs.h"
 #include "schematic.h"
-#include "viewpainter.h"
 #include "module.h"
 #include "misc.h"
 
@@ -31,6 +30,8 @@
 #include <QMessageBox>
 #include <QPainter>
 #include <QDebug>
+
+#include <assert.h>
 
 /*!
  * \file component.cpp
@@ -42,13 +43,14 @@
  * \class Component
  * \brief The Component class implements a generic analog component
  */
-Component::Component()
+Component::Component() : Element()
 {
-  Type = isAnalogComponent;
+  qDebug() << "constructing Componet" << this;
+  ElemType = isAnalogComponent;
 
   mirroredX = false;
   rotated = 0;
-  isSelected = false;
+  ElemSelected = false;
   isActive = COMP_IS_ACTIVE;
   showName = true;
 
@@ -60,6 +62,17 @@ Component::Component()
   Props.setAutoDelete(true);
 
   containingSchematic = NULL;
+
+  incomplete();
+#if 0
+  setFlags(ItemIsSelectable|ItemIsMovable);
+#if QT_VERSION < 0x050000
+  setAcceptsHoverEvents(true);
+#else
+  setAcceptHoverEvents(true);
+#endif
+#endif
+
 }
 
 // -------------------------------------------------------
@@ -182,79 +195,142 @@ bool Component::getSelected(int x_, int y_)
   return false;
 }
 
-// -------------------------------------------------------
-void Component::paint(ViewPainter *p)
-{
-  int x, y, a, b, xb, yb;
-  QFont f = p->Painter->font();   // save current font
-  QFont newFont = f;
-  if(Model.at(0) == '.') {   // is simulation component (dc, ac, ...)
-    newFont.setPointSizeF(p->Scale * Texts.first()->Size);
-    newFont.setWeight(QFont::DemiBold);
-    p->Painter->setFont(newFont);
-    p->map(cx, cy, x, y);
 
-    p->Painter->setPen(QPen(Qt::darkBlue,2));
-    a = b = 0;
+QRectF Component::boundingRect() const
+{
+  return QRectF(x1, y1, x2-x1, y2-y1);
+}
+
+void Component::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
+{
+  Q_UNUSED(item);
+  Q_UNUSED(widget);
+
+
+  if(drawScheme) {
+    paintScheme(painter);
+    return;
+  }
+
+  /// \todo move the paint down to each simulation component?
+  // is simulation component (dc, ac, ...)
+  bool isSimulation = false;
+  /// \bug vacomponent crashes, Model empty?
+  if(Model.size() && Model.at(0) == '.')
+    isSimulation = true;
+
+  QFont f = painter->font();   // save current font
+  QFont newFont = f;
+
+  if(isSimulation) {
+    /// \todo offset mouse to center, or grab item on any location
+
+    newFont.setPointSizeF(Texts.first()->Size);
+    newFont.setWeight(QFont::DemiBold);
+    painter->setFont(newFont);
+    //p->map(cx, cy, x, y);
+
+    painter->setPen(QPen(Qt::darkBlue,2));
+
+    // compute size of text
+    int w=0; // texts width
+    int h=0; // texts height
     QRect r, t;
     foreach(Text *pt, Texts) {
-      t.setRect(x, y+b, 0, 0);
-      p->Painter->drawText(t, Qt::AlignLeft|Qt::TextDontClip, pt->s, &r);
-      b += r.height();
-      if(a < r.width())  a = r.width();
+      int flags =  Qt::AlignLeft|Qt::TextDontClip;
+      t.setRect(0, 0+h, 0, 0);
+      painter->drawText(t, flags, pt->s, &r);
+      h += r.height();
+      if(w < r.width())
+        w = r.width();
     }
-    xb = a + int(12.0*p->Scale);
-    yb = b + int(10.0*p->Scale);
-    x2 = x1+25 + int(float(a) / p->Scale);
-    y2 = y1+23 + int(float(b) / p->Scale);
-    if(ty < y2+1) if(ty > y1-r.height())  ty = y2 + 1;
 
-    p->map(cx-1, cy, x, y);
-    p->map(cx-6, cy-5, a, b);
-    p->Painter->drawRect(a, b, xb, yb);
-    p->Painter->drawLine(x,      y+yb, a,      b+yb);
-    p->Painter->drawLine(x+xb-1, y+yb, x,      y+yb);
-    p->Painter->drawLine(x+xb-1, y+yb, a+xb,   b+yb);
-    p->Painter->drawLine(x+xb-1, y+yb, x+xb-1, y);
-    p->Painter->drawLine(x+xb-1, y,    a+xb,   b);
+    // Draw simulation block
+    //  diagonal line
+    //  horizontal line
+    //  diagonal line
+    //  vertical line
+    //  diagonal line
+    //
+    // 1 ----- 2
+    // | .c    | \
+    // |       |  5
+    // 4 ----- 3  |
+    //   \      \ |
+    //    7 ----- 6
+
+    // augmented text box size
+    int bx = w + 12;
+    int by = h + 10;
+
+    // new origin from center, easier to draw
+    int xn = -6;
+    int yn = -5;
+
+    // box depth (sort of)
+    int dz = 5;
+
+    // update relative boundings and text position
+    x2 = x1 + 25 + w;
+    y2 = y1 + 23 + h;
+    if(ty < y2+1)
+      if(ty > y1-r.height())
+        ty = y2 + 1;
+
+    painter->drawPoint(0,0); // center
+    painter->drawRect(xn,       yn,       bx,       by);
+    painter->drawLine(xn,       yn+by,    xn+dz,    yn+by+dz); //diag 4-7
+    painter->drawLine(xn+dz,    yn+by+dz, xn+dz+bx, yn+by+dz); //hori 4-3
+    painter->drawLine(xn+bx,    yn+by,    xn+bx+dz, yn+by+dz); //diag 3-6
+    painter->drawLine(xn+bx+dz, yn+dz,    xn+bx+dz, yn+dz+by); //vert 5-6
+    painter->drawLine(xn+bx,    yn,       xn+bx+dz, yn+dz);    //diag 2-5
   }
-  else {    // normal components go here
+
+  if (! isSimulation) { /// \todo move to simulation component?
 
     // paint all lines
-    foreach(Line *p1, Lines) {
-      p->Painter->setPen(p1->style);
-      p->drawLine(cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
+    foreach (Line *l, Lines) {
+      QPen pen(l->style);
+      pen.setCosmetic(true); // do not scale thickness
+      painter->setPen(pen);
+      painter->drawLine(l->x1, l->y1, l->x2, l->y2);
     }
-
     // paint all arcs
-    foreach(Arc *p3, Arcs) {
-      p->Painter->setPen(p3->style);
-      p->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
+    foreach(Arc *a, Arcs) {
+      QPen pen(a->style);
+      pen.setCosmetic(true); // do not scale thickness
+      painter->setPen(pen);
+      painter->drawArc(a->x, a->y, a->w, a->h, a->angle, a->arclen);
     }
-
     // paint all rectangles
-    foreach(Area *pa, Rects) {
-      p->Painter->setPen(pa->Pen);
-      p->Painter->setBrush(pa->Brush);
-      p->drawRect(cx+pa->x, cy+pa->y, pa->w, pa->h);
+    foreach(Area *a, Rects) {
+      painter->setPen(a->Pen);
+      painter->setBrush(a->Brush);
+      painter->drawRect(a->x, a->y, a->w, a->h);
     }
-
     // paint all ellipses
-    foreach(Area *pa, Ellips) {
-      p->Painter->setPen(pa->Pen);
-      p->Painter->setBrush(pa->Brush);
-      p->drawEllipse(cx+pa->x, cy+pa->y, pa->w, pa->h);
+    foreach(Area *a, Ellips) {
+      painter->setPen(a->Pen);
+      painter->setBrush(a->Brush);
+      painter->drawEllipse(a->x, a->y, a->w, a->h);
     }
-    p->Painter->setBrush(Qt::NoBrush);
 
+    painter->setBrush(Qt::NoBrush);
     newFont.setWeight(QFont::Light);
 
+    /// \todo components with rotated text?? subcircuit maybe?
+    /// code similar to portions of GrahicText::paint
+/*
     // keep track of painter state
     p->Painter->save();
 
+  // rotate text acordingly
     QMatrix wm = p->Painter->worldMatrix();
-    // write all text
+*/
+    // paint all texts (on the symbol)
     foreach(Text *pt, Texts) {
+      //qDebug() << "component text:" << pt->s;
+      /*
       p->Painter->setWorldMatrix(
           QMatrix(pt->mCos, -pt->mSin, pt->mSin, pt->mCos,
                    p->DX + float(cx+pt->x) * p->Scale,
@@ -265,61 +341,86 @@ void Component::paint(ViewPainter *p)
       p->Painter->setFont(newFont);
       p->Painter->setPen(pt->Color);
       if (0) {
-	p->Painter->drawText(0, 0, 0, 0, Qt::AlignLeft|Qt::TextDontClip, pt->s);
+        p->Painter->drawText(0, 0, 0, 0, Qt::AlignLeft|Qt::TextDontClip, pt->s);
       } else {
-	int w, h;
-	w = p->drawTextMapped (pt->s, 0, 0, &h);
-    Q_UNUSED(w);
+        int w, h;
+        w = p->drawTextMapped (pt->s, 0, 0, &h);
       }
+      */
+      /// \todo figure out the rotation and transformation matrix stuff.
+      newFont.setPointSize(pt->Size);
+      newFont.setOverline(pt->over);
+      newFont.setUnderline(pt->under);
+      painter->setFont(newFont);
+      painter->setPen(pt->Color);
+      /// \todo crude text placement
+      int flags = Qt::AlignLeft|Qt::TextDontClip;
+      painter->drawText(pt->x, pt->y, 0, 0, flags, pt->s);
     }
+/*
     p->Painter->setWorldMatrix(wm);
     p->Painter->setWorldMatrixEnabled(false);
 
     // restore painter state
     p->Painter->restore();
-  }
+*/
 
-  // restore old font
-  p->Painter->setFont(f);
+  } // not simulation
 
-  p->Painter->setPen(QPen(Qt::black,1));
-  p->map(cx+tx, cy+ty, x, y);
+  // restore previous font
+  painter->setFont(f);
+  painter->setPen(QPen(Qt::black,1));
+
+  // keep track of text vertical displacement
+  int y=0;
   if(showName) {
-    p->Painter->drawText(x, y, 0, 0, Qt::TextDontClip, Name);
-    y += p->LineSpacing;
+    painter->drawText(tx, ty+y, 0, 0, Qt::TextDontClip, Name);
+    y += painter->fontMetrics().lineSpacing();
   }
-  // write all properties
-  for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next())
-    if(p4->display) {
-      p->Painter->drawText(x, y, 0, 0, Qt::TextDontClip, p4->Name+"="+p4->Value);
-      y += p->LineSpacing;
-    }
 
+  // write all properties
+  for(Property* pp : Props) {
+    Property p=*pp;
+    if(p.display) {
+      painter->drawText(tx, ty+y, 0, 0, Qt::TextDontClip, p.Name+"="+p.Value);
+      y += painter->fontMetrics().lineSpacing();
+    }
+  }
+
+  // draw crossed box for active/inactive/shorted state
   if(isActive == COMP_IS_OPEN)
-    p->Painter->setPen(QPen(Qt::red,0));
+    painter->setPen(QPen(Qt::red,0));
   else if(isActive & COMP_IS_SHORTEN)
-    p->Painter->setPen(QPen(Qt::darkGreen,0));
+    painter->setPen(QPen(Qt::darkGreen,0));
   if(isActive != COMP_IS_ACTIVE) {
-    p->drawRect(cx+x1, cy+y1, x2-x1+1, y2-y1+1);
-    p->drawLine(cx+x1, cy+y1, cx+x2, cy+y2);
-    p->drawLine(cx+x1, cy+y2, cx+x2, cy+y1);
+    painter->drawRect(x1, y1, x2-x1+1, y2-y1+1);
+    painter->drawLine(x1, y1, x2, y2);
+    painter->drawLine(x1, y2, x2, y1);
   }
 
   // draw component bounding box
-  if(isSelected) {
-    p->Painter->setPen(QPen(Qt::darkGray,3));
-    p->drawRoundRect(cx+x1, cy+y1, x2-x1, y2-y1);
+  if(isSelected()) {
+    ElemSelected = true;
+    painter->setPen(QPen(Qt::darkGray,3));
+    painter->drawRoundedRect(boundingRect(), 5.0, 5.0);
+  }
+  else {
+    ElemSelected = false;
+    // else visualize boundingRect
+    boundingBoxColor.setCosmetic(true); // do not scale thickness
+    painter->setPen(boundingBoxColor);
+    painter->drawRect(boundingRect());
   }
 }
 
 // -------------------------------------------------------
 // Paints the component when moved with the mouse.
-void Component::paintScheme(Schematic *p)
+// Draw relative to cx, cy, which are updated on mouse move event
+void Component::paintScheme(QPainter *painter)
 {
-  // qDebug() << "paintScheme" << Model;
   if(Model.at(0) == '.') {   // is simulation component (dc, ac, ...)
     int a, b, xb, yb;
-    QFont newFont = p->font();
+    QFont newFont = painter->font();
 
     float Scale =
           ((Schematic*)QucsMain->DocumentTab->currentWidget())->Scale;
@@ -342,45 +443,84 @@ void Component::paintScheme(Schematic *p)
     y2 = y1+23 + int(float(b) / Scale);
     if(ty < y2+1) if(ty > y1-r.height())  ty = y2 + 1;
 
-    p->PostPaintEvent(_Rect,cx-6, cy-5, xb, yb);
-    p->PostPaintEvent(_Line,cx-1, cy+yb, cx-6, cy+yb-5);
-    p->PostPaintEvent(_Line,cx+xb-2, cy+yb, cx-1, cy+yb);
-    p->PostPaintEvent(_Line,cx+xb-2, cy+yb, cx+xb-6, cy+yb-5);
-    p->PostPaintEvent(_Line,cx+xb-2, cy+yb, cx+xb-2, cy);
-    p->PostPaintEvent(_Line,cx+xb-2, cy, cx+xb-6, cy-5);
+    painter->drawRect(cx-6,    cy-5,  xb, yb);
+    painter->drawLine(cx-1,    cy+yb, cx-6,    cy+yb-5);
+    painter->drawLine(cx+xb-2, cy+yb, cx-1,    cy+yb);
+    painter->drawLine(cx+xb-2, cy+yb, cx+xb-6, cy+yb-5);
+    painter->drawLine(cx+xb-2, cy+yb, cx+xb-2, cy);
+    painter->drawLine(cx+xb-2, cy,    cx+xb-6, cy-5);
     return;
   }
 
   // paint all lines
   foreach(Line *p1, Lines)
-    p->PostPaintEvent(_Line,cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
+    painter->drawLine(cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
 
   // paint all ports
   foreach(Port *p2, Ports)
-    if(p2->avail) p->PostPaintEvent(_Ellipse,cx+p2->x-4, cy+p2->y-4, 8, 8);
+    if(p2->avail) painter->drawEllipse(cx+p2->x-4, cy+p2->y-4, 8, 8);
 
   foreach(Arc *p3, Arcs)   // paint all arcs
-    p->PostPaintEvent(_Arc,cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
+    painter->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
 
 
   foreach(Area *pa, Rects) // paint all rectangles
-    p->PostPaintEvent(_Rect,cx+pa->x, cy+pa->y, pa->w, pa->h);
+    painter->drawRect(cx+pa->x, cy+pa->y, pa->w, pa->h);
 
   foreach(Area *pa, Ellips) // paint all ellipses
-    p->PostPaintEvent(_Ellipse,cx+pa->x, cy+pa->y, pa->w, pa->h);
+    painter->drawEllipse(cx+pa->x, cy+pa->y, pa->w, pa->h);
 }
 
 // -------------------------------------------------------
 // For output on a printer device.
-void Component::print(ViewPainter *p, float FontScale)
+/// \todo is Component::print needed?
+void Component::print(QPainter *p, float FontScale)
 {
   foreach(Text *pt, Texts)
     pt->Size *= FontScale;
 
-  paint(p);
+  /// \todo paint(p);
 
  foreach(Text *pt, Texts)
     pt->Size /= FontScale;
+}
+
+void Component::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+  qDebug() << "hoverEnter" << this->Name;
+  boundingBoxColor = QPen(Qt::blue,2);
+
+  // show properties as tooltip
+  QString str = QString(
+    "Description : %1\n"
+    "Name        : %2\n"
+    "Model       : %3\n"
+    "Ports       : %4\n"
+    "Props       : %5\n"
+    "mirroredX   : %6\n"
+    "rotated     : %7\n"
+    "isActive    : %8\n"
+    "cx,cy       : %9, %10"
+     )
+       .arg(Description)
+       .arg(Name)
+       .arg(Model)
+       .arg(QString::number(Ports.size()))
+       .arg(QString::number(Props.count()))
+       .arg(QString::number(mirroredX))
+       .arg(QString::number(rotated))
+       .arg(QString::number(isActive))
+       .arg(QString::number(cx))
+       .arg(QString::number(cy));
+
+  incomplete();
+  // setToolTip(str);
+}
+
+void Component::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
+  qDebug() << "hoverLeave" << this->Name;
+  boundingBoxColor = QPen(Qt::magenta,1);
 }
 
 // -------------------------------------------------------
@@ -787,6 +927,7 @@ void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
 // FIXME: must be Component* SchematicParser::loadComponent(Stream&, Component*);
 Component* Schematic::loadComponent(const QString& _s, Component* c) const
 {
+  qDebug() << "load" << _s;
   bool ok;
   int  ttx, tty, tmp;
   QString s = _s;
@@ -858,23 +999,27 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
 
   unsigned int z=0, counts = s.count('"');
   // FIXME. use c->paramCount()
-  if(Model == "Sub")
+  if(Model == "Sub"){
     tmp = 2;   // first property (File) already exists
-  else if(Model == "Lib")
+  }else if(Model == "Lib"){
     tmp = 3;
-  else if(Model == "EDD")
+  }else if(Model == "EDD"){
     tmp = 5;
-  else if(Model == "RFEDD")
+  }else if(Model == "RFEDD"){
     tmp = 8;
-  else if(Model == "VHDL")
+  }else if(Model == "VHDL"){
     tmp = 2;
-  else if(Model == "MUTX")
+  }else if(Model == "MUTX"){
     tmp = 5; // number of properties for the default MUTX (2 inductors)
-  else tmp = counts + 1;    // "+1" because "counts" could be zero
+  }else{
+    // "+1" because "counts" could be zero
+    tmp = counts + 1;
+  }
 
   /// BUG FIXME. dont use Component parameter dictionary.
-  for(; tmp<=(int)counts/2; tmp++)
+  for(; tmp<=(int)counts/2; tmp++){
     c->Props.append(new Property("p", "", true, " "));
+  }
 
   // load all properties
   Property *p1;
@@ -888,6 +1033,7 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
     if(z > counts) {
       if(p1->Description.isEmpty()){
         c->Props.remove();    // remove if allocated in vain
+      }else{
       }
 
       if(Model == "Diode") { // BUG: don't use names
@@ -907,9 +1053,8 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
           p1->Value = c->Props.at(11)->Value;
           c->Props.current()->Value = "0";
         }
-      }
-      else if(Model == "AND" || Model == "NAND" || Model == "NOR" ||
-	      Model == "OR" ||  Model == "XNOR"|| Model == "XOR") {
+      }else if(Model == "AND" || Model == "NAND" || Model == "NOR" ||
+	       Model == "OR" ||  Model == "XNOR"|| Model == "XOR") {
 	if(counts < 10) {   // backward compatible
           counts >>= 1;
           p1 = c->Props.at(counts);
@@ -921,8 +1066,7 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
           }
           c->Props.current()->Value = "10";
 	}
-      }
-      else if(Model == "Buf" || Model == "Inv") {
+      }else if(Model == "Buf" || Model == "Inv") {
 	if(counts < 8) {   // backward compatible
           counts >>= 1;
           p1 = c->Props.at(counts);
@@ -934,12 +1078,17 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
           }
           c->Props.current()->Value = "10";
 	}
+      }else{
       }
 
       return c;
+    }else{
+      // z <= counts
     }
 
     // for equations
+    qDebug() << "Model" << Model;
+#if 1
     if(Model != "EDD" && Model != "RFEDD" && Model != "RFEDD2P")
     if(p1->Description.isEmpty()) {  // unknown number of properties ?
       p1->Name = n.section('=',0,0);
@@ -950,6 +1099,7 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
         c->Props.prev();
       }
     }
+#endif
     if(z == 6)  if(counts == 6)     // backward compatible
       if(Model == "R") {
         c->Props.getLast()->Value = n;
@@ -963,8 +1113,6 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
 
   return c;
 }
-
-// -------------------------------------------------------
 
 // *******************************************************************
 // ***  The following functions are used to load the schematic symbol
@@ -1274,7 +1422,7 @@ Property * Component::getProperty(const QString& name)
 // ---------------------------------------------------------------------
 void Component::copyComponent(Component *pc)
 {
-  Type = pc->Type;
+  ElemType = pc->ElemType;
   x1 = pc->x1;
   y1 = pc->y1;
   x2 = pc->x2;
@@ -1349,7 +1497,7 @@ void MultiViewComponent::recreate(Schematic *Doc)
 // ***********************************************************************
 GateComponent::GateComponent()
 {
-  Type = isComponent;   // both analog and digital
+  ElemType = isComponent;   // both analog and digital
   Name  = "Y";
 
   // the list order must be preserved !!!

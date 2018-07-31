@@ -28,16 +28,17 @@ class QPainter;
 class QucsDoc {
 public: 
   QucsDoc(QucsApp*, const QString&);
-  virtual ~QucsDoc() {};
+  virtual ~QucsDoc() {}
 
-  virtual void  setName(const QString&) {};
-  virtual bool  load() { return true; };
-  virtual int   save() { return 0; };
-  virtual void  print(QPrinter*, QPainter*, bool, bool) {};
-  virtual void  becomeCurrent(bool) {};
-  virtual float zoomBy(float) { return 1.0; };
-  virtual void  showAll() {};
-  virtual void  showNoZoom() {};
+  virtual void  setName(const QString&) {}
+  virtual bool  load() { return true; }
+  virtual int   save() { return 0; }
+  virtual void  print(QPrinter*, QPainter*, bool, bool) {}
+  virtual void  becomeCurrent(bool) {}
+  virtual void  zoomFit() {}
+  virtual void  zoomReset() {}
+  virtual void  zoomOut() {}
+  virtual void  zoomIn() {}
 
   static QString fileSuffix (const QString&);
   QString fileSuffix (void);

@@ -21,7 +21,7 @@
 
 SubCirPort::SubCirPort()
 {
-  Type = isComponent;   // both analog and digital
+  ElemType = isComponent;   // both analog and digital
   Description = QObject::tr("port of a subcircuit");
 
   // This property must be the first one !

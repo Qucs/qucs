@@ -37,11 +37,26 @@ addons:
       - latex2html
       - octave
 
+# default to qt4, available by default on Trusty 14.04
 matrix:
   include:
     - os: linux
       compiler: gcc
-      env: BUILD=cmake
+      env: BUILD=cmake QT=qt5
+      addons:
+        apt:
+          packages:
+            - *native_deps
+            - qt5-default
+            - qtbase5-dev
+            - qttools5-dev-tools
+            - qttools5-dev
+            - qtscript5-dev
+            - libqt5svg5-dev
+
+    - os: linux
+      compiler: gcc
+      env: BUILD=cmake QT=qt4
       addons:
         apt:
           packages:
@@ -49,7 +64,7 @@ matrix:
 
     - os: linux
       compiler: gcc
-      env: BUILD=autotools
+      env: BUILD=autotools QT=qt4
       addons:
         apt:
           packages:
@@ -59,7 +74,7 @@ matrix:
 
     - os: linux
       compiler: clang
-      env: BUILD=autotools
+      env: BUILD=autotools QT=qt4
       addons:
         apt:
           packages:
@@ -78,11 +93,16 @@ matrix:
             - python-tk
 
     - os: osx
+      osx_image: xcode8.3
+      compiler: clang
+      env: BUILD=cmake QT=qt5
+
+    - os: osx
       # Qt 4.8.7 official installer works up to OSX 10.10 or xcode6.4
       # Use bottle (with Qt3Support) from cartr/qt4
       osx_image: xcode8.3
       compiler: clang
-      env: BUILD=autotools
+      env: BUILD=autotools QT=qt4
 
 # Set secure environment with encrypted string containing GIT_NAME, GIT_EMAIL and GH_TOKEN
 env:
@@ -97,6 +117,8 @@ before_install:
   - if [[ $CC == clang ]]; then CLANG=true; fi
   - if [[ $BUILD == autotools ]]; then AUTOTOOLS=true; fi
   - if [[ $BUILD == cmake ]]; then CMAKE=true; fi
+  - if [[ $QT == qt5 ]]; then QT5=true; fi
+  - if [[ $QT == qt4 ]]; then QT4=true; fi
 
   - if [[ $TRAVIS_BRANCH == master ]] ; then MASTER=true; fi
 
@@ -125,11 +147,16 @@ install:
       pip install matplotlib;
       brew install ccache;
       export PATH="/usr/local/opt/ccache/libexec:$PATH";
+      brew tap guitorri/tap;
+      brew install adms;
+    fi
+  - if [[ $OSX && QT4 ]]; then
       brew tap cartr/qt4;
       brew tap-pin cartr/qt4;
       brew install qt@4;
-      brew tap guitorri/tap;
-      brew install adms;
+    fi
+  - if [[ $OSX && QT5 ]]; then
+      brew install qt;
     fi
 
 before_script:
@@ -182,30 +209,50 @@ script:
   # enable parallel make after building ADMS
   - export MAKEFLAGS="-j2"
 
-  # run all checks
-  - ./bootstrap
-
-  - if [[ $OSX ]]; then
+  - if [[ $OSX && $AUTOTOOLS && $QT4 ]]; then
+      ./bootstrap;
       ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc PYTHON=python2 || travis_terminate 1;
       make || travis_terminate 1;
       make qucscheck || travis_terminate 1;
     fi
 
-    if [[ $LINUX && $AUTOTOOLS && $CLANG ]]; then
+  - if [[ $LINUX && $AUTOTOOLS && $QT4 && $CLANG ]]; then
+      ./bootstrap;
       ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --enable-doc || travis_terminate 1;
       make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --enable-doc" || travis_terminate 1;
     fi
 
-   if [[ $LINUX && $AUTOTOOLS && $GCC ]]; then
+  - if [[ $LINUX && $AUTOTOOLS && $QT4 && $GCC ]]; then
+      ./bootstrap;
       ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc || travis_terminate 1;
-      make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --disable-dependency-tracking --disable-doc" || travis_terminate 1;
-    fi
+      make check || travis_terminate 1;
+   fi
 
-  # with cmake build only
-  - if [[ $CMAKE ]]; then
+   if [[ $LINUX && $AUTOTOOLS && $GCC ]]; then
+      make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --disable-dependency-tracking --disable-doc" || travis_terminate 1;
+   fi
+
+  - if [[ $LINUX && $CMAKE && $QT5 ]]; then
       mkdir build;
       cd build;
-      cmake .. || travis_terminate 1;
+      cmake .. -DUSE_QT5=ON || travis_terminate 1;
+      make || travis_terminate 1;
+      make test || travis_terminate 1;
+    fi
+
+  - if [[ $LINUX && $CMAKE && $QT4 ]]; then
+      mkdir build;
+      cd build;
+      cmake .. -DUSE_QT5=OFF || travis_terminate 1;
+      make || travis_terminate 1;
+      make test || travis_terminate 1;
+    fi
+
+  - if [[ $OSX && $CMAKE && $QT5 ]]; then
+      export Qt5_DIR=`brew --prefix qt`;
+      mkdir build;
+      cd build;
+      cmake .. -DUSE_QT5=ON || travis_terminate 1;
       make || travis_terminate 1;
       make test || travis_terminate 1;
     fi

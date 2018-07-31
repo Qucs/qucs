@@ -37,8 +37,11 @@
 #ifndef ELEMENT_H
 #define ELEMENT_H
 
+#include <QGraphicsItem>
 #include <QPen>
 #include <QBrush>
+#include <QDebug>
+#include "qt_compat.h"
 
 class Node;
 class QPainter;
@@ -107,7 +110,7 @@ struct Property {
 #define isDummyElement    0
 #define isSpecialMask    -16
 
-#define isComponent        0x30000
+#define isComponent_        0x30000
 #define isComponentText    0x30002
 #define isAnalogComponent  0x10000
 #define isDigitalComponent 0x20000
@@ -136,22 +139,33 @@ struct Property {
 
 /** \class Element
   * \brief Superclass of all schematic drawing elements
-  *
+  * Element and its derived classes can be used in the QGraphicsView canvas.
   *
   */
 class Element {
-public:
+protected: // Element is an abstract basetype. hence we hide the constructors.
   Element();
+  Element(const Element&);
+public:
   virtual ~Element();
 
-  virtual void paintScheme(Schematic *);
   virtual void paintScheme(QPainter *);
+
   virtual void setCenter(int, int, bool relative=false);
   virtual void getCenter(int&, int&);
 
-  bool isSelected;
-  int  Type;    // whether it is Component, Wire, ...
+  virtual QRectF boundingRect() const;
+  virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
+
+public:
+  bool isSelected() const { return ElemSelected; }
+  // BUG: use dynamic_cast to obtain type
+  int elemType() const { return ElemType; }
+
+  bool ElemSelected;
+  int  ElemType;    // BUG. obsolete, should be just Type?
   int  cx, cy, x1, y1, x2, y2;  // center and relative boundings
+  bool drawScheme; // inform paint method to draw element or its outline
 };
 
 

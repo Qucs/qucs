@@ -20,7 +20,7 @@
 
 RS_FlipFlop::RS_FlipFlop()
 {
-  Type = isDigitalComponent;
+  ElemType = isDigitalComponent;
   Description = QObject::tr("RS flip flop");
 
   Props.append(new Property("t", "0", false, QObject::tr("delay time")));

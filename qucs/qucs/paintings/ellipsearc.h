@@ -26,9 +26,11 @@
 class EllipseArc : public Painting  {
 public:
   EllipseArc();
- ~EllipseArc();
+  virtual ~EllipseArc() {}
 
-  void paintScheme(Schematic*);
+  QRectF boundingRect() const;
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
+
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
@@ -38,7 +40,6 @@ public:
   QString save();
   QString saveCpp();
   QString saveJSON();
-  void paint(ViewPainter*);
   void MouseMoving(Schematic*, int, int, int, int, Schematic*, int, int, bool);
   bool MousePressing();
   bool getSelected(float, float, float);
