@@ -94,6 +94,7 @@ void Graph::paintLines(ViewPainter *p, int x0, int y0)
   }
 }
 // ---------------------------------------------------------------------
+#if 0
 /*paint function for phasor diagram*/
 void Graph::paintvect(ViewPainter *p, int x0, int y0)
 {
@@ -113,6 +114,7 @@ void Graph::paintvect(ViewPainter *p, int x0, int y0)
   p->Painter->setPen(QPen(QColor(Color), Thick*p->PrintScale, Qt::SolidLine));
   drawvect(x0, y0, p);
 }
+#endif
 // ---------------------------------------------------------------------
 QString Graph::save()
 {
