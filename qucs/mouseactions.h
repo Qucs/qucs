@@ -32,8 +32,8 @@ public:
 	{
 	}
 public:
-	Element* element() { return _e; }
-	Element const* element() const { return _e; }
+	ElementGraphics* element() { return _e; }
+	ElementGraphics const* element() const { return _e; }
 
 	void clear(){
 		_e=nullptr;
@@ -49,11 +49,12 @@ public: // compat with old code
 		return _e;
 	}
 	void setSelected() const{
-		incomplete();
+		assert(_e);
+		_e->setSelected();
 	}
 	bool isSelected() const{
-		incomplete();
-		return false;
+		assert(_e);
+		return _e->isSelected();
 	}
 
 public: // access coordinates from old code.
