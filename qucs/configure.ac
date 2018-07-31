@@ -375,17 +375,18 @@ case $host_os in
 
     ]) # End of fallback Qt4 logic
 
-    AC_SUBST([QT_MAJOR_VERSION], [version string for moc purposes])
+    AC_SUBST([QT_MAJOR_VERSION], [${QT_MAJOR_VERSION}], [version string for moc purposes])
 
     AS_IF([test $QT_MAJOR_VERSION -ge 5],
           [ QT_CFLAGS="$QT_CFLAGS -fPIC"
 	   DEPRECATED_STUFF=
-      PKG_CHECK_MODULES([QtPrintSupport], [${qt_name}PrintSupport])
+      PKG_CHECK_MODULES([QtPrintSupport], [${qt_name}PrintSupport], [])
       PKG_CHECK_MODULES([QtScript], [${qt_name}Script])
 	   ], [
-      PKG_CHECK_MODULES([Qt3Support], [${qt_name}PrintSupport])
+	       # in qt<5 is unchanged, as the new code does not work yet.
+      PKG_CHECK_MODULES([Qt3Support], [Qt3Support])
 	       DEPRECATED_STUFF="-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS"
-	       QT_LIBS="$QT_LIBS -framework Qt3Support"
+	       QT_LIBS="$QT_LIBS $Qt3Support_LIBS -framework Qt3Support"
 	       CPPFLAGS="$CPPFLAGS -I$path/Qt3Support.framework/Headers"
 	       ])
 
