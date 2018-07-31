@@ -24,6 +24,7 @@
 #include <QDebug>
 #include <QPolygon>
 
+#if QT_VERSION < 0x050000
 ViewPainter::ViewPainter(QPainter *p)
 {
   Painter = p;
@@ -66,6 +67,8 @@ void ViewPainter::init(QPainter *p, float Scale_, int DX_, int DY_,
   p->setRenderHints(hints);
 }
 
+#endif
+
 // -------------------------------------------------------------
 void ViewPainter::map(int x1, int y1, int& x, int& y)
 {
@@ -75,6 +78,8 @@ void ViewPainter::map(int x1, int y1, int& x, int& y)
   z = float(y1)*Scale + DY;
   y = TO_INT(z);
 }
+
+#if QT_VERSION < 0x050000
 
 // -------------------------------------------------------------
 void ViewPainter::drawPoint(int x1i, int y1i)
@@ -97,6 +102,8 @@ void ViewPainter::drawLine(int x1i, int y1i, int x2i, int y2i)
 
   Painter->drawLine(QLineF(x1, y1, x2, y2));
 }
+
+#endif
 
 // -------------------------------------------------------------
 /*!
@@ -169,6 +176,8 @@ void Graph::drawLines(int x0, int y0, ViewPainter *p) const
     Painter->drawPath(path);
   }
 }
+
+#if QT_VERSION < 0x050000
 // -------------------------------------------------------------
 //draws the vectors of phasor diagram
 void Graph::drawvect(int x0, int y0, ViewPainter *p) const
@@ -225,6 +234,7 @@ void Graph::drawvect(int x0, int y0, ViewPainter *p) const
   }
 
 }
+#endif
 // -------------------------------------------------------------
 void Graph::drawStarSymbols(int x0i, int y0i, ViewPainter *p) const
 {
@@ -312,6 +322,8 @@ void Graph::drawArrowSymbols(int x0i, int y0i, ViewPainter *p) const
     else  pp++;
   }
 }
+
+#if QT_VERSION < 0x050000
 
 // -------------------------------------------------------------
 void ViewPainter::drawRect(int x1i, int y1i, int dxi, int dyi)
@@ -502,5 +514,14 @@ void ViewPainter::drawResizeRect(int x1i, int y1i)
 
   Painter->drawRect(QRectF(x1-5, y1-5, 10, 10));
 }
+
+#else // qt5
+
+void ViewPainter::drawResizeRect(int x1, int y1)
+{
+  Painter->drawRect(QRectF(x1-5, y1-5, 10, 10));
+}
+
+#endif
 
 // vim:ts=8:sw=2:noet
