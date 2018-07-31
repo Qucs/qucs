@@ -298,6 +298,9 @@ protected:
   void paintFrame(ViewPainter*);
 
   // overloaded function to get actions of user
+#ifdef USE_SCROLLVIEW
+  void drawContents(QPainter*, int, int, int, int);
+#endif
   void contentsMouseMoveEvent(QMouseEvent*);
   void contentsMousePressEvent(QMouseEvent*);
   void contentsMouseDoubleClickEvent(QMouseEvent*);
