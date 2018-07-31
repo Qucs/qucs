@@ -1079,6 +1079,7 @@ void QucsApp::slotCursorUp(bool up)
     view->MAx3 = 1;  // sign for moved elements
     view->endElementMoving(Doc, &movingElements);
   }
+  */
 #endif
 }
 
