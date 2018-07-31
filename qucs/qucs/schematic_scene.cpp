@@ -29,3 +29,21 @@ ElementGraphics* Schematic::itemAt(float x, float y)
 	return nullptr;
 #endif
 }
+
+#if QT_VERSION >= 0x050000
+Component* component(ElementGraphics* e){
+	return component(e->operator->());
+}
+Wire* wire(ElementGraphics* e){
+	return wire(e->operator->());
+}
+WireLabel* wireLabel(ElementGraphics* e){
+	return wireLabel(e->operator->());
+}
+Diagram* diagram(ElementGraphics* e){
+	return diagram(e->operator->());
+}
+Painting* painting(ElementGraphics* e){
+	return painting(e->operator->());
+}
+#endif
