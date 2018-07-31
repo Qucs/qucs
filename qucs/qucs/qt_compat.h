@@ -25,6 +25,21 @@
 
 #include "trace.h"
 
+#if QT_VERSION < 0x050000
+# define USE_SCROLLVIEW
+#endif
+
+// this is also in schematic.h. that's a moc issue.
+#ifdef USE_SCROLLVIEW
+# define SchematicBase Q3ScrollView
+#else
+# define SchematicBase QGraphicsView
+class ElementGraphics;
+#endif
+
+
+// strictly, this should also work with qt4.
+
 // partly implement Q3Ptrlist, see Qt3 documentation.
 // just don't use it in new code, remove what is no longer used.
 template <class T>
@@ -178,7 +193,7 @@ public:
 		}else if (cur == localList.begin()){ untested();
 			cur=localList.end();
 			return nullptr;
-		}else{ untested();
+		}else{ itested();
 			cur--;
 			return *cur;
 		}
@@ -294,8 +309,37 @@ private:
 	iterator cur;
 };
 
-// select qt3 code
-#define USE_SCROLLVIEW
+#ifndef QT_MAJOR_VERSION
+#define QT_MAJOR_VERSION (QT_VERSION >> 16)
+#endif
+
+#if QT_VERSION >= 0x050000
+
+# define TRUE true
+# define FALSE false
+
+# define setResizeMode setSectionResizeMode
+# define setClickable setSectionsClickable
+
+# define setCodecForTr setCodecForLocale
+# define DockRight RightDockWidgetArea
+# define Q_UINT16 quint16
+# define Q_UINT32 quint32
+# define Q_ULONG qulonglong
+# define IO_WriteOnly QIODevice::WriteOnly
+# define WFlags WindowFlags
+# define toAscii toLatin1
+
+# define qInstallMsgHandler qInstallMessageHandler
+
+# define languageChange() incomplete()
+
+# define contentsMousePressEvent mousePressEvent
+# define contentsMouseMoveEvent mouseMoveEvent
+# define contentsMouseReleaseEvent mouseReleaseEvent
+# define contentsMouseDoubleClickEvent mouseDoubleClickEvent
+
+#endif
 
 #endif
 

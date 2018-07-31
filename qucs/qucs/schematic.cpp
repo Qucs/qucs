@@ -55,6 +55,8 @@
 #include "misc.h"
 #include "trace.h"
 
+#include "qt_compat.h"
+
 // just dummies for empty lists
 WireList      SymbolWires;
 NodeList      SymbolNodes;
