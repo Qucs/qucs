@@ -23,9 +23,9 @@
 #ifndef PRINTERWRITER_H_
 #define PRINTERWRITER_H_ value
 
-#include <QPrinter>
 #include <QString>
 
+class QPrinter;
 class QWidget;
 
 class PrinterWriter
