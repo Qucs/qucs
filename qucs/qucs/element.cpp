@@ -49,6 +49,10 @@ void Element::snapToGrid(Schematic& s){
     s.setOnGrid(cx, cy);
 }
 
+// pure? maybe not. there could be non-paintable elements...
+void Element::paint(ViewPainter*){
+	unreachable();
+}
 
 // legacy stuff. pretend that Element points to an Element
 #include "components/component.h"
