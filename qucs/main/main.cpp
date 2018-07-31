@@ -92,6 +92,8 @@ void qucsMessageOutput(QtMsgType type, const char *msg)
   case QtFatalMsg:
     fprintf(stderr, "Fatal: %s\n", msg);
     abort();
+  default:
+    fprintf(stderr, "Default %s\n", msg);
   }
 
 #ifdef _WIN32
@@ -605,6 +607,17 @@ void attach_default_plugins()
   attach_single(pp, "libpaintings" SOEXT);
  // attach_single(pp, "libdialogs" SOEXT);
 }
+
+#if QT_VERSION < 0x050000
+# define qucsMessageHandler qucsMessageOutput
+#else
+void qucsMessageHandler(QtMsgType type, const QMessageLogContext &, const QString & str)
+{
+  const char * msg = str.toUtf8().data();
+  qucsMessageOutput(type, msg);
+}
+#endif
+
 // #########################################################################
 // ##########                                                     ##########
 // ##########                  Program Start                      ##########
@@ -612,7 +625,7 @@ void attach_default_plugins()
 // #########################################################################
 int main(int argc, char *argv[])
 {
-  qInstallMsgHandler(qucsMessageOutput);
+  qInstallMsgHandler(qucsMessageHandler);
   // set the Qucs version string
   QucsVersion = VersionTriplet(PACKAGE_VERSION);
 
