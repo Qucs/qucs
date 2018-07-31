@@ -41,15 +41,37 @@ matrix:
   include:
     - os: linux
       compiler: gcc
+      env: BUILD=autotools QT=qt5
+      addons:
+        apt:
+          packages:
+            - *native_deps
+            - lcov # lcov is required by configure, only gcov really needed thou
+            - qt5-default
+            - qtbase5-dev
+            - qttools5-dev-tools
+            - qttools5-dev
+            - qtscript5-dev
+            - libqt5svg5-dev
+            - python-tk
+
+    - os: linux
+      compiler: gcc
       env: BUILD=cmake
       addons:
         apt:
           packages:
             - *native_deps
+            - qt5-default
+            - qtbase5-dev
+            - qttools5-dev-tools
+            - qttools5-dev
+            - qtscript5-dev
+            - libqt5svg5-dev
 
     - os: linux
       compiler: gcc
-      env: BUILD=autotools
+      env: BUILD=autotools QT=qt4
       addons:
         apt:
           packages:
@@ -59,7 +81,7 @@ matrix:
 
     - os: linux
       compiler: clang
-      env: BUILD=autotools
+      env: BUILD=autotools QT=qt4
       addons:
         apt:
           packages:
@@ -82,7 +104,7 @@ matrix:
       # Use bottle (with Qt3Support) from cartr/qt4
       osx_image: xcode8.3
       compiler: clang
-      env: BUILD=autotools
+      env: BUILD=autotools QT=qt4
 
 # Set secure environment with encrypted string containing GIT_NAME, GIT_EMAIL and GH_TOKEN
 env:
@@ -97,6 +119,8 @@ before_install:
   - if [[ $CC == clang ]]; then CLANG=true; fi
   - if [[ $BUILD == autotools ]]; then AUTOTOOLS=true; fi
   - if [[ $BUILD == cmake ]]; then CMAKE=true; fi
+  - if [[ $QT == qt5 ]]; then QT5=true; fi
+  - if [[ $QT == qt4 ]]; then QT4=true; fi
 
   - if [[ $TRAVIS_BRANCH == master ]] ; then MASTER=true; fi
 
@@ -195,6 +219,14 @@ script:
       ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --enable-doc || travis_terminate 1;
       make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --enable-doc" || travis_terminate 1;
     fi
+
+    if [[ $LINUX && $AUTOTOOLS && $QT5 ]]; then
+      mkdir b;
+      cd b;
+      ../configure --with-qt-name=Qt5 --enable-debug --disable-doc || travis_terminate 1;
+      make check || travis_terminate 1;
+    fi
+
 
    if [[ $LINUX && $AUTOTOOLS && $GCC ]]; then
       ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc || travis_terminate 1;
