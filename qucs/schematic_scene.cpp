@@ -33,19 +33,36 @@ ElementGraphics* Schematic::itemAt(float x, float y)
 
 #if QT_VERSION >= 0x050000
 Component* component(ElementGraphics* e){
+	if(!e) return nullptr;
 	return component(e->operator->());
 }
 Wire* wire(ElementGraphics* e){
+	if(!e) return nullptr;
 	return wire(e->operator->());
 }
 WireLabel* wireLabel(ElementGraphics* e){
+	if(!e) return nullptr;
 	return wireLabel(e->operator->());
 }
 Diagram* diagram(ElementGraphics* e){
+	if(!e) return nullptr;
 	return diagram(e->operator->());
 }
 Painting* painting(ElementGraphics* e){
+	if(!e) return nullptr;
 	return painting(e->operator->());
+}
+Marker* marker(ElementGraphics* e){
+	if(!e) return nullptr;
+	return marker(e->operator->());
+}
+Node* node(ElementGraphics* e){
+	if(!e) return nullptr;
+	return node(e->operator->());
+}
+Graph* graph(ElementGraphics* e){
+	if(!e) return nullptr;
+	return graph(e->operator->());
 }
 
 #endif
