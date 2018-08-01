@@ -100,9 +100,11 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   isVerilog = false;
   creatingLib = false;
 
+#ifndef USE_SCROLLVIEW
   // HUH?
   Scene = new SchematicScene(this);
   this->setScene(Scene);
+#endif
 
   ShowFrame = 0;  // don't show
   FrameText[0] = tr("Title");
