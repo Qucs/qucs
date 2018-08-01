@@ -2260,4 +2260,16 @@ QPointF Schematic::mapToScene(QPoint const& p)
 #endif
 
 
+// ---------------------------------------------------
+#ifdef USE_SCROLLVIEW
+QPointF Schematic::mapToScene(QPoint const& p)
+{
+  float fX=float(p.x())/Scale + float(ViewX1);
+  float fY=float(p.x())/Scale + float(ViewY1);
+
+  return QPointF(fX, fY);
+}
+#endif
+
+
 // vim:ts=8:sw=2:noet
