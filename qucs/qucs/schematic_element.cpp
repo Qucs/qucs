@@ -711,7 +711,7 @@ int Schematic::insertWire(Wire *w)
 
 // ---------------------------------------------------
 // Follows a wire line and selects it.
-void Schematic::selectWireLine(Element *pe, Node *pn, bool ctrl)
+void Schematic::selectWireLine(ElementGraphics *g, Node *pn, bool ctrl)
 {
     Node *pn_1st = pn;
     while(pn->connectionsCount() == 2)
