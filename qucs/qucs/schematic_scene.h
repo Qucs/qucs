@@ -78,7 +78,7 @@ private: // later: Qgraphics virtual overrides
 //  void paint() { assert(_e); _e->paint(); }
 //  void paintScheme(Schematic *s) { assert(_e); _e->paintScheme(s); }
   void paintScheme(QPainter *p) { assert(_e); _e->paintScheme(p); }
-//  QRectF boundingRect() const {return _e->boundingRect(); }
+  QRectF boundingRect() const { assert(_e); return _e->boundingRect(); }
   void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*){
 	  assert(_e);
 	  ViewPainter v(painter);

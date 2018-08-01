@@ -174,6 +174,8 @@ public: // make old variables accessible
 	void setObsoleteType(int t){
 		Type = t;
 	}
+
+  virtual QRectF boundingRect() const;
 public: // other stuff
   virtual void paintScheme(Schematic *) const; // obsolete?
   virtual void paintScheme(QPainter *) const; // obsolete?
