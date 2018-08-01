@@ -269,8 +269,32 @@ public:
   int ViewX1, ViewY1, ViewX2, ViewY2;  // size of the document area
   int UsedX1, UsedY1, UsedX2, UsedY2;  // document area used by elements
 
-  int showFrame;
-  QString Frame_Text0, Frame_Text1, Frame_Text2, Frame_Text3;
+  int ShowFrame; // BUG// it's the frame type.
+  int showFrame() const{ return ShowFrame; }
+  void setFrameType(int t){
+	  if(t != ShowFrame){
+		  setChanged(true);
+		  ShowFrame = t;
+	  }else{
+	  }
+  }
+
+  // BUG: use Frame::setParameter
+  void setFrameText(int idx, QString s){
+	  if(s != FrameText[idx]){
+		  setChanged(true);
+		  FrameText[idx] = s;
+	  }else{
+	  }
+  }
+
+private:
+  QString FrameText[4];
+public:
+  QString frameText0() const { return FrameText[0]; }
+  QString frameText1() const { return FrameText[1]; }
+  QString frameText2() const { return FrameText[2]; }
+  QString frameText3() const { return FrameText[3]; }
 
   // Two of those data sets are needed for Schematic and for symbol.
   // Which one is in "tmp..." depends on "symbolMode".
