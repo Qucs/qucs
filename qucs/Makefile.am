@@ -23,6 +23,9 @@
 #
 ACLOCAL_AMFLAGS=-Im4
 
+# TODO: why is this needed?
+check-recursive: all
+
 SUBDIRS = \
   man \
   qucs \
