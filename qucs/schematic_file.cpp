@@ -447,11 +447,11 @@ bool Schematic::loadProperties(QTextStream *stream)
 		if(nstr.toInt(&ok) == 0) SimRunScript = false;
 		else SimRunScript = true;
     else if(cstr == "showFrame")
-		showFrame = nstr.at(0).toLatin1() - '0';
-    else if(cstr == "FrameText0") misc::convert2Unicode(Frame_Text0 = nstr);
-    else if(cstr == "FrameText1") misc::convert2Unicode(Frame_Text1 = nstr);
-    else if(cstr == "FrameText2") misc::convert2Unicode(Frame_Text2 = nstr);
-    else if(cstr == "FrameText3") misc::convert2Unicode(Frame_Text3 = nstr);
+		setFrameType( nstr.at(0).toLatin1() - '0');
+    else if(cstr == "FrameText0") misc::convert2Unicode(FrameText[0] = nstr);
+    else if(cstr == "FrameText1") misc::convert2Unicode(FrameText[1] = nstr);
+    else if(cstr == "FrameText2") misc::convert2Unicode(FrameText[2] = nstr);
+    else if(cstr == "FrameText3") misc::convert2Unicode(FrameText[3] = nstr);
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 	   QObject::tr("Format Error:\nUnknown property: ")+cstr);
