@@ -63,7 +63,7 @@ typedef Element ElementGraphics;
 #else
 // A graphics element on the screen.
 // kind of smart-pointer/proxy.
-class ElementGraphics : public QObject {
+class ElementGraphics : public QGraphicsItem {
 private:
 	ElementGraphics(){}
 public:
