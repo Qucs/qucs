@@ -158,7 +158,7 @@ public:
 private:
   // former Schematic::select*
   // but that does not work, because ElementMouseAction lives here.
-  ElementMouseAction selectElement(Schematic*, float, float, bool, int *index=0);
+  ElementMouseAction selectElement(Schematic*, QPoint const&, bool, int *index=0);
   Component* selectCompText(Schematic*, int, int, int&, int&);
   void     deselectElements(Schematic*, ElementMouseAction);
 

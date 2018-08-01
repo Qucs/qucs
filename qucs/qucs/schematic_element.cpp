@@ -979,7 +979,7 @@ ElementMouseAction MouseActions::selectElement(Schematic* Doc,
 
     int n;
 
-    QPointF pos=mapToScene(xy);
+    QPointF pos=Doc->mapToScene(xy);
     float fX=pos.x();
     float fY=pos.y();
     int x=int(fX);
