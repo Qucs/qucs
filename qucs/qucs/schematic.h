@@ -274,8 +274,9 @@ public:
   void    markerLeftRight(bool, Q3PtrList<Element>*);
   void    markerUpDown(bool, Q3PtrList<Element>*);
 
-  Element* selectElement(QPoint const&, bool, int *index=0);
-  ElementGraphics itemAt(float, float);
+  // now in mouseactions
+  // Element* selectElement(QPoint const&, bool, int *index=0);
+  ElementGraphics* itemAt(float, float);
   int      selectElements(int, int, int, int, bool);
   void     selectMarkers();
   void     newMovingWires(Q3PtrList<Element>*, Node*, int);
