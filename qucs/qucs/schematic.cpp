@@ -102,7 +102,14 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
 
 #ifndef USE_SCROLLVIEW
   // HUH?
+  setSceneRect(-2000, -2000, 4000, 4000);
   Scene = new SchematicScene(this);
+  QBrush b(Qt::Dense7Pattern);
+  Scene->setBackgroundBrush(b);
+  //Scene->setBackgroundBrush(Qt::blue);
+
+  setDragMode(QGraphicsView::RubberBandDrag); // why?
+
   this->setScene(Scene);
 #endif
 

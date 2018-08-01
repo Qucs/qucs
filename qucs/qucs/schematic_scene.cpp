@@ -58,6 +58,8 @@ SchematicScene::~SchematicScene()
 
 void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 {
+	QGraphicsScene::drawBackground(painter, rect);
+	return;
 
 	// Draw origin when visible
 	if(rect.contains(QPointF(0, 0))) {

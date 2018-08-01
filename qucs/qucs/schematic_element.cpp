@@ -1434,7 +1434,7 @@ void MouseActions::deselectElements(Schematic* Doc, ElementMouseAction e)
 // return the number of elements selected.
 int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
 {
-#if QT_VERSION >= 0x050000
+#if 0 && QT_VERSION >= 0x050000
     //do something smarter
     incomplete();
     return 0;
