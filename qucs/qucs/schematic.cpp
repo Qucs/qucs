@@ -100,6 +100,10 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   isVerilog = false;
   creatingLib = false;
 
+  // HUH?
+  Scene = new SchematicScene(this);
+  this->setScene(Scene);
+
   ShowFrame = 0;  // don't show
   FrameText[0] = tr("Title");
   FrameText[1] = tr("Drawn By:");
