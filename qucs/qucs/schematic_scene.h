@@ -74,6 +74,10 @@ public:
 	}
 	~ElementGraphics(){
 	}
+public:
+	bool operator!=(Element const* e) const{
+		return _e!=e;
+	}
 private: // later: Qgraphics virtual overrides
 //  void paint() { assert(_e); _e->paint(); }
 //  void paintScheme(Schematic *s) { assert(_e); _e->paintScheme(s); }
@@ -100,6 +104,13 @@ public:
 	  assert(_e);
 	  _e->getCenter(i, j);
   }
+
+	int const& cx_() const { assert(_e); return _e->cx_(); }
+	int const& cy_() const { assert(_e); return _e->cy_(); }
+	int const& x1_() const { assert(_e); return _e->x1_(); }
+	int const& y1_() const { assert(_e); return _e->y1_(); }
+	int const& x2_() const { assert(_e); return _e->x2_(); }
+	int const& y2_() const { assert(_e); return _e->y2_(); }
 private:
   Element* _e;
 }; // ElementGraphics
@@ -115,6 +126,9 @@ Wire* wire(ElementGraphics*);
 WireLabel* wireLabel(ElementGraphics*);
 Diagram* diagram(ElementGraphics*);
 Painting* painting(ElementGraphics*);
+Graph* graph(ElementGraphics*);
+Marker* marker(ElementGraphics*);
+Node* node(ElementGraphics*);
 #endif
 
 
