@@ -59,6 +59,16 @@ void Element::snapToGrid(Schematic& s){
     s.setOnGrid(cx, cy);
 }
 
+QRectF Element::boundingRect() const
+{
+	return QRectF(x1, y1, x2-x1, y2-y1);
+
+//node:
+ // return QRect(cx-4,cy-4,8,8);
+
+}
+
+
 // legacy stuff. pretend that Element points to an Element
 #include "components/component.h"
 #include "diagram.h"
