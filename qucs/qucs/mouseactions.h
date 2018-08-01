@@ -32,8 +32,8 @@ public:
 	{
 	}
 public:
-	ElementGraphics* element() { return _e; }
-	ElementGraphics const* element() const { return _e; }
+	Element* element() { return _e; }
+	Element const* element() const { return _e; }
 
 	void clear(){
 		_e=nullptr;
