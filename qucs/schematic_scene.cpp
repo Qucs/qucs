@@ -62,6 +62,9 @@ SchematicScene::~SchematicScene()
 void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 {
 #ifndef USE_SCROLLVIEW
+	QGraphicsScene::drawBackground(painter, rect);
+	return;
+
 	// Draw origin when visible
 	if(rect.contains(QPointF(0, 0))) {
 		painter->drawLine(QLine(-3.0, 0.0, 3.0, 0.0));
