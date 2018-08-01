@@ -369,7 +369,7 @@ public:
   bool  connectHWires2(Wire*);
   bool  connectVWires2(Wire*);
   int   insertWire(Wire*);
-  void  selectWireLine(Element*, Node*, bool);
+  void  selectWireLine(ElementGraphics*, Node*, bool);
   Wire* selectedWire(int, int);
   Wire* splitWire(Wire*, Node*);
   bool  oneTwoWires(Node*);
@@ -395,6 +395,7 @@ public:
   // now in mouseactions
   // Element* selectElement(QPoint const&, bool, int *index=0);
   ElementGraphics* itemAt(float, float);
+  ElementGraphics* itemAt(QPointF x) { return itemAt(x.x(), x.y());}
   int      selectElements(int, int, int, int, bool);
   void     selectMarkers();
   void     newMovingWires(Q3PtrList<Element>*, Node*, int);
