@@ -709,15 +709,21 @@ int Schematic::insertWire(Wire *w)
     return con | 0x0200;   // sent also end flag
 }
 
+// other place.
+//
 // ---------------------------------------------------
 // Follows a wire line and selects it.
 void Schematic::selectWireLine(ElementGraphics *g, Node *pn, bool ctrl)
 {
+    Element* pe=g->operator->();
     Node *pn_1st = pn;
     while(pn->connectionsCount() == 2)
     {
-        if(pn->Connections.first() == pe)  pe = pn->Connections.last();
-        else  pe = pn->Connections.first();
+        if(pn->Connections.first() == element(pe)){
+	    pe = pn->Connections.last();
+	}else{
+	    pe = pn->Connections.first();
+	}
 
         if(pe->Type != isWire) break;
         if(ctrl) pe->toggleSelected();
@@ -968,13 +974,29 @@ void Schematic::markerUpDown(bool up, Q3PtrList<Element> *Elements)
 */
 ElementMouseAction MouseActions::selectElement(Schematic* Doc,
 	QPoint const& xy, bool flag, int *index)
-{
-  // something like
-   // dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform())
-   //
+{ untested();
    // THIS IS MISLEADING. it is also used to generate mouse actions.
    // we need something that produces actions, not Elements
    // actions will be needed to implement the undo stack... etcpp
+#ifndef USE_SCROLLVIEW
+    assert(Doc);
+   auto scenepos=Doc->mapToScene(xy);
+
+   ElementGraphics* e=Doc->itemAt(scenepos);
+   if(e){ untested();
+   }else{ untested();
+   }
+
+   // now add the mouseaction hacks...
+   if(component(e)){ untested();
+       return ElementMouseAction(e);
+   }else if(wire(e)){ untested();
+       return ElementMouseAction(e);
+   }else{ untested();
+       incomplete();
+       return ElementMouseAction(nullptr);
+   }
+#else
 
     int n;
 
@@ -1254,6 +1276,7 @@ ElementMouseAction MouseActions::selectElement(Schematic* Doc,
     }
 
     return ElementMouseAction(pe_1st);
+#endif
 }
 
 void Schematic::highlightWireLabels ()
