@@ -130,6 +130,15 @@ void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& 
 	QString Frame_Text1(QG(m,"FrameText1"));
 	QString Frame_Text2(QG(m,"FrameText2"));
 	QString Frame_Text3(QG(m,"FrameText3"));
+  // QString t;
+  // misc::convert2ASCII(t = FrameText[0]);
+  // stream << "  <FrameText0=" << t << ">\n";
+  // misc::convert2ASCII(t = FrameText[1]);
+  // stream << "  <FrameText1=" << t << ">\n";
+  // misc::convert2ASCII(t = FrameText[2]);
+  // stream << "  <FrameText2=" << t << ">\n";
+  // misc::convert2ASCII(t = FrameText[3]);
+  // stream << "  <FrameText3=" << t << ">\n";
 
 	QString t;
 	misc::convert2ASCII(t = Frame_Text0);
