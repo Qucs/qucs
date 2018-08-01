@@ -145,6 +145,15 @@ public:
   bool scrollLeft(int);
   bool scrollRight(int);
 
+#ifndef USE_SCROLLVIEW
+private:
+  // schematic Scene for this View
+  SchematicScene *Scene;
+  SchematicScene *scene() { return Scene; }
+  // schematic frame item
+  // Frame *SchematicFrame;
+#endif
+
 // TODO: const access ONLY
   ComponentList& components(){
 	  return DocModel.components();
