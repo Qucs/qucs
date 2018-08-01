@@ -46,4 +46,45 @@ Diagram* diagram(ElementGraphics* e){
 Painting* painting(ElementGraphics* e){
 	return painting(e->operator->());
 }
+
+SchematicScene::SchematicScene(QObject *parent) :
+  QGraphicsScene(parent)
+{
+}
+
+SchematicScene::~SchematicScene()
+{
+}
+
+void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
+{
+
+	// Draw origin when visible
+	if(rect.contains(QPointF(0, 0))) {
+		painter->drawLine(QLine(-3.0, 0.0, 3.0, 0.0));
+		painter->drawLine(QLine(0.0, -3.0, 0.0, 3.0));
+	}else{
+	}
+	/// \todo getter and setter
+	int GridX = 10;
+	int GridY = 10;
+
+	// Get associated view, assume single view
+	Schematic *v = static_cast<Schematic *>(views().at(0));
+
+	// When scaling, adjust visible grid spacing
+	float scale = v->Scale;
+	if(scale < 1) {
+		if(scale > 0.5) {
+			GridX *= 4;
+			GridY *= 4;
+		} else {
+			GridX *= 16;
+			GridY *= 16;
+		}
+	}
+}
+
+
+
 #endif
