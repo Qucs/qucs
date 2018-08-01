@@ -654,8 +654,10 @@ void Schematic::simpleInsertComponent(Component *c)
 
   DocComps.append(c);
 
-  // add Component to scene
+#ifndef USE_SCROLLVIEW
+  // add Component to scene // BUG, not here, and keep track
   scene()->addItem(new ElementGraphics(c));
+#endif
 }
 
 // -------------------------------------------------------------
