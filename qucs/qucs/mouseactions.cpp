@@ -1011,7 +1011,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
     // print define value in hex, see element.h
     //qDebug() << "MPressSelect: focusElement->Type" <<  QString("0x%1").arg(focusElement->Type, 0, 16);
   }else{
-    qDebug() << "MPressSelect";
+    qDebug() << "MPressSelect miss";
   }
 
   incomplete(); //this does not add up.
@@ -1600,7 +1600,12 @@ void MouseActions::MPressMoveText(Schematic *Doc, QMouseEvent* Event)
 
   MAx1 = int(fX);
   MAy1 = int(fY);
-  focusElement = ElementMouseAction( selectCompText(Doc, MAx1, MAy1, MAx2, MAy2) );
+
+#ifndef USE_SCROLLVIEW
+  incomplete();
+#else
+  Component* c=selectCompText(Doc, MAx1, MAy1, MAx2, MAy2);
+  focusElement = ElementMouseAction(c);
 
   auto C=component(focusElement);
 
@@ -1615,6 +1620,7 @@ void MouseActions::MPressMoveText(Schematic *Doc, QMouseEvent* Event)
     QucsMain->MouseReleaseAction = &MouseActions::MReleaseMoveText;
     Doc->grabKeyboard();  // no keyboard inputs during move actions
   }
+#endif
 }
 
 // -----------------------------------------------------------
