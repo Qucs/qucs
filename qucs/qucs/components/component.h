@@ -122,6 +122,7 @@ protected:
 
 public: // set protected variables. don't use
   void obsolete_set(std::string name, int value){
+	  qDebug() << "obsolete_set" << name.c_str() << value;
 	  if(name=="cx"){
 		  cx=value;
 	  }else if(name=="cy"){
