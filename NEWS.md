@@ -7,7 +7,7 @@ Qucs
 
 * [NEW] Maching Circuit dialog. Add impedance matching techniques: Single matching,
   double stub matching, real to real broadband transformers, cascaded L-sections
-  and lambda/8 + lambda/4 matching ([PR#666)]
+  and lambda/8 + lambda/4 matching ([PR#666])
 
 * [NEW] Add tapered line component. S-param behaviour of a tapered line.
   It provides 4 impedance profiles: Exponential, Linear, Triangular and Klopfenstein. ([PR#657])
@@ -19,21 +19,23 @@ Qucs
   - spiral inductor, planar circular loop inductor
   - create new palette for RF devices
 
-* [NEW] Wattmeter probe. [(#PR682)]
+* [NEW] Wattmeter probe. [(PR#682)]
   -  Calculate apparent power, real power, reactive power and power factor.
   -  Internal resistance can be set for the voltage and current ports.update news
 
-* [NEW] Add context menu to document tabs ([#PR708])
+* [NEW] Add context menu to document tabs ([PR#708])
 
 * [NEW] Show schematic description while hovering over file name ([#764])
+
+* [NEW] N-port S-parameters de-embedding ([PR#693])
 
 * Initial support for dynamic loading of shared libraries. ([PR#458])
 
 * Fix behavior of push button used for color picking. ([#74])
 
-* Let Markers show impedance/admittance data when used with Smith chart. ([#PR701])
+* Let Markers show impedance/admittance data when used with Smith chart. ([PR#701])
 
-* Fix "export as image" with non integer scale factor ([#PR715])
+* Fix "export as image" with non integer scale factor ([PR#715])
 
 Qucsator
 --------
@@ -47,13 +49,25 @@ Qucsator
 
 * Fix bug on polar() function ([#704])
 
-* Fix crash in sortChildAnalyses, avoid removing from list while traversing. ([#PR712])
+* Fix crash when using glibc-2.26 ([#710])
+
+* Fix crash in sortChildAnalyses, avoid removing from list while traversing. ([PR#712])
+
+* Fix AC and SP sweep with a single value and Type=list ([#211])
 
 * [NEW] add smooth() function, similar to what is often used in VNAs
-   to remove some noise from group delay measurements. ([#PR747])
+   to remove some noise from group delay measurements. ([PR#747])
 
 * [NEW] add groupdelay(S) function, returns the delay group between ports 1 and 2,
-  and groupdelay(S, P2, P1) does the same but for ports P2 and P1. ([#PR751])
+  and groupdelay(S, P2, P1) does the same but for ports P2 and P1. ([PR#751])
+
+* [NEW] N-port S-parameters de-embedding ([PR#693])
+
+Qucsconv
+--------
+
+* Fix crash when writing a MATLAB file. ([PR#758])
+
 
 Qucs-Filter
 -----------
@@ -479,7 +493,7 @@ Bug fixes
 
 <!-- Cross reference generated with NEWS_crossref.py -->
 [#30]: https://github.com/Qucs/qucs/issues/30
-[#34]: https://github.com/Qucs/qucs/issues/34
+[#710]: https://github.com/Qucs/qucs/issues/710
 [#31]: https://github.com/Qucs/qucs/issues/31
 [#467]: https://github.com/Qucs/qucs/issues/467
 [#32]: https://github.com/Qucs/qucs/issues/32
@@ -491,16 +505,18 @@ Bug fixes
 [#310]: https://github.com/Qucs/qucs/issues/310
 [#43]: https://github.com/Qucs/qucs/issues/43
 [#73]: https://github.com/Qucs/qucs/issues/73
-[#272]: https://github.com/Qucs/qucs/issues/272
+[#211]: https://github.com/Qucs/qucs/issues/211
+[#319]: https://github.com/Qucs/qucs/issues/319
 [#204]: https://github.com/Qucs/qucs/issues/204
 [#57]: https://github.com/Qucs/qucs/issues/57
-[#550]: https://github.com/Qucs/qucs/issues/550
+[#34]: https://github.com/Qucs/qucs/issues/34
 [#133]: https://github.com/Qucs/qucs/issues/133
 [#764]: https://github.com/Qucs/qucs/issues/764
 [#421]: https://github.com/Qucs/qucs/issues/421
 [#296]: https://github.com/Qucs/qucs/issues/296
 [#661]: https://github.com/Qucs/qucs/issues/661
 [#38]: https://github.com/Qucs/qucs/issues/38
+[#550]: https://github.com/Qucs/qucs/issues/550
 [#55]: https://github.com/Qucs/qucs/issues/55
 [#658]: https://github.com/Qucs/qucs/issues/658
 [#335]: https://github.com/Qucs/qucs/issues/335
@@ -509,7 +525,7 @@ Bug fixes
 [#300]: https://github.com/Qucs/qucs/issues/300
 [#789]: https://github.com/Qucs/qucs/issues/789
 [#704]: https://github.com/Qucs/qucs/issues/704
-[#319]: https://github.com/Qucs/qucs/issues/319
+[#272]: https://github.com/Qucs/qucs/issues/272
 [#253]: https://github.com/Qucs/qucs/issues/253
 [#543]: https://github.com/Qucs/qucs/issues/543
 [#216]: https://github.com/Qucs/qucs/issues/216
@@ -520,15 +536,19 @@ Bug fixes
 [PR#209]: https://github.com/Qucs/qucs/pull/209
 [PR#507]: https://github.com/Qucs/qucs/pull/507
 [PR#575]: https://github.com/Qucs/qucs/pull/575
+[PR#701]: https://github.com/Qucs/qucs/pull/701
 [PR#86]: https://github.com/Qucs/qucs/pull/86
 [PR#232]: https://github.com/Qucs/qucs/pull/232
 [PR#657]: https://github.com/Qucs/qucs/pull/657
 [PR#252]: https://github.com/Qucs/qucs/pull/252
+[PR#292]: https://github.com/Qucs/qucs/pull/292
 [PR#416]: https://github.com/Qucs/qucs/pull/416
 [PR#523]: https://github.com/Qucs/qucs/pull/523
 [PR#509]: https://github.com/Qucs/qucs/pull/509
 [PR#412]: https://github.com/Qucs/qucs/pull/412
+[PR#666]: https://github.com/Qucs/qucs/pull/666
 [PR#357]: https://github.com/Qucs/qucs/pull/357
+[PR#715]: https://github.com/Qucs/qucs/pull/715
 [PR#482]: https://github.com/Qucs/qucs/pull/482
 [PR#124]: https://github.com/Qucs/qucs/pull/124
 [PR#153]: https://github.com/Qucs/qucs/pull/153
@@ -536,7 +556,7 @@ Bug fixes
 [PR#669]: https://github.com/Qucs/qucs/pull/669
 [PR#389]: https://github.com/Qucs/qucs/pull/389
 [PR#458]: https://github.com/Qucs/qucs/pull/458
-[PR#303]: https://github.com/Qucs/qucs/pull/303
+[PR#85]: https://github.com/Qucs/qucs/pull/85
 [PR#501]: https://github.com/Qucs/qucs/pull/501
 [PR#98]: https://github.com/Qucs/qucs/pull/98
 [PR#371]: https://github.com/Qucs/qucs/pull/371
@@ -548,10 +568,11 @@ Bug fixes
 [PR#652]: https://github.com/Qucs/qucs/pull/652
 [PR#444]: https://github.com/Qucs/qucs/pull/444
 [PR#456]: https://github.com/Qucs/qucs/pull/456
+[PR#693]: https://github.com/Qucs/qucs/pull/693
 [PR#688]: https://github.com/Qucs/qucs/pull/688
 [PR#548]: https://github.com/Qucs/qucs/pull/548
-[PR#267]: https://github.com/Qucs/qucs/pull/267
-[PR#95]: https://github.com/Qucs/qucs/pull/95
+[PR#712]: https://github.com/Qucs/qucs/pull/712
+[PR#708]: https://github.com/Qucs/qucs/pull/708
 [PR#493]: https://github.com/Qucs/qucs/pull/493
 [PR#481]: https://github.com/Qucs/qucs/pull/481
 [PR#727]: https://github.com/Qucs/qucs/pull/727
@@ -563,17 +584,21 @@ Bug fixes
 [PR#508]: https://github.com/Qucs/qucs/pull/508
 [PR#561]: https://github.com/Qucs/qucs/pull/561
 [PR#524]: https://github.com/Qucs/qucs/pull/524
-[PR#85]: https://github.com/Qucs/qucs/pull/85
+[PR#758]: https://github.com/Qucs/qucs/pull/758
 [PR#274]: https://github.com/Qucs/qucs/pull/274
+[PR#95]: https://github.com/Qucs/qucs/pull/95
 [PR#203]: https://github.com/Qucs/qucs/pull/203
+[PR#751]: https://github.com/Qucs/qucs/pull/751
 [PR#29]: https://github.com/Qucs/qucs/pull/29
-[PR#156]: https://github.com/Qucs/qucs/pull/156
+[PR#303]: https://github.com/Qucs/qucs/pull/303
+[PR#747]: https://github.com/Qucs/qucs/pull/747
 [PR#207]: https://github.com/Qucs/qucs/pull/207
 [PR#486]: https://github.com/Qucs/qucs/pull/486
 [PR#399]: https://github.com/Qucs/qucs/pull/399
 [PR#427]: https://github.com/Qucs/qucs/pull/427
 [PR#415]: https://github.com/Qucs/qucs/pull/415
+[PR#156]: https://github.com/Qucs/qucs/pull/156
 [PR#406]: https://github.com/Qucs/qucs/pull/406
-[PR#292]: https://github.com/Qucs/qucs/pull/292
+[PR#267]: https://github.com/Qucs/qucs/pull/267
 [SF#171]: https://sourceforge.net/p/qucs/bugs/171
 [SF#183]: https://sourceforge.net/p/qucs/bugs/183
