@@ -980,21 +980,39 @@ ElementMouseAction MouseActions::selectElement(Schematic* Doc,
    // we need something that produces actions, not Elements
    // actions will be needed to implement the undo stack... etcpp
 #ifndef USE_SCROLLVIEW
+    ElementGraphics *pe_sel=nullptr;
+    ElementGraphics *pe_1st=nullptr;
     assert(Doc);
    auto scenepos=Doc->mapToScene(xy);
 
-   ElementGraphics* e=Doc->itemAt(scenepos);
+   ElementGraphics* e=Doc->itemAt(xy);
    if(e){ untested();
    }else{ untested();
    }
 
    // now add the mouseaction hacks...
    if(component(e)){ untested();
-       return ElementMouseAction(e);
+       ElementMouseAction pc(e);
+       if(flag) { untested();
+	   // The element can be deselected
+	   pc->setSelected(!pc->isSelected());
+	   return ElementMouseAction(pc);
+       }else if(pe_sel) {
+	   pe_sel->setSelected(false);
+	   return ElementMouseAction(pc);
+       }else if(pe_1st == 0) {
+	   incomplete();
+	   // give access to elements lying beneath
+	   pe_1st = element(pc);
+       } if(pc->isSelected()) {
+	   incomplete();
+	   pe_sel = element(pc);
+       }else{
+       }
    }else if(wire(e)){ untested();
        return ElementMouseAction(e);
    }else{ untested();
-       incomplete();
+	   qDebug() << "nothing at" << scenepos;
        return ElementMouseAction(nullptr);
    }
 #else
