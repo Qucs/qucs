@@ -27,6 +27,8 @@ Qucs
 
 * [NEW] Show schematic description while hovering over file name ([#764])
 
+* [NEW] N-port S-parameters de-embedding ([PR#693])
+
 * Initial support for dynamic loading of shared libraries. ([PR#458])
 
 * Fix behavior of push button used for color picking. ([#74])
@@ -47,13 +49,25 @@ Qucsator
 
 * Fix bug on polar() function ([#704])
 
+* Fix crash when using glibc-2.26 ([#710])
+
 * Fix crash in sortChildAnalyses, avoid removing from list while traversing. ([#PR712])
+
+* Fix AC and SP sweep with a single value and Type=list ([#211])
 
 * [NEW] add smooth() function, similar to what is often used in VNAs
    to remove some noise from group delay measurements. ([#PR747])
 
 * [NEW] add groupdelay(S) function, returns the delay group between ports 1 and 2,
   and groupdelay(S, P2, P1) does the same but for ports P2 and P1. ([#PR751])
+
+* [NEW] N-port S-parameters de-embedding ([PR#693])
+
+Qucsconv
+--------
+
+* Fix crash when writing a MATLAB file. ([#PR758])
+
 
 Qucs-Filter
 -----------
