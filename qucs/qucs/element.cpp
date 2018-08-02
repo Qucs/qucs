@@ -39,26 +39,34 @@ void Element::paintScheme(QPainter *)
 
 void Element::setCenter(int, int, bool)
 {
+	incomplete();
 }
 
 void Element::getCenter(int&, int&)
 {
+	incomplete();
 }
 
-void Element::snapToGrid(Schematic& s){
-    s.setOnGrid(cx, cy);
+void Element::snapToGrid(Schematic& s)
+{
+	s.setOnGrid(cx, cy);
 }
 
 // pure? maybe not. there could be non-paintable elements...
-void Element::paint(ViewPainter*){
-	unreachable();
+void Element::paint(ViewPainter* p)
+{
+	// draw bounding box for debugging.
+    p->Painter->setPen(QPen(Qt::red,1));
+    p->Painter->drawRoundRect(boundingRect());
 }
 
 QRectF Element::boundingRect() const
-{
-	return QRectF(x1, y1, x2-x1, y2-y1);
+{  untested();
+	QRectF b(cx+x1, cy+y1, x2-x1, y2-y1);
+	qDebug() << "boundingRect" << b;
+	return b;
 
-//node:
+//node
  // return QRect(cx-4,cy-4,8,8);
 
 }
