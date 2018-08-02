@@ -65,7 +65,7 @@ typedef Element ElementGraphics;
 // kind of smart-pointer/proxy.
 class ElementGraphics : public QGraphicsItem {
 private:
-	ElementGraphics(){}
+	ElementGraphics();
 public:
 	explicit ElementGraphics(Element* e)
 		: _e(e)
@@ -82,17 +82,16 @@ private: // later: Qgraphics virtual overrides
 //  void paint() { assert(_e); _e->paint(); }
 //  void paintScheme(Schematic *s) { assert(_e); _e->paintScheme(s); }
   void paintScheme(QPainter *p) { assert(_e); _e->paintScheme(p); }
-  QRectF boundingRect() const { assert(_e); return _e->boundingRect(); }
+  QRectF boundingRect() const;
   void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*){
 	  assert(_e);
 	  ViewPainter v(painter);
 	  return _e->paint(&v);
   }
 
+public:
   // TODO: move coordinate stuff here.
-//  void setPos(int a, int b){
-//     _e->setPos(a, b);
-//  }
+  void setPos(int a, int b);
 public:
   Element* operator->(){ assert(_e); return _e; }
   Element const* operator->() const{ assert(_e); return _e; }
