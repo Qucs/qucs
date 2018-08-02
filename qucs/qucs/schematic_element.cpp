@@ -984,7 +984,7 @@ ElementMouseAction MouseActions::selectElement(Schematic* Doc,
     assert(Doc);
    auto scenepos=Doc->mapToScene(xy);
 
-   ElementGraphics* e=Doc->itemAt(xy);
+   ElementGraphics* e=Doc->itemAt(scenepos);
    if(e){ untested();
    }else{ untested();
    }
@@ -1011,7 +1011,7 @@ ElementMouseAction MouseActions::selectElement(Schematic* Doc,
    }else if(wire(e)){ untested();
        return ElementMouseAction(e);
    }else{ untested();
-	   qDebug() << "nothing at" << scenepos;
+	   qDebug() << "nothing at" << xy << scenepos;
        return ElementMouseAction(nullptr);
    }
 #else

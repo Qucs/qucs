@@ -338,6 +338,7 @@ void Component::paint(ViewPainter *p) const
   if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(cx+x1, cy+y1, x2-x1, y2-y1);
+  }else{
   }
 }
 
