@@ -23,6 +23,7 @@
 #include <QtCore>
 #include <QMessageBox>
 #include <QDir>
+#include <QDebug>
 #include <QStringList>
 #include <QPlainTextEdit>
 #include "qt_compat.h"
