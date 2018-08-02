@@ -2,9 +2,34 @@
 #include "schematic_scene.h"
 #include "schematic.h"
 
+
+// ---------------------------------------------------
+//
+#if QT_VERSION >= 0x050000
+ElementGraphics::ElementGraphics() : QGraphicsItem()
+{
+	setFlags(ItemIsSelectable|ItemIsMovable);
+	setAcceptHoverEvents(true);
+}
+
+QRectF ElementGraphics::boundingRect() const
+{ untested();
+	assert(_e);
+	return _e->boundingRect();
+}
+
+// ?!
+void ElementGraphics::setPos(int a, int b)
+{
+	assert(_e);
+	qDebug() << "EG::setPos" << a << _e->cx_();
+	QGraphicsItem::setPos(QPointF(a, b));
+	qDebug() << "EG::setPos" << boundingRect();
+}
+#endif
 // ---------------------------------------------------
 // forward to graphicscene, once it is there.
-ElementGraphics* Schematic::itemAt(int x, int y)
+ElementGraphics* Schematic::itemAt(float x, float y)
 {
 	qDebug() << "Schematic::itemAt" << x << y;
 #if QT_VERSION >= 0x050000

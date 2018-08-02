@@ -93,6 +93,8 @@ public: // obsolete?
   void init(QPainter*, float, int, int, int, int, 
 	    float FontScale_=0.0, float PrintScale_=1.0)
   {
+	  (void)FontScale_;
+	  (void)PrintScale_;
 	  incomplete();
   }
 public: // BUG, is accessed directly.
