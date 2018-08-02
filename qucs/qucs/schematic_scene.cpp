@@ -4,14 +4,15 @@
 
 // ---------------------------------------------------
 // forward to graphicscene, once it is there.
-ElementGraphics* Schematic::itemAt(float x, float y)
+ElementGraphics* Schematic::itemAt(int x, int y)
 {
 #if QT_VERSION >= 0x050000
-	QPointF p(x, y);
+	QPoint p(x, y);
 	QGraphicsItem* I=scene()->itemAt(p, QTransform());
-	if(ElementGraphics* G=dynamic_cast<ElementGraphics*>(I)){
+	if(ElementGraphics* G=dynamic_cast<ElementGraphics*>(I)){ untested();
 		return G;
-	}else{
+	}else{ untested();
+		qDebug() << "miss in Schematic::itemAt";
 		return nullptr;
 	}
 #else
