@@ -48,7 +48,7 @@ void ElementGraphics::setPos(int a, int b)
 #endif
 // ---------------------------------------------------
 // forward to graphicscene, once it is there.
-ElementGraphics* Schematic::itemAt(float x, float y)
+ElementGraphics* Schematic::itemAt(int x, int y)
 {
 #ifndef USE_SCROLLVIEW
 	QPointF p(x, y);

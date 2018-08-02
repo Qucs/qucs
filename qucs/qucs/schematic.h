@@ -343,8 +343,8 @@ public:
 
   // now in mouseactions
   // Element* selectElement(QPoint const&, bool, int *index=0);
-  ElementGraphics* itemAt(float, float);
-  ElementGraphics* itemAt(QPointF x) { return itemAt(x.x(), x.y());}
+  ElementGraphics* itemAt(int, int);
+  ElementGraphics* itemAt(QPoint x) { return itemAt(x.x(), x.y());}
   int      selectElements(int, int, int, int, bool);
   void     selectMarkers();
   void     newMovingWires(Q3PtrList<Element>*, Node*, int);
