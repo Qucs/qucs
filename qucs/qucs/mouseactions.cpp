@@ -1000,7 +1000,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
     // print define value in hex, see element.h
     //qDebug() << "MPressSelect: focusElement->Type" <<  QString("0x%1").arg(focusElement->Type, 0, 16);
   }else{
-    qDebug() << "MPressSelect miss";
+    qDebug() << "MPressSelect miss" << Event->pos() << pos;
   }
 
   incomplete(); //this does not add up.
@@ -2012,7 +2012,10 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 { untested();
 //    qDebug() << "+double click, editElement";
 
-  if(!focusElement) return;
+  if(!focusElement){untested();
+    return;
+  }else{ untested();
+  }
 
 //  qDebug() << "+focusElement->Type" << focusElement->Type;
 
@@ -2029,7 +2032,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
   float fY=pos.y();
 
   // BUG. move to respective classes. 1 at a time...
-  if(auto c=component(focusElement)){
+  if(auto c=component(focusElement)){ untested();
 //         qDebug() << "cast focusElement into" << c->Name;
          bool done=false;
          if(c->obsolete_model_hack() == "GND") { // BUG

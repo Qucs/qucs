@@ -104,6 +104,10 @@ public:
 	  assert(_e);
 	  _e->getCenter(i, j);
   }
+	void toggleSelected(){
+		assert(_e);
+		setSelected(!isSelected());
+	}
 
 	int const& cx_() const { assert(_e); return _e->cx_(); }
 	int const& cy_() const { assert(_e); return _e->cy_(); }
