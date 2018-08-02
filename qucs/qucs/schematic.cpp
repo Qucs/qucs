@@ -66,6 +66,12 @@ NodeList      SymbolNodes;
 DiagramList   SymbolDiags;
 ComponentList SymbolComps;
 
+void Schematic::printCursorPosition(int x, int y)
+{
+  QPoint p(x,y);
+  QPointF mp=mapToScene(p);
+  App->printCursorPosition(mp.x(),mp.y());
+}
 
 Schematic::Schematic(QucsApp *App_, const QString& Name_)
     : QucsDoc(App_, Name_), DocModel(this),
@@ -142,7 +148,7 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
 
   if (App_) {
     connect(this, SIGNAL(signalCursorPosChanged(int, int)), 
-        App_, SLOT(printCursorPosition(int, int)));
+        this, SLOT(printCursorPosition(int, int)));
     /** \todo
     connect(this, SIGNAL(horizontalSliderPressed()), 
         App_, SLOT(slotHideEdit()));
