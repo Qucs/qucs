@@ -83,6 +83,7 @@ bool QucsApp::performToggleAction(bool on, QAction *Action,
 	pToggleFunc Function, pMouseFunc MouseMove, pMouseFunc2 MousePress)
 {
   slotHideEdit(); // disable text edit of component property
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
 
   if(!on) {
     MouseMoveAction = 0;
@@ -91,33 +92,39 @@ bool QucsApp::performToggleAction(bool on, QAction *Action,
     MouseDoubleClickAction = 0;
     activeAction = 0;   // no action active
     return false;
-  }
+  }else{
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  if(Function && (Doc->*Function)()) {
+    if(!Function){
+      // nothing to do?!
+    }else if (Doc->*Function)() {
+      // function executed, it said "yes". wtf?
+      //
+      // Action is actually a togglebutton.
       Action->blockSignals(true);
       Action->setChecked(false);  // release toolbar button
       Action->blockSignals(false);
       Doc->viewport()->update();
-  }else{
+    }else{
+      // function executed. it said "no".. ?
 
-    if(activeAction) {
-      activeAction->blockSignals(true); // do not call toggle slot
-      activeAction->setChecked(false);       // set last toolbar button off
-      activeAction->blockSignals(false);
+      if(activeAction) {
+	activeAction->blockSignals(true); // do not call toggle slot
+	activeAction->setChecked(false);       // set last toolbar button off
+	activeAction->blockSignals(false);
+      }
+      activeAction = Action;
+
+      MouseMoveAction = MouseMove;
+      MousePressAction = MousePress;
+      MouseReleaseAction = 0;
+      MouseDoubleClickAction = 0;
+
     }
-    activeAction = Action;
 
-    MouseMoveAction = MouseMove;
-    MousePressAction = MousePress;
-    MouseReleaseAction = 0;
-    MouseDoubleClickAction = 0;
-
+    Doc->viewport()->update();
+    view->drawn = false;
+    return true;
   }
-
-  Doc->viewport()->update();
-  view->drawn = false;
-  return true;
 }
 
 // -----------------------------------------------------------------------
@@ -178,6 +185,7 @@ void QucsApp::slotEditActivate (bool on)
 void QucsApp::slotEditDelete(bool on)
 { untested();
   TextDoc *Doc = (TextDoc*)DocumentTab->currentWidget();
+  // TODO Doc->Delete.
   if(isTextDocument(Doc)) {
     Doc->viewport()->setFocus();
     //Doc->del();
@@ -186,7 +194,9 @@ void QucsApp::slotEditDelete(bool on)
     editDelete->blockSignals(true);
     editDelete->setChecked(false);  // release toolbar button
     editDelete->blockSignals(false);
-  }else{
+  }else{ /* if what?! */
+    qDebug() << "slotEditDelete" << on;
+    // BUG uses Schematic.
     performToggleAction(on, editDelete, &Schematic::deleteElements,
           &MouseActions::MMoveDelete, &MouseActions::MPressDelete);
   }
