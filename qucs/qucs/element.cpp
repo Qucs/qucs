@@ -70,9 +70,9 @@ void Element::paint(ViewPainter* p) const
 }
 
 QRectF Element::boundingRect() const
-{  untested();
+{  itested();
 	QRectF b(cx+x1, cy+y1, x2-x1, y2-y1);
-	qDebug() << "boundingRect" << b;
+	// qDebug() << "boundingRect" << b;
 	return b;
 
 //node

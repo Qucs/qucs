@@ -17,7 +17,7 @@ ElementGraphics::ElementGraphics() : QGraphicsItem()
 }
 
 QRectF ElementGraphics::boundingRect() const
-{ untested();
+{ itested();
 	assert(_e);
 	return _e->boundingRect();
 }

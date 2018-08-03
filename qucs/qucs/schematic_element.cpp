@@ -1014,6 +1014,7 @@ ElementMouseAction MouseActions::selectElement(Schematic* Doc,
 	   qDebug() << "nothing at" << xy << scenepos;
        return ElementMouseAction(nullptr);
    }
+    return ElementMouseAction(pe_1st);
 #else
 
     int n;
