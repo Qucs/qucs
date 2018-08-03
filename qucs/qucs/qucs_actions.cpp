@@ -166,7 +166,7 @@ void QucsApp::slotEditActivate (bool on)
 // ------------------------------------------------------------------------
 // Is called if "Delete"-Button is pressed.
 void QucsApp::slotEditDelete(bool on)
-{
+{ untested();
   TextDoc *Doc = (TextDoc*)DocumentTab->currentWidget();
   if(isTextDocument(Doc)) {
     Doc->viewport()->setFocus();
@@ -176,10 +176,10 @@ void QucsApp::slotEditDelete(bool on)
     editDelete->blockSignals(true);
     editDelete->setChecked(false);  // release toolbar button
     editDelete->blockSignals(false);
-  }
-  else
+  }else{
     performToggleAction(on, editDelete, &Schematic::deleteElements,
           &MouseActions::MMoveDelete, &MouseActions::MPressDelete);
+  }
 }
 
 // -----------------------------------------------------------------------
