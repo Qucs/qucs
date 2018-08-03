@@ -993,7 +993,7 @@ void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent* Event)
 
 // -----------------------------------------------------------
 void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
-{
+{ untested();
   QPointF pos=Doc->mapToScene(Event->pos());
   float fX=pos.x();
   float fY=pos.y();
@@ -1007,13 +1007,6 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
   focusElement = selectElement(Doc, Event->pos(), Ctrl, &No);
   isMoveEqual = false;   // moving not neccessarily square
 
-  if(focusElement){
-    // print define value in hex, see element.h
-    //qDebug() << "MPressSelect: focusElement->Type" <<  QString("0x%1").arg(focusElement->Type, 0, 16);
-  }else{
-    qDebug() << "MPressSelect miss" << Event->pos() << pos;
-  }
-
   incomplete(); //this does not add up.
 #if 0
   if(!focusElement){
@@ -1024,8 +1017,10 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
   }
 #endif
 
-  if(!focusElement){
+  if(!focusElement){ untested();
+    qDebug() << "MPressSelect miss" << Event->pos() << pos;
   }else if(focusElement->Type == isPaintingResize){
+    incomplete();
       focusElement->Type = isPainting;
       QucsMain->MouseReleaseAction = &MouseActions::MReleaseResizePainting;
       QucsMain->MouseMoveAction = &MouseActions::MMoveResizePainting;
@@ -1036,6 +1031,8 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
       Doc->highlightWireLabels ();
       return;
   }else if(focusElement->Type == isDiagramResize){
+    incomplete();
+
 #if 0
       if(((Diagram*)focusElement)->Name.left(4) != "Rect")
         if(((Diagram*)focusElement)->Name.at(0) != 'T')
@@ -1077,6 +1074,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
 
   }else if(focusElement->Type == isDiagramHScroll
    || focusElement->Type == isDiagramVScroll){
+    incomplete();
 
       focusElement->Type = isDiagram; // reset happens here. FIXME.
 
@@ -1108,6 +1106,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
       return;
 
   }else if(focusElement->Type == isComponentText){
+    incomplete();
 
       focusElement->Type &= (~isComponentText) | isComponent;
 
@@ -1119,6 +1118,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
 
   }else if(auto n=node(focusElement)){
       if (QucsSettings.NodeWiring) {
+    incomplete();
 
         MAx1 = 0;   // paint wire corner first up, then left/right
         MAx3 = focusElement->cx_();  // works even if node is not on grid
@@ -1154,21 +1154,19 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
   Doc->viewport()->update();
   drawn = false;
 
-  if(!focusElement) {
+  if(!focusElement) { untested();
     MAx2 = 0;  // if not clicking on an element => open a rectangle
     MAy2 = 0;
     QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect2;
     QucsMain->MouseMoveAction = &MouseActions::MMoveSelect;
-  }
-  else
-  {
+  }else{ untested();
     // element could be moved
-    if(!Ctrl)
-    {
-      if(!focusElement->isSelected()) {
+    if(Ctrl) { untested();
+    }else{ untested();
+      if(!focusElement->isSelected()) { untested();
 	// Don't move selected elements if clicked
         deselectElements(Doc, focusElement); // element was not selected.
-      }else{
+      }else{ untested();
       }
       focusElement->setSelected();
     }
@@ -1177,7 +1175,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
   }
   // Update matching wire label highlighting
   Doc->highlightWireLabels ();
-}
+} // MPressSelect
 
 // -----------------------------------------------------------
 void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent* Event)
