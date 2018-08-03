@@ -586,7 +586,18 @@ void Schematic::actionExportGraphAsCsv()
 }
 
 // -----------------------------------------------------------------------
-// This function is called from all toggle actions.
+/*!
+ * \brief QucsApp::performToggleAction
+ * \param on
+ * \param Action
+ * \param Function
+ * \param MouseMove
+ * \param MousePress
+ * \return
+ * This function is called from all toggle actions.
+ * Used in combination with slots to set function pointers to the methods
+ * that serve the mouse actions, ie. press, move, release, double click.
+ */
 bool Schematic::performToggleAction(bool on, QAction *Action,
 	pToggleFunc Function, pMouseFunc MouseMove, pMouseFunc2 MousePress)
 {
