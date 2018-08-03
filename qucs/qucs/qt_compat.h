@@ -86,7 +86,7 @@ public:
 		return *cur;
 	};
 	T* last() {
-		if (localList.size()) { untested();
+		if (localList.size()) { itested();
 			cur = localList.end();
 			--cur;
 			return *cur;
@@ -189,7 +189,7 @@ public:
 	T* prev() {
 		if (cur == localList.end()) { untested();
 			return nullptr;
-		}else if (cur == localList.begin()){ untested();
+		}else if (cur == localList.begin()){ itested();
 			cur=localList.end();
 			return nullptr;
 		}else{ itested();

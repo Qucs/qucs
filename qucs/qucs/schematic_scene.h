@@ -93,8 +93,12 @@ public:
   // TODO: move coordinate stuff here.
   void setPos(int a, int b);
 public:
-  Element* operator->(){ assert(_e); return _e; }
-  Element const* operator->() const{ assert(_e); return _e; }
+  Element* operator->(){ itested();
+	  assert(_e); return _e;
+  }
+  Element const* operator->() const{ untested();
+	  assert(_e); return _e;
+  }
   void setCenter(int i, int j, bool relative=false){
 	  assert(_e);
 	  _e->setCenter(i, j, relative);
@@ -106,6 +110,13 @@ public:
 	void toggleSelected(){
 		assert(_e);
 		setSelected(!isSelected());
+	}
+
+	// BUG: selected is stored in Element.
+	void setSelected(bool s){
+		QGraphicsItem::setSelected(s);
+		assert(_e);
+		_e->setSelected(s);
 	}
 
 	int const& cx_() const { assert(_e); return _e->cx_(); }
