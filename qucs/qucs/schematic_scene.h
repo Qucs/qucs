@@ -67,11 +67,8 @@ class ElementGraphics : public QGraphicsItem {
 private:
 	ElementGraphics();
 public:
-	explicit ElementGraphics(Element* e)
-		: _e(e)
-	{
-		assert(_e);
-	}
+	explicit ElementGraphics(Element* e);
+
 	~ElementGraphics(){
 	}
 public:
@@ -113,11 +110,7 @@ public:
 	}
 
 	// BUG: selected is stored in Element.
-	void setSelected(bool s){
-		QGraphicsItem::setSelected(s);
-		assert(_e);
-		_e->setSelected(s);
-	}
+	void setSelected(bool s);
 
 	int const& cx_() const { assert(_e); return _e->cx_(); }
 	int const& cy_() const { assert(_e); return _e->cy_(); }
