@@ -1686,6 +1686,8 @@ void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
   bool ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
   if(!ctrl) { untested();
+    untested();
+    // BUG this does not make any sense at all.
     deselectElements(Doc, focusElement);
   }else{ untested();
   }

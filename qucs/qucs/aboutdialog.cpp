@@ -125,7 +125,7 @@ AboutDialog::AboutDialog(QWidget *parent)
   hl->addWidget(vbox);
 
   QString versionText;
-  versionText = tr("Version")+" "+PACKAGE_VERSION+
+  versionText = tr("Version")+" "+"PACKAGE_VERSION"+
 #ifdef GIT
     " ("+GIT+") " +
 #endif
