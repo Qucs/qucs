@@ -95,7 +95,7 @@ bool QucsApp::performToggleAction(bool on, QAction *Action,
 
     if(!Function){
       // nothing to do?!
-    }else if (Doc->*Function)() {
+    }else if ((Doc->*Function)()) {
       // function executed, it said "yes". wtf?
       //
       // Action is actually a togglebutton.
