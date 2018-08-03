@@ -279,6 +279,23 @@ void MouseActions::moveElements(Q3PtrList<Element> *movElements, int x, int y)
 // **********       Functions for serving mouse moving          **********
 // **********                                                   **********
 // ***********************************************************************
+/*!
+ * \brief MouseActions::MMoveElement
+ * \param Doc
+ * \param Event
+ *
+ * Event handler, an Element selected for insertion is moved
+ * on the View.
+ *
+ * Set the mouse decoration/cursor to represent the selElem.
+ * Motion snaps to grid points.
+ *
+ * selElem is an Element object, see QucsApp::slotSelectComponent and
+ * other similar slots.
+ *
+ * When mouse moves over the scene, the Element must be added and
+ * updated acordingly.
+ */
 void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
 { untested();
   if(selElem == 0) return;
