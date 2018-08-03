@@ -281,7 +281,7 @@ void PackageDialog::slotCreate()
   // First write header.
   char Header[HEADER_LENGTH];
   memset(Header, 0, HEADER_LENGTH);
-  strcpy(Header, "Qucs package " PACKAGE_VERSION);
+  strcpy(Header, "Qucs package " "PACKAGE_VERSION");
   PkgFile.write(Header, HEADER_LENGTH);
 
 

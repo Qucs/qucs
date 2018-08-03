@@ -1683,6 +1683,8 @@ void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
   bool ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
   if(!ctrl) { untested();
+    untested();
+    // BUG this does not make any sense at all.
     deselectElements(Doc, focusElement);
   }else{ untested();
   }
@@ -2214,8 +2216,8 @@ void MouseActions::MDoubleClickWire2(Schematic *Doc, QMouseEvent *Event)
 
 bool ElementMouseAction::isSelected() const
 {
-  incomplete();
-  return false;
+  assert(_e);
+  return _e->isSelected();
 }
 
 // vim:ts=8:sw=2:noet
