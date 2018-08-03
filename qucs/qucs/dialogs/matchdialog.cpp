@@ -26,10 +26,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "../../qucs-filter/material_props.h"
 #include "matchdialog.h"
 #include "misc.h"
@@ -2052,7 +2048,7 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
             .arg(Substrate.roughness);
 
   // Schematic header
-  QString Schematic = "<Qucs Schematic " PACKAGE_VERSION ">\n";
+  QString Schematic = "<Qucs Schematic " "PACKAGE_VERSION" ">\n";
 
   // Add components
   Schematic += "<Components>\n";
