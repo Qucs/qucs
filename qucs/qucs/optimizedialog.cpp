@@ -17,10 +17,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
 #include "qucs.h"
 #include "components/optimizedialog.h"
 #include "components/opt_sim.h"
@@ -880,7 +876,7 @@ void OptimizeDialog::slotCancel()
 
 void OptimizeDialog::slotCreateEqn()
 {
-  QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n"
+  QString s = "<Qucs Schematic " "PACKAGE_VERSION" ">\n"
               "<Components>\n"
               //<Model Name ShowName cx cy tx ty mirroredX rotate
               "<Eqn OptValues 1 0 0 -28 15 0 0 ";

@@ -12,14 +12,30 @@
 #ifndef USE_SCROLLVIEW
 ElementGraphics::ElementGraphics() : QGraphicsItem()
 {
+	unreachable();
+}
+
+ElementGraphics::ElementGraphics(Element* e)
+	: QGraphicsItem(), _e(e)
+{
 	setFlags(ItemIsSelectable|ItemIsMovable);
 	setAcceptHoverEvents(true);
+	assert(_e);
 }
 
 QRectF ElementGraphics::boundingRect() const
 { itested();
 	assert(_e);
 	return _e->boundingRect();
+}
+
+void ElementGraphics::setSelected(bool s)
+{
+	qDebug() << "setSeletected" << s << this;
+	QGraphicsItem::setSelected(s);
+	assert(QGraphicsItem::isSelected()==s);
+	assert(_e);
+	_e->setSelected(s);
 }
 
 // ?!

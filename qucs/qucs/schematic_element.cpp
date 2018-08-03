@@ -973,7 +973,7 @@ void Schematic::markerUpDown(bool up, Q3PtrList<Element> *Elements)
    menu.
 */
 ElementMouseAction MouseActions::selectElement(Schematic* Doc,
-	QPoint const& xy, bool flag, int *index)
+	QPoint const& xy, bool flag, int *ndex)
 { untested();
    // THIS IS MISLEADING. it is also used to generate mouse actions.
    // we need something that produces actions, not Elements
@@ -1431,6 +1431,9 @@ void Schematic::highlightWireLabels ()
 // bug: why do we not have a list of selected elements?!
 void MouseActions::deselectElements(Schematic* Doc, ElementMouseAction e)
 {
+#ifndef USE_SCROLLVIEW
+incomplete();
+#else
     // test all components
     for(auto* pc : Doc->components()){
         if(e != pc)  pc->setSelected(false);
@@ -1468,6 +1471,7 @@ void MouseActions::deselectElements(Schematic* Doc, ElementMouseAction e)
     for(auto *pp : Doc->paintings()){
         if(e != pp)  pp->setSelected(false);
     }
+#endif
 }
 
 // ---------------------------------------------------
@@ -2000,8 +2004,32 @@ int Schematic::copyElements(int& x1, int& y1, int& x2, int& y2,
 
 // ---------------------------------------------------
 // Deletes all selected elements.
+// return what?
 bool Schematic::deleteElements()
 {
+#ifndef USE_SCROLLVIEW
+    // todo: elements seem to be entangled, see below old code.
+//    scene()->selectionChanged();
+    for(auto ge : scene()->selectedItems()){ untested();
+	qDebug() << "select" << ge << ge->isSelected();
+	if(auto e=dynamic_cast<ElementGraphics*>(ge)){
+	    scene()->removeItem(ge);
+
+	    // todo: forward delete to schematicModel (or so) container
+	    if(auto c=component(e)){ untested();
+		deleteComp(c);
+	    }else if(auto w=wire(e)){ untested();
+		deleteWire(w);
+	    }else{
+		incomplete();
+	    }
+	}else{
+	    unreachable();
+	    incomplete();
+	}
+    }
+    return true; // ?
+#else
     bool sel = false;
 
     Component *pc = components().first();
@@ -2109,6 +2137,7 @@ bool Schematic::deleteElements()
         setChanged(sel, true);
     }
     return sel;
+#endif
 }
 
 // ---------------------------------------------------
