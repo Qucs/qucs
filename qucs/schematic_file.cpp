@@ -482,12 +482,15 @@ bool Schematic::loadProperties(QTextStream *stream)
 
 // ---------------------------------------------------
 // Inserts a component without performing logic for wire optimization.
-void Schematic::simpleInsertComponent(Component *c)
+void SchematicModel::simpleInsertComponent(Component *c)
 {
   incomplete();
   return DocModel.simpleInsertComponent(c);
 
   Node *pn;
+  assert(&_doc->components() == &components());
+  assert(&_doc->nodes() == &nodes());
+  int x, y;
   // connect every node of component
   for(auto pp : c->Ports){
     int x=pp->x+c->cx_();
