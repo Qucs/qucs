@@ -1182,9 +1182,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
 // -----------------------------------------------------------
 void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent* Event)
 {
-  QPointF pos=Doc->mapToScene(Event->pos());
-  float fX=pos.x();
-  float fY=pos.y();
+  // QPointF pos=Doc->mapToScene(Event->pos());
 
   ElementMouseAction pe = selectElement(Doc, Event->pos(), false); // BUG
   if(pe)
@@ -1272,9 +1270,7 @@ void MouseActions::MPressMirrorY(Schematic *Doc, QMouseEvent* Event)
 // -----------------------------------------------------------
 void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
 {
-  QPointF pos=Doc->mapToScene(Event->pos());
-  float fX=pos.x();
-  float fY=pos.y();
+  // QPointF pos=Doc->mapToScene(Event->pos());
 
   // why is this not part of the event?
   ElementMouseAction e = selectElement(Doc, Event->pos(), false);
@@ -1330,9 +1326,7 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
 // insert component, diagram, painting into schematic ?!
 void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event)
 {
-  QPointF pos=Doc->mapToScene(Event->pos());
-  float fX=pos.x();
-  float fY=pos.y();
+  // QPointF pos=Doc->mapToScene(Event->pos());
 
   if(selElem == 0) return;
   //QPainter painter(Doc->viewport());
@@ -1579,9 +1573,7 @@ void MouseActions::MPressMarker(Schematic *Doc, QMouseEvent* Event)
 // -----------------------------------------------------------
 void MouseActions::MPressOnGrid(Schematic *Doc, QMouseEvent* Event)
 {
-  QPointF pos=Doc->mapToScene(Event->pos());
-  float fX=pos.x();
-  float fY=pos.y();
+  //QPointF pos=Doc->mapToScene(Event->pos());
 
   auto pe = selectElement(Doc, Event->pos(), false);
   if(pe)
@@ -2154,11 +2146,6 @@ void MouseActions::MDoubleClickSelect(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MDoubleClickWire2(Schematic *Doc, QMouseEvent *Event)
 {
-  QPointF pos=Doc->mapToScene(Event->pos());
-  float fX=pos.x();
-  float fY=pos.y();
-
-  // fingers crossed.
   MPressWire2(Doc, Event);
 
   if(formerAction)
