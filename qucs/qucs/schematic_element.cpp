@@ -2066,7 +2066,7 @@ bool Schematic::deleteElements()
 
     if(sel)
     {
-        sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);   // set new document size
+	sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
         setChanged(sel, true);
     }
     return sel;

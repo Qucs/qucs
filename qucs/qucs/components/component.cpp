@@ -723,7 +723,8 @@ QString Component::get_VHDL_Code(int NumPorts)
 // save a component
 // FIXME: part of corresponding SchematicSerializer implementation
 // BUG: c must be const (cannot because of QT3)
-void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
+// TODO: schematic_model.cpp
+void SchematicModel::saveComponent(QTextStream& s, Component /*const*/ * c)
 {
 #if XML
   QDomDocument doc;

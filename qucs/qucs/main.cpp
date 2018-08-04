@@ -474,7 +474,7 @@ void createListComponentEntry(){
 
 		// FIXME: cleanup
 		QTextStream s;
-		c->getSchematic()->saveComponent(s, c);
+		SchematicModel::saveComponent(s, c);
       QString qucsEntry = *(s.string());
       fprintf(stdout, "%s; qucs    ; %s\n", c->obsolete_model_hack().toAscii().data(), qucsEntry.toAscii().data());
 

@@ -65,7 +65,7 @@ ComponentList SymbolComps;
 
 
 Schematic::Schematic(QucsApp *App_, const QString& Name_)
-    : QucsDoc(App_, Name_)
+    : QucsDoc(App_, Name_), DocModel(this)
 {
   symbolMode = false;
 
@@ -956,7 +956,7 @@ float Schematic::textCorr()
 }
 
 // ---------------------------------------------------
-void Schematic::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
+void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float textCorr) const
 {
   xmin=INT_MAX;
   ymin=INT_MAX;
@@ -978,7 +978,7 @@ void Schematic::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
         }
 
 
-  float Corr = textCorr();
+  float Corr = textCorr;
   int x1, y1, x2, y2;
   // find boundings of all components
   for(auto pc : components()) {
@@ -1302,7 +1302,7 @@ void Schematic::reloadGraphs()
 // Copy function, 
 void Schematic::copy()
 {
-  QString s = createClipboardFile();
+  QString s = DocModel.createClipboardFile();
   QClipboard *cb = QApplication::clipboard();  // get system clipboard
   if (!s.isEmpty()) {
     cb->setText(s, QClipboard::Clipboard);
@@ -1885,7 +1885,8 @@ bool Schematic::elementsOnGrid()
 // ---------------------------------------------------
 void Schematic::switchPaintMode()
 {
-  symbolMode = !symbolMode;  // change mode
+  // BUG. this messes with SchematicModel functions
+  symbolMode = !symbolMode;
 
   int tmp, t2;
   float temp;

@@ -105,9 +105,8 @@ public:
 		incomplete();
 		return -1;
 	};
-	bool isEmpty() { untested();
-		incomplete();
-		return false;
+	bool isEmpty() const { untested();
+		return !localList.size();
 	};
 	int findPrev() { untested();
 		incomplete();
