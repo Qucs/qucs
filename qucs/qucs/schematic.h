@@ -151,14 +151,22 @@ public:
 
   // The pointers points to the current lists, either to the schematic
   // elements "Doc..." or to the symbol elements "SymbolPaints".
-// private: //TODO. one at a time.
-  WireList      *Wires, DocWires;
-  NodeList      *Nodes, DocNodes;
-  DiagramList   *Diagrams, DocDiags;
-  PaintingList  *Paintings, DocPaints;
-  ComponentList *Components, DocComps;
+// private: //TODO. one at a time. these must go to SchematicModel
+  WireList DocWires;
+  NodeList DocNodes;
+  DiagramList DocDiags;
+  PaintingList DocPaints;
+  ComponentList DocComps;
 
-  // TODO: const access
+// private: BUG: this is insane.
+  WireList *Wires;
+  NodeList *Nodes;
+  DiagramList *Diagrams;
+  PaintingList *Paintings;
+  ComponentList *Components;
+
+// TODO: const access
+// BUG: give access to container, not to insane pointer.
   ComponentList& components(){
 	  assert(Components);
 	  return *Components;
