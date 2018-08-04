@@ -207,7 +207,7 @@ void Schematic::becomeCurrent(bool update)
 
     // if no symbol yet exists -> create one
     if(createSubcircuitSymbol()) {
-      sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
+      SymbolPaints.sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
       setChanged(true, true);
     }
 
@@ -2221,6 +2221,31 @@ void Schematic::contentsDragMoveEvent(QDragMoveEvent *Event)
   }
 
   Event->accept();
+}
+
+// ===============================================================
+void PaintingList::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const
+{
+  xmin=INT_MAX;
+  ymin=INT_MAX;
+  xmax=INT_MIN;
+  ymax=INT_MIN;
+  int x1, y1, x2, y2;
+
+  // BUG, where is this used? //
+  if(isEmpty()) {
+    xmin = xmax = 0;
+    ymin = ymax = 0;
+    return;
+  }
+
+  for(auto pp : *this) {
+    pp->Bounding(x1, y1, x2, y2);
+    if(x1 < xmin) xmin = x1;
+    if(x2 > xmax) xmax = x2;
+    if(y1 < ymin) ymin = y1;
+    if(y2 > ymax) ymax = y2;
+  }
 }
 
 // ---------------------------------------------------
