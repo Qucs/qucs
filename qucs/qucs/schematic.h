@@ -164,6 +164,10 @@ public:
 	  assert(Components);
 	  return *Components;
   }
+  ComponentList const& components() const{
+	  assert(Components);
+	  return *Components;
+  }
   NodeList& nodes() const{
 	  assert(Nodes);
 	  return *Nodes;
