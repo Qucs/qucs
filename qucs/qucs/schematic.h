@@ -126,6 +126,7 @@ public:
 public: // stuff saved from Schematic
   QString createClipboardFile();
   void sizeOfAll(int&, int&, int&, int&, float) const;
+  void simpleInsertComponent(Component* c);
 public: // obsolete.
   static void saveComponent(QTextStream& s, Component /* FIXME const */* c);
 private: // TODO: actually store here.
@@ -464,7 +465,7 @@ private:
   int  saveDocument();
 
   bool loadProperties(QTextStream*);
-  void simpleInsertComponent(Component*);
+  void simpleInsertComponent(Component* c) { return DocModel.simpleInsertComponent(c); }
   bool loadComponents(QTextStream*, ComponentList *List=0);
   void simpleInsertWire(Wire*);
   bool loadWires(QTextStream*, WireList*List=0);

@@ -630,8 +630,10 @@ bool Schematic::loadProperties(QTextStream *stream)
 
 // ---------------------------------------------------
 // Inserts a component without performing logic for wire optimization.
-void Schematic::simpleInsertComponent(Component *c)
+void SchematicModel::simpleInsertComponent(Component *c)
 {
+  assert(&_doc->components() == &components());
+  assert(&_doc->nodes() == &nodes());
   int x, y;
   // connect every node of component
   foreach(Port *pp, c->Ports) {
@@ -669,18 +671,6 @@ void Schematic::simpleInsertComponent(Component *c)
   }
 
   components().append(c);
-
-#ifndef USE_SCROLLVIEW
-  // add Component to scene // BUG, not here, and keep track
-      auto n=new ElementGraphics(c);
-    // set component location
-    // HACK: actually propagates from component to QGraphicsItem.
-//    QPointF center(c->cx_(), c->cy_());
-    qDebug() << "addcomp at" << c->cx_() <<  c->cy_();
-    n->setPos(c->cx_(), c->cy_());
-
-  scene()->addItem(n);
-#endif
 }
 
 // -------------------------------------------------------------
@@ -1008,6 +998,11 @@ bool Schematic::loadDocument()
     }
   }
 
+  // not here.
+  for(auto i : components()){
+    auto n=new ElementGraphics(i);
+    scene()->addItem(n);
+  }
   file.close();
   return true;
 }
