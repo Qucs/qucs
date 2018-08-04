@@ -99,6 +99,27 @@ typedef Element ElementGraphics;
 class ElementGraphics;
 #endif
 
+class SchematicModel{
+private:
+  SchematicModel(){}
+public:
+  SchematicModel(Schematic* s);
+private: // TODO: actually store here.
+  WireList& wires();
+  NodeList& nodes();
+  DiagramList& diagrams();
+  PaintingList& paintings();
+  ComponentList& components();
+public:
+  WireList const& wires() const;
+  NodeList const& nodes() const;
+  DiagramList const& diagrams() const;
+  PaintingList const& paintings() const;
+  ComponentList const& components() const;
+private:
+  Schematic* _doc;
+};
+
 class Schematic : public Q3ScrollView, public QucsDoc {
   Q_OBJECT
 public:
@@ -116,7 +137,11 @@ public:
 
   float textCorr();
   bool sizeOfFrame(int&, int&);
-  void  sizeOfAll(int&, int&, int&, int&);
+private: //temporary/obsolete
+  void sizeOfAll(int&a, int&b, int&c, int&d){
+	  return DocModel.sizeOfAll(a, b, c, d);
+  }
+public:
   bool  rotateElements();
   bool  mirrorXComponents();
   bool  mirrorYComponents();
@@ -157,6 +182,7 @@ public:
   DiagramList DocDiags;
   PaintingList DocPaints;
   ComponentList DocComps;
+  SchematicModel DocModel;
 
 // private: BUG: this is insane.
   WireList *Wires;
