@@ -167,7 +167,7 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, EGPList* pe)
       if(Line == "<Paintings>") {
 	PaintingList pl;
 	incomplete(); // ignore paintings.
-        if(!loadPaintings(stream, &pl)) return false;
+        if(!DocModel.loadPaintings(stream, &pl)) return false;
       } else {
         QMessageBox::critical(0, QObject::tr("Error"),
 		   QObject::tr("Clipboard Format Error:\nUnknown field!"));
@@ -194,7 +194,7 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, EGPList* pe)
     if(Line == "<Paintings>") {
       incomplete(); // ignore Paintings fo rnow.
       PaintingList pl;
-      if(!loadPaintings(stream, &pl)) return false;
+      if(!DocModel.loadPaintings(stream, &pl)) return false;
     }
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
@@ -876,6 +876,13 @@ bool Schematic::loadDiagrams(QTextStream *stream, DiagramList *List)
 }
 
 // -------------------------------------------------------------
+bool SchematicModel::loadPaintings(QTextStream *stream)
+{
+  incomplete();
+  return false;
+}
+
+// -------------------------------------------------------------
 bool PaintingList::load(QTextStream *stream)
 {
   auto List=this;
@@ -1001,7 +1008,7 @@ bool Schematic::loadDocument()
     else
     if(Line == "<Paintings>") {
       if(!paintings().load(&stream)) { file.close(); return false; } }
-    else {
+    }else {
        qDebug() << Line;
        QMessageBox::critical(0, QObject::tr("Error"),
 		   QObject::tr("File Format Error:\nUnknown field!"));
