@@ -993,10 +993,10 @@ void Schematic::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
   WireLabel *pl;
   Painting *pp;
 
-  if(Components->isEmpty())
-    if(Wires->isEmpty())
-      if(Diagrams->isEmpty())
-        if(Paintings->isEmpty()) {
+  if(components().isEmpty())
+    if(wires().isEmpty())
+      if(diagrams().isEmpty())
+        if(paintings().isEmpty()) {
           xmin = xmax = 0;
           ymin = ymax = 0;
           return;
@@ -1006,7 +1006,7 @@ void Schematic::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
   float Corr = textCorr();
   int x1, y1, x2, y2;
   // find boundings of all components
-  for(pc = Components->first(); pc != 0; pc = Components->next()) {
+  for(auto pc : components()) {
     pc->entireBounds(x1, y1, x2, y2, Corr);
     if(x1 < xmin) xmin = x1;
     if(x2 > xmax) xmax = x2;
@@ -1015,7 +1015,7 @@ void Schematic::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
   }
 
   // find boundings of all wires
-  for(pw = Wires->first(); pw != 0; pw = Wires->next()) {
+  for(auto pw : wires()) {
     if(pw->x1_() < xmin) xmin = pw->x1_();
     if(pw->x2_() > xmax) xmax = pw->x2_();
     if(pw->y1_() < ymin) ymin = pw->y1_();
@@ -1032,7 +1032,7 @@ void Schematic::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
   }
 
   // find boundings of all node labels
-  for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
+  for(auto pn : nodes()){
     pl = pn->Label;
     if(pl) {     // check position of node label
         pl->getLabelBounding(x1,y1,x2,y2);
@@ -1044,7 +1044,7 @@ void Schematic::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
   }
 
   // find boundings of all diagrams
-  for(pd = Diagrams->first(); pd != 0; pd = Diagrams->next()) {
+  for(auto pd : diagrams()) {
     pd->Bounding(x1, y1, x2, y2);
     if(x1 < xmin) xmin = x1;
     if(x2 > xmax) xmax = x2;
@@ -1063,7 +1063,7 @@ void Schematic::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
   }
 
   // find boundings of all Paintings
-  for(pp = Paintings->first(); pp != 0; pp = Paintings->next()) {
+  for(auto pp : paintings()) {
     pp->Bounding(x1, y1, x2, y2);
     if(x1 < xmin) xmin = x1;
     if(x2 > xmax) xmax = x2;
