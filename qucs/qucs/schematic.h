@@ -94,6 +94,8 @@ class ElementGraphics;
 // TODO: rename to SchematicDocument
 class Schematic : public SchematicBase, public QucsDoc {
   Q_OBJECT
+private:
+  Schematic(Schematic const&x): SchematicBase(), QucsDoc(x), DocModel(this){ unreachable(); }
 public:
   Schematic(QucsApp*, const QString&);
  ~Schematic();
