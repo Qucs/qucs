@@ -105,6 +105,11 @@ private:
   SchematicModel(){}
 public:
   SchematicModel(Schematic* s);
+public: // stuff saved from Schematic
+  QString createClipboardFile();
+  void sizeOfAll(int&, int&, int&, int&, float) const;
+public: // obsolete.
+  static void saveComponent(QTextStream& s, Component /* FIXME const */* c);
 private: // TODO: actually store here.
   WireList& wires();
   NodeList& nodes();
@@ -140,7 +145,7 @@ public:
   bool sizeOfFrame(int&, int&);
 private: //temporary/obsolete
   void sizeOfAll(int&a, int&b, int&c, int&d){
-	  return DocModel.sizeOfAll(a, b, c, d);
+	  return DocModel.sizeOfAll(a, b, c, d, textCorr());
   }
 public:
   bool  rotateElements();
@@ -393,7 +398,6 @@ private:
   bool loadPaintings(QTextStream*, Q3PtrList<Painting>*);
   bool loadIntoNothing(QTextStream*);
 
-  QString createClipboardFile();
   bool    pasteFromClipboard(QTextStream *, Q3PtrList<Element>*);
 
   QString createUndoString(char);
@@ -432,6 +436,10 @@ public:
 
 public: // serializer
   void saveComponent(QTextStream& s, Component const* c) const;
+
+public: // need access to SchematicModel. grr
+  friend class MouseActions;
+  friend class ImageWriter;
 };
 
 #endif
