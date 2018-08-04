@@ -172,7 +172,7 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, EGPList* pe)
       if(Line == "<Paintings>") {
 	PaintingList pl;
 	incomplete(); // ignore paintings.
-        if(!loadPaintings(stream, &pl)) return false;
+        if(!DocModel.loadPaintings(stream, &pl)) return false;
       } else {
         QMessageBox::critical(0, QObject::tr("Error"),
 		   QObject::tr("Clipboard Format Error:\nUnknown field!"));
@@ -199,7 +199,7 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, EGPList* pe)
     if(Line == "<Paintings>") {
       incomplete(); // ignore Paintings fo rnow.
       PaintingList pl;
-      if(!loadPaintings(stream, &pl)) return false;
+      if(!DocModel.loadPaintings(stream, &pl)) return false;
     }
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
@@ -407,11 +407,25 @@ void Schematic::saveDocument() const
   D->save(stream, a);
 }
 
-
 // -------------------------------------------------------------
 #if 0// moved
 bool Schematic::loadProperties(QTextStream *stream)
+// // TODO: move to frame::setParameters
+void Schematic::setFrameText(int idx, QString s)
 {
+  if(s != FrameText[idx]){
+    setChanged(true);
+    FrameText[idx] = s;
+    misc::convert2Unicode(FrameText[idx]);
+  }else{
+  }
+}
+
+// -------------------------------------------------------------
+// // TODO: move to frame::setParameters
+bool SchematicModel::loadProperties(QTextStream *stream)
+{
+  Schematic* d = _doc;
   bool ok = true;
   QString Line, cstr, nstr;
   while(!stream->atEnd()) {
@@ -435,33 +449,33 @@ bool Schematic::loadProperties(QTextStream *stream)
     cstr = Line.section('=',0,0);    // property type
     nstr = Line.section('=',1,1);    // property value
          if(cstr == "View") {
-		ViewX1 = nstr.section(',',0,0).toInt(&ok); if(ok) {
-		ViewY1 = nstr.section(',',1,1).toInt(&ok); if(ok) {
-		ViewX2 = nstr.section(',',2,2).toInt(&ok); if(ok) {
-		ViewY2 = nstr.section(',',3,3).toInt(&ok); if(ok) {
-		Scale  = nstr.section(',',4,4).toDouble(&ok); if(ok) {
-		tmpViewX1 = nstr.section(',',5,5).toInt(&ok); if(ok)
-		tmpViewY1 = nstr.section(',',6,6).toInt(&ok); }}}}} }
+		d->ViewX1 = nstr.section(',',0,0).toInt(&ok); if(ok) {
+		d->ViewY1 = nstr.section(',',1,1).toInt(&ok); if(ok) {
+		d->ViewX2 = nstr.section(',',2,2).toInt(&ok); if(ok) {
+		d->ViewY2 = nstr.section(',',3,3).toInt(&ok); if(ok) {
+		d->Scale  = nstr.section(',',4,4).toDouble(&ok); if(ok) {
+		d->tmpViewX1 = nstr.section(',',5,5).toInt(&ok); if(ok)
+		d->tmpViewY1 = nstr.section(',',6,6).toInt(&ok); }}}}} }
     else if(cstr == "Grid") {
-		GridX = nstr.section(',',0,0).toInt(&ok); if(ok) {
-		GridY = nstr.section(',',1,1).toInt(&ok); if(ok) {
-		if(nstr.section(',',2,2).toInt(&ok) == 0) GridOn = false;
-		else GridOn = true; }} }
-    else if(cstr == "DataSet") DataSet = nstr;
-    else if(cstr == "DataDisplay") DataDisplay = nstr;
+		d->GridX = nstr.section(',',0,0).toInt(&ok); if(ok) {
+		d->GridY = nstr.section(',',1,1).toInt(&ok); if(ok) {
+		if(nstr.section(',',2,2).toInt(&ok) == 0) d->GridOn = false;
+		else d->GridOn = true; }} }
+    else if(cstr == "DataSet") d->DataSet = nstr;
+    else if(cstr == "DataDisplay") d->DataDisplay = nstr;
     else if(cstr == "OpenDisplay")
-		if(nstr.toInt(&ok) == 0) SimOpenDpl = false;
-		else SimOpenDpl = true;
-    else if(cstr == "Script") Script = nstr;
+		if(nstr.toInt(&ok) == 0) d->SimOpenDpl = false;
+		else d->SimOpenDpl = true;
+    else if(cstr == "Script") d->Script = nstr;
     else if(cstr == "RunScript")
-		if(nstr.toInt(&ok) == 0) SimRunScript = false;
-		else SimRunScript = true;
+		if(nstr.toInt(&ok) == 0) d->SimRunScript = false;
+		else d->SimRunScript = true;
     else if(cstr == "showFrame")
-		setFrameType( nstr.at(0).toLatin1() - '0');
-    else if(cstr == "FrameText0") misc::convert2Unicode(FrameText[0] = nstr);
-    else if(cstr == "FrameText1") misc::convert2Unicode(FrameText[1] = nstr);
-    else if(cstr == "FrameText2") misc::convert2Unicode(FrameText[2] = nstr);
-    else if(cstr == "FrameText3") misc::convert2Unicode(FrameText[3] = nstr);
+		d->setFrameType( nstr.at(0).toLatin1() - '0');
+    else if(cstr == "FrameText0") d->setFrameText(0, nstr);
+    else if(cstr == "FrameText1") d->setFrameText(1, nstr);
+    else if(cstr == "FrameText2") d->setFrameText(2, nstr);
+    else if(cstr == "FrameText3") d->setFrameText(3, nstr);
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 	   QObject::tr("Format Error:\nUnknown property: ")+cstr);
@@ -548,14 +562,16 @@ static std::string find_type_in_string(QString& Line)
 }
 
 // -------------------------------------------------------------
-bool Schematic::loadComponents(QTextStream *stream, ComponentList *List)
+bool SchematicModel::loadComponents(QTextStream *stream)
 {
   assert(false);
   (void) stream;
   (void) List;
   unreachable();
 #if 0
+  void* List=nullptr; // incomplete
   QString Line, cstr;
+  Schematic* d=_doc; // for now.
   Component *c;
   while(!stream->atEnd()) {
     Line = stream->readLine();
@@ -712,11 +728,12 @@ bool Schematic::loadWires(QTextStream *stream, WireList *List)
 // -------------------------------------------------------------
 // // SchematicModel::?
 //  wtf is List?
-bool Schematic::loadDiagrams(QTextStream *stream, DiagramList *List)
-{
+bool SchematicModel::loadDiagrams(QTextStream *stream /*, DiagramList *List */)
+{ untested();
+  DiagramList* List=&diagrams();
   Diagram *d;
   QString Line, cstr;
-  while(!stream->atEnd()) {
+  while(!stream->atEnd()) { untested();
     Line = stream->readLine();
     if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
     Line = Line.trimmed();
@@ -729,34 +746,18 @@ bool Schematic::loadDiagrams(QTextStream *stream, DiagramList *List)
 	d=prechecked_cast<Diagram*>(x->clone());
 	assert(d);
       qDebug() << "gotit" << what.c_str();
-    }else
-#if 0 // incomplete. see qt5 rework
-         if(cstr == "<Rect") d = new RectDiagram();
-    else if(cstr == "<Polar") d = new PolarDiagram();
-    else if(cstr == "<Tab") d = new TabDiagram();
-    else if(cstr == "<Smith") d = new SmithDiagram();
-    else if(cstr == "<ySmith") d = new SmithDiagram(0,0,false);
-    else if(cstr == "<PS") d = new PSDiagram();
-    else if(cstr == "<SP") d = new PSDiagram(0,0,false);
-    else if(cstr == "<Rect3D") d = new Rect3DDiagram();
-    else if(cstr == "<Curve") d = new CurveDiagram();
-    else if(cstr == "<Time") d = new TimingDiagram();
-    else if(cstr == "<Truth") d = new TruthDiagram();
-    /*else if(cstr == "<Phasor") d = new PhasorDiagram();
-    else if(cstr == "<Waveac") d = new Waveac();*/
-    else
-#endif
-    {
+    }else {
       QMessageBox::critical(0, QObject::tr("Error"),
 		   QObject::tr("Format Error:\nUnknown diagram!"));
       return false;
     }
 
-    if(!d->load(Line, stream)) {
+    if(!d->load(Line, stream)) { untested();
       QMessageBox::critical(0, QObject::tr("Error"),
 		QObject::tr("Format Error:\nWrong 'diagram' line format!"));
       delete d;
       return false;
+    }else{ untested();
     }
     List->append(d);
   }
@@ -768,12 +769,13 @@ bool Schematic::loadDiagrams(QTextStream *stream, DiagramList *List)
 
 // -------------------------------------------------------------
 // obsolete. see qt5 rework
-bool PaintingList::load(QTextStream *stream)
+#if 0
+bool SchematicModel::loadPaintings(QTextStream *stream)
 {
   incomplete();
-  (void) stream;
   return false;
 }
+#endif
 
 /*!
  * \brief Schematic::loadDocument tries to load a schematic document.
@@ -880,11 +882,13 @@ bool Schematic::rebuild(QString *s)
   QTextStream stream(s, QIODevice::ReadOnly);
   Line = stream.readLine();  // skip identity byte
 
+#if 0 // BUG
   // read content *************************
-  if(!loadComponents(&stream))  return false;
+  if(!DocModel.loadComponents(&stream))  return false;
   if(!loadWires(&stream))  return false;
   if(!loadDiagrams(&stream, &diagrams()))  return false;
   if(!loadPaintings(&stream, &paintings())) return false;
+#endif
 
   return true;
 }
