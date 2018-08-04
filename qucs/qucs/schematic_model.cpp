@@ -27,24 +27,28 @@ SchematicModel::SchematicModel(Schematic* s)
 // note that _doc->...() functions still involve pointer hacks
 ComponentList& SchematicModel::components()
 {
+	assert(_doc);
 	// temporary. move stuff here....
 	return _doc->components();
 }
 
 WireList& SchematicModel::wires()
 {
+	assert(_doc);
 	// temporary. move stuff here....
 	return _doc->wires();
 }
 
 NodeList& SchematicModel::nodes()
 {
+	assert(_doc);
 	// temporary. move stuff here....
 	return _doc->nodes();
 }
 
 PaintingList& SchematicModel::paintings()
 {
+	assert(_doc);
 	// temporary. move stuff here....
 	return _doc->paintings();
 }
