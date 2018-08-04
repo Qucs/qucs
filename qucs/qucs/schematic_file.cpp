@@ -814,8 +814,9 @@ QString Schematic::createUndoString(char Op)
   for(pw = wires().first(); pw != 0; pw = wires().next())
     s += pw->save()+"\n";
   // save all labeled nodes as wires
-  for(Node *pn = nodes().first(); pn != 0; pn = nodes().next())
+  for(auto pn : nodes()) {
     if(pn->Label) s += pn->Label->save()+"\n";
+  }
   s += "</>\n";
 
   for(pd = diagrams().first(); pd != 0; pd = diagrams().next())
@@ -1004,7 +1005,7 @@ int Schematic::testFile(const QString& DocName)
 void Schematic::collectDigitalSignals(void)
 {
   incomplete();
-//  Node *pn;
+// Node *pn=nullptr;
 //
 //  for(pn = nodes().first(); pn != 0; pn = nodes().next()) {
 //    DigMap::Iterator it = Signals.find(pn->name());
