@@ -92,6 +92,9 @@ class ComponentList : public Q3PtrList<Component> {
 };
 // TODO: refactor here
 class PaintingList : public Q3PtrList<Painting> {
+
+public:
+	void sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const;
 };
 
 #if QT_VERSION < 0x050000
