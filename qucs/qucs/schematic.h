@@ -121,6 +121,7 @@ public: // stuff saved from Schematic
   QString createClipboardFile();
   void sizeOfAll(int&, int&, int&, int&, float) const;
   void simpleInsertComponent(Component* c);
+  bool loadPaintings(QTextStream*, PaintingList*);
 public: // obsolete.
   static void saveComponent(QTextStream& s, Component /* FIXME const */* c);
 private: // TODO: actually store here.
