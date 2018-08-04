@@ -512,8 +512,6 @@ void createListComponentEntry()
       assert(c);
 
       // FIXME: cleanup
-
-
       s << "=====" << c->type() << "=========\n";
       lang->printItem(c, s);
       s << "\n";
