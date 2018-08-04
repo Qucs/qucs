@@ -149,7 +149,7 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, Q3PtrList<Element> *pe)
   }
 
   // read content in symbol edit mode *************************
-  if(symbolMode) {
+  if(isSymbolMode()) {
     while(!stream->atEnd()) {
       Line = stream->readLine();
       if(Line == "<Components>") {
@@ -365,7 +365,7 @@ int Schematic::saveDocument()
   stream << "<Qucs Schematic " << PACKAGE_VERSION << ">\n";
 
   stream << "<Properties>\n";
-  if(symbolMode) {
+  if(isSymbolMode()) {
     stream << "  <View=" << tmpViewX1<<","<<tmpViewY1<<","
 			 << tmpViewX2<<","<<tmpViewY2<< ",";
     stream <<tmpScale<<","<<tmpPosX<<","<<tmpPosY << ">\n";

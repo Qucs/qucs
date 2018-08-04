@@ -229,7 +229,15 @@ public:
   PaintingList  SymbolPaints;  // symbol definition for subcircuit
 
   QList<PostedPaintEvent>   PostedPaintEvents;
-  bool symbolMode;  // true if in symbol painting mode
+private:
+  bool SymbolMode;
+public:
+  void setSymbolMode(bool x){
+	  SymbolMode = x;
+  }
+  bool isSymbolMode() const{
+	  return SymbolMode;
+  }
 
 
   int GridX, GridY;

@@ -65,9 +65,9 @@ ComponentList SymbolComps;
 
 
 Schematic::Schematic(QucsApp *App_, const QString& Name_)
-    : QucsDoc(App_, Name_), DocModel(this)
+    : QucsDoc(App_, Name_), DocModel(this),
+  SymbolMode(false)
 {
-  symbolMode = false;
 
   // ...........................................................
   GridX  = GridY  = 10;
@@ -179,7 +179,7 @@ void Schematic::becomeCurrent(bool update)
   emit signalCursorPosChanged(0, 0);
 
   // update appropriate menu entry
-  if (symbolMode) {
+  if (isSymbolMode()) {
     if (DocName.right(4) == ".sym") {
       App->symEdit->setText(tr("Edit Text"));
       App->symEdit->setStatusTip(tr("Edits the Text"));
@@ -198,7 +198,7 @@ void Schematic::becomeCurrent(bool update)
 	tr("Edit Circuit Symbol\n\nEdits the symbol for this schematic"));
   }
 
-  if(symbolMode) {
+  if(isSymbolMode()) {
     Nodes = &SymbolNodes;
     Wires = &SymbolWires;
     Diagrams = &SymbolDiags;
@@ -260,7 +260,7 @@ void Schematic::setChanged(bool c, bool fillStack, char Op)
 
 
   // ................................................
-  if(symbolMode) {  // for symbol edit mode
+  if(isSymbolMode()) {  // for symbol edit mode
     while(undoSymbol.size() > undoSymbolIdx + 1) {
       delete undoSymbol.last();
       undoSymbol.pop_back();
@@ -405,7 +405,7 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
   paintGrid(&Painter, contentsX(), contentsY(),
             visibleWidth(), visibleHeight());
 
-  if(!symbolMode)
+  if(!isSymbolMode())
     paintFrame(&Painter);
 
   for(Component *pc = Components->first(); pc != 0; pc = Components->next())
@@ -646,7 +646,7 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
   p.init(Painter, PrintScale * PrintRatio,
          -StartX, -StartY, -marginX, -marginY, PrintScale, PrintRatio);
 
-  if(!symbolMode)
+  if(!isSymbolMode())
     paintFrame(&p);
 
   paintSchToViewpainter(&p,printAll,false,screenDpiX,printerDpiX);
@@ -1348,11 +1348,11 @@ bool Schematic::load()
     delete undoSymbol.last();
     undoSymbol.pop_back();
   }
-  symbolMode = true;
+  setSymbolMode(true);
   setChanged(false, true); // "not changed" state, but put on undo stack
   undoSymbolIdx = 0;
   undoSymbol.at(undoSymbolIdx)->replace(1, 1, 'i');
-  symbolMode = false;
+  setSymbolMode(false);
   setChanged(false, true); // "not changed" state, but put on undo stack
   undoActionIdx = 0;
   undoAction.at(undoActionIdx)->replace(1, 1, 'i');
@@ -1415,7 +1415,7 @@ int Schematic::adjustPortNumbers()
 {
   int x1, x2, y1, y2;
   // get size of whole symbol to know where to place new ports
-  if(symbolMode)  sizeOfAll(x1, y1, x2, y2);
+  if(isSymbolMode())  sizeOfAll(x1, y1, x2, y2);
   else {
     Components = &SymbolComps;
     Wires      = &SymbolWires;
@@ -1648,7 +1648,7 @@ int Schematic::adjustPortNumbers()
 // ---------------------------------------------------
 bool Schematic::undo()
 {
-  if(symbolMode) {
+  if(isSymbolMode()) {
     if (undoSymbolIdx == 0) { return false; }
 
     rebuildSymbol(undoSymbol.at(--undoSymbolIdx));
@@ -1695,7 +1695,7 @@ bool Schematic::undo()
 // ---------------------------------------------------
 bool Schematic::redo()
 {
-  if(symbolMode) {
+  if(isSymbolMode()) {
     if (undoSymbolIdx == undoSymbol.size() - 1) { return false; }
 
     rebuildSymbol(undoSymbol.at(++undoSymbolIdx));
@@ -1886,7 +1886,7 @@ bool Schematic::elementsOnGrid()
 void Schematic::switchPaintMode()
 {
   // BUG. this messes with SchematicModel functions
-  symbolMode = !symbolMode;
+  setSymbolMode(!isSymbolMode());
 
   int tmp, t2;
   float temp;
