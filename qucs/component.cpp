@@ -923,7 +923,7 @@ Component* LegacySchematicLang::loadComponent(const QString& _s, Component* c) c
     }
 
     // for equations
-    qDebug() << "Model" << Model;
+    qDebug() << "Schematic::loadComponent Model" << Model;
 #if 1
     if(Model != "EDD" && Model != "RFEDD" && Model != "RFEDD2P")
     if(p1->Description.isEmpty()) {  // unknown number of properties ?
