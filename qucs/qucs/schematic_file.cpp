@@ -56,7 +56,7 @@ SubMap FileList;
 // -------------------------------------------------------------
 // Creates a Qucs file format (without document properties) in the returning
 // string. This is used to copy the selected elements into the clipboard.
-QString Schematic::createClipboardFile()
+QString SchematicModel::createClipboardFile()
 {
   int z=0;  // counts selected elements
   Wire *pw;
@@ -104,7 +104,7 @@ QString Schematic::createClipboardFile()
   s += "</Diagrams>\n";
 
   s += "<Paintings>\n";
-  for(pp = Paintings->first(); pp != 0; pp = Paintings->next()){
+  for(auto pp : paintings()){
     if(pp->isSelected()){
       if(pp->Name.at(0) != '.') {  // subcircuit specific -> do not copy
         s += "<"+pp->save()+">\n";  z++;
@@ -410,7 +410,7 @@ int Schematic::saveDocument()
   stream << "<Components>\n";    // save all components
   for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()){
     stream << "  "; // BUG language specific.
-    saveComponent(stream, pc);
+    SchematicModel::saveComponent(stream, pc);
     stream << "\n"; // BUG?
   }
   stream << "</Components>\n";
@@ -1002,7 +1002,7 @@ QString Schematic::createUndoString(char Op)
   s.replace(0,1,Op);
   for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
     QTextStream str(&s);
-    saveComponent(str, pc);
+    SchematicModel::saveComponent(str, pc);
     s += "\n";
   }
   s += "</>\n";  // short end flag
