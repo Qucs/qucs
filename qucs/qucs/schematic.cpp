@@ -81,7 +81,7 @@ void Schematic::printCursorPosition(int x, int y)
 Schematic::Schematic(QucsApp *App_, const QString& Name_)
     : QucsDoc(App_, Name_), DocModel(this),
   SymbolMode(false)
-{
+{ untested();
 
   // TODO: get rid of this.
   // sometimes these point to other stuff, sometimes when
