@@ -630,8 +630,10 @@ bool Schematic::loadProperties(QTextStream *stream)
 
 // ---------------------------------------------------
 // Inserts a component without performing logic for wire optimization.
-void Schematic::simpleInsertComponent(Component *c)
+void SchematicModel::simpleInsertComponent(Component *c)
 {
+  assert(&_doc->components() == &components());
+  assert(&_doc->nodes() == &nodes());
   int x, y;
   // connect every node of component
   foreach(Port *pp, c->Ports) {
@@ -679,7 +681,7 @@ void Schematic::simpleInsertComponent(Component *c)
     qDebug() << "addcomp at" << c->cx_() <<  c->cy_();
     n->setPos(c->cx_(), c->cy_());
 
-  scene()->addItem(n);
+//  scene()->addItem(n);
 #endif
 }
 
@@ -1008,6 +1010,11 @@ bool Schematic::loadDocument()
     }
   }
 
+  // not here.
+  for(auto i : components()){
+    auto n=new ElementGraphics(i);
+    scene()->addItem(n);
+  }
   file.close();
   return true;
 }
