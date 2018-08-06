@@ -219,8 +219,8 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 			GridY *= 16;
 		}
 	}
-}
 #endif
+}
 
 #ifndef USE_SCROLLVIEW
 void ElementGraphics::paintScheme(Schematic *p)
