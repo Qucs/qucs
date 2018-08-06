@@ -22,6 +22,16 @@ SchematicModel::SchematicModel(Schematic* s)
 {
 }
 
+void SchematicModel::clear()
+{
+  components().clear();
+  nodes().clear();
+  diagrams().clear();
+  wires().clear();
+  paintings().clear();
+  //SymbolPaints.clear(); ??
+}
+
 /// ACCESS FUNCTIONS.
 // these are required to move model methods over to SchematicModel
 // note that _doc->...() functions still involve pointer hacks
