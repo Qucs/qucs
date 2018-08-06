@@ -2,6 +2,8 @@
 #include "schematic_scene.h"
 #include "schematic.h"
 
+#include <QFileInfo>
+
 
 // ---------------------------------------------------
 //
@@ -156,6 +158,17 @@ void ElementGraphics::paintScheme(Schematic *p)
 {
   	assert(_e);
 	_e->paintScheme(p);
+}
+
+void SchematicModel::toScene(QGraphicsScene& s) const
+{
+  for(auto i : components()){ itested();
+    s.addItem(new ElementGraphics(i));
+  }
+  for(auto i : wires()){ itested();
+    s.addItem(new ElementGraphics(i));
+  }
+  s.update();
 }
 
 
