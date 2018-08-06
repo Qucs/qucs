@@ -955,22 +955,9 @@ bool PaintingList::load(QTextStream *stream)
  * \brief Schematic::loadDocument tries to load a schematic document.
  * \return true/false in case of success/failure
  */
-bool Schematic::loadDocument()
-{
-  QFile file(DocName);
-  if(!file.open(QIODevice::ReadOnly)) {
-    /// \todo implement unified error/warning handling GUI and CLI
-    if (QucsMain)
-      QMessageBox::critical(0, QObject::tr("Error"),
-                 QObject::tr("Cannot load document: ")+DocName);
-    else
-      qCritical() << "Schematic::loadDocument:"
-                  << QObject::tr("Cannot load document: ")+DocName;
-    return false;
-  }
+bool SchematicModel::loadDocument(QFile& /*BUG*/ file)
+{ untested();
 
-  // Keep reference to source file (the schematic file)
-  setFileInfo(DocName);
 
   QString Line;
   QTextStream stream(&file);
@@ -978,7 +965,7 @@ bool Schematic::loadDocument()
   // read header **************************
   do {
     if(stream.atEnd()) {
-      file.close();
+      file.close(); // BUG
       return true;
     }
 
@@ -987,8 +974,9 @@ bool Schematic::loadDocument()
 
   if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
     file.close();
+    // BUG: throw
     QMessageBox::critical(0, QObject::tr("Error"),
- 		 QObject::tr("Wrong document type: ")+DocName);
+ 		 QObject::tr("Wrong document type: ")+"DocName");
     return false;
   }
 
@@ -1015,16 +1003,16 @@ bool Schematic::loadDocument()
     }
     else
     if(Line == "<Properties>") {
-      if(!DocModel.loadProperties(&stream)) { file.close(); return false; } }
+      if(!loadProperties(&stream)) { file.close(); return false; } }
     else
     if(Line == "<Components>") {
-      if(!DocModel.loadComponents(&stream)) { file.close(); return false; } }
+      if(!loadComponents(&stream)) { file.close(); return false; } }
     else
     if(Line == "<Wires>") {
-      if(!DocModel.loadWires(&stream)) { file.close(); return false; } }
+      if(!loadWires(&stream)) { file.close(); return false; } }
     else
     if(Line == "<Diagrams>") {
-      if(!DocModel.loadDiagrams(&stream /* wtf?, &DocDiags*/ )) { file.close(); return false; } }
+      if(!loadDiagrams(&stream /*, diagrams()??? */ )) { file.close(); return false; } }
     else
     if(Line == "<Paintings>") {
       if(!paintings().load(&stream)) { file.close(); return false; } }
@@ -1039,11 +1027,33 @@ bool Schematic::loadDocument()
 
   // not here.
   for(auto i : components()){
-    auto n=new ElementGraphics(i);
-    scene()->addItem(n);
+  //  auto n=new ElementGraphics(i);
+//    scene()->addItem(n);
   }
   file.close();
   return true;
+}
+
+bool Schematic::loadDocument()
+{
+  QFile file(DocName);
+  if(!file.open(QIODevice::ReadOnly)) {
+    /// \todo implement unified error/warning handling GUI and CLI
+    if (QucsMain)
+      QMessageBox::critical(0, QObject::tr("Error"),
+                 QObject::tr("Cannot load document: ")+DocName);
+    else
+      qCritical() << "Schematic::loadDocument:"
+                  << QObject::tr("Cannot load document: ")+DocName;
+    return false;
+  }else{
+    setFileInfo(DocName); // ??!
+    DocModel.loadDocument(file);
+    // scene()->loadModel(DocModel); // ??
+    QGraphicsScene& s=*scene();
+    DocModel.toScene(s);
+    return true;
+  }
 }
 
 // -------------------------------------------------------------
@@ -1403,6 +1413,10 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
           else // command line
             qCritical() << "Schematic::throughAllComps" << message;
           return false;
+      }else{
+	// Keep reference to source file (the schematic file)
+	// GAAH
+	// setFileInfo(DocName);
       }
       d->DocName = s;
       d->isVerilog = isVerilog;
