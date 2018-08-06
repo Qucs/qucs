@@ -1025,7 +1025,7 @@ bool SchematicModel::loadDocument(QFile& /*BUG*/ file)
 bool Schematic::loadDocument()
 {
   QFile file(DocName);
-  if(!file.open(QIODevice::ReadOnly)) {
+  if(!file.open(QIODevice::ReadOnly)) { untested();
     /// \todo implement unified error/warning handling GUI and CLI
     if (QucsMain)
       QMessageBox::critical(0, QObject::tr("Error"),
