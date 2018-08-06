@@ -122,16 +122,17 @@ Schematic *openSchematic(QString schematic)
   Schematic *sch = new Schematic(0, schematic);
 
   // load schematic file if possible
-  if(!sch->loadDocument()) {
+  if(!sch->loadDocument()) { untested();
     fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
     delete sch;
     return NULL;
+  }else{ untested();
   }
   return sch;
 }
 
 int doNetlist(QString schematic, QString netlist)
-{
+{ untested();
   Schematic *sch = openSchematic(schematic);
   if (sch == NULL) {
     return 1;

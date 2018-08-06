@@ -121,11 +121,18 @@ public: // stuff saved from Schematic
   void sizeOfAll(int&, int&, int&, int&, float) const;
   void simpleInsertComponent(Component* c);
   void simpleInsertWire(Wire*);
+public:
+  bool loadDocument(QFile& /*BUG*/ file);
   bool loadPaintings(QTextStream*, PaintingList*);
   bool loadProperties(QTextStream*);
   bool loadComponents(QTextStream*);
   bool loadDiagrams(QTextStream*);
   bool loadWires(QTextStream*);
+
+  void clear();
+
+public: // scene interaction
+  void toScene(QGraphicsScene& s) const;
 public: // obsolete.
   static void saveComponent(QTextStream& s, Component /* FIXME const */* c);
 private: // TODO: actually store here.
