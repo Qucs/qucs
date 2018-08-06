@@ -210,6 +210,7 @@ void Component::paint(ViewPainter *p) const
 {
   int x, y;
 //  int a, b, xb, yb;
+  Element::paint(p);
   QFont f = p->Painter->font();   // save current font
   QFont newFont = f;
   if(dynamic_cast<Command const*>(this)) {
