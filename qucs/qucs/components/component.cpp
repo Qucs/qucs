@@ -191,6 +191,7 @@ bool Component::getSelected(int x_, int y_)
 // -------------------------------------------------------
 void Component::paint(ViewPainter *p)
 {
+  Element::paint(p);
   int x, y, a, b, xb, yb;
   QFont f = p->Painter->font();   // save current font
   QFont newFont = f;
