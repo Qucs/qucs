@@ -699,9 +699,11 @@ void SchematicModel::simpleInsertComponent(Component *c)
 }
 
 // -------------------------------------------------------------
-bool Schematic::loadComponents(QTextStream *stream, ComponentList *List)
+bool SchematicModel::loadComponents(QTextStream *stream)
 {
+  void* List=nullptr; // incomplete
   QString Line, cstr;
+  Schematic* d=_doc; // for now.
   Component *c;
   while(!stream->atEnd()) {
     Line = stream->readLine();
@@ -710,7 +712,7 @@ bool Schematic::loadComponents(QTextStream *stream, ComponentList *List)
     if(Line.isEmpty()) continue;
 
     /// \todo enable user to load partial schematic, skip unknown components
-    c = getComponentFromName(Line, this);
+    c = getComponentFromName(Line, d);
     if(!c) return false;
 
 
@@ -1011,7 +1013,7 @@ bool Schematic::loadDocument()
       if(!DocModel.loadProperties(&stream)) { file.close(); return false; } }
     else
     if(Line == "<Components>") {
-      if(!loadComponents(&stream)) { file.close(); return false; } }
+      if(!DocModel.loadComponents(&stream)) { file.close(); return false; } }
     else
     if(Line == "<Wires>") {
       if(!loadWires(&stream)) { file.close(); return false; } }
@@ -1114,7 +1116,7 @@ bool Schematic::rebuild(QString *s)
   Line = stream.readLine();  // skip identity byte
 
   // read content *************************
-  if(!loadComponents(&stream))  return false;
+  if(!DocModel.loadComponents(&stream))  return false;
   if(!loadWires(&stream))  return false;
   if(!loadDiagrams(&stream, &DocDiags))  return false;
   if(!paintings().load(&stream)) return false;
