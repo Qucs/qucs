@@ -74,7 +74,7 @@ ElementGraphics* Schematic::itemAt(float x, float y)
 #endif
 }
 
-#if QT_VERSION >= 0x050000
+#ifndef USE_SCROLLVIEW
 Element* element(ElementGraphics* e){
 	if(!e) return nullptr;
 	return e->operator->();
