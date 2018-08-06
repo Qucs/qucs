@@ -190,7 +190,8 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, EGPList* pe)
       incomplete();
 //      if(!loadComponents(stream, pe)) return false;
     }else if(Line == "<Wires>") {
-      if(!loadWires(stream, pe)) return false;
+      incomplete();
+//      if(!loadWires(stream, pe)) return false;
     }else if(Line == "<Diagrams>") {
       incomplete();
 //      if(!loadDiagrams(stream, pe)) return false;
@@ -614,7 +615,7 @@ bool SchematicModel::loadComponents(QTextStream *stream)
 
 // -------------------------------------------------------------
 // Inserts a wire without performing logic for optimizing.
-void Schematic::simpleInsertWire(Wire *pw)
+void SchematicModel::simpleInsertWire(Wire *pw)
 {
   Node *pn=nullptr;
 
@@ -668,10 +669,11 @@ void Schematic::simpleInsertWire(Wire *pw)
 }
 
 // -------------------------------------------------------------
-bool Schematic::loadWires(QTextStream *stream, WireList *List)
+bool SchematicModel::loadWires(QTextStream *stream /*, EGPList *List */)
 {
   incomplete();
   unreachable();
+  QList<ElementGraphics*>* List=nullptr; //?
   Wire *w;
   QString Line;
   while(!stream->atEnd()) {
@@ -714,10 +716,11 @@ bool Schematic::loadWires(QTextStream *stream, WireList *List)
 #endif
       }else{
       }
-    }else{
-    }
 #endif
-    else simpleInsertWire(w);
+    }else simpleInsertWire(w);
+    } else {
+      simpleInsertWire(w);
+    }
   }
 
   QMessageBox::critical(0, QObject::tr("Error"),
