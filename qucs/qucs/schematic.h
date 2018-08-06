@@ -121,6 +121,7 @@ public: // stuff saved from Schematic
   void sizeOfAll(int&, int&, int&, int&, float) const;
   void simpleInsertComponent(Component* c);
   bool loadPaintings(QTextStream*, PaintingList*);
+  bool loadProperties(QTextStream*);
 public: // obsolete.
   static void saveComponent(QTextStream& s, Component /* FIXME const */* c);
 private: // TODO: actually store here.
@@ -135,6 +136,8 @@ public:
   DiagramList const& diagrams() const;
   PaintingList const& paintings() const;
   ComponentList const& components() const;
+
+  Schematic* doc();
 private:
   Schematic* _doc;
 };
@@ -282,14 +285,7 @@ public:
   }
 
   // BUG: use Frame::setParameter
-  void setFrameText(int idx, QString s){
-	  if(s != FrameText[idx]){
-		  setChanged(true);
-		  FrameText[idx] = s;
-	  }else{
-	  }
-  }
-
+  void setFrameText(int idx, QString s);
 private:
   QString FrameText[4];
 public:
@@ -445,7 +441,6 @@ public:
 private:
   int  saveDocument();
 
-  bool loadProperties(QTextStream*);
   void simpleInsertComponent(Component* c) { return DocModel.simpleInsertComponent(c); }
   bool loadComponents(QTextStream*, ComponentList *List=0);
   void simpleInsertWire(Wire*);
