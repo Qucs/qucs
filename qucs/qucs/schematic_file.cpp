@@ -693,7 +693,7 @@ void SchematicModel::simpleInsertComponent(Component *c)
     // HACK: actually propagates from component to QGraphicsItem.
 //    QPointF center(c->cx_(), c->cy_());
     qDebug() << "addcomp at" << c->cx_() <<  c->cy_();
-    n->setPos(c->cx_(), c->cy_());
+    // n->setPos(c->cx_(), c->cy_());
 
 //  scene()->addItem(n);
 #endif
