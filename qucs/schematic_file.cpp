@@ -674,13 +674,25 @@ bool Schematic::loadWires(QTextStream *stream, WireList *List)
     if(List) {
       if(w->x1_() == w->x2_()) if(w->y1_() == w->y2_()) if(w->Label) {
 	w->Label->Type = isMovingLabel;
+#ifdef USE_SCROLLVIEW
+	List->append(w->Label);
+#else
 	List->append(new ElementGraphics(w->Label));
+#endif
 	delete w;
 	continue;
       }
+#ifdef USE_SCROLLVIEW
+      List->append(w);
+#else
       List->append(new ElementGraphics(w));
+#endif
       if(w->Label){
+#ifdef USE_SCROLLVIEW
+      	List->append(w);
+#else
       	List->append(new ElementGraphics(w->Label));
+#endif
       }else{
       }
     }else{
