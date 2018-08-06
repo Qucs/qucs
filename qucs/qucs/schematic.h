@@ -225,6 +225,8 @@ private:
   SchematicScene *scene() { return Scene; }
   // schematic frame item
   // Frame *SchematicFrame;
+public:
+  SchematicScene *sceneHACK() { return Scene; }
 #endif
 
 public: // model
