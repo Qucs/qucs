@@ -139,10 +139,11 @@ Schematic *newSchematic(QString schematic)
   Schematic *sch = new Schematic(0 /* no app */, schematic);
 
   // load schematic file if possible
-  if(!sch->loadDocument()) {
+  if(!sch->loadDocument()) { untested();
     fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
     delete sch;
     return NULL;
+  }else{ untested();
   }
   return sch;
 }

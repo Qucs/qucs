@@ -811,6 +811,28 @@ bool Schematic::loadDocument()
   }
 }
 
+bool Schematic::loadDocument()
+{
+  QFile file(DocName);
+  if(!file.open(QIODevice::ReadOnly)) {
+    /// \todo implement unified error/warning handling GUI and CLI
+    if (QucsMain)
+      QMessageBox::critical(0, QObject::tr("Error"),
+                 QObject::tr("Cannot load document: ")+DocName);
+    else
+      qCritical() << "Schematic::loadDocument:"
+                  << QObject::tr("Cannot load document: ")+DocName;
+    return false;
+  }else{
+    setFileInfo(DocName); // ??!
+    DocModel.loadDocument(file);
+    // scene()->loadModel(DocModel); // ??
+    QGraphicsScene& s=*scene();
+    DocModel.toScene(s);
+    return true;
+  }
+}
+
 // -------------------------------------------------------------
 // Creates a Qucs file format (without document properties) in the returning
 // string. This is used to save state for undo operation.
