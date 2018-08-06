@@ -558,9 +558,22 @@ int Schematic::saveDocument()
   return 0;
 }
 
-// -------------------------------------------------------------
-bool Schematic::loadProperties(QTextStream *stream)
+// // TODO: move to frame::setParameters
+void Schematic::setFrameText(int idx, QString s)
 {
+  if(s != FrameText[idx]){
+    setChanged(true);
+    FrameText[idx] = s;
+    misc::convert2Unicode(FrameText[idx]);
+  }else{
+  }
+}
+
+// -------------------------------------------------------------
+// // TODO: move to frame::setParameters
+bool SchematicModel::loadProperties(QTextStream *stream)
+{
+  Schematic* d = _doc;
   bool ok = true;
   QString Line, cstr, nstr;
   while(!stream->atEnd()) {
@@ -584,33 +597,33 @@ bool Schematic::loadProperties(QTextStream *stream)
     cstr = Line.section('=',0,0);    // property type
     nstr = Line.section('=',1,1);    // property value
          if(cstr == "View") {
-		ViewX1 = nstr.section(',',0,0).toInt(&ok); if(ok) {
-		ViewY1 = nstr.section(',',1,1).toInt(&ok); if(ok) {
-		ViewX2 = nstr.section(',',2,2).toInt(&ok); if(ok) {
-		ViewY2 = nstr.section(',',3,3).toInt(&ok); if(ok) {
-		Scale  = nstr.section(',',4,4).toDouble(&ok); if(ok) {
-		tmpViewX1 = nstr.section(',',5,5).toInt(&ok); if(ok)
-		tmpViewY1 = nstr.section(',',6,6).toInt(&ok); }}}}} }
+		d->ViewX1 = nstr.section(',',0,0).toInt(&ok); if(ok) {
+		d->ViewY1 = nstr.section(',',1,1).toInt(&ok); if(ok) {
+		d->ViewX2 = nstr.section(',',2,2).toInt(&ok); if(ok) {
+		d->ViewY2 = nstr.section(',',3,3).toInt(&ok); if(ok) {
+		d->Scale  = nstr.section(',',4,4).toDouble(&ok); if(ok) {
+		d->tmpViewX1 = nstr.section(',',5,5).toInt(&ok); if(ok)
+		d->tmpViewY1 = nstr.section(',',6,6).toInt(&ok); }}}}} }
     else if(cstr == "Grid") {
-		GridX = nstr.section(',',0,0).toInt(&ok); if(ok) {
-		GridY = nstr.section(',',1,1).toInt(&ok); if(ok) {
-		if(nstr.section(',',2,2).toInt(&ok) == 0) GridOn = false;
-		else GridOn = true; }} }
-    else if(cstr == "DataSet") DataSet = nstr;
-    else if(cstr == "DataDisplay") DataDisplay = nstr;
+		d->GridX = nstr.section(',',0,0).toInt(&ok); if(ok) {
+		d->GridY = nstr.section(',',1,1).toInt(&ok); if(ok) {
+		if(nstr.section(',',2,2).toInt(&ok) == 0) d->GridOn = false;
+		else d->GridOn = true; }} }
+    else if(cstr == "DataSet") d->DataSet = nstr;
+    else if(cstr == "DataDisplay") d->DataDisplay = nstr;
     else if(cstr == "OpenDisplay")
-		if(nstr.toInt(&ok) == 0) SimOpenDpl = false;
-		else SimOpenDpl = true;
-    else if(cstr == "Script") Script = nstr;
+		if(nstr.toInt(&ok) == 0) d->SimOpenDpl = false;
+		else d->SimOpenDpl = true;
+    else if(cstr == "Script") d->Script = nstr;
     else if(cstr == "RunScript")
-		if(nstr.toInt(&ok) == 0) SimRunScript = false;
-		else SimRunScript = true;
+		if(nstr.toInt(&ok) == 0) d->SimRunScript = false;
+		else d->SimRunScript = true;
     else if(cstr == "showFrame")
-		setFrameType( nstr.at(0).toLatin1() - '0');
-    else if(cstr == "FrameText0") misc::convert2Unicode(FrameText[0] = nstr);
-    else if(cstr == "FrameText1") misc::convert2Unicode(FrameText[1] = nstr);
-    else if(cstr == "FrameText2") misc::convert2Unicode(FrameText[2] = nstr);
-    else if(cstr == "FrameText3") misc::convert2Unicode(FrameText[3] = nstr);
+		d->setFrameType( nstr.at(0).toLatin1() - '0');
+    else if(cstr == "FrameText0") d->setFrameText(0, nstr);
+    else if(cstr == "FrameText1") d->setFrameText(1, nstr);
+    else if(cstr == "FrameText2") d->setFrameText(2, nstr);
+    else if(cstr == "FrameText3") d->setFrameText(3, nstr);
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 	   QObject::tr("Format Error:\nUnknown property: ")+cstr);
@@ -995,7 +1008,7 @@ bool Schematic::loadDocument()
     }
     else
     if(Line == "<Properties>") {
-      if(!loadProperties(&stream)) { file.close(); return false; } }
+      if(!DocModel.loadProperties(&stream)) { file.close(); return false; } }
     else
     if(Line == "<Components>") {
       if(!loadComponents(&stream)) { file.close(); return false; } }
