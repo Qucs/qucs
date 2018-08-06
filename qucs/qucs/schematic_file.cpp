@@ -1038,8 +1038,10 @@ bool Schematic::loadDocument()
     setFileInfo(DocName); // ??!
     DocModel.loadDocument(file);
     // scene()->loadModel(DocModel); // ??
+#ifndef USE_SCROLLVIEW
     QGraphicsScene& s=*scene();
     DocModel.toScene(s);
+#endif
     return true;
   }
 }
