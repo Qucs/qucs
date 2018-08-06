@@ -122,6 +122,7 @@ public: // stuff saved from Schematic
   void simpleInsertComponent(Component* c);
   bool loadPaintings(QTextStream*, PaintingList*);
   bool loadProperties(QTextStream*);
+  bool loadComponents(QTextStream*);
 public: // obsolete.
   static void saveComponent(QTextStream& s, Component /* FIXME const */* c);
 private: // TODO: actually store here.
@@ -442,7 +443,6 @@ private:
   int  saveDocument();
 
   void simpleInsertComponent(Component* c) { return DocModel.simpleInsertComponent(c); }
-  bool loadComponents(QTextStream*, ComponentList *List=0);
   void simpleInsertWire(Wire*);
   bool loadWires(QTextStream*, WireList*List=0);
   bool loadDiagrams(QTextStream*, DiagramList*);
