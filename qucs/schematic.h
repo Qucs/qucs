@@ -408,7 +408,8 @@ private: // tmp hack. use SchematicModel.
 
 private: // legacy, don't use
   void simpleInsertComponent(Component* c) { return DocModel.simpleInsertComponent(c); }
-  void simpleInsertCommand(Command*);
+  void simpleInsertCommand(Command*) { return DocModel.simpleInsertCommand(c); }
+  void simpleInsertWire(Wire* w) { return DocModel.simpleInsertWire(w); }
 private:
   void simpleInsertElement(Element*);
 
