@@ -17,7 +17,6 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#include <QFileInfo>
 #include <QPaintDevice>
 #include <QDir>
 #include <QTextStream>
@@ -1414,11 +1413,15 @@ bool Schematic::paste(QTextStream *stream, Schematic::EGPList *pe)
 // ---------------------------------------------------
 // Loads this Qucs document.
 bool Schematic::load()
-{
+{ untested();
   DocModel.clear();
-  SymbolPaints.clear();
 
-  if(!loadDocument()) return false;
+  if(!loadDocument()){ untested();
+    return false;
+  }else{ untested();
+    // Keep reference to source file (the schematic file)
+    // setFileInfo(DocName);
+  }
   lastSaved = QDateTime::currentDateTime();
 
   while(!undoAction.isEmpty()) {

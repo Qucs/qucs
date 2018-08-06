@@ -153,11 +153,14 @@ QucsApp::QucsApp()
   lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
 
   // load documents given as command line arguments
+  // // ARGH. this is argv argc
   for(int z=1; z<qApp->arguments().size(); z++) {
     QString arg = qApp->arguments()[z];
     QByteArray ba = arg.toLatin1();
     const char *c_arg= ba.data();
-    if(*(c_arg) != '-') {
+    if(*(c_arg) == '-') {
+        // do not open files with '-'
+    }else{
       QFileInfo Info(arg);
       QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
       arg = QucsSettings.QucsWorkDir.filePath(Info.fileName());
@@ -1405,30 +1408,35 @@ void QucsApp::slotTextNew()
 // directly, otherwise it loads it.
 bool QucsApp::gotoPage(const QString& Name)
 {
+    // is Name the filename?!
   int No = DocumentTab->currentIndex();
 
   int i = 0;
   QucsDoc * d = findDoc (Name, &i);  // search, if page is already loaded
 
-  if(d) {   // open page found ?
+  if(d) {
+    // open page found
     d->becomeCurrent(true);
     DocumentTab->setCurrentIndex(i);  // make new document the current
     return true;
+  }else{
   }
 
   QFileInfo Info(Name);
   if(Info.suffix() == "sch" || Info.suffix() == "dpl" ||
-     Info.suffix() == "sym") {
+     Info.suffix() == "sym") { untested();
     d = DocumentTab->createEmptySchematic(Name);
-  } else {
+  } else { untested();
     d = DocumentTab->createEmptyTextDoc(Name);
   }
 
-  if(!d->load()) {    // load document if possible
+     // load document if possible
+  if(!d->load()) { untested();
     delete d;
     DocumentTab->setCurrentIndex(No);
     view->drawn = false;
     return false;
+  }else{ untested();
   }
   slotChangeView(DocumentTab->currentWidget());
 

@@ -107,7 +107,6 @@ void SchematicModel::parse(DocumentStream& s, SchematicLanguage const* L)
 	}
 }
 
-
 /// ACCESS FUNCTIONS.
 // these are required to move model methods over to SchematicModel
 // note that _doc->...() functions still involve pointer hacks
@@ -266,12 +265,12 @@ DiagramList const& SchematicModel::diagrams() const
 
 // TODO: what is this? (perhaps DocumentFormat?)
 static void createNodeSet(QStringList& Collect, int& countInit,
-			      Conductor *pw, Node *p1)
+		Conductor *pw, Node *p1)
 {
-  if(pw->Label)
-    if(!pw->Label->initValue.isEmpty())
-      Collect.append("NodeSet:NS" + QString::number(countInit++) + " " +
-                     p1->name() + " U=\"" + pw->Label->initValue + "\"");
+	if(pw->Label)
+		if(!pw->Label->initValue.isEmpty())
+			Collect.append("NodeSet:NS" + QString::number(countInit++) + " " +
+					p1->name() + " U=\"" + pw->Label->initValue + "\"");
 }
 
 // find connected components (slow)
@@ -298,50 +297,50 @@ void SchematicModel::throughAllNodes(unsigned& z) const
 
 #if 0
 void SchematicModel::propagateNode(QStringList& Collect,
-			      int& countInit, Node *pn)
+		int& countInit, Node *pn)
 {
-  bool isAnalog=true;
-  bool setName=false;
-  Q3PtrList<Node> Cons;
-  Node *p2;
-  Wire *pw;
-  Element *pe;
+	bool isAnalog=true;
+	bool setName=false;
+	Q3PtrList<Node> Cons;
+	Node *p2;
+	Wire *pw;
+	Element *pe;
 
-  Cons.append(pn);
-  for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
-    for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
-      if(pe->Type == isWire) {
-	pw = (Wire*)pe;
-	if(p2 != pw->Port1) {
-	  if(pw->Port1->name().isEmpty()) {
-	    pw->Port1->setName(pn->name());
-	    pw->Port1->State = 1;
-	    Cons.append(pw->Port1);
-	    setName = true;
-	  }
-	}
-	else {
-	  if(pw->Port2->name().isEmpty()) {
-	    pw->Port2->setName(pn->name());
-	    pw->Port2->State = 1;
-	    Cons.append(pw->Port2);
-	    setName = true;
-	  }
-	}
-	if(setName) {
-	  Cons.findRef(p2);   // back to current Connection
-	  if (isAnalog) createNodeSet(Collect, countInit, pw, pn);
-	  setName = false;
-	}
-      }
-  Cons.clear();
+	Cons.append(pn);
+	for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
+		for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
+			if(pe->Type == isWire) {
+				pw = (Wire*)pe;
+				if(p2 != pw->Port1) {
+					if(pw->Port1->name().isEmpty()) {
+						pw->Port1->setName(pn->name());
+						pw->Port1->State = 1;
+						Cons.append(pw->Port1);
+						setName = true;
+					}
+				}
+				else {
+					if(pw->Port2->name().isEmpty()) {
+						pw->Port2->setName(pn->name());
+						pw->Port2->State = 1;
+						Cons.append(pw->Port2);
+						setName = true;
+					}
+				}
+				if(setName) {
+					Cons.findRef(p2);   // back to current Connection
+					if (isAnalog) createNodeSet(Collect, countInit, pw, pn);
+					setName = false;
+				}
+			}
+	Cons.clear();
 }
 #endif
 
 // really?
 bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
-                   QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
-		  bool creatingLib, NetLang const& nl)
+		QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
+		bool creatingLib, NetLang const& nl)
 {
 	incomplete(); // BUG. called from Sckt:tAC
 	(void) nl;
