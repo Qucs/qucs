@@ -226,7 +226,7 @@ script:
 
   # clang 5.0.0 complains a lot about unused command line arguments
   # set CXXFLAGS also in 'make distcheck' as specifying DISTCHECK_CONFIGURE_FLAGS will retrigger configure
-  - if [[ $LINUX && $AUTOTOOLS && $CLANG ]]; then
+  - if [[ $LINUX && $AUTOTOOLS && $CLANG && $QT4 ]]; then
       cd qucs; ./configure CXXFLAGS="-Wno-unused-command-line-argument" --disable-dependency-tracking --with-gtest=/tmp/gtest --enable-doc || travis_terminate 1;
       make distcheck DISTCHECK_CONFIGURE_FLAGS="CXXFLAGS=-Wno-unused-command-line-argument --with-gtest=/tmp/gtest --enable-doc" || travis_terminate 1;
       cd ..;
@@ -240,14 +240,15 @@ script:
     fi
 
 
-   if [[ $LINUX && $AUTOTOOLS && $GCC ]]; then
+   if [[ $LINUX && $AUTOTOOLS && $GCC && $QT4 ]]; then
       cd qucs; ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc || travis_terminate 1;
       make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --disable-dependency-tracking --disable-doc" || travis_terminate 1;
       cd ..;
     fi
 
-  # with cmake build only
+  # with cmake build only (later.)
   - if [[ $CMAKE ]]; then
+      travis_terminate 0;
       mkdir build;
       cd build;
       cmake .. -DCMAKE_INSTALL_PREFIX=$HOME || travis_terminate 1;
