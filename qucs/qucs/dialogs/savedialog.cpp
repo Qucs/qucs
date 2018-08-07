@@ -91,7 +91,7 @@ void SaveDialog::initDialog()
 
 void SaveDialog::addUnsavedDoc(QucsDoc *doc)
 {
-   QString text = (doc->DocName).isEmpty() ? tr("Untitled") : doc->DocName;
+   QString text = (doc->docName().isEmpty()) ? tr("Untitled") : doc->docName();
 
    QListWidgetItem *item = new QListWidgetItem(text, fileView);
    item->setFlags( item->flags() | Qt::ItemIsUserCheckable );

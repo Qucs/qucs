@@ -115,7 +115,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   if(parent){
 	  const Schematic* s = dynamic_cast<const Schematic*>(parent);
 	  assert(s);
-	  QFileInfo Info(s->DocName);
+	  QFileInfo Info(s->docName());
 	  defaultDataSet = Info.path() + QDir::separator() + s->DataSet;
   }else{
 	  defaultDataSet = "unknown";

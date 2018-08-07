@@ -50,7 +50,12 @@ public:
   static QString fileBase (const QString&);
   QString fileBase (void);
 
+private:
   QString DocName;
+public:
+  void setDocName(QString x){ DocName=x; }
+  QString docName() const{ return DocName; }
+
   QString DataSet;     // name of the default dataset
   QString DataDisplay; // name of the default data display
   QString Script;

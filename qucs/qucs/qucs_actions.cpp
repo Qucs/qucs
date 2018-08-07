@@ -1002,7 +1002,7 @@ void QucsApp::slotBuildModule()
     builder->setProcessChannelMode(QProcess::MergedChannels);
     // get current va document
     QucsDoc *Doc = getDoc();
-    QString vaModule = Doc->fileBase(Doc->DocName);
+    QString vaModule = Doc->fileBase(Doc->docName());
 
     QString admsXml = QucsSettings.AdmsXmlBinDir.canonicalPath();
 
