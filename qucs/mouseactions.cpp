@@ -474,7 +474,6 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
   movingElements=Doc->cropSelectedElements();
   Doc->viewport()->repaint();
 
-  Wire *pw;
   // Changes the position of all moving elements by dx/dy
   for(Element *pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
     pw = dynamic_cast<Wire*>(pe);   // connecting wires are not moved completely
@@ -2044,6 +2043,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 
 //  qDebug() << "+focusElement->Type" << focusElement->Type;
 
+  MarkerDialog *mdia;
   int x1, y1, x2, y2;
 
   QFileInfo Info(Doc->DocName);
