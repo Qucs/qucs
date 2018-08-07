@@ -124,7 +124,7 @@ void DiagramDialog::attach(Object* d)
   if(schematic()){
 	  const Schematic* s = dynamic_cast<const Schematic*>(schematic());
 	  assert(s);
-	  QFileInfo Info(s->DocName);
+	  QFileInfo Info(s->docName());
 	  defaultDataSet = Info.path() + QDir::separator() + s->DataSet;
   }else{
 	  defaultDataSet = "unknown";
