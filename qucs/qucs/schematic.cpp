@@ -81,6 +81,7 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
     : QucsDoc(App_, Name_), DocModel(this),
   SymbolMode(false)
 { untested();
+  qDebug() << "Schematic::Schematic" << Name_;
 
   // TODO: get rid of this.
   // sometimes these point to other stuff, sometimes when
@@ -236,7 +237,7 @@ void Schematic::becomeCurrent(bool update)
 
   // update appropriate menu entry
   if (isSymbolMode()) {
-    if (DocName.right(4) == ".sym") {
+    if (docName().right(4) == ".sym") {
       App->symEdit->setText(tr("Edit Text"));
       App->symEdit->setStatusTip(tr("Edits the Text"));
       App->symEdit->setWhatsThis(tr("Edit Text\n\nEdits the text file"));
@@ -279,8 +280,8 @@ void Schematic::becomeCurrent(bool update)
 // ---------------------------------------------------
 void Schematic::setName (const QString& Name_)
 {
-  DocName = Name_;
-  QFileInfo Info (DocName);
+  setDocName(Name_);
+  QFileInfo Info (docName());
   QString base = Info.completeBaseName ();
   QString ext = Info.suffix();
   DataSet = base + ".dat";
@@ -1379,7 +1380,7 @@ bool Schematic::mirrorYComponents()
 // Updates the graph data of all diagrams (load from data files).
 void Schematic::reloadGraphs()
 {
-  QFileInfo Info(DocName);
+  QFileInfo Info(docName());
   for(Diagram *pd = diagrams().first(); pd != 0; pd = diagrams().next())
     pd->loadGraphData(Info.path()+QDir::separator()+DataSet);
 }
@@ -1467,7 +1468,7 @@ int Schematic::save()
   int result = adjustPortNumbers();// same port number for schematic and symbol
   saveDocument();
 
-  QFileInfo Info(DocName);
+  QFileInfo Info(docName());
   lastSaved = Info.lastModified();
 
   if(result >= 0) {
@@ -1543,7 +1544,7 @@ int Schematic::adjustPortNumbers()
     int Number;
 
     // get ports from VHDL file
-    QFileInfo Info(DocName);
+    QFileInfo Info(docName());
     QString Name = Info.path() + QDir::separator() + DataDisplay;
 
     // obtain VHDL information either from open text document or the
@@ -1607,7 +1608,7 @@ int Schematic::adjustPortNumbers()
     int Number;
 
     // get ports from Verilog-HDL file
-    QFileInfo Info (DocName);
+    QFileInfo Info (docName());
     QString Name = Info.path() + QDir::separator() + DataDisplay;
 
     // obtain Verilog-HDL information either from open text document or the
@@ -1654,7 +1655,7 @@ int Schematic::adjustPortNumbers()
     int Number;
 
     // get ports from Verilog-A file
-    QFileInfo Info (DocName);
+    QFileInfo Info (docName());
     QString Name = Info.path() + QDir::separator() + DataDisplay;
 
     // obtain Verilog-A information either from open text document or the

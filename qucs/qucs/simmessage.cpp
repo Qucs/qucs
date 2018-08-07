@@ -67,7 +67,7 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
   else
     Doc = (QucsDoc*) ((Schematic*)DocWidget);
 
-  DocName = Doc->DocName;
+  DocName = Doc->docName();
   DataDisplay = Doc->DataDisplay;
   Script = Doc->Script;
   QFileInfo Info(DocName);

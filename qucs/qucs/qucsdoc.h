@@ -53,7 +53,7 @@ public:
   static QString fileBase (const QString&);
   QString fileBase (void);
 
-// private:
+private:
   QString DocName;
 
 public:

@@ -216,7 +216,7 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, EGPList* pe)
 // -------------------------------------------------------------
 int Schematic::saveSymbolCpp (void)
 {
-  QFileInfo info (DocName);
+  QFileInfo info (docName());
   QString cppfile = info.path () + QDir::separator() + DataSet;
   QFile file (cppfile);
 
@@ -284,7 +284,7 @@ int Schematic::saveSymbolCpp (void)
 // save symbol paintings in JSON format
 int Schematic::saveSymbolJSON()
 {
-  QFileInfo info (DocName);
+  QFileInfo info (docName());
   QString jsonfile = info.path () + QDir::separator()
                    + info.completeBaseName() + "_sym.json";
 
@@ -365,6 +365,7 @@ int Schematic::saveSymbolJSON()
 
 }
 
+<<<<<<< HEAD
 // BUG: move to SchematicModel
 namespace{
 class sda : public ModelAccess{
@@ -813,18 +814,19 @@ bool Schematic::loadDocument()
 
 bool Schematic::loadDocument()
 {
-  QFile file(DocName);
+  QFile file(docName());
   if(!file.open(QIODevice::ReadOnly)) { untested();
     /// \todo implement unified error/warning handling GUI and CLI
     if (QucsMain)
       QMessageBox::critical(0, QObject::tr("Error"),
-                 QObject::tr("Cannot load document: ")+DocName);
+                 QObject::tr("Cannot load document: ")+docName());
     else
       qCritical() << "Schematic::loadDocument:"
-                  << QObject::tr("Cannot load document: ")+DocName;
+                  << QObject::tr("Cannot load document: ")+docName();
     return false;
   }else{
-    setFileInfo(DocName); // ??!
+    setFileInfo(docName());
+
     DocModel.loadDocument(file);
     // scene()->loadModel(DocModel); // ??
 #ifndef USE_SCROLLVIEW
@@ -896,14 +898,11 @@ QString Schematic::createSymbolUndoString(char Op)
 
 // -------------------------------------------------------------
 // Is quite similiar to "loadDocument()" but with less error checking.
-// Used for "undo" function.
+// Abused for "undo" function.
 bool Schematic::rebuild(QString *s)
 {
-  wires().clear();	// delete whole document
-  nodes().clear();
-  components().clear();
-  diagrams().clear();
-  paintings().clear();
+  incomplete();
+  DocModel.clear();
 
   QString Line;
   QTextStream stream(s, QIODevice::ReadOnly);
@@ -1651,7 +1650,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
     stream << "--";
   }
 
-  stream << " Qucs " << PACKAGE_VERSION << "  " << DocName << "\n";
+  stream << " Qucs " << PACKAGE_VERSION << "  " << docName() << "\n";
 
   // set timescale property for verilog schematics
   if (isVerilog) {

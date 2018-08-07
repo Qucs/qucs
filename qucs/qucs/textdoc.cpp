@@ -135,7 +135,7 @@ void TextDoc::setLanguage (int lang)
  */
 bool TextDoc::saveSettings (void)
 {
-  QFile file (DocName + ".cfg");
+  QFile file (docName() + ".cfg");
   if (!file.open (QIODevice::WriteOnly))
     return false;
 
@@ -163,7 +163,7 @@ bool TextDoc::saveSettings (void)
  */
 bool TextDoc::loadSettings (void)
 {
-  QFile file (DocName + ".cfg");
+  QFile file (docName() + ".cfg");
   if (!file.open (QIODevice::ReadOnly))
     return false;
 
@@ -207,10 +207,10 @@ bool TextDoc::loadSettings (void)
  */
 void TextDoc::setName (const QString& Name_)
 {
-  DocName = Name_;
-  setLanguage (DocName);
+  setDocName(Name_);
+  setLanguage (docName());
 
-  QFileInfo Info (DocName);
+  QFileInfo Info (docName());
 
   DataSet = Info.completeBaseName() + ".dat";
   DataDisplay = Info.completeBaseName() + ".dpl";
@@ -374,10 +374,10 @@ QMenu *TextDoc::createStandardContextMenu()
  */
 bool TextDoc::load ()
 {
-  QFile file (DocName);
+  QFile file (docName());
   if (!file.open (QIODevice::ReadOnly))
     return false;
-  setLanguage (DocName);
+  setLanguage (docName());
 
   QTextStream stream (&file);
   insertPlainText(stream.readAll());
@@ -400,10 +400,10 @@ int TextDoc::save ()
 {
   saveSettings ();
 
-  QFile file (DocName);
+  QFile file (docName());
   if (!file.open (QIODevice::WriteOnly))
     return -1;
-  setLanguage (DocName);
+  setLanguage (docName());
 
   QTextStream stream (&file);
   stream << toPlainText();
@@ -411,7 +411,7 @@ int TextDoc::save ()
   slotSetChanged ();
   file.close ();
 
-  QFileInfo Info (DocName);
+  QFileInfo Info (docName());
   lastSaved = Info.lastModified ();
 
   /// clear highlighted lines on save \see MessageDock::slotCursor()
@@ -569,7 +569,7 @@ QString TextDoc::getModuleName (void)
     }
   case LANG_OCTAVE:
     {
-      QFileInfo Info (DocName);
+      QFileInfo Info (docName());
       return Info.completeBaseName();
     }
   default:
@@ -602,7 +602,7 @@ void TextDoc::highlightCurrentLine()
 
 void TextDoc::refreshLanguage()
 {
-    this->setLanguage(DocName);
+    this->setLanguage(docName());
     syntaxHighlight->setLanguage(language);
     syntaxHighlight->setDocument(document());
 }
