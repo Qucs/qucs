@@ -448,7 +448,7 @@ void LibraryDialog::slotSave()
 			arg(SelectedNames[i]));
         break;
     }
-    Doc->DocName = NameEdit->text() + "_" + SelectedNames[i];
+    Doc->setDocName(NameEdit->text() + "_" + SelectedNames[i]);
     Success = false;
 
     // save analog model

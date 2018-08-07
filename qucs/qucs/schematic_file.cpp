@@ -211,7 +211,7 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, EGPList* pe)
 // -------------------------------------------------------------
 int Schematic::saveSymbolCpp (void)
 {
-  QFileInfo info (DocName);
+  QFileInfo info (docName());
   QString cppfile = info.path () + QDir::separator() + DataSet;
   QFile file (cppfile);
 
@@ -279,7 +279,7 @@ int Schematic::saveSymbolCpp (void)
 // save symbol paintings in JSON format
 int Schematic::saveSymbolJSON()
 {
-  QFileInfo info (DocName);
+  QFileInfo info (docName());
   QString jsonfile = info.path () + QDir::separator()
                    + info.completeBaseName() + "_sym.json";
 
@@ -364,7 +364,7 @@ int Schematic::saveSymbolJSON()
 // Returns the number of subcircuit ports.
 int Schematic::saveDocument()
 {
-  QFile file(DocName);
+  QFile file(docName());
   if(!file.open(QIODevice::WriteOnly)) {
     QMessageBox::critical(0, QObject::tr("Error"),
 				QObject::tr("Cannot save document!"));
@@ -1036,18 +1036,19 @@ bool SchematicModel::loadDocument(QFile& /*BUG*/ file)
 
 bool Schematic::loadDocument()
 {
-  QFile file(DocName);
+  QFile file(docName());
   if(!file.open(QIODevice::ReadOnly)) { untested();
     /// \todo implement unified error/warning handling GUI and CLI
     if (QucsMain)
       QMessageBox::critical(0, QObject::tr("Error"),
-                 QObject::tr("Cannot load document: ")+DocName);
+                 QObject::tr("Cannot load document: ")+docName());
     else
       qCritical() << "Schematic::loadDocument:"
-                  << QObject::tr("Cannot load document: ")+DocName;
+                  << QObject::tr("Cannot load document: ")+docName();
     return false;
   }else{
-    setFileInfo(DocName); // ??!
+    setFileInfo(docName());
+
     DocModel.loadDocument(file);
     // scene()->loadModel(DocModel); // ??
 #ifndef USE_SCROLLVIEW
@@ -1121,7 +1122,7 @@ QString Schematic::createSymbolUndoString(char Op)
 // Is quite similiar to "loadDocument()" but with less error checking.
 // Used for "undo" function.
 bool Schematic::rebuild(QString *s)
-{
+{ untested();
   DocWires.clear();	// delete whole document
   DocNodes.clear();
   DocComps.clear();
@@ -1374,15 +1375,13 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
     }
 
     // handle subcircuits
-    if(pc->obsolete_model_hack() == "Sub")
-    {
+    if(pc->obsolete_model_hack() == "Sub") { untested();
       int i;
       // tell the subcircuit it belongs to this schematic
       pc->setSchematic (this);
       QString f = pc->getSubcircuitFile();
       SubMap::Iterator it = FileList.find(f);
-      if(it != FileList.end())
-      {
+      if(it != FileList.end()) { untested();
         if (!it.value().PortTypes.isEmpty())
         {
           i = 0;
@@ -1420,7 +1419,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 	// GAAH
 	// setFileInfo(DocName);
       }
-      d->DocName = s;
+      d->setDocName(s);
       d->isVerilog = isVerilog;
       d->isAnalog = isAnalog;
       d->creatingLib = creatingLib;
@@ -1646,7 +1645,7 @@ int NumPorts)
   QTextStream * tstream = stream;
   QFile ofile;
   if(creatingLib) {
-    QString f = misc::properAbsFileName(DocName) + ".lst";
+    QString f = misc::properAbsFileName(docName()) + ".lst";
     ofile.setFileName(f);
     if(!ofile.open(IO_WriteOnly)) {
       ErrText->appendPlainText(tr("ERROR: Cannot create library file \"%s\".").arg(f));
@@ -1661,7 +1660,7 @@ int NumPorts)
   for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
     if(pc->obsolete_model_hack().at(0) == '.') { // no simulations in subcircuits
       ErrText->appendPlainText(
-        QObject::tr("WARNING: Ignore simulation component in subcircuit \"%1\".").arg(DocName)+"\n");
+        QObject::tr("WARNING: Ignore simulation component in subcircuit \"%1\".").arg(docName())+"\n");
       continue;
     }
     else if(pc->obsolete_model_hack() == "Port") {
@@ -1733,7 +1732,7 @@ int NumPorts)
     }
   }
 
-  QString f = misc::properFileName(DocName);
+  QString f = misc::properFileName(docName());
   QString Type = misc::properName(f);
 
   Painting *pi;
@@ -1991,7 +1990,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
     stream << "//";
   else
     stream << "--";
-  stream << " Qucs " << PACKAGE_VERSION << "  " << DocName << "\n";
+  stream << " Qucs " << PACKAGE_VERSION << "  " << docName() << "\n";
 
   // set timescale property for verilog schematics
   if (isVerilog) {
