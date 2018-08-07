@@ -499,7 +499,6 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
   movingElements=Doc->cropSelectedElements();
   Doc->viewport()->repaint();
 
-  Wire *pw;
   // Changes the position of all moving elements by dx/dy
   for(auto pe=movingElements.first(); pe!=0; pe=movingElements.next()) { untested();
     if(auto pw=wire(pe)){
@@ -2065,9 +2064,9 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 
 //  qDebug() << "+focusElement->Type" << focusElement->Type;
 
-  Graph *pg;
-  Component *c;
-  Diagram *dia;
+//  Graph *pg;
+  //Component *c;
+  //Diagram *dia;
   MarkerDialog *mdia;
   int x1, y1, x2, y2;
 
