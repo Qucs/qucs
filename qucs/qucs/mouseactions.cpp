@@ -173,7 +173,7 @@ void MouseActions::editLabel(Schematic *Doc, WireLabel *pl)
 
 // -----------------------------------------------------------
 // Reinserts all elements (moved by the user) back into the schematic.
-void MouseActions::endElementMoving(Schematic *Doc, Q3PtrList<Element> *movElements)
+void MouseActions::endElementMoving(Schematic *Doc, EGPList *movElements)
 { untested();
   incomplete();
 #if 0
@@ -231,7 +231,7 @@ void MouseActions::endElementMoving(Schematic *Doc, Q3PtrList<Element> *movEleme
 
 // -----------------------------------------------------------
 // Moves elements in "movElements" by x/y
-void MouseActions::moveElements(Q3PtrList<Element> *movElements, int x, int y)
+void MouseActions::moveElements(EGPList *movElements, int x, int y)
 { untested();
   incomplete();
 #if 0
