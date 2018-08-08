@@ -486,7 +486,8 @@ void Schematic::simpleInsertComponent(Component *c)
     qDebug() << c->label() << "port" << x << y;
 
     // check if new node lies upon existing node
-    for(pn = nodes().first(); pn != 0; pn = nodes().next()){
+    for(auto pn_ : nodes()){
+      pn = pn_;
       if(pn->cx_() == x) if(pn->cy_() == y) {
 // 	if (!pn->DType.isEmpty()) {
 // 	  pp->Type = pn->DType;
@@ -498,10 +499,13 @@ void Schematic::simpleInsertComponent(Component *c)
       }
     }
 
-    if(pn == 0) { // create new node, if no existing one lies at this position
+    if(!pn) {
+      // create new node, if no existing one lies at this position
       pn = new Node(x, y);
       nodes().append(pn);
+    }else{
     }
+
     pn->Connections.append(c);  // connect schematic node to component node
     if (!pp->Type.isEmpty()) {
 //      pn->DType = pp->Type;
@@ -585,10 +589,17 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
 // Inserts a wire without performing logic for optimizing.
 void Schematic::simpleInsertWire(Wire *pw)
 {
-  Node *pn;
-  // check if first wire node lies upon existing node
-  for(pn = nodes().first(); pn != 0; pn = nodes().next())
-    if(pn->cx_() == pw->x1_()) if(pn->cy_() == pw->y1_()) break;
+  Node *pn=nullptr;
+
+  // find_node_at
+  for(auto pn_ : nodes()){
+    if(pn_->cx_() == pw->x1_()) {
+      if(pn_->cy_() == pw->y1_()) {
+	pn = pn_;
+	break;
+      }
+    }
+  }
 
   if(!pn) {   // create new node, if no existing one lies at this position
     pn = new Node(pw->x1_(), pw->y1_());
@@ -608,9 +619,16 @@ void Schematic::simpleInsertWire(Wire *pw)
   pn->Connections.append(pw);  // connect schematic node to component node
   pw->Port1 = pn;
 
-  // check if second wire node lies upon existing node
-  for(pn = nodes().first(); pn != 0; pn = nodes().next())
-    if(pn->cx_() == pw->x2_()) if(pn->cy_() == pw->y2_()) break;
+  // find_node_at
+  pn=nullptr;
+  for(auto pn_ : nodes()){
+    if(pn_->cx_() == pw->x2_()) {
+      if(pn_->cy_() == pw->y2_()) {
+	pn = pn_;
+	break;
+      }
+    }
+  }
 
   if(!pn) {   // create new node, if no existing one lies at this position
     pn = new Node(pw->x2_(), pw->y2_());

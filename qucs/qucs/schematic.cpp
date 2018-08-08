@@ -78,6 +78,15 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   SymbolMode(false)
 {
 
+  // TODO: get rid of this.
+  // sometimes these point to other stuff, sometimes when
+  // SymbolMode is active, but not only.
+    Components = &DocComps;
+    Wires      = &DocWires;
+    Nodes      = &DocNodes;
+    Diagrams   = &DocDiags;
+    Paintings  = &DocPaints;
+
   // ...........................................................
   GridX  = GridY  = 10;
   ViewX1=ViewY1=0;
