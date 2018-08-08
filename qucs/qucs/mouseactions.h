@@ -27,7 +27,7 @@
 // internals.
 class ElementMouseAction {
 public:
-	explicit ElementMouseAction(Element* e)
+	explicit ElementMouseAction(ElementGraphics* e)
 		: _e(e)
 	{
 	}
@@ -79,7 +79,7 @@ public:
 private:
 	int _action_type; // the legacy way.
 	                  //  might need cleanup
-  Element* _e;
+  ElementGraphics* _e;
 };
 
 class Wire;
