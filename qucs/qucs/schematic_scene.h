@@ -128,6 +128,7 @@ WireLabel const* const_wireLabel(ElementGraphics const);
 Diagram const* const_diagram(ElementGraphics const);
 Painting const* const_painting(ElementGraphics const);
 
+Element* element(ElementGraphics*);
 Component* component(ElementGraphics*);
 Wire* wire(ElementGraphics*);
 WireLabel* wireLabel(ElementGraphics*);
