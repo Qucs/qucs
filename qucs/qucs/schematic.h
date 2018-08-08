@@ -95,7 +95,7 @@ class PaintingList : public Q3PtrList<Painting> {
 };
 
 #if QT_VERSION < 0x050000
-typedef Element* ElementGraphics;
+typedef Element ElementGraphics;
 #else
 class ElementGraphics;
 #endif
