@@ -39,22 +39,29 @@ public:
 		_e=nullptr;
 	}
 public: // compat with old code
-	bool operator==(Element const* e) const{
+	bool operator==(ElementGraphics const* e) const{
 		return _e==e;
 	}
-	bool operator!=(Element const* e) const{
+	bool operator!=(ElementGraphics const* e) const{
 		return _e!=e;
 	}
+#ifndef USE_SCROLLVIEW
+	bool operator!=(Element const* e) const{
+		return *_e!=e;
+	}
+#endif
 	operator bool() const{
 		return _e;
 	}
-	void setSelected() const{
+	void setSelected(bool x=true){ untested();
 		assert(_e);
-		_e->setSelected();
+		_e->setSelected(x);
 	}
-	bool isSelected() const{
+	bool isSelected() const;
+
+	void toggleSelected() const{
 		assert(_e);
-		return _e->isSelected();
+		_e->toggleSelected();
 	}
 
 public: // access coordinates from old code.
@@ -87,7 +94,7 @@ class Label;
 
 // enable access to attached elements.
 // this might be temporary
-inline Element* element(ElementMouseAction e)
+inline ElementGraphics* element(ElementMouseAction e)
 {
   return e.element();
 }
@@ -135,6 +142,8 @@ extern QAction *formerAction;
 
 class MouseActions {
 public:
+  typedef Q3PtrList<ElementGraphics> EGPList;
+public:
   MouseActions(QucsApp*);
   virtual ~MouseActions();
 
@@ -148,7 +157,9 @@ public:
   QMouseEvent *focusMEvent;
 
   int  MAx1, MAy1,MAx2, MAy2, MAx3, MAy3;  // cache for mouse movements
-  Q3PtrList<Element> movingElements;
+private:
+  Q3PtrList<ElementGraphics> movingElements;
+public:
   int movingRotated;
 
   // menu appearing by right mouse button click on component
@@ -220,14 +231,14 @@ public:
   void paintElementsScheme(Schematic*);
   void rotateElements(Schematic*, int&, int&);
   void moveElements(Schematic*, int&, int&);
-  void moveElements(Q3PtrList<Element>*, int, int);
-  void endElementMoving(Schematic*, Q3PtrList<Element>*);
+  void moveElements(Q3PtrList<ElementGraphics>*, int, int);
+  void endElementMoving(Schematic*, EGPList*);
   void rightPressMenu(Schematic*, QMouseEvent*);
 };
 
 class Label;
 
-Element* element(ElementMouseAction);
+ElementGraphics* element(ElementMouseAction);
 Component* component(ElementMouseAction);
 Wire* wire(ElementMouseAction);
 WireLabel* wireLabel(ElementMouseAction);
