@@ -622,16 +622,17 @@ bool Schematic::loadProperties(QTextStream *stream)
 // Inserts a component without performing logic for wire optimization.
 void Schematic::simpleInsertComponent(Component *c)
 {
-  Node *pn;
   int x, y;
   // connect every node of component
   foreach(Port *pp, c->Ports) {
     x = pp->x+c->cx_();
     y = pp->y+c->cy_();
+    Node *pn=nullptr;
 
-    // check if new node lies upon existing node
-    for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
-      if(pn->cx_() == x) if(pn->cy_() == y) {
+    // find_node_..
+    for(auto pn_ : nodes()){
+      if(pn_->cx_() == x) if(pn_->cy_() == y) {
+	pn = pn_;
 	if (!pn->DType.isEmpty()) {
 	  pp->Type = pn->DType;
 	}
@@ -640,11 +641,15 @@ void Schematic::simpleInsertComponent(Component *c)
 	}
 	break;
       }
-
-    if(pn == 0) { // create new node, if no existing one lies at this position
-      pn = new Node(x, y);
-      DocNodes.append(pn);
     }
+
+    if(!pn) {
+      // create new node, if no existing one lies at this position
+      pn = new Node(x, y);
+      nodes().append(pn);
+    }else{
+    }
+
     pn->Connections.append(c);  // connect schematic node to component node
     if (!pp->Type.isEmpty()) {
       pn->DType = pp->Type;
@@ -653,7 +658,7 @@ void Schematic::simpleInsertComponent(Component *c)
     pp->Connection = pn;  // connect component node to schematic node
   }
 
-  DocComps.append(c);
+  components().append(c);
 
 #ifndef USE_SCROLLVIEW
   // add Component to scene // BUG, not here, and keep track
@@ -704,14 +709,21 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
 // Inserts a wire without performing logic for optimizing.
 void Schematic::simpleInsertWire(Wire *pw)
 {
-  Node *pn;
-  // check if first wire node lies upon existing node
-  for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
-    if(pn->cx_() == pw->x1_()) if(pn->cy_() == pw->y1_()) break;
+  Node *pn=nullptr;
+
+  // find_node_at
+  for(auto pn_ : nodes()){
+    if(pn_->cx_() == pw->x1_()) {
+      if(pn_->cy_() == pw->y1_()) {
+	pn = pn_;
+	break;
+      }
+    }
+  }
 
   if(!pn) {   // create new node, if no existing one lies at this position
     pn = new Node(pw->x1_(), pw->y1_());
-    DocNodes.append(pn);
+    nodes().append(pn);
   }
 
   if(pw->x1_() == pw->x2_()) if(pw->y1_() == pw->y2_()) {
@@ -726,18 +738,25 @@ void Schematic::simpleInsertWire(Wire *pw)
   pn->Connections.append(pw);  // connect schematic node to component node
   pw->Port1 = pn;
 
-  // check if second wire node lies upon existing node
-  for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
-    if(pn->cx_() == pw->x2_()) if(pn->cy_() == pw->y2_()) break;
+  // find_node_at
+  pn=nullptr;
+  for(auto pn_ : nodes()){
+    if(pn_->cx_() == pw->x2_()) {
+      if(pn_->cy_() == pw->y2_()) {
+	pn = pn_;
+	break;
+      }
+    }
+  }
 
   if(!pn) {   // create new node, if no existing one lies at this position
     pn = new Node(pw->x2_(), pw->y2_());
-    DocNodes.append(pn);
+    nodes().append(pn);
   }
   pn->Connections.append(pw);  // connect schematic node to component node
   pw->Port2 = pn;
 
-  DocWires.append(pw);
+  wires().append(pw);
 }
 
 // -------------------------------------------------------------
@@ -1080,7 +1099,7 @@ void Schematic::createNodeSet(QStringList& Collect, int& countInit,
 void Schematic::throughAllNodes(bool User, QStringList& Collect,
 				int& countInit)
 {
-  Node *pn;
+  Node *pn=nullptr;
   int z=0;
 
   for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
