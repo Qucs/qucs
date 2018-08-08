@@ -63,10 +63,6 @@ public: // compat with old code
 		assert(_e);
 		_e->toggleSelected();
 	}
-	void toggleSelected() const{
-		assert(_e);
-		_e->toggleSelected();
-	}
 
 public: // access coordinates from old code.
 	     // newer code might use Qt conventions...?
