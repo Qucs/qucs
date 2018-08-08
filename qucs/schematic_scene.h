@@ -58,7 +58,7 @@ protected:
 // A graphics element on the screen.
 // kind of smart-pointer/proxy.
 #if 1 // not yet
-typedef Element* ElementGraphics;
+typedef Element ElementGraphics;
 #else
 class ElementGraphics : public QObject {
 private:
