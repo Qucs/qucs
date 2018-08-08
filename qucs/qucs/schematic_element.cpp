@@ -716,7 +716,7 @@ int Schematic::insertWire(Wire *w)
 // Follows a wire line and selects it.
 void Schematic::selectWireLine(ElementGraphics *g, Node *pn, bool ctrl)
 {
-    Element* pe=g->operator->();
+    Element* pe=element(g);
     Node *pn_1st = pn;
     while(pn->Connections.count() == 2)
     {
@@ -974,7 +974,7 @@ void Schematic::markerUpDown(bool up, Q3PtrList<Element> *Elements)
    menu.
 */
 ElementMouseAction MouseActions::selectElement(Schematic* Doc,
-	QPoint const& xy, bool flag, int *ndex)
+	QPoint const& xy, bool flag, int *index)
 { untested();
    // THIS IS MISLEADING. it is also used to generate mouse actions.
    // we need something that produces actions, not Elements
