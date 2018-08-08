@@ -973,7 +973,7 @@ void Schematic::markerUpDown(bool up, Q3PtrList<Element> *Elements)
    menu.
 */
 ElementMouseAction MouseActions::selectElement(Schematic* Doc,
-	QPoint const& xy, bool flag, int *ndex)
+	QPoint const& xy, bool flag, int *index)
 { untested();
    // THIS IS MISLEADING. it is also used to generate mouse actions.
    // we need something that produces actions, not Elements
