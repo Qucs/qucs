@@ -75,6 +75,10 @@ ElementGraphics* Schematic::itemAt(float x, float y)
 }
 
 #if QT_VERSION >= 0x050000
+Element* element(ElementGraphics* e){
+	if(!e) return nullptr;
+	return e->operator->();
+}
 Component* component(ElementGraphics* e){
 	if(!e) return nullptr;
 	return component(e->operator->());
