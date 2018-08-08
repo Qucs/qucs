@@ -87,6 +87,8 @@ bool MouseActions::pasteElements(Schematic *Doc)
   QString s = cb->text(QClipboard::Clipboard);
   QTextStream stream(&s, QIODevice::ReadOnly);
   movingElements.clear();
+  incomplete();
+#if 0
   if(!Doc->paste(&stream, &movingElements)) return false;
 
   Element *pe;
@@ -128,6 +130,7 @@ bool MouseActions::pasteElements(Schematic *Doc)
     else
       pe->setCenter(xmin, ymin, true);
 
+#endif
   return true;
 }
 
@@ -171,8 +174,10 @@ void MouseActions::editLabel(Schematic *Doc, WireLabel *pl)
 
 // -----------------------------------------------------------
 // Reinserts all elements (moved by the user) back into the schematic.
-void MouseActions::endElementMoving(Schematic *Doc, Q3PtrList<Element> *movElements)
+void MouseActions::endElementMoving(Schematic *Doc, EGPList *movElements)
 {
+  incomplete();
+#if 0
   Element *pe;
   for(pe = movElements->first(); pe!=0; pe = movElements->next()) {
 //    pe->setSelected(false);  // deselect first (maybe afterwards pe == NULL)
@@ -222,12 +227,15 @@ void MouseActions::endElementMoving(Schematic *Doc, Q3PtrList<Element> *movEleme
   Doc->enlargeView(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
   Doc->viewport()->update();
   drawn = false;
+#endif
 }
 
 // -----------------------------------------------------------
 // Moves elements in "movElements" by x/y
-void MouseActions::moveElements(Q3PtrList<Element> *movElements, int x, int y)
+void MouseActions::moveElements(Q3PtrList<ElementGraphics> *movElements, int x, int y)
 {
+  incomplete();
+#if 0
   Wire *pw;
   Element *pe;
   for(pe = movElements->first(); pe != 0; pe = movElements->next()) {
@@ -263,6 +271,7 @@ void MouseActions::moveElements(Q3PtrList<Element> *movElements, int x, int y)
     }
     else pe->setCenter(x, y, true);
   }
+#endif
 }
 
 
@@ -442,6 +451,8 @@ void MouseActions::MMoveResizePainting(Schematic *Doc, QMouseEvent *Event)
 // Moves components by keeping the mouse button pressed.
 void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
 {
+  incomplete();
+#if 0
 
   MAx2 = DOC_X_POS(Event->pos().x());
   MAy2 = DOC_Y_POS(Event->pos().y());
@@ -493,12 +504,15 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
   QucsMain->MouseMoveAction = &MouseActions::MMoveMoving2;
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseMoving;
 
+#endif
 }
 
 // -----------------------------------------------------------
 // Moves components by keeping the mouse button pressed.
 void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
 {
+  incomplete();
+#if 0
   MAx2 = DOC_X_POS(Event->pos().x());
   MAy2 = DOC_Y_POS(Event->pos().y());
 
@@ -528,6 +542,7 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
 
   MAx1 = MAx2;
   MAy1 = MAy2;
+#endif
 }
 
 
@@ -1803,6 +1818,8 @@ void MouseActions::paintElementsScheme(Schematic *p)
 // -----------------------------------------------------------
 void MouseActions::moveElements(Schematic *Doc, int& x1, int& y1)
 {
+  incomplete();
+#if 0
   Element *pe;
   Doc->setOnGrid(x1, y1);
 
@@ -1817,11 +1834,14 @@ void MouseActions::moveElements(Schematic *Doc, int& x1, int& y1)
       pe->setCenter(x1, y1, true);
     }
   }
+#endif
 }
 
 // -----------------------------------------------------------
 void MouseActions::rotateElements(Schematic *Doc, int& x1, int& y1)
 {
+  incomplete();
+#if 0
   int x2, y2;
   Element *pe;
   Doc->setOnGrid(x1, y1);
@@ -1855,11 +1875,14 @@ void MouseActions::rotateElements(Schematic *Doc, int& x1, int& y1)
       break;
     }
   }
+#endif
 }
 
 // -----------------------------------------------------------
 void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 {
+  incomplete();
+#if 0
   int x1, y1, x2, y2, rot;
   QFileInfo Info(Doc->DocName);
   //QPainter painter(Doc->viewport());
@@ -1939,6 +1962,7 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 
   default: ;    // avoids compiler warnings
   }
+#endif
 }
 
 // -----------------------------------------------------------
@@ -2159,6 +2183,12 @@ void MouseActions::MDoubleClickWire2(Schematic *Doc, QMouseEvent *Event)
     QucsMain->MousePressAction = &MouseActions::MPressWire1;
     QucsMain->MouseDoubleClickAction = 0;
   }
+}
+
+bool ElementMouseAction::isSelected() const
+{
+  incomplete();
+  return false;
 }
 
 // vim:ts=8:sw=2:noet
