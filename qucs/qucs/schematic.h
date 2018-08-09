@@ -142,6 +142,7 @@ private: // TODO: actually store here.
   DiagramList& diagrams();
   PaintingList& paintings();
   ComponentList& components();
+  PaintingList& symbolPaintings();
 public:
   WireList const& wires() const;
   NodeList const& nodes() const;
@@ -272,6 +273,7 @@ public: // model
 
   QList<PostedPaintEvent>   PostedPaintEvents;
 private:
+public: // BUG
   PaintingList& symbolPaintings();
 private:
   bool SymbolMode;
