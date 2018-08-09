@@ -217,7 +217,7 @@ script:
       make qucscheck || travis_terminate 1;
     fi
 
-    if [[ $LINUX && $AUTOTOOLS && $CLANG ]]; then
+    if [[ $LINUX && $AUTOTOOLS && $CLANG && QT4 ]]; then
       ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --enable-doc || travis_terminate 1;
       make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --enable-doc" || travis_terminate 1;
     fi
@@ -230,7 +230,7 @@ script:
     fi
 
 
-   if [[ $LINUX && $AUTOTOOLS && $GCC ]]; then
+   if [[ $LINUX && $AUTOTOOLS && $GCC && $QT4 ]]; then
       ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc || travis_terminate 1;
       make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --disable-dependency-tracking --disable-doc" || travis_terminate 1;
     fi
