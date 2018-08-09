@@ -232,6 +232,13 @@ PaintingList& SchematicModel::paintings()
 	return Paintings;
 }
 
+PaintingList& SchematicModel::symbolPaintings()
+{
+	assert(_doc);
+	// temporary. move stuff here....
+	return _doc->symbolPaintings();
+}
+
 DiagramList& SchematicModel::diagrams()
 {
 	return Diagrams;
