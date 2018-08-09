@@ -75,10 +75,11 @@ public:
 	bool operator!=(Element const* e) const{
 		return _e!=e;
 	}
-  void paintScheme(Schematic *s) { assert(_e); _e->paintScheme(s); }
+public: //?
+  void paintScheme(Schematic *p);
 private: // later: Qgraphics virtual overrides
 //  void paint() { assert(_e); _e->paint(); }
-  void paintScheme(QPainter *p) { assert(_e); _e->paintScheme(p); }
+//  void paintScheme(Schematic *s) { assert(_e); _e->paintScheme(s); }
   QRectF boundingRect() const;
   void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*){
 	  assert(_e);
