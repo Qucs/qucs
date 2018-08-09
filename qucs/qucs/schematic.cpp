@@ -66,6 +66,11 @@ NodeList      SymbolNodes;
 DiagramList   SymbolDiags;
 ComponentList SymbolComps;
 
+PaintingList& Schematic::symbolPaintings()
+{ untested();
+  return SymbolPaints;
+}
+
 void Schematic::printCursorPosition(int x, int y)
 {
   QPoint p(x,y);
