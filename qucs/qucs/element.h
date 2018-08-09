@@ -139,19 +139,60 @@ struct Property {
   *
   *
   */
+
+// will be gone soon.
+class Component;
+class Wire;
+class Label;
+class WireLabel;
+class Diagram;
+class Painting;
+class Graph;
+class Marker;
+class Node;
+class ViewPainter;
+
 class Element {
 public:
   Element();
   virtual ~Element();
 
+public: // make old variables accessible
+	int const& cx_() const { return cx; }
+	int const& cy_() const { return cy; }
+	int const& x1_() const { return x1; }
+	int const& y1_() const { return y1; }
+	int const& x2_() const { return x2; }
+	int const& y2_() const { return y2; }
+	void snapToGrid(Schematic& s);
+
+	void setObsoleteType(int t){
+		Type = t;
+	}
+
+  virtual QRectF boundingRect() const;
+public: // other stuff
   virtual void paintScheme(Schematic *);
   virtual void paintScheme(QPainter *);
   virtual void setCenter(int, int, bool relative=false);
   virtual void getCenter(int&, int&);
+  virtual void paint(ViewPainter*);
 
-  bool isSelected;
+public:
+  void setSelected(bool b=true){
+	  Selected = b;
+  }
+  void toggleSelected(){
+	  Selected = !Selected;
+  }
+  bool isSelected() const{return Selected;}
+
+public: // BUG
+  bool Selected;
   int  Type;    // whether it is Component, Wire, ...
-  int  cx, cy, x1, y1, x2, y2;  // center and relative boundings
+
+protected:
+  int  cx, cy, x1, y1, x2, y2;  // center and relative boundings. TODO: move.
 };
 
 
@@ -163,5 +204,24 @@ class Conductor : public Element {
 public:
   WireLabel *Label;
 };
+
+Component const* component(Element const*);
+Wire const* wire(Element const*);
+WireLabel const* wireLabel(Element const*);
+Diagram const* diagram(Element const*);
+Painting const* painting(Element const*);
+Graph const* graph(Element const*);
+
+Component* component(Element*);
+inline Element*& element(Element*& x){return x;}
+Wire* wire(Element*);
+WireLabel* wireLabel(Element*);
+Diagram* diagram(Element*);
+Painting* painting(Element*);
+Graph* graph(Element*);
+Marker* marker(Element*);
+Node* node(Element*);
+Label* label(Element*);
+
 
 #endif

@@ -421,14 +421,21 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   changed = false;
 
   Comp->textSize(tx_Dist, ty_Dist);
-  int tmp = Comp->tx+tx_Dist - Comp->x1;
+  int tmp = Comp->tx+tx_Dist - Comp->x1_();
   if((tmp > 0) || (tmp < -6))  tx_Dist = 0;  // remember the text position
-  tmp = Comp->ty+ty_Dist - Comp->y1;
+  tmp = Comp->ty+ty_Dist - Comp->y1_();
   if((tmp > 0) || (tmp < -6))  ty_Dist = 0;
 
   /*! Insert all \a Comp properties into the dialog \a prop list */
   int row=0; // row counter
-  for(Property *p = Comp->Props.at(Comp->Props.find(pp)+1); p != 0; p = Comp->Props.next()) {
+  Comp->Props.findRef(pp);
+  Property *p=Comp->Props.current();
+  if(p){
+    p = Comp->Props.next();
+  }else{
+    p = Comp->Props.first();
+  }
+  for(; p!=nullptr; p=Comp->Props.next()) {
 
       // do not insert if already on first tab
       // this is the reason it was originally from back to front...

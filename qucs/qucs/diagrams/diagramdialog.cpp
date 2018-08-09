@@ -106,15 +106,16 @@ static const int NumDefaultColors = 8;
 
 
 DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
-                    : QDialog(parent, Qt::WDestructiveClose)
+                    : QDialog(parent)
 {
   Diag = d;
+  setAttribute(Qt::WA_DeleteOnClose);
   Graphs.setAutoDelete(true);
   copyDiagramGraphs();   // make a copy of all graphs
   if(parent){
 	  const Schematic* s = dynamic_cast<const Schematic*>(parent);
 	  assert(s);
-	  QFileInfo Info(s->DocName);
+	  QFileInfo Info(s->docName());
 	  defaultDataSet = Info.path() + QDir::separator() + s->DataSet;
   }else{
 	  defaultDataSet = "unknown";

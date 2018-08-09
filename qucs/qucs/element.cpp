@@ -16,11 +16,12 @@
  ***************************************************************************/
 
 #include "element.h"
+#include "schematic.h"
 
-Element::Element()
+Element::Element() :
+	Selected(false)
 {
   Type = isDummyElement;
-  isSelected = false;
   cx = cy = x1 = y1 = x2 = y2 = 0;
 }
 
@@ -38,8 +39,57 @@ void Element::paintScheme(QPainter *)
 
 void Element::setCenter(int, int, bool)
 {
+	incomplete();
 }
 
 void Element::getCenter(int&, int&)
 {
+	incomplete();
 }
+
+void Element::snapToGrid(Schematic& s)
+{
+	s.setOnGrid(cx, cy);
+}
+
+// pure? maybe not. there could be non-paintable elements...
+void Element::paint(ViewPainter* p)
+{
+	// draw bounding box for debugging.
+    p->Painter->setPen(QPen(Qt::red,1));
+    p->Painter->drawRoundRect(boundingRect());
+}
+
+QRectF Element::boundingRect() const
+{  itested();
+	QRectF b(cx+x1, cy+y1, x2-x1, y2-y1);
+	// qDebug() << "boundingRect" << b;
+	return b;
+
+//node
+ // return QRect(cx-4,cy-4,8,8);
+
+}
+
+
+// legacy stuff. pretend that Element points to an Element
+#include "components/component.h"
+#include "diagrams/diagram.h"
+#include "wire.h"
+#include "wirelabel.h"
+
+Component* component(Element* e){ return dynamic_cast<Component*>(e); }
+Wire* wire(Element* e){ return dynamic_cast<Wire*>(e); }
+WireLabel* wireLabel(Element* e){ return dynamic_cast<WireLabel*>(e); }
+Diagram* diagram(Element* e){ return dynamic_cast<Diagram*>(e); }
+Painting* painting(Element* e){ return dynamic_cast<Painting*>(e); }
+Marker* marker(Element* e){ return dynamic_cast<Marker*>(e); }
+Graph* graph(Element* e){ return dynamic_cast<Graph*>(e); }
+Node* node(Element* e){ return dynamic_cast<Node*>(e); }
+
+Component const* component(Element const* e){ return dynamic_cast<Component const*>(e); }
+Wire const* wire(Element const* e){ return dynamic_cast<Wire const*>(e); }
+WireLabel const* wireLabel(Element const* e){ return dynamic_cast<WireLabel const*>(e); }
+Diagram const* diagram(Element const* e){ return dynamic_cast<Diagram const*>(e); }
+Painting const* painting(Element const* e){ return dynamic_cast<Painting const*>(e); }
+

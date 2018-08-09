@@ -38,6 +38,7 @@ using namespace std;
 #include <QProgressBar>
 #include <QDebug>
 #include <QMessageBox>
+#include <QTextBlock>
 
 #include "simmessage.h"
 #include "module.h"
@@ -65,7 +66,7 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
   else
     Doc = (QucsDoc*) ((Schematic*)DocWidget);
 
-  DocName = Doc->DocName;
+  DocName = Doc->docName();
   DataDisplay = Doc->DataDisplay;
   Script = Doc->Script;
   QFileInfo Info(DocName);
@@ -259,7 +260,7 @@ void SimMessage::nextSPICE()
   qDebug() << "start QucsConv" << prog << com.join(" ");
   SimProcess.start(prog, com);
 
-  if(!SimProcess.Running) {
+  if(SimProcess.Running!=0) {
     ErrText->appendPlainText(tr("SIM ERROR: Cannot start QucsConv!"));
     FinishSimulation(-1);
     return;

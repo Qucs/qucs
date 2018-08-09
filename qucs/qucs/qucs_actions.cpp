@@ -26,7 +26,7 @@
 #include <limits.h>
 
 #include <QProcess>
-#include <Q3PtrList>
+#include "qt_compat.h"
 #include <QRegExpValidator>
 #include <QLineEdit>
 #include <QAction>
@@ -66,12 +66,23 @@
 QRegExp  Expr_CompProp;
 QRegExpValidator Val_CompProp(Expr_CompProp, 0);
 
-// -----------------------------------------------------------------------
-// This function is called from all toggle actions.
+/*!
+ * \brief QucsApp::performToggleAction
+ * \param on
+ * \param Action
+ * \param Function
+ * \param MouseMove
+ * \param MousePress
+ * \return
+ * This function is called from all toggle actions.
+ * Used in combination with slots to set function pointers to the methods
+ * that serve the mouse actions, ie. press, move, release, double click.
+ */
 bool QucsApp::performToggleAction(bool on, QAction *Action,
 	pToggleFunc Function, pMouseFunc MouseMove, pMouseFunc2 MousePress)
 {
   slotHideEdit(); // disable text edit of component property
+  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
 
   if(!on) {
     MouseMoveAction = 0;
@@ -80,35 +91,39 @@ bool QucsApp::performToggleAction(bool on, QAction *Action,
     MouseDoubleClickAction = 0;
     activeAction = 0;   // no action active
     return false;
-  }
+  }else{
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  do {
-    if(Function) if((Doc->*Function)()) {
+    if(!Function){
+      // nothing to do?!
+    }else if ((Doc->*Function)()) {
+      // function executed, it said "yes". wtf?
+      //
+      // Action is actually a togglebutton.
       Action->blockSignals(true);
       Action->setChecked(false);  // release toolbar button
       Action->blockSignals(false);
       Doc->viewport()->update();
-      break;
+    }else{
+      // function executed. it said "no".. ?
+
+      if(activeAction) {
+	activeAction->blockSignals(true); // do not call toggle slot
+	activeAction->setChecked(false);       // set last toolbar button off
+	activeAction->blockSignals(false);
+      }
+      activeAction = Action;
+
+      MouseMoveAction = MouseMove;
+      MousePressAction = MousePress;
+      MouseReleaseAction = 0;
+      MouseDoubleClickAction = 0;
+
     }
 
-    if(activeAction) {
-      activeAction->blockSignals(true); // do not call toggle slot
-      activeAction->setChecked(false);       // set last toolbar button off
-      activeAction->blockSignals(false);
-    }
-    activeAction = Action;
-
-    MouseMoveAction = MouseMove;
-    MousePressAction = MousePress;
-    MouseReleaseAction = 0;
-    MouseDoubleClickAction = 0;
-
-  } while(false);   // to perform "break"
-
-  Doc->viewport()->update();
-  view->drawn = false;
-  return true;
+    Doc->viewport()->update();
+    view->drawn = false;
+    return true;
+  }
 }
 
 // -----------------------------------------------------------------------
@@ -167,8 +182,9 @@ void QucsApp::slotEditActivate (bool on)
 // ------------------------------------------------------------------------
 // Is called if "Delete"-Button is pressed.
 void QucsApp::slotEditDelete(bool on)
-{
+{ untested();
   TextDoc *Doc = (TextDoc*)DocumentTab->currentWidget();
+  // TODO Doc->Delete.
   if(isTextDocument(Doc)) {
     Doc->viewport()->setFocus();
     //Doc->del();
@@ -177,10 +193,12 @@ void QucsApp::slotEditDelete(bool on)
     editDelete->blockSignals(true);
     editDelete->setChecked(false);  // release toolbar button
     editDelete->blockSignals(false);
-  }
-  else
+  }else{ /* if what?! */
+    qDebug() << "slotEditDelete" << on;
+    // BUG uses Schematic.
     performToggleAction(on, editDelete, &Schematic::deleteElements,
           &MouseActions::MMoveDelete, &MouseActions::MPressDelete);
+  }
 }
 
 // -----------------------------------------------------------------------
@@ -982,6 +1000,8 @@ void QucsApp::slotCursorLeft(bool left)
   }
   if(!editText->isHidden()) return;  // for edit of component property ?
 
+  TODO("Fix scrollling");
+  /** \todo
   Q3PtrList<Element> movingElements;
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   int markerCount = Doc->copySelectedElements(&movingElements);
@@ -1005,15 +1025,18 @@ void QucsApp::slotCursorLeft(bool left)
     view->MAx3 = 1;  // sign for moved elements
     view->endElementMoving(Doc, &movingElements);
   }
+  */
 }
 
 // -----------------------------------------------------------
 void QucsApp::slotCursorUp(bool up)
 {
+  incomplete();
+#if 0 // what is this trying to do?
   if(editText->isHidden()) {  // for edit of component property ?
   }else if(up){
     if(view->MAx3 == 0) return;  // edit component namen ?
-    Component *pc = (Component*)view->focusElement;
+    Component *pc = component(view->focusElement);
     Property *pp = pc->Props.at(view->MAx3-1);  // current property
     int Begin = pp->Description.indexOf('[');
     if(Begin < 0) return;  // no selection list ?
@@ -1031,7 +1054,7 @@ void QucsApp::slotCursorUp(bool up)
     return;
   }else{ // down
     if(view->MAx3 == 0) return;  // edit component namen ?
-    Component *pc = (Component*)view->focusElement;
+    Component *pc = component(view->focusElement);
     Property *pp = pc->Props.at(view->MAx3-1);  // current property
     int Pos = pp->Description.indexOf('[');
     if(Pos < 0) return;  // no selection list ?
@@ -1051,6 +1074,8 @@ void QucsApp::slotCursorUp(bool up)
     return;
   }
 
+  TODO("Fix scrolling");
+  /** \todo
   Q3PtrList<Element> movingElements;
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   int markerCount = Doc->copySelectedElements(&movingElements);
@@ -1074,6 +1099,8 @@ void QucsApp::slotCursorUp(bool up)
     view->MAx3 = 1;  // sign for moved elements
     view->endElementMoving(Doc, &movingElements);
   }
+  */
+#endif
 }
 
 // -----------------------------------------------------------
@@ -1089,10 +1116,10 @@ void QucsApp::slotApplyCompText()
   editText->setFont(f);
 
   Property  *pp = 0;
-  Component *pc = (Component*)view->focusElement;
+  Component *pc = component(view->focusElement);
   if(!pc) return;  // should never happen
-  view->MAx1 = pc->cx + pc->tx;
-  view->MAy1 = pc->cy + pc->ty;
+  view->MAx1 = pc->cx_() + pc->tx;
+  view->MAy1 = pc->cy_() + pc->ty;
 
   int z, n=0;  // "n" is number of property on screen
   pp = pc->Props.first();
@@ -1161,9 +1188,11 @@ void QucsApp::slotApplyCompText()
   editText->setMinimumWidth(editText->fontMetrics().width(s)+4);
 
 
-  Doc->contentsToViewport(int(Doc->Scale * float(view->MAx1 - Doc->ViewX1)),
-			 int(Doc->Scale * float(view->MAy1 - Doc->ViewY1)),
-			 view->MAx2, view->MAy2);
+  TODO("Need to map contentsToViewport?");
+  /// \todo Doc->contentsToViewport(int(Doc->Scale * float(view->MAx1 - Doc->ViewX1)),
+  ///			 int(Doc->Scale * float(view->MAy1 - Doc->ViewY1)),
+  ///	 view->MAx2, view->MAy2);
+
   editText->setReadOnly(false);
   if(pp) {  // is it a property ?
     s = pp->Value;
@@ -1236,9 +1265,11 @@ void QucsApp::slotExportGraphAsCsv()
   slotHideEdit(); // disable text edit of component property
 
   for(;;) {
-    if(view->focusElement)
-      if(view->focusElement->Type == isGraph)
+    if(!view->focusElement){
+    }else if(graph(view->focusElement)){
         break;
+    }else{
+    }
 
     QMessageBox::critical(this, tr("Error"), tr("Please select a diagram graph!"));
     return;
@@ -1277,10 +1308,11 @@ void QucsApp::slotExportGraphAsCsv()
 
 
   DataX const *pD;
-  Graph *g = (Graph*)view->focusElement;
+  Graph const*g = graph(view->focusElement);
   // First output the names of independent and dependent variables.
-  for(unsigned ii=0; (pD=g->axis(ii)); ++ii)
+  for(unsigned ii=0; (pD=g->axis(ii)); ++ii){
     Stream << '\"' << pD->Var << "\";";
+  }
   Stream << "\"r " << g->Var << "\";\"i " << g->Var << "\"\n";
 
 
@@ -1491,7 +1523,7 @@ void QucsApp::slotBuildModule()
     builder->setProcessChannelMode(QProcess::MergedChannels);
     // get current va document
     QucsDoc *Doc = getDoc();
-    QString vaModule = Doc->fileBase(Doc->DocName);
+    QString vaModule = Doc->fileBase(Doc->docName());
 
     QString admsXml = QucsSettings.AdmsXmlBinDir.canonicalPath();
 

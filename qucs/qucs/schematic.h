@@ -34,9 +34,15 @@
 #include "diagrams/diagram.h"
 #include "paintings/painting.h"
 #include "components/component.h"
+#include "schematic_scene.h"
 
+#ifdef USE_SCROLLVIEW
 #include <Q3ScrollView>
-#include <Q3PtrList>
+#else
+#include <QGraphicsView>
+#endif
+
+#include "qt_compat.h"
 #include <QVector>
 #include <QStringList>
 #include <QFileInfo>
@@ -90,10 +96,70 @@ class ComponentList : public Q3PtrList<Component> {
 };
 // TODO: refactor here
 class PaintingList : public Q3PtrList<Painting> {
+public:
+	bool load(QTextStream *stream);
+public:
+	void sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const;
 };
 
-class Schematic : public Q3ScrollView, public QucsDoc {
+#if QT_MAJOR_VERSION < 5
+typedef Element ElementGraphics;
+#define SchematicBase Q3ScrollView
+#else
+// strictly, this should also work with qt4.
+class ElementGraphics;
+#define SchematicBase QGraphicsView
+#endif
+
+class SchematicModel{
+private:
+  SchematicModel(){}
+public:
+  SchematicModel(Schematic* s);
+public: // stuff saved from Schematic
+  QString createClipboardFile();
+  void sizeOfAll(int&, int&, int&, int&, float) const;
+  void simpleInsertComponent(Component* c);
+  void simpleInsertWire(Wire*);
+public:
+  bool loadDocument(QFile& /*BUG*/ file);
+  bool loadPaintings(QTextStream*, PaintingList*);
+  bool loadProperties(QTextStream*);
+  bool loadComponents(QTextStream*);
+  bool loadDiagrams(QTextStream*);
+  bool loadWires(QTextStream*);
+
+  void clear();
+
+public: // scene interaction
+  void toScene(QGraphicsScene& s) const;
+public: // obsolete.
+  static void saveComponent(QTextStream& s, Component /* FIXME const */* c);
+private: // TODO: actually store here.
+  WireList& wires();
+  NodeList& nodes();
+  DiagramList& diagrams();
+  PaintingList& paintings();
+  ComponentList& components();
+  PaintingList& symbolPaintings();
+public:
+  WireList const& wires() const;
+  NodeList const& nodes() const;
+  DiagramList const& diagrams() const;
+  PaintingList const& paintings() const;
+  ComponentList const& components() const;
+
+  Schematic* doc();
+private:
+  Schematic* _doc;
+};
+
+class Schematic : public SchematicBase, public QucsDoc {
   Q_OBJECT
+private:
+  Schematic(Schematic const&x): SchematicBase(), QucsDoc(x), DocModel(this){ unreachable(); }
+public:
+  typedef Q3PtrList<ElementGraphics> EGPList;
 public:
   Schematic(QucsApp*, const QString&);
  ~Schematic();
@@ -109,7 +175,11 @@ public:
 
   float textCorr();
   bool sizeOfFrame(int&, int&);
-  void  sizeOfAll(int&, int&, int&, int&);
+private: //temporary/obsolete
+  void sizeOfAll(int&a, int&b, int&c, int&d){
+	  return DocModel.sizeOfAll(a, b, c, d, textCorr());
+  }
+public:
   bool  rotateElements();
   bool  mirrorXComponents();
   bool  mirrorYComponents();
@@ -128,7 +198,7 @@ public:
 
   void    cut();
   void    copy();
-  bool    paste(QTextStream*, Q3PtrList<Element>*);
+  bool    paste(QTextStream*, EGPList*);
   bool    load();
   int     save();
   int     saveSymbolCpp (void);
@@ -142,33 +212,102 @@ public:
   bool scrollLeft(int);
   bool scrollRight(int);
 
+#ifndef USE_SCROLLVIEW
+private:
+  // schematic Scene for this View
+  SchematicScene *Scene;
+  SchematicScene *scene() { return Scene; }
+  // schematic frame item
+  // Frame *SchematicFrame;
+public:
+  SchematicScene *sceneHACK() { return Scene; }
+#endif
+
+public: // model
   // The pointers points to the current lists, either to the schematic
   // elements "Doc..." or to the symbol elements "SymbolPaints".
-// private: //TODO. one at a time.
-  WireList      *Wires, DocWires;
-  NodeList      *Nodes, DocNodes;
-  DiagramList   *Diagrams, DocDiags;
-  PaintingList  *Paintings, DocPaints;
-  ComponentList *Components, DocComps;
+// private: //TODO. one at a time. these must go to SchematicModel
+  WireList DocWires;
+  NodeList DocNodes;
+  DiagramList DocDiags;
+  PaintingList DocPaints;
+  ComponentList DocComps;
+  SchematicModel DocModel;
 
-  // TODO: const access
+// private: BUG: this is insane.
+  WireList *Wires;
+  NodeList *Nodes;
+  DiagramList *Diagrams;
+  PaintingList *Paintings;
+  ComponentList *Components;
+
+// TODO: const access
+// BUG: give access to container, not to insane pointer.
   ComponentList& components(){
 	  assert(Components);
 	  return *Components;
+  }
+  ComponentList const& components() const{
+	  assert(Components);
+	  return *Components;
+  }
+  NodeList& nodes() const{
+	  assert(Nodes);
+	  return *Nodes;
+  }
+  WireList& wires() const{
+	  assert(Wires);
+	  return *Wires;
+  }
+  DiagramList& diagrams() const{
+	  assert(Diagrams);
+	  return *Diagrams;
+  }
+  PaintingList& paintings() const{
+	  assert(Paintings);
+	  return *Paintings;
   }
 
   PaintingList  SymbolPaints;  // symbol definition for subcircuit
 
   QList<PostedPaintEvent>   PostedPaintEvents;
-  bool symbolMode;  // true if in symbol painting mode
+private:
+public: // BUG
+  PaintingList& symbolPaintings();
+private:
+  bool SymbolMode;
+public:
+  void setSymbolMode(bool x){
+	  SymbolMode = x;
+  }
+  bool isSymbolMode() const{
+	  return SymbolMode;
+  }
 
 
   int GridX, GridY;
   int ViewX1, ViewY1, ViewX2, ViewY2;  // size of the document area
   int UsedX1, UsedY1, UsedX2, UsedY2;  // document area used by elements
 
-  int showFrame;
-  QString Frame_Text0, Frame_Text1, Frame_Text2, Frame_Text3;
+  int ShowFrame; // BUG// it's the frame type.
+  int showFrame() const{ return ShowFrame; }
+  void setFrameType(int t){
+	  if(t != ShowFrame){
+		  setChanged(true);
+		  ShowFrame = t;
+	  }else{
+	  }
+  }
+
+  // BUG: use Frame::setParameter
+  void setFrameText(int idx, QString s);
+private:
+  QString FrameText[4];
+public:
+  QString frameText0() const { return FrameText[0]; }
+  QString frameText1() const { return FrameText[1]; }
+  QString frameText2() const { return FrameText[2]; }
+  QString frameText3() const { return FrameText[3]; }
 
   // Two of those data sets are needed for Schematic and for symbol.
   // Which one is in "tmp..." depends on "symbolMode".
@@ -196,7 +335,9 @@ protected:
   void paintFrame(ViewPainter*);
 
   // overloaded function to get actions of user
+#ifdef USE_SCROLLVIEW
   void drawContents(QPainter*, int, int, int, int);
+#endif
   void contentsMouseMoveEvent(QMouseEvent*);
   void contentsMousePressEvent(QMouseEvent*);
   void contentsMouseDoubleClickEvent(QMouseEvent*);
@@ -207,11 +348,17 @@ protected:
   void contentsDragLeaveEvent(QDragLeaveEvent*);
   void contentsDragMoveEvent(QDragMoveEvent*);
 
+public:
+#ifdef USE_SCROLLVIEW
+  QPointF mapToScene(QPoint const& p);
+#endif
+
 protected slots:
   void slotScrollUp();
   void slotScrollDown();
   void slotScrollLeft();
   void slotScrollRight();
+  void printCursorPosition(int x_, int y_);
 
 private:
   bool dragIsOkay;
@@ -236,7 +383,7 @@ public:
   bool  connectHWires2(Wire*);
   bool  connectVWires2(Wire*);
   int   insertWire(Wire*);
-  void  selectWireLine(Element*, Node*, bool);
+  void  selectWireLine(ElementGraphics*, Node*, bool);
   Wire* selectedWire(int, int);
   Wire* splitWire(Wire*, Node*);
   bool  oneTwoWires(Node*);
@@ -246,12 +393,14 @@ public:
   void    markerLeftRight(bool, Q3PtrList<Element>*);
   void    markerUpDown(bool, Q3PtrList<Element>*);
 
-  Element* selectElement(float, float, bool, int *index=0);
-  void     deselectElements(Element*);
+  // now in mouseactions
+  // Element* selectElement(QPoint const&, bool, int *index=0);
+  ElementGraphics* itemAt(float, float);
+  ElementGraphics* itemAt(QPointF x) { return itemAt(x.x(), x.y());}
   int      selectElements(int, int, int, int, bool);
   void     selectMarkers();
   void     newMovingWires(Q3PtrList<Element>*, Node*, int);
-  int      copySelectedElements(Q3PtrList<Element>*);
+  int      copySelectedElements(Q3PtrList<ElementGraphics>*);
   bool     deleteElements();
   bool     aligning(int);
   bool     distributeHorizontal();
@@ -265,7 +414,6 @@ public:
   bool       activateSpecifiedComponent(int, int);
   bool       activateSelectedComponents();
   void       setCompPorts(Component*);
-  Component* selectCompText(int, int, int&, int&);
   Component* searchSelSubcircuit();
   Component* selectedComponent(int, int);
   void       deleteComp(Component*);
@@ -308,17 +456,11 @@ public:
 private:
   int  saveDocument();
 
-  bool loadProperties(QTextStream*);
-  void simpleInsertComponent(Component*);
-  bool loadComponents(QTextStream*, Q3PtrList<Component> *List=0);
-  void simpleInsertWire(Wire*);
-  bool loadWires(QTextStream*, Q3PtrList<Element> *List=0);
-  bool loadDiagrams(QTextStream*, Q3PtrList<Diagram>*);
-  bool loadPaintings(QTextStream*, Q3PtrList<Painting>*);
+  void simpleInsertComponent(Component* c) { return DocModel.simpleInsertComponent(c); }
+  void simpleInsertWire(Wire* w) { return DocModel.simpleInsertWire(w); }
   bool loadIntoNothing(QTextStream*);
 
-  QString createClipboardFile();
-  bool    pasteFromClipboard(QTextStream *, Q3PtrList<Element>*);
+  bool    pasteFromClipboard(QTextStream *, EGPList*);
 
   QString createUndoString(char);
   bool    rebuild(QString *);
@@ -346,7 +488,9 @@ public:
   bool creatingLib;
 
 public: // serializer
-  void saveComponent(QTextStream& s, Component /* FIXME const */* c) const;
+public: // need access to SchematicModel. grr
+  friend class MouseActions;
+  friend class ImageWriter;
 };
 
 #endif

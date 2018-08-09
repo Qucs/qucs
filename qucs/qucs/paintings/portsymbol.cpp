@@ -22,9 +22,9 @@
 
 PortSymbol::PortSymbol(int cx_, int cy_, const QString& numberStr_,
                                          const QString& nameStr_)
+	: Painting()
 {
   Name = ".PortSym ";
-  isSelected = false;
   cx = cx_;
   cy = cy_;
 
@@ -105,7 +105,7 @@ void PortSymbol::paint(ViewPainter *p)
   p->Painter->setPen(Qt::lightGray);
   p->drawRect(cx+x1, cy+y1, x2, y2);
 
-  if(isSelected) {
+  if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(cx+x1-4, cy+y1-4, x2+8, y2+8);
   }

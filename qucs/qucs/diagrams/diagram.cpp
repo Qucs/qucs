@@ -36,11 +36,12 @@
 #include <locale.h>
 
 #include "diagram.h"
+#include "diagramdialog.h"
 #include "qucs.h"
 #include "mnemo.h"
 #include "schematic.h"
 
-#include "rect3ddiagram.h"
+#include "rect3ddiagram.h" // BUG
 #include "misc.h"
 
 #include <QTextStream>
@@ -50,6 +51,7 @@
 #include <QPainter>
 #include <QDebug>
 #include <QString>
+#include <QMouseEvent>
 
 Diagram::Diagram(int _cx, int _cy)
 {
@@ -85,7 +87,6 @@ Diagram::Diagram(int _cx, int _cy)
   hideLines = true;  // hide invisible lines
 
   Type = isDiagram;
-  isSelected = false;
   GridPen = QPen(Qt::lightGray,0);
 }
 
@@ -144,7 +145,7 @@ void Diagram::paintDiagram(ViewPainter *p)
     p->Painter->restore();
 
 
-    if(isSelected) {
+    if(isSelected()) {
       int x_, y_;
       float fx_, fy_;
       p->map(cx, cy-y2, x_, y_);
@@ -634,7 +635,7 @@ void Diagram::getAxisLimits(Graph *pg)
 {
   // FIXME: Graph should know the limits. but it doesn't yet.
   //        we should only copy here. better: just wrap, dont use {x,y,z}Axis
-  int z,i=0;
+  int z;
   double x, y, *p;
   QString var, find;
   DataX const *pD = pg->axis(0);
@@ -665,7 +666,7 @@ void Diagram::getAxisLimits(Graph *pg)
     }
   }
 
-  Axis *pa, *pA;
+  Axis *pa;
   if(pg->yAxisNo == 0)  pa = &yAxis;
   else  pa = &zAxis;
   (pa->numGraphs)++;    // count graphs
@@ -2338,3 +2339,35 @@ double Diagram::wavevalX(int i) const
     return i*xAxis.up/(sc*50); 
 }
 */
+
+bool Diagram::pressElement(Schematic* Doc, Element*& selElem, QMouseEvent* Event)
+{
+
+	if(Event->button() != Qt::LeftButton){ untested();
+	  	return false; // sets drawn to false! (correct?)
+	}else{
+	}
+
+	Diagram *Diag = this;
+	QFileInfo Info(Doc->docName());
+	// dialog is Qt::WDestructiveClose !!!
+	DiagramDialog *dia = new DiagramDialog(Diag, Doc);
+
+	bool drawn=true;
+	if(dia->exec() == QDialog::Rejected) {  // don't insert if dialog canceled
+		Doc->viewport()->update();
+		drawn = false;
+	}else{
+
+		Doc->Diagrams->append(Diag);
+		Doc->enlargeView(Diag->cx_(), Diag->cy_()-Diag->y2_(), Diag->cx_()+Diag->x2_(), Diag->cy_());
+		Doc->setChanged(true, true);   // document has been changed
+
+		Doc->viewport()->repaint();
+		Diag = Diag->newOne(); // the component is used, so create a new one
+		Diag->paintScheme(Doc);
+		selElem = Diag;
+	}
+
+	return drawn;
+}

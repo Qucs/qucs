@@ -8,8 +8,11 @@ m4_define([QUCS_VERSION], m4_esyscmd([tr -d '\n' < VERSION]))
 
 AC_INIT([qucs], [QUCS_VERSION], [qucs-bugs@lists.sourceforge.net])
 AC_CONFIG_SRCDIR([qucs/qucs.cpp])
-AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_HEADERS([qt_version])
+
+# qt_version is not really a config header. it is touched whenever the
+# QT_VERSION changes, triggers moc recompilation
+AC_CONFIG_HEADER([config.h qt_version])
+
 AC_CONFIG_AUX_DIR([.])
 
 AC_CANONICAL_BUILD
@@ -52,6 +55,7 @@ if test "$enable_qucs_gui_debug" = yes; then
   AC_DEFINE(DEBUG, 1, [Enable debug build.])
   QT_DEF="-DQT_DEBUG"
   CXXFLAGS="$CXXFLAGS -g -O0"
+  CPPFLAGS="$CPPFLAGS -DTRACE_UNTESTED"
 else
   AC_DEFINE(NDEBUG, 1, [Disable debug build.])
   QT_DEF="-DQT_NO_DEBUG -DQT_NO_DEBUG_OUTPUT"
@@ -203,7 +207,8 @@ RCC_=`$PKG_CONFIG --variable rcc_location ${qt_name}Core`
 UIC_=`$PKG_CONFIG --variable uic_location ${qt_name}Core`
 MOC_=`$PKG_CONFIG --variable moc_location ${qt_name}Core`
 QT_VERSION=`$PKG_CONFIG --modversion ${qt_name}Core`
-AC_SUBST([QT_VERSION])
+AC_DEFINE_UNQUOTED([QT_VERSION_STRING], ["$QT_VERSION"],
+		   [version string for stamping purposes])
 
 # empty for Qt4
 QT_BINPATH=`$PKG_CONFIG --variable host_bins ${qt_name}Core`
@@ -238,7 +243,7 @@ case $host_os in
     CXXFLAGS="$CXXFLAGS -std=c++0x"
     PKG_CHECK_MODULES([QTest], [${qt_name}Test])
 
-    PKG_CHECK_MODULES([QT], [${qt_name}Core ${qt_name}Gui ${qt_name}Script ${qt_name}Svg ${qt_name}Xml Qt3Support], [
+    PKG_CHECK_MODULES([QT], [${qt_name}Core ${qt_name}Gui ${qt_name}Script ${qt_name}Svg ${qt_name}Xml], [
       QT_CFLAGS="$QT_CFLAGS $QT_DEF -DQT_DEPRECATED_WARNINGS -DQT_THREAD_SUPPORT -D_REENTRANT"
       case $host_os in
         *freebsd*) QT_LIBS="$QT_LIBS -pthread" ;;
@@ -370,13 +375,22 @@ case $host_os in
 
     ]) # End of fallback Qt4 logic
 
+    AC_SUBST([QT_MAJOR_VERSION], [${QT_MAJOR_VERSION}], [version string for moc purposes])
+
     AS_IF([test $QT_MAJOR_VERSION -ge 5],
           [ QT_CFLAGS="$QT_CFLAGS -fPIC"
-      PKG_CHECK_MODULES([QtPrintSupport], [${qt_name}PrintSupport])
+	   DEPRECATED_STUFF=
+      PKG_CHECK_MODULES([QtPrintSupport], [${qt_name}PrintSupport], [])
       PKG_CHECK_MODULES([QtScript], [${qt_name}Script])
-	   ])
+	   ], [
+	       # in qt<5 is unchanged, as the new code does not work yet.
+      PKG_CHECK_MODULES([Qt3Support], [Qt3Support])
+	       DEPRECATED_STUFF="-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS"
+	       QT_LIBS="$QT_LIBS $Qt3Support_LIBS -framework Qt3Support"
+	       CPPFLAGS="$CPPFLAGS -I$path/Qt3Support.framework/Headers"
+	       ])
 
-    QT_CFLAGS="$QT_CFLAGS $QtPrintSupport_CFLAGS $QtScript_CFLAGS"
+    QT_CFLAGS="$QT_CFLAGS $Qt3Support_CFLAGS $QtPrintSupport_CFLAGS $QtScript_CFLAGS"
     QT_LIBS="$QtScript_LIBS $QtPrintSupport_LIBS $QT_LIBS"
 
     ;;
@@ -415,24 +429,23 @@ case $host_os in
     if test "x${with_qt}" = xyes ; then
       AC_MSG_RESULT([found in $path])
       QT_LIBS="-framework QtGui -framework QtCore -framework QtXml -framework QtSvg -framework QtScript"
-      QT_LIBS="$QT_LIBS -framework Qt3Support"
       CPPFLAGS="$CPPFLAGS -I$path/QtCore.framework/Headers"
       CPPFLAGS="$CPPFLAGS -I$path/QtGui.framework/Headers"
       CPPFLAGS="$CPPFLAGS -I$path/QtXml.framework/Headers"
       CPPFLAGS="$CPPFLAGS -I$path/QtSvg.framework/Headers"
       CPPFLAGS="$CPPFLAGS -I$path/QtScript.framework/Headers"
-      CPPFLAGS="$CPPFLAGS -I$path/Qt3Support.framework/Headers"
       QT_LDFLAGS="$QT_LDFLAGS -F$path"
     else
       AC_MSG_ERROR([not found])
     fi
 
     dnl Define Qt3Support
-    QT_DEF="-DQT_SHARED -DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS -DQT_DEPRECATED_WARNINGS"
+    QT_DEF="-DQT_SHARED $DEPRECATED_STUFF -DQT_DEPRECATED_WARNINGS"
     CPPFLAGS="$CPPFLAGS $QT_DEF"
     QT_LDFLAGS="$QT_LDFLAGS -headerpad_max_install_names"
 
     if test "$enable_qucs_gui_debug" = yes; then
+      # BUG. -W and -Wall are not CPPFLAGS
       CPPFLAGS="$CPPFLAGS -W -Wall"
     fi
 

@@ -84,6 +84,8 @@ void qucsMessageOutput(QtMsgType type, const char *msg)
   case QtFatalMsg:
     fprintf(stderr, "Fatal: %s\n", msg);
     abort();
+  default:
+    fprintf(stderr, "Default %s\n", msg);
   }
 
 #ifdef _WIN32
@@ -120,16 +122,17 @@ Schematic *openSchematic(QString schematic)
   Schematic *sch = new Schematic(0, schematic);
 
   // load schematic file if possible
-  if(!sch->loadDocument()) {
+  if(!sch->loadDocument()) { untested();
     fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
     delete sch;
     return NULL;
+  }else{ untested();
   }
   return sch;
 }
 
 int doNetlist(QString schematic, QString netlist)
-{
+{ untested();
   Schematic *sch = openSchematic(schematic);
   if (sch == NULL) {
     return 1;
@@ -474,7 +477,7 @@ void createListComponentEntry(){
 
 		// FIXME: cleanup
 		QTextStream s;
-		c->getSchematic()->saveComponent(s, c);
+		SchematicModel::saveComponent(s, c);
       QString qucsEntry = *(s.string());
       fprintf(stdout, "%s; qucs    ; %s\n", c->obsolete_model_hack().toAscii().data(), qucsEntry.toAscii().data());
 
@@ -499,6 +502,16 @@ void createListComponentEntry(){
     } // category
 }
 
+#if QT_VERSION < 0x050000
+# define qucsMessageHandler qucsMessageOutput
+#else
+void qucsMessageHandler(QtMsgType type, const QMessageLogContext &, const QString & str)
+{
+  const char * msg = str.toUtf8().data();
+  qucsMessageOutput(type, msg);
+}
+#endif
+
 // #########################################################################
 // ##########                                                     ##########
 // ##########                  Program Start                      ##########
@@ -506,7 +519,7 @@ void createListComponentEntry(){
 // #########################################################################
 int main(int argc, char *argv[])
 {
-  qInstallMsgHandler(qucsMessageOutput);
+  qInstallMsgHandler(qucsMessageHandler);
   // set the Qucs version string
   QucsVersion = VersionTriplet(PACKAGE_VERSION);
 

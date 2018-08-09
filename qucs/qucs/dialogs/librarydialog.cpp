@@ -21,9 +21,6 @@
  *
  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
 #include <QLabel>
 #include <QLineEdit>
 #include <QPlainTextEdit>
@@ -423,7 +420,7 @@ void LibraryDialog::slotSave()
   }
   QTextStream Stream;
   Stream.setDevice(&LibFile);
-  Stream << "<Qucs Library " PACKAGE_VERSION " \""
+  Stream << "<Qucs Library " "PACKAGE_VERSION" " \""
 	 << NameEdit->text() << "\">\n\n";
 
   bool Success = true, ret;
@@ -451,7 +448,7 @@ void LibraryDialog::slotSave()
 			arg(SelectedNames[i]));
         break;
     }
-    Doc->DocName = NameEdit->text() + "_" + SelectedNames[i];
+    Doc->setDocName(NameEdit->text() + "_" + SelectedNames[i]);
     Success = false;
 
     // save analog model

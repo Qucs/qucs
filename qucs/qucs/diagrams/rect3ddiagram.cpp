@@ -36,6 +36,7 @@
 #include "rect3ddiagram.h"
 #include "qucs.h"
 #include "misc.h"
+#include "qt_compat.h"
 
 Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
@@ -705,10 +706,11 @@ int Rect3DDiagram::calcAxis(Axis *Axis, int x, int y,
       
       xLen = int(ystepD * cos(phi) + 0.5) + x;
       yLen = int(ystepD * sin(phi) + 0.5) + y;
-      if(Qt::DockRight)
+      if(Qt::DockRight!=0){
 	Texts.append(new Text(xLen+3+gx, yLen-6+gy, tmp));
-      else
+      }else{
 	Texts.append(new Text(xLen-w-2-gx, yLen-6-gy, tmp));
+      }
       
       // short grid marks
       Lines.append(new Line(xLen-gx, yLen-gy, xLen+gx, yLen+gy,
@@ -738,7 +740,7 @@ int Rect3DDiagram::calcAxis(Axis *Axis, int x, int y,
       
       w = metrics.width(tmp);  // width of text
       if(maxWidth < w) maxWidth = w;
-      if(Qt::DockRight)
+      if(Qt::DockRight!=0)
 	Texts.append(new Text(x+3+gx, y-6+gy, tmp)); // place text right
       else
 	Texts.append(new Text(x-w-2-gx, y-6-gy, tmp)); // place left

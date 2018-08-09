@@ -32,6 +32,8 @@
 #include <QPainter>
 #include <QDebug>
 
+#include <assert.h>
+
 /*!
  * \file component.cpp
  * \brief Implementation of the Component class.
@@ -48,7 +50,6 @@ Component::Component()
 
   mirroredX = false;
   rotated = 0;
-  isSelected = false;
   isActive = COMP_IS_ACTIVE;
   showName = true;
 
@@ -126,8 +127,13 @@ void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2, float Corr)
 // -------------------------------------------------------
 void Component::setCenter(int x, int y, bool relative)
 {
-  if(relative) { cx += x;  cy += y; }
-  else { cx = x;  cy = y; }
+  if(relative) {
+    cx += x;
+    cy += y;
+  } else {
+    cx = x;
+    cy = y;
+  }
 }
 
 // -------------------------------------------------------
@@ -185,6 +191,7 @@ bool Component::getSelected(int x_, int y_)
 // -------------------------------------------------------
 void Component::paint(ViewPainter *p)
 {
+  Element::paint(p);
   int x, y, a, b, xb, yb;
   QFont f = p->Painter->font();   // save current font
   QFont newFont = f;
@@ -306,9 +313,10 @@ void Component::paint(ViewPainter *p)
   }
 
   // draw component bounding box
-  if(isSelected) {
+  if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(cx+x1, cy+y1, x2-x1, y2-y1);
+  }else{
   }
 }
 
@@ -717,7 +725,8 @@ QString Component::get_VHDL_Code(int NumPorts)
 // save a component
 // FIXME: part of corresponding SchematicSerializer implementation
 // BUG: c must be const (cannot because of QT3)
-void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
+// TODO: schematic_model.cpp
+void SchematicModel::saveComponent(QTextStream& s, Component /*const*/ * c)
 {
 #if XML
   QDomDocument doc;
@@ -755,7 +764,7 @@ void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
   }
   i |= c->isActive;
   s << QString::number(i);
-  s << " "+QString::number(c->cx)+" "+QString::number(c->cy);
+  s << " "+QString::number(c->cx_())+" "+QString::number(c->cy_());
   s << " "+QString::number(c->tx)+" "+QString::number(c->ty);
   s << " ";
   if(c->mirroredX){
@@ -787,6 +796,7 @@ void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
 // FIXME: must be Component* SchematicParser::loadComponent(Stream&, Component*);
 Component* Schematic::loadComponent(const QString& _s, Component* c) const
 {
+  qDebug() << "load" << _s;
   bool ok;
   int  ttx, tty, tmp;
   QString s = _s;
@@ -818,11 +828,11 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
     c->showName = true;
 
   n  = s.section(' ',3,3);    // cx
-  c->cx = n.toInt(&ok);
+  c->obsolete_set("cx", n.toInt(&ok));
   if(!ok) return NULL;
 
   n  = s.section(' ',4,4);    // cy
-  c->cy = n.toInt(&ok);
+  c->obsolete_set("cy", n.toInt(&ok));
   if(!ok) return NULL;
 
   n  = s.section(' ',5,5);    // tx
@@ -858,23 +868,27 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
 
   unsigned int z=0, counts = s.count('"');
   // FIXME. use c->paramCount()
-  if(Model == "Sub")
+  if(Model == "Sub"){
     tmp = 2;   // first property (File) already exists
-  else if(Model == "Lib")
+  }else if(Model == "Lib"){
     tmp = 3;
-  else if(Model == "EDD")
+  }else if(Model == "EDD"){
     tmp = 5;
-  else if(Model == "RFEDD")
+  }else if(Model == "RFEDD"){
     tmp = 8;
-  else if(Model == "VHDL")
+  }else if(Model == "VHDL"){
     tmp = 2;
-  else if(Model == "MUTX")
+  }else if(Model == "MUTX"){
     tmp = 5; // number of properties for the default MUTX (2 inductors)
-  else tmp = counts + 1;    // "+1" because "counts" could be zero
+  }else{
+    // "+1" because "counts" could be zero
+    tmp = counts + 1;
+  }
 
   /// BUG FIXME. dont use Component parameter dictionary.
-  for(; tmp<=(int)counts/2; tmp++)
+  for(; tmp<=(int)counts/2; tmp++){
     c->Props.append(new Property("p", "", true, " "));
+  }
 
   // load all properties
   Property *p1;
@@ -888,6 +902,7 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
     if(z > counts) {
       if(p1->Description.isEmpty()){
         c->Props.remove();    // remove if allocated in vain
+      }else{
       }
 
       if(Model == "Diode") { // BUG: don't use names
@@ -907,9 +922,8 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
           p1->Value = c->Props.at(11)->Value;
           c->Props.current()->Value = "0";
         }
-      }
-      else if(Model == "AND" || Model == "NAND" || Model == "NOR" ||
-	      Model == "OR" ||  Model == "XNOR"|| Model == "XOR") {
+      }else if(Model == "AND" || Model == "NAND" || Model == "NOR" ||
+	       Model == "OR" ||  Model == "XNOR"|| Model == "XOR") {
 	if(counts < 10) {   // backward compatible
           counts >>= 1;
           p1 = c->Props.at(counts);
@@ -921,8 +935,7 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
           }
           c->Props.current()->Value = "10";
 	}
-      }
-      else if(Model == "Buf" || Model == "Inv") {
+      }else if(Model == "Buf" || Model == "Inv") {
 	if(counts < 8) {   // backward compatible
           counts >>= 1;
           p1 = c->Props.at(counts);
@@ -934,12 +947,17 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
           }
           c->Props.current()->Value = "10";
 	}
+      }else{
       }
 
       return c;
+    }else{
+      // z <= counts
     }
 
     // for equations
+    qDebug() << "Schematic::loadComponent Model" << Model;
+#if 1
     if(Model != "EDD" && Model != "RFEDD" && Model != "RFEDD2P")
     if(p1->Description.isEmpty()) {  // unknown number of properties ?
       p1->Name = n.section('=',0,0);
@@ -950,6 +968,7 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
         c->Props.prev();
       }
     }
+#endif
     if(z == 6)  if(counts == 6)     // backward compatible
       if(Model == "R") {
         c->Props.getLast()->Value = n;

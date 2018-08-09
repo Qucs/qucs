@@ -57,6 +57,7 @@ MOCHEADERS = \
   octave_window.h \
   projectView.h \
   schematic.h \
+  schematic_scene.h \
   textdoc.h \
   qucs.h
 
@@ -69,6 +70,8 @@ libqucsschematic_la_SOURCES= \
   node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
   qucs.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
   viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
+  schematic_model.cpp \
+  schematic_scene.cpp \
   schematic_file.cpp syntax.cpp module.cpp octave_window.cpp \
   messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
   projectView.cpp
@@ -95,6 +98,7 @@ qucs_real_LDADD = \
 	libqucsschematic.la
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
+	qt_compat.h trace.h \
   wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
   projectView.h printerwriter.h imagewriter.h
 

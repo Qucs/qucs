@@ -26,10 +26,9 @@
 #include <QComboBox>
 #include <QCheckBox>
 
-Ellipse::Ellipse(bool _filled)
+Ellipse::Ellipse(bool _filled) : Painting()
 {
   Name = "Ellipse ";
-  isSelected = false;
   Pen = QPen(QColor());
   Brush = QBrush(Qt::lightGray);
   filled = _filled;
@@ -45,7 +44,7 @@ Ellipse::~Ellipse()
 // --------------------------------------------------------------------------
 void Ellipse::paint(ViewPainter *p)
 {
-  if(isSelected) {
+  if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
     if(filled)  p->Painter->setBrush(Brush);
     p->drawEllipse(cx, cy, x2, y2);

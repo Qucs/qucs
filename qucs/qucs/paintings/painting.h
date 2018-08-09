@@ -25,28 +25,28 @@
 class Painting : public Element  {
 public:
   Painting();
- ~Painting() {};
+ ~Painting() {}
 
-  virtual void getCenter(int&, int &) {};
-  virtual bool getSelected(float, float, float) { return false; };
+  virtual void getCenter(int&, int &) {}
+  virtual bool getSelected(float, float, float) { return false; }
 
   virtual Painting* newOne();
-  virtual bool load(const QString&) { return true; };
+  virtual bool load(const QString&) { return true; }
   virtual QString save();
   virtual QString saveCpp();
   virtual QString saveJSON();
-  virtual void paint(ViewPainter*) {};
+  virtual void paint(ViewPainter*) {}
   virtual void MouseMoving(Schematic*, int, int, int, int,
-                           Schematic*, int, int, bool) {};
-  virtual bool MousePressing() { return false; };
+                           Schematic*, int, int, bool) {}
+  virtual bool MousePressing() { return false; }
   virtual void Bounding(int&, int&, int&, int&);
-  virtual bool resizeTouched(float, float, float) { return false; };
-  virtual void MouseResizeMoving(int, int, Schematic*) {};
+  virtual bool resizeTouched(float, float, float) { return false; }
+  virtual void MouseResizeMoving(int, int, Schematic*) {}
 
-  virtual void rotate() {};
-  virtual void mirrorX() {};
-  virtual void mirrorY() {};
-  virtual bool Dialog() { return false; };
+  virtual void rotate() {}
+  virtual void mirrorX() {}
+  virtual void mirrorY() {}
+  virtual bool Dialog() { return false; }
 
   QString toPenString (int);
   QString toBrushString (int);

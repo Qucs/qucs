@@ -16,7 +16,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+# include "config.h"
 #endif
 
 #include <QModelIndex>
@@ -143,11 +143,14 @@ QucsApp::QucsApp()
   lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
 
   // load documents given as command line arguments
+  // // ARGH. this is argv argc
   for(int z=1; z<qApp->arguments().size(); z++) {
     QString arg = qApp->arguments()[z];
     QByteArray ba = arg.toLatin1();
     const char *c_arg= ba.data();
-    if(*(c_arg) != '-') {
+    if(*(c_arg) == '-') {
+        // do not open files with '-'
+    }else{
       QFileInfo Info(arg);
       QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
       arg = QucsSettings.QucsWorkDir.filePath(Info.fileName());
@@ -548,7 +551,7 @@ QucsDoc * QucsApp::findDoc (QString File, int * Pos)
   int No = 0;
   File = QDir::toNativeSeparators(File);
   while ((d = getDoc (No++)) != 0)
-    if (QDir::toNativeSeparators(d->DocName) == File) {
+    if (QDir::toNativeSeparators(d->docName()) == File) {
       if (Pos) *Pos = No - 1;
       return d;
     }
@@ -806,8 +809,10 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
     return;
   }
 
-  if(view->drawn)
-    ((Q3ScrollView*)DocumentTab->currentWidget())->viewport()->update();
+  if(view->drawn){
+    ((SchematicBase*)DocumentTab->currentWidget())->viewport()->update();
+  }else{
+  }
   view->drawn = false;
 
   // toggle last toolbar button off
@@ -1366,35 +1371,40 @@ void QucsApp::slotTextNew()
 // directly, otherwise it loads it.
 bool QucsApp::gotoPage(const QString& Name)
 {
+    // is Name the filename?!
   int No = DocumentTab->currentIndex();
 
   int i = 0;
   QucsDoc * d = findDoc (Name, &i);  // search, if page is already loaded
 
-  if(d) {   // open page found ?
+  if(d) {
+    // open page found
     d->becomeCurrent(true);
     DocumentTab->setCurrentIndex(i);  // make new document the current
     return true;
+  }else{
   }
 
   QFileInfo Info(Name);
   if(Info.suffix() == "sch" || Info.suffix() == "dpl" ||
-     Info.suffix() == "sym") {
+     Info.suffix() == "sym") { untested();
     d = DocumentTab->createEmptySchematic(Name);
-  } else {
+  } else { untested();
     d = DocumentTab->createEmptyTextDoc(Name);
   }
 
-  if(!d->load()) {    // load document if possible
+     // load document if possible
+  if(!d->load()) { untested();
     delete d;
     DocumentTab->setCurrentIndex(No);
     view->drawn = false;
     return false;
+  }else{ untested();
   }
   slotChangeView(DocumentTab->currentWidget());
 
   // if only an untitled document was open -> close it
-  if(getDoc(0)->DocName.isEmpty())
+  if(getDoc(0)->docName().isEmpty())
     if(!getDoc(0)->DocChanged)
       delete DocumentTab->widget(0);
 
@@ -1432,7 +1442,7 @@ bool QucsApp::saveFile(QucsDoc *Doc)
   if(!Doc)
     Doc = getDoc();
 
-  if(Doc->DocName.isEmpty())
+  if(Doc->docName().isEmpty())
     return saveAs();
 
   int Result = Doc->save();
@@ -1474,7 +1484,7 @@ bool QucsApp::saveAs()
   QString s, Filter;
   QFileInfo Info;
   while(true) {
-    s = Doc->DocName;
+    s = Doc->docName();
     Info.setFile(s);
     if(s.isEmpty()) {   // which is default directory ?
       if(ProjName.isEmpty()) {
@@ -1584,7 +1594,7 @@ void QucsApp::slotFileSaveAll()
   int No=0;
   QucsDoc *Doc;  // search, if page is already loaded
   while((Doc=getDoc(No++)) != 0) {
-    if(Doc->DocName.isEmpty())  // make document the current ?
+    if(Doc->docName().isEmpty())  // make document the current ?
       DocumentTab->setCurrentIndex(No-1);
     // Hack! TODO: Maybe it's better to let slotFileChanged() know about Tab number?
     //   if saving was successful, turn off "saving needed" icon
@@ -1597,7 +1607,7 @@ void QucsApp::slotFileSaveAll()
   QString tabType = DocumentTab->currentWidget()->metaObject()->className();
 
   if (tabType == "Schematic") {
-    ((Q3ScrollView*)DocumentTab->currentWidget())->viewport()->update();
+    ((SchematicBase*)DocumentTab->currentWidget())->viewport()->update();
   }
   view->drawn = false;
   statusBar()->showMessage(tr("Ready."));
@@ -1745,7 +1755,7 @@ bool QucsApp::closeTabsRange(int startTab, int stopTab, int exceptTab)
     }
   } while (doc != stopDoc);
 
-  switchEditMode(true);   // set schematic edit mode
+  switchEditMode(true);
   return true;
 }
 
@@ -1823,7 +1833,7 @@ void QucsApp::slotChangeView(QWidget *w)
     // already in schematic?
     if(cursorLeft->isEnabled()) {
       // which mode: schematic or symbol editor ?
-      if((CompChoose->count() > 1) == d->symbolMode)
+      if((CompChoose->count() > 1) == d->isSymbolMode())
         changeSchematicSymbolMode (d);
     }
     else {
@@ -1894,7 +1904,7 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
 {
   if(No<0) return;
 
-  QString pathName = currDoc->DocName;
+  QString pathName = currDoc->docName();
   QString ext = currDoc->fileSuffix ();
   QFileInfo Info (pathName);
   QString Model, File, Name = Info.fileName();
@@ -2019,7 +2029,8 @@ void QucsApp::slotIntoHierarchy()
   QString s = pc->getSubcircuitFile();
   if(!gotoPage(s)) { return; }
 
-  HierarchyHistory.push(Doc->DocName); //remember for the way back
+  // BUG: this complains about some malloc in qvector (not without a reason)
+  HierarchyHistory.push(Doc->docName()); //remember for the way back
   popH->setEnabled(true);
 }
 
@@ -2087,11 +2098,11 @@ void QucsApp::slotSimulate()
   else
     Doc = (QucsDoc*)((Schematic*)w);
 
-  if(Doc->DocName.isEmpty()) // if document 'untitled' ...
+  if(Doc->docName().isEmpty()) // if document 'untitled' ...
     if(!saveAs()) return;    // ... save schematic before
 
   // Perhaps the document was modified from another program ?
-  QFileInfo Info(Doc->DocName);
+  QFileInfo Info(Doc->docName());
   if(Doc->lastSaved.isValid()) {
     if(Doc->lastSaved < Info.lastModified()) {
       int No = QMessageBox::warning(this, tr("Warning"),
@@ -2110,7 +2121,7 @@ void QucsApp::slotSimulate()
     if(Doc->DocChanged)
       Doc->save();
     slotViewOctaveDock(true);
-    octave->runOctaveScript(Doc->DocName);
+    octave->runOctaveScript(Doc->docName());
     return;
   }
 
@@ -2261,11 +2272,14 @@ void QucsApp::slotToPage()
     return;
   }
 
-  if(d->DocName.right(2) == ".m" ||
-     d->DocName.right(4) == ".oct")
+  if(d->docName().right(2) == ".m" ||
+     d->docName().right(4) == ".oct") {
     slotViewOctaveDock(true);
-  else
-    slotChangePage(d->DocName, d->DataDisplay);
+  }else{
+      QString dn=d->docName();
+    slotChangePage(dn, d->DataDisplay);
+    d->setDocName(dn);
+  }
 }
 
 // -------------------------------------------------------------------
@@ -2402,8 +2416,10 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
   Comp->recreate(0);
   view->selElem = Comp;
 
-  if(view->drawn)
-    ((Q3ScrollView*)DocumentTab->currentWidget())->viewport()->update();
+  if(view->drawn){
+    ((SchematicBase*)DocumentTab->currentWidget())->viewport()->update();
+  }else{
+  }
   view->drawn = false;
   MouseMoveAction = &MouseActions::MMoveElement;
   MousePressAction = &MouseActions::MPressElement;
@@ -2527,14 +2543,14 @@ void QucsApp::switchEditMode(bool SchematicMode)
 // ---------------------------------------------------------
 void QucsApp::changeSchematicSymbolMode(Schematic *Doc)
 {
-  if(Doc->symbolMode) {
+  if(Doc->isSymbolMode()) {
     // go into select modus to avoid placing a forbidden element
     select->setChecked(true);
 
     switchEditMode(false);
-  }
-  else
+  }else{
     switchEditMode(true);
+  }
 }
 
 // ---------------------------------------------------------
@@ -2554,7 +2570,7 @@ void QucsApp::slotSymbolEdit()
   if (isTextDocument (w)) {
     TextDoc *TDoc = (TextDoc*)w;
     // set 'DataDisplay' document of text file to symbol file
-    QFileInfo Info(TDoc->DocName);
+    QFileInfo Info(TDoc->docName());
     QString sym = Info.completeBaseName()+".sym";
     TDoc->DataDisplay = sym;
 
@@ -2564,7 +2580,9 @@ void QucsApp::slotSymbolEdit()
       paint_mode = 1;
 
     // change current page to appropriate symbol file
-    slotChangePage(TDoc->DocName,TDoc->DataDisplay);
+    QString s=TDoc->docName();
+    slotChangePage(s, TDoc->DataDisplay);
+    TDoc->setDocName(s);
 
     // set 'DataDisplay' document of symbol file to original text file
     Schematic *SDoc = (Schematic*)DocumentTab->currentWidget();
@@ -2572,8 +2590,8 @@ void QucsApp::slotSymbolEdit()
 
     // change into symbol mode
     if (paint_mode) // but only switch coordinates if newly loaded
-      SDoc->switchPaintMode();
-    SDoc->symbolMode = true;
+      SDoc->switchPaintMode(); // toggles SymbolMode (wtf?)
+    SDoc->setSymbolMode(true);
     changeSchematicSymbolMode(SDoc);
     SDoc->becomeCurrent(true);
     SDoc->viewport()->update();
@@ -2583,13 +2601,14 @@ void QucsApp::slotSymbolEdit()
   else {
     Schematic *SDoc = (Schematic*)w;
     // in a symbol file
-    if(SDoc->DocName.right(4) == ".sym") {
-      slotChangePage(SDoc->DocName, SDoc->DataDisplay);
-    }
+    if(SDoc->docName().right(4) == ".sym") {
+      QString dn=SDoc->docName();
+      slotChangePage(dn, SDoc->DataDisplay);
+      SDoc->setDocName(dn);
+    }else{
     // in a normal schematic
-    else {
       slotHideEdit(); // disable text edit of component property
-      SDoc->switchPaintMode();   // twist the view coordinates
+      SDoc->switchPaintMode(); // toggles SymbolMode (wtf?)
       changeSchematicSymbolMode(SDoc);
       SDoc->becomeCurrent(true);
       SDoc->viewport()->update();
@@ -2601,6 +2620,10 @@ void QucsApp::slotSymbolEdit()
 // -----------------------------------------------------------
 void QucsApp::slotPowerMatching()
 {
+#if 0
+
+	// not here.
+
   if(!view->focusElement) return;
   if(view->focusElement->Type != isMarker) return;
   Marker *pm = (Marker*)view->focusElement;
@@ -2620,11 +2643,15 @@ void QucsApp::slotPowerMatching()
   slotToPage();
   if(Dia->exec() != QDialog::Accepted)
     return;
+#endif
 }
 
 // -----------------------------------------------------------
 void QucsApp::slot2PortMatching()
 {
+#if 0
+
+	// not here
   if(!view->focusElement) return;
   if(view->focusElement->Type != isMarker) return;
   Marker *pm = (Marker*)view->focusElement;
@@ -2703,14 +2730,19 @@ void QucsApp::slot2PortMatching()
   slotToPage();
   if(Dia->exec() != QDialog::Accepted)
     return;
+
+#endif
 }
 
 // -----------------------------------------------------------
 // Is called if the "edit" action is clicked on right mouse button menu.
 void QucsApp::slotEditElement()
 {
-  if(view->focusMEvent)
+  if(view->focusMEvent){
     view->editElement((Schematic*)DocumentTab->currentWidget(), view->focusMEvent);
+  }else{
+	 // ?!
+  }
 }
 
 // -----------------------------------------------------------
@@ -2993,7 +3025,7 @@ void ContextMenuTabWidget::showContextMenu(const QPoint& point)
     // get the document where the context menu was opened
     QucsDoc *d = App->getDoc(contextTabIndex);
     // save the document name (full path)
-    docName = d->DocName;
+    docName = d->docName();
 
 #define APPEND_MENU(action, slot, text)         \
   QAction *action = new QAction(tr(text), &menu);    \
@@ -3152,3 +3184,5 @@ bool saveApplSettings()
   return true;
 
 }
+
+// vim:ts=8:sw=4:et

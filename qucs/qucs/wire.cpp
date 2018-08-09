@@ -19,6 +19,7 @@
 #include <QPainter>
 
 Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2)
+	: Conductor()
 {
   cx = 0;
   cy = 0;
@@ -31,7 +32,6 @@ Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2)
   Label  = 0;
 
   Type = isWire;
-  isSelected = false;
 }
 
 Wire::~Wire()
@@ -55,11 +55,14 @@ void Wire::rotate()
   y2  = ym - tmp + xm;
 
   if(Label) {
-    tmp = Label->cx;
-    Label->cx = xm + Label->cy - ym;
-    Label->cy = ym - tmp + xm;
-    if(Label->Type == isHWireLabel) Label->Type = isVWireLabel;
-    else Label->Type = isHWireLabel;
+    tmp = Label->cx_();
+    Label->moveTo(xm + Label->cy_() - ym, ym - tmp + xm);
+    if(Label->Type == isHWireLabel){
+		 // Label->setV(); // something like that, don't abuse type.
+		 Label->Type = isVWireLabel;
+	 } else {
+		 Label->Type = isHWireLabel;
+	 }
   }
 }
 
@@ -107,7 +110,7 @@ void Wire::paintScheme(QPainter *p)
 // ----------------------------------------------------------------
 void Wire::paint(ViewPainter *p)
 {
-  if(isSelected) {
+  if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,6));
     p->drawLine(x1, y1, x2, y2);
     p->Painter->setPen(QPen(Qt::lightGray,2));
@@ -119,11 +122,6 @@ void Wire::paint(ViewPainter *p)
   }
 }
 
-// ----------------------------------------------------------------
-bool Wire::isHorizontal()
-{
-  return (y1 == y2);
-}
 
 // ----------------------------------------------------------------
 void Wire::setName(const QString& Name_, const QString& Value_, int delta_, int x_, int y_)
@@ -154,8 +152,8 @@ QString Wire::save()
           s += " "+QString::number(x2)+" "+QString::number(y2);
   if(Label) {
           s += " \""+Label->Name+"\" ";
-          s += QString::number(Label->x1)+" "+QString::number(Label->y1)+" ";
-          s += QString::number(Label->cx-x1 + Label->cy-y1);
+          s += QString::number(Label->x1_())+" "+QString::number(Label->y1_())+" ";
+          s += QString::number(Label->cx_()-x1 + Label->cy_()-y1);
           s += " \""+Label->initValue+"\">";
   }
   else { s += " \"\" 0 0 0 \"\">"; }

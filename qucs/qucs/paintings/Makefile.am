@@ -27,6 +27,8 @@ noinst_LTLIBRARIES = libpaintings.la
 MOCHEADERS = arrowdialog.h graphictextdialog.h filldialog.h id_dialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
+include ../../common.mk
+
 libpaintings_la_SOURCES = rectangle.cpp painting.cpp arrow.cpp  \
   graphictextdialog.cpp graphictext.cpp graphicline.cpp ellipse.cpp           \
   arrowdialog.cpp filldialog.cpp portsymbol.cpp ellipsearc.cpp id_text.cpp    \
@@ -38,11 +40,6 @@ noinst_HEADERS = $(MOCHEADERS) arrow.h ellipse.h graphicline.h graphictext.h  \
   painting.h paintings.h rectangle.h portsymbol.h ellipsearc.h id_text.h
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
-
-SUFFIXES = .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -o $@ $<
 
 CLEANFILES = *~ *.moc.cpp
 MAINTAINERCLEANFILES = Makefile.in

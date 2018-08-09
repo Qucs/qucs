@@ -28,6 +28,8 @@ noinst_LTLIBRARIES = libcomponents.la
 MOCHEADERS = componentdialog.h spicedialog.h optimizedialog.h spicefile.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
+include ../../common.mk
+
 libcomponents_la_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   vcvs.cpp vccs.cpp tr_sim.cpp tline.cpp substrate.cpp sp_sim.cpp             \
   param_sweep.cpp mstee.cpp msstep.cpp msline.cpp mscross.cpp mscoupled.cpp mslange.cpp   \
@@ -95,11 +97,6 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   capq.h indq.h spiralinductor.h circularloop.h spdeembed.h
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
-
-SUFFIXES = .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -o $@ $<
 
 CLEANFILES = *~ *.moc.cpp
 MAINTAINERCLEANFILES = Makefile.in

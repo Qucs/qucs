@@ -54,7 +54,7 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
   Z0(default_Z0) // BUG: see declaration.
 {
   Type = isMarker;
-  isSelected = transparent = false;
+  transparent = false;
 
   cx =  cx_;
   cy = -cy_;
@@ -286,7 +286,7 @@ void Marker::createText()
   assert(diag());
   Text += diag()->extraMarkerText(this);
 
-    Axis const *pa,*pt;
+    Axis const *pa;
 
     if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
     else  pa = &(diag()->zAxis);
@@ -329,7 +329,6 @@ bool Marker::moveLeftRight(bool left)
 {
   int n;
   double *px;
-  double x;
 
   DataX const *pD = pGraph->axis(0);
   px = pD->Points;
@@ -460,7 +459,7 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
   fy2 = (float(y0)-fCY)*p->Scale + p->DY;
   p->Painter->drawLine(x1_, y1_, TO_INT(fx2), TO_INT(fy2));
 
-  if(isSelected) {
+  if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(x0+x1-3, y0+y1-3, x2+6, y2+6);
   }
@@ -470,8 +469,8 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
 void Marker::paintScheme(QPainter *p)
 {
   assert(diag());
-  int x0 = diag()->cx;
-  int y0 = diag()->cy;
+  int x0 = diag()->cx_();
+  int y0 = diag()->cy_();
   p->drawRect(x0+x1, y0+y1, x2, y2);
 
   // which corner of rectangle should be connected to line ?
@@ -504,10 +503,10 @@ void Marker::setCenter(int x, int y, bool relative)
 void Marker::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
   if(diag()) {
-    _x1 = diag()->cx + x1;
-    _y1 = diag()->cy + y1;
-    _x2 = diag()->cx + x1+x2;
-    _y2 = diag()->cy + y1+y2;
+    _x1 = diag()->cx_() + x1;
+    _y1 = diag()->cy_() + y1;
+    _x2 = diag()->cx_() + x1+x2;
+    _y2 = diag()->cy_() + y1+y2;
   }
   else {
     _x1 = x1;

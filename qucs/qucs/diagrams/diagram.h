@@ -43,6 +43,8 @@
     p_end = g->begin() + (Size - 9); \
   }
 
+class QMouseEvent;
+
 struct Axis {
   double  min, max; // least and greatest values of all graph data
   double  low, up;  // the limits of the diagram
@@ -62,13 +64,13 @@ public:
   virtual ~Diagram();
 
   virtual Diagram* newOne();
-  virtual int  calcDiagram() { return 0; };
+  virtual int  calcDiagram() { return 0; }
   virtual void calcCoordinate
-               (const double*, const double*, const double*, float*, float*, Axis const*) const {};
+               (const double*, const double*, const double*, float*, float*, Axis const*) const {}
   void calcCoordinateP (const double*x, const double*y, const double*z, Graph::iterator& p, Axis const* A) const;
   virtual void calcCoordinatePh(const double*, float*, float*, Axis const*, Axis const*) const{};
   virtual void finishMarkerCoordinates(float&, float&) const;
-  virtual void calcLimits() {};
+  virtual void calcLimits() {}
   virtual QString extraMarkerText(Marker const*) const {return "";}
   
   virtual void paint(ViewPainter*);
@@ -142,6 +144,24 @@ protected:
   void rectClip(Graph::iterator &) const;
 
   virtual void calcData(Graph*);
+
+public: // from mouseactions.cpp
+  virtual bool scrollTo(int, int, int){return false;}
+  virtual int scroll(int){return 0;}
+  virtual int xAxis_limit_min() const{
+	  return xAxis.limit_min;
+  }
+
+  // returns drawn, for now.
+  bool pressElement(Schematic* Doc, Element*& selElem, QMouseEvent* Event);
+
+public: // FIXME, these are still around.
+	int & cx__() { return cx; }
+	int & cy__() { return cy; }
+	int & x1__() { return x1; }
+	int & y1__() { return y1; }
+	int & x2__() { return x2; }
+	int & y2__() { return y2; }
 
 private:
   int Bounding_x1, Bounding_x2, Bounding_y1, Bounding_y2;
