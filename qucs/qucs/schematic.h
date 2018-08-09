@@ -426,7 +426,6 @@ private:
   void simpleInsertWire(Wire*);
   bool loadWires(QTextStream*, WireList*List=0);
   bool loadDiagrams(QTextStream*, DiagramList*);
-  bool loadPaintings(QTextStream*, PaintingList*);
   bool loadIntoNothing(QTextStream*);
 
   bool    pasteFromClipboard(QTextStream *, EGPList*);
