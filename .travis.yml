@@ -99,12 +99,12 @@ matrix:
             - pgf
             - python-tk
 
-#     - os: osx
-#       # Qt 4.8.7 official installer works up to OSX 10.10 or xcode6.4
-#       # Use bottle (with Qt3Support) from cartr/qt4
-#       osx_image: xcode8.3
-#       compiler: clang
-#       env: BUILD=autotools QT=qt4
+     - os: osx
+       # Qt 4.8.7 official installer works up to OSX 10.10 or xcode6.4
+       # Use bottle (with Qt3Support) from cartr/qt4
+       osx_image: xcode8.3
+       compiler: clang
+       env: BUILD=autotools QT=qt5
 
 # Set secure environment with encrypted string containing GIT_NAME, GIT_EMAIL and GH_TOKEN
 env:
@@ -149,12 +149,18 @@ install:
       pip install matplotlib;
       brew install ccache;
       export PATH="/usr/local/opt/ccache/libexec:$PATH";
-      brew tap cartr/qt4;
-      brew tap-pin cartr/qt4;
-      brew install qt@4;
       brew tap guitorri/tap;
       brew install adms;
     fi
+  - if [[ $OSX && QT4 ]]; then
+      brew tap cartr/qt4;
+      brew tap-pin cartr/qt4;
+      brew install qt@4;
+    fi
+  - if [[ $OSX && QT5 ]]; then
+      brew install qt;
+    fi
+
 
 before_script:
   - ccache --version
@@ -210,10 +216,9 @@ script:
   - ./bootstrap
 
   # osx does not work, qt3 support missing
-  - if [[ $OSX && $QT4 ]]; then
-      ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc PYTHON=python2 || travis_terminate 1;
-      make || travis_terminate 1;
-      make qucscheck || travis_terminate 1;
+  - if [[ $OSX && $QT5 ]]; then
+      ./configure --with-qt-name=Qt5 --disable-dependency-tracking --disable-doc || travis_terminate 1;
+      make check || travis_terminate 1;
     fi
 
     if [[ $LINUX && $AUTOTOOLS && $CLANG && QT4 ]]; then
