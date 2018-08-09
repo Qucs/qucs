@@ -718,8 +718,7 @@ bool SchematicModel::loadWires(QTextStream *stream /*, EGPList *List */)
       }else{
       }
 #endif
-    }else simpleInsertWire(w);
-    } else {
+    {
       simpleInsertWire(w);
     }
   }
