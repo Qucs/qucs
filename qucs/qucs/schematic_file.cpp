@@ -135,9 +135,11 @@ bool Schematic::loadIntoNothing(QTextStream *stream)
 }
 
 // -------------------------------------------------------------
-// Paste from clipboard.
-bool Schematic::pasteFromClipboard(QTextStream *stream, Q3PtrList<Element> *pe)
-{
+// Paste from clipboard. into pe. wtf is pe?
+bool Schematic::pasteFromClipboard(QTextStream *stream, EGPList* pe)
+{ untested();
+  incomplete();
+#if 0
   QString Line;
 
   Line = stream->readLine();
@@ -168,8 +170,10 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, Q3PtrList<Element> *pe)
         if(!loadIntoNothing(stream)) return false; }
       else
       if(Line == "<Paintings>") {
-        if(!loadPaintings(stream, (Q3PtrList<Painting>*)pe)) return false; }
-      else {
+	PaintingList pl;
+	incomplete(); // ignore paintings.
+        if(!loadPaintings(stream, &pl)) return false;
+      } else {
         QMessageBox::critical(0, QObject::tr("Error"),
 		   QObject::tr("Clipboard Format Error:\nUnknown field!"));
         return false;
@@ -183,16 +187,20 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, Q3PtrList<Element> *pe)
   while(!stream->atEnd()) {
     Line = stream->readLine();
     if(Line == "<Components>") {
-      if(!loadComponents(stream, (Q3PtrList<Component>*)pe)) return false; }
-    else
-    if(Line == "<Wires>") {
-      if(!loadWires(stream, pe)) return false; }
-    else
-    if(Line == "<Diagrams>") {
-      if(!loadDiagrams(stream, (Q3PtrList<Diagram>*)pe)) return false; }
+      incomplete();
+//      if(!loadComponents(stream, pe)) return false;
+    }else if(Line == "<Wires>") {
+      if(!loadWires(stream, pe)) return false;
+    }else if(Line == "<Diagrams>") {
+      incomplete();
+//      if(!loadDiagrams(stream, pe)) return false;
+    }
     else
     if(Line == "<Paintings>") {
-      if(!loadPaintings(stream, (Q3PtrList<Painting>*)pe)) return false; }
+      incomplete(); // ignore Paintings fo rnow.
+      PaintingList pl;
+      if(!loadPaintings(stream, &pl)) return false;
+    }
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 		   QObject::tr("Clipboard Format Error:\nUnknown field!"));
@@ -200,6 +208,7 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, Q3PtrList<Element> *pe)
     }
   }
 
+#endif
   return true;
 }
 
@@ -536,8 +545,7 @@ static std::string find_type_in_string(QString& Line)
 }
 
 // -------------------------------------------------------------
-// TODO: fixed in qt5 branch
-bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
+bool Schematic::loadComponents(QTextStream *stream, ComponentList *List)
 {
   assert(false);
   (void) stream;
@@ -641,7 +649,7 @@ void Schematic::simpleInsertWire(Wire *pw)
 }
 
 // -------------------------------------------------------------
-bool Schematic::loadWires(QTextStream *stream, Q3PtrList<Element> *List)
+bool Schematic::loadWires(QTextStream *stream, WireList *List)
 {
   incomplete();
   unreachable();
@@ -661,16 +669,23 @@ bool Schematic::loadWires(QTextStream *stream, Q3PtrList<Element> *List)
       delete w;
       return false;
     }
+#if 0
+    incomplete();
     if(List) {
       if(w->x1_() == w->x2_()) if(w->y1_() == w->y2_()) if(w->Label) {
 	w->Label->Type = isMovingLabel;
-	List->append(w->Label);
+	List->append(new ElementGraphics(w->Label));
 	delete w;
 	continue;
       }
-      List->append(w);
-      if(w->Label)  List->append(w->Label);
+      List->append(new ElementGraphics(w));
+      if(w->Label){
+      	List->append(new ElementGraphics(w->Label));
+      }else{
+      }
+    }else{
     }
+#endif
     else simpleInsertWire(w);
   }
 
@@ -680,7 +695,9 @@ bool Schematic::loadWires(QTextStream *stream, Q3PtrList<Element> *List)
 }
 
 // -------------------------------------------------------------
-bool Schematic::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
+// // SchematicModel::?
+//  wtf is List?
+bool Schematic::loadDiagrams(QTextStream *stream, DiagramList *List)
 {
   Diagram *d;
   QString Line, cstr;
@@ -736,7 +753,7 @@ bool Schematic::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
 
 // -------------------------------------------------------------
 // obsolete. see qt5 rework
-bool Schematic::loadPaintings(QTextStream *stream, Q3PtrList<Painting> *List)
+bool Schematic::loadPaintings(QTextStream *stream, PaintingList* List)
 {
   incomplete();
   (void) stream;
