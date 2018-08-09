@@ -861,8 +861,9 @@ bool Schematic::loadDiagrams(QTextStream *stream, DiagramList *List)
 }
 
 // -------------------------------------------------------------
-bool Schematic::loadPaintings(QTextStream *stream, PaintingList* List)
+bool PaintingList::load(QTextStream *stream)
 {
+  auto List=this;
   Painting *p=0;
   QString Line, cstr;
   while(!stream->atEnd()) {
@@ -965,7 +966,7 @@ bool Schematic::loadDocument()
     if(Line.isEmpty()) continue;
 
     if(Line == "<Symbol>") {
-      if(!loadPaintings(&stream, &SymbolPaints)) {
+      if(!symbolPaintings().load(&stream)) {
         file.close();
         return false;
       }
@@ -984,7 +985,7 @@ bool Schematic::loadDocument()
       if(!loadDiagrams(&stream, &DocDiags)) { file.close(); return false; } }
     else
     if(Line == "<Paintings>") {
-      if(!loadPaintings(&stream, &DocPaints)) { file.close(); return false; } }
+      if(!paintings().load(&stream)) { file.close(); return false; } }
     else {
        qDebug() << Line;
        QMessageBox::critical(0, QObject::tr("Error"),
@@ -1075,7 +1076,7 @@ bool Schematic::rebuild(QString *s)
   if(!loadComponents(&stream))  return false;
   if(!loadWires(&stream))  return false;
   if(!loadDiagrams(&stream, &DocDiags))  return false;
-  if(!loadPaintings(&stream, &DocPaints)) return false;
+  if(!paintings().load(&stream)) return false;
 
   return true;
 }
@@ -1094,7 +1095,7 @@ bool Schematic::rebuildSymbol(QString *s)
   Line = stream.readLine();  // skip components
   Line = stream.readLine();  // skip wires
   Line = stream.readLine();  // skip diagrams
-  if(!loadPaintings(&stream, &SymbolPaints)) return false;
+  if(!symbolPaintings().load(&stream)) return false;
 
   return true;
 }
