@@ -97,7 +97,8 @@ class ComponentList : public Q3PtrList<Component> {
 };
 // TODO: refactor here
 class PaintingList : public Q3PtrList<Painting> {
-
+public:
+	bool load(QTextStream *stream);
 public:
 	void sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const;
 };
@@ -250,6 +251,8 @@ public: // model
   PaintingList  SymbolPaints;  // symbol definition for subcircuit
 
   QList<PostedPaintEvent>   PostedPaintEvents;
+private:
+  PaintingList& symbolPaintings();
 private:
   bool SymbolMode;
 public:
@@ -458,7 +461,6 @@ private:
   void simpleInsertWire(Wire*);
   bool loadWires(QTextStream*, WireList*List=0);
   bool loadDiagrams(QTextStream*, DiagramList*);
-  bool loadPaintings(QTextStream*, PaintingList*);
   bool loadIntoNothing(QTextStream*);
 
   bool    pasteFromClipboard(QTextStream *, EGPList*);
