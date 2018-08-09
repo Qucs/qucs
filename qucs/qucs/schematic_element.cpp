@@ -1779,8 +1779,20 @@ void Schematic::newMovingWires(Q3PtrList<Element> *p, Node *pn, int pos)
 // For moving of elements: Copies all selected elements into the
 // list 'p' and deletes them from the document.
 // returns the number of "copied" _Markers_ only
-Q3PtrList<Element> Schematic::cropSelectedElements()
+Q3PtrList<ElementGraphics> Schematic::cropSelectedElements()
 {
+#ifndef USE_SCROLLVIEW
+    assert(scene());
+    for(auto i : scene()->selectedItems()){
+	if(auto x=dynamic_cast<ElementGraphics*>(i)){
+	    p->append(x);
+	}else{
+	    unreachable();
+	}
+    }
+
+    return 0;
+#else // does not work with ElementGraphics
     int i, count = 0;
     Component *pc;
     Wire      *pw;
@@ -1938,6 +1950,7 @@ Q3PtrList<Element> Schematic::cropSelectedElements()
         }
 
     return P;
+#endif
 }
 
 // ---------------------------------------------------
