@@ -139,6 +139,8 @@ private:
 class Schematic : public SchematicBase, public QucsDoc {
   Q_OBJECT
 public:
+  typedef Q3PtrList<ElementGraphics> EGPList;
+public:
   Schematic(QucsApp*, const QString&);
  ~Schematic();
 
@@ -176,7 +178,7 @@ public:
 
   void    cut();
   void    copy();
-  bool    paste(QTextStream*, Q3PtrList<Element>*);
+  bool    paste(QTextStream*, EGPList*);
   bool    load();
   int     save();
   int     saveSymbolCpp (void);
@@ -380,7 +382,7 @@ public:
   int      selectElements(int, int, int, int, bool);
   void     selectMarkers();
   void     newMovingWires(Q3PtrList<Element>*, Node*, int);
-  int      copySelectedElements(Q3PtrList<Element>*);
+  int      copySelectedElements(Q3PtrList<ElementGraphics>*);
   bool     deleteElements();
   bool     aligning(int);
   bool     distributeHorizontal();
@@ -438,14 +440,14 @@ private:
 
   bool loadProperties(QTextStream*);
   void simpleInsertComponent(Component*);
-  bool loadComponents(QTextStream*, Q3PtrList<Component> *List=0);
+  bool loadComponents(QTextStream*, ComponentList *List=0);
   void simpleInsertWire(Wire*);
-  bool loadWires(QTextStream*, Q3PtrList<Element> *List=0);
-  bool loadDiagrams(QTextStream*, Q3PtrList<Diagram>*);
-  bool loadPaintings(QTextStream*, Q3PtrList<Painting>*);
+  bool loadWires(QTextStream*, WireList*List=0);
+  bool loadDiagrams(QTextStream*, DiagramList*);
+  bool loadPaintings(QTextStream*, PaintingList*);
   bool loadIntoNothing(QTextStream*);
 
-  bool    pasteFromClipboard(QTextStream *, Q3PtrList<Element>*);
+  bool    pasteFromClipboard(QTextStream *, EGPList*);
 
   QString createUndoString(char);
   bool    rebuild(QString *);

@@ -91,7 +91,7 @@ bool MouseActions::pasteElements(Schematic *Doc)
 #if 0
   if(!Doc->paste(&stream, &movingElements)) return false;
 
-  Element *pe;
+  ElementGraphics *pe;
   int xmax, xmin, ymax, ymin;
   xmin = ymin = INT_MAX;
   xmax = ymax = INT_MIN;
@@ -178,8 +178,7 @@ void MouseActions::endElementMoving(Schematic *Doc, EGPList *movElements)
 { untested();
   incomplete();
 #if 0
-  Element *pe;
-  for(pe = movElements->first(); pe!=0; pe = movElements->next()) { untested();
+  for(auto pe=movElements->first(); pe!=0; pe=movElements->next()) { untested();
 //    pe->setSelected(false);  // deselect first (maybe afterwards pe == NULL)
     switch(pe->Type) { // FIXME: use casts.
       case isWire:
@@ -237,8 +236,7 @@ void MouseActions::moveElements(EGPList *movElements, int x, int y)
   incomplete();
 #if 0
   Wire *pw;
-  Element *pe;
-  for(pe = movElements->first(); pe != 0; pe = movElements->next()) { untested();
+  for(auto pe=movElements->first(); pe!=0; pe=movElements->next()) { untested();
     if(pe->Type == isWire) { untested();
       pw = (Wire*)pe;   // connected wires are not moved completely
 
@@ -484,9 +482,9 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
 
   Wire *pw;
   // Changes the position of all moving elements by dx/dy
-  for(Element *pe=movingElements.first(); pe!=0; pe=movingElements.next()) { untested();
-    pw = dynamic_cast<Wire*>(pe);   // connecting wires are not moved completely
-    if(pe->Type == isWire) { untested();
+  for(auto pe=movingElements.first(); pe!=0; pe=movingElements.next()) { untested();
+    if(auto pw=wire(pe)){
+      // connecting wires are not moved completely
       assert(pw);
 
       if(((uintptr_t)pw->Port1) > 3) { pw->x1__() += MAx1;  pw->y1__() += MAy1; }
@@ -532,9 +530,8 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
   MAx2 = DOC_X_POS(Event->pos().x());
   MAy2 = DOC_Y_POS(Event->pos().y());
 
-  Element *pe;
   if(drawn) // erase old scheme
-    for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
+    for(auto pe=movingElements.first(); pe != 0; pe = movingElements.next())
       pe->paintScheme(Doc);
 //      if(pe->Type == isWire)  if(((Wire*)pe)->Label)
 //        if(!((Wire*)pe)->Label->isSelected)
@@ -550,7 +547,7 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
   moveElements(&movingElements, MAx1, MAy1);  // moves elements by MAx1/MAy1
 
   // paint afterwards to avoid conflict between wire and label painting
-  for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
+  for(auto pe=movingElements.first(); pe!=0; pe=movingElements.next())
     pe->paintScheme(Doc);
 //    if(pe->Type == isWire)  if(((Wire*)pe)->Label)
 //      if(!((Wire*)pe)->Label->isSelected)
@@ -1825,8 +1822,9 @@ void MouseActions::MReleaseResizePainting(Schematic *Doc, QMouseEvent *Event)
 // -----------------------------------------------------------
 void MouseActions::paintElementsScheme(Schematic *p)
 { untested();
-  for(auto pe = movingElements.first(); pe != 0; pe = movingElements.next())
+  for(auto pe=movingElements.first(); pe != 0; pe = movingElements.next()){
     pe->paintScheme(p);
+  }
 }
 
 // -----------------------------------------------------------
@@ -1834,10 +1832,9 @@ void MouseActions::moveElements(Schematic *Doc, int& x1, int& y1)
 { untested();
   incomplete();
 #if 0
-  Element *pe;
   Doc->setOnGrid(x1, y1);
 
-  for(pe=movingElements.first(); pe!=0; pe=movingElements.next()) { untested();
+  for(auto pe=movingElements.first(); pe!=0; pe=movingElements.next()) { untested();
     auto L=dynamic_cast<WireLabel*>(pe);
     if(pe->Type & isLabel) { untested();
       assert(L);
@@ -1857,10 +1854,9 @@ void MouseActions::rotateElements(Schematic *Doc, int& x1, int& y1)
   incomplete();
 #if 0
   int x2, y2;
-  Element *pe;
   Doc->setOnGrid(x1, y1);
 
-  for(pe = movingElements.first(); pe != 0; pe = movingElements.next()) { untested();
+  for(auto pe=movingElements.first(); pe != 0; pe = movingElements.next()) { untested();
     auto W=dynamic_cast<Wire*>(pe);
     switch(pe->Type) {
     case isComponent:
@@ -1901,11 +1897,10 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
   QFileInfo Info(Doc->DocName);
   //QPainter painter(Doc->viewport());
 
-  Element *pe;
   switch(Event->button()) {
   case Qt::LeftButton :
     // insert all moved elements into document
-    for(pe = movingElements.first(); pe!=0; pe = movingElements.next()) { untested();
+    for(auto pe = movingElements.first(); pe!=0; pe = movingElements.next()) { untested();
       pe->setSelected(false);
       switch(pe->Type) {
 	case isWire:
@@ -1929,7 +1924,8 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 	  Doc->enlargeView(x1, y1, x2, y2);
 	  break;
 	case isMovingLabel:
-	  pe->Type = isNodeLabel;
+	  incomplete();
+//	  pe->Type = isNodeLabel;
 	  Doc->placeNodeLabel((WireLabel*)pe);
 	  break;
 	case isComponent:

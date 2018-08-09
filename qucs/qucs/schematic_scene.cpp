@@ -152,6 +152,11 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 	}
 }
 
+void ElementGraphics::paintScheme(Schematic *p)
+{
+  	assert(_e);
+	_e->paintScheme(p);
+}
 
 
 #endif
