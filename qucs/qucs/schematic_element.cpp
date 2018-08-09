@@ -1781,8 +1781,20 @@ void Schematic::newMovingWires(Q3PtrList<Element> *p, Node *pn, int pos)
 // BUG: does not (only) copy, as the name suggests.
 //      cannot be used to make copies.
 // returns the number of "copied" _Markers_ only
-int Schematic::copySelectedElements(Q3PtrList<Element> *p)
-{
+int Schematic::copySelectedElements(Q3PtrList<ElementGraphics> *p)
+{ untested();
+#ifndef USE_SCROLLVIEW
+    assert(scene());
+    for(auto i : scene()->selectedItems()){
+	if(auto x=dynamic_cast<ElementGraphics*>(i)){
+	    p->append(x);
+	}else{
+	    unreachable();
+	}
+    }
+
+    return 0;
+#else // does not work with ElementGraphics
     int i, count = 0;
     Component *pc;
     Wire      *pw;
@@ -1938,6 +1950,7 @@ int Schematic::copySelectedElements(Q3PtrList<Element> *p)
         }
 
     return count;
+#endif
 }
 
 // ---------------------------------------------------
