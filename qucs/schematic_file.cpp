@@ -753,11 +753,10 @@ bool Schematic::loadDiagrams(QTextStream *stream, DiagramList *List)
 
 // -------------------------------------------------------------
 // obsolete. see qt5 rework
-bool Schematic::loadPaintings(QTextStream *stream, PaintingList* List)
+bool PaintingList::load(QTextStream *stream)
 {
   incomplete();
   (void) stream;
-  (void) List;
   return false;
 }
 
@@ -888,7 +887,7 @@ bool Schematic::rebuildSymbol(QString *s)
   Line = stream.readLine();  // skip components
   Line = stream.readLine();  // skip wires
   Line = stream.readLine();  // skip diagrams
-  if(!loadPaintings(&stream, &SymbolPaints)) return false;
+  if(!symbolPaintings().load(&stream)) return false;
 
   return true;
 }
