@@ -2619,8 +2619,10 @@ void Schematic::insertRawComponent(Component *c, bool noOptimize)
     insertComponentNodes(c, noOptimize);
     components().append(c);
 
+#ifndef USE_SCROLLVIEW
     // huh, where is the original EG?
     scene()->addItem(new ElementGraphics(c));
+#endif
 
     // a ground symbol erases an existing label on the wire line
     if(c->obsolete_model_hack() == "GND") { // BUG.
