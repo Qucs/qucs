@@ -175,8 +175,6 @@ void MouseActions::editLabel(Schematic *Doc, WireLabel *pl)
 // Reinserts all elements (moved by the user) back into the schematic.
 void MouseActions::endElementMoving(Schematic *Doc, EGPList *movElements)
 { untested();
-  incomplete();
-#if 0
   for(auto pe=movElements->first(); pe!=0; pe=movElements->next()) { untested();
 //    pe->setSelected(false);  // deselect first (maybe afterwards pe == NULL)
     switch(pe->Type) { // FIXME: use casts.
@@ -225,15 +223,12 @@ void MouseActions::endElementMoving(Schematic *Doc, EGPList *movElements)
   Doc->enlargeView(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
   Doc->viewport()->update();
   drawn = false;
-#endif
 }
 
 // -----------------------------------------------------------
 // Moves elements in "movElements" by x/y
 void MouseActions::moveElements(EGPList *movElements, int x, int y)
 { untested();
-  incomplete();
-#if 0
   Wire *pw;
   for(auto pe=movElements->first(); pe!=0; pe=movElements->next()) { untested();
     if(pe->Type == isWire) { untested();
@@ -268,7 +263,6 @@ void MouseActions::moveElements(EGPList *movElements, int x, int y)
     }
     else pe->setCenter(x, y, true);
   }
-#endif
 }
 
 
@@ -486,10 +480,9 @@ void MouseActions::MMoveResizePainting(Schematic *Doc, QMouseEvent *Event)
 void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
 {
   setPainter(Doc);
-  incomplete();
-#if 0
 
   Set2(Event, Doc);
+
   Doc->setOnGrid(MAx2, MAy2);
   MAx3 = MAx1 = MAx2 - MAx1;
   MAy3 = MAy1 = MAy2 - MAy1;
@@ -536,7 +529,6 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
   QucsMain->MouseMoveAction = &MouseActions::MMoveMoving2;
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseMoving;
 
-#endif
 }
 
 // -----------------------------------------------------------
@@ -546,8 +538,6 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
   setPainter(Doc);
 
   Set2(Event, Doc);
-  incomplete();
-#if 0
 
   if(drawn) // erase old scheme
     for(auto pe=movingElements.first(); pe != 0; pe = movingElements.next())
@@ -574,7 +564,6 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
 
   MAx1 = MAx2;
   MAy1 = MAy2;
-#endif
 }
 
 
@@ -1843,8 +1832,6 @@ void MouseActions::paintElementsScheme(Schematic *p)
 // -----------------------------------------------------------
 void MouseActions::moveElements(Schematic *Doc, int& x1, int& y1)
 { untested();
-  incomplete();
-#if 0
   Doc->setOnGrid(x1, y1);
 
   for(auto pe=movingElements.first(); pe!=0; pe=movingElements.next()) { untested();
@@ -1858,7 +1845,6 @@ void MouseActions::moveElements(Schematic *Doc, int& x1, int& y1)
       pe->setCenter(x1, y1, true);
     }
   }
-#endif
 }
 
 // -----------------------------------------------------------
