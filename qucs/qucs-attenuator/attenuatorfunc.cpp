@@ -81,7 +81,7 @@ int QUCS_Att::Calc(tagATT *ATT)
         //Power dissipation
         ATT->PR1 = ATT->Pin*(ATT->R1/ATT->Zin);//[W]
         ATT->PR2 = ATT->Pin*(pow(ATT->R1-ATT->Zin,2))/(ATT->R2*ATT->Zin);//[W]
-        ATT->PR2 = ATT->Pin*(ATT->R3*pow(ATT->R1+ATT->R2-ATT->Zin,2)/(ATT->Zin*ATT->R2*ATT->R2));//[W]
+        ATT->PR3 = ATT->Pin*(ATT->R3*pow(ATT->R1+ATT->R2-ATT->Zin,2)/(ATT->Zin*ATT->R2*ATT->R2));//[W]
 	    break;
 	  }
 	case BRIDGE_TYPE:
@@ -138,7 +138,7 @@ int QUCS_Att::Calc(tagATT *ATT)
          ATT->R4 = 0.25*C0/ATT->freq;//lambda/4
          //Power dissipation.
          ATT->PR1 = ATT->Pin*ATT->R1*ATT->Zin/pow(ATT->R1 + ATT->Zin,2);
-         ATT->PR2 = ATT->Pin*ATT->Zin*ATT->Zin/pow(ATT->R1 + ATT->Zin,2);
+         ATT->PR2 = ATT->Pin*ATT->R1*ATT->R1/pow(ATT->R1 + ATT->Zin,2);
          ATT->PR3 = ATT->PR1;
          break;
       }

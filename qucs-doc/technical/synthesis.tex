@@ -609,17 +609,17 @@ V_1 = \sqrt{P_{shunt} \cdot R_{eq}} = \sqrt{P_{shunt} \cdot \left( \dfrac{R \cdo
 \noindent So, the power dissipation formulae for $R_2$ and $R_3$ are given by:
 
 \begin{equation}
-P_{R2} = \dfrac{V_1^2}{Z_0} = \dfrac{\dfrac{R \cdot \sqrt{P_{in} \cdot Z_0}}{R + Z_0}}{Z_0} = P_{in} \cdot \dfrac{R \cdot Z_0}{(R + Z_0)^2}
+P_{R2} = \dfrac{V_1^2}{Z_0} = \dfrac{\dfrac{R \cdot \sqrt{P_{in} \cdot Z_0}}{R + Z_0}}{Z_0} = P_{in} \cdot \dfrac{R^2}{(R + Z_0)^2}
 \end{equation}
 
 \begin{equation}
-P_{R3} = \dfrac{V_1^2}{R} = \dfrac{\dfrac{R \cdot \sqrt{P_{in} \cdot Z_0}}{R + Z_0}}{R} = P_{in} \cdot \dfrac{R^2}{(R + Z_0)^2}
+P_{R3} = \dfrac{V_1^2}{R} = \dfrac{\dfrac{R \cdot \sqrt{P_{in} \cdot Z_0}}{R + Z_0}}{R} = P_{in} \cdot \dfrac{R \cdot Z_0}{(R + Z_0)^2}
 \end{equation}
 
 \noindent The mean current flowing through the shunt branch is $I_{1} = \dfrac{V_{in}}{Z_{TL}}$ and the current delivered by the source is $I_{in} = \sqrt{\dfrac{P_{in}}{Z_{TL}}}$. Thus, the current delivered to $R_1$ and to the load is $I_{2} = I_{in} - I_{1}$ and the power dissipated by $R_2$ is given by:
 
 \begin{equation}
-P_{R1} = P_{R2} = I_{2}^2 \cdot R = P_{in} \cdot \dfrac{R \cdot Z_0}{(R + Z_0)^2}
+P_{R1} = P_{R3} = I_{2}^2 \cdot R = P_{in} \cdot \dfrac{R \cdot Z_0}{(R + Z_0)^2}
 \end{equation}
 
 \clearpage
