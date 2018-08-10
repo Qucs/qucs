@@ -2617,6 +2617,9 @@ void Schematic::insertRawComponent(Component *c, bool noOptimize)
     insertComponentNodes(c, noOptimize);
     Components->append(c);
 
+    // huh, where is the original EG?
+    scene()->addItem(new ElementGraphics(c));
+
     // a ground symbol erases an existing label on the wire line
     if(c->obsolete_model_hack() == "GND") { // BUG.
         c->gnd_obsolete_model_override_hack("x");
