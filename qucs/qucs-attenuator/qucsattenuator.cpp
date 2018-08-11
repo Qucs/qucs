@@ -221,6 +221,7 @@ QucsAttenuator::QucsAttenuator()
   //Option for the Reflection attenuator
   minR_Reflection_Att = new QCheckBox("Use R > Z0");
   minR_Reflection_Att->hide();
+  connect(minR_Reflection_Att, SIGNAL(stateChanged(int)), this, SLOT(slotCalculate()));
   inGrid->addWidget(minR_Reflection_Att, 6,0);
 
   //Option for transforming a quarter wavelength transmission line into its lumped element equivalent
