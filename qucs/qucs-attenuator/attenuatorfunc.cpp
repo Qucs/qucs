@@ -108,9 +108,10 @@ int QUCS_Att::Calc(tagATT *ATT)
             ATT->R1 = ATT->Zin*(L + 1)/(L - 1);
          else
             ATT->R1 = ATT->Zin*(L - 1)/(L + 1);
+
          ATT->R2 = ATT->R1;
          //Power dissipation. Both resistors dissipate the same power
-         ATT->PR1 = 0.5*ATT->Pin*(1-pow(abs((ATT->Zin-ATT->R1)/(ATT->Zin+ATT->R1)),2));
+         ATT->PR1 = 0.5*ATT->Pin*(1-pow(fabs((ATT->Zin-ATT->R1)/(ATT->Zin+ATT->R1)),2));
          ATT->PR2 = ATT->PR1;
          break;
       }
