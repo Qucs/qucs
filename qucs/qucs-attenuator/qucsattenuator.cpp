@@ -459,7 +459,9 @@ void QucsAttenuator::slotTopologyChanged()
       lineEdit_R4->hide();
       LabelR4_Ohm->hide();
       LabelR3_Ohm->show();
+      lineEdit_R3_Pdiss->show();
       lineEdit_R4_Pdiss->hide();
+      ComboR3_PowerUnits->show();
       ComboR4_PowerUnits->hide();
       minR_Reflection_Att->hide();
       Check_QW_CLC->hide();
@@ -481,7 +483,9 @@ void QucsAttenuator::slotTopologyChanged()
       lineEdit_R4->hide();
       LabelR4_Ohm->hide();
       LabelR3_Ohm->show();
+      lineEdit_R3_Pdiss->show();
       lineEdit_R4_Pdiss->hide();
+      ComboR3_PowerUnits->show();
       ComboR4_PowerUnits->hide();
       minR_Reflection_Att->hide();
       Check_QW_CLC->hide();
