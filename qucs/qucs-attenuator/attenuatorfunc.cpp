@@ -25,8 +25,11 @@
 #endif
 
 #include "attenuatorfunc.h"
-
 #include <QString>
+
+// References:
+// [1] RF design guide. Systems, circuits, and equations. Peter Vizmuller. Artech House, 1995
+// [2] The PIN diode circuit designer's handbook. W.E. Doherty, Jr., R.D. Joos, Microsemi Corp., 1998
 
 QUCS_Att::QUCS_Att(){}
 QUCS_Att::~QUCS_Att(){}
@@ -62,7 +65,7 @@ int QUCS_Att::Calc(tagATT *ATT)
 	{
 	case PI_TYPE:
 	  {
-        //Design equations
+        //Design equations [1]
 	    ATT->R2 = ((L - 1) / 2) * sqrt(ATT->Zin * ATT->Zout / L);
 	    ATT->R1 = 1 / (((A / ATT->Zin)) - (1 / ATT->R2));
 	    ATT->R3 = 1 / (((A / ATT->Zout)) - (1 / ATT->R2));
@@ -74,7 +77,7 @@ int QUCS_Att::Calc(tagATT *ATT)
 	  }
 	case TEE_TYPE:
 	  {
-        //Design equations
+        //Design equations [1]
 	    ATT->R2 = (2 * sqrt(L * ATT->Zin * ATT->Zout)) / (L - 1);
 	    ATT->R1 = ATT->Zin * A - ATT->R2;
 	    ATT->R3 = ATT->Zout * A - ATT->R2;
@@ -86,7 +89,7 @@ int QUCS_Att::Calc(tagATT *ATT)
 	  }
 	case BRIDGE_TYPE:
 	  {
-        //Design equations
+        //Design equations [1]
         L = pow(10, 0.05*ATT->Attenuation);
 	    ATT->R1 = ATT->Zin * (L - 1);
         ATT->R2 = ATT->Zin / (L - 1);
@@ -102,7 +105,7 @@ int QUCS_Att::Calc(tagATT *ATT)
 	  }
       case REFLECTION_TYPE:
       {
-         //Design equations
+         //Design equations [2]
          L = pow(10, 0.05*ATT->Attenuation);
          if (ATT->minR)
             ATT->R1 = ATT->Zin*(L + 1)/(L - 1);
@@ -117,7 +120,7 @@ int QUCS_Att::Calc(tagATT *ATT)
       }
       case QW_SERIES_TYPE:
       {
-         //Design equations
+         //Design equations [2]
          L = pow(10, 0.05*ATT->Attenuation);
          ATT->R1  = ATT->Zin/(L-1);
          ATT->R2 = ATT->Zin;
@@ -131,7 +134,7 @@ int QUCS_Att::Calc(tagATT *ATT)
       }
       case QW_SHUNT_TYPE:
       {
-         //Design equations
+         //Design equations [2]
          L = pow(10, 0.05*ATT->Attenuation);
          ATT->R1  = ATT->Zin*(L-1);
          ATT->R2 = ATT->Zin;
