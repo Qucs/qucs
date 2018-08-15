@@ -47,6 +47,14 @@
 #include <QRadioButton>
 #include <QVBoxLayout>
 
+#define LSECTION           0
+#define SINGLESTUB         1
+#define DOUBLESTUB         2
+#define MULTISTAGEL4       3
+#define CASCADEDLSECTIONS  4
+#define L8L4               5
+
+
 MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   setWindowTitle(tr("Create Matching Circuit"));
   DoubleVal = new QDoubleValidator(this);
@@ -496,42 +504,66 @@ void MatchDialog::slotSetTwoPort(bool on) {
 // This function is called when a new topology is selected. According to the
 // index selected, it makes visible (or invisible) certain window components.
 void MatchDialog::slotChangeMode_TopoCombo() {
-  if ((TopoCombo->currentIndex() == 1) ||
-      (TopoCombo->currentIndex() == 2)) // Single/Double stub selected
-  {
-    ShortRadioButton->setVisible(true);
-    OpenRadioButton->setVisible(true);
-    OpenRadioButton->setChecked(true);
-    BalancedCheck->setEnabled(true);
-  } else {
-    ShortRadioButton->setVisible(false);
-    OpenRadioButton->setVisible(false);
-    BalancedCheck->setEnabled(false);
-  }
-  if ((TopoCombo->currentIndex() != 0) &&
-      (TopoCombo->currentIndex() != 4)) // Obviously, the microstrip
-                                        // implementation panel cannot be used
-                                        // when LC is selected
-  {
-    MicrostripCheck->setEnabled(true);
-  } else {
-    MicrostripCheck->setEnabled(false);
-  }
 
-  if (TopoCombo->currentIndex() == 3)
-    Weighting_groupBox->setVisible(true); // Cascaded lambda/4 sections selected
-  else
-    Weighting_groupBox->setVisible(false);
-
-  if ((TopoCombo->currentIndex() == 4) ||
-      (TopoCombo->currentIndex() == 3)) // Cascaded LC sections selected
-  {
-    OrderLabel->setVisible(true);
-    OrderEdit->setVisible(true);
-  } else {
-    OrderLabel->setVisible(false);
-    OrderEdit->setVisible(false);
-  }
+    switch(TopoCombo->currentIndex())
+    {
+       case LSECTION:
+        ShortRadioButton->setVisible(false);
+        OpenRadioButton->setVisible(false);
+        BalancedCheck->setEnabled(false);
+        MicrostripCheck->setEnabled(false);
+        Weighting_groupBox->setVisible(false);
+        OrderLabel->setVisible(false);
+        OrderEdit->setVisible(false);
+        break;
+       case SINGLESTUB:
+        ShortRadioButton->setVisible(true);
+        OpenRadioButton->setVisible(true);
+        OpenRadioButton->setChecked(true);
+        BalancedCheck->setEnabled(true);
+        MicrostripCheck->setEnabled(true);
+        Weighting_groupBox->setVisible(false);
+        OrderLabel->setVisible(false);
+        OrderEdit->setVisible(false);
+        break;
+       case DOUBLESTUB:
+        ShortRadioButton->setVisible(true);
+        OpenRadioButton->setVisible(true);
+        OpenRadioButton->setChecked(true);
+        BalancedCheck->setEnabled(true);
+        MicrostripCheck->setEnabled(true);
+        Weighting_groupBox->setVisible(false);
+        OrderLabel->setVisible(false);
+        OrderEdit->setVisible(false);
+        break;
+       case MULTISTAGEL4:
+        ShortRadioButton->setVisible(false);
+        OpenRadioButton->setVisible(false);
+        BalancedCheck->setEnabled(false);
+        MicrostripCheck->setEnabled(true);
+        Weighting_groupBox->setVisible(true);
+        OrderLabel->setVisible(true);
+        OrderEdit->setVisible(true);
+        break;
+       case CASCADEDLSECTIONS:
+        ShortRadioButton->setVisible(false);
+        OpenRadioButton->setVisible(false);
+        BalancedCheck->setEnabled(false);
+        MicrostripCheck->setEnabled(false);
+        Weighting_groupBox->setVisible(false);
+        OrderLabel->setVisible(true);
+        OrderEdit->setVisible(true);
+        break;
+       case L8L4:
+        ShortRadioButton->setVisible(false);
+        OpenRadioButton->setVisible(false);
+        BalancedCheck->setEnabled(false);
+        MicrostripCheck->setEnabled(true);
+        Weighting_groupBox->setVisible(false);
+        OrderLabel->setVisible(false);
+        OrderEdit->setVisible(false);
+        break;
+    }
 }
 
 // -----------------------------------------------------------------------
