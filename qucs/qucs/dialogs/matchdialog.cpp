@@ -808,70 +808,171 @@ void MatchDialog::z2r(double &Real, double &Imag, double Z0) {
   Imag *= 2.0 * Z0 / tmp;
 }
 
+// This function retrieves the path schematic image of the L-section matching according to the
+// reactance and susceptance values.
+// first_series: Indicates if the first element is place in series
+// X           : Reactance
+// B           : Susceptance
+QString MatchDialog::getImageFrom_XB(bool first_series, double X, double B)
+{
+  if (first_series == true)//First series, Z0 < ZL
+  {
+      if (X < 0)//Series capacitor
+      {
+          if (B < 0)
+              return ":/bitmaps/matching/CSLP.png";
+          else
+              return ":/bitmaps/matching/CSCP.png";
+      }
+      else//Series inductor
+      {
+          if (B < 0)
+              return ":/bitmaps/matching/LSLP.png";
+          else
+              return ":/bitmaps/matching/LSCP.png";
+      }
+  }
+  else//First shunt, Z0 > ZL
+  {
+      if (B < 0)//Shunt inductor
+      {
+          if (X > 0)
+              return ":/bitmaps/matching/LPLP.png";
+          else
+              return ":/bitmaps/matching/LPCP.png";
+      }
+      else//Shunt inductor
+      {
+          if (X > 0)
+              return ":/bitmaps/matching/CPLP.png";
+          else
+              return ":/bitmaps/matching/CPCP.png";
+      }
+  }
+}
+
 // -----------------------------------------------------------------------
 // This function calculates a LC matching section
+// Reference:
+// Microwave Circuit Design Using Linear and Nonlinear Techniques. George D. Vendelin,
+// Antonio M. Pavio, Ulrich P. Rohde. 2nd Edition. p. 251-252. Wiley
 QString MatchDialog::calcMatchingLC(double r_real, double r_imag, double Z0,
-                                    double Freq) {
-  double Zreal = r_real, Zimag = r_imag;
-  r2z(Zreal, Zimag, Z0);
+                                    double f0) {
+  double RL = r_real, XL = r_imag;
+  r2z(RL, XL, Z0);
 
-  if (Zreal < 0.0) {
-    if (Zreal < -1e-13) {
+  if (RL < 0.0) {
+    if (RL < -1e-13) {
       QMessageBox::critical(
           0, tr("Error"),
           tr("Real part of impedance must be greater zero,\nbut is %1 !")
-              .arg(Zreal));
+              .arg(RL));
       return QString(""); // matching not possible
     }
 
     // In high-Q circuits, Zreal often becomes somewhat about -1e-16
     // because of numerical inaccuracy.
-    Zreal = 0.0;
+    RL = 0.0;
   }
 
-  double X1, X2, Omega = 2.0 * pi * Freq;
-  QString Str;
+  double w0 = 2.0 * pi * f0;
+  double X1, X2, B1, B2;
+  double L, C, X, B;
+  int solution;
+  QString laddercode = "";
+
   if (r_real < 0) {
-    // ...................................................
-    // first serial than parallel component (possible if Zreal <= Z0)
-    Str = "sp";
-    X1 = sqrt(Zreal * (Z0 - Zreal));
-    if (Zimag < 0.0)
-      X1 *= -1.0; // always use shortest matching path
-    X1 -= Zimag;
+    // Z0 > ZL
+    // ZS -------- X -- ZL
+    //       |
+    //       B
+    //       |
+    //      ---
 
-    // parallel component
-    X2 = (Zimag + X1) / (Zreal * Zreal + (Zimag + X1) * (Zimag + X1));
+    // Solution 1
+      X1 = sqrt(RL*(Z0-RL))-XL;
+      B1 = sqrt((Z0-RL)/RL)/Z0;
+    // Solution 2
+      X2 = -sqrt(RL*(Z0-RL))-XL;
+      B2 = -sqrt((Z0-RL)/RL)/Z0;
+
+    QMessageBox msgBox;
+    msgBox.setText("L-section design");
+    msgBox.setInformativeText("Please select a solution");
+    //Add buttons
+    //Solution 1
+    QAbstractButton* Solution1_button = msgBox.addButton(tr(""), QMessageBox::AcceptRole);
+    Solution1_button->setIcon(QIcon(getImageFrom_XB(false, X1, B1)));
+    Solution1_button->setIconSize(QSize(300, 300));
+
+    //Solution 2
+    QAbstractButton* Solution2_button = msgBox.addButton(tr(""), QMessageBox::RejectRole);
+    Solution2_button->setIcon(QIcon(getImageFrom_XB(false, X2, B2)));
+    Solution2_button->setIconSize(QSize(300, 300));
+
+    msgBox.setDefaultButton(QMessageBox::SaveAll);
+    solution = msgBox.exec();
+
+
+    if (solution == 0) X = X1, B = B1;
+    else               X = X2, B = B2;
+
+
+    if (B < 0)  //Capacitor
+        C = B/w0,         laddercode += QString("CP:%1;").arg(C);
+    else        //Inductor
+        L = -1/(w0*B),    laddercode += QString("LP:%1;").arg(L);
+
+    if (X < 0)  //Capacitor
+        C = -1/(w0*X),    laddercode += QString("CS:%1;").arg(C);
+    else        //Inductor
+        L = X/w0,         laddercode += QString("LS:%1;").arg(L);
+
   } else {
+      // Z0 < ZL
+      // ZS --- X  ------- ZL
+      //              |
+      //              B
+      //              |
+      //             ---
 
-    Str = "ps";
-    X1 = Zreal + Zimag * Zimag / Zreal - Z0;
-    // ...................................................
-    // first parallel than serial component (possible if X >= 0.0)
-    X1 = sqrt(Z0 * X1);
-    if (Zimag > 0.0)
-      X1 *= -1.0; // always use shortest matching path
+    // Solution 1
+      B1 = (XL + sqrt(RL/Z0)*sqrt(RL*RL + XL*XL - Z0*RL))/(RL*RL + XL*XL);
+      X1 = 1/B1 + XL*Z0/RL - Z0/(B1*RL);
+    // Solution 2
+      B2 = (XL - sqrt(RL/Z0)*sqrt(RL*RL + XL*XL - Z0*RL))/(RL*RL + XL*XL);
+      X2 = 1/B2 + XL*Z0/RL - Z0/(B2*RL);
 
-    // parallel component
-    X2 = Zimag / (Zreal * Zreal + Zimag * Zimag) + X1 / (Z0 * Z0 + X1 * X1);
+    QMessageBox msgBox;
+    msgBox.setText("L-section design");
+    msgBox.setInformativeText("Please select a solution");
+    //Add buttons
+    //Solution 1
+    QAbstractButton* Solution1_button = msgBox.addButton(tr(""), QMessageBox::AcceptRole);
+    Solution1_button->setIcon(QIcon(getImageFrom_XB(true, X1, B1)));
+    Solution1_button->setIconSize(QSize(300, 300));
+
+    //Solution 2
+    QAbstractButton* Solution2_button = msgBox.addButton(tr(""), QMessageBox::RejectRole);
+    Solution2_button->setIcon(QIcon(getImageFrom_XB(true, X2, B2)));
+    Solution2_button->setIconSize(QSize(300, 300));
+
+    solution = msgBox.exec();
+
+    if (solution == 0) X = X1, B = B1;
+    else               X = X2, B = B2;
+
+    if (X < 0)  //Capacitor
+        C = -1/(w0*X),         laddercode += QString("CS:%1;").arg(C);
+    else        //Inductor
+        L = X/w0,              laddercode += QString("LS:%1;").arg(L);
+
+    if (B > 0)  //Capacitor
+        C = B/w0,              laddercode += QString("CP:%1;").arg(C);
+    else        //Inductor
+        L = -1/(w0*B),         laddercode += QString("LP:%1;").arg(L);
   }
 
-  // Circuit topology and values
-  QString laddercode = "", series_element, shunt_element;
-  // serial component
-  if (X1 < 0.0) // capacitance ?
-    series_element = QString("CS:%1;").arg(-1.0 / Omega / X1);
-  else // inductance
-    series_element = QString("LS:%1;").arg(X1 / Omega);
-
-  // parallel component
-  if (X2 < 0.0) // inductance ?
-    shunt_element = QString("LP:%1;").arg(-1.0 / Omega / X2);
-  else // capacitance
-    shunt_element = QString("CP:%1;").arg(X2 / Omega);
-
-  (r_real < 0) ? laddercode = shunt_element + series_element
-               : laddercode = series_element + shunt_element;
   return laddercode;
 }
 

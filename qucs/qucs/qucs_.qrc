@@ -245,5 +245,13 @@
         <file>bitmaps/hicolor/128x128/apps/qucs.png</file>
         <file>bitmaps/smallsave.xpm</file>
         <file>bitmaps/empty.xpm</file>
+        <file>bitmaps/matching/CPCS.png</file>
+        <file>bitmaps/matching/CPLS.png</file>
+        <file>bitmaps/matching/CSCP.png</file>
+        <file>bitmaps/matching/CSLP.png</file>
+        <file>bitmaps/matching/LPCS.png</file>
+        <file>bitmaps/matching/LPLS.png</file>
+        <file>bitmaps/matching/LSCP.png</file>
+        <file>bitmaps/matching/LSLP.png</file>
     </qresource>
 </RCC>

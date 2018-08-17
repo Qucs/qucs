@@ -94,6 +94,7 @@ public:
   //-------------------------------------------------------------------------------------------------------
   // These functions calculate the specified matching network and and generate
   // the circuit description code
+  QString getImageFrom_XB(bool, double, double);
   QString calcMatchingLC(double, double, double, double);
   QString calcMatchingCascadedLCSections(double, double, double, double, int);
   QString calcSingleStub(double, double, double, double, bool, bool);
