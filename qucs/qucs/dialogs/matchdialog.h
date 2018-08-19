@@ -53,6 +53,20 @@ struct tSubstrate {
   double minWidth, maxWidth;
 };
 
+enum NETWORK_TYPE{TWO_PORT_INPUT, TWO_PORT_OUTPUT, SINGLE_PORT};
+
+struct NetworkParams {
+  double S11real, S11imag, S12real, S12imag, S21real, S21imag, S22real, S22imag;
+  double Z1, Z2, freq;
+  bool BalancedStubs, micro_syn, SP_block, open_short;
+  int order;
+  double gamma_MAX;
+  double r_real, r_imag;
+  tSubstrate Substrate;
+  NETWORK_TYPE network;
+  double DetReal, DetImag;
+};
+
 static const double Z_FIELD = 376.73031346958504364963;
 static const double SPEED_OF_LIGHT = 299792458.0;
 
@@ -83,8 +97,7 @@ public:
   static void r2z(double &, double &, double);
   static void z2r(double &, double &, double);
 
-  bool calcMatchingCircuit(double, double, double, double, bool, bool, bool,
-                           tSubstrate, int, double, bool);
+  bool calcMatchingCircuit(struct NetworkParams);
   enum SchematicCode {
     SNG_PORT,
     SNG_PORT_SPAR_SIM,
@@ -95,20 +108,17 @@ public:
   // These functions calculate the specified matching network and and generate
   // the circuit description code
   QString getImageFrom_XB(bool, double, double);
-  QString calcMatchingLC(double, double, double, double);
-  QString calcMatchingCascadedLCSections(double, double, double, double, int);
-  QString calcSingleStub(double, double, double, double, bool, bool);
-  QString calcDoubleStub(double, double, double, double, bool, bool);
-  QString calcMatchingLambda8Lambda4(double, double, double, double);
-  QString calcBinomialLines(double, double, double, int, double);
-  QString calcChebyLines(double, double, double, double, int, double);
+  QString calcMatchingLC(struct NetworkParams);
+  QString calcMatchingCascadedLCSections(struct NetworkParams);
+  QString calcSingleStub(struct NetworkParams);
+  QString calcDoubleStub(struct NetworkParams);
+  QString calcMatchingLambda8Lambda4(struct NetworkParams);
+  QString calcBinomialLines(struct NetworkParams);
+  QString calcChebyLines(struct NetworkParams);
   //--------------------------------------------------------------------------------------------------------
 
-  QString calcBiMatch(double, double, double, double, double, double, double,
-                      double, bool, double, int, bool);
-  bool calc2PortMatch(double, double, double, double, double, double, double,
-                      double, double, bool, bool, bool, tSubstrate, int, double,
-                      bool);
+  QString calcBiMatch(struct NetworkParams);
+  bool calc2PortMatch(struct NetworkParams);
 
   void SchematicParser(QString, int &, double, tSubstrate,
                        bool); // This function convert the circuit description

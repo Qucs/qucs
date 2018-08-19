@@ -492,7 +492,7 @@ void MatchDialog::slotSetTwoPort(bool on) {
     set2PortWidgetsVisible(true);
   } else {
     S11Label->setText(tr("Reflexion Coefficient"));
-    S21Label->setText(tr("Impedance (Ohms)"));
+    S21Label->setText(QString("Impedance (%1)").arg(QChar(0xA9, 0x03)));
     set2PortWidgetsVisible(false);
     // save S21 values, as these will be overwritten with the impedance value
     tmpS21mag = S21magEdit->text().toDouble();
@@ -707,69 +707,67 @@ void MatchDialog::setS22LineEdits(double Real, double Imag) {
 
 // -----------------------------------------------------------------------
 // Is called if the "Create"-button is pressed.
-void MatchDialog::slotButtCreate() {
-  double Z1 = Ref1Edit->text().toDouble(); // Port 1 impedance
-  double Z2 = Ref2Edit->text().toDouble(); // Port 2 impedance
-  double Freq = FrequencyEdit->text().toDouble() *
+void MatchDialog::slotButtCreate() {  
+  struct NetworkParams params;
+
+  params.Z1 = Ref1Edit->text().toDouble(); // Port 1 impedance
+  params.Z2 = Ref2Edit->text().toDouble(); // Port 2 impedance
+  params.freq = FrequencyEdit->text().toDouble() *
                 pow(10.0, 3.0 * UnitCombo->currentIndex());
 
   // S matrix
-  double S11real = S11magEdit->text().toDouble();
-  double S11imag = S11degEdit->text().toDouble();
-  double S12real = S12magEdit->text().toDouble();
-  double S12imag = S12degEdit->text().toDouble();
-  double S21real = S21magEdit->text().toDouble();
-  double S21imag = S21degEdit->text().toDouble();
-  double S22real = S22magEdit->text().toDouble();
-  double S22imag = S22degEdit->text().toDouble();
+  params.S11real = S11magEdit->text().toDouble();
+  params.S11imag = S11degEdit->text().toDouble();
+  params.S12real = S12magEdit->text().toDouble();
+  params.S12imag = S12degEdit->text().toDouble();
+  params.S21real = S21magEdit->text().toDouble();
+  params.S21imag = S21degEdit->text().toDouble();
+  params.S22real = S22magEdit->text().toDouble();
+  params.S22imag = S22degEdit->text().toDouble();
+
   if (FormatCombo->currentIndex()) { // are they polar ?
-    p2c(S11real, S11imag);
-    p2c(S12real, S12imag);
-    p2c(S21real, S21imag);
-    p2c(S22real, S22imag);
+    p2c(params.S11real, params.S11imag);
+    p2c(params.S12real, params.S12imag);
+    p2c(params.S21real, params.S21imag);
+    p2c(params.S22real, params.S22imag);
   }
 
-  bool BalancedStubs = BalancedCheck->isChecked();
-  bool micro_syn = MicrostripCheck->isChecked(); // Microstrip implementation?
-  bool SP_block = AddSPBlock->isChecked();       // Add S-parameter block?
-  bool open_short =
+  params.BalancedStubs = BalancedCheck->isChecked();
+  params.micro_syn = MicrostripCheck->isChecked(); // Microstrip implementation?
+  params.SP_block = AddSPBlock->isChecked();       // Add S-parameter block?
+  params.open_short =
       OpenRadioButton
           ->isChecked(); // Open stub or short circuit stub configuration
-  int order = OrderEdit->text().toInt() +
+  params.order = OrderEdit->text().toInt() +
               1; // Order of the multisection lambda/4 matching
   bool success = true;
-  double gamma_MAX =
+  params.gamma_MAX =
       MaxRippleEdit->text()
           .toDouble(); // Maximum ripple (Chebyshev weighting only)
 
-  tSubstrate Substrate;
-  if (micro_syn) // In case microstrip implementation is selected. This reads
+
+  if (params.micro_syn) // In case microstrip implementation is selected. This reads
                  // the substrate properties given by the user
   {
-    Substrate.er = RelPermCombo->currentText().section("  ", 0, 0).toDouble();
-    Substrate.height = SubHeightEdit->text().toDouble() / 1e3;
-    Substrate.thickness = thicknessEdit->text().toDouble() / 1e6;
-    Substrate.tand = tanDEdit->text().toDouble();
-    Substrate.resistivity = ResistivityEdit->text().toDouble();
-    Substrate.roughness = 0.0;
-    Substrate.minWidth = minWEdit->text().toDouble() / 1e3;
-    Substrate.maxWidth = maxWEdit->text().toDouble() / 1e3;
+    params.Substrate.er = RelPermCombo->currentText().section("  ", 0, 0).toDouble();
+    params.Substrate.height = SubHeightEdit->text().toDouble() / 1e3;
+    params.Substrate.thickness = thicknessEdit->text().toDouble() / 1e6;
+    params.Substrate.tand = tanDEdit->text().toDouble();
+    params.Substrate.resistivity = ResistivityEdit->text().toDouble();
+    params.Substrate.roughness = 0.0;
+    params.Substrate.minWidth = minWEdit->text().toDouble() / 1e3;
+    params.Substrate.maxWidth = maxWEdit->text().toDouble() / 1e3;
   }
 
   if (TwoCheck->isChecked()) { // two-port matching ?
     // determinant of S-parameter matrix
-    double DetReal = S11real * S22real - S11imag * S22imag - S12real * S21real +
-                     S12imag * S21imag;
-    double DetImag = S11real * S22imag + S11imag * S22real - S12real * S21imag -
-                     S12imag * S21real;
-    success =
-        calc2PortMatch(S11real, S11imag, S22real, S22imag, DetReal, DetImag, Z1,
-                       Z2, Freq, micro_syn, SP_block, open_short, Substrate,
-                       order, gamma_MAX, BalancedStubs);
+    params.DetReal = params.S11real * params.S22real - params.S11imag * params.S22imag - params.S12real * params.S21real +
+                     params.S12imag * params.S21imag;
+    params.DetImag = params.S11real * params.S22imag + params.S11imag * params.S22real - params.S12real * params.S21imag -
+                     params.S12imag * params.S21real;
+    success = calc2PortMatch(params);
   } else {
-    success = calcMatchingCircuit(S11real, S11imag, Z1, Freq, micro_syn,
-                                  SP_block, open_short, Substrate, order,
-                                  gamma_MAX, BalancedStubs);
+    success = calcMatchingCircuit(params);
   }
 
   QucsMain->slotEditPaste(success);
@@ -856,9 +854,19 @@ QString MatchDialog::getImageFrom_XB(bool first_series, double X, double B)
 // Reference:
 // Microwave Circuit Design Using Linear and Nonlinear Techniques. George D. Vendelin,
 // Antonio M. Pavio, Ulrich P. Rohde. 2nd Edition. p. 251-252. Wiley
-QString MatchDialog::calcMatchingLC(double r_real, double r_imag, double Z0,
-                                    double f0) {
-  double RL = r_real, XL = r_imag;
+QString MatchDialog::calcMatchingLC(struct NetworkParams params) {
+  double RL, XL, Z0;
+  if (params.network == SINGLE_PORT)
+  {
+      RL = params.S11real, XL = params.S11imag;
+      Z0 = params.Z1;
+  }
+  else//Two-port matching
+  {
+      RL = params.r_real, XL = params.r_imag;
+      (params.network == TWO_PORT_INPUT) ? Z0 = params.Z1 : Z0 = params.Z2;
+  }
+
   r2z(RL, XL, Z0);
 
   if (RL < 0.0) {
@@ -875,13 +883,13 @@ QString MatchDialog::calcMatchingLC(double r_real, double r_imag, double Z0,
     RL = 0.0;
   }
 
-  double w0 = 2.0 * pi * f0;
+  double w0 = 2.0 * pi * params.freq;
   double X1, X2, B1, B2;
   double L, C, X, B;
   int solution;
   QString laddercode = "";
 
-  if (r_real < 0) {
+  if (params.r_real < 0) {
     // Z0 > ZL
     // ZS -------- X -- ZL
     //       |
@@ -980,77 +988,84 @@ QString MatchDialog::calcMatchingLC(double r_real, double r_imag, double Z0,
 // This function calls the specific matching network function so as to get the
 // desired matching topology Returns true if the synthesis worked as expected or
 // false if it wasn't
-bool MatchDialog::calcMatchingCircuit(double S11real, double S11imag, double Z0,
-                                      double Freq, bool micro_syn,
-                                      bool SP_Block, bool open_short,
-                                      tSubstrate Substrate, int order,
-                                      double gamma_MAX, bool BalancedStubs) {
+bool MatchDialog::calcMatchingCircuit(struct NetworkParams params) {
   QString laddercode;
+  params.network = SINGLE_PORT;
   switch (TopoCombo->currentIndex()) {
   case 0: // LC
-    laddercode = calcMatchingLC(S11real, S11imag, Z0,
-                                Freq); // It calculates the LC matching circuit.
+    laddercode = calcMatchingLC(params); // It calculates the LC matching circuit.
     break;
   case 1: // Single stub
-    laddercode =
-        calcSingleStub(S11real, S11imag, Z0, Freq, open_short, BalancedStubs);
+    laddercode = calcSingleStub(params);
     break;
   case 2: // Double stub
     laddercode =
-        calcDoubleStub(S11real, S11imag, Z0, Freq, open_short, BalancedStubs);
+        calcDoubleStub(params);
     break;
   case 3: // Quarter wave cascaded sections
     (BinRadio->isChecked())
-        ? laddercode = calcBinomialLines(S11real, S11imag, Z0, order, Freq)
-        : laddercode =
-              calcChebyLines(S11real, S11imag, Z0, gamma_MAX, order, Freq);
+        ? laddercode = calcBinomialLines(params)
+        : laddercode = calcChebyLines(params);
     break;
   case 4: // Cascaded LC sections
     laddercode =
-        calcMatchingCascadedLCSections(S11real, S11imag, Z0, Freq, order - 1);
+        calcMatchingCascadedLCSections(params);
     break;
   case 5: // Lambda/8 + Lambda/4 impedance transformer
           // Reference: Inder J. Bahl. "Fundamentals of RF and microwave
           // transistor amplifiers". John Wiley and Sons. 2009. Pages 159-160
-    laddercode = calcMatchingLambda8Lambda4(S11real, S11imag, Z0, Freq);
+    laddercode = calcMatchingLambda8Lambda4(params);
     break;
   }
 
   if (laddercode.isEmpty())
     return false;
 
-  double RL = S11real, XL = S11imag;
+  double RL = params.S11real, XL = params.S11imag;
   QString wirestr = "";
   QString componentstr = "";
   QString paintingstr = "";
   int x_pos = 0;
 
-  r2z(RL, XL, Z0);
+  r2z(RL, XL, params.Z1);
 
-  if (SP_Block) {
+  if (params.SP_block) {
     laddercode.append("S2P:Freq;");
-    laddercode.prepend(QString("P1:%1;").arg(Z0));
+    laddercode.prepend(QString("P1:%1;").arg(params.Z1));
     laddercode.append(QString("ZL:%1#%2;").arg(RL).arg(XL));
   } else // Add tags instead of a S-param simulation
   {
     laddercode.prepend("LBL:Port 1;");
     laddercode.append("LBL:Port 2;");
   }
-  SchematicParser(laddercode, x_pos, Freq, Substrate, micro_syn);
+  SchematicParser(laddercode, x_pos, params.freq, params.Substrate, params.micro_syn);
   return true; // The schematic was successfully created
 }
 
 // -----------------------------------------------------------------------
 // Fundamental calculations for concurrent 2-port matching.
-QString MatchDialog::calcBiMatch(double S11real, double S11imag, double S22real,
-                                 double S22imag, double DetReal, double DetImag,
-                                 double Z0, double Freq, bool open_short,
-                                 double gamma_MAX, int order,
-                                 bool BalancedStubs) {
+QString MatchDialog::calcBiMatch(struct NetworkParams params) {
+
+  double S11real, S11imag, S22real, S22imag;
+
+  if (params.network == TWO_PORT_OUTPUT)
+  {
+    S11real = params.S22real;
+    S11imag = params.S22imag;
+    S22real = params.S11real;
+    S22imag = params.S11imag;
+  }
+  else
+  {
+     S11real = params.S11real;
+     S11imag = params.S11imag;
+     S22real = params.S22real;
+     S22imag = params.S22imag;
+  }
   double B = 1.0 + S11real * S11real + S11imag * S11imag - S22real * S22real -
-             S22imag * S22imag - DetReal * DetReal - DetImag * DetImag;
-  double Creal = S11real - S22real * DetReal - S22imag * DetImag;
-  double Cimag = S22real * DetImag - S11imag - S22imag * DetReal;
+             S22imag * S22imag - params.DetReal * params.DetReal - params.DetImag * params.DetImag;
+  double Creal = S11real - S22real * params.DetReal - S22imag * params.DetImag;
+  double Cimag = S22real * params.DetImag - S11imag - S22imag * params.DetReal;
   double Cmag = 2.0 * (Creal * Creal + Cimag * Cimag);
   Creal /= Cmag;
   Cimag /= Cmag;
@@ -1066,6 +1081,9 @@ QString MatchDialog::calcBiMatch(double S11real, double S11imag, double S22real,
     Rreal *= Creal;
   }
 
+  params.r_real = Rreal;
+  params.r_imag = -Rimag;
+
   QString laddercode;
 
   switch (TopoCombo->currentIndex()) // Matches both the input and the output
@@ -1073,27 +1091,24 @@ QString MatchDialog::calcBiMatch(double S11real, double S11imag, double S22real,
                                      // Ohms)
   {
   case 0: // LC
-    laddercode = calcMatchingLC(Rreal, -Rimag, Z0, Freq);
+    laddercode = calcMatchingLC(params);
     break;
   case 1: // Single stub
-    laddercode =
-        calcSingleStub(Rreal, -Rimag, Z0, Freq, open_short, BalancedStubs);
+    laddercode = calcSingleStub(params);
     break;
   case 2: // Double stub
-    laddercode =
-        calcDoubleStub(Rreal, -Rimag, Z0, Freq, open_short, BalancedStubs);
+    laddercode = calcDoubleStub(params);
     break;
   case 3: // Quarter wave cascaded sections
     (BinRadio->isChecked())
-        ? laddercode = calcBinomialLines(Rreal, -Rimag, Z0, order, Freq)
-        : laddercode =
-              calcChebyLines(Rreal, -Rimag, Z0, gamma_MAX, order, Freq);
+        ? laddercode = calcBinomialLines(params)
+        : laddercode = calcChebyLines(params);
     break;
   case 4: // Cascaded LC sections
-    laddercode = calcMatchingCascadedLCSections(Rreal, -Rimag, Z0, Freq, order);
+    laddercode = calcMatchingCascadedLCSections(params);
     break;
   case 5: // Lambda/8 + Lambda/4 transformer
-    laddercode = calcMatchingLambda8Lambda4(Rreal, -Rimag, Z0, Freq);
+    laddercode = calcMatchingLambda8Lambda4(params);
     break;
   }
 
@@ -1104,41 +1119,34 @@ QString MatchDialog::calcBiMatch(double S11real, double S11imag, double S22real,
 // This function calculates both the input and the output matching networks. In
 // this sense, it calls 'calcBiMatch' function to get the input/output
 // impedance. Then it synthesize the network according to the user choice
-bool MatchDialog::calc2PortMatch(double S11real, double S11imag, double S22real,
-                                 double S22imag, double DetReal, double DetImag,
-                                 double Z1, double Z2, double Freq,
-                                 bool microsyn, bool SP_Block, bool open_short,
-                                 tSubstrate Substrate, int order,
-                                 double gamma_MAX, bool BalancedStubs) {
+bool MatchDialog::calc2PortMatch(struct NetworkParams params) {
   // Input port network
   // The result is a string which gives the structure of the matching network
-  QString InputLadderCode =
-      calcBiMatch(S11real, S11imag, S22real, S22imag, DetReal, DetImag, Z1,
-                  Freq, open_short, gamma_MAX, order, BalancedStubs);
+  params.network = TWO_PORT_INPUT;
+  QString InputLadderCode = calcBiMatch(params);
   if (InputLadderCode.isEmpty())
     return false; // Synthesis error
 
   // Output port network
-  QString OutputLadderCode =
-      calcBiMatch(S22real, S22imag, S11real, S11imag, DetReal, DetImag, Z2,
-                  Freq, open_short, gamma_MAX, order, BalancedStubs);
+  params.network = TWO_PORT_OUTPUT;
+  QString OutputLadderCode = calcBiMatch(params);
   if (OutputLadderCode.isEmpty())
     return false; // Synthesis error
   else
     OutputLadderCode = flipLadderCode(OutputLadderCode);
 
-  if (SP_Block) {
+  if (params.SP_block) {
     InputLadderCode.prepend(QString("S2P:%1;").arg(
-        Freq)); // Add the s-param simulation to the circuit code
-    InputLadderCode.prepend(QString("P1:%1;").arg(Z1)); // Port 1
-    OutputLadderCode.append(QString("P2:%1;").arg(Z2)); // Port 2
+        params.freq)); // Add the s-param simulation to the circuit code
+    InputLadderCode.prepend(QString("P1:%1;").arg(params.Z1)); // Port 1
+    OutputLadderCode.append(QString("P2:%1;").arg(params.Z2)); // Port 2
   } else { // Use labels instead of the S-param simulation
     InputLadderCode.prepend(QString("LBL:Port 1;")); // Port 1
     OutputLadderCode.append(QString("LBL:Port 2;")); // Port 2
   }
   QString laddercode = InputLadderCode + QString("DEV:0") + OutputLadderCode;
   int x_pos = 0;
-  SchematicParser(laddercode, x_pos, Freq, Substrate, microsyn);
+  SchematicParser(laddercode, x_pos, params.freq, params.Substrate, params.micro_syn);
 
   return true;
 }
@@ -1286,14 +1294,24 @@ void MatchDialog::getMicrostrip(double Z0, double freq, tSubstrate *substrate,
 // Calculates a matching network according to the stub+line method
 // Reference: 'Microwave Engineering'. David Pozar. John Wiley and Sons. 4th
 // Edition. Pg 234-241
-QString MatchDialog::calcSingleStub(double r_real, double r_imag, double Z0,
-                                    double Freq, bool open_short,
-                                    bool BalancedStubs) {
+QString MatchDialog::calcSingleStub(struct NetworkParams params) {
   double t = 0, t1 = 0, t2 = 0;
   double dl, dl1, dl2, B;
   double B1, B2, d, lstub, ll;
-  double lambda = SPEED_OF_LIGHT / (Freq);
-  double RL = r_real, XL = r_imag;
+  double lambda = SPEED_OF_LIGHT / params.freq;
+
+  double RL, XL, Z0;
+  if (params.network == SINGLE_PORT)
+  {
+      RL = params.S11real, XL = params.S11imag;
+      Z0 = params.Z1;
+  }
+  else//Two-port matching
+  {
+      RL = params.r_real, XL = params.r_imag;
+      (params.network == TWO_PORT_INPUT) ? Z0 = params.Z1 : Z0 = params.Z2;
+  }
+
   r2z(RL, XL, Z0);
 
   // Stub+line method formulas
@@ -1318,41 +1336,41 @@ QString MatchDialog::calcSingleStub(double r_real, double r_imag, double Z0,
 
   if (t != 0) {
     d = dl * lambda;
-    (open_short) ? ll = -(atan(B * Z0)) / (2 * pi)
+    (params.open_short) ? ll = -(atan(B * Z0)) / (2 * pi)
                  : ll = (atan(1. / (B * Z0))) / (2 * pi);
-    if ((open_short) && (ll < 0))
+    if ((params.open_short) && (ll < 0))
       ll += 0.5;
-    if ((!open_short) && (ll > 0.5))
+    if ((!params.open_short) && (ll > 0.5))
       ll -= 0.5;
     lstub = ll * lambda;
   }
 
   if (t1 != 0) {
     d = dl1 * lambda;
-    (open_short) ? ll = -(atan(B1 * Z0)) / (2 * pi)
+    (params.open_short) ? ll = -(atan(B1 * Z0)) / (2 * pi)
                  : ll = (atan(1. / (1. * B1 * Z0))) / (2 * pi);
-    if ((open_short) && (ll < 0))
+    if ((params.open_short) && (ll < 0))
       ll += 0.5;
-    if ((!open_short) && (ll > 0.5))
+    if ((!params.open_short) && (ll > 0.5))
       ll -= 0.5;
     lstub = ll * lambda;
 
   } else {
     if (t2 != 0) {
       d = dl2 * lambda;
-      (open_short) ? ll = -(atan(B2 * Z0)) / (2 * pi)
+      (params.open_short) ? ll = -(atan(B2 * Z0)) / (2 * pi)
                    : ll = (atan(1. / (1. * B2 * Z0))) / (2 * pi);
-      if ((open_short) && (ll < 0))
+      if ((params.open_short) && (ll < 0))
         ll += 0.5;
-      if ((!open_short) && (ll > 0.5))
+      if ((!params.open_short) && (ll > 0.5))
         ll -= 0.5;
       lstub = ll * lambda;
     }
   }
 
-  if (BalancedStubs) { // Balanced stub implementation
+  if (params.BalancedStubs) { // Balanced stub implementation
     double K;
-    (open_short) ? K = 0.5 : K = 2;
+    (params.open_short) ? K = 0.5 : K = 2;
     lstub = (lambda / (2 * pi)) * atan(K * tan((2 * pi * lstub) / lambda));
     if (lstub < 0)
       lstub += 0.5 * lambda;
@@ -1360,22 +1378,22 @@ QString MatchDialog::calcSingleStub(double r_real, double r_imag, double Z0,
 
   // String code
   QString laddercode;
-  if ((open_short) && (!BalancedStubs))
+  if ((params.open_short) && (!params.BalancedStubs))
     laddercode = QString("OL:%1#%2;TL:%1#%3;")
                      .arg(Z0)
                      .arg(lstub)
                      .arg(d); // Line + Open stub
-  if ((open_short) && (BalancedStubs))
+  if ((params.open_short) && (params.BalancedStubs))
     laddercode = QString("OU:%1#%2;OL:%1#%2;TL:%1#%3;")
                      .arg(Z0)
                      .arg(lstub)
                      .arg(d); // Open circuit balanced stubs
-  if ((!open_short) && (!BalancedStubs))
+  if ((!params.open_short) && (!params.BalancedStubs))
     laddercode = QString("SL:%1#%2;TL:%1#%3;")
                      .arg(Z0)
                      .arg(lstub)
                      .arg(d); // Line + Short circuited stub
-  if ((!open_short) && (BalancedStubs))
+  if ((!params.open_short) && (params.BalancedStubs))
     laddercode = QString("SU:%1#%2;SL:%1#%2;TL:%1#%3;")
                      .arg(Z0)
                      .arg(lstub)
@@ -1388,15 +1406,25 @@ QString MatchDialog::calcSingleStub(double r_real, double r_imag, double Z0,
 // Calculates a matching network according to the stub+line+stub method
 // Reference: 'Microwave Engineering', David Pozar. John Wiley and Sons. 4th
 // Edition. Pg 241-245
-QString MatchDialog::calcDoubleStub(double r_real, double r_imag, double Z0,
-                                    double Freq, bool open_short,
-                                    bool BalancedStubs) {
-  double RL = r_real, XL = r_imag;
+QString MatchDialog::calcDoubleStub(struct NetworkParams params) {
+
+  double RL, XL, Z0;
+  if (params.network == SINGLE_PORT)
+  {
+     RL = params.S11real, XL = params.S11imag;
+     Z0 = params.Z1;
+  }
+  else//Two-port matching
+  {
+     RL = params.r_real, XL = params.r_imag;
+     (params.network == TWO_PORT_INPUT) ? Z0 = params.Z1 : Z0 = params.Z2;
+  }
+
   r2z(RL, XL, Z0);
   double Y0 = 1. / Z0;
   double GL = (1 / ((RL * RL) + (XL * XL))) * RL;
   double BL = -(1 / ((RL * RL) + (XL * XL))) * XL;
-  double lambda = SPEED_OF_LIGHT / Freq;
+  double lambda = SPEED_OF_LIGHT / params.freq;
   double beta = (2 * pi) / lambda;
   double d = lambda / 8;
   double t = tan(beta * d);
@@ -1426,25 +1454,25 @@ QString MatchDialog::calcDoubleStub(double r_real, double r_imag, double Z0,
   // solution
 
   // Open circuit solution
-  (open_short) ? ll1 = (atan(B11 * Z0)) / (2 * pi)
+  (params.open_short) ? ll1 = (atan(B11 * Z0)) / (2 * pi)
                : ll1 = -(atan(1. / (1. * B11 * Z0))) / (2 * pi);
-  (open_short) ? ll2 = (atan(B21 * Z0)) / (2 * pi)
+  (params.open_short) ? ll2 = (atan(B21 * Z0)) / (2 * pi)
                : ll2 = -(atan(1. / (1. * B21 * Z0))) / (2 * pi);
 
   if (ll1 < 0)
     ll1 += 0.5;
   if (ll2 < 0)
     ll2 += 0.5;
-  if ((!open_short) && (ll1 > 0.5))
+  if ((!params.open_short) && (ll1 > 0.5))
     ll1 -= 0.5;
-  if ((!open_short) && (ll2 > 0.5))
+  if ((!params.open_short) && (ll2 > 0.5))
     ll2 -= 0.5;
 
   double lstub1 = ll1 * lambda, lstub2 = ll2 * lambda;
 
-  if (BalancedStubs) { // Balanced stub implementation
+  if (params.BalancedStubs) { // Balanced stub implementation
     double K;
-    (open_short) ? K = 0.5 : K = 2;
+    (params.open_short) ? K = 0.5 : K = 2;
     lstub1 = (lambda / (2 * pi)) * atan(K * tan((2 * pi * lstub1) / lambda));
     lstub2 = (lambda / (2 * pi)) * atan(K * tan((2 * pi * lstub2) / lambda));
     if (lstub1 < 0)
@@ -1454,25 +1482,25 @@ QString MatchDialog::calcDoubleStub(double r_real, double r_imag, double Z0,
   }
 
   QString laddercode;
-  if ((open_short) && (BalancedStubs))
+  if ((params.open_short) && (params.BalancedStubs))
     laddercode = QString("OU:%1#%2;OL:%1#%2;TL:%1#%3;OU:%1#%4;OL:%1#%4;")
                      .arg(Z0)
                      .arg(lstub2)
                      .arg(d)
                      .arg(lstub1);
-  if ((open_short) && (!BalancedStubs))
+  if ((params.open_short) && (!params.BalancedStubs))
     laddercode = QString("OL:%1#%2;TL:%1#%3;OL:%1#%4;")
                      .arg(Z0)
                      .arg(lstub2)
                      .arg(d)
                      .arg(lstub1);
-  if ((!open_short) && (BalancedStubs))
+  if ((!params.open_short) && (params.BalancedStubs))
     laddercode = QString("SU:%1#%2;SL:%1#%2;TL:%1#%3;SU:%1#%4;SL:%1#%4;")
                      .arg(Z0)
                      .arg(lstub2)
                      .arg(d)
                      .arg(lstub1);
-  if ((!open_short) && (!BalancedStubs))
+  if ((!params.open_short) && (!params.BalancedStubs))
     laddercode = QString("SL:%1#%2;TL:%1#%3;SL:%1#%4;")
                      .arg(Z0)
                      .arg(lstub2)
@@ -1497,9 +1525,19 @@ int BinomialCoeffs(int n, int k) {
 // This function calculates a multistage lambda/4 matching using binomial
 // weigthing Reference: 'Microwave Engineering'. David Pozar. John Wiley and
 // Sons. 4th Edition. Pg 252-256
-QString MatchDialog::calcBinomialLines(double r_real, double r_imag, double Z0,
-                                       int order, double Freq) {
-  double RL = r_real, XL = r_imag;
+QString MatchDialog::calcBinomialLines(struct NetworkParams params) {
+  double RL, XL, Z0;
+  if (params.network == SINGLE_PORT)
+  {
+      RL = params.S11real, XL = params.S11imag;
+      Z0 = params.Z1;
+  }
+  else//Two-port matching
+  {
+      RL = params.r_real, XL = params.r_imag;
+      (params.network == TWO_PORT_INPUT) ? Z0 = params.Z1 : Z0 = params.Z2;
+  }
+
   r2z(RL, XL, Z0);
   if (RL == 0) {
     QMessageBox::warning(
@@ -1513,12 +1551,12 @@ QString MatchDialog::calcBinomialLines(double r_real, double r_imag, double Z0,
                          QObject::tr("Reactive loads cannot be matched. Only "
                                      "the real part will be matched"));
   }
-  double l4 = SPEED_OF_LIGHT / (4. * Freq);
+  double l4 = SPEED_OF_LIGHT / (4. * params.freq);
   double Ci, Zi, Zaux = Z0;
   QString laddercode;
-  for (int i = 1; i < order; i++) {
-    Ci = BinomialCoeffs(order - 1, i - 1);
-    Zi = exp(log(Zaux) + (Ci / pow(2, order - 1)) * log(RL / Z0));
+  for (int i = 1; i < params.order; i++) {
+    Ci = BinomialCoeffs(params.order - 1, i - 1);
+    Zi = exp(log(Zaux) + (Ci / pow(2, params.order - 1)) * log(RL / Z0));
     Zaux = Zi;
     laddercode += QString("TL:%1#%2;").arg(Zi).arg(l4);
   }
@@ -1529,9 +1567,8 @@ QString MatchDialog::calcBinomialLines(double r_real, double r_imag, double Z0,
 // This function calculates a multistage lambda/4 matching using the Chebyshev
 // weigthing. Reference 'Microwave Engineering'. David Pozar. John Wiley and
 // Sons. 4th Edition. Pg 256-261
-QString MatchDialog::calcChebyLines(double r_real, double r_imag, double Z0,
-                                    double gamma, int order, double Freq) {
-  int N = order - 1; // Number of sections
+QString MatchDialog::calcChebyLines(struct NetworkParams params) {
+  int N = params.order - 1; // Number of sections
   if (N > 7)         // So far, it is only available Chebyshev weighting up to 7
              // sections. Probably, it makes no sense to use a higher number of
              // sections because of the losses
@@ -1542,17 +1579,28 @@ QString MatchDialog::calcChebyLines(double r_real, double r_imag, double Z0,
     return QString("");
   }
   QString laddercode;
-  double RL = r_real, XL = r_imag;
-  r2z(RL, XL,
-      Z0); // Calculation of the load impedance given the reflection coeffient
+
+  double RL, XL, Z0;
+  if (params.network == SINGLE_PORT)
+  {
+      RL = params.S11real, XL = params.S11imag;
+      Z0 = params.Z1;
+  }
+  else//Two-port matching
+  {
+      RL = params.r_real, XL = params.r_imag;
+      (params.network == TWO_PORT_INPUT) ? Z0 = params.Z1 : Z0 = params.Z2;
+  }
+
+  r2z(RL, XL, Z0); // Calculation of the load impedance given the reflection coeffient
   double sec_theta_m; // =
                       // cosh((1/(1.*N))*acosh((1/gamma)*fabs((RL-Z0)/(Z0+RL)))
                       // );
   // double sec_theta_m = cosh((1/(1.*N))*acosh(fabs(log(RL/Z0)/(2*gamma))) );
-  (fabs(log(RL / Z0) / (2 * gamma)) < 1)
+  (fabs(log(RL / Z0) / (2 * params.gamma_MAX)) < 1)
       ? sec_theta_m = 0
       : sec_theta_m =
-            cosh((1 / (1. * N)) * acosh(fabs(log(RL / Z0) / (2 * gamma))));
+            cosh((1 / (1. * N)) * acosh(fabs(log(RL / Z0) / (2 * params.gamma_MAX))));
 
   double w[N];
 
@@ -1607,11 +1655,11 @@ QString MatchDialog::calcChebyLines(double r_real, double r_imag, double Z0,
     w[6] = w[1];
     break;
   }
-  double l4 = SPEED_OF_LIGHT / (4. * Freq);
+  double l4 = SPEED_OF_LIGHT / (4. * params.freq);
   double Zaux = Z0, Zi;
   for (int i = 0; i < N; i++) {
-    (RL < Z0) ? Zi = exp(log(Zaux) - gamma * w[i])
-              : Zi = exp(log(Zaux) + gamma * w[i]); // When RL<Z0, Z_{i}<Z_{i-1}
+    (RL < Z0) ? Zi = exp(log(Zaux) - params.gamma_MAX * w[i])
+              : Zi = exp(log(Zaux) + params.gamma_MAX * w[i]); // When RL<Z0, Z_{i}<Z_{i-1}
     Zaux = Zi;
     laddercode += QString("TL:%1#%2;").arg(Zi).arg(l4);
   }
@@ -1622,11 +1670,23 @@ QString MatchDialog::calcChebyLines(double r_real, double r_imag, double Z0,
 // It calculates a cascaded LC matching network (only real impedances)
 // Reference: Inder J. Bahl. "Fundamentals of RF and microwave transistor
 // amplifiers". John Wiley and Sons. 2009. Pages 169 - 170
-QString MatchDialog::calcMatchingCascadedLCSections(double r_real,
-                                                    double r_imag, double Z0,
-                                                    double Freq, int N) {
-  double RL = r_real, XL = r_imag, RS = Z0;
-  double w = 2 * pi * Freq, Q, C, L;
+QString MatchDialog::calcMatchingCascadedLCSections(struct NetworkParams params) {
+  double N = params.order - 1;
+  double RS = params.Z1;
+  double w = 2 * pi * params.freq, Q, C, L;
+
+  double RL, XL, Z0;
+  if (params.network == SINGLE_PORT)
+  {
+      RL = params.S11real, XL = params.S11imag;
+      Z0 = params.Z1;
+  }
+  else//Two-port matching
+  {
+      RL = params.r_real, XL = params.r_imag;
+      (params.network == TWO_PORT_INPUT) ? Z0 = params.Z1 : Z0 = params.Z2;
+  }
+
   r2z(RL, XL, Z0);
   double Raux, R, R1, R2;
   QString s = "";
@@ -1679,11 +1739,22 @@ QString MatchDialog::calcMatchingCascadedLCSections(double r_real,
 //--------------------------------------------------------------------------
 // It calculates a lambda/8 + lambda/4 transformer to match a complex load to a
 // real source
-QString MatchDialog::calcMatchingLambda8Lambda4(double r_real, double r_imag,
-                                                double Z0, double Freq) {
-  double RL = r_real, XL = r_imag;
-  double l4 = SPEED_OF_LIGHT / (4. * Freq);
+QString MatchDialog::calcMatchingLambda8Lambda4(struct NetworkParams params) {
+  double l4 = SPEED_OF_LIGHT / (4. * params.freq);
   double l8 = .5 * l4;
+
+  double RL, XL, Z0;
+  if (params.network == SINGLE_PORT)
+  {
+      RL = params.S11real, XL = params.S11imag;
+      Z0 = params.Z1;
+  }
+  else//Two-port matching
+  {
+      RL = params.r_real, XL = params.r_imag;
+      (params.network == TWO_PORT_INPUT) ? Z0 = params.Z1 : Z0 = params.Z2;
+  }
+
   r2z(RL, XL, Z0);
   double Zmm = sqrt(RL * RL + XL * XL);
   double Zm = sqrt((Z0 * RL * Zmm) / (Zmm - XL));
