@@ -66,6 +66,7 @@
 #include "module.h"
 #include "misc.h"
 #include "globals.h"
+#include "actions.h"
 
 // for editing component name on schematic
 QRegExp  Expr_CompProp;
@@ -987,46 +988,55 @@ void QucsApp::slotAddToProject()
 }
 
 // -----------------------------------------------------------
-void QucsApp::slotCursorLeft(bool left)
+void QucsApp::slotCursor(arrow_dir_t dir)
 {
   int sign = 1;
-  if(left){
+
+  if(dir==arr_left){
     sign = -1;
   }
-  if(!editText->isHidden()) return;  // for edit of component property ?
+  if(editText->isHidden()) {
+    // for edit of component property ?
+    Q3PtrList<Element> movingElements;
+    Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
+    int markerCount = Doc->copySelectedElements(&movingElements);
 
-  Q3PtrList<Element> movingElements;
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  int markerCount = Doc->copySelectedElements(&movingElements);
+    if((movingElements.count() - markerCount) < 1) { // all selections are markers
+      if(markerCount > 0) {  // only move marker if nothing else selected
+	Doc->markerMove(dir, &movingElements);
+      } else if(dir==arr_up) {
+       	// nothing selected at all
+	if(Doc->scrollUp(Doc->verticalScrollBar()->singleStep()))
+	  Doc->scrollBy(0, -Doc->verticalScrollBar()->singleStep());
+      } else if(dir==arr_down) {
+	if(Doc->scrollDown(-Doc->verticalScrollBar()->singleStep()))
+	  Doc->scrollBy(0, Doc->verticalScrollBar()->singleStep());
+      } else if(dir==arr_left) {
+	if(Doc->scrollLeft(Doc->horizontalScrollBar()->singleStep()))
+	  Doc->scrollBy(-Doc->horizontalScrollBar()->singleStep(), 0);
+      } else if(dir==arr_right) {
+	if(Doc->scrollRight(-Doc->horizontalScrollBar()->singleStep()))
+	  Doc->scrollBy(Doc->horizontalScrollBar()->singleStep(), 0);
+      }else{
+	// unreachable. TODO: switch
+      }
 
-  if((movingElements.count() - markerCount) < 1) {
-    if(markerCount > 0) {  // only move marker if nothing else selected
-      Doc->markerLeftRight(left, &movingElements);
-    } else if(left) {
-      if(Doc->scrollLeft(Doc->horizontalScrollBar()->singleStep()))
-        Doc->scrollBy(-Doc->horizontalScrollBar()->singleStep(), 0);
-    }else{ // right
-      if(Doc->scrollRight(-Doc->horizontalScrollBar()->singleStep()))
-        Doc->scrollBy(Doc->horizontalScrollBar()->singleStep(), 0);
+      Doc->viewport()->update();
+      view->drawn = false;
+    }else if(dir==arr_up || dir==arr_down){
+      // some random selection, put it back
+      view->moveElements(&movingElements, 0, ((dir==arr_up)?-1:1) * Doc->GridY);
+      view->MAx3 = 1;  // sign for moved elements
+      view->endElementMoving(Doc, &movingElements);
+    }else if(dir==arr_left || dir==arr_right){
+      view->moveElements(&movingElements, sign*Doc->GridX, 0);
+      view->MAx3 = 1;  // sign for moved elements
+      view->endElementMoving(Doc, &movingElements);
+    }else{
+      //unreachable(); //TODO: switch.
     }
 
-    Doc->viewport()->update();
-    view->drawn = false;
-    return;
-  } else { // random selection. move all of them
-    view->moveElements(&movingElements, sign*Doc->GridX, 0);
-    view->MAx3 = 1;  // sign for moved elements
-    view->endElementMoving(Doc, &movingElements);
-  }
-}
-
-// -----------------------------------------------------------
-void QucsApp::slotCursorUp(bool up)
-{
-  incomplete();
-#if 0 // what is this trying to do?
-  if(editText->isHidden()) {  // for edit of component property ?
-  }else if(up){
+  }else if(dir==arr_up){ // BUG: redirect.
     if(view->MAx3 == 0) return;  // edit component namen ?
     Component *pc = component(view->focusElement);
     Property *pp = pc->Props.at(view->MAx3-1);  // current property
@@ -1043,8 +1053,7 @@ void QucsApp::slotCursorUp(bool up)
     if(pp->Description.at(Pos) == ' ') Pos++; // remove leading space
     editText->setText(pp->Description.mid(Pos, End-Pos+1));
     editText->selectAll();
-    return;
-  }else{ // down
+  }else if(dir==arr_down) { // BUG: redirect.
     if(view->MAx3 == 0) return;  // edit component namen ?
     Component *pc = component(view->focusElement);
     Property *pp = pc->Props.at(view->MAx3-1);  // current property
@@ -1063,33 +1072,9 @@ void QucsApp::slotCursorUp(bool up)
     }
     editText->setText(pp->Description.mid(Pos, End-Pos));
     editText->selectAll();
-    return;
+  }else{
+
   }
-
-  Q3PtrList<Element> movingElements;
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  int markerCount = Doc->copySelectedElements(&movingElements);
-
-  if((movingElements.count() - markerCount) < 1) { // all selections are markers
-    if(markerCount > 0) {  // only move marker if nothing else selected
-      Doc->markerUpDown(up, &movingElements);
-    } else if(up) { // nothing selected at all
-      if(Doc->scrollUp(Doc->verticalScrollBar()->singleStep()))
-        Doc->scrollBy(0, -Doc->verticalScrollBar()->singleStep());
-    } else { // down
-      if(Doc->scrollDown(-Doc->verticalScrollBar()->singleStep()))
-        Doc->scrollBy(0, Doc->verticalScrollBar()->singleStep());
-    }
-
-    Doc->viewport()->update();
-    view->drawn = false;
-    return;
-  }else{ // some random selection, put it back
-    view->moveElements(&movingElements, 0, ((up)?-1:1) * Doc->GridY);
-    view->MAx3 = 1;  // sign for moved elements
-    view->endElementMoving(Doc, &movingElements);
-  }
-#endif
 }
 
 // -----------------------------------------------------------
