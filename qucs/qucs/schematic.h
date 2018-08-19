@@ -27,6 +27,7 @@
 #  define prechecked_cast dynamic_cast
 #endif
 
+#include "actions.h"
 #include "wire.h"
 #include "node.h"
 #include "qucsdoc.h"
@@ -325,8 +326,21 @@ public:
   void  deleteWire(Wire*);
 
   Marker* setMarker(int, int);
+
+private: // FIXME: remove
   void    markerLeftRight(bool, Q3PtrList<Element>*);
   void    markerUpDown(bool, Q3PtrList<Element>*);
+public:
+  void    markerMove(arrow_dir_t d, Q3PtrList<Element>* l){
+	  switch(d){
+		  case arr_up:
+		  case arr_down:
+			  return   markerUpDown(d==arr_up, l);
+		  case arr_left:
+		  case arr_right:
+			  return   markerLeftRight(d==arr_left, l);
+	  }
+  }
 
   // now in mouseactions
   // Element* selectElement(QPoint const&, bool, int *index=0);

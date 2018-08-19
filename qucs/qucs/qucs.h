@@ -23,6 +23,7 @@
 #include <QHash>
 #include <QStack>
 #include <QDir>
+#include "actions.h"
 
 /**
  * @file qucs.h
@@ -436,11 +437,15 @@ public slots:
   void slotSaveDiagramToGraphicsFile();
   void slotSaveSchematicToGraphicsFile(bool diagram = false);
 
+private:
+  void slotCursor(arrow_dir_t dir);
+
 private slots:
-  void slotCursorLeft(bool left=true);
-  void slotCursorRight() {return slotCursorLeft(false);}
-  void slotCursorUp(bool up=true);
-  void slotCursorDown() {return slotCursorUp(false);}
+  void slotCursorLeft() {return slotCursor(arr_left);}
+  void slotCursorRight() {return slotCursor(arr_right);}
+  void slotCursorUp() {return slotCursor(arr_up);}
+  void slotCursorDown() {return slotCursor(arr_down);}
+
   void slotResizePropEdit(const QString&);
   void slotCreateLib();
   void slotImportData();
