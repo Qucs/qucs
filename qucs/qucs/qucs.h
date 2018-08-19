@@ -26,6 +26,8 @@
 #include <QFileSystemModel>
 #include <QSortFilterProxyModel>
 
+#include "actions.h" // BUG
+
 /**
  * @file qucs.h
  * @brief definition of the main Qucs application class and other helper classes
@@ -454,11 +456,15 @@ public slots: // BUG. why is this here?
   void slotSaveDiagramToGraphicsFile();
   void slotSaveSchematicToGraphicsFile(bool diagram = false);
 
+private:
+  void slotCursor(arrow_dir_t dir);
+
 private slots:
-  void slotCursorLeft(bool left=true);
-  void slotCursorRight() {return slotCursorLeft(false);}
-  void slotCursorUp(bool up=true);
-  void slotCursorDown() {return slotCursorUp(false);}
+  void slotCursorLeft() {return slotCursor(arr_left);}
+  void slotCursorRight() {return slotCursor(arr_right);}
+  void slotCursorUp() {return slotCursor(arr_up);}
+  void slotCursorDown() {return slotCursor(arr_down);}
+
   void slotResizePropEdit(const QString&);
   void slotCreateLib();
   void slotImportData();
