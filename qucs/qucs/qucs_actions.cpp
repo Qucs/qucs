@@ -1031,8 +1031,6 @@ void QucsApp::slotCursorLeft(bool left)
 // -----------------------------------------------------------
 void QucsApp::slotCursorUp(bool up)
 {
-  incomplete();
-#if 0 // what is this trying to do?
   if(editText->isHidden()) {  // for edit of component property ?
   }else if(up){
     if(view->MAx3 == 0) return;  // edit component namen ?
@@ -1100,7 +1098,6 @@ void QucsApp::slotCursorUp(bool up)
     view->endElementMoving(Doc, &movingElements);
   }
   */
-#endif
 }
 
 // -----------------------------------------------------------
