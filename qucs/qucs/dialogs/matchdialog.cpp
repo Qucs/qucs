@@ -47,14 +47,6 @@
 #include <QRadioButton>
 #include <QVBoxLayout>
 
-#define LSECTION           0
-#define SINGLESTUB         1
-#define DOUBLESTUB         2
-#define MULTISTAGEL4       3
-#define CASCADEDLSECTIONS  4
-#define L8L4               5
-
-
 MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   setWindowTitle(tr("Create Matching Circuit"));
   DoubleVal = new QDoubleValidator(this);
@@ -136,28 +128,40 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   hsubs->addWidget(ResistivityLabel, 6, 0);
   hsubs->addWidget(ResistivityEdit, 6, 1);
 
-  QHBoxLayout *h4 = new QHBoxLayout();
-  h4->setSpacing(3);
-  TopoLabel = new QLabel(tr("Method"));
-  h4->addWidget(TopoLabel);
+  QGridLayout *MatchingMethod_Layout = new QGridLayout();
+  TopoLabel = new QLabel(tr("Input matching:"));
+  MatchingMethod_Layout->addWidget(TopoLabel, 0, 0);
 
   // Matching network topology
-  TopoCombo = new QComboBox();
-  TopoCombo->setFixedWidth(220);
-  TopoCombo->addItem(tr("L-section"));
-  TopoCombo->addItem(tr("Single stub"));
-  TopoCombo->addItem(tr("Double stub"));
+  QStringList matching_methods;
+  matching_methods.append(tr("L-section"));
+  matching_methods.append(tr("Single stub"));
+  matching_methods.append(tr("Double stub"));
   QString str = tr("Multistage ") + QString(QChar(0xBB, 0x03)) + "/4";
-  TopoCombo->addItem(str);
-  TopoCombo->addItem("Cascaded L-sections");
+  matching_methods.append(str);
+  matching_methods.append(tr("Cascaded L-sections"));
   str = QString(QChar(0xBB, 0x03)) + "/8 +" + QString(QChar(0xBB, 0x03)) +
         "/4 transformer";
-  TopoCombo->addItem(str);
+  matching_methods.append(str);
 
-  h4->addWidget(TopoCombo);
+  TopoCombo = new QComboBox();
+  TopoCombo->setFixedWidth(220);
+  TopoCombo->addItems(matching_methods);
+
+  MatchingMethod_Layout->addWidget(TopoCombo, 0, 1);
   connect(TopoCombo, SIGNAL(activated(int)), SLOT(slotChangeMode_TopoCombo()));
-  h4->addStretch(5);
-  MethodLayout->addLayout(h4);
+
+  TopoLabel_Output = new QLabel(tr("Output matching:"));
+  MatchingMethod_Layout->addWidget(TopoLabel_Output, 1, 0);
+
+  // Matching network topology
+  TopoCombo_Output = new QComboBox();
+  TopoCombo_Output->setFixedWidth(220);
+  TopoCombo_Output->addItems(matching_methods);
+
+  MatchingMethod_Layout->addWidget(TopoCombo_Output, 1, 1);
+  connect(TopoCombo_Output, SIGNAL(activated(int)), SLOT(slotChangeMode_TopoCombo()));
+  MethodLayout->addLayout(MatchingMethod_Layout);
 
   // When the stub implementation is selected, it is possible to select either
   // the open or the short circuit solution
@@ -219,6 +223,7 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   BalancedCheck->setEnabled(false);
   TwoCheck = new QCheckBox(tr("Calculate two-port matching"));
   TwoCheck->setChecked(true);
+  connect(TwoCheck, SIGNAL(clicked(bool)), SLOT(slotChangeMode_TopoCombo()));
   AddSPBlock =
       new QCheckBox(tr("Add S-Parameter simulation")); // The user can choose
                                                        // whether add a S-param
@@ -505,6 +510,19 @@ void MatchDialog::slotSetTwoPort(bool on) {
 // index selected, it makes visible (or invisible) certain window components.
 void MatchDialog::slotChangeMode_TopoCombo() {
 
+    if (TwoCheck->isChecked())//Two-port matching
+    {
+      TopoCombo_Output->setVisible(true);
+      TopoLabel_Output->setVisible(true);
+      TopoLabel->setText("Input matching:");
+    }
+    else//Single-port matching
+    {
+      TopoCombo_Output->setVisible(false);
+      TopoLabel_Output->setVisible(false);
+      TopoLabel->setText("Method:");
+    }
+
     switch(TopoCombo->currentIndex())
     {
        case LSECTION:
@@ -759,6 +777,10 @@ void MatchDialog::slotButtCreate() {
     params.Substrate.maxWidth = maxWEdit->text().toDouble() / 1e3;
   }
 
+  //Set network types
+  params.input_network_type = TopoCombo->currentIndex();
+  params.output_network_type = TopoCombo_Output->currentIndex();
+
   if (TwoCheck->isChecked()) { // two-port matching ?
     // determinant of S-parameter matrix
     params.DetReal = params.S11real * params.S22real - params.S11imag * params.S22imag - params.S12real * params.S21real +
@@ -991,7 +1013,7 @@ QString MatchDialog::calcMatchingLC(struct NetworkParams params) {
 bool MatchDialog::calcMatchingCircuit(struct NetworkParams params) {
   QString laddercode;
   params.network = SINGLE_PORT;
-  switch (TopoCombo->currentIndex()) {
+  switch (params.input_network_type) {
   case 0: // LC
     laddercode = calcMatchingLC(params); // It calculates the LC matching circuit.
     break;
@@ -1085,8 +1107,13 @@ QString MatchDialog::calcBiMatch(struct NetworkParams params) {
   params.r_imag = -Rimag;
 
   QString laddercode;
+  int topology;
+  if (params.network == TWO_PORT_INPUT)
+      topology = params.input_network_type;
+  else
+      topology = params.output_network_type;
 
-  switch (TopoCombo->currentIndex()) // Matches both the input and the output
+  switch (topology) // Matches both the input and the output
                                      // port to external sources (typically, 50
                                      // Ohms)
   {

@@ -53,6 +53,13 @@ struct tSubstrate {
   double minWidth, maxWidth;
 };
 
+#define LSECTION           0
+#define SINGLESTUB         1
+#define DOUBLESTUB         2
+#define MULTISTAGEL4       3
+#define CASCADEDLSECTIONS  4
+#define L8L4               5
+
 enum NETWORK_TYPE{TWO_PORT_INPUT, TWO_PORT_OUTPUT, SINGLE_PORT};
 
 struct NetworkParams {
@@ -65,6 +72,7 @@ struct NetworkParams {
   tSubstrate Substrate;
   NETWORK_TYPE network;
   double DetReal, DetImag;
+  int input_network_type, output_network_type;
 };
 
 static const double Z_FIELD = 376.73031346958504364963;
@@ -150,13 +158,13 @@ private:
   QVBoxLayout *MethodLayout;
   QDoubleValidator *DoubleVal;
   QLabel *Port1Label, *Port2Label, *Ohm1Label, *Ohm2Label, *FormatLabel,
-      *FrequencyLabel, *TopoLabel, *OrderLabel, *RelPermLabel, *S11Label,
+      *FrequencyLabel, *TopoLabel, *TopoLabel_Output, *OrderLabel, *RelPermLabel, *S11Label,
       *S11sLabel, *S11uLabel, *S21Label, *S21sLabel, *S21uLabel, *S12Label,
       *S12sLabel, *S12uLabel, *S22Label, *S22sLabel, *S22uLabel, *SubsHScale,
       *ThicknessScale, *minWScale, *maxWScale, *ResistivityLabel,
       *maxRippleLabel, *thicknessLabel, *subsHLabel, *minWLabel, *maxWLabel,
-      *tanDLabel, *WeightingLabel;
-  QComboBox *FormatCombo, *UnitCombo, *TopoCombo, *RelPermCombo;
+      *tanDLabel, *WeightingLabel, *InputLabel, *OutputLabel;
+  QComboBox *FormatCombo, *UnitCombo, *TopoCombo, *RelPermCombo, *TopoCombo_Output;
 
   QLineEdit *Ref1Edit, *Ref2Edit, *FrequencyEdit, *OrderEdit, *ResistivityEdit,
       *MaxRippleEdit, *SubHeightEdit, *thicknessEdit, *minWEdit, *maxWEdit,
