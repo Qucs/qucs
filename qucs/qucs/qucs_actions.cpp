@@ -999,7 +999,7 @@ void QucsApp::slotCursor(arrow_dir_t dir)
     // for edit of component property ?
     Q3PtrList<Element> movingElements;
     Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-    int markerCount = Doc->copySelectedElements(&movingElements);
+    int markerCount = Doc->cropSelectedElements(&movingElements);
 
     if((movingElements.count() - markerCount) < 1) { // all selections are markers
       if(markerCount > 0) {  // only move marker if nothing else selected

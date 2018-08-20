@@ -1732,10 +1732,8 @@ void Schematic::newMovingWires(Q3PtrList<Element> *p, Node *pn, int pos)
 // ---------------------------------------------------
 // For moving of elements: Copies all selected elements into the
 // list 'p' and deletes them from the document.
-// BUG: does not (only) copy, as the name suggests.
-//      cannot be used to make copies.
 // returns the number of "copied" _Markers_ only
-int Schematic::copySelectedElements(Q3PtrList<Element> *p)
+int Schematic::cropSelectedElements(Q3PtrList<Element> *p)
 {
     int i, count = 0;
     Component *pc;
