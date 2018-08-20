@@ -329,17 +329,19 @@ public:
   Marker* setMarker(int, int);
 
 private: // FIXME: remove
-  void    markerLeftRight(bool, Q3PtrList<Element>*);
-  void    markerUpDown(bool, Q3PtrList<Element>*);
+  void    markerLeftRight(bool, Q3PtrList<ElementGraphics>*);
+  void    markerUpDown(bool, Q3PtrList<ElementGraphics>*);
 public:
-  void    markerMove(arrow_dir_t d, Q3PtrList<Element>* l){
+  void    markerMove(arrow_dir_t d, Q3PtrList<ElementGraphics>* l){
 	  switch(d){
 		  case arr_up:
 		  case arr_down:
-			  return   markerUpDown(d==arr_up, l);
+			    markerUpDown(d==arr_up, l);
+				 break;
 		  case arr_left:
 		  case arr_right:
-			  return   markerLeftRight(d==arr_left, l);
+				 markerLeftRight(d==arr_left, l);
+				 break;
 	  }
   }
 
