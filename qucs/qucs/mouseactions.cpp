@@ -1822,8 +1822,7 @@ void MouseActions::MReleaseResizePainting(Schematic *Doc, QMouseEvent *Event)
 // -----------------------------------------------------------
 void MouseActions::paintElementsScheme(Schematic *p)
 {
-  Element *pe;
-  for(pe = movingElements.first(); pe != 0; pe = movingElements.next()){
+  for(auto const& pe : movingElements){
     // something with mouse cursor
     pe->paintScheme(p);
   }
