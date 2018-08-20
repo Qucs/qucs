@@ -348,7 +348,7 @@ public:
   int      selectElements(int, int, int, int, bool);
   void     selectMarkers();
   void     newMovingWires(Q3PtrList<Element>*, Node*, int);
-  int      copySelectedElements(Q3PtrList<Element>*);
+  int      cropSelectedElements(Q3PtrList<Element>*);
   bool     deleteElements();
   bool     aligning(int);
   bool     distributeHorizontal();
