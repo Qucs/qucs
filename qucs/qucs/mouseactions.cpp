@@ -460,8 +460,9 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
   MAx3 = MAx1 = MAx2 - MAx1;
   MAy3 = MAy1 = MAy2 - MAy1;
 
+  // assert(movingElements.empty); //?
   movingElements.clear();
-  Doc->cropSelectedElements(&movingElements);
+  movingElements=Doc->cropSelectedElements();
   Doc->viewport()->repaint();
 
   Wire *pw;
@@ -1803,8 +1804,10 @@ void MouseActions::MReleaseResizePainting(Schematic *Doc, QMouseEvent *Event)
 void MouseActions::paintElementsScheme(Schematic *p)
 {
   Element *pe;
-  for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
+  for(pe = movingElements.first(); pe != 0; pe = movingElements.next()){
+    // something with mouse cursor
     pe->paintScheme(p);
+  }
 }
 
 // -----------------------------------------------------------

@@ -1733,7 +1733,7 @@ void Schematic::newMovingWires(Q3PtrList<Element> *p, Node *pn, int pos)
 // For moving of elements: Copies all selected elements into the
 // list 'p' and deletes them from the document.
 // returns the number of "copied" _Markers_ only
-int Schematic::cropSelectedElements(Q3PtrList<Element> *p)
+Q3PtrList<Element> Schematic::cropSelectedElements()
 {
     int i, count = 0;
     Component *pc;
@@ -1742,6 +1742,8 @@ int Schematic::cropSelectedElements(Q3PtrList<Element> *p)
     Element   *pe;
     Node      *pn;
 
+    Q3PtrList<Element> P;
+    auto p=&P;
 
     // test all components *********************************
     // Insert components before wires in order to prevent short-cut removal.
@@ -1889,7 +1891,7 @@ int Schematic::cropSelectedElements(Q3PtrList<Element> *p)
             pd = Diagrams->next();
         }
 
-    return count;
+    return P;
 }
 
 // ---------------------------------------------------
