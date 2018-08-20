@@ -461,7 +461,7 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
   MAy3 = MAy1 = MAy2 - MAy1;
 
   movingElements.clear();
-  Doc->copySelectedElements(&movingElements);
+  Doc->cropSelectedElements(&movingElements);
   Doc->viewport()->repaint();
 
   Wire *pw;
