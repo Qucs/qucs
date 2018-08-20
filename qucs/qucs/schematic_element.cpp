@@ -929,7 +929,7 @@ Marker* Schematic::setMarker(int x, int y)
 
 // ---------------------------------------------------
 // Moves the marker pointer left/right on the graph.
-void Schematic::markerLeftRight(bool left, Q3PtrList<Element> *Elements)
+void Schematic::markerLeftRight(bool left, Q3PtrList<ElementGraphics> *Elements)
 {
     bool acted = false;
     for(auto i : *Elements) {
@@ -943,8 +943,8 @@ void Schematic::markerLeftRight(bool left, Q3PtrList<Element> *Elements)
 }
 
 // ---------------------------------------------------
-// Moves the marker pointer up/down on the more-dimensional graph.
-void Schematic::markerUpDown(bool up, Q3PtrList<Element> *Elements)
+// Move the marker pointer up/down on the more-dimensional graph.
+void Schematic::markerUpDown(bool up, Q3PtrList<ElementGraphics> *Elements)
 {
     Marker *pm;
     bool acted = false;
@@ -1781,6 +1781,9 @@ void Schematic::newMovingWires(Q3PtrList<Element> *p, Node *pn, int pos)
 // returns the number of "copied" _Markers_ only
 Q3PtrList<ElementGraphics> Schematic::cropSelectedElements()
 {
+    Q3PtrList<ElementGraphics> P;
+    auto p=&P;
+
 #ifndef USE_SCROLLVIEW
     assert(scene());
     for(auto i : scene()->selectedItems()){
@@ -1791,7 +1794,7 @@ Q3PtrList<ElementGraphics> Schematic::cropSelectedElements()
 	}
     }
 
-    return 0;
+    return P;
 #else // does not work with ElementGraphics
     int i, count = 0;
     Component *pc;
@@ -1799,9 +1802,6 @@ Q3PtrList<ElementGraphics> Schematic::cropSelectedElements()
     Diagram   *pd;
     Element   *pe;
     Node      *pn;
-
-    Q3PtrList<Element> P;
-    auto p=&P;
 
     // test all components *********************************
     // Insert components before wires in order to prevent short-cut removal.
