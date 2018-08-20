@@ -987,6 +987,12 @@ void QucsApp::slotAddToProject()
   statusBar()->showMessage(tr("Ready."));
 }
 
+// tmp
+static Marker const* marker(Element const* e)
+{
+  return dynamic_cast<Marker const*>(e);
+}
+
 // -----------------------------------------------------------
 void QucsApp::slotCursor(arrow_dir_t dir)
 {
@@ -999,7 +1005,13 @@ void QucsApp::slotCursor(arrow_dir_t dir)
     // for edit of component property ?
     Q3PtrList<Element> movingElements;
     Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-    int markerCount = Doc->cropSelectedElements(&movingElements);
+    movingElements = Doc->cropSelectedElements();
+    int markerCount=0;
+    for(auto const& i : movingElements){
+      if(marker(i)){
+	++markerCount;
+      }
+    }
 
     if((movingElements.count() - markerCount) < 1) { // all selections are markers
       if(markerCount > 0) {  // only move marker if nothing else selected
