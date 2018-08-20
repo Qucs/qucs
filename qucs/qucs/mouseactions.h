@@ -156,7 +156,12 @@ public:
   ElementMouseAction focusElement; // BUG: use focusMEvent instead
   QMouseEvent *focusMEvent;
 
-  int  MAx1, MAy1,MAx2, MAy2, MAx3, MAy3;  // cache for mouse movements
+private:
+  void Set2(QMouseEvent*, Schematic const*);
+  void Set3(QMouseEvent*, Schematic const*);
+public: // BUG
+  int MAx1, MAy1, MAx2, MAy2;
+  int MAx3, MAy3;
 private:
   Q3PtrList<ElementGraphics> movingElements;
 public:
