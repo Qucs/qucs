@@ -1008,7 +1008,7 @@ void QucsApp::slotCursor(arrow_dir_t dir)
   }
   if(editText->isHidden()) {
     // for edit of component property ?
-    Q3PtrList<Element> movingElements;
+    Q3PtrList<ElementGraphics> movingElements;
     Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
     movingElements = Doc->cropSelectedElements();
     int markerCount=0;
@@ -1019,6 +1019,8 @@ void QucsApp::slotCursor(arrow_dir_t dir)
     }
 
     if((movingElements.count() - markerCount) < 1) { // all selections are markers
+      incomplete();
+#if 0
       if(markerCount > 0) {  // only move marker if nothing else selected
 	Doc->markerMove(dir, &movingElements);
       } else if(dir==arr_up) {
@@ -1037,6 +1039,7 @@ void QucsApp::slotCursor(arrow_dir_t dir)
       }else{
 	// unreachable. TODO: switch
       }
+#endif
 
       Doc->viewport()->update();
       view->drawn = false;
