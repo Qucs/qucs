@@ -77,12 +77,18 @@ public:
   #define COMP_IS_SHORTEN 2
   int  isActive; // should it be used in simulation or not ?
   int  tx, ty;   // upper left corner of text (position)
+
+// private: // TODO
   bool showName;
 
 public:
   QString const& obsolete_model_hack() const{
 	  // BUG. do not use
 	  return Model;
+  }
+  void setName(QString x){
+	  // FIXME move to Element.
+	  Name = x;
   }
   QString const& name() const{
 	  // yikes. this should not be necessary
@@ -102,7 +108,7 @@ public:
 private:
 protected: // BUG
   QString Model;
-protected: // BUG
+protected: // BUG => Element.
   QString Name;
 protected: // BUG
   QString  Description;
