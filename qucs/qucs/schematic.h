@@ -228,6 +228,8 @@ private:
   // Frame *SchematicFrame;
 public:
   SchematicScene *sceneHACK() { return Scene; }
+
+  void deselectElements();
 #endif
 
 public: // model

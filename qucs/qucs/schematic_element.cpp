@@ -997,10 +997,10 @@ ElementMouseAction MouseActions::selectElement(Schematic* Doc,
 	   // The element can be deselected
 	   pc->setSelected(!pc->isSelected());
 	   return ElementMouseAction(pc);
-       }else if(pe_sel) {
+       }else if(pe_sel) { untested();
 	   pe_sel->setSelected(false);
 	   return ElementMouseAction(pc);
-       }else if(pe_1st == 0) {
+       }else if(!pe_1st) { untested();
 	   incomplete();
 	   // give access to elements lying beneath
 	   pe_1st = element(pc);
@@ -1433,7 +1433,8 @@ void Schematic::highlightWireLabels ()
 void MouseActions::deselectElements(Schematic* Doc, ElementMouseAction e)
 {
 #ifndef USE_SCROLLVIEW
-incomplete();
+    Doc->deselectElements();
+    e->setSelected(true); //?!
 #else
     // test all components
     for(auto* pc : Doc->components()){
@@ -1774,6 +1775,23 @@ void Schematic::newMovingWires(Q3PtrList<Element> *p, Node *pn, int pos)
     // x1, x2, y2 moving
     p->insert(pos, new Wire(pn->cx_(), pn->cy_(), pn->cx_(), pn->cy_(), (Node*)1, (Node*)3));
 }
+
+#ifndef USE_SCROLLVIEW
+void Schematic::deselectElements()
+{ untested();
+    assert(scene());
+    while(scene()->selectedItems().size()){ untested();
+	auto i=scene()->selectedItems().first();
+	if(auto x=dynamic_cast<ElementGraphics*>(i)){ untested();
+	    // BUG: selected state is stored in element.
+	    x->setSelected(false);
+	}else{ untested();
+	    // ?
+	}
+    }
+
+}
+#endif
 
 // ---------------------------------------------------
 // For moving of elements: Copies all selected elements into the
