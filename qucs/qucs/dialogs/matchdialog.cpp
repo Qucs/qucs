@@ -878,6 +878,9 @@ QString MatchDialog::getImageFrom_XB(bool first_series, double X, double B)
 // Antonio M. Pavio, Ulrich P. Rohde. 2nd Edition. p. 251-252. Wiley
 QString MatchDialog::calcMatchingLC(struct NetworkParams params) {
   double RL, XL, Z0;
+  QMessageBox msgBox;//Informs the user about the two candidate networks
+  QString message;
+
   if (params.network == SINGLE_PORT)
   {
       RL = params.S11real, XL = params.S11imag;
@@ -925,8 +928,19 @@ QString MatchDialog::calcMatchingLC(struct NetworkParams params) {
       X2 = -sqrt(RL*(Z0-RL))-XL;
       B2 = -sqrt((Z0-RL)/RL)/Z0;
 
-    QMessageBox msgBox;
-    msgBox.setText("L-section design");
+    switch (params.network){
+    case SINGLE_PORT:
+        message = "L-section design";
+        break;
+    case TWO_PORT_INPUT:
+        message = "L-section design: Input matching";
+        break;
+    case TWO_PORT_OUTPUT:
+        message = "L-section design: Output matching";
+        break;
+    }
+
+    msgBox.setText(message);
     msgBox.setInformativeText("Please select a solution");
     //Add buttons
     //Solution 1
@@ -972,8 +986,19 @@ QString MatchDialog::calcMatchingLC(struct NetworkParams params) {
       B2 = (XL - sqrt(RL/Z0)*sqrt(RL*RL + XL*XL - Z0*RL))/(RL*RL + XL*XL);
       X2 = 1/B2 + XL*Z0/RL - Z0/(B2*RL);
 
-    QMessageBox msgBox;
-    msgBox.setText("L-section design");
+    switch (params.network){
+    case SINGLE_PORT:
+        message = "L-section design";
+        break;
+    case TWO_PORT_INPUT:
+        message = "L-section design: Input matching";
+        break;
+    case TWO_PORT_OUTPUT:
+        message = "L-section design: Output matching";
+        break;
+    }
+
+    msgBox.setText(message);
     msgBox.setInformativeText("Please select a solution");
     //Add buttons
     //Solution 1
