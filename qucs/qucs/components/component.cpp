@@ -798,13 +798,10 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   }
   s = s.mid(1, s.length()-2);   // cut off start and end character
 
-  QString n;
-  if(c->name() == "*"){
-    c->obsolete_name_override_hack("");
-  }else{
-    c->obsolete_name_override_hack(s.section(' ',1,1));
-  }
+  QString label=s.section(' ',1,1);
+  c->setName(label);
 
+  QString n;
   n  = s.section(' ',2,2);      // isActive
   tmp = n.toInt(&ok);
   if(!ok){
@@ -812,10 +809,11 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   }
   c->isActive = tmp & 3;
 
-  if(tmp & 4)
+  if(tmp & 4){
     c->showName = false;
-  else
-    c->showName = true;
+  }else{
+    // use default, e.g. never show name for GND (bug?)
+  }
 
   n  = s.section(' ',3,3);    // cx
   c->cx = n.toInt(&ok);
