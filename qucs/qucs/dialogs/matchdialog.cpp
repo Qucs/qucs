@@ -857,16 +857,16 @@ QString MatchDialog::getImageFrom_XB(bool first_series, double X, double B)
       if (B < 0)//Shunt inductor
       {
           if (X > 0)
-              return ":/bitmaps/matching/LPLP.png";
+              return ":/bitmaps/matching/LPLS.png";
           else
-              return ":/bitmaps/matching/LPCP.png";
+              return ":/bitmaps/matching/LPCS.png";
       }
       else//Shunt inductor
       {
           if (X > 0)
-              return ":/bitmaps/matching/CPLP.png";
+              return ":/bitmaps/matching/CPLS.png";
           else
-              return ":/bitmaps/matching/CPCP.png";
+              return ":/bitmaps/matching/CPCS.png";
       }
   }
 }
@@ -911,8 +911,7 @@ QString MatchDialog::calcMatchingLC(struct NetworkParams params) {
   int solution;
   QString laddercode = "";
 
-  if (params.r_real < 0) {
-    // Z0 > ZL
+  if (Z0 > RL) {
     // ZS -------- X -- ZL
     //       |
     //       B
@@ -948,7 +947,7 @@ QString MatchDialog::calcMatchingLC(struct NetworkParams params) {
     else               X = X2, B = B2;
 
 
-    if (B < 0)  //Capacitor
+    if (B > 0)  //Capacitor
         C = B/w0,         laddercode += QString("CP:%1;").arg(C);
     else        //Inductor
         L = -1/(w0*B),    laddercode += QString("LP:%1;").arg(L);
@@ -959,7 +958,7 @@ QString MatchDialog::calcMatchingLC(struct NetworkParams params) {
         L = X/w0,         laddercode += QString("LS:%1;").arg(L);
 
   } else {
-      // Z0 < ZL
+      // Z0 < RL
       // ZS --- X  ------- ZL
       //              |
       //              B
