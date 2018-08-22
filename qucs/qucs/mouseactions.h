@@ -147,6 +147,7 @@ public:
   MouseActions(QucsApp*);
   virtual ~MouseActions();
 
+  void setPainter(Schematic*);
   bool pasteElements(Schematic*);
   void editElement(Schematic*, QMouseEvent*);
   void editLabel(Schematic*, WireLabel*);
@@ -157,6 +158,7 @@ public:
   QMouseEvent *focusMEvent;
 
 private:
+  void Set1(QMouseEvent*, Schematic const*);
   void Set2(QMouseEvent*, Schematic const*);
   void Set3(QMouseEvent*, Schematic const*);
 public: // BUG

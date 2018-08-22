@@ -75,6 +75,11 @@ MouseActions::~MouseActions()
 }
 
 // -----------------------------------------------------------
+void MouseActions::setPainter(Schematic *)
+{
+}
+
+// -----------------------------------------------------------
 bool MouseActions::pasteElements(Schematic *Doc)
 { untested();
   QClipboard *cb = QApplication::clipboard();   // get system clipboard
@@ -397,6 +402,13 @@ void MouseActions::MMoveWire2(Schematic *Doc, QMouseEvent *Event)
   Doc->viewport()->update();
 }
 
+void MouseActions::Set1(QMouseEvent* Event, Schematic const* Doc)
+{
+  QPointF pos=Doc->mapToScene(Event->pos());
+  MAx1 = pos.x();
+  MAy1 = pos.y();
+}
+
 void MouseActions::Set2(QMouseEvent* Event, Schematic const* Doc)
 {
   QPointF pos=Doc->mapToScene(Event->pos());
@@ -449,10 +461,10 @@ void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
 
 // -----------------------------------------------------------
 void MouseActions::MMoveResizePainting(Schematic *Doc, QMouseEvent *Event)
-{ untested();
-  QPointF pos=Doc->mapToScene(Event->pos());
-  MAx1 = pos.x();
-  MAy1 = pos.y();
+{
+  setPainter(Doc);
+
+  Set1(Event, Doc);
   Doc->setOnGrid(MAx1, MAy1);
 
   if(auto p=painting(focusElement)){ untested();
@@ -466,7 +478,9 @@ void MouseActions::MMoveResizePainting(Schematic *Doc, QMouseEvent *Event)
 // -----------------------------------------------------------
 // Moves components by keeping the mouse button pressed.
 void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
-{ untested();
+{
+  setPainter(Doc);
+
   Set2(Event, Doc);
 
   Doc->setOnGrid(MAx2, MAy2);
@@ -520,7 +534,9 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
 // -----------------------------------------------------------
 // Moves components by keeping the mouse button pressed.
 void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
-{ untested();
+{
+  setPainter(Doc);
+
   Set2(Event, Doc);
 
   if(drawn) // erase old scheme
@@ -557,10 +573,8 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
  * @param Event
  */
 void MouseActions::MMovePaste(Schematic *Doc, QMouseEvent *Event)
-{ untested();
-  QPointF pos=Doc->mapToScene(Event->pos());
-  MAx1 = pos.x();
-  MAy1 = pos.y();
+{
+  Set1(Event, Doc);
   moveElements(Doc,MAx1,MAy1);
   paintElementsScheme(Doc);
 
@@ -599,10 +613,8 @@ void MouseActions::MMoveScrollBar(Schematic *Doc, QMouseEvent *Event)
 * @param Event
 */
 void MouseActions::MMoveDelete(Schematic *Doc, QMouseEvent *Event)
-{ untested();
-  QPointF pos=Doc->mapToScene(Event->pos());
-  MAx3 = pos.x();
-  MAy3 = pos.y();
+{
+  Set3(Event, Doc);
 
   // cannot draw on the viewport, it is displaced by the size of dock and toolbar
   Doc->PostPaintEvent (_Line, MAx3-15, MAy3-15, MAx3+15, MAy3+15,0,0,false);
@@ -616,10 +628,8 @@ void MouseActions::MMoveDelete(Schematic *Doc, QMouseEvent *Event)
  * @param Event
  */
 void MouseActions::MMoveLabel(Schematic *Doc, QMouseEvent *Event)
-{ untested();
-  QPointF pos=Doc->mapToScene(Event->pos());
-  MAx3 = pos.x();
-  MAy3 = pos.y();
+{
+  Set3(Event, Doc);
 
   // paint marker
   Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx3+10, MAy3-10);
@@ -639,10 +649,8 @@ void MouseActions::MMoveLabel(Schematic *Doc, QMouseEvent *Event)
  * @param Event
  */
 void MouseActions::MMoveMarker(Schematic *Doc, QMouseEvent *Event)
-{ untested();
-  QPointF pos=Doc->mapToScene(Event->pos());
-  MAx3 = pos.x();
-  MAy3 = pos.y();
+{
+  Set3(Event, Doc);
 
   Doc->PostPaintEvent (_Line, MAx3, MAy3-2, MAx3-8, MAy3-10);
   Doc->PostPaintEvent (_Line, MAx3+1, MAy3-3, MAx3+8, MAy3-10);
@@ -656,10 +664,8 @@ void MouseActions::MMoveMarker(Schematic *Doc, QMouseEvent *Event)
  * @param Event
  */
 void MouseActions::MMoveMirrorY(Schematic *Doc, QMouseEvent *Event)
-{ untested();
-  QPointF pos=Doc->mapToScene(Event->pos());
-  MAx3 = pos.x();
-  MAy3 = pos.y();
+{
+  Set3(Event, Doc);
 
   Doc->PostPaintEvent (_Line, MAx3-11, MAy3-4, MAx3-9, MAy3-9);
   Doc->PostPaintEvent (_Line, MAx3-11, MAy3-3, MAx3-6, MAy3-3);
@@ -675,10 +681,8 @@ void MouseActions::MMoveMirrorY(Schematic *Doc, QMouseEvent *Event)
  * @param Event
  */
 void MouseActions::MMoveMirrorX(Schematic *Doc, QMouseEvent *Event)
-{ untested();
-  QPointF pos=Doc->mapToScene(Event->pos());
-  MAx3 = pos.x();
-  MAy3 = pos.y();
+{
+  Set3(Event, Doc);
 
   Doc->PostPaintEvent (_Line, MAx3-4, MAy3-11, MAx3-9, MAy3-9);
   Doc->PostPaintEvent (_Line, MAx3-3, MAy3-11, MAx3-3, MAy3-6);
@@ -693,10 +697,8 @@ void MouseActions::MMoveMirrorX(Schematic *Doc, QMouseEvent *Event)
  * @param Event
  */
 void MouseActions::MMoveRotate(Schematic *Doc, QMouseEvent *Event)
-{ untested();
-  QPointF pos=Doc->mapToScene(Event->pos());
-  MAx3 = pos.x();
-  MAy3 = pos.y();
+{
+  Set3(Event, Doc);
 
   Doc->PostPaintEvent (_Line, MAx3-6, MAy3+8, MAx3-6, MAy3+1);
   Doc->PostPaintEvent (_Line, MAx3-7, MAy3+8, MAx3-12, MAy3+8);
@@ -710,10 +712,8 @@ void MouseActions::MMoveRotate(Schematic *Doc, QMouseEvent *Event)
  * @param Event
  */
 void MouseActions::MMoveActivate(Schematic *Doc, QMouseEvent *Event)
-{ untested();
-  QPointF pos=Doc->mapToScene(Event->pos());
-  MAx3 = pos.x();
-  MAy3 = pos.y();
+{
+  Set3(Event, Doc);
 
   Doc->PostPaintEvent (_Rect, MAx3, MAy3-9, 14, 10);
   Doc->PostPaintEvent (_Line, MAx3, MAy3-9, MAx3+13, MAy3);
@@ -727,10 +727,8 @@ void MouseActions::MMoveActivate(Schematic *Doc, QMouseEvent *Event)
  * @param Event
  */
 void MouseActions::MMoveOnGrid(Schematic *Doc, QMouseEvent *Event)
-{ untested();
-  QPointF pos=Doc->mapToScene(Event->pos());
-  MAx3 = pos.x();
-  MAy3 = pos.y();
+{
+  Set3(Event, Doc);
 
   Doc->PostPaintEvent (_Line, MAx3+10, MAy3+ 3, MAx3+25, MAy3+3);
   Doc->PostPaintEvent (_Line, MAx3+10, MAy3+ 7, MAx3+25, MAy3+7);
@@ -747,7 +745,7 @@ void MouseActions::MMoveOnGrid(Schematic *Doc, QMouseEvent *Event)
  * @param Event
  */
 void MouseActions::MMoveMoveTextB(Schematic *Doc, QMouseEvent *Event)
-{ untested();
+{
   Set3(Event, Doc);
 
   Doc->PostPaintEvent (_Line, MAx3+14, MAy3   , MAx3+16, MAy3);
@@ -767,7 +765,7 @@ void MouseActions::MMoveMoveTextB(Schematic *Doc, QMouseEvent *Event)
  * @param Event
  */
 void MouseActions::MMoveMoveText(Schematic *Doc, QMouseEvent *Event)
-{ untested();
+{
   QPointF pos=Doc->mapToScene(Event->pos());
   int newX=pos.x();
   int newY=pos.y();
@@ -787,7 +785,7 @@ void MouseActions::MMoveMoveText(Schematic *Doc, QMouseEvent *Event)
  * @param Event
  */
 void MouseActions::MMoveZoomIn(Schematic *Doc, QMouseEvent *Event)
-{ untested();
+{
   Set3(Event, Doc);
 
   Doc->PostPaintEvent (_Line, MAx3+14, MAy3   , MAx3+22, MAy3);
