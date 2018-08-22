@@ -75,6 +75,11 @@ MouseActions::~MouseActions()
 }
 
 // -----------------------------------------------------------
+void MouseActions::setPainter(Schematic *)
+{
+}
+
+// -----------------------------------------------------------
 bool MouseActions::pasteElements(Schematic *Doc)
 {
   QClipboard *cb = QApplication::clipboard();   // get system clipboard
