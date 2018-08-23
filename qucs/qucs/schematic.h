@@ -144,7 +144,8 @@ public:
 
   void    cut();
   void    copy();
-  bool    paste(QTextStream*, EGPList*);
+  template<class SOME_LIST>
+  bool    paste(QTextStream*, SOME_LIST*);
   bool    load();
   int     save();
   int     saveSymbolCpp (void);
@@ -496,5 +497,13 @@ public: // need access to SchematicModel. grr
   friend class MouseActions;
   friend class ImageWriter;
 };
+
+// ---------------------------------------------------
+// Performs paste function from clipboard
+template<class SOME_LIST>
+inline bool Schematic::paste(QTextStream *stream, SOME_LIST *pe)
+{ untested();
+  return pasteFromClipboard(stream, pe);
+}
 
 #endif

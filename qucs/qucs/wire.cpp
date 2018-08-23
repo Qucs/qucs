@@ -204,3 +204,11 @@ bool Wire::load(const QString& _s)
 
   return true;
 }
+
+// ----------------------------------------------------------------
+QRectF Wire::boundingRect() const
+{ itested();
+  return QRectF(x1-5, y1-5, x2-x1+10, y2-y1+10);
+}
+
+// vim:ts=8:sw=2:et

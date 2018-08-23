@@ -82,3 +82,12 @@ void Node::setName(const QString& Name_, const QString& Value_, int x_, int y_)
   Label->pOwner = this;
   Label->initValue = Value_;
 }
+
+// ----------------------------------------------------------------
+QRectF Node::boundingRect() const
+{
+  QRectF b(cx-4,cy-4,8,8);
+  return b;
+}
+
+// vim:ts=8:sw=2:et

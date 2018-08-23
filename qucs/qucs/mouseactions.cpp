@@ -86,9 +86,13 @@ bool MouseActions::pasteElements(Schematic *Doc)
   QString s = cb->text(QClipboard::Clipboard);
   QTextStream stream(&s, QIODevice::ReadOnly);
   movingElements.clear();
-  incomplete();
-#if 0
-  if(!Doc->paste(&stream, &movingElements)) return false;
+#if 1
+  if(!Doc->paste(&stream, &movingElements)){
+    // something went wrong during parse.
+    // throw?!
+    return false;
+  }else{
+  }
 
   int xmax, xmin, ymax, ymin;
   xmin = ymin = INT_MAX;
@@ -307,19 +311,18 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
 
 
   //QPainter painter(Doc->viewport());
-  TODO("Sort out contentsX");
-  /*
-  if(selElem->Type == isPainting) { untested();
+  if(auto P=painting(selElem)) { untested();
     Doc->PostPaintEvent (_NotRop, 0,0,0,0);
+    incomplete();
+#if 0
     x -= Doc->contentsX();
     y -= Doc->contentsY();
-    ((Painting*)selElem)->MouseMoving(Doc, x, y, gx, gy,
-                                       Doc, x, y, drawn);
+#endif
+    P->MouseMoving(Doc, x, y, gx, gy, Doc, x, y, drawn);
     drawn = true;
     Doc->viewport()->update();
     return;
   }  // of "if(isPainting)"
-  */
 
   // ********** it is a component or diagram
   if(drawn) selElem->paintScheme(Doc); // erase old scheme
@@ -447,7 +450,7 @@ void MouseActions::MMoveWire1(Schematic *Doc, QMouseEvent *Event)
  * @param Event
  */
 void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
-{ untested();
+{
   //qDebug() << "MMoveSelect " << "select area";
   Set2(Event, Doc);
   if(isMoveEqual) {    // x and y size must be equal ?
@@ -809,12 +812,8 @@ void MouseActions::MMoveZoomIn(Schematic *Doc, QMouseEvent *Event)
 // Is called from several MousePress functions to show right button menu.
 void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
 { untested();
-  QPointF pos=Doc->mapToScene(Event->pos());
-  float fX=pos.x();
-  float fY=pos.y();
+  Set1(Event, Doc);
 
-  MAx1 = int(fX);
-  MAy1 = int(fY);
   focusElement = selectElement(Doc, Event->pos(), false);
 
   if(focusElement){  // remove special function (4 least significant bits)
@@ -829,7 +828,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
   ComponentMenu->clear();
   { untested();
     if(focusElement) { untested();
-      focusElement->setSelected();
+      focusElement->setSelected(true);
       QAction *editProp = new QAction(QObject::tr("Edit Properties"), QucsMain);
       QucsMain->connect(editProp, SIGNAL(triggered()), SLOT(slotEditElement()));
       ComponentMenu->addAction(editProp);
