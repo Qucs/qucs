@@ -158,6 +158,8 @@ private:
   // Frame *SchematicFrame;
 #endif
 
+  Component* find_component(QString const&);
+
 // TODO: const access ONLY
   ComponentList& components(){
 	  return DocModel.components();
