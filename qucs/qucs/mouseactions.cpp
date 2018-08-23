@@ -181,8 +181,7 @@ void MouseActions::endElementMoving(Schematic *Doc, EGPList *movElements)
 { untested();
   for(auto pe : *movElements){ untested();
 //    pe->setSelected(false);  // deselect first (maybe afterwards pe == NULL)
-    switch(pe->Type) { // FIXME: use casts.
-      case isWire:
+    if(wire(pe)){ untested();
         if(pe->x1_() == pe->x2_())
           if(pe->y1_() == pe->y2_()) { untested();
             // Delete wires with zero length, but preserve label.
@@ -196,25 +195,18 @@ void MouseActions::endElementMoving(Schematic *Doc, EGPList *movElements)
 
 	Doc->insertWire((Wire*)pe);
 	break;
-      case isDiagram:
+    }else if(diagram(pe)){ untested();
 	Doc->Diagrams->append((Diagram*)pe);
-	break;
-      case isPainting:
+    }else if(painting(pe)){ untested();
 	Doc->Paintings->append((Painting*)pe);
-	break;
-      case isComponent:
-      case isAnalogComponent:
-      case isDigitalComponent:
-	Doc->insertRawComponent((Component*)pe, false);
-	break;
-      case isMovingLabel:
-      case isHMovingLabel:
-      case isVMovingLabel:
-	Doc->insertNodeLabel((WireLabel*)pe);
-	break;
-      case isMarker:
-	assert(dynamic_cast<Marker*>(pe));
-	break;
+    }else if(auto c=component(pe)){ untested();
+      qDebug() << "type" << pe->Type << c->name();
+	Doc->insertRawComponent(c, false);
+    }else if(auto w=wireLabel(pe)){ untested();
+	Doc->insertNodeLabel(w);
+    }else if(marker(pe)){ untested();
+      //?
+    }else{ untested();
     }
   }
 
