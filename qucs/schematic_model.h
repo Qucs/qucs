@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /***************************************************************************
                               schematic_model.h
                              --------------------
@@ -56,7 +57,7 @@ class SchematicLanguage;
 // currently containging chunks/cruft from legacy Schematic implementation
 class SchematicModel{
 private:
-	SchematicModel() = delete;
+	SchematicModel(){}
 #if 0
 	SchematicModel() : _doc(nullptr),
 	_symbol(new SchematicSymbol());
@@ -140,6 +141,7 @@ private: // TODO: actually store here.
 	PaintingList& paintings();
 	ComponentList& components();
 	PaintingList& symbolPaints();
+	PaintingList& symbolPaintings();
 public:
 	WireList const& wires() const;
 	NodeList const& nodes() const;
@@ -163,6 +165,17 @@ private:
 	NodeList Nodes;
 	DiagramList Diagrams;
 	PaintingList SymbolPaints;
+
+	Schematic* doc();
+	QString const& portType(int i) const{
+		return PortTypes[i];
+	}
+private: // TODO: remove. store parent in ElementGraphics.
+	Schematic* const _doc;
+private:
+	ComponentList Components;
+	NodeList Nodes;
+	DiagramList Diagrams;
 	WireList Wires;
 //	SchematicSymbol* _symbol;
 	QStringList PortTypes;
