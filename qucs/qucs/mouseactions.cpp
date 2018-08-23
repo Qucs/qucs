@@ -231,7 +231,7 @@ void MouseActions::moveElements(EGPList& what, int x, int y)
 { itested();
   auto movElements=&what;
   Wire *pw;
-  for(auto pe : *movElements) { untested();
+  for(auto pe : *movElements) { itested();
     if(pe->Type == isWire) { untested();
       pw = (Wire*)pe;   // connected wires are not moved completely
 
@@ -1889,16 +1889,16 @@ void MouseActions::rotateElements(Schematic *Doc, int& x1, int& y1)
 // -----------------------------------------------------------
 void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 { untested();
-  incomplete();
-#if 0
+#if 1
   int x1, y1, x2, y2, rot;
   QFileInfo Info(Doc->docName());
   //QPainter painter(Doc->viewport());
+  QPointF pos=Doc->mapToScene(Event->pos());
 
   switch(Event->button()) {
   case Qt::LeftButton :
     // insert all moved elements into document
-    for(auto pe = movingElements.first(); pe!=0; pe = movingElements.next()) { untested();
+    for(auto pe : movingElements){
       pe->setSelected(false);
       switch(pe->Type) {
 	case isWire:
@@ -1906,12 +1906,12 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 	    if(pe->y1_() == pe->y2_())  break;
 	  }
 	  Doc->insertWire((Wire*)pe);
-	  if (Doc->Wires->containsRef ((Wire*)pe))
+	  if (Doc->wires().containsRef ((Wire*)pe))
 	    Doc->enlargeView(pe->x1_(), pe->y1_(), pe->x2_(), pe->y2_());
 	  else pe = NULL;
 	  break;
 	case isDiagram:
-      Doc->Diagrams->append((Diagram*)pe);
+      Doc->diagrams().append((Diagram*)pe);
       ((Diagram*)pe)->loadGraphData(Info.path() + QDir::separator() +
 					Doc->DataSet);
 	  Doc->enlargeView(pe->cx_(), pe->cy_()-pe->y2_(), pe->cx_()+pe->x2_(), pe->cy_());
@@ -1959,8 +1959,9 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
       paintElementsScheme(Doc);
     drawn = true;
 
-    x1 = DOC_X_POS(Event->pos().x());
-    y1 = DOC_Y_POS(Event->pos().y());
+    x1 = pos.x();
+    y1 = pos.y();
+
     rotateElements(Doc,x1,y1);
     paintElementsScheme(Doc);
     // save rotation
