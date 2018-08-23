@@ -1492,9 +1492,7 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
     y1 = cy1;
     y2 = cy2;
 
-    // test all components
-    for(Component *pc = components().first(); pc != 0; pc = components().next())
-    {
+    for(auto pc : components()) {
         pc->Bounding(cx1, cy1, cx2, cy2);
         if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2)
                     {
@@ -2506,9 +2504,10 @@ void Schematic::setComponentNumber(Component *c)
     QString cSign = c->obsolete_model_hack();
     Component *pc;
     // First look, if the port number already exists.
-    for(pc = components().first(); pc != 0; pc = components().next())
+    for(pc = components().first(); pc!=0; pc = components().next()){
         if(pc->obsolete_model_hack() == cSign)
             if(pc->Props.getFirst()->Value == s) break;
+    }
     if(!pc) return;   // was port number not yet in use ?
 
     // Find the first free number.
@@ -2703,13 +2702,14 @@ void Schematic::insertComponent(Component *c)
     {
         // determines the name by looking for names with the same
         // prefix and increment the number
-        for(Component *pc = components().first(); pc != 0; pc = components().next())
+        for(auto pc : components()){
             if(pc->name().left(len) == c->name())
             {
                 s = pc->name().right(pc->name().length()-len);
                 z = s.toInt(&ok);
                 if(ok) if(z >= max) max = z + 1;
             }
+	}
         c->obsolete_name_override_hack(
 	    c->name() + QString::number(max));  // create name with new number
     }
@@ -2734,8 +2734,7 @@ void Schematic::activateCompsWithinRect(int x1, int y1, int x2, int y2)
     y2 = cy2;
 
 
-    for(Component *pc = components().first(); pc != 0; pc = components().next())
-    {
+    for(auto pc : components()) {
         pc->Bounding(cx1, cy1, cx2, cy2);
         if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2)
                     {
@@ -2767,8 +2766,7 @@ void Schematic::activateCompsWithinRect(int x1, int y1, int x2, int y2)
 bool Schematic::activateSpecifiedComponent(int x, int y)
 {
     int x1, y1, x2, y2, a;
-    for(Component *pc = components().first(); pc != 0; pc = components().next())
-    {
+    for(auto pc : components()) {
         pc->Bounding(x1, y1, x2, y2);
         if(x >= x1) if(x <= x2) if(y >= y1) if(y <= y2)
                     {
@@ -2801,7 +2799,7 @@ bool Schematic::activateSelectedComponents()
 {
     int a;
     bool sel = false;
-    for(Component *pc = components().first(); pc != 0; pc = components().next())
+    for(auto pc : components()) {
         if(pc->isSelected())
         {
             a = pc->isActive - 1;
@@ -2823,6 +2821,7 @@ bool Schematic::activateSelectedComponents()
             }
             sel = true;
         }
+    }
 
     if(sel) setChanged(true, true);
     return sel;
@@ -2893,8 +2892,7 @@ Component* Schematic::searchSelSubcircuit()
 {
     Component *sub=0;
     // test all components
-    for(Component *pc = components().first(); pc != 0; pc = components().next())
-    {
+    for(auto pc : components()) {
         if(!pc->isSelected()) continue;
 
         if(pc->obsolete_model_hack() != "Sub"){
@@ -2912,11 +2910,12 @@ Component* Schematic::searchSelSubcircuit()
 Component* Schematic::selectedComponent(int x, int y)
 {
     // test all components
-    for(Component *pc = components().first(); pc != 0; pc = components().next())
+    for(auto pc : components()) {
         if(pc->getSelected(x, y))
             return pc;
+    }
 
-    return 0;
+    return nullptr;
 }
 
 // ---------------------------------------------------
@@ -2964,15 +2963,14 @@ int Schematic::copyComponents(int& x1, int& y1, int& x2, int& y2,
 }
 
 // ---------------------------------------------------
+// ???
 void Schematic::copyComponents2(int& x1, int& y1, int& x2, int& y2,
                                 QList<Element *> *ElementCache)
 {
     Component *pc;
     // find bounds of all selected components
-    for(pc = components().first(); pc != 0; )
-    {
-        if(pc->isSelected())
-        {
+    for(pc = components().first(); pc != 0; ) {
+        if(pc->isSelected()) {
             // is better for unsymmetrical components
             if(pc->cx_() < x1)  x1 = pc->cx_();
             if(pc->cx_() > x2)  x2 = pc->cx_();
