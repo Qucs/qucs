@@ -99,48 +99,6 @@ class ElementGraphics;
 #define SchematicBase QGraphicsView
 #endif
 
-class SchematicModel{
-private:
-  SchematicModel(){}
-public:
-  SchematicModel(Schematic* s);
-public: // stuff saved from Schematic
-  QString createClipboardFile();
-  void sizeOfAll(int&, int&, int&, int&, float) const;
-  void simpleInsertComponent(Component* c);
-  void simpleInsertWire(Wire*);
-public:
-  bool loadDocument(QFile& /*BUG*/ file);
-  bool loadPaintings(QTextStream*, PaintingList*);
-  bool loadProperties(QTextStream*);
-  bool loadComponents(QTextStream*);
-  bool loadDiagrams(QTextStream*);
-  bool loadWires(QTextStream*);
-
-  void clear();
-
-public: // scene interaction
-  void toScene(QGraphicsScene& s) const;
-public: // obsolete.
-  static void saveComponent(QTextStream& s, Component /* FIXME const */* c);
-private: // TODO: actually store here.
-  WireList& wires();
-  NodeList& nodes();
-  DiagramList& diagrams();
-  PaintingList& paintings();
-  ComponentList& components();
-  PaintingList& symbolPaintings();
-public:
-  WireList const& wires() const;
-  NodeList const& nodes() const;
-  DiagramList const& diagrams() const;
-  PaintingList const& paintings() const;
-  ComponentList const& components() const;
-
-  Schematic* doc();
-private:
-  Schematic* _doc;
-};
 
 class Schematic : public SchematicBase, public QucsDoc {
   Q_OBJECT
