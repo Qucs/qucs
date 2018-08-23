@@ -20,6 +20,8 @@
 SchematicModel::SchematicModel(Schematic* s)
   :_doc(s)
 {
+	// presumably Q3PTRlist without this is just a QList<*> (check)
+  Components.setAutoDelete(true);
 }
 
 void SchematicModel::clear()
@@ -74,9 +76,7 @@ void SchematicModel::parse(QTextStream& stream)
 // note that _doc->...() functions still involve pointer hacks
 ComponentList& SchematicModel::components()
 {
-	assert(_doc);
-	// temporary. move stuff here....
-	return _doc->components();
+	return Components;
 }
 
 WireList& SchematicModel::wires()

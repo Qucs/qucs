@@ -180,7 +180,6 @@ public: // model
   NodeList DocNodes;
   DiagramList DocDiags;
   PaintingList DocPaints;
-  ComponentList DocComps;
   SchematicModel DocModel;
 
 // private: BUG: this is insane.
@@ -188,17 +187,15 @@ public: // model
   NodeList *Nodes;
   DiagramList *Diagrams;
   PaintingList *Paintings;
-  ComponentList *Components;
+//  ComponentList *Components;
 
 // TODO: const access
 // BUG: give access to container, not to insane pointer.
   ComponentList& components(){
-	  assert(Components);
-	  return *Components;
+	  return DocModel.components();
   }
   ComponentList const& components() const{
-	  assert(Components);
-	  return *Components;
+	  return DocModel.components();
   }
   Component* find_component(QString const&);
 

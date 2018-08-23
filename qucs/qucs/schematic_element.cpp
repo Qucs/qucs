@@ -1994,6 +1994,8 @@ bool Schematic::copyComps2WiresPaints(int& x1, int& y1, int& x2, int& y2,
 int Schematic::copyElements(int& x1, int& y1, int& x2, int& y2,
                             QList<Element *> *ElementCache)
 {
+    incomplete();
+#if 0
     int bx1, by1, bx2, by2;
     wires().setAutoDelete(false);
     Components->setAutoDelete(false);
@@ -2035,6 +2037,7 @@ int Schematic::copyElements(int& x1, int& y1, int& x2, int& y2,
         }
 
     return number;
+#endif
 }
 
 // ---------------------------------------------------
