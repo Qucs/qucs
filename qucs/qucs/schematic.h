@@ -199,6 +199,8 @@ public: // model
 	  assert(Components);
 	  return *Components;
   }
+  Component* find_component(QString const&);
+
   NodeList& nodes() const{
 	  assert(Nodes);
 	  return *Nodes;
