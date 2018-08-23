@@ -39,9 +39,11 @@ public:
   bool loadWires(QTextStream*);
 
   void clear();
+public:
+  void merge(SchematicModel&);
 
 public: // scene interaction
-  void toScene(QGraphicsScene& s) const;
+  void toScene(QGraphicsScene& s, QList<ElementGraphics*>* l=nullptr) const;
 public: // obsolete.
   static void saveComponent(QTextStream& s, Component /* FIXME const */* c);
 private: // TODO: actually store here.

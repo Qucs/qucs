@@ -24,12 +24,49 @@ SchematicModel::SchematicModel(Schematic* s)
 
 void SchematicModel::clear()
 {
+	// memory leak?!
   components().clear();
   nodes().clear();
   diagrams().clear();
   wires().clear();
   paintings().clear();
   //SymbolPaints.clear(); ??
+}
+
+void SchematicModel::parse(QTextStream& stream)
+{
+	QString Line;
+  while(!stream.atEnd()) {
+    Line = stream.readLine();
+    if(Line == "<Components>") {
+      if(!loadComponents(&stream)){
+			incomplete();
+//			throw exception...
+		}
+    }else if(Line == "<Wires>") {
+      incomplete();
+//      if(!loadWires(stream, pe)) return false;
+    }else if(Line == "<Diagrams>") {
+      incomplete();
+//      if(!loadDiagrams(stream, pe)) return false;
+    }
+    else
+    if(Line == "<Paintings>") {
+      incomplete(); // ignore Paintings fo rnow.
+      PaintingList pl;
+      if(!loadPaintings(&stream, &pl)){
+			incomplete();
+//			throw exception...
+		}
+    }
+    else {
+		 incomplete();
+//		 throw something.
+      // QMessageBox::critical(0, QObject::tr("Error"),
+		//   QObject::tr("Clipboard Format Error:\nUnknown field!"));
+    }
+  }
+
 }
 
 /// ACCESS FUNCTIONS.
@@ -105,4 +142,12 @@ DiagramList const& SchematicModel::diagrams() const
 {
 	// temporary. move stuff here....
 	return _doc->diagrams();
+}
+
+void SchematicModel::merge(SchematicModel& src)
+{
+  for(auto i : src.components()){ itested();
+	  components().append(i);
+  }
+  src.components().clear();
 }

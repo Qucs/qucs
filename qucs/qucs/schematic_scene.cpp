@@ -1,6 +1,7 @@
 
 #include "schematic_scene.h"
 #include "schematic.h"
+#include "qt_compat.h"
 
 #include <QFileInfo>
 
@@ -160,14 +161,26 @@ void ElementGraphics::paintScheme(Schematic *p)
 	_e->paintScheme(p);
 }
 
-void SchematicModel::toScene(QGraphicsScene& s) const
+// scene::display(SchematicModel&)?
+// 'l' is a bit of a hack. let's see
+void SchematicModel::toScene(QGraphicsScene& s, QList<ElementGraphics*>* l) const
 {
   for(auto i : components()){ itested();
-    s.addItem(new ElementGraphics(i));
+    auto x=new ElementGraphics(i);
+	 if(l){
+		 l->append(x);
+	 }
+    s.addItem(x);
   }
   for(auto i : wires()){ itested();
-    s.addItem(new ElementGraphics(i));
+    auto x=new ElementGraphics(i);
+	 if(l){
+		 l->append(x);
+	 }
+    s.addItem(x);
   }
+
+  incomplete(); // do the others...
   qDebug() << "wires" << s.items().size();
   s.update();
 }
