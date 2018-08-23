@@ -54,8 +54,7 @@ Node* Schematic::insertNode(int x, int y, Element *e)
     else return pn;   // return, if node is not new
 
     // check if the new node lies upon an existing wire
-    for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())
-    {
+    for(auto pw : wires()){
         if(pw->x1_() == x) {
             if(pw->y1_() > y) continue;
             if(pw->y2_() < y) continue;
@@ -114,8 +113,7 @@ int Schematic::insertWireNode1(Wire *w)
 
 
     // check if the new node lies upon an existing wire
-    for(Wire *ptr2 = Wires->first(); ptr2 != 0; ptr2 = Wires->next())
-    {
+    for(auto ptr2 : wires()){
         if(ptr2->x1_() == w->x1_()) {
             if(ptr2->y1_() > w->y1_()) continue;
             if(ptr2->y2_() < w->y1_()) continue;
@@ -261,7 +259,7 @@ bool Schematic::connectHWires1(Wire *w)
             }
             pw->Port1->Connections.removeRef(pw);
             nodes().removeRef(pw->Port2);
-            Wires->removeRef(pw);
+            wires().removeRef(pw); // deleted if autodelete.
             return true;
         }
         w->x1__() = pw->x2_();    // shorten new wire according to an existing one
@@ -359,8 +357,7 @@ int Schematic::insertWireNode2(Wire *w)
 
 
     // check if the new node lies upon an existing wire
-    for(Wire *ptr2 = Wires->first(); ptr2 != 0; ptr2 = Wires->next())
-    {
+    for(auto ptr2 : wires()){
         if(ptr2->x1_() == w->x2_())
         {
             if(ptr2->y1_() > w->y2_()) continue;
@@ -3261,8 +3258,7 @@ void Schematic::copyLabels(int& x1, int& y1, int& x2, int& y2,
 {
     WireLabel *pl;
     // find bounds of all selected wires
-    for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())
-    {
+    for(auto pw : wires()){
         pl = pw->Label;
         if(pl) if(pl->isSelected())
             {
