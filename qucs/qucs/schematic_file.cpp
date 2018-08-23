@@ -829,6 +829,7 @@ bool SchematicModel::loadDiagrams(QTextStream *stream /*, DiagramList *List */)
   QString Line, cstr;
   while(!stream->atEnd()) { untested();
     Line = stream->readLine();
+    qDebug() << Line;
     if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
     Line = Line.trimmed();
     if(Line.isEmpty()) continue;
