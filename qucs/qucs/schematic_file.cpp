@@ -411,8 +411,9 @@ int Schematic::saveDocument()
   stream << "</Components>\n";
 
   stream << "<Wires>\n";    // save all wires
-  for(Wire *pw = DocWires.first(); pw != 0; pw = DocWires.next())
+  for(auto pw : wires()){
     stream << "  " << pw->save() << "\n";
+  }
 
   // save all labeled nodes as wires
   for(auto pn : nodes()) {
@@ -1053,8 +1054,9 @@ QString Schematic::createUndoString(char Op)
   }
   s += "</>\n";  // short end flag
 
-  for(pw = DocWires.first(); pw != 0; pw = DocWires.next())
+  for(auto pw : wires()){
     s += pw->save()+"\n";
+  }
   // save all labeled nodes as wires
   for(auto pn : nodes()) {
     if(pn->Label) s += pn->Label->save()+"\n";
@@ -1531,13 +1533,14 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
   }
 
   // set the wire names to the connected node
-  for(Wire *pw = DocWires.first(); pw != 0; pw = DocWires.next())
+  for(auto pw : wires()){
     if(pw->Label != 0) {
       if(isAnalog)
         pw->Port1->Name = pw->Label->Name;
       else  // avoid to use reserved VHDL words
         pw->Port1->Name = "net" + pw->Label->Name;
     }
+  }
 
   // go through components
   if(!throughAllComps(stream, countInit, Collect, ErrText, NumPorts)){
