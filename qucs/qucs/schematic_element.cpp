@@ -37,7 +37,7 @@ Node* SchematicModel::insertNode(int x, int y, Element *e)
 {
     Node *pn;
     // check if new node lies upon existing node
-    for(pn = nodes().first(); pn != 0; pn = nodes().next()){
+    for(pn = nodes().first(); pn!=0; pn=nodes().next()){
         // check every node
         if(pn->cx_() == x) if(pn->cy_() == y) {
 	    pn->connectionsAppend(e);
@@ -78,11 +78,11 @@ Node* SchematicModel::insertNode(int x, int y, Element *e)
 // ---------------------------------------------------
 Node* Schematic::selectedNode(int x, int y)
 {
-    for(Node *pn = nodes().first(); pn != 0; pn = nodes().next()) // test nodes
+    for(auto pn : nodes()){
         if(pn->getSelected(x, y))
             return pn;
-
-    return 0;
+    }
+    return nullptr;
 }
 
 
@@ -99,8 +99,11 @@ int Schematic::insertWireNode1(Wire *w)
 {
     Node *pn;
     // check if new node lies upon an existing node
-    for(pn = nodes().first(); pn != 0; pn = nodes().next()) // check every node
-        if(pn->cx_() == w->x1_()) if(pn->cy_() == w->y1_()) break;
+    for(pn = nodes().first(); pn != 0; pn=nodes().next()){
+        if(pn->cx_() == w->x1_() && (pn->cy_() == w->y1_())) {
+	    break;
+	}
+    }
 
     if(pn != 0) {
         pn->connectionsAppend(w);

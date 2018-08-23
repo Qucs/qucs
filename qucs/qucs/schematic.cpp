@@ -767,7 +767,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
     }
 
     Element *pe;
-    for(Node *pn = nodes().first(); pn != 0; pn = nodes().next()) {
+    for(auto pn : nodes()) {
       for( auto i : pn->connections()){
 	pe=i;
         if(pe->isSelected() || printAll) {
@@ -827,7 +827,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
 
     if(showBias > 0) {  // show DC bias points in schematic ?
       int x, y, z;
-      for(Node* pn = nodes().first(); pn != 0; pn = nodes().next()) {
+      for(auto pn : nodes()) {
         if(pn->name().isEmpty()) continue;
         x = pn->cx_();
         y = pn->cy_() + 4;
@@ -1925,8 +1925,7 @@ bool Schematic::elementsOnGrid()
   }
   wires().setAutoDelete(true);
 
-  // test all node labels
-  for(Node *pn = nodes().first(); pn != 0; pn = nodes().next())
+  for(auto pn : nodes()) {
     if(pn->Label){
       if(pn->Label->isSelected()) {
         setOnGrid(pn->Label->x1__(), pn->Label->y1__());
@@ -1936,6 +1935,7 @@ bool Schematic::elementsOnGrid()
       }
     }else{
     }
+  }
 
   // test all diagrams
   for(Diagram *pd = diagrams().last(); pd != 0; pd = diagrams().prev()) {
