@@ -90,12 +90,11 @@ bool MouseActions::pasteElements(Schematic *Doc)
 #if 0
   if(!Doc->paste(&stream, &movingElements)) return false;
 
-  ElementGraphics *pe;
   int xmax, xmin, ymax, ymin;
   xmin = ymin = INT_MAX;
   xmax = ymax = INT_MIN;
   // First, get the max and min coordinates of all selected elements.
-  for(pe = movingElements.first(); pe != 0; pe = movingElements.next()) { untested();
+  for(auto pe : movingElements){ untested();
     if(pe->Type == isWire) { untested();
       if(pe->x1_() < xmin) xmin = pe->x1_();
       if(pe->x2_() > xmax) xmax = pe->x2_();
@@ -115,7 +114,7 @@ bool MouseActions::pasteElements(Schematic *Doc)
   Doc->setOnGrid(xmin, ymin);
 
   // moving with mouse cursor in the midpoint
-  for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
+  for(auto pe : movingElements){ untested();
     if(pe->Type & isLabel) { untested();
       auto L=dynamic_cast<WireLabel*>(pe);
       //pe->cx += xmin;  pe->x1 += xmin;
@@ -125,9 +124,10 @@ bool MouseActions::pasteElements(Schematic *Doc)
       L->Type = isMovingLabel;
       L->setCenter(xmin, ymin, true /*relative*/);
       L->Type = oldtype;
-    }
-    else
+    } else{
       pe->setCenter(xmin, ymin, true);
+    }
+  }
 
 #endif
   return true;
@@ -175,7 +175,7 @@ void MouseActions::editLabel(Schematic *Doc, WireLabel *pl)
 // Reinserts all elements (moved by the user) back into the schematic.
 void MouseActions::endElementMoving(Schematic *Doc, EGPList *movElements)
 { untested();
-  for(auto pe=movElements->first(); pe!=0; pe=movElements->next()) { untested();
+  for(auto pe : *movElements){ untested();
 //    pe->setSelected(false);  // deselect first (maybe afterwards pe == NULL)
     switch(pe->Type) { // FIXME: use casts.
       case isWire:
@@ -227,10 +227,11 @@ void MouseActions::endElementMoving(Schematic *Doc, EGPList *movElements)
 
 // -----------------------------------------------------------
 // Moves elements in "movElements" by x/y
-void MouseActions::moveElements(EGPList *movElements, int x, int y)
-{ untested();
+void MouseActions::moveElements(EGPList& what, int x, int y)
+{ itested();
+  auto movElements=&what;
   Wire *pw;
-  for(auto pe=movElements->first(); pe!=0; pe=movElements->next()) { untested();
+  for(auto pe : *movElements) { untested();
     if(pe->Type == isWire) { untested();
       pw = (Wire*)pe;   // connected wires are not moved completely
 
@@ -493,7 +494,7 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
   Doc->viewport()->repaint();
 
   // Changes the position of all moving elements by dx/dy
-  for(auto pe=movingElements.first(); pe!=0; pe=movingElements.next()) { untested();
+  for(auto pe : movingElements) { untested();
     if(auto pw=wire(pe)){
       // connecting wires are not moved completely
       assert(pw);
@@ -539,12 +540,15 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
 
   Set2(Event, Doc);
 
-  if(drawn) // erase old scheme
-    for(auto pe=movingElements.first(); pe != 0; pe = movingElements.next())
+  if(drawn){
+    // erase old scheme
+    for(auto pe : movingElements) {
       pe->paintScheme(Doc);
 //      if(pe->Type == isWire)  if(((Wire*)pe)->Label)
 //        if(!((Wire*)pe)->Label->isSelected)
 //          ((Wire*)pe)->Label->paintScheme(&painter);
+    }
+  }
 
   drawn = true;
   if (!Event->modifiers().testFlag(Qt::ControlModifier))
@@ -553,14 +557,15 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
   MAy1 = MAy2 - MAy1;
   MAx3 += MAx1;  MAy3 += MAy1;   // keep track of the complete movement
 
-  moveElements(&movingElements, MAx1, MAy1);  // moves elements by MAx1/MAy1
+  moveElements(movingElements, MAx1, MAy1);  // moves elements by MAx1/MAy1
 
   // paint afterwards to avoid conflict between wire and label painting
-  for(auto pe=movingElements.first(); pe!=0; pe=movingElements.next())
+  for(auto pe : movingElements) {
     pe->paintScheme(Doc);
 //    if(pe->Type == isWire)  if(((Wire*)pe)->Label)
 //      if(!((Wire*)pe)->Label->isSelected)
 //        ((Wire*)pe)->Label->paintScheme(&painter);
+  }
 
   MAx1 = MAx2;
   MAy1 = MAy2;
@@ -1833,7 +1838,7 @@ void MouseActions::moveElements(Schematic *Doc, int& x1, int& y1)
 { untested();
   Doc->setOnGrid(x1, y1);
 
-  for(auto pe=movingElements.first(); pe!=0; pe=movingElements.next()) { untested();
+  for(auto pe : movingElements) {
     auto L=dynamic_cast<WireLabel*>(pe);
     if(pe->Type & isLabel) { untested();
       assert(L);

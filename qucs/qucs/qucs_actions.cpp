@@ -1008,7 +1008,7 @@ void QucsApp::slotCursor(arrow_dir_t dir)
   }
   if(editText->isHidden()) {
     // for edit of component property ?
-    Q3PtrList<ElementGraphics> movingElements;
+    QList<ElementGraphics*> movingElements;
     Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
     movingElements = Doc->cropSelectedElements();
     int markerCount=0;
@@ -1045,11 +1045,11 @@ void QucsApp::slotCursor(arrow_dir_t dir)
       view->drawn = false;
     }else if(dir==arr_up || dir==arr_down){
       // some random selection, put it back
-      view->moveElements(&movingElements, 0, ((dir==arr_up)?-1:1) * Doc->GridY);
+      view->moveElements(movingElements, 0, ((dir==arr_up)?-1:1) * Doc->GridY);
       view->MAx3 = 1;  // sign for moved elements
       view->endElementMoving(Doc, &movingElements);
     }else if(dir==arr_left || dir==arr_right){
-      view->moveElements(&movingElements, sign*Doc->GridX, 0);
+      view->moveElements(movingElements, sign*Doc->GridX, 0);
       view->MAx3 = 1;  // sign for moved elements
       view->endElementMoving(Doc, &movingElements);
     }else{

@@ -142,7 +142,7 @@ extern QAction *formerAction;
 
 class MouseActions {
 public:
-  typedef Q3PtrList<ElementGraphics> EGPList;
+  typedef QList<ElementGraphics*> EGPList;
 public:
   MouseActions(QucsApp*);
   virtual ~MouseActions();
@@ -165,7 +165,7 @@ public: // BUG
   int MAx1, MAy1, MAx2, MAy2;
   int MAx3, MAy3;
 private:
-  Q3PtrList<ElementGraphics> movingElements;
+  QList<ElementGraphics*> movingElements;
 public:
   int movingRotated;
 
@@ -238,7 +238,7 @@ public:
   void paintElementsScheme(Schematic*);
   void rotateElements(Schematic*, int&, int&);
   void moveElements(Schematic*, int&, int&);
-  void moveElements(Q3PtrList<ElementGraphics>*, int, int);
+  void moveElements(QList<ElementGraphics*>&, int, int);
   void endElementMoving(Schematic*, EGPList*);
   void rightPressMenu(Schematic*, QMouseEvent*);
 };

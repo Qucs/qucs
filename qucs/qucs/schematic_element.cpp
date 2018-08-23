@@ -1797,9 +1797,9 @@ void Schematic::deselectElements()
 // For moving of elements: Copies all selected elements into the
 // list 'p' and deletes them from the document.
 // returns the number of "copied" _Markers_ only
-Q3PtrList<ElementGraphics> Schematic::cropSelectedElements()
+QList<ElementGraphics*> Schematic::cropSelectedElements()
 {
-    Q3PtrList<ElementGraphics> P;
+    QList<ElementGraphics*> P;
     auto p=&P;
 
 #ifndef USE_SCROLLVIEW
