@@ -1499,9 +1499,7 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
     y1 = cy1;
     y2 = cy2;
 
-    // test all components
-    for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-    {
+    for(auto pc : components()) {
         pc->Bounding(cx1, cy1, cx2, cy2);
         if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2)
                     {
@@ -2568,9 +2566,10 @@ void Schematic::setComponentNumber(Component *c)
     QString cSign = c->obsolete_model_hack();
     Component *pc;
     // First look, if the port number already exists.
-    for(pc = Components->first(); pc != 0; pc = Components->next())
+    for(pc = components().first(); pc!=0; pc = components().next()){
         if(pc->obsolete_model_hack() == cSign)
             if(pc->Props.getFirst()->Value == s) break;
+    }
     if(!pc) return;   // was port number not yet in use ?
 
     // Find the first free number.
@@ -2578,7 +2577,7 @@ void Schematic::setComponentNumber(Component *c)
     {
         s  = QString::number(n);
         // look for existing ports and their numbers
-        for(pc = Components->first(); pc != 0; pc = Components->next())
+        for(pc = components().first(); pc != 0; pc = components().next())
             if(pc->obsolete_model_hack() == cSign)
                 if(pc->Props.getFirst()->Value == s) break;
 
@@ -2633,7 +2632,7 @@ void Schematic::insertRawComponent(Component *c, bool noOptimize)
 {
     // connect every node of component to corresponding schematic node
     insertComponentNodes(c, noOptimize);
-    Components->append(c);
+    components().append(c);
 
 #ifndef USE_SCROLLVIEW
     // huh, where is the original EG?
@@ -2742,19 +2741,20 @@ void Schematic::insertComponent(Component *c)
     {
         // determines the name by looking for names with the same
         // prefix and increment the number
-        for(Component *pc = Components->first(); pc != 0; pc = Components->next())
+        for(auto pc : components()){
             if(pc->name().left(len) == c->name())
             {
                 s = pc->name().right(pc->name().length()-len);
                 z = s.toInt(&ok);
                 if(ok) if(z >= max) max = z + 1;
             }
+	}
         c->obsolete_name_override_hack(
 	    c->name() + QString::number(max));  // create name with new number
     }
 
     setComponentNumber(c); // important for power sources and subcircuit ports
-    Components->append(c);
+    components().append(c);
 }
 
 // ---------------------------------------------------
@@ -2773,8 +2773,7 @@ void Schematic::activateCompsWithinRect(int x1, int y1, int x2, int y2)
     y2 = cy2;
 
 
-    for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-    {
+    for(auto pc : components()) {
         pc->Bounding(cx1, cy1, cx2, cy2);
         if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2)
                     {
@@ -2806,8 +2805,7 @@ void Schematic::activateCompsWithinRect(int x1, int y1, int x2, int y2)
 bool Schematic::activateSpecifiedComponent(int x, int y)
 {
     int x1, y1, x2, y2, a;
-    for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-    {
+    for(auto pc : components()) {
         pc->Bounding(x1, y1, x2, y2);
         if(x >= x1) if(x <= x2) if(y >= y1) if(y <= y2)
                     {
@@ -2840,7 +2838,7 @@ bool Schematic::activateSelectedComponents()
 {
     int a;
     bool sel = false;
-    for(Component *pc = Components->first(); pc != 0; pc = Components->next())
+    for(auto pc : components()) {
         if(pc->isSelected())
         {
             a = pc->isActive - 1;
@@ -2862,6 +2860,7 @@ bool Schematic::activateSelectedComponents()
             }
             sel = true;
         }
+    }
 
     if(sel) setChanged(true, true);
     return sel;
@@ -2932,8 +2931,7 @@ Component* Schematic::searchSelSubcircuit()
 {
     Component *sub=0;
     // test all components
-    for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-    {
+    for(auto pc : components()) {
         if(!pc->isSelected()) continue;
 
         if(pc->obsolete_model_hack() != "Sub"){
@@ -2951,11 +2949,12 @@ Component* Schematic::searchSelSubcircuit()
 Component* Schematic::selectedComponent(int x, int y)
 {
     // test all components
-    for(Component *pc = Components->first(); pc != 0; pc = Components->next())
+    for(auto pc : components()) {
         if(pc->getSelected(x, y))
             return pc;
+    }
 
-    return 0;
+    return nullptr;
 }
 
 // ---------------------------------------------------
@@ -2979,7 +2978,8 @@ void Schematic::deleteComp(Component *c)
             break;
         }
 
-    Components->removeRef(c);   // delete component
+    // delete component?
+    components().removeRef(c);
 }
 
 // ---------------------------------------------------
@@ -2989,7 +2989,7 @@ int Schematic::copyComponents(int& x1, int& y1, int& x2, int& y2,
     Component *pc;
     int bx1, by1, bx2, by2, count=0;
     // find bounds of all selected components
-    for(pc = Components->first(); pc != 0; )
+    for(pc = components().first(); pc != 0; )
     {
         if(pc->isSelected())
         {
@@ -3018,24 +3018,23 @@ int Schematic::copyComponents(int& x1, int& y1, int& x2, int& y2,
                     }
 
             deleteComp(pc);
-            pc = Components->current();
+            pc = components().current();
             continue;
         }
-        pc = Components->next();
+        pc = components().next();
     }
     return count;
 }
 
 // ---------------------------------------------------
+// ???
 void Schematic::copyComponents2(int& x1, int& y1, int& x2, int& y2,
                                 QList<Element *> *ElementCache)
 {
     Component *pc;
     // find bounds of all selected components
-    for(pc = Components->first(); pc != 0; )
-    {
-        if(pc->isSelected())
-        {
+    for(pc = components().first(); pc != 0; ) {
+        if(pc->isSelected()) {
             // is better for unsymmetrical components
             if(pc->cx_() < x1)  x1 = pc->cx_();
             if(pc->cx_() > x2)  x2 = pc->cx_();
@@ -3056,10 +3055,10 @@ void Schematic::copyComponents2(int& x1, int& y1, int& x2, int& y2,
                     }
 
             deleteComp(pc);
-            pc = Components->current();
+            pc = components().current();
             continue;
         }
-        pc = Components->next();
+        pc = components().next();
     }
 }
 
