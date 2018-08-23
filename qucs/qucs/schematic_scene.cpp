@@ -7,7 +7,7 @@
 
 // ---------------------------------------------------
 //
-#if QT_VERSION >= 0x050000
+#ifndef USE_SCROLLVIEW
 ElementGraphics::ElementGraphics() : QGraphicsItem()
 {
 	unreachable();
@@ -50,7 +50,7 @@ void ElementGraphics::setPos(int a, int b)
 ElementGraphics* Schematic::itemAt(float x, float y)
 {
 	qDebug() << "Schematic::itemAt" << x << y;
-#if QT_VERSION >= 0x050000
+#ifndef USE_SCROLLVIEW
 	QPoint p(x, y);
 	QGraphicsItem* I=scene()->itemAt(p, QTransform());
 	if(ElementGraphics* G=dynamic_cast<ElementGraphics*>(I)){ untested();
