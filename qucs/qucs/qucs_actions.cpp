@@ -1135,9 +1135,7 @@ void QucsApp::slotApplyCompText()
       Component *pc2;
       if(!editText->text().isEmpty())
         if(pc->name() != editText->text()) {
-          for(pc2 = Doc->Components->first(); pc2!=0; pc2 = Doc->Components->next())
-            if(pc2->name() == editText->text())
-              break;  // found component with the same name ?
+          auto pc2=Doc->find_component( editText->text());
           if(!pc2) {
             pc->obsolete_name_override_hack( editText->text() );
             Doc->setChanged(true, true);  // only one undo state

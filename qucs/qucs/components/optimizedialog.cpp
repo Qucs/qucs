@@ -343,11 +343,11 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
 
   // ...........................................................
 
-  Component *pc;
-  for(pc=Doc->Components->first(); pc!=0; pc=Doc->Components->next())
+  for(auto pc:Doc->components()){
     if(pc != Comp)
       if(pc->obsolete_model_hack()[0] == '.' && pc->obsolete_model_hack() != ".Opt")
         SimEdit->insertItem(SimEdit->count(), pc->name());
+  }
 
   Property *pp;
   pp = Comp->Props.at(0);
@@ -721,12 +721,10 @@ void OptimizeDialog::slotApply()
     NameEdit->setText(Comp->name());
   else
   if(NameEdit->text() != Comp->name()) {
-    for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next())
-      if(pc->name() == NameEdit->text())
-        break;  // found component with the same name ?
-    if(pc)
+    auto pc = Doc->find_component(NameEdit->text());
+    if(pc){
       NameEdit->setText(Comp->name());
-    else {
+	 } else {
       Comp->obsolete_name_override_hack(NameEdit->text());
       changed = true;
     }

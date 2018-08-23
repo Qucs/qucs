@@ -310,7 +310,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
         xmax= INT_MIN,
         ymax= INT_MIN;
 
-     for(Component *pc = sch->Components->first(); pc != 0; pc = sch->Components->next()) {
+     for(auto pc : sch->components()){
          if (pc->isSelected()) {
            int x1,y1,x2,y2;
            pc->entireBounds(x1,y1,x2,y2,sch->textCorr());
