@@ -90,7 +90,7 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   //  Components = &DocComps;
     Wires      = &DocWires;
     // Nodes      = &DocNodes;
-    Diagrams   = &DocDiags;
+    // Diagrams   = &DocDiags;
     Paintings  = &DocPaints;
 #endif
 
@@ -107,7 +107,6 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   tmpScale = 1.0;
 
   DocWires.setAutoDelete(true);
-  DocDiags.setAutoDelete(true);
   DocPaints.setAutoDelete(true);
   SymbolPaints.setAutoDelete(true);
 
@@ -250,7 +249,7 @@ void Schematic::becomeCurrent(bool update)
     incomplete(); // yikes.
     // Nodes = &SymbolNodes;
     Wires = &SymbolWires;
-    Diagrams = &SymbolDiags;
+    //Diagrams = &SymbolDiags;
     Paintings = &SymbolPaints;
     // Components = &SymbolComps;
 
@@ -489,8 +488,9 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
 
   // FIXME disable here, issue with select box goes away
   // also, instead of red, line turns blue
-  for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
+  for(auto pd : diagrams()){
     pd->paint(&Painter);
+  }
 
   for(Painting *pp = Paintings->first(); pp != 0; pp = Paintings->next())
     pp->paint(&Painter);
@@ -784,7 +784,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
         pp->setSelected(selected);
       }
 
-    for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
+    for(auto pd : diagrams()){
       if(pd->isSelected() || printAll) {
         // if graph or marker is selected, deselect during printing
         foreach(Graph *pg, pd->Graphs) {
@@ -812,6 +812,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
       }
         }
       }
+    }
 
     if(showBias > 0) {  // show DC bias points in schematic ?
       int x, y, z;
@@ -1372,8 +1373,9 @@ bool Schematic::mirrorYComponents()
 void Schematic::reloadGraphs()
 {
   QFileInfo Info(docName());
-  for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
+  for(auto pd : diagrams()){
     pd->loadGraphData(Info.path()+QDir::separator()+DataSet);
+  }
 }
 
 // Copy function, 
@@ -1494,7 +1496,7 @@ int Schematic::adjustPortNumbers()
     // Components = &SymbolComps;
     Wires      = &SymbolWires;
     // Nodes      = &SymbolNodes;
-    Diagrams   = &SymbolDiags;
+    // Diagrams   = &SymbolDiags;
     Paintings  = &SymbolPaints;
     incomplete();
     sizeOfAll(x1, y1, x2, y2);
@@ -1924,7 +1926,7 @@ bool Schematic::elementsOnGrid()
     }
   }
 
-  for(Diagram *pd = Diagrams->last(); pd != 0; pd = Diagrams->prev()) {
+  for(Diagram *pd = diagrams().last(); pd != 0; pd = diagrams().prev()) {
     if(pd->isSelected()) {
       setOnGrid(pd->cx__(), pd->cy__());
       pd->setSelected(false);

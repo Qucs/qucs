@@ -421,8 +421,9 @@ int Schematic::saveDocument()
   stream << "</Wires>\n";
 
   stream << "<Diagrams>\n";    // save all diagrams
-  for(Diagram *pd = DocDiags.first(); pd != 0; pd = DocDiags.next())
+  for(auto *pd : diagrams()){
     stream << "  " << pd->save() << "\n";
+  }
   stream << "</Diagrams>\n";
 
   stream << "<Paintings>\n";     // save all paintings
@@ -1060,8 +1061,9 @@ QString Schematic::createUndoString(char Op)
   }
   s += "</>\n";
 
-  for(pd = DocDiags.first(); pd != 0; pd = DocDiags.next())
+  for(auto pd : diagrams()){
     s += pd->save()+"\n";
+  }
   s += "</>\n";
 
   for(pp = DocPaints.first(); pp != 0; pp = DocPaints.next())

@@ -920,7 +920,7 @@ int Schematic::copyWires(int& x1, int& y1, int& x2, int& y2,
 Marker* Schematic::setMarker(int x, int y)
 {
   // only diagrams ...
-  for(Diagram *pd = Diagrams->last(); pd != 0; pd = Diagrams->prev()){
+  for(Diagram *pd = diagrams().last(); pd != 0; pd = diagrams().prev()){
     if(Marker* m=pd->setMarker(x,y)){
       setChanged(true, true);
       return m;
@@ -1581,10 +1581,7 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
     }
 
 
-    // test all diagrams *******************************************
-    for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
-    {
-        // test graphs of diagram
+    for(auto pd : diagrams()){
         foreach(Graph *pg, pd->Graphs)
         {
 	    if(!flag){
@@ -1650,10 +1647,11 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
 // Selects all markers.
 void Schematic::selectMarkers()
 {
-    for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
+    for(auto pd : diagrams()){
         foreach(Graph *pg, pd->Graphs)
             foreach(Marker *pm, pg->Markers)
                 pm->setSelected();
+    }
 }
 
 // ---------------------------------------------------
