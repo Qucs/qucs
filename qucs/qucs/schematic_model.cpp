@@ -22,6 +22,7 @@ SchematicModel::SchematicModel(Schematic* s)
 {
 	// presumably Q3PTRlist without this is just a QList<*> (check)
   Components.setAutoDelete(true);
+  Nodes.setAutoDelete(true);
 }
 
 void SchematicModel::clear()
@@ -88,9 +89,7 @@ WireList& SchematicModel::wires()
 
 NodeList& SchematicModel::nodes()
 {
-	assert(_doc);
-	// temporary. move stuff here....
-	return _doc->nodes();
+	return Nodes;
 }
 
 PaintingList& SchematicModel::paintings()
@@ -116,8 +115,7 @@ DiagramList& SchematicModel::diagrams()
 // same, but const.
 ComponentList const& SchematicModel::components() const
 {
-	// temporary. move stuff here....
-	return _doc->components();
+	return Components;
 }
 
 WireList const& SchematicModel::wires() const
@@ -128,8 +126,7 @@ WireList const& SchematicModel::wires() const
 
 NodeList const& SchematicModel::nodes() const
 {
-	// temporary. move stuff here....
-	return _doc->nodes();
+	return Nodes;
 }
 
 PaintingList const& SchematicModel::paintings() const

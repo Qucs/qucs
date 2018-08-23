@@ -65,6 +65,7 @@ private: // TODO: remove.
   Schematic* _doc;
 private:
   ComponentList Components;
+  NodeList Nodes;
 public: // for now.
   friend class Schematic;
 };
