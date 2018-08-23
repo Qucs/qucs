@@ -199,11 +199,14 @@ int doPrint(QString schematic, QString printFile,
     return 1;
   }
 
+  // kind of reset from symMode?!
+#if 0
   sch->Nodes = &(sch->DocNodes);
   sch->Wires = &(sch->DocWires);
   sch->Diagrams = &(sch->DocDiags);
   sch->Paintings = &(sch->DocPaints);
   sch->Components = &(sch->DocComps);
+#endif
   sch->reloadGraphs();
 
   qDebug() << "*** try to print file  :" << printFile;

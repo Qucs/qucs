@@ -1326,8 +1326,9 @@ void Component::copyComponent(Component *pc)
 void MultiViewComponent::recreate(Schematic *Doc)
 {
   if(Doc) {
-    Doc->Components->setAutoDelete(false);
-    Doc->deleteComp(this);
+    incomplete();
+//    Doc->Components->setAutoDelete(false);
+  //  Doc->deleteComp(this);
   }
 
   Ellips.clear();
@@ -1353,8 +1354,9 @@ void MultiViewComponent::recreate(Schematic *Doc)
   mirroredX = mmir;
 
   if(Doc) {
-    Doc->insertRawComponent(this);
-    Doc->Components->setAutoDelete(true);
+    incomplete();
+    //Doc->insertRawComponent(this);
+    //Doc->Components->setAutoDelete(true);
   }
 }
 
