@@ -9,7 +9,7 @@
 
 // ---------------------------------------------------
 //
-#if QT_VERSION >= 0x050000
+#ifndef USE_SCROLLVIEW
 ElementGraphics::ElementGraphics() : QGraphicsItem()
 {
 	setFlags(ItemIsSelectable|ItemIsMovable);
