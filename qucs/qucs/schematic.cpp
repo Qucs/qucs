@@ -729,7 +729,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
         if (sizeOfFrame(x2,y2)) paintFrame(p);
     }
 
-    for(Component *pc = Components->first(); pc != 0; pc = Components->next())
+    for(auto pc : components()){
       if(pc->isSelected() || printAll) {
         selected = pc->isSelected();
         pc->setSelected(false);
@@ -740,6 +740,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
         }
         pc->setSelected(selected);
       }
+    }
 
     for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next()) {
       if(pw->isSelected() || printAll) {
@@ -1127,7 +1128,7 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
 bool Schematic::rotateElements()
 {
   Wires->setAutoDelete(false);
-  Components->setAutoDelete(false);
+  components().setAutoDelete(false);
 
   int x1=INT_MAX, y1=INT_MAX;
   int x2=INT_MIN, y2=INT_MIN;
@@ -1139,7 +1140,7 @@ bool Schematic::rotateElements()
   if(y1 == INT_MAX) return false;   // no element selected
 
   Wires->setAutoDelete(true);
-  Components->setAutoDelete(true);
+  components().setAutoDelete(true);
 
   x1 = (x1+x2) >> 1;   // center for rotation
   y1 = (y1+y2) >> 1;
@@ -1226,14 +1227,14 @@ bool Schematic::rotateElements()
 bool Schematic::mirrorXComponents()
 {
   Wires->setAutoDelete(false);
-  Components->setAutoDelete(false);
+  components().setAutoDelete(false);
 
   int x1, y1, x2, y2;
   QList<Element *> ElementCache;
   if(!copyComps2WiresPaints(x1, y1, x2, y2, &ElementCache))
     return false;
   Wires->setAutoDelete(true);
-  Components->setAutoDelete(true);
+  components().setAutoDelete(true);
 
   y1 = (y1+y2) >> 1;   // axis for mirroring
   setOnGrid(y2, y1);
@@ -1297,15 +1298,15 @@ bool Schematic::mirrorXComponents()
 // Mirrors all selected components. First copy them to 'ElementCache', then mirror and insert again.
 bool Schematic::mirrorYComponents()
 {
-  Wires->setAutoDelete(false);
-  Components->setAutoDelete(false);
+  wires().setAutoDelete(false);
+  components().setAutoDelete(false);
 
   int x1, y1, x2, y2;
   QList<Element *> ElementCache;
   if(!copyComps2WiresPaints(x1, y1, x2, y2, &ElementCache))
     return false;
-  Wires->setAutoDelete(true);
-  Components->setAutoDelete(true);
+  wires().setAutoDelete(true);
+  components().setAutoDelete(true);
 
   x1 = (x1+x2) >> 1;   // axis for mirroring
   setOnGrid(x1, x2);
@@ -1680,8 +1681,7 @@ int Schematic::adjustPortNumbers()
   else
   {
       // go through all components in a schematic
-      for(Component *pc = DocComps.first(); pc!=0; pc = DocComps.next())
-      {
+      for(auto pc : components()){
          if(pc->obsolete_model_hack() == "Port") { // BUG. move to device.
              countPort++;
 
@@ -1828,8 +1828,8 @@ bool Schematic::elementsOnGrid()
   Q3PtrList<WireLabel> LabelCache;
 
   // test all components
-  Components->setAutoDelete(false);
-  for(Component *pc = Components->last(); pc != 0; pc = Components->prev())
+  components().setAutoDelete(false);
+  for(Component *pc = components().last(); pc != 0; pc = components().prev())
     if(pc->isSelected()) {
 
       // rescue non-selected node labels
@@ -1843,11 +1843,11 @@ bool Schematic::elementsOnGrid()
 
       x = pc->cx_();
       y = pc->cy_();
-      No = Components->at();
+      No = components().at();
       deleteComp(pc); // TODO
       pc->snapToGrid(*this); // setOnGrid(pc->cx__(), pc->cy__());
       insertRawComponent(pc); // TODO
-      Components->at(No);   // restore current list position
+      components().at(No);   // restore current list position
       pc->setSelected(false);
       count = true;
 
@@ -1860,9 +1860,9 @@ bool Schematic::elementsOnGrid()
       }
       LabelCache.clear();
     }
-  Components->setAutoDelete(true);
+  components().setAutoDelete(true);
 
-  Wires->setAutoDelete(false);
+  wires().setAutoDelete(false);
   // test all wires and wire labels
   for(Wire *pw = Wires->last(); pw != 0; pw = Wires->prev()) {
     pl = pw->Label;
@@ -2341,6 +2341,16 @@ void PaintingList::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const
     if(y1 < ymin) ymin = y1;
     if(y2 > ymax) ymax = y2;
   }
+}
+
+Component* Schematic::find_component(QString const& n)
+{
+    for(auto pc : components()){
+       if(pc->name() == n){
+	 return pc;
+       }
+    }
+    return nullptr;
 }
 
 // ---------------------------------------------------
