@@ -338,7 +338,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
         }
     }
 
-    for(Node *pn = sch->Nodes->first(); pn != 0; pn = sch->Nodes->next()) {
+    for(auto pn : sch->nodes()){
         WireLabel *pl = pn->Label;
         if(pl) {     // check position of node label
             if (pl->isSelected()) {
