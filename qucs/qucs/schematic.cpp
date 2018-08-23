@@ -88,7 +88,7 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   // sometimes these point to other stuff, sometimes when
   // SymbolMode is active, but not only.
   //  Components = &DocComps;
-    Wires      = &DocWires;
+    // Wires      = &DocWires;
     // Nodes      = &DocNodes;
     // Diagrams   = &DocDiags;
     Paintings  = &DocPaints;
@@ -106,7 +106,6 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   tmpUsedX2 = tmpUsedY2 = tmpViewX2 = tmpViewY2 =  200;
   tmpScale = 1.0;
 
-  DocWires.setAutoDelete(true);
   DocPaints.setAutoDelete(true);
   SymbolPaints.setAutoDelete(true);
 
@@ -248,7 +247,7 @@ void Schematic::becomeCurrent(bool update)
   if(isSymbolMode()) {
     incomplete(); // yikes.
     // Nodes = &SymbolNodes;
-    Wires = &SymbolWires;
+    // Wires = &SymbolWires;
     //Diagrams = &SymbolDiags;
     Paintings = &SymbolPaints;
     // Components = &SymbolComps;
@@ -1494,7 +1493,7 @@ int Schematic::adjustPortNumbers()
     sizeOfAll(x1, y1, x2, y2);
   } else {
     // Components = &SymbolComps;
-    Wires      = &SymbolWires;
+    // Wires      = &SymbolWires;
     // Nodes      = &SymbolNodes;
     // Diagrams   = &SymbolDiags;
     Paintings  = &SymbolPaints;
@@ -2362,7 +2361,29 @@ QPointF Schematic::mapToScene(QPoint const& p) const
 
   return QPointF(fX, fY);
 }
+#else
+void Schematic::addToScene(Element* x)
+{
+  auto i=new ElementGraphics(x);
+  scene()->addItem(i);
+}
 #endif
+
+void Schematic::removeWire(Wire const* x)
+{
+#ifndef USE_SCROLLVIEW
+  scene()->removeItem(x);
+#endif
+  wires().removeRef((Wire*)x);
+}
+
+void Schematic::removeNode(Node const* x)
+{
+#ifndef USE_SCROLLVIEW
+  scene()->removeItem(x);
+#endif
+  nodes().removeRef((Node*)x);
+}
 
 
 // vim:ts=8:sw=2:noet
