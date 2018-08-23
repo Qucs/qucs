@@ -75,10 +75,12 @@ public: // access coordinates from old code.
 public:
 	// don't use. just to compile
 	int Type; // BUG BUG
+#if 1
 	ElementMouseAction* operator->(){
 		unreachable(); // complain loudly.
 		return this;
 	}
+#endif
 	void setObsoleteType(int t){
 		_action_type = t;
 	}

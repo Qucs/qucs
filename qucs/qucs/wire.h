@@ -45,6 +45,7 @@ public:
   QString save();
   bool    load(const QString&);
   bool    isHorizontal() const { return (y1 == y2);}
+  QRectF boundingRect() const;
 
 public: // FIXME, these are still around.
 	//int & cx__() { return cx; }

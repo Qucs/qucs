@@ -1785,6 +1785,7 @@ void Schematic::deselectElements()
 	if(auto x=dynamic_cast<ElementGraphics*>(i)){ untested();
 	    // BUG: selected state is stored in element.
 	    x->setSelected(false);
+	    i->setSelected(false);
 	}else{ untested();
 	    // ?
 	}
@@ -2637,7 +2638,7 @@ void Schematic::insertRawComponent(Component *c, bool noOptimize)
     components().append(c);
 
 #ifndef USE_SCROLLVIEW
-    // huh, where is the original EG?
+    // huh, where is the original EG? (memory leak)
     scene()->addItem(new ElementGraphics(c));
 #endif
 

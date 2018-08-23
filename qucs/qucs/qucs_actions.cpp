@@ -1011,6 +1011,7 @@ void QucsApp::slotCursor(arrow_dir_t dir)
     QList<ElementGraphics*> movingElements;
     Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
     movingElements = Doc->cropSelectedElements();
+    qDebug() << "moving elements" << movingElements.count();
     int markerCount=0;
     for(auto const& i : movingElements){
       if(marker(i)){

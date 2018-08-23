@@ -38,6 +38,7 @@ public:
   QString DType; // type of node (used by digital files)
   int State;	 // remember some things during some operations
 
+  QRectF boundingRect() const;
 public: // protected coordinate abuse
   void markUnChecked(){
 	  y1=0;

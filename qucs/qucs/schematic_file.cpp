@@ -133,8 +133,7 @@ bool Schematic::loadIntoNothing(QTextStream *stream)
 // Paste from clipboard. into pe. wtf is pe?
 bool Schematic::pasteFromClipboard(QTextStream *stream, EGPList* pe)
 { untested();
-  incomplete();
-#if 0
+#if 1
   QString Line;
 
   Line = stream->readLine();
@@ -153,6 +152,7 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, EGPList* pe)
 
   // read content in symbol edit mode *************************
   if(isSymbolMode()) {
+    incomplete(); // yikes.
     while(!stream->atEnd()) {
       Line = stream->readLine();
       if(Line == "<Components>") {
@@ -179,30 +179,18 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, EGPList* pe)
   }
 
   // read content in schematic edit mode *************************
-  while(!stream->atEnd()) {
-    Line = stream->readLine();
-    if(Line == "<Components>") {
-      incomplete();
-//      if(!loadComponents(stream, pe)) return false;
-    }else if(Line == "<Wires>") {
-      incomplete();
-//      if(!loadWires(stream, pe)) return false;
-    }else if(Line == "<Diagrams>") {
-      incomplete();
-//      if(!loadDiagrams(stream, pe)) return false;
-    }
-    else
-    if(Line == "<Paintings>") {
-      incomplete(); // ignore Paintings fo rnow.
-      PaintingList pl;
-      if(!DocModel.loadPaintings(stream, &pl)) return false;
-    }
-    else {
-      QMessageBox::critical(0, QObject::tr("Error"),
-		   QObject::tr("Clipboard Format Error:\nUnknown field!"));
-      return false;
-    }
+  SchematicModel x(NULL);
+  try{
+    x.parse(*stream);
+  }catch( std::string ){
+    incomplete();
+//    messagebox?
   }
+
+  // better interface for this kind of stuff?
+  assert(!pe->count());
+  x.toScene(*scene(), pe);
+  DocModel.merge(x);
 
 #endif
   return true;
