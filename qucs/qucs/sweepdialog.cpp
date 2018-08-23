@@ -241,8 +241,7 @@ Graph* SweepDialog::setBiasPoints()
 
 
   // create DC current through each probe
-  Component *pc;
-  for(pc = Doc->components().first(); pc != 0; pc = Doc->components().next())
+  for(auto pc : Doc->components()){
     if(pc->obsolete_model_hack() == "IProbe") { // BUG.
       pn = pc->Ports.first()->Connection;
       if(!pn->name().isEmpty())   // preserve node voltage ?
@@ -277,6 +276,7 @@ Graph* SweepDialog::setBiasPoints()
         }
 		}
     }
+  }
 
 
   Doc->showBias = 1;

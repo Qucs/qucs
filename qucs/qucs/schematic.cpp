@@ -1678,8 +1678,7 @@ int Schematic::adjustPortNumbers()
 #endif
   }else{
       // go through all components in a schematic
-      for(Component *pc = components().first(); pc!=0; pc = components().next())
-      {
+      for(auto pc : components()){
          if(pc->obsolete_model_hack() == "Port") { // BUG. move to device.
              countPort++;
 
@@ -2440,6 +2439,16 @@ void PaintingList::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const
     if(y1 < ymin) ymin = y1;
     if(y2 > ymax) ymax = y2;
   }
+}
+
+Component* Schematic::find_component(QString const& n)
+{
+    for(auto pc : components()){
+       if(pc->name() == n){
+	 return pc;
+       }
+    }
+    return nullptr;
 }
 
 // ---------------------------------------------------
