@@ -315,8 +315,7 @@ void Schematic::actionCursor(arrow_dir_t dir)
 
 	if(App->editText->isHidden()) {
 		// for edit of component property ?
-		Q3PtrList<ElementGraphics> movingElements;
-		movingElements = cropSelectedElements();
+		auto movingElements = cropSelectedElements();
 		int markerCount=0;
 		for(auto const& i : movingElements){
 			if(marker(i)){

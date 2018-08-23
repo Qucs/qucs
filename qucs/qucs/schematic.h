@@ -105,7 +105,7 @@ class Schematic : public SchematicBase, public QucsDoc {
 private:
   Schematic(Schematic const&x): SchematicBase(), QucsDoc(x), DocModel(this){ unreachable(); }
 public:
-  typedef Q3PtrList<ElementGraphics> EGPList;
+  typedef QList<ElementGraphics*> EGPList;
 public:
   Schematic(QucsApp*, const QString&);
  ~Schematic();
@@ -365,7 +365,7 @@ public:
   int      selectElements(int, int, int, int, bool);
   void     selectMarkers();
   void     newMovingWires(Q3PtrList<Element>*, Node*, int);
-  Q3PtrList<ElementGraphics> cropSelectedElements();
+  QList<ElementGraphics*> cropSelectedElements();
   bool     deleteElements();
   bool     aligning(int);
   bool     distributeHorizontal();
