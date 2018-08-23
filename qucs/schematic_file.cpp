@@ -765,12 +765,11 @@ QString Schematic::createUndoString(char Op)
   Wire *pw;
   Diagram *pd;
   Painting *pp;
-  Component *pc;
 
   // Build element document.
   QString s = "  \n";
   s.replace(0,1,Op);
-  for(pc = components().first(); pc != 0; pc = components().next()) {
+  for(auto pc : components()){
     QTextStream str(&s);
     incomplete();
     // SchematicModel::saveComponent(str, pc);
@@ -1189,14 +1188,9 @@ int NumPorts, bool creatingLib, NetLang const& )
   // collect subcircuit ports and sort their node names into
   // "SubcircuitPortNames"
   PortTypes.clear();
-  for(pc = components().first(); pc != 0; pc = components().next()) {
+  for(auto pc : components()){
     if(dynamic_cast<Command const*> (pc)){
       // ignore commands.
-    }else if(pc->obsolete_model_hack().at(0) == '.') { // no simulations in subcircuits
-      incomplete();
-//      ErrText->appendPlainText(
-//        QObject::tr("WARNING: Ignore simulation component in subcircuit \"%1\".").arg(docName())+"\n");
-      continue;
     }else if(dynamic_cast<Port const*>(pc)
       ||pc->obsolete_model_hack() == "Port" // BUG
       ){
@@ -1361,7 +1355,7 @@ int NumPorts, bool creatingLib, NetLang const& )
         }
 
       // write all equations into netlist file
-      for(pc = components().first(); pc != 0; pc = components().next()) {
+      for(auto pc : components()){
         if(pc->obsolete_model_hack() == "Eqn") {
           (*tstream) << pc->get_Verilog_Code(NumPorts);
         }
@@ -1371,7 +1365,7 @@ int NumPorts, bool creatingLib, NetLang const& )
       (*tstream) << " assign gnd = 0;\n"; // should appear only once
 
       // write all components into netlist file
-      for(pc = components().first(); pc != 0; pc = components().next()) {
+      for(auto pc : components()){
         if(pc->obsolete_model_hack() != "Eqn") {
           s = pc->get_Verilog_Code(NumPorts);
           if(s.length()>0 && s.at(0) == '\xA7') {  //section symbol
@@ -1422,7 +1416,7 @@ int NumPorts, bool creatingLib, NetLang const& )
      // }
 
       // write all equations into netlist file
-      for(pc = components().first(); pc != 0; pc = components().next()) {
+      for(auto pc : components()){
         if(pc->obsolete_model_hack() == "Eqn") {
           ErrText->appendPlainText(
                       QObject::tr("WARNING: Equations in \"%1\" are 'time' typed.").
@@ -1437,7 +1431,7 @@ int NumPorts, bool creatingLib, NetLang const& )
       (*tstream) << " gnd <= '0';\n"; // should appear only once
 
       // write all components into netlist file
-      for(pc = components().first(); pc != 0; pc = components().next()) {
+      for(auto pc : components()){
         if(pc->obsolete_model_hack() != "Eqn") {
             s = pc->get_VHDL_Code(NumPorts);
             if(s.length()>0 && s.at(0) == '\xA7') {  //section symbol
@@ -1515,13 +1509,9 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   int allTypes = 0, NumPorts = 0;
 
   // Detect simulation domain (analog/digital) by looking at component types.
-  for(Component *pc = components().first(); pc != 0; pc = components().next()) {
-    if(pc->isActive == COMP_IS_OPEN){
-      // open circuit (or so)
-//    }else if(pc->obsolete_model_hack().at(0) == '.') {
-    }else if(dynamic_cast<Command const*>(pc)) {
-
-      qDebug() << pc->obsolete_model_hack();
+  for(auto pc : components()){
+    if(pc->isActive == COMP_IS_OPEN) continue;
+    if(pc->obsolete_model_hack().at(0) == '.') {
       if(pc->obsolete_model_hack() == ".Digi") {
         if(allTypes & isDigitalComponent) {
           ErrText->appendPlainText(
@@ -1667,7 +1657,7 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts, NetLang cons
   FileList.clear();
 
   QString s, Time;
-  for(Component *pc = components().first(); pc != 0; pc = components().next()) {
+  for(auto pc : components()){
     if(isAnalog) {
       if(pc->type()=="GND"){ // qucsator hack
       }else{

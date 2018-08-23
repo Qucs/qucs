@@ -442,12 +442,9 @@ void Schematic::actionApplyCompText()
 	if(!editText->isHidden()) {   // is called the first time ?
 		// no -> apply value to current property
 		if(mouseActions()->MAx3 == 0) {   // component name ?
-			Component *pc2;
 			if(!editText->text().isEmpty())
 				if(pc->name() != editText->text()) {
-					for(pc2 = components().first(); pc2!=0; pc2 = components().next())
-						if(pc2->name() == editText->text())
-							break;  // found component with the same name ?
+					auto pc2=Doc->find_component( editText->text());
 					if(!pc2) {
 						pc->obsolete_name_override_hack( editText->text() );
 						setChanged(true, true);  // only one undo state
