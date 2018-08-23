@@ -2635,7 +2635,7 @@ void Schematic::insertComponentNodes(Component *c, bool noOptimize)
 // ---------------------------------------------------
 // Used for example in moving components.
 void Schematic::insertRawComponent(Component *c, bool noOptimize)
-{
+{ untested();
     // connect every node of component to corresponding schematic node
     insertComponentNodes(c, noOptimize);
     components().append(c);
@@ -2646,7 +2646,8 @@ void Schematic::insertRawComponent(Component *c, bool noOptimize)
 #endif
 
     // a ground symbol erases an existing label on the wire line
-    if(c->obsolete_model_hack() == "GND") { // BUG.
+    if(c->obsolete_model_hack() == "GND") { untested();
+	// BUG.
         c->gnd_obsolete_model_override_hack("x");
         Element *pe = getWireLabel(c->Ports.first()->Connection);
         if(pe) if((pe->Type & isComponent) == 0)
@@ -2655,6 +2656,8 @@ void Schematic::insertRawComponent(Component *c, bool noOptimize)
                 ((Conductor*)pe)->Label = 0;
             }
         c->gnd_obsolete_model_override_hack("GND");
+    }else{
+	untested();
     }
 }
 
