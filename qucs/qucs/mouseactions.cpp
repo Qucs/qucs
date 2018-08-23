@@ -182,16 +182,19 @@ void MouseActions::endElementMoving(Schematic *Doc, EGPList *movElements)
   for(auto pe : *movElements){ untested();
 //    pe->setSelected(false);  // deselect first (maybe afterwards pe == NULL)
     if(wire(pe)){ untested();
-        if(pe->x1_() == pe->x2_())
+        if(pe->x1_() == pe->x2_()){ untested();
           if(pe->y1_() == pe->y2_()) { untested();
             // Delete wires with zero length, but preserve label.
             if(((Wire*)pe)->Label) { untested();
               Doc->insertNodeLabel((WireLabel*)((Wire*)pe)->Label);
               ((Wire*)pe)->Label = 0;
-            }
+            }else{
+	    }
             delete (Wire*)pe;
             break;
           }
+	}else{
+	}
 
 	Doc->insertWire((Wire*)pe);
 	break;

@@ -177,14 +177,12 @@ public: // model
   // elements "Doc..." or to the symbol elements "SymbolPaints".
 // private: //TODO. one at a time. these must go to SchematicModel
   WireList DocWires;
-  NodeList DocNodes;
   DiagramList DocDiags;
   PaintingList DocPaints;
   SchematicModel DocModel;
 
 // private: BUG: this is insane.
   WireList *Wires;
-  NodeList *Nodes;
   DiagramList *Diagrams;
   PaintingList *Paintings;
 //  ComponentList *Components;
@@ -199,9 +197,11 @@ public: // model
   }
   Component* find_component(QString const&);
 
-  NodeList& nodes() const{
-	  assert(Nodes);
-	  return *Nodes;
+  NodeList& nodes(){
+	  return DocModel.nodes();
+  }
+  NodeList const& nodes() const{
+	  return DocModel.nodes();
   }
   WireList& wires() const{
 	  assert(Wires);

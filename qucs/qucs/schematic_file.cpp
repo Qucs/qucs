@@ -634,8 +634,6 @@ bool SchematicModel::loadProperties(QTextStream *stream)
 // Inserts a component without performing logic for wire optimization.
 void SchematicModel::simpleInsertComponent(Component *c)
 {
-  // assert(&_doc->components() == &components());
-  assert(&_doc->nodes() == &nodes());
   int x, y;
   // connect every node of component
   foreach(Port *pp, c->Ports) {
