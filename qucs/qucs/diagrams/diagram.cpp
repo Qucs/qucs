@@ -2359,7 +2359,8 @@ bool Diagram::pressElement(Schematic* Doc, Element*& selElem, QMouseEvent* Event
 		drawn = false;
 	}else{
 
-		Doc->Diagrams->append(Diag);
+		Doc->diagrams().append(Diag);
+		// display??
 		Doc->enlargeView(Diag->cx_(), Diag->cy_()-Diag->y2_(), Diag->cx_()+Diag->x2_(), Diag->cy_());
 		Doc->setChanged(true, true);   // document has been changed
 

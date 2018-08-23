@@ -177,6 +177,7 @@ void MouseActions::editLabel(Schematic *Doc, WireLabel *pl)
 
 // -----------------------------------------------------------
 // Reinserts all elements (moved by the user) back into the schematic.
+// but why?!
 void MouseActions::endElementMoving(Schematic *Doc, EGPList *movElements)
 { untested();
   for(auto pe : *movElements){ untested();
@@ -199,7 +200,7 @@ void MouseActions::endElementMoving(Schematic *Doc, EGPList *movElements)
 	Doc->insertWire((Wire*)pe);
 	break;
     }else if(diagram(pe)){ untested();
-	Doc->Diagrams->append((Diagram*)pe);
+	Doc->diagrams().append((Diagram*)pe); // BUG. already there?!
     }else if(painting(pe)){ untested();
 	Doc->Paintings->append((Painting*)pe);
     }else if(auto c=component(pe)){ untested();
@@ -2125,7 +2126,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
   }else if(auto pg=graph(focusElement)){ untested();
 	 // searching diagram for this graph
 	 // BUG: a graph should know its parent.
-	 for(dia = Doc->Diagrams->last(); dia != 0; dia = Doc->Diagrams->prev())
+	 for(dia = Doc->diagrams().last(); dia != 0; dia = Doc->diagrams().prev())
 	   if(dia->Graphs.indexOf(pg) >= 0)
 	     break;
 

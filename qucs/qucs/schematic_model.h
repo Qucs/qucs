@@ -66,6 +66,7 @@ private: // TODO: remove.
 private:
   ComponentList Components;
   NodeList Nodes;
+  DiagramList Diagrams;
 public: // for now.
   friend class Schematic;
 };

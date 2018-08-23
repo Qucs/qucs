@@ -177,13 +177,11 @@ public: // model
   // elements "Doc..." or to the symbol elements "SymbolPaints".
 // private: //TODO. one at a time. these must go to SchematicModel
   WireList DocWires;
-  DiagramList DocDiags;
   PaintingList DocPaints;
   SchematicModel DocModel;
 
 // private: BUG: this is insane.
   WireList *Wires;
-  DiagramList *Diagrams;
   PaintingList *Paintings;
 //  ComponentList *Components;
 
@@ -207,9 +205,11 @@ public: // model
 	  assert(Wires);
 	  return *Wires;
   }
-  DiagramList& diagrams() const{
-	  assert(Diagrams);
-	  return *Diagrams;
+  DiagramList& diagrams(){
+	  return DocModel.diagrams();
+  }
+  DiagramList const& diagrams() const{
+	  return DocModel.diagrams();
   }
   PaintingList& paintings() const{
 	  assert(Paintings);
