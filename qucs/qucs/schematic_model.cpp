@@ -47,22 +47,23 @@ void SchematicModel::parse(QTextStream& stream)
 //			throw exception...
 		}
     }else if(Line == "<Wires>") {
-      incomplete();
-//      if(!loadWires(stream, pe)) return false;
-    }else if(Line == "<Diagrams>") {
-      incomplete();
-//      if(!loadDiagrams(stream, pe)) return false;
-    }
-    else
-    if(Line == "<Paintings>") {
-      incomplete(); // ignore Paintings fo rnow.
-      PaintingList pl;
-      if(!loadPaintings(&stream, &pl)){
+      if(!loadWires(&stream)){
+			incomplete();
+//			throw exception... (in loadWires)
+		}
+    }else if(Line == "<Diagrams>") { untested();
+      if(!loadDiagrams(&stream)){
 			incomplete();
 //			throw exception...
 		}
-    }
-    else {
+    }else if(Line == "<Paintings>") { untested();
+      incomplete(); // ignore Paintings fo rnow.
+      PaintingList pl;
+      if(!loadPaintings(&stream, &pl)){ untested();
+			incomplete();
+//			throw exception...
+		}
+    }else{ untested();
 		 incomplete();
 //		 throw something.
       // QMessageBox::critical(0, QObject::tr("Error"),
