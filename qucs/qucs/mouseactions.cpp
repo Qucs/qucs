@@ -1309,7 +1309,7 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
   }else if(auto W=wire(e)){ untested();
       pl = W->Label;
       W->Label = 0;    // prevent label to be deleted
-      Doc->Wires->setAutoDelete(false);
+      Doc->wires().setAutoDelete(false);
       Doc->deleteWire(W);
       W->Label = pl;
       W->rotate();
@@ -1317,8 +1317,8 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
       Doc->setOnGrid(W->x2__(), W->y2__());
       if(pl)  Doc->setOnGrid(pl->cx__(), pl->cy__());
       Doc->insertWire(W);
-      Doc->Wires->setAutoDelete(true);
-      if (Doc->Wires->containsRef (W)){ untested();
+      Doc->wires().setAutoDelete(true);
+      if (Doc->wires().containsRef (W)){ untested();
         Doc->enlargeView(e->x1_(), e->y1_(), e->x2_(), e->y2_());
       }else{ untested();
       }

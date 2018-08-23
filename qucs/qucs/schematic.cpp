@@ -473,7 +473,7 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
   for(Component *pc = Components->first(); pc != 0; pc = Components->next())
     pc->paint(&Painter);
 
-  for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next()) {
+  for(auto pw : wires()){
     pw->paint(&Painter);
     if(pw->Label)
       pw->Label->paint(&Painter);  // separate because of paintSelected
@@ -744,7 +744,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
       }
     }
 
-    for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next()) {
+    for(auto pw : wires()){
       if(pw->isSelected() || printAll) {
         selected = pw->isSelected();
         pw->setSelected(false);
@@ -1129,7 +1129,7 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
 // Rotates all selected components around their midpoint.
 bool Schematic::rotateElements()
 {
-  Wires->setAutoDelete(false);
+  wires().setAutoDelete(false);
   components().setAutoDelete(false);
 
   int x1=INT_MAX, y1=INT_MAX;
@@ -1141,7 +1141,7 @@ bool Schematic::rotateElements()
   copyPaintings(x1, y1, x2, y2, &ElementCache);
   if(y1 == INT_MAX) return false;   // no element selected
 
-  Wires->setAutoDelete(true);
+  wires().setAutoDelete(true);
   components().setAutoDelete(true);
 
   x1 = (x1+x2) >> 1;   // center for rotation
@@ -1228,14 +1228,14 @@ bool Schematic::rotateElements()
 // First copy them to 'ElementCache', then mirror and insert again.
 bool Schematic::mirrorXComponents()
 {
-  Wires->setAutoDelete(false);
+  wires().setAutoDelete(false);
   components().setAutoDelete(false);
 
   int x1, y1, x2, y2;
   QList<Element *> ElementCache;
   if(!copyComps2WiresPaints(x1, y1, x2, y2, &ElementCache))
     return false;
-  Wires->setAutoDelete(true);
+  wires().setAutoDelete(true);
   components().setAutoDelete(true);
 
   y1 = (y1+y2) >> 1;   // axis for mirroring
@@ -1865,7 +1865,7 @@ bool Schematic::elementsOnGrid()
 
   wires().setAutoDelete(false);
   // test all wires and wire labels
-  for(Wire *pw = Wires->last(); pw != 0; pw = Wires->prev()) {
+  for(Wire *pw = wires().last(); pw != 0; pw = wires().prev()) {
     pl = pw->Label;
     pw->Label = 0;
 
@@ -1885,12 +1885,12 @@ bool Schematic::elementsOnGrid()
         }
       }
 
-      No = Wires->at();
+      No = wires().at();
       deleteWire(pw);
       setOnGrid(pw->x1__(), pw->y1__());
       setOnGrid(pw->x2__(), pw->y2__());
       insertWire(pw);
-      Wires->at(No);   // restore current list position
+      wires().at(No);   // restore current list position
       pw->setSelected(false);
       count = true;
       if(pl){
@@ -1912,7 +1912,7 @@ bool Schematic::elementsOnGrid()
       }
     }
   }
-  Wires->setAutoDelete(true);
+  wires().setAutoDelete(true);
 
   for(auto pn : nodes()) {
     if(pn->Label){

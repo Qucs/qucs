@@ -318,7 +318,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
          }
     }
 
-    for(Wire *pw = sch->Wires->first(); pw != 0; pw = sch->Wires->next()) {
+    for(auto pw : sch->wires()){
 
         if (pw->isSelected()) {
             if(pw->x1_() < xmin) xmin = pw->x1_();
