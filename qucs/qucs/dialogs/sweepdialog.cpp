@@ -179,7 +179,7 @@ Graph* SweepDialog::setBiasPoints()
   ValueList.clear();
 
   // create DC voltage for all nodes
-  for(pn = Doc->Nodes->first(); pn != 0; pn = Doc->Nodes->next()) {
+  for(pn = Doc->nodes().first(); pn != 0; pn = Doc->nodes().next()) {
     if(pn->Name.isEmpty()) continue;
 
     pn->reset_something();
