@@ -176,12 +176,10 @@ public: // model
   // The pointers points to the current lists, either to the schematic
   // elements "Doc..." or to the symbol elements "SymbolPaints".
 // private: //TODO. one at a time. these must go to SchematicModel
-  WireList DocWires;
   PaintingList DocPaints;
   SchematicModel DocModel;
 
 // private: BUG: this is insane.
-  WireList *Wires;
   PaintingList *Paintings;
 //  ComponentList *Components;
 
@@ -201,9 +199,11 @@ public: // model
   NodeList const& nodes() const{
 	  return DocModel.nodes();
   }
-  WireList& wires() const{
-	  assert(Wires);
-	  return *Wires;
+  WireList& wires(){
+	  return DocModel.wires();
+  }
+  WireList const& wires() const{
+	  return DocModel.wires();
   }
   DiagramList& diagrams(){
 	  return DocModel.diagrams();
@@ -300,6 +300,7 @@ public:
 #ifdef USE_SCROLLVIEW
   QPointF mapToScene(QPoint const& p) const;
 #endif
+  void addToScene(Element*);
 
 protected slots:
   void slotScrollUp();
@@ -312,6 +313,10 @@ private:
   bool dragIsOkay;
   /*! \brief hold system-independent information about a schematic file */
   QFileInfo FileInfo;
+
+private:
+  void removeWire(Wire const* w);
+  void removeNode(Node const* n);
 
 /* ********************************************************************
    *****  The following methods are in the file                   *****

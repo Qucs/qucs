@@ -24,6 +24,7 @@ SchematicModel::SchematicModel(Schematic* s)
   Components.setAutoDelete(true);
   Nodes.setAutoDelete(true);
   Diagrams.setAutoDelete(true);
+  Wires.setAutoDelete(true);
 }
 
 void SchematicModel::clear()
@@ -86,9 +87,7 @@ ComponentList& SchematicModel::components()
 
 WireList& SchematicModel::wires()
 {
-	assert(_doc);
-	// temporary. move stuff here....
-	return _doc->wires();
+	return Wires;
 }
 
 NodeList& SchematicModel::nodes()
@@ -123,8 +122,7 @@ ComponentList const& SchematicModel::components() const
 
 WireList const& SchematicModel::wires() const
 {
-	// temporary. move stuff here....
-	return _doc->wires();
+	return Wires;
 }
 
 NodeList const& SchematicModel::nodes() const

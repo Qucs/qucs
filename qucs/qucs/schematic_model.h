@@ -67,6 +67,7 @@ private:
   ComponentList Components;
   NodeList Nodes;
   DiagramList Diagrams;
+  WireList Wires;
 public: // for now.
   friend class Schematic;
 };

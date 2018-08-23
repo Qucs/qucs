@@ -40,11 +40,15 @@ public:
   SchematicScene (QObject *);
   virtual ~SchematicScene ();
 
-  // void removeItem(Element const*);
 //  void addItem(ElementGraphics*);
   void addItem(QGraphicsItem* x){
 	  QGraphicsScene::addItem(x);
   }
+  void removeItem(QGraphicsItem const*x){
+	  QGraphicsScene::removeItem((QGraphicsItem*)x);
+  }
+
+  void removeItem(Element const*);
 
 private:
 
