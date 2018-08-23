@@ -352,9 +352,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
         }
     }
 
-    for(Diagram *pd = sch->Diagrams->first(); pd != 0; pd =sch-> Diagrams->next()) {
-
-
+    for(auto pd : sch->diagrams()) {
 
         if (pd->isSelected()) {
             int x1,y1,x2,y2;

@@ -23,6 +23,7 @@ SchematicModel::SchematicModel(Schematic* s)
 	// presumably Q3PTRlist without this is just a QList<*> (check)
   Components.setAutoDelete(true);
   Nodes.setAutoDelete(true);
+  Diagrams.setAutoDelete(true);
 }
 
 void SchematicModel::clear()
@@ -41,6 +42,7 @@ void SchematicModel::parse(QTextStream& stream)
 	QString Line;
   while(!stream.atEnd()) {
     Line = stream.readLine();
+	 qDebug() << "parse" << Line;
     if(Line == "<Components>") {
       if(!loadComponents(&stream)){
 			incomplete();
@@ -61,6 +63,7 @@ void SchematicModel::parse(QTextStream& stream)
       PaintingList pl;
       if(!loadPaintings(&stream, &pl)){ untested();
 			incomplete();
+			return;
 //			throw exception...
 		}
     }else{ untested();
@@ -109,8 +112,7 @@ PaintingList& SchematicModel::symbolPaintings()
 
 DiagramList& SchematicModel::diagrams()
 {
-	// temporary. move stuff here....
-	return _doc->diagrams();
+	return Diagrams;
 }
 
 // same, but const.
