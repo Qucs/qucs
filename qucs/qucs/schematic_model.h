@@ -61,6 +61,10 @@ public:
   ComponentList const& components() const;
 
   Schematic* doc();
-private:
+private: // TODO: remove.
   Schematic* _doc;
+private:
+  ComponentList Components;
+public: // for now.
+  friend class Schematic;
 };

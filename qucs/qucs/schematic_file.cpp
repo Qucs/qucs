@@ -634,7 +634,7 @@ bool SchematicModel::loadProperties(QTextStream *stream)
 // Inserts a component without performing logic for wire optimization.
 void SchematicModel::simpleInsertComponent(Component *c)
 {
-  assert(&_doc->components() == &components());
+  // assert(&_doc->components() == &components());
   assert(&_doc->nodes() == &nodes());
   int x, y;
   // connect every node of component
@@ -1097,11 +1097,8 @@ QString Schematic::createSymbolUndoString(char Op)
 // Used for "undo" function.
 bool Schematic::rebuild(QString *s)
 { untested();
-  DocWires.clear();	// delete whole document
-  DocNodes.clear();
-  DocComps.clear();
-  DocDiags.clear();
-  DocPaints.clear();
+  incomplete(); // invalidates pointers.
+  DocModel.clear();
 
   QString Line;
   QTextStream stream(s, QIODevice::ReadOnly);

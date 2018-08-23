@@ -2082,10 +2082,13 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
            if(cd->exec() != 1){ untested();
 	     done=true;   // dialog is WDestructiveClose
 	   }else{ untested();
+	     incomplete();
+#if 0
 	     Doc->Components->findRef(c);
 	     Doc->Components->take();
 	     Doc->setComponentNumber(c); // for ports/power sources
 	     Doc->Components->append(c);
+#endif
 	   }
          }
 

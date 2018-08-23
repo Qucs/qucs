@@ -83,14 +83,16 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
 { untested();
   qDebug() << "Schematic::Schematic" << Name_;
 
+#if 1
   // TODO: get rid of this.
   // sometimes these point to other stuff, sometimes when
   // SymbolMode is active, but not only.
-    Components = &DocComps;
+  //  Components = &DocComps;
     Wires      = &DocWires;
     Nodes      = &DocNodes;
     Diagrams   = &DocDiags;
     Paintings  = &DocPaints;
+#endif
 
   // ...........................................................
   GridX  = GridY  = 10;
@@ -104,7 +106,6 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   tmpUsedX2 = tmpUsedY2 = tmpViewX2 = tmpViewY2 =  200;
   tmpScale = 1.0;
 
-  DocComps.setAutoDelete(true);
   DocWires.setAutoDelete(true);
   DocNodes.setAutoDelete(true);
   DocDiags.setAutoDelete(true);
@@ -252,7 +253,7 @@ void Schematic::becomeCurrent(bool update)
     Wires = &SymbolWires;
     Diagrams = &SymbolDiags;
     Paintings = &SymbolPaints;
-    Components = &SymbolComps;
+    // Components = &SymbolComps;
 
     // if no symbol yet exists -> create one
     if(createSubcircuitSymbol()) {
@@ -264,11 +265,13 @@ void Schematic::becomeCurrent(bool update)
     emit signalRedoState(undoSymbolIdx != undoSymbol.size()-1);
   }
   else {
+#if 0
     Nodes = &DocNodes;
     Wires = &DocWires;
     Diagrams = &DocDiags;
     Paintings = &DocPaints;
     Components = &DocComps;
+#endif
 
     emit signalUndoState(undoActionIdx != 0);
     emit signalRedoState(undoActionIdx != undoAction.size()-1);
@@ -1038,7 +1041,6 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
   ymin=INT_MAX;
   xmax=INT_MIN;
   ymax=INT_MIN;
-  Component *pc;
   Diagram *pd;
   Wire *pw;
   WireLabel *pl;
@@ -1486,20 +1488,24 @@ int Schematic::adjustPortNumbers()
 {
   int x1, x2, y1, y2;
   // get size of whole symbol to know where to place new ports
-  if(isSymbolMode())  sizeOfAll(x1, y1, x2, y2);
-  else {
-    Components = &SymbolComps;
+  if(isSymbolMode()){
+    // yikes.
+    sizeOfAll(x1, y1, x2, y2);
+  } else {
+    // Components = &SymbolComps;
     Wires      = &SymbolWires;
     Nodes      = &SymbolNodes;
     Diagrams   = &SymbolDiags;
     Paintings  = &SymbolPaints;
     incomplete();
     sizeOfAll(x1, y1, x2, y2);
+#if 0
     Components = &DocComps;
     Wires      = &DocWires;
     Nodes      = &DocNodes;
     Diagrams   = &DocDiags;
     Paintings  = &DocPaints;
+#endif
   }
   x1 += 40;
   y2 += 20;
