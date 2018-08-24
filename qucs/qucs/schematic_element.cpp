@@ -1654,7 +1654,8 @@ void Schematic::selectMarkers()
 // For moving elements: If the moving element is connected to a not
 // moving element, insert two wires. If the connected element is already
 // a wire, use this wire. Otherwise create new wire.
-void Schematic::newMovingWires(Q3PtrList<Element> *p, Node *pn, int pos)
+// use WireList?! SchematicModel?
+void Schematic::newMovingWires(QList<Element*> *p, Node *pn, int pos)
 {
     Element *pe;
 
@@ -1818,7 +1819,7 @@ QList<ElementGraphics*> Schematic::cropSelectedElements()
 
     // test all components *********************************
     // Insert components before wires in order to prevent short-cut removal.
-    for(pc = Components->first(); pc != 0; )
+    for(pc = components().first(); pc != 0; )
         if(pc->isSelected())
         {
             p->append(pc);
@@ -1831,10 +1832,11 @@ QList<ElementGraphics*> Schematic::cropSelectedElements()
                 pp->Connection->State = 4;
             }
 
-            Components->take();   // take component out of the document
-            pc = Components->current();
-        }
-        else pc = Components->next();
+            components().take();   // take component out of the document
+            pc = components().current();
+        }else{
+	    pc = components().next();
+	}
 
     // test all wires and wire labels ***********************
     for(pw = wires().first(); pw != 0; )
@@ -1860,27 +1862,38 @@ QList<ElementGraphics*> Schematic::cropSelectedElements()
     // Inserts wires, if a connection to a not moving element is found.
     // The order of the "for"-loops is important to guarantee a stable
     // operation: components, new wires, old wires
-    pc = (Component*)p->first();
-    for(i=0; i<count; i++)
-    {
-        foreach(Port *pp, pc->Ports)
+    auto pi=p->begin();
+    pc = component(*pi);
+    for(i=0; i<count; i++) {
+        foreach(Port *pp, pc->Ports){
             newMovingWires(p, pp->Connection, count);
+	}
 
-        p->findRef(pc);   // back to the real current pointer
-        pc = (Component*)p->next();
+	// find something already cropped.
+	++pi;
+	pc = component(*pi);
     }
 
-    for(pe = (Element*)pc; pe != 0; pe = p->next())  // new wires
+    // GAAH. everything is stuffed into *p, but the first few are components.
+    // these could be wires or so.
+    for(; pi!=p->end(); ++pi){
+	pe=*pi;
+	// assert wire(...)?
         if(pe->isSelected())
             break;
+    }
 
-    for(pw = (Wire*)pe; pw != 0; pw = (Wire*)p->next())
+    pw = wire(*pi);
+    for(pw = (Wire*)pe; pw != 0;){
+	pw = wire(*pi);
         if(pw->Type == isWire)    // not working on labels
         {
             newMovingWires(p, pw->Port1, count);
             newMovingWires(p, pw->Port2, count);
-            p->findRef(pw);   // back to the real current pointer
+            pi = p->find(pw);   // back to the real current pointer
         }
+	++pi;
+    }
 
 
     // ..............................................
@@ -1935,15 +1948,12 @@ QList<ElementGraphics*> Schematic::cropSelectedElements()
 
     count = 0;  // count markers now
     // test all diagrams **********************************
-    for(pd = Diagrams->first(); pd != 0; )
-        if(pd->isSelected())
-        {
+    for(pd = diagrams().first(); pd != 0; )
+        if(pd->isSelected()) {
             p->append(pd);
-            Diagrams->take();
-            pd = Diagrams->current();
-        }
-        else
-        {
+            diagrams().take();
+            pd = diagrams().current();
+        } else {
             foreach(Graph *pg, pd->Graphs)
             {
                 QMutableListIterator<Marker *> im(pg->Markers);
@@ -1959,7 +1969,7 @@ QList<ElementGraphics*> Schematic::cropSelectedElements()
                 }
             }
 
-            pd = Diagrams->next();
+            pd = diagrams().next();
         }
 
     return P;
@@ -2064,15 +2074,15 @@ bool Schematic::deleteElements()
 #else
     bool sel = false;
 
-    Component *pc = Components->first();
+    Component *pc = components().first();
     while(pc != 0)      // all selected component
         if(pc->isSelected())
         {
             deleteComp(pc);
-            pc = Components->current();
+            pc = components().current();
             sel = true;
         }
-        else pc = Components->next();
+        else pc = components().next();
 
     Wire *pw = wires().first();
     while(pw != 0)        // all selected wires and their labels
@@ -2090,8 +2100,9 @@ bool Schematic::deleteElements()
             deleteWire(pw);
             pw = wires().current();
             sel = true;
-        }
-        else pw = Wires->next();
+        }else{
+	    pw = wires().next();
+	}
     }
 
     // all selected labels on nodes ***************************
@@ -2104,12 +2115,12 @@ bool Schematic::deleteElements()
                 sel = true;
             }
 
-    Diagram *pd = Diagrams->first();
+    Diagram *pd = diagrams().first();
     while(pd != 0)      // test all diagrams
         if(pd->isSelected())
         {
-            Diagrams->remove();
-            pd = Diagrams->current();
+            diagrams().remove();
+            pd = diagrams().current();
             sel = true;
         }
         else
@@ -2145,7 +2156,7 @@ bool Schematic::deleteElements()
             if(wasGraphDeleted)
                 pd->recalcGraphData();  // update diagram (resize etc.)
 
-            pd = Diagrams->next();
+            pd = diagrams().next();
         } //else
 
 
