@@ -189,7 +189,9 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, EGPList* pe)
 
   // better interface for this kind of stuff?
   assert(!pe->count());
+#ifndef USE_SCROLLVIEW
   x.toScene(*scene(), pe);
+#endif
   DocModel.merge(x);
 
 #endif

@@ -469,8 +469,9 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
   if(!isSymbolMode())
     paintFrame(&Painter);
 
-  for(Component *pc = Components->first(); pc != 0; pc = Components->next())
+  for(auto pc : components()){
     pc->paint(&Painter);
+  }
 
   for(auto pw : wires()){
     pw->paint(&Painter);
@@ -478,8 +479,7 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
       pw->Label->paint(&Painter);  // separate because of paintSelected
   }
 
-  Node *pn;
-  for(pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
+  for(auto pn : nodes()){
     pn->paint(&Painter);
     if(pn->Label)
       pn->Label->paint(&Painter);  // separate because of paintSelected
@@ -496,7 +496,7 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
 
   if(showBias > 0) {  // show DC bias points in schematic ?
     int x, y, z;
-    for(pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
+    for(auto pn : nodes()){
       if(pn->Name.isEmpty()) continue;
       x = pn->cx_();
       y = pn->cy_() + 4;
@@ -2360,6 +2360,11 @@ QPointF Schematic::mapToScene(QPoint const& p) const
   float fY=float(p.y())/Scale + float(ViewY1);
 
   return QPointF(fX, fY);
+}
+
+void Schematic::addToScene(Element* x)
+{
+  // not needed.
 }
 #else
 void Schematic::addToScene(Element* x)

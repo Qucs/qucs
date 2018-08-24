@@ -62,9 +62,10 @@ ElementGraphics* Schematic::itemAt(float x, float y)
 		return nullptr;
 	}
 #else
-	for(Component *pc = Components->first(); pc != 0; pc = Components->next())
+	for(auto pc : components()){
 		if(pc->getSelected(x, y))
 			return (ElementGraphics*)(pc);
+	}
 
 	float Corr = 5.0 / Scale; // size of line select
 
