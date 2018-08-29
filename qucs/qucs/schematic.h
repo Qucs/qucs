@@ -54,6 +54,12 @@ class QMouseEvent;
 class QDragEnterEvent;
 class QPainter;
 
+class Schematic;
+class MouseActions;
+typedef bool (Schematic::*pToggleFunc) ();
+typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
+typedef void (MouseActions::*pMouseFunc2) (Schematic*, QMouseEvent*);
+
 // digital signal data
 struct DigSignal {
   DigSignal() { Name=""; Type=""; }
@@ -439,6 +445,45 @@ public:
   bool isAnalog;
   bool isVerilog;
   bool creatingLib;
+
+private: // action overrides, schematic_action.cpp
+  void actionCopy(){
+	  copy();
+  }
+  void actionCut(){
+	  cut();
+  }
+  void actionEditUndo();
+  void actionEditRedo();
+  void actionAlign(int what);
+  void actionDistrib(int dir); // 0=horiz, 1=vert
+
+  void actionApplyCompText();
+  void actionSelect(bool);
+  void actionSelectMarker();
+  void actionSelectAll();
+  void actionChangeProps();
+  void actionCursor(arrow_dir_t);
+
+  void actionOnGrid(bool);
+  void actionEditRotate(bool);
+  void actionEditMirrorX(bool);
+  void actionEditMirrorY(bool);
+  void actionEditActivate(bool);
+  void actionEditDelete(bool);
+  void actionEditPaste(bool);
+  void actionSetWire(bool);
+  void actionInsertLabel(bool);
+  void actionInsertEquation(bool);
+  void actionInsertPort(bool);
+  void actionInsertGround(bool);
+  void actionSetMarker(bool);
+  void actionMoveText(bool);
+  void actionZoomIn(bool);
+  void actionExportGraphAsCsv(); // BUG
+
+private:
+  bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2);
 
 public: // serializer
 public: // need access to SchematicModel. grr

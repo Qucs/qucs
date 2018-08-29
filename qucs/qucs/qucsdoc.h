@@ -20,15 +20,21 @@
 
 #include <QString>
 #include <QDateTime>
+#include <assert.h>
+
+#include "actions.h"
+#include "trace.h"
 
 class QucsApp;
+class QAction;
 class QPrinter;
 class QPainter;
+class MouseActions;
 
 class QucsDoc {
 public: 
   QucsDoc(QucsApp*, const QString&);
-  virtual ~QucsDoc() {};
+  virtual ~QucsDoc();
 
   virtual void  setName(const QString&) {};
   virtual bool  load() { return true; };
@@ -59,6 +65,47 @@ public:
   int  showBias;     // -1=no, 0=calculation running, >0=show DC bias points
   bool GridOn;
   int  tmpPosX, tmpPosY;
+
+public: // actions: These somehow correspond to buttons.
+        // needs cleanup...
+	virtual void actionSelect(bool on) = 0;
+	virtual void actionCopy() = 0;
+	virtual void actionCut() = 0;
+	virtual void actionEditActivate(bool) = 0;
+	virtual void actionEditUndo() = 0;
+	virtual void actionEditRedo() = 0;
+	virtual void actionSelectAll() = 0;
+	virtual void actionChangeProps() = 0;
+
+	// these are not implemented for qucstext, not called perhaps?
+	virtual void actionApplyCompText() { unreachable(); }
+	virtual void actionAlign(int) {unreachable();}
+	virtual void actionDistrib(int) {unreachable();}
+	virtual void actionSelectMarker() {unreachable();}
+	virtual void actionCursor(arrow_dir_t) { unreachable();}
+	virtual void actionExportGraphAsCsv(){ unreachable();}
+
+	virtual void actionOnGrid(bool) {unreachable();}
+	virtual void actionEditRotate(bool) {unreachable();}
+	virtual void actionEditMirrorX(bool) {unreachable();}
+	virtual void actionEditMirrorY(bool) {unreachable();}
+	virtual void actionEditDelete(bool) {unreachable();}
+	virtual void actionEditPaste(bool) {unreachable();}
+	virtual void actionSetWire(bool) {unreachable();}
+	virtual void actionInsertLabel(bool) {unreachable();}
+	virtual void actionInsertEquation(bool) {unreachable();}
+	virtual void actionInsertEntity() {unreachable();}
+	virtual void actionInsertPort(bool) {unreachable();}
+	virtual void actionInsertGround(bool) {unreachable();}
+	virtual void actionSetMarker(bool) {unreachable();}
+	virtual void actionMoveText(bool) {unreachable();}
+	virtual void actionZoomIn(bool) = 0;
+
+	void uncheckActive();
+
+protected: // cleaning up debris
+	QAction* selectAction();
+	MouseActions* mouseActions();
 };
 
 #endif
