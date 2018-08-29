@@ -441,6 +441,12 @@ public:
   bool creatingLib;
 
 private: // action overrides, schematic_action.cpp
+  void actionCopy(){
+	  copy();
+  }
+  void actionCut(){
+	  cut();
+  }
   void actionSelect(bool);
 
 public: // serializer

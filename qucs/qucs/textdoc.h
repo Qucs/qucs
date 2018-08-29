@@ -101,6 +101,12 @@ private:
   SyntaxHighlighter * syntaxHighlight;
 
 private: // actions
+  void actionCopy(){
+	  cut();
+  }
+  void actionCut(){
+	  cut();
+  }
   void actionSelect(bool){
 	  viewport()->setFocus();
 	  selectAction()->blockSignals(true);

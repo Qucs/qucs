@@ -63,6 +63,8 @@ public:
 
 public: // actions:
 	virtual void actionSelect(bool on);
+	virtual void actionCopy() = 0;
+	virtual void actionCut() = 0;
 
 protected: // cleaning up debris
 	QAction* selectAction();

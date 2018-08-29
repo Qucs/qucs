@@ -252,12 +252,11 @@ void QucsApp::slotEditCut()
   statusBar()->showMessage(tr("Cutting selection..."));
   slotHideEdit(); // disable text edit of component property
 
-  QWidget *Doc = DocumentTab->currentWidget();
-  if(isTextDocument (Doc)) {
-    ((TextDoc *)Doc)->cut();
-  } else {
-    ((Schematic *)Doc)->cut();
-  }
+  QWidget *w = DocumentTab->currentWidget();
+  QucsDoc *qd = prechecked_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionCut();
 
   statusBar()->showMessage(tr("Ready."));
 }
@@ -267,12 +266,11 @@ void QucsApp::slotEditCopy()
 {
   statusBar()->showMessage(tr("Copying selection to clipboard..."));
 
-  QWidget *Doc = DocumentTab->currentWidget();
-  if(isTextDocument (Doc)) {
-    ((TextDoc *)Doc)->copy();
-  } else {
-    ((Schematic *)Doc)->copy();
-  }
+  QWidget *w = DocumentTab->currentWidget();
+  QucsDoc *qd = prechecked_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionCopy();
 
   statusBar()->showMessage(tr("Ready."));
 }
