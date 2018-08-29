@@ -20,7 +20,7 @@
 
 #include "element.h"
 #include "qt_compat.h"
-
+#include "schematic_scene.h"
 
 // a mouse action on an element.
 // formerly, a mouse action was implemented by means of messing with element

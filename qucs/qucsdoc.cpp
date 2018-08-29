@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include <QFileInfo>
+#include <QAction>
 
 #include "qucsdoc.h"
 #include "qucs.h"
@@ -53,6 +54,11 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& Name_)
   Scale = 1.0;
 }
 
+// vtable here?
+QucsDoc::~QucsDoc()
+{
+}
+
 QString QucsDoc::fileSuffix (const QString& Name) {
   QFileInfo Info (Name);
   return Info.suffix();
@@ -71,3 +77,23 @@ QString QucsDoc::fileBase (void) {
   return fileBase (DocName);
 }
 
+// cleanup debris
+QAction* QucsDoc::selectAction()
+{
+  	return App->select;
+}
+
+void QucsDoc::uncheckActive(){
+	if(App->activeAction) {
+		App->activeAction->blockSignals(true); // do not call toggle slot
+		App->activeAction->setChecked(false);       // set last toolbar button off
+		App->activeAction->blockSignals(false);
+	}else{
+	}
+}
+
+MouseActions* QucsDoc::mouseActions()
+{
+	assert(App);
+	return App->view;
+}

@@ -27,7 +27,6 @@
 
 #include <QProcess>
 #include "qt_compat.h"
-#include <QRegExpValidator>
 #include <QLineEdit>
 #include <QAction>
 #include <QStatusBar>
@@ -44,13 +43,9 @@
 
 #include "projectView.h"
 #include "qucs.h"
-#include "schematic.h"
 #include "textdoc.h"
 #include "mouseactions.h"
 #include "messagedock.h"
-#include "components/ground.h"
-//#include "components/subcirport.h"
-#include "components/equation.h"
 
 // BUG: untangle dialogs
 #include "matchdialog.h"
@@ -67,173 +62,130 @@
 #include "misc.h"
 #include "globals.h"
 #include "actions.h"
-
-// for editing component name on schematic
-QRegExp  Expr_CompProp;
-QRegExpValidator Val_CompProp(Expr_CompProp, 0);
-
-// -----------------------------------------------------------------------
-// This function is called from all toggle actions.
-bool QucsApp::performToggleAction(bool on, QAction *Action,
-	pToggleFunc Function, pMouseFunc MouseMove, pMouseFunc2 MousePress)
-{
-  slotHideEdit(); // disable text edit of component property
-
-  if(!on) {
-    MouseMoveAction = 0;
-    MousePressAction = 0;
-    MouseReleaseAction = 0;
-    MouseDoubleClickAction = 0;
-    activeAction = 0;   // no action active
-    return false;
-  }
-
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  if(Function && (Doc->*Function)()) {
-      Action->blockSignals(true);
-      Action->setChecked(false);  // release toolbar button
-      Action->blockSignals(false);
-      Doc->viewport()->update();
-  }else{
-
-    if(activeAction) {
-      activeAction->blockSignals(true); // do not call toggle slot
-      activeAction->setChecked(false);       // set last toolbar button off
-      activeAction->blockSignals(false);
-    }
-    activeAction = Action;
-
-    MouseMoveAction = MouseMove;
-    MousePressAction = MousePress;
-    MouseReleaseAction = 0;
-    MouseDoubleClickAction = 0;
-
-  }
-
-  Doc->viewport()->update();
-  view->drawn = false;
-  return true;
-}
+#include "platform.h"
 
 // -----------------------------------------------------------------------
 // Is called, when "set on grid" action is triggered.
 void QucsApp::slotOnGrid(bool on)
 {
-  performToggleAction(on, onGrid, &Schematic::elementsOnGrid,
-		&MouseActions::MMoveOnGrid, &MouseActions::MPressOnGrid);
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionOnGrid(on);
 }
 
 // -----------------------------------------------------------------------
 // Is called when the rotate toolbar button is pressed.
 void QucsApp::slotEditRotate(bool on)
 {
-  performToggleAction(on, editRotate, &Schematic::rotateElements,
-		&MouseActions::MMoveRotate, &MouseActions::MPressRotate);
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionEditRotate(on);
 }
 
 // -----------------------------------------------------------------------
 // Is called when the mirror toolbar button is pressed.
 void QucsApp::slotEditMirrorX(bool on)
 {
-  performToggleAction(on, editMirror, &Schematic::mirrorXComponents,
-		&MouseActions::MMoveMirrorX, &MouseActions::MPressMirrorX);
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionEditMirrorX(on);
 }
 
 // -----------------------------------------------------------------------
 // Is called when the mirror toolbar button is pressed.
 void QucsApp::slotEditMirrorY(bool on)
 {
-  performToggleAction(on, editMirrorY, &Schematic::mirrorYComponents,
-		&MouseActions::MMoveMirrorY, &MouseActions::MPressMirrorY);
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionEditMirrorY(on);
 }
 
 // -----------------------------------------------------------------------
 // Is called when the activate/deactivate toolbar button is pressed.
 // It also comments out the selected text on a text document
 // \todo update the status or tooltip message
-void QucsApp::slotEditActivate (bool on)
+void QucsApp::slotEditActivate(bool on)
 {
-  TextDoc * Doc = (TextDoc *) DocumentTab->currentWidget ();
-  if (isTextDocument (Doc)) {
-    //TODO Doc->clearParagraphBackground (Doc->tmpPosX);
-    Doc->commentSelected ();
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-    editActivate->blockSignals (true);
-    editActivate->setChecked(false);  // release toolbar button
-    editActivate->blockSignals (false);
-  }
-  else
-    performToggleAction (on, editActivate,
-        &Schematic::activateSelectedComponents,
-        &MouseActions::MMoveActivate, &MouseActions::MPressActivate);
+  qd->actionEditActivate(on);
 }
 
 // ------------------------------------------------------------------------
 // Is called if "Delete"-Button is pressed.
 void QucsApp::slotEditDelete(bool on)
 {
-  TextDoc *Doc = (TextDoc*)DocumentTab->currentWidget();
-  if(isTextDocument(Doc)) {
-    Doc->viewport()->setFocus();
-    //Doc->del();
-    Doc->textCursor().deleteChar();
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-    editDelete->blockSignals(true);
-    editDelete->setChecked(false);  // release toolbar button
-    editDelete->blockSignals(false);
-  }
-  else
-    performToggleAction(on, editDelete, &Schematic::deleteElements,
-          &MouseActions::MMoveDelete, &MouseActions::MPressDelete);
+  qd->actionEditDelete(on);
 }
 
 // -----------------------------------------------------------------------
 // Is called if "Wire"-Button is pressed.
 void QucsApp::slotSetWire(bool on)
 {
-  performToggleAction(on, insWire, 0,
-		&MouseActions::MMoveWire1, &MouseActions::MPressWire1);
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionSetWire(on);
 }
 
 // -----------------------------------------------------------------------
 void QucsApp::slotInsertLabel(bool on)
 {
-  performToggleAction(on, insLabel, 0,
-		&MouseActions::MMoveLabel, &MouseActions::MPressLabel);
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionInsertLabel(on);
 }
 
 // -----------------------------------------------------------------------
 void QucsApp::slotSetMarker(bool on)
 {
-  performToggleAction(on, setMarker, 0,
-		&MouseActions::MMoveMarker, &MouseActions::MPressMarker);
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionSetMarker(on);
 }
 
 // -----------------------------------------------------------------------
 // Is called, when "move component text" action is triggered.
 void QucsApp::slotMoveText(bool on)
 {
-  performToggleAction(on, moveText, 0,
-		&MouseActions::MMoveMoveTextB, &MouseActions::MPressMoveText);
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionMoveText(on);
 }
 
 // -----------------------------------------------------------------------
 // Is called, when "Zoom in" action is triggered.
 void QucsApp::slotZoomIn(bool on)
 {
-  TextDoc *Doc = (TextDoc*)DocumentTab->currentWidget();
-  if(isTextDocument(Doc)) {
-    Doc->zoomBy(1.5f);
-    magPlus->blockSignals(true);
-    magPlus->setChecked(false);
-    magPlus->blockSignals(false);
-  }
-  else
-    performToggleAction(on, magPlus, 0,
-		&MouseActions::MMoveZoomIn, &MouseActions::MPressZoomIn);
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionZoomIn(on);
 }
 
-
+// -----------------------------------------------------------------------
 void QucsApp::slotEscape()
 {
     select->setChecked(true);
@@ -244,33 +196,11 @@ void QucsApp::slotEscape()
 // Is called when the select toolbar button is pressed.
 void QucsApp::slotSelect(bool on)
 {
-  QWidget *w = DocumentTab->currentWidget();
-  if(isTextDocument(w)) {
-    ((TextDoc*)w)->viewport()->setFocus();
-      select->blockSignals(true);
-      select->setChecked(true);
-      select->blockSignals(false);
-    return;
-  }
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  // goto to insertWire mode if ESC pressed during wiring
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  if(MouseMoveAction == &MouseActions::MMoveWire2) {
-    MouseMoveAction = &MouseActions::MMoveWire1;
-    MousePressAction = &MouseActions::MPressWire1;
-    Doc->viewport()->update();
-    view->drawn = false;
-
-    select->blockSignals(true);
-    select->setChecked(false);
-    select->blockSignals(false);
-    return;
-  }
-
-  if(performToggleAction(on, select, 0, 0, &MouseActions::MPressSelect)) {
-    MouseReleaseAction = &MouseActions::MReleaseSelect;
-    MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
-  }
+  qd->actionSelect(on);
 }
 
 // --------------------------------------------------------------------
@@ -279,12 +209,11 @@ void QucsApp::slotEditCut()
   statusBar()->showMessage(tr("Cutting selection..."));
   slotHideEdit(); // disable text edit of component property
 
-  QWidget *Doc = DocumentTab->currentWidget();
-  if(isTextDocument (Doc)) {
-    ((TextDoc *)Doc)->cut();
-  } else {
-    ((Schematic *)Doc)->cut();
-  }
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionCut();
 
   statusBar()->showMessage(tr("Ready."));
 }
@@ -294,12 +223,11 @@ void QucsApp::slotEditCopy()
 {
   statusBar()->showMessage(tr("Copying selection to clipboard..."));
 
-  QWidget *Doc = DocumentTab->currentWidget();
-  if(isTextDocument (Doc)) {
-    ((TextDoc *)Doc)->copy();
-  } else {
-    ((Schematic *)Doc)->copy();
-  }
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionCopy();
 
   statusBar()->showMessage(tr("Ready."));
 }
@@ -307,361 +235,190 @@ void QucsApp::slotEditCopy()
 // -----------------------------------------------------------------------
 void QucsApp::slotEditPaste(bool on)
 {
-  // get the current document
-  QWidget *Doc = DocumentTab->currentWidget();
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  // if the current document is a text document paste in
-  // the contents of the clipboard as text
-  if(isTextDocument (Doc))
-  {
-    ((TextDoc*)Doc)->paste();
-
-    editPaste->blockSignals(true);
-    editPaste->setChecked(false);  // release toolbar button
-    editPaste->blockSignals(false);
-    return;
-  } 
-  else {
-    // if it's not a text doc, prevent the user from editing
-    // while we perform the paste operation
-    slotHideEdit();
-
-    if(!on)
-    {
-      MouseMoveAction = 0;
-      MousePressAction = 0;
-      MouseReleaseAction = 0;
-      MouseDoubleClickAction = 0;
-      activeAction = 0;   // no action active
-      if(view->drawn) {
-        ((Schematic *)Doc)->viewport()->update();
-      }
-      return;
-    }
-
-    if(!view->pasteElements((Schematic *)Doc))
-    {
-      editPaste->blockSignals(true); // do not call toggle slot
-      editPaste->setChecked(false);       // set toolbar button off
-      editPaste->blockSignals(false);
-      return;   // if clipboard empty
-    }
-
-    if(activeAction)
-    {
-      activeAction->blockSignals(true); // do not call toggle slot
-      activeAction->setChecked(false);       // set last toolbar button off
-      activeAction->blockSignals(false);
-    }
-    activeAction = editPaste;
-
-    view->drawn = false;
-    MouseMoveAction = &MouseActions::MMovePaste;
-    view->movingRotated = 0;
-    MousePressAction = 0;
-    MouseReleaseAction = 0;
-    MouseDoubleClickAction = 0;
-  }
+  qd->actionEditPaste(on);
 }
+
 
 // -----------------------------------------------------------------------
 void QucsApp::slotInsertEntity ()
 {
-  TextDoc * Doc = (TextDoc *) DocumentTab->currentWidget ();
-  Doc->viewport()->setFocus ();
-  //TODO Doc->clearParagraphBackground (Doc->tmpPosX);
-  Doc->insertSkeleton ();
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  //int x, y;
-  //Doc->getCursorPosition (&x, &y);
-  //x = Doc->textCursor().blockNumber();
-  //y = Doc->textCursor().columnNumber();
-  Doc->slotCursorPosChanged();
+  qd->actionInsertEntity();
 }
 
 // -----------------------------------------------------------------------
 // Is called when the mouse is clicked upon the equation toolbar button.
 void QucsApp::slotInsertEquation(bool on)
 {
-  slotHideEdit(); // disable text edit of component property
-  MouseReleaseAction = 0;
-  MouseDoubleClickAction = 0;
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  if(!on) {
-    MouseMoveAction = 0;
-    MousePressAction = 0;
-    activeAction = 0;   // no action active
-    return;
-  }
-  if(activeAction) {
-    activeAction->blockSignals(true); // do not call toggle slot
-    activeAction->setChecked(false);       // set last toolbar button off
-    activeAction->blockSignals(false);
-  }
-  activeAction = insEquation;
-
-  if(view->selElem)
-    delete view->selElem;  // delete previously selected component
-
-  Symbol* sym=symbol_dispatcher.clone("eqn");
-  assert(sym);
-  view->selElem = prechecked_cast<Component*>(sym);
-  assert(view->selElem);
-
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  if(view->drawn) Doc->viewport()->update();
-  view->drawn = false;
-  MouseMoveAction = &MouseActions::MMoveElement;
-  MousePressAction = &MouseActions::MPressElement;
+  qd->actionInsertEquation(on);
 }
 
 // -----------------------------------------------------------------------
 // Is called when the mouse is clicked upon the ground toolbar button.
 void QucsApp::slotInsertGround(bool on)
 {
-  slotHideEdit(); // disable text edit of component property
-  MouseReleaseAction = 0;
-  MouseDoubleClickAction = 0;
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  if(!on) {
-    MouseMoveAction = 0;
-    MousePressAction = 0;
-    activeAction = 0;   // no action active
-    return;
-  }
-  if(activeAction) {
-    activeAction->blockSignals(true); // do not call toggle slot
-    activeAction->setChecked(false);       // set last toolbar button off
-    activeAction->blockSignals(false);
-  }
-  activeAction = insGround;
-
-  if(view->selElem)
-    delete view->selElem;  // delete previously selected component
-
-  Symbol* sym=symbol_dispatcher.clone("GND");
-  assert(sym);
-  view->selElem = prechecked_cast<Component*>(sym);
-  assert(view->selElem);
-
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  if(view->drawn) Doc->viewport()->update();
-  view->drawn = false;
-  MouseMoveAction = &MouseActions::MMoveElement;
-  MousePressAction = &MouseActions::MPressElement;
+  qd->actionInsertGround(on);
 }
+
 
 // -----------------------------------------------------------------------
 // Is called when the mouse is clicked upon the port toolbar button.
 void QucsApp::slotInsertPort(bool on)
 {
-  slotHideEdit(); // disable text edit of component property
-  MouseReleaseAction = 0;
-  MouseDoubleClickAction = 0;
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  if(!on) {
-    MouseMoveAction = 0;
-    MousePressAction = 0;
-    activeAction = 0;   // no action active
-    return;
-  }
-  if(activeAction) {
-    activeAction->blockSignals(true); // do not call toggle slot
-    activeAction->setChecked(false);       // set last toolbar button off
-    activeAction->blockSignals(false);
-  }
-  activeAction = insPort;
-
-  if(view->selElem)
-    delete view->selElem;  // delete previously selected component
-
-  Symbol* sym=symbol_dispatcher.clone("subckt_port");
-  assert(sym);
-  view->selElem = prechecked_cast<Component*>(sym);
-  assert(view->selElem);
-
-  Schematic *Doc=prechecked_cast<Schematic*>(DocumentTab->currentPage());
-  assert(Doc);
-  if(view->drawn) Doc->viewport()->update();
-  view->drawn = false;
-  MouseMoveAction = &MouseActions::MMoveElement;
-  MousePressAction = &MouseActions::MPressElement;
+  qd->actionInsertPort(on);
 }
 
 // --------------------------------------------------------------
 // Is called, when "Undo"-Button is pressed.
 void QucsApp::slotEditUndo()
 {
-  Schematic *Doc=prechecked_cast<Schematic*>(DocumentTab->currentPage());
-  assert(Doc);
-  if(isTextDocument(Doc)) {
-    ((TextDoc*)Doc)->viewport()->setFocus();
-    ((TextDoc*)Doc)->undo();
-    return;
-  }
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  slotHideEdit(); // disable text edit of component property
-
-  Doc->undo();
-  Doc->viewport()->update();
-  view->drawn = false;
+  qd->actionEditUndo();
 }
 
 // --------------------------------------------------------------
 // Is called, when "Undo"-Button is pressed.
 void QucsApp::slotEditRedo()
 {
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  if(isTextDocument(Doc)) {
-    ((TextDoc*)Doc)->viewport()->setFocus();
-    ((TextDoc*)Doc)->redo();
-    return;
-  }
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  slotHideEdit(); // disable text edit of component property
-
-  Doc->redo();
-  Doc->viewport()->update();
-  view->drawn = false;
+  qd->actionEditRedo();
 }
 
 // --------------------------------------------------------------
 // Is called, when "Align top" action is triggered.
 void QucsApp::slotAlignTop()
 {
-  slotHideEdit(); // disable text edit of component property
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  if(!Doc->aligning(0))
-    QMessageBox::information(this, tr("Info"),
-		      tr("At least two elements must be selected !"));
-  Doc->viewport()->update();
-  view->drawn = false;
+  qd->actionAlign(0);
 }
 
 // --------------------------------------------------------------
 // Is called, when "Align bottom" action is triggered.
 void QucsApp::slotAlignBottom()
 {
-  slotHideEdit(); // disable text edit of component property
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  if(!Doc->aligning(1))
-    QMessageBox::information(this, tr("Info"),
-		      tr("At least two elements must be selected !"));
-  Doc->viewport()->update();
-  view->drawn = false;
+  qd->actionAlign(1);
 }
 
 // --------------------------------------------------------------
 // Is called, when "Align left" action is triggered.
 void QucsApp::slotAlignLeft()
 {
-  slotHideEdit(); // disable text edit of component property
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  if(!Doc->aligning(2))
-    QMessageBox::information(this, tr("Info"),
-		      tr("At least two elements must be selected !"));
-  Doc->viewport()->update();
-  view->drawn = false;
+  qd->actionAlign(2);
 }
 
 // --------------------------------------------------------------
 // Is called, when "Align right" action is triggered.
 void QucsApp::slotAlignRight()
 {
-  slotHideEdit(); // disable text edit of component property
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  if(!Doc->aligning(3))
-    QMessageBox::information(this, tr("Info"),
-		      tr("At least two elements must be selected !"));
-  Doc->viewport()->update();
-  view->drawn = false;
+  qd->actionAlign(3);
 }
 
 // --------------------------------------------------------------
 // Is called, when "Distribute horizontally" action is triggered.
 void QucsApp::slotDistribHoriz()
 {
-  slotHideEdit(); // disable text edit of component property
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  Doc->distributeHorizontal();
-  Doc->viewport()->update();
-  view->drawn = false;
+  qd->actionDistrib(0);
 }
 
 // --------------------------------------------------------------
 // Is called, when "Distribute vertically" action is triggered.
 void QucsApp::slotDistribVert()
 {
-  slotHideEdit(); // disable text edit of component property
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  Doc->distributeVertical();
-  Doc->viewport()->update();
-  view->drawn = false;
+  qd->actionDistrib(1);
 }
 
 // --------------------------------------------------------------
 // Is called, when "Center horizontally" action is triggered.
 void QucsApp::slotCenterHorizontal()
 {
-  slotHideEdit(); // disable text edit of component property
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  if(!Doc->aligning(4))
-    QMessageBox::information(this, tr("Info"),
-		      tr("At least two elements must be selected !"));
-  Doc->viewport()->update();
-  view->drawn = false;
+  qd->actionAlign(4);
 }
 
 // --------------------------------------------------------------
 // Is called, when "Center vertically" action is triggered.
 void QucsApp::slotCenterVertical()
 {
-  slotHideEdit(); // disable text edit of component property
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  if(!Doc->aligning(5))
-    QMessageBox::information(this, tr("Info"),
-		      tr("At least two elements must be selected !"));
-  Doc->viewport()->update();
-  view->drawn = false;
+  qd->actionAlign(5);
 }
 
 // ---------------------------------------------------------------------
 // Is called when the "select all" action is triggered.
 void QucsApp::slotSelectAll()
 {
-  slotHideEdit(); // disable text edit of component property
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  QWidget *Doc = DocumentTab->currentWidget();
-  if(isTextDocument(Doc)) {
-    ((TextDoc*)Doc)->viewport()->setFocus();
-    //((TextDoc*)Doc)->selectAll(true);
-    ((TextDoc*)Doc)->selectAll();
-  }
-  else {
-    ((Schematic*)Doc)->selectElements(INT_MIN, INT_MIN, INT_MAX, INT_MAX, true);
-    ((Schematic*)Doc)->viewport()->update();
-    view->drawn = false;
-  }
+  hideEdit();
+  qd->actionSelectAll();
 }
 
 // ---------------------------------------------------------------------
 // Is called when the "select markers" action is triggered.
+// schematic only
 void QucsApp::slotSelectMarker()
 {
-  slotHideEdit(); // disable text edit of component property
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  Doc->selectMarkers();
-  Doc->viewport()->update();
-  view->drawn = false;
+  qd->actionSelectMarker();
 }
 
 
@@ -888,20 +645,11 @@ void QucsApp::slotEditFind()
 // --------------------------------------------------------------
 void QucsApp::slotChangeProps()
 {
-  QWidget *Doc = DocumentTab->currentWidget();
-  if(isTextDocument(Doc)) {
-    ((TextDoc*)Doc)->viewport()->setFocus();
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-    SearchDia->initSearch(Doc,
-        ((TextDoc *)Doc)->textCursor().selectedText(), true);
-  }
-  else {
-    ChangeDialog *d = new ChangeDialog((Schematic*)Doc);
-    if(d->exec() == QDialog::Accepted) {
-      ((Schematic*)Doc)->setChanged(true, true);
-      ((Schematic*)Doc)->viewport()->update();
-    }
-  }
+  qd->actionChangeProps();
 }
 
 // --------------------------------------------------------------
@@ -987,106 +735,21 @@ void QucsApp::slotAddToProject()
   statusBar()->showMessage(tr("Ready."));
 }
 
-// tmp
+#if 0
 static Marker const* marker(Element const* e)
 {
   return dynamic_cast<Marker const*>(e);
 }
+#endif
 
 // -----------------------------------------------------------
 void QucsApp::slotCursor(arrow_dir_t dir)
 {
-  int sign = 1;
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  if(dir==arr_left){
-    sign = -1;
-  }
-  if(editText->isHidden()) {
-    // for edit of component property ?
-    Q3PtrList<Element> movingElements;
-    Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-    movingElements = Doc->cropSelectedElements();
-    int markerCount=0;
-    for(auto const& i : movingElements){
-      if(marker(i)){
-	++markerCount;
-      }
-    }
-
-    if((movingElements.count() - markerCount) < 1) { // all selections are markers
-      if(markerCount > 0) {  // only move marker if nothing else selected
-	Doc->markerMove(dir, &movingElements);
-      } else if(dir==arr_up) {
-       	// nothing selected at all
-	if(Doc->scrollUp(Doc->verticalScrollBar()->singleStep()))
-	  Doc->scrollBy(0, -Doc->verticalScrollBar()->singleStep());
-      } else if(dir==arr_down) {
-	if(Doc->scrollDown(-Doc->verticalScrollBar()->singleStep()))
-	  Doc->scrollBy(0, Doc->verticalScrollBar()->singleStep());
-      } else if(dir==arr_left) {
-	if(Doc->scrollLeft(Doc->horizontalScrollBar()->singleStep()))
-	  Doc->scrollBy(-Doc->horizontalScrollBar()->singleStep(), 0);
-      } else if(dir==arr_right) {
-	if(Doc->scrollRight(-Doc->horizontalScrollBar()->singleStep()))
-	  Doc->scrollBy(Doc->horizontalScrollBar()->singleStep(), 0);
-      }else{
-	// unreachable. TODO: switch
-      }
-
-      Doc->viewport()->update();
-      view->drawn = false;
-    }else if(dir==arr_up || dir==arr_down){
-      // some random selection, put it back
-      view->moveElements(&movingElements, 0, ((dir==arr_up)?-1:1) * Doc->GridY);
-      view->MAx3 = 1;  // sign for moved elements
-      view->endElementMoving(Doc, &movingElements);
-    }else if(dir==arr_left || dir==arr_right){
-      view->moveElements(&movingElements, sign*Doc->GridX, 0);
-      view->MAx3 = 1;  // sign for moved elements
-      view->endElementMoving(Doc, &movingElements);
-    }else{
-      //unreachable(); //TODO: switch.
-    }
-
-  }else if(dir==arr_up){ // BUG: redirect.
-    if(view->MAx3 == 0) return;  // edit component namen ?
-    Component *pc = component(view->focusElement);
-    Property *pp = pc->Props.at(view->MAx3-1);  // current property
-    int Begin = pp->Description.indexOf('[');
-    if(Begin < 0) return;  // no selection list ?
-    int End = pp->Description.indexOf(editText->text(), Begin); // current
-    if(End < 0) return;  // should never happen
-    End = pp->Description.lastIndexOf(',', End);
-    if(End < Begin) return;  // was first item ?
-    End--;
-    int Pos = pp->Description.lastIndexOf(',', End);
-    if(Pos < Begin) Pos = Begin;   // is first item ?
-    Pos++;
-    if(pp->Description.at(Pos) == ' ') Pos++; // remove leading space
-    editText->setText(pp->Description.mid(Pos, End-Pos+1));
-    editText->selectAll();
-  }else if(dir==arr_down) { // BUG: redirect.
-    if(view->MAx3 == 0) return;  // edit component namen ?
-    Component *pc = component(view->focusElement);
-    Property *pp = pc->Props.at(view->MAx3-1);  // current property
-    int Pos = pp->Description.indexOf('[');
-    if(Pos < 0) return;  // no selection list ?
-    Pos = pp->Description.indexOf(editText->text(), Pos); // current list item
-    if(Pos < 0) return;  // should never happen
-    Pos = pp->Description.indexOf(',', Pos);
-    if(Pos < 0) return;  // was last item ?
-    Pos++;
-    if(pp->Description.at(Pos) == ' ') Pos++; // remove leading space
-    int End = pp->Description.indexOf(',', Pos);
-    if(End < 0) {  // is last item ?
-      End = pp->Description.indexOf(']', Pos);
-      if(End < 0) return;  // should never happen
-    }
-    editText->setText(pp->Description.mid(Pos, End-Pos));
-    editText->selectAll();
-  }else{
-
-  }
+  qd->actionCursor(dir);
 }
 
 // -----------------------------------------------------------
@@ -1095,114 +758,13 @@ void QucsApp::slotCursor(arrow_dir_t dir)
 // In "view->MAx3" is the number of the current property.
 void QucsApp::slotApplyCompText()
 {
-  QString s;
-  QFont f = QucsSettings.font;
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  f.setPointSizeF(Doc->Scale * float(f.pointSize()) );
-  editText->setFont(f);
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  Property  *pp = 0;
-  Component *pc = component(view->focusElement);
-  if(!pc) return;  // should never happen
-  view->MAx1 = pc->cx_() + pc->tx;
-  view->MAy1 = pc->cy_() + pc->ty;
-
-  int z, n=0;  // "n" is number of property on screen
-  pp = pc->Props.first();
-  for(z=view->MAx3; z>0; z--) {  // calculate "n"
-    if(!pp) {  // should never happen
-      slotHideEdit();
-      return;
-    }
-    if(pp->display) n++;   // is visible ?
-    pp = pc->Props.next();
-  }
-
-  pp = 0;
-  if(view->MAx3 > 0)  pp = pc->Props.at(view->MAx3-1); // current property
-  else s = pc->name();
-
-  if(!editText->isHidden()) {   // is called the first time ?
-    // no -> apply value to current property
-    if(view->MAx3 == 0) {   // component name ?
-      Component *pc2;
-      if(!editText->text().isEmpty())
-        if(pc->name() != editText->text()) {
-          for(pc2 = Doc->Components->first(); pc2!=0; pc2 = Doc->Components->next())
-            if(pc2->name() == editText->text())
-              break;  // found component with the same name ?
-          if(!pc2) {
-            pc->obsolete_name_override_hack( editText->text() );
-            Doc->setChanged(true, true);  // only one undo state
-          }
-        }
-    }
-    else if(pp) {  // property was applied
-      if(pp->Value != editText->text()) {
-        pp->Value = editText->text();
-        Doc->recreateComponent(pc);  // because of "Num" and schematic symbol
-        Doc->setChanged(true, true); // only one undo state
-      }
-    }
-
-    n++;     // next row on screen
-    (view->MAx3)++;  // next property
-    pp = pc->Props.at(view->MAx3-1);  // search for next property
-
-    Doc->viewport()->update();
-    view->drawn = false;
-
-    if(!pp) {     // was already last property ?
-      slotHideEdit();
-      return;
-    }
-
-
-    while(!pp->display) {  // search for next visible property
-      (view->MAx3)++;  // next property
-      pp = pc->Props.next();
-      if(!pp) {     // was already last property ?
-        slotHideEdit();
-        return;
-      }
-    }
-  }
-
-  // avoid seeing the property text behind the line edit
-  if(pp)  // Is it first property or component name ?
-    s = pp->Value;
-  editText->setMinimumWidth(editText->fontMetrics().width(s)+4);
-
-
-  Doc->contentsToViewport(int(Doc->Scale * float(view->MAx1 - Doc->ViewX1)),
-			 int(Doc->Scale * float(view->MAy1 - Doc->ViewY1)),
-			 view->MAx2, view->MAy2);
-  editText->setReadOnly(false);
-  if(pp) {  // is it a property ?
-    s = pp->Value;
-    view->MAx2 += editText->fontMetrics().width(pp->Name+"=");
-    if(pp->Description.indexOf('[') >= 0)  // is selection list ?
-      editText->setReadOnly(true);
-    Expr_CompProp.setPattern("[^\"]*");
-    if(!pc->showName) n--;
-  }
-  else   // it is the component name
-    Expr_CompProp.setPattern("[\\w_]+");
-  Val_CompProp.setRegExp(Expr_CompProp);
-  editText->setValidator(&Val_CompProp);
-
-  z = editText->fontMetrics().lineSpacing();
-  view->MAy2 += n*z;
-  editText->setText(s);
-  misc::setWidgetBackgroundColor(editText, QucsSettings.BGColor);
-  editText->setFocus();
-  editText->selectAll();
-  // make QLineEdit editable on mouse click
-  QPoint p = QPoint(view->MAx2, view->MAy2);
-  editText->setParent(Doc->viewport());
-  editText->setGeometry(p.x(), p.y(), editText->width(), editText->height());
-  editText->show();
+  qd->actionApplyCompText();
 }
+
 
 // -----------------------------------------------------------
 // Is called if the text of the property edit changed, to match
@@ -1261,78 +823,17 @@ void QucsApp::slotExportSchematic()
   // do_the_export(netlister,filename);
 }
 // -----------------------------------------------------------
+// // BUG this is a diagram slot.
 void QucsApp::slotExportGraphAsCsv()
 {
-  slotHideEdit(); // disable text edit of component property
+  QWidget *w=DocumentTab->currentWidget();
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  assert(qd);
 
-  for(;;) {
-    if(!view->focusElement){
-    }else if(graph(view->focusElement)){
-        break;
-    }else{
-    }
-
-    QMessageBox::critical(this, tr("Error"), tr("Please select a diagram graph!"));
-    return;
-  }
-
-  /*QString s = Q3FileDialog::getSaveFileName(
-     lastDir.isEmpty() ? QString(".") : lastDir,
-     tr("CSV file")+" (*.csv);;" + tr("Any File")+" (*)",
-     this, 0, tr("Enter an Output File Name"));
-     */
-  QString s = QFileDialog::getSaveFileName(this, tr("Enter an Output File Name"),
-    lastDir.isEmpty() ? QString(".") : lastDir, tr("CSV file")+" (*.csv);;" + tr("Any File")+" (*)");
-
-  if(s.isEmpty())
-    return;
-
-  QFileInfo Info(s);
-  lastDir = Info.absolutePath();  // remember last directory
-  if(Info.suffix().isEmpty())
-    s += ".csv";
-
-  QFile File(s);
-  if(File.exists())
-    if(QMessageBox::information(this, tr("Info"),
-          tr("Output file already exists!")+"\n"+tr("Overwrite it?"),
-          tr("&Yes"), tr("&No"), 0,1,1))
-      return;
-
-  if(!File.open(QIODevice::WriteOnly)) {
-    QMessageBox::critical(this, QObject::tr("Error"),
-                          QObject::tr("Cannot create output file!"));
-    return;
-  }
-
-  QTextStream Stream(&File);
-
-
-  DataX const *pD;
-  Graph const*g = graph(view->focusElement);
-  // First output the names of independent and dependent variables.
-  for(unsigned ii=0; (pD=g->axis(ii)); ++ii){
-    Stream << '\"' << pD->Var << "\";";
-  }
-  Stream << "\"r " << g->Var << "\";\"i " << g->Var << "\"\n";
-
-
-  int n, m;
-  double *py = g->cPointsY;
-  int Count = g->countY * g->axis(0)->count;
-  for(n = 0; n < Count; n++) {
-    m = n;
-	 for(unsigned ii=0; (pD=g->axis(ii)); ++ii) {
-      Stream << *(pD->Points + m%pD->count) << ';';
-      m /= pD->count;
-    }
-
-    Stream << *(py) << ';' << *(py+1) << '\n';
-    py += 2;
-  }
-
-  File.close();
+  hideEdit();
+  qd->actionExportGraphAsCsv();
 }
+
 
 // ----------------------------------------------------------
 void QucsApp::slotCreatePackage()
