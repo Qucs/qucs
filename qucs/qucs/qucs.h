@@ -134,7 +134,6 @@ bool loadSettings();
 bool saveApplSettings();
 
 // function pointers used with mouse actions handling
-typedef bool (Schematic::*pToggleFunc) ();
 typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
 typedef void (MouseActions::*pMouseFunc2) (Schematic*, QMouseEvent*);
 
@@ -258,6 +257,9 @@ private slots:
   void slotFileChanged(bool);
 signals:
   void signalKillEmAll();
+
+public: // called directly from Schematic... bug?
+  void hideEdit(){ slotHideEdit(); }
 
 public:
   MouseActions *view;
@@ -402,6 +404,8 @@ public:
           *createLib, *importData, *graph2csv, *createPkg, *extractPkg,
           *callAtt, *callRes, *centerHor, *centerVert, *loadModule, *buildModule;
 
+  QAction* selectAction(){ return select; }
+
 public slots: // BUG. why is this here?
 	           // what if a plugin wants to add menu items?
   void slotEditRotate(bool);  // rotate the selected items
@@ -479,11 +483,10 @@ private slots:
 
 private:
   void showHTML(const QString&);
-  bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2);
   void launchTool(const QString&, const QString&, const QString& = ""); // tool, description and args
   friend class SaveDialog;
   QString lastExportFilename;
-};
+}; // qucsApp
 
 /**
  * @brief a QTabWidget with context menu for tabs
