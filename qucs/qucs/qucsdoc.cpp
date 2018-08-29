@@ -71,3 +71,8 @@ QString QucsDoc::fileBase (void) {
   return fileBase (DocName);
 }
 
+// cleanup debris
+QAction* QucsDoc::selectAction()
+{
+  	return App->select;
+}

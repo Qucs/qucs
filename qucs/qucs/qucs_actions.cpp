@@ -240,11 +240,13 @@ void QucsApp::slotEscape()
 void QucsApp::slotSelect(bool on)
 {
   QWidget *w = DocumentTab->currentWidget();
+  QucsDoc *qd = prechecked_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionSelect(on);
+
   if(isTextDocument(w)) {
-    ((TextDoc*)w)->viewport()->setFocus();
-      select->blockSignals(true);
-      select->setChecked(true);
-      select->blockSignals(false);
+    // BUG
     return;
   }
 

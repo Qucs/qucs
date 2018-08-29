@@ -22,6 +22,7 @@
 #include <QDateTime>
 
 class QucsApp;
+class QAction;
 class QPrinter;
 class QPainter;
 
@@ -59,6 +60,12 @@ public:
   int  showBias;     // -1=no, 0=calculation running, >0=show DC bias points
   bool GridOn;
   int  tmpPosX, tmpPosY;
+
+public: // actions:
+	virtual void actionSelect(bool on);
+
+protected: // cleaning up debris
+	QAction* selectAction();
 };
 
 #endif

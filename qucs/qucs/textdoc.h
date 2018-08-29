@@ -100,6 +100,15 @@ public slots:
 private:
   SyntaxHighlighter * syntaxHighlight;
 
+private: // actions
+  void actionSelect(bool){
+	  viewport()->setFocus();
+	  selectAction()->blockSignals(true);
+	  selectAction()->setChecked(true);
+	  selectAction()->blockSignals(false);
+  }
+
+
 private slots:
   void highlightCurrentLine();
   bool baseSearch(const QString &, bool, bool, bool);
