@@ -440,6 +440,9 @@ public:
   bool isVerilog;
   bool creatingLib;
 
+private: // action overrides, schematic_action.cpp
+  void actionSelect(bool);
+
 public: // serializer
 public: // need access to SchematicModel. grr
   friend class MouseActions;

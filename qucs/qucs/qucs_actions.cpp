@@ -244,30 +244,6 @@ void QucsApp::slotSelect(bool on)
   assert(qd);
 
   qd->actionSelect(on);
-
-  if(isTextDocument(w)) {
-    // BUG
-    return;
-  }
-
-  // goto to insertWire mode if ESC pressed during wiring
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  if(MouseMoveAction == &MouseActions::MMoveWire2) {
-    MouseMoveAction = &MouseActions::MMoveWire1;
-    MousePressAction = &MouseActions::MPressWire1;
-    Doc->viewport()->update();
-    view->drawn = false;
-
-    select->blockSignals(true);
-    select->setChecked(false);
-    select->blockSignals(false);
-    return;
-  }
-
-  if(performToggleAction(on, select, 0, 0, &MouseActions::MPressSelect)) {
-    MouseReleaseAction = &MouseActions::MReleaseSelect;
-    MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
-  }
 }
 
 // --------------------------------------------------------------------

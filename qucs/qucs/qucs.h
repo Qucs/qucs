@@ -461,11 +461,12 @@ private slots:
 
 private:
   void showHTML(const QString&);
-  bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2);
   void launchTool(const QString&, const QString&, const QString& = ""); // tool, description and args
   friend class SaveDialog;
   QString lastExportFilename;
-};
+public: // BUG: called by Schematic
+  bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2);
+}; // qucsApp
 
 /**
  * @brief a QTabWidget with context menu for tabs
