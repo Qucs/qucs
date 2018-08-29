@@ -20,6 +20,7 @@
 
 #include <QString>
 #include <QDateTime>
+#include "trace.h"
 
 class QucsApp;
 class QAction;
@@ -61,10 +62,23 @@ public:
   bool GridOn;
   int  tmpPosX, tmpPosY;
 
-public: // actions:
+public: // actions: These somehow correspond to buttons.
+        // needs cleanup...
 	virtual void actionSelect(bool on);
 	virtual void actionCopy() = 0;
 	virtual void actionCut() = 0;
+	virtual void actionEditActivate(bool) = 0;
+
+	virtual void actionOnGrid(bool) {unreachable();}
+	virtual void actionEditRotate(bool) {unreachable();}
+	virtual void actionEditMirrorX(bool) {unreachable();}
+	virtual void actionEditMirrorY(bool) {unreachable();}
+	virtual void actionEditDelete(bool) {unreachable();}
+	virtual void actionSetWire(bool) {unreachable();}
+	virtual void actionInsertLabel(bool) {unreachable();}
+	virtual void actionSetMarker(bool) {unreachable();}
+	virtual void actionMoveText(bool) {unreachable();}
+	virtual void actionZoomIn(bool) = 0;
 
 protected: // cleaning up debris
 	QAction* selectAction();

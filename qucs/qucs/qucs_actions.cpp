@@ -69,44 +69,43 @@ QRegExpValidator Val_CompProp(Expr_CompProp, 0);
 
 // -----------------------------------------------------------------------
 // This function is called from all toggle actions.
-bool QucsApp::performToggleAction(bool on, QAction *Action,
+bool Schematic::performToggleAction(bool on, QAction *Action,
 	pToggleFunc Function, pMouseFunc MouseMove, pMouseFunc2 MousePress)
 {
-  slotHideEdit(); // disable text edit of component property
+  assert(App);
+  App->hideEdit(); // disable text edit of component property
 
   if(!on) {
-    MouseMoveAction = 0;
-    MousePressAction = 0;
-    MouseReleaseAction = 0;
-    MouseDoubleClickAction = 0;
-    activeAction = 0;   // no action active
+    App->MouseMoveAction = 0;
+    App->MousePressAction = 0;
+    App->MouseReleaseAction = 0;
+    App->MouseDoubleClickAction = 0;
+    App->activeAction = 0;
     return false;
   }
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  if(Function && (Doc->*Function)()) {
+  if(Function && (this->*Function)()) {
       Action->blockSignals(true);
       Action->setChecked(false);  // release toolbar button
       Action->blockSignals(false);
-      Doc->viewport()->update();
+      viewport()->update();
   }else{
 
-    if(activeAction) {
-      activeAction->blockSignals(true); // do not call toggle slot
-      activeAction->setChecked(false);       // set last toolbar button off
-      activeAction->blockSignals(false);
+    if(App->activeAction) {
+      App->activeAction->blockSignals(true); // do not call toggle slot
+      App->activeAction->setChecked(false);       // set last toolbar button off
+      App->activeAction->blockSignals(false);
     }
-    activeAction = Action;
+    App->activeAction = Action;
 
-    MouseMoveAction = MouseMove;
-    MousePressAction = MousePress;
-    MouseReleaseAction = 0;
-    MouseDoubleClickAction = 0;
-
+    App->MouseMoveAction = MouseMove;
+    App->MousePressAction = MousePress;
+    App->MouseReleaseAction = 0;
+    App->MouseDoubleClickAction = 0;
   }
 
-  Doc->viewport()->update();
-  view->drawn = false;
+  viewport()->update();
+  App->view->drawn = false;
   return true;
 }
 
@@ -114,121 +113,124 @@ bool QucsApp::performToggleAction(bool on, QAction *Action,
 // Is called, when "set on grid" action is triggered.
 void QucsApp::slotOnGrid(bool on)
 {
-  performToggleAction(on, onGrid, &Schematic::elementsOnGrid,
-		&MouseActions::MMoveOnGrid, &MouseActions::MPressOnGrid);
+  QWidget *w = DocumentTab->currentWidget();
+  QucsDoc *qd = prechecked_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionOnGrid(on);
 }
 
 // -----------------------------------------------------------------------
 // Is called when the rotate toolbar button is pressed.
 void QucsApp::slotEditRotate(bool on)
 {
-  performToggleAction(on, editRotate, &Schematic::rotateElements,
-		&MouseActions::MMoveRotate, &MouseActions::MPressRotate);
+  QWidget *w = DocumentTab->currentWidget();
+  QucsDoc *qd = prechecked_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionEditRotate(on);
 }
 
 // -----------------------------------------------------------------------
 // Is called when the mirror toolbar button is pressed.
 void QucsApp::slotEditMirrorX(bool on)
 {
-  performToggleAction(on, editMirror, &Schematic::mirrorXComponents,
-		&MouseActions::MMoveMirrorX, &MouseActions::MPressMirrorX);
+  QWidget *w = DocumentTab->currentWidget();
+  QucsDoc *qd = prechecked_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionEditMirrorX(on);
 }
 
 // -----------------------------------------------------------------------
 // Is called when the mirror toolbar button is pressed.
 void QucsApp::slotEditMirrorY(bool on)
 {
-  performToggleAction(on, editMirrorY, &Schematic::mirrorYComponents,
-		&MouseActions::MMoveMirrorY, &MouseActions::MPressMirrorY);
+  QWidget *w = DocumentTab->currentWidget();
+  QucsDoc *qd = prechecked_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionEditMirrorY(on);
 }
 
 // -----------------------------------------------------------------------
 // Is called when the activate/deactivate toolbar button is pressed.
 // It also comments out the selected text on a text document
 // \todo update the status or tooltip message
-void QucsApp::slotEditActivate (bool on)
+void QucsApp::slotEditActivate(bool on)
 {
-  TextDoc * Doc = (TextDoc *) DocumentTab->currentWidget ();
-  if (isTextDocument (Doc)) {
-    //TODO Doc->clearParagraphBackground (Doc->tmpPosX);
-    Doc->commentSelected ();
+  QWidget *w = DocumentTab->currentWidget();
+  QucsDoc *qd = prechecked_cast<QucsDoc*>(w);
+  assert(qd);
 
-    editActivate->blockSignals (true);
-    editActivate->setChecked(false);  // release toolbar button
-    editActivate->blockSignals (false);
-  }
-  else
-    performToggleAction (on, editActivate,
-        &Schematic::activateSelectedComponents,
-        &MouseActions::MMoveActivate, &MouseActions::MPressActivate);
+  qd->actionEditActivate(on);
 }
 
 // ------------------------------------------------------------------------
 // Is called if "Delete"-Button is pressed.
 void QucsApp::slotEditDelete(bool on)
 {
-  TextDoc *Doc = (TextDoc*)DocumentTab->currentWidget();
-  if(isTextDocument(Doc)) {
-    Doc->viewport()->setFocus();
-    //Doc->del();
-    Doc->textCursor().deleteChar();
+  QWidget *w = DocumentTab->currentWidget();
+  QucsDoc *qd = prechecked_cast<QucsDoc*>(w);
+  assert(qd);
 
-    editDelete->blockSignals(true);
-    editDelete->setChecked(false);  // release toolbar button
-    editDelete->blockSignals(false);
-  }
-  else
-    performToggleAction(on, editDelete, &Schematic::deleteElements,
-          &MouseActions::MMoveDelete, &MouseActions::MPressDelete);
+  qd->actionEditDelete(on);
 }
 
 // -----------------------------------------------------------------------
 // Is called if "Wire"-Button is pressed.
 void QucsApp::slotSetWire(bool on)
 {
-  performToggleAction(on, insWire, 0,
-		&MouseActions::MMoveWire1, &MouseActions::MPressWire1);
+  QWidget *w = DocumentTab->currentWidget();
+  QucsDoc *qd = prechecked_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionSetWire(on);
 }
 
 // -----------------------------------------------------------------------
 void QucsApp::slotInsertLabel(bool on)
 {
-  performToggleAction(on, insLabel, 0,
-		&MouseActions::MMoveLabel, &MouseActions::MPressLabel);
+  QWidget *w = DocumentTab->currentWidget();
+  QucsDoc *qd = prechecked_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionInsertLabel(on);
 }
 
 // -----------------------------------------------------------------------
 void QucsApp::slotSetMarker(bool on)
 {
-  performToggleAction(on, setMarker, 0,
-		&MouseActions::MMoveMarker, &MouseActions::MPressMarker);
+  QWidget *w = DocumentTab->currentWidget();
+  QucsDoc *qd = prechecked_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionSetMarker(on);
 }
 
 // -----------------------------------------------------------------------
 // Is called, when "move component text" action is triggered.
 void QucsApp::slotMoveText(bool on)
 {
-  performToggleAction(on, moveText, 0,
-		&MouseActions::MMoveMoveTextB, &MouseActions::MPressMoveText);
+  QWidget *w = DocumentTab->currentWidget();
+  QucsDoc *qd = prechecked_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionMoveText(on);
 }
 
 // -----------------------------------------------------------------------
 // Is called, when "Zoom in" action is triggered.
 void QucsApp::slotZoomIn(bool on)
 {
-  TextDoc *Doc = (TextDoc*)DocumentTab->currentWidget();
-  if(isTextDocument(Doc)) {
-    Doc->zoomBy(1.5f);
-    magPlus->blockSignals(true);
-    magPlus->setChecked(false);
-    magPlus->blockSignals(false);
-  }
-  else
-    performToggleAction(on, magPlus, 0,
-		&MouseActions::MMoveZoomIn, &MouseActions::MPressZoomIn);
+  QWidget *w = DocumentTab->currentWidget();
+  QucsDoc *qd = prechecked_cast<QucsDoc*>(w);
+  assert(qd);
+
+  qd->actionZoomIn(on);
 }
 
-
+// -----------------------------------------------------------------------
 void QucsApp::slotEscape()
 {
     select->setChecked(true);
