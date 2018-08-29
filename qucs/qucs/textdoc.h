@@ -22,6 +22,7 @@ Copyright (C) 2014 by Guilherme Brondani Torri <guitorri@gmail.com>
 #include <QFont>
 
 #include "qucsdoc.h"
+#include "dialogs/searchdialog.h" // BUG
 
 /*!
  * \file textdoc.h
@@ -100,9 +101,53 @@ public slots:
 private:
   SyntaxHighlighter * syntaxHighlight;
 
+private: // actions. here?
+  void actionCopy(){
+	  cut();
+  }
+  void actionCut(){
+	  cut();
+  }
+  void actionSelect(bool);
+  void actionEditActivate(bool);
+  void actionEditDelete(bool);
+  void actionEditPaste(bool);
+  void actionZoomIn(bool);
+
+  void actionEditUndo(){
+    viewport()->setFocus();
+    undo();
+  }
+  void actionEditRedo(){
+	  viewport()->setFocus();
+	  redo();
+  }
+
+  void actionInsertEntity();
+  void actionSelectAll() {
+	  viewport()->setFocus();
+	  //->selectAll(true);
+	  selectAll();
+  }
+  void actionChangeProps();
+
+
 private slots:
   void highlightCurrentLine();
   bool baseSearch(const QString &, bool, bool, bool);
 };
+
+inline void TextDoc::actionInsertEntity()
+{
+  viewport()->setFocus ();
+  //TODO Doc->clearParagraphBackground (Doc->tmpPosX);
+  insertSkeleton ();
+
+  //int x, y;
+  //Doc->getCursorPosition (&x, &y);
+  //x = Doc->textCursor().blockNumber();
+  //y = Doc->textCursor().columnNumber();
+  slotCursorPosChanged();
+}
 
 #endif
