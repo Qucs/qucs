@@ -338,6 +338,11 @@ private:
 # define contentsMouseReleaseEvent mouseReleaseEvent
 # define contentsMouseDoubleClickEvent mouseDoubleClickEvent
 
+# define contentsWheelEvent wheelEvent
+# define contentsDropEvent dropEvent
+# define contentsDragEnterEvent dragEnterEvent
+# define contentsDragLeaveEvent dragLeaveEvent
+# define contentsDragMoveEvent dragMoveEvent
 #endif
 
 #endif
