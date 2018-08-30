@@ -22,6 +22,7 @@ Copyright (C) 2014 by Guilherme Brondani Torri <guitorri@gmail.com>
 #include <QFont>
 
 #include "qucsdoc.h"
+#include "dialogs/searchdialog.h" // BUG
 
 /*!
  * \file textdoc.h
@@ -129,6 +130,13 @@ private: // actions. here?
     App->editDelete->setChecked(false);  // release toolbar button
     App->editDelete->blockSignals(false);
   }
+  void actionEditPaste(bool){
+    paste();
+
+    App->editPaste->blockSignals(true);
+    App->editPaste->setChecked(false);  // release toolbar button
+    App->editPaste->blockSignals(false);
+  }
 
   void actionZoomIn(bool){
     zoomBy(1.5f);
@@ -137,9 +145,42 @@ private: // actions. here?
     App->magPlus->blockSignals(false);
   }
 
+  void actionEditUndo(){
+    viewport()->setFocus();
+    undo();
+  }
+  void actionEditRedo(){
+	  viewport()->setFocus();
+	  redo();
+  }
+
+  void actionInsertEntity();
+  void actionSelectAll() {
+	  viewport()->setFocus();
+	  //->selectAll(true);
+	  selectAll();
+  }
+  void actionChangeProps() {
+	  viewport()->setFocus();
+	  App->SearchDia->initSearch(this, textCursor().selectedText(), true);
+  }
+
 private slots:
   void highlightCurrentLine();
   bool baseSearch(const QString &, bool, bool, bool);
 };
+
+inline void TextDoc::actionInsertEntity()
+{
+  viewport()->setFocus ();
+  //TODO Doc->clearParagraphBackground (Doc->tmpPosX);
+  insertSkeleton ();
+
+  //int x, y;
+  //Doc->getCursorPosition (&x, &y);
+  //x = Doc->textCursor().blockNumber();
+  //y = Doc->textCursor().columnNumber();
+  slotCursorPosChanged();
+}
 
 #endif
