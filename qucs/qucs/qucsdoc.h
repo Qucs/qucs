@@ -34,7 +34,7 @@ class MouseActions;
 class QucsDoc {
 public: 
   QucsDoc(QucsApp*, const QString&);
-  virtual ~QucsDoc() {};
+  virtual ~QucsDoc();
 
   virtual void  setName(const QString&) {};
   virtual bool  load() { return true; };
@@ -68,7 +68,7 @@ public:
 
 public: // actions: These somehow correspond to buttons.
         // needs cleanup...
-	virtual void actionSelect(bool on);
+	virtual void actionSelect(bool on) = 0;
 	virtual void actionCopy() = 0;
 	virtual void actionCut() = 0;
 	virtual void actionEditActivate(bool) = 0;

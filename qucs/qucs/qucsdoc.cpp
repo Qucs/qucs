@@ -54,6 +54,11 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& Name_)
   Scale = 1.0;
 }
 
+// vtable here?
+QucsDoc::~QucsDoc()
+{
+}
+
 QString QucsDoc::fileSuffix (const QString& Name) {
   QFileInfo Info (Name);
   return Info.suffix();

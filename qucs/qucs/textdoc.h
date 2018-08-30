@@ -108,42 +108,11 @@ private: // actions. here?
   void actionCut(){
 	  cut();
   }
-  void actionSelect(bool){
-	  viewport()->setFocus();
-	  selectAction()->blockSignals(true);
-	  selectAction()->setChecked(true);
-	  selectAction()->blockSignals(false);
-  }
-  void actionEditActivate(bool){
-    commentSelected();
-
-    App->editActivate->blockSignals (true);
-    App->editActivate->setChecked(false);  // release toolbar button
-    App->editActivate->blockSignals (false);
-  }
-
-  void actionEditDelete(bool){
-    viewport()->setFocus();
-    textCursor().deleteChar();
-
-    App->editDelete->blockSignals(true);
-    App->editDelete->setChecked(false);  // release toolbar button
-    App->editDelete->blockSignals(false);
-  }
-  void actionEditPaste(bool){
-    paste();
-
-    App->editPaste->blockSignals(true);
-    App->editPaste->setChecked(false);  // release toolbar button
-    App->editPaste->blockSignals(false);
-  }
-
-  void actionZoomIn(bool){
-    zoomBy(1.5f);
-    App->magPlus->blockSignals(true);
-    App->magPlus->setChecked(false);
-    App->magPlus->blockSignals(false);
-  }
+  void actionSelect(bool);
+  void actionEditActivate(bool);
+  void actionEditDelete(bool);
+  void actionEditPaste(bool);
+  void actionZoomIn(bool);
 
   void actionEditUndo(){
     viewport()->setFocus();
@@ -160,10 +129,8 @@ private: // actions. here?
 	  //->selectAll(true);
 	  selectAll();
   }
-  void actionChangeProps() {
-	  viewport()->setFocus();
-	  App->SearchDia->initSearch(this, textCursor().selectedText(), true);
-  }
+  void actionChangeProps();
+
 
 private slots:
   void highlightCurrentLine();

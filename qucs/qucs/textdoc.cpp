@@ -596,3 +596,52 @@ void TextDoc::refreshLanguage()
     syntaxHighlight->setLanguage(language);
     syntaxHighlight->setDocument(document());
 }
+
+void TextDoc::actionSelect(bool){
+	viewport()->setFocus();
+	selectAction()->blockSignals(true);
+	selectAction()->setChecked(true);
+	selectAction()->blockSignals(false);
+}
+
+void TextDoc::actionEditActivate(bool)
+{
+	commentSelected();
+
+	App->editActivate->blockSignals (true);
+	App->editActivate->setChecked(false);  // release toolbar button
+	App->editActivate->blockSignals (false);
+}
+
+void TextDoc::actionEditDelete(bool)
+{
+	viewport()->setFocus();
+	textCursor().deleteChar();
+
+	App->editDelete->blockSignals(true);
+	App->editDelete->setChecked(false);  // release toolbar button
+	App->editDelete->blockSignals(false);
+}
+
+void TextDoc::actionEditPaste(bool)
+{
+	paste();
+
+	App->editPaste->blockSignals(true);
+	App->editPaste->setChecked(false);  // release toolbar button
+	App->editPaste->blockSignals(false);
+}
+
+void TextDoc::actionZoomIn(bool)
+{
+	zoomBy(1.5f);
+	App->magPlus->blockSignals(true);
+	App->magPlus->setChecked(false);
+	App->magPlus->blockSignals(false);
+}
+
+void TextDoc::actionChangeProps()
+{
+	viewport()->setFocus();
+	App->SearchDia->initSearch(this, textCursor().selectedText(), true);
+}
