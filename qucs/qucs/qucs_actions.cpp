@@ -62,7 +62,7 @@
 void QucsApp::slotOnGrid(bool on)
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionOnGrid(on);
@@ -73,7 +73,7 @@ void QucsApp::slotOnGrid(bool on)
 void QucsApp::slotEditRotate(bool on)
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionEditRotate(on);
@@ -84,7 +84,7 @@ void QucsApp::slotEditRotate(bool on)
 void QucsApp::slotEditMirrorX(bool on)
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionEditMirrorX(on);
@@ -95,7 +95,7 @@ void QucsApp::slotEditMirrorX(bool on)
 void QucsApp::slotEditMirrorY(bool on)
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionEditMirrorY(on);
@@ -108,7 +108,7 @@ void QucsApp::slotEditMirrorY(bool on)
 void QucsApp::slotEditActivate(bool on)
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionEditActivate(on);
@@ -119,7 +119,7 @@ void QucsApp::slotEditActivate(bool on)
 void QucsApp::slotEditDelete(bool on)
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionEditDelete(on);
@@ -130,7 +130,7 @@ void QucsApp::slotEditDelete(bool on)
 void QucsApp::slotSetWire(bool on)
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionSetWire(on);
@@ -140,7 +140,7 @@ void QucsApp::slotSetWire(bool on)
 void QucsApp::slotInsertLabel(bool on)
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionInsertLabel(on);
@@ -150,7 +150,7 @@ void QucsApp::slotInsertLabel(bool on)
 void QucsApp::slotSetMarker(bool on)
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionSetMarker(on);
@@ -161,7 +161,7 @@ void QucsApp::slotSetMarker(bool on)
 void QucsApp::slotMoveText(bool on)
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionMoveText(on);
@@ -172,7 +172,7 @@ void QucsApp::slotMoveText(bool on)
 void QucsApp::slotZoomIn(bool on)
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionZoomIn(on);
@@ -190,7 +190,7 @@ void QucsApp::slotEscape()
 void QucsApp::slotSelect(bool on)
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionSelect(on);
@@ -203,7 +203,7 @@ void QucsApp::slotEditCut()
   slotHideEdit(); // disable text edit of component property
 
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionCut();
@@ -217,7 +217,7 @@ void QucsApp::slotEditCopy()
   statusBar()->showMessage(tr("Copying selection to clipboard..."));
 
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionCopy();
@@ -229,7 +229,7 @@ void QucsApp::slotEditCopy()
 void QucsApp::slotEditPaste(bool on)
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionEditPaste(on);
@@ -240,7 +240,7 @@ void QucsApp::slotEditPaste(bool on)
 void QucsApp::slotInsertEntity ()
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionInsertEntity();
@@ -251,7 +251,7 @@ void QucsApp::slotInsertEntity ()
 void QucsApp::slotInsertEquation(bool on)
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionInsertEquation(on);
@@ -262,7 +262,7 @@ void QucsApp::slotInsertEquation(bool on)
 void QucsApp::slotInsertGround(bool on)
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionInsertGround(on);
@@ -274,7 +274,7 @@ void QucsApp::slotInsertGround(bool on)
 void QucsApp::slotInsertPort(bool on)
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionInsertPort(on);
@@ -285,7 +285,7 @@ void QucsApp::slotInsertPort(bool on)
 void QucsApp::slotEditUndo()
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionEditUndo();
@@ -296,7 +296,7 @@ void QucsApp::slotEditUndo()
 void QucsApp::slotEditRedo()
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionEditRedo();
@@ -307,7 +307,7 @@ void QucsApp::slotEditRedo()
 void QucsApp::slotAlignTop()
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionAlign(0);
@@ -318,7 +318,7 @@ void QucsApp::slotAlignTop()
 void QucsApp::slotAlignBottom()
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionAlign(1);
@@ -329,7 +329,7 @@ void QucsApp::slotAlignBottom()
 void QucsApp::slotAlignLeft()
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionAlign(2);
@@ -340,7 +340,7 @@ void QucsApp::slotAlignLeft()
 void QucsApp::slotAlignRight()
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionAlign(3);
@@ -351,7 +351,7 @@ void QucsApp::slotAlignRight()
 void QucsApp::slotDistribHoriz()
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionDistrib(0);
@@ -362,7 +362,7 @@ void QucsApp::slotDistribHoriz()
 void QucsApp::slotDistribVert()
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionDistrib(1);
@@ -373,7 +373,7 @@ void QucsApp::slotDistribVert()
 void QucsApp::slotCenterHorizontal()
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionAlign(4);
@@ -384,7 +384,7 @@ void QucsApp::slotCenterHorizontal()
 void QucsApp::slotCenterVertical()
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionAlign(5);
@@ -395,7 +395,7 @@ void QucsApp::slotCenterVertical()
 void QucsApp::slotSelectAll()
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   hideEdit();
@@ -408,7 +408,7 @@ void QucsApp::slotSelectAll()
 void QucsApp::slotSelectMarker()
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionSelectMarker();
@@ -639,7 +639,7 @@ void QucsApp::slotEditFind()
 void QucsApp::slotChangeProps()
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionChangeProps();
@@ -740,7 +740,7 @@ static Marker const* marker(Element const* e)
 void QucsApp::slotCursor(arrow_dir_t dir)
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionCursor(dir);
@@ -753,7 +753,7 @@ void QucsApp::slotCursor(arrow_dir_t dir)
 void QucsApp::slotApplyCompText()
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   qd->actionApplyCompText();
@@ -804,7 +804,7 @@ void QucsApp::slotImportData()
 void QucsApp::slotExportGraphAsCsv()
 {
   QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=prechecked_cast<QucsDoc*>(w);
+  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
   hideEdit();
