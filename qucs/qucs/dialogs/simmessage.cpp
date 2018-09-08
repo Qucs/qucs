@@ -525,11 +525,9 @@ void SimMessage::startSimulator()
       if((SimOpt = findOptimization((Schematic*)DocWidget))) {
 	    ((Optimize_Sim*)SimOpt)->createASCOnetlist();
 
-        // use ASCO "general" mode so the full simulator path can be specified
-        // in the 'general.sh' that it will call
         Program = QucsSettings.AscoBinDir.canonicalPath();
         Program = QDir::toNativeSeparators(Program+"/"+"asco"+QString(executableSuffix));
-        Arguments << "-general" << QucsSettings.QucsHomeDir.filePath("asco_netlist.txt")
+        Arguments << "-qucs" << QucsSettings.QucsHomeDir.filePath("asco_netlist.txt")
                   << "-o" << "asco_out";
       }
       else {
