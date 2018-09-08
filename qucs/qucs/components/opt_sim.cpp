@@ -25,13 +25,6 @@
 #include "qucs.h"
 
 
-// ASCO uses OS-dependent script names
-#ifdef __MINGW32__
-const QString asco_script_filename="general.bat";
-#else
-const QString asco_script_filename="general.sh";
-#endif
-
 Optimize_Sim::Optimize_Sim()
 {
   Description = QObject::tr("Optimization");
@@ -88,16 +81,22 @@ bool Optimize_Sim::createASCOFiles()
   Property* pp;
 
   // create the script used by ASCO to invoke the simulator
-  QFile gfile(QucsSettings.QucsHomeDir.filePath(asco_script_filename));
+#ifdef __MINGW32__
+  QFile gfile(QucsSettings.QucsHomeDir.filePath("general.bat"));
+#else
+  QFile gfile(QucsSettings.QucsHomeDir.filePath("general.sh"));
+#endif
   if(gfile.open(QIODevice::WriteOnly)) {
     QTextStream stream(&gfile);
 #ifdef __MINGW32__
     stream << "@echo off\r\n";
-    stream << "\"" << QDir::toNativeSeparators(QucsSettings.Qucsator) << "\"";
-    stream << " -i %1.txt -o %2.out > NUL";
 #else
     stream << "nice -n 19 ";
+#endif
     stream << "\"" << QDir::toNativeSeparators(QucsSettings.Qucsator) << "\"";
+#ifdef __MINGW32__
+    stream << " -i %1.txt -o %2.out > NUL";
+#else
     stream << " -i $1.txt -o $2.out > /dev/null";
 #endif
     gfile.close();
