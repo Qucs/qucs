@@ -357,6 +357,7 @@ IF(APPLE)
 INSTALL(CODE "
     file(GLOB_RECURSE QTPLUGINS
       \"\${CMAKE_INSTALL_PREFIX}/bin/${plugin_dest_dir}/plugins/*${CMAKE_SHARED_LIBRARY_SUFFIX}\")
+    set(BU_CHMOD_BUNDLE_ITEMS ON)
     include(BundleUtilities)
     fixup_bundle(\"${APPS}\" \"\${QTPLUGINS}\" \"${DIRS}\")
     " COMPONENT Runtime)
