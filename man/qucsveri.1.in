@@ -40,10 +40,10 @@ the name of the directory where the simulation is going to be performed
 the location where the \fIqucsconv\fR program is installed
 .SH AVAILABILITY
 The latest version of Qucs can always be obtained from
-\fBwww.sourceforge.net\fR or \fBwww.freshmeat.net\fR
+\fB@PACKAGE_URL@\fR
 .SH "REPORTING BUGS"
 Known bugs are documented within the BUGS file.  Report bugs to
-<qucs-bugs@lists.sourceforge.net>.
+\fB@PACKAGE_BUGREPORT@\fR
 .SH COPYRIGHT
 Copyright \(co 2007 Stefan Jahn <stefan@lkcc.org>
 .PP

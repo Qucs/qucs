@@ -1,8 +1,8 @@
-.TH QucsLib "1" "July 2005" "Debian/GNU Linux" "User Commands"
+.TH QucsResCodes "" "April 2012" "Debian/GNU Linux" "User Commands"
 .SH NAME
-QucsLib \- A component library manager for Qucs.
+QucsResCodes \- A Standard resistor color code generator for Qucs.
 .SH SYNOPSIS
-.B qucslib
+.B qucsrescodes
 [\fIOPTION\fR] ...
 .SH DESCRIPTION
 
@@ -24,17 +24,27 @@ component is transported to the Qucs application by clicking on the
 button "Copy to Clipboard".  Being back in the schematic window the
 component can be inserted by pressing CTRL-V (paste from clipboard).
 
+\fBQucsResCodes\fR is a program to compute color codes for resistors
+and resistance values for color codes. 
+To obtain the color codes, simply enter the 
+resistance and tolerance values and press the "To Colors" button.
+Alternatively to obtain the resistance, 
+select the appropriate color bands and press the "To Resistance" button. 
+The program computes the closest standard 
+resistor value. You can paste the computed resistor 
+in the schematic (by pressing ctrl+v). Have fun! ;)
+
 .SH AVAILABILITY
 The latest version of Qucs can always be obtained from
-\fBwww.sourceforge.net\fR or \fBwww.freshmeat.net\fR
+\fB@PACKAGE_URL@\fR
 .SH "REPORTING BUGS"
 Known bugs are documented within the BUGS file.  Report bugs to
-<qucs-bugs@lists.sourceforge.net>.
+\fB@PACKAGE_BUGREPORT@\fR
 .SH COPYRIGHT
-Copyright \(co 2005 Michael Margraf <michael.margraf@alumni.tu-berlin.de>
+Copyright \(co 2012 M. K. Sudhakar <sudhakar.m.kumar@gmail.com>
 .PP
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 .SH AUTHORS
-Written by Michael Margraf <michael.margraf@alumni.tu-berlin.de> and
-Stefan Jahn <stefan@lkcc.org>.
+Written by Arun I <theroarofthedragon@gmail.com> and 
+M. K. Sudhakar <sudhakar.m.kumar@gmail.com>

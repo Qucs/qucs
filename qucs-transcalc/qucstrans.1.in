@@ -36,10 +36,10 @@ Coaxial Line, Coplanar and Coupled Microstrips.
 
 .SH AVAILABILITY
 The latest version of Qucs can always be obtained from
-\fBwww.sourceforge.net\fR or \fBwww.freshmeat.net\fR
+\fB@PACKAGE_URL@\fR
 .SH "REPORTING BUGS"
 Known bugs are documented within the BUGS file.  Report bugs to
-<qucs-bugs@lists.sourceforge.net>.
+\fB@PACKAGE_BUGREPORT@\fR
 .SH COPYRIGHT
 Copyright \(co 2005 Stefan Jahn <stefan@lkcc.org>
 .PP
