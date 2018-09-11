@@ -38,10 +38,10 @@ the entity name implemented in the VHDL file
 library name into which the module will reside
 .SH AVAILABILITY
 The latest version of Qucs can always be obtained from
-\fBwww.sourceforge.net\fR or \fBwww.freshmeat.net\fR
+\fB@PACKAGE_URL@\fR
 .SH "REPORTING BUGS"
 Known bugs are documented within the BUGS file.  Report bugs to
-<qucs-bugs@lists.sourceforge.net>.
+\fB@PACKAGE_BUGREPORT@\fR
 .SH COPYRIGHT
 Copyright \(co 2005 Michael Margraf <michael.margraf@alumni.tu-berlin.de>
 .PP
