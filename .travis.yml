@@ -210,6 +210,9 @@ script:
       cmake .. || travis_terminate 1;
       make || travis_terminate 1;
       make test || travis_terminate 1;
+      make install || travis_terminate 1;
+      qucs -v || travis_terminate 1;
+      qucsator -v || travis_terminate 1;
     fi
 
   - echo $TRAVIS_BRANCH
