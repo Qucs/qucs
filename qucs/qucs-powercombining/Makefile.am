@@ -26,6 +26,8 @@ bin_PROGRAMS = qucspowercombining
 MOCHEADERS = qucspowercombiningtool.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
+dist_man_MANS = qucspowercombining.1
+
 include ../common.mk
 
 qucspowercombining_SOURCES = main.cpp qucspowercombiningtool.cpp qrc_qucspowercombining.cpp
