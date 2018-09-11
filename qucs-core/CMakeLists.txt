@@ -231,6 +231,7 @@ if(UNIX AND ENABLE_RPATH)
   set(CMAKE_SKIP_BUILD_RPATH FALSE)
   set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
   set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+  set(CMAKE_MACOSX_RPATH TRUE)
 endif()
 
 # CMake adds --enable-all-exports on Cygwin (since Cygwin is
