@@ -100,4 +100,4 @@ INSTALL(TARGETS qucspowercombining
     )
 
 # man pages
-#INSTALL( FILES qucspowercombining.1 DESTINATION share/man/man1 )
+INSTALL( FILES qucspowercombining.1 DESTINATION share/man/man1 )
