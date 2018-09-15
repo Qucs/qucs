@@ -73,8 +73,8 @@ build_script:
   - bash -lc "exec 0</dev/null && tar xvfz ASCO-0.4.10.tar.gz || true"
   # expand Autotools.tar.gz to get a small patch for de36.c
   - bash -lc "exec 0</dev/null && cd ASCO-0.4.10/ && tar xvfz Autotools.tar.gz"
-  # add patch for Windows
-  - bash -lc "exec 0</dev/null && cd ASCO-0.4.10/ && patch -p1 < $APPVEYOR_BUILD_FOLDER/contrib/ASCO-Correct-shell-script-name-for-Windows.patch"
+  # add patch for selecting the Qucs simulator name
+  - bash -lc "exec 0</dev/null && cd ASCO-0.4.10/ && patch -p1 < $APPVEYOR_BUILD_FOLDER/contrib/ASCO-Qucs_simulator_name.patch"
   # build using the provided Makefile
   - bash -lc "exec 0</dev/null && cd ASCO-0.4.10/ && make -f Makefile.win32"
   # check if ASCO is working (it exits with a non-zero code, hence the '|| true' )
