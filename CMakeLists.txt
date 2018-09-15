@@ -6,6 +6,9 @@ cmake_policy(VERSION 2.8)
 file (STRINGS "${qucs-suite_SOURCE_DIR}/VERSION" QUCS_VERSION)
 message(STATUS "Configuring Qucs: VERSION ${QUCS_VERSION}")
 
+SET(QUCS_URL "https://sf.net/p/qucs")
+SET(QUCS_BUGREPORT "qucs-bugs@lists.sourceforge.net")
+
 set(GIT unknown)
 IF(EXISTS ${CMAKE_SOURCE_DIR}/../.git )
   FIND_PACKAGE(Git)
@@ -38,6 +41,22 @@ INCLUDE( ${QT_USE_FILE} )
 
 ADD_DEFINITIONS(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
 
+
+
+
+configure_file(./man/qucs.1.cmake.in ./man/qucs.1)
+configure_file(./man/qucsdigi.1.cmake.in ./man/qucsdigi.1)
+configure_file(./man/qucsdigilib.1.cmake.in ./man/qucsdigilib.1)
+configure_file(./man/qucsveri.1.cmake.in ./man/qucsveri.1)
+
+#Tools
+configure_file(./qucs-activefilter/qucsactivefilter.1.cmake.in ./qucs-activefilter/qucsactivefilter.1)
+configure_file(./qucs-filter/qucsfilter.1.cmake.in ./qucs-filter/qucsfilter.1)
+configure_file(./qucs-attenuator/qucsattenuator.1.cmake.in ./qucs-attenuator/qucsattenuator.1)
+configure_file(./qucs-lib/qucslib.1.cmake.in ./qucs-lib/qucslib.1)
+configure_file(./qucs-powercombining/qucspowercombining.1.cmake.in ./qucs-powercombining/qucspowercombining.1)
+configure_file(./qucs-rescodes/qucsrescodes.1.cmake.in ./qucs-rescodes/qucsrescodes.1)
+configure_file(./qucs-transcalc/qucstrans.1.cmake.in ./qucs-transcalc/qucstrans.1)
 
 ADD_SUBDIRECTORY( man )
 ADD_SUBDIRECTORY( qucs )
