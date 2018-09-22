@@ -109,7 +109,9 @@ ProjectView::refresh()
     columnData.clear();
     QStandardItem * d = new QStandardItem(fileName);
     if (QucsSettings.ShowDescriptionProjectTree)
-    {
+    { // In case of the ShowDescriptionProjectTree property is set, 
+      // it reads the schematic header looking for the message to be displayed
+      // and the variable which sets the visibility of the frame
        QString description = ReadDescription(workPath.absoluteFilePath(fileName));
        d->setToolTip(description);
     }
@@ -171,6 +173,7 @@ QString ProjectView::ReadDescription(QString file)
     if (!QucsDocument.open(QIODevice::ReadOnly)) return "";
     QTextStream in (&QucsDocument);
     QString line, description;
+    int showFrame;
     int index, index2;
     do {
         line = in.readLine();
@@ -179,12 +182,17 @@ QString ProjectView::ReadDescription(QString file)
             index2 = line.indexOf(">", index);
             index+=11;//Skip FrameText0=
             description = line.mid(index, index2-index);
-            break;
+        }
+        index = line.indexOf("showFrame=");
+        if (index != -1) {
+            index2 = line.indexOf(">", index);
+            index+=10;//Skip showFrame=
+            showFrame = line.mid(index, index2-index).toInt();
         }
     } while (!line.isNull());
 
     description.replace("\\n", "<br>");
     QucsDocument.close();
-    if (description == "Title") description = "";//Prevent schematics without description from showing "Title" in the tooltip
+    if ((description == tr("Title")) || (showFrame == 0)) description = "";//Don't show the tooltip
     return description;
 }
