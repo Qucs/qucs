@@ -23,6 +23,8 @@
 #include <QHash>
 #include <QStack>
 #include <QDir>
+#include <QFileSystemModel>
+#include <QSortFilterProxyModel>
 
 /**
  * @file qucs.h
@@ -59,7 +61,6 @@ class QTreeWidgetItem;
 class QListWidget;
 class QShortcut;
 class QListView;
-class QFileSystemModel;
 class QModelIndex;
 class QPushButton;
 
@@ -95,8 +96,9 @@ struct tQucsSettings {
   QString DocDir;
 
   unsigned int NodeWiring;
-  QDir QucsWorkDir;
-  QDir QucsHomeDir;
+  QDir QucsWorkDir; // Qucs user directory where user currently works (usually QucsHomeDir or subdir)
+  QDir QucsHomeDir; // Qucs initial user projects directory
+  QDir projsDir; // current user directory where projects are located
   QDir AdmsXmlBinDir;  // dir of admsXml executable
   QDir AscoBinDir;     // dir of asco executable
   // QDir OctaveBinDir;   // dir of octave executable
@@ -133,6 +135,22 @@ bool saveApplSettings();
 typedef bool (Schematic::*pToggleFunc) ();
 typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
 typedef void (MouseActions::*pMouseFunc2) (Schematic*, QMouseEvent*, float, float);
+
+class QucsFileSystemModel : public QFileSystemModel {
+  Q_OBJECT
+public:
+  QucsFileSystemModel(QObject* parent = 0) : QFileSystemModel(parent) {};
+  QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
+};
+
+class QucsSortFilterProxyModel : public QSortFilterProxyModel {
+  Q_OBJECT
+
+public:
+  QucsSortFilterProxyModel(QObject *parent = 0) : QSortFilterProxyModel(parent) {};
+protected:
+  bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
+};
 
 class QucsApp : public QMainWindow {
   Q_OBJECT
@@ -280,7 +298,8 @@ private:
 // ********** Properties ************************************************
   QStack<QString> HierarchyHistory; // keeps track of "go into subcircuit"
   QString  QucsFileFilter;
-  QFileSystemModel *m_homeDirModel;
+  QucsFileSystemModel *m_homeDirModel;
+  QucsSortFilterProxyModel *m_proxyModel;
   QFileSystemModel *m_projModel;
   int ccCurIdx; // CompChooser current index (used during search)
 
