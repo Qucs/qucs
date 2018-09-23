@@ -666,7 +666,6 @@ void QucsSettingsDialog::slotApply()
     if(changed)
     {
         App->readProjects();
-        App->slotUpdateTreeview();
         App->repaint();
     }
 
