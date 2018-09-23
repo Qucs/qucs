@@ -1226,8 +1226,7 @@ void QucsApp::slotListProjOpen(const QModelIndex &idx)
     // change projects directory to the selected one
     QucsSettings.projsDir = QucsSettings.projsDir.filePath(dName);
     readProjects();
-    slotUpdateTreeview();
-    repaint();
+    //repaint();
   }
 }
 
