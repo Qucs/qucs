@@ -6,7 +6,7 @@ AC_PREREQ(2.57)
 dnl Read version from file
 m4_define([QUCS_VERSION], m4_esyscmd([tr -d '\n' < VERSION]))
 
-AC_INIT([qucs], [QUCS_VERSION], [qucs-bugs@lists.sourceforge.net])
+AC_INIT([qucs], [QUCS_VERSION], [qucs-bugs@lists.sourceforge.net], [], [https://sf.net/p/qucs])
 AC_CONFIG_SRCDIR([qucs/qucs.cpp])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_HEADERS([qt_version])
@@ -802,6 +802,9 @@ AH_TOP([
 #endif
 ])
 
+
+
+
 dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([Makefile
     contrib/Makefile
@@ -827,7 +830,18 @@ AC_CONFIG_FILES([Makefile
     qucs/dialogs/Makefile
     qucs/tests/Makefile
     tests/Makefile
-    translations/Makefile])
+    translations/Makefile
+    man/qucs.1
+    man/qucsdigi.1
+    man/qucsdigilib.1
+    man/qucsveri.1
+    qucs-activefilter/qucsactivefilter.1
+    qucs-attenuator/qucsattenuator.1
+    qucs-filter/qucsfilter.1
+    qucs-lib/qucslib.1
+    qucs-rescodes/qucsrescodes.1
+    qucs-transcalc/qucstrans.1
+    qucs-powercombining/qucspowercombining.1])
 
 AC_CONFIG_FILES([qucs/qucs], [chmod +x qucs/qucs])
 
