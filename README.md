@@ -84,6 +84,7 @@ For the GUI tools and simulation engine the following dependencies are needed:
     sudo apt-get install build-essential
     sudo apt-get install libqt4-dev libqt4-qt3support
     sudo apt-get install automake libtool libtool-bin gperf flex bison
+    sudo apt-get install libx11-dev
 
 The ADMS package is necessary. Please [download](https://sourceforge.net/projects/mot-adms/files/adms-source/) the latest tarball and follow the [install](https://github.com/Qucs/ADMS#users-install-from-tarball) instructions. Having `admsXml` on the path should be sufficient.
 
