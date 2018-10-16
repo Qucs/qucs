@@ -1226,8 +1226,7 @@ void QucsApp::slotListProjOpen(const QModelIndex &idx)
     // change projects directory to the selected one
     QucsSettings.projsDir = QucsSettings.projsDir.filePath(dName);
     readProjects();
-    slotUpdateTreeview();
-    repaint();
+    //repaint();
   }
 }
 
@@ -3209,3 +3208,4 @@ bool QucsSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelInd
 
   return QSortFilterProxyModel::lessThan(left, right);
 }
+// vim:ts=8:sw=2:et
