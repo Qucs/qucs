@@ -408,9 +408,9 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   connect(S21degEdit, SIGNAL(textChanged(const QString &)),
           SLOT(slotImpedanceChanged(const QString &)));
   connect(S11magEdit, SIGNAL(textChanged(const QString &)),
-          SLOT(slotReflexionChanged(const QString &)));
+          SLOT(slotReflectionChanged(const QString &)));
   connect(S11degEdit, SIGNAL(textChanged(const QString &)),
-          SLOT(slotReflexionChanged(const QString &)));
+          SLOT(slotReflectionChanged(const QString &)));
 
   QHBoxLayout *h2 = new QHBoxLayout();
   h2->setSpacing(3);
@@ -442,7 +442,7 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   connect(buttCreate, SIGNAL(clicked()), SLOT(slotButtCreate()));
   connect(buttCancel, SIGNAL(clicked()), SLOT(reject()));
 
-  slotReflexionChanged(""); // calculate impedance
+  slotReflectionChanged(""); // calculate impedance
   setFrequency(1e9);        // set 1GHz
 }
 
@@ -520,13 +520,13 @@ void MatchDialog::slotSetTwoPort(bool on) {
     setS21LineEdits(tmpS21mag, tmpS21deg);
     set2PortWidgetsVisible(true);
   } else {
-    S11Label->setText(tr("Reflexion Coefficient"));
+    S11Label->setText(tr("Reflection Coefficient"));
     S21Label->setText(QString("Impedance (%1)").arg(QChar(0xA9, 0x03)));
     set2PortWidgetsVisible(false);
     // save S21 values, as these will be overwritten with the impedance value
     tmpS21mag = S21magEdit->text().toDouble();
     tmpS21deg = S21degEdit->text().toDouble();
-    slotReflexionChanged(""); // calculate impedance
+    slotReflectionChanged(""); // calculate impedance
   }
 }
 //------------------------------------------------------------------------
@@ -714,7 +714,7 @@ void MatchDialog::slotChangeMode(int Index) {
 }
 
 // -----------------------------------------------------------------------
-// Is called if the user changed the impedance. -> The reflexion
+// Is called if the user changed the impedance. -> The Reflection
 // coefficient is calculated.
 void MatchDialog::slotImpedanceChanged(const QString &) {
   if (TwoCheck->isChecked())
@@ -736,9 +736,9 @@ void MatchDialog::slotImpedanceChanged(const QString &) {
 }
 
 // -----------------------------------------------------------------------
-// Is called if the user changed the reflexion coefficient. -> The impedance
+// Is called if the user changed the Reflection coefficient. -> The impedance
 // is calculated.
-void MatchDialog::slotReflexionChanged(const QString &) {
+void MatchDialog::slotReflectionChanged(const QString &) {
   if (TwoCheck->isChecked())
     return;
 
@@ -874,7 +874,7 @@ void MatchDialog::p2c(double &Real, double &Imag) {
 }
 
 // -----------------------------------------------------------------------
-// transform reflexion coefficient into impedance
+// transform reflection coefficient into impedance
 void MatchDialog::r2z(double &Real, double &Imag, double Z0) {
   double tmp = Z0 / ((1.0 - Real) * (1.0 - Real) + Imag * Imag);
   Real = (1.0 - Real * Real - Imag * Imag) * tmp;
@@ -882,7 +882,7 @@ void MatchDialog::r2z(double &Real, double &Imag, double Z0) {
 }
 
 // -----------------------------------------------------------------------
-// transform impedance into reflexion coefficient
+// transform impedance into reflection coefficient
 void MatchDialog::z2r(double &Real, double &Imag, double Z0) {
   double tmp = (Real + Z0) * (Real + Z0) + Imag * Imag;
   Real = (Real * Real + Imag * Imag - Z0 * Z0) / tmp;

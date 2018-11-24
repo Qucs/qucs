@@ -148,7 +148,7 @@ public:
 public slots:
   void slotButtCreate();
   void slotImpedanceChanged(const QString &);
-  void slotReflexionChanged(const QString &);
+  void slotReflectionChanged(const QString &);
   void slotSetTwoPort(bool);
   void slotChangeMode(int);
   void setS11LineEdits(double, double);
