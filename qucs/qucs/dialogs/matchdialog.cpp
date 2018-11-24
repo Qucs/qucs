@@ -143,6 +143,8 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   str = QString(QChar(0xBB, 0x03)) + "/8 +" + QString(QChar(0xBB, 0x03)) +
         "/4 transformer";
   matching_methods.append(str);
+  str = QString(QChar(0xD6, 0x03)) + "-type";
+  matching_methods.append(str);
 
   TopoCombo = new QComboBox();
   TopoCombo->setFixedWidth(220);
@@ -210,9 +212,31 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   MaxRippleEdit->setAlignment(Qt::AlignLeft);
   h8->setAlignment(Qt::AlignLeft);
 
+  // Quality factor
+  QHBoxLayout *h9 = new QHBoxLayout();
+  QualityFactorLabel = new QLabel(tr("Q"));
+  h9->addWidget(QualityFactorLabel);
+  QualityFactorEdit = new QLineEdit("3");
+  h9->addWidget(QualityFactorEdit);
+  QualityFactorEdit->setFixedWidth(50);
+  QualityFactorEdit->setAlignment(Qt::AlignLeft);
+  h9->setAlignment(Qt::AlignLeft);
+
+  //Network response
+  QHBoxLayout *h10 = new QHBoxLayout();
+  NetworkResponseLabel = new QLabel(tr("Response"));
+  h10->addWidget(NetworkResponseLabel);
+  NetworkResponseCombo = new QComboBox();
+  NetworkResponseCombo->addItem("Lowpass");
+  NetworkResponseCombo->addItem("Highpass");
+
+  h10->setAlignment(Qt::AlignLeft);
+
   QGridLayout *OptLayout = new QGridLayout();
   v7_box->addLayout(h7_box);
   v7_box->addLayout(h8);
+  v7_box->addLayout(h9);
+  v7_box->addLayout(h10);
   Weighting_groupBox->setLayout(v7_box);
   Weighting_groupBox->setVisible(false);
   h7->addWidget(Weighting_groupBox);
@@ -533,6 +557,10 @@ void MatchDialog::slotChangeMode_TopoCombo() {
         Weighting_groupBox->setVisible(false);
         OrderLabel->setVisible(false);
         OrderEdit->setVisible(false);
+        QualityFactorEdit->setVisible(false);
+        QualityFactorLabel->setVisible(false);
+        NetworkResponseCombo->setVisible(false);
+        NetworkResponseLabel->setVisible(false);
         break;
        case SINGLESTUB:
         ShortRadioButton->setVisible(true);
@@ -543,6 +571,10 @@ void MatchDialog::slotChangeMode_TopoCombo() {
         Weighting_groupBox->setVisible(false);
         OrderLabel->setVisible(false);
         OrderEdit->setVisible(false);
+        QualityFactorEdit->setVisible(false);
+        QualityFactorLabel->setVisible(false);
+        NetworkResponseCombo->setVisible(false);
+        NetworkResponseLabel->setVisible(false);
         break;
        case DOUBLESTUB:
         ShortRadioButton->setVisible(true);
@@ -553,6 +585,10 @@ void MatchDialog::slotChangeMode_TopoCombo() {
         Weighting_groupBox->setVisible(false);
         OrderLabel->setVisible(false);
         OrderEdit->setVisible(false);
+        QualityFactorEdit->setVisible(false);
+        QualityFactorLabel->setVisible(false);
+        NetworkResponseCombo->setVisible(false);
+        NetworkResponseLabel->setVisible(false);
         break;
        case MULTISTAGEL4:
         ShortRadioButton->setVisible(false);
@@ -562,6 +598,10 @@ void MatchDialog::slotChangeMode_TopoCombo() {
         Weighting_groupBox->setVisible(true);
         OrderLabel->setVisible(true);
         OrderEdit->setVisible(true);
+        QualityFactorEdit->setVisible(false);
+        QualityFactorLabel->setVisible(false);
+        NetworkResponseCombo->setVisible(false);
+        NetworkResponseLabel->setVisible(false);
         break;
        case CASCADEDLSECTIONS:
         ShortRadioButton->setVisible(false);
@@ -571,6 +611,10 @@ void MatchDialog::slotChangeMode_TopoCombo() {
         Weighting_groupBox->setVisible(false);
         OrderLabel->setVisible(true);
         OrderEdit->setVisible(true);
+        QualityFactorEdit->setVisible(false);
+        QualityFactorLabel->setVisible(false);
+        NetworkResponseCombo->setVisible(false);
+        NetworkResponseLabel->setVisible(false);
         break;
        case L8L4:
         ShortRadioButton->setVisible(false);
@@ -580,6 +624,23 @@ void MatchDialog::slotChangeMode_TopoCombo() {
         Weighting_groupBox->setVisible(false);
         OrderLabel->setVisible(false);
         OrderEdit->setVisible(false);
+        QualityFactorEdit->setVisible(false);
+        QualityFactorLabel->setVisible(false);
+        NetworkResponseCombo->setVisible(false);
+        NetworkResponseLabel->setVisible(false);
+        break;
+    case PI_TYPE:
+        ShortRadioButton->setVisible(false);
+        OpenRadioButton->setVisible(false);
+        BalancedCheck->setEnabled(false);
+        MicrostripCheck->setEnabled(true);
+        Weighting_groupBox->setVisible(false);
+        OrderLabel->setVisible(false);
+        OrderEdit->setVisible(false);
+        QualityFactorEdit->setVisible(true);
+        QualityFactorLabel->setVisible(true);
+        NetworkResponseCombo->setVisible(true);
+        NetworkResponseLabel->setVisible(true);
         break;
     }
 }
@@ -1062,6 +1123,9 @@ bool MatchDialog::calcMatchingCircuit(struct NetworkParams params) {
           // transistor amplifiers". John Wiley and Sons. 2009. Pages 159-160
     laddercode = calcMatchingLambda8Lambda4(params);
     break;
+  case 6: //Pi-type network
+    laddercode = calcPiType(params);
+    break;
   }
 
   if (laddercode.isEmpty())
@@ -1160,6 +1224,9 @@ QString MatchDialog::calcBiMatch(struct NetworkParams params) {
     break;
   case 5: // Lambda/8 + Lambda/4 transformer
     laddercode = calcMatchingLambda8Lambda4(params);
+    break;
+  case 6: //Pi-type network
+    laddercode = calcPiType(params);
     break;
   }
 
@@ -1785,6 +1852,64 @@ QString MatchDialog::calcMatchingCascadedLCSections(struct NetworkParams params)
   }
 
   return s;
+}
+
+QString MatchDialog::calcPiParameters(struct NetworkParams params) {
+    double RS = params.Z1;
+    double RL, XL, Z0;
+    if (params.network == SINGLE_PORT)
+    {
+        RL = params.S11real;
+        Z0 = params.Z1;
+    }
+    else//Two-port matching
+    {
+        RL = params.r_real, XL = params.r_imag;
+        (params.network == TWO_PORT_INPUT) ? Z0 = params.Z1 : Z0 = params.Z2;
+    }
+
+    r2z(RL, XL, Z0);
+
+    double Q1 = (2*params.Q*RS - sqrt(4*params.Q*params.Q*RS*RL - (RS - RL)*(RS - RL)))/(RS - RL);
+    double Q2 = (2*params.Q*RL - sqrt(4*params.Q*params.Q*RS*RL - (RL - RS)*(RL - RS)))/(RL - RS);
+    double B1 = Q1/RS;
+    double B2 = Q2/RL;
+    double Xc = 2*params.Q*RL/(1+Q2);
+    return QString("%1;%2;%3").arg(B1).arg(Xc).arg(B2);
+}
+
+//--------------------------------------------------------------------------
+// It calculates pi-type matching network
+QString MatchDialog::calcPiType(struct NetworkParams params) {
+    QString pi_params = calcPiParameters(params);
+    double w0 = 2*pi*params.freq;
+    QString laddercode;
+    QStringList pi_comp_val = pi_params.split(";");//Get the parameters calculated by calcPiParameters()
+
+    if (params.network_response == LOWPASS)
+    {//Lowpass pi-type matching network
+        double C1 = pi_comp_val.at(0).toDouble()/w0;// B1/w0
+        double C2 = pi_comp_val.at(2).toDouble()/w0;// B2/w0
+        double L = pi_comp_val.at(1).toDouble()/w0;//  X/w0
+
+        //Build the schematic description
+        laddercode += QString("CP:%1;").arg(C1);
+        laddercode += QString("LS:%1;").arg(L);
+        laddercode += QString("CP:%1;").arg(C2);
+    }
+    else
+    {//Highpass pi-type matching network
+        double L1 = 1/(w0*pi_comp_val.at(0).toDouble());// 1/(w0*B1)
+        double L2 = 1/(w0*pi_comp_val.at(2).toDouble());// 1/(w0*B2)
+        double C = 1/(w0*pi_comp_val.at(1).toDouble());//  1/(w0*X)
+
+        //Build the schematic description
+        laddercode += QString("LP:%1;").arg(L1);
+        laddercode += QString("CS:%1;").arg(C);
+        laddercode += QString("LP:%1;").arg(L2);
+    }
+
+    return laddercode;
 }
 
 //--------------------------------------------------------------------------

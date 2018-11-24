@@ -59,8 +59,10 @@ struct tSubstrate {
 #define MULTISTAGEL4       3
 #define CASCADEDLSECTIONS  4
 #define L8L4               5
+#define PI_TYPE            6
 
 enum NETWORK_TYPE{TWO_PORT_INPUT, TWO_PORT_OUTPUT, SINGLE_PORT};
+enum RESPONSE_TYPE{LOWPASS, HIGHPASS};
 
 struct NetworkParams {
   double S11real, S11imag, S12real, S12imag, S21real, S21imag, S22real, S22imag;
@@ -73,6 +75,8 @@ struct NetworkParams {
   NETWORK_TYPE network;
   double DetReal, DetImag;
   int input_network_type, output_network_type;
+  double Q;
+  RESPONSE_TYPE network_response;
 };
 
 static const double Z_FIELD = 376.73031346958504364963;
@@ -123,6 +127,8 @@ public:
   QString calcMatchingLambda8Lambda4(struct NetworkParams);
   QString calcBinomialLines(struct NetworkParams);
   QString calcChebyLines(struct NetworkParams);
+  QString calcPiParameters(struct NetworkParams);
+  QString calcPiType(struct NetworkParams);
   //--------------------------------------------------------------------------------------------------------
 
   QString calcBiMatch(struct NetworkParams);
@@ -161,13 +167,13 @@ private:
       *FrequencyLabel, *TopoLabel, *TopoLabel_Output, *OrderLabel, *RelPermLabel, *S11Label,
       *S11sLabel, *S11uLabel, *S21Label, *S21sLabel, *S21uLabel, *S12Label,
       *S12sLabel, *S12uLabel, *S22Label, *S22sLabel, *S22uLabel, *SubsHScale,
-      *ThicknessScale, *minWScale, *maxWScale, *ResistivityLabel,
-      *maxRippleLabel, *thicknessLabel, *subsHLabel, *minWLabel, *maxWLabel,
+      *ThicknessScale, *minWScale, *maxWScale, *ResistivityLabel, *QualityFactorLabel,
+      *maxRippleLabel, *thicknessLabel, *subsHLabel, *minWLabel, *maxWLabel, *NetworkResponseLabel,
       *tanDLabel, *WeightingLabel, *InputLabel, *OutputLabel;
-  QComboBox *FormatCombo, *UnitCombo, *TopoCombo, *RelPermCombo, *TopoCombo_Output;
+  QComboBox *FormatCombo, *UnitCombo, *TopoCombo, *RelPermCombo, *TopoCombo_Output, *NetworkResponseCombo;
 
   QLineEdit *Ref1Edit, *Ref2Edit, *FrequencyEdit, *OrderEdit, *ResistivityEdit,
-      *MaxRippleEdit, *SubHeightEdit, *thicknessEdit, *minWEdit, *maxWEdit,
+      *MaxRippleEdit, *SubHeightEdit, *thicknessEdit, *minWEdit, *maxWEdit, *QualityFactorEdit,
       *tanDEdit, *S11magEdit, *S11degEdit, *S21magEdit, *S21degEdit,
       *S12magEdit, *S12degEdit, *S22magEdit, *S22degEdit;
 
