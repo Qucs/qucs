@@ -186,7 +186,7 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
       new QCheckBox(tr("Add S-Parameter simulation")); // The user can choose
                                                        // whether add a S-param
                                                        // simulation or not
-  AddSPBlock->setChecked(false);
+  AddSPBlock->setChecked(true);
   MicrostripCheck = new QCheckBox(tr("Synthesize microstrip lines"));
   MicrostripCheck->setEnabled(false);
   MicrostripCheck->setChecked(false);
