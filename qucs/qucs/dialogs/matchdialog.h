@@ -32,6 +32,7 @@
 #include <QDebug>
 #include <QDialog>
 #include <cmath>
+#include "matchsettingsdialog.h"
 
 class Element;
 class QLabel;
@@ -42,42 +43,6 @@ class QRadioButton;
 class QHBoxLayout;
 class QVBoxLayout;
 class QDoubleValidator;
-
-struct tSubstrate {
-  double er;
-  double height;
-  double thickness;
-  double tand;
-  double resistivity;
-  double roughness;
-  double minWidth, maxWidth;
-};
-
-#define LSECTION           0
-#define SINGLESTUB         1
-#define DOUBLESTUB         2
-#define MULTISTAGEL4       3
-#define CASCADEDLSECTIONS  4
-#define L8L4               5
-#define PI_TYPE            6
-
-enum NETWORK_TYPE{TWO_PORT_INPUT, TWO_PORT_OUTPUT, SINGLE_PORT};
-enum RESPONSE_TYPE{LOWPASS, HIGHPASS};
-
-struct NetworkParams {
-  double S11real, S11imag, S12real, S12imag, S21real, S21imag, S22real, S22imag;
-  double Z1, Z2, freq;
-  bool BalancedStubs, micro_syn, SP_block, open_short;
-  int order;
-  double gamma_MAX;
-  double r_real, r_imag;
-  tSubstrate Substrate;
-  NETWORK_TYPE network;
-  double DetReal, DetImag;
-  int input_network_type, output_network_type;
-  double Q;
-  RESPONSE_TYPE network_response;
-};
 
 static const double Z_FIELD = 376.73031346958504364963;
 static const double SPEED_OF_LIGHT = 299792458.0;
@@ -125,10 +90,12 @@ public:
   QString calcSingleStub(struct NetworkParams);
   QString calcDoubleStub(struct NetworkParams);
   QString calcMatchingLambda8Lambda4(struct NetworkParams);
+  QString calcTransmissionLineTransformer(struct NetworkParams);
   QString calcBinomialLines(struct NetworkParams);
   QString calcChebyLines(struct NetworkParams);
-  QString calcPiParameters(struct NetworkParams);
+  QString calcPiParameters(struct ImplementationParams, double, double);
   QString calcPiType(struct NetworkParams);
+  QString SynthesizeMatchingNetwork(struct NetworkParams);
   //--------------------------------------------------------------------------------------------------------
 
   QString calcBiMatch(struct NetworkParams);
@@ -155,9 +122,11 @@ public slots:
   void setS12LineEdits(double, double);
   void setS21LineEdits(double, double);
   void setS22LineEdits(double, double);
-  void slotChangeMode_TopoCombo();
   void slotSetMicrostripCheck();
-  void slotChebyCheck();
+  void slot_InputMatchingSettings();
+  void slot_OutputMatchingSettings();
+  void slot_InputTopologyChanged(int);
+  void slot_OutputTopologyChanged(int);
 
 private:
   QHBoxLayout *all; // the mother of all widgets
@@ -167,24 +136,27 @@ private:
       *FrequencyLabel, *TopoLabel, *TopoLabel_Output, *OrderLabel, *RelPermLabel, *S11Label,
       *S11sLabel, *S11uLabel, *S21Label, *S21sLabel, *S21uLabel, *S12Label,
       *S12sLabel, *S12uLabel, *S22Label, *S22sLabel, *S22uLabel, *SubsHScale,
-      *ThicknessScale, *minWScale, *maxWScale, *ResistivityLabel, *QualityFactorLabel,
-      *maxRippleLabel, *thicknessLabel, *subsHLabel, *minWLabel, *maxWLabel, *NetworkResponseLabel,
-      *tanDLabel, *WeightingLabel, *InputLabel, *OutputLabel;
-  QComboBox *FormatCombo, *UnitCombo, *TopoCombo, *RelPermCombo, *TopoCombo_Output, *NetworkResponseCombo;
+      *ThicknessScale, *minWScale, *maxWScale, *ResistivityLabel,
+      *thicknessLabel, *subsHLabel, *minWLabel, *maxWLabel,
+      *tanDLabel, *InputLabel, *OutputLabel;
+  QComboBox *FormatCombo, *UnitCombo, *TopoCombo_Input, *RelPermCombo, *TopoCombo_Output;
 
-  QLineEdit *Ref1Edit, *Ref2Edit, *FrequencyEdit, *OrderEdit, *ResistivityEdit,
-      *MaxRippleEdit, *SubHeightEdit, *thicknessEdit, *minWEdit, *maxWEdit, *QualityFactorEdit,
+  QLineEdit *Ref1Edit, *Ref2Edit, *FrequencyEdit, *ResistivityEdit,
+      *MaxRippleEdit, *SubHeightEdit, *thicknessEdit, *minWEdit, *maxWEdit,
       *tanDEdit, *S11magEdit, *S11degEdit, *S21magEdit, *S21degEdit,
       *S12magEdit, *S12degEdit, *S22magEdit, *S22degEdit;
 
-  QCheckBox *TwoCheck, *MicrostripCheck, *AddSPBlock, *BalancedCheck;
-  QRadioButton *OpenRadioButton, *ShortRadioButton, *BinRadio, *ChebyRadio;
-  QGroupBox *SubstrateBox, *Weighting_groupBox, *MethodBox;
+  QCheckBox *TwoCheck, *MicrostripCheck, *AddSPBlock;
+  QGroupBox *SubstrateBox, *MethodBox;
+  QPushButton *InputMatchingSettings_Button, *OutputMatchingSettings_Button;
 
   double tmpS21mag, tmpS21deg;
 
   void set2PortWidgetsVisible(bool);
   QString flipLadderCode(QString laddercode);
+
+  struct NetworkParams params;
+  struct ImplementationParams input_network, output_network;
 };
 
 #endif
