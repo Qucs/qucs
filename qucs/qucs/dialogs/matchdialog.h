@@ -122,11 +122,12 @@ public slots:
   void setS12LineEdits(double, double);
   void setS21LineEdits(double, double);
   void setS22LineEdits(double, double);
-  void slotSetMicrostripCheck();
   void slot_InputMatchingSettings();
   void slot_OutputMatchingSettings();
   void slot_InputTopologyChanged(int);
   void slot_OutputTopologyChanged(int);
+  void slot_SubtrateSettings();
+  void slot_MicrostripCheckChanged();
 
 private:
   QHBoxLayout *all; // the mother of all widgets
@@ -135,20 +136,16 @@ private:
   QLabel *Port1Label, *Port2Label, *Ohm1Label, *Ohm2Label, *FormatLabel,
       *FrequencyLabel, *TopoLabel, *TopoLabel_Output, *OrderLabel, *RelPermLabel, *S11Label,
       *S11sLabel, *S11uLabel, *S21Label, *S21sLabel, *S21uLabel, *S12Label,
-      *S12sLabel, *S12uLabel, *S22Label, *S22sLabel, *S22uLabel, *SubsHScale,
-      *ThicknessScale, *minWScale, *maxWScale, *ResistivityLabel,
-      *thicknessLabel, *subsHLabel, *minWLabel, *maxWLabel,
-      *tanDLabel, *InputLabel, *OutputLabel;
-  QComboBox *FormatCombo, *UnitCombo, *TopoCombo_Input, *RelPermCombo, *TopoCombo_Output;
+      *S12sLabel, *S12uLabel, *S22Label, *S22sLabel, *S22uLabel, *InputLabel, *OutputLabel;
+  QComboBox *FormatCombo, *UnitCombo, *TopoCombo_Input, *TopoCombo_Output;
 
   QLineEdit *Ref1Edit, *Ref2Edit, *FrequencyEdit, *ResistivityEdit,
-      *MaxRippleEdit, *SubHeightEdit, *thicknessEdit, *minWEdit, *maxWEdit,
-      *tanDEdit, *S11magEdit, *S11degEdit, *S21magEdit, *S21degEdit,
+      *MaxRippleEdit, *S11magEdit, *S11degEdit, *S21magEdit, *S21degEdit,
       *S12magEdit, *S12degEdit, *S22magEdit, *S22degEdit;
 
   QCheckBox *TwoCheck, *MicrostripCheck, *AddSPBlock;
-  QGroupBox *SubstrateBox, *MethodBox;
-  QPushButton *InputMatchingSettings_Button, *OutputMatchingSettings_Button;
+  QGroupBox *MethodBox;
+  QPushButton *InputMatchingSettings_Button, *OutputMatchingSettings_Button, *Substrate_Button;
 
   double tmpS21mag, tmpS21deg;
 

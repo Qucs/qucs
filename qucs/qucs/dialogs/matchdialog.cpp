@@ -30,11 +30,9 @@
 #include <config.h>
 #endif
 
-#include "../../qucs-filter/material_props.h"
 #include "matchdialog.h"
 #include "misc.h"
 #include "qucs.h"
-#include "matchsettingsdialog.h"
 
 #include <QApplication>
 #include <QClipboard>
@@ -53,12 +51,7 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   DoubleVal = new QDoubleValidator(this);
 
   all = new QHBoxLayout(this);
-//  all->setSizeConstraint(QLayout::SetFixedSize);
 
-  /* The main frame was divided into two vertical layouts. The first one, on the
-     left side, is much the old matching tool whereas the other layout was
-     included specifically for microstrip synthesis.
-  */
   QVBoxLayout *matchFrame = new QVBoxLayout();   // Matching circuit design panel
   QVBoxLayout *micro_layout = new QVBoxLayout(); // Substrate properties
   all->addLayout(matchFrame);
@@ -67,67 +60,6 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   MethodBox = new QGroupBox(tr("Implementation"));
   matchFrame->addWidget(MethodBox);
   MethodLayout = new QVBoxLayout();
-
-  SubstrateBox = new QGroupBox(tr("Microstrip Substrate"));
-  QGridLayout *hsubs = new QGridLayout();
-
-  SubstrateBox->setVisible(false);
-  micro_layout->addWidget(SubstrateBox);
-  SubstrateBox->setLayout(hsubs);
-  RelPermLabel = new QLabel(tr("Relative Permitivity"));
-  RelPermCombo = new QComboBox();
-  RelPermCombo->setEditable(true);
-  const char **p = List_er;
-  while (*(++p))
-    RelPermCombo->addItem(*p); // The dielectric coeff combobox is filled with
-                               // the materials taken from
-                               // "../../qucs-filter/material_props.h"
-  RelPermCombo->lineEdit()->setText("9.8");
-  hsubs->addWidget(RelPermLabel, 0, 0);
-  hsubs->addWidget(RelPermCombo, 0, 1, 1, 2);
-
-  subsHLabel = new QLabel(tr("Substrate height"));
-  SubHeightEdit = new QLineEdit("1.0");
-  SubsHScale = new QLabel("mm");
-  hsubs->addWidget(subsHLabel, 1, 0);
-  hsubs->addWidget(SubHeightEdit, 1, 1);
-  hsubs->addWidget(SubsHScale, 1, 2);
-
-  // Thickness
-  thicknessLabel = new QLabel(tr("Metal thickness"));
-  thicknessEdit = new QLineEdit("12.5");
-  ThicknessScale = new QLabel("um");
-  hsubs->addWidget(thicknessLabel, 2, 0);
-  hsubs->addWidget(thicknessEdit, 2, 1);
-  hsubs->addWidget(ThicknessScale, 2, 2);
-
-  // Minimum width
-  minWLabel = new QLabel(tr("Minimum width"));
-  minWEdit = new QLineEdit("0.4");
-  minWScale = new QLabel("mm");
-  hsubs->addWidget(minWLabel, 3, 0);
-  hsubs->addWidget(minWEdit, 3, 1);
-  hsubs->addWidget(minWScale, 3, 2);
-
-  // Maximum width
-  maxWLabel = new QLabel(tr("Maximum width"));
-  maxWEdit = new QLineEdit("5.0");
-  maxWScale = new QLabel("mm");
-  hsubs->addWidget(maxWLabel, 4, 0);
-  hsubs->addWidget(maxWEdit, 4, 1);
-  hsubs->addWidget(maxWScale, 4, 2);
-
-  // tan(delta)
-  tanDLabel = new QLabel(tr("tanD"));
-  tanDEdit = new QLineEdit("0.0125");
-  hsubs->addWidget(tanDLabel, 5, 0);
-  hsubs->addWidget(tanDEdit, 5, 1);
-
-  // Resistivity
-  ResistivityLabel = new QLabel(tr("Resistivity"));
-  ResistivityEdit = new QLineEdit("2.43902e-08");
-  hsubs->addWidget(ResistivityLabel, 6, 0);
-  hsubs->addWidget(ResistivityEdit, 6, 1);
 
   QGridLayout *MatchingMethod_Layout = new QGridLayout();
   TopoLabel = new QLabel(tr("Input matching:"));
@@ -179,6 +111,10 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
 
   QGridLayout *OptLayout = new QGridLayout();
 
+  Substrate_Button = new QPushButton(tr("Substrate settings..."));
+  Substrate_Button->setEnabled(false);
+  connect(Substrate_Button, SIGNAL(clicked(bool)), SLOT(slot_SubtrateSettings()));
+
   MethodBox->setLayout(MethodLayout);
   TwoCheck = new QCheckBox(tr("Calculate two-port matching"));
   TwoCheck->setChecked(true);
@@ -190,15 +126,15 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   MicrostripCheck = new QCheckBox(tr("Synthesize microstrip lines"));
   MicrostripCheck->setEnabled(false);
   MicrostripCheck->setChecked(false);
+  connect(MicrostripCheck, SIGNAL(clicked(bool)), SLOT(slot_MicrostripCheckChanged()));
 
   OptLayout->addWidget(TwoCheck, 0, 0);
+  OptLayout->addWidget(MicrostripCheck, 0, 1);
   OptLayout->addWidget(AddSPBlock, 1, 0);
-  OptLayout->addWidget(MicrostripCheck, 1, 1);
+  OptLayout->addWidget(Substrate_Button, 1, 1);
   matchFrame->addLayout(OptLayout);
 
   connect(TwoCheck, SIGNAL(toggled(bool)), SLOT(slotSetTwoPort(bool)));
-  connect(MicrostripCheck, SIGNAL(toggled(bool)),
-          SLOT(slotSetMicrostripCheck()));
 
   // ...........................................................
   QGroupBox *ImpBox = new QGroupBox(tr("Reference Impedance"));
@@ -395,20 +331,6 @@ void MatchDialog::setFrequency(double Freq_) {
   FrequencyEdit->setText(QString::number(Freq_));
 }
 
-//------------------------------------------------------
-// This function sets the visibility of the microstrip synthesis panel. The
-// substrate properties are visible when the microstrip implementation is
-// selected.
-void MatchDialog::slotSetMicrostripCheck() {
-  if (MicrostripCheck->isChecked()) {
-    SubstrateBox->setVisible(true);
-    resize(650, 100);
-  } else {
-    SubstrateBox->setVisible(false);
-    setMaximumSize(500, 100);
-  }
-}
-
 // Set visibility of LineEdits and Labels associated with two-port matching
 void MatchDialog::set2PortWidgetsVisible(bool visible) {
   S12magEdit->setVisible(visible);
@@ -595,8 +517,6 @@ void MatchDialog::setS22LineEdits(double Real, double Imag) {
 // -----------------------------------------------------------------------
 // Is called if the "Create"-button is pressed.
 void MatchDialog::slotButtCreate() {  
-  struct NetworkParams params;
-
   params.Z1 = Ref1Edit->text().toDouble(); // Port 1 impedance
   params.Z2 = Ref2Edit->text().toDouble(); // Port 2 impedance
   params.freq = FrequencyEdit->text().toDouble() *
@@ -622,19 +542,6 @@ void MatchDialog::slotButtCreate() {
   }
 
   bool success = true;
-
-  if (params.micro_syn) // In case microstrip implementation is selected. This reads
-                 // the substrate properties given by the user
-  {
-    params.Substrate.er = RelPermCombo->currentText().section("  ", 0, 0).toDouble();
-    params.Substrate.height = SubHeightEdit->text().toDouble() / 1e3;
-    params.Substrate.thickness = thicknessEdit->text().toDouble() / 1e6;
-    params.Substrate.tand = tanDEdit->text().toDouble();
-    params.Substrate.resistivity = ResistivityEdit->text().toDouble();
-    params.Substrate.roughness = 0.0;
-    params.Substrate.minWidth = minWEdit->text().toDouble() / 1e3;
-    params.Substrate.maxWidth = maxWEdit->text().toDouble() / 1e3;
-  }
 
   // Set topology: the topology is set here so as to avoid writing a slot function. The parameters are updated by the Settings... button.
   input_network.network_type = TopoCombo_Input->currentIndex();
@@ -2313,6 +2220,20 @@ void MatchDialog::slot_OutputMatchingSettings()
     delete M;
 }
 
+//This function pops up a window for setting the parameters of the microstrip substrate
+void MatchDialog::slot_SubtrateSettings()
+{
+    MatchSubstrateDialog *M = new MatchSubstrateDialog(this);
+    if(M->exec())
+    {
+        struct tSubstrate N = M->GetOptions();
+        if (N.er != -1)
+            params.Substrate = N;
+    }
+    delete M;
+}
+
+//This function is triggered by the input topology combo and its purpose is to enable/disable the settings button and the microstrip implementation checkbox
 void MatchDialog::slot_InputTopologyChanged(int currentIndex)
 {
     //Enable settings button. There are certain topologies which don't need any extra parameters.
@@ -2323,14 +2244,18 @@ void MatchDialog::slot_InputTopologyChanged(int currentIndex)
 
     //Microstrip substrate
     int currentIndex_output = TopoCombo_Output->currentIndex();
-    enable_settings = false;
     if ((currentIndex == 1) || (currentIndex == 2) || (currentIndex == 3) || (currentIndex == 5)
-            || (currentIndex_output == 1) || (currentIndex_output == 2) || (currentIndex_output == 3) || (currentIndex_output == 5))
-        enable_settings = true;
-    MicrostripCheck->setEnabled(enable_settings);
-
+            || (currentIndex_output == 1) || (currentIndex_output == 2) || (currentIndex_output == 3) || (currentIndex_output == 5)){
+        MicrostripCheck->setEnabled(true);
+     }
+     else  {
+         MicrostripCheck->setEnabled(false);
+         MicrostripCheck->setChecked(false);
+         Substrate_Button->setEnabled(false);
+     }
 }
 
+//This function is triggered by the output topology combo and its purpose is to enable/disable the settings button and the microstrip implementation checkbox
 void MatchDialog::slot_OutputTopologyChanged(int currentIndex)
 {
     //Enable settings button. There are certain topologies which don't need any extra parameters.
@@ -2341,10 +2266,24 @@ void MatchDialog::slot_OutputTopologyChanged(int currentIndex)
 
     //Microstrip substrate
     int currentIndex_input = TopoCombo_Input->currentIndex();
-    enable_settings = false;
     if ((currentIndex == 1) || (currentIndex == 2) || (currentIndex == 3) || (currentIndex == 5)
-            || (currentIndex_input == 1) || (currentIndex_input == 2) || (currentIndex_input == 3) || (currentIndex_input == 5))
-        enable_settings = true;
-    MicrostripCheck->setEnabled(enable_settings);
+            || (currentIndex_input == 1) || (currentIndex_input == 2) || (currentIndex_input == 3) || (currentIndex_input == 5)) {
+       MicrostripCheck->setEnabled(true);
+    }
+    else  {
+        MicrostripCheck->setEnabled(false);
+        MicrostripCheck->setChecked(false);
+        Substrate_Button->setEnabled(false);
+    }
 
+
+}
+
+// This function is called when the microstrip checkbox is clicked. Its purpose is to enable and disable the substrate settings window accordingly
+void MatchDialog::slot_MicrostripCheckChanged()
+{
+    bool microstrip_implementation = false;
+    if (MicrostripCheck->isChecked())
+        microstrip_implementation = true;
+    Substrate_Button->setEnabled(microstrip_implementation);
 }

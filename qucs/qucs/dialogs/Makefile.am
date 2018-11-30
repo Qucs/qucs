@@ -28,7 +28,8 @@ MOCHEADERS = settingsdialog.h simmessage.h qucssettingsdialog.h      \
      labeldialog.h changedialog.h matchdialog.h digisettingsdialog.h \
      sweepdialog.h searchdialog.h librarydialog.h importdialog.h     \
      packagedialog.h savedialog.h vasettingsdialog.h                 \
-     exportdialog.h loaddialog.h newprojdialog.h aboutdialog.h matchsettingsdialog.h
+     exportdialog.h loaddialog.h newprojdialog.h aboutdialog.h matchsettingsdialog.h \
+     matchsubstratedialog.h
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
@@ -43,7 +44,7 @@ libdialogs_la_SOURCES = settingsdialog.cpp newprojdialog.cpp \
      matchdialog.cpp sweepdialog.cpp digisettingsdialog.cpp searchdialog.cpp \
      librarydialog.cpp importdialog.cpp packagedialog.cpp \
      savedialog.cpp vasettingsdialog.cpp exportdialog.cpp loaddialog.cpp \
-     aboutdialog.cpp matchsettingsdialog.cpp
+     aboutdialog.cpp matchsettingsdialog.cpp matchsubstratedialog.cpp
 
 nodist_libdialogs_la_SOURCES = $(MOCFILES)
 
