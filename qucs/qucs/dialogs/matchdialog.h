@@ -101,8 +101,7 @@ public:
   QString calcBiMatch(struct NetworkParams);
   bool calc2PortMatch(struct NetworkParams);
 
-  void SchematicParser(QString, int &, double, tSubstrate,
-                       bool); // This function convert the circuit description
+  void SchematicParser(QString, int &, struct NetworkParams); // This function convert the circuit description
                               // code into a Qucs schematic
 
   void getMicrostrip(double, double, tSubstrate *, double &, double &);

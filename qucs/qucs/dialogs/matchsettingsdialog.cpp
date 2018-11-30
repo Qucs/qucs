@@ -85,6 +85,25 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   MatchSettingslayout->addWidget(QualityFactor_Label, 6, 0);
   MatchSettingslayout->addWidget(Quality_Factor_Spinbox, 6, 1);
 
+  //Capacitor Q
+  CapacitorQ_Label =  new QLabel(tr("Capacitor Q"));
+  CapacitorQ_Spinbox = new QDoubleSpinBox();
+  CapacitorQ_Spinbox->setMinimum(0.5);
+  CapacitorQ_Spinbox->setValue(40);
+  CapacitorQ_Spinbox->setSingleStep(0.5);
+  MatchSettingslayout->addWidget(CapacitorQ_Label, 7, 0);
+  MatchSettingslayout->addWidget(CapacitorQ_Spinbox, 7, 1);
+
+  //Inductor Q
+  InductorQ_Label =  new QLabel(tr("Inductor Q"));
+  InductorQ_Spinbox = new QDoubleSpinBox();
+  InductorQ_Spinbox->setMinimum(0.5);
+  InductorQ_Spinbox->setValue(20);
+  InductorQ_Spinbox->setSingleStep(0.5);
+  MatchSettingslayout->addWidget(InductorQ_Label, 8, 0);
+  MatchSettingslayout->addWidget(InductorQ_Spinbox, 8, 1);
+
+
   //Default settings
   Order_Label->setVisible(false);
   Order_Spinbox->setVisible(false);
@@ -100,9 +119,17 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   Network_Response_Combo->setVisible(false);
   QualityFactor_Label->setVisible(false);
   Quality_Factor_Spinbox->setVisible(false);
+  CapacitorQ_Label->setVisible(false);
+  CapacitorQ_Spinbox->setVisible(false);
+  InductorQ_Label->setVisible(false);
+  InductorQ_Spinbox->setVisible(false);
 
   switch (topology) {
   case LSECTION:
+       CapacitorQ_Label->setVisible(true);
+       CapacitorQ_Spinbox->setVisible(true);
+       InductorQ_Label->setVisible(true);
+       InductorQ_Spinbox->setVisible(true);
        break;
   case SINGLESTUB:
        Stub_Type_Label->setVisible(true);
@@ -125,12 +152,20 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
        Weighting_Type_Combo->setVisible(true);
        break;
   case CASCADEDLSECTIONS:
+       CapacitorQ_Label->setVisible(true);
+       CapacitorQ_Spinbox->setVisible(true);
+       InductorQ_Label->setVisible(true);
+       InductorQ_Spinbox->setVisible(true);
        Order_Label->setVisible(true);
        Order_Spinbox->setVisible(true);
        break;
   case L8L4:
        break;
   case PI_TYPE:
+       CapacitorQ_Label->setVisible(true);
+       CapacitorQ_Spinbox->setVisible(true);
+       InductorQ_Label->setVisible(true);
+       InductorQ_Spinbox->setVisible(true);
        Network_Response_Label->setVisible(true);
        Network_Response_Combo->setVisible(true);
        QualityFactor_Label->setVisible(true);
@@ -140,8 +175,8 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
 
   OK_Button = new QPushButton(tr("OK"));
   Cancel_Button = new QPushButton(tr("Cancel"));
-  MatchSettingslayout->addWidget(OK_Button, 7, 0);
-  MatchSettingslayout->addWidget(Cancel_Button, 7, 1);
+  MatchSettingslayout->addWidget(OK_Button, 9, 0);
+  MatchSettingslayout->addWidget(Cancel_Button, 9, 1);
   connect(OK_Button, SIGNAL(clicked()), SLOT(slot_save_settings()));
   connect(Cancel_Button, SIGNAL(clicked()), SLOT(slot_cancel_settings()));
 
@@ -155,7 +190,9 @@ void MatchSettingsDialog::slot_save_settings(){
     params.open_short = Stub_Type_Combo->currentIndex() == 0; // Open stub or short circuit stub configuration
     params.order = Order_Spinbox->value() + 1; // Order of the multisection lambda/4 matching
     params.gamma_MAX = maxRipple_Spinbox->value(); // Maximum ripple (Chebyshev weighting only)
-    params.Q = Quality_Factor_Spinbox->value();
+    params.Q = Quality_Factor_Spinbox->value(); // Quality factor of the overall network
+    params.CAPQ = CapacitorQ_Spinbox->value();// Capacitor quality factor
+    params.INDQ = InductorQ_Spinbox->value();// Inductor quality factor
     switch (Network_Response_Combo->currentIndex()) {
     case 0:
         params.network_response = LOWPASS;

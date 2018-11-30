@@ -827,7 +827,7 @@ bool MatchDialog::calcMatchingCircuit(struct NetworkParams params) {
     laddercode.prepend("LBL:Port 1;");
     laddercode.append("LBL:Port 2;");
   }
-  SchematicParser(laddercode, x_pos, params.freq, params.Substrate, params.micro_syn);
+  SchematicParser(laddercode, x_pos, params);
   return true; // The schematic was successfully created
 }
 
@@ -941,7 +941,7 @@ bool MatchDialog::calc2PortMatch(struct NetworkParams params) {
   }
   QString laddercode = InputLadderCode + QString("DEV:0") + OutputLadderCode;
   int x_pos = 0;
-  SchematicParser(laddercode, x_pos, params.freq, params.Substrate, params.micro_syn);
+  SchematicParser(laddercode, x_pos, params);
 
   return true;
 }
@@ -1679,8 +1679,7 @@ QString MatchDialog::calcMatchingLambda8Lambda4(struct NetworkParams params) {
 // Given a string code of inductors, capacitors and transmission lines, it
 // generates the Qucs network. Notice that the schematic is split into three
 // parts: components, wires and paintings, all of them are passed by reference.
-void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
-                                  tSubstrate Substrate, bool microsyn) {
+void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct NetworkParams params) {
   QStringList strlist = laddercode.split(";");//Slipt the string code to get the components
   QString component, tag, label;
   qDebug() << laddercode;
@@ -1688,6 +1687,13 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
   int x_series = 120, x_shunt = 20; // x-axis spacing depending on whether the
                                     // component is placed in a series or shunt
                                     // configuration
+
+  double Freq = params.freq;
+  bool microsyn = params.micro_syn;
+  tSubstrate Substrate = params.Substrate;
+  double CAPQ, INDQ;
+  CAPQ = params.InputNetwork.CAPQ;
+  INDQ = params.InputNetwork.INDQ;
 
   // Clear schematic strings
   QString componentstr = "", wirestr = "", paintingstr = "";
@@ -1780,13 +1786,18 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
           QString("<Rectangle %1 -160 90 50 #000000 0 1 #c0c0c0 1 0>\n")
               .arg(x_pos + 50); // Box surrounding the 'Device' label
       x_pos += 200;
+
+      //Update CAPQ and INDQ data
+      CAPQ = params.OutputNetwork.CAPQ;
+      INDQ = params.OutputNetwork.INDQ;
     } else if (!tag.compare("LS")) // Series inductor
     {
       QString val = misc::num2str(value, 3, "H"); // Add prefix, unit - 3 significant digits
-      componentstr += QString("<L L1 1 %1 -120 -26 10 0 0 \"%2\" 1 "
+      componentstr += QString("<INDQ INDQ1 1 %1 -120 -26 10 0 0 \"%2\" 1 \"%3\" 1 "
                               " 0>\n")
                           .arg(x_pos + 60)
-                          .arg(val);
+                          .arg(val)
+                          .arg(INDQ);
       wirestr += QString("<%1 -120 %2 -120 "
                          " 0 0 0 "
                          ">\n")
@@ -1801,10 +1812,11 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
     } else if (!tag.compare("CS")) // Series capacitor
     {
       QString val = misc::num2str(value, 3, "F"); // Add prefix, unit - 3 significant digits
-      componentstr += QString("<C C1 1 %1 -120 -26 17 0 0 \"%2\" 1 "
+      componentstr += QString("<CAPQ CAPQ1 1 %1 -120 -26 17 0 0 \"%2\" 1 \"%3\" 1 "
                               " 0>\n")
                           .arg(x_pos + 60)
-                          .arg(val);
+                          .arg(val)
+                          .arg(CAPQ);
       wirestr += QString("<%1 -120 %2 -120 "
                          " 0 0 0 "
                          ">\n")
@@ -1820,10 +1832,11 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
     {
       QString val = misc::num2str(value, 3, "H"); // Add prefix, unit - 3 significant digits
       componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
-      componentstr += QString("<L L1 1 %1 -30 5 -20 0 1 \"%2\" 1 "
+      componentstr += QString("<INDQ INDQ1 1 %1 -30 5 -20 0 1 \"%2\" 1 \"%3\" 1 "
                               " 0>\n")
                           .arg(x_pos)
-                          .arg(val);
+                          .arg(val)
+                          .arg(INDQ);
       wirestr += QString("<%1 -60 %1 -120 "
                          " 0 0 0 "
                          ">\n")
@@ -1838,10 +1851,11 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
     {
       QString val = misc::num2str(value, 3, "F"); // Add prefix, unit - 3 significant digits
       componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
-      componentstr += QString("<C C1 1 %1 -30 15 -20 0 1 \"%2\" 1 "
+      componentstr += QString("<CAPQ CAPQ1 1 %1 -30 15 -20 0 1 \"%2\" 1 \"%3\" 1 "
                               " 0>\n")
                           .arg(x_pos)
-                          .arg(val);
+                          .arg(val)
+                          .arg(CAPQ);
       wirestr += QString("<%1 -60 %1 -120 "
                          " 0 0 0 "
                          ">\n")

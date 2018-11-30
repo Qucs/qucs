@@ -49,13 +49,15 @@ enum NETWORK_TYPE{TWO_PORT_INPUT, TWO_PORT_OUTPUT, SINGLE_PORT};
 enum RESPONSE_TYPE{LOWPASS, HIGHPASS};
 
 struct ImplementationParams {
-    bool BalancedStubs=false, open_short=true;
-    int order=3;
-    double gamma_MAX=0.05;
-    int network_type = 0;
-    double Q = 5;
-    RESPONSE_TYPE network_response = LOWPASS;
-    int weighting_type = 0;
+    bool BalancedStubs=false, open_short=true;//Stub implementation
+    int order=3;//Number of section
+    double gamma_MAX=0.05;//Maximum ripple for the impedance transformer
+    int network_type = 0;//Network topology
+    double Q = 5;//Q of the overall matching network. Only for Pi/Tee matching
+    RESPONSE_TYPE network_response = LOWPASS;//Response type for Pi/Tee matching networks
+    int weighting_type = 0;//Weighting of the impedance transformer: Chebyshev or binomial
+    double CAPQ = 1000;//Capacitor quality factor, Q = X/R = 1/(w·C·R)
+    double INDQ = 1000;//Inductor quality factor, Q = X/R = (w·L) / R
 };
 
 
@@ -79,10 +81,10 @@ public:
 
 private:
   QLabel *Order_Label, *Network_Response_Label, *QualityFactor_Label, *maxRipple_Label, *Weighting_Type_Label,
-         *Stub_Type_Label, *Stub_Implementation_Label;
+         *Stub_Type_Label, *Stub_Implementation_Label, *CapacitorQ_Label, *InductorQ_Label;
   QComboBox *Network_Response_Combo, *Stub_Type_Combo, *Weighting_Type_Combo, *Stub_Implementation_Combo;
   QSpinBox *Order_Spinbox;
-  QDoubleSpinBox *Quality_Factor_Spinbox, *maxRipple_Spinbox;
+  QDoubleSpinBox *Quality_Factor_Spinbox, *maxRipple_Spinbox, *CapacitorQ_Spinbox, *InductorQ_Spinbox;
   QPushButton *OK_Button, *Cancel_Button;
   struct ImplementationParams params;
 
