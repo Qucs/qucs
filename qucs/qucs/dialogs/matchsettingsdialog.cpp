@@ -80,8 +80,10 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   //Quality factor
   QualityFactor_Label = new QLabel(tr("Quality factor"));
   Quality_Factor_Spinbox = new QDoubleSpinBox();
-  Quality_Factor_Spinbox->setMinimum(0.5);
+  Quality_Factor_Spinbox->setMinimum(1);
   Quality_Factor_Spinbox->setValue(5);
+  Quality_Factor_Spinbox->setDecimals(1);
+  Quality_Factor_Spinbox->setSingleStep(0.5);
   MatchSettingslayout->addWidget(QualityFactor_Label, 6, 0);
   MatchSettingslayout->addWidget(Quality_Factor_Spinbox, 6, 1);
 
@@ -89,8 +91,10 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   CapacitorQ_Label =  new QLabel(tr("Capacitor Q"));
   CapacitorQ_Spinbox = new QDoubleSpinBox();
   CapacitorQ_Spinbox->setMinimum(0.5);
-  CapacitorQ_Spinbox->setValue(40);
+  CapacitorQ_Spinbox->setMaximum(1000);
+  CapacitorQ_Spinbox->setValue(1000);
   CapacitorQ_Spinbox->setSingleStep(0.5);
+  CapacitorQ_Spinbox->setDecimals(1);
   MatchSettingslayout->addWidget(CapacitorQ_Label, 7, 0);
   MatchSettingslayout->addWidget(CapacitorQ_Spinbox, 7, 1);
 
@@ -98,8 +102,10 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   InductorQ_Label =  new QLabel(tr("Inductor Q"));
   InductorQ_Spinbox = new QDoubleSpinBox();
   InductorQ_Spinbox->setMinimum(0.5);
-  InductorQ_Spinbox->setValue(20);
+  InductorQ_Spinbox->setMaximum(1000);
+  InductorQ_Spinbox->setValue(1000);
   InductorQ_Spinbox->setSingleStep(0.5);
+  InductorQ_Spinbox->setDecimals(1);
   MatchSettingslayout->addWidget(InductorQ_Label, 8, 0);
   MatchSettingslayout->addWidget(InductorQ_Spinbox, 8, 1);
 
@@ -181,6 +187,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   connect(Cancel_Button, SIGNAL(clicked()), SLOT(slot_cancel_settings()));
 
   setLayout(MatchSettingslayout);
+  OK_Button->setFocus();
 }
 
 MatchSettingsDialog::~MatchSettingsDialog() {

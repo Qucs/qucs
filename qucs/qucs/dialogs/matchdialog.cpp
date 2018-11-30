@@ -76,7 +76,7 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   str = QString(QChar(0xBB, 0x03)) + "/8 +" + QString(QChar(0xBB, 0x03)) +
         "/4 transformer";
   matching_methods.append(str);
-  str = QString(QChar(0xD6, 0x03)) + "-type";
+  str = QString(QChar(0xC0, 0x03)) + "-type";
   matching_methods.append(str);
 
   TopoCombo_Input = new QComboBox();
@@ -1588,10 +1588,10 @@ QString MatchDialog::calcMatchingCascadedLCSections(struct NetworkParams params)
 
 QString MatchDialog::calcPiParameters(struct ImplementationParams ImplParams, double RL, double Z0) {
     double Q1 = (2*ImplParams.Q*Z0 - sqrt(4*ImplParams.Q*ImplParams.Q*Z0*RL - (Z0 - RL)*(Z0 - RL)))/(Z0 - RL);
-    double Q2 = (2*ImplParams.Q*Z0 - sqrt(4*ImplParams.Q*ImplParams.Q*Z0*RL - (RL - Z0)*(RL - Z0)))/(RL - Z0);
+    double Q2 = (2*ImplParams.Q*RL - sqrt(4*ImplParams.Q*ImplParams.Q*Z0*RL - (RL - Z0)*(RL - Z0)))/(RL - Z0);
     double B1 = Q1/Z0;
     double B2 = Q2/RL;
-    double Xc = 2*ImplParams.Q*RL/(1+Q2);
+    double Xc = 2*ImplParams.Q*Z0/(1+Q1*Q1);
     return QString("%1;%2;%3").arg(B1).arg(Xc).arg(B2);
 }
 
