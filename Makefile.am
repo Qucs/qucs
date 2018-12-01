@@ -56,7 +56,6 @@ app_PROGS = $(top_builddir)/qucs/qucs \
   $(top_builddir)/qucs-filter/qucsfilter \
   $(top_builddir)/qucs-activefilter/qucsactivefilter \
   $(top_builddir)/qucs-lib/qucslib \
-  $(top_builddir)/qucs-edit/qucsedit \
   $(top_builddir)/qucs-rescodes/qucsrescodes \
   $(top_builddir)/qucs-powercombining/qucspowercombining \
   $(top_builddir)/qucs-transcalc/qucstrans

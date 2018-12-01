@@ -36,10 +36,10 @@ in the schematic (by pressing ctrl+v). Have fun! ;)
 
 .SH AVAILABILITY
 The latest version of Qucs can always be obtained from
-\fBwww.sourceforge.net\fR or \fBwww.freshmeat.net\fR
+\fB${QUCS_URL}\fR
 .SH "REPORTING BUGS"
 Known bugs are documented within the BUGS file.  Report bugs to
-<qucs-bugs@lists.sourceforge.net>.
+\fB${QUCS_BUGREPORT}\fR
 .SH COPYRIGHT
 Copyright \(co 2012 M. K. Sudhakar <sudhakar.m.kumar@gmail.com>
 .PP
