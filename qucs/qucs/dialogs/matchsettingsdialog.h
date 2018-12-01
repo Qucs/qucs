@@ -65,6 +65,7 @@ struct ImplementationParams {
     double INDQ = 1000;//Inductor quality factor, Q = X/R = (w·L) / R
     double L2 = 5e-9;//L2 parameter for the double tapped resonator
     double k = 0.95;//Coupling coefficient of the transformer
+    int coupled_L_Equivalent;//Use coupled inductor or its uncoupled equivalent
 };
 
 
@@ -89,8 +90,8 @@ public:
 private:
   QLabel *Order_Label, *Network_Response_Label, *QualityFactor_Label, *maxRipple_Label, *Weighting_Type_Label,
          *Stub_Type_Label, *Stub_Implementation_Label, *CapacitorQ_Label, *InductorQ_Label, *L2_Double_Tapped_Resonator_Label,
-         *k_Transformer_Label;
-  QComboBox *Network_Response_Combo, *Stub_Type_Combo, *Weighting_Type_Combo, *Stub_Implementation_Combo, *L2_Double_Tapped_Resonator_Scale_Combo;
+         *k_Transformer_Label, *coupled_L_Label;
+  QComboBox *Network_Response_Combo, *Stub_Type_Combo, *Weighting_Type_Combo, *Stub_Implementation_Combo, *L2_Double_Tapped_Resonator_Scale_Combo, *coupled_L_Combo;
   QSpinBox *Order_Spinbox;
   QDoubleSpinBox *Quality_Factor_Spinbox, *maxRipple_Spinbox, *CapacitorQ_Spinbox, *InductorQ_Spinbox, *L2_Double_Tapped_Resonator_SpinBox,
                  *k_Transformer_Spinbox;

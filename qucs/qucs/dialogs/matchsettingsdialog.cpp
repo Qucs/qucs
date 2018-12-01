@@ -138,6 +138,15 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   MatchSettingslayout->addWidget(k_Transformer_Label, 10, 0);
   MatchSettingslayout->addWidget(k_Transformer_Spinbox, 10, 1);
 
+  //Use coupled inductor or the uncoupled equivalent circuit
+  coupled_L_Label = new QLabel("Mode");
+  coupled_L_Combo = new QComboBox();
+  coupled_L_Combo->addItem(tr("Coupled inductors"));
+  coupled_L_Combo->addItem(tr("Uncoupled inductors (Tee-type)"));
+  coupled_L_Combo->addItem(QString(tr("Uncoupled inductors (%1-type)").arg(QChar(0xC0, 0x03))));
+  MatchSettingslayout->addWidget(coupled_L_Label, 11, 0);
+  MatchSettingslayout->addWidget(coupled_L_Combo, 11, 1);
+
   //Default settings
   Order_Label->setVisible(false);
   Order_Spinbox->setVisible(false);
@@ -162,6 +171,8 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   L2_Double_Tapped_Resonator_SpinBox->setVisible(false);
   k_Transformer_Label->setVisible(false);
   k_Transformer_Spinbox->setVisible(false);
+  coupled_L_Label->setVisible(false);
+  coupled_L_Combo->setVisible(false);
 
   switch (topology) {
   case SINGLESTUB:
@@ -210,6 +221,8 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
       CapacitorQ_Spinbox->setVisible(true);
       k_Transformer_Label->setVisible(true);
       k_Transformer_Spinbox->setVisible(true);
+      coupled_L_Label->setVisible(true);
+      coupled_L_Combo->setVisible(true);
       break;
 
   case DOUBLE_TAPPED:
@@ -230,8 +243,8 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
 
   OK_Button = new QPushButton(tr("OK"));
   Cancel_Button = new QPushButton(tr("Cancel"));
-  MatchSettingslayout->addWidget(OK_Button, 11, 0);
-  MatchSettingslayout->addWidget(Cancel_Button, 11, 1);
+  MatchSettingslayout->addWidget(OK_Button, 12, 0);
+  MatchSettingslayout->addWidget(Cancel_Button, 12, 1);
   connect(OK_Button, SIGNAL(clicked()), SLOT(slot_save_settings()));
   connect(Cancel_Button, SIGNAL(clicked()), SLOT(slot_cancel_settings()));
 
@@ -261,6 +274,7 @@ void MatchSettingsDialog::slot_save_settings(){
     params.weighting_type = Weighting_Type_Combo->currentIndex() == 0; //Chebyshev or binomial
     params.L2 = L2_Double_Tapped_Resonator_SpinBox->value()*getScale(L2_Double_Tapped_Resonator_Scale_Combo->currentIndex());
     params.k = k_Transformer_Spinbox->value();
+    params.coupled_L_Equivalent = coupled_L_Combo->currentIndex();
     accept();
 }
 

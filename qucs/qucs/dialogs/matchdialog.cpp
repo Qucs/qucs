@@ -1896,14 +1896,35 @@ QString MatchDialog::calcSingleTunedTransformer(struct NetworkParams params) {
     r2z(RL, XL, Z0);
 
     double w0 = 2*pi*params.freq;
-    QString laddercode;
+
+    //Design equations
     double L11 = (Z0*RL*ImplParams.k*ImplParams.k)/(w0*ImplParams.Q*(Z0+RL*ImplParams.k*ImplParams.k));
     double L22 = (L11*RL/Z0)/(ImplParams.k*ImplParams.k);
     double C = 1/(L11*w0*w0);
 
-    //Build the schematic description
+    QString laddercode;
     laddercode += QString("CP:%1;").arg(C);
-    laddercode += QString("LCOUP:%1#%2#%3;").arg(L11).arg(L22).arg(ImplParams.k);
+
+    if (ImplParams.coupled_L_Equivalent==0){//Use coupled inductors
+        laddercode += QString("LCOUP:%1#%2#%3;").arg(L11).arg(L22).arg(ImplParams.k);
+    }else{
+        if (ImplParams.coupled_L_Equivalent==1)
+        {
+        //Use the uncoupled equivalent circuit (tee)
+        double M = ImplParams.k*sqrt(L11*L22);
+        laddercode += QString("LS:%1;").arg(L11-M);
+        laddercode += QString("LP:%1;").arg(M);
+        laddercode += QString("LS:%1;").arg(L22-M);
+        }
+        else{
+            //Use the uncoupled equivalent circuit (pi)
+            double M = ImplParams.k*sqrt(L11*L22);
+            double delta = L11*L22-M*M;
+            laddercode += QString("LP:%1;").arg(delta/(L22-M));
+            laddercode += QString("LS:%1;").arg(delta/M);
+            laddercode += QString("LP:%1;").arg(delta/(L11-M));
+        }
+    }
 
     return laddercode;
 }
@@ -1941,7 +1962,7 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
   QString component, tag, label;
   qDebug() << laddercode;
   double value, value2, value3, er, width;
-  int x_series = 120, x_shunt = 20; // x-axis spacing depending on whether the
+  int x_series = 120, x_shunt = 100; // x-axis spacing depending on whether the
                                     // component is placed in a series or shunt
                                     // configuration
 
