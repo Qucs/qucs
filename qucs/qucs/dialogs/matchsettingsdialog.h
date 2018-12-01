@@ -39,6 +39,7 @@
 #define L8L4               5
 #define PI_TYPE            6
 #define TEE_TYPE           7
+#define TAPPED_C           8
 
 #define CHEBYSHEV_WEIGHTING 0
 #define BINOMIAL_WEIGHTING  1

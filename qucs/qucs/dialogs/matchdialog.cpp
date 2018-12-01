@@ -79,6 +79,7 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   str = QString(QChar(0xC0, 0x03)) + "-type";
   matching_methods.append(str);
   matching_methods.append(tr("Tee-Type"));
+  matching_methods.append(tr("Tapped C transformer"));
 
   TopoCombo_Input = new QComboBox();
   TopoCombo_Input->setFixedWidth(220);
@@ -910,6 +911,9 @@ QString MatchDialog::SynthesizeMatchingNetwork(struct NetworkParams params)
     case 7: //Tee-type network
       laddercode = calcTeeType(params);
       break;
+    case 8: //Tapped-C transformer
+      laddercode = calcTappedCTransformer(params);
+      break;
     }
     return laddercode;
 }
@@ -1651,6 +1655,48 @@ QString MatchDialog::calcPiType(struct NetworkParams params) {
         laddercode += QString("CS:%1;").arg(C);
         laddercode += QString("LP:%1;").arg(L2);
     }
+
+    return laddercode;
+}
+
+//Synthesis of a tapped-C transformer
+QString MatchDialog::calcTappedCTransformer(struct NetworkParams params)
+{
+    double RL, XL, Z0;
+    struct ImplementationParams ImplParams;
+    if (params.network == SINGLE_PORT)
+    {
+        RL = params.S11real, XL = params.S11imag;
+        Z0 = params.Z1;
+        ImplParams = params.InputNetwork;
+    }
+    else//Two-port matching
+    {
+        RL = params.r_real, XL = params.r_imag;
+        if (params.network == TWO_PORT_INPUT){
+            Z0 = params.Z1;
+            ImplParams = params.InputNetwork;
+        }
+        else{
+            Z0 = params.Z2;
+            ImplParams = params.OutputNetwork;
+        }
+    }
+    r2z(RL, XL, Z0);
+
+    double w0 = 2*pi*params.freq;
+
+    // Design equations
+    double Q2 = sqrt((RL/Z0)*(ImplParams.Q*ImplParams.Q + 1)-1);
+    double L = Z0/(w0*ImplParams.Q);
+    double C2 = Q2/(RL*w0);
+    double C1 = C2*(Q2*Q2 + 1)/(ImplParams.Q*Q2 - Q2*Q2);
+
+    //Build the schematic description
+    QString laddercode;
+    laddercode += QString("LP:%1;").arg(L);
+    laddercode += QString("CS:%1;").arg(C1);
+    laddercode += QString("CP:%1;").arg(C2);
 
     return laddercode;
 }

@@ -187,6 +187,14 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
       QualityFactor_Label->setVisible(true);
       Quality_Factor_Spinbox->setVisible(true);
       break;
+  case TAPPED_C:
+      CapacitorQ_Label->setVisible(true);
+      CapacitorQ_Spinbox->setVisible(true);
+      InductorQ_Label->setVisible(true);
+      InductorQ_Spinbox->setVisible(true);
+      QualityFactor_Label->setVisible(true);
+      Quality_Factor_Spinbox->setVisible(true);
+      break;
   }
 
   OK_Button = new QPushButton(tr("OK"));

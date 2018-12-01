@@ -96,6 +96,7 @@ public:
   QString calcPiParameters(struct ImplementationParams, double, double);
   QString calcPiType(struct NetworkParams);
   QString calcTeeType(struct NetworkParams);
+  QString calcTappedCTransformer(struct NetworkParams);
   QString SynthesizeMatchingNetwork(struct NetworkParams);
   //--------------------------------------------------------------------------------------------------------
 
