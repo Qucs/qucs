@@ -78,6 +78,7 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   matching_methods.append(str);
   str = QString(QChar(0xC0, 0x03)) + "-type";
   matching_methods.append(str);
+  matching_methods.append(tr("Tee-Type"));
 
   TopoCombo_Input = new QComboBox();
   TopoCombo_Input->setFixedWidth(220);
@@ -906,6 +907,9 @@ QString MatchDialog::SynthesizeMatchingNetwork(struct NetworkParams params)
     case 6: //Pi-type network
       laddercode = calcPiType(params);
       break;
+    case 7: //Tee-type network
+      laddercode = calcTeeType(params);
+      break;
     }
     return laddercode;
 }
@@ -1646,6 +1650,65 @@ QString MatchDialog::calcPiType(struct NetworkParams params) {
         laddercode += QString("LP:%1;").arg(L1);
         laddercode += QString("CS:%1;").arg(C);
         laddercode += QString("LP:%1;").arg(L2);
+    }
+
+    return laddercode;
+}
+
+//--------------------------------------------------------------------------
+// It calculates tee-type matching network
+QString MatchDialog::calcTeeType(struct NetworkParams params) {
+    double RL, XL, Z0;
+    struct ImplementationParams ImplParams;
+    if (params.network == SINGLE_PORT)
+    {
+        RL = params.S11real, XL = params.S11imag;
+        Z0 = params.Z1;
+        ImplParams = params.InputNetwork;
+    }
+    else//Two-port matching
+    {
+        RL = params.r_real, XL = params.r_imag;
+        if (params.network == TWO_PORT_INPUT){
+            Z0 = params.Z1;
+            ImplParams = params.InputNetwork;
+        }
+        else{
+            Z0 = params.Z2;
+            ImplParams = params.OutputNetwork;
+        }
+    }
+    r2z(RL, XL, Z0);
+
+    QString pi_params = calcPiParameters(ImplParams, RL, Z0);
+    double w0 = 2*pi*params.freq;
+    QString laddercode;
+    QStringList pi_comp_val = pi_params.split(";");//Get the parameters calculated by calcPiParameters()
+    double B1 = pi_comp_val.at(0).toDouble();
+    double X =  pi_comp_val.at(1).toDouble();
+    double B2 = pi_comp_val.at(2).toDouble();
+
+    if (ImplParams.network_response == LOWPASS)
+    {//Lowpass tee-type matching network
+        double L1 = -B2*X/((B1*B2*X - B1 - B2)*w0);
+        double L2 = -B1*X/((B1*B2*X - B1 - B2)*w0);
+        double C = -(B1*B2*X - B1 - B2)/w0;
+
+        //Build the schematic description
+        laddercode += QString("LS:%1;").arg(L1);
+        laddercode += QString("CP:%1;").arg(C);
+        laddercode += QString("LS:%1;").arg(L2);
+    }
+    else
+    {//Highpass tee-type matching network
+        double C1 = -(B1*B2*X - B1 - B2)/(B2*X*w0);
+        double C2 = -(B1*B2*X - B1 - B2)/(B1*X*w0);
+        double L = -1/((B1*B2*X - B1 - B2)*w0);
+
+        //Build the schematic description
+        laddercode += QString("CS:%1;").arg(C1);
+        laddercode += QString("LP:%1;").arg(L);
+        laddercode += QString("CS:%1;").arg(C2);
     }
 
     return laddercode;

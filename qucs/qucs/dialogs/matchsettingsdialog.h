@@ -38,6 +38,7 @@
 #define CASCADEDLSECTIONS  4
 #define L8L4               5
 #define PI_TYPE            6
+#define TEE_TYPE           7
 
 #define CHEBYSHEV_WEIGHTING 0
 #define BINOMIAL_WEIGHTING  1

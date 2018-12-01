@@ -177,6 +177,16 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
        QualityFactor_Label->setVisible(true);
        Quality_Factor_Spinbox->setVisible(true);
        break;
+  case TEE_TYPE:
+      CapacitorQ_Label->setVisible(true);
+      CapacitorQ_Spinbox->setVisible(true);
+      InductorQ_Label->setVisible(true);
+      InductorQ_Spinbox->setVisible(true);
+      Network_Response_Label->setVisible(true);
+      Network_Response_Combo->setVisible(true);
+      QualityFactor_Label->setVisible(true);
+      Quality_Factor_Spinbox->setVisible(true);
+      break;
   }
 
   OK_Button = new QPushButton(tr("OK"));

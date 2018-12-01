@@ -95,6 +95,7 @@ public:
   QString calcChebyLines(struct NetworkParams);
   QString calcPiParameters(struct ImplementationParams, double, double);
   QString calcPiType(struct NetworkParams);
+  QString calcTeeType(struct NetworkParams);
   QString SynthesizeMatchingNetwork(struct NetworkParams);
   //--------------------------------------------------------------------------------------------------------
 
