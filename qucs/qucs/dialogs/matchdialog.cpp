@@ -1856,11 +1856,18 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
     } else if (!tag.compare("LS")) // Series inductor
     {
       QString val = misc::num2str(value, 3, "H"); // Add prefix, unit - 3 significant digits
+      if (INDQ == 1000){//Use an ideal inductor
+          componentstr += QString("<L L1 1 %1 -120 -26 10 0 0 \"%2\" 1 "
+                                  " 0>\n")
+                              .arg(x_pos + 60)
+                              .arg(val);
+      }else{
       componentstr += QString("<INDQ INDQ1 1 %1 -120 -26 10 0 0 \"%2\" 1 \"%3\" 1 "
                               " 0>\n")
                           .arg(x_pos + 60)
                           .arg(val)
                           .arg(INDQ);
+      }
       wirestr += QString("<%1 -120 %2 -120 "
                          " 0 0 0 "
                          ">\n")
@@ -1875,11 +1882,19 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
     } else if (!tag.compare("CS")) // Series capacitor
     {
       QString val = misc::num2str(value, 3, "F"); // Add prefix, unit - 3 significant digits
-      componentstr += QString("<CAPQ CAPQ1 1 %1 -120 -26 17 0 0 \"%2\" 1 \"%3\" 1 "
-                              " 0>\n")
-                          .arg(x_pos + 60)
-                          .arg(val)
-                          .arg(CAPQ);
+      if (CAPQ == 1000){//Use an ideal capacitor
+          componentstr += QString("<C C1 1 %1 -120 -26 17 0 0 \"%2\" 1 "
+                                  " 0>\n")
+                              .arg(x_pos + 60)
+                              .arg(val);
+      }
+      else{
+          componentstr += QString("<CAPQ CAPQ1 1 %1 -120 -26 17 0 0 \"%2\" 1 \"%3\" 1 "
+                                  " 0>\n")
+                              .arg(x_pos + 60)
+                              .arg(val)
+                              .arg(CAPQ);
+      }
       wirestr += QString("<%1 -120 %2 -120 "
                          " 0 0 0 "
                          ">\n")
@@ -1895,11 +1910,20 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
     {
       QString val = misc::num2str(value, 3, "H"); // Add prefix, unit - 3 significant digits
       componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
-      componentstr += QString("<INDQ INDQ1 1 %1 -30 5 -20 0 1 \"%2\" 1 \"%3\" 1 "
-                              " 0>\n")
-                          .arg(x_pos)
-                          .arg(val)
-                          .arg(INDQ);
+      if (INDQ == 1000){
+          componentstr += QString("<L L1 1 %1 -30 5 -20 0 1 \"%2\" 1 "
+                                  " 0>\n")
+                              .arg(x_pos)
+                              .arg(val);
+      }
+      else{
+          componentstr += QString("<INDQ INDQ1 1 %1 -30 5 -20 0 1 \"%2\" 1 \"%3\" 1 "
+                                  " 0>\n")
+                              .arg(x_pos)
+                              .arg(val)
+                              .arg(INDQ);
+      }
+
       wirestr += QString("<%1 -60 %1 -120 "
                          " 0 0 0 "
                          ">\n")
@@ -1914,11 +1938,20 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
     {
       QString val = misc::num2str(value, 3, "F"); // Add prefix, unit - 3 significant digits
       componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
-      componentstr += QString("<CAPQ CAPQ1 1 %1 -30 15 -20 0 1 \"%2\" 1 \"%3\" 1 "
-                              " 0>\n")
-                          .arg(x_pos)
-                          .arg(val)
-                          .arg(CAPQ);
+      if (CAPQ == 1000){//Use an ideal capacitor
+          componentstr += QString("<C C1 1 %1 -30 15 -20 0 1 \"%2\" 1 "
+                                  " 0>\n")
+                              .arg(x_pos)
+                              .arg(val);
+      }
+      else{
+          componentstr += QString("<CAPQ CAPQ1 1 %1 -30 15 -20 0 1 \"%2\" 1 \"%3\" 1 "
+                                  " 0>\n")
+                              .arg(x_pos)
+                              .arg(val)
+                              .arg(CAPQ);
+      }
+
       wirestr += QString("<%1 -60 %1 -120 "
                          " 0 0 0 "
                          ">\n")
