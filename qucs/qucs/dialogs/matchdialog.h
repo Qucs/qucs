@@ -98,6 +98,7 @@ public:
   QString calcTeeType(struct NetworkParams);
   QString calcTappedCTransformer(struct NetworkParams);
   QString calcTappedLTransformer(struct NetworkParams);
+  QString calcDoubleTappedResonator(struct NetworkParams);
   QString SynthesizeMatchingNetwork(struct NetworkParams);
   //--------------------------------------------------------------------------------------------------------
 

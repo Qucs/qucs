@@ -81,6 +81,7 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   matching_methods.append(tr("Tee-Type"));
   matching_methods.append(tr("Tapped C transformer"));
   matching_methods.append(tr("Tapped L transformer"));
+  matching_methods.append(tr("Double tapped resonator"));
 
   TopoCombo_Input = new QComboBox();
   TopoCombo_Input->setFixedWidth(220);
@@ -918,6 +919,9 @@ QString MatchDialog::SynthesizeMatchingNetwork(struct NetworkParams params)
     case 9: //Tapped-L transformer
       laddercode = calcTappedLTransformer(params);
       break;
+    case 10: //Double tapped resonator
+      laddercode = calcDoubleTappedResonator(params);
+      break;
     }
     return laddercode;
 }
@@ -1746,6 +1750,54 @@ QString MatchDialog::calcTappedLTransformer(struct NetworkParams params)
 
     return laddercode;
 }
+
+//Synthesis of a double tapped transformer
+QString MatchDialog::calcDoubleTappedResonator(struct NetworkParams params)
+{
+    double RL, XL, Z0;
+    struct ImplementationParams ImplParams;
+    if (params.network == SINGLE_PORT)
+    {
+        RL = params.S11real, XL = params.S11imag;
+        Z0 = params.Z1;
+        ImplParams = params.InputNetwork;
+    }
+    else//Two-port matching
+    {
+        RL = params.r_real, XL = params.r_imag;
+        if (params.network == TWO_PORT_INPUT){
+            Z0 = params.Z1;
+            ImplParams = params.InputNetwork;
+        }
+        else{
+            Z0 = params.Z2;
+            ImplParams = params.OutputNetwork;
+        }
+    }
+    r2z(RL, XL, Z0);
+
+    double w0 = 2*pi*params.freq;
+
+    // Design equations
+    double L1 = Z0/(w0*ImplParams.Q);
+    double Qsq = ImplParams.Q*ImplParams.Q;
+    double Q2 = sqrt((RL/Z0)*(Qsq + 1) - 1);
+    double Leq = ((L1*Qsq)/(1+Qsq))+ImplParams.L2;
+    double Ceq = 1/(w0*w0*Leq);
+    double C2 = Q2/(w0*RL);
+    double C2_ = C2*(1+Q2*Q2)/(Q2*Q2);
+    double C1 = (Ceq*C2_)/(C2_ - Ceq);
+
+    //Build the schematic description
+    QString laddercode;
+    laddercode += QString("LP:%1;").arg(L1);
+    laddercode += QString("LS:%1;").arg(ImplParams.L2);
+    laddercode += QString("CS:%1;").arg(C1);
+    laddercode += QString("CP:%1;").arg(C2);
+
+    return laddercode;
+}
+
 
 //--------------------------------------------------------------------------
 // It calculates tee-type matching network

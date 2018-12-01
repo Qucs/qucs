@@ -41,6 +41,7 @@
 #define TEE_TYPE           7
 #define TAPPED_C           8
 #define TAPPED_L           9
+#define DOUBLE_TAPPED      10
 
 #define CHEBYSHEV_WEIGHTING 0
 #define BINOMIAL_WEIGHTING  1
@@ -61,6 +62,7 @@ struct ImplementationParams {
     int weighting_type = 0;//Weighting of the impedance transformer: Chebyshev or binomial
     double CAPQ = 1000;//Capacitor quality factor, Q = X/R = 1/(w·C·R)
     double INDQ = 1000;//Inductor quality factor, Q = X/R = (w·L) / R
+    double L2 = 5e-9;//L2 parameter for the double tapped resonator
 };
 
 
@@ -84,12 +86,14 @@ public:
 
 private:
   QLabel *Order_Label, *Network_Response_Label, *QualityFactor_Label, *maxRipple_Label, *Weighting_Type_Label,
-         *Stub_Type_Label, *Stub_Implementation_Label, *CapacitorQ_Label, *InductorQ_Label;
-  QComboBox *Network_Response_Combo, *Stub_Type_Combo, *Weighting_Type_Combo, *Stub_Implementation_Combo;
+         *Stub_Type_Label, *Stub_Implementation_Label, *CapacitorQ_Label, *InductorQ_Label, *L2_Double_Tapped_Resonator_Label;
+  QComboBox *Network_Response_Combo, *Stub_Type_Combo, *Weighting_Type_Combo, *Stub_Implementation_Combo, *L2_Double_Tapped_Resonator_Scale_Combo;
   QSpinBox *Order_Spinbox;
-  QDoubleSpinBox *Quality_Factor_Spinbox, *maxRipple_Spinbox, *CapacitorQ_Spinbox, *InductorQ_Spinbox;
+  QDoubleSpinBox *Quality_Factor_Spinbox, *maxRipple_Spinbox, *CapacitorQ_Spinbox, *InductorQ_Spinbox, *L2_Double_Tapped_Resonator_SpinBox;
   QPushButton *OK_Button, *Cancel_Button;
   struct ImplementationParams params;
+
+  double getScale(int);
 
 public slots:
   void slot_save_settings();

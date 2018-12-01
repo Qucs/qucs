@@ -109,6 +109,25 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   MatchSettingslayout->addWidget(InductorQ_Label, 8, 0);
   MatchSettingslayout->addWidget(InductorQ_Spinbox, 8, 1);
 
+  //L2 inductor for double tapped resonator
+  L2_Double_Tapped_Resonator_Label = new QLabel(tr("Fixed inductor"));
+  L2_Double_Tapped_Resonator_SpinBox = new QDoubleSpinBox();
+  L2_Double_Tapped_Resonator_SpinBox->setMinimum(0.1);
+  L2_Double_Tapped_Resonator_SpinBox->setMaximum(1000);
+  L2_Double_Tapped_Resonator_SpinBox->setSingleStep(0.5);
+  L2_Double_Tapped_Resonator_SpinBox->setValue(5);
+  L2_Double_Tapped_Resonator_SpinBox->setDecimals(1);
+  L2_Double_Tapped_Resonator_Scale_Combo = new QComboBox();
+  L2_Double_Tapped_Resonator_Scale_Combo->addItem("H");
+  L2_Double_Tapped_Resonator_Scale_Combo->addItem("mH");
+  L2_Double_Tapped_Resonator_Scale_Combo->addItem("uH");
+  L2_Double_Tapped_Resonator_Scale_Combo->addItem("nH");
+  L2_Double_Tapped_Resonator_Scale_Combo->addItem("pH");
+  L2_Double_Tapped_Resonator_Scale_Combo->setCurrentIndex(3);
+
+  MatchSettingslayout->addWidget(L2_Double_Tapped_Resonator_Label, 9, 0);
+  MatchSettingslayout->addWidget(L2_Double_Tapped_Resonator_SpinBox, 9, 1);
+  MatchSettingslayout->addWidget(L2_Double_Tapped_Resonator_Scale_Combo, 9, 2);
 
   //Default settings
   Order_Label->setVisible(false);
@@ -129,6 +148,9 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   CapacitorQ_Spinbox->setVisible(false);
   InductorQ_Label->setVisible(false);
   InductorQ_Spinbox->setVisible(false);
+  L2_Double_Tapped_Resonator_Label->setVisible(false);
+  L2_Double_Tapped_Resonator_Scale_Combo->setVisible(false);
+  L2_Double_Tapped_Resonator_SpinBox->setVisible(false);
 
   switch (topology) {
   case LSECTION:
@@ -178,6 +200,11 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
        Quality_Factor_Spinbox->setVisible(true);
        break;
 
+  case DOUBLE_TAPPED:
+       L2_Double_Tapped_Resonator_Label->setVisible(true);
+       L2_Double_Tapped_Resonator_Scale_Combo->setVisible(true);
+       L2_Double_Tapped_Resonator_SpinBox->setVisible(true);
+
   case TAPPED_L:
   case TAPPED_C:
       CapacitorQ_Label->setVisible(true);
@@ -191,8 +218,8 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
 
   OK_Button = new QPushButton(tr("OK"));
   Cancel_Button = new QPushButton(tr("Cancel"));
-  MatchSettingslayout->addWidget(OK_Button, 9, 0);
-  MatchSettingslayout->addWidget(Cancel_Button, 9, 1);
+  MatchSettingslayout->addWidget(OK_Button, 10, 0);
+  MatchSettingslayout->addWidget(Cancel_Button, 10, 1);
   connect(OK_Button, SIGNAL(clicked()), SLOT(slot_save_settings()));
   connect(Cancel_Button, SIGNAL(clicked()), SLOT(slot_cancel_settings()));
 
@@ -220,9 +247,27 @@ void MatchSettingsDialog::slot_save_settings(){
     }
 
     params.weighting_type = Weighting_Type_Combo->currentIndex() == 0; //Chebyshev or binomial
+    params.L2 = L2_Double_Tapped_Resonator_SpinBox->value()*getScale(L2_Double_Tapped_Resonator_Scale_Combo->currentIndex());
     accept();
-
 }
+
+//This function calculates the scale factor for a given index
+double MatchSettingsDialog::getScale(int index)
+{
+    switch (index) {
+    case 1:
+        return 1e-3;
+    case 2:
+        return 1e-6;
+    case 3:
+        return 1e-9;
+    case 4:
+        return 1e-12;
+    default:
+        return 1;
+    }
+}
+
 void MatchSettingsDialog::slot_cancel_settings(){
     params.order = -1;//Indicates that the main window must not update the settings
     accept();
