@@ -40,6 +40,7 @@
 #define PI_TYPE            6
 #define TEE_TYPE           7
 #define TAPPED_C           8
+#define TAPPED_L           9
 
 #define CHEBYSHEV_WEIGHTING 0
 #define BINOMIAL_WEIGHTING  1

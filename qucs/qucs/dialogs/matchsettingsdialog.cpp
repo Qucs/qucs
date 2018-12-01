@@ -137,18 +137,15 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
        InductorQ_Label->setVisible(true);
        InductorQ_Spinbox->setVisible(true);
        break;
+
   case SINGLESTUB:
-       Stub_Type_Label->setVisible(true);
-       Stub_Type_Combo->setVisible(true);
-       Stub_Implementation_Label->setVisible(true);
-       Stub_Implementation_Combo->setVisible(true);
-       break;
   case DOUBLESTUB:
        Stub_Type_Label->setVisible(true);
        Stub_Type_Combo->setVisible(true);
        Stub_Implementation_Label->setVisible(true);
        Stub_Implementation_Combo->setVisible(true);
        break;
+
   case MULTISTAGEL4:
        Order_Label->setVisible(true);
        Order_Spinbox->setVisible(true);
@@ -157,6 +154,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
        Weighting_Type_Label->setVisible(true);
        Weighting_Type_Combo->setVisible(true);
        break;
+
   case CASCADEDLSECTIONS:
        CapacitorQ_Label->setVisible(true);
        CapacitorQ_Spinbox->setVisible(true);
@@ -167,6 +165,8 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
        break;
   case L8L4:
        break;
+
+  case TEE_TYPE:
   case PI_TYPE:
        CapacitorQ_Label->setVisible(true);
        CapacitorQ_Spinbox->setVisible(true);
@@ -177,16 +177,8 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
        QualityFactor_Label->setVisible(true);
        Quality_Factor_Spinbox->setVisible(true);
        break;
-  case TEE_TYPE:
-      CapacitorQ_Label->setVisible(true);
-      CapacitorQ_Spinbox->setVisible(true);
-      InductorQ_Label->setVisible(true);
-      InductorQ_Spinbox->setVisible(true);
-      Network_Response_Label->setVisible(true);
-      Network_Response_Combo->setVisible(true);
-      QualityFactor_Label->setVisible(true);
-      Quality_Factor_Spinbox->setVisible(true);
-      break;
+
+  case TAPPED_L:
   case TAPPED_C:
       CapacitorQ_Label->setVisible(true);
       CapacitorQ_Spinbox->setVisible(true);
