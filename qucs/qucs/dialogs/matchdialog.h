@@ -99,6 +99,7 @@ public:
   QString calcTappedCTransformer(struct NetworkParams);
   QString calcTappedLTransformer(struct NetworkParams);
   QString calcDoubleTappedResonator(struct NetworkParams);
+  QString calcSingleTunedTransformer(struct NetworkParams);
   QString SynthesizeMatchingNetwork(struct NetworkParams);
   //--------------------------------------------------------------------------------------------------------
 

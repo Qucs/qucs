@@ -82,6 +82,7 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   matching_methods.append(tr("Tapped C transformer"));
   matching_methods.append(tr("Tapped L transformer"));
   matching_methods.append(tr("Double tapped resonator"));
+  matching_methods.append(tr("Single tuned transformer"));
 
   TopoCombo_Input = new QComboBox();
   TopoCombo_Input->setFixedWidth(220);
@@ -922,6 +923,9 @@ QString MatchDialog::SynthesizeMatchingNetwork(struct NetworkParams params)
     case 10: //Double tapped resonator
       laddercode = calcDoubleTappedResonator(params);
       break;
+    case 11: //Single tuned transformer
+      laddercode = calcSingleTunedTransformer(params);
+      break;
     }
     return laddercode;
 }
@@ -971,7 +975,16 @@ QString MatchDialog::flipLadderCode(QString laddercode) {
   QString flipped_laddercode = "";
   // Build the flipped ladder code
   for (int i = 0; i < strlist.length(); i++) {
-    flipped_laddercode += strlist.at(i) + ";";
+      if (strlist.at(i).mid(0, 5) == "LCOUP"){//In case of having coupled inductors L11 and L22 must also be swapped
+          QString lcoup = strlist.at(i).mid(6);
+          QStringList lcoup_params = lcoup.split("#");
+          QString L11 = lcoup_params.at(0);
+          QString L22 = lcoup_params.at(1);
+          QString k = lcoup_params.at(2);
+          flipped_laddercode += QString("LCOUP:%1#%2#%3;").arg(L22).arg(L11).arg(k);
+      }else{
+          flipped_laddercode += strlist.at(i) + ";";
+      }
   }
   return flipped_laddercode;
 }
@@ -1858,6 +1871,43 @@ QString MatchDialog::calcTeeType(struct NetworkParams params) {
     return laddercode;
 }
 
+// This function implements the design equations of a single tuned transformer
+QString MatchDialog::calcSingleTunedTransformer(struct NetworkParams params) {
+    double RL, XL, Z0;
+    struct ImplementationParams ImplParams;
+    if (params.network == SINGLE_PORT)
+    {
+        RL = params.S11real, XL = params.S11imag;
+        Z0 = params.Z1;
+        ImplParams = params.InputNetwork;
+    }
+    else//Two-port matching
+    {
+        RL = params.r_real, XL = params.r_imag;
+        if (params.network == TWO_PORT_INPUT){
+            Z0 = params.Z1;
+            ImplParams = params.InputNetwork;
+        }
+        else{
+            Z0 = params.Z2;
+            ImplParams = params.OutputNetwork;
+        }
+    }
+    r2z(RL, XL, Z0);
+
+    double w0 = 2*pi*params.freq;
+    QString laddercode;
+    double L11 = (Z0*RL*ImplParams.k*ImplParams.k)/(w0*ImplParams.Q*(Z0+RL*ImplParams.k*ImplParams.k));
+    double L22 = (L11*RL/Z0)/(ImplParams.k*ImplParams.k);
+    double C = 1/(L11*w0*w0);
+
+    //Build the schematic description
+    laddercode += QString("CP:%1;").arg(C);
+    laddercode += QString("LCOUP:%1#%2#%3;").arg(L11).arg(L22).arg(ImplParams.k);
+
+    return laddercode;
+}
+
 //--------------------------------------------------------------------------
 // It calculates a lambda/8 + lambda/4 transformer to match a complex load to a
 // real source
@@ -1890,7 +1940,7 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
   QStringList strlist = laddercode.split(";");//Slipt the string code to get the components
   QString component, tag, label;
   qDebug() << laddercode;
-  double value, value2, er, width;
+  double value, value2, value3, er, width;
   int x_series = 120, x_shunt = 20; // x-axis spacing depending on whether the
                                     // component is placed in a series or shunt
                                     // configuration
@@ -1921,6 +1971,7 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
   //    P2: Port 2
   //    DEV: Device label
   //    S2P: S-param simulation block
+  //    LCOUP: Coupled inductors
 
   for (int i = 0; i < strlist.count(); i++) {
     // Each token of the string descriptor has the following format:
@@ -1935,14 +1986,23 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
     // At this point, we have the component parameters. In case of having more
     // than one parameter, they are separated by #
     int index = component.indexOf("#");
-    // Transmission lines are characterised by its impedance and its length
+    // Transmission lines are defined by its impedance and its length
     // whereas capacitors and inductors only depend on
     // its capacitance and inductance, respectively. So, the code below is aimed
     // to handle such difference
     if (index != -1) // The component has two values
     {
+      double index2 = component.indexOf("#", index+1);
       value = component.mid(0, index).toDouble();
+      if (index2 == -1)
+      {//Just two parameters
       value2 = component.mid(index + 1).toDouble();
+      }
+      else
+      {//Three parameters: Coupled inductors
+          value2 = component.mid(index + 1, index2-index-1).toDouble();
+          value3 = component.mid(index2 + 1).toDouble();
+      }
     } else {
       if (!tag.compare("LBL")) // The value is a string
       {
@@ -2106,7 +2166,36 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
                      .arg(x_pos - 20)
                      .arg(x_pos + x_shunt);
       x_pos += x_shunt;
-    } else if (!tag.compare("TL")) // Transmission line
+    } else if (!tag.compare("LCOUP")) // Coupled inductors
+    {
+        x_pos += 120;
+        QString L11_val = misc::num2str(value, 3, "H"); // Add prefix, unit - 3 significant digits
+        QString L22_val = misc::num2str(value2, 3, "H"); // Add prefix, unit - 3 significant digits
+        QString k = misc::num2str(value3);
+        componentstr += QString("<MUT Tr1 1 %1 -90 40 -20 0 0 \"%2\" 1 \"%3\" 1 \"%4\" 1 "
+                                " 0>\n")
+                            .arg(x_pos)
+                            .arg(L11_val)
+                            .arg(L22_val)
+                            .arg(k);
+        componentstr += QString("<GND * 1 %1 -60 0 0 0 0>\n").arg(x_pos-30);
+        componentstr += QString("<GND * 1 %1 -60 0 0 0 0>\n").arg(x_pos+30);
+
+        wirestr += QString("<%1 -120 %2 -120 "
+                           " 0 0 0 "
+                           ">\n")
+                       .arg(x_pos - 120)
+                       .arg(x_pos - 30);
+
+        wirestr += QString("<%1 -120 %2 -120 "
+                           " 0 0 0 "
+                           ">\n")
+                       .arg(x_pos + 30)
+                       .arg(x_pos + 140);
+
+        x_pos += 140;
+
+    }else if (!tag.compare("TL")) // Transmission line
     {
       if (microsyn) // Microstrip implementation
       {

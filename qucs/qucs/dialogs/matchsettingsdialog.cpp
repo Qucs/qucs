@@ -124,10 +124,19 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   L2_Double_Tapped_Resonator_Scale_Combo->addItem("nH");
   L2_Double_Tapped_Resonator_Scale_Combo->addItem("pH");
   L2_Double_Tapped_Resonator_Scale_Combo->setCurrentIndex(3);
-
   MatchSettingslayout->addWidget(L2_Double_Tapped_Resonator_Label, 9, 0);
   MatchSettingslayout->addWidget(L2_Double_Tapped_Resonator_SpinBox, 9, 1);
   MatchSettingslayout->addWidget(L2_Double_Tapped_Resonator_Scale_Combo, 9, 2);
+
+  //Coupling coefficient (coupled inductors)
+  k_Transformer_Label = new QLabel(tr("Coupling coefficient (k)"));
+  k_Transformer_Spinbox = new QDoubleSpinBox();
+  k_Transformer_Spinbox->setMinimum(0.01);
+  k_Transformer_Spinbox->setMaximum(0.99);
+  k_Transformer_Spinbox->setSingleStep(0.01);
+  k_Transformer_Spinbox->setValue(0.95);
+  MatchSettingslayout->addWidget(k_Transformer_Label, 10, 0);
+  MatchSettingslayout->addWidget(k_Transformer_Spinbox, 10, 1);
 
   //Default settings
   Order_Label->setVisible(false);
@@ -151,15 +160,10 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   L2_Double_Tapped_Resonator_Label->setVisible(false);
   L2_Double_Tapped_Resonator_Scale_Combo->setVisible(false);
   L2_Double_Tapped_Resonator_SpinBox->setVisible(false);
+  k_Transformer_Label->setVisible(false);
+  k_Transformer_Spinbox->setVisible(false);
 
   switch (topology) {
-  case LSECTION:
-       CapacitorQ_Label->setVisible(true);
-       CapacitorQ_Spinbox->setVisible(true);
-       InductorQ_Label->setVisible(true);
-       InductorQ_Spinbox->setVisible(true);
-       break;
-
   case SINGLESTUB:
   case DOUBLESTUB:
        Stub_Type_Label->setVisible(true);
@@ -190,15 +194,23 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
 
   case TEE_TYPE:
   case PI_TYPE:
-       CapacitorQ_Label->setVisible(true);
-       CapacitorQ_Spinbox->setVisible(true);
-       InductorQ_Label->setVisible(true);
-       InductorQ_Spinbox->setVisible(true);
        Network_Response_Label->setVisible(true);
        Network_Response_Combo->setVisible(true);
        QualityFactor_Label->setVisible(true);
        Quality_Factor_Spinbox->setVisible(true);
+  case LSECTION:
+       InductorQ_Label->setVisible(true);
+       InductorQ_Spinbox->setVisible(true);
+       CapacitorQ_Label->setVisible(true);
+       CapacitorQ_Spinbox->setVisible(true);
        break;
+
+  case SINGLE_TUNED_TRANSFORMER:
+      CapacitorQ_Label->setVisible(true);
+      CapacitorQ_Spinbox->setVisible(true);
+      k_Transformer_Label->setVisible(true);
+      k_Transformer_Spinbox->setVisible(true);
+      break;
 
   case DOUBLE_TAPPED:
        L2_Double_Tapped_Resonator_Label->setVisible(true);
@@ -218,8 +230,8 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
 
   OK_Button = new QPushButton(tr("OK"));
   Cancel_Button = new QPushButton(tr("Cancel"));
-  MatchSettingslayout->addWidget(OK_Button, 10, 0);
-  MatchSettingslayout->addWidget(Cancel_Button, 10, 1);
+  MatchSettingslayout->addWidget(OK_Button, 11, 0);
+  MatchSettingslayout->addWidget(Cancel_Button, 11, 1);
   connect(OK_Button, SIGNAL(clicked()), SLOT(slot_save_settings()));
   connect(Cancel_Button, SIGNAL(clicked()), SLOT(slot_cancel_settings()));
 
@@ -248,6 +260,7 @@ void MatchSettingsDialog::slot_save_settings(){
 
     params.weighting_type = Weighting_Type_Combo->currentIndex() == 0; //Chebyshev or binomial
     params.L2 = L2_Double_Tapped_Resonator_SpinBox->value()*getScale(L2_Double_Tapped_Resonator_Scale_Combo->currentIndex());
+    params.k = k_Transformer_Spinbox->value();
     accept();
 }
 
