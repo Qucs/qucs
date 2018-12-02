@@ -86,7 +86,6 @@ Component * Module::getComponent (QString Model)
 	 // this is not a component. d'uh
     Model=QString(Model.data()+1);
   }else{
-    qDebug() << "no dot" << Model;
   }
   if ( Modules.contains(Model)) {
     Module *m = Modules.find(Model).value();

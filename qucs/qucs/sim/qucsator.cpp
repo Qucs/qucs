@@ -16,7 +16,6 @@
  ***************************************************************************/
 
 #include "sim.h"
-#include "../components/component.h"
 #include "node.h"
 #include <QString>
 #include "globals.h"
