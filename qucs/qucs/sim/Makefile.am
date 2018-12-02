@@ -22,7 +22,7 @@
 # Boston, MA 02110-1301, USA.
 #
 
-pkglib_LTLIBRARIES = qucsator.la
+pkglib_LTLIBRARIES = qucsator.la verilog.la
 AM_DEFAULT_SOURCE_EXT = .cpp
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
 
@@ -30,3 +30,8 @@ qucsator_la_LDFLAGS = -module -avoid-version
 qucsator_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(abs_top_srcdir)/qucs
 # need Qt for TextStream.
 qucsator_la_CPPFLAGS += $(QT_INCLUDES)
+
+verilog_la_LDFLAGS = -module -avoid-version
+verilog_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(abs_top_srcdir)/qucs
+# need Qt for TextStream.
+verilog_la_CPPFLAGS += $(QT_INCLUDES)
