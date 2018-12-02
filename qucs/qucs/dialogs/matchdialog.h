@@ -90,6 +90,7 @@ public:
   QString calcSingleStub(struct NetworkParams);
   QString calcDoubleStub(struct NetworkParams);
   QString calcMatchingLambda8Lambda4(struct NetworkParams);
+  QString calcMatchingLambda4(struct NetworkParams);
   QString calcTransmissionLineTransformer(struct NetworkParams);
   QString calcBinomialLines(struct NetworkParams);
   QString calcChebyLines(struct NetworkParams);

@@ -225,6 +225,8 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
        Order_Label->setVisible(true);
        Order_Spinbox->setVisible(true);
        break;
+
+  case QUARTER_WAVE_LINE:
   case L8L4:
        break;
 

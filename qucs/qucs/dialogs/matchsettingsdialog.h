@@ -36,15 +36,16 @@
 #define DOUBLESTUB                         2
 #define MULTISTAGEL4                       3
 #define CASCADEDLSECTIONS                  4
-#define L8L4                               5
-#define PI_TYPE                            6
-#define TEE_TYPE                           7
-#define TAPPED_C                           8
-#define TAPPED_L                           9
-#define DOUBLE_TAPPED                     10
-#define SINGLE_TUNED_TRANSFORMER          11
-#define PARALLEL_DOUBLE_TUNED_TRANSFORMER 12
-#define SERIES_DOUBLE_TUNED_TRANSFORMER   13
+#define QUARTER_WAVE_LINE                  5
+#define L8L4                               6
+#define PI_TYPE                            7
+#define TEE_TYPE                           8
+#define TAPPED_C                           9
+#define TAPPED_L                          10
+#define DOUBLE_TAPPED                     11
+#define SINGLE_TUNED_TRANSFORMER          12
+#define PARALLEL_DOUBLE_TUNED_TRANSFORMER 13
+#define SERIES_DOUBLE_TUNED_TRANSFORMER   14
 
 #define CHEBYSHEV_WEIGHTING 0
 #define BINOMIAL_WEIGHTING  1

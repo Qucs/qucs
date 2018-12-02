@@ -70,14 +70,11 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   matching_methods.append(tr("L-section"));
   matching_methods.append(tr("Single stub"));
   matching_methods.append(tr("Double stub"));
-  QString str = tr("Multistage ") + QString(QChar(0xBB, 0x03)) + "/4";
-  matching_methods.append(str);
+  matching_methods.append(QString("%1 %2/4").arg(tr("Multistage ")).arg(QString(QChar(0xBB, 0x03))));
   matching_methods.append(tr("Cascaded L-sections"));
-  str = QString(QChar(0xBB, 0x03)) + "/8 +" + QString(QChar(0xBB, 0x03)) +
-        "/4 transformer";
-  matching_methods.append(str);
-  str = QString(QChar(0xC0, 0x03)) + "-type";
-  matching_methods.append(str);
+  matching_methods.append(QString("%1/4 line").arg(QChar(0xBB, 0x03)));
+  matching_methods.append(QString("%1/8 + %1/4 line").arg(QChar(0xBB, 0x03)));
+  matching_methods.append(QString("%1-type").arg(QChar(0xC0, 0x03)));
   matching_methods.append(tr("Tee-Type"));
   matching_methods.append(tr("Tapped C transformer"));
   matching_methods.append(tr("Tapped L transformer"));
@@ -892,46 +889,49 @@ QString MatchDialog::SynthesizeMatchingNetwork(struct NetworkParams params)
 
     switch (topology)
     {
-    case 0: // LC
+    case LSECTION: // LC
       laddercode = calcMatchingLC(params);
       break;
-    case 1: // Single stub
+    case SINGLESTUB: // Single stub
       laddercode = calcSingleStub(params);
       break;
-    case 2: // Double stub
+    case DOUBLESTUB: // Double stub
       laddercode = calcDoubleStub(params);
       break;
-    case 3: // Quarter wave cascaded sections
+    case MULTISTAGEL4: // Quarter wave cascaded sections
        laddercode = calcTransmissionLineTransformer(params);
       break;
-    case 4: // Cascaded LC sections
+    case CASCADEDLSECTIONS: // Cascaded LC sections
       laddercode = calcMatchingCascadedLCSections(params);
       break;
-    case 5: // Lambda/8 + Lambda/4 transformer
+    case QUARTER_WAVE_LINE:
+        laddercode = calcMatchingLambda4(params);
+        break;
+    case L8L4: // Lambda/8 + Lambda/4 transformer
       laddercode = calcMatchingLambda8Lambda4(params);
       break;
-    case 6: //Pi-type network
+    case PI_TYPE: //Pi-type network
       laddercode = calcPiType(params);
       break;
-    case 7: //Tee-type network
+    case TEE_TYPE: //Tee-type network
       laddercode = calcTeeType(params);
       break;
-    case 8: //Tapped-C transformer
+    case TAPPED_C: //Tapped-C transformer
       laddercode = calcTappedCTransformer(params);
       break;
-    case 9: //Tapped-L transformer
+    case TAPPED_L: //Tapped-L transformer
       laddercode = calcTappedLTransformer(params);
       break;
-    case 10: //Double tapped resonator
+    case DOUBLE_TAPPED: //Double tapped resonator
       laddercode = calcDoubleTappedResonator(params);
       break;
-    case 11: //Single tuned transformer
+    case SINGLE_TUNED_TRANSFORMER: //Single tuned transformer
       laddercode = calcSingleTunedTransformer(params);
       break;
-    case 12: //Parallel double-tuned transformer
+    case PARALLEL_DOUBLE_TUNED_TRANSFORMER: //Parallel double-tuned transformer
       laddercode = calcParallelDoubleTunedTransformer(params);
       break;
-    case 13: //Series double-tuned transformer
+    case SERIES_DOUBLE_TUNED_TRANSFORMER: //Series double-tuned transformer
       laddercode = calcSeriesDoubleTunedTransformer(params);
       break;
     }
@@ -2106,6 +2106,29 @@ QString MatchDialog::calcMatchingLambda8Lambda4(struct NetworkParams params) {
   double Zmm = sqrt(RL * RL + XL * XL);
   double Zm = sqrt((Z0 * RL * Zmm) / (Zmm - XL));
   return QString("TL:%1#%2;TL:%3#%4;").arg(Zm).arg(l4).arg(Zmm).arg(l8);
+}
+
+//--------------------------------------------------------------------------
+// This function calculates a lambda/4 transformer to match a real load to a
+// real source
+QString MatchDialog::calcMatchingLambda4(struct NetworkParams params) {
+  double l4 = SPEED_OF_LIGHT / (4. * params.freq);
+
+  double RL, XL, Z0;
+  if (params.network == SINGLE_PORT)
+  {
+      RL = params.S11real, XL = params.S11imag;
+      Z0 = params.Z1;
+  }
+  else//Two-port matching
+  {
+      RL = params.r_real, XL = params.r_imag;
+      (params.network == TWO_PORT_INPUT) ? Z0 = params.Z1 : Z0 = params.Z2;
+  }
+
+  r2z(RL, XL, Z0);
+  double Zm = sqrt(Z0*RL);
+  return QString("TL:%1#%2;").arg(Zm).arg(l4);
 }
 
 // Given a string code of inductors, capacitors and transmission lines, it
