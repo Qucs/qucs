@@ -702,17 +702,19 @@ void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
   }
   qDebug (doc.toString());
 #endif
-  QString s = "<";
+  s << "<";
   if(dynamic_cast<Command const*>(this)){ // FIXME: separate Commands from Components
-    s += ".";
+    s << ".";
   }
-  s += Model + " ";
-  if(Name.isEmpty()){
-    s += "*";
+  s << c->obsolete_model_hack();
+
+  s << " ";
+  if(c->name().isEmpty()){
+    s << "*";
   }else{
-    s += Name;
+    s << c->name();
   }
-  s += " ";
+  s << " ";
 
   int i=0;
   if(!c->showName){
