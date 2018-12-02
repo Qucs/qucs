@@ -18,10 +18,10 @@
 #ifndef AC_SIM_H
 #define AC_SIM_H
 
-#include "component.h"
+#include "command.h"
 
 
-class AC_Sim : public Component  {
+class AC_Sim : public Command  {
 public:
   AC_Sim();
  ~AC_Sim();
