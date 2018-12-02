@@ -84,6 +84,7 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   matching_methods.append(tr("Double tapped resonator"));
   matching_methods.append(tr("Single tuned transformer"));
   matching_methods.append(tr("Parallel double-tuned transformer"));
+  matching_methods.append(tr("Series double-tuned transformer"));
 
   TopoCombo_Input = new QComboBox();
   TopoCombo_Input->setFixedWidth(220);
@@ -929,6 +930,9 @@ QString MatchDialog::SynthesizeMatchingNetwork(struct NetworkParams params)
       break;
     case 12: //Parallel double-tuned transformer
       laddercode = calcParallelDoubleTunedTransformer(params);
+      break;
+    case 13: //Series double-tuned transformer
+      laddercode = calcSeriesDoubleTunedTransformer(params);
       break;
     }
     return laddercode;
@@ -2004,6 +2008,77 @@ QString MatchDialog::calcParallelDoubleTunedTransformer(struct NetworkParams par
         }
     }
     laddercode += QString("CP:%1;").arg(C2);
+
+    return laddercode;
+}
+
+// This function implements the design equations of a series double-tuned transformer
+QString MatchDialog::calcSeriesDoubleTunedTransformer(struct NetworkParams params) {
+    double RL, XL, Z0;
+    struct ImplementationParams ImplParams;
+    if (params.network == SINGLE_PORT)
+    {
+        RL = params.S11real, XL = params.S11imag;
+        Z0 = params.Z1;
+        ImplParams = params.InputNetwork;
+    }
+    else//Two-port matching
+    {
+        RL = params.r_real, XL = params.r_imag;
+        if (params.network == TWO_PORT_INPUT){
+            Z0 = params.Z1;
+            ImplParams = params.InputNetwork;
+        }
+        else{
+            Z0 = params.Z2;
+            ImplParams = params.OutputNetwork;
+        }
+    }
+    r2z(RL, XL, Z0);
+
+    //Design equations
+    double f0 = params.freq;
+    double w0 = 2*pi*params.freq;
+    double BW = ImplParams.BW;
+    double f1 = f0 - 0.5*BW;
+    double f2 = f0 + 0.5*BW;
+    double M = (f1*f1+f2*f2)/(f1*f2);
+    double gt = pow(10, (-ImplParams.gamma_MAX*0.1));
+    double kQ = 1/sqrt(gt) + sqrt((1/gt)-1);
+    double kQsq = kQ*kQ;
+    double A = (kQsq*kQsq)*(M*M) - 4*kQsq;
+    double B = (4-M*M)*kQsq;
+    double k = (-A + sqrt(A*A - 4*B))/2;
+    double Q = kQ/k;
+
+    double L11 = Q*Z0/w0;
+    double C1 = 1/(w0*Z0*Q);
+    double L22 = Q*RL/w0;
+    double C2 = 1/(w0*RL*Q);
+
+    QString laddercode;
+    laddercode += QString("CS:%1;").arg(C1);
+
+    if (ImplParams.coupled_L_Equivalent==0){//Use coupled inductors
+        laddercode += QString("LCOUP:%1#%2#%3;").arg(L11).arg(L22).arg(k);
+    }else{
+        double M = k*sqrt(L11*L22);
+        if (ImplParams.coupled_L_Equivalent==1)
+        {
+        //Use the uncoupled equivalent circuit (tee)
+        laddercode += QString("LS:%1;").arg(L11-M);
+        laddercode += QString("LP:%1;").arg(M);
+        laddercode += QString("LS:%1;").arg(L22-M);
+        }
+        else{
+            //Use the uncoupled equivalent circuit (pi)
+            double delta = L11*L22-M*M;
+            laddercode += QString("LP:%1;").arg(delta/(L22-M));
+            laddercode += QString("LS:%1;").arg(delta/M);
+            laddercode += QString("LP:%1;").arg(delta/(L11-M));
+        }
+    }
+    laddercode += QString("CS:%1;").arg(C2);
 
     return laddercode;
 }

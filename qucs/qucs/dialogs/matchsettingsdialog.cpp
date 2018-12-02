@@ -241,6 +241,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
        CapacitorQ_Spinbox->setVisible(true);
        break;
 
+  case SERIES_DOUBLE_TUNED_TRANSFORMER:
   case PARALLEL_DOUBLE_TUNED_TRANSFORMER:
       CapacitorQ_Label->setVisible(true);
       CapacitorQ_Spinbox->setVisible(true);

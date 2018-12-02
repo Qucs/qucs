@@ -101,6 +101,7 @@ public:
   QString calcDoubleTappedResonator(struct NetworkParams);
   QString calcSingleTunedTransformer(struct NetworkParams);
   QString calcParallelDoubleTunedTransformer(struct NetworkParams);
+  QString calcSeriesDoubleTunedTransformer(struct NetworkParams);
   QString SynthesizeMatchingNetwork(struct NetworkParams);
   //--------------------------------------------------------------------------------------------------------
 
