@@ -706,13 +706,12 @@ int main(int argc, char *argv[])
   for (int i = 1; i < argc; ++i) {
     if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
       fprintf(stdout,
-  "Usage: %s [-hv] \n"
-  "       qucs -n -i FILENAME -o FILENAME\n"
-  "       qucs -p -i FILENAME -o FILENAME.[pdf|png|svg|eps] \n\n"
+  "Usage: %s [COMMAND] [OPTIONS]\n\n"
+  "Commands:\n"
   "  -h, --help     display this help and exit\n"
   "  -v, --version  display version information and exit\n"
-  "  -n, --netlist  convert Qucs schematic into netlist\n"
-  "  -p, --print    print Qucs schematic to file (eps needs inkscape)\n"
+  "  -n, --netlist  convert Qucs schematic into netlist, requires -i, -o\n"
+  "  -p, --print    print Qucs schematic to file, requires -i, -o (eps needs inkscape)\n"
   "  -q, --quit     exit\n"
   "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
   "    --dpi NUMBER                 set dpi value (default 96)\n"
@@ -727,7 +726,15 @@ int main(int argc, char *argv[])
   "                   - CSV file with component data ([comp#]_data.csv)\n"
   "                   - CSV file with component properties. ([comp#]_props.csv)\n"
   "  -list-entries  list component entry formats for schematic and netlist\n"
-  , argv[0]);
+  "Options:\n"
+  "  -i FILENAME    use file as input schematic\n"
+  "  -o FILENAME    use file as output netlist\n"
+  "  -l NETLANG     language to be used by netlister, can be a simulator name\n"
+  "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
+  "    --dpi NUMBER                 set dpi value (default 96)\n"
+  "    --color [RGB|RGB]            set color mode (default RGB)\n"
+  "    --orin [portrait|landscape]  set orientation (default portraid)\n"
+  ,argv[0]);
       return 0;
     }else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
 #ifdef GIT
@@ -766,6 +773,9 @@ int main(int argc, char *argv[])
     }
     else if (!strcmp(argv[i], "-o")) {
       outputfile = argv[++i];
+    }
+    else if (!strcmp(argv[i], "-l")) {
+      netlang_name = argv[++i];
     }
     else if(!strcmp(argv[i], "-icons")) {
       createIcons();
@@ -813,11 +823,7 @@ int main(int argc, char *argv[])
     }
     // create netlist from schematic
     if (netlist_flag) {
-      auto sd=simulator_dispatcher["qucsator"];
-      assert(sd);
-      auto nl = sd->netLang();
-      assert(nl);
-      return doNetlist(inputfile, outputfile, nl);
+      return doNetlist(inputfile, outputfile, netlang);
     } else if (print_flag) {
       return doPrint(inputfile, outputfile,
           page, dpi, color, orientation);
