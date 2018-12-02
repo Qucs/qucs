@@ -19,6 +19,7 @@
 
 #include "componentdialog.h"
 #include "components.h"
+#include "command.h"
 #include "node.h"
 #include "qucs.h"
 #include "schematic.h"
@@ -321,7 +322,7 @@ void Component::paint(ViewPainter *p)
 void Component::paintScheme(Schematic *p)
 {
   // qDebug() << "paintScheme" << Model;
-  if(dynamic_cast<Command const*>(this)) {
+  if(dynamic_cast<Command const*>(this)) { // FIXME: separate Commands from Components
     int a, b, xb, yb;
     QFont newFont = p->font();
 
@@ -701,16 +702,17 @@ void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
   }
   qDebug (doc.toString());
 #endif
-  // s << "  "; ??
-  s << "<" << c->obsolete_model_hack();
-
-  s << " ";
-  if(c->name().isEmpty()){
-    s << "*";
-  }else{
-    s << c->name();
+  QString s = "<";
+  if(dynamic_cast<Command const*>(this)){ // FIXME: separate Commands from Components
+    s += ".";
   }
-  s << " ";
+  s += Model + " ";
+  if(Name.isEmpty()){
+    s += "*";
+  }else{
+    s += Name;
+  }
+  s += " ";
 
   int i=0;
   if(!c->showName){
@@ -795,8 +797,6 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   if(!ok) return NULL;
 
   if(!dynamic_cast<Command const*>(c)) {
-    assert(c->obsolete_model_hack().at(0) != '.');
-
     n  = s.section(' ',7,7);    // mirroredX
     if(n.toInt(&ok) == 1){
       c->mirrorX();
@@ -812,7 +812,7 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
       c->rotate();
     }
   }else{
-    assert(c->obsolete_model_hack().at(0) == '.');
+    // assert(c->obsolete_model_hack().at(0) == '.');
   }
 
   c->tx = ttx;
