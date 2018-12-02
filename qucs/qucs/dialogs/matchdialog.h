@@ -100,6 +100,7 @@ public:
   QString calcTappedLTransformer(struct NetworkParams);
   QString calcDoubleTappedResonator(struct NetworkParams);
   QString calcSingleTunedTransformer(struct NetworkParams);
+  QString calcParallelDoubleTunedTransformer(struct NetworkParams);
   QString SynthesizeMatchingNetwork(struct NetworkParams);
   //--------------------------------------------------------------------------------------------------------
 

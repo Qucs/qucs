@@ -42,6 +42,9 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   maxRipple_Label = new QLabel(tr("Max. ripple"));
   maxRipple_Spinbox = new QDoubleSpinBox();
   maxRipple_Spinbox->setMinimum(0.05);
+  maxRipple_Spinbox->setMaximum(1);
+  maxRipple_Spinbox->setSingleStep(0.05);
+  maxRipple_Spinbox->setValue(0.1);
   MatchSettingslayout->addWidget(maxRipple_Label, 1, 0);
   MatchSettingslayout->addWidget(maxRipple_Spinbox, 1, 1);
 
@@ -147,6 +150,24 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   MatchSettingslayout->addWidget(coupled_L_Label, 11, 0);
   MatchSettingslayout->addWidget(coupled_L_Combo, 11, 1);
 
+  //BW (double-tuned transformer)
+  BW_Label = new QLabel("BW");
+  BW_Spinbox = new QSpinBox();
+  BW_Spinbox->setMinimum(1);
+  BW_Spinbox->setMaximum(1000);
+  BW_Spinbox->setValue(20);
+  BW_Scale_Combo = new QComboBox();
+  QStringList freq_units;
+  freq_units.append("Hz");
+  freq_units.append("kHz");
+  freq_units.append("MHz");
+  freq_units.append("GHz");
+  BW_Scale_Combo->addItems(freq_units);
+  BW_Scale_Combo->setCurrentIndex(2);
+  MatchSettingslayout->addWidget(BW_Label, 12, 0);
+  MatchSettingslayout->addWidget(BW_Spinbox, 12, 1);
+  MatchSettingslayout->addWidget(BW_Scale_Combo, 12, 2);
+
   //Default settings
   Order_Label->setVisible(false);
   Order_Spinbox->setVisible(false);
@@ -173,6 +194,10 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   k_Transformer_Spinbox->setVisible(false);
   coupled_L_Label->setVisible(false);
   coupled_L_Combo->setVisible(false);
+  BW_Label->setVisible(false);
+  BW_Spinbox->setVisible(false);
+  BW_Scale_Combo->setVisible(false);
+
 
   switch (topology) {
   case SINGLESTUB:
@@ -216,11 +241,23 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
        CapacitorQ_Spinbox->setVisible(true);
        break;
 
-  case SINGLE_TUNED_TRANSFORMER:
+  case PARALLEL_DOUBLE_TUNED_TRANSFORMER:
       CapacitorQ_Label->setVisible(true);
       CapacitorQ_Spinbox->setVisible(true);
+      coupled_L_Label->setVisible(true);
+      coupled_L_Combo->setVisible(true);
+      maxRipple_Label->setVisible(true);
+      maxRipple_Spinbox->setVisible(true);
+      BW_Label->setVisible(true);
+      BW_Spinbox->setVisible(true);
+      BW_Scale_Combo->setVisible(true);
+      break;
+
+  case SINGLE_TUNED_TRANSFORMER:
       k_Transformer_Label->setVisible(true);
       k_Transformer_Spinbox->setVisible(true);
+      CapacitorQ_Label->setVisible(true);
+      CapacitorQ_Spinbox->setVisible(true);
       coupled_L_Label->setVisible(true);
       coupled_L_Combo->setVisible(true);
       break;
@@ -243,8 +280,8 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
 
   OK_Button = new QPushButton(tr("OK"));
   Cancel_Button = new QPushButton(tr("Cancel"));
-  MatchSettingslayout->addWidget(OK_Button, 12, 0);
-  MatchSettingslayout->addWidget(Cancel_Button, 12, 1);
+  MatchSettingslayout->addWidget(OK_Button, 14, 0);
+  MatchSettingslayout->addWidget(Cancel_Button, 14, 1);
   connect(OK_Button, SIGNAL(clicked()), SLOT(slot_save_settings()));
   connect(Cancel_Button, SIGNAL(clicked()), SLOT(slot_cancel_settings()));
 
@@ -272,27 +309,37 @@ void MatchSettingsDialog::slot_save_settings(){
     }
 
     params.weighting_type = Weighting_Type_Combo->currentIndex() == 0; //Chebyshev or binomial
-    params.L2 = L2_Double_Tapped_Resonator_SpinBox->value()*getScale(L2_Double_Tapped_Resonator_Scale_Combo->currentIndex());
+    params.L2 = L2_Double_Tapped_Resonator_SpinBox->value()*getScale(L2_Double_Tapped_Resonator_Scale_Combo->currentText());
     params.k = k_Transformer_Spinbox->value();
     params.coupled_L_Equivalent = coupled_L_Combo->currentIndex();
+    params.BW = BW_Spinbox->value()*getScale(BW_Scale_Combo->currentText());
     accept();
 }
 
 //This function calculates the scale factor for a given index
-double MatchSettingsDialog::getScale(int index)
+double MatchSettingsDialog::getScale(QString text)
 {
-    switch (index) {
-    case 1:
-        return 1e-3;
-    case 2:
+    //Get first character
+    QChar preffix = text.at(0);
+    if (preffix == 'm')
+       return 1e-3;
+    else if (preffix == 'u')
         return 1e-6;
-    case 3:
+    else if (preffix == 'n')
         return 1e-9;
-    case 4:
+    else if (preffix == 'p')
         return 1e-12;
-    default:
-        return 1;
-    }
+    else if (preffix == 'f')
+        return 1e-15;
+    else if (preffix == 'k')
+        return 1e3;
+    else if (preffix == 'M')
+        return 1e6;
+    else if (preffix == 'G')
+        return 1e9;
+    else if (preffix == 'T')
+        return 1e12;
+    else return 1;
 }
 
 void MatchSettingsDialog::slot_cancel_settings(){

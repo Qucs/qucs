@@ -31,18 +31,19 @@
 #include <QGridLayout>
 #include "matchsubstratedialog.h"
 
-#define LSECTION                  0
-#define SINGLESTUB                1
-#define DOUBLESTUB                2
-#define MULTISTAGEL4              3
-#define CASCADEDLSECTIONS         4
-#define L8L4                      5
-#define PI_TYPE                   6
-#define TEE_TYPE                  7
-#define TAPPED_C                  8
-#define TAPPED_L                  9
-#define DOUBLE_TAPPED            10
-#define SINGLE_TUNED_TRANSFORMER 11
+#define LSECTION                           0
+#define SINGLESTUB                         1
+#define DOUBLESTUB                         2
+#define MULTISTAGEL4                       3
+#define CASCADEDLSECTIONS                  4
+#define L8L4                               5
+#define PI_TYPE                            6
+#define TEE_TYPE                           7
+#define TAPPED_C                           8
+#define TAPPED_L                           9
+#define DOUBLE_TAPPED                     10
+#define SINGLE_TUNED_TRANSFORMER          11
+#define PARALLEL_DOUBLE_TUNED_TRANSFORMER 12
 
 #define CHEBYSHEV_WEIGHTING 0
 #define BINOMIAL_WEIGHTING  1
@@ -56,7 +57,7 @@ enum RESPONSE_TYPE{LOWPASS, HIGHPASS};
 struct ImplementationParams {
     bool BalancedStubs=false, open_short=true;//Stub implementation
     int order=3;//Number of section
-    double gamma_MAX=0.05;//Maximum ripple for the impedance transformer
+    double gamma_MAX=0.1;//Maximum ripple for the impedance transformer
     int network_type = 0;//Network topology
     double Q = 5;//Q of the overall matching network. Only for Pi/Tee matching
     RESPONSE_TYPE network_response = LOWPASS;//Response type for Pi/Tee matching networks
@@ -65,7 +66,8 @@ struct ImplementationParams {
     double INDQ = 1000;//Inductor quality factor, Q = X/R = (w·L) / R
     double L2 = 5e-9;//L2 parameter for the double tapped resonator
     double k = 0.95;//Coupling coefficient of the transformer
-    int coupled_L_Equivalent;//Use coupled inductor or its uncoupled equivalent
+    int coupled_L_Equivalent=0;//Use coupled inductor or its uncoupled equivalent
+    double BW = 20e6;// Bandwidth for the double-tuned transformer matching method
 };
 
 
@@ -90,15 +92,16 @@ public:
 private:
   QLabel *Order_Label, *Network_Response_Label, *QualityFactor_Label, *maxRipple_Label, *Weighting_Type_Label,
          *Stub_Type_Label, *Stub_Implementation_Label, *CapacitorQ_Label, *InductorQ_Label, *L2_Double_Tapped_Resonator_Label,
-         *k_Transformer_Label, *coupled_L_Label;
-  QComboBox *Network_Response_Combo, *Stub_Type_Combo, *Weighting_Type_Combo, *Stub_Implementation_Combo, *L2_Double_Tapped_Resonator_Scale_Combo, *coupled_L_Combo;
-  QSpinBox *Order_Spinbox;
+         *k_Transformer_Label, *coupled_L_Label, *BW_Label, *f2_Label;
+  QComboBox *Network_Response_Combo, *Stub_Type_Combo, *Weighting_Type_Combo, *Stub_Implementation_Combo, *L2_Double_Tapped_Resonator_Scale_Combo,
+            *coupled_L_Combo, *BW_Scale_Combo, *f2_Scale_Combo;
+  QSpinBox *Order_Spinbox, *BW_Spinbox, *f2_Spinbox;
   QDoubleSpinBox *Quality_Factor_Spinbox, *maxRipple_Spinbox, *CapacitorQ_Spinbox, *InductorQ_Spinbox, *L2_Double_Tapped_Resonator_SpinBox,
                  *k_Transformer_Spinbox;
   QPushButton *OK_Button, *Cancel_Button;
   struct ImplementationParams params;
 
-  double getScale(int);
+  double getScale(QString);
 
 public slots:
   void slot_save_settings();
