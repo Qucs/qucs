@@ -58,7 +58,7 @@ enum RESPONSE_TYPE{LOWPASS, HIGHPASS};
 
 struct ImplementationParams {
     bool BalancedStubs=false, open_short=true;//Stub implementation
-    int order=3;//Number of section
+    int order=3;//Number of sections
     double gamma_MAX=0.1;//Maximum ripple for the impedance transformer
     int network_type = 0;//Network topology
     double Q = 5;//Q of the overall matching network. Only for Pi/Tee matching

@@ -1600,17 +1600,29 @@ QString MatchDialog::calcMatchingCascadedLCSections(struct NetworkParams params)
   for (int i = 0; i < N - 1; i++) {
     R = pow(R1, 1. * (N - (i + 1)) / N) * pow(R2, 1. * (i + 1) / N);
     Q = sqrt(Raux / R - 1);
-    C = Q / (w * Raux);
-    L = Q * R / w;
-    s += QString("CP:%1;LS:%2;").arg(C).arg(L);
+    if (ImplParams.network_response == LOWPASS){
+        C = Q / (w * Raux);
+        L = Q * R / w;
+        s += QString("CP:%1;LS:%2;").arg(C).arg(L);
+    }else{//Highpass
+        C = 1/(w*Q*R);
+        L = Raux/(w*Q);
+        s += QString("LP:%1;CS:%2;").arg(L).arg(C);
+    }
     Raux = R;
   }
 
   Q = sqrt(R / R2 - 1);
-  C = Q / (w * R);
-  L = Q * R2 / w;
-  s += QString("CP:%1;LS:%2;").arg(C).arg(L);
 
+  if (ImplParams.network_response == LOWPASS){
+      C = Q / (w * R);
+      L = Q * R2 / (w);
+      s += QString("CP:%1;LS:%2;").arg(C).arg(L);
+  }else{
+      L = R/(w*Q);
+      C = 1/(w*Q*R2);
+      s += QString("LP:%1;CS:%2;").arg(L).arg(C);
+  }
   if (RL > RS) // Flip string
   {
     QString temp = "";

@@ -584,13 +584,26 @@ T_0(x) = 1
 \noindent \textit{Reference:} \cite{Pozar}, pages 250-260.
 
 \subsection{Cascaded L-sections}
-An alternative method to achieve broadband matching between real impedances is to cascade N (lowpass) \textit{L-section} stages. In this sense, the \textit{Cascaded L-sections} method does N-1 matches between intermediate real impedances such that $R_i > R_{i+1} \forall i \in N$.
+An alternative method to achieve broadband matching between real impedances is to cascade N \textit{L-section} stages. In this sense, the \textit{Cascaded L-sections} method does N-1 matches between intermediate real impedances such that $R_i > R_{i+1} \forall i \in N$.
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=120mm]{CascadedLCsch}
-\caption{Cascaded L-sections method}
-\end{figure}
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ | c | c | }
+    \hline
+    Lowpass & \begin{minipage}{.4\textwidth}
+      \includegraphics[width=\linewidth]{CascadedLCsch-lowpass}
+    \end{minipage}\\ \hline
+    Highpass
+    &
+    \begin{minipage}{.4\textwidth}
+      \includegraphics[width=\linewidth]{CascadedLCsch-highpass}
+    \end{minipage}
+\\ \hline
+  \end{tabular}
+  \caption{Cascade L-section networks}
+  \label{tbl:cascaded-l-section-lowpass-highpass-schematic}
+\end{table}
+
 
 Depending on the values of the intermediate impedances, the bandwidth of the matching network will vary. In order to maximize it, the ratios of consecutive virtual resistances should be equal:
 
@@ -604,13 +617,53 @@ Depending on the values of the intermediate impedances, the bandwidth of the mat
 R_i = R_S^{\frac{N-i}{N}} \cdot R_L^{\frac{i}{N}}, \forall i \in [1, N-1]
 \end{equation}
 
-
 \noindent Once having $R_i$, the values of the inductors and the can be determined:
-\begin{align}
-Q_i & = \sqrt {\frac{R_{i-1}}{R_i}},\\
-C_i & = \frac{Q_i}{\omega R_{i-1}}, \\
-L_i & = \frac{Q_i R_i}{\omega},  \forall i \in [1, N-1]
-\end{align}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ | c | c | }
+    \hline
+    Lowpass & Highpass\\ \hline
+    \begin{minipage}{.4\textwidth}
+      \includegraphics[width=\linewidth]{cascaded-l-section-lowpass}
+    \end{minipage}
+    &
+    \begin{minipage}{.4\textwidth}
+      \includegraphics[width=\linewidth]{cascaded-l-section-highpass}
+    \end{minipage}
+\\ \hline
+    \begin{minipage}{.4\textwidth}
+         {\begin{align}
+           R_i' &= \frac{R_i}{1 + Q_i^2} \\
+           C_i' &= C_i \cdot (1 + Q_i^{-2}) \\
+           Z_A &= R_{i-1} + j \cdot \omega L_i \\
+           Z_B &= R_{i}' - j \cdot \frac{1}{\omega \cdot C_i} \\
+           Z_A &= Z_B^* \Longrightarrow R_{i-1} = \frac{R_i}{1 + Q_i^2} \\
+           Q_{i} &= \sqrt{\frac{R_{i}}{R_{i-1}} - 1} \\
+           Q_{i} &= R_{i} \cdot \omega \cdot C_i \Longrightarrow C_i = \frac{Q_i}{\omega \cdot R_i}\\
+           Q_{i} &= \frac{\omega \cdot L_i}{R_{i}} \Longrightarrow L_i = \frac{Q_i \cdot R_i}{\omega}
+         \end{align}}
+    \end{minipage}
+    &
+        \begin{minipage}{.4\textwidth}
+          {\begin{align}
+           R_i' &= \frac{R_i}{1 + Q_i^2} \\
+           L_i' &= \frac{L_i}{1 + Q_i^{-2}} \\
+           Z_A &= R_{i-1} - j \cdot \frac{1}{\omega C_i} \\
+           Z_B &= R_{i}' + j \cdot \omega \cdot L_i' \\
+           Z_A &= Z_B^* \Longrightarrow R_{i-1} = \frac{R_i}{1 + Q_i^2} \\
+           Q_{i} &= \sqrt{\frac{R_{i}}{R_{i-1}} - 1} \\
+           Q_{i} &= \frac{R_{i}}{\omega \cdot L_i} \Longrightarrow L_i = \frac{R_i}{Q_i \cdot \omega}\\
+           Q_{i} &= \frac{1}{\omega \cdot C_i \cdot R_{i}} \Longrightarrow C_i = \frac{1}{\omega \cdot Q_i \cdot R_i}
+         \end{align}}
+    \end{minipage}
+    \\ \hline
+  \end{tabular}
+  \caption{Derivation of the design equations of the lowpass and highpass cascade L-section matching}
+  \label{tbl:cascaded-l-section-lowpass-highpass}
+\end{table}
+
+
 
 
 \begin{figure}[H]
