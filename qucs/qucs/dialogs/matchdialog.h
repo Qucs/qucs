@@ -154,6 +154,8 @@ private:
   QGroupBox *MethodBox;
   QPushButton *InputMatchingSettings_Button, *OutputMatchingSettings_Button, *Substrate_Button;
 
+  QList<int> Transmission_Line_Topologies;
+
   double tmpS21mag, tmpS21deg;
 
   void set2PortWidgetsVisible(bool);

@@ -83,6 +83,13 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   matching_methods.append(tr("Parallel double-tuned transformer"));
   matching_methods.append(tr("Series double-tuned transformer"));
 
+  //List of matching methos that may be implemented using a microstrip line
+  Transmission_Line_Topologies.append(SINGLESTUB);
+  Transmission_Line_Topologies.append(DOUBLESTUB);
+  Transmission_Line_Topologies.append(MULTISTAGEL4);
+  Transmission_Line_Topologies.append(QUARTER_WAVE_LINE);
+  Transmission_Line_Topologies.append(L8L4);
+
   TopoCombo_Input = new QComboBox();
   TopoCombo_Input->setFixedWidth(220);
   TopoCombo_Input->addItems(matching_methods);
@@ -2795,10 +2802,8 @@ void MatchDialog::slot_InputTopologyChanged(int currentIndex)
         enable_settings = false;
     InputMatchingSettings_Button->setEnabled(enable_settings);
 
-    //Microstrip substrate
-    int currentIndex_output = TopoCombo_Output->currentIndex();
-    if ((currentIndex == 1) || (currentIndex == 2) || (currentIndex == 3) || (currentIndex == 5)
-            || (currentIndex_output == 1) || (currentIndex_output == 2) || (currentIndex_output == 3) || (currentIndex_output == 5)){
+    //Enable/Disable the microstrip substrate checkbox
+    if ((Transmission_Line_Topologies.contains(TopoCombo_Input->currentIndex())) || Transmission_Line_Topologies.contains(TopoCombo_Output->currentIndex())) {
         MicrostripCheck->setEnabled(true);
      }
      else  {
@@ -2817,10 +2822,8 @@ void MatchDialog::slot_OutputTopologyChanged(int currentIndex)
         enable_settings = false;
     OutputMatchingSettings_Button->setEnabled(enable_settings);
 
-    //Microstrip substrate
-    int currentIndex_input = TopoCombo_Input->currentIndex();
-    if ((currentIndex == 1) || (currentIndex == 2) || (currentIndex == 3) || (currentIndex == 5)
-            || (currentIndex_input == 1) || (currentIndex_input == 2) || (currentIndex_input == 3) || (currentIndex_input == 5)) {
+    //Enable/Disable the microstrip substrate checkbox
+    if ((Transmission_Line_Topologies.contains(TopoCombo_Input->currentIndex())) || Transmission_Line_Topologies.contains(TopoCombo_Output->currentIndex())) {
        MicrostripCheck->setEnabled(true);
     }
     else  {
@@ -2828,8 +2831,6 @@ void MatchDialog::slot_OutputTopologyChanged(int currentIndex)
         MicrostripCheck->setChecked(false);
         Substrate_Button->setEnabled(false);
     }
-
-
 }
 
 // This function is called when the microstrip checkbox is clicked. Its purpose is to enable and disable the substrate settings window accordingly
