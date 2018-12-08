@@ -25,6 +25,7 @@
 #include <QMutex>
 
 #include <limits.h>
+#include <io_trace.h>
 
 
 
@@ -200,6 +201,7 @@ int Subcircuit::loadSymbol(const QString& DocName)
 // -------------------------------------------------------
 QString Subcircuit::netlist() const
 {
+	incomplete();
   QString s = Model+":"+Name;
 
   // output all node names

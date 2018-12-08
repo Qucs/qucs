@@ -127,7 +127,7 @@ Schematic *openSchematic(QString schematic)
   return sch;
 }
 
-int doNetlist(QString schematic, QString netlist, NetLang const* lang)
+int doNetlist(QString schematic, QString netlist, NetLang const& nl)
 {
   Schematic *sch = openSchematic(schematic);
   if (sch == NULL) {
@@ -155,7 +155,7 @@ int doNetlist(QString schematic, QString netlist, NetLang const* lang)
   }
 
   Stream.setDevice(&NetlistFile);
-  int SimPorts = sch->prepareNetlist(Stream, Collect, ErrText);
+  int SimPorts = sch->prepareNetlist(Stream, Collect, ErrText, nl);
 
   if(SimPorts < -5) {
     NetlistFile.close();
@@ -179,7 +179,7 @@ int doNetlist(QString schematic, QString netlist, NetLang const* lang)
 
   Stream << '\n';
 
-  QString SimTime = sch->createNetlist(Stream, SimPorts, lang);
+  QString SimTime = sch->createNetlist(Stream, SimPorts, nl);
   delete(sch);
 
   NetlistFile.close();
@@ -824,7 +824,7 @@ int main(int argc, char *argv[])
     }
     // create netlist from schematic
     if (netlist_flag) {
-      return doNetlist(inputfile, outputfile, netlang);
+      return doNetlist(inputfile, outputfile, *netlang);
     } else if (print_flag) {
       return doPrint(inputfile, outputfile,
           page, dpi, color, orientation);

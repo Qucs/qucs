@@ -20,6 +20,8 @@
 #include <QString>
 #include "globals.h"
 
+#include "components/subcircuit.h" //  BUG
+
 namespace {
 // qucslang language implementation
 class QucsLang : public NetLang
@@ -54,10 +56,13 @@ void QucsLang::printInstance(Component const* c, QTextStream& s) const
       s << "R:" << c->label() << "." << QString::number(z++) << " "
 	<< Node1 << " " << iport.next()->Connection->Name << " R=\"0\"\n";
     }
+//  }else if(Subcircuit const* sub=dynamic_cast<Subcircuit const*>(c)){
+//    incomplete();
   }else{
     try{
       // default to the legacy way, fix later
       s << c->getNetlist();
+      incomplete();
     }catch (...){ // todo: introduce proper exceptions
       // normal netlisting
       s << c->type() << ":" << c->label();
