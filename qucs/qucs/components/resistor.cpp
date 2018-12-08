@@ -25,6 +25,9 @@ namespace{
 class Resistor : public MultiViewComponent {
 public:
   Resistor(bool european=true);
+  Resistor(const Resistor& r) 
+	 : MultiViewComponent(r)
+  { untested(); }
  ~Resistor() {};
   // return new Resistor(Props.getLast()->Value != "US"); ?!
   Component* newOne() const {return new Resistor(*this);}
@@ -32,6 +35,9 @@ public:
   static Element* info_us(QString&, char* &, bool getNewOne=false);
 
   void set_dev_type(){ incomplete(); }
+  QString name() const{ untested();
+	  return QObject::tr("resistor");
+  }
 
 protected:
   void createSymbol();
