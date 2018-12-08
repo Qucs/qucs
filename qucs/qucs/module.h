@@ -21,25 +21,32 @@
 #include <QList>
 #include <QHash>
 #include <QMap>
+#include "platform.h"
 
 class Element;
 
 // function typedefs for circuits and analyses
 typedef Element * (* pInfoFunc) (QString&, char * &, bool);
+#if 1 // pointless
 typedef Element * (* pInfoVAFunc) (QString&, QString&, bool, QString);
 typedef Component * (* pCreatorFunc) ();
+#endif
+
+INTERFACE void guiRegisterElement (std::string const& category, Element const*);
 
 // sort of element wrapper for stuff displayed in the select menu.
 // each module is part of a Category. see below.
 class Module
 {
  public:
-  Module ();
+  Module (Element const* e) : myElement(e) { }
+
   ~Module ();
-  static void registerModule (QString, pInfoFunc);
   static void registerComponent (QString, pInfoFunc);
+  static void registerElement (QString, Element const*);
   static void intoCategory (Module *);
-  static Component * getComponent (QString);
+
+  // static Component * getComponent (QString);
 
  public:
   static QHash<QString, Module *> Modules;
@@ -49,10 +56,11 @@ class Module
   static void registerModules (void);
   static void unregisterModules (void);
 
- public:
-  pInfoFunc info = 0;
-  pInfoVAFunc infoVA = 0;
-  QString category;
+  bool has_element() const{ return myElement; }
+  Element const* element() const{ return myElement; }
+ private:
+  Element const* myElement;
+  QString category; // why this?!
 };
 
 // a category. something like "lumped" or "simulations"

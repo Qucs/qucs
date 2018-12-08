@@ -41,7 +41,9 @@ Verilog_File::Verilog_File()
 }
 
 // -------------------------------------------------------
-Symbol* Verilog_File::newOne() const
+// BUG: too complicated
+// use constructor.
+Component* Verilog_File::newOne() const
 {
   Verilog_File *p = new Verilog_File();
   p->Props.getFirst()->Value = Props.getFirst()->Value;
