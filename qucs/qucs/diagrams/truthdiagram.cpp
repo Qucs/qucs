@@ -263,12 +263,6 @@ funcEnd:
 }
 
 // ------------------------------------------------------------
-Diagram* TruthDiagram::newOne()
-{
-  return new TruthDiagram();
-}
-
-// ------------------------------------------------------------
 Element* TruthDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Truth Table");

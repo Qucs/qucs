@@ -80,12 +80,6 @@ void GraphicLine::setCenter(int x, int y, bool relative)
 }
 
 // --------------------------------------------------------------------------
-Painting* GraphicLine::newOne()
-{
-  return new GraphicLine();
-}
-
-// --------------------------------------------------------------------------
 Element* GraphicLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Line");

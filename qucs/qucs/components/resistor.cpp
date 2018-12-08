@@ -25,18 +25,18 @@ class Resistor : public MultiViewComponent {
 public:
   Resistor(bool european=true);
  ~Resistor() {};
-  Object* newOne() const;
+  // return new Resistor(Props.getLast()->Value != "US"); ?!
+  Symbol* newOne() const {return new Resistor(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_us(QString&, char* &, bool getNewOne=false);
+
+  void set_dev_type(){ incomplete(); }
 
 protected:
   void createSymbol();
 }R;
 
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "resistor", &R);
-
-// alias. here?!
-static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "Rus", &R);
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "resistor|Rus", &R);
 
 Resistor::Resistor(bool european)
 {
@@ -63,12 +63,6 @@ Resistor::Resistor(bool european)
   ty = y2+4;
   // Model = "R";
   // Name  = "R";
-}
-
-// -------------------------------------------------------
-Object* Resistor::newOne() const
-{
-  return new Resistor(Props.getLast()->Value != "US");
 }
 
 // -------------------------------------------------------

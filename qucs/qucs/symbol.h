@@ -38,6 +38,8 @@ class QPainter;
 class Symbol : public Element{
 public: // construct
   Symbol() {}
+  virtual ~Symbol(){}
+  virtual Symbol* newOne()const {return 0 /*NULL, actually*/;}
 
 public: // interface
   virtual unsigned portNumber()const {return 0;}

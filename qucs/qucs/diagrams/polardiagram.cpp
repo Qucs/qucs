@@ -90,12 +90,6 @@ int PolarDiagram::calcDiagram()
 }
 
 // ------------------------------------------------------------
-Diagram* PolarDiagram::newOne()
-{
-  return new PolarDiagram();
-}
-
-// ------------------------------------------------------------
 Element* PolarDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Polar");
