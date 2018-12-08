@@ -466,7 +466,7 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
 }
 
 // ---------------------------------------------------------------------
-void Marker::paintScheme(QPainter *p)
+void Marker::paintScheme(QPainter *p) const
 {
   assert(diag());
   int x0 = diag()->cx;
