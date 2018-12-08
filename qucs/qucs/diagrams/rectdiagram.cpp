@@ -245,12 +245,6 @@ void RectDiagram::clip(Graph::iterator &p) const
 }
 
 // ------------------------------------------------------------
-Diagram* RectDiagram::newOne()
-{
-  return new RectDiagram();
-}
-
-// ------------------------------------------------------------
 Element* RectDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Cartesian");

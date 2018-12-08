@@ -34,7 +34,7 @@ public:
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
-  Painting* newOne();
+  Object* newOne() const {return new GraphicText(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   bool load(const QString&);
   QString save();
