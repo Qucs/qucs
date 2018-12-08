@@ -113,7 +113,7 @@ RANDOM_LEGACY_STUFF = \
 	equation.cpp \
 	vafile.cpp
 
-nodist_libcomponents_a_SOURCES = $(MOCFILES) $(SIM_THINGS) \
+libcomponents_la_SOURCES = $(MOCFILES) $(SIM_THINGS) \
 	$(RANDOM_LEGACY_STUFF) \
 	$(DIALG_SRC) \
 	command.cpp \
