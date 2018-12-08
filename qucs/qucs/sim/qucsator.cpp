@@ -83,6 +83,7 @@ void QucsLang::printInstance(Component const* c, QTextStream& s) const
 }
 
 static QucsLang qucslang;
+static Dispatcher<NetLang>::INSTALL pl(&netlang_dispatcher, "qucsator", &qucslang);
 
 // qucsator simulator backend
 class Qucsator : public Simulator

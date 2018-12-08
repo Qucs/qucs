@@ -45,6 +45,7 @@
 #include "sim/sim.h"
 #include "io_trace.h"
 #include "command.h"
+#include "globals.h"
 
 
 // Here the subcircuits, SPICE components etc are collected. It must be
@@ -1266,6 +1267,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       pc->Ports.first()->Connection->Name = "gnd";
       continue;
     }else if(dynamic_cast<Subcircuit const*>(pc)) {
+      assert(pc->obsolete_model_hack()=="Sub"); // really?
       int i;
       // tell the subcircuit it belongs to this schematic
       pc->setSchematic (this);
@@ -1333,7 +1335,9 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
         return false;
       }
       continue;
-    } // if(pc->Model == "Sub")
+    }else{
+      assert(pc->obsolete_model_hack()!="Sub");
+    }
 
     if(LibComp* lib = dynamic_cast</*const*/LibComp*>(pc)) {
       if(creatingLib) {
@@ -1514,8 +1518,8 @@ bool Schematic::createLibNetlist(QTextStream *stream, QPlainTextEdit *ErrText,
 
 //#define VHDL_SIGNAL_TYPE "bit"
 //#define VHDL_LIBRARIES   ""
-#define VHDL_SIGNAL_TYPE "std_logic"
-#define VHDL_LIBRARIES   "\nlibrary ieee;\nuse ieee.std_logic_1164.all;\n"
+static const std::string VHDL_SIGNAL_TYPE("std_logic");
+static const std::string VHDL_LIBRARIES("\nlibrary ieee;\nuse ieee.std_logic_1164.all;\n");
 
 // ---------------------------------------------------
 void Schematic::createSubNetlistPlain(QTextStream *stream, QPlainTextEdit *ErrText,
@@ -1555,8 +1559,13 @@ int NumPorts)
       ErrText->appendPlainText(
         QObject::tr("WARNING: Ignore simulation component in subcircuit \"%1\".").arg(DocName)+"\n");
       continue;
-    }
-    else if(pc->obsolete_model_hack() == "Port") {
+    }else if(dynamic_cast<Port const*>(pc)
+      ||pc->obsolete_model_hack() == "Port" // BUG
+      ){
+      if(pc->obsolete_model_hack() != "Port"){
+	incomplete();
+      }
+
       i = pc->Props.first()->Value.toInt();
       for(z=SubcircuitPortNames.size(); z<i; z++) { // add empty port names
         SubcircuitPortNames.append(" ");
@@ -1606,9 +1615,11 @@ int NumPorts)
               (*it_name) += " : " + pc->Props.at(1)->Value;
           }
           (*it_name) += " " + ((*it_type).isEmpty() ?
-          VHDL_SIGNAL_TYPE : (*it_type));
+          QString::fromStdString(VHDL_SIGNAL_TYPE) : (*it_type));
         }
       }
+    }else{
+      assert(pc->obsolete_model_hack() != "Port");
     }
   }
 
@@ -1646,21 +1657,24 @@ int NumPorts)
       }
     (*tstream) << '\n';
 
+    auto nlp=netlang_dispatcher["qucsator"];
+    assert(nlp);
+
     // write all components with node names into netlist file
     for(pc = DocComps.first(); pc != 0; pc = DocComps.next()){
       try{
        	(*tstream) << pc->getNetlist();
       }catch(std::exception const&){
 	incomplete();
-	*tstream << "notyet";
+	nlp->printItem(pc, *tstream);
       }
     }
 
     (*tstream) << ".Def:End\n";
 
-  }
-  else {
+  } else {
     if (isVerilog) {
+      incomplete(); // use verilog
       // ..... digital subcircuit ...................................
       (*tstream) << "\nmodule Sub_" << Type << " ("
               << SubcircuitPortNames.join(", ") << ");\n";
@@ -1721,7 +1735,7 @@ int NumPorts)
       (*tstream) << "endmodule\n";
     } else {
       // ..... digital subcircuit ...................................
-      (*tstream) << VHDL_LIBRARIES;
+      (*tstream) << QString::fromStdString(VHDL_LIBRARIES);
       (*tstream) << "entity Sub_" << Type << " is\n"
                 << " port ("
                 << SubcircuitPortNames.join(";\n ") << ");\n";
@@ -1754,7 +1768,7 @@ int NumPorts)
         for (it = values.constBegin(); it != values.constEnd(); ++it) {
           (*tstream) << " signal " << (*it).Name << " : "
           << ((*it).Type.isEmpty() ?
-          VHDL_SIGNAL_TYPE : (*it).Type) << ";\n";
+	      QString::fromStdString(VHDL_SIGNAL_TYPE) : (*it).Type) << ";\n";
         }
       }
 
@@ -1917,7 +1931,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   }
 
   if (!isVerilog) {
-    stream << VHDL_LIBRARIES;
+    stream << QString::fromStdString(VHDL_LIBRARIES);
     stream << "entity TestBench is\n"
 	   << "end entity;\n"
 	   << "use work.all;\n";
@@ -1945,7 +1959,7 @@ void Schematic::beginNetlistDigital(QTextStream& stream, NetLang const& /*lang*/
     for (it = values.constBegin(); it != values.constEnd(); ++it) {
       stream << "  signal " << (*it).Name << " : "
 	     << ((*it).Type.isEmpty() ?
-		 VHDL_SIGNAL_TYPE : (*it).Type) << ";\n";
+		 QString::fromStdString(VHDL_SIGNAL_TYPE) : (*it).Type) << ";\n";
     }
     stream << "begin\n";
   }
