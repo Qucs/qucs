@@ -33,7 +33,7 @@ public:
  ~Wire();
 
   void paint(ViewPainter*);
-  void paintScheme(QPainter*);
+  void paintScheme(QPainter*) const;
   void setCenter(int, int, bool relative=false);
   void getCenter(int&, int&);
   bool getSelected(int, int);
