@@ -138,6 +138,8 @@ protected:
   void copyComponent(Component*);
   Property * getProperty(const QString&);
   Schematic* containingSchematic;
+private: // (hopefully) obsolete callbacks
+  void recreateCallback();
 };
 
 // need a baseclass for commands.
@@ -174,8 +176,6 @@ public:
 
   virtual QString getSubcircuitFile() { return ""; }
   // set the pointer scematic associated with the component
-  virtual void setSchematic (Schematic* p) { containingSchematic = p; }
-  virtual Schematic* getSchematic () {return containingSchematic; }
   // do somehting with buttons. can sb think of a more descriptive name?
   virtual void dialgButtStuff(ComponentDialog&)const;
 

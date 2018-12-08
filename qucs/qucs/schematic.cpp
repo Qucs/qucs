@@ -2120,6 +2120,7 @@ void Schematic::contentsDragEnterEvent(QDragEnterEvent *Event)
     QString s = Event->mimeData()->text();
     if(s.left(15) == "QucsComponent:<") {
       s = s.mid(14);
+		incomplete();
       App->view->selElem = getComponentFromName(s);
       if(App->view->selElem) {
         Event->accept();
