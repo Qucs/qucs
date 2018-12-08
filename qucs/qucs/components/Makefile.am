@@ -71,6 +71,18 @@ LATER= \
   DLS_nto1.cpp DLS_1ton.cpp andor4x2.cpp andor4x3.cpp andor4x4.cpp            \
   dmux2to4.cpp dmux3to8.cpp dmux4to16.cpp ha1b.cpp fa1b.cpp fa2b.cpp         
 
+MORE_LATER = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
+  vcvs.cpp vccs.cpp tr_sim.cpp tline.cpp substrate.cpp sp_sim.cpp             \
+  param_sweep.cpp mstee.cpp msstep.cpp msline.cpp mscross.cpp mscoupled.cpp mslange.cpp   \
+  mscorner.cpp hb_sim.cpp diode.cpp dc_sim.cpp coplanar.cpp ccvs.cpp cccs.cpp \
+subcirport.cpp ground.cpp        \
+  dcfeed.cpp dcblock.cpp biast.cpp inductor.cpp capacitor.cpp vhdlfile.cpp    \
+  component.cpp iprobe.cpp volt_noise.cpp ampere_noise.cpp       \
+  msmbend.cpp msopen.cpp ampere_ac.cpp bjt.cpp jfet.cpp mosfet.cpp            \
+  msgap.cpp bjtsub.cpp mosfet_sub.cpp vpulse.cpp ipulse.cpp vrect.cpp         \
+  irect.cpp msvia.cpp amplifier.cpp opamp.cpp spicefile.cpp cpwopen.cpp       \
+  cpwshort.cpp spicedialog.cpp cpwgap.cpp cpwstep.cpp libcomp.cpp mutual.cpp  
+
 # are these really *source* files?!
 # verilogstuff =
 # binarytogrey4bit.cpp vafile.cpp         \

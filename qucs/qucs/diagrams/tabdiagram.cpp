@@ -404,9 +404,9 @@ bool TabDiagram::scrollTo(int initial, int, int dy)
 }
 
 // ------------------------------------------------------------
-Diagram* TabDiagram::newOne()
+Object* TabDiagram::newOne() const
 {
-  return new TabDiagram();
+  return new TabDiagram(*this);
 }
 
 // ------------------------------------------------------------

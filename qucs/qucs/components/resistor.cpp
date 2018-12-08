@@ -14,18 +14,18 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "l_dispatcher.h"
+#include "globals.h"
 #include "node.h"
 #include "schematic.h"
-#include "symbol.h"
+#include "component.h"
 
 namespace{
 
-class Resistor : public SYMBOL {
+class Resistor : public MultiViewComponent {
 public:
   Resistor(bool european=true);
  ~Resistor() {};
-  Component* newOne();
+  Object* newOne() const;
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_us(QString&, char* &, bool getNewOne=false);
 
@@ -33,8 +33,10 @@ protected:
   void createSymbol();
 }R;
 
-static Dispatcher<SYMBOL> p("resistor", &R);
-static Dispatcher<SYMBOL> p("Rus", &R);
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "resistor", &R);
+
+// alias. here?!
+static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "Rus", &R);
 
 Resistor::Resistor(bool european)
 {
@@ -64,7 +66,7 @@ Resistor::Resistor(bool european)
 }
 
 // -------------------------------------------------------
-Component* Resistor::newOne()
+Object* Resistor::newOne() const
 {
   return new Resistor(Props.getLast()->Value != "US");
 }

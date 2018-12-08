@@ -27,7 +27,7 @@ public:
  ~CurveDiagram();
 
 
-  Diagram* newOne();
+  Object* newOne() const;
   static Element* info(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();

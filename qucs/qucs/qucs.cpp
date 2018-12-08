@@ -52,7 +52,7 @@
 #include "wire.h"
 #include "module.h"
 #include "projectView.h"
-#include "components/components.h"
+#include "components/component.h"
 #include "paintings/paintings.h"
 #include "diagrams/diagrams.h"
 #include "dialogs/savedialog.h"

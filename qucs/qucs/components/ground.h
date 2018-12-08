@@ -25,7 +25,7 @@ class Ground : public Component  {
 public:
   Ground();
  ~Ground();
-  Component* newOne();
+  Object* newOne() const;
   static Element* info(QString&, char* &, bool getNewOne=false);
 
 protected:

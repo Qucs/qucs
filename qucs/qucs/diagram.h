@@ -61,7 +61,7 @@ public:
   Diagram(int _cx=0, int _cy=0);
   virtual ~Diagram();
 
-  virtual Diagram* newOne();
+  // virtual Object* newOne(); from Element
   virtual int  calcDiagram() { return 0; };
   virtual void calcCoordinate
                (const double*, const double*, const double*, float*, float*, Axis const*) const {};
