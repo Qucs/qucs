@@ -18,6 +18,7 @@
 #ifndef MODULE_H
 #define MODULE_H
 
+#include <QDebug>
 #include <QList>
 #include <QHash>
 #include <QMap>
@@ -73,6 +74,7 @@ class Module
       _cat(cat),
       _p(p)
     {
+		qDebug() << "INSTALL" << QString::fromStdString(cat);
       assert(p);
 		registerElement(QString::fromStdString(cat), p);
     }
