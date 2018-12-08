@@ -76,7 +76,7 @@ public:
   void paintMarkers(ViewPainter* p, bool paintAll = true);
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
-  void    paintScheme(Schematic*);
+  void    paintScheme(Schematic*) const;
   void    Bounding(int&, int&, int&, int&);
   bool    getSelected(int, int);
   bool    resizeTouched(float, float, float);

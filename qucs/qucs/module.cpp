@@ -198,7 +198,7 @@ void Module::intoCategory (Module * m) {
 
 
 // find component. find category. pass it on.
-static void REGISTER_COMP_1(std::string const& cat, std::string name)
+static void REGISTER_COMP_1(std::string const& cat, std::string const& name)
 {
 	qDebug() << "reg" << QString::fromStdString(cat) << QString::fromStdString(name);
 
@@ -206,9 +206,17 @@ static void REGISTER_COMP_1(std::string const& cat, std::string name)
   incomplete();
   // this will only work, if symbols were already loaded.
   // FIXME: do this upon module loading!
-//  auto sym = symbol_dispatcher[name];
-//  Component const* legacy_component = prechecked_cast<Component const*>(sym);
-//  registerComponent (cat, &legacy_component)
+  Symbol const* sym = symbol_dispatcher[name];
+  Component const* legacy_component = prechecked_cast<Component const*>(sym);
+  if(legacy_component){
+	  qDebug() << "loading" << QString::fromStdString(name)
+		        << "into" << QString::fromStdString(cat);
+	  guiRegisterElement(cat, legacy_component);
+  }else{ incomplete();
+	  qDebug() << QString::fromStdString(name)
+		        << "not loaded?!";
+	  // not loaded yet?
+  }
 }
 
 #define REGISTER_SIM_1(cat,val) \
@@ -264,7 +272,7 @@ static void REGISTER_COMP_1(std::string const& cat, std::string name)
 void Module::registerModules (void) {
 
   // lumped components
-  REGISTER_LUMPED_1 (Resistor);
+  REGISTER_LUMPED_1 (R);
   REGISTER_LUMPED_1 (Rus);
 #if 0 // this does not work
   REGISTER_LUMPED_1 (Capacitor);

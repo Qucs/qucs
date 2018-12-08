@@ -34,7 +34,7 @@ public:
             int _x1=0, int _y1=0, int _Type=isNodeLabel);
   ~WireLabel();
 
-  void paintScheme(QPainter *p);
+  void paintScheme(QPainter *p) const;
   void setCenter(int x, int y, bool relative=false);
   bool getSelected(int, int);
   void setName(const QString& Name_);

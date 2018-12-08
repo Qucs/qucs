@@ -306,7 +306,7 @@ void Command::paint(ViewPainter *p)
 
 // -------------------------------------------------------
 // Paints the component when moved with the mouse.
-void Command::paintScheme(Schematic *p)
+void Command::paintScheme(Schematic *p) const
 {
   // qDebug() << "paintScheme" << Model;
   if(Model.at(0) == '.') {   // is simulation component (dc, ac, ...)
@@ -330,9 +330,14 @@ void Command::paintScheme(Schematic *p)
     }
     xb = a + int(12.0*Scale);
     yb = b + int(10.0*Scale);
+
+    // BUG. modifies const object
     x2 = x1+25 + int(float(a) / Scale);
     y2 = y1+23 + int(float(b) / Scale);
-    if(ty < y2+1) if(ty > y1-r.height())  ty = y2 + 1;
+    if(ty < y2+1) if(ty > y1-r.height())
+    {
+      ty = y2 + 1;
+    }
 
     p->PostPaintEvent(_Rect,cx-6, cy-5, xb, yb);
     p->PostPaintEvent(_Line,cx-1, cy+yb, cx-6, cy+yb-5);

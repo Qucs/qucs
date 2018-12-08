@@ -42,7 +42,7 @@ WireLabel::~WireLabel()
 }
 
 // ----------------------------------------------------------------
-void WireLabel::paintScheme(QPainter *p)
+void WireLabel::paintScheme(QPainter *p) const
 {
   p->drawRect(x1, y1, x2, y2);
 
