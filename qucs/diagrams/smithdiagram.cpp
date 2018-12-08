@@ -103,12 +103,6 @@ int SmithDiagram::calcDiagram()
 }
 
 // ------------------------------------------------------------
-Diagram* SmithDiagram::newOne()
-{
-  return new SmithDiagram();
-}
-
-// ------------------------------------------------------------
 Element* SmithDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Smith Chart");

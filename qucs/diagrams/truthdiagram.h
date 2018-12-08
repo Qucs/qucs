@@ -26,7 +26,7 @@ public:
   TruthDiagram(int _cx=0, int _cy=0);
  ~TruthDiagram();
 
-  Diagram* newOne();
+  Object* newOne() const {return new TruthDiagram(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   int calcDiagram();
 };

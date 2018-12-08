@@ -118,12 +118,6 @@ void GraphicText::setCenter(int x, int y, bool relative)
 }
 
 // -----------------------------------------------------------------------
-Painting* GraphicText::newOne()
-{
-  return new GraphicText();
-}
-
-// --------------------------------------------------------------------------
 Element* GraphicText::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Text");

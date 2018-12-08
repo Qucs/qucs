@@ -191,7 +191,7 @@ public:
   TT* clone(std::string s) {
     TT* proto = (*this)[s];
     if (proto) {
-      return proto->clone();
+      return proto->newOne();
     }else{untested();
       return NULL;
     }

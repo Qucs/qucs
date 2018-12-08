@@ -26,8 +26,7 @@ public:
   SmithDiagram(int _cx=0, int _cy=0, bool ImpMode=true);
  ~SmithDiagram();
 
-
-  Diagram* newOne();
+  Object* newOne() const {return new SmithDiagram(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_y(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();

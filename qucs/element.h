@@ -40,8 +40,7 @@
 #include <QPen>
 #include <QBrush>
 #include "object.h"
-
-#include "object.h"
+#include "io_trace.h"
 
 class Node;
 class QPainter;

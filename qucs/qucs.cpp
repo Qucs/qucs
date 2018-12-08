@@ -72,6 +72,7 @@
 #include "imagewriter.h"
 #include "../qucs-lib/qucslib_common.h"
 #include "misc.h"
+#include "globals.h"
 
 struct iconCompInfoStruct
 {
@@ -637,9 +638,11 @@ void QucsApp::slotSetCompView (int index)
 
       // Just need path to bitmap, do not create an object
       QString Name, vaBitmap;
-      Component * c = (Component *)
-              vacomponent::info (Name, vaBitmap, false, i.value());
-      if (c) delete c;
+		incomplete();
+/// what's this?
+///       Component * c = (Component *)
+///               vacomponent::info (Name, vaBitmap, false, i.value());
+///       if (c) delete c;
 
       // check if icon exists, fall back to default
       QString iconPath = QucsSettings.QucsWorkDir.filePath(vaBitmap+".png");
@@ -754,7 +757,9 @@ void QucsApp::slotSearchComponent(const QString &searchText)
       i.next();
       // Just need path to bitmap, do not create an object
       QString Name, vaBitmap;
-      vacomponent::info (Name, vaBitmap, false, i.value());
+
+		incomplete();
+      // what's this? vacomponent::info (Name, vaBitmap, false, i.value());
 
       if((Name.indexOf(searchText, 0, Qt::CaseInsensitive)) != -1) {
         //match
@@ -2400,13 +2405,16 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
   }
   activeAction = 0;
 
-  Component *Comp;
-  if(isVHDL)
-    Comp = new VHDL_File();
-  else if(isVerilog)
-    Comp = new Verilog_File();
-  else
-    Comp = new Subcircuit();
+  Symbol* Symb;
+  if(isVHDL){
+	  Symb = symbol_dispatcher.clone("VHDL_legacy");
+  }else if(isVerilog){
+	  Symb = symbol_dispatcher.clone("Verilog_legacy");
+  }else{
+	  Symb = symbol_dispatcher.clone("Subcircuit_legacy");
+  }
+  Component *Comp = prechecked_cast<Component*>(Symb);
+  assert(Comp);
   Comp->Props.first()->Value = idx.sibling(idx.row(), 0).data().toString();
   Comp->recreate(0);
   view->selElem = Comp;
