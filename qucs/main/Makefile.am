@@ -7,7 +7,8 @@ include ../common.mk
 
 qucs_real_LDFLAGS = $(QT_LDFLAGS)
 qucs_real_SOURCES = main.cpp # qucs_.qrc
-qucs_real_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) -I${top_srcdir}/qucs
+qucs_real_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) -I${top_srcdir}/qucs\
+		-DQUCS_PLUGPATH=\"${pkglibdir}\"
 
 # these are not plugins yet. but there's hope.
 # TODO:
@@ -18,7 +19,6 @@ PLUGINS = \
 	../qucs/diagrams/libdiagrams.la \
 	../qucs/paintings/libpaintings.la \
 	../qucs/dialogs/libdialogs.la
-
 
 if COND_WIN32
 qucs_real_LDADD = \

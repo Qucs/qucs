@@ -56,8 +56,6 @@
 #include <Windows.h>  //for OutputDebugString
 #endif
 
-// void attach(const char*); not yet.
-
 /*!
  * \brief qucsMessageOutput handles qDebug, qWarning, qCritical, qFatal.
  * \param type Message type (Qt enum)
@@ -576,6 +574,15 @@ int main(int argc, char *argv[])
   QucsSettings.ExamplesDir = QucsDir.canonicalPath() + "/share/qucs/examples/";
   QucsSettings.DocDir =      QucsDir.canonicalPath() + "/share/qucs/docs/";
 
+  // TODO: cleanup
+  const char* ppenv=getenv("QUCS_PLUGPATH");
+  std::string plugpath;
+  if(!ppenv){
+    plugpath = QUCS_PLUGPATH;
+  }else{
+    plugpath=ppenv;
+  }
+  attach((plugpath + "/qucsator").c_str());
 
   /// \todo Make the setting up of all executables below more consistent
   var = getenv("QUCSATOR");
