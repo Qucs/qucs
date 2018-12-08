@@ -1433,9 +1433,12 @@ void QucsApp::slotLoadModule()
       QMutableHashIterator<QString, Module *> it( Module::Modules );
       while(it.hasNext()) {
         it.next();
-        if (it.value()->category == QObject::tr("verilog-a user devices")) {
-          it.remove();
-        }
+
+	// BUG: what is this?
+	// ( it's not needed for loading modules.)
+//        if (it.value()->category == QObject::tr("verilog-a user devices")) {
+//          it.remove();
+//        }
       }
 
       if (! Module::vaComponents.isEmpty()) {

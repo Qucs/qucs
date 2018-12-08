@@ -30,7 +30,10 @@ public:
   virtual void getCenter(int&, int &) {};
   virtual bool getSelected(float, float, float) { return false; };
 
-  virtual Object* newOne() const;
+  virtual Painting* newOne() const { unreachable(); // does it make sense?
+	  return new Painting(*this);
+  }
+
   virtual bool load(const QString&) { return true; };
   virtual QString save();
   virtual QString saveCpp();

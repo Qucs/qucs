@@ -358,7 +358,7 @@ public:
   bool creatingLib;
 
 public: // serializer
-  void saveComponent(QTextStream& s, Component /* FIXME const */* c) const;
+  void saveComponent(QTextStream& s, Component const* c) const;
 };
 
 #endif

@@ -26,7 +26,8 @@ public:
   TimingDiagram(int _cx=0, int _cy=0);
  ~TimingDiagram();
 
-  Object* newOne() const;
+  Diagram* newOne() const { return new TimingDiagram(*this); }
+
   static Element* info(QString&, char* &, bool getNewOne=false);
   void paint(ViewPainter *p);
   void paintDiagram(ViewPainter *p);

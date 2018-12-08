@@ -38,10 +38,11 @@ QList<Category *> Category::Categories;
 
 QMap<QString, QString> Module::vaComponents;
 
-// Constructor creates instance of module object.
-Module::Module () {
-  info = 0;
-  category = "#special";
+// register Elements to the gui.
+// the implementation is legacy, but the interface should be able to survive.
+INTERFACE void guiRegisterElement (std::string const& cat, Element const* e)
+{
+	Module::registerElement(QString::fromStdString(cat), e);
 }
 
 // Destructor removes instance of module object from memory.
@@ -50,16 +51,18 @@ Module::~Module () {
 
 // Module registration using a category name and the appropriate
 // function returning a modules instance object.
-void Module::registerModule (QString category, pInfoFunc info) {
-  Module * m = new Module ();
-  m->info = info;
-  m->category = category;
+void Module::registerElement (QString category, Element const* e) {
+  Module * m = new Module (e);
+  // m->category = category; // OUCH, incomplete?
   intoCategory (m);
 }
 
 // Component registration using a category name and the appropriate
 // function returning a components instance object.
-void Module::registerComponent (QString category, pInfoFunc info) {
+void Module::registerComponent (QString category, pInfoFunc info)
+{
+	incomplete();
+#if 0 // pointless?
   Module * m = new Module ();
   m->info = info;
   m->category = category; // OUCH
@@ -76,21 +79,15 @@ void Module::registerComponent (QString category, pInfoFunc info) {
   intoCategory (m);
   if (!Modules.contains (Model))
     Modules.insert (Model, m);
+#endif
 }
 
+#if 0 // dont understand.
 // Returns instantiated component based on the given "Model" name.  If
 // there is no such component registers the function returns NULL.
-// BUG: also gets non-components.
 Component * Module::getComponent (QString Model)
 {
-  if(Model.data()[0] == '.'){
-	 incomplete();
-
-	 qDebug() << "not a command?" << Model;
-	 // this is not a component. d'uh
-    Model=QString(Model.data()+1);
-  }else{
-  }
+	incomplete();
   if ( Modules.contains(Model)) {
     Module *m = Modules.find(Model).value();
     QString Name;
@@ -108,6 +105,7 @@ Component * Module::getComponent (QString Model)
   }
   return 0;
 }
+#endif
 
 #if 0
 // no. components must register to the select-dialogs
@@ -163,6 +161,7 @@ incomplete();
 
 // The function appends the given module to the appropriate category.
 // If there is no such category yet, then the category gets created.
+// BUG: retrieves the category from the element.
 void Module::intoCategory (Module * m) {
 
   // look through existing categories
@@ -186,14 +185,16 @@ void Module::intoCategory (Module * m) {
 
 // Helper macros for module registration.
 #define REGISTER_MOD_1(cat,val) \
-  registerModule (cat, &val::info)
-#define REGISTER_MOD_2(cat,val,inf1,inf2) \
-  registerModule (cat, &val::inf1); \
-  registerModule (cat, &val::inf2)
-#define REGISTER_MOD_3(cat,val,inf1,inf2,inf3) \
-  registerModule (cat, &val::inf1); \
-  registerModule (cat, &val::inf2); \
-  registerModule (cat, &val::inf3)
+  guiRegisterElement (cat, new val())
+
+// BUG. this does not work
+// #define REGISTER_MOD_2(cat,val,inf1,inf2) \
+//   registerElementToGui (cat, val::inf1()); \
+//   registerElementToGui (cat, val::inf2())
+// #define REGISTER_MOD_3(cat,val,inf1,inf2,inf3) \
+//   registerElementToGui (cat, val::inf1()); \
+//   registerElementToGui (cat, val::inf2()); \
+//   registerElementToGui (cat, val::inf3())
 
 
 // find component. find category. pass it on.
@@ -249,7 +250,7 @@ static void REGISTER_COMP_1(std::string const& cat, std::string name)
 #define REGISTER_SIMULATION_1(val) \
   REGISTER_SIM_1 (QObject::tr("simulations"),val)
 #define REGISTER_DIAGRAM_1(val) \
-  REGISTER_MOD_1 (QObject::tr("diagrams"),val)
+  REGISTER_MOD_1 ("diagrams", val)
 #define REGISTER_DIAGRAM_2(val,inf1,inf2) \
   REGISTER_MOD_2 (QObject::tr("diagrams"),val,inf1,inf2)
 #define REGISTER_PAINT_1(val) \
@@ -452,11 +453,11 @@ void Module::registerModules (void) {
   REGISTER_SIMULATION_1 (Optimize_Sim);
 
   // diagrams
-  REGISTER_DIAGRAM_1 (RectDiagram);
+//  REGISTER_DIAGRAM_2 (RectDiagram);
   REGISTER_DIAGRAM_1 (PolarDiagram);
   REGISTER_DIAGRAM_1 (TabDiagram);
-  REGISTER_DIAGRAM_2 (SmithDiagram, info, info_y);
-  REGISTER_DIAGRAM_2 (PSDiagram, info, info_sp);
+//  REGISTER_DIAGRAM_2 (SmithDiagram, info, info_y);
+//  REGISTER_DIAGRAM_2 (PSDiagram, info, info_sp);
   REGISTER_DIAGRAM_1 (Rect3DDiagram);
   REGISTER_DIAGRAM_1 (CurveDiagram);
   REGISTER_DIAGRAM_1 (TimingDiagram);

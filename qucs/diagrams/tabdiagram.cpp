@@ -403,11 +403,6 @@ bool TabDiagram::scrollTo(int initial, int, int dy)
   return true;
 }
 
-// ------------------------------------------------------------
-Object* TabDiagram::newOne() const
-{
-  return new TabDiagram(*this);
-}
 
 // ------------------------------------------------------------
 Element* TabDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)

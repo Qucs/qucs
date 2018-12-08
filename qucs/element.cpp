@@ -28,11 +28,11 @@ Element::~Element()
 {
 }
 
-void Element::paintScheme(Schematic *)
+void Element::paintScheme(Schematic *) const
 {
 }
 
-void Element::paintScheme(QPainter *)
+void Element::paintScheme(QPainter *) const
 {
 }
 

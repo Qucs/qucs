@@ -147,12 +147,18 @@ public:
   Element();
   virtual ~Element();
 
-  virtual void paintScheme(Schematic *); // obsolete?
-  virtual void paintScheme(QPainter *); // obsolete?
+  virtual void paintScheme(Schematic *) const; // obsolete?
+  virtual void paintScheme(QPainter *) const; // obsolete?
   virtual void draw(QPainter&) { incomplete(); }
   virtual void setCenter(int, int, bool relative=false);
   virtual void getCenter(int&, int&);
 
+public:
+  virtual Element* newOne()const { unreachable(); return 0 /*NULL, actually*/;}
+  QString name() const{incomplete(); return "ELEMENT"; }
+  virtual QString file() const{incomplete(); return "FILE"; }
+
+//private: FIXME
   bool isSelected;
   int  Type;    // whether it is Component, Wire, ...
   int  cx, cy, x1, y1, x2, y2;  // center and relative boundings

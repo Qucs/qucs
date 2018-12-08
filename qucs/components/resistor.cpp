@@ -26,7 +26,7 @@ public:
   Resistor(bool european=true);
  ~Resistor() {};
   // return new Resistor(Props.getLast()->Value != "US"); ?!
-  Symbol* newOne() const {return new Resistor(*this);}
+  Component* newOne() const {return new Resistor(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_us(QString&, char* &, bool getNewOne=false);
 

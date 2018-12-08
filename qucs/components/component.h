@@ -33,13 +33,12 @@ public:
   Component();
   virtual ~Component() {};
 
-  virtual Component* newOne() /* BUG: const */;
   virtual Component* clone() const{
 	  return const_cast<Component*>(this)->newOne();
   }
 
   virtual void recreate(Schematic*) {};
-  QString getNetlist() const {return netlist();}
+  QString getNetlist() const; // BUG. use netlister to create netlist
   QString get_VHDL_Code(int);
   QString get_Verilog_Code(int);
   void    paint(ViewPainter*);
@@ -64,7 +63,7 @@ public:
   virtual QString getSubcircuitFile() const { return ""; }
   // set the pointer scematic associated with the component
   virtual void setSchematic (Schematic* p) { containingSchematic = p; }
-  virtual Schematic* getSchematic () {return containingSchematic; }
+  virtual Schematic* getSchematic () const {return containingSchematic; }
   // do somehting with buttons. can sb think of a more descriptive name?
   virtual void dialgButtStuff(ComponentDialog&)const;
 

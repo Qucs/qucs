@@ -33,7 +33,7 @@ public:
 public:
   SpiceFile();
  ~SpiceFile() {};
-  Symbol* newOne() const {return new SpiceFile(/* *this */);}
+  Component* newOne() const {return new SpiceFile(/* *this */);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 
   bool withSim;
