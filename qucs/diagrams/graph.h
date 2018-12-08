@@ -87,6 +87,7 @@ class Graph : public Element {
 public:
   Graph(const Diagram*, const QString& _Line="");
  ~Graph();
+  Element* newOne()const{ incomplete(); return NULL;}
 
   class ScrPt{
     float ScrX;
