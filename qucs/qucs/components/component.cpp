@@ -680,8 +680,6 @@ QString Component::get_VHDL_Code(int NumPorts)
 
 // -------------------------------------------------------
 
-// -------------------------------------------------------
-
 // *******************************************************************
 // ***  The following functions are used to load the schematic symbol
 // ***  from file. (e.g. subcircuit, library component)
@@ -1407,5 +1405,21 @@ void Component::dialgButtStuff(ComponentDialog& d)const
   incomplete();
   // d.disableButtons();
 }
+
+# if 0
+// is this needed in subcircuit?
+// (what is subcircuit?)
+void Component::setSchematic(Schematic* p)
+{
+  cstr = c->Name;   // is randomly changed in "recreate" (e.g. subcircuit)
+  int x = c->tx;
+  int y = c->ty;
+  Symbol::setSchematic(p);
+  recreate(0);
+  Name = cstr;
+  tx = x;
+  ty = y;
+}
+# endif
 
 // vim:ts=8:sw=2:noet

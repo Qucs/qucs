@@ -655,7 +655,28 @@ void Schematic::simpleInsertComponent(Component *c)
   DocComps.append(c);
 }
 
+// todo: proper string processing
+static std::string find_type_in_string(QString& Line)
+{
+  Line = Line.trimmed();
+  if(Line.at(0) != '<') {
+    QMessageBox::critical(0, QObject::tr("Error"),
+			QObject::tr("Format Error:\nWrong line start!"));
+    incomplete();
+    // throw exception_CS?
+  //  return 0;
+  }
+
+  QString cstr = Line.section (' ',0,0); // component type
+  cstr.remove (0,1);    // remove leading "<"
+
+  return cstr.toLatin1().data();
+}
+
 // -------------------------------------------------------------
+// TODO:
+// - rename, this is about Elements
+// - don't abuse schematic for parsing
 bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
 {
   QString Line, cstr;
@@ -669,17 +690,35 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
     Line = Line.trimmed();
     if(Line.isEmpty()) continue;
 
-    /// \todo enable user to load partial schematic, skip unknown components
-    qDebug() << "loadline" << Line;
-    c = getComponentFromName(Line, this);
+    std::string type = find_type_in_string(Line);
+
+//    c = getComponentFromName(Line, this);
+    Symbol* c = symbol_dispatcher[type];
+    if(c==NULL){
+      incomplete();
+      // throw Exception?
+	//QMessageBox::critical(0, QObject::tr("Error"),
+	  //  QObject::tr("Format Error:\nWrong 'component' line format!"));
+    }else{
+
+      if(!loadElement(Line, c->newOne())) {
+	delete c;
+	return 0;
+      }
+
+      c->setSchematic(this);
+    }
+
+    // this is what exceptions are for.
     if(!c) return false;
 
     if(List) {  // "paste" ?
-      int z;
-      for(z=c->name().length()-1; z>=0; z--) // cut off number of component name
-        if(!c->name().at(z).isDigit()) break;
-      c->obsolete_name_override_hack(c->name().left(z+1));
-      List->append(c);
+      incomplete();
+      // int z;
+      // for(z=c->Name.length()-1; z>=0; z--) // cut off number of component name
+      //   if(!c->Name.at(z).isDigit()) break;
+      // c->Name = c->Name.left(z+1);
+      // List->append(c);
     }else{
       simpleInsertComponent(c);
     }
