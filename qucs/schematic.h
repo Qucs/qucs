@@ -346,6 +346,7 @@ private:
   QStringList PortTypes;
 
 public: // for now. move to parser asap
+	Element* loadElement(const QString& _s, Element* c) const;
 	Component* loadComponent(const QString& _s, Component* c) const;
 
 public:
