@@ -37,9 +37,9 @@ protected:
   void createSymbol();
 }R;
 
-// this is the schematic name, not the name in the toolbox
+// this is the schematic name...
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "R", &R);
-// the name in the toolbox...
+// the toolbox item
 static Module::INSTALL pp("lumped", &R);
 
 Resistor::Resistor(bool european)
