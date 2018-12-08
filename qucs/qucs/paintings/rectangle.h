@@ -32,7 +32,7 @@ public:
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
-  Painting* newOne();
+  Object* newOne() const;
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_filled(QString&, char* &, bool getNewOne=false);
   bool load(const QString&);
