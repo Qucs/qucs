@@ -33,7 +33,14 @@ public:
 public:
   SpiceFile();
  ~SpiceFile() {};
-  Component* newOne() const {return new SpiceFile(/* *this */);}
+  Component* newOne() const // BUG. should be {return new SpiceFile(*this);}
+  {
+	SpiceFile *p = new SpiceFile();
+	p->recreate(0);   // createSymbol() is NOT called in constructor !!!
+	return p;
+  }
+
+// -------------------------------------------------------
   static Element* info(QString&, char* &, bool getNewOne=false);
 
   bool withSim;
