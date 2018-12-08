@@ -1640,8 +1640,14 @@ int NumPorts)
     (*tstream) << '\n';
 
     // write all components with node names into netlist file
-    for(pc = DocComps.first(); pc != 0; pc = DocComps.next())
-      (*tstream) << pc->getNetlist();
+    for(pc = DocComps.first(); pc != 0; pc = DocComps.next()){
+      try{
+       	(*tstream) << pc->getNetlist();
+      }catch(std::exception const&){
+	incomplete();
+	*tstream << "notyet";
+      }
+    }
 
     (*tstream) << ".Def:End\n";
 
