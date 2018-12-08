@@ -17,6 +17,17 @@
 
 #include "volt_dc.h"
 
+namespace{
+
+class Volt_dc : public Component  {
+public:
+  Volt_dc();
+  ~Volt_dc();
+  Component* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
+} VS;
+
+static Dispatcher<SYMBOL> p("volt_dc", &VS);
 
 Volt_dc::Volt_dc()
 {
@@ -63,4 +74,5 @@ Element* Volt_dc::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Volt_dc();
   return 0;
+}
 }

@@ -23,7 +23,6 @@
 #include "component.h"
 
 #include "ground.h"
-#include "resistor.h"
 #include "capacitor.h"
 #include "capq.h"
 #include "inductor.h"
@@ -47,7 +46,6 @@
 #include "circulator.h"
 #include "gyrator.h"
 #include "phaseshifter.h"
-#include "volt_dc.h"
 #include "ampere_dc.h"
 #include "volt_ac.h"
 #include "ampere_ac.h"
