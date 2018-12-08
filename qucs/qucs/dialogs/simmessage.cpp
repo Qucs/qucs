@@ -47,6 +47,7 @@ using namespace std;
 #include "components/opt_sim.h"
 #include "components/vhdlfile.h"
 #include "misc.h"
+#include "globals.h"
 
 /*!
  * \brief Create a simulation messages dialog.

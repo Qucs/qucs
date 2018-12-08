@@ -50,6 +50,7 @@
 #include "misc.h"
 
 #include "components/components.h"
+#include "globals.h"
 
 #ifdef _WIN32
 #include <Windows.h>  //for OutputDebugString

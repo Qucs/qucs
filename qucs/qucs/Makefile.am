@@ -64,7 +64,13 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 pqucsdir=${pkglibdir}
 pqucs_LTLIBRARIES = \
 	libqucsschematic.la \
-	libqucsgui.la
+	libqucsgui.la \
+	libqucs.la
+
+libqucs_la_SOURCES = \
+	globals.cpp \
+	module.cpp \
+	io_error.cpp
 
 # TODO:
 # - parts must go to libqucs
