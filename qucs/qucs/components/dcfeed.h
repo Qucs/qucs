@@ -25,7 +25,7 @@ class dcFeed : public Component  {
 public:
   dcFeed();
   ~dcFeed();
-  Component* newOne();
+  Symbol* newOne() {return new dcFeed(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 };
 
