@@ -168,6 +168,15 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   MatchSettingslayout->addWidget(BW_Spinbox, 12, 1);
   MatchSettingslayout->addWidget(BW_Scale_Combo, 12, 2);
 
+  //Quarter wavelength transmission line lumped equivalent
+  Lumped_QW_Label = new QLabel(QString("%1/4 line implementation").arg(QChar(0xBB, 0x03)));
+  Lumped_QW_Combo = new QComboBox();
+  Lumped_QW_Combo->addItem("Transmission line");
+  Lumped_QW_Combo->addItem(QString(tr("%1-type equivalent").arg(QChar(0xC0, 0x03))));
+  Lumped_QW_Combo->addItem(tr("T-type equivalent"));
+  MatchSettingslayout->addWidget(Lumped_QW_Label, 13, 0);
+  MatchSettingslayout->addWidget(Lumped_QW_Combo, 13, 1);
+
   //Default settings
   Order_Label->setVisible(false);
   Order_Spinbox->setVisible(false);
@@ -197,7 +206,8 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   BW_Label->setVisible(false);
   BW_Spinbox->setVisible(false);
   BW_Scale_Combo->setVisible(false);
-
+  Lumped_QW_Label->setVisible(false);
+  Lumped_QW_Combo->setVisible(false);
 
   switch (topology) {
   case SINGLESTUB:
@@ -215,6 +225,8 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
        maxRipple_Spinbox->setVisible(true);
        Weighting_Type_Label->setVisible(true);
        Weighting_Type_Combo->setVisible(true);
+       Lumped_QW_Label->setVisible(true);
+       Lumped_QW_Combo->setVisible(true);
        break;
 
   case CASCADEDLSECTIONS:
@@ -228,8 +240,10 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
        Network_Response_Combo->setVisible(true);
        break;
 
-  case QUARTER_WAVE_LINE:
   case L8L4:
+  case QUARTER_WAVE_LINE:
+       Lumped_QW_Label->setVisible(true);
+       Lumped_QW_Combo->setVisible(true);
        break;
 
   case TEE_TYPE:
@@ -318,6 +332,7 @@ void MatchSettingsDialog::slot_save_settings(){
     params.k = k_Transformer_Spinbox->value();
     params.coupled_L_Equivalent = coupled_L_Combo->currentIndex();
     params.BW = BW_Spinbox->value()*getScale(BW_Scale_Combo->currentText());
+    params.use_lumped_equivalent = Lumped_QW_Combo->currentIndex();
     accept();
 }
 

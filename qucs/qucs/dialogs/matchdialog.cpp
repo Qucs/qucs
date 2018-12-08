@@ -1547,7 +1547,10 @@ QString MatchDialog::calcChebyLines(struct NetworkParams params) {
     (RL < Z0) ? Zi = exp(log(Zaux) - ImplParams.gamma_MAX * w[i])
               : Zi = exp(log(Zaux) + ImplParams.gamma_MAX * w[i]); // When RL<Z0, Z_{i}<Z_{i-1}
     Zaux = Zi;
-    laddercode += QString("TL:%1#%2;").arg(Zi).arg(l4);
+    if (ImplParams.use_lumped_equivalent == 0)
+       laddercode += QString("TL:%1#%2;").arg(Zi).arg(l4);
+    else
+       laddercode += CalcQuarterWaveEquivalent(params.freq, Zaux, ImplParams.use_lumped_equivalent);
   }
   return laddercode;
 }
@@ -2108,23 +2111,34 @@ QString MatchDialog::calcSeriesDoubleTunedTransformer(struct NetworkParams param
 QString MatchDialog::calcMatchingLambda8Lambda4(struct NetworkParams params) {
   double l4 = SPEED_OF_LIGHT / (4. * params.freq);
   double l8 = .5 * l4;
-
+  struct ImplementationParams ImplParams;
   double RL, XL, Z0;
   if (params.network == SINGLE_PORT)
   {
       RL = params.S11real, XL = params.S11imag;
       Z0 = params.Z1;
+      ImplParams = params.InputNetwork;
   }
   else//Two-port matching
   {
       RL = params.r_real, XL = params.r_imag;
-      (params.network == TWO_PORT_INPUT) ? Z0 = params.Z1 : Z0 = params.Z2;
+      if (params.network == TWO_PORT_INPUT) {
+          Z0 = params.Z1;
+          ImplParams = params.InputNetwork;
+      }else{
+          Z0 = params.Z2;
+          ImplParams = params.OutputNetwork;
+      }
   }
 
   r2z(RL, XL, Z0);
   double Zmm = sqrt(RL * RL + XL * XL);
   double Zm = sqrt((Z0 * RL * Zmm) / (Zmm - XL));
-  return QString("TL:%1#%2;TL:%3#%4;").arg(Zm).arg(l4).arg(Zmm).arg(l8);
+
+  if (ImplParams.use_lumped_equivalent == 0)
+     return QString("TL:%1#%2;TL:%3#%4;").arg(Zm).arg(l4).arg(Zmm).arg(l8);
+  else
+     return QString("%1;TL:%2#%3;").arg(CalcQuarterWaveEquivalent(params.freq, Zm, ImplParams.use_lumped_equivalent)).arg(Zmm).arg(l8);
 }
 
 //--------------------------------------------------------------------------
@@ -2132,22 +2146,32 @@ QString MatchDialog::calcMatchingLambda8Lambda4(struct NetworkParams params) {
 // real source
 QString MatchDialog::calcMatchingLambda4(struct NetworkParams params) {
   double l4 = SPEED_OF_LIGHT / (4. * params.freq);
-
   double RL, XL, Z0;
+  struct ImplementationParams ImplParams;
   if (params.network == SINGLE_PORT)
   {
       RL = params.S11real, XL = params.S11imag;
       Z0 = params.Z1;
+      ImplParams = params.InputNetwork;
   }
   else//Two-port matching
   {
       RL = params.r_real, XL = params.r_imag;
-      (params.network == TWO_PORT_INPUT) ? Z0 = params.Z1 : Z0 = params.Z2;
+      if (params.network == TWO_PORT_INPUT) {
+          Z0 = params.Z1;
+          ImplParams = params.InputNetwork;
+      }else{
+          Z0 = params.Z2;
+          ImplParams = params.OutputNetwork;
+      }
   }
 
   r2z(RL, XL, Z0);
   double Zm = sqrt(Z0*RL);
-  return QString("TL:%1#%2;").arg(Zm).arg(l4);
+  if (ImplParams.use_lumped_equivalent == 0)
+     return QString("TL:%1#%2;").arg(Zm).arg(l4);
+  else
+     return CalcQuarterWaveEquivalent(params.freq, Zm, ImplParams.use_lumped_equivalent);
 }
 
 // Given a string code of inductors, capacitors and transmission lines, it
@@ -2796,12 +2820,6 @@ void MatchDialog::slot_SubtrateSettings()
 //This function is triggered by the input topology combo and its purpose is to enable/disable the settings button and the microstrip implementation checkbox
 void MatchDialog::slot_InputTopologyChanged(int currentIndex)
 {
-    //Enable settings button. There are certain topologies which don't need any extra parameters.
-    bool enable_settings = true;
-    if (currentIndex == 5)
-        enable_settings = false;
-    InputMatchingSettings_Button->setEnabled(enable_settings);
-
     //Enable/Disable the microstrip substrate checkbox
     if ((Transmission_Line_Topologies.contains(TopoCombo_Input->currentIndex())) || Transmission_Line_Topologies.contains(TopoCombo_Output->currentIndex())) {
         MicrostripCheck->setEnabled(true);
@@ -2816,12 +2834,6 @@ void MatchDialog::slot_InputTopologyChanged(int currentIndex)
 //This function is triggered by the output topology combo and its purpose is to enable/disable the settings button and the microstrip implementation checkbox
 void MatchDialog::slot_OutputTopologyChanged(int currentIndex)
 {
-    //Enable settings button. There are certain topologies which don't need any extra parameters.
-    bool enable_settings = true;
-    if (currentIndex == 5)
-        enable_settings = false;
-    OutputMatchingSettings_Button->setEnabled(enable_settings);
-
     //Enable/Disable the microstrip substrate checkbox
     if ((Transmission_Line_Topologies.contains(TopoCombo_Input->currentIndex())) || Transmission_Line_Topologies.contains(TopoCombo_Output->currentIndex())) {
        MicrostripCheck->setEnabled(true);
@@ -2840,4 +2852,16 @@ void MatchDialog::slot_MicrostripCheckChanged()
     if (MicrostripCheck->isChecked())
         microstrip_implementation = true;
     Substrate_Button->setEnabled(microstrip_implementation);
+}
+
+//This function calculates the lumped element equivalent of a quarter wavelength transmission line
+QString MatchDialog::CalcQuarterWaveEquivalent(double f0, double Z0, int mode)
+{
+    double w0 = 2*pi*f0;
+    double X1 = Z0/w0, X2 = 1/(w0*Z0);
+    if (mode == 1){//Pi type equivalent
+       return QString("CP:%1;LS:%2;CP:%1;").arg(X2).arg(X1);
+    }else{//Tee type equivalent
+       return QString("LS:%1;CP:%2;LS:%1;").arg(X1).arg(X2);
+    }
 }

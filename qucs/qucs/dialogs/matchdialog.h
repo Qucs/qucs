@@ -106,6 +106,7 @@ public:
   QString SynthesizeMatchingNetwork(struct NetworkParams);
   //--------------------------------------------------------------------------------------------------------
 
+  QString CalcQuarterWaveEquivalent(double, double, int);
   QString calcBiMatch(struct NetworkParams);
   bool calc2PortMatch(struct NetworkParams);
 
