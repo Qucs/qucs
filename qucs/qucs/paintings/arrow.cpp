@@ -131,12 +131,6 @@ void Arrow::setCenter(int x, int y, bool relative)
 }
 
 // --------------------------------------------------------------------------
-Object* Arrow::newOne() const
-{
-  return new Arrow(*this);
-}
-
-// --------------------------------------------------------------------------
 Element* Arrow::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Arrow");

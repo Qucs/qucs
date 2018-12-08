@@ -623,7 +623,6 @@ void QucsApp::slotSetCompView (int index)
 
   Comps = Category::getModules(item);
   QString Name;
-  pInfoFunc Infos = 0;
 
   // if something was registered dynamicaly, get and draw icons into dock
   if (item == QObject::tr("verilog-a user devices")) {
@@ -672,22 +671,23 @@ void QucsApp::slotSetCompView (int index)
     }
   } else {
     // static components
-    char * File;
+    QString File;
     // Populate list of component bitmaps
     compIdx = 0;
     QList<Module *>::const_iterator it;
     for (it = Comps.constBegin(); it != Comps.constEnd(); it++) {
-      Infos = (*it)->info;
-      if (Infos) {
-        /// \todo warning: expression result unused, can we rewrite this?
-        (void) *((*it)->info) (Name, File, false);
-        QListWidgetItem *icon = new QListWidgetItem(QPixmap(":/bitmaps/" + QString (File) + ".png"), Name);
+      if (Element const* e = (*it)->element()) {
+        Name = e->name();
+		  File = e->file();
+        QListWidgetItem *icon = new QListWidgetItem(QPixmap(":/bitmaps/" + File + ".png"), Name);
         icon->setToolTip(Name);
         iconCompInfo = iconCompInfoStruct{catIdx, compIdx};
         v.setValue(iconCompInfo);
         icon->setData(Qt::UserRole, v);
         CompComps->addItem(icon);
-      }
+      }else{
+			incomplete();
+		}
       compIdx++;
     }
   }
@@ -717,7 +717,7 @@ void QucsApp::slotSearchComponent(const QString &searchText)
 
     //traverse all component and match searchText with name
     QString Name;
-    char * File;
+    QString File;
     QList<Module *> Comps;
     iconCompInfoStruct iconCompInfo;
     QVariant v;
@@ -731,13 +731,14 @@ void QucsApp::slotSearchComponent(const QString &searchText)
       QList<Module *>::const_iterator modit;
       int compIdx = 0;
       for (modit = Comps.constBegin(); modit != Comps.constEnd(); modit++) {
-        if ((*modit)->info) {
-          /// \todo warning: expression result unused, can we rewrite this?
-          (void) *((*modit)->info) (Name, File, false);
+        if (Element const* e = (*modit)->element()) {
+          File=e->file();
+          Name=e->name();
 
           if((Name.indexOf(searchText, 0, Qt::CaseInsensitive)) != -1) {
+            incomplete();
             //match
-            QListWidgetItem *icon = new QListWidgetItem(QPixmap(":/bitmaps/" + QString (File) + ".png"), Name);
+            QListWidgetItem *icon = new QListWidgetItem(QPixmap(":/bitmaps/" + File + ".png"), Name);
             icon->setToolTip(it + ": " + Name);
             // add component category and module indexes to the icon
             iconCompInfo = iconCompInfoStruct{catIdx, compIdx};
@@ -758,7 +759,7 @@ void QucsApp::slotSearchComponent(const QString &searchText)
       // Just need path to bitmap, do not create an object
       QString Name, vaBitmap;
 
-		incomplete();
+      incomplete();
       // what's this? vacomponent::info (Name, vaBitmap, false, i.value());
 
       if((Name.indexOf(searchText, 0, Qt::CaseInsensitive)) != -1) {
@@ -840,9 +841,6 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   MouseReleaseAction = 0;
   MouseDoubleClickAction = 0;
 
-  pInfoFunc Infos = 0;
-  pInfoVAFunc InfosVA = 0;
-
   int i = CompComps->row(item);
   QList<Module *> Comps;
 
@@ -863,13 +861,14 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   assert(cat);
   Module *mod = (*cat)[iconCompInfo.compIdx];
   assert(mod);
-  qDebug() << "mod->info" << mod->info;
-  qDebug() << "mod->infoVA" << mod->infoVA;
-  Infos = mod->info;
-  if (Infos) {
+  qDebug() << "mod->info" << mod->element()->name();
+  Element const* e = mod->element();
+  if (e) {
     // static component
-    view->selElem = (*mod->info) (CompName, CompFile_cptr, true);
+    view->selElem = e->newOne(); // BUG. memory leak
   } else {
+    incomplete();
+#if 0 // pointless
     // Verilog-A component
     InfosVA = mod->infoVA;
     // get JSON file out of item name on widgetitem
@@ -877,19 +876,19 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
     if (InfosVA) {
       view->selElem = (*InfosVA) (CompName, CompFile_qstr, true, filename);
     }
+#endif
   }
 
-  // in "search mode" ?
-  if (CompChoose->itemText(0) == tr("Search results")) {
-    if (Infos || InfosVA) {
-      // change currently selected category, so the user will
-      //   see where the component comes from
-      CompChoose->setCurrentIndex(iconCompInfo.catIdx+1); // +1 due to the added "Search Results" item
-      ccCurIdx = iconCompInfo.catIdx; // remember the category to select when exiting search
-      //!! comment out the above two lines if you would like that the search
-      //!!   returns back to the last selected category instead
-    }
+#if 0 // what is this?
+  if (Infos || InfosVA) {
+    // change currently selected category, so the user will
+    //   see where the component comes from
+    CompChoose->setCurrentIndex(iconCompInfo.catIdx+1); // +1 due to the added "Search Results" item
+    ccCurIdx = iconCompInfo.catIdx; // remember the category to select when exiting search
+    //!! comment out the above two lines if you would like that the search
+    //!!   returns back to the last selected category instead
   }
+#endif
 }
 
 // ####################################################################

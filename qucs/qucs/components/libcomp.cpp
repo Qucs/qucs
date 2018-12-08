@@ -44,7 +44,8 @@ LibComp::LibComp()
 }
 
 // ---------------------------------------------------------------------
-Symbol* LibComp::newOne() const
+// BUG: too complicated.
+Component* LibComp::newOne() const
 {
   LibComp *p = new LibComp();
   p->Props.first()->Value =
