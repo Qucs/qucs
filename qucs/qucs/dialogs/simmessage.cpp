@@ -173,9 +173,14 @@ bool SimMessage::startProcess()
 
   Stream.setDevice(&NetlistFile);
 
+  // BUG: ask simulator
+  auto nlp=netlang_dispatcher["qucsator"];
+  assert(nlp);
+  auto& nl=*nlp;
+
   if(!QucsApp::isTextDocument(DocWidget)) {
     SimPorts =
-       ((Schematic*)DocWidget)->prepareNetlist(Stream, Collect, ErrText);
+       ((Schematic*)DocWidget)->prepareNetlist(Stream, Collect, ErrText, nl);
     if(SimPorts < -5) {
       NetlistFile.close();
       ErrText->appendPlainText(tr("ERROR: Cannot simulate a text file!"));
@@ -454,7 +459,7 @@ void SimMessage::startSimulator()
     assert(sd); //for now.
     auto nl = sd->netLang();
     assert(nl);
-    SimTime = ((Schematic*)DocWidget)->createNetlist(Stream, SimPorts, nl);
+    SimTime = ((Schematic*)DocWidget)->createNetlist(Stream, SimPorts, *nl);
     if(SimTime.length()>0&&SimTime.at(0) == '\xA7') {
       NetlistFile.close();
       ErrText->insertPlainText(SimTime.mid(1));

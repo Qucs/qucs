@@ -21,6 +21,7 @@
 #include "component.h"
 
 
+// BUG: must derive from subckt_model (or so)
 class Subcircuit : public MultiViewComponent  {
 public:
   Subcircuit();

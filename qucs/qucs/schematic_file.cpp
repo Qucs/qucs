@@ -39,6 +39,7 @@
 #include "components/vhdlfile.h"
 #include "components/verilogfile.h"
 #include "components/libcomp.h"
+#include "components/subcircuit.h" // BUG. move to qucsator.cc
 #include "module.h"
 #include "misc.h"
 #include "sim/sim.h"
@@ -1230,9 +1231,13 @@ void Schematic::propagateNode(QStringList& Collect,
  * \param NumPorts counter for the number of ports
  * \return true in case of success (false otherwise)
  */
+
+// BUG: produces output
+// to be called from qucsator language only..
 bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
-                   QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts)
-{
+                   QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
+		   NetLang const& nl)
+{ incomplete();
   bool r;
   QString s;
 
@@ -1260,8 +1265,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
     if(pc->obsolete_model_hack() == "GND") { // BUG.
       pc->Ports.first()->Connection->Name = "gnd";
       continue;
-    }else if(pc->obsolete_model_hack() == "Sub") {
-      incomplete();
+    }else if(dynamic_cast<Subcircuit const*>(pc)) {
       int i;
       // tell the subcircuit it belongs to this schematic
       pc->setSchematic (this);
@@ -1308,7 +1312,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       d->isVerilog = isVerilog;
       d->isAnalog = isAnalog;
       d->creatingLib = creatingLib;
-      r = d->createSubNetlist(stream, countInit, Collect, ErrText, NumPorts);
+      r = d->createSubNetlist(stream, countInit, Collect, ErrText, NumPorts, nl);
       if (r)
       {
         i = 0;
@@ -1430,7 +1434,8 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 // each component. Output into "stream", NodeSets are collected in
 // "Collect" and counted with "countInit".
 bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
-                   QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts)
+                   QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
+		   NetLang const& nl)
 {
   // delete the node names
   for(Node *pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
@@ -1454,7 +1459,7 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
     }
 
   // go through components
-  if(!throughAllComps(stream, countInit, Collect, ErrText, NumPorts)){
+  if(!throughAllComps(stream, countInit, Collect, ErrText, NumPorts, nl)){
     fprintf(stderr, "Error: Could not go throughAllComps\n");
     return false;
   }
@@ -1473,7 +1478,7 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
 
 // ---------------------------------------------------
 bool Schematic::createLibNetlist(QTextStream *stream, QPlainTextEdit *ErrText,
-				 int NumPorts)
+				 int NumPorts, NetLang const& nl)
 {
   int countInit = 0;
   QStringList Collect;
@@ -1482,7 +1487,7 @@ bool Schematic::createLibNetlist(QTextStream *stream, QPlainTextEdit *ErrText,
   Signals.clear();
   // Apply node names and collect subcircuits and file include
   creatingLib = true;
-  if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts)) {
+  if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts, nl)) {
     creatingLib = false;
     return false;
   }
@@ -1500,6 +1505,7 @@ bool Schematic::createLibNetlist(QTextStream *stream, QPlainTextEdit *ErrText,
   (*stream) << "\n" << c << " TOP LEVEL MARK " << c << "\n";
 
   // Emit subcircuit components
+  incomplete();
   createSubNetlistPlain(stream, ErrText, NumPorts);
 
   Signals.clear();  // was filled in "giveNodeNames()"
@@ -1625,6 +1631,7 @@ int NumPorts)
 
   Painting *pi;
   if(isAnalog) {
+    incomplete();
     // ..... analog subcircuit ...................................
     (*tstream) << "\n.Def:" << Type << " " << SubcircuitPortNames.join(" ");
     for(pi = SymbolPaints.first(); pi != 0; pi = SymbolPaints.next())
@@ -1790,13 +1797,14 @@ int NumPorts)
 // ---------------------------------------------------
 // Write the netlist as subcircuit to the text stream 'stream'.
 bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
-                     QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts)
+                     QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
+		     NetLang const& nl)
 {
 //  int Collect_count = Collect.count();   // position for this subcircuit
 
   // TODO: NodeSets have to be put into the subcircuit block.
   qDebug() << "giveNodeNames" << NumPorts << "\n";
-  if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts)){
+  if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts, nl)){
     fprintf(stderr, "Error giving NodeNames in createSubNetlist\n");
     return false;
   }
@@ -1810,6 +1818,7 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
       else it++;*/
 
   // Emit subcircuit components
+  incomplete();
   createSubNetlistPlain(stream, ErrText, NumPorts);
 
   Signals.clear();  // was filled in "giveNodeNames()"
@@ -1819,7 +1828,7 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
 // ---------------------------------------------------
 // Determines the node names and writes subcircuits into netlist file.
 int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
-                              QPlainTextEdit *ErrText)
+                              QPlainTextEdit *ErrText, NetLang const& nl)
 {
   if(showBias > 0) showBias = -1;  // do not show DC bias anymore
 
@@ -1898,7 +1907,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   }
 
   int countInit = 0;  // counts the nodesets to give them unique names
-  if(!giveNodeNames(&stream, countInit, Collect, ErrText, NumPorts)){
+  if(!giveNodeNames(&stream, countInit, Collect, ErrText, NumPorts, nl)){
     fprintf(stderr, "Error giving NodeNames\n");
     return -10;
   }
@@ -1919,7 +1928,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
 // ---------------------------------------------------
 // Write the beginning of digital netlist to the text stream 'stream'.
 // FIXME: really use lang. get rid of isVerilog
-void Schematic::beginNetlistDigital(QTextStream& stream, NetLang const* /*lang*/)
+void Schematic::beginNetlistDigital(QTextStream& stream, NetLang const& /*lang*/)
 {
   if (isVerilog) {
     stream << "module TestBench ();\n";
@@ -1953,7 +1962,7 @@ void Schematic::beginNetlistDigital(QTextStream& stream, NetLang const* /*lang*/
 // ---------------------------------------------------
 // Write the end of digital netlist to the text stream 'stream'.
 // FIXME: use lang, not isVerilog
-void Schematic::endNetlistDigital(QTextStream& stream, NetLang const* /*lang*/)
+void Schematic::endNetlistDigital(QTextStream& stream, NetLang const& /*lang*/)
 {
   if (isVerilog) {
   } else {
@@ -1964,10 +1973,10 @@ void Schematic::endNetlistDigital(QTextStream& stream, NetLang const* /*lang*/)
 // ---------------------------------------------------
 // write all components with node names into the netlist file
 // return some Time.
-QString Schematic::createNetlist(QTextStream& stream, int NumPorts, NetLang const* lang)
+QString Schematic::createNetlist(QTextStream& stream, int NumPorts, NetLang const& nl)
 {
   if(!isAnalog) {
-    beginNetlistDigital(stream, lang);
+    beginNetlistDigital(stream, nl);
   }
 
   Signals.clear();  // was filled in "giveNodeNames()"
@@ -1976,7 +1985,7 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts, NetLang cons
   QString s, Time;
   for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
     if(isAnalog) {
-      lang->printItem(pc, stream);
+      nl.printItem(pc, stream);
     } else { // FIXME: use different lang to print things differently
       if(pc->obsolete_model_hack() == ".Digi" && pc->isActive) {  // simulation component ?
         if(NumPorts > 0) { // truth table simulation ?
@@ -2006,7 +2015,7 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts, NetLang cons
   }
 
   if(!isAnalog) {
-    endNetlistDigital(stream, lang);
+    endNetlistDigital(stream, nl);
   }
 
   return Time;
