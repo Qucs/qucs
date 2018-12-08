@@ -63,11 +63,12 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 pqucsdir=${pkglibdir}
 pqucs_LTLIBRARIES = \
-	libqucsschematic.la \
-	libqucsgui.la \
-	libqucs.la
+	libqucs.la \
+	libqucsschematic.la
 
 libqucs_la_SOURCES = \
+	misc.cpp \
+	viewpainter.cpp \
 	globals.cpp \
 	module.cpp \
 	io_error.cpp
@@ -79,12 +80,12 @@ libqucsschematic_la_SOURCES = \
   attach.cpp \
   node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
   qucs.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
-  viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
+  mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
   schematic_file.cpp syntax.cpp module.cpp octave_window.cpp \
-  messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
+  messagedock.cpp imagewriter.cpp printerwriter.cpp \
   projectView.cpp
 
-libqucsgui_la_SOURCES = qucs_.qrc
+libqucs_la_SOURCES += qucs_.qrc
 
 libqucsschematic_la_SOURCES += $(MOCFILES)
 
@@ -101,7 +102,7 @@ PLUGINS = \
 
 if COND_WIN32
 libqucsschematic_la_LIBADD = \
-	libqucsgui.la \
+	libqucs.la \
 	$(X11_LIBS) \
 	$(QT_LIBS)
 else
