@@ -514,12 +514,6 @@ bool TimingDiagram::scrollTo(int initial, int dx, int)
 }
 
 // ------------------------------------------------------------
-Object* TimingDiagram::newOne() const
-{
-  return new TimingDiagram(*this);
-}
-
-// ------------------------------------------------------------
 Element* TimingDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Timing Diagram");

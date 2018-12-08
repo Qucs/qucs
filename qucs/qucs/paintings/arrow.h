@@ -33,7 +33,8 @@ public:
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
-  Object* newOne() const;
+  Painting* newOne() const { return new Arrow(*this); }
+
   static Element* info(QString&, char* &, bool getNewOne=false);
   bool load(const QString&);
   QString save();

@@ -87,12 +87,6 @@ void Rectangle::setCenter(int x, int y, bool relative)
 }
 
 // --------------------------------------------------------------------------
-Object* Rectangle::newOne() const
-{
-  return new Rectangle(*this);
-}
-
-// --------------------------------------------------------------------------
 Element* Rectangle::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Rectangle");

@@ -28,7 +28,7 @@ class LibComp : public MultiViewComponent  {
 public:
   LibComp();
   ~LibComp() {};
-  Symbol* newOne() const; // BUG{return new LibComp(*this);}
+  Component* newOne() const; // BUG{return new LibComp(*this);}
 
   bool createSubNetlist(QTextStream *, QStringList&, int type=1);
   QString getSubcircuitFile() const;
