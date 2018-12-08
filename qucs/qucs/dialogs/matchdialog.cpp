@@ -32,6 +32,10 @@
 
 #include "../../qucs-filter/material_props.h"
 #include "matchdialog.h"
+#include "main.h"
+#include "qucs.h"
+#include "element.h"
+
 #include "misc.h"
 #include "qucs.h"
 

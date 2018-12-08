@@ -22,9 +22,9 @@ Painting::Painting()
   State = 0;
 }
 
-Painting* Painting::newOne()
+Object* Painting::newOne() const
 {
-  return new Painting();
+  return new Painting(*this);
 }
 
 void Painting::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)

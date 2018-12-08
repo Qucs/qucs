@@ -41,8 +41,7 @@ public:
   Rect3DDiagram(int _cx=0, int _cy=0);
  ~Rect3DDiagram();
 
-
-  Diagram* newOne();
+  Object* newOne() const;
   static Element* info(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();

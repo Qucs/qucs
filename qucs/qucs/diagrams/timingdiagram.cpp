@@ -514,9 +514,9 @@ bool TimingDiagram::scrollTo(int initial, int dx, int)
 }
 
 // ------------------------------------------------------------
-Diagram* TimingDiagram::newOne()
+Object* TimingDiagram::newOne() const
 {
-  return new TimingDiagram();
+  return new TimingDiagram(*this);
 }
 
 // ------------------------------------------------------------

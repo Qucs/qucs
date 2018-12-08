@@ -131,9 +131,9 @@ void Arrow::setCenter(int x, int y, bool relative)
 }
 
 // --------------------------------------------------------------------------
-Painting* Arrow::newOne()
+Object* Arrow::newOne() const
 {
-  return new Arrow();
+  return new Arrow(*this);
 }
 
 // --------------------------------------------------------------------------
