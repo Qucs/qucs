@@ -28,7 +28,7 @@ public:
   Ellipse(bool _filled=false);
  ~Ellipse();
 
-  void paintScheme(Schematic*);
+  void paintScheme(Schematic*) const;
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
