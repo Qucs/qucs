@@ -39,6 +39,8 @@
 
 #include <QPen>
 #include <QBrush>
+#include <QDebug>
+#include "io_trace.h"
 #include "object.h"
 #include "io_trace.h"
 
@@ -155,7 +157,11 @@ public:
 
 public:
   // should be pure, but several elments are incomplete.
-  virtual Element* newOne()const{ incomplete(); return NULL; }
+  virtual Element* newOne()const{
+	  incomplete();
+	  qDebug() << name() << "lacks clone\n";
+	  return NULL;
+  }
 //  { unreachable(); return 0 /*NULL, actually*/;}
   virtual QString name() const{incomplete(); return "ELEMENT"; }
   virtual QString file() const{incomplete(); return "FILE"; }

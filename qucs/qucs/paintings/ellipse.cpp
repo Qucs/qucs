@@ -67,7 +67,7 @@ void Ellipse::paint(ViewPainter *p)
 }
 
 // --------------------------------------------------------------------------
-void Ellipse::paintScheme(Schematic *p)
+void Ellipse::paintScheme(Schematic *p) const
 {
   p->PostPaintEvent(_Ellipse, cx, cy, x2, y2);
 }
