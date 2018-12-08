@@ -22,11 +22,11 @@ PLUGINS = \
 
 if COND_WIN32
 qucs_real_LDADD = \
-../qucs/libqucsgui.la \
+	../qucs/libqucs.la \
 	../qucs/libqucsschematic.la ${PLUGINS}
 else
 qucs_real_LDADD = \
-../qucs/libqucsgui.la \
+	../qucs/libqucs.la \
 	../qucs/libqucsschematic.la ${PLUGINS} \
 	$(X11_LIBS) $(QT_LIBS)
 endif
