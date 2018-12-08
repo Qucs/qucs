@@ -71,11 +71,6 @@ SP_Sim::~SP_Sim()
 {
 }
 
-Component* SP_Sim::newOne()
-{
-  return new SP_Sim();
-}
-
 Element* SP_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("S-parameter simulation");
