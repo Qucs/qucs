@@ -720,7 +720,7 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
       // c->Name = c->Name.left(z+1);
       // List->append(c);
     }else{
-      simpleInsertComponent(c);
+      simpleInsertElement(c);
     }
   }
 
