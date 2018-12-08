@@ -25,7 +25,7 @@ class SP_Sim : public Command  {
 public:
   SP_Sim();
   ~SP_Sim();
-  Component* newOne();
+  Element* newOne() const{return new SP_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(Schematic*);
 };

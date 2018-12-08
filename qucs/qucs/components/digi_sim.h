@@ -25,7 +25,7 @@ class Digi_Sim : public Command {
 public:
   Digi_Sim();
  ~Digi_Sim();
-  Component* newOne();
+  Element* newOne() const {return new Digi_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 };
 

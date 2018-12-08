@@ -60,7 +60,7 @@ LATER= \
   logical_nor.cpp logical_and.cpp logical_nand.cpp logical_xor.cpp            \
   logical_xnor.cpp logical_inv.cpp digi_sim.cpp digi_source.cpp coupler.cpp   \
   rs_flipflop.cpp d_flipflop.cpp jk_flipflop.cpp coaxialline.cpp vprobe.cpp   \
-  switch.cpp relais.cpp am_modulator.cpp pm_modulator.cpp opt_sim.cpp         \
+  switch.cpp relais.cpp am_modulator.cpp pm_modulator.cpp        \
   optimizedialog.cpp tline_4port.cpp twistedpair.cpp bondwire.cpp rlcg.cpp    \
   verilogfile.cpp vexp.cpp iexp.cpp eqndefined.cpp  \
   vfile.cpp ifile.cpp mod_amp.cpp thyristor.cpp triac.cpp       \
@@ -71,10 +71,12 @@ LATER= \
   DLS_nto1.cpp DLS_1ton.cpp andor4x2.cpp andor4x3.cpp andor4x4.cpp            \
   dmux2to4.cpp dmux3to8.cpp dmux4to16.cpp ha1b.cpp fa1b.cpp fa2b.cpp         
 
+SIM_THINGS = dc_sim.cpp tr_sim.cpp sp_sim.cpp hb_sim.cpp opt_sim.cpp
+
 MORE_LATER = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
-  vcvs.cpp vccs.cpp tr_sim.cpp tline.cpp substrate.cpp sp_sim.cpp             \
+  vcvs.cpp vccs.cpp tline.cpp substrate.cpp \
   param_sweep.cpp mstee.cpp msstep.cpp msline.cpp mscross.cpp mscoupled.cpp mslange.cpp   \
-  mscorner.cpp hb_sim.cpp diode.cpp dc_sim.cpp coplanar.cpp ccvs.cpp cccs.cpp \
+  mscorner.cpp diode.cpp coplanar.cpp ccvs.cpp cccs.cpp \
 subcirport.cpp ground.cpp        \
   dcfeed.cpp dcblock.cpp biast.cpp inductor.cpp capacitor.cpp vhdlfile.cpp    \
   component.cpp iprobe.cpp volt_noise.cpp ampere_noise.cpp       \
@@ -93,7 +95,7 @@ subcirport.cpp ground.cpp        \
 #   etr_sim.cpp ecvs.cpp vcresistor.cpp vacomponent.cpp        \
 #   mutualx.cpp
 
-nodist_libcomponents_la_SOURCES = $(MOCFILES)
+nodist_libcomponents_la_SOURCES = $(MOCFILES) $(SIM_THINGS)
 
 noinst_HEADERS = $(MOCHEADERS) components.h capacitor.h vccs.h     \
   inductor.h biast.h dcblock.h dcfeed.h ground.h subcirport.h symtrafo.h      \
