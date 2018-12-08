@@ -25,7 +25,7 @@ class AC_Sim : public Command  {
 public:
   AC_Sim();
  ~AC_Sim();
-  Component* newOne();
+  Element* newOne() const{return new AC_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(Schematic*);
 };

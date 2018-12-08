@@ -27,7 +27,8 @@
 
 Optimize_Sim::Optimize_Sim()
 {
-  Description = QObject::tr("Optimization");
+  incomplete();
+  // Description = QObject::tr("Optimization");
 
   Texts.append(new Text(0, 0, Description, Qt::darkBlue, QucsSettings.largeFontSize));
 
@@ -45,11 +46,6 @@ Optimize_Sim::Optimize_Sim()
 
 Optimize_Sim::~Optimize_Sim()
 {
-}
-
-Component* Optimize_Sim::newOne()
-{
-  return new Optimize_Sim();
 }
 
 Element* Optimize_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)

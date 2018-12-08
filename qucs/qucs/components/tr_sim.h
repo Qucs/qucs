@@ -25,7 +25,7 @@ class TR_Sim : public Command  {
 public:
   TR_Sim();
   ~TR_Sim();
-  Component* newOne();
+  Element* newOne() const{return new TR_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(Schematic*);
 };

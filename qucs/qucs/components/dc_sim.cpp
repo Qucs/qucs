@@ -72,9 +72,9 @@ DC_Sim::~DC_Sim()
 {
 }
 
-Component* DC_Sim::newOne()
+Element* DC_Sim::newOne() const
 {
-  return new DC_Sim();
+  return new DC_Sim(*this);
 }
 
 Element* DC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
