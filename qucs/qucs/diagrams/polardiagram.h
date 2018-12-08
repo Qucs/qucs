@@ -26,7 +26,7 @@ public:
   PolarDiagram(int _cx=0, int _cy=0);
  ~PolarDiagram();
 
-  Object* newOne() const {return new PolarDiagram(*this);}
+  Diagram* newOne() const {return new PolarDiagram(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();

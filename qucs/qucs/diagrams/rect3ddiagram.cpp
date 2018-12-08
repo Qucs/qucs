@@ -1063,12 +1063,6 @@ bool Rect3DDiagram::insideDiagram(float x, float y) const
 }
 
 // ------------------------------------------------------------
-Object* Rect3DDiagram::newOne() const
-{
-  return new Rect3DDiagram(*this);
-}
-
-// ------------------------------------------------------------
 Element* Rect3DDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("3D-Cartesian");

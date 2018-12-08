@@ -32,7 +32,8 @@ public:
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
-  Object* newOne() const;
+  Painting* newOne() const { return new Rectangle(*this); }
+
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_filled(QString&, char* &, bool getNewOne=false);
   bool load(const QString&);

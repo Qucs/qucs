@@ -229,6 +229,8 @@ int doPrint(QString schematic, QString printFile,
  * \brief createIcons Create component icons (png) from command line.
  */
 void createIcons() {
+  incomplete();
+#if 0
 
   int nCats = 0, nComps = 0;
 
@@ -250,7 +252,7 @@ void createIcons() {
     QString Name;
 
     foreach (Module *Mod, Comps) {
-      if (Mod->info) {
+      if (Mod->has_element()) {
 
         Element *e = (Mod->info) (Name, File, true);
 
@@ -338,6 +340,7 @@ void createIcons() {
     nCats++;
   } // category
   fprintf(stdout, "Created %i component icons from %i categories\n", nComps, nCats);
+#endif
 }
 
 /*!
@@ -387,7 +390,7 @@ void createDocData() {
         QDir().mkdir(curDir);
     }
 
-    char * File;
+    QString File; // what is this, really?
     QString Name;
 
     int num = 0; // compoment id inside category
@@ -397,7 +400,11 @@ void createDocData() {
 
         nComps += 1;
 
-        Element *e = (Mod->info) (Name, File, true);
+	assert(Mod->has_element());
+        Element *e = Mod->element()->newOne(); // memory leak?!
+      // 	(Name, File, true);
+        Name = e->name();
+        File = e->file();
         Component *c = (Component* ) e;
 
         // object info
@@ -475,13 +482,13 @@ void createListComponentEntry(){
     QString Name;
 
     foreach (Module *Mod, Comps) {
-      Element *e = (Mod->info) (Name, File, true);
-		// dangerous. better precheck cast
-      Component *c = (Component* ) e;
+      Element const *e = Mod->element();
+      Component const *c = prechecked_cast<Component const*>(e);
+      assert(c);
 
-		// FIXME: cleanup
-		QTextStream s;
-		c->getSchematic()->saveComponent(s, c);
+      // FIXME: cleanup
+      QTextStream s;
+      c->getSchematic()->saveComponent(s, c);
       QString qucsEntry = *(s.string());
       fprintf(stdout, "%s; qucs    ; %s\n", c->obsolete_model_hack().toAscii().data(), qucsEntry.toAscii().data());
 

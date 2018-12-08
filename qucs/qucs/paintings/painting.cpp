@@ -22,11 +22,6 @@ Painting::Painting()
   State = 0;
 }
 
-Object* Painting::newOne() const
-{
-  return new Painting(*this);
-}
-
 void Painting::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
   _x1 = cx;     _y1 = cy;
