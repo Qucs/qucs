@@ -490,6 +490,7 @@ void Module::registerModules (void) {
 #endif
 }
 
+
 // This function has to be called once at application end.  It removes
 // all categories and registered modules from memory.
 void Module::unregisterModules (void) {
