@@ -621,8 +621,16 @@ void Component::mirrorY()
  * obsolete function. still used for some special components
  * just indicate that it's obsolete, so the netlister knows.
  */
+class obsolete_exception : public std::exception{
+  public:
+    obsolete_exception(std::string const& w):_what(w){}
+    const char* what() const noexcept{return _what.c_str();}
+  private:
+    std::string _what;
+};
 QString Component::netlist() const
 {
+  throw obsolete_exception("tried to use obsolete netlister");
   return "obsolete";
 }
 

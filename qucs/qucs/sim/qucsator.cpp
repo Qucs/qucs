@@ -55,13 +55,11 @@ void QucsLang::printInstance(Component const* c, QTextStream& s) const
 	<< Node1 << " " << iport.next()->Connection->Name << " R=\"0\"\n";
     }
   }else{
-    QString netlist(c->getNetlist());
-    if(netlist!="obsolete") {
-      // still using obsolete netlister here.
-      // other languages must throw here!
-      qDebug() << "incomplete, using netlist()";
-      s << netlist;
-    }else{ // normal netlisting
+    try{
+      // default to the legacy way, fix later
+      s << c->getNetlist();
+    }catch (...){ // todo: introduce proper exceptions
+      // normal netlisting
       s << c->type() << ":" << c->label();
 
       // output all node names
