@@ -40,13 +40,13 @@ ComponentTests_SOURCES = ComponentTests.cpp ComponentTests.moc.cpp
 ComponentTests_CPPFLAGS = ${AM_CPPFLAGS}
 
 SchematicTests_LDADD = \
-	../libqucsschematic.la ${PLUGINS} ${QT_LIBS} ${QTest_LIBS}
+	../libqucs.la ../libqucsschematic.la ${PLUGINS} ${QT_LIBS} ${QTest_LIBS}
 
 ElementTests_LDADD = \
-	../libqucsschematic.la ${PLUGINS} ${QT_LIBS} ${QTest_LIBS}
+	../libqucs.la ../libqucsschematic.la ${PLUGINS} ${QT_LIBS} ${QTest_LIBS}
 
 ComponentTests_LDADD = \
-	../libqucsschematic.la ${PLUGINS} ${QT_LIBS} ${QTest_LIBS}
+	../libqucs.la ../libqucsschematic.la ${PLUGINS} ${QT_LIBS} ${QTest_LIBS}
 
 MOCFILES = ${check_PROGRAMS:%=%.moc.cpp}
 BUILT_SOURCES = ${MOCFILES}
