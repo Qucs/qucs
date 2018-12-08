@@ -346,10 +346,14 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
   // ...........................................................
 
   Component *pc;
-  for(pc=Doc->Components->first(); pc!=0; pc=Doc->Components->next())
-    if(pc != Comp)
-      if(pc->obsolete_model_hack()[0] == '.' && pc->obsolete_model_hack() != ".Opt")
-        SimEdit->insertItem(SimEdit->count(), pc->name());
+  for(pc=Doc->Components->first(); pc!=0; pc=Doc->Components->next()){
+    incomplete();
+    // BUG: this is not a component.
+
+    // if(pc != Comp)
+    //   if(pc->Model[0] == '.' && pc->Model != ".Opt")
+    //     SimEdit->insertItem(SimEdit->count(), pc->Name);
+  }
 
   Property *pp;
   pp = Comp->Props.at(0);
