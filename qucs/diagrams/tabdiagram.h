@@ -26,7 +26,7 @@ public:
   TabDiagram(int _cx=0, int _cy=0);
  ~TabDiagram();
 
-  virtual Diagram* newOne();
+  virtual Object* newOne() const;
   static Element* info(QString&, char* &, bool getNewOne=false);
   virtual void paint(ViewPainter*);
   virtual void paintDiagram(ViewPainter *p);

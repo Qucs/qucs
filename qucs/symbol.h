@@ -25,6 +25,8 @@
 #ifndef SYMBOL_H
 #define SYMBOL_H
 
+#include "element.h"
+
 /** \class Symbol
   * \brief Superclass of all circuit components (except wires).
   *
@@ -33,11 +35,9 @@
 
 class QPainter;
 
-class Symbol{
+class Symbol : public Element{
 public: // construct
   Symbol() {}
-  virtual ~Symbol(){}
-  virtual Symbol* newOne()const {return 0 /*NULL, actually*/;} // pure?
 
 public: // interface
   virtual unsigned portNumber()const {return 0;}
@@ -47,7 +47,7 @@ public: // graphics
 		  // leave it like that, for now.
   virtual unsigned height()const {return 0;}
   virtual unsigned width()const {return 0;}
-  virtual void draw(QPainter&)const=0;
+//  virtual void draw(QPainter&)const=0;
   //...  more to come
 };
 

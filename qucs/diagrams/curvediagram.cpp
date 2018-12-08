@@ -247,7 +247,7 @@ void CurveDiagram::clip(Graph::iterator &p) const
 }
 
 // ------------------------------------------------------------
-Diagram* CurveDiagram::newOne()
+Object* CurveDiagram::newOne() const
 {
   return new CurveDiagram();
 }

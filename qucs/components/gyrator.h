@@ -25,7 +25,7 @@ class Gyrator : public Component  {
 public:
   Gyrator();
   ~Gyrator();
-  Component* newOne();
+  Object* newOne() const;
   static Element* info(QString&, char* &, bool getNewOne=false);
 };
 
