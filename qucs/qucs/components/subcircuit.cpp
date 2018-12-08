@@ -202,7 +202,7 @@ int Subcircuit::loadSymbol(const QString& DocName)
 QString Subcircuit::netlist() const
 {
 	incomplete();
-  QString s = Model+":"+Name;
+  QString s = "subcktinstance"+Model+":"+Name;
 
   // output all node names
   foreach(Port *p1, Ports)
