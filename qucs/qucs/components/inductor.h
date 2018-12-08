@@ -25,7 +25,7 @@ class Inductor : public Component  {
 public:
   Inductor();
  ~Inductor();
-  Object* newOne() const;
+  Symbol* newOne() const{return new Inductor(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 };
 

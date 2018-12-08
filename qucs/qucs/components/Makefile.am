@@ -79,7 +79,7 @@ MORE_LATER = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   mscorner.cpp diode.cpp coplanar.cpp ccvs.cpp cccs.cpp \
 subcirport.cpp ground.cpp        \
   dcfeed.cpp dcblock.cpp biast.cpp inductor.cpp capacitor.cpp vhdlfile.cpp    \
-  component.cpp iprobe.cpp volt_noise.cpp ampere_noise.cpp       \
+  iprobe.cpp volt_noise.cpp ampere_noise.cpp       \
   msmbend.cpp msopen.cpp ampere_ac.cpp bjt.cpp jfet.cpp mosfet.cpp            \
   msgap.cpp bjtsub.cpp mosfet_sub.cpp vpulse.cpp ipulse.cpp vrect.cpp         \
   irect.cpp msvia.cpp amplifier.cpp opamp.cpp spicefile.cpp cpwopen.cpp       \
@@ -95,7 +95,9 @@ subcirport.cpp ground.cpp        \
 #   etr_sim.cpp ecvs.cpp vcresistor.cpp vacomponent.cpp        \
 #   mutualx.cpp
 
-nodist_libcomponents_la_SOURCES = $(MOCFILES) $(SIM_THINGS)
+nodist_libcomponents_a_SOURCES = $(MOCFILES) $(SIM_THINGS) \
+	command.cpp \
+	component.cpp
 
 noinst_HEADERS = $(MOCHEADERS) components.h capacitor.h vccs.h     \
   inductor.h biast.h dcblock.h dcfeed.h ground.h subcirport.h symtrafo.h      \
