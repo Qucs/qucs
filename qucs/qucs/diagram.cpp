@@ -170,7 +170,7 @@ void Diagram::paintMarkers(ViewPainter *p, bool paintAll)
 }
 
 // ------------------------------------------------------------
-void Diagram::paintScheme(Schematic *p)
+void Diagram::paintScheme(Schematic *p) const
 {
   p->PostPaintEvent(_Rect, cx, cy-y2, x2, y2);
 }

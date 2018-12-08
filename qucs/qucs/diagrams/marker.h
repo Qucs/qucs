@@ -51,7 +51,7 @@ public:
   bool    moveLeftRight(bool);
   bool    moveUpDown(bool);
   void    paint(ViewPainter*, int, int);
-  void    paintScheme(QPainter*);
+  void    paintScheme(QPainter*) const;
   void    setCenter(int, int, bool);
   void    Bounding(int& _x1, int& _y1, int& _x2, int& _y2);
   QString save();

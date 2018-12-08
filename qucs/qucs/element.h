@@ -161,7 +161,10 @@ public:
 //private: FIXME
   bool isSelected;
   int  Type;    // whether it is Component, Wire, ...
-  int  cx, cy, x1, y1, x2, y2;  // center and relative boundings
+  int  cx, cy, x1, y1;
+  
+  // BUG; abused in Command
+  mutable int x2, y2;  // center and relative boundings
 };
 
 
