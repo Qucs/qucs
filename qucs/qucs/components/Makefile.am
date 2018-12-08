@@ -36,15 +36,26 @@ libcomponents_la_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   vcvs.cpp vccs.cpp tr_sim.cpp tline.cpp substrate.cpp sp_sim.cpp             \
   param_sweep.cpp mstee.cpp msstep.cpp msline.cpp mscross.cpp mscoupled.cpp mslange.cpp   \
   mscorner.cpp hb_sim.cpp diode.cpp dc_sim.cpp coplanar.cpp ccvs.cpp cccs.cpp \
-  ac_sim.cpp volt_dc.cpp volt_ac.cpp subcircuit.cpp spembed.cpp               \
-  source_ac.cpp isolator.cpp equation.cpp circulator.cpp attenuator.cpp       \
-  ampere_dc.cpp transformer.cpp symtrafo.cpp subcirport.cpp ground.cpp        \
+subcirport.cpp ground.cpp        \
   dcfeed.cpp dcblock.cpp biast.cpp inductor.cpp capacitor.cpp vhdlfile.cpp    \
-  component.cpp resistor.cpp iprobe.cpp wprobe.cpp volt_noise.cpp ampere_noise.cpp       \
+  component.cpp iprobe.cpp volt_noise.cpp ampere_noise.cpp       \
   msmbend.cpp msopen.cpp ampere_ac.cpp bjt.cpp jfet.cpp mosfet.cpp            \
   msgap.cpp bjtsub.cpp mosfet_sub.cpp vpulse.cpp ipulse.cpp vrect.cpp         \
   irect.cpp msvia.cpp amplifier.cpp opamp.cpp spicefile.cpp cpwopen.cpp       \
-  cpwshort.cpp spicedialog.cpp cpwgap.cpp cpwstep.cpp libcomp.cpp mutual.cpp  \
+  cpwshort.cpp spicedialog.cpp cpwgap.cpp cpwstep.cpp libcomp.cpp mutual.cpp  
+
+plugindir = ${pkglibdir}
+plugin_LTLIBRARIES = qucs-default-components.la
+
+qucs_default_components_la_LDFLAGS = -shared -module -avoid-version
+qucs_default_components_la_SOURCES = \
+	resistor.cpp \
+	volt_dc.cpp
+# TODO: move the others
+LATER= \
+  ac_sim.cpp volt_ac.cpp subcircuit.cpp sparamfile.cpp            \
+  source_ac.cpp isolator.cpp equation.cpp circulator.cpp attenuator.cpp       \
+  ampere_dc.cpp transformer.cpp symtrafo.cpp \
   mutual2.cpp noise_ii.cpp noise_iv.cpp noise_vv.cpp logical_or.cpp           \
   logical_nor.cpp logical_and.cpp logical_nand.cpp logical_xor.cpp            \
   logical_xnor.cpp logical_inv.cpp digi_sim.cpp digi_source.cpp coupler.cpp   \
@@ -58,25 +69,24 @@ libcomponents_la_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   EKV26MOS.cpp logical_buf.cpp dff_SR.cpp jkff_SR.cpp tff_SR.cpp              \
   gatedDlatch.cpp logic_0.cpp logic_1.cpp mux2to1.cpp mux4to1.cpp mux8to1.cpp \
   DLS_nto1.cpp DLS_1ton.cpp andor4x2.cpp andor4x3.cpp andor4x4.cpp            \
-  dmux2to4.cpp dmux3to8.cpp dmux4to16.cpp ha1b.cpp fa1b.cpp fa2b.cpp          \
-  pad2bit.cpp pad3bit.cpp pad4bit.cpp binarytogrey4bit.cpp vafile.cpp         \
-  greytobinary4bit.cpp comp_1bit.cpp comp_2bit.cpp comp_4bit.cpp              \
-  hpribin4bit.cpp msrstub.cpp phototransistor.cpp nigbt.cpp \
-  hybrid.cpp ctline.cpp tunneldiode.cpp \
-  etr_sim.cpp ecvs.cpp vcresistor.cpp vacomponent.cpp       \
-  mutualx.cpp circline.cpp taperedline.cpp     \
-  capq.cpp indq.cpp spiralinductor.cpp circularloop.cpp spdeembed.cpp
+  dmux2to4.cpp dmux3to8.cpp dmux4to16.cpp ha1b.cpp fa1b.cpp fa2b.cpp         
+
+# are these really *source* files?!
+# verilogstuff =
+# binarytogrey4bit.cpp vafile.cpp         \
+#  pad2bit.cpp pad3bit.cpp pad4bit.cpp
+#   greytobinary4bit.cpp comp_1bit.cpp comp_2bit.cpp comp_4bit.cpp              \
+#   hpribin4bit.cpp msrstub.cpp phototransistor.cpp nigbt.cpp \
+#   hybrid.cpp ctline.cpp tunneldiode.cpp \
+#   etr_sim.cpp ecvs.cpp vcresistor.cpp vacomponent.cpp        \
+#   mutualx.cpp
 
 nodist_libcomponents_la_SOURCES = $(MOCFILES)
 
-if COND_WIN32
-libcomponents_la_LIBADD = ../libqucsschematic.la
-endif
-
-noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
+noinst_HEADERS = $(MOCHEADERS) components.h capacitor.h vccs.h     \
   inductor.h biast.h dcblock.h dcfeed.h ground.h subcirport.h symtrafo.h      \
   transformer.h ampere_dc.h attenuator.h circulator.h equation.h isolator.h   \
-  source_ac.h spembed.h subcircuit.h volt_ac.h volt_dc.h ac_sim.h cccs.h      \
+  source_ac.h sparamfile.h subcircuit.h volt_ac.h ac_sim.h cccs.h   \
   ccvs.h coplanar.h dc_sim.h diode.h hb_sim.h mscorner.h mscoupled.h mslange.h          \
   mscross.h msline.h msstep.h mstee.h param_sweep.h sp_sim.h substrate.h      \
   tline.h tr_sim.h component.h vcvs.h gyrator.h phaseshifter.h vhdlfile.h     \
