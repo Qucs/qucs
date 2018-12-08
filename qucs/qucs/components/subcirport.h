@@ -25,7 +25,7 @@ class SubCirPort : public MultiViewComponent  {
 public:
   SubCirPort();
  ~SubCirPort() {};
-  Component* newOne();
+  Component* newOne() const{return new SubCirPort(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 
 protected:

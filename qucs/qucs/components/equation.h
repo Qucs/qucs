@@ -26,7 +26,7 @@ class Equation : public Component  {
 public:
   Equation();
   ~Equation();
-  Component* newOne();
+  Component* newOne() const{return new Equation(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 
 protected:

@@ -87,11 +87,6 @@ TR_Sim::~TR_Sim()
 {
 }
 
-Component* TR_Sim::newOne()
-{
-  return new TR_Sim();
-}
-
 Element* TR_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Transient simulation");

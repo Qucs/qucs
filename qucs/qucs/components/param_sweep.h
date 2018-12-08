@@ -25,7 +25,7 @@ class Param_Sweep : public Command  {
 public:
   Param_Sweep();
   ~Param_Sweep();
-  Component* newOne();
+  Element* newOne()const {return new Param_Sweep(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(Schematic*);
 };
