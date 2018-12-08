@@ -1242,7 +1242,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
 	// part of
 	Comp->setSchematic (Doc);
 	Comp->textSize(x1, y1);
-	Doc->insertComponent(Comp);
+	Doc->insertElement(Comp);
 	Comp->textSize(x2, y2);
 	if(Comp->tx < Comp->x1) Comp->tx -= x2 - x1;
 
@@ -1784,13 +1784,20 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 	  pe->Type = isNodeLabel;
 	  Doc->placeNodeLabel((WireLabel*)pe);
 	  break;
-	case isComponent:
-	case isAnalogComponent:
-	case isDigitalComponent:
-	  Doc->insertComponent((Component*)pe);
-	  ((Component*)pe)->entireBounds(x1,y1,x2,y2, Doc->textCorr());
-	  Doc->enlargeView(x1, y1, x2, y2);
-	  break;
+//	case isComponent:
+//	case isAnalogComponent:
+//	case isDigitalComponent:
+      }
+      if(Component* C=dynamic_cast<Component*>(pe)){
+	// legacy component
+	Doc->insertElement(C);
+	C->entireBounds(x1,y1,x2,y2, Doc->textCorr());
+	Doc->enlargeView(x1, y1, x2, y2);
+      }else if(Symbol* S=dynamic_cast<Symbol*>(pe)){ untested();
+	Doc->insertElement(S);
+	incomplete();
+	// S->entireBounds(x1,y1,x2,y2, Doc->textCorr());
+	Doc->enlargeView(x1, y1, x2, y2);
       }
     }
 

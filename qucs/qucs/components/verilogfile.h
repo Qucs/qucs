@@ -28,7 +28,7 @@ class Verilog_File : public MultiViewComponent  {
 public:
   Verilog_File();
  ~Verilog_File() {};
-  Component* newOne();
+  Component* newOne() const {return new Verilog_File(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 
   bool createSubNetlist(QTextStream *);

@@ -25,7 +25,7 @@ class HB_Sim : public Command {
 public:
   HB_Sim();
   ~HB_Sim();
-  Component* newOne();
+  Element* newOne()const {return new HB_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 };
 
