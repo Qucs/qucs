@@ -82,7 +82,8 @@ bool QucsApp::performToggleAction(bool on, QAction *Action,
     return false;
   }
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
+  Schematic *Doc=prechecked_cast<Schematic*>(DocumentTab->currentPage());
+  assert(Doc);
   do {
     if(Function) if((Doc->*Function)()) {
       Action->blockSignals(true);
@@ -467,7 +468,8 @@ void QucsApp::slotInsertPort(bool on)
 
   view->selElem = new SubCirPort();
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
+  Schematic *Doc=prechecked_cast<Schematic*>(DocumentTab->currentPage());
+  assert(Doc);
   if(view->drawn) Doc->viewport()->update();
   view->drawn = false;
   MouseMoveAction = &MouseActions::MMoveElement;
@@ -478,7 +480,8 @@ void QucsApp::slotInsertPort(bool on)
 // Is called, when "Undo"-Button is pressed.
 void QucsApp::slotEditUndo()
 {
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
+  Schematic *Doc=prechecked_cast<Schematic*>(DocumentTab->currentPage());
+  assert(Doc);
   if(isTextDocument(Doc)) {
     ((TextDoc*)Doc)->viewport()->setFocus();
     ((TextDoc*)Doc)->undo();
