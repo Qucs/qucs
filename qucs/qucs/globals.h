@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /***************************************************************************
                               globals.h
                              --------------------
@@ -13,6 +14,9 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+#ifndef QUCS_GLOBALS_H
+#define QUCS_GLOBALS_H
+
 #include "platform.h"
 #include "l_dispatcher.h"
 
@@ -27,3 +31,5 @@ extern INTERFACE Dispatcher<Simulator> simulator_dispatcher;
 extern INTERFACE Dispatcher<NetLang> netlang_dispatcher;
 extern INTERFACE Dispatcher<Command> command_dispatcher;
 extern INTERFACE Dispatcher<Painting> painting_dispatcher;
+
+#endif

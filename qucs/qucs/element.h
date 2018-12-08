@@ -41,6 +41,8 @@
 #include <QBrush>
 #include "object.h"
 
+#include "object.h"
+
 class Node;
 class QPainter;
 class WireLabel;
@@ -146,8 +148,9 @@ public:
   Element();
   virtual ~Element();
 
-  virtual void paintScheme(Schematic *);
-  virtual void paintScheme(QPainter *);
+  virtual void paintScheme(Schematic *); // obsolete?
+  virtual void paintScheme(QPainter *); // obsolete?
+  virtual void draw(QPainter&) { incomplete(); }
   virtual void setCenter(int, int, bool relative=false);
   virtual void getCenter(int&, int&);
 

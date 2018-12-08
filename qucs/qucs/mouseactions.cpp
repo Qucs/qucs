@@ -1265,9 +1265,9 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
 //      qDebug() << "   ===+ recast";
       Comp = dynamic_cast<vacomponent*>(Comp)->newOne(filename); //va component
       qDebug() << "   => recast = Comp;" << Comp->name() << "filename: " << filename;
-    }
-    else {
-	  Comp = Comp->newOne(); // static component is used, so create a new one
+    }else{
+	  // static component is used, so create a new one
+	  Comp = prechecked_cast<Component*>(Comp->newOne());
     }
 	rot -= Comp->rotated;
 	rot &= 3;
@@ -1309,7 +1309,8 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
     Doc->setChanged(true, true);   // document has been changed
 
     Doc->viewport()->repaint();
-    Diag = Diag->newOne(); // the component is used, so create a new one
+    Diag = prechecked_cast<Diagram*>(Diag->newOne());
+    assert(Diag);
     Diag->paintScheme(Doc);
     selElem = Diag;
     return;
@@ -1321,7 +1322,8 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
     Doc->Paintings->append((Painting*)selElem);
     ((Painting*)selElem)->Bounding(x1,y1,x2,y2);
     //Doc->enlargeView(x1, y1, x2, y2);
-    selElem = ((Painting*)selElem)->newOne();
+    selElem = prechecked_cast<Element*>(((Painting*)selElem)->newOne());
+    assert(selElem);
 
     Doc->viewport()->update();
     Doc->setChanged(true, true);

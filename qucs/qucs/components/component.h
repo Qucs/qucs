@@ -20,7 +20,7 @@
 
 #include <Q3PtrList>
 
-#include "element.h"
+#include "symbol.h"
 
 class Schematic;
 class ViewPainter;
@@ -28,7 +28,7 @@ class QString;
 class QPen;
 class ComponentDialog;
 
-class Component : public Element {
+class Component : public Symbol {
 public:
   Component();
   virtual ~Component() {};
