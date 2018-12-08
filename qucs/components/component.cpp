@@ -840,7 +840,10 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   tty = n.toInt(&ok);
   if(!ok) return NULL;
 
-  if(c->obsolete_model_hack().at(0) != '.') {  // is simulation component (dc, ac, ...) ?
+  assert(c);
+  if(!c->Model.size()){
+    // avoid segfault in obsolete code...
+  }else if(c->obsolete_model_hack.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
 
     n  = s.section(' ',7,7);    // mirroredX
     if(n.toInt(&ok) == 1){
