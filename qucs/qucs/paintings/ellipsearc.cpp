@@ -81,12 +81,6 @@ void EllipseArc::setCenter(int x, int y, bool relative)
 }
 
 // --------------------------------------------------------------------------
-Painting* EllipseArc::newOne()
-{
-  return new EllipseArc();
-}
-
-// --------------------------------------------------------------------------
 Element* EllipseArc::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Elliptic Arc");

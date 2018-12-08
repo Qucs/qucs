@@ -25,7 +25,7 @@ class Capacitor : public MultiViewComponent  {
 public:
   Capacitor();
  ~Capacitor() {};
-  Object* newOne() const;
+  Capacitor* newOne() const {return new Capacitor(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 
 protected:

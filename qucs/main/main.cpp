@@ -49,8 +49,10 @@
 #include "module.h"
 #include "misc.h"
 
+// Wtf?
 #include "components/components.h"
 #include "globals.h"
+// #include "components/components.h"
 
 // for now. move to lib later.
 #include "io_findf.cc"

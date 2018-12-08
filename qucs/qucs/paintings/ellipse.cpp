@@ -88,12 +88,6 @@ void Ellipse::setCenter(int x, int y, bool relative)
 }
 
 // --------------------------------------------------------------------------
-Painting* Ellipse::newOne()
-{
-  return new Ellipse();
-}
-
-// --------------------------------------------------------------------------
 Element* Ellipse::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Ellipse");

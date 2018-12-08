@@ -117,12 +117,6 @@ int PSDiagram::calcDiagram()
 }
 
 // ------------------------------------------------------------
-Diagram* PSDiagram::newOne()
-{
-  return new PSDiagram();
-}
-
-// ------------------------------------------------------------
 Element* PSDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Polar-Smith Combi");

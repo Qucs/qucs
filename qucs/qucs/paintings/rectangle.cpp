@@ -87,9 +87,9 @@ void Rectangle::setCenter(int x, int y, bool relative)
 }
 
 // --------------------------------------------------------------------------
-Painting* Rectangle::newOne()
+Object* Rectangle::newOne() const
 {
-  return new Rectangle();
+  return new Rectangle(*this);
 }
 
 // --------------------------------------------------------------------------

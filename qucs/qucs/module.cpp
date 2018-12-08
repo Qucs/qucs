@@ -22,11 +22,11 @@
 
 #include "element.h"
 #include "components/component.h"
-#include "components/components.h"
 #include "paintings/paintings.h"
 #include "diagrams/diagrams.h"
 #include "module.h"
 #include "io_trace.h"
+#include "globals.h"
 
 // Global category and component lists.
 QHash<QString, Module *> Module::Modules;
@@ -92,10 +92,12 @@ Component * Module::getComponent (QString Model)
     QString Name;
     char * File;
     QString vaBitmap;
-    if (vaComponents.contains(Model))
-      return (Component *)
-              vacomponent::info (Name, vaBitmap, true, vaComponents[Model]);
-    else
+
+//	 ??
+ //   if (vaComponents.contains(Model))
+ //     return (Component *)
+ //             vacomponent::info (Name, vaBitmap, true, vaComponents[Model]);
+ //   else
       return (Component *) m->info (Name, File, true);
   }else{
 	  qDebug() << "it's not there";
@@ -123,7 +125,8 @@ void Module::registerDynamicComponents()
 
      // the typedef needs to be different
      //passes the pointer, but it has no idea how to call the JSON
-     m->infoVA = &vacomponent::info;
+	  incomplete();
+ //    m->infoVA = &vacomponent::info;
 
      // TODO maybe allow user load into custom category?
      m->category = QObject::tr("verilog-a user devices");
@@ -134,10 +137,13 @@ void Module::registerDynamicComponents()
      //char * File;
      QString Name, Model, vaBitmap;
 //     char * File;
-     Component * c = (Component *)
-             vacomponent::info (Name, vaBitmap, true, vaComponents[i.key()]);
-     Model = c->obsolete_model_hack();
-     delete c;
+//
+//     what is this trying to do?
+incomplete();
+//     Component * c = (Component *)
+//             vacomponent::info (Name, vaBitmap, true, vaComponents[i.key()]);
+//     Model = c->obsolete_model_hack();
+//     delete c;
 
      // put into category and the component hash
      intoCategory (m);
@@ -181,15 +187,14 @@ void Module::intoCategory (Module * m) {
   registerModule (cat, &val::inf2); \
   registerModule (cat, &val::inf3)
 
-#define REGISTER_COMP_1(cat,val) \
-  registerComponent (cat, &val::info)
-#define REGISTER_COMP_2(cat,val,inf1,inf2) \
-  registerComponent (cat, &val::inf1); \
-  registerComponent (cat, &val::inf2)
-#define REGISTER_COMP_3(cat,val,inf1,inf2,inf3) \
-  registerComponent (cat, &val::inf1); \
-  registerComponent (cat, &val::inf2); \
-  registerComponent (cat, &val::inf3)
+static void REGISTER_COMP_1(QString const& cat, std::string name)
+{
+  auto sym = symbol_dispatcher[name];
+// transitional bu^H^Hhack.
+  Component const* legacy_component = prechecked_cast<Component const*>(sym);
+  registerComponent (cat, &legacy_component)
+}
+
 
 #define REGISTER_LUMPED_1(val) \
   REGISTER_COMP_1 (QObject::tr("lumped components"),val)
@@ -232,13 +237,13 @@ void Module::intoCategory (Module * m) {
 #define REGISTER_EXTERNAL_1(val) \
   REGISTER_COMP_1 (QObject::tr("external sim components"),val)
 
-// This function has to be called once at application startup.  It
-// registers every component available in the application.  Put here
-// any new component.
+// waah. need one plugin per symbol list.
 void Module::registerModules (void) {
 
   // lumped components
-  REGISTER_LUMPED_2 (Resistor, info, info_us);
+  REGISTER_LUMPED_1 (Resistor)
+  REGISTER_LUMPED_1 (Rus)
+#if 0 // this does not work
   REGISTER_LUMPED_1 (Capacitor);
   REGISTER_LUMPED_1 (Inductor);
   REGISTER_LUMPED_1 (Ground);
@@ -445,6 +450,7 @@ void Module::registerModules (void) {
   REGISTER_PAINT_2 (Rectangle, info, info_filled);
   REGISTER_PAINT_1 (EllipseArc);
 
+#endif
 }
 
 // This function has to be called once at application end.  It removes
