@@ -154,8 +154,10 @@ public:
   virtual void getCenter(int&, int&);
 
 public:
-  virtual Element* newOne()const { unreachable(); return 0 /*NULL, actually*/;}
-  QString name() const{incomplete(); return "ELEMENT"; }
+  // should be pure, but several elments are incomplete.
+  virtual Element* newOne()const{ incomplete(); return NULL; }
+//  { unreachable(); return 0 /*NULL, actually*/;}
+  virtual QString name() const{incomplete(); return "ELEMENT"; }
   virtual QString file() const{incomplete(); return "FILE"; }
 
 //private: FIXME

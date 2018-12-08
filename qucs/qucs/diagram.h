@@ -94,16 +94,10 @@ public:
   bool insideDiagramP(Graph::iterator const& ) const;
   Marker* setMarker(int x, int y);
 
-  bool insideDiagramPh(Graph::iterator const& , float*, float*) const;
-  bool newcoordinate(Graph::iterator const& , float*, float*) const;
-  /* PHASOR AND WAVEAC RELATED
-  void phasorscale();
-  void findaxisA(Graph*);
-  bool findmatch(Graph* , int);
-  void findfreq(Graph*);
-  void setlimitsphasor(Axis* ,Axis*);
-  double wavevalX(int) const;*/
-
+public: // element interface
+  virtual QString name() const{return Name;}
+private: // internals
+public: // BUG/incomplete
   QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   QPen    GridPen;
 
