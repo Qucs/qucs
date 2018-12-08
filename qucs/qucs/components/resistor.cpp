@@ -14,10 +14,27 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "resistor.h"
+#include "l_dispatcher.h"
 #include "node.h"
 #include "schematic.h"
+#include "symbol.h"
 
+namespace{
+
+class Resistor : public SYMBOL {
+public:
+  Resistor(bool european=true);
+ ~Resistor() {};
+  Component* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  static Element* info_us(QString&, char* &, bool getNewOne=false);
+
+protected:
+  void createSymbol();
+}R;
+
+static Dispatcher<SYMBOL> p("resistor", &R);
+static Dispatcher<SYMBOL> p("Rus", &R);
 
 Resistor::Resistor(bool european)
 {
@@ -42,8 +59,8 @@ Resistor::Resistor(bool european)
   createSymbol();
   tx = x1+4;
   ty = y2+4;
-  Model = "R";
-  Name  = "R";
+  // Model = "R";
+  // Name  = "R";
 }
 
 // -------------------------------------------------------
@@ -101,3 +118,5 @@ Element* Resistor::info_us(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new Resistor(false);
   return 0;
 }
+
+} // namespace
