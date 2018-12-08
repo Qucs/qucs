@@ -117,4 +117,5 @@ class Category
   QList<Module *> Content;
 };
 
+
 #endif /* __MODULE_H__ */

@@ -28,7 +28,7 @@ public:
   Rectangle(bool _filled=false);
  ~Rectangle();
 
-  void paintScheme(Schematic*);
+  void paintScheme(Schematic*) const;
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 

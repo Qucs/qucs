@@ -85,7 +85,7 @@ MORE_LATER = phaseshifter.cpp gyrator.cpp \
   iprobe.cpp volt_noise.cpp ampere_noise.cpp       \
   msmbend.cpp msopen.cpp ampere_ac.cpp bjt.cpp jfet.cpp mosfet.cpp            \
   msgap.cpp bjtsub.cpp mosfet_sub.cpp vpulse.cpp ipulse.cpp vrect.cpp         \
-  irect.cpp msvia.cpp amplifier.cpp opamp.cpp spicefile.cpp cpwopen.cpp       \
+  irect.cpp msvia.cpp amplifier.cpp opamp.cpp cpwopen.cpp       \
   cpwshort.cpp cpwgap.cpp cpwstep.cpp mutual.cpp  
 
 # are these really *source* files?!
@@ -111,7 +111,8 @@ RANDOM_LEGACY_STUFF = \
 	verilogfile.cpp \
   	subcirport.cpp \
 	equation.cpp \
-	vafile.cpp
+	vafile.cpp \
+	spicefile.cpp
 
 libcomponents_la_SOURCES = $(MOCFILES) $(SIM_THINGS) \
 	$(RANDOM_LEGACY_STUFF) \
