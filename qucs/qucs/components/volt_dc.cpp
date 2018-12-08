@@ -15,7 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "volt_dc.h"
+#include "component.h"
+#include "globals.h"
 
 namespace{
 
@@ -23,11 +24,11 @@ class Volt_dc : public Component  {
 public:
   Volt_dc();
   ~Volt_dc();
-  Component* newOne();
+  Object* newOne() const;
   static Element* info(QString&, char* &, bool getNewOne=false);
 } VS;
 
-static Dispatcher<SYMBOL> p("volt_dc", &VS);
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "volt_dc", &VS);
 
 Volt_dc::Volt_dc()
 {
@@ -62,9 +63,9 @@ Volt_dc::~Volt_dc()
 {
 }
 
-Component* Volt_dc::newOne()
+Object* Volt_dc::newOne() const
 {
-  return new Volt_dc();
+  return new Volt_dc(*this);
 }
 
 Element* Volt_dc::info(QString& Name, char* &BitmapFile, bool getNewOne)

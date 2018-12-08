@@ -40,7 +40,7 @@
 #include "loaddialog.h"
 #include "qucs.h"
 #include "qucsdoc.h"
-#include "components/components.h"
+#include "components/component.h"
 
 LoadDialog::LoadDialog( QWidget* parent )
    : QDialog( parent )
@@ -201,9 +201,11 @@ void LoadDialog::slotSymbolFileClicked(QListWidgetItem* item)
 
   // Just need path to bitmap, do not create an object
   QString Name, vaBitmap;
-  Component * c = (Component *)
-          vacomponent::info (Name, vaBitmap, false, JSON);
-  if (c) delete c;
+  incomplete();
+// what's this?!
+//   Component * c = (Component *)
+//           vacomponent::info (Name, vaBitmap, false, JSON);
+//  if (c) delete c;
 
   qDebug() << "slotSymbolFileClicked" << Name << vaBitmap;
 

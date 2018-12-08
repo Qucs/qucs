@@ -1185,10 +1185,11 @@ void Diagram::getCenter(int& x, int& y)
 }
 
 // ------------------------------------------------------------
-Diagram* Diagram::newOne()
-{
-  return new Diagram();
-}
+// Object* Diagram::newOne() const
+// {
+//   unreachable();
+//   return new Diagram();
+// }
 
 // ------------------------------------------------------------
 void Diagram::finishMarkerCoordinates(float& fCX, float& fCY) const

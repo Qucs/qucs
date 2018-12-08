@@ -30,7 +30,7 @@ public:
   virtual void getCenter(int&, int &) {};
   virtual bool getSelected(float, float, float) { return false; };
 
-  virtual Painting* newOne();
+  virtual Object* newOne() const;
   virtual bool load(const QString&) { return true; };
   virtual QString save();
   virtual QString saveCpp();

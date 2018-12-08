@@ -1063,9 +1063,9 @@ bool Rect3DDiagram::insideDiagram(float x, float y) const
 }
 
 // ------------------------------------------------------------
-Diagram* Rect3DDiagram::newOne()
+Object* Rect3DDiagram::newOne() const
 {
-  return new Rect3DDiagram();
+  return new Rect3DDiagram(*this);
 }
 
 // ------------------------------------------------------------
