@@ -62,7 +62,17 @@ PSFILES = MNAexample.eps NLexample.eps CYexample.eps MNAnoise1.eps \
   DoubleStubOpenBalanced.eps DoubleStubShortBalanced.eps \
   SingleStubOpenBalanced.eps SingleStubShortBalanced.eps \
   Lsection.eps SmithChart-Lsection.eps SmithChartTL.eps \
-  Smithl8l4.eps CascadedLCsch.eps SmithCascadedLCsections.eps
+  Smithl8l4.eps SmithCascadedLCsections.eps cascaded-l-section-lowpass.eps \
+  cascaded-l-section-highpass.eps CascadedLCsch-lowpass.eps CascadedLCsch-highpass.eps \
+  Tee-to-pi-transformation.eps Tapped-L-transformation-output.eps Tapped-L-transformation-input.eps \
+  Tapped-L-equivalent.eps Tapped-L.eps Tapped-C-Transformer.eps Tapped-C-ckt-equivalent-input-pair-transformed.eps \
+  Tapped-C-ckt-equivalent.eps Single-tuned-transformer-equivalent-ckt.eps Single-tuned-transformer.eps \
+  Series_to_parallel.eps series-double-tuned-transformer.eps pi-type-output-transform.eps \
+  pi-type-network.eps pi-type-Lowpass-Highpass.eps pi-type-input-transform.eps \
+  Pi-to-tee-transformation.eps Parallel_to_series.eps parallel-double-tuned-transformer.eps \
+  Lowpass-Tee.eps Lowpass-Pi.eps Highpass-Tee.eps Highpass-Pi.eps Double-Tapped-Resonator-Transformed.eps \
+  Double-Tapped-Resonator-p2s-output.eps Double-Tapped-Resonator-p2s-input.eps Double-Tapped-Resonator.eps \
+  coupled-inductors-tee-equivalent.eps coupled-inductors-pi-equivalent.eps coupled-inductors.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PSFRAGTEXS = $(FIGURES:.fig=.tex) $(MATHFILES:.m=.tex)
 PDFFILES = $(FIGURES:.fig=.pdf)
