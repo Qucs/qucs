@@ -66,7 +66,7 @@ void Rectangle::paint(ViewPainter *p)
 }
 
 // --------------------------------------------------------------------------
-void Rectangle::paintScheme(Schematic *p)
+void Rectangle::paintScheme(Schematic *p) const
 {
   p->PostPaintEvent(_Rect, cx, cy, x2, y2);
 }

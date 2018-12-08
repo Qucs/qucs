@@ -128,7 +128,16 @@ libqucs_la_LIBADD =
 libqucsschematic_la_LIBADD =
 endif
 
-noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs-lib
+qucs_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
+qucs_LDADD = libqucs.la components/libcomponents.la diagrams/libdiagrams.la \
+  paintings/libpaintings.la dialogs/libdialogs.la \
+  $(X11_LIBS) $(QT_LIBS)
+
+# not a good idea.
+# qucs_LDADD += components/qucs-default-components.la
+
+noinst_HEADERS = $(MOCHEADERS) main.h wire.h qucsdoc.h element.h node.h \
   wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
   projectView.h printerwriter.h imagewriter.h command.h
 

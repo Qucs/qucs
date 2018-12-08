@@ -56,14 +56,6 @@ SpiceFile::SpiceFile()
 }
 
 // -------------------------------------------------------
-Component* SpiceFile::newOne()
-{
-  SpiceFile *p = new SpiceFile();
-  p->recreate(0);   // createSymbol() is NOT called in constructor !!!
-  return p;
-}
-
-// -------------------------------------------------------
 Element* SpiceFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("SPICE netlist");
@@ -150,14 +142,16 @@ void SpiceFile::createSymbol()
 // ---------------------------------------------------
 QString SpiceFile::netlist() const
 {
-  if(Props.at(1)->Value.isEmpty())
+// HACK around qt3 bug
+	Q3PtrList<Property>* P=const_cast<Q3PtrList<Property>*>(&Props);
+  if(P->at(1)->Value.isEmpty())
     return QString("");  // no ports, no subcircuit instance
 
   QString s = "Sub:"+Name;   // SPICE netlist is subcircuit
   foreach(Port *pp, Ports)
     s += " "+pp->Connection->Name;   // output all node names
 
-  QString f = misc::properFileName(Props.first()->Value);
+  QString f = misc::properFileName(P->first()->Value);
   s += " Type=\""+misc::properName(f)+"\"\n";
   return s;
 }
