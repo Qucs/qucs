@@ -95,7 +95,7 @@ bool Wire::getSelected(int x_, int y_)
 }
 
 // ----------------------------------------------------------------
-void Wire::paintScheme(QPainter *p)
+void Wire::paintScheme(QPainter *p) const
 {
   p->drawLine(x1, y1, x2, y2);
 //  if(Label)
