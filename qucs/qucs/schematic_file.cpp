@@ -1462,14 +1462,12 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
         pw->Port1->Name = "net" + pw->Label->Name;
     }
 
-  *stream << "\nTAC\n";
   // go through components
   // BUG: ejects declarations
   if(!throughAllComps(stream, countInit, Collect, ErrText, NumPorts, nl)){
     fprintf(stderr, "Error: Could not go throughAllComps\n");
     return false;
   }
-  *stream << "\ndone TAC\n";
 
   // work on named nodes first in order to preserve the user given names
   throughAllNodes(true, Collect, countInit);
@@ -1670,7 +1668,6 @@ int NumPorts)
       }
       try{
        	(*tstream) << pc->getNetlist();
-       	(*tstream) << "inc " << pc->name();
       }catch(std::exception const&){
 	incomplete();
 	nlp->printItem(pc, *tstream);
@@ -1919,14 +1916,12 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   else if (isVerilog)
     stream << "//";
   else
-    stream << "--";
   stream << " Qucs " << PACKAGE_VERSION << "  " << DocName << "\n";
 
   // set timescale property for verilog schematics
   if (isVerilog) {
     stream << "\n`timescale 1ps/100fs\n";
   }
-  stream << "\ninthemiddle\n";
 
   int countInit = 0;  // counts the nodesets to give them unique names
 
@@ -1944,7 +1939,6 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
 	   << "use work.all;\n";
   }
 
-  stream << "\nattheend\n" << NumPorts;
   return NumPorts;
 }
 

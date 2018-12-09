@@ -157,7 +157,7 @@ int doNetlist(QString schematic, QString netlist, NetLang const& nl)
 
   Stream.setDevice(&NetlistFile);
   int SimPorts = sch->prepareNetlist(Stream, Collect, ErrText, nl);
-  Stream << "done prep\n";
+  qDebug() << "done prep\n";
 
   if(SimPorts < -5) {
     NetlistFile.close();
