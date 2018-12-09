@@ -190,7 +190,8 @@ void Component::paint(ViewPainter *p)
   int x, y, a, b, xb, yb;
   QFont f = p->Painter->font();   // save current font
   QFont newFont = f;
-  if(Model.at(0) == '.') {   // is simulation component (dc, ac, ...)
+  if(dynamic_cast<Command const*>(this)) {
+//    assert(Model.at(0) == '.'); no longer.
     newFont.setPointSizeF(p->Scale * Texts.first()->Size);
     newFont.setWeight(QFont::DemiBold);
     p->Painter->setFont(newFont);
@@ -219,8 +220,9 @@ void Component::paint(ViewPainter *p)
     p->Painter->drawLine(x+xb-1, y+yb, a+xb,   b+yb);
     p->Painter->drawLine(x+xb-1, y+yb, x+xb-1, y);
     p->Painter->drawLine(x+xb-1, y,    a+xb,   b);
-  }
-  else {    // normal components go here
+  }else{    // normal components go here
+    qDebug() << "normal component?";
+    assert(Model.at(0) != '.');
 
     // paint all lines
     foreach(Line *p1, Lines) {
@@ -319,7 +321,7 @@ void Component::paint(ViewPainter *p)
 void Component::paintScheme(Schematic *p)
 {
   // qDebug() << "paintScheme" << Model;
-  if(Model.at(0) == '.') {   // is simulation component (dc, ac, ...)
+  if(dynamic_cast<Command const*>(this)) {
     int a, b, xb, yb;
     QFont newFont = p->font();
 
@@ -792,7 +794,8 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   tty = n.toInt(&ok);
   if(!ok) return NULL;
 
-  if(c->obsolete_model_hack().at(0) != '.') {  // is simulation component (dc, ac, ...) ?
+  if(dynamic_cast<Command const*>(c)) {
+    // assert(c->obsolete_model_hack().at(0) == '.');
 
     n  = s.section(' ',7,7);    // mirroredX
     if(n.toInt(&ok) == 1){
@@ -808,6 +811,8 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
     for(int z=c->rotated; z<tmp; z++){
       c->rotate();
     }
+  }else{
+    assert(c->obsolete_model_hack().at(0) != '.');
   }
 
   c->tx = ttx;

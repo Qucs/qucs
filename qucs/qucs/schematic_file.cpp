@@ -1261,6 +1261,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       pc->Ports.first()->Connection->Name = "gnd";
       continue;
     }else if(pc->obsolete_model_hack() == "Sub") {
+      incomplete();
       int i;
       // tell the subcircuit it belongs to this schematic
       pc->setSchematic (this);
@@ -1289,9 +1290,10 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 
       // load subcircuit schematic
       s = pc->Props.first()->Value;
+
+      qDebug() << "reading subckt schematic" << pc->getSubcircuitFile();
       Schematic *d = new Schematic(0, pc->getSubcircuitFile());
-      if(!d->loadDocument())      // load document if possible
-      {
+      if(!d->loadDocument()) { // BUG. "try".
           delete d;
           /// \todo implement error/warning message dispatcher for GUI and CLI modes.
           QString message = QObject::tr("ERROR: Cannot load subcircuit \"%1\".").arg(s);
@@ -1300,6 +1302,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
           else // command line
             qCritical() << "Schematic::throughAllComps" << message;
           return false;
+      }else{
       }
       d->DocName = s;
       d->isVerilog = isVerilog;
