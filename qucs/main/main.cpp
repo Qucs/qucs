@@ -699,6 +699,8 @@ int main(int argc, char *argv[])
   int dpi = 96;
   QString color = "RGB";
   QString orientation = "portrait";
+  std::string default_simulator = "qucsator"; // FIXME: get from rc? maybe from environment?
+  std::string netlang_name = default_simulator;
 
   // simple command line parser
   for (int i = 1; i < argc; ++i) {
@@ -781,6 +783,19 @@ int main(int argc, char *argv[])
       fprintf(stderr, "Error: Unknown option: %s\n", argv[i]);
       return -1;
     }
+  }
+
+  NetLang const* netlang;
+  if((netlang = netlang_dispatcher[netlang_name])){
+    // just use it.
+  }else if(auto sd = simulator_dispatcher[netlang_name]){
+    // ask a simulator.
+    netlang = sd->netLang();
+  }
+  if(!netlang){
+    std::cerr << "Error: Cannot find language for "
+              << std::string(netlang_name) << "\n";
+    return -1;
   }
 
   // check operation and its required arguments
