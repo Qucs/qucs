@@ -1,9 +1,8 @@
 /***************************************************************************
-                               param_sweep.h
-                              ---------------
-    begin                : Sat Aug 23 2003
-    copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               command.h
+                              -------------
+    copyright            : (C) 2018 Felix Salfelder
+    email                : yes
  ***************************************************************************/
 
 /***************************************************************************
@@ -15,19 +14,16 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef PARAM_SWEEP_H
-#define PARAM_SWEEP_H
+#ifndef QUCS_COMMMAND_H
+#define QUCS_COMMMAND_H
 
-#include "command.h"
+#include "components/component.h"
 
-
-class Param_Sweep : public Command  {
-public:
-  Param_Sweep();
-  ~Param_Sweep();
-  Component* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
-  void recreate(Schematic*);
+/*!
+ * this is a bug. commands are not components, maybe elements?
+ * decide later. we only need this base class.
+ */
+class Command : public Component {
 };
 
 #endif

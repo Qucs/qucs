@@ -18,10 +18,10 @@
 #ifndef ETR_SIM_H
 #define ETR_SIM_H
 
-#include "component.h"
+#include "command.h"
 
 
-class ETR_Sim : public Component  {
+class ETR_Sim : public Command {
 public:
   ETR_Sim();
   ~ETR_Sim();

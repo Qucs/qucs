@@ -42,6 +42,7 @@
 #include "module.h"
 #include "misc.h"
 #include "sim/sim.h"
+#include "io_trace.h"
 
 
 // Here the subcircuits, SPICE components etc are collected. It must be
@@ -1251,11 +1252,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
     if(pc->obsolete_model_hack() == "GND") { // BUG.
       pc->Ports.first()->Connection->Name = "gnd";
       continue;
-    }
-
-    // handle subcircuits
-    if(pc->obsolete_model_hack() == "Sub")
-    {
+    }else if(pc->obsolete_model_hack() == "Sub") {
       int i;
       // tell the subcircuit it belongs to this schematic
       pc->setSchematic (this);
@@ -1554,6 +1551,7 @@ int NumPorts)
         it_type++;
       }
       (*it_name) = pc->Ports.first()->Connection->Name;
+      qDebug() << "found" << *it_name;
       DigMap::Iterator it = Signals.find(*it_name);
       if(it!=Signals.end())
         (*it_type) = it.value().Type;
@@ -1778,6 +1776,7 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
 //  int Collect_count = Collect.count();   // position for this subcircuit
 
   // TODO: NodeSets have to be put into the subcircuit block.
+  qDebug() << "giveNodeNames" << NumPorts << "\n";
   if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts)){
     fprintf(stderr, "Error giving NodeNames in createSubNetlist\n");
     return false;

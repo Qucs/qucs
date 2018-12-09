@@ -26,6 +26,7 @@
 #include "paintings/paintings.h"
 #include "diagrams/diagrams.h"
 #include "module.h"
+#include "io_trace.h"
 
 // Global category and component lists.
 QHash<QString, Module *> Module::Modules;
