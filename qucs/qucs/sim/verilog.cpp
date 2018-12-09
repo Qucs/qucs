@@ -19,6 +19,7 @@
 #include "node.h"
 #include <QString>
 #include "globals.h"
+#include "command.h"
 
 namespace {
 class Verilog : public NetLang
