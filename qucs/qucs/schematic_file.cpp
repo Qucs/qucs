@@ -1514,7 +1514,7 @@ bool Schematic::createLibNetlist(QTextStream *stream, QPlainTextEdit *ErrText,
 
   Signals.clear();  // was filled in "giveNodeNames()"
   return true;
-}
+} // createLibNetlist
 
 //#define VHDL_SIGNAL_TYPE "bit"
 //#define VHDL_LIBRARIES   ""
@@ -1662,8 +1662,12 @@ int NumPorts)
 
     // write all components with node names into netlist file
     for(pc = DocComps.first(); pc != 0; pc = DocComps.next()){
+      if(dynamic_cast<Port const*>(pc)){
+	  incomplete();
+      }
       try{
        	(*tstream) << pc->getNetlist();
+       	(*tstream) << "inc " << pc->name();
       }catch(std::exception const&){
 	incomplete();
 	nlp->printItem(pc, *tstream);
@@ -1919,23 +1923,25 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   if (isVerilog) {
     stream << "\n`timescale 1ps/100fs\n";
   }
+  stream << "\ninthemiddle\n";
 
   int countInit = 0;  // counts the nodesets to give them unique names
+
+  // BUG: giveNodeNames ejects subcircuit declarations (WTF?)
   if(!giveNodeNames(&stream, countInit, Collect, ErrText, NumPorts, nl)){
     fprintf(stderr, "Error giving NodeNames\n");
     return -10;
   }
 
   if(allTypes & isAnalogComponent){
-    return NumPorts;
-  }
-
-  if (!isVerilog) {
+  }else if (!isVerilog) {
     stream << QString::fromStdString(VHDL_LIBRARIES);
     stream << "entity TestBench is\n"
 	   << "end entity;\n"
 	   << "use work.all;\n";
   }
+
+  stream << "\nattheend\n" << NumPorts;
   return NumPorts;
 }
 

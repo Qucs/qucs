@@ -95,6 +95,7 @@ void qucsMessageOutput(QtMsgType type, const char *msg)
  */
 void attach(const char* what);
 
+// BUG. new
 Schematic *openSchematic(QString schematic)
 {
   qDebug() << "*** try to load schematic :" << schematic;
@@ -156,6 +157,7 @@ int doNetlist(QString schematic, QString netlist, NetLang const& nl)
 
   Stream.setDevice(&NetlistFile);
   int SimPorts = sch->prepareNetlist(Stream, Collect, ErrText, nl);
+  Stream << "done prep\n";
 
   if(SimPorts < -5) {
     NetlistFile.close();

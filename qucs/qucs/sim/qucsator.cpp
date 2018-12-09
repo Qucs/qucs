@@ -62,9 +62,15 @@ void QucsLang::printInstance(Component const* c, QTextStream& s) const
     try{
       // default to the legacy way, fix later
       s << c->getNetlist();
+      s<< "---";
       incomplete();
     }catch (...){ // todo: introduce proper exceptions
       // normal netlisting
+
+      if(dynamic_cast<Command const*>(c)){
+	s << ".";
+      }else{
+      }
       s << c->type() << ":" << c->label();
 
       // output all node names
