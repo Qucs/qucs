@@ -18,10 +18,10 @@
 #ifndef OPT_SIM_H
 #define OPT_SIM_H
 
-#include "component.h"
+#include "command.h"
 
 
-class Optimize_Sim : public Component  {
+class Optimize_Sim : public Command  {
 public:
   Optimize_Sim();
  ~Optimize_Sim();

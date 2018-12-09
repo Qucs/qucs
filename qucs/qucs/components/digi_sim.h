@@ -18,10 +18,10 @@
 #ifndef DIGI_SIM_H
 #define DIGI_SIM_H
 
-#include "component.h"
+#include "command.h"
 
 
-class Digi_Sim : public Component  {
+class Digi_Sim : public Command {
 public:
   Digi_Sim();
  ~Digi_Sim();

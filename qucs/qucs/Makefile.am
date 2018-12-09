@@ -113,7 +113,7 @@ endif
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
   wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
-  projectView.h printerwriter.h imagewriter.h
+  projectView.h printerwriter.h imagewriter.h command.h
 
 # must be installed. but later
 noinst_HEADERS += platform.h globals.h l_dispatcher.h io_trace.h

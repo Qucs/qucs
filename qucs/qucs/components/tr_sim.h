@@ -18,10 +18,10 @@
 #ifndef TR_SIM_H
 #define TR_SIM_H
 
-#include "component.h"
+#include "command.h"
 
 
-class TR_Sim : public Component  {
+class TR_Sim : public Command  {
 public:
   TR_Sim();
   ~TR_Sim();
