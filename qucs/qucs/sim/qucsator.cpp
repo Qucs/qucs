@@ -25,8 +25,18 @@ namespace {
 // qucslang language implementation
 class QucsLang : public NetLang
 {
+  virtual void printCommand(Command const*, QTextStream&) const;
   virtual void printInstance(Component const*, QTextStream&) const;
 };
+
+// this does not make sense...
+// but it works, because the empty portlist is not visible
+void QucsLang::printCommand(Command const* c, QTextStream& s) const
+{
+  Component const* C = dynamic_cast<Component const*>(c);
+  s << ".";
+  return printInstance(C, s);
+}
 
 /*!
  * print Components in qucs language

@@ -21,6 +21,7 @@ class NetLang;
 class Component;
 
 #include <assert.h>
+#include <command.h>
 #include <components/component.h>
 #include <iostream>
 
@@ -49,6 +50,7 @@ public:
   virtual ~NetLang(){}
   void printItem(Element const*, stream_t&) const;
 private:
+  virtual void printCommand(Command const*, stream_t&) const = 0;
   virtual void printInstance(Component const*, stream_t&) const = 0;
 };
 
@@ -63,7 +65,9 @@ inline void NetLang::printItem(Element const* c, stream_t& s) const
 //    still using obsolete code
 //  }else
 //  ...
-  if (auto C=dynamic_cast<const Component*>(c)) {
+  if (auto C=dynamic_cast<const Command*>(c)) {
+    printCommand(C, s);
+  }else if (auto C=dynamic_cast<const Component*>(c)) {
     printInstance(C, s);
   }else{
     std::cerr << "incomplete\n";
