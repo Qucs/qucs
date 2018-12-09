@@ -105,8 +105,10 @@ void SP_Sim::recreate(Schematic*)
   }
 }
 
+#if 0 // not yet
 namespace{
 SP_Sim p;
 Dispatcher<Command>::INSTALL d(&command_dispatcher, "SP", &p);
 }
+#endif
 

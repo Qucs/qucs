@@ -86,7 +86,9 @@ Element* DC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
+#if 0 // not yet
 namespace{
 DC_Sim p;
 Dispatcher<Command>::INSTALL d(&command_dispatcher, "DC", &p);
 }
+#endif
