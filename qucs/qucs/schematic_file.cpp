@@ -1462,11 +1462,14 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
         pw->Port1->Name = "net" + pw->Label->Name;
     }
 
+  *stream << "\nTAC\n";
   // go through components
+  // BUG: ejects declarations
   if(!throughAllComps(stream, countInit, Collect, ErrText, NumPorts, nl)){
     fprintf(stderr, "Error: Could not go throughAllComps\n");
     return false;
   }
+  *stream << "\ndone TAC\n";
 
   // work on named nodes first in order to preserve the user given names
   throughAllNodes(true, Collect, countInit);
