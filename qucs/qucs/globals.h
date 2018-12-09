@@ -19,7 +19,9 @@
 class Symbol;
 class Simulator;
 class NetLang;
+class Command;
 
 extern INTERFACE Dispatcher<Symbol> symbol_dispatcher;
 extern INTERFACE Dispatcher<Simulator> simulator_dispatcher;
 extern INTERFACE Dispatcher<NetLang> netlang_dispatcher;
+extern INTERFACE Dispatcher<Command> command_dispatcher;

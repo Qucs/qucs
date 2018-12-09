@@ -660,11 +660,15 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
   Component *c;
   while(!stream->atEnd()) {
     Line = stream->readLine();
-    if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
+    if(Line.at(0) == '<' && Line.at(1) == '/'){
+      // ?!
+      return true;
+    }
     Line = Line.trimmed();
     if(Line.isEmpty()) continue;
 
     /// \todo enable user to load partial schematic, skip unknown components
+    qDebug() << "loadline" << Line;
     c = getComponentFromName(Line, this);
     if(!c) return false;
 
