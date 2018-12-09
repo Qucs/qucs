@@ -1291,7 +1291,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       // load subcircuit schematic
       s = pc->Props.first()->Value;
 
-      qDebug() << "reading subckt schematic" << pc->getSubcircuitFile();
+//      qDebug() << "reading subckt schematic" << pc->getSubcircuitFile();
       Schematic *d = new Schematic(0, pc->getSubcircuitFile());
       if(!d->loadDocument()) { // BUG. "try".
           delete d;

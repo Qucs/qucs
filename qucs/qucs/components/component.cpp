@@ -191,7 +191,7 @@ void Component::paint(ViewPainter *p)
   QFont f = p->Painter->font();   // save current font
   QFont newFont = f;
   if(dynamic_cast<Command const*>(this)) {
-//    assert(Model.at(0) == '.'); no longer.
+    assert(Model.at(0) == '.');
     newFont.setPointSizeF(p->Scale * Texts.first()->Size);
     newFont.setWeight(QFont::DemiBold);
     p->Painter->setFont(newFont);
@@ -794,8 +794,8 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   tty = n.toInt(&ok);
   if(!ok) return NULL;
 
-  if(dynamic_cast<Command const*>(c)) {
-    // assert(c->obsolete_model_hack().at(0) == '.');
+  if(!dynamic_cast<Command const*>(c)) {
+    assert(c->obsolete_model_hack().at(0) != '.');
 
     n  = s.section(' ',7,7);    // mirroredX
     if(n.toInt(&ok) == 1){
@@ -812,7 +812,7 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
       c->rotate();
     }
   }else{
-    assert(c->obsolete_model_hack().at(0) != '.');
+    assert(c->obsolete_model_hack().at(0) == '.');
   }
 
   c->tx = ttx;
