@@ -1589,13 +1589,16 @@ Component* getComponentFromName(QString& Line, Schematic* p)
 
   QString cstr = Line.section (' ',0,0); // component type
   cstr.remove (0,1);    // remove leading "<"
+#if 0 // not yet.
   if(cstr[0]=='.'){
     Command const* p=command_dispatcher[cstr.toStdString().c_str()+1];
     if(p){
       c = p->clone();
     }else{
     }
-  }else if (cstr == "Lib") c = new LibComp ();
+  }else
+#endif
+  if (cstr == "Lib") c = new LibComp ();
   else if (cstr == "Eqn") c = new Equation ();
   else if (cstr == "SPICE") c = new SpiceFile();
   else if (cstr == "Rus") c = new Resistor (false);  // backward compatible
