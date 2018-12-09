@@ -41,7 +41,7 @@ DC_Sim::DC_Sim()
 
   tx = 0;
   ty = y2+1;
-  Model = ".DC";
+  Model = "DC";
   Name  = "DC";
 
   Props.append(new Property("Temp", "26.85", false,
