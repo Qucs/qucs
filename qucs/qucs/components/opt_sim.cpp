@@ -43,7 +43,7 @@ Optimize_Sim::Optimize_Sim()
 
   tx = 0;
   ty = y2+1;
-  Model = ".Opt";
+  Model = "Opt";
   Name  = "Opt";
 
   Props.append(new Property("Sim", "", false, ""));
