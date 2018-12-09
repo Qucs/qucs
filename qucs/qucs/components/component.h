@@ -33,7 +33,11 @@ public:
   Component();
   virtual ~Component() {};
 
-  virtual Component* newOne();
+  virtual Component* newOne() /* BUG: const */;
+  virtual Component* clone() const{
+	  return const_cast<Component*>(this)->newOne();
+  }
+
   virtual void recreate(Schematic*) {};
   QString getNetlist() const {return netlist();}
   QString get_VHDL_Code(int);

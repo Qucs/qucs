@@ -39,6 +39,7 @@
 
 #include <QPen>
 #include <QBrush>
+#include "object.h"
 
 class Node;
 class QPainter;
@@ -139,7 +140,7 @@ struct Property {
   *
   *
   */
-class Element {
+class Element : public Object {
 public:
   Element();
   virtual ~Element();

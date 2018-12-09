@@ -25,6 +25,8 @@
 #include "viewpainter.h"
 #include "module.h"
 #include "misc.h"
+#include "io_trace.h"
+#include "globals.h"
 
 #include <QPen>
 #include <QString>
@@ -63,7 +65,7 @@ Component::Component()
 }
 
 // -------------------------------------------------------
-Component* Component::newOne()
+Component* Component::newOne() /* BUG const */
 {
   return new Component();
 }
@@ -1558,6 +1560,7 @@ void GateComponent::createSymbol()
 // FIXME:
 // must be Component* SomeParserClass::getComponent(QString& Line)
 // better: Component* SomeParserClass::getComponent(SomeDataStream& s)
+// BUG: loads component into schematic.
 Component* getComponentFromName(QString& Line, Schematic* p)
 {
   Component *c = 0;
@@ -1571,7 +1574,13 @@ Component* getComponentFromName(QString& Line, Schematic* p)
 
   QString cstr = Line.section (' ',0,0); // component type
   cstr.remove (0,1);    // remove leading "<"
-  if (cstr == "Lib") c = new LibComp ();
+  if(cstr[0]=='.'){
+    Command const* p=command_dispatcher[cstr.toStdString().c_str()+1];
+    if(p){
+      c = p->clone();
+    }else{
+    }
+  }else if (cstr == "Lib") c = new LibComp ();
   else if (cstr == "Eqn") c = new Equation ();
   else if (cstr == "SPICE") c = new SpiceFile();
   else if (cstr == "Rus") c = new Resistor (false);  // backward compatible
@@ -1617,6 +1626,7 @@ Component* getComponentFromName(QString& Line, Schematic* p)
 	QObject::tr("Format Error:\nWrong 'component' line format!"));
     delete c;
     return 0;
+  }else{
   }
 
   cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
