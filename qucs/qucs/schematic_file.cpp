@@ -43,6 +43,7 @@
 #include "misc.h"
 #include "sim/sim.h"
 #include "io_trace.h"
+#include "command.h"
 
 
 // Here the subcircuits, SPICE components etc are collected. It must be
@@ -98,9 +99,12 @@ QString Schematic::createClipboardFile()
 
   s += "<Paintings>\n";
   for(pp = Paintings->first(); pp != 0; pp = Paintings->next())
-    if(pp->isSelected)
+    if(pp->isSelected){
       if(pp->Name.at(0) != '.') {  // subcircuit specific -> do not copy
-        s += "<"+pp->save()+">\n";  z++; }
+        s += "<"+pp->save()+">\n";  z++;
+      }
+    }else{
+    }
   s += "</Paintings>\n";
 
   if(z == 0) return "";   // return empty if no selection
@@ -1532,7 +1536,9 @@ int NumPorts)
   // "SubcircuitPortNames"
   PortTypes.clear();
   for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
-    if(pc->obsolete_model_hack().at(0) == '.') { // no simulations in subcircuits
+    if(dynamic_cast<Command const*> (pc)){
+      // ignore commands.
+    }else if(pc->obsolete_model_hack().at(0) == '.') { // no simulations in subcircuits
       ErrText->appendPlainText(
         QObject::tr("WARNING: Ignore simulation component in subcircuit \"%1\".").arg(DocName)+"\n");
       continue;
@@ -1811,8 +1817,11 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
 
   // Detect simulation domain (analog/digital) by looking at component types.
   for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
-    if(pc->isActive == COMP_IS_OPEN) continue;
-    if(pc->obsolete_model_hack().at(0) == '.') {
+    if(pc->isActive == COMP_IS_OPEN){
+      // open circuit (or so)
+    }else if(pc->obsolete_model_hack().at(0) == '.') {
+      qDebug() << pc->obsolete_model_hack();
+      assert(dynamic_cast<Command const*>(pc));
       if(pc->obsolete_model_hack() == ".Digi") {
         if(allTypes & isDigitalComponent) {
           ErrText->appendPlainText(
@@ -1832,8 +1841,10 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
            QObject::tr("ERROR: Analog and digital simulations cannot be mixed."));
         return -10;
       }
+    }else if(pc->obsolete_model_hack() == "DigiSource"){
+      NumPorts++;
+    }else{
     }
-    else if(pc->obsolete_model_hack() == "DigiSource") NumPorts++;
   }
 
   if((allTypes & isAnalogComponent) == 0) {
