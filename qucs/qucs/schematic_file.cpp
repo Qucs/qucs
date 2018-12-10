@@ -1845,9 +1845,15 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
 
 // ---------------------------------------------------
 // Determines the node names and writes subcircuits into netlist file.
+// BUG: generates the Netlist.
 int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
                               QPlainTextEdit *ErrText, NetLang const& nl)
 {
+
+  // TODO:
+  // SomeNetlister.generate(stream, Collect, nl);
+  // return;
+
   if(showBias > 0) showBias = -1;  // do not show DC bias anymore
 
   isVerilog = false;
