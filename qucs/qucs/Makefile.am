@@ -68,9 +68,9 @@ pqucs_LTLIBRARIES = \
 	libqucsschematic.la
 
 libqucs_la_SOURCES = \
+	globals.cpp \
 	attach.cpp \
 	element.cpp \
-	globals.cpp \
 	imagewriter.cpp \
 	io_error.cpp \
 	messagedock.cpp \
@@ -93,7 +93,9 @@ libqucs_la_SOURCES = \
 	textdoc.cpp \
 	viewpainter.cpp \
 	wire.cpp \
-	wirelabel.cpp
+	wirelabel.cpp \
+	misc.cpp \
+	io_error.cpp
 
 libqucs_la_SOURCES += qucs_.qrc
 
@@ -112,16 +114,18 @@ PLUGINS = \
 
 if COND_WIN32
 # non-posix woes.
-libqucs_la_LIBADD = \
-	libqucsschematic.la
 libqucsschematic_la_LIBADD = \
-	libqucs.la \
+	${PLUGINS} \
+	$(X11_LIBS) \
+	$(QT_LIBS)
+libqucs_la_LIBADD = \
+	libqucsschematic.la \
 	$(X11_LIBS) \
 	$(QT_LIBS)
 else
 # link order hack?
 libqucs_la_LIBADD =
-libqucsschematic_la_LIBADD = # libqucsgui.la
+libqucsschematic_la_LIBADD =
 endif
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
