@@ -58,8 +58,12 @@
 // Make the MS DLL functions look like the posix ones.
 #define SOEXT ".dll"
 #define Arc HIDE_Arc
+#define Rectangle HIDE_Rect
+#define Ellipse HIDE_Ell
 #include <windows.h>
 #undef Arc
+#undef Rectangle
+#undef Ellipse
 #include <stdlib.h>
 #include <string.h>
 #undef min
