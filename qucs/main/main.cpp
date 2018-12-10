@@ -95,8 +95,9 @@ void qucsMessageOutput(QtMsgType type, const char *msg)
  */
 void attach(const char* what);
 
-// BUG. new
-Schematic *openSchematic(QString schematic)
+// BUG: not here.
+// possibly use SchematicModel(QString Filename, Lang...)
+Schematic *newSchematic(QString schematic)
 {
   qDebug() << "*** try to load schematic :" << schematic;
 
@@ -114,10 +115,10 @@ Schematic *openSchematic(QString schematic)
   }
 
   // populate Modules list
-  Module::registerModules ();
+  Module::registerModules (); // BUG: on startup
 
   // new schematic from file
-  Schematic *sch = new Schematic(0, schematic);
+  Schematic *sch = new Schematic(0 /* no app */, schematic);
 
   // load schematic file if possible
   if(!sch->loadDocument()) {
@@ -130,7 +131,7 @@ Schematic *openSchematic(QString schematic)
 
 int doNetlist(QString schematic, QString netlist, NetLang const& nl)
 {
-  Schematic *sch = openSchematic(schematic);
+  Schematic *sch = newSchematic(schematic);
   if (sch == NULL) {
     return 1;
   }
@@ -192,7 +193,7 @@ int doNetlist(QString schematic, QString netlist, NetLang const& nl)
 int doPrint(QString schematic, QString printFile,
     QString page, int dpi, QString color, QString orientation)
 {
-  Schematic *sch = openSchematic(schematic);
+  Schematic *sch = newSchematic(schematic);
   if (sch == NULL) {
     return 1;
   }
