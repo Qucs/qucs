@@ -111,12 +111,16 @@ PLUGINS = \
 	paintings/libpaintings.la dialogs/libdialogs.la
 
 if COND_WIN32
+# non-posix woes.
+libqucs_la_LIBADD = \
+	libqucsschematic.la
 libqucsschematic_la_LIBADD = \
 	libqucs.la \
 	$(X11_LIBS) \
 	$(QT_LIBS)
 else
 # link order hack?
+libqucs_la_LIBADD =
 libqucsschematic_la_LIBADD = # libqucsgui.la
 endif
 
