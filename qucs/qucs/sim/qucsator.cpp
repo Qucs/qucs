@@ -49,8 +49,6 @@ void QucsLang::printInstance(Component const* c, QTextStream& s) const
   // BUG
   assert(c->isActive == COMP_IS_ACTIVE);
 
- 
-
   if(c->isOpen()) {
     // nothing.
   }else if(c->isShort()){

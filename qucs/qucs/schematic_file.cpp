@@ -1865,23 +1865,25 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
     if(pc->isActive == COMP_IS_OPEN){
       // open circuit (or so)
-    }else if(pc->obsolete_model_hack().at(0) == '.') {
+//    }else if(pc->obsolete_model_hack().at(0) == '.') {
+    }else if(dynamic_cast<Command const*>(pc)) {
+
       qDebug() << pc->obsolete_model_hack();
-      assert(dynamic_cast<Command const*>(pc));
       if(pc->obsolete_model_hack() == ".Digi") {
         if(allTypes & isDigitalComponent) {
           ErrText->appendPlainText(
              QObject::tr("ERROR: Only one digital simulation allowed."));
           return -10;
-        }
-        if(pc->Props.getFirst()->Value != "TimeList")
+        }else if(pc->Props.getFirst()->Value != "TimeList"){
           isTruthTable = true;
-	      if(pc->Props.getLast()->Value != "VHDL")
+	}
+	if(pc->Props.getLast()->Value != "VHDL")
 	        isVerilog = true;
         allTypes |= isDigitalComponent;
 	      isAnalog = false;
+      }else{
+       	allTypes |= isAnalogComponent;
       }
-      else allTypes |= isAnalogComponent;
       if((allTypes & isComponent) == isComponent) {
         ErrText->appendPlainText(
            QObject::tr("ERROR: Analog and digital simulations cannot be mixed."));
@@ -1921,7 +1923,10 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
     stream << "#";
   else if (isVerilog)
     stream << "//";
-  else
+  else{
+    stream << "--";
+  }
+
   stream << " Qucs " << PACKAGE_VERSION << "  " << DocName << "\n";
 
   // set timescale property for verilog schematics
