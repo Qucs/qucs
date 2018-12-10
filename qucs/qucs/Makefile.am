@@ -69,9 +69,7 @@ pqucs_LTLIBRARIES = \
 
 libqucs_la_SOURCES = \
 	misc.cpp \
-	viewpainter.cpp \
 	globals.cpp \
-	module.cpp \
 	io_error.cpp
 
 # TODO:
@@ -79,6 +77,7 @@ libqucs_la_SOURCES = \
 # - other parts need to be loaded at run time
 libqucsschematic_la_SOURCES = \
   attach.cpp \
+  viewpainter.cpp \
   node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
   qucs.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
   mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
@@ -103,16 +102,18 @@ PLUGINS = \
 
 if COND_WIN32
 # non-posix woes.
-libqucs_la_LIBADD = \
-	libqucsschematic.la
 libqucsschematic_la_LIBADD = \
-	libqucs.la \
+	${PLUGINS} \
+	$(X11_LIBS) \
+	$(QT_LIBS)
+libqucs_la_LIBADD = \
+	libqucsschematic.la \
 	$(X11_LIBS) \
 	$(QT_LIBS)
 else
 # link order hack?
 libqucs_la_LIBADD =
-libqucsschematic_la_LIBADD = # libqucsgui.la
+libqucsschematic_la_LIBADD =
 endif
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
