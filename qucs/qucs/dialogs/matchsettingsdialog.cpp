@@ -177,6 +177,15 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   MatchSettingslayout->addWidget(Lumped_QW_Label, 13, 0);
   MatchSettingslayout->addWidget(Lumped_QW_Combo, 13, 1);
 
+  //lambda/8 transmission line lumped equivalent
+  Lumped_L8_Label = new QLabel(QString("%1/8 line implementation").arg(QChar(0xBB, 0x03)));
+  Lumped_L8_Combo = new QComboBox();
+  Lumped_L8_Combo->addItem("Transmission line");
+  Lumped_L8_Combo->addItem(QString(tr("%1-type equivalent").arg(QChar(0xC0, 0x03))));
+  Lumped_L8_Combo->addItem(tr("T-type equivalent"));
+  MatchSettingslayout->addWidget(Lumped_L8_Label, 14, 0);
+  MatchSettingslayout->addWidget(Lumped_L8_Combo, 14, 1);
+
   //Default settings
   Order_Label->setVisible(false);
   Order_Spinbox->setVisible(false);
@@ -241,6 +250,8 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
        break;
 
   case L8L4:
+       Lumped_L8_Label->setVisible(true);
+       Lumped_L8_Combo->setVisible(true);
   case QUARTER_WAVE_LINE:
        Lumped_QW_Label->setVisible(true);
        Lumped_QW_Combo->setVisible(true);
@@ -299,8 +310,8 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
 
   OK_Button = new QPushButton(tr("OK"));
   Cancel_Button = new QPushButton(tr("Cancel"));
-  MatchSettingslayout->addWidget(OK_Button, 14, 0);
-  MatchSettingslayout->addWidget(Cancel_Button, 14, 1);
+  MatchSettingslayout->addWidget(OK_Button, 15, 0);
+  MatchSettingslayout->addWidget(Cancel_Button, 15, 1);
   connect(OK_Button, SIGNAL(clicked()), SLOT(slot_save_settings()));
   connect(Cancel_Button, SIGNAL(clicked()), SLOT(slot_cancel_settings()));
 
@@ -332,7 +343,8 @@ void MatchSettingsDialog::slot_save_settings(){
     params.k = k_Transformer_Spinbox->value();
     params.coupled_L_Equivalent = coupled_L_Combo->currentIndex();
     params.BW = BW_Spinbox->value()*getScale(BW_Scale_Combo->currentText());
-    params.use_lumped_equivalent = Lumped_QW_Combo->currentIndex();
+    params.use_l4_lumped_equivalent = Lumped_QW_Combo->currentIndex();
+    params.use_l8_lumped_equivalent = Lumped_L8_Combo->currentIndex();
     accept();
 }
 

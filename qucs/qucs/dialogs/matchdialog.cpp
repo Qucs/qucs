@@ -1547,10 +1547,10 @@ QString MatchDialog::calcChebyLines(struct NetworkParams params) {
     (RL < Z0) ? Zi = exp(log(Zaux) - ImplParams.gamma_MAX * w[i])
               : Zi = exp(log(Zaux) + ImplParams.gamma_MAX * w[i]); // When RL<Z0, Z_{i}<Z_{i-1}
     Zaux = Zi;
-    if (ImplParams.use_lumped_equivalent == 0)
+    if (ImplParams.use_l4_lumped_equivalent == 0)
        laddercode += QString("TL:%1#%2;").arg(Zi).arg(l4);
     else
-       laddercode += CalcQuarterWaveEquivalent(params.freq, Zaux, ImplParams.use_lumped_equivalent);
+       laddercode += CalcQuarterWaveEquivalent(params.freq, Zaux, ImplParams.use_l4_lumped_equivalent);
   }
   return laddercode;
 }
@@ -2135,10 +2135,20 @@ QString MatchDialog::calcMatchingLambda8Lambda4(struct NetworkParams params) {
   double Zmm = sqrt(RL * RL + XL * XL);
   double Zm = sqrt((Z0 * RL * Zmm) / (Zmm - XL));
 
-  if (ImplParams.use_lumped_equivalent == 0)
-     return QString("TL:%1#%2;TL:%3#%4;").arg(Zm).arg(l4).arg(Zmm).arg(l8);
-  else
-     return QString("%1;TL:%2#%3;").arg(CalcQuarterWaveEquivalent(params.freq, Zm, ImplParams.use_lumped_equivalent)).arg(Zmm).arg(l8);
+  QString str;
+
+  if (ImplParams.use_l4_lumped_equivalent == 0){
+      str += QString("TL:%1#%2;").arg(Zm).arg(l4);
+  } else{
+      str += QString("%1;").arg(CalcQuarterWaveEquivalent(params.freq, Zm, ImplParams.use_l4_lumped_equivalent));
+  }
+
+  if (ImplParams.use_l8_lumped_equivalent == 0){
+      str += QString("TL:%1#%2;").arg(Zmm).arg(l8);
+  } else{
+      str += QString("%1;").arg(CalcLambda8Equivalent(params.freq, Zmm, ImplParams.use_l8_lumped_equivalent));
+  }
+return str;
 }
 
 //--------------------------------------------------------------------------
@@ -2168,10 +2178,10 @@ QString MatchDialog::calcMatchingLambda4(struct NetworkParams params) {
 
   r2z(RL, XL, Z0);
   double Zm = sqrt(Z0*RL);
-  if (ImplParams.use_lumped_equivalent == 0)
+  if (ImplParams.use_l4_lumped_equivalent == 0)
      return QString("TL:%1#%2;").arg(Zm).arg(l4);
   else
-     return CalcQuarterWaveEquivalent(params.freq, Zm, ImplParams.use_lumped_equivalent);
+     return CalcQuarterWaveEquivalent(params.freq, Zm, ImplParams.use_l4_lumped_equivalent);
 }
 
 // Given a string code of inductors, capacitors and transmission lines, it
@@ -2863,5 +2873,22 @@ QString MatchDialog::CalcQuarterWaveEquivalent(double f0, double Z0, int mode)
        return QString("CP:%1;LS:%2;CP:%1;").arg(X2).arg(X1);
     }else{//Tee type equivalent
        return QString("LS:%1;CP:%2;LS:%1;").arg(X1).arg(X2);
+    }
+}
+
+//This function calculates the lumped element equivalent of a lambda/8 transmission line
+QString MatchDialog::CalcLambda8Equivalent(double f0, double Z0, int mode)
+{
+    double w0 = 2*pi*f0;
+    double L, C;
+    double sq2 = sqrt(2);
+    if (mode == 1){//Pi type equivalent
+       L = (Z0*sq2)/(2*w0);
+       C = (sq2-1)/(Z0*w0);
+       return QString("CP:%1;LS:%2;CP:%1;").arg(C).arg(L);
+    }else{//Tee type equivalent
+       L = (-Z0*(1-sq2))/(w0);
+       C = (sq2)/(2*Z0*w0);
+       return QString("LS:%1;CP:%2;LS:%1;").arg(L).arg(C);
     }
 }

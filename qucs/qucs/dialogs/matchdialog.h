@@ -107,6 +107,7 @@ public:
   //--------------------------------------------------------------------------------------------------------
 
   QString CalcQuarterWaveEquivalent(double, double, int);
+  QString CalcLambda8Equivalent(double, double, int);
   QString calcBiMatch(struct NetworkParams);
   bool calc2PortMatch(struct NetworkParams);
 

@@ -70,7 +70,8 @@ struct ImplementationParams {
     double k = 0.95;//Coupling coefficient of the transformer
     int coupled_L_Equivalent=0;//Use coupled inductor or its uncoupled equivalent
     double BW = 20e6;// Bandwidth for the double-tuned transformer matching method
-    int use_lumped_equivalent = 0;//Use the lumped lambda/4 transmission line equivalent
+    int use_l4_lumped_equivalent = 0, use_l8_lumped_equivalent;
+                                  //Use the lumped lambda/4 and lambda/8 transmission line lumped equivalent
                                   // 0 -> Use transmission lines
                                   // 1 -> Pi quarter-wave line equivalent
                                   // 2 -> Tee quarter-wave line equivalent
@@ -98,9 +99,9 @@ public:
 private:
   QLabel *Order_Label, *Network_Response_Label, *QualityFactor_Label, *maxRipple_Label, *Weighting_Type_Label,
          *Stub_Type_Label, *Stub_Implementation_Label, *CapacitorQ_Label, *InductorQ_Label, *L2_Double_Tapped_Resonator_Label,
-         *k_Transformer_Label, *coupled_L_Label, *BW_Label, *f2_Label, *Lumped_QW_Label;
+         *k_Transformer_Label, *coupled_L_Label, *BW_Label, *f2_Label, *Lumped_QW_Label, *Lumped_L8_Label;
   QComboBox *Network_Response_Combo, *Stub_Type_Combo, *Weighting_Type_Combo, *Stub_Implementation_Combo, *L2_Double_Tapped_Resonator_Scale_Combo,
-            *coupled_L_Combo, *BW_Scale_Combo, *f2_Scale_Combo, *Lumped_QW_Combo;
+            *coupled_L_Combo, *BW_Scale_Combo, *f2_Scale_Combo, *Lumped_QW_Combo, *Lumped_L8_Combo;
   QSpinBox *Order_Spinbox, *BW_Spinbox, *f2_Spinbox;
   QDoubleSpinBox *Quality_Factor_Spinbox, *maxRipple_Spinbox, *CapacitorQ_Spinbox, *InductorQ_Spinbox, *L2_Double_Tapped_Resonator_SpinBox,
                  *k_Transformer_Spinbox;
