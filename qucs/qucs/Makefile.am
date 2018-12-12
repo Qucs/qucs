@@ -83,6 +83,7 @@ libqucsschematic_la_SOURCES = \
   mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
   schematic_file.cpp syntax.cpp module.cpp octave_window.cpp \
   messagedock.cpp imagewriter.cpp printerwriter.cpp \
+  schematic_component.cpp \
   projectView.cpp
 
 libqucs_la_SOURCES += qucs_.qrc
