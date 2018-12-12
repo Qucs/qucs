@@ -831,15 +831,10 @@ bool Schematic::loadPaintings(QTextStream *stream, Q3PtrList<Painting> *List)
     Line = Line.mid(1, Line.length()-2);  // cut off start and end character
 
     cstr = Line.section(' ',0,0);    // painting type
-         if(cstr == "Line") p = new GraphicLine();
-    else if(cstr == "EArc") p = new EllipseArc();
-    else if(cstr == ".PortSym") p = new PortSymbol();
-    else if(cstr == ".ID") p = new ID_Text();
-    else if(cstr == "Text") p = new GraphicText();
-    else if(cstr == "Rectangle") p = new Rectangle();
-    else if(cstr == "Arrow") p = new Arrow();
-    else if(cstr == "Ellipse") p = new Ellipse();
-    else {
+    if(Painting const* pp=painting_dispatcher[cstr.toStdString()]){
+      p=prechecked_cast<Painting*>(pp->clone());
+      assert(p);
+    }else{
       QMessageBox::critical(0, QObject::tr("Error"),
 		QObject::tr("Format Error:\nUnknown painting!"));
       return false;
