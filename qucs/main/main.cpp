@@ -52,6 +52,9 @@
 #include "components/components.h"
 #include "globals.h"
 
+// for now. move to lib later.
+#include "io_findf.cc"
+
 #ifdef _WIN32
 #include <Windows.h>  //for OutputDebugString
 #endif
@@ -501,6 +504,29 @@ void createListComponentEntry(){
     } // category
 }
 
+void attach_single(std::string const&path, std::string const& what)
+{
+  std::string full_file_name = findfile(what, path, R_OK);
+  if (full_file_name != "") {
+    // found it, with search
+  }else{untested();
+    std::cerr << "something seriously wrong with installation\n";
+    std::cerr << "cannot find plugin " + what + " in " +path + "\n";
+    exit(1);
+  }
+  attach(full_file_name.c_str());
+}
+
+void attach_default_plugins(std::string plugpath)
+{
+  attach_single(plugpath, "qucsator" SOEXT);
+
+  // TODO: remove "lib" prefix
+  attach_single(plugpath, "libcomponents" SOEXT);
+  attach_single(plugpath, "libdiagrams" SOEXT);
+  attach_single(plugpath, "libpaintings" SOEXT);
+  attach_single(plugpath, "libdialogs" SOEXT);
+}
 // #########################################################################
 // ##########                                                     ##########
 // ##########                  Program Start                      ##########
@@ -585,7 +611,8 @@ int main(int argc, char *argv[])
   }else{
     plugpath=ppenv;
   }
-  attach((plugpath + "/qucsator").c_str());
+
+  attach_default_plugins(plugpath);
 
   /// \todo Make the setting up of all executables below more consistent
   var = getenv("QUCSATOR");
