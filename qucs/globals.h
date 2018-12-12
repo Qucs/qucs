@@ -20,8 +20,10 @@ class Symbol;
 class Simulator;
 class NetLang;
 class Command;
+class Painting;
 
 extern INTERFACE Dispatcher<Symbol> symbol_dispatcher;
 extern INTERFACE Dispatcher<Simulator> simulator_dispatcher;
 extern INTERFACE Dispatcher<NetLang> netlang_dispatcher;
 extern INTERFACE Dispatcher<Command> command_dispatcher;
+extern INTERFACE Dispatcher<Painting> painting_dispatcher;
