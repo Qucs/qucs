@@ -38,9 +38,12 @@ if [ -z "$QUCS_LIBRARY" ]; then
 	QUCS_LIBRARY="$top_src/qucs-lib/library";
 fi
 
-# TODO: findfile
 if [ -z "$QUCS_PLUGPATH" ]; then
 	QUCS_PLUGPATH="$top/qucs/sim/.libs";
+	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/qucs/components/.libs";
+	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/qucs/diagrams/.libs";
+	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/qucs/paintings/.libs";
+	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/qucs/dialogs/.libs";
 fi
 
 subdirs="$( make -C $top subdirs )"
