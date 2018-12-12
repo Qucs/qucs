@@ -103,7 +103,6 @@ PLUGINS = \
 if COND_WIN32
 # non-posix woes.
 libqucsschematic_la_LIBADD = \
-	${PLUGINS} \
 	$(X11_LIBS) \
 	$(QT_LIBS)
 libqucs_la_LIBADD = \
