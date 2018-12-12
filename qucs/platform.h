@@ -47,15 +47,18 @@
 
 /*--------------------------------------------------------------------------*/
 /* portability hacks, the serious stuff */
+#define PATHSEP		':'
 
 #if !defined(MS_DLL)
   // The usual way for POSIX compliant systems
+  #define	ENDDIR		"/"
   #define SOEXT ".so"
   #include <dlfcn.h>
   #define INTERFACE
 #else
 // Microsoft DLL hacks -- thanks to Holger Vogt and Cesar Strauss for the info
 // Make the MS DLL functions look like the posix ones.
+#define	ENDDIR		"/\\"
 #define SOEXT ".dll"
 #define Arc HIDE_Arc
 #define Rectangle HIDE_Rect

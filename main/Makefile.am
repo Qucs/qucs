@@ -35,24 +35,14 @@ qucs_real_SOURCES = main.cpp # qucs_.qrc
 qucs_real_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) -I${top_srcdir}/qucs\
 		-DQUCS_PLUGPATH=\"${pkglibdir}\"
 
-# these are not plugins yet. but there's hope.
-# TODO:
-# - cleanup
-# - use attach, do not mention here.
-PLUGINS = \
-	../qucs/components/libcomponents.la \
-	../qucs/diagrams/libdiagrams.la \
-	../qucs/paintings/libpaintings.la \
-	../qucs/dialogs/libdialogs.la
-
 if COND_WIN32
 qucs_real_LDADD = \
 	../qucs/libqucs.la \
-	../qucs/libqucsschematic.la ${PLUGINS}
+	../qucs/libqucsschematic.la
 else
 qucs_real_LDADD = \
 	../qucs/libqucs.la \
-	../qucs/libqucsschematic.la ${PLUGINS} \
+	../qucs/libqucsschematic.la \
 	$(X11_LIBS) $(QT_LIBS)
 endif
 
@@ -64,6 +54,8 @@ endif
 bin_PROGRAMS = qucs.real
 transform=s&\.real$$&&;$(program_transform_name)
 
-EXTRA_DIST = README
+EXTRA_DIST = \
+	io_findf.cc \
+	README
 
 CLEANFILES = qucs_.cpp
