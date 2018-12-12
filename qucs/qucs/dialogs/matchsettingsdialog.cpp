@@ -186,6 +186,15 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   MatchSettingslayout->addWidget(Lumped_L8_Label, 14, 0);
   MatchSettingslayout->addWidget(Lumped_L8_Combo, 14, 1);
 
+  //Arbitrary-length transmission line lumped equivalent
+  Lumped_TL_Label = new QLabel(tr("Transmission line implementation"));
+  Lumped_TL_Combo = new QComboBox();
+  Lumped_TL_Combo->addItem("Transmission line");
+  Lumped_TL_Combo->addItem(QString(tr("%1-type equivalent").arg(QChar(0xC0, 0x03))));
+  Lumped_TL_Combo->addItem(tr("T-type equivalent"));
+  MatchSettingslayout->addWidget(Lumped_TL_Label, 15, 0);
+  MatchSettingslayout->addWidget(Lumped_TL_Combo, 15, 1);
+
   //Default settings
   Order_Label->setVisible(false);
   Order_Spinbox->setVisible(false);
@@ -217,10 +226,16 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   BW_Scale_Combo->setVisible(false);
   Lumped_QW_Label->setVisible(false);
   Lumped_QW_Combo->setVisible(false);
+  Lumped_L8_Label->setVisible(false);
+  Lumped_L8_Combo->setVisible(false);
+  Lumped_TL_Label->setVisible(false);
+  Lumped_TL_Combo->setVisible(false);
 
   switch (topology) {
   case SINGLESTUB:
   case DOUBLESTUB:
+       Lumped_TL_Label->setVisible(true);
+       Lumped_TL_Combo->setVisible(true);
        Stub_Type_Label->setVisible(true);
        Stub_Type_Combo->setVisible(true);
        Stub_Implementation_Label->setVisible(true);
@@ -310,8 +325,8 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
 
   OK_Button = new QPushButton(tr("OK"));
   Cancel_Button = new QPushButton(tr("Cancel"));
-  MatchSettingslayout->addWidget(OK_Button, 15, 0);
-  MatchSettingslayout->addWidget(Cancel_Button, 15, 1);
+  MatchSettingslayout->addWidget(OK_Button, 16, 0);
+  MatchSettingslayout->addWidget(Cancel_Button, 16, 1);
   connect(OK_Button, SIGNAL(clicked()), SLOT(slot_save_settings()));
   connect(Cancel_Button, SIGNAL(clicked()), SLOT(slot_cancel_settings()));
 
@@ -322,7 +337,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
 MatchSettingsDialog::~MatchSettingsDialog() {
 }
 void MatchSettingsDialog::slot_save_settings(){
-    params.BalancedStubs = Stub_Implementation_Combo->currentIndex() == 0;
+    params.BalancedStubs = Stub_Implementation_Combo->currentIndex() != 0;
     params.open_short = Stub_Type_Combo->currentIndex() == 0; // Open stub or short circuit stub configuration
     params.order = Order_Spinbox->value() + 1; // Order of the multisection lambda/4 matching
     params.gamma_MAX = maxRipple_Spinbox->value(); // Maximum ripple (Chebyshev weighting only)
@@ -345,6 +360,7 @@ void MatchSettingsDialog::slot_save_settings(){
     params.BW = BW_Spinbox->value()*getScale(BW_Scale_Combo->currentText());
     params.use_l4_lumped_equivalent = Lumped_QW_Combo->currentIndex();
     params.use_l8_lumped_equivalent = Lumped_L8_Combo->currentIndex();
+    params.use_TL_lumped_equivalent = Lumped_TL_Combo->currentIndex();
     accept();
 }
 

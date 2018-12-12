@@ -106,8 +106,7 @@ public:
   QString SynthesizeMatchingNetwork(struct NetworkParams);
   //--------------------------------------------------------------------------------------------------------
 
-  QString CalcQuarterWaveEquivalent(double, double, int);
-  QString CalcLambda8Equivalent(double, double, int);
+  QString CalcTransmissionLineLumpedEquivalent(double, double, int, double);
   QString calcBiMatch(struct NetworkParams);
   bool calc2PortMatch(struct NetworkParams);
 

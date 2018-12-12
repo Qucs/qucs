@@ -1227,26 +1227,45 @@ QString MatchDialog::calcSingleStub(struct NetworkParams params) {
   // String code
   QString laddercode;
   if ((ImplParams.open_short) && (!ImplParams.BalancedStubs))
-    laddercode = QString("OL:%1#%2;TL:%1#%3;")
+  {
+      laddercode = QString("OL:%1#%2;")
                      .arg(Z0)
-                     .arg(lstub)
-                     .arg(d); // Line + Open stub
+                     .arg(lstub); // Line + Open stub
+      if (ImplParams.use_TL_lumped_equivalent)
+          laddercode += CalcTransmissionLineLumpedEquivalent(params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
+      else
+          laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
+  }
   if ((ImplParams.open_short) && (ImplParams.BalancedStubs))
-    laddercode = QString("OU:%1#%2;OL:%1#%2;TL:%1#%3;")
+  {
+      laddercode = QString("OU:%1#%2;OL:%1#%2;")
                      .arg(Z0)
-                     .arg(lstub)
-                     .arg(d); // Open circuit balanced stubs
+                     .arg(lstub); // Open circuit balanced stubs
+      if (ImplParams.use_TL_lumped_equivalent)
+          laddercode += CalcTransmissionLineLumpedEquivalent(params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
+      else
+          laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
+  }
   if ((!ImplParams.open_short) && (!ImplParams.BalancedStubs))
-    laddercode = QString("SL:%1#%2;TL:%1#%3;")
+  {
+      laddercode = QString("SL:%1#%2;")
                      .arg(Z0)
-                     .arg(lstub)
-                     .arg(d); // Line + Short circuited stub
+                     .arg(lstub); // Line + Short circuited stub
+      if (ImplParams.use_TL_lumped_equivalent)
+          laddercode += CalcTransmissionLineLumpedEquivalent(params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
+      else
+          laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
+  }
   if ((!ImplParams.open_short) && (ImplParams.BalancedStubs))
-    laddercode = QString("SU:%1#%2;SL:%1#%2;TL:%1#%3;")
+  {
+      laddercode = QString("SU:%1#%2;SL:%1#%2;")
                      .arg(Z0)
-                     .arg(lstub)
-                     .arg(d); // Short circuited balanced stubs
-
+                     .arg(lstub); // Short circuited balanced stubs
+      if (ImplParams.use_TL_lumped_equivalent)
+          laddercode += CalcTransmissionLineLumpedEquivalent(params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
+      else
+          laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
+  }
   return laddercode;
 }
 
@@ -1340,29 +1359,52 @@ QString MatchDialog::calcDoubleStub(struct NetworkParams params) {
 
   QString laddercode;
   if ((ImplParams.open_short) && (ImplParams.BalancedStubs))
-    laddercode = QString("OU:%1#%2;OL:%1#%2;TL:%1#%3;OU:%1#%4;OL:%1#%4;")
+  {
+      laddercode = QString("OU:%1#%2;OL:%1#%2;")
                      .arg(Z0)
-                     .arg(lstub2)
-                     .arg(d)
-                     .arg(lstub1);
+                     .arg(lstub2);
+      if (ImplParams.use_TL_lumped_equivalent)
+          laddercode += CalcTransmissionLineLumpedEquivalent(params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
+      else
+          laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
+
+      laddercode += QString("OU:%1#%2;OL:%1#%2;").arg(Z0).arg(lstub1);
+  }
   if ((ImplParams.open_short) && (!ImplParams.BalancedStubs))
-    laddercode = QString("OL:%1#%2;TL:%1#%3;OL:%1#%4;")
+  {  laddercode = QString("OL:%1#%2;")
                      .arg(Z0)
-                     .arg(lstub2)
-                     .arg(d)
-                     .arg(lstub1);
+                     .arg(lstub2);
+      if (ImplParams.use_TL_lumped_equivalent)
+          laddercode += CalcTransmissionLineLumpedEquivalent(params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
+      else
+          laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
+
+      laddercode += QString("OL:%1#%2;").arg(Z0).arg(lstub1);
+  }
   if ((!ImplParams.open_short) && (ImplParams.BalancedStubs))
-    laddercode = QString("SU:%1#%2;SL:%1#%2;TL:%1#%3;SU:%1#%4;SL:%1#%4;")
+  {
+      laddercode = QString("SU:%1#%2;SL:%1#%2;")
                      .arg(Z0)
-                     .arg(lstub2)
-                     .arg(d)
-                     .arg(lstub1);
+                     .arg(lstub2);
+      if (ImplParams.use_TL_lumped_equivalent)
+          laddercode += CalcTransmissionLineLumpedEquivalent(params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
+      else
+          laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
+
+      laddercode += QString("SU:%1#%2;SL:%1#%2;").arg(Z0).arg(lstub1);
+  }
   if ((!ImplParams.open_short) && (!ImplParams.BalancedStubs))
-    laddercode = QString("SL:%1#%2;TL:%1#%3;SL:%1#%4;")
+  {
+      laddercode = QString("SL:%1#%2;")
                      .arg(Z0)
-                     .arg(lstub2)
-                     .arg(d)
-                     .arg(lstub1);
+                     .arg(lstub2);
+      if (ImplParams.use_TL_lumped_equivalent)
+          laddercode += CalcTransmissionLineLumpedEquivalent(params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
+      else
+          laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
+
+      laddercode += QString("SL:%1#%2;").arg(Z0).arg(lstub1);
+  }
 
   return laddercode;
 }
@@ -1550,7 +1592,7 @@ QString MatchDialog::calcChebyLines(struct NetworkParams params) {
     if (ImplParams.use_l4_lumped_equivalent == 0)
        laddercode += QString("TL:%1#%2;").arg(Zi).arg(l4);
     else
-       laddercode += CalcQuarterWaveEquivalent(params.freq, Zaux, ImplParams.use_l4_lumped_equivalent);
+       laddercode += CalcTransmissionLineLumpedEquivalent(params.freq, Zaux, ImplParams.use_l4_lumped_equivalent, l4);
   }
   return laddercode;
 }
@@ -2140,13 +2182,13 @@ QString MatchDialog::calcMatchingLambda8Lambda4(struct NetworkParams params) {
   if (ImplParams.use_l4_lumped_equivalent == 0){
       str += QString("TL:%1#%2;").arg(Zm).arg(l4);
   } else{
-      str += QString("%1;").arg(CalcQuarterWaveEquivalent(params.freq, Zm, ImplParams.use_l4_lumped_equivalent));
+      str += QString("%1;").arg(CalcTransmissionLineLumpedEquivalent(params.freq, Zm, ImplParams.use_l4_lumped_equivalent, l4));
   }
 
   if (ImplParams.use_l8_lumped_equivalent == 0){
       str += QString("TL:%1#%2;").arg(Zmm).arg(l8);
   } else{
-      str += QString("%1;").arg(CalcLambda8Equivalent(params.freq, Zmm, ImplParams.use_l8_lumped_equivalent));
+      str += QString("%1;").arg(CalcTransmissionLineLumpedEquivalent(params.freq, Zmm, ImplParams.use_l8_lumped_equivalent, l8));
   }
 return str;
 }
@@ -2181,7 +2223,7 @@ QString MatchDialog::calcMatchingLambda4(struct NetworkParams params) {
   if (ImplParams.use_l4_lumped_equivalent == 0)
      return QString("TL:%1#%2;").arg(Zm).arg(l4);
   else
-     return CalcQuarterWaveEquivalent(params.freq, Zm, ImplParams.use_l4_lumped_equivalent);
+     return CalcTransmissionLineLumpedEquivalent(params.freq, Zm, ImplParams.use_l4_lumped_equivalent, l4);
 }
 
 // Given a string code of inductors, capacitors and transmission lines, it
@@ -2864,31 +2906,23 @@ void MatchDialog::slot_MicrostripCheckChanged()
     Substrate_Button->setEnabled(microstrip_implementation);
 }
 
-//This function calculates the lumped element equivalent of a quarter wavelength transmission line
-QString MatchDialog::CalcQuarterWaveEquivalent(double f0, double Z0, int mode)
+//This function calculates the lumped element equivalent of an arbitrary-length transmission line
+QString MatchDialog::CalcTransmissionLineLumpedEquivalent(double f0, double Zm, int mode, double L)
 {
     double w0 = 2*pi*f0;
-    double X1 = Z0/w0, X2 = 1/(w0*Z0);
+    double Xs, Xp;
+    double beta = 2*pi*f0/SPEED_OF_LIGHT;
+    Xs = Zm*sin(beta*L);
+    Xp = -Xs/(1-cos(beta*L));
     if (mode == 1){//Pi type equivalent
-       return QString("CP:%1;LS:%2;CP:%1;").arg(X2).arg(X1);
+        if (Xs >= 0)// L <= lambda/2
+           return QString("CP:%1;LS:%2;CP:%1;").arg(-1/(Xp*w0)).arg(Xs/w0);
+        else//L > lambda
+           return QString("LP:%1;CS:%2;LP:%1;").arg(Xp/w0).arg(-1/(w0*Xs));
     }else{//Tee type equivalent
-       return QString("LS:%1;CP:%2;LS:%1;").arg(X1).arg(X2);
-    }
-}
-
-//This function calculates the lumped element equivalent of a lambda/8 transmission line
-QString MatchDialog::CalcLambda8Equivalent(double f0, double Z0, int mode)
-{
-    double w0 = 2*pi*f0;
-    double L, C;
-    double sq2 = sqrt(2);
-    if (mode == 1){//Pi type equivalent
-       L = (Z0*sq2)/(2*w0);
-       C = (sq2-1)/(Z0*w0);
-       return QString("CP:%1;LS:%2;CP:%1;").arg(C).arg(L);
-    }else{//Tee type equivalent
-       L = (-Z0*(1-sq2))/(w0);
-       C = (sq2)/(2*Z0*w0);
-       return QString("LS:%1;CP:%2;LS:%1;").arg(L).arg(C);
+        if (Xs >= 0)// L <= lambda/2
+           return QString("LS:%1;CP:%2;LS:%1;").arg((Xp*Xs)/(w0*(2*Xp+Xs))).arg(-(2*Xp+Xs)/(Xp*Xp*w0));
+        else//L > lambda
+           return QString("CS:%1;LP:%2;CS:%1;").arg(-(2*Xp+Xs)/(Xp*Xs*w0)).arg(Xp*Xp/((2*Xp+Xs)*w0));
     }
 }
