@@ -1,0 +1,15 @@
+qucs main executable
+
+this is meant to provide new and other ways to run qucs, without interference.
+
+- main executables could use different (possibly platform dependent)
+  configuration management, such as QucsSettings, or gconf, or just environment
+  variables.
+
+- main executables could use different ways to load different sets of plugins
+  at startup, including ways this could be implemented.
+
+- when using qucs as a shared library, none of this will be necessary
+
+see gnucap/main and gnucap-custom how this is meant to work in detail.
+(here, some decruft will be required)

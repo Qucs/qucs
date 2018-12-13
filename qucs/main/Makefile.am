@@ -39,4 +39,6 @@ endif
 bin_PROGRAMS = qucs.real
 transform=s&\.real$$&&;$(program_transform_name)
 
+EXTRA_DIST = README
+
 CLEANFILES = qucs_.cpp
