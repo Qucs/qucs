@@ -1877,7 +1877,6 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
   //QPainter painter(Doc->viewport());
   QPointF pos=Doc->mapToScene(Event->pos());
 
-
   Element *pe;
   switch(Event->button()) {
   case Qt::LeftButton :
