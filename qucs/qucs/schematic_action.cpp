@@ -315,6 +315,7 @@ void Schematic::actionChangeProps()
 
 void Schematic::actionCursor(arrow_dir_t dir)
 {
+#ifdef USE_SCROLLVIEW
 	int sign = 1;
 
 	if(dir==arr_left){
@@ -406,6 +407,7 @@ void Schematic::actionCursor(arrow_dir_t dir)
 	}else{
 
 	}
+#endif
 } // actionCursor
 
 void Schematic::actionApplyCompText()
