@@ -24,6 +24,8 @@
 #include <QFile>
 #include <QTextStream>
 #include <QVBoxLayout>
+#include "qucsdoc.h" // stream
+#include "io.h"
 
 class QPlainTextEdit;
 class QTextStream;
@@ -99,7 +101,7 @@ public:
   bool           makeSubcircuit, insertSim;
   QStringList    Collect;
   QFile          NetlistFile;
-  QTextStream    Stream;
+  DocumentStream Stream;
 
   QVBoxLayout  *all;
 protected:

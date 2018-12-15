@@ -29,7 +29,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(Schematic*);
 } D;
-Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, ".TR", &D);
+Dispatcher<Command>::INSTALL p(&command_dispatcher, ".TR", &D);
 Module::INSTALL pp("simulations", &D);
 
 TR_Sim::TR_Sim()
@@ -51,7 +51,7 @@ TR_Sim::TR_Sim()
 
   tx = 0;
   ty = y2+1;
-  Model = "TR";
+  //Model = "TR";
   setLabel("TR");
   setName("TR");
 

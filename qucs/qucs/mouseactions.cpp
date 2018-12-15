@@ -84,18 +84,21 @@ bool MouseActions::pasteElements(Schematic *Doc)
 { untested();
   QClipboard *cb = QApplication::clipboard();   // get system clipboard
   QString s = cb->text(QClipboard::Clipboard);
-  QTextStream stream(&s, QIODevice::ReadOnly);
+  DocumentStream stream(&s, QIODevice::ReadOnly);
   movingElements.clear();
-  incomplete();
-#if 0
-  if(!Doc->paste(&stream, &movingElements)) return false;
+#if 1
+  if(!Doc->paste(&stream, &movingElements)){
+    // something went wrong during parse.
+    // throw?!
+    return false;
+  }else{
+  }
 
-  ElementGraphics *pe;
   int xmax, xmin, ymax, ymin;
   xmin = ymin = INT_MAX;
   xmax = ymax = INT_MIN;
   // First, get the max and min coordinates of all selected elements.
-  for(pe = movingElements.first(); pe != 0; pe = movingElements.next()) { untested();
+  for(auto pe : movingElements){ untested();
     if(pe->Type == isWire) { untested();
       if(pe->x1_() < xmin) xmin = pe->x1_();
       if(pe->x2_() > xmax) xmax = pe->x2_();
@@ -115,7 +118,7 @@ bool MouseActions::pasteElements(Schematic *Doc)
   Doc->setOnGrid(xmin, ymin);
 
   // moving with mouse cursor in the midpoint
-  for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
+  for(auto pe : movingElements){ untested();
     if(pe->Type & isLabel) { untested();
       auto L=dynamic_cast<WireLabel*>(pe);
       //pe->cx += xmin;  pe->x1 += xmin;
@@ -125,9 +128,10 @@ bool MouseActions::pasteElements(Schematic *Doc)
       L->Type = isMovingLabel;
       L->setCenter(xmin, ymin, true /*relative*/);
       L->Type = oldtype;
-    }
-    else
+    } else{
       pe->setCenter(xmin, ymin, true);
+    }
+  }
 
 #endif
   return true;
@@ -173,44 +177,41 @@ void MouseActions::editLabel(Schematic *Doc, WireLabel *pl)
 
 // -----------------------------------------------------------
 // Reinserts all elements (moved by the user) back into the schematic.
+// but why?!
 void MouseActions::endElementMoving(Schematic *Doc, EGPList *movElements)
 { untested();
-  for(auto pe=movElements->first(); pe!=0; pe=movElements->next()) { untested();
+  for(auto pe : *movElements){ untested();
 //    pe->setSelected(false);  // deselect first (maybe afterwards pe == NULL)
-    switch(pe->Type) { // FIXME: use casts.
-      case isWire:
-        if(pe->x1_() == pe->x2_())
+    if(wire(pe)){ untested();
+        if(pe->x1_() == pe->x2_()){ untested();
           if(pe->y1_() == pe->y2_()) { untested();
             // Delete wires with zero length, but preserve label.
             if(((Wire*)pe)->Label) { untested();
               Doc->insertNodeLabel((WireLabel*)((Wire*)pe)->Label);
               ((Wire*)pe)->Label = 0;
-            }
+            }else{
+	    }
             delete (Wire*)pe;
             break;
           }
+	}else{
+	}
 
-	Doc->insertWire((Wire*)pe);
-	break;
-      case isDiagram:
-	Doc->diagrams().append((Diagram*)pe);
-	break;
-      case isPainting:
+	// Doc->insertWire((Wire*)pe); wtf?
+	break; // why?
+    }else if(diagram(pe)){ untested();
+	//already there. d'uh
+    }else if(painting(pe)){ untested();
 	Doc->paintings().append((Painting*)pe);
-	break;
-      case isComponent:
-      case isAnalogComponent:
-      case isDigitalComponent:
-	Doc->insertRawComponent((Component*)pe, false);
-	break;
-      case isMovingLabel:
-      case isHMovingLabel:
-      case isVMovingLabel:
-	Doc->insertNodeLabel((WireLabel*)pe);
-	break;
-      case isMarker:
-	assert(dynamic_cast<Marker*>(pe));
-	break;
+    }else if(auto c=component(pe)){ untested();
+      qDebug() << "type" << pe->Type << c->name();
+	Doc->insertRawComponent(c, false);
+//      Doc->connect(c); // TODO.
+    }else if(auto w=wireLabel(pe)){ untested();
+	Doc->insertNodeLabel(w);
+    }else if(marker(pe)){ untested();
+      //?
+    }else{ untested();
     }
   }
 
@@ -227,10 +228,11 @@ void MouseActions::endElementMoving(Schematic *Doc, EGPList *movElements)
 
 // -----------------------------------------------------------
 // Moves elements in "movElements" by x/y
-void MouseActions::moveElements(EGPList *movElements, int x, int y)
-{ untested();
+void MouseActions::moveElements(EGPList& what, int x, int y)
+{ itested();
+  auto movElements=&what;
   Wire *pw;
-  for(auto pe=movElements->first(); pe!=0; pe=movElements->next()) { untested();
+  for(auto pe : *movElements) { itested();
     if(pe->Type == isWire) { untested();
       pw = (Wire*)pe;   // connected wires are not moved completely
 
@@ -307,30 +309,33 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
 
 
   //QPainter painter(Doc->viewport());
-  TODO("Sort out contentsX");
-  /*
-  if(selElem->Type == isPainting) { untested();
+  if(auto P=painting(selElem)) { untested();
     Doc->PostPaintEvent (_NotRop, 0,0,0,0);
+    incomplete();
+#if 0
     x -= Doc->contentsX();
     y -= Doc->contentsY();
-    ((Painting*)selElem)->MouseMoving(Doc, x, y, gx, gy,
-                                       Doc, x, y, drawn);
+#endif
+    P->MouseMoving(Doc, x, y, gx, gy, Doc, x, y, drawn);
     drawn = true;
     Doc->viewport()->update();
-    return;
-  }  // of "if(isPainting)"
-  */
+  }else{
 
-  // ********** it is a component or diagram
-  if(drawn) selElem->paintScheme(Doc); // erase old scheme
-  drawn = true;
+    // ********** it is a component or diagram
+    if(drawn){
+      // erase old scheme
+      selElem->paintScheme(Doc);
+    }else{
+      drawn = true;
+    }
 
-//  Component *comp = (Component*)selElem;
-  //qDebug() << "desc" << comp->Description << "gx" << gx << "gy" << gy;
+  //  Component *comp = (Component*)selElem;
+    //qDebug() << "desc" << comp->Description << "gx" << gx << "gy" << gy;
 
-  selElem->setCenter(gx, gy);
-  selElem->paintScheme(Doc); // paint scheme at new position
-  Doc->viewport()->update();
+    selElem->setCenter(gx, gy);
+    selElem->paintScheme(Doc); // paint scheme at new position
+    Doc->viewport()->update();
+  }
 }
 
 
@@ -446,8 +451,9 @@ void MouseActions::MMoveWire1(Schematic *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
+// can't we use Qt builtin ractangle selector?
 void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
-{ untested();
+{
   //qDebug() << "MMoveSelect " << "select area";
   Set2(Event, Doc);
   if(isMoveEqual) {    // x and y size must be equal ?
@@ -482,6 +488,7 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
 {
   setPainter(Doc);
 
+
   Set2(Event, Doc);
 
   Doc->setOnGrid(MAx2, MAy2);
@@ -490,11 +497,13 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
 
   // assert(movingElements.empty); //?
   movingElements.clear();
-  movingElements=Doc->cropSelectedElements();
+  movingElements=Doc->cropSelectedElements(); // obsolete.
   Doc->viewport()->repaint();
 
+//  currentCommand = new MoveElementsCommand(selectedItems, startposition);
+
   // Changes the position of all moving elements by dx/dy
-  for(auto pe=movingElements.first(); pe!=0; pe=movingElements.next()) { untested();
+  for(auto pe : movingElements) { untested();
     if(auto pw=wire(pe)){
       // connecting wires are not moved completely
       assert(pw);
@@ -540,12 +549,15 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
 
   Set2(Event, Doc);
 
-  if(drawn) // erase old scheme
-    for(auto pe=movingElements.first(); pe != 0; pe = movingElements.next())
+  if(drawn){
+    // erase old scheme
+    for(auto pe : movingElements) {
       pe->paintScheme(Doc);
 //      if(pe->Type == isWire)  if(((Wire*)pe)->Label)
 //        if(!((Wire*)pe)->Label->isSelected)
 //          ((Wire*)pe)->Label->paintScheme(&painter);
+    }
+  }
 
   drawn = true;
   if (!Event->modifiers().testFlag(Qt::ControlModifier))
@@ -554,14 +566,15 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
   MAy1 = MAy2 - MAy1;
   MAx3 += MAx1;  MAy3 += MAy1;   // keep track of the complete movement
 
-  moveElements(&movingElements, MAx1, MAy1);  // moves elements by MAx1/MAy1
+  moveElements(movingElements, MAx1, MAy1);  // moves elements by MAx1/MAy1
 
   // paint afterwards to avoid conflict between wire and label painting
-  for(auto pe=movingElements.first(); pe!=0; pe=movingElements.next())
+  for(auto pe : movingElements) {
     pe->paintScheme(Doc);
 //    if(pe->Type == isWire)  if(((Wire*)pe)->Label)
 //      if(!((Wire*)pe)->Label->isSelected)
 //        ((Wire*)pe)->Label->paintScheme(&painter);
+  }
 
   MAx1 = MAx2;
   MAy1 = MAy2;
@@ -805,12 +818,8 @@ void MouseActions::MMoveZoomIn(Schematic *Doc, QMouseEvent *Event)
 // Is called from several MousePress functions to show right button menu.
 void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
 { untested();
-  QPointF pos=Doc->mapToScene(Event->pos());
-  float fX=pos.x();
-  float fY=pos.y();
+  Set1(Event, Doc);
 
-  MAx1 = int(fX);
-  MAy1 = int(fY);
   focusElement = selectElement(Doc, Event->pos(), false);
 
   if(focusElement){  // remove special function (4 least significant bits)
@@ -825,7 +834,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
   ComponentMenu->clear();
   { untested();
     if(focusElement) { untested();
-      focusElement->setSelected();
+      focusElement.setSelected(true);
       QAction *editProp = new QAction(QObject::tr("Edit Properties"), QucsMain);
       QucsMain->connect(editProp, SIGNAL(triggered()), SLOT(slotEditElement()));
       ComponentMenu->addAction(editProp);
@@ -1017,7 +1026,6 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
   float fY=pos.y();
 
   bool Ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
-
 
   int No=0;
   MAx1 = int(fX);
@@ -1311,7 +1319,7 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
   }else if(auto W=wire(e)){ untested();
       pl = W->Label;
       W->Label = 0;    // prevent label to be deleted
-      Doc->wires().setAutoDelete(false);
+//      Doc->wires().setAutoDelete(false);
       Doc->deleteWire(W);
       W->Label = pl;
       W->rotate();
@@ -1319,7 +1327,7 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
       Doc->setOnGrid(W->x2__(), W->y2__());
       if(pl)  Doc->setOnGrid(pl->cx__(), pl->cy__());
       Doc->insertWire(W);
-      Doc->wires().setAutoDelete(true);
+ //     Doc->wires().setAutoDelete(true);
       if (Doc->wires().containsRef (W)){
         Doc->enlargeView(e->x1_(), e->y1_(), e->x2_(), e->y2_());
       }else{ untested();
@@ -1357,9 +1365,9 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event)
 	// left mouse button inserts component into the schematic
 	// give the component a pointer to the schematic it's a
 	// part of
-	Comp->setSchematic(&Doc->DocModel);
 	Comp->textSize(x1, y1);
 	Doc->insertElement(Comp);
+	assert(&Doc->DocModel == Comp->getScope());
 	Comp->textSize(x2, y2);
 	if(Comp->tx < Comp->x1_()) Comp->tx -= x2 - x1;
 
@@ -1698,7 +1706,11 @@ void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
 // Is called after the rectangle for selection is released.
 void MouseActions::MReleaseSelect2(Schematic *Doc, QMouseEvent *Event)
 { untested();
-  if(Event->button() != Qt::LeftButton) return;
+  if(Event->button() != Qt::LeftButton){
+    unreachable(); // yikes.
+    return;
+  }else{
+  }
 
   bool Ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
@@ -1837,7 +1849,7 @@ void MouseActions::moveElements(Schematic *Doc, int& x1, int& y1)
 { untested();
   Doc->setOnGrid(x1, y1);
 
-  for(auto pe=movingElements.first(); pe!=0; pe=movingElements.next()) { untested();
+  for(auto pe : movingElements) {
     auto L=dynamic_cast<WireLabel*>(pe);
     if(pe->Type & isLabel) { untested();
       assert(L);
@@ -1853,6 +1865,7 @@ void MouseActions::moveElements(Schematic *Doc, int& x1, int& y1)
 // -----------------------------------------------------------
 void MouseActions::rotateElements(Schematic *Doc, int& x1, int& y1)
 { untested();
+  (void)Doc;
   incomplete();
 #if 0
   int x2, y2;
@@ -1893,8 +1906,7 @@ void MouseActions::rotateElements(Schematic *Doc, int& x1, int& y1)
 // -----------------------------------------------------------
 void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 { untested();
-  incomplete();
-#if 0
+#if 1
   int x1, y1, x2, y2, rot;
   QFileInfo Info(Doc->docName());
   //QPainter painter(Doc->viewport());
@@ -1903,7 +1915,7 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
   switch(Event->button()) {
   case Qt::LeftButton :
     // insert all moved elements into document
-    for(auto pe = movingElements.first(); pe!=0; pe = movingElements.next()) { untested();
+    for(auto pe : movingElements){
       pe->setSelected(false);
       switch(pe->Type) {
 	case isWire:
@@ -1916,7 +1928,7 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 	  else pe = NULL;
 	  break;
 	case isDiagram:
-      Doc->diagrams().append((Diagram*)pe);
+      Doc->pushBack((Diagram*)pe);
       ((Diagram*)pe)->loadGraphData(Info.path() + QDir::separator() +
 					Doc->DataSet);
 	  Doc->enlargeView(pe->cx_(), pe->cy_()-pe->y2_(), pe->cx_()+pe->x2_(), pe->cy_());
@@ -2072,8 +2084,11 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
   float fX=pos.x();
   float fY=pos.y();
 
-  incomplete();
-  element(focusElement)->editElement(Doc);
+//  incomplete();
+ // Element* E=element();
+  ElementGraphics* EG=focusElement->element();
+  Element* E=element(EG);
+  E->editElement(Doc);
 
   // BUG. move to respective classes. 1 at a time...
   if(auto c=component(focusElement)){ untested();
@@ -2096,6 +2111,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
            if(cd->exec() != 1){ untested();
 	     done=true;   // dialog is WDestructiveClose
 	   }else{ untested();
+	     incomplete();
 	     Doc->Components->findRef(c);
 	     Doc->Components->take();
 	     Doc->setComponentNumber(c); // for ports/power sources
@@ -2142,9 +2158,12 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
   }else if(auto pg=graph(focusElement)){ untested();
 	 // searching diagram for this graph
 	 // BUG: a graph should know its parent.
-	 for(dia = Doc->diagrams().last(); dia != 0; dia = Doc->diagrams().prev())
-	   if(dia->Graphs.indexOf(pg) >= 0)
+	 for(auto d : Doc->diagrams()){
+	   if(dia->Graphs.indexOf(pg) >= 0){
+	     dia=d;
 	     break;
+	   }
+	 }
 
 	 if(dia){ untested();
 
@@ -2176,6 +2195,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
         // mdia = new MarkerDialog(m, Doc);
         // if(mdia->exec() > 1)
         //   Doc->setChanged(true, true);
+  }else{
   }
 
   // Very strange: Now an open VHDL editor gets all the keyboard input !?!
@@ -2213,6 +2233,15 @@ void MouseActions::MDoubleClickWire2(Schematic *Doc, QMouseEvent *Event)
     QucsMain->MouseMoveAction = &MouseActions::MMoveWire1;
     QucsMain->MousePressAction = &MouseActions::MPressWire1;
     QucsMain->MouseDoubleClickAction = 0;
+  }
+}
+
+void ElementMouseAction::setSelected(bool x)
+{ untested();
+  if(_e){
+    _e->setSelected(x);
+  }else{
+    unreachable();
   }
 }
 

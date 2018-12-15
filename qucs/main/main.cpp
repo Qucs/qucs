@@ -118,7 +118,8 @@ static std::string plugpath()
 
 // BUG: not here.
 // possibly use SchematicModel(QString Filename, Lang...)
-Schematic *newSchematic(QString schematic)
+#if 0
+Schematic *openSchematic(QString schematic)
 {
   qDebug() << "*** try to load schematic :" << schematic;
 
@@ -129,24 +130,26 @@ Schematic *newSchematic(QString schematic)
   QFile file(schematic);  // save simulator messages
   if(file.open(QIODevice::ReadOnly)) {
     file.close();
-  }
-  else {
-    fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
+  }else{
+    fprintf(stderr, "Error: No such file %s\n", c_sch);
     return NULL;
   }
 
   // new schematic from file
-  Schematic *sch = new Schematic(0 /* no app */, schematic);
+  SchematicModel *sch = new SchematicModel(schematic);
 
   // load schematic file if possible
-  if(!sch->loadDocument()) { untested();
+  if(!sch->loadDocument()) {
     fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
     delete sch;
     return NULL;
-  }else{ untested();
+  }else{
   }
   return sch;
 }
+#endif
+
+// BUG: move to SchematicModel
 namespace{
 class sda : public ModelAccess{
 public:
@@ -231,14 +234,20 @@ void doNetlist(QString schematic, QString netlist, DocumentFormat const& NLN)
   sda xs(sch);
   xs.DocName = schematic.toStdString(); // tmp
   NLN.save(os, xs);
-
 }
 
 int doPrint(QString schematic, QString printFile,
     QString page, int dpi, QString color, QString orientation)
 {
-  Schematic *sch = newSchematic(schematic);
-  if (sch == NULL) {
+  Schematic sch(nullptr, "..."); // need X?
+  // sch.setFileInfo(schematic);
+  QFile file(schematic);  // save simulator messages
+  file.open(QIODevice::ReadOnly);
+  DocumentStream stream (&file);
+  try{
+    incomplete();
+    // sch.parse(stream);
+  }catch(...){
     return 1;
   }
 
@@ -248,6 +257,7 @@ int doPrint(QString schematic, QString printFile,
 //  sch->Paintings = &(sch->DocPaints);
 //  sch->Components = &(sch->DocComps);
 //  sch->reloadGraphs();
+  incomplete();
 
   qDebug() << "*** try to print file  :" << printFile;
 
@@ -256,10 +266,10 @@ int doPrint(QString schematic, QString printFile,
     //initial printer
     PrinterWriter *Printer = new PrinterWriter();
     Printer->setFitToPage(true);
-    Printer->noGuiPrint(sch, printFile, page, dpi, color, orientation);
+    Printer->noGuiPrint(&sch, printFile, page, dpi, color, orientation);
   } else {
     ImageWriter *Printer = new ImageWriter("");
-    Printer->noGuiPrint(sch, printFile, color);
+    Printer->noGuiPrint(&sch, printFile, color);
   }
   return 0;
 }
@@ -510,7 +520,6 @@ void createDocData() {
   // table for quick reference, schematic and netlist entry
 void createListComponentEntry()
 { untested();
-
   QStringList cats = Category::getCategories ();
   QFile data("/dev/stdout");
   data.open (QFile::WriteOnly | QFile::Truncate);
@@ -644,15 +653,6 @@ int main(int argc, char *argv[])
   QFile qfl(":/bitmaps/line.png");
   assert(qfl.exists());
 
-  QApplication a(argc, argv);
-//  Q_INIT_RESOURCE();
-  QDesktopWidget *d = a.desktop();
-  int w = d->width();
-  int h = d->height();
-  QucsSettings.x = w/8;
-  QucsSettings.y = h/8;
-  QucsSettings.dx = w*3/4;
-  QucsSettings.dy = h*3/4;
 
   // default
   QucsSettings.QucsHomeDir.setPath(QDir::homePath()+QDir::toNativeSeparators("/.qucs"));
@@ -665,22 +665,11 @@ int main(int argc, char *argv[])
 
   // check for relocation env variable
   char* var = getenv("QUCSDIR");
-  QDir QucsDir;
-  if (var!= NULL)
-  {
+  QDir QucsDir(QUCS_PREFIX);
+  if (var!= NULL) {
       QucsDir = QDir(QString(var));
       qDebug() << "QUCSDIR set: " << QucsDir.absolutePath();
-  }
-  else
-  {
-     QString QucsApplicationPath = QCoreApplication::applicationDirPath();
-     #ifdef __APPLE__
-     QucsDir = QDir(QucsApplicationPath.section("/bin",0,0));
-     #else
-     QucsDir = QDir(QucsApplicationPath);
-     QucsDir.cdUp();
-     #endif
-
+  }else{
   }
 
   QucsSettings.BinDir =      QucsDir.absolutePath() + "/bin/";
@@ -763,6 +752,7 @@ int main(int argc, char *argv[])
   if(!QucsSettings.BGColor.isValid())
     QucsSettings.BGColor.setRgb(255, 250, 225);
 
+
   // syntax highlighting
   if(!QucsSettings.Comment.isValid())
     QucsSettings.Comment = Qt::gray;
@@ -784,7 +774,6 @@ int main(int argc, char *argv[])
     QucsSettings.Task = Qt::darkRed;
 
 
-  a.setFont(QucsSettings.font);
 
   // set codecs
   QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
@@ -797,7 +786,9 @@ int main(int argc, char *argv[])
     lang = loc.name();
   }
   tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
-  a.installTranslator( &tor );
+
+  //{
+  //}
 
   // This seems to be neccessary on a few system to make strtod()
   // work properly !???!
@@ -964,7 +955,21 @@ int main(int argc, char *argv[])
           page, dpi, color, orientation);
     }
   }
+  //{
+  QApplication a(argc, argv);
+//  Q_INIT_RESOURCE();
+  QDesktopWidget *d = a.desktop();
+  int w = d->width();
+  int h = d->height();
+  QucsSettings.x = w/8;
+  QucsSettings.y = h/8;
+  QucsSettings.dx = w*3/4;
+  QucsSettings.dy = h*3/4;
+  a.setFont(QucsSettings.font);
+  a.installTranslator( &tor );
+  //}
 
+  Module::registerModules (); // BUG
   QucsMain = new QucsApp();
   
   QucsMain->show();

@@ -17,7 +17,7 @@
 #include "mstee.h"
 #include "qucs.h"
 
-#include <QFontMetrics>
+#include "some_font_stuff.h"
 
 
 MStee::MStee()
@@ -28,7 +28,7 @@ MStee::MStee()
   x2 =  30; y2 =  30;
 
   // use the screen-compatible metric
-  QFontMetrics metrics(QucsSettings.font, 0);   // get size of text
+  FontMetrics metrics;
   tx = x1+4;
   ty = y1 - 5*metrics.lineSpacing() - 4; // 5 lines of text
   Model = "MTEE";
@@ -81,7 +81,8 @@ void MStee::createSymbol()
   // symbol text is smaller (10 pt default)
   Font.setPointSize(10); 
   // get the small font size; use the screen-compatible metric
-  QFontMetrics smallmetrics(Font, 0); 
+  FontMetrics smallmetrics;
+  smallmetrics.setSmall();
   
   Lines.append(new Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));

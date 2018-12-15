@@ -120,12 +120,17 @@ public:
 		incomplete();
 		return true;
 	};
-	unsigned containsRef(T *t) { untested();
+	unsigned containsRef(T *t) const{ untested();
 		unsigned i=0;
 		for (const_iterator c=begin(); c!=end(); ++c){
 			i += (t == *c);
 		}
 		return i;
+	};
+	// yikes. don't use
+	int findRef(T const*t) const {
+		auto* s=const_cast<Q3PtrList<T>* >(this);
+		return s->findRef(t);
 	};
 	int findRef(T *t) {
 		auto i=0;
@@ -136,6 +141,15 @@ public:
 			++i;
 		}
 		return -1;
+	};
+	iterator find(T const *t) {
+		for (cur=begin(); cur!=end(); ++cur){
+			if (t == *cur){
+				break;
+			}else{
+			}
+		}
+		return cur;
 	};
 	bool removeRef(T const*tt) {
 		T* t=const_cast<T*>(tt);
@@ -149,6 +163,10 @@ public:
 	void prepend(T *t) { untested();
 		localList.push_front(t);
 		cur=begin();
+	};
+	T const* take(uint i) const { untested();
+		auto* s=const_cast<Q3PtrList<T>* >(this);
+		return const_cast<T*>(s->take(i));
 	};
 	T* take(uint i) { untested();
 		if(within_range(i)){
@@ -179,8 +197,8 @@ public:
 	T* getLast() { itested();
 		return localList.back();
 	};
-	T* next() {
-		if (cur == localList.end()){ untested();
+	T const* next() const{
+		if (cur == localList.end()){
 			return nullptr;
 		}else{
 			cur++;
@@ -191,6 +209,10 @@ public:
 			}
 		}
 	};
+	T* next() {
+		auto const* t=this;
+		return const_cast<T*>(t->next());
+	}
 	T* prev() {
 		if (cur == localList.end()) { untested();
 			return nullptr;
@@ -298,7 +320,7 @@ private:
 		}else{
 		}
 	}
-	bool within_range(int i){
+	bool within_range(int i) const{
 		if (i < 0){ untested();
 			return false;
 		}else if(i<int(localList.size())) { untested();
@@ -310,7 +332,7 @@ private:
 private:
 	std::list<T*> localList;
 	bool _autodelete;
-	iterator cur;
+	mutable iterator cur;
 };
 
 #if QT_VERSION >= 0x050000

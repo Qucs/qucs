@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /***************************************************************************
                               schematic_model.h
                              --------------------
@@ -85,6 +84,8 @@ public: // stuff saved from Schematic
 	void throughAllNodes(unsigned& z) const;
 	void propagateNode(Node* z) const;
 	void updateNetLabels() const;
+
+public:
 	void collectDigitalSignals(void);
 	QString createNetlist(DocumentStream&, int, NetLang const&);
 	void createSubNetlistPlain(stream_t&, QPlainTextEdit*, int,
@@ -114,6 +115,8 @@ public: // container
 	void pushBack(Element* what);
 	void erase(Element* what);
 	void merge(SchematicModel&);
+	void deleteItem(ElementGraphics*);
+
 
 private: // used in erase?
 	void       deleteComp(Component*c);
@@ -126,9 +129,20 @@ public: // net access
 
 public: // node stuff. why public?
 	Node* insertNode(int x, int y, Element* e);
-	Wire* splitWire(Wire* w, Node* n);
 	void insertSymbolNodes(Symbol *c, bool noOptimize);
 	bool  oneTwoWires(Node* n);
+	Wire* splitWire(Wire*, Node*);
+	int   insertWireNode1(Wire* w);
+	bool  connectHWires1(Wire* w);
+	bool  connectVWires1(Wire* w);
+	int   insertWireNode2(Wire* w);
+	bool  connectHWires2(Wire* w);
+	bool  connectVWires2(Wire* w);
+	int   insertWire(Wire* w); // BUG, what is simpleInsertWire?
+	void  deleteWire(Wire*);
+
+private:
+	void removeNode(Node const* n);
 
 public: // scene interaction
 	void toScene(QGraphicsScene& s, QList<ElementGraphics*>* l=nullptr) const;
@@ -140,15 +154,12 @@ private: // TODO: actually store here.
 	DiagramList& diagrams();
 	PaintingList& paintings();
 	ComponentList& components();
-	PaintingList& symbolPaints();
-	PaintingList& symbolPaintings();
 public:
 	WireList const& wires() const;
 	NodeList const& nodes() const;
 	DiagramList const& diagrams() const;
 	PaintingList const& paintings() const;
 	ComponentList const& components() const;
-	PaintingList const& symbolPaints() const;
 
 	Schematic* doc();
 	QString const& portType(int i) const{
@@ -159,21 +170,8 @@ public:
 	}
 
 private:
-	Schematic* const _doc;
 	ComponentList Components;
 	PaintingList Paintings;
-	NodeList Nodes;
-	DiagramList Diagrams;
-	PaintingList SymbolPaints;
-
-	Schematic* doc();
-	QString const& portType(int i) const{
-		return PortTypes[i];
-	}
-private: // TODO: remove. store parent in ElementGraphics.
-	Schematic* const _doc;
-private:
-	ComponentList Components;
 	NodeList Nodes;
 	DiagramList Diagrams;
 	WireList Wires;
@@ -188,8 +186,11 @@ private: // net numbers and labels
 	mutable // tmp kludgee.
 		std::vector<QString> netLabels;
 
+private:
+	Schematic* _doc;
+
 public: // for now.
 	friend class Schematic;
-};
+}; // schematicmodel
 
 #endif

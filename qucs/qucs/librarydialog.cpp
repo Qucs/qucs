@@ -411,6 +411,8 @@ void LibraryDialog::slotUpdateDescription()
 // what is being saved here?
 void LibraryDialog::slotSave()
 {
+	incomplete();
+#if 0
   stackedWidgets->setCurrentIndex(2); //message window
   libSaveName->setText(NameEdit->text() + ".lib");
 
@@ -438,7 +440,7 @@ void LibraryDialog::slotSave()
   bool Success = true, ret;
 
   QString tmp;
-  QTextStream ts(&tmp, QIODevice::WriteOnly);
+  DocumentStream ts(&tmp, QIODevice::WriteOnly);
 
   for (int i=0; i < SelectedNames.count(); i++) {
     ErrText->insertPlainText("\n=================\n");
@@ -469,7 +471,7 @@ void LibraryDialog::slotSave()
 
     ErrText->insertPlainText("\n");
     ErrText->insertPlainText(tr("Creating Qucs netlist.\n"));
-    ret = Doc->createLibNetlist(&ts, ErrText, -1, nl);
+    ret = Doc->createLibNetlist(ts, ErrText, -1, nl);
     if(ret) {
       intoStream(Stream, tmp, "Model");
       int error = 0;
@@ -507,7 +509,7 @@ void LibraryDialog::slotSave()
 
     ErrText->insertPlainText("\n");
     ErrText->insertPlainText(tr("Creating Verilog netlist.\n"));
-    ret = Doc->createLibNetlist(&ts, ErrText, 0, nl);
+    ret = Doc->createLibNetlist(ts, ErrText, 0, nl);
     if(ret) {
       intoStream(Stream, tmp, "VerilogModel");
       int error = 0;
@@ -544,7 +546,7 @@ void LibraryDialog::slotSave()
     Doc->isAnalog = false;
 
     ErrText->insertPlainText(tr("Creating VHDL netlist.\n"));
-    ret = Doc->createLibNetlist(&ts, ErrText, 0, nl);
+    ret = Doc->createLibNetlist(ts, ErrText, 0, nl);
     if(ret) {
       intoStream(Stream, tmp, "VHDLModel");
       int error = 0;
@@ -578,7 +580,7 @@ void LibraryDialog::slotSave()
       Stream << "  <Symbol>\n";
       Doc->createSubcircuitSymbol();
       Painting *pp;
-      for(pp = Doc->SymbolPaints.first(); pp != 0; pp = Doc->SymbolPaints.next())
+      for(pp = Doc->symbolPaintings().first(); pp != 0; pp = Doc->symbolPaintings().next())
         Stream << "    <" << pp->save() << ">\n";
 
       Stream << "  </Symbol>\n"
@@ -598,6 +600,7 @@ void LibraryDialog::slotSave()
   }
 
   ErrText->appendPlainText(tr("Successfully created library."));
+#endif
 }
 
 // ---------------------------------------------------------------

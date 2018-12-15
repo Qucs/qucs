@@ -19,6 +19,7 @@
 #include "qucs.h"
 #include "schematic.h"
 #include "misc.h"
+#include "some_font_stuff.h"
 
 #include <QTextStream>
 #include <QRegExp>
@@ -115,7 +116,7 @@ QString Verilog_File::loadFile()
 void Verilog_File::createSymbol()
 { 
   // use the screen-compatible metric
-  QFontMetrics  metrics(QucsSettings.font, 0);   // get size of text
+  FontMetrics  metrics;
   int fHeight = metrics.lineSpacing();
 
   int No = 0;
@@ -169,7 +170,7 @@ QString Verilog_File::getSubcircuitFile() const
 }
 
 // -------------------------------------------------------
-bool Verilog_File::createSubNetlist(QTextStream *stream)
+bool Verilog_File::createSubNetlist(DocumentStream& stream)
 {
   ErrText = "";
 
@@ -195,10 +196,10 @@ bool Verilog_File::createSubNetlist(QTextStream *stream)
   // write the whole Verilog file into the netlist output
   QByteArray FileContent = f.readAll();
   f.close();
-  (*stream) << '\n';
+  stream << '\n';
   //?stream->writeRawBytes(FileContent.data(), FileContent.size());
-  (*stream) << FileContent.data();
-  (*stream) << '\n';
+  stream << FileContent.data(); // BUG
+  stream << '\n';
   return true;
 }
 

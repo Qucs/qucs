@@ -29,6 +29,7 @@
 #include "schematic_scene.h"
 #include "schematic_model.h"
 #include "schematic_lang.h"
+#include "qt_compat.h"
 
 #ifdef USE_SCROLLVIEW
 #include <Q3ScrollView>
@@ -36,7 +37,6 @@
 #include <QGraphicsView>
 #endif
 
-#include "qt_compat.h"
 #include <QVector>
 #include <QStringList>
 #include <QFileInfo>
@@ -72,6 +72,7 @@ typedef enum {_NotRop, _Rect, _Line, _Ellipse, _Arc, _DotLine, _Translate, _Scal
 typedef struct {PE pe; int x1; int y1;int x2;int y2;int a; int b; bool PaintOnViewport;}PostedPaintEvent;
 
 // subcircuit, vhdl, etc. file structure
+// BUG: schematic_symbol
 struct SubFile {
   SubFile() { Type=""; File=""; PortTypes.clear(); }
   SubFile(const QString& _Type, const QString& _File)
@@ -97,7 +98,7 @@ class Schematic : public SchematicBase, public QucsDoc {
 private:
   Schematic(Schematic const&x): SchematicBase(), QucsDoc(x), DocModel(this){ unreachable(); }
 public:
-  typedef Q3PtrList<ElementGraphics> EGPList;
+  typedef QList<ElementGraphics*> EGPList;
 public:
   Schematic(QucsApp*, const QString&);
  ~Schematic();
@@ -122,7 +123,7 @@ public:
   bool  rotateElements();
   bool  mirrorXComponents();
   bool  mirrorYComponents();
-  void  setOnGrid(int&, int&);
+  QPoint  setOnGrid(int, int);
   bool  elementsOnGrid();
 
   float zoom(float);
@@ -137,7 +138,8 @@ public:
 
   void    cut();
   void    copy();
-  bool    paste(QTextStream*, EGPList*);
+  template<class SOME_LIST>
+  bool    paste(DocumentStream*, SOME_LIST*);
   bool    load();
   int     save();
   int     saveSymbolCpp (void);
@@ -162,11 +164,13 @@ public:
   void deselectElements();
 #endif
 
+  // find_symbol
   Component* find_component(QString const&);
 
-// TODO: const access ONLY
+#ifdef USE_SCROLLVIEW
+  // selection does not work, hence this hack
   ComponentList& components(){
-	  return DocModel.components();
+     return DocModel.components();
   }
   NodeList& nodes(){
 	  return DocModel.nodes();
@@ -177,6 +181,8 @@ public:
   WireList& wires(){
 	  return DocModel.wires();
   }
+#endif
+
   ComponentList const& components() const{
 	  return DocModel.components();
   }
@@ -205,6 +211,12 @@ public:
 	  return SymbolPaints; // -> schematicSymbol
   }
   PaintingList const& symbolPaints() const{
+	  return SymbolPaints; // -> schematicSymbol
+  }
+  PaintingList& symbolPaintings(){
+	  return SymbolPaints; // -> schematicSymbol
+  }
+  PaintingList const& symbolPaintings() const{
 	  return SymbolPaints; // -> schematicSymbol
   }
 
@@ -254,9 +266,8 @@ public:
   QVector<QString *> undoSymbol;    // undo stack for circuit symbol
 
   /*! \brief Get (schematic) file reference */
-  QFileInfo getFileInfo (void) { return FileInfo; }
+  QFileInfo getFileInfo (void) { return DocModel.getFileInfo();}
   /*! \brief Set reference to file (schematic) */
-  void setFileInfo(QString FileName) { FileInfo = QFileInfo(FileName); }
 
 signals:
   void signalCursorPosChanged(int, int);
@@ -285,6 +296,10 @@ public:
 #ifdef USE_SCROLLVIEW
   QPointF mapToScene(QPoint const& p) const;
 #endif
+  void addToScene(Element*); // called from SM::pushBack.
+
+private:
+  void erase(ElementGraphics*);
 
 protected slots:
   void slotScrollUp();
@@ -296,8 +311,10 @@ protected slots:
 private:
   bool dragIsOkay;
   /*! \brief hold system-independent information about a schematic file */
-  QFileInfo FileInfo;
 
+  void removeWire(Wire const* w);
+
+private:
 /* ********************************************************************
    *****  The following methods are in the file                   *****
    *****  "schematic_element.cpp". They only access the QPtrList  *****
@@ -311,13 +328,27 @@ public:
   }
   Node* selectedNode(int, int);
 
-  int   insertWireNode1(Wire*);
-  bool  connectHWires1(Wire*);
-  bool  connectVWires1(Wire*);
-  int   insertWireNode2(Wire*);
-  bool  connectHWires2(Wire*);
-  bool  connectVWires2(Wire*);
-  int   insertWire(Wire*);
+  int   insertWireNode1(Wire* w){
+	  return DocModel.insertWireNode1(w);
+  }
+  bool  connectHWires1(Wire* w){
+	  return DocModel.connectHWires1(w);
+  }
+  bool  connectVWires1(Wire* w){
+	  return DocModel.connectVWires1(w);
+  }
+  int   insertWireNode2(Wire* w){
+	  return DocModel.insertWireNode2(w);
+  }
+  bool  connectHWires2(Wire* w){
+	  return DocModel.connectHWires2(w);
+  }
+  bool  connectVWires2(Wire* w){
+	  return DocModel.connectVWires2(w);
+  }
+  int   insertWire(Wire* w){
+	  return DocModel.insertWire(w);
+  }
   void  selectWireLine(ElementGraphics*, Node*, bool);
   Wire* selectedWire(int, int);
   Wire* splitWire(Wire* w, Node* n){
@@ -326,7 +357,10 @@ public:
   bool  oneTwoWires(Node* n){
 	  return DocModel.oneTwoWires(n);
   }
-  void  deleteWire(Wire*);
+  void  deleteWire(Wire* w){
+	  //called from mouse actions...?
+	  return DocModel.deleteWire(w);
+  }
 
   Marker* setMarker(int, int);
 
@@ -353,8 +387,9 @@ public:
   ElementGraphics* itemAt(QPointF x) { return itemAt(x.x(), x.y());}
   int      selectElements(int, int, int, int, bool);
   void     selectMarkers();
-  void     newMovingWires(Q3PtrList<Element>*, Node*, int);
-  Q3PtrList<ElementGraphics> cropSelectedElements();
+  void     newMovingWires(QList<Element*>*, Node*, int);
+  QList<ElementGraphics*> cropSelectedElements();
+  QList<ElementGraphics*> selectedItems();
   bool     deleteElements();
   bool     aligning(int);
   bool     distributeHorizontal();
@@ -386,7 +421,6 @@ public:
 
 
 private:
-  void insertComponentNodes(Component*, bool);
   int  copyWires(int&, int&, int&, int&, QList<Element *> *);
   int  copyComponents(int&, int&, int&, int&, QList<Element *> *);
   void copyComponents2(int&, int&, int&, int&, QList<Element *> *);
@@ -400,34 +434,24 @@ private:
    *****  and their pointers. ("DocComps", "Components" etc.)     *****
    ******************************************************************** */
 
-public: // TODO: move out of the way, perhaps to SchematicNetlist,
-        // SchematicModel or so.
+public: // not here.
   static int testFile(const QString &);
-  bool createLibNetlist(QTextStream*, QPlainTextEdit*, int, NetLang const& nl);
-  void createSubNetlistPlain(QTextStream*, QPlainTextEdit*, int);
-  int  prepareNetlist(QTextStream&, QStringList&, QPlainTextEdit*, const NetLang&);
-  QString createNetlist(QTextStream&, int, NetLang const&);
   bool loadDocument();
   void highlightWireLabels (void);
 
-private: // tmp hack. use SchematicModel.
-  bool do_loadDocument(QFile&);
-  void parse(DocumentStream& stream, SchematicLanguage const*l=nullptr);
-
 private: // legacy, don't use
   void simpleInsertComponent(Component* c) { return DocModel.simpleInsertComponent(c); }
-  void simpleInsertCommand(Command*) { return DocModel.simpleInsertCommand(c); }
+  void simpleInsertCommand(Command* c) { return DocModel.simpleInsertCommand(c); }
   void simpleInsertWire(Wire* w) { return DocModel.simpleInsertWire(w); }
 private:
   void simpleInsertElement(Element*);
 
   void saveDocument() const;
 
-  void simpleInsertWire(Wire*);
   bool loadWires(QTextStream*, EGPList *List=0);
-  bool loadIntoNothing(QTextStream*);
+  bool loadIntoNothing(DocumentStream*);
 
-  bool    pasteFromClipboard(QTextStream *, EGPList*);
+  bool    pasteFromClipboard(DocumentStream *, EGPList*);
 
   QString createUndoString(char);
   bool    rebuild(QString *);
@@ -452,20 +476,34 @@ private:
 //		  int, NetLang const&);
 
   DigMap Signals; // collecting node names for VHDL signal declarations
-public: // BUG
-  QStringList PortTypes;
 
-public: // for now. move to parser asap
-	Element* loadElement(const QString& _s, Element* c) const;
-	Component* loadComponent(const QString& _s, Component* c) const;
-	Command* loadCommand(const QString& _s, Command* c) const;
+public: // for now
+	Command* loadCommand(const QString& _s, Command* c) const{
+		return DocModel.loadCommand(_s, c);
+	}
+	Component* loadComponent(const QString& _s, Component* c) const{
+		return DocModel.loadComponent(_s, c);
+	}
+   int  prepareNetlist(DocumentStream& a, QStringList& b, QPlainTextEdit* c,
+			bool creatingLib, NetLang const& nl){
+		assert(!creatingLib); // ?!
+ 	  return DocModel.prepareNetlist(a,b,c, creatingLib, nl);
+   }
+  bool createLibNetlist(DocumentStream& a, QPlainTextEdit* b, int c, NetLang const& nl){
+		return DocModel.createLibNetlist(a,b,c, nl);
+  }
+  // used in main?
+  QString createNetlist(DocumentStream& a, int b, NetLang const& nl){
+	  return DocModel.createNetlist(a, b, nl);
+  }
 
 	QString getParameter(std::string const& key) const;
 
 public: // schematicModel
-	QString const& portType(int i) const{
-		return PortTypes[i];
-	}
+	//QString const& portType(int i) const{
+	//	return PortTypes[i];
+	//}
+
 public:
   bool isAnalog;
   bool isVerilog;
@@ -531,36 +569,12 @@ private: // obsolete.
   }
 };
 
-
-//tmp hack
-inline bool Schematic::do_loadDocument(QFile& /*BUG*/ file)
+// ---------------------------------------------------
+// Peeforms paste function from clipboard
+template<class SOME_LIST>
+inline bool Schematic::paste(DocumentStream *stream, SOME_LIST *pe)
 { untested();
-
-  QString Line;
-  DocumentStream stream(&file);
-
-  // read header **************************
-  do {
-    if(stream.atEnd()) {
-      file.close(); // BUG
-      return true;
-    }
-
-    Line = stream.readLine();
-  } while(Line.isEmpty());
-
-  if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
-    file.close();
-    // BUG: throw
- throw "Wrong document type: ";
-    return false;
-  }
-
-  Line = Line.mid(16, Line.length()-17);
-
-  parse(stream);
-  file.close();
-  return true;
+  return pasteFromClipboard(stream, pe);
 }
 
 #endif

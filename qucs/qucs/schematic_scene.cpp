@@ -6,49 +6,6 @@
 #include <QFileInfo>
 
 
-#include <QFileInfo>
-
-
-// ---------------------------------------------------
-//
-#ifndef USE_SCROLLVIEW
-ElementGraphics::ElementGraphics() : QGraphicsItem()
-{
-	unreachable();
-}
-
-ElementGraphics::ElementGraphics(Element* e)
-	: QGraphicsItem(), _e(e)
-{
-	setFlags(ItemIsSelectable|ItemIsMovable);
-	setAcceptHoverEvents(true);
-	assert(_e);
-}
-
-QRectF ElementGraphics::boundingRect() const
-{ itested();
-	assert(_e);
-	return _e->boundingRect();
-}
-
-void ElementGraphics::setSelected(bool s)
-{
-	qDebug() << "setSeletected" << s << this;
-	QGraphicsItem::setSelected(s);
-	assert(QGraphicsItem::isSelected()==s);
-	assert(_e);
-	_e->setSelected(s);
-}
-
-// ?!
-void ElementGraphics::setPos(int a, int b)
-{
-	assert(_e);
-	qDebug() << "EG::setPos" << a << _e->cx_();
-	QGraphicsItem::setPos(QPointF(a, b));
-	qDebug() << "EG::setPos" << boundingRect();
-}
-#endif
 // ---------------------------------------------------
 //
 #ifndef USE_SCROLLVIEW
@@ -97,7 +54,7 @@ ElementGraphics* Schematic::itemAt(float x, float y)
 	QPointF p(x, y);
 	QGraphicsItem* I=scene()->itemAt(p, QTransform());
 	if(ElementGraphics* G=dynamic_cast<ElementGraphics*>(I)){ untested();
-		qDebug() << "got something";
+		qDebug() << "got something" << element(G)->name();
 		return G;
 	}else{ untested();
 		qDebug() << "miss";
@@ -221,8 +178,8 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 			GridY *= 16;
 		}
 	}
-#endif
 }
+#endif
 
 #ifndef USE_SCROLLVIEW
 void ElementGraphics::paintScheme(Schematic *p)

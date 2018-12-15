@@ -19,8 +19,7 @@
 #include "schematic_lang.h"
 #include "globals.h"
 
-SchematicModel::SchematicModel(Schematic* s)
-  :_doc(s)
+SchematicModel::SchematicModel(Schematic* s) : _doc(s)
 {
 	// presumably Q3PTRlist without this is just a QList<*> (check)
 //  _symbol=new SchematicSymbol();
@@ -117,12 +116,13 @@ ComponentList& SchematicModel::components()
 
 void SchematicModel::pushBack(Element* what)
 {
-	if(auto c=component(what)){
+	if(auto c=component(what)){ untested();
       simpleInsertComponent(c);
 	}else if(auto d=diagram(what)){
 		diagrams().append(d);
 	}else if(auto w=wire(what)){
 		simpleInsertWire(w);
+//		insertWire(w);?? wtf?
 	}else if(auto s=dynamic_cast<SchematicSymbol*>(what)){ untested();
 		(void)s;
 		assert(false);
@@ -132,15 +132,13 @@ void SchematicModel::pushBack(Element* what)
 		incomplete();
 	}
 
-	if(doc()){
-		// only necessary when gui is running.
 #ifndef USE_SCROLLVIEW
-		// doc()->addToScene(what);
+  if(doc()){
+	  doc()->addToScene(what);
+  }else{
+  }
 #endif
-	}else{
-	}
-
-}
+} // pushBack
 
 // was Schematic::insertComponentNodes.
 void SchematicModel::insertSymbolNodes(Symbol *c, bool noOptimize)
@@ -201,7 +199,16 @@ void SchematicModel::erase(Element* what)
 	delete(what);
 }
 
-// BUG: use schematic_symbol
+void SchematicModel::deleteItem(ElementGraphics *g)
+{
+    Element* e=element(g);
+    delete(g); // will it detach from scene?
+
+	 erase(e); // also get rid of the payload.
+}
+
+
+// should be a QucsDoc*, probably
 Schematic* SchematicModel::doc()
 {
 	return _doc;
@@ -222,23 +229,23 @@ NodeList& SchematicModel::nodes()
 	return Nodes;
 }
 
-PaintingList const& SchematicModel::symbolPaints() const
-{
-	return SymbolPaints;
-}
+//PaintingList const& SchematicModel::symbolPaints() const
+//{
+//	return SymbolPaints;
+//}
 
 PaintingList& SchematicModel::paintings()
 {
 	return Paintings;
 }
-
-PaintingList& SchematicModel::symbolPaintings()
-{
-	assert(_doc);
-	// temporary. move stuff here....
-	return _doc->symbolPaintings();
-}
-
+//
+//PaintingList& SchematicModel::symbolPaintings()
+//{
+//	assert(_symbol);
+//	// temporary. move stuff here....
+//	return _symbol->symbolPaintings();
+//}
+//
 DiagramList& SchematicModel::diagrams()
 {
 	return Diagrams;
@@ -270,6 +277,11 @@ DiagramList const& SchematicModel::diagrams() const
 	return Diagrams;
 }
 
+//PaintingList const& SchematicModel::symbolPaints() const
+//{
+//	return SymbolPaintings;
+//}
+
 // TODO: what is this? (perhaps DocumentFormat?)
 static void createNodeSet(QStringList& Collect, int& countInit,
 		Conductor *pw, Node *p1)
@@ -279,6 +291,22 @@ static void createNodeSet(QStringList& Collect, int& countInit,
 			Collect.append("NodeSet:NS" + QString::number(countInit++) + " " +
 					p1->name() + " U=\"" + pw->Label->initValue + "\"");
 }
+
+#if 0
+bool SchematicModel::throughAllComps(DocumentStream& stream, int& countInit,
+                   QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
+		   bool creatingLib, NetLang const& nl)
+{
+	bool r;
+	QString s;
+	bool isAnalog=true;
+	bool isVerilog=false;
+
+	// give the ground nodes the name "gnd", and insert subcircuits etc.
+	for(auto pc : components()) {
+	}
+}
+#endif
 
 // find connected components (slow)
 // figure out later...
@@ -314,9 +342,9 @@ void SchematicModel::propagateNode(QStringList& Collect,
 	Element *pe;
 
 	Cons.append(pn);
-	for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
+	for(p2 = Cons.first(); p2 != 0; p2 = Cons.next()){
 		for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
-			if(pe->Type == isWire) {
+			if(wire(pe)){
 				pw = (Wire*)pe;
 				if(p2 != pw->Port1) {
 					if(pw->Port1->name().isEmpty()) {
@@ -325,9 +353,9 @@ void SchematicModel::propagateNode(QStringList& Collect,
 						Cons.append(pw->Port1);
 						setName = true;
 					}
-				}
-				else {
+				}else{
 					if(pw->Port2->name().isEmpty()) {
+						assert(pn);
 						pw->Port2->setName(pn->name());
 						pw->Port2->State = 1;
 						Cons.append(pw->Port2);
@@ -340,6 +368,7 @@ void SchematicModel::propagateNode(QStringList& Collect,
 					setName = false;
 				}
 			}
+	}
 	Cons.clear();
 }
 #endif
@@ -360,8 +389,7 @@ bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
 #if 0
 	bool isAnalog=true;
 	// delete the node names
-	for(auto i : nodes()) {
-		Node* pn=i;
+	for(auto pn : nodes()) {
 		pn->State = 0;
 		if(pn->Label) {
 			if(isAnalog)
@@ -384,13 +412,10 @@ bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
 
 	// go through components
 	// BUG: ejects declarations
-	incomplete();
-#if 0
-	if(!throughAllComps(stream, countInit, Collect, ErrText, NumPorts, nl)){
+	if(!throughAllComps(stream, countInit, Collect, ErrText, NumPorts, creatingLib, nl)){
 		fprintf(stderr, "Error: Could not go throughAllComps\n");
 		return false;
 	}
-#endif
 
 	// work on named nodes first in order to preserve the user given names
 	throughAllNodes(true, Collect, countInit);
@@ -398,11 +423,8 @@ bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
 	// give names to the remaining (unnamed) nodes
 	throughAllNodes(false, Collect, countInit);
 
-	if(!isAnalog){
-		incomplete();
-		// collectDigitalSignals();
-	}else{
-	}
+	if(!isAnalog) // collect all node names for VHDL signal declaration
+		collectDigitalSignals();
 
 #endif
 	return true;
@@ -435,6 +457,7 @@ bool SchematicModel::loadDocument(QFile& /*BUG*/ file)
   return true;
 }
 
+// called from PushBack...
 void SchematicModel::simpleInsertComponent(Component *c)
 {
 	Node *pn;
@@ -594,3 +617,12 @@ void SchematicModel::updateNetLabels() const
 }
 
 ModelAccess::ModelAccess(){}
+//
+// needed?
+void SchematicModel::merge(SchematicModel& src)
+{
+  for(auto i : src.components()){ itested();
+	  components().append(i);
+  }
+  src.components().clear();
+}

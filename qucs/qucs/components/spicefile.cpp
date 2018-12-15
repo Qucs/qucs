@@ -35,6 +35,7 @@
 #include "schematic.h"
 #include "qucs.h"
 #include "misc.h"
+#include "some_font_stuff.h"
 
 
 SpiceFile::SpiceFile()
@@ -76,7 +77,8 @@ void SpiceFile::createSymbol()
   // symbol text is smaller (10 pt default)
   f.setPointSize(10);
   // use the screen-compatible metric
-  QFontMetrics  smallmetrics(f, 0);   // get size of text
+  FontMetrics  smallmetrics;
+  smallmetrics.setSmall();
   int fHeight = smallmetrics.lineSpacing();
 
   int No = 0;
@@ -131,7 +133,7 @@ void SpiceFile::createSymbol()
   x2 =  30; y2 =  h+15;
 
   // compute component name text position - normal size font
-  QFontMetrics  metrics(QucsSettings.font, 0);   // use the screen-compatible metric
+  FontMetrics  metrics;
   fHeight = metrics.lineSpacing();
   tx = x1+4;
   ty = y1 - fHeight - 4;
@@ -209,7 +211,7 @@ QString SpiceFile::getSubcircuitFile() const
                 else
                 {
                     /// \todo improve GUI/CLI error/warning
-                    qCritical() << "Spice file not found:" << localFileInfo.absoluteFilePath();
+                    qDebug() << "Spice file not found:" << localFileInfo.absoluteFilePath();
                 }
             }
         }
@@ -255,7 +257,7 @@ QString SpiceFile::getSubcircuitFile() const
 }
 
 // -------------------------------------------------------------------------
-bool SpiceFile::createSubNetlist(QTextStream *stream)
+bool SpiceFile::createSubNetlist(DocumentStream &stream)
 {
   // check file name
   QString FileName = Props.first()->Value;
@@ -287,7 +289,7 @@ bool SpiceFile::createSubNetlist(QTextStream *stream)
                           arg(FileName + ".lst");
       return false;
     }
-    outstream = stream;
+    outstream = &stream;
     filstream = new QTextStream(&ConvFile);
     QString SpiceName = SpiceFile.fileName();
     bool ret = recreateSubNetlist(&SpiceName, &FileName);
@@ -305,7 +307,7 @@ bool SpiceFile::createSubNetlist(QTextStream *stream)
   QByteArray FileContent = ConvFile.readAll();
   ConvFile.close();
   //? stream->writeRawBytes(FileContent.value(), FileContent.size());
-  (*stream) << FileContent.data();
+  stream << FileContent.data(); // BUG
   return true;
 }
 
