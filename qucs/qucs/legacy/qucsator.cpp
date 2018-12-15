@@ -110,15 +110,11 @@ void QucsLang::printSubckt(SubcktProto const* p, stream_t& s) const
 
 void QucsLang::printCommand(Command const* c, stream_t& s) const
 {
-	if(c->isOpen()) {
-		// nothing.
-	}else if(c->isShort()){
-		unreachable();
-	}else{
+	{
 		{ // todo: introduce proper exceptions
 			// normal netlisting
 
-			s << "." << QString::fromStdString(c->type()) << ":" << c->label();
+			s << "." << c->name() << ":" << c->label();
 
 			//for(auto p2 : c->params())
 			for(auto p2 : c->Props){ // BUG

@@ -35,6 +35,7 @@ enum QucsMsgType{
    QucsFatalMsg=5
 };
 
+// base object for qucs.
 class Object{
 protected:
 	explicit Object(){}

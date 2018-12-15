@@ -20,8 +20,6 @@
   \brief The Rect3DDiagram class implements the 3D-Cartesian diagram
 */
 
-#include <QFontMetrics>
-
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -37,6 +35,7 @@
 #include "qucs.h"
 #include "misc.h"
 #include "qt_compat.h"
+#include "some_font_stuff.h"
 
 Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
@@ -671,7 +670,7 @@ int Rect3DDiagram::calcAxis(Axis *Axis, int x, int y,
 
   QString tmp;
   // get size of text using the screen-compatible metric
-  QFontMetrics metrics(QucsSettings.font, 0);
+  FontMetrics metrics;
   int maxWidth = 0;
   int count, gx, gy, w;
 
@@ -767,7 +766,7 @@ void Rect3DDiagram::createAxis(Axis *Axis, bool Right,
 
   QString s;
   // get size of text using the screen-compatible metric
-  QFontMetrics metrics(QucsSettings.font, 0);
+  FontMetrics metrics;
 
   x = x2_ - x1_;
   y = y2_ - y1_;
@@ -830,7 +829,7 @@ int Rect3DDiagram::calcDiagram()
 
   double GridStep, corr, zD, zDstep, GridNum;
   // get size of text using the screen-compatible metric
-  QFontMetrics metrics(QucsSettings.font, 0);
+  FontMetrics metrics;
 
   x3 = x2 + 7;
   int z, z2, o, w;

@@ -728,7 +728,6 @@ void OptimizeDialog::slotOK()
 // -----------------------------------------------------------
 void OptimizeDialog::slotApply()
 {
-  Component *pc;
   if(NameEdit->text().isEmpty())
     NameEdit->setText(Comp->name());
   else

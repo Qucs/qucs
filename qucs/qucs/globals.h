@@ -19,20 +19,20 @@
 #include "platform.h"
 #include "dispatcher.h"
 
+class Command;
 class Diagram;
-class Symbol;
-class Simulator;
 class DocumentLanguage;
 class DocumentFormat;
-class Command;
 class Painting;
+class Simulator;
+class Symbol;
 
+extern INTERFACE Dispatcher<Command> command_dispatcher;
 extern INTERFACE Dispatcher<Diagram> diagram_dispatcher;
-extern INTERFACE Dispatcher<Symbol> symbol_dispatcher;
-extern INTERFACE Dispatcher<Simulator> simulator_dispatcher;
 extern INTERFACE Dispatcher<DocumentLanguage> doclang_dispatcher;
 extern INTERFACE Dispatcher<DocumentFormat> docfmt_dispatcher;
-extern INTERFACE Dispatcher<Command> command_dispatcher;
 extern INTERFACE Dispatcher<Painting> painting_dispatcher;
+extern INTERFACE Dispatcher<Simulator> simulator_dispatcher;
+extern INTERFACE Dispatcher<Symbol> symbol_dispatcher;
 
 #endif

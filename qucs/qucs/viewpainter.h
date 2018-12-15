@@ -67,11 +67,7 @@ public: // just forward
 		incomplete(); // return some bounding box width?
 		return 0;
 	}
-	int  drawTextMapped(const QString&, int, int, int *Height=0){
-		(void)Height;
-		incomplete();
-		return 0;
-	}
+	int  drawTextMapped(const QString&, int, int, int *Height=0);
 	void fillRect(int a, int b, int c, int d, const QColor& e){
 		Painter->fillRect(a, b, c, d, e);
 	}

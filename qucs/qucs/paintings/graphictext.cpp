@@ -21,6 +21,7 @@
 #include "misc.h"
 #include "globals.h"
 #include "module.h"
+#include "some_font_stuff.h"
 
 #include <QPainter>
 #include <QPushButton>
@@ -164,7 +165,7 @@ bool GraphicText::load(const QString& s)
 
   misc::convert2Unicode(Text);
   // get size of text using the screen-compatible metric
-  QFontMetrics metrics(QucsSettings.font, 0);
+  FontMetrics metrics;
   QSize r = metrics.size(0, Text);    // get overall size of text
   x2 = r.width();
   y2 = r.height();

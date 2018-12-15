@@ -65,10 +65,10 @@ NodeList      SymbolNodes;
 DiagramList   SymbolDiags;
 ComponentList SymbolComps;
 
-PaintingList& Schematic::symbolPaintings()
-{ untested();
-  return SymbolPaints;
-}
+//PaintingList& Schematic::symbolPaintings()
+//{ untested();
+//  return DocModel.symbolPaintings();
+//}
 
 void Schematic::printCursorPosition(int x, int y)
 {
@@ -82,15 +82,6 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   SymbolMode(false)
 { untested();
   qDebug() << "Schematic::Schematic" << Name_;
-
-  // TODO: get rid of this.
-  // sometimes these point to other stuff, sometimes when
-  // SymbolMode is active, but not only.
-    Components = &DocComps;
-    Wires      = &DocWires;
-    Nodes      = &DocNodes;
-    Diagrams   = &DocDiags;
-    Paintings  = &DocPaints;
 
   // ...........................................................
   GridX  = GridY  = 10;
@@ -178,11 +169,13 @@ Schematic::~Schematic()
 // ---------------------------------------------------
 bool Schematic::createSubcircuitSymbol()
 {
+  incomplete();
+#if 0
   // If the number of ports is not equal, remove or add some.
   unsigned int countPort = adjustPortNumbers();
 
   // If a symbol does not yet exist, create one.
-  if(SymbolPaints.count() != countPort)
+  if(symbolPaintings().count() != countPort)
     return false;
 
   int h = 30*((countPort-1)/2) + 10;
@@ -190,43 +183,44 @@ bool Schematic::createSubcircuitSymbol()
   Painting* txt=painting_dispatcher.clone("ID_Text");
   assert(txt);
   txt->setArgs2Int(-20, h+4); // fix later.
-  SymbolPaints.prepend(txt);
+  symbolPaintings().prepend(txt);
 
   Painting* pp;
 
   pp = painting_dispatcher.clone("GraphicsLine");
   assert(pp);
   pp->setSomeStuff(-20, -h, 40,  0, QPen(Qt::darkBlue,2));
-  SymbolPaints.append(pp);
+  symbolPaintings().append(pp);
 
   pp = painting_dispatcher.clone("GraphicsLine");
   pp->setSomeStuff( 20, -h,  0,2*h, QPen(Qt::darkBlue,2));
-  SymbolPaints.append(pp);
+  symbolPaintings().append(pp);
 
   pp = painting_dispatcher.clone("GraphicsLine");
   pp->setSomeStuff(-20,  h, 40,  0, QPen(Qt::darkBlue,2));
-  SymbolPaints.append(pp);
+  symbolPaintings().append(pp);
 
   pp = painting_dispatcher.clone("GraphicsLine");
   pp->setSomeStuff(-20, -h,  0,2*h, QPen(Qt::darkBlue,2));
-  SymbolPaints.append(pp);
+  symbolPaintings().append(pp);
 
   unsigned int i=0, y = 10-h;
   while(i<countPort) {
     i++;
-	 pp = painting_dispatcher.clone("GraphicsLine");
-	 pp->setSomeStuff(-30, y, 10, 0, QPen(Qt::darkBlue,2));
-	 SymbolPaints.append(pp);
-    SymbolPaints.at(i)->setCenter(-30,  y);
+    pp = painting_dispatcher.clone("GraphicsLine");
+    pp->setSomeStuff(-30, y, 10, 0, QPen(Qt::darkBlue,2));
+    symbolPaintings().append(pp);
+    symbolPaintings().at(i)->setCenter(-30,  y);
 
     if(i == countPort)  break;
     i++;
-	 pp = painting_dispatcher.clone("GraphicsLine");
-	 pp->setSomeStuff( 20, y, 10, 0, QPen(Qt::darkBlue,2));
-	 SymbolPaints.append(pp);
-    SymbolPaints.at(i)->setCenter(30,  y);
+    pp = painting_dispatcher.clone("GraphicsLine");
+    pp->setSomeStuff( 20, y, 10, 0, QPen(Qt::darkBlue,2));
+    symbolPaintings().append(pp);
+    symbolPaintings().at(i)->setCenter(30,  y);
     y += 60;
   }
+#endif
   return true;
 }
 
@@ -261,7 +255,7 @@ void Schematic::becomeCurrent(bool update)
 
     // if no symbol yet exists -> create one
     if(createSubcircuitSymbol()) {
-      SymbolPaints.sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
+      symbolPaintings().sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
       setChanged(true, true);
     }
 
@@ -269,6 +263,13 @@ void Schematic::becomeCurrent(bool update)
     emit signalRedoState(undoSymbolIdx != undoSymbol.size()-1);
   } else {
     incomplete();
+#if 0
+    Nodes = &DocNodes;
+    Wires = &DocWires;
+    Diagrams = &DocDiags;
+    Paintings = &DocPaints;
+    Components = &DocComps;
+#endif
 
     emit signalUndoState(undoActionIdx != 0);
     emit signalRedoState(undoActionIdx != undoAction.size()-1);
@@ -482,8 +483,8 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
 
   Node *pn;
   for(auto i : nodes()){
-	  pn=i;
-	  Element* e=pn;
+    pn=i;
+    Element* e=pn;
     e->paint(&Painter);
     if(pn->Label)
       pn->Label->paint(&Painter);  // separate because of paintSelected
@@ -660,7 +661,10 @@ void Schematic::contentsMouseDoubleClickEvent(QMouseEvent *Event)
 // -----------------------------------------------------------
 void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPage)
 {
-#if QT_VERSION > 0x050000
+#ifndef USE_SCROLLVIEW
+  (void) Painter;
+  (void) printAll;
+  (void) fitToPage;
   incomplete(); // does not work with qt5
 #else
   QPaintDevice *pdevice = Painter->device();
@@ -730,14 +734,19 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
 
 void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImage, int screenDpiX, int printerDpiX)
 {
-    bool selected;
+  (void) toImage;
+  (void) screenDpiX;
+  (void) printerDpiX;
 
     if (printAll) {
         int x2,y2;
         if (sizeOfFrame(x2,y2)) paintFrame(p);
     }
 
-    for(auto pc : components()) {
+#if 0
+    bool selected;
+    // this is a mess
+    for(auto pc : components()){
       if(pc->isSelected() || printAll) {
         selected = pc->isSelected();
         pc->setSelected(false);
@@ -845,6 +854,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
         p->drawText(pn->name(), x, y);
       }
     }
+#endif
 }
 
 // -----------------------------------------------------------
@@ -971,8 +981,10 @@ void Schematic::enlargeView(int x1, int y1, int x2, int y2)
 
 // ---------------------------------------------------
 // Sets an arbitrary coordinate onto the next grid coordinate.
-void Schematic::setOnGrid(int& x, int& y)
+// BUG: fp?
+QPoint Schematic::setOnGrid(int x, int y)
 {
+  //qDebug() << "setongrid in" << x << y;
   if(x<0) x -= (GridX >> 1) - 1;
   else x += GridX >> 1;
   x -= x % GridX;
@@ -980,6 +992,9 @@ void Schematic::setOnGrid(int& x, int& y)
   if(y<0) y -= (GridY >> 1) - 1;
   else y += GridY >> 1;
   y -= y % GridY;
+
+  //qDebug() << "setongrid out" << x << y;
+  return QPoint(x, y);
 }
 
 // ---------------------------------------------------
@@ -1137,31 +1152,37 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
 // Rotates all selected components around their midpoint.
 bool Schematic::rotateElements()
 {
-  wires().setAutoDelete(false); // BUG
-  components().setAutoDelete(false); // BUG
+  // disconnect();?
 
-  int x1=INT_MAX, y1=INT_MAX;
-  int x2=INT_MIN, y2=INT_MIN;
-  QList<Element *> ElementCache;
-  copyLabels(x1, y1, x2, y2, &ElementCache);   // must be first of all !
-  copyComponents(x1, y1, x2, y2, &ElementCache);
-  copyWires(x1, y1, x2, y2, &ElementCache);
-  copyPaintings(x1, y1, x2, y2, &ElementCache);
-  if(y1 == INT_MAX) return false;   // no element selected
+  QRectF BB(1., 1., -1. , -1.);
+  QList<ElementGraphics*> ElementCache;
 
-  wires().setAutoDelete(true);
-  components().setAutoDelete(true);
+#ifdef USE_SCROLLVIEW
+  ElementCache = Schematic::cropSelectedElements();
+#else
+  assert(scene());
+  scene()->selectedItemsAndBoundingBox(ElementCache, BB);
+  assert(BB.isEmpty() == ElementCache.isEmpty());
+#endif
 
-  x1 = (x1+x2) >> 1;   // center for rotation
-  y1 = (y1+y2) >> 1;
-  //setOnGrid(x1, y1);
+  qreal _x1, _x2, _y1, _y2;
+  BB.getCoords(&_x1, &_y1, &_x2, &_y2);
+  _x1 = (_x1+_x2) * .5;   // center for rotation
+  _y1 = (_y1+_y2) * .5;
+  QPoint gp=setOnGrid(_x1, _y1);
+  int x1=gp.x();
+  int y1=gp.y();
 
+  int x2;
+  int y2;
 
   Painting  *pp;
   Component *pc;
   WireLabel *pl;
   // re-insert elements
-  foreach(Element *pe, ElementCache) {
+  for(auto g: ElementCache) {
+    Element* pe=element(g);
+    assert(pe);
     auto pw=dynamic_cast<Wire*>(pe);
     switch(pe->Type) {
       case isComponent:
@@ -1225,8 +1246,6 @@ bool Schematic::rotateElements()
     }
   }
 
-  ElementCache.clear();
-
   setChanged(true, true);
   return true;
 }
@@ -1235,36 +1254,49 @@ bool Schematic::rotateElements()
 // Mirrors all selected components.
 // First copy them to 'ElementCache', then mirror and insert again.
 bool Schematic::mirrorXComponents()
-{
-  wires().setAutoDelete(false);
-  components().setAutoDelete(false);
+{ untested();
+  QRectF BB(1., 1., -1. , -1.);
+  QList<ElementGraphics*> ElementCache;
 
-  int x1, y1, x2, y2;
-  QList<Element *> ElementCache;
-  if(!copyComps2WiresPaints(x1, y1, x2, y2, &ElementCache))
-    return false;
-  wires().setAutoDelete(true);
-  components().setAutoDelete(true);
+#ifdef USE_SCROLLVIEW
+  ElementCache = Schematic::cropSelectedElements();
+#else
+  assert(scene());
+  scene()->selectedItemsAndBoundingBox(ElementCache, BB);
+  assert(BB.isEmpty() == ElementCache.isEmpty());
+#endif
 
-  y1 = (y1+y2) >> 1;   // axis for mirroring
-  setOnGrid(y2, y1);
-  y1 <<= 1;
+  qreal _x1, _x2, _y1, _y2;
+  BB.getCoords(&_x1, &_y1, &_x2, &_y2);
+  _y1 = (_y1+_y2) * .5;
 
+  QPoint gp=setOnGrid(_y2, _y1);
+  int y2=gp.x();
+  int y1=gp.y();
+
+  y1 *= 2;
+
+  int x2;
 
   Wire *pw;
   Painting  *pp;
-  Component *pc;
+  Component *pc; (void) pc;
   WireLabel *pl;
   // re-insert elements
-  foreach(Element *pe, ElementCache)
+  for(ElementGraphics *g : ElementCache) { untested();
+    Element* pe=element(g);
+
+    assert(pe);
+    if(auto c=component(pe)){
+	c->mirrorX();   // mirror component !before! mirroring its center
+	g->setCenter(c->cx_(), y1 - c->cy_());
+    }else{
+      incomplete();
+    }
     switch(pe->Type) {
       case isComponent:
       case isAnalogComponent:
       case isDigitalComponent:
-	pc = (Component*)pe;
-	pc->mirrorX();   // mirror component !before! mirroring its center
-	pc->setCenter(pc->cx_(), y1 - pc->cy_());
-	insertRawComponent(pc);
 	break;
       case isWire:
 	pw = (Wire*)pe;
@@ -1275,7 +1307,6 @@ bool Schematic::mirrorXComponents()
           pl->cy__() = y1 - pl->cy_();
         }else{
         }
-	insertWire(pw);
 	break;
       case isHWireLabel:
       case isVWireLabel:
@@ -1287,19 +1318,17 @@ bool Schematic::mirrorXComponents()
 	if(pl->pOwner == 0)
 	  pl->y1__() = y1 - pl->y1_();
 	pl->cy__() = y1 - pl->cy_();
-	insertNodeLabel(pl);
 	break;
       case isPainting:
 	pp = (Painting*)pe;
 	pp->getCenter(x2, y2);
 	pp->mirrorX();   // mirror painting !before! mirroring its center
 	pp->setCenter(x2, y1 - y2);
-	paintings().append(pp);
 	break;
       default: ;
     }
+  }
 
-  ElementCache.clear();
   setChanged(true, true);
   return true;
 }
@@ -1308,26 +1337,35 @@ bool Schematic::mirrorXComponents()
 // Mirrors all selected components. First copy them to 'ElementCache', then mirror and insert again.
 bool Schematic::mirrorYComponents()
 {
-  wires().setAutoDelete(false);
-  components().setAutoDelete(false);
 
-  int x1, y1, x2, y2;
-  QList<Element *> ElementCache;
-  if(!copyComps2WiresPaints(x1, y1, x2, y2, &ElementCache))
-    return false;
-  wires().setAutoDelete(true);
-  components().setAutoDelete(true);
+  QRectF BB(1., 1., -1. , -1.);
+  QList<ElementGraphics*> ElementCache;
+#ifdef USE_SCROLLVIEW
+  ElementCache = Schematic::cropSelectedElements();
+#else
+  assert(scene());
+  scene()->selectedItemsAndBoundingBox(ElementCache, BB);
+  assert(BB.isEmpty() == ElementCache.isEmpty());
+#endif
 
-  x1 = (x1+x2) >> 1;   // axis for mirroring
-  setOnGrid(x1, x2);
-  x1 <<= 1;
+  qreal _x1, _x2, _y1, _y2;
+  BB.getCoords(&_x1, &_y1, &_x2, &_y2);
+
+  _x1 = (_x1+_x2) * .5;
+  QPoint gp=setOnGrid(_x1, _x2);
+  int x1=gp.x();
+  int x2=gp.y();
+  int y2;
+  x1 *= 2.;
 
   Wire *pw;
   Painting  *pp;
   Component *pc;
   WireLabel *pl;
   // re-insert elements
-  foreach(Element *pe, ElementCache)
+  for(ElementGraphics *g : ElementCache) { untested();
+    Element* pe=element(g);
+    assert(pe);
     switch(pe->Type) {
       case isComponent:
       case isAnalogComponent:
@@ -1370,8 +1408,8 @@ bool Schematic::mirrorYComponents()
         break;
       default: ;
     }
+  }
 
-  ElementCache.clear();
   setChanged(true, true);
   return true;
 }
@@ -1381,8 +1419,9 @@ bool Schematic::mirrorYComponents()
 void Schematic::reloadGraphs()
 {
   QFileInfo Info(docName());
-  for(Diagram *pd = diagrams().first(); pd != 0; pd = diagrams().next())
+  for(auto pd : diagrams()){
     pd->loadGraphData(Info.path()+QDir::separator()+DataSet);
+  }
 }
 
 // Copy function, 
@@ -1404,12 +1443,6 @@ void Schematic::cut()
   viewport()->update();
 }
 
-// ---------------------------------------------------
-// Performs paste function from clipboard
-bool Schematic::paste(QTextStream *stream, Schematic::EGPList *pe)
-{ untested();
-  return pasteFromClipboard(stream, pe);
-}
 
 // ---------------------------------------------------
 // Loads this Qucs document.
@@ -1559,7 +1592,7 @@ int Schematic::adjustPortNumbers()
     if (!VInfo.PortNames.isEmpty())
       Names = VInfo.PortNames.split(",", QString::SkipEmptyParts);
 
-    for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+    for(pp = symbolPaintings().first(); pp!=0; pp = symbolPaintings().next())
       if(pp->Name == ".ID ") {
 	ID_Text * id = (ID_Text *) pp;
 	id->Prefix = VInfo.EntityName.toUpper();
@@ -1585,14 +1618,14 @@ int Schematic::adjustPortNumbers()
 
       Str = QString::number(Number);
       // search for matching port symbol
-      for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+      for(pp = symbolPaintings().first(); pp!=0; pp = symbolPaintings().next())
 	if(pp->Name == ".PortSym ")
 	  if(((PortSymbol*)pp)->numberStr == Str) break;
 
       if(pp)
 	((PortSymbol*)pp)->nameStr = *it;
       else {
-	SymbolPaints.append(new PortSymbol(x1, y2, Str, *it));
+	symbolPaintings().append(new PortSymbol(x1, y2, Str, *it));
 	y2 += 40;
       }
     }
@@ -1622,7 +1655,7 @@ int Schematic::adjustPortNumbers()
     if (!VInfo.PortNames.isEmpty())
       Names = VInfo.PortNames.split(",", QString::SkipEmptyParts);
 
-    for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+    for(pp = symbolPaintings().first(); pp!=0; pp = symbolPaintings().next())
       if(pp->Name == ".ID ") {
 	ID_Text * id = (ID_Text *) pp;
 	id->Prefix = VInfo.ModuleName.toUpper();
@@ -1634,14 +1667,14 @@ int Schematic::adjustPortNumbers()
 
       Str = QString::number(Number);
       // search for matching port symbol
-      for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+      for(pp = symbolPaintings().first(); pp!=0; pp = symbolPaintings().next())
 	if(pp->Name == ".PortSym ")
 	  if(((PortSymbol*)pp)->numberStr == Str) break;
 
       if(pp)
 	((PortSymbol*)pp)->nameStr = *it;
       else {
-	SymbolPaints.append(new PortSymbol(x1, y2, Str, *it));
+	symbolPaintings().append(new PortSymbol(x1, y2, Str, *it));
 	y2 += 40;
       }
     }
@@ -1670,7 +1703,7 @@ int Schematic::adjustPortNumbers()
     if (!VInfo.PortNames.isEmpty())
       Names = VInfo.PortNames.split(",", QString::SkipEmptyParts);
 
-    for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+    for(pp = symbolPaintings().first(); pp!=0; pp = symbolPaintings().next())
       if(pp->Name == ".ID ") {
 	ID_Text * id = (ID_Text *) pp;
 	id->Prefix = VInfo.ModuleName.toUpper();
@@ -1682,14 +1715,14 @@ int Schematic::adjustPortNumbers()
 
       Str = QString::number(Number);
       // search for matching port symbol
-      for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+      for(pp = symbolPaintings().first(); pp!=0; pp = symbolPaintings().next())
 	if(pp->Name == ".PortSym ")
 	  if(((PortSymbol*)pp)->numberStr == Str) break;
 
       if(pp)
 	((PortSymbol*)pp)->nameStr = *it;
       else {
-	SymbolPaints.append(new PortSymbol(x1, y2, Str, *it));
+	symbolPaintings().append(new PortSymbol(x1, y2, Str, *it));
 	y2 += 40;
       }
     }
@@ -1702,7 +1735,7 @@ int Schematic::adjustPortNumbers()
 
              Str = pc->Props.getFirst()->Value;
              // search for matching port symbol
-             for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+             for(pp = symbolPaintings().first(); pp!=0; pp = symbolPaintings().next())
              {
                  if(pp->name() == ".PortSym ")
                  {
@@ -1713,9 +1746,9 @@ int Schematic::adjustPortNumbers()
              if(pp) {
                  ((PortSymbol*)pp)->nameStr = pc->name();
              } else {
-					  Painting* ps=painting_dispatcher.clone("PortSymbol");
+	         Painting* ps=painting_dispatcher.clone("PortSymbol");
                  ps->setSomeArgsHack(x1, y2, Str, pc->name());
-                 SymbolPaints.append(ps);
+                 symbolPaintings().append(ps);
                  y2 += 40;
              }
           }
@@ -1726,11 +1759,11 @@ int Schematic::adjustPortNumbers()
   for(pp = SymbolPaints.first(); pp!=0; ) {
     if(pp->name() == ".PortSym ")
       if(((PortSymbol*)pp)->nameStr.isEmpty()) {
-        SymbolPaints.remove();
-        pp = SymbolPaints.current();
+        symbolPaintings().remove();
+        pp = symbolPaintings().current();
         continue;
       }
-    pp = SymbolPaints.next();
+    pp = symbolPaintings().next();
   }
 
   return countPort;
@@ -1844,9 +1877,8 @@ bool Schematic::elementsOnGrid()
   Q3PtrList<WireLabel> LabelCache;
 
   // test all components
-  components().setAutoDelete(false);
-  for(Component *pc = components().last(); pc != 0; pc = components().prev())
-    if(pc->isSelected()) {
+  for(auto elt : selectedItems()){
+    if(auto pc=component(elt)){
 
       // rescue non-selected node labels
       foreach(Port *pp, pc->Ports)
@@ -1859,12 +1891,12 @@ bool Schematic::elementsOnGrid()
 
       x = pc->cx_();
       y = pc->cy_();
-      No = components().at();
-      deleteComp(pc); // TODO
+     // No = components().at();
+     // deleteComp(pc); // TODO
       pc->snapToGrid(*this); // setOnGrid(pc->cx__(), pc->cy__());
-      insertRawComponent(pc); // TODO
-      components().at(No);   // restore current list position
-      pc->setSelected(false);
+     // insertRawComponent(pc); // TODO
+     // components().at(No);   // restore current list position
+      // pc->setSelected(false);
       count = true;
 
       x -= pc->cx_();
@@ -1876,9 +1908,9 @@ bool Schematic::elementsOnGrid()
       }
       LabelCache.clear();
     }
-  components().setAutoDelete(true);
+  }
 
-  wires().setAutoDelete(false);
+#ifdef USE_SCROLLVIEW
   // test all wires and wire labels
   for(Wire *pw = wires().last(); pw != 0; pw = wires().prev()) {
     pl = pw->Label;
@@ -1941,7 +1973,6 @@ bool Schematic::elementsOnGrid()
     }
   }
 
-  // test all diagrams
   for(Diagram *pd = diagrams().last(); pd != 0; pd = diagrams().prev()) {
     if(pd->isSelected()) {
       setOnGrid(pd->cx__(), pd->cy__());
@@ -1971,6 +2002,7 @@ bool Schematic::elementsOnGrid()
       count = true;
     }
 
+#endif
   if(count) setChanged(true, true);
   return count;
 }
@@ -2008,13 +2040,14 @@ void Schematic::switchPaintMode()
 // **********      Function for serving mouse wheel moving    **********
 // **********                                                 **********
 // *********************************************************************
-void Schematic::contentsWheelEvent(QWheelEvent * /*Event*/)
+void Schematic::contentsWheelEvent(QWheelEvent * Event)
 {
+#ifndef USE_SCROLLVIEW
+  (void) Event;
+#else
   App->editText->setHidden(true);  // disable edit of component property
   // use smaller steps; typically the returned delta() is a multiple of 120
 
-  TODO("Fix wheelEvent");
-  /** \todo
   int delta = Event->delta() >> 1;
 
   // ...................................................................
@@ -2044,7 +2077,7 @@ void Schematic::contentsWheelEvent(QWheelEvent * /*Event*/)
   }
 
   Event->accept();   // QScrollView must not handle this event
-  */
+#endif
 }
 
 // -----------------------------------------------------------
@@ -2083,6 +2116,7 @@ bool Schematic::scrollDown(int step)
 {
 #ifndef USE_SCROLLVIEW
   incomplete();
+  (void) step;
 #else
   int diff;
 
@@ -2478,6 +2512,17 @@ QPointF Schematic::mapToScene(QPoint const& p) const
 
   return QPointF(fX, fY);
 }
+
+void Schematic::addToScene(Element* x)
+{
+  // not needed.
+}
+#else
+void Schematic::addToScene(Element* x)
+{
+  auto i=new ElementGraphics(x);
+  scene()->addItem(i);
+}
 #endif
 
 namespace{
@@ -2515,6 +2560,7 @@ private:
 };
 }
 
+#if 0 // transition. obsolete
 void Schematic::parse(DocumentStream& s, SchematicLanguage const* L)
 {
   if(!L){
@@ -2530,11 +2576,16 @@ void Schematic::parse(DocumentStream& s, SchematicLanguage const* L)
     assert(s.atEnd()); // happens with legacy lang
   }
 }
+#endif
 
 // pre qt5 kludge
 void Schematic::pushBack(Element* what)
 {
   qDebug() << "Schematic::pushBack" << what;
+#ifndef USE_SCROLLVIEW
+  incomplete();
+  DocModel.pushBack(what);
+#else
   if(auto c=command(what)){
     incomplete();
     simpleInsertCommand(c);
@@ -2553,18 +2604,53 @@ void Schematic::pushBack(Element* what)
   }else{
     incomplete();
   }
+#endif
 }
 
 // ----------------------------------------------------------------
 QString Schematic::getParameter(std::string const& x) const
 {
   if(x=="DocName"){
-    return DocName;
+    return docName();
   }else if(x=="ViewX1"){
     return QString(ViewX1);
   }else{
     throw "Exception_cantfind";
   }
+}
+
+// ----------------------------------------------------------------
+void Schematic::removeWire(Wire const* x)
+{
+#ifndef USE_SCROLLVIEW
+incomplete();
+  scene()->removeItem(x);
+#else
+  wires().removeRef((Wire*)x);
+#endif
+}
+
+void SchematicModel::removeNode(Node const* x)
+{
+#ifndef USE_SCROLLVIEW
+  incomplete();
+  //scene()->removeItem(x);
+#else
+#endif
+  nodes().removeRef((Node*)x);
+}
+
+QList<ElementGraphics*> Schematic::selectedItems()
+{
+#ifndef USE_SCROLLVIEW
+  assert(scene());
+  // TODO/BUG: proper iterator.
+  auto L = scene()->selectedItems();
+  auto EL = reinterpret_cast<QList<ElementGraphics*>* >(&L);
+  return *EL;
+#else
+  return cropSelectedElements();
+#endif
 }
 
 // vim:ts=8:sw=2:noet

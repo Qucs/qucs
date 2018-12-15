@@ -632,6 +632,7 @@ void QucsApp::slotSetCompView (int index)
   QVariant v;
   QString item = CompChoose->itemText (index);
   int catIdx = Category::getModulesNr(item);
+  //int catIdx = Category::categories.getModulesNr(item);
 
   Comps = Category::getModules(item);
   QString Name;
@@ -873,7 +874,7 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   iconCompInfoStruct iconCompInfo = v.value<iconCompInfoStruct>();
   qDebug() << "slotSelectComponent()" << iconCompInfo.catIdx << iconCompInfo.compIdx;
 
-  Category* cat = Category::Categories.at(iconCompInfo.catIdx);
+  Category const* cat = Category::categories.at(iconCompInfo.catIdx);
   assert(cat);
   Module *mod = (*cat)[iconCompInfo.compIdx];
   assert(mod);
@@ -1930,6 +1931,10 @@ void QucsApp::slotRefreshSchPath()
 // --------------------------------------------------------------
 void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
 {
+  (void) currDoc;
+  (void) No;
+  incomplete();
+#if 0
   if(No<0) return;
 
   QString pathName = currDoc->docName();
@@ -1971,6 +1976,7 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
       pc = Doc->components().prev();
     }
   }
+#endif
 }
 
 

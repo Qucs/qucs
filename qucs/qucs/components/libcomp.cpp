@@ -231,7 +231,7 @@ QString LibComp::getSubcircuitFile() const
 }
 
 // -------------------------------------------------------
-bool LibComp::createSubNetlist(QTextStream *stream, QStringList &FileList,
+bool LibComp::createSubNetlist(DocumentStream& stream, QStringList &FileList,
 			       int type)
 {
   int r = -1;
@@ -262,12 +262,12 @@ bool LibComp::createSubNetlist(QTextStream *stream, QStringList &FileList,
       QByteArray FileContent = file.readAll();
       file.close();
       //?stream->writeRawBytes(FileContent.value(), FileContent.size());
-      (*stream) << FileContent.data();
+      stream << FileContent.data(); // BUG. lang?!
       qDebug() << "hi from libcomp";
     }
   }
 
-  (*stream) << "\n" << FileString << "\n";
+  stream << "\n" << FileString << "\n"; //??
   return error > 0 ? false : true;
 }
 

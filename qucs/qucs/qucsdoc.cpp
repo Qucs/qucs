@@ -20,6 +20,7 @@
 #include "qucsdoc.h"
 #include "qucs.h"
 #include <QUndoStack>
+#include "io.h" // tmp?
 
 
 QucsDoc::QucsDoc(QucsApp *App_, const QString& Name_)

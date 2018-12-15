@@ -35,6 +35,7 @@
 #include <stdlib.h>
 
 #include "misc.h"
+#include "some_font_stuff.h"
 
 static double default_Z0=50;
 
@@ -317,7 +318,7 @@ void Marker::makeInvalid()
 void Marker::getTextSize()
 {
   // get size of text using the screen-compatible metric
-  QFontMetrics metrics(QucsSettings.font, 0);
+  FontMetrics metrics;
   QSize r = metrics.size(0, Text);
   x2 = r.width()+5;
   y2 = r.height()+5;

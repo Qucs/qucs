@@ -33,7 +33,8 @@ all-local: qucs
 qucs_real_LDFLAGS = $(QT_LDFLAGS)
 qucs_real_SOURCES = main.cpp # qucs_.qrc
 qucs_real_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) -I${top_srcdir}/qucs\
-		-DQUCS_PLUGPATH=\"${pkglibdir}\"
+		-DQUCS_PLUGPATH=\"${pkglibdir}\" \
+		-DQUCS_PREFIX=\"${prefix}\"
 
 if COND_WIN32
 qucs_real_LDADD = \

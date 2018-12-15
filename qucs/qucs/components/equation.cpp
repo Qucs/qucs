@@ -19,7 +19,7 @@
 #include "module.h"
 #include "qucs.h"
 
-#include <QFontMetrics>
+#include "some_font_stuff.h"
 
 #include "component.h"
 
@@ -50,7 +50,7 @@ Equation::Equation() : Component()
   QFont f = QucsSettings.font;
   f.setWeight(QFont::Light);
   f.setPointSizeF(12.0);
-  QFontMetrics  metrics(f, 0);  // use the the screen-compatible metric
+  FontMetrics  metrics;
   QSize r = metrics.size(0, QObject::tr("Equation"));
   int xb = r.width()  >> 1;
   int yb = r.height() >> 1;

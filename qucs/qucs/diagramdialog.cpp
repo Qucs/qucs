@@ -108,9 +108,7 @@ static const int NumDefaultColors = 8;
 DiagramDialog::DiagramDialog(QucsDoc* d)
 	: SchematicDialog(d)
 {
-  // setAttribute(Qt::WA_DeleteOnClose); really?
-							 //, Qt::WDestructiveClose) ?!
-							 //
+  setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void DiagramDialog::attach(Object* d)
@@ -118,7 +116,6 @@ void DiagramDialog::attach(Object* d)
 	assert(d);
   Diag = prechecked_cast<Diagram*>(d);
   assert(Diag);
-  setAttribute(Qt::WA_DeleteOnClose);
   Graphs.setAutoDelete(true);
   copyDiagramGraphs();   // make a copy of all graphs
   if(schematic()){

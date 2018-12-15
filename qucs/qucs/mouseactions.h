@@ -32,8 +32,8 @@ public:
 	{
 	}
 public:
-	Element* element() { return _e; }
-	Element const* element() const { return _e; }
+	ElementGraphics* element() { return _e; }
+	ElementGraphics const* element() const { return _e; }
 
 	void clear(){
 		_e=nullptr;
@@ -46,6 +46,9 @@ public: // compat with old code
 		return _e!=e;
 	}
 #ifndef USE_SCROLLVIEW
+	bool operator==(Element const* e) const{
+		return ::element(_e)==e;
+	}
 	bool operator!=(Element const* e) const{
 		return *_e!=e;
 	}
@@ -53,10 +56,7 @@ public: // compat with old code
 	operator bool() const{
 		return _e;
 	}
-	void setSelected(bool x=true){ untested();
-		assert(_e);
-		_e->setSelected(x);
-	}
+	void setSelected(bool x=true);
 	bool isSelected() const;
 
 	void toggleSelected() const{
@@ -75,10 +75,12 @@ public: // access coordinates from old code.
 public:
 	// don't use. just to compile
 	int Type; // BUG BUG
+#if 1
 	ElementMouseAction* operator->(){
 		unreachable(); // complain loudly.
 		return this;
 	}
+#endif
 	void setObsoleteType(int t){
 		_action_type = t;
 	}
@@ -142,7 +144,7 @@ extern QAction *formerAction;
 
 class MouseActions {
 public:
-  typedef Q3PtrList<ElementGraphics> EGPList;
+  typedef QList<ElementGraphics*> EGPList;
 public:
   MouseActions(QucsApp*);
   virtual ~MouseActions();
@@ -166,7 +168,7 @@ public: // BUG
   int MAx1, MAy1, MAx2, MAy2;
   int MAx3, MAy3;
 private:
-  Q3PtrList<ElementGraphics> movingElements;
+  QList<ElementGraphics*> movingElements;
 public:
   int movingRotated;
 
@@ -239,7 +241,7 @@ public:
   void paintElementsScheme(Schematic*);
   void rotateElements(Schematic*, int&, int&);
   void moveElements(Schematic*, int&, int&);
-  void moveElements(Q3PtrList<ElementGraphics>*, int, int);
+  void moveElements(QList<ElementGraphics*>&, int, int);
   void endElementMoving(Schematic*, EGPList*);
   void rightPressMenu(Schematic*, QMouseEvent*);
 };

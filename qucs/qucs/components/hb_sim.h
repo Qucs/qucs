@@ -25,7 +25,7 @@ class HB_Sim : public Command {
 public:
   HB_Sim();
   ~HB_Sim();
-  Element* newOne()const {return new HB_Sim(*this);}
+  Element* clone()const {return new HB_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 };
 

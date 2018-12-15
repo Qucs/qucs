@@ -165,7 +165,6 @@ void ChangeDialog::slotButtReplace()
 
   QList<QCheckBox *> pList;
   QCheckBox *pb;
-  Component *pc;
   QStringList List;
   QString str;
   int i1, i2;

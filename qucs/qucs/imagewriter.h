@@ -33,7 +33,7 @@ public:
   ImageWriter (QString lastfile);
   virtual ~ImageWriter ();
   int print(QWidget *);
-  void noGuiPrint(QWidget *, QString printFile, QString color);
+  void noGuiPrint(QWidget*, QString printFile, QString color);
 
   QString getLastSavedFile();
 

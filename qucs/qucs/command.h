@@ -27,7 +27,7 @@
 // need a baseclass for commands.
 // formerly, they were components, but that does not make sense.
 // (a command does not have ports etc.)
-class Command : public Component /*BUG*/ {
+class Command : public Element {
 protected:
   Command(const Command&);
   explicit Command();

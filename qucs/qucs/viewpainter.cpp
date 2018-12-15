@@ -534,6 +534,11 @@ void ViewPainter::drawResizeRect(int x1, int y1)
   Painter->drawRect(QRectF(x1-5, y1-5, 10, 10));
 }
 
+int  ViewPainter::drawTextMapped(const QString&, int, int, int *Height){
+  (void)Height;
+  // incomplete();
+  return 0;
+}
 #endif
 
 // vim:ts=8:sw=2:noet

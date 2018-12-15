@@ -29,7 +29,7 @@ public:
   void recreate(Schematic*);
 }D;
 
-Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, ".AC", &D);
+Dispatcher<Command>::INSTALL p(&command_dispatcher, ".AC", &D);
 Module::INSTALL pp("simulations", &D);
 
 AC_Sim::AC_Sim()
@@ -54,8 +54,7 @@ AC_Sim::AC_Sim()
 
   tx = 0;
   ty = y2+1;
-  Model = "AC";
-  Name  = "AC";
+  setName("AC");
 
   // The index of the first 4 properties must not changed. Used in recreate().
   Props.append(new Property("Type", "lin", true,

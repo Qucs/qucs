@@ -36,6 +36,8 @@
 
 #include <assert.h>
 
+#include "some_font_stuff.h"
+
 /*!
  * \file component.cpp
  * \brief Implementation of the Component class.
@@ -100,7 +102,7 @@ void Component::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 int Component::textSize(int& _dx, int& _dy)
 {
   // get size of text using the screen-compatible metric
-  QFontMetrics metrics(QucsSettings.font, 0);
+  FontMetrics metrics;
 
   int tmp, count=0;
   _dx = _dy = 0;
@@ -172,7 +174,7 @@ int Component::getTextSelected(int x_, int y_, float Corr)
   y_ -= ty;
   int w, dy = int(float(y_) * Corr);  // correction for font scaling
   // use the screen-compatible metric
-  QFontMetrics  metrics(QucsSettings.font, 0);
+  FontMetrics  metrics;
   if(showName) {
     w  = metrics.width(Name);
     if(dy < 1) {
@@ -214,39 +216,9 @@ void Component::paint(ViewPainter *p) const
   QFont f = p->Painter->font();   // save current font
   QFont newFont = f;
   if(dynamic_cast<Command const*>(this)) {
-    assert(false);
-#if 0
-    assert(Model.at(0) == '.');
-    newFont.setPointSizeF(p->Scale * Texts.first()->Size);
-    newFont.setWeight(QFont::DemiBold);
-    p->Painter->setFont(newFont);
-    p->map(cx, cy, x, y);
-
-    p->Painter->setPen(QPen(Qt::darkBlue,2));
-    a = b = 0;
-    QRect r, t;
-    foreach(Text *pt, Texts) {
-      t.setRect(x, y+b, 0, 0);
-      p->Painter->drawText(t, Qt::AlignLeft|Qt::TextDontClip, pt->s, &r);
-      b += r.height();
-      if(a < r.width())  a = r.width();
-    }
-    xb = a + int(12.0*p->Scale);
-    yb = b + int(10.0*p->Scale);
-    x2 = x1+25 + int(float(a) / p->Scale);
-    y2 = y1+23 + int(float(b) / p->Scale);
-    if(ty < y2+1) if(ty > y1-r.height())  ty = y2 + 1;
-
-    p->map(cx-1, cy, x, y);
-    p->map(cx-6, cy-5, a, b);
-    p->Painter->drawRect(a, b, xb, yb);
-    p->Painter->drawLine(x,      y+yb, a,      b+yb);
-    p->Painter->drawLine(x+xb-1, y+yb, x,      y+yb);
-    p->Painter->drawLine(x+xb-1, y+yb, a+xb,   b+yb);
-    p->Painter->drawLine(x+xb-1, y+yb, x+xb-1, y);
-    p->Painter->drawLine(x+xb-1, y,    a+xb,   b);
-#endif
-  }else{    // normal components go here
+    unreachable();
+  }else{
+    // normal components go here
     assert(!Model.size() || Model.at(0) != '.');
 
     // paint all lines
@@ -357,7 +329,7 @@ void Component::paintScheme(Schematic *p) const
     newFont.setWeight(QFont::DemiBold);
     // here the font metric is already the screen metric, since the font
     // is the current font the painter is using
-    QFontMetrics  metrics(newFont);
+    FontMetrics  metrics; // (newFont);
 
     a = b = 0;
     QSize r;
@@ -491,7 +463,8 @@ void Component::rotate()
   tx  = ty;
   ty  = tmp;
   // use the screen-compatible metric
-  QFontMetrics  metrics(QucsSettings.font, 0);   // get size of text
+  FontMetrics metrics;
+
   dx = dy = 0;
   if(showName) {
     dx = metrics.width(Name);
@@ -548,12 +521,13 @@ void Component::mirrorX()
   foreach(Area *pa, Ellips)
     pa->y = -pa->y - pa->h;
 
-  QFont f = QucsSettings.font;
+//  QFont f = QucsSettings.font;
   // mirror all text
   foreach(Text *pt, Texts) {
-    f.setPointSizeF(pt->Size);
+//    f.setPointSizeF(pt->Size);
     // use the screen-compatible metric
-    QFontMetrics  smallMetrics(f, 0);
+    FontMetrics smallMetrics;
+    smallMetrics.setSmall();
     QSize s = smallMetrics.size(0, pt->s);   // use size for more lines
     pt->y = -pt->y - int(pt->mCos)*s.height() + int(pt->mSin)*s.width();
   }
@@ -561,7 +535,7 @@ void Component::mirrorX()
   int tmp = y1;
   y1  = -y2; y2 = -tmp;   // mirror boundings
   // use the screen-compatible metric
-  QFontMetrics  metrics(QucsSettings.font, 0);   // get size of text
+  FontMetrics metrics;
   int dy = 0;
   if(showName)
     dy = metrics.lineSpacing();   // for "Name"
@@ -614,7 +588,9 @@ void Component::mirrorY()
   foreach(Text *pt, Texts) {
     f.setPointSizeF(pt->Size);
     // use the screen-compatible metric
-    QFontMetrics  smallMetrics(f, 0);
+    FontMetrics smallMetrics;
+    smallMetrics.setSmall();
+
     QSize s = smallMetrics.size(0, pt->s);   // use size for more lines
     pt->x = -pt->x - int(pt->mSin)*s.height() - int(pt->mCos)*s.width();
   }
@@ -622,7 +598,7 @@ void Component::mirrorY()
   tmp = x1;
   x1  = -x2; x2 = -tmp;   // mirror boundings
   // use the screen-compatible metric
-  QFontMetrics  metrics(QucsSettings.font, 0);   // get size of text
+  FontMetrics  metrics;
   int dx = 0;
   if(showName)
     dx = metrics.width(Name);
@@ -687,6 +663,7 @@ QString Component::netlist() const
 // -------------------------------------------------------
 QString Component::getNetlist() const
 {
+  unreachable();
   switch(isActive) {
     case COMP_IS_ACTIVE:
       return netlist();
@@ -757,7 +734,6 @@ QString Component::get_VHDL_Code(int NumPorts)
   return "  " + Node1 + " <= " + Ports.at(1)->Connection->name() + ";\n";
 }
 
-// -------------------------------------------------------
 // -------------------------------------------------------
 #if 0 // moved.
 Component* LegacySchematicLang::loadComponent(const QString& _s, Component* c) const
@@ -1135,7 +1111,7 @@ int Component::analyseLine(const QString& Row, int numProps)
 
     QFont Font(QucsSettings.font);
     Font.setPointSizeF(float(i3));
-    QFontMetrics  metrics(Font, 0); // use the screen-compatible metric
+    FontMetrics  metrics;
     QSize r = metrics.size(0, s);    // get size of text
     i3 = i1 + int(float(r.width())  * Texts.last()->mCos)
             + int(float(r.height()) * Texts.last()->mSin);
@@ -1665,9 +1641,9 @@ Element* getComponentFromName(QString& Line)
 #if 0 // legacy cruft?
   // BUG: don't use schematic.
   if(Command* cmd=command(e)){
-    p->loadCommand(Line, cmd);
+    sp->loadCommand(Line, cmd);
   }else if(Component* c=component(e)){
-    if(!p->loadComponent(Line, c)) {
+    if(!sp->loadComponent(Line, c)) {
       QMessageBox::critical(0, QObject::tr("Error"),
 	  QObject::tr("Format Error:\nWrong 'component' line format!"));
       delete e;
@@ -1676,10 +1652,11 @@ Element* getComponentFromName(QString& Line)
     }
     cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
     int x = c->tx, y = c->ty;
-    c->setSchematic (p);
+    c->setSchematicModel(sp); // setParent?
     c->recreate(0);
     c->obsolete_name_override_hack(cstr);
     c->tx = x;  c->ty = y;
+  }else{
   }
 #endif
 

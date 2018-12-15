@@ -87,6 +87,8 @@ private:
 public: // BUG
   int State;	 // remember some things during some operations, BUG
 
+  QRectF boundingRect() const;
+
 private:
   unsigned cn;
 

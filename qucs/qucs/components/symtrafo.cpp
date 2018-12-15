@@ -10,7 +10,7 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -19,7 +19,7 @@
 #include "globals.h"
 #include "module.h"
 
-#include<QFontMetrics>
+#include "some_font_stuff.h"
 
 #include "component.h"
 
@@ -40,12 +40,6 @@ Module::INSTALL pp("lumped", &D);
 symTrafo::symTrafo()
 {
   Description = QObject::tr("ideal symmetrical transformer");
-
-  QFont Font(QucsSettings.font); // default application font
-  // symbol text is smaller (10 pt default)
-  Font.setPointSize(10); 
-  // get the small font size; use the screen-compatible metric
-  QFontMetrics  smallmetrics(Font, 0);
 
   int w;
   QString stmp;
@@ -76,9 +70,9 @@ symTrafo::symTrafo()
   Lines.append(new Line( -1,-57, -1, 57,QPen(Qt::darkBlue,1)));
   Lines.append(new Line(  1,-57,  1, 57,QPen(Qt::darkBlue,1)));
 
-  stmp = "T1"; w = smallmetrics.width(stmp); // compute width to right-align
+  stmp = "T1"; w = get_some_width(stmp); // compute width to right-align
   Texts.append(new Text(-13-w,-57,stmp));
-  stmp = "T2"; w = smallmetrics.width(stmp); // compute width to right-align
+  stmp = "T2"; w = get_some_width(stmp);
   Texts.append(new Text(-13-w, 22,stmp));
 
   // mark the turn direction

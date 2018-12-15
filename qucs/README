@@ -38,6 +38,7 @@ Qucs needs Qt version 4.6 or later. For simplicity, the Qt configuration is
 currently obtained through pkg-config, which you need to install in addition
 to Qt.
 
+On Debian, consider the qtscript5-dev and libqt5svg5-dev packages.
 
 Installation
 ============

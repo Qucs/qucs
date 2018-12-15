@@ -90,6 +90,9 @@ class Module
   };
 };
 
+class Category;
+class Categories : public QList<Category*>{};
+
 // a category. something like "lumped" or "simulations"
 // will show up in the dropdown thing.
 class Category
@@ -100,7 +103,7 @@ class Category
   ~Category ();
 
  public:
-  static QList<Category *> Categories;
+  static Categories categories;
 
  public:
   static QStringList getCategories (void);

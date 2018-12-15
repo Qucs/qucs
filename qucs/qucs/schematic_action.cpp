@@ -10,10 +10,9 @@
 #include "schematic.h"
 #include "qucs.h"
 #include "misc.h"
+#include "globals.h"
 #include "mouseactions.h"
 #include "globals.h"
-
-#include "components/ground.h" // BUG
 
 #include "changedialog.h"
 
@@ -324,8 +323,7 @@ void Schematic::actionCursor(arrow_dir_t dir)
 
 	if(App->editText->isHidden()) {
 		// for edit of component property ?
-		Q3PtrList<ElementGraphics> movingElements;
-		movingElements = cropSelectedElements();
+		auto movingElements = cropSelectedElements();
 		int markerCount=0;
 		for(auto const& i : movingElements){
 			if(marker(i)){
@@ -334,6 +332,8 @@ void Schematic::actionCursor(arrow_dir_t dir)
 		}
 
 		if((movingElements.count() - markerCount) < 1) { // all selections are markers
+			incomplete();
+#if 0
 			if(markerCount > 0) {  // only move marker if nothing else selected
 				markerMove(dir, &movingElements);
 			} else if(dir==arr_up) {
@@ -355,13 +355,14 @@ void Schematic::actionCursor(arrow_dir_t dir)
 
 			viewport()->update();
 			mouseActions()->drawn = false;
+#endif
 		}else if(dir==arr_up || dir==arr_down){
 			// some random selection, put it back
-			mouseActions()->moveElements(&movingElements, 0, ((dir==arr_up)?-1:1) * GridY);
+			mouseActions()->moveElements(movingElements, 0, ((dir==arr_up)?-1:1) * GridY);
 			mouseActions()->MAx3 = 1;  // sign for moved elements
 			mouseActions()->endElementMoving(this, &movingElements);
 		}else if(dir==arr_left || dir==arr_right){
-			mouseActions()->moveElements(&movingElements, sign*GridX, 0);
+			mouseActions()->moveElements(movingElements, sign*GridX, 0);
 			mouseActions()->MAx3 = 1;  // sign for moved elements
 			mouseActions()->endElementMoving(this, &movingElements);
 		}else{

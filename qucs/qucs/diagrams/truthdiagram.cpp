@@ -22,10 +22,9 @@
 
 #include <cmath>
 
-#include <QFontMetrics>
-
 #include "truthdiagram.h"
 #include "qucs.h"
+#include "some_font_stuff.h"
 
 
 TruthDiagram::TruthDiagram(int _cx, int _cy) : TabDiagram(_cx, _cy)
@@ -55,7 +54,7 @@ int TruthDiagram::calcDiagram()
   x1 = 0;  // no scroll bar
   x3 = x2;
   // get size of text using the screen-compatible metric
-  QFontMetrics metrics(QucsSettings.font, 0);
+  FontMetrics metrics;
   int tHeight = metrics.lineSpacing();
   QString Str;
   int colWidth=0, x=6, y;

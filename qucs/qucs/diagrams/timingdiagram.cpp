@@ -27,6 +27,7 @@
 #include <cmath>
 #include <QPolygon>
 #include <QPainter>
+#include "some_font_stuff.h"
 
 
 TimingDiagram::TimingDiagram(int _cx, int _cy) : TabDiagram(_cx, _cy)
@@ -129,7 +130,7 @@ int TimingDiagram::calcDiagram()
   y1 = 0;  // no scroll bar
   x3 = x2;
   // get size of text using the screen-compatible metric
-  QFontMetrics metrics(QucsSettings.font, 0);
+  FontMetrics metrics;
   int tHeight = metrics.lineSpacing();
   QString Str;
   int colWidth=0, x=4, y, xStart = 0, z;

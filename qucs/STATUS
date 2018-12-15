@@ -1,0 +1,2 @@
+no longer builds with scrollview
+   using scene()->selectedItems(), not available for scrollview

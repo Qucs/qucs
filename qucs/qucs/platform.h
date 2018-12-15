@@ -97,6 +97,7 @@ inline void dlclose(void* h)
   FreeLibrary((HINSTANCE)h);
 }
 
+#if 1 // not yet
 inline char* dlerror()
 {
   static LPVOID lpMsgBuf = NULL;
@@ -118,6 +119,7 @@ inline char* dlerror()
 		0, NULL);
   return (char*)lpMsgBuf;
 }
+#endif // windows stuff
 #define RTLD_LAZY       0x00001 /* Lazy function call binding.  */
 #define RTLD_NOW        0x00002 /* Immediate function call binding.  */
 #define RTLD_BINDING_MASK   0x3 /* Mask of binding time value.  */

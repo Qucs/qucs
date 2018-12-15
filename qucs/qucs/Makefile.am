@@ -103,12 +103,14 @@ DIALOG_SRC+= \
 
 libqucs_la_SOURCES = \
 	globals.cpp \
+	module.cpp \
 	attach.cpp \
 	command.cpp \
 	component.cpp \
 	diagram.cpp \
 	docfmt.h \
 	element.cpp \
+	element_graphics.cpp \
 	graph.cpp \
 	imagewriter.cpp \
 	io.cpp \
@@ -118,7 +120,6 @@ libqucs_la_SOURCES = \
 	messagedock.cpp \
 	misc.cpp \
 	mnemo.cpp \
-	module.cpp \
 	mouseactions.cpp \
 	node.cpp \
 	object.cpp \
@@ -169,10 +170,11 @@ libqucsschematic_la_LIBADD = libqucs.la
 endif
 
 noinst_HEADERS = \
-	$(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
 	actions.h \
 	command.h \
+	element.h \
 	exception.h \
+	imagewriter.h \
   	imagewriter.h \
 	language.h \
 	misc.h \
@@ -180,29 +182,50 @@ noinst_HEADERS = \
 	module.h \
 	mouseactions.h \
 	port.h \
+	node.h \
 	printerwriter.h \
 	projectView.h \
 	qt_compat.h \
+	qucsdoc.h \
 	symbol.h \
-  	syntax.h \
+	syntax.h \
+	schematic_lang.h \
+	schematic_symbol.h \
+	some_font_stuff.h \
 	trace.h \
 	viewpainter.h \
-	wirelabel.h
+	wire.h \
+	wirelabel.h \
+	$(MOCHEADERS)
 
 # must be installed. but later
 noinst_HEADERS += \
+	actions.h \
+	command.h \
 	diagram.h \
 	dispatcher.h \
 	globals.h \
+	imagewriter.h \
 	io.h \
 	io_trace.h \
 	l_dispatcher.h \
+	misc.h \
+	mnemo.h \
+	module.h \
+	mouseactions.h \
 	object.h \
 	platform.h \
+	printerwriter.h \
+	projectView.h \
 	qt_compat.h \
 	schematic_lang.h \
 	schematic_model.h \
-	schematic_symbol.h
+	schematic_symbol.h \
+	syntax.h \
+	trace.h \
+	viewpainter.h \
+	wirelabel.h \
+	wirelabel.h
 
 hicolor16dir = ${prefix}/share/icons/hicolor/16x16/apps
 hicolor16_DATA =  bitmaps/hicolor/16x16/apps/qucs.png

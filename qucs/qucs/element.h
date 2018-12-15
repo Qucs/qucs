@@ -43,6 +43,7 @@
 #include "object.h"
 #include "io_trace.h"
 #include "port.h"
+#include "qt_compat.h"
 
 class Node;
 class QucsDoc;
@@ -157,6 +158,8 @@ class Marker;
 class Node;
 class ViewPainter;
 
+class SchematicModel;
+
 class Element : public Object {
 public:
   Element();
@@ -189,24 +192,28 @@ public: // other stuff
 
 public:
   virtual Element* clone()const = 0;
-//  { unreachable(); return 0 /*NULL, actually*/;}
   virtual QString const& name() const{return Name;}
   void setName(QString const& n){ Name = n; }
   virtual QString const& description() const{return incomplete_description;}
   virtual char const* iconBasename() const{return nullptr;}
 
-private:
-  bool Selected;
-
-public:
+#ifndef USE_SCROLLVIEW
+private: // only called from ElementGraphics
+#endif
   void setSelected(bool b=true){
 	  Selected = b;
   }
   void toggleSelected(){
 	  Selected = !Selected;
   }
+
+#ifndef USE_SCROLLVIEW
+protected:
+#endif
   bool isSelected() const{return Selected;}
 
+private:
+  bool Selected;
 public: // BUG
   int  Type;    // whether it is Component, Wire, ...
   int  cx, cy, x1, y1;
@@ -219,8 +226,10 @@ public: // BUG
 
 protected: //BUG
   QString Name; // the label, but sometimes the type. yikes.
-}; // Element
-
+#ifndef USE_SCROLLVIEW
+  friend class ElementGraphics;
+#endif
+};
 
 // nodes and wires?
 class Conductor : public Element {

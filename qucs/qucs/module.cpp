@@ -31,7 +31,7 @@
 
 // Global category and component lists.
 QHash<QString, Module *> Module::Modules;
-QList<Category *> Category::Categories;
+Categories Category::categories;
 
 QMap<QString, QString> Module::vaComponents;
 
@@ -167,8 +167,8 @@ void Module::intoCategory(std::string const& cat, Module * m)
   // look through existing categories
   // // BUG linear search
   QList<Category *>::const_iterator it;
-  for (it = Category::Categories.constBegin();
-       it != Category::Categories.constEnd(); it++) {
+  for (it = Category::categories.constBegin();
+       it != Category::categories.constEnd(); it++) {
     if ((*it)->name() == category) {
       (*it)->push_back(m);
       break;
@@ -176,9 +176,9 @@ void Module::intoCategory(std::string const& cat, Module * m)
   }
 
   // if there is no such category, then create it
-  if (it == Category::Categories.constEnd()) {
+  if (it == Category::categories.constEnd()) {
     Category *cat = new Category (category);
-    Category::Categories.append (cat);
+    Category::categories.append (cat);
     cat->push_back(m);
   }
 }
@@ -494,8 +494,8 @@ void Module::registerModules (void) {
 // This function has to be called once at application end.  It removes
 // all categories and registered modules from memory.
 void Module::unregisterModules (void) {
-  while(!Category::Categories.isEmpty()) {
-    delete Category::Categories.takeFirst();
+  while(!Category::categories.isEmpty()) {
+    delete Category::categories.takeFirst();
   }
 
   //remove all modules by iterator, require in qhash
@@ -534,8 +534,8 @@ Category::~Category () {
 QStringList Category::getCategories (void) {
   QStringList res;
   QList<Category *>::const_iterator it;
-  for (it = Category::Categories.constBegin(); 
-       it != Category::Categories.constEnd(); it++) {
+  for (it = Category::categories.constBegin(); 
+       it != Category::categories.constEnd(); it++) {
     res.append ((*it)->Name);
   }
   return res;
@@ -547,8 +547,8 @@ QStringList Category::getCategories (void) {
 QList<Module *> Category::getModules (QString category) {
   QList<Module *> res;
   QList<Category *>::const_iterator it;
-  for (it = Category::Categories.constBegin();
-       it != Category::Categories.constEnd(); it++) {
+  for (it = Category::categories.constBegin();
+       it != Category::categories.constEnd(); it++) {
     if (category == (*it)->Name) {
       res = (*it)->Content;
     }
@@ -560,8 +560,8 @@ QList<Module *> Category::getModules (QString category) {
 // category name.  The function returns minus 1 if there is no such
 // category.
 int Category::getModulesNr (QString category) {
-  for (int i = 0; i < Category::Categories.size(); i++) {
-    if (category == Category::Categories.at(i)->Name)
+  for (int i = 0; i < Category::categories.size(); i++) {
+    if (category == Category::categories.at(i)->Name)
       return i;
   }
   return -1;
