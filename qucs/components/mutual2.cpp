@@ -17,19 +17,12 @@
 
 #include "qucs.h"
 #include "mutual2.h"
-
-#include<QFontMetrics>
+#include "some_font_stuff.h"
 
 
 Mutual2::Mutual2()
 {
   Description = QObject::tr("three mutual inductors");
-
-  QFont Font(QucsSettings.font); // default application font
-  // symbol text is smaller (10 pt default)
-  Font.setPointSize(10); 
-  // get the small font size; use the screen-compatible metric
-  QFontMetrics  smallmetrics(Font, 0);
 
   int w;
   QString stmp;
@@ -56,9 +49,9 @@ Mutual2::Mutual2()
   Lines.append(new Line(-10, 10,-30, 10,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-10, 10,-10, 22,QPen(Qt::darkBlue,2)));
 
-  stmp = "1"; w = smallmetrics.width(stmp); // compute width to right-align
+  stmp = "1"; w = get_some_width(stmp); // compute width to right-align
   Texts.append(new Text(-13-w,-61,stmp));
-  stmp = "2"; w = smallmetrics.width(stmp); // compute width to right-align
+  stmp = "2"; w = get_some_width(stmp); // compute width to right-align
   Texts.append(new Text(-13-w, 18,stmp));
   Texts.append(new Text( 13,-22,"3")); // left-aligned, no need to compute width
 

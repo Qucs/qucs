@@ -29,7 +29,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(Schematic*);
 }D;
-Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, ".SW", &D);
+Dispatcher<Command>::INSTALL p(&command_dispatcher, ".SW", &D);
 Module::INSTALL pp("simulations", &D);
 
 Param_Sweep::Param_Sweep()
@@ -49,8 +49,7 @@ Param_Sweep::Param_Sweep()
 
   tx = 0;
   ty = y2+1;
-  Model = "SW";
-  Name  = "SW";
+  setName("SW");
 
   // The index of the first 6 properties must not changed. Used in recreate().
   Props.append(new Property("Sim", "", true,

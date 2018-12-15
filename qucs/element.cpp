@@ -57,27 +57,23 @@ void /*really?*/ Element::editElement(QucsDoc*)
 	incomplete();
 }
 
-void Element::snapToGrid(Schematic& s){
-    s.setOnGrid(cx, cy);
-}
-
 // pure? maybe not. there could be non-paintable elements...
 void Element::paint(ViewPainter* p) const
 {
 	// draw bounding box for debugging.
-    p->Painter->setPen(QPen(Qt::red,1));
-    p->Painter->drawRoundRect(boundingRect());
+	if(isSelected()){
+		p->Painter->setPen(QPen(Qt::red,2));
+	}else{
+		p->Painter->setPen(QPen(Qt::yellow,1));
+	}
+	p->Painter->drawRoundRect(boundingRect());
 }
 
+// does not work for nodes and diagrams
 QRectF Element::boundingRect() const
-{  itested();
+{
 	QRectF b(cx+x1, cy+y1, x2-x1, y2-y1);
-	// qDebug() << "boundingRect" << b;
 	return b;
-
-//node
- // return QRect(cx-4,cy-4,8,8);
-
 }
 
 
@@ -97,6 +93,7 @@ Painting* painting(Element* e){ return dynamic_cast<Painting*>(e); }
 Marker* marker(Element* e){ return dynamic_cast<Marker*>(e); }
 Graph* graph(Element* e){ return dynamic_cast<Graph*>(e); }
 Node* node(Element* e){ return dynamic_cast<Node*>(e); }
+//Label* label(Element* e){ return dynamic_cast<Label*>(e); }
 
 Component const* component(Element const* e){ return dynamic_cast<Component const*>(e); }
 Wire const* wire(Element const* e){ return dynamic_cast<Wire const*>(e); }

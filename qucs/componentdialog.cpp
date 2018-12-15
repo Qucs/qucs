@@ -849,6 +849,7 @@ void ComponentDialog::slotApplyInput()
   if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->name());
   else
   if(CompNameEdit->text() != Comp->name()) {
+#if 0
     for(pc = schematic()->components().first(); pc!=0;
         pc=schematic()->components().next()){
       if(pc->name() == CompNameEdit->text()){
@@ -862,6 +863,7 @@ void ComponentDialog::slotApplyInput()
       Comp->obsolete_name_override_hack(CompNameEdit->text());
       changed = true;
     }
+#endif
   }
 
   /*! Walk the original Comp->Props and compare with the
@@ -1090,22 +1092,24 @@ void ComponentDialog::slotApplyInput()
 // -------------------------------------------------------------------------
 void ComponentDialog::slotBrowseFile()
 {
+  incomplete();
   // current file name from the component properties
   QString currFileName = prop->item(prop->currentRow(), 1)->text();
   QFileInfo currFileInfo(currFileName);
   // name of the schematic where component is instantiated (may be empty)
-  QFileInfo schematicFileInfo = Comp->getSchematic()->getFileInfo();
-  QString schematicFileName = schematicFileInfo.fileName();
+  QFileInfo schematicFileInfo; // = Comp->getSchematic()->getFileInfo();
+  QString schematicFileName; //  = schematicFileInfo.fileName();
   // directory to use for the file open dialog
-  QString currDir;
+  QString currDir = "unknown_dir";
 
   if (!currFileName.isEmpty()) { // a file name is already defined
     if (currFileInfo.isRelative()) { // but has no absolute path
       if (!schematicFileName.isEmpty()) { // if schematic has a filename
+        incomplete();
 	// build the an absolute file name using the schematic path
-	currDir = schematicFileInfo.absolutePath() + 
-	          QDir::separator() +
-                  currFileInfo.fileName();
+	// currDir = schematicFileInfo.absolutePath() + 
+	//        QDir::separator() +
+        //        currFileInfo.fileName();
       } else { // no absolute paths around
 	// use the WorkDir path
 	currDir = QucsSettings.QucsWorkDir.path() + 

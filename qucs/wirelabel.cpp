@@ -18,6 +18,7 @@
 #include "viewpainter.h"
 #include "wire.h"
 #include "qucs.h"
+#include "some_font_stuff.h"
 
 #include <QString>
 #include <QPainter>
@@ -199,7 +200,7 @@ void WireLabel::setName(const QString& Name_)
   setLabel(Name_);
   
   // get size of text using the screen-compatible metric
-  QFontMetrics metrics(QucsSettings.font, 0);
+  FontMetrics metrics;
   QSize r = metrics.size(0, Name);
   x2 = r.width();
   y2 = r.height()-2;    // remember size of text

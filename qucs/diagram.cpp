@@ -53,6 +53,9 @@
 #include <QDebug>
 #include <QString>
 #include <QMouseEvent>
+#include <QRectF>
+#include "some_font_stuff.h"
+
 
 Diagram::Diagram(int _cx, int _cy)
 {
@@ -105,6 +108,7 @@ void Diagram::paint(ViewPainter *p) const
 	Diagram* d=const_cast<Diagram*>(this);
 	d->paintDiagram(p);
 	d->paintMarkers(p);
+	Element::paint(p);
 }
 
 void Diagram::paintDiagram(ViewPainter *p)
@@ -132,13 +136,14 @@ void Diagram::paintDiagram(ViewPainter *p)
     // write whole text (axis label inclusively)
     QMatrix wm = p->Painter->worldMatrix();
     foreach(Text *pt, Texts) {
-      p->Painter->setWorldMatrix(
-          QMatrix(pt->mCos, -pt->mSin, pt->mSin, pt->mCos,
-                   p->DX + float(cx+pt->x) * p->Scale,
-                   p->DY + float(cy-pt->y) * p->Scale));
-
+//      p->Painter->setWorldMatrix(
+//          QMatrix(pt->mCos, -pt->mSin, pt->mSin, pt->mCos,
+//                   p->DX   + float(cx+pt->x) * p->Scale,
+//                   p->DY   + float(cy+pt->y) * p->Scale));
+//
+      // qDebug() << p->DX << p->DY << cy;
       p->Painter->setPen(pt->Color);
-      p->Painter->drawText(QPoint(0, 0), pt->s);
+      p->Painter->drawText(QPoint(cx+pt->x, cy-pt->y), pt->s);
     }
     p->Painter->setWorldMatrix(wm);
     p->Painter->setWorldMatrixEnabled(false);
@@ -186,7 +191,7 @@ void Diagram::createAxisLabels()
   int   x, y, w, wmax = 0;
   QString Str;
   // get size of text using the screen-compatible metric
-  QFontMetrics metrics(QucsSettings.font, 0);
+  FontMetrics metrics;
   int LineSpacing = metrics.lineSpacing();
 
   nfreqa=0;
@@ -592,13 +597,27 @@ for(int zz=0; zz<60; zz+=2)
   // unreachable
 }
 
+
 // -------------------------------------------------------
+// doesn't seem to be the bounding box
 void Diagram::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
   _x1 = cx - Bounding_x1;
   _y1 = cy - y2 - Bounding_y2;
   _x2 = cx + x2 + Bounding_x2;
   _y2 = cy - Bounding_y1;
+}
+
+// -------------------------------------------------------
+QRectF Diagram::boundingRect() const
+{
+	int x1, y1, x2, y2;
+
+	Diagram* d=const_cast<Diagram*>(this);
+	d->Bounding(x1, y1, x2, y2);
+	QRectF b(x1, y1, x2, y2); // WRONG
+	return QRectF(cx, cy, +x2-x1+30, y1-y2+30);
+	return b;
 }
 
 // -------------------------------------------------------
@@ -1152,7 +1171,7 @@ bool Diagram::sameDependencies(Graph const*g1, Graph const*g2) const
 
 // ------------------------------------------------------------
 int Diagram::checkColumnWidth(const QString& Str,
-		const QFontMetrics& metrics, int colWidth, int x, int y)
+		const FontMetrics& metrics, int colWidth, int x, int y)
 {
   //qDebug("%i", metrics.charWidth(Str,0));
   int w = metrics.boundingRect(Str).width();  // width of text
@@ -1250,7 +1269,7 @@ QString Diagram::save()
 }
 
 // ------------------------------------------------------------
-bool Diagram::load(const QString& Line, QTextStream *stream)
+bool Diagram::load(const QString& Line, DocumentStream& stream)
 {
   bool ok;
   QString s = Line;
@@ -1369,8 +1388,8 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   Graph *pg;
   // .......................................................
   // load graphs of the diagram
-  while(!stream->atEnd()) {
-    s = stream->readLine();
+  while(!stream.atEnd()) {
+    s = stream.readLine();
     s = s.trimmed();
     if(s.isEmpty()) continue;
 
@@ -1658,7 +1677,7 @@ void Diagram::createPolarDiagram(Axis *Axis, int Mode)
   Arcs.append(new struct Arc(0, y2, x2, y2, tmp, 16*360-phi, QPen(Qt::black,0)));
 
   // get size of text using the screen-compatible metric
-  QFontMetrics metrics(QucsSettings.font, 0);
+  FontMetrics metrics;
   QSize r = metrics.size(0, Texts.last()->s);  // width of text
   len = x2+r.width()-4;   // more space at the right
   if(len > x3)  x3 = len;
@@ -1895,7 +1914,7 @@ bool Diagram::calcYAxis(Axis *Axis, int x0)
 
   QString tmp;
   // get size of text using the screen-compatible metric
-  QFontMetrics metrics(QucsSettings.font, 0);
+  FontMetrics metrics;
   int maxWidth = 0;
 
   bool back = false;
@@ -2363,7 +2382,7 @@ bool Diagram::pressElement(Schematic* Doc, Element*& selElem, QMouseEvent* Event
 		drawn = false;
 	}else{
 
-		Doc->diagrams().append(Diag); // BUG
+		Doc->pushBack(Diag);
 		Doc->enlargeView(Diag->cx_(), Diag->cy_()-Diag->y2_(), Diag->cx_()+Diag->x2_(), Diag->cy_());
 		Doc->setChanged(true, true);   // document has been changed
 

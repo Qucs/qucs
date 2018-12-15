@@ -2,7 +2,7 @@
 // Part of QUCS
 
 #include "qucsdoc.h"
-//#include "schematic_model.h"
+#include "schematic_model.h"
 #include "schematic_lang.h"
 #include "schematic_symbol.h"
 #include "schematic_model.h" /// hmm
@@ -66,7 +66,6 @@ namespace{
 class LegacySchematicLanguage : public SchematicLanguage {
 public:
 	LegacySchematicLanguage() : SchematicLanguage(){ untested();
-		// defaultSchematicLanguage = this;
 	}
 private: // stuff saved from schematic_file.cpp
 	Diagram* loadDiagram(QString const& Line, DocumentStream& /*, DiagramList *List */) const;
@@ -105,7 +104,6 @@ private: // overrides
 private:
 	void printSymbol(Symbol const*, stream_t&) const;
 }defaultSchematicLanguage_;
-
 static Dispatcher<DocumentLanguage>::INSTALL
     p(&doclang_dispatcher, "leg_sch", &defaultSchematicLanguage_);
 // ------------------------------------------------------
@@ -113,7 +111,6 @@ static Dispatcher<DocumentLanguage>::INSTALL
 // BUG: this is schematicFormat
 void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) const
 {
-
 	QString Line;
 
 	// mode: a throwback to the legacy format:
@@ -154,8 +151,6 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 				}
 			}else if(mode=='S'){
 				incomplete();
-#if 1
-				// SchematicSymbol* s=new SchematicSymbol();
 				try{
 					qDebug() << "symbol Paintings";
 					s.symbolPaintings().load(stream);
@@ -163,7 +158,6 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 				}catch(...){
 					incomplete();
 				}
-#endif
 			}else if(mode=='W'){
 				// (Node*)4 =  move all ports (later on)
 				Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4);
@@ -202,7 +196,6 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 	}
 }
 
-
 Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 		DocumentStream& stream /*, DiagramList *List */)const
 { untested();
@@ -230,7 +223,7 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 			return nullptr;
 		}
 
-		if(!d->load(Line, &stream)) { untested();
+		if(!d->load(Line, stream)) { untested();
 			incomplete();
 			delete d;
 			return nullptr;
@@ -371,30 +364,9 @@ Command* LegacySchematicLanguage::loadCommand(const QString& _s, Command* c) con
   if(!ok) return NULL;
 
   assert(c);
-  if(!c->obsolete_model_hack().size()){
-    // avoid segfault in obsolete code...
-  }else if(c->obsolete_model_hack().at(0) != '.') {  // is simulation component (dc, ac, ...) ?
-
-    n  = s.section(' ',7,7);    // mirroredX
-    if(n.toInt(&ok) == 1){
-      c->mirrorX();
-    }
-    if(!ok) return NULL;
-
-    n  = s.section(' ',8,8);    // rotated
-    tmp = n.toInt(&ok);
-    if(!ok) return NULL;
-    if(c->rotated > tmp)  // neccessary because of historical flaw in ...
-      tmp += 4;        // ... components like "volt_dc"
-    for(int z=c->rotated; z<tmp; z++){
-      c->rotate();
-    }
-  }
 
   c->tx = ttx;
   c->ty = tty; // restore text position (was changed by rotate/mirror)
-
-  QString Model = c->obsolete_model_hack(); // BUG: don't use names
 
   unsigned int z=0, counts = s.count('"');
   // FIXME. use c->paramCount()

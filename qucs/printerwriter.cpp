@@ -49,7 +49,7 @@ PrinterWriter::~PrinterWriter()
 
 //allow user pass parameter and print document
 void
-PrinterWriter::noGuiPrint(QWidget *doc, QString printFile,
+PrinterWriter::noGuiPrint(Schematic* doc, QString printFile,
     QString page, int dpi, QString color, QString orientation)
 {
   //set property
@@ -84,7 +84,7 @@ PrinterWriter::noGuiPrint(QWidget *doc, QString printFile,
     return;
   }
 
-  static_cast<Schematic *>(doc)->print(Printer, &Painter,
+  doc->print(Printer, &Painter,
     Printer->printRange() == QPrinter::AllPages, fitToPage);
 }
 

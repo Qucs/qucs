@@ -301,8 +301,11 @@ QString misc::properName(const QString& Name)
 {
   QString s = Name;
   QFileInfo Info(s);
-  if(Info.suffix() == "sch")
+  if(s.size()==0){
+	  return s;
+  }else if(Info.suffix() == "sch"){
     s.chop(4);
+  }
   if(s.at(0) <= '9') if(s.at(0) >= '0')
     s = 'n' + s;
   s.replace(QRegExp("\\W"), "_"); // none [a-zA-Z0-9] into "_"

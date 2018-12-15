@@ -18,6 +18,7 @@
 #include "qucs.h"
 #include "schematic.h"
 #include "misc.h"
+#include "some_font_stuff.h"
 
 #include <QFileInfo>
 
@@ -141,7 +142,8 @@ void SPEmbed::createSymbol()
   // symbol text is smaller (10 pt default)
   Font.setPointSize(10 ); 
   // get the small font size; use the screen-compatible metric
-  QFontMetrics  smallmetrics(Font, 0);
+  FontMetrics  smallmetrics;
+  smallmetrics.setSmall();
   int fHeight = smallmetrics.lineSpacing();
   QString stmp;
 
@@ -191,7 +193,7 @@ void SPEmbed::createSymbol()
   x1 = -30; y1 = -h-2;
   x2 =  30; y2 =  h+15;
   // compute component name text position - normal size font
-  QFontMetrics  metrics(QucsSettings.font, 0);   // use the screen-compatible metric
+  FontMetrics  metrics;
   tx = x1+4;
   ty = y1 - 2*metrics.lineSpacing() - 4;
 }

@@ -24,12 +24,12 @@ class DC_Sim : public Command  {
 public:
   DC_Sim();
   ~DC_Sim();
-  Component* newOne(){
+  Element* clone() const{
 	  return new DC_Sim(*this);
   }
   static Element* info(QString&, char* &, bool getNewOne=false);
 }D;
-Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, ".DC", &D);
+Dispatcher<Command>::INSTALL p(&command_dispatcher, ".DC", &D);
 Module::INSTALL pp("simulations", &D);
 
 
@@ -55,8 +55,7 @@ DC_Sim::DC_Sim()
 
   tx = 0;
   ty = y2+1;
-  Model = "DC";
-  Name  = "DC";
+  setName("DC");
 
   Props.append(new Property("Temp", "26.85", false,
 		QObject::tr("simulation temperature in degree Celsius")));

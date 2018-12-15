@@ -19,6 +19,8 @@
 #include "schematic.h"
 #include "misc.h"
 
+#include "some_font_stuff.h"
+
 #include <QTextStream>
 #include <QRegExp>
 #include <QFileInfo>
@@ -126,7 +128,7 @@ QString VHDL_File::loadFile()
 void VHDL_File::createSymbol()
 {
   // use the screen-compatible metric
-  QFontMetrics  metrics(QucsSettings.font, 0);   // get size of text
+  FontMetrics  metrics;
   int fHeight = metrics.lineSpacing();
 
   int No = 0;
@@ -211,7 +213,7 @@ QString VHDL_File::getSubcircuitFile() const
 }
 
 // -------------------------------------------------------
-bool VHDL_File::createSubNetlist(QTextStream *stream)
+bool VHDL_File::createSubNetlist(DocumentStream& stream)
 {
   ErrText = "";
 
@@ -237,10 +239,10 @@ bool VHDL_File::createSubNetlist(QTextStream *stream)
   // write the whole VHDL file into the netlist output
   QByteArray FileContent = f.readAll();
   f.close();
-  (*stream) << '\n';
+  stream << '\n';
   //? stream->writeRawBytes(FileContent.data(), FileContent.size());
-  (*stream) << FileContent.data();
-  (*stream) << '\n';
+  stream << FileContent.data(); // BUG. lang?!
+  stream << '\n';
   return true;
 }
 

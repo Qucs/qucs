@@ -167,7 +167,6 @@ Graph* SweepDialog::setBiasPoints()
   QFileInfo Info(Doc->docName());
   QString DataSet = Info.path() + QDir::separator() + Doc->DataSet;
 
-  Node *pn;
   Element *pe;
 
   // Note 1:
@@ -179,7 +178,7 @@ Graph* SweepDialog::setBiasPoints()
   ValueList.clear();
 
   // create DC voltage for all nodes
-  for(pn = Doc->nodes().first(); pn != 0; pn = Doc->nodes().next()) {
+  for(auto pn : Doc->nodes()){
     if(pn->name().isEmpty()) continue;
 
     pn->reset_something();
@@ -241,6 +240,7 @@ Graph* SweepDialog::setBiasPoints()
 
 
   // create DC current through each probe
+  Node* pn;
   for(auto pc : Doc->components()){
     if(pc->obsolete_model_hack() == "IProbe") { // BUG.
       pn = pc->Ports.first()->Connection;

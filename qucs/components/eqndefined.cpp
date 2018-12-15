@@ -17,6 +17,7 @@
 #include "eqndefined.h"
 #include "qucs.h"
 #include "schematic.h"
+#include "some_font_stuff.h"
 
 #include <QFileInfo>
 
@@ -98,7 +99,8 @@ void EqnDefined::createSymbol()
   //Font.setPointSizeF(Font.pointSizeF()/1.2);  // symbol text size proportional to default font size
   Font.setPointSize(10); // symbol text size fixed at 10 pt
   // get the small font size; use the screen-compatible metric
-  QFontMetrics  smallmetrics(Font, 0); 
+  FontMetrics  smallmetrics;
+  smallmetrics.setSmall();
   int fHeight = smallmetrics.lineSpacing();
   QString tmp;
   int i, PortDistance = 60;
@@ -173,7 +175,7 @@ void EqnDefined::createSymbol()
   x1 = -30; y1 = -h-2;
   x2 =  30; y2 =  h+2;
   // compute component name text position - normal size font
-  QFontMetrics  metrics(QucsSettings.font, 0);  // use the screen-compatible metric
+  FontMetrics  metrics;
   tx = x1+4;
   ty = y1 - 2*metrics.lineSpacing() - 4;
 }

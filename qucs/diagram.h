@@ -44,6 +44,8 @@
   }
 
 class QMouseEvent;
+class DocumentStream; // BUG
+class FontMetrics;
 
 struct Axis {
   double  min, max; // least and greatest values of all graph data
@@ -90,17 +92,18 @@ public: // ??!
   void    getCenter(int&, int&);
   void    paintScheme(Schematic*) const;
   void    Bounding(int&, int&, int&, int&);
+	QRectF boundingRect() const;
   bool    getSelected(int, int);
   bool    resizeTouched(float, float, float);
   QString save();
-  bool    load(const QString&, QTextStream*);
+  bool    load(const QString&, DocumentStream&);
 
   void getAxisLimits(Graph*);
   void updateGraphData();
   void loadGraphData(const QString&);
   void recalcGraphData();
   bool sameDependencies(Graph const*, Graph const*) const;
-  int  checkColumnWidth(const QString&, const QFontMetrics&, int, int, int);
+  int  checkColumnWidth(const QString&, const FontMetrics&, int, int, int);
 
   virtual bool insideDiagram(float, float) const;
   bool insideDiagramP(Graph::iterator const& ) const;

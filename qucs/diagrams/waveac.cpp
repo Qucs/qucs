@@ -33,7 +33,7 @@
 #include "waveac.h"
 #include "qucs.h"
 #include "misc.h"
-
+#include "some_font_stuff.h"
 
 Waveac::Waveac(int _cx, int _cy) : Diagram(_cx, _cy)
 {
@@ -119,7 +119,7 @@ int Waveac::calcDiagram()
 
   double GridStep, corr, zD, zDstep, GridNum;
   // get size of text using the screen-compatible metric
-  QFontMetrics metrics(QucsSettings.font, 0);
+  FontMetrics metrics;
   y1 = QucsSettings.font.pointSize() + 6;
 
   x1 = 10;      // position of label text

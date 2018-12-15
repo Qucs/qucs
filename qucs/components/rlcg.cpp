@@ -17,7 +17,7 @@
 #include "qucs.h"
 #include "rlcg.h"
 
-#include <QFontMetrics>
+#include "some_font_stuff.h"
 
 RLCG::RLCG()
 {
@@ -39,7 +39,7 @@ RLCG::RLCG()
   // symbol text is smaller (10 pt default)
   Font.setPointSize(10); 
   // get the small font size; use the screen-compatible metric
-  QFontMetrics  smallmetrics(Font, 0); 
+  FontMetrics  smallmetrics;
   int fHeight = smallmetrics.lineSpacing();
   QString tmp = QObject::tr("RLCG");
   int w = smallmetrics.width(tmp);
