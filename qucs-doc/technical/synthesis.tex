@@ -1415,36 +1415,25 @@ Z_p = \frac{R_S \cdot k^2 \cdot L_2}{L_1} = R_L + j \cdot \omega_0 \cdot L_2'
    L_3 &= \frac{\Delta}{M}
 \end{align}
 
-\subsection{Lumped equivalent circuits of the $\lambda/4$ transmission line}
+\subsection{Lumped equivalent circuits of a transmission line}
 
-\noindent The lumped equivalent circuit may be found by comparing the $\lambda/4$ transmission line to the $\pi$ and T-type networks in terms of their ABCD parameters.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=80mm]{Pi-equivalent-ckt}
-\caption{$\pi$-type equivalent circuit of a $\lambda/4$ transmission line}
-\label{fig:pi-equivalent-ckt}
-\end{figure}
-
-
-\noindent The ABCD matrix of a transmission line is given by:
+\noindent The lumped equivalent circuit of a transmission line may be found by comparing its ABCD parameters with those of the $\pi$ and T-type networks. The ABCD matrix of a transmission line is given by:
 
 \begin{equation}
 A_{TL} = \begin{pmatrix}
     cosh(\gamma \cdot L)       & Z_0 \cdot sinh(\gamma \cdot L) \\
     \frac{1}{Z_0} \cdot sinh(\gamma \cdot L) & cosh(\gamma \cdot L)
 \end{pmatrix}
-\label{eq:ABCD_TL}
 \end{equation}
 
-\noindent For $L = \lambda/4$, it reduces to:
+\noindent Under the assumption that the transmission line is lossless, $\gamma = -j\cdot \beta$:
 
 \begin{equation}
-A_{\lambda/4} = \begin{pmatrix}
-    0       & j \cdot Z_0 \\
-    \frac{j}{Z_0} & 0
+A_{TL} = \begin{pmatrix}
+    j\cdot cos(\beta \cdot L)       & j \cdot Z_0 \cdot sin(\beta \cdot L) \\
+    \frac{j}{Z_0} \cdot sin(\beta \cdot L) & j \cdot cos(\beta \cdot L)
 \end{pmatrix}
-\label{eq:ABCD_QW}
+\label{eq:ABCD_TL}
 \end{equation}
 
 \noindent On the other hand, in virtue of the cascade property of the ABCD parameters, the ABCD parameters of the $\pi$-type network is given by:
@@ -1452,103 +1441,107 @@ A_{\lambda/4} = \begin{pmatrix}
 \begin{equation}
 A_{\pi} = \begin{pmatrix}
      1       & 0 \\
-    Y_1 & 1
+   \frac{1}{Z_{sh1}} & 1
 \end{pmatrix} \cdot
 \begin{pmatrix}
-     1       & Z_1 \\
+     1       & Z_{ser} \\
     0 & 1
 \end{pmatrix}
 \begin{pmatrix}
      1       & 0 \\
-    Y_2 & 1
+    \frac{1}{Z_{sh2}} & 1
 \end{pmatrix} = 
 \begin{pmatrix}
-     Y_2 \cdot Z_1 + 1       & Z_1 \\
-    (Y_1 \cdot Z_1 + 1)\cdot Y_2 + Y_1  & Y_1 \cdot Z_1 + 1
+     \frac{Z_{ser}}{Z_{sh1} + 1}      & Z_{ser} \\
+     \frac{\frac{Z_{ser}}{Z_{sh1}}+ 1}{Z_{sh2}} + \frac{1}{Z_{sh1}} & \frac{Z_{ser}}{Z_{sh2} + 1} 
 \end{pmatrix}
 \label{eq:ABCD_PI}
 \end{equation}
 
-\noindent By comparing \ref{eq:ABCD_QW} and \ref{eq:ABCD_PI} we get the following system of equations:
+\noindent where $Z_{ser}$, $Z_{sh1}$ and $Z_{sh2}$ are the impedance of the series and the shunt branches as shown in \ref{} 
 
-\begin{equation}
-A_{\lambda/4} = A_{\pi} \Longrightarrow
-\begin{cases} Y_2 \cdot Z_1 + 1 = 0 \\ Z_1 =  j \cdot Z_0 \\ (Y_1 \cdot Z_1 + 1)\cdot Y_2 + Y_1 = \frac{j}{Z_0} \\ Y_1 \cdot Z_1 + 1 = 0\end{cases} 
-\label{eq:qw-pi-equivalent-equations}
-\end{equation}
+\begin{figure}[H]
+\centering
+\includegraphics[width=80mm]{pi-equivalent-circuit}
+\caption{Schematic of the $\pi$-type equivalent circuit of a transmission line}
+\label{fig:Transmission-Line-Circuit-Equivalent-Schematic}
+\end{figure}
 
-\noindent Since $Z_1 =  j \cdot Z_0$, the series element must be an inductor such that $L_{\pi} = \frac{Z_0}{\omega_0}$. From the first fourth equations in \ref{eq:qw-pi-equivalent-equations}, the shunt elements must be capacitors of the same value.
-
-\begin{equation}
-Y_2 \cdot Z_1 + 1 = 0 \Longrightarrow Y_2 = -\frac{1}{Z_1} = j \cdot \frac{1}{Z_0} \Longrightarrow C_{\pi} = \frac{1}{\omega_0 \cdot Z_0}
-\end{equation}
-
-\noindent In order to check the equivalent circuit is valid, it is needed to verify the above solutions using the third equation in \ref{eq:qw-pi-equivalent-equations}:
-
-\begin{equation}
-(Y_1 \cdot Z_1 + 1) \cdot Y_2  + Y_1 = \frac{j}{Z_0} \Longleftrightarrow \left( \frac{j}{Z_0} \cdot j \cdot Z_0 + 1\right) \cdot \frac{j}{Z_0} + \frac{j}{Z_0} = \frac{j}{Z_0} \Longleftrightarrow  \frac{j}{Z_0} = \frac{j}{Z_0}
-\end{equation}
-
-\noindent Now, it is possible to find the T-type equivalent using \ref{tbl:pi-to-tee-transformation}:
+\noindent By comparing \ref{eq:ABCD_TL} and \ref{eq:ABCD_PI} it yields:
 
 \begin{align}
-           Z_1^T &= \frac{Z_A^{\pi} \cdot Z_B^{\pi}}{Z_A^{\pi} + Z_B^{\pi} + Z_C^{\pi}} = j \cdot Z_0 \Longrightarrow L_{T} = \frac{Z_0}{\omega_0}\\
-           Z_2^T &= \frac{Z_B^{\pi} \cdot Z_C^{\pi}}{Z_A^{\pi} + Z_B^{\pi} + Z_C^{\pi}} = j \cdot Z_0 = Z_1\\
-           Z_3^T &= \frac{Z_A^{\pi} \cdot Z_C^{\pi}}{Z_A^{\pi} + Z_B^{\pi} + Z_C^{\pi}} = -j \cdot Z_0 \Longrightarrow C_{T} = \frac{Z_0}{\omega_0}
-         \end{align}
+     Z_{ser} &= j \cdot Z_0 \cdot sin(\beta \cdot L) \\
+     Z_{sh1} &= Z_{sh2} = -j \cdot \frac{Z_0 \cdot sin(\beta \cdot L)}{1 - cos(\beta \cdot L)}
+\end{align}
 
-\noindent where
+\noindent Since $\beta \cdot L \in \mathbb{R}$. $Z_{ser}$ and $Z_{sh1}$ may be capacitative or inductive depending on the length of the tranmission line as follows:
 
+\noindent For $L \in (n\lambda/2, (n+1) \lambda/2), \forall n  \in [0, +\infty] \in \mathbb{N}$
 \begin{align}
-   Z_A^{\pi} &= \frac{1}{Y_1} = 1/(j \cdot \omega_0 \cdot C_{\pi}) \\
-   Z_B^{\pi} &= Z_1 = j \cdot \omega_0 \cdot L_{\pi} \\
-   Z_C^{\pi} &= \frac{1}{Y_2} = 1/(j \cdot \omega_0 \cdot C_{\pi})
+     Z_{ser} &> 0 \Longrightarrow L_{ser} = \frac{X_S}{\omega_0} \\
+     Z_{sh1} &= Z_{sh2}  < 0 \Longrightarrow C_{sh} = \frac{1 - cos(\beta \cdot L)}{X_S\cdot \omega_0}
+\end{align}
+\noindent where $X_S = Z_0 \cdot sin(\beta \cdot L)$
+
+\noindent Conversely, for $L \in [n\lambda/2, (n+1) \lambda/2), \forall n  \in [1, +\infty] \in \mathbb{N}$
+\begin{align}
+     Z_{ser} &< 0 \Longrightarrow C_{ser} = -\frac{1}{\omega_0 \cdot X_S} \\
+     Z_{sh1} &= Z_{sh2} > 0  \Longrightarrow L_{sh} = -\frac{X_S}{\omega_0 \cdot (1 - cos(\beta \cdot L))}
 \end{align}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=80mm]{TL_Pi_Tee_conversion}
-\caption{Conversion between $\pi$-type and T-type circuit equivalents of the $\lambda\/4$ transmission line}
-\label{fig:pi-t-equivalent-ckt}
+\includegraphics[width=80mm]{pi-to-tee-equivalent-implementation}
+\caption{Reactance of the series and shunt elements of the $\pi$-type equivalent circuit}
+\label{fig:Transmission-Line-Circuit-Equivalent-Values}
 \end{figure}
 
+\noindent Now, it is possible to find the T-type equivalent using \ref{tbl:pi-to-tee-transformation}:
 
-
-\subsection{Lumped equivalent circuit of the $\lambda/8$ transmission line}
-
-\noindent As with the $\lambda/4$ transmission line, the equivalent circuit of the $\lambda/8$ transmission line is calculated using the ABCD matrix. From \ref{eq:ABCD_TL}
-
-\begin{equation}
-A_{\lambda/8} = \frac{1}{2} \cdot \begin{pmatrix}
-    \sqrt{2}       & j \cdot Z_0 \cdot \sqrt{2}\\
-    \frac{j \sqrt{2}}{Z_0} & \sqrt{2} 
-\end{pmatrix}
-\label{eq:ABCD_L8}
-\end{equation}
-
-\begin{equation}
-A_{\lambda/8} = A_{\pi} \Longrightarrow
-\begin{cases} Y_2 \cdot Z_1 + 1 = \frac{\sqrt{2}}{2} \\ Z_1 =  j \cdot Z_0 \cdot \frac{\sqrt{2}}{2} \\ (Y_1 \cdot Z_1 + 1)\cdot Y_2 + Y_1 = \frac{j \cdot \sqrt{2}}{2 \cdot Z_0} \\ Y_1 \cdot Z_1 + 1 = \frac{\sqrt{2}}{2}\end{cases} 
-\label{eq:l8-pi-equivalent-equations}
-\end{equation}
-
-\noindent By comparing \ref{eq:ABCD_L8} and \ref{eq:ABCD_PI} we get the following system of equations:
-
-\noindent Since $ Z_1 =  j \cdot Z_0 \cdot \frac{\sqrt{2}}{2}$, the series element must be an inductor such that: $L_{\pi} = \frac{Z_0 \cdot \sqrt{2}}{2 \cdot \omega_0}$
-
-\begin{equation}
- Y_2 \cdot Z_1 + 1 = \frac{\sqrt{2}}{2} \Longrightarrow Y_2 =  \frac{\frac{\sqrt{2}}{2} - 1}{Z_1} = j \cdot \frac{\sqrt{2}-1}{Z_0} \Leftrightarrow C_{\pi} = \frac{\sqrt{2} - 1}{Z_0 \cdot \omega_0}
-\end{equation}
-
-
-
-\noindent Now, it is possible to find the T-type equivalent using the transformation equations \ref{tbl:pi-to-tee-transformation}:
-
-\begin{align}
-   Z_1^T &= \frac{1}{Y_1} = \frac{Z_A^{\pi} \cdot Z_B^{\pi}}{Z_A^{\pi} + Z_B^{\pi} + Z_C^{\pi}} = j \cdot \frac{Z_0}{\sqrt{2} + 1} \Longrightarrow L_T = \frac{Z_0 \cdot (1 - \sqrt{2})}{\omega_0}\\
-   Z_2^T &= Z_1 = \frac{Z_B^{\pi} \cdot Z_C^{\pi}}{Z_A^{\pi} + Z_B^{\pi} + Z_C^{\pi}} = j \cdot \frac{Z_0}{\sqrt{2} + 1} = Z_1\\
-   Z_3^T &= \frac{1}{Y_2} =\frac{Z_A^{\pi} \cdot Z_C^{\pi}}{Z_A^{\pi} + Z_B^{\pi} + Z_C^{\pi}} = -j \cdot \frac{Z_0 \cdot \sqrt{2}}{(\sqrt{2}+1)(\sqrt{2}-1)}\Longrightarrow C_T = \frac{\sqrt{2}}{2 \cdot \omega_0 \cdot Z_0}
-\end{align}
-
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ | c | c | }
+    \hline
+    $L \leq \lambda/2$ & $L > \lambda/2$\\ \hline
+    \begin{minipage}{.4\textwidth}
+      \includegraphics[width=\linewidth]{TL-circuit-equivalent-LP-Pi-Tee}
+    \end{minipage}
+    &
+    \begin{minipage}{.4\textwidth}
+      \includegraphics[width=\linewidth]{TL-circuit-equivalent-HP-Pi-Tee}
+    \end{minipage}
+\\ \hline
+    \multicolumn{2}{|c|}{
+    \begin{minipage}{.4\textwidth}
+         { \begin{align}
+              Z_A^{\pi} &= j \cdot X_P\\
+              Z_B^{\pi} &= j \cdot X_S \\
+              Z_C^{\pi} &= Z_A^{\pi} 
+         \end{align}
+        \noindent where
+        \begin{align}
+              X_S &= Z_0 \cdot sin(\beta \cdot L)\\
+              X_P &= -\frac{X_S}{1 - cos(\beta \cdot L)}
+         \end{align}
+       }\end{minipage}}
+\\ \hline
+    \begin{minipage}{.4\textwidth}
+         { \begin{align}
+              L_T &= \frac{X_P \cdot X_S}{(2 \cdot X_P + X_S) \cdot \omega_0} \\
+              C_T &= -\frac{2 \cdot X_P + X_S}{X_P^2 \cdot \omega_0}
+     \end{align}}
+    \end{minipage}
+    &
+        \begin{minipage}{.4\textwidth}
+         { \begin{align}
+              L_T &= \frac{X_P ^2}{(2 \cdot X_P + X_S) \cdot \omega_0}\\
+              C_T &= -\frac{2 \cdot X_P + X_S}{X_P \cdot X_S \cdot \omega_0}
+     \end{align}}
+    \end{minipage}
+    \\ \hline
+  \end{tabular}
+  \caption{$\pi$ to T-type transformations}
+  \label{tbl:pi-to-tee-transformation}
+\end{table}
 
 
