@@ -942,7 +942,7 @@ QString MatchDialog::SynthesizeMatchingNetwork(struct NetworkParams params)
       laddercode = calcSeriesDoubleTunedTransformer(params);
       break;
     }
-    return laddercode;
+    return SimplifySeriesParallelConnections(laddercode);
 }
 
 // -----------------------------------------------------------------------
@@ -2182,13 +2182,13 @@ QString MatchDialog::calcMatchingLambda8Lambda4(struct NetworkParams params) {
   if (ImplParams.use_l4_lumped_equivalent == 0){
       str += QString("TL:%1#%2;").arg(Zm).arg(l4);
   } else{
-      str += QString("%1;").arg(CalcTransmissionLineLumpedEquivalent(params.freq, Zm, ImplParams.use_l4_lumped_equivalent, l4));
+      str += QString("%1").arg(CalcTransmissionLineLumpedEquivalent(params.freq, Zm, ImplParams.use_l4_lumped_equivalent, l4));
   }
 
   if (ImplParams.use_l8_lumped_equivalent == 0){
       str += QString("TL:%1#%2;").arg(Zmm).arg(l8);
   } else{
-      str += QString("%1;").arg(CalcTransmissionLineLumpedEquivalent(params.freq, Zmm, ImplParams.use_l8_lumped_equivalent, l8));
+      str += QString("%1").arg(CalcTransmissionLineLumpedEquivalent(params.freq, Zmm, ImplParams.use_l8_lumped_equivalent, l8));
   }
 return str;
 }
@@ -2925,4 +2925,52 @@ QString MatchDialog::CalcTransmissionLineLumpedEquivalent(double f0, double Zm, 
         else//L > lambda
            return QString("CS:%1;LP:%2;CS:%1;").arg(-(2*Xp+Xs)/(Xp*Xs*w0)).arg(Xp*Xp/((2*Xp+Xs)*w0));
     }
+}
+
+//The purpose of this function is to simplify series parallel combinations of capacitors/inductors
+QString MatchDialog::SimplifySeriesParallelConnections(QString laddercode)
+{
+    QStringList strlist = laddercode.split(";");//Slipt the string code to get the components
+    QString component, component_aux, tag, tag_aux;
+    double value, value_aux;
+    QString output;
+
+    for (int i = 0; i < strlist.count(); i++) {
+        // Each token of the string descriptor has the following format:
+        // 'tag:<value>;''tag:<value1>#<value2>;'
+        // First, extract the tag
+        component = strlist.at(i);
+        int index_colon = component.indexOf(":");
+        tag = component.mid(0, index_colon);
+        value = component.mid(index_colon+1).toDouble();
+
+      double new_val;
+      bool simplify = false;
+      if (!tag.compare(tag_aux))
+          //Check if the components are LS, LP, CS or CP and simplify
+          if (!tag.compare("LS") || !tag.compare("LP") || !tag.compare("CS") || !tag.compare("CP"))
+          {
+            simplify = true;
+           if (!tag.compare("LS"))
+              new_val = value+value_aux;
+          else if (!tag.compare("LP"))
+                    new_val = (value*value_aux)/(value+value_aux);
+                 else if (!tag.compare("CS"))
+                        new_val = (value*value_aux)/(value+value_aux);
+                        else if (!tag.compare("CP"))
+                                new_val= value+value_aux;
+            }
+      if (simplify){
+          //Remove the value of the last component
+          int index = output.lastIndexOf(":");
+          output = output.mid(0, index);
+          output += QString(":%1;").arg(new_val);
+      }else
+          output += component + QString(";");
+
+      component_aux = component;
+      tag_aux = tag;
+      value_aux = value;
+    }
+    return output;
 }

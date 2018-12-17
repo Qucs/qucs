@@ -107,6 +107,7 @@ public:
   //--------------------------------------------------------------------------------------------------------
 
   QString CalcTransmissionLineLumpedEquivalent(double, double, int, double);
+  QString SimplifySeriesParallelConnections(QString);
   QString calcBiMatch(struct NetworkParams);
   bool calc2PortMatch(struct NetworkParams);
 
