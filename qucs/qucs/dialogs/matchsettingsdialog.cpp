@@ -27,14 +27,15 @@
    This is a pop-up window for configuring the matching network settings
 */
 
-MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialog(parent) {
+MatchSettingsDialog::MatchSettingsDialog(struct ImplementationParams ImplDetails, QWidget *parent, int topology) : QDialog(parent) {
   setWindowTitle(tr("Matching circuit settings"));
   QGridLayout *MatchSettingslayout = new QGridLayout();
 
   //Order
   Order_Label = new QLabel(tr("Order"));
   Order_Spinbox = new QSpinBox();
-  Order_Spinbox->setValue(3);
+  Order_Spinbox->setMinimum(2);
+  Order_Spinbox->setValue(ImplDetails.order-1);
   MatchSettingslayout->addWidget(Order_Label, 0, 0);
   MatchSettingslayout->addWidget(Order_Spinbox, 0,1);
 
@@ -44,7 +45,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   maxRipple_Spinbox->setMinimum(0.05);
   maxRipple_Spinbox->setMaximum(1);
   maxRipple_Spinbox->setSingleStep(0.05);
-  maxRipple_Spinbox->setValue(0.1);
+  maxRipple_Spinbox->setValue(ImplDetails.gamma_MAX);
   MatchSettingslayout->addWidget(maxRipple_Label, 1, 0);
   MatchSettingslayout->addWidget(maxRipple_Spinbox, 1, 1);
 
@@ -53,6 +54,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   Stub_Type_Combo = new QComboBox();
   Stub_Type_Combo->addItem(tr("Open"));
   Stub_Type_Combo->addItem(tr("Short"));
+  Stub_Type_Combo->setCurrentIndex(ImplDetails.open_short);
   MatchSettingslayout->addWidget(Stub_Type_Label, 2, 0);
   MatchSettingslayout->addWidget(Stub_Type_Combo, 2, 1);
 
@@ -61,6 +63,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   Stub_Implementation_Combo = new QComboBox();
   Stub_Implementation_Combo->addItem(tr("Unbalanced"));
   Stub_Implementation_Combo->addItem(tr("Balanced"));
+  Stub_Implementation_Combo->setCurrentIndex(ImplDetails.BalancedStubs);
   MatchSettingslayout->addWidget(Stub_Implementation_Label, 3, 0);
   MatchSettingslayout->addWidget(Stub_Implementation_Combo, 3, 1);
 
@@ -69,6 +72,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   Weighting_Type_Combo = new QComboBox();
   Weighting_Type_Combo->addItem(tr("Chebyshev"));
   Weighting_Type_Combo->addItem(tr("Binomial"));
+  Weighting_Type_Combo->setCurrentIndex(ImplDetails.weighting_type);
   MatchSettingslayout->addWidget(Weighting_Type_Label, 4, 0);
   MatchSettingslayout->addWidget(Weighting_Type_Combo, 4, 1);
 
@@ -77,6 +81,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   Network_Response_Combo = new QComboBox();
   Network_Response_Combo->addItem(tr("Lowpass"));
   Network_Response_Combo->addItem(tr("Highpass"));
+  Network_Response_Combo->setCurrentIndex(ImplDetails.network_response);
   MatchSettingslayout->addWidget(Network_Response_Label, 5, 0);
   MatchSettingslayout->addWidget(Network_Response_Combo, 5, 1);
 
@@ -84,7 +89,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   QualityFactor_Label = new QLabel(tr("Quality factor"));
   Quality_Factor_Spinbox = new QDoubleSpinBox();
   Quality_Factor_Spinbox->setMinimum(1);
-  Quality_Factor_Spinbox->setValue(5);
+  Quality_Factor_Spinbox->setValue(ImplDetails.Q);
   Quality_Factor_Spinbox->setDecimals(1);
   Quality_Factor_Spinbox->setSingleStep(0.5);
   MatchSettingslayout->addWidget(QualityFactor_Label, 6, 0);
@@ -95,7 +100,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   CapacitorQ_Spinbox = new QDoubleSpinBox();
   CapacitorQ_Spinbox->setMinimum(0.5);
   CapacitorQ_Spinbox->setMaximum(1000);
-  CapacitorQ_Spinbox->setValue(1000);
+  CapacitorQ_Spinbox->setValue(ImplDetails.CAPQ);
   CapacitorQ_Spinbox->setSingleStep(0.5);
   CapacitorQ_Spinbox->setDecimals(1);
   MatchSettingslayout->addWidget(CapacitorQ_Label, 7, 0);
@@ -106,7 +111,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   InductorQ_Spinbox = new QDoubleSpinBox();
   InductorQ_Spinbox->setMinimum(0.5);
   InductorQ_Spinbox->setMaximum(1000);
-  InductorQ_Spinbox->setValue(1000);
+  InductorQ_Spinbox->setValue(ImplDetails.INDQ);
   InductorQ_Spinbox->setSingleStep(0.5);
   InductorQ_Spinbox->setDecimals(1);
   MatchSettingslayout->addWidget(InductorQ_Label, 8, 0);
@@ -118,7 +123,18 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   L2_Double_Tapped_Resonator_SpinBox->setMinimum(0.1);
   L2_Double_Tapped_Resonator_SpinBox->setMaximum(1000);
   L2_Double_Tapped_Resonator_SpinBox->setSingleStep(0.5);
-  L2_Double_Tapped_Resonator_SpinBox->setValue(5);
+  double val=ImplDetails.L2; int suffix=0;
+  if (val < 1)
+      if(val > 1e-3) val *= 1e3, suffix = 1;
+      else
+          if(val > 1e-6) val *= 1e6, suffix = 2;
+          else
+             if(val > 1e-9) val *= 1e9, suffix = 3;
+             else
+                if(val > 1e-12) val *= 1e12, suffix = 4;
+                 else
+                    val *= 1e12, suffix = 4;
+  L2_Double_Tapped_Resonator_SpinBox->setValue(val);
   L2_Double_Tapped_Resonator_SpinBox->setDecimals(1);
   L2_Double_Tapped_Resonator_Scale_Combo = new QComboBox();
   L2_Double_Tapped_Resonator_Scale_Combo->addItem("H");
@@ -126,7 +142,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   L2_Double_Tapped_Resonator_Scale_Combo->addItem("uH");
   L2_Double_Tapped_Resonator_Scale_Combo->addItem("nH");
   L2_Double_Tapped_Resonator_Scale_Combo->addItem("pH");
-  L2_Double_Tapped_Resonator_Scale_Combo->setCurrentIndex(3);
+  L2_Double_Tapped_Resonator_Scale_Combo->setCurrentIndex(suffix);
   MatchSettingslayout->addWidget(L2_Double_Tapped_Resonator_Label, 9, 0);
   MatchSettingslayout->addWidget(L2_Double_Tapped_Resonator_SpinBox, 9, 1);
   MatchSettingslayout->addWidget(L2_Double_Tapped_Resonator_Scale_Combo, 9, 2);
@@ -137,7 +153,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   k_Transformer_Spinbox->setMinimum(0.01);
   k_Transformer_Spinbox->setMaximum(0.99);
   k_Transformer_Spinbox->setSingleStep(0.01);
-  k_Transformer_Spinbox->setValue(0.95);
+  k_Transformer_Spinbox->setValue(ImplDetails.k);
   MatchSettingslayout->addWidget(k_Transformer_Label, 10, 0);
   MatchSettingslayout->addWidget(k_Transformer_Spinbox, 10, 1);
 
@@ -147,6 +163,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   coupled_L_Combo->addItem(tr("Coupled inductors"));
   coupled_L_Combo->addItem(tr("Uncoupled inductors (Tee-type)"));
   coupled_L_Combo->addItem(QString(tr("Uncoupled inductors (%1-type)").arg(QChar(0xC0, 0x03))));
+  coupled_L_Combo->setCurrentIndex(ImplDetails.coupled_L_Equivalent);
   MatchSettingslayout->addWidget(coupled_L_Label, 11, 0);
   MatchSettingslayout->addWidget(coupled_L_Combo, 11, 1);
 
@@ -155,7 +172,14 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   BW_Spinbox = new QSpinBox();
   BW_Spinbox->setMinimum(1);
   BW_Spinbox->setMaximum(1000);
-  BW_Spinbox->setValue(20);
+  val=ImplDetails.BW; suffix=0;
+  if (val > 1e9) val *= 1e-9, suffix = 3;
+  else
+      if(val > 1e6) val *= 1e-6, suffix = 2;
+      else
+          if(val > 1e3) val *= 1e-3, suffix = 1;
+
+  BW_Spinbox->setValue(val);
   BW_Scale_Combo = new QComboBox();
   QStringList freq_units;
   freq_units.append("Hz");
@@ -163,7 +187,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   freq_units.append("MHz");
   freq_units.append("GHz");
   BW_Scale_Combo->addItems(freq_units);
-  BW_Scale_Combo->setCurrentIndex(2);
+  BW_Scale_Combo->setCurrentIndex(suffix);
   MatchSettingslayout->addWidget(BW_Label, 12, 0);
   MatchSettingslayout->addWidget(BW_Spinbox, 12, 1);
   MatchSettingslayout->addWidget(BW_Scale_Combo, 12, 2);
@@ -174,6 +198,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   Lumped_QW_Combo->addItem("Transmission line");
   Lumped_QW_Combo->addItem(QString(tr("%1-type equivalent").arg(QChar(0xC0, 0x03))));
   Lumped_QW_Combo->addItem(tr("T-type equivalent"));
+  Lumped_QW_Combo->setCurrentIndex(ImplDetails.use_l4_lumped_equivalent);
   MatchSettingslayout->addWidget(Lumped_QW_Label, 13, 0);
   MatchSettingslayout->addWidget(Lumped_QW_Combo, 13, 1);
 
@@ -183,6 +208,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   Lumped_L8_Combo->addItem("Transmission line");
   Lumped_L8_Combo->addItem(QString(tr("%1-type equivalent").arg(QChar(0xC0, 0x03))));
   Lumped_L8_Combo->addItem(tr("T-type equivalent"));
+  Lumped_L8_Combo->setCurrentIndex(ImplDetails.use_l8_lumped_equivalent);
   MatchSettingslayout->addWidget(Lumped_L8_Label, 14, 0);
   MatchSettingslayout->addWidget(Lumped_L8_Combo, 14, 1);
 
@@ -192,6 +218,7 @@ MatchSettingsDialog::MatchSettingsDialog(QWidget *parent, int topology) : QDialo
   Lumped_TL_Combo->addItem("Transmission line");
   Lumped_TL_Combo->addItem(QString(tr("%1-type equivalent").arg(QChar(0xC0, 0x03))));
   Lumped_TL_Combo->addItem(tr("T-type equivalent"));
+  Lumped_TL_Combo->setCurrentIndex(ImplDetails.use_TL_lumped_equivalent);
   MatchSettingslayout->addWidget(Lumped_TL_Label, 15, 0);
   MatchSettingslayout->addWidget(Lumped_TL_Combo, 15, 1);
 

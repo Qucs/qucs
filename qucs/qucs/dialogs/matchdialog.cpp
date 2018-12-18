@@ -2828,12 +2828,10 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
   QApplication::clipboard()->setText(Schematic, QClipboard::Clipboard);
 }
 
-//MatchSettingsDialog::MatchSettingsDialog(QWidget *parent) : QDialog(parent) {}
-
 //This function pops up a window for setting the parameters of the input matching network
 void MatchDialog::slot_InputMatchingSettings()
 {
-    MatchSettingsDialog *M = new MatchSettingsDialog(this, TopoCombo_Input->currentIndex());
+    MatchSettingsDialog *M = new MatchSettingsDialog(input_network, this, TopoCombo_Input->currentIndex());
     if(M->exec())
     {
         struct ImplementationParams N = M->GetOptions();
@@ -2846,7 +2844,7 @@ void MatchDialog::slot_InputMatchingSettings()
 //This function pops up a window for setting the parameters of the output matching network
 void MatchDialog::slot_OutputMatchingSettings()
 {
-    MatchSettingsDialog *M = new MatchSettingsDialog(this, TopoCombo_Output->currentIndex());
+    MatchSettingsDialog *M = new MatchSettingsDialog(output_network, this, TopoCombo_Output->currentIndex());
     if(M->exec())
     {
         struct ImplementationParams N = M->GetOptions();

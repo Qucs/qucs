@@ -65,7 +65,7 @@ struct ImplementationParams {
     RESPONSE_TYPE network_response = LOWPASS;//Response type for Pi/Tee matching networks
     int weighting_type = 0;//Weighting of the impedance transformer: Chebyshev or binomial
     double CAPQ = 1000;//Capacitor quality factor, Q = X/R = 1/(w·C·R)
-    double INDQ = 1000;//Inductor quality factor, Q = X/R = (w·L) / R
+    double INDQ = 1000;//Inductor quality factor, Q = X/R = (w·L) / Rnetwork_response
     double L2 = 5e-9;//L2 parameter for the double tapped resonator
     double k = 0.95;//Coupling coefficient of the transformer
     int coupled_L_Equivalent=0;//Use coupled inductor or its uncoupled equivalent
@@ -92,7 +92,7 @@ struct NetworkParams {
 class MatchSettingsDialog : public QDialog {
   Q_OBJECT
 public:
-  MatchSettingsDialog(QWidget *parent = 0, int topology=LSECTION);
+    MatchSettingsDialog(struct ImplementationParams Impl, QWidget *parent = 0, int topology=LSECTION);
   ~MatchSettingsDialog();
   struct ImplementationParams GetOptions();
 
