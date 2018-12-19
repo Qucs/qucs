@@ -186,6 +186,7 @@ double MatchSubstrateDialog::getScaleFactor(int index)
         return 1e-6;
         break;
     }
+    return 1e-3;//Never reaches this point, but it fixes "control reaches end of non-void function" warning
 }
 
 void MatchSubstrateDialog::getValueAndIndex(double & val, int & index){

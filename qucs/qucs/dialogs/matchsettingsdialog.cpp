@@ -124,7 +124,7 @@ MatchSettingsDialog::MatchSettingsDialog(struct ImplementationParams ImplDetails
   L2_Double_Tapped_Resonator_SpinBox->setMaximum(1000);
   L2_Double_Tapped_Resonator_SpinBox->setSingleStep(0.5);
   double val=ImplDetails.L2; int suffix=0;
-  if (val < 1)
+  if (val < 1){
       if(val > 1e-3) val *= 1e3, suffix = 1;
       else
           if(val > 1e-6) val *= 1e6, suffix = 2;
@@ -134,6 +134,7 @@ MatchSettingsDialog::MatchSettingsDialog(struct ImplementationParams ImplDetails
                 if(val > 1e-12) val *= 1e12, suffix = 4;
                  else
                     val *= 1e12, suffix = 4;
+  }
   L2_Double_Tapped_Resonator_SpinBox->setValue(val);
   L2_Double_Tapped_Resonator_SpinBox->setDecimals(1);
   L2_Double_Tapped_Resonator_Scale_Combo = new QComboBox();
