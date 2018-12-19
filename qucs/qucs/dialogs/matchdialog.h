@@ -7,8 +7,8 @@
 
 -----------------------------------------------------------------------------
     Update (2017)        : New impedance matching techniques: Single matching,
-                           double stub matching, real to real broadband transformers, 
-                           cascaded L-sections and lambda/8 + lambda/4 matching
+                           double stub matching, real to real broadband
+transformers, cascaded L-sections and lambda/8 + lambda/4 matching
 
                           Andres Martinez-Mera <andresmartinezmera@gmail.com>
                           Claudio Girardi      <claudio.girardi@virgilio.it>
@@ -28,11 +28,11 @@
 #ifndef MATCHDIALOG_H
 #define MATCHDIALOG_H
 
+#include "matchsettingsdialog.h"
 #include <QCheckBox>
 #include <QDebug>
 #include <QDialog>
 #include <cmath>
-#include "matchsettingsdialog.h"
 
 class Element;
 class QLabel;
@@ -111,8 +111,10 @@ public:
   QString calcBiMatch(struct NetworkParams);
   bool calc2PortMatch(struct NetworkParams);
 
-  void SchematicParser(QString, int &, struct NetworkParams); // This function convert the circuit description
-                              // code into a Qucs schematic
+  void SchematicParser(
+      QString, int &,
+      struct NetworkParams); // This function convert the circuit description
+                             // code into a Qucs schematic
 
   void getMicrostrip(double, double, tSubstrate *, double &, double &);
   void setFrequency(double);
@@ -143,9 +145,10 @@ private:
   QVBoxLayout *MethodLayout;
   QDoubleValidator *DoubleVal;
   QLabel *Port1Label, *Port2Label, *Ohm1Label, *Ohm2Label, *FormatLabel,
-      *FrequencyLabel, *TopoLabel, *TopoLabel_Output, *OrderLabel, *RelPermLabel, *S11Label,
-      *S11sLabel, *S11uLabel, *S21Label, *S21sLabel, *S21uLabel, *S12Label,
-      *S12sLabel, *S12uLabel, *S22Label, *S22sLabel, *S22uLabel, *InputLabel, *OutputLabel;
+      *FrequencyLabel, *TopoLabel, *TopoLabel_Output, *OrderLabel,
+      *RelPermLabel, *S11Label, *S11sLabel, *S11uLabel, *S21Label, *S21sLabel,
+      *S21uLabel, *S12Label, *S12sLabel, *S12uLabel, *S22Label, *S22sLabel,
+      *S22uLabel, *InputLabel, *OutputLabel;
   QComboBox *FormatCombo, *UnitCombo, *TopoCombo_Input, *TopoCombo_Output;
 
   QLineEdit *Ref1Edit, *Ref2Edit, *FrequencyEdit, *ResistivityEdit,
@@ -154,7 +157,8 @@ private:
 
   QCheckBox *TwoCheck, *MicrostripCheck, *AddSPBlock;
   QGroupBox *MethodBox;
-  QPushButton *InputMatchingSettings_Button, *OutputMatchingSettings_Button, *Substrate_Button;
+  QPushButton *InputMatchingSettings_Button, *OutputMatchingSettings_Button,
+      *Substrate_Button;
 
   QList<int> Transmission_Line_Topologies;
 

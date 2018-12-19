@@ -8,8 +8,8 @@
 
 -----------------------------------------------------------------------------
     Update (2017)        : New impedance matching techniques: Single matching,
-                           double stub matching, real to real broadband transformers, 
-                           cascaded L-sections and lambda/8 + lambda/4 matching
+                           double stub matching, real to real broadband
+transformers, cascaded L-sections and lambda/8 + lambda/4 matching
 
                           Andres Martinez-Mera <andresmartinezmera@gmail.com>
                           Claudio Girardi      <claudio.girardi@virgilio.it>
@@ -52,7 +52,7 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
 
   all = new QHBoxLayout(this);
 
-  QVBoxLayout *matchFrame = new QVBoxLayout();   // Matching circuit design panel
+  QVBoxLayout *matchFrame = new QVBoxLayout(); // Matching circuit design panel
   QVBoxLayout *micro_layout = new QVBoxLayout(); // Substrate properties
   all->addLayout(matchFrame);
   all->addLayout(micro_layout);
@@ -70,7 +70,9 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   matching_methods.append(tr("L-section"));
   matching_methods.append(tr("Single stub"));
   matching_methods.append(tr("Double stub"));
-  matching_methods.append(QString("%1 %2/4").arg(tr("Multistage ")).arg(QString(QChar(0xBB, 0x03))));
+  matching_methods.append(QString("%1 %2/4")
+                              .arg(tr("Multistage "))
+                              .arg(QString(QChar(0xBB, 0x03))));
   matching_methods.append(tr("Cascaded L-sections"));
   matching_methods.append(QString("%1/4 line").arg(QChar(0xBB, 0x03)));
   matching_methods.append(QString("%1/8 + %1/4 line").arg(QChar(0xBB, 0x03)));
@@ -83,7 +85,7 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   matching_methods.append(tr("Parallel double-tuned transformer"));
   matching_methods.append(tr("Series double-tuned transformer"));
 
-  //List of matching methos that may be implemented using a microstrip line
+  // List of matching methos that may be implemented using a microstrip line
   Transmission_Line_Topologies.append(SINGLESTUB);
   Transmission_Line_Topologies.append(DOUBLESTUB);
   Transmission_Line_Topologies.append(MULTISTAGEL4);
@@ -93,15 +95,16 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   TopoCombo_Input = new QComboBox();
   TopoCombo_Input->setFixedWidth(220);
   TopoCombo_Input->addItems(matching_methods);
-  connect(TopoCombo_Input, SIGNAL(currentIndexChanged(int)), SLOT(slot_InputTopologyChanged(int)));
+  connect(TopoCombo_Input, SIGNAL(currentIndexChanged(int)),
+          SLOT(slot_InputTopologyChanged(int)));
 
   MatchingMethod_Layout->addWidget(TopoCombo_Input, 0, 1);
 
-  //Button for setting the input matching network parameters
+  // Button for setting the input matching network parameters
   InputMatchingSettings_Button = new QPushButton("Settings...");
-  connect(InputMatchingSettings_Button, SIGNAL(clicked(bool)), SLOT(slot_InputMatchingSettings()));
+  connect(InputMatchingSettings_Button, SIGNAL(clicked(bool)),
+          SLOT(slot_InputMatchingSettings()));
   MatchingMethod_Layout->addWidget(InputMatchingSettings_Button, 0, 2);
-
 
   TopoLabel_Output = new QLabel(tr("Output matching:"));
   MatchingMethod_Layout->addWidget(TopoLabel_Output, 1, 0);
@@ -110,21 +113,24 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   TopoCombo_Output = new QComboBox();
   TopoCombo_Output->setFixedWidth(220);
   TopoCombo_Output->addItems(matching_methods);
-  connect(TopoCombo_Output, SIGNAL(currentIndexChanged(int)), SLOT(slot_OutputTopologyChanged(int)));
+  connect(TopoCombo_Output, SIGNAL(currentIndexChanged(int)),
+          SLOT(slot_OutputTopologyChanged(int)));
 
   MatchingMethod_Layout->addWidget(TopoCombo_Output, 1, 1);
   MethodLayout->addLayout(MatchingMethod_Layout);
 
-  //Button for setting the output matching network parameters
+  // Button for setting the output matching network parameters
   OutputMatchingSettings_Button = new QPushButton("Settings...");
-  connect(OutputMatchingSettings_Button, SIGNAL(clicked(bool)), SLOT(slot_OutputMatchingSettings()));
+  connect(OutputMatchingSettings_Button, SIGNAL(clicked(bool)),
+          SLOT(slot_OutputMatchingSettings()));
   MatchingMethod_Layout->addWidget(OutputMatchingSettings_Button, 1, 2);
 
   QGridLayout *OptLayout = new QGridLayout();
 
   Substrate_Button = new QPushButton(tr("Substrate settings..."));
   Substrate_Button->setEnabled(false);
-  connect(Substrate_Button, SIGNAL(clicked(bool)), SLOT(slot_SubtrateSettings()));
+  connect(Substrate_Button, SIGNAL(clicked(bool)),
+          SLOT(slot_SubtrateSettings()));
 
   MethodBox->setLayout(MethodLayout);
   TwoCheck = new QCheckBox(tr("Calculate two-port matching"));
@@ -137,7 +143,8 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   MicrostripCheck = new QCheckBox(tr("Synthesize microstrip lines"));
   MicrostripCheck->setEnabled(false);
   MicrostripCheck->setChecked(false);
-  connect(MicrostripCheck, SIGNAL(clicked(bool)), SLOT(slot_MicrostripCheckChanged()));
+  connect(MicrostripCheck, SIGNAL(clicked(bool)),
+          SLOT(slot_MicrostripCheckChanged()));
 
   OptLayout->addWidget(TwoCheck, 0, 0);
   OptLayout->addWidget(MicrostripCheck, 0, 1);
@@ -322,7 +329,7 @@ MatchDialog::MatchDialog(QWidget *parent) : QDialog(parent) {
   connect(buttCancel, SIGNAL(clicked()), SLOT(reject()));
 
   slotReflectionChanged(""); // calculate impedance
-  setFrequency(1e9);        // set 1GHz
+  setFrequency(1e9);         // set 1GHz
 }
 
 MatchDialog::~MatchDialog() {
@@ -527,7 +534,7 @@ void MatchDialog::setS22LineEdits(double Real, double Imag) {
 
 // -----------------------------------------------------------------------
 // Is called if the "Create"-button is pressed.
-void MatchDialog::slotButtCreate() {  
+void MatchDialog::slotButtCreate() {
   params.Z1 = Ref1Edit->text().toDouble(); // Port 1 impedance
   params.Z2 = Ref2Edit->text().toDouble(); // Port 2 impedance
   params.freq = FrequencyEdit->text().toDouble() *
@@ -554,7 +561,8 @@ void MatchDialog::slotButtCreate() {
 
   bool success = true;
 
-  // Set topology: the topology is set here so as to avoid writing a slot function. The parameters are updated by the Settings... button.
+  // Set topology: the topology is set here so as to avoid writing a slot
+  // function. The parameters are updated by the Settings... button.
   input_network.network_type = TopoCombo_Input->currentIndex();
   output_network.network_type = TopoCombo_Output->currentIndex();
 
@@ -563,10 +571,12 @@ void MatchDialog::slotButtCreate() {
 
   if (TwoCheck->isChecked()) { // two-port matching ?
     // determinant of S-parameter matrix
-    params.DetReal = params.S11real * params.S22real - params.S11imag * params.S22imag - params.S12real * params.S21real +
-                     params.S12imag * params.S21imag;
-    params.DetImag = params.S11real * params.S22imag + params.S11imag * params.S22real - params.S12real * params.S21imag -
-                     params.S12imag * params.S21real;
+    params.DetReal =
+        params.S11real * params.S22real - params.S11imag * params.S22imag -
+        params.S12real * params.S21real + params.S12imag * params.S21imag;
+    params.DetImag =
+        params.S11real * params.S22imag + params.S11imag * params.S22real -
+        params.S12real * params.S21imag - params.S12imag * params.S21real;
     success = calc2PortMatch(params);
   } else {
     success = calcMatchingCircuit(params);
@@ -608,68 +618,61 @@ void MatchDialog::z2r(double &Real, double &Imag, double Z0) {
   Imag *= 2.0 * Z0 / tmp;
 }
 
-// This function retrieves the path schematic image of the L-section matching according to the
-// reactance and susceptance values.
-// first_series: Indicates if the first element is place in series
-// X           : Reactance
-// B           : Susceptance
-QString MatchDialog::getImageFrom_XB(bool first_series, double X, double B)
-{
-  if (first_series == true)//First series, Z0 < ZL
+// This function retrieves the path schematic image of the L-section matching
+// according to the reactance and susceptance values. first_series: Indicates if
+// the first element is place in series X           : Reactance B           :
+// Susceptance
+QString MatchDialog::getImageFrom_XB(bool first_series, double X, double B) {
+  if (first_series == true) // First series, Z0 < ZL
   {
-      if (X < 0)//Series capacitor
-      {
-          if (B < 0)
-              return ":/bitmaps/matching/CSLP.png";
-          else
-              return ":/bitmaps/matching/CSCP.png";
-      }
-      else//Series inductor
-      {
-          if (B < 0)
-              return ":/bitmaps/matching/LSLP.png";
-          else
-              return ":/bitmaps/matching/LSCP.png";
-      }
-  }
-  else//First shunt, Z0 > ZL
+    if (X < 0) // Series capacitor
+    {
+      if (B < 0)
+        return ":/bitmaps/matching/CSLP.png";
+      else
+        return ":/bitmaps/matching/CSCP.png";
+    } else // Series inductor
+    {
+      if (B < 0)
+        return ":/bitmaps/matching/LSLP.png";
+      else
+        return ":/bitmaps/matching/LSCP.png";
+    }
+  } else // First shunt, Z0 > ZL
   {
-      if (B < 0)//Shunt inductor
-      {
-          if (X > 0)
-              return ":/bitmaps/matching/LPLS.png";
-          else
-              return ":/bitmaps/matching/LPCS.png";
-      }
-      else//Shunt inductor
-      {
-          if (X > 0)
-              return ":/bitmaps/matching/CPLS.png";
-          else
-              return ":/bitmaps/matching/CPCS.png";
-      }
+    if (B < 0) // Shunt inductor
+    {
+      if (X > 0)
+        return ":/bitmaps/matching/LPLS.png";
+      else
+        return ":/bitmaps/matching/LPCS.png";
+    } else // Shunt inductor
+    {
+      if (X > 0)
+        return ":/bitmaps/matching/CPLS.png";
+      else
+        return ":/bitmaps/matching/CPCS.png";
+    }
   }
 }
 
 // -----------------------------------------------------------------------
 // This function calculates a LC matching section
 // Reference:
-// Microwave Circuit Design Using Linear and Nonlinear Techniques. George D. Vendelin,
-// Antonio M. Pavio, Ulrich P. Rohde. 2nd Edition. p. 251-252. Wiley
+// Microwave Circuit Design Using Linear and Nonlinear Techniques. George D.
+// Vendelin, Antonio M. Pavio, Ulrich P. Rohde. 2nd Edition. p. 251-252. Wiley
 QString MatchDialog::calcMatchingLC(struct NetworkParams params) {
   double RL, XL, Z0;
-  QMessageBox msgBox;//Informs the user about the two candidate networks
+  QMessageBox msgBox; // Informs the user about the two candidate networks
   QString message;
 
-  if (params.network == SINGLE_PORT)
+  if (params.network == SINGLE_PORT) {
+    RL = params.S11real, XL = params.S11imag;
+    Z0 = params.Z1;
+  } else // Two-port matching
   {
-      RL = params.S11real, XL = params.S11imag;
-      Z0 = params.Z1;
-  }
-  else//Two-port matching
-  {
-      RL = params.r_real, XL = params.r_imag;
-      (params.network == TWO_PORT_INPUT) ? Z0 = params.Z1 : Z0 = params.Z2;
+    RL = params.r_real, XL = params.r_imag;
+    (params.network == TWO_PORT_INPUT) ? Z0 = params.Z1 : Z0 = params.Z2;
   }
 
   r2z(RL, XL, Z0);
@@ -702,109 +705,117 @@ QString MatchDialog::calcMatchingLC(struct NetworkParams params) {
     //      ---
 
     // Solution 1
-      X1 = sqrt(RL*(Z0-RL))-XL;
-      B1 = sqrt((Z0-RL)/RL)/Z0;
+    X1 = sqrt(RL * (Z0 - RL)) - XL;
+    B1 = sqrt((Z0 - RL) / RL) / Z0;
     // Solution 2
-      X2 = -sqrt(RL*(Z0-RL))-XL;
-      B2 = -sqrt((Z0-RL)/RL)/Z0;
+    X2 = -sqrt(RL * (Z0 - RL)) - XL;
+    B2 = -sqrt((Z0 - RL) / RL) / Z0;
 
-    switch (params.network){
+    switch (params.network) {
     case SINGLE_PORT:
-        message = "L-section design";
-        break;
+      message = "L-section design";
+      break;
     case TWO_PORT_INPUT:
-        message = "L-section design: Input matching";
-        break;
+      message = "L-section design: Input matching";
+      break;
     case TWO_PORT_OUTPUT:
-        message = "L-section design: Output matching";
-        break;
+      message = "L-section design: Output matching";
+      break;
     }
 
     msgBox.setText(message);
     msgBox.setInformativeText("Please select a solution");
-    //Add buttons
-    //Solution 1
-    QAbstractButton* Solution1_button = msgBox.addButton(tr(""), QMessageBox::AcceptRole);
+    // Add buttons
+    // Solution 1
+    QAbstractButton *Solution1_button =
+        msgBox.addButton(tr(""), QMessageBox::AcceptRole);
     Solution1_button->setIcon(QIcon(getImageFrom_XB(false, X1, B1)));
     Solution1_button->setIconSize(QSize(300, 300));
 
-    //Solution 2
-    QAbstractButton* Solution2_button = msgBox.addButton(tr(""), QMessageBox::RejectRole);
+    // Solution 2
+    QAbstractButton *Solution2_button =
+        msgBox.addButton(tr(""), QMessageBox::RejectRole);
     Solution2_button->setIcon(QIcon(getImageFrom_XB(false, X2, B2)));
     Solution2_button->setIconSize(QSize(300, 300));
 
     msgBox.setDefaultButton(QMessageBox::SaveAll);
     solution = msgBox.exec();
 
+    if (solution == 0)
+      X = X1, B = B1;
+    else
+      X = X2, B = B2;
 
-    if (solution == 0) X = X1, B = B1;
-    else               X = X2, B = B2;
+    if (B > 0) // Capacitor
+      C = B / w0, laddercode += QString("CP:%1;").arg(C);
+    else // Inductor
+      L = -1 / (w0 * B), laddercode += QString("LP:%1;").arg(L);
 
-
-    if (B > 0)  //Capacitor
-        C = B/w0,         laddercode += QString("CP:%1;").arg(C);
-    else        //Inductor
-        L = -1/(w0*B),    laddercode += QString("LP:%1;").arg(L);
-
-    if (X < 0)  //Capacitor
-        C = -1/(w0*X),    laddercode += QString("CS:%1;").arg(C);
-    else        //Inductor
-        L = X/w0,         laddercode += QString("LS:%1;").arg(L);
+    if (X < 0) // Capacitor
+      C = -1 / (w0 * X), laddercode += QString("CS:%1;").arg(C);
+    else // Inductor
+      L = X / w0, laddercode += QString("LS:%1;").arg(L);
 
   } else {
-      // Z0 < RL
-      // ZS --- X  ------- ZL
-      //              |
-      //              B
-      //              |
-      //             ---
+    // Z0 < RL
+    // ZS --- X  ------- ZL
+    //              |
+    //              B
+    //              |
+    //             ---
 
     // Solution 1
-      B1 = (XL + sqrt(RL/Z0)*sqrt(RL*RL + XL*XL - Z0*RL))/(RL*RL + XL*XL);
-      X1 = 1/B1 + XL*Z0/RL - Z0/(B1*RL);
+    B1 = (XL + sqrt(RL / Z0) * sqrt(RL * RL + XL * XL - Z0 * RL)) /
+         (RL * RL + XL * XL);
+    X1 = 1 / B1 + XL * Z0 / RL - Z0 / (B1 * RL);
     // Solution 2
-      B2 = (XL - sqrt(RL/Z0)*sqrt(RL*RL + XL*XL - Z0*RL))/(RL*RL + XL*XL);
-      X2 = 1/B2 + XL*Z0/RL - Z0/(B2*RL);
+    B2 = (XL - sqrt(RL / Z0) * sqrt(RL * RL + XL * XL - Z0 * RL)) /
+         (RL * RL + XL * XL);
+    X2 = 1 / B2 + XL * Z0 / RL - Z0 / (B2 * RL);
 
-    switch (params.network){
+    switch (params.network) {
     case SINGLE_PORT:
-        message = "L-section design";
-        break;
+      message = "L-section design";
+      break;
     case TWO_PORT_INPUT:
-        message = "L-section design: Input matching";
-        break;
+      message = "L-section design: Input matching";
+      break;
     case TWO_PORT_OUTPUT:
-        message = "L-section design: Output matching";
-        break;
+      message = "L-section design: Output matching";
+      break;
     }
 
     msgBox.setText(message);
     msgBox.setInformativeText("Please select a solution");
-    //Add buttons
-    //Solution 1
-    QAbstractButton* Solution1_button = msgBox.addButton(tr(""), QMessageBox::AcceptRole);
+    // Add buttons
+    // Solution 1
+    QAbstractButton *Solution1_button =
+        msgBox.addButton(tr(""), QMessageBox::AcceptRole);
     Solution1_button->setIcon(QIcon(getImageFrom_XB(true, X1, B1)));
     Solution1_button->setIconSize(QSize(300, 300));
 
-    //Solution 2
-    QAbstractButton* Solution2_button = msgBox.addButton(tr(""), QMessageBox::RejectRole);
+    // Solution 2
+    QAbstractButton *Solution2_button =
+        msgBox.addButton(tr(""), QMessageBox::RejectRole);
     Solution2_button->setIcon(QIcon(getImageFrom_XB(true, X2, B2)));
     Solution2_button->setIconSize(QSize(300, 300));
 
     solution = msgBox.exec();
 
-    if (solution == 0) X = X1, B = B1;
-    else               X = X2, B = B2;
+    if (solution == 0)
+      X = X1, B = B1;
+    else
+      X = X2, B = B2;
 
-    if (X < 0)  //Capacitor
-        C = -1/(w0*X),         laddercode += QString("CS:%1;").arg(C);
-    else        //Inductor
-        L = X/w0,              laddercode += QString("LS:%1;").arg(L);
+    if (X < 0) // Capacitor
+      C = -1 / (w0 * X), laddercode += QString("CS:%1;").arg(C);
+    else // Inductor
+      L = X / w0, laddercode += QString("LS:%1;").arg(L);
 
-    if (B > 0)  //Capacitor
-        C = B/w0,              laddercode += QString("CP:%1;").arg(C);
-    else        //Inductor
-        L = -1/(w0*B),         laddercode += QString("LP:%1;").arg(L);
+    if (B > 0) // Capacitor
+      C = B / w0, laddercode += QString("CP:%1;").arg(C);
+    else // Inductor
+      L = -1 / (w0 * B), laddercode += QString("LP:%1;").arg(L);
   }
 
   return laddercode;
@@ -848,20 +859,20 @@ QString MatchDialog::calcBiMatch(struct NetworkParams params) {
 
   double S11real, S11imag, S22real, S22imag;
 
-  if (params.network == TWO_PORT_OUTPUT){
-     S11real = params.S22real;
-     S11imag = params.S22imag;
-     S22real = params.S11real;
-     S22imag = params.S11imag;
-  }
-  else  {
-     S11real = params.S11real;
-     S11imag = params.S11imag;
-     S22real = params.S22real;
-     S22imag = params.S22imag;
+  if (params.network == TWO_PORT_OUTPUT) {
+    S11real = params.S22real;
+    S11imag = params.S22imag;
+    S22real = params.S11real;
+    S22imag = params.S11imag;
+  } else {
+    S11real = params.S11real;
+    S11imag = params.S11imag;
+    S22real = params.S22real;
+    S22imag = params.S22imag;
   }
   double B = 1.0 + S11real * S11real + S11imag * S11imag - S22real * S22real -
-             S22imag * S22imag - params.DetReal * params.DetReal - params.DetImag * params.DetImag;
+             S22imag * S22imag - params.DetReal * params.DetReal -
+             params.DetImag * params.DetImag;
   double Creal = S11real - S22real * params.DetReal - S22imag * params.DetImag;
   double Cimag = S22real * params.DetImag - S11imag - S22imag * params.DetReal;
   double Cmag = 2.0 * (Creal * Creal + Cimag * Cimag);
@@ -885,64 +896,62 @@ QString MatchDialog::calcBiMatch(struct NetworkParams params) {
   return SynthesizeMatchingNetwork(params);
 }
 
-QString MatchDialog::SynthesizeMatchingNetwork(struct NetworkParams params)
-{
-    QString laddercode;
-    int topology;
-    if ((params.network == TWO_PORT_INPUT) || (params.network == SINGLE_PORT))
-        topology = params.InputNetwork.network_type;
-    else
-        topology = params.OutputNetwork.network_type;
+QString MatchDialog::SynthesizeMatchingNetwork(struct NetworkParams params) {
+  QString laddercode;
+  int topology;
+  if ((params.network == TWO_PORT_INPUT) || (params.network == SINGLE_PORT))
+    topology = params.InputNetwork.network_type;
+  else
+    topology = params.OutputNetwork.network_type;
 
-    switch (topology)
-    {
-    case LSECTION: // LC
-      laddercode = calcMatchingLC(params);
-      break;
-    case SINGLESTUB: // Single stub
-      laddercode = calcSingleStub(params);
-      break;
-    case DOUBLESTUB: // Double stub
-      laddercode = calcDoubleStub(params);
-      break;
-    case MULTISTAGEL4: // Quarter wave cascaded sections
-       laddercode = calcTransmissionLineTransformer(params);
-      break;
-    case CASCADEDLSECTIONS: // Cascaded LC sections
-      laddercode = calcMatchingCascadedLCSections(params);
-      break;
-    case QUARTER_WAVE_LINE:
-        laddercode = calcMatchingLambda4(params);
-        break;
-    case L8L4: // Lambda/8 + Lambda/4 transformer
-      laddercode = calcMatchingLambda8Lambda4(params);
-      break;
-    case PI_TYPE: //Pi-type network
-      laddercode = calcPiType(params);
-      break;
-    case TEE_TYPE: //Tee-type network
-      laddercode = calcTeeType(params);
-      break;
-    case TAPPED_C: //Tapped-C transformer
-      laddercode = calcTappedCTransformer(params);
-      break;
-    case TAPPED_L: //Tapped-L transformer
-      laddercode = calcTappedLTransformer(params);
-      break;
-    case DOUBLE_TAPPED: //Double tapped resonator
-      laddercode = calcDoubleTappedResonator(params);
-      break;
-    case SINGLE_TUNED_TRANSFORMER: //Single tuned transformer
-      laddercode = calcSingleTunedTransformer(params);
-      break;
-    case PARALLEL_DOUBLE_TUNED_TRANSFORMER: //Parallel double-tuned transformer
-      laddercode = calcParallelDoubleTunedTransformer(params);
-      break;
-    case SERIES_DOUBLE_TUNED_TRANSFORMER: //Series double-tuned transformer
-      laddercode = calcSeriesDoubleTunedTransformer(params);
-      break;
-    }
-    return SimplifySeriesParallelConnections(laddercode);
+  switch (topology) {
+  case LSECTION: // LC
+    laddercode = calcMatchingLC(params);
+    break;
+  case SINGLESTUB: // Single stub
+    laddercode = calcSingleStub(params);
+    break;
+  case DOUBLESTUB: // Double stub
+    laddercode = calcDoubleStub(params);
+    break;
+  case MULTISTAGEL4: // Quarter wave cascaded sections
+    laddercode = calcTransmissionLineTransformer(params);
+    break;
+  case CASCADEDLSECTIONS: // Cascaded LC sections
+    laddercode = calcMatchingCascadedLCSections(params);
+    break;
+  case QUARTER_WAVE_LINE:
+    laddercode = calcMatchingLambda4(params);
+    break;
+  case L8L4: // Lambda/8 + Lambda/4 transformer
+    laddercode = calcMatchingLambda8Lambda4(params);
+    break;
+  case PI_TYPE: // Pi-type network
+    laddercode = calcPiType(params);
+    break;
+  case TEE_TYPE: // Tee-type network
+    laddercode = calcTeeType(params);
+    break;
+  case TAPPED_C: // Tapped-C transformer
+    laddercode = calcTappedCTransformer(params);
+    break;
+  case TAPPED_L: // Tapped-L transformer
+    laddercode = calcTappedLTransformer(params);
+    break;
+  case DOUBLE_TAPPED: // Double tapped resonator
+    laddercode = calcDoubleTappedResonator(params);
+    break;
+  case SINGLE_TUNED_TRANSFORMER: // Single tuned transformer
+    laddercode = calcSingleTunedTransformer(params);
+    break;
+  case PARALLEL_DOUBLE_TUNED_TRANSFORMER: // Parallel double-tuned transformer
+    laddercode = calcParallelDoubleTunedTransformer(params);
+    break;
+  case SERIES_DOUBLE_TUNED_TRANSFORMER: // Series double-tuned transformer
+    laddercode = calcSeriesDoubleTunedTransformer(params);
+    break;
+  }
+  return SimplifySeriesParallelConnections(laddercode);
 }
 
 // -----------------------------------------------------------------------
@@ -990,16 +999,18 @@ QString MatchDialog::flipLadderCode(QString laddercode) {
   QString flipped_laddercode = "";
   // Build the flipped ladder code
   for (int i = 0; i < strlist.length(); i++) {
-      if (strlist.at(i).mid(0, 5) == "LCOUP"){//In case of having coupled inductors L11 and L22 must also be swapped
-          QString lcoup = strlist.at(i).mid(6);
-          QStringList lcoup_params = lcoup.split("#");
-          QString L11 = lcoup_params.at(0);
-          QString L22 = lcoup_params.at(1);
-          QString k = lcoup_params.at(2);
-          flipped_laddercode += QString("LCOUP:%1#%2#%3;").arg(L22).arg(L11).arg(k);
-      }else{
-          flipped_laddercode += strlist.at(i) + ";";
-      }
+    if (strlist.at(i).mid(0, 5) ==
+        "LCOUP") { // In case of having coupled inductors L11 and L22 must also
+                   // be swapped
+      QString lcoup = strlist.at(i).mid(6);
+      QStringList lcoup_params = lcoup.split("#");
+      QString L11 = lcoup_params.at(0);
+      QString L22 = lcoup_params.at(1);
+      QString k = lcoup_params.at(2);
+      flipped_laddercode += QString("LCOUP:%1#%2#%3;").arg(L22).arg(L11).arg(k);
+    } else {
+      flipped_laddercode += strlist.at(i) + ";";
+    }
   }
   return flipped_laddercode;
 }
@@ -1141,23 +1152,20 @@ QString MatchDialog::calcSingleStub(struct NetworkParams params) {
   double RL, XL, Z0;
 
   struct ImplementationParams ImplParams;
-  if (params.network == SINGLE_PORT)
+  if (params.network == SINGLE_PORT) {
+    RL = params.S11real, XL = params.S11imag;
+    Z0 = params.Z1;
+    ImplParams = params.InputNetwork;
+  } else // Two-port matching
   {
-      RL = params.S11real, XL = params.S11imag;
+    RL = params.r_real, XL = params.r_imag;
+    if (params.network == TWO_PORT_INPUT) {
       Z0 = params.Z1;
       ImplParams = params.InputNetwork;
-  }
-  else//Two-port matching
-  {
-      RL = params.r_real, XL = params.r_imag;
-      if (params.network == TWO_PORT_INPUT){
-          Z0 = params.Z1;
-          ImplParams = params.InputNetwork;
-      }
-      else{
-          Z0 = params.Z2;
-          ImplParams = params.OutputNetwork;
-      }
+    } else {
+      Z0 = params.Z2;
+      ImplParams = params.OutputNetwork;
+    }
   }
 
   r2z(RL, XL, Z0);
@@ -1185,7 +1193,7 @@ QString MatchDialog::calcSingleStub(struct NetworkParams params) {
   if (t != 0) {
     d = dl * lambda;
     (ImplParams.open_short) ? ll = -(atan(B * Z0)) / (2 * pi)
-                 : ll = (atan(1. / (B * Z0))) / (2 * pi);
+                            : ll = (atan(1. / (B * Z0))) / (2 * pi);
     if ((ImplParams.open_short) && (ll < 0))
       ll += 0.5;
     if ((!ImplParams.open_short) && (ll > 0.5))
@@ -1196,7 +1204,7 @@ QString MatchDialog::calcSingleStub(struct NetworkParams params) {
   if (t1 != 0) {
     d = dl1 * lambda;
     (ImplParams.open_short) ? ll = -(atan(B1 * Z0)) / (2 * pi)
-                 : ll = (atan(1. / (1. * B1 * Z0))) / (2 * pi);
+                            : ll = (atan(1. / (1. * B1 * Z0))) / (2 * pi);
     if ((ImplParams.open_short) && (ll < 0))
       ll += 0.5;
     if ((!ImplParams.open_short) && (ll > 0.5))
@@ -1207,7 +1215,7 @@ QString MatchDialog::calcSingleStub(struct NetworkParams params) {
     if (t2 != 0) {
       d = dl2 * lambda;
       (ImplParams.open_short) ? ll = -(atan(B2 * Z0)) / (2 * pi)
-                   : ll = (atan(1. / (1. * B2 * Z0))) / (2 * pi);
+                              : ll = (atan(1. / (1. * B2 * Z0))) / (2 * pi);
       if ((ImplParams.open_short) && (ll < 0))
         ll += 0.5;
       if ((!ImplParams.open_short) && (ll > 0.5))
@@ -1226,45 +1234,42 @@ QString MatchDialog::calcSingleStub(struct NetworkParams params) {
 
   // String code
   QString laddercode;
-  if ((ImplParams.open_short) && (!ImplParams.BalancedStubs))
-  {
-      laddercode = QString("OL:%1#%2;")
-                     .arg(Z0)
-                     .arg(lstub); // Line + Open stub
-      if (ImplParams.use_TL_lumped_equivalent)
-          laddercode += CalcTransmissionLineLumpedEquivalent(params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
-      else
-          laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
+  if ((ImplParams.open_short) && (!ImplParams.BalancedStubs)) {
+    laddercode = QString("OL:%1#%2;").arg(Z0).arg(lstub); // Line + Open stub
+    if (ImplParams.use_TL_lumped_equivalent)
+      laddercode += CalcTransmissionLineLumpedEquivalent(
+          params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
+    else
+      laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
   }
-  if ((ImplParams.open_short) && (ImplParams.BalancedStubs))
-  {
-      laddercode = QString("OU:%1#%2;OL:%1#%2;")
+  if ((ImplParams.open_short) && (ImplParams.BalancedStubs)) {
+    laddercode = QString("OU:%1#%2;OL:%1#%2;")
                      .arg(Z0)
                      .arg(lstub); // Open circuit balanced stubs
-      if (ImplParams.use_TL_lumped_equivalent)
-          laddercode += CalcTransmissionLineLumpedEquivalent(params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
-      else
-          laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
+    if (ImplParams.use_TL_lumped_equivalent)
+      laddercode += CalcTransmissionLineLumpedEquivalent(
+          params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
+    else
+      laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
   }
-  if ((!ImplParams.open_short) && (!ImplParams.BalancedStubs))
-  {
-      laddercode = QString("SL:%1#%2;")
-                     .arg(Z0)
-                     .arg(lstub); // Line + Short circuited stub
-      if (ImplParams.use_TL_lumped_equivalent)
-          laddercode += CalcTransmissionLineLumpedEquivalent(params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
-      else
-          laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
+  if ((!ImplParams.open_short) && (!ImplParams.BalancedStubs)) {
+    laddercode =
+        QString("SL:%1#%2;").arg(Z0).arg(lstub); // Line + Short circuited stub
+    if (ImplParams.use_TL_lumped_equivalent)
+      laddercode += CalcTransmissionLineLumpedEquivalent(
+          params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
+    else
+      laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
   }
-  if ((!ImplParams.open_short) && (ImplParams.BalancedStubs))
-  {
-      laddercode = QString("SU:%1#%2;SL:%1#%2;")
+  if ((!ImplParams.open_short) && (ImplParams.BalancedStubs)) {
+    laddercode = QString("SU:%1#%2;SL:%1#%2;")
                      .arg(Z0)
                      .arg(lstub); // Short circuited balanced stubs
-      if (ImplParams.use_TL_lumped_equivalent)
-          laddercode += CalcTransmissionLineLumpedEquivalent(params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
-      else
-          laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
+    if (ImplParams.use_TL_lumped_equivalent)
+      laddercode += CalcTransmissionLineLumpedEquivalent(
+          params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
+    else
+      laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
   }
   return laddercode;
 }
@@ -1277,23 +1282,20 @@ QString MatchDialog::calcDoubleStub(struct NetworkParams params) {
 
   double RL, XL, Z0;
   struct ImplementationParams ImplParams;
-  if (params.network == SINGLE_PORT)
+  if (params.network == SINGLE_PORT) {
+    RL = params.S11real, XL = params.S11imag;
+    Z0 = params.Z1;
+    ImplParams = params.InputNetwork;
+  } else // Two-port matching
   {
-      RL = params.S11real, XL = params.S11imag;
+    RL = params.r_real, XL = params.r_imag;
+    if (params.network == TWO_PORT_INPUT) {
       Z0 = params.Z1;
       ImplParams = params.InputNetwork;
-  }
-  else//Two-port matching
-  {
-      RL = params.r_real, XL = params.r_imag;
-      if (params.network == TWO_PORT_INPUT){
-          Z0 = params.Z1;
-          ImplParams = params.InputNetwork;
-      }
-      else{
-          Z0 = params.Z2;
-          ImplParams = params.OutputNetwork;
-      }
+    } else {
+      Z0 = params.Z2;
+      ImplParams = params.OutputNetwork;
+    }
   }
 
   r2z(RL, XL, Z0);
@@ -1331,9 +1333,9 @@ QString MatchDialog::calcDoubleStub(struct NetworkParams params) {
 
   // Open circuit solution
   (ImplParams.open_short) ? ll1 = (atan(B11 * Z0)) / (2 * pi)
-               : ll1 = -(atan(1. / (1. * B11 * Z0))) / (2 * pi);
+                          : ll1 = -(atan(1. / (1. * B11 * Z0))) / (2 * pi);
   (ImplParams.open_short) ? ll2 = (atan(B21 * Z0)) / (2 * pi)
-               : ll2 = -(atan(1. / (1. * B21 * Z0))) / (2 * pi);
+                          : ll2 = -(atan(1. / (1. * B21 * Z0))) / (2 * pi);
 
   if (ll1 < 0)
     ll1 += 0.5;
@@ -1358,52 +1360,45 @@ QString MatchDialog::calcDoubleStub(struct NetworkParams params) {
   }
 
   QString laddercode;
-  if ((ImplParams.open_short) && (ImplParams.BalancedStubs))
-  {
-      laddercode = QString("OU:%1#%2;OL:%1#%2;")
-                     .arg(Z0)
-                     .arg(lstub2);
-      if (ImplParams.use_TL_lumped_equivalent)
-          laddercode += CalcTransmissionLineLumpedEquivalent(params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
-      else
-          laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
+  if ((ImplParams.open_short) && (ImplParams.BalancedStubs)) {
+    laddercode = QString("OU:%1#%2;OL:%1#%2;").arg(Z0).arg(lstub2);
+    if (ImplParams.use_TL_lumped_equivalent)
+      laddercode += CalcTransmissionLineLumpedEquivalent(
+          params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
+    else
+      laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
 
-      laddercode += QString("OU:%1#%2;OL:%1#%2;").arg(Z0).arg(lstub1);
+    laddercode += QString("OU:%1#%2;OL:%1#%2;").arg(Z0).arg(lstub1);
   }
-  if ((ImplParams.open_short) && (!ImplParams.BalancedStubs))
-  {  laddercode = QString("OL:%1#%2;")
-                     .arg(Z0)
-                     .arg(lstub2);
-      if (ImplParams.use_TL_lumped_equivalent)
-          laddercode += CalcTransmissionLineLumpedEquivalent(params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
-      else
-          laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
+  if ((ImplParams.open_short) && (!ImplParams.BalancedStubs)) {
+    laddercode = QString("OL:%1#%2;").arg(Z0).arg(lstub2);
+    if (ImplParams.use_TL_lumped_equivalent)
+      laddercode += CalcTransmissionLineLumpedEquivalent(
+          params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
+    else
+      laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
 
-      laddercode += QString("OL:%1#%2;").arg(Z0).arg(lstub1);
+    laddercode += QString("OL:%1#%2;").arg(Z0).arg(lstub1);
   }
-  if ((!ImplParams.open_short) && (ImplParams.BalancedStubs))
-  {
-      laddercode = QString("SU:%1#%2;SL:%1#%2;")
-                     .arg(Z0)
-                     .arg(lstub2);
-      if (ImplParams.use_TL_lumped_equivalent)
-          laddercode += CalcTransmissionLineLumpedEquivalent(params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
-      else
-          laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
+  if ((!ImplParams.open_short) && (ImplParams.BalancedStubs)) {
+    laddercode = QString("SU:%1#%2;SL:%1#%2;").arg(Z0).arg(lstub2);
+    if (ImplParams.use_TL_lumped_equivalent)
+      laddercode += CalcTransmissionLineLumpedEquivalent(
+          params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
+    else
+      laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
 
-      laddercode += QString("SU:%1#%2;SL:%1#%2;").arg(Z0).arg(lstub1);
+    laddercode += QString("SU:%1#%2;SL:%1#%2;").arg(Z0).arg(lstub1);
   }
-  if ((!ImplParams.open_short) && (!ImplParams.BalancedStubs))
-  {
-      laddercode = QString("SL:%1#%2;")
-                     .arg(Z0)
-                     .arg(lstub2);
-      if (ImplParams.use_TL_lumped_equivalent)
-          laddercode += CalcTransmissionLineLumpedEquivalent(params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
-      else
-          laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
+  if ((!ImplParams.open_short) && (!ImplParams.BalancedStubs)) {
+    laddercode = QString("SL:%1#%2;").arg(Z0).arg(lstub2);
+    if (ImplParams.use_TL_lumped_equivalent)
+      laddercode += CalcTransmissionLineLumpedEquivalent(
+          params.freq, Z0, ImplParams.use_TL_lumped_equivalent, d);
+    else
+      laddercode += QString("TL:%1#%2;").arg(Z0).arg(d);
 
-      laddercode += QString("SL:%1#%2;").arg(Z0).arg(lstub1);
+    laddercode += QString("SL:%1#%2;").arg(Z0).arg(lstub1);
   }
 
   return laddercode;
@@ -1420,16 +1415,19 @@ int BinomialCoeffs(int n, int k) {
   return (int)coeff;
 }
 
-QString MatchDialog::calcTransmissionLineTransformer(struct NetworkParams params)
-{
+QString
+MatchDialog::calcTransmissionLineTransformer(struct NetworkParams params) {
   QString laddercode;
- if (params.network == TWO_PORT_OUTPUT){
-   (params.OutputNetwork.weighting_type) ? laddercode = calcChebyLines(params) : laddercode = calcBinomialLines(params);
- }
- else{
-   (params.InputNetwork.weighting_type) ?  laddercode = calcChebyLines(params) : laddercode = calcBinomialLines(params);
- }
- return laddercode;
+  if (params.network == TWO_PORT_OUTPUT) {
+    (params.OutputNetwork.weighting_type)
+        ? laddercode = calcChebyLines(params)
+        : laddercode = calcBinomialLines(params);
+  } else {
+    (params.InputNetwork.weighting_type)
+        ? laddercode = calcChebyLines(params)
+        : laddercode = calcBinomialLines(params);
+  }
+  return laddercode;
 }
 
 //-----------------------------------------------------------------------------------
@@ -1439,23 +1437,20 @@ QString MatchDialog::calcTransmissionLineTransformer(struct NetworkParams params
 QString MatchDialog::calcBinomialLines(struct NetworkParams params) {
   double RL, XL, Z0;
   struct ImplementationParams ImplParams;
-  if (params.network == SINGLE_PORT)
+  if (params.network == SINGLE_PORT) {
+    RL = params.S11real, XL = params.S11imag;
+    Z0 = params.Z1;
+    ImplParams = params.InputNetwork;
+  } else // Two-port matching
   {
-      RL = params.S11real, XL = params.S11imag;
+    RL = params.r_real, XL = params.r_imag;
+    if (params.network == TWO_PORT_INPUT) {
       Z0 = params.Z1;
       ImplParams = params.InputNetwork;
-  }
-  else//Two-port matching
-  {
-      RL = params.r_real, XL = params.r_imag;
-      if (params.network == TWO_PORT_INPUT){
-          Z0 = params.Z1;
-          ImplParams = params.InputNetwork;
-      }
-      else{
-          Z0 = params.Z2;
-          ImplParams = params.OutputNetwork;
-      }
+    } else {
+      Z0 = params.Z2;
+      ImplParams = params.OutputNetwork;
+    }
   }
 
   r2z(RL, XL, Z0);
@@ -1488,28 +1483,25 @@ QString MatchDialog::calcBinomialLines(struct NetworkParams params) {
 // weigthing. Reference 'Microwave Engineering'. David Pozar. John Wiley and
 // Sons. 4th Edition. Pg 256-261
 QString MatchDialog::calcChebyLines(struct NetworkParams params) {
-   double RL, XL, Z0;
-   struct ImplementationParams ImplParams;
-   if (params.network == SINGLE_PORT)
-   {
-      RL = params.S11real, XL = params.S11imag;
+  double RL, XL, Z0;
+  struct ImplementationParams ImplParams;
+  if (params.network == SINGLE_PORT) {
+    RL = params.S11real, XL = params.S11imag;
+    Z0 = params.Z1;
+    ImplParams = params.InputNetwork;
+  } else // Two-port matching
+  {
+    RL = params.r_real, XL = params.r_imag;
+    if (params.network == TWO_PORT_INPUT) {
       Z0 = params.Z1;
       ImplParams = params.InputNetwork;
-   }
-   else//Two-port matching
-   {
-      RL = params.r_real, XL = params.r_imag;
-      if (params.network == TWO_PORT_INPUT){
-          Z0 = params.Z1;
-          ImplParams = params.InputNetwork;
-      }
-      else{
-          Z0 = params.Z2;
-          ImplParams = params.OutputNetwork;
-      }
+    } else {
+      Z0 = params.Z2;
+      ImplParams = params.OutputNetwork;
     }
+  }
   int N = ImplParams.order - 1; // Number of sections
-  if (N > 7)         // So far, it is only available Chebyshev weighting up to 7
+  if (N > 7) // So far, it is only available Chebyshev weighting up to 7
              // sections. Probably, it makes no sense to use a higher number of
              // sections because of the losses
   {
@@ -1520,7 +1512,8 @@ QString MatchDialog::calcChebyLines(struct NetworkParams params) {
   }
   QString laddercode;
 
-  r2z(RL, XL, Z0); // Calculation of the load impedance given the reflection coeffient
+  r2z(RL, XL,
+      Z0); // Calculation of the load impedance given the reflection coeffient
   double sec_theta_m; // =
                       // cosh((1/(1.*N))*acosh((1/gamma)*fabs((RL-Z0)/(Z0+RL)))
                       // );
@@ -1528,7 +1521,8 @@ QString MatchDialog::calcChebyLines(struct NetworkParams params) {
   (fabs(log(RL / Z0) / (2 * ImplParams.gamma_MAX)) < 1)
       ? sec_theta_m = 0
       : sec_theta_m =
-            cosh((1 / (1. * N)) * acosh(fabs(log(RL / Z0) / (2 * ImplParams.gamma_MAX))));
+            cosh((1 / (1. * N)) *
+                 acosh(fabs(log(RL / Z0) / (2 * ImplParams.gamma_MAX))));
 
   double w[N];
 
@@ -1587,12 +1581,14 @@ QString MatchDialog::calcChebyLines(struct NetworkParams params) {
   double Zaux = Z0, Zi;
   for (int i = 0; i < N; i++) {
     (RL < Z0) ? Zi = exp(log(Zaux) - ImplParams.gamma_MAX * w[i])
-              : Zi = exp(log(Zaux) + ImplParams.gamma_MAX * w[i]); // When RL<Z0, Z_{i}<Z_{i-1}
+              : Zi = exp(log(Zaux) + ImplParams.gamma_MAX *
+                                         w[i]); // When RL<Z0, Z_{i}<Z_{i-1}
     Zaux = Zi;
     if (ImplParams.use_l4_lumped_equivalent == 0)
-       laddercode += QString("TL:%1#%2;").arg(Zi).arg(l4);
+      laddercode += QString("TL:%1#%2;").arg(Zi).arg(l4);
     else
-       laddercode += CalcTransmissionLineLumpedEquivalent(params.freq, Zaux, ImplParams.use_l4_lumped_equivalent, l4);
+      laddercode += CalcTransmissionLineLumpedEquivalent(
+          params.freq, Zaux, ImplParams.use_l4_lumped_equivalent, l4);
   }
   return laddercode;
 }
@@ -1601,26 +1597,24 @@ QString MatchDialog::calcChebyLines(struct NetworkParams params) {
 // It calculates a cascaded LC matching network (only real impedances)
 // Reference: Inder J. Bahl. "Fundamentals of RF and microwave transistor
 // amplifiers". John Wiley and Sons. 2009. Pages 169 - 170
-QString MatchDialog::calcMatchingCascadedLCSections(struct NetworkParams params) {
+QString
+MatchDialog::calcMatchingCascadedLCSections(struct NetworkParams params) {
   double RL, XL, Z0;
   struct ImplementationParams ImplParams;
-  if (params.network == SINGLE_PORT)
+  if (params.network == SINGLE_PORT) {
+    RL = params.S11real, XL = params.S11imag;
+    Z0 = params.Z1;
+    ImplParams = params.InputNetwork;
+  } else // Two-port matching
   {
-      RL = params.S11real, XL = params.S11imag;
+    RL = params.r_real, XL = params.r_imag;
+    if (params.network == TWO_PORT_INPUT) {
       Z0 = params.Z1;
       ImplParams = params.InputNetwork;
-  }
-  else//Two-port matching
-  {
-      RL = params.r_real, XL = params.r_imag;
-      if (params.network == TWO_PORT_INPUT){
-          Z0 = params.Z1;
-          ImplParams = params.InputNetwork;
-      }
-      else{
-          Z0 = params.Z2;
-          ImplParams = params.OutputNetwork;
-      }
+    } else {
+      Z0 = params.Z2;
+      ImplParams = params.OutputNetwork;
+    }
   }
   double N = ImplParams.order - 1;
   double RS = params.Z1;
@@ -1643,7 +1637,8 @@ QString MatchDialog::calcMatchingCascadedLCSections(struct NetworkParams params)
                                      "the real part will be matched"));
   }
 
-  if (RL > RS)//The design equations were tailored for the RS > RL case. In case of RL > RS, the ports impedance are swapped
+  if (RL > RS) // The design equations were tailored for the RS > RL case. In
+               // case of RL > RS, the ports impedance are swapped
     R1 = RL, R2 = RS;
   else
     R1 = RS, R2 = RL;
@@ -1652,28 +1647,28 @@ QString MatchDialog::calcMatchingCascadedLCSections(struct NetworkParams params)
   for (int i = 0; i < N - 1; i++) {
     R = pow(R1, 1. * (N - (i + 1)) / N) * pow(R2, 1. * (i + 1) / N);
     Q = sqrt(Raux / R - 1);
-    if (ImplParams.network_response == LOWPASS){
-        C = Q / (w * Raux);
-        L = Q * R / w;
-        s += QString("CP:%1;LS:%2;").arg(C).arg(L);
-    }else{//Highpass
-        C = 1/(w*Q*R);
-        L = Raux/(w*Q);
-        s += QString("LP:%1;CS:%2;").arg(L).arg(C);
+    if (ImplParams.network_response == LOWPASS) {
+      C = Q / (w * Raux);
+      L = Q * R / w;
+      s += QString("CP:%1;LS:%2;").arg(C).arg(L);
+    } else { // Highpass
+      C = 1 / (w * Q * R);
+      L = Raux / (w * Q);
+      s += QString("LP:%1;CS:%2;").arg(L).arg(C);
     }
     Raux = R;
   }
 
   Q = sqrt(R / R2 - 1);
 
-  if (ImplParams.network_response == LOWPASS){
-      C = Q / (w * R);
-      L = Q * R2 / (w);
-      s += QString("CP:%1;LS:%2;").arg(C).arg(L);
-  }else{
-      L = R/(w*Q);
-      C = 1/(w*Q*R2);
-      s += QString("LP:%1;CS:%2;").arg(L).arg(C);
+  if (ImplParams.network_response == LOWPASS) {
+    C = Q / (w * R);
+    L = Q * R2 / (w);
+    s += QString("CP:%1;LS:%2;").arg(C).arg(L);
+  } else {
+    L = R / (w * Q);
+    C = 1 / (w * Q * R2);
+    s += QString("LP:%1;CS:%2;").arg(L).arg(C);
   }
   if (RL > RS) // Flip string
   {
@@ -1687,464 +1682,443 @@ QString MatchDialog::calcMatchingCascadedLCSections(struct NetworkParams params)
   return s;
 }
 
-QString MatchDialog::calcPiParameters(struct ImplementationParams ImplParams, double RL, double Z0) {
-    double Q1 = (2*ImplParams.Q*Z0 - sqrt(4*ImplParams.Q*ImplParams.Q*Z0*RL - (Z0 - RL)*(Z0 - RL)))/(Z0 - RL);
-    double Q2 = (2*ImplParams.Q*RL - sqrt(4*ImplParams.Q*ImplParams.Q*Z0*RL - (RL - Z0)*(RL - Z0)))/(RL - Z0);
-    double B1 = Q1/Z0;
-    double B2 = Q2/RL;
-    double Xc = 2*ImplParams.Q*Z0/(1+Q1*Q1);
-    return QString("%1;%2;%3").arg(B1).arg(Xc).arg(B2);
+QString MatchDialog::calcPiParameters(struct ImplementationParams ImplParams,
+                                      double RL, double Z0) {
+  double Q1 =
+      (2 * ImplParams.Q * Z0 - sqrt(4 * ImplParams.Q * ImplParams.Q * Z0 * RL -
+                                    (Z0 - RL) * (Z0 - RL))) /
+      (Z0 - RL);
+  double Q2 =
+      (2 * ImplParams.Q * RL - sqrt(4 * ImplParams.Q * ImplParams.Q * Z0 * RL -
+                                    (RL - Z0) * (RL - Z0))) /
+      (RL - Z0);
+  double B1 = Q1 / Z0;
+  double B2 = Q2 / RL;
+  double Xc = 2 * ImplParams.Q * Z0 / (1 + Q1 * Q1);
+  return QString("%1;%2;%3").arg(B1).arg(Xc).arg(B2);
 }
 
 //--------------------------------------------------------------------------
 // It calculates pi-type matching network
 QString MatchDialog::calcPiType(struct NetworkParams params) {
-    double RL, XL, Z0;
-    struct ImplementationParams ImplParams;
-    if (params.network == SINGLE_PORT)
-    {
-        RL = params.S11real, XL = params.S11imag;
-        Z0 = params.Z1;
-        ImplParams = params.InputNetwork;
+  double RL, XL, Z0;
+  struct ImplementationParams ImplParams;
+  if (params.network == SINGLE_PORT) {
+    RL = params.S11real, XL = params.S11imag;
+    Z0 = params.Z1;
+    ImplParams = params.InputNetwork;
+  } else // Two-port matching
+  {
+    RL = params.r_real, XL = params.r_imag;
+    if (params.network == TWO_PORT_INPUT) {
+      Z0 = params.Z1;
+      ImplParams = params.InputNetwork;
+    } else {
+      Z0 = params.Z2;
+      ImplParams = params.OutputNetwork;
     }
-    else//Two-port matching
-    {
-        RL = params.r_real, XL = params.r_imag;
-        if (params.network == TWO_PORT_INPUT){
-            Z0 = params.Z1;
-            ImplParams = params.InputNetwork;
-        }
-        else{
-            Z0 = params.Z2;
-            ImplParams = params.OutputNetwork;
-        }
-    }
-    r2z(RL, XL, Z0);
+  }
+  r2z(RL, XL, Z0);
 
-    QString pi_params = calcPiParameters(ImplParams, RL, Z0);
-    double w0 = 2*pi*params.freq;
-    QString laddercode;
-    QStringList pi_comp_val = pi_params.split(";");//Get the parameters calculated by calcPiParameters()
+  QString pi_params = calcPiParameters(ImplParams, RL, Z0);
+  double w0 = 2 * pi * params.freq;
+  QString laddercode;
+  QStringList pi_comp_val = pi_params.split(
+      ";"); // Get the parameters calculated by calcPiParameters()
 
-    if (ImplParams.network_response == LOWPASS)
-    {//Lowpass pi-type matching network
-        double C1 = pi_comp_val.at(0).toDouble()/w0;// B1/w0
-        double C2 = pi_comp_val.at(2).toDouble()/w0;// B2/w0
-        double L = pi_comp_val.at(1).toDouble()/w0;//  X/w0
+  if (ImplParams.network_response ==
+      LOWPASS) { // Lowpass pi-type matching network
+    double C1 = pi_comp_val.at(0).toDouble() / w0; // B1/w0
+    double C2 = pi_comp_val.at(2).toDouble() / w0; // B2/w0
+    double L = pi_comp_val.at(1).toDouble() / w0;  //  X/w0
 
-        //Build the schematic description
-        laddercode += QString("CP:%1;").arg(C1);
-        laddercode += QString("LS:%1;").arg(L);
-        laddercode += QString("CP:%1;").arg(C2);
-    }
-    else
-    {//Highpass pi-type matching network
-        double L1 = 1/(w0*pi_comp_val.at(0).toDouble());// 1/(w0*B1)
-        double L2 = 1/(w0*pi_comp_val.at(2).toDouble());// 1/(w0*B2)
-        double C = 1/(w0*pi_comp_val.at(1).toDouble());//  1/(w0*X)
-
-        //Build the schematic description
-        laddercode += QString("LP:%1;").arg(L1);
-        laddercode += QString("CS:%1;").arg(C);
-        laddercode += QString("LP:%1;").arg(L2);
-    }
-
-    return laddercode;
-}
-
-//Synthesis of a tapped-C transformer
-QString MatchDialog::calcTappedCTransformer(struct NetworkParams params)
-{
-    double RL, XL, Z0;
-    struct ImplementationParams ImplParams;
-    if (params.network == SINGLE_PORT)
-    {
-        RL = params.S11real, XL = params.S11imag;
-        Z0 = params.Z1;
-        ImplParams = params.InputNetwork;
-    }
-    else//Two-port matching
-    {
-        RL = params.r_real, XL = params.r_imag;
-        if (params.network == TWO_PORT_INPUT){
-            Z0 = params.Z1;
-            ImplParams = params.InputNetwork;
-        }
-        else{
-            Z0 = params.Z2;
-            ImplParams = params.OutputNetwork;
-        }
-    }
-    r2z(RL, XL, Z0);
-
-    double w0 = 2*pi*params.freq;
-
-    // Design equations
-    double Q2 = sqrt((RL/Z0)*(ImplParams.Q*ImplParams.Q + 1)-1);
-    double L = Z0/(w0*ImplParams.Q);
-    double C2 = Q2/(RL*w0);
-    double C1 = C2*(Q2*Q2 + 1)/(ImplParams.Q*Q2 - Q2*Q2);
-
-    //Build the schematic description
-    QString laddercode;
-    laddercode += QString("LP:%1;").arg(L);
-    laddercode += QString("CS:%1;").arg(C1);
+    // Build the schematic description
+    laddercode += QString("CP:%1;").arg(C1);
+    laddercode += QString("LS:%1;").arg(L);
     laddercode += QString("CP:%1;").arg(C2);
+  } else { // Highpass pi-type matching network
+    double L1 = 1 / (w0 * pi_comp_val.at(0).toDouble()); // 1/(w0*B1)
+    double L2 = 1 / (w0 * pi_comp_val.at(2).toDouble()); // 1/(w0*B2)
+    double C = 1 / (w0 * pi_comp_val.at(1).toDouble());  //  1/(w0*X)
 
-    return laddercode;
-}
-
-//Synthesis of a tapped-L transformer
-QString MatchDialog::calcTappedLTransformer(struct NetworkParams params)
-{
-    double RL, XL, Z0;
-    struct ImplementationParams ImplParams;
-    if (params.network == SINGLE_PORT)
-    {
-        RL = params.S11real, XL = params.S11imag;
-        Z0 = params.Z1;
-        ImplParams = params.InputNetwork;
-    }
-    else//Two-port matching
-    {
-        RL = params.r_real, XL = params.r_imag;
-        if (params.network == TWO_PORT_INPUT){
-            Z0 = params.Z1;
-            ImplParams = params.InputNetwork;
-        }
-        else{
-            Z0 = params.Z2;
-            ImplParams = params.OutputNetwork;
-        }
-    }
-    r2z(RL, XL, Z0);
-
-    double w0 = 2*pi*params.freq;
-
-    // Design equations
-    double Q2 = sqrt((RL/Z0)*(ImplParams.Q*ImplParams.Q + 1)-1);
-    double C = ImplParams.Q/(w0*Z0);
-    double L2 = RL/(Q2*w0);
-    double L1 = L2*(ImplParams.Q*Q2 - Q2*Q2)/(Q2*Q2 + 1);
-
-    //Build the schematic description
-    QString laddercode;
-    laddercode += QString("CP:%1;").arg(C);
-    laddercode += QString("LS:%1;").arg(L1);
-    laddercode += QString("LP:%1;").arg(L2);
-
-    return laddercode;
-}
-
-//Synthesis of a double tapped transformer
-QString MatchDialog::calcDoubleTappedResonator(struct NetworkParams params)
-{
-    double RL, XL, Z0;
-    struct ImplementationParams ImplParams;
-    if (params.network == SINGLE_PORT)
-    {
-        RL = params.S11real, XL = params.S11imag;
-        Z0 = params.Z1;
-        ImplParams = params.InputNetwork;
-    }
-    else//Two-port matching
-    {
-        RL = params.r_real, XL = params.r_imag;
-        if (params.network == TWO_PORT_INPUT){
-            Z0 = params.Z1;
-            ImplParams = params.InputNetwork;
-        }
-        else{
-            Z0 = params.Z2;
-            ImplParams = params.OutputNetwork;
-        }
-    }
-    r2z(RL, XL, Z0);
-
-    double w0 = 2*pi*params.freq;
-
-    // Design equations
-    double L1 = Z0/(w0*ImplParams.Q);
-    double Qsq = ImplParams.Q*ImplParams.Q;
-    double Q2 = sqrt((RL/Z0)*(Qsq + 1) - 1);
-    double Leq = ((L1*Qsq)/(1+Qsq))+ImplParams.L2;
-    double Ceq = 1/(w0*w0*Leq);
-    double C2 = Q2/(w0*RL);
-    double C2_ = C2*(1+Q2*Q2)/(Q2*Q2);
-    double C1 = (Ceq*C2_)/(C2_ - Ceq);
-
-    //Build the schematic description
-    QString laddercode;
+    // Build the schematic description
     laddercode += QString("LP:%1;").arg(L1);
-    laddercode += QString("LS:%1;").arg(ImplParams.L2);
-    laddercode += QString("CS:%1;").arg(C1);
-    laddercode += QString("CP:%1;").arg(C2);
+    laddercode += QString("CS:%1;").arg(C);
+    laddercode += QString("LP:%1;").arg(L2);
+  }
 
-    return laddercode;
+  return laddercode;
 }
 
+// Synthesis of a tapped-C transformer
+QString MatchDialog::calcTappedCTransformer(struct NetworkParams params) {
+  double RL, XL, Z0;
+  struct ImplementationParams ImplParams;
+  if (params.network == SINGLE_PORT) {
+    RL = params.S11real, XL = params.S11imag;
+    Z0 = params.Z1;
+    ImplParams = params.InputNetwork;
+  } else // Two-port matching
+  {
+    RL = params.r_real, XL = params.r_imag;
+    if (params.network == TWO_PORT_INPUT) {
+      Z0 = params.Z1;
+      ImplParams = params.InputNetwork;
+    } else {
+      Z0 = params.Z2;
+      ImplParams = params.OutputNetwork;
+    }
+  }
+  r2z(RL, XL, Z0);
+
+  double w0 = 2 * pi * params.freq;
+
+  // Design equations
+  double Q2 = sqrt((RL / Z0) * (ImplParams.Q * ImplParams.Q + 1) - 1);
+  double L = Z0 / (w0 * ImplParams.Q);
+  double C2 = Q2 / (RL * w0);
+  double C1 = C2 * (Q2 * Q2 + 1) / (ImplParams.Q * Q2 - Q2 * Q2);
+
+  // Build the schematic description
+  QString laddercode;
+  laddercode += QString("LP:%1;").arg(L);
+  laddercode += QString("CS:%1;").arg(C1);
+  laddercode += QString("CP:%1;").arg(C2);
+
+  return laddercode;
+}
+
+// Synthesis of a tapped-L transformer
+QString MatchDialog::calcTappedLTransformer(struct NetworkParams params) {
+  double RL, XL, Z0;
+  struct ImplementationParams ImplParams;
+  if (params.network == SINGLE_PORT) {
+    RL = params.S11real, XL = params.S11imag;
+    Z0 = params.Z1;
+    ImplParams = params.InputNetwork;
+  } else // Two-port matching
+  {
+    RL = params.r_real, XL = params.r_imag;
+    if (params.network == TWO_PORT_INPUT) {
+      Z0 = params.Z1;
+      ImplParams = params.InputNetwork;
+    } else {
+      Z0 = params.Z2;
+      ImplParams = params.OutputNetwork;
+    }
+  }
+  r2z(RL, XL, Z0);
+
+  double w0 = 2 * pi * params.freq;
+
+  // Design equations
+  double Q2 = sqrt((RL / Z0) * (ImplParams.Q * ImplParams.Q + 1) - 1);
+  double C = ImplParams.Q / (w0 * Z0);
+  double L2 = RL / (Q2 * w0);
+  double L1 = L2 * (ImplParams.Q * Q2 - Q2 * Q2) / (Q2 * Q2 + 1);
+
+  // Build the schematic description
+  QString laddercode;
+  laddercode += QString("CP:%1;").arg(C);
+  laddercode += QString("LS:%1;").arg(L1);
+  laddercode += QString("LP:%1;").arg(L2);
+
+  return laddercode;
+}
+
+// Synthesis of a double tapped transformer
+QString MatchDialog::calcDoubleTappedResonator(struct NetworkParams params) {
+  double RL, XL, Z0;
+  struct ImplementationParams ImplParams;
+  if (params.network == SINGLE_PORT) {
+    RL = params.S11real, XL = params.S11imag;
+    Z0 = params.Z1;
+    ImplParams = params.InputNetwork;
+  } else // Two-port matching
+  {
+    RL = params.r_real, XL = params.r_imag;
+    if (params.network == TWO_PORT_INPUT) {
+      Z0 = params.Z1;
+      ImplParams = params.InputNetwork;
+    } else {
+      Z0 = params.Z2;
+      ImplParams = params.OutputNetwork;
+    }
+  }
+  r2z(RL, XL, Z0);
+
+  double w0 = 2 * pi * params.freq;
+
+  // Design equations
+  double L1 = Z0 / (w0 * ImplParams.Q);
+  double Qsq = ImplParams.Q * ImplParams.Q;
+  double Q2 = sqrt((RL / Z0) * (Qsq + 1) - 1);
+  double Leq = ((L1 * Qsq) / (1 + Qsq)) + ImplParams.L2;
+  double Ceq = 1 / (w0 * w0 * Leq);
+  double C2 = Q2 / (w0 * RL);
+  double C2_ = C2 * (1 + Q2 * Q2) / (Q2 * Q2);
+  double C1 = (Ceq * C2_) / (C2_ - Ceq);
+
+  // Build the schematic description
+  QString laddercode;
+  laddercode += QString("LP:%1;").arg(L1);
+  laddercode += QString("LS:%1;").arg(ImplParams.L2);
+  laddercode += QString("CS:%1;").arg(C1);
+  laddercode += QString("CP:%1;").arg(C2);
+
+  return laddercode;
+}
 
 //--------------------------------------------------------------------------
 // It calculates tee-type matching network
 QString MatchDialog::calcTeeType(struct NetworkParams params) {
-    double RL, XL, Z0;
-    struct ImplementationParams ImplParams;
-    if (params.network == SINGLE_PORT)
-    {
-        RL = params.S11real, XL = params.S11imag;
-        Z0 = params.Z1;
-        ImplParams = params.InputNetwork;
+  double RL, XL, Z0;
+  struct ImplementationParams ImplParams;
+  if (params.network == SINGLE_PORT) {
+    RL = params.S11real, XL = params.S11imag;
+    Z0 = params.Z1;
+    ImplParams = params.InputNetwork;
+  } else // Two-port matching
+  {
+    RL = params.r_real, XL = params.r_imag;
+    if (params.network == TWO_PORT_INPUT) {
+      Z0 = params.Z1;
+      ImplParams = params.InputNetwork;
+    } else {
+      Z0 = params.Z2;
+      ImplParams = params.OutputNetwork;
     }
-    else//Two-port matching
-    {
-        RL = params.r_real, XL = params.r_imag;
-        if (params.network == TWO_PORT_INPUT){
-            Z0 = params.Z1;
-            ImplParams = params.InputNetwork;
-        }
-        else{
-            Z0 = params.Z2;
-            ImplParams = params.OutputNetwork;
-        }
-    }
-    r2z(RL, XL, Z0);
+  }
+  r2z(RL, XL, Z0);
 
-    QString pi_params = calcPiParameters(ImplParams, RL, Z0);
-    double w0 = 2*pi*params.freq;
-    QString laddercode;
-    QStringList pi_comp_val = pi_params.split(";");//Get the parameters calculated by calcPiParameters()
-    double B1 = pi_comp_val.at(0).toDouble();
-    double X =  pi_comp_val.at(1).toDouble();
-    double B2 = pi_comp_val.at(2).toDouble();
+  QString pi_params = calcPiParameters(ImplParams, RL, Z0);
+  double w0 = 2 * pi * params.freq;
+  QString laddercode;
+  QStringList pi_comp_val = pi_params.split(
+      ";"); // Get the parameters calculated by calcPiParameters()
+  double B1 = pi_comp_val.at(0).toDouble();
+  double X = pi_comp_val.at(1).toDouble();
+  double B2 = pi_comp_val.at(2).toDouble();
 
-    if (ImplParams.network_response == LOWPASS)
-    {//Lowpass tee-type matching network
-        double L1 = -B2*X/((B1*B2*X - B1 - B2)*w0);
-        double L2 = -B1*X/((B1*B2*X - B1 - B2)*w0);
-        double C = -(B1*B2*X - B1 - B2)/w0;
+  if (ImplParams.network_response ==
+      LOWPASS) { // Lowpass tee-type matching network
+    double L1 = -B2 * X / ((B1 * B2 * X - B1 - B2) * w0);
+    double L2 = -B1 * X / ((B1 * B2 * X - B1 - B2) * w0);
+    double C = -(B1 * B2 * X - B1 - B2) / w0;
 
-        //Build the schematic description
-        laddercode += QString("LS:%1;").arg(L1);
-        laddercode += QString("CP:%1;").arg(C);
-        laddercode += QString("LS:%1;").arg(L2);
-    }
-    else
-    {//Highpass tee-type matching network
-        double C1 = -(B1*B2*X - B1 - B2)/(B2*X*w0);
-        double C2 = -(B1*B2*X - B1 - B2)/(B1*X*w0);
-        double L = -1/((B1*B2*X - B1 - B2)*w0);
+    // Build the schematic description
+    laddercode += QString("LS:%1;").arg(L1);
+    laddercode += QString("CP:%1;").arg(C);
+    laddercode += QString("LS:%1;").arg(L2);
+  } else { // Highpass tee-type matching network
+    double C1 = -(B1 * B2 * X - B1 - B2) / (B2 * X * w0);
+    double C2 = -(B1 * B2 * X - B1 - B2) / (B1 * X * w0);
+    double L = -1 / ((B1 * B2 * X - B1 - B2) * w0);
 
-        //Build the schematic description
-        laddercode += QString("CS:%1;").arg(C1);
-        laddercode += QString("LP:%1;").arg(L);
-        laddercode += QString("CS:%1;").arg(C2);
-    }
+    // Build the schematic description
+    laddercode += QString("CS:%1;").arg(C1);
+    laddercode += QString("LP:%1;").arg(L);
+    laddercode += QString("CS:%1;").arg(C2);
+  }
 
-    return laddercode;
+  return laddercode;
 }
 
 // This function implements the design equations of a single tuned transformer
 QString MatchDialog::calcSingleTunedTransformer(struct NetworkParams params) {
-    double RL, XL, Z0;
-    struct ImplementationParams ImplParams;
-    if (params.network == SINGLE_PORT)
-    {
-        RL = params.S11real, XL = params.S11imag;
-        Z0 = params.Z1;
-        ImplParams = params.InputNetwork;
+  double RL, XL, Z0;
+  struct ImplementationParams ImplParams;
+  if (params.network == SINGLE_PORT) {
+    RL = params.S11real, XL = params.S11imag;
+    Z0 = params.Z1;
+    ImplParams = params.InputNetwork;
+  } else // Two-port matching
+  {
+    RL = params.r_real, XL = params.r_imag;
+    if (params.network == TWO_PORT_INPUT) {
+      Z0 = params.Z1;
+      ImplParams = params.InputNetwork;
+    } else {
+      Z0 = params.Z2;
+      ImplParams = params.OutputNetwork;
     }
-    else//Two-port matching
-    {
-        RL = params.r_real, XL = params.r_imag;
-        if (params.network == TWO_PORT_INPUT){
-            Z0 = params.Z1;
-            ImplParams = params.InputNetwork;
-        }
-        else{
-            Z0 = params.Z2;
-            ImplParams = params.OutputNetwork;
-        }
+  }
+  r2z(RL, XL, Z0);
+
+  double w0 = 2 * pi * params.freq;
+
+  // Design equations
+  double L11 = (Z0 * RL * ImplParams.k * ImplParams.k) /
+               (w0 * ImplParams.Q * (Z0 + RL * ImplParams.k * ImplParams.k));
+  double L22 = (L11 * RL / Z0) / (ImplParams.k * ImplParams.k);
+  double C = 1 / (L11 * w0 * w0);
+
+  QString laddercode;
+  laddercode += QString("CP:%1;").arg(C);
+
+  if (ImplParams.coupled_L_Equivalent == 0) { // Use coupled inductors
+    laddercode +=
+        QString("LCOUP:%1#%2#%3;").arg(L11).arg(L22).arg(ImplParams.k);
+  } else {
+    double M = ImplParams.k * sqrt(L11 * L22);
+    if (ImplParams.coupled_L_Equivalent == 1) {
+      // Use the uncoupled equivalent circuit (tee)
+      laddercode += QString("LS:%1;").arg(L11 - M);
+      laddercode += QString("LP:%1;").arg(M);
+      laddercode += QString("LS:%1;").arg(L22 - M);
+    } else {
+      // Use the uncoupled equivalent circuit (pi)
+      double delta = L11 * L22 - M * M;
+      laddercode += QString("LP:%1;").arg(delta / (L22 - M));
+      laddercode += QString("LS:%1;").arg(delta / M);
+      laddercode += QString("LP:%1;").arg(delta / (L11 - M));
     }
-    r2z(RL, XL, Z0);
+  }
 
-    double w0 = 2*pi*params.freq;
-
-    //Design equations
-    double L11 = (Z0*RL*ImplParams.k*ImplParams.k)/(w0*ImplParams.Q*(Z0+RL*ImplParams.k*ImplParams.k));
-    double L22 = (L11*RL/Z0)/(ImplParams.k*ImplParams.k);
-    double C = 1/(L11*w0*w0);
-
-    QString laddercode;
-    laddercode += QString("CP:%1;").arg(C);
-
-    if (ImplParams.coupled_L_Equivalent==0){//Use coupled inductors
-        laddercode += QString("LCOUP:%1#%2#%3;").arg(L11).arg(L22).arg(ImplParams.k);
-    }else{
-        double M = ImplParams.k*sqrt(L11*L22);
-        if (ImplParams.coupled_L_Equivalent==1)
-        {
-        //Use the uncoupled equivalent circuit (tee)
-        laddercode += QString("LS:%1;").arg(L11-M);
-        laddercode += QString("LP:%1;").arg(M);
-        laddercode += QString("LS:%1;").arg(L22-M);
-        }
-        else{
-            //Use the uncoupled equivalent circuit (pi)
-            double delta = L11*L22-M*M;
-            laddercode += QString("LP:%1;").arg(delta/(L22-M));
-            laddercode += QString("LS:%1;").arg(delta/M);
-            laddercode += QString("LP:%1;").arg(delta/(L11-M));
-        }
-    }
-
-    return laddercode;
+  return laddercode;
 }
 
-// This function implements the design equations of a parallel double-tuned transformer
-QString MatchDialog::calcParallelDoubleTunedTransformer(struct NetworkParams params) {
-    double RL, XL, Z0;
-    struct ImplementationParams ImplParams;
-    if (params.network == SINGLE_PORT)
-    {
-        RL = params.S11real, XL = params.S11imag;
-        Z0 = params.Z1;
-        ImplParams = params.InputNetwork;
+// This function implements the design equations of a parallel double-tuned
+// transformer
+QString
+MatchDialog::calcParallelDoubleTunedTransformer(struct NetworkParams params) {
+  double RL, XL, Z0;
+  struct ImplementationParams ImplParams;
+  if (params.network == SINGLE_PORT) {
+    RL = params.S11real, XL = params.S11imag;
+    Z0 = params.Z1;
+    ImplParams = params.InputNetwork;
+  } else // Two-port matching
+  {
+    RL = params.r_real, XL = params.r_imag;
+    if (params.network == TWO_PORT_INPUT) {
+      Z0 = params.Z1;
+      ImplParams = params.InputNetwork;
+    } else {
+      Z0 = params.Z2;
+      ImplParams = params.OutputNetwork;
     }
-    else//Two-port matching
-    {
-        RL = params.r_real, XL = params.r_imag;
-        if (params.network == TWO_PORT_INPUT){
-            Z0 = params.Z1;
-            ImplParams = params.InputNetwork;
-        }
-        else{
-            Z0 = params.Z2;
-            ImplParams = params.OutputNetwork;
-        }
+  }
+  r2z(RL, XL, Z0);
+
+  // Design equations
+  double f0 = params.freq;
+  double BW = ImplParams.BW;
+  double w1 = 2 * pi * (f0 - 0.5 * BW);
+  double w2 = 2 * pi * (f0 + 0.5 * BW);
+  double gt = pow(10, (-ImplParams.gamma_MAX * 0.1));
+  double r = (1 + sqrt(abs(1 - gt))) / (1 - sqrt(abs(1 - gt)));
+  double Q2m1 = abs(sqrt(r * w1 / w2 - 1));
+  double Q2m2 = abs(sqrt(r * w2 / w1 - 1));
+  double K1 = abs(Q2m1) * Z0 / (1 + Q2m1 * Q2m1);
+  double K2 = abs(Q2m2) * Z0 / (1 + Q2m2 * Q2m2);
+  double C2_ = (w2 / (w1 * w1) - 1 / w2) / (K2 + K1 * w2 / w1);
+  double L2_ = -(K1 - 1 / (w1 * C2_)) / w1;
+  double RL_ = (1 + Q2m1 * Q2m1) / (w1 * w1 * C2_ * C2_ * Z0);
+  double GL_ = 1 / RL_;
+  double Bm1 = -(C2_ * C2_ * L2_ * w1 * w1 + GL_ * GL_ * L2_ - C2_) * w1 /
+               (C2_ * C2_ * L2_ * L2_ * w1 * w1 * w1 * w1 +
+                GL_ * GL_ * L2_ * L2_ * w1 * w1 - 2 * C2_ * L2_ * w1 * w1 + 1);
+  double Bm2 = -(C2_ * C2_ * L2_ * w2 * w2 + GL_ * GL_ * L2_ - C2_) * w2 /
+               (C2_ * C2_ * L2_ * L2_ * w2 * w2 * w2 * w2 +
+                GL_ * GL_ * L2_ * L2_ * w2 * w2 - 2 * C2_ * L2_ * w2 * w2 + 1);
+  double L11 = ((1 / w2) - (w2 / (w1 * w1))) / (-abs(Bm2) - abs(Bm1) * w2 / w1);
+  double C1 = -(abs(Bm1) - 1 / (w1 * L11)) / w1;
+  double k = 1 / sqrt(1 + L2_ / L11);
+  double L22 = L11 * RL / (k * k * RL_);
+  double C2 = C2_ * L11 / (k * k * L22);
+
+  QString laddercode;
+  laddercode += QString("CP:%1;").arg(C1);
+
+  if (ImplParams.coupled_L_Equivalent == 0) { // Use coupled inductors
+    laddercode += QString("LCOUP:%1#%2#%3;").arg(L11).arg(L22).arg(k);
+  } else {
+    double M = k * sqrt(L11 * L22);
+    if (ImplParams.coupled_L_Equivalent == 1) {
+      // Use the uncoupled equivalent circuit (tee)
+      laddercode += QString("LS:%1;").arg(L11 - M);
+      laddercode += QString("LP:%1;").arg(M);
+      laddercode += QString("LS:%1;").arg(L22 - M);
+    } else {
+      // Use the uncoupled equivalent circuit (pi)
+      double delta = L11 * L22 - M * M;
+      laddercode += QString("LP:%1;").arg(delta / (L22 - M));
+      laddercode += QString("LS:%1;").arg(delta / M);
+      laddercode += QString("LP:%1;").arg(delta / (L11 - M));
     }
-    r2z(RL, XL, Z0);
+  }
+  laddercode += QString("CP:%1;").arg(C2);
 
-    //Design equations
-    double f0 = params.freq;
-    double BW = ImplParams.BW;
-    double w1 = 2*pi*(f0-0.5*BW);
-    double w2 = 2*pi*(f0+0.5*BW);
-    double gt = pow(10, (-ImplParams.gamma_MAX*0.1));
-    double r = (1+sqrt(abs(1-gt)))/(1-sqrt(abs(1-gt)));
-    double Q2m1 = abs(sqrt(r*w1/w2 - 1));
-    double Q2m2 = abs(sqrt(r*w2/w1 - 1));
-    double K1 = abs(Q2m1) * Z0/(1+Q2m1*Q2m1);
-    double K2 = abs(Q2m2) * Z0/(1+Q2m2*Q2m2);
-    double C2_ = (w2/(w1*w1) - 1/w2)/(K2+K1*w2/w1);
-    double L2_ = -(K1-1/(w1*C2_))/w1;
-    double RL_ = (1+Q2m1*Q2m1)/(w1*w1*C2_*C2_*Z0);
-    double GL_ = 1/RL_;
-    double Bm1 = -(C2_*C2_*L2_*w1*w1 + GL_*GL_*L2_ - C2_)*w1/(C2_*C2_*L2_*L2_*w1*w1*w1*w1 +
-                                                         GL_*GL_*L2_*L2_*w1*w1 - 2*C2_*L2_*w1*w1 + 1);
-    double Bm2 = -(C2_*C2_*L2_*w2*w2 + GL_*GL_*L2_ - C2_)*w2/(C2_*C2_*L2_*L2_*w2*w2*w2*w2 +
-                                                              GL_*GL_*L2_*L2_*w2*w2 - 2*C2_*L2_*w2*w2 + 1);
-    double L11 = ((1/w2) -(w2/(w1*w1)))/(-abs(Bm2) - abs(Bm1)*w2/w1);
-    double C1 = -(abs(Bm1) - 1/(w1*L11))/w1;
-    double k = 1/sqrt(1 + L2_/L11);
-    double L22 = L11*RL/(k*k*RL_);
-    double C2 = C2_*L11/(k*k*L22);
-
-    QString laddercode;
-    laddercode += QString("CP:%1;").arg(C1);
-
-    if (ImplParams.coupled_L_Equivalent==0){//Use coupled inductors
-        laddercode += QString("LCOUP:%1#%2#%3;").arg(L11).arg(L22).arg(k);
-    }else{
-        double M = k*sqrt(L11*L22);
-        if (ImplParams.coupled_L_Equivalent==1)
-        {
-        //Use the uncoupled equivalent circuit (tee)
-        laddercode += QString("LS:%1;").arg(L11-M);
-        laddercode += QString("LP:%1;").arg(M);
-        laddercode += QString("LS:%1;").arg(L22-M);
-        }
-        else{
-            //Use the uncoupled equivalent circuit (pi)
-            double delta = L11*L22-M*M;
-            laddercode += QString("LP:%1;").arg(delta/(L22-M));
-            laddercode += QString("LS:%1;").arg(delta/M);
-            laddercode += QString("LP:%1;").arg(delta/(L11-M));
-        }
-    }
-    laddercode += QString("CP:%1;").arg(C2);
-
-    return laddercode;
+  return laddercode;
 }
 
-// This function implements the design equations of a series double-tuned transformer
-QString MatchDialog::calcSeriesDoubleTunedTransformer(struct NetworkParams params) {
-    double RL, XL, Z0;
-    struct ImplementationParams ImplParams;
-    if (params.network == SINGLE_PORT)
-    {
-        RL = params.S11real, XL = params.S11imag;
-        Z0 = params.Z1;
-        ImplParams = params.InputNetwork;
+// This function implements the design equations of a series double-tuned
+// transformer
+QString
+MatchDialog::calcSeriesDoubleTunedTransformer(struct NetworkParams params) {
+  double RL, XL, Z0;
+  struct ImplementationParams ImplParams;
+  if (params.network == SINGLE_PORT) {
+    RL = params.S11real, XL = params.S11imag;
+    Z0 = params.Z1;
+    ImplParams = params.InputNetwork;
+  } else // Two-port matching
+  {
+    RL = params.r_real, XL = params.r_imag;
+    if (params.network == TWO_PORT_INPUT) {
+      Z0 = params.Z1;
+      ImplParams = params.InputNetwork;
+    } else {
+      Z0 = params.Z2;
+      ImplParams = params.OutputNetwork;
     }
-    else//Two-port matching
-    {
-        RL = params.r_real, XL = params.r_imag;
-        if (params.network == TWO_PORT_INPUT){
-            Z0 = params.Z1;
-            ImplParams = params.InputNetwork;
-        }
-        else{
-            Z0 = params.Z2;
-            ImplParams = params.OutputNetwork;
-        }
+  }
+  r2z(RL, XL, Z0);
+
+  // Design equations
+  double f0 = params.freq;
+  double w0 = 2 * pi * params.freq;
+  double BW = ImplParams.BW;
+  double f1 = f0 - 0.5 * BW;
+  double f2 = f0 + 0.5 * BW;
+  double M = (f1 * f1 + f2 * f2) / (f1 * f2);
+  double gt = pow(10, (-ImplParams.gamma_MAX * 0.1));
+  double kQ = 1 / sqrt(gt) + sqrt((1 / gt) - 1);
+  double kQsq = kQ * kQ;
+  double A = (kQsq * kQsq) * (M * M) - 4 * kQsq;
+  double B = (4 - M * M) * kQsq;
+  double k = (-A + sqrt(A * A - 4 * B)) / 2;
+  double Q = kQ / k;
+
+  double L11 = Q * Z0 / w0;
+  double C1 = 1 / (w0 * Z0 * Q);
+  double L22 = Q * RL / w0;
+  double C2 = 1 / (w0 * RL * Q);
+
+  QString laddercode;
+  laddercode += QString("CS:%1;").arg(C1);
+
+  if (ImplParams.coupled_L_Equivalent == 0) { // Use coupled inductors
+    laddercode += QString("LCOUP:%1#%2#%3;").arg(L11).arg(L22).arg(k);
+  } else {
+    double M = k * sqrt(L11 * L22);
+    if (ImplParams.coupled_L_Equivalent == 1) {
+      // Use the uncoupled equivalent circuit (tee)
+      laddercode += QString("LS:%1;").arg(L11 - M);
+      laddercode += QString("LP:%1;").arg(M);
+      laddercode += QString("LS:%1;").arg(L22 - M);
+    } else {
+      // Use the uncoupled equivalent circuit (pi)
+      double delta = L11 * L22 - M * M;
+      laddercode += QString("LP:%1;").arg(delta / (L22 - M));
+      laddercode += QString("LS:%1;").arg(delta / M);
+      laddercode += QString("LP:%1;").arg(delta / (L11 - M));
     }
-    r2z(RL, XL, Z0);
+  }
+  laddercode += QString("CS:%1;").arg(C2);
 
-    //Design equations
-    double f0 = params.freq;
-    double w0 = 2*pi*params.freq;
-    double BW = ImplParams.BW;
-    double f1 = f0 - 0.5*BW;
-    double f2 = f0 + 0.5*BW;
-    double M = (f1*f1+f2*f2)/(f1*f2);
-    double gt = pow(10, (-ImplParams.gamma_MAX*0.1));
-    double kQ = 1/sqrt(gt) + sqrt((1/gt)-1);
-    double kQsq = kQ*kQ;
-    double A = (kQsq*kQsq)*(M*M) - 4*kQsq;
-    double B = (4-M*M)*kQsq;
-    double k = (-A + sqrt(A*A - 4*B))/2;
-    double Q = kQ/k;
-
-    double L11 = Q*Z0/w0;
-    double C1 = 1/(w0*Z0*Q);
-    double L22 = Q*RL/w0;
-    double C2 = 1/(w0*RL*Q);
-
-    QString laddercode;
-    laddercode += QString("CS:%1;").arg(C1);
-
-    if (ImplParams.coupled_L_Equivalent==0){//Use coupled inductors
-        laddercode += QString("LCOUP:%1#%2#%3;").arg(L11).arg(L22).arg(k);
-    }else{
-        double M = k*sqrt(L11*L22);
-        if (ImplParams.coupled_L_Equivalent==1)
-        {
-        //Use the uncoupled equivalent circuit (tee)
-        laddercode += QString("LS:%1;").arg(L11-M);
-        laddercode += QString("LP:%1;").arg(M);
-        laddercode += QString("LS:%1;").arg(L22-M);
-        }
-        else{
-            //Use the uncoupled equivalent circuit (pi)
-            double delta = L11*L22-M*M;
-            laddercode += QString("LP:%1;").arg(delta/(L22-M));
-            laddercode += QString("LS:%1;").arg(delta/M);
-            laddercode += QString("LP:%1;").arg(delta/(L11-M));
-        }
-    }
-    laddercode += QString("CS:%1;").arg(C2);
-
-    return laddercode;
+  return laddercode;
 }
 
 //--------------------------------------------------------------------------
@@ -2155,22 +2129,20 @@ QString MatchDialog::calcMatchingLambda8Lambda4(struct NetworkParams params) {
   double l8 = .5 * l4;
   struct ImplementationParams ImplParams;
   double RL, XL, Z0;
-  if (params.network == SINGLE_PORT)
+  if (params.network == SINGLE_PORT) {
+    RL = params.S11real, XL = params.S11imag;
+    Z0 = params.Z1;
+    ImplParams = params.InputNetwork;
+  } else // Two-port matching
   {
-      RL = params.S11real, XL = params.S11imag;
+    RL = params.r_real, XL = params.r_imag;
+    if (params.network == TWO_PORT_INPUT) {
       Z0 = params.Z1;
       ImplParams = params.InputNetwork;
-  }
-  else//Two-port matching
-  {
-      RL = params.r_real, XL = params.r_imag;
-      if (params.network == TWO_PORT_INPUT) {
-          Z0 = params.Z1;
-          ImplParams = params.InputNetwork;
-      }else{
-          Z0 = params.Z2;
-          ImplParams = params.OutputNetwork;
-      }
+    } else {
+      Z0 = params.Z2;
+      ImplParams = params.OutputNetwork;
+    }
   }
 
   r2z(RL, XL, Z0);
@@ -2179,18 +2151,20 @@ QString MatchDialog::calcMatchingLambda8Lambda4(struct NetworkParams params) {
 
   QString str;
 
-  if (ImplParams.use_l4_lumped_equivalent == 0){
-      str += QString("TL:%1#%2;").arg(Zm).arg(l4);
-  } else{
-      str += QString("%1").arg(CalcTransmissionLineLumpedEquivalent(params.freq, Zm, ImplParams.use_l4_lumped_equivalent, l4));
+  if (ImplParams.use_l4_lumped_equivalent == 0) {
+    str += QString("TL:%1#%2;").arg(Zm).arg(l4);
+  } else {
+    str += QString("%1").arg(CalcTransmissionLineLumpedEquivalent(
+        params.freq, Zm, ImplParams.use_l4_lumped_equivalent, l4));
   }
 
-  if (ImplParams.use_l8_lumped_equivalent == 0){
-      str += QString("TL:%1#%2;").arg(Zmm).arg(l8);
-  } else{
-      str += QString("%1").arg(CalcTransmissionLineLumpedEquivalent(params.freq, Zmm, ImplParams.use_l8_lumped_equivalent, l8));
+  if (ImplParams.use_l8_lumped_equivalent == 0) {
+    str += QString("TL:%1#%2;").arg(Zmm).arg(l8);
+  } else {
+    str += QString("%1").arg(CalcTransmissionLineLumpedEquivalent(
+        params.freq, Zmm, ImplParams.use_l8_lumped_equivalent, l8));
   }
-return str;
+  return str;
 }
 
 //--------------------------------------------------------------------------
@@ -2200,43 +2174,44 @@ QString MatchDialog::calcMatchingLambda4(struct NetworkParams params) {
   double l4 = SPEED_OF_LIGHT / (4. * params.freq);
   double RL, XL, Z0;
   struct ImplementationParams ImplParams;
-  if (params.network == SINGLE_PORT)
+  if (params.network == SINGLE_PORT) {
+    RL = params.S11real, XL = params.S11imag;
+    Z0 = params.Z1;
+    ImplParams = params.InputNetwork;
+  } else // Two-port matching
   {
-      RL = params.S11real, XL = params.S11imag;
+    RL = params.r_real, XL = params.r_imag;
+    if (params.network == TWO_PORT_INPUT) {
       Z0 = params.Z1;
       ImplParams = params.InputNetwork;
-  }
-  else//Two-port matching
-  {
-      RL = params.r_real, XL = params.r_imag;
-      if (params.network == TWO_PORT_INPUT) {
-          Z0 = params.Z1;
-          ImplParams = params.InputNetwork;
-      }else{
-          Z0 = params.Z2;
-          ImplParams = params.OutputNetwork;
-      }
+    } else {
+      Z0 = params.Z2;
+      ImplParams = params.OutputNetwork;
+    }
   }
 
   r2z(RL, XL, Z0);
-  double Zm = sqrt(Z0*RL);
+  double Zm = sqrt(Z0 * RL);
   if (ImplParams.use_l4_lumped_equivalent == 0)
-     return QString("TL:%1#%2;").arg(Zm).arg(l4);
+    return QString("TL:%1#%2;").arg(Zm).arg(l4);
   else
-     return CalcTransmissionLineLumpedEquivalent(params.freq, Zm, ImplParams.use_l4_lumped_equivalent, l4);
+    return CalcTransmissionLineLumpedEquivalent(
+        params.freq, Zm, ImplParams.use_l4_lumped_equivalent, l4);
 }
 
 // Given a string code of inductors, capacitors and transmission lines, it
 // generates the Qucs network. Notice that the schematic is split into three
 // parts: components, wires and paintings, all of them are passed by reference.
-void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct NetworkParams params) {
-  QStringList strlist = laddercode.split(";");//Slipt the string code to get the components
+void MatchDialog::SchematicParser(QString laddercode, int &x_pos,
+                                  struct NetworkParams params) {
+  QStringList strlist =
+      laddercode.split(";"); // Slipt the string code to get the components
   QString component, tag, label;
   qDebug() << laddercode;
   double value, value2, value3, er, width;
   int x_series = 120, x_shunt = 100; // x-axis spacing depending on whether the
-                                    // component is placed in a series or shunt
-                                    // configuration
+                                     // component is placed in a series or shunt
+                                     // configuration
 
   double Freq = params.freq;
   bool microsyn = params.micro_syn;
@@ -2285,16 +2260,13 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
     // to handle such difference
     if (index != -1) // The component has two values
     {
-      double index2 = component.indexOf("#", index+1);
+      double index2 = component.indexOf("#", index + 1);
       value = component.mid(0, index).toDouble();
-      if (index2 == -1)
-      {//Just two parameters
-      value2 = component.mid(index + 1).toDouble();
-      }
-      else
-      {//Three parameters: Coupled inductors
-          value2 = component.mid(index + 1, index2-index-1).toDouble();
-          value3 = component.mid(index2 + 1).toDouble();
+      if (index2 == -1) { // Just two parameters
+        value2 = component.mid(index + 1).toDouble();
+      } else { // Three parameters: Coupled inductors
+        value2 = component.mid(index + 1, index2 - index - 1).toDouble();
+        value3 = component.mid(index2 + 1).toDouble();
       }
     } else {
       if (!tag.compare("LBL")) // The value is a string
@@ -2311,10 +2283,11 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
     // components, wires and paintings in the schematic
     if (!tag.compare("P1")) // Port 1 component
     {
-      componentstr += QString("<Pac P1 1 %2 -30 18 -26 0 1 \"1\" 1 \"%1\" 1 "
-                              "\"0 dBm\" 0 \"1 GHz\" 0>\n")
-                          .arg(misc::num2str(value, 3, "Ohm")) // reference impedance
-                          .arg(x_pos);
+      componentstr +=
+          QString("<Pac P1 1 %2 -30 18 -26 0 1 \"1\" 1 \"%1\" 1 "
+                  "\"0 dBm\" 0 \"1 GHz\" 0>\n")
+              .arg(misc::num2str(value, 3, "Ohm")) // reference impedance
+              .arg(x_pos);
       componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
       wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos);
       wirestr += QString("<%1 -120 %2 -120>\n").arg(x_pos).arg(x_pos + 120);
@@ -2329,10 +2302,11 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
                                    // from P1 because of the wiring)
     {
       x_pos += 100;
-      componentstr += QString("<Pac P2 1 %2 -30 18 -26 0 1 \"1\" 1 \"%1\" 1 "
-                              "\"0 dBm\" 0 \"1 GHz\" 0>\n")
-                          .arg(misc::num2str(value, 3, "Ohm")) // reference impedance
-                          .arg(x_pos);
+      componentstr +=
+          QString("<Pac P2 1 %2 -30 18 -26 0 1 \"1\" 1 \"%1\" 1 "
+                  "\"0 dBm\" 0 \"1 GHz\" 0>\n")
+              .arg(misc::num2str(value, 3, "Ohm")) // reference impedance
+              .arg(x_pos);
       componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
       wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos); // Vertical wire
       wirestr += QString("<%1 -120 %2 -120>\n")
@@ -2347,23 +2321,25 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
               .arg(x_pos + 50); // Box surrounding the 'Device' label
       x_pos += 200;
 
-      //Update CAPQ and INDQ data
+      // Update CAPQ and INDQ data
       CAPQ = params.OutputNetwork.CAPQ;
       INDQ = params.OutputNetwork.INDQ;
     } else if (!tag.compare("LS")) // Series inductor
     {
-      QString val = misc::num2str(value, 3, "H"); // Add prefix, unit - 3 significant digits
-      if (INDQ == 1000){//Use an ideal inductor
-          componentstr += QString("<L L1 1 %1 -120 -26 10 0 0 \"%2\" 1 "
-                                  " 0>\n")
-                              .arg(x_pos + 60)
-                              .arg(val);
-      }else{
-      componentstr += QString("<INDQ INDQ1 1 %1 -120 -26 10 0 0 \"%2\" 1 \"%3\" 1 "
-                              " 0>\n")
-                          .arg(x_pos + 60)
-                          .arg(val)
-                          .arg(INDQ);
+      QString val = misc::num2str(
+          value, 3, "H"); // Add prefix, unit - 3 significant digits
+      if (INDQ == 1000) { // Use an ideal inductor
+        componentstr += QString("<L L1 1 %1 -120 -26 10 0 0 \"%2\" 1 "
+                                " 0>\n")
+                            .arg(x_pos + 60)
+                            .arg(val);
+      } else {
+        componentstr +=
+            QString("<INDQ INDQ1 1 %1 -120 -26 10 0 0 \"%2\" 1 \"%3\" 1 "
+                    " 0>\n")
+                .arg(x_pos + 60)
+                .arg(val)
+                .arg(INDQ);
       }
       wirestr += QString("<%1 -120 %2 -120 "
                          " 0 0 0 "
@@ -2378,19 +2354,20 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
       x_pos += x_series;
     } else if (!tag.compare("CS")) // Series capacitor
     {
-      QString val = misc::num2str(value, 3, "F"); // Add prefix, unit - 3 significant digits
-      if (CAPQ == 1000){//Use an ideal capacitor
-          componentstr += QString("<C C1 1 %1 -120 -26 17 0 0 \"%2\" 1 "
-                                  " 0>\n")
-                              .arg(x_pos + 60)
-                              .arg(val);
-      }
-      else{
-          componentstr += QString("<CAPQ CAPQ1 1 %1 -120 -26 17 0 0 \"%2\" 1 \"%3\" 1 "
-                                  " 0>\n")
-                              .arg(x_pos + 60)
-                              .arg(val)
-                              .arg(CAPQ);
+      QString val = misc::num2str(
+          value, 3, "F"); // Add prefix, unit - 3 significant digits
+      if (CAPQ == 1000) { // Use an ideal capacitor
+        componentstr += QString("<C C1 1 %1 -120 -26 17 0 0 \"%2\" 1 "
+                                " 0>\n")
+                            .arg(x_pos + 60)
+                            .arg(val);
+      } else {
+        componentstr +=
+            QString("<CAPQ CAPQ1 1 %1 -120 -26 17 0 0 \"%2\" 1 \"%3\" 1 "
+                    " 0>\n")
+                .arg(x_pos + 60)
+                .arg(val)
+                .arg(CAPQ);
       }
       wirestr += QString("<%1 -120 %2 -120 "
                          " 0 0 0 "
@@ -2405,20 +2382,21 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
       x_pos += x_series;
     } else if (!tag.compare("LP")) // Shunt inductor
     {
-      QString val = misc::num2str(value, 3, "H"); // Add prefix, unit - 3 significant digits
+      QString val = misc::num2str(
+          value, 3, "H"); // Add prefix, unit - 3 significant digits
       componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
-      if (INDQ == 1000){
-          componentstr += QString("<L L1 1 %1 -30 5 -20 0 1 \"%2\" 1 "
-                                  " 0>\n")
-                              .arg(x_pos)
-                              .arg(val);
-      }
-      else{
-          componentstr += QString("<INDQ INDQ1 1 %1 -30 5 -20 0 1 \"%2\" 1 \"%3\" 1 "
-                                  " 0>\n")
-                              .arg(x_pos)
-                              .arg(val)
-                              .arg(INDQ);
+      if (INDQ == 1000) {
+        componentstr += QString("<L L1 1 %1 -30 5 -20 0 1 \"%2\" 1 "
+                                " 0>\n")
+                            .arg(x_pos)
+                            .arg(val);
+      } else {
+        componentstr +=
+            QString("<INDQ INDQ1 1 %1 -30 5 -20 0 1 \"%2\" 1 \"%3\" 1 "
+                    " 0>\n")
+                .arg(x_pos)
+                .arg(val)
+                .arg(INDQ);
       }
 
       wirestr += QString("<%1 -60 %1 -120 "
@@ -2433,20 +2411,21 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
       x_pos += x_shunt;
     } else if (!tag.compare("CP")) // Shunt capacitor
     {
-      QString val = misc::num2str(value, 3, "F"); // Add prefix, unit - 3 significant digits
+      QString val = misc::num2str(
+          value, 3, "F"); // Add prefix, unit - 3 significant digits
       componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
-      if (CAPQ == 1000){//Use an ideal capacitor
-          componentstr += QString("<C C1 1 %1 -30 15 -20 0 1 \"%2\" 1 "
-                                  " 0>\n")
-                              .arg(x_pos)
-                              .arg(val);
-      }
-      else{
-          componentstr += QString("<CAPQ CAPQ1 1 %1 -30 15 -20 0 1 \"%2\" 1 \"%3\" 1 "
-                                  " 0>\n")
-                              .arg(x_pos)
-                              .arg(val)
-                              .arg(CAPQ);
+      if (CAPQ == 1000) { // Use an ideal capacitor
+        componentstr += QString("<C C1 1 %1 -30 15 -20 0 1 \"%2\" 1 "
+                                " 0>\n")
+                            .arg(x_pos)
+                            .arg(val);
+      } else {
+        componentstr +=
+            QString("<CAPQ CAPQ1 1 %1 -30 15 -20 0 1 \"%2\" 1 \"%3\" 1 "
+                    " 0>\n")
+                .arg(x_pos)
+                .arg(val)
+                .arg(CAPQ);
       }
 
       wirestr += QString("<%1 -60 %1 -120 "
@@ -2461,43 +2440,47 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
       x_pos += x_shunt;
     } else if (!tag.compare("LCOUP")) // Coupled inductors
     {
-        x_pos += 120;
-        QString L11_val = misc::num2str(value, 3, "H"); // Add prefix, unit - 3 significant digits
-        QString L22_val = misc::num2str(value2, 3, "H"); // Add prefix, unit - 3 significant digits
-        QString k = misc::num2str(value3);
-        componentstr += QString("<MUT Tr1 1 %1 -90 40 -20 0 0 \"%2\" 1 \"%3\" 1 \"%4\" 1 "
-                                " 0>\n")
-                            .arg(x_pos)
-                            .arg(L11_val)
-                            .arg(L22_val)
-                            .arg(k);
-        componentstr += QString("<GND * 1 %1 -60 0 0 0 0>\n").arg(x_pos-30);
-        componentstr += QString("<GND * 1 %1 -60 0 0 0 0>\n").arg(x_pos+30);
+      x_pos += 120;
+      QString L11_val = misc::num2str(
+          value, 3, "H"); // Add prefix, unit - 3 significant digits
+      QString L22_val = misc::num2str(
+          value2, 3, "H"); // Add prefix, unit - 3 significant digits
+      QString k = misc::num2str(value3);
+      componentstr +=
+          QString("<MUT Tr1 1 %1 -90 40 -20 0 0 \"%2\" 1 \"%3\" 1 \"%4\" 1 "
+                  " 0>\n")
+              .arg(x_pos)
+              .arg(L11_val)
+              .arg(L22_val)
+              .arg(k);
+      componentstr += QString("<GND * 1 %1 -60 0 0 0 0>\n").arg(x_pos - 30);
+      componentstr += QString("<GND * 1 %1 -60 0 0 0 0>\n").arg(x_pos + 30);
 
-        wirestr += QString("<%1 -120 %2 -120 "
-                           " 0 0 0 "
-                           ">\n")
-                       .arg(x_pos - 120)
-                       .arg(x_pos - 30);
+      wirestr += QString("<%1 -120 %2 -120 "
+                         " 0 0 0 "
+                         ">\n")
+                     .arg(x_pos - 120)
+                     .arg(x_pos - 30);
 
-        wirestr += QString("<%1 -120 %2 -120 "
-                           " 0 0 0 "
-                           ">\n")
-                       .arg(x_pos + 30)
-                       .arg(x_pos + 140);
+      wirestr += QString("<%1 -120 %2 -120 "
+                         " 0 0 0 "
+                         ">\n")
+                     .arg(x_pos + 30)
+                     .arg(x_pos + 140);
 
-        x_pos += 140;
+      x_pos += 140;
 
-    }else if (!tag.compare("TL")) // Transmission line
+    } else if (!tag.compare("TL")) // Transmission line
     {
       if (microsyn) // Microstrip implementation
       {
         er = Substrate.er;
         getMicrostrip(value, Freq, &Substrate, width, er);
-        QString val_width =
-          misc::num2str(width, 3, "m"); // Add prefix, unit - 3 significant digits
+        QString val_width = misc::num2str(
+            width, 3, "m"); // Add prefix, unit - 3 significant digits
         QString val_length =
-          misc::num2str(value2 / sqrt(er), 3, "m"); // Add prefix, unit - 3 significant digits
+            misc::num2str(value2 / sqrt(er), 3,
+                          "m"); // Add prefix, unit - 3 significant digits
         componentstr +=
             QString("<MLIN MS1 1 %3 -120 -26 20 0 0 \"Sub1\" 1 \"%1\" 1 \"%2\" "
                     "1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n")
@@ -2505,7 +2488,8 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
                 .arg(val_length)
                 .arg(x_pos + 60);
       } else {
-        // Add a prefix (although rarely needed here) and unit - 3 significant digits
+        // Add a prefix (although rarely needed here) and unit - 3 significant
+        // digits
         QString val_impedance = misc::num2str(value, 3, "Ohm");
         // Add prefix, unit - 3 significant digits
         QString val_length = misc::num2str(value2, 3, "m");
@@ -2543,7 +2527,8 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
                 .arg(val_length)
                 .arg(x_pos);
       } else {
-        // Add a prefix (although rarely needed here) and unit - 3 significant digits
+        // Add a prefix (although rarely needed here) and unit - 3 significant
+        // digits
         QString val_impedance = misc::num2str(value, 3, "Ohm");
         // Add prefix, unit - 3 significant digits
         QString val_length = misc::num2str(value2, 3, "m");
@@ -2581,7 +2566,8 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
                 .arg(val_length)
                 .arg(x_pos);
       } else {
-        // Add a prefix (although rarely needed here) and unit - 3 significant digits
+        // Add a prefix (although rarely needed here) and unit - 3 significant
+        // digits
         QString val_impedance = misc::num2str(value, 3, "Ohm");
         // Add suffix mm, cm - 3 significant digits
         QString val_length = misc::num2str(value2, 3, "m");
@@ -2675,7 +2661,7 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
       // Add the frequency range for the S-param simulation
       //   cover 1 octave below and 1 above, user will adjust if needed...
       double freq_start = Freq / 2.0;
-      double freq_stop = 2.0 *Freq;
+      double freq_stop = 2.0 * Freq;
       QString val_freq_start = misc::num2str(freq_start, 3, "Hz");
       QString val_freq_stop = misc::num2str(freq_stop, 3, "Hz");
 
@@ -2710,13 +2696,12 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
         componentstr += QString("<C C1 1 %1 -90 15 -26 0 -1 \"%2\" 1 0>\n")
                             .arg(x_pos)
                             .arg(val_Cap);
-        paintingstr +=
-            QString("<Text %1 50 12 #000000 0 \"%4-j%5 %2 @ %3\">\n")
-                .arg(x_pos)
-                .arg(QChar(0x2126))
-                .arg(misc::num2str(Freq, 3, "Hz"))
-                .arg(RL)
-                .arg(fabs(XL));
+        paintingstr += QString("<Text %1 50 12 #000000 0 \"%4-j%5 %2 @ %3\">\n")
+                           .arg(x_pos)
+                           .arg(QChar(0x2126))
+                           .arg(misc::num2str(Freq, 3, "Hz"))
+                           .arg(RL)
+                           .arg(fabs(XL));
       } else if ((RL > 1e-3) && (XL > 1e-3)) // R + L
       {
         QString val_Res = misc::num2str(RL, 3, "Ohm");
@@ -2729,13 +2714,12 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
         componentstr += QString("<L L1 1 %1 -90 15 -26 0 -1 \"%2\" 1 0>\n")
                             .arg(x_pos)
                             .arg(val_Ind);
-        paintingstr +=
-            QString("<Text %1 50 12 #000000 0 \"%4+j%5 %2 @ %3\">\n")
-                .arg(x_pos)
-                .arg(QChar(0x2126))
-                .arg(misc::num2str(Freq, 3, "Hz"))
-                .arg(RL)
-                .arg(XL);
+        paintingstr += QString("<Text %1 50 12 #000000 0 \"%4+j%5 %2 @ %3\">\n")
+                           .arg(x_pos)
+                           .arg(QChar(0x2126))
+                           .arg(misc::num2str(Freq, 3, "Hz"))
+                           .arg(RL)
+                           .arg(XL);
       } else if ((RL > 1e-3) && (fabs(XL) < 1e-3)) // R
       {
         QString val_Res = misc::num2str(RL, 3, "Ohm");
@@ -2759,12 +2743,11 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
                 .arg(x_pos)
                 .arg(val_Ind);
         wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos); // Vertical wire
-        paintingstr +=
-            QString("<Text %1 50 12 #000000 0 \"j%4 %2 @ %3\">\n")
-                .arg(x_pos)
-                .arg(QChar(0x2126))
-                .arg(misc::num2str(Freq, 3, "Hz"))
-                .arg(XL);
+        paintingstr += QString("<Text %1 50 12 #000000 0 \"j%4 %2 @ %3\">\n")
+                           .arg(x_pos)
+                           .arg(QChar(0x2126))
+                           .arg(misc::num2str(Freq, 3, "Hz"))
+                           .arg(XL);
       } else if ((RL < 1e-3) && (XL < -1e-3)) // C
       {
         // Need to use abs() because XL < 0
@@ -2775,12 +2758,11 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
                 .arg(x_pos)
                 .arg(val_Cap);
         wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos); // Vertical wire
-        paintingstr +=
-            QString("<Text %1 50 12 #000000 0 \"-j%4 %2 @ %3\">\n")
-                .arg(x_pos)
-                .arg(QChar(0x2126))
-                .arg(misc::num2str(Freq, 3, "Hz"))
-                .arg(fabs(XL));
+        paintingstr += QString("<Text %1 50 12 #000000 0 \"-j%4 %2 @ %3\">\n")
+                           .arg(x_pos)
+                           .arg(QChar(0x2126))
+                           .arg(misc::num2str(Freq, 3, "Hz"))
+                           .arg(fabs(XL));
       }
       wirestr += QString("<%1 -120 %2 -120>\n")
                      .arg(x_pos - 100)
@@ -2824,151 +2806,158 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, struct Network
   Schematic += paintingstr;
   Schematic += "</Paintings>\n";
 
-  //Copy the schematic into clipboard
+  // Copy the schematic into clipboard
   QApplication::clipboard()->setText(Schematic, QClipboard::Clipboard);
 }
 
-//This function pops up a window for setting the parameters of the input matching network
-void MatchDialog::slot_InputMatchingSettings()
-{
-    MatchSettingsDialog *M = new MatchSettingsDialog(input_network, this, TopoCombo_Input->currentIndex());
-    if(M->exec())
-    {
-        struct ImplementationParams N = M->GetOptions();
-        if (N.order != -1)
-           input_network = N;
-    }
-    delete M;
+// This function pops up a window for setting the parameters of the input
+// matching network
+void MatchDialog::slot_InputMatchingSettings() {
+  MatchSettingsDialog *M = new MatchSettingsDialog(
+      input_network, this, TopoCombo_Input->currentIndex());
+  if (M->exec()) {
+    struct ImplementationParams N = M->GetOptions();
+    if (N.order != -1)
+      input_network = N;
+  }
+  delete M;
 }
 
-//This function pops up a window for setting the parameters of the output matching network
-void MatchDialog::slot_OutputMatchingSettings()
-{
-    MatchSettingsDialog *M = new MatchSettingsDialog(output_network, this, TopoCombo_Output->currentIndex());
-    if(M->exec())
-    {
-        struct ImplementationParams N = M->GetOptions();
-        if (N.order != -1)
-            output_network = N;
-    }
-    delete M;
+// This function pops up a window for setting the parameters of the output
+// matching network
+void MatchDialog::slot_OutputMatchingSettings() {
+  MatchSettingsDialog *M = new MatchSettingsDialog(
+      output_network, this, TopoCombo_Output->currentIndex());
+  if (M->exec()) {
+    struct ImplementationParams N = M->GetOptions();
+    if (N.order != -1)
+      output_network = N;
+  }
+  delete M;
 }
 
-//This function pops up a window for setting the parameters of the microstrip substrate
-void MatchDialog::slot_SubtrateSettings()
-{
-    MatchSubstrateDialog *M = new MatchSubstrateDialog(params.Substrate, this);
-    if(M->exec())
-    {
-        struct tSubstrate N = M->GetOptions();
-        if (N.er != -1)
-            params.Substrate = N;
-    }
-    delete M;
+// This function pops up a window for setting the parameters of the microstrip
+// substrate
+void MatchDialog::slot_SubtrateSettings() {
+  MatchSubstrateDialog *M = new MatchSubstrateDialog(params.Substrate, this);
+  if (M->exec()) {
+    struct tSubstrate N = M->GetOptions();
+    if (N.er != -1)
+      params.Substrate = N;
+  }
+  delete M;
 }
 
-//This function is triggered by the input topology combo and its purpose is to enable/disable the settings button and the microstrip implementation checkbox
-void MatchDialog::slot_InputTopologyChanged(int currentIndex)
-{
-    //Enable/Disable the microstrip substrate checkbox
-    if ((Transmission_Line_Topologies.contains(TopoCombo_Input->currentIndex())) || Transmission_Line_Topologies.contains(TopoCombo_Output->currentIndex())) {
-        MicrostripCheck->setEnabled(true);
-     }
-     else  {
-         MicrostripCheck->setEnabled(false);
-         MicrostripCheck->setChecked(false);
-         Substrate_Button->setEnabled(false);
-     }
+// This function is triggered by the input topology combo and its purpose is to
+// enable/disable the settings button and the microstrip implementation checkbox
+void MatchDialog::slot_InputTopologyChanged(int currentIndex) {
+  // Enable/Disable the microstrip substrate checkbox
+  if ((Transmission_Line_Topologies.contains(
+          TopoCombo_Input->currentIndex())) ||
+      Transmission_Line_Topologies.contains(TopoCombo_Output->currentIndex())) {
+    MicrostripCheck->setEnabled(true);
+  } else {
+    MicrostripCheck->setEnabled(false);
+    MicrostripCheck->setChecked(false);
+    Substrate_Button->setEnabled(false);
+  }
 }
 
-//This function is triggered by the output topology combo and its purpose is to enable/disable the settings button and the microstrip implementation checkbox
-void MatchDialog::slot_OutputTopologyChanged(int currentIndex)
-{
-    //Enable/Disable the microstrip substrate checkbox
-    if ((Transmission_Line_Topologies.contains(TopoCombo_Input->currentIndex())) || Transmission_Line_Topologies.contains(TopoCombo_Output->currentIndex())) {
-       MicrostripCheck->setEnabled(true);
-    }
-    else  {
-        MicrostripCheck->setEnabled(false);
-        MicrostripCheck->setChecked(false);
-        Substrate_Button->setEnabled(false);
-    }
+// This function is triggered by the output topology combo and its purpose is to
+// enable/disable the settings button and the microstrip implementation checkbox
+void MatchDialog::slot_OutputTopologyChanged(int currentIndex) {
+  // Enable/Disable the microstrip substrate checkbox
+  if ((Transmission_Line_Topologies.contains(
+          TopoCombo_Input->currentIndex())) ||
+      Transmission_Line_Topologies.contains(TopoCombo_Output->currentIndex())) {
+    MicrostripCheck->setEnabled(true);
+  } else {
+    MicrostripCheck->setEnabled(false);
+    MicrostripCheck->setChecked(false);
+    Substrate_Button->setEnabled(false);
+  }
 }
 
-// This function is called when the microstrip checkbox is clicked. Its purpose is to enable and disable the substrate settings window accordingly
-void MatchDialog::slot_MicrostripCheckChanged()
-{
-    bool microstrip_implementation = false;
-    if (MicrostripCheck->isChecked())
-        microstrip_implementation = true;
-    Substrate_Button->setEnabled(microstrip_implementation);
+// This function is called when the microstrip checkbox is clicked. Its purpose
+// is to enable and disable the substrate settings window accordingly
+void MatchDialog::slot_MicrostripCheckChanged() {
+  bool microstrip_implementation = false;
+  if (MicrostripCheck->isChecked())
+    microstrip_implementation = true;
+  Substrate_Button->setEnabled(microstrip_implementation);
 }
 
-//This function calculates the lumped element equivalent of an arbitrary-length transmission line
-QString MatchDialog::CalcTransmissionLineLumpedEquivalent(double f0, double Zm, int mode, double L)
-{
-    double w0 = 2*pi*f0;
-    double Xs, Xp;
-    double beta = 2*pi*f0/SPEED_OF_LIGHT;
-    Xs = Zm*sin(beta*L);
-    Xp = -Xs/(1-cos(beta*L));
-    if (mode == 1){//Pi type equivalent
-        if (Xs >= 0)// L <= lambda/2
-           return QString("CP:%1;LS:%2;CP:%1;").arg(-1/(Xp*w0)).arg(Xs/w0);
-        else//L > lambda
-           return QString("LP:%1;CS:%2;LP:%1;").arg(Xp/w0).arg(-1/(w0*Xs));
-    }else{//Tee type equivalent
-        if (Xs >= 0)// L <= lambda/2
-           return QString("LS:%1;CP:%2;LS:%1;").arg((Xp*Xs)/(w0*(2*Xp+Xs))).arg(-(2*Xp+Xs)/(Xp*Xp*w0));
-        else//L > lambda
-           return QString("CS:%1;LP:%2;CS:%1;").arg(-(2*Xp+Xs)/(Xp*Xs*w0)).arg(Xp*Xp/((2*Xp+Xs)*w0));
-    }
+// This function calculates the lumped element equivalent of an arbitrary-length
+// transmission line
+QString MatchDialog::CalcTransmissionLineLumpedEquivalent(double f0, double Zm,
+                                                          int mode, double L) {
+  double w0 = 2 * pi * f0;
+  double Xs, Xp;
+  double beta = 2 * pi * f0 / SPEED_OF_LIGHT;
+  Xs = Zm * sin(beta * L);
+  Xp = -Xs / (1 - cos(beta * L));
+  if (mode == 1) { // Pi type equivalent
+    if (Xs >= 0)   // L <= lambda/2
+      return QString("CP:%1;LS:%2;CP:%1;").arg(-1 / (Xp * w0)).arg(Xs / w0);
+    else // L > lambda
+      return QString("LP:%1;CS:%2;LP:%1;").arg(Xp / w0).arg(-1 / (w0 * Xs));
+  } else {       // Tee type equivalent
+    if (Xs >= 0) // L <= lambda/2
+      return QString("LS:%1;CP:%2;LS:%1;")
+          .arg((Xp * Xs) / (w0 * (2 * Xp + Xs)))
+          .arg(-(2 * Xp + Xs) / (Xp * Xp * w0));
+    else // L > lambda
+      return QString("CS:%1;LP:%2;CS:%1;")
+          .arg(-(2 * Xp + Xs) / (Xp * Xs * w0))
+          .arg(Xp * Xp / ((2 * Xp + Xs) * w0));
+  }
 }
 
-//The purpose of this function is to simplify series parallel combinations of capacitors/inductors
-QString MatchDialog::SimplifySeriesParallelConnections(QString laddercode)
-{
-    QStringList strlist = laddercode.split(";");//Slipt the string code to get the components
-    QString component, component_aux, tag, tag_aux;
-    double value, value_aux;
-    QString output;
+// The purpose of this function is to simplify series parallel combinations of
+// capacitors/inductors
+QString MatchDialog::SimplifySeriesParallelConnections(QString laddercode) {
+  QStringList strlist =
+      laddercode.split(";"); // Slipt the string code to get the components
+  QString component, component_aux, tag, tag_aux;
+  double value, value_aux;
+  QString output;
 
-    for (int i = 0; i < strlist.count(); i++) {
-        // Each token of the string descriptor has the following format:
-        // 'tag:<value>;''tag:<value1>#<value2>;'
-        // First, extract the tag
-        component = strlist.at(i);
-        int index_colon = component.indexOf(":");
-        tag = component.mid(0, index_colon);
-        value = component.mid(index_colon+1).toDouble();
+  for (int i = 0; i < strlist.count(); i++) {
+    // Each token of the string descriptor has the following format:
+    // 'tag:<value>;''tag:<value1>#<value2>;'
+    // First, extract the tag
+    component = strlist.at(i);
+    int index_colon = component.indexOf(":");
+    tag = component.mid(0, index_colon);
+    value = component.mid(index_colon + 1).toDouble();
 
-      double new_val;
-      bool simplify = false;
-      if (!tag.compare(tag_aux))
-          //Check if the components are LS, LP, CS or CP and simplify
-          if (!tag.compare("LS") || !tag.compare("LP") || !tag.compare("CS") || !tag.compare("CP"))
-          {
-            simplify = true;
-           if (!tag.compare("LS"))
-              new_val = value+value_aux;
-          else if (!tag.compare("LP"))
-                    new_val = (value*value_aux)/(value+value_aux);
-                 else if (!tag.compare("CS"))
-                        new_val = (value*value_aux)/(value+value_aux);
-                        else if (!tag.compare("CP"))
-                                new_val= value+value_aux;
-            }
-      if (simplify){
-          //Remove the value of the last component
-          int index = output.lastIndexOf(":");
-          output = output.mid(0, index);
-          output += QString(":%1;").arg(new_val);
-      }else
-          output += component + QString(";");
+    double new_val;
+    bool simplify = false;
+    if (!tag.compare(tag_aux))
+      // Check if the components are LS, LP, CS or CP and simplify
+      if (!tag.compare("LS") || !tag.compare("LP") || !tag.compare("CS") ||
+          !tag.compare("CP")) {
+        simplify = true;
+        if (!tag.compare("LS"))
+          new_val = value + value_aux;
+        else if (!tag.compare("LP"))
+          new_val = (value * value_aux) / (value + value_aux);
+        else if (!tag.compare("CS"))
+          new_val = (value * value_aux) / (value + value_aux);
+        else if (!tag.compare("CP"))
+          new_val = value + value_aux;
+      }
+    if (simplify) {
+      // Remove the value of the last component
+      int index = output.lastIndexOf(":");
+      output = output.mid(0, index);
+      output += QString(":%1;").arg(new_val);
+    } else
+      output += component + QString(";");
 
-      component_aux = component;
-      tag_aux = tag;
-      value_aux = value;
-    }
-    return output;
+    component_aux = component;
+    tag_aux = tag;
+    value_aux = value;
+  }
+  return output;
 }
