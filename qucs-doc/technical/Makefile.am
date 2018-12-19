@@ -72,7 +72,9 @@ PSFILES = MNAexample.eps NLexample.eps CYexample.eps MNAnoise1.eps \
   Pi-to-tee-transformation.eps Parallel_to_series.eps parallel-double-tuned-transformer.eps \
   Lowpass-Tee.eps Lowpass-Pi.eps Highpass-Tee.eps Highpass-Pi.eps Double-Tapped-Resonator-Transformed.eps \
   Double-Tapped-Resonator-p2s-output.eps Double-Tapped-Resonator-p2s-input.eps Double-Tapped-Resonator.eps \
-  coupled-inductors-tee-equivalent.eps coupled-inductors-pi-equivalent.eps coupled-inductors.eps
+  coupled-inductors-tee-equivalent.eps coupled-inductors-pi-equivalent.eps coupled-inductors.eps \
+  TL-circuit-equivalent-HP-Pi-Tee.eps TL-circuit-equivalent-LP-Pi-Tee.eps pi-to-tee-equivalent-implementation.eps \
+  pi-equivalent-circuit.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PSFRAGTEXS = $(FIGURES:.fig=.tex) $(MATHFILES:.m=.tex)
 PDFFILES = $(FIGURES:.fig=.pdf)
