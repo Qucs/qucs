@@ -1,19 +1,10 @@
 /***************************************************************************
-                               matchdialog.cpp
-                              -----------------
-    begin                : Fri Jul 22 2005
-    copyright            : (C) 2005 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
-    copyright            : (C) 2012, 2013, 2016 by Qucs Team (see AUTHORS file)
-
------------------------------------------------------------------------------
-    Update (2017)        : New impedance matching techniques: Single matching,
-                           double stub matching, real to real broadband
-transformers, cascaded L-sections and lambda/8 + lambda/4 matching
-
-                          Andres Martinez-Mera <andresmartinezmera@gmail.com>
-                          Claudio Girardi      <claudio.girardi@virgilio.it>
-------------------------------------------------------------------------------
+                                matchdialog.cpp
+                                ----------
+    copyright            :  QUCS team
+    author                :  2018 Andres Martinez-Mera
+                                 2017 Andres Martinez-Mera and Claudio Girardi
+                                 2005 Michael Margraf
 
  ***************************************************************************/
 
@@ -21,7 +12,7 @@ transformers, cascaded L-sections and lambda/8 + lambda/4 matching
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
