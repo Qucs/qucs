@@ -2857,7 +2857,7 @@ void MatchDialog::slot_OutputMatchingSettings()
 //This function pops up a window for setting the parameters of the microstrip substrate
 void MatchDialog::slot_SubtrateSettings()
 {
-    MatchSubstrateDialog *M = new MatchSubstrateDialog(this);
+    MatchSubstrateDialog *M = new MatchSubstrateDialog(params.Substrate, this);
     if(M->exec())
     {
         struct tSubstrate N = M->GetOptions();

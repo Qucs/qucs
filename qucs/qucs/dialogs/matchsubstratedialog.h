@@ -44,7 +44,7 @@ struct tSubstrate {
 class MatchSubstrateDialog : public QDialog {
   Q_OBJECT
 public:
-  MatchSubstrateDialog(QWidget *parent = 0);
+  MatchSubstrateDialog(struct tSubstrate, QWidget *parent = 0);
   ~MatchSubstrateDialog();
   struct tSubstrate GetOptions();
 
@@ -56,6 +56,7 @@ private:
   QPushButton *OK_Button, *Cancel_Button;
   QLineEdit *Resistivity_Edit;
   double getScaleFactor(int);
+  void getValueAndIndex(double &, int &);
 
 public slots:
   void slot_save_settings();

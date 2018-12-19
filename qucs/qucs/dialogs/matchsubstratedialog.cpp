@@ -26,9 +26,11 @@
    This is a pop-up window to enter the substrate parameters
 */
 
-MatchSubstrateDialog::MatchSubstrateDialog(QWidget *parent) : QDialog(parent) {
+MatchSubstrateDialog::MatchSubstrateDialog(struct tSubstrate subs, QWidget *parent) : QDialog(parent) {
   setWindowTitle(tr("Substrate parameters"));
   QGridLayout *SubstrateParameterslayout = new QGridLayout();
+  double val;
+  int index=0;
 
   QStringList units;
   units.append("mm");
@@ -44,19 +46,20 @@ MatchSubstrateDialog::MatchSubstrateDialog(QWidget *parent) : QDialog(parent) {
     Relative_Permittivity_Combo->addItem(*p); // The dielectric coeff combobox is filled with
                                // the materials taken from
                                // "../../qucs-filter/material_props.h"
-  Relative_Permittivity_Combo->lineEdit()->setText("4.7");
+  Relative_Permittivity_Combo->lineEdit()->setText(QString("%1").arg(subs.er));
   SubstrateParameterslayout->addWidget(Relative_Permittivity_Label, 0, 0);
-  SubstrateParameterslayout->addWidget(Relative_Permittivity_Combo, 0,1);
+  SubstrateParameterslayout->addWidget(Relative_Permittivity_Combo, 0, 1);
 
   //Substrate height
   Substrate_Height_Label = new QLabel(tr("Substrate height"));
   Substrate_Height_Spinbox = new QDoubleSpinBox();
   Substrate_Height_Spinbox->setMinimum(0.01);
-  Substrate_Height_Spinbox->setValue(1.5);
+  val = subs.height, getValueAndIndex(val, index);
+  Substrate_Height_Spinbox->setValue(val);
   Substrate_Height_Spinbox->setSingleStep(0.01);
   Substrate_Height_Units = new QComboBox();
   Substrate_Height_Units->addItems(units);
-  Substrate_Height_Units->setCurrentIndex(2);
+  Substrate_Height_Units->setCurrentIndex(index);
   SubstrateParameterslayout->addWidget(Substrate_Height_Label, 1, 0);
   SubstrateParameterslayout->addWidget(Substrate_Height_Spinbox, 1, 1);
   SubstrateParameterslayout->addWidget(Substrate_Height_Units, 1, 2);
@@ -65,11 +68,12 @@ MatchSubstrateDialog::MatchSubstrateDialog(QWidget *parent) : QDialog(parent) {
   Thickness_Label = new QLabel(tr("Metal thickness"));
   Thickness_Spinbox = new QDoubleSpinBox();
   Thickness_Spinbox->setMinimum(0.01);
-  Thickness_Spinbox->setValue(36);
+  val = subs.thickness, getValueAndIndex(val, index);
+  Thickness_Spinbox->setValue(val);
   Thickness_Spinbox->setSingleStep(0.01);
   Thickness_Units = new QComboBox();
   Thickness_Units->addItems(units);
-  Thickness_Units->setCurrentIndex(2);
+  Thickness_Units->setCurrentIndex(index);
   SubstrateParameterslayout->addWidget(Thickness_Label, 2, 0);
   SubstrateParameterslayout->addWidget(Thickness_Spinbox, 2, 1);
   SubstrateParameterslayout->addWidget(Thickness_Units, 2, 2);
@@ -78,11 +82,12 @@ MatchSubstrateDialog::MatchSubstrateDialog(QWidget *parent) : QDialog(parent) {
   Minimum_Width_Label = new QLabel(tr("Minimum width"));
   Minimum_Width_Spinbox = new QDoubleSpinBox();
   Minimum_Width_Spinbox->setMinimum(0.01);
-  Minimum_Width_Spinbox->setValue(0.4);
+  val = subs.minWidth; getValueAndIndex(val, index);
+  Minimum_Width_Spinbox->setValue(val);
   Minimum_Width_Spinbox->setSingleStep(0.01);
   Minimum_Width_Scale = new QComboBox();
   Minimum_Width_Scale->addItems(units);
-  Minimum_Width_Scale->setCurrentIndex(2);
+  Minimum_Width_Scale->setCurrentIndex(index);
   SubstrateParameterslayout->addWidget(Minimum_Width_Label, 3, 0);
   SubstrateParameterslayout->addWidget(Minimum_Width_Spinbox, 3, 1);
   SubstrateParameterslayout->addWidget(Minimum_Width_Scale, 3, 2);
@@ -91,11 +96,12 @@ MatchSubstrateDialog::MatchSubstrateDialog(QWidget *parent) : QDialog(parent) {
   Maximum_Width_Label = new QLabel(tr("Maximum width"));
   Maximum_Width_Spinbox = new QDoubleSpinBox();
   Maximum_Width_Spinbox->setMinimum(0.01);
-  Maximum_Width_Spinbox->setValue(5);
+  val = subs.maxWidth; getValueAndIndex(val, index);
+  Maximum_Width_Spinbox->setValue(val);
   Maximum_Width_Spinbox->setSingleStep(0.01);
   Maximum_Width_Scale = new QComboBox();
   Maximum_Width_Scale->addItems(units);
-  Maximum_Width_Scale->setCurrentIndex(2);
+  Maximum_Width_Scale->setCurrentIndex(index);
   SubstrateParameterslayout->addWidget(Maximum_Width_Label, 4, 0);
   SubstrateParameterslayout->addWidget(Maximum_Width_Spinbox, 4, 1);
   SubstrateParameterslayout->addWidget(Maximum_Width_Scale, 4, 2);
@@ -105,14 +111,14 @@ MatchSubstrateDialog::MatchSubstrateDialog(QWidget *parent) : QDialog(parent) {
   tanD_Spinbox = new QDoubleSpinBox();
   tanD_Spinbox->setDecimals(4);
   tanD_Spinbox->setMinimum(0.0001);
-  tanD_Spinbox->setValue(0.0125);
+  tanD_Spinbox->setValue(subs.tand);
   tanD_Spinbox->setSingleStep(0.0001);
   SubstrateParameterslayout->addWidget(tanD_Label, 5, 0);
   SubstrateParameterslayout->addWidget(tanD_Spinbox, 5, 1);
 
   //Resistivity
   Resistivity_Label = new QLabel(tr("Resistivity"));
-  Resistivity_Edit = new QLineEdit("2.43902e-08");
+  Resistivity_Edit = new QLineEdit(QString("%1").arg(subs.resistivity));
   SubstrateParameterslayout->addWidget(Resistivity_Label, 6, 0);
   SubstrateParameterslayout->addWidget(Resistivity_Edit, 6, 1);
 
@@ -120,12 +126,13 @@ MatchSubstrateDialog::MatchSubstrateDialog(QWidget *parent) : QDialog(parent) {
   Roughness_Label = new QLabel(tr("Roughness"));
   Roughness_Spinbox = new QDoubleSpinBox();
   Roughness_Spinbox->setMinimum(0.01);
-  Roughness_Spinbox->setValue(0.1);
+  val = subs.roughness; getValueAndIndex(val, index);
+  Roughness_Spinbox->setValue(val);
   Roughness_Spinbox->setDecimals(2);
   Roughness_Spinbox->setSingleStep(0.01);
   Roughness_Scale = new QComboBox();
   Roughness_Scale->addItems(units);
-  Roughness_Scale->setCurrentIndex(2);
+  Roughness_Scale->setCurrentIndex(index);
   SubstrateParameterslayout->addWidget(Roughness_Label, 7, 0);
   SubstrateParameterslayout->addWidget(Roughness_Spinbox, 7, 1);
   SubstrateParameterslayout->addWidget(Roughness_Scale, 7, 2);
@@ -165,6 +172,7 @@ struct tSubstrate MatchSubstrateDialog::GetOptions()
     return substrate_parameters;
 }
 
+//This function returns the scale factor given a combo index
 double MatchSubstrateDialog::getScaleFactor(int index)
 {
     switch (index) {
@@ -178,4 +186,11 @@ double MatchSubstrateDialog::getScaleFactor(int index)
         return 1e-6;
         break;
     }
+}
+
+void MatchSubstrateDialog::getValueAndIndex(double & val, int & index){
+    if (val < 1e-6)//Then use micron units
+        val *= 1e6, index = 2;
+    else//Use millimeters
+        val *= 1e3, index = 0;
 }
