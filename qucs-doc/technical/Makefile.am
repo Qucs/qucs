@@ -57,24 +57,56 @@ PSFILES = MNAexample.eps NLexample.eps CYexample.eps MNAnoise1.eps \
   rectwaveguide.eps circularwaveguide.eps                          \
   PlanarSpiralInductors.eps CircularLoop.eps PrintedInductorEC.eps \
   ReflectionCoeffsTaper.eps capq.eps indq.eps \
-  DoubleStubOpen.eps DoubleStubShort.eps \
-  SingleStubOpen.eps SingleStubShort.eps \
-  DoubleStubOpenBalanced.eps DoubleStubShortBalanced.eps \
-  SingleStubOpenBalanced.eps SingleStubShortBalanced.eps \
-  Lsection.eps SmithChart-Lsection.eps SmithChartTL.eps \
-  Smithl8l4.eps SmithCascadedLCsections.eps cascaded-l-section-lowpass.eps \
-  cascaded-l-section-highpass.eps CascadedLCsch-lowpass.eps CascadedLCsch-highpass.eps \
-  Tee-to-pi-transformation.eps Tapped-L-transformation-output.eps Tapped-L-transformation-input.eps \
-  Tapped-L-equivalent.eps Tapped-L.eps Tapped-C-Transformer.eps Tapped-C-ckt-equivalent-input-pair-transformed.eps \
-  Tapped-C-ckt-equivalent.eps Single-tuned-transformer-equivalent-ckt.eps Single-tuned-transformer.eps \
-  Series_to_parallel.eps series-double-tuned-transformer.eps pi-type-output-transform.eps \
-  pi-type-network.eps pi-type-Lowpass-Highpass.eps pi-type-input-transform.eps \
-  Pi-to-tee-transformation.eps Parallel_to_series.eps parallel-double-tuned-transformer.eps \
-  Lowpass-Tee.eps Lowpass-Pi.eps Highpass-Tee.eps Highpass-Pi.eps Double-Tapped-Resonator-Transformed.eps \
-  Double-Tapped-Resonator-p2s-output.eps Double-Tapped-Resonator-p2s-input.eps Double-Tapped-Resonator.eps \
-  coupled-inductors-tee-equivalent.eps coupled-inductors-pi-equivalent.eps coupled-inductors.eps \
-  TL-circuit-equivalent-HP-Pi-Tee.eps TL-circuit-equivalent-LP-Pi-Tee.eps pi-to-tee-equivalent-implementation.eps \
-  pi-equivalent-circuit.eps
+  ./images/Synthesis/Impedance_Matching/DoubleStubOpen.eps \
+  ./images/Synthesis/Impedance_Matching/DoubleStubShort.eps \
+  ./images/Synthesis/Impedance_Matching/SingleStubOpen.eps \
+  ./images/Synthesis/Impedance_Matching/SingleStubShort.eps \
+  ./images/Synthesis/Impedance_Matching/DoubleStubOpenBalanced.eps \
+  ./images/Synthesis/Impedance_Matching/DoubleStubShortBalanced.eps \
+  ./images/Synthesis/Impedance_Matching/SingleStubOpenBalanced.eps \
+  ./images/Synthesis/Impedance_Matching/SingleStubShortBalanced.eps \
+  ./images/Synthesis/Impedance_Matching/Lsection.eps \
+  ./images/Synthesis/Impedance_Matching/SmithChart-Lsection.eps \
+  ./images/Synthesis/Impedance_Matching/SmithChartTL.eps \
+  ./images/Synthesis/Impedance_Matching/Smithl8l4.eps \
+  ./images/Synthesis/Impedance_Matching/SmithCascadedLCsections.eps \
+  ./images/Synthesis/Impedance_Matching/cascaded-l-section-lowpass.eps \
+  ./images/Synthesis/Impedance_Matching/cascaded-l-section-highpass.eps \
+  ./images/Synthesis/Impedance_Matching/CascadedLCsch-lowpass.eps \
+  ./images/Synthesis/Impedance_Matching/CascadedLCsch-highpass.eps \
+  ./images/Synthesis/Impedance_Matching/Tee-to-pi-transformation.eps \
+  ./images/Synthesis/Impedance_Matching/Tapped-L-transformation-output.eps \
+  ./images/Synthesis/Impedance_Matching/Tapped-L-transformation-input.eps \
+  ./images/Synthesis/Impedance_Matching/Tapped-L-equivalent.eps \
+  ./images/Synthesis/Impedance_Matching/Tapped-L.eps \
+  ./images/Synthesis/Impedance_Matching/Tapped-C-Transformer.eps \
+  ./images/Synthesis/Impedance_Matching/Tapped-C-ckt-equivalent-input-pair-transformed.eps \
+  ./images/Synthesis/Impedance_Matching/Tapped-C-ckt-equivalent.eps \
+  ./images/Synthesis/Impedance_Matching/Single-tuned-transformer-equivalent-ckt.eps \
+  ./images/Synthesis/Impedance_Matching/Single-tuned-transformer.eps \
+  ./images/Synthesis/Impedance_Matching/Series_to_parallel.eps \
+  ./images/Synthesis/Impedance_Matching/series-double-tuned-transformer.eps \
+  ./images/Synthesis/Impedance_Matching/pi-type-output-transform.eps \
+  ./images/Synthesis/Impedance_Matching/pi-type-network.eps pi-type-Lowpass-Highpass.eps \
+  ./images/Synthesis/Impedance_Matching/pi-type-input-transform.eps \
+  ./images/Synthesis/Impedance_Matching/Pi-to-tee-transformation.eps \
+  ./images/Synthesis/Impedance_Matching/Parallel_to_series.eps \
+  ./images/Synthesis/Impedance_Matching/parallel-double-tuned-transformer.eps \
+  ./images/Synthesis/Impedance_Matching/Lowpass-Tee.eps \
+   ./images/Synthesis/Impedance_Matching/Lowpass-Pi.eps \
+   ./images/Synthesis/Impedance_Matching/Highpass-Tee.eps \
+   ./images/Synthesis/Impedance_Matching/Highpass-Pi.eps \
+  ./images/Synthesis/Impedance_Matching/Double-Tapped-Resonator-Transformed.eps \
+  ./images/Synthesis/Impedance_Matching/Double-Tapped-Resonator-p2s-output.eps \
+  ./images/Synthesis/Impedance_Matching/Double-Tapped-Resonator-p2s-input.eps \
+  ./images/Synthesis/Impedance_Matching/Double-Tapped-Resonator.eps \
+  ./images/Synthesis/Impedance_Matching/coupled-inductors-tee-equivalent.eps  \
+  ./images/Synthesis/Impedance_Matching/coupled-inductors-pi-equivalent.eps \
+  ./images/Synthesis/Impedance_Matching/coupled-inductors.eps \
+  ./images/Synthesis/Impedance_Matching/TL-circuit-equivalent-HP-Pi-Tee.eps \
+  ./images/Synthesis/Impedance_Matching/TL-circuit-equivalent-LP-Pi-Tee.eps  \
+  ./images/Synthesis/Impedance_Matching/pi-to-tee-equivalent-implementation.eps \
+  ./images/Synthesis/Impedance_Matching/pi-equivalent-circuit.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PSFRAGTEXS = $(FIGURES:.fig=.tex) $(MATHFILES:.m=.tex)
 PDFFILES = $(FIGURES:.fig=.pdf)

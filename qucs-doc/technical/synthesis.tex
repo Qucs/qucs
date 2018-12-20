@@ -256,7 +256,7 @@ The \textit{L-section} method combines two reactances (shunt and series) to matc
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=120mm]{Lsection}
+\includegraphics[width=120mm]{./images/Synthesis/Impedance_Matching/Lsection}
 \caption{L-section topology}
 \label{fig:Lsection}
 \end{figure}
@@ -266,7 +266,7 @@ The series and the shunt reactances move $Z_L$ towards $Z_0$ through the impedan
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=120mm]{SmithChart-Lsection}
+\includegraphics[width=120mm]{./images/Synthesis/Impedance_Matching/SmithChart-Lsection}
 \caption{Impedance traslation produced by a series/shunt capacitor and inductor}
 \label{fig:LsectionSmith}
 \end{figure}
@@ -301,11 +301,11 @@ At microwave frequencies, transmission lines are usually preferred rather than l
     \hline
     Open circuited stub & Short circuited stub\\ \hline
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{SingleStubOpen}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/SingleStubOpen}
     \end{minipage}
     &
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{SingleStubShort}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/SingleStubShort}
     \end{minipage}
     \\ \hline
   \end{tabular}
@@ -318,7 +318,7 @@ As \ref{fig:SmithTL} shows, a transmission line describes a circle around $Z_0$ 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=120mm]{SmithChartTL}
+\includegraphics[width=120mm]{./images/Synthesis/Impedance_Matching/SmithChartTL}
 \caption{Impedance traslation caused by a transmission line and an open/short circuited stub}
 \label{fig:SmithTL}
 \end{figure}
@@ -373,11 +373,11 @@ R_L == Z_0 \;\;\;\;\;\;\;  t & = -X_L/(2\cdot Z_0)
     \hline
     Open circuited balanced stubs & Short circuited balanced stubs\\ \hline
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{SingleStubOpenBalanced}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/SingleStubOpenBalanced}
     \end{minipage}
     &
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{SingleStubShortBalanced}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/SingleStubShortBalanced}
     \end{minipage}
     \\ \hline
   \end{tabular}
@@ -405,11 +405,11 @@ The distance between different blocks (e.g. amplifier stages, filters,...) in a 
     \hline
     Open circuited stub & Short circuited stub\\ \hline
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{DoubleStubOpen}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/DoubleStubOpen}
     \end{minipage}
     &
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{DoubleStubShort}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/DoubleStubShort}
     \end{minipage}
     \\ \hline
   \end{tabular}
@@ -465,11 +465,11 @@ l_{short} & = \frac{-\lambda}{2\pi} atan\left(\frac{1}{Z_0\cdot B_{stub_i}}\righ
     \hline
     Open circuited stub & Short circuited stub\\ \hline
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{DoubleStubOpenBalanced}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/DoubleStubOpenBalanced}
     \end{minipage}
     &
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{DoubleStubShortBalanced}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/DoubleStubShortBalanced}
     \end{minipage}
     \\ \hline
   \end{tabular}
@@ -505,7 +505,7 @@ In order to overcome the limitations of the $\lambda/4$ matching, a $\lambda/8$ 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=120mm]{Smithl8l4}
+\includegraphics[width=120mm]{./images/Synthesis/Impedance_Matching/Smithl8l4}
 \caption{Example of $\lambda/4 + \lambda/8$ matching: $Z_S = 50\Omega$, $Z_L = 30+j50\Omega$, $Z_{\lambda/4} = 102.6\Omega$, $Z_{\lambda/4} = 58.3\Omega$}
 \label{fig:SmithL8L4}
 \end{figure}
@@ -591,12 +591,12 @@ An alternative method to achieve broadband matching between real impedances is t
   \begin{tabular}{ | c | c | }
     \hline
     Lowpass & \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{CascadedLCsch-lowpass}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/CascadedLCsch-lowpass}
     \end{minipage}\\ \hline
     Highpass
     &
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{CascadedLCsch-highpass}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/CascadedLCsch-highpass}
     \end{minipage}
 \\ \hline
   \end{tabular}
@@ -625,11 +625,11 @@ R_i = R_S^{\frac{N-i}{N}} \cdot R_L^{\frac{i}{N}}, \forall i \in [1, N-1]
     \hline
     Lowpass & Highpass\\ \hline
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{cascaded-l-section-lowpass}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/cascaded-l-section-lowpass}
     \end{minipage}
     &
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{cascaded-l-section-highpass}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/cascaded-l-section-highpass}
     \end{minipage}
 \\ \hline
     \begin{minipage}{.4\textwidth}
@@ -668,7 +668,7 @@ R_i = R_S^{\frac{N-i}{N}} \cdot R_L^{\frac{i}{N}}, \forall i \in [1, N-1]
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=120mm]{SmithCascadedLCsections}
+\includegraphics[width=120mm]{./images/Synthesis/Impedance_Matching/SmithCascadedLCsections}
 \caption{Example of \textit{cascaded L-sections} matching: $Z_S = 50\Omega$, $Z_L = 150\Omega$, $L_i = \lbrace 5.3, 7.6, 11\rbrace nH$, $C_i = \lbrace 1.47, 1, 0.7 \rbrace pF$}
 \end{figure}
 
@@ -676,11 +676,15 @@ R_i = R_S^{\frac{N-i}{N}} \cdot R_L^{\frac{i}{N}}, \forall i \in [1, N-1]
 \noindent \textit{Reference:} \cite{BahlFundamentalsRFMW}, pages: 169-172.
 
 \subsection{$\pi$-type matching networks}
-\subsubsection{Series-parallel transformations}
-The foundations of the $\pi$ and T-type matching networks rely on the series-to-parallel and parallel-to-series circuit transformations.
+\noindent The $\pi$ and T-type matching networks add an extra element with respect to the conventional L-section matching. This introduces a new degree of freedom in the Smitch Chart path, This means, the impedances are matched using three "impedance jumps". Consequently, infinite paths are available to match the load to the source. These paths fit in different Q-factor arcs allowing more or less bandwidth. \\
 
-\paragraph{Unloaded quality factor}
-The unloaded quality factor is defined by the ratio between the resistive and reactive parts of a circuit. For series-connected impedances it is defined as $Q = X/R$. In the case of shunt-connected impedances, $Q = R/X$
+\noindent The foundations of the $\pi$ and T-type matching networks rely on the series-to-parallel and parallel-to-series circuit transformations as detailed below. In order to deal with these circuit transformations, it is necessary to introduce the \textit{unloaded quality factor} of an impedance, Q.  The unloaded quality factor is defined as the ratio between the resistive and reactive parts of a circuit and it is related to the bandwidth of a tank \cite{TheDesignofCMOSRFIC}:
+
+\begin{itemize}
+ \item Series-connected impedances: $Q = X/R$
+ \item Shunt-connected impedances: $Q = R/X$
+\end{itemize}
+
 \paragraph{Series-to-parallel transformation}
 Given a series impedance $Z = R + j \cdot X$, the parallel equivalent $Y = G + j \cdot B$ presents the same input impedance for a given frequency:
 
@@ -717,11 +721,11 @@ Z = \frac{1}{G \cdot (1 + Q^2)} - j \cdot \frac{1}{B \cdot (1 + Q^{-2})}
     \hline
     Series to parallel & Parallel to series\\ \hline
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{Series_to_parallel}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/Series_to_parallel}
     \end{minipage}
     &
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{Parallel_to_series}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/Parallel_to_series}
     \end{minipage}
     \\ \hline
     \begin{minipage}{.4\textwidth}
@@ -745,16 +749,14 @@ Z = \frac{1}{G \cdot (1 + Q^2)} - j \cdot \frac{1}{B \cdot (1 + Q^{-2})}
   \label{tbl:Qtrans_summary}
 \end{table}
 
-\noindent The previous results may be applied to the $\pi$-type network in \ref{fig:pi-matching}
+\noindent The previous results may be applied to the shunt branches of the $\pi$-type network as shown in \ref{tbl:pi-eqs}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=80mm]{pi-type-network}
+\includegraphics[width=80mm]{./images/Synthesis/Impedance_Matching/pi-type-network}
 \caption{$\pi$-type matching network}
 \label{fig:pi-matching}
 \end{figure}
-
-\noindent The parallel to series transformation to the shunt branches as follows:
 
 \begin{table}[H]
   \centering
@@ -762,11 +764,11 @@ Z = \frac{1}{G \cdot (1 + Q^2)} - j \cdot \frac{1}{B \cdot (1 + Q^{-2})}
     \hline
     Input & Output\\ \hline
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{pi-type-input-transform}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/pi-type-input-transform}
     \end{minipage}
     &
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{pi-type-output-transform}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/pi-type-output-transform}
     \end{minipage}
     \\ \hline
     \begin{minipage}{.4\textwidth}
@@ -794,7 +796,7 @@ Z = \frac{1}{G \cdot (1 + Q^2)} - j \cdot \frac{1}{B \cdot (1 + Q^{-2})}
   \label{tbl:pi-eqs}
 \end{table}
 
-\noindent For conjugate matching $Z_A^* = j·X_C + Z_B$,
+\noindent For conjugate matching, $Z_A^* = j·X_C + Z_B$,
 
 \begin{equation}
 \frac{R_S}{1 + Q_1^2} + j \cdot \frac{X_1}{1 + Q_1^{-2}} = \frac{R_L}{1 + Q_2^{-2}} + j \cdot \left( X_2 - \frac{X_3}{1 + Q_2^{-2}} \right)
@@ -848,11 +850,11 @@ X_C = \frac{2 \cdot Q_0 \cdot R_S}{1 + Q_1^2} = \frac{2 \cdot Q_0 \cdot R_L}{1 +
     \hline
     Lowpass & Highpass\\ \hline
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{Lowpass-Pi}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/Lowpass-Pi}
     \end{minipage}
     &
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{Highpass-Pi}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/Highpass-Pi}
     \end{minipage}
 \\ \hline
     \begin{minipage}{.4\textwidth}
@@ -886,11 +888,11 @@ X_C = \frac{2 \cdot Q_0 \cdot R_S}{1 + Q_1^2} = \frac{2 \cdot Q_0 \cdot R_L}{1 +
     \hline
     $\pi$-to-T & T-to-$\pi$\\ \hline
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{Pi-to-tee-transformation}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/Pi-to-tee-transformation}
     \end{minipage}
     &
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{Tee-to-pi-transformation}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/Tee-to-pi-transformation}
     \end{minipage}
     \\ \hline
     \begin{minipage}{.4\textwidth}
@@ -922,11 +924,11 @@ X_C = \frac{2 \cdot Q_0 \cdot R_S}{1 + Q_1^2} = \frac{2 \cdot Q_0 \cdot R_L}{1 +
     \hline
     Lowpass & Highpass\\ \hline
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{Lowpass-Tee}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/Lowpass-Tee}
     \end{minipage}
     &
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{Highpass-Tee}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/Highpass-Tee}
     \end{minipage}
 \\ \hline
     \begin{minipage}{.4\textwidth}
@@ -954,7 +956,7 @@ X_C = \frac{2 \cdot Q_0 \cdot R_S}{1 + Q_1^2} = \frac{2 \cdot Q_0 \cdot R_L}{1 +
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=80mm]{Tapped-C-Transformer}
+\includegraphics[width=80mm]{./images/Synthesis/Impedance_Matching/Tapped-C-Transformer}
 \caption{Tapped-C transformer}
 \label{fig:tapped-c-transformer}
 \end{figure}
@@ -976,7 +978,7 @@ X_C = \frac{2 \cdot Q_0 \cdot R_S}{1 + Q_1^2} = \frac{2 \cdot Q_0 \cdot R_L}{1 +
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=80mm]{Tapped-C-ckt-equivalent}
+\includegraphics[width=80mm]{./images/Synthesis/Impedance_Matching/Tapped-C-ckt-equivalent}
 \caption{Simplification after transforming the output pair into a series impedance}
 \label{fig:tapped-c-simplification}
 \end{figure}
@@ -988,7 +990,7 @@ X_C = \frac{2 \cdot Q_0 \cdot R_S}{1 + Q_1^2} = \frac{2 \cdot Q_0 \cdot R_L}{1 +
 C_2 = \frac{Q_2}{R_L \cdot \omega_0}
 \end{equation}
 
-\noindent As seen in \ref{fig:tapped-c-simplification} $C_1$ and $C_2'$ are connected in series, they may be simplified as an equivalent capacitance, $C_{eq}$,
+\noindent As seen in \ref{fig:tapped-c-simplification}, $C_1$ and $C_2'$ are connected in series, they may be simplified as an equivalent capacitance, $C_{eq}$:
 
 \begin{equation}
 C_{eq} = \frac{C_1 \cdot C_2'}{C_1 + C_2'} = \frac{C_1 \cdot C_2 \cdot (1 + Q_2^{-2})}{C_1 + C_2 \cdot(1 + Q_2^{-2})} = \frac{C_1 \cdot C_2 \cdot Q_2^2 + C_1 \cdot C_2}{C_1 \cdot Q_2^2 + C_2 \cdot Q_2^2 + C_2}
@@ -998,7 +1000,7 @@ C_{eq} = \frac{C_1 \cdot C_2'}{C_1 + C_2'} = \frac{C_1 \cdot C_2 \cdot (1 + Q_2^
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=80mm]{Tapped-C-ckt-equivalent-input-pair-transformed}
+\includegraphics[width=80mm]{./images/Synthesis/Impedance_Matching/Tapped-C-ckt-equivalent-input-pair-transformed}
 \caption{Simplification after transforming the input pair into a series impedance}
 \label{fig:tapped-c-simplification-input}
 \end{figure}
@@ -1010,7 +1012,7 @@ C_{eq} = \frac{C_1 \cdot C_2'}{C_1 + C_2'} = \frac{C_1 \cdot C_2 \cdot (1 + Q_2^
   L' &= \frac{L}{1 + Q^{-2}} = \frac{L}{1 + \left( \frac{R_S}{\omega_0 \cdot L}\right)^{-2}} = \frac{L \cdot R_S^2}{R_S^2 + \omega_0^2 \cdot L^2}
 \end{align}
 
-\noindent Lets define $Z_A = R_S' + j \cdot \omega_0 \cdot L'$ and $Z_B = R_L' - j \cdot \frac{1}{\omega_0 \cdot C_{eq}}$. For maximum power transfer, conjugate matching is needed so:
+\noindent Lets define $Z_A = R_S' + j \cdot \omega_0 \cdot L'$ and $Z_B = R_L' - j \cdot \frac{1}{\omega_0 \cdot C_{eq}}$. For maximum power transfer, conjugate matching is required so:
 
 \begin{equation}
 Z_A = Z_B^* \Longrightarrow R_S' + j \cdot \omega_0 \cdot L' = R_L' + j \cdot \frac{1}{\omega_0 \cdot C_{eq}}
@@ -1029,7 +1031,7 @@ R_S' = R_L' \Longleftrightarrow \frac{R_S}{1 + Q^2} = \frac{R_L}{1 + Q_2^2} \Lon
 C_2 = \frac{\sqrt{\frac{R_L}{R_S} \cdot (1 + Q^2)  - 1 }}{R_L \cdot \omega_0}
 \end{equation}
 
-\noindent Finally, in order to determine the value of $C_1$ we get
+\noindent Finally, $C_1$ is calculated as follows:
 
 \begin{equation}
 Q = \frac{X_{C_{eq}}}{R_L'} = \frac{C_1 + C_2'}{\omega_0 \cdot R_L' \cdot C_1 \cdot C_2'} \Longrightarrow C_1 = \frac{C_2 \cdot (1 + Q_2^2)}{Q \cdot Q_2 - Q_2^2}
@@ -1046,11 +1048,11 @@ Q = \frac{X_{C_{eq}}}{R_L'} = \frac{C_1 + C_2'}{\omega_0 \cdot R_L' \cdot C_1 \c
 
 
 \subsection{Tapped-L transformers}
-\noindent The rationale behind the tapped-L matching design is the same as for the tapped-C network.
+\noindent The rationale behind the tapped-L matching design is the same as for the tapped-C network:
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=80mm]{Tapped-L}
+\includegraphics[width=80mm]{./images/Synthesis/Impedance_Matching/Tapped-L}
 \caption{Tapped-L transformer}
 \label{fig:tapped-c-transformer}
 \end{figure}
@@ -1061,11 +1063,11 @@ Q = \frac{X_{C_{eq}}}{R_L'} = \frac{C_1 + C_2'}{\omega_0 \cdot R_L' \cdot C_1 \c
     \hline
     Input & Output\\ \hline
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{Tapped-L-transformation-input}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/Tapped-L-transformation-input}
     \end{minipage}
     &
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{Tapped-L-transformation-output}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/Tapped-L-transformation-output}
     \end{minipage}
 \\ \hline
     \begin{minipage}{.4\textwidth}
@@ -1089,11 +1091,11 @@ Q = \frac{X_{C_{eq}}}{R_L'} = \frac{C_1 + C_2'}{\omega_0 \cdot R_L' \cdot C_1 \c
   \label{tbl:tapped-L-matching}
 \end{table}
 
-\noindent Using the transformations from \ref{tbl:tapped-L-matching}, the tapped-L circuit (\ref{fig:tapped-c-transformer}) may be rewritten as shown in \ref{fig:tapped-c-transformer-equivalent}
+\noindent Using the transformations from \ref{tbl:tapped-L-matching}, the tapped-L circuit (\ref{fig:tapped-c-transformer}) may be rewritten as shown in \ref{fig:tapped-c-transformer-equivalent}.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=80mm]{Tapped-L-equivalent}
+\includegraphics[width=80mm]{./images/Synthesis/Impedance_Matching/Tapped-L-equivalent}
 \caption{Tapped-L transformer}
 \label{fig:tapped-c-transformer-equivalent}
 \end{figure}
@@ -1137,10 +1139,11 @@ Q = \frac{L_{eq}}{R_L'} = \frac{\omega_0 \cdot (L_1 + L_2)}{R_L'} \Longrightarro
 \end{enumerate}
 
 \subsection{Double tapped resonator}
+\noindent The double tapped resonator matching technique which may be suitable when the previous method are difficult to implement \cite{TheDesignofCMOSRFIC}.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=80mm]{Double-Tapped-Resonator}
+\includegraphics[width=80mm]{./images/Synthesis/Impedance_Matching/Double-Tapped-Resonator}
 \caption{Double tapped resonator}
 \label{fig:double-tapped-resonator}
 \end{figure}
@@ -1153,11 +1156,11 @@ Q = \frac{L_{eq}}{R_L'} = \frac{\omega_0 \cdot (L_1 + L_2)}{R_L'} \Longrightarro
     \hline
     Input & Output\\ \hline
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{Double-Tapped-Resonator-p2s-input}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/Double-Tapped-Resonator-p2s-input}
     \end{minipage}
     &
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{Double-Tapped-Resonator-p2s-output}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/Double-Tapped-Resonator-p2s-output}
     \end{minipage}
 \\ \hline
     \begin{minipage}{.4\textwidth}
@@ -1185,7 +1188,7 @@ Q = \frac{L_{eq}}{R_L'} = \frac{\omega_0 \cdot (L_1 + L_2)}{R_L'} \Longrightarro
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=80mm]{Double-Tapped-Resonator-Transformed}
+\includegraphics[width=80mm]{./images/Synthesis/Impedance_Matching/Double-Tapped-Resonator-Transformed}
 \caption{Double tapped resonator transformed equivalent circuit.}
 \label{fig:double-tapped-resonator-transformed}
 \end{figure}
@@ -1203,7 +1206,7 @@ Q = \frac{L_{eq}}{R_L'} = \frac{\omega_0 \cdot (L_1 + L_2)}{R_L'} \Longrightarro
 R_S' = R_L' \Longleftrightarrow   \frac{R_S}{1 + Q_1^2} = \frac{R_L}{1 + Q_2^2}
 \end{equation}
 
-\noindent Assuming $Q \sim Q_1$,
+\noindent Assuming $Q \sim Q_1$:
 
 \begin{equation}
 Q_2 = \sqrt{\frac{R_S}{R_L} \cdot \left(1 + Q^2\right) - 1}
@@ -1231,7 +1234,7 @@ Q_2 = \sqrt{\frac{R_S}{R_L} \cdot \left(1 + Q^2\right) - 1}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=80mm]{Single-tuned-transformer}
+\includegraphics[width=80mm]{./images/Synthesis/Impedance_Matching/Single-tuned-transformer}
 \caption{Schematic of a single tuned transformer}
 \label{fig:single-tuned-transformer}
 \end{figure}
@@ -1241,7 +1244,7 @@ According to the equivalent circuit of an RF transformer, the circuit in \ref{fi
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=80mm]{Single-tuned-transformer-equivalent-ckt}
+\includegraphics[width=80mm]{./images/Synthesis/Impedance_Matching/Single-tuned-transformer-equivalent-ckt}
 \caption{Schematic of a single tuned transformer after replacing the coupled inductors by an ideal transformer}
 \label{fig:single-tuned-transformer-equivalent-ckt}
 \end{figure}
@@ -1263,7 +1266,7 @@ Z_p = \frac{R_S + \frac{X_{L1} \cdot X_C}{X_{L1} + X_C}}{k'^2} = \frac{R_S + \fr
 \label{eq:single-tuned-primary-impedance}
 \end{equation}
 
-\noindent At resonance, the pair $L_1$ - C presents an infinte impedance so \ref{eq:single-tuned-primary-impedance} simplifies as:
+\noindent At resonance, the pair $L_1$ - C presents an infinte impedance so \ref{eq:single-tuned-primary-impedance} may be simplified as:
 
 \begin{equation}
 Z_p = \frac{R_S}{\left( \frac{L_1}{k^2 \cdot L_2} \right)} = \frac{R_S \cdot k^2 \cdot L_2}{L_1}
@@ -1287,7 +1290,7 @@ Z_p = \frac{R_S \cdot k^2 \cdot L_2}{L_1} = R_L + j \cdot \omega_0 \cdot L_2'
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=80mm]{parallel-double-tuned-transformer}
+\includegraphics[width=80mm]{./images/Synthesis/Impedance_Matching/parallel-double-tuned-transformer}
 \caption{Schematic of a parallel double-tuned transformer}
 \label{fig:parallel-double-tuned-transformer}
 \end{figure}
@@ -1314,7 +1317,7 @@ Z_p = \frac{R_S \cdot k^2 \cdot L_2}{L_1} = R_L + j \cdot \omega_0 \cdot L_2'
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=80mm]{series-double-tuned-transformer}
+\includegraphics[width=80mm]{./images/Synthesis/Impedance_Matching/series-double-tuned-transformer}
 \caption{Schematic of a series double-tuned transformer}
 \label{fig:series-double-tuned-transformer}
 \end{figure}
@@ -1339,11 +1342,11 @@ Z_p = \frac{R_S \cdot k^2 \cdot L_2}{L_1} = R_L + j \cdot \omega_0 \cdot L_2'
     \hline
     Coupled inductors & Tee equivalent\\ \hline
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{coupled-inductors}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/coupled-inductors}
     \end{minipage}
     &
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{coupled-inductors-tee-equivalent}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/coupled-inductors-tee-equivalent}
     \end{minipage}
 \\ \hline
     \begin{minipage}{.4\textwidth}
@@ -1367,7 +1370,7 @@ Z_p = \frac{R_S \cdot k^2 \cdot L_2}{L_1} = R_L + j \cdot \omega_0 \cdot L_2'
   \label{tbl:tee-coupled-inductors}
 \end{table}
 
-\noindent By comparison of the above equations, we get:
+\noindent By comparing the above equations, we get:
 
 \begin{align}
    L_{11} &= L_1 + L_3 \\
@@ -1383,7 +1386,7 @@ Z_p = \frac{R_S \cdot k^2 \cdot L_2}{L_1} = R_L + j \cdot \omega_0 \cdot L_2'
    L_3 &= M
 \end{align}
 
-\noindent From \ref{tbl:pi-to-tee-transformation} the $\pi$-type equivalent is derived.
+\noindent The $\pi$-type equivalent may be derived from \ref{tbl:pi-to-tee-transformation} .
 
 \begin{align}
    Z_1 &= j \cdot \omega \cdot (L_{11} - M) \\
@@ -1403,8 +1406,8 @@ Z_p = \frac{R_S \cdot k^2 \cdot L_2}{L_1} = R_L + j \cdot \omega_0 \cdot L_2'
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=80mm]{coupled-inductors-pi-equivalent}
-\caption{$\pi$-type equivalent of a pair of coupled inductors}
+\includegraphics[width=80mm]{./images/Synthesis/Impedance_Matching/coupled-inductors-pi-equivalent}
+\caption{$\pi$-type equivalent circuit of a pair of coupled inductors}
 \label{fig:pi-type-coupled-inductor-equivalent}
 \end{figure}
 
@@ -1417,7 +1420,7 @@ Z_p = \frac{R_S \cdot k^2 \cdot L_2}{L_1} = R_L + j \cdot \omega_0 \cdot L_2'
 
 \subsection{Lumped equivalent circuits of a transmission line}
 
-\noindent The lumped equivalent circuit of a transmission line may be found by comparing its ABCD parameters with those of the $\pi$ and T-type networks. The ABCD matrix of a transmission line is given by:
+\noindent The lumped equivalent circuit of a transmission line may be found by comparing its ABCD parameters with those of the $\pi$ or T-type network. The ABCD matrix of a transmission line is given by:
 
 \begin{equation}
 A_{TL} = \begin{pmatrix}
@@ -1458,30 +1461,30 @@ A_{\pi} = \begin{pmatrix}
 \label{eq:ABCD_PI}
 \end{equation}
 
-\noindent where $Z_{ser}$, $Z_{sh1}$ and $Z_{sh2}$ are the impedance of the series and the shunt branches as shown in \ref{} 
+\noindent where $Z_{ser}$, $Z_{sh1}$ and $Z_{sh2}$ are the impedances of the series and shunt branches as shown in \ref{fig:Transmission-Line-Circuit-Equivalent-Schematic} 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=80mm]{pi-equivalent-circuit}
+\includegraphics[width=80mm]{./images/Synthesis/Impedance_Matching/pi-equivalent-circuit}
 \caption{Schematic of the $\pi$-type equivalent circuit of a transmission line}
 \label{fig:Transmission-Line-Circuit-Equivalent-Schematic}
 \end{figure}
 
-\noindent By comparing \ref{eq:ABCD_TL} and \ref{eq:ABCD_PI} it yields:
+\noindent By comparing \ref{eq:ABCD_TL} and \ref{eq:ABCD_PI}:
 
 \begin{align}
      Z_{ser} &= j \cdot Z_0 \cdot sin(\beta \cdot L) \\
      Z_{sh1} &= Z_{sh2} = -j \cdot \frac{Z_0 \cdot sin(\beta \cdot L)}{1 - cos(\beta \cdot L)}
 \end{align}
 
-\noindent Since $\beta \cdot L \in \mathbb{R}$. $Z_{ser}$ and $Z_{sh1}$ may be capacitative or inductive depending on the length of the tranmission line as follows:
+\noindent Since $\beta \cdot L \in \mathbb{R}$. $Z_{ser}$ and $Z_{sh1}$ may be capacitative or inductive depending on the length of the tranmission line as follows:\\
 
 \noindent For $L \in (n\lambda/2, (n+1) \lambda/2), \forall n  \in [0, +\infty] \in \mathbb{N}$
 \begin{align}
      Z_{ser} &> 0 \Longrightarrow L_{ser} = \frac{X_S}{\omega_0} \\
      Z_{sh1} &= Z_{sh2}  < 0 \Longrightarrow C_{sh} = \frac{1 - cos(\beta \cdot L)}{X_S\cdot \omega_0}
 \end{align}
-\noindent where $X_S = Z_0 \cdot sin(\beta \cdot L)$
+\noindent where $X_S = Z_0 \cdot sin(\beta \cdot L)$\\
 
 \noindent Conversely, for $L \in [n\lambda/2, (n+1) \lambda/2), \forall n  \in [1, +\infty] \in \mathbb{N}$
 \begin{align}
@@ -1491,12 +1494,12 @@ A_{\pi} = \begin{pmatrix}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=80mm]{pi-to-tee-equivalent-implementation}
+\includegraphics[width=80mm]{./images/Synthesis/Impedance_Matching/pi-to-tee-equivalent-implementation}
 \caption{Reactance of the series and shunt elements of the $\pi$-type equivalent circuit}
 \label{fig:Transmission-Line-Circuit-Equivalent-Values}
 \end{figure}
 
-\noindent Now, it is possible to find the T-type equivalent using \ref{tbl:pi-to-tee-transformation}:
+\noindent At this point, it is possible to find the T-type equivalent using \ref{tbl:pi-to-tee-transformation}:
 
 \begin{table}[H]
   \centering
@@ -1504,11 +1507,11 @@ A_{\pi} = \begin{pmatrix}
     \hline
     $L \leq \lambda/2$ & $L > \lambda/2$\\ \hline
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{TL-circuit-equivalent-LP-Pi-Tee}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/TL-circuit-equivalent-LP-Pi-Tee}
     \end{minipage}
     &
     \begin{minipage}{.4\textwidth}
-      \includegraphics[width=\linewidth]{TL-circuit-equivalent-HP-Pi-Tee}
+      \includegraphics[width=\linewidth]{./images/Synthesis/Impedance_Matching/TL-circuit-equivalent-HP-Pi-Tee}
     \end{minipage}
 \\ \hline
     \multicolumn{2}{|c|}{
