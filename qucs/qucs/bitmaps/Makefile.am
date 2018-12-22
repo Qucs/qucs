@@ -238,7 +238,15 @@ PNG = \
 	wprobe.png \
 	xnor.png \
 	xor.png \
-	ysmith.png
+	ysmith.png \
+	CPCS.png \
+	CPLS.png \
+	CSLP.png \
+	CSCP.png \
+	LSCP.png \
+	LSLP.png \
+	LPCS.png \
+	LPLS.png
 
 XPM = \
 	big.button.qucs.xpm \

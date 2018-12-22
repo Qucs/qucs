@@ -619,30 +619,30 @@ QString MatchDialog::getImageFrom_XB(bool first_series, double X, double B) {
     if (X < 0) // Series capacitor
     {
       if (B < 0)
-        return ":/bitmaps/matching/CSLP.png";
+        return ":/bitmaps/CSLP.png";
       else
-        return ":/bitmaps/matching/CSCP.png";
+        return ":/bitmaps/CSCP.png";
     } else // Series inductor
     {
       if (B < 0)
-        return ":/bitmaps/matching/LSLP.png";
+        return ":/bitmaps/LSLP.png";
       else
-        return ":/bitmaps/matching/LSCP.png";
+        return ":/bitmaps/LSCP.png";
     }
   } else // First shunt, Z0 > ZL
   {
     if (B < 0) // Shunt inductor
     {
       if (X > 0)
-        return ":/bitmaps/matching/LPLS.png";
+        return ":/bitmaps/LPLS.png";
       else
-        return ":/bitmaps/matching/LPCS.png";
+        return ":/bitmaps/LPCS.png";
     } else // Shunt inductor
     {
       if (X > 0)
-        return ":/bitmaps/matching/CPLS.png";
+        return ":/bitmaps/CPLS.png";
       else
-        return ":/bitmaps/matching/CPCS.png";
+        return ":/bitmaps/CPCS.png";
     }
   }
 }
