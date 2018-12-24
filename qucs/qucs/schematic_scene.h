@@ -25,14 +25,22 @@
 #define SCHEMATICSCENE_H_
 
 #include <QGraphicsScene>
+#include <QList> // BUG
 #include <QGraphicsItem>
 #include <assert.h>
 
 #include "viewpainter.h"
+#include "qt_compat.h"
 
 class Element;
 
-#ifndef USE_SCROLLVIEW
+#ifdef USE_SCROLLVIEW
+class SchematicScene {
+  SchematicScene (QObject *);
+  virtual ~SchematicScene ();
+};
+#else
+class ElementGraphics;
 class SchematicScene : public QGraphicsScene
 {
 Q_OBJECT
@@ -40,11 +48,16 @@ public:
   SchematicScene (QObject *);
   virtual ~SchematicScene ();
 
-  // void removeItem(Element const*);
 //  void addItem(ElementGraphics*);
   void addItem(QGraphicsItem* x){
 	  QGraphicsScene::addItem(x);
   }
+  void removeItem(QGraphicsItem const*x){
+	  QGraphicsScene::removeItem((QGraphicsItem*)x);
+  }
+
+  void selectedItemsAndBoundingBox(QList<ElementGraphics*>& ElementCache, QRectF& BB);
+  void removeItem(Element const*);
 
 private:
 
@@ -53,11 +66,12 @@ protected:
 };
 #endif
 
+#include "qt_compat.h"
 #include "element.h" // TODO: move implementation to .cpp
                      // also: this relates to scene, but is this the right place?
 							// (having other problems, still)
 
-#if QT_VERSION < 0x050000
+#if QT_MAJOR_VERSION < 5
 // use naked pointer, as legacy qucs does.
 typedef Element ElementGraphics;
 #else
@@ -65,37 +79,34 @@ typedef Element ElementGraphics;
 // kind of smart-pointer/proxy.
 class ElementGraphics : public QGraphicsItem {
 private:
-	ElementGraphics(){}
+	ElementGraphics();
 public:
-	explicit ElementGraphics(Element* e)
-		: _e(e)
-	{
-		assert(_e);
-	}
+	explicit ElementGraphics(Element* e);
+
 	~ElementGraphics(){
 	}
 public:
 	bool operator!=(Element const* e) const{
 		return _e!=e;
 	}
+public: //?
+  void paintScheme(Schematic *p);
 private: // later: Qgraphics virtual overrides
 //  void paint() { assert(_e); _e->paint(); }
 //  void paintScheme(Schematic *s) { assert(_e); _e->paintScheme(s); }
-  void paintScheme(QPainter *p) { assert(_e); _e->paintScheme(p); }
-  QRectF boundingRect() const { assert(_e); return _e->boundingRect(); }
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*){
-	  assert(_e);
-	  ViewPainter v(painter);
-	  return _e->paint(&v);
-  }
+  QRectF boundingRect() const;
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*); // const...
 
-  // TODO: move coordinate stuff here.
-//  void setPos(int a, int b){
-//     _e->setPos(a, b);
-//  }
 public:
-  Element* operator->(){ assert(_e); return _e; }
-  Element const* operator->() const{ assert(_e); return _e; }
+  // TODO: move coordinate stuff here.
+  void setPos(int a, int b);
+public:
+  Element* operator->(){ itested();
+	  assert(_e); return _e;
+  }
+  Element const* operator->() const{ untested();
+	  assert(_e); return _e;
+  }
   void setCenter(int i, int j, bool relative=false){
 	  assert(_e);
 	  _e->setCenter(i, j, relative);
@@ -104,6 +115,13 @@ public:
 	  assert(_e);
 	  _e->getCenter(i, j);
   }
+	void toggleSelected(){
+		assert(_e);
+		setSelected(!isSelected());
+	}
+
+	// BUG: selected is stored in Element.
+	void setSelected(bool s);
 
 	int const& cx_() const { assert(_e); return _e->cx_(); }
 	int const& cy_() const { assert(_e); return _e->cy_(); }
@@ -121,14 +139,16 @@ WireLabel const* const_wireLabel(ElementGraphics const);
 Diagram const* const_diagram(ElementGraphics const);
 Painting const* const_painting(ElementGraphics const);
 
-Component* component(ElementGraphics*);
-Wire* wire(ElementGraphics*);
-WireLabel* wireLabel(ElementGraphics*);
-Diagram* diagram(ElementGraphics*);
-Painting* painting(ElementGraphics*);
-Graph* graph(ElementGraphics*);
-Marker* marker(ElementGraphics*);
-Node* node(ElementGraphics*);
+Element* element(QGraphicsItem*);
+Component* component(QGraphicsItem*);
+Wire* wire(QGraphicsItem*);
+WireLabel* wireLabel(QGraphicsItem*);
+Diagram* diagram(QGraphicsItem*);
+Painting* painting(QGraphicsItem*);
+Graph* graph(QGraphicsItem*);
+Marker* marker(QGraphicsItem*);
+Node* node(QGraphicsItem*);
+// Label* label(QGraphicsItem*);
 #endif
 
 

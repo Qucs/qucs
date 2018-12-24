@@ -1,7 +1,51 @@
 
 #include "schematic_scene.h"
 #include "schematic.h"
+#include "qt_compat.h"
 
+#include <QFileInfo>
+
+
+// ---------------------------------------------------
+//
+#ifndef USE_SCROLLVIEW
+ElementGraphics::ElementGraphics() : QGraphicsItem()
+{
+	unreachable();
+}
+
+ElementGraphics::ElementGraphics(Element* e)
+	: QGraphicsItem(), _e(e)
+{
+	setFlags(ItemIsSelectable|ItemIsMovable);
+	setAcceptHoverEvents(true);
+	assert(_e);
+}
+
+QRectF ElementGraphics::boundingRect() const
+{ itested();
+	assert(_e);
+	return _e->boundingRect();
+}
+
+void ElementGraphics::setSelected(bool s)
+{
+	qDebug() << "setSeletected" << s << this;
+	QGraphicsItem::setSelected(s);
+	assert(QGraphicsItem::isSelected()==s);
+	assert(_e);
+	_e->setSelected(s); // BUG
+}
+
+// ?!
+void ElementGraphics::setPos(int a, int b)
+{
+	assert(_e);
+	qDebug() << "EG::setPos" << a << _e->cx_();
+	QGraphicsItem::setPos(QPointF(a, b));
+	qDebug() << "EG::setPos" << boundingRect();
+}
+#endif
 // ---------------------------------------------------
 // forward to graphicscene, once it is there.
 ElementGraphics* Schematic::itemAt(float x, float y)
@@ -9,15 +53,18 @@ ElementGraphics* Schematic::itemAt(float x, float y)
 #ifndef USE_SCROLLVIEW
 	QPointF p(x, y);
 	QGraphicsItem* I=scene()->itemAt(p, QTransform());
-	if(ElementGraphics* G=dynamic_cast<ElementGraphics*>(I)){
+	if(ElementGraphics* G=dynamic_cast<ElementGraphics*>(I)){ untested();
+		qDebug() << "got something";
 		return G;
-	}else{
+	}else{ untested();
+		qDebug() << "miss";
 		return nullptr;
 	}
 #else
-	for(Component *pc = Components->first(); pc != 0; pc = Components->next())
+	for(auto pc : components()){
 		if(pc->getSelected(x, y))
 			return (ElementGraphics*)(pc);
+	}
 
 	float Corr = 5.0 / Scale; // size of line select
 
@@ -31,44 +78,69 @@ ElementGraphics* Schematic::itemAt(float x, float y)
 #endif
 }
 
-#if QT_VERSION >= 0x050000
-Component* component(ElementGraphics* e){
+#ifndef USE_SCROLLVIEW
+// scene()->selectedItems gives QGraphicsItems
+Element* element(QGraphicsItem* g)
+{
+	auto e=dynamic_cast<ElementGraphics*>(g);
+	if(!e) return nullptr;
+	return e->operator->();
+}
+Component* component(QGraphicsItem* g)
+{
+	auto e=dynamic_cast<ElementGraphics*>(g);
 	if(!e) return nullptr;
 	return component(e->operator->());
 }
-Wire* wire(ElementGraphics* e){
+Wire* wire(QGraphicsItem* g)
+{
+	auto e=dynamic_cast<ElementGraphics*>(g);
 	if(!e) return nullptr;
 	return wire(e->operator->());
 }
-WireLabel* wireLabel(ElementGraphics* e){
+WireLabel* wireLabel(QGraphicsItem* g)
+{
+	auto e=dynamic_cast<ElementGraphics*>(g);
 	if(!e) return nullptr;
 	return wireLabel(e->operator->());
 }
-Diagram* diagram(ElementGraphics* e){
+Diagram* diagram(QGraphicsItem* g)
+{
+	auto e=dynamic_cast<ElementGraphics*>(g);
 	if(!e) return nullptr;
 	return diagram(e->operator->());
 }
-Painting* painting(ElementGraphics* e){
+Painting* painting(QGraphicsItem* g)
+{
+	auto e=dynamic_cast<ElementGraphics*>(g);
 	if(!e) return nullptr;
 	return painting(e->operator->());
 }
-Marker* marker(ElementGraphics* e){
+Marker* marker(QGraphicsItem* g)
+{
+	auto e=dynamic_cast<ElementGraphics*>(g);
 	if(!e) return nullptr;
 	return marker(e->operator->());
 }
-Node* node(ElementGraphics* e){
+Node* node(QGraphicsItem* g)
+{
+	auto e=dynamic_cast<ElementGraphics*>(g);
 	if(!e) return nullptr;
 	return node(e->operator->());
 }
-Graph* graph(ElementGraphics* e){
+Graph* graph(QGraphicsItem* g)
+{
+	auto e=dynamic_cast<ElementGraphics*>(g);
 	if(!e) return nullptr;
 	return graph(e->operator->());
 }
 
 #endif
 
-SchematicScene::SchematicScene(QObject *parent) :
-  QGraphicsScene(parent)
+SchematicScene::SchematicScene(QObject *parent)
+#ifndef USE_SCROLLVIEW
+  : QGraphicsScene(parent)
+#endif
 {
 }
 
@@ -76,9 +148,9 @@ SchematicScene::~SchematicScene()
 {
 }
 
+#ifndef USE_SCROLLVIEW
 void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 {
-#ifndef USE_SCROLLVIEW
 	QGraphicsScene::drawBackground(painter, rect);
 	return;
 
@@ -106,5 +178,92 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 			GridY *= 16;
 		}
 	}
-#endif
 }
+#endif
+
+#ifndef USE_SCROLLVIEW
+void ElementGraphics::paintScheme(Schematic *p)
+{
+  	assert(_e);
+	_e->paintScheme(p);
+}
+
+// scene::display(SchematicModel&)?
+// 'l' is a bit of a hack. let's see
+void SchematicModel::toScene(QGraphicsScene& s, QList<ElementGraphics*>* l) const
+{
+  for(auto i : components()){ untested();
+    auto x=new ElementGraphics(i);
+	 if(l){
+		 l->append(x);
+	 }
+    s.addItem(x);
+  }
+  for(auto i : wires()){ untested();
+    auto x=new ElementGraphics(i);
+	 if(l){
+		 l->append(x);
+	 }
+    s.addItem(x);
+  }
+
+  incomplete(); // do the others...
+  qDebug() << "wires" << s.items().size();
+  s.update();
+}
+
+void SchematicScene::removeItem(Element const* xx)
+{
+	Element* x=(Element*)(xx);
+	if(auto w=wire(x)){ untested();
+	}else if(auto n=node(x)){ untested();
+	}else{
+	  	unreachable();
+	}
+}
+
+// FIXME: is the weird order really necessary?
+void SchematicScene::selectedItemsAndBoundingBox(QList<ElementGraphics*>& ElementCache, QRectF& BB)
+{
+	for(auto elt : selectedItems()){
+		if(BB.isEmpty()){
+			// BUG
+			BB = elt->boundingRect();
+		}else{
+			BB = BB.united(elt->boundingRect());
+		}
+		ElementGraphics* eg=prechecked_cast<ElementGraphics*>(elt);
+		qDebug() << "selected" << element(eg)->name() << element(eg)->boundingRect();
+		qDebug() << "unite" << BB;
+		assert(eg);
+		if(auto l=wireLabel(elt)){
+			ElementCache.append(eg);
+		}else{
+		}
+	}
+	for(auto elt : selectedItems()){
+		ElementGraphics* eg=prechecked_cast<ElementGraphics*>(elt);
+		assert(eg);
+		if(auto c=component(elt)){
+			ElementCache.append(eg);
+		}else{
+		}
+	}
+	for(auto elt : selectedItems()){
+		ElementGraphics* eg=prechecked_cast<ElementGraphics*>(elt);
+		assert(eg);
+		if(auto w=wire(elt)){
+			ElementCache.append(eg);
+		}else{
+		}
+	}
+	for(auto elt : selectedItems()){
+		ElementGraphics* eg=prechecked_cast<ElementGraphics*>(elt);
+		assert(eg);
+		if(auto p=painting(elt)){
+			ElementCache.append(eg);
+		}else{
+		}
+	}
+}
+#endif
