@@ -70,6 +70,7 @@ pqucs_LTLIBRARIES = \
 libqucs_la_SOURCES = \
 	misc.cpp \
 	globals.cpp \
+	diagram.cpp \
 	io_error.cpp
 
 # TODO:
@@ -123,6 +124,7 @@ noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
 # must be installed. but later
 noinst_HEADERS += \
 	globals.h \
+	diagram.h \
 	io_trace.h \
 	l_dispatcher.h \
 	object.h \
