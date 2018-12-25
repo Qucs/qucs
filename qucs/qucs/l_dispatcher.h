@@ -191,7 +191,7 @@ public:
   TT* clone(std::string s) {
     TT* proto = (*this)[s];
     if (proto) {
-      return proto->newOne();
+      return prechecked_cast<TT*>(proto->newOne());
     }else{untested();
       return NULL;
     }

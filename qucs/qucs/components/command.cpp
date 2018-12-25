@@ -20,7 +20,6 @@
 #include "componentdialog.h"
 #include "component.h"
 #include "node.h"
-#include "main.h"
 #include "qucs.h"
 #include "schematic.h"
 #include "viewpainter.h"
@@ -1006,8 +1005,11 @@ Property * Command::getProperty(const QString& name)
 }
 
 // ---------------------------------------------------------------------
+// // BUG: implements assign
 void Command::copyComponent(Component *pc)
 {
+  incomplete();
+#if 0 // WTF?
   Type = pc->Type;
   x1 = pc->x1;
   y1 = pc->y1;
@@ -1032,6 +1034,7 @@ void Command::copyComponent(Component *pc)
   Rects  = pc->Rects;
   Ellips = pc->Ellips;
   Texts  = pc->Texts;
+#endif
 }
 
 // do something with Dialog Buttons
