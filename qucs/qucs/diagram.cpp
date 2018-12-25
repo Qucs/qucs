@@ -40,7 +40,7 @@
 #include "mnemo.h"
 #include "schematic.h"
 
-#include "rect3ddiagram.h"
+#include "diagrams/rect3ddiagram.h" // BUG
 #include "misc.h"
 
 #include <QTextStream>

@@ -779,6 +779,7 @@ bool Schematic::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
     if(Line.isEmpty()) continue;
 
     cstr = Line.section(' ',0,0);    // diagram type
+#if 0 // incomplete. see qt5 rework
          if(cstr == "<Rect") d = new RectDiagram();
     else if(cstr == "<Polar") d = new PolarDiagram();
     else if(cstr == "<Tab") d = new TabDiagram();
@@ -792,7 +793,9 @@ bool Schematic::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
     else if(cstr == "<Truth") d = new TruthDiagram();
     /*else if(cstr == "<Phasor") d = new PhasorDiagram();
     else if(cstr == "<Waveac") d = new Waveac();*/
-    else {
+    else
+#endif
+    {
       QMessageBox::critical(0, QObject::tr("Error"),
 		   QObject::tr("Format Error:\nUnknown diagram!"));
       return false;

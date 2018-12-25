@@ -31,7 +31,7 @@
 #include "node.h"
 #include "qucsdoc.h"
 #include "viewpainter.h"
-#include "diagrams/diagram.h"
+#include "diagram.h"
 #include "paintings/painting.h"
 #include "components/component.h"
 #include "sim/sim.h"
