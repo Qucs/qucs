@@ -18,8 +18,8 @@
 #ifndef DIAGRAM_H
 #define DIAGRAM_H
 
-#include "graph.h"
-#include "marker.h"
+#include "diagrams/graph.h"
+#include "diagrams/marker.h"
 #include "element.h"
 #include "viewpainter.h"
 
