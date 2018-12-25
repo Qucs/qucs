@@ -865,7 +865,8 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   Element const* e = mod->element();
   if (e) {
     // static component
-    view->selElem = e->newOne(); // BUG. memory leak
+    view->selElem = prechecked_cast<Element*>(e->newOne()); // BUG. memory leak
+    assert(view->selElem);
   } else {
     incomplete();
 #if 0 // pointless

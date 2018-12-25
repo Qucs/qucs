@@ -401,7 +401,8 @@ void createDocData() {
         nComps += 1;
 
 	assert(Mod->has_element());
-        Element *e = Mod->element()->newOne(); // memory leak?!
+        Element *e = prechecked_cast<Element*>(Mod->element()->newOne()); // memory leak?!
+	assert(e);
       // 	(Name, File, true);
         Name = e->name();
         File = e->file();
