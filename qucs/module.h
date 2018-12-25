@@ -23,6 +23,8 @@
 #include <QHash>
 #include <QMap>
 #include "platform.h"
+#include "io_trace.h"
+#include <assert.h>
 
 class Element;
 

@@ -144,6 +144,8 @@ struct Property {
   *
   *
   */
+
+static QString incomplete_file="incomplete_file";
 class Element : public Object {
 public:
   Element();
@@ -157,14 +159,14 @@ public:
 
 public:
   // should be pure, but several elments are incomplete.
-  virtual Element* newOne()const{
+  virtual Object* newOne()const{
 	  incomplete();
-	  qDebug() << name() << "lacks clone\n";
+	  qDebug() << label() << "lacks clone\n";
 	  return NULL;
   }
 //  { unreachable(); return 0 /*NULL, actually*/;}
-  virtual QString name() const{incomplete(); return "ELEMENT"; }
-  virtual QString file() const{incomplete(); return "FILE"; }
+  virtual QString name() const{return "incomplete_name";}
+  virtual QString const& file() const{return incomplete_file;}
 
 //private: FIXME
   bool isSelected;
@@ -173,7 +175,7 @@ public:
   
   // BUG; abused in Command
   mutable int x2, y2;  // center and relative boundings
-};
+}; // Element
 
 
 /** \class Conductor

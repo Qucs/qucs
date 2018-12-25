@@ -650,7 +650,6 @@ QString Component::netlist() const
 
 // -------------------------------------------------------
 QString Component::getNetlist() const
->>>>>>> 89745b3dd... mostly fix const correctness.
 {
   throw obsolete_exception("tried to use obsolete netlister");
   return "obsolete";
@@ -841,9 +840,9 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   if(!ok) return NULL;
 
   assert(c);
-  if(!c->Model.size()){
+  if(!c->obsolete_model_hack().size()){
     // avoid segfault in obsolete code...
-  }else if(c->obsolete_model_hack.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
+  }else if(c->obsolete_model_hack().at(0) != '.') {  // is simulation component (dc, ac, ...) ?
 
     n  = s.section(' ',7,7);    // mirroredX
     if(n.toInt(&ok) == 1){
@@ -975,7 +974,6 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
 }
 
 // -------------------------------------------------------
->>>>>>> 89745b3dd... mostly fix const correctness.
 
 // *******************************************************************
 // ***  The following functions are used to load the schematic symbol
@@ -1652,7 +1650,8 @@ Component* getComponentFromName(QString& Line, Schematic* p)
 
   if(Component const* sc=dynamic_cast<Component const*>(s)){
       // legacy component
-    c = sc->newOne(); // memory leak
+    Object* s=sc->newOne(); // memory leak
+    c=prechecked_cast<Component*>(s);
   }else{ untested();
   // don't know what this is (yet);
   incomplete();

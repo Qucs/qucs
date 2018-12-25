@@ -2186,6 +2186,7 @@ void Schematic::contentsDragMoveEvent(QDragMoveEvent *Event)
   Event->accept();
 }
 
+#if 0
 void Schematic::getSelAreaWidthAndHeight(int &wsel, int &hsel, int& xmin_sel_, int& ymin_sel_)
 {
     int xmin= INT_MAX,
@@ -2261,6 +2262,7 @@ void Schematic::getSelAreaWidthAndHeight(int &wsel, int &hsel, int& xmin_sel_, i
     xmin_sel_ = xmin;
     ymin_sel_ = ymin;
 }
+#endif
 
 // insert an Element into the schematic.
 void Schematic::simpleInsertElement(Element* e)
