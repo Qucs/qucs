@@ -123,7 +123,7 @@ libcomponents_la_SOURCES = $(MOCFILES) $(SIM_THINGS) \
 noinst_HEADERS = $(MOCHEADERS) components.h capacitor.h vccs.h     \
   inductor.h biast.h dcblock.h dcfeed.h ground.h subcirport.h symtrafo.h      \
   transformer.h ampere_dc.h attenuator.h circulator.h equation.h isolator.h   \
-  source_ac.h sparamfile.h subcircuit.h volt_ac.h ac_sim.h cccs.h   \
+  source_ac.h subcircuit.h volt_ac.h ac_sim.h cccs.h   \
   ccvs.h coplanar.h dc_sim.h diode.h hb_sim.h mscorner.h mscoupled.h mslange.h          \
   mscross.h msline.h msstep.h mstee.h param_sweep.h sp_sim.h substrate.h      \
   tline.h tr_sim.h component.h vcvs.h gyrator.h phaseshifter.h vhdlfile.h     \

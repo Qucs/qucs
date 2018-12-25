@@ -1,5 +1,11 @@
+/***************************************************************************
+                              globals.cpp
+                             --------------------
+    author               : 2018 Felix Salfelder
+    license              : GPLv3+
+ ***************************************************************************/
 #include "l_dispatcher.h"
-#include "symbol.h"
+#include "globals.h"
 
 Dispatcher<Symbol> symbol_dispatcher;
 Dispatcher<Simulator> simulator_dispatcher;
