@@ -184,7 +184,7 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
 // save a component
 // FIXME: part of corresponding SchematicSerializer implementation
 // BUG: c must be const (cannot because of QT3)
-void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
+void Schematic::saveComponent(QTextStream& s, Component const * c) const
 {
 #if XML
   QDomDocument doc;

@@ -674,62 +674,10 @@ static std::string find_type_in_string(QString& Line)
 }
 
 // -------------------------------------------------------------
-// TODO:
-// - rename, this is about Elements
-// - don't abuse schematic for parsing
+// TODO: fixed in qt5 branch
 bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
 {
-  QString Line, cstr;
-  Component *c;
-  while(!stream->atEnd()) {
-    Line = stream->readLine();
-    if(Line.at(0) == '<' && Line.at(1) == '/'){
-      // ?!
-      return true;
-    }
-    Line = Line.trimmed();
-    if(Line.isEmpty()) continue;
-
-    std::string type = find_type_in_string(Line);
-
-//    c = getComponentFromName(Line, this);
-    Symbol* c = symbol_dispatcher[type];
-    if(c==NULL){
-      qDebug() << "cannot find" << QString::fromStdString(type) << "parsing netlist";
-      incomplete();
-      // throw Exception?
-	//QMessageBox::critical(0, QObject::tr("Error"),
-	  //  QObject::tr("Format Error:\nWrong 'component' line format!"));
-    }else{
-
-      if(!loadElement(Line, c->newOne())) {
-	delete c;
-	return 0;
-      }
-
-      c->setSchematic(this);
-    }
-
-    // this is what exceptions are for.
-    if(!c){
-      return false;
-    }else{ untested();
-    }
-
-    if(List) {  // "paste" ?
-      incomplete();
-      // int z;
-      // for(z=c->Name.length()-1; z>=0; z--) // cut off number of component name
-      //   if(!c->Name.at(z).isDigit()) break;
-      // c->Name = c->Name.left(z+1);
-      // List->append(c);
-    }else{
-      simpleInsertElement(c);
-    }
-  }
-
-  QMessageBox::critical(0, QObject::tr("Error"),
-	   QObject::tr("Format Error:\n'Component' field is not closed!"));
+  incomplete();
   return false;
 }
 
