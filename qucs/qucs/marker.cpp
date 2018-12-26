@@ -21,9 +21,9 @@
          diagram
 */
 
-#include "marker.h"
+#include "diagrams/marker.h"
 #include "diagram.h"
-#include "graph.h"
+#include "diagrams/graph.h"
 #include "qucs.h"
 
 #include <QString>

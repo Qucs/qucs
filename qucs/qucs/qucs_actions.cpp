@@ -61,6 +61,7 @@
 #include "dialogs/aboutdialog.h"
 #include "module.h"
 #include "misc.h"
+#include "globals.h"
 
 // for editing component name on schematic
 QRegExp  Expr_CompProp;
@@ -400,7 +401,10 @@ void QucsApp::slotInsertEquation(bool on)
   if(view->selElem)
     delete view->selElem;  // delete previously selected component
 
-  view->selElem = new Equation();
+  Symbol* sym=symbol_dispatcher.clone("eqn");
+  assert(sym);
+  view->selElem = prechecked_cast<Component*>(sym);
+  assert(view->selElem);
 
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(view->drawn) Doc->viewport()->update();
@@ -433,7 +437,10 @@ void QucsApp::slotInsertGround(bool on)
   if(view->selElem)
     delete view->selElem;  // delete previously selected component
 
-  view->selElem = new Ground();
+  Symbol* sym=symbol_dispatcher.clone("gnd");
+  assert(sym);
+  view->selElem = prechecked_cast<Component*>(sym);
+  assert(view->selElem);
 
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(view->drawn) Doc->viewport()->update();
@@ -466,7 +473,10 @@ void QucsApp::slotInsertPort(bool on)
   if(view->selElem)
     delete view->selElem;  // delete previously selected component
 
-  view->selElem = new SubCirPort();
+  Symbol* sym=symbol_dispatcher.clone("subckt_port");
+  assert(sym);
+  view->selElem = prechecked_cast<Component*>(sym);
+  assert(view->selElem);
 
   Schematic *Doc=prechecked_cast<Schematic*>(DocumentTab->currentPage());
   assert(Doc);

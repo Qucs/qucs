@@ -32,7 +32,7 @@ MOCHEADERS = componentdialog.h spicedialog.h optimizedialog.h spicefile.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 libcomponents_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
-libcomponents_la_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
+libcomponents_la_SOURCES = phaseshifter.cpp gyrator.cpp \
   vcvs.cpp vccs.cpp tr_sim.cpp tline.cpp substrate.cpp sp_sim.cpp             \
   param_sweep.cpp mstee.cpp msstep.cpp msline.cpp mscross.cpp mscoupled.cpp mslange.cpp   \
   mscorner.cpp hb_sim.cpp diode.cpp dc_sim.cpp coplanar.cpp ccvs.cpp cccs.cpp \
@@ -97,12 +97,6 @@ MORE_LATER = phaseshifter.cpp gyrator.cpp \
 #   hybrid.cpp ctline.cpp tunneldiode.cpp \
 #   etr_sim.cpp ecvs.cpp vcresistor.cpp       \
 #   mutualx.cpp
-
-# dialogs related to components
-DIALG_SRC = \
-	spicedialog.cpp \
-	componentdialog.cpp \
-	optimizedialog.cpp
 
 # some stuff mostly related to legacy components
 RANDOM_LEGACY_STUFF = \

@@ -532,6 +532,7 @@ void SimMessage::startSimulator()
           }
       } // vaComponents not empty
 
+#if 0 // BUG
       if((SimOpt = findOptimization((Schematic*)DocWidget))) {
 	    ((Optimize_Sim*)SimOpt)->createASCOnetlist();
 
@@ -541,8 +542,9 @@ void SimMessage::startSimulator()
         Program = QDir::toNativeSeparators(Program+"/"+"asco"+QString(executableSuffix));
         Arguments << "-general" << QucsSettings.QucsHomeDir.filePath("asco_netlist.txt")
                   << "-o" << "asco_out";
-      }
-      else {
+      }else
+#endif
+      {
         Program = QucsSettings.Qucsator;
         Arguments << "-b" << "-g" << "-i"
                   << QucsSettings.QucsHomeDir.filePath("netlist.txt")
@@ -817,8 +819,12 @@ void SimMessage::FinishSimulation(int Status)
 	}
 	ifile.close();
       }
-      if(((Optimize_Sim*)SimOpt)->loadASCOout())
+#if 0
+      BUG.
+      if(((Optimize_Sim*)SimOpt)->loadASCOout()){
 	((Schematic*)DocWidget)->setChanged(true,true);
+      }
+#endif
     }
   }
 
