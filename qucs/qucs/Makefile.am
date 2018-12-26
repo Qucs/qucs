@@ -71,6 +71,8 @@ libqucs_la_SOURCES = \
 	misc.cpp \
 	globals.cpp \
 	diagram.cpp \
+	command.cpp \
+	component.cpp \
 	io_error.cpp
 
 # TODO:
@@ -96,14 +98,6 @@ AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs-lib
 
 libqucsschematic_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 
-# these are not plugins yet. but there's hope.
-# TODO:
-# - cleanup
-# - use attach, do not mention here.
-PLUGINS = \
-	components/libcomponents.la diagrams/libdiagrams.la \
-	paintings/libpaintings.la dialogs/libdialogs.la
-
 if COND_WIN32
 # non-posix woes.
 libqucsschematic_la_LIBADD = \
@@ -116,7 +110,7 @@ libqucs_la_LIBADD = \
 else
 # link order hack?
 libqucs_la_LIBADD =
-libqucsschematic_la_LIBADD =
+libqucsschematic_la_LIBADD = libqucs.la
 endif
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
