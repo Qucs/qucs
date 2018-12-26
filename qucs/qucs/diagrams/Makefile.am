@@ -32,7 +32,7 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 libdiagrams_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 libdiagrams_la_SOURCES = tabdiagram.cpp smithdiagram.cpp rectdiagram.cpp \
-  polardiagram.cpp graph.cpp diagramdialog.cpp marker.cpp   \
+  polardiagram.cpp diagramdialog.cpp marker.cpp   \
   markerdialog.cpp psdiagram.cpp rect3ddiagram.cpp curvediagram.cpp     \
   timingdiagram.cpp truthdiagram.cpp
  # phasordiagram.cpp waveac.cpp

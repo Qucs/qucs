@@ -70,10 +70,12 @@ pqucs_LTLIBRARIES = \
 libqucs_la_SOURCES = \
 	globals.cpp \
 	attach.cpp \
+	diagram.cpp \
 	command.cpp \
 	component.cpp \
 	diagram.cpp \
 	element.cpp \
+	graph.cpp \
 	imagewriter.cpp \
 	io_error.cpp \
 	messagedock.cpp \
