@@ -14,8 +14,8 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "spicedialog.h"
-#include "spicefile.h"
+#include "components/spicedialog.h"
+#include "components/spicefile.h"
 #include "qucs.h"
 #include "schematic.h"
 
