@@ -14,7 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "graph.h"
+#include "diagrams/graph.h"
 
 #include <stdlib.h>
 #include <iostream>
