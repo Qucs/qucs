@@ -19,10 +19,10 @@
   \class DiagramDialog
   \brief The DiagramDialog is used to setup and edit diagrams.
 */
-#include "diagramdialog.h"
+#include "diagrams/diagramdialog.h"
 #include "qucs.h"
 #include "schematic.h"
-#include "rect3ddiagram.h"
+// #include "rect3ddiagram.h" BUG
 #include "misc.h"
 
 #include <cmath>
@@ -421,6 +421,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
       GridLogZ->setChecked(Diag->zAxis.log);
 
 
+#if 0 // BUG
       if(Diag->Name == "Rect3D") {
         hideInvisible = new QCheckBox(tr("hide invisible lines"), Tab2);
         gp->addWidget(hideInvisible, Row, 0);
@@ -496,6 +497,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
         rotationZ->setText(QString::number(((Rect3DDiagram*)Diag)->rotZ));
 
       }
+#endif
     }
     else GridLogX = GridLogY = GridLogZ = 0;
 
@@ -1157,7 +1159,7 @@ void DiagramDialog::slotApply()
       changed = true;
     }
 
-    // for "rect3D"
+#if 0 //BUG
     if(hideInvisible)
       if(((Rect3DDiagram*)Diag)->hideLines != hideInvisible->isChecked()) {
         ((Rect3DDiagram*)Diag)->hideLines = hideInvisible->isChecked();
@@ -1181,6 +1183,7 @@ void DiagramDialog::slotApply()
         ((Rect3DDiagram*)Diag)->rotZ = rotationZ->text().toInt();
         changed = true;
       }
+#endif
 
   }   // of "if(Diag->Name != "Tab")"
 
