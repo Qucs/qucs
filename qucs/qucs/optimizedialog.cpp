@@ -22,8 +22,8 @@
 #endif
 
 #include "qucs.h"
-#include "optimizedialog.h"
-#include "opt_sim.h"
+#include "components/optimizedialog.h"
+#include "components/opt_sim.h"
 #include "schematic.h"
 
 #include <QLabel>

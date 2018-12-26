@@ -64,8 +64,15 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 pqucsdir=${pkglibdir}
 pqucs_LTLIBRARIES = \
-	libqucs.la \
-	libqucsschematic.la
+	libqucs.la
+
+# dialogs related to components
+# sort out later.
+DIALG_SRC = \
+	spicedialog.cpp \
+	componentdialog.cpp \
+	diagramdialog.cpp \
+	optimizedialog.cpp
 
 libqucs_la_SOURCES = \
 	globals.cpp \
@@ -73,6 +80,7 @@ libqucs_la_SOURCES = \
 	diagram.cpp \
 	command.cpp \
 	component.cpp \
+<<<<<<< HEAD
 	diagram.cpp \
 	element.cpp \
 	graph.cpp \
@@ -104,7 +112,6 @@ libqucs_la_SOURCES = \
 
 libqucs_la_SOURCES += qucs_.qrc
 
-libqucsschematic_la_SOURCES += $(MOCFILES)
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs-lib
 
@@ -121,7 +128,7 @@ libqucs_la_LIBADD = \
 	$(QT_LIBS)
 else
 # link order hack?
-libqucs_la_LIBADD =
+libqucs_la_LIBADD = dialogs/libdialogs.la
 libqucsschematic_la_LIBADD = libqucs.la
 endif
 

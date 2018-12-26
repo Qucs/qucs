@@ -532,6 +532,7 @@ void SimMessage::startSimulator()
           }
       } // vaComponents not empty
 
+#if 0 // BUG
       if((SimOpt = findOptimization((Schematic*)DocWidget))) {
 	    ((Optimize_Sim*)SimOpt)->createASCOnetlist();
 
@@ -549,6 +550,7 @@ void SimMessage::startSimulator()
                   << QucsSettings.QucsHomeDir.filePath("netlist.txt")
                   << "-o" << DataSet;
       }
+#endif
     }
     else {
       if (isVerilog) {
@@ -818,8 +820,12 @@ void SimMessage::FinishSimulation(int Status)
 	}
 	ifile.close();
       }
-      if(((Optimize_Sim*)SimOpt)->loadASCOout())
+#if 0
+      BUG.
+      if(((Optimize_Sim*)SimOpt)->loadASCOout()){
 	((Schematic*)DocWidget)->setChanged(true,true);
+      }
+#endif
     }
   }
 
