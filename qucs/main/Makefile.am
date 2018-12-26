@@ -37,12 +37,10 @@ qucs_real_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) -I${top_srcdir}/qucs\
 
 if COND_WIN32
 qucs_real_LDADD = \
-	../qucs/libqucs.la \
-	../qucs/libqucsschematic.la
+	../qucs/libqucs.la
 else
 qucs_real_LDADD = \
 	../qucs/libqucs.la \
-	../qucs/libqucsschematic.la \
 	$(X11_LIBS) $(QT_LIBS)
 endif
 

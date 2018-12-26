@@ -51,6 +51,10 @@ libdialogs_la_SOURCES = settingsdialog.cpp newprojdialog.cpp \
 
 if COND_WIN32
 libdialogs_la_LIBADD = ../libqucsschematic.la
+else
+libdialogs_la_LIBADD = \
+	$(X11_LIBS) \
+	$(QT_LIBS)
 endif
 
 nodist_libdialogs_la_SOURCES = $(MOCFILES)

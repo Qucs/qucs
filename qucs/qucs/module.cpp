@@ -457,6 +457,7 @@ void Module::registerModules (void) {
   // try not to touch the non-components, for now
 
   // simulations
+#if 0
   REGISTER_SIMULATION_1 (DC_Sim);
   REGISTER_SIMULATION_1 (TR_Sim);
   REGISTER_SIMULATION_1 (AC_Sim);
@@ -465,17 +466,19 @@ void Module::registerModules (void) {
   REGISTER_SIMULATION_1 (Param_Sweep);
   REGISTER_SIMULATION_1 (Digi_Sim);
   REGISTER_SIMULATION_1 (Optimize_Sim);
+#endif
 
   // diagrams
+  // does not work. load from diagram files.
 //  REGISTER_DIAGRAM_2 (RectDiagram);
-  REGISTER_DIAGRAM_1 (PolarDiagram);
-  REGISTER_DIAGRAM_1 (TabDiagram);
+//  REGISTER_DIAGRAM_1 (PolarDiagram);
+//  REGISTER_DIAGRAM_1 (TabDiagram);
 //  REGISTER_DIAGRAM_2 (SmithDiagram, info, info_y);
 //  REGISTER_DIAGRAM_2 (PSDiagram, info, info_sp);
-  REGISTER_DIAGRAM_1 (Rect3DDiagram);
-  REGISTER_DIAGRAM_1 (CurveDiagram);
-  REGISTER_DIAGRAM_1 (TimingDiagram);
-  REGISTER_DIAGRAM_1 (TruthDiagram);
+//  REGISTER_DIAGRAM_1 (Rect3DDiagram);
+//  REGISTER_DIAGRAM_1 (CurveDiagram);
+//  REGISTER_DIAGRAM_1 (TimingDiagram);
+//  REGISTER_DIAGRAM_1 (TruthDiagram);
 //  REGISTER_DIAGRAM_1 (PhasorDiagram);
 //  REGISTER_DIAGRAM_1 (Waveac);
 
