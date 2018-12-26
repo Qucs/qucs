@@ -116,9 +116,7 @@ RANDOM_LEGACY_STUFF = \
 
 libcomponents_la_SOURCES = $(MOCFILES) $(SIM_THINGS) \
 	$(RANDOM_LEGACY_STUFF) \
-	$(DIALG_SRC) \
-	command.cpp \
-	component.cpp
+	$(DIALG_SRC)
 
 noinst_HEADERS = $(MOCHEADERS) components.h capacitor.h vccs.h     \
   inductor.h biast.h dcblock.h dcfeed.h ground.h subcirport.h symtrafo.h      \
