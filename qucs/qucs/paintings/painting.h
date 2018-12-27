@@ -10,7 +10,7 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -34,6 +34,19 @@ public:
 	  return new Painting(*this);
   }
 
+public: // legacy anonymous stuff.
+  virtual void setArgs2Int(int, int) {
+	  incomplete();
+  }
+  virtual void setSomeArgsHack(int, int, const QString&,  const QString&){
+	  incomplete();
+  }
+  virtual void setSomeStuff( int cx_=0, int cy_=0, int x2_=0, int y2_=0,
+              QPen Pen_=QPen(QColor())){
+	  incomplete();
+  }
+
+public:
   virtual bool load(const QString&) { return true; };
   virtual QString save();
   virtual QString saveCpp();

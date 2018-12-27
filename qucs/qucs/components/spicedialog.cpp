@@ -35,17 +35,23 @@
 #include <QListWidget>
 #include <QListWidgetItem>
 #include <QDebug>
+#include "object.h"
 
 
-SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
-    : QDialog(d, Qt::WDestructiveClose)
+SpiceDialog::SpiceDialog() : SchematicDialog()
 {
-  App = App_; // pointer to main application
+    //: QDialog(d, Qt::WDestructiveClose) fixed in qt5 branch
+  //App = App_; // pointer to main application BUG
 
   resize(400, 250);
   setWindowTitle(tr("Edit SPICE Component Properties"));
-  Comp = c;
-  Doc  = d;
+}
+
+void SpiceDialog::attach(Object* spicecomponent)
+{
+
+  Comp = prechecked_cast<SpiceFile*>(spicecomponent);
+  Doc  = nullptr; // parent?!
 
   all = new QVBoxLayout(); // to provide neccessary size
   this->setLayout(all);

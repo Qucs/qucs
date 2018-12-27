@@ -1263,7 +1263,8 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
     if (Module::vaComponents.contains(entryName)){
       QString filename = Module::vaComponents[entryName];
 //      qDebug() << "   ===+ recast";
-      Comp = dynamic_cast<vacomponent*>(Comp)->newOne(filename); //va component
+      incomplete(); // myust be Comp->pressElement (or so).
+      //Comp = dynamic_cast<vacomponent*>(Comp)->newOne(filename); //va component
       qDebug() << "   => recast = Comp;" << Comp->name() << "filename: " << filename;
     }else{
 	  // static component is used, so create a new one
@@ -1290,10 +1291,17 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
     return;
 
   }  // of "if(isComponent)"
-  else if(selElem->Type == isDiagram) {
-    if(Event->button() != Qt::LeftButton) return;
+  else if(selElem->Type == isDiagram) { // BUG
+    if(Event->button() != Qt::LeftButton){
+      incomplete();
+      return;
+    }else{
+    }
 
     Diagram *Diag = (Diagram*)selElem;
+    Diag->MPressElement();
+
+#if 0
     QFileInfo Info(Doc->DocName);
     // dialog is Qt::WDestructiveClose !!!
     DiagramDialog *dia =
@@ -1314,7 +1322,8 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
     Diag->paintScheme(Doc);
     selElem = Diag;
     return;
-  }  // of "if(isDiagram)"
+#endif
+  }  else
 
 
   // ***********  it is a painting !!!
@@ -1330,6 +1339,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
 
     MMoveElement(Doc, Event);  // needed before next mouse pressing
     drawn = false;
+  }else{
   }
 }
 
@@ -1952,6 +1962,8 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 #endif
     case isDiagram :
          dia = (Diagram*)focusElement;
+	 dia->editElement();
+#if 0 // move
          if(dia->Name.at(0) == 'T') { // don't open dialog on scrollbar
            if(dia->Name == "Time") {
              if(dia->cy < int(fY)) {
@@ -1969,15 +1981,19 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 	   }
 	 }
 
-	 ddia = new DiagramDialog(dia, Doc);
+	 ddia = new DiagramDialog(); //BUG
+	 ddia->setSchematic(Doc);
+	 ddia->setObject(dia);
          if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
            Doc->setChanged(true, true);
 
 	 dia->Bounding(x1, x2, y1, y2);
 	 Doc->enlargeView(x1, x2, y1, y2);
 	 break;
-
+#endif
     case isGraph :
+	 incomplete();
+#if 0
 	 pg = (Graph*)focusElement;
 	 // searching diagram for this graph
 	 for(dia = Doc->Diagrams->last(); dia != 0; dia = Doc->Diagrams->prev())
@@ -1990,6 +2006,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 	 if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
 	   Doc->setChanged(true, true);
          break;
+#endif
 
     case isWire:
          MPressLabel(Doc, Event, fX, fY);
@@ -2009,9 +2026,12 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
          break;
 
     case isMarker:
+	 incomplete(); // does not link, move to marker
+#if 0
          mdia = new MarkerDialog((Marker*)focusElement, Doc);
          if(mdia->exec() > 1)
            Doc->setChanged(true, true);
+#endif
          break;
   }
 

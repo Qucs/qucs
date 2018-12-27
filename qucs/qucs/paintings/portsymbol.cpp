@@ -20,7 +20,10 @@
 
 #include <QPainter>
 
-PortSymbol::PortSymbol(int cx_, int cy_, const QString& numberStr_,
+PortSymbol::PortSymbol(){}
+
+
+void PortSymbol::setSomeArgsHack(int cx_, int cy_, const QString& numberStr_,
                                          const QString& nameStr_)
 {
   Name = ".PortSym ";

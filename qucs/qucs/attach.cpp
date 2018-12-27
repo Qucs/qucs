@@ -23,20 +23,21 @@
 #include <ctype.h>
 
 #include "platform.h"
+#include "io_trace.h"
 
 class plugins{
   public:
-    ~plugins(){
+    ~plugins(){ untested();
       for (std::map<std::string, void*>::iterator ii = attach_list.begin();
-	  ii != attach_list.end(); ++ii) {
+	  ii != attach_list.end(); ++ii) { untested();
 	void* m=ii->second;
-	if(m){
+	if(m){ untested();
 	  dlclose(m);
 	}
       }
     }
 
-    void attach(std::string what){
+    void attach(std::string what){ untested();
       // RTLD_NOW means to resolve symbols on loading
       // RTLD_LOCAL means symbols defined in a plugin are local
       int dl_scope = RTLD_LOCAL;
@@ -44,9 +45,9 @@ class plugins{
       void* handle;
 
       handle = dlopen((what).c_str(), check | dl_scope);
-      if (handle) {
+      if (handle) { untested();
 	attach_list[what] = handle;
-      }else{
+      }else{ untested();
 	std::cerr << "failed to attach " << what << " (" << errno << ")\n";
 	std::cerr << dlerror() << "\n";
 	exit(1); // temporary, should actually throw.
@@ -59,7 +60,7 @@ class plugins{
 } my_plugins;
 
 void attach(const char* what)
-{
+{ untested();
   my_plugins.attach(std::string(what));
 }
 
