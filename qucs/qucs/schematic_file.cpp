@@ -1251,10 +1251,12 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       }
     }
 
+    pc->tAC();
     // handle ground symbol
     if(pc->obsolete_model_hack() == "GND") { // BUG.
       pc->Ports.first()->Connection->Name = "gnd";
       continue;
+#if 0 // moved to Subcircuit::tAC
     }else if(dynamic_cast<Subcircuit const*>(pc)) {
       assert(pc->obsolete_model_hack()=="Sub"); // really?
       int i;
@@ -1323,9 +1325,9 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       {
         return false;
       }
-      continue;
+      continue; // BUG
     }else{
-      assert(pc->obsolete_model_hack()!="Sub");
+#endif
     }
 
 #if 0 // does not work
@@ -1353,7 +1355,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 	    arg(pc->name(), pc->Props.at(1)->Value, scfile));
 	return false;
       }
-      continue;
+      continue; // BUG
     }
 #endif
 
@@ -1380,8 +1382,8 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       if(!r){
         return false;
       }
-      continue;
-    }
+      continue; // BUG
+    } else
 
     // handle digital file subcircuits
     if(pc->obsolete_model_hack() == "VHDL" || pc->obsolete_model_hack() == "Verilog") {
@@ -1421,7 +1423,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 //	}
       }else{
       }
-      continue;
+      continue; // BUG
     }
   }
   return true;

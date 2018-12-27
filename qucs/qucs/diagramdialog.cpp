@@ -104,17 +104,22 @@ static const QRgb DefaultColors[]
 
 static const int NumDefaultColors = 8;
 
-
-DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
-                    : QDialog(parent)
+DiagramDialog::DiagramDialog() : SchematicDialog()
 {
-  setAttribute(Qt::WA_DeleteOnClose);
+  // setAttribute(Qt::WA_DeleteOnClose); really?
+							 //, Qt::WDestructiveClose) ?!
+							 //
+}
 
-  Diag = d;
+void DiagramDialog::attach(Object* d)
+{
+	assert(d);
+  Diag = prechecked_cast<Diagram*>(d);
+  assert(Diag);
   Graphs.setAutoDelete(true);
   copyDiagramGraphs();   // make a copy of all graphs
-  if(parent){
-	  const Schematic* s = dynamic_cast<const Schematic*>(parent);
+  if(schematic()){
+	  const Schematic* s = dynamic_cast<const Schematic*>(schematic());
 	  assert(s);
 	  QFileInfo Info(s->DocName);
 	  defaultDataSet = Info.path() + QDir::separator() + s->DataSet;
@@ -717,6 +722,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
 
   // ...........................................................
   // put all graphs into the ListBox
+  Graph* currentGraph = nullptr;
   Row = 0;
   foreach(Graph *pg, Diag->Graphs) {
     GraphList->insertItem(Row, pg->Var);

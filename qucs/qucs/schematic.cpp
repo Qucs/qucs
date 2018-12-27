@@ -1,16 +1,15 @@
 /***************************************************************************
                               schematic.cpp
                              ---------------
-    begin                : Sat Mar 3 2006
     copyright            : (C) 2006 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+	                           2018 Felix Salfelder / QUCS team
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -53,6 +52,7 @@
 #include "components/verilogfile.h"
 #include "components/vafile.h"
 #include "misc.h"
+#include "globals.h"
 
 // just dummies for empty lists
 WireList      SymbolWires;
@@ -142,28 +142,44 @@ bool Schematic::createSubcircuitSymbol()
     return false;
 
   int h = 30*((countPort-1)/2) + 10;
-  SymbolPaints.prepend(new ID_Text(-20, h+4));
 
-  SymbolPaints.append(
-     new GraphicLine(-20, -h, 40,  0, QPen(Qt::darkBlue,2)));
-  SymbolPaints.append(
-     new GraphicLine( 20, -h,  0,2*h, QPen(Qt::darkBlue,2)));
-  SymbolPaints.append(
-     new GraphicLine(-20,  h, 40,  0, QPen(Qt::darkBlue,2)));
-  SymbolPaints.append(
-     new GraphicLine(-20, -h,  0,2*h, QPen(Qt::darkBlue,2)));
+  Painting* txt=painting_dispatcher.clone("ID_Text");
+  assert(txt);
+  txt->setArgs2Int(-20, h+4); // fix later.
+  SymbolPaints.prepend(txt);
+
+  Painting* pp;
+
+  pp = painting_dispatcher.clone("GraphicsLine");
+  assert(pp);
+  pp->setSomeStuff(-20, -h, 40,  0, QPen(Qt::darkBlue,2));
+  SymbolPaints.append(pp);
+
+  pp = painting_dispatcher.clone("GraphicsLine");
+  pp->setSomeStuff( 20, -h,  0,2*h, QPen(Qt::darkBlue,2));
+  SymbolPaints.append(pp);
+
+  pp = painting_dispatcher.clone("GraphicsLine");
+  pp->setSomeStuff(-20,  h, 40,  0, QPen(Qt::darkBlue,2));
+  SymbolPaints.append(pp);
+
+  pp = painting_dispatcher.clone("GraphicsLine");
+  pp->setSomeStuff(-20, -h,  0,2*h, QPen(Qt::darkBlue,2));
+  SymbolPaints.append(pp);
 
   unsigned int i=0, y = 10-h;
   while(i<countPort) {
     i++;
-    SymbolPaints.append(
-       new GraphicLine(-30, y, 10, 0, QPen(Qt::darkBlue,2)));
+	 pp = painting_dispatcher.clone("GraphicsLine");
+	 pp->setSomeStuff(-30, y, 10, 0, QPen(Qt::darkBlue,2));
+	 SymbolPaints.append(pp);
     SymbolPaints.at(i)->setCenter(-30,  y);
 
     if(i == countPort)  break;
     i++;
-    SymbolPaints.append(
-       new GraphicLine( 20, y, 10, 0, QPen(Qt::darkBlue,2)));
+	 pp = painting_dispatcher.clone("GraphicsLine");
+	 pp->setSomeStuff( 20, y, 10, 0, QPen(Qt::darkBlue,2));
+	 SymbolPaints.append(pp);
     SymbolPaints.at(i)->setCenter(30,  y);
     y += 60;
   }
@@ -1593,13 +1609,12 @@ int Schematic::adjustPortNumbers()
                  }
              }
 
-             if(pp)
-             {
+             if(pp) {
                  ((PortSymbol*)pp)->nameStr = pc->name();
-             }
-             else
-             {
-                 SymbolPaints.append(new PortSymbol(x1, y2, Str, pc->name()));
+             } else {
+					  Painting* ps=painting_dispatcher.clone("PortSymbol");
+                 ps->setSomeArgsHack(x1, y2, Str, pc->name());
+                 SymbolPaints.append(ps);
                  y2 += 40;
              }
           }

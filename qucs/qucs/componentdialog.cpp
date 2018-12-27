@@ -37,8 +37,7 @@
 #include <QKeyEvent>
 #include <QDebug>
 
-ComponentDialog::ComponentDialog(Schematic &d)
-			: SchematicDialog(d)
+ComponentDialog::ComponentDialog() : SchematicDialog()
 {
   resize(450, 250);
   setWindowTitle(tr("Edit Component Properties"));
