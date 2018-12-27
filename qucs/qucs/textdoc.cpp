@@ -542,6 +542,9 @@ void TextDoc::insertSkeleton ()
  */
 QString TextDoc::getModuleName (void)
 {
+	incomplete();
+	return "incompletemodulename";
+#if 0 // BUG. what is language?
   switch (language) {
   case LANG_VHDL:
     {
@@ -566,6 +569,7 @@ QString TextDoc::getModuleName (void)
   default:
     return "";
   }
+#endif
 }
 
 /*!

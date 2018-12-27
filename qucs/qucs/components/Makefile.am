@@ -28,7 +28,8 @@ qucsdir=${pkglibdir}
 
 qucs_LTLIBRARIES = libcomponents.la
 
-MOCHEADERS = componentdialog.h spicedialog.h optimizedialog.h spicefile.h
+MOCHEADERS = \
+	spicedialog.h optimizedialog.h spicefile.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 libcomponents_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
@@ -113,6 +114,7 @@ libcomponents_la_SOURCES = $(MOCFILES) $(SIM_THINGS) \
 	$(DIALG_SRC)
 
 noinst_HEADERS = $(MOCHEADERS) components.h capacitor.h vccs.h     \
+	componentdialog.h \
   inductor.h biast.h dcblock.h dcfeed.h ground.h subcirport.h symtrafo.h      \
   transformer.h ampere_dc.h attenuator.h circulator.h equation.h isolator.h   \
   source_ac.h subcircuit.h volt_ac.h ac_sim.h cccs.h   \
