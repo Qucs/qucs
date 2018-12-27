@@ -1,16 +1,15 @@
 /***************************************************************************
                                  element.h
                                 -----------
-    begin                : Sat Sep 20 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+	                           2018 Felix Salfelder / QUCS
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -40,6 +39,7 @@
 #include <QPen>
 #include <QBrush>
 #include <QDebug>
+#include <assert.h>
 #include "io_trace.h"
 #include "object.h"
 #include "io_trace.h"
@@ -145,7 +145,11 @@ struct Property {
   *
   */
 
+class NetLang;
+
 static QString incomplete_file="incomplete_file";
+static QString incomplete_description="incomplete_description";
+
 class Element : public Object {
 public:
   Element();
@@ -159,7 +163,8 @@ public:
 
   virtual void editElement(){}
   virtual void MPressElement(){}
-  virtual void tAC(){untested();}
+  virtual void tAC(QTextStream&, Schematic*, QStringList&, int&, int,
+		  NetLang const&){untested();}
 public:
   // should be pure, but several elments are incomplete.
   virtual Object* newOne()const{
@@ -169,6 +174,7 @@ public:
   }
 //  { unreachable(); return 0 /*NULL, actually*/;}
   virtual QString name() const{return "incomplete_name";}
+  virtual QString const& description() const{return incomplete_description;}
   virtual QString const& file() const{return incomplete_file;}
 
 //private: FIXME

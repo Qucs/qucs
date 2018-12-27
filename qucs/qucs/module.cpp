@@ -11,7 +11,7 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -53,7 +53,7 @@ Module::~Module () {
 // function returning a modules instance object.
 void Module::registerElement (QString category, Element const* e)
 {
-  qDebug() << "regElt" << category << e->name();
+  qDebug() << "regElt" << category << e->name() << e->description();
   Module * m = new Module (e);
   // m->category = category; // OUCH, incomplete?
   intoCategory(category.toStdString(), m);
@@ -203,20 +203,29 @@ void Module::intoCategory(std::string const& cat, Module * m)
 // find component. find category. pass it on.
 static void REGISTER_COMP_1(std::string const& cat, std::string const& name)
 {
-	qDebug() << "reg" << QString::fromStdString(cat) << QString::fromStdString(name);
+  qDebug() << "reg" << QString::fromStdString(cat) << QString::fromStdString(name);
 
-// transitional bu^H^Hhack.
-  incomplete();
   // this will only work, if symbols were already loaded.
   // FIXME: do this upon module loading!
-  Symbol const* sym = symbol_dispatcher[name];
-  Component const* legacy_component = prechecked_cast<Component const*>(sym);
-  if(legacy_component){ untested();
+  Symbol /*const*/ * sym = symbol_dispatcher[name];
+
+  for (auto x : symbol_dispatcher){
+    qDebug() << "sd" << QString::fromStdString(x.first)
+      << "name" << QString::fromStdString(name);
+    assert(x.second);
+    assert(symbol_dispatcher[name]);
+  }
+  if(!sym){
+    qDebug() << QString::fromStdString(name) << "does not exist";
+  }else if( Component* legacy_component = prechecked_cast<Component*>(sym) ){
     // careful: "name" is the dictionary key (std::string) and the netlist name
     //          sym->name() is the GUI representation  (QString)
 	  qDebug() << "loading" << QString::fromStdString(name)
 		        << "named" << sym->name()
 		        << "into" << QString::fromStdString(cat);
+	  QString dummy0;
+	  char* dummy1;
+	 // legacy_component->info(dummy0, dummy1); // ?!
 	  guiRegisterElement(cat, legacy_component);
   }else{ incomplete();
 	  qDebug() << QString::fromStdString(name)
@@ -279,7 +288,7 @@ void Module::registerModules (void) {
 
   // lumped components
   REGISTER_LUMPED_1 (R);
-  REGISTER_LUMPED_1 (Rus);
+  // REGISTER_LUMPED_1 (Rus);
 #if 0 // this does not work
   REGISTER_LUMPED_1 (Capacitor);
   REGISTER_LUMPED_1 (Inductor);

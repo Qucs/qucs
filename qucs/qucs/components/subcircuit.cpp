@@ -364,12 +364,16 @@ QString Subcircuit::getSubcircuitFile() const
 
 }
 
+static SubMap FileList;
+
 // moved from schematic_file.cpp
-void Subcircuit::tAC(){
+void Subcircuit::tAC(QTextStream& stream, Schematic* schem, QStringList&
+		Collect, int& countInit, int NumPorts, NetLang const& nl){
+	Component* pc=this;
 	assert(pc->obsolete_model_hack()=="Sub"); // really?
 	int i;
 	// tell the subcircuit it belongs to this schematic
-	pc->setSchematic (this);
+	pc->setSchematic(schem);
 	QString f = pc->getSubcircuitFile();
 	SubMap::Iterator it = FileList.find(f);
 	if(it != FileList.end())
@@ -385,7 +389,7 @@ void Subcircuit::tAC(){
 				i++;
 			}
 		}
-		continue;   // insert each subcircuit just one time
+//		continue;   // wtf?
 	}
 
 	// The subcircuit has not previously been added
@@ -394,7 +398,7 @@ void Subcircuit::tAC(){
 
 
 	// load subcircuit schematic
-	s = pc->Props.first()->Value;
+	QString s=pc->Props.first()->Value;
 
 	//      qDebug() << "reading subckt schematic" << pc->getSubcircuitFile();
 	Schematic *d = new Schematic(0, pc->getSubcircuitFile());
@@ -403,34 +407,32 @@ void Subcircuit::tAC(){
 		/// \todo implement error/warning message dispatcher for GUI and CLI modes.
 		QString message = QObject::tr("ERROR: Cannot load subcircuit \"%1\".").arg(s);
 		if (QucsMain) // GUI is running
-			ErrText->appendPlainText(message);
+			qDebug() << "ErrText->appendPlainText(message)";
 		else // command line
 			qCritical() << "Schematic::throughAllComps" << message;
-		return false;
+		throw "something wrong in sckt"; // TODO
 	}else{
 	}
 	d->DocName = s;
-	d->isVerilog = isVerilog;
-	d->isAnalog = isAnalog;
-	d->creatingLib = creatingLib;
-	r = d->createSubNetlist(stream, countInit, Collect, ErrText, NumPorts, nl);
-	if (r)
-	{
+	d->isVerilog = false; // isVerilog;
+	d->isAnalog = true; // isAnalog;
+	d->creatingLib = false; // creatingLib; //!?
+	auto r = d->createSubNetlist(&stream, countInit, Collect, nullptr, NumPorts, nl);
+	if (r) {
 		i = 0;
 		// save in/out signal types of subcircuit
 		foreach(Port *pp, pc->Ports)
 		{
 			//if(i>=d->PortTypes.count())break;
-			pp->Type = d->PortTypes[i];
+			pp->Type = d->portType(i);
 			pp->Connection->DType = pp->Type;
 			i++;
 		}
 		sub.PortTypes = d->PortTypes;
 		FileList.insert(f, sub);
 	}
-	delete d;
-	if(!r)
-	{
-		return false;
+	delete d; // BUG
+	if(!r) {
+		// throw?
 	}
 }
