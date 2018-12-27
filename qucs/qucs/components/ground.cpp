@@ -17,10 +17,13 @@
 
 #include "ground.h"
 #include "node.h"
+#include "module.h"
+#include "globals.h"
 
 
 Ground::Ground()
 {
+  info(Name, bitmap_file);
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("ground (reference potential)");
 
@@ -59,4 +62,10 @@ Element* Ground::info(QString& Name, char* &BitmapFile, bool getNewOne)
 QString Ground::netlist() const
 {
   return QString("");
+}
+
+namespace{
+Ground D;
+Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "GND", &D);
+Module::INSTALL pp("lumped", &D);
 }

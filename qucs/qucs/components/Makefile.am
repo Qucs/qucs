@@ -26,7 +26,7 @@
 # private library
 qucsdir=${pkglibdir}
 
-MOCHEADERS = spicefile.h
+MOCHEADERS =
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 plugindir = ${pkglibdir}
@@ -34,7 +34,6 @@ plugin_LTLIBRARIES = qucs-default-components.la
 
 qucs_default_components_la_LDFLAGS = -shared -module -avoid-version
 qucs_default_components_la_SOURCES = \
-	resistor.cpp \
 	spicedialog.cpp \
 	volt_dc.cpp \
   volt_ac.cpp subcircuit.cpp \
@@ -61,7 +60,9 @@ SIM_THINGS = \
 	dc_sim.cpp tr_sim.cpp sp_sim.cpp hb_sim.cpp opt_sim.cpp \
 	ac_sim.cpp digi_sim.cpp param_sweep.cpp
 
-MORE_LATER = phaseshifter.cpp gyrator.cpp \
+LUMPED_COMPONENTS = \
+	phaseshifter.cpp gyrator.cpp \
+	resistor.cpp \
   vcvs.cpp vccs.cpp tline.cpp substrate.cpp \
   mstee.cpp msstep.cpp msline.cpp mscross.cpp mscoupled.cpp mslange.cpp   \
   mscorner.cpp diode.cpp coplanar.cpp ccvs.cpp cccs.cpp \
@@ -86,6 +87,7 @@ qucs_default_components_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 # some stuff mostly related to legacy components
 qucs_default_components_la_SOURCES += \
+	${LUMPED_COMPONENTS} \
 	vacomponent.cpp \
 	vhdlfile.cpp libcomp.cpp ground.cpp \
 	verilogfile.cpp \
@@ -94,8 +96,8 @@ qucs_default_components_la_SOURCES += \
 	vafile.cpp \
 	spicefile.cpp
 
-noinst_HEADERS = $(MOCHEADERS) components.h capacitor.h vccs.h     \
-	spicedialog.h optimizedialog.h
+noinst_HEADERS = $(MOCHEADERS) components.h    \
+	spicedialog.h optimizedialog.h spicefile.h \
 	componentdialog.h \
   inductor.h biast.h dcblock.h dcfeed.h ground.h subcirport.h symtrafo.h      \
   transformer.h ampere_dc.h attenuator.h circulator.h equation.h isolator.h   \

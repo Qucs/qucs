@@ -682,7 +682,9 @@ void QucsApp::slotSetCompView (int index)
     for (it = Comps.constBegin(); it != Comps.constEnd(); it++) {
       if (Element const* e = (*it)->element()) {
         Name = e->description();
-        File = e->file();
+        File = e->iconBasename();
+        qDebug() << "icon" << File;
+        // BUG use normal files, not qrc mess.
         QListWidgetItem *icon = new QListWidgetItem(QPixmap(":/bitmaps/" + File + ".png"), Name);
         icon->setToolTip(Name);
         iconCompInfo = iconCompInfoStruct{catIdx, compIdx};
@@ -736,7 +738,7 @@ void QucsApp::slotSearchComponent(const QString &searchText)
       int compIdx = 0;
       for (modit = Comps.constBegin(); modit != Comps.constEnd(); modit++) {
         if (Element const* e = (*modit)->element()) {
-          File=e->file();
+          File=e->iconBasename();
           Name=e->name();
 
           if((Name.indexOf(searchText, 0, Qt::CaseInsensitive)) != -1) {

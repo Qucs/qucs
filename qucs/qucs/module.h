@@ -32,7 +32,7 @@ class Element;
 typedef Element * (* pInfoFunc) (QString&, char * &, bool);
 #if 1 // pointless
 typedef Element * (* pInfoVAFunc) (QString&, QString&, bool, QString);
-typedef Component * (* pCreatorFunc) ();
+//typedef Component * (* pCreatorFunc) ();
 #endif
 
 INTERFACE void guiRegisterElement (std::string const& category, Element const*);
