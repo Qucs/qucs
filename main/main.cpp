@@ -405,7 +405,7 @@ void createDocData() {
 	assert(e);
       // 	(Name, File, true);
         Name = e->name();
-        File = e->file();
+        File = e->iconBasename();
         Component *c = (Component* ) e;
 
         // object info

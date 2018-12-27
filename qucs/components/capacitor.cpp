@@ -1,25 +1,41 @@
 /***************************************************************************
                           capacitor.cpp  -  description
                              -------------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+	                         2018 Felix Salfelder / QUCS
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "capacitor.h"
+#include "globals.h"
+#include "component.h"
+#include "module.h"
+
+namespace {
+
+class Capacitor : public MultiViewComponent  {
+public:
+  Capacitor();
+ ~Capacitor() {};
+  Object* newOne() const {return new Capacitor(*this);}
+  static Element* info(QString&, char* &, bool getNewOne=false);
+
+protected:
+  void createSymbol();
+};
 
 
 Capacitor::Capacitor()
 {
+info(Name, bitmap_file);
+
   Description = QObject::tr("capacitor");
 
   Props.append(new Property("C", "1 pF", true,
@@ -36,10 +52,11 @@ Capacitor::Capacitor()
   Name  = "C";
 }
 
-Component* Capacitor::newOne()
-{
-  return new Capacitor();
-}
+Capacitor C;
+
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "C", &C);
+// the toolbox item
+static Module::INSTALL pp("lumped", &C);
 
 Element* Capacitor::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
@@ -71,4 +88,6 @@ void Capacitor::createSymbol()
 
   x1 = -30; y1 = -13;
   x2 =  30; y2 =  13;
+}
+
 }

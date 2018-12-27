@@ -1,25 +1,40 @@
 /***************************************************************************
                           vccs.cpp  -  description
                              -------------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+	                         2018 Felix Salfelder / QUCS
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "vccs.h"
+#include "globals.h"
+#include "module.h"
+#include "component.h"
+
+namespace{
+
+class VCCS : public Component  {
+public:
+  VCCS();
+  ~VCCS();
+  Object* newOne() const;
+  static Element* info(QString&, char* &, bool getNewOne=false);
+}D;
+
+Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "VCCS", &D);
+Module::INSTALL pp("sources", &D);
 
 
 VCCS::VCCS()
 {
+  info(Name, bitmap_file);
   Description = QObject::tr("voltage controlled current source");
 
   Arcs.append(new Arc(0,-11, 22, 22,  0, 16*360,QPen(Qt::darkBlue,2)));
@@ -68,7 +83,7 @@ VCCS::~VCCS()
 {
 }
 
-Component* VCCS::newOne()
+Object* VCCS::newOne() const
 {
   return new VCCS();
 }
@@ -80,4 +95,6 @@ Element* VCCS::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new VCCS();
   return 0;
+}
+
 }

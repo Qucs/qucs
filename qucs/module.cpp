@@ -287,12 +287,9 @@ static void REGISTER_COMP_1(std::string const& cat, std::string const& name)
 void Module::registerModules (void) {
 
   // lumped components
-  REGISTER_LUMPED_1 (R);
+ //  REGISTER_LUMPED_1 (R);
   // REGISTER_LUMPED_1 (Rus);
 #if 0 // this does not work
-  REGISTER_LUMPED_1 (Capacitor);
-  REGISTER_LUMPED_1 (Inductor);
-  REGISTER_LUMPED_1 (Ground);
   REGISTER_LUMPED_1 (SubCirPort);
   REGISTER_LUMPED_1 (Transformer);
   REGISTER_LUMPED_1 (symTrafo);
@@ -316,7 +313,6 @@ void Module::registerModules (void) {
   REGISTER_SOURCE_1 (Source_ac);
   REGISTER_SOURCE_1 (Volt_noise);
   REGISTER_SOURCE_1 (Ampere_noise);
-  REGISTER_SOURCE_1 (VCCS);
   REGISTER_SOURCE_1 (CCCS);
   REGISTER_SOURCE_1 (VCVS);
   REGISTER_SOURCE_1 (CCVS);

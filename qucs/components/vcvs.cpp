@@ -69,7 +69,7 @@ VCVS::~VCVS()
 {
 }
 
-Component* VCVS::newOne()
+Object* VCVS::newOne() const
 {
   return new VCVS();
 }
