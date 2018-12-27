@@ -399,9 +399,10 @@ void SimMessage::startSimulator()
       Arguments  << QucsSettings.QucsHomeDir.filePath("netlist.txt")
                  << DataSet << SimTime << pathName(SimPath)
                  << pathName(QucsSettings.BinDir) << libs;
-    }
-    // Module.
-    else {
+    }else{
+      // no simulation
+      incomplete();
+#if 0
       QString text = Doc->toPlainText();
       VHDL_File_Info VInfo (text);
       QString entity = VInfo.EntityName.toLower();
@@ -437,6 +438,7 @@ void SimMessage::startSimulator()
                 << pathName(SimPath)
                 << entity
                 << lib;
+#endif
     }
   }
   // Simulate schematic window.
