@@ -158,6 +158,8 @@ public:
   virtual void getCenter(int&, int&);
 
   virtual void editElement(){}
+  virtual void MPressElement(){}
+  virtual void tAC(){untested();}
 public:
   // should be pure, but several elments are incomplete.
   virtual Object* newOne()const{

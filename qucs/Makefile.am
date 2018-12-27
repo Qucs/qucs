@@ -70,7 +70,6 @@ pqucs_LTLIBRARIES = \
 # dialogs related to components
 # sort out later.
 DIALG_SRC = \
-	spicedialog.cpp \
 	componentdialog.cpp \
 	diagramdialog.cpp \
 	optimizedialog.cpp
@@ -79,9 +78,10 @@ libqucs_la_SOURCES = \
 	globals.cpp \
 	attach.cpp \
 	diagram.cpp \
+	painting.cpp \
+	graph.cpp \
 	command.cpp \
 	component.cpp \
-<<<<<<< HEAD
 	diagram.cpp \
 	element.cpp \
 	graph.cpp \
@@ -129,7 +129,6 @@ libqucs_la_LIBADD = \
 	$(QT_LIBS)
 else
 # link order hack?
-libqucs_la_LIBADD = dialogs/libdialogs.la
 libqucsschematic_la_LIBADD = libqucs.la
 endif
 

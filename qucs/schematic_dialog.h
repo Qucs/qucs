@@ -40,7 +40,7 @@ class QVBoxLayout;
 class SchematicDialog : public QDialog {
    Q_OBJECT
 public:
-  SchematicDialog(Schematic& d) : Doc(d) {}
+  SchematicDialog() : Doc(nullptr /*??*/) {}
   virtual ~SchematicDialog(){}
 
   // slot?
@@ -83,12 +83,17 @@ public:
 
 protected slots:
     virtual void reject(){}
-    virtual bool eventFilter(QObject *obj, QEvent *event){return false;}
+    virtual bool eventFilter(QObject * /*obj*/, QEvent * /*event*/){return false;}
 
 private:
   virtual void updateCompPropsList(void){}
+protected:
+  Schematic* schematic(){ untested();
+	  return Doc;
+  }
+
 private:
-  Schematic& Doc;
+  Schematic* Doc;
 };
 
 #endif
