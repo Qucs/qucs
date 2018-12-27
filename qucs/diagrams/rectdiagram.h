@@ -18,25 +18,5 @@
 #ifndef RECTDIAGRAM_H
 #define RECTDIAGRAM_H
 
-#include "diagram.h"
-
-
-class RectDiagram : public Diagram  {
-public: 
-  RectDiagram(int _cx=0, int _cy=0);
- ~RectDiagram();
-
-  Diagram* newOne() const {return new RectDiagram(*this);}
-  static Element* info(QString&, char* &, bool getNewOne=false);
-  int  calcDiagram();
-  void calcLimits();
-  void calcCoordinate(const double*, const double*, const double*, float*, float*, Axis const*) const;
-  void finishMarkerCoordinates(float&, float&) const;
-  bool insideDiagram(float, float) const;
-
-  QString name() const{return QObject::tr("Cartesian");}
-protected:
-  void clip(Graph::iterator &) const;
-};
 
 #endif

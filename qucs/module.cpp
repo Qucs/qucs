@@ -23,8 +23,8 @@
 
 #include "element.h"
 #include "components/component.h"
-#include "paintings/paintings.h"
-#include "diagrams/diagrams.h"
+// #include "paintings/paintings.h"
+// #include "diagrams/diagrams.h"
 #include "module.h"
 #include "io_trace.h"
 #include "globals.h"
@@ -201,6 +201,7 @@ void Module::intoCategory(std::string const& cat, Module * m)
 
 
 // find component. find category. pass it on.
+#if 0
 static void REGISTER_COMP_1(std::string const& cat, std::string const& name)
 {
   qDebug() << "reg" << QString::fromStdString(cat) << QString::fromStdString(name);
@@ -233,6 +234,7 @@ static void REGISTER_COMP_1(std::string const& cat, std::string const& name)
 	  // not loaded yet?
   }
 }
+#endif
 
 #define REGISTER_SIM_1(cat,val) \
   registerComponent (cat, &val::info)
@@ -318,7 +320,6 @@ void Module::registerModules (void) {
   REGISTER_SOURCE_1 (CCVS);
   REGISTER_SOURCE_1 (vPulse);
   REGISTER_SOURCE_1 (iPulse);
-  REGISTER_SOURCE_1 (vRect);
   REGISTER_SOURCE_1 (iRect);
   REGISTER_SOURCE_1 (Noise_ii);
   REGISTER_SOURCE_1 (Noise_vv);

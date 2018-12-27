@@ -49,7 +49,7 @@
 #include "mouseactions.h"
 #include "messagedock.h"
 #include "components/ground.h"
-#include "components/subcirport.h"
+//#include "components/subcirport.h"
 #include "components/equation.h"
 
 // BUG: untangle dialogs

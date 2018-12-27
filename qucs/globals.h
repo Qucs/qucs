@@ -19,12 +19,14 @@
 #include "platform.h"
 #include "dispatcher.h"
 
+class Diagram;
 class Symbol;
 class Simulator;
 class NetLang;
 class Command;
 class Painting;
 
+extern INTERFACE Dispatcher<Diagram> diagram_dispatcher;
 extern INTERFACE Dispatcher<Symbol> symbol_dispatcher;
 extern INTERFACE Dispatcher<Simulator> simulator_dispatcher;
 extern INTERFACE Dispatcher<NetLang> netlang_dispatcher;
