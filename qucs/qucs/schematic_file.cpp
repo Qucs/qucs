@@ -1251,7 +1251,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       }
     }
 
-    pc->tAC();
+    pc->tAC(*stream, this, Collect, countInit, NumPorts, nl); //?!!
     // handle ground symbol
     if(pc->obsolete_model_hack() == "GND") { // BUG.
       pc->Ports.first()->Connection->Name = "gnd";

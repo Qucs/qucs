@@ -22,7 +22,7 @@
  */
 
 #include "searchdialog.h"
-#include "ui_searchdialog.h"
+#include "dialogs/ui_searchdialog.h"
 
 SearchDialog::SearchDialog(QWidget *parent) : 
     QDialog(parent),

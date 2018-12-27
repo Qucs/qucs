@@ -17,7 +17,7 @@
 #define QUCS_GLOBALS_H
 
 #include "platform.h"
-#include "l_dispatcher.h"
+#include "dispatcher.h"
 
 class Symbol;
 class Simulator;

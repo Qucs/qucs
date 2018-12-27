@@ -532,10 +532,10 @@ void attach_default_plugins(std::string plugpath)
   attach_single(plugpath, "qucsator" SOEXT);
 
   // TODO: remove "lib" prefix
-  attach_single(plugpath, "libcomponents" SOEXT);
+  attach_single(plugpath, "qucs-default-components" SOEXT);
   attach_single(plugpath, "libdiagrams" SOEXT);
   attach_single(plugpath, "libpaintings" SOEXT);
-  attach_single(plugpath, "libdialogs" SOEXT);
+ // attach_single(plugpath, "libdialogs" SOEXT);
 }
 // #########################################################################
 // ##########                                                     ##########

@@ -24,15 +24,21 @@
 #include <QGridLayout>
 #include <QComboBox>
 #include <QCheckBox>
+#include "platform.h"
 
 
-MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent)
-                     : QDialog(parent)
+MarkerDialog::MarkerDialog()
+   //, QWidget *parent) what is parent?!
 {
   setWindowTitle(tr("Edit Marker Properties"));
-  setAttribute(Qt::WA_DeleteOnClose);
+  setAttribute(Qt::WA_DeleteOnClose); // really?
+}
 
-  pMarker = pm_;
+void MarkerDialog::attach(Object *pm_)
+{
+                     //: QDialog(parent, Qt::WDestructiveClose) fixed in qt5 branh
+  pMarker = prechecked_cast<Marker*>(pm_);
+  assert(pMarker);
 
   QGridLayout *g = new QGridLayout;
 

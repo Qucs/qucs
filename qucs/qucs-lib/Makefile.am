@@ -39,6 +39,7 @@ qucslib_SOURCES = main.cpp qucslib.cpp displaydialog.cpp symbolwidget.cpp \
        librarydialog.cpp qucslib_.qrc
 
 nodist_qucslib_SOURCES = $(MOCFILES)
+nodist_qucslib_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
 qucslib_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
