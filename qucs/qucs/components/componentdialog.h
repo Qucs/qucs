@@ -19,8 +19,11 @@
 #define COMPONENTDIALOG_H
 
 #include "component.h"
+#include "platform.h"
+#include "schematic_dialog.h"
 
 #include <QDialog>
+#include <assert.h>
 
 class Schematic;
 
@@ -38,13 +41,14 @@ class QPushButton;
 class QVBoxLayout;
 
 
-class ComponentDialog : public QDialog {
-   Q_OBJECT
+class ComponentDialog : public SchematicDialog {
 public:
-  ComponentDialog(Component*, Schematic*);
- ~ComponentDialog();
+  ComponentDialog(Schematic&);
+  ~ComponentDialog();
 
-private slots:
+  void attach(Component* c);
+
+private: // slot overrides.
   void slotButtOK();
   void slotButtCancel();
   void slotSelectProperty(QTableWidgetItem *item);

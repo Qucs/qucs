@@ -1328,6 +1328,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       assert(pc->obsolete_model_hack()!="Sub");
     }
 
+#if 0 // does not work
     if(LibComp* lib = dynamic_cast</*const*/LibComp*>(pc)) {
       if(creatingLib) {
 	ErrText->appendPlainText(
@@ -1354,6 +1355,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       }
       continue;
     }
+#endif
 
     // handle SPICE subcircuit components
     if(pc->obsolete_model_hack() == "SPICE") { // BUG
@@ -1402,20 +1404,22 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       FileList.insert(f, SubFile(s, f));
 
       if(pc->obsolete_model_hack() == "VHDL") {
-	VHDL_File *vf = (VHDL_File*)pc;
-	r = vf->createSubNetlist(stream);
-	ErrText->appendPlainText(vf->getErrorText());
-	if(!r) {
-	  return false;
-	}
-      }
-      if(pc->obsolete_model_hack() == "Verilog") {
-	Verilog_File *vf = (Verilog_File*)pc;
-	r = vf->createSubNetlist(stream);
-	ErrText->appendPlainText(vf->getErrorText());
-	if(!r) {
-	  return false;
-	}
+	incomplete();
+//	VHDL_File *vf = (VHDL_File*)pc;
+//	r = vf->createSubNetlist(stream);
+//	ErrText->appendPlainText(vf->getErrorText());
+//	if(!r) {
+//	  return false;
+//	}
+      }else if(pc->obsolete_model_hack() == "Verilog") {
+	incomplete();
+//	Verilog_File *vf = (Verilog_File*)pc;
+//	r = vf->createSubNetlist(stream);
+//	ErrText->appendPlainText(vf->getErrorText());
+//	if(!r) {
+//	  return false;
+//	}
+      }else{
       }
       continue;
     }
