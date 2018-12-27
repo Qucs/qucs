@@ -1901,7 +1901,8 @@ void MouseActions::MReleaseZoomIn(Schematic *Doc, QMouseEvent *Event)
 void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 {
 //    qDebug() << "+double click, editElement";
-
+//
+// BUG: focusElement is a parameter
   if(focusElement == 0) return;
 
 //  qDebug() << "+focusElement->Type" << focusElement->Type;
@@ -1916,10 +1917,13 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
   QFileInfo Info(Doc->DocName);
   float fX = DOC_X_FPOS, fY = DOC_Y_FPOS;
 
+  focusElement->editElement();
+
   switch(focusElement->Type) {
     case isComponent:
     case isAnalogComponent:
     case isDigitalComponent:
+#if 0
          c = (Component*)focusElement;
 //         qDebug() << "cast focusElement into" << c->Name;
          if(c->obsolete_model_hack() == "GND") { // BUG
@@ -1945,6 +1949,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
          Doc->enlargeView(x1,y1,x2,y2);
          break;
 
+#endif
     case isDiagram :
          dia = (Diagram*)focusElement;
          if(dia->Name.at(0) == 'T') { // don't open dialog on scrollbar

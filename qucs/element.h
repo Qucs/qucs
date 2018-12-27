@@ -157,6 +157,7 @@ public:
   virtual void setCenter(int, int, bool relative=false);
   virtual void getCenter(int&, int&);
 
+  virtual void editElement(){}
 public:
   // should be pure, but several elments are incomplete.
   virtual Object* newOne()const{
