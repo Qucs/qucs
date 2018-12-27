@@ -39,7 +39,7 @@ protected:
   void remakeSymbol(int No);
   int  loadSymbol(const QString&);
 private: // overrides
-  void tAC();
+  void tAC(QTextStream& stream, Schematic*, QStringList&, int&, int, NetLang const&);
 };
 
 #endif

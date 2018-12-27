@@ -25,13 +25,8 @@
 # private library
 qucsdir=${pkglibdir}
 
-qucs_LTLIBRARIES = libdialogs.la
+# qucs_LTLIBRARIES = libdialogs.la
 
-MOCHEADERS = settingsdialog.h simmessage.h qucssettingsdialog.h      \
-     labeldialog.h changedialog.h matchdialog.h digisettingsdialog.h \
-     sweepdialog.h searchdialog.h librarydialog.h importdialog.h     \
-     packagedialog.h savedialog.h vasettingsdialog.h                 \
-     exportdialog.h loaddialog.h newprojdialog.h aboutdialog.h
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
@@ -42,12 +37,7 @@ UICFILES = ui_searchdialog.h
 BUILT_SOURCES = $(UICFILES)
 
 libdialogs_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
-libdialogs_la_SOURCES = settingsdialog.cpp newprojdialog.cpp \
-     simmessage.cpp qucssettingsdialog.cpp labeldialog.cpp changedialog.cpp \
-     matchdialog.cpp sweepdialog.cpp digisettingsdialog.cpp searchdialog.cpp \
-     librarydialog.cpp importdialog.cpp packagedialog.cpp \
-     savedialog.cpp vasettingsdialog.cpp exportdialog.cpp loaddialog.cpp \
-     aboutdialog.cpp
+libdialogs_la_SOURCES =
 
 if COND_WIN32
 libdialogs_la_LIBADD = ../libqucsschematic.la

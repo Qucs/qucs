@@ -31,7 +31,6 @@ SUBDIRS = \
 	bitmaps \
 	components diagrams \
 	paintings \
-	dialogs \
 	octave \
 	sim \
 	tests
@@ -52,7 +51,14 @@ endif
 
 bin_SCRIPTS = qucsdigi${BAT_EXT} qucsveri${BAT_EXT} qucsdigilib${BAT_EXT}
 
+DIALG_MOCHEADERS = settingsdialog.h simmessage.h qucssettingsdialog.h      \
+     labeldialog.h changedialog.h matchdialog.h digisettingsdialog.h \
+     sweepdialog.h searchdialog.h librarydialog.h importdialog.h     \
+     packagedialog.h savedialog.h vasettingsdialog.h                 \
+     exportdialog.h loaddialog.h newprojdialog.h aboutdialog.h
+
 MOCHEADERS = \
+	${DIALG_MOCHEADERS} \
   messagedock.h \
   octave_window.h \
   projectView.h \
@@ -69,22 +75,32 @@ pqucs_LTLIBRARIES = \
 
 # dialogs related to components
 # sort out later.
-DIALG_SRC = \
+DIALOG_SRC = \
 	componentdialog.cpp \
 	diagramdialog.cpp \
 	optimizedialog.cpp
 
+# plugins? lets see
+DIALOG_SRC+= \
+								settingsdialog.cpp newprojdialog.cpp \
+     simmessage.cpp qucssettingsdialog.cpp labeldialog.cpp changedialog.cpp \
+     matchdialog.cpp sweepdialog.cpp digisettingsdialog.cpp searchdialog.cpp \
+     librarydialog.cpp importdialog.cpp packagedialog.cpp \
+     savedialog.cpp vasettingsdialog.cpp exportdialog.cpp loaddialog.cpp \
+     aboutdialog.cpp
+
+
 libqucs_la_SOURCES = \
 	misc.cpp \
 	globals.cpp \
+	io_error.cpp \
 	diagram.cpp \
 	painting.cpp \
 	graph.cpp \
 	command.cpp \
 	component.cpp \
 	marker.cpp \
-	${DIALG_SRC}
-	io_error.cpp
+	${DIALOG_SRC}
 
 # TODO:
 # - parts must go to libqucs
@@ -100,6 +116,7 @@ libqucs_la_SOURCES += \
   messagedock.cpp imagewriter.cpp printerwriter.cpp \
   schematic_component.cpp \
   projectView.cpp \
+  ${DIALG_SRC} \
  $(MOCFILES)
 
 libqucs_la_SOURCES += qucs_.qrc
@@ -132,6 +149,7 @@ noinst_HEADERS += \
 	globals.h \
 	diagram.h \
 	io_trace.h \
+	dispatcher.h \
 	l_dispatcher.h \
 	object.h \
 	platform.h
