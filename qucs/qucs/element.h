@@ -147,7 +147,6 @@ struct Property {
 
 class NetLang;
 
-static QString incomplete_file="incomplete_file";
 static QString incomplete_description="incomplete_description";
 
 class Element : public Object {
@@ -175,7 +174,7 @@ public:
 //  { unreachable(); return 0 /*NULL, actually*/;}
   virtual QString name() const{return "incomplete_name";}
   virtual QString const& description() const{return incomplete_description;}
-  virtual QString const& file() const{return incomplete_file;}
+  virtual char const* iconBasename() const{return nullptr;}
 
 //private: FIXME
   bool isSelected;

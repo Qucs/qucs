@@ -112,11 +112,12 @@ public:
   }
 
 private:
+  char const* iconBasename() const{return bitmap_file;}
 protected: // BUG
   QString Model;
 protected: // BUG => Element.
   QString Name;
-  char* bitmap_file; // wtf?
+  char* bitmap_file;
 protected: // BUG
   QString  Description;
 protected:
