@@ -27,7 +27,6 @@ qucsdir=${pkglibdir}
 
 qucs_LTLIBRARIES = libdiagrams.la
 
-MOCHEADERS = diagramdialog.h markerdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 libdiagrams_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
@@ -40,6 +39,7 @@ libdiagrams_la_SOURCES = tabdiagram.cpp smithdiagram.cpp rectdiagram.cpp \
 nodist_libdiagrams_la_SOURCES = $(MOCFILES)
 
 noinst_HEADERS = $(MOCHEADERS) graph.h polardiagram.h rectdiagram.h \
+ diagramdialog.h markerdialog.h\
   smithdiagram.h tabdiagram.h diagrams.h marker.h psdiagram.h rect3ddiagram.h \
   curvediagram.h timingdiagram.h truthdiagram.h 
 #phasordiagram.h waveac.h

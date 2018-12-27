@@ -20,6 +20,7 @@
 
 #include <QDialog>
 #include <QRegExp>
+#include "schematic_dialog.h"
 
 class Schematic;
 class Optimize_Sim;
@@ -33,12 +34,13 @@ class QDoubleValidator;
 class QIntValidator;
 
 
-class OptimizeDialog : public QDialog  {
-Q_OBJECT
+class OptimizeDialog : public SchematicDialog  {
+// Q_OBJECT does not work
 public:
-  OptimizeDialog(Optimize_Sim*, Schematic*);
+  OptimizeDialog();
  ~OptimizeDialog();
 
+ void attach(Object* sim);
 private slots:
   void slotOK();
   void slotApply();

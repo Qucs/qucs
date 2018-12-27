@@ -25,9 +25,11 @@
 
 class GraphicLine : public Painting  {
 public:
-  GraphicLine(int cx_=0, int cy_=0, int x2_=0, int y2_=0,
+  GraphicLine();
+  ~GraphicLine();
+  
+  void setSomeStuff( int cx_=0, int cy_=0, int x2_=0, int y2_=0,
               QPen Pen_=QPen(QColor()));
- ~GraphicLine();
 
   void paintScheme(Schematic*);
   void getCenter(int&, int&);

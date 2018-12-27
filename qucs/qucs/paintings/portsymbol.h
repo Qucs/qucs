@@ -24,9 +24,9 @@
 
 class PortSymbol : public Painting  {
 public:
-  PortSymbol(int cx_=0, int cy_=0, const QString& numberStr_="1",
-                                   const QString& nameStr_="");
- ~PortSymbol();
+  PortSymbol();
+  ~PortSymbol();
+  void setSomeArgsHack(int cx_, int cy_, const QString& numberStr_,  const QString& nameStr_);
 
   void paintScheme(Schematic*);
   void getCenter(int&, int&);

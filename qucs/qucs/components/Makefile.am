@@ -28,22 +28,8 @@ qucsdir=${pkglibdir}
 
 qucs_LTLIBRARIES = libcomponents.la
 
-MOCHEADERS = \
-	spicedialog.h optimizedialog.h spicefile.h
+MOCHEADERS =
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
-
-libcomponents_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
-libcomponents_la_SOURCES = phaseshifter.cpp gyrator.cpp \
-  vcvs.cpp vccs.cpp tr_sim.cpp tline.cpp substrate.cpp sp_sim.cpp             \
-  param_sweep.cpp mstee.cpp msstep.cpp msline.cpp mscross.cpp mscoupled.cpp mslange.cpp   \
-  mscorner.cpp hb_sim.cpp diode.cpp dc_sim.cpp coplanar.cpp ccvs.cpp cccs.cpp \
-subcirport.cpp ground.cpp        \
-  dcfeed.cpp dcblock.cpp biast.cpp inductor.cpp capacitor.cpp vhdlfile.cpp    \
-  component.cpp iprobe.cpp volt_noise.cpp ampere_noise.cpp       \
-  msmbend.cpp msopen.cpp ampere_ac.cpp bjt.cpp jfet.cpp mosfet.cpp            \
-  msgap.cpp bjtsub.cpp mosfet_sub.cpp vpulse.cpp ipulse.cpp vrect.cpp         \
-  irect.cpp msvia.cpp amplifier.cpp opamp.cpp spicefile.cpp cpwopen.cpp       \
-  cpwshort.cpp spicedialog.cpp cpwgap.cpp cpwstep.cpp libcomp.cpp mutual.cpp  
 
 plugindir = ${pkglibdir}
 plugin_LTLIBRARIES = qucs-default-components.la
@@ -51,6 +37,7 @@ plugin_LTLIBRARIES = qucs-default-components.la
 qucs_default_components_la_LDFLAGS = -shared -module -avoid-version
 qucs_default_components_la_SOURCES = \
 	resistor.cpp \
+	spicedialog.cpp \
 	volt_dc.cpp
 # TODO: move the others
 LATER= \
@@ -114,6 +101,7 @@ libcomponents_la_SOURCES = $(MOCFILES) $(SIM_THINGS) \
 	$(DIALG_SRC)
 
 noinst_HEADERS = $(MOCHEADERS) components.h capacitor.h vccs.h     \
+	spicedialog.h optimizedialog.h spicefile.h \
 	componentdialog.h \
   inductor.h biast.h dcblock.h dcfeed.h ground.h subcirport.h symtrafo.h      \
   transformer.h ampere_dc.h attenuator.h circulator.h equation.h isolator.h   \
