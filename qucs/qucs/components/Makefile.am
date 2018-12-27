@@ -36,7 +36,7 @@ qucs_default_components_la_LDFLAGS = -shared -module -avoid-version
 qucs_default_components_la_SOURCES = \
 	spicedialog.cpp \
 	volt_dc.cpp \
-  volt_ac.cpp subcircuit.cpp \
+  volt_ac.cpp \
   source_ac.cpp isolator.cpp circulator.cpp attenuator.cpp       \
   ampere_dc.cpp transformer.cpp symtrafo.cpp \
   mutual2.cpp noise_ii.cpp noise_iv.cpp noise_vv.cpp logical_or.cpp           \
@@ -62,6 +62,7 @@ SIM_THINGS = \
 
 LUMPED_COMPONENTS = \
 	phaseshifter.cpp gyrator.cpp \
+  	subcirport.cpp \
 	resistor.cpp \
   vcvs.cpp vccs.cpp tline.cpp substrate.cpp \
   mstee.cpp msstep.cpp msline.cpp mscross.cpp mscoupled.cpp mslange.cpp   \
@@ -91,7 +92,6 @@ qucs_default_components_la_SOURCES += \
 	vacomponent.cpp \
 	vhdlfile.cpp libcomp.cpp ground.cpp \
 	verilogfile.cpp \
-  	subcirport.cpp \
 	equation.cpp \
 	vafile.cpp \
 	spicefile.cpp
@@ -99,7 +99,7 @@ qucs_default_components_la_SOURCES += \
 noinst_HEADERS = $(MOCHEADERS) components.h    \
 	spicedialog.h optimizedialog.h spicefile.h \
 	componentdialog.h \
-  inductor.h biast.h dcblock.h dcfeed.h ground.h subcirport.h symtrafo.h      \
+  inductor.h biast.h dcblock.h dcfeed.h ground.h symtrafo.h      \
   transformer.h ampere_dc.h attenuator.h circulator.h equation.h isolator.h   \
   source_ac.h subcircuit.h volt_ac.h ac_sim.h cccs.h   \
   ccvs.h coplanar.h dc_sim.h diode.h hb_sim.h mscorner.h mscoupled.h mslange.h          \
@@ -111,7 +111,7 @@ noinst_HEADERS = $(MOCHEADERS) components.h    \
   cpwgap.h cpwstep.h libcomp.h mutual.h mutual2.h noise_ii.h noise_iv.h       \
   noise_vv.h logical_or.h logical_nor.h logical_and.h logical_nand.h          \
   logical_xor.h logical_xnor.h logical_inv.h digi_sim.h digi_source.h         \
-  coupler.h rs_flipflop.h d_flipflop.h jk_flipflop.h coaxialline.h vprobe.h   \
+  coupler.h rs_flipflop.h d_flipflop.h jk_flipflop.h coaxialline.h   \
   switch.h relais.h am_modulator.h pm_modulator.h opt_sim.h tline_4port.h     \
   twistedpair.h bondwire.h verilogfile.h vexp.h iexp.h  \
   eqndefined.h vfile.h ifile.h mod_amp.h thyristor.h triac.h      \
