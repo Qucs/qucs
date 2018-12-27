@@ -15,11 +15,30 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "vprobe.h"
+#include "globals.h"
+#include "module.h"
+#include "component.h"
+
+
+namespace{
+
+
+class vProbe : public Component  {
+public:
+  vProbe();
+ ~vProbe();
+  Object* newOne() const;
+  static Element* info(QString&, char* &, bool getNewOne=false);
+}D;
+
+Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "VProbe", &D);
+Module::INSTALL pp("sources", &D);
+
 
 
 vProbe::vProbe()
 {
+  info(Name, bitmap_file);
   Description = QObject::tr("voltage probe");
 
   Lines.append(new Line(-20,-31, 20,-31,QPen(Qt::darkBlue,2)));
@@ -57,7 +76,7 @@ vProbe::~vProbe()
 {
 }
 
-Component* vProbe::newOne()
+Object* vProbe::newOne() const
 {
   return new vProbe();
 }
@@ -69,4 +88,6 @@ Element* vProbe::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new vProbe();
   return 0;
+}
+
 }

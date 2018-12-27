@@ -10,13 +10,27 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "vrect.h"
+#include "component.h"
+#include "module.h"
+#include "globals.h"
 
+namespace{
+
+class vRect : public Component  {
+public:
+  vRect();
+  ~vRect();
+  Object* newOne() const;
+  static Element* info(QString&, char* &, bool getNewOne=false);
+}D;
+
+Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Vrect", &D);
+Module::INSTALL pp("sources", &D);
 
 vRect::vRect()
 {
@@ -68,7 +82,7 @@ vRect::~vRect()
 {
 }
 
-Component* vRect::newOne()
+Object* vRect::newOne() const
 {
   return new vRect();
 }
@@ -80,4 +94,6 @@ Element* vRect::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new vRect();
   return 0;
+}
+
 }

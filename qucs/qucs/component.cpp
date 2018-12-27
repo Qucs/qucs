@@ -1614,6 +1614,7 @@ void GateComponent::createSymbol()
 // must be Component* SomeParserClass::getComponent(QString& Line)
 // better: Component* SomeParserClass::getComponent(SomeDataStream& s)
 // BUG: loads component into schematic.
+// fixed in qt5 rework
 Component* getComponentFromName(QString& Line, Schematic* p)
 {
   Component *c = 0;
@@ -1646,9 +1647,13 @@ Component* getComponentFromName(QString& Line, Schematic* p)
   }
 
   // fetch proto from dictionary.
-  Symbol const* s=symbol_dispatcher[cstr.toStdString()];
+  Element const* s=symbol_dispatcher[cstr.toStdString()];
 
   if(Component const* sc=dynamic_cast<Component const*>(s)){
+      // legacy component
+    Object* s=sc->newOne(); // memory leak
+    c=prechecked_cast<Component*>(s);
+  }else if(Command const* sc=dynamic_cast<Command const*>(s)){
       // legacy component
     Object* s=sc->newOne(); // memory leak
     c=prechecked_cast<Component*>(s);
