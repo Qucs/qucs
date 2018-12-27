@@ -37,13 +37,20 @@
 #include <QKeyEvent>
 #include <QDebug>
 
-ComponentDialog::ComponentDialog(Component *c, Schematic *d)
-			: QDialog(d)
+ComponentDialog::ComponentDialog(Schematic &d)
+			: SchematicDialog(d)
 {
   resize(450, 250);
   setWindowTitle(tr("Edit Component Properties"));
-  Comp  = c;
-  Doc   = d;
+}
+
+void ComponentDialog::attach(Component* c)
+{
+  if(Comp){
+    incomplete();
+  }else{
+  }
+  Comp = c;
   QString s;
   setAllVisible = true; // state when toggling properties visibility
 

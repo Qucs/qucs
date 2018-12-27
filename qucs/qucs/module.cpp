@@ -447,10 +447,10 @@ void Module::registerModules (void) {
   REGISTER_DIGITAL_1 (Digi_Sim);
 
   // file components
-  REGISTER_FILE_1 (SpiceFile);
-  REGISTER_FILE_3 (SPEmbed, info1, info2, info);
-  REGISTER_FILE_3 (SPDeEmbed, info2, info4, info);
-  REGISTER_FILE_1 (Subcircuit);
+ // REGISTER_FILE_1 (SpiceFile);
+ // REGISTER_FILE_3 (SPEmbed, info1, info2, info);
+ // REGISTER_FILE_3 (SPDeEmbed, info2, info4, info);
+ // REGISTER_FILE_1 (Subcircuit);
 
 #endif
 

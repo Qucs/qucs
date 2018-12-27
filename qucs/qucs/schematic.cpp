@@ -1419,6 +1419,7 @@ int Schematic::adjustPortNumbers()
   QString Suffix = Info.suffix();
 
   // handle VHDL file symbol
+#if 0
   if (Suffix == "vhd" || Suffix == "vhdl") {
     QStringList::iterator it;
     QStringList Names, GNames, GTypes, GDefs;
@@ -1477,9 +1478,12 @@ int Schematic::adjustPortNumbers()
 	y2 += 40;
       }
     }
-  }
+  }else
+#endif
   // handle Verilog-HDL file symbol
-  else if (Suffix == "v") {
+  if (Suffix == "v") {
+	  incomplete();
+#if 0
 
     QStringList::iterator it;
     QStringList Names;
@@ -1523,9 +1527,10 @@ int Schematic::adjustPortNumbers()
 	y2 += 40;
       }
     }
-  }
-  // handle Verilog-A file symbol
-  else if (Suffix == "va") {
+#endif
+  }else if (Suffix == "va") {
+	  incomplete();
+#if 0
 
     QStringList::iterator it;
     QStringList Names;
@@ -1570,10 +1575,8 @@ int Schematic::adjustPortNumbers()
 	y2 += 40;
       }
     }
-  }
-  // handle schematic symbol
-  else
-  {
+#endif
+  }else{
       // go through all components in a schematic
       for(Component *pc = DocComps.first(); pc!=0; pc = DocComps.next())
       {

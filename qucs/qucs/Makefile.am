@@ -58,6 +58,7 @@ MOCHEADERS = \
   projectView.h \
   schematic.h \
   textdoc.h \
+  schematic_dialog.h \
   qucs.h
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
