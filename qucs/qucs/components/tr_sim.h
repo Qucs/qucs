@@ -18,16 +18,5 @@
 #ifndef TR_SIM_H
 #define TR_SIM_H
 
-#include "command.h"
-
-
-class TR_Sim : public Command  {
-public:
-  TR_Sim();
-  ~TR_Sim();
-  Element* newOne() const{return new TR_Sim(*this);}
-  static Element* info(QString&, char* &, bool getNewOne=false);
-  void recreate(Schematic*);
-};
 
 #endif

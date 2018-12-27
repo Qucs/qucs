@@ -677,7 +677,35 @@ static std::string find_type_in_string(QString& Line)
 // TODO: fixed in qt5 branch
 bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
 {
-  incomplete();
+  QString Line, cstr;
+  Component *c;
+  while(!stream->atEnd()) {
+    Line = stream->readLine();
+    if(Line.at(0) == '<' && Line.at(1) == '/'){
+      // ?!
+      return true;
+    }
+    Line = Line.trimmed();
+    if(Line.isEmpty()) continue;
+
+    /// \todo enable user to load partial schematic, skip unknown components
+    qDebug() << "loadline" << Line;
+    c = getComponentFromName(Line, this);
+    if(!c) return false;
+
+    if(List) {  // "paste" ?
+      int z;
+      for(z=c->name().length()-1; z>=0; z--) // cut off number of component name
+        if(!c->name().at(z).isDigit()) break;
+      c->obsolete_name_override_hack(c->name().left(z+1));
+      List->append(c);
+    }else{
+      simpleInsertComponent(c);
+    }
+  }
+
+  QMessageBox::critical(0, QObject::tr("Error"),
+	   QObject::tr("Format Error:\n'Component' field is not closed!"));
   return false;
 }
 
@@ -770,6 +798,13 @@ bool Schematic::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
     if(Line.isEmpty()) continue;
 
     cstr = Line.section(' ',0,0);    // diagram type
+    std::string what=cstr.toStdString();
+
+    if(auto x=diagram_dispatcher[what.c_str()+1]){
+	d=prechecked_cast<Diagram*>(x->newOne());
+	assert(d);
+      qDebug() << "gotit" << what.c_str();
+    }else
 #if 0 // incomplete. see qt5 rework
          if(cstr == "<Rect") d = new RectDiagram();
     else if(cstr == "<Polar") d = new PolarDiagram();
