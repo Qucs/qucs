@@ -10,17 +10,39 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "subcirport.h"
 #include "node.h"
 #include "schematic.h"
+#include "component.h"
+#include "globals.h"
+#include "module.h"
 
+
+namespace{
+class SubCirPort : public MultiViewComponent  {
+public:
+  SubCirPort();
+ ~SubCirPort() {};
+  Component* newOne() const{return new SubCirPort(*this);}
+  static Element* info(QString&, char* &, bool getNewOne=false);
+
+protected:
+  QString netlist() const;
+  QString vhdlCode(int);
+  QString verilogCode(int);
+  void createSymbol();
+};
+
+SubCirPort D;
+Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "SubCirPort", &D);
+Module::INSTALL pp("lumped", &D);
 
 SubCirPort::SubCirPort()
 {
+  info(Name, bitmap_file);
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("port of a subcircuit");
 
@@ -115,4 +137,5 @@ QString SubCirPort::vhdlCode(int)
 QString SubCirPort::verilogCode(int)
 {
   return QString("");
+}
 }
