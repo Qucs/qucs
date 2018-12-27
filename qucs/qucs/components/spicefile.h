@@ -27,7 +27,7 @@ class QTextStream;
 class QString;
 
 class SpiceFile : public QObject, public MultiViewComponent  {
-   Q_OBJECT
+ //  Q_OBJECT wtf?
 public:
   using MultiViewComponent::name;
 public:

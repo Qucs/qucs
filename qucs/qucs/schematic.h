@@ -346,12 +346,17 @@ private:
 		  int, NetLang const&);
 
   DigMap Signals; // collecting node names for VHDL signal declarations
+public: // BUG
   QStringList PortTypes;
 
 public: // for now. move to parser asap
 	Element* loadElement(const QString& _s, Element* c) const;
 	Component* loadComponent(const QString& _s, Component* c) const;
 
+public: // schematicModel
+	QString const& portType(int i) const{
+		return PortTypes[i];
+	}
 public:
   bool isAnalog;
   bool isVerilog;

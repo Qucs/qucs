@@ -31,9 +31,28 @@
 
 #include "smithdiagram.h"
 #include "misc.h"
-#include "../dialogs/matchdialog.h" // For r2z function
+// #include "../dialogs/matchdialog.h" // For r2z function
+//
 
-static const double pi = 3.1415926535897932384626433832795029;  /* pi   */
+namespace{
+const double pi = 3.1415926535897932384626433832795029;  /* pi   */
+void p2c(double &Real, double &Imag) {
+  double Real_ = Real;
+  Real = Real_ * cos(Imag * pi / 180.0); // real part
+  Imag = Real_ * sin(Imag * pi / 180.0); // imaginary part
+}
+void r2z(double &Real, double &Imag, double Z0) {
+  double tmp = Z0 / ((1.0 - Real) * (1.0 - Real) + Imag * Imag);
+  Real = (1.0 - Real * Real - Imag * Imag) * tmp;
+  Imag *= 2.0 * tmp;
+}
+void c2p(double &Real, double &Imag) {
+  double Real_ = Real;
+  Real = sqrt(Real * Real + Imag * Imag); // magnitude
+  Imag = 180.0 / pi * atan2(Imag, Real_); // phase in degree
+}
+
+}
 
 SmithDiagram::SmithDiagram(int _cx, int _cy, bool ImpMode) : Diagram(_cx, _cy)
 {
@@ -138,13 +157,13 @@ QString SmithDiagram::extraMarkerText(Marker const* m) const
   Zr = m->powReal();
   Zi = m->powImag();
 
-  MatchDialog::r2z(Zr, Zi, Z0);
+  r2z(Zr, Zi, Z0);
   // convert impedance to admittance
   Yr = Zr; Yi = Zi;
-  MatchDialog::c2p(Yr, Yi);
+  c2p(Yr, Yi);
   Yr = 1.0 / Yr; // magnitude
   Yi = -Yi; // angle
-  MatchDialog::p2c(Yr, Yi);
+  p2c(Yr, Yi);
     
   QString Var = pGraph->Var;
   QString varName;

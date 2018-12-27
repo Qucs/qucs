@@ -41,8 +41,7 @@ public: // legacy anonymous stuff.
   virtual void setSomeArgsHack(int, int, const QString&,  const QString&){
 	  incomplete();
   }
-  virtual void setSomeStuff( int cx_=0, int cy_=0, int x2_=0, int y2_=0,
-              QPen Pen_=QPen(QColor())){
+  virtual void setSomeStuff( int, int, int, int, QPen){
 	  incomplete();
   }
 

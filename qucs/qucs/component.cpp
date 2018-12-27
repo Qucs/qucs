@@ -216,7 +216,7 @@ void Component::paint(ViewPainter *p)
     p->Painter->drawLine(x+xb-1, y,    a+xb,   b);
   }else{    // normal components go here
     qDebug() << "normal component?";
-    assert(Model.at(0) != '.');
+    assert(!Model.size() || Model.at(0) != '.');
 
     // paint all lines
     foreach(Line *p1, Lines) {

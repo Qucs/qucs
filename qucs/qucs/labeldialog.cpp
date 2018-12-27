@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "labeldialog.h"
-#include "../wirelabel.h"
+#include "wirelabel.h"
 
 #include <QLabel>
 #include <QLineEdit>
