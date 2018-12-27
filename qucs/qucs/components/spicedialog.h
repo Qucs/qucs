@@ -20,6 +20,7 @@
 
 #include <QDialog>
 #include <QRegExp>
+#include "schematic_dialog.h"
 
 class Schematic;
 class SpiceFile;
@@ -35,13 +36,13 @@ class QComboBox;
 class QucsApp;
 class QTextStream;
 
-class SpiceDialog : public QDialog {
-   Q_OBJECT
+class SpiceDialog : public SchematicDialog {
 public:
-  SpiceDialog(QucsApp*, SpiceFile*, Schematic*);
+  SpiceDialog(); // (QucsApp*, SpiceFile*, Schematic*) wtf?
  ~SpiceDialog();
 
-private slots:
+ void attach(Object* spicecomponent);
+private: // slot overrides
   void slotButtOK();
   void slotButtCancel();
   void slotButtApply();

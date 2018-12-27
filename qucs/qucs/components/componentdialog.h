@@ -43,7 +43,7 @@ class QVBoxLayout;
 
 class ComponentDialog : public SchematicDialog {
 public:
-  ComponentDialog(Schematic&);
+  ComponentDialog();
   ~ComponentDialog();
 
   void attach(Component* c);

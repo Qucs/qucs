@@ -46,14 +46,20 @@
 #include <QInputDialog>
 
 
-OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
-			: QDialog(d_)
+OptimizeDialog::OptimizeDialog() : SchematicDialog()
 {
-  Comp = c_;
-  Doc  = d_;
+  setWindowTitle(tr("Edit Optimization Properties"));
+
+}
+
+void OptimizeDialog::attach(Object* sim)
+{
+#if 0 // BUG: it's a Simulation
+  Comp = prechecked_cast<Optimize_Sim*>(sim);
+  assert(Comp);
+  Doc = nullptr; //??? sim->parent?
   changed = false;
   numPrec = 3;
-  setWindowTitle(tr("Edit Optimization Properties"));
 
   Expr.setPattern("[\\w_]+");
   Validator = new QRegExpValidator(Expr, this);
@@ -469,6 +475,7 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
   }
 
   resize(300, 250);
+#endif
 }
 
 OptimizeDialog::~OptimizeDialog()

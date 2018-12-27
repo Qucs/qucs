@@ -3,14 +3,14 @@
                              -----------------
     begin                : Sun Oct 5 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+	                            2018 Felix Salfelder / QUCS team
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -19,6 +19,7 @@
 #define DIAGRAMDIALOG_H
 #include "diagram.h"
 #include "node.h"
+#include "schematic_dialog.h"
 
 #include <QDialog>
 #include <QRegExp>
@@ -40,15 +41,16 @@ class QTableWidget;
 class QListWidget;
 
 
-class DiagramDialog : public QDialog  {
-Q_OBJECT
+class DiagramDialog : public SchematicDialog {
+	// Q_OBJECT // does not work. StaticMetaobject...
 public:
-  DiagramDialog(Diagram *d, QWidget *parent=0,
-		Graph *currentGraph=0);
+  DiagramDialog();
   ~DiagramDialog();
+
 
   bool loadVarData(const QString&);
   void copyDiagramGraphs();
+  void attach(Object* d);
 
 private slots:
   void slotReadVars(int);

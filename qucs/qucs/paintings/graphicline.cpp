@@ -24,7 +24,11 @@
 #include <QLineEdit>
 #include <QComboBox>
 
-GraphicLine::GraphicLine(int cx_, int cy_, int x2_, int y2_, QPen Pen_)
+GraphicLine::GraphicLine()
+{
+}
+
+void GraphicLine::setSomeStuff(int cx_, int cy_, int x2_, int y2_, QPen Pen_)
 {
   Name = "Line ";
   isSelected = false;
