@@ -15,11 +15,26 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "inductor.h"
+#include "module.h"
+#include "globals.h"
+#include "component.h"
 
+namespace{
+
+class Inductor : public Component  {
+public:
+  Inductor();
+ ~Inductor();
+  Symbol* newOne() const{return new Inductor(*this);}
+  static Element* info(QString&, char* &, bool getNewOne=false);
+}D;
+
+Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Inductor", &D);
+Module::INSTALL pp("lumped", &D);
 
 Inductor::Inductor()
 {
+  info(Name, bitmap_file);
   Description = QObject::tr("inductor");
 
   Arcs.append(new Arc(-18, -6, 12, 12,  0, 16*180,QPen(Qt::darkBlue,2)));
@@ -49,11 +64,6 @@ Inductor::~Inductor()
 {
 }
 
-Component* Inductor::newOne()
-{
-  return new Inductor();
-}
-
 Element* Inductor::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Inductor");
@@ -61,4 +71,5 @@ Element* Inductor::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Inductor();
   return 0;
+}
 }
