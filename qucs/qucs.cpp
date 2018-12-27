@@ -55,21 +55,25 @@
 #include "components/component.h"
 #include "paintings/paintings.h"
 #include "diagrams/diagrams.h"
-#include "dialogs/savedialog.h"
-#include "dialogs/newprojdialog.h"
-#include "dialogs/settingsdialog.h"
-#include "dialogs/digisettingsdialog.h"
-#include "dialogs/vasettingsdialog.h"
-#include "dialogs/qucssettingsdialog.h"
-#include "dialogs/searchdialog.h"
-#include "dialogs/sweepdialog.h"
-#include "dialogs/labeldialog.h"
-#include "dialogs/matchdialog.h"
-#include "dialogs/simmessage.h"
-#include "dialogs/exportdialog.h"
+
+// BUG: cleanup dialogs. how?!
+#include "savedialog.h"
+#include "newprojdialog.h"
+#include "settingsdialog.h"
+#include "digisettingsdialog.h"
+#include "vasettingsdialog.h"
+#include "qucssettingsdialog.h"
+#include "searchdialog.h"
+#include "sweepdialog.h"
+#include "labeldialog.h"
+#include "matchdialog.h"
+#include "simmessage.h"
+#include "exportdialog.h"
 #include "octave_window.h"
 #include "printerwriter.h"
 #include "imagewriter.h"
+
+
 #include "../qucs-lib/qucslib_common.h"
 #include "misc.h"
 #include "globals.h"
@@ -677,8 +681,8 @@ void QucsApp::slotSetCompView (int index)
     QList<Module *>::const_iterator it;
     for (it = Comps.constBegin(); it != Comps.constEnd(); it++) {
       if (Element const* e = (*it)->element()) {
-        Name = e->name();
-		  File = e->file();
+        Name = e->description();
+        File = e->file();
         QListWidgetItem *icon = new QListWidgetItem(QPixmap(":/bitmaps/" + File + ".png"), Name);
         icon->setToolTip(Name);
         iconCompInfo = iconCompInfoStruct{catIdx, compIdx};

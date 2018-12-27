@@ -7,7 +7,7 @@
  *
  * Qucs is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2, or (at your option)
+ * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
  *
  * This software is distributed in the hope that it will be useful,
@@ -22,7 +22,7 @@
 
 #include "schematic.h"
 #include "imagewriter.h"
-#include "dialogs/exportdialog.h"
+#include "exportdialog.h"
 
 #include <QtSvg>
 
@@ -126,6 +126,7 @@ QString ImageWriter::getLastSavedFile()
 }
 
 // FIXME: should check if filename exists and not silently overwrite
+// BUG: this is all exportdialog. d'uh
 int ImageWriter::print(QWidget *doc)
 {
   Schematic *sch = static_cast<Schematic*>(doc);
@@ -147,7 +148,12 @@ int ImageWriter::print(QWidget *doc)
     noselect = true;
   }
 
-  ExportDialog *dlg = new ExportDialog(
+  incomplete();
+  
+  ExportDialog *dlg = nullptr;
+  
+#if 0
+  new ExportDialog(
       w, h, wsel, hsel, lastExportFilename, noselect, 0);
   
   if (onlyDiagram) {
@@ -286,6 +292,7 @@ int ImageWriter::print(QWidget *doc)
   }
   delete dlg;
   return status;
+#endif
 }
 
 void ImageWriter::getSchWidthAndHeight(Schematic *sch, int &w, int &h, int &xmin, int &ymin)

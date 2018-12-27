@@ -116,6 +116,7 @@ protected: // BUG
   QString Model;
 protected: // BUG => Element.
   QString Name;
+  char* bitmap_file; // wtf?
 protected: // BUG
   QString  Description;
 protected:

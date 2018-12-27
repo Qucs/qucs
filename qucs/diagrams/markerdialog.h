@@ -17,6 +17,7 @@
 
 #ifndef MARKERDIALOG_H
 #define MARKERDIALOG_H
+#include "schematic_dialog.h"
 #include "marker.h"
 #include <QDialog>
 
@@ -24,12 +25,12 @@ class QLineEdit;
 class QComboBox;
 class QCheckBox;
 
-class MarkerDialog : public QDialog  {
-Q_OBJECT
+class MarkerDialog : public SchematicDialog{
 public:
-  MarkerDialog(Marker *pm_, QWidget *parent=0);
- ~MarkerDialog();
+  ~MarkerDialog();
+  MarkerDialog(); // Marker *pm_, QWidget *parent=0);
 
+	void attach(Object *pm_);
 private slots:
   void slotAcceptValues();
 

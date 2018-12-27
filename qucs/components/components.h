@@ -15,8 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef COMPONENTS_H
-#define COMPONENTS_H
+#if 0
 
 // This header file includes the header files of all components.
 

@@ -31,7 +31,7 @@
 #include "diagrams/markerdialog.h"
 #include "diagrams/tabdiagram.h"
 #include "diagrams/timingdiagram.h"
-#include "dialogs/labeldialog.h"
+#include "labeldialog.h"
 
 #include <QTextStream>
 #include <Q3PtrList>
@@ -1989,8 +1989,8 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 
 	 dia->Bounding(x1, x2, y1, y2);
 	 Doc->enlargeView(x1, x2, y1, y2);
-	 break;
 #endif
+	 break;
     case isGraph :
 	 incomplete();
 #if 0
@@ -2005,9 +2005,8 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 	 ddia = new DiagramDialog(dia, Doc, pg);
 	 if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
 	   Doc->setChanged(true, true);
-         break;
 #endif
-
+         break;
     case isWire:
          MPressLabel(Doc, Event, fX, fY);
          break;

@@ -26,9 +26,7 @@
 # private library
 qucsdir=${pkglibdir}
 
-qucs_LTLIBRARIES = libcomponents.la
-
-MOCHEADERS =
+MOCHEADERS = spicefile.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 plugindir = ${pkglibdir}
@@ -38,10 +36,8 @@ qucs_default_components_la_LDFLAGS = -shared -module -avoid-version
 qucs_default_components_la_SOURCES = \
 	resistor.cpp \
 	spicedialog.cpp \
-	volt_dc.cpp
-# TODO: move the others
-LATER= \
-  volt_ac.cpp subcircuit.cpp sparamfile.cpp            \
+	volt_dc.cpp \
+  volt_ac.cpp subcircuit.cpp \
   source_ac.cpp isolator.cpp circulator.cpp attenuator.cpp       \
   ampere_dc.cpp transformer.cpp symtrafo.cpp \
   mutual2.cpp noise_ii.cpp noise_iv.cpp noise_vv.cpp logical_or.cpp           \
@@ -86,8 +82,10 @@ MORE_LATER = phaseshifter.cpp gyrator.cpp \
 #   etr_sim.cpp ecvs.cpp vcresistor.cpp       \
 #   mutualx.cpp
 
+qucs_default_components_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
+
 # some stuff mostly related to legacy components
-RANDOM_LEGACY_STUFF = \
+qucs_default_components_la_SOURCES += \
 	vacomponent.cpp \
 	vhdlfile.cpp libcomp.cpp ground.cpp \
 	verilogfile.cpp \
@@ -96,12 +94,8 @@ RANDOM_LEGACY_STUFF = \
 	vafile.cpp \
 	spicefile.cpp
 
-libcomponents_la_SOURCES = $(MOCFILES) $(SIM_THINGS) \
-	$(RANDOM_LEGACY_STUFF) \
-	$(DIALG_SRC)
-
 noinst_HEADERS = $(MOCHEADERS) components.h capacitor.h vccs.h     \
-	spicedialog.h optimizedialog.h spicefile.h \
+	spicedialog.h optimizedialog.h
 	componentdialog.h \
   inductor.h biast.h dcblock.h dcfeed.h ground.h subcirport.h symtrafo.h      \
   transformer.h ampere_dc.h attenuator.h circulator.h equation.h isolator.h   \

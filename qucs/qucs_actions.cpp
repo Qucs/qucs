@@ -51,14 +51,18 @@
 #include "components/ground.h"
 #include "components/subcirport.h"
 #include "components/equation.h"
-#include "dialogs/matchdialog.h"
-#include "dialogs/changedialog.h"
-#include "dialogs/searchdialog.h"
-#include "dialogs/librarydialog.h"
-#include "dialogs/loaddialog.h"
-#include "dialogs/importdialog.h"
-#include "dialogs/packagedialog.h"
-#include "dialogs/aboutdialog.h"
+
+// BUG: untangle dialogs
+#include "matchdialog.h"
+#include "changedialog.h"
+#include "searchdialog.h"
+#include "librarydialog.h"
+#include "loaddialog.h"
+#include "importdialog.h"
+#include "packagedialog.h"
+#include "aboutdialog.h"
+//
+
 #include "module.h"
 #include "misc.h"
 #include "globals.h"

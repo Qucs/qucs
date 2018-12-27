@@ -50,6 +50,7 @@ static Module::INSTALL pp("lumped", &R);
 
 Resistor::Resistor(bool european)
 {
+	info(Name, bitmap_file);
   Description = QObject::tr("resistor");
 
   Props.append(new Property("R", "50 Ohm", true,
