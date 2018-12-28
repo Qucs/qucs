@@ -32,9 +32,6 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 include ../../common.mk
 
-UICFILES = ui_searchdialog.h
-
-BUILT_SOURCES = $(UICFILES)
 
 libdialogs_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 libdialogs_la_SOURCES =
@@ -53,13 +50,7 @@ noinst_HEADERS = $(MOCHEADERS) $(UIHEADERS)
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
 
-# common?!
-ui_searchdialog.h: searchdialog.ui
-	$(UIC) -o $@ $<
 
-ui_searchdialog.h: $(top_builddir)/qt_version
-
-EXTRA_DIST = searchdialog.ui
 
 CLEANFILES = *~ *.moc.cpp ui_*.h
 MAINTAINERCLEANFILES = Makefile.in
