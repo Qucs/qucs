@@ -57,6 +57,16 @@ DIALG_MOCHEADERS = settingsdialog.h simmessage.h qucssettingsdialog.h      \
      packagedialog.h savedialog.h vasettingsdialog.h                 \
      exportdialog.h loaddialog.h newprojdialog.h aboutdialog.h
 
+UICFILES = ui_searchdialog.h
+BUILT_SOURCES = $(UICFILES)
+
+# common?!
+ui_searchdialog.h: searchdialog.ui
+	$(UIC) -o $@ $<
+ui_searchdialog.h: $(top_builddir)/qt_version
+
+EXTRA_DIST = searchdialog.ui
+
 MOCHEADERS = \
 	${DIALG_MOCHEADERS} \
   messagedock.h \
@@ -147,6 +157,7 @@ libqucsschematic_la_LIBADD = libqucs.la
 endif
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
+					  symbol.h\
   wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
   projectView.h printerwriter.h imagewriter.h command.h
 
