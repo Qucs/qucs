@@ -34,9 +34,6 @@ public:
   void calcCoordinate(const double*, const double*, const double*, float*, float*, Axis const*) const;
   QString extraMarkerText(Marker const*) const;
 
-  // type dependent, sometimes "Admittance Smith"
-  // move to child class.
-  QString name() const{return QObject::tr("Smith Chart");}
 };
 
 #endif

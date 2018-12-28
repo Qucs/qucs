@@ -72,7 +72,7 @@ Resistor::Resistor(bool european)
   createSymbol();
   tx = x1+4;
   ty = y2+4;
-  // Model = "R";
+  setType("R");
   // Name  = "R";
 }
 

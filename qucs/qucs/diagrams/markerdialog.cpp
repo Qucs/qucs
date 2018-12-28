@@ -59,7 +59,7 @@ void MarkerDialog::attach(Object *pm_)
   g->addWidget(NumberBox, 1, 1);
 
   assert(pMarker->diag());
-  if(pMarker->diag()->Name.count("Smith")) // BUG
+  if(pMarker->diag()->name().count("Smith")) // BUG
   {
     //S parameter also displayed as Z, need Z0 here
     SourceImpedance = new QLineEdit();
@@ -122,7 +122,7 @@ void MarkerDialog::slotAcceptValues()
   }
   assert(pMarker->diag());
 
-   if(pMarker->diag()->Name.count("Smith")) // BUG: need generic MarkerDialog.
+   if(pMarker->diag()->name().count("Smith")) // BUG: need generic MarkerDialog.
    {
       double SrcImp = SourceImpedance->text().toDouble();
       if(SrcImp != pMarker->Z0)

@@ -966,11 +966,11 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       return;
 
     case isDiagramResize:  // resize diagram ?
-      if(((Diagram*)focusElement)->Name.left(4) != "Rect")
-        if(((Diagram*)focusElement)->Name.at(0) != 'T')
-          if(((Diagram*)focusElement)->Name != "Curve")
-           /* if(((Diagram*)focusElement)->Name != "Waveac")
-          if(((Diagram*)focusElement)->Name != "Phasor")*/
+      if(((Diagram*)focusElement)->name().left(4) != "Rect")
+        if(((Diagram*)focusElement)->name().at(0) != 'T')
+          if(((Diagram*)focusElement)->name() != "Curve")
+           /* if(((Diagram*)focusElement)->name() != "Waveac")
+          if(((Diagram*)focusElement)->name() != "Phasor")*/
             isMoveEqual = true;  // diagram must be square
 
       focusElement->Type = isDiagram;
@@ -1232,7 +1232,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
   int x1, y1, x2, y2, rot;
   if(selElem->Type & isComponent) {
     Component *Comp = (Component*)selElem;
-//    qDebug() << "+-+ got to switch:" << Comp->Name;
+//    qDebug() << "+-+ got to switch:" << Comp->name();
     QString entryName = Comp->name();
 
     switch(Event->button()) {
@@ -1247,7 +1247,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
 	if(Comp->tx < Comp->x1) Comp->tx -= x2 - x1;
 
     // Note: insertCopmponents does increment  name1 -> name2
-//    qDebug() << "  +-+ got to insert:" << Comp->Name;
+//    qDebug() << "  +-+ got to insert:" << Comp->name();
 
 	// enlarge viewarea if component lies outside the view
 	Comp->entireBounds(x1,y1,x2,y2, Doc->textCorr());
@@ -1285,7 +1285,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
 
       default: ;   // avoids compiler warnings
     }
-//    qDebug() << "   => selElem = Comp;" << Comp->Name;
+//    qDebug() << "   => selElem = Comp;" << Comp->name();
     // comp it geting empty
     selElem = Comp;
     return;
@@ -1935,7 +1935,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
     case isDigitalComponent:
 #if 0
          c = (Component*)focusElement;
-//         qDebug() << "cast focusElement into" << c->Name;
+//         qDebug() << "cast focusElement into" << c->name();
          if(c->obsolete_model_hack() == "GND") { // BUG
 	   return;
 	 }else if(c->obsolete_model_hack() == "SPICE") { // BUG. use cast
@@ -1964,8 +1964,8 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
          dia = (Diagram*)focusElement;
 	 dia->editElement();
 #if 0 // move
-         if(dia->Name.at(0) == 'T') { // don't open dialog on scrollbar
-           if(dia->Name == "Time") {
+         if(dia->name().at(0) == 'T') { // don't open dialog on scrollbar
+           if(dia->name() == "Time") {
              if(dia->cy < int(fY)) {
 	       if(((TimingDiagram*)focusElement)->scroll(MAx1))
 	         Doc->setChanged(true, true, 'm'); // 'm' = only the first time

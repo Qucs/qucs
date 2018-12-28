@@ -94,11 +94,8 @@ public:
   bool insideDiagramP(Graph::iterator const& ) const;
   Marker* setMarker(int x, int y);
 
-public: // element interface
-  virtual QString name() const{return Name;}
 private: // internals
 public: // BUG/incomplete
-  QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   QPen    GridPen;
 
   QList<Graph *>  Graphs;
@@ -139,6 +136,6 @@ protected:
 
 private:
   int Bounding_x1, Bounding_x2, Bounding_y1, Bounding_y2;
-};
+}; // Diagram
 
 #endif

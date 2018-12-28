@@ -174,7 +174,8 @@ public:
 	  return NULL;
   }
 //  { unreachable(); return 0 /*NULL, actually*/;}
-  virtual QString name() const{return "incomplete_name";}
+  virtual QString const& name() const{return Name;}
+  void setName(QString const& n){ Name = n; }
   virtual QString const& description() const{return incomplete_description;}
   virtual char const* iconBasename() const{return nullptr;}
 
@@ -185,6 +186,9 @@ public:
   
   // BUG; abused in Command
   mutable int x2, y2;  // center and relative boundings
+
+protected: //BUG
+  QString Name; // the label.
 }; // Element
 
 

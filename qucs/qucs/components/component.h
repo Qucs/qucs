@@ -112,13 +112,16 @@ public:
   QString const& description() const{
 	  return Description;
   }
+  void setType(std::string const& x){
+	  // tmp kludge, store type in Model...
+	  Model = QString::fromStdString(x);
+  }
 
 private:
   char const* iconBasename() const{return bitmap_file;}
 protected: // BUG
   QString Model;
 protected: // BUG => Element.
-  QString Name;
   char* bitmap_file;
 protected: // BUG
   QString  Description;
