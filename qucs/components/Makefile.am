@@ -5,11 +5,12 @@
 # Automake input file.
 #
 # Copyright (C) 2004-2011 Stefan Jahn <stefan@lkcc.org>
-# New models 2013 addded Mike Brinson  mbrin72043@yahoo.co.uk
+#               2013 addded Mike Brinson  mbrin72043@yahoo.co.uk
+#               2018 Felix Salfelder
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2, or (at your option)
+# the Free Software Foundation; either version 3, or (at your option)
 # any later version.
 #
 # This software is distributed in the hope that it will be useful,
@@ -53,6 +54,8 @@ qucs_default_components_la_SOURCES = \
   gatedDlatch.cpp logic_0.cpp logic_1.cpp mux2to1.cpp mux4to1.cpp mux8to1.cpp \
   DLS_nto1.cpp DLS_1ton.cpp andor4x2.cpp andor4x3.cpp andor4x4.cpp            \
   dmux2to4.cpp dmux3to8.cpp dmux4to16.cpp ha1b.cpp fa1b.cpp fa2b.cpp         
+
+qucs_default_components_la_LIBADD = $(QT_LIBS)
 
 # BUG: move to commands.
 COMMANDS = \
@@ -101,9 +104,9 @@ noinst_HEADERS = $(MOCHEADERS) components.h    \
 	componentdialog.h \
   inductor.h biast.h dcblock.h dcfeed.h ground.h symtrafo.h      \
   transformer.h ampere_dc.h attenuator.h circulator.h equation.h isolator.h   \
-  source_ac.h subcircuit.h volt_ac.h ac_sim.h cccs.h   \
+  source_ac.h subcircuit.h ac_sim.h cccs.h   \
   ccvs.h coplanar.h dc_sim.h diode.h hb_sim.h mscorner.h mscoupled.h mslange.h          \
-  mscross.h msline.h msstep.h mstee.h param_sweep.h sp_sim.h substrate.h      \
+  mscross.h msline.h msstep.h mstee.h sp_sim.h substrate.h      \
   tline.h tr_sim.h component.h vcvs.h gyrator.h phaseshifter.h vhdlfile.h     \
   iprobe.h wprobe.h volt_noise.h ampere_noise.h msmbend.h msopen.h ampere_ac.h bjt.h   \
   jfet.h mosfet.h msgap.h bjtsub.h mosfet_sub.h vpulse.h ipulse.h vrect.h     \

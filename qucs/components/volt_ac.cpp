@@ -1,25 +1,38 @@
 /***************************************************************************
                                volt_ac.cpp
                               -------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2018 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "volt_ac.h"
+#include "globals.h"
+#include "module.h"
+#include "component.h"
 
+namespace{
+
+class Volt_ac : public Component  {
+public:
+  Volt_ac();
+  ~Volt_ac();
+  Object* newOne() const;
+  static Element* info(QString&, char* &, bool getNewOne=false);
+}D;
+Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Vac", &D);
+Module::INSTALL pp("lumped", &D);
 
 Volt_ac::Volt_ac()
 {
+  info(Name, bitmap_file);
   Description = QObject::tr("ideal ac voltage source");
 
   Arcs.append(new Arc(-12,-12, 24, 24,     0, 16*360,QPen(Qt::darkBlue,2)));
@@ -58,7 +71,7 @@ Volt_ac::~Volt_ac()
 {
 }
 
-Component* Volt_ac::newOne()
+Object* Volt_ac::newOne() const
 {
   return new Volt_ac();
 }
@@ -70,4 +83,6 @@ Element* Volt_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Volt_ac();
   return 0;
+}
+
 }

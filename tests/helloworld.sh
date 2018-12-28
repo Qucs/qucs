@@ -4,7 +4,7 @@
 QUCS=../main/qucs
 
 if [ ! -x ${QUCS} ]; then
-	echo ${QUCS} does not exist
+	echo ${QUCS} does not exist >&9
    exit 1
 fi
 

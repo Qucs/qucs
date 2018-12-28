@@ -29,9 +29,6 @@
 #include "io_trace.h"
 #include "globals.h"
 
-// TODO: still entangled with components
-#include "components/noncomponents.h"
-
 // Global category and component lists.
 QHash<QString, Module *> Module::Modules;
 QList<Category *> Category::Categories;

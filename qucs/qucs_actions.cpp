@@ -441,7 +441,7 @@ void QucsApp::slotInsertGround(bool on)
   if(view->selElem)
     delete view->selElem;  // delete previously selected component
 
-  Symbol* sym=symbol_dispatcher.clone("gnd");
+  Symbol* sym=symbol_dispatcher.clone("GND");
   assert(sym);
   view->selElem = prechecked_cast<Component*>(sym);
   assert(view->selElem);
