@@ -27,7 +27,7 @@ else
 check_PROGRAMS = SchematicTests ElementTests ComponentTests
 endif
 
-PLUGINS = \
+NO_PLUGINS = \
 	../components/libcomponents.la \
 	../diagrams/libdiagrams.la \
 	../paintings/libpaintings.la \
@@ -41,17 +41,16 @@ ElementTests_CPPFLAGS = ${AM_CPPFLAGS}
 ComponentTests_SOURCES = ComponentTests.cpp ComponentTests.moc.cpp
 ComponentTests_CPPFLAGS = ${AM_CPPFLAGS}
 
+QUCS_LIBS=../libqucs.la
+
 SchematicTests_LDADD = \
-	../libqucs.la \
-	../libqucsschematic.la ${PLUGINS} ${QT_LIBS} ${QTest_LIBS} ../libqucs.la
+	${QUCS_LIBS} ${PLUGINS} ${QT_LIBS} ${QTest_LIBS}
 
 ElementTests_LDADD = \
-	../libqucs.la \
-	../libqucsschematic.la ${PLUGINS} ${QT_LIBS} ${QTest_LIBS} ../libqucs.la
+	${QUCS_LIBS} ${PLUGINS} ${QT_LIBS} ${QTest_LIBS}
 
 ComponentTests_LDADD = \
-	../libqucs.la \
-	../libqucsschematic.la ${PLUGINS} ${QT_LIBS} ${QTest_LIBS} ../libqucs.la
+	${QUCS_LIBS} ${PLUGINS} ${QT_LIBS} ${QTest_LIBS}
 
 MOCFILES = ${check_PROGRAMS:%=%.moc.cpp}
 BUILT_SOURCES = ${MOCFILES}

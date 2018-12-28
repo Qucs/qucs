@@ -1,22 +1,36 @@
 /***************************************************************************
                                 ac_sim.cpp
                                ------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2018 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "ac_sim.h"
 #include "qucs.h"
+#include "command.h"
+#include "globals.h"
+#include "module.h"
 
+namespace{
+
+class AC_Sim : public Command  {
+public:
+  AC_Sim();
+ ~AC_Sim();
+  Element* newOne() const{return new AC_Sim(*this);}
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  void recreate(Schematic*);
+}D;
+
+Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, ".AC", &D);
+Module::INSTALL pp("simulations", &D);
 
 AC_Sim::AC_Sim()
 {
@@ -88,4 +102,6 @@ void AC_Sim::recreate(Schematic*)
     Props.next()->Name = "Stop";
     Props.next()->Name = "Points";
   }
+}
+
 }
