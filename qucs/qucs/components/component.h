@@ -41,7 +41,9 @@ public:
   QString getNetlist() const; // BUG. use netlister to create netlist
   QString get_VHDL_Code(int);
   QString get_Verilog_Code(int);
+private: // override
   void    paint(ViewPainter*);
+public:
   void    paintScheme(Schematic*) const;
   void    print(ViewPainter*, float);
   void    setCenter(int, int, bool relative=false);
