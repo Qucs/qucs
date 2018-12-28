@@ -146,6 +146,7 @@ struct Property {
   */
 
 class NetLang;
+class ViewPainter;
 
 static QString incomplete_description="incomplete_description";
 
@@ -159,6 +160,7 @@ public:
   virtual void draw(QPainter&) { incomplete(); }
   virtual void setCenter(int, int, bool relative=false);
   virtual void getCenter(int&, int&);
+  virtual void paint(ViewPainter*); // BUG: const
 
   virtual void editElement(){}
   virtual void MPressElement(){}
