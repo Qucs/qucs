@@ -1,14 +1,12 @@
 ## Process this file with automake to produce Makefile.in
 #
-# qucs-attenuator/Makefile.am
-#
 # Automake input file.
 #
-# Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2018 Felix Salfelder
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2, or (at your option)
+# the Free Software Foundation; either version 3, or (at your option)
 # any later version.
 #
 # This software is distributed in the hope that it will be useful,
@@ -22,27 +20,24 @@
 # Boston, MA 02110-1301, USA.
 #
 
-include ../common.mk
+# private library
+qucsdir=${pkglibdir}
 
-bin_PROGRAMS = qucsattenuator
-
-SUBDIRS = bitmaps
-
-dist_man_MANS = qucsattenuator.1
-
-MOCHEADERS = qucsattenuator.h
+MOCHEADERS =
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucsattenuator_SOURCES = main.cpp qucsattenuator.cpp \
-  attenuatorfunc.cpp qucsattenuator_.qrc
-qucsattenuator_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
+plugindir = ${pkglibdir}
+plugin_LTLIBRARIES = vadim-components.la
 
-nodist_qucsattenuator_SOURCES = $(MOCFILES)
+vadim_components_la_LDFLAGS = -shared -module -avoid-version
+vadim_components_la_SOURCES = \
+	DIODE_SPICE.cpp
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS)
-qucsattenuator_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
-qucsattenuator_LDADD = $(X11_LIBS) $(QT_LIBS)
+vadim_components_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
-noinst_HEADERS = $(MOCHEADERS) attenuatorfunc.h
+# BUG: components.h still uses Q3Ptrlist from qt4
+vadim_components_la_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS)
 
-CLEANFILES = *~ *_.cpp qucsattenuator.moc.cpp
+AM_CPPFLAGS = -I$(top_srcdir)/qucs
+
+CLEANFILES = *~ Makefile.in

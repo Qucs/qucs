@@ -29,7 +29,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
 }D;
 
-Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Inductor", &D);
+Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "L", &D);
 Module::INSTALL pp("lumped", &D);
 
 Inductor::Inductor()
