@@ -818,6 +818,7 @@ AH_TOP([
 dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([Makefile
     contrib/Makefile
+    contrib/vadim/Makefile
     main/Makefile
     man/Makefile
     examples/Makefile
@@ -838,7 +839,6 @@ AC_CONFIG_FILES([Makefile
     qucs/components/Makefile
     qucs/diagrams/Makefile
     qucs/paintings/Makefile
-    qucs/dialogs/Makefile
     qucs/sim/Makefile
     qucs/tests/Makefile
     tests/Makefile
