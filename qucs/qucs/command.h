@@ -26,7 +26,7 @@
 // need a baseclass for commands.
 // formerly, they were components, but that does not make sense.
 // (a command does not have ports etc.)
-class Command : public Element {
+class Command : public Component /*BUG*/ {
 public:
   Command();
   virtual ~Command() {};
@@ -99,5 +99,6 @@ protected:
   Property * getProperty(const QString&);
   Schematic* containingSchematic;
 };
+
 
 #endif

@@ -1615,9 +1615,9 @@ void GateComponent::createSymbol()
 // better: Component* SomeParserClass::getComponent(SomeDataStream& s)
 // BUG: loads component into schematic.
 // fixed in qt5 rework
-Component* getComponentFromName(QString& Line, Schematic* p)
+Element* getComponentFromName(QString& Line, Schematic* p)
 {
-  Component *c = 0;
+  Element *e = 0;
 
   Line = Line.trimmed();
   if(Line.at(0) != '<') {
@@ -1652,17 +1652,17 @@ Component* getComponentFromName(QString& Line, Schematic* p)
   if(Component const* sc=dynamic_cast<Component const*>(s)){
       // legacy component
     Object* s=sc->newOne(); // memory leak
-    c=prechecked_cast<Component*>(s);
+    e=prechecked_cast<Element*>(s);
   }else if(Command const* sc=dynamic_cast<Command const*>(s)){
       // legacy component
     Object* s=sc->newOne(); // memory leak
-    c=prechecked_cast<Component*>(s);
+    e=prechecked_cast<Element*>(s);
   }else{ untested();
   // don't know what this is (yet);
-  incomplete();
+    incomplete();
   }
 
-  if(!c) {
+  if(!e) {
     incomplete();
     // BUG: use of messagebox in the parser.
     // does not work. need to get rid of this
@@ -1693,21 +1693,26 @@ Component* getComponentFromName(QString& Line, Schematic* p)
   }
 
   // BUG: don't use schematic.
-  if(!p->loadComponent(Line, c)) {
-    QMessageBox::critical(0, QObject::tr("Error"),
-	QObject::tr("Format Error:\nWrong 'component' line format!"));
-    delete c;
-    return 0;
-  }else{
+  if(Component* c=component(e)){
+    if(!p->loadComponent(Line, c)) {
+      QMessageBox::critical(0, QObject::tr("Error"),
+	  QObject::tr("Format Error:\nWrong 'component' line format!"));
+      delete e;
+      return 0;
+    }else{
+    }
+    cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
+    int x = c->tx, y = c->ty;
+    c->setSchematic (p);
+    c->recreate(0);
+    c->obsolete_name_override_hack(cstr);
+    c->tx = x;  c->ty = y;
+
+  }else if(Command* cmd=command(c)){
+    incomplete();
   }
 
-  cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
-  int x = c->tx, y = c->ty;
-  c->setSchematic (p);
-  c->recreate(0);
-  c->obsolete_name_override_hack(cstr);
-  c->tx = x;  c->ty = y;
-  return c;
+  return e;
 }
 
 // do something with Dialog Buttons

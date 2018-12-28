@@ -33,4 +33,8 @@ extern INTERFACE Dispatcher<NetLang> netlang_dispatcher;
 extern INTERFACE Dispatcher<Command> command_dispatcher;
 extern INTERFACE Dispatcher<Painting> painting_dispatcher;
 
+// options.h?
+class DocumentLanguage;
+extern DocumentLanguage const* defaultSchematicLanguage;
+
 #endif
