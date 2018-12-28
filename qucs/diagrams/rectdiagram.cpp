@@ -50,7 +50,8 @@ public:
   void finishMarkerCoordinates(float&, float&) const;
   bool insideDiagram(float, float) const;
 
-  QString name() const{return QObject::tr("Cartesian");}
+  // wtf?
+  // QString name() const{return QObject::tr("Cartesian");}
 protected:
   void clip(Graph::iterator &) const;
 }D;

@@ -77,7 +77,7 @@ public:
   // BUG: abused in some display function
   mutable int  tx, ty;   // upper left corner of text (position)
   bool showName;
-  QString  Model, Name;
+  QString  Name;
   QString  Description;
 
 protected:

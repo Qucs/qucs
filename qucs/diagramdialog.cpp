@@ -137,25 +137,25 @@ void DiagramDialog::attach(Object* d)
   ValDouble  = new QDoubleValidator(-1e200, 1e200, 6, this);
 
   QString NameY, NameZ;
-  if((Diag->Name == "Rect") || (Diag->Name == "Curve") || (Diag->Name == "Waveac")) {
+  if((Diag->name() == "Rect") || (Diag->name() == "Curve") || (Diag->name() == "Waveac")) {
     NameY = tr("left Axis");
     NameZ = tr("right Axis");
   }
-  else if(Diag->Name == "Polar") {
+  else if(Diag->name() == "Polar") {
     NameY = tr("y-Axis");
   }
-  else if((Diag->Name == "Smith") || (Diag->Name == "ySmith")) {
+  else if((Diag->name() == "Smith") || (Diag->name() == "ySmith")) {
     NameY = tr("y-Axis");
   }
-  else if(Diag->Name == "PS") {
+  else if(Diag->name() == "PS") {
     NameY = tr("smith Axis");
     NameZ = tr("polar Axis");
   }
-  else if(Diag->Name == "SP") {
+  else if(Diag->name() == "SP") {
     NameY = tr("polar Axis");
     NameZ = tr("smith Axis");
   }
-  else if(Diag->Name == "Rect3D") {
+  else if(Diag->name() == "Rect3D") {
     NameY = tr("y-Axis");
     NameZ = tr("z-Axis");
   }
@@ -192,7 +192,8 @@ void DiagramDialog::attach(Object* d)
   InputGroupLayout->addWidget(Box2);
   Box2Layout->setSpacing(5);
 
-  if(Diag->Name == "Tab") {
+  // BUG
+  if(Diag->name() == "Tab") {
     Label1 = new QLabel(tr("Number Notation: "));
     Box2Layout->addWidget(Label1);
     PropertyBox = new QComboBox();
@@ -213,7 +214,7 @@ void DiagramDialog::attach(Object* d)
     Property2->setMaximumWidth(25);
     Property2->setText("3");
   }
-  else if(Diag->Name != "Truth") {
+  else if(Diag->name() != "Truth") {
     Label1 = new QLabel(tr("Color:"));
     Box2Layout->addWidget(Label1);
     ColorButt = new QPushButton("");
@@ -232,7 +233,7 @@ void DiagramDialog::attach(Object* d)
 
     PropertyBox->addItem(tr("dash line"));
     PropertyBox->addItem(tr("dot line"));
-    if(Diag->Name != "Time") {
+    if(Diag->name() != "Time") {
       PropertyBox->addItem(tr("long dash line"));
       PropertyBox->addItem(tr("stars"));
       PropertyBox->addItem(tr("circles"));
@@ -252,7 +253,7 @@ void DiagramDialog::attach(Object* d)
     Property2->setMaxLength(2);
     Property2->setText("0");
 
-    if((Diag->Name=="Rect") || (Diag->Name=="PS") || (Diag->Name=="SP") || (Diag->Name=="Curve")) {
+    if((Diag->name()=="Rect") || (Diag->name()=="PS") || (Diag->name()=="SP") || (Diag->name()=="Curve")) {
       Label4 = new QLabel(tr("y-Axis:"));
       Box2Layout->addWidget(Label4);
       Label4->setEnabled(false);
@@ -292,7 +293,7 @@ void DiagramDialog::attach(Object* d)
   // todo: replace by QTableWidget
   // see https://gist.github.com/ClemensFMN/8955411
 
-    Name=Diag->Name;
+    Name=Diag->name();
     connect(ChooseData, SIGNAL(activated(int)), SLOT(slotReadVars(int)));
     ChooseVars = new QTableWidget(1, 3);
     ChooseVars->verticalHeader()->setVisible(false);
@@ -336,7 +337,7 @@ void DiagramDialog::attach(Object* d)
 
   // Tab #2...........................................................
   int Row = 0;
-  if(Diag->Name.at(0) != 'T') {  // not tabular or timing diagram
+  if(Diag->name().at(0) != 'T') {  // not tabular or timing diagram
     QWidget *Tab2 = new QWidget(t);
     QGridLayout *gp = new QGridLayout();
     Tab2->setLayout(gp);
@@ -353,7 +354,7 @@ void DiagramDialog::attach(Object* d)
     gp->addWidget(ylLabel, Row, 1);
     Row++;
 
-    if((Diag->Name != "Smith") && (Diag->Name != "Polar")) {
+    if((Diag->name() != "Smith") && (Diag->name() != "Polar")) {
       gp->addWidget(new QLabel(NameZ +" "+tr("Label:"), Tab2), Row, 0);
       yrLabel = new QLineEdit(Tab2);
       yrLabel->setValidator(Validator);
@@ -366,7 +367,7 @@ void DiagramDialog::attach(Object* d)
         Row, 0, 1, 2);
     Row++;
 
-    if(Diag->Name != "Rect3D") {
+    if(Diag->name() != "Rect3D") {
       GridOn = new QCheckBox(tr("show Grid"), Tab2);
       gp->addWidget(GridOn, Row, 0);
       Row++;
@@ -406,7 +407,7 @@ void DiagramDialog::attach(Object* d)
     ylLabel->setText(Diag->yAxis.Label);
     if(yrLabel)  yrLabel->setText(Diag->zAxis.Label);
 
-    if((Diag->Name.left(4) == "Rect") || (Diag->Name == "Curve")) {
+    if((Diag->name().left(4) == "Rect") || (Diag->name() == "Curve")) {
       GridLogX = new QCheckBox(tr("logarithmical X Axis Grid"), Tab2);
       gp->addWidget(GridLogX, Row, 0);
       Row++;
@@ -579,7 +580,7 @@ void DiagramDialog::attach(Object* d)
     QWidget *VBox7 = new QWidget();
     axisYLayout->addWidget(VBox7);
     QVBoxLayout *VBox7Layout = new QVBoxLayout();
-    if((Diag->Name=="Smith") || (Diag->Name=="ySmith") || (Diag->Name=="PS"))
+    if((Diag->name()=="Smith") || (Diag->name()=="ySmith") || (Diag->name()=="PS"))
       VBox7Layout->addWidget(new QLabel(tr("number")));
     else  VBox7Layout->addWidget(new QLabel(tr("step")));
     stepY = new QLineEdit();
@@ -624,7 +625,7 @@ void DiagramDialog::attach(Object* d)
     QWidget *VBox11 = new QWidget();
     axisZLayout->addWidget(VBox11);
     QVBoxLayout *VBox11Layout = new QVBoxLayout();
-    if(Diag->Name == "SP") VBox11Layout->addWidget(new QLabel(tr("number")));
+    if(Diag->name() == "SP") VBox11Layout->addWidget(new QLabel(tr("number")));
     else VBox11Layout->addWidget(new QLabel(tr("step")));
     stepZ = new QLineEdit();
     VBox11Layout->addWidget(stepZ);
@@ -671,12 +672,12 @@ void DiagramDialog::attach(Object* d)
     stepZ->setText(QString::number(Diag->zAxis.step));
     stopZ->setText(QString::number(Diag->zAxis.limit_max));
 
-    if((Diag->Name == "Smith") || (Diag->Name == "ySmith") ||
-       (Diag->Name == "Polar")) {
+    if((Diag->name() == "Smith") || (Diag->name() == "ySmith") ||
+       (Diag->name() == "Polar")) {
        axisZ->setEnabled(false);
     }
-    if(Diag->Name.left(4) != "Rect")   // cartesian 2D and 3D
-       if((Diag->Name != "Curve")) {
+    if(Diag->name().left(4) != "Rect")   // cartesian 2D and 3D
+       if((Diag->name() != "Curve")) {
         axisX->setEnabled(false);
         startY->setEnabled(false);
         startZ->setEnabled(false);
@@ -849,8 +850,8 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 
     Graph *g = new Graph(Diag, GraphInput->text());   // create a new graph
 
-    if(Diag->Name != "Tab") {
-      if(Diag->Name != "Truth") {
+    if(Diag->name() != "Tab") {
+      if(Diag->name() != "Truth") {
         g->Color = misc::getWidgetBackgroundColor(ColorButt);
         g->Thick = Property2->text().toInt();
         QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
@@ -865,7 +866,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
           yAxisBox->setEnabled(true);
           Label4->setEnabled(true);
         }
-        else if(Diag->Name == "Rect3D") g->yAxisNo = 1;
+        else if(Diag->name() == "Rect3D") g->yAxisNo = 1;
 
         Label3->setEnabled(true);
         ColorButt->setEnabled(true);
@@ -913,8 +914,8 @@ void DiagramDialog::SelectGraph(Graph *g)
   GraphInput->setText(g->Var);
   GraphInput->blockSignals(false);
 
-  if(Diag->Name != "Tab") {
-    if(Diag->Name != "Truth") {
+  if(Diag->name() != "Tab") {
+    if(Diag->name() != "Truth") {
       Property2->setText(QString::number(g->Thick));
       misc::setPickerColor(ColorButt, g->Color);
       PropertyBox->setCurrentIndex(g->Style);
@@ -948,7 +949,7 @@ void DiagramDialog::SelectGraph(Graph *g)
 void DiagramDialog::slotDeleteGraph()
 {
   int i;
-  if(Diag->Name != "Phasor" || Var2 != ".a")
+  if(Diag->name() != "Phasor" || Var2 != ".a")
   {
     i = GraphList->currentRow();
     if(i < 0) return;   // return, if no item selected
@@ -974,8 +975,8 @@ void DiagramDialog::slotDeleteGraph()
       GraphInput->setText("");  // erase input line and back to default values
   }
 
-  if(Diag->Name != "Tab") {
-    if(Diag->Name != "Truth") {
+  if(Diag->name() != "Tab") {
+    if(Diag->name() != "Truth") {
       QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
       misc::setPickerColor(ColorButt, selectedColor);
       Property2->setText("0");
@@ -1013,14 +1014,14 @@ void DiagramDialog::slotNewGraph()
 
   Graph *g = new Graph(Diag, GraphInput->text());
 // FIXME: call  Diag->whateverelse();
-  if(Diag->Name != "Tab") { // BUG
-    if(Diag->Name != "Truth") { // BUG
+  if(Diag->name() != "Tab") { // BUG
+    if(Diag->name() != "Truth") { // BUG
       g->Color = misc::getWidgetBackgroundColor(ColorButt);
       g->Thick = Property2->text().toInt();
       g->Style = toGraphStyle(PropertyBox->currentIndex());
       assert(g->Style!=GRAPHSTYLE_INVALID);
       if(yAxisBox)  g->yAxisNo = yAxisBox->currentIndex();
-      else if(Diag->Name == "Rect3D")  g->yAxisNo = 1;
+      else if(Diag->name() == "Rect3D")  g->yAxisNo = 1;
     }
   }
   else {
@@ -1046,7 +1047,7 @@ void DiagramDialog::slotOK()
 */
 void DiagramDialog::slotApply()
 {
-  if(Diag->Name.at(0) != 'T') {  // not tabular or timing
+  if(Diag->name().at(0) != 'T') {  // not tabular or timing
     if(Diag->xAxis.Label.isEmpty())
       Diag->xAxis.Label = ""; // can be not 0 and empty!
     if(xLabel->text().isEmpty()) xLabel->setText("");
@@ -1079,7 +1080,7 @@ void DiagramDialog::slotApply()
       Diag->GridPen.setStyle((Qt::PenStyle)(GridStyleBox->currentIndex()+1));
       changed = true;
     }
-    if((Diag->Name != "Smith") && (Diag->Name != "Polar")) {
+    if((Diag->name() != "Smith") && (Diag->name() != "Polar")) {
       if(Diag->zAxis.Label.isEmpty())
         Diag->zAxis.Label = ""; // can be not 0 and empty!
       if(yrLabel->text().isEmpty()) yrLabel->setText("");
@@ -1089,7 +1090,7 @@ void DiagramDialog::slotApply()
       }
     }
 
-    if(Diag->Name.left(4) == "Rect") {
+    if(Diag->name().left(4) == "Rect") {
       if(Diag->xAxis.log != GridLogX->isChecked()) {
         Diag->xAxis.log = GridLogX->isChecked();
         changed = true;
@@ -1104,12 +1105,12 @@ void DiagramDialog::slotApply()
       }
     }
 
-    if((Diag->Name == "Smith") || (Diag->Name == "ySmith") ||
-				  (Diag->Name == "PS"))
+    if((Diag->name() == "Smith") || (Diag->name() == "ySmith") ||
+				  (Diag->name() == "PS"))
       if(stopY->text().toDouble() < 1.0)
         stopY->setText("1");
 
-    if(Diag->Name == "SP")
+    if(Diag->name() == "SP")
       if(stopZ->text().toDouble() < 1.0)
         stopZ->setText("1");
 
@@ -1275,7 +1276,7 @@ void DiagramDialog::slotSetProp2(const QString& s)
   if(i < 0) return;   // return, if no item selected
 
   Graph *g = Graphs.at(i);
-  if(Diag->Name == "Tab") g->Precision = s.toInt();
+  if(Diag->name() == "Tab") g->Precision = s.toInt();
   else  g->Thick = s.toInt();
   changed = true;
   toTake  = false;
@@ -1356,7 +1357,7 @@ void DiagramDialog::slotSetYAxis(int axis)
 void DiagramDialog::slotManualX(int state)
 {
   if(state == 2) {
-    if((Diag->Name.left(4) == "Rect") || (Diag->Name == "Curve"))
+    if((Diag->name().left(4) == "Rect") || (Diag->name() == "Curve"))
       startX->setEnabled(true);
     stopX->setEnabled(true);
     if(GridLogX) if(GridLogX->isChecked())  return;
@@ -1373,7 +1374,7 @@ void DiagramDialog::slotManualX(int state)
 void DiagramDialog::slotManualY(int state)
 {
   if(state == 2) {
-    if((Diag->Name.left(4) == "Rect") || (Diag->Name == "Curve")||(Diag->Name=="Phasor")  || (Diag->Name=="Waveac"))
+    if((Diag->name().left(4) == "Rect") || (Diag->name() == "Curve")||(Diag->name()=="Phasor")  || (Diag->name()=="Waveac"))
       startY->setEnabled(true);
     stopY->setEnabled(true);
     if(GridLogY) if(GridLogY->isChecked())  return;
@@ -1390,7 +1391,7 @@ void DiagramDialog::slotManualY(int state)
 void DiagramDialog::slotManualZ(int state)
 {
   if(state == 2) {
-    if((Diag->Name.left(4) == "Rect") || (Diag->Name == "Curve")||(Diag->Name=="Phasor")  || (Diag->Name=="Waveac"))
+    if((Diag->name().left(4) == "Rect") || (Diag->name() == "Curve")||(Diag->name()=="Phasor")  || (Diag->name()=="Waveac"))
       startZ->setEnabled(true);
     stopZ->setEnabled(true);
     if(GridLogZ) if(GridLogZ->isChecked())  return;
