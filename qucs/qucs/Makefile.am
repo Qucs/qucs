@@ -115,6 +115,7 @@ libqucs_la_SOURCES += \
   schematic_file.cpp syntax.cpp module.cpp octave_window.cpp \
   messagedock.cpp imagewriter.cpp printerwriter.cpp \
   schematic_component.cpp \
+  schematic_lang.cpp \
   projectView.cpp \
   ${DIALG_SRC} \
  $(MOCFILES)
@@ -152,7 +153,9 @@ noinst_HEADERS += \
 	dispatcher.h \
 	l_dispatcher.h \
 	object.h \
-	platform.h
+	platform.h \
+	qt_compat.h \
+	schematic_lang.h
 
 hicolor16dir = ${prefix}/share/icons/hicolor/16x16/apps
 hicolor16_DATA =  bitmaps/hicolor/16x16/apps/qucs.png

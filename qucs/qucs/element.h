@@ -195,4 +195,23 @@ public:
   WireLabel *Label;
 };
 
+class Component;
+class Command;
+class Wire;
+class WireLabel;
+class Diagram;
+class Painting;
+class Graph;
+class Marker;
+
+Component* component(Element*);
+Command* command(Element*);
+inline Element*& element(Element*& x){return x;}
+Wire* wire(Element*);
+WireLabel* wireLabel(Element*);
+Diagram* diagram(Element*);
+Painting* painting(Element*);
+Graph* graph(Element*);
+Marker* marker(Element*);
+Node* node(Element*);
 #endif
