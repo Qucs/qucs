@@ -22,6 +22,8 @@
 # Boston, MA 02110-1301, USA.  
 #
 
+SUBDIRS = vadim
+
 dist_bin_SCRIPTS = ps2sp
 
 dist_man_MANS = ps2sp.1
