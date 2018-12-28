@@ -45,6 +45,11 @@ void Element::getCenter(int&, int&)
 {
 }
 
+void Element::paint(ViewPainter*) // BUG: const
+{
+	incomplete();
+}
+
 // legacy stuff. pretend that Element points to an Element
 #include "components/component.h"
 #include "diagram.h"

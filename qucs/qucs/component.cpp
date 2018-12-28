@@ -185,6 +185,8 @@ void Component::paint(ViewPainter *p)
   QFont f = p->Painter->font();   // save current font
   QFont newFont = f;
   if(dynamic_cast<Command const*>(this)) {
+    assert(false);
+#if 0
     assert(Model.at(0) == '.');
     newFont.setPointSizeF(p->Scale * Texts.first()->Size);
     newFont.setWeight(QFont::DemiBold);
@@ -214,6 +216,7 @@ void Component::paint(ViewPainter *p)
     p->Painter->drawLine(x+xb-1, y+yb, a+xb,   b+yb);
     p->Painter->drawLine(x+xb-1, y+yb, x+xb-1, y);
     p->Painter->drawLine(x+xb-1, y,    a+xb,   b);
+#endif
   }else{    // normal components go here
     qDebug() << "normal component?";
     assert(!Model.size() || Model.at(0) != '.');
@@ -1648,6 +1651,7 @@ Element* getComponentFromName(QString& Line, Schematic* p)
 
   // fetch proto from dictionary.
   Element const* s=symbol_dispatcher[cstr.toStdString()];
+  qDebug() << "lookup" << cstr << s;
 
   if(Component const* sc=dynamic_cast<Component const*>(s)){
       // legacy component

@@ -36,7 +36,9 @@ public:
   QString getNetlist();
   QString get_VHDL_Code(int);
   QString get_Verilog_Code(int);
+private:
   void    paint(ViewPainter*);
+public:
   void    paintScheme(Schematic*) const;
   void    print(ViewPainter*, float);
   void    setCenter(int, int, bool relative=false);
