@@ -54,9 +54,8 @@ qucs_default_components_la_SOURCES = \
   DLS_nto1.cpp DLS_1ton.cpp andor4x2.cpp andor4x3.cpp andor4x4.cpp            \
   dmux2to4.cpp dmux3to8.cpp dmux4to16.cpp ha1b.cpp fa1b.cpp fa2b.cpp         
 
-# simulation commands.
-# these are not pluggable. compile them in.
-SIM_THINGS = \
+# BUG: move to commands.
+COMMANDS = \
 	dc_sim.cpp tr_sim.cpp sp_sim.cpp hb_sim.cpp opt_sim.cpp \
 	ac_sim.cpp digi_sim.cpp param_sweep.cpp
 
@@ -88,6 +87,7 @@ qucs_default_components_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 # some stuff mostly related to legacy components
 qucs_default_components_la_SOURCES += \
+	${COMMANDS} \
 	${LUMPED_COMPONENTS} \
 	vacomponent.cpp \
 	vhdlfile.cpp libcomp.cpp ground.cpp \

@@ -421,8 +421,10 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
   if(!symbolMode)
     paintFrame(&Painter);
 
-  for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-    pc->paint(&Painter);
+  for(Component *pc = Components->first(); pc != 0; pc = Components->next()){
+	  Element* e=pc;
+    e->paint(&Painter);
+  }
 
   for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next()) {
     pw->paint(&Painter);
@@ -662,7 +664,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
         selected = pc->isSelected;
         pc->isSelected = false;
         if (toImage) {
-            pc->paint(p);
+            ((Element*)pc)->paint(p);
         } else {
             pc->print(p, (float)screenDpiX / (float)printerDpiX);
         }
