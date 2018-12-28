@@ -35,7 +35,6 @@ public:
   // clone the object.
   virtual Object* newOne() /*BUG const*/ {return 0 /*NULL, actually*/;}
   virtual Object* clone()const {return 0 /*NULL, actually*/;}
-  virtual QString name() const{incomplete(); return Label;} // BUG
 
   QString const& label() const{return Label;}
   void setLabel(QString const& l) {Label = l;}
