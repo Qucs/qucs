@@ -61,11 +61,10 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
   fCX = float(cx);
   fCY = float(cy);
 
-  //Default setting for displaying extra parameters. The markers will show the impedance data if the chart is type "Smith".
-  //In the case of having an admittance chart, admittance will be display. 
-  if (diag()->Name == "Smith") {
+  // BUG
+  if (diag()->name() == "Smith") {
     optText = Marker::SHOW_Z;
-  } else if (diag()->Name == "ySmith") {
+  } else if (diag()->name() == "ySmith") {
     optText = Marker::SHOW_Y;
   } else {
     optText = 0;
@@ -240,8 +239,8 @@ void Marker::createText()
   double *pp;
   nVarPos = pGraph->numAxes();
   DataX const *pD;
-  if(diag()->Name!="Waveac")
-  {
+  //BUG
+  if(diag()->name()!="Waveac") {
     auto p = pGraph->findSample(VarPos);
     VarDep[0] = p.first;
     VarDep[1] = p.second;
@@ -267,7 +266,7 @@ void Marker::createText()
 
   // now actually create text.
   for(unsigned ii=0; (pD=pGraph->axis(ii)); ++ii) {
-    if(ii==0 && diag()->Name=="Waveac")
+    if(ii==0 && diag()->name()=="Waveac")
       Text += "Time: " + unit(VarPos[ii]) + "\n";
     else
       Text += pD->Var + ": " + QString::number(VarPos[ii],'g',Precision) + "\n";
@@ -532,7 +531,7 @@ QString Marker::save()
   if(transparent)  s += " 1";
   else  s += " 0";
 
-  if (diag()->Name.count("Smith"))//Impedance/admittance smith charts
+  if (diag()->name().count("Smith"))//Impedance/admittance smith charts
   {
     s += " " + QString::number(optText);
   }

@@ -1180,9 +1180,9 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
 
         if(pd->getSelected(x, y))
         {
-            if(pd->Name[0] == 'T')     // tabular, timing diagram or truth table ?
+            if(pd->name()[0] == 'T')     // tabular, timing diagram or truth table ?
             {
-                if(pd->Name[1] == 'i')
+                if(pd->name()[1] == 'i')
                 {
                     if(y > pd->cy)
                     {

@@ -51,6 +51,8 @@ void QucsLang::printInstance(Component const* c, QTextStream& s) const
 
   if(c->isOpen()) {
     // nothing.
+  }else if(c->type() == "GND") {
+    // nothing.
   }else if(c->isShort()){
     // replace by some resistors (hack?)
     int z=0;
