@@ -40,6 +40,7 @@ qucsrescodes_SOURCES = \
 	qresistor.cpp \
 	resistor.cpp \
 	qucsrescodes.qrc
+qucsrescodes_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 nodist_qucsrescodes_SOURCES = $(MOCFILES)
 

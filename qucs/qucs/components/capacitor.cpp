@@ -29,8 +29,10 @@ public:
 
 protected:
   void createSymbol();
-};
+}C;
 
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "C", &C);
+static Module::INSTALL pp("lumped", &C);
 
 Capacitor::Capacitor()
 {
@@ -51,12 +53,6 @@ info(Name, bitmap_file);
   Model = "C";
   Name  = "C";
 }
-
-Capacitor C;
-
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "C", &C);
-// the toolbox item
-static Module::INSTALL pp("lumped", &C);
 
 Element* Capacitor::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
