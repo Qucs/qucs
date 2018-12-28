@@ -1,16 +1,14 @@
 /***************************************************************************
                               graphictext.cpp
                              -----------------
-    begin                : Mon Nov 24 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -21,6 +19,8 @@
 #include "graphictextdialog.h"
 #include "schematic.h"
 #include "misc.h"
+#include "globals.h"
+#include "module.h"
 
 #include <QPainter>
 #include <QPushButton>
@@ -28,6 +28,12 @@
 #include <QTextEdit>
 
 #include <cmath>
+
+namespace{
+GraphicText D;
+Dispatcher<Painting>::INSTALL p(&painting_dispatcher, "Text", &D);
+Module::INSTALL pp("paintings", &D);
+}
 
 GraphicText::GraphicText()
 {

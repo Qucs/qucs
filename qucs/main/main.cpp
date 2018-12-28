@@ -100,6 +100,16 @@ void qucsMessageOutput(QtMsgType type, const char *msg)
  */
 void attach(const char* what);
 
+static std::string plugpath()
+{
+  const char* ppenv=getenv("QUCS_PLUGPATH");
+  if(!ppenv){
+    return QUCS_PLUGPATH;
+  }else{
+    return ppenv;
+  }
+}
+
 // BUG: not here.
 // possibly use SchematicModel(QString Filename, Lang...)
 Schematic *newSchematic(QString schematic)
@@ -516,7 +526,14 @@ void createListComponentEntry(){
 
 void attach_single(std::string const&path, std::string const& what)
 {
-  std::string full_file_name = findfile(what, path, R_OK);
+  std::string full_file_name;
+  if(what.size()==0){
+  }else if(what[0]=='.'){
+    full_file_name=what;
+  }else{
+    full_file_name = findfile(what, path, R_OK);
+  }
+
   if (full_file_name != "") {
     // found it, with search
   }else{untested();
@@ -527,15 +544,16 @@ void attach_single(std::string const&path, std::string const& what)
   attach(full_file_name.c_str());
 }
 
-void attach_default_plugins(std::string plugpath)
+void attach_default_plugins()
 {
-  attach_single(plugpath, "qucsator" SOEXT);
+  std::string pp=plugpath();
+  attach_single(pp, "qucsator" SOEXT);
 
   // TODO: remove "lib" prefix
-  attach_single(plugpath, "qucs-default-components" SOEXT);
-  attach_single(plugpath, "libdiagrams" SOEXT);
-  attach_single(plugpath, "libpaintings" SOEXT);
- // attach_single(plugpath, "libdialogs" SOEXT);
+  attach_single(pp, "qucs-default-components" SOEXT);
+  attach_single(pp, "libdiagrams" SOEXT);
+  attach_single(pp, "libpaintings" SOEXT);
+ // attach_single(pp, "libdialogs" SOEXT);
 }
 // #########################################################################
 // ##########                                                     ##########
@@ -613,16 +631,7 @@ int main(int argc, char *argv[])
   QucsSettings.ExamplesDir = QucsDir.canonicalPath() + "/share/qucs/examples/";
   QucsSettings.DocDir =      QucsDir.canonicalPath() + "/share/qucs/docs/";
 
-  // TODO: cleanup
-  const char* ppenv=getenv("QUCS_PLUGPATH");
-  std::string plugpath;
-  if(!ppenv){
-    plugpath = QUCS_PLUGPATH;
-  }else{
-    plugpath=ppenv;
-  }
-
-  attach_default_plugins(plugpath);
+  attach_default_plugins();
 
   /// \todo Make the setting up of all executables below more consistent
   var = getenv("QUCSATOR");
@@ -805,7 +814,14 @@ int main(int argc, char *argv[])
     else if (!strcmp(argv[i], "-a")) {
       ++i;
       qDebug() << "attaching" << argv[i];
-      attach(argv[i]);
+      std::string pp=plugpath();
+      std::string what=argv[i];
+      if(what.size()<4){
+      }else if(what[what.size()-3]!='.'){
+	what += SOEXT;
+      }else{
+      }
+      attach_single(pp, what);
     }
     else if(!strcmp(argv[i], "-q") || !strcmp(argv[i], "--quit")) {
 	exit(0);
