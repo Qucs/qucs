@@ -49,6 +49,7 @@ qucsfilter_SOURCES =  \
         qw_coupled_ring_filter.cpp \
         ccoupled_shunt_resonators.cpp \
 	qucsfilter_.qrc
+qucsfilter_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 nodist_qucsfilter_SOURCES = $(MOCFILES)
 

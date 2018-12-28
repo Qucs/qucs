@@ -31,6 +31,7 @@ public:
 } D;
 Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, ".TR", &D);
 Module::INSTALL pp("simulations", &D);
+
 TR_Sim::TR_Sim()
 {
   Description = QObject::tr("transient simulation");

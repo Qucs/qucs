@@ -35,6 +35,7 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 qucstrans_SOURCES = main.cpp qucstrans.cpp helpdialog.cpp optionsdialog.cpp \
   qucstrans_.qrc
+qucstrans_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 qucstrans_LDADD = libtranscalc.a $(X11_LIBS) $(QT_LIBS)
 
@@ -50,6 +51,7 @@ noinst_LIBRARIES = libtranscalc.a
 
 libtranscalc_a_SOURCES = microstrip.cpp transline.cpp coax.cpp \
 	rectwaveguide.cpp c_microstrip.cpp coplanar.cpp stripline.cpp
+libtranscalc_a_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 CLEANFILES = *~ qucstrans_.cpp
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp

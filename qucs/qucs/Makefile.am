@@ -65,8 +65,6 @@ ui_searchdialog.h: searchdialog.ui
 	$(UIC) -o $@ $<
 ui_searchdialog.h: $(top_builddir)/qt_version
 
-EXTRA_DIST = searchdialog.ui
-
 MOCHEADERS = \
 	${DIALG_MOCHEADERS} \
   messagedock.h \
@@ -198,6 +196,7 @@ desktop_DATA = qucs.desktop
 
 
 EXTRA_DIST = \
+	searchdialog.ui \
 	qucsdigi qucsdigilib qucsdigi.bat qucsdigilib.bat qucsveri qucsveri.bat \
 	$(hicolor16_DATA) $(hicolor22_DATA) $(hicolor32_DATA) $(hicolor48_DATA) \
 	$(hicolor64_DATA) $(hicolor128_DATA) $(hicolor256_DATA) $(hicolor512_DATA) \
@@ -213,6 +212,7 @@ EXTRA_DIST = \
 	bitmaps/qucstrans.icns
 
 
-CLEANFILES = *~ *.rej *.orig qucs_.cpp *.moc.cpp qucs
+CLEANFILES = *~ *.rej *.orig qucs_.cpp *.moc.cpp qucs \
+	${UICFILES}
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.qm
 DISTCLEANFILES = *.qm
