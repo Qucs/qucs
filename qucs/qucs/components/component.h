@@ -165,6 +165,7 @@ protected:
 };
 
 // prototype of independent function
-Component* getComponentFromName(QString& Line, Schematic* p=NULL);
+// kludge: must be Element, for Commands
+Element* getComponentFromName(QString& Line, Schematic* p=NULL);
 
 #endif

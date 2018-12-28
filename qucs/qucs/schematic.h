@@ -313,6 +313,7 @@ public: // TODO: move out of the way, perhaps to SchematicNetlist,
 
 private: // legacy, don't use
   void simpleInsertComponent(Component*);
+  void simpleInsertCommand(Command*);
 private:
   void simpleInsertElement(Element*);
 
