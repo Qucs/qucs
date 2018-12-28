@@ -1,0 +1,9 @@
+vadims components, diode demo
+
+run with
+
+$ qucs -a path/to/vadim-components.so -i diode.sch
+
+to see diode in action, and listed under components
+
+(there is a bug that causes qucs to open random "documents", ignore.)
