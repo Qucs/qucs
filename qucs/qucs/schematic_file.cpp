@@ -869,7 +869,7 @@ bool Schematic::loadPaintings(QTextStream *stream, Q3PtrList<Painting> *List)
       assert(p);
     }else{
       QMessageBox::critical(0, QObject::tr("Error"),
-		QObject::tr("Format Error:\nUnknown painting!"));
+		QObject::tr("Format Error:\nUnknown painting " + cstr));
       return false;
     }
 
