@@ -34,6 +34,8 @@ Module::INSTALL pp("simulations", &D);
 TR_Sim::TR_Sim()
 {
   Description = QObject::tr("transient simulation");
+  Name = QObject::tr("Transient simulation");
+  // BitmapFile = (char *) "tran";
 
   QString  s = Description;
   int a = s.indexOf(" ");
