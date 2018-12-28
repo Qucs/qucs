@@ -34,9 +34,9 @@ SUBDIRS = \
 	qucs-transcalc \
         qucs-powercombining \
 	translations \
-	contrib \
 	examples \
 	main \
+	contrib \
 	tests \
 	$(RELEASEDIRS)
 

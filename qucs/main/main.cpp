@@ -803,7 +803,9 @@ int main(int argc, char *argv[])
       orientation = argv[++i];
     }
     else if (!strcmp(argv[i], "-a")) {
-      attach(argv[++i]);
+      ++i;
+      qDebug() << "attaching" << argv[i];
+      attach(argv[i]);
     }
     else if(!strcmp(argv[i], "-q") || !strcmp(argv[i], "--quit")) {
 	exit(0);
