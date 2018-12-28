@@ -27,17 +27,44 @@ namespace {
 // qucslang language implementation
 class QucsLang : public NetLang
 {
-  virtual void printCommand(Command const*, QTextStream&) const;
-  virtual void printInstance(Component const*, QTextStream&) const;
+  void printCommand(Command const*, QTextStream&) const;
+  void printInstance(Component const*, QTextStream&) const;
 };
 
 // this does not make sense...
 // but it works, because the empty portlist is not visible
 void QucsLang::printCommand(Command const* c, QTextStream& s) const
 {
-  Component const* C = dynamic_cast<Component const*>(c);
   s << ".";
-  return printInstance(C, s);
+
+  if(c->isOpen()) {
+    // nothing.
+  }else if(c->type() == "GND") {
+    // nothing.
+  }else if(c->isShort()){
+    unreachable();
+  }else{
+    try{
+      // default to the legacy way, fix later
+      Command* mc=const_cast<Command*>(c);
+      s << mc->getNetlist();
+      incomplete();
+   }catch (...)
+    { // todo: introduce proper exceptions
+      // normal netlisting
+
+      s << c->type() << ":" << c->label();
+
+      // output all node names
+
+      for(auto p2 : c->params()) {
+	if(p2->Name != "Symbol") { // hack.
+	  s << " " << p2->Name << "=\"" << p2->Value << "\"";
+	}
+      }
+      s << '\n';
+    }
+  }
 }
 
 /*!
