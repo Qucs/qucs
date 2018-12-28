@@ -690,17 +690,21 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
 
     /// \todo enable user to load partial schematic, skip unknown components
     qDebug() << "loadline" << Line;
-    c = getComponentFromName(Line, this);
-    if(!c) return false;
+    Element* e = getComponentFromName(Line, this);
 
-    if(List) {  // "paste" ?
-      int z;
-      for(z=c->name().length()-1; z>=0; z--) // cut off number of component name
-        if(!c->name().at(z).isDigit()) break;
-      c->obsolete_name_override_hack(c->name().left(z+1));
-      List->append(c);
-    }else{
-      simpleInsertComponent(c);
+    if(Component* c=component(e)){
+	
+      if(List) {  // "paste" ?
+	int z;
+	for(z=c->name().length()-1; z>=0; z--) // cut off number of component name
+	  if(!c->name().at(z).isDigit()) break;
+	c->obsolete_name_override_hack(c->name().left(z+1));
+	List->append(c);
+      }else{
+	simpleInsertComponent(c);
+      }
+    }else if(Command* cc=command(e)){
+      simpleInsertCommand(cc);
     }
   }
 

@@ -187,7 +187,8 @@ int LibComp::loadSymbol()
     z = loadSection("Model", Line);
     if(z < 0)  return z;
 
-    Component *pc = getComponentFromName(Line);
+    Element *e=getComponentFromName(Line);
+    Component *pc = component(e);
     if(pc == 0)  return -20;
 
     copyComponent(pc);

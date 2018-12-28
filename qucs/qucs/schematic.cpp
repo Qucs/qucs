@@ -2287,6 +2287,8 @@ void Schematic::simpleInsertElement(Element* e)
 {
 	if(Component* c=dynamic_cast<Component*>(e)){
 		simpleInsertComponent(c);
+	}else if(Command* c=dynamic_cast<Command*>(e)){
+		simpleInsertCommand(c);
 	}else{
 		incomplete();
 	}

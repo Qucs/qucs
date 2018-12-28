@@ -1043,5 +1043,42 @@ void Command::dialgButtStuff(ComponentDialog& d)const
   incomplete();
   // d.disableButtons();
 }
+//
+// BUG, tmp.
+void Schematic::simpleInsertCommand(Command *c)
+{
+  Node *pn;
+  int x, y;
+  // connect every node of component
+  foreach(Port *pp, c->Ports) {
+    x = pp->x+c->cx;
+    y = pp->y+c->cy;
+
+    // check if new node lies upon existing node
+    for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
+      if(pn->cx == x) if(pn->cy == y) {
+	if (!pn->DType.isEmpty()) {
+	  pp->Type = pn->DType;
+	}
+	if (!pp->Type.isEmpty()) {
+	  pn->DType = pp->Type;
+	}
+	break;
+      }
+
+    if(pn == 0) { // create new node, if no existing one lies at this position
+      pn = new Node(x, y);
+      DocNodes.append(pn);
+    }
+    pn->Connections.append(c);  // connect schematic node to component node
+    if (!pp->Type.isEmpty()) {
+      pn->DType = pp->Type;
+    }
+
+    pp->Connection = pn;  // connect component node to schematic node
+  }
+
+  DocComps.append(c);
+}
 
 // vim:ts=8:sw=2:noet
