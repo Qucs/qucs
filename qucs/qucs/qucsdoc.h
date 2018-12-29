@@ -63,23 +63,5 @@ public:
   int  tmpPosX, tmpPosY;
 };
 
-class QFile;
-class DocumentStream : public QTextStream {
-public:
-  explicit DocumentStream(){ incomplete(); }
-  explicit DocumentStream(QFile* /* BUG const */ file);
-  explicit DocumentStream(QString /* BUG const */ * filename, QIODevice::OpenModeFlag flag) :
-    QTextStream(filename, flag){}
-
-};
-// baseclass for schematic and net languages.
-class DocumentLanguage : public Object{
-protected:
-        DocumentLanguage() : Object(){}
-public:
-        virtual ~DocumentLanguage() {}
-// virtual void parse(DocumentStream& stream, SchematicModel*) const=0;
-};
-
 
 #endif
