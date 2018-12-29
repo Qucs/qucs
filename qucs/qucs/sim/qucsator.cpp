@@ -25,11 +25,24 @@
 
 namespace {
 // qucslang language implementation
-class QucsLang : public NetLang
-{
+class QucsLang : public NetLang {
+private: // NetLang
+  // inline void printItem(Element const* c, stream_t& s) const;
+
+private: // local
   void printCommand(Command const*, QTextStream&) const;
-  void printInstance(Component const*, QTextStream&) const;
+  void printSymbol(Symbol const*, QTextStream&) const;
+  void printComponent(Component const*, QTextStream&) const;
 };
+
+void QucsLang::printSymbol(Symbol const* d, QTextStream& s) const
+{
+  if(auto c=dynamic_cast<Component const*>(d)){
+    printComponent(c, s);
+  }else{
+    incomplete();
+  }
+}
 
 // this does not make sense...
 // but it works, because the empty portlist is not visible
@@ -44,18 +57,20 @@ void QucsLang::printCommand(Command const* c, QTextStream& s) const
   }else if(c->isShort()){
     unreachable();
   }else{
-    try{
-      // default to the legacy way, fix later
-      Command* mc=const_cast<Command*>(c);
-      s << mc->getNetlist();
-      incomplete();
-   }catch (...)
     { // todo: introduce proper exceptions
       // normal netlisting
 
       s << c->type() << ":" << c->label();
 
-      // output all node names
+      Component const* cc=c;
+      qDebug() << "command params" << c->params().count();
+      qDebug() << "command params" << cc->params().count();
+
+      for(auto p2 : cc->params()) {
+	if(p2->name() != "Symbol") { // hack.
+	  s << " " << p2->name() << "=\"" << p2->Value << "\"";
+	}
+      }
 
       for(auto p2 : c->params()) {
 	if(p2->name() != "Symbol") { // hack.
@@ -70,7 +85,7 @@ void QucsLang::printCommand(Command const* c, QTextStream& s) const
 /*!
  * print Components in qucs language
  */
-void QucsLang::printInstance(Component const* c, QTextStream& s) const
+void QucsLang::printComponent(Component const* c, QTextStream& s) const
 {
 
   // BUG

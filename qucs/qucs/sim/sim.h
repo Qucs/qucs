@@ -49,31 +49,26 @@ public:
 class NetLang : public Object{
 public:
   virtual ~NetLang(){}
-  void printItem(Element const*, stream_t&) const;
-private:
-  virtual void printCommand(Command const*, stream_t&) const = 0;
-  virtual void printInstance(Component const*, stream_t&) const = 0;
+  virtual void printItem(Element const*, stream_t&) const;
+private: //called by printItem
+  virtual void printPainting(Painting const*, stream_t&) const {incomplete();}
+  virtual void printDiagram(Symbol const*, stream_t&) const {incomplete();}
+  virtual void printSymbol(Symbol const*, stream_t&) const {incomplete();}
+  virtual void printCommand(Command const*, stream_t&) const {incomplete();}
 };
 
-/*!
- * print an item
- * boldly ripped from gnucap.
- */
 inline void NetLang::printItem(Element const* c, stream_t& s) const
 {
   assert(c);
-//  if (auto C=dynamic_cast<const Subcircuit*>(c)) {
-//    still using obsolete code
-//  }else
-//  ...
   if (auto C=dynamic_cast<const Command*>(c)) {
     printCommand(C, s);
-  }else if (auto C=dynamic_cast<const Component*>(c)) {
-    printInstance(C, s);
+  }else if (auto C=dynamic_cast<const Symbol*>(c)) {
+    printSymbol(C, s);
   }else{
-    std::cerr << "incomplete\n";
+    incomplete();
   }
 }
+
 
 #define QUCS_SIM_H__
 #endif

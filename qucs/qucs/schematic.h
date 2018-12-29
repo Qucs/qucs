@@ -353,6 +353,7 @@ public: // BUG
 public: // for now. move to parser asap
 	Element* loadElement(const QString& _s, Element* c) const;
 	Component* loadComponent(const QString& _s, Component* c) const;
+	Command* loadCommand(const QString& _s, Command* c) const;
 
 public: // schematicModel
 	QString const& portType(int i) const{
