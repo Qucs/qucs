@@ -24,6 +24,8 @@
 
 include $(top_srcdir)/qucstex.mk
 
+SUBDIRS = images/Synthesis/Impedance_Matching
+
 EXTRA_DIST = technical.tex l2h-init.cfg $(FIGURES) $(BIBFILE) \
   $(PSFILES) $(MATHFILES) $(MATHHELPS) $(CHAPTERS)
 
@@ -56,22 +58,7 @@ PSFILES = MNAexample.eps NLexample.eps CYexample.eps MNAnoise1.eps \
   Real_r.eps TLpiece.eps QuarterWavelengthFilter.eps               \
   rectwaveguide.eps circularwaveguide.eps                          \
   PlanarSpiralInductors.eps CircularLoop.eps PrintedInductorEC.eps \
-  ReflectionCoeffsTaper.eps capq.eps indq.eps  \
-CascadedLCsch-highpass.eps              Double-Tapped-Resonator-Transformed.eps  pi-type-input-transform.eps                  Smithl8l4.eps \
-CascadedLCsch-lowpass.eps               Highpass-Pi.eps                          pi-type-network.eps                          Tapped-C-ckt-equivalent.eps \
-cascaded-l-section-highpass.eps         Highpass-Tee.eps                         pi-type-output-transform.eps                 Tapped-C-ckt-equivalent-input-pair-transformed.eps \
-cascaded-l-section-lowpass.eps          Lowpass-Pi.eps                           series-double-tuned-transformer.eps          Tapped-C-Transformer.eps \
-coupled-inductors.eps                   Lowpass-Tee.eps                          Series_to_parallel.eps                       Tapped-L.eps \
-coupled-inductors-pi-equivalent.eps     Lsection.eps                             SingleStubOpenBalanced.eps                   Tapped-L-equivalent.eps \
-coupled-inductors-tee-equivalent.eps    Makefile                                 SingleStubOpen.eps                           Tapped-L-transformation-input.eps \
-DoubleStubOpenBalanced.eps              Makefile.am                              SingleStubShortBalanced.eps                  Tapped-L-transformation-output.eps \
-DoubleStubOpen.eps                      Makefile.in                              SingleStubShort.eps                          Tee-to-pi-transformation.eps \
-DoubleStubShortBalanced.eps             parallel-double-tuned-transformer.eps    Single-tuned-transformer.eps                 TL-circuit-equivalent-HP-Pi-Tee.eps \
-DoubleStubShort.eps                     Parallel_to_series.eps                   Single-tuned-transformer-equivalent-ckt.eps  TL-circuit-equivalent-LP-Pi-Tee.eps \
-Double-Tapped-Resonator.eps             pi-equivalent-circuit.eps                SmithCascadedLCsections.eps \
-Double-Tapped-Resonator-p2s-input.eps   pi-to-tee-equivalent-implementation.eps  SmithChart-Lsection.eps \
-Double-Tapped-Resonator-p2s-output.eps  Pi-to-tee-transformation.eps             SmithChartTL.eps
-
+  ReflectionCoeffsTaper.eps capq.eps indq.eps
 
 EPSFILES = $(FIGURES:.fig=.eps)
 PSFRAGTEXS = $(FIGURES:.fig=.tex) $(MATHFILES:.m=.tex)
@@ -96,7 +83,6 @@ html:
 # docdata_DATA+=$(LIST_OF_HTMLFILES)
 # install-local: # maybe use this?
 #endif
-
 
 technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES) $(CHAPTERS)
 
