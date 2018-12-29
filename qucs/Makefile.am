@@ -99,15 +99,16 @@ DIALOG_SRC+= \
 
 
 libqucs_la_SOURCES = \
+	globals.cpp \
 	attach.cpp \
 	command.cpp \
 	component.cpp \
 	diagram.cpp \
 	element.cpp \
-	globals.cpp \
 	graph.cpp \
 	imagewriter.cpp \
 	io_error.cpp \
+	language.cpp \
 	marker.cpp \
 	messagedock.cpp \
 	misc.cpp \
