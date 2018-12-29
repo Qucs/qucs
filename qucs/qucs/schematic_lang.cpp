@@ -123,7 +123,7 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 		std::string what=cstr.toStdString();
 
 		if(auto x=diagram_dispatcher[what.c_str()+1]){
-			d=prechecked_cast<Diagram*>(x->newOne());
+			d=prechecked_cast<Diagram*>(x->clone());
 			assert(d);
 			qDebug() << "gotit" << what.c_str();
 		}else{ untested();

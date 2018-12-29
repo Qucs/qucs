@@ -272,11 +272,11 @@ void EKV26MOS::createSymbol()
 
 QString EKV26MOS::netlist() const
 {
-  QString s = Model+":"+Name;
+  QString s = Model+":"+name();
 
   // output all node names
   foreach(Port *p1, Ports)
-    s += " "+p1->Connection->Name;   // node names
+    s += " "+p1->Connection->name();   // node names
 
   // output type npn/pnp property
   Property *p2 = Props.first();
@@ -287,7 +287,7 @@ QString EKV26MOS::netlist() const
 
   // output all remaining properties
   for(p2 = Props.next(); p2 != 0; p2 = Props.next())
-    s += " "+p2->Name+"=\""+p2->Value+"\"";
+    s += " "+p2->name()+"=\""+p2->Value+"\"";
 
   return s + '\n';
 }

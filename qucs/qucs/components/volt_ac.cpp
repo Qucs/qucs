@@ -24,7 +24,9 @@ class Volt_ac : public Component  {
 public:
   Volt_ac();
   ~Volt_ac();
-  Object* newOne() const;
+  Component* newOne(){
+	  return new Volt_ac(*this);
+  }
   static Element* info(QString&, char* &, bool getNewOne=false);
 }D;
 Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Vac", &D);
@@ -69,11 +71,6 @@ Volt_ac::Volt_ac()
 
 Volt_ac::~Volt_ac()
 {
-}
-
-Object* Volt_ac::newOne() const
-{
-  return new Volt_ac();
 }
 
 Element* Volt_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)

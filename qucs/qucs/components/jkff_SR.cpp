@@ -108,13 +108,13 @@ QString jkff_SR::vhdlCode( int )
   if(!misc::VHDL_Delay(td, Name)) return td; // time has not VHDL format
   td += ";\n";
 
-  QString S     = Ports.at(0)->Connection->Name;
-  QString J     = Ports.at(1)->Connection->Name;
-  QString CLK   = Ports.at(2)->Connection->Name;
-  QString K     = Ports.at(3)->Connection->Name;
-  QString R     = Ports.at(4)->Connection->Name;
-  QString QB    = Ports.at(5)->Connection->Name;
-  QString Q     = Ports.at(6)->Connection->Name;
+  QString S     = Ports.at(0)->Connection->name();
+  QString J     = Ports.at(1)->Connection->name();
+  QString CLK   = Ports.at(2)->Connection->name();
+  QString K     = Ports.at(3)->Connection->name();
+  QString R     = Ports.at(4)->Connection->name();
+  QString QB    = Ports.at(5)->Connection->name();
+  QString Q     = Ports.at(6)->Connection->name();
 
   s = "\n  "+Name+":process ("+S+", "+CLK+", "+R+") is\n"+
       "  variable state : std_logic;\n"+
@@ -140,13 +140,13 @@ QString jkff_SR::verilogCode( int )
 
   QString l = "";
 
-  QString S     = Ports.at(0)->Connection->Name;
-  QString J     = Ports.at(1)->Connection->Name;
-  QString CLK   = Ports.at(2)->Connection->Name;
-  QString K     = Ports.at(3)->Connection->Name;
-  QString R     = Ports.at(4)->Connection->Name;
-  QString QB    = Ports.at(5)->Connection->Name;
-  QString Q     = Ports.at(6)->Connection->Name;
+  QString S     = Ports.at(0)->Connection->name();
+  QString J     = Ports.at(1)->Connection->name();
+  QString CLK   = Ports.at(2)->Connection->name();
+  QString K     = Ports.at(3)->Connection->name();
+  QString R     = Ports.at(4)->Connection->name();
+  QString QB    = Ports.at(5)->Connection->name();
+  QString Q     = Ports.at(6)->Connection->name();
 
   QString QR   = "Q_reg"  + Name + Q;
   QString QBR  = "QB_reg"  + Name + QB;

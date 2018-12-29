@@ -71,19 +71,19 @@ Element* EqnDefined::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 QString EqnDefined::netlist() const
 {
-  QString s = Model+":"+Name;
+  QString s = Model+":"+name();
   QString e = "\n";
 
   // output all node names
   foreach(Port *p1, Ports)
-    s += " "+p1->Connection->Name;   // node names
+    s += " "+p1->Connection->name();   // node names
 
   // output all properties
   Property *p2 = Props.at(2);
   while(p2) {
-    s += " "+p2->Name+"=\""+Name+"."+p2->Name+"\"";
-    e += "  Eqn:Eqn"+Name+p2->Name+" "+
-      Name+"."+p2->Name+"=\""+p2->Value+"\" Export=\"no\"\n";
+    s += " "+p2->name()+"=\""+name()+"."+p2->name()+"\"";
+    e += "  Eqn:Eqn"+name()+p2->name()+" "+
+      name()+"."+p2->name()+"=\""+p2->Value+"\" Export=\"no\"\n";
     p2 = Props.next();
   }
 

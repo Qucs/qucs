@@ -65,11 +65,6 @@ Transformer::~Transformer()
 {
 }
 
-Component* Transformer::newOne()
-{
-  return new Transformer();
-}
-
 Element* Transformer::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Transformer");

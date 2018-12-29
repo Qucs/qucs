@@ -28,19 +28,17 @@
 
 class Object{
 protected:
-	Object(){ }
+	explicit Object(){}
+	explicit Object(Object const&){}
+
 public:
-  virtual ~Object(){}
+	virtual ~Object(){}
 
-  // clone the object.
-  virtual Object* newOne() /*BUG const*/ {return 0 /*NULL, actually*/;}
-  virtual Object* clone()const {return 0 /*NULL, actually*/;}
-
-  QString const& label() const{return Label;}
-  void setLabel(QString const& l) {Label = l;}
+	QString const& label() const{return Label;}
+	void setLabel(QString const& l) {Label = l;}
 
 private:
-  QString Label;
+	QString Label;
 };
 
 #endif

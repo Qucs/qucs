@@ -125,19 +125,19 @@ QString andor4x3::vhdlCode( int )
   if(!misc::VHDL_Delay(td, Name)) return td; // time has not VHDL format
   td += ";\n";
 
-  QString a11 = Ports.at(0)->Connection->Name;
-  QString a12 = Ports.at(1)->Connection->Name;
-  QString a13 = Ports.at(2)->Connection->Name;
-  QString a21 = Ports.at(3)->Connection->Name;
-  QString a22 = Ports.at(4)->Connection->Name;
-  QString a23 = Ports.at(5)->Connection->Name;
-  QString a31 = Ports.at(6)->Connection->Name;
-  QString a32 = Ports.at(7)->Connection->Name;
-  QString a33 = Ports.at(8)->Connection->Name;
-  QString a41 = Ports.at(9)->Connection->Name;
-  QString a42 = Ports.at(10)->Connection->Name;
-  QString a43 = Ports.at(11)->Connection->Name;
-  QString y   = Ports.at(12)->Connection->Name;
+  QString a11 = Ports.at(0)->Connection->name();
+  QString a12 = Ports.at(1)->Connection->name();
+  QString a13 = Ports.at(2)->Connection->name();
+  QString a21 = Ports.at(3)->Connection->name();
+  QString a22 = Ports.at(4)->Connection->name();
+  QString a23 = Ports.at(5)->Connection->name();
+  QString a31 = Ports.at(6)->Connection->name();
+  QString a32 = Ports.at(7)->Connection->name();
+  QString a33 = Ports.at(8)->Connection->name();
+  QString a41 = Ports.at(9)->Connection->name();
+  QString a42 = Ports.at(10)->Connection->name();
+  QString a43 = Ports.at(11)->Connection->name();
+  QString y   = Ports.at(12)->Connection->name();
 
   s = "\n  " + Name + ":process (" +
       a11 + ", " +  a12 + ", " + a13 + ", " +
@@ -160,21 +160,21 @@ QString andor4x3::verilogCode( int )
   
   QString l = "";
 
-  QString a11 = Ports.at(0)->Connection->Name;
-  QString a12 = Ports.at(1)->Connection->Name;
-  QString a13 = Ports.at(2)->Connection->Name;
-  QString a21 = Ports.at(3)->Connection->Name;
-  QString a22 = Ports.at(4)->Connection->Name;
-  QString a23 = Ports.at(5)->Connection->Name;
-  QString a31 = Ports.at(6)->Connection->Name;
-  QString a32 = Ports.at(7)->Connection->Name;
-  QString a33 = Ports.at(8)->Connection->Name;
-  QString a41 = Ports.at(9)->Connection->Name;
-  QString a42 = Ports.at(10)->Connection->Name;
-  QString a43 = Ports.at(11)->Connection->Name;
-  QString y   = Ports.at(12)->Connection->Name;
+  QString a11 = Ports.at(0)->Connection->name();
+  QString a12 = Ports.at(1)->Connection->name();
+  QString a13 = Ports.at(2)->Connection->name();
+  QString a21 = Ports.at(3)->Connection->name();
+  QString a22 = Ports.at(4)->Connection->name();
+  QString a23 = Ports.at(5)->Connection->name();
+  QString a31 = Ports.at(6)->Connection->name();
+  QString a32 = Ports.at(7)->Connection->name();
+  QString a33 = Ports.at(8)->Connection->name();
+  QString a41 = Ports.at(9)->Connection->name();
+  QString a42 = Ports.at(10)->Connection->name();
+  QString a43 = Ports.at(11)->Connection->name();
+  QString y   = Ports.at(12)->Connection->name();
  
-  QString v = "net_reg" + Name + y;
+  QString v = "net_reg" + name() + y;
   
   l = "\n  // " + Name + " 4x3 andor\n" +
       "  assign  " + y + " = " + v + ";\n" +

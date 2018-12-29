@@ -93,16 +93,16 @@ void BJT::createSymbol()
 // -------------------------------------------------------
 QString BJT::netlist() const
 {
-  QString s = "BJT:"+Name;
+  QString s = "BJT:"+name();
 
   // output all node names
   foreach(Port *p1, Ports)
-    s += " "+p1->Connection->Name;   // node names
-  s += " "+Ports.at(1)->Connection->Name;  // connect substrate to collector
+    s += " "+p1->Connection->name();   // node names
+  s += " "+Ports.at(1)->Connection->name();  // connect substrate to collector
 
   // output all properties
   for(Property *p2 = Props.first(); p2 != 0; p2 = Props.next())
-    s += " "+p2->Name+"=\""+p2->Value+"\"";
+    s += " "+p2->name()+"=\""+p2->Value+"\"";
 
   return s + '\n';
 }

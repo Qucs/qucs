@@ -25,7 +25,7 @@ class VCVS : public Component  {
 public:
   VCVS();
   ~VCVS();
-  Object* newOne() const;
+  Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
 };
 

@@ -433,8 +433,10 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
   }
 
   Node *pn;
-  for(pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
-    pn->paint(&Painter);
+  for(auto i : *Nodes){
+	  pn=i;
+	  Element* e=pn;
+    e->paint(&Painter);
     if(pn->Label)
       pn->Label->paint(&Painter);  // separate because of paintSelected
   }
@@ -449,12 +451,13 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
 
   if(showBias > 0) {  // show DC bias points in schematic ?
     int x, y, z;
-    for(pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
-      if(pn->Name.isEmpty()) continue;
+    for(auto i: * Nodes){
+		 pn=i;
+      if(pn->name().isEmpty()) continue;
       x = pn->cx;
       y = pn->cy + 4;
       z = pn->x1;
-      if(z & 1) x -= Painter.Painter->fontMetrics().width(pn->Name);
+      if(z & 1) x -= Painter.Painter->fontMetrics().width(pn->name());
       if(!(z & 2)) {
         y -= (Painter.LineSpacing>>1) + 4;
         if(z & 1) x -= 4;
@@ -464,7 +467,7 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
         Painter.Painter->setPen(Qt::darkGreen);  // green for currents
       else
         Painter.Painter->setPen(Qt::blue);   // blue for voltages
-      Painter.drawText(pn->Name, x, y);
+      Painter.drawText(pn->name(), x, y);
     }
   }
 
@@ -689,11 +692,15 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
 
     Element *pe;
     for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
-      for(pe = pn->Connections.first(); pe != 0; pe = pn->Connections.next())
+		for( auto i : pn->connections()){
+			pe=i;
         if(pe->isSelected || printAll) {
-          pn->paint(p); // paint all nodes with selected elements
+			 Element* e=pn;
+			 e->paint(p); // paint all nodes with selected elements
           break;
-        }
+        }else{
+		  }
+		}
       if(pn->Label)
         if(pn->Label->isSelected || printAll) {
           selected = pn->Label->isSelected;
@@ -743,11 +750,11 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
     if(showBias > 0) {  // show DC bias points in schematic ?
       int x, y, z;
       for(Node* pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
-        if(pn->Name.isEmpty()) continue;
+        if(pn->name().isEmpty()) continue;
         x = pn->cx;
         y = pn->cy + 4;
         z = pn->x1;
-        if(z & 1) x -= p->Painter->fontMetrics().width(pn->Name);
+        if(z & 1) x -= p->Painter->fontMetrics().width(pn->name());
         if(!(z & 2)) {
           y -= (p->LineSpacing>>1) + 4;
           if(z & 1) x -= 4;
@@ -757,7 +764,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
           p->Painter->setPen(Qt::darkGreen);  // green for currents
         else
           p->Painter->setPen(Qt::blue);   // blue for voltages
-        p->drawText(pn->Name, x, y);
+        p->drawText(pn->name(), x, y);
       }
     }
 }
@@ -1750,7 +1757,7 @@ bool Schematic::elementsOnGrid()
       // rescue non-selected node labels
       foreach(Port *pp, pc->Ports)
         if(pp->Connection->Label)
-          if(pp->Connection->Connections.count() < 2) {
+          if(pp->Connection->connectionsCount() < 2) {
             LabelCache.append(pp->Connection->Label);
             pp->Connection->Label->pOwner = 0;
             pp->Connection->Label = 0;
@@ -1787,13 +1794,13 @@ bool Schematic::elementsOnGrid()
       // rescue non-selected node label
       pLabel = 0;
       if(pw->Port1->Label) {
-        if(pw->Port1->Connections.count() < 2) {
+        if(pw->Port1->connectionsCount() < 2) {
             pLabel = pw->Port1->Label;
             pw->Port1->Label = 0;
         }
       }
       else if(pw->Port2->Label) {
-        if(pw->Port2->Connections.count() < 2) {
+        if(pw->Port2->connectionsCount() < 2) {
             pLabel = pw->Port2->Label;
             pw->Port2->Label = 0;
         }

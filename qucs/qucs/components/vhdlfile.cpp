@@ -41,7 +41,7 @@ VHDL_File::VHDL_File()
 
 // -------------------------------------------------------
 // BUG: call constructor instead.
-Component* VHDL_File::newOne() const
+Component* VHDL_File::newOne()
 {
   VHDL_File *p = new VHDL_File();
   p->Props.getFirst()->Value = Props.getFirst()->Value;
@@ -84,10 +84,10 @@ QString VHDL_File::vhdlCode(int)
 
     // output all node names
     s += " port map (";
-    if(pp)  s += pp->Connection->Name;
+    if(pp)  s += pp->Connection->name();
     while (iport.hasNext()) {
       pp = iport.next();
-      s += ", "+pp->Connection->Name;   // node names
+      s += ", "+pp->Connection->name();   // node names
     }
     s += ");\n";
   }

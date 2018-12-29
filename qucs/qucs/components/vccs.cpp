@@ -24,7 +24,7 @@ class VCCS : public Component  {
 public:
   VCCS();
   ~VCCS();
-  Object* newOne() const;
+  Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
 }D;
 
@@ -83,7 +83,7 @@ VCCS::~VCCS()
 {
 }
 
-Object* VCCS::newOne() const
+Component* VCCS::newOne()
 {
   return new VCCS();
 }

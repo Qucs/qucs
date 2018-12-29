@@ -72,11 +72,6 @@ Coupler::~Coupler()
 {
 }
 
-Component* Coupler::newOne()
-{
-  return new Coupler();
-}
-
 Element* Coupler::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Coupler");

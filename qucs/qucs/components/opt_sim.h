@@ -25,7 +25,7 @@ class Optimize_Sim : public Command  {
 public:
   Optimize_Sim();
  ~Optimize_Sim();
-  Element* newOne() const{return new Optimize_Sim(*this);}
+  Element* clone() const{return new Optimize_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   bool createASCOFiles() const;
   bool createASCOnetlist();

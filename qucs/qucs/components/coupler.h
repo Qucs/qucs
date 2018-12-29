@@ -25,7 +25,9 @@ class Coupler : public Component  {
 public:
   Coupler();
  ~Coupler();
-  Component* newOne();
+  Component* newOne() {
+	  return new Coupler(*this);
+  }
   static Element* info(QString&, char* &, bool getNewOne=false);
 };
 

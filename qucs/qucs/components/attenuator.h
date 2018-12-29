@@ -25,7 +25,9 @@ class Attenuator : public Component  {
 public:
   Attenuator();
   ~Attenuator();
-  Component* newOne();
+  Component* newOne(){
+	  return new Attenuator(*this);
+  }
   static Element* info(QString&, char* &, bool getNewOne=false);
 };
 

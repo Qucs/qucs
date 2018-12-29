@@ -610,11 +610,8 @@ void Command::mirrorY()
 // -------------------------------------------------------
 QString Command::netlist()
 {
+  unreachable(); // obsolete.
   QString s = Model+":"+Name;
-
-  // output all node names
-  foreach(Port *p1, Ports)
-    s += " "+p1->Connection->Name;   // node names
 
   // output all properties
   for(Property *p2 = Props.first(); p2 != 0; p2 = Props.next())
@@ -627,23 +624,8 @@ QString Command::netlist()
 // -------------------------------------------------------
 QString Command::getNetlist()
 {
-  switch(isActive) {
-    case COMP_IS_ACTIVE:
-      return netlist();
-    case COMP_IS_OPEN:
-      return QString("");
-  }
-
-  // Component is shortened.
-  int z=0;
-  QListIterator<Port *> iport(Ports);
-  Port *pp = iport.next();
-  QString Node1 = pp->Connection->Name;
-  QString s = "";
-  while (iport.hasNext())
-    s += "R:" + Name + "." + QString::number(z++) + " " +
-      Node1 + " " + iport.next()->Connection->Name + " R=\"0\"\n";
-  return s;
+  unreachable(); // obsolete
+  return QString("");
 }
 
 // -------------------------------------------------------
@@ -653,48 +635,16 @@ QString Command::verilogCode(int)
 }
 
 // -------------------------------------------------------
-QString Command::get_Verilog_Code(int NumPorts)
+QString Command::get_Verilog_Code(int)
 {
-  switch(isActive) {
-    case COMP_IS_OPEN:
-      return QString("");
-    case COMP_IS_ACTIVE:
-      return verilogCode(NumPorts);
-  }
-
-  // Component is shortened.
-  QListIterator<Port *> iport(Ports);
-  Port *pp = iport.next();
-  QString Node1 = pp->Connection->Name;
-  QString s = "";
-  while (iport.hasNext())
-    s += "  assign " + iport.next()->Connection->Name + " = " + Node1 + ";\n";
-  return s;
+  unreachable(); // obsolete
+  return "?!";
 }
 
 // -------------------------------------------------------
 QString Command::vhdlCode(int)
 {
   return QString("");   // no digital model
-}
-
-// -------------------------------------------------------
-QString Command::get_VHDL_Code(int NumPorts)
-{
-  switch(isActive) {
-    case COMP_IS_OPEN:
-      return QString("");
-    case COMP_IS_ACTIVE:
-      return vhdlCode(NumPorts);
-  }
-
-  // Component is shortened.
-  // This puts the signal of the second port onto the first port.
-  // This is logically correct for the inverter only, but makes
-  // some sense for the gates (OR, AND etc.).
-  // Has anyone a better idea?
-  QString Node1 = Ports.at(0)->Connection->Name;
-  return "  " + Node1 + " <= " + Ports.at(1)->Connection->Name + ";\n";
 }
 
 // -------------------------------------------------------
@@ -1006,7 +956,7 @@ Property * Command::getProperty(const QString& name)
 
 // ---------------------------------------------------------------------
 // // BUG: implements assign
-void Command::copyComponent(Component *pc)
+void Command::copyComponent(Component *)
 {
   incomplete();
 #if 0 // WTF?
@@ -1050,33 +1000,6 @@ void Schematic::simpleInsertCommand(Command *c)
   Node *pn;
   int x, y;
   // connect every node of component
-  foreach(Port *pp, c->Ports) {
-    x = pp->x+c->cx;
-    y = pp->y+c->cy;
-
-    // check if new node lies upon existing node
-    for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
-      if(pn->cx == x) if(pn->cy == y) {
-	if (!pn->DType.isEmpty()) {
-	  pp->Type = pn->DType;
-	}
-	if (!pp->Type.isEmpty()) {
-	  pn->DType = pp->Type;
-	}
-	break;
-      }
-
-    if(pn == 0) { // create new node, if no existing one lies at this position
-      pn = new Node(x, y);
-      DocNodes.append(pn);
-    }
-    pn->Connections.append(c);  // connect schematic node to component node
-    if (!pp->Type.isEmpty()) {
-      pn->DType = pp->Type;
-    }
-
-    pp->Connection = pn;  // connect component node to schematic node
-  }
 
   DocComps.append(c);
 }

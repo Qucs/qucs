@@ -38,6 +38,11 @@ public:
   Marker(Graph *pg_=0, int _nn=0, int cx_=0, int cy_=0);
  ~Marker();
 
+  Element* clone() const{
+	  incomplete();
+	  return new Marker(*this);
+  }
+
 private:
   void    initText(int);
 public:

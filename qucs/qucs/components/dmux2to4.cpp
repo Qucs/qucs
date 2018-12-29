@@ -109,15 +109,15 @@ QString dmux2to4::vhdlCode( int )
   if(!misc::VHDL_Delay(td, Name)) return td; // time has not VHDL format
   td += ";\n";
 
-  QString En = Ports.at(0)->Connection->Name;
-  QString A  = Ports.at(1)->Connection->Name;
-  QString B  = Ports.at(2)->Connection->Name;
-  QString Y3 = Ports.at(3)->Connection->Name;
-  QString Y2 = Ports.at(4)->Connection->Name;
-  QString Y1 = Ports.at(5)->Connection->Name;
-  QString Y0 = Ports.at(6)->Connection->Name;
+  QString En = Ports.at(0)->Connection->name();
+  QString A  = Ports.at(1)->Connection->name();
+  QString B  = Ports.at(2)->Connection->name();
+  QString Y3 = Ports.at(3)->Connection->name();
+  QString Y2 = Ports.at(4)->Connection->name();
+  QString Y1 = Ports.at(5)->Connection->name();
+  QString Y0 = Ports.at(6)->Connection->name();
 
-  s = "\n  "+Name+":process ("+En+", "+A+", "+B+")\n"+
+  s = "\n  "+name()+":process ("+En+", "+A+", "+B+")\n"+
       "  begin\n" +
       "    "+Y0+" <= "+"(not "+En+") and (not "+B+") and (not "+A+")"+td+ 
       "    "+Y1+" <= "+"(not "+En+") and (not "+B+") and "+A+td+
@@ -134,15 +134,15 @@ QString dmux2to4::verilogCode( int )
 
   QString l = "";
 
-  QString En = Ports.at(0)->Connection->Name;
-  QString A  = Ports.at(1)->Connection->Name;
-  QString B  = Ports.at(2)->Connection->Name;
-  QString Y3 = Ports.at(3)->Connection->Name;
-  QString Y2 = Ports.at(4)->Connection->Name;
-  QString Y1 = Ports.at(5)->Connection->Name;
-  QString Y0 = Ports.at(6)->Connection->Name;
+  QString En = Ports.at(0)->Connection->name();
+  QString A  = Ports.at(1)->Connection->name();
+  QString B  = Ports.at(2)->Connection->name();
+  QString Y3 = Ports.at(3)->Connection->name();
+  QString Y2 = Ports.at(4)->Connection->name();
+  QString Y1 = Ports.at(5)->Connection->name();
+  QString Y0 = Ports.at(6)->Connection->name();
 
-  QString Y3R = "net_reg" + Name + Y3;
+  QString Y3R = "net_reg" + name() + Y3;
   QString Y2R = "net_reg" + Name + Y2;
   QString Y1R = "net_reg" + Name + Y1;
   QString Y0R = "net_reg" + Name + Y0;

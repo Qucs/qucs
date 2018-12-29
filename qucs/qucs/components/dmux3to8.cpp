@@ -125,18 +125,18 @@ QString dmux3to8::vhdlCode( int )
   if(!misc::VHDL_Delay(td, Name)) return td; // time has not VHDL format
   td += ";\n";
 
-  QString En = Ports.at(0)->Connection->Name;
-  QString A  = Ports.at(1)->Connection->Name;
-  QString B  = Ports.at(2)->Connection->Name;
-  QString C  = Ports.at(3)->Connection->Name;
-  QString Y7 = Ports.at(4)->Connection->Name;
-  QString Y6 = Ports.at(5)->Connection->Name;
-  QString Y5 = Ports.at(6)->Connection->Name;
-  QString Y4 = Ports.at(7)->Connection->Name;
-  QString Y3 = Ports.at(8)->Connection->Name;
-  QString Y2 = Ports.at(9)->Connection->Name;
-  QString Y1 = Ports.at(10)->Connection->Name;
-  QString Y0 = Ports.at(11)->Connection->Name;
+  QString En = Ports.at(0)->Connection->name();
+  QString A  = Ports.at(1)->Connection->name();
+  QString B  = Ports.at(2)->Connection->name();
+  QString C  = Ports.at(3)->Connection->name();
+  QString Y7 = Ports.at(4)->Connection->name();
+  QString Y6 = Ports.at(5)->Connection->name();
+  QString Y5 = Ports.at(6)->Connection->name();
+  QString Y4 = Ports.at(7)->Connection->name();
+  QString Y3 = Ports.at(8)->Connection->name();
+  QString Y2 = Ports.at(9)->Connection->name();
+  QString Y1 = Ports.at(10)->Connection->name();
+  QString Y0 = Ports.at(11)->Connection->name();
 
   s = "\n  "+Name+":process ("+En+", "+A+", "+B+", "+C+")\n"+
       "  begin\n" +
@@ -159,29 +159,29 @@ QString dmux3to8::verilogCode( int )
   
   QString l = "";
 
-  QString En = Ports.at(0)->Connection->Name;
-  QString A  = Ports.at(1)->Connection->Name;
-  QString B  = Ports.at(2)->Connection->Name;
-  QString C  = Ports.at(3)->Connection->Name;
-  QString Y7 = Ports.at(4)->Connection->Name;
-  QString Y6 = Ports.at(5)->Connection->Name;
-  QString Y5 = Ports.at(6)->Connection->Name;
-  QString Y4 = Ports.at(7)->Connection->Name;
-  QString Y3 = Ports.at(8)->Connection->Name;
-  QString Y2 = Ports.at(9)->Connection->Name;
-  QString Y1 = Ports.at(10)->Connection->Name;
-  QString Y0 = Ports.at(11)->Connection->Name;
+  QString En = Ports.at(0)->Connection->name();
+  QString A  = Ports.at(1)->Connection->name();
+  QString B  = Ports.at(2)->Connection->name();
+  QString C  = Ports.at(3)->Connection->name();
+  QString Y7 = Ports.at(4)->Connection->name();
+  QString Y6 = Ports.at(5)->Connection->name();
+  QString Y5 = Ports.at(6)->Connection->name();
+  QString Y4 = Ports.at(7)->Connection->name();
+  QString Y3 = Ports.at(8)->Connection->name();
+  QString Y2 = Ports.at(9)->Connection->name();
+  QString Y1 = Ports.at(10)->Connection->name();
+  QString Y0 = Ports.at(11)->Connection->name();
 
-  QString Y7R = "net_reg" + Name + Y7;
-  QString Y6R = "net_reg" + Name + Y6;
-  QString Y5R = "net_reg" + Name + Y5;
-  QString Y4R = "net_reg" + Name + Y4;  
-  QString Y3R = "net_reg" + Name + Y3;
-  QString Y2R = "net_reg" + Name + Y2;
-  QString Y1R = "net_reg" + Name + Y1;
-  QString Y0R = "net_reg" + Name + Y0;
+  QString Y7R = "net_reg" + name() + Y7;
+  QString Y6R = "net_reg" + name() + Y6;
+  QString Y5R = "net_reg" + name() + Y5;
+  QString Y4R = "net_reg" + name() + Y4;  
+  QString Y3R = "net_reg" + name() + Y3;
+  QString Y2R = "net_reg" + name() + Y2;
+  QString Y1R = "net_reg" + name() + Y1;
+  QString Y0R = "net_reg" + name() + Y0;
 
-  l = "\n  // " + Name + " 3to8 demux\n" +
+  l = "\n  // " + name() + " 3to8 demux\n" +
       "  assign  " + Y0 + " = " + Y0R + ";\n" +
       "  reg     " + Y0R + " = 0;\n" +
       "  assign  " + Y1 + " = " + Y1R + ";\n" +

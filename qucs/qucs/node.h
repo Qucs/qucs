@@ -28,16 +28,54 @@ class ViewPainter;
 class Node : public Conductor {
 public:
   Node(int, int);
- ~Node();
+  ~Node();
+  Element* clone()const{
+	  return new Node(*this);
+  }
 
-  void  paint(ViewPainter*);
+  void connectionsAppend(Element* e){
+	  Connections.append(e);
+  }
+  void connectionsRemove(Element* e){
+	  Connections.removeRef(e);
+  }
+  unsigned connectionsCount() const{
+	  return Connections.count();
+  }
+  Q3PtrList<Element> const& connections() const{
+	  return Connections;
+  }
+  // void setName(QString const& x){
+//	  // BUG
+//	  Name = x;
+ // }
+
+  // BUG
+  void setName(const QString&, const QString&, int x_=0, int y_=0);
+  // QString const& name() const{ return Name; }
+
+  void setState(int i){
+	  State |= i;
+  }
+  bool hasState(int i) const{
+	  return State & i;
+  }
+
+public: // obsolete
   bool  getSelected(int, int);
-  void  setName(const QString&, const QString&, int x_=0, int y_=0);
 
+private: //Element overrides
+  void  paint(ViewPainter*);
+
+public: // BUG. does weird reverse iteration
   Q3PtrList<Element> Connections;
-  QString Name;  // node name used by creation of netlist
+
+private:
+  // QString Name;  //Element?
   QString DType; // type of node (used by digital files)
-  int State;	 // remember some things during some operations
+
+public: // BUG
+  int State;	 // remember some things during some operations, BUG
 };
 
 #endif
