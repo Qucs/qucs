@@ -45,10 +45,10 @@ public:
   Q3PtrList<Element> const& connections() const{
 	  return Connections;
   }
-  // void setName(QString const& x){
+  void setName(QString const& x){
 //	  // BUG
-//	  Name = x;
- // }
+	  Element::Name = x;
+  }
 
   // BUG
   void setName(const QString&, const QString&, int x_=0, int y_=0);
