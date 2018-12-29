@@ -1199,10 +1199,7 @@ int Schematic::testFile(const QString& DocName)
 // Collects the signal names for digital simulations.
 void Schematic::collectDigitalSignals(void)
 {
-<<<<<<< HEAD
   incomplete();
-=======
->>>>>>> 43448e9dc... cleanup. compile
 //  Node *pn;
 //
 //  for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
@@ -1240,16 +1237,10 @@ void Schematic::propagateNode(QStringList& Collect,
 	    Cons.append(pw->Port1);
 	    setName = true;
 	  }
-<<<<<<< HEAD
 	}else{
 	  if(pw->Port2->name().isEmpty()) {
 	    assert(pn);
 	    qDebug() << pn->name();
-=======
-	}
-	else {
-	  if(pw->Port2->name().isEmpty()) {
->>>>>>> 43448e9dc... cleanup. compile
 	    pw->Port2->setName(pn->name());
 	    pw->Port2->State = 1;
 	    Cons.append(pw->Port2);
