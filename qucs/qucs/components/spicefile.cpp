@@ -149,7 +149,7 @@ QString SpiceFile::netlist() const
 
   QString s = "Sub:"+Name;   // SPICE netlist is subcircuit
   foreach(Port *pp, Ports)
-    s += " "+pp->Connection->Name;   // output all node names
+    s += " "+pp->Connection->name();   // output all node names
 
   QString f = misc::properFileName(P->first()->Value);
   s += " Type=\""+misc::properName(f)+"\"\n";

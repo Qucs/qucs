@@ -25,7 +25,9 @@ class Circulator : public Component  {
 public:
   Circulator();
   ~Circulator();
-  Component* newOne();
+  Component* newOne(){
+	  return new Circulator(*this);
+  }
   static Element* info(QString&, char* &, bool getNewOne=false);
 };
 

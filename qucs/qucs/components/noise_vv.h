@@ -25,7 +25,9 @@ class Noise_vv : public Component  {
 public:
   Noise_vv();
  ~Noise_vv();
-  Component* newOne();
+  Component* newOne() {
+	  return new Noise_vv(*this);
+  }
   static Element* info(QString&, char* &, bool getNewOne=false);
 };
 

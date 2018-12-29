@@ -66,14 +66,14 @@ QString D_FlipFlop::vhdlCode(int NumPorts)
   s += ";\n";
 
   s = "  " + Name + " : process (" +
-      Ports.at(0)->Connection->Name + ", " +
-      Ports.at(1)->Connection->Name + ")\n  begin\n    if (" +
-      Ports.at(3)->Connection->Name + "='1') then  " +
-      Ports.at(2)->Connection->Name + " <= '0'" + s +"    elsif (" +
-      Ports.at(1)->Connection->Name + "='1' and " +
-      Ports.at(1)->Connection->Name + "'event) then\n      " +
-      Ports.at(2)->Connection->Name + " <= " +
-      Ports.at(0)->Connection->Name + s + "    end if;\n  end process;\n\n";
+      Ports.at(0)->Connection->name() + ", " +
+      Ports.at(1)->Connection->name() + ")\n  begin\n    if (" +
+      Ports.at(3)->Connection->name() + "='1') then  " +
+      Ports.at(2)->Connection->name() + " <= '0'" + s +"    elsif (" +
+      Ports.at(1)->Connection->name() + "='1' and " +
+      Ports.at(1)->Connection->name() + "'event) then\n      " +
+      Ports.at(2)->Connection->name() + " <= " +
+      Ports.at(0)->Connection->name() + s + "    end if;\n  end process;\n\n";
   return s;
 }
 
@@ -83,18 +83,18 @@ QString D_FlipFlop::verilogCode(int NumPorts)
   QString t = "";
   if(NumPorts <= 0) { // no truth table simulation ?
     QString td = Props.at(0)->Value;        // delay time
-    if(!misc::Verilog_Delay(td, Name)) return td; // time has not VHDL format
+    if(!misc::Verilog_Delay(td, name())) return td; // time has not VHDL format
     if(!td.isEmpty()) t = "   " + td  + ";\n";
   }
   
   QString s = "";
-  QString q = Ports.at(2)->Connection->Name;
-  QString d = Ports.at(0)->Connection->Name;
-  QString r = Ports.at(3)->Connection->Name;
-  QString c = Ports.at(1)->Connection->Name;
-  QString v = "net_reg" + Name + q;
+  QString q = Ports.at(2)->Connection->name();
+  QString d = Ports.at(0)->Connection->name();
+  QString r = Ports.at(3)->Connection->name();
+  QString c = Ports.at(1)->Connection->name();
+  QString v = "net_reg" + name() + q;
   
-  s = "\n  // " + Name + " D-flipflop\n" +
+  s = "\n  // " + name() + " D-flipflop\n" +
     "  assign  " + q + " = " + v + ";\n" +
     "  reg     " + v + " = 0;\n" +
     "  always @ (" + c + " or " + r + ") begin\n" + t +

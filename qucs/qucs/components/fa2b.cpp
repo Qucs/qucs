@@ -112,14 +112,14 @@ QString fa2b::vhdlCode( int )
   if(!misc::VHDL_Delay(td, Name)) return td; // time has not VHDL format
   td += ";\n";
 
-  QString D    = Ports.at(0)->Connection->Name;
-  QString C    = Ports.at(1)->Connection->Name;
-  QString B    = Ports.at(2)->Connection->Name;
-  QString A    = Ports.at(3)->Connection->Name;
-  QString E   = Ports.at(4)->Connection->Name;
-  QString CO   = Ports.at(5)->Connection->Name;
-  QString S1   = Ports.at(6)->Connection->Name;
-  QString S0   = Ports.at(7)->Connection->Name; 
+  QString D    = Ports.at(0)->Connection->name();
+  QString C    = Ports.at(1)->Connection->name();
+  QString B    = Ports.at(2)->Connection->name();
+  QString A    = Ports.at(3)->Connection->name();
+  QString E   = Ports.at(4)->Connection->name();
+  QString CO   = Ports.at(5)->Connection->name();
+  QString S1   = Ports.at(6)->Connection->name();
+  QString S0   = Ports.at(7)->Connection->name(); 
 
   s = "\n  "+Name+":process ("+A+", "+B+", "+C+", "+D+", "+E+ ")\n"+
       "  begin\n" +
@@ -137,16 +137,16 @@ QString fa2b::verilogCode( int )
 
   QString l = "";
 
-  QString D    = Ports.at(0)->Connection->Name;
-  QString C    = Ports.at(1)->Connection->Name;
-  QString B    = Ports.at(2)->Connection->Name;
-  QString A    = Ports.at(3)->Connection->Name;
-  QString E   = Ports.at(4)->Connection->Name;
-  QString CO   = Ports.at(5)->Connection->Name;
-  QString S1   = Ports.at(6)->Connection->Name;
-  QString S0   = Ports.at(7)->Connection->Name; 
+  QString D    = Ports.at(0)->Connection->name();
+  QString C    = Ports.at(1)->Connection->name();
+  QString B    = Ports.at(2)->Connection->name();
+  QString A    = Ports.at(3)->Connection->name();
+  QString E   = Ports.at(4)->Connection->name();
+  QString CO   = Ports.at(5)->Connection->name();
+  QString S1   = Ports.at(6)->Connection->name();
+  QString S0   = Ports.at(7)->Connection->name(); 
 
-  QString COR  = "CO_reg" + Name + CO;
+  QString COR  = "CO_reg" + name() + CO;
   QString S1R  = "S1_reg" + Name + S1;
   QString S0R  = "S0_reg" + Name + S0;
 

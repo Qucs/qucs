@@ -43,7 +43,7 @@ Verilog_File::Verilog_File()
 // -------------------------------------------------------
 // BUG: too complicated
 // use constructor.
-Component* Verilog_File::newOne() const
+Component* Verilog_File::newOne()
 {
   Verilog_File *p = new Verilog_File();
   p->Props.getFirst()->Value = Props.getFirst()->Value;
@@ -75,11 +75,11 @@ QString Verilog_File::verilogCode(int)
     s = "  " + ModuleName + " " + Name + " (";
 
     // output all node names
-    if(pp)  s += pp->Connection->Name;
+    if(pp)  s += pp->Connection->name();
     while(iport.hasNext())
     {
       pp = iport.next();
-      s += ", "+pp->Connection->Name;   // node names
+      s += ", "+pp->Connection->name();   // node names
     }
 
     s += ");\n";

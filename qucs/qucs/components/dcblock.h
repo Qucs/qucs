@@ -25,7 +25,7 @@ class dcBlock : public Component  {
 public:
   dcBlock();
   ~dcBlock();
-  Object* newOne() const {return new dcBlock(*this);}
+  Component* newOne() {return new dcBlock(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 };
 

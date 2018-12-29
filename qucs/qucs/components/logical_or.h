@@ -22,10 +22,21 @@
 
 
 class Logical_OR : public GateComponent  {
+private:
+  Logical_OR(Logical_OR const& o)
+  {
+ 	 Props.getFirst()->Value = o.Props.getFirst()->Value;
+ 	 Props.getLast()->Value = o.Props.getLast()->Value;
+ 	 recreate(0);
+ 	 return p;
+  }
+
 public:
   Logical_OR();
  ~Logical_OR();
-  Component* newOne();
+  Element* newOne() const{
+	  return new Logical_OR(*this);
+  }
   static Element* info(QString&, char* &, bool getNewOne=false);
 };
 

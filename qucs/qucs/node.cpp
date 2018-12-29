@@ -69,6 +69,7 @@ bool Node::getSelected(int x_, int y_)
 }
 
 // ----------------------------------------------------------------
+// BUG: does not set Name
 void Node::setName(const QString& Name_, const QString& Value_, int x_, int y_)
 {
   if(Name_.isEmpty() && Value_.isEmpty()) {

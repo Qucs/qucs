@@ -53,7 +53,7 @@ Phaseshifter::~Phaseshifter()
 {
 }
 
-Object* Phaseshifter::newOne()
+Component* Phaseshifter::newOne()
 {
   return new Phaseshifter();
 }

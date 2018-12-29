@@ -32,17 +32,19 @@ class Component : public Symbol {
 public:
   Component();
   virtual ~Component() {};
-
-  virtual Object* clone() const{
-	  return const_cast<Component*>(this)->newOne();
-  }
-
   virtual void recreate(Schematic*) {};
   QString getNetlist() const; // BUG. use netlister to create netlist
   QString get_VHDL_Code(int);
   QString get_Verilog_Code(int);
 private: // override
   void    paint(ViewPainter*);
+  virtual Component* newOne() = 0; // legacy interfase. use clone.
+public:
+  Element* clone() const{
+	  Component const* e=this;
+	  Component* E=const_cast<Component*>(e);
+	  return E->newOne();
+  }
 public:
   void    paintScheme(Schematic*) const;
   void    print(ViewPainter*, float);
@@ -116,6 +118,10 @@ public:
 	  // tmp kludge, store type in Model...
 	  Model = QString::fromStdString(x);
   }
+
+protected:
+public: // ?!
+  QString const& name() const{ return Name; }
 
 private:
   char const* iconBasename() const{return bitmap_file;}

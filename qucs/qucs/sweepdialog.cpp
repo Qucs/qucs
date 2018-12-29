@@ -145,9 +145,10 @@ void SweepDialog::slotNewValue(int)
   QList<Node *>::iterator node_it;
   QList<double *>::const_iterator value_it = ValueList.begin();
   for(node_it = NodeList.begin(); node_it != NodeList.end(); node_it++) {
-    qDebug() << "SweepDialog::slotNewValue:(*node_it)->Name:" << (*node_it)->Name;
-    (*node_it)->Name = misc::num2str(*((*value_it)+Index));
-    (*node_it)->Name += ((*node_it)->x1 & 0x10)? "A" : "V";
+    qDebug() << "SweepDialog::slotNewValue:(*node_it)->Name:" << (*node_it)->name();
+	 incomplete();
+	 // (*node_it)->name() = misc::num2str(*((*value_it)+Index));
+    // (*node_it)->name() += ((*node_it)->x1 & 0x10)? "A" : "V";
     value_it++;
   }
 
@@ -158,7 +159,7 @@ void SweepDialog::slotNewValue(int)
 Graph* SweepDialog::setBiasPoints()
 {
   // When this function is entered, a simulation was performed.
-  // Thus, the node names are still in "node->Name".
+  // Thus, the node names are still in "node->name()".
 
   qDebug() << "SweepDialog::setBiasPoints()";
 
@@ -180,20 +181,21 @@ Graph* SweepDialog::setBiasPoints()
 
   // create DC voltage for all nodes
   for(pn = Doc->Nodes->first(); pn != 0; pn = Doc->Nodes->next()) {
-    if(pn->Name.isEmpty()) continue;
+    if(pn->name().isEmpty()) continue;
 
     pn->x1 = 0;
-    if(pn->Connections.count() < 2) {
-      pn->Name = "";  // no text at open nodes
-      continue;
+    if(pn->connectionsCount() < 2) {
+      // pn->Name = "";  // no text at open nodes
+		//                  // too late. d'uh
+      continue; // BUG.
     }
     else {
       hasNoComp = true;
-      for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next())
+      for(auto i : pn->connections()){
+        pe = i;
         if(pe->Type == isWire) {
           if( ((Wire*)pe)->isHorizontal() )  pn->x1 |= 2;
-        }
-        else {
+        }else {
           if( ((Component*)pe)->obsolete_model_hack() == "GND" ) { // BUG
             hasNoComp = true;   // no text at ground symbol
             break;
@@ -202,30 +204,35 @@ Graph* SweepDialog::setBiasPoints()
           if(pn->cx < pe->cx)  pn->x1 |= 1;  // to the right is no room
           hasNoComp = false;
         }
+		}
       if(hasNoComp) {  // text only were a component is connected
-        pn->Name = "";
+			incomplete(); // pn->Name = "";
         continue;
       }
     }
 
-    pg->Var = pn->Name + ".V";
+    pg->Var = pn->name() + ".V";
     pg->lastLoaded = QDateTime(); // Note 1 at the start of this function
     if(pg->loadDatFile(DataSet) == 2) {
-      pn->Name = misc::num2str(*(pg->cPointsY)) + "V";
+		 incomplete(); // node names are not mutable.
+      // pn->name() = misc::num2str(*(pg->cPointsY)) + "V";
       NodeList.append(pn);             // remember node ...
       ValueList.append(pg->cPointsY);  // ... and all of its values
       pg->cPointsY = 0;   // do not delete it next time !
-    }
-    else
-      pn->Name = "0V";
+    }else{
+		 incomplete();
+    //  pn->Name = "0V";
+	 }
 
 
-    for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next())
+    for(auto i : pn->connections()){
+		 pe = i;
       if(pe->Type == isWire) {
         if( ((Wire*)pe)->Port1 != pn )  // no text at next node
-          ((Wire*)pe)->Port1->Name = "";
-        else  ((Wire*)pe)->Port2->Name = "";
+          ((Wire*)pe)->Port1->setName("");
+        else  ((Wire*)pe)->Port2->setName("");
       }
+	 }
   }
 
 
@@ -234,28 +241,30 @@ Graph* SweepDialog::setBiasPoints()
   for(pc = Doc->Components->first(); pc != 0; pc = Doc->Components->next())
     if(pc->obsolete_model_hack() == "IProbe") { // BUG.
       pn = pc->Ports.first()->Connection;
-      if(!pn->Name.isEmpty())   // preserve node voltage ?
+      if(!pn->name().isEmpty())   // preserve node voltage ?
         pn = pc->Ports.at(1)->Connection;
 
       pn->x1 = 0x10;   // mark current
       pg->Var = pc->name() + ".I";
       pg->lastLoaded = QDateTime(); // Note 1 at the start of this function
       if(pg->loadDatFile(DataSet) == 2) {
-        pn->Name = misc::num2str(*(pg->cPointsY)) + "A";
+        pn->setName( misc::num2str(*(pg->cPointsY)) + "A");
         NodeList.append(pn);             // remember node ...
         ValueList.append(pg->cPointsY);  // ... and all of its values
         pg->cPointsY = 0;   // do not delete it next time !
-      }
-      else
-        pn->Name = "0A";
+      } else{
+        pn->setName("0A");
+		}
 
-      for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next())
+      for(auto i: pn->connections()){
+			pe=i;
         if(pe->Type == isWire) {
           if( ((Wire*)pe)->isHorizontal() )  pn->x1 |= 2;
         }
         else {
           if(pn->cx < pe->cx)  pn->x1 |= 1;  // to the right is no room
         }
+		}
     }
 
 

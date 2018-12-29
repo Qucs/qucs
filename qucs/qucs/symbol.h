@@ -35,11 +35,11 @@
 
 class QPainter;
 
+// a component symbol. not necessarily one of the legacy components
 class Symbol : public Element{
 public: // construct
   Symbol() {}
   virtual ~Symbol(){}
-  virtual Object* newOne()const {return 0 /*NULL, actually*/;}
 
 public: // interface
   virtual unsigned portNumber()const {return 0;}

@@ -25,7 +25,9 @@ class vRect : public Component  {
 public:
   vRect();
   ~vRect();
-  Object* newOne() const;
+  Component* newOne(){
+	  return new vRect(*this);
+  }
   static Element* info(QString&, char* &, bool getNewOne=false);
 }D;
 
@@ -80,11 +82,6 @@ vRect::vRect()
 
 vRect::~vRect()
 {
-}
-
-Object* vRect::newOne() const
-{
-  return new vRect();
 }
 
 Element* vRect::info(QString& Name, char* &BitmapFile, bool getNewOne)

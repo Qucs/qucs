@@ -40,9 +40,8 @@ qucs_default_components_la_SOURCES = \
   volt_ac.cpp \
   source_ac.cpp isolator.cpp circulator.cpp attenuator.cpp       \
   ampere_dc.cpp transformer.cpp symtrafo.cpp \
-  mutual2.cpp noise_ii.cpp noise_iv.cpp noise_vv.cpp logical_or.cpp           \
-  logical_nor.cpp logical_and.cpp logical_nand.cpp logical_xor.cpp            \
-  logical_xnor.cpp logical_inv.cpp digi_source.cpp coupler.cpp   \
+  mutual2.cpp noise_ii.cpp noise_iv.cpp noise_vv.cpp \
+  coupler.cpp   \
   rs_flipflop.cpp d_flipflop.cpp jk_flipflop.cpp coaxialline.cpp vprobe.cpp   \
   switch.cpp relais.cpp am_modulator.cpp pm_modulator.cpp        \
   tline_4port.cpp twistedpair.cpp bondwire.cpp rlcg.cpp    \
@@ -50,10 +49,17 @@ qucs_default_components_la_SOURCES = \
   vfile.cpp ifile.cpp mod_amp.cpp thyristor.cpp triac.cpp       \
   diac.cpp log_amp.cpp potentiometer.cpp rfedd.cpp rfedd2p.cpp  \
   MESFET.cpp rectline.cpp photodiode.cpp     \
-  EKV26MOS.cpp logical_buf.cpp dff_SR.cpp jkff_SR.cpp tff_SR.cpp              \
+  EKV26MOS.cpp dff_SR.cpp jkff_SR.cpp tff_SR.cpp              \
   gatedDlatch.cpp logic_0.cpp logic_1.cpp mux2to1.cpp mux4to1.cpp mux8to1.cpp \
   DLS_nto1.cpp DLS_1ton.cpp andor4x2.cpp andor4x3.cpp andor4x4.cpp            \
   dmux2to4.cpp dmux3to8.cpp dmux4to16.cpp ha1b.cpp fa1b.cpp fa2b.cpp         
+
+LOGIC_STUFF =\
+  logical_or.cpp           \
+  logical_nor.cpp logical_and.cpp logical_nand.cpp logical_xor.cpp            \
+  logical_xnor.cpp logical_inv.cpp digi_source.cpp \
+  logical_buf.cpp
+
 
 qucs_default_components_la_LIBADD = $(QT_LIBS)
 

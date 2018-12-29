@@ -25,7 +25,9 @@ class Transformer : public Component  {
 public:
   Transformer();
   ~Transformer();
-  Component* newOne();
+  Component* newOne() {
+	  return new Transformer(*this);
+  }
   static Element* info(QString&, char* &, bool getNewOne=false);
 };
 

@@ -25,7 +25,9 @@ class Isolator : public Component  {
 public:
   Isolator();
   ~Isolator();
-  Component* newOne();
+  Component* newOne(){
+	  return new Isolator(*this);
+  }
   static Element* info(QString&, char* &, bool getNewOne=false);
 };
 

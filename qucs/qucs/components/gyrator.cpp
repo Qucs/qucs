@@ -61,7 +61,7 @@ Gyrator::~Gyrator()
 {
 }
 
-Object* Gyrator::newOne() const
+Component* Gyrator::newOne()
 {
   return new Gyrator();
 }

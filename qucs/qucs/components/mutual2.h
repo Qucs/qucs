@@ -25,7 +25,9 @@ class Mutual2 : public Component  {
 public:
   Mutual2();
  ~Mutual2();
-  Component* newOne();
+  Component* newOne() {
+	  return new Mutual2(*this);
+  }
   static Element* info(QString&, char* &, bool getNewOne=false);
 };
 
