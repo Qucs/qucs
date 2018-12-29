@@ -33,6 +33,8 @@ public:
   void  paint(ViewPainter*);
   bool  getSelected(int, int);
   void  setName(const QString&, const QString&, int x_=0, int y_=0);
+  void setName(QString const& n){ Name = n; }
+  QString const& name() const{ return Name; }
 
   Q3PtrList<Element> Connections;
   QString Name;  // node name used by creation of netlist

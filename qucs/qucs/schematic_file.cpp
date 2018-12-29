@@ -1099,14 +1099,14 @@ void Schematic::createNodeSet(QStringList& Collect, int& countInit,
 void Schematic::throughAllNodes(bool User, QStringList& Collect,
 				int& countInit)
 {
+  qDebug() << "tan";
   Node *pn;
   int z=0;
 
   for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
     if(pn->Name.isEmpty() == User) {
       continue;  // already named ?
-    }
-    if(!User) {
+    }else if(!User) {
       if(isAnalog)
 	pn->Name = "_net";
       else
@@ -1117,7 +1117,11 @@ void Schematic::throughAllNodes(bool User, QStringList& Collect,
       continue;  // already worked on
     }
 
-    if(isAnalog) createNodeSet(Collect, countInit, pn, pn);
+    if(isAnalog){ untested();
+      createNodeSet(Collect, countInit, pn, pn);
+    }else{
+      incomplete();
+    }
 
     pn->State = 1;
     propagateNode(Collect, countInit, pn);
@@ -1195,16 +1199,17 @@ int Schematic::testFile(const QString& DocName)
 // Collects the signal names for digital simulations.
 void Schematic::collectDigitalSignals(void)
 {
-  Node *pn;
-
-  for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
-    DigMap::Iterator it = Signals.find(pn->Name);
-    if(it == Signals.end()) { // avoid redeclaration of signal
-      Signals.insert(pn->Name, DigSignal(pn->Name, pn->DType));
-    } else if (!pn->DType.isEmpty()) {
-      it.value().Type = pn->DType;
-    }
-  }
+  incomplete();
+//  Node *pn;
+//
+//  for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
+//    DigMap::Iterator it = Signals.find(pn->name());
+//    if(it == Signals.end()) { // avoid redeclaration of signal
+//      Signals.insert(pn->name(), DigSignal(pn->name(), pn->DType));
+//    } else if (!pn->DType.isEmpty()) {
+//      it.value().Type = pn->DType;
+//    }
+//  }
 }
 
 // ---------------------------------------------------
@@ -1212,6 +1217,7 @@ void Schematic::collectDigitalSignals(void)
 void Schematic::propagateNode(QStringList& Collect,
 			      int& countInit, Node *pn)
 {
+    qDebug() << "propagateNode" << countInit;
   bool setName=false;
   Q3PtrList<Node> Cons;
   Node *p2;
@@ -1219,9 +1225,10 @@ void Schematic::propagateNode(QStringList& Collect,
   Element *pe;
 
   Cons.append(pn);
-  for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
+  for(p2 = Cons.first(); p2 != 0; p2 = Cons.next()){
+    qDebug() << "here";
     for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
-      if(pe->Type == isWire) {
+      if(wire(pe)){
 	pw = (Wire*)pe;
 	if(p2 != pw->Port1) {
 	  if(pw->Port1->Name.isEmpty()) {
@@ -1230,10 +1237,11 @@ void Schematic::propagateNode(QStringList& Collect,
 	    Cons.append(pw->Port1);
 	    setName = true;
 	  }
-	}
-	else {
-	  if(pw->Port2->Name.isEmpty()) {
-	    pw->Port2->Name = pn->Name;
+	}else{
+	  if(pw->Port2->name().isEmpty()) {
+	    assert(pn);
+	    qDebug() << pn->name();
+	    pw->Port2->setName(pn->name());
 	    pw->Port2->State = 1;
 	    Cons.append(pw->Port2);
 	    setName = true;
@@ -1245,6 +1253,7 @@ void Schematic::propagateNode(QStringList& Collect,
 	  setName = false;
 	}
       }
+  }
   Cons.clear();
 }
 
@@ -1402,6 +1411,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 
     // handle SPICE subcircuit components
     if(pc->obsolete_model_hack() == "SPICE") { // BUG
+      incomplete();
       s = pc->Props.first()->Value;
       // tell the spice component it belongs to this schematic
       pc->setSchematic (this);
@@ -1424,10 +1434,8 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
         return false;
       }
       continue; // BUG
-    } else
-
-    // handle digital file subcircuits
-    if(pc->obsolete_model_hack() == "VHDL" || pc->obsolete_model_hack() == "Verilog") {
+    } else if(pc->obsolete_model_hack() == "VHDL" || pc->obsolete_model_hack() == "Verilog") {
+      incomplete();
       if(isVerilog && pc->obsolete_model_hack() == "VHDL")
 	continue;
       if(!isVerilog && pc->obsolete_model_hack() == "Verilog")
