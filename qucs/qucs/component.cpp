@@ -1696,8 +1696,11 @@ Element* getComponentFromName(QString& Line, Schematic* p)
 
   }
 
+
   // BUG: don't use schematic.
-  if(Component* c=component(e)){
+  if(Command* cmd=command(e)){
+    p->loadCommand(Line, cmd);
+  }else if(Component* c=component(e)){
     if(!p->loadComponent(Line, c)) {
       QMessageBox::critical(0, QObject::tr("Error"),
 	  QObject::tr("Format Error:\nWrong 'component' line format!"));
@@ -1711,9 +1714,6 @@ Element* getComponentFromName(QString& Line, Schematic* p)
     c->recreate(0);
     c->obsolete_name_override_hack(cstr);
     c->tx = x;  c->ty = y;
-
-  }else if(Command* cmd=command(c)){
-    incomplete();
   }
 
   return e;

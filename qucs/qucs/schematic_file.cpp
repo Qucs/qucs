@@ -693,7 +693,10 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
     qDebug() << "loadline" << Line;
     Element* e = getComponentFromName(Line, this);
 
-    if(Component* c=component(e)){
+    if(Command* cc=command(e)){
+      qDebug() << "got command";
+      simpleInsertCommand(cc);
+    }else if(Component* c=component(e)){
 	
       if(List) {  // "paste" ?
 	int z;
@@ -704,8 +707,8 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
       }else{
 	simpleInsertComponent(c);
       }
-    }else if(Command* cc=command(e)){
-      simpleInsertCommand(cc);
+    }else{
+      incomplete();
     }
   }
 

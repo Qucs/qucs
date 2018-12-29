@@ -1004,4 +1004,111 @@ void Schematic::simpleInsertCommand(Command *c)
   DocComps.append(c);
 }
 
+Command* Schematic::loadCommand(const QString& _s, Command* c) const
+{
+  bool ok;
+  int  ttx, tty, tmp;
+  QString s = _s;
+
+  if(s.at(0) != '<'){
+    return NULL;
+  }else if(s.at(s.length()-1) != '>'){
+    return NULL;
+  }
+  s = s.mid(1, s.length()-2);   // cut off start and end character
+
+  QString label=s.section(' ',1,1);
+  c->setName(label);
+
+  QString n;
+  n  = s.section(' ',2,2);      // isActive
+  tmp = n.toInt(&ok);
+  if(!ok){
+    return NULL;
+  }
+  c->isActive = tmp & 3;
+
+  if(tmp & 4){
+    c->showName = false;
+  }else{
+    // use default, e.g. never show name for GND (bug?)
+  }
+
+  n  = s.section(' ',3,3);    // cx
+  c->cx = n.toInt(&ok);
+  if(!ok) return NULL;
+
+  n  = s.section(' ',4,4);    // cy
+  c->cy = n.toInt(&ok);
+  if(!ok) return NULL;
+
+  n  = s.section(' ',5,5);    // tx
+  ttx = n.toInt(&ok);
+  if(!ok) return NULL;
+
+  n  = s.section(' ',6,6);    // ty
+  tty = n.toInt(&ok);
+  if(!ok) return NULL;
+
+  assert(c);
+  if(!c->obsolete_model_hack().size()){
+    // avoid segfault in obsolete code...
+  }else if(c->obsolete_model_hack().at(0) != '.') {  // is simulation component (dc, ac, ...) ?
+
+    n  = s.section(' ',7,7);    // mirroredX
+    if(n.toInt(&ok) == 1){
+      c->mirrorX();
+    }
+    if(!ok) return NULL;
+
+    n  = s.section(' ',8,8);    // rotated
+    tmp = n.toInt(&ok);
+    if(!ok) return NULL;
+    if(c->rotated > tmp)  // neccessary because of historical flaw in ...
+      tmp += 4;        // ... components like "volt_dc"
+    for(int z=c->rotated; z<tmp; z++){
+      c->rotate();
+    }
+  }
+
+  c->tx = ttx;
+  c->ty = tty; // restore text position (was changed by rotate/mirror)
+
+  QString Model = c->obsolete_model_hack(); // BUG: don't use names
+
+  unsigned int z=0, counts = s.count('"');
+  // FIXME. use c->paramCount()
+
+  /// BUG FIXME. dont use Component parameter dictionary.
+  for(; tmp<=(int)counts/2; tmp++)
+    c->Props.append(new Property("p", "", true, " "));
+
+  // load all properties
+  Property *p1;
+  qDebug() << "load command props" << s;
+  for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
+    qDebug() << "load command props" << z;
+    z++;
+    n = s.section('"',z,z);    // property value
+    z++;
+    //qDebug() << "LOAD: " << p1->Description;
+
+    // not all properties have to be mentioned (backward compatible)
+    if(z > counts) {
+      if(p1->Description.isEmpty()){
+        c->Props.remove();    // remove if allocated in vain
+      }
+
+      return c;
+    }
+
+    p1->Value = n;
+
+    n  = s.section('"',z,z);    // display
+    p1->display = (n.at(1) == '1');
+  }
+
+  return c;
+}
+
 // vim:ts=8:sw=2:noet
