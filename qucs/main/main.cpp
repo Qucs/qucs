@@ -411,7 +411,7 @@ void createDocData() {
         nComps += 1;
 
 	assert(Mod->has_element());
-        Element *e = prechecked_cast<Element*>(Mod->element()->newOne()); // memory leak?!
+        Element *e = prechecked_cast<Element*>(Mod->element()->clone()); // memory leak?!
 	assert(e);
       // 	(Name, File, true);
         Name = e->name();
@@ -507,7 +507,7 @@ void createListComponentEntry(){
       int port = 0;
       foreach (Port *p, c->Ports) {
         Node *n = new Node(0,0);
-        n->Name="_net"+QString::number(port);
+        n->setName("_net"+QString::number(port));
         p->Connection = n;
         port +=1;
       }

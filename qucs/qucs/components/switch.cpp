@@ -67,19 +67,19 @@ Element* Switch::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 QString Switch::netlist() const
 {
-  QString s = Model+":"+Name;
+  QString s = Model+":"+name();
 
   // output all node names
-  s += " "+Ports.at(0)->Connection->Name;
-  s += " "+Ports.at(1)->Connection->Name;
+  s += " "+Ports.at(0)->Connection->name();
+  s += " "+Ports.at(1)->Connection->name();
 
   // output all properties
   Property *p2 = Props.first();
-  s += " "+p2->Name+"=\""+p2->Value+"\"";
+  s += " "+p2->name()+"=\""+p2->Value+"\"";
   p2 = Props.next();
-  s += " "+p2->Name+"=\"["+p2->Value+"]\"";
+  s += " "+p2->name()+"=\"["+p2->Value+"]\"";
   for(p2 = Props.next(); p2 != 0; p2 = Props.next())
-    s += " "+p2->Name+"=\""+p2->Value+"\"";
+    s += " "+p2->name()+"=\""+p2->Value+"\"";
 
   return s + '\n';
 }

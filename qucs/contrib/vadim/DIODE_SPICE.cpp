@@ -28,7 +28,7 @@ class DIODE_SPICE : public Component /* BUG: perhaps need a vadim baseclass */ {
 public:
   DIODE_SPICE();
   ~DIODE_SPICE();
-  Object* newOne() const;
+  Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
 protected:
   QString netlist();
@@ -84,9 +84,9 @@ DIODE_SPICE::~DIODE_SPICE()
 {
 }
 
-Object* DIODE_SPICE::newOne() const
+Component* DIODE_SPICE::newOne()
 {
-  return new DIODE_SPICE();
+  return new DIODE_SPICE(*this);
 }
 
 Element* DIODE_SPICE::info(QString& Name, char* &BitmapFile, bool getNewOne)
@@ -107,7 +107,7 @@ QString DIODE_SPICE::spice_netlist(bool)
 {
     QString s = ""; // TODO spicecompat::check_refdes(Name,SpiceModel);
     foreach(Port *p1, Ports) {
-        QString nam = p1->Connection->Name;
+        QString nam = p1->Connection->name();
         if (nam=="gnd") nam = "0";
         s += " "+ nam+" ";   // node names
     }

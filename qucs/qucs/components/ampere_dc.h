@@ -25,7 +25,9 @@ class Ampere_dc : public Component  {
 public:
   Ampere_dc();
   ~Ampere_dc();
-  Component* newOne();
+  Component* newOne() {
+	  return new Ampere_dc(*this);
+  }
   static Element* info(QString&, char* &, bool getNewOne=false);
 };
 

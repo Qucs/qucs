@@ -60,18 +60,18 @@ QString RS_FlipFlop::vhdlCode(int NumPorts)
   QString s = "";
   if(NumPorts <= 0) { // no truth table simulation ?
     QString td = Props.at(0)->Value;     // delay time
-    if(!misc::VHDL_Delay(td, Name)) return td; // time has not VHDL format
+    if(!misc::VHDL_Delay(td, name())) return td; // time has not VHDL format
     s = td;
   }
   s += ";\n";
 
   s = "  " +
-    Ports.at(2)->Connection->Name + " <= " +
-    Ports.at(0)->Connection->Name + " nor " +
-    Ports.at(3)->Connection->Name + s + "  " +
-    Ports.at(3)->Connection->Name + " <= " +
-    Ports.at(1)->Connection->Name + " nor " +
-    Ports.at(2)->Connection->Name + s + '\n';
+    Ports.at(2)->Connection->name() + " <= " +
+    Ports.at(0)->Connection->name() + " nor " +
+    Ports.at(3)->Connection->name() + s + "  " +
+    Ports.at(3)->Connection->name() + " <= " +
+    Ports.at(1)->Connection->name() + " nor " +
+    Ports.at(2)->Connection->name() + s + '\n';
   return s;
 }
 
@@ -88,12 +88,12 @@ QString RS_FlipFlop::verilogCode(int NumPorts)
   
   QString l = "";
 
-  QString s = Ports.at(1)->Connection->Name;
-  QString r = Ports.at(0)->Connection->Name;
-  QString q = Ports.at(2)->Connection->Name;
-  QString b = Ports.at(3)->Connection->Name;
+  QString s = Ports.at(1)->Connection->name();
+  QString r = Ports.at(0)->Connection->name();
+  QString q = Ports.at(2)->Connection->name();
+  QString b = Ports.at(3)->Connection->name();
   
-  l = "\n  // " + Name + " RS-flipflop\n" +
+  l = "\n  // " + name() + " RS-flipflop\n" +
     "  assign" + t + q + " = ~(" + r + " | " + b + ");\n" +
     "  assign" + t + b + " = ~(" + s + " | " + q + ");\n\n";
   return l;

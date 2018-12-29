@@ -24,7 +24,7 @@ class Volt_dc : public Component  {
 public:
   Volt_dc();
   ~Volt_dc();
-  Component* newOne() const {return new Volt_dc(*this);}
+  Component* newOne() {return new Volt_dc(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 } VS;
 

@@ -25,7 +25,9 @@ class symTrafo : public Component  {
 public:
   symTrafo();
   ~symTrafo();
-  Component* newOne();
+  Component* newOne() {
+	  return new symTrafo(*this);
+  }
   static Element* info(QString&, char* &, bool getNewOne=false);
 };
 

@@ -30,7 +30,7 @@ public:
   { untested(); }
  ~Resistor() {};
   // return new Resistor(Props.getLast()->Value != "US"); ?!
-  Component* newOne() const { untested();
+  Component* newOne() { untested();
 	  return new Resistor(*this);
   }
   static Element* info(QString&, char* &, bool getNewOne=false);

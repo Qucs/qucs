@@ -26,7 +26,7 @@ class SubCirPort : public MultiViewComponent  {
 public:
   SubCirPort();
  ~SubCirPort() {};
-  Component* newOne() const{return new SubCirPort(*this);}
+  Component* newOne() {return new SubCirPort(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 
 protected:
@@ -128,8 +128,8 @@ QString SubCirPort::vhdlCode(int)
   // Insert dummy buffer to avoid reading from an output port.
   QString s = "  net_out";
   Node *pn = Ports.first()->Connection;
-  s += pn->Name + " <= ";
-  s += pn->Name + ";\n";
+  s += pn->name() + " <= ";
+  s += pn->name() + ";\n";
   return s;
 }
 

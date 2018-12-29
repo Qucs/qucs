@@ -1268,7 +1268,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
       qDebug() << "   => recast = Comp;" << Comp->name() << "filename: " << filename;
     }else{
 	  // static component is used, so create a new one
-	  Comp = prechecked_cast<Component*>(Comp->newOne());
+	  Comp = prechecked_cast<Component*>(Comp->clone());
     }
 	rot -= Comp->rotated;
 	rot &= 3;
@@ -1331,7 +1331,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
     Doc->Paintings->append((Painting*)selElem);
     ((Painting*)selElem)->Bounding(x1,y1,x2,y2);
     //Doc->enlargeView(x1, y1, x2, y2);
-    selElem = prechecked_cast<Element*>(((Painting*)selElem)->newOne());
+    selElem = prechecked_cast<Element*>(selElem->clone());
     assert(selElem);
 
     Doc->viewport()->update();

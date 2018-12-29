@@ -187,16 +187,6 @@ void Module::intoCategory(std::string const& cat, Module * m)
 #define REGISTER_MOD_1(cat,val) \
   guiRegisterElement (cat, new val())
 
-// BUG. this does not work
-// #define REGISTER_MOD_2(cat,val,inf1,inf2) \
-//   registerElementToGui (cat, val::inf1()); \
-//   registerElementToGui (cat, val::inf2())
-// #define REGISTER_MOD_3(cat,val,inf1,inf2,inf3) \
-//   registerElementToGui (cat, val::inf1()); \
-//   registerElementToGui (cat, val::inf2()); \
-//   registerElementToGui (cat, val::inf3())
-
-
 // find component. find category. pass it on.
 #if 0
 static void REGISTER_COMP_1(std::string const& cat, std::string const& name)

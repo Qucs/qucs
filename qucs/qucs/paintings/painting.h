@@ -30,11 +30,6 @@ public:
   virtual void getCenter(int&, int &) {};
   virtual bool getSelected(float, float, float) { return false; };
 
-  virtual Object* clone()const {
-	  Object* o=const_cast<Object*>((Object const*)this);
-	  return o->newOne();
-  }
-
 public: // legacy anonymous stuff.
   virtual void setArgs2Int(int, int) {
 	  incomplete();

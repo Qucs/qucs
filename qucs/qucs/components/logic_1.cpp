@@ -73,9 +73,9 @@ QString logic_1::vhdlCode( int )
 {
   QString s = "";
 
-  QString L1 = Ports.at(0)->Connection->Name;
+  QString L1 = Ports.at(0)->Connection->name();
  
-  s = "\n  " + Name + ":process\n" +
+  s = "\n  " + name() + ":process\n" +
      "  begin\n    " +
      L1 + " <= '1';\n" + 
      "  end process;\n";
@@ -87,7 +87,7 @@ QString logic_1::verilogCode( int )
    
   QString l = "";
 
-  QString L1 = Ports.at(0)->Connection->Name;
+  QString L1 = Ports.at(0)->Connection->name();
   
   QString v = "net_reg" + Name + L1;
   

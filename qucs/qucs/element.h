@@ -96,13 +96,17 @@ struct Text {
   bool	  over, under;      // text attributes
 };
 
-struct Property {
+struct Property // : public Object
+{
   Property(const QString& _Name="", const QString& _Value="",
 	   bool _display=false, const QString& Desc="")
 	 : Name(_Name), Value(_Value), display(_display), Description(Desc) {};
   QString Name, Value;
   bool    display;   // show on schematic or not ?
   QString Description;
+
+  QString const& name() const{ return Name; }
+  QString const& value() const{ return Value; }
 };
 
 
@@ -167,12 +171,7 @@ public:
   virtual void tAC(QTextStream&, Schematic*, QStringList&, int&, int,
 		  NetLang const&){untested();}
 public:
-  // should be pure, but several elments are incomplete.
-  virtual Object* newOne()const{
-	  incomplete();
-	  qDebug() << label() << "lacks clone\n";
-	  return NULL;
-  }
+  virtual Element* clone()const = 0;
 //  { unreachable(); return 0 /*NULL, actually*/;}
   virtual QString const& name() const{return Name;}
   void setName(QString const& n){ Name = n; }
@@ -192,10 +191,7 @@ protected: //BUG
 }; // Element
 
 
-/** \class Conductor
-  * \brief label for Node and Wire classes
-  *
-  */
+// nodes and wires?
 class Conductor : public Element {
 public:
   WireLabel *Label;

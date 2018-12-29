@@ -34,8 +34,8 @@ public:
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
-  Object* newOne() const {return new GraphicText(*this);}
-  Object* clone() const {return new GraphicText(*this);}
+  Element* newOne() const {return new GraphicText(*this);}
+  Element* clone() const {return new GraphicText(*this);}
 
   static Element* info(QString&, char* &, bool getNewOne=false);
   bool load(const QString&);
