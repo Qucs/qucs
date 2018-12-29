@@ -29,7 +29,7 @@ class Component;
 #include <QTextStream>
 #include <QDebug>
 #include "object.h"
-#define stream_t QTextStream
+#include "language.h"
 
 /*!
  * class to provide simulator duties
@@ -46,28 +46,10 @@ public:
  * class to provide language dependent functionality, such as netlisting
  * FIXME (later): don't use Qt types here. has nothing to do with GUI
  */
-class NetLang : public Object{
+class NetLang : public DocumentLanguage {
 public:
   virtual ~NetLang(){}
-  virtual void printItem(Element const*, stream_t&) const;
-private: //called by printItem
-  virtual void printPainting(Painting const*, stream_t&) const {incomplete();}
-  virtual void printDiagram(Symbol const*, stream_t&) const {incomplete();}
-  virtual void printSymbol(Symbol const*, stream_t&) const {incomplete();}
-  virtual void printCommand(Command const*, stream_t&) const {incomplete();}
 };
-
-inline void NetLang::printItem(Element const* c, stream_t& s) const
-{
-  assert(c);
-  if (auto C=dynamic_cast<const Command*>(c)) {
-    printCommand(C, s);
-  }else if (auto C=dynamic_cast<const Symbol*>(c)) {
-    printSymbol(C, s);
-  }else{
-    incomplete();
-  }
-}
 
 
 #define QUCS_SIM_H__

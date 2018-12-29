@@ -7,7 +7,7 @@
 #define QUCS_SCHEMATIC_LANG_H
 
 #include "object.h"
-#include "qucsdoc.h"
+#include "language.h"
 
 #define SchematicModel Schematic // fix later.
 class SchematicModel;
