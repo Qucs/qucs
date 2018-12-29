@@ -40,6 +40,14 @@ public:
   void setName(const QString& Name_);
   void setHighlighted (bool newval) { isHighlighted = newval; };
 
+  Component* newOne(){
+	  incomplete();
+	  return nullptr;
+  }
+  Element* clone()const{
+	  incomplete();
+	  return nullptr;
+  }
 
   Conductor *pOwner;  // Wire or Node where label belongs to
   QString Name, initValue;

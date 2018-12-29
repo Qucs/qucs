@@ -112,14 +112,14 @@ QString mux4to1::vhdlCode( int )
   if(!misc::VHDL_Delay(td, Name)) return td; // time has not VHDL format
   td += ";\n";
 
-  QString En = Ports.at(0)->Connection->Name;
-  QString A  = Ports.at(1)->Connection->Name;
-  QString B  = Ports.at(2)->Connection->Name;
-  QString D0 = Ports.at(3)->Connection->Name;
-  QString D1 = Ports.at(4)->Connection->Name;
-  QString D2 = Ports.at(5)->Connection->Name;
-  QString D3 = Ports.at(6)->Connection->Name;
-  QString y  = Ports.at(7)->Connection->Name;
+  QString En = Ports.at(0)->Connection->name();
+  QString A  = Ports.at(1)->Connection->name();
+  QString B  = Ports.at(2)->Connection->name();
+  QString D0 = Ports.at(3)->Connection->name();
+  QString D1 = Ports.at(4)->Connection->name();
+  QString D2 = Ports.at(5)->Connection->name();
+  QString D3 = Ports.at(6)->Connection->name();
+  QString y  = Ports.at(7)->Connection->name();
 
   s = "\n  " + Name + ":process (" + En + ", " +  A + ", " + B + ", " +
                               D0 + ", " +  D1 + ", " + D2 + ", " + D3 + ")\n"  +
@@ -135,20 +135,20 @@ QString mux4to1::vhdlCode( int )
 QString mux4to1::verilogCode( int )
 {
   QString td = Props.at(1)->Value;        // delay time
-  if(!misc::Verilog_Delay(td, Name)) return td; // time does not have VHDL format
+  if(!misc::Verilog_Delay(td, name())) return td; // time does not have VHDL format
   
   QString l = "";
 
-  QString En = Ports.at(0)->Connection->Name;
-  QString A  = Ports.at(1)->Connection->Name;
-  QString B  = Ports.at(2)->Connection->Name;
-  QString D0 = Ports.at(3)->Connection->Name;
-  QString D1 = Ports.at(4)->Connection->Name;
-  QString D2 = Ports.at(5)->Connection->Name;
-  QString D3 = Ports.at(6)->Connection->Name;
-  QString y  = Ports.at(7)->Connection->Name;
+  QString En = Ports.at(0)->Connection->name();
+  QString A  = Ports.at(1)->Connection->name();
+  QString B  = Ports.at(2)->Connection->name();
+  QString D0 = Ports.at(3)->Connection->name();
+  QString D1 = Ports.at(4)->Connection->name();
+  QString D2 = Ports.at(5)->Connection->name();
+  QString D3 = Ports.at(6)->Connection->name();
+  QString y  = Ports.at(7)->Connection->name();
 
-  QString v = "net_reg" + Name + y;
+  QString v = "net_reg" + name() + y;
   
   l = "\n  // " + Name + " 4to1 mux\n" +
       "  assign  " + y + " = " + v + ";\n" +

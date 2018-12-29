@@ -27,7 +27,7 @@ public:
   PSDiagram(int _cx=0, int _cy=0, bool _polarUp=true);
   ~PSDiagram();
 
-  Diagram* newOne() const {return new PSDiagram(*this);}
+  Element* clone() const {return new PSDiagram(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_sp(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();

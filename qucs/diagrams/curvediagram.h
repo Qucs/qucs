@@ -26,7 +26,7 @@ public:
   CurveDiagram(int _cx=0, int _cy=0);
  ~CurveDiagram();
 
-  Diagram* newOne() const{ return new CurveDiagram(); }
+  Element* clone() const{ return new CurveDiagram(); }
 
   static Element* info(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();

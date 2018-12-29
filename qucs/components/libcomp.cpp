@@ -45,7 +45,7 @@ LibComp::LibComp()
 
 // ---------------------------------------------------------------------
 // BUG: too complicated.
-Component* LibComp::newOne() const
+Component* LibComp::newOne()
 {
   LibComp *p = new LibComp();
   p->Props.first()->Value =
@@ -285,7 +285,7 @@ QString LibComp::netlist() const
 
   // output all node names
   foreach(Port *p1, Ports)
-    s += " "+p1->Connection->Name;   // node names
+    s += " "+p1->Connection->name();   // node names
 
   // output property
   s += " Type=\""+createType()+"\"";   // type for subcircuit
@@ -305,10 +305,10 @@ QString LibComp::verilogCode(int)
   // output all node names
   QListIterator<Port *> iport(Ports);
   Port *pp = iport.next();
-  if(pp)  s += pp->Connection->Name;
+  if(pp)  s += pp->Connection->name();
   while (iport.hasNext()) {
     pp = iport.next();
-    s += ", "+pp->Connection->Name;   // node names
+    s += ", "+pp->Connection->name();   // node names
   }
 
   s += ");\n";
@@ -323,10 +323,10 @@ QString LibComp::vhdlCode(int)
   // output all node names
   QListIterator<Port *> iport(Ports);
   Port *pp = iport.next();
-  if(pp)  s += pp->Connection->Name;
+  if(pp)  s += pp->Connection->name();
   while (iport.hasNext()) {
     pp = iport.next();
-    s += ", "+pp->Connection->Name;   // node names
+    s += ", "+pp->Connection->name();   // node names
   }
 
   s += ");\n";

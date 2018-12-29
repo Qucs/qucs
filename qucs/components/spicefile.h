@@ -33,7 +33,7 @@ public:
 public:
   SpiceFile();
  ~SpiceFile() {};
-  Object* newOne() const {
+  Component* newOne() {
 	  // BUG. {return new SpiceFile(*this);}
 	SpiceFile *p = new SpiceFile();
 	p->recreate(0);   // createSymbol() is NOT called in constructor !!!

@@ -871,7 +871,7 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   Element const* e = mod->element();
   if (e) {
     // static component
-    view->selElem = prechecked_cast<Element*>(e->newOne()); // BUG. memory leak
+    view->selElem = prechecked_cast<Element*>(e->clone()); // BUG. memory leak
     assert(view->selElem);
   } else {
     incomplete();
@@ -2664,7 +2664,7 @@ void QucsApp::slot2PortMatching()
   QFileInfo Info(Doc->DocName);
   DataSet = Info.path()+QDir::separator()+DataSet;
 
-  Diagram *Diag = new Diagram();
+  Diagram *Diag = new Diagram(); //?! which one?
 
   // FIXME: use normal Diagrams.
   Graph *pg = new Graph(Diag, "S[1,1]");

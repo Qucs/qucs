@@ -97,11 +97,6 @@ Mutual2::~Mutual2()
 {
 }
 
-Component* Mutual2::newOne()
-{
-  return new Mutual2();
-}
-
 Element* Mutual2::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("3 Mutual Inductors");

@@ -95,11 +95,6 @@ symTrafo::~symTrafo()
 {
 }
 
-Component* symTrafo::newOne()
-{
-  return new symTrafo();
-}
-
 Element* symTrafo::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("symmetric Transformer");

@@ -58,8 +58,8 @@ void QucsLang::printCommand(Command const* c, QTextStream& s) const
       // output all node names
 
       for(auto p2 : c->params()) {
-	if(p2->Name != "Symbol") { // hack.
-	  s << " " << p2->Name << "=\"" << p2->Value << "\"";
+	if(p2->name() != "Symbol") { // hack.
+	  s << " " << p2->name() << "=\"" << p2->Value << "\"";
 	}
       }
       s << '\n';
@@ -85,10 +85,10 @@ void QucsLang::printInstance(Component const* c, QTextStream& s) const
     int z=0;
     QListIterator<Port *> iport(c->ports());
     Port *pp = iport.next();
-    QString Node1 = pp->Connection->Name;
+    QString Node1 = pp->Connection->name();
     while (iport.hasNext()){
       s << "R:" << c->label() << "." << QString::number(z++) << " "
-	<< Node1 << " " << iport.next()->Connection->Name << " R=\"0\"\n";
+	<< Node1 << " " << iport.next()->Connection->name() << " R=\"0\"\n";
     }
 //  }else if(Subcircuit const* sub=dynamic_cast<Subcircuit const*>(c)){
 //    incomplete();
@@ -105,12 +105,12 @@ void QucsLang::printInstance(Component const* c, QTextStream& s) const
 
       // output all node names
       for(Port *p1 : c->ports()){
-	s << " " << p1->Connection->Name;
+	s << " " << p1->Connection->name();
       }
 
       for(auto p2 : c->params()) {
-	if(p2->Name != "Symbol") { // hack.
-	  s << " " << p2->Name << "=\"" << p2->Value << "\"";
+	if(p2->name() != "Symbol") { // hack.
+	  s << " " << p2->name() << "=\"" << p2->Value << "\"";
 	}
       }
       s << '\n';

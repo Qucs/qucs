@@ -95,13 +95,18 @@ vacomponent::vacomponent(QString filename)
  * \return \a Component based on the \p filename
  *  Used by mouseactions to drop new items into the schematic.
  */
-Component *vacomponent::newOne(QString filename)
+Component *vacomponent::newOne()
 {
+	incomplete();
+	return nullptr;
+
+#if 0 // does not add up.
   vacomponent * p = new vacomponent(filename);
   if (Props.count())
       p->Props.getFirst()->Value = Props.getFirst()->Value;
   p->recreate(0);
   return p;
+#endif
 
 }
 

@@ -37,6 +37,9 @@ public:
   QString get_VHDL_Code(int);
   QString get_Verilog_Code(int);
 private:
+  Component* newOne(){ unreachable();
+	  return nullptr;
+  }
   void    paint(ViewPainter*);
 public:
   void    paintScheme(Schematic*) const;

@@ -78,23 +78,23 @@ QString JK_FlipFlop::vhdlCode(int NumPorts)
   s += ";\n";
 
   s = "  " + Name + " : process (" +
-      Ports.at(5)->Connection->Name + ", " +
-      Ports.at(6)->Connection->Name + ", " +
-      Ports.at(4)->Connection->Name + ")\n  begin\n    if (" +
-      Ports.at(6)->Connection->Name + "='1') then  " +
-      Ports.at(2)->Connection->Name + " <= '0'" + s +"    elsif (" +
-      Ports.at(5)->Connection->Name + "='1') then  " +
-      Ports.at(2)->Connection->Name + " <= '1'" + s +"    elsif (" +
-      Ports.at(4)->Connection->Name + "='1' and " +
-      Ports.at(4)->Connection->Name + "'event) then\n      " +
-      Ports.at(2)->Connection->Name + " <= (" +
-      Ports.at(0)->Connection->Name + " and not " +
-      Ports.at(2)->Connection->Name + ") or (not " +
-      Ports.at(1)->Connection->Name + " and " +
-      Ports.at(2)->Connection->Name + ")" + s +
+      Ports.at(5)->Connection->name() + ", " +
+      Ports.at(6)->Connection->name() + ", " +
+      Ports.at(4)->Connection->name() + ")\n  begin\n    if (" +
+      Ports.at(6)->Connection->name() + "='1') then  " +
+      Ports.at(2)->Connection->name() + " <= '0'" + s +"    elsif (" +
+      Ports.at(5)->Connection->name() + "='1') then  " +
+      Ports.at(2)->Connection->name() + " <= '1'" + s +"    elsif (" +
+      Ports.at(4)->Connection->name() + "='1' and " +
+      Ports.at(4)->Connection->name() + "'event) then\n      " +
+      Ports.at(2)->Connection->name() + " <= (" +
+      Ports.at(0)->Connection->name() + " and not " +
+      Ports.at(2)->Connection->name() + ") or (not " +
+      Ports.at(1)->Connection->name() + " and " +
+      Ports.at(2)->Connection->name() + ")" + s +
       "    end if;\n  end process;\n  " +
-      Ports.at(3)->Connection->Name + " <= not " +
-      Ports.at(2)->Connection->Name + ";\n\n";
+      Ports.at(3)->Connection->name() + " <= not " +
+      Ports.at(2)->Connection->name() + ";\n\n";
   return s;
 }
 
@@ -104,22 +104,22 @@ QString JK_FlipFlop::verilogCode(int NumPorts)
   QString t = "";
   if(NumPorts <= 0) { // no truth table simulation ?
     QString td = Props.at(0)->Value;        // delay time
-    if(!misc::Verilog_Delay(td, Name)) return td; // time has not VHDL format
+    if(!misc::Verilog_Delay(td, name())) return td; // time has not VHDL format
     if(!td.isEmpty()) t = "   " + td + ";\n";
   }
 
   QString l = "";
 
-  QString s = Ports.at(5)->Connection->Name;
-  QString r = Ports.at(6)->Connection->Name;
-  QString j = Ports.at(0)->Connection->Name;
-  QString k = Ports.at(1)->Connection->Name;
-  QString q = Ports.at(2)->Connection->Name;
-  QString b = Ports.at(3)->Connection->Name;
-  QString c = Ports.at(4)->Connection->Name;
-  QString v = "net_reg" + Name + q;
+  QString s = Ports.at(5)->Connection->name();
+  QString r = Ports.at(6)->Connection->name();
+  QString j = Ports.at(0)->Connection->name();
+  QString k = Ports.at(1)->Connection->name();
+  QString q = Ports.at(2)->Connection->name();
+  QString b = Ports.at(3)->Connection->name();
+  QString c = Ports.at(4)->Connection->name();
+  QString v = "net_reg" + name() + q;
   
-  l = "\n  // " + Name + " JK-flipflop\n" +
+  l = "\n  // " + name() + " JK-flipflop\n" +
     "  assign  " + q + " = " + v + ";\n" +
     "  assign  " + b + " = ~" + q + ";\n" +
     "  reg     " + v + " = 0;\n" +

@@ -61,7 +61,11 @@ public:
   Diagram(int _cx=0, int _cy=0);
   virtual ~Diagram();
 
-  // virtual Object* newOne(); from Element
+  Element* clone()const{
+	  // BUG. trying to instanciate Diagram, which is supposed to be pure.
+	  unreachable();
+	  return nullptr;
+  }
   virtual int  calcDiagram() { return 0; };
   virtual void calcCoordinate
                (const double*, const double*, const double*, float*, float*, Axis const*) const {};

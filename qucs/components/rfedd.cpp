@@ -79,27 +79,27 @@ Element* RFedd::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 QString RFedd::netlist() const
 {
-  QString s = Model+":"+Name;
+  QString s = Model+":"+name();
   QString e = "\n";
   QString n, p;
 
   // output all node names
   foreach(Port *p1, Ports)
-    s += " "+p1->Connection->Name;   // node names
+    s += " "+p1->Connection->name();   // node names
 
   // output all properties
   Property *p2;
   p2 = Props.at(0);
-  s += " "+p2->Name+"=\""+p2->Value+"\"";
+  s += " "+p2->name()+"=\""+p2->Value+"\"";
   p = p2->Value;
   p2 = Props.at(2);
-  s += " "+p2->Name+"=\""+p2->Value+"\"";
+  s += " "+p2->name()+"=\""+p2->Value+"\"";
   p2 = Props.at(3);
   while(p2) {
-    n = p2->Name.mid(1);
-    s += " "+p2->Name+"=\""+Name+"."+p+n+"\"";
-    e += "  Eqn:Eqn"+Name+p2->Name+" "+
-      Name+"."+p+n+"=\""+p2->Value+"\" Export=\"no\"\n";
+    n = p2->name().mid(1);
+    s += " "+p2->name()+"=\""+name()+"."+p+n+"\"";
+    e += "  Eqn:Eqn"+name()+p2->name()+" "+
+      name()+"."+p+n+"=\""+p2->Value+"\" Export=\"no\"\n";
     p2 = Props.next();
   }
 
@@ -129,7 +129,8 @@ void RFedd::createSymbol()
   if (NumProps < No * No) { // number of ports was increased, add properties
     for(i = 0; i < NumProps; i++) {
       tmp=QString::number((i)/No+1)+QString::number((i)%No+1);
-      Props.at(i+3)->Name="P"+tmp;
+		incomplete(); // BUG: cannot change a parameter name.
+      // Props.at(i+3)->setName("P"+tmp);
       Props.at(i+3)->Description=QObject::tr("parameter equation") + " " +tmp;
     }
     for(i = NumProps; i < No * No; i++) {
@@ -143,7 +144,8 @@ void RFedd::createSymbol()
     }
     for(i = 0; i < No * No; i++) {
       tmp=QString::number((i)/No+1)+QString::number((i)%No+1);
-      Props.at(i+3)->Name="P"+tmp;
+		incomplete(); // BUG
+      // Props.at(i+3)->name()="P"+tmp;
       Props.at(i+3)->Description=QObject::tr("parameter equation") + " " +tmp;
     }
   }

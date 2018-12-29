@@ -76,27 +76,27 @@ Element* RFedd2P::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 QString RFedd2P::netlist() const
 {
-  QString s = "RFEDD:"+Name;
+  QString s = "RFEDD:"+name();
   QString e = "\n";
   QString n, p;
 
   // output all node names
   foreach(Port *p1, Ports)
-    s += " "+p1->Connection->Name;   // node names
+    s += " "+p1->Connection->name();   // node names
 
   // output all properties
   Property *p2;
   p2 = Props.at(0);
-  s += " "+p2->Name+"=\""+p2->Value+"\"";
+  s += " "+p2->name()+"=\""+p2->Value+"\"";
   p = p2->Value;
   p2 = Props.at(1);
-  s += " "+p2->Name+"=\""+p2->Value+"\"";
+  s += " "+p2->name()+"=\""+p2->Value+"\"";
   p2 = Props.at(2);
   while(p2) {
-    n = p2->Name.mid(1);
-    s += " "+p2->Name+"=\""+Name+"."+p+n+"\"";
-    e += "  Eqn:Eqn"+Name+p2->Name+" "+
-      Name+"."+p+n+"=\""+p2->Value+"\" Export=\"no\"\n";
+    n = p2->name().mid(1);
+    s += " "+p2->name()+"=\""+name()+"."+p+n+"\"";
+    e += "  Eqn:Eqn"+name()+p2->name()+" "+
+      name()+"."+p+n+"=\""+p2->Value+"\" Export=\"no\"\n";
     p2 = Props.next();
   }
 

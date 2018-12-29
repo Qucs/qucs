@@ -27,7 +27,7 @@ class vProbe : public Component  {
 public:
   vProbe();
  ~vProbe();
-  Object* newOne() const;
+  Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
 }D;
 
@@ -76,7 +76,7 @@ vProbe::~vProbe()
 {
 }
 
-Object* vProbe::newOne() const
+Component* vProbe::newOne()
 {
   return new vProbe();
 }
