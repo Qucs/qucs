@@ -22,14 +22,14 @@
 class Diagram;
 class Symbol;
 class Simulator;
-class NetLang;
+class DocumentLanguage;
 class Command;
 class Painting;
 
 extern INTERFACE Dispatcher<Diagram> diagram_dispatcher;
 extern INTERFACE Dispatcher<Symbol> symbol_dispatcher;
 extern INTERFACE Dispatcher<Simulator> simulator_dispatcher;
-extern INTERFACE Dispatcher<NetLang> netlang_dispatcher;
+extern INTERFACE Dispatcher<DocumentLanguage> doclang_dispatcher;
 extern INTERFACE Dispatcher<Command> command_dispatcher;
 extern INTERFACE Dispatcher<Painting> painting_dispatcher;
 

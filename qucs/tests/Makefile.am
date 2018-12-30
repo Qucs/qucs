@@ -54,6 +54,7 @@ TESTS = \
 SH_TESTS = \
 	helloworld.sh \
 	doesnotexist.sh \
+	lce.sh \
 	netlist.sh \
 	run.sh
 
@@ -157,6 +158,8 @@ dist-hook:
 
 
 EXTRA_DIST = \
+	entries.ref \
+	resonance.sch.ref \
 	prj_log_compiler \
 	$(SH_TESTS)
 

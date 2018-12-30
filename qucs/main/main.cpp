@@ -475,12 +475,25 @@ void createDocData() {
  * Prints the default component entries format for:
  *  - Qucs schematic
  *  - Qucsator netlist
+ *
+ *  ... not so sure what this is about.
  */
-void createListComponentEntry(){
-
-  Module::registerModules ();
-  QStringList cats = Category::getCategories ();
   // table for quick reference, schematic and netlist entry
+void createListComponentEntry()
+{ untested();
+
+  QStringList cats = Category::getCategories ();
+  QFile data("/dev/stdout");
+  data.open (QFile::WriteOnly | QFile::Truncate);
+  QTextStream s(&data);
+
+  auto lang=doclang_dispatcher["leg_sch"];
+  assert(lang);
+  auto qucsatorlang=doclang_dispatcher["qucsator"];
+  assert(qucsatorlang);
+  auto verilog=doclang_dispatcher["verilog"];
+  // assert(verilog); it's optional!
+
   foreach(QString category, cats) {
 
     QList<Module *> Comps;
@@ -493,15 +506,20 @@ void createListComponentEntry(){
     QString Name;
 
     foreach (Module *Mod, Comps) {
+      qDebug() << "some module";
       Element const *e = Mod->element();
       Component const *c = prechecked_cast<Component const*>(e);
       assert(c);
 
       // FIXME: cleanup
-      QTextStream s;
-      c->getSchematic()->saveComponent(s, c);
-      QString qucsEntry = *(s.string());
-      fprintf(stdout, "%s; qucs    ; %s\n", c->obsolete_model_hack().toAscii().data(), qucsEntry.toAscii().data());
+
+
+      s << "=====" << c->type() << "=========\n";
+      lang->printItem(c, s);
+      s << "\n";
+
+     // QString qucsEntry = s.string();
+     // fprintf(stdout, "%s; qucs    ; %s\n", c->obsolete_model_hack().toAscii().data(), qucsEntry.toAscii().data());
 
       // add dummy ports/wires, avoid segfault
       int port = 0;
@@ -511,15 +529,23 @@ void createListComponentEntry(){
         p->Connection = n;
         port +=1;
       }
+      if(verilog){
+	verilog->printItem(c, s);
+	// s << "\n"; included in verilog line.
+      }else{
+      }
 
       // skip Subcircuit, segfault, there is nothing to netlist
       if (c->obsolete_model_hack() == "Sub" or c->obsolete_model_hack() == ".Opt") {
         fprintf(stdout, "WARNING, qucsator netlist not generated for %s\n\n", c->obsolete_model_hack().toAscii().data());
         continue;
+      }else{
+	qucsatorlang->printItem(c, s);
+	// s << "\n"; // included.
       }
 
-      QString qucsatorEntry = c->getNetlist();
-      fprintf(stdout, "%s; qucsator; %s\n", c->obsolete_model_hack().toAscii().data(), qucsatorEntry.toAscii().data());
+      // QString qucsatorEntry = c->getNetlist();
+      // fprintf(stdout, "%s; qucsator; %s\n", c->obsolete_model_hack().toAscii().data(), qucsatorEntry.toAscii().data());
       } // module
     } // category
 }
@@ -842,8 +868,11 @@ int main(int argc, char *argv[])
     else if(!strcmp(argv[i], "-doc")) {
       createDocData();
       return 0;
-    }
-    else if(!strcmp(argv[i], "-list-entries")) {
+    } else if(!strcmp(argv[i], "-list-entries")) {
+      incomplete(); // don't use.
+      createListComponentEntry();
+      return 0;
+    } else if(!strcmp(argv[i], "--list-entries")) {
       createListComponentEntry();
       return 0;
     }
@@ -853,8 +882,10 @@ int main(int argc, char *argv[])
     }
   }
 
-  NetLang const* netlang;
-  if((netlang = netlang_dispatcher[netlang_name])){
+  DocumentLanguage const* dl = doclang_dispatcher[netlang_name];
+  NetLang const* netlang = dynamic_cast<NetLang const*>(dl);
+
+  if(netlang){
     // just use it.
   }else if(auto sd = simulator_dispatcher[netlang_name]){
     // ask a simulator.

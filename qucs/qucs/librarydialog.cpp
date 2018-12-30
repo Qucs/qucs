@@ -427,9 +427,11 @@ void LibraryDialog::slotSave()
 
 // BUG: where is the language specified?
 // BUG: wrong place for header here
-	auto nlp=netlang_dispatcher["qucsator"];
+	auto nlp=doclang_dispatcher["qucsator"];
 	assert(nlp);
-	NetLang const& nl=*nlp;
+	NetLang const* n=prechecked_cast<NetLang const*>(nlp);
+	assert(n);
+	NetLang const& nl=*n;
 
   QTextStream Stream;
   Stream.setDevice(&LibFile);

@@ -1,0 +1,48 @@
+=====Vac=========
+<Vac V 1 0 0 18 -26 0 1 "1 V" 1 "1 GHz" 0 "0" 0 "0" 0>
+Vac #(.U(1 V), .f(1 GHz), .Phase(0), .Theta(0)) V(_net0, _net1);
+Vac:V _net0 _net1 U="1 V" f="1 GHz" Phase="0" Theta="0"
+=====Port=========
+<Port P 1 0 0 -23 12 0 0 "1" 1 "analog" 0>
+Port #(.Num(1), .Type(analog)) P(_net0);
+Port:P _net0 Num="1" Type="analog"
+=====R=========
+<R Resistor 1 0 0 -26 15 0 0 "50 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+R #(.R(50 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) Resistor(_net0, _net1);
+R:Resistor _net0 _net1 R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+=====L=========
+<L L 1 0 0 -26 10 0 0 "1 nH" 1 "" 0>
+L #(.L(1 nH), .I()) L(_net0, _net1);
+L:L _net0 _net1 L="1 nH" I=""
+=====C=========
+<C C 1 0 0 -26 17 0 0 "1 pF" 1 "" 0 "neutral" 0>
+C #(.C(1 pF), .V(), .Symbol(neutral)) C(_net0, _net1);
+C:C _net0 _net1 C="1 pF" V=""
+=====GND=========
+<GND * 5 0 0 0 0 0 0>
+GND #() (_net0);
+GND: _net0
+=====VProbe=========
+<VProbe Pr 1 0 0 28 -31 0 0>
+VProbe #() Pr(_net0, _net1);
+VProbe:Pr _net0 _net1
+=====VCCS=========
+<VCCS SRC 1 0 0 -26 34 0 0 "1 S" 1 "0" 0>
+VCCS #(.G(1 S), .T(0)) SRC(_net0, _net1, _net2, _net3);
+VCCS:SRC _net0 _net1 _net2 _net3 G="1 S" T="0"
+=====Vrect=========
+<Vrect V 1 0 0 18 -26 0 1 "1 V" 1 "1 ms" 1 "1 ms" 1 "1 ns" 0 "1 ns" 0 "0 ns" 0>
+Vrect #(.U(1 V), .TH(1 ms), .TL(1 ms), .Tr(1 ns), .Tf(1 ns), .Td(0 ns)) V(_net0, _net1);
+Vrect:V _net0 _net1 U="1 V" TH="1 ms" TL="1 ms" Tr="1 ns" Tf="1 ns" Td="0 ns"
+=====TR=========
+
+//
+.TR: Type="lin" Start="0" Stop="1 ms" Points="11" IntegrationMethod="Trapezoidal" Order="2" InitialStep="1 ns" MinStep="1e-16" MaxIter="150" reltol="0.001" abstol="1 pA" vntol="1 uV" Temp="26.85" LTEreltol="1e-3" LTEabstol="1e-6" LTEfactor="1" Solver="CroutLU" relaxTSR="no" initialDC="yes" MaxStep="0"
+=====AC=========
+
+//
+.AC: Type="lin" Start="1 GHz" Stop="10 GHz" Points="19" Noise="no"
+=====SW=========
+
+//
+.SW: Sim="" Type="lin" Param="R1" Start="5 Ohm" Stop="50 Ohm" Points="20"
