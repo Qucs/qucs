@@ -1,22 +1,36 @@
 /***************************************************************************
                           dc_sim.cpp  -  description
                              -------------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2018 Felix Salfelder / QUCS
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "dc_sim.h"
+#include "command.h"
 #include "qucs.h"
 #include "globals.h"
+#include "module.h"
+
+namespace{
+
+class DC_Sim : public Command  {
+public:
+  DC_Sim();
+  ~DC_Sim();
+  Component* newOne(){
+	  return new DC_Sim(*this);
+  }
+  static Element* info(QString&, char* &, bool getNewOne=false);
+}D;
+Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, ".DC", &D);
+Module::INSTALL pp("simulations", &D);
 
 
 DC_Sim::DC_Sim()
@@ -72,11 +86,6 @@ DC_Sim::~DC_Sim()
 {
 }
 
-Element* DC_Sim::newOne() const
-{
-  return new DC_Sim(*this);
-}
-
 Element* DC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("dc simulation");
@@ -86,9 +95,4 @@ Element* DC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-#if 0 // not yet
-namespace{
-DC_Sim p;
-Dispatcher<Command>::INSTALL d(&command_dispatcher, "DC", &p);
 }
-#endif

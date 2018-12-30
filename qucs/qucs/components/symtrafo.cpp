@@ -16,10 +16,26 @@
  ***************************************************************************/
 
 #include "qucs.h"
-#include "symtrafo.h"
+#include "globals.h"
+#include "module.h"
 
 #include<QFontMetrics>
 
+#include "component.h"
+
+namespace{
+
+class symTrafo : public Component  {
+public:
+  symTrafo();
+  ~symTrafo();
+  Component* newOne() {
+	  return new symTrafo(*this);
+  }
+  static Element* info(QString&, char* &, bool getNewOne=false);
+}D;
+Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "sTr", &D);
+Module::INSTALL pp("lumped", &D);
 
 symTrafo::symTrafo()
 {
@@ -102,4 +118,6 @@ Element* symTrafo::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new symTrafo();
   return 0;
+}
+
 }

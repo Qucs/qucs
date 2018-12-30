@@ -1,28 +1,35 @@
 /***************************************************************************
                               graphicline.cpp
                              -----------------
-    begin                : Mon Nov 24 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2018 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 #include "graphicline.h"
 #include "filldialog.h"
 #include "misc.h"
+#include "globals.h"
+#include "module.h"
 #include "schematic.h"
 
 #include <QPainter>
 #include <QPushButton>
 #include <QLineEdit>
 #include <QComboBox>
+
+namespace{
+GraphicLine D;
+Dispatcher<Painting>::INSTALL p(&painting_dispatcher, "Line", &D);
+Module::INSTALL pp("paintings", &D);
+}
 
 GraphicLine::GraphicLine()
 {

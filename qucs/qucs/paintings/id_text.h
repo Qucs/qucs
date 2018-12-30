@@ -35,10 +35,14 @@ struct SubParameter {
 };
 
 
+// BUG
 class ID_Text : public Painting  {
 public:
   ID_Text(int cx_=0, int cy_=0);
- ~ID_Text();
+  ~ID_Text();
+  Element* clone() const{
+	  return new ID_Text(*this);
+  }
 
   void paintScheme(Schematic*);
   void getCenter(int&, int&);

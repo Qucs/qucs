@@ -3,6 +3,17 @@
 # there are more tests in the test package. but not reachable from here.
 # TODO: migrate all tests
 
-../main/qucs -n -i ${examplesdir}/resonance.sch -o resonance.sch.out 2>&9
+do_test(){
+../main/qucs -n -i ${examplesdir}/$1 -o $1.out 2>&9
 
-diff ${srcdir}/resonance.sch.ref resonance.sch.out 2>&9
+diff ${srcdir}/$1.ref $1.out
+diff ${srcdir}/$1.ref $1.out 2>&9
+
+if [ $? -ne 0 ]; then
+	echo $1 failed
+	exit 1
+fi
+}
+
+do_test resonance.sch
+do_test LPF-Balun2.sch

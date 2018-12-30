@@ -26,6 +26,9 @@ class PortSymbol : public Painting  {
 public:
   PortSymbol();
   ~PortSymbol();
+  Element* clone() const{
+	  return new PortSymbol(*this);
+  }
   void setSomeArgsHack(int cx_, int cy_, const QString& numberStr_,  const QString& nameStr_);
 
   void paintScheme(Schematic*);

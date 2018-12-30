@@ -41,16 +41,16 @@ public:
 
 protected:
   void createSymbol();
-}R;
+}D;
 
 // this is the schematic name...
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "R", &R);
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "R", &D);
 // the toolbox item
-static Module::INSTALL pp("lumped", &R);
+static Module::INSTALL pp("lumped", &D);
 
 Resistor::Resistor(bool european)
 {
-	info(Name, bitmap_file);
+  info(Name, bitmap_file);
   Description = QObject::tr("resistor");
 
   Props.append(new Property("R", "50 Ohm", true,
