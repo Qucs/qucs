@@ -177,7 +177,7 @@ public: // other stuff
   virtual void draw(QPainter&) { incomplete(); }
   virtual void setCenter(int, int, bool relative=false);
   virtual void getCenter(int&, int&);
-  virtual void paint(ViewPainter*); // BUG: const
+  virtual void paint(ViewPainter*) const;
 
   virtual void editElement(){}
   virtual void MPressElement(){}
@@ -191,8 +191,9 @@ public:
   virtual QString const& description() const{return incomplete_description;}
   virtual char const* iconBasename() const{return nullptr;}
 
-//private: FIXME
-  bool isSelected;
+private:
+  bool Selected;
+
 public:
   void setSelected(bool b=true){
 	  Selected = b;

@@ -208,7 +208,7 @@ public:
 			return *cur;
 		}
 	};
-	unsigned int count() {
+	unsigned int count() const{
 		return (unsigned int)localList.size();
 	};
 	void remove(int i) {

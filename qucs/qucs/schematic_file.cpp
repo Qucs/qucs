@@ -70,7 +70,8 @@ QString SchematicModel::createClipboardFile()
   for(auto pc : components()){
     if(pc->isSelected()) {
       QTextStream str(&s);
-      saveComponent(str, pc);
+      incomplete();
+      // saveComponent(str, pc);
       s += "\n";
       ++z;
     }
@@ -412,7 +413,8 @@ int Schematic::saveDocument()
   stream << "<Components>\n";    // save all components
   for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()){
     stream << "  "; // BUG language specific.
-    SchematicModel::saveComponent(stream, pc);
+    incomplete();
+    // SchematicModel::saveComponent(stream, pc);
     stream << "\n"; // BUG?
   }
   stream << "</Components>\n";
@@ -1004,7 +1006,8 @@ QString Schematic::createUndoString(char Op)
   s.replace(0,1,Op);
   for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
     QTextStream str(&s);
-    SchematicModel::saveComponent(str, pc);
+    incomplete();
+    // SchematicModel::saveComponent(str, pc);
     s += "\n";
   }
   s += "</>\n";  // short end flag

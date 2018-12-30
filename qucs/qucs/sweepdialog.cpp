@@ -146,8 +146,8 @@ void SweepDialog::slotNewValue(int)
   QList<double *>::const_iterator value_it = ValueList.begin();
   for(node_it = NodeList.begin(); node_it != NodeList.end(); node_it++) {
     qDebug() << "SweepDialog::slotNewValue:(*node_it)->Name:" << (*node_it)->name();
-    (*node_it)->setName(misc::num2str(*((*value_it)+Index));
-                        + ((*node_it)->x1_() & 0x10)? "A" : "V")
+    (*node_it)->setName(misc::num2str(*((*value_it)+Index))
+                        + QString(((*node_it)->x1_() & 0x10)? "A" : "V"));
     value_it++;
   }
 
@@ -182,7 +182,6 @@ Graph* SweepDialog::setBiasPoints()
   for(pn = Doc->Nodes->first(); pn != 0; pn = Doc->Nodes->next()) {
     if(pn->name().isEmpty()) continue;
 
-<<<<<<< HEAD
     pn->reset_something();
     if(pn->connectionsCount() < 2) {
       // pn->Name = "";  // no text at open nodes
@@ -193,7 +192,7 @@ Graph* SweepDialog::setBiasPoints()
       hasNoComp = true;
       for(auto i : pn->connections()){
         pe = i;
-        if(pe->Type == isWire) {
+        if(auto w=wire(pe)) {
           if( w->isHorizontal() ) {
 				 pn->set_something(2);
 			 }

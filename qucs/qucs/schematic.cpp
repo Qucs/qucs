@@ -104,8 +104,10 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   Frame_Text2 = tr("Date:");
   Frame_Text3 = tr("Revision:");
 
+#ifndef USE_SCROLLVIEW
   this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+#endif
 
   misc::setWidgetBackgroundColor(viewport(), QucsSettings.BGColor);
   viewport()->setMouseTracking(true);
@@ -420,10 +422,9 @@ void Schematic::paintFrame(ViewPainter *p)
 
 // -----------------------------------------------------------
 // Is called when the content (schematic or data display) has to be drawn.
+#ifdef USE_SCROLLVIEW
 void Schematic::drawContents(QPainter *p, int, int, int, int)
 {
-  // no longer used.
-#if 0
   ViewPainter Painter;
 
   Painter.init(p, Scale, -ViewX1, -ViewY1, contentsX(), contentsY());
@@ -541,8 +542,8 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
   }
   PostedPaintEvents.clear();
 
-#endif
 }
+#endif
 
 void Schematic::PostPaintEvent (PE pe, int x1, int y1, int x2, int y2, int a, int b, bool PaintOnViewport)
 {
@@ -728,7 +729,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
     for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
       for( auto i : pn->connections()){
 	pe=i;
-        if(pe->isSelected || printAll) {
+        if(pe->isSelected() || printAll) {
 	  Element* e=pn;
 	  e->paint(p); // paint all nodes with selected elements
           break;
@@ -839,10 +840,10 @@ float Schematic::zoomBy(float s)
 // ---------------------------------------------------
 void Schematic::showAll()
 {
-  TODO("Fix showAll");
+#ifndef USE_SCROLLVIEW
+  incomplete();
   fitInView(this->sceneRect(), Qt::KeepAspectRatio);
-  /// \todo showAll
-  /*
+#else
   sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
   if(UsedX1 == 0)
     if(UsedX2 == 0)
@@ -863,7 +864,7 @@ void Schematic::showAll()
   ViewX2 = UsedX2 + 40;
   ViewY2 = UsedY2 + 40;
   zoom(xScale);
-  */
+#endif
 }
 
 // ---------------------------------------------------
@@ -2407,7 +2408,7 @@ void PaintingList::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const
 
 // ---------------------------------------------------
 #ifdef USE_SCROLLVIEW
-QPointF Schematic::mapToScene(QPoint const& p)
+QPointF Schematic::mapToScene(QPoint const& p) const
 {
   float fX=float(p.x())/Scale + float(ViewX1);
   float fY=float(p.y())/Scale + float(ViewY1);

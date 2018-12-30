@@ -78,6 +78,10 @@
 #include "misc.h"
 #include "globals.h"
 
+#ifdef USE_SCROLLVIEW
+#include <QGraphicsView>
+#endif
+
 struct iconCompInfoStruct
 {
   int catIdx; // index of the component Category

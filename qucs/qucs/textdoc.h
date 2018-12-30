@@ -22,7 +22,7 @@ Copyright (C) 2014 by Guilherme Brondani Torri <guitorri@gmail.com>
 #include <QFont>
 
 #include "qucsdoc.h"
-#include "dialogs/searchdialog.h" // BUG
+#include "searchdialog.h" // BUG
 
 /*!
  * \file textdoc.h
