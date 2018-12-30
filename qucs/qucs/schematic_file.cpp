@@ -1220,7 +1220,6 @@ void Schematic::collectDigitalSignals(void)
 void Schematic::propagateNode(QStringList& Collect,
 			      int& countInit, Node *pn)
 {
-    qDebug() << "propagateNode" << countInit;
   bool setName=false;
   Q3PtrList<Node> Cons;
   Node *p2;
@@ -1229,7 +1228,6 @@ void Schematic::propagateNode(QStringList& Collect,
 
   Cons.append(pn);
   for(p2 = Cons.first(); p2 != 0; p2 = Cons.next()){
-    qDebug() << "here";
     for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
       if(wire(pe)){
 	pw = (Wire*)pe;
@@ -1243,7 +1241,6 @@ void Schematic::propagateNode(QStringList& Collect,
 	}else{
 	  if(pw->Port2->name().isEmpty()) {
 	    assert(pn);
-	    qDebug() << pn->name();
 	    pw->Port2->setName(pn->name());
 	    pw->Port2->State = 1;
 	    Cons.append(pw->Port2);
@@ -1306,7 +1303,6 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
     pc->tAC(*stream, this, Collect, countInit, NumPorts, nl); //?!!
     // handle ground symbol
     if(pc->obsolete_model_hack() == "GND") { // BUG.
-      qDebug() << "gnd symbol?!" << pc->obsolete_model_hack();
       pc->Ports.first()->Connection->setName("gnd");
       continue;
 #if 0 // moved to Subcircuit::tAC

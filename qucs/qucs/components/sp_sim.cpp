@@ -1,23 +1,35 @@
 /***************************************************************************
                                 sp_sim.cpp
                                ------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2018 Felix Salfelder / QUCS
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "sp_sim.h"
 #include "qucs.h"
 #include "globals.h"
+#include "command.h"
+#include "module.h"
 
+namespace{
+
+class SP_Sim : public Command  {
+public:
+  SP_Sim();
+  ~SP_Sim();
+  Element* clone() const {return new SP_Sim(*this);}
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  void recreate(Schematic*);
+}D;
+Dispatcher<Command>::INSTALL d(&command_dispatcher, ".SP", &D);
+Module::INSTALL pp("simulations", &D);
 
 SP_Sim::SP_Sim()
 {
@@ -100,10 +112,4 @@ void SP_Sim::recreate(Schematic*)
   }
 }
 
-#if 0 // not yet
-namespace{
-SP_Sim p;
-Dispatcher<Command>::INSTALL d(&command_dispatcher, "SP", &p);
 }
-#endif
-
