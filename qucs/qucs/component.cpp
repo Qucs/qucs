@@ -1283,10 +1283,6 @@ void Component::copyComponent(Component *pc)
 // ***********************************************************************
 void MultiViewComponent::recreate(Schematic *Doc)
 {
-  if(Doc) {
-    Doc->Components->setAutoDelete(false);
-    Doc->deleteComp(this);
-  }
 
   Ellips.clear();
   Texts.clear();
@@ -1310,10 +1306,6 @@ void MultiViewComponent::recreate(Schematic *Doc)
   rotated = rrot;   // restore properties (were changed by rotate/mirror)
   mirroredX = mmir;
 
-  if(Doc) {
-    Doc->insertRawComponent(this);
-    Doc->Components->setAutoDelete(true);
-  }
 }
 
 
@@ -1581,7 +1573,7 @@ void GateComponent::createSymbol()
 // better: Component* SomeParserClass::getComponent(SomeDataStream& s)
 // BUG: loads component into schematic.
 // fixed in qt5 rework
-Element* getComponentFromName(QString& Line, Schematic* p)
+Element* getComponentFromName(QString& Line)
 {
   Element *e = 0;
 
@@ -1661,6 +1653,7 @@ Element* getComponentFromName(QString& Line, Schematic* p)
   }
 
 
+#if 0 // legacy cruft?
   // BUG: don't use schematic.
   if(Command* cmd=command(e)){
     p->loadCommand(Line, cmd);
@@ -1679,6 +1672,7 @@ Element* getComponentFromName(QString& Line, Schematic* p)
     c->obsolete_name_override_hack(cstr);
     c->tx = x;  c->ty = y;
   }
+#endif
 
   return e;
 }

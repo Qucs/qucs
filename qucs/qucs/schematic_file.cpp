@@ -700,12 +700,13 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
 
     /// \todo enable user to load partial schematic, skip unknown components
     qDebug() << "loadline" << Line;
-    Element* e = getComponentFromName(Line, this);
+    Element* e = getComponentFromName(Line);
 
     if(Command* cc=command(e)){
       qDebug() << "got command";
       simpleInsertCommand(cc);
     }else if(Component* c=component(e)){
+     // c->setSchematic(this);
 	
       if(List) {  // "paste" ?
 	int z;
@@ -1872,15 +1873,16 @@ int NumPorts)
 }
 // ---------------------------------------------------
 // Write the netlist as subcircuit to the text stream 'stream'.
-bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
+// BUG: not here.
+bool SchematicModel::createSubNetlist(DocumentStream& stream, int& countInit,
                      QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
-		     NetLang const& nl)
+		  bool creatingLib, NetLang const& nl)
 {
 //  int Collect_count = Collect.count();   // position for this subcircuit
 
   // TODO: NodeSets have to be put into the subcircuit block.
   qDebug() << "giveNodeNames" << NumPorts << "\n";
-  if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts, nl)){
+  if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts, false, nl)){
     fprintf(stderr, "Error giving NodeNames in createSubNetlist\n");
     return false;
   }
@@ -1895,9 +1897,10 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
 
   // Emit subcircuit components
   incomplete();
-  createSubNetlistPlain(stream, ErrText, NumPorts);
+  stream << "subckt decl";
+  // createSubNetlistPlain(stream, ErrText, NumPorts);
 
-  Signals.clear();  // was filled in "giveNodeNames()"
+  // Signals.clear();  // was filled in "giveNodeNames()"
   return true;
 }
 

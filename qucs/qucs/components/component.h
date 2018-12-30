@@ -15,11 +15,10 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef COMPONENT_H
-#define COMPONENT_H
+#ifndef QUCS_COMPONENT_H
+#define QUCS_COMPONENT_H
 
 #include "symbol.h"
-#include "element.h"
 #include "qt_compat.h"
 
 class Schematic;
@@ -186,6 +185,6 @@ protected:
 
 // prototype of independent function
 // kludge: must be Element, for Commands
-Element* getComponentFromName(QString& Line, Schematic* p=NULL);
+Element* getComponentFromName(QString& Line);
 
 #endif
