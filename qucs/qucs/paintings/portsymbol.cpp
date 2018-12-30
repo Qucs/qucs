@@ -27,12 +27,12 @@ Dispatcher<Painting>::INSTALL p(&painting_dispatcher, ".PortSym", &D);
 Module::INSTALL pp("paintings", &D);
 }
 
-PortSymbol::PortSymbol(){}
-
+PortSymbol::PortSymbol() : Painting()
+{
+}
 
 void PortSymbol::setSomeArgsHack(int cx_, int cy_, const QString& numberStr_,
                                          const QString& nameStr_)
-	: Painting()
 {
   Name = ".PortSym ";
   cx = cx_;

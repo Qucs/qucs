@@ -1873,6 +1873,8 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
   int x1, y1, x2, y2, rot;
   QFileInfo Info(Doc->DocName);
   //QPainter painter(Doc->viewport());
+  QPointF pos=Doc->mapToScene(Event->pos());
+
 
   Element *pe;
   switch(Event->button()) {
@@ -1945,8 +1947,8 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
       paintElementsScheme(Doc);
     drawn = true;
 
-    x1 = DOC_X_POS(Event->pos().x());
-    y1 = DOC_Y_POS(Event->pos().y());
+    x1 = pos.x();
+    y1 = pos.y();
     rotateElements(Doc,x1,y1);
     paintElementsScheme(Doc);
     // save rotation
@@ -2044,7 +2046,8 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
   float fX=pos.x();
   float fY=pos.y();
 
-  focusElement->editElement();
+  incomplete();
+  //focusElement->editElement();
 
   // BUG. move to respective classes. 1 at a time...
   if(auto c=component(focusElement)){
@@ -2053,12 +2056,16 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
          if(c->obsolete_model_hack() == "GND") { // BUG
 	   return;
 	 }else if(c->obsolete_model_hack() == "SPICE") { // BUG. use cast
-           SpiceDialog *sd = new SpiceDialog(App, (SpiceFile*)c, Doc);
-           if(sd->exec() != 1) done=true;   // dialog is WDestructiveClose
+	   incomplete();
+           // SpiceDialog *sd = new SpiceDialog(App, (SpiceFile*)c, Doc);
+           // if(sd->exec() != 1) done=true;   // dialog is WDestructiveClose
          } else if(c->obsolete_model_hack() == ".Opt") { // BUG again...
-           OptimizeDialog *od = new OptimizeDialog((Optimize_Sim*)c, Doc);
-           if(od->exec() != 1) done=true;   // dialog is WDestructiveClose
+	   incomplete();
+           // OptimizeDialog *od = new OptimizeDialog((Optimize_Sim*)c, Doc);
+           // if(od->exec() != 1) done=true;   // dialog is WDestructiveClose
          } else {
+	   incomplete();
+#if 0
            ComponentDialog * cd = new ComponentDialog(c, Doc);
            if(cd->exec() != 1){
 	     done=true;   // dialog is WDestructiveClose
@@ -2068,6 +2075,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 	     Doc->setComponentNumber(c); // for ports/power sources
 	     Doc->Components->append(c);
 	   }
+#endif
          }
 
 	 if(!done){
@@ -2078,8 +2086,8 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 	 }
   }else if(auto dia=diagram(focusElement)){
          bool done=false;
-         if(dia->Name.at(0) == 'T') { // don't open dialog on scrollbar
-           if(dia->Name == "Time") {
+         if(dia->name().at(0) == 'T') { // don't open dialog on scrollbar
+           if(dia->name() == "Time") {
              if(dia->cy_() < int(fY)) {
 	       if(dia->scroll(MAx1))
 	         Doc->setChanged(true, true, 'm'); // 'm' = only the first time
@@ -2136,9 +2144,10 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
            Doc->setChanged(true, true);
 
   }else if(auto m=marker(focusElement)){
-         mdia = new MarkerDialog(m, Doc);
-         if(mdia->exec() > 1)
-           Doc->setChanged(true, true);
+    incomplete();
+        // mdia = new MarkerDialog(m, Doc);
+        // if(mdia->exec() > 1)
+        //   Doc->setChanged(true, true);
   }
 
   // Very strange: Now an open VHDL editor gets all the keyboard input !?!
