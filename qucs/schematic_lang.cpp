@@ -8,12 +8,8 @@
 #include "wire.h"
 #include "diagram.h" // BUG
 
-// legacy hack, throw everything into "Schematic"
-// will be fixed in qt5 branch
-#define SchematicModel Schematic
-
  //BUG
-Element* getComponentFromName(QString& Line, Schematic* p);
+Element* getComponentFromName(QString& Line);
 
 class LegacySchematicLanguage : public SchematicLanguage {
 public:
@@ -55,7 +51,11 @@ private:
 				/// \todo enable user to load partial schematic, skip unknown components
 				Element*c=nullptr;
 				if(mode=='C'){
-					c = getComponentFromName(Line, s /*connect ports?*/);
+					c = getComponentFromName(Line);
+					if(Symbol* sym=dynamic_cast<Symbol*>(c) ){
+						sym->setSchematic(s);
+					}else{
+					}
 				}else if(mode=='S'){
 					incomplete();
 #if 0
