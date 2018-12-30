@@ -103,7 +103,14 @@ private:
 			}
 		}
 	}
+
+private:
+	void printSymbol(Symbol const*, stream_t&) const;
 }defaultSchematicLanguage_;
+
+static Dispatcher<DocumentLanguage>::INSTALL
+    p(&doclang_dispatcher, "leg_sch", &defaultSchematicLanguage_);
+// ------------------------------------------------------
 
 Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 		DocumentStream& stream /*, DiagramList *List */)const
@@ -143,3 +150,81 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 
 	return nullptr;
 }
+//
+//
+// -------------------------------------------------------
+// was: void Schematic::saveComponent(QTextStream& s, Component const* c) const
+void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
+{ untested();
+	Component const* c=dynamic_cast<Component const*>(sym);
+	if(!c){ untested();
+		incomplete();
+		return;
+	}else{ untested();
+	}
+#if XML
+	QDomDocument doc;
+	QDomElement el = doc.createElement (Model);
+	doc.appendChild (el);
+	el.setTagName (Model);
+	el.setAttribute ("inst", Name.isEmpty() ? "*" : Name);
+	el.setAttribute ("display", isActive | (showName ? 4 : 0));
+	el.setAttribute ("cx", cx);
+	el.setAttribute ("cy", cy);
+	el.setAttribute ("tx", tx);
+	el.setAttribute ("ty", ty);
+	el.setAttribute ("mirror", mirroredX);
+	el.setAttribute ("rotate", rotated);
+
+	for (Property *pr = Props.first(); pr != 0; pr = Props.next()) { untested();
+		el.setAttribute (pr->Name, (pr->display ? "1@" : "0@") + pr->Value);
+	}
+	qDebug << doc.toString();
+#endif
+	// s << "  "; ??
+	s << "<" << c->obsolete_model_hack();
+
+	s << " ";
+	if(c->name().isEmpty()){
+		s << "*";
+	}else{
+		s << c->name();
+	}
+	s << " ";
+
+	int i=0;
+	if(!c->showName){
+		i = 4;
+	}
+	i |= c->isActive;
+	s << QString::number(i);
+	s << " "+QString::number(c->cx)+" "+QString::number(c->cy);
+	s << " "+QString::number(c->tx)+" "+QString::number(c->ty);
+	s << " ";
+	if(c->mirroredX){
+		s << "1";
+	}else{
+		s << "0";
+	}
+	s << " " << QString::number(c->rotated);
+
+	// write all properties
+	// FIXME: ask component for properties, not for dictionary
+	Component* cc=const_cast<Component*>(c); // BUGBUGBUGBUG
+	// cannot access Props without this hack
+	for(Property *p1 = cc->Props.first(); p1 != 0; p1 = cc->Props.next()) {
+		if(p1->Description.isEmpty()){
+			s << " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations
+		}else{
+			s << " \""+p1->Value+"\"";
+		}
+		s << " ";
+		if(p1->display){
+			s << "1";
+		}else{
+			s << "0";
+		}
+	}
+
+	s << ">";
+} // printSymbol

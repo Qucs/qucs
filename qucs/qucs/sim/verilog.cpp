@@ -25,10 +25,10 @@ namespace {
 class Verilog : public NetLang
 {
   virtual void printCommand(Command const*, QTextStream&) const;
-  virtual void printInstance(Component const*, QTextStream&) const;
+  virtual void printSymbol(Symbol const*, QTextStream&) const;
 } V;
 
-static Dispatcher<NetLang>::INSTALL p(&netlang_dispatcher, "verilog", &V);
+static Dispatcher<DocumentLanguage>::INSTALL p(&doclang_dispatcher, "verilog", &V);
 
 /*!
  * verilog does not know about commands
@@ -41,11 +41,15 @@ void Verilog::printCommand(Command const* c, QTextStream& s) const
 /*!
  * print Components in Verilog
  */
-void Verilog::printInstance(Component const* c, QTextStream& s) const
-{
-  if(c->isOpen()) {
-    // nothing.
-  }else if(c->isShort()){
+void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
+{ untested();
+  Component const* c=dynamic_cast<Component const*>(sym);
+  if(!c){
+    incomplete();
+    return;
+  }else if(c->isOpen()) { untested();
+    unreachable(); // wrong place.
+  }else if(c->isShort()){ untested();
     // replace by some resistors (hack?)
     int z=0;
     QListIterator<Port *> iport(c->ports());
@@ -55,25 +59,16 @@ void Verilog::printInstance(Component const* c, QTextStream& s) const
       s << "R:" << c->label() << "." << QString::number(z++) << " "
 	<< Node1 << " " << iport.next()->Connection->name() << " R=\"0\"\n";
     }
-  }else{
-    QString netlist(c->getNetlist());
-    if(netlist!="obsolete") {
-      // still using obsolete netlister here.
-      std::cerr << "incomplete, see verilog.cpp\n";
-      qDebug() << c->label() << c->type();
-    }
+  }else{ untested();
     s << c->type() << " ";
 
     QString comma="";
-    if(c->params().count()) {
-      s << "#(";
-
-      for(auto p2 : c->params()) {
-	s << comma << "." << p2->name() << "(" << p2->Value << ")";
-	comma = ", ";
-      }
-      s << ") ";
+    s << "#(";
+    for(auto p2 : c->params()) {
+      s << comma << "." << p2->name() << "(" << p2->Value << ")";
+      comma = ", ";
     }
+    s << ") ";
     s << c->label() << "(";
 
     comma = "";

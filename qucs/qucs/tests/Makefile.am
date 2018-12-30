@@ -24,7 +24,8 @@ AM_LDFLAGS = -Wl,--no-as-needed
 if COND_WIN32
 check_PROGRAMS =
 else
-check_PROGRAMS = SchematicTests ElementTests ComponentTests
+#entirely useless.
+check_PROGRAMS = # SchematicTests ElementTests ComponentTests
 endif
 
 NO_PLUGINS = \
