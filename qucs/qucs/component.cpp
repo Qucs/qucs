@@ -1596,6 +1596,7 @@ Element* getComponentFromName(QString& Line, Schematic* p)
     Element* s=sc->clone(); // memory leak?
     e=prechecked_cast<Element*>(s);
   }else{ untested();
+    e=command_dispatcher[cstr.toStdString()];
   // don't know what this is (yet);
     incomplete();
   }

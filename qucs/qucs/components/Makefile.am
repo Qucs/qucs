@@ -103,16 +103,17 @@ qucs_default_components_la_SOURCES += \
 	verilogfile.cpp \
 	equation.cpp \
 	vafile.cpp \
-	spicefile.cpp
+	spicefile.cpp \
+	subcircuit.cpp
 
 noinst_HEADERS = $(MOCHEADERS) components.h    \
 	spicedialog.h optimizedialog.h spicefile.h \
 	componentdialog.h \
-  inductor.h biast.h dcblock.h dcfeed.h ground.h symtrafo.h      \
+  inductor.h biast.h dcblock.h dcfeed.h ground.h       \
   transformer.h ampere_dc.h attenuator.h circulator.h equation.h isolator.h   \
   source_ac.h subcircuit.h ac_sim.h cccs.h   \
-  ccvs.h coplanar.h dc_sim.h diode.h hb_sim.h mscorner.h mscoupled.h mslange.h          \
-  mscross.h msline.h msstep.h mstee.h sp_sim.h substrate.h      \
+  ccvs.h coplanar.h diode.h hb_sim.h mscorner.h mscoupled.h mslange.h          \
+  mscross.h msline.h msstep.h mstee.h substrate.h      \
   tline.h tr_sim.h component.h vcvs.h gyrator.h phaseshifter.h vhdlfile.h     \
   iprobe.h wprobe.h volt_noise.h ampere_noise.h msmbend.h msopen.h ampere_ac.h bjt.h   \
   jfet.h mosfet.h msgap.h bjtsub.h mosfet_sub.h vpulse.h ipulse.h vrect.h     \

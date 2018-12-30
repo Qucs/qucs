@@ -1,25 +1,41 @@
 /***************************************************************************
                                source_ac.cpp
                               ---------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2018 Felix Salfelder / QUCS
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "source_ac.h"
+#include "globals.h"
+#include "module.h"
+#include "component.h"
+
+namespace{
+
+class Source_ac : public Component  {
+public:
+  Source_ac();
+  ~Source_ac();
+  Component* newOne(){
+	  return new Source_ac(*this);
+  }
+  static Element* info(QString&, char* &, bool getNewOne=false);
+}D;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Pac", &D);
+static Module::INSTALL pp("probes", &D);
 
 
 Source_ac::Source_ac()
 {
+  info(Name, bitmap_file);
   Description = QObject::tr("ac power source");
 
   Lines.append(new Line(-22,-11, 22,-11,QPen(Qt::darkGray,0)));
@@ -80,4 +96,6 @@ Element* Source_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Source_ac();
   return 0;
+}
+
 }
