@@ -52,8 +52,6 @@ void QucsLang::printCommand(Command const* c, QTextStream& s) const
 
   if(c->isOpen()) {
     // nothing.
-  }else if(c->type() == "GND") {
-    // nothing.
   }else if(c->isShort()){
     unreachable();
   }else{
@@ -62,17 +60,8 @@ void QucsLang::printCommand(Command const* c, QTextStream& s) const
 
       s << c->type() << ":" << c->label();
 
-      Component const* cc=c;
-      qDebug() << "command params" << c->params().count();
-      qDebug() << "command params" << cc->params().count();
-
-      for(auto p2 : cc->params()) {
-	if(p2->name() != "Symbol") { // hack.
-	  s << " " << p2->name() << "=\"" << p2->Value << "\"";
-	}
-      }
-
-      for(auto p2 : c->params()) {
+      //for(auto p2 : c->params())
+      for(auto p2 : c->Props){ // BUG
 	if(p2->name() != "Symbol") { // hack.
 	  s << " " << p2->name() << "=\"" << p2->Value << "\"";
 	}
@@ -92,8 +81,6 @@ void QucsLang::printComponent(Component const* c, QTextStream& s) const
   assert(c->isActive == COMP_IS_ACTIVE);
 
   if(c->isOpen()) {
-    // nothing.
-  }else if(c->type() == "GND") {
     // nothing.
   }else if(c->isShort()){
     // replace by some resistors (hack?)
@@ -134,7 +121,7 @@ void QucsLang::printComponent(Component const* c, QTextStream& s) const
 }
 
 static QucsLang qucslang;
-static Dispatcher<NetLang>::INSTALL pl(&netlang_dispatcher, "qucsator", &qucslang);
+static Dispatcher<DocumentLanguage>::INSTALL pl(&doclang_dispatcher, "qucsator", &qucslang);
 
 // qucsator simulator backend
 class Qucsator : public Simulator
