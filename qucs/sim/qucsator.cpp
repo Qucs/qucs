@@ -95,11 +95,6 @@ void QucsLang::printComponent(Component const* c, QTextStream& s) const
 //  }else if(Subcircuit const* sub=dynamic_cast<Subcircuit const*>(c)){
 //    incomplete();
   }else{
-    try{
-      // default to the legacy way, fix later
-      s << c->getNetlist();
-      incomplete();
-   }catch (...)
     { // todo: introduce proper exceptions
       // normal netlisting
 

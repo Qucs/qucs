@@ -4,9 +4,9 @@
 # TODO: migrate all tests
 
 do_test(){
+echo "../main/qucs -n -i ${examplesdir}/$1 -o $1.out" >&9
 ../main/qucs -n -i ${examplesdir}/$1 -o $1.out 2>&9
 
-diff ${srcdir}/$1.ref $1.out
 diff ${srcdir}/$1.ref $1.out 2>&9
 
 if [ $? -ne 0 ]; then

@@ -539,7 +539,7 @@ void createListComponentEntry()
         continue;
       }else{
 	qucsatorlang->printItem(c, s);
-	// s << "\n"; // included.
+	//s << "\n";
       }
 
       // QString qucsatorEntry = c->getNetlist();

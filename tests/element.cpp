@@ -29,6 +29,9 @@ class test_element : public Element{
 public:
 	test_element() : Element() {}
 	~test_element(){}
+	Element* clone() const{
+		return new test_element(*this);
+	}
 
 }e;
 install_element_stub p1 (&e);
@@ -38,8 +41,8 @@ install_element_stub p1 (&e);
 // this is fixed in #742
 Element::Element(){}
 Element::~Element(){}
-void Element::paintScheme(Schematic*){}
-void Element::paintScheme(QPainter*){}
+//void Element::paintScheme(Schematic*){}
+//void Element::paintScheme(QPainter*){}
 void Element::setCenter(int, int, bool){}
 void Element::getCenter(int&, int&){}
 
