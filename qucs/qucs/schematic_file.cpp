@@ -1706,19 +1706,24 @@ int NumPorts)
       }
     (*tstream) << '\n';
 
-    auto nlp=netlang_dispatcher["qucsator"];
-    assert(nlp);
+    auto nlp=doclang_dispatcher["qucsator"];
+    NetLang const* n=prechecked_cast<NetLang const*>(nlp);
+    assert(n);
+    NetLang const& nl=*n;
 
     // write all components with node names into netlist file
-    for(pc = DocComps.first(); pc != 0; pc = DocComps.next()){
+    for(auto pc : components() ){ untested();
+      qDebug() << "comps" << pc->type();
       if(dynamic_cast<Port const*>(pc)){
 	  incomplete();
-      }
-      try{
-       	(*tstream) << pc->getNetlist();
-      }catch(std::exception const&){
-	incomplete();
-	nlp->printItem(pc, *tstream);
+      }else if(pc->type() == "GND") { untested();
+      }else{
+	try{
+	  // fixme.
+	  (*tstream) << pc->getNetlist();
+	}catch(std::exception const&){
+	  nlp->printItem(pc, *tstream);
+	}
       }
     }
 
@@ -2049,8 +2054,9 @@ void Schematic::endNetlistDigital(QTextStream& stream, NetLang const& /*lang*/)
 // ---------------------------------------------------
 // write all components with node names into the netlist file
 // return some Time.
+// BUG: not here.
 QString Schematic::createNetlist(QTextStream& stream, int NumPorts, NetLang const& nl)
-{
+{ untested();
   if(!isAnalog) {
     beginNetlistDigital(stream, nl);
   }
@@ -2061,7 +2067,10 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts, NetLang cons
   QString s, Time;
   for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
     if(isAnalog) {
-      nl.printItem(pc, stream);
+      if(pc->type()=="GND"){ // qucsator hack
+      }else{
+	nl.printItem(pc, stream);
+      }
     } else { // FIXME: use different lang to print things differently
       if(pc->obsolete_model_hack() == ".Digi" && pc->isActive) {  // simulation component ?
         if(NumPorts > 0) { // truth table simulation ?

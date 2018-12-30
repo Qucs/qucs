@@ -174,9 +174,11 @@ bool SimMessage::startProcess()
   Stream.setDevice(&NetlistFile);
 
   // BUG: ask simulator
-  auto nlp=netlang_dispatcher["qucsator"];
-  assert(nlp);
-  auto& nl=*nlp;
+  auto dl=doclang_dispatcher["qucsator"];
+  assert(dl);
+  NetLang const* n=prechecked_cast<NetLang const*>(dl);
+  assert(n);
+  auto& nl=*n;
 
   if(!QucsApp::isTextDocument(DocWidget)) {
     SimPorts =
