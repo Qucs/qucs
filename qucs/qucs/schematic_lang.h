@@ -9,7 +9,6 @@
 #include "object.h"
 #include "language.h"
 
-#define SchematicModel Schematic // fix later.
 class SchematicModel;
 
 class SchematicLanguage : public DocumentLanguage{

@@ -366,7 +366,7 @@ QString Subcircuit::getSubcircuitFile() const
 static SubMap FileList;
 
 // moved from schematic_file.cpp
-void Subcircuit::tAC(QTextStream& stream, SchematicModel* schem, QStringList&
+void Subcircuit::tAC(QTextStream& stream, Schematic* schem, QStringList&
 		Collect, int& countInit, int NumPorts, NetLang const& nl)
 {
 	Component* pc=this;
@@ -374,7 +374,7 @@ void Subcircuit::tAC(QTextStream& stream, SchematicModel* schem, QStringList&
 	// tell the subcircuit it belongs to this schematic
 	Subcircuit* sckt=prechecked_cast<Subcircuit*>(pc);
 	assert(sckt);
-	sckt->setSchematicModel (schem);
+	sckt->setSchematic(schem);
 	QString f = pc->getSubcircuitFile();
 	qDebug() << "sckt" << f;
 	SubMap::Iterator it = FileList.find(f);
@@ -409,7 +409,7 @@ void Subcircuit::tAC(QTextStream& stream, SchematicModel* schem, QStringList&
 	qDebug() << "getting sckt definition from" << scktfilename;
 	file.open(QIODevice::ReadOnly);
 	DocumentStream pstream(&file);
-	d->setFileInfo(scktfilename);
+	// d->setFileInfo(scktfilename);
 	d->parse(pstream);
 	d->setDevType(s);
 

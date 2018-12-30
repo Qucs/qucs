@@ -22,8 +22,8 @@
   * (this is under construction)
   *
   */
-#ifndef SYMBOL_H
-#define SYMBOL_H
+#ifndef QUCS_SYMBOL_H
+#define QUCS_SYMBOL_H
 
 #include "element.h"
 
@@ -34,6 +34,7 @@
   */
 
 class QPainter;
+class Schematic;
 
 // a component symbol. not necessarily one of the legacy components
 class Symbol : public Element{
@@ -43,8 +44,8 @@ public: // construct
 
 public: // interface
   virtual unsigned portNumber()const {return 0;}
-  virtual void setSchematic (Schematic* p) { containingSchematic = p; }
-  Schematic* getSchematic() const{return containingSchematic;}
+  virtual void setSchematic (SchematicModel* p) { containingSchematic = p; }
+  SchematicModel* getSchematic() const{return containingSchematic;}
 
 public: // graphics
         // hmm, maybe just dispatch a gfx object.
@@ -54,7 +55,7 @@ public: // graphics
 //  virtual void draw(QPainter&)const=0;
   //...  more to come
 private:
-  Schematic* containingSchematic;
+  SchematicModel* containingSchematic;
 };
 
 
