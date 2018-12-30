@@ -121,8 +121,6 @@ public:
 public: // stuff saved from Schematic
   QString createClipboardFile();
   void sizeOfAll(int&, int&, int&, int&, float) const;
-public: // obsolete.
-  static void saveComponent(QTextStream& s, Component /* FIXME const */* c);
 private: // TODO: actually store here.
   WireList& wires();
   NodeList& nodes();
@@ -284,6 +282,9 @@ protected:
   void paintFrame(ViewPainter*);
 
   // overloaded function to get actions of user
+#ifdef USE_SCROLLVIEW
+  void drawContents(QPainter*, int, int, int, int);
+#endif
   void contentsMouseMoveEvent(QMouseEvent*);
   void contentsMousePressEvent(QMouseEvent*);
   void contentsMouseDoubleClickEvent(QMouseEvent*);
@@ -296,7 +297,7 @@ protected:
 
 public:
 #ifdef USE_SCROLLVIEW
-  QPointF mapToScene(QPoint const& p);
+  QPointF mapToScene(QPoint const& p) const;
 #endif
 
 protected slots:
