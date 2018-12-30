@@ -40,7 +40,7 @@
 #include <QBrush>
 #include <QDebug>
 #include <assert.h>
-#include "io_trace.h"
+#include "schematic_model.h"
 #include "object.h"
 #include "io_trace.h"
 
@@ -181,8 +181,8 @@ public: // other stuff
 
   virtual void editElement(){}
   virtual void MPressElement(){}
-  virtual void tAC(QTextStream&, Schematic*, QStringList&, int&, int,
-		  NetLang const&){untested();}
+  void tAC(QTextStream& stream, SchematicModel* schem, QStringList&
+		Collect, int& countInit, int NumPorts, NetLang const& nl);
 public:
   virtual Element* clone()const = 0;
 //  { unreachable(); return 0 /*NULL, actually*/;}
