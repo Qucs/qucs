@@ -33,14 +33,13 @@
   *
   */
 
-#ifndef ELEMENT_H
-#define ELEMENT_H
+#ifndef QUCS_ELEMENT_H
+#define QUCS_ELEMENT_H
 
 #include <QPen>
 #include <QBrush>
 #include <QDebug>
 #include <assert.h>
-#include "schematic_model.h"
 #include "object.h"
 #include "io_trace.h"
 
@@ -48,6 +47,7 @@ class Node;
 class QPainter;
 class WireLabel;
 class Schematic;
+class SchematicModel;
 
 struct Line {
   Line(int _x1, int _y1, int _x2, int _y2, QPen _style)
@@ -181,8 +181,7 @@ public: // other stuff
 
   virtual void editElement(){}
   virtual void MPressElement(){}
-  void tAC(QTextStream& stream, SchematicModel* schem, QStringList&
-		Collect, int& countInit, int NumPorts, NetLang const& nl);
+  void tAC(QTextStream&, Schematic*, QStringList&, int&, int, NetLang const&){}
 public:
   virtual Element* clone()const = 0;
 //  { unreachable(); return 0 /*NULL, actually*/;}

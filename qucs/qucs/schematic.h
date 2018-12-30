@@ -37,6 +37,7 @@
 #include "components/component.h"
 #include "sim/sim.h"
 #include "schematic_scene.h"
+#include "schematic_model.h"
 
 #include <Q3ScrollView>
 #include "qt_compat.h"
@@ -84,26 +85,6 @@ struct SubFile {
 };
 typedef QMap<QString, SubFile> SubMap;
 
-// TODO: refactor here
-class WireList : public Q3PtrList<Wire> {
-};
-// TODO: refactor here
-class NodeList : public Q3PtrList<Node> {
-};
-// TODO: refactor here
-class DiagramList : public Q3PtrList<Diagram> {
-};
-// TODO: refactor here
-class ComponentList : public Q3PtrList<Component> {
-	// void first(){} // GOAL: hide, still compile.
-};
-// TODO: refactor here
-class PaintingList : public Q3PtrList<Painting> {
-
-public:
-	void sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const;
-};
-
 #if QT_VERSION < 0x050000
 typedef Element ElementGraphics;
 #define SchematicBase Q3ScrollView
@@ -113,6 +94,7 @@ class ElementGraphics;
 #define SchematicBase QGraphicsView
 #endif
 
+#if 0
 class SchematicModel{
 private:
   SchematicModel(){}
@@ -136,6 +118,7 @@ public:
 private:
   Schematic* _doc;
 };
+#endif
 
 class Schematic : public SchematicBase, public QucsDoc {
   Q_OBJECT
@@ -408,8 +391,6 @@ public: // TODO: move out of the way, perhaps to SchematicNetlist,
         // SchematicModel or so.
   static int testFile(const QString &);
   bool createLibNetlist(QTextStream*, QPlainTextEdit*, int, NetLang const& nl);
-  bool createSubNetlist(QTextStream *, int&, QStringList&, QPlainTextEdit*, int,
-		  const NetLang& nl);
   void createSubNetlistPlain(QTextStream*, QPlainTextEdit*, int);
   int  prepareNetlist(QTextStream&, QStringList&, QPlainTextEdit*, const NetLang&);
   QString createNetlist(QTextStream&, int, NetLang const&);
