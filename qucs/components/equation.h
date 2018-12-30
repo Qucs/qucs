@@ -18,22 +18,5 @@
 #ifndef EQUATION_H
 #define EQUATION_H
 
-#include "component.h"
-
-
-class Equation : public Component  {
-
-public:
-  Equation();
-  ~Equation();
-  Component* newOne() {return new Equation(*this);}
-  static Element* info(QString&, char* &, bool getNewOne=false);
-
-protected:
-  QString vhdlCode(int);
-  QString verilogCode(int);
-
-  void dialgButtStuff(ComponentDialog& d)const;
-};
 
 #endif

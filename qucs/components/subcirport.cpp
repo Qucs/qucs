@@ -34,10 +34,8 @@ protected:
   QString vhdlCode(int);
   QString verilogCode(int);
   void createSymbol();
-};
-
-SubCirPort D;
-Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "SubCirPort", &D);
+}D;
+Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Port", &D);
 Module::INSTALL pp("lumped", &D);
 
 SubCirPort::SubCirPort()

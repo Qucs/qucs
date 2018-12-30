@@ -1,16 +1,15 @@
 /***************************************************************************
                                subcircuit.cpp
                               ----------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2018 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -26,6 +25,8 @@
 
 #include <limits.h>
 #include <io_trace.h>
+#include "globals.h"
+#include "module.h"
 
 
 
@@ -37,8 +38,8 @@ Subcircuit::Subcircuit()
   Props.append(new Property("File", "", false,
 		QObject::tr("name of qucs schematic file")));
 
-  Model = "Sub";
-  Name  = "SUB";
+  setType("Sub");
+  Name  = "SUB"; // label, irrelevant.
 
   // Do NOT call createSymbol() here. But create port to let it rotate.
   Ports.append(new Port(0, 0, false));
@@ -206,7 +207,7 @@ QString Subcircuit::netlist() const
 
   // output all node names
   foreach(Port *p1, Ports)
-    s += " "+p1->Connection->Name;   // node names
+    s += " "+p1->Connection->name();   // node names
 
   // type for subcircuit
   QString f = misc::properFileName(Props.first()->Value);
@@ -214,7 +215,7 @@ QString Subcircuit::netlist() const
 
   // output all user defined properties
   for(Property *pp = Props.next(); pp != 0; pp = Props.next())
-    s += " "+pp->Name+"=\""+pp->Value+"\"";
+    s += " "+pp->name()+"=\""+pp->Value+"\"";
   return s + '\n';
 }
 
@@ -222,7 +223,7 @@ QString Subcircuit::netlist() const
 QString Subcircuit::vhdlCode(int)
 {
   QString f = misc::properFileName(Props.first()->Value);
-  QString s = "  " + Name + ": entity Sub_" + misc::properName(f);
+  QString s = "  " + name() + ": entity Sub_" + misc::properName(f);
 
   // output all user defined properties
   Property *pr = Props.next();
@@ -239,10 +240,10 @@ QString Subcircuit::vhdlCode(int)
   QListIterator<Port *> iport(Ports);
   Port *pp = iport.next();
   if(pp)
-    s += pp->Connection->Name;
+    s += pp->Connection->name();
   while (iport.hasNext()) {
     pp = iport.next();
-    s += ", "+pp->Connection->Name;   // node names
+    s += ", "+pp->Connection->name();   // node names
   }
 
   s += ");\n";
@@ -266,14 +267,14 @@ QString Subcircuit::verilogCode(int)
   }
 
   // output all node names
-  s +=  " " + Name + " (";
+  s +=  " " + name() + " (";
   QListIterator<Port *> iport(Ports);
   Port *pp = iport.next();
   if(pp)
-    s += pp->Connection->Name;
+    s += pp->Connection->name();
   while (iport.hasNext()) {
     pp = iport.next();
-    s += ", "+pp->Connection->Name;   // node names
+    s += ", "+pp->Connection->name();   // node names
   }
 
   s += ");\n";
@@ -385,7 +386,7 @@ void Subcircuit::tAC(QTextStream& stream, Schematic* schem, QStringList&
 			foreach(Port *pp, pc->Ports)
 			{
 				pp->Type = it.value().PortTypes[i];
-				pp->Connection->DType = pp->Type;
+				// pp->Connection->DType = pp->Type;
 				i++;
 			}
 		}
@@ -425,7 +426,7 @@ void Subcircuit::tAC(QTextStream& stream, Schematic* schem, QStringList&
 		{
 			//if(i>=d->PortTypes.count())break;
 			pp->Type = d->portType(i);
-			pp->Connection->DType = pp->Type;
+			//pp->Connection->DType = pp->Type;
 			i++;
 		}
 		sub.PortTypes = d->PortTypes;
@@ -435,4 +436,10 @@ void Subcircuit::tAC(QTextStream& stream, Schematic* schem, QStringList&
 	if(!r) {
 		// throw?
 	}
+}
+
+namespace{
+Subcircuit D;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Sub", &D);
+static Module::INSTALL pp("stuff", &D);
 }

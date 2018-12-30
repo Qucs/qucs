@@ -15,10 +15,32 @@
  *                                                                         *
  ***************************************************************************/
 #include "componentdialog.h"
-#include "equation.h"
+#include "globals.h"
+#include "module.h"
 #include "qucs.h"
 
 #include <QFontMetrics>
+
+#include "component.h"
+
+
+class Equation : public Component  {
+
+public:
+  Equation();
+  ~Equation();
+  Component* newOne() {return new Equation(*this);}
+  static Element* info(QString&, char* &, bool getNewOne=false);
+
+protected:
+  QString vhdlCode(int);
+  QString verilogCode(int);
+
+  void dialgButtStuff(ComponentDialog& d)const;
+}D;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Eqn", &D);
+// the toolbox item
+static Module::INSTALL pp("lumped", &D);
 
 Equation::Equation()
 {
