@@ -287,44 +287,42 @@ QString Subcircuit::getSubcircuitFile() const
   // construct full filename
   QString FileName = Props.getFirst()->Value;
 
-  if (FileName.isEmpty())
-  {
+  if (FileName.isEmpty()) {
+	  incomplete();
       return misc::properAbsFileName(FileName);
+  }else{ untested();
   }
 
   QFileInfo FileInfo(FileName);
 
-  if (FileInfo.exists())
-  {
+  if (FileInfo.exists()) {
       // the file must be an absolute path to a schematic file
      return FileInfo.absoluteFilePath();
-  }
-  else
-  {
+  } else {
+	  qDebug() << FileName << "doesnt exist";
     // get the complete base name (everything except the last '.'
     // and whatever follows
     QString baseName = FileInfo.completeBaseName();
 
     // if only a file name is supplied, first check if it is in the
     // same directory as the schematic file it is a part of
-    if (FileInfo.fileName () == FileName)
-    {
+    if (FileInfo.fileName () != FileName) { untested();
         // the file has no path information, just the file name
-        if (containingSchematic)
-        {
-            // check if a file of the same name is in the same directory
-            // as the schematic file, if we have a pointer to it, in
-            // which case we use this one
-            QFileInfo schematicFileInfo = containingSchematic->getFileInfo ();
-            QFileInfo localFIleInfo (schematicFileInfo.canonicalPath () + "/" + baseName + ".sch");
-            if (localFIleInfo.exists ())
-            {
-                // return the subcircuit saved in the same directory
-                // as the schematic file
-                return localFIleInfo.absoluteFilePath();
-            }
-        }
-    }
+	 }else if (containingSchematic) {
+		 qDebug() << "trying to inherit path from sch";
+		 // check if a file of the same name is in the same directory
+		 // as the schematic file, if we have a pointer to it, in
+		 // which case we use this one
+		 QFileInfo schematicFileInfo = containingSchematic->getFileInfo ();
+		 QFileInfo localFIleInfo (schematicFileInfo.canonicalPath () + "/" + baseName + ".sch");
+		 qDebug() << "got" << schematicFileInfo.canonicalPath();
+		 if (localFIleInfo.exists ()) { untested();
+			 // return the subcircuit saved in the same directory
+			 // as the schematic file
+			 return localFIleInfo.absoluteFilePath();
+		 }else{ untested();
+		 }
+	 }
 
     // look up the hash table for the schematic file as
     // it does not seem to be an absolute path, this will also
@@ -368,17 +366,19 @@ QString Subcircuit::getSubcircuitFile() const
 static SubMap FileList;
 
 // moved from schematic_file.cpp
-void Subcircuit::tAC(QTextStream& stream, Schematic* schem, QStringList&
-		Collect, int& countInit, int NumPorts, NetLang const& nl){
+void Subcircuit::tAC(QTextStream& stream, SchematicModel* schem, QStringList&
+		Collect, int& countInit, int NumPorts, NetLang const& nl)
+{
 	Component* pc=this;
-	assert(pc->obsolete_model_hack()=="Sub"); // really?
 	int i;
 	// tell the subcircuit it belongs to this schematic
-	pc->setSchematic(schem);
+	Subcircuit* sckt=prechecked_cast<Subcircuit*>(pc);
+	assert(sckt);
+	sckt->setSchematicModel (schem);
 	QString f = pc->getSubcircuitFile();
+	qDebug() << "sckt" << f;
 	SubMap::Iterator it = FileList.find(f);
-	if(it != FileList.end())
-	{
+	if(it != FileList.end()) { untested();
 		if (!it.value().PortTypes.isEmpty())
 		{
 			i = 0;
@@ -386,11 +386,11 @@ void Subcircuit::tAC(QTextStream& stream, Schematic* schem, QStringList&
 			foreach(Port *pp, pc->Ports)
 			{
 				pp->Type = it.value().PortTypes[i];
-				// pp->Connection->DType = pp->Type;
+				incomplete();
+				//pp->Connection->DType = pp->Type;
 				i++;
 			}
 		}
-//		continue;   // wtf?
 	}
 
 	// The subcircuit has not previously been added
@@ -400,41 +400,41 @@ void Subcircuit::tAC(QTextStream& stream, Schematic* schem, QStringList&
 
 	// load subcircuit schematic
 	QString s=pc->Props.first()->Value;
+	SchematicModel sm(nullptr);
+	SchematicModel* d=&sm;
 
-	//      qDebug() << "reading subckt schematic" << pc->getSubcircuitFile();
-	Schematic *d = new Schematic(0, pc->getSubcircuitFile());
-	if(!d->loadDocument()) { // BUG. "try".
-		delete d;
-		/// \todo implement error/warning message dispatcher for GUI and CLI modes.
-		QString message = QObject::tr("ERROR: Cannot load subcircuit \"%1\".").arg(s);
-		if (QucsMain) // GUI is running
-			qDebug() << "ErrText->appendPlainText(message)";
-		else // command line
-			qCritical() << "Schematic::throughAllComps" << message;
-		throw "something wrong in sckt"; // TODO
-	}else{
-	}
-	d->DocName = s;
-	d->isVerilog = false; // isVerilog;
-	d->isAnalog = true; // isAnalog;
-	d->creatingLib = false; // creatingLib; //!?
-	auto r = d->createSubNetlist(&stream, countInit, Collect, nullptr, NumPorts, nl);
-	if (r) {
+	// todo: error handling.
+	QString scktfilename(pc->getSubcircuitFile());
+	QFile file(scktfilename);
+	qDebug() << "getting sckt definition from" << scktfilename;
+	file.open(QIODevice::ReadOnly);
+	DocumentStream pstream(&file);
+	d->setFileInfo(scktfilename);
+	d->parse(pstream);
+	d->setDevType(s);
+
+	// d->setDocName(s);
+	// d->isVerilog = isVerilog;
+	// d->isAnalog = isAnalog;
+	// d->creatingLib = creatingLib; wtf?
+	bool creatingLib=false;
+	auto r = d->createSubNetlist(pstream, countInit, Collect, nullptr, NumPorts, creatingLib, nl);
+	if (r)
+	{
 		i = 0;
 		// save in/out signal types of subcircuit
 		foreach(Port *pp, pc->Ports)
 		{
 			//if(i>=d->PortTypes.count())break;
 			pp->Type = d->portType(i);
+			incomplete();
 			//pp->Connection->DType = pp->Type;
 			i++;
 		}
-		sub.PortTypes = d->PortTypes;
+		incomplete();
+		//sub.PortTypes = d->PortTypes;
 		FileList.insert(f, sub);
-	}
-	delete d; // BUG
-	if(!r) {
-		// throw?
+	}else{
 	}
 }
 
