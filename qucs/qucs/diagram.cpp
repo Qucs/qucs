@@ -36,7 +36,7 @@
 #include <locale.h>
 
 #include "diagram.h"
-#include "diagramdialog.h"
+#include "diagrams/diagramdialog.h"
 #include "qucs.h"
 #include "mnemo.h"
 #include "schematic.h"
@@ -2352,7 +2352,8 @@ bool Diagram::pressElement(Schematic* Doc, Element*& selElem, QMouseEvent* Event
 	Diagram *Diag = this;
 	QFileInfo Info(Doc->DocName);
 	// dialog is Qt::WDestructiveClose !!!
-	DiagramDialog *dia = new DiagramDialog(Diag, Doc);
+	incomplete();
+	DiagramDialog *dia = nullptr; // new DiagramDialog(Diag, Doc);
 
 	bool drawn=true;
 	if(dia->exec() == QDialog::Rejected) {  // don't insert if dialog canceled
@@ -2365,7 +2366,9 @@ bool Diagram::pressElement(Schematic* Doc, Element*& selElem, QMouseEvent* Event
 		Doc->setChanged(true, true);   // document has been changed
 
 		Doc->viewport()->repaint();
-		Diag = Diag->newOne(); // the component is used, so create a new one
+	  	// the component is used, so create a new one ??
+		Diag = prechecked_cast<Diagram*>(Diag->clone());
+		assert(Diag);
 		Diag->paintScheme(Doc);
 		selElem = Diag;
 	}

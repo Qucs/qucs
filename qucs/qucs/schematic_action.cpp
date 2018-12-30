@@ -11,12 +11,12 @@
 #include "qucs.h"
 #include "misc.h"
 #include "mouseactions.h"
+#include "globals.h"
 
 #include "components/equation.h" // BUG
 #include "components/ground.h" // BUG
-#include "components/subcirport.h" // BUG
 
-#include "dialogs/changedialog.h"
+#include "changedialog.h"
 
 QRegExp Expr_CompProp;
 QRegExpValidator Val_CompProp(Expr_CompProp, 0);
@@ -133,7 +133,10 @@ void Schematic::actionInsertEquation(bool on)
   if(mouseActions()->selElem)
     delete mouseActions()->selElem;  // delete previously selected component
 
-  mouseActions()->selElem = new Equation();
+  Symbol* sym=symbol_dispatcher.clone("Eqn");
+  assert(sym);
+  mouseActions()->selElem = prechecked_cast<Component*>(sym);
+  assert(mouseActions()->selElem);
 
   if(mouseActions()->drawn) viewport()->update();
   mouseActions()->drawn = false;
@@ -198,7 +201,10 @@ void Schematic::actionInsertGround(bool on)
   if(mouseActions()->selElem)
     delete mouseActions()->selElem;  // delete previously selected component
 
-  mouseActions()->selElem = new Ground();
+  Symbol* sym=symbol_dispatcher.clone("GND");
+  assert(sym);
+  mouseActions()->selElem = prechecked_cast<Component*>(sym);
+  assert(mouseActions()->selElem);
 
   if(mouseActions()->drawn) viewport()->update();
   mouseActions()->drawn = false;
@@ -228,7 +234,10 @@ void Schematic::actionInsertPort(bool on)
   if(mouseActions()->selElem)
     delete mouseActions()->selElem;  // delete previously selected component
 
-  mouseActions()->selElem = new SubCirPort();
+  Symbol* sym=symbol_dispatcher.clone("Port");
+  assert(sym);
+  mouseActions()->selElem = prechecked_cast<Component*>(sym);
+  assert(mouseActions()->selElem);
 
   if(mouseActions()->drawn) viewport()->update();
   mouseActions()->drawn = false;

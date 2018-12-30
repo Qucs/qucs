@@ -150,6 +150,7 @@ public:
   QMouseEvent *focusMEvent;
 
 private:
+  void Set1(QMouseEvent*, Schematic const*);
   void Set2(QMouseEvent*, Schematic const*);
   void Set3(QMouseEvent*, Schematic const*);
 public: // BUG

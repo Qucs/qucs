@@ -619,7 +619,6 @@ void Component::mirrorY()
 }
 
 // -------------------------------------------------------
-<<<<<<< HEAD:qucs/qucs/component.cpp
 /*!
  * obsolete function. still used for some special components
  * just indicate that it's obsolete, so the netlister knows.
@@ -676,11 +675,11 @@ QString Component::getNetlist() const
   int z=0;
   QListIterator<Port *> iport(Ports);
   Port *pp = iport.next();
-  QString Node1 = pp->Connection->Name;
+  QString Node1 = pp->Connection->name();
   QString s = "";
   while (iport.hasNext())
     s += "R:" + Name + "." + QString::number(z++) + " " +
-      Node1 + " " + iport.next()->Connection->Name + " R=\"0\"\n";
+      Node1 + " " + iport.next()->Connection->name() + " R=\"0\"\n";
   return s;
 }
 
@@ -735,12 +734,6 @@ QString Component::get_VHDL_Code(int NumPorts)
   return "  " + Node1 + " <= " + Ports.at(1)->Connection->name() + ";\n";
 }
 
-// -------------------------------------------------------
-void Schematic::saveComponent(QTextStream& s, Component const* c) const
-{
-  // use DocumentLang::printItem
-  assert(false);
-}
 // -------------------------------------------------------
 // TODO: move to parser (it's not there yet.)
 Element* Schematic::loadElement(const QString& _s, Element* e) const
