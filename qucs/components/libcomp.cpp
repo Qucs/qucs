@@ -187,7 +187,7 @@ int LibComp::loadSymbol()
     z = loadSection("Model", Line);
     if(z < 0)  return z;
 
-    Element *e=getComponentFromName(Line);
+    Element *e=nullptr; incomplete(); // getComponentFromName(Line);
     Component *pc = component(e);
     if(pc == 0)  return -20;
 
