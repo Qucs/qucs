@@ -98,11 +98,12 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, ModelInserter& s) co
 				// (Node*)4 =  move all ports (later on)
 				Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4);
 				incomplete(); // qt5 branch...
-				//	c = w->obsolete_load(Line);
-				if(!c){
+				bool err=w->obsolete_load(Line);
+				if(!err){
 					qDebug() << "ERROR" << Line;
 					delete(w);
 				}else{
+					c=w;
 				}
 			}else if(mode=='D'){
 				qDebug() << "diagram parse?" << Line;
@@ -121,8 +122,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, ModelInserter& s) co
 			}
 
 			if(c){
-				incomplete(); // qt5 branch
-				// s->pushBack(c);
+				s.pushBack(c);
 			}else{
 			}
 
