@@ -687,6 +687,9 @@ static std::string find_type_in_string(QString& Line)
 // TODO: fixed in qt5 branch
 bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
 {
+  assert(false);
+  unreachable();
+#if 0
   QString Line, cstr;
   Component *c;
   while(!stream->atEnd()) {
@@ -725,6 +728,7 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
   QMessageBox::critical(0, QObject::tr("Error"),
 	   QObject::tr("Format Error:\n'Component' field is not closed!"));
   return false;
+#endif
 }
 
 // -------------------------------------------------------------
@@ -908,88 +912,28 @@ bool Schematic::loadPaintings(QTextStream *stream, Q3PtrList<Painting> *List)
  */
 bool Schematic::loadDocument()
 {
-  QFile file(DocName);
-  if(!file.open(QIODevice::ReadOnly)) {
+  QFile file(docName());
+  qDebug() << "opening" << docName();
+  if(!file.open(QIODevice::ReadOnly)) { untested();
     /// \todo implement unified error/warning handling GUI and CLI
     if (QucsMain)
       QMessageBox::critical(0, QObject::tr("Error"),
-                 QObject::tr("Cannot load document: ")+DocName);
+                 QObject::tr("Cannot load document: ")+docName());
     else
       qCritical() << "Schematic::loadDocument:"
-                  << QObject::tr("Cannot load document: ")+DocName;
+                  << QObject::tr("Cannot load document: ")+docName();
     return false;
+  }else{
+    DocModel.setFileInfo(docName());
+
+    DocModel.loadDocument(file);
+    // scene()->loadModel(DocModel); // ??
+#ifndef USE_SCROLLVIEW
+    QGraphicsScene& s=*scene();
+//    DocModel.toScene(s);
+#endif
+    return true;
   }
-
-  // Keep reference to source file (the schematic file)
-  setFileInfo(DocName);
-
-  QString Line;
-  QTextStream stream(&file);
-
-  // read header **************************
-  do {
-    if(stream.atEnd()) {
-      file.close();
-      return true;
-    }
-
-    Line = stream.readLine();
-  } while(Line.isEmpty());
-
-  if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
-    file.close();
-    QMessageBox::critical(0, QObject::tr("Error"),
- 		 QObject::tr("Wrong document type: ")+DocName);
-    return false;
-  }
-
-  Line = Line.mid(16, Line.length()-17);
-  VersionTriplet DocVersion = VersionTriplet(Line);
-  if (DocVersion > QucsVersion) { // wrong version number ?
-    if (!QucsSettings.IgnoreFutureVersion) {
-      QMessageBox::critical(0, QObject::tr("Error"),
-                            QObject::tr("Wrong document version: %1").arg(DocVersion.toString()));
-    }
-  }
-
-  // read content *************************
-  while(!stream.atEnd()) {
-    Line = stream.readLine();
-    Line = Line.trimmed();
-    if(Line.isEmpty()) continue;
-
-    if(Line == "<Symbol>") {
-      if(!loadPaintings(&stream, &SymbolPaints)) {
-        file.close();
-        return false;
-      }
-    }
-    else
-    if(Line == "<Properties>") {
-      if(!loadProperties(&stream)) { file.close(); return false; } }
-    else
-    if(Line == "<Components>") {
-      if(!loadComponents(&stream)) { file.close(); return false; } }
-    else
-    if(Line == "<Wires>") {
-      if(!loadWires(&stream)) { file.close(); return false; } }
-    else
-    if(Line == "<Diagrams>") {
-      if(!loadDiagrams(&stream, &DocDiags)) { file.close(); return false; } }
-    else
-    if(Line == "<Paintings>") {
-      if(!loadPaintings(&stream, &DocPaints)) { file.close(); return false; } }
-    else {
-       qDebug() << Line;
-       QMessageBox::critical(0, QObject::tr("Error"),
-		   QObject::tr("File Format Error:\nUnknown field!"));
-      file.close();
-      return false;
-    }
-  }
-
-  file.close();
-  return true;
 }
 
 // -------------------------------------------------------------

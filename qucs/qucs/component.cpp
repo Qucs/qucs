@@ -735,21 +735,9 @@ QString Component::get_VHDL_Code(int NumPorts)
 }
 
 // -------------------------------------------------------
-// TODO: move to parser (it's not there yet.)
-Element* Schematic::loadElement(const QString& _s, Element* e) const
-{
-  if(Component* c=dynamic_cast<Component*>(e)){
-    // legacy components
-    // will not work non-qucs-.sch languages
-    return loadComponent(_s, c);
-  }else{
-    incomplete();
-    return e;
-  }
-}
 // -------------------------------------------------------
-// FIXME: must be Component* SchematicParser::loadComponent(Stream&, Component*);
-Component* Schematic::loadComponent(const QString& _s, Component* c) const
+#if 0 // moved.
+Component* LegacySchematicLang::loadComponent(const QString& _s, Component* c) const
 {
   qDebug() << "load" << _s;
   bool ok;
@@ -938,6 +926,7 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
 
   return c;
 }
+#endif
 
 // -------------------------------------------------------
 
@@ -1568,11 +1557,7 @@ void GateComponent::createSymbol()
 // ********                                                       ********
 // ***********************************************************************
 
-// FIXME:
-// must be Component* SomeParserClass::getComponent(QString& Line)
-// better: Component* SomeParserClass::getComponent(SomeDataStream& s)
-// BUG: loads component into schematic.
-// fixed in qt5 rework
+#if 0 // moved
 Element* getComponentFromName(QString& Line)
 {
   Element *e = 0;
@@ -1622,7 +1607,9 @@ Element* getComponentFromName(QString& Line)
     incomplete();
   }
 
-  if(!e) {
+  if(e) {
+    loadElement(Line, e);
+  }else{
     incomplete();
     // BUG: use of messagebox in the parser.
     // does not work. need to get rid of this
@@ -1676,6 +1663,7 @@ Element* getComponentFromName(QString& Line)
 
   return e;
 }
+#endif
 
 // do something with Dialog Buttons
 void Component::dialgButtStuff(ComponentDialog& d)const

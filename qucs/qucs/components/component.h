@@ -183,8 +183,4 @@ protected:
   void createSymbol();
 };
 
-// prototype of independent function
-// kludge: must be Element, for Commands
-Element* getComponentFromName(QString& Line);
-
 #endif
