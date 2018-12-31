@@ -162,7 +162,7 @@ QString Wire::save()
 
 // ----------------------------------------------------------------
 // This is the counterpart to Wire::save.
-bool Wire::load(const QString& _s)
+bool Wire::obsolete_load(const QString& _s)
 {
   bool ok;
   QString s = _s;

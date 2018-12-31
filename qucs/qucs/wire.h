@@ -51,7 +51,7 @@ public:
 
   void    rotate();
   QString save();
-  bool    load(const QString&);
+  bool    obsolete_load(const QString&);
   bool    isHorizontal() const { return (y1 == y2);}
 
 public: // FIXME, these are still around.

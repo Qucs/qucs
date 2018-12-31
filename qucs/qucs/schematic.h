@@ -1,22 +1,21 @@
 /***************************************************************************
                                schematic.h
                               -------------
-    begin                : Sat Mar 11 2006
     copyright            : (C) 2006 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2018 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#ifndef SCHEMATIC_H
-#define SCHEMATIC_H
+#ifndef QUCS_SCHEMATIC_H
+#define QUCS_SCHEMATIC_H
 
 // maybe in another place...
 #ifdef NDEBUG
@@ -38,6 +37,7 @@
 #include "sim/sim.h"
 #include "schematic_scene.h"
 #include "schematic_model.h"
+#include "schematic_lang.h"
 
 #include <Q3ScrollView>
 #include "qt_compat.h"
@@ -94,32 +94,6 @@ class ElementGraphics;
 #define SchematicBase QGraphicsView
 #endif
 
-#if 0
-class SchematicModel{
-private:
-  SchematicModel(){}
-public:
-  SchematicModel(Schematic* s);
-public: // stuff saved from Schematic
-  QString createClipboardFile();
-  void sizeOfAll(int&, int&, int&, int&, float) const;
-private: // TODO: actually store here.
-  WireList& wires();
-  NodeList& nodes();
-  DiagramList& diagrams();
-  PaintingList& paintings();
-  ComponentList& components();
-public:
-  WireList const& wires() const;
-  NodeList const& nodes() const;
-  DiagramList const& diagrams() const;
-  PaintingList const& paintings() const;
-  ComponentList const& components() const;
-private:
-  Schematic* _doc;
-};
-#endif
-
 class Schematic : public SchematicBase, public QucsDoc {
   Q_OBJECT
 public:
@@ -142,6 +116,7 @@ private: //temporary/obsolete
 	  return DocModel.sizeOfAll(a, b, c, d, textCorr());
   }
 public:
+  void pushBack(Element* what);
   bool  rotateElements();
   bool  mirrorXComponents();
   bool  mirrorYComponents();
