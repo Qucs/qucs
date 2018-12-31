@@ -95,6 +95,8 @@ LUMPED_COMPONENTS = \
 #   etr_sim.cpp ecvs.cpp vcresistor.cpp       \
 #   mutualx.cpp
 
+AM_CXXFLAGS = ${CXXFLAGS}
+
 qucs_default_components_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 # some stuff mostly related to legacy components

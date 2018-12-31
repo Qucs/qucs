@@ -185,7 +185,7 @@ bool Component::getSelected(int x_, int y_)
 }
 
 // -------------------------------------------------------
-void Component::paint(ViewPainter *p)
+void Component::paint(ViewPainter *p) const
 {
   int x, y, a, b, xb, yb;
   QFont f = p->Painter->font();   // save current font

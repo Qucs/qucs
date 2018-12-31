@@ -36,7 +36,7 @@ public:
   QString get_VHDL_Code(int);
   QString get_Verilog_Code(int);
 private: // override
-  void    paint(ViewPainter*);
+  void    paint(ViewPainter*) const;
   virtual Component* newOne() = 0; // legacy interfase. use clone.
 public:
   Element* clone() const{
