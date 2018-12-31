@@ -428,8 +428,8 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
   if(!isSymbolMode())
     paintFrame(&Painter);
 
-  for(Component *pc = Components->first(); pc != 0; pc = Components->next()){
-	  Element* e=pc;
+  for(auto pc : components()) {
+    Element* e=pc;
     e->paint(&Painter);
   }
 
@@ -450,8 +450,10 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
 
   // FIXME disable here, issue with select box goes away
   // also, instead of red, line turns blue
-  for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
-    pd->paint(&Painter);
+  for(auto pd : diagrams()){
+    Element const* e=pd;
+    e->paint(&Painter);
+  }
 
   for(Painting *pp = Paintings->first(); pp != 0; pp = Paintings->next())
     pp->paint(&Painter);

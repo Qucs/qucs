@@ -22,6 +22,7 @@
 #include "diagrams/diagramdialog.h"
 #include "qucs.h"
 #include "schematic.h"
+#include "platform.h"
 // #include "rect3ddiagram.h" BUG
 #include "misc.h"
 

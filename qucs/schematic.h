@@ -17,15 +17,6 @@
 #ifndef QUCS_SCHEMATIC_H
 #define QUCS_SCHEMATIC_H
 
-// maybe in another place...
-#ifdef NDEBUG
-// cast without overhead
-#  define prechecked_cast static_cast
-#else
-// cast safely, for debugging purposes
-#  define prechecked_cast dynamic_cast
-#endif
-
 #include "actions.h"
 #include "wire.h"
 #include "node.h"
