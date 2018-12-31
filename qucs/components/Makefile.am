@@ -115,7 +115,7 @@ noinst_HEADERS = $(MOCHEADERS) components.h    \
 	spicedialog.h optimizedialog.h spicefile.h \
 	componentdialog.h \
   inductor.h biast.h dcblock.h dcfeed.h ground.h       \
-  transformer.h ampere_dc.h attenuator.h circulator.h isolator.h   \
+  ampere_dc.h attenuator.h circulator.h isolator.h   \
   source_ac.h subcircuit.h ac_sim.h cccs.h   \
   ccvs.h coplanar.h diode.h hb_sim.h mscorner.h mscoupled.h mslange.h          \
   mscross.h msline.h msstep.h mstee.h substrate.h      \
