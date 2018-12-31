@@ -774,6 +774,8 @@ void Schematic::simpleInsertWire(Wire *pw)
 // -------------------------------------------------------------
 bool Schematic::loadWires(QTextStream *stream, Q3PtrList<Element> *List)
 {
+  incomplete();
+  unreachable();
   Wire *w;
   QString Line;
   while(!stream->atEnd()) {
@@ -784,7 +786,7 @@ bool Schematic::loadWires(QTextStream *stream, Q3PtrList<Element> *List)
 
     // (Node*)4 =  move all ports (later on)
     w = new Wire(0,0,0,0, (Node*)4,(Node*)4);
-    if(!w->load(Line)) {
+    if(!w->obsolete_load(Line)) {
       QMessageBox::critical(0, QObject::tr("Error"),
 		QObject::tr("Format Error:\nWrong 'wire' line format!"));
       delete w;
@@ -926,7 +928,8 @@ bool Schematic::loadDocument()
   }else{
     DocModel.setFileInfo(docName());
 
-    DocModel.loadDocument(file);
+    // pre-qt5 kludge
+    do_loadDocument(file);
     // scene()->loadModel(DocModel); // ??
 #ifndef USE_SCROLLVIEW
     QGraphicsScene& s=*scene();
@@ -1075,7 +1078,7 @@ void Schematic::throughAllNodes(bool User, QStringList& Collect,
       continue;  // already worked on
     }
 
-    if(isAnalog){ untested();
+    if(isAnalog){
       createNodeSet(Collect, countInit, pn, pn);
     }else{
       incomplete();
@@ -1257,6 +1260,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
     pc->tAC(*stream, this, Collect, countInit, NumPorts, nl); //?!!
     // handle ground symbol
     if(pc->obsolete_model_hack() == "GND") { // BUG.
+      qDebug() << "GND hack" << pc->Ports.first()->Connection->name();
       pc->Ports.first()->Connection->setName("gnd");
       continue;
 #if 0 // moved to Subcircuit::tAC
