@@ -17,6 +17,7 @@
 
 #include "schematic.h"
 #include "schematic_lang.h"
+#include "globals.h"
 
 SchematicModel::SchematicModel(Schematic* s)
   :_doc(s)
@@ -46,16 +47,36 @@ void SchematicModel::setDevType(QString const& s)
 	DevType = s;
 }
 
+namespace{
+class ins : public ModelInserter{
+public:
+	ins(SchematicModel* m) : _m(m) {
+		assert(m);
+	}
+private:
+	void pushBack(Element* e){
+		_m->pushBack(e);
+	}
+private:
+	SchematicModel* _m;
+};
+}
+
 void SchematicModel::parse(DocumentStream& s, SchematicLanguage const* L)
 {
+	if(!L){
+		auto D=doclang_dispatcher["leg_sch"];
+		L = dynamic_cast<SchematicLanguage const*>(D);
+	}else{
+	}
 	assert(L);
+	ins i(this);
 	while(!s.atEnd()){ untested();
 		qDebug() << "entering parse";
-		L->parse(s, this);
+		L->parse(s, i);
 		assert(s.atEnd()); // happens with legacy lang
 	}
 }
-
 
 
 /// ACCESS FUNCTIONS.
@@ -63,8 +84,56 @@ void SchematicModel::parse(DocumentStream& s, SchematicLanguage const* L)
 // note that _doc->...() functions still involve pointer hacks
 ComponentList& SchematicModel::components()
 {
+	incomplete();
 	// temporary. move stuff here....
 	return _doc->components();
+}
+
+void SchematicModel::pushBack(Element* what)
+{
+	if(auto c=component(what)){
+      simpleInsertComponent(c);
+	}else if(auto d=diagram(what)){
+		diagrams().append(d);
+	}else if(auto w=wire(what)){
+		simpleInsertWire(w);
+	}else if(auto s=dynamic_cast<SchematicSymbol*>(what)){ untested();
+		qDebug() << "Model replacing symbol";
+		delete _symbol;
+		_symbol = s;
+	}else{
+		incomplete();
+	}
+
+	if(doc()){
+		// only necessary when gui is running.
+		incomplete();
+		// later, in qt5 rework
+		// doc()->addToScene(what);
+	}else{
+	}
+
+}
+
+// called from schematic::erase only
+void SchematicModel::erase(Element* what)
+{
+	if(auto c=component(what)){
+		components().removeRef(c);
+	}else if(auto d=diagram(what)){
+		diagrams().removeRef(d);
+	}else if(auto w=wire(what)){
+		wires().removeRef(w);
+	}else{
+		unreachable();
+	}
+	delete(what);
+}
+
+// BUG: use schematic_symbol
+Schematic* SchematicModel::doc()
+{
+	return _doc;
 }
 
 WireList& SchematicModel::wires()
@@ -256,3 +325,89 @@ bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
 
 	return true;
 }
+
+bool SchematicModel::loadDocument(QFile& /*BUG*/ file)
+{ untested();
+  QString Line;
+  DocumentStream stream(&file);
+
+  // read header **************************
+  do {
+    if(stream.atEnd()) {
+      file.close(); // BUG
+      return true;
+    }
+
+    Line = stream.readLine();
+  } while(Line.isEmpty());
+
+  if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
+    file.close();
+    throw "incomplete_exception";
+  }
+
+  Line = Line.mid(16, Line.length()-17);
+
+  parse(stream);
+  file.close();
+  return true;
+}
+
+void SchematicModel::simpleInsertComponent(Component *c)
+{
+	incomplete();
+	// called from PushBack?
+}
+
+void SchematicModel::simpleInsertWire(Wire *pw)
+{
+  Node *pn=nullptr;
+
+  // find_node_at
+  for(auto pn_ : nodes()){
+    if(pn_->cx_() == pw->x1_()) {
+      if(pn_->cy_() == pw->y1_()) {
+	pn = pn_;
+	break;
+      }
+    }
+  }
+
+  if(!pn) {   // create new node, if no existing one lies at this position
+    pn = new Node(pw->x1_(), pw->y1_());
+    nodes().append(pn);
+  }
+
+  if(pw->x1_() == pw->x2_()) if(pw->y1_() == pw->y2_()) {
+    pn->Label = pw->Label;   // wire with length zero are just node labels
+    if (pn->Label) {
+      pn->Label->Type = isNodeLabel;
+      pn->Label->pOwner = pn;
+    }
+    delete pw;           // delete wire because this is not a wire
+    return;
+  }
+  pn->Connections.append(pw);  // connect schematic node to component node
+  pw->Port1 = pn;
+
+  // find_node_at
+  pn=nullptr;
+  for(auto pn_ : nodes()){
+    if(pn_->cx_() == pw->x2_()) {
+      if(pn_->cy_() == pw->y2_()) {
+	pn = pn_;
+	break;
+      }
+    }
+  }
+
+  if(!pn) {   // create new node, if no existing one lies at this position
+    pn = new Node(pw->x2_(), pw->y2_());
+    nodes().append(pn);
+  }
+  pn->Connections.append(pw);  // connect schematic node to component node
+  pw->Port2 = pn;
+
+  wires().append(pw);
+}
+
