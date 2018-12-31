@@ -13,7 +13,6 @@
 #include "mouseactions.h"
 #include "globals.h"
 
-#include "components/equation.h" // BUG
 #include "components/ground.h" // BUG
 
 #include "changedialog.h"

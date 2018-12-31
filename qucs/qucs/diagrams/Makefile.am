@@ -33,7 +33,6 @@ include ../../common.mk
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 libdiagrams_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
-include ../../common.mk
 
 libdiagrams_la_SOURCES = tabdiagram.cpp smithdiagram.cpp rectdiagram.cpp \
   polardiagram.cpp \

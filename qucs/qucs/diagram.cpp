@@ -40,6 +40,7 @@
 #include "qucs.h"
 #include "mnemo.h"
 #include "schematic.h"
+#include "platform.h"
 
 #include "diagrams/rect3ddiagram.h" // BUG
 #include "misc.h"
@@ -99,10 +100,11 @@ Diagram::~Diagram()
 /*!
    Paint function for most diagrams (cartesian, smith, polar, ...)
 */
-void Diagram::paint(ViewPainter *p)
+void Diagram::paint(ViewPainter *p) const
 {
-    paintDiagram(p);
-    paintMarkers(p);
+	Diagram* d=const_cast<Diagram*>(this);
+	d->paintDiagram(p);
+	d->paintMarkers(p);
 }
 
 void Diagram::paintDiagram(ViewPainter *p)
