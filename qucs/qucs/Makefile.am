@@ -158,23 +158,37 @@ endif
 
 noinst_HEADERS = \
 	$(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
-	symbol.h \
-	trace.h \
+	actions.h \
+	command.h \
+  	imagewriter.h \
+	language.h \
+	misc.h \
+	mnemo.h \
+	module.h \
+	mouseactions.h \
+	printerwriter.h \
+	projectView.h \
 	qt_compat.h \
-	wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
-	projectView.h printerwriter.h imagewriter.h command.h actions.h
+	symbol.h \
+  	syntax.h \
+	trace.h \
+	viewpainter.h \
+	wirelabel.h
 
 # must be installed. but later
 noinst_HEADERS += \
-	globals.h \
 	diagram.h \
-	io_trace.h \
 	dispatcher.h \
+	globals.h \
+	io.h \
+	io_trace.h \
 	l_dispatcher.h \
 	object.h \
 	platform.h \
 	qt_compat.h \
-	schematic_lang.h
+	schematic_lang.h \
+	schematic_model.h \
+	schematic_symbol.h
 
 hicolor16dir = ${prefix}/share/icons/hicolor/16x16/apps
 hicolor16_DATA =  bitmaps/hicolor/16x16/apps/qucs.png

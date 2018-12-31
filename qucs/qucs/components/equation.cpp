@@ -23,6 +23,7 @@
 
 #include "component.h"
 
+namespace{
 
 class Equation : public Component  {
 
@@ -39,10 +40,9 @@ protected:
   void dialgButtStuff(ComponentDialog& d)const;
 }D;
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Eqn", &D);
-// the toolbox item
 static Module::INSTALL pp("lumped", &D);
 
-Equation::Equation()
+Equation::Equation() : Component()
 {
   Type = isComponent; // Analogue and digital component.
   Description = QObject::tr("equation");
@@ -111,6 +111,8 @@ Element* Equation::info(QString& Name, char* &BitmapFile, bool getNewOne)
 void Equation::dialgButtStuff(ComponentDialog& d)const
 {
   d.enableButtons();
+}
+
 }
 
 // vim:ts=8:sw=2:noet

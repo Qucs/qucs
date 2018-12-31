@@ -77,7 +77,10 @@ public:
   virtual void calcLimits() {}
   virtual QString extraMarkerText(Marker const*) const {return "";}
   
-  virtual void paint(ViewPainter*);
+private:
+  virtual void paint(ViewPainter*) const;
+
+public: // ??!
   virtual void paintDiagram(ViewPainter* p);
   void paintMarkers(ViewPainter* p, bool paintAll = true);
   void    setCenter(int, int, bool relative=false);
