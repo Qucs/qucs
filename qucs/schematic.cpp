@@ -2411,4 +2411,54 @@ QPointF Schematic::mapToScene(QPoint const& p) const
 }
 #endif
 
+namespace{
+class ins : public ModelInserter{
+public:
+  ins(Schematic* m) : _m(m) {
+    assert(m);
+  }
+private:
+  void pushBack(Element* e){
+    _m->pushBack(e);
+  }
+private:
+  Schematic* _m;
+};
+}
+
+void Schematic::parse(DocumentStream& s, SchematicLanguage const* L)
+{
+  if(!L){
+    auto D=doclang_dispatcher["leg_sch"];
+    L = dynamic_cast<SchematicLanguage const*>(D);
+  }else{
+  }
+  assert(L);
+  ins i(this);
+  while(!s.atEnd()){ untested();
+    qDebug() << "entering parse";
+    L->parse(s, i);
+    assert(s.atEnd()); // happens with legacy lang
+  }
+}
+
+// pre qt5 kludge
+void Schematic::pushBack(Element* what)
+{
+  qDebug() << "Schematic::pushBack" << what;
+  if(auto c=component(what)){
+    simpleInsertComponent(c);
+  }else if(auto d=diagram(what)){
+    diagrams().append(d);
+  }else if(auto w=wire(what)){
+    simpleInsertWire(w);
+  }else if(auto s=dynamic_cast<SchematicSymbol*>(what)){ untested();
+    unreachable();
+   //  delete _symbol;
+    // _symbol = s;
+  }else{
+    incomplete();
+  }
+}
+
 // vim:ts=8:sw=2:noet
