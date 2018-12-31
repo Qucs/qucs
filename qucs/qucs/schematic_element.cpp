@@ -21,7 +21,7 @@
 #include "mouseactions.h"
 #include "qt_compat.h"
 #include <QDebug>
-
+#include "platform.h"
 #include "trace.h"
 
 

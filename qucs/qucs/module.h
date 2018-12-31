@@ -113,7 +113,7 @@ class Category
 	  return Content.at(x);
   }
   void push_back(Module* x){
-	  incomplete(); // must refresh gui.
+	  // incomplete(); // must refresh gui.
 	  Content.append(x);
   }
  private: // internal

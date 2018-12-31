@@ -30,7 +30,6 @@ void schematicParse(DocumentStream& s, ModelInserter& c, SchematicLanguage const
 {
 	assert(L);
 	while(!s.atEnd()){ untested();
-		qDebug() << "entering parse";
 		L->parse(s, c);
 		assert(s.atEnd()); // happens with legacy lang
 	}
