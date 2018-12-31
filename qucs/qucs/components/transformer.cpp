@@ -1,25 +1,41 @@
 /***************************************************************************
-                          transformer.cpp  -  description
-                             -------------------
-    begin                : Sat Aug 23 2003
+                               resistor.cpp
+                              --------------
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2018 Felix Salfelder / QUCS
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+#include "globals.h"
+#include "module.h"
 
-#include "transformer.h"
+#include "component.h"
 
+namespace {
+
+
+class Transformer : public Component  {
+public:
+  Transformer();
+  ~Transformer();
+  Component* newOne() {
+	  return new Transformer(*this);
+  }
+  static Element* info(QString&, char* &, bool getNewOne=false);
+}D;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Tr", &D);
+static Module::INSTALL pp("lumped", &D);
 
 Transformer::Transformer()
 {
+  info(Name, bitmap_file);
   Description = QObject::tr("ideal transformer");
 
   Arcs.append(new Arc(-16,-18,12,12, 16*270,16*180, QPen(Qt::darkBlue,2)));
@@ -72,4 +88,6 @@ Element* Transformer::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Transformer();
   return 0;
+}
+
 }
