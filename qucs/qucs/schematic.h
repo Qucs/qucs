@@ -397,6 +397,10 @@ public: // TODO: move out of the way, perhaps to SchematicNetlist,
   bool loadDocument();
   void highlightWireLabels (void);
 
+private: // tmp hack. use SchematicModel.
+  bool do_loadDocument(QFile&);
+  void parse(DocumentStream& stream, SchematicLanguage const*l=nullptr);
+
 private: // legacy, don't use
   void simpleInsertComponent(Component*);
   void simpleInsertCommand(Command*);
@@ -495,5 +499,37 @@ public: // need access to SchematicModel. grr
   friend class MouseActions;
   friend class ImageWriter;
 };
+
+
+//tmp hack
+inline bool Schematic::do_loadDocument(QFile& /*BUG*/ file)
+{ untested();
+
+  QString Line;
+  DocumentStream stream(&file);
+
+  // read header **************************
+  do {
+    if(stream.atEnd()) {
+      file.close(); // BUG
+      return true;
+    }
+
+    Line = stream.readLine();
+  } while(Line.isEmpty());
+
+  if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
+    file.close();
+    // BUG: throw
+ throw "Wrong document type: ";
+    return false;
+  }
+
+  Line = Line.mid(16, Line.length()-17);
+
+  parse(stream);
+  file.close();
+  return true;
+}
 
 #endif
