@@ -35,19 +35,23 @@ private: // local
 
 void QucsLang::printSymbol(Symbol const* d, QTextStream& s) const
 {
-  if(auto c=dynamic_cast<Component const*>(d)){
+  if(auto c=dynamic_cast<Command const*>(d)){
+    if(auto cc=dynamic_cast<Component const*>(d)){
+      incomplete(); // legacy hack
+      //printComponent(cc, s);
+      printCommand(c, s);
+    }else{
+      printCommand(c, s);
+    }
+  }else if(auto c=dynamic_cast<Component const*>(d)){
     printComponent(c, s);
   }else{
     incomplete();
   }
 }
 
-// this does not make sense...
-// but it works, because the empty portlist is not visible
 void QucsLang::printCommand(Command const* c, QTextStream& s) const
 {
-  s << ".";
-
   if(c->isOpen()) {
     // nothing.
   }else if(c->isShort()){
@@ -56,7 +60,7 @@ void QucsLang::printCommand(Command const* c, QTextStream& s) const
     { // todo: introduce proper exceptions
       // normal netlisting
 
-      s << c->type() << ":" << c->label();
+      s << "." << c->name() << ":" << c->label();
 
       //for(auto p2 : c->params())
       for(auto p2 : c->Props){ // BUG
