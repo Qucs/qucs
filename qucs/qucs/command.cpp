@@ -173,7 +173,7 @@ bool Command::getSelected(int x_, int y_)
 }
 
 // -------------------------------------------------------
-void Command::paint(ViewPainter *p)
+void Command::paint(ViewPainter *p) const
 {
   int x, y, a, b, xb, yb;
   QFont f = p->Painter->font();   // save current font

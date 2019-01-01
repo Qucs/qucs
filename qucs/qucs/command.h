@@ -40,7 +40,7 @@ private:
   Component* newOne(){ unreachable();
 	  return nullptr;
   }
-  void    paint(ViewPainter*);
+  void    paint(ViewPainter*) const;
 public:
   void    paintScheme(Schematic*) const;
   void    print(ViewPainter*, float);

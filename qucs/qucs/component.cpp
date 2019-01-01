@@ -41,10 +41,30 @@
  * \brief Implementation of the Component class.
  */
 
+Component::Component(Component const& p)
+  : Symbol(p),
+    mirroredX(p.mirroredX),
+    rotated(p.rotated),
+    //cx(p.cx),
+    //cy(p.cy),
+    tx(p.tx),
+    ty(p.ty),
+    showName(p.showName),
+    containingSchematic(p.containingSchematic)
+{
+  qDebug() << "component copy";
+
+  Props.clear();
+  for(auto i : p.Props){
+	Props.append(new Property(*i));
+  }
+
+  setType(p.type().toStdString()); // bug.
+}
 
 /*!
  * \class Component
- * \brief The Component class implements a generic analog component
+ * \brief The Component class implements a legacy qucs component symbol
  */
 Component::Component()
 {

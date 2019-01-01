@@ -36,7 +36,7 @@ static Module::INSTALL pp("lumped", &C);
 
 Capacitor::Capacitor()
 {
-info(Name, bitmap_file);
+  info(Name, bitmap_file);
 
   Description = QObject::tr("capacitor");
 
