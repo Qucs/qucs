@@ -58,23 +58,23 @@ Pac:P _net0 _net1 Num="1" Z="50 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
 =====DC=========
 
 //
-.DC: Temp="26.85" reltol="0.001" abstol="1 pA" vntol="1 uV" saveOPs="no" MaxIter="150" saveAll="no" convHelper="none" Solver="CroutLU"
+.: Temp="26.85" reltol="0.001" abstol="1 pA" vntol="1 uV" saveOPs="no" MaxIter="150" saveAll="no" convHelper="none" Solver="CroutLU"
 =====TR=========
 
-//
-.TR: Type="lin" Start="0" Stop="1 ms" Points="11" IntegrationMethod="Trapezoidal" Order="2" InitialStep="1 ns" MinStep="1e-16" MaxIter="150" reltol="0.001" abstol="1 pA" vntol="1 uV" Temp="26.85" LTEreltol="1e-3" LTEabstol="1e-6" LTEfactor="1" Solver="CroutLU" relaxTSR="no" initialDC="yes" MaxStep="0"
+//TR
+.TR:TR Type="lin" Start="0" Stop="1 ms" Points="11" IntegrationMethod="Trapezoidal" Order="2" InitialStep="1 ns" MinStep="1e-16" MaxIter="150" reltol="0.001" abstol="1 pA" vntol="1 uV" Temp="26.85" LTEreltol="1e-3" LTEabstol="1e-6" LTEfactor="1" Solver="CroutLU" relaxTSR="no" initialDC="yes" MaxStep="0"
 =====SP=========
 
 //
-.SP: Type="lin" Start="1 GHz" Stop="10 GHz" Points="19" Noise="no" NoiseIP="1" NoiseOP="2" saveCVs="no" saveAll="no"
+.: Type="lin" Start="1 GHz" Stop="10 GHz" Points="19" Noise="no" NoiseIP="1" NoiseOP="2" saveCVs="no" saveAll="no"
 =====AC=========
 
 //
-.AC: Type="lin" Start="1 GHz" Stop="10 GHz" Points="19" Noise="no"
+.: Type="lin" Start="1 GHz" Stop="10 GHz" Points="19" Noise="no"
 =====SW=========
 
 //
-.SW: Sim="" Type="lin" Param="R1" Start="5 Ohm" Stop="50 Ohm" Points="20"
+.: Sim="" Type="lin" Param="R1" Start="5 Ohm" Stop="50 Ohm" Points="20"
 =====Sub=========
 <Sub SUB 1 0 0 0 0 0 0 "" 0>
 Sub #(.File()) SUB(_net0);

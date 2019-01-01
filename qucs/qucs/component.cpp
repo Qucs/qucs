@@ -52,7 +52,7 @@ Component::Component(Component const& p)
     showName(p.showName),
     containingSchematic(p.containingSchematic)
 {
-  qDebug() << "component copy";
+  qDebug() << "component copy" << p.Name << p.Model;
 
   assert(!Props.count());
   for(auto i : p.Props){
