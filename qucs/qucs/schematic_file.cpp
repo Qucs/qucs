@@ -631,11 +631,11 @@ bool Schematic::loadProperties(QTextStream *stream)
 void Schematic::simpleInsertComponent(Component *c)
 {
   Node *pn;
-  int x, y;
   // connect every node of component
-  foreach(Port *pp, c->Ports) {
-    x = pp->x+c->cx_();
-    y = pp->y+c->cy_();
+  for(auto pp : c->Ports){
+    int x=pp->x+c->cx_();
+    int y=pp->y+c->cy_();
+    qDebug() << c->label() << "port" << x << y;
 
     // check if new node lies upon existing node
     for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next()){
@@ -1048,6 +1048,7 @@ bool Schematic::rebuildSymbol(QString *s)
 // *****                                                     *****
 // ***************************************************************
 
+// ?!?!@
 void Schematic::createNodeSet(QStringList& Collect, int& countInit,
 			      Conductor *pw, Node *p1)
 {
@@ -1060,20 +1061,16 @@ void Schematic::createNodeSet(QStringList& Collect, int& countInit,
 // ---------------------------------------------------
 void Schematic::throughAllNodes(bool User, QStringList& Collect,
 				int& countInit)
-{
-  qDebug() << "tan";
+{ untested();
   Node *pn;
   int z=0;
 
-  for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
-    if(pn->name().isEmpty() == User) {
+  for(pn = nodes().first(); pn != 0; pn = nodes().next()) {
+    if((!pn->number()) == User) {
       continue;  // already named ?
     }else if(!User) {
-      if(isAnalog)
-	pn->setName("_net");
-      else
-	pn->setName("net_net");   // VHDL names must not begin with '_'
-      pn->setName(pn->name() + QString::number(z++));
+      pn->setNumber(++z);
+      pn->setName("_net" + QString::number(z));
     }else if(pn->State) {
       continue;  // already worked on
     }
@@ -1177,42 +1174,61 @@ void Schematic::collectDigitalSignals(void)
 // Propagates the given node to connected component ports.
 void Schematic::propagateNode(QStringList& Collect,
 			      int& countInit, Node *pn)
-{
+{ untested();
   bool setName=false;
-  Q3PtrList<Node> Cons;
+  std::list<Node*> Cons;
   Node *p2;
   Wire *pw;
   Element *pe;
 
-  Cons.append(pn);
-  for(p2 = Cons.first(); p2 != 0; p2 = Cons.next()){
-    for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
+  Cons.push_back(pn);
+  for(auto it=Cons.begin(); it!=Cons.end(); ){
+    auto p2=*it;
+    auto cur=it;
+    bool nextit=true;
+    for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next()){
       if(wire(pe)){
 	pw = (Wire*)pe;
 	if(p2 != pw->Port1) {
-	  if(pw->Port1->name().isEmpty()) {
-	    pw->Port1->setName(pn->name());
+	  if(!pw->Port1->number()) {
+	    pw->Port1->setNumber(pn->number());
+	    pw->Port1->setName("net" + QString::number(pn->number()));
 	    pw->Port1->State = 1;
-	    Cons.append(pw->Port1);
+	    Cons.push_back(pw->Port1);
+	    it=Cons.end();
+	    --it;
 	    setName = true;
 	  }
 	}else{
-	  if(pw->Port2->name().isEmpty()) {
+	  if(!pw->Port2->number()) {
 	    assert(pn);
-	    pw->Port2->setName(pn->name());
+	    pw->Port2->setNumber(pn->number());
+	    pw->Port2->setName("net" + QString::number(pn->number()));
 	    pw->Port2->State = 1;
-	    Cons.append(pw->Port2);
+	    Cons.push_back(pw->Port2);
+	    it=Cons.end();
+	    --it;
 	    setName = true;
 	  }
 	}
 	if(setName) {
-	  Cons.findRef(p2);   // back to current Connection
-	  if (isAnalog) createNodeSet(Collect, countInit, pw, pn);
+	  if (isAnalog){
+	    createNodeSet(Collect, countInit, pw, pn);
+	  }else{
+	  }
 	  setName = false;
+	  nextit=false;
+	} else{
 	}
+      }else{
       }
+    }
+    if(nextit){
+      ++it;
+    }else{
+      it=cur;
+    }
   }
-  Cons.clear();
 }
 
 #include <iostream>
@@ -1442,27 +1458,32 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
                    QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
 		   NetLang const& nl)
-{
+{ untested();
   // delete the node names
-  for(Node *pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
+  for(auto pn : nodes()) {
     pn->State = 0;
     if(pn->Label) {
-      if(isAnalog)
+      if(isAnalog){
         pn->setName(pn->Label->name());
-      else
+        // pn->setNumber(pn->Label->number());
+      } else{
+	incomplete();
         pn->setName("net" + pn->Label->name());
+      }
+    } else {
+      pn->setName("");
     }
-    else pn->setName("");
   }
 
   // set the wire names to the connected node
-  for(Wire *pw = DocWires.first(); pw != 0; pw = DocWires.next())
+  for(auto pw : wires()){
     if(pw->Label != 0) {
       if(isAnalog)
         pw->Port1->setName(pw->Label->Name);
       else  // avoid to use reserved VHDL words
         pw->Port1->setName("net" + pw->Label->Name);
     }
+  }
 
   // go through components
   // BUG: ejects declarations
@@ -1477,8 +1498,11 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
   // give names to the remaining (unnamed) nodes
   throughAllNodes(false, Collect, countInit);
 
-  if(!isAnalog) // collect all node names for VHDL signal declaration
-    collectDigitalSignals();
+  if(!isAnalog){
+    incomplete();
+    // collect all node names for VHDL signal declaration
+    // collectDigitalSignals();
+  }
 
   return true;
 }
@@ -1825,7 +1849,7 @@ int NumPorts)
 bool SchematicModel::createSubNetlist(DocumentStream& stream, int& countInit,
                      QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
 		  bool creatingLib, NetLang const& nl)
-{
+{ untested();
 //  int Collect_count = Collect.count();   // position for this subcircuit
 
   // TODO: NodeSets have to be put into the subcircuit block.

@@ -85,7 +85,7 @@ class Module
     
     ~INSTALL() {
 		 // remove stuff from GUI display
-		 incomplete();
+		 // incomplete();
     }
   };
 };

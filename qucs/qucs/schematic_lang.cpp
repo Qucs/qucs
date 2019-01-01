@@ -22,10 +22,20 @@ private: // stuff saved from schematic_file.cpp
 private: // stuff from component.cc
 	Component* loadComponent(const QString& _s, Component* c) const;
 	Element* loadElement(const QString& _s, Element* e) const {
-		if(Component* c=dynamic_cast<Component*>(e)){
+		if(Command* c=dynamic_cast<Command*>(e)){
+			// incomplete();
+		}else if(Component* c=dynamic_cast<Component*>(e)){
 			// legacy components
 			// will not work non-qucs-.sch languages
-			return loadComponent(_s, c);
+			c = loadComponent(_s, c);
+
+			 QString cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
+			 int x = c->tx;
+			 int y = c->ty;
+			 // c->setSchematic (p);
+			 c->recreate(0);
+			 c->setLabel(cstr);
+			 c->tx = x;  c->ty = y;
 		}else{
 			incomplete();
 			return e;
@@ -250,7 +260,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
 
 Component* LegacySchematicLanguage::loadComponent(const QString& _s, Component* c) const
 {
-  qDebug() << "load" << _s;
+  qDebug() << "loadComponent" << _s;
   bool ok;
   int  ttx, tty, tmp;
   QString s = _s;
@@ -281,7 +291,9 @@ Component* LegacySchematicLanguage::loadComponent(const QString& _s, Component* 
   }
 
   n  = s.section(' ',3,3);    // cx
-  c->obsolete_set("cx", n.toInt(&ok));
+  int cx=n.toInt(&ok);
+  qDebug() << "cx" << cx;
+  c->obsolete_set("cx", cx);
   if(!ok) return NULL;
 
   n  = s.section(' ',4,4);    // cy
@@ -297,9 +309,9 @@ Component* LegacySchematicLanguage::loadComponent(const QString& _s, Component* 
   if(!ok) return NULL;
 
   assert(c);
-  if(!c->obsolete_model_hack().size()){
-    // avoid segfault in obsolete code...
-  }else if(c->obsolete_model_hack().at(0) != '.') {  // is simulation component (dc, ac, ...) ?
+  assert(c->obsolete_model_hack().at(0) != '.');
+
+  {
 
     n  = s.section(' ',7,7);    // mirroredX
     if(n.toInt(&ok) == 1){
@@ -441,6 +453,7 @@ Component* LegacySchematicLanguage::loadComponent(const QString& _s, Component* 
 
 Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 {
+ qDebug() << "component" << Line;
   Element *e = 0;
 
   Line = Line.trimmed();
@@ -471,18 +484,17 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 
   // fetch proto from dictionary.
   Element const* s=symbol_dispatcher[cstr.toStdString()];
-  qDebug() << "lookup" << cstr << s;
 
   if(Component const* sc=dynamic_cast<Component const*>(s)){
       // legacy component
-    Element* s=sc->clone(); // memory leak?
-    e=prechecked_cast<Element*>(s);
+    Element* k=sc->clone(); // memory leak?
+    e = prechecked_cast<Element*>(k);
   }else if(Command const* sc=dynamic_cast<Command const*>(s)){
       // legacy component
-    Element* s=sc->clone(); // memory leak?
-    e=prechecked_cast<Element*>(s);
+    Element* k=sc->clone(); // memory leak?
+    e=prechecked_cast<Element*>(k);
   }else{ untested();
-    e=command_dispatcher[cstr.toStdString()];
+    e=command_dispatcher.clone(cstr.toStdString());
   // don't know what this is (yet);
     incomplete();
   }
