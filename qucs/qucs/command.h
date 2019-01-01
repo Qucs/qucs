@@ -9,7 +9,7 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -18,6 +18,7 @@
 #define QUCS_COMMMAND_H
 
 #include "components/component.h"
+#include "platform.h"
 
 /*!
  * this is a bug. commands are not components, maybe elements?
@@ -27,8 +28,10 @@
 // formerly, they were components, but that does not make sense.
 // (a command does not have ports etc.)
 class Command : public Component /*BUG*/ {
+protected:
+  Command(const Command&);
+  explicit Command();
 public:
-  Command();
   virtual ~Command() {};
 
 //  virtual Object* newOne(); from Symbol.
@@ -38,7 +41,10 @@ public:
   QString get_Verilog_Code(int);
 private:
   Component* newOne(){ unreachable();
-	  return nullptr;
+	  Element* hack=clone();
+	  Component* e=prechecked_cast<Component*>(hack);
+	  assert(e);
+	  return e;
   }
   void    paint(ViewPainter*) const;
 public:
@@ -55,6 +61,10 @@ public:
   void    mirrorX();  // mirror about X axis
   void    mirrorY();  // mirror about Y axis
   bool    load(const QString&);
+
+//  QString const& type() const{ // HACK
+//	  return name();
+//  }
 
   // to hold track of the component appearance for saving and copying
   bool mirroredX;   // is it mirrored about X axis or not
