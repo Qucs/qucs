@@ -32,6 +32,32 @@
 #include <QPainter>
 #include <QDebug>
 
+Command::Command(Command const& p)
+  : Component(),
+    mirroredX(p.mirroredX),
+    rotated(p.rotated),
+    //cx(p.cx),
+    //cy(p.cy),
+    tx(p.tx),
+    ty(p.ty),
+    showName(p.showName),
+    containingSchematic(p.containingSchematic)
+{
+  qDebug() << "component copy";
+
+  assert(!Props.count());
+  for(auto i : p.Props){
+	Props.append(new Property(*i));
+  }
+
+  for(auto i : p.Ports){
+	Ports.append(new Port(*i));
+  }
+
+  setType(p.type().toStdString()); // bug.
+
+  Name=p.Name;
+}
 
 /*!
  * \class Component
@@ -41,8 +67,6 @@
  */
 Command::Command()
 {
-  Type = isAnalogComponent;
-
   mirroredX = false;
   rotated = 0;
   isActive = COMP_IS_ACTIVE;
@@ -1003,6 +1027,7 @@ void Schematic::simpleInsertCommand(Command *c)
   DocComps.append(c);
 }
 
+#if 0
 Command* Schematic::loadCommand(const QString& _s, Command* c) const
 {
   bool ok;
@@ -1109,5 +1134,6 @@ Command* Schematic::loadCommand(const QString& _s, Command* c) const
 
   return c;
 }
+#endif
 
 // vim:ts=8:sw=2:noet

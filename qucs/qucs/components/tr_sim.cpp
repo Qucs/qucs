@@ -25,7 +25,7 @@ class TR_Sim : public Command  {
 public:
   TR_Sim();
   ~TR_Sim();
-  Element* newOne() const{return new TR_Sim(*this);}
+  Element* clone() const{return new TR_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(Schematic*);
 } D;
@@ -52,7 +52,8 @@ TR_Sim::TR_Sim()
   tx = 0;
   ty = y2+1;
   Model = "TR";
-  Name  = "TR";
+  setLabel("TR");
+  setName("TR");
 
   // The index of the first 4 properties must not changed. Used in recreate().
   Props.append(new Property("Type", "lin", true,
