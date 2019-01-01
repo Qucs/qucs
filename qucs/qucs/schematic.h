@@ -152,7 +152,6 @@ public:
 
 // private: BUG: this is insane.
   WireList *Wires;
-  NodeList *Nodes;
   DiagramList *Diagrams;
   PaintingList *Paintings;
   ComponentList *Components;
@@ -163,17 +162,24 @@ public:
 	  assert(Components);
 	  return *Components;
   }
+  NodeList& nodes(){
+	  return DocNodes;
+  }
+  WireList& wires(){
+	  assert(Wires);
+	  return DocWires;
+  }
+
   ComponentList const& components() const{
 	  assert(Components);
 	  return *Components;
   }
-  NodeList& nodes() const{
-	  assert(Nodes);
-	  return *Nodes;
+  NodeList const& nodes() const{
+	  return DocNodes;
   }
-  WireList& wires() const{
+  WireList const& wires() const{
 	  assert(Wires);
-	  return *Wires;
+	  return DocWires;
   }
   DiagramList& diagrams() const{
 	  assert(Diagrams);

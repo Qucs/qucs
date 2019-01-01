@@ -45,13 +45,15 @@ public:
 	  return Connections;
   }
   void setName(QString const& x){
-//	  // BUG
-	  Element::Name = x;
+	  setLabel(x);
   }
+  void setNumber(unsigned x){ cn = x; }
 
   // BUG
   void setName(const QString&, const QString&, int x_=0, int y_=0);
-  // QString const& name() const{ return Name; }
+  unsigned number() const{ return cn; }
+  int cx() const{ return Element::cx; }
+  int cy() const{ return Element::cy; }
 
   void setState(int i){
 	  State |= i;
@@ -75,6 +77,9 @@ private:
 
 public: // BUG
   int State;	 // remember some things during some operations, BUG
+
+private:
+  unsigned cn;
 
 public: // protected coordinate abuse
   void markUnChecked(){

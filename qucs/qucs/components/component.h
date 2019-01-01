@@ -28,8 +28,12 @@ class QPen;
 class ComponentDialog;
 
 class Component : public Symbol {
-public:
+protected:
+  Component(Component const&);
+
+public: //??!
   Component();
+
   virtual ~Component() {};
   virtual void recreate(Schematic*) {};
   QString getNetlist() const; // BUG. use netlister to create netlist

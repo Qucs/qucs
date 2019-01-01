@@ -218,7 +218,9 @@ void Schematic::becomeCurrent(bool update)
   }
 
   if(isSymbolMode()) {
-    Nodes = &SymbolNodes;
+    incomplete();
+    assert(0);
+    //Nodes = &SymbolNodes;
     Wires = &SymbolWires;
     Diagrams = &SymbolDiags;
     Paintings = &SymbolPaints;
@@ -234,7 +236,6 @@ void Schematic::becomeCurrent(bool update)
     emit signalRedoState(undoSymbolIdx != undoSymbol.size()-1);
   }
   else {
-    Nodes = &DocNodes;
     Wires = &DocWires;
     Diagrams = &DocDiags;
     Paintings = &DocPaints;
@@ -440,7 +441,7 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
   }
 
   Node *pn;
-  for(auto i : *Nodes){
+  for(auto i : nodes()){
 	  pn=i;
 	  Element* e=pn;
     e->paint(&Painter);
@@ -460,7 +461,7 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
 
   if(showBias > 0) {  // show DC bias points in schematic ?
     int x, y, z;
-    for(auto i: * Nodes){
+    for(auto i: nodes()){
       pn=i;
       if(pn->name().isEmpty()) continue;
       x = pn->cx_();
@@ -721,7 +722,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
     }
 
     Element *pe;
-    for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
+    for(Node *pn = nodes().first(); pn != 0; pn = nodes().next()) {
       for( auto i : pn->connections()){
 	pe=i;
         if(pe->isSelected() || printAll) {
@@ -779,7 +780,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
 
     if(showBias > 0) {  // show DC bias points in schematic ?
       int x, y, z;
-      for(Node* pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
+      for(Node* pn = nodes().first(); pn != 0; pn = nodes().next()) {
         if(pn->name().isEmpty()) continue;
         x = pn->cx_();
         y = pn->cy_() + 4;
@@ -1459,17 +1460,19 @@ int Schematic::adjustPortNumbers()
 {
   int x1, x2, y1, y2;
   // get size of whole symbol to know where to place new ports
-  if(isSymbolMode())  sizeOfAll(x1, y1, x2, y2);
-  else {
+  if(isSymbolMode()) {
+    sizeOfAll(x1, y1, x2, y2);
+    incomplete();
+  } else {
     Components = &SymbolComps;
     Wires      = &SymbolWires;
-    Nodes      = &SymbolNodes;
+    // Nodes      = &SymbolNodes;
     Diagrams   = &SymbolDiags;
     Paintings  = &SymbolPaints;
     sizeOfAll(x1, y1, x2, y2);
     Components = &DocComps;
     Wires      = &DocWires;
-    Nodes      = &DocNodes;
+    // Nodes      = &DocNodes;
     Diagrams   = &DocDiags;
     Paintings  = &DocPaints;
   }
@@ -1883,7 +1886,7 @@ bool Schematic::elementsOnGrid()
   Wires->setAutoDelete(true);
 
   // test all node labels
-  for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
+  for(Node *pn = nodes().first(); pn != 0; pn = nodes().next())
     if(pn->Label){
       if(pn->Label->isSelected()) {
         setOnGrid(pn->Label->x1__(), pn->Label->y1__());
@@ -2368,7 +2371,10 @@ void Schematic::getSelAreaWidthAndHeight(int &wsel, int &hsel, int& xmin_sel_, i
 // insert an Element into the schematic.
 void Schematic::simpleInsertElement(Element* e)
 {
-	if(Component* c=dynamic_cast<Component*>(e)){
+  assert(false); // use PushBack
+	if(Wire* c=dynamic_cast<Wire*>(e)){
+		simpleInsertWire(c);
+	}else if(Component* c=dynamic_cast<Component*>(e)){
 		simpleInsertComponent(c);
 	}else if(Command* c=dynamic_cast<Command*>(e)){
 		simpleInsertCommand(c);
@@ -2448,7 +2454,10 @@ void Schematic::parse(DocumentStream& s, SchematicLanguage const* L)
 void Schematic::pushBack(Element* what)
 {
   qDebug() << "Schematic::pushBack" << what;
-  if(auto c=component(what)){
+  if(auto c=command(what)){
+    incomplete();
+  }else if(auto c=component(what)){
+    qDebug() << "sic" << c->label();
     simpleInsertComponent(c);
   }else if(auto d=diagram(what)){
     diagrams().append(d);
