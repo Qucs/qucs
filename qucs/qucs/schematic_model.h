@@ -53,6 +53,8 @@ public:
 class DocumentLanguage;
 class SchematicLanguage;
 
+// Base class for all schematic models.
+// currently containging chunks/cruft from legacy Schematic implementation
 class SchematicModel{
 private:
   SchematicModel() = delete;

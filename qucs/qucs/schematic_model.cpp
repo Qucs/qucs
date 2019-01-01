@@ -53,9 +53,12 @@ public:
 	ins(SchematicModel* m) : _m(m) {
 		assert(m);
 	}
-private:
+private: // ModelInserter
 	void pushBack(Element* e){
 		_m->pushBack(e);
+	}
+	void setParameter(std::string const&, std::string const&){
+		incomplete();
 	}
 private:
 	SchematicModel* _m;
@@ -411,3 +414,5 @@ void SchematicModel::simpleInsertWire(Wire *pw)
   wires().append(pw);
 }
 
+ModelAccess::ModelAccess(){}
+ModelInserter::ModelInserter(){}

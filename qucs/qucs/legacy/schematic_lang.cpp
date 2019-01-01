@@ -9,17 +9,17 @@
 #include "command.h"
 #include "diagram.h" // BUG
 
- //BUG
-Element* getComponentFromName(QString& Line);
+namespace{
 
 class LegacySchematicLanguage : public SchematicLanguage {
 public:
 	LegacySchematicLanguage() : SchematicLanguage(){ untested();
-		defaultSchematicLanguage = this;
+		// defaultSchematicLanguage = this;
 	}
 private: // stuff saved from schematic_file.cpp
 	Diagram* loadDiagram(QString const& Line, DocumentStream& /*, DiagramList *List */) const;
 private: // stuff from component.cc
+	void loadProperties(QTextStream& stream, ModelInserter& m) const;
 	Component* loadComponent(const QString& _s, Component* c) const;
 	Element* loadElement(const QString& _s, Element* e) const {
 		if(Command* c=dynamic_cast<Command*>(e)){
@@ -126,6 +126,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, ModelInserter& s) co
 				}
 
 			}else if(mode=='Q'){
+
 			}else{
 				qDebug() << "LSL::parse" <<  Line;
 				incomplete();
@@ -543,4 +544,76 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 #endif
 
   return e;
+}
+
+// was Schematic::loadProperties
+void LegacySchematicLanguage::loadProperties(QTextStream& s_in,
+		ModelInserter& m) const
+{
+	auto stream=&s_in;
+	bool ok = true;
+	QString Line, cstr, nstr;
+	while(!stream->atEnd()) {
+		Line = stream->readLine();
+		if(Line.at(0) == '<') if(Line.at(1) == '/') return; //?!
+		Line = Line.trimmed();
+		if(Line.isEmpty()) continue;
+
+		// move up.
+		if(Line.size() < 2){
+			throw "incomplete_exception1";
+		}else if(Line.at(0) != '<') {
+			throw "incomplete_exception1";
+		}else if(Line.at(Line.length()-1) != '>') {
+			throw "incomplete_exception2";
+		}
+		Line = Line.mid(1, Line.length()-2);   // cut off start and end character
+
+		cstr = Line.section('=',0,0);    // property type
+		nstr = Line.section('=',1,1);    // property value
+		if(cstr == "View") {
+			incomplete(); // setParameter
+		// 	ViewX1 = nstr.section(',',0,0).toInt(&ok); if(ok) {
+		// 		ViewY1 = nstr.section(',',1,1).toInt(&ok); if(ok) {
+		// 			ViewX2 = nstr.section(',',2,2).toInt(&ok); if(ok) {
+		// 				ViewY2 = nstr.section(',',3,3).toInt(&ok); if(ok) {
+		// 					Scale  = nstr.section(',',4,4).toDouble(&ok); if(ok) {
+		// 						tmpViewX1 = nstr.section(',',5,5).toInt(&ok); if(ok)
+		// 							tmpViewY1 = nstr.section(',',6,6).toInt(&ok); }}}}}
+		} else if(cstr == "Grid") {
+			m.setParameter("GridX", nstr.section(',',0,0).toStdString());
+			m.setParameter("GridY", nstr.section(',',1,1).toStdString());
+			m.setParameter("GridOn",nstr.section(',',2,2).toStdString());
+		}else if(cstr == "DataSet"
+		       ||cstr == "Script"
+		       ||cstr == "FrameText0"
+		       ||cstr == "FrameText1"
+		       ||cstr == "FrameText2"
+		       ||cstr == "FrameText3"
+		       ||cstr == "showFrame"
+		       ||cstr == "DataDisplay"
+		       ||cstr == "OpenDisplay"){
+			m.setParameter(cstr.toStdString(), nstr.toStdString());
+		}
+		// else if(cstr == "OpenDisplay") // bool SimOpenDpl
+		// else if(cstr == "RunScript") // bool simRunScript
+		// else if(cstr == "showFrame") // bool showFrame
+		//else if(cstr == "FrameText0") misc::convert2Unicode(Frame_Text0 = nstr);
+		//else if(cstr == "FrameText1") misc::convert2Unicode(Frame_Text1 = nstr);
+		//else if(cstr == "FrameText2") misc::convert2Unicode(Frame_Text2 = nstr);
+		//else if(cstr == "FrameText3") misc::convert2Unicode(Frame_Text3 = nstr);
+		else {
+			throw "incomplete_exception" + cstr.toStdString();
+		}
+		if(!ok) {
+			incomplete();
+					//QObject::tr("Format Error:\nNumber expected in property field!"));
+			throw "something wrong";
+		}else{
+		}
+	}
+
+	throw "QObject::tr(\"Format Error:\n'Property' field is not closed!\")";
+}
+
 }

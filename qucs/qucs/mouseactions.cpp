@@ -2030,7 +2030,10 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 //    qDebug() << "+double click, editElement";
 //
 // BUG: focusElement is a parameter
-  if(focusElement == 0) return;
+  if(focusElement == (Element*)nullptr){
+    incomplete();
+    return;
+  }
 
 //  qDebug() << "+focusElement->Type" << focusElement->Type;
 

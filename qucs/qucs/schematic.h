@@ -2,7 +2,7 @@
                                schematic.h
                               -------------
     copyright            : (C) 2006 by Michael Margraf
-                               2018 Felix Salfelder
+                               2018, 2019 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -189,8 +189,12 @@ public:
 	  assert(Paintings);
 	  return *Paintings;
   }
-
+  
+	// transition
   PaintingList  SymbolPaints;  // symbol definition for subcircuit
+  PaintingList const& symbolPaints() const{
+	  return SymbolPaints; // -> docModel
+  }
 
   QList<PostedPaintEvent>   PostedPaintEvents;
 private:
@@ -379,7 +383,7 @@ private: // legacy, don't use
 private:
   void simpleInsertElement(Element*);
 
-  int  saveDocument();
+  void saveDocument() const;
 
   bool loadProperties(QTextStream*);
   bool loadComponents(QTextStream*, Q3PtrList<Component> *List=0);

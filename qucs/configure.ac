@@ -838,6 +838,7 @@ AC_CONFIG_FILES([Makefile
     qucs-rescodes/Makefile
     qucs-powercombining/Makefile
     qucs/Makefile
+    qucs/legacy/Makefile
     qucs/bitmaps/Makefile
     qucs/octave/Makefile
     qucs/components/Makefile

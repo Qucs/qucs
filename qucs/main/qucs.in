@@ -44,6 +44,7 @@ if [ -z "$QUCS_PLUGPATH" ]; then
 	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/qucs/diagrams/.libs";
 	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/qucs/paintings/.libs";
 	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/qucs/dialogs/.libs";
+	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/qucs/legacy/.libs";
 fi
 
 subdirs="$( make -C $top subdirs )"
