@@ -216,6 +216,8 @@ protected: //BUG
 
 // nodes and wires?
 class Conductor : public Element {
+protected:
+  explicit Conductor() : Label(nullptr) {}
 public:
   WireLabel *Label;
 };
