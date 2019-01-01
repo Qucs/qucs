@@ -571,7 +571,7 @@ void attach_single(std::string const&path, std::string const& what)
 void attach_default_plugins()
 {
   std::string pp=plugpath();
-  attach_single(pp, "qucsator" SOEXT);
+  attach_single(pp, "legacy" SOEXT);
 
   // TODO: remove "lib" prefix
   attach_single(pp, "qucs-default-components" SOEXT);

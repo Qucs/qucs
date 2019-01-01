@@ -1422,8 +1422,7 @@ bool Schematic::load()
 int Schematic::save()
 {
   int result = adjustPortNumbers();// same port number for schematic and symbol
-  if(saveDocument() < 0)
-     return -1;
+  saveDocument();
 
   QFileInfo Info(DocName);
   lastSaved = Info.lastModified();
@@ -2429,6 +2428,9 @@ private:
   void pushBack(Element* e){
     _m->pushBack(e);
   }
+  void setParameter(std::string const&, std::string const&){
+    incomplete();
+  }
 private:
   Schematic* _m;
 };
@@ -2456,6 +2458,7 @@ void Schematic::pushBack(Element* what)
   qDebug() << "Schematic::pushBack" << what;
   if(auto c=command(what)){
     incomplete();
+    simpleInsertCommand(c);
   }else if(auto c=component(what)){
     qDebug() << "sic" << c->label();
     simpleInsertComponent(c);

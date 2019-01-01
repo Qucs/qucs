@@ -9,9 +9,7 @@
 Dispatcher<Diagram> diagram_dispatcher;
 Dispatcher<Symbol> symbol_dispatcher;
 Dispatcher<Simulator> simulator_dispatcher;
-Dispatcher<DocumentLanguage> doclang_dispatcher;
-Dispatcher<Command> command_dispatcher;
+Dispatcher<DocumentLanguage> doclang_dispatcher; // Fmt baseclasses?
+Dispatcher<DocumentFormat> docfmt_dispatcher;
+Dispatcher<Command> command_dispatcher; // CommandSymbol ..
 Dispatcher<Painting> painting_dispatcher;
-
-// for now. where are options?
-DocumentLanguage const* defaultSchematicLanguage;

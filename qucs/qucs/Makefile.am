@@ -32,6 +32,7 @@ SUBDIRS = \
 	components diagrams \
 	paintings \
 	octave \
+	legacy \
 	sim \
 	tests
 
@@ -100,6 +101,7 @@ DIALOG_SRC+= \
 
 
 libqucs_la_SOURCES = \
+<<<<<<< HEAD
 	globals.cpp \
 	attach.cpp \
 	command.cpp \
@@ -134,6 +136,21 @@ libqucs_la_SOURCES = \
 	wire.cpp \
 	wirelabel.cpp \
 	${DIALOG_SRC}
+
+=======
+	command.cpp \
+	component.cpp \
+	diagram.cpp \
+	docfmt.h \
+	globals.cpp \
+	graph.cpp \
+	io_error.cpp \
+	language.cpp \
+	marker.cpp \
+	misc.cpp \
+	painting.cpp \
+	${DIALOG_SRC}
+
 
 libqucs_la_SOURCES += qucs_.qrc
 

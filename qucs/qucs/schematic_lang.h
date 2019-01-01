@@ -10,11 +10,24 @@
 #include "language.h"
 
 class SchematicModel;
+class Schematic; // BUG
 
 class ModelInserter{
+protected:
+	explicit ModelInserter();
 public:
 	virtual void pushBack(Element*) = 0;
-	virtual SchematicModel* model() const{return nullptr;}
+	virtual SchematicModel* model() const{return nullptr;} // BUG
+	virtual void setParameter(std::string const&, std::string const&) = 0;
+};
+
+class ModelAccess{
+protected:
+	explicit ModelAccess();
+public:
+	// BUG: must be SchematicModel const&
+	virtual Schematic const& schematicModel() const = 0;
+	virtual std::string const& getParameter(std::string const&) const = 0;
 };
 
 class SchematicLanguage : public DocumentLanguage{

@@ -19,6 +19,10 @@ Vrect:V _net0 _net1 U="1 V" TH="1 ms" TL="1 ms" Tr="1 ns" Tf="1 ns" Td="0 ns"
 <Vac V 1 0 0 18 -26 0 1 "1 V" 1 "1 GHz" 0 "0" 0 "0" 0>
 Vac #(.U(1 V), .f(1 GHz), .Phase(0), .Theta(0)) V(_net0, _net1);
 Vac:V _net0 _net1 U="1 V" f="1 GHz" Phase="0" Theta="0"
+=====Tr=========
+<Tr Tr 1 0 0 -29 38 0 0 "1" 1>
+Tr #(.T(1)) Tr(_net0, _net1, _net2, _net3);
+Tr:Tr _net0 _net1 _net2 _net3 T="1"
 =====sTr=========
 <sTr Tr 1 0 0 -29 78 0 0 "1" 1 "1" 1>
 sTr #(.T1(1), .T2(1)) Tr(_net0, _net1, _net2, _net3, _net4, _net5);
