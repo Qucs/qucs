@@ -987,7 +987,7 @@ void Command::copyComponent(Component *)
 }
 
 // do something with Dialog Buttons
-void Command::dialgButtStuff(ComponentDialog& d)const
+void Command::dialgButtStuff(ComponentDialog& /*d*/)const
 {
   incomplete();
   // d.disableButtons();
