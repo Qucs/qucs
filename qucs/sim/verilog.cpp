@@ -73,7 +73,7 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 
     comma = "";
     for(Port *p1 : c->ports()){
-      s << comma << p1->Connection->name();
+      s << comma << p1->Connection->label();
       if(p1->Name!="") s << " /*" << p1->Name << "*/"; // later.
       comma = ", ";
     }

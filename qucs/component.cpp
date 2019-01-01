@@ -54,9 +54,13 @@ Component::Component(Component const& p)
 {
   qDebug() << "component copy";
 
-  Props.clear();
+  assert(!Props.count());
   for(auto i : p.Props){
 	Props.append(new Property(*i));
+  }
+
+  for(auto i : p.Ports){
+	Ports.append(new Port(*i));
   }
 
   setType(p.type().toStdString()); // bug.

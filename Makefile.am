@@ -24,15 +24,15 @@
 ACLOCAL_AMFLAGS=-Im4
 
 SUBDIRS = \
-  man \
-  qucs \
+	man \
+	qucs \
 	qucs-activefilter \
 	qucs-attenuator \
 	qucs-filter \
 	qucs-lib \
 	qucs-rescodes \
 	qucs-transcalc \
-        qucs-powercombining \
+	qucs-powercombining \
 	translations \
 	examples \
 	main \

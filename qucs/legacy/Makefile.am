@@ -1,15 +1,13 @@
 ## Process this file with automake to produce Makefile.in
 #
-# stuff.am
+# Automake input file.
 #
-# rules used in other makefiles
-#
-# Author: Felix
-# Copyright (C) 2017 QUCS team
+# Copyright (C) 2015 Felix Salfelder felix@salfelder.org
+# Copyright (C) 2018 Felix Salfelder felix@salfelder.org
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2, or (at your option)
+# the Free Software Foundation; either version 8, or (at your option)
 # any later version.
 #
 # This software is distributed in the hope that it will be useful,
@@ -23,16 +21,15 @@
 # Boston, MA 02110-1301, USA.
 #
 
-SUFFIXES = .qrc
-
-.qrc.cpp:
-	$(RCC) -o $@ $<
-
-SUFFIXES += .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -DQT_MAJOR_VERSION=${QT_MAJOR_VERSION} -o $@ $<
-
-$(MOCFILES): $(top_builddir)/qt_version
-
+pkglib_LTLIBRARIES = legacy.la
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
 AM_CXXFLAGS = ${CXXFLAGS} -fPIC
+
+legacy_la_LDFLAGS = -module -avoid-version
+legacy_la_CPPFLAGS = $(AM_CPPFLAGS)
+# need Qt for TextStream.
+legacy_la_CPPFLAGS += $(QT_INCLUDES)
+legacy_la_SOURCES = \
+	schematic_format.cpp \
+	schematic_lang.cpp \
+	qucsator.cpp
