@@ -181,7 +181,7 @@ public: // other stuff
 
   virtual void editElement(){}
   virtual void MPressElement(){}
-  void tAC(QTextStream&, Schematic /*MODEL*/ const*, QStringList&, int&, int, NetLang const&){}
+  void tAC(QTextStream&, SchematicModel const*, QStringList&, int&, int, NetLang const&){}
 public:
   virtual Element* clone()const = 0;
 //  { unreachable(); return 0 /*NULL, actually*/;}

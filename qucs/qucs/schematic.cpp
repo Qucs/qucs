@@ -220,11 +220,6 @@ void Schematic::becomeCurrent(bool update)
   if(isSymbolMode()) {
     incomplete();
     assert(0);
-    //Nodes = &SymbolNodes;
-    Wires = &SymbolWires;
-    Diagrams = &SymbolDiags;
-    Paintings = &SymbolPaints;
-    Components = &SymbolComps;
 
     // if no symbol yet exists -> create one
     if(createSubcircuitSymbol()) {
@@ -234,12 +229,8 @@ void Schematic::becomeCurrent(bool update)
 
     emit signalUndoState(undoSymbolIdx != 0);
     emit signalRedoState(undoSymbolIdx != undoSymbol.size()-1);
-  }
-  else {
-    Wires = &DocWires;
-    Diagrams = &DocDiags;
-    Paintings = &DocPaints;
-    Components = &DocComps;
+  } else {
+    incomplete();
 
     emit signalUndoState(undoActionIdx != 0);
     emit signalRedoState(undoActionIdx != undoAction.size()-1);
@@ -434,7 +425,7 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
     e->paint(&Painter);
   }
 
-  for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next()) {
+  for(auto pw : wires()) {
     pw->paint(&Painter);
     if(pw->Label)
       pw->Label->paint(&Painter);  // separate because of paintSelected
@@ -456,8 +447,9 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
     e->paint(&Painter);
   }
 
-  for(Painting *pp = Paintings->first(); pp != 0; pp = Paintings->next())
+  for(auto pp : paintings()){
     pp->paint(&Painter);
+  }
 
   if(showBias > 0) {  // show DC bias points in schematic ?
     int x, y, z;
@@ -693,7 +685,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
         if (sizeOfFrame(x2,y2)) paintFrame(p);
     }
 
-    for(Component *pc = Components->first(); pc != 0; pc = Components->next())
+    for(auto pc : components()) {
       if(pc->isSelected() || printAll) {
         selected = pc->isSelected();
         pc->setSelected(false);
@@ -704,8 +696,9 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
         }
         pc->setSelected(selected);
       }
+    }
 
-    for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next()) {
+    for(auto pw : wires()){
       if(pw->isSelected() || printAll) {
         selected = pw->isSelected();
         pw->setSelected(false);
@@ -741,15 +734,16 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
         }
     }
 
-    for(Painting *pp = Paintings->first(); pp != 0; pp = Paintings->next())
+    for(auto pp : paintings()){
       if(pp->isSelected() || printAll) {
         selected = pp->isSelected();
         pp->setSelected(false);
         pp->paint(p);   // paint all selected paintings
         pp->setSelected(selected);
       }
+    }
 
-    for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
+    for(auto pd : diagrams()){
       if(pd->isSelected() || printAll) {
         // if graph or marker is selected, deselect during printing
         foreach(Graph *pg, pd->Graphs) {
@@ -777,6 +771,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
       }
         }
       }
+    }
 
     if(showBias > 0) {  // show DC bias points in schematic ?
       int x, y, z;
@@ -1005,8 +1000,6 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
   xmax=INT_MIN;
   ymax=INT_MIN;
   Component *pc;
-  Diagram *pd;
-  Wire *pw;
   WireLabel *pl;
   Painting *pp;
 
@@ -1093,8 +1086,8 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
 // Rotates all selected components around their midpoint.
 bool Schematic::rotateElements()
 {
-  Wires->setAutoDelete(false);
-  Components->setAutoDelete(false);
+  wires().setAutoDelete(false); // BUG
+  components().setAutoDelete(false); // BUG
 
   int x1=INT_MAX, y1=INT_MAX;
   int x2=INT_MIN, y2=INT_MIN;
@@ -1105,8 +1098,8 @@ bool Schematic::rotateElements()
   copyPaintings(x1, y1, x2, y2, &ElementCache);
   if(y1 == INT_MAX) return false;   // no element selected
 
-  Wires->setAutoDelete(true);
-  Components->setAutoDelete(true);
+  wires().setAutoDelete(true);
+  components().setAutoDelete(true);
 
   x1 = (x1+x2) >> 1;   // center for rotation
   y1 = (y1+y2) >> 1;
@@ -1175,7 +1168,7 @@ bool Schematic::rotateElements()
         //qDebug("pp->getCenter(x2, y2): (%i,%i)\n", x2, y2);
         //qDebug("(x1,y1) (x2,y2): (%i,%i) (%i,%i)\n", x1,y1,x2,y2);
         pp->setCenter(y2-y1 + x1, x1-x2 + y1);
-        Paintings->append(pp);
+        paintings().append(pp);
         break;
       default: ;
     }
@@ -1192,15 +1185,15 @@ bool Schematic::rotateElements()
 // First copy them to 'ElementCache', then mirror and insert again.
 bool Schematic::mirrorXComponents()
 {
-  Wires->setAutoDelete(false);
-  Components->setAutoDelete(false);
+  wires().setAutoDelete(false);
+  components().setAutoDelete(false);
 
   int x1, y1, x2, y2;
   QList<Element *> ElementCache;
   if(!copyComps2WiresPaints(x1, y1, x2, y2, &ElementCache))
     return false;
-  Wires->setAutoDelete(true);
-  Components->setAutoDelete(true);
+  wires().setAutoDelete(true);
+  components().setAutoDelete(true);
 
   y1 = (y1+y2) >> 1;   // axis for mirroring
   setOnGrid(y2, y1);
@@ -1250,7 +1243,7 @@ bool Schematic::mirrorXComponents()
 	pp->getCenter(x2, y2);
 	pp->mirrorX();   // mirror painting !before! mirroring its center
 	pp->setCenter(x2, y1 - y2);
-	Paintings->append(pp);
+	paintings().append(pp);
 	break;
       default: ;
     }
@@ -1264,15 +1257,15 @@ bool Schematic::mirrorXComponents()
 // Mirrors all selected components. First copy them to 'ElementCache', then mirror and insert again.
 bool Schematic::mirrorYComponents()
 {
-  Wires->setAutoDelete(false);
-  Components->setAutoDelete(false);
+  wires().setAutoDelete(false);
+  components().setAutoDelete(false);
 
   int x1, y1, x2, y2;
   QList<Element *> ElementCache;
   if(!copyComps2WiresPaints(x1, y1, x2, y2, &ElementCache))
     return false;
-  Wires->setAutoDelete(true);
-  Components->setAutoDelete(true);
+  wires().setAutoDelete(true);
+  components().setAutoDelete(true);
 
   x1 = (x1+x2) >> 1;   // axis for mirroring
   setOnGrid(x1, x2);
@@ -1322,7 +1315,7 @@ bool Schematic::mirrorYComponents()
         pp->getCenter(x2, y2);
         pp->mirrorY();   // mirror painting !before! mirroring its center
         pp->setCenter(x1 - x2, y2);
-        Paintings->append(pp);
+        paintings().append(pp);
         break;
       default: ;
     }
@@ -1337,7 +1330,7 @@ bool Schematic::mirrorYComponents()
 void Schematic::reloadGraphs()
 {
   QFileInfo Info(DocName);
-  for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
+  for(Diagram *pd = diagrams().first(); pd != 0; pd = diagrams().next())
     pd->loadGraphData(Info.path()+QDir::separator()+DataSet);
 }
 
@@ -1371,11 +1364,11 @@ bool Schematic::paste(QTextStream *stream, Q3PtrList<Element> *pe)
 // Loads this Qucs document.
 bool Schematic::load()
 {
-  DocComps.clear();
-  DocWires.clear();
-  DocNodes.clear();
-  DocDiags.clear();
-  DocPaints.clear();
+  components().clear();
+  wires().clear();
+  nodes().clear();
+  diagrams().clear();
+  paintings().clear();
   SymbolPaints.clear();
 
   if(!loadDocument()) return false;
@@ -1463,17 +1456,17 @@ int Schematic::adjustPortNumbers()
     sizeOfAll(x1, y1, x2, y2);
     incomplete();
   } else {
-    Components = &SymbolComps;
-    Wires      = &SymbolWires;
-    // Nodes      = &SymbolNodes;
-    Diagrams   = &SymbolDiags;
-    Paintings  = &SymbolPaints;
+//    Components = &SymbolComps;
+//    Wires      = &SymbolWires;
+//    // Nodes      = &SymbolNodes;
+//    Diagrams   = &SymbolDiags;
+//    Paintings  = &SymbolPaints;
     sizeOfAll(x1, y1, x2, y2);
-    Components = &DocComps;
-    Wires      = &DocWires;
-    // Nodes      = &DocNodes;
-    Diagrams   = &DocDiags;
-    Paintings  = &DocPaints;
+//    Components = &DocComps;
+//    Wires      = &DocWires;
+//    // Nodes      = &DocNodes;
+//    Diagrams   = &DocDiags;
+//    Paintings  = &DocPaints;
   }
   x1 += 40;
   y2 += 20;
@@ -1652,7 +1645,7 @@ int Schematic::adjustPortNumbers()
 #endif
   }else{
       // go through all components in a schematic
-      for(Component *pc = DocComps.first(); pc!=0; pc = DocComps.next())
+      for(Component *pc = components().first(); pc!=0; pc = components().next())
       {
          if(pc->obsolete_model_hack() == "Port") { // BUG. move to device.
              countPort++;
@@ -1799,8 +1792,8 @@ bool Schematic::elementsOnGrid()
   Q3PtrList<WireLabel> LabelCache;
 
   // test all components
-  Components->setAutoDelete(false);
-  for(Component *pc = Components->last(); pc != 0; pc = Components->prev())
+  components().setAutoDelete(false);
+  for(Component *pc = components().last(); pc != 0; pc = components().prev())
     if(pc->isSelected()) {
 
       // rescue non-selected node labels
@@ -1814,11 +1807,11 @@ bool Schematic::elementsOnGrid()
 
       x = pc->cx_();
       y = pc->cy_();
-      No = Components->at();
+      No = components().at();
       deleteComp(pc); // TODO
       pc->snapToGrid(*this); // setOnGrid(pc->cx__(), pc->cy__());
       insertRawComponent(pc); // TODO
-      Components->at(No);   // restore current list position
+      components().at(No);   // restore current list position
       pc->setSelected(false);
       count = true;
 
@@ -1831,11 +1824,11 @@ bool Schematic::elementsOnGrid()
       }
       LabelCache.clear();
     }
-  Components->setAutoDelete(true);
+  components().setAutoDelete(true);
 
-  Wires->setAutoDelete(false);
+  wires().setAutoDelete(false);
   // test all wires and wire labels
-  for(Wire *pw = Wires->last(); pw != 0; pw = Wires->prev()) {
+  for(Wire *pw = wires().last(); pw != 0; pw = wires().prev()) {
     pl = pw->Label;
     pw->Label = 0;
 
@@ -1855,12 +1848,12 @@ bool Schematic::elementsOnGrid()
         }
       }
 
-      No = Wires->at();
+      No = wires().at();
       deleteWire(pw);
       setOnGrid(pw->x1__(), pw->y1__());
       setOnGrid(pw->x2__(), pw->y2__());
       insertWire(pw);
-      Wires->at(No);   // restore current list position
+      wires().at(No);   // restore current list position
       pw->setSelected(false);
       count = true;
       if(pl){
@@ -1882,7 +1875,7 @@ bool Schematic::elementsOnGrid()
       }
     }
   }
-  Wires->setAutoDelete(true);
+  wires().setAutoDelete(true);
 
   // test all node labels
   for(Node *pn = nodes().first(); pn != 0; pn = nodes().next())
@@ -1897,7 +1890,7 @@ bool Schematic::elementsOnGrid()
     }
 
   // test all diagrams
-  for(Diagram *pd = Diagrams->last(); pd != 0; pd = Diagrams->prev()) {
+  for(Diagram *pd = diagrams().last(); pd != 0; pd = diagrams().prev()) {
     if(pd->isSelected()) {
       setOnGrid(pd->cx__(), pd->cy__());
       pd->setSelected(false);
@@ -1919,7 +1912,7 @@ bool Schematic::elementsOnGrid()
   }
 
   // test all paintings
-  for(Painting *pa = Paintings->last(); pa != 0; pa = Paintings->prev())
+  for(Painting *pa = paintings().last(); pa != 0; pa = paintings().prev())
     if(pa->isSelected()) {
       pa->snapToGrid(*this);
       pa->setSelected(false);
@@ -2297,7 +2290,7 @@ void Schematic::getSelAreaWidthAndHeight(int &wsel, int &hsel, int& xmin_sel_, i
         xmax= INT_MIN,
         ymax= INT_MIN;
 
-     for(Component *pc = Components->first(); pc != 0; pc = Components->next()) {
+     for(Component *pc = components().first(); pc != 0; pc = components().next()) {
          if (pc->isSelected) {
            int x1,y1,x2,y2,d1,d2,d3,d4;
            pc->entireBounds(x1,y1,x2,y2,this->textCorr());
@@ -2312,7 +2305,7 @@ void Schematic::getSelAreaWidthAndHeight(int &wsel, int &hsel, int& xmin_sel_, i
          }
     }
 
-    for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next()) {
+    for(Wire *pw = wires().first(); pw != 0; pw = wires().next()) {
 
         if (pw->isSelected) {
             int xc,yc;
@@ -2325,7 +2318,7 @@ void Schematic::getSelAreaWidthAndHeight(int &wsel, int &hsel, int& xmin_sel_, i
         }
     }
 
-    for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next()) {
+    for(Diagram *pd = diagrams().first(); pd != 0; pd = diagrams().next()) {
 
 
 
@@ -2344,7 +2337,7 @@ void Schematic::getSelAreaWidthAndHeight(int &wsel, int &hsel, int& xmin_sel_, i
         }
     }
 
-    for(Painting *pp = Paintings->first(); pp != 0; pp = Paintings->next()) {
+    for(Painting *pp = paintings().first(); pp != 0; pp = paintings().next()) {
 
        if (pp->isSelected) {
            int x1,y1,x2,y2,d1,d2,d3,d4;

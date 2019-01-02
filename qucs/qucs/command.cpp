@@ -1020,11 +1020,12 @@ void Command::dialgButtStuff(ComponentDialog& /*d*/)const
 // BUG, tmp.
 void Schematic::simpleInsertCommand(Command *c)
 {
+  incomplete();
   Node *pn;
   int x, y;
   // connect every node of component
 
-  DocComps.append(c);
+  components().append(c);
 }
 
 #if 0

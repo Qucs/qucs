@@ -66,11 +66,11 @@ private:
 }
 
 void SchematicModel::parse(DocumentStream& s, SchematicLanguage const* L)
-{
-	if(!L){
+{ untested();
+	if(!L){ untested();
 		auto D=doclang_dispatcher["leg_sch"];
 		L = dynamic_cast<SchematicLanguage const*>(D);
-	}else{
+	}else{ untested();
 	}
 	assert(L);
 	ins i(this);
@@ -87,9 +87,7 @@ void SchematicModel::parse(DocumentStream& s, SchematicLanguage const* L)
 // note that _doc->...() functions still involve pointer hacks
 ComponentList& SchematicModel::components()
 {
-	incomplete();
-	// temporary. move stuff here....
-	return _doc->components();
+	return Components;
 }
 
 void SchematicModel::pushBack(Element* what)
@@ -110,9 +108,9 @@ void SchematicModel::pushBack(Element* what)
 
 	if(doc()){
 		// only necessary when gui is running.
-		incomplete();
-		// later, in qt5 rework
+#ifndef USE_SCROLLVIEW
 		// doc()->addToScene(what);
+#endif
 	}else{
 	}
 
@@ -139,59 +137,59 @@ Schematic* SchematicModel::doc()
 	return _doc;
 }
 
+QFileInfo const& SchematicModel::getFileInfo ()const
+{
+	return FileInfo;
+}
+
 WireList& SchematicModel::wires()
 {
-	// temporary. move stuff here....
-	return _doc->wires();
+	return Wires;
 }
 
 NodeList& SchematicModel::nodes()
 {
-	// temporary. move stuff here....
-	return _doc->nodes();
+	return Nodes;
+}
+
+PaintingList const& SchematicModel::symbolPaints() const{
+	return SymbolPaints;
 }
 
 PaintingList& SchematicModel::paintings()
 {
-	// temporary. move stuff here....
-	return _doc->paintings();
+	return Paintings;
 }
 
 DiagramList& SchematicModel::diagrams()
 {
-	// temporary. move stuff here....
-	return _doc->diagrams();
+	return Diagrams;
 }
 
 // same, but const.
 ComponentList const& SchematicModel::components() const
 {
-	// temporary. move stuff here....
-	return _doc->components();
+	return Components;
 }
 
 WireList const& SchematicModel::wires() const
 {
-	// temporary. move stuff here....
-	return _doc->wires();
+	return Wires;
 }
 
 NodeList const& SchematicModel::nodes() const
 {
-	// temporary. move stuff here....
-	return _doc->nodes();
+	return Nodes;
 }
 
 PaintingList const& SchematicModel::paintings() const
 {
-	// temporary. move stuff here....
-	return _doc->paintings();
+	return Paintings;
 }
 
 DiagramList const& SchematicModel::diagrams() const
 {
-	// temporary. move stuff here....
-	return _doc->diagrams();
+	return Diagrams;
 }
 
 static void createNodeSet(QStringList& Collect, int& countInit,
@@ -203,6 +201,7 @@ static void createNodeSet(QStringList& Collect, int& countInit,
                      p1->name() + " U=\"" + pw->Label->initValue + "\"");
 }
 
+#if 0
 // not here.
 void SchematicModel::throughAllNodes(bool User, QStringList& Collect,
 				int& countInit)
@@ -234,7 +233,9 @@ void SchematicModel::throughAllNodes(bool User, QStringList& Collect,
 		propagateNode(Collect, countInit, pn);
 	}
 }
+#endif
 
+#if 0
 void SchematicModel::propagateNode(QStringList& Collect,
 			      int& countInit, Node *pn)
 {
@@ -274,12 +275,16 @@ void SchematicModel::propagateNode(QStringList& Collect,
       }
   Cons.clear();
 }
+#endif
 
 // really?
 bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
                    QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
 		  bool creatingLib, NetLang const& nl)
 {
+	incomplete();
+	return false;
+#if 0
 	bool isAnalog=true;
 	// delete the node names
 	for(auto i : nodes()) {
@@ -327,6 +332,7 @@ bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
 	}
 
 	return true;
+#endif
 }
 
 bool SchematicModel::loadDocument(QFile& /*BUG*/ file)
@@ -358,8 +364,39 @@ bool SchematicModel::loadDocument(QFile& /*BUG*/ file)
 
 void SchematicModel::simpleInsertComponent(Component *c)
 {
-	incomplete();
-	// called from PushBack?
+	Node *pn;
+	// connect every node of component
+	for(auto pp : c->Ports){
+		int x=pp->x+c->cx_();
+		int y=pp->y+c->cy_();
+		qDebug() << c->label() << "port" << x << y;
+
+		// check if new node lies upon existing node
+		for(pn = nodes().first(); pn != 0; pn = nodes().next()){
+			if(pn->cx_() == x) if(pn->cy_() == y) {
+				// 	if (!pn->DType.isEmpty()) {
+				// 	  pp->Type = pn->DType;
+				// 	}
+				// 	if (!pp->Type.isEmpty()) {
+				// 	  pn->DType = pp->Type;
+				// 	}
+				break;
+			}
+		}
+
+		if(pn == 0) { // create new node, if no existing one lies at this position
+			pn = new Node(x, y);
+			nodes().append(pn);
+		}
+		pn->Connections.append(c);  // connect schematic node to component node
+		if (!pp->Type.isEmpty()) {
+			//      pn->DType = pp->Type;
+		}
+
+		pp->Connection = pn;  // connect component node to schematic node
+	}
+
+	components().append(c);
 }
 
 void SchematicModel::simpleInsertWire(Wire *pw)

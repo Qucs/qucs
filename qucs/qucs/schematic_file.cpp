@@ -361,10 +361,10 @@ int Schematic::saveSymbolJSON()
 namespace{
 class sda : public ModelAccess{
 public:
-  sda(Schematic const& m) : _m(m) {
+  sda(SchematicModel const& m, Schematic const& s) : _m(m), _s(s) {
   }
 private: // ModelAccess
-  Schematic const& schematicModel() const{
+  SchematicModel const& schematicModel() const{
     incomplete();
     return _m;
   }
@@ -373,7 +373,8 @@ private: // ModelAccess
     return x;
   }
 private:
-  Schematic const& _m;
+  SchematicModel const& _m;
+  Schematic const& _s;
 };
 }
 
@@ -389,7 +390,7 @@ void Schematic::saveDocument() const
   file.open(QIODevice::WriteOnly | QIODevice::Truncate);
   DocumentStream stream(&file);
 
-  sda a(*this);
+  sda a(DocModel, *this);
 
   // TODO: provide selection GUI
   auto D=docfmt_dispatcher["leg_sch"];
@@ -473,6 +474,9 @@ bool Schematic::loadProperties(QTextStream *stream)
 // Inserts a component without performing logic for wire optimization.
 void Schematic::simpleInsertComponent(Component *c)
 {
+  incomplete();
+  return DocModel.simpleInsertComponent(c);
+
   Node *pn;
   // connect every node of component
   for(auto pp : c->Ports){
@@ -481,7 +485,7 @@ void Schematic::simpleInsertComponent(Component *c)
     qDebug() << c->label() << "port" << x << y;
 
     // check if new node lies upon existing node
-    for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next()){
+    for(pn = nodes().first(); pn != 0; pn = nodes().next()){
       if(pn->cx_() == x) if(pn->cy_() == y) {
 // 	if (!pn->DType.isEmpty()) {
 // 	  pp->Type = pn->DType;
@@ -495,7 +499,7 @@ void Schematic::simpleInsertComponent(Component *c)
 
     if(pn == 0) { // create new node, if no existing one lies at this position
       pn = new Node(x, y);
-      DocNodes.append(pn);
+      nodes().append(pn);
     }
     pn->Connections.append(c);  // connect schematic node to component node
     if (!pp->Type.isEmpty()) {
@@ -505,7 +509,7 @@ void Schematic::simpleInsertComponent(Component *c)
     pp->Connection = pn;  // connect component node to schematic node
   }
 
-  DocComps.append(c);
+  components().append(c);
 }
 
 // todo: proper string processing
@@ -580,12 +584,12 @@ void Schematic::simpleInsertWire(Wire *pw)
 {
   Node *pn;
   // check if first wire node lies upon existing node
-  for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
+  for(pn = nodes().first(); pn != 0; pn = nodes().next())
     if(pn->cx_() == pw->x1_()) if(pn->cy_() == pw->y1_()) break;
 
   if(!pn) {   // create new node, if no existing one lies at this position
     pn = new Node(pw->x1_(), pw->y1_());
-    DocNodes.append(pn);
+    nodes().append(pn);
   }
 
   if(pw->x1_() == pw->x2_()) if(pw->y1_() == pw->y2_()) {
@@ -602,17 +606,17 @@ void Schematic::simpleInsertWire(Wire *pw)
   pw->Port1 = pn;
 
   // check if second wire node lies upon existing node
-  for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
+  for(pn = nodes().first(); pn != 0; pn = nodes().next())
     if(pn->cx_() == pw->x2_()) if(pn->cy_() == pw->y2_()) break;
 
   if(!pn) {   // create new node, if no existing one lies at this position
     pn = new Node(pw->x2_(), pw->y2_());
-    DocNodes.append(pn);
+    nodes().append(pn);
   }
   pn->Connections.append(pw);  // connect schematic node to component node
   pw->Port2 = pn;
 
-  DocWires.append(pw);
+  wires().append(pw);
 }
 
 // -------------------------------------------------------------
@@ -796,7 +800,7 @@ QString Schematic::createUndoString(char Op)
   // Build element document.
   QString s = "  \n";
   s.replace(0,1,Op);
-  for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+  for(pc = components().first(); pc != 0; pc = components().next()) {
     QTextStream str(&s);
     incomplete();
     // SchematicModel::saveComponent(str, pc);
@@ -804,18 +808,18 @@ QString Schematic::createUndoString(char Op)
   }
   s += "</>\n";  // short end flag
 
-  for(pw = DocWires.first(); pw != 0; pw = DocWires.next())
+  for(pw = wires().first(); pw != 0; pw = wires().next())
     s += pw->save()+"\n";
   // save all labeled nodes as wires
-  for(Node *pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
+  for(Node *pn = nodes().first(); pn != 0; pn = nodes().next())
     if(pn->Label) s += pn->Label->save()+"\n";
   s += "</>\n";
 
-  for(pd = DocDiags.first(); pd != 0; pd = DocDiags.next())
+  for(pd = diagrams().first(); pd != 0; pd = diagrams().next())
     s += pd->save()+"\n";
   s += "</>\n";
 
-  for(pp = DocPaints.first(); pp != 0; pp = DocPaints.next())
+  for(pp = paintings().first(); pp != 0; pp = paintings().next())
     s += "<"+pp->save()+">\n";
   s += "</>\n";
 
@@ -847,11 +851,11 @@ QString Schematic::createSymbolUndoString(char Op)
 // Used for "undo" function.
 bool Schematic::rebuild(QString *s)
 {
-  DocWires.clear();	// delete whole document
-  DocNodes.clear();
-  DocComps.clear();
-  DocDiags.clear();
-  DocPaints.clear();
+  wires().clear();	// delete whole document
+  nodes().clear();
+  components().clear();
+  diagrams().clear();
+  paintings().clear();
 
   QString Line;
   QTextStream stream(s, QIODevice::ReadOnly);
@@ -860,8 +864,8 @@ bool Schematic::rebuild(QString *s)
   // read content *************************
   if(!loadComponents(&stream))  return false;
   if(!loadWires(&stream))  return false;
-  if(!loadDiagrams(&stream, &DocDiags))  return false;
-  if(!loadPaintings(&stream, &DocPaints)) return false;
+  if(!loadDiagrams(&stream, &diagrams()))  return false;
+  if(!loadPaintings(&stream, &paintings())) return false;
 
   return true;
 }
@@ -904,7 +908,7 @@ void Schematic::createNodeSet(QStringList& Collect, int& countInit,
 
 // ---------------------------------------------------
 // find connected components (slow)
-void Schematic::throughAllNodes(unsigned& z) const
+void SchematicModel::throughAllNodes(unsigned& z) const
 { untested();
   z = 0; // number cc.
 
@@ -998,7 +1002,7 @@ void Schematic::collectDigitalSignals(void)
   incomplete();
 //  Node *pn;
 //
-//  for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
+//  for(pn = nodes().first(); pn != 0; pn = nodes().next()) {
 //    DigMap::Iterator it = Signals.find(pn->name());
 //    if(it == Signals.end()) { // avoid redeclaration of signal
 //      Signals.insert(pn->name(), DigSignal(pn->name(), pn->DType));
@@ -1010,7 +1014,7 @@ void Schematic::collectDigitalSignals(void)
 
 // ---------------------------------------------------
 // Propagates the given node to connected component ports.
-void Schematic::propagateNode(Node *pn) const
+void SchematicModel::propagateNode(Node *pn) const
 { untested();
   bool setName=false;
   std::deque<Node*> q;
@@ -1063,18 +1067,18 @@ void Schematic::propagateNode(Node *pn) const
 
 // BUG: produces output
 // to be called from qucsator language only..
+#if 0 // moved to qucsator.cc
 bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
                    QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
 		   NetLang const& nl)
 {
   incomplete();
   return true;
-#if 0 // moved to qucsator.cc
   bool r;
   QString s;
 
   // give the ground nodes the name "gnd", and insert subcircuits etc.
-  for(auto it=DocComps.begin(); it!=DocComps.end(); ++it) {
+  for(auto it=components().begin(); it!=components().end(); ++it) {
     Component *pc=*it;
 
     if(pc->isActive != COMP_IS_ACTIVE) continue;
@@ -1268,8 +1272,8 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
     }
   }
   return true;
-#endif
 }
+#endif
 
 // ---------------------------------------------------
 // Follows the wire lines in order to determine the node names for
@@ -1279,6 +1283,9 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
                    QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
 		   NetLang const& nl)
 { untested();
+  incomplete();
+  return 0;
+#if 0
   // delete the node names
   for(auto pn : nodes()) {
     pn->State = 0;
@@ -1327,6 +1334,7 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
   }
 
   return true;
+#endif
 }
 
 // ---------------------------------------------------
@@ -1401,7 +1409,7 @@ int NumPorts)
   // collect subcircuit ports and sort their node names into
   // "SubcircuitPortNames"
   PortTypes.clear();
-  for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+  for(pc = components().first(); pc != 0; pc = components().next()) {
     if(dynamic_cast<Command const*> (pc)){
       // ignore commands.
     }else if(pc->obsolete_model_hack().at(0) == '.') { // no simulations in subcircuits
@@ -1569,7 +1577,7 @@ int NumPorts)
         }
 
       // write all equations into netlist file
-      for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+      for(pc = components().first(); pc != 0; pc = components().next()) {
         if(pc->obsolete_model_hack() == "Eqn") {
           (*tstream) << pc->get_Verilog_Code(NumPorts);
         }
@@ -1579,7 +1587,7 @@ int NumPorts)
       (*tstream) << " assign gnd = 0;\n"; // should appear only once
 
       // write all components into netlist file
-      for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+      for(pc = components().first(); pc != 0; pc = components().next()) {
         if(pc->obsolete_model_hack() != "Eqn") {
           s = pc->get_Verilog_Code(NumPorts);
           if(s.length()>0 && s.at(0) == '\xA7') {  //section symbol
@@ -1630,7 +1638,7 @@ int NumPorts)
       }
 
       // write all equations into netlist file
-      for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+      for(pc = components().first(); pc != 0; pc = components().next()) {
         if(pc->obsolete_model_hack() == "Eqn") {
           ErrText->appendPlainText(
                       QObject::tr("WARNING: Equations in \"%1\" are 'time' typed.").
@@ -1645,7 +1653,7 @@ int NumPorts)
       (*tstream) << " gnd <= '0';\n"; // should appear only once
 
       // write all components into netlist file
-      for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+      for(pc = components().first(); pc != 0; pc = components().next()) {
         if(pc->obsolete_model_hack() != "Eqn") {
             s = pc->get_VHDL_Code(NumPorts);
             if(s.length()>0 && s.at(0) == '\xA7') {  //section symbol
@@ -1720,7 +1728,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   int allTypes = 0, NumPorts = 0;
 
   // Detect simulation domain (analog/digital) by looking at component types.
-  for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+  for(Component *pc = components().first(); pc != 0; pc = components().next()) {
     if(pc->isActive == COMP_IS_OPEN){
       // open circuit (or so)
 //    }else if(pc->obsolete_model_hack().at(0) == '.') {
@@ -1872,7 +1880,7 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts, NetLang cons
   FileList.clear();
 
   QString s, Time;
-  for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+  for(Component *pc = components().first(); pc != 0; pc = components().next()) {
     if(isAnalog) {
       if(pc->type()=="GND"){ // qucsator hack
       }else{

@@ -25,8 +25,7 @@ class ModelAccess{
 protected:
 	explicit ModelAccess();
 public:
-	// BUG: must be SchematicModel const&
-	virtual Schematic const& schematicModel() const = 0;
+	virtual SchematicModel const& schematicModel() const = 0;
 	virtual std::string const& getParameter(std::string const&) const = 0;
 };
 
