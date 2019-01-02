@@ -57,97 +57,106 @@ class SchematicLanguage;
 // currently containging chunks/cruft from legacy Schematic implementation
 class SchematicModel{
 private:
-  SchematicModel() = delete;
+	SchematicModel() = delete;
 #if 0
-  SchematicModel() : _doc(nullptr),
-	  _symbol(new SchematicSymbol());
+	SchematicModel() : _doc(nullptr),
+	_symbol(new SchematicSymbol());
 	{
 		incomplete();
 	}
 #endif
 public:
-  SchematicModel(Schematic* s);
+	SchematicModel(Schematic* s);
 public: // stuff saved from Schematic
-  QString createClipboardFile();
-  void sizeOfAll(int&, int&, int&, int&, float) const;
-  void simpleInsertComponent(Component* c);
-  void simpleInsertCommand(Command* c);
-  void simpleInsertWire(Wire*);
-  //private??
-  bool giveNodeNames(DocumentStream&, int&, QStringList&, QPlainTextEdit*, int,
-		  bool creatingLib, NetLang const&);
-  bool throughAllComps(DocumentStream&, int&, QStringList&, QPlainTextEdit *, int,
-		  bool creatingLib, NetLang const&);
-  bool createLibNetlist(DocumentStream&, QPlainTextEdit*, int, NetLang const&);
-  bool createSubNetlist(DocumentStream&, int&, QStringList&, QPlainTextEdit*, int,
-		  bool creatingLib, NetLang const&);
-  void throughAllNodes(bool, QStringList&, int&);
-  void propagateNode(QStringList&, int&, Node*);
-  void collectDigitalSignals(void);
-  QString createNetlist(DocumentStream&, int, NetLang const&);
-  void createSubNetlistPlain(DocumentStream&, QPlainTextEdit*, int,
-		  bool creatingLib
-		  );
-  QFileInfo const& getFileInfo ()const;
-  void print(QPrinter*, QPainter*, bool, bool);
-  void setFileInfo(QString FileName) { FileInfo = QFileInfo(FileName); }
-  void setDevType(QString const& type); // BUG. move to parent.
-  QString const& devType() const;
+	QString createClipboardFile();
+	void sizeOfAll(int&, int&, int&, int&, float) const;
+	void simpleInsertComponent(Component* c);
+	void simpleInsertCommand(Command* c);
+	void simpleInsertWire(Wire*);
+	//private??
+	bool giveNodeNames(DocumentStream&, int&, QStringList&, QPlainTextEdit*, int,
+			bool creatingLib, NetLang const&);
+	bool throughAllComps(DocumentStream&, int&, QStringList&, QPlainTextEdit *, int,
+			bool creatingLib, NetLang const&);
+	bool createLibNetlist(DocumentStream&, QPlainTextEdit*, int, NetLang const&);
+	bool createSubNetlist(DocumentStream&, int&, QStringList&, QPlainTextEdit*, int,
+			bool creatingLib, NetLang const&);
+	void throughAllNodes(unsigned& z) const;
+	void propagateNode(Node* z) const;
+	void collectDigitalSignals(void);
+	QString createNetlist(DocumentStream&, int, NetLang const&);
+	void createSubNetlistPlain(DocumentStream&, QPlainTextEdit*, int,
+			bool creatingLib
+			);
+	QFileInfo const& getFileInfo ()const;
+	void print(QPrinter*, QPainter*, bool, bool);
+	void setFileInfo(QString FileName) { FileInfo = QFileInfo(FileName); }
+	void setDevType(QString const& type); // BUG. move to parent.
+	QString const& devType() const;
 
 public:
-  void parse(DocumentStream& stream, SchematicLanguage const*l=nullptr);
-  int  prepareNetlist(DocumentStream&, QStringList&, QPlainTextEdit*,
-		  bool creatingLib, NetLang const&);
-  Component* loadComponent(const QString& _s, Component* c) const;
-  Command* loadCommand(const QString& _s, Command* c) const;
-  bool loadDocument(QFile& /*BUG*/ file);
-  bool loadPaintings(QTextStream*, PaintingList* p=NULL);
-  bool loadProperties(QTextStream*);
-  bool loadComponents(QTextStream*);
-  // bool loadDiagrams(QTextStream*);
-  bool loadWires(QTextStream*);
+	void parse(DocumentStream& stream, SchematicLanguage const*l=nullptr);
+	int  prepareNetlist(DocumentStream&, QStringList&, QPlainTextEdit*,
+			bool creatingLib, NetLang const&);
+	Component* loadComponent(const QString& _s, Component* c) const;
+	Command* loadCommand(const QString& _s, Command* c) const;
+	bool loadDocument(QFile& /*BUG*/ file);
+	bool loadPaintings(QTextStream*, PaintingList* p=NULL);
+	bool loadProperties(QTextStream*);
+	bool loadComponents(QTextStream*);
+	// bool loadDiagrams(QTextStream*);
+	bool loadWires(QTextStream*);
 
-  void clear();
-  void pushBack(Element* what);
-  void erase(Element* what);
+	void clear();
+	void pushBack(Element* what);
+	void erase(Element* what);
 public:
-  void merge(SchematicModel&);
+	void merge(SchematicModel&);
 
 public: // scene interaction
-  void toScene(QGraphicsScene& s, QList<ElementGraphics*>* l=nullptr) const;
+	void toScene(QGraphicsScene& s, QList<ElementGraphics*>* l=nullptr) const;
 public: // obsolete.
-  static void saveComponent(QTextStream& s, Component const* c);
+	static void saveComponent(QTextStream& s, Component const* c);
 private: // TODO: actually store here.
-  WireList& wires();
-  NodeList& nodes();
-  DiagramList& diagrams();
-  PaintingList& paintings();
-  ComponentList& components();
-  PaintingList& symbolPaintings();
+	WireList& wires();
+	NodeList& nodes();
+	DiagramList& diagrams();
+	PaintingList& paintings();
+	ComponentList& components();
+	PaintingList& symbolPaints();
 public:
-  WireList const& wires() const;
-  NodeList const& nodes() const;
-  DiagramList const& diagrams() const;
-  PaintingList const& paintings() const;
-  ComponentList const& components() const;
+	WireList const& wires() const;
+	NodeList const& nodes() const;
+	DiagramList const& diagrams() const;
+	PaintingList const& paintings() const;
+	ComponentList const& components() const;
+	PaintingList const& symbolPaints() const;
 
-  Schematic* doc();
-  QString const& portType(int i) const{
-	  return PortTypes[i];
-  }
-private: // TODO: remove. store parent in ElementGraphics.
-  Schematic* const _doc;
+	Schematic* doc();
+	QString const& portType(int i) const{
+		return PortTypes[i];
+	}
+	unsigned numberOfNets() const{
+		return nc;
+	}
+
 private:
-  ComponentList Components;
-  NodeList Nodes;
-  DiagramList Diagrams;
-  WireList Wires;
-  SchematicSymbol* _symbol;
-  QStringList PortTypes;
-  QFileInfo FileInfo;
-  QString DevType; // BUG move to parent
+	Schematic* const _doc;
+	ComponentList Components;
+	PaintingList Paintings;
+	NodeList Nodes;
+	DiagramList Diagrams;
+	PaintingList SymbolPaints;
+	WireList Wires;
+	SchematicSymbol* _symbol;
+	QStringList PortTypes;
+	QFileInfo FileInfo;
+	QString DevType; // BUG move to parent
+	mutable // tmp kludge.
+		unsigned nc; // number of connected components ("nets");
+
 public: // for now.
-  friend class Schematic;
+	friend class Schematic;
 };
 
 #endif

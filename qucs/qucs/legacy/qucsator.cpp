@@ -163,7 +163,7 @@ void LegacyNetlister::save(DocumentStream& Stream, ModelAccess const& m) const
 {
   qDebug() << "*** LegacyNetlister::save";
 
-  Schematic const *sch = &m.schematicModel();
+  SchematicModel const *sch = &m.schematicModel();
   if (sch == NULL) {
     throw "incomplete_exception";
   }else{
@@ -406,7 +406,7 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, ModelAccess const&
 	bool isAnalog=true;
 
 	// give the ground nodes the name "gnd", and insert subcircuits etc.
-	for(auto it : m.schematicModel().components()){
+	for(auto it : m.schematicModel().components()){ untested();
 		Component *pc=it;
 
 		if(pc->isActive != COMP_IS_ACTIVE) continue;

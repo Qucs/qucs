@@ -1945,19 +1945,19 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
 
     // start from the last to omit re-appended components
     Schematic *Doc = (Schematic*)w;
-    for(Component *pc=Doc->Components->last(); pc!=0; ) {
+    for(Component *pc=Doc->components().last(); pc!=0; ) {
       if(pc->obsolete_model_hack() == Model) { // BUG
         File = pc->Props.getFirst()->Value;
         if((File == pathName) || (File == Name)) {
-          pc_tmp = Doc->Components->prev();
+          pc_tmp = Doc->components().prev();
           Doc->recreateComponent(pc);  // delete and re-append component
           if(!pc_tmp)  break;
-          Doc->Components->findRef(pc_tmp);
-          pc = Doc->Components->current();
+          Doc->components().findRef(pc_tmp);
+          pc = Doc->components().current();
           continue;
         }
       }
-      pc = Doc->Components->prev();
+      pc = Doc->components().prev();
     }
   }
 }

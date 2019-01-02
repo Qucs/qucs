@@ -318,7 +318,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
         xmax= INT_MIN,
         ymax= INT_MIN;
 
-     for(Component *pc = sch->Components->first(); pc != 0; pc = sch->Components->next()) {
+     for(auto pc : sch->components()){
          if (pc->isSelected()) {
            int x1,y1,x2,y2;
            pc->entireBounds(x1,y1,x2,y2,sch->textCorr());
@@ -326,8 +326,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
          }
     }
 
-    for(Wire *pw = sch->Wires->first(); pw != 0; pw = sch->Wires->next()) {
-
+    for(auto pw : sch->wires()){
         if (pw->isSelected()) {
             if(pw->x1_() < xmin) xmin = pw->x1_();
             if(pw->x2_() > xmax) xmax = pw->x2_();
@@ -360,10 +359,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
         }
     }
 
-    for(Diagram *pd = sch->Diagrams->first(); pd != 0; pd =sch-> Diagrams->next()) {
-
-
-
+    for(auto pd : sch->diagrams()){
         if (pd->isSelected()) {
             int x1,y1,x2,y2;
             pd->Bounding(x1,y1,x2,y2);
@@ -381,8 +377,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
         }
     }
 
-    for(Painting *pp = sch->Paintings->first(); pp != 0; pp = sch->Paintings->next()) {
-
+    for(auto pp : sch->paintings()) {
        if (pp->isSelected()) {
            int x1,y1,x2,y2;
            pp->Bounding(x1,y1,x2,y2);

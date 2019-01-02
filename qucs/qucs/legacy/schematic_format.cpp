@@ -12,6 +12,7 @@ namespace{
 
 class LegacySchematicFormat : public DocumentFormat{
 	void save(DocumentStream& stream, ModelAccess const&) const;
+	void load(DocumentStream& stream, ModelInserter&) const{ incomplete(); }
 
 private: // legacy cruft
 	bool isSymbolMode() const{ return false; }
@@ -112,7 +113,7 @@ void LegacySchematicFormat::save(DocumentStream& stream, ModelAccess const& m) c
 	stream << "</Symbol>\n";
 
 	stream << "<Components>\n";    // save all components
-	for(auto pc : components(m)){
+	for(auto pc : components(m)){ untested();
 		stream << "  ";
 		L->printItem(pc, stream);
 		stream << "\n"; // BUG?
