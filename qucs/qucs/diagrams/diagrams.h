@@ -22,7 +22,6 @@
 
 #include "diagram.h"
 
-#include "rectdiagram.h"
 #include "polardiagram.h"
 #include "smithdiagram.h"
 #include "tabdiagram.h"

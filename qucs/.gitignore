@@ -53,3 +53,5 @@ stamp-h2
 *.1
 
 !tests/*/*.sch
+!examples/*.sch
+!examples/*.dpl

@@ -29,6 +29,8 @@ dist_examples_DATA = \
     active_mixer.sch\
     Amp_Baseband_Low-noise.sch\
     Amp_Two_Tone.sch\
+	 opa227.sch\
+	 bandpass.sch\
     bbv.sch\
     boostconverter.sch\
     bpf_10Ghz.sch\

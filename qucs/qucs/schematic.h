@@ -164,6 +164,9 @@ public:
   NodeList& nodes(){
 	  return DocNodes;
   }
+  DiagramList& diagrams(){
+	  return DocDiags;
+  }
   WireList& wires(){
 	  return DocWires;
   }
@@ -176,9 +179,8 @@ public:
   WireList const& wires() const{
 	  return DocWires;
   }
-  DiagramList& diagrams() const{
-	  assert(Diagrams);
-	  return *Diagrams;
+  DiagramList const& diagrams() const{
+	  return DocDiags;
   }
   PaintingList& paintings() const{
 	  assert(Paintings);
