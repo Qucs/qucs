@@ -62,11 +62,14 @@ class Diagram : public Element {
 public:
   Diagram(int _cx=0, int _cy=0);
   virtual ~Diagram();
-
-  Element* clone()const{
-	  // BUG. trying to instanciate Diagram, which is supposed to be pure.
+  virtual Diagram* newOne(){ // BUG: pure. legacy interface.
 	  unreachable();
 	  return nullptr;
+  }
+  Element* clone() const{
+	  Diagram const* e=this;
+	  Diagram* E=const_cast<Diagram*>(e);
+	  return E->newOne();
   }
   virtual int  calcDiagram() { return 0; };
   virtual void calcCoordinate
