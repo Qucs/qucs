@@ -63,6 +63,8 @@ void Wire::rotate()
 	 } else {
 		 Label->Type = isHWireLabel;
 	 }
+  }else{
+	  unreachable(); /// ?!?!
   }
 }
 
@@ -126,21 +128,21 @@ void Wire::paint(ViewPainter *p)
 // ----------------------------------------------------------------
 void Wire::setName(const QString& Name_, const QString& Value_, int delta_, int x_, int y_)
 {
+	qDebug() << "Wirelabelparse?!" << Name_;
   if(Name_.isEmpty() && Value_.isEmpty()) {
     if(Label) delete Label;
     Label = 0;
-    return;
-  }
-
-  if(!Label) {
+  }else if(!Label) {
     if(isHorizontal())
       Label = new WireLabel(Name_, x1+delta_, y1, x_, y_, isHWireLabel);
     else
       Label = new WireLabel(Name_, x1, y1+delta_, x_, y_, isVWireLabel);
     Label->pOwner = this;
     Label->initValue = Value_;
+  }else{
+    Label->setName(Name_); // ?!
+    Label->setLabel(Name_);
   }
-  else Label->setName(Name_);
 }
 
 // ----------------------------------------------------------------
@@ -151,7 +153,7 @@ QString Wire::save()
   QString s  = "<"+QString::number(x1)+" "+QString::number(y1);
           s += " "+QString::number(x2)+" "+QString::number(y2);
   if(Label) {
-          s += " \""+Label->Name+"\" ";
+          s += " \""+Label->name()+"\" ";
           s += QString::number(Label->x1_())+" "+QString::number(Label->y1_())+" ";
           s += QString::number(Label->cx_()-x1 + Label->cy_()-y1);
           s += " \""+Label->initValue+"\">";
