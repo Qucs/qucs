@@ -184,6 +184,9 @@ public:
 	  assert(Paintings);
 	  return *Paintings;
   }
+  unsigned numberOfNets() const{
+	  return nc;
+  }
   
 	// transition
   PaintingList  SymbolPaints;  // symbol definition for subcircuit
@@ -473,6 +476,10 @@ public: // serializer
 public: // need access to SchematicModel. grr
   friend class MouseActions;
   friend class ImageWriter;
+
+private:
+  mutable // tmp kludge.
+  unsigned nc; // number of connected components ("nets");
 };
 
 

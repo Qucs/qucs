@@ -594,8 +594,9 @@ void Schematic::simpleInsertWire(Wire *pw)
       pn->Label->Type = isNodeLabel;
       pn->Label->pOwner = pn;
     }
-    delete pw;           // delete wire because this is not a wire
-    return;
+    // yikes.
+    // delete pw;           // delete wire because this is not a wire
+    // return;
   }
   pn->Connections.append(pw);  // connect schematic node to component node
   pw->Port1 = pn;
@@ -908,16 +909,19 @@ void Schematic::throughAllNodes(unsigned& z) const
   z = 0; // number cc.
 
   for(auto pn : nodes()){
-    assert(!pn->number());
+    assert(!pn->hasNumber());
   }
 
   for(auto pn : nodes()){
-    if(pn->number()){
+    if(pn->hasNumber()){
     }else{
-      pn->setNumber(++z);
+      pn->setNumber(z++);
       propagateNode(pn);
     }
   }
+
+  qDebug() << "got" << nodes().count() << "nodes and" << z << "cc";
+  nc = z;
 } // throughAllNodes
 
 // ----------------------------------------------------------
@@ -1013,8 +1017,8 @@ void Schematic::propagateNode(Node *pn) const
   Node *p2;
   Element *pe;
 
+  assert(pn->hasNumber());
   int z=pn->number();
-  assert(z);
 
   q.push_back(pn);
   while(!q.empty()){
@@ -1025,12 +1029,12 @@ void Schematic::propagateNode(Node *pn) const
     for(auto pe : cur->Connections){
       if(Wire* pw=wire(pe)){ untested();
 	if(cur == pw->Port2) { untested();
-	  if(!pw->Port1->number()){
+	  if(!pw->Port1->hasNumber()){
 	    q.push_back(pw->Port1);
 	  }else{
 	  }
 	}else if(cur == pw->Port1) { untested();
-	  if(!pw->Port2->number()){
+	  if(!pw->Port2->hasNumber()){
 	    q.push_back(pw->Port2);
 	  }else{
 	  }
