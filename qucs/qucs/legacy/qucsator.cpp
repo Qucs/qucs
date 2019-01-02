@@ -71,7 +71,7 @@ void QucsLang::printCommand(Command const* c, stream_t& s) const
     { // todo: introduce proper exceptions
       // normal netlisting
 
-      s << "." << c->name() << ":" << c->label();
+      s << "." << c->type() << ":" << c->label();
 
       //for(auto p2 : c->params())
       for(auto p2 : c->Props){ // BUG
@@ -84,6 +84,7 @@ void QucsLang::printCommand(Command const* c, stream_t& s) const
   }
 }
 
+std::vector<QString> netLabels; // BUG
 /*!
  * print Components in qucs language
  */
@@ -116,10 +117,13 @@ void QucsLang::printComponent(Component const* c, stream_t& s) const
 
       // output all node names
       for(Port *p1 : c->ports()){
-	// s << " " << p1->Connection->label();
-      s << " " << "number" << QString::number(p1->Connection->number());
-	// s << " " << "n_" << QString::number(p1->Connection->cx()) << "_" <<
-	// QString::number(p1->Connection->cy());
+			s << " ";
+			if(p1->Connection->hasNumber()){
+				s << netLabels[p1->Connection->number()];
+			}else{
+				// happens in list_entries ...
+				s << "open";
+			}
       }
 
       for(auto p2 : c->params()) {
@@ -297,7 +301,32 @@ void LegacyNetlister::prepareSave(DocumentStream& stream, ModelAccess const& m) 
 	// giveNodeNames(&stream, m);
 	
 	unsigned count;
-	m.schematicModel().throughAllNodes(count); // number connected components.
+	auto& sm=m.schematicModel();
+	sm.throughAllNodes(count); // hack: number connected components.
+	                           // should already be numbered...
+
+	unsigned nc=sm.numberOfNets();
+	netLabels.resize(nc);
+	qDebug() << "found" << nc << "nets";
+	
+	for(auto w : sm.wires()){
+		assert(w->Port1->number()==w->Port1->number());
+		unsigned i=w->Port1->number();
+		qDebug() << "wire" << i << w->Label;
+		if(!w->Label){
+		}else if (netLabels[i].size()){
+		}else{
+			netLabels[i] = w->Label->name();
+		}
+	}
+
+	unsigned z=0;
+	for(auto& i : netLabels){
+		if(!i.size()){
+			i = "_net" + QString::number(z++);
+		}else{
+		}
+	}
 
 	throughAllComps(stream, m);
 

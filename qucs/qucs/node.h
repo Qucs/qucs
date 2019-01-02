@@ -52,6 +52,7 @@ public:
   // BUG
   void setName(const QString&, const QString&, int x_=0, int y_=0);
   unsigned number() const{ return cn; }
+  unsigned hasNumber() const { return cn!=-1u; }
   int cx() const{ return Element::cx; }
   int cy() const{ return Element::cy; }
 
