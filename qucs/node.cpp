@@ -21,7 +21,7 @@
 
 #include <QPainter>
 
-Node::Node(int _x, int _y) : cn(0)
+Node::Node(int _x, int _y) : cn(-1u)
 {
   Label = nullptr; // BUG
   Type  = isNode;

@@ -128,7 +128,7 @@ void Wire::paint(ViewPainter *p)
 // ----------------------------------------------------------------
 void Wire::setName(const QString& Name_, const QString& Value_, int delta_, int x_, int y_)
 {
-	qDebug() << "Wirelabelparse?!" << Name_;
+  qDebug() << "Wirelabelparse?!" << Name_;
   if(Name_.isEmpty() && Value_.isEmpty()) {
     if(Label) delete Label;
     Label = 0;
@@ -163,7 +163,7 @@ QString Wire::save()
 }
 
 // ----------------------------------------------------------------
-// This is the counterpart to Wire::save.
+// move to schematic_lang.
 bool Wire::obsolete_load(const QString& _s)
 {
   bool ok;
@@ -201,6 +201,7 @@ bool Wire::obsolete_load(const QString& _s)
     int delta = s.section(' ',7,7).toInt(&ok);// delta for x/y root coordinate
     if(!ok) return false;
 
+	 qDebug() << "wire name" << n;
     setName(n, s.section('"',3,3), delta, nx, ny);  // Wire Label
   }
 
