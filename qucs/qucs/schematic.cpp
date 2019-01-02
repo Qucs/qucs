@@ -2465,6 +2465,7 @@ void Schematic::pushBack(Element* what)
   }else if(auto d=diagram(what)){
     diagrams().append(d);
   }else if(auto w=wire(what)){
+    qDebug() << "got wire";
     simpleInsertWire(w);
   }else if(auto s=dynamic_cast<SchematicSymbol*>(what)){ untested();
     unreachable();
