@@ -298,9 +298,9 @@ bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
 	for(auto pw : wires()){
 		if(pw->Label != 0) {
 			if(isAnalog)
-				pw->Port1->setName(pw->Label->Name);
+				pw->Port1->setName(pw->Label->name());
 			else  // avoid to use reserved VHDL words
-				pw->Port1->setName("net" + pw->Label->Name);
+				pw->Port1->setName("net" + pw->Label->name());
 		}
 	}
 

@@ -53,7 +53,7 @@ public:
   }
 
   Conductor *pOwner;  // Wire or Node where label belongs to
-  QString Name, initValue;
+  QString initValue;
 
   void    paint(ViewPainter*);
   void    rotate();
