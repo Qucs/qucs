@@ -424,8 +424,10 @@ void SchematicModel::simpleInsertWire(Wire *pw)
       pn->Label->Type = isNodeLabel;
       pn->Label->pOwner = pn;
     }
+#if 0 // gaaah
     delete pw;           // delete wire because this is not a wire
     return;
+#endif
   }
   pn->Connections.append(pw);  // connect schematic node to component node
   pw->Port1 = pn;
