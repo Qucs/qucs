@@ -1300,14 +1300,14 @@ void Schematic::highlightWireLabels ()
                     {
                         // Highlight the label if it has the same name as the selected label
                         // if only one wire has this label, do not highlight it
-                        if (pltestinner != pltestouter)
-                        {
-                            if (pltestouter->Name == pltestinner->Name)
-                            {
+                        if (pltestinner != pltestouter) {
+                            if (pltestouter->name() == pltestinner->name()){
                                 pltestinner->setHighlighted (true);
                                 hiLightOuter = true;
-                            }
-                        }
+                            }else{
+			    }
+                        }else{
+			}
                     }
                 }
                 // Search for matching labels on nodes
@@ -1318,7 +1318,7 @@ void Schematic::highlightWireLabels ()
                     pltestinner = pninner->Label; // test any label associated with the node
                     if (pltestinner)
                     {
-                        if (pltestouter->Name == pltestinner->Name)
+                        if (pltestouter->name() == pltestinner->name())
                         {
                             // node label matches wire label
                             pltestinner->setHighlighted (true);
@@ -1350,7 +1350,7 @@ void Schematic::highlightWireLabels ()
                     pltestinner = pwinner->Label; // test any label associated with the wire
                     if (pltestinner)
                     {
-                        if (pltestouter->Name == pltestinner->Name)
+                        if (pltestouter->name() == pltestinner->name())
                         {
                             // wire label matches node label
                             pltestinner->setHighlighted (true);
@@ -1369,7 +1369,7 @@ void Schematic::highlightWireLabels ()
                         // if only one node has this label, do not highlight it
                         if (pltestinner != pltestouter)
                         {
-                            if (pltestouter->Name == pltestinner->Name)
+                            if (pltestouter->name() == pltestinner->name())
                             {
                                 pltestinner->setHighlighted (true);
                                 hiLightOuter = true;
@@ -2053,7 +2053,7 @@ bool Schematic::deleteElements()
     while(pp != 0)      // test all paintings
     {
         if(pp->isSelected())
-            if(pp->Name.at(0) != '.'){
+            if(pp->name().at(0) != '.'){
 	      // do not delete "PortSym", "ID_text"
                 sel = true;
                 Paintings->remove();
@@ -3139,7 +3139,7 @@ void Schematic::insertNodeLabel(WireLabel *pl)
     if(pw)    // lies label on existing wire ?
     {
         if(getWireLabel(pw->Port1) == 0)  // wire not yet labeled ?
-            pw->setName(pl->Name, pl->initValue, 0, pl->cx_(), pl->cx_());
+            pw->setName(pl->name(), pl->initValue, 0, pl->cx_(), pl->cx_());
 
         delete pl;
         return;

@@ -27,5 +27,5 @@ public:
     QTextStream(filename, flag){}
 
 };
-typedef QTextStream stream_t;
+typedef QTextStream stream_t; //  BUG
 #endif

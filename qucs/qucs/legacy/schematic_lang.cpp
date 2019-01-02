@@ -116,7 +116,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, ModelInserter& s) co
 					qDebug() << "ERROR" << Line;
 					delete(w);
 				}else{
-					c=w;
+					c = w;
 				}
 			}else if(mode=='D'){
 				qDebug() << "diagram parse?" << Line;

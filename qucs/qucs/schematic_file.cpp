@@ -19,6 +19,7 @@
 # include <config.h>
 #endif
 
+#include <deque>
 #include <QtCore>
 #include <QMessageBox>
 #include <QDir>
@@ -60,7 +61,6 @@ SubMap FileList;
 QString SchematicModel::createClipboardFile()
 {
   int z=0;  // counts selected elements
-  Wire *pw;
   Diagram *pd;
   Painting *pp;
 
@@ -368,8 +368,9 @@ private: // ModelAccess
     incomplete();
     return _m;
   }
-  std::string const& getParameter(std::string const&) const{
+  std::string const& getParameter(std::string const&x) const{
     incomplete();
+    return x;
   }
 private:
   Schematic const& _m;
@@ -901,32 +902,23 @@ void Schematic::createNodeSet(QStringList& Collect, int& countInit,
 }
 
 // ---------------------------------------------------
-void Schematic::throughAllNodes(bool User, QStringList& Collect,
-				int& countInit)
+// find connected components (slow)
+void Schematic::throughAllNodes(unsigned& z) const
 { untested();
-  Node *pn;
-  int z=0;
+  z = 0; // number cc.
 
-  for(pn = nodes().first(); pn != 0; pn = nodes().next()) {
-    if((!pn->number()) == User) {
-      continue;  // already named ?
-    }else if(!User) {
-      pn->setNumber(++z);
-      pn->setName("_net" + QString::number(z));
-    }else if(pn->State) {
-      continue;  // already worked on
-    }
-
-    if(isAnalog){
-      createNodeSet(Collect, countInit, pn, pn);
-    }else{
-      incomplete();
-    }
-
-    pn->State = 1;
-    propagateNode(Collect, countInit, pn);
+  for(auto pn : nodes()){
+    assert(!pn->number());
   }
-}
+
+  for(auto pn : nodes()){
+    if(pn->number()){
+    }else{
+      pn->setNumber(++z);
+      propagateNode(pn);
+    }
+  }
+} // throughAllNodes
 
 // ----------------------------------------------------------
 // Checks whether this file is a qucs file and whether it is an subcircuit.
@@ -1014,61 +1006,39 @@ void Schematic::collectDigitalSignals(void)
 
 // ---------------------------------------------------
 // Propagates the given node to connected component ports.
-void Schematic::propagateNode(QStringList& Collect,
-			      int& countInit, Node *pn)
+void Schematic::propagateNode(Node *pn) const
 { untested();
   bool setName=false;
-  std::list<Node*> Cons;
+  std::deque<Node*> q;
   Node *p2;
-  Wire *pw;
   Element *pe;
 
-  Cons.push_back(pn);
-  for(auto it=Cons.begin(); it!=Cons.end(); ){
-    auto p2=*it;
-    auto cur=it;
-    bool nextit=true;
-    for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next()){
-      if(wire(pe)){
-	pw = (Wire*)pe;
-	if(p2 != pw->Port1) {
-	  if(!pw->Port1->number()) {
-	    pw->Port1->setNumber(pn->number());
-	    pw->Port1->setName("net" + QString::number(pn->number()));
-	    pw->Port1->State = 1;
-	    Cons.push_back(pw->Port1);
-	    it=Cons.end();
-	    --it;
-	    setName = true;
-	  }
-	}else{
-	  if(!pw->Port2->number()) {
-	    assert(pn);
-	    pw->Port2->setNumber(pn->number());
-	    pw->Port2->setName("net" + QString::number(pn->number()));
-	    pw->Port2->State = 1;
-	    Cons.push_back(pw->Port2);
-	    it=Cons.end();
-	    --it;
-	    setName = true;
-	  }
-	}
-	if(setName) {
-	  if (isAnalog){
-	    createNodeSet(Collect, countInit, pw, pn);
+  int z=pn->number();
+  assert(z);
+
+  q.push_back(pn);
+  while(!q.empty()){
+    auto cur=q.front();
+    q.pop_front();
+    cur->setNumber(z);
+
+    for(auto pe : cur->Connections){
+      if(Wire* pw=wire(pe)){ untested();
+	if(cur == pw->Port2) { untested();
+	  if(!pw->Port1->number()){
+	    q.push_back(pw->Port1);
 	  }else{
 	  }
-	  setName = false;
-	  nextit=false;
-	} else{
+	}else if(cur == pw->Port1) { untested();
+	  if(!pw->Port2->number()){
+	    q.push_back(pw->Port2);
+	  }else{
+	  }
+	}else{
+	  // wires have exactly 2 connections.
+	  assert(false);
 	}
-      }else{
       }
-    }
-    if(nextit){
-      ++it;
-    }else{
-      it=cur;
     }
   }
 }
@@ -1092,7 +1062,10 @@ void Schematic::propagateNode(QStringList& Collect,
 bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
                    QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
 		   NetLang const& nl)
-{ incomplete();
+{
+  incomplete();
+  return true;
+#if 0 // moved to qucsator.cc
   bool r;
   QString s;
 
@@ -1291,6 +1264,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
     }
   }
   return true;
+#endif
 }
 
 // ---------------------------------------------------
@@ -1306,9 +1280,12 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
     pn->State = 0;
     if(pn->Label) {
       if(isAnalog){
+	qDebug() << "attach label" << pn->Label->name();
         pn->setName(pn->Label->name());
+        pn->setLabel(pn->Label->name());
         // pn->setNumber(pn->Label->number());
       } else{
+	assert(0);
 	incomplete();
         pn->setName("net" + pn->Label->name());
       }
@@ -1321,9 +1298,9 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
   for(auto pw : wires()){
     if(pw->Label != 0) {
       if(isAnalog)
-        pw->Port1->setName(pw->Label->Name);
+        pw->Port1->setName(pw->Label->name());
       else  // avoid to use reserved VHDL words
-        pw->Port1->setName("net" + pw->Label->Name);
+        pw->Port1->setName("net" + pw->Label->name());
     }
   }
 
@@ -1334,11 +1311,10 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
     return false;
   }
 
-  // work on named nodes first in order to preserve the user given names
-  throughAllNodes(true, Collect, countInit);
-
-  // give names to the remaining (unnamed) nodes
-  throughAllNodes(false, Collect, countInit);
+  // number connected components
+  unsigned z=0;
+  throughAllNodes(z);
+  countInit = z;
 
   if(!isAnalog){
     incomplete();
@@ -1720,10 +1696,13 @@ bool SchematicModel::createSubNetlist(DocumentStream& stream, int& countInit,
 
 // ---------------------------------------------------
 // Determines the node names and writes subcircuits into netlist file.
-// BUG: generates the Netlist.
+// moved to QucsatorNetlister::prepareSave
 int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
                               QPlainTextEdit *ErrText, NetLang const& nl)
 {
+  incomplete();
+  return 0;
+#if 0
 
   // TODO:
   // SomeNetlister.generate(stream, Collect, nl);
@@ -1826,6 +1805,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   }
 
   return NumPorts;
+#endif
 }
 
 // ---------------------------------------------------
@@ -1876,9 +1856,10 @@ void Schematic::endNetlistDigital(QTextStream& stream, NetLang const& /*lang*/)
 // ---------------------------------------------------
 // write all components with node names into the netlist file
 // return some Time.
-// BUG: not here.
 QString Schematic::createNetlist(QTextStream& stream, int NumPorts, NetLang const& nl)
 { untested();
+  return "incomplete";
+#if 0 // qucsatorNetlister::createNetlist
   if(!isAnalog) {
     beginNetlistDigital(stream, nl);
   }
@@ -1926,6 +1907,7 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts, NetLang cons
   }
 
   return Time;
+#endif
 }
 
 // vim:ts=8:sw=2:noet

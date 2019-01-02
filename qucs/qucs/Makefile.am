@@ -177,6 +177,7 @@ noinst_HEADERS = \
 	$(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
 	actions.h \
 	command.h \
+	exception.h \
   	imagewriter.h \
 	language.h \
 	misc.h \

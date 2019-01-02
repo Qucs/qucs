@@ -41,7 +41,7 @@ LabelDialog::LabelDialog(WireLabel *pl, QWidget *parent)
   gbox->addWidget(Label1,0,0);
 
   NodeName = new QLineEdit();
-  if(pLabel)  NodeName->setText(pLabel->Name);
+  if(pLabel)  NodeName->setText(pLabel->name());
   NodeName->setValidator(Validator1);
   gbox->addWidget(NodeName,1,0,1,3);
 
@@ -112,8 +112,8 @@ void LabelDialog::slotOk()
 
   bool changed = false;
   if(pLabel) {
-    if(pLabel->Name != NodeName->text()) {
-      pLabel->Name = NodeName->text();
+    if(pLabel->name() != NodeName->text()) {
+      pLabel->setName(NodeName->text());
       changed = true;
     }
 
