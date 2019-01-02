@@ -1,8 +1,8 @@
 # Qucs 0.1.0  /home/felix/extern/qucs/qucs/examples/resonance.sch
 
-Vac:V1 _net0 gnd U="1 V" f="1 GHz" Phase="0" Theta="0"
-R:R1 _net2 _net0 R="R_par" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-C:C1 _net1 _net3 C="2 pF" V=""
-L:L1 _net3 _net2 L="13 nH" I=""
-.SW:SW1 Sim="" Type="lin" Param="R1" Start="5 Ohm" Stop="50 Ohm" Points="20"
-.AC:AC1 Type="lin" Start="1 GHz" Stop="10 GHz" Points="19" Noise="no"
+Vac:V1 _net1 _net2 U="1 V" f="1 GHz" Phase="0" Theta="0"
+R:R1 _net4 net1 R="R_par" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+C:C1 _net3 _net5 C="2 pF" V=""
+L:L1 _net5 _net4 L="13 nH" I=""
+.SW1:SW1 Sim="AC1" Type="log" Param="R_par" Start="1 Ohm" Stop="20 Ohm" Points="6" p="" p="" p="" p="" p="" p="" p=""
+.AC1:AC1 Type="lin" Start="0.9 GHz" Stop="1.1 GHz" Points="150" Noise="no" p="" p="" p="" p="" p=""

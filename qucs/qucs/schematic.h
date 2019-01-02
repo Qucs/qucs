@@ -159,26 +159,21 @@ public:
 // TODO: const access
 // BUG: give access to container, not to insane pointer.
   ComponentList& components(){
-	  assert(Components);
-	  return *Components;
+	  return DocComps;
   }
   NodeList& nodes(){
 	  return DocNodes;
   }
   WireList& wires(){
-	  assert(Wires);
 	  return DocWires;
   }
-
   ComponentList const& components() const{
-	  assert(Components);
-	  return *Components;
+	  return DocComps;
   }
   NodeList const& nodes() const{
 	  return DocNodes;
   }
   WireList const& wires() const{
-	  assert(Wires);
 	  return DocWires;
   }
   DiagramList& diagrams() const{
@@ -401,8 +396,12 @@ private:
   bool    rebuildSymbol(QString *);
 
   static void createNodeSet(QStringList&, int&, Conductor*, Node*);
-  void throughAllNodes(bool, QStringList&, int&);
-  void propagateNode(QStringList&, int&, Node*);
+
+public:
+  void throughAllNodes(unsigned& count) const;
+
+private:
+  void propagateNode(Node*) const;
   void collectDigitalSignals(void);
   bool giveNodeNames(QTextStream *, int&, QStringList&, QPlainTextEdit*,
 		  int, NetLang const&);

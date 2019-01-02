@@ -41,6 +41,7 @@
 #include <QDebug>
 
 #include "qucs.h"
+#include "docfmt.h"
 #include "node.h"
 #include "printerwriter.h"
 #include "imagewriter.h"
@@ -143,66 +144,49 @@ Schematic *newSchematic(QString schematic)
   }
   return sch;
 }
+// BUG: move to SchematicModel
+namespace{
+class sda : public ModelAccess{
+public:
+  sda(Schematic const& m) : _m(m) {
+  }
+private: // ModelAccess
+  Schematic const& schematicModel() const{ untested();
+    incomplete();
+    return _m;
+  }
+  std::string const& getParameter(std::string const&x) const{
+    incomplete();
+    return x;
+  }
+private:
+  Schematic const& _m;
+};
+}
 
-int doNetlist(QString schematic, QString netlist, NetLang const& nl)
+// moved to legacy/qucsator, QucsatorNetlister::save
+void doNetlist(QString schematic, QString netlist, NetLang const& nl)
 {
   Schematic *sch = newSchematic(schematic);
-  if (sch == NULL) {
-    return 1;
+  if (!sch){
+    throw "sthwrong1";
   }
 
-  qDebug() << "*** try to write netlist  :" << netlist;
-
-  // QString to *char
-  QByteArray ba = schematic.toLatin1();
-  const char *c_net = ba.data();
-
-  QStringList Collect;
-
-  QPlainTextEdit *ErrText = new QPlainTextEdit();  //dummy
   QFile NetlistFile;
-  QTextStream   Stream;
-
-  Collect.clear();  // clear list for NodeSets, SPICE components etc.
-
   NetlistFile.setFileName(netlist);
   if(!NetlistFile.open(QIODevice::WriteOnly)) {
-    fprintf(stderr, "Error: Could not load netlist %s\n", c_net);
-    return -1;
+//    fprintf(stderr, "Error: Could not load netlist %s\n", c_net);
+    throw "sthwrong";
   }
 
-  Stream.setDevice(&NetlistFile);
-  int SimPorts = sch->prepareNetlist(Stream, Collect, ErrText, nl);
-  qDebug() << "done prep\n";
+  DocumentStream stream;
+  stream.setDevice(&NetlistFile);
 
-  if(SimPorts < -5) {
-    NetlistFile.close();
-    fprintf(stderr, "Error: Could not prepare netlist %s\n", c_net);
-    /// \todo better handling for error/warnings
-    qCritical() << ErrText->toPlainText();
-    return 1;
-  }
+  auto NLN=docfmt_dispatcher["legacy_nl"];
+  assert(NLN);
+  sda xs(*sch);
+  NLN->save(stream, xs);
 
-  // output NodeSets, SPICE simulations etc.
-  for(QStringList::Iterator it = Collect.begin();
-  it != Collect.end(); ++it) {
-    // don't put library includes into netlist...
-    if ((*it).right(4) != ".lst" &&
-    (*it).right(5) != ".vhdl" &&
-    (*it).right(4) != ".vhd" &&
-    (*it).right(2) != ".v") {
-      Stream << *it << '\n';
-    }
-  }
-
-  Stream << '\n';
-
-  QString SimTime = sch->createNetlist(Stream, SimPorts, nl);
-  delete(sch);
-
-  NetlistFile.close();
-
-  return 0;
 }
 
 int doPrint(QString schematic, QString printFile,
@@ -911,7 +895,8 @@ int main(int argc, char *argv[])
     }
     // create netlist from schematic
     if (netlist_flag) {
-      return doNetlist(inputfile, outputfile, *netlang);
+      doNetlist(inputfile, outputfile, *netlang);
+      return 0; // BUG
     } else if (print_flag) {
       return doPrint(inputfile, outputfile,
           page, dpi, color, orientation);

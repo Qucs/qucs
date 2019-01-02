@@ -29,7 +29,8 @@ WireLabel::WireLabel(const QString& _Name, int _cx, int _cy,
   cy = _cy;
   x1 = _x1;
   y1 = _y1;
-  setName(_Name);
+  setName(_Name); //?!
+  setLabel(_Name);
   initValue = "";
 
   Type = _Type;
@@ -194,7 +195,8 @@ void WireLabel::paint(ViewPainter *p)
 // ----------------------------------------------------------------
 void WireLabel::setName(const QString& Name_)
 {
-  Name = Name_;
+  Name = Name_; //?!
+  setLabel(Name_);
   
   // get size of text using the screen-compatible metric
   QFontMetrics metrics(QucsSettings.font, 0);
