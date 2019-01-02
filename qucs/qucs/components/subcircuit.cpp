@@ -366,7 +366,7 @@ QString Subcircuit::getSubcircuitFile() const
 static SubMap FileList;
 
 // moved from schematic_file.cpp
-void Subcircuit::tAC(QTextStream& stream, Schematic* schem, QStringList&
+void Subcircuit::tAC(QTextStream& stream, SchematicModel* schem, QStringList&
 		Collect, int& countInit, int NumPorts, NetLang const& nl)
 {
 	Component* pc=this;

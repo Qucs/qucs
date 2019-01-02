@@ -191,10 +191,10 @@ void MouseActions::endElementMoving(Schematic *Doc, Q3PtrList<Element> *movEleme
 	Doc->insertWire((Wire*)pe);
 	break;
       case isDiagram:
-	Doc->Diagrams->append((Diagram*)pe);
+	Doc->diagrams().append((Diagram*)pe);
 	break;
       case isPainting:
-	Doc->Paintings->append((Painting*)pe);
+	Doc->paintings().append((Painting*)pe);
 	break;
       case isComponent:
       case isAnalogComponent:
@@ -1295,7 +1295,7 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
   }else if(auto W=wire(e)){
       pl = W->Label;
       W->Label = 0;    // prevent label to be deleted
-      Doc->Wires->setAutoDelete(false);
+      Doc->wires().setAutoDelete(false);
       Doc->deleteWire(W);
       W->Label = pl;
       W->rotate();
@@ -1303,8 +1303,8 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
       Doc->setOnGrid(W->x2__(), W->y2__());
       if(pl)  Doc->setOnGrid(pl->cx__(), pl->cy__());
       Doc->insertWire(W);
-      Doc->Wires->setAutoDelete(true);
-      if (Doc->Wires->containsRef (W)){
+      Doc->wires().setAutoDelete(true);
+      if (Doc->wires().containsRef (W)){
         Doc->enlargeView(e->x1_(), e->y1_(), e->x2_(), e->y2_());
       }else{
       }
@@ -1341,7 +1341,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event)
 	// left mouse button inserts component into the schematic
 	// give the component a pointer to the schematic it's a
 	// part of
-	Comp->setSchematic (Doc);
+	Comp->setSchematic(&Doc->DocModel);
 	Comp->textSize(x1, y1);
 	Doc->insertElement(Comp);
 	Comp->textSize(x2, y2);
@@ -1397,7 +1397,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event)
     d->pressElement(Doc, element(selElem), Event);
 
   }else if(((Painting*)selElem)->MousePressing()) {
-    Doc->Paintings->append((Painting*)selElem);
+    Doc->paintings().append((Painting*)selElem);
     ((Painting*)selElem)->Bounding(x1,y1,x2,y2);
     //Doc->enlargeView(x1, y1, x2, y2);
     selElem = prechecked_cast<Element*>(selElem->clone());
@@ -1888,18 +1888,18 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 	    if(pe->y1_() == pe->y2_())  break;
 	  }
 	  Doc->insertWire((Wire*)pe);
-	  if (Doc->Wires->containsRef ((Wire*)pe))
+	  if (Doc->wires().containsRef ((Wire*)pe))
 	    Doc->enlargeView(pe->x1_(), pe->y1_(), pe->x2_(), pe->y2_());
 	  else pe = NULL;
 	  break;
 	case isDiagram:
-      Doc->Diagrams->append((Diagram*)pe);
+      Doc->diagrams().append((Diagram*)pe);
       ((Diagram*)pe)->loadGraphData(Info.path() + QDir::separator() +
 					Doc->DataSet);
 	  Doc->enlargeView(pe->cx_(), pe->cy_()-pe->y2_(), pe->cx_()+pe->x2_(), pe->cy_());
 	  break;
 	case isPainting:
-	  Doc->Paintings->append((Painting*)pe);
+	  Doc->paintings().append((Painting*)pe);
 	  ((Painting*)pe)->Bounding(x1,y1,x2,y2);
 	  Doc->enlargeView(x1, y1, x2, y2);
 	  break;
@@ -2119,7 +2119,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
   }else if(auto pg=graph(focusElement)){
 	 // searching diagram for this graph
 	 // BUG: a graph should know its parent.
-	 for(dia = Doc->Diagrams->last(); dia != 0; dia = Doc->Diagrams->prev())
+	 for(dia = Doc->diagrams().last(); dia != 0; dia = Doc->diagrams().prev())
 	   if(dia->Graphs.indexOf(pg) >= 0)
 	     break;
 

@@ -140,54 +140,39 @@ public:
   bool scrollLeft(int);
   bool scrollRight(int);
 
-  // The pointers points to the current lists, either to the schematic
-  // elements "Doc..." or to the symbol elements "SymbolPaints".
-// private: //TODO. one at a time. these must go to SchematicModel
-  WireList DocWires;
-  NodeList DocNodes;
-  DiagramList DocDiags;
-  PaintingList DocPaints;
-  ComponentList DocComps;
-  SchematicModel DocModel;
-
-// private: BUG: this is insane.
-  WireList *Wires;
-  DiagramList *Diagrams;
-  PaintingList *Paintings;
-  ComponentList *Components;
-
-// TODO: const access
-// BUG: give access to container, not to insane pointer.
+// TODO: const access ONLY
   ComponentList& components(){
-	  return DocComps;
+	  return DocModel.components();
   }
   NodeList& nodes(){
-	  return DocNodes;
+	  return DocModel.nodes();
   }
   DiagramList& diagrams(){
-	  return DocDiags;
+	  return DocModel.diagrams();
   }
   WireList& wires(){
-	  return DocWires;
+	  return DocModel.wires();
   }
   ComponentList const& components() const{
-	  return DocComps;
+	  return DocModel.components();
   }
   NodeList const& nodes() const{
-	  return DocNodes;
+	  return DocModel.nodes();
   }
   WireList const& wires() const{
-	  return DocWires;
+	  return DocModel.wires();
   }
   DiagramList const& diagrams() const{
-	  return DocDiags;
+	  return DocModel.diagrams();
   }
-  PaintingList& paintings() const{
-	  assert(Paintings);
-	  return *Paintings;
+  PaintingList& paintings(){
+	  return DocModel.paintings();
+  }
+  PaintingList const& paintings() const{
+	  return DocModel.paintings();
   }
   unsigned numberOfNets() const{
-	  return nc;
+	  return DocModel.numberOfNets();
   }
   
 	// transition
@@ -197,8 +182,6 @@ public:
   }
 
   QList<PostedPaintEvent>   PostedPaintEvents;
-private:
-  bool SymbolMode;
 public:
   void setSymbolMode(bool x){
 	  SymbolMode = x;
@@ -403,7 +386,9 @@ private:
   static void createNodeSet(QStringList&, int&, Conductor*, Node*);
 
 public:
-  void throughAllNodes(unsigned& count) const;
+  void throughAllNodes(unsigned& count) const{
+	  return DocModel.throughAllNodes(count);
+  }
 
 private:
   void propagateNode(Node*) const;
@@ -412,8 +397,8 @@ private:
 		  int, NetLang const&);
   void beginNetlistDigital(QTextStream &, NetLang const&);
   void endNetlistDigital(QTextStream &, NetLang const&);
-  bool throughAllComps(QTextStream *, int&, QStringList&, QPlainTextEdit *,
-		  int, NetLang const&);
+//  bool throughAllComps(QTextStream *, int&, QStringList&, QPlainTextEdit *,
+//		  int, NetLang const&);
 
   DigMap Signals; // collecting node names for VHDL signal declarations
 public: // BUG
@@ -480,8 +465,8 @@ public: // need access to SchematicModel. grr
   friend class ImageWriter;
 
 private:
-  mutable // tmp kludge.
-  unsigned nc; // number of connected components ("nets");
+  SchematicModel DocModel;
+  bool SymbolMode;
 };
 
 
