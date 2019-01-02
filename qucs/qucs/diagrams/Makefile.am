@@ -42,7 +42,7 @@ libdiagrams_la_SOURCES = tabdiagram.cpp smithdiagram.cpp rectdiagram.cpp \
 
 nodist_libdiagrams_la_SOURCES = $(MOCFILES)
 
-noinst_HEADERS = $(MOCHEADERS) graph.h polardiagram.h rectdiagram.h \
+noinst_HEADERS = $(MOCHEADERS) graph.h polardiagram.h \
  diagramdialog.h markerdialog.h\
   smithdiagram.h tabdiagram.h diagrams.h marker.h psdiagram.h rect3ddiagram.h \
   curvediagram.h timingdiagram.h truthdiagram.h 

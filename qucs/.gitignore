@@ -44,3 +44,5 @@ debian/qucs/
 *.dsp
 *.dsw
 !tests/*/*.sch
+!examples/*.sch
+!examples/*.dpl
