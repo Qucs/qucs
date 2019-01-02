@@ -168,6 +168,7 @@ dist-hook:
 
 EXTRA_DIST = \
 	entries.ref \
+	LPF-Balun2.sch.ref \
 	resonance.sch.ref \
 	prj_log_compiler \
 	$(SH_TESTS)
