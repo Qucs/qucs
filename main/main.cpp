@@ -130,9 +130,6 @@ Schematic *newSchematic(QString schematic)
     return NULL;
   }
 
-  // populate Modules list
-  Module::registerModules (); // BUG: on startup
-
   // new schematic from file
   Schematic *sch = new Schematic(0 /* no app */, schematic);
 
@@ -148,11 +145,10 @@ Schematic *newSchematic(QString schematic)
 namespace{
 class sda : public ModelAccess{
 public:
-  sda(Schematic const& m) : _m(m) {
+  sda(SchematicModel const& m) : _m(m) {
   }
 private: // ModelAccess
-  Schematic const& schematicModel() const{ untested();
-    incomplete();
+  SchematicModel const& schematicModel() const{ untested();
     return _m;
   }
   std::string const& getParameter(std::string const&x) const{
@@ -160,32 +156,42 @@ private: // ModelAccess
     return x;
   }
 private:
-  Schematic const& _m;
+  SchematicModel const& _m;
 };
 }
 
 // moved to legacy/qucsator, QucsatorNetlister::save
 void doNetlist(QString schematic, QString netlist, NetLang const& nl)
-{
-  Schematic *sch = newSchematic(schematic);
-  if (!sch){
-    throw "sthwrong1";
+{ untested();
+  SchematicModel sch(nullptr);
+  sch.setFileInfo(schematic);
+  QFile file(schematic);  // save simulator messages
+  file.open(QIODevice::ReadOnly);
+  DocumentStream stream (&file);
+  try{ untested();
+    sch.parse(stream);
+  }catch(...){ untested();
+    throw "doNetlist fail";
   }
 
-  QFile NetlistFile;
-  NetlistFile.setFileName(netlist);
-  if(!NetlistFile.open(QIODevice::WriteOnly)) {
+  SchematicModel const& S(sch);
+  for(auto it : S.components()){ untested();
+    qDebug() << "got it" << netlist;
+  }
+  qDebug() << "got it" << netlist;
+
+  QFile NetlistFile(netlist);
+  if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
 //    fprintf(stderr, "Error: Could not load netlist %s\n", c_net);
     throw "sthwrong";
+  }else{ untested();
   }
-
-  DocumentStream stream;
-  stream.setDevice(&NetlistFile);
+  DocumentStream os(&NetlistFile);
 
   auto NLN=docfmt_dispatcher["legacy_nl"];
   assert(NLN);
-  sda xs(*sch);
-  NLN->save(stream, xs);
+  sda xs(sch);
+  NLN->save(os, xs);
 
 }
 
@@ -198,11 +204,11 @@ int doPrint(QString schematic, QString printFile,
   }
 
 //  sch->Nodes = &(sch->DocNodes);
-  sch->Wires = &(sch->DocWires);
-  sch->Diagrams = &(sch->DocDiags);
-  sch->Paintings = &(sch->DocPaints);
-  sch->Components = &(sch->DocComps);
-  sch->reloadGraphs();
+//  sch->Wires = &(sch->DocWires);
+//  sch->Diagrams = &(sch->DocDiags);
+//  sch->Paintings = &(sch->DocPaints);
+//  sch->Components = &(sch->DocComps);
+//  sch->reloadGraphs();
 
   qDebug() << "*** try to print file  :" << printFile;
 

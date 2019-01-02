@@ -44,8 +44,8 @@ public: // construct
 
 public: // interface
   virtual unsigned portNumber()const {return 0;}
-  virtual void setSchematic (SchematicModel* p) { containingSchematic = p; }
-  SchematicModel* getSchematic() const{return containingSchematic;}
+  virtual void setSchematic (SchematicModel const* p) { containingSchematic = p; }
+  SchematicModel const* getSchematic() const{return containingSchematic;}
 
 public: // graphics
         // hmm, maybe just dispatch a gfx object.
@@ -54,8 +54,8 @@ public: // graphics
   virtual unsigned width()const {return 0;}
 //  virtual void draw(QPainter&)const=0;
   //...  more to come
-private:
-  SchematicModel* containingSchematic;
+private: // good idea?
+  SchematicModel const* containingSchematic;
 };
 
 

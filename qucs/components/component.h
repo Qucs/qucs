@@ -69,8 +69,8 @@ public:
 
   virtual QString getSubcircuitFile() const { return ""; }
   // set the pointer scematic associated with the component
-  virtual void setSchematic (Schematic* p) { containingSchematic = p; }
-  virtual Schematic* getSchematic () const {return containingSchematic; }
+  virtual void setSchematic (SchematicModel* p) { containingSchematic = p; }
+  virtual SchematicModel* getSchematic () const {return containingSchematic; }
   // do somehting with buttons. can sb think of a more descriptive name?
   virtual void dialgButtStuff(ComponentDialog&)const;
 
@@ -147,7 +147,7 @@ protected:
 
   void copyComponent(Component*);
   Property * getProperty(const QString&);
-  Schematic* containingSchematic;
+  SchematicModel* containingSchematic;
 private: // (hopefully) obsolete callbacks
   void recreateCallback();
 
