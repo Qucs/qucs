@@ -148,7 +148,7 @@ private: // overrides
 private:
   mutable SubMap FileList;
 }LNL;
-static Dispatcher<DocumentFormat>::INSTALL p1(&docfmt_dispatcher, "legacy_nl", &LNL);
+static Dispatcher<DocumentFormat>::INSTALL p1(&docfmt_dispatcher, "qucsator|legacy_nl", &LNL);
 
 // was main::doNetlist
 void LegacyNetlister::save(DocumentStream& Stream, ModelAccess const& m) const

@@ -409,7 +409,7 @@ public: // for now. move to parser asap
 	Component* loadComponent(const QString& _s, Component* c) const;
 	Command* loadCommand(const QString& _s, Command* c) const;
 
-	QString const& getParameter(std::string const& key) const;
+	QString getParameter(std::string const& key) const;
 
 public: // schematicModel
 	QString const& portType(int i) const{

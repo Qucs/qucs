@@ -63,6 +63,8 @@
 #include <Windows.h>  //for OutputDebugString
 #endif
 
+static const std::string default_simulator="qucsator"; // FIXME: get from rc? maybe from environment?
+
 /*!
  * \brief qucsMessageOutput handles qDebug, qWarning, qCritical, qFatal.
  * \param type Message type (Qt enum)
@@ -155,7 +157,34 @@ private: // ModelAccess
   std::string getParameter(std::string const&x) const{
     if(x=="DocName"){
       return DocName;
+    }else if(x=="ViewX1"){
+      incomplete(); // there is no view.
+      return "0";
+    }else if(x=="ViewX2"){
+      incomplete(); // there is no view.
+      return "0";
+    }else if(x=="ViewY1"){
+      incomplete(); // there is no view.
+      return "0";
+    }else if(x=="ViewY2"){
+      incomplete(); // there is no view.
+      return "0";
+    }else if(x=="Scale"){
+      incomplete(); // there is no view.
+      return "0";
+    }else if(x=="GridOn"){
+      incomplete(); // there is no view.
+      return "0";
+    }else if(x=="GridX"){
+      incomplete(); // there is no view.
+      return "0";
+    }else if(x=="GridY"){
+      incomplete(); // there is no view.
+      return "0";
     }else{
+      qDebug() << "unknown parameter" << QString::fromStdString(x);
+      incomplete();
+      return "unknown";
       throw ExceptionCantFind();
     }
   }
@@ -168,7 +197,7 @@ public: // tmo hack
 }
 
 // moved to legacy/qucsator, QucsatorNetlister::save
-void doNetlist(QString schematic, QString netlist, NetLang const& nl)
+void doNetlist(QString schematic, QString netlist, DocumentFormat const& NLN)
 { untested();
   SchematicModel sch(nullptr);
   sch.setFileInfo(schematic);
@@ -182,10 +211,6 @@ void doNetlist(QString schematic, QString netlist, NetLang const& nl)
   }
 
   SchematicModel const& S(sch);
-  for(auto it : S.components()){ untested();
-    qDebug() << "got it" << netlist;
-  }
-  qDebug() << "got it" << netlist;
 
   QFile NetlistFile(netlist);
   if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
@@ -195,11 +220,9 @@ void doNetlist(QString schematic, QString netlist, NetLang const& nl)
   }
   DocumentStream os(&NetlistFile);
 
-  auto NLN=docfmt_dispatcher["legacy_nl"];
-  assert(NLN);
   sda xs(sch);
   xs.DocName = schematic.toStdString(); // tmp
-  NLN->save(os, xs);
+  NLN.save(os, xs);
 
 }
 
@@ -764,13 +787,12 @@ int main(int argc, char *argv[])
   QString inputfile;
   QString outputfile;
 
-  bool netlist_flag = false;
+  bool dump_flag = false;
   bool print_flag = false;
   QString page = "A4";
   int dpi = 96;
   QString color = "RGB";
   QString orientation = "portrait";
-  std::string default_simulator = "qucsator"; // FIXME: get from rc? maybe from environment?
   std::string netlang_name = default_simulator;
 
   // simple command line parser
@@ -781,7 +803,8 @@ int main(int argc, char *argv[])
   "Commands:\n"
   "  -h, --help     display this help and exit\n"
   "  -v, --version  display version information and exit\n"
-  "  -n, --netlist  convert Qucs schematic into netlist, requires -i, -o\n"
+  "  -n, --netlist  obsolete. use --dump\n"
+  "  -d, --dump     dump schematic, requires -i, -o\n"
   "  -p, --print    print Qucs schematic to file, requires -i, -o (eps needs inkscape)\n"
   "  -q, --quit     exit\n"
   "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
@@ -800,7 +823,7 @@ int main(int argc, char *argv[])
   "Options:\n"
   "  -i FILENAME    use file as input schematic\n"
   "  -o FILENAME    use file as output netlist\n"
-  "  -l NETLANG     language to be used by netlister, can be a simulator name\n"
+  "  -l DOCLANG     language to be used by dump, can be a simulator name\n"
   "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
   "    --dpi NUMBER                 set dpi value (default 96)\n"
   "    --color [RGB|RGB]            set color mode (default RGB)\n"
@@ -814,11 +837,11 @@ int main(int argc, char *argv[])
       fprintf(stdout, "Qucs " PACKAGE_VERSION "\n");
 #endif
       return 0;
-    }
-    else if (!strcmp(argv[i], "-n") || !strcmp(argv[i], "--netlist")) {
-      netlist_flag = true;
-    }
-    else if (!strcmp(argv[i], "-p") || !strcmp(argv[i], "--print")) {
+    } else if (!strcmp(argv[i], "-d") || !strcmp(argv[i], "--dump")) {
+      dump_flag = true;
+    } else if (!strcmp(argv[i], "-n") || !strcmp(argv[i], "--netlist")) {
+      dump_flag = true;
+    } else if (!strcmp(argv[i], "-p") || !strcmp(argv[i], "--print")) {
       print_flag = true;
     }
     else if (!strcmp(argv[i], "--page")) {
@@ -878,14 +901,14 @@ int main(int argc, char *argv[])
     }
   }
 
-  DocumentLanguage const* dl = doclang_dispatcher[netlang_name];
-  NetLang const* netlang = dynamic_cast<NetLang const*>(dl);
+  DocumentLanguage const* netlang = doclang_dispatcher[netlang_name];
 
   if(netlang){
     // just use it.
   }else if(auto sd = simulator_dispatcher[netlang_name]){
+    incomplete();
     // ask a simulator.
-    netlang = sd->netLang();
+//    netlang = sd->netLang();
   }
   if(!netlang){
     // TODO: io_error...
@@ -895,10 +918,10 @@ int main(int argc, char *argv[])
   }
 
   // check operation and its required arguments
-  if (netlist_flag and print_flag) {
+  if (dump_flag and print_flag) {
     fprintf(stderr, "Error: --print and --netlist cannot be used together\n");
     return -1;
-  } else if (netlist_flag or print_flag) {
+  } else if (dump_flag or print_flag) {
     if (inputfile.isEmpty()) {
       fprintf(stderr, "Error: Expected input file.\n");
       return -1;
@@ -908,8 +931,10 @@ int main(int argc, char *argv[])
       return -1;
     }
     // create netlist from schematic
-    if (netlist_flag) {
-      doNetlist(inputfile, outputfile, *netlang);
+    if (dump_flag) {
+      auto NLN=docfmt_dispatcher[netlang_name];
+      assert(NLN);
+      doNetlist(inputfile, outputfile, *NLN);
       return 0; // BUG
     } else if (print_flag) {
       return doPrint(inputfile, outputfile,

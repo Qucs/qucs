@@ -60,6 +60,7 @@ TESTS = \
 	${PRJ_TESTS}
 
 SH_TESTS = \
+	dump.sh \
 	helloworld.sh \
 	element.sh \
 	doesnotexist.sh \
@@ -156,7 +157,6 @@ if COND_WIN32
 doesnotexist.log: SH_LOG_FLAGS=-c 'exit 77'
 endif
 
-
 dist-hook:
 	for i in ${PRJ_TESTS}; do \
 		mkdir -p ${distdir}/$$i; \
@@ -165,11 +165,10 @@ dist-hook:
 		cp $(srcdir)/$$i/*.sch.net $(distdir)/$$i; \
 	done
 
-
 EXTRA_DIST = \
+	${SCHEMATICS:%=%.net.ref} \
+	${SCHEMATICS:%=%.ref} \
 	entries.ref \
-	LPF-Balun2.sch.ref \
-	resonance.sch.ref \
 	prj_log_compiler \
 	$(SH_TESTS)
 
