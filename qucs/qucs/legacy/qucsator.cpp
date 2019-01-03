@@ -45,20 +45,14 @@ private: // local
 static Dispatcher<DocumentLanguage>::INSTALL pl(&doclang_dispatcher, "qucsator", &qucslang);
 
 void QucsLang::printSymbol(Symbol const* d, stream_t& s) const
-{ untested();
-  if(auto c=dynamic_cast<Command const*>(d)){
-    if(auto cc=dynamic_cast<Component const*>(d)){
-      incomplete(); // legacy hack
-      //printComponent(cc, s);
-      printCommand(c, s);
-    }else{
-      printCommand(c, s);
-    }
-  }else if(auto c=dynamic_cast<Component const*>(d)){
-    printComponent(c, s);
-  }else{
-    incomplete();
-  }
+{
+	if(auto c=dynamic_cast<Command const*>(d)){
+		printCommand(c, s);
+	}else if(auto c=dynamic_cast<Component const*>(d)){
+		printComponent(c, s);
+	}else{
+		incomplete();
+	}
 }
 
 void QucsLang::printCommand(Command const* c, stream_t& s) const
@@ -90,8 +84,6 @@ std::vector<QString> netLabels; // BUG
  */
 void QucsLang::printComponent(Component const* c, stream_t& s) const
 {
-  qDebug() << "pC" << c << c->label();
-
   // BUG
   assert(c->isActive == COMP_IS_ACTIVE);
 
@@ -317,6 +309,17 @@ void LegacyNetlister::prepareSave(DocumentStream& stream, ModelAccess const& m) 
 		}else if (netLabels[i].size()){
 		}else{
 			netLabels[i] = w->Label->name();
+		}
+	}
+
+	for(auto pc : sm.components()){
+		if(pc->type() == "GND") {
+			unsigned i=pc->Ports.first()->Connection->number();
+			if (netLabels[i].size()){
+			}else{
+				qDebug() << "GND: warning: overriding label" << netLabels[i];
+			}
+			netLabels[i] = "gnd";
 		}
 	}
 
