@@ -12,13 +12,15 @@
 class SchematicModel;
 class Schematic; // BUG
 
+// could be redundant, once schematicModels are some kind of
+// symbol/object
 class ModelInserter{
 protected:
 	explicit ModelInserter();
 public:
 	virtual void pushBack(Element*) = 0;
 	virtual SchematicModel* model() const{return nullptr;} // BUG
-	virtual void setParameter(std::string const&, std::string const&) = 0;
+	virtual void setParameter(std::string const&, std::string) = 0;
 };
 
 class ModelAccess{

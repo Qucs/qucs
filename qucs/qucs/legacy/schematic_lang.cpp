@@ -683,10 +683,16 @@ void LegacySchematicLanguage::loadProperties(QTextStream& s_in,
 		nstr = Line.section('=',1,1);    // property value
 		if(cstr == "View") {
 			incomplete(); // setParameter
-		// 	ViewX1 = nstr.section(',',0,0).toInt(&ok); if(ok) {
-		// 		ViewY1 = nstr.section(',',1,1).toInt(&ok); if(ok) {
-		// 			ViewX2 = nstr.section(',',2,2).toInt(&ok); if(ok) {
-		// 				ViewY2 = nstr.section(',',3,3).toInt(&ok); if(ok) {
+		 	QString tmp;
+			tmp=nstr.section(',',0,0).toInt(&ok);
+			m.setParameter("ViewX1", tmp.toStdString());
+			tmp=nstr.section(',',1,1).toInt(&ok);
+			m.setParameter("ViewY1", tmp.toStdString());
+			tmp=nstr.section(',',2,2).toInt(&ok);
+			m.setParameter("ViewX2", tmp.toStdString());
+			tmp=nstr.section(',',2,2).toInt(&ok);
+			m.setParameter("ViewY2", tmp.toStdString());
+
 		// 					Scale  = nstr.section(',',4,4).toDouble(&ok); if(ok) {
 		// 						tmpViewX1 = nstr.section(',',5,5).toInt(&ok); if(ok)
 		// 							tmpViewY1 = nstr.section(',',6,6).toInt(&ok); }}}}}
