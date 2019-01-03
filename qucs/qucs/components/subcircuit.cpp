@@ -308,12 +308,12 @@ QString Subcircuit::getSubcircuitFile() const
     // same directory as the schematic file it is a part of
     if (FileInfo.fileName () != FileName) { untested();
         // the file has no path information, just the file name
-	 }else if (containingSchematic) {
+	 }else if (getSchematic()) {
 		 qDebug() << "trying to inherit path from sch";
 		 // check if a file of the same name is in the same directory
 		 // as the schematic file, if we have a pointer to it, in
 		 // which case we use this one
-		 QFileInfo schematicFileInfo = containingSchematic->getFileInfo ();
+		 QFileInfo schematicFileInfo = getSchematic()->getFileInfo ();
 		 QFileInfo localFIleInfo (schematicFileInfo.canonicalPath () + "/" + baseName + ".sch");
 		 qDebug() << "got" << schematicFileInfo.canonicalPath();
 		 if (localFIleInfo.exists ()) { untested();
@@ -366,9 +366,9 @@ QString Subcircuit::getSubcircuitFile() const
 static SubMap FileList;
 
 // moved from schematic_file.cpp
-void Subcircuit::tAC(QTextStream& stream, SchematicModel* schem, QStringList&
+void Subcircuit::tAC(QTextStream& stream, SchematicModel const* schem, QStringList&
 		Collect, int& countInit, int NumPorts, NetLang const& nl)
-{
+{untested();
 	Component* pc=this;
 	int i;
 	// tell the subcircuit it belongs to this schematic
