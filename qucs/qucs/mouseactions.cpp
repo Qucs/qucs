@@ -2037,10 +2037,6 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 
 //  qDebug() << "+focusElement->Type" << focusElement->Type;
 
-  Graph *pg;
-  Component *c;
-  Diagram *dia;
-  MarkerDialog *mdia;
   int x1, y1, x2, y2;
 
   QFileInfo Info(Doc->DocName);

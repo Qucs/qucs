@@ -57,7 +57,7 @@ private: // ModelInserter
 	void pushBack(Element* e){
 		_m->pushBack(e);
 	}
-	void setParameter(std::string const&, std::string const&){
+	void setParameter(std::string const&, std::string){
 		incomplete();
 	}
 private:

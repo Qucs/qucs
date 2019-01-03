@@ -999,9 +999,7 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
   ymin=INT_MAX;
   xmax=INT_MIN;
   ymax=INT_MIN;
-  Component *pc;
   WireLabel *pl;
-  Painting *pp;
 
   if(components().isEmpty())
     if(wires().isEmpty())
@@ -2421,7 +2419,7 @@ private:
   void pushBack(Element* e){
     _m->pushBack(e);
   }
-  void setParameter(std::string const&, std::string const&){
+  void setParameter(std::string const&, std::string){
     incomplete();
   }
 private:
@@ -2470,10 +2468,12 @@ void Schematic::pushBack(Element* what)
 }
 
 // ----------------------------------------------------------------
-QString const& Schematic::getParameter(std::string const& x) const
+QString Schematic::getParameter(std::string const& x) const
 {
   if(x=="DocName"){
     return DocName;
+  }else if(x=="ViewX1"){
+    return QString(ViewX1);
   }else{
     throw "Exception_cantfind";
   }

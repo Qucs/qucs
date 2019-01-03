@@ -47,21 +47,42 @@ static QString QG(ModelAccess const& m, std::string const& key)
 void LegacySchematicFormat::save(DocumentStream& stream, ModelAccess const& m) const
 {
 	// get legacy "parameters"
-	float tmpScale=std::stof(m.getParameter("tmpScale"));
-	int tmpViewX1=std::stoi(m.getParameter("tmpViewX1"));
-	int tmpViewX2=std::stoi(m.getParameter("tmpViewX2"));
-	int tmpViewY1=std::stoi(m.getParameter("tmpViewY1"));
-   int tmpViewY2=std::stoi(m.getParameter("tmpViewY2"));
-   int tmpPosX=std::stoi(m.getParameter("tmpPosX"));
-   int tmpPosY=std::stoi(m.getParameter("tmpPosY"));
-	int ViewX1=std::stoi(m.getParameter("ViewX1"));
-	int ViewY1=std::stoi(m.getParameter("ViewY1"));
-	int ViewX2=std::stoi(m.getParameter("ViewX2"));
-	int ViewY2=std::stoi(m.getParameter("ViewY2"));
-	int Scale=std::stoi(m.getParameter("Scale"));
-	int GridX=std::stoi(m.getParameter("GridX"));
-	int GridY=std::stoi(m.getParameter("GridY"));
-	int GridOn=std::stoi(m.getParameter("GridOn"));
+	float tmpScale;
+	int tmpViewX1;
+	int tmpViewX2;
+	int tmpViewY1;
+   int tmpViewY2;
+   int tmpPosX;
+   int tmpPosY;
+	int ViewX1;
+	int ViewY1;
+	int ViewX2;
+	int ViewY2;
+	int Scale;
+	int GridX;
+	int GridY;
+	int GridOn;
+
+	try{
+		ViewX1=std::stoi(m.getParameter("ViewX1"));
+		ViewY1=std::stoi(m.getParameter("ViewY1"));
+		ViewX2=std::stoi(m.getParameter("ViewX2"));
+		ViewY2=std::stoi(m.getParameter("ViewY2"));
+		Scale=std::stoi(m.getParameter("Scale"));
+		GridX=std::stoi(m.getParameter("GridX"));
+		GridY=std::stoi(m.getParameter("GridY"));
+		GridOn=std::stoi(m.getParameter("GridOn"));
+
+		tmpViewX1=std::stoi(m.getParameter("tmpViewX1"));
+		tmpViewX2=std::stoi(m.getParameter("tmpViewX2"));
+		tmpViewY1=std::stoi(m.getParameter("tmpViewY1"));
+		tmpViewY2=std::stoi(m.getParameter("tmpViewY2"));
+		tmpScale=std::stof(m.getParameter("tmpScale"));
+		tmpPosX=std::stoi(m.getParameter("tmpPosX"));
+		tmpPosY=std::stoi(m.getParameter("tmpPosY"));
+	}catch (std::invalid_argument){
+		incomplete();
+	}
 
 	auto D=doclang_dispatcher["leg_sch"];
 	auto L = dynamic_cast<DocumentLanguage const*>(D);
@@ -71,6 +92,8 @@ void LegacySchematicFormat::save(DocumentStream& stream, ModelAccess const& m) c
 
 	stream << "<Properties>\n";
 	if(isSymbolMode()) {
+		incomplete();
+		assert(false); // => symbol_format.cc
 		stream << "  <View=" << tmpViewX1<<","<<tmpViewY1<<","
 			<< tmpViewX2<<","<<tmpViewY2<< ",";
 		stream <<tmpScale<<","<<tmpPosX<<","<<tmpPosY << ">\n";

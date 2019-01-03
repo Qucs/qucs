@@ -1,19 +1,82 @@
-# Qucs 0.1.0  ../../tests/../examples/LPF-Balun2.sch
-
-L:L1 _net0 _net1 L="1.2uH" I=""
-L:L2 _net1 _net2 L="470nH" I=""
-C:C1 _net3 _net0 C="270pF" V=""
-C:C2 _net4 _net1 C="270pF" V=""
-L:L3 _net5 _net0 L="470nH" I=""
-L:L4 _net6 _net3 L="470nH" I=""
-L:L5 _net3 _net4 L="1.2uH" I=""
-L:L6 _net4 _net7 L="470nH" I=""
-Pac:P1 _net8 gnd Num="1" Z="100 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
-Sub:Balun1 File="IdealBalun.sch"
-Sub:Balun2 File="IdealBalun.sch"
-Vdc:V1 _net9 gnd U="1V"
-VProbe:Pr1 _net10 gnd
-Pac:P2 _net11 gnd Num="2" Z="100 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
-.SP:SP1 Type="log" Start="1MHz" Stop="100MHz" Points="1001" Noise="no" NoiseIP="1" NoiseOP="2" saveCVs="no" saveAll="no" p="" p="" p="" p="" p="" p="" p="" p="" p="" p=""
-Eqn:Eqn1 dBS21="dB(S[2,1])" dBS11="dB(S[1,1])" Export="yes"
-.DC:DC1 Temp="26.85" reltol="0.001" abstol="1 pA" vntol="1 uV" saveOPs="no" MaxIter="150" saveAll="no" convHelper="none" Solver="CroutLU" p="" p="" p="" p="" p="" p="" p="" p="" p="" p=""
+<Qucs Schematic 0.0.20>
+<Properties>
+  <View=0,0,0,0,0,0,0>
+  <Grid=0,0,0>
+  <DataSet=unknown>
+  <DataDisplay=unknown>
+  <OpenDisplay=unknown>
+  <Script=unknown>
+  <RunScript=unknown>
+  <showFrame=unknown>
+  <FrameText0=unknown>
+  <FrameText1=unknown>
+  <FrameText2=unknown>
+  <FrameText3=unknown>
+</Properties>
+<Symbol>
+</Symbol>
+<Components>
+  <L L1 1 510 90 -26 10 0 0 "1.2uH" 1 "" 0>
+  <L L2 1 650 90 -26 10 0 0 "470nH" 1 "" 0>
+  <C C1 1 440 170 17 -26 0 1 "270pF" 1 "" 0 "neutral" 0>
+  <C C2 1 580 170 17 -26 0 1 "270pF" 1 "" 0 "neutral" 0>
+  <L L3 1 360 90 -26 10 0 0 "470nH" 1 "" 0>
+  <L L4 1 360 260 -26 10 0 0 "470nH" 1 "" 0>
+  <L L5 1 510 260 -26 10 0 0 "1.2uH" 1 "" 0>
+  <L L6 1 650 260 -26 10 0 0 "470nH" 1 "" 0>
+  <GND * 5 130 270 0 0 0 0>
+  <Pac P1 1 -20 190 18 -26 0 1 "1" 1 "100 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
+  <GND * 5 -20 240 0 0 0 0>
+  <GND * 5 870 190 0 0 0 0>
+  <Sub Balun1 1 160 150 -10 34 0 0 "IdealBalun.sch" 0>
+  <Sub Balun2 1 820 150 -40 34 1 2 "IdealBalun.sch" 0>
+  <GND * 5 80 210 0 0 0 0>
+  <Vdc V1 1 80 160 18 -26 0 1 "1V" 1>
+  <VProbe Pr1 1 920 130 28 -31 0 0>
+  <GND * 5 930 170 0 0 0 0>
+  <Pac P2 1 990 180 18 -26 0 1 "2" 1 "100 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
+  <GND * 5 990 250 0 0 1 2>
+  
+  <Eqn Eqn1 1 200 370 -28 15 0 0 "dBS21=dB(S[2,1])" 1 "dBS11=dB(S[1,1])" 1 "yes" 0>
+  
+</Components>
+<Wires>
+  <440 90 440 140 "" 0 0 0 "">
+  <580 90 580 140 "" 0 0 0 "">
+  <440 90 480 90 "" 0 0 0 "">
+  <540 90 580 90 "" 0 0 0 "">
+  <580 90 620 90 "" 0 0 0 "">
+  <440 200 440 260 "" 0 0 0 "">
+  <390 90 440 90 "" 0 0 0 "">
+  <390 260 440 260 "" 0 0 0 "">
+  <580 200 580 260 "" 0 0 0 "">
+  <440 260 480 260 "" 0 0 0 "">
+  <540 260 580 260 "" 0 0 0 "">
+  <580 260 620 260 "" 0 0 0 "">
+  <220 90 330 90 "" 0 0 0 "">
+  <220 260 330 260 "" 0 0 0 "">
+  <-20 220 -20 240 "" 0 0 0 "">
+  <-20 90 -20 160 "" 0 0 0 "">
+  <-20 90 130 90 "" 0 0 0 "">
+  <130 170 130 270 "" 0 0 0 "">
+  <220 170 220 260 "" 0 0 0 "">
+  <850 170 870 170 "" 0 0 0 "">
+  <870 170 870 190 "" 0 0 0 "">
+  <680 90 760 90 "" 0 0 0 "">
+  <720 170 760 170 "" 0 0 0 "">
+  <680 260 720 260 "" 0 0 0 "">
+  <720 170 720 260 "" 0 0 0 "">
+  <80 190 80 210 "" 0 0 0 "">
+  <80 130 130 130 "" 0 0 0 "">
+  <850 90 990 90 "" 0 0 0 "">
+  <990 90 990 150 "" 0 0 0 "">
+  <990 210 990 250 "" 0 0 0 "">
+  <930 150 930 170 "" 0 0 0 "">
+  <860 150 910 150 "" 0 0 0 "">
+  <850 130 860 130 "" 0 0 0 "">
+  <860 130 860 150 "" 0 0 0 "">
+</Wires>
+<Diagrams>
+</Diagrams>
+<Paintings>
+</Paintings>
