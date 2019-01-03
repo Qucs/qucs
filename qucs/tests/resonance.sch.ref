@@ -1,8 +1,38 @@
-# Qucs 0.1.0  ../../tests/../examples/resonance.sch
-
-Vac:V1 test gnd U="1 V" f="1 GHz" Phase="0" Theta="0"
-R:R1 _net0 test R="R_par" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-C:C1 gnd Voltage C="2 pF" V=""
-L:L1 Voltage _net0 L="13 nH" I=""
-.SW:SW1 Sim="AC1" Type="log" Param="R_par" Start="1 Ohm" Stop="20 Ohm" Points="6" p="" p="" p="" p="" p="" p="" p=""
-.AC:AC1 Type="lin" Start="0.9 GHz" Stop="1.1 GHz" Points="150" Noise="no" p="" p="" p="" p="" p=""
+<Qucs Schematic 0.0.20>
+<Properties>
+  <View=0,0,0,0,0,0,0>
+  <Grid=0,0,0>
+  <DataSet=unknown>
+  <DataDisplay=unknown>
+  <OpenDisplay=unknown>
+  <Script=unknown>
+  <RunScript=unknown>
+  <showFrame=unknown>
+  <FrameText0=unknown>
+  <FrameText1=unknown>
+  <FrameText2=unknown>
+  <FrameText3=unknown>
+</Properties>
+<Symbol>
+</Symbol>
+<Components>
+  <Vac V1 1 120 150 18 -26 0 1 "1 V" 1 "1 GHz" 0 "0" 0 "0" 0>
+  <GND * 5 320 240 0 0 0 0>
+  <GND * 5 120 240 0 0 0 0>
+  <R R1 1 320 90 15 -26 0 1 "R_par" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <C C1 1 320 210 17 -26 0 1 "2 pF" 1 "" 0 "neutral" 0>
+  <L L1 1 320 150 10 -26 0 1 "13 nH" 1 "" 0>
+  
+  
+</Components>
+<Wires>
+  <120 180 120 240 "" 0 0 0 "">
+  <120 60 320 60 "test" 0 0 0 "">
+  <120 60 120 120 "" 0 0 0 "">
+  <320 180 320 180 "Voltage" 240 140 0 "">
+  <320 180 320 180 "Voltage" 240 140 0 "">
+</Wires>
+<Diagrams>
+</Diagrams>
+<Paintings>
+</Paintings>
