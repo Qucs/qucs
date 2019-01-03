@@ -2469,4 +2469,14 @@ void Schematic::pushBack(Element* what)
   }
 }
 
+// ----------------------------------------------------------------
+QString const& Schematic::getParameter(std::string const& x) const
+{
+  if(x=="DocName"){
+    return DocName;
+  }else{
+    throw "Exception_cantfind";
+  }
+}
+
 // vim:ts=8:sw=2:noet

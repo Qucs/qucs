@@ -26,7 +26,7 @@ protected:
 	explicit ModelAccess();
 public:
 	virtual SchematicModel const& schematicModel() const = 0;
-	virtual std::string const& getParameter(std::string const&) const = 0;
+	virtual std::string getParameter(std::string const&) const = 0;
 };
 
 class SchematicLanguage : public DocumentLanguage{
