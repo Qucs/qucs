@@ -49,6 +49,7 @@
 #include "schematic.h"
 #include "module.h"
 #include "misc.h"
+#include "exception.h"
 
 // Wtf?
 #include "components/components.h"
@@ -141,7 +142,6 @@ Schematic *newSchematic(QString schematic)
   }
   return sch;
 }
-// BUG: move to SchematicModel
 namespace{
 class sda : public ModelAccess{
 public:
@@ -151,12 +151,19 @@ private: // ModelAccess
   SchematicModel const& schematicModel() const{ untested();
     return _m;
   }
-  std::string const& getParameter(std::string const&x) const{
-    incomplete();
-    return x;
+  // bug, forward to schematic object (it doesn't exist yet).
+  std::string getParameter(std::string const&x) const{
+    if(x=="DocName"){
+      return DocName;
+    }else{
+      throw ExceptionCantFind();
+    }
   }
 private:
   SchematicModel const& _m;
+
+public: // tmo hack
+  std::string DocName;
 };
 }
 
@@ -191,6 +198,7 @@ void doNetlist(QString schematic, QString netlist, NetLang const& nl)
   auto NLN=docfmt_dispatcher["legacy_nl"];
   assert(NLN);
   sda xs(sch);
+  xs.DocName = schematic.toStdString(); // tmp
   NLN->save(os, xs);
 
 }

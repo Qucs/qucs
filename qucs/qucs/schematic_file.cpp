@@ -368,9 +368,9 @@ private: // ModelAccess
     incomplete();
     return _m;
   }
-  std::string const& getParameter(std::string const&x) const{
+  std::string getParameter(std::string const&x) const{
     incomplete();
-    return x;
+    return "incomplete";
   }
 private:
   SchematicModel const& _m;
