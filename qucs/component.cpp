@@ -49,8 +49,7 @@ Component::Component(Component const& p)
     //cy(p.cy),
     tx(p.tx),
     ty(p.ty),
-    showName(p.showName),
-    containingSchematic(p.containingSchematic)
+    showName(p.showName)
 {
   qDebug() << "component copy" << p.Name << p.Model;
 
@@ -85,8 +84,6 @@ Component::Component()
   ty = 0;
 
   Props.setAutoDelete(true);
-
-  containingSchematic = NULL;
 }
 
 // -------------------------------------------------------

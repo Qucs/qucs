@@ -39,7 +39,7 @@ class Schematic;
 // a component symbol. not necessarily one of the legacy components
 class Symbol : public Element{
 public: // construct
-  Symbol() {}
+  Symbol() : Element(), containingSchematic(nullptr) {}
   virtual ~Symbol(){}
 
 public: // interface
