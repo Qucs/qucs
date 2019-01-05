@@ -1,5 +1,6 @@
 #!/bin/bash
 
+QUCS=../main/qucs
 
 base=$( basename $1 )
 eval echo $base ${REDIR}
@@ -11,17 +12,41 @@ eval echo "$@" ${REDIR}
 for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 	schname=$(basename $i)
 	eval echo more $base $schname ${REDIR}
-	eval echo "../qucs/qucs -n -i ${srcdir}/$i -o ${base}_${schname}.net" ${REDIR}
-	
-	eval ../qucs/qucs -n -i ${srcdir}/$i -o ${base}_${schname}.net ${REDIR}
+
+	# dump qucsator netlist
+	cmd="$QUCS -n -i ${srcdir}/$i -o ${base}_${schname}.net"
+	eval echo "$cmd" ${REDIR}
+	eval "$cmd" ${REDIR}
 
 	# BUG: use stdout and filter
 	sed -i '1 s/20.*/20/' ${base}_${schname}.net
 
-	cmd="diff ${base}_${schname}.net ${srcdir}/$i.net"
+	# dump verilog netlist
+	cmd="$QUCS -a ../qucs/sim/.libs/verilog.so -l verilog -n -i ${srcdir}/$i -o ${base}_${schname}.v"
+	eval echo "$cmd" ${REDIR}
+	eval "$cmd" ${REDIR}
+	
+	# dump legacy schematic
+	cmd="$QUCS -l leg_sch -n -i ${srcdir}/$i -o ${base}_${schname}.sch"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
 
+	# =================================
+
+	cmd="diff ${base}_${schname}.net ${srcdir}/$i.net"
+	eval echo "$cmd" ${REDIR}
+	eval "$cmd" ${REDIR}
 	if [ $? -ne 0 ]; then exit 1; fi
+
+	cmd="diff ${base}_${schname}.v ${srcdir}/$i.v"
+	eval echo "$cmd" ${REDIR}
+	eval "$cmd" ${REDIR}
+	if [ $? -ne 0 ]; then exit 1; fi
+
+	cmd="diff ${base}_${schname}.sch ${srcdir}/$i.sch"
+	eval echo "$cmd" ${REDIR}
+	eval "$cmd" ${REDIR}
+	if [ $? -ne 0 ]; then exit 1; fi
+
 done
 
