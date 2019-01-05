@@ -1,0 +1,11 @@
+# Qucs 0.0.20
+
+# it does not work. qucs tries to put temporary file into read-only location.
+.Def:NAND_GATE_cir _netA _netVCC _netB _netY _ref
+
+Sub:X1 A _net0 B out gnd Type="NAND_GATE_cir"
+C:C1 gnd out C="5 pF" V=""
+.TR:TR1 Type="lin" Start="0" Stop="5 ms" Points="101" IntegrationMethod="Gear" Order="2" InitialStep="1 ns" MinStep="1e-16" MaxIter="150" reltol="0.001" abstol="1 pA" vntol="1 uV" Temp="26.85" LTEreltol="1e-3" LTEabstol="1e-6" LTEfactor="1" Solver="CroutLU" relaxTSR="no" initialDC="yes" MaxStep="0"
+Vrect:VA A gnd U="5 V" TH="1 ms" TL="1 ms" Tr="10 ns" Tf="10 ns" Td="1 ms"
+Vrect:VA1 B gnd U="5 V" TH="1.3 ms" TL="1.3 ms" Tr="10 ns" Tf="10 ns" Td="1 ms"
+Vdc:V1 _net0 gnd U="5 V"

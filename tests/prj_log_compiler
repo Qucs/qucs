@@ -1,0 +1,27 @@
+#!/bin/bash
+
+
+base=$( basename $1 )
+eval echo $base ${REDIR}
+eval echo "$@" ${REDIR}
+
+# eval echo $( cd ${srcdir}; ls $base/*.sch ) ${REDIR}
+# eval echo ${srcdir}/$base ${REDIR}
+
+for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
+	schname=$(basename $i)
+	eval echo more $base $schname ${REDIR}
+	eval echo "../qucs/qucs -n -i ${srcdir}/$i -o ${base}_${schname}.net" ${REDIR}
+	
+	eval ../qucs/qucs -n -i ${srcdir}/$i -o ${base}_${schname}.net ${REDIR}
+
+	# BUG: use stdout and filter
+	sed -i '1 s/20.*/20/' ${base}_${schname}.net
+
+	cmd="diff ${base}_${schname}.net ${srcdir}/$i.net"
+	eval echo "$cmd" ${REDIR}
+	eval "$cmd" ${REDIR}
+
+	if [ $? -ne 0 ]; then exit 1; fi
+done
+
