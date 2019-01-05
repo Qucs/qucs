@@ -186,10 +186,16 @@ script:
   - ./bootstrap
 
   - if [[ $OSX ]]; then
+      declare -p;
+      echo "declare -p done";
       travis_terminate 0;
+      echo "travis_terminate done";
       ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc PYTHON=python2 || travis_terminate 1;
+      echo "configure done";
       make || travis_terminate 1;
+      echo "make done";
       make qucscheck || travis_terminate 1;
+      echo "make qucscheck done";
     fi
 
   # clang 5.0.0 complains a lot about unused command line arguments
