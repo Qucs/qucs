@@ -1,0 +1,6 @@
+# Qucs 0.0.20
+
+Idc:I1 _net0 gnd I="500 nA"
+R:R4 _net2 _net3 R="1k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+OpAmp:OP1 _net1 _net0 _net2 G="1e6" Umax="1 V"
+C:C1 gnd _net3 C="1 nF" V=""
