@@ -52,3 +52,4 @@ stamp-h2
 # generated man pages
 *.1
 
+!tests/*/*.sch
