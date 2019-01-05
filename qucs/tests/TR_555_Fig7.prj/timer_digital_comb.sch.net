@@ -1,0 +1,17 @@
+# Qucs 0.0.20
+
+Inv:Y5 _net3 _net2 V="1 V" t="0" TR="10"
+R:R1 _net6 _net7 R="1k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R5 _net8 _net9 R="1k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R3 _net10 _net11 R="1k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R2 _net12 _net2 R="1k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R4 _net3 _net4 R="1k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Inv:Y4 _net6 _net5 V="1 V" t="0" TR="10"
+OR:Y1 _net8 _net1 _net7 V="1 V" t="0" TR="10"
+NOR:Y3 _net12 _net11 _net9 V="1 V" t="0" TR="10"
+NOR:Y2 _net10 _net0 _net2 V="1 V" t="5 ns" TR="10"
+C:C1 gnd _net7 C="0.5nF" V=""
+C:C5 gnd _net9 C="0.5nF" V=""
+C:C4 gnd _net4 C="5nF" V=""
+C:C3 gnd _net11 C="0.09nF" V=""
+C:C2 gnd _net2 C="0.5nF" V=""
