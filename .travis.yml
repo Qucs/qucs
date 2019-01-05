@@ -33,7 +33,7 @@ addons:
   apt:
     packages: &native_deps
       - gperf
-      - latex2html
+        # - latex2html
       - octave
       - doxygen # add packages for  Doxygen and qucs-doc PDF build
       - texlive
@@ -171,19 +171,19 @@ script:
     fi
 
   # fetch gtest...
-  - wget https://github.com/google/googletest/archive/release-1.7.0.tar.gz -O /tmp/gtest.tar.gz --quiet
-  - mkdir /tmp/gtest
-  - tar --strip-components=1 -C /tmp/gtest -xvf /tmp/gtest.tar.gz
+  #  - wget https://github.com/google/googletest/archive/release-1.7.0.tar.gz -O /tmp/gtest.tar.gz --quiet
+  #- mkdir /tmp/gtest
+  #- tar --strip-components=1 -C /tmp/gtest -xvf /tmp/gtest.tar.gz
 
 
   # Build ADMS from release (avoid need of Perl and its modules)
   #   install locally to avoid using sudo, add local bin/ to PATH so the Qucs configure can find it
-  - if [[ $LINUX ]]; then
-      wget http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.6.tar.gz -O /tmp/adms-2.3.6.tar.gz --quiet || travis_terminate 1;
-      tar -xzvf /tmp/adms-2.3.6.tar.gz;
-      cd adms-2.3.6 && ./configure --prefix=$HOME && make && make install && cd .. || travis_terminate 1;
-      export PATH=$HOME/bin:$PATH;
-    fi
+  #  - if [[ $LINUX ]]; then
+  #      wget http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.6.tar.gz -O /tmp/adms-2.3.6.tar.gz --quiet || travis_terminate 1;
+  #      tar -xzvf /tmp/adms-2.3.6.tar.gz;
+  #      cd adms-2.3.6 && ./configure --prefix=$HOME && make && make install && cd .. || travis_terminate 1;
+  #      export PATH=$HOME/bin:$PATH;
+  #    fi
 
   # Check available tools
   - which admsXml && admsXml --version
@@ -203,13 +203,15 @@ script:
   # clang 5.0.0 complains a lot about unused command line arguments
   # set CXXFLAGS also in 'make distcheck' as specifying DISTCHECK_CONFIGURE_FLAGS will retrigger configure
   - if [[ $LINUX && $AUTOTOOLS && $CLANG ]]; then
-      ./configure CXXFLAGS="-Wno-unused-command-line-argument" --disable-dependency-tracking --with-gtest=/tmp/gtest --enable-doc || travis_terminate 1;
+      cd qucs; ./configure CXXFLAGS="-Wno-unused-command-line-argument" --disable-dependency-tracking --with-gtest=/tmp/gtest --enable-doc || travis_terminate 1;
       make distcheck DISTCHECK_CONFIGURE_FLAGS="CXXFLAGS=-Wno-unused-command-line-argument --with-gtest=/tmp/gtest --enable-doc" || travis_terminate 1;
+      cd ..;
     fi
 
   - if [[ $LINUX && $AUTOTOOLS && $GCC ]]; then
-      ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc || travis_terminate 1;
+      cd qucs; ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc || travis_terminate 1;
       make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --disable-dependency-tracking --disable-doc" || travis_terminate 1;
+      cd ..;
     fi
 
   # with cmake build only
