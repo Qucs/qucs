@@ -42,12 +42,25 @@ public: //??!
 private: // override
   void    paint(ViewPainter*) const;
   virtual Component* newOne() = 0; // legacy interfase. use clone.
-public:
+
+public: // Element interface, private?!
   Element* clone() const{
 	  Component const* e=this;
 	  Component* E=const_cast<Component*>(e);
 	  return E->newOne();
   }
+
+private: // symbol interface
+  virtual Port const* port(unsigned i) const { return Ports[i]; }
+  //virtual Port const* portValue(unsigned i) const { return Ports[i]; } ... ?
+  virtual unsigned portCount() const{ untested(); return Ports.count(); }
+
+  virtual unsigned paramCount() const;
+  virtual std::string paramValue(unsigned i) const;
+  virtual std::string paramName(unsigned i) const;
+
+  // virtual void setParam...
+
 public:
   void    paintScheme(Schematic*) const;
   void    print(ViewPainter*, float);
@@ -86,7 +99,6 @@ public:
   #define COMP_IS_SHORTEN 2
   bool isShort() const{return isActive==COMP_IS_SHORTEN;}
   bool isOpen() const{return isActive==COMP_IS_OPEN;}
-  QString type() const{return Model;}
   QString label() const{return Name;}
   Q3PtrList<Property> const& params() const{return Props;}
   QList<Port*>const& ports() const{return Ports;}
@@ -94,6 +106,9 @@ public:
   int  isActive; // should it be used in simulation or not ?
   mutable /*BUGBUGBUG*/ int  tx, ty;   // upper left corner of text (position)
   bool showName;
+
+public: // BUG
+  virtual std::string type() const { return Model.toStdString(); }
 
 public:
   QString const& obsolete_model_hack() const{

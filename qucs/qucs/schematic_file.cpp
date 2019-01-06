@@ -1521,7 +1521,7 @@ int NumPorts)
 
     // write all components with node names into netlist file
     for(auto pc : components() ){ untested();
-      qDebug() << "comps" << pc->type();
+      qDebug() << "comps" << QString::fromStdString(pc->type());
       if(dynamic_cast<Port const*>(pc)){
 	  incomplete();
       }else if(pc->type() == "GND") { untested();

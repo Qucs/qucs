@@ -54,7 +54,7 @@ Command::Command(Command const& p)
 	Ports.append(new Port(*i));
   }
 
-  setType(p.type().toStdString()); // bug.
+  setType(p.type()); // hmmm
 
   Name=p.Name;
 }

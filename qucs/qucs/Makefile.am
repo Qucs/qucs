@@ -184,6 +184,7 @@ noinst_HEADERS = \
 	mnemo.h \
 	module.h \
 	mouseactions.h \
+	port.h \
 	printerwriter.h \
 	projectView.h \
 	qt_compat.h \

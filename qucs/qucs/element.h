@@ -42,6 +42,7 @@
 #include <assert.h>
 #include "object.h"
 #include "io_trace.h"
+#include "port.h"
 
 class Node;
 class QPainter;
@@ -73,17 +74,6 @@ struct Area {
   QBrush Brush;    // filling style/color
 };
 
-struct Port {
-  Port() {};
-  Port(int _x, int _y, bool _avail=true) : x(_x), y(_y), avail(_avail) {
-    Type=""; Name=""; Connection=0;};
-  int   x, y;
-  bool  avail;
-  QString Type;
-  QString Name;
-  Node *Connection;
-};
-
 struct Text {
   Text(int _x, int _y, const QString& _s, QColor _Color = QColor(0,0,0),
 	float _Size = 10.0, float _mCos=1.0, float _mSin=0.0)
@@ -96,6 +86,7 @@ struct Text {
   bool	  over, under;      // text attributes
 };
 
+// BUG. wrong file. don't use.
 struct Property // : public Object
 {
   Property(const QString& _Name="", const QString& _Value="",
