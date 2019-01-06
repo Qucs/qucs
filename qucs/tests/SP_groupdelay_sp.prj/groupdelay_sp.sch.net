@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 C:C1 gnd _net0 C="39.01pF" V=""
 L:L1 _net0 _net1 L="280.9nH" I=""

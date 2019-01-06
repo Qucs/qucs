@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 .Def:IdealBalun _net1 _net4 _net3 _net0 _net2
 sTr:Tr1 _net0 _net1 _net2 _net3 _net4 _net4 T1="0.5" T2="0.5"

@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 Vdc:V1 _net0 gnd U="12 V"
 R:R3 step2 step3 R="30 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

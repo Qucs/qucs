@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 C:C1 gnd _net0 C="195 fF" V=""
 SPIRALIND:SPIRALIND1 _net0 _net1 Subst="Subst1" Geometry="Circular" W="25 um" Di="91 um" S="25 um" N="2" Temp="26.85"

@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 C:C1 pos _net0 C="2p" V=""
 C:C2 neg _net0 C="2p" V=""

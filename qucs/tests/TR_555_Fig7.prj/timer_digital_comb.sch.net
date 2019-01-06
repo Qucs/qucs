@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 Inv:Y5 _net3 _net2 V="1 V" t="0" TR="10"
 R:R1 _net6 _net7 R="1k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

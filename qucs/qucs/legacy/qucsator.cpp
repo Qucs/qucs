@@ -57,25 +57,28 @@ void QucsLang::printSymbol(Symbol const* d, stream_t& s) const
 
 void QucsLang::printCommand(Command const* c, stream_t& s) const
 {
-  if(c->isOpen()) {
-    // nothing.
-  }else if(c->isShort()){
-    unreachable();
-  }else{
-    { // todo: introduce proper exceptions
-      // normal netlisting
+	if(c->isOpen()) {
+		// nothing.
+	}else if(c->isShort()){
+		unreachable();
+	}else{
+		{ // todo: introduce proper exceptions
+			// normal netlisting
 
-      s << "." << c->type() << ":" << c->label();
+			s << "." << c->type() << ":" << c->label();
 
-      //for(auto p2 : c->params())
-      for(auto p2 : c->Props){ // BUG
-	if(p2->name() != "Symbol") { // hack.
-	  s << " " << p2->name() << "=\"" << p2->Value << "\"";
+			//for(auto p2 : c->params())
+			for(auto p2 : c->Props){ // BUG
+				if(p2->name() == "Symbol") { // hack??
+				}else if(p2->name()=="p" && p2->value()==""){
+					// unreachable
+				}else{
+					s << " " << p2->name() << "=\"" << p2->value() << "\"";
+				}
+			}
+			s << '\n';
+		}
 	}
-      }
-      s << '\n';
-    }
-  }
 }
 
 std::vector<QString> netLabels; // BUG
@@ -84,48 +87,49 @@ std::vector<QString> netLabels; // BUG
  */
 void QucsLang::printComponent(Component const* c, stream_t& s) const
 {
-  // BUG
-  assert(c->isActive == COMP_IS_ACTIVE);
+	// BUG
+	assert(c->isActive == COMP_IS_ACTIVE);
 
-  if(c->isOpen()) {
-    // nothing.
-  }else if(c->isShort()){
-    // replace by some resistors (hack?)
-    int z=0;
-    QListIterator<Port *> iport(c->ports());
-    Port *pp = iport.next();
-    QString Node1 = pp->Connection->label();
-    while (iport.hasNext()){
-      s << "R:" << c->label() << "." << QString::number(z++) << " "
-	<< Node1 << " " << iport.next()->Connection->label() << " R=\"0\"\n";
-    }
-//  }else if(Subcircuit const* sub=dynamic_cast<Subcircuit const*>(c)){
-//    incomplete();
-  }else{
-    { // todo: introduce proper exceptions
-      // normal netlisting
+	if(c->isOpen()) {
+		// nothing.
+	}else if(c->isShort()){
+		// replace by some resistors (hack?)
+		int z=0;
+		QListIterator<Port *> iport(c->ports());
+		Port *pp = iport.next();
+		QString Node1 = pp->Connection->label();
+		while (iport.hasNext()){
+			s << "R:" << c->label() << "." << QString::number(z++) << " "
+				<< Node1 << " " << iport.next()->Connection->label() << " R=\"0\"\n";
+		}
+		//  }else if(Subcircuit const* sub=dynamic_cast<Subcircuit const*>(c)){
+		//    incomplete();
+	}else{
+		{ // todo: introduce proper exceptions
+			// normal netlisting
 
-      s << c->type() << ":" << c->label();
+			s << c->type() << ":" << c->label();
 
-      // output all node names
-      for(Port *p1 : c->ports()){
-			s << " ";
-			if(p1->Connection->hasNumber()){
-				s << netLabels[p1->Connection->number()];
-			}else{
-				// happens in list_entries ...
-				s << "open";
+			// output all node names
+			for(Port *p1 : c->ports()){
+				s << " ";
+				if(p1->Connection->hasNumber()){
+					s << netLabels[p1->Connection->number()];
+				}else{
+					// happens in list_entries ...
+					s << "open";
+				}
 			}
-      }
 
-      for(auto p2 : c->params()) {
-	if(p2->name() != "Symbol") { // hack.
-	  s << " " << p2->name() << "=\"" << p2->Value << "\"";
+			for(auto p2 : c->params()) {
+				if(p2->name() == "Symbol") { // hack??
+				}else{
+					s << " " << p2->name() << "=\"" << p2->value() << "\"";
+				}
+			}
+			s << '\n';
+		}
 	}
-      }
-      s << '\n';
-    }
-  }
 }
 
 

@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 R:R1 pos _net0 R="10k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 R:R2 neg _net0 R="10k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
