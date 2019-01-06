@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 Vdc:V1 _net0 gnd U="15 V"
 IProbe:Collector output _net1

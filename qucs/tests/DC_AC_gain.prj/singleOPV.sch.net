@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 MOSFET:T3 _net0 _net1 _net2 _net3 Type="nfet" Vt0="1.0 V" Kp="2e-5" Gamma="0.0" Phi="0.6 V" Lambda="0.0" Rd="0.0 Ohm" Rs="0.0 Ohm" Rg="0.0 Ohm" Is="1e-14 A" N="1.0" W="120 um" L="0.8 um" Ld="0.0" Tox="0.1 um" Cgso="0.0" Cgdo="0.0" Cgbo="0.0" Cbd="0.0 F" Cbs="0.0 F" Pb="0.8 V" Mj="0.5" Fc="0.5" Cjsw="0.0" Mjsw="0.33" Tt="0.0 ps" Nsub="0.0" Nss="0.0" Tpg="1" Uo="600.0" Rsh="0.0" Nrd="1" Nrs="1" Cj="0.0" Js="0.0" Ad="0.0" As="0.0" Pd="0.0 m" Ps="0.0 m" Kf="0.0" Af="1.0" Ffe="1.0" Temp="26.85" Tnom="26.85"
 MOSFET:T4 _net4 _net5 _net2 _net3 Type="nfet" Vt0="1.0 V" Kp="2e-5" Gamma="0.0" Phi="0.6 V" Lambda="0.0" Rd="0.0 Ohm" Rs="0.0 Ohm" Rg="0.0 Ohm" Is="1e-14 A" N="1.0" W="120 um" L="0.8 um" Ld="0.0" Tox="0.1 um" Cgso="0.0" Cgdo="0.0" Cgbo="0.0" Cbd="0.0 F" Cbs="0.0 F" Pb="0.8 V" Mj="0.5" Fc="0.5" Cjsw="0.0" Mjsw="0.33" Tt="0.0 ps" Nsub="0.0" Nss="0.0" Tpg="1" Uo="600.0" Rsh="0.0" Nrd="1" Nrs="1" Cj="0.0" Js="0.0" Ad="0.0" As="0.0" Pd="0.0 m" Ps="0.0 m" Kf="0.0" Af="1.0" Ffe="1.0" Temp="26.85" Tnom="26.85"

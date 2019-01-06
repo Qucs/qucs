@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 R:R1 Input _net0 R="100k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 R:R2 gnd Input R="10k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

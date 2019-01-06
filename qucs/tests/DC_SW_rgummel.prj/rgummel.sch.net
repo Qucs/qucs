@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 Vdc:VCE _net0 gnd U="Vce"
 Vdc:VSUB _net1 gnd U="0 V"

@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 INDQ:INDQ1 _net0 out L="1.82uH" Q="Ql" f="f0" Mode="SquareRoot" Temp="26.85"
 INDQ:INDQ3 _net1 out L="221.8nH" Q="Ql" f="f0" Mode="SquareRoot" Temp="26.85"

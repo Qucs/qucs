@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 L:L1 _net0 Output L="5u" I=""
 Vdc:Vp _net0 gnd U="5 V"

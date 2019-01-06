@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 C:C1 Output _net0 C="10 nF" V=""
 L:L1 Output _net0 L="0.5 mH" I=""

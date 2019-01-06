@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 # it does not work. qucs tries to put temporary file into read-only location.
 .Def:NAND_GATE_cir _netA _netVCC _netB _netY _ref

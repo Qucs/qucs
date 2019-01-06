@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 L:L1 _net0 dio L="47uH" I="0"
 Vdc:V2 _net0 gnd U="12V"

@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 MCOUPLED:MS1 _net0 _net1 _net2 _net3 Subst="Subst1" W="384um" L="5.24mm" S="482um" Model="Kirschning" DispModel="Kirschning" Temp="26.85"
 MCOUPLED:MS2 _net4 _net5 _net6 _net7 Subst="Subst1" W="1.08mm" L="4.72mm" S="712um" Model="Kirschning" DispModel="Kirschning" Temp="26.85"
