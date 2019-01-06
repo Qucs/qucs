@@ -43,9 +43,14 @@ public: // construct
   virtual ~Symbol(){}
 
 public: // interface
-  virtual unsigned portNumber()const {return 0;}
   virtual void setSchematic (SchematicModel const* p) { containingSchematic = p; }
   SchematicModel const* getSchematic() const{return containingSchematic;}
+  virtual std::string type() const=0;
+
+  virtual unsigned portCount() const{ return 0; } // pure?
+  virtual Port const* port(unsigned) const{ return nullptr; } // pure?
+
+  virtual unsigned paramCount()const {return 0;}
 
 public: // graphics
         // hmm, maybe just dispatch a gfx object.

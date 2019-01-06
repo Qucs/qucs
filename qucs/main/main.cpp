@@ -210,8 +210,6 @@ void doNetlist(QString schematic, QString netlist, DocumentFormat const& NLN)
     throw "doNetlist fail";
   }
 
-  SchematicModel const& S(sch);
-
   QFile NetlistFile(netlist);
   if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
 //    fprintf(stderr, "Error: Could not load netlist %s\n", c_net);
@@ -533,7 +531,7 @@ void createListComponentEntry()
       assert(c);
 
       // FIXME: cleanup
-      s << "=====" << c->type() << "=========\n";
+      s << "=====" << QString::fromStdString(c->type()) << "=========\n";
       lang->printItem(c, s);
       s << "\n";
 
@@ -901,16 +899,16 @@ int main(int argc, char *argv[])
     }
   }
 
-  DocumentLanguage const* netlang = doclang_dispatcher[netlang_name];
+  DocumentFormat const* fmt = docfmt_dispatcher[netlang_name];
 
-  if(netlang){
+  if(fmt){
     // just use it.
   }else if(auto sd = simulator_dispatcher[netlang_name]){
     incomplete();
     // ask a simulator.
-//    netlang = sd->netLang();
+//    fmt = sd->netLang();
   }
-  if(!netlang){
+  if(!fmt){
     // TODO: io_error...
     std::cerr << "Error: Cannot find language for "
               << netlang_name << "\n";
@@ -933,7 +931,11 @@ int main(int argc, char *argv[])
     // create netlist from schematic
     if (dump_flag) {
       auto NLN=docfmt_dispatcher[netlang_name];
-      assert(NLN);
+      if(!NLN){
+	qDebug() << "no lang" << QString::fromStdString(netlang_name);
+	incomplete();
+	exit(1);
+      }
       doNetlist(inputfile, outputfile, *NLN);
       return 0; // BUG
     } else if (print_flag) {

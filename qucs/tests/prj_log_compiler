@@ -31,6 +31,11 @@ for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
 
+	# dump verilog schematic
+	cmd="$QUCS -a ../qucs/sim/.libs/verilog.so -l v_sch -n -i ${srcdir}/$i -o ${base}_${schname}.vs"
+	eval echo "$cmd" ${REDIR}
+	eval "$cmd" ${REDIR}
+
 	# =================================
 
 	cmd="diff ${base}_${schname}.net ${srcdir}/$i.net"
@@ -38,12 +43,17 @@ for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 	eval "$cmd" ${REDIR}
 	if [ $? -ne 0 ]; then exit 1; fi
 
-	cmd="diff ${base}_${schname}.v ${srcdir}/$i.v"
+	cmd="diff ${base}_${schname}.sch ${srcdir}/$i.sch"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
 	if [ $? -ne 0 ]; then exit 1; fi
 
-	cmd="diff ${base}_${schname}.sch ${srcdir}/$i.sch"
+	cmd="diff ${base}_${schname}.vs ${srcdir}/$i.vs"
+	eval echo "$cmd" ${REDIR}
+	eval "$cmd" ${REDIR}
+	if [ $? -ne 0 ]; then exit 1; fi
+
+	cmd="diff ${base}_${schname}.v ${srcdir}/$i.v"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
 	if [ $? -ne 0 ]; then exit 1; fi
