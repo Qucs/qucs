@@ -21,11 +21,21 @@
 class QFile;
 class DocumentStream : public QTextStream {
 public:
-  explicit DocumentStream(){ incomplete(); }
-  explicit DocumentStream(QFile* /* BUG const */ file);
-  explicit DocumentStream(QString /* BUG const */ * filename, QIODevice::OpenModeFlag flag) :
-    QTextStream(filename, flag){}
+	explicit DocumentStream(){ incomplete(); }
+	explicit DocumentStream(QFile* /* BUG const */ file);
+	explicit DocumentStream(QString /* BUG const */ * filename, QIODevice::OpenModeFlag flag) :
+		QTextStream(filename, flag){}
 
+public:
+	DocumentStream& operator<<(std::string const& x){
+		QTextStream::operator<<(QString::fromStdString(x));
+		return *this;
+	}
+	template<class T>
+	DocumentStream& operator<<(T x){
+		QTextStream::operator<<(x);
+		return *this;
+	}
 };
 typedef QTextStream stream_t; //  BUG
 #endif

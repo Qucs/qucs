@@ -62,7 +62,7 @@ Component::Component(Component const& p)
 	Ports.append(new Port(*i));
   }
 
-  setType(p.type().toStdString()); // bug.
+  setType(p.type()); // hmmm
 }
 
 /*!
@@ -1710,5 +1710,20 @@ void Component::setSchematic(Schematic* p)
   d.disableButtons();
 }
 # endif
+
+unsigned Component::paramCount() const
+{ untested();
+  return Props.count();
+}
+std::string Component::paramValue(unsigned i) const
+{ untested();
+  assert( Props.at(i));
+  return Props.at(i)->value().toStdString();
+}
+std::string Component::paramName(unsigned i) const
+{ untested();
+  assert( Props.at(i));
+  return Props.at(i)->name().toStdString();
+}
 
 // vim:ts=8:sw=2:noet

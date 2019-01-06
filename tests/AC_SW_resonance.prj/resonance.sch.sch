@@ -1,0 +1,38 @@
+<Qucs Schematic 0.0.20>
+<Properties>
+  <View=0,0,0,0,0,0,0>
+  <Grid=0,0,0>
+  <DataSet=unknown>
+  <DataDisplay=unknown>
+  <OpenDisplay=unknown>
+  <Script=unknown>
+  <RunScript=unknown>
+  <showFrame=unknown>
+  <FrameText0=unknown>
+  <FrameText1=unknown>
+  <FrameText2=unknown>
+  <FrameText3=unknown>
+</Properties>
+<Symbol>
+</Symbol>
+<Components>
+  <Vac V1 1 120 150 18 -26 0 1 "1 V" 1 "1 GHz" 0 "0" 0 "0" 0>
+  <GND * 5 320 240 0 0 0 0>
+  <GND * 5 120 240 0 0 0 0>
+  <R R1 1 320 90 15 -26 0 1 "R_par" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <C C1 1 320 210 17 -26 0 1 "2 pF" 1 "" 0 "neutral" 0>
+  <L L1 1 320 150 10 -26 0 1 "13 nH" 1 "" 0>
+  
+  
+</Components>
+<Wires>
+  <120 180 120 240 "" 0 0 0 "">
+  <120 60 320 60 "" 0 0 0 "">
+  <120 60 120 120 "" 0 0 0 "">
+  <320 180 320 180 "Voltage" 240 140 0 "">
+  <320 180 320 180 "Voltage" 240 140 0 "">
+</Wires>
+<Diagrams>
+</Diagrams>
+<Paintings>
+</Paintings>
