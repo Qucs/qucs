@@ -1,25 +1,41 @@
 /***************************************************************************
                           vcvs.cpp  -  description
                              -------------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2018 Felix Salfelder / QUCS
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "vcvs.h"
+#include "globals.h"
+#include "module.h"
+#include "component.h"
+
+namespace{
+
+class VCVS : public Component  {
+public:
+  VCVS();
+  ~VCVS();
+  Component* newOne(){
+	  return new VCVS(*this);
+	}
+  static Element* info(QString&, char* &, bool getNewOne=false);
+}D;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "VCVS", &D);
+static Module::INSTALL pp("sources", &D);
 
 
 VCVS::VCVS()
 {
+  info(Name, bitmap_file);
   Description = QObject::tr("voltage controlled voltage source");
 
   Arcs.append(new Arc(0,-11, 22, 22,  0, 16*360,QPen(Qt::darkBlue,2)));
@@ -69,11 +85,6 @@ VCVS::~VCVS()
 {
 }
 
-Component* VCVS::newOne()
-{
-  return new VCVS();
-}
-
 Element* VCVS::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Voltage Controlled Voltage Source");
@@ -81,4 +92,6 @@ Element* VCVS::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new VCVS();
   return 0;
+}
+
 }

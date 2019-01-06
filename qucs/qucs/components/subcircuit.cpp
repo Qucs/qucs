@@ -29,6 +29,29 @@
 #include "module.h"
 
 
+#include "component.h"
+
+
+// BUG: must derive from subckt_model (or so)
+class Subcircuit : public MultiViewComponent  {
+public:
+  Subcircuit();
+ ~Subcircuit() {};
+  Component* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
+
+  QString getSubcircuitFile() const;
+
+protected:
+  QString netlist() const;
+  QString vhdlCode(int);
+  QString verilogCode(int);
+  void createSymbol();
+  void remakeSymbol(int No);
+  int  loadSymbol(const QString&);
+private: // overrides
+  void tAC(QTextStream&, SchematicModel const*, QStringList&, int&, int, NetLang const&);
+};
 
 Subcircuit::Subcircuit()
 {
@@ -47,7 +70,7 @@ Subcircuit::Subcircuit()
 
 // ---------------------------------------------------------------------
 Component* Subcircuit::newOne()
-{
+{ untested();
   Subcircuit *p = new Subcircuit();
   p->Props.getFirst()->Value = Props.getFirst()->Value;
   p->recreate(0);
@@ -315,7 +338,7 @@ QString Subcircuit::getSubcircuitFile() const
 		 // which case we use this one
 		 QFileInfo schematicFileInfo = getSchematic()->getFileInfo ();
 		 QFileInfo localFIleInfo (schematicFileInfo.canonicalPath () + "/" + baseName + ".sch");
-		 qDebug() << "got" << schematicFileInfo.canonicalPath();
+		 qDebug() << schematicFileInfo.canonicalPath() << "seems to exist";
 		 if (localFIleInfo.exists ()) { untested();
 			 // return the subcircuit saved in the same directory
 			 // as the schematic file
@@ -369,6 +392,8 @@ static SubMap FileList;
 void Subcircuit::tAC(QTextStream& stream, SchematicModel const* schem, QStringList&
 		Collect, int& countInit, int NumPorts, NetLang const& nl)
 {untested();
+	qDebug() << "Subcircuit::tAC";
+	stream << "# subckt declaration\n";
 	Component* pc=this;
 	int i;
 	// tell the subcircuit it belongs to this schematic
@@ -406,7 +431,7 @@ void Subcircuit::tAC(QTextStream& stream, SchematicModel const* schem, QStringLi
 	// todo: error handling.
 	QString scktfilename(pc->getSubcircuitFile());
 	QFile file(scktfilename);
-	qDebug() << "getting sckt definition from" << scktfilename;
+	qDebug() << "getting sckt definition from" << scktfilename << "type" << s;
 	file.open(QIODevice::ReadOnly);
 	DocumentStream pstream(&file);
 	// d->setFileInfo(scktfilename);
@@ -418,9 +443,8 @@ void Subcircuit::tAC(QTextStream& stream, SchematicModel const* schem, QStringLi
 	// d->isAnalog = isAnalog;
 	// d->creatingLib = creatingLib; wtf?
 	bool creatingLib=false;
-	auto r = d->createSubNetlist(pstream, countInit, Collect, nullptr, NumPorts, creatingLib, nl);
-	if (r)
-	{
+	auto r = d->createSubNetlist(stream, countInit, Collect, nullptr, NumPorts, creatingLib, nl);
+	if (r) {
 		i = 0;
 		// save in/out signal types of subcircuit
 		foreach(Port *pp, pc->Ports)

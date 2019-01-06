@@ -152,7 +152,8 @@ NodeList& SchematicModel::nodes()
 	return Nodes;
 }
 
-PaintingList const& SchematicModel::symbolPaints() const{
+PaintingList const& SchematicModel::symbolPaints() const
+{
 	return SymbolPaints;
 }
 
@@ -282,8 +283,7 @@ bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
                    QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
 		  bool creatingLib, NetLang const& nl)
 {
-	incomplete();
-	return false;
+	incomplete(); // BUG. called from Sckt:tAC
 #if 0
 	bool isAnalog=true;
 	// delete the node names
@@ -331,8 +331,8 @@ bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
 	}else{
 	}
 
-	return true;
 #endif
+	return true;
 }
 
 bool SchematicModel::loadDocument(QFile& /*BUG*/ file)

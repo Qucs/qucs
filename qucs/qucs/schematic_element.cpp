@@ -2615,6 +2615,8 @@ void Schematic::insertElement(Element *c)
     incomplete();
 //    insertSymbol(x);
   }else if(Symbol* x=dynamic_cast<Symbol*>(c)){
+      incomplete();
+      (void)x;
 //    insertSymbol(x);
   }
 }

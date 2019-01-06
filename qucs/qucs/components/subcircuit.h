@@ -18,29 +18,5 @@
 #ifndef SUBCIRCUIT_H
 #define SUBCIRCUIT_H
 
-#include "component.h"
-
-
-// BUG: must derive from subckt_model (or so)
-class Subcircuit : public MultiViewComponent  {
-public:
-  Subcircuit();
- ~Subcircuit() {};
-  Component* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
-
-  QString getSubcircuitFile() const;
-
-protected:
-  QString netlist() const;
-  QString vhdlCode(int);
-  QString verilogCode(int);
-  void createSymbol();
-  void remakeSymbol(int No);
-  int  loadSymbol(const QString&);
-private: // overrides
-  void tAC(QTextStream& stream, SchematicModel const* schem, QStringList&
-		Collect, int& countInit, int NumPorts, NetLang const& nl);
-};
 
 #endif
