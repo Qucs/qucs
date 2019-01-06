@@ -40,8 +40,9 @@ qucs_default_components_la_LDFLAGS = -shared -module -avoid-version
 qucs_default_components_la_SOURCES = \
 	spicedialog.cpp \
 	volt_dc.cpp \
-  volt_ac.cpp \
-  source_ac.cpp isolator.cpp circulator.cpp attenuator.cpp       \
+	volt_ac.cpp \
+	source_ac.cpp \
+	isolator.cpp circulator.cpp attenuator.cpp       \
   ampere_dc.cpp transformer.cpp symtrafo.cpp \
   mutual2.cpp noise_ii.cpp noise_iv.cpp noise_vv.cpp \
   coupler.cpp   \
@@ -119,7 +120,7 @@ noinst_HEADERS = $(MOCHEADERS) components.h    \
   source_ac.h subcircuit.h ac_sim.h cccs.h   \
   ccvs.h coplanar.h diode.h hb_sim.h mscorner.h mscoupled.h mslange.h          \
   mscross.h msline.h msstep.h mstee.h substrate.h      \
-  tline.h tr_sim.h component.h vcvs.h gyrator.h phaseshifter.h vhdlfile.h     \
+  tline.h tr_sim.h component.h gyrator.h phaseshifter.h vhdlfile.h     \
   iprobe.h wprobe.h volt_noise.h ampere_noise.h msmbend.h msopen.h ampere_ac.h bjt.h   \
   jfet.h mosfet.h msgap.h bjtsub.h mosfet_sub.h vpulse.h ipulse.h vrect.h     \
   irect.h msvia.h amplifier.h opamp.h spicefile.h cpwopen.h cpwshort.h        \

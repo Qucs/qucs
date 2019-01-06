@@ -45,7 +45,12 @@ public: // construct
 public: // interface
   virtual void setSchematic (SchematicModel const* p) { containingSchematic = p; }
   SchematicModel const* getSchematic() const{return containingSchematic;}
-  virtual std::string type() const=0;
+  virtual std::string /* const& */ type() const{
+	  return _type;
+  }
+  void setType(std::string const& x){
+	  _type = x;
+  }
 
   virtual unsigned portCount() const{ return 0; } // pure?
   virtual Port const* port(unsigned) const{ return nullptr; } // pure?
@@ -61,6 +66,9 @@ public: // graphics
   //...  more to come
 private: // good idea?
   SchematicModel const* containingSchematic;
+
+private:
+  std::string _type;
 };
 
 

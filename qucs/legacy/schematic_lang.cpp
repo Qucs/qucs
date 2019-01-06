@@ -4,10 +4,60 @@
 #include "qucsdoc.h"
 //#include "schematic_model.h"
 #include "schematic_lang.h"
+#include "schematic_symbol.h"
+#include "schematic_model.h" /// hmm
 #include "globals.h"
 #include "wire.h"
 #include "command.h"
+#include "paintings/painting.h"
 #include "diagram.h" // BUG
+
+bool PaintingList::load(QTextStream& str)
+{
+	auto stream=&str;
+	auto List=this;
+  incomplete();
+# if 1
+  Painting *p=0;
+  QString Line, cstr;
+  while(!stream->atEnd()) {
+    Line = stream->readLine();
+    if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
+
+    Line = Line.trimmed();
+    if(Line.isEmpty()) continue;
+    if( (Line.at(0) != '<') || (Line.at(Line.length()-1) != '>')) {
+		 incomplete();
+		 // QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line delimiter!"));
+      return false;
+    }
+    Line = Line.mid(1, Line.length()-2);  // cut off start and end character
+
+    cstr = Line.section(' ',0,0);    // painting type
+    qDebug() << cstr;
+    if(Painting const* pp=painting_dispatcher[cstr.toStdString()]){
+      p=prechecked_cast<Painting*>(pp->clone());
+      assert(p);
+    }else{
+		 // incomplete();
+      // QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nUnknown painting " + cstr));
+      return false;
+    }
+
+    if(!p->load(Line)) {
+		 incomplete();
+      // QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line format!"));
+      delete p;
+      return false;
+    }
+    List->append(p);
+  }
+
+  incomplete();
+  // QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\n'Painting' field is not closed!"));
+  return false;
+#endif
+}
 
 namespace{
 
@@ -97,11 +147,11 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, ModelInserter& s) co
 				}
 			}else if(mode=='S'){
 				incomplete();
-#if 0
+#if 1
 				SchematicSymbol* s=new SchematicSymbol();
 				try{
 					qDebug() << "symbol Paintings";
-					s->symbolPaintings().load(&stream);
+					s->symbolPaintings().load(stream);
 					c = s;
 				}catch(...){
 					incomplete();
@@ -564,96 +614,97 @@ Component* LegacySchematicLanguage::loadComponent(const QString& _s, Component* 
 
 Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 {
- qDebug() << "component" << Line;
-  Element *e = 0;
+	qDebug() << "component" << Line;
+	Element *e = 0;
 
-  Line = Line.trimmed();
-  if(Line.at(0) != '<') {
-	  throw "notyet_exception"
+	Line = Line.trimmed();
+	if(Line.at(0) != '<') {
+		throw "notyet_exception"
 			"Format Error:\nWrong line start!";
-  }
+	}
 
-  QString cstr = Line.section (' ',0,0); // component type
-  cstr.remove (0,1);    // remove leading "<"
+	QString cstr = Line.section (' ',0,0); // component type
+	cstr.remove (0,1);    // remove leading "<"
 
-// TODO: get rid of the exceptional cases.
-  if (cstr == "Lib"){
-    incomplete();
-   // c = new LibComp ();
-  }else if (cstr == "Eqn"){
-    incomplete();
-   // c = new Equation ();
-  }else if (cstr == "SPICE"){
-    incomplete();
-    // c = new SpiceFile();
-  }else if (cstr.left (6) == "SPfile" && cstr != "SPfile"){
-    incomplete();
-    // backward compatible
-    //c = new SParamFile ();
-    //c->Props.getLast()->Value = cstr.mid (6);
-  }
+	// TODO: get rid of the exceptional cases.
+	if (cstr == "Lib"){
+		incomplete();
+		// c = new LibComp ();
+	}else if (cstr == "Eqn"){
+		incomplete();
+		// c = new Equation ();
+	}else if (cstr == "SPICE"){
+		incomplete();
+		// c = new SpiceFile();
+	}else if (cstr.left (6) == "SPfile" && cstr != "SPfile"){
+		incomplete();
+		// backward compatible
+		//c = new SParamFile ();
+		//c->Props.getLast()->Value = cstr.mid (6);
+	}
 
-  // fetch proto from dictionary.
-  Element const* s=symbol_dispatcher[cstr.toStdString()];
+	// fetch proto from dictionary.
+	Element const* s=symbol_dispatcher[cstr.toStdString()];
 
-  if(Component const* sc=dynamic_cast<Component const*>(s)){
-      // legacy component
-    Element* k=sc->clone(); // memory leak?
-    e = prechecked_cast<Element*>(k);
-  }else if(Command const* sc=dynamic_cast<Command const*>(s)){
-      // legacy component
-    Element* k=sc->clone(); // memory leak?
-    e=prechecked_cast<Element*>(k);
-  }else{ untested();
-    e=command_dispatcher.clone(cstr.toStdString());
-  // don't know what this is (yet);
-    incomplete();
-  }
+	if(Component const* sc=dynamic_cast<Component const*>(s)){
+		// legacy component
+		Element* k=sc->clone(); // memory leak?
+		e = prechecked_cast<Element*>(k);
+	}else if(Command const* sc=dynamic_cast<Command const*>(s)){
+		// legacy component
+		Element* k=sc->clone(); // memory leak?
+		e=prechecked_cast<Element*>(k);
+	}else{ untested();
+		e=command_dispatcher.clone(cstr.toStdString());
+		// don't know what this is (yet);
+		incomplete();
+	}
 
-  if(e) {
-    loadElement(Line, e);
-  }else{
-    incomplete();
-    // BUG: use of messagebox in the parser.
-    // does not work. need to get rid of this
-			throw "notyet_exception" 
-                                             "Format Error:\nUnknown component!\n"
-                                                         "%1\n\n"
-                                                         "Do you want to load schematic anyway?\n"
-                                                         "Unknown components will be replaced \n"
-                                                         "by dummy subcircuit placeholders.";
+	if(e) {
+		loadElement(Line, e);
+	}else{
+		qDebug() << "error with" << cstr;
+		incomplete();
+		// BUG: use of messagebox in the parser.
+		// does not work. need to get rid of this
+		throw "notyet_exception" 
+			"Format Error:\nUnknown component!\n"
+			"%1\n\n"
+			"Do you want to load schematic anyway?\n"
+			"Unknown components will be replaced \n"
+			"by dummy subcircuit placeholders.";
 
-	     incomplete();
-             // c = new Subcircuit();
-             // // Hack: insert dummy File property before the first property
-             // int pos1 = Line.indexOf('"');
-             // QString filestr = QString("\"%1.sch\" 1 ").arg(cstr);
-             // Line.insert(pos1,filestr);
-  }
+		incomplete();
+		// c = new Subcircuit();
+		// // Hack: insert dummy File property before the first property
+		// int pos1 = Line.indexOf('"');
+		// QString filestr = QString("\"%1.sch\" 1 ").arg(cstr);
+		// Line.insert(pos1,filestr);
+	}
 
 
 #if 0 // legacy cruft?
-  // BUG: don't use schematic.
-  if(Command* cmd=command(e)){
-    p->loadCommand(Line, cmd);
-  }else if(Component* c=component(e)){
-    if(!p->loadComponent(Line, c)) {
-      QMessageBox::critical(0, QObject::tr("Error"),
-	  QObject::tr("Format Error:\nWrong 'component' line format!"));
-      delete e;
-      return 0;
-    }else{
-    }
-    cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
-    int x = c->tx, y = c->ty;
-    c->setSchematic (p);
-    c->recreate(0);
-    c->obsolete_name_override_hack(cstr);
-    c->tx = x;  c->ty = y;
-  }
+	// BUG: don't use schematic.
+	if(Command* cmd=command(e)){
+		p->loadCommand(Line, cmd);
+	}else if(Component* c=component(e)){
+		if(!p->loadComponent(Line, c)) {
+			QMessageBox::critical(0, QObject::tr("Error"),
+					QObject::tr("Format Error:\nWrong 'component' line format!"));
+			delete e;
+			return 0;
+		}else{
+		}
+		cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
+		int x = c->tx, y = c->ty;
+		c->setSchematic (p);
+		c->recreate(0);
+		c->obsolete_name_override_hack(cstr);
+		c->tx = x;  c->ty = y;
+	}
 #endif
 
-  return e;
+	return e;
 }
 
 // was Schematic::loadProperties
