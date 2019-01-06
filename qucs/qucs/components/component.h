@@ -41,7 +41,12 @@ public: //??!
   QString get_Verilog_Code(int);
 private: // override
   void    paint(ViewPainter*) const;
+
+public: // legacy stuff. don't use/
   virtual Component* newOne() = 0; // legacy interfase. use clone.
+  virtual void tAC(QTextStream&, SchematicModel const*, QStringList&, int&, int, NetLang const&){
+	  unreachable();
+  }
 
 public: // Element interface, private?!
   Element* clone() const{

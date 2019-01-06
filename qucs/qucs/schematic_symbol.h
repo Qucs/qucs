@@ -5,11 +5,11 @@
 #ifndef QUCS_SCHEMATIC_SYMBOL_H
 #define QUCS_SCHEMATIC_SYMBOL_H
 
-#include "element.h"
+#include "symbol.h"
 
 class PaintingList;
 
-class SchematicSymbol : public Element{
+class SchematicSymbol : public Symbol{
 public:
 	explicit SchematicSymbol();
 	~SchematicSymbol();

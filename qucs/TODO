@@ -3,7 +3,7 @@
 -- 
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
--- the Free Software Foundation; either version 2, or (at your option)
+-- the Free Software Foundation; either version 3, or (at your option)
 -- any later version.
 -- 
 -- This software is distributed in the hope that it will be useful,
@@ -16,6 +16,21 @@
 -- the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
 -- Boston, MA 02110-1301, USA.  
 --
+
+===== 0.1.0 TODO =====
+
+- error message handling (Object)
+- parse verilog schematic and round trip
+- use dispatcher in Module::INSTALL
+- split repos (qucs/qucsator/qucs-doc/...?)
+- port/untangle some stuff from 0.0.20
+- finish verilog netlister for testing.
+- untangle tAC and other callbacks
+- implement symbol editor (standalone, not as "mode")
+- connect disconnect ports/wires
+- proper undo/redo stack
+
+===== old stuff, mostly obsolete, implement plugins instead =====
 
 This file lists all the things we would like to add in the future.
 Bugs are not listed here; for a list of all known bugs (fixed and

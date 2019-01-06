@@ -44,7 +44,7 @@ class ComponentList : public Q3PtrList<Component> {
 // TODO: refactor here
 class PaintingList : public Q3PtrList<Painting> {
 public:
-	bool load(QTextStream *stream);
+	bool load(QTextStream& stream);
 public:
 	void sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const;
 };
@@ -79,15 +79,14 @@ public: // stuff saved from Schematic
 	bool throughAllComps(DocumentStream&, int&, QStringList&, QPlainTextEdit *, int,
 			bool creatingLib, NetLang const&);
 	bool createLibNetlist(DocumentStream&, QPlainTextEdit*, int, NetLang const&);
-	bool createSubNetlist(DocumentStream&, int&, QStringList&, QPlainTextEdit*, int,
+	bool createSubNetlist(stream_t&, int&, QStringList&, QPlainTextEdit*, int,
 			bool creatingLib, NetLang const&);
 	void throughAllNodes(unsigned& z) const;
 	void propagateNode(Node* z) const;
 	void collectDigitalSignals(void);
 	QString createNetlist(DocumentStream&, int, NetLang const&);
-	void createSubNetlistPlain(DocumentStream&, QPlainTextEdit*, int,
-			bool creatingLib
-			);
+	void createSubNetlistPlain(stream_t&, QPlainTextEdit*, int,
+			bool creatingLib, NetLang const&);
 	QFileInfo const& getFileInfo ()const;
 	void print(QPrinter*, QPainter*, bool, bool);
 	void setFileInfo(QString FileName) { FileInfo = QFileInfo(FileName); }
