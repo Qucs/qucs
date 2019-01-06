@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 Pac:P1 _net0 gnd Num="1" Z="50 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
 L:L1 gnd _net0 L="196.6nH" I=""

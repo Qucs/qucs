@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 C:C1 gnd P1 C="39.01pF" V=""
 L:L1 P1 P2 L="280.9nH" I=""

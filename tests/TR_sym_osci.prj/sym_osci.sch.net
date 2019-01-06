@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 MOSFET:T6 _net0 _net1 _net2 _net2 Type="pfet" Vt0="-0.7 V" Kp="5e-4" Gamma="1.15" Phi="0.65 V" Lambda="0.02" Rd="1.0 Ohm" Rs="1.0 Ohm" Rg="0.0 Ohm" Is="1e-15 A" N="1.0" W="1 um" L="1 um" Ld="0.1e-6" Tox="2e-8" Cgso="4.0e-11" Cgdo="4.0e-11" Cgbo="2.0e-10" Cbd="0.06e-15 F" Cbs="0.06e-15 F" Pb="0.87 V" Mj="0.5" Fc="0.5" Cjsw="0.0" Mjsw="0.33" Tt="0.0 ps" Nsub="4.0e15" Nss="1.0e10" Tpg="1" Uo="400.0" Rsh="10.0" Nrd="1" Nrs="1" Cj="2.0e-4" Js="1.0e-8" Ad="0.0" As="0.0" Pd="0.0 m" Ps="0.0 m" Kf="0.0" Af="1.0" Ffe="1.0" Temp="26.85" Tnom="26.85"
 MOSFET:T8 _net1 _net0 _net2 _net2 Type="pfet" Vt0="-0.7 V" Kp="5e-4" Gamma="1.15" Phi="0.65 V" Lambda="0.02" Rd="1.0 Ohm" Rs="1.0 Ohm" Rg="0.0 Ohm" Is="1e-15 A" N="1.0" W="1 um" L="1 um" Ld="0.1e-6" Tox="2e-8" Cgso="4.0e-11" Cgdo="4.0e-11" Cgbo="2.0e-10" Cbd="0.06e-15 F" Cbs="0.06e-15 F" Pb="0.87 V" Mj="0.5" Fc="0.5" Cjsw="0.0" Mjsw="0.33" Tt="0.0 ps" Nsub="4.0e15" Nss="1.0e10" Tpg="1" Uo="400.0" Rsh="10.0" Nrd="1" Nrs="1" Cj="2.0e-4" Js="1.0e-8" Ad="0.0" As="0.0" Pd="0.0 m" Ps="0.0 m" Kf="0.0" Af="1.0" Ffe="1.0" Temp="26.85" Tnom="26.85"
