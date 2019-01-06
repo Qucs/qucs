@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 .DC:DC1 Temp="26.85" reltol="0.001" abstol="1 pA" vntol="1 uV" saveOPs="no" MaxIter="150" saveAll="no" convHelper="none" Solver="CroutLU"
 Idc:I1 vdiode gnd I="Idiode"

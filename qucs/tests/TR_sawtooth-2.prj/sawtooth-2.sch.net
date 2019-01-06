@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 NodeSet:NS0 TOUT U="15 V"
 NodeSet:NS1 TOUT2 U="0"
 

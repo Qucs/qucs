@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 C:C1 _net0 _net1 C="1.01u" V=""
 R:R5 In Out R="10k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

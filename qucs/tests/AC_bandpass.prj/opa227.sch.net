@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 VCVS:SRC2 _net0 _net1 gnd gnd G="1" T="0"
 R:R1 _net2 _net0 R="1 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

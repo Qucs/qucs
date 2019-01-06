@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 Vac:V1 _net0 gnd U="150 V" f="1 GHz" Phase="0" Theta="0"
 R:R1 gnd _net1 R="15 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

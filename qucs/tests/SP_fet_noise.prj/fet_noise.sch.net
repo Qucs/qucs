@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 .Def:fet _net9 _net8 _net10
 C:C3 _net0 _net1 C="234 fF" V=""

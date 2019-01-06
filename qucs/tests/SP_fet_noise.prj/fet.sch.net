@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 C:C3 _net0 _net1 C="234 fF" V=""
 VCCS:SRC1 _net1 _net2 _net3 _net0 G="0.069 S" T="1.69 ps"

@@ -1,4 +1,4 @@
-# Qucs 0.0.20
+# Qucs
 
 C:C1 _net0 _net1 C="1 nF" V=""
 L:L1 _net0 _net1 L="100 uH" I=""
