@@ -65,7 +65,7 @@ void QucsLang::printCommand(Command const* c, stream_t& s) const
 		{ // todo: introduce proper exceptions
 			// normal netlisting
 
-			s << "." << c->type() << ":" << c->label();
+			s << "." << QString::fromStdString(c->type()) << ":" << c->label();
 
 			//for(auto p2 : c->params())
 			for(auto p2 : c->Props){ // BUG
@@ -108,7 +108,7 @@ void QucsLang::printComponent(Component const* c, stream_t& s) const
 		{ // todo: introduce proper exceptions
 			// normal netlisting
 
-			s << c->type() << ":" << c->label();
+			s << QString::fromStdString(c->type()) << ":" << c->label();
 
 			// output all node names
 			for(Port *p1 : c->ports()){
