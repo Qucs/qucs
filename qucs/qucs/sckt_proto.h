@@ -18,7 +18,7 @@ public: // accessed from netlister..
 
 protected:
 	Element const* proto() const{ return Proto; }
-	SchematicModel& schematicModel(){ return sm; }
+	SchematicModel* schematicModel(){ return &sm; }
 
 private:
 	Element const* Proto;

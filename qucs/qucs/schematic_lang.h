@@ -14,6 +14,7 @@ class SchematicModel;
 
 // could be redundant, once schematicModels are some kind of
 // symbol/object
+#if 0 // remove
 class ModelInserter{
 protected:
 	explicit ModelInserter();
@@ -24,6 +25,7 @@ public:
 
 	virtual PaintingList& symbolPaintings() = 0; // hmmm
 };
+#endif
 
 class ModelAccess : public SchematicSymbol{
 protected:
@@ -35,11 +37,11 @@ protected:
 	SchematicLanguage() : DocumentLanguage() {}
 public:
 	virtual ~SchematicLanguage() {}
-	virtual void parse(DocumentStream& stream, ModelInserter&) const=0;
+	virtual void parse(DocumentStream& stream, SchematicSymbol&) const=0;
 };
 
 template<class container>
-void schematicParse(DocumentStream& s, ModelInserter& c, SchematicLanguage const* L)
+void schematicParse(DocumentStream& s, SchematicSymbol& c, SchematicLanguage const* L)
 {
 	assert(L);
 	while(!s.atEnd()){ untested();

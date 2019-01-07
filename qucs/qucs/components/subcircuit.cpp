@@ -27,6 +27,7 @@
 #include <limits.h>
 #include <io_trace.h>
 #include "globals.h"
+#include "docfmt.h"
 #include "module.h"
 
 
@@ -522,8 +523,8 @@ public:
 
 		// load subcircuit schematic
 		QString s=pc->Props.first()->Value;
-		SchematicModel* d=&schematicModel();
-		SchematicModel const* dc=&schematicModel();
+		SchematicModel* d=schematicModel();
+		SchematicModel const* dc=schematicModel();
 
 		// todo: error handling.
 		QString scktfilename(sckt->getSubcircuitFile(getScope()));
@@ -532,13 +533,16 @@ public:
 		qDebug() << "getting sckt definition from" << scktfilename << "type" << s;
 		file.open(QIODevice::ReadOnly);
 		DocumentStream pstream(&file);
-		// d->setFileInfo(scktfilename);
-		d->parse(pstream);
 
-		qDebug() << "got" << dc->components().count();
+		auto D=docfmt_dispatcher["leg_sch"];
+		assert(D);
+
+		qDebug() << "reading subckt .sch";
+		D->load(pstream, *this);
+		//d->parse(pstream);
+
+		qDebug() << "got" << dc->components().count() << "components";
 		d->setDevType(s);
-//		unsigned count=0;
-//		d->throughAllNodes(count); // hack: number connected components.
 	}
 
 private:
