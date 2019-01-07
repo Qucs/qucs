@@ -50,6 +50,7 @@ bool PaintingList::load(QTextStream& str)
       delete p;
       return false;
     }
+	 qDebug() << "got painting" << cstr << p->name();
     List->append(p);
   }
 

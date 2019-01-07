@@ -106,7 +106,7 @@ QString SchematicModel::createClipboardFile()
   s += "<Paintings>\n";
   for(auto pp : paintings()){
     if(pp->isSelected()){
-      if(pp->Name.at(0) != '.') {  // subcircuit specific -> do not copy
+      if(pp->name().at(0) != '.') {  // subcircuit specific -> do not copy
         s += "<"+pp->save()+">\n";  z++;
       }
     }else{
@@ -229,8 +229,8 @@ int Schematic::saveSymbolCpp (void)
 
   stream << "  // symbol drawing code\n";
   for (pp = SymbolPaints.first (); pp != 0; pp = SymbolPaints.next ()) {
-    if (pp->Name == ".ID ") continue;
-    if (pp->Name == ".PortSym ") {
+    if (pp->name() == ".ID ") continue;
+    if (pp->name() == ".PortSym ") {
       if (((PortSymbol*)pp)->numberStr.toInt() > maxNum)
 	maxNum = ((PortSymbol*)pp)->numberStr.toInt();
       x1 = ((PortSymbol*)pp)->cx_();
@@ -252,7 +252,7 @@ int Schematic::saveSymbolCpp (void)
   stream << "\n  // terminal definitions\n";
   for (int i = 1; i <= maxNum; i++) {
     for (pp = SymbolPaints.first (); pp != 0; pp = SymbolPaints.next ()) {
-      if (pp->Name == ".PortSym ")
+      if (pp->name() == ".PortSym ")
 	if (((PortSymbol*)pp)->numberStr.toInt() == i)
 	  stream << "  " << pp->saveCpp () << "\n";
     }
@@ -264,7 +264,7 @@ int Schematic::saveSymbolCpp (void)
 
   stream << "\n  // property text position\n";
   for (pp = SymbolPaints.first (); pp != 0; pp = SymbolPaints.next ())
-    if (pp->Name == ".ID ")
+    if (pp->name() == ".ID ")
       stream << "  " << pp->saveCpp () << "\n";
 
   file.close ();
@@ -305,8 +305,8 @@ int Schematic::saveSymbolJSON()
 
   // symbol drawing code"
   for (pp = SymbolPaints.first (); pp != 0; pp = SymbolPaints.next ()) {
-    if (pp->Name == ".ID ") continue;
-    if (pp->Name == ".PortSym ") {
+    if (pp->name() == ".ID ") continue;
+    if (pp->name() == ".PortSym ") {
       if (((PortSymbol*)pp)->numberStr.toInt() > maxNum)
 	maxNum = ((PortSymbol*)pp)->numberStr.toInt();
       x1 = ((PortSymbol*)pp)->cx_();
@@ -329,7 +329,7 @@ int Schematic::saveSymbolJSON()
   //stream << "terminal \n";
   for (int i = 1; i <= maxNum; i++) {
     for (pp = SymbolPaints.first (); pp != 0; pp = SymbolPaints.next ()) {
-      if (pp->Name == ".PortSym ")
+      if (pp->name() == ".PortSym ")
 	if (((PortSymbol*)pp)->numberStr.toInt() == i)
 	  stream << "  " << pp->saveJSON () << "\n";
     }
@@ -344,7 +344,7 @@ int Schematic::saveSymbolJSON()
 
   // property text position
   for (pp = SymbolPaints.first (); pp != 0; pp = SymbolPaints.next ())
-    if (pp->Name == ".ID ")
+    if (pp->name() == ".ID ")
       stream << "  " << pp->saveJSON () << "\n";
 
   stream << "}\n";
@@ -1526,7 +1526,7 @@ int NumPorts, bool creatingLib, NetLang const& )
     qDebug() << "eject Def";
     (*tstream) << "\n.Def:" << Type << " " << SubcircuitPortNames.join(" ");
     for(pi = SymbolPaints.first(); pi != 0; pi = SymbolPaints.next())
-      if(pi->Name == ".ID ") {
+      if(pi->name() == ".ID ") {
         ID_Text *pid = (ID_Text*)pi;
         QList<SubParameter *>::const_iterator it;
         for(it = pid->Parameter.constBegin(); it != pid->Parameter.constEnd(); it++) {
@@ -1588,7 +1588,7 @@ int NumPorts, bool creatingLib, NetLang const& )
 
       // subcircuit parameters
       for(pi = SymbolPaints.first(); pi != 0; pi = SymbolPaints.next())
-        if(pi->Name == ".ID ") {
+        if(pi->name() == ".ID ") {
           QList<SubParameter *>::const_iterator it;
           ID_Text *pid = (ID_Text*)pi;
           for(it = pid->Parameter.constBegin(); it != pid->Parameter.constEnd(); it++) {
@@ -1630,7 +1630,7 @@ int NumPorts, bool creatingLib, NetLang const& )
                 << SubcircuitPortNames.join(";\n ") << ");\n";
 
       for(pi = SymbolPaints.first(); pi != 0; pi = SymbolPaints.next())
-        if(pi->Name == ".ID ") {
+        if(pi->name() == ".ID ") {
           ID_Text *pid = (ID_Text*)pi;
           QList<SubParameter *>::const_iterator it;
 

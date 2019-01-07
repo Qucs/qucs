@@ -59,6 +59,11 @@ private: // symbol interface
   virtual Port const* port(unsigned i) const { return Ports[i]; }
   //virtual Port const* portValue(unsigned i) const { return Ports[i]; } ... ?
   virtual unsigned portCount() const{ untested(); return Ports.count(); }
+  virtual Node const& portValue(unsigned i) const{
+	  assert(i<unsigned(Ports.count()));
+	  assert(Ports.at(i)->Connection);
+	  return *Ports.at(i)->Connection;
+  }
 
   virtual unsigned paramCount() const;
   virtual std::string paramValue(unsigned i) const;
