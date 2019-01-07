@@ -149,7 +149,11 @@ class sda : public ModelAccess{
 public:
   sda(SchematicModel const& m) : _m(m) {
   }
-private: // ModelAccess
+private: // SchematicSymbol
+  SchematicModel* schematicModel(){ untested();
+    unreachable();
+    return nullptr;
+  }
   SchematicModel const& schematicModel() const{ untested();
     return _m;
   }

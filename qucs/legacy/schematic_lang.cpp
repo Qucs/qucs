@@ -69,7 +69,7 @@ public:
 private: // stuff saved from schematic_file.cpp
 	Diagram* loadDiagram(QString const& Line, DocumentStream& /*, DiagramList *List */) const;
 private: // stuff from component.cc
-	void loadProperties(QTextStream& stream, ModelInserter& m) const;
+	void loadProperties(QTextStream& stream, SchematicSymbol& m) const;
 	Component* loadComponent(const QString& _s, Component* c) const;
 	Command* loadCommand(const QString& _s, Command* c) const;
 	Element* loadElement(const QString& _s, Element* e) const {
@@ -96,7 +96,8 @@ private: // stuff from component.cc
 	}
 	Element* getComponentFromName(QString& Line) const;
 private: // overrides
-	void parse(DocumentStream& stream, ModelInserter& s) const;
+	// BUG: need parseItem
+	void parse(DocumentStream& stream, SchematicSymbol& s) const;
 
 private:
 	void printSymbol(Symbol const*, stream_t&) const;
@@ -106,7 +107,7 @@ static Dispatcher<DocumentLanguage>::INSTALL
     p(&doclang_dispatcher, "leg_sch", &defaultSchematicLanguage_);
 // ------------------------------------------------------
 
-void LegacySchematicLanguage::parse(DocumentStream& stream, ModelInserter& s) const
+void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) const
 {
 
 	QString Line;
@@ -142,7 +143,8 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, ModelInserter& s) co
 			if(mode=='C'){
 				c = getComponentFromName(Line);
 				if(Symbol* sym=dynamic_cast<Symbol*>(c) ){
-					sym->setSchematic(s.model()); // HACK
+					//always do this?
+					sym->setScope(s.schematicModel());
 				}else{
 				}
 			}else if(mode=='S'){
@@ -186,7 +188,8 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, ModelInserter& s) co
 			}
 
 			if(c){
-				s.pushBack(c);
+				assert(s.schematicModel());
+				s.schematicModel()->pushBack(c);
 			}else{
 			}
 
@@ -709,7 +712,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 
 // was Schematic::loadProperties
 void LegacySchematicLanguage::loadProperties(QTextStream& s_in,
-		ModelInserter& m) const
+		SchematicSymbol& m) const
 {
 	auto stream=&s_in;
 	bool ok = true;

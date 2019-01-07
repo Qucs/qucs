@@ -12,7 +12,7 @@ namespace{
 
 class LegacySchematicFormat : public DocumentFormat{
 	void save(DocumentStream& stream, ModelAccess const&) const;
-	void load(DocumentStream& stream, ModelInserter&) const{ incomplete(); }
+	void load(DocumentStream& stream, SchematicSymbol&) const;
 
 private: // legacy cruft
 	bool isSymbolMode() const{ return false; }
@@ -38,6 +38,19 @@ private: // legacy cruft
 static Dispatcher<DocumentFormat>::INSTALL
     p(&docfmt_dispatcher, "leg_sch", &D);
 
+void LegacySchematicFormat::load(DocumentStream& s, SchematicSymbol& c) const
+{
+	auto l=doclang_dispatcher["leg_sch"];
+	assert(l);
+	auto L=dynamic_cast<SchematicLanguage const*>(l);
+	assert(L);
+
+	while(!s.atEnd()){ untested();
+		L->parse(s, c);
+		assert(s.atEnd()); // happens with legacy lang
+	}
+
+}
 
 static QString QG(ModelAccess const& m, std::string const& key)
 {
@@ -80,7 +93,7 @@ void LegacySchematicFormat::save(DocumentStream& stream, ModelAccess const& m) c
 		tmpScale=std::stof(m.getParameter("tmpScale"));
 		tmpPosX=std::stoi(m.getParameter("tmpPosX"));
 		tmpPosY=std::stoi(m.getParameter("tmpPosY"));
-	}catch (std::invalid_argument){
+	}catch (std::invalid_argument const&){
 		incomplete();
 	}
 

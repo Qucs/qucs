@@ -2028,8 +2028,9 @@ bool Schematic::scrollUp(int step)
 // area accordingly. ("step" must be negative!)
 bool Schematic::scrollDown(int step)
 {
-  TODO("Fix scroll");
-  /**
+#ifndef USE_SCROLLVIEW
+  incomplete();
+#else
   int diff;
 
   diff = contentsHeight() - contentsY()-visibleHeight() + step;
@@ -2047,7 +2048,7 @@ bool Schematic::scrollDown(int step)
     ViewY1 -= diff;
     return false;
   }
-  */
+#endif
   return true;
 }
 
@@ -2056,8 +2057,10 @@ bool Schematic::scrollDown(int step)
 // area accordingly.
 bool Schematic::scrollLeft(int step)
 {
-  TODO("Fix scroll");
-  /**
+#ifndef SCROLLVIEW
+  incomplete();
+  (void) step;
+#else
   int diff;
 
   diff = contentsX() - step;
@@ -2074,7 +2077,7 @@ bool Schematic::scrollLeft(int step)
     resizeContents(contentsWidth()-diff, contentsHeight());
     ViewX2 -= diff;
   }
-  */
+#endif
   return true;
 }
 
@@ -2083,9 +2086,10 @@ bool Schematic::scrollLeft(int step)
 // view area accordingly. ("step" must be negative!)
 bool Schematic::scrollRight(int step)
 {
-
-  TODO("Fix scroll");
-  /**
+#ifndef SCROLLVIEW
+  incomplete();
+  (void) step;
+#else
   int diff;
 
   diff = contentsWidth() - contentsX()-visibleWidth() + step;
@@ -2103,7 +2107,7 @@ bool Schematic::scrollRight(int step)
     ViewX1 -= diff;
     return false;
   }
-  */
+#endif
   return true;
 }
 
@@ -2413,7 +2417,7 @@ QPointF Schematic::mapToScene(QPoint const& p) const
 #endif
 
 namespace{
-class ins : public ModelInserter{
+class ins : public SchematicSymbol{
 public:
   ins(Schematic* m) : _m(m) {
     assert(m);
@@ -2428,6 +2432,19 @@ private:
 
   PaintingList& symbolPaintings() {
     return _m->symbolPaints();
+  }
+
+private: // SchematicSymbol
+  SchematicModel const& schematicModel() const{
+    assert(_m);
+    return _m->DocModel;
+  }
+  SchematicModel* schematicModel() {
+    assert(_m);
+    return &_m->DocModel;
+  }
+  std::string getParameter(std::string const&) const{
+    return "ins, incomplete";
   }
 private:
   Schematic* _m;
