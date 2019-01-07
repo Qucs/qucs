@@ -30,3 +30,9 @@ PaintingList& SchematicSymbol::symbolPaintings()
 	assert(_paint);
 	return *_paint;
 }
+
+PaintingList const& SchematicSymbol::symbolPaintings() const
+{
+	assert(_paint);
+	return *_paint;
+}
