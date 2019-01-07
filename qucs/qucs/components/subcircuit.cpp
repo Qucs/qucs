@@ -15,6 +15,7 @@
  ***************************************************************************/
 
 #include "subcircuit.h"
+#include "sckt_proto.h"
 #include "qucs.h"
 #include "schematic.h"
 #include "misc.h"
@@ -50,6 +51,8 @@ protected:
   void remakeSymbol(int No);
   int  loadSymbol(const QString&);
 private: // overrides
+  Element* proto(SchematicModel const* schem) const;
+	  // obsolete.
   void tAC(QTextStream&, SchematicModel const*, QStringList&, int&, int, NetLang const&);
 };
 
@@ -392,6 +395,7 @@ static SubMap FileList;
 void Subcircuit::tAC(QTextStream& stream, SchematicModel const* schem, QStringList&
 		Collect, int& countInit, int NumPorts, NetLang const& nl)
 {untested();
+	unreachable(); // use decl
 	qDebug() << "Subcircuit::tAC";
 	stream << "# subckt declaration\n";
 	Component* pc=this;
@@ -460,6 +464,76 @@ void Subcircuit::tAC(QTextStream& stream, SchematicModel const* schem, QStringLi
 		FileList.insert(f, sub);
 	}else{
 	}
+}
+
+namespace{
+class pr : public SubcktProto{
+public:
+  	pr(Element const* e) : SubcktProto(e){}
+
+	void build(){
+		qDebug() << "pr::build";
+		int i;
+		// tell the subcircuit it belongs to this schematic
+		Subcircuit const* sckt=dynamic_cast<Subcircuit const*>(proto());
+		Component const* pc=sckt;
+		assert(sckt);
+		//sckt->setSchematic(schem);
+		QString f = sckt->getSubcircuitFile();
+		qDebug() << "sckt" << f;
+		SubMap::Iterator it = FileList.find(f);
+		if(it != FileList.end()) { untested();
+			if (!it.value().PortTypes.isEmpty())
+			{
+				i = 0;
+				// apply in/out signal types of subcircuit
+				foreach(Port *pp, pc->Ports)
+				{
+					pp->Type = it.value().PortTypes[i];
+					incomplete();
+					//pp->Connection->DType = pp->Type;
+					i++;
+				}
+			}
+		}
+
+		// The subcircuit has not previously been added
+		SubFile sub = SubFile("SCH", f);
+		FileList.insert(f, sub);
+
+
+		// load subcircuit schematic
+		QString s=pc->Props.first()->Value;
+		SchematicModel* d=&schematicModel();
+
+		// todo: error handling.
+		QString scktfilename(pc->getSubcircuitFile());
+		QFile file(scktfilename);
+		qDebug() << "getting sckt definition from" << scktfilename << "type" << s;
+		file.open(QIODevice::ReadOnly);
+		DocumentStream pstream(&file);
+		// d->setFileInfo(scktfilename);
+		d->parse(pstream);
+		d->setDevType(s);
+	}
+
+private:
+	std::string getParameter(std::string const&) const{
+		return "incomplete";
+	}
+
+};
+
+}
+
+// partially tAC.
+Element* Subcircuit::proto(SchematicModel const* schem) const
+{untested();
+	Symbol* s=new pr(this);
+	QString t=Props.first()->Value;
+	s->setType(t.toStdString());
+	s->setSchematic(schem);
+	return s;
 }
 
 namespace{

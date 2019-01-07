@@ -1513,8 +1513,8 @@ int NumPorts, bool creatingLib, NetLang const& nl)
     }
   }
 
-  assert(_symbol); // for now.
-  QString Type = QString::fromStdString(_symbol->type());
+//  assert(_symbol); // for now.
+  QString Type("incomplete/obsolete"); // QString::fromStdString(_symbol->type());
 
   Painting *pi;
   if(isAnalog) {

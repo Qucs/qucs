@@ -13,9 +13,13 @@ class SchematicSymbol : public Symbol{
 public:
 	explicit SchematicSymbol();
 	~SchematicSymbol();
+public:
+	virtual SchematicModel const& schematicModel() const = 0;
+	virtual std::string getParameter(std::string const&) const = 0;
 private:
   virtual Element* clone()const{
-	  return new SchematicSymbol(*this);
+	  unreachable();
+	  return nullptr; // new SchematicSymbol(*this);
   }
 private: // hide. don't mess with this.
 	SchematicSymbol(SchematicSymbol const&){};

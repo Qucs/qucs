@@ -8,9 +8,9 @@
 
 #include "object.h"
 #include "language.h"
+#include "schematic_symbol.h"
 
 class SchematicModel;
-class Schematic; // BUG
 
 // could be redundant, once schematicModels are some kind of
 // symbol/object
@@ -21,14 +21,13 @@ public:
 	virtual void pushBack(Element*) = 0;
 	virtual SchematicModel* model() const{return nullptr;} // BUG
 	virtual void setParameter(std::string const&, std::string) = 0;
+
+	virtual PaintingList& symbolPaintings() = 0; // hmmm
 };
 
-class ModelAccess{
+class ModelAccess : public SchematicSymbol{
 protected:
 	explicit ModelAccess();
-public:
-	virtual SchematicModel const& schematicModel() const = 0;
-	virtual std::string getParameter(std::string const&) const = 0;
 };
 
 class SchematicLanguage : public DocumentLanguage{

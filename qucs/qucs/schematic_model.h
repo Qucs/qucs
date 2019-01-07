@@ -147,7 +147,7 @@ private:
 	DiagramList Diagrams;
 	PaintingList SymbolPaints;
 	WireList Wires;
-	SchematicSymbol* _symbol;
+//	SchematicSymbol* _symbol;
 	QStringList PortTypes;
 	QFileInfo FileInfo;
 	QString DevType; // BUG move to parent

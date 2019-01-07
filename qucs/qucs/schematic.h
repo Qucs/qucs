@@ -177,8 +177,11 @@ public:
   
 	// transition
   PaintingList  SymbolPaints;  // symbol definition for subcircuit
+  PaintingList& symbolPaints(){
+	  return SymbolPaints; // -> schematicSymbol
+  }
   PaintingList const& symbolPaints() const{
-	  return SymbolPaints; // -> docModel
+	  return SymbolPaints; // -> schematicSymbol
   }
 
   QList<PostedPaintEvent>   PostedPaintEvents;
