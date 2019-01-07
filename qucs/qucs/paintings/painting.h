@@ -32,13 +32,13 @@ public:
 
 public: // legacy anonymous stuff.
   virtual void setArgs2Int(int, int) {
-	  incomplete();
+	  unreachable();
   }
   virtual void setSomeArgsHack(int, int, const QString&,  const QString&){
-	  incomplete();
+	  unreachable();
   }
   virtual void setSomeStuff( int, int, int, int, QPen){
-	  incomplete();
+	  unreachable();
   }
 
 public:
@@ -61,8 +61,7 @@ public:
 
   QString toPenString (int);
   QString toBrushString (int);
-  QString Name; // name of painting, e.g. for saving
-  int  State;   // state for different mouse operations
+  int  State;   // state for different mouse operations. yikes
 };
 
 #endif

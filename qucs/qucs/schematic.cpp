@@ -1475,7 +1475,7 @@ int Schematic::adjustPortNumbers()
   Painting *pp;
   // delete all port names in symbol
   for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
-    if(pp->Name == ".PortSym ")
+    if(pp->name() == ".PortSym ")
       ((PortSymbol*)pp)->nameStr = "";
 
   QString Str;
@@ -1653,7 +1653,7 @@ int Schematic::adjustPortNumbers()
              // search for matching port symbol
              for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
              {
-                 if(pp->Name == ".PortSym ")
+                 if(pp->name() == ".PortSym ")
                  {
                    if(((PortSymbol*)pp)->numberStr == Str) break;
                  }
@@ -1673,7 +1673,7 @@ int Schematic::adjustPortNumbers()
 
   // delete not accounted port symbols
   for(pp = SymbolPaints.first(); pp!=0; ) {
-    if(pp->Name == ".PortSym ")
+    if(pp->name() == ".PortSym ")
       if(((PortSymbol*)pp)->nameStr.isEmpty()) {
         SymbolPaints.remove();
         pp = SymbolPaints.current();
