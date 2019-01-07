@@ -59,12 +59,52 @@ void QucsLang::printSymbol(Symbol const* d, stream_t& s) const
 	}
 }
 
-void QucsLang::printSubckt(SubcktProto const*, stream_t& s) const
-{
-	qDebug() << "proto here";
-	s << "proto here\n";
+std::vector<QString> netLabels;
 
-	s << "proto end \n";
+// partly from Schematic::createSubnetlistplain
+void QucsLang::printSubckt(SubcktProto const* p, stream_t& s) const
+{
+
+	s << "\n";
+	s << ".Def:" << QString::fromStdString(p->type());
+
+	for(auto pc : p->schematicModel().components()){
+
+		if(pc->type() == "Port"){
+			qDebug() << "port" << QString::fromStdString(pc->type());
+			// BUG trainwreck.
+			// why does a port not have a label?!
+      	auto nn=pc->Ports.first()->Connection->number();
+      	s << " " << netLabels[nn];
+		}else{
+			qDebug() << "not port" << QString::fromStdString(pc->type());
+		}
+	}
+
+	s << "\n";
+
+	for(auto pi : p->symbolPaintings()){
+		if(pi->name() == ".ID ") {
+	//		ID_Text *pid = (ID_Text*)pi;
+	//		QList<SubParameter *>::const_iterator it;
+	//		for(it = pid->Parameter.constBegin(); it != pid->Parameter.constEnd(); it++) {
+	//			s = (*it)->Name; // keep 'Name' unchanged
+	//			(*tstream) << " " << s.replace("=", "=\"") << '"';
+		}else{
+		}
+	//		break;
+	}
+	//(*tstream) << '\n';
+
+	for(auto i : p->schematicModel().components()){
+      if(i->type() == "Port"){
+		}else if(i->type() == "GND"){
+		}else{
+			printSymbol(i, s);
+		}
+	}
+
+	s << ".Def:End\n";
 }
 
 void QucsLang::printCommand(Command const* c, stream_t& s) const
@@ -93,7 +133,6 @@ void QucsLang::printCommand(Command const* c, stream_t& s) const
 	}
 }
 
-std::vector<QString> netLabels; // BUG
 /*!
  * print Components in qucs language
  */
@@ -220,10 +259,71 @@ void LegacyNetlister::save(DocumentStream& Stream, SchematicSymbol const& m) con
 	createNetlist(Stream, m);
 }
 
+// TODO: sort out
+static void nodeMap(SchematicSymbol const& m)
+{
+	unsigned count;
+	auto& sm=m.schematicModel();
+	sm.throughAllNodes(count); // hack: number connected components.
+	                           // should already be numbered...
+
+	unsigned nc=sm.numberOfNets();
+	netLabels.resize(nc);
+	qDebug() << "found" << nc << "nets";
+	
+	for(auto w : sm.wires()){
+		assert(w->Port1->number()==w->Port1->number());
+		unsigned i=w->Port1->number();
+		qDebug() << "wire" << i << w->Label;
+		if(!w->Label){
+		}else if (netLabels[i].size()){
+		}else{
+			netLabels[i] = w->Label->name();
+		}
+	}
+
+	for(auto pc : sm.components()){
+		if(pc->type() == "GND") {
+			unsigned i=pc->Ports.first()->Connection->number();
+			if (netLabels[i].size()){
+			}else{
+				qDebug() << "GND: warning: overriding label" << netLabels[i];
+			}
+			netLabels[i] = "gnd";
+		}
+	}
+
+	unsigned z=0;
+	for(auto& i : netLabels){
+		if(!i.size()){
+			i = "_net" + QString::number(z++);
+		}else{
+		}
+	}
+
+
+	// if(allTypes & isAnalogComponent){
+	// }else if (!isVerilog) {
+	// 	incomplete();
+	// //	stream << QString::fromStdString(VHDL_LIBRARIES);
+	// //	stream << "entity TestBench is\n"
+	// //		<< "end entity;\n"
+	// //		<< "use work.all;\n";
+	// }
+
+//	return NumPorts;
+} // nodeMap
+
+
 void LegacyNetlister::createDeclarations(DocumentStream& stream) const
 {
-	for(auto i: declarations){
-		stream << "got declaration " << i.first << "\n";
+	for(auto si : declarations){
+		//prepareSave(stream, m); // yikes
+		if(SchematicSymbol* sym=dynamic_cast<SchematicSymbol*>(si.second)){
+			nodeMap(*sym);
+		}
+
+		qucslang.printItem(si.second, stream);
 	}
 }
 
@@ -325,58 +425,8 @@ void LegacyNetlister::prepareSave(DocumentStream& stream, SchematicSymbol const&
 
 	// BUG: giveNodeNames ejects subcircuit declarations (WTF?)
 	// giveNodeNames(&stream, m);
-	
-	unsigned count;
-	auto& sm=m.schematicModel();
-	sm.throughAllNodes(count); // hack: number connected components.
-	                           // should already be numbered...
-
-	unsigned nc=sm.numberOfNets();
-	netLabels.resize(nc);
-	qDebug() << "found" << nc << "nets";
-	
-	for(auto w : sm.wires()){
-		assert(w->Port1->number()==w->Port1->number());
-		unsigned i=w->Port1->number();
-		qDebug() << "wire" << i << w->Label;
-		if(!w->Label){
-		}else if (netLabels[i].size()){
-		}else{
-			netLabels[i] = w->Label->name();
-		}
-	}
-
-	for(auto pc : sm.components()){
-		if(pc->type() == "GND") {
-			unsigned i=pc->Ports.first()->Connection->number();
-			if (netLabels[i].size()){
-			}else{
-				qDebug() << "GND: warning: overriding label" << netLabels[i];
-			}
-			netLabels[i] = "gnd";
-		}
-	}
-
-	unsigned z=0;
-	for(auto& i : netLabels){
-		if(!i.size()){
-			i = "_net" + QString::number(z++);
-		}else{
-		}
-	}
-
 	throughAllComps(stream, m);
-
-	if(allTypes & isAnalogComponent){
-	}else if (!isVerilog) {
-		incomplete();
-	//	stream << QString::fromStdString(VHDL_LIBRARIES);
-	//	stream << "entity TestBench is\n"
-	//		<< "end entity;\n"
-	//		<< "use work.all;\n";
-	}
-
-//	return NumPorts;
+	
 }
 
 // former Schematic::createNetlist
@@ -400,9 +450,8 @@ void LegacyNetlister::createNetlist(DocumentStream& stream,
 	// }
 	//
 	// legacy: qucsator expects all definitions at the top
-	for(auto si : declarations){
-		qucslang.printItem(si.second, stream);
-	}
+
+	nodeMap(m);
 
 	QString s, Time;
 	for(auto pc : m.schematicModel().components()){
@@ -474,6 +523,7 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 		qDebug() << "call tAC" << QString::fromStdString(pc->type());
 		
 		Element* decl=pc->proto(&m.schematicModel());
+
 		if(decl){
 			if(SubcktProto* s=dynamic_cast<SubcktProto*>(decl)){
 				qDebug() << "got proto" << QString::fromStdString(s->type());

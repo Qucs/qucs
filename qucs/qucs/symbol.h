@@ -43,8 +43,16 @@ public: // construct
   virtual ~Symbol(){}
 
 public: // interface
-  virtual void setSchematic (SchematicModel const* p) { containingSchematic = p; }
-  SchematicModel const* getSchematic() const{return containingSchematic;}
+
+  // obsolete
+  virtual void setSchematic (SchematicModel const* p) { unreachable(); containingSchematic = p; }
+  SchematicModel const* getSchematic() const{ unreachable(); return containingSchematic;}
+
+  // use these, TODO: parent.
+  void setScope (SchematicModel const* p) { containingSchematic = p; }
+  SchematicModel const* getScope() const{return containingSchematic;}
+
+
   virtual std::string /* const& */ type() const{
 	  return _type;
   }
