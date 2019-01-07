@@ -1022,9 +1022,10 @@ void Schematic::simpleInsertCommand(Command *c)
 {
   incomplete();
   Node *pn;
-  int x, y;
+//  int x, y;
   // connect every node of component
 
+  // bug: not here.
   components().append(c);
 }
 

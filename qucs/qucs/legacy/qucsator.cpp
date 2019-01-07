@@ -27,6 +27,7 @@
 #include "schematic.h" // BUG. fixed in qt branch
 #include "schematic_lang.h"
 #include "exception.h"
+#include "sckt_proto.h"
 #include "misc.h"
 
 #include "components/subcircuit.h" //  BUG
@@ -40,19 +41,30 @@ private: // NetLang
 private: // local
   void printCommand(Command const*, stream_t&) const;
   void printSymbol(Symbol const*, stream_t&) const;
+  void printSubckt(SubcktProto const*, stream_t&) const;
   void printComponent(Component const*, stream_t&) const;
 }qucslang;
 static Dispatcher<DocumentLanguage>::INSTALL pl(&doclang_dispatcher, "qucsator", &qucslang);
 
 void QucsLang::printSymbol(Symbol const* d, stream_t& s) const
 {
-	if(auto c=dynamic_cast<Command const*>(d)){
+	if(auto c=dynamic_cast<SubcktProto const*>(d)){
+		printSubckt(c, s);
+	}else if(auto c=dynamic_cast<Command const*>(d)){
 		printCommand(c, s);
 	}else if(auto c=dynamic_cast<Component const*>(d)){
 		printComponent(c, s);
 	}else{
 		incomplete();
 	}
+}
+
+void QucsLang::printSubckt(SubcktProto const*, stream_t& s) const
+{
+	qDebug() << "proto here";
+	s << "proto here\n";
+
+	s << "proto end \n";
 }
 
 void QucsLang::printCommand(Command const* c, stream_t& s) const
@@ -144,73 +156,91 @@ static Dispatcher<Simulator>::INSTALL p(&simulator_dispatcher, "qucsator", &QS);
 
 class LegacyNetlister : public DocumentFormat{
 private: // legacy implementation
-  void createNetlist(DocumentStream& stream, ModelAccess const& m) const;
-  void prepareSave(DocumentStream& stream, ModelAccess const& m) const;
-  void throughAllComps(DocumentStream& d, ModelAccess const& m) const;
+  void createNetlist(DocumentStream& stream, SchematicSymbol const& m) const;
+  void prepareSave(DocumentStream& stream, SchematicSymbol const& m) const;
+  void throughAllComps(DocumentStream& d, SchematicSymbol const& m) const;
+  void clear() const;
+  void createDeclarations(DocumentStream& d) const;
 private: // overrides
-  void save(DocumentStream& stream, ModelAccess const& m) const;
+  void save(DocumentStream& stream, SchematicSymbol const& m) const;
 private:
-  mutable SubMap FileList;
+  mutable SubMap FileList; // BUG
+  mutable std::map<std::string, Element*> declarations;
 }LNL;
 static Dispatcher<DocumentFormat>::INSTALL p1(&docfmt_dispatcher, "qucsator|legacy_nl", &LNL);
 
-// was main::doNetlist
-void LegacyNetlister::save(DocumentStream& Stream, ModelAccess const& m) const
+void LegacyNetlister::clear() const
 {
-  qDebug() << "*** LegacyNetlister::save";
+	declarations.clear();
+}
+// was main::doNetlist
+void LegacyNetlister::save(DocumentStream& Stream, SchematicSymbol const& m) const
+{
+	clear();
 
-  SchematicModel const *sch = &m.schematicModel();
-  if (sch == NULL) {
-    throw "incomplete_exception";
-  }else{
-  }
+	qDebug() << "*** LegacyNetlister::save";
 
-  QStringList Collect;
+	SchematicModel const *sch = &m.schematicModel();
+	if (sch == NULL) {
+		throw "incomplete_exception";
+	}else{
+	}
 
-  Collect.clear();  // clear list for NodeSets, SPICE components etc.
+	QStringList Collect;
 
-  int SimPorts = 10;//??
-  prepareSave(Stream, m);
+	Collect.clear();  // clear list for NodeSets, SPICE components etc.
 
-  qDebug() << "done prep\n";
+	int SimPorts = 10;//??
+	prepareSave(Stream, m);
 
-  if(SimPorts < -5) {
-    throw "not_enough_ports_exception"; // ?!
-  }
+	qDebug() << "done prep\n";
+
+	if(SimPorts < -5) {
+		throw "not_enough_ports_exception"; // ?!
+	}
 
 #if 0
-  // output NodeSets, SPICE simulations etc.
-  for(QStringList::Iterator it = Collect.begin();
-  it != Collect.end(); ++it) {
-    // don't put library includes into netlist...
-    if ((*it).right(4) != ".lst" &&
-    (*it).right(5) != ".vhdl" &&
-    (*it).right(4) != ".vhd" &&
-    (*it).right(2) != ".v") {
-      Stream << *it << '\n';
-    }
-  }
+	// output NodeSets, SPICE simulations etc.
+	for(QStringList::Iterator it = Collect.begin();
+			it != Collect.end(); ++it) {
+		// don't put library includes into netlist...
+		if ((*it).right(4) != ".lst" &&
+				(*it).right(5) != ".vhdl" &&
+				(*it).right(4) != ".vhd" &&
+				(*it).right(2) != ".v") {
+			Stream << *it << '\n';
+		}
+	}
 #endif
 
-  Stream << '\n';
+	createDeclarations(Stream);
 
-  createNetlist(Stream, m);
+	Stream << '\n';
+
+	createNetlist(Stream, m);
+}
+
+void LegacyNetlister::createDeclarations(DocumentStream& stream) const
+{
+	for(auto i: declarations){
+		stream << "got declaration " << i.first << "\n";
+	}
 }
 
 // was Schematic::prepareNetlist
 //  visit lot of components, strange callbacks...
-void LegacyNetlister::prepareSave(DocumentStream& stream, ModelAccess const& m) const
+void LegacyNetlister::prepareSave(DocumentStream& stream, SchematicSymbol const& m) const
 {
 
 	// if(showBias > 0) showBias = -1;  // do not show DC bias anymore
 
 	bool isVerilog = false;
-	bool isAnalog = true;
 	bool isTruthTable = false;
 	int allTypes = 0, NumPorts = 0;
 
 	// BUG: Detect simulation domain (analog/digital) by looking at component types.
 #if 0
+	bool isAnalog = true;
 	for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
 		if(pc->isActive == COMP_IS_OPEN){
 			// open circuit (or so)
@@ -250,7 +280,7 @@ void LegacyNetlister::prepareSave(DocumentStream& stream, ModelAccess const& m) 
 			// If no simulation exists, assume analog simulation. There may
 			// be a simulation within a SPICE file. Otherwise Qucsator will
 			// output an error.
-			isAnalog = true;
+			// isAnalog = true;
 			allTypes |= isAnalogComponent;
 			NumPorts = -1;
 		}
@@ -265,7 +295,7 @@ void LegacyNetlister::prepareSave(DocumentStream& stream, ModelAccess const& m) 
 	}
 	else {
 		NumPorts = -1;
-		isAnalog = true;
+		// isAnalog = true;
 	}
 
 	// first line is documentation
@@ -351,7 +381,7 @@ void LegacyNetlister::prepareSave(DocumentStream& stream, ModelAccess const& m) 
 
 // former Schematic::createNetlist
 void LegacyNetlister::createNetlist(DocumentStream& stream,
-		ModelAccess const& m) const
+		SchematicSymbol const& m) const
 { untested();
 	bool isAnalog=true;
 	bool isVerilog=false;
@@ -363,6 +393,16 @@ void LegacyNetlister::createNetlist(DocumentStream& stream,
 	FileList.clear();
 
 	int NumPorts=0; // huh??
+
+	/// include directives. qucsator does not seem to do that.
+	// for(auto si : directives){
+	// 	qucslang.printItem(si, stream);
+	// }
+	//
+	// legacy: qucsator expects all definitions at the top
+	for(auto si : declarations){
+		qucslang.printItem(si.second, stream);
+	}
 
 	QString s, Time;
 	for(auto pc : m.schematicModel().components()){
@@ -406,7 +446,7 @@ void LegacyNetlister::createNetlist(DocumentStream& stream,
 // return Time;
 }
 
-void LegacyNetlister::throughAllComps(DocumentStream& stream, ModelAccess const& m) const
+void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol const& m) const
 { incomplete();
 	bool r;
 	QString s;
@@ -432,9 +472,22 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, ModelAccess const&
 		int countInit = 0;  // ??
 		int NumPorts=0; // ??!
 		qDebug() << "call tAC" << QString::fromStdString(pc->type());
-		/*stuff=*/ pc->tAC(stream, &m.schematicModel(), Collect, countInit, NumPorts, qucslang); //?!!
-		// handle ground symbol
-		if(pc->obsolete_model_hack() == "GND") { // BUG.
+		
+		Element* decl=pc->proto(&m.schematicModel());
+		if(decl){
+			if(SubcktProto* s=dynamic_cast<SubcktProto*>(decl)){
+				qDebug() << "got proto" << QString::fromStdString(s->type());
+				auto& ex=declarations[s->type()];
+				if(ex){
+					// already got this one.
+				}else{
+					ex = s;
+					s->build();
+				}
+			}else{
+				incomplete();
+			}
+		}else if(pc->obsolete_model_hack() == "GND") { // BUG.
 			qDebug() << "GND hack" << pc->Ports.first()->Connection->name();
 			pc->Ports.first()->Connection->setName("gnd");
 			continue;

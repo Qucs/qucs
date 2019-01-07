@@ -9,7 +9,7 @@
 #include "object.h"
 
 class ModelInserter;
-class ModelAccess;
+class SchematicSymbol;
 class DocumentStream;
 
 class DocumentFormat : public Object{
@@ -18,7 +18,7 @@ protected:
 public:
 	virtual ~DocumentFormat() {}
 	virtual void load(DocumentStream&, ModelInserter&) const{incomplete();}
-	virtual void save(DocumentStream&, ModelAccess const&) const{incomplete();}
+	virtual void save(DocumentStream&, SchematicSymbol const&) const{incomplete();}
 };
 
 #endif
