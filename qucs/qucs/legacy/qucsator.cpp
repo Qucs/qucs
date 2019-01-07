@@ -71,19 +71,18 @@ void QucsLang::printSubckt(SubcktProto const* p, stream_t& s) const
 	for(auto pc : p->schematicModel().components()){
 
 		if(pc->type() == "Port"){
-			qDebug() << "port" << QString::fromStdString(pc->type());
 			// BUG trainwreck.
 			// why does a port not have a label?!
       	auto nn=pc->Ports.first()->Connection->number();
       	s << " " << netLabels[nn];
 		}else{
-			qDebug() << "not port" << QString::fromStdString(pc->type());
 		}
 	}
 
 	s << "\n";
 
 	for(auto pi : p->symbolPaintings()){
+			s<<"TODO\n";
 		if(pi->name() == ".ID ") {
 	//		ID_Text *pid = (ID_Text*)pi;
 	//		QList<SubParameter *>::const_iterator it;
@@ -96,6 +95,7 @@ void QucsLang::printSubckt(SubcktProto const* p, stream_t& s) const
 	}
 	//(*tstream) << '\n';
 
+	// TODO: deduplicate.
 	for(auto i : p->schematicModel().components()){
       if(i->type() == "Port"){
 		}else if(i->type() == "GND"){
@@ -202,6 +202,7 @@ private: // legacy implementation
   void createDeclarations(DocumentStream& d) const;
 private: // overrides
   void save(DocumentStream& stream, SchematicSymbol const& m) const;
+  void load(DocumentStream&, SchematicSymbol&) const{ incomplete(); }
 private:
   mutable SubMap FileList; // BUG
   mutable std::map<std::string, Element*> declarations;

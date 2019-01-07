@@ -361,12 +361,15 @@ class sda : public ModelAccess{
 public:
   sda(SchematicModel const& m, Schematic const& s) : _m(m), _s(s) {
   }
-private: // ModelAccess
+private: // SchematicSymbol
   SchematicModel const& schematicModel() const{
     incomplete();
     return _m;
   }
-  std::string getParameter(std::string const&x) const{
+  SchematicModel* schematicModel() {
+    return nullptr;
+  }
+  std::string getParameter(std::string const&) const{
     incomplete();
     return "incomplete";
   }
@@ -1394,9 +1397,9 @@ void Schematic::createSubNetlistPlain(QTextStream*, QPlainTextEdit*, int){
 // ---------------------------------------------------
 // what is this?
 void SchematicModel::createSubNetlistPlain(stream_t& str, QPlainTextEdit *ErrText,
-int NumPorts, bool creatingLib, NetLang const& nl)
+int NumPorts, bool creatingLib, NetLang const& )
 {
-  incomplete();
+  incomplete(); // obsolete.
   bool isAnalog=true;
   auto stream=&str;
   int i, z;
@@ -1537,7 +1540,7 @@ int NumPorts, bool creatingLib, NetLang const& nl)
     auto nlp=doclang_dispatcher["qucsator"];
     NetLang const* n=prechecked_cast<NetLang const*>(nlp);
     assert(n);
-    NetLang const& nl=*n;
+//    NetLang const& nl=*n;
 
     // write all components with node names into netlist file
     for(auto pc : components() ){ untested();
@@ -1701,6 +1704,9 @@ bool SchematicModel::createSubNetlist(stream_t& stream, int& countInit,
                      QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
 		  bool creatingLib, NetLang const& nl)
 { untested();
+  (void) countInit;
+  (void) Collect;
+  (void) creatingLib;
 //  int Collect_count = Collect.count();   // position for this subcircuit
 
   // TODO: NodeSets have to be put into the subcircuit block.
@@ -1730,12 +1736,12 @@ bool SchematicModel::createSubNetlist(stream_t& stream, int& countInit,
 // ---------------------------------------------------
 // Determines the node names and writes subcircuits into netlist file.
 // moved to QucsatorNetlister::prepareSave
+#if 0
 int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
                               QPlainTextEdit *ErrText, NetLang const& nl)
 {
   incomplete();
   return 0;
-#if 0
 
   // TODO:
   // SomeNetlister.generate(stream, Collect, nl);
@@ -1838,8 +1844,8 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   }
 
   return NumPorts;
-#endif
 }
+#endif
 
 // ---------------------------------------------------
 // Write the beginning of digital netlist to the text stream 'stream'.

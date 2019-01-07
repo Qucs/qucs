@@ -95,7 +95,7 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 /// --------------------------------------------------------
 class VerilogSchematicFormat : public DocumentFormat{
   void save(DocumentStream& stream, ModelAccess const&) const;
-  void load(DocumentStream& stream, ModelInserter&) const;
+  void load(DocumentStream& stream, SchematicSymbol&) const;
 
 private: // legacy cruft
   bool isSymbolMode() const{ return false; }
@@ -126,7 +126,7 @@ static Dispatcher<DocumentFormat>::INSTALL
 pp(&docfmt_dispatcher, "v_sch", &VS);
 // ------------------------------------------------------
 
-void VerilogSchematicFormat::load(DocumentStream& stream, ModelInserter& s) const
+void VerilogSchematicFormat::load(DocumentStream& stream, SchematicSymbol& s) const
 {
   incomplete();
 }

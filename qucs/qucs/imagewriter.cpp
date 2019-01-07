@@ -291,8 +291,8 @@ int ImageWriter::print(QWidget *doc)
     }
   }
   delete dlg;
-  return status;
 #endif
+  return status;
 }
 
 void ImageWriter::getSchWidthAndHeight(Schematic *sch, int &w, int &h, int &xmin, int &ymin)
