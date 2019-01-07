@@ -4,12 +4,16 @@
 #include "schematic_symbol.h"
 #include "schematic_model.h"
 
+// a subcircuit declaration as in a spice "subckt" or verilog "module" or
+// qucsator ".Def" 
 class SubcktProto : public SchematicSymbol{
 public:
-	SubcktProto(Element const* p) : SchematicSymbol(), Proto(p), sm(nullptr){}
+	SubcktProto(Element const* p) : SchematicSymbol(), Proto(p), sm(nullptr){
+	}
+
 	virtual void build()=0;
 
-protected:
+public: // accessed from netlister..
 	SchematicModel const& schematicModel() const{ return sm; }
 
 protected:
