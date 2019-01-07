@@ -28,13 +28,15 @@ Module::INSTALL pp("paintings", &D);
 }
 
 ID_Text::ID_Text(int cx_, int cy_) : Painting()
-{
+{ untested();
   Name = ".ID ";
   cx = cx_;
   cy = cy_;
   x2 = y2 = 20;
 
   Prefix = "SUB";
+
+  setLabel("?????");
 }
 
 ID_Text::~ID_Text()

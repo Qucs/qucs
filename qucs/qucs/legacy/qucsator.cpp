@@ -55,6 +55,7 @@ void QucsLang::printSymbol(Symbol const* d, stream_t& s) const
 	}else if(auto c=dynamic_cast<Component const*>(d)){
 		printComponent(c, s);
 	}else{
+		s<<"incomplete\n";
 		incomplete();
 	}
 }
@@ -82,8 +83,9 @@ void QucsLang::printSubckt(SubcktProto const* p, stream_t& s) const
 	s << "\n";
 
 	for(auto pi : p->symbolPaintings()){
-			s<<"TODO\n";
 		if(pi->name() == ".ID ") {
+			incomplete();
+			s<<"TODO " << pi->label() << pi->name() << "\n";
 	//		ID_Text *pid = (ID_Text*)pi;
 	//		QList<SubParameter *>::const_iterator it;
 	//		for(it = pid->Parameter.constBegin(); it != pid->Parameter.constEnd(); it++) {
@@ -145,6 +147,7 @@ void QucsLang::printComponent(Component const* c, stream_t& s) const
 		// nothing.
 	}else if(c->isShort()){
 		// replace by some resistors (hack?)
+		incomplete();
 		int z=0;
 		QListIterator<Port *> iport(c->ports());
 		Port *pp = iport.next();
@@ -170,6 +173,11 @@ void QucsLang::printComponent(Component const* c, stream_t& s) const
 					// happens in list_entries ...
 					s << "open";
 				}
+			}
+
+			Symbol const* sym=c;
+			for(unsigned i=0; i<sym->portCount(); ++i){
+				s << sym->portValue(i).number();
 			}
 
 			for(auto p2 : c->params()) {

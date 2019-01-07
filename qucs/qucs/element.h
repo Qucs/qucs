@@ -204,7 +204,7 @@ public: // BUG
   virtual Element* proto(SchematicModel const*) const{return nullptr;}
 
 protected: //BUG
-  QString Name; // the label.
+  QString Name; // the label, but sometimes the type. yikes.
 }; // Element
 
 
