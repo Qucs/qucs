@@ -148,11 +148,11 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, ModelInserter& s) co
 			}else if(mode=='S'){
 				incomplete();
 #if 1
-				SchematicSymbol* s=new SchematicSymbol();
+				// SchematicSymbol* s=new SchematicSymbol();
 				try{
 					qDebug() << "symbol Paintings";
-					s->symbolPaintings().load(stream);
-					c = s;
+					s.symbolPaintings().load(stream);
+					c = nullptr;
 				}catch(...){
 					incomplete();
 				}

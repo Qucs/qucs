@@ -894,6 +894,7 @@ void Schematic::showNoZoom()
 void Schematic::enlargeView(int x1, int y1, int x2, int y2)
 {
   int dx=0, dy=0;
+  (void) (dx+dy);
   if(x1 < UsedX1) UsedX1 = x1;
   if(y1 < UsedY1) UsedY1 = y1;
   if(x2 > UsedX2) UsedX2 = x2;
@@ -1954,7 +1955,7 @@ void Schematic::switchPaintMode()
 // **********      Function for serving mouse wheel moving    **********
 // **********                                                 **********
 // *********************************************************************
-void Schematic::contentsWheelEvent(QWheelEvent *Event)
+void Schematic::contentsWheelEvent(QWheelEvent * /*Event*/)
 {
   App->editText->setHidden(true);  // disable edit of component property
   // use smaller steps; typically the returned delta() is a multiple of 120
@@ -1998,8 +1999,10 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
 // area accordingly.
 bool Schematic::scrollUp(int step)
 {
-  TODO("Fix scroll");
-  /**
+#ifndef USE_SCROLLVIEW
+  incomplete();
+  (void) step;
+#else
   int diff;
 
   diff = contentsY() - step;
@@ -2016,7 +2019,7 @@ bool Schematic::scrollUp(int step)
     resizeContents(contentsWidth(), contentsHeight()-diff);
     ViewY2 -= diff;
   }
-  */
+#endif
   return true;
 }
 
@@ -2421,6 +2424,10 @@ private:
   }
   void setParameter(std::string const&, std::string){
     incomplete();
+  }
+
+  PaintingList& symbolPaintings() {
+    return _m->symbolPaints();
   }
 private:
   Schematic* _m;

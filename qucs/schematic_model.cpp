@@ -23,7 +23,7 @@ SchematicModel::SchematicModel(Schematic* s)
   :_doc(s)
 {
 	// presumably Q3PTRlist without this is just a QList<*> (check)
-  _symbol=new SchematicSymbol();
+//  _symbol=new SchematicSymbol();
 }
 
 void SchematicModel::clear()
@@ -48,6 +48,7 @@ void SchematicModel::setDevType(QString const& s)
 }
 
 namespace{
+// TODO: use Object
 class ins : public ModelInserter{
 public:
 	ins(SchematicModel* m) : _m(m) {
@@ -55,13 +56,23 @@ public:
 	}
 private: // ModelInserter
 	void pushBack(Element* e){
-		_m->pushBack(e);
+		if(auto s=dynamic_cast<SchematicSymbol*>(e)){ untested();
+			incomplete();
+		//delete _symbol;
+		//_symbol = s;
+		}else{
+			_m->pushBack(e);
+		}
 	}
 	void setParameter(std::string const&, std::string){
 		incomplete();
 	}
+	PaintingList& symbolPaintings(){
+		return _dummy;
+	}
 private:
 	SchematicModel* _m;
+	PaintingList _dummy; // ignore those paintings.
 };
 }
 
@@ -99,9 +110,9 @@ void SchematicModel::pushBack(Element* what)
 	}else if(auto w=wire(what)){
 		simpleInsertWire(w);
 	}else if(auto s=dynamic_cast<SchematicSymbol*>(what)){ untested();
-		qDebug() << "Model replacing symbol";
-		delete _symbol;
-		_symbol = s;
+		assert(false);
+		//delete _symbol;
+		//_symbol = s;
 	}else{
 		incomplete();
 	}

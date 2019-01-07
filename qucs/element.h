@@ -200,6 +200,9 @@ public: // BUG
   // BUG; abused in Command
   mutable int x2, y2;  // center and relative boundings
 
+  // create a declaration, e.g. subcircuit definition or include directive
+  virtual Element* proto(SchematicModel const*) const{return nullptr;}
+
 protected: //BUG
   QString Name; // the label.
 }; // Element
