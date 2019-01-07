@@ -543,6 +543,8 @@ public:
 
 		qDebug() << "got" << dc->components().count() << "components";
 		d->setDevType(s);
+
+		// Ports.resize(5);
 	}
 
 private:
