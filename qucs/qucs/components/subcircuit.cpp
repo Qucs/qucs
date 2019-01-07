@@ -41,7 +41,9 @@ public:
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
 
-  QString getSubcircuitFile() const;
+private: // not yet
+public:
+  QString getSubcircuitFile(SchematicModel const* scope) const;
 
 protected:
   QString netlist() const;
@@ -99,6 +101,7 @@ Element* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // of ports.
 void Subcircuit::createSymbol()
 {
+#if 0 // incomplete
   int No;
   QString FileName(Props.getFirst()->Value);
   FileName = getSubcircuitFile();
@@ -126,6 +129,7 @@ void Subcircuit::createSymbol()
     Ports.clear();
     remakeSymbol(No);  // no symbol was found -> create standard symbol
   }
+#endif
 }
 
 // ---------------------------------------------------------------------
@@ -265,8 +269,10 @@ QString Subcircuit::vhdlCode(int)
   s += " port map (";
   QListIterator<Port *> iport(Ports);
   Port *pp = iport.next();
-  if(pp)
+  if(pp){
     s += pp->Connection->name();
+  }else{
+  }
   while (iport.hasNext()) {
     pp = iport.next();
     s += ", "+pp->Connection->name();   // node names
@@ -308,7 +314,7 @@ QString Subcircuit::verilogCode(int)
 }
 
 // -------------------------------------------------------
-QString Subcircuit::getSubcircuitFile() const
+QString Subcircuit::getSubcircuitFile(SchematicModel const* scope) const
 {
   // construct full filename
   QString FileName = Props.getFirst()->Value;
@@ -334,12 +340,13 @@ QString Subcircuit::getSubcircuitFile() const
     // same directory as the schematic file it is a part of
     if (FileInfo.fileName () != FileName) { untested();
         // the file has no path information, just the file name
-	 }else if (getSchematic()) {
+		 qDebug() << "no path info";
+	 }else if (scope) {
 		 qDebug() << "trying to inherit path from sch";
 		 // check if a file of the same name is in the same directory
 		 // as the schematic file, if we have a pointer to it, in
 		 // which case we use this one
-		 QFileInfo schematicFileInfo = getSchematic()->getFileInfo ();
+		 QFileInfo schematicFileInfo = scope->getFileInfo ();
 		 QFileInfo localFIleInfo (schematicFileInfo.canonicalPath () + "/" + baseName + ".sch");
 		 qDebug() << schematicFileInfo.canonicalPath() << "seems to exist";
 		 if (localFIleInfo.exists ()) { untested();
@@ -348,6 +355,8 @@ QString Subcircuit::getSubcircuitFile() const
 			 return localFIleInfo.absoluteFilePath();
 		 }else{ untested();
 		 }
+	 }else{
+		 qDebug() << "no schematic";
 	 }
 
     // look up the hash table for the schematic file as
@@ -469,7 +478,8 @@ void Subcircuit::tAC(QTextStream& stream, SchematicModel const* schem, QStringLi
 namespace{
 class pr : public SubcktProto{
 public:
-  	pr(Element const* e) : SubcktProto(e){}
+  	pr(Element const* e) : SubcktProto(e){
+	}
 
 	void build(){
 		qDebug() << "pr::build";
@@ -479,8 +489,10 @@ public:
 		Component const* pc=sckt;
 		assert(sckt);
 		//sckt->setSchematic(schem);
-		QString f = sckt->getSubcircuitFile();
-		qDebug() << "sckt" << f;
+		qDebug() << "sckt" << sckt->getSchematic();
+		qDebug() << "mine" << getSchematic();
+
+#if 0
 		SubMap::Iterator it = FileList.find(f);
 		if(it != FileList.end()) { untested();
 			if (!it.value().PortTypes.isEmpty())
@@ -496,25 +508,37 @@ public:
 				}
 			}
 		}
+#endif
 
 		// The subcircuit has not previously been added
-		SubFile sub = SubFile("SCH", f);
-		FileList.insert(f, sub);
+//		SubFile sub = SubFile("SCH", f);
+//		FileList.insert(f, sub);
 
+		// assert(sckt->getSchematic()==getSchematic()); // nope. haven't got a scope.
+		assert(getScope());
+		// assert(sckt->getScope()); nope/
+		QString f = sckt->getSubcircuitFile(getScope());
+		qDebug() << "sckt" << f;
 
 		// load subcircuit schematic
 		QString s=pc->Props.first()->Value;
 		SchematicModel* d=&schematicModel();
+		SchematicModel const* dc=&schematicModel();
 
 		// todo: error handling.
-		QString scktfilename(pc->getSubcircuitFile());
+		QString scktfilename(sckt->getSubcircuitFile(getScope()));
+		assert(scktfilename!="");
 		QFile file(scktfilename);
 		qDebug() << "getting sckt definition from" << scktfilename << "type" << s;
 		file.open(QIODevice::ReadOnly);
 		DocumentStream pstream(&file);
 		// d->setFileInfo(scktfilename);
 		d->parse(pstream);
+
+		qDebug() << "got" << dc->components().count();
 		d->setDevType(s);
+//		unsigned count=0;
+//		d->throughAllNodes(count); // hack: number connected components.
 	}
 
 private:
@@ -527,12 +551,15 @@ private:
 }
 
 // partially tAC.
-Element* Subcircuit::proto(SchematicModel const* schem) const
+Element* Subcircuit::proto(SchematicModel const* scope) const
 {untested();
+	// assert(getSchematic()); /// hmm elements have no scope. d'uh
 	Symbol* s=new pr(this);
 	QString t=Props.first()->Value;
 	s->setType(t.toStdString());
-	s->setSchematic(schem);
+	assert(scope);
+	s->setSchematic(scope);
+	assert(s->getSchematic());
 	return s;
 }
 

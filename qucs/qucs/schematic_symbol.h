@@ -25,6 +25,7 @@ private: // hide. don't mess with this.
 	SchematicSymbol(SchematicSymbol const&){};
 public: //legacy hack
 	PaintingList& symbolPaintings();
+	PaintingList const& symbolPaintings() const;
 private:
 	PaintingList* _paint; // BUG
 };
