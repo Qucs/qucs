@@ -470,7 +470,9 @@ public: // need access to SchematicModel. grr
   friend class ImageWriter;
 
 private:
+public: // BUG. use symbol
   SchematicModel DocModel;
+private:
   bool SymbolMode;
 };
 

@@ -49,7 +49,7 @@ void SchematicModel::setDevType(QString const& s)
 
 namespace{
 // TODO: use Object
-class ins : public ModelInserter{
+class ins : public SchematicSymbol{
 public:
 	ins(SchematicModel* m) : _m(m) {
 		assert(m);
@@ -57,6 +57,7 @@ public:
 private: // ModelInserter
 	void pushBack(Element* e){
 		if(auto s=dynamic_cast<SchematicSymbol*>(e)){ untested();
+			(void) s;
 			incomplete();
 		//delete _symbol;
 		//_symbol = s;
@@ -70,6 +71,20 @@ private: // ModelInserter
 	PaintingList& symbolPaintings(){
 		return _dummy;
 	}
+
+private: // SchematicSymbol
+	SchematicModel const& schematicModel() const{
+		assert(_m);
+		return *_m;
+	}
+	SchematicModel* schematicModel() {
+		assert(_m);
+		return _m;
+	}
+	std::string getParameter(std::string const&) const{
+		return "incomplete getParameter";
+	}
+
 private:
 	SchematicModel* _m;
 	PaintingList _dummy; // ignore those paintings.
@@ -295,6 +310,10 @@ bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
 		  bool creatingLib, NetLang const& nl)
 {
 	incomplete(); // BUG. called from Sckt:tAC
+	(void) Collect;
+	(void) countInit;
+	(void) creatingLib;
+	(void) NumPorts;
 #if 0
 	bool isAnalog=true;
 	// delete the node names
@@ -465,4 +484,3 @@ void SchematicModel::simpleInsertWire(Wire *pw)
 }
 
 ModelAccess::ModelAccess(){}
-ModelInserter::ModelInserter(){}

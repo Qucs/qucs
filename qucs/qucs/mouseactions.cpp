@@ -278,6 +278,7 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
 
   int x  = Event->pos().x();
   int y  = Event->pos().y();
+  (void) (x+y);
 
   QPointF pos=Doc->mapToScene(Event->pos());
   int fx = pos.x();

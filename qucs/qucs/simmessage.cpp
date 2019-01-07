@@ -178,11 +178,11 @@ bool SimMessage::startProcess()
   assert(dl);
   NetLang const* n=prechecked_cast<NetLang const*>(dl);
   assert(n);
-  auto& nl=*n;
 
   if(!QucsApp::isTextDocument(DocWidget)) {
-    SimPorts =
-       ((Schematic*)DocWidget)->prepareNetlist(Stream, Collect, ErrText, nl);
+    incomplete(); // use a netlister.
+  // auto& nl=*n;
+//    SimPorts = ((Schematic*)DocWidget)->prepareNetlist(Stream, Collect, ErrText, nl);
     if(SimPorts < -5) {
       NetlistFile.close();
       ErrText->appendPlainText(tr("ERROR: Cannot simulate a text file!"));
