@@ -1,6 +1,6 @@
 /***************************************************************************
-                                 node.h
-                                --------
+                               subcircuit.cpp
+                              ----------------
     copyright            : (C) 2003 by Michael Margraf
                                2018 Felix Salfelder / QUCS team
  ***************************************************************************/
@@ -14,25 +14,38 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef QUCS_PORT_H
-#define QUCS_PORT_H
+#ifndef QUCS_LEGACY_SUBCKT_H
+#define QUCS_LEGACY_SUBCKT_H
 
-class Node;
 
-struct Port {
-  Port() {};
-  Port(int _x, int _y, bool _avail=true) : x(_x), y(_y), avail(_avail) {
-    Type=""; Name=""; Connection=0;};
-  int   x, y;
-  bool  avail;
-  QString Type;
-  QString Name;
-  Node *Connection;
+#include "../components/component.h"
 
-public: // perhaps not here
-  Node* value() const{return Connection;}
-  QString const& name() const{return Name;}
+
+// BUG: must derive from subckt_model (or so)
+class Subcircuit : public MultiViewComponent  {
+public:
+  Subcircuit();
+ ~Subcircuit() {};
+  Component* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
+
+private: // not yet
+public:
+  QString getSubcircuitFile(SchematicModel const* scope) const;
+
+protected:
+  QString netlist() const;
+  QString vhdlCode(int);
+  QString verilogCode(int);
+  void createSymbol();
+  void remakeSymbol(int No);
+  int  loadSymbol(const QString&);
+
+private: // overrides
+  void build();
+  Element* proto(SchematicModel const* schem) const;
+	  // obsolete.
+  void tAC(QTextStream&, SchematicModel const*, QStringList&, int&, int, NetLang const&);
 };
-
 
 #endif

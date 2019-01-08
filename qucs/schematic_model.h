@@ -23,7 +23,6 @@
 #include "io.h"
 #include "schematic_scene.h"
 #include "schematic_symbol.h"
-#include "components/subcircuit.h" // BUG
 #include "qucsdoc.h"
 
 class QPlainTextEdit; //??!

@@ -22,7 +22,7 @@ for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 	sed -i '1 s/Qucs.*/Qucs/' ${base}_${schname}.net
 
 	# dump verilog netlist
-	cmd="$QUCS -a ../qucs/sim/.libs/verilog.so -l verilog -n -i ${srcdir}/$i -o ${base}_${schname}.v"
+	cmd="$QUCS -a ../qucs/sim/.libs/verilog.so -l verilog_nl -n -i ${srcdir}/$i -o ${base}_${schname}.v"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
 	
