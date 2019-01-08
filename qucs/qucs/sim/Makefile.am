@@ -4,11 +4,11 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2015 Felix Salfelder felix@salfelder.org
+# Copyright (C) 2015, 2019 Felix Salfelder felix@salfelder.org
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2, or (at your option)
+# the Free Software Foundation; either version 3, or (at your option)
 # any later version.
 #
 # This software is distributed in the hope that it will be useful,
@@ -32,6 +32,7 @@ qucsator_la_CPPFLAGS = $(AM_CPPFLAGS)
 # need Qt for TextStream.
 qucsator_la_CPPFLAGS += $(QT_INCLUDES)
 
+verilog_la_SOURCES = verilog.cpp verilog_nl.cpp
 verilog_la_LDFLAGS = -module -avoid-version
 verilog_la_CPPFLAGS = $(AM_CPPFLAGS)
 # need Qt for TextStream.

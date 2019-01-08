@@ -40,7 +40,6 @@
 #include "components/vhdlfile.h"
 #include "components/verilogfile.h"
 #include "components/libcomp.h"
-#include "components/subcircuit.h" // BUG. move to qucsator.cc
 #include "module.h"
 #include "misc.h"
 #include "sim/sim.h"
@@ -922,7 +921,7 @@ void SchematicModel::throughAllNodes(unsigned& z) const
   z = 0; // number cc.
 
   for(auto pn : nodes()){
-    assert(!pn->hasNumber());
+    pn->resetNumber();
   }
 
   for(auto pn : nodes()){

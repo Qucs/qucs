@@ -25,6 +25,9 @@ class ViewPainter;
 
 
 class Node : public Conductor {
+  enum{
+	  INVALID=-1u
+  };
 public:
   Node(int, int);
   ~Node();
@@ -47,12 +50,13 @@ public:
   void setName(QString const& x){
 	  setLabel(x);
   }
+  void resetNumber(){ cn = INVALID; }
   void setNumber(unsigned x){ cn = x; }
 
   // BUG
   void setName(const QString&, const QString&, int x_=0, int y_=0);
   unsigned number() const{ return cn; }
-  unsigned hasNumber() const { return cn!=-1u; }
+  unsigned hasNumber() const { return cn!=INVALID; }
   int cx() const{ return Element::cx; }
   int cy() const{ return Element::cy; }
 

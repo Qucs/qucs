@@ -42,10 +42,7 @@ public:
 //  virtual SimOutputData const* results(){}
 };
 
-/*!
- * class to provide language dependent functionality, such as netlisting
- * FIXME (later): don't use Qt types here. has nothing to do with GUI
- */
+//obsolete?
 class NetLang : public DocumentLanguage {
 public:
   virtual ~NetLang(){}
