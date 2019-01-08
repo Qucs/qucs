@@ -27,7 +27,7 @@ for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 	eval "$cmd" ${REDIR}
 	
 	# dump legacy schematic
-	cmd="$QUCS -l leg_sch -n -i ${srcdir}/$i -o ${base}_${schname}.sch"
+	cmd="$QUCS -l leg_sch -n -i ${srcdir}/$i -o ${base}_${schname}.dup"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
 
@@ -43,7 +43,7 @@ for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 	eval "$cmd" ${REDIR}
 	if [ $? -ne 0 ]; then exit 1; fi
 
-	cmd="diff ${base}_${schname}.sch ${srcdir}/$i.sch"
+	cmd="diff ${base}_${schname}.dup ${srcdir}/$i.dup"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
 	if [ $? -ne 0 ]; then exit 1; fi
