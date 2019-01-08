@@ -1119,6 +1119,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
       return;
 
   }else if(auto n=node(focusElement)){
+    (void)n;
       if (QucsSettings.NodeWiring) {
 
         MAx1 = 0;   // paint wire corner first up, then left/right

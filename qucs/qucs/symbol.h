@@ -59,6 +59,7 @@ public: // interface
   void setType(std::string const& x){
 	  _type = x;
   }
+  virtual void build(){ }
 
   virtual unsigned portCount() const{ return 0; } // pure?
   virtual Port const* port(unsigned) const{ return nullptr; } // pure?

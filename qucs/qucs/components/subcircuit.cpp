@@ -53,7 +53,9 @@ protected:
   void createSymbol();
   void remakeSymbol(int No);
   int  loadSymbol(const QString&);
+
 private: // overrides
+  void build();
   Element* proto(SchematicModel const* schem) const;
 	  // obsolete.
   void tAC(QTextStream&, SchematicModel const*, QStringList&, int&, int, NetLang const&);
@@ -102,10 +104,9 @@ Element* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // of ports.
 void Subcircuit::createSymbol()
 {
-#if 0 // incomplete
   int No;
   QString FileName(Props.getFirst()->Value);
-  FileName = getSubcircuitFile();
+  FileName = getSubcircuitFile(getScope());
 
   tx = INT_MIN;
   ty = INT_MIN;
@@ -130,7 +131,6 @@ void Subcircuit::createSymbol()
     Ports.clear();
     remakeSymbol(No);  // no symbol was found -> create standard symbol
   }
-#endif
 }
 
 // ---------------------------------------------------------------------
@@ -554,6 +554,11 @@ private:
 
 };
 
+}
+
+void Subcircuit::build()
+{
+	createSymbol();
 }
 
 // partially tAC.
