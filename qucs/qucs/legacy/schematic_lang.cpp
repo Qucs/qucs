@@ -11,6 +11,7 @@
 #include "command.h"
 #include "paintings/painting.h"
 #include "diagram.h" // BUG
+#include "subcircuit.h"
 
 bool PaintingList::load(QTextStream& str)
 {
@@ -270,8 +271,12 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
 	}
 	qDebug << doc.toString();
 #endif
-	// s << "  "; ??
-	s << "<" << c->obsolete_model_hack();
+	s << "  <";
+	if(dynamic_cast<Subcircuit const*>(c)){
+		s << "Sub";
+	}else{
+		s << c->obsolete_model_hack();
+	}
 
 	s << " ";
 	if(c->name().isEmpty()){
