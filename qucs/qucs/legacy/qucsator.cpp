@@ -28,9 +28,8 @@
 #include "schematic_lang.h"
 #include "exception.h"
 #include "sckt_proto.h"
+#include "subcircuit.h"
 #include "misc.h"
-
-#include "components/subcircuit.h" //  BUG
 
 namespace {
 // qucslang language implementation
@@ -156,45 +155,36 @@ void QucsLang::printComponent(Component const* c, stream_t& s) const
 			s << "R:" << c->label() << "." << QString::number(z++) << " "
 				<< Node1 << " " << iport.next()->Connection->label() << " R=\"0\"\n";
 		}
-		//  }else if(Subcircuit const* sub=dynamic_cast<Subcircuit const*>(c)){
-		//    incomplete();
 	}else{
-		{ // todo: introduce proper exceptions
-			// normal netlisting
-
+		if(dynamic_cast<Subcircuit const*>(c)) {
+			s << "Sub:" << c->label();
+		}else{
 			s << QString::fromStdString(c->type()) << ":" << c->label();
-
-			// output all node names
-		//	for(Port *p1 : c->ports()){
-		//		s << " ";
-		//		if(p1->Connection->hasNumber()){
-		//			s << netLabels[p1->Connection->number()];
-		//		}else{
-		//			// happens in list_entries ...
-		//			s << "open";
-		//		}
-		//	}
-
-			Symbol const* sym=c;
-			for(unsigned i=0; i<sym->portCount(); ++i){
-				auto N=sym->portValue(i);
-				s << " ";
-				if(N.hasNumber()){
-					s << netLabels[N.number()];
-				}else{
-					// happens in list_entries ...
-					s << "open";
-				}
-			}
-
-			for(auto p2 : c->params()) {
-				if(p2->name() == "Symbol") { // hack??
-				}else{
-					s << " " << p2->name() << "=\"" << p2->value() << "\"";
-				}
-			}
-			s << '\n';
 		}
+
+		Symbol const* sym=c;
+		for(unsigned i=0; i<sym->portCount(); ++i){
+			auto N=sym->portValue(i);
+			s << " ";
+			if(N.hasNumber()){
+				s << netLabels[N.number()];
+			}else{
+				// happens in list_entries ...
+				s << "open";
+			}
+		}
+
+		for(auto p2 : c->params()) {
+			if(p2->name() == "Symbol") { // hack??
+			}else{
+				s << " " << p2->name() << "=\"" << p2->value() << "\"";
+			}
+		}
+		if(dynamic_cast<Subcircuit const*>(c)) {
+			s << " Type=\"" << QString::fromStdString(c->type()) << "\"";
+		}else{
+		}
+		s << '\n';
 	}
 }
 
@@ -284,6 +274,7 @@ static void nodeMap(SchematicSymbol const& m)
 	                           // should already be numbered...
 
 	unsigned nc=sm.numberOfNets();
+	netLabels.resize(0);
 	netLabels.resize(nc);
 	qDebug() << "found" << nc << "nets";
 	
@@ -436,8 +427,6 @@ void LegacyNetlister::prepareSave(DocumentStream& stream, SchematicSymbol const&
 	if (isVerilog) {
 		stream << "\n`timescale 1ps/100fs\n";
 	}
-
-	int countInit = 0;  // counts the nodesets to give them unique names
 
 	// BUG: giveNodeNames ejects subcircuit declarations (WTF?)
 	// giveNodeNames(&stream, m);

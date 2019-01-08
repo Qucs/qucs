@@ -84,7 +84,11 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 		comma = "";
 		for(Port *p1 : c->ports()){
 			s << comma << p1->Connection->label();
-			if(p1->Name!="") s << " /*" << p1->Name << "*/"; // later.
+			if(p1->name()!=""){
+				s << "?";
+			}else{
+			  	s << " /*" << p1->Name << "*/"; // later.
+			}
 			comma = ", ";
 		}
 
@@ -94,27 +98,27 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 
 /// --------------------------------------------------------
 class VerilogSchematicFormat : public DocumentFormat{
-  void save(DocumentStream& stream, ModelAccess const&) const;
+  void save(DocumentStream& stream, SchematicSymbol const&) const;
   void load(DocumentStream& stream, SchematicSymbol&) const;
 
 private: // legacy cruft
   bool isSymbolMode() const{ return false; }
-  PaintingList const& symbolPaints(ModelAccess const& m) const{
+  PaintingList const& symbolPaints(SchematicSymbol const& m) const{
     return m.schematicModel().symbolPaints();
   }
-  DiagramList const& diagrams(ModelAccess const& m) const{
+  DiagramList const& diagrams(SchematicSymbol const& m) const{
     return m.schematicModel().diagrams();
   }
-  PaintingList const& paintings(ModelAccess const& m) const{
+  PaintingList const& paintings(SchematicSymbol const& m) const{
     return m.schematicModel().paintings();
   }
-  WireList const& wires(ModelAccess const& m) const{
+  WireList const& wires(SchematicSymbol const& m) const{
     return m.schematicModel().wires();
   }
-  NodeList const& nodes(ModelAccess const& m) const{
+  NodeList const& nodes(SchematicSymbol const& m) const{
     return m.schematicModel().nodes();
   }
-  ComponentList const& components(ModelAccess const& m) const{
+  ComponentList const& components(SchematicSymbol const& m) const{
     return m.schematicModel().components();
   }
 
@@ -131,7 +135,7 @@ void VerilogSchematicFormat::load(DocumentStream& stream, SchematicSymbol& s) co
   incomplete();
 }
 
-void VerilogSchematicFormat::save(DocumentStream& stream, ModelAccess const& m) const{
+void VerilogSchematicFormat::save(DocumentStream& stream, SchematicSymbol const& m) const{
   for(auto pc : components(m)){ untested();
 	  if(dynamic_cast<Command const*>(pc)){
 		  unreachable();
