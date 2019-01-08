@@ -1,25 +1,42 @@
 /***************************************************************************
                                ampere_dc.cpp
                               ---------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2019 Felix Salfelder / QUCS team
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "ampere_dc.h"
+#include "globals.h"
+#include "module.h"
+#include "component.h"
+
+
+namespace{
+
+class Ampere_dc : public Component  {
+public:
+  Ampere_dc();
+  ~Ampere_dc();
+  Component* newOne() {
+	  return new Ampere_dc(*this);
+  }
+  static Element* info(QString&, char* &, bool getNewOne=false);
+}D;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Idc", &D);
+static Module::INSTALL pp("sources", &D);
 
 
 Ampere_dc::Ampere_dc()
 {
+  info(Name, bitmap_file);
   Description = QObject::tr("ideal dc current source");
 
   Arcs.append(new Arc(-12,-12, 24, 24,  0, 16*360,QPen(Qt::darkBlue,2)));
@@ -57,4 +74,6 @@ Element* Ampere_dc::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Ampere_dc();
   return 0;
+}
+
 }

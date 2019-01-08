@@ -1,25 +1,43 @@
 /***************************************************************************
                                 diode.cpp
-                               -----------
-    begin                : Sat Aug 23 2003
+                              ---------------
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2019 Felix Salfelder / QUCS team
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "diode.h"
+#include "globals.h"
+#include "module.h"
+#include "component.h"
+
+
+namespace{
+
+class Diode : public MultiViewComponent  {
+public:
+  Diode();
+ ~Diode() {};
+  Component* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
+
+protected:
+  void createSymbol();
+}D;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Diode", &D);
+static Module::INSTALL pp("nonlinear", &D);
 
 
 Diode::Diode()
 {
+  info(Name, bitmap_file);
   Description = QObject::tr("diode");
 
   Props.append(new Property("Is", "1e-15 A", true,
@@ -135,4 +153,5 @@ void Diode::createSymbol()
 
   x1 = -30; y1 = -11;
   x2 =  30; y2 =  11;
+}
 }
