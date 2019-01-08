@@ -165,19 +165,26 @@ void QucsLang::printComponent(Component const* c, stream_t& s) const
 			s << QString::fromStdString(c->type()) << ":" << c->label();
 
 			// output all node names
-			for(Port *p1 : c->ports()){
+		//	for(Port *p1 : c->ports()){
+		//		s << " ";
+		//		if(p1->Connection->hasNumber()){
+		//			s << netLabels[p1->Connection->number()];
+		//		}else{
+		//			// happens in list_entries ...
+		//			s << "open";
+		//		}
+		//	}
+
+			Symbol const* sym=c;
+			for(unsigned i=0; i<sym->portCount(); ++i){
+				auto N=sym->portValue(i);
 				s << " ";
-				if(p1->Connection->hasNumber()){
-					s << netLabels[p1->Connection->number()];
+				if(N.hasNumber()){
+					s << netLabels[N.number()];
 				}else{
 					// happens in list_entries ...
 					s << "open";
 				}
-			}
-
-			Symbol const* sym=c;
-			for(unsigned i=0; i<sym->portCount(); ++i){
-				s << sym->portValue(i).number();
 			}
 
 			for(auto p2 : c->params()) {
