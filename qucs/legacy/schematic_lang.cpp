@@ -108,6 +108,7 @@ static Dispatcher<DocumentLanguage>::INSTALL
     p(&doclang_dispatcher, "leg_sch", &defaultSchematicLanguage_);
 // ------------------------------------------------------
 
+// BUG: this is schematicFormat
 void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) const
 {
 
@@ -146,6 +147,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 				if(Symbol* sym=dynamic_cast<Symbol*>(c) ){
 					//always do this?
 					sym->setScope(s.schematicModel());
+					sym->build();
 				}else{
 				}
 			}else if(mode=='S'){
