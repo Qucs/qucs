@@ -58,7 +58,7 @@ public: // Element interface, private?!
 private: // symbol interface
   virtual Port const* port(unsigned i) const { return Ports[i]; }
   //virtual Port const* portValue(unsigned i) const { return Ports[i]; } ... ?
-  virtual unsigned portCount() const{ untested(); return Ports.count(); }
+  virtual unsigned portCount() const{ return Ports.count(); }
   virtual Node const& portValue(unsigned i) const{
 	  assert(i<unsigned(Ports.count()));
 	  assert(Ports.at(i)->Connection);
