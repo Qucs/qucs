@@ -189,7 +189,6 @@ script:
   - ./bootstrap
 
   - if [[ $OSX ]]; then
-      travis_terminate 0;
       ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc PYTHON=python2 || travis_terminate 1;
       make || travis_terminate 1;
       make qucscheck || travis_terminate 1;
