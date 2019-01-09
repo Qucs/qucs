@@ -27,6 +27,8 @@ virtualenv:
 cache:
   apt: true
   ccache: true
+  directories:
+    - $HOME/Library/Caches/Homebrew
 
 # packages required by all Linux builds
 #   additional packages are defined in the matrix, depending on needs
@@ -83,6 +85,18 @@ matrix:
       osx_image: xcode8.3
       compiler: clang
       env: BUILD=autotools
+      addons:
+        homebrew:
+          taps:
+            - cartr/qt4
+            - guitorri/tap
+          packages:
+            - flex
+            - bison
+            - qt@4 # from tap
+            - adms # from tap
+            - python@2
+            - ccache
 
 # Set secure environment with encrypted string containing GIT_NAME, GIT_EMAIL and GH_TOKEN
 env:
@@ -115,21 +129,10 @@ install:
   # Setup OSX
   # Installed already: autoconf automake libtool pkg-config
   - if [[ $OSX ]]; then
-      brew update;
-      brew install flex;
-      brew link --force flex;
-      brew install bison;
-      brew link --force bison;
-      brew install python@2;
-      brew link --overwrite python@2;
-      pip install matplotlib;
-      brew install ccache;
+      export PATH="/usr/local/opt/flex/bin:$PATH";
+      export PATH="/usr/local/opt/bison/bin:$PATH";
+      pip2 install matplotlib;
       export PATH="/usr/local/opt/ccache/libexec:$PATH";
-      brew tap cartr/qt4;
-      brew tap-pin cartr/qt4;
-      brew install qt@4;
-      brew tap guitorri/tap;
-      brew install adms;
     fi
 
 before_script:
