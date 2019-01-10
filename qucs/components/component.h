@@ -64,6 +64,10 @@ private: // symbol interface
 	  assert(Ports.at(i)->Connection);
 	  return *Ports.at(i)->Connection;
   }
+  void setPort(unsigned i, Node* n){
+	  assert(i<unsigned(Ports.count()));
+	  Ports[i]->Connection = n;
+  }
 
   virtual unsigned paramCount() const;
   virtual std::string paramValue(unsigned i) const;

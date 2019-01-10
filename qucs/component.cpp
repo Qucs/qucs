@@ -1294,6 +1294,7 @@ void Component::copyComponent(Component *pc)
 // ***********************************************************************
 void MultiViewComponent::recreate(Schematic *Doc)
 {
+  (void) Doc;
 
   Ellips.clear();
   Texts.clear();

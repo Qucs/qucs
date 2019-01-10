@@ -2145,6 +2145,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
            Doc->setChanged(true, true);
 
   }else if(auto m=marker(focusElement)){
+    (void) m;
     incomplete();
         // mdia = new MarkerDialog(m, Doc);
         // if(mdia->exec() > 1)
