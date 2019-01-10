@@ -15,16 +15,22 @@ private: // hide. don't mess with this.
 public:
 	explicit SchematicSymbol();
 	~SchematicSymbol();
+
+private: // Symbol
+  virtual void setPort(unsigned i, Node* n){ incomplete(); }
+
 public:
 	virtual SchematicModel const& schematicModel() const = 0;
 	virtual SchematicModel* schematicModel() = 0;
 	virtual std::string getParameter(std::string const&) const = 0;
 	virtual void setParameter(std::string const&, std::string const&){ unreachable(); }
+
 private:
   virtual Element* clone()const{
 	  unreachable();
 	  return nullptr; // new SchematicSymbol(*this);
   }
+
 public: //legacy hack
 	PaintingList& symbolPaintings();
 	PaintingList const& symbolPaintings() const;

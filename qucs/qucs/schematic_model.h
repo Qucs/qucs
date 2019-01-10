@@ -111,6 +111,11 @@ public:
 public:
 	void merge(SchematicModel&);
 
+public: // node stuff. why public?
+	Node* insertNode(int x, int y, Element* e);
+	Wire* splitWire(Wire* w, Node* n);
+	void insertSymbolNodes(Symbol *c, bool noOptimize);
+
 public: // scene interaction
 	void toScene(QGraphicsScene& s, QList<ElementGraphics*>* l=nullptr) const;
 public: // obsolete.

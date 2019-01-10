@@ -142,6 +142,49 @@ void SchematicModel::pushBack(Element* what)
 
 }
 
+// was Schematic::insertComponentNodes.
+void SchematicModel::insertSymbolNodes(Symbol *c, bool noOptimize)
+{
+	// connect every node of the component to corresponding schematic node
+	for(unsigned i=0; i<c->portCount(); ++i){
+		auto pp=c->portValue(i);
+		Node* n=insertNode(pp.cx()+c->cx, pp.cy()+c->cy, c);
+		c->setPort(i, n);
+	}
+
+	if(noOptimize)  return;
+#if 0
+	// replace wires. later.
+
+	Node    *pn;
+	Element *pe, *pe1;
+	Q3PtrList<Element> *pL;
+	// if component over wire then delete this wire
+	QListIterator<Port *> iport(c->Ports);
+	// omit the first element
+	Port *pp = iport.next();
+	while (iport.hasNext())
+	{
+		pp = iport.next();
+		pn = pp->Connection;
+		for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next()){
+			if(pe->Type == isWire)
+			{
+				if(((Wire*)pe)->Port1 == pn)  pL = &(((Wire*)pe)->Port2->Connections);
+				else  pL = &(((Wire*)pe)->Port1->Connections);
+
+				for(pe1 = pL->first(); pe1!=0; pe1 = pL->next())
+					if(pe1 == c)
+					{
+						deleteWire((Wire*)pe);
+						break;
+					}
+			}
+		}
+	}
+#endif
+}
+
 // called from schematic::erase only
 void SchematicModel::erase(Element* what)
 {

@@ -264,7 +264,9 @@ private:
    ******************************************************************** */
 
 public:
-  Node* insertNode(int, int, Element*);
+  Node* insertNode(int x, int y, Element* e){
+	  return DocModel.insertNode(x, y, e);
+  }
   Node* selectedNode(int, int);
 
   int   insertWireNode1(Wire*);
@@ -276,7 +278,9 @@ public:
   int   insertWire(Wire*);
   void  selectWireLine(Element*, Node*, bool);
   Wire* selectedWire(int, int);
-  Wire* splitWire(Wire*, Node*);
+  Wire* splitWire(Wire* w, Node* n){
+	  return DocModel.splitWire(w, n);
+  }
   bool  oneTwoWires(Node*);
   void  deleteWire(Wire*);
 
