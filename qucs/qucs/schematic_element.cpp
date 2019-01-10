@@ -33,7 +33,7 @@
 
 // Inserts a port into the schematic and connects it to another node if
 // the coordinates are identical. The node is returned.
-Node* Schematic::insertNode(int x, int y, Element *e)
+Node* SchematicModel::insertNode(int x, int y, Element *e)
 {
     Node *pn;
     // check if new node lies upon existing node
@@ -45,15 +45,17 @@ Node* Schematic::insertNode(int x, int y, Element *e)
         }
     }
 
-    if(pn == 0)   // create new node, if no existing one lies at this position
-    {
+    if(pn == 0){
+      	// create new node, if no existing one lies at this position
         pn = new Node(x, y);
         nodes().append(pn);
         pn->connectionsAppend(e);  // connect schematic node to component node
+    } else {
+	// node is not new
+	return pn;
     }
-    else return pn;   // return, if node is not new
 
-    // check if the new node lies upon an existing wire
+    // check if the new node lies within an existing wire
     for(auto pw : wires()) {
         if(pw->x1_() == x) {
             if(pw->y1_() > y) continue;
@@ -739,7 +741,7 @@ Wire* Schematic::selectedWire(int x, int y)
 
 // ---------------------------------------------------
 // Splits the wire "*pw" into two pieces by the node "*pn".
-Wire* Schematic::splitWire(Wire *pw, Node *pn)
+Wire* SchematicModel::splitWire(Wire *pw, Node *pn)
 {
     Wire *newWire = new Wire(pn->cx_(), pn->cy_(), pw->x2_(), pw->y2_(), pn, pw->Port2);
     newWire->setSelected(pw->isSelected());

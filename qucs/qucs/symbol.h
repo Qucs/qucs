@@ -64,6 +64,7 @@ public: // interface
   virtual unsigned portCount() const{ return 0; } // pure?
   virtual Port const* port(unsigned) const{ return nullptr; } // pure?
   virtual Node const& portValue(unsigned) const{ throw "incomplete"; } // pure?
+  virtual void setPort(unsigned i, Node* n) = 0;
 
   virtual unsigned paramCount()const {return 0;}
 
