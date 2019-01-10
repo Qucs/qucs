@@ -98,6 +98,8 @@ public: // HACK
   void obsolete_name_override_hack(QString x){
 	  Name = x;
   }
+  // BUG: a command is not a symbol
+  void setPort(unsigned i, Node* n){ unreachable(); }
 
 protected:
   virtual QString netlist();
