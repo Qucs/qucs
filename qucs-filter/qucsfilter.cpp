@@ -704,7 +704,7 @@ void QucsFilter::slotRealizationChanged(int index)
 
 
   //Shared settings for microwave BP filters
-  if ((index == END_COUPLED) || (index == PARALLEL_COUPLED_TL) || (index == QW_RESONATORS) || (index == QW_RING))
+  if ((index == END_COUPLED) || (index == PARALLEL_COUPLED_TL) || (index == QW_RING))
   {
            ComboClass->setCurrentIndex(CLASS_BANDPASS);
            slotClassChanged(CLASS_BANDPASS);
@@ -714,6 +714,16 @@ void QucsFilter::slotRealizationChanged(int index)
            box2->setEnabled(false);//Microstrip substrate definition panel
   }
   
+  // QW bandpass and notch filters
+  if (index == QW_RESONATORS)
+  {
+    MicrostripcheckBox->setEnabled(true);
+    ComboClass->setEnabled(true);
+    MicrostripcheckBox->setChecked(
+        false); // By default, the microstrip implementation is unchecked
+    box2->setEnabled(false); // Microstrip substrate definition panel
+  }
+
   if (index == STEPPED_IMPEDANCE)//Stepped impedance LPF
   {
      ComboClass->setCurrentIndex(CLASS_LOWPASS);
