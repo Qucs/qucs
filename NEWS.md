@@ -21,7 +21,6 @@ Qucs
 
 * [NEW] Wattmeter probe. [(PR#682)]
   -  Calculate apparent power, real power, reactive power and power factor.
-  -  Internal resistance can be set for the voltage and current ports.update news
 
 * [NEW] Add context menu to document tabs ([PR#708])
 
@@ -546,6 +545,7 @@ Bug fixes
 [PR#252]: https://github.com/Qucs/qucs/pull/252
 [PR#292]: https://github.com/Qucs/qucs/pull/292
 [PR#416]: https://github.com/Qucs/qucs/pull/416
+[PR#682]: https://github.com/Qucs/qucs/pull/682
 [PR#523]: https://github.com/Qucs/qucs/pull/523
 [PR#509]: https://github.com/Qucs/qucs/pull/509
 [PR#412]: https://github.com/Qucs/qucs/pull/412
