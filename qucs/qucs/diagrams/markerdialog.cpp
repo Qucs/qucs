@@ -27,8 +27,8 @@
 #include "platform.h"
 
 
-MarkerDialog::MarkerDialog()
-   //, QWidget *parent) what is parent?!
+MarkerDialog::MarkerDialog(QucsDoc* d)
+  : SchematicDialog(d)
 {
   setWindowTitle(tr("Edit Marker Properties"));
   setAttribute(Qt::WA_DeleteOnClose); // really?

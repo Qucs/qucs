@@ -50,6 +50,11 @@ void Element::paint(ViewPainter*) const
 	unreachable();
 }
 
+void /*really?*/ Element::editElement(QucsDoc*)
+{
+	incomplete();
+}
+
 void Element::snapToGrid(Schematic& s){
     s.setOnGrid(cx, cy);
 }

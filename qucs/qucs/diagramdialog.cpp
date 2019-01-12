@@ -105,7 +105,8 @@ static const QRgb DefaultColors[]
 
 static const int NumDefaultColors = 8;
 
-DiagramDialog::DiagramDialog() : SchematicDialog()
+DiagramDialog::DiagramDialog(QucsDoc* d)
+	: SchematicDialog(d)
 {
   // setAttribute(Qt::WA_DeleteOnClose); really?
 							 //, Qt::WDestructiveClose) ?!
