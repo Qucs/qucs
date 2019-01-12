@@ -49,6 +49,12 @@
 /* portability hacks, the serious stuff */
 #define PATHSEP		':'
 
+#ifdef __MINGW32__
+#define executableSuffix ".exe"
+#else
+#define executableSuffix ""
+#endif
+
 #if !defined(MS_DLL)
   // The usual way for POSIX compliant systems
   #define	ENDDIR		"/"

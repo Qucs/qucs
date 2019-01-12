@@ -10,7 +10,7 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -27,6 +27,7 @@
 #include <QSortFilterProxyModel>
 
 #include "actions.h" // BUG
+#include "platform.h"
 
 /**
  * @file qucs.h
@@ -66,11 +67,6 @@ class QListView;
 class QModelIndex;
 class QPushButton;
 
-#ifdef __MINGW32__
-#define executableSuffix ".exe"
-#else
-#define executableSuffix ""
-#endif
 
 /* pi */
 static const double pi = 3.141592653589793238462643383279502884197169399375105820974944;
