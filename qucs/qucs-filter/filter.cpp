@@ -89,10 +89,12 @@ double Filter::getQuadraticNormValues(int No, tFilter *theFilter, double &b)
 }
 
 // -----------------------------------------------------------------------
-QString Filter::num2str(double Num)
+// COPIED FROM QUCS-GUI, misc.h
+QString Filter::num2str(double Num, int Precision, QString unit)
 {
-  char c = 0;
-  double cal = std::abs(Num);
+  QString c;
+  QString Str;
+  double cal = fabs(Num);
   if(cal > 1e-20) {
     cal = log10(cal) / 3.0;
     if(cal < -0.2)  cal -= 0.98;
@@ -111,12 +113,14 @@ QString Filter::num2str(double Num)
         case  4: c = 'T'; break;
       }
 
-    if(c)  Num /= pow(10.0, double(3*Expo));
+    if (!c.isEmpty())  Num /= pow(10.0, double(3*Expo));
   }
 
-  QString Str = QString::number(Num, 'g', 4);
-  if(c)  Str += c;
-  
+  if (!c.isEmpty() or (unit != "m"))
+    Str = QString("%1 %2%3").arg(QString::number(Num, 'g', Precision)).arg(c).arg(unit);
+  else
+    Str = QString::number(Num, 'g', Precision);
+
   return Str;
 }
 
