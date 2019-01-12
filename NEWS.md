@@ -37,6 +37,8 @@ Qucs
 
 * Fix "export as image" with non integer scale factor ([PR#715])
 
+* Fix PDF bounding box when using "File->Export as image..." ([#882])
+
 Qucsator
 --------
 
@@ -501,6 +503,7 @@ Bug fixes
 [#15]: https://github.com/Qucs/qucs/issues/15
 [#311]: https://github.com/Qucs/qucs/issues/311
 [#74]: https://github.com/Qucs/qucs/issues/74
+[#882]: https://github.com/Qucs/qucs/issues/882
 [#112]: https://github.com/Qucs/qucs/issues/112
 [#310]: https://github.com/Qucs/qucs/issues/310
 [#43]: https://github.com/Qucs/qucs/issues/43
