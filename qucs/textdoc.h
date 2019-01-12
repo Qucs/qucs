@@ -117,11 +117,11 @@ private: // actions. here?
 
   void actionEditUndo(){
     viewport()->setFocus();
-    undo();
+	 QPlainTextEdit::undo();
   }
   void actionEditRedo(){
 	  viewport()->setFocus();
-	  redo();
+	  QPlainTextEdit::redo();
   }
 
   void actionInsertEntity();

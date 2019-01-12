@@ -1363,11 +1363,7 @@ bool Schematic::paste(QTextStream *stream, Q3PtrList<Element> *pe)
 // Loads this Qucs document.
 bool Schematic::load()
 {
-  components().clear();
-  wires().clear();
-  nodes().clear();
-  diagrams().clear();
-  paintings().clear();
+  DocModel.clear();
   SymbolPaints.clear();
 
   if(!loadDocument()) return false;
@@ -1686,6 +1682,7 @@ int Schematic::adjustPortNumbers()
 }
 
 // ---------------------------------------------------
+#if 0 // does not work
 bool Schematic::undo()
 {
   if(isSymbolMode()) {
@@ -1780,6 +1777,7 @@ bool Schematic::redo()
   setChanged(true, false);
   return true;
 }
+#endif
 
 // ---------------------------------------------------
 // Sets selected elements on grid.
