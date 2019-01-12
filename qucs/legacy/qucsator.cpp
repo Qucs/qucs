@@ -523,8 +523,6 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 		}
 
 		QStringList Collect; // BUG
-		int countInit = 0;  // ??
-		int NumPorts=0; // ??!
 		qDebug() << "call tAC" << QString::fromStdString(pc->type());
 		
 		Element* decl=pc->proto(&m.schematicModel());

@@ -87,7 +87,8 @@ private: // stuff from component.cc
 			 int x = c->tx;
 			 int y = c->ty;
 			 // c->setSchematic (p);
-			 c->recreate(0);
+			 Symbol* s(c);
+			 s->recreate();
 			 c->setLabel(cstr);
 			 c->tx = x;  c->ty = y;
 		}else{

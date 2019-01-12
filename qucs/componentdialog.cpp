@@ -190,6 +190,8 @@ void ComponentDialog::attach(Component* c)
 
 
     if(Comp->obsolete_model_hack() == ".SW") {   // parameter sweep
+      incomplete();
+#if 0
       for(ComponentList::const_iterator pi=Doc->components().begin(); pi!=Doc->components().end(); ++pi) {
         Component const* pc=*pi;
 	// insert all schematic available simulations in the Simulation combo box
@@ -210,8 +212,8 @@ void ComponentDialog::attach(Component* c)
       checkType->setChecked(Comp->Props.current()->display);
       editParam->setText(Comp->Props.next()->Value);
       checkParam->setChecked(Comp->Props.current()->display);
-    }
-    else {
+#endif
+    } else {
       s = Comp->Props.first()->Value;
       checkType->setChecked(Comp->Props.current()->display);
     }
@@ -847,11 +849,16 @@ void ComponentDialog::slotApplyInput()
   if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->name());
   else
   if(CompNameEdit->text() != Comp->name()) {
-    for(pc = Doc->components().first(); pc!=0; pc = Doc->components().next())
-      if(pc->name() == CompNameEdit->text())
-        break;  // found component with the same name ?
-    if(pc)  CompNameEdit->setText(Comp->name());
-    else {
+    for(pc = schematic()->components().first(); pc!=0;
+        pc=schematic()->components().next()){
+      if(pc->name() == CompNameEdit->text()){
+        break;  // found component with this name?
+      }else{
+      }
+    }
+    if(pc){
+      CompNameEdit->setText(Comp->name());
+    } else {
       Comp->obsolete_name_override_hack(CompNameEdit->text());
       changed = true;
     }
@@ -1069,14 +1076,15 @@ void ComponentDialog::slotApplyInput()
       ty_Dist = dy;
     }
 
-    Doc->recreateComponent(Comp);
-    Doc->viewport()->repaint();
+    schematic()->recreateSymbol(Comp);
+    auto V=schematic()->viewport();
+    assert(V);
+    V->repaint();
     if ( (int) Comp->Props.count() != prop->rowCount()) { // If props count was changed after recreation
       Q_ASSERT(prop->rowCount() >= 0);
       updateCompPropsList(); // of component we need to update properties
     }
   }
-
 }
 
 // -------------------------------------------------------------------------
@@ -1143,7 +1151,7 @@ void ComponentDialog::slotBrowseFile()
 // -------------------------------------------------------------------------
 void ComponentDialog::slotEditFile()
 {
-  Doc->App->editFile(QucsSettings.QucsWorkDir.filePath(edit->text()));
+  schematic()->App->editFile(QucsSettings.QucsWorkDir.filePath(edit->text()));
 }
 
 /*!

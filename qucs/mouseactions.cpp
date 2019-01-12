@@ -2133,6 +2133,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 	 }
 
   }else if(auto w=wire(focusElement)){
+    (void) w;
          MPressLabel(Doc, Event);
 
   }else if(auto l=wireLabel(focusElement)){
