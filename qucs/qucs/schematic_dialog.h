@@ -20,6 +20,7 @@
 #include <QDialog>
 #include <assert.h>
 #include "object.h"
+#include "platform.h"
 
 class Schematic;
 
@@ -35,16 +36,17 @@ class QRegExp;
 class QComboBox;
 class QPushButton;
 class QVBoxLayout;
+class QucsDoc;
 
 
 class SchematicDialog : public QDialog {
-   Q_OBJECT
+   Q_OBJECT //?
 public:
-  SchematicDialog() : Doc(nullptr /*??*/) {}
+  SchematicDialog(QucsDoc* d);
   virtual ~SchematicDialog(){}
 
   // slot?
-  virtual void attach(Object*) = 0;
+  virtual void attach(Object*){ incomplete(); } // not yet.
 
 private slots: // BUG: sane interface!!
   virtual void slotButtOK(){incomplete();}

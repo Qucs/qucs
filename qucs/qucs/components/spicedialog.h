@@ -38,7 +38,7 @@ class QTextStream;
 
 class SpiceDialog : public SchematicDialog {
 public:
-  SpiceDialog(); // (QucsApp*, SpiceFile*, Schematic*) wtf?
+  SpiceDialog(QucsDoc*); // , SpiceFile*, Schematic*) wtf?
  ~SpiceDialog();
 
  void attach(Object* spicecomponent);

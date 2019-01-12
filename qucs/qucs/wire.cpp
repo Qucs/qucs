@@ -110,7 +110,7 @@ void Wire::paintScheme(QPainter *p) const
 }
 
 // ----------------------------------------------------------------
-void Wire::paint(ViewPainter *p)
+void Wire::paint(ViewPainter *p) const
 {
   if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,6));

@@ -17,7 +17,7 @@ public:
 	~SchematicSymbol();
 
 private: // Symbol
-  virtual void setPort(unsigned i, Node* n){ incomplete(); }
+  virtual void setPort(unsigned, Node*){ incomplete(); }
 
 public:
 	virtual SchematicModel const& schematicModel() const = 0;

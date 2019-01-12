@@ -44,7 +44,7 @@ class QListWidget;
 class DiagramDialog : public SchematicDialog {
 	// Q_OBJECT // does not work. StaticMetaobject...
 public:
-  DiagramDialog();
+  DiagramDialog(QucsDoc* d);
   ~DiagramDialog();
 
 

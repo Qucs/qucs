@@ -28,7 +28,7 @@ class QCheckBox;
 class MarkerDialog : public SchematicDialog{
 public:
   ~MarkerDialog();
-  MarkerDialog(); // Marker *pm_, QWidget *parent=0);
+  MarkerDialog(QucsDoc*); // Marker *pm_, QWidget *parent=0);
 
 	void attach(Object *pm_);
 private slots:

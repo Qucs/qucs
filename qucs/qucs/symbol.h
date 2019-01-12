@@ -42,6 +42,9 @@ public: // construct
   Symbol() : Element(), containingSchematic(nullptr) {}
   virtual ~Symbol(){}
 
+private: // Element
+	void paint(ViewPainter*) const{unreachable();}	
+
 public: // interface
 
   // obsolete

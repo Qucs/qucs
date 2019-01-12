@@ -99,7 +99,7 @@ public: // HACK
 	  Name = x;
   }
   // BUG: a command is not a symbol
-  void setPort(unsigned i, Node* n){ unreachable(); }
+  void setPort(unsigned, Node*){ unreachable(); }
 
 protected:
   virtual QString netlist();

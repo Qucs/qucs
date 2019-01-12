@@ -40,7 +40,7 @@ public:
 	  return nullptr;
   }
 
-  void paint(ViewPainter*);
+  void paint(ViewPainter*) const;
   void paintScheme(QPainter*) const;
   void setCenter(int, int, bool relative=false);
   void getCenter(int&, int&);
