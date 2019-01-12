@@ -47,6 +47,7 @@ class QMouseEvent;
 class QDragEnterEvent;
 class QPainter;
 
+// TODO: rename to SchematicDocument
 class Schematic;
 class MouseActions;
 typedef bool (Schematic::*pToggleFunc) ();
@@ -85,6 +86,7 @@ class ElementGraphics;
 #define SchematicBase QGraphicsView
 #endif
 
+// TODO: rename to SchematicDocument
 class Schematic : public SchematicBase, public QucsDoc {
   Q_OBJECT
 public:
@@ -132,8 +134,6 @@ public:
   int     saveSymbolCpp (void);
   int     saveSymbolJSON (void);
   void    becomeCurrent(bool);
-  bool    undo();
-  bool    redo();
 
   bool scrollUp(int);
   bool scrollDown(int);
