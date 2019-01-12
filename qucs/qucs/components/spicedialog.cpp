@@ -38,7 +38,7 @@
 #include "object.h"
 
 
-SpiceDialog::SpiceDialog() : SchematicDialog()
+SpiceDialog::SpiceDialog(QucsDoc* d) : SchematicDialog(d)
 {
     //: QDialog(d, Qt::WDestructiveClose) fixed in qt5 branch
   //App = App_; // pointer to main application BUG

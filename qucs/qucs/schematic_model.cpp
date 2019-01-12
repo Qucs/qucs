@@ -357,6 +357,7 @@ bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
 	(void) countInit;
 	(void) creatingLib;
 	(void) NumPorts;
+	(void) stream;
 #if 0
 	bool isAnalog=true;
 	// delete the node names

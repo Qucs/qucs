@@ -67,6 +67,9 @@ public:
 	  return State & i;
   }
 
+private: // element (BUG?)
+  void paint(ViewPainter*) const{ }
+
 public: // obsolete
   bool  getSelected(int, int);
 

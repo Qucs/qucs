@@ -45,6 +45,7 @@
 #include "port.h"
 
 class Node;
+class QucsDoc;
 class QPainter;
 class WireLabel;
 class Schematic;
@@ -168,9 +169,9 @@ public: // other stuff
   virtual void draw(QPainter&) { incomplete(); }
   virtual void setCenter(int, int, bool relative=false);
   virtual void getCenter(int&, int&);
-  virtual void paint(ViewPainter*) const;
+  virtual void paint(ViewPainter*) const = 0;
+  virtual void editElement(QucsDoc*);
 
-  virtual void editElement(){}
   virtual void MPressElement(){}
 
 public:

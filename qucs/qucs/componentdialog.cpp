@@ -37,7 +37,15 @@
 #include <QKeyEvent>
 #include <QDebug>
 
-ComponentDialog::ComponentDialog() : SchematicDialog()
+SchematicDialog::SchematicDialog(QucsDoc* d)
+  : QDialog(prechecked_cast<Schematic*>(d))
+{
+  assert(d);
+  Doc=prechecked_cast<Schematic*>(d);
+  assert(Doc);
+}
+
+ComponentDialog::ComponentDialog(QucsDoc* d) : SchematicDialog(d)
 {
   resize(450, 250);
   setWindowTitle(tr("Edit Component Properties"));

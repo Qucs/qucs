@@ -37,7 +37,7 @@ class QIntValidator;
 class OptimizeDialog : public SchematicDialog  {
 // Q_OBJECT does not work
 public:
-  OptimizeDialog();
+  OptimizeDialog(QucsDoc* d);
  ~OptimizeDialog();
 
  void attach(Object* sim);

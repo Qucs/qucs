@@ -104,7 +104,7 @@ bool WireLabel::getSelected(int x, int y)
 }
 
 // ----------------------------------------------------------------
-void WireLabel::paint(ViewPainter *p)
+void WireLabel::paint(ViewPainter *p) const
 {
   QFont f = p->Painter->font(); // save current font
   QFont newFont = f;

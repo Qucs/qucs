@@ -55,7 +55,7 @@ public:
   Conductor *pOwner;  // Wire or Node where label belongs to
   QString initValue;
 
-  void    paint(ViewPainter*);
+  void    paint(ViewPainter*) const;
   void    rotate();
   QString save();
   bool    load(const QString& s);

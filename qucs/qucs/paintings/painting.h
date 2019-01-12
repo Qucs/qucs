@@ -46,7 +46,7 @@ public:
   virtual QString save();
   virtual QString saveCpp();
   virtual QString saveJSON();
-  virtual void paint(ViewPainter*) {}
+  virtual void paint(ViewPainter*) const {}
   virtual void MouseMoving(Schematic*, int, int, int, int,
                            Schematic*, int, int, bool) {}
   virtual bool MousePressing() { return false; }
