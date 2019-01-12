@@ -55,6 +55,7 @@ public: // interface
   void setScope (SchematicModel const* p) { containingSchematic = p; }
   SchematicModel const* getScope() const{return containingSchematic;}
 
+  virtual void recreate();
 
   virtual std::string /* const& */ type() const{
 	  return _type;

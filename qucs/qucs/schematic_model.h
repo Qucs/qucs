@@ -72,6 +72,7 @@ public: // stuff saved from Schematic
 	void simpleInsertComponent(Component* c);
 	void simpleInsertCommand(Command* c);
 	void simpleInsertWire(Wire*);
+	void recreateSymbol(Symbol* s); // yikes.
 	//private??
 	bool giveNodeNames(DocumentStream&, int&, QStringList&, QPlainTextEdit*, int,
 			bool creatingLib, NetLang const&);

@@ -1950,7 +1950,7 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
         File = pc->Props.getFirst()->Value;
         if((File == pathName) || (File == Name)) {
           pc_tmp = Doc->components().prev();
-          Doc->recreateComponent(pc);  // delete and re-append component
+          Doc->recreateSymbol(pc);  // delete and re-append component
           if(!pc_tmp)  break;
           Doc->components().findRef(pc_tmp);
           pc = Doc->components().current();
@@ -2428,7 +2428,7 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
   Component *Comp = prechecked_cast<Component*>(Symb);
   assert(Comp);
   Comp->Props.first()->Value = idx.sibling(idx.row(), 0).data().toString();
-  Comp->recreate(0);
+  Symb->recreate();
   view->selElem = Comp;
 
   if(view->drawn)

@@ -239,7 +239,7 @@ void ChangeDialog::slotButtReplace()
         }
 
         // apply changes to schematic symbol
-        Doc->recreateComponent(pc);
+        Doc->recreateSymbol(pc);
         changed = true;
         break;
       }

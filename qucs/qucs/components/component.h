@@ -35,7 +35,6 @@ public: //??!
   Component();
 
   virtual ~Component() {};
-  virtual void recreate(Schematic*) {};
   QString getNetlist() const; // BUG. use netlister to create netlist
   QString get_VHDL_Code(int);
   QString get_Verilog_Code(int);
@@ -43,6 +42,15 @@ public: //??!
 private: // Element override
   void    paint(ViewPainter*) const;
   void editElement(QucsDoc*);
+
+private: // Symbol interface.
+  virtual void recreate() {}; // obsolete?
+
+protected: // wrap legacy. don't use in new code.
+  void recreate(int i){
+	  assert(i==0);
+	  return recreate();
+  }
 
 public: // legacy stuff. don't use/
   virtual Component* newOne() = 0; // legacy interfase. use clone.
@@ -197,7 +205,15 @@ public:
   };
   virtual ~MultiViewComponent() {};
 
-  void recreate(Schematic*);
+
+private: // Symbol
+  void recreate();
+
+protected: // wrap legacy. don't use.
+  void recreate(int i){
+	  assert(i==0);
+	  return recreate();
+  }
 
 protected:
   virtual void createSymbol() {};
