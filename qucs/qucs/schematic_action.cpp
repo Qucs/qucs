@@ -607,31 +607,34 @@ bool Schematic::performToggleAction(bool on, QAction *Action,
     App->MouseReleaseAction = 0;
     App->MouseDoubleClickAction = 0;
     App->activeAction = 0;
-    return false;
-  }
 
-  if(Function && (this->*Function)()) {
+  }else{
+
+    if(Function && (this->*Function)()) {
       Action->blockSignals(true);
       Action->setChecked(false);  // release toolbar button
       Action->blockSignals(false);
       viewport()->update();
-  }else{
+    }else{
 
-    if(App->activeAction) {
-      App->activeAction->blockSignals(true); // do not call toggle slot
-      App->activeAction->setChecked(false);       // set last toolbar button off
-      App->activeAction->blockSignals(false);
+      if(App->activeAction) {
+        App->activeAction->blockSignals(true); // do not call toggle slot
+        App->activeAction->setChecked(false);       // set last toolbar button off
+        App->activeAction->blockSignals(false);
+      }else{
+      }
+
+      App->activeAction = Action;
+      App->MouseMoveAction = MouseMove;
+      App->MousePressAction = MousePress;
+      App->MouseReleaseAction = 0;
+      App->MouseDoubleClickAction = 0;
     }
-    App->activeAction = Action;
 
-    App->MouseMoveAction = MouseMove;
-    App->MousePressAction = MousePress;
-    App->MouseReleaseAction = 0;
-    App->MouseDoubleClickAction = 0;
+    viewport()->update();
+    mouseActions()->drawn = false;
+    return true;
   }
-
-  viewport()->update();
-  mouseActions()->drawn = false;
-  return true;
 }
 
+// vim:ts=8:sw=2:et
