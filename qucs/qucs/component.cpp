@@ -1291,10 +1291,8 @@ void Component::copyComponent(Component *pc)
 // ********          Functions of class MultiViewComponent        ********
 // ********                                                       ********
 // ***********************************************************************
-void MultiViewComponent::recreate(Schematic *Doc)
+void MultiViewComponent::recreate()
 {
-  (void) Doc;
-
   Ellips.clear();
   Texts.clear();
   Ports.clear();

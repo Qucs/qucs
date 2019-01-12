@@ -315,7 +315,9 @@ public:
 
   void       setComponentNumber(Component*);
   void       insertRawComponent(Component*, bool noOptimize=true);
-  void       recreateComponent(Component*);
+  void       recreateSymbol(Symbol* s){
+	  DocModel.recreateSymbol(s);
+  }
   void       insertElement(Element*);
 private: // old legacy stuff.
   void       insertComponent(Component*);

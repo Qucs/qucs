@@ -125,6 +125,7 @@ void SchematicModel::pushBack(Element* what)
 	}else if(auto w=wire(what)){
 		simpleInsertWire(w);
 	}else if(auto s=dynamic_cast<SchematicSymbol*>(what)){ untested();
+		(void)s;
 		assert(false);
 		//delete _symbol;
 		//_symbol = s;
@@ -353,7 +354,9 @@ bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
 		  bool creatingLib, NetLang const& nl)
 {
 	incomplete(); // BUG. called from Sckt:tAC
+	(void) nl;
 	(void) Collect;
+	(void) ErrText;
 	(void) countInit;
 	(void) creatingLib;
 	(void) NumPorts;

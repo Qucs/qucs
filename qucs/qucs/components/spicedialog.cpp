@@ -275,7 +275,7 @@ void SpiceDialog::slotButtApply()
 
   if(changed || Comp->withSim)    // because of "sim" text
   {
-    Doc->recreateComponent(Comp); // to apply changes to the schematic symbol
+    Doc->recreateSymbol(Comp); // to apply changes to the schematic symbol
     Doc->viewport()->repaint();
   }
 }
