@@ -457,7 +457,7 @@ void Schematic::actionApplyCompText()
 		else if(pp) {  // property was applied
 			if(pp->Value != editText->text()) {
 				pp->Value = editText->text();
-				recreateComponent(pc);  // because of "Num" and schematic symbol
+				recreateSymbol(pc);  // because of "Num" and schematic symbol
 				setChanged(true, true); // only one undo state
 			}
 		}

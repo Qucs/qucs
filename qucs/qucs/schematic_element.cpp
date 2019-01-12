@@ -2546,14 +2546,18 @@ void Schematic::insertRawComponent(Component *c, bool noOptimize)
 }
 
 // ---------------------------------------------------
-void Schematic::recreateComponent(Component *Comp)
+// was void Schematic::recreateComponent(Component *Comp)
+// what does it do?! only call symbol->recreate.
+//
+// apparently label are owned by nodes,
+// FIXME: store labels properly, and get rid of this mess.
+void SchematicModel::recreateSymbol(Symbol *Comp)
 {
-
+#if 0 // does not work like this.
     WireLabel **plMem=0, **pl;
-    int PortCount = Comp->Ports.count();
+    int PortCount = Comp->portCount();
 
-    if(PortCount > 0)
-    {
+    if(PortCount > 0) {
         // Save the labels whose node is not connected to somewhere else.
         // Otherwise the label would be deleted.
         pl = plMem = (WireLabel**)malloc(PortCount * sizeof(WireLabel*));
@@ -2564,13 +2568,20 @@ void Schematic::recreateComponent(Component *Comp)
                 pp->Connection->Label = 0;
             }
             else  *(pl++) = 0;
+    }else{
     }
+#endif
 
 
+#if 0
+    // move component back to where it was.
+    // BUG: why are components moved around??!
     int x = Comp->tx, y = Comp->ty;
     int x1 = Comp->x1_(), x2 = Comp->x2_(), y1 = Comp->y1_(), y2 = Comp->y2_();
     QString tmp = Comp->name();    // is sometimes changed by "recreate"
-    Comp->recreate(this);   // to apply changes to the schematic symbol
+#endif
+    Comp->recreate();
+#if 0
     Comp->obsolete_name_override_hack(tmp);
     if(x < x1)
         x += Comp->x1_() - x1;
@@ -2584,8 +2595,7 @@ void Schematic::recreateComponent(Component *Comp)
     Comp->ty = y;
 
 
-    if(PortCount > 0)
-    {
+    if(PortCount > 0) {
         // restore node labels
         pl = plMem;
         foreach(Port *pp, Comp->Ports)
@@ -2606,6 +2616,7 @@ void Schematic::recreateComponent(Component *Comp)
         }
         free(plMem);
     }
+#endif
 }
 // ---------------------------------------------------
 void Schematic::insertElement(Element *c)

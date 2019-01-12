@@ -100,7 +100,6 @@ private:
   QPushButton *ButtUp, *ButtDown;
   QCheckBox   *disp;
   Component   *Comp;
-  Schematic   *Doc;
   bool        changed;
   int         tx_Dist, ty_Dist;   // remember the text position
   bool        setAllVisible; // used for toggling visibility of properties
