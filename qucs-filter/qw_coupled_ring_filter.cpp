@@ -80,7 +80,7 @@ QString* QW_Coupled_Ring_Filter::createSchematic(tFilter *Filter, tSubstrate *Su
   *s += QString("<Pac P1 1 -100 70 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n").arg(Z0);
   *s += QString("<GND * 1 -100 100 0 0 0 0>\n");
    *s += QString("<Eqn Eqn2 1 230 310 -31 19 0 0 \"S21_dB=dB(S[2,1])\" 1 \"S11_dB=dB(S[1,1])\" 1 \"yes\" 0>\n");
-  *s += QString("<.SP SP1 1 -50 310 0 80 0 0 \"lin\" 1 \"%1\" 1 \"%2\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0 \"no\" 0 \"no\" 0>\n").arg(num2str(fstart)).arg(num2str(fstop));
+  *s += QString("<.SP SP1 1 -50 310 0 80 0 0 \"lin\" 1 \"%1\" 1 \"%2\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0 \"no\" 0 \"no\" 0>\n").arg(num2str(fstart, 3, QString("Hz"))).arg(num2str(fstop, 3, QString("Hz")));
 
   if (isMicrostrip)//Microstrip implementation
   {
@@ -103,7 +103,7 @@ QString* QW_Coupled_Ring_Filter::createSchematic(tFilter *Filter, tSubstrate *Su
       *s += QString("<MOPEN MS1 1 340 120 -26 -81 0 -1 \"Sub1\" 0 \"%3\" 0 \"Hammerstad\" 0 \"Kirschning\" 0 \"Kirschning\" 0>\n").arg(num2str(width));
       *s += QString("<MOPEN MS1 1 40 120 -26 -81 0 -1 \"Sub1\" 0 \"%3\" 0 \"Hammerstad\" 0 \"Kirschning\" 0 \"Kirschning\" 0>\n").arg(num2str(width));
 
-    *s += QString("<SUBST Sub1 1 450 400 50 0 80 0 \"%1\" 1 \"%2m\" 1 \"%3m\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate->er).arg(num2str(Substrate->height)).arg(num2str(Substrate->thickness)).arg(Substrate->tand).arg(Substrate->resistivity).arg(Substrate->roughness);
+    *s += QString("<SUBST Sub1 1 450 400 50 0 80 0 \"%1\" 1 \"%2\" 1 \"%3\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate->er).arg(num2str(Substrate->height)).arg(num2str(Substrate->thickness)).arg(Substrate->tand).arg(Substrate->resistivity).arg(Substrate->roughness);
   }
   else//Ideal transmission line implementation
   {
@@ -142,7 +142,7 @@ QString* QW_Coupled_Ring_Filter::createSchematic(tFilter *Filter, tSubstrate *Su
 
   *s += "<Paintings>\n";
   *s += QString("<Text 300 500 12 #000000 0 \"Quarter wave side coupled ring bandpass filter\\n");
-  *s += QString("%1Hz...%2Hz ").arg(num2str(Filter->Frequency)).arg(num2str(Filter->Frequency2));
+  *s += QString("%1...%2 ").arg(num2str(Filter->Frequency, 3, QString("Hz"))).arg(num2str(Filter->Frequency2, 3, QString("Hz")));
   *s += QString("Impedance matching %3 Ohm\">\n").arg(Filter->Impedance);
   *s += "</Paintings>\n";
 
