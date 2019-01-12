@@ -1,16 +1,15 @@
 /***************************************************************************
                                 qucsdoc.cpp
                                -------------
-    begin                : Wed Sep 3 2003
     copyright            : (C) 2003, 2004 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2019 Felix Salfelder / QUCS team
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -20,11 +19,13 @@
 
 #include "qucsdoc.h"
 #include "qucs.h"
+#include <QUndoStack>
 
 
 QucsDoc::QucsDoc(QucsApp *App_, const QString& Name_)
 {
   App = App_;
+  undoStack = new QUndoStack;
 
   GridOn = true;
   DocName = Name_;
@@ -57,6 +58,18 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& Name_)
 // vtable here?
 QucsDoc::~QucsDoc()
 {
+	delete undoStack;
+}
+
+// really?!
+void QucsDoc::undo(){
+  assert(undoStack);
+  return undoStack->undo();
+}
+
+void QucsDoc::redo(){
+  assert(undoStack);
+  return undoStack->redo();
 }
 
 QString QucsDoc::fileSuffix (const QString& Name) {

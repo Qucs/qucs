@@ -32,6 +32,7 @@ class QAction;
 class QPrinter;
 class QPainter;
 class MouseActions;
+class QUndoStack;
 
 class QucsDoc {
 public: 
@@ -74,6 +75,10 @@ public:
   bool GridOn;
   int  tmpPosX, tmpPosY;
 
+protected: // why not directly connect to undostack slots?!
+  virtual void undo();
+  virtual void redo();
+
 public: // actions: These somehow correspond to buttons.
         // needs cleanup...
 	virtual void actionSelect(bool on) = 0;
@@ -114,6 +119,9 @@ public: // actions: These somehow correspond to buttons.
 protected: // cleaning up debris
 	QAction* selectAction();
 	MouseActions* mouseActions();
+
+private:
+	QUndoStack* undoStack;
 };
 
 
