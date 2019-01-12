@@ -82,7 +82,7 @@ struct Axis;
  *
  * also stores markers.
  */
-class Graph : public Element {
+class Graph : public Element /* ?? */ {
 public:
   Graph(const Diagram*, const QString& _Line="");
  ~Graph();
@@ -126,6 +126,7 @@ public:
   int loadIndepVarData(const QString&, char* datfilecontent, DataX* where);
 
   void    paint(ViewPainter*, int, int);
+  void    paint(ViewPainter*) const{ incomplete(); }
   void    paintLines(ViewPainter*, int, int);
   QString save();
   bool    load(const QString&);

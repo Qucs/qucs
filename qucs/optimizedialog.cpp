@@ -46,14 +46,15 @@
 #include <QInputDialog>
 
 
-OptimizeDialog::OptimizeDialog() : SchematicDialog()
+OptimizeDialog::OptimizeDialog(QucsDoc* d) : SchematicDialog(d)
 {
   setWindowTitle(tr("Edit Optimization Properties"));
 
 }
 
-void OptimizeDialog::attach(Object* sim)
+void OptimizeDialog::attach(Object*)
 {
+	incomplete();
 #if 0 // BUG: it's a Simulation
   Comp = prechecked_cast<Optimize_Sim*>(sim);
   assert(Comp);

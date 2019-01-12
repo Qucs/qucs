@@ -2048,7 +2048,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
   float fY=pos.y();
 
   incomplete();
-  //focusElement->editElement();
+  element(focusElement)->editElement(Doc);
 
   // BUG. move to respective classes. 1 at a time...
   if(auto c=component(focusElement)){
@@ -2165,6 +2165,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 // -----------------------------------------------------------
 void MouseActions::MDoubleClickSelect(Schematic *Doc, QMouseEvent *Event)
 {
+  qDebug() << "doubleclick";
   Doc->releaseKeyboard();  // allow keyboard inputs again
   QucsMain->editText->setHidden(true);
   editElement(Doc, Event);

@@ -39,8 +39,10 @@ public: //??!
   QString getNetlist() const; // BUG. use netlister to create netlist
   QString get_VHDL_Code(int);
   QString get_Verilog_Code(int);
-private: // override
+
+private: // Element override
   void    paint(ViewPainter*) const;
+  void editElement(QucsDoc*);
 
 public: // legacy stuff. don't use/
   virtual Component* newOne() = 0; // legacy interfase. use clone.

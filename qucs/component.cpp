@@ -246,7 +246,6 @@ void Component::paint(ViewPainter *p) const
     p->Painter->drawLine(x+xb-1, y,    a+xb,   b);
 #endif
   }else{    // normal components go here
-    qDebug() << "normal component?";
     assert(!Model.size() || Model.at(0) != '.');
 
     // paint all lines
@@ -1689,7 +1688,7 @@ Element* getComponentFromName(QString& Line)
 #endif
 
 // do something with Dialog Buttons
-void Component::dialgButtStuff(ComponentDialog& d)const
+void Component::dialgButtStuff(ComponentDialog&)const
 {
   incomplete();
   // d.disableButtons();
@@ -1726,6 +1725,21 @@ std::string Component::paramName(unsigned i) const
 { untested();
   assert( Props.at(i));
   return Props.at(i)->name().toStdString();
+}
+
+void Component::editElement(QucsDoc* Doc)
+{
+  ComponentDialog* cd = new ComponentDialog(Doc);
+  cd->attach(this);
+  if(cd->exec() != 1){
+    // done=true;   // dialog is WDestructiveClose
+  }else{
+    incomplete();
+//    Doc->Components->findRef(c); ???
+//    Doc->Components->take(); ???
+//    Doc->setComponentNumber(this); // for ports/power sources
+///    Doc->Components->append(c); ???
+  }
 }
 
 // vim:ts=8:sw=2:noet
