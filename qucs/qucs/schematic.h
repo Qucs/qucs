@@ -305,7 +305,9 @@ public:
   Wire* splitWire(Wire* w, Node* n){
 	  return DocModel.splitWire(w, n);
   }
-  bool  oneTwoWires(Node*);
+  bool  oneTwoWires(Node* n){
+	  return DocModel.oneTwoWires(n);
+  }
   void  deleteWire(Wire*);
 
   Marker* setMarker(int, int);
@@ -352,8 +354,6 @@ public:
   void       setCompPorts(Component*);
   Component* searchSelSubcircuit();
   Component* selectedComponent(int, int);
-  void       deleteComp(Component*);
-
   void     oneLabel(Node*);
   int      placeNodeLabel(WireLabel*);
   Element* getWireLabel(Node*);
@@ -504,6 +504,13 @@ public: // BUG. use symbol
   SchematicModel DocModel;
 private:
   bool SymbolMode;
+
+
+private: // obsolete.
+  void       deleteComp(Component*c){
+	  unreachable();
+	  return DocModel.erase(c);
+  }
 };
 
 

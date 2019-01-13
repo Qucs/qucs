@@ -769,7 +769,7 @@ Wire* SchematicModel::splitWire(Wire *pw, Node *pn)
 
 // ---------------------------------------------------
 // If possible, make one wire out of two wires.
-bool Schematic::oneTwoWires(Node *n)
+bool SchematicModel::oneTwoWires(Node *n)
 {
     Wire *e3;
     Wire *e1 = (Wire*)n->Connections.getFirst();  // two wires -> one wire
@@ -2486,6 +2486,7 @@ void Schematic::setComponentNumber(Component *c)
 }
 
 // ---------------------------------------------------
+// connect?
 void Schematic::insertComponentNodes(Component *c, bool noOptimize)
 {
     // simulation components do not have ports
@@ -2874,30 +2875,6 @@ Component* Schematic::selectedComponent(int x, int y)
             return pc;
 
     return 0;
-}
-
-// ---------------------------------------------------
-// Deletes the component 'c'.
-void Schematic::deleteComp(Component *c)
-{
-    // delete all port connections
-    foreach(Port *pn, c->Ports)
-        switch(pn->Connection->connectionsCount()) {
-        case 1  :
-            if(pn->Connection->Label) delete pn->Connection->Label;
-            nodes().removeRef(pn->Connection);  // delete open nodes
-            pn->Connection = 0;		  //  (auto-delete)
-            break;
-        case 3  :
-            pn->Connection->connectionsRemove(c);// delete connection
-            oneTwoWires(pn->Connection);  // two wires -> one wire
-            break;
-        default :
-            pn->Connection->connectionsRemove(c);// remove connection
-            break;
-        }
-
-    components().removeRef(c);   // delete component
 }
 
 // ---------------------------------------------------

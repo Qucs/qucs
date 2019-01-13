@@ -40,7 +40,7 @@ class Schematic;
 class Symbol : public Element{
 public: // construct
   Symbol() : Element(), containingSchematic(nullptr) {}
-  virtual ~Symbol(){}
+  virtual ~Symbol();
 
 private: // Element
 	void paint(ViewPainter*) const{unreachable();}	

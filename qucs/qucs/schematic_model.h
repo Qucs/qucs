@@ -105,17 +105,22 @@ public:
 	bool loadComponents(QTextStream*);
 	// bool loadDiagrams(QTextStream*);
 	bool loadWires(QTextStream*);
+	void disconnect(Symbol* c);
 
+public: // container
 	void clear();
 	void pushBack(Element* what);
 	void erase(Element* what);
-public:
 	void merge(SchematicModel&);
+
+private: // used in erase?
+	void       deleteComp(Component*c);
 
 public: // node stuff. why public?
 	Node* insertNode(int x, int y, Element* e);
 	Wire* splitWire(Wire* w, Node* n);
 	void insertSymbolNodes(Symbol *c, bool noOptimize);
+	bool  oneTwoWires(Node* n);
 
 public: // scene interaction
 	void toScene(QGraphicsScene& s, QList<ElementGraphics*>* l=nullptr) const;
