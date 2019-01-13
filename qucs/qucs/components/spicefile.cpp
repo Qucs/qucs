@@ -33,7 +33,6 @@
 
 #include "spicefile.h"
 #include "schematic.h"
-#include "main.h"
 #include "qucs.h"
 #include "misc.h"
 
@@ -216,7 +215,7 @@ QString SpiceFile::getSubcircuitFile()
                 else
                 {
                     /// \todo improve GUI/CLI error/warning
-                    qCritical() << "Spice file not found:" << localFileInfo.absFilePath();
+                    qCritical() << "Spice file not found:" << localFileInfo.absoluteFilePath();
                 }
             }
         }
@@ -311,7 +310,7 @@ bool SpiceFile::createSubNetlist(QTextStream *stream)
   }
   QByteArray FileContent = ConvFile.readAll();
   ConvFile.close();
-  //? stream->writeRawBytes(FileContent.data(), FileContent.size());
+  //? stream->writeRawBytes(FileContent.value(), FileContent.size());
   (*stream) << FileContent.data();
   return true;
 }
@@ -390,7 +389,6 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
     }
 
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-    env.insert("PATH", env.value("PATH") );
     SpicePrep->setProcessEnvironment(env);
     SpicePrep->start(script.join(" "));
     //QucsHelp->setCommunication(0);
@@ -440,7 +438,6 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
   // startup SPICE conversion process
   QucsConv = new QProcess(this);
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-  env.insert("PATH", env.value("PATH") );
   QucsConv->setProcessEnvironment(env);
 
   qDebug() << "SpiceFile::recreateSubNetlist :Command:" << prog << com.join(" ");

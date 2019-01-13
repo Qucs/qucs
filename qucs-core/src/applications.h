@@ -738,6 +738,20 @@ struct application_t qucs::eqn::applications[] = {
   { "cumprod", TAG_COMPLEX, evaluate::cumprod_c, 1, { TAG_COMPLEX } },
   { "cumprod", TAG_VECTOR,  evaluate::cumprod_v, 1, { TAG_VECTOR  } },
 
+  { "smooth", TAG_DOUBLE, evaluate::smooth_d_d, 2,
+    { TAG_DOUBLE,  TAG_DOUBLE } },
+  { "smooth", TAG_COMPLEX, evaluate::smooth_c_d, 2,
+    { TAG_COMPLEX, TAG_DOUBLE } },
+  { "smooth", TAG_VECTOR, evaluate::smooth_v_d, 2,
+    { TAG_VECTOR,  TAG_DOUBLE } },
+
+  { "groupdelay", TAG_VECTOR, evaluate::groupdelay_mv, 1,
+    { TAG_MATVEC} },
+  { "groupdelay", TAG_VECTOR, evaluate::groupdelay_v, 1,
+    { TAG_VECTOR} },
+  { "groupdelay", TAG_VECTOR, evaluate::groupdelay_mv_i_i, 3,
+    { TAG_MATVEC, TAG_DOUBLE, TAG_DOUBLE } },
+
   { "rms", TAG_DOUBLE, evaluate::rms_d, 1, { TAG_DOUBLE  } },
   { "rms", TAG_DOUBLE, evaluate::rms_c, 1, { TAG_COMPLEX } },
   { "rms", TAG_DOUBLE, evaluate::rms_v, 1, { TAG_VECTOR  } },

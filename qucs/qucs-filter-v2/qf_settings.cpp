@@ -32,7 +32,7 @@ bool loadSettings (void)
 {
   bool result = true;
 
-  QFile file(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/filterrc"));
+  QFile file(QDir::homeDirPath()+QDir::toNativeSeparators ("/.qucs/filterrc"));
   if(!file.open(QIODevice::ReadOnly))
     result = false; // settings file doesn't exist
   else {
@@ -56,7 +56,7 @@ bool loadSettings (void)
     file.close();
   }  
 
-  file.setName(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/qucsrc"));
+  file.setName(QDir::homeDirPath()+QDir::toNativeSeparators ("/.qucs/qucsrc"));
   if(!file.open(QIODevice::ReadOnly))
     result = true; // qucs settings not necessary
   else {
@@ -85,7 +85,7 @@ bool saveSettings(qf_box *qucs)
       return true;   // nothing has changed
 
 
-  QFile file(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/filterrc"));
+  QFile file(QDir::homeDirPath()+QDir::toNativeSeparators ("/.qucs/filterrc"));
   if(!file.open(QIODevice::WriteOnly)) {
     QMessageBox::warning(0, QObject::tr("Warning"),
 			QObject::tr("Cannot save settings !"));
@@ -156,7 +156,7 @@ bool saveXmlSettings (qf_box * qucs)
   gr.appendChild (el);
   rt.appendChild (gr);
 
-  QFile file (QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/filterrc"));
+  QFile file (QDir::homeDirPath()+QDir::toNativeSeparators ("/.qucs/filterrc"));
   if (!file.open (QIODevice::WriteOnly)) {
     QMessageBox::warning (0,
 			  QObject::tr("Warning"),
@@ -230,7 +230,7 @@ bool loadXmlSettings (void)
 {
   bool result = true;
 
-  QFile file (QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/filterrc"));
+  QFile file (QDir::homeDirPath()+QDir::toNativeSeparators ("/.qucs/filterrc"));
   if (!file.open(QIODevice::ReadOnly))
     result = false; // settings file doesn't exist
   else {

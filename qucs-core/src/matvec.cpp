@@ -22,6 +22,11 @@
  *
  */
 
+/*!
+ * \file matvec.cpp
+ * \brief Vector of matrices class implementation
+ */
+
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -46,7 +51,10 @@
 
 namespace qucs {
 
-// Constructor creates an unnamed instance of the matvec class.
+/*!\brief Create an empty vector of matrices
+
+   Constructor creates an unnamed instance of the matvec class.
+*/
 matvec::matvec () {
   size = 0;
   rows = cols = 0;
@@ -54,8 +62,14 @@ matvec::matvec () {
   data = NULL;
 }
 
-/* Constructor creates an unnamed instance of the matvec class with a
-   certain number of empty matrices. */
+/*!\brief Creates a vector of matrices
+
+   Constructor creates an unnamed instance of the matvec class with a
+   certain number of empty matrices.
+   \param[in] length number of matrices in the vector
+   \param[in] r number of rows of each matrix
+   \param[in] c number of columns of each matrix
+*/
 matvec::matvec (int length, int r, int c) {
   size = length;
   rows = r;
@@ -69,8 +83,11 @@ matvec::matvec (int length, int r, int c) {
   }
 }
 
-/* The copy constructor creates a new instance based on the given
-   matvec object. */
+/*!\brief copy constructor
+
+   The copy constructor creates a new instance based on the given
+   matvec object.
+*/
 matvec::matvec (const matvec & m) {
   size = m.size;
   rows = m.rows;
@@ -85,19 +102,26 @@ matvec::matvec (const matvec & m) {
   }
 }
 
-// Destructor deletes a matvec object.
+/*!\brief Destructor
+
+   Destructor deletes a matvec object.
+*/
 matvec::~matvec () {
   free (name);
   delete[] data;
 }
 
-// Sets the name of the matvec object.
+/*!\brief Sets the name of the matvec object.
+   \param[in] n constant pointer to the name character array.
+*/
 void matvec::setName (const char * n) {
   free (name);
   name = n ? strdup (n) : NULL;
 }
 
-// Returns the name of the matvec object.
+/*!\brief Returns the name of the matvec object.
+   \return name of the matvec object
+*/
 char * matvec::getName (void) {
   return name;
 }
@@ -126,7 +150,7 @@ qucs::vector matvec::get (int r, int c) {
 /* This function returns a static text representation with the
    'n[r,c]' scheme indicating a matrix (vector) entry. */
 char * matvec::createMatrixString (const char * n, int r, int c) {
-  static char str[256]; // hopefully enough
+  static char str[256]; // hopefully enough. FIXME: use snprintf() ?
   sprintf (str, "%s[%d,%d]", n, r + 1, c + 1);
   return str;
 }
@@ -135,7 +159,7 @@ char * matvec::createMatrixString (const char * n, int r, int c) {
    'n[r,c]' scheme indicating a matrix (vector) entry but with
    different arguments. */
 char * matvec::createMatrixString (char n, int r, int c) {
-  static char str[256]; // hopefully enough
+  static char str[256]; // hopefully enough. FIXME: use snprintf() ?
   sprintf (str, "%c[%d,%d]", n, r + 1, c + 1);
   return str;
 }

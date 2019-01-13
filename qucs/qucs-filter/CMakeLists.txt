@@ -35,6 +35,7 @@ ENDIF()
 
 FIND_PACKAGE( Qt4 REQUIRED )
 SET( QT_USE_QTGUI TRUE )
+SET( QT_USE_QTSVG TRUE )
 
 INCLUDE( ${QT_USE_FILE} )
 
@@ -55,6 +56,8 @@ SET(QUCS-FILTER_SRCS
   stepz_filter.cpp
   tl_filter.cpp
   quarterwave_filter.cpp
+  qw_coupled_ring_filter.cpp
+  ccoupled_shunt_resonators.cpp
 )
 
 SET(QUCS-FILTER_HDRS
@@ -80,7 +83,7 @@ SET(QUCS-FILTER_MOC_HDRS
 
 QT4_WRAP_CPP(QUCS-FILTER_MOC_SRCS ${QUCS-FILTER_MOC_HDRS})
 
-SET(RESOURCES qucsfilter.qrc)
+SET(RESOURCES qucsfilter_.qrc)
 QT4_ADD_RESOURCES(RESOURCES_SRCS ${RESOURCES})
 
 

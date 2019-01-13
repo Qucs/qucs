@@ -25,7 +25,7 @@
 
 #include <cmath>
 #include "misc.h"
-#include "main.h"
+#include "qucs.h"
 
 #include <cstdio>
 #include <QString>
@@ -194,10 +194,18 @@ void misc::str2num(const QString& s_, double& Number, QString& Unit, double& Fac
   return;
 }
 
-// #########################################################################
-QString misc::num2str(double Num)
+/**
+ * @brief format number using metric prefixes, optionally adding a unit
+ * @param Num number to format
+ * @param Precision number of significant digits in the output string
+ * @param unit unit to add after the metric prefix
+ * 
+ * handles the special case "1 m" meaning "1 milli(meter)", so avoid adding the unit if this is "m"
+ */
+QString misc::num2str(double Num, int Precision, QString unit)
 {
-  char c = 0;
+  QString c;
+  QString Str;
   double cal = fabs(Num);
   if(cal > 1e-20) {
     cal = log10(cal) / 3.0;
@@ -217,11 +225,13 @@ QString misc::num2str(double Num)
         case  4: c = 'T'; break;
       }
 
-    if(c)  Num /= pow(10.0, double(3*Expo));
+    if (!c.isEmpty())  Num /= pow(10.0, double(3*Expo));
   }
 
-  QString Str = QString::number(Num);
-  if(c)  Str += c;
+  if (!c.isEmpty() or (unit != "m"))
+    Str = QString("%1 %2%3").arg(QString::number(Num, 'g', Precision)).arg(c).arg(unit);
+  else
+    Str = QString::number(Num, 'g', Precision);
 
   return Str;
 }
@@ -435,7 +445,7 @@ VersionTriplet::VersionTriplet(const QString& version) {
   if (version.isEmpty()) {
     major = minor = patch = 0;
   } else {
-    QStringList vl = QStringList::split('.', version);
+    QStringList vl = version.split('.');
     major = vl.at(0).toUInt();
     minor = vl.at(1).toUInt();
     patch = vl.at(2).toUInt();

@@ -38,7 +38,7 @@ vProbe::vProbe()
   Lines.append(new Line(-10,  0,-10,  6,QPen(Qt::red,2)));
   Lines.append(new Line(-13,  3, -7,  3,QPen(Qt::red,2)));
   Lines.append(new Line(  7,  3, 13,  3,QPen(Qt::black,2)));
-  
+
   Lines.append(new Line(-10,  9,-10, 20,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 10,  9, 10, 20,QPen(Qt::darkBlue,2)));
   Ports.append(new Port(-10, 20));

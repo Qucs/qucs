@@ -31,6 +31,7 @@
 #include <QDir>
 #include <QFont>
 #include <QSettings>
+#include <QDebug>
 #include "qucslib.h"
 
 tQucsSettings QucsSettings;
@@ -112,6 +113,12 @@ int main(int argc, char *argv[])
 #endif
     QucsSettings.LangDir = QucsDir.canonicalPath() + "/share/qucs/lang/";
     QucsSettings.LibDir  = QucsDir.canonicalPath() + "/share/qucs/library/";
+  }
+
+  if(char* qucslibdir=getenv("QUCS_LIBRARY")){
+    qDebug() << "setting library" << qucslibdir;
+    QucsSettings.LibDir = QDir(QString(qucslibdir)).canonicalPath();
+  }else{
   }
 
   loadSettings();

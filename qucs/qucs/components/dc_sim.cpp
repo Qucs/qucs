@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "dc_sim.h"
-#include "main.h"
+#include "qucs.h"
 
 
 DC_Sim::DC_Sim()
@@ -24,7 +24,7 @@ DC_Sim::DC_Sim()
 
   QString s = Description;
   int a = s.indexOf(" ");
-  int b = s.findRev(" ");
+  int b = s.lastIndexOf(" ");
   if (a != -1 && b != -1) {
     if (a > (int) s.length() - b)  b = a;
   }

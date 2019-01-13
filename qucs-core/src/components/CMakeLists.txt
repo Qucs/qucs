@@ -8,8 +8,10 @@ SET( COMPONENTS_SRC
   attenuator.cpp
   biastee.cpp
   capacitor.cpp
+  capq.cpp
   cccs.cpp
   ccvs.cpp
+  circline.cpp
   circulator.cpp
   coaxline.cpp
   coupler.cpp
@@ -18,6 +20,7 @@ SET( COMPONENTS_SRC
   dcblock.cpp
   dcfeed.cpp
   ecvs.cpp
+  taperedline.cpp
   ground.cpp
   gyrator.cpp
   hybrid.cpp
@@ -27,6 +30,7 @@ SET( COMPONENTS_SRC
   ifile.cpp
   iinoise.cpp
   inductor.cpp
+  indq.cpp
   inoise.cpp
   iprobe.cpp
   ipulse.cpp
@@ -48,6 +52,8 @@ SET( COMPONENTS_SRC
   rlcg.cpp
   short.cpp
   spfile.cpp
+  spembed.cpp
+  spdeembed.cpp
   strafo.cpp
   tee.cpp
   tline.cpp
@@ -68,6 +74,7 @@ SET( COMPONENTS_SRC
   vpulse.cpp
   vrect.cpp
   vvnoise.cpp
+  wprobe.cpp
 )
 
 SET(HEADERS

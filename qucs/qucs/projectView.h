@@ -26,6 +26,7 @@
 
 #include <QTreeView>
 #include <QString>
+#include "qucs.h"
 
 #define APPEND_ROW(parent, data) \
 ({ \
@@ -35,6 +36,7 @@
 })
 
 class QStandardItemModel;
+class QFileSystemWatcher;
 
 class ProjectView : public QTreeView
 {
@@ -47,14 +49,21 @@ public:
 
   //data related
   void setProjPath(const QString &);
+  void init();
   void refresh();
   QStringList exportSchematic();
 private:
   QStandardItemModel *m_model;
+  QFileSystemWatcher *watcher;
 
   bool m_valid;
   QString m_projPath;
   QString m_projName;
+
+  QString ReadDescription(QString);
+
+public slots:
+  void dirChanged(const QString&);
 };
 
 #endif /* PROJECTVIEW_H_ */

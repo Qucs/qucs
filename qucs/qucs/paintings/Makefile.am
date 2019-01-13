@@ -22,28 +22,27 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-noinst_LIBRARIES = libpaintings.a
+noinst_LTLIBRARIES = libpaintings.la
 
 MOCHEADERS = arrowdialog.h graphictextdialog.h filldialog.h id_dialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-libpaintings_a_SOURCES = rectangle.cpp painting.cpp arrow.cpp  \
+libpaintings_la_SOURCES = rectangle.cpp painting.cpp arrow.cpp  \
   graphictextdialog.cpp graphictext.cpp graphicline.cpp ellipse.cpp           \
   arrowdialog.cpp filldialog.cpp portsymbol.cpp ellipsearc.cpp id_text.cpp    \
   id_dialog.cpp
 
-nodist_libpaintings_a_SOURCES = $(MOCFILES)
+nodist_libpaintings_la_SOURCES = $(MOCFILES)
 
 noinst_HEADERS = $(MOCHEADERS) arrow.h ellipse.h graphicline.h graphictext.h  \
   painting.h paintings.h rectangle.h portsymbol.h ellipsearc.h id_text.h
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
 
 SUFFIXES = .moc.cpp
 
 .h.moc.cpp:
 	$(MOC) -o $@ $<
 
-CLEANFILES = *~
-MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
-DISTCLEANFILES = *.moc.cpp
+CLEANFILES = *~ *.moc.cpp
+MAINTAINERCLEANFILES = Makefile.in

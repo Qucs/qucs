@@ -26,7 +26,6 @@
 #include <QDebug>
 
 #include "importdialog.h"
-#include "main.h"
 #include "qucs.h"
 
 

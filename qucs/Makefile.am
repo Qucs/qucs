@@ -21,38 +21,48 @@
 # the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
 # Boston, MA 02110-1301, USA.  
 #
+ACLOCAL_AMFLAGS=-Im4
 
 SUBDIRS = \
+  man \
   qucs \
 	qucs-activefilter \
 	qucs-attenuator \
-	qucs-edit \
 	qucs-filter \
-	qucs-help \
 	qucs-lib \
 	qucs-rescodes \
 	qucs-transcalc \
+        qucs-powercombining \
 	translations \
 	contrib \
 	examples \
+	tests \
 	$(RELEASEDIRS)
 
-EXTRA_DIST = ar-lib bootstrap depcomp PLATFORMS RELEASE Info.plist
+# used in qucs.in wrapper, to compile PATH
+subdirs:
+	@echo $(SUBDIRS)
+
+.PHONY: subdirs
+
+EXTRA_DIST = ar-lib bootstrap depcomp PLATFORMS RELEASE Info.plist \
+	common.mk
 
 # MacOSX specific installation of applications
+# FIXME: don't install twice.
 if COND_MACOSX
 app_PROGS = $(top_builddir)/qucs/qucs \
   $(top_builddir)/qucs-attenuator/qucsattenuator \
   $(top_builddir)/qucs-filter/qucsfilter \
   $(top_builddir)/qucs-activefilter/qucsactivefilter \
-  $(top_builddir)/qucs-help/qucshelp \
   $(top_builddir)/qucs-lib/qucslib \
-  $(top_builddir)/qucs-edit/qucsedit \
   $(top_builddir)/qucs-rescodes/qucsrescodes \
+  $(top_builddir)/qucs-powercombining/qucspowercombining \
   $(top_builddir)/qucs-transcalc/qucstrans
 
 install-exec-hook: mac-install-apps mac-deploy-framework
 
+# BUG: overwrites. don't install from here.
 mac-install-apps:
 	@echo "Creating MacOSX applications...";
 	@list='$(app_PROGS)'; for file in $$list; do \
@@ -60,17 +70,20 @@ mac-install-apps:
 	$(mkinstalldirs) $(DESTDIR)$(bindir)/$$app.app/Contents && \
 	$(mkinstalldirs) $(DESTDIR)$(bindir)/$$app.app/Contents/Resources && \
 	$(mkinstalldirs) $(DESTDIR)$(bindir)/$$app.app/Contents/MacOS && \
-	$(install_sh_PROGRAM) $$file $(DESTDIR)$(bindir)/$$app.app/Contents/MacOS/ && \
-	strip $(DESTDIR)$(bindir)/$$app.app/Contents/MacOS/$$app && \
+	echo "$(install_sh_PROGRAM) $$file $(DESTDIR)$(bindir)/$$app.app/Contents/MacOS/" && \
+	if [ $$app != qucs ]; then \
+	  $(install_sh_PROGRAM) $$file $(DESTDIR)$(bindir)/$$app.app/Contents/MacOS/ && \
+	  strip $(DESTDIR)$(bindir)/$$app.app/Contents/MacOS/$$app; \
+	fi; \
 	case $$app in \
 	  qucs)		  desc="Qucs";; \
 	  qucsattenuator) desc="Qucs Attenuator";; \
 	  qucsfilter)	  desc="Qucs Filter";; \
 	  qucsactivefilter)	  desc="Qucs Active Filter";; \
-	  qucshelp)	  desc="Qucs Help";; \
 	  qucslib)	  desc="Qucs Library";; \
 	  qucsedit)	  desc="Qucs Editor";; \
 	  qucrescodes)	  desc="Qucs Resistor codes";; \
+          qucspowercombining)	  desc="Qucs Power combining";; \
 	  qucstrans)	  desc="Qucs Transcalc";; \
 	esac && \
 	cat $(srcdir)/Info.plist | \

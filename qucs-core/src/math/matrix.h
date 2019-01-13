@@ -2,6 +2,7 @@
  * matrix.h - matrix class definitions
  *
  * Copyright (C) 2003-2009 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2012-2017 Qucs Team
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -133,6 +134,18 @@ class matrix
   matrix operator  - ();
   matrix operator += (matrix);
   matrix operator -= (matrix);
+
+  // block operations
+  matrix getBlock(int, int, int, int);
+  matrix getTopLeftCorner(int, int);
+  matrix getBottomLeftCorner(int, int);
+  matrix getTopRightCorner(int, int);
+  matrix getBottomRightCorner(int, int);
+  void setBlock(matrix, int, int, int, int);
+  void setTopLeftCorner(matrix, int, int);
+  void setBottomLeftCorner(matrix, int, int);
+  void setTopRightCorner(matrix, int, int);
+  void setBottomRightCorner(matrix, int, int);
 
   // other operations
   friend matrix transpose (matrix);

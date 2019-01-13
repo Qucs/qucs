@@ -14,7 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "main.h"
+#include "qucs.h"
 #include "mnemo.h"
 #include "viewpainter.h"
 #include "graphictext.h"
@@ -325,9 +325,8 @@ bool GraphicText::Dialog()
 
   GraphicTextDialog *d = new GraphicTextDialog();
 
-  QPalette palette;
-  palette.setColor(d->ColorButt->backgroundRole(), Color);
-  d->ColorButt->setPalette(palette);
+  // initialize dialog picker color
+  misc::setPickerColor(d->ColorButt, Color);
 
   d->TextSize->setText(QString::number(Font.pointSize()));
   d->Angle->setText(QString::number(Angle));
@@ -340,8 +339,9 @@ bool GraphicText::Dialog()
     return false;
   }
 
-  if(Color != d->ColorButt->palette().color(d->ColorButt->backgroundRole())) {
-    Color = d->ColorButt->palette().color(d->ColorButt->backgroundRole());
+  QColor curColor = misc::getWidgetBackgroundColor(d->ColorButt);
+  if(Color != curColor) {
+    Color = curColor;
     changed = true;
   }
   f.setPointSize(d->TextSize->text().toInt());   // to avoid wrong text width

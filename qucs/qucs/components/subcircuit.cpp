@@ -18,7 +18,6 @@
 #include "subcircuit.h"
 #include "qucs.h"
 #include "schematic.h"
-#include "main.h"
 #include "misc.h"
 
 #include <QTextStream>
@@ -146,7 +145,7 @@ int Subcircuit::loadSymbol(const QString& DocName)
   // To strongly speed up the file read operation the whole file is
   // read into the memory in one piece.
   QTextStream ReadWhole(&file);
-  QString FileString = ReadWhole.read();
+  QString FileString = ReadWhole.readAll();
   file.close();
   QTextStream stream(&FileString, QIODevice::ReadOnly);
 

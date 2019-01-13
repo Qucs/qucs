@@ -19,9 +19,9 @@
 # include <config.h>
 #endif
 
-#include "main.h"
 #include "qucs.h"
 #include "octave_window.h"
+#include "misc.h"
 
 #include <QAction>
 #include <QShortcut>
@@ -44,14 +44,21 @@ void QucsApp::initActions()
 
   // note: first argument of QAction() for backward compatibility Qt < 3.2
 
-  fileNew = new QAction(QIcon((":/bitmaps/filenew.png")), tr("&New"), this);
+  fileNew = new QAction(QIcon((":/bitmaps/filenew.png")), tr("Document"), this);
   fileNew->setShortcut(Qt::CTRL+Qt::Key_N);
   fileNew->setStatusTip(tr("Creates a new document"));
   fileNew->setWhatsThis(
 	        tr("New\n\nCreates a new schematic or data display document"));
   connect(fileNew, SIGNAL(triggered()), SLOT(slotFileNew()));
 
-  textNew = new QAction(QIcon((":/bitmaps/textnew.png")), tr("New &Text"), this);
+  fileNewNoDD = new QAction(QIcon((":/bitmaps/filenew.png")), tr("Stand-alone Document"), this);
+  fileNewNoDD->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_H);
+  fileNewNoDD->setStatusTip(tr("Creates a new stand-alone document"));
+  fileNewNoDD->setWhatsThis(
+	        tr("New\n\nCreates a new stand-alone schematic or data display document"));
+  connect(fileNewNoDD, SIGNAL(triggered()), SLOT(slotFileNewNoDD()));
+
+  textNew = new QAction(QIcon((":/bitmaps/textnew.png")), tr("&Text Document"), this);
   textNew->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_V);
   textNew->setStatusTip(tr("Creates a new text document"));
   textNew->setWhatsThis(tr("New Text\n\nCreates a new text document"));
@@ -88,6 +95,26 @@ void QucsApp::initActions()
   fileClose->setStatusTip(tr("Closes the current document"));
   fileClose->setWhatsThis(tr("Close File\n\nCloses the current document"));
   connect(fileClose, SIGNAL(triggered()), SLOT(slotFileClose()));
+
+  fileCloseOthers = new QAction(QIcon((":/bitmaps/fileclose.png")), tr("Close all but current"), this);
+  fileCloseOthers->setStatusTip(tr("Closes all documents except the current one"));
+  fileCloseOthers->setWhatsThis(tr("Close all but current\n\nCloses all documents except the current one"));
+  connect(fileCloseOthers, SIGNAL(triggered()), SLOT(slotFileCloseOthers()));
+
+  fileCloseAllLeft = new QAction(QIcon((":/bitmaps/fileclose.png")), tr("Close all left"), this);
+  fileCloseAllLeft->setStatusTip(tr("Closes all documents to the left of the current one"));
+  fileCloseAllLeft->setWhatsThis(tr("Close all left\n\nCloses all documents to the left of the current one"));
+  connect(fileCloseAllLeft, SIGNAL(triggered()), SLOT(slotFileCloseAllLeft()));
+
+  fileCloseAllRight = new QAction(QIcon((":/bitmaps/fileclose.png")), tr("Close all right"), this);
+  fileCloseAllRight->setStatusTip(tr("Closes all documents to the right of the current one"));
+  fileCloseAllRight->setWhatsThis(tr("Close all right\n\nCloses all documents to the right of the current one"));
+  connect(fileCloseAllRight, SIGNAL(triggered()), SLOT(slotFileCloseAllRight()));
+
+  fileCloseAll = new QAction(QIcon((":/bitmaps/fileclose.png")), tr("Close &All"), this);
+  fileCloseAll->setStatusTip(tr("Closes all documents"));
+  fileCloseAll->setWhatsThis(tr("Close All\n\nCloses all documents"));
+  connect(fileCloseAll, SIGNAL(triggered()), SLOT(slotFileCloseAll()));
 
   for (int i = 0; i < MaxRecentFiles; ++i) {
     fileRecentAction[i] = new QAction(this);
@@ -567,6 +594,15 @@ void QucsApp::initActions()
   tr("Resistor color codes\n\nStarts standard resistor color code computation program"));
   connect(callRes, SIGNAL(triggered()), SLOT(slotCallRes()));
 
+
+  callPowerComb = new QAction(tr("Power combining"), this);
+  callPowerComb->setShortcut(Qt::CTRL+Qt::Key_9);
+  callPowerComb->setStatusTip(tr("Starts Qucs power combining tool"));
+  callPowerComb->setWhatsThis(
+  tr("Power combining synthesis\n\nStarts power combining synthesis tool"));
+  connect(callPowerComb, SIGNAL(triggered()), SLOT(slotCallPowerComb()));
+
+
   simulate = new QAction(QIcon((":/bitmaps/gear.png")), tr("Simulate"), this);
   simulate->setShortcut(Qt::Key_F2);
   simulate->setStatusTip(tr("Simulates the current schematic"));
@@ -637,17 +673,11 @@ void QucsApp::initActions()
       tr("Octave Window\n\nShows/hides the Octave dock window"));
   connect(viewOctaveDock, SIGNAL(toggled(bool)), SLOT(slotViewOctaveDock(bool)));
 
-  helpIndex = new QAction(tr("Help Index..."), this);
-  helpIndex->setShortcut(Qt::Key_F1);
-  helpIndex->setStatusTip(tr("Index of Qucs Help"));
-  helpIndex->setWhatsThis(tr("Help Index\n\nIndex of intern Qucs help"));
-  connect(helpIndex, SIGNAL(triggered()), SLOT(slotHelpIndex()));
-
-  helpGetStart = new QAction(tr("Getting Started..."), this);
-  helpGetStart->setStatusTip(tr("Getting Started with Qucs"));
-  helpGetStart->setWhatsThis(
-	tr("Getting Started\n\nShort introduction into Qucs"));
-  connect(helpGetStart, SIGNAL(triggered()), SLOT(slotGettingStarted()));
+  helpOnline = new QAction(tr("Qucs-Help website"), this);
+  helpOnline->setShortcut(Qt::Key_F1);
+  helpOnline->setStatusTip(tr("Open help website in the default browser."));
+  helpOnline->setWhatsThis(tr("Qucs-help\n\nOpen help website in the default browser."));
+  connect(helpOnline, SIGNAL(triggered()), SLOT(slotHelpOnline()));
 
   helpAboutApp = new QAction(tr("&About Qucs..."), this);
   helpAboutApp->setStatusTip(tr("About the application"));
@@ -664,46 +694,58 @@ void QucsApp::initActions()
 void QucsApp::initMenuBar()
 {
   fileMenu = new QMenu(tr("&File"));  // menuBar entry fileMenu
-  fileMenu->addAction(fileNew);
-  fileMenu->addAction(textNew);
+
+  QMenu *newFileMenu = new QMenu(tr("New"), fileMenu);
+  newFileMenu->addAction(fileNew);
+  newFileMenu->addAction(fileNewNoDD);
+  newFileMenu->addAction(textNew);
+  fileMenu->addMenu(newFileMenu);
+
   fileMenu->addAction(fileOpen);
-  fileMenu->addAction(fileClose);
+
+  QMenu *closeFileMenu = new QMenu(tr("Close"), fileMenu);
+  closeFileMenu->addAction(fileClose);
+  closeFileMenu->addAction(fileCloseOthers);
+  closeFileMenu->addAction(fileCloseAllLeft);
+  closeFileMenu->addAction(fileCloseAllRight);
+  closeFileMenu->addAction(fileCloseAll);
+  fileMenu->addMenu(closeFileMenu);
 
   recentFilesMenu = new QMenu(tr("Open Recent"),fileMenu);
   fileMenu->addMenu(recentFilesMenu);
   for (int i = 0; i < MaxRecentFiles; ++i) {
     recentFilesMenu->addAction(fileRecentAction[i]);
   }
-  recentFilesMenu->insertSeparator();
+  recentFilesMenu->addSeparator();
   recentFilesMenu->addAction(fileClearRecent);
 
-  fileMenu->insertSeparator();
+  fileMenu->addSeparator();
   fileMenu->addAction(fileSave);
   fileMenu->addAction(fileSaveAll);
   fileMenu->addAction(fileSaveAs);
   fileMenu->addAction(exportAsImage);
   fileMenu->addAction(filePrint);
   fileMenu->addAction(filePrintFit);
-  fileMenu->insertSeparator();
+  fileMenu->addSeparator();
   fileMenu->addAction(fileExamples);
-  fileMenu->insertSeparator();
+  fileMenu->addSeparator();
   fileMenu->addAction(fileSettings);
   fileMenu->addAction(symEdit);
-  fileMenu->insertSeparator();
+  fileMenu->addSeparator();
   fileMenu->addAction(applSettings);
   fileMenu->addAction(refreshSchPath);
-  fileMenu->insertSeparator();
+  fileMenu->addSeparator();
   fileMenu->addAction(fileQuit);
 
   editMenu = new QMenu(tr("&Edit"));  // menuBar entry editMenu
   editMenu->addAction(undo);
   editMenu->addAction(redo);
-  editMenu->insertSeparator();
+  editMenu->addSeparator();
   editMenu->addAction(editCut);
   editMenu->addAction(editCopy);
   editMenu->addAction(editPaste);
   editMenu->addAction(editDelete);
-  editMenu->insertSeparator();
+  editMenu->addSeparator();
   editMenu->addAction(select);
   editMenu->addAction(selectAll);
   editMenu->addAction(selectMarker);
@@ -713,7 +755,7 @@ void QucsApp::initMenuBar()
   editMenu->addAction(editMirror);
   editMenu->addAction(editMirrorY);
   editMenu->addAction(editActivate);
-  editMenu->insertSeparator();
+  editMenu->addSeparator();
   editMenu->addAction(intoH);
   editMenu->addAction(popH);
 
@@ -722,15 +764,15 @@ void QucsApp::initMenuBar()
   alignMenu = new QMenu(tr("P&ositioning"));  // menuBar entry alignMenu
   alignMenu->addAction(moveText);
   alignMenu->addAction(onGrid);
-  alignMenu->insertSeparator();
+  alignMenu->addSeparator();
   alignMenu->addAction(centerHor);
   alignMenu->addAction(centerVert);
-  alignMenu->insertSeparator();
+  alignMenu->addSeparator();
   alignMenu->addAction(alignTop);
   alignMenu->addAction(alignBottom);
   alignMenu->addAction(alignLeft);
   alignMenu->addAction(alignRight);
-  alignMenu->insertSeparator();
+  alignMenu->addSeparator();
   alignMenu->addAction(distrHor);
   alignMenu->addAction(distrVert);
 
@@ -752,14 +794,14 @@ void QucsApp::initMenuBar()
   projMenu->addAction(addToProj);
   projMenu->addAction(projClose);
   projMenu->addAction(projDel);
-  projMenu->insertSeparator();
+  projMenu->addSeparator();
   projMenu->addAction(createLib);
   projMenu->addAction(createPkg);
   projMenu->addAction(extractPkg);
-  projMenu->insertSeparator();
+  projMenu->addSeparator();
   projMenu->addAction(importData);
   projMenu->addAction(graph2csv);
-  projMenu->insertSeparator();
+  projMenu->addSeparator();
   // TODO only enable if document is VA file
   projMenu->addAction(buildModule);
   projMenu->addAction(loadModule);
@@ -773,7 +815,7 @@ void QucsApp::initMenuBar()
   toolMenu->addAction(callMatch);
   toolMenu->addAction(callAtt);
   toolMenu->addAction(callRes);
-
+  toolMenu->addAction(callPowerComb);
 
 
   simMenu = new QMenu(tr("&Simulation"));  // menuBar entry simMenu
@@ -789,8 +831,7 @@ void QucsApp::initMenuBar()
   viewMenu->addAction(magOne);
   viewMenu->addAction(magPlus);
   viewMenu->addAction(magMinus);
-  viewMenu->insertSeparator();
-  viewMenu->setCheckable(true);
+  viewMenu->addSeparator();
   viewMenu->addAction(viewToolBar);
   viewMenu->addAction(viewStatusBar);
   viewMenu->addAction(viewBrowseDock);
@@ -798,11 +839,7 @@ void QucsApp::initMenuBar()
 
 
   helpMenu = new QMenu(tr("&Help"));  // menuBar entry helpMenu
-  helpMenu->addAction(helpIndex);
-  helpMenu->addAction(helpGetStart);
-  helpMenu->insertSeparator();
-
-
+  helpMenu->addAction(helpOnline);
 
   //Fill submenu's with filenames of PDF documents
   QDir TechnicalDir = QDir(QucsSettings.DocDir.replace('\\','/'));
@@ -818,7 +855,7 @@ void QucsApp::initMenuBar()
       QAction* helpTechnicalActions = new QAction(entries[i], this);
       helpTechnicalActions->setObjectName ( entries[i] );
       helpTechnicalActions->setStatusTip(tr("Open ")+entries[i]);
-      helpTechnicalActions->setWhatsThis(tr(entries[i]+"\n\nOpen "+entries[i]));
+      helpTechnicalActions->setWhatsThis(tr("Open ")+entries[i]);
       connect(helpTechnicalActions, SIGNAL(triggered()), SLOT(slotHelpTechnical()));
       helpTechnical->addAction(helpTechnicalActions);
     }
@@ -838,7 +875,7 @@ void QucsApp::initMenuBar()
       QAction* helpReportActions = new QAction(entries[i], this);
       helpReportActions->setObjectName ( entries[i] );
       helpReportActions->setStatusTip(tr("Open ")+entries[i]);
-      helpReportActions->setWhatsThis(tr(entries[i]+"\n\nOpen "+entries[i]));
+      helpReportActions->setWhatsThis(tr("Open ")+entries[i]);
       connect(helpReportActions, SIGNAL(triggered()), SLOT(slotHelpReport()));
       helpReport->addAction(helpReportActions);
     }
@@ -857,14 +894,14 @@ void QucsApp::initMenuBar()
       QAction* helpTutorialActions = new QAction(entries[i], this);
       helpTutorialActions->setObjectName ( entries[i] );
       helpTutorialActions->setStatusTip(tr("Open ")+entries[i]);
-      helpTutorialActions->setWhatsThis(tr(entries[i]+"\n\nOpen "+entries[i]));
+      helpTutorialActions->setWhatsThis(tr("Open ")+entries[i]);
       connect(helpTutorialActions, SIGNAL(triggered()), SLOT(slotHelpTutorial()));
       helpTutorial->addAction(helpTutorialActions);
     }
   }
 
 
-  helpMenu->insertSeparator();
+  helpMenu->addSeparator();
   helpMenu->addAction(helpAboutApp);
   helpMenu->addAction(helpAboutQt);
 
@@ -877,7 +914,7 @@ void QucsApp::initMenuBar()
   menuBar()->addMenu(toolMenu);
   menuBar()->addMenu(simMenu);
   menuBar()->addMenu(viewMenu);
-  menuBar()->insertSeparator();
+  menuBar()->addSeparator();
   menuBar()->addMenu(helpMenu);
 
 }
@@ -942,13 +979,13 @@ void QucsApp::initStatusBar()
 {
   // To reserve enough space, insert the longest text and rewrite it afterwards.
   WarningLabel = new QLabel(tr("no warnings"), statusBar());
-  statusBar()->addWidget(WarningLabel, 0, true);
+  statusBar()->addPermanentWidget(WarningLabel, 0);
 
   PositionLabel = new QLabel("0 : 0", statusBar());
   PositionLabel->setAlignment(Qt::AlignRight);
-  statusBar()->addWidget(PositionLabel, 0, true);
+  statusBar()->addPermanentWidget(PositionLabel, 0);
 
-  statusBar()->message(tr("Ready."), 2000);
+  statusBar()->showMessage(tr("Ready."), 2000);
 }
 
 // ----------------------------------------------------------
@@ -965,9 +1002,9 @@ void QucsApp::slotShowWarnings()
 
   ResultState++;
   if(ResultState & 1)
-    WarningLabel->setPaletteForegroundColor(Qt::red);
+    misc::setWidgetForegroundColor(WarningLabel, Qt::red);
   else
-    WarningLabel->setPaletteForegroundColor(Qt::black);
+    misc::setWidgetForegroundColor(WarningLabel, Qt::black);
 
   if(ResultState < 9)
     QTimer::singleShot(500, this, SLOT(slotShowWarnings()));
@@ -981,7 +1018,7 @@ void QucsApp::slotResetWarnings()
   QFont f = WarningLabel->font();   // reset warning label
   f.setWeight(QFont::Normal);
   WarningLabel->setFont(f);
-  WarningLabel->setPaletteForegroundColor(Qt::black);
+  misc::setWidgetForegroundColor(WarningLabel, Qt::black);
   WarningLabel->setText(tr("no warnings"));
 }
 

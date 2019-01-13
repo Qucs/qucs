@@ -66,6 +66,7 @@ private slots:
     void slotHomeDirBrowse();
     void slotAdmsXmlDirBrowse();
     void slotAscoDirBrowse();
+    void slotEditorBrowse();
     void slotOctaveDirBrowse();
 
     void slotAddPath();
@@ -78,7 +79,8 @@ public:
 
     QFont Font;
     QCheckBox *checkWiring, *checkLoadFromFutureVersions,
-              *checkAntiAliasing, *checkTextAntiAliasing;
+              *checkAntiAliasing, *checkTextAntiAliasing,
+              *checkShowSchematicDescription;
     QComboBox *LanguageCombo;
     QPushButton *FontButton, *BGColorButton;
     QLineEdit *LargeFontSizeEdit, *undoNumEdit, *editorEdit, *Input_Suffix,

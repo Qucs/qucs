@@ -17,7 +17,6 @@
  *                                                                         *
  ***************************************************************************/
 #include "qucs.h"
-#include "main.h"
 #include "node.h"
 #include "schematic.h"
 #include "mouseactions.h"
@@ -72,7 +71,7 @@ MouseActions::MouseActions(QucsApp* App_)
   // initialize menu appearing by right mouse button click on component
   ComponentMenu = new QMenu(QucsMain);
   focusMEvent   = new QMouseEvent(QEvent::MouseButtonPress, QPoint(0,0),
-				  Qt::NoButton, Qt::NoButton);
+                  Qt::NoButton, Qt::NoButton, Qt::NoModifier);
 }
 
 
@@ -497,7 +496,7 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
 //          ((Wire*)pe)->Label->paintScheme(&painter);
 
   drawn = true;
-  if((Event->state() & Qt::ControlModifier) == 0)
+  if (!Event->modifiers().testFlag(Qt::ControlModifier))
     Doc->setOnGrid(MAx2, MAy2);  // use grid only if CTRL key not pressed
   MAx1 = MAx2 - MAx1;
   MAy1 = MAy2 - MAy1;
@@ -775,86 +774,89 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
   while(true) {
     if(focusElement) {
       focusElement->isSelected = true;
-      ComponentMenu->insertItem(
-         QObject::tr("Edit Properties"), QucsMain, SLOT(slotEditElement()));
+      QAction *editProp = new QAction(QObject::tr("Edit Properties"), QucsMain);
+      QucsMain->connect(editProp, SIGNAL(triggered()), SLOT(slotEditElement()));
+      ComponentMenu->addAction(editProp);
 
       if((focusElement->Type & isComponent) == 0) break;
     }
     else {
-/// \todo "exchange like this"
-      //ComponentMenu->addAction(QucsMain->symEdit);
-      //to QucsMain->symEdit->addTo(ComponentMenu);
-      // see http://qt-project.org/doc/qt-4.8/qaction-qt3.html#addTo
-      QucsMain->symEdit->addTo(ComponentMenu);
-      QucsMain->fileSettings->addTo(ComponentMenu);
+      ComponentMenu->addAction(QucsMain->symEdit);
+      ComponentMenu->addAction(QucsMain->fileSettings);
     }
-    if(!QucsMain->moveText->isOn())
-      QucsMain->moveText->addTo(ComponentMenu);
+    if(!QucsMain->moveText->isChecked())
+      ComponentMenu->addAction(QucsMain->moveText);
     break;
   }
   while(true) {
     if(focusElement)
       if(focusElement->Type == isGraph) break;
-    if(!QucsMain->onGrid->isOn())
-      QucsMain->onGrid->addTo(ComponentMenu);
-    QucsMain->editCopy->addTo(ComponentMenu);
-    if(!QucsMain->editPaste->isOn())
-      QucsMain->editPaste->addTo(ComponentMenu);
+    if(!QucsMain->onGrid->isChecked())
+      ComponentMenu->addAction(QucsMain->onGrid);
+    ComponentMenu->addAction(QucsMain->editCopy);
+    if(!QucsMain->editPaste->isChecked())
+      ComponentMenu->addAction(QucsMain->editPaste);
     break;
   }
 
   while (true) {
     if (focusElement) {
       if (focusElement->Type == isDiagram) {
-        ComponentMenu->insertItem(QObject::tr("Export as image"), QucsMain,
-            SLOT(slotSaveDiagramToGraphicsFile()));
+        QAction *imgExport = new QAction(QObject::tr("Export as image"), QucsMain);
+        QucsMain->connect(imgExport, SIGNAL(triggered()), SLOT(slotSaveDiagramToGraphicsFile()));
+        ComponentMenu->addAction(imgExport);
       }
     }
     break;
   }
 
-  if(!QucsMain->editDelete->isOn())
-    QucsMain->editDelete->addTo(ComponentMenu);
+  if(!QucsMain->editDelete->isChecked())
+    ComponentMenu->addAction(QucsMain->editDelete);
   if(focusElement) if(focusElement->Type == isMarker) {
-    ComponentMenu->insertSeparator();
+    ComponentMenu->addSeparator();
     QString s = QObject::tr("power matching");
     if( ((Marker*)focusElement)->pGraph->Var == "Sopt" )
       s = QObject::tr("noise matching");
-    ComponentMenu->insertItem(s, QucsMain, SLOT(slotPowerMatching()));
-    if( ((Marker*)focusElement)->pGraph->Var.left(2) == "S[" )
-      ComponentMenu->insertItem(QObject::tr("2-port matching"), QucsMain,
-                                SLOT(slot2PortMatching()));
+
+    QAction *powerMatch = new QAction(s, QucsMain);
+    QucsMain->connect(powerMatch, SIGNAL(triggered()), SLOT(slotPowerMatching()));
+    ComponentMenu->addAction(powerMatch);
+    if( ((Marker*)focusElement)->pGraph->Var.left(2) == "S[" ) {
+      QAction *power2Match = new QAction(QObject::tr("2-port matching"), QucsMain);
+      QucsMain->connect(power2Match, SIGNAL(triggered()), SLOT(slot2PortMatching()));
+      ComponentMenu->addAction(power2Match);
+    }
   }
   do {
     if(focusElement) {
       if(focusElement->Type == isDiagram) break;
       if(focusElement->Type == isGraph) {
-        QucsMain->graph2csv->addTo(ComponentMenu);
+        ComponentMenu->addAction(QucsMain->graph2csv);
         break;
       }
     }
-    ComponentMenu->insertSeparator();
+    ComponentMenu->addSeparator();
     if(focusElement) if(focusElement->Type & isComponent)
-      if(!QucsMain->editActivate->isOn())
-        QucsMain->editActivate->addTo(ComponentMenu);
-    if(!QucsMain->editRotate->isOn())
-      QucsMain->editRotate->addTo(ComponentMenu);
-    if(!QucsMain->editMirror->isOn())
-      QucsMain->editMirror->addTo(ComponentMenu);
-    if(!QucsMain->editMirrorY->isOn())
-      QucsMain->editMirrorY->addTo(ComponentMenu);
+      if(!QucsMain->editActivate->isChecked())
+        ComponentMenu->addAction(QucsMain->editActivate);
+    if(!QucsMain->editRotate->isChecked())
+      ComponentMenu->addAction(QucsMain->editRotate);
+    if(!QucsMain->editMirror->isChecked())
+      ComponentMenu->addAction(QucsMain->editMirror);
+    if(!QucsMain->editMirrorY->isChecked())
+      ComponentMenu->addAction(QucsMain->editMirrorY);
 
     // right-click menu to go into hierarchy
     if(focusElement) {
       if(focusElement->Type & isComponent)
-	if(((Component*)focusElement)->Model == "Sub")
-	  if(!QucsMain->intoH->isOn())
-	    QucsMain->intoH->addTo(ComponentMenu);
+	if(((Component*)focusElement)->obsolete_model_hack() == "Sub")
+      if(!QucsMain->intoH->isChecked())
+        ComponentMenu->addAction(QucsMain->intoH);
     }
     // right-click menu to pop out of hierarchy
     if(!focusElement)
-      if(!QucsMain->popH->isOn())
-	QucsMain->popH->addTo(ComponentMenu);
+      if(!QucsMain->popH->isChecked())
+        ComponentMenu->addAction(QucsMain->popH);
   } while(false);
 
   *focusMEvent = *Event;  // remember event for "edit component" action
@@ -935,9 +937,7 @@ void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent*, float fX, float fY)
 // -----------------------------------------------------------
 void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, float fY)
 {
-  bool Ctrl;
-  if(Event->state() & Qt::ControlModifier) Ctrl = true;
-  else Ctrl = false;
+  bool Ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
   int No=0;
   MAx1 = int(fX);
@@ -969,6 +969,8 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       if(((Diagram*)focusElement)->Name.left(4) != "Rect")
         if(((Diagram*)focusElement)->Name.at(0) != 'T')
           if(((Diagram*)focusElement)->Name != "Curve")
+           /* if(((Diagram*)focusElement)->Name != "Waveac")
+          if(((Diagram*)focusElement)->Name != "Phasor")*/
             isMoveEqual = true;  // diagram must be square
 
       focusElement->Type = isDiagram;
@@ -1231,7 +1233,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
   if(selElem->Type & isComponent) {
     Component *Comp = (Component*)selElem;
 //    qDebug() << "+-+ got to switch:" << Comp->Name;
-    QString entryName = Comp->Name;
+    QString entryName = Comp->name();
 
     switch(Event->button()) {
       case Qt::LeftButton :
@@ -1262,7 +1264,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
       QString filename = Module::vaComponents[entryName];
 //      qDebug() << "   ===+ recast";
       Comp = dynamic_cast<vacomponent*>(Comp)->newOne(filename); //va component
-      qDebug() << "   => recast = Comp;" << Comp->Name << "filename: " << filename;
+      qDebug() << "   => recast = Comp;" << Comp->name() << "filename: " << filename;
     }
     else {
 	  Comp = Comp->newOne(); // static component is used, so create a new one
@@ -1541,9 +1543,7 @@ void MouseActions::MPressZoomIn(Schematic *Doc, QMouseEvent*, float fX, float fY
 // ***********************************************************************
 void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
 {
-  bool ctrl;
-  if(Event->state() & Qt::ControlModifier) ctrl = true;
-  else ctrl = false;
+  bool ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
   if(!ctrl) Doc->deselectElements(focusElement);
 
@@ -1569,9 +1569,7 @@ void MouseActions::MReleaseSelect2(Schematic *Doc, QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
 
-  bool Ctrl;
-  if(Event->state() & Qt::ControlModifier) Ctrl = true;
-  else Ctrl = false;
+  bool Ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
   // selects all elements within the rectangle
   Doc->selectElements(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2, Ctrl);
@@ -1770,8 +1768,8 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 	  else pe = NULL;
 	  break;
 	case isDiagram:
-	  Doc->Diagrams->append((Diagram*)pe);
-	  ((Diagram*)pe)->loadGraphData(Info.dirPath() + QDir::separator() +
+      Doc->Diagrams->append((Diagram*)pe);
+      ((Diagram*)pe)->loadGraphData(Info.path() + QDir::separator() +
 					Doc->DataSet);
 	  Doc->enlargeView(pe->cx, pe->cy-pe->y2, pe->cx+pe->x2, pe->cy);
 	  break;
@@ -1915,17 +1913,15 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
     case isDigitalComponent:
          c = (Component*)focusElement;
 //         qDebug() << "cast focusElement into" << c->Name;
-         if(c->Model == "GND") return;
-
-         if(c->Model == "SPICE") {
+         if(c->obsolete_model_hack() == "GND") { // BUG
+	   return;
+	 }else if(c->obsolete_model_hack() == "SPICE") { // BUG. use cast
            SpiceDialog *sd = new SpiceDialog(App, (SpiceFile*)c, Doc);
            if(sd->exec() != 1) break;   // dialog is WDestructiveClose
-         }
-         else if(c->Model == ".Opt") {
+         } else if(c->obsolete_model_hack() == ".Opt") { // BUG again...
            OptimizeDialog *od = new OptimizeDialog((Optimize_Sim*)c, Doc);
            if(od->exec() != 1) break;   // dialog is WDestructiveClose
-         }
-         else {
+         } else {
            ComponentDialog * cd = new ComponentDialog(c, Doc);
            if(cd->exec() != 1) break;   // dialog is WDestructiveClose
 

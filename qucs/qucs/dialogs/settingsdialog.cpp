@@ -18,7 +18,6 @@
 #include "settingsdialog.h"
 
 #include "node.h"
-#include "main.h"
 #include "qucs.h"
 #include "mnemo.h"
 #include "schematic.h"
@@ -117,15 +116,15 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
     QWidget *Tab3 = new QWidget(t);
     QGridLayout *gp3 = new QGridLayout(Tab3);
     Combo_Frame = new QComboBox(Tab3);
-    Combo_Frame->insertItem(1, tr("no Frame"));
-    Combo_Frame->insertItem(2, tr("DIN A5 landscape"));
-    Combo_Frame->insertItem(3, tr("DIN A5 portrait"));
-    Combo_Frame->insertItem(4, tr("DIN A4 landscape"));
-    Combo_Frame->insertItem(5, tr("DIN A4 portrait"));
-    Combo_Frame->insertItem(6, tr("DIN A3 landscape"));
-    Combo_Frame->insertItem(7, tr("DIN A3 portrait"));
-    Combo_Frame->insertItem(8, tr("Letter landscape"));
-    Combo_Frame->insertItem(9, tr("Letter portrait"));
+    Combo_Frame->addItem(tr("no Frame"));
+    Combo_Frame->addItem(tr("DIN A5 landscape"));
+    Combo_Frame->addItem(tr("DIN A5 portrait"));
+    Combo_Frame->addItem(tr("DIN A4 landscape"));
+    Combo_Frame->addItem(tr("DIN A4 portrait"));
+    Combo_Frame->addItem(tr("DIN A3 landscape"));
+    Combo_Frame->addItem(tr("DIN A3 portrait"));
+    Combo_Frame->addItem(tr("Letter landscape"));
+    Combo_Frame->addItem(tr("Letter portrait"));
     gp3->addWidget(Combo_Frame,0,0,1,2);
 
     Input_Frame0 = new QTextEdit(Tab3);

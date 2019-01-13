@@ -22,7 +22,19 @@
 # Boston, MA 02110-1301, USA.
 #
 
-SUBDIRS = components diagrams paintings dialogs octave
+include ../common.mk
+
+AM_DEFAULT_SOURCE_EXT = .cpp
+
+SUBDIRS = \
+	bitmaps \
+	components diagrams \
+	paintings \
+	dialogs \
+	octave \
+	tests
+
+all-local: qucs
 
 if COND_WIN32
 bin_SCRIPTS = qucsdigi.bat qucsveri.bat qucsdigilib.bat
@@ -30,7 +42,15 @@ else
 bin_SCRIPTS = qucsdigi qucsveri qucsdigilib
 endif
 
-bin_PROGRAMS = qucs
+qucs_appledir = $(bindir)/qucs.app/Contents/MacOS/
+
+if COND_MACOSX
+qucs_apple_PROGRAMS = qucs.real
+else
+endif
+
+bin_PROGRAMS = qucs.real
+transform=s&\.real$$&&;$(program_transform_name)
 
 MOCHEADERS = \
   messagedock.h \
@@ -42,27 +62,44 @@ MOCHEADERS = \
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucs_SOURCES = node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
-  qucs.cpp main.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
+noinst_LTLIBRARIES = libqucsschematic.la
+
+libqucsschematic_la_SOURCES= \
+  attach.cpp \
+  node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
+  qucs.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
   viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
-  schematic_file.cpp syntax.cpp module.cpp octave_window.cpp qrc_qucs.cpp   \
+  schematic_file.cpp syntax.cpp module.cpp octave_window.cpp \
   messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
-	projectView.cpp
+  projectView.cpp
 
-qrc_qucs.cpp: qucs.qrc
-	$(RCC) -o $@ $<
+nodist_libqucsschematic_la_SOURCES = $(MOCFILES)
 
-nodist_qucs_SOURCES = $(MOCFILES)
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs-lib
+libqucsschematic_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs-lib
-qucs_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
-qucs_LDADD = components/libcomponents.a diagrams/libdiagrams.a \
-  paintings/libpaintings.a dialogs/libdialogs.a \
+# TODO:
+# - parts must go to libqucs
+# - other parts need to be loaded at run time
+libqucsschematic_la_LIBADD = \
+ components/libcomponents.la diagrams/libdiagrams.la \
+  paintings/libpaintings.la dialogs/libdialogs.la
+
+# why this? qucs_real_LDADD does not seem to work on windows (yet?)
+libqucsschematic_la_LIBADD += \
   $(X11_LIBS) $(QT_LIBS)
 
-noinst_HEADERS = $(MOCHEADERS) main.h wire.h qucsdoc.h element.h node.h \
+qucs_real_LDFLAGS = $(QT_LIBS)
+qucs_real_SOURCES = main.cpp qucs_.qrc
+qucs_real_LDADD = \
+	libqucsschematic.la
+
+noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
   wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
   projectView.h printerwriter.h imagewriter.h
+
+# must be installed. but later
+noinst_HEADERS += platform.h
 
 hicolor16dir = ${prefix}/share/icons/hicolor/16x16/apps
 hicolor16_DATA =  bitmaps/hicolor/16x16/apps/qucs.png
@@ -92,7 +129,7 @@ EXTRA_DIST = \
 	qucsdigi qucsdigilib qucsdigi.bat qucsdigilib.bat qucsveri qucsveri.bat \
 	$(hicolor16_DATA) $(hicolor22_DATA) $(hicolor32_DATA) $(hicolor48_DATA) \
 	$(hicolor64_DATA) $(hicolor128_DATA) $(hicolor256_DATA) $(hicolor512_DATA) \
-	$(hicolorsc_DATA) $(desktop_DATA) qucs.qrc \
+	$(hicolorsc_DATA) $(desktop_DATA) \
 	bitmaps/qucs.icns \
 	bitmaps/qucsattenuator.icns \
 	bitmaps/qucsfilter.icns \
@@ -103,11 +140,7 @@ EXTRA_DIST = \
 	bitmaps/qucsrescodes.icns \
 	bitmaps/qucstrans.icns
 
-SUFFIXES = .h .moc.cpp
 
-.h.moc.cpp:
-	$(MOC) -o $@ $<
-
-CLEANFILES = *~ *.rej *.orig
+CLEANFILES = *~ *.rej *.orig qucs_.cpp *.moc.cpp
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.qm
-DISTCLEANFILES = *.moc.cpp *.qm
+DISTCLEANFILES = *.qm

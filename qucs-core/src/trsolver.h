@@ -53,7 +53,6 @@ public:
     void initTR (void);
     void deinitTR (void);
     static void calcTR (trsolver *);
-    void restart (void);
     void initDC (void);
     static void calcDC (trsolver *);
     void initSteps (void);
@@ -99,6 +98,7 @@ protected:
     history * tHistory;
     bool relaxTSR;
     bool initialDC;
+    int ohm;
 
 };
 

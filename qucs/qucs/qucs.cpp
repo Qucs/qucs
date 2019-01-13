@@ -43,7 +43,6 @@
 #include <QVariant>
 #include <QDebug>
 
-#include "main.h"
 #include "qucs.h"
 #include "qucsdoc.h"
 #include "textdoc.h"
@@ -74,48 +73,6 @@
 #include "../qucs-lib/qucslib_common.h"
 #include "misc.h"
 
-// icon for unsaved files (diskette)
-const char *smallsave_xpm[] = {
-"16 17 66 1", " 	c None",
-".	c #595963","+	c #E6E6F1","@	c #465460","#	c #FEFEFF",
-"$	c #DEDEEE","%	c #43535F","&	c #D1D1E6","*	c #5E5E66",
-"=	c #FFFFFF","-	c #C5C5DF",";	c #FCF8F9",">	c #BDBDDA",
-",	c #BFBFDC","'	c #C4C4DF",")	c #FBF7F7","!	c #D6D6E9",
-"~	c #CBCBE3","{	c #B5B5D6","]	c #BCBCDA","^	c #C6C6E0",
-"/	c #CFCFE5","(	c #CEC9DC","_	c #D8D8EA",":	c #DADAEB",
-"<	c #313134","[	c #807FB3","}	c #AEAED1","|	c #B7B7D7",
-"1	c #E2E2EF","2	c #9393C0","3	c #E3E3F0","4	c #DDD5E1",
-"5	c #E8E8F3","6	c #2F2F31","7	c #7B7BAF","8	c #8383B5",
-"9	c #151518","0	c #000000","a	c #C0C0DC","b	c #8E8FBD",
-"c	c #8989BA","d	c #E7EEF6","e	c #282829","f	c #6867A1",
-"g	c #7373A9","h	c #A7A7CD","i	c #8080B3","j	c #7B7CB0",
-"k	c #7070A8","l	c #6D6DA5","m	c #6E6EA6","n	c #6969A2",
-"o	c #7A79AF","p	c #DCDCEC","q	c #60609A","r	c #7777AC",
-"s	c #5D5D98","t	c #7676AB","u	c #484785","v	c #575793",
-"w	c #50506A","x	c #8787B8","y	c #53536E","z	c #07070E",
-"A	c #666688",
-"        .       ",
-"       .+.      ",
-"      .+@#.     ",
-"     .$%###.    ",
-"    .&*####=.   ",
-"   .-.#;#####.  ",
-"  .>,'.#)!!!!~. ",
-" .{].'^./(!_:<[.",
-".}|.1./2.3456789",
-"0a.$11.bc.defg9 ",
-" 011h11.ij9kl9  ",
-"  0_1h1h.mno9   ",
-"   0p12h9qr9    ",
-"    0hh9st9     ",
-"     09uv9w     ",
-"      0x9y      ",
-"       zA       "};
-
-const char *empty_xpm[] = {  // provides same height than "smallsave_xpm"
-"1 17 1 1", "  c None", " ", " ", " ", " ", " ",
-" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "};
-
 struct iconCompInfoStruct
 {
   int catIdx; // index of the component Category
@@ -124,6 +81,17 @@ struct iconCompInfoStruct
 
 Q_DECLARE_METATYPE(iconCompInfoStruct)
 
+// declare extern variables
+tQucsSettings QucsSettings;  // nearly everywhere used
+QString lastDir;    // to remember last directory for several dialogs
+QStringList qucsPathList;
+VersionTriplet QucsVersion; // Qucs version string
+QucsApp *QucsMain = 0;  // the Qucs application itself
+
+
+/*!
+ * \brief QucsApp::QucsApp main application
+ */
 QucsApp::QucsApp()
 {
   setWindowTitle("Qucs " PACKAGE_VERSION);
@@ -167,9 +135,7 @@ QucsApp::QucsApp()
   SearchDia = new SearchDialog(this);
 
   // creates a document called "untitled"
-  Schematic *d = new Schematic(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
-  DocumentTab->setCurrentIndex(i);
+  DocumentTab->createEmptySchematic("");
 
   select->setChecked(true);  // switch on the 'select' action
   switchSchematicDoc(true);  // "untitled" document is schematic
@@ -177,9 +143,11 @@ QucsApp::QucsApp()
   lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
 
   // load documents given as command line arguments
-  for(int z=1; z<qApp->argc(); z++) {
-    QString arg = qApp->argv()[z];
-    if(*(arg) != '-') {
+  for(int z=1; z<qApp->arguments().size(); z++) {
+    QString arg = qApp->arguments()[z];
+    QByteArray ba = arg.toLatin1();
+    const char *c_arg= ba.data();
+    if(*(c_arg) != '-') {
       QFileInfo Info(arg);
       QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
       arg = QucsSettings.QucsWorkDir.filePath(Info.fileName());
@@ -212,7 +180,7 @@ void QucsApp::initView()
   setWindowIcon (QPixmap(":/bitmaps/big.qucs.xpm"));
 #endif
 
-  DocumentTab = new QTabWidget(this);
+  DocumentTab = new ContextMenuTabWidget(this);
   setCentralWidget(DocumentTab);
 
   connect(DocumentTab,
@@ -240,9 +208,7 @@ void QucsApp::initView()
   editText->setFrame(false);
   editText->setHidden(true);
 
-  QPalette p = palette();
-  p.setColor(backgroundRole(), QucsSettings.BGColor);
-  editText->setPalette(p);
+  misc::setWidgetBackgroundColor(editText, QucsSettings.BGColor);
 
   connect(editText, SIGNAL(returnPressed()), SLOT(slotApplyCompText()));
   connect(editText, SIGNAL(textChanged(const QString&)),
@@ -381,15 +347,27 @@ void QucsApp::initView()
 
   messageDock = new MessageDock(this);
 
-  // initial home directory model
-  m_homeDirModel = new QFileSystemModel(this);
-  QStringList filters;
-  filters << "*_prj";
-  m_homeDirModel->setNameFilters(filters);
-  m_homeDirModel->setNameFilterDisables(false);
-  m_homeDirModel->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
+  // initial projects directory model
+  m_homeDirModel = new QucsFileSystemModel(this);
+  m_proxyModel = new QucsSortFilterProxyModel();
+  //m_proxyModel->setDynamicSortFilter(true);
+  // show all directories (project and non-project)
+  m_homeDirModel->setFilter(QDir::NoDot | QDir::AllDirs);
 
   // ............................................
+  QString path = QucsSettings.QucsHomeDir.absolutePath();
+  QDir ProjDir(path);
+  // initial projects directory is the Qucs home directory
+  QucsSettings.projsDir = path;
+
+  // create home dir if not exist
+  if(!ProjDir.exists()) {
+    if(!ProjDir.mkdir(path)) {
+      QMessageBox::warning(this, tr("Warning"),
+          tr("Cannot create work directory !"));
+      return;
+    }
+  }
   readProjects(); // reads all projects and inserts them into the ListBox
 }
 
@@ -580,9 +558,9 @@ QucsDoc * QucsApp::findDoc (QString File, int * Pos)
 {
   QucsDoc * d;
   int No = 0;
-  File = QDir::convertSeparators (File);
+  File = QDir::toNativeSeparators(File);
   while ((d = getDoc (No++)) != 0)
-    if (QDir::convertSeparators (d->DocName) == File) {
+    if (QDir::toNativeSeparators(d->DocName) == File) {
       if (Pos) *Pos = No - 1;
       return d;
     }
@@ -923,7 +901,7 @@ void QucsApp::initCursorMenu()
   }
   
   APPEND_MENU(ActionCMenuOpen, slotCMenuOpen, "Open")
-  APPEND_MENU(ActionCMenuCopy, slotCMenuCopy, "Duplicate")
+  APPEND_MENU(ActionCMenuCopy, slotCMenuCopy, "Copy file")
   APPEND_MENU(ActionCMenuRename, slotCMenuRename, "Rename")
   APPEND_MENU(ActionCMenuDelete, slotCMenuDelete, "Delete")
   APPEND_MENU(ActionCMenuInsert, slotCMenuInsert, "Insert")
@@ -1038,8 +1016,6 @@ void QucsApp::slotCMenuCopy()
     // refresh the schematic file path
     this->updateSchNameHash();
     this->updateSpiceNameHash();
-
-    slotUpdateTreeview();
   }
 }
 
@@ -1078,8 +1054,6 @@ void QucsApp::slotCMenuRename()
       QMessageBox::critical(this, tr("Error"), tr("Cannot rename file: %1").arg(filename));
       return;
     }
-
-    slotUpdateTreeview();
   }
 }
 
@@ -1109,8 +1083,6 @@ void QucsApp::slotCMenuDelete()
       return;
     }
   }
-
-  slotUpdateTreeview();
 }
 
 void QucsApp::slotCMenuInsert()
@@ -1125,20 +1097,26 @@ void QucsApp::slotCMenuInsert()
 // Checks for qucs directory and reads all existing Qucs projects.
 void QucsApp::readProjects()
 {
-  QString path = QucsSettings.QucsHomeDir.absolutePath();
-  QDir ProjDir(path);
+  QString path = QucsSettings.projsDir.absolutePath();
+  QString homepath = QucsSettings.QucsHomeDir.absolutePath();
 
-  // create home dir if not exist
-  if(!ProjDir.exists()) {
-    if(!ProjDir.mkdir(path)) {
-      QMessageBox::warning(this, tr("Warning"),
-          tr("Cannot create work directory !"));
-      return;
-    }
+  if (path == homepath) {
+    // in Qucs Home, disallow further up in the dirs tree
+    m_homeDirModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
+  } else {
+    m_homeDirModel->setFilter(QDir::NoDot | QDir::AllDirs);
   }
-  m_homeDirModel->setRootPath(path);
-  Projects->setModel(m_homeDirModel);
-  Projects->setRootIndex(m_homeDirModel->index(path));
+
+  // set the root path
+  QModelIndex rootModelIndex = m_homeDirModel->setRootPath(path);
+  // assign the model to the proxy and the proxy to the view
+  m_proxyModel->setSourceModel(m_homeDirModel);
+  m_proxyModel->setSortCaseSensitivity(Qt::CaseInsensitive);
+  // sort by first column (file name, only column show in the QListView)
+  m_proxyModel->sort(0);
+  Projects->setModel(m_proxyModel);
+  // fix the listview on the root path of the model
+  Projects->setRootIndex(m_proxyModel->mapFromSource(rootModelIndex));
 }
 
 // ----------------------------------------------------------
@@ -1150,7 +1128,7 @@ void QucsApp::slotButtonProjNew()
   NewProjDialog *d = new NewProjDialog(this);
   if(d->exec() != QDialog::Accepted) return;
 
-  QDir projDir(QucsSettings.QucsHomeDir.path());
+  QDir projDir(QucsSettings.projsDir.path());
   QString name = d->ProjName->text();
   bool open = d->OpenProj->isChecked();
 
@@ -1163,7 +1141,7 @@ void QucsApp::slotButtonProjNew()
         tr("Cannot create project directory !"));
   }
   if(open) {
-    openProject(QucsSettings.QucsHomeDir.filePath(name));
+    openProject(QucsSettings.projsDir.filePath(name));
   }
 }
 
@@ -1189,9 +1167,7 @@ void QucsApp::openProject(const QString& Path)
   }
 
   if(!closeAllFiles()) return;   // close files and ask for saving them
-  Schematic *d = new Schematic(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
-  DocumentTab->setCurrentIndex(i);
+  DocumentTab->createEmptySchematic("");
 
   view->drawn = false;
 
@@ -1217,7 +1193,7 @@ void QucsApp::slotMenuProjOpen()
 {
   QString d = QFileDialog::getExistingDirectory(
       this, tr("Choose Project Directory for Opening"),
-      QucsSettings.QucsHomeDir.path(),
+      QucsSettings.projsDir.path(),
       QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
   if(d.isEmpty()) return;
 
@@ -1243,8 +1219,15 @@ void QucsApp::slotButtonProjOpen()
 // Is called when project is double-clicked to open it.
 void QucsApp::slotListProjOpen(const QModelIndex &idx)
 {
-  openProject(QucsSettings.QucsHomeDir.filePath(
-      idx.data().toString()));
+  QString dName = idx.data().toString();
+  if (dName.endsWith("_prj")) { // it's a Qucs project
+    openProject(QucsSettings.projsDir.filePath(dName));
+  } else { // it's a normal directory
+    // change projects directory to the selected one
+    QucsSettings.projsDir = QucsSettings.projsDir.filePath(dName);
+    readProjects();
+    //repaint();
+  }
 }
 
 // ----------------------------------------------------------
@@ -1254,15 +1237,13 @@ void QucsApp::slotMenuProjClose()
   slotHideEdit(); // disable text edit of component property
 
   if(!closeAllFiles()) return;   // close files and ask for saving them
-  Schematic *d = new Schematic(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
-  DocumentTab->setCurrentIndex(i);
+  DocumentTab->createEmptySchematic("");
 
   view->drawn = false;
 
   slotResetWarnings();
   setWindowTitle("Qucs " PACKAGE_VERSION + tr(" - Project: "));
-  QucsSettings.QucsWorkDir.setPath(QDir::homePath()+QDir::convertSeparators ("/.qucs"));
+  QucsSettings.QucsWorkDir.setPath(QDir::homePath()+QDir::toNativeSeparators("/.qucs"));
   octave->adjustDirectory();
 
   Content->setProjPath("");
@@ -1345,7 +1326,7 @@ void QucsApp::slotMenuProjDel()
 {
   QString d = QFileDialog::getExistingDirectory(
       this, tr("Choose Project Directory for Deleting"),
-      QucsSettings.QucsHomeDir.path(),
+      QucsSettings.projsDir.path(),
       QFileDialog::ShowDirsOnly
       | QFileDialog::DontResolveSymlinks);
 
@@ -1363,7 +1344,7 @@ void QucsApp::slotButtonProjDel()
     return;
   }
 
-  deleteProject(QucsSettings.QucsHomeDir.filePath(idx.data().toString()));
+  deleteProject(QucsSettings.projsDir.filePath(idx.data().toString()));
 }
 
 
@@ -1372,16 +1353,20 @@ void QucsApp::slotButtonProjDel()
 // #####  documents.                                          #####
 // ################################################################
 
-void QucsApp::slotFileNew()
+void QucsApp::slotFileNew(bool enableOpenDpl)
 {
   statusBar()->showMessage(tr("Creating new schematic..."));
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *d = new Schematic(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
-  DocumentTab->setCurrentIndex(i);
+  Schematic *d = DocumentTab->createEmptySchematic("");
+  d->SimOpenDpl = enableOpenDpl;
 
   statusBar()->showMessage(tr("Ready."));
+}
+
+void QucsApp::slotFileNewNoDD()
+{
+  slotFileNew(false);
 }
 
 // --------------------------------------------------------------
@@ -1389,9 +1374,8 @@ void QucsApp::slotTextNew()
 {
   statusBar()->showMessage(tr("Creating new text editor..."));
   slotHideEdit(); // disable text edit of component property
-  TextDoc *d = new TextDoc(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
-  DocumentTab->setCurrentIndex(i);
+
+  editFile("");
 
   statusBar()->showMessage(tr("Ready."));
 }
@@ -1415,14 +1399,10 @@ bool QucsApp::gotoPage(const QString& Name)
   QFileInfo Info(Name);
   if(Info.suffix() == "sch" || Info.suffix() == "dpl" ||
      Info.suffix() == "sym") {
-    d = new Schematic(this, Name);
-    i = DocumentTab->addTab((Schematic *)d, QPixmap(empty_xpm), Info.fileName()); 
+    d = DocumentTab->createEmptySchematic(Name);
+  } else {
+    d = DocumentTab->createEmptyTextDoc(Name);
   }
-  else {
-    d = new TextDoc(this, Name);
-    i = DocumentTab->addTab((TextDoc *)d, QPixmap(empty_xpm), Info.fileName());
-  }
-  DocumentTab->setCurrentIndex(i);
 
   if(!d->load()) {    // load document if possible
     delete d;
@@ -1478,7 +1458,6 @@ bool QucsApp::saveFile(QucsDoc *Doc)
   if(Result < 0)  return false;
 
   updatePortNumber(Doc, Result);
-  slotUpdateTreeview();
   return true;
 }
 
@@ -1498,9 +1477,6 @@ void QucsApp::slotFileSave()
 
   DocumentTab->blockSignals(false);
   statusBar()->showMessage(tr("Ready."));
-
-  if(!ProjName.isEmpty())
-    slotUpdateTreeview();
 }
 
 // --------------------------------------------------------------
@@ -1583,7 +1559,6 @@ bool QucsApp::saveAs()
   if(n < 0)  return false;
 
   updatePortNumber(Doc, n);
-  slotUpdateTreeview();
   updateRecentFilesList(s);
   return true;
 }
@@ -1607,9 +1582,6 @@ void QucsApp::slotFileSaveAs()
 
   // refresh the schematic file path
   slotRefreshSchPath();
-
-  if(!ProjName.isEmpty())
-    slotUpdateTreeview();
 }
 
 
@@ -1625,9 +1597,9 @@ void QucsApp::slotFileSaveAll()
   while((Doc=getDoc(No++)) != 0) {
     if(Doc->DocName.isEmpty())  // make document the current ?
       DocumentTab->setCurrentIndex(No-1);
-    if (saveFile(Doc)) { // Hack! TODO: Maybe it's better to let slotFileChanged()
-        DocumentTab->setTabIcon(No-1,QPixmap(empty_xpm)); // know about Tab number?
-    }
+    // Hack! TODO: Maybe it's better to let slotFileChanged() know about Tab number?
+    //   if saving was successful, turn off "saving needed" icon
+    DocumentTab->setSaveIcon(!saveFile(Doc), No-1);
   }
 
   DocumentTab->blockSignals(false);
@@ -1643,7 +1615,6 @@ void QucsApp::slotFileSaveAll()
 
   // refresh the schematic file path
   slotRefreshSchPath();
-  slotUpdateTreeview();
 }
 
 // --------------------------------------------------------------
@@ -1662,6 +1633,34 @@ void QucsApp::slotFileClose(int index)
     closeFile(index);
 }
 
+// Close all documents except the current one
+void QucsApp::slotFileCloseOthers()
+{
+  closeAllFiles(DocumentTab->currentIndex());
+}
+
+// Close all documents to the left of the current one
+void QucsApp::slotFileCloseAllLeft()
+{
+  closeAllLeft(DocumentTab->currentIndex());
+}
+
+// Close all documents to the right of the current one
+void QucsApp::slotFileCloseAllRight()
+{
+  closeAllRight(DocumentTab->currentIndex());
+}
+
+// Close all documents
+void QucsApp::slotFileCloseAll()
+{
+  // close all tabs
+  closeAllFiles();
+  // create empty schematic
+  slotFileNew();
+}
+
+//
 // --------------------------------------------------------------
 // Common function to close a file tab specified by its index
 // checking for changes in the file before doing so. If called
@@ -1688,23 +1687,53 @@ void QucsApp::closeFile(int index)
     delete Doc;
 
     if(DocumentTab->count() < 1) { // if no document left, create an untitled
-      Schematic *d = new Schematic(this, "");
-      DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled")); 
-      DocumentTab->setCurrentIndex(0);
+      DocumentTab->createEmptySchematic("");
     }
 
     statusBar()->showMessage(tr("Ready."));
 }
 
 
-// --------------------------------------------------------------
-bool QucsApp::closeAllFiles()
+/**
+ * @brief close all open documents - except a specified one, optionally
+ * @param exceptTab tab to leave open, none if not specified
+ *
+ * @return true if all files were succesfully closed
+ */
+bool QucsApp::closeAllFiles(int exceptTab)
 {
+  if (DocumentTab->count() == 0) // no open tabs
+    return true;
+
+  return closeTabsRange(0, DocumentTab->count()-1, exceptTab);
+}
+
+/**
+ * @brief close Tabs in a specified range, optionally skipping a specified one
+ * @param startTab first tab to be closed
+ * @param stoptTab last tab to be closed
+ * @param exceptTab tab to leave open, none if not specified
+ *
+ * @return true if all requested tabs were succesfully closed
+ */
+bool QucsApp::closeTabsRange(int startTab, int stopTab, int exceptTab)
+{
+  if (stopTab < startTab)
+    return false;
+  // document to keep open, if any
+  QucsDoc *docToKeep = 0;
+  if (exceptTab >= 0) {
+    docToKeep = getDoc(exceptTab);
+  }
+
   SaveDialog *sd = new SaveDialog(this);
   sd->setApp(this);
-  for(int i=0; i < DocumentTab->count(); ++i) {
+  Q_ASSERT(startTab >= 0);
+  Q_ASSERT(stopTab < DocumentTab->count());
+
+  for(int i=startTab; i <= stopTab; ++i) {
     QucsDoc *doc = getDoc(i);
-    if(doc->DocChanged)
+    if ((doc->DocChanged) && (doc != docToKeep))
       sd->addUnsavedDoc(doc);
   }
   int Result = SaveDialog::DontSave;
@@ -1713,15 +1742,40 @@ bool QucsApp::closeAllFiles()
   delete sd;
   if(Result == SaveDialog::AbortClosing)
     return false;
+  // remove documents
   QucsDoc *doc = 0;
-  while((doc = getDoc()) != 0)
-	delete doc;
-
+  QucsDoc *stopDoc = getDoc(stopTab);
+  int i = 0;
+  do {
+    doc = getDoc(startTab+i);
+    if (doc == docToKeep) {
+      i++; // skip to next doc
+    } else {
+      delete doc;
+    }
+  } while (doc != stopDoc);
 
   switchEditMode(true);   // set schematic edit mode
   return true;
 }
 
+/**
+ * @brief close all documents to the left of the specified one
+ * @param index reference tab
+ */
+bool QucsApp::closeAllLeft(int index)
+{
+  return closeTabsRange(0, index-1);
+}
+
+/**
+ * @brief close all documents to the right of the specified one
+ * @param index reference tab
+ */
+bool QucsApp::closeAllRight(int index)
+{
+  return closeTabsRange(index+1, DocumentTab->count()-1);
+}
 
 void QucsApp::slotFileExamples()
 {
@@ -1875,7 +1929,7 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
     // start from the last to omit re-appended components
     Schematic *Doc = (Schematic*)w;
     for(Component *pc=Doc->Components->last(); pc!=0; ) {
-      if(pc->Model == Model) {
+      if(pc->obsolete_model_hack() == Model) { // BUG
         File = pc->Props.getFirst()->Value;
         if((File == pathName) || (File == Name)) {
           pc_tmp = Doc->Components->prev();
@@ -2163,17 +2217,12 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
   else {   // no open page found ?
     QString ext = QucsDoc::fileSuffix (DataDisplay);
 
-    int i = 0;
     if (ext != "vhd" && ext != "vhdl" && ext != "v" && ext != "va" &&
 	ext != "oct" && ext != "m") {
-      d = new Schematic(this, Name);
-      i = DocumentTab->addTab((Schematic *)d, QPixmap(empty_xpm), DataDisplay);
+      d = DocumentTab->createEmptySchematic(Name);
+    } else {
+      d = DocumentTab->createEmptyTextDoc(Name);
     }
-    else {
-      d = new TextDoc(this, Name);
-      i = DocumentTab->addTab((TextDoc *)d, QPixmap(empty_xpm), DataDisplay);
-    }
-    DocumentTab->setCurrentIndex(i);
 
     QFile file(Name);
     if(file.open(QIODevice::ReadOnly)) {      // try to load document
@@ -2187,7 +2236,6 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
     else {
       if(file.open(QIODevice::ReadWrite)) {  // if document doesn't exist, create
         d->DataDisplay = Info.fileName();
-        slotUpdateTreeview();
       }
       else {
         QMessageBox::critical(this, tr("Error"), tr("Cannot create ")+Name);
@@ -2245,9 +2293,7 @@ void QucsApp::slotOpenContent(const QModelIndex &idx)
   QFileInfo Info(QucsSettings.QucsWorkDir.filePath(filename));
   QString extName = Info.suffix();
 
-  if (extName == "sch" || extName == "dpl" || extName == "vhdl" ||
-      extName == "vhd" || extName == "v" || extName == "va" ||
-      extName == "m" || extName == "oct") {
+  if (extName == "sch" || extName == "dpl") {
     gotoPage(Info.absoluteFilePath());
     updateRecentFilesList(Info.absoluteFilePath());
     slotUpdateRecentFiles();
@@ -2267,10 +2313,14 @@ void QucsApp::slotOpenContent(const QModelIndex &idx)
     return;
   }
 
-  if(extName == "dat") {
-    editFile(Info.absoluteFilePath());  // open datasets with text editor
+  // open text files with text editor
+  if(extName == "dat" || extName == "vhdl" ||
+     extName == "vhd" || extName == "v" || extName == "va" ||
+     extName == "m" || extName == "oct") {
+    editFile(Info.absoluteFilePath());
     return;
   }
+
 
   // File is no Qucs file, so go through list and search a user
   // defined program to open it.
@@ -2285,7 +2335,6 @@ void QucsApp::slotOpenContent(const QModelIndex &idx)
       QProcess *Program = new QProcess();
       //Program->setCommunication(0);
       QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-      env.insert("PATH", env.value("PATH") );
       Program->setProcessEnvironment(env);
       Program->start(com.join(" "));
       if(Program->state()!=QProcess::Running&&
@@ -2683,19 +2732,10 @@ void QucsApp::slotHideEdit()
 }
 
 // -----------------------------------------------------------
-// set document tab icon to smallsave_xpm or empty_xpm
+// set document tab icon to "smallsave.xpm" or "empty.xpm"
 void QucsApp::slotFileChanged(bool changed)
 {
-  DocumentTab->setTabIcon(DocumentTab->currentIndex(),
-      QPixmap((changed)? smallsave_xpm : empty_xpm));
-}
-
-// -----------------------------------------------------------
-// Update project view by call refresh function
-// looses the focus.
-void QucsApp::slotUpdateTreeview()
-{
-  Content->refresh();
+  DocumentTab->setSaveIcon(changed);
 }
 
 // -----------------------------------------------------------
@@ -2843,3 +2883,329 @@ void QucsApp::slotSaveSchematicToGraphicsFile(bool diagram)
   }
   delete writer;
 }
+
+
+// #########################################################################
+// Loads the settings file and stores the settings.
+bool loadSettings()
+{
+    QSettings settings("qucs","qucs");
+
+    if(settings.contains("x"))QucsSettings.x=settings.value("x").toInt();
+    if(settings.contains("y"))QucsSettings.y=settings.value("y").toInt();
+    if(settings.contains("dx"))QucsSettings.dx=settings.value("dx").toInt();
+    if(settings.contains("dy"))QucsSettings.dy=settings.value("dy").toInt();
+    if(settings.contains("font"))QucsSettings.font.fromString(settings.value("font").toString());
+    if(settings.contains("LargeFontSize"))QucsSettings.largeFontSize=settings.value("LargeFontSize").toDouble(); // use toDouble() as it can interpret the string according to the current locale
+    if(settings.contains("maxUndo"))QucsSettings.maxUndo=settings.value("maxUndo").toInt();
+    if(settings.contains("NodeWiring"))QucsSettings.NodeWiring=settings.value("NodeWiring").toInt();
+    if(settings.contains("BGColor"))QucsSettings.BGColor.setNamedColor(settings.value("BGColor").toString());
+    if(settings.contains("Editor"))QucsSettings.Editor=settings.value("Editor").toString();
+    if(settings.contains("FileTypes"))QucsSettings.FileTypes=settings.value("FileTypes").toStringList();
+    if(settings.contains("Language"))QucsSettings.Language=settings.value("Language").toString();
+    if(settings.contains("Comment"))QucsSettings.Comment.setNamedColor(settings.value("Comment").toString());
+    if(settings.contains("String"))QucsSettings.String.setNamedColor(settings.value("String").toString());
+    if(settings.contains("Integer"))QucsSettings.Integer.setNamedColor(settings.value("Integer").toString());
+    if(settings.contains("Real"))QucsSettings.Real.setNamedColor(settings.value("Real").toString());
+    if(settings.contains("Character"))QucsSettings.Character.setNamedColor(settings.value("Character").toString());
+    if(settings.contains("Type"))QucsSettings.Type.setNamedColor(settings.value("Type").toString());
+    if(settings.contains("Attribute"))QucsSettings.Attribute.setNamedColor(settings.value("Attribute").toString());
+    if(settings.contains("Directive"))QucsSettings.Directive.setNamedColor(settings.value("Directive").toString());
+    if(settings.contains("Task"))QucsSettings.Task.setNamedColor(settings.value("Task").toString());
+
+    if(settings.contains("Qucsator"))QucsSettings.Qucsator = settings.value("Qucsator").toString();
+    //if(settings.contains("BinDir"))QucsSettings.BinDir = settings.value("BinDir").toString();
+    //if(settings.contains("LangDir"))QucsSettings.LangDir = settings.value("LangDir").toString();
+    //if(settings.contains("LibDir"))QucsSettings.LibDir = settings.value("LibDir").toString();
+    if(settings.contains("AdmsXmlBinDir"))QucsSettings.AdmsXmlBinDir = settings.value("AdmsXmlBinDir").toString();
+    if(settings.contains("AscoBinDir"))QucsSettings.AscoBinDir = settings.value("AscoBinDir").toString();
+    //if(settings.contains("OctaveDir"))QucsSettings.OctaveDir = settings.value("OctaveDir").toString();
+    //if(settings.contains("ExamplesDir"))QucsSettings.ExamplesDir = settings.value("ExamplesDir").toString();
+    //if(settings.contains("DocDir"))QucsSettings.DocDir = settings.value("DocDir").toString();
+    if(settings.contains("OctaveExecutable")) {
+        QucsSettings.OctaveExecutable = settings.value("OctaveExecutable").toString();
+    } else {
+        if(settings.contains("OctaveBinDir")) {
+            QucsSettings.OctaveExecutable = settings.value("OctaveBinDir").toString() +
+                    QDir::separator() + "octave" + QString(executableSuffix);
+        } else QucsSettings.OctaveExecutable = "octave" + QString(executableSuffix);
+    }
+
+    if(settings.contains("QucsHomeDir"))
+      if(settings.value("QucsHomeDir").toString() != "")
+         QucsSettings.QucsHomeDir.setPath(settings.value("QucsHomeDir").toString());
+    QucsSettings.QucsWorkDir = QucsSettings.QucsHomeDir;
+
+    if (settings.contains("IgnoreVersion")) QucsSettings.IgnoreFutureVersion = settings.value("IgnoreVersion").toBool();
+    // check also for old setting name with typo...
+    else if (settings.contains("IngnoreVersion")) QucsSettings.IgnoreFutureVersion = settings.value("IngnoreVersion").toBool();
+    else QucsSettings.IgnoreFutureVersion = false;
+
+    if (settings.contains("GraphAntiAliasing")) QucsSettings.GraphAntiAliasing = settings.value("GraphAntiAliasing").toBool();
+    else QucsSettings.GraphAntiAliasing = false;
+
+    if (settings.contains("TextAntiAliasing")) QucsSettings.TextAntiAliasing = settings.value("TextAntiAliasing").toBool();
+    else QucsSettings.TextAntiAliasing = false;
+
+    if(settings.contains("Editor")) QucsSettings.Editor = settings.value("Editor").toString();
+
+    if(settings.contains("ShowDescription")) QucsSettings.ShowDescriptionProjectTree = settings.value("ShowDescription").toBool();
+
+    QucsSettings.RecentDocs = settings.value("RecentDocs").toString().split("*",QString::SkipEmptyParts);
+    QucsSettings.numRecentDocs = QucsSettings.RecentDocs.count();
+
+
+    QucsSettings.spiceExtensions << "*.sp" << "*.cir" << "*.spc" << "*.spi";
+
+    // If present read in the list of directory paths in which Qucs should
+    // search for subcircuit schematics
+    int npaths = settings.beginReadArray("Paths");
+    for (int i = 0; i < npaths; ++i)
+    {
+        settings.setArrayIndex(i);
+        QString apath = settings.value("path").toString();
+        qucsPathList.append(apath);
+    }
+    settings.endArray();
+
+    QucsSettings.numRecentDocs = 0;
+
+    return true;
+}
+
+ContextMenuTabWidget::ContextMenuTabWidget(QucsApp *parent) : QTabWidget(parent)
+{
+  App = parent;
+  setContextMenuPolicy(Qt::CustomContextMenu);
+  connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint&)));
+}
+
+void ContextMenuTabWidget::showContextMenu(const QPoint& point)
+{
+  if (point.isNull()) {
+    qDebug() << "ContextMenuTabWidget::showContextMenu() : point is null!";
+    return;
+  }
+
+  contextTabIndex = tabBar()->tabAt(point);
+  qDebug() << "contextTabIndex =" << contextTabIndex;
+  if (contextTabIndex >= 0) { // clicked over a tab
+    QMenu menu(this);
+
+    // get the document where the context menu was opened
+    QucsDoc *d = App->getDoc(contextTabIndex);
+    // save the document name (full path)
+    docName = d->DocName;
+
+#define APPEND_MENU(action, slot, text)         \
+  QAction *action = new QAction(tr(text), &menu);    \
+  connect(action, SIGNAL(triggered()), SLOT(slot())); \
+  menu.addAction(action);
+
+  APPEND_MENU(ActionCxMenuClose, slotCxMenuClose, "Close")
+  APPEND_MENU(ActionCxMenuCloseOthers, slotCxMenuCloseOthers, "Close all but this")
+  APPEND_MENU(ActionCxMenuCloseLeft, slotCxMenuCloseLeft, "Close all to the left")
+  APPEND_MENU(ActionCxMenuCloseRight, slotCxMenuCloseRight, "Close all to the right")
+  APPEND_MENU(ActionCxMenuCloseAll, slotCxMenuCloseAll, "Close all")
+  menu.addSeparator();
+  APPEND_MENU(ActionCxMenuCopyPath, slotCxMenuCopyPath, "Copy full path")
+  APPEND_MENU(ActionCxMenuOpenFolder, slotCxMenuOpenFolder, "Open containing folder")
+#undef APPEND_MENU
+
+    // a not-yet-saved document does not have a name/full path
+    // so copying full path or opening containing folder does not make sense
+    ActionCxMenuCopyPath->setEnabled(!docName.isEmpty());
+    ActionCxMenuOpenFolder->setEnabled(!docName.isEmpty());
+
+    menu.exec(tabBar()->mapToGlobal(point));
+  }
+}
+
+Schematic *ContextMenuTabWidget::createEmptySchematic(const QString &name)
+{
+  // create a schematic
+  QFileInfo Info(name);
+  Schematic *d = new Schematic(App, name);
+  int i = addTab(d, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
+  setCurrentIndex(i);
+  return d;
+}
+
+TextDoc *ContextMenuTabWidget::createEmptyTextDoc(const QString &name)
+{
+  // create a text document
+  QFileInfo Info(name);
+  TextDoc *d = new TextDoc(App, name);
+  int i = addTab(d, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
+  setCurrentIndex(i);
+  return d;
+}
+
+void ContextMenuTabWidget::setSaveIcon(bool state, int index)
+{
+  // set document tab icon to "smallsave.xpm" or "empty.xpm"
+  QString icon = (state)? ":/bitmaps/smallsave.xpm" : ":/bitmaps/empty.xpm";
+  if (index < 0) {
+    index = currentIndex();
+  }
+  setTabIcon(index, QPixmap(icon));
+}
+
+void ContextMenuTabWidget::slotCxMenuClose()
+{
+  // close tab where the context menu was opened
+  App->slotFileClose(contextTabIndex);
+}
+
+void ContextMenuTabWidget::slotCxMenuCloseOthers()
+{
+  // close all tabs, except the one where the context menu was opened
+  App->closeAllFiles(contextTabIndex);
+}
+
+void ContextMenuTabWidget::slotCxMenuCloseLeft()
+{
+  // close all tabs to the left of the current one
+  App->closeAllLeft(contextTabIndex);
+}
+
+void ContextMenuTabWidget::slotCxMenuCloseRight()
+{
+  // close all tabs to the right of the current one
+  App->closeAllRight(contextTabIndex);
+}
+
+void ContextMenuTabWidget::slotCxMenuCloseAll()
+{
+  App->slotFileCloseAll();
+}
+
+void ContextMenuTabWidget::slotCxMenuCopyPath()
+{
+  // copy the document full path to the clipboard
+  QClipboard *cb = QApplication::clipboard();
+  cb->setText(docName);
+}
+
+void ContextMenuTabWidget::slotCxMenuOpenFolder()
+{
+  QFileInfo Info(docName);
+  QDesktopServices::openUrl(QUrl::fromLocalFile(Info.canonicalPath()));
+}
+
+// #########################################################################
+// Saves the settings in the settings file.
+bool saveApplSettings()
+{
+    QSettings settings ("qucs","qucs");
+
+    settings.setValue("x", QucsSettings.x);
+    settings.setValue("y", QucsSettings.y);
+    settings.setValue("dx", QucsSettings.dx);
+    settings.setValue("dy", QucsSettings.dy);
+    settings.setValue("font", QucsSettings.font.toString());
+    // store LargeFontSize as a string, so it will be also human-readable in the settings file (will be a @Variant() otherwise)
+    settings.setValue("LargeFontSize", QString::number(QucsSettings.largeFontSize));
+    settings.setValue("maxUndo", QucsSettings.maxUndo);
+    settings.setValue("NodeWiring", QucsSettings.NodeWiring);
+    settings.setValue("BGColor", QucsSettings.BGColor.name());
+    settings.setValue("Editor", QucsSettings.Editor);
+    settings.setValue("FileTypes", QucsSettings.FileTypes);
+    settings.setValue("Language", QucsSettings.Language);
+    settings.setValue("Comment", QucsSettings.Comment.name());
+    settings.setValue("String", QucsSettings.String.name());
+    settings.setValue("Integer", QucsSettings.Integer.name());
+    settings.setValue("Real", QucsSettings.Real.name());
+    settings.setValue("Character", QucsSettings.Character.name());
+    settings.setValue("Type", QucsSettings.Type.name());
+    settings.setValue("Attribute", QucsSettings.Attribute.name());
+    settings.setValue("Directive", QucsSettings.Directive.name());
+    settings.setValue("Task", QucsSettings.Task.name());
+    //settings.setValue("Qucsator", QucsSettings.Qucsator);
+    //settings.setValue("BinDir", QucsSettings.BinDir);
+    //settings.setValue("LangDir", QucsSettings.LangDir);
+    //settings.setValue("LibDir", QucsSettings.LibDir);
+    settings.setValue("AdmsXmlBinDir", QucsSettings.AdmsXmlBinDir.canonicalPath());
+    settings.setValue("AscoBinDir", QucsSettings.AscoBinDir.canonicalPath());
+    //settings.setValue("OctaveDir", QucsSettings.OctaveDir);
+    //settings.setValue("ExamplesDir", QucsSettings.ExamplesDir);
+    //settings.setValue("DocDir", QucsSettings.DocDir);
+    // settings.setValue("OctaveBinDir", QucsSettings.OctaveBinDir.canonicalPath());
+    settings.setValue("OctaveExecutable",QucsSettings.OctaveExecutable);
+    settings.setValue("QucsHomeDir", QucsSettings.QucsHomeDir.canonicalPath());
+    settings.setValue("IgnoreVersion", QucsSettings.IgnoreFutureVersion);
+    settings.setValue("GraphAntiAliasing", QucsSettings.GraphAntiAliasing);
+    settings.setValue("TextAntiAliasing", QucsSettings.TextAntiAliasing);
+    settings.setValue("Editor", QucsSettings.Editor);
+    settings.setValue("ShowDescription", QucsSettings.ShowDescriptionProjectTree);
+
+    // Copy the list of directory paths in which Qucs should
+    // search for subcircuit schematics from qucsPathList
+    settings.remove("Paths");
+    settings.beginWriteArray("Paths");
+    int i = 0;
+    foreach(QString path, qucsPathList) {
+         settings.setArrayIndex(i);
+         settings.setValue("path", path);
+         i++;
+     }
+     settings.endArray();
+
+  return true;
+
+}
+
+QVariant QucsFileSystemModel::data( const QModelIndex& index, int role ) const
+{
+  if (role == Qt::DecorationRole) { // it's an icon
+    QString dName = fileName(index);
+    if (dName.endsWith("_prj")) { // it's a Qucs project
+      // for some reason SVG does not always work on Windows, so use PNG
+      return QIcon(":bitmaps/hicolor/128x128/apps/qucs.png");
+    }
+  }
+  // return default system icon
+  return QFileSystemModel::data(index, role);
+}
+
+// function below is adapted from https://stackoverflow.com/questions/10789284/qfilesystemmodel-sorting-dirsfirst
+bool QucsSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
+{
+  // if sorting by file names column
+  if (sortColumn() == 0) {
+    QucsFileSystemModel *model = qobject_cast<QucsFileSystemModel*>(sourceModel());
+    // get the current sort order (do we need this ?)
+    bool asc = sortOrder() == Qt::AscendingOrder ? true : false;
+
+    QFileInfo leftFileInfo = model->fileInfo(left);
+    QFileInfo rightFileInfo = model->fileInfo(right);
+    QString leftFileName = model->fileName(left);
+    QString rightFileName = model->fileName(right);
+
+    // If DotAndDot move in the beginning
+    if (sourceModel()->data(left).toString() == "..")
+      return asc;
+    if (sourceModel()->data(right).toString() == "..")
+      return !asc;
+
+    // move dirs upper
+    if (!leftFileInfo.isDir() && rightFileInfo.isDir()) {
+      return !asc;
+    }
+    if (leftFileInfo.isDir() && !rightFileInfo.isDir()) {
+      return asc;
+    }
+    // move dirs ending in '_prj' upper
+    if (leftFileInfo.isDir() && rightFileInfo.isDir()) {
+      if (!leftFileName.endsWith("_prj") && rightFileName.endsWith("_prj")) {
+        return !asc;
+      }
+      if (leftFileName.endsWith("_prj") && !rightFileName.endsWith("_prj")) {
+        return asc;
+      }
+    }
+  }
+
+  return QSortFilterProxyModel::lessThan(left, right);
+}
+// vim:ts=8:sw=2:et

@@ -21,6 +21,8 @@ smithdiagram.h
 tabdiagram.h
 timingdiagram.h
 truthdiagram.h
+#phasordiagram.h
+#waveac.h
 )
 
 SET(DIAGRAMS_SRCS
@@ -28,6 +30,8 @@ curvediagram.cpp	graph.cpp		polardiagram.cpp	smithdiagram.cpp
 diagram.cpp		marker.cpp		psdiagram.cpp		tabdiagram.cpp
 diagramdialog.cpp	markerdialog.cpp	rect3ddiagram.cpp	timingdiagram.cpp
 rectdiagram.cpp		truthdiagram.cpp
+#phasordiagram.cpp
+#waveac.cpp
 )
 
 SET(DIAGRAMS_MOC_HDRS
@@ -37,4 +41,4 @@ markerdialog.h
 
 QT4_WRAP_CPP( DIAGRAMS_MOC_SRCS ${DIAGRAMS_MOC_HDRS} )
 
-ADD_LIBRARY(diagrams ${DIAGRAMS_HDRS} ${DIAGRAMS_SRCS} ${DIAGRAMS_MOC_SRCS})
+ADD_LIBRARY(diagrams OBJECT ${DIAGRAMS_HDRS} ${DIAGRAMS_SRCS} ${DIAGRAMS_MOC_SRCS})

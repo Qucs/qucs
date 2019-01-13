@@ -1,3 +1,56 @@
+/compile
+/qucs-core/build-aux/ar-lib
+/qucs-core/build-aux/compile
+/qucs-core/build-aux/test-driver
+/qucs-core/build-aux/ylwrap
+/qucs-core/src/components/verilog/DLS_1ton.cpp
+/qucs-core/src/components/verilog/DLS_nto1.cpp
+/qucs-core/src/components/verilog/EKV26MOS.cpp
+/qucs-core/src/components/verilog/MESFET.cpp
+/qucs-core/src/components/verilog/andor4x2.cpp
+/qucs-core/src/components/verilog/andor4x3.cpp
+/qucs-core/src/components/verilog/andor4x4.cpp
+/qucs-core/src/components/verilog/binarytogrey4bit.cpp
+/qucs-core/src/components/verilog/comp_1bit.cpp
+/qucs-core/src/components/verilog/comp_2bit.cpp
+/qucs-core/src/components/verilog/comp_4bit.cpp
+/qucs-core/src/components/verilog/dff_SR.cpp
+/qucs-core/src/components/verilog/dmux2to4.cpp
+/qucs-core/src/components/verilog/dmux3to8.cpp
+/qucs-core/src/components/verilog/dmux4to16.cpp
+/qucs-core/src/components/verilog/fa1b.cpp
+/qucs-core/src/components/verilog/fa2b.cpp
+/qucs-core/src/components/verilog/gatedDlatch.cpp
+/qucs-core/src/components/verilog/greytobinary4bit.cpp
+/qucs-core/src/components/verilog/ha1b.cpp
+/qucs-core/src/components/verilog/hpribin4bit.cpp
+/qucs-core/src/components/verilog/jkff_SR.cpp
+/qucs-core/src/components/verilog/log_amp.cpp
+/qucs-core/src/components/verilog/logic_0.cpp
+/qucs-core/src/components/verilog/logic_1.cpp
+/qucs-core/src/components/verilog/mod_amp.cpp
+/qucs-core/src/components/verilog/mux2to1.cpp
+/qucs-core/src/components/verilog/mux4to1.cpp
+/qucs-core/src/components/verilog/mux8to1.cpp
+/qucs-core/src/components/verilog/nigbt.cpp
+/qucs-core/src/components/verilog/pad2bit.cpp
+/qucs-core/src/components/verilog/pad3bit.cpp
+/qucs-core/src/components/verilog/pad4bit.cpp
+/qucs-core/src/components/verilog/photodiode.cpp
+/qucs-core/src/components/verilog/phototransistor.cpp
+/qucs-core/src/components/verilog/potentiometer.cpp
+/qucs-core/src/components/verilog/tff_SR.cpp
+/qucs-core/src/components/verilog/vcresistor.cpp
+/qucs-core/src/converter/parse_spice.hpp
+/qucs-core/src/converter/parse_vcd.hpp
+/qucs-core/src/parse_citi.hpp
+/qucs-core/src/parse_csv.hpp
+/qucs-core/src/parse_dataset.hpp
+/qucs-core/src/parse_mdl.hpp
+/qucs-core/src/parse_netlist.hpp
+/qucs-core/src/parse_touchstone.hpp
+/qucs-core/src/parse_zvr.hpp
+/qucs/ar-lib
 # Qucs Specific #
 #################
 */src/qucsator
@@ -82,7 +135,6 @@ tokens_vcd.h
 
 # Autotools Generated #
 #######################
-*.in
 *.la
 *.lo
 configure
@@ -190,6 +242,8 @@ CMakeLists.txt.user
 # except in the examples/ directory
 !examples/*.sch
 !examples/*.dpl
+!qucs-doc/tutorial/sparameteramp/*/*.sch
+!qucs-doc/tutorial/sparameteramp/*/*.dpl
 
 # Xcode #
 #########
@@ -212,3 +266,6 @@ CMakeFiles
 CMakeCache.txt
 *.cmake
 *.depends
+/qucs-core/src/components/verilog/constants.vams
+/qucs-core/src/components/verilog/disciplines.vams
+/qucs-doc/technical/octave-workspace

@@ -97,6 +97,12 @@ SET(PROJECT_COPYRIGHT_YEAR "2013")
 SET(PROJECT_DOMAIN_FIRST "qucs")
 SET(PROJECT_DOMAIN_SECOND "org")
 
+SET(QUCS_URL "https://sf.net/p/qucs")
+SET(QUCS_BUGREPORT "qucs-bugs@lists.sourceforge.net")
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/doc/qucsconv.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/doc/qucsconv.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/doc/qucsator.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/doc/qucsator.1)
+
 # use last git commit hash along the version
 set(GIT unknown)
 IF(EXISTS ${CMAKE_SOURCE_DIR}/../.git )
@@ -231,6 +237,7 @@ if(UNIX AND ENABLE_RPATH)
   set(CMAKE_SKIP_BUILD_RPATH FALSE)
   set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
   set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+  set(CMAKE_MACOSX_RPATH TRUE)
 endif()
 
 # CMake adds --enable-all-exports on Cygwin (since Cygwin is

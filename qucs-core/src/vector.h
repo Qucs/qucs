@@ -96,6 +96,8 @@ class vector : public object
   friend vector  cumsum  (vector);
   friend vector  cumprod (vector);
   friend vector  cumavg  (vector);
+  friend vector  smooth  (vector, const nr_double_t);
+  friend vector  groupdelay  (vector, vector);
   friend vector  dbm     (vector, const nr_complex_t);
   friend nr_complex_t integrate (vector v, const nr_complex_t);
   friend nr_double_t integrate (vector v, const nr_double_t);
@@ -253,6 +255,7 @@ nr_complex_t avg     (vector);
 vector  cumsum  (vector);
 vector  cumprod (vector);
 vector  cumavg  (vector);
+vector  smooth  (vector, const nr_double_t);
 vector  dbm     (vector, const nr_complex_t z = 50.0);
 nr_complex_t integrate (vector v, const nr_complex_t);
 nr_double_t integrate (vector v, const nr_double_t);

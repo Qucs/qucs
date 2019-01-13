@@ -49,6 +49,7 @@ using namespace qucs;
 
 strlist * touchstone_idents = NULL;
 dataset * touchstone_result = NULL;
+qucs::vector  * touchstone_line = NULL;
 qucs::vector  * touchstone_vector = NULL;
 
 /* default touchstone options */

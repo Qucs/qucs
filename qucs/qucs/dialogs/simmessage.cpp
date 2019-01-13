@@ -40,7 +40,6 @@ using namespace std;
 #include <QMessageBox>
 
 #include "simmessage.h"
-#include "main.h"
 #include "module.h"
 #include "qucs.h"
 #include "textdoc.h"
@@ -48,12 +47,6 @@ using namespace std;
 #include "components/opt_sim.h"
 #include "components/vhdlfile.h"
 #include "misc.h"
-
-#ifdef __MINGW32__
-#define executableSuffix ".exe"
-#else
-#define executableSuffix ""
-#endif
 
 /*!
  * \brief Create a simulation messages dialog.
@@ -76,7 +69,7 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
   DataDisplay = Doc->DataDisplay;
   Script = Doc->Script;
   QFileInfo Info(DocName);
-  DataSet = QDir::convertSeparators(Info.path()) +
+  DataSet = QDir::toNativeSeparators(Info.path()) +
     QDir::separator() + Doc->DataSet;
   showBias = Doc->showBias;     // save some settings as the document...
   SimOpenDpl = Doc->SimOpenDpl; // ...could be closed during the simulation.
@@ -326,7 +319,7 @@ void SimMessage::slotFinishSpiceNetlist(int status )
 #ifdef __MINGW32__
 #include <windows.h>
 static QString pathName(QString longpath) {
-  const char * lpath = QDir::convertSeparators(longpath).ascii();
+  const char * lpath = QDir::toNativeSeparators(longpath).toAscii();
   char spath[2048];
   int len = GetShortPathNameA(lpath,spath,sizeof(spath)-1);
   spath[len] = '\0';
@@ -350,7 +343,7 @@ void SimMessage::startSimulator()
 
   QString SimTime;
   QStringList Arguments;
-  QString SimPath = QDir::convertSeparators (QucsSettings.QucsHomeDir.absolutePath());
+  QString SimPath = QDir::toNativeSeparators(QucsSettings.QucsHomeDir.absolutePath());
 #ifdef __MINGW32__
   QString QucsDigiLib = "qucsdigilib.bat";
   QString QucsDigi = "qucsdigi.bat";
@@ -408,7 +401,7 @@ void SimMessage::startSimulator()
       QString entity = VInfo.EntityName.toLower();
       QString lib = Doc->Library.toLower();
       if (lib.isEmpty()) lib = "work";
-      QString dir = QDir::convertSeparators (QucsSettings.QucsHomeDir.path());
+      QString dir = QDir::toNativeSeparators(QucsSettings.QucsHomeDir.path());
       QDir vhdlDir(dir);
       if(!vhdlDir.exists("vhdl"))
 	if(!vhdlDir.mkdir("vhdl")) {
@@ -534,8 +527,11 @@ void SimMessage::startSimulator()
 
         Program = QucsSettings.AscoBinDir.canonicalPath();
         Program = QDir::toNativeSeparators(Program+"/"+"asco"+QString(executableSuffix));
+        // pass full path of simulator to ASCO so it does not be to be in PATH
+        // and QUCSATOR environment variable is honored
         Arguments << "-qucs" << QucsSettings.QucsHomeDir.filePath("asco_netlist.txt")
-                  << "-o" << "asco_out";
+                  << "-o" << "asco_out"
+                  << "-s" << "\"" + QDir::toNativeSeparators(QucsSettings.Qucsator) + "\"";
       }
       else {
         Program = QucsSettings.Qucsator;
@@ -594,9 +590,6 @@ void SimMessage::startSimulator()
   QString sep(":");
 #endif
 
-  // append process PATH
-  // insert Qucs bin dir, so ASCO can find qucsator
-  env.insert("PATH", env.value("PATH") + sep + QucsSettings.BinDir );
   SimProcess.setProcessEnvironment(env);
 
   qDebug() << "Command :" << Program << Arguments.join(" ");
@@ -609,7 +602,7 @@ Component * SimMessage::findOptimization(Schematic *Doc) {
   Component *pc;
   for(pc=Doc->Components->first(); pc!=0; pc=Doc->Components->next())
     if(pc->isActive)
-      if(pc->Model == ".Opt")
+      if(pc->obsolete_model_hack() == ".Opt")
 	return pc;
   return NULL;
 }

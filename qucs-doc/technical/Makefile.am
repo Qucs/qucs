@@ -50,10 +50,19 @@ FIGURES = differential.fig biast.fig \
   mstee.fig mstee2.fig nitrafo.fig hb_concept.fig spsgp_spice.fig fft.fig     \
   lssp.fig cpopen.fig cpshort.fig cpgap.fig cpstep.fig hbn_concept.fig        \
   coupler.fig coax.fig tline.fig vam.fig vpm.fig twisted.fig dcalgo.fig       \
-  mscross.fig bondwire.fig tline4p.fig
+  mscross.fig bondwire.fig tline4p.fig twoportcascade.fig fourportab.fig
 PSFILES = MNAexample.eps NLexample.eps CYexample.eps MNAnoise1.eps \
   MNAnoise2.eps Unoise.eps MNAsingular.eps Real_c.eps Real_ec.eps  \
-  Real_r.eps TLpiece.eps QuarterWavelengthFilter.eps
+  Real_r.eps TLpiece.eps QuarterWavelengthFilter.eps               \
+  rectwaveguide.eps circularwaveguide.eps                          \
+  PlanarSpiralInductors.eps CircularLoop.eps PrintedInductorEC.eps \
+  ReflectionCoeffsTaper.eps capq.eps indq.eps \
+  DoubleStubOpen.eps DoubleStubShort.eps \
+  SingleStubOpen.eps SingleStubShort.eps \
+  DoubleStubOpenBalanced.eps DoubleStubShortBalanced.eps \
+  SingleStubOpenBalanced.eps SingleStubShortBalanced.eps \
+  Lsection.eps SmithChart-Lsection.eps SmithChartTL.eps \
+  Smithl8l4.eps CascadedLCsch.eps SmithCascadedLCsections.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PSFRAGTEXS = $(FIGURES:.fig=.tex) $(MATHFILES:.m=.tex)
 PDFFILES = $(FIGURES:.fig=.pdf)
@@ -78,7 +87,7 @@ html:
 # install-local: # maybe use this?
 #endif
 
-technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES)
+technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES) $(CHAPTERS)
 
 SUFFIXES = .dvi .tex .pdf .ps .eps .fig .frg .m
 

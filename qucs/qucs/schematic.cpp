@@ -43,7 +43,6 @@
 
 #include "qucs.h"
 #include "schematic.h"
-#include "main.h"
 #include "node.h"
 #include "textdoc.h"
 #include "viewpainter.h"
@@ -53,12 +52,13 @@
 #include "components/vhdlfile.h"
 #include "components/verilogfile.h"
 #include "components/vafile.h"
+#include "misc.h"
 
 // just dummies for empty lists
-Q3PtrList<Wire>      SymbolWires;
-Q3PtrList<Node>      SymbolNodes;
-Q3PtrList<Diagram>   SymbolDiags;
-Q3PtrList<Component> SymbolComps;
+WireList      SymbolWires;
+NodeList      SymbolNodes;
+DiagramList   SymbolDiags;
+ComponentList SymbolComps;
 
 
 Schematic::Schematic(QucsApp *App_, const QString& Name_)
@@ -102,7 +102,7 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
 
   setVScrollBarMode(Q3ScrollView::AlwaysOn);
   setHScrollBarMode(Q3ScrollView::AlwaysOn);
-  viewport()->setPaletteBackgroundColor(QucsSettings.BGColor);
+  misc::setWidgetBackgroundColor(viewport(), QucsSettings.BGColor);
   viewport()->setMouseTracking(true);
   viewport()->setAcceptDrops(true);  // enable drag'n drop
 
@@ -1575,8 +1575,7 @@ int Schematic::adjustPortNumbers()
       // go through all components in a schematic
       for(Component *pc = DocComps.first(); pc!=0; pc = DocComps.next())
       {
-         if(pc->Model == "Port")
-         {
+         if(pc->obsolete_model_hack() == "Port") { // BUG. move to device.
              countPort++;
 
              Str = pc->Props.getFirst()->Value;
@@ -1591,11 +1590,11 @@ int Schematic::adjustPortNumbers()
 
              if(pp)
              {
-                 ((PortSymbol*)pp)->nameStr = pc->Name;
+                 ((PortSymbol*)pp)->nameStr = pc->name();
              }
              else
              {
-                 SymbolPaints.append(new PortSymbol(x1, y2, Str, pc->Name));
+                 SymbolPaints.append(new PortSymbol(x1, y2, Str, pc->name()));
                  y2 += 40;
              }
           }
@@ -2078,7 +2077,7 @@ void Schematic::contentsDropEvent(QDropEvent *Event)
 
     // URI:  file:/home/linuxuser/Desktop/example.sch
     foreach(QUrl url, urls) {
-      App->gotoPage(QDir::convertSeparators(url.toLocalFile()));
+      App->gotoPage(QDir::toNativeSeparators(url.toLocalFile()));
     }
 
     d->DocChanged = changed;

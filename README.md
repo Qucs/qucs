@@ -79,18 +79,25 @@ Some general contribution guidelines can be found on our Wiki <https://github.co
 
 ## Compile instructions Linux (Debian/Ubuntu)
 
-First make sure you have all dependencies installed:
+For the GUI tools and simulation engine the following dependencies are needed:
 
     sudo apt-get install build-essential
     sudo apt-get install libqt4-dev libqt4-qt3support
-    sudo apt-get install automake libtool gperf flex bison
-    sudo apt-get install texlive-font-utils octave-epstk
+    sudo apt-get install automake libtool libtool-bin gperf flex bison
 
 The ADMS package is necessary. Please [download](https://sourceforge.net/projects/mot-adms/files/adms-source/) the latest tarball and follow the [install](https://github.com/Qucs/ADMS#users-install-from-tarball) instructions. Having `admsXml` on the path should be sufficient.
 
-
 To build the manuals and user documentation further dependencies are needed. Please check the `qucs-doc/README` file.
+See below the `--disable-doc` to skip building the documentation from source.
+To build the documentation from source the following dependencies are needed:
 
+    sudo apt-get install doxygen
+    sudo apt-get install octave octave-epstk
+    sudo apt-get install latex2html
+    sudo apt-get install texlive texlive-font-utils texlive-math-extra
+    sudo apt-get install texlive-publishers texlive-science
+    sudo apt-get install transfig gnuplot graphviz
+    sudo apt-get install ps2eps pgf python-tk
 
 Bootstrap and build everything (after cloning):
 

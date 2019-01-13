@@ -2,6 +2,7 @@
  * matrix.cpp - matrix class implementation
  *
  * Copyright (C) 2003-2009 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2012-2017 Qucs Team
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -120,7 +121,7 @@ matrix::matrix (int s)  {
   data = (s > 0) ? new nr_complex_t[s * s] : NULL;
 }
 
-/* \brief Creates a matrix
+/*!\brief Creates a matrix
 
    Constructor creates an unnamed instance of the matrix class with a
    certain number of rows and columns.
@@ -135,7 +136,7 @@ matrix::matrix (int r, int c)  {
   data = (r > 0 && c > 0) ? new nr_complex_t[r * c] : NULL;
 }
 
-/* \brief copy constructor
+/*!\brief copy constructor
 
    The copy constructor creates a new instance based on the given
    matrix object.
@@ -178,7 +179,7 @@ const matrix& matrix::operator=(const matrix & m) {
   return *this;
 }
 
-/*!\bried Destructor
+/*!\brief Destructor
 
    Destructor deletes a matrix object.
 */
@@ -1571,6 +1572,138 @@ void matrix::exchangeCols (int c1, int c2) {
     data[r + c1] = data[r + c2];
     data[r + c2] = s;
   }
+}
+
+/*!\brief Return a generic rectangular submatrix
+
+  Extract a block of size (p,q), starting at (i,j)
+  \param[in] i start row
+  \param[in] j start column
+  \param[in] p number of rows for the submatrix
+  \param[in] q number of columns for the submatrix
+  \todo check that (p+i)<rows and (q+j)<cols?
+*/
+matrix matrix::getBlock(int i, int j, int p, int q) {
+  matrix bm = matrix(p, q);
+
+  // copy matrix elements
+  for (int r = 0; r < p; r++) {
+    for (int c = 0; c < q; c++) {
+      bm.set(r, c, data[(r + i) * cols + c + j]);
+    }
+  }
+  return bm;
+}
+
+/*!\brief Return a rectangular submatrix flush against the top-left corner
+
+  Extract a block of size p by q flush against the top-left corner
+  \param[in] p number of rows for the submatrix
+  \param[in] q number of columns for the submatrix
+*/
+matrix matrix::getTopLeftCorner(int p, int q) {
+  return getBlock(0, 0, p, q);
+}
+
+/*!\brief Return a rectangular submatrix flush against the bottom-left corner
+
+  Extract a block of size p by q flush against the bottom-left corner
+  \param[in] p number of rows for the submatrix
+  \param[in] q number of columns for the submatrix
+*/
+matrix matrix::getBottomLeftCorner(int p, int q) {
+  // bottom-left p by q block
+  return getBlock(getRows()-p, 0, p, q);
+}
+
+/*!\brief Return a rectangular submatrix flush against the top-right corner
+
+  Extract a block of size p by q flush against the top-right corner
+  \param[in] p number of rows for the submatrix
+  \param[in] q number of columns for the submatrix
+*/
+matrix matrix::getTopRightCorner(int p, int q) {
+  // top-right p by q block
+  return getBlock(0, getCols()-q, p, q);
+}
+
+/*!\brief Return a rectangular submatrix flush against the bottom-right corner
+
+  Extract a block of size p by q flush against the bottom-right corner
+  \param[in] p number of rows for the submatrix
+  \param[in] q number of columns for the submatrix
+*/
+matrix matrix::getBottomRightCorner(int p, int q) {
+  // bottom-right p by q block
+  return getBlock(getRows()-p, getCols()-q, p, q);
+}
+
+/*!\brief Set a generic rectangular submatrix portion
+
+  Assign a block of size (p,q), starting at (i,j)
+  \param[in] m matrix block to assign
+  \param[in] i start row
+  \param[in] j start column
+  \param[in] p number of rows to assign
+  \param[in] q number of columns to assign
+  \return matrix with assigned submatrix portion
+  \todo check that (p+i)<rows and (q+j)<cols?
+*/
+void matrix::setBlock(matrix m, int i, int j, int p, int q) {
+  // copy matrix elements
+  for (int r = 0; r < p; r++) {
+    for (int c = 0; c < q; c++) {
+      data[(r + i) * cols + c + j] = m.get(r, c);
+    }
+  }
+}
+
+/*!\brief Set a rectangular submatrix portion adjacent to the top-left corner
+
+  Assign a block of size p by q, starting at the top-left corner
+  \param[in] m matrix block to assign
+  \param[in] p number of rows to assign
+  \param[in] q number of columns to assign
+  \return matrix with assigned submatrix portion
+*/
+void matrix::setTopLeftCorner(matrix m, int p, int q) {
+  setBlock(m, 0, 0, p, q);
+}
+
+/*!\brief Set a rectangular submatrix portion adjacent to the bottom-left corner
+
+  Assign a block of size p by q, starting at the bottom-left corner
+  \param[in] m matrix block to assign
+  \param[in] p number of rows to assign
+  \param[in] q number of columns to assign
+  \return matrix with assigned submatrix portion
+*/
+void matrix::setBottomLeftCorner(matrix m, int p, int q) {
+  setBlock(m, getRows()-p, 0, p, q);
+}
+
+/*!\brief Set a rectangular submatrix portion adjacent to the top-right corner
+
+  Assign a block of size p by q, starting at the top-right corner
+  \param[in] m matrix block to assign
+  \param[in] p number of rows to assign
+  \param[in] q number of columns to assign
+  \return matrix with assigned submatrix portion
+*/
+void matrix::setTopRightCorner(matrix m, int p, int q) {
+  setBlock(m, 0, getCols()-q, p, q);
+}
+
+/*!\brief Set a rectangular submatrix portion adjacent to the bottom-right corner
+
+  Assign a block of size p by q, starting at the bottom-right corner
+  \param[in] m matrix block to assign
+  \param[in] p number of rows to assign
+  \param[in] q number of columns to assign
+  \return matrix with assigned submatrix portion
+*/
+void matrix::setBottomRightCorner(matrix m, int p, int q) {
+  setBlock(m, getRows()-p, getCols()-q, p, q);
 }
 
 /*!\brief Generic conversion matrix

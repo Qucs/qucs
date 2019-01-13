@@ -32,7 +32,7 @@
 #endif
 
 #include "rectdiagram.h"
-#include "main.h"
+#include "qucs.h"
 #include "misc.h"
 
 

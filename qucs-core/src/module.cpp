@@ -164,8 +164,10 @@ void module::registerModules (void) {
   // circuit components
   REGISTER_CIRCUIT (resistor);
   REGISTER_CIRCUIT (capacitor);
+  REGISTER_CIRCUIT (capq);
   REGISTER_CIRCUIT (pac);
   REGISTER_CIRCUIT (inductor);
+  REGISTER_CIRCUIT (indq);
   REGISTER_CIRCUIT (vccs);
   REGISTER_CIRCUIT (cccs);
   REGISTER_CIRCUIT (vcvs);
@@ -200,6 +202,8 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (tline4p);
   REGISTER_CIRCUIT (ctline);
   REGISTER_CIRCUIT (coaxline);
+  REGISTER_CIRCUIT (circline);
+  REGISTER_CIRCUIT (taperedline);
   REGISTER_CIRCUIT (rectline);
   REGISTER_CIRCUIT (twistedpair);
   REGISTER_CIRCUIT (rlcg);
@@ -225,16 +229,20 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (msvia);
   REGISTER_CIRCUIT (msrstub);
   REGISTER_CIRCUIT (bondwire);
+  REGISTER_CIRCUIT (spiralinductor);
+  REGISTER_CIRCUIT (circularloop);
   REGISTER_CIRCUIT (cpwline);
   REGISTER_CIRCUIT (cpwopen);
   REGISTER_CIRCUIT (cpwshort);
   REGISTER_CIRCUIT (cpwgap);
   REGISTER_CIRCUIT (cpwstep);
   REGISTER_CIRCUIT (iprobe);
+  REGISTER_CIRCUIT (wprobe);
   REGISTER_CIRCUIT (vprobe);
   REGISTER_CIRCUIT (jfet);
   REGISTER_CIRCUIT (bjt);
-  REGISTER_CIRCUIT (spfile);
+  REGISTER_CIRCUIT (spembed);
+  REGISTER_CIRCUIT (spdeembed);
   REGISTER_CIRCUIT (vnoise);
   REGISTER_CIRCUIT (inoise);
   REGISTER_CIRCUIT (mosfet);

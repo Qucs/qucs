@@ -8,6 +8,11 @@
 #   cmake .. -DCMAKE_INSTALL_PREFIX=/new/install/prefix
 #
 # By default, the prefix is "/usr/local"
+#
+# Tests are enabled by default.
+# To run the tests, try one of these:
+#   make test
+#   env CTEST_OUTPUT_ON_FAILURE=1 make test    # for verbose output
 
 PROJECT(qucs CXX)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
@@ -26,6 +31,9 @@ set(PROJECT_DOMAIN_SECOND "org")
 
 #
 SET(CMAKE_BUILD_TYPE Debug)
+
+# enable testing for current directory and below
+ENABLE_TESTING()
 
 # If Git hash not defined, try to define it
 IF(NOT GIT)
@@ -54,7 +62,7 @@ endif()
 #
 ADD_DEFINITIONS( -DHAVE_CONFIG_H )
 
-FIND_PACKAGE( Qt4 4.6.3 REQUIRED QtCore QtGui Qt3Support QtSvg QtXml QtScript)
+FIND_PACKAGE( Qt4 4.6.3 REQUIRED QtCore QtGui Qt3Support QtSvg QtXml QtScript QtTest)
 INCLUDE( ${QT_USE_FILE} )
 
 #MESSAGE("QT_INCLUDES=[${QT_INCLUDES}]")
@@ -103,7 +111,17 @@ IF(WIN32)
   ENDIF()
 ENDIF(WIN32)
 
-ADD_DEFINITIONS(${QT_DEFINITIONS})
+#
+# Set position independed code PIC
+#
+IF (UNIX AND NOT APPLE)
+  IF( CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" )
+    SET(CMAKE_POSITION_INDEPENDENT_CODE ON)
+  ENDIF()
+ENDIF()
+
+
+ADD_DEFINITIONS(${QT_DEFINITIONS} -DQT3_SUPPORT_WARNINGS)
 
 INCLUDE_DIRECTORIES(
   ${qucs_SOURCE_DIR}
@@ -123,9 +141,12 @@ ADD_SUBDIRECTORY( octave )
 ADD_SUBDIRECTORY( python )
 ADD_SUBDIRECTORY( paintings )
 
+ADD_SUBDIRECTORY( tests )
+
 SET(QUCS_SRCS
+  attach.cpp
   element.cpp	octave_window.cpp	qucsdoc.cpp
-  textdoc.cpp  main.cpp	schematic.cpp
+  textdoc.cpp  schematic.cpp
   mnemo.cpp	qucs.cpp	viewpainter.cpp
   module.cpp	schematic_element.cpp	wire.cpp
   mouseactions.cpp qucs_actions.cpp	schematic_file.cpp
@@ -136,7 +157,6 @@ SET(QUCS_SRCS
 
 SET(QUCS_HDRS
 element.h
-main.h
 messagedock.h
 misc.h
 mnemo.h
@@ -144,6 +164,7 @@ module.h
 mouseactions.h
 node.h
 octave_window.h
+platform.h
 qucs.h
 qucsdoc.h
 schematic.h
@@ -174,8 +195,9 @@ QT4_WRAP_CPP( QUCS_MOC_SRCS ${QUCS_MOC_HDRS} )
 #
 # generate rules for building source files from bitmap resources
 #
-SET(RESOURCES qucs.qrc)
+SET(RESOURCES qucs_.qrc)
 QT4_ADD_RESOURCES(RESOURCES_SRCS ${RESOURCES})
+
 
 if(UNIX AND NOT APPLE)
 
@@ -203,9 +225,6 @@ if(UNIX AND NOT APPLE)
     INSTALL( FILES ${DESKTOP} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
 endif()
 
-
-
-
 #
 # configure Apple bundle information
 #
@@ -231,20 +250,44 @@ IF(APPLE)
   #SET(RESOURCES_SRCS ${RESOURCES_SRCS} ${LANG_SRCS})
 ENDIF(APPLE)
 
+#
+# Set up RPATH for the project
+#
+option(ENABLE_RPATH "Enable rpath support on Linux and Mac" ON)
+if(NOT CMAKE_INSTALL_RPATH)
+  set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+endif()
+if(APPLE AND NOT CMAKE_INSTALL_NAME_DIR)
+  set(CMAKE_INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/lib")
+endif()
+if(UNIX AND ENABLE_RPATH)
+  set(CMAKE_SKIP_BUILD_RPATH FALSE)
+  set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
+  set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+  set(CMAKE_MACOSX_RPATH TRUE)
+endif()
+
+# schematic library
+ADD_LIBRARY( coreSchematic OBJECT ${QUCS_SRCS} ${QUCS_MOC_SRCS})
+
+# create shared library
+ADD_LIBRARY( qucsschematic SHARED
+  $<TARGET_OBJECTS:coreSchematic>
+  $<TARGET_OBJECTS:components>
+  $<TARGET_OBJECTS:diagrams>
+  $<TARGET_OBJECTS:dialogs>
+  $<TARGET_OBJECTS:paintings>
+)
+
+# link system libraries
+TARGET_LINK_LIBRARIES( qucsschematic ${QT_LIBRARIES} ${CMAKE_DL_LIBS})
 
 #
 #  CMake's way of creating an executable
 #
-ADD_EXECUTABLE( qucs MACOSX_BUNDLE WIN32
-  ${QUCS_HDRS}
-  ${QUCS_SRCS}
-  ${QUCS_MOC_SRCS}
-  ${RESOURCES_SRCS} )
+ADD_EXECUTABLE( qucs MACOSX_BUNDLE WIN32 main.cpp ${RESOURCES_SRCS} )
 
-#
-# Tell CMake which libraries we need to link our executable against.
-#
-TARGET_LINK_LIBRARIES( qucs  components diagrams dialogs paintings ${QT_LIBRARIES} )
+TARGET_LINK_LIBRARIES( qucs qucsschematic )
 
 #
 # Prepare the installation
@@ -270,6 +313,13 @@ INSTALL(TARGETS qucs
     BUNDLE DESTINATION bin COMPONENT Runtime
     RUNTIME DESTINATION bin COMPONENT Runtime
     )
+
+# set Windows runtime location for libqucschematic
+# See: http://www.cmake.org/pipermail/cmake/2010-June/037461.html
+INSTALL(TARGETS qucsschematic
+     RUNTIME DESTINATION bin COMPONENT runtime
+     ARCHIVE DESTINATION lib COMPONENT devel
+     LIBRARY DESTINATION lib COMPONENT library)
 
 #
 # Install needed Qt plugins by copying directories from the qt installation
@@ -307,6 +357,7 @@ IF(APPLE)
 INSTALL(CODE "
     file(GLOB_RECURSE QTPLUGINS
       \"\${CMAKE_INSTALL_PREFIX}/bin/${plugin_dest_dir}/plugins/*${CMAKE_SHARED_LIBRARY_SUFFIX}\")
+    set(BU_CHMOD_BUNDLE_ITEMS ON)
     include(BundleUtilities)
     fixup_bundle(\"${APPS}\" \"\${QTPLUGINS}\" \"${DIRS}\")
     " COMPONENT Runtime)

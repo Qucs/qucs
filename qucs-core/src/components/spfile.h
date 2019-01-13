@@ -51,33 +51,19 @@ class spfile_vector
   int c;
 };
 
-class spfile : public qucs::circuit
+class spfile
 {
  public:
-  CREATOR (spfile);
+  spfile ();
   ~spfile ();
-  void initSP (void);
-  void calcSP (nr_double_t);
-  void calcNoiseSP (nr_double_t);
-  void initDC (void);
-  void initTR (void);
-  void initAC (void);
-  void calcAC (nr_double_t);
-  void calcNoiseAC (nr_double_t);
   void createIndex (void);
   void prepare (void);
   void createVector (int, int);
-  qucs::matrix correlationMatrix (nr_double_t, nr_complex_t, nr_double_t, qucs::matrix);
-  nr_double_t noiseFigure (qucs::matrix, qucs::matrix, nr_double_t&, nr_complex_t&,
-			   nr_double_t&);
-  qucs::matrix expandNoiseMatrix (qucs::matrix, qucs::matrix);
-  qucs::matrix shrinkNoiseMatrix (qucs::matrix, qucs::matrix);
   qucs::matrix expandSParaMatrix (qucs::matrix);
   qucs::matrix shrinkSParaMatrix (qucs::matrix);
   qucs::matrix getInterpolMatrixS (nr_double_t);
-  qucs::matrix calcMatrixCs (nr_double_t);
 
- private:
+  int nPorts;
   qucs::dataset * data;
   qucs::vector * sfreq;
   qucs::vector * nfreq;

@@ -69,18 +69,18 @@ endif
 # so use the prefix of the installed package.
 qucscheck: $(PWD)/qucs-test
 	$(QUCSTEST_ENV) \
-	cd qucs-test && python run.py --qucs --exclude skip$(macossuffix).txt
+	cd qucs-test && $(PYTHON) run.py --qucs --exclude skip$(macossuffix).txt
 
 # Run test on qucsator
 qucsatorcheck: $(PWD)/qucs-test
 	$(QUCSTEST_ENV) \
-	cd qucs-test && python run.py --prefix $(abs_top_builddir)/qucs-core/src/ \
+	cd qucs-test && $(PYTHON) run.py --prefix $(abs_top_builddir)/qucs-core/src/ \
 		--qucsator --exclude skip$(macossuffix).txt
 
 # Run tests on Qucsator equation system
 eqncheck: $(PWD)/qucs-test
 	$(QUCSTEST_ENV) \
-	cd qucs-test && python run_equations.py --prefix $(abs_top_builddir)/qucs-core/src/
+	cd qucs-test && $(PYTHON) run_equations.py --prefix $(abs_top_builddir)/qucs-core/src/
 
 # BUG should not be necessary, but is.
 $(PWD)/qucs-test:

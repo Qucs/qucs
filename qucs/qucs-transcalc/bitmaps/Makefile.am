@@ -24,8 +24,9 @@
 
 XPMS = 
 
-PNGS = c_microstrip.png coax.png microstrip.png rectwaveguide.png cpw.png \
-	cpw_back.png
+PNGS = c_microstrip.png coax.png microstrip.png stripline.png rectwaveguide.png cpw.png \
+	cpw_back.png \
+	big.qucs.xpm
 
 ICONS = 
 

@@ -17,9 +17,9 @@
 #include <stdlib.h>
 #include <cmath>
 
+#include "componentdialog.h"
 #include "components.h"
 #include "node.h"
-#include "main.h"
 #include "qucs.h"
 #include "schematic.h"
 #include "viewpainter.h"
@@ -615,17 +615,29 @@ void Component::mirrorY()
 QString Component::netlist()
 {
   QString s = Model+":"+Name;
-
+  int i=-1;
   // output all node names
-  foreach(Port *p1, Ports)
-    s += " "+p1->Connection->Name;   // node names
+  // This only works in cases where the resistor would be a series
+  // with the component, as for the other components, they're accounted
+  // as a resistor as well, and the changes were made to their .cpp
+  foreach(Port *p1, Ports){
+    i++;
+    s += " " + p1->Connection->Name;   // node names
+  }
 
   // output all properties
-  for(Property *p2 = Props.first(); p2 != 0; p2 = Props.next())
-    if(p2->Name != "Symbol")
-      s += " "+p2->Name+"=\""+p2->Value+"\"";
+  for (Property *p2 = Props.first(); p2 != 0; p2 = Props.next()){
+    if (p2->Name != "Symbol"){
+      s += " " + p2->Name + "=\"" + p2->Value + "\"";
+    }else{
+      // BUG: what is this?
+      // doing name dependent stuff
+    }
+  }
 
-  return s + '\n';
+  s += '\n';
+
+  return s;
 }
 
 // -------------------------------------------------------
@@ -702,7 +714,10 @@ QString Component::get_VHDL_Code(int NumPorts)
 }
 
 // -------------------------------------------------------
-QString Component::save()
+// save a component
+// FIXME: part of corresponding SchematicSerializer implementation
+// BUG: c must be const (cannot because of QT3)
+void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
 {
 #if XML
   QDomDocument doc;
@@ -723,93 +738,124 @@ QString Component::save()
   }
   qDebug (doc.toString());
 #endif
-  QString s = "<" + Model;
+  // s << "  "; ??
+  s << "<" << c->obsolete_model_hack();
 
-  if(Name.isEmpty()) s += " * ";
-  else s += " "+Name+" ";
+  s << " ";
+  if(c->name().isEmpty()){
+    s << "*";
+  }else{
+    s << c->name();
+  }
+  s << " ";
 
   int i=0;
-  if(!showName)
+  if(!c->showName){
     i = 4;
-  i |= isActive;
-  s += QString::number(i);
-  s += " "+QString::number(cx)+" "+QString::number(cy);
-  s += " "+QString::number(tx)+" "+QString::number(ty);
-  if(mirroredX) s += " 1";
-  else s += " 0";
-  s += " "+QString::number(rotated);
+  }
+  i |= c->isActive;
+  s << QString::number(i);
+  s << " "+QString::number(c->cx)+" "+QString::number(c->cy);
+  s << " "+QString::number(c->tx)+" "+QString::number(c->ty);
+  s << " ";
+  if(c->mirroredX){
+    s << "1";
+  }else{
+    s << "0";
+  }
+  s << " " << QString::number(c->rotated);
 
   // write all properties
-  for(Property *p1 = Props.first(); p1 != 0; p1 = Props.next()) {
-    if(p1->Description.isEmpty())
-      s += " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations
-    else s += " \""+p1->Value+"\"";
-    if(p1->display) s += " 1";
-    else s += " 0";
+  // FIXME: ask component for properties, not for dictionary
+  for(Property *p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
+    if(p1->Description.isEmpty()){
+      s << " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations
+    }else{
+      s << " \""+p1->Value+"\"";
+    }
+    s << " ";
+    if(p1->display){
+      s << "1";
+    }else{
+      s << "0";
+    }
   }
 
-  return s+">";
+  s << ">";
 }
-
 // -------------------------------------------------------
-bool Component::load(const QString& _s)
+// FIXME: must be Component* SchematicParser::loadComponent(Stream&, Component*);
+Component* Schematic::loadComponent(const QString& _s, Component* c) const
 {
   bool ok;
   int  ttx, tty, tmp;
   QString s = _s;
 
-  if(s.at(0) != '<') return false;
-  if(s.at(s.length()-1) != '>') return false;
+  if(s.at(0) != '<'){
+    return NULL;
+  }else if(s.at(s.length()-1) != '>'){
+    return NULL;
+  }
   s = s.mid(1, s.length()-2);   // cut off start and end character
 
-  QString n;
-  Name = s.section(' ',1,1);    // Name
-  if(Name == "*") Name = "";
+  QString label=s.section(' ',1,1);
+  c->setName(label);
 
+  QString n;
   n  = s.section(' ',2,2);      // isActive
   tmp = n.toInt(&ok);
-  if(!ok) return false;
-  isActive = tmp & 3;
+  if(!ok){
+    return NULL;
+  }
+  c->isActive = tmp & 3;
 
-  if(tmp & 4)
-    showName = false;
-  else
-    showName = true;
+  if(tmp & 4){
+    c->showName = false;
+  }else{
+    // use default, e.g. never show name for GND (bug?)
+  }
 
   n  = s.section(' ',3,3);    // cx
-  cx = n.toInt(&ok);
-  if(!ok) return false;
+  c->cx = n.toInt(&ok);
+  if(!ok) return NULL;
 
   n  = s.section(' ',4,4);    // cy
-  cy = n.toInt(&ok);
-  if(!ok) return false;
+  c->cy = n.toInt(&ok);
+  if(!ok) return NULL;
 
   n  = s.section(' ',5,5);    // tx
   ttx = n.toInt(&ok);
-  if(!ok) return false;
+  if(!ok) return NULL;
 
   n  = s.section(' ',6,6);    // ty
   tty = n.toInt(&ok);
-  if(!ok) return false;
+  if(!ok) return NULL;
 
-  if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
+  if(c->obsolete_model_hack().at(0) != '.') {  // is simulation component (dc, ac, ...) ?
 
     n  = s.section(' ',7,7);    // mirroredX
-    if(n.toInt(&ok) == 1) mirrorX();
-    if(!ok) return false;
+    if(n.toInt(&ok) == 1){
+      c->mirrorX();
+    }
+    if(!ok) return NULL;
 
     n  = s.section(' ',8,8);    // rotated
     tmp = n.toInt(&ok);
-    if(!ok) return false;
-    if(rotated > tmp)  // neccessary because of historical flaw in ...
+    if(!ok) return NULL;
+    if(c->rotated > tmp)  // neccessary because of historical flaw in ...
       tmp += 4;        // ... components like "volt_dc"
-    for(int z=rotated; z<tmp; z++) rotate();
-
+    for(int z=c->rotated; z<tmp; z++){
+      c->rotate();
+    }
   }
 
-  tx = ttx; ty = tty; // restore text position (was changed by rotate/mirror)
+  c->tx = ttx;
+  c->ty = tty; // restore text position (was changed by rotate/mirror)
+
+  QString Model = c->obsolete_model_hack(); // BUG: don't use names
 
   unsigned int z=0, counts = s.count('"');
+  // FIXME. use c->paramCount()
   if(Model == "Sub")
     tmp = 2;   // first property (File) already exists
   else if(Model == "Lib")
@@ -824,12 +870,13 @@ bool Component::load(const QString& _s)
     tmp = 5; // number of properties for the default MUTX (2 inductors)
   else tmp = counts + 1;    // "+1" because "counts" could be zero
 
+  /// BUG FIXME. dont use Component parameter dictionary.
   for(; tmp<=(int)counts/2; tmp++)
-    Props.append(new Property("p", "", true, " "));
+    c->Props.append(new Property("p", "", true, " "));
 
   // load all properties
   Property *p1;
-  for(p1 = Props.first(); p1 != 0; p1 = Props.next()) {
+  for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
     z++;
     n = s.section('"',z,z);    // property value
     z++;
@@ -837,55 +884,57 @@ bool Component::load(const QString& _s)
 
     // not all properties have to be mentioned (backward compatible)
     if(z > counts) {
-      if(p1->Description.isEmpty())
-        Props.remove();    // remove if allocated in vain
+      if(p1->Description.isEmpty()){
+        c->Props.remove();    // remove if allocated in vain
+      }
 
-      if(Model == "Diode") {
+      if(Model == "Diode") { // BUG: don't use names
 	if(counts < 56) {  // backward compatible
           counts >>= 1;
-          p1 = Props.at(counts-1);
-          for(; p1 != 0; p1 = Props.current()) {
-            if(counts-- < 19)
+          p1 = c->Props.at(counts-1);
+          for(; p1 != 0; p1 = c->Props.current()) {
+            if(counts-- < 19){
               break;
+	    }
 
-            n = Props.prev()->Value;
+            n = c->Props.prev()->Value;
             p1->Value = n;
           }
 
-          p1 = Props.at(17);
-          p1->Value = Props.at(11)->Value;
-          Props.current()->Value = "0";
+          p1 = c->Props.at(17);
+          p1->Value = c->Props.at(11)->Value;
+          c->Props.current()->Value = "0";
         }
       }
       else if(Model == "AND" || Model == "NAND" || Model == "NOR" ||
 	      Model == "OR" ||  Model == "XNOR"|| Model == "XOR") {
 	if(counts < 10) {   // backward compatible
           counts >>= 1;
-          p1 = Props.at(counts);
-          for(; p1 != 0; p1 = Props.current()) {
+          p1 = c->Props.at(counts);
+          for(; p1 != 0; p1 = c->Props.current()) {
             if(counts-- < 4)
               break;
-            n = Props.prev()->Value;
+            n = c->Props.prev()->Value;
             p1->Value = n;
           }
-          Props.current()->Value = "10";
+          c->Props.current()->Value = "10";
 	}
       }
       else if(Model == "Buf" || Model == "Inv") {
 	if(counts < 8) {   // backward compatible
           counts >>= 1;
-          p1 = Props.at(counts);
-          for(; p1 != 0; p1 = Props.current()) {
+          p1 = c->Props.at(counts);
+          for(; p1 != 0; p1 = c->Props.current()) {
             if(counts-- < 3)
               break;
-            n = Props.prev()->Value;
+            n = c->Props.prev()->Value;
             p1->Value = n;
           }
-          Props.current()->Value = "10";
+          c->Props.current()->Value = "10";
 	}
       }
 
-      return true;
+      return c;
     }
 
     // for equations
@@ -894,15 +943,15 @@ bool Component::load(const QString& _s)
       p1->Name = n.section('=',0,0);
       n = n.section('=',1);
       // allocate memory for a new property (e.g. for equations)
-      if(Props.count() < (counts>>1)) {
-        Props.insert(z >> 1, new Property("y", "1", true));
-        Props.prev();
+      if(c->Props.count() < (counts>>1)) {
+        c->Props.insert(z >> 1, new Property("y", "1", true));
+        c->Props.prev();
       }
     }
     if(z == 6)  if(counts == 6)     // backward compatible
       if(Model == "R") {
-        Props.getLast()->Value = n;
-        return true;
+        c->Props.getLast()->Value = n;
+        return c;
       }
     p1->Value = n;
 
@@ -910,8 +959,10 @@ bool Component::load(const QString& _s)
     p1->display = (n.at(1) == '1');
   }
 
-  return true;
+  return c;
 }
+
+// -------------------------------------------------------
 
 // *******************************************************************
 // ***  The following functions are used to load the schematic symbol
@@ -1540,11 +1591,14 @@ void GateComponent::createSymbol()
 // ***********************************************************************
 // ********                                                       ********
 // ******** The following function does not belong to any class.  ********
-// ******** It creates a component by getting the identification  ********
+// ******** It creates a symbol by getting the identification     ********
 // ******** string used in the schematic file and for copy/paste. ********
 // ********                                                       ********
 // ***********************************************************************
 
+// FIXME:
+// must be Component* SomeParserClass::getComponent(QString& Line)
+// better: Component* SomeParserClass::getComponent(SomeDataStream& s)
 Component* getComponentFromName(QString& Line, Schematic* p)
 {
   Component *c = 0;
@@ -1564,10 +1618,12 @@ Component* getComponentFromName(QString& Line, Schematic* p)
   else if (cstr == "Rus") c = new Resistor (false);  // backward compatible
   else if (cstr.left (6) == "SPfile" && cstr != "SPfile") {
     // backward compatible
-    c = new SParamFile ();
-    c->Props.getLast()->Value = cstr.mid (6); }
-  else
+    c = new SPEmbed ();
+    c->Props.getLast()->Value = cstr.mid (6);
+  }else{
+	  // FIXME: fetch proto from dictionary.
     c = Module::getComponent (cstr);
+  }
 
   if(!c) {
     /// \todo enable user to load partial schematic, skip unknown components
@@ -1596,18 +1652,27 @@ Component* getComponentFromName(QString& Line, Schematic* p)
 
   }
 
-  if(!c->load(Line)) {
+  // BUG: don't use schematic.
+  if(!p->loadComponent(Line, c)) {
     QMessageBox::critical(0, QObject::tr("Error"),
 	QObject::tr("Format Error:\nWrong 'component' line format!"));
     delete c;
     return 0;
   }
 
-  cstr = c->Name;   // is perhaps changed in "recreate" (e.g. subcircuit)
+  cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
   int x = c->tx, y = c->ty;
   c->setSchematic (p);
   c->recreate(0);
-  c->Name = cstr;
+  c->obsolete_name_override_hack(cstr);
   c->tx = x;  c->ty = y;
   return c;
 }
+
+// do something with Dialog Buttons
+void Component::dialgButtStuff(ComponentDialog& d)const
+{
+  d.disableButtons();
+}
+
+// vim:ts=8:sw=2:noet

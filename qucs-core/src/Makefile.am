@@ -33,9 +33,9 @@ AM_CPPFLAGS = -I$(top_srcdir)/src/math -I$(top_srcdir)/src/components \
 	-I$(top_builddir)/src/components \
 	-I$(top_srcdir)/src/interface -I$(builddir)
 
-lib_LTLIBRARIES = libqucs.la
+lib_LTLIBRARIES = libqucsator.la
 
-libqucs_la_LIBADD = math/libqucsmath.la   \
+libqucsator_la_LIBADD = math/libqucsmath.la   \
 	components/libcomponent.la	      \
 	components/microstrip/libmicrostrip.la \
 	components/devices/libdevices.la	      \
@@ -43,7 +43,7 @@ libqucs_la_LIBADD = math/libqucsmath.la   \
 	components/verilog/libverilog.la \
 	interface/libinterface.la
 ## In case we want to build windows dlls
-libqucs_la_LDFLAGS = -shared -no-undefined
+libqucsator_la_LDFLAGS = -shared -no-undefined
 
 pkginclude_HEADERS = compat.h logging.h object.h vector.h consts.h node.h \
   net.h circuit.h integrator.h states.h states.cpp valuelist.h \
@@ -70,7 +70,7 @@ noinst_HEADERS = $(noinst_TEMPLATES)            \
 	nodeset.h nodelist.h strlist.h operatingpoint.h  consts.h  \
 	integrator.h valuelist.h gperfappgen.h
 
-libqucs_la_SOURCES = dataset.cpp check_dataset.cpp \
+libqucsator_la_SOURCES = dataset.cpp check_dataset.cpp \
 	check_touchstone.cpp vector.cpp object.cpp          \
 	property.cpp \
 	variable.cpp   \
@@ -108,7 +108,7 @@ scan_zvr.cpp: LEX_OUTPUT_ROOT = lex.zvr_
 # just make sure, everything is in place
 bin_PROGRAMS = qucsator
 
-qucsator_LDADD = libqucs.la
+qucsator_LDADD = libqucsator.la
 
 qucsator_LDFLAGS = -Wl,-rpath,$(libdir)
 
@@ -124,7 +124,7 @@ generated_FILES = qucsdefs.h
 qucsdefs.h: qucsator$(EXEEXT)
 	./$< -l > $@
 
-## The qucs equation definitions use a hash lookup table
+## The qucsator equation definitions use a hash lookup table
 ## generated using gperf and put in gperfapphash.cpp which
 ## is #included in the body of equation.cpp
 equation.cpp: gperfapphash.cpp

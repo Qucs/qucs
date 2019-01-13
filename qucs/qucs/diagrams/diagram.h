@@ -66,6 +66,7 @@ public:
   virtual void calcCoordinate
                (const double*, const double*, const double*, float*, float*, Axis const*) const {};
   void calcCoordinateP (const double*x, const double*y, const double*z, Graph::iterator& p, Axis const* A) const;
+  virtual void calcCoordinatePh(const double*, float*, float*, Axis const*, Axis const*) const{};
   virtual void finishMarkerCoordinates(float&, float&) const;
   virtual void calcLimits() {};
   virtual QString extraMarkerText(Marker const*) const {return "";}
@@ -93,6 +94,16 @@ public:
   bool insideDiagramP(Graph::iterator const& ) const;
   Marker* setMarker(int x, int y);
 
+  bool insideDiagramPh(Graph::iterator const& , float*, float*) const;
+  bool newcoordinate(Graph::iterator const& , float*, float*) const;
+  /* PHASOR AND WAVEAC RELATED
+  void phasorscale();
+  void findaxisA(Graph*);
+  bool findmatch(Graph* , int);
+  void findfreq(Graph*);
+  void setlimitsphasor(Axis* ,Axis*);
+  double wavevalX(int) const;*/
+
   QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   QPen    GridPen;
 
@@ -101,8 +112,15 @@ public:
   QList<Line *>   Lines;
   QList<Text *>   Texts;
 
-  int x3, y3;
+  QString sfreq;
+  double *freq=nullptr;
+  int nfreqt,nfreqa;
+  int x3, y3, sc;
   Axis  xAxis, yAxis, zAxis;   // axes (x, y left, y right)
+
+  /* PHASOR DIAGRAM RELATED
+  Axis  xAxisV, yAxisV, zAxisV, xAxisI, yAxisI, zAxisI, xAxisP, yAxisP, zAxisP, xAxisZ, yAxisZ,
+ zAxisZ, *xAxisA, *yAxisA, *zAxisA;*/
   int State;  // to remember which resize area was touched
 
   bool hideLines;       // for "Rect3D": hide invisible lines ?

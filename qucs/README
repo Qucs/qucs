@@ -34,8 +34,9 @@ http://qucs.sourceforge.net
 Requirements
 ============
 
-Qucs needs Qt(R) by Digia(R) <http://www.digia.com>.
-This current version is known to work with Qt 4.6 and later.
+Qucs needs Qt version 4.6 or later. For simplicity, the Qt configuration is
+currently obtained through pkg-config, which you need to install in addition
+to Qt.
 
 
 Installation
@@ -81,6 +82,6 @@ version might not even compile.
 
     $ git clone http://git.code.sf.net/p/qucs/git qucs-git
 
-Press 'Enter' when asked for a password.  Run `sh bootstrap.sh' and
-`configure' with the appropriate options.  Maintainance currently
-requires Autoconf version 2.57 and GNU automake 1.7.0.
+Press 'Enter' when asked for a password.  Run `sh bootstrap' and `configure'
+(see above) with the appropriate options.  Maintainance currently requires
+Autoconf version 2.57 and GNU automake 1.7.0.

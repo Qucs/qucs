@@ -66,6 +66,111 @@ f_{TM} &\approx \dfrac{c_0}{\left(D - d\right)\cdot\sqrt{\varepsilon_r}}
 \;\;\;\;\rightarrow\;\;\;\; \textrm{TM(n,1) mode}
 \end{align}
 
+\section{Rectangular waveguide}
+\label{sec:rectWG}
+
+In most of practical applications, the rectangular waveguides are designed to propagate the dominant mode only. This allows the designer to use conventional transmission line equations and avoid power leaking to higher order modes. In this sense, the Qucs rectangular waveguide component was implemented to extract the transmission line parameters from the $TE_{10}$ mode (dominant mode) and generate the quadripole parameters. For this reason, the simulation data is valid only for those frequencies between the $TE_{10}$ and $TM_{01}$ cutoff, where only $TE_{10}$ propagation is guaranteed.
+
+
+\begin{figure}[H]
+\begin{center}
+\psfrag{er}{$\mathrm{\varepsilon_r}$}
+\includegraphics[width=0.5\linewidth]{rectwaveguide}
+\end{center}
+\caption{Rectangular waveguide of width \textit{a}, height \textit{b} and length \textit{L}}
+\label{fig:rectwg}
+\end{figure}
+
+
+\noindent As detailed in \ref{sec:tl_yparameter}, the quadripole parameters of an ideal transmission line depends on the propagation constant ($\gamma$), the charateristic impedance of the line ($Z_0$) and its length (L). \\ 
+
+The propagation constant is defined as $\gamma = \alpha + j \cdot \beta$, where $\alpha$ is the attenuation constant and $\beta$ is the phase constant. The attenuation sources are the conductive loss due to the finite conductivity of the wall material ($\alpha_c$) and the loss caused by dielectric material ($\alpha_d$). In this sense, the attenuation constant is defined as $\alpha = \alpha_c + \alpha_d$\\
+
+\noindent The conductor loss depends on the wall material and the geometry of the waveguide (width and height) whereas the dielectric loss mainly depends on the $tan (\delta)$ parameter of the dielectric material:
+
+\begin{align}
+    \text{Conductive loss:} \;\;\;\;\; \alpha_c & = \frac{R_s}{a^3 b \beta k \eta} (2b\pi^2 + a^3k^2) \\
+    \text{Dielectric loss:} \;\;\;\;\;\alpha_d & = \frac{k^2 tan (\delta)}{2 \beta}
+\end{align} 
+
+\noindent where $k = \omega \sqrt{\mu \epsilon}$ is the wave number and $\eta = \sqrt{\frac{\mu}{\epsilon}}$ is the characteristic impedance of the dielectric material. The wall surface resistance ($R_s$) can be calculated as follows:
+
+\begin{equation}
+R_s = \sqrt{\frac{\omega \mu_0}{2 \sigma}}
+\label{eq:WG_wallRs}
+\end{equation}
+
+\noindent where $\sigma$ is the conductivity of the walls.\\
+
+\noindent The phase constant of the $TE_{10}$ mode is given by:
+
+\begin{equation}
+\beta  = \sqrt{k^2 - \left( \frac{\pi}{a}\right)^2}
+\end{equation}
+
+\noindent and the wave impedance of the TE modes can be calculated as:
+
+\begin{equation}
+Z_0 = \frac{k \cdot \eta}{\beta}
+\end{equation}
+
+\noindent Finally, the cutoff frequencies of the $TE_{10}$ and $TM_{11}$ modes are given by:
+
+\begin{align}
+f_c^{TE_{10}} & = \frac{1}{2 \pi \sqrt{\mu \epsilon}} \sqrt{\left( \frac{\pi}{a}\right)^2 } \\
+f_c^{TM_{11}} &= \frac{1}{2 \pi \sqrt{\mu \epsilon}} \sqrt{\left( \frac{\pi}{a}\right)^2 +\left( \frac{\pi}{b}\right)^2 }
+\end{align}
+
+
+\noindent \textit{Reference}: \cite{Pozar}, pages 110-121
+
+\section{Circular waveguide}
+
+As seen in \ref{sec:rectWG}, most of practical applications involving waveguides are designed to propagate the dominant mode only. For this reason, the Qucs circular waveguide component only models the dominant mode ($TE_{11}$). Again, please notice that the simulation data is valid only for those frequencies between the $TE_{11}$ and the $TM_{01}$ cutoff, where only $TE_{11}$ propagation is guaranteed.
+
+\begin{figure}[H]
+\begin{center}
+\psfrag{er}{$\mathrm{\varepsilon_r}$}
+\includegraphics[width=0.5\linewidth]{circularwaveguide}
+\end{center}
+\caption{Circular waveguide of radius \textit{a} and length \textit{L}}
+\label{fig:circwg}
+\end{figure}
+
+\noindent As introduced in \ref{sec:rectWG} the Qucs model extracts the quadripole parameters using the ideal transmission line model. The model parameters are obtained as follows:\\
+
+\noindent The attenuation constant $\alpha = \alpha_c + \alpha_d$ involves both the loss in the conductive walls ($\alpha_c$) and the dielectric loss ($\alpha_d$):
+
+\begin{align}
+    \text{Conductive loss:} \;\;\;\;\; \alpha_c & = \frac{R_s}{a k \eta \beta} \left( k_c^2 + \frac{k^2}{2.389}\right) \\
+    \text{Dielectric loss:} \;\;\;\;\;\alpha_d & = \frac{k^2 \cdot tan (\delta)}{ 2\beta}
+\end{align}
+
+\noindent where $k = \omega \sqrt{\mu \epsilon}$ is the wave number, $k_c = \frac{1.841}{a}$, $tan (\delta)$ is a parameter that accounts for the loss of the dielectric material and surface resistance of the wall ($R_s$) is calculated according to \ref{eq:WG_wallRs}.\\
+
+
+\noindent The phase constant of the $TE_{11}$ mode is given by:
+
+\begin{equation}
+\beta = \sqrt{k^2 - \left( \frac{1.841}{a}\right)^2}
+\end{equation}
+
+\noindent As in the rectangular waveguide case, the characteristic impedance of a circular waveguide (TE modes) is given by:
+
+\begin{equation}
+Z_0 = \frac{k \eta}{\beta}
+\end{equation}
+
+\noindent Finally, the cutoff frequencies of the $TE_{11}$ and $TM_{01}$ modes are:
+
+\begin{align}
+f_c^{TE_{11}} & = \frac{1.841}{2 \pi a \sqrt{\mu \epsilon}} \\
+f_c^{TM_{01}} & = \frac{2.405}{2 \pi a \sqrt{\mu \epsilon}}
+\end{align}
+
+\noindent \textit{Reference}: \cite{Pozar}, pages 121-130
+
+
 \section{Twisted pair}
 %\addcontentsline{toc}{section}{Twisted pair}
 

@@ -22,6 +22,8 @@
 # Boston, MA 02110-1301, USA.
 #
 
+AM_DISTCHECK_CONFIGURE_FLAGS=--without-gtest
+
 # Ignore external headers and sources,
 # enable branch coverage (default disabled on lcov 1.10)
 CODE_COVERAGE_LCOV_OPTIONS ?= --no-external --rc lcov_branch_coverage=1 $(CODE_COVERAGE_LCOV_OPTIONS_DEFAULT)

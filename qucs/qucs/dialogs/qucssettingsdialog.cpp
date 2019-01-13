@@ -31,9 +31,10 @@
 #include <cmath>
 #include <QGridLayout>
 #include <QVBoxLayout>
-#include "main.h"
+#include "qucs.h"
 #include "textdoc.h"
 #include "schematic.h"
+#include "misc.h"
 
 #include <QWidget>
 #include <QLabel>
@@ -86,7 +87,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
     appSettingsGrid->addWidget(LargeFontSizeEdit,1,1);
 
     appSettingsGrid->addWidget(new QLabel(tr("Document Background Color:"), appSettingsTab) ,2,0);
-    BGColorButton = new QPushButton("      ", appSettingsTab);
+    BGColorButton = new QPushButton("", appSettingsTab);
     connect(BGColorButton, SIGNAL(clicked()), SLOT(slotBGColorDialog()));
     appSettingsGrid->addWidget(BGColorButton,2,1);
 
@@ -124,30 +125,40 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
 
     appSettingsGrid->addWidget(new QLabel(tr("Text editor:"), appSettingsTab) ,5,0);
     editorEdit = new QLineEdit(appSettingsTab);
-    editorEdit->setToolTip(tr("Set to qucs, qucsedit or the path to your favorite text editor."));
+    editorEdit->setToolTip(tr("Default is qucs (built-in editor), or the path to your favorite text editor."));
     appSettingsGrid->addWidget(editorEdit,5,1);
+    QPushButton *editorButt = new QPushButton("Browse");
+    appSettingsGrid->addWidget(editorButt, 5, 2);
+    connect(editorButt, SIGNAL(clicked()), SLOT(slotEditorBrowse()));
 
-    appSettingsGrid->addWidget(new QLabel(tr("Start wiring when clicking open node:"), appSettingsTab) ,6,0);
+    appSettingsGrid->addWidget(new QLabel(tr("Start wiring when clicking open node:"), appSettingsTab),6,0);
     checkWiring = new QCheckBox(appSettingsTab);
     appSettingsGrid->addWidget(checkWiring,6,1);
 
-    appSettingsGrid->addWidget(new QLabel(tr("Load documents from future versions:")));
+    appSettingsGrid->addWidget(new QLabel(tr("Load documents from future versions:")),7,0);
     checkLoadFromFutureVersions = new QCheckBox(appSettingsTab);
     checkLoadFromFutureVersions->setToolTip(tr("Try to load also documents created with newer versions of Qucs."));
     appSettingsGrid->addWidget(checkLoadFromFutureVersions,7,1);
     checkLoadFromFutureVersions->setChecked(QucsSettings.IgnoreFutureVersion);
 
-    appSettingsGrid->addWidget(new QLabel(tr("Draw diagrams with anti-aliasing feature:")));
+    appSettingsGrid->addWidget(new QLabel(tr("Draw diagrams with anti-aliasing feature:")),8,0);
     checkAntiAliasing = new QCheckBox(appSettingsTab);
     checkAntiAliasing->setToolTip(tr("Use anti-aliasing for graphs for a smoother appereance."));
     appSettingsGrid->addWidget(checkAntiAliasing,8,1);
     checkAntiAliasing->setChecked(QucsSettings.GraphAntiAliasing);
 
-    appSettingsGrid->addWidget(new QLabel(tr("Draw text with anti-aliasing feature:")));
+    appSettingsGrid->addWidget(new QLabel(tr("Draw text with anti-aliasing feature:")),9,0);
     checkTextAntiAliasing = new QCheckBox(appSettingsTab);
     checkTextAntiAliasing->setToolTip(tr("Use anti-aliasing for text for a smoother appereance."));
     appSettingsGrid->addWidget(checkTextAntiAliasing,9,1);
     checkTextAntiAliasing->setChecked(QucsSettings.TextAntiAliasing);
+
+    appSettingsGrid->addWidget(new QLabel(tr("Show schematic description in the project tree")),10,0);
+    checkShowSchematicDescription = new QCheckBox(appSettingsTab);
+    checkShowSchematicDescription->setToolTip(tr("Show schematic description when hovering the mouse over the file"));
+    appSettingsGrid->addWidget(checkShowSchematicDescription,10,1);
+    checkShowSchematicDescription->setChecked(QucsSettings.ShowDescriptionProjectTree);
+
 
     t->addTab(appSettingsTab, tr("Settings"));
 
@@ -161,74 +172,56 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
     QPalette p;
 
     ColorComment = new QPushButton(tr("Comment"), editorTab);
-    p = ColorComment->palette();
-    p.setColor(ColorComment->foregroundRole(), QucsSettings.Comment);
-    p.setColor(ColorComment->backgroundRole(), QucsSettings.BGColor);
-    ColorComment->setPalette(p);
+    misc::setWidgetForegroundColor(ColorComment, QucsSettings.Comment);
+    misc::setWidgetBackgroundColor(ColorComment, QucsSettings.BGColor);
     connect(ColorComment, SIGNAL(clicked()), SLOT(slotColorComment()));
     editorGrid->addWidget(ColorComment,1,0);
 
     ColorString = new QPushButton(tr("String"), editorTab);
-    p = ColorString->palette();
-    p.setColor(ColorString->foregroundRole(), QucsSettings.String);
-    p.setColor(ColorString->backgroundRole(), QucsSettings.BGColor);
-    ColorString->setPalette(p);
+    misc::setWidgetForegroundColor(ColorString, QucsSettings.String);
+    misc::setWidgetBackgroundColor(ColorString, QucsSettings.BGColor);
     connect(ColorString, SIGNAL(clicked()), SLOT(slotColorString()));
     editorGrid->addWidget(ColorString,1,1);
 
     ColorInteger = new QPushButton(tr("Integer Number"), editorTab);
-    p = ColorInteger->palette();
-    p.setColor(ColorInteger->foregroundRole(), QucsSettings.Integer);
-    p.setColor(ColorInteger->backgroundRole(), QucsSettings.BGColor);
-    ColorInteger->setPalette(p);
+    misc::setWidgetForegroundColor(ColorInteger, QucsSettings.Integer);
+    misc::setWidgetBackgroundColor(ColorInteger, QucsSettings.BGColor);
     connect(ColorInteger, SIGNAL(clicked()), SLOT(slotColorInteger()));
     editorGrid->addWidget(ColorInteger,1,2);
 
     ColorReal = new QPushButton(tr("Real Number"), editorTab);
-    p = ColorReal->palette();
-    p.setColor(ColorReal->foregroundRole(), QucsSettings.Real);
-    p.setColor(ColorReal->backgroundRole(), QucsSettings.BGColor);
-    ColorReal->setPalette(p);
+    misc::setWidgetForegroundColor(ColorReal, QucsSettings.Real);
+    misc::setWidgetBackgroundColor(ColorReal, QucsSettings.BGColor);
     connect(ColorReal, SIGNAL(clicked()), SLOT(slotColorReal()));
     editorGrid->addWidget(ColorReal,2,0);
 
     ColorCharacter = new QPushButton(tr("Character"), editorTab);
-    p = ColorCharacter->palette();
-    p.setColor(ColorCharacter->foregroundRole(), QucsSettings.Character);
-    p.setColor(ColorCharacter->backgroundRole(), QucsSettings.BGColor);
-    ColorCharacter->setPalette(p);
+    misc::setWidgetForegroundColor(ColorCharacter, QucsSettings.Character);
+    misc::setWidgetBackgroundColor(ColorCharacter, QucsSettings.BGColor);
     connect(ColorCharacter, SIGNAL(clicked()), SLOT(slotColorCharacter()));
     editorGrid->addWidget(ColorCharacter,2,1);
 
     ColorDataType = new QPushButton(tr("Data Type"), editorTab);
-    p = ColorDataType->palette();
-    p.setColor(ColorDataType->foregroundRole(), QucsSettings.Type);
-    p.setColor(ColorDataType->backgroundRole(), QucsSettings.BGColor);
-    ColorDataType->setPalette(p);
+    misc::setWidgetForegroundColor(ColorDataType, QucsSettings.Type);
+    misc::setWidgetBackgroundColor(ColorDataType, QucsSettings.BGColor);
     connect(ColorDataType, SIGNAL(clicked()), SLOT(slotColorDataType()));
     editorGrid->addWidget(ColorDataType,2,2);
 
     ColorAttribute = new QPushButton(tr("Attribute"), editorTab);
-    p = ColorAttribute->palette();
-    p.setColor(ColorAttribute->foregroundRole(), QucsSettings.Attribute);
-    p.setColor(ColorAttribute->backgroundRole(), QucsSettings.BGColor);
-    ColorAttribute->setPalette(p);
+    misc::setWidgetForegroundColor(ColorAttribute, QucsSettings.Attribute);
+    misc::setWidgetBackgroundColor(ColorAttribute, QucsSettings.BGColor);
     connect(ColorAttribute, SIGNAL(clicked()), SLOT(slotColorAttribute()));
     editorGrid->addWidget(ColorAttribute,3,0);
 
     ColorDirective = new QPushButton(tr("Directive"), editorTab);
-    p = ColorDirective->palette();
-    p.setColor(ColorDirective->foregroundRole(), QucsSettings.Directive);
-    p.setColor(ColorDirective->backgroundRole(), QucsSettings.BGColor);
-    ColorDirective->setPalette(p);
+    misc::setWidgetForegroundColor(ColorDirective, QucsSettings.Directive);
+    misc::setWidgetBackgroundColor(ColorDirective, QucsSettings.BGColor);
     connect(ColorDirective, SIGNAL(clicked()), SLOT(slotColorDirective()));
     editorGrid->addWidget(ColorDirective,3,1);
 
     ColorTask = new QPushButton(tr("Task"), editorTab);
-    p = ColorTask->palette();
-    p.setColor(ColorTask->foregroundRole(), QucsSettings.Task);
-    p.setColor(ColorTask->backgroundRole(), QucsSettings.BGColor);
-    ColorTask->setPalette(p);
+    misc::setWidgetForegroundColor(ColorTask, QucsSettings.Task);
+    misc::setWidgetBackgroundColor(ColorTask, QucsSettings.BGColor);
     connect(ColorTask, SIGNAL(clicked()), SLOT(slotColorTask()));
     editorGrid->addWidget(ColorTask,3,2);
 
@@ -410,9 +403,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
     QString s = QString::number(QucsSettings.largeFontSize, 'f', 1);
     LargeFontSizeEdit->setText(s);
 
-    p = BGColorButton->palette();
-    p.setColor(BGColorButton->backgroundRole(), QucsSettings.BGColor);
-    BGColorButton->setPalette(p);
+    misc::setPickerColor(BGColorButton, QucsSettings.BGColor);
 
     undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
     editorEdit->setText(QucsSettings.Editor);
@@ -519,9 +510,10 @@ void QucsSettingsDialog::slotApply()
       // later below the file tree will be refreshed
     }
 
-    if(QucsSettings.BGColor != BGColorButton->palette().color(BGColorButton->backgroundRole()))
+    QColor curColor = misc::getWidgetBackgroundColor(BGColorButton);
+    if(QucsSettings.BGColor != curColor)
     {
-        QucsSettings.BGColor = BGColorButton->palette().color(BGColorButton->backgroundRole());
+        QucsSettings.BGColor = curColor;
 
         int No=0;
         QWidget *w;
@@ -533,9 +525,7 @@ void QucsSettingsDialog::slotApply()
           } else {
             vp = ((Schematic*)w)->viewport();
           }
-          QPalette p = vp->palette();
-          p.setColor(vp->backgroundRole(), QucsSettings.BGColor);
-          vp->setPalette(p);
+          misc::setWidgetBackgroundColor(vp, QucsSettings.BGColor);
         }
         changed = true;
     }
@@ -545,49 +535,58 @@ void QucsSettingsDialog::slotApply()
     QucsSettings.Language =
         LanguageCombo->currentText().section('(',1,1).remove(')');
 
-    if(QucsSettings.Comment != ColorComment->palette().color(ColorComment->foregroundRole()))
+    curColor = misc::getWidgetForegroundColor(ColorComment);
+    if(QucsSettings.Comment != curColor)
     {
-        QucsSettings.Comment = ColorComment->palette().color(ColorComment->foregroundRole());
+        QucsSettings.Comment = curColor;
         changed = true;
     }
-    if(QucsSettings.String != ColorString->palette().color(ColorString->foregroundRole()))
+    curColor = misc::getWidgetForegroundColor(ColorString);
+    if(QucsSettings.String != curColor)
     {
-        QucsSettings.String = ColorString->palette().color(ColorString->foregroundRole());
+        QucsSettings.String = curColor;
         changed = true;
     }
-    if(QucsSettings.Integer != ColorInteger->palette().color(ColorInteger->foregroundRole()))
+    curColor = misc::getWidgetForegroundColor(ColorInteger);
+    if(QucsSettings.Integer != curColor)
     {
-        QucsSettings.Integer = ColorInteger->palette().color(ColorInteger->foregroundRole());
+        QucsSettings.Integer = curColor;
         changed = true;
     }
-    if(QucsSettings.Real != ColorReal->palette().color(ColorReal->foregroundRole()))
+    curColor = misc::getWidgetForegroundColor(ColorReal);
+    if(QucsSettings.Real != curColor)
     {
-        QucsSettings.Real = ColorReal->palette().color(ColorReal->foregroundRole());
+        QucsSettings.Real = curColor;
         changed = true;
     }
-    if(QucsSettings.Character != ColorCharacter->palette().color(ColorCharacter->foregroundRole()))
+    curColor = misc::getWidgetForegroundColor(ColorCharacter);
+    if(QucsSettings.Character != curColor)
     {
-        QucsSettings.Character = ColorCharacter->palette().color(ColorCharacter->foregroundRole());
+        QucsSettings.Character = curColor;
         changed = true;
     }
-    if(QucsSettings.Type != ColorDataType->palette().color(ColorDataType->foregroundRole()))
+    curColor = misc::getWidgetForegroundColor(ColorDataType);
+    if(QucsSettings.Type != curColor)
     {
-        QucsSettings.Type = ColorDataType->palette().color(ColorDataType->foregroundRole());
+        QucsSettings.Type = curColor;
         changed = true;
     }
-    if(QucsSettings.Attribute != ColorAttribute->palette().color(ColorAttribute->foregroundRole()))
+    curColor = misc::getWidgetForegroundColor(ColorAttribute);
+    if(QucsSettings.Attribute != curColor)
     {
-        QucsSettings.Attribute = ColorAttribute->palette().color(ColorAttribute->foregroundRole());
+        QucsSettings.Attribute = curColor;
         changed = true;
     }
-    if(QucsSettings.Directive != ColorDirective->palette().color(ColorDirective->foregroundRole()))
+    curColor = misc::getWidgetForegroundColor(ColorDirective);
+    if(QucsSettings.Directive != curColor)
     {
-        QucsSettings.Directive = ColorDirective->palette().color(ColorDirective->foregroundRole());
+        QucsSettings.Directive = curColor;
         changed = true;
     }
-    if(QucsSettings.Task != ColorTask->palette().color(ColorTask->foregroundRole()))
+    curColor = misc::getWidgetForegroundColor(ColorTask);
+    if(QucsSettings.Task != curColor)
     {
-        QucsSettings.Task = ColorTask->palette().color(ColorTask->foregroundRole());
+        QucsSettings.Task = curColor;
         changed = true;
     }
 
@@ -639,6 +638,12 @@ void QucsSettingsDialog::slotApply()
       changed = true;
     }
 
+    if (QucsSettings.ShowDescriptionProjectTree != checkShowSchematicDescription->isChecked())
+    {
+      QucsSettings.ShowDescriptionProjectTree = checkShowSchematicDescription->isChecked();
+      changed = true;
+    }
+
     // use toDouble() as it can interpret the string according to the current locale
     if (QucsSettings.largeFontSize != LargeFontSizeEdit->text().toDouble(&ok))
     {
@@ -651,8 +656,9 @@ void QucsSettingsDialog::slotApply()
     // if QucsHome is changed, refresh projects tree
     // do this after updating the other paths
     if (homeDirChanged) {;
-      // files were actuallt closed above, this will refresh the projects tree
+      // files were actually closed above, this will refresh the projects tree
       // and create an empty schematic
+      // (this could likely be simplified once the automatic Project Content Tab refresh is implemented)
       App->slotMenuProjClose();
       changed = true;
     }
@@ -660,7 +666,6 @@ void QucsSettingsDialog::slotApply()
     if(changed)
     {
         App->readProjects();
-        App->slotUpdateTreeview();
         App->repaint();
     }
 
@@ -688,12 +693,10 @@ void QucsSettingsDialog::slotFontDialog()
 void QucsSettingsDialog::slotBGColorDialog()
 {
     QColor c = QColorDialog::getColor(
-                   BGColorButton->palette().color(BGColorButton->foregroundRole()),
+                   misc::getWidgetForegroundColor(BGColorButton),
                    this);
     if(c.isValid()) {
-        QPalette p = BGColorButton->palette();
-        p.setColor(BGColorButton->backgroundRole(), c);
-        BGColorButton->setPalette(p);
+        misc::setPickerColor(BGColorButton, c);
     }
 }
 
@@ -707,64 +710,43 @@ void QucsSettingsDialog::slotDefaultValues()
 
     LanguageCombo->setCurrentIndex(0);
     
-    p = BGColorButton->palette();
-    p.setColor(BGColorButton->backgroundRole(), QColor(255,250,225));
-    BGColorButton->setPalette(p);
+    misc::setPickerColor(BGColorButton, QColor(255,250,225));
 
-    p = ColorComment->palette();
-    p.setColor(ColorComment->foregroundRole(), Qt::gray);
-    ColorComment->setPalette(p);
+    misc::setWidgetForegroundColor(ColorComment, Qt::gray);
 
-    p = ColorString->palette();
-    p.setColor(ColorString->foregroundRole(), Qt::red);
-    ColorString->setPalette(p);
+    misc::setWidgetForegroundColor(ColorString, Qt::red);
 
-    p = ColorInteger->palette();
-    p.setColor(ColorInteger->foregroundRole(), Qt::blue);
-    ColorInteger->setPalette(p);
+    misc::setWidgetForegroundColor(ColorInteger, Qt::blue);
 
-    p = ColorReal->palette();
-    p.setColor(ColorReal->foregroundRole(), Qt::darkMagenta);
-    ColorReal->setPalette(p);
+    misc::setWidgetForegroundColor(ColorReal, Qt::darkMagenta);
 
-    p = ColorCharacter->palette();
-    p.setColor(ColorCharacter->foregroundRole(), Qt::magenta);
-    ColorCharacter->setPalette(p);
+    misc::setWidgetForegroundColor(ColorCharacter,Qt::magenta);
 
-    p = ColorDataType->palette();
-    p.setColor(ColorDataType->foregroundRole(), Qt::darkRed);
-    ColorDataType->setPalette(p);
+    misc::setWidgetForegroundColor(ColorDataType, Qt::darkRed);
 
-    p = ColorAttribute->palette();
-    p.setColor(ColorAttribute->foregroundRole(), Qt::darkCyan);
-    ColorAttribute->setPalette(p);
+    misc::setWidgetForegroundColor(ColorAttribute, Qt::darkCyan);
 
-    p = ColorDirective->palette();
-    p.setColor(ColorDirective->foregroundRole(), Qt::darkCyan);
-    ColorDirective->setPalette(p);
+    misc::setWidgetForegroundColor(ColorDirective, Qt::darkCyan);
 
-    p = ColorTask->palette();
-    p.setColor(ColorTask->foregroundRole(), Qt::darkRed);
-    ColorTask->setPalette(p);
+    misc::setWidgetForegroundColor(ColorTask, Qt::darkRed);
 
     undoNumEdit->setText("20");
-    editorEdit->setText(QucsSettings.BinDir + "qucs");
+    editorEdit->setText("qucs");
     checkWiring->setChecked(false);
     checkLoadFromFutureVersions->setChecked(false);
     checkAntiAliasing->setChecked(false);
     checkTextAntiAliasing->setChecked(true);
+    checkShowSchematicDescription->setChecked(false);
 }
 
 // -----------------------------------------------------------
 void QucsSettingsDialog::slotColorComment()
 {
     QColor c = QColorDialog::getColor(
-                 ColorComment->palette().color(ColorComment->foregroundRole()),
+                 misc::getWidgetForegroundColor(ColorComment),
                  this);
     if(c.isValid()) {
-        QPalette p = ColorComment->palette();
-        p.setColor(ColorComment->foregroundRole(), c);
-        ColorComment->setPalette(p);
+        misc::setWidgetForegroundColor(ColorComment, c);
     }
 }
 
@@ -772,12 +754,10 @@ void QucsSettingsDialog::slotColorComment()
 void QucsSettingsDialog::slotColorString()
 {
     QColor c = QColorDialog::getColor(
-                 ColorString->palette().color(ColorString->foregroundRole()),
+                 misc::getWidgetForegroundColor(ColorString),
                  this);
     if(c.isValid()) {
-        QPalette p = ColorString->palette();
-        p.setColor(ColorString->foregroundRole(), c);
-        ColorString->setPalette(p);
+        misc::setWidgetForegroundColor(ColorString, c);
     }
 }
 
@@ -785,12 +765,10 @@ void QucsSettingsDialog::slotColorString()
 void QucsSettingsDialog::slotColorInteger()
 {
     QColor c = QColorDialog::getColor(
-                 ColorInteger->palette().color(ColorInteger->foregroundRole()),
+                 misc::getWidgetForegroundColor(ColorInteger),
                  this);
     if(c.isValid()) {
-        QPalette p = ColorInteger->palette();
-        p.setColor(ColorInteger->foregroundRole(), c);
-        ColorInteger->setPalette(p);
+        misc::setWidgetForegroundColor(ColorInteger, c);
     }
 }
 
@@ -798,12 +776,10 @@ void QucsSettingsDialog::slotColorInteger()
 void QucsSettingsDialog::slotColorReal()
 {
     QColor c = QColorDialog::getColor(
-                 ColorReal->palette().color(ColorReal->foregroundRole()),
+                 misc::getWidgetForegroundColor(ColorReal),
                  this);
     if(c.isValid()) {
-         QPalette p = ColorReal->palette();
-         p.setColor(ColorReal->foregroundRole(), c);
-         ColorReal->setPalette(p);
+        misc::setWidgetForegroundColor(ColorReal, c);
     }
 }
 
@@ -811,12 +787,10 @@ void QucsSettingsDialog::slotColorReal()
 void QucsSettingsDialog::slotColorCharacter()
 {
     QColor c = QColorDialog::getColor(
-                 ColorCharacter->palette().color(ColorCharacter->foregroundRole()),
+                 misc::getWidgetForegroundColor(ColorCharacter),
                  this);
     if(c.isValid()) {
-        QPalette p = ColorCharacter->palette();
-        p.setColor(ColorCharacter->foregroundRole(), c);
-        ColorCharacter->setPalette(p);
+        misc::setWidgetForegroundColor(ColorCharacter, c);
     }
 }
 
@@ -824,12 +798,10 @@ void QucsSettingsDialog::slotColorCharacter()
 void QucsSettingsDialog::slotColorDataType()
 {
     QColor c = QColorDialog::getColor(
-                 ColorDataType->palette().color(ColorDataType->foregroundRole()),
+                 misc::getWidgetForegroundColor(ColorDataType),
                  this);
     if(c.isValid()) {
-        QPalette p = ColorDataType->palette();
-        p.setColor(ColorDataType->foregroundRole(), c);
-        ColorDataType->setPalette(p);
+        misc::setWidgetForegroundColor(ColorDataType, c);
     }
 }
 
@@ -837,12 +809,10 @@ void QucsSettingsDialog::slotColorDataType()
 void QucsSettingsDialog::slotColorAttribute()
 {
     QColor c = QColorDialog::getColor(
-                 ColorAttribute->palette().color(ColorAttribute->foregroundRole()),
+                 misc::getWidgetForegroundColor(ColorAttribute),
                  this);
     if(c.isValid()) {
-        QPalette p = ColorAttribute->palette();
-        p.setColor(ColorAttribute->foregroundRole(), c);
-        ColorAttribute->setPalette(p);
+        misc::setWidgetForegroundColor(ColorAttribute, c);
     }
 }
 
@@ -850,12 +820,10 @@ void QucsSettingsDialog::slotColorAttribute()
 void QucsSettingsDialog::slotColorDirective()
 {
     QColor c = QColorDialog::getColor(
-                 ColorDirective->palette().color(ColorDirective->foregroundRole()),
+                 misc::getWidgetForegroundColor(ColorDirective),
                  this);
     if(c.isValid()) {
-        QPalette p = ColorDirective->palette();
-        p.setColor(ColorDirective->foregroundRole(), c);
-        ColorDirective->setPalette(p);
+        misc::setWidgetForegroundColor(ColorDirective, c);
     }
 }
 
@@ -863,12 +831,10 @@ void QucsSettingsDialog::slotColorDirective()
 void QucsSettingsDialog::slotColorTask()
 {
     QColor c = QColorDialog::getColor(
-                 ColorTask->palette().color(ColorTask->foregroundRole()),
+                 misc::getWidgetForegroundColor(ColorTask),
                  this);
     if(c.isValid()) {
-        QPalette p = ColorTask->palette();
-        p.setColor(ColorTask->foregroundRole(), c);
-        ColorTask->setPalette(p);
+        misc::setWidgetForegroundColor(ColorTask, c);
     }
 }
 
@@ -913,6 +879,17 @@ void QucsSettingsDialog::slotAscoDirBrowse()
 
   if(!d.isEmpty())
     ascoEdit->setText(d);
+}
+
+void QucsSettingsDialog::slotEditorBrowse()
+{
+  QString d = QFileDialog::getOpenFileName(
+              this,
+              tr("Select the text editor"),
+              editorEdit->text(),
+              "All files (*)");
+  if(!d.isEmpty())
+    editorEdit->setText(d);
 }
 
 void QucsSettingsDialog::slotOctaveDirBrowse()

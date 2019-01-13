@@ -23,20 +23,20 @@
 # Boston, MA 02110-1301, USA.
 #
 
-noinst_LIBRARIES = libcomponents.a
+noinst_LTLIBRARIES = libcomponents.la
 
 MOCHEADERS = componentdialog.h spicedialog.h optimizedialog.h spicefile.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
+libcomponents_la_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   vcvs.cpp vccs.cpp tr_sim.cpp tline.cpp substrate.cpp sp_sim.cpp             \
   param_sweep.cpp mstee.cpp msstep.cpp msline.cpp mscross.cpp mscoupled.cpp mslange.cpp   \
   mscorner.cpp hb_sim.cpp diode.cpp dc_sim.cpp coplanar.cpp ccvs.cpp cccs.cpp \
-  ac_sim.cpp volt_dc.cpp volt_ac.cpp subcircuit.cpp sparamfile.cpp            \
+  ac_sim.cpp volt_dc.cpp volt_ac.cpp subcircuit.cpp spembed.cpp               \
   source_ac.cpp isolator.cpp equation.cpp circulator.cpp attenuator.cpp       \
   ampere_dc.cpp transformer.cpp symtrafo.cpp subcirport.cpp ground.cpp        \
   dcfeed.cpp dcblock.cpp biast.cpp inductor.cpp capacitor.cpp vhdlfile.cpp    \
-  component.cpp resistor.cpp iprobe.cpp volt_noise.cpp ampere_noise.cpp       \
+  component.cpp resistor.cpp iprobe.cpp wprobe.cpp volt_noise.cpp ampere_noise.cpp       \
   msmbend.cpp msopen.cpp ampere_ac.cpp bjt.cpp jfet.cpp mosfet.cpp            \
   msgap.cpp bjtsub.cpp mosfet_sub.cpp vpulse.cpp ipulse.cpp vrect.cpp         \
   irect.cpp msvia.cpp amplifier.cpp opamp.cpp spicefile.cpp cpwopen.cpp       \
@@ -59,19 +59,20 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   greytobinary4bit.cpp comp_1bit.cpp comp_2bit.cpp comp_4bit.cpp              \
   hpribin4bit.cpp msrstub.cpp phototransistor.cpp nigbt.cpp \
   hybrid.cpp ctline.cpp tunneldiode.cpp \
-  etr_sim.cpp ecvs.cpp vcresistor.cpp vacomponent.cpp        \
-  mutualx.cpp
+  etr_sim.cpp ecvs.cpp vcresistor.cpp vacomponent.cpp       \
+  mutualx.cpp circline.cpp taperedline.cpp     \
+  capq.cpp indq.cpp spiralinductor.cpp circularloop.cpp spdeembed.cpp
 
-nodist_libcomponents_a_SOURCES = $(MOCFILES)
+nodist_libcomponents_la_SOURCES = $(MOCFILES)
 
 noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   inductor.h biast.h dcblock.h dcfeed.h ground.h subcirport.h symtrafo.h      \
   transformer.h ampere_dc.h attenuator.h circulator.h equation.h isolator.h   \
-  source_ac.h sparamfile.h subcircuit.h volt_ac.h volt_dc.h ac_sim.h cccs.h   \
+  source_ac.h spembed.h subcircuit.h volt_ac.h volt_dc.h ac_sim.h cccs.h      \
   ccvs.h coplanar.h dc_sim.h diode.h hb_sim.h mscorner.h mscoupled.h mslange.h          \
   mscross.h msline.h msstep.h mstee.h param_sweep.h sp_sim.h substrate.h      \
   tline.h tr_sim.h component.h vcvs.h gyrator.h phaseshifter.h vhdlfile.h     \
-  iprobe.h volt_noise.h ampere_noise.h msmbend.h msopen.h ampere_ac.h bjt.h   \
+  iprobe.h wprobe.h volt_noise.h ampere_noise.h msmbend.h msopen.h ampere_ac.h bjt.h   \
   jfet.h mosfet.h msgap.h bjtsub.h mosfet_sub.h vpulse.h ipulse.h vrect.h     \
   irect.h msvia.h amplifier.h opamp.h spicefile.h cpwopen.h cpwshort.h        \
   cpwgap.h cpwstep.h libcomp.h mutual.h mutual2.h noise_ii.h noise_iv.h       \
@@ -89,16 +90,16 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   pad3bit.h pad4bit.h binarytogrey4bit.h greytobinary4bit.h comp_1bit.h       \
   comp_2bit.h comp_4bit.h hpribin4bit.h msrstub.h phototransistor.h nigbt.h   \
   vafile.h hybrid.h ctline.h tunneldiode.h      \
-  etr_sim.h ecvs.h vcresistor.h vacomponent.h                  \
-  mutualx.h
+  etr_sim.h ecvs.h vcresistor.h vacomponent.h   \
+  mutualx.h circline.h taperedline.h \
+  capq.h indq.h spiralinductor.h circularloop.h spdeembed.h
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
 
 SUFFIXES = .moc.cpp
 
 .h.moc.cpp:
 	$(MOC) -o $@ $<
 
-CLEANFILES = *~
-MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
-DISTCLEANFILES = *.moc.cpp
+CLEANFILES = *~ *.moc.cpp
+MAINTAINERCLEANFILES = Makefile.in

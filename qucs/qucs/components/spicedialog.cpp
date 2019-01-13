@@ -16,7 +16,6 @@
  ***************************************************************************/
 #include "spicedialog.h"
 #include "spicefile.h"
-#include "main.h"
 #include "qucs.h"
 #include "schematic.h"
 
@@ -39,7 +38,7 @@
 
 
 SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
-    : QDialog(d, 0, TRUE, Qt::WDestructiveClose)
+    : QDialog(d, Qt::WDestructiveClose)
 {
   App = App_; // pointer to main application
 
@@ -151,7 +150,7 @@ SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
   all->addLayout(hbottom);
 
   // ------------------------------------------------------------
-  CompNameEdit->setText(Comp->Name);
+  CompNameEdit->setText(Comp->name());
   changed = false;
 
   // insert all properties into the ListBox
@@ -161,9 +160,9 @@ SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
   SimCheck->setChecked(Comp->Props.at(2)->Value == "yes");
   for(int i=0; i<PrepCombo->count(); i++)
   {
-    if(PrepCombo->text(i) == Comp->Props.at(3)->Value)
+    if(PrepCombo->itemText(i) == Comp->Props.at(3)->Value)
     {
-      PrepCombo->setCurrentItem(i);
+      PrepCombo->setCurrentIndex(i);
       currentPrep = i;
       break;
     }
@@ -207,18 +206,18 @@ void SpiceDialog::reject()
 void SpiceDialog::slotButtApply()
 {
   Component *pc;
-  if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->Name);
-  else if(CompNameEdit->text() != Comp->Name)
+  if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->name());
+  else if(CompNameEdit->text() != Comp->name())
   {
     for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next())
-      if(pc->Name == CompNameEdit->text()) {
+      if(pc->name() == CompNameEdit->text()) {
         break;  // found component with the same name ?
       }
     if (pc) {
-      CompNameEdit->setText(Comp->Name);
+      CompNameEdit->setText(Comp->name());
     }
     else {
-      Comp->Name = CompNameEdit->text();
+      Comp->obsolete_name_override_hack( CompNameEdit->text() );
       changed = true;
     }
   }
@@ -288,11 +287,11 @@ void SpiceDialog::slotButtBrowse()
   }
 
   QFileInfo Info(s);
-  lastDir = Info.dirPath(true);  // remember last directory
+  lastDir = Info.absolutePath();  // remember last directory
 
   // snip path if file in current directory
   if(QucsSettings.QucsWorkDir.exists(Info.fileName()) &&
-          QucsSettings.QucsWorkDir.absPath() == Info.dirPath(true)) {
+          QucsSettings.QucsWorkDir.absolutePath() == Info.absolutePath()) {
     s = Info.fileName();
   }
   FileEdit->setText(s);
@@ -307,7 +306,7 @@ void SpiceDialog::slotPrepChanged(int i)
   if(currentPrep != i)
   {
     currentPrep = i;
-    PrepCombo->setCurrentItem(i);
+    PrepCombo->setCurrentIndex(i);
     loadSpiceNetList(FileEdit->text());  // reload netlist nodes
   }
 }
@@ -371,11 +370,12 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
       connect(SpicePrep, SIGNAL(readyReadStandardError()), SLOT(slotGetPrepErr()));
     }
 
-    QMessageBox *MBox = new QMessageBox(tr("Info"),
+    QMessageBox *MBox = new QMessageBox(QMessageBox::NoIcon,
+                                        tr("Info"),
                                         tr("Preprocessing SPICE file \"%1\".").arg(FileInfo.filePath()),
-                                        QMessageBox::NoIcon, QMessageBox::Abort,
-                                        QMessageBox::NoButton, QMessageBox::NoButton, this, 0, true,
-                                        Qt::WStyle_DialogBorder |  Qt::WDestructiveClose);
+                                        QMessageBox::Abort,
+                                        this);
+    MBox->setAttribute(Qt::WA_DeleteOnClose);
 
     connect(SpicePrep, SIGNAL(finished(int, QProcess::ExitStatus)), MBox, SLOT(close()));
 
@@ -438,12 +438,12 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
   connect(QucsConv, SIGNAL(readyReadStandardError()), SLOT(slotGetError()));
 
 
-  QMessageBox *MBox = new QMessageBox(tr("Info"),
+  QMessageBox *MBox = new QMessageBox(QMessageBox::NoIcon,
+                                      tr("Info"),
                                       tr("Converting SPICE file \"%1\".").arg(FileInfo.filePath()),
-                                      QMessageBox::NoIcon, QMessageBox::Abort,
-                                      QMessageBox::NoButton, QMessageBox::NoButton, this, 0, true,
-                                      Qt::WStyle_DialogBorder |  Qt::WDestructiveClose);
-
+                                      QMessageBox::Abort,
+                                      this);
+  MBox->setAttribute(Qt::WA_DeleteOnClose);
   connect(QucsConv, SIGNAL(finished(int, QProcess::ExitStatus)), MBox, SLOT(close()));
 
   QucsConv->start(Program, Arguments);
@@ -465,7 +465,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
   if(!pp->Value.isEmpty())
   {
     PortsList->clear();
-    QStringList ports = QStringList::split(',', pp->Value);
+    QStringList ports = pp->Value.split(',');
     foreach(QString port, ports) {
       PortsList->addItem(port);
     }

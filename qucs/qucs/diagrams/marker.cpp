@@ -24,7 +24,7 @@
 #include "marker.h"
 #include "diagram.h"
 #include "graph.h"
-#include "main.h"
+#include "qucs.h"
 
 #include <QString>
 #include <QPainter>
@@ -60,10 +60,22 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
   cy = -cy_;
   fCX = float(cx);
   fCY = float(cy);
+
+  //Default setting for displaying extra parameters. The markers will show the impedance data if the chart is type "Smith".
+  //In the case of having an admittance chart, admittance will be display. 
+  if (diag()->Name == "Smith") {
+    optText = Marker::SHOW_Z;
+  } else if (diag()->Name == "ySmith") {
+    optText = Marker::SHOW_Y;
+  } else {
+    optText = 0;
+  }
+
   if(!pGraph){
     makeInvalid();
   }else{
     initText(branchNo);   // finally create marker
+    //fix();//RELATED TO THE PHASOR DIAGRAM CODE
     createText();
   }
 
@@ -122,23 +134,26 @@ void Marker::initText(int n)
   // find exact marker position
   m  = nnn - 1;
   pz = pGraph->cPointsY + 2*n;
-  for(nn=0; nn<nnn; nn++) {
-    diag()->calcCoordinate(px, pz, py, &fCX, &fCY, pa);
-    ++px;
-    pz += 2;
-    if(isCross) {
-      px--;
-      py++;
-      pz += 2*(pD->count-1);
+
+    for(nn=0; nn<nnn; nn++) {
+      diag()->calcCoordinate(px, pz, py, &fCX, &fCY, pa);
+      ++px;
+      pz += 2;
+      if(isCross) {
+	px--;
+	py++;
+	pz += 2*(pD->count-1);
+      }
+      
+      x = int(fCX+0.5) - cx;
+      y = int(fCY+0.5) - cy;
+      d = x*x + y*y;
+      if(d < dmin) {
+	dmin = d;
+	m = nn;
+      }
     }
-    x = int(fCX+0.5) - cx;
-    y = int(fCY+0.5) - cy;
-    d = x*x + y*y;
-    if(d < dmin) {
-      dmin = d;
-      m = nn;
-    }
-  }
+
   if(isCross) m *= pD->count;
   n += m;
 
@@ -153,12 +168,46 @@ void Marker::initText(int n)
   for(unsigned i=0; (pD = pGraph->axis(i)); ++i) {
     px = pD->Points + (nn % pD->count);
     VarPos[i] = *px;
-    Text += pD->Var + ": " + QString::number(*px,'g',Precision) + "\n";
+    Text += pD->Var + ": " + QString::number(VarPos[i],'g',Precision) + "\n";
     nn /= pD->count;
   }
 
   // createText();
 }
+
+/* RELATED TO THE PHASOR DIAGRAM CODE
+//this function finds the VarPos[0] of waveac
+void Marker::fix()
+{
+  if(!(pGraph->cPointsY)) {
+    makeInvalid();
+    return;
+  }
+  if(diag()->Name!="Waveac") return;
+
+  int nn,x,d,dmin = INT_MAX;
+  Axis const *pa;
+  if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
+  else  pa = &(diag()->zAxis);
+  double Dummy = 0.0;   // needed for 2D graph in 3D diagram
+  double px=0, *py=&Dummy, pz=0;
+  int nnn = 50*diag()->sc;
+  int m  = nnn - 1;
+  
+  for(nn=0; nn<nnn; nn++) {
+      px = diag()->wavevalX(nn);
+      diag()->calcCoordinate(&px, &pz, py, &fCX, &fCY, pa);
+      x = int(fCX+0.5) - cx;
+      d = x*x;
+      if(d < dmin) {
+	dmin = d;
+	m = nn;
+      }
+  }
+  VarPos[0] = diag()->wavevalX(m);
+  
+}
+*/
 
 // ---------------------------------------------------------------------
 /*!
@@ -191,10 +240,17 @@ void Marker::createText()
   double *pp;
   nVarPos = pGraph->numAxes();
   DataX const *pD;
-
-  auto p = pGraph->findSample(VarPos);
-  VarDep[0] = p.first;
-  VarDep[1] = p.second;
+  if(diag()->Name!="Waveac")
+  {
+    auto p = pGraph->findSample(VarPos);
+    VarDep[0] = p.first;
+    VarDep[1] = p.second;
+  }
+  else
+  {
+    VarDep[0] = wavevalY(VarPos[0],VarPos);
+    VarDep[1] = 0;
+  }
 
   double v=0.;   // needed for 2D graph in 3D diagram
   double *py=&v;
@@ -211,7 +267,10 @@ void Marker::createText()
 
   // now actually create text.
   for(unsigned ii=0; (pD=pGraph->axis(ii)); ++ii) {
-    Text += pD->Var + ": " + QString::number(VarPos[ii],'g',Precision) + "\n";
+    if(ii==0 && diag()->Name=="Waveac")
+      Text += "Time: " + unit(VarPos[ii]) + "\n";
+    else
+      Text += pD->Var + ": " + QString::number(VarPos[ii],'g',Precision) + "\n";
   }
 
   Text += pGraph->Var + ": ";
@@ -227,12 +286,14 @@ void Marker::createText()
   assert(diag());
   Text += diag()->extraMarkerText(this);
 
-  Axis const *pa;
-  if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
-  else  pa = &(diag()->zAxis);
-  pp = &(VarPos[0]);
+    Axis const *pa,*pt;
 
-  diag()->calcCoordinate(pp, pz, py, &fCX, &fCY, pa);
+    if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
+    else  pa = &(diag()->zAxis);
+    pp = &(VarPos[0]);
+
+    diag()->calcCoordinate(pp, pz, py, &fCX, &fCY, pa);
+
   diag()->finishMarkerCoordinates(fCX, fCY);
 
   cx = int(fCX+0.5);
@@ -268,25 +329,28 @@ bool Marker::moveLeftRight(bool left)
 {
   int n;
   double *px;
+  double x;
 
   DataX const *pD = pGraph->axis(0);
   px = pD->Points;
   if(!px) return false;
-  for(n=0; n<pD->count; n++) {
-    if(VarPos[0] <= *px) break;
-    px++;
-  }
-  if(n == pD->count) px--;
 
-  if(left) {
-    if(px <= pD->Points) return false;
-    px--;  // one position to the left
-  }
-  else {
-    if(px >= (pD->Points + pD->count - 1)) return false;
-    px++;  // one position to the right
-  }
-  VarPos[0] = *px;
+    for(n=0; n<pD->count; n++) {
+      if(VarPos[0] <= *px) break;
+      px++;
+    }
+    if(n == pD->count) px--;
+
+    if(left) {
+      if(px <= pD->Points) return false;
+      px--;  // one position to the left
+    }
+    else {
+      if(px >= (pD->Points + pD->count - 1)) return false;
+      px++;  // one position to the right
+    }
+    VarPos[0] = *px;
+
   createText();
 
   return true;
@@ -466,8 +530,15 @@ QString Marker::save()
 
   s += QString::number(x1) +" "+ QString::number(y1) +" "
       +QString::number(Precision) +" "+ QString::number(numMode);
-  if(transparent)  s += " 1>";
-  else  s += " 0>";
+  if(transparent)  s += " 1";
+  else  s += " 0";
+
+  if (diag()->Name.count("Smith"))//Impedance/admittance smith charts
+  {
+    s += " " + QString::number(optText);
+  }
+
+  s+=">"; 
 
   return s;
 }
@@ -520,6 +591,14 @@ bool Marker::load(const QString& _s)
   if(n == "0")  transparent = false;
   else  transparent = true;
 
+  // for Smith charts; optional parameters to be displayed
+  n  = s.section(' ',7,7);
+  if(n.isEmpty()) return true;  // backward compatibility
+  int numOpt = n.toInt(&ok);
+  if(!ok) return false;
+  
+  optText = static_cast<extraText>(numOpt);
+
   return true;
 }
 
@@ -533,7 +612,26 @@ bool Marker::getSelected(int x_, int y_)
 
   return false;
 }
+// ------------------------------------------------------------------------
+/*will find the y value of a point in time for waveac*/
+double Marker::wavevalY(double xn,std::vector<double>& VarPos)  
+{
+  double n;
+  double af=0.0; //angles
+  double A = 0.0;
+  double yp[2];
 
+  n=VarPos[0];
+  VarPos[0]= diag()->freq[0];
+  auto p = pGraph->findSample(VarPos);
+  yp[0]=p.first;
+  yp[1]=p.second;
+
+  af = atan2 (yp[1],yp[0]);
+  A = sqrt(yp[1]*yp[1] +yp[0]*yp[0]);
+  VarPos[0]=n;
+  return A*sin(2*pi*(diag()->freq[0])*xn + af);
+}
 // ------------------------------------------------------------------------
 /*
  * the diagram this belongs to
@@ -561,5 +659,105 @@ Marker* Marker::sameNewOne(Graph *pGraph_)
 
   return pm;
 }
+// ------------------------------------------------------------------------
+QString Marker::unit(double n)
+{
+  QString value="";
+  if(n < 1e-9)
+  {
+    n/= 1e-9;
+    value.setNum(n);
+    value+= " p";
+  }
+  else if(n < 1e-6)
+  {
+    n/= 1e-9;
+    value.setNum(n);
+    value+= " n";
+  }
+  else if(n < 1e-3)
+  {
+    n/= 1e-6;
+    value.setNum(n);
+    value+= " u";
+  }
+  else if(n < 1)
+  {
+    n/= 1e-3;
+    value.setNum(n);
+    value+= " m";
+  }
+  else
+  {
+    value.setNum(n);
+  }
+  return value;
 
-// vim:ts=8:sw=2:noet
+}
+
+/* RELATED TO THE PHASOR DIAGRAM CODE
+int Marker::phasormk(double *pz,double *px,int max)
+{
+  int m,n,nn,x,y,d,dmin = INT_MAX;
+  Axis const *pa,*pt;
+
+  findaxismk();
+  pt=xA;
+  if(pGraph->yAxisNo == 0)  pa = yA;
+  else  pa = zA;
+
+  for(nn=0; nn<max; nn++) {
+    for(n=0;n<diag()->nfreqt;n++)
+    {
+      if(diag()->freq[n]==*px) break;
+    }
+    if(n < diag()->nfreqt) diag()->calcCoordinatePh(pz, &fCX, &fCY, pa, pt);
+    ++px;
+    pz += 2;
+      
+    x = int(fCX+0.5) - cx;
+    y = int(fCY+0.5) - cy;
+    d = x*x + y*y;
+    if(d < dmin) {
+      dmin = d;
+      m = nn;
+    }
+  }
+  return m;
+}
+
+void Marker::findaxismk()
+{
+  QString var = pGraph->Var;
+    
+    xA = &(diag()->xAxis);
+    yA = &(diag()->yAxis);
+    zA = &(diag()->zAxis);
+
+    if(var.indexOf(".v",0,Qt::CaseSensitive) != -1)
+    {
+      xA = &(diag()->xAxisV);
+      yA = &(diag()->yAxisV);
+      zA = &(diag()->zAxisV);
+    }
+    else if(var.indexOf(".i",0,Qt::CaseSensitive) != -1)
+    {
+      xA = &(diag()->xAxisI);
+      yA = &(diag()->yAxisI);
+      zA = &(diag()->zAxisI);
+    }
+    else if(var.indexOf(".S",0,Qt::CaseSensitive) != -1)
+    {
+      xA = &(diag()->xAxisP);
+      yA = &(diag()->yAxisP);
+      zA = &(diag()->zAxisP);
+    }
+    else if(var.indexOf(".Ohm",0,Qt::CaseSensitive) != -1)
+    {
+      xA = &(diag()->xAxisZ);
+      yA = &(diag()->yAxisZ);
+      zA = &(diag()->zAxisZ);
+    }
+
+}
+*/

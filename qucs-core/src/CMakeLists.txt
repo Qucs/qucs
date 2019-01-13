@@ -498,8 +498,7 @@ ADD_EXECUTABLE( qucsator ucs.cpp ${PUBLIC_HEADERS} ${TEMPLATES})
 # After:
 # - http://stackoverflow.com/questions/11429055/cmake-how-create-a-single-shared-library-from-all-static-libraries-of-subprojec
 #
-# use target libqucs to avoid clash with target qucs (GUI) while on release mode
-ADD_LIBRARY( libqucs SHARED
+ADD_LIBRARY( libqucsator SHARED
   ${LIBQUCS_SRC}
   ${TEMPLATES}
   $<TARGET_OBJECTS:coreMath>
@@ -511,30 +510,28 @@ ADD_LIBRARY( libqucs SHARED
   $<TARGET_OBJECTS:coreDigital>
 )
 
-# rename the library to let it be libqucs (not liblibqucs)
-SET_TARGET_PROPERTIES( libqucs PROPERTIES OUTPUT_NAME qucs )
-
-TARGET_LINK_LIBRARIES( libqucs ${CMAKE_DL_LIBS} )
+# rename the library to let it be libqucsator (not liblibqucsator)
+SET_TARGET_PROPERTIES( libqucsator PROPERTIES OUTPUT_NAME qucsator )
 
 #
 # Create target to handle gperfapp dependency
 #
 ADD_CUSTOM_TARGET( equation DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/gperfapphash.cpp equation.cpp )
-ADD_DEPENDENCIES( libqucs equation )
+ADD_DEPENDENCIES( libqucsator equation )
 
 #
-# Link qucsator and libqucs
+# Link qucsator and libqucsator
 #
-TARGET_LINK_LIBRARIES( qucsator libqucs )
+TARGET_LINK_LIBRARIES( qucsator libqucsator ${CMAKE_DL_LIBS})
 
 #
 # Handle install
 #
 INSTALL(TARGETS qucsator DESTINATION bin)
 
-# set Windows runtime location for libqucs
+# set Windows runtime location for libqucsator
 # See: http://www.cmake.org/pipermail/cmake/2010-June/037461.html
-INSTALL(TARGETS libqucs
+INSTALL(TARGETS libqucsator
      RUNTIME DESTINATION bin COMPONENT runtime
      ARCHIVE DESTINATION lib COMPONENT devel
      LIBRARY DESTINATION lib COMPONENT library)

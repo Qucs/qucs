@@ -19,7 +19,7 @@ ampere_dc.cpp		ecvs.cpp
 source_ac.cpp
 ampere_noise.cpp	equation.cpp		mosfet.cpp		sp_sim.cpp
 amplifier.cpp		etr_sim.cpp
-			fa1b.cpp		mosfet_sub.cpp		sparamfile.cpp
+			fa1b.cpp		mosfet_sub.cpp		spembed.cpp
 andor4x2.cpp		fa2b.cpp		mscorner.cpp		spicedialog.cpp
 andor4x3.cpp		gatedDlatch.cpp		mscoupled.cpp
 andor4x4.cpp		greytobinary4bit.cpp	mscross.cpp		spicefile.cpp
@@ -51,11 +51,11 @@ cpwstep.cpp		jkff_SR.cpp		pad4bit.cpp		volt_noise.cpp
 ctline.cpp		libcomp.cpp		param_sweep.cpp		vprobe.cpp
 d_flipflop.cpp		log_amp.cpp		phaseshifter.cpp	vpulse.cpp
 dc_sim.cpp		logic_0.cpp		photodiode.cpp		vrect.cpp
-dcblock.cpp		logic_1.cpp		phototransistor.cpp
-dcfeed.cpp		logical_and.cpp		pm_modulator.cpp
-vcresistor.cpp
-vacomponent.cpp
-mutualx.cpp
+dcblock.cpp		logic_1.cpp		phototransistor.cpp	wprobe.cpp
+dcfeed.cpp		logical_and.cpp		pm_modulator.cpp        capq.cpp
+vcresistor.cpp          indq.cpp                spiralinductor.cpp      circularloop.cpp
+vacomponent.cpp		mutualx.cpp		circline.cpp		taperedline.cpp
+spdeembed.cpp
 )
 
 SET(COMPONENTS_HDRS
@@ -75,9 +75,12 @@ bjt.h
 bjtsub.h
 bondwire.h
 capacitor.h
+capq.h
 cccs.h
 ccvs.h
 circulator.h
+circline.h
+circularloop.h
 coaxialline.h
 comp_1bit.h
 comp_2bit.h
@@ -111,6 +114,7 @@ EKV26MOS.h
 eqndefined.h
 equation.h
 etr_sim.h
+taperedline.h
 fa1b.h
 fa2b.h
 gatedDlatch.h
@@ -124,7 +128,9 @@ hybrid.h
 iexp.h
 ifile.h
 inductor.h
+indq.h
 iprobe.h
+wprobe.h
 ipulse.h
 irect.h
 isolator.h
@@ -189,9 +195,11 @@ rlcg.h
 rs_flipflop.h
 source_ac.h
 sp_sim.h
-sparamfile.h
+spdeembed.h
+spembed.h
 spicedialog.h
 spicefile.h
+spiralinductor.h
 subcircuit.h
 subcirport.h
 substrate.h
@@ -233,7 +241,7 @@ spicefile.h
 
 QT4_WRAP_CPP(COMPONENTS_MOC_SRCS ${COMPONENTS_MOC_HDRS})
 
-ADD_LIBRARY(components ${COMPONENTS_HDRS} ${COMPONENTS_SRCS} ${COMPONENTS_MOC_SRCS} )
+ADD_LIBRARY(components OBJECT ${COMPONENTS_HDRS} ${COMPONENTS_SRCS} ${COMPONENTS_MOC_SRCS} )
 
 
 

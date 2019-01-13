@@ -780,7 +780,7 @@ void qf_poly::div (qf_double_t r, qf_double_t i) {
     exit (-1);
   }
 
-  i = fabs (i);			// Imaginary part must be > 0
+  i = std::abs (i);			// Imaginary part must be > 0
 
   // First examins pathological cases
 
@@ -796,8 +796,8 @@ void qf_poly::div (qf_double_t r, qf_double_t i) {
 
   if (d == 1) {
     if (((rep == ROOTS) || (rep == BOTH))
-    && (fabs (rts[0] - r) < ROOT_TOL)
-    && (fabs (rts[1]) < ROOT_TOL)) {
+    && (std::abs (rts[0] - r) < ROOT_TOL)
+    && (std::abs (rts[1]) < ROOT_TOL)) {
       d = 0;
       delete[] rts;
       rts = NULL;
@@ -808,7 +808,7 @@ void qf_poly::div (qf_double_t r, qf_double_t i) {
       return;
     }
 
-    if ((rep == COEFF) && (fabs (p[0] / p[1] + r) < ROOT_TOL)) {
+    if ((rep == COEFF) && (std::abs (p[0] / p[1] + r) < ROOT_TOL)) {
       qf_double_t temp = p[1];
       d = 0;
       delete[] p;
@@ -837,11 +837,11 @@ void qf_poly::div (qf_double_t r, qf_double_t i) {
 
   for (unsigned k = 0, j = 0; k < 2 * d; k += 2) {
 #ifdef _QF_POLY_DEBUG
-    std::cout << "Div: " << fabs (rts[k] - r) << " "
-          << fabs (rts[k + 1] - i) << "\n";
+    std::cout << "Div: " << std::abs (rts[k] - r) << " "
+          << std::abs (rts[k + 1] - i) << "\n";
 #endif
 
-    if ((fabs (rts[k] - r) > ROOT_TOL) || (fabs (rts[k + 1] - i) > ROOT_TOL)) {
+    if ((std::abs (rts[k] - r) > ROOT_TOL) || (std::abs (rts[k + 1] - i) > ROOT_TOL)) {
       rtsp[j] = rts[k];
       rtsp[j + 1] = rts[k + 1];
       j += 2;
@@ -909,8 +909,8 @@ void smpf (qf_poly & N, qf_poly & D) {
       std::cout << "N.rts[" << i + 1 << "] = " << N.rts[i + 1] << ", ";
       std::cout << "D.rts[" << j + 1 << "] = " << D.rts[j + 1] << "\n";
       if ((Ld[j / 2]) &&
-      (fabs (N.rts[i] - D.rts[j]) < ROOT_TOL) &&
-      (fabs (N.rts[i + 1] - D.rts[j + 1]) < ROOT_TOL)) {
+      (std::abs (N.rts[i] - D.rts[j]) < ROOT_TOL) &&
+      (std::abs (N.rts[i + 1] - D.rts[j + 1]) < ROOT_TOL)) {
     Ln[i / 2] = false;	// Eliminates both roots
     Ld[j / 2] = false;
     ndN--;
@@ -1079,8 +1079,8 @@ void qf_poly::disp_c (void) {
   if (p[d] < 0)
     std::cout << "-";
 
-  if (fabs (p[d]) != 1)
-    std::cout << fabs (p[d]);
+  if (std::abs (p[d]) != 1)
+    std::cout << std::abs (p[d]);
 
   if (d == 1) {
     std::cout << " x ";
@@ -1098,8 +1098,8 @@ void qf_poly::disp_c (void) {
       else
     std::cout << "- ";
 
-      if (fabs (p[i]) != 1)
-    std::cout << fabs (p[i]);
+      if (std::abs (p[i]) != 1)
+    std::cout << std::abs (p[i]);
 
       std::cout << " x^" << i << ' ';
     }
@@ -1110,8 +1110,8 @@ void qf_poly::disp_c (void) {
       else
     std::cout << "- ";
 
-      if (fabs (p[1]) != 1)
-    std::cout << fabs (p[1]);
+      if (std::abs (p[1]) != 1)
+    std::cout << std::abs (p[1]);
 
       std::cout << " x ";
     }
@@ -1123,7 +1123,7 @@ void qf_poly::disp_c (void) {
     else
       std::cout << "- ";
 
-    std::cout << fabs (p[0]);
+    std::cout << std::abs (p[0]);
 
   }
   std::cout << '\n';
@@ -1144,7 +1144,7 @@ void qf_poly::disp_r (void) {
     std::cout << ") ";
 
       else if (rts[i] < 0)
-    std::cout << " + " << fabs (rts[i]) << ") ";
+    std::cout << " + " << std::abs (rts[i]) << ") ";
 
       else
     std::cout << " - " << rts[i] << ") ";
@@ -1159,7 +1159,7 @@ void qf_poly::disp_r (void) {
     std::cout << "- " << n << "X ";
 
       if (n < 0)
-    std::cout << "+ " << fabs (n) << "X ";
+    std::cout << "+ " << std::abs (n) << "X ";
 
       std::cout << "+ " << m << ") ";
 
@@ -1255,8 +1255,6 @@ void qf_poly::to_roots (void) {
     exit (-1);
   }
 
-  int status;
-
   if ((rep == ROOTS) || (rep == BOTH))
     return;			// Nothing to do
 
@@ -1275,11 +1273,11 @@ void qf_poly::to_roots (void) {
 
   qf_scm (m);
   qf_bcm (m);
-  status = qf_qrc (m, rts);
+  qf_qrc (m, rts);
 
   // root solving qr method failed to converge
   for (unsigned i = 0; i < 2 * d; i++) {
-    if (fabs (rts[i]) <= ROOT_PREC)
+    if (std::abs (rts[i]) <= ROOT_PREC)
       rts[i] = 0;
     else
       rts[i] = ROUND_ROOT (rts[i]);
@@ -1321,28 +1319,28 @@ void qf_poly::qf_bcm (qf_matrix & m) {
     for (i = 0; i < m.n; i++) {
       /* column norm, excluding the diagonal */
       if (i != m.n - 1) {
-    col_norm = fabs (m (i + 1, i));
+    col_norm = std::abs (m (i + 1, i));
       }
 
       else {
     col_norm = 0;
 
     for (j = 0; j < m.n - 1; j++) {
-      col_norm += fabs (m (j, m.n - 1));
+      col_norm += std::abs (m (j, m.n - 1));
     }
       }
 
       /* row norm, excluding the diagonal */
       if (i == 0) {
-    row_norm = fabs (m (0, m.n - 1));
+    row_norm = std::abs (m (0, m.n - 1));
       }
 
       else if (i == m.n - 1) {
-    row_norm = fabs (m (i, i - 1));
+    row_norm = std::abs (m (i, i - 1));
       }
 
       else {
-    row_norm = fabs (m (i, i - 1)) + fabs (m (i, m.n - 1));
+    row_norm = std::abs (m (i, i - 1)) + std::abs (m (i, m.n - 1));
       }
 
       if ((col_norm == 0) || (row_norm == 0)) {
@@ -1406,9 +1404,9 @@ next_root:
 
 next_iteration:
   for (e = n; e >= 2; e--) {
-    qf_double_t a1 = fabs (h (e - 1, e - 2));
-    qf_double_t a2 = fabs (h (e - 2, e - 2));
-    qf_double_t a3 = fabs (h (e - 1, e - 1));
+    qf_double_t a1 = std::abs (h (e - 1, e - 2));
+    qf_double_t a2 = std::abs (h (e - 2, e - 2));
+    qf_double_t a3 = std::abs (h (e - 1, e - 1));
 
     if (a1 <= EPSILON * (a2 + a3))
       break;
@@ -1428,7 +1426,7 @@ next_iteration:
   if (e == n - 1) {
     p = (y - x) / 2;
     q = p * p + w;
-    y = sqrt (fabs (q));
+    y = sqrt (std::abs (q));
     x += t;
 
     if (q > 0) {		/* two real roots */
@@ -1463,7 +1461,7 @@ next_iteration:
       h (i, i) -= x;
     }
 
-    s = fabs (h (n - 1, n - 2)) + fabs (h (n - 2, n - 3));
+    s = std::abs (h (n - 1, n - 2)) + std::abs (h (n - 2, n - 3));
     y = 0.75 * s;
     x = y;
     w = -0.4375 * s * s;
@@ -1480,7 +1478,7 @@ next_iteration:
     p = h (m - 1, m) + (r * s - w) / h (m, m - 1);
     q = h (m, m) - z - r - s;
     r = h (m + 1, m);
-    s = fabs (p) + fabs (q) + fabs (r);
+    s = std::abs (p) + std::abs (q) + std::abs (r);
     p /= s;
     q /= s;
     r /= s;
@@ -1488,11 +1486,11 @@ next_iteration:
     if (m == e)
       break;
 
-    a1 = fabs (h (m - 1, m - 2));
-    a2 = fabs (h (m - 2, m - 2));
-    a3 = fabs (h (m, m));
+    a1 = std::abs (h (m - 1, m - 2));
+    a2 = std::abs (h (m - 2, m - 2));
+    a3 = std::abs (h (m, m));
 
-    if (a1 * (fabs (q) + fabs (r)) <= EPSILON * fabs (p) * (a2 + a3))
+    if (a1 * (std::abs (q) + std::abs (r)) <= EPSILON * std::abs (p) * (a2 + a3))
       break;
   }
 
@@ -1511,7 +1509,7 @@ next_iteration:
       p = h (k - 1, k - 2);
       q = h (k, k - 2);
       r = notlast ? h (k + 1, k - 2) : 0;
-      x = fabs (p) + fabs (q) + fabs (r);
+      x = std::abs (p) + std::abs (q) + std::abs (r);
 
       if (x == 0)
     continue;		/* FIXME????? */
