@@ -38,7 +38,8 @@ public:
   void connectionsAppend(Element* e){
 	  Connections.append(e);
   }
-  void connectionsRemove(Element* e){
+  void connectionsRemove(Element const* ee){
+     Element* e=const_cast<Element*>(ee);
 	  Connections.removeRef(e);
   }
   unsigned connectionsCount() const{
