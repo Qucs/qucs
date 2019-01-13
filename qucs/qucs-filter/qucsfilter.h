@@ -40,6 +40,18 @@ struct tQucsSettings {
 
 extern struct tQucsSettings QucsSettings;
 
+enum FilterImplementation {
+  LC_LADDER_PI,
+  LC_LADDER_TEE,
+  END_COUPLED,
+  PARALLEL_COUPLED_TL,
+  STEPPED_IMPEDANCE,
+  QW_RESONATORS,
+  QW_RING,
+  CAP_COUPLED_SHUNT_RESONATORS,
+  EQN_DEFINED
+};
+
 class QucsFilter : public QMainWindow
 {
   Q_OBJECT
