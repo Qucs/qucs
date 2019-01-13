@@ -21,7 +21,6 @@ Qucs
 
 * [NEW] Wattmeter probe. [(PR#682)]
   -  Calculate apparent power, real power, reactive power and power factor.
-  -  Internal resistance can be set for the voltage and current ports.update news
 
 * [NEW] Add context menu to document tabs ([PR#708])
 
@@ -36,6 +35,8 @@ Qucs
 * Let Markers show impedance/admittance data when used with Smith chart. ([PR#701])
 
 * Fix "export as image" with non integer scale factor ([PR#715])
+
+* Fix PDF bounding box when using "File->Export as image..." ([#882])
 
 Qucsator
 --------
@@ -501,6 +502,7 @@ Bug fixes
 [#15]: https://github.com/Qucs/qucs/issues/15
 [#311]: https://github.com/Qucs/qucs/issues/311
 [#74]: https://github.com/Qucs/qucs/issues/74
+[#882]: https://github.com/Qucs/qucs/issues/882
 [#112]: https://github.com/Qucs/qucs/issues/112
 [#310]: https://github.com/Qucs/qucs/issues/310
 [#43]: https://github.com/Qucs/qucs/issues/43
@@ -543,6 +545,7 @@ Bug fixes
 [PR#252]: https://github.com/Qucs/qucs/pull/252
 [PR#292]: https://github.com/Qucs/qucs/pull/292
 [PR#416]: https://github.com/Qucs/qucs/pull/416
+[PR#682]: https://github.com/Qucs/qucs/pull/682
 [PR#523]: https://github.com/Qucs/qucs/pull/523
 [PR#509]: https://github.com/Qucs/qucs/pull/509
 [PR#412]: https://github.com/Qucs/qucs/pull/412
