@@ -190,6 +190,7 @@ void SchematicModel::insertSymbolNodes(Symbol *c, bool noOptimize)
 void SchematicModel::erase(Element* what)
 {
 	if(auto c=component(what)){
+		disconnect(c);
 		components().removeRef(c);
 	}else if(auto d=diagram(what)){
 		diagrams().removeRef(d);
@@ -529,5 +530,32 @@ void SchematicModel::simpleInsertWire(Wire *pw)
 
   wires().append(pw);
 }
+
+void SchematicModel::disconnect(Symbol* c)
+{
+	// delete all port connections
+	for(unsigned i=0; i<c->portCount(); ++i){
+		Node const* val=&(c->portValue(i));
+		Node* Connection=const_cast<Node*>(val); // ok, we are owner
+
+		if(Connection->connectionsCount()==1){
+			if(Connection->Label){
+				delete Connection->Label;
+			}else{
+			}
+
+			nodes().removeRef(Connection);  // delete open nodes
+			c->setPort(i, nullptr);
+		}else if(Connection->connectionsCount()==3){
+			Connection->connectionsRemove(c);// delete connection
+//			pn->disconnect(c);
+			oneTwoWires(Connection);  // two wires -> one wire
+		}else{
+			Connection->connectionsRemove(c);// remove connection
+//			pn->disconnect(c);
+		}
+	}
+}
+
 
 ModelAccess::ModelAccess(){}

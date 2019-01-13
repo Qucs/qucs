@@ -137,7 +137,8 @@ public:
 		}
 		return -1;
 	};
-	bool removeRef(T *t) {
+	bool removeRef(T const*tt) {
+		T* t=const_cast<T*>(tt);
 		int nr = findRef(t);
 		if (nr >= 0) {
 			remove(nr);
