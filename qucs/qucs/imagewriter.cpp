@@ -62,7 +62,8 @@ ImageWriter::noGuiPrint(QWidget *doc, QString printFile, QString color)
         svg1->setFileName(printFile);
     }
 
-    svg1->setSize(QSize(1.12*w, h));
+    svg1->setSize(QSize(w, h));
+    svg1->setViewBox(QRectF(0, 0, w,h));
     QPainter *p = new QPainter(svg1);
     p->fillRect(0, 0, svg1->size().width(), svg1->size().height(), Qt::white);
     ViewPainter *vp = new ViewPainter(p);
@@ -75,7 +76,7 @@ ImageWriter::noGuiPrint(QWidget *doc, QString printFile, QString color)
     delete svg1;
 
     if (!printFile.endsWith(".svg")) {
-        QString cmd = "inkscape -z -D --file=";
+        QString cmd = "inkscape -z --file=";
         cmd += tempfile + " ";
 
         if (printFile.endsWith(".eps")) {
@@ -225,8 +226,8 @@ int ImageWriter::print(QWidget *doc)
           svgwriter->setFileName(filename);
         }
 
-        //svgwriter->setSize(QSize(1.12*w,1.1*h));
-        svgwriter->setSize(QSize(1.12*w,h));
+        svgwriter->setSize(QSize(w,h));
+        svgwriter->setViewBox(QRectF(0, 0, w,h));
         QPainter *p = new QPainter(svgwriter);
         p->fillRect(0, 0, svgwriter->size().width(), svgwriter->size().height(), Qt::white);
 
@@ -239,7 +240,7 @@ int ImageWriter::print(QWidget *doc)
         delete svgwriter;
 
         if (dlg->needsInkscape()) {
-            QString cmd = "inkscape -z -D --file=";
+            QString cmd = "inkscape -z --file=";
             cmd += filename+".tmp.svg ";
 
             if (dlg->isPdf_Tex()) {

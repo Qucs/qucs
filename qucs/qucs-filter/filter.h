@@ -25,6 +25,7 @@
 #define TYPE_CAUER       3
 
 #include <cmath>
+#include <QString>
 
 static const double pi          = 3.1415926535897932384626433832795029;  /* pi       */
 static const double one_over_pi = 0.3183098861837906715377675267450287;  /* 1/pi     */
@@ -66,7 +67,7 @@ public:
   static double getQuadraticNormValues(int, tFilter*, double&);
 
 protected:
-  static QString num2str(double);
+  static QString num2str(double Num, int Precision = 4, QString unit = QString("m"));
   static double getE6value(double);
 
 private:
