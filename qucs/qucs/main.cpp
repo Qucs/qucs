@@ -703,7 +703,7 @@ int main(int argc, char *argv[])
   QString page = "A4";
   int dpi = 96;
   QString color = "RGB";
-  QString orientation = "portraid";
+  QString orientation = "portrait";
 
   // simple command line parser
   for (int i = 1; i < argc; ++i) {
@@ -761,7 +761,7 @@ int main(int argc, char *argv[])
     else if (!strcmp(argv[i], "-a")) {
       attach(argv[++i]);
     }
-    else if(!strcmp(argv[i], "-q")) {
+    else if(!strcmp(argv[i], "-q") || !strcmp(argv[i], "--quit")) {
 	exit(0);
     }
     else if (!strcmp(argv[i], "-i")) {

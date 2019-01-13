@@ -6,7 +6,7 @@ AC_PREREQ(2.57)
 dnl Read version from file
 m4_define([QUCS_VERSION], m4_esyscmd([tr -d '\n' < VERSION]))
 
-AC_INIT([qucs], [QUCS_VERSION], [qucs-bugs@lists.sourceforge.net])
+AC_INIT([qucs], [QUCS_VERSION], [qucs-bugs@lists.sourceforge.net], [], [https://sf.net/p/qucs])
 AC_CONFIG_SRCDIR([qucs/qucs.cpp])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_HEADERS([qt_version])
@@ -236,7 +236,7 @@ case $host_os in
 
     dnl Enable C++11 support
     CXXFLAGS="$CXXFLAGS -std=c++0x"
-    PKG_CHECK_MODULES([QTest], [${qt_name}Test ])
+    PKG_CHECK_MODULES([QTest], [${qt_name}Test])
 
     PKG_CHECK_MODULES([QT], [${qt_name}Core ${qt_name}Gui ${qt_name}Script ${qt_name}Svg ${qt_name}Xml], [
       QT_CFLAGS="$QT_CFLAGS $QT_DEF -DQT_DEPRECATED_WARNINGS -DQT_THREAD_SUPPORT -D_REENTRANT"
@@ -414,12 +414,13 @@ case $host_os in
 
     if test "x${with_qt}" = xyes ; then
       AC_MSG_RESULT([found in $path])
-      QT_LIBS="-framework QtGui -framework QtCore -framework QtXml -framework QtSvg -framework QtScript"
+      QT_LIBS="-framework QtGui -framework QtCore -framework QtXml -framework QtSvg -framework QtScript -framework QtTest"
       CPPFLAGS="$CPPFLAGS -I$path/QtCore.framework/Headers"
       CPPFLAGS="$CPPFLAGS -I$path/QtGui.framework/Headers"
       CPPFLAGS="$CPPFLAGS -I$path/QtXml.framework/Headers"
       CPPFLAGS="$CPPFLAGS -I$path/QtSvg.framework/Headers"
       CPPFLAGS="$CPPFLAGS -I$path/QtScript.framework/Headers"
+      CPPFLAGS="$CPPFLAGS -I$path/QtTest.framework/Headers"
       QT_LDFLAGS="$QT_LDFLAGS -F$path"
     else
       AC_MSG_ERROR([not found])
@@ -798,6 +799,9 @@ AH_TOP([
 #endif
 ])
 
+
+
+
 dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([Makefile
     contrib/Makefile
@@ -823,7 +827,18 @@ AC_CONFIG_FILES([Makefile
     qucs/dialogs/Makefile
     qucs/tests/Makefile
     tests/Makefile
-    translations/Makefile])
+    translations/Makefile
+    man/qucs.1
+    man/qucsdigi.1
+    man/qucsdigilib.1
+    man/qucsveri.1
+    qucs-activefilter/qucsactivefilter.1
+    qucs-attenuator/qucsattenuator.1
+    qucs-filter/qucsfilter.1
+    qucs-lib/qucslib.1
+    qucs-rescodes/qucsrescodes.1
+    qucs-transcalc/qucstrans.1
+    qucs-powercombining/qucspowercombining.1])
 
 AC_CONFIG_FILES([qucs/qucs], [chmod +x qucs/qucs])
 

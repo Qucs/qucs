@@ -23,7 +23,10 @@ SET(DISABLE_QDEBUG ${DISABLE_QDEBUG} CACHE BOOL "Disable debug infos" FORCE)
 file (STRINGS "${qucs-suite_SOURCE_DIR}/VERSION" QUCS_VERSION)
 message(STATUS "Configuring Qucs: VERSION ${QUCS_VERSION}")
 
-SET(GIT unknown)
+SET(QUCS_URL "https://sf.net/p/qucs")
+SET(QUCS_BUGREPORT "qucs-bugs@lists.sourceforge.net")
+
+set(GIT unknown)
 IF(EXISTS ${CMAKE_SOURCE_DIR}/../.git )
   FIND_PACKAGE(Git)
   # Get the latest abbreviated commit hash of the working branch
@@ -86,6 +89,22 @@ IF(DISABLE_QDEBUG)
     ADD_DEFINITIONS(-DQT_NO_DEBUG_OUTPUT -DQT_NO_DEBUG -DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 ENDIF()
 
+
+
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucs.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/man/qucs.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigi.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigi.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigilib.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigilib.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsveri.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsveri.1)
+
+#Tools
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-activefilter/qucsactivefilter.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-activefilter/qucsactivefilter.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-filter/qucsfilter.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-filter/qucsfilter.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-attenuator/qucsattenuator.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-attenuator/qucsattenuator.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-lib/qucslib.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-lib/qucslib.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-powercombining/qucspowercombining.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-powercombining/qucspowercombining.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-rescodes/qucsrescodes.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-rescodes/qucsrescodes.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1)
 
 ADD_SUBDIRECTORY( man )
 ADD_SUBDIRECTORY( qucs )
