@@ -33,6 +33,9 @@ public:
 		return new test_element(*this);
 	}
 
+private: // Element
+	void paint(ViewPainter*) const{}
+
 }e;
 install_element_stub p1 (&e);
 

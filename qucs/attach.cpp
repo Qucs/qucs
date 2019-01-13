@@ -37,7 +37,7 @@ class plugins{
       }
     }
 
-    void attach(std::string what){ untested();
+    void attach(std::string what){
       // RTLD_NOW means to resolve symbols on loading
       // RTLD_LOCAL means symbols defined in a plugin are local
       int dl_scope = RTLD_LOCAL;
@@ -60,7 +60,7 @@ class plugins{
 } my_plugins;
 
 void attach(const char* what)
-{ untested();
+{
   my_plugins.attach(std::string(what));
 }
 
