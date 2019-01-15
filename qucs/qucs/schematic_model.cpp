@@ -264,6 +264,7 @@ DiagramList const& SchematicModel::diagrams() const
 	return Diagrams;
 }
 
+// TODO: what is this? (perhaps DocumentFormat?)
 static void createNodeSet(QStringList& Collect, int& countInit,
 			      Conductor *pw, Node *p1)
 {
@@ -273,39 +274,27 @@ static void createNodeSet(QStringList& Collect, int& countInit,
                      p1->name() + " U=\"" + pw->Label->initValue + "\"");
 }
 
-#if 0
-// not here.
-void SchematicModel::throughAllNodes(bool User, QStringList& Collect,
-				int& countInit)
-{
-	bool isAnalog=true; //?!
-	Node *pn=nullptr;
-	int z=0;
+// find connected components (slow)
+// figure out later...
+void SchematicModel::throughAllNodes(unsigned& z) const
+{ untested();
+  z = 0; // number cc.
 
-	for(pn = nodes().first(); pn != 0; pn = nodes().next()) {
-		if(pn->name().isEmpty() == User) {
-			continue;  // already named ?
-		}
-		if(!User) {
-			if(isAnalog)
-				pn->setName("_net" + QString::number(z++));
-			else
-				pn->setName("net_net" + QString::number(z++));
-		}
-		else if(pn->State) {
-			continue;  // already worked on
-		}
+  for(auto pn : nodes()){
+    pn->resetNumber();
+  }
 
-		if(isAnalog){
-			createNodeSet(Collect, countInit, pn, pn);
-		}else{
-		}
+  for(auto pn : nodes()){
+    if(pn->hasNumber()){
+    }else{
+      pn->setNumber(z++);
+      propagateNode(pn);
+    }
+  }
 
-		pn->State = 1;
-		propagateNode(Collect, countInit, pn);
-	}
-}
-#endif
+  qDebug() << "got" << nodes().count() << "nodes and" << z << "cc";
+  nc = z;
+} // throughAllNodes
 
 #if 0
 void SchematicModel::propagateNode(QStringList& Collect,
