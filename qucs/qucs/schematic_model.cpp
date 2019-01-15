@@ -546,5 +546,45 @@ void SchematicModel::disconnect(Symbol* c)
 	}
 }
 
+void SchematicModel::updateNetLabels() const
+{
+	auto& sm=*this;
+
+	unsigned nc=sm.numberOfNets();
+	netLabels.resize(0);
+	netLabels.resize(nc);
+	qDebug() << "found" << nc << "nets";
+
+	for(auto w : sm.wires()){
+		assert(w->Port1->number()==w->Port1->number());
+		unsigned i=w->Port1->number();
+		qDebug() << "wire" << i << w->Label;
+		if(!w->Label){
+		}else if (netLabels[i].size()){
+		}else{
+			netLabels[i] = w->Label->name();
+		}
+	}
+
+	for(auto pc : sm.components()){
+		if(pc->type() == "GND") { // BUG, use rails with net names.
+			unsigned i=pc->Ports.first()->Connection->number();
+			if (netLabels[i].size()){
+			}else{
+				qDebug() << "GND: warning: overriding label" << netLabels[i];
+			}
+			netLabels[i] = "0"; // HACK
+		}
+	}
+
+	unsigned z=0;
+	for(auto& i : netLabels){
+		if(!i.size()){
+			i = "_net" + QString::number(z++);
+		}else{
+		}
+	}
+
+}
 
 ModelAccess::ModelAccess(){}
