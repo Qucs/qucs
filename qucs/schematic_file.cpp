@@ -915,7 +915,7 @@ void Schematic::createNodeSet(QStringList& Collect, int& countInit,
 }
 
 // ---------------------------------------------------
-// find connected components (slow)
+#if 0 // obsolete
 void SchematicModel::throughAllNodes(unsigned& z) const
 { untested();
   z = 0; // number cc.
@@ -935,6 +935,7 @@ void SchematicModel::throughAllNodes(unsigned& z) const
   qDebug() << "got" << nodes().count() << "nodes and" << z << "cc";
   nc = z;
 } // throughAllNodes
+#endif
 
 // ----------------------------------------------------------
 // Checks whether this file is a qucs file and whether it is an subcircuit.
