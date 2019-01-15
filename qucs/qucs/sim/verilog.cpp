@@ -39,6 +39,9 @@ class Verilog : public NetLang
 {
   virtual void printCommand(Command const*, QTextStream&) const;
   virtual void printSymbol(Symbol const*, QTextStream&) const;
+
+private:
+  SchematicModel const* modelhack;
 } V;
 
 static Dispatcher<DocumentLanguage>::INSTALL p(&doclang_dispatcher, "verilog", &V);
@@ -81,7 +84,12 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 		s << ") ";
 		s << c->label() << "(";
 
+		auto parent=c->getScope(); // HACK. move to symbol
+
 		comma = "";
+		for(unsigned i; i < sym->portCount(); ++i){
+			s << parent->netLabel(i);
+		}
 		for(Port *p1 : c->ports()){
 			s << comma << p1->Connection->label();
 			if(p1->name()!=""){
@@ -135,7 +143,9 @@ void VerilogSchematicFormat::load(DocumentStream& stream, SchematicSymbol& s) co
   incomplete();
 }
 
-void VerilogSchematicFormat::save(DocumentStream& stream, SchematicSymbol const& m) const{
+void VerilogSchematicFormat::save(DocumentStream& stream, SchematicSymbol const& m) const
+{
+  //modelhack=&m.schematicModel();
   for(auto pc : components(m)){ untested();
 	  if(dynamic_cast<Command const*>(pc)){
 		  unreachable();
