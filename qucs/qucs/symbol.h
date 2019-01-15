@@ -1,16 +1,14 @@
 /***************************************************************************
                                  symbol.h
                                 -----------
-    begin                : 2016
-    copyright            : (C) 2016 Felix Salfelder
-    email                : felix@salfelder.org
+    copyright            : (C) 2016, 2019 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -71,6 +69,9 @@ public: // interface
   virtual void setPort(unsigned i, Node* n) = 0;
 
   virtual unsigned paramCount()const {return 0;}
+
+public: // non-virtual (on purpose)
+  QString const& netLabel(unsigned i) const;
 
 public: // graphics
         // hmm, maybe just dispatch a gfx object.
