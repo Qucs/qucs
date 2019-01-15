@@ -46,6 +46,7 @@ private:
   mutable std::map<std::string, Element*> declarations;
   mutable std::vector<QString> netLabels;
   DocumentLanguage const* verilog;
+  mutable SchematicModel const* modelhack;
 }VNL;
 static Dispatcher<DocumentFormat>::INSTALL p1(&docfmt_dispatcher, "verilog_nl", &VNL);
 
@@ -63,6 +64,7 @@ void VerilogNetlister::clear() const
 // was main::doNetlist
 void VerilogNetlister::save(DocumentStream& Stream, SchematicSymbol const& m) const
 {
+	modelhack=&m.schematicModel();
 	clear();
 
 	qDebug() << "*** VerilogNetlister::save";
@@ -115,6 +117,7 @@ void VerilogNetlister::nodeMap(SchematicSymbol const& m) const
 	auto& sm=m.schematicModel();
 	sm.throughAllNodes(count); // hack: number connected components.
 	                           // should already be numbered...
+	sm.updateNetLabels(); // HACK: should already be named.
 
 	unsigned nc=sm.numberOfNets();
 	netLabels.resize(0);

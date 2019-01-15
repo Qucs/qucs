@@ -148,6 +148,9 @@ namespace{
 class sda : public ModelAccess{
 public:
   sda(SchematicModel const& m) : _m(m) {
+    unsigned u;
+    m.throughAllNodes(u); // hack
+    m.updateNetLabels(); // hack
   }
 private: // SchematicSymbol
   SchematicModel* schematicModel(){ untested();

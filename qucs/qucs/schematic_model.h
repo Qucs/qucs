@@ -83,6 +83,7 @@ public: // stuff saved from Schematic
 			bool creatingLib, NetLang const&);
 	void throughAllNodes(unsigned& z) const;
 	void propagateNode(Node* z) const;
+	void updateNetLabels() const;
 	void collectDigitalSignals(void);
 	QString createNetlist(DocumentStream&, int, NetLang const&);
 	void createSubNetlistPlain(stream_t&, QPlainTextEdit*, int,
@@ -115,6 +116,12 @@ public: // container
 
 private: // used in erase?
 	void       deleteComp(Component*c);
+
+public: // net access
+	QString const& netLabel(unsigned n) const{
+		assert(n<netLabels.size());
+		return netLabels[n];
+	}
 
 public: // node stuff. why public?
 	Node* insertNode(int x, int y, Element* e);
@@ -161,8 +168,12 @@ private:
 	QStringList PortTypes;
 	QFileInfo FileInfo;
 	QString DevType; // BUG move to parent
+
+private: // net numbers and labels
 	mutable // tmp kludge.
 		unsigned nc; // number of connected components ("nets");
+	mutable // tmp kludgee.
+		std::vector<QString> netLabels;
 
 public: // for now.
 	friend class Schematic;
