@@ -667,7 +667,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 		Element* k=sc->clone(); // memory leak?
 		e=prechecked_cast<Element*>(k);
 	}else{ untested();
-		e=command_dispatcher.clone(cstr.toStdString());
+		e = command_dispatcher.clone(cstr.toStdString());
 		// don't know what this is (yet);
 		incomplete();
 	}
@@ -676,15 +676,12 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 		loadElement(Line, e);
 	}else{
 		qDebug() << "error with" << cstr;
-		incomplete();
-		// BUG: use of messagebox in the parser.
-		// does not work. need to get rid of this
-		throw "notyet_exception" 
+		message(QucsWarningMsg,
 			"Format Error:\nUnknown component!\n"
 			"%1\n\n"
 			"Do you want to load schematic anyway?\n"
 			"Unknown components will be replaced \n"
-			"by dummy subcircuit placeholders.";
+			"by dummy subcircuit placeholders.");
 
 		incomplete();
 		// c = new Subcircuit();
