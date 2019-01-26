@@ -101,15 +101,16 @@ DIALOG_SRC+= \
 
 
 libqucs_la_SOURCES = \
-<<<<<<< HEAD
 	globals.cpp \
 	attach.cpp \
 	command.cpp \
 	component.cpp \
 	diagram.cpp \
+	docfmt.h \
 	element.cpp \
 	graph.cpp \
 	imagewriter.cpp \
+	io.cpp \
 	io_error.cpp \
 	language.cpp \
 	marker.cpp \
@@ -119,38 +120,31 @@ libqucs_la_SOURCES = \
 	module.cpp \
 	mouseactions.cpp \
 	node.cpp \
+	object.cpp \
 	octave_window.cpp \
 	painting.cpp \
 	printerwriter.cpp \
-	projectView.cpp
+	projectView.cpp \
 	qucs_actions.cpp \
 	qucs.cpp \
 	qucsdoc.cpp \
 	qucs_init.cpp \
+	schematic_action.cpp \
+	schematic_component.cpp \
 	schematic.cpp \
 	schematic_element.cpp \
 	schematic_file.cpp \
+	schematic_model.cpp \
+	schematic_scene.cpp \
+	schematic_symbol.cpp \
+	symbol.cpp \
 	syntax.cpp \
 	textdoc.cpp \
 	viewpainter.cpp \
 	wire.cpp \
 	wirelabel.cpp \
+	$(MOCFILES) \
 	${DIALOG_SRC}
-
-=======
-	command.cpp \
-	component.cpp \
-	diagram.cpp \
-	docfmt.h \
-	globals.cpp \
-	graph.cpp \
-	io_error.cpp \
-	language.cpp \
-	marker.cpp \
-	misc.cpp \
-	painting.cpp \
-	${DIALOG_SRC}
-
 
 libqucs_la_SOURCES += qucs_.qrc
 
