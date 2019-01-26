@@ -65,13 +65,30 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 noinst_LTLIBRARIES = libqucsschematic.la
 
 libqucsschematic_la_SOURCES= \
-  attach.cpp \
-  node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
-  qucs.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
-  viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
-  schematic_file.cpp syntax.cpp module.cpp octave_window.cpp \
-  messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
-  projectView.cpp
+	attach.cpp \
+	element.cpp \
+	imagewriter.cpp \
+	messagedock.cpp \
+	misc.cpp \
+	mnemo.cpp \
+	module.cpp \
+	mouseactions.cpp \
+	node.cpp \
+	octave_window.cpp \
+	printerwriter.cpp \
+	projectView.cpp
+	qucs_actions.cpp \
+	qucs.cpp \
+	qucsdoc.cpp \
+	qucs_init.cpp \
+	schematic.cpp \
+	schematic_element.cpp \
+	schematic_file.cpp \
+	syntax.cpp \
+	textdoc.cpp \
+	viewpainter.cpp \
+	wire.cpp \
+	wirelabel.cpp \
 
 nodist_libqucsschematic_la_SOURCES = $(MOCFILES)
 
