@@ -26,6 +26,15 @@
 
 #include <QString> // yikes
 
+enum QucsMsgType{
+	QucsTraceMsg=0,
+	QucsLogMsg=1,
+	QucsDebugMsg=2,
+	QucsWarningMsg=3,
+   QucsCriticalMsg=4,
+   QucsFatalMsg=5
+};
+
 class Object{
 protected:
 	explicit Object(){}
@@ -36,6 +45,9 @@ public:
 
 	QString const& label() const{return Label;}
 	void setLabel(QString const& l) {Label = l;}
+
+protected: // error handling
+	virtual void message(QucsMsgType, const char*) const;
 
 private:
 	QString Label;
