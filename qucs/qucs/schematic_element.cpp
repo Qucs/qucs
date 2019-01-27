@@ -2554,6 +2554,7 @@ void Schematic::insertRawComponent(Component *c, bool noOptimize)
 // FIXME: store labels properly, and get rid of this mess.
 void SchematicModel::recreateSymbol(Symbol *Comp)
 {
+    incomplete();
 #if 0 // does not work like this.
     WireLabel **plMem=0, **pl;
     int PortCount = Comp->portCount();
