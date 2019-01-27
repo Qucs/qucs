@@ -281,7 +281,7 @@ static void nodeMap(SchematicSymbol const& m)
 	for(auto w : sm.wires()){
 		assert(w->Port1->number()==w->Port1->number());
 		unsigned i=w->Port1->number();
-		qDebug() << "wire" << i << w->Label;
+		// qDebug() << "wire" << i << w->Label;
 		if(!w->Label){
 		}else if (netLabels[i].size()){
 		}else{
