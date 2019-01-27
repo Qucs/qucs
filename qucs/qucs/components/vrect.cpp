@@ -37,6 +37,7 @@ Module::INSTALL pp("sources", &D);
 vRect::vRect()
 {
   Description = QObject::tr("ideal rectangle voltage source");
+  info(Name, bitmap_file);
 
   Arcs.append(new Arc(-12,-12, 24, 24,     0, 16*360,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
