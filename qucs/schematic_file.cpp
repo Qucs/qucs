@@ -716,52 +716,13 @@ bool Schematic::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
 }
 
 // -------------------------------------------------------------
+// obsolete. see qt5 rework
 bool Schematic::loadPaintings(QTextStream *stream, Q3PtrList<Painting> *List)
 {
   incomplete();
   (void) stream;
   (void) List;
   return false;
-# if 0 // PaintingList::load
-  Painting *p=0;
-  QString Line, cstr;
-  while(!stream->atEnd()) {
-    Line = stream->readLine();
-    if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
-
-    Line = Line.trimmed();
-    if(Line.isEmpty()) continue;
-    if( (Line.at(0) != '<') || (Line.at(Line.length()-1) != '>')) {
-      QMessageBox::critical(0, QObject::tr("Error"),
-	QObject::tr("Format Error:\nWrong 'painting' line delimiter!"));
-      return false;
-    }
-    Line = Line.mid(1, Line.length()-2);  // cut off start and end character
-
-    cstr = Line.section(' ',0,0);    // painting type
-    qDebug() << cstr;
-    if(Painting const* pp=painting_dispatcher[cstr.toStdString()]){
-      p=prechecked_cast<Painting*>(pp->clone());
-      assert(p);
-    }else{
-      QMessageBox::critical(0, QObject::tr("Error"),
-		QObject::tr("Format Error:\nUnknown painting " + cstr));
-      return false;
-    }
-
-    if(!p->load(Line)) {
-      QMessageBox::critical(0, QObject::tr("Error"),
-	QObject::tr("Format Error:\nWrong 'painting' line format!"));
-      delete p;
-      return false;
-    }
-    List->append(p);
-  }
-
-  QMessageBox::critical(0, QObject::tr("Error"),
-	QObject::tr("Format Error:\n'Painting' field is not closed!"));
-  return false;
-#endif
 }
 
 /*!
