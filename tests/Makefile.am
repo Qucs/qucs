@@ -65,7 +65,6 @@ SH_TESTS = \
 	element.sh \
 	doesnotexist.sh \
 	lce.sh \
-	netlist.sh \
 	run.sh
 
 PRJ_TESTS = \

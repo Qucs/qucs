@@ -55,7 +55,7 @@ void Verilog::printCommand(Command const* c, QTextStream& s) const
 }
 
 void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
-{ untested();
+{
 	Component const* c=dynamic_cast<Component const*>(sym);
 	if(!c){
 		incomplete();
@@ -72,7 +72,7 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 			s << "R:" << c->label() << "." << QString::number(z++) << " "
 				<< Node1 << " " << iport.next()->Connection->name() << " R=\"0\"\n";
 		}
-	}else{ untested();
+	}else{
 		s << QString::fromStdString(c->type()) << " ";
 
 		QString comma="";
