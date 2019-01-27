@@ -1004,7 +1004,7 @@ void SchematicModel::propagateNode(Node *pn) const
 	    q.push_back(pw->Port1);
 	  }else{
 	  }
-	}else if(cur == pw->Port1) { untested();
+	}else if(cur == pw->Port1) {
 	  if(!pw->Port2->hasNumber()){
 	    q.push_back(pw->Port2);
 	  }else{
