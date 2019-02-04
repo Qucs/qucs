@@ -43,3 +43,12 @@ debian/qucs/
 *.swp
 *.dsp
 *.dsw
+
+# auto-generated files
+qt_version
+qucs/qucs.real
+stamp-h2
+
+# generated man pages
+*.1
+
