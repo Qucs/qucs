@@ -1,6 +1,5 @@
 PROJECT(qucsfilter CXX C)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-cmake_policy(VERSION 2.6)
+cmake_minimum_required(VERSION 3.1.0)
 
 # use top VERSION file
 file (STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
@@ -33,11 +32,16 @@ IF(NOT WIN32)
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
 ENDIF()
 
-FIND_PACKAGE( Qt4 REQUIRED )
-SET( QT_USE_QTGUI TRUE )
-SET( QT_USE_QTSVG TRUE )
 
-INCLUDE( ${QT_USE_FILE} )
+
+# Find includes in corresponding build directories
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+# Instruct CMake to run moc automatically when needed
+set(CMAKE_AUTOMOC ON)
+# Create code from a list of Qt designer ui files
+set(CMAKE_AUTOUIC ON)
+
+find_package(Qt5Widgets CONFIG REQUIRED)
 
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 
@@ -81,10 +85,10 @@ SET(QUCS-FILTER_MOC_HDRS
   qucsfilter.h
 )
 
-QT4_WRAP_CPP(QUCS-FILTER_MOC_SRCS ${QUCS-FILTER_MOC_HDRS})
+QT5_WRAP_CPP(QUCS-FILTER_MOC_SRCS ${QUCS-FILTER_MOC_HDRS})
 
 SET(RESOURCES qucsfilter_.qrc)
-QT4_ADD_RESOURCES(RESOURCES_SRCS ${RESOURCES})
+QT5_ADD_RESOURCES(RESOURCES_SRCS ${RESOURCES})
 
 
 IF(APPLE)
@@ -112,6 +116,8 @@ ADD_EXECUTABLE(qucsfilter MACOSX_BUNDLE WIN32
   ${RESOURCES_SRCS} )
 
 TARGET_LINK_LIBRARIES(qucsfilter ${QT_LIBRARIES})
+
+qt5_use_modules(qucsfilter Core Svg)
 
 INSTALL(TARGETS qucsfilter
     BUNDLE DESTINATION bin COMPONENT Runtime
