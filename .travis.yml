@@ -126,7 +126,7 @@ install:
   # Qucs-Test uses Numpy to compare results
   - if [[ $LINUX ]]; then pip install --user --only-binary=numpy,matplotlib numpy matplotlib --quiet; fi
   
-  - if [[ $LINUX ]]; then sudo apt-get -qq --yes install qt5-default; fi
+  - if [[ $LINUX ]]; then sudo apt-get -qq --yes install qt5-default libqt5svg5-dev; fi
 
   # Setup OSX
   # Installed already: autoconf automake libtool pkg-config
