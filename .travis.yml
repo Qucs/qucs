@@ -16,7 +16,7 @@
 
 language: cpp
 dist: trusty
-sudo: false
+sudo: required
 
 python:
   - "2.7"
@@ -125,6 +125,8 @@ install:
 
   # Qucs-Test uses Numpy to compare results
   - if [[ $LINUX ]]; then pip install --user --only-binary=numpy,matplotlib numpy matplotlib --quiet; fi
+  
+  - if [[ $LINUX ]]; then sudo apt-get -qq --yes install qt5-default; fi
 
   # Setup OSX
   # Installed already: autoconf automake libtool pkg-config
