@@ -16,7 +16,7 @@
 
 language: cpp
 dist: trusty
-sudo: required
+sudo: false
 
 python:
   - "2.7"
@@ -48,7 +48,15 @@ matrix:
         apt:
           packages:
             - *native_deps
-
+            - lcov # lcov is required by configure, only gcov really needed thou
+            - qt5-default
+            - qtbase5-dev
+            - qttools5-dev-tools
+            - qttools5-dev
+            - qtscript5-dev
+            - libqt5svg5-dev
+            - python-tk
+            
     - os: linux
       compiler: gcc
       env: BUILD=autotools
@@ -125,8 +133,6 @@ install:
 
   # Qucs-Test uses Numpy to compare results
   - if [[ $LINUX ]]; then pip install --user --only-binary=numpy,matplotlib numpy matplotlib --quiet; fi
-  
-  - if [[ $LINUX ]]; then sudo apt-get -qq --yes install qt5-default libqt5svg5-dev; fi
 
   # Setup OSX
   # Installed already: autoconf automake libtool pkg-config
