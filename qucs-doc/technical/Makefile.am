@@ -62,7 +62,15 @@ PSFILES = MNAexample.eps NLexample.eps CYexample.eps MNAnoise1.eps \
   DoubleStubOpenBalanced.eps DoubleStubShortBalanced.eps \
   SingleStubOpenBalanced.eps SingleStubShortBalanced.eps \
   Lsection.eps SmithChart-Lsection.eps SmithChartTL.eps \
-  Smithl8l4.eps CascadedLCsch.eps SmithCascadedLCsections.eps
+  Smithl8l4.eps CascadedLCsch.eps SmithCascadedLCsections.eps \
+  Bridged-Tee-Power-Dissipation.eps Bridged-Tee-Schematic.eps Minimum_Synthesizable_Att_Pi_Tee.eps \
+  Pi-Attenuator-Schematic.eps Pi-equivalent-l4.eps Pi-Type-Power-Dissipation.eps \
+  QW-Series-Attenuator-Schematic.eps QW-Series-Power-Dissipation.eps qw-series-typical-response.eps \
+  QW-Shunt-Attenuator-Schematic.eps QW-Shunt-Power-Dissipation.eps Reflection-Attenuator-Power-Dissipation.eps \
+  Relative-dissipated-power-bridged-tee-50.eps Relative-dissipated-power-pi-tee-Zin-50-Zout-75.eps \
+  Relative-dissipated-power-pi-tee-Zin-Zout-Z0.eps Relative-dissipated-QW_series_Z0_50.eps \
+  Relative-dissipated-reflection-attenuator.eps Tee-Attenuator-Schematic.eps Tee-equivalent-l4.eps \
+  Tee-Type-Power-Dissipation.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PSFRAGTEXS = $(FIGURES:.fig=.tex) $(MATHFILES:.m=.tex)
 PDFFILES = $(FIGURES:.fig=.pdf)

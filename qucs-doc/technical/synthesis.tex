@@ -4,8 +4,8 @@
 % Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
 % Copyright (C) 2005 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
 %
-% Impedance matching documentation:
-% Copyright (C) 2017 Andres Martínez-Mera <andresmartinezmera@gmail.com>
+% Impedance matching and attenuator synthesis update:
+% Copyright (C) 2018 Andres Martínez-Mera <andresmartinezmera@gmail.com>
 %
 % Permission is granted to copy, distribute and/or modify this document
 % under the terms of the GNU Free Documentation License, Version 1.1
@@ -29,6 +29,9 @@ L = \dfrac{P_{in}}{P_{out}}
 where $P_{in}$ and $P_{out}$ are the input and output power and
 $V_{in}$ and $V_{out}$ are the input and output voltages.
 
+\subsection{Pi type attenuator}
+\subsubsection{Design equations}
+
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[width=5cm]{picircuit}
@@ -51,6 +54,81 @@ impedance ratio of:
 \begin{equation}
 \dfrac{1}{L} \le \dfrac{Z_{out}}{Z_{in}} \le L
 \end{equation}
+
+\noindent However, in practice, it is more useful to calculate the resistor values from the attenuation coefficient in dB units \cite{Vizmuller}:
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=6cm]{Pi-Attenuator-Schematic.eps}
+\end{center}
+\caption{Schematic of a $\pi$-type attenuator}
+\label{fig:pi_attenuator_schematic}
+\end{figure}
+
+
+\begin{equation}
+ R_{1} = \frac{1}{\frac{10^{\frac{\alpha}{10}}+1}{Z_{in} \cdot (10^{\frac{\alpha}{10}}-1)} - \frac{1}{R_{2}}}
+\end{equation}
+
+\begin{equation}
+ R_{2} = \frac{10^{\frac{\alpha}{10}}-1}{2} \cdot \sqrt{\frac{Z_{in}\cdot Z_{out}}{10^{\frac{\alpha}{10}}}}	
+\end{equation}
+
+\begin{equation}
+ R_{3} = \frac{1}{\frac{10^{\frac{\alpha}{10}}+1}{Z_{out} \cdot (10^{\frac{\alpha}{10}}-1)} - \frac{1}{R_{2}}}
+\end{equation}
+
+
+\subsubsection{Power dissipation equations}
+
+The power dissipated by the resistors in steady state regime can be easily obtained using basic circuit analysis techniques.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=10cm]{Pi-Type-Power-Dissipation}
+\end{center}
+\caption{Node and branch names used in the power dissipation formulae for the $\pi$-type attenuator}
+\label{fig:pi_attenuator_power_dissipation}
+\end{figure}
+\FloatBarrier
+
+\noindent In what follows, $P_{Rx}$ will denote the mean power dissipated by $Rx$ in steady state. The power dissipated by $R_1$ is given by:
+
+\begin{equation}
+P_{R1} = \dfrac{V_{in}^2}{R_{1}}, \;\;\;\; V_{1} = V_{in}, V_{in} = \sqrt{P_{in}\cdot Z_{in}}  \Rightarrow P_{R1} = \dfrac{P_{in} \cdot Z_{in}}{R_{1}}
+\end{equation}
+
+\noindent Prior to calculate the power dissipated by $R_2$, it is needed to derive the expression which relates $I_{2}$ with circuit parameters:
+
+\begin{equation}
+I_{2} = I_{in} - I_{1}, I_{1} = \dfrac{V_{1}}{R_{1}} = \dfrac{\sqrt{P_{in} \cdot Z_{in}}}{R_{1}} \Rightarrow I_{2} = \sqrt{\dfrac{P_{in}}{Z_{in}}} - \dfrac{\sqrt{P_{in} \cdot Z_{in}}}{R_{1}}
+\end{equation}
+
+\noindent Thus,
+\begin{equation}
+P_{R2} = I_{2}^2 \cdot R_{2} = \left( \sqrt{\dfrac{P_{in}}{Z_{in}}} - \dfrac{\sqrt{P_{in} \cdot Z_{in}}}{R_{1}} \right)^2 \cdot R_{2} = P_{in} \cdot R_{2} \cdot \dfrac{(R_{1} - Z_{in})^2}{R_{1}^2 \cdot Z_{in}}
+\end{equation}
+
+\noindent Finally, for $R_{3}$:
+\begin{equation}
+P_{R3} = \dfrac{V_{out}^2}{R_{3}} = \dfrac{(V_{in} - I_{2} \cdot R_{2})^2}{R_{3}} = \dfrac{\left( \sqrt{P_{in} \cdot Z_{in}} - R_{2}\cdot\left( \sqrt{\dfrac{P_{in}}{Z_{in}}} - \dfrac{\sqrt{P_{in} \cdot Z_{in}}}{R_{1}}\right) \right)^2}{R_{3}}
+\end{equation}
+
+\noindent After some simplification:
+\begin{equation}
+P_{R3} = P_{in} \cdot \dfrac{(R_{1} \cdot R_{2} - Z_{in} \cdot (R_{1} + R_{2}))^2}{R_{1}^2 \cdot R_{3} \cdot Z_{in}}
+\label{eq:Pi_DissP_R3}
+\end{equation}
+
+\noindent From  \ref{eq:Pi_DissP_R3}, the attenuation factor may be expressed in terms of the resistor values and the input and output impedances as follows:
+
+\begin{equation}
+\alpha = 10\cdot log_{10} \left( \dfrac{P_{out}}{P_{in}}\right) = 20\cdot log_{10} \left( \dfrac{(R_{1} \cdot R_{2} - Z_{in} \cdot (R_{1} + R_{2}))}{R_{1} \cdot \sqrt{ R_{3} \cdot Z_{in}}} \right)
+\end{equation}
+
+\clearpage
+\subsection{Tee-type attenuator}
+\subsubsection{Design equations}
 
 \begin{figure}[ht]
 \begin{center}
@@ -76,6 +154,654 @@ The T-attenuator can be used for an impedance ratio of:
 \begin{equation}
 \dfrac{Z_{out}}{Z_{in}} \le \dfrac{(L+1)^2}{4\cdot L}
 \end{equation}
+
+\noindent The expression which relate the resistor values with the attenuation coefficient in dB units are given below \cite{Vizmuller}:
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=6cm]{Tee-Attenuator-Schematic.eps}
+\end{center}
+\caption{Schematic of a tee-type attenuator}
+\label{fig:tee_attenuator_schematic}
+\end{figure}
+
+\begin{equation}
+R_{1} = Z_{in} \cdot  \frac{10^{\frac{\alpha}{10}}+1}{10^{\frac{\alpha}{10}}-1} - R_{2}
+\end{equation}
+
+\begin{equation}
+R_{2} = \dfrac{2 \cdot \sqrt{Z_{in} \cdot Z_{out} \cdot 10^{\frac{\alpha}{10}}}}{10^{\frac{\alpha}{10}} - 1}
+\end{equation}
+
+\begin{equation}
+R_{3} = Z_{out} \cdot  \frac{10^{\frac{\alpha}{10}}+1}{10^{\frac{\alpha}{10}}-1} - R_{2}
+\end{equation}
+
+\subsubsection{Power dissipation equations}
+
+\noindent As in the $\pi$-type attenuator case, the power dissipated by the tee-type attenuator resistors may be calculated using the Ohm's law:
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=10cm]{Tee-Type-Power-Dissipation}
+\end{center}
+\caption{Node and branch names used in the power dissipation formulae for the tee-type attenuator}
+\label{fig:tee_attenuator_power_dissipation}
+\end{figure}
+\FloatBarrier
+
+\noindent The power dissipated by $R_{1}$ is given by:
+
+\begin{equation}
+P_{R1} = I_{1}^2 \cdot R_{1} = \dfrac{P_{in} \cdot R_{1}}{Z_{in}}
+\end{equation}
+
+\noindent Similarly, for $R_{2}$:
+
+\begin{equation}
+P_{R2} = \dfrac{V_{1}^2}{R_{2}}, V_{1} = V_{in} - I_{1} \cdot R_{1} \Rightarrow P_{R2} = \dfrac{(V_{in} - I_{1}\cdot R_{1})^2}{R_{2}}
+\end{equation}
+
+\begin{equation}
+P_{R2} = \dfrac{\left( \sqrt{P_{in} \cdot Z_{in}} - R_{1}\cdot \sqrt{\dfrac{P_{in}}{Z_{in}}}\right)^2}{R_2} = P_{in} \cdot \dfrac{(R_{1}-Z_{in})^2}{R_{2} \cdot Z_{in}}
+\end{equation}
+
+\noindent Finally, the power dissipated by $R_{3}$ is calculated from the output current, $I_3$:
+
+\begin{equation}
+P_{R3} = I_{3}^2 \cdot R_{3}
+\label{eq:PR3-Tee}
+\end{equation}
+
+\noindent where $I_{3}$ can be calculated as follows:
+
+\begin{equation}
+I_3 = I_1 - I_2 = \sqrt{\dfrac{P_{in}}{Z_{in}}} - \dfrac{V_{1}}{R_{2}} = \sqrt{\dfrac{P_{in}}{Z_{in}}} - \dfrac{\sqrt{P_{in} \cdot Z_{in}} - R_{1} \cdot \sqrt{\dfrac{P_{in}}{Z_{in}}}}{R_{2}}
+\label{eq:I3_Tee}
+\end{equation}
+
+\noindent Now, $P_{R3}$ is obtained by replacing \ref{eq:I3_Tee} into \ref{eq:PR3-Tee}:
+
+\begin{equation}
+P_{R3} = \left( \sqrt{\dfrac{P_{in}}{Z_{in}}} - \dfrac{\sqrt{P_{in} \cdot Z_{in}} - R_{1} \cdot \sqrt{\dfrac{P_{in}}{Z_{in}}}}{R_{2}} \right)^2 \cdot R_{3}
+\end{equation}
+
+\noindent After some simplification work:
+
+\begin{equation}
+P_{R3} = \dfrac{R_3 \cdot (R_1 + R_2 - Z_{in})^2}{Z_{in} \cdot R_{2}^2}
+\end{equation}
+
+\subsection{Some common properties between $\pi$ and tee-type attenuators}
+
+\noindent The following table summarizes the power dissipation equations of the $\pi$-type and  tee-type attenuators:
+
+\begin{center}
+\begin{tabular}{| c | c | c| }
+\hline 
+ & \textbf{$\pi$-type attenuator} & \textbf{Tee-type attenuator} \\ \hline                        
+$P_{R1}$ & $ P_{in}\cdot \dfrac{Z_{in}}{R_1}$ &  $ P_{in}\cdot \dfrac{R_1}{Z_{in}}$ \\ \hline  
+$P_{R2}$ & $P_{in}\cdot \dfrac{R_2 \cdot (R_1 - Z_{in})^2}{R_1^2 \cdot Z_{in}}$ & $P_{in}\cdot \dfrac{ (R_1 - Z_{in})^2}{R_2 \cdot Z_{in}}$ \\ \hline  
+$P_{R3}$ & $P_{in} \cdot \dfrac{(R_1 \cdot R_2 - Z_{in} \cdot (R_1 + R_2))^2}{R_1^2 \cdot R_3 \cdot Z_{in}}$ & $P_{in} \cdot \dfrac{R_3 \cdot (R_1 + R_2 - Z_{in})^2}{Z_{in} \cdot R_2^2}$  \\   
+\hline  
+\end{tabular}
+\end{center}
+
+\noindent Despite the fact that the equations above are different for the $\pi$- and tee-type networks, the power dissipated by the resistors is the same in both attenuator types as long as $Z_{in} = Z_{out}$ (see Fig. \ref{fig:tee_pi_pow_diss_Zin_Zout_Z0}). However, this does not happen when $Z_{in} \neq Z_{out}$ (see Fig. \ref{fig:tee_pi_pow_diss_Zin_50_Zout_75}). Notice that $R_{1}$ is the resistor which dissipates more power for attenuation values above $~7dB$:
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=10cm]{Relative-dissipated-power-pi-tee-Zin-Zout-Z0}
+\end{center}
+\caption{Relative power dissipated by each resistors in $\pi$- and tee-type attenuators where $Z_{in} = Z_{out} = 50 \Omega$}
+\label{fig:tee_pi_pow_diss_Zin_Zout_Z0}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=10cm]{Relative-dissipated-power-pi-tee-Zin-50-Zout-75}
+\end{center}
+\caption{Relative power dissipated by each resistors in $\pi$- and tee-type attenuators where $Z_{in} = 50\Omega, Z_{out} = 75 \Omega$}
+\label{fig:tee_pi_pow_diss_Zin_50_Zout_75}
+\end{figure}
+\FloatBarrier
+
+\noindent The minimum achievable attenuation using $\pi$- and tee-type attenuators depends on the ratio between the input and output impedances and it can be calculated as follows \cite{Vizmuller}:
+\begin{equation}
+\alpha_{min} = 20 \cdot log_{10} \left( \sqrt{\dfrac{Z_{in}}{Z_{out}}} + \sqrt{\dfrac{Z_{in}}{Z_{out}}+1}\right)
+\end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=10cm]{Minimum_Synthesizable_Att_Pi_Tee}
+\end{center}
+\caption{Minimum synthesizable attenuation using $\pi$- and tee-type attenuators}
+\label{fig:tee_pi_min_att}
+\end{figure}
+\FloatBarrier
+
+\clearpage
+\subsection{Bridged-tee attenuator}
+\subsubsection{Design equations}
+
+\noindent Unlike $\pi$- and tee-type attenuators, the bridged-tee network requires that $Z_{in} = Z_{out} = Z_{0}$. The design equations are the following \cite{Vizmuller}:
+
+\begin{equation}
+R_{1} = Z_{0} \cdot \left( 10^{\frac{\alpha}{20}} -1 \right)
+\end{equation}
+
+\begin{equation}
+R_{4} = \dfrac{Z_{0}}{  10^{\frac{\alpha}{20}} -1 }
+\end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=5cm]{Bridged-Tee-Schematic}
+\end{center}
+\caption{Schematic of a bridged-tee attenuator}
+\label{fig:bridged_pow_diss_Zin_50_Zout_75}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Power dissipation equations}
+
+\noindent The power dissipated by the resistors can be calculated using the Kirchhoff's laws:
+
+\begin{equation}
+P_{R1} = P_{in} \cdot \dfrac{4\cdot R_1\cdot R_4^2 \cdot Z_0}{ (R_1 \cdot R_4 + Z_0 \cdot (2 \cdot R_4 + Z_0))^2}
+\end{equation}
+
+\begin{equation}
+P_{R2} = P_{in} \cdot \dfrac{(R_1 \cdot R_4 + Z_0^2)^2 }{ (R_1 \cdot R_4 + Z_0 \cdot (2 \cdot R_4 + Z_0))^2}
+\end{equation}
+
+\begin{equation}
+P_{R3} = 0
+\end{equation}
+
+\begin{equation}
+P_{R4} = P_{in} \cdot \dfrac{4\cdot R_4\cdot Z_0^3}{ (R_1 \cdot R_4 + Z_0 \cdot (2 \cdot R_4 + Z_0))^2}
+\end{equation}
+
+\noindent Notice that $R_3$ does not dissipate power. However, it is required for the output impedance matching. Figure \ref{fig:bridged-tee_pow_diss_Z0_50} shows the relative power dissipated by each resistor with respect to the input power:
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=10cm]{Relative-dissipated-power-bridged-tee-50}
+\end{center}
+\caption{Relative power dissipated by each resistors in a bridged-tee attenuator where $Z_{0} = 50\Omega$}
+\label{fig:bridged-tee_pow_diss_Z0_50}
+\end{figure}
+\FloatBarrier
+
+\clearpage
+\subsection{Reflection attenuator}
+\subsubsection{Design equations}
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=6cm]{Reflection-Attenuator-Power-Dissipation}
+\end{center}
+\caption{Schematic of a reflection attenuator with some relavant S-parameters annotations}
+\label{fig:reflec-attenuator-schematic}
+\end{figure}
+\FloatBarrier
+
+\noindent The attenuation properties of the reflection attenuator can be derived using the S-parameter properties of an ideal 3-dB coupler. In this sense, $S_{21}$ and the attenuation coefficient, $\alpha$, may be expressed in terms of $R_i$ and $Z_0$:
+
+
+\begin{align}
+S_{21} & = S_{31} \cdot (-S_{33}) \cdot S_{23} + S_{41} \cdot (-S_{44}) \cdot S_{24} = \left( \dfrac{Z_0 - R_i}{Z_0 + R_i} \right) \cdot (S_{31} \cdot S_{23} + S_{41} \cdot S_{24}) \\
+ & = \left( \dfrac{Z_0 - R_i}{Z_0 + R_i} \right) \cdot \left( \dfrac{1}{\sqrt{2}} \cdot \dfrac{e^{j \dfrac{\pi}{2}}}{\sqrt{2}} + \dfrac{1}{\sqrt{2}} \cdot \dfrac{e^{j \dfrac{\pi}{2}}}{\sqrt{2}} \right) = \left( \dfrac{Z_{0} - R_{i}}{Z_{0} + R_{i}}\right) \cdot e^{j\dfrac{\pi}{2}}
+\end{align}
+
+
+\begin{equation}
+\alpha = -20\cdot log_{10} (\abs{S_{21}}) = -20\cdot log_{10} \left(\abs*{\dfrac{Z_0 - R_i}{Z_0 + R_i}} \right)
+\end{equation}
+
+\noindent Now, it is possible to find the value of $R_{i}$ for the certain attenuation $\alpha$:
+
+\begin{equation}
+10^{-\frac{\alpha}{20}} = \abs*{\dfrac{Z_0 - R_i}{Z_0 + R_i}} \iff (Z_0 + R_i) \cdot 10^{-\dfrac{\alpha}{20}} = \abs{Z_{0} - R_i}
+\end{equation}
+
+\noindent There are two solutions for $R_i$:
+\bigskip
+
+\noindent If $R_i < Z_0$:
+\begin{equation}
+R_i = Z_0 \cdot \dfrac{1 - 10^{-\frac{\alpha}{20}}}{1 + 10^{-\frac{\alpha}{20}}}
+\end{equation}
+
+\noindent If $R_i > Z_0$:
+\begin{equation}
+R_i = Z_0 \cdot \dfrac{1 + 10^{-\frac{\alpha}{20}}}{1 - 10^{-\frac{\alpha}{20}}}
+\end{equation}
+
+\subsubsection{Power dissipation equations}
+
+The power dissipated by the resistors can be calculated in terms of the difference between the incident power and the reflected-back power.
+Because of the symmetry of the 3dB coupler, the power dissipated by both resistors is the same:
+
+\begin{equation}
+P_{inc} = P_{in} \cdot \abs{S_{i1}}^2
+\end{equation}
+
+\begin{equation}
+P_{refl} = P_{in} \cdot \abs{S_{ii}}^2
+\end{equation}
+
+\begin{equation}
+P_{diss} = P_{inc} - P_{refl} = P_{in} \cdot \abs{S_{i1}}^2 \cdot \left( 1 - \abs{S_{ii}}^2\right)
+\end{equation}
+
+\noindent where $S_{ii} = \frac{Z_0 - R_i}{Z_0 + R_i}$ and $\abs{S_{i1}} = \frac{1}{\sqrt{2}}$
+
+\noindent Thus, 
+
+\begin{equation}
+P_{diss} = \dfrac{P_{in}}{2} \cdot \left( \dfrac{Z_0 - R_i}{Z_0 + R_i}\right) = \dfrac{P_{in}}{2} \cdot \left( 1 - 10^{-\frac{\alpha}{10}}\right)
+\end{equation}
+
+
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=8cm]{Relative-dissipated-reflection-attenuator}
+\end{center}
+\caption{Relative power dissipated by each resistors in a reflection attenuator where $Z_{0} = 50\Omega$}
+\label{fig:reflec-attenuator-pow-diss}
+\end{figure}
+\FloatBarrier
+
+\clearpage
+\subsection{Quarter-wavelength series attenuator}
+\subsubsection{Design equations}
+\noindent The response of the quarter-wavelength series attenuator can be derived using the ABCD-parameters of the branches marked in Fig. \ref{fig:qw-series-att-schematic}. That way, the ABCD-parameters are converted into S-parameters and finally, the attenuation coeffient may be expressed in terms of the circuit parameters.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=8cm]{QW-Series-Attenuator-Schematic}
+\end{center}
+\caption{Schematic of a quarter-wavelength series attenuator}
+\label{fig:qw-series-att-schematic}
+\end{figure}
+\FloatBarrier
+
+
+\begin{gather}
+ Y_{1} = 
+ \begin{bmatrix} 1 & 0 \\ \dfrac{1}{R + Z_0} & 1 \end{bmatrix}
+\end{gather}
+
+\noindent The ABCD matrix of a quarter-wavelength transmission line is given by \ref{eq:trasmission_line_general}:
+
+\begin{gather}
+ A_{QW} = 
+ \begin{bmatrix} 0 & j \cdot Z_0 \\ \dfrac{j}{Z_0} & 0 \end{bmatrix}
+\end{gather}
+
+\begin{gather}
+ Y_{2} = 
+ \begin{bmatrix} 1 & 0 \\ \dfrac{1}{R} & 1 \end{bmatrix}
+\end{gather}
+
+\noindent Then, the ABCD matrix of the whole network is given by:
+
+\begin{gather}
+ ABCD = Y_{1} \cdot A_{QW} \cdot Y_{2} = j \cdot Z_0 \cdot 
+ \begin{bmatrix} \dfrac{1}{R} & 1 \\ \left( \dfrac{1}{R \cdot (R + Z_0)} + \dfrac{1}{Z_0^2}\right) & \dfrac{1}{R+Z_0} \end{bmatrix}
+\end{gather}
+
+\noindent Using the formulae for the ABCD- to S-parameters conversion:
+
+\begin{gather}
+ S = 
+ \begin{bmatrix} 0 & -j\cdot \dfrac{R}{R+Z_0} \\ -j\cdot \dfrac{R}{R+Z_0} & \dfrac{Z_0^2}{(R+Z_0)^2} \end{bmatrix}
+\end{gather}
+
+\noindent Notice that this is a not a symmetrical network since $S \cdot S^t \neq I$
+
+\begin{equation}
+\alpha = -10 \cdot log_{10} \left( \dfrac{R}{R+Z_0}\right)
+\end{equation}
+
+\noindent Finally,
+
+\begin{equation}
+R = \dfrac{Z_0}{10^{\frac{\alpha}{20}}-1}
+\end{equation}
+
+
+\noindent Notice also that the impedance inversion property of the $\lambda/4$-transmission line holds for narrowband applications. In this sense, the general (broadband) expressions for the S-parameters are rather complex and lie outside of the scope of this document. S-parameter simulation is preferred instead:
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=8cm]{qw-series-typical-response}
+\end{center}
+\caption{Typical response of an ideal quarter-wavelength series attenuator. The attenuation is degraded away from the center frequency because of the narrowband behavior of the transmission line}
+\label{fig:qw-series-att-response}
+\end{figure}
+\FloatBarrier
+
+
+
+\subsubsection{Power dissipation at $f_0$}
+
+\begin{equation}
+P_{R1} = I_1^2 \cdot R_1 = \left( \dfrac{V_{in}}{R_1 + Z_0} \right)^2 \cdot R_1 = \left( \dfrac{P_{in} \cdot Z_0}{(R_1 + Z_0)^2} \right) \cdot R_1
+\end{equation}
+
+
+\begin{equation}
+P_{R2} = \dfrac{P_{in} \cdot Z_0^2}{(R_1 + Z_0)^2}
+\end{equation}
+
+\noindent The power delivered both to the load and to $R_3$ is denoted as $P_2$ and it may be calculated as follows:
+
+\begin{equation}
+P_2 = P_{in} - (P_{R1} + P_{R2}) = P_{in} - \left( \left( \dfrac{P_{in} \cdot Z_0}{(R1 + Z_0)^2} \right) \cdot \left( R_1 + Z_0\right) \right) = P_{in} \cdot \left( 1 - \dfrac{Z_0 \cdot (R_1 + Z_0)}{(R_1 + Z_0)^2} \right)
+\end{equation}
+
+
+\noindent $V_{out}$ is calculated as follows:
+\begin{equation}
+V_{out} = \sqrt{P_2 \cdot \left( \dfrac{R_3 \cdot Z_0}{R_3 + Z_0} \right)} = \sqrt{ P_{in} \cdot \left( \dfrac{Z_0 \cdot (R_1 \cdot Z_0)}{(R_1 + Z_0)^2} \right) \cdot \left( \dfrac{R_3 \cdot Z_0}{R_3 + Z_0}\right)}
+\end{equation}
+
+\noindent Thus, the power dissipated by $R_3$ is given by:
+
+\begin{equation}
+P_{R3} = \dfrac{V_{out}^2}{R_3} = \dfrac{P_{in} \cdot \left( \left( 1 - \dfrac{Z_0 \cdot (R_1 + Z_0)}{(R_1 + Z_0)^2}\right) \cdot \left( \dfrac{R_3 \cdot Z_0}{R_3 + Z_0}\right) \right)}{R_3}
+\end{equation}
+
+\noindent Since $R_1 = R_3 = R$,
+
+\begin{equation}
+P_{R1} = P_{R3} = P_{in} \cdot \dfrac{R \cdot Z_0}{(R + Z_0)^2}
+\end{equation}
+
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=8cm]{Relative-dissipated-QW_series_Z0_50}
+\end{center}
+\caption{Relative power dissipated by each resistors in a quarter-wavelength series attenuator, $Z_{0} = 50\Omega$}
+\label{fig:qw-series-attenuator-pow-diss}
+\end{figure}
+\FloatBarrier
+
+\clearpage
+\subsection{Quarter-wavelength shunt attenuator}
+
+
+\subsubsection{Design equations}
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=8cm]{QW-Shunt-Attenuator-Schematic}
+\end{center}
+\caption{Schematic of a quarter-wavelength shunt attenuator}
+\label{fig:qw-shunt-att-schematic}
+\end{figure}
+\FloatBarrier
+
+
+\noindent The $\lambda/4$ transmission line behaves as an impedance inverter at $f_0$ such that its input impedance is $Z_{TL} = \dfrac{Z_0^2}{Z_L} $ where $Z_L$ is the impedance of the line termination. Thus, the admittance $Y_1$ can be calculated as follows:
+
+\begin{equation}
+Z_L = R_{eq} = \dfrac{R \cdot Z_0}{ R + Z_0} \rightarrow Z_{TL} = \dfrac{Z_0 \cdot (R + Z_0)}{R}
+\end{equation}
+
+\noindent and consequently, the ABCD matrix of the shunt branch is given by:
+
+\begin{gather}
+ Y_{1} = 
+ \begin{bmatrix} 1 & 0 \\ \dfrac{R}{Z_0 \cdot (R + Z_0)} & 1 \end{bmatrix}
+\end{gather}
+
+\noindent Similarly, the ABCD matrix of the series resistor is:
+
+\begin{gather}
+ A_{2} = 
+ \begin{bmatrix} 1 & R \\ 0 & 1 \end{bmatrix}
+\end{gather}
+
+\noindent Thus, the ABCD matrix of the cascade is given by:
+\begin{gather}
+ ABCD = Y_{1} \cdot A_{2} = \begin{bmatrix} 1 & R \\ \dfrac{R}{Z_0 \cdot (R + Z_0)} & 1 + \dfrac{R^2}{Z_0 \cdot (R + Z_0)} \end{bmatrix}
+\end{gather}
+
+\noindent Using the ABCD to S parameters conversion formulae:
+
+\begin{gather}
+ S = 
+ \begin{bmatrix} 0 & \dfrac{Z_0}{R + Z_0} \\ \dfrac{Z_0}{R + Z_0} & \dfrac{R^2}{R + Z_0} \end{bmatrix}
+\end{gather}
+
+
+\noindent Now, the attenuation coefficient can be expressed in terms of R and $Z_0$:
+
+\begin{equation}
+\alpha = -10 \cdot log_{10} \left( \abs{S_{21}^2}\right) = -20 \cdot log_{10} \left(  \dfrac{Z_0}{R + Z_0}\right)
+\end{equation}
+
+\noindent And finally, the value of R for a given attenuation, $\alpha$, is given by:
+
+\begin{equation}
+R = Z_0 \cdot \left( 10^{\frac{\alpha}{20} - 1}\right)
+\end{equation}
+
+\subsubsection{Power dissipation at $f_0$}
+
+\noindent According to the impedance inversion properties of the quarter-wavelength transmission line, the power dissipated by the shunt branch is:
+
+\begin{equation}
+P_{shunt} = \dfrac{V_{in}^2}{Z_{TL} } = P_{in} \cdot \dfrac{R}{R + Z_0}
+\end{equation}
+
+\noindent Consequently, $V_1$ may be expressed in terms of the input power as:
+
+\begin{equation}
+V_1 = \sqrt{P_{shunt} \cdot R_{eq}} = \sqrt{P_{shunt} \cdot \left( \dfrac{R \cdot Z_0}{R + Z_0}\right)} = \sqrt{P_{in} \cdot \dfrac{R}{R + Z_0} \cdot \dfrac{R \cdot Z_0}{R + Z_0}} = \dfrac{R \cdot \sqrt{P_{in} \cdot Z_0}}{R + Z_0}
+\end{equation}
+
+\noindent So, the power dissipation formulae for $R_2$ and $R_3$ are given by:
+
+\begin{equation}
+P_{R2} = \dfrac{V_1^2}{Z_0} = \dfrac{\dfrac{R \cdot \sqrt{P_{in} \cdot Z_0}}{R + Z_0}}{Z_0} = P_{in} \cdot \dfrac{R^2}{(R + Z_0)^2}
+\end{equation}
+
+\begin{equation}
+P_{R3} = \dfrac{V_1^2}{R} = \dfrac{\dfrac{R \cdot \sqrt{P_{in} \cdot Z_0}}{R + Z_0}}{R} = P_{in} \cdot \dfrac{R \cdot Z_0}{(R + Z_0)^2}
+\end{equation}
+
+\noindent The mean current flowing through the shunt branch is $I_{1} = \dfrac{V_{in}}{Z_{TL}}$ and the current delivered by the source is $I_{in} = \sqrt{\dfrac{P_{in}}{Z_{TL}}}$. Thus, the current delivered to $R_1$ and to the load is $I_{2} = I_{in} - I_{1}$ and the power dissipated by $R_2$ is given by:
+
+\begin{equation}
+P_{R1} = P_{R3} = I_{2}^2 \cdot R = P_{in} \cdot \dfrac{R \cdot Z_0}{(R + Z_0)^2}
+\end{equation}
+
+\clearpage
+\subsection{Lumped element equivalents of the $\lambda/4$ transmission line}
+
+\noindent At low frequencies, a length of $\lambda/4$ may be impractical, so it would be convenient to find lumped-element impedance inverters which mimic the $\lambda/4$ line properties (at least at $f_0$). In this sense, it is possible to find such equivalent networks in both $\pi$ and tee configurations. The ABCD matrix of a (general) transmission line is:
+
+\begin{gather}
+  A_{TL} = 
+ \begin{bmatrix} cosh(\gamma \cdot l) & Z_0 \cdot sinh(\gamma \cdot l) \\ \dfrac{1}{Z_0} \cdot sinh(\gamma \cdot l) & cosh(\gamma \cdot l) \end{bmatrix}
+\label{eq:trasmission_line_general}
+\end{gather}
+
+\noindent where $\gamma = \alpha + j \cdot \beta$ is the propagation constant, $\alpha$ is the attenuation constant and $\beta = \dfrac{2\pi}{\lambda_0}$ is the wavenumber.
+\medskip
+
+\noindent Under the assumption that the transmission line is lossless, $\alpha = 0$ and because of the length of a $\lambda/4$ line, \ref{eq:trasmission_line_general} can be simplified as:
+
+\begin{gather}
+  A_{QW} = 
+\begin{bmatrix} 0 & j \cdot Z_0 \\ \dfrac{j}{Z_0}  & 0 \end{bmatrix}
+ \label{eq:qw-line}
+\end{gather}
+
+\subsubsection{$\pi$-type equivalent}
+
+\noindent The ABCD-parameters of a $\pi$-type network is easily determined using the cascade property of the ABCD-parameters.
+
+\begin{equation}
+A_{\pi} = A_{shunt1} \cdot A_{series} \cdot A_{shunt2}
+\end{equation}
+
+\noindent where $A_{shunt1} = \begin{bmatrix} 1 & 0  \\ Y_1 & 1 \end{bmatrix}$, $A_{series} = \begin{bmatrix} 1 & Z_1  \\ 0 & 1 \end{bmatrix}$ and $A_{shunt2} = \begin{bmatrix} 1 & 0  \\ Y_2 & 1 \end{bmatrix}$
+
+\noindent Thus,
+
+\begin{gather}
+  A_{\pi} = 
+ \begin{bmatrix} Y_2 \cdot Z_1 + 1 & Z_1 \\ (Y_1 \cdot Z_1 + 1) \cdot Y_2 + Y_1 & Y_1 \cdot Z_1 + 1 \end{bmatrix}
+ \label{eq:pi-network-equivalent}
+\end{gather}
+
+\noindent Since $A_{QW} = A_{\pi}$, we get the following equations system:
+
+\begin{equation}
+\begin{cases} Y_2 \cdot Z_1 + 1 = 0\\ Z_1 = j\cdot Z_0 \\ (Y_1 \cdot Z_1 + 1) \cdot Y_2 + Y_1 = \dfrac{j}{Z_0} \\ Y_1 \cdot Z_1 + 1 = 0\end{cases} 
+\end{equation}
+
+\noindent From the second equation, we get that $Z_1$ must be an inductor such that:
+
+\begin{equation}
+Z_1 = j\cdot \omega_0 \cdot L \Longrightarrow L = \dfrac{Z_0}{\omega_0}
+\end{equation}
+
+\noindent Now, from the first and the fourth equations, $Y_1 = Y_2$, so:
+
+\begin{equation}
+Y_1 \cdot j \cdot Z_0 + 1 = 0, Y_2 \cdot j \cdot Z_0 + 1 = 0 \iff Y_1 = Y_2 = \dfrac{j}{Z_0}
+\end{equation}
+
+\noindent So the shunt elements must be capacitors such that:
+
+\begin{equation}
+Y_1 = Y_2 = j \cdot \omega_0 \cdot C = \dfrac{j}{Z_0} \Longrightarrow C = \dfrac{1}{\omega_0 \cdot Z_0}
+\end{equation}
+
+\noindent Finally, $Y_1$, $Y_2$ and $Z_1$ may be substituted in the third equation to check they satisfy the whole equation system.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=8cm]{Pi-equivalent-l4}
+\end{center}
+\caption{$\pi$-type equivalent of a $\lambda/4$ line}
+\label{fig:pi-eq-l4}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Tee-type equivalent}
+
+\noindent In case of the tee-type network, the ABCD matrix is given by: 
+
+\begin{equation}
+A_{tee} = A_{series1} \cdot A_{shunt} \cdot A_{shunt2}
+\end{equation}
+
+\noindent where $A_{series1} = \begin{bmatrix} 1 & Z_1  \\ 0 & 1 \end{bmatrix}$, $A_{shunt} = \begin{bmatrix} 1 & 0  \\ Y_1 & 1 \end{bmatrix}$ and $A_{series2} = \begin{bmatrix} 1 & Z_2  \\ 0 & 1 \end{bmatrix}$
+
+\noindent Thus,
+
+\begin{gather}
+  A_{Tee} = 
+ \begin{bmatrix} Y_1 \cdot Z_2 + 1 & Y_1 \\ (Y_1 \cdot Z_1 + 1) \cdot Z_2 + Z_1 & Y_1 \cdot Z_1 + 1 \end{bmatrix}
+ \label{eq:tee-network-equivalent}
+\end{gather}
+
+\noindent Since $A_{QW} = A_{tee}$, we get the following equations system:
+
+\begin{equation}
+\begin{cases} Y_1 \cdot Z_2 + 1 = 0\\ Y_1 = j\cdot Z_0 \\ (Y_1 \cdot Z_1 + 1) \cdot Z_2 + Z_1 = \dfrac{j}{Z_0} \\ Y_1 \cdot Z_1 + 1 = 0\end{cases} 
+\end{equation}
+
+\noindent From the second equation, we get that $Y_1$ must be a capacitor such that:
+
+\begin{equation}
+Y_1 = j\cdot \omega_0 \cdot C \Longrightarrow C = \dfrac{Z_0}{\omega_0}
+\end{equation}
+
+\noindent Now, from the first and the fourth equations, $Z_1 = Z_2$, so:
+
+\begin{equation}
+j \cdot Z_0 \cdot Z_1 + 1 = 0, j \cdot Z_0 \cdot Z_2 + 1 = 0 \iff Z_1 = Z_2 = \dfrac{j}{Z_0}
+\end{equation}
+
+\noindent So the shunt elements must be inductors such that:
+
+\begin{equation}
+Z_1 = Z_2 = j \cdot \omega_0 \cdot L = \dfrac{j}{Z_0} \Longrightarrow L = \dfrac{1}{\omega_0 \cdot Z_0}
+\end{equation}
+
+\noindent Finally, $Z_1$, $Z_2$ and $Y_1$ may be substituted in the third equation to check they satisfy the whole equation system.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=8cm]{Tee-equivalent-l4}
+\end{center}
+\caption{Tee-type equivalent of a $\lambda/4$ line}
+\label{fig:tee-eq-l4}
+\end{figure}
+\FloatBarrier
+
+\clearpage
+\subsection{Power unit conversion}
+
+\noindent The attenuator synthesis tool can calculate the power dissipated by each resistor using different power units. In this sense, the present section collects the power unit conversions implemented.
+
+\subsubsection{Conversion from W to dBm}
+\begin{equation}
+P_{dBm} = 10 \cdot log_{10} (P_{W} \cdot 10^{-3}) = 10 \cdot log_{10} (P_{W}) - 30
+\end{equation}
+
+\begin{equation}
+P_{W} = 10^{\dfrac{P_{dBm}}{10}} + 30
+\end{equation}
+
+\subsubsection{Conversion from dBm to dBuV and dBmV}
+\begin{equation}
+P_{W} = \dfrac{V_{V}^2}{Z_{0}} = \dfrac{(V_{uV} \cdot 10^{6})^2}{Z_{0}} \Longrightarrow P_{dBuV} = 10 \cdot log_{10} \left( P_{W} \right) + 10 \cdot log_{10} \left( Z_0 \right) +120
+\end{equation}
+
+\begin{equation}
+P_{W} = 10^{\dfrac{P_{dBuV} - 120 - 10\cdot log_{10} (Z_0)}{10}}
+\end{equation}
+
+\noindent Similarly, for the $dBmV$ case:
+
+\begin{equation}
+P_{W} = \dfrac{V_{V}^2}{Z_{0}} = \dfrac{(V_{mV} \cdot 10^{3})^2}{Z_{0}} \Longrightarrow P_{dBuV} = 10 \cdot log_{10} \left( P_{W} \right) + 10 \cdot log_{10} \left( Z_0 \right) + 60
+\end{equation}
+
+\begin{equation}
+P_{W} = 10^{\dfrac{P_{dBuV} - 60 - 10\cdot log_{10} (Z_0)}{10}}
+\end{equation}
+
+\begin{landscape}
+\thispagestyle{empty}
+\newgeometry{right=-6cm,bottom=11cm}
+\begin{table}[!]
+\setlength{\tabcolsep}{10pt}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{from \textbackslash to} & \textbf{W}                        & \textbf{dBm}                  & \textbf{dBuV ($75\Omega$)}          & \textbf{dBmV ($75\Omega$)}         & \textbf{dBuV ($50\Omega$)}          & \textbf{dBmV ($50\Omega$)}       \\ \hline
+\textbf{W}                      & \cellcolor[HTML]{C0C0C0}          & $10 \cdot log_{10} ( P_W)+30$ & $10 \cdot log_{10} ( P_W) + 138.75$ & $10 \cdot log_{10} ( P_W) + 78.75$ & $10 \cdot log_{10} ( P_W) + 136.99$ & $10 \cdot log_{10} ( P_W)+76.99$ \\ \hline
+\textbf{dBm}                    & $10^{\frac{P_{dBm}}{10}} + 30$    & \cellcolor[HTML]{C0C0C0}      & $P_{dBuV}+108.75$                  & $P_{dBuV}+48.75$                  & $P_{dBuV}+106.99$                  & $P_{dBuV}+46.99 $               \\ \hline
+\textbf{dBuV ($75\Omega$)}      & $10^{\frac{P_{dBuV}-138.75}{10}}$ & $P_{dBuV}-108.75$            & \cellcolor[HTML]{C0C0C0}            & $P_{dBmV} - 60$                   & $P_{dBuV}-1.76$                    & $P_{dBmV} - 61.76$              \\ \hline
+\textbf{dBmV ($75\Omega$)}      & $10^{\frac{P_{dBuV}-78.75}{10}}$  & $P_{dBuV}-48.75$             &$ P_{dBmV} + 60 $                   & \cellcolor[HTML]{C0C0C0}           & $P_{dBmV} + 58.35 $                & $P_{dBmV} - 1.76$               \\ \hline
+\textbf{dBuV ($50\Omega$)}      & $10^{\frac{P_{dBuV}-136.99}{10}}$ &$ P_{dBuV}-106.99 $           & $P_{dBuV} + 1.76$                  & $P_{dBuV} - 58.35 $               & \cellcolor[HTML]{C0C0C0}            & $P_{dBuV}-60 $                  \\ \hline
+\textbf{dBmV ($50\Omega$)}      & $10^{\frac{P_{dBuV}-76.99}{10}}$  & $P_{dBuV}-46.99 $            & $P_{dBmV} + 61.76$                 & $P_{dBmV} + 1.76  $               &$P_{dBmV} + 60 $                   & \cellcolor[HTML]{C0C0C0}         \\ \hline
+\end{tabular}
+\caption{Summary of power unit conversion formulae}
+\end{table}
+\end{landscape}
+\restoregeometry
 
 \section{Filters}
 
@@ -225,14 +951,14 @@ n = \dfrac{\textrm{sech}\left(\dfrac{10^{-0.1\cdot \alpha_{stop}} - 1}{10^{-0.1\
 
 Because of the nature of the derivation of the inverse Chebychev approximation function from the standard Chebychev approximation the calculation of the order \eqref{eq:ChebOrder} is the same.
 
-\subsection{Quarter wavelength filters}
+\subsection{Quarter-wavelength filters}
 
-Quarter wavelength filters are based on the fact that short and open $\lambda/4$ stubs are equivalent to series and paralell resonant tanks, respectively. Once given the normalized $g_i$ coefficients of the filter prototype, it is quite straighforward to obtain the impedance of the short/open stubs, depending on the desired filter mask (bandpass/notch). Figure \ref{eq:QWfilter} illustrates the topology of a quarter wavelength filter.\\
+Quarter-wavelength filters are based on the fact that short and open $\lambda/4$ stubs are equivalent to series and paralell resonant tanks, respectively. Once given the normalized $g_i$ coefficients of the filter prototype, it is quite straighforward to obtain the impedance of the short/open stubs, depending on the desired filter mask (bandpass/notch). Figure \ref{eq:QWfilter} illustrates the topology of a quarter-wavelength filter.\\
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=100mm]{QuarterWavelengthFilter}
-\caption{Quarter wavelength filters topology. a) Notch filter b) Bandpass filter \cite{Pozar}}
+\caption{Quarter-wavelength filters topology. a) Notch filter b) Bandpass filter \cite{Pozar}}
 \label{eq:QWfilter}
 \end{figure}
 
@@ -245,7 +971,7 @@ Quarter wavelength filters are based on the fact that short and open $\lambda/4$
 
 \noindent where $Z_0$ is the characteristic impedance of the filter (typically, 50$\Omega$) and $\Delta$ is the relative bandwidth defined as $\Delta = \frac{f_2 - f_1}{f_c}$. The demonstration \cite{Pozar} is not included in this document in favour of greater simplicity.
 
-\noindent It has to be said that quarter wavelength filters are narrowband by nature. Besides this, these kind of filters may not be feasible because of the stubs may require unpractical widths (i.e. impedances) for proper operation.
+\noindent It has to be said that quarter-wavelength filters are narrowband by nature. Besides this, these kind of filters may not be feasible because of the stubs may require unpractical widths (i.e. impedances) for proper operation.
 
 
 \section{Matching newtworks}
