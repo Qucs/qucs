@@ -7,6 +7,7 @@ Comment[de]=Ein universeller Schaltkreissimulator
 Comment[pt]=Simulador universal de circuitos
 Comment[fr]=Simulateur universel de circuits
 Comment[it]=Simulatore universale di circuiti
+Comment[ru]=Симулятор электрических цепей
 Exec=qucs %U
 Icon=qucs
 Terminal=false
