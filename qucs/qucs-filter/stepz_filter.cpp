@@ -87,7 +87,7 @@ QString* StepImpedance_Filter::createSchematic(tFilter *Filter, tSubstrate *Subs
     if(isMicrostrip)
       *s += QString("<MLIN MS1 1 %1 180 -26 15 0 0 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(num2str(width)).arg(num2str(len));
     else
-      *s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(num2str(len));
+      *s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2 Ohm\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(num2str(len));
   }
 
 
@@ -95,9 +95,9 @@ QString* StepImpedance_Filter::createSchematic(tFilter *Filter, tSubstrate *Subs
   *s += QString("<Pac P2 1 %1 330 18 -26 0 1 \"2\" 1 \"%2 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(x).arg(Filter->Impedance);
   *s += QString("<GND * 1 %1 360 0 0 0 0>\n").arg(x);
 
-  *s += QString("<.SP SP1 1 70 460 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg(num2str(0.1 * Filter->Frequency)).arg(num2str(10.0 * Filter->Frequency));
+  *s += QString("<.SP SP1 1 70 460 0 67 0 0 \"lin\" 1 \"%2\" 1 \"%3\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg(num2str(0.1 * Filter->Frequency, 3, QString("Hz"))).arg(num2str(10.0 * Filter->Frequency, 3, QString("Hz")));
   if(isMicrostrip)
-    *s += QString("<SUBST Sub1 1 300 500 -30 24 0 0 \"%1\" 1 \"%2m\" 1 \"%3m\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate->er).arg(num2str(Substrate->height)).arg(num2str(Substrate->thickness)).arg(Substrate->tand).arg(Substrate->resistivity).arg(Substrate->roughness);
+    *s += QString("<SUBST Sub1 1 300 500 -30 24 0 0 \"%1\" 1 \"%2\" 1 \"%3\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate->er).arg(num2str(Substrate->height)).arg(num2str(Substrate->thickness)).arg(Substrate->tand).arg(Substrate->resistivity).arg(Substrate->roughness);
   *s += QString("<Eqn Eqn1 1 450 560 -28 15 0 0 \"S21_dB=dB(S[2,1])\" 1 \"S11_dB=dB(S[1,1])\" 1 \"yes\" 0>\n");
   *s += "</Components>\n";
 
@@ -132,7 +132,7 @@ QString* StepImpedance_Filter::createSchematic(tFilter *Filter, tSubstrate *Subs
     case TYPE_CHEBYSHEV:   *s += QString("Chebyshev"); break;
   }
 
-  *s += QString(" %1Hz...%2Hz \\n ").arg(num2str(Filter->Frequency)).arg(num2str(Filter->Frequency2));
+  *s += QString(" %1...%2 \\n ").arg(num2str(Filter->Frequency, 3, QString("Hz"))).arg(num2str(Filter->Frequency2, 3, QString("Hz")));
   *s += QString("impedance matching %3 Ohm\">\n").arg(Filter->Impedance);
   *s += "</Paintings>\n";
 

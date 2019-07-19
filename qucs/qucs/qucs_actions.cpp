@@ -974,7 +974,6 @@ void QucsApp::slotAddToProject()
   }
 
   free(Buffer);
-  slotUpdateTreeview();
   statusBar()->showMessage(tr("Ready."));
 }
 
@@ -1112,19 +1111,19 @@ void QucsApp::slotApplyCompText()
 
   pp = 0;
   if(view->MAx3 > 0)  pp = pc->Props.at(view->MAx3-1); // current property
-  else s = pc->Name;
+  else s = pc->name();
 
   if(!editText->isHidden()) {   // is called the first time ?
     // no -> apply value to current property
     if(view->MAx3 == 0) {   // component name ?
       Component *pc2;
       if(!editText->text().isEmpty())
-        if(pc->Name != editText->text()) {
+        if(pc->name() != editText->text()) {
           for(pc2 = Doc->Components->first(); pc2!=0; pc2 = Doc->Components->next())
-            if(pc2->Name == editText->text())
+            if(pc2->name() == editText->text())
               break;  // found component with the same name ?
           if(!pc2) {
-            pc->Name = editText->text();
+            pc->obsolete_name_override_hack( editText->text() );
             Doc->setChanged(true, true);  // only one undo state
           }
         }
@@ -1231,8 +1230,7 @@ void QucsApp::slotImportData()
   }
 
   ImportDialog *d = new ImportDialog(this);
-  if(d->exec() == QDialog::Accepted)
-    slotUpdateTreeview();
+  d->exec();
 }
 
 // -----------------------------------------------------------

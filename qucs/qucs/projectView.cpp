@@ -28,17 +28,20 @@
 #include <QStringList>
 #include <QDir>
 #include <QStandardItemModel>
+#include <QFileSystemWatcher>
 #include <QDebug>
 
 ProjectView::ProjectView(QWidget *parent)
   : QTreeView(parent)
 {
   m_projPath = QString();
-  m_projPath = QString();
+  m_projName = QString();
   m_valid = false;
   m_model = new QStandardItemModel(8, 2, this);
+  watcher = new QFileSystemWatcher(this);
+  connect(watcher, SIGNAL(directoryChanged(const QString&)), SLOT(dirChanged(const QString&)));
 
-  refresh();
+  init();
 
   this->setModel(m_model);
   this->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -47,6 +50,7 @@ ProjectView::ProjectView(QWidget *parent)
 ProjectView::~ProjectView()
 {
   delete m_model;
+  delete watcher;
 }
 
 void
@@ -56,7 +60,11 @@ ProjectView::setProjPath(const QString &path)
   m_valid = !path.isEmpty() && QDir(path).exists();
 
   if (m_valid) {
+    if (!m_projPath.isEmpty()) {
+      watcher->removePath(m_projPath); // stop watching the previous directry
+    }
     m_projPath = path; // full path
+    watcher->addPath(path); // start watching the current directory
     m_projName = QDir(m_projPath).dirName(); // only project directory name
     if (m_projName.endsWith("_prj")) {
       m_projName.chop(4);// remove "_prj" from name
@@ -65,11 +73,17 @@ ProjectView::setProjPath(const QString &path)
     }
   }
   refresh();
+  // expand only the Schematics section, to show all the schematic files
+  for (int i=0; i<m_model->rowCount(); i++) {
+    setExpanded(m_model->index(i, 0), i==6);
+  }
+  // make sure the whole schematics name are shown
+  resizeColumnToContents(0);
 }
 
-// refresh using projectPath
+// initialize the view
 void
-ProjectView::refresh()
+ProjectView::init()
 {
   m_model->clear();
 
@@ -86,18 +100,26 @@ ProjectView::refresh()
   APPEND_ROW(m_model, tr("Schematics")   );
   APPEND_ROW(m_model, tr("Others")       );
 
-  setExpanded(m_model->index(6, 0), true);
-
   if (!m_valid) {
     return;
   }
+}
 
+// refresh the view using the current projectPath
+void
+ProjectView::refresh()
+{
   // put all files into "Content"-ListView
   QDir workPath(m_projPath);
   QStringList files = workPath.entryList(QStringList() << "*", QDir::Files, QDir::Name);
   QStringList::iterator it;
   QString extName, fileName;
   QList<QStandardItem *> columnData;
+
+  for (int i=0; i<m_model->rowCount(); i++) {
+    // delete_childrens
+    m_model->item(i, 0)->removeRows(0, m_model->item(i, 0)->rowCount());
+  }
 
 #define APPEND_CHILD(category, data) \
   m_model->item(category, 0)->appendRow(data);
@@ -109,7 +131,9 @@ ProjectView::refresh()
     columnData.clear();
     QStandardItem * d = new QStandardItem(fileName);
     if (QucsSettings.ShowDescriptionProjectTree)
-    {
+    { // In case of the ShowDescriptionProjectTree property is set, 
+      // it reads the schematic header looking for the message to be displayed
+      // and the variable which sets the visibility of the frame
        QString description = ReadDescription(workPath.absoluteFilePath(fileName));
        d->setToolTip(description);
     }
@@ -164,6 +188,13 @@ ProjectView::exportSchematic()
   return list;
 }
 
+void ProjectView::dirChanged(const QString &path)
+{
+  Q_UNUSED(path);
+  //qDebug() << "watcher:" << path;
+  refresh();
+}
+
 // This function reads the text inside the <description></description> tags from the given file location
 QString ProjectView::ReadDescription(QString file)
 {
@@ -171,6 +202,7 @@ QString ProjectView::ReadDescription(QString file)
     if (!QucsDocument.open(QIODevice::ReadOnly)) return "";
     QTextStream in (&QucsDocument);
     QString line, description;
+    int showFrame;
     int index, index2;
     do {
         line = in.readLine();
@@ -179,12 +211,17 @@ QString ProjectView::ReadDescription(QString file)
             index2 = line.indexOf(">", index);
             index+=11;//Skip FrameText0=
             description = line.mid(index, index2-index);
-            break;
+        }
+        index = line.indexOf("showFrame=");
+        if (index != -1) {
+            index2 = line.indexOf(">", index);
+            index+=10;//Skip showFrame=
+            showFrame = line.mid(index, index2-index).toInt();
         }
     } while (!line.isNull());
 
     description.replace("\\n", "<br>");
     QucsDocument.close();
-    if (description == "Title") description = "";//Prevent schematics without description from showing "Title" in the tooltip
+    if ((description == tr("Title")) || (showFrame == 0)) description = "";//Don't show the tooltip
     return description;
 }

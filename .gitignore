@@ -233,6 +233,12 @@ CMakeLists.txt.user
 # dot hash files (write locks)
 .\#*
 
+# vi/vim #
+##########
+# lock files (write locks)
+[._]*.swp
+[._]*.swo
+
 # Qucs user files #
 ###################
 # ignore schematics, data display and data

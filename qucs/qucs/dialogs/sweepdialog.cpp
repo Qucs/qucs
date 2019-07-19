@@ -194,7 +194,7 @@ Graph* SweepDialog::setBiasPoints()
           if( ((Wire*)pe)->isHorizontal() )  pn->x1 |= 2;
         }
         else {
-          if( ((Component*)pe)->Model == "GND" ) {
+          if( ((Component*)pe)->obsolete_model_hack() == "GND" ) { // BUG
             hasNoComp = true;   // no text at ground symbol
             break;
           }
@@ -232,13 +232,13 @@ Graph* SweepDialog::setBiasPoints()
   // create DC current through each probe
   Component *pc;
   for(pc = Doc->Components->first(); pc != 0; pc = Doc->Components->next())
-    if(pc->Model == "IProbe") {
+    if(pc->obsolete_model_hack() == "IProbe") { // BUG.
       pn = pc->Ports.first()->Connection;
       if(!pn->Name.isEmpty())   // preserve node voltage ?
         pn = pc->Ports.at(1)->Connection;
 
       pn->x1 = 0x10;   // mark current
-      pg->Var = pc->Name + ".I";
+      pg->Var = pc->name() + ".I";
       pg->lastLoaded = QDateTime(); // Note 1 at the start of this function
       if(pg->loadDatFile(DataSet) == 2) {
         pn->Name = misc::num2str(*(pg->cPointsY)) + "A";

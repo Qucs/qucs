@@ -2154,8 +2154,8 @@
 <!-- simulator settings -->
 <admst:value-to select="/simulator/package_name" string="qucs"/>
 <admst:value-to select="/simulator/package_tarname" string="qucs"/>
-<admst:value-to select="/simulator/package_version" string="0.0.19"/>
-<admst:value-to select="/simulator/package_string" string="qucs 0.0.19"/>
+<admst:value-to select="/simulator/package_version" string="0.0.20"/>
+<admst:value-to select="/simulator/package_string" string="qucs 0.0.20"/>
 <admst:value-to select="/simulator/package_bugreport" string="qucs-bugs@lists.sourceforge.net"/>
 
 <admst:for-each select="/module">

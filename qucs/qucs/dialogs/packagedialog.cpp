@@ -99,8 +99,8 @@ PackageDialog::PackageDialog(QWidget *parent_, bool create_)
     connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
 
     // ...........................................................
-    // insert all projects
-    QStringList PrDirs = QucsSettings.QucsHomeDir.entryList(QStringList("*"), QDir::Dirs, QDir::Name);
+    // insert all projects in the current directory
+    QStringList PrDirs = QucsSettings.projsDir.entryList(QStringList("*"), QDir::Dirs, QDir::Name);
     QStringList::iterator it;
     for(it = PrDirs.begin(); it != PrDirs.end(); it++)
        if((*it).right(4) == "_prj"){   // project directories end with "_prj"
@@ -292,7 +292,7 @@ void PackageDialog::slotCreate()
     if(p->isChecked()) {
       s = p->text() + "_prj";
       Stream << Q_UINT32(CODE_DIR) << s.toLatin1();
-      s = QucsSettings.QucsHomeDir.absolutePath() + QDir::separator() + s;
+      s = QucsSettings.projsDir.absolutePath() + QDir::separator() + s;
       if(insertDirectory(s, Stream) < 0) {
         PkgFile.close();
         PkgFile.remove();
@@ -358,7 +358,7 @@ void PackageDialog::extractPackage()
   }
   QDataStream Stream(&PkgFile);
 
-  QDir currDir = QucsSettings.QucsHomeDir;
+  QDir currDir = QucsSettings.projsDir;
   QString Version;
   VersionTriplet PackageVersion;
   Q_UINT16 Checksum;

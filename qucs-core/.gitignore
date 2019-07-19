@@ -29,3 +29,6 @@ install_manifest.txt
 
 lib/
 lib/gtest/
+
+# generated manual pages
+*.1

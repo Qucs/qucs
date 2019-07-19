@@ -1,0 +1,135 @@
+From 65043029ca2ffec16f77ccf2e5b10f22218d1d60 Mon Sep 17 00:00:00 2001
+From: in3otd <in3otd@qsl.net>
+Date: Sat, 15 Sep 2018 14:20:36 +0200
+Subject: [PATCH] Allow arbitrary simulator name for Qucs mode
+
+---
+ asco-test.c |  9 ++++++++-
+ asco.c      | 18 ++++++++++++++----
+ errfunc.c   |  8 ++++----
+ 3 files changed, 26 insertions(+), 9 deletions(-)
+
+diff --git a/asco-test.c b/asco-test.c
+index 2a38764..823b651 100644
+--- a/asco-test.c
++++ b/asco-test.c
+@@ -29,7 +29,7 @@
+ extern double evaluate(int D, double tmp[], char *argv); /* obj. funct. */
+ extern int DE(int argc, char *argv[]);
+ 
+-
++char *qucsator; // full path to the simulator used by Qucs
+ 
+ 
+ /*##############################################################################
+@@ -179,6 +179,13 @@ int main(int argc, char *argv[])
+ 		exit(EXIT_FAILURE);
+ 	}
+ 
++	if (argc == 7) {
++		// full path to Qucs simulator specified (like "-s /usr/local/bin/myqucsator")
++		qucsator = strdup(argv[6]);
++	} else {
++		// assume simulator is named "qucsator" and is in PATH
++		qucsator = strdup("qucsator");
++	}
+ 
+ 	/**/
+ 	/*Step4: define needed variables value */
+diff --git a/asco.c b/asco.c
+index 164ae89..d928d02 100644
+--- a/asco.c
++++ b/asco.c
+@@ -49,6 +49,9 @@ extern int NM(int argc, char *argv[]);
+  *      6: Rename output files, currently only for Qucs
+  *
+  */
++
++char *qucsator = NULL; // full path to the simulator used by Qucs
++
+ int main(int argc, char *argv[])
+ {
+ 	int ii, ccode;
+@@ -203,6 +206,14 @@ int main(int argc, char *argv[])
+ 			exit(EXIT_FAILURE);
+ 	}
+ 
++	if (argc == 7) {
++		// full path to Qucs simulator specified (like "-s /usr/local/bin/myqucsator")
++		qucsator = strdup(argv[6]);
++	} else {
++		// assume simulator is named "qucsator" and is in PATH
++		qucsator = strdup("qucsator");
++	}
++
+ 	#ifdef MPI /*If in parallel optimization mode, copy all files to /tmp/asco */
+ 	if (id) { /*If it is a slave process*/
+ 		pid=getpid();
+@@ -400,21 +411,19 @@ int main(int argc, char *argv[])
+ 	#else
+ 	{
+ 	#endif
++		if ((spice==50) && (argc>=5) ) { /*Qucs*/
+ 		#ifndef __MINGW32__
+-		if ((spice==50) && (argc==5) ) { /*Qucs*/
+ 			sprintf(lkk, "cp -fp %s.dat %s.dat > /dev/null", hostname, argv[4]);
+ 			system(lkk); /*copy simulation output file*/
+ 			sprintf(lkk, "cp -fp %s.log %s.log > /dev/null", hostname, argv[4]);
+ 			system(lkk); /*copy log file*/
+-		}
+ 		#else
+-		if ((spice==50) && (argc==5) ) { /*Qucs*/
+ 			sprintf(lkk, "copy /y %s.dat %s.dat > NUL", hostname, argv[4]);
+ 			system(lkk); /*copy simulation output file*/
+ 			sprintf(lkk, "copy /y %s.log %s.log > NUL", hostname, argv[4]);
+ 			system(lkk); /*copy log file*/
+-		}
+ 		#endif
++		}
+ 	}
+ 
+ 
+@@ -424,5 +433,6 @@ int main(int argc, char *argv[])
+ 		printf("INFO:  ASCO has ended on '%s'.\n", hostname);
+ 		fflush(stdout);
+ 	}
++	free(qucsator);
+ 	return(EXIT_SUCCESS);
+ }
+diff --git a/errfunc.c b/errfunc.c
+index 120fa5e..39cc863 100644
+--- a/errfunc.c
++++ b/errfunc.c
+@@ -33,7 +33,7 @@
+ #include "auxfunc_measurefromlis.h"
+ #include "rfmodule.h"
+ 
+-
++extern char* qucsator; // full path to the simulator used by Qucs
+ 
+ 
+ 
+@@ -621,9 +621,9 @@ double errfunc(char *filename, double *x)
+ 			break;
+ 		case 50: /*Qucs*/
+ 			#ifndef __MINGW32__
+-			sprintf(lkk, "nice -n 19 qucsator -i %s.txt -o %s.dat > /dev/null", hostname, hostname);
++			sprintf(lkk, "nice -n 19 %s -i %s.txt -o %s.dat > /dev/null", qucsator, hostname, hostname);
+ 			#else
+-			sprintf(lkk, "qucsator -i %s.txt -o %s.dat > NUL", hostname, hostname);
++			sprintf(lkk, "%s -i %s.txt -o %s.dat > NUL", qucsator, hostname, hostname);
+ 			#endif
+ 			break;
+ 		case 51: /*ngspice*/
+@@ -637,7 +637,7 @@ double errfunc(char *filename, double *x)
+ 			#ifndef __MINGW32__
+ 			sprintf(lkk, "nice -n 19 ./general.sh %s %s", hostname, hostname);
+ 			#else
+-			sprintf(lkk, "./general.sh %s %s", hostname, hostname);
++			sprintf(lkk, ".\\general.bat %s %s", hostname, hostname);
+ 			#endif
+ 			break;
+ 		default:
+-- 
+2.9.0
+

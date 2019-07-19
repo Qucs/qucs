@@ -739,13 +739,13 @@ void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
   qDebug (doc.toString());
 #endif
   // s << "  "; ??
-  s << "<" << c->Model;
+  s << "<" << c->obsolete_model_hack();
 
   s << " ";
-  if(c->Name.isEmpty()){
+  if(c->name().isEmpty()){
     s << "*";
   }else{
-    s << c->Name;
+    s << c->name();
   }
   s << " ";
 
@@ -798,12 +798,10 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   }
   s = s.mid(1, s.length()-2);   // cut off start and end character
 
-  QString n;
-  c->Name = s.section(' ',1,1);    // Name
-  if(c->Name == "*"){
-	  c->Name = "";
-  }
+  QString label=s.section(' ',1,1);
+  c->setName(label);
 
+  QString n;
   n  = s.section(' ',2,2);      // isActive
   tmp = n.toInt(&ok);
   if(!ok){
@@ -811,10 +809,11 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   }
   c->isActive = tmp & 3;
 
-  if(tmp & 4)
+  if(tmp & 4){
     c->showName = false;
-  else
-    c->showName = true;
+  }else{
+    // use default, e.g. never show name for GND (bug?)
+  }
 
   n  = s.section(' ',3,3);    // cx
   c->cx = n.toInt(&ok);
@@ -832,7 +831,7 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   tty = n.toInt(&ok);
   if(!ok) return NULL;
 
-  if(c->Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
+  if(c->obsolete_model_hack().at(0) != '.') {  // is simulation component (dc, ac, ...) ?
 
     n  = s.section(' ',7,7);    // mirroredX
     if(n.toInt(&ok) == 1){
@@ -853,7 +852,7 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
   c->tx = ttx;
   c->ty = tty; // restore text position (was changed by rotate/mirror)
 
-  QString Model = c->Model; // BUG: don't use names
+  QString Model = c->obsolete_model_hack(); // BUG: don't use names
 
   unsigned int z=0, counts = s.count('"');
   // FIXME. use c->paramCount()
@@ -1661,11 +1660,11 @@ Component* getComponentFromName(QString& Line, Schematic* p)
     return 0;
   }
 
-  cstr = c->Name;   // is perhaps changed in "recreate" (e.g. subcircuit)
+  cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
   int x = c->tx, y = c->ty;
   c->setSchematic (p);
   c->recreate(0);
-  c->Name = cstr;
+  c->obsolete_name_override_hack(cstr);
   c->tx = x;  c->ty = y;
   return c;
 }

@@ -29,6 +29,8 @@ class QString;
 class SpiceFile : public QObject, public MultiViewComponent  {
    Q_OBJECT
 public:
+  using MultiViewComponent::name;
+public:
   SpiceFile();
  ~SpiceFile() {};
   Component* newOne();

@@ -171,12 +171,12 @@ void ChangeDialog::slotButtReplace()
   int i1, i2;
   // search through all components
   for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next()) {
-    if(matches(pc->Model)) {
-      if(Expr.indexIn(pc->Name) >= 0)
+    if(matches(pc->obsolete_model_hack())) {
+      if(Expr.indexIn(pc->name()) >= 0)
         for(Property *pp = pc->Props.first(); pp!=0; pp = pc->Props.next())
           if(pp->Name == PropNameEdit->currentText()) {
-            pb = new QCheckBox(pc->Name);
-            Dia_Box->addWidget(pb);   
+            pb = new QCheckBox(pc->name());
+            Dia_Box->addWidget(pb);
             pList.append(pb);
             pb->setChecked(true);
             i1 = pp->Description.indexOf('[');
@@ -213,7 +213,7 @@ void ChangeDialog::slotButtReplace()
     if(!pb->isChecked())  continue;
 
     for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next()) {
-      if(pb->text() != pc->Name)  continue;
+      if(pb->text() != pc->name())  continue;
 
       for(Property *pp = pc->Props.first(); pp!=0; pp = pc->Props.next()) {
         if(pp->Name != PropNameEdit->currentText())  continue;

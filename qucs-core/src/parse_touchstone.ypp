@@ -35,7 +35,7 @@
 
 #define YYERROR_VERBOSE 42
 #define YYDEBUG 1
-#define YYMAXDEPTH 1000000
+//#define YYMAXDEPTH 1000000
 
 #include "logging.h"
 #include "complex.h"
@@ -76,36 +76,42 @@ Input:
 
 OptionLine: /* option line */
     '#' OptionList 'R' Float OptionList Eol {
-    touchstone_vector = NULL;
+    touchstone_line = NULL;
     touchstone_options.resistance = $4;
   }
   | '#' OptionList Eol {
-    touchstone_vector = NULL;
+    touchstone_line = NULL;
     touchstone_options.resistance = 50.0;
   }
   | Eol OptionLine { /* skip this line */ }
 ;
 
 OptionList: /* nothing */ { }
-  | Option OptionList {
+  | OptionList Option {
     if (touchstone_idents == NULL) touchstone_idents = new strlist ();
-    touchstone_idents->add ($1);
-    free ($1);
+    touchstone_idents->add ($2);
+    free ($2);
   }
 ;
 
 Dataset: /* nothing */ { }
-  | DataLine Eol Dataset { /* append vector lines */
-    $1->setNext (touchstone_vector);
-    touchstone_vector = $1;
+  | Dataset DataLine Eol { /* append vector lines */
+    if (!touchstone_vector)
+      touchstone_vector = $2; /* save first vector location */
+    if (touchstone_line)
+      touchstone_line->setNext($2);
+    touchstone_line = $2;
   }
-  | DataLine { /* last line, no trailing end-of-line */
-    $1->setNext (touchstone_vector);
-    touchstone_vector = $1;
+  | Dataset DataLine { /* last line, no trailing end-of-line */
+    if (!touchstone_vector)
+      touchstone_vector = $2; /* save first vector location */
+    if (touchstone_line)
+      touchstone_line->setNext($2);
+    touchstone_line = $2;
     logprint (LOG_ERROR, "line %d: no trailing end-of-line found, "
 	      "continuing...\n", touchstone_lineno);
   }
-  | Eol Dataset { /* skip this line */ }
+  | Dataset Eol { /* skip this line */ }
 ;
 
 DataLine:

@@ -77,10 +77,41 @@ public:
   #define COMP_IS_SHORTEN 2
   int  isActive; // should it be used in simulation or not ?
   int  tx, ty;   // upper left corner of text (position)
-  bool showName;
-  QString  Model, Name;
-  QString  Description;
 
+// private: // TODO
+  bool showName;
+
+public:
+  QString const& obsolete_model_hack() const{
+	  // BUG. do not use
+	  return Model;
+  }
+  void setName(QString x){
+	  // FIXME move to Element.
+	  Name = x;
+  }
+  QString const& name() const{
+	  // yikes. this should not be necessary
+	  return Name;
+  }
+  void obsolete_name_override_hack(QString x){
+	  Name = x;
+  }
+  void gnd_obsolete_model_override_hack(QString x){
+	  //assert (this is a gnd component); // fix later
+	  Model = x;
+  }
+  QString const& description() const{
+	  return Description;
+  }
+
+private:
+protected: // BUG
+  QString Model;
+protected: // BUG => Element.
+  QString Name;
+protected: // BUG
+  QString  Description;
 protected:
   virtual QString netlist();
   virtual QString vhdlCode(int);

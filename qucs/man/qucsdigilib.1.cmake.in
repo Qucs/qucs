@@ -1,9 +1,9 @@
-.TH QucsLib "1" "July 2005" "Debian/GNU Linux" "User Commands"
+.TH QucsDigiLib "1" "October 2009" "Debian/GNU Linux" "User Commands"
 .SH NAME
-QucsLib \- A component library manager for Qucs.
+QucsDigiLib \- A wrapper script for digital modules and libraries.
 .SH SYNOPSIS
-.B qucslib
-[\fIOPTION\fR] ...
+.B qucsdigilib
+[\fIOPTION\fR] \fIinfile\fR \fIdir\fR \fIentity\fR \fIlibrary\fR
 .SH DESCRIPTION
 
 \fBQucs\fR is an integrated circuit simulator which means you are able
@@ -16,20 +16,32 @@ The software aims to support all kinds of circuit simulation types,
 e.g. DC, AC, S-parameter, harmonic balance analysis, noise analysis,
 etc.
 
-\fBQucsLib\fR is a program to manage Qucs component libraries. On the
-left side of the application window the available libraries can be
-browsed to find the wanted component.  By clicking on the component
-name its description can be seen on the right side. The selected
-component is transported to the Qucs application by clicking on the
-button "Copy to Clipboard".  Being back in the schematic window the
-component can be inserted by pressing CTRL-V (paste from clipboard).
+\fBQucsDigiLib\fR is a wrapper script for digital modules and
+libraries created by Qucs.  The program utilizes the \fBFreeHDL\fR
+compiler in order to convert the VHDL output of Qucs into a C++ file.
+Thereafter this C++ source is compiled to a binary.  The binary is
+then copied into the VHDL directory.
 
+.SH OPTIONS
+.TP
+\fR INFILE
+the filename of the VHDL file to be simulated located in the
+directory specified in \fIDIR\fR
+.TP
+\fR DIR
+the name of the directory where the compilation is going to be performed
+.TP
+\fR ENTITY
+the entity name implemented in the VHDL file
+.TP
+\fR LIBRARY
+library name into which the module will reside
 .SH AVAILABILITY
 The latest version of Qucs can always be obtained from
-\fBwww.sourceforge.net\fR or \fBwww.freshmeat.net\fR
+\fB${QUCS_URL}\fR
 .SH "REPORTING BUGS"
 Known bugs are documented within the BUGS file.  Report bugs to
-<qucs-bugs@lists.sourceforge.net>.
+\fB${QUCS_BUGREPORT}\fR
 .SH COPYRIGHT
 Copyright \(co 2005 Michael Margraf <michael.margraf@alumni.tu-berlin.de>
 .PP

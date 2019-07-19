@@ -677,7 +677,7 @@ void QucsFilter::slotRealizationChanged(int index)
 {
   FlushImage();
 
-  if (index < 2)//LC filters
+  if ((index == LC_LADDER_PI) || (index == LC_LADDER_TEE))//LC filters
   {
      ComboType->clear();
      ComboType->addItem("Bessel");
@@ -704,7 +704,7 @@ void QucsFilter::slotRealizationChanged(int index)
 
 
   //Shared settings for microwave BP filters
-  if ((index == 2) || (index == 3) || (index == 5) || (index == 6))
+  if ((index == END_COUPLED) || (index == PARALLEL_COUPLED_TL) || (index == QW_RING))
   {
            ComboClass->setCurrentIndex(CLASS_BANDPASS);
            slotClassChanged(CLASS_BANDPASS);
@@ -714,7 +714,17 @@ void QucsFilter::slotRealizationChanged(int index)
            box2->setEnabled(false);//Microstrip substrate definition panel
   }
   
-  if (index == 4)//Stepped impedance LPF
+  // QW bandpass and notch filters
+  if (index == QW_RESONATORS)
+  {
+    MicrostripcheckBox->setEnabled(true);
+    ComboClass->setEnabled(true);
+    MicrostripcheckBox->setChecked(
+        false); // By default, the microstrip implementation is unchecked
+    box2->setEnabled(false); // Microstrip substrate definition panel
+  }
+
+  if (index == STEPPED_IMPEDANCE)//Stepped impedance LPF
   {
      ComboClass->setCurrentIndex(CLASS_LOWPASS);
      slotClassChanged(CLASS_LOWPASS);
@@ -724,7 +734,7 @@ void QucsFilter::slotRealizationChanged(int index)
      box2->setEnabled(false);//Microstrip substrate definition panel
   }
 
-  if (index == 6)//Quarter wavelength side coupled ring resonator (BP)
+  if (index == QW_RING)//Quarter wavelength side coupled ring resonator (BP)
   {
      ComboType->setEnabled(false);//Conventional frequency responses not available
      EditOrder->setEnabled(false);//Not possible to modify the order
@@ -740,7 +750,7 @@ void QucsFilter::slotRealizationChanged(int index)
   }
 
   //Shared settings for the qw-ring resonator and the capacitively coupled shunt resonators
-  if ((index == 6)||(index == 7))
+  if ((index == QW_RING) || (index == CAP_COUPLED_SHUNT_RESONATORS))
   {
     MicrostripcheckBox->setEnabled(false);//Microstrip implementation does not work...
     ComboClass->setCurrentIndex(CLASS_BANDPASS);
@@ -748,7 +758,7 @@ void QucsFilter::slotRealizationChanged(int index)
     ComboClass->setEnabled(false);
   }
 
-  if (index == 8)//RF EDD filter
+  if (index == EQN_DEFINED)//RF EDD filter
   {
      MicrostripcheckBox->setEnabled(false);
      MicrostripcheckBox->setChecked(false);

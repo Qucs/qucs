@@ -6,7 +6,7 @@ AC_PREREQ(2.64)
 dnl Read version from file
 m4_define([QUCS_VERSION], m4_esyscmd([tr -d '\n' < VERSION]))
 
-AC_INIT([qucs-core],[QUCS_VERSION],[qucs-bugs@lists.sourceforge.net])
+AC_INIT([qucsator], [QUCS_VERSION], [qucs-bugs@lists.sourceforge.net], [], [https://sf.net/p/qucs])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR([build-aux])
 LT_PREREQ([2.2.2])
@@ -899,6 +899,8 @@ AH_TOP([
 #endif
 ])
 
+
+
 dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([Makefile
 		 qucs_typedefs.h
@@ -913,6 +915,8 @@ AC_CONFIG_FILES([Makefile
 		 src/components/digital/Makefile
 		 src/components/verilog/Makefile
 		 tests/Makefile
+                 doc/qucsator.1
+                 doc/qucsconv.1
 		 ])
 
 

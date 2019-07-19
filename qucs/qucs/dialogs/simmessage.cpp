@@ -527,8 +527,11 @@ void SimMessage::startSimulator()
 
         Program = QucsSettings.AscoBinDir.canonicalPath();
         Program = QDir::toNativeSeparators(Program+"/"+"asco"+QString(executableSuffix));
+        // pass full path of simulator to ASCO so it does not be to be in PATH
+        // and QUCSATOR environment variable is honored
         Arguments << "-qucs" << QucsSettings.QucsHomeDir.filePath("asco_netlist.txt")
-                  << "-o" << "asco_out";
+                  << "-o" << "asco_out"
+                  << "-s" << "\"" + QDir::toNativeSeparators(QucsSettings.Qucsator) + "\"";
       }
       else {
         Program = QucsSettings.Qucsator;
@@ -599,7 +602,7 @@ Component * SimMessage::findOptimization(Schematic *Doc) {
   Component *pc;
   for(pc=Doc->Components->first(); pc!=0; pc=Doc->Components->next())
     if(pc->isActive)
-      if(pc->Model == ".Opt")
+      if(pc->obsolete_model_hack() == ".Opt")
 	return pc;
   return NULL;
 }
