@@ -6,6 +6,9 @@ cmake_policy(VERSION 2.8)
 file (STRINGS "${qucs-suite_SOURCE_DIR}/VERSION" QUCS_VERSION)
 message(STATUS "Configuring Qucs: VERSION ${QUCS_VERSION}")
 
+SET(QUCS_URL "https://sf.net/p/qucs")
+SET(QUCS_BUGREPORT "qucs-bugs@lists.sourceforge.net")
+
 set(GIT unknown)
 IF(EXISTS ${CMAKE_SOURCE_DIR}/../.git )
   FIND_PACKAGE(Git)
@@ -39,6 +42,23 @@ INCLUDE( ${QT_USE_FILE} )
 ADD_DEFINITIONS(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
 
 
+
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucs.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/man/qucs.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigi.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigi.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigilib.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigilib.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsveri.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsveri.1)
+
+#Tools
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-activefilter/qucsactivefilter.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-activefilter/qucsactivefilter.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-filter/qucsfilter.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-filter/qucsfilter.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-attenuator/qucsattenuator.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-attenuator/qucsattenuator.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-lib/qucslib.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-lib/qucslib.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-powercombining/qucspowercombining.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-powercombining/qucspowercombining.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-rescodes/qucsrescodes.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-rescodes/qucsrescodes.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-wideband-matching/qucswideband.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-wideband-matching/qucswideband.1)
+
 ADD_SUBDIRECTORY( man )
 ADD_SUBDIRECTORY( qucs )
 ADD_SUBDIRECTORY( qucs-activefilter )
@@ -64,5 +84,4 @@ configure_file(
 
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake)
-
 
