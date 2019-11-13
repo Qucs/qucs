@@ -195,6 +195,9 @@ SET(QUCS_SRCS
 SET(QUCS_HDRS
 element.h
 messagedock.h
+imagewriter.h
+printerwriter.h
+projectView.h
 misc.h
 mnemo.h
 module.h
@@ -211,6 +214,8 @@ wire.h
 wirelabel.h
 frame.h
 mousecursor.h
+schematicscene.h
+qt_compat.h
 )
 
 #
@@ -324,7 +329,7 @@ if(UNIX AND ENABLE_RPATH)
 endif()
 
 # schematic library
-ADD_LIBRARY( coreSchematic OBJECT ${QUCS_SRCS} ${QUCS_MOC_SRCS})
+ADD_LIBRARY( coreSchematic OBJECT ${QUCS_SRCS} ${QUCS_HDRS} ${QUCS_MOC_SRCS})
 
 # create shared library
 ADD_LIBRARY( qucsschematic SHARED
