@@ -21,7 +21,7 @@
  */
 
 #ifndef SCHEMATICSCENE_H_
-#define SCHEMATICSCENE_H_ value
+#define SCHEMATICSCENE_H_
 
 #include <QGraphicsScene>
 
