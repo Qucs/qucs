@@ -190,6 +190,7 @@ SET(QUCS_SRCS
   frame.cpp
   mousecursor.cpp
   schematicscene.cpp
+  undocommands.cpp
 )
 
 SET(QUCS_HDRS
@@ -216,6 +217,7 @@ frame.h
 mousecursor.h
 schematicscene.h
 qt_compat.h
+undocommands.h
 )
 
 #
