@@ -171,11 +171,6 @@ public:
   int tmpViewX1, tmpViewY1, tmpViewX2, tmpViewY2;
   int tmpUsedX1, tmpUsedY1, tmpUsedX2, tmpUsedY2;
 
-  int undoActionIdx;
-  QVector<QString *> undoAction;
-  int undoSymbolIdx;
-  QVector<QString *> undoSymbol;    // undo stack for circuit symbol
-
   /*! \brief Get (schematic) file reference */
   QFileInfo getFileInfo (void) { return FileInfo; }
   /*! \brief Set reference to file (schematic) */
