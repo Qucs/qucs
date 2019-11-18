@@ -53,6 +53,7 @@ class QWheelEvent;
 class QMouseEvent;
 class QDragEnterEvent;
 class QPainter;
+class QUndoStack;
 
 // digital signal data
 struct DigSignal {
@@ -170,6 +171,8 @@ public:
   float tmpScale;
   int tmpViewX1, tmpViewY1, tmpViewX2, tmpViewY2;
   int tmpUsedX1, tmpUsedY1, tmpUsedX2, tmpUsedY2;
+
+  QUndoStack *undoStack;
 
   /*! \brief Get (schematic) file reference */
   QFileInfo getFileInfo (void) { return FileInfo; }

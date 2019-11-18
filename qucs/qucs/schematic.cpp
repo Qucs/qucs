@@ -42,6 +42,7 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QScrollBar>
+#include <QUndoStack>
 
 #include "qucs.h"
 #include "schematicscene.h"
