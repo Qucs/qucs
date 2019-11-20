@@ -23,7 +23,7 @@ void AddItemCommand::undo()
 void AddItemCommand::redo()
 {
     m_scene->addItem(m_item);
-    m_item->setPos(m_pos);
+    m_item->setPos(m_pos.x(), m_pos.y());
     m_scene->clearSelection();
     m_scene->update();
 }
