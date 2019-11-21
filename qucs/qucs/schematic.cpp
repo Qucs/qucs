@@ -267,6 +267,7 @@ void Schematic::setName (const QString& Name_)
 
 // ---------------------------------------------------
 // Sets the document to be changed or not to be changed.
+/// \todo fillstack and Op are no longer used
 void Schematic::setChanged(bool c, bool fillStack, char Op)
 {
   if((!DocChanged) && c)
@@ -1358,8 +1359,7 @@ int Schematic::adjustPortNumbers()
 // ---------------------------------------------------
 bool Schematic::undo()
 {
-  TODO("Schematic::undo()");
-
+  undoStack->undo();
   setChanged(true, false);
   return true;
 }
@@ -1367,8 +1367,7 @@ bool Schematic::undo()
 // ---------------------------------------------------
 bool Schematic::redo()
 {
-  TODO("Schematic::redo()");
-
+  undoStack->redo();
   setChanged(true, false);
   return true;
 }
