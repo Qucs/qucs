@@ -1,19 +1,27 @@
-/***************************************************************************
-                               schematic.h
-                              -------------
-    begin                : Sat Mar 11 2006
-    copyright            : (C) 2006 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+ * schematicview.cpp - implement schematic view
+ *
+ * Copyright (C) 2006, Michael Margraf, michael.margraf@alumni.tu-berlin.de
+ * Copyright (C) 2006, Gopala Krishna A <krishna.ggk@gmail.com>
+ * Copyright (C) 2012-2016 by Pablo Daniel Pareja Obregon
+ * Copyright (C) 2019, Guilherme Brondani Torri, guitorri@gmail.com
+ *
+ * This file is part of Qucs
+ *
+ * Qucs is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Qucs.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
 #ifndef SCHEMATIC_H
 #define SCHEMATIC_H
@@ -207,6 +215,10 @@ private:
   bool dragIsOkay;
   /*! \brief hold system-independent information about a schematic file */
   QFileInfo FileInfo;
+
+  //! \brief Auxiliary pan variables
+  bool panMode;
+  QPointF panStartPosition;
 
 /* ********************************************************************
    *****  The following methods are in the file                   *****

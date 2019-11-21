@@ -1,19 +1,27 @@
-/***************************************************************************
-                              schematic.cpp
-                             ---------------
-    begin                : Sat Mar 3 2006
-    copyright            : (C) 2006 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/*
+ * schematicview.cpp - implement schematic view
+ *
+ * Copyright (C) 2006, Michael Margraf, michael.margraf@alumni.tu-berlin.de
+ * Copyright (C) 2006, Gopala Krishna A <krishna.ggk@gmail.com>
+ * Copyright (C) 2012-2016 by Pablo Daniel Pareja Obregon
+ * Copyright (C) 2019, Guilherme Brondani Torri, guitorri@gmail.com
+ *
+ * This file is part of Qucs
+ *
+ * Qucs is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Qucs.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
 #include <stdlib.h>
 #include <limits.h>
@@ -91,6 +99,8 @@ SchematicView::SchematicView(QucsApp *App_, const QString& Name_)
   isVerilog = false;
   creatingLib = false;
 
+  panMode= false;
+
   // create and set current scene
   scene = new SchematicScene(this);
   this->setScene(scene);
@@ -118,13 +128,14 @@ SchematicView::SchematicView(QucsApp *App_, const QString& Name_)
   undoStack = new QUndoStack(this);
 
   setDragMode(QGraphicsView::RubberBandDrag);
-
-  this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-  this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+  setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+  setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+  setAcceptDrops(true);
+  setViewportUpdateMode(SmartViewportUpdate);
+  setTransformationAnchor(QGraphicsView::NoAnchor);
+  setMouseTracking(true);
 
   misc::setWidgetBackgroundColor(viewport(), QucsSettings.BGColor);
-  viewport()->setMouseTracking(true);
-  viewport()->setAcceptDrops(true);  // enable drag'n drop
 
   TODO("Repair scroll connect");
   // to repair some strange  scrolling artefacts
@@ -295,14 +306,17 @@ void SchematicView::setChanged(bool c, bool fillStack, char Op)
  */
 void SchematicView::mouseMoveEvent(QMouseEvent *Event)
 {
+  if(panMode) {
+    QPointF d = mapToScene(Event->pos()) - panStartPosition;
+    translate(d.x(), d.y());
+    panStartPosition = mapToScene(Event->pos());
+  }
+
   QPoint pos = mapToScene(Event->pos()).toPoint();
   emit signalCursorPosChanged(pos.x(), pos.y());
 
-  // propagate event to parent class
-  // needed for HoverEvent to work
   QGraphicsView::mouseMoveEvent(Event);
 }
-
 
 /*!
  * \brief Schematic::mousePressEvent
@@ -315,36 +329,28 @@ void SchematicView::mouseMoveEvent(QMouseEvent *Event)
  */
 void SchematicView::mousePressEvent(QMouseEvent *Event)
 {
-  TODO("check mousePressEvent");
   App->editText->setHidden(true); // disable text edit of component property
-  if(App->MouseReleaseAction == &MouseActions::MReleasePaste)
+
+  if(Event->button() == Qt::MiddleButton) {
+    panMode = true;
+    panStartPosition = mapToScene(Event->pos());
+    setCursor(Qt::ClosedHandCursor);
+    Event->accept();
     return;
-
-  if(Event->button() != Qt::LeftButton)
-    if(App->MousePressAction != &MouseActions::MPressElement)
-      if(App->MousePressAction != &MouseActions::MPressWire2) {
-        // show menu on right mouse button
-        App->view->rightPressMenu(this, Event);
-        if(App->MouseReleaseAction)
-           // Is not called automatically because menu has focus.
-          (App->view->*(App->MouseReleaseAction))(this, Event);
-        return;
-      }
-
-  if(App->MousePressAction)
-    (App->view->*(App->MousePressAction))(this, Event);
-
-  // propagate event to parent class
-  // needed to reach QGraphicsItem
+  }
+  
   QGraphicsView::mousePressEvent(Event);
 }
 
 // -----------------------------------------------------------
 void SchematicView::mouseReleaseEvent(QMouseEvent *Event)
 {
-  TODO("check mouseReleaseEvent");
-  if(App->MouseReleaseAction)
-    (App->view->*(App->MouseReleaseAction))(this, Event);
+  if(Event->button() == Qt::MiddleButton) {
+    panMode = false;
+    setCursor(Qt::ArrowCursor);
+  }
+  
+  QGraphicsView::mouseReleaseEvent(Event);
 }
 
 // -----------------------------------------------------------
