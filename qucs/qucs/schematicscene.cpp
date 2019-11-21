@@ -24,9 +24,11 @@
 #include "schematicscene.h"
 #include "schematicview.h"
 #include "undocommands.h"
+#include "components.h"
 
 #include <QPainter>
 #include <QUndoStack>
+#include <QGraphicsSceneMouseEvent>
 
 SchematicScene::SchematicScene(QObject *parent) :
   QGraphicsScene(parent)
@@ -86,7 +88,9 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 void SchematicScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
   // need to figure out a way to get the element selected for insert
-  //undoStack->push( new AddItemCommand(Comp, pos, Doc->scene) );
+  Element *foo = new Equation();
+  QPointF d = event->scenePos();
+  undoStack->push( new AddItemCommand(foo, d, this) );
 }
 
 void SchematicScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
