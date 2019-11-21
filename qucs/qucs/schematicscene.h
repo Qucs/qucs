@@ -25,6 +25,8 @@
 
 #include <QGraphicsScene>
 
+class QUndoStack;
+
 class SchematicScene : public QGraphicsScene
 {
 Q_OBJECT
@@ -33,6 +35,7 @@ public:
   virtual ~SchematicScene ();
 
 private:
+  QUndoStack *undoStack;
 
 protected:
   void drawBackground(QPainter *painter, const QRectF& rect);
