@@ -64,7 +64,7 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
   if(QucsApp::isTextDocument(DocWidget))
     Doc = (QucsDoc*) ((TextDoc*)DocWidget);
   else
-    Doc = (QucsDoc*) ((Schematic*)DocWidget);
+    Doc = (QucsDoc*) ((SchematicView*)DocWidget);
 
   DocName = Doc->DocName;
   DataDisplay = Doc->DataDisplay;
@@ -175,7 +175,7 @@ bool SimMessage::startProcess()
 
   if(!QucsApp::isTextDocument(DocWidget)) {
     SimPorts =
-       ((Schematic*)DocWidget)->prepareNetlist(Stream, Collect, ErrText);
+       ((SchematicView*)DocWidget)->prepareNetlist(Stream, Collect, ErrText);
     if(SimPorts < -5) {
       NetlistFile.close();
       ErrText->appendPlainText(tr("ERROR: Cannot simulate a text file!"));
@@ -449,8 +449,8 @@ void SimMessage::startSimulator()
     }
     Stream << '\n';
 
-    isVerilog = ((Schematic*)DocWidget)->isVerilog;
-    SimTime = ((Schematic*)DocWidget)->createNetlist(Stream, SimPorts);
+    isVerilog = ((SchematicView*)DocWidget)->isVerilog;
+    SimTime = ((SchematicView*)DocWidget)->createNetlist(Stream, SimPorts);
     if(SimTime.length()>0&&SimTime.at(0) == '\xA7') {
       NetlistFile.close();
       ErrText->insertPlainText(SimTime.mid(1));
@@ -523,7 +523,7 @@ void SimMessage::startSimulator()
           }
       } // vaComponents not empty
 
-      if((SimOpt = findOptimization((Schematic*)DocWidget))) {
+      if((SimOpt = findOptimization((SchematicView*)DocWidget))) {
 	    ((Optimize_Sim*)SimOpt)->createASCOnetlist();
 
         Program = QucsSettings.AscoBinDir.canonicalPath();
@@ -599,7 +599,7 @@ void SimMessage::startSimulator()
 }
 
 // ------------------------------------------------------------------------
-Component * SimMessage::findOptimization(Schematic *Doc) {
+Component * SimMessage::findOptimization(SchematicView *Doc) {
   Component *pc;
   for(pc=Doc->Components->first(); pc!=0; pc=Doc->Components->next())
     if(pc->isActive)
@@ -810,7 +810,7 @@ void SimMessage::FinishSimulation(int Status)
 	ifile.close();
       }
       if(((Optimize_Sim*)SimOpt)->loadASCOout())
-	((Schematic*)DocWidget)->setChanged(true,true);
+	((SchematicView*)DocWidget)->setChanged(true,true);
     }
   }
 

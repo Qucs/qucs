@@ -92,11 +92,11 @@ class ComponentList : public Q3PtrList<Component> {
 class PaintingList : public Q3PtrList<Painting> {
 };
 
-class Schematic : public QGraphicsView, public QucsDoc {
+class SchematicView : public QGraphicsView, public QucsDoc {
   Q_OBJECT
 public:
-  Schematic(QucsApp*, const QString&);
- ~Schematic();
+  SchematicView(QucsApp*, const QString&);
+ ~SchematicView();
 
   void setName(const QString&);
   void setChanged(bool, bool fillStack=false, char Op='*');

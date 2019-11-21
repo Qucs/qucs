@@ -30,7 +30,7 @@
 
 // Inserts a port into the schematic and connects it to another node if
 // the coordinates are identical. The node is returned.
-Node* Schematic::insertNode(int x, int y, Element *e)
+Node* SchematicView::insertNode(int x, int y, Element *e)
 {
     Node *pn;
     // check if new node lies upon existing node
@@ -73,7 +73,7 @@ Node* Schematic::insertNode(int x, int y, Element *e)
 }
 
 // ---------------------------------------------------
-Node* Schematic::selectedNode(int x, int y)
+Node* SchematicView::selectedNode(int x, int y)
 {
     for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next()) // test nodes
         if(pn->getSelected(x, y))
@@ -92,7 +92,7 @@ Node* Schematic::selectedNode(int x, int y)
 // Inserts a port into the schematic and connects it to another node if the
 // coordinates are identical. If 0 is returned, no new wire is inserted.
 // If 2 is returned, the wire line ended.
-int Schematic::insertWireNode1(Wire *w)
+int SchematicView::insertWireNode1(Wire *w)
 {
     Node *pn;
     // check if new node lies upon an existing node
@@ -214,7 +214,7 @@ int Schematic::insertWireNode1(Wire *w)
 
 // ---------------------------------------------------
 // if possible, connect two horizontal wires to one
-bool Schematic::connectHWires1(Wire *w)
+bool SchematicView::connectHWires1(Wire *w)
 {
     Wire *pw;
     Node *n = w->Port1;
@@ -277,7 +277,7 @@ bool Schematic::connectHWires1(Wire *w)
 
 // ---------------------------------------------------
 // if possible, connect two vertical wires to one
-bool Schematic::connectVWires1(Wire *w)
+bool SchematicView::connectVWires1(Wire *w)
 {
     Wire *pw;
     Node *n = w->Port1;
@@ -342,7 +342,7 @@ bool Schematic::connectVWires1(Wire *w)
 // Inserts a port into the schematic and connects it to another node if the
 // coordinates are identical. If 0 is returned, no new wire is inserted.
 // If 2 is returned, the wire line ended.
-int Schematic::insertWireNode2(Wire *w)
+int SchematicView::insertWireNode2(Wire *w)
 {
     Node *pn;
     // check if new node lies upon an existing node
@@ -450,7 +450,7 @@ int Schematic::insertWireNode2(Wire *w)
 
 // ---------------------------------------------------
 // if possible, connect two horizontal wires to one
-bool Schematic::connectHWires2(Wire *w)
+bool SchematicView::connectHWires2(Wire *w)
 {
     Wire *pw;
     Node *n = w->Port2;
@@ -504,7 +504,7 @@ bool Schematic::connectHWires2(Wire *w)
 
 // ---------------------------------------------------
 // if possible, connect two vertical wires to one
-bool Schematic::connectVWires2(Wire *w)
+bool SchematicView::connectVWires2(Wire *w)
 {
     Wire *pw;
     Node *n = w->Port2;
@@ -560,7 +560,7 @@ bool Schematic::connectVWires2(Wire *w)
 // Inserts a vertical or horizontal wire into the schematic and connects
 // the ports that hit together. Returns whether the beginning and ending
 // (the ports of the wire) are connected or not.
-int Schematic::insertWire(Wire *w)
+int SchematicView::insertWire(Wire *w)
 {
     int  tmp, con = 0;
     bool ok;
@@ -722,7 +722,7 @@ int Schematic::insertWire(Wire *w)
 
 // ---------------------------------------------------
 // Follows a wire line and selects it.
-void Schematic::selectWireLine(Element *pe, Node *pn, bool ctrl)
+void SchematicView::selectWireLine(Element *pe, Node *pn, bool ctrl)
 {
     Node *pn_1st = pn;
     while(pn->Connections.count() == 2)
@@ -741,7 +741,7 @@ void Schematic::selectWireLine(Element *pe, Node *pn, bool ctrl)
 }
 
 // ---------------------------------------------------
-Wire* Schematic::selectedWire(int x, int y)
+Wire* SchematicView::selectedWire(int x, int y)
 {
     for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())
         if(pw->getSelected(x, y))
@@ -752,7 +752,7 @@ Wire* Schematic::selectedWire(int x, int y)
 
 // ---------------------------------------------------
 // Splits the wire "*pw" into two pieces by the node "*pn".
-Wire* Schematic::splitWire(Wire *pw, Node *pn)
+Wire* SchematicView::splitWire(Wire *pw, Node *pn)
 {
     Wire *newWire = new Wire(pn->cx, pn->cy, pw->x2, pw->y2, pn, pw->Port2);
     newWire->ElemSelected = pw->ElemSelected;
@@ -780,7 +780,7 @@ Wire* Schematic::splitWire(Wire *pw, Node *pn)
 
 // ---------------------------------------------------
 // If possible, make one wire out of two wires.
-bool Schematic::oneTwoWires(Node *n)
+bool SchematicView::oneTwoWires(Node *n)
 {
     Wire *e3;
     Wire *e1 = (Wire*)n->Connections.getFirst();  // two wires -> one wire
@@ -824,7 +824,7 @@ bool Schematic::oneTwoWires(Node *n)
 
 // ---------------------------------------------------
 // Deletes the wire 'w'.
-void Schematic::deleteWire(Wire *w)
+void SchematicView::deleteWire(Wire *w)
 {
     if(w->Port1->Connections.count() == 1)
     {
@@ -859,7 +859,7 @@ void Schematic::deleteWire(Wire *w)
 }
 
 // ---------------------------------------------------
-int Schematic::copyWires(int& x1, int& y1, int& x2, int& y2,
+int SchematicView::copyWires(int& x1, int& y1, int& x2, int& y2,
                          QList<Element *> *ElementCache)
 {
     int count=0;
@@ -919,7 +919,7 @@ int Schematic::copyWires(int& x1, int& y1, int& x2, int& y2,
    *****                                                         *****
    ******************************************************************* */
 
-Marker* Schematic::setMarker(int x, int y)
+Marker* SchematicView::setMarker(int x, int y)
 {
   // only diagrams ...
   for(Diagram *pd = Diagrams->last(); pd != 0; pd = Diagrams->prev()){
@@ -933,7 +933,7 @@ Marker* Schematic::setMarker(int x, int y)
 
 // ---------------------------------------------------
 // Moves the marker pointer left/right on the graph.
-void Schematic::markerLeftRight(bool left, Q3PtrList<Element> *Elements)
+void SchematicView::markerLeftRight(bool left, Q3PtrList<Element> *Elements)
 {
     Marker *pm;
     bool acted = false;
@@ -948,7 +948,7 @@ void Schematic::markerLeftRight(bool left, Q3PtrList<Element> *Elements)
 
 // ---------------------------------------------------
 // Moves the marker pointer up/down on the more-dimensional graph.
-void Schematic::markerUpDown(bool up, Q3PtrList<Element> *Elements)
+void SchematicView::markerUpDown(bool up, Q3PtrList<Element> *Elements)
 {
     Marker *pm;
     bool acted = false;
@@ -969,7 +969,7 @@ void Schematic::markerUpDown(bool up, Q3PtrList<Element> *Elements)
    ******************************************************************* */
 
 
-void Schematic::highlightWireLabels ()
+void SchematicView::highlightWireLabels ()
 {
     WireLabel *pltestinner = 0;
     WireLabel *pltestouter = 0;
@@ -1101,7 +1101,7 @@ void Schematic::highlightWireLabels ()
 
 // ---------------------------------------------------
 // Deselects all elements except 'e'.
-void Schematic::deselectElements(Element *e)
+void SchematicView::deselectElements(Element *e)
 {
     // test all components
     for(Component *pc = Components->first(); pc != 0; pc = Components->next())
@@ -1142,7 +1142,7 @@ void Schematic::deselectElements(Element *e)
 
 // ---------------------------------------------------
 // Selects elements that lie within the rectangle x1/y1, x2/y2.
-int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
+int SchematicView::selectElements(int x1, int y1, int x2, int y2, bool flag)
 {
     int  z=0;   // counts selected elements
     int  cx1, cy1, cx2, cy2;
@@ -1272,7 +1272,7 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
 
 // ---------------------------------------------------
 // Selects all markers.
-void Schematic::selectMarkers()
+void SchematicView::selectMarkers()
 {
     for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
         foreach(Graph *pg, pd->Graphs)
@@ -1284,7 +1284,7 @@ void Schematic::selectMarkers()
 // For moving elements: If the moving element is connected to a not
 // moving element, insert two wires. If the connected element is already
 // a wire, use this wire. Otherwise create new wire.
-void Schematic::newMovingWires(Q3PtrList<Element> *p, Node *pn, int pos)
+void SchematicView::newMovingWires(Q3PtrList<Element> *p, Node *pn, int pos)
 {
     Element *pe;
 
@@ -1406,7 +1406,7 @@ void Schematic::newMovingWires(Q3PtrList<Element> *p, Node *pn, int pos)
 // BUG: does not (only) copy, as the name suggests.
 //      cannot be used to make copies.
 // returns the number of "copied" _Markers_ only
-int Schematic::copySelectedElements(Q3PtrList<Element> *p)
+int SchematicView::copySelectedElements(Q3PtrList<Element> *p)
 {
     int i, count = 0;
     Component *pc;
@@ -1566,7 +1566,7 @@ int Schematic::copySelectedElements(Q3PtrList<Element> *p)
 }
 
 // ---------------------------------------------------
-bool Schematic::copyComps2WiresPaints(int& x1, int& y1, int& x2, int& y2,
+bool SchematicView::copyComps2WiresPaints(int& x1, int& y1, int& x2, int& y2,
                                       QList<Element *> *ElementCache)
 {
     x1=INT_MAX;
@@ -1584,7 +1584,7 @@ bool Schematic::copyComps2WiresPaints(int& x1, int& y1, int& x2, int& y2,
 
 // ---------------------------------------------------
 // Used in "aligning()", "distributeHorizontal()", "distributeVertical()".
-int Schematic::copyElements(int& x1, int& y1, int& x2, int& y2,
+int SchematicView::copyElements(int& x1, int& y1, int& x2, int& y2,
                             QList<Element *> *ElementCache)
 {
     int bx1, by1, bx2, by2;
@@ -1632,7 +1632,7 @@ int Schematic::copyElements(int& x1, int& y1, int& x2, int& y2,
 
 // ---------------------------------------------------
 // Deletes all selected elements.
-bool Schematic::deleteElements()
+bool SchematicView::deleteElements()
 {
     bool sel = false;
 
@@ -1749,7 +1749,7 @@ bool Schematic::deleteElements()
  * \param Mode: top, bottom, left, right, center vertical, center horizontal
  * \return True if aligned
  */
-bool Schematic::aligning(int Mode)
+bool SchematicView::aligning(int Mode)
 {
     int x1, y1, x2, y2;
     int bx1, by1, bx2, by2, *bx=0, *by=0, *ax=0, *ay=0;
@@ -1886,7 +1886,7 @@ bool Schematic::aligning(int Mode)
  * \brief Schematic::distributeHorizontal sort selection horizontally
  * \return True if sorted
  */
-bool Schematic::distributeHorizontal()
+bool SchematicView::distributeHorizontal()
 {
     int x1, y1, x2, y2;
     int bx1, by1, bx2, by2;
@@ -2001,7 +2001,7 @@ bool Schematic::distributeHorizontal()
  * \brief Schematic::distributeVertical sort selection vertically.
  * \return True if sorted
  */
-bool Schematic::distributeVertical()
+bool SchematicView::distributeVertical()
 {
     int x1, y1, x2, y2;
     int bx1, by1, bx2, by2;
@@ -2112,7 +2112,7 @@ bool Schematic::distributeVertical()
 
 // Finds the correct number for power sources, subcircuit ports and
 // digital sources and sets them accordingly.
-void Schematic::setComponentNumber(Component *c)
+void SchematicView::setComponentNumber(Component *c)
 {
     Property *pp = c->Props.getFirst();
     if(!pp) return;
@@ -2144,7 +2144,7 @@ void Schematic::setComponentNumber(Component *c)
 }
 
 // ---------------------------------------------------
-void Schematic::insertComponentNodes(Component *c, bool noOptimize)
+void SchematicView::insertComponentNodes(Component *c, bool noOptimize)
 {
     // simulation components do not have ports
     if (c->Ports.empty()) return;
@@ -2184,7 +2184,7 @@ void Schematic::insertComponentNodes(Component *c, bool noOptimize)
 
 // ---------------------------------------------------
 // Used for example in moving components.
-void Schematic::insertRawComponent(Component *c, bool noOptimize)
+void SchematicView::insertRawComponent(Component *c, bool noOptimize)
 {
     // connect every node of component to corresponding schematic node
     insertComponentNodes(c, noOptimize);
@@ -2204,7 +2204,7 @@ void Schematic::insertRawComponent(Component *c, bool noOptimize)
 }
 
 // ---------------------------------------------------
-void Schematic::recreateComponent(Component *Comp)
+void SchematicView::recreateComponent(Component *Comp)
 {
 
     WireLabel **plMem=0, **pl;
@@ -2267,7 +2267,7 @@ void Schematic::recreateComponent(Component *Comp)
 }
 
 // ---------------------------------------------------
-void Schematic::insertComponent(Component *c)
+void SchematicView::insertComponent(Component *c)
 {
     // connect every node of component to corresponding schematic node
     insertComponentNodes(c, false);
@@ -2309,7 +2309,7 @@ void Schematic::insertComponent(Component *c)
 
 // ---------------------------------------------------
 /// \bug avoid linear search, pass rubberband selection or arbitrary list of selected items
-void Schematic::activateCompsWithinRect(int x1, int y1, int x2, int y2)
+void SchematicView::activateCompsWithinRect(int x1, int y1, int x2, int y2)
 {
     bool changed = false;
     int  cx1, cy1, cx2, cy2, a;
@@ -2355,7 +2355,7 @@ void Schematic::activateCompsWithinRect(int x1, int y1, int x2, int y2)
 
 // ---------------------------------------------------
 /// \bug avoid linear search, pass item under mouse event directly
-bool Schematic::activateSpecifiedComponent(int x, int y)
+bool SchematicView::activateSpecifiedComponent(int x, int y)
 {
     int x1, y1, x2, y2, a;
     for(Component *pc = Components->first(); pc != 0; pc = Components->next())
@@ -2388,7 +2388,7 @@ bool Schematic::activateSpecifiedComponent(int x, int y)
 }
 
 // ---------------------------------------------------
-bool Schematic::activateSelectedComponents()
+bool SchematicView::activateSelectedComponents()
 {
     int a;
     bool sel = false;
@@ -2421,7 +2421,7 @@ bool Schematic::activateSelectedComponents()
 
 // ---------------------------------------------------
 // Sets the component ports anew. Used after rotate, mirror etc.
-void Schematic::setCompPorts(Component *pc)
+void SchematicView::setCompPorts(Component *pc)
 {
     WireLabel *pl;
     Q3PtrList<WireLabel> LabelCache;
@@ -2460,7 +2460,7 @@ void Schematic::setCompPorts(Component *pc)
 // ---------------------------------------------------
 // Returns a pointer of the component on whose text x/y points.
 /// \bug replace with itemAt, find parent of label
-Component* Schematic::selectCompText(int x_, int y_, int& w, int& h)
+Component* SchematicView::selectCompText(int x_, int y_, int& w, int& h)
 {
     int a, b, dx, dy;
     for(Component *pc = Components->first(); pc != 0; pc = Components->next())
@@ -2483,7 +2483,7 @@ Component* Schematic::selectCompText(int x_, int y_, int& w, int& h)
 }
 
 // ---------------------------------------------------
-Component* Schematic::searchSelSubcircuit()
+Component* SchematicView::searchSelSubcircuit()
 {
     Component *sub=0;
     // test all components
@@ -2503,7 +2503,7 @@ Component* Schematic::searchSelSubcircuit()
 
 // ---------------------------------------------------
 // Deletes the component 'c'.
-void Schematic::deleteComp(Component *c)
+void SchematicView::deleteComp(Component *c)
 {
     // delete all port connections
     foreach(Port *pn, c->Ports)
@@ -2527,7 +2527,7 @@ void Schematic::deleteComp(Component *c)
 }
 
 // ---------------------------------------------------
-int Schematic::copyComponents(int& x1, int& y1, int& x2, int& y2,
+int SchematicView::copyComponents(int& x1, int& y1, int& x2, int& y2,
                               QList<Element *> *ElementCache)
 {
     Component *pc;
@@ -2571,7 +2571,7 @@ int Schematic::copyComponents(int& x1, int& y1, int& x2, int& y2,
 }
 
 // ---------------------------------------------------
-void Schematic::copyComponents2(int& x1, int& y1, int& x2, int& y2,
+void SchematicView::copyComponents2(int& x1, int& y1, int& x2, int& y2,
                                 QList<Element *> *ElementCache)
 {
     Component *pc;
@@ -2616,7 +2616,7 @@ void Schematic::copyComponents2(int& x1, int& y1, int& x2, int& y2,
 
 // Test, if wire connects wire line with more than one label and delete
 // all further labels. Also delete all labels if wire line is grounded.
-void Schematic::oneLabel(Node *n1)
+void SchematicView::oneLabel(Node *n1)
 {
     Wire *pw;
     Node *pn, *pNode;
@@ -2691,7 +2691,7 @@ void Schematic::oneLabel(Node *n1)
 }
 
 // ---------------------------------------------------
-int Schematic::placeNodeLabel(WireLabel *pl)
+int SchematicView::placeNodeLabel(WireLabel *pl)
 {
     Node *pn;
     int x = pl->cx;
@@ -2725,7 +2725,7 @@ int Schematic::placeNodeLabel(WireLabel *pl)
 // ---------------------------------------------------
 // Test, if wire line is already labeled and returns a pointer to the
 // labeled element.
-Element* Schematic::getWireLabel(Node *pn_)
+Element* SchematicView::getWireLabel(Node *pn_)
 {
     Wire *pw;
     Node *pn, *pNode;
@@ -2765,7 +2765,7 @@ Element* Schematic::getWireLabel(Node *pn_)
 
 // ---------------------------------------------------
 // Inserts a node label.
-void Schematic::insertNodeLabel(WireLabel *pl)
+void SchematicView::insertNodeLabel(WireLabel *pl)
 {
     if(placeNodeLabel(pl) != -1)
         return;
@@ -2792,7 +2792,7 @@ void Schematic::insertNodeLabel(WireLabel *pl)
 }
 
 // ---------------------------------------------------
-void Schematic::copyLabels(int& x1, int& y1, int& x2, int& y2,
+void SchematicView::copyLabels(int& x1, int& y1, int& x2, int& y2,
                            QList<Element *> *ElementCache)
 {
     WireLabel *pl;
@@ -2834,7 +2834,7 @@ void Schematic::copyLabels(int& x1, int& y1, int& x2, int& y2,
    ******************************************************************* */
 
 // ---------------------------------------------------
-void Schematic::copyPaintings(int& x1, int& y1, int& x2, int& y2,
+void SchematicView::copyPaintings(int& x1, int& y1, int& x2, int& y2,
                               QList<Element *> *ElementCache)
 {
     Painting *pp;

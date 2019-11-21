@@ -108,7 +108,7 @@ void qucsMessageOutput(QtMsgType type, const QMessageLogContext &, const QString
  */
 void attach(const char* what);
 
-Schematic *openSchematic(QString schematic)
+SchematicView *openSchematic(QString schematic)
 {
   qDebug() << "*** try to load schematic :" << schematic;
 
@@ -129,7 +129,7 @@ Schematic *openSchematic(QString schematic)
   Module::registerModules ();
 
   // new schematic from file
-  Schematic *sch = new Schematic(0, schematic);
+  SchematicView *sch = new SchematicView(0, schematic);
 
   // load schematic file if possible
   if(!sch->loadDocument()) {
@@ -142,7 +142,7 @@ Schematic *openSchematic(QString schematic)
 
 int doNetlist(QString schematic, QString netlist)
 {
-  Schematic *sch = openSchematic(schematic);
+  SchematicView *sch = openSchematic(schematic);
   if (sch == NULL) {
     return 1;
   }
@@ -203,7 +203,7 @@ int doNetlist(QString schematic, QString netlist)
 int doPrint(QString schematic, QString printFile,
     QString page, int dpi, QString color, QString orientation)
 {
-  Schematic *sch = openSchematic(schematic);
+  SchematicView *sch = openSchematic(schematic);
   if (sch == NULL) {
     return 1;
   }

@@ -77,7 +77,7 @@ MouseActions::~MouseActions()
 }
 
 // -----------------------------------------------------------
-bool MouseActions::pasteElements(Schematic *Doc)
+bool MouseActions::pasteElements(SchematicView *Doc)
 {
   QClipboard *cb = QApplication::clipboard();   // get system clipboard
   QString s = cb->text(QClipboard::Clipboard);
@@ -122,7 +122,7 @@ bool MouseActions::pasteElements(Schematic *Doc)
 }
 
 // -----------------------------------------------------------
-void MouseActions::editLabel(Schematic *Doc, WireLabel *pl)
+void MouseActions::editLabel(SchematicView *Doc, WireLabel *pl)
 {
   LabelDialog *Dia = new LabelDialog(pl, Doc);
   int Result = Dia->exec();
@@ -158,7 +158,7 @@ void MouseActions::editLabel(Schematic *Doc, WireLabel *pl)
 
 // -----------------------------------------------------------
 // Reinserts all elements (moved by the user) back into the schematic.
-void MouseActions::endElementMoving(Schematic *Doc, Q3PtrList<Element> *movElements)
+void MouseActions::endElementMoving(SchematicView *Doc, Q3PtrList<Element> *movElements)
 {
   Element *pe;
   for(pe = movElements->first(); pe!=0; pe = movElements->next()) {
@@ -268,7 +268,7 @@ void MouseActions::moveElements(Q3PtrList<Element> *movElements, int x, int y)
  * When mouse moves over the scene, the Element must be added and
  * updated acordingly.
  */
-void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveElement(SchematicView *Doc, QMouseEvent *Event)
 {
   if(selElem == 0) return;
 
@@ -349,7 +349,7 @@ static void paintGhostLineV(Schematic *Doc, int fx, int fy, int fyy){
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveWire2(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveWire2(SchematicView *Doc, QMouseEvent *Event)
 {
   TODO("check MMoveWire2");
   QPointF pos = Doc->mapToScene(Event->pos());
@@ -381,7 +381,7 @@ void MouseActions::MMoveWire2(Schematic *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveWire1(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveWire1(SchematicView *Doc, QMouseEvent *Event)
 {
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx3 = pos.x();
@@ -403,7 +403,7 @@ void MouseActions::MMoveWire1(Schematic *Doc, QMouseEvent *Event)
  * Relative to first mouse press location stored in MAx1, MAy1.
  * Box size is set on MAx2, MAy2.
  */
-void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveSelect(SchematicView *Doc, QMouseEvent *Event)
 {
   //qDebug() << "MMoveSelect " << "select area";
   QPointF pos = Doc->mapToScene(Event->pos());
@@ -420,7 +420,7 @@ void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void MouseActions::MMoveResizePainting(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveResizePainting(SchematicView *Doc, QMouseEvent *Event)
 {
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx1 = pos.x();
@@ -442,7 +442,7 @@ void MouseActions::MMoveResizePainting(Schematic *Doc, QMouseEvent *Event)
  *  Handle center of other Elements in movingElements.
  *  Set next Move and Release actions.
  */
-void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveMoving(SchematicView *Doc, QMouseEvent *Event)
 {
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx2 = pos.x();
@@ -494,7 +494,7 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
 
 // -----------------------------------------------------------
 // Moves components by keeping the mouse button pressed.
-void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveMoving2(SchematicView *Doc, QMouseEvent *Event)
 {
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx2 = pos.x();
@@ -534,7 +534,7 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMovePaste(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMovePaste(SchematicView *Doc, QMouseEvent *Event)
 {
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx1 = pos.x();
@@ -549,7 +549,7 @@ void MouseActions::MMovePaste(Schematic *Doc, QMouseEvent *Event)
 
 // -----------------------------------------------------------
 // Moves scroll bar of diagram (e.g. tabular) according the mouse cursor.
-void MouseActions::MMoveScrollBar(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveScrollBar(SchematicView *Doc, QMouseEvent *Event)
 {
   TabDiagram *d = (TabDiagram*)focusElement;
   QPointF pos = Doc->mapToScene(Event->pos());
@@ -576,7 +576,7 @@ void MouseActions::MMoveScrollBar(Schematic *Doc, QMouseEvent *Event)
 * @param Doc Schematic document
 * @param Event
 */
-void MouseActions::MMoveDelete(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveDelete(SchematicView *Doc, QMouseEvent *Event)
 {
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx3 = pos.x();
@@ -592,7 +592,7 @@ void MouseActions::MMoveDelete(Schematic *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveLabel(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveLabel(SchematicView *Doc, QMouseEvent *Event)
 {
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx3 = pos.x();
@@ -608,7 +608,7 @@ void MouseActions::MMoveLabel(Schematic *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveMarker(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveMarker(SchematicView *Doc, QMouseEvent *Event)
 {
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx3 = pos.x();
@@ -624,7 +624,7 @@ void MouseActions::MMoveMarker(Schematic *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveMirrorY(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveMirrorY(SchematicView *Doc, QMouseEvent *Event)
 {
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx3 = pos.x();
@@ -640,7 +640,7 @@ void MouseActions::MMoveMirrorY(Schematic *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveMirrorX(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveMirrorX(SchematicView *Doc, QMouseEvent *Event)
 {
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx3 = pos.x();
@@ -655,7 +655,7 @@ void MouseActions::MMoveMirrorX(Schematic *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveRotate(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveRotate(SchematicView *Doc, QMouseEvent *Event)
 {
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx3 = pos.x();
@@ -671,7 +671,7 @@ void MouseActions::MMoveRotate(Schematic *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveActivate(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveActivate(SchematicView *Doc, QMouseEvent *Event)
 {
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx3 = pos.x();
@@ -687,7 +687,7 @@ void MouseActions::MMoveActivate(Schematic *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveOnGrid(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveOnGrid(SchematicView *Doc, QMouseEvent *Event)
 {
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx3 = pos.x();
@@ -703,7 +703,7 @@ void MouseActions::MMoveOnGrid(Schematic *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveMoveTextB(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveMoveTextB(SchematicView *Doc, QMouseEvent *Event)
 {
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx3 = pos.x();
@@ -719,7 +719,7 @@ void MouseActions::MMoveMoveTextB(Schematic *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveMoveText(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveMoveText(SchematicView *Doc, QMouseEvent *Event)
 {
   QPointF pos = Doc->mapToScene(Event->pos());
   int newX = pos.x();
@@ -744,7 +744,7 @@ void MouseActions::MMoveMoveText(Schematic *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveZoomIn(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MMoveZoomIn(SchematicView *Doc, QMouseEvent *Event)
 {
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx3  = pos.x();
@@ -770,7 +770,7 @@ void MouseActions::MMoveZoomIn(Schematic *Doc, QMouseEvent *Event)
  * Terminal action, called from mousePressEvent show right button menu.
  * The right button menu is defined based on the location of the Event.
  */
-void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::rightPressMenu(SchematicView *Doc, QMouseEvent *Event)
 {
   focusElement = dynamic_cast<Element*>(Doc->scene->itemAt(Event->pos(), QTransform()));
 
@@ -880,7 +880,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
  * \param Event
  * Handle selection of nodes and nodelabels
  */
-void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent* Event)
+void MouseActions::MPressLabel(SchematicView *Doc, QMouseEvent* Event)
 {
   QPointF pos = Doc->mapToScene(Event->pos());
   float x = pos.x();
@@ -978,7 +978,7 @@ void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent* Event)
  * If no focusElement, set next actions to create selection box.
  * If focusElement, set next actions to move selected element.
  */
-void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MPressSelect(SchematicView *Doc, QMouseEvent *Event)
 {
   bool Ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
@@ -1149,7 +1149,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
  *
  * Delete item under mouse press location.
  */
-void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent* Event)
+void MouseActions::MPressDelete(SchematicView *Doc, QMouseEvent* Event)
 {
   Element *pe = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(pe)
@@ -1169,7 +1169,7 @@ void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent* Event)
  * \param Event
  * Handle (De)Activate action, cycle component under mouse event to open, active or shorted.
  */
-void MouseActions::MPressActivate(Schematic *Doc, QMouseEvent* Event)
+void MouseActions::MPressActivate(SchematicView *Doc, QMouseEvent* Event)
 {
   /// \todo check if MAx1 MAy1 are bein reused (ie during Move or Release)
   QPointF pos = Doc->mapToScene(Event->pos());
@@ -1195,7 +1195,7 @@ void MouseActions::MPressActivate(Schematic *Doc, QMouseEvent* Event)
  * \param fY
  * Mirror components with ports vertically
  */
-void MouseActions::MPressMirrorX(Schematic *Doc, QMouseEvent* Event)
+void MouseActions::MPressMirrorX(SchematicView *Doc, QMouseEvent* Event)
 {
   // no use in mirroring wires or diagrams
   Component *c = dynamic_cast<Component*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
@@ -1223,7 +1223,7 @@ void MouseActions::MPressMirrorX(Schematic *Doc, QMouseEvent* Event)
  * \param fY
  * Mirror components with ports horizontally
  */
-void MouseActions::MPressMirrorY(Schematic *Doc, QMouseEvent* Event)
+void MouseActions::MPressMirrorY(SchematicView *Doc, QMouseEvent* Event)
 {
   // no use in mirroring wires or diagrams
   Component *c = dynamic_cast<Component*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
@@ -1252,7 +1252,7 @@ void MouseActions::MPressMirrorY(Schematic *Doc, QMouseEvent* Event)
  *
  * Rotate element under mouse press location
  */
-void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
+void MouseActions::MPressRotate(SchematicView *Doc, QMouseEvent* Event)
 {
   Element *e = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(e == 0) return;
@@ -1319,7 +1319,7 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
  * Handle the insertion of Elements, component, diagram and painting
  * into the schematic.
  */
-void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MPressElement(SchematicView *Doc, QMouseEvent *Event)
 {
   if(selElem == 0) return;
 
@@ -1459,7 +1459,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event)
  * @param fX
  * @param fY
  */
-void MouseActions::MPressWire1(Schematic *Doc, QMouseEvent* Event)
+void MouseActions::MPressWire1(SchematicView *Doc, QMouseEvent* Event)
 {
   TODO("check MPressWire1");
   //Doc->PostPaintEvent (_DotLine);
@@ -1499,7 +1499,7 @@ void MouseActions::MPressWire1(Schematic *Doc, QMouseEvent* Event)
  * @param fX
  * @param fY
  */
-void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MPressWire2(SchematicView *Doc, QMouseEvent *Event)
 {
   TODO("check MPressWire2");
   // needed inside the case
@@ -1595,7 +1595,7 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event)
  * \param Event
  *  Terminal handler, called for setting a marker on a diagram's graph
  */
-void MouseActions::MPressMarker(Schematic *Doc, QMouseEvent* Event)
+void MouseActions::MPressMarker(SchematicView *Doc, QMouseEvent* Event)
 {
   QPointF pos = Doc->mapToScene(Event->pos());
   float x = pos.x();
@@ -1619,7 +1619,7 @@ void MouseActions::MPressMarker(Schematic *Doc, QMouseEvent* Event)
  * \param Event
  * Called when press combined with set on grid action in use.
  */
-void MouseActions::MPressOnGrid(Schematic *Doc, QMouseEvent* Event)
+void MouseActions::MPressOnGrid(SchematicView *Doc, QMouseEvent* Event)
 {
   Element *pe = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(pe)
@@ -1646,7 +1646,7 @@ void MouseActions::MPressOnGrid(Schematic *Doc, QMouseEvent* Event)
  * \param Event
  * Handle press for moving component text label
  */
-void MouseActions::MPressMoveText(Schematic *Doc, QMouseEvent* Event)
+void MouseActions::MPressMoveText(SchematicView *Doc, QMouseEvent* Event)
 {
   /// \bug get rid of MA?? position temp vars and return by reference
   QPointF pos = Doc->mapToScene(Event->pos());
@@ -1668,7 +1668,7 @@ void MouseActions::MPressMoveText(Schematic *Doc, QMouseEvent* Event)
 }
 
 // -----------------------------------------------------------
-void MouseActions::MPressZoomIn(Schematic *Doc, QMouseEvent* Event)
+void MouseActions::MPressZoomIn(SchematicView *Doc, QMouseEvent* Event)
 {
   qDebug() << "zoom into box";
   QPointF pos = Doc->mapToScene(Event->pos());
@@ -1693,7 +1693,7 @@ void MouseActions::MPressZoomIn(Schematic *Doc, QMouseEvent* Event)
 // **********    Functions for serving mouse button releasing   **********
 // **********                                                   **********
 // ***********************************************************************
-void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MReleaseSelect(SchematicView *Doc, QMouseEvent *Event)
 {
   bool ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
@@ -1717,7 +1717,7 @@ void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
 
 // -----------------------------------------------------------
 // Is called after the rectangle for selection is released.
-void MouseActions::MReleaseSelect2(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MReleaseSelect2(SchematicView *Doc, QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
 
@@ -1742,7 +1742,7 @@ void MouseActions::MReleaseSelect2(Schematic *Doc, QMouseEvent *Event)
  * \param Event
  * On relase, cycle elements inside press and release events bounding box.
  */
-void MouseActions::MReleaseActivate(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MReleaseActivate(SchematicView *Doc, QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
 
@@ -1761,7 +1761,7 @@ void MouseActions::MReleaseActivate(Schematic *Doc, QMouseEvent *Event)
 
 // -----------------------------------------------------------
 // Is called after moving selected elements.
-void MouseActions::MReleaseMoving(Schematic *Doc, QMouseEvent*)
+void MouseActions::MReleaseMoving(SchematicView *Doc, QMouseEvent*)
 {
   // Allow all mouse buttons, because for others than the left one,
   // a menu has already created.
@@ -1775,7 +1775,7 @@ void MouseActions::MReleaseMoving(Schematic *Doc, QMouseEvent*)
 }
 
 // -----------------------------------------------------------
-void MouseActions::MReleaseResizeDiagram(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MReleaseResizeDiagram(SchematicView *Doc, QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
 
@@ -1828,7 +1828,7 @@ void MouseActions::MReleaseResizeDiagram(Schematic *Doc, QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void MouseActions::MReleaseResizePainting(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MReleaseResizePainting(SchematicView *Doc, QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
 
@@ -1844,7 +1844,7 @@ void MouseActions::MReleaseResizePainting(Schematic *Doc, QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void MouseActions::paintElementsScheme(Schematic *p)
+void MouseActions::paintElementsScheme(SchematicView *p)
 {
   TODO("is paintElementsScheme needed?")
   //Element *pe;
@@ -1854,7 +1854,7 @@ void MouseActions::paintElementsScheme(Schematic *p)
 }
 
 // -----------------------------------------------------------
-void MouseActions::moveElements(Schematic *Doc, int& x1, int& y1)
+void MouseActions::moveElements(SchematicView *Doc, int& x1, int& y1)
 {
   Element *pe;
   Doc->setOnGrid(x1, y1);
@@ -1870,7 +1870,7 @@ void MouseActions::moveElements(Schematic *Doc, int& x1, int& y1)
 }
 
 // -----------------------------------------------------------
-void MouseActions::rotateElements(Schematic *Doc, int& x1, int& y1)
+void MouseActions::rotateElements(SchematicView *Doc, int& x1, int& y1)
 {
   int x2, y2;
   Element *pe;
@@ -1907,7 +1907,7 @@ void MouseActions::rotateElements(Schematic *Doc, int& x1, int& y1)
 }
 
 // -----------------------------------------------------------
-void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MReleasePaste(SchematicView *Doc, QMouseEvent *Event)
 {
   int x1, y1, x2, y2, rot;
   QFileInfo Info(Doc->DocName);
@@ -1989,7 +1989,7 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void MouseActions::MReleaseMoveText(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MReleaseMoveText(SchematicView *Doc, QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
 
@@ -2012,7 +2012,7 @@ void MouseActions::MReleaseMoveText(Schematic *Doc, QMouseEvent *Event)
  * Handle zoom in for mouse press or small selection box, center on event position.
  * Handle zoom fit to rectangle. Limited to 500% zoom in.
  */
-void MouseActions::MReleaseZoomIn(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MReleaseZoomIn(SchematicView *Doc, QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
 
@@ -2085,7 +2085,7 @@ void MouseActions::MReleaseZoomIn(Schematic *Doc, QMouseEvent *Event)
 // **********    Functions for mouse button double clicking     **********
 // **********                                                   **********
 // ***********************************************************************
-void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::editElement(SchematicView *Doc, QMouseEvent *Event)
 {
 //    qDebug() << "+double click, editElement";
 
@@ -2213,7 +2213,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void MouseActions::MDoubleClickSelect(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MDoubleClickSelect(SchematicView *Doc, QMouseEvent *Event)
 {
   Doc->releaseKeyboard();  // allow keyboard inputs again
   QucsMain->editText->setHidden(true);
@@ -2226,7 +2226,7 @@ void MouseActions::MDoubleClickSelect(Schematic *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MDoubleClickWire2(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MDoubleClickWire2(SchematicView *Doc, QMouseEvent *Event)
 {
 
   MPressWire2(Doc, Event);

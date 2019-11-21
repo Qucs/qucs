@@ -40,7 +40,7 @@ ImageWriter::~ImageWriter()
 void
 ImageWriter::noGuiPrint(QWidget *doc, QString printFile, QString color)
 {
-  Schematic *sch = static_cast<Schematic*>(doc);
+  SchematicView *sch = static_cast<SchematicView*>(doc);
   const int bourder = 30;
   int w,h,wsel,hsel,
       xmin, ymin, xmin_sel, ymin_sel;
@@ -124,7 +124,7 @@ QString ImageWriter::getLastSavedFile()
 // FIXME: should check if filename exists and not silently overwrite
 int ImageWriter::print(QWidget *doc)
 {
-  Schematic *sch = static_cast<Schematic*>(doc);
+  SchematicView *sch = static_cast<SchematicView*>(doc);
   const int border = 30;
 
   int w,h,wsel,hsel,
@@ -279,7 +279,7 @@ int ImageWriter::print(QWidget *doc)
   return status;
 }
 
-void ImageWriter::getSchWidthAndHeight(Schematic *sch, int &w, int &h, int &xmin, int &ymin)
+void ImageWriter::getSchWidthAndHeight(SchematicView *sch, int &w, int &h, int &xmin, int &ymin)
 {
     int xmax,ymax;
     sch->sizeOfAll(xmin,ymin,xmax,ymax);
@@ -295,7 +295,7 @@ void ImageWriter::getSchWidthAndHeight(Schematic *sch, int &w, int &h, int &xmin
     }
 }
 
-void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel, int& xmin_sel_, int& ymin_sel_)
+void ImageWriter::getSelAreaWidthAndHeight(SchematicView *sch, int &wsel, int &hsel, int& xmin_sel_, int& ymin_sel_)
 {
     int xmin= INT_MAX,
         ymin= INT_MAX,

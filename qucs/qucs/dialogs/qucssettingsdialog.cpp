@@ -534,7 +534,7 @@ void QucsSettingsDialog::slotApply()
           if(QucsApp::isTextDocument(w)) {
             vp = ((TextDoc*)w)->viewport();
           } else {
-            vp = ((Schematic*)w)->viewport();
+            vp = ((SchematicView*)w)->viewport();
           }
           misc::setWidgetBackgroundColor(vp, QucsSettings.BGColor);
         }

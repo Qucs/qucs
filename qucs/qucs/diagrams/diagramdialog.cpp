@@ -113,7 +113,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   Graphs.setAutoDelete(true);
   copyDiagramGraphs();   // make a copy of all graphs
   if(parent){
-	  const Schematic* s = dynamic_cast<const Schematic*>(parent);
+	  const SchematicView* s = dynamic_cast<const SchematicView*>(parent);
 	  assert(s);
 	  QFileInfo Info(s->DocName);
 	  defaultDataSet = Info.path() + QDir::separator() + s->DataSet;
@@ -1195,7 +1195,7 @@ void DiagramDialog::slotApply()
   Graphs.setAutoDelete(true);
 
   Diag->loadGraphData(defaultDataSet);
-  ((Schematic*)parent())->viewport()->repaint();
+  ((SchematicView*)parent())->viewport()->repaint();
   copyDiagramGraphs();
   if(changed) transfer = true;   // changes have been applied ?
 }

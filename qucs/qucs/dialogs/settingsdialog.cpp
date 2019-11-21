@@ -43,7 +43,7 @@
 #include <QModelIndex>
 #include <QDebug>
 
-SettingsDialog::SettingsDialog(Schematic *Doc_)
+SettingsDialog::SettingsDialog(SchematicView *Doc_)
     : QDialog(Doc_) 
 {
     Doc = Doc_;

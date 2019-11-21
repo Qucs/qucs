@@ -211,7 +211,7 @@ bool EllipseArc::resizeTouched(float fX, float fY, float len)
 
 // --------------------------------------------------------------------------
 // Mouse move action during resize.
-void EllipseArc::MouseResizeMoving(int x, int y, Schematic *p)
+void EllipseArc::MouseResizeMoving(int x, int y, SchematicView *p)
 {
   switch(State) {
     case 0: x2 = x-cx; y2 = y-cy; // lower right corner
@@ -231,8 +231,8 @@ void EllipseArc::MouseResizeMoving(int x, int y, Schematic *p)
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
 void EllipseArc::MouseMoving(
-	Schematic *paintScale, int fx, int fy, int gx, int gy,
-	Schematic *p, int x, int y, bool drawn)
+	SchematicView *paintScale, int fx, int fy, int gx, int gy,
+	SchematicView *p, int x, int y, bool drawn)
 {
   switch(State) {
     case 0 :

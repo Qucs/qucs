@@ -251,7 +251,7 @@ bool Rectangle::resizeTouched(float fX, float fY, float len)
 
 // --------------------------------------------------------------------------
 // Mouse move action during resize.
-void Rectangle::MouseResizeMoving(int x, int y, Schematic *p)
+void Rectangle::MouseResizeMoving(int x, int y, SchematicView *p)
 {
   switch(State) {
     case 0: x2 = x-cx; y2 = y-cy; // lower right corner
@@ -271,8 +271,8 @@ void Rectangle::MouseResizeMoving(int x, int y, Schematic *p)
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
 void Rectangle::MouseMoving(
-	Schematic *paintScale, int, int, int gx, int gy,
-	Schematic *p, int x, int y, bool drawn)
+	SchematicView *paintScale, int, int, int gx, int gy,
+	SchematicView *p, int x, int y, bool drawn)
 {
   if(State > 0) { // after first press
     x2 = gx;

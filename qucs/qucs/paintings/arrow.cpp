@@ -292,7 +292,7 @@ bool Arrow::resizeTouched(float fX, float fY, float len)
 
 // --------------------------------------------------------------------------
 // Mouse move action during resize.
-void Arrow::MouseResizeMoving(int x, int y, Schematic *p)
+void Arrow::MouseResizeMoving(int x, int y, SchematicView *p)
 {
   if(State == 1) { x2 += cx-x; y2 += cy-y; cx = x; cy = y; } // moving shaft
   else { x2 = x-cx;  y2 = y-cy; }  // moving head
@@ -318,8 +318,8 @@ void Arrow::calcArrowHead()
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
 void Arrow::MouseMoving(
-	Schematic *paintScale, int, int, int gx, int gy,
-	Schematic *p, int x, int y, bool drawn)
+	SchematicView *paintScale, int, int, int gx, int gy,
+	SchematicView *p, int x, int y, bool drawn)
 {
   if(State > 0) { // after first press
     // update end point

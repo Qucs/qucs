@@ -21,7 +21,7 @@
 #include "element.h"
 #include "qt_compat.h"
 
-class Schematic;
+class SchematicView;
 class QString;
 class QPen;
 class ComponentDialog;
@@ -32,7 +32,7 @@ public:
   virtual ~Component() {};
 
   virtual Component* newOne();
-  virtual void recreate(Schematic*) {};
+  virtual void recreate(SchematicView*) {};
   QString getNetlist();
   QString get_VHDL_Code(int);
   QString get_Verilog_Code(int);
@@ -67,8 +67,8 @@ public:
 
   virtual QString getSubcircuitFile() { return ""; }
   // set the pointer scematic associated with the component
-  virtual void setSchematic (Schematic* p) { containingSchematic = p; }
-  virtual Schematic* getSchematic () {return containingSchematic; }
+  virtual void setSchematic (SchematicView* p) { containingSchematic = p; }
+  virtual SchematicView* getSchematic () {return containingSchematic; }
   // do somehting with buttons. can sb think of a more descriptive name?
   virtual void dialgButtStuff(ComponentDialog&)const;
 
@@ -133,7 +133,7 @@ protected:
 
   void copyComponent(Component*);
   Property * getProperty(const QString&);
-  Schematic* containingSchematic;
+  SchematicView* containingSchematic;
 };
 
 
@@ -142,7 +142,7 @@ public:
   MultiViewComponent() {};
   virtual ~MultiViewComponent() {};
 
-  void recreate(Schematic*);
+  void recreate(SchematicView*);
 
 protected:
   virtual void createSymbol() {};
@@ -161,6 +161,6 @@ protected:
 };
 
 // prototype of independent function
-Component* getComponentFromName(QString& Line, Schematic* p=NULL);
+Component* getComponentFromName(QString& Line, SchematicView* p=NULL);
 
 #endif

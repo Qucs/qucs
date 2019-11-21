@@ -21,7 +21,7 @@
 #include <QDialog>
 #include <QVBoxLayout>
 
-class Schematic;
+class SchematicView;
 class QLineEdit;
 class QTextEdit;
 class QCheckBox;
@@ -35,7 +35,7 @@ class QModelIndex;
 class SettingsDialog : public QDialog  {
    Q_OBJECT
 public:
-  SettingsDialog(Schematic*);
+  SettingsDialog(SchematicView*);
  ~SettingsDialog();
 
 private slots:
@@ -46,7 +46,7 @@ private slots:
   void slotApply();
 
 public:
-  Schematic *Doc;
+  SchematicView *Doc;
 
   QComboBox *Combo_Frame;
   QTextEdit *Input_Frame0;

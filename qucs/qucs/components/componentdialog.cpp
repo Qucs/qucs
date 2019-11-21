@@ -37,7 +37,7 @@
 #include <QKeyEvent>
 #include <QDebug>
 
-ComponentDialog::ComponentDialog(Component *c, Schematic *d)
+ComponentDialog::ComponentDialog(Component *c, SchematicView *d)
 			: QDialog(d)
 {
   resize(450, 250);

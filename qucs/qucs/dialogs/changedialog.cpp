@@ -34,7 +34,7 @@
 #include <QDebug>
 
 
-ChangeDialog::ChangeDialog(Schematic *Doc_)
+ChangeDialog::ChangeDialog(SchematicView *Doc_)
 			: QDialog(Doc_) 
 {
   Doc = Doc_;

@@ -33,7 +33,7 @@ class QProgressBar;
 class QProcess;
 class QFile;
 class Component;
-class Schematic;
+class SchematicView;
 
 // #define SPEEDUP_PROGRESSBAR
 
@@ -77,7 +77,7 @@ private:
   void FinishSimulation(int);
   void nextSPICE();
   void startSimulator();
-  Component * findOptimization(Schematic *);
+  Component * findOptimization(SchematicView *);
 
 public:
   QWidget *DocWidget;

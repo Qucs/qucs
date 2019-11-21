@@ -46,7 +46,7 @@
 class Node;
 class QPainter;
 class WireLabel;
-class Schematic;
+class SchematicView;
 
 struct Line {
   Line(int _x1, int _y1, int _x2, int _y2, QPen _style)

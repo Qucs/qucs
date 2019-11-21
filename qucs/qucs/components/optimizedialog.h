@@ -21,7 +21,7 @@
 #include <QDialog>
 #include <QRegExp>
 
-class Schematic;
+class SchematicView;
 class Optimize_Sim;
 class QTableWidget;
 class QCheckBox;
@@ -36,7 +36,7 @@ class QIntValidator;
 class OptimizeDialog : public QDialog  {
 Q_OBJECT
 public:
-  OptimizeDialog(Optimize_Sim*, Schematic*);
+  OptimizeDialog(Optimize_Sim*, SchematicView*);
  ~OptimizeDialog();
 
 private slots:
@@ -66,7 +66,7 @@ private:
 
 public:
   Optimize_Sim *Comp;
-  Schematic *Doc;
+  SchematicView *Doc;
   bool changed;
   int numPrec;
 

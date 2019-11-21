@@ -37,7 +37,7 @@
 #include <QDebug>
 
 
-SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
+SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, SchematicView *d)
     : QDialog(d)
 {
   App = App_; // pointer to main application

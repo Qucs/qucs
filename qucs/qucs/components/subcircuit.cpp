@@ -92,7 +92,7 @@ void Subcircuit::createSymbol()
     }
   }
   else {
-    No = Schematic::testFile(FileName);
+    No = SchematicView::testFile(FileName);
     if(No < 0)  No = 0;
 
     Ports.clear();

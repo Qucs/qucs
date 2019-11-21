@@ -32,7 +32,7 @@
  */
 
 class QucsDoc;
-class Schematic;
+class SchematicView;
 class TextDoc;
 class SimMessage;
 class MouseActions;
@@ -133,8 +133,8 @@ bool saveApplSettings();
 
 // function pointers used with mouse actions handling
 /// function pointers used to handle mouse actions
-typedef bool (Schematic::*pToggleFunc) ();
-typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
+typedef bool (SchematicView::*pToggleFunc) ();
+typedef void (MouseActions::*pMouseFunc) (SchematicView*, QMouseEvent*);
 
 class QucsFileSystemModel : public QFileSystemModel {
   Q_OBJECT
@@ -175,10 +175,10 @@ public:
   SearchDialog *SearchDia;  // global in order to keep values
 
   // current mouse methods
-  void (MouseActions::*MouseMoveAction) (Schematic*, QMouseEvent*);
-  void (MouseActions::*MousePressAction) (Schematic*, QMouseEvent*);
-  void (MouseActions::*MouseDoubleClickAction) (Schematic*, QMouseEvent*);
-  void (MouseActions::*MouseReleaseAction) (Schematic*, QMouseEvent*);
+  void (MouseActions::*MouseMoveAction) (SchematicView*, QMouseEvent*);
+  void (MouseActions::*MousePressAction) (SchematicView*, QMouseEvent*);
+  void (MouseActions::*MouseDoubleClickAction) (SchematicView*, QMouseEvent*);
+  void (MouseActions::*MouseReleaseAction) (SchematicView*, QMouseEvent*);
 
 protected:
   void closeEvent(QCloseEvent*);
@@ -316,7 +316,7 @@ private:
   void fillComboBox(bool);
   void switchSchematicDoc(bool);
   void switchEditMode(bool);
-  void changeSchematicSymbolMode(Schematic*);
+  void changeSchematicSymbolMode(SchematicView*);
   bool recurRemove(const QString &);
   void closeFile(int);
 
@@ -486,7 +486,7 @@ class ContextMenuTabWidget : public QTabWidget
   Q_OBJECT
 public:
   ContextMenuTabWidget(QucsApp *parent = 0);
-  Schematic *createEmptySchematic(const QString &name);
+  SchematicView *createEmptySchematic(const QString &name);
   TextDoc *createEmptyTextDoc(const QString &name);
   void setSaveIcon(bool state=true, int index=-1);
 public slots:

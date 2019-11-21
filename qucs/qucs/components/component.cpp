@@ -419,7 +419,7 @@ void Component::paintScheme(QPainter *painter)
     QFont newFont = painter->font();
 
     float Scale =
-          ((Schematic*)QucsMain->DocumentTab->currentWidget())->Scale;
+          ((SchematicView*)QucsMain->DocumentTab->currentWidget())->Scale;
     newFont.setPointSizeF(float(Scale) * QucsSettings.largeFontSize);
     newFont.setWeight(QFont::DemiBold);
     // here the font metric is already the screen metric, since the font
@@ -852,7 +852,7 @@ QString Component::get_VHDL_Code(int NumPorts)
 // save a component
 // FIXME: part of corresponding SchematicSerializer implementation
 // BUG: c must be const (cannot because of QT3)
-void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
+void SchematicView::saveComponent(QTextStream& s, Component /*const*/ * c) const
 {
 #if XML
   QDomDocument doc;
@@ -920,7 +920,7 @@ void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
 }
 // -------------------------------------------------------
 // FIXME: must be Component* SchematicParser::loadComponent(Stream&, Component*);
-Component* Schematic::loadComponent(const QString& _s, Component* c) const
+Component* SchematicView::loadComponent(const QString& _s, Component* c) const
 {
   qDebug() << "load" << _s;
   bool ok;
@@ -1447,7 +1447,7 @@ void Component::copyComponent(Component *pc)
 // ********          Functions of class MultiViewComponent        ********
 // ********                                                       ********
 // ***********************************************************************
-void MultiViewComponent::recreate(Schematic *Doc)
+void MultiViewComponent::recreate(SchematicView *Doc)
 {
   if(Doc) {
     Doc->Components->setAutoDelete(false);
@@ -1742,7 +1742,7 @@ void GateComponent::createSymbol()
 // FIXME:
 // must be Component* SomeParserClass::getComponent(QString& Line)
 // better: Component* SomeParserClass::getComponent(SomeDataStream& s)
-Component* getComponentFromName(QString& Line, Schematic* p)
+Component* getComponentFromName(QString& Line, SchematicView* p)
 {
   Component *c = 0;
 

@@ -84,7 +84,7 @@ PrinterWriter::noGuiPrint(QWidget *doc, QString printFile,
     return;
   }
 
-  static_cast<Schematic *>(doc)->print(Printer, &Painter,
+  static_cast<SchematicView *>(doc)->print(Printer, &Painter,
     Printer->printRange() == QPrinter::AllPages, fitToPage);
 }
 
@@ -118,7 +118,7 @@ PrinterWriter::print(QWidget *doc)
           break;
         }
 
-        static_cast<Schematic *>(doc)->print(Printer, &Painter,
+        static_cast<SchematicView *>(doc)->print(Printer, &Painter,
                 Printer->printRange() == QPrinter::AllPages, fitToPage);
         if (z > 1 && !Printer->newPage()) {
           delete dialog;

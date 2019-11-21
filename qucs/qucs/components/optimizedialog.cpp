@@ -46,7 +46,7 @@
 #include <QInputDialog>
 
 
-OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
+OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, SchematicView *d_)
 			: QDialog(d_)
 {
   Comp = c_;

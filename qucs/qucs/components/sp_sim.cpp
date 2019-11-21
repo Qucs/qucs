@@ -84,7 +84,7 @@ Element* SP_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-void SP_Sim::recreate(Schematic*)
+void SP_Sim::recreate(SchematicView*)
 {
   Property *pp = Props.first();
   if((pp->Value == "list") || (pp->Value == "const")) {

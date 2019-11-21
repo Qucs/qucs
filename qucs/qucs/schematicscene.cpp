@@ -53,7 +53,7 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
   int GridY = 10;
 
   // Get associated view, assume single view
-  Schematic *v = static_cast<Schematic *>(views().at(0));
+  SchematicView *v = static_cast<SchematicView *>(views().at(0));
 
   // When scaling, adjust visible grid spacing
   float scale = v->Scale;

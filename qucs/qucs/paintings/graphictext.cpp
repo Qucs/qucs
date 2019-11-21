@@ -218,8 +218,8 @@ QString GraphicText::saveJSON()
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
 void GraphicText::MouseMoving(
-	Schematic*, int, int, int gx, int gy,
-	Schematic *p, int x, int y, bool drawn)
+	SchematicView*, int, int, int gx, int gy,
+	SchematicView *p, int x, int y, bool drawn)
 {
   ///\todo x1 = x;
   //y1 = y;

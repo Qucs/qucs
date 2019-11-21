@@ -443,7 +443,7 @@ void LibraryDialog::slotSave()
            << description
            << "\n  </Description>\n";
 
-    Schematic *Doc = new Schematic(0, QucsSettings.QucsWorkDir.filePath(SelectedNames[i]));
+    SchematicView *Doc = new SchematicView(0, QucsSettings.QucsWorkDir.filePath(SelectedNames[i]));
     ErrText->insertPlainText(tr("Loading subcircuit \"%1\".\n").arg(SelectedNames[i]));
     if(!Doc->loadDocument()) {  // load document if possible
         delete Doc;

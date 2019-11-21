@@ -65,7 +65,7 @@ QValidator::State mySpinBox::validate ( QString & text, int & pos ) const
 /// \param Doc_
 /// This dialog is launched when the Calculate DC bias is requested
 /// for a project which contains a sweep.
-SweepDialog::SweepDialog(Schematic *Doc_)
+SweepDialog::SweepDialog(SchematicView *Doc_)
 			: QDialog(Doc_)
 {
   qDebug() << "SweepDialog::SweepDialog()";
