@@ -295,10 +295,8 @@ void SchematicView::setChanged(bool c, bool fillStack, char Op)
  */
 void SchematicView::mouseMoveEvent(QMouseEvent *Event)
 {
-  QPointF pos = mapToScene(Event->pos().x(), Event->pos().y());
+  QPoint pos = mapToScene(Event->pos()).toPoint();
   emit signalCursorPosChanged(pos.x(), pos.y());
-  if(App->MouseMoveAction)
-    (App->view->*(App->MouseMoveAction))(this, Event);
 
   // propagate event to parent class
   // needed for HoverEvent to work
