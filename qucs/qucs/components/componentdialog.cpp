@@ -17,7 +17,7 @@
 
 #include "componentdialog.h"
 #include "qucs.h"
-#include "schematic.h"
+#include "schematicview.h"
 #include "misc.h"
 
 #include <cmath>

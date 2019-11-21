@@ -46,7 +46,7 @@
 
 #include "librarydialog.h"
 #include "qucs.h"
-#include "schematic.h"
+#include "schematicview.h"
 
 extern SubMap FileList;
 

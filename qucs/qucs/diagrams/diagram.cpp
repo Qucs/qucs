@@ -38,7 +38,6 @@
 #include "diagram.h"
 #include "qucs.h"
 #include "mnemo.h"
-#include "schematic.h"
 
 #include "rect3ddiagram.h"
 #include "misc.h"

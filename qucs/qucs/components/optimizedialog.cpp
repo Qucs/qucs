@@ -24,7 +24,7 @@
 #include "qucs.h"
 #include "optimizedialog.h"
 #include "opt_sim.h"
-#include "schematic.h"
+#include "schematicview.h"
 
 #include <QLabel>
 #include <QCheckBox>

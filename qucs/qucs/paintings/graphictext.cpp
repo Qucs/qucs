@@ -18,7 +18,7 @@
 #include "mnemo.h"
 #include "graphictext.h"
 #include "graphictextdialog.h"
-#include "schematic.h"
+#include "schematicview.h"
 #include "misc.h"
 
 #include <QPainter>

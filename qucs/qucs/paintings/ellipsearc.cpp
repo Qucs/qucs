@@ -18,7 +18,7 @@
 #include "filldialog.h"
 #include "qucs.h"
 #include "misc.h"
-#include "schematic.h"
+#include "schematicview.h"
 
 #include <QPainter>
 #include <QPushButton>

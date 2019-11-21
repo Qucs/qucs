@@ -14,7 +14,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "ecvs.h"
-#include "schematic.h"
+#include "node.h"
 
 ecvs::ecvs()
 {

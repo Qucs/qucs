@@ -45,8 +45,8 @@
 #include <QUndoStack>
 
 #include "qucs.h"
+#include "schematicview.h"
 #include "schematicscene.h"
-#include "schematic.h"
 #include "node.h"
 #include "textdoc.h"
 #include "mouseactions.h"

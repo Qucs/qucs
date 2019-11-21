@@ -20,7 +20,7 @@
 #include "node.h"
 #include "qucs.h"
 #include "mnemo.h"
-#include "schematic.h"
+#include "schematicview.h"
 #include "schematicscene.h"
 
 #include <QGridLayout>

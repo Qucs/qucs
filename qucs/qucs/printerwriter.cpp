@@ -21,7 +21,7 @@
  */
 
 #include "printerwriter.h"
-#include "schematic.h"
+#include "schematicview.h"
 #include "textdoc.h"
 #include "qucs.h"
 

@@ -46,7 +46,7 @@
 #include "qucs.h"
 #include "qucsdoc.h"
 #include "textdoc.h"
-#include "schematic.h"
+#include "schematicview.h"
 #include "schematicscene.h"
 #include "mouseactions.h"
 #include "messagedock.h"

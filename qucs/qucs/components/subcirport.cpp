@@ -16,8 +16,6 @@
  ***************************************************************************/
 #include "subcirport.h"
 #include "node.h"
-#include "schematic.h"
-
 
 SubCirPort::SubCirPort()
 {

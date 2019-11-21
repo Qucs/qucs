@@ -180,7 +180,7 @@ ADD_SUBDIRECTORY( tests )
 SET(QUCS_SRCS
   attach.cpp
   element.cpp	octave_window.cpp	qucsdoc.cpp
-  textdoc.cpp schematic.cpp
+  textdoc.cpp schematicview.cpp
   mnemo.cpp	qucs.cpp
   module.cpp	schematic_element.cpp	wire.cpp
   mouseactions.cpp qucs_actions.cpp	schematic_file.cpp
@@ -208,7 +208,7 @@ octave_window.h
 platform.h
 qucs.h
 qucsdoc.h
-schematic.h
+schematicview.h
 syntax.h
 textdoc.h
 wire.h
@@ -226,7 +226,7 @@ undocommands.h
 SET(QUCS_MOC_HDRS
   octave_window.h
   qucs.h
-  schematic.h
+  schematicview.h
   schematicscene.h
   textdoc.h
   messagedock.h

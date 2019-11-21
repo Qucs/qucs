@@ -16,8 +16,6 @@
  ***************************************************************************/
 #include "resistor.h"
 #include "node.h"
-#include "schematic.h"
-
 
 Resistor::Resistor(bool european)
 {

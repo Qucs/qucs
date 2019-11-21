@@ -44,7 +44,7 @@ using namespace std;
 #include "module.h"
 #include "qucs.h"
 #include "textdoc.h"
-#include "schematic.h"
+#include "schematicview.h"
 #include "components/opt_sim.h"
 #include "components/vhdlfile.h"
 #include "misc.h"

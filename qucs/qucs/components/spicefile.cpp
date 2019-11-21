@@ -32,7 +32,7 @@
 #include <QStatusBar>
 
 #include "spicefile.h"
-#include "schematic.h"
+#include "schematicview.h"
 #include "qucs.h"
 #include "misc.h"
 

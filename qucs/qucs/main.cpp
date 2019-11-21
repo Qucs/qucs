@@ -45,7 +45,7 @@
 #include "printerwriter.h"
 #include "imagewriter.h"
 
-#include "schematic.h"
+#include "schematicview.h"
 #include "module.h"
 #include "misc.h"
 

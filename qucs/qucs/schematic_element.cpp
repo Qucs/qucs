@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#include "schematic.h"
+#include "schematicview.h"
 #include "qt_compat.h"
 #include <QDebug>
 

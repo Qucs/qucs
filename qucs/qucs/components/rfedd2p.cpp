@@ -16,11 +16,9 @@
  ***************************************************************************/
 #include "rfedd2p.h"
 #include "qucs.h"
-#include "schematic.h"
+#include "node.h"
 
 #include <QFileInfo>
-
-
 
 RFedd2P::RFedd2P()
 {

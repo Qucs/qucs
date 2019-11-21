@@ -22,7 +22,7 @@
  */
 
 #include "projectView.h"
-#include "schematic.h"
+#include "schematicview.h"
 
 #include <QString>
 #include <QStringList>

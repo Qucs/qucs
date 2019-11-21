@@ -16,7 +16,6 @@
  ***************************************************************************/
 #include "qucs.h"
 #include "portsymbol.h"
-#include "schematic.h"
 
 #include <QPainter>
 

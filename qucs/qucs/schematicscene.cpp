@@ -22,7 +22,7 @@
  */
 
 #include "schematicscene.h"
-#include "schematic.h"
+#include "schematicview.h"
 
 #include <QPainter>
 

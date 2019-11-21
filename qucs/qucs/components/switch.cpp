@@ -16,8 +16,6 @@
  ***************************************************************************/
 #include "switch.h"
 #include "node.h"
-#include "schematic.h"
-
 
 Switch::Switch()
 {

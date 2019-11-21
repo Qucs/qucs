@@ -16,7 +16,7 @@
  ***************************************************************************/
 #include "changedialog.h"
 #include "node.h"
-#include "schematic.h"
+#include "schematicview.h"
 #include "components/component.h"
 
 #include <QLabel>

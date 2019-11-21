@@ -32,7 +32,7 @@
 
 #include "qucs.h"
 #include "node.h"
-#include "schematic.h"
+#include "schematicview.h"
 #include "schematicscene.h"
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"

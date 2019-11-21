@@ -17,7 +17,7 @@
 #include "spicedialog.h"
 #include "spicefile.h"
 #include "qucs.h"
-#include "schematic.h"
+#include "schematicview.h"
 
 #include <QLabel>
 #include <QHBoxLayout>

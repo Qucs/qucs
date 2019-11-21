@@ -45,7 +45,7 @@
 
 #include "projectView.h"
 #include "qucs.h"
-#include "schematic.h"
+#include "schematicview.h"
 #include "schematicscene.h"
 #include "textdoc.h"
 #include "mouseactions.h"

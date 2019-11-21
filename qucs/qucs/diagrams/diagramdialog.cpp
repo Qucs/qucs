@@ -21,7 +21,7 @@
 */
 #include "diagramdialog.h"
 #include "qucs.h"
-#include "schematic.h"
+#include "schematicview.h"
 #include "rect3ddiagram.h"
 #include "misc.h"
 

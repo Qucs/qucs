@@ -1,6 +1,6 @@
 
 #include "qucs.h"
-#include "schematic.h"
+#include "schematicview.h"
 #include "SchematicTests.h"
 
 #include <QTest>

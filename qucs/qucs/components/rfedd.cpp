@@ -16,10 +16,9 @@
  ***************************************************************************/
 #include "rfedd.h"
 #include "qucs.h"
-#include "schematic.h"
+#include "node.h"
 
 #include <QFileInfo>
-
 
 RFedd::RFedd()
 {

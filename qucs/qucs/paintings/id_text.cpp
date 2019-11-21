@@ -16,7 +16,6 @@
  ***************************************************************************/
 #include "id_text.h"
 #include "id_dialog.h"
-#include "schematic.h"
 
 #include <QPainter>
 

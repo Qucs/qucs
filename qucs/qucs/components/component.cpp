@@ -21,7 +21,7 @@
 #include "components.h"
 #include "node.h"
 #include "qucs.h"
-#include "schematic.h"
+#include "schematicview.h"
 #include "module.h"
 #include "misc.h"
 

@@ -20,7 +20,7 @@
  *
  */
 
-#include "schematic.h"
+#include "schematicview.h"
 #include "imagewriter.h"
 #include "dialogs/exportdialog.h"
 

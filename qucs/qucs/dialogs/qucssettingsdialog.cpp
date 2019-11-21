@@ -33,7 +33,7 @@
 #include <QVBoxLayout>
 #include "qucs.h"
 #include "textdoc.h"
-#include "schematic.h"
+#include "schematicview.h"
 #include "misc.h"
 
 #include <QWidget>

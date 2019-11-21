@@ -16,8 +16,8 @@
  ***************************************************************************/
 #include "spembed.h"
 #include "qucs.h"
-#include "schematic.h"
 #include "misc.h"
+#include "node.h"
 
 #include <QFileInfo>
 

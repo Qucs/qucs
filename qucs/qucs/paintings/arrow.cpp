@@ -22,7 +22,7 @@
 
 #include "arrow.h"
 #include "arrowdialog.h"
-#include "schematic.h"
+#include "schematicview.h"
 #include "misc.h"
 #include <cmath>
 
