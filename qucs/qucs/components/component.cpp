@@ -45,7 +45,6 @@
  */
 Component::Component() : Element()
 {
-  qDebug() << "constructing Componet" << this;
   ElemType = isAnalogComponent;
 
   mirroredX = false;
