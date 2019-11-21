@@ -21,8 +21,8 @@
  *
  */
 
-#ifndef SCHEMATIC_H
-#define SCHEMATIC_H
+#ifndef SCHEMATICVIEW_H
+#define SCHEMATICVIEW_H
 
 // maybe in another place...
 #ifdef NDEBUG
