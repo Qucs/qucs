@@ -34,6 +34,7 @@
 #include "diagrams/tabdiagram.h"
 #include "diagrams/timingdiagram.h"
 #include "dialogs/labeldialog.h"
+#include "undocommands.h"
 
 #include <QTextStream>
 #include "qt_compat.h"
@@ -281,6 +282,7 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
   // while moving, add selElem only once to scene
   if(!drawn) {
     Doc->scene->addItem(selElem);
+    
     drawn = true;
     selElem->drawScheme = true;
   }
@@ -297,7 +299,7 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
   // Default to Component or Diagram
   // move Element with the cursor
   selElem->setCenter(gx, gy);
-
+  Doc->scene->update();
 }
 
 
@@ -1346,11 +1348,10 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event)
 	gx = x;
 	gy = y;
 	Doc->setOnGrid(gx, gy);
-	Comp->setPos(gx,gy);
-	Doc->scene->addItem(Comp);
-	/// clear flag, paint whole Element, not just outline
+    /// clear flag, paint whole Element, not just outline
 	Comp->drawScheme = false;
-
+    Doc->undoStack->push( new AddItemCommand(Comp, QPoint(gx,gy), Doc->scene) );
+    
 	// Note: insertCopmponents does increment  name1 -> name2
 	Doc->insertComponent(Comp);
 	Comp->textSize(x2, y2);
