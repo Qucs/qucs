@@ -300,7 +300,6 @@ void SchematicView::setChanged(bool c, bool fillStack, char Op)
  * Event handler for mouse movements over the View.
  * Send signal to update the cursor position on the status bar.
  * Cursor position is reported in Scene coordinates.
- * Update current mouse move (function pointer) handler.
  */
 void SchematicView::mouseMoveEvent(QMouseEvent *Event)
 {
@@ -323,7 +322,6 @@ void SchematicView::mouseMoveEvent(QMouseEvent *Event)
  * Event handler for mouse press.
  * Set current mouse press (function pointer) handler.
  * Pass position in Scene coordinates to handler.
- * Set next mouse release handler.
  */
 void SchematicView::mousePressEvent(QMouseEvent *Event)
 {
