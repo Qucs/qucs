@@ -80,3 +80,15 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
           painter->drawPoint(x, y);
 }
 
+void SchematicScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+}
+
+void SchematicScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+}
+
+void SchematicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+}
+
