@@ -25,6 +25,7 @@
 #include "schematicview.h"
 #include "undocommands.h"
 #include "components.h"
+#include "qucs.h"
 
 #include <QPainter>
 #include <QUndoStack>
@@ -88,13 +89,36 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 void SchematicScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
   // need to figure out a way to get the element selected for insert
-  Element *foo = new Equation();
-  QPointF d = event->scenePos();
-  undoStack->push( new AddItemCommand(foo, d, this) );
+  QPointF pos = event->scenePos();
+  SchematicView *view = static_cast<SchematicView *>(views().at(0));
+  Element *chosen = view->App->chosenElement;
+
+  Component *comp = static_cast<Component *>(chosen);
+
+  // insert copy
+  Component *copy = comp->newOne();
+  undoStack->push( new AddItemCommand(copy, pos, this) );
 }
 
 void SchematicScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
+  QPointF pos = event->scenePos();
+  SchematicView *view = static_cast<SchematicView *>(views().at(0));
+  Element *chosen = view->App->chosenElement;
+
+  if (chosen){
+    if (!this->items().contains(chosen)) {
+      addItem(chosen);
+    }
+    int x = pos.x();
+    int y = pos.y();
+    int gx = x;
+    int gy = y;
+    view->setOnGrid(gx, gy);
+    chosen->setPos(gx,gy);
+    chosen->drawScheme = true;
+  }
+  update();
 }
 
 void SchematicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
