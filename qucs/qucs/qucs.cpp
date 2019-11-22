@@ -141,6 +141,8 @@ QucsApp::QucsApp()
   select->setChecked(true);  // switch on the 'select' action
   switchSchematicDoc(true);  // "untitled" document is schematic
 
+  chosenElement = 0; // no component/painting is selected
+
   lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
 
   // load documents given as command line arguments
@@ -811,20 +813,16 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
 
   // remove from scene and delete previously selected elements
-  if(view->selElem != 0)  {
-      Doc->scene->removeItem(view->selElem);
-      delete view->selElem;
+  if(chosenElement != 0)  {
+      Doc->scene->removeItem(chosenElement);
+      delete chosenElement;
   }
-  view->selElem  = 0;   // no component/diagram/painting selected
+  chosenElement = 0;   // no component/diagram/painting selected
 
   if(item == 0) {   // mouse button pressed not over an item ?
     CompComps->clearSelection();  // deselect component in ViewList
     return;
   }
-
-  if(view->drawn)
-    ((QGraphicsView*)DocumentTab->currentWidget())->viewport()->update();
-  view->drawn = false;
 
   // toggle last toolbar button off
   if(activeAction) {
@@ -833,11 +831,6 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
     activeAction->blockSignals(false);
   }
   activeAction = 0;
-
-  MouseMoveAction = &MouseActions::MMoveElement;
-  MousePressAction = &MouseActions::MPressElement;
-  MouseReleaseAction = 0;
-  MouseDoubleClickAction = 0;
 
   pInfoFunc Infos = 0;
   pInfoVAFunc InfosVA = 0;
@@ -865,14 +858,14 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   Infos = mod->info;
   if (Infos) {
     // static component
-    view->selElem = (*mod->info) (CompName, CompFile_cptr, true);
+    chosenElement = (*mod->info) (CompName, CompFile_cptr, true);
   } else {
     // Verilog-A component
     InfosVA = mod->infoVA;
     // get JSON file out of item name on widgetitem
     QString filename = Module::vaComponents[name];
     if (InfosVA) {
-      view->selElem = (*InfosVA) (CompName, CompFile_qstr, true, filename);
+      chosenElement = (*InfosVA) (CompName, CompFile_qstr, true, filename);
     }
   }
 

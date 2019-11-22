@@ -43,6 +43,7 @@ class ProjectView;
 class ContextMenuTabWidget;
 class VersionTriplet;
 class QucsApp;
+class Element;
 
 class QLabel;
 class QAction;
@@ -173,6 +174,9 @@ public:
 
   QLineEdit *editText;  // for edit component properties on schematic
   SearchDialog *SearchDia;  // global in order to keep values
+
+  /// \brief Item chosen for insertion
+  Element *chosenElement;
 
   // current mouse methods
   void (MouseActions::*MouseMoveAction) (SchematicView*, QMouseEvent*);
