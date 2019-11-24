@@ -334,7 +334,6 @@ void SchematicView::mousePressEvent(QMouseEvent *Event)
     Event->accept();
     return;
   }
-  
   QGraphicsView::mousePressEvent(Event);
 }
 
@@ -345,7 +344,6 @@ void SchematicView::mouseReleaseEvent(QMouseEvent *Event)
     panMode = false;
     setCursor(Qt::ArrowCursor);
   }
-  
   QGraphicsView::mouseReleaseEvent(Event);
 }
 
@@ -1359,7 +1357,7 @@ int SchematicView::adjustPortNumbers()
 // ---------------------------------------------------
 bool SchematicView::undo()
 {
-  undoStack->undo();
+  scene->undoStack->undo();
   setChanged(true, false);
   return true;
 }
@@ -1367,7 +1365,7 @@ bool SchematicView::undo()
 // ---------------------------------------------------
 bool SchematicView::redo()
 {
-  undoStack->redo();
+  scene->undoStack->redo();
   setChanged(true, false);
   return true;
 }

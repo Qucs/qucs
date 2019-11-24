@@ -34,7 +34,7 @@ public:
   SchematicScene (QObject *);
   virtual ~SchematicScene ();
 
-private:
+public:
   QUndoStack *undoStack;
 
 protected:
