@@ -65,8 +65,11 @@ void wprobe::saveOperatingPoints (void) {
 
 void wprobe::calcOperatingPoints (void) {
 //Reading the current and voltage values to calculate power values
-  nr_double_t VAr = real  ((getV (NODE_3) - getV (NODE_4)) * getJ (NODE_1));
-  nr_double_t VAi = -imag ((getV (NODE_3) - getV (NODE_4)) * getJ (NODE_1));
+  nr_complex_t Vw = getV (NODE_3) - getV (NODE_4);
+  nr_complex_t Iw = getJ (VSRC_1);
+  nr_complex_t Sw = Vw * conj (Iw);
+  nr_double_t VAr = real (Sw);
+  nr_double_t VAi = imag (Sw);
   setOperatingPoint ("VAr", VAr);
   setOperatingPoint ("VAi", VAi);
 
