@@ -60,29 +60,19 @@ void wprobe::saveOperatingPoints (void) {
   nr_double_t Vi = imag (getV (NODE_1) - getV (NODE_2));
   // operating points as for the vprobe
   setOperatingPoint ("Vr", Vr);
-  setOperatingPoint ("Vi", Vi); //This section works just like a voltmeter
-}
+  setOperatingPoint ("Vi", Vi);
 
-//For specific information regarding The Power triangle and Power factor:
-//https://en.wikipedia.org/wiki/Power_factor#Definition_and_calculation
-
-void wprobe::calcOperatingPoints (void) {
-//Reading the current and voltage values to calculate power values
+  // read current and voltage values to calculate power values
   nr_complex_t Vw = getV (NODE_1) - getV (NODE_2);
   nr_complex_t Iw = getJ (VSRC_1);
   nr_complex_t Sw = Vw * conj (Iw);
-  nr_double_t VAr = real (Sw);
-  nr_double_t VAi = imag (Sw);
-  setOperatingPoint ("VAr", VAr);
-  setOperatingPoint ("VAi", VAi);
-
-  nr_double_t P = VAr;
+  // save P and Q instead of just S since operating points cannot hold complex values
+  nr_double_t P = real (Sw);
+  nr_double_t Q = imag (Sw);
   setOperatingPoint ("P", P);
-
-  nr_double_t Q = VAi;
   setOperatingPoint ("Q", Q);
 //Power Factor calculation
-  setOperatingPoint ("PF", P/std::sqrt(P*P+VAi*VAi));
+  setOperatingPoint ("PF", P/std::sqrt(P*P+Q*Q));
 }
 
 void wprobe::initTR (void) {

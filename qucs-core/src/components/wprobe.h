@@ -34,7 +34,6 @@ class wprobe : public qucs::circuit
   void initAC (void);
   void initTR (void);
   void saveOperatingPoints (void);
-  void calcOperatingPoints (void);
 };
 
 #endif /* __WPROBE_H__ */
