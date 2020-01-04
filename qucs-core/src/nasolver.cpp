@@ -1369,28 +1369,26 @@ void nasolver<nr_type_t>::saveResults (const std::string &volts, const std::stri
             saveVariable (n, nr_complex_t (c->getOperatingPoint ("Vr"),
             c->getOperatingPoint ("Vi")), f);
 
-	    //add watt probe data
+            // add watt probe data
             // this is a big hack due to (ab)using the operating points
-	    for (auto ops: c->getOperatingPoints ())
-            {
-		//It will only get values if none of the strings are 0
-		//Once again most of this is adapted from Vprobe and Iprobe
-                operatingpoint &p = ops.second;
-	        if (strcmp(p.getName(), "Vi") == 0) continue;
-                if (strcmp(p.getName(), "VAi") == 0) continue;
-	        if (strcmp(p.getName(), "Vr") == 0) continue;
-		if (strcmp(p.getName(), "VAr") == 0)
-		{
-              	    std::string n = createOP(c->getName(), "S");
-              	    saveVariable (n, nr_complex_t (c->getOperatingPoint ("VAr"),
-                    c->getOperatingPoint ("VAi")), f);
-		   continue;
-		}
-           	
-           	std::string n = createOP(c->getName(), p.getName());
-           	saveVariable(n, p.getValue(), f);
-       	    }	    
-	    	    
+            // for specific information regarding The Power triangle and Power factor:
+            //    https://en.wikipedia.org/wiki/Power_factor#Definition_and_calculation
+            if (c->hasOperatingPoint("P") && c->hasOperatingPoint("Q")) {
+                nr_double_t P = c->getOperatingPoint ("P");
+                nr_double_t Q = c->getOperatingPoint ("Q");
+                // save complex power
+                std::string n = createOP(c->getName(), "S");
+                saveVariable (n, nr_complex_t (P, Q), f);
+                // save active power
+                n = createOP(c->getName(), "P");
+                saveVariable(n, P, f);
+                // save reactive power
+                n = createOP(c->getName(), "Q");
+                saveVariable(n, Q, f);
+                // save power factor
+                n = createOP(c->getName(), "PF");
+                saveVariable(n, P / std::sqrt(P*P + Q*Q), f);
+            }
         }
     }
 

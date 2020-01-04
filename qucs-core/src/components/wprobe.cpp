@@ -71,8 +71,6 @@ void wprobe::saveOperatingPoints (void) {
   nr_double_t Q = imag (Sw);
   setOperatingPoint ("P", P);
   setOperatingPoint ("Q", Q);
-//Power Factor calculation
-  setOperatingPoint ("PF", P/std::sqrt(P*P+Q*Q));
 }
 
 void wprobe::initTR (void) {
