@@ -100,6 +100,9 @@ void SchematicScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
     Component *copy = comp->newOne();
     undoStack->push( new AddItemCommand(copy, pos, this) );
   }
+
+  // propagate to be able to drag items
+  QGraphicsScene::mousePressEvent(event);
 }
 
 void SchematicScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -121,6 +124,9 @@ void SchematicScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     chosen->drawScheme = true;
   }
   update();
+
+  // propagate to reach hoverEnterEvent
+  QGraphicsScene::mouseMoveEvent(event);
 }
 
 void SchematicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
