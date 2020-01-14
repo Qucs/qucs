@@ -249,6 +249,11 @@ void QucsApp::slotEscape()
 {
     select->setChecked(true); // trigger slotSelect
     slotSearchClear();
+
+    // delete previously selected component
+    if(QucsMain->chosenElement)
+        delete QucsMain->chosenElement;
+    QucsMain->chosenElement = 0;
 }
 
 // -----------------------------------------------------------------------
@@ -421,16 +426,12 @@ void QucsApp::slotInsertEquation(bool on)
   }
   activeAction = insEquation;
 
-  if(view->selElem)
-    delete view->selElem;  // delete previously selected component
+  // delete previously selected component
+  if(QucsMain->chosenElement)
+    delete QucsMain->chosenElement;
 
-  view->selElem = new Equation();
-
-  SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
-  if(view->drawn) Doc->viewport()->update();
-  view->drawn = false;
-  MouseMoveAction = &MouseActions::MMoveElement;
-  MousePressAction = &MouseActions::MPressElement;
+  // pick new
+  QucsMain->chosenElement = new Equation();
 }
 
 // -----------------------------------------------------------------------
@@ -454,16 +455,12 @@ void QucsApp::slotInsertGround(bool on)
   }
   activeAction = insGround;
 
-  if(view->selElem)
-    delete view->selElem;  // delete previously selected component
+  // delete previously selected component
+  if(QucsMain->chosenElement)
+    delete QucsMain->chosenElement;
 
-  view->selElem = new Ground();
-
-  SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
-  if(view->drawn) Doc->viewport()->update();
-  view->drawn = false;
-  MouseMoveAction = &MouseActions::MMoveElement;
-  MousePressAction = &MouseActions::MPressElement;
+  // pick new
+  QucsMain->chosenElement = new Ground();
 }
 
 // -----------------------------------------------------------------------
@@ -487,16 +484,12 @@ void QucsApp::slotInsertPort(bool on)
   }
   activeAction = insPort;
 
-  if(view->selElem)
-    delete view->selElem;  // delete previously selected component
+  // delete previously selected component
+  if(QucsMain->chosenElement)
+    delete QucsMain->chosenElement;
 
-  view->selElem = new SubCirPort();
-
-  SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
-  if(view->drawn) Doc->viewport()->update();
-  view->drawn = false;
-  MouseMoveAction = &MouseActions::MMoveElement;
-  MousePressAction = &MouseActions::MPressElement;
+  // pick new
+  QucsMain->chosenElement = new SubCirPort();
 }
 
 // --------------------------------------------------------------
