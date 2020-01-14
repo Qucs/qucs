@@ -93,11 +93,13 @@ void SchematicScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
   SchematicView *view = static_cast<SchematicView *>(views().at(0));
   Element *chosen = view->App->chosenElement;
 
-  Component *comp = static_cast<Component *>(chosen);
+  if (chosen) {
+    Component *comp = static_cast<Component *>(chosen);
 
-  // insert copy
-  Component *copy = comp->newOne();
-  undoStack->push( new AddItemCommand(copy, pos, this) );
+    // insert copy
+    Component *copy = comp->newOne();
+    undoStack->push( new AddItemCommand(copy, pos, this) );
+  }
 }
 
 void SchematicScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
