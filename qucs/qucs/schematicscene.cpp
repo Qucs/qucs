@@ -26,6 +26,7 @@
 #include "undocommands.h"
 #include "components.h"
 #include "qucs.h"
+#include "misc.h"
 
 #include <QPainter>
 #include <QUndoStack>
@@ -88,6 +89,7 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 
 void SchematicScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+  TODO("trace");
   // need to figure out a way to get the element selected for insert
   QPointF pos = event->scenePos();
   SchematicView *view = static_cast<SchematicView *>(views().at(0));
@@ -131,5 +133,12 @@ void SchematicScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void SchematicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+  TODO("trace");
+
+}
+
+void SchematicScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+  TODO("trace");
 }
 

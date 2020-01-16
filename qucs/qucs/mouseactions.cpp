@@ -2087,11 +2087,11 @@ void MouseActions::MReleaseZoomIn(SchematicView *Doc, QMouseEvent *Event)
 // ***********************************************************************
 void MouseActions::editElement(SchematicView *Doc, QMouseEvent *Event)
 {
-//    qDebug() << "+double click, editElement";
+    qDebug() << "+double click, editElement";
 
   if(focusElement == 0) return;
 
-//  qDebug() << "+focusElement->Type" << focusElement->Type;
+  qDebug() << "+focusElement->Type" << focusElement->Type;
 
   Graph *pg;
   Component *c;

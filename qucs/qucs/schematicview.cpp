@@ -325,6 +325,7 @@ void SchematicView::mouseMoveEvent(QMouseEvent *Event)
  */
 void SchematicView::mousePressEvent(QMouseEvent *Event)
 {
+  TODO("trace");
   App->editText->setHidden(true); // disable text edit of component property
 
   if(Event->button() == Qt::MiddleButton) {
@@ -334,12 +335,17 @@ void SchematicView::mousePressEvent(QMouseEvent *Event)
     Event->accept();
     return;
   }
+
+  // press over element, set focus, needed by view->editElement()
+  QucsMain->view->focusElement = dynamic_cast<Element*>(this->scene->itemAt(this->mapToScene(Event->pos()), QTransform() ));
+
   QGraphicsView::mousePressEvent(Event);
 }
 
 // -----------------------------------------------------------
 void SchematicView::mouseReleaseEvent(QMouseEvent *Event)
 {
+  TODO("trace");
   if(Event->button() == Qt::MiddleButton) {
     panMode = false;
     setCursor(Qt::ArrowCursor);
@@ -350,9 +356,8 @@ void SchematicView::mouseReleaseEvent(QMouseEvent *Event)
 // -----------------------------------------------------------
 void SchematicView::mouseDoubleClickEvent(QMouseEvent *Event)
 {
-  TODO("check mouseDoubleClickEvent");
-  if(App->MouseDoubleClickAction)
-    (App->view->*(App->MouseDoubleClickAction))(this, Event);
+  TODO("trace");
+  QucsMain->view->MDoubleClickSelect(this, Event);
 }
 
 // -----------------------------------------------------------

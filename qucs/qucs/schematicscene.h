@@ -43,6 +43,7 @@ protected:
   void mousePressEvent(QGraphicsSceneMouseEvent *event);
   void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
   void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+  void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 };
 
 #endif /* SCHEMATICSCENE_H_ */
