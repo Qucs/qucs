@@ -87,10 +87,6 @@ ProjectView::init()
 {
   m_model->clear();
 
-  QStringList header;
-  header << tr("Content of %1").arg(m_projName) << tr("Note");
-  m_model->setHorizontalHeaderLabels(header);
-
   APPEND_ROW(m_model, tr("Datasets")     );
   APPEND_ROW(m_model, tr("Data Displays"));
   APPEND_ROW(m_model, tr("Verilog")      );
@@ -115,6 +111,11 @@ ProjectView::refresh()
   QStringList::iterator it;
   QString extName, fileName;
   QList<QStandardItem *> columnData;
+
+  // update project name in header as it may have changed
+  QStringList header;
+  header << tr("Content of %1").arg(m_projName) << tr("Note");
+  m_model->setHorizontalHeaderLabels(header);
 
   for (int i=0; i<m_model->rowCount(); i++) {
     // delete_childrens
