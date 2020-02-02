@@ -34,7 +34,16 @@ install:
   # Switch from SF to msys2.org (default, much faster)
   - bash -lc "pacman --noconfirm --sync pacman-mirrors"
   - bash -lc "pacman --noconfirm -S autoconf automake bison flex"
-  - bash -lc "pacman --noconfirm -S mingw-w64-$MARCH-qt4"
+  #- bash -lc "pacman --noconfirm -S mingw-w64-$MARCH-qt4"
+  # Qt4 was removed from MSYS2, see
+  #   https://github.com/msys2/MINGW-packages/issues/3881
+  #   and https://github.com/slowphil/texmacs-win-builder/issues/3 for the "fix"
+  #   copied below
+  # pacman no longer finds qt4 probably because of https://github.com/msys2/MINGW-packages/issues/3881
+  # nevertheless the binary still exists in the repo (for the moment)
+  # https://msys2.duckdns.org/repos
+  # https://wiki.archlinux.org/index.php/offline_installation_of_packages
+  - bash -lc "cd /var/cache/pacman/pkg && wget http://repo.msys2.org/mingw/$MARCH/mingw-w64-$MARCH-qt4-4.8.7-4-any.pkg.tar.xz && pacman --noconfirm -U mingw-w64-$MARCH-qt4-4.8.7-4-any.pkg.tar.xz"
 
   # Set compiler (64bit)
   - set "CC=/c/msys64/mingw%MBITS%/bin/gcc.exe"
