@@ -35,9 +35,9 @@ install:
   - bash -lc "pacman --version"
   - bash -lc "pacman -Q"
   # Switch from SF to msys2.org (default, much faster)
-  - bash -lc "pacman --noconfirm --sync pacman-mirrors"
-  - bash -lc "pacman --noconfirm -S autoconf automake bison flex"
-  #- bash -lc "pacman --noconfirm -S mingw-w64-$MARCH-qt4"
+  - bash -lc "pacman --noconfirm --needed --sync pacman-mirrors"
+  - bash -lc "pacman --noconfirm --needed -S autoconf automake bison flex"
+  #- bash -lc "pacman --noconfirm --needed -S mingw-w64-$MARCH-qt4"
   # Qt4 was removed from MSYS2, see
   #   https://github.com/msys2/MINGW-packages/issues/3881
   #   and https://github.com/slowphil/texmacs-win-builder/issues/3 for the "fix"
@@ -48,8 +48,10 @@ install:
   # https://wiki.archlinux.org/index.php/offline_installation_of_packages
   #
   # download package directly into the local pacman packages directory, cached by AppVeyor
+  # make sure pacman packages directory exists (may not be there if no packages downloaded yet)
+  - bash -lc "mkdir -p /var/cache/pacman/pkg"
   # use "no-clobber" option for wget since the file could/should already be in the cache
-  - bash -lc "cd /var/cache/pacman/pkg && wget -nc http://repo.msys2.org/mingw/$MARCH/mingw-w64-$MARCH-qt4-4.8.7-4-any.pkg.tar.xz && pacman --noconfirm -U mingw-w64-$MARCH-qt4-4.8.7-4-any.pkg.tar.xz"
+  - bash -lc "cd /var/cache/pacman/pkg && wget -nc http://repo.msys2.org/mingw/$MARCH/mingw-w64-$MARCH-qt4-4.8.7-4-any.pkg.tar.xz && pacman --noconfirm --needed -U mingw-w64-$MARCH-qt4-4.8.7-4-any.pkg.tar.xz"
 
   # Set compiler (64bit)
   - set "CC=/c/msys64/mingw%MBITS%/bin/gcc.exe"
