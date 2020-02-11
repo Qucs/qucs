@@ -19,7 +19,7 @@ dist: trusty
 sudo: false
 
 python:
-  - "2.7"
+  - "3.6"
 
 virtualenv:
   system_site_packages: true
@@ -95,7 +95,7 @@ matrix:
             - bison
             - qt@4 # from tap
             - adms # from tap
-            - python@2
+            - python@3
             - ccache
 
 # Set secure environment with encrypted string containing GIT_NAME, GIT_EMAIL and GH_TOKEN
@@ -138,6 +138,8 @@ install:
     fi
 
 before_script:
+  - brew ccache
+  - ls -la /usr/local/opt/ccache/libexec
   - ccache --version
   - ccache --zero-stats
 
