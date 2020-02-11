@@ -133,6 +133,8 @@ install:
       export PATH="/usr/local/opt/bison/bin:$PATH";
       pip2 install matplotlib;
       export PATH="/usr/local/opt/ccache/libexec:$PATH";
+      ls -la /usr/local/opt/ccache/libexec
+      find /usr/local -name ccache -ls
     fi
 
 before_script:
