@@ -247,7 +247,7 @@ if test "x$PKG_CONFIG" != "x"; then
       PKG_CHECK_MODULES([QTest], [${qt_name}Test])
 
       PKG_CHECK_MODULES([QT], [${qt_name}Core ${qt_name}Gui ${qt_name}Script ${qt_name}Svg ${qt_name}Xml Qt3Support], [
-        QT_CFLAGS="$QT_CFLAGS $QT_DEF -DQT_DEPRECATED_WARNINGS -DQT_THREAD_SUPPORT -D_REENTRANT"
+        QT_CFLAGS="$QT_CFLAGS $QT_DEF -DQT_DEPRECATED_WARNINGS -D_REENTRANT"
         case $host_os in
           *freebsd*) QT_LIBS="$QT_LIBS -pthread" ;;
           *mingw* | *msys*) QT_CFLAGS="$QT_CFLAGS -mthreads -DQT_DLL -DUNICODE" ;;
@@ -274,9 +274,17 @@ else
     QTDIR_lib_paths="$QTDIR/lib $QTDIR/lib64"
   fi
 
+  QT_CFLAGS="$QT_DEF -DQT3_SUPPORT -DQT_DEPRECATED_WARNINGS -D_REENTRANT"
+  [case $host_os in
+    *freebsd*)
+      QT_LIB="-lQtCore -lQtGui -lQtXml -lQtSvg -lQtScript -pthread" ;;
+    *mingw* | *msys*)
+      QT_LIB="-lQtCore4 -lQtGui4 -lQtXml4 -lQt3Support4 -lQtSvg4 -lQtScript4"
+      QT_CFLAGS="$QT_CFLAGS -mthreads -DQT_DLL -DUNICODE" ;;
+  esac]
+
   dnl Check include path to Qt.
   QT_INCLUDES=""
-  QT_VER=2
   AC_MSG_CHECKING([for Qt headers])
   paths="$QTDIR/include $QTDIR/include/qt4 \
     /usr/local/qt4/include /usr/include/qt4 \
@@ -285,79 +293,38 @@ else
     /usr/local/include/qt4"
   for path in $paths; do
     if test -f "$path/Qt/qapplication.h"; then
-      QT_INCLUDES="$path -I$path/Qt -I$path/QtGui -I$path/QtCore -I$path/QtSvg -I$path/QtXml -I$path/QtScript -I$path/Qt3Support"
-      QT_VER=4
+      QT_INCLUDES=$path
       break
     fi
   done
   if test "x$QT_INCLUDES" != "x"; then
     AC_MSG_RESULT([found in $QT_INCLUDES])
-    QT_INCLUDES="-I$QT_INCLUDES"
+    QT_CFLAGS="$QT_CFLAGS -I$path -I$path/Qt -I$path/QtGui -I$path/QtCore -I$path/QtSvg -I$path/QtXml -I$path/QtScript -I$path/Qt3Support"
   else
     AC_MSG_ERROR([not found])
   fi
-  QT_CFLAGS="${QT_INCLUDES}"
-  AC_SUBST(QT_CFLAGS)
-
-  dnl Check for multi-threaded option.
-  AC_ARG_ENABLE([mt],
-    AC_HELP_STRING([--disable-mt],
-                   [link to non-threaded Qt (deprecated)]),
-    enable_mt="$enableval",
-    [if test $QT_VER = 4; then
-       enable_mt="yes"
-     else
-       enable_mt="no"
-     fi])
-  if test "$enable_mt" = yes; then
-    QT_LDF=""
-    QT_LIB="-lQtCore -lQtGui -lQtXml -lQtSvg -lQtScript"
-    QT_INC="$QT_DEF -DQT3_SUPPORT -DQT_DEPRECATED_WARNINGS -DQT_THREAD_SUPPORT -D_REENTRANT"
-    [case $host_os in
-      *freebsd*) QT_LIB="$QT_LIB -pthread" ;;
-      *mingw* | *msys*) QT_INC="$QT_INC -mthreads"; QT_LDF="$QT_LDF -mthreads" ;;
-    esac]
-    QT_MTS="multi-threaded"
-  else
-    QT_LDF=""
-    QT_LIB="-lQtCore -lQtGui -lQtXml -lQtSvg -lQtScript"
-    QT_INC="$QT_DEF"
-    QT_MTS="non-threaded"
-  fi
-  echo "####host_os: #$host_os#"
-  case $host_os in
-    *mingw* | *msys*)
-    QT_LIB="-lQtCore4 -lQtGui4 -lQtXml4 -lQt3Support4 -lQtSvg4 -lQtScript4"
-    QT_INC="$QT_INC -DQT_DLL -DUNICODE"
-    QT_LDF="$QT_LDF -mwindows"
-    ;;
-  esac
-  unset enable_mt
 
   dnl Check library path to Qt.
   QT_LDFLAGS=""
   QT_LIBS=""
-  AC_MSG_RESULT([checking for Qt... $QT_VER ($QT_MTS)])
-  AC_MSG_CHECKING([for Qt library])
+  AC_MSG_CHECKING([for Qt4 library])
   paths="$QTDIR_lib_paths /usr/local/qt4/lib /usr/lib/qt4 /usr/lib/qt4/Qtconf /usr/lib \
     /usr/X11R6/lib/X11/qt4 /usr/X11R6/lib/X11/qt4 /usr/X11R6/lib/qt4 \
     /usr/X11R6/lib /sw/lib /usr/lib64/qt4 /usr/X11R6/lib/qt4 /usr/local/lib/qt4"
   AC_LANG(C++)
   for path in $paths; do
-    echo "searching $path..."
     save_LIBS="$LIBS"
     save_LDFLAGS="$LDFLAGS"
     save_CXXFLAGS="$CXXFLAGS"
     LIBS="$LIBS $X11_LIBS $QT_LIB"
-    LDFLAGS="$LDFLAGS $X11_LDFLAGS -L$path $QT_LDF"
-    CXXFLAGS="$CXXFLAGS $X11_INCLUDES $QT_CFLAGS $QT_INC"
+    LDFLAGS="$LDFLAGS -L$path"
+    CXXFLAGS="$CXXFLAGS $QT_CFLAGS"
     AC_LINK_IFELSE(
         [AC_LANG_SOURCE([#include <Qt/qapplication.h>
                          int main (int argc, char ** argv) {
                          QApplication a (argc, argv); a.exec (); return 0; }])],
                          [
                                QT_LDFLAGS="$path";
-                               QT_CFLAGS="$QT_CFLAGS $QT_INC";
                                break;
                          ]
     )
@@ -377,8 +344,7 @@ else
   # ( no check is better than a broken one! ) (?)
   if test "x$QT_LDFLAGS" != "x"; then
     AC_MSG_RESULT([found in $QT_LDFLAGS])
-    QT_LDFLAGS="-L$QT_LDFLAGS $QT_LDF"
-    QT_LIBS="$QT_LIB"
+    QT_LIBS="-L$QT_LDFLAGS $QT_LIB"
   else
     AC_MSG_ERROR([not found])
   fi
@@ -768,7 +734,6 @@ if test "$enable_qucs_gui_debug" = yes; then
  fi
 fi
 
-QT_LIBS="${QT_LIBS} ${QT_LDFLAGS}"
 AC_SUBST(QT_LIBS)
 AC_SUBST(QT_CFLAGS)
 AC_SUBST(QT_LDFLAGS)
@@ -901,7 +866,6 @@ Configure Information:
   QT_LIBS         : $QT_LIBS
   QT_DEF          : $QT_DEF
   QT_LDFLAGS      : $QT_LDFLAGS
-  QT_INC          : $QT_INC
 ])
 AC_MSG_RESULT([])
 
