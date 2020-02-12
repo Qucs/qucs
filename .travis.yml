@@ -19,7 +19,8 @@ dist: trusty
 sudo: false
 
 python:
-  - "2.7"
+  - 2.7
+  - 3.6
 
 virtualenv:
   system_site_packages: true
@@ -41,6 +42,10 @@ addons:
 
 matrix:
   include:
+    - python: 3.6
+      dist: xenial
+      sudo: true
+      
     - os: linux
       compiler: gcc
       env: BUILD=cmake
@@ -95,7 +100,7 @@ matrix:
             - bison
             - qt@4 # from tap
             - adms # from tap
-            - python@2
+            - python@3
             - ccache
 
 # Set secure environment with encrypted string containing GIT_NAME, GIT_EMAIL and GH_TOKEN
@@ -133,11 +138,13 @@ install:
       export PATH="/usr/local/opt/bison/bin:$PATH";
       pip2 install matplotlib;
       export PATH="/usr/local/opt/ccache/libexec:$PATH";
+      ls -la /usr/local/opt/ccache/libexec;
+      find /usr/local -name ccache -ls;
     fi
 
 before_script:
-  - ccache --version
-  - ccache --zero-stats
+  - echo "ccache --version"
+  - echo "ccache --zero-stats"
 
 script:
   - uname -a
@@ -150,8 +157,8 @@ script:
   # use gcov matched to GCC
   - if [[ $GCC && $AUTOTOOLS ]]; then which gcov-4.8 && gcov-4.8 --version; fi
   - if [[ $GCC && $AUTOTOOLS ]]; then  lcov --version; fi
-  - python --version
-  - python -c "import numpy; print numpy.__version__"
+  - python3 --version
+  - python3 -c "import numpy; print numpy.__version__"
   - pwd
   - ls
 
@@ -189,9 +196,9 @@ script:
   - ./bootstrap
 
   - if [[ $OSX ]]; then
-      ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc PYTHON=python2 || travis_terminate 1;
+      ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc PYTHON=python3 || travis_terminate 1;
       make || travis_terminate 1;
-      make qucscheck PYTHON=python2 || travis_terminate 1;
+      make qucscheck PYTHON=python3 || travis_terminate 1;
     fi
 
   # clang 5.0.0 complains a lot about unused command line arguments
