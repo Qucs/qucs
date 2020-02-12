@@ -138,10 +138,8 @@ install:
     fi
 
 before_script:
-  - brew ccache
-  - ls -la /usr/local/opt/ccache/libexec
-  - ccache --version
-  - ccache --zero-stats
+  - echo "ccache --version"
+  - echo "ccache --zero-stats"
 
 script:
   - uname -a
@@ -195,7 +193,7 @@ script:
   - if [[ $OSX ]]; then
       ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc PYTHON=python2 || travis_terminate 1;
       make || travis_terminate 1;
-      make qucscheck PYTHON=python2 || travis_terminate 1;
+      make qucscheck PYTHON=python3 || travis_terminate 1;
     fi
 
   # clang 5.0.0 complains a lot about unused command line arguments
