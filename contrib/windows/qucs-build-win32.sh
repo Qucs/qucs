@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #
-# This script cross compiles Qucs from OSX to Windows 32.
-# It uses Wine and MinGW-w64.
+# This script cross compiles Qucs for Windows 32 using Wine and MinGW-w64.
+# Works with OSX and Linux
 # The MinGW-w64 is the compiler used by the official Qt 4.8.6 binaries/installer.
 # The reason to use it is twofold. We don't need to compile Qt and we can
 # easily redistribute the compiler. The same compiler is needed for to build
@@ -24,7 +24,7 @@
 # Need to add --disable-dependency-tracking to avoid mixup of host and target header files
 # https://software.sandia.gov/trac/acro/ticket/2835
 
-## Setup Mac OSX host, Win32 target
+## Setup for Mac OSX host, Win32 target:
 #
 
 ## 1) Install Wine (using homebrew)
@@ -57,21 +57,7 @@
 # $ 7z x i686-4.8.2-release-posix-dwarf-rt_v3-rev3.7z -o$HOME/.wine/drive_c/
 #
 
-## 4) Update Wine registry
-#
-# Either do it manually with: wine regedit
-#
-# Or pass it as a configuration file
-#
-# cat > /tmp/qttemp.reg << EOF
-# [HKEY_CURRENT_USER\Environment]
-# "PATH"="%PATH%;C:\\\windows\\\system32;C:\\\Qt\\\4.8.6\\\bin;C:\\\mingw32\\\bin"
-# "QTDIR"="C:\\\Qt\\\4.8.6"
-# EOF
-# regedit /tmp/qttemp.reg
-# rm /tmp/qttemp.reg
-
-## 5) Install Inno Setup 5 (used in `qucs-installer-win32.sh`)
+## 4) Install Inno Setup 5 (used in `qucs-installer-win32.sh`)
 # Install older Inno version due to issues with wine
 # Error: * Could not find dependent assembly L"Microsoft.Windows.Common-Controls" (6.0.0.0)
 #
@@ -86,6 +72,9 @@ if [ "$#" -ne 1 ]; then
 fi
 
 echo "Cross-compiling Qucs for Win32"
+
+# setup Windows Mingw32 and Qt paths for Wine
+export WINEPATH="C:\mingw32\bin;C:\Qt\4.8.6\bin"
 
 # Install prefix
 WINDIR=${HOME}/.wine/drive_c/qucs-win32-bin
@@ -115,6 +104,25 @@ wine gperf.exe $@
 EOF
 chmod u+x /tmp/gperf
 
+# do the same for uic, moc, rcc
+cat > /tmp/uic << 'EOF'
+#!/bin/sh
+wine uic.exe $@
+EOF
+chmod u+x /tmp/uic
+
+cat > /tmp/moc << 'EOF'
+#!/bin/sh
+wine moc.exe $@
+EOF
+chmod u+x /tmp/moc
+
+cat > /tmp/rcc << 'EOF'
+#!/bin/sh
+wine rcc.exe $@
+EOF
+chmod u+x /tmp/rcc
+
 # Create environment wrapper for mingw
 cat > /tmp/mingw << 'EOF'
 # Set QTDIR
@@ -130,7 +138,12 @@ export OBJDUMP="wine objdump.exe"
 export RANLIB="wine ranlib.exe"
 export STRIP="wine strip.exe"
 export WINDRES="wine windres.exe"
-# point to wrapper
+# make sure that the host pkg-config is not found
+export PKG_CONFIG=
+# point to wrappers
+export MOC="/tmp/moc"
+export UIC="/tmp/uic"
+export RCC="/tmp/rcc"
 export GPERF="/tmp/gperf"
 exec "$@"
 EOF
