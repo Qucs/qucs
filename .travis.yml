@@ -18,9 +18,6 @@ language: cpp
 dist: trusty
 sudo: false
 
-python:
-  - "2.7"
-
 virtualenv:
   system_site_packages: true
 
@@ -43,6 +40,7 @@ matrix:
   include:
     - os: linux
       compiler: gcc
+      python: 3.6
       env: BUILD=cmake
       addons:
         apt:
@@ -51,6 +49,7 @@ matrix:
 
     - os: linux
       compiler: gcc
+      python: 3.6
       env: BUILD=autotools
       addons:
         apt:
@@ -61,6 +60,7 @@ matrix:
 
     - os: linux
       compiler: clang
+      python: 3.6
       env: BUILD=autotools
       addons:
         apt:
@@ -133,6 +133,8 @@ install:
       export PATH="/usr/local/opt/bison/bin:$PATH";
       pip2 install matplotlib;
       export PATH="/usr/local/opt/ccache/libexec:$PATH";
+      brew install ccache
+      sudo find /usr /opt -type f -name ccache -ls #
     fi
 
 before_script:
