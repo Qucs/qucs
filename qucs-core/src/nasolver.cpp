@@ -1355,36 +1355,40 @@ void nasolver<nr_type_t>::saveResults (const std::string &volts, const std::stri
         circuit * root = subnet->getRoot ();
         for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
         {
+            // FIXME: operating points are (ab)used in probes to hold probes data
+            //   should be handled differently
+            // skip if not a probe
             if (!c->isProbe ()) continue;
+            // skip if saving subcircuit components data is not requested
             if (!c->getSubcircuit().empty() && !(saveOPs & SAVE_ALL)) continue;
+            // update probe internal values, if it's not a noise simulation
+            //   values for noise simulation are in acsolver::saveNoiseResults()
             if (volts != "vn")
                 c->saveOperatingPoints ();
 	    std::string n = createOP (c->getName (), volts);
             saveVariable (n, nr_complex_t (c->getOperatingPoint ("Vr"),
             c->getOperatingPoint ("Vi")), f);
 
-	    //add watt probe data
-	    c->calcOperatingPoints ();
-	    for (auto ops: c->getOperatingPoints ())
-            {
-		//It will only get values if none of the strings are 0
-		//Once again most of this is adapted from Vprobe and Iprobe
-                operatingpoint &p = ops.second;
-	        if (strcmp(p.getName(), "Vi") == 0) continue;
-                if (strcmp(p.getName(), "VAi") == 0) continue;
-	        if (strcmp(p.getName(), "Vr") == 0) continue;
-		if (strcmp(p.getName(), "VAr") == 0)
-		{
-              	    std::string n = createOP(c->getName(), "S");
-              	    saveVariable (n, nr_complex_t (c->getOperatingPoint ("VAr"),
-                    c->getOperatingPoint ("VAi")), f);
-		   continue;
-		}
-           	
-           	std::string n = createOP(c->getName(), p.getName());
-           	saveVariable(n, p.getValue(), f);
-       	    }	    
-	    	    
+            // add watt probe data
+            // this is a big hack due to (ab)using the operating points
+            // for specific information regarding The Power triangle and Power factor:
+            //    https://en.wikipedia.org/wiki/Power_factor#Definition_and_calculation
+            if (c->hasOperatingPoint("P") && c->hasOperatingPoint("Q")) {
+                nr_double_t P = c->getOperatingPoint ("P");
+                nr_double_t Q = c->getOperatingPoint ("Q");
+                // save complex power
+                std::string n = createOP(c->getName(), "S");
+                saveVariable (n, nr_complex_t (P, Q), f);
+                // save active power
+                n = createOP(c->getName(), "P");
+                saveVariable(n, P, f);
+                // save reactive power
+                n = createOP(c->getName(), "Q");
+                saveVariable(n, Q, f);
+                // save power factor
+                n = createOP(c->getName(), "PF");
+                saveVariable(n, P / std::sqrt(P*P + Q*Q), f);
+            }
         }
     }
 

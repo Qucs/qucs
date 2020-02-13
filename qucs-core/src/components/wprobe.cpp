@@ -39,14 +39,16 @@ wprobe::wprobe () : circuit (4) {
   setVoltageSources (1);
 }
 
-//NODE 1 --> I+
-//NODE 2 --> I-
-//NODE 3 --> V+
-//NODE 4 --> V-
+// voltmeter nodes must be at nodes 1 and 2 as so it's assumed
+//   in saveNoiseResults() for noise calculations
+//NODE 1 --> V+
+//NODE 2 --> V-
+//NODE 3 --> I+
+//NODE 4 --> I-
 
 void wprobe::initDC (void) {
   allocMatrixMNA ();
-  voltageSource (VSRC_1, NODE_1, NODE_2);
+  voltageSource (VSRC_1, NODE_3, NODE_4);
 }
 
 void wprobe::initAC (void) {
@@ -54,29 +56,21 @@ void wprobe::initAC (void) {
 }
 
 void wprobe::saveOperatingPoints (void) {
-  nr_double_t Vr = real (getV (NODE_3) - getV (NODE_4));
-  nr_double_t Vi = imag (getV (NODE_3) - getV (NODE_4));
+  nr_double_t Vr = real (getV (NODE_1) - getV (NODE_2));
+  nr_double_t Vi = imag (getV (NODE_1) - getV (NODE_2));
+  // operating points as for the vprobe
   setOperatingPoint ("Vr", Vr);
-  setOperatingPoint ("Vi", Vi); //This section works just like a voltmeter
-}
+  setOperatingPoint ("Vi", Vi);
 
-//For specific information regarding The Power triangle and Power factor:
-//https://en.wikipedia.org/wiki/Power_factor#Definition_and_calculation
-
-void wprobe::calcOperatingPoints (void) {
-//Reading the current and voltage values to calculate power values
-  nr_double_t VAr = real  ((getV (NODE_3) - getV (NODE_4)) * getJ (NODE_1));
-  nr_double_t VAi = -imag ((getV (NODE_3) - getV (NODE_4)) * getJ (NODE_1));
-  setOperatingPoint ("VAr", VAr);
-  setOperatingPoint ("VAi", VAi);
-
-  nr_double_t P = VAr;
+  // read current and voltage values to calculate power values
+  nr_complex_t Vw = getV (NODE_1) - getV (NODE_2);
+  nr_complex_t Iw = getJ (VSRC_1);
+  nr_complex_t Sw = Vw * conj (Iw);
+  // save P and Q instead of just S since operating points cannot hold complex values
+  nr_double_t P = real (Sw);
+  nr_double_t Q = imag (Sw);
   setOperatingPoint ("P", P);
-
-  nr_double_t Q = VAi;
   setOperatingPoint ("Q", Q);
-//Power Factor calculation
-  setOperatingPoint ("PF", P/std::sqrt(P*P+VAi*VAi));
 }
 
 void wprobe::initTR (void) {
