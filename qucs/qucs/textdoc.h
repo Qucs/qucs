@@ -99,6 +99,7 @@ public slots:
 
 private:
   SyntaxHighlighter * syntaxHighlight;
+  QucsApp *App;
 
 private slots:
   void highlightCurrentLine();
