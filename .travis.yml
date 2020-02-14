@@ -112,8 +112,6 @@ before_install:
   - if [[ $BUILD == autotools ]]; then AUTOTOOLS=true; fi
   - if [[ $BUILD == cmake ]]; then CMAKE=true; fi
 
-  - if [[ $TRAVIS_BRANCH == master ]] ; then MASTER=true; fi
-
   # Set xvfb for headless qucs GUI test
   - "export DISPLAY=:99.0"
   -  if [[ $LINUX ]]; then sh -e /etc/init.d/xvfb start; fi
