@@ -137,7 +137,6 @@ install:
       export PATH="/usr/local/opt/bison/bin:$PATH";
       pip3 install matplotlib;
       brew install ccache;
-      export PATH="/usr/local/opt/ccache/libexec:$PATH";
     fi
 
 before_script:
