@@ -209,7 +209,8 @@ script:
 
   - if [[ $LINUX && $AUTOTOOLS && $GCC ]]; then
       ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc || travis_terminate 1;
-      make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --disable-dependency-tracking --disable-doc" || travis_terminate 1;
+      make -j2 || terminate 1;
+      make eqncheck PYTHON=python3 || terminate 1;
     fi
 
   # with cmake build only
