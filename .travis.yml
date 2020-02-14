@@ -78,7 +78,7 @@ matrix:
     - os: osx
       # Qt 4.8.7 official installer works up to OSX 10.10 or xcode6.4
       # Use bottle (with Qt3Support) from cartr/qt4
-      osx_image: xcode8.3
+      osx_image: xcode11.3
       compiler: clang
       env: BUILD=autotools
       addons:
