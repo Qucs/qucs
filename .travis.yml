@@ -18,6 +18,9 @@ language: cpp
 dist: xenial
 sudo: false
 
+services:
+  - xvfb
+
 virtualenv:
   system_site_packages: true
 
