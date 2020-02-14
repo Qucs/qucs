@@ -13,7 +13,7 @@ addons:
 
 before_install:
   - which pip3
-  - pip3 instal --upgrade pip
+  - pip3 install --upgrade pip
   - pip3 install numpy matplotlib
 
 script:
