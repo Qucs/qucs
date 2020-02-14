@@ -135,11 +135,11 @@ install:
       export PATH="/usr/local/opt/bison/bin:$PATH";
       pip3 install matplotlib;
       brew install ccache;
-      brew tap cartr/qt4;
+      export PATH="/usr/local/opt/ccache/libexec:$PATH";
       brew tap-pin cartr/qt4;
       brew install qt@4;
     fi
-
+     
 before_script:
   - ccache --version
   - ccache --zero-stats
