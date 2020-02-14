@@ -117,8 +117,8 @@ before_install:
   - if [[ $TRAVIS_BRANCH == master ]] ; then MASTER=true; fi
 
   # Set xvfb for headless qucs GUI test
-  - "export DISPLAY=:99.0"
-  -  if [[ $LINUX ]]; then sh -e /etc/init.d/xvfb start; fi
+  #- "export DISPLAY=:99.0"
+  #-  if [[ $LINUX ]]; then sh -e /etc/init.d/xvfb start; fi
 
 install:
   # Setup Linux
