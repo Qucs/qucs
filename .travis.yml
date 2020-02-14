@@ -18,9 +18,6 @@ language: cpp
 dist: trusty
 sudo: false
 
-python:
-  - "2.7"
-
 virtualenv:
   system_site_packages: true
 
@@ -43,6 +40,7 @@ matrix:
   include:
     - os: linux
       compiler: gcc
+      python: 3.6
       env: BUILD=cmake
       addons:
         apt:
@@ -51,6 +49,7 @@ matrix:
 
     - os: linux
       compiler: gcc
+      python: 3.6
       env: BUILD=autotools
       addons:
         apt:
@@ -61,6 +60,7 @@ matrix:
 
     - os: linux
       compiler: clang
+      python: 3.6
       env: BUILD=autotools
       addons:
         apt:
@@ -95,7 +95,7 @@ matrix:
             - bison
             - qt@4 # from tap
             - adms # from tap
-            - python@2
+            - python@3
             - ccache
 
 # Set secure environment with encrypted string containing GIT_NAME, GIT_EMAIL and GH_TOKEN
@@ -121,18 +121,20 @@ before_install:
 install:
   # Setup Linux
   # Set up for Coveralls for GCC (LINUX) only
-  - if [[ $GCC ]]; then pip install --user cpp-coveralls --quiet; fi
+  - if [[ $GCC ]]; then pip3 install cpp-coveralls --quiet; fi
 
   # Qucs-Test uses Numpy to compare results
-  - if [[ $LINUX ]]; then pip install --user --only-binary=numpy,matplotlib numpy matplotlib --quiet; fi
+  - if [[ $LINUX ]]; then pip3 install --only-binary=numpy,matplotlib numpy matplotlib --quiet; fi
 
   # Setup OSX
   # Installed already: autoconf automake libtool pkg-config
   - if [[ $OSX ]]; then
       export PATH="/usr/local/opt/flex/bin:$PATH";
       export PATH="/usr/local/opt/bison/bin:$PATH";
-      pip2 install matplotlib;
+      pip3 install matplotlib;
       export PATH="/usr/local/opt/ccache/libexec:$PATH";
+      brew install ccache
+      sudo find /usr /opt -type f -name ccache -ls #
     fi
 
 before_script:
@@ -150,8 +152,9 @@ script:
   # use gcov matched to GCC
   - if [[ $GCC && $AUTOTOOLS ]]; then which gcov-4.8 && gcov-4.8 --version; fi
   - if [[ $GCC && $AUTOTOOLS ]]; then  lcov --version; fi
-  - python --version
-  - python -c "import numpy; print numpy.__version__"
+  - python3 --version
+  - python3 -c "import numpy; print numpy.__version__"
+  - pip3 list --format=columns # List installed packages 
   - pwd
   - ls
 
@@ -189,9 +192,9 @@ script:
   - ./bootstrap
 
   - if [[ $OSX ]]; then
-      ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc PYTHON=python2 || travis_terminate 1;
+      ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc PYTHON=python3 || travis_terminate 1;
       make || travis_terminate 1;
-      make qucscheck PYTHON=python2 || travis_terminate 1;
+      make qucscheck PYTHON=python3 || travis_terminate 1;
     fi
 
   # clang 5.0.0 complains a lot about unused command line arguments
