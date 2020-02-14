@@ -12,4 +12,7 @@ addons:
 
 before_install:
   - which pip3
-  - pip3 install numpy
+  - pip3 install numpy matplotlib
+
+script:
+  - pip3 freeze
