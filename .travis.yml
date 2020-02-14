@@ -9,6 +9,7 @@ addons:
     packages:
       - python3
       - python3-pip
+      - python3-setuptools
 
 before_install:
   - which pip3
