@@ -16,7 +16,7 @@
 
 language: cpp
 dist: trusty
-sudo: false
+#sudo: false
 
 virtualenv:
   system_site_packages: true
