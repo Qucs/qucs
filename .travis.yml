@@ -40,7 +40,7 @@ matrix:
   include:
     - os: linux
       compiler: gcc
-      python: 3.6
+      python: 3.7.5 # in case there are many 3.7 versions travis aborts
       env: BUILD=cmake
       addons:
         apt:
@@ -49,7 +49,7 @@ matrix:
 
     - os: linux
       compiler: gcc
-      python: 3.6
+      python: 3.7.5 # in case there are many 3.7 versions travis aborts
       env: BUILD=autotools
       addons:
         apt:
@@ -60,7 +60,7 @@ matrix:
 
     - os: linux
       compiler: clang
-      python: 3.6
+      python: 3.7.5 # in case there are many 3.7 versions travis aborts
       env: BUILD=autotools
       addons:
         apt:
