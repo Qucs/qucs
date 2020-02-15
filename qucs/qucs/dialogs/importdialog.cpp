@@ -98,7 +98,7 @@ ImportDialog::ImportDialog(QWidget *parent)
 
 ImportDialog::~ImportDialog()
 {
-  if(Process.Running)  Process.kill();
+  if(Process.state() == QProcess::Running)  Process.kill();
   delete all;
 }
 
@@ -255,7 +255,7 @@ void ImportDialog::slotImport()
   qDebug() << "Command:" << Program << CommandLine.join(" ");
   Process.start(Program, CommandLine);
   
-  if(!Process.Running)
+  if(Process.state() == QProcess::Running)
     MsgText->appendPlainText(tr("ERROR: Cannot start converter!"));
 }
 
@@ -285,7 +285,7 @@ void ImportDialog::slotType(int index)
 // ------------------------------------------------------------------------
 void ImportDialog::slotAbort()
 {
-  if(Process.Running)  Process.kill();
+  if(Process.state() == QProcess::Running) Process.kill();
   AbortButt->setDisabled(true);
   ImportButt->setDisabled(false);
 }
