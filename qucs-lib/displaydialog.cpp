@@ -30,9 +30,10 @@
 
 
 DisplayDialog::DisplayDialog(QWidget *parent, QString Text, QString VHDLText, QString VerilogText)
-                     // QDialog(parent, 0, false, Qt::WDestructiveClose)
     : QDialog(parent)
 {
+  setAttribute(Qt::WA_DeleteOnClose);
+
   vLayout = new QVBoxLayout(this);
   vLayout->setMargin(3);
 
