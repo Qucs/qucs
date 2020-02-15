@@ -634,7 +634,7 @@ void Diagram::getAxisLimits(Graph *pg)
 {
   // FIXME: Graph should know the limits. but it doesn't yet.
   //        we should only copy here. better: just wrap, dont use {x,y,z}Axis
-  int z,i=0;
+  int z=0;
   double x, y, *p;
   QString var, find;
   DataX const *pD = pg->axis(0);
@@ -665,7 +665,7 @@ void Diagram::getAxisLimits(Graph *pg)
     }
   }
 
-  Axis *pa, *pA;
+  Axis *pa;
   if(pg->yAxisNo == 0)  pa = &yAxis;
   else  pa = &zAxis;
   (pa->numGraphs)++;    // count graphs
