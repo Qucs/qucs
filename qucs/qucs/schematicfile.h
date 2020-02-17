@@ -31,10 +31,10 @@
 #include <QString>
 #include <QStringList>
 
+class Wire;
+
 class QTextStream;
 class QPlainTextEdit;
-#include "diagrams/diagram.h"
-#include "paintings/painting.h"
 
 // digital signal data
 struct DigSignal {
