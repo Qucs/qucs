@@ -18,6 +18,7 @@
  ***************************************************************************/
 #include "qucs.h"
 #include "node.h"
+#include "schematicfile.h"
 #include "schematicview.h"
 #include "schematicscene.h"
 #include "misc.h"
@@ -83,7 +84,9 @@ bool MouseActions::pasteElements(SchematicView *Doc)
   QString s = cb->text(QClipboard::Clipboard);
   QTextStream stream(&s, QIODevice::ReadOnly);
   movingElements.clear();
-  if(!Doc->paste(&stream, &movingElements)) return false;
+
+  SchematicFile *sch = new SchematicFile();
+  if(!sch->paste(&stream, &movingElements)) return false;
 
   Element *pe;
   int xmax, xmin, ymax, ymin;
@@ -107,7 +110,7 @@ bool MouseActions::pasteElements(SchematicView *Doc)
 
   xmin = -((xmax+xmin) >> 1);   // calculate midpoint
   ymin = -((ymax+ymin) >> 1);
-  Doc->setOnGrid(xmin, ymin);
+  Doc->scene->setOnGrid(xmin, ymin);
 
   // moving with mouse cursor in the midpoint
   for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
@@ -277,7 +280,7 @@ void MouseActions::MMoveElement(SchematicView *Doc, QMouseEvent *Event)
   int y = pos.y();
   int gx = x;
   int gy = y;
-  Doc->setOnGrid(gx, gy);
+  Doc->scene->setOnGrid(gx, gy);
 
   // while moving, add selElem only once to scene
   if(!drawn) {
@@ -355,7 +358,7 @@ void MouseActions::MMoveWire2(SchematicView *Doc, QMouseEvent *Event)
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx2  = pos.x();
   MAy2  = pos.y();
-  Doc->setOnGrid(MAx2, MAy2);
+  Doc->scene->setOnGrid(MAx2, MAy2);
   /// \todo paint aim
   /*paintAim(Doc,MAx2,MAy2); //let we paint aim cross
 
@@ -386,7 +389,7 @@ void MouseActions::MMoveWire1(SchematicView *Doc, QMouseEvent *Event)
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx3 = pos.x();
   MAy3 = pos.y();
-  Doc->setOnGrid(MAx3, MAy3);
+  Doc->scene->setOnGrid(MAx3, MAy3);
   /// \todo paint aim
   //paintAim(Doc,MAx3,MAy3);
   //MAx2 = DOC_X_POS(Doc->contentsX()+Doc->viewport()->width()-1-2);
@@ -425,7 +428,7 @@ void MouseActions::MMoveResizePainting(SchematicView *Doc, QMouseEvent *Event)
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx1 = pos.x();
   MAy1 = pos.y();
-  Doc->setOnGrid(MAx1, MAy1);
+  Doc->scene->setOnGrid(MAx1, MAy1);
   ((Painting*)focusElement)->MouseResizeMoving(MAx1, MAy1, Doc);
 }
 
@@ -448,7 +451,7 @@ void MouseActions::MMoveMoving(SchematicView *Doc, QMouseEvent *Event)
   MAx2 = pos.x();
   MAy2 = pos.y();
 
-  Doc->setOnGrid(MAx2, MAy2);
+  Doc->scene->setOnGrid(MAx2, MAy2);
   /// MAx1, MAy1 set on MPressSelect (?)
   MAx3 = MAx1 = MAx2 - MAx1;
   MAy3 = MAy1 = MAy2 - MAy1;
@@ -510,7 +513,7 @@ void MouseActions::MMoveMoving2(SchematicView *Doc, QMouseEvent *Event)
 
   drawn = true;
   if (!Event->modifiers().testFlag(Qt::ControlModifier))
-    Doc->setOnGrid(MAx2, MAy2);  // use grid only if CTRL key not pressed
+    Doc->scene->setOnGrid(MAx2, MAy2);  // use grid only if CTRL key not pressed
   MAx1 = MAx2 - MAx1;
   MAy1 = MAy2 - MAy1;
   MAx3 += MAx1;  MAy3 += MAy1;   // keep track of the complete movement
@@ -939,7 +942,7 @@ void MouseActions::MPressLabel(SchematicView *Doc, QMouseEvent* Event)
 
     int xl = x+30;
     int yl = y-30;
-    Doc->setOnGrid(xl, yl);
+    Doc->scene->setOnGrid(xl, yl);
     // set new name
     if(pw) pw->setName(Name, Value, x-pw->x1 + y-pw->y1, xl, yl);
     else pn->setName(Name, Value, xl, yl);
@@ -1133,7 +1136,7 @@ void MouseActions::MPressSelect(SchematicView *Doc, QMouseEvent *Event)
         Doc->deselectElements(focusElement); // element was not selected.
       focusElement->ElemSelected = true;
     }
-    Doc->setOnGrid(MAx1, MAy1);
+    Doc->scene->setOnGrid(MAx1, MAy1);
     QucsMain->MouseMoveAction = &MouseActions::MMoveMoving;
   }
   // Update matching wire label highlighting
@@ -1282,9 +1285,9 @@ void MouseActions::MPressRotate(SchematicView *Doc, QMouseEvent* Event)
       Doc->deleteWire((Wire*)e);
       ((Wire*)e)->Label = pl;
       ((Wire*)e)->rotate();
-      Doc->setOnGrid(e->x1, e->y1);
-      Doc->setOnGrid(e->x2, e->y2);
-      if(pl)  Doc->setOnGrid(pl->cx, pl->cy);
+      Doc->scene->setOnGrid(e->x1, e->y1);
+      Doc->scene->setOnGrid(e->x2, e->y2);
+      if(pl)  Doc->scene->setOnGrid(pl->cx, pl->cy);
       Doc->insertWire((Wire*)e);
       Doc->Wires->setAutoDelete(true);
       if (Doc->Wires->containsRef ((Wire*)e))
@@ -1347,7 +1350,7 @@ void MouseActions::MPressElement(SchematicView *Doc, QMouseEvent *Event)
 	/// set center position before nodes are inserted (?)
 	gx = x;
 	gy = y;
-	Doc->setOnGrid(gx, gy);
+	Doc->scene->setOnGrid(gx, gy);
     /// clear flag, paint whole Element, not just outline
 	Comp->drawScheme = false;
     Doc->undoStack->push( new AddItemCommand(Comp, QPoint(gx,gy), Doc->scene) );
@@ -1477,7 +1480,7 @@ void MouseActions::MPressWire1(SchematicView *Doc, QMouseEvent* Event)
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx3 = pos.x();
   MAy3 = pos.y();
-  Doc->setOnGrid(MAx3, MAy3);
+  Doc->scene->setOnGrid(MAx3, MAy3);
 
 //ALYS - draw aiming cross
   /// \todo paintAim(Doc,MAx3, MAy3);
@@ -1569,7 +1572,7 @@ void MouseActions::MPressWire2(SchematicView *Doc, QMouseEvent *Event)
     /// \bug get rid of global temp position vars
     MAx2  = int(pos.x());
     MAy2  = int(pos.y());
-    Doc->setOnGrid(MAx2, MAy2);
+    Doc->scene->setOnGrid(MAx2, MAy2);
 
     MAx1 ^= 1;    // change the painting direction of wire corner
 	if(MAx1 == 0) {
@@ -1857,7 +1860,7 @@ void MouseActions::paintElementsScheme(SchematicView *p)
 void MouseActions::moveElements(SchematicView *Doc, int& x1, int& y1)
 {
   Element *pe;
-  Doc->setOnGrid(x1, y1);
+  Doc->scene->setOnGrid(x1, y1);
 
   for(pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
     if(pe->ElemType & isLabel) {
@@ -1874,7 +1877,7 @@ void MouseActions::rotateElements(SchematicView *Doc, int& x1, int& y1)
 {
   int x2, y2;
   Element *pe;
-  Doc->setOnGrid(x1, y1);
+  Doc->scene->setOnGrid(x1, y1);
 
   for(pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
     switch(pe->ElemType) {
