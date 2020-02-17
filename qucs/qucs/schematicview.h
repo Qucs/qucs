@@ -2,8 +2,6 @@
  * schematicview.cpp - implement schematic view
  *
  * Copyright (C) 2006, Michael Margraf, michael.margraf@alumni.tu-berlin.de
- * Copyright (C) 2006, Gopala Krishna A <krishna.ggk@gmail.com>
- * Copyright (C) 2012-2016 by Pablo Daniel Pareja Obregon
  * Copyright (C) 2019, Guilherme Brondani Torri, guitorri@gmail.com
  *
  * This file is part of Qucs
