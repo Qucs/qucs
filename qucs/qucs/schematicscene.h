@@ -69,6 +69,8 @@ protected:
   void  setOnGrid(int&, int&);
   bool  elementsOnGrid();
 
+public:
+  /// \todo make then public while we fix stuff
   // The pointers points to the current lists, either to the schematic
   // elements "Doc..." or to the symbol elements "SymbolPaints".
 // private: //TODO. one at a time.

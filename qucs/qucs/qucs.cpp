@@ -1927,19 +1927,19 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
 
     // start from the last to omit re-appended components
     SchematicView *Doc = (SchematicView*)w;
-    for(Component *pc=Doc->Components->last(); pc!=0; ) {
+    for(Component *pc=Doc->scene->Components->last(); pc!=0; ) {
       if(pc->obsolete_model_hack() == Model) { // BUG
         File = pc->Props.getFirst()->Value;
         if((File == pathName) || (File == Name)) {
-          pc_tmp = Doc->Components->prev();
-          Doc->recreateComponent(pc);  // delete and re-append component
+          pc_tmp = Doc->scene->Components->prev();
+          Doc->scene->recreateComponent(pc);  // delete and re-append component
           if(!pc_tmp)  break;
-          Doc->Components->findRef(pc_tmp);
-          pc = Doc->Components->current();
+          Doc->scene->Components->findRef(pc_tmp);
+          pc = Doc->scene->Components->current();
           continue;
         }
       }
-      pc = Doc->Components->prev();
+      pc = Doc->scene->Components->prev();
     }
   }
 }
@@ -2022,7 +2022,7 @@ void QucsApp::slotIntoHierarchy()
   slotHideEdit(); // disable text edit of component property
 
   SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
-  Component *pc = Doc->searchSelSubcircuit();
+  Component *pc = Doc->scene->searchSelSubcircuit();
   if(pc == 0) { return; }
 
   QString s = pc->getSubcircuitFile();
@@ -2182,7 +2182,7 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
     else
       if(w) if(!isTextDocument (sim->DocWidget))
 	// load recent simulation data (if document is still open)
-	((SchematicView*)sim->DocWidget)->reloadGraphs();
+	((SchematicView*)sim->DocWidget)->scene->reloadGraphs();
   }
 
   if(!isTextDocument (sim->DocWidget))
@@ -2249,7 +2249,7 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
 
   if(DocumentTab->currentWidget() == w)      // if page not ...
     if(!isTextDocument (w))
-      ((SchematicView*)w)->reloadGraphs();  // ... changes, reload here !
+      ((SchematicView*)w)->scene->reloadGraphs();  // ... changes, reload here !
 
   TabView->setCurrentIndex(2);   // switch to "Component"-Tab
   if (Name.right(4) == ".dpl") {
