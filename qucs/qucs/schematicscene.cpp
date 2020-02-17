@@ -2976,7 +2976,7 @@ void SchematicScene::copyLabels(int& x1, int& y1, int& x2, int& y2,
 
 
 // ---------------------------------------------------
-bool SchematicView::createSubcircuitSymbol()
+bool SchematicScene::createSubcircuitSymbol()
 {
   // If the number of ports is not equal, remove or add some.
   unsigned int countPort = adjustPortNumbers();
@@ -3017,7 +3017,7 @@ bool SchematicView::createSubcircuitSymbol()
 
 // ---------------------------------------------------
 // Rotates all selected components around their midpoint.
-bool SchematicView::rotateElements()
+bool SchematicScene::rotateElements()
 {
   Wires->setAutoDelete(false);
   Components->setAutoDelete(false);
@@ -3117,7 +3117,7 @@ bool SchematicView::rotateElements()
 // ---------------------------------------------------
 // Mirrors all selected components.
 // First copy them to 'ElementCache', then mirror and insert again.
-bool SchematicView::mirrorXComponents()
+bool SchematicScene::mirrorXComponents()
 {
   Wires->setAutoDelete(false);
   Components->setAutoDelete(false);
@@ -3186,7 +3186,7 @@ bool SchematicView::mirrorXComponents()
 
 // ---------------------------------------------------
 // Mirrors all selected components. First copy them to 'ElementCache', then mirror and insert again.
-bool SchematicView::mirrorYComponents()
+bool SchematicScene::mirrorYComponents()
 {
   Wires->setAutoDelete(false);
   Components->setAutoDelete(false);
@@ -3287,7 +3287,7 @@ void SchematicScene::copyPaintings(int& x1, int& y1, int& x2, int& y2,
 // ---------------------------------------------------
 // Sets selected elements on grid.
 /// \bug pass list of selected instead of searching for them.
-bool SchematicView::elementsOnGrid()
+bool SchematicScene::elementsOnGrid()
 {
   int x, y, No;
   bool count = false;
