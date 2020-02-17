@@ -1,13 +1,15 @@
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
-
 import parse_result as pr
+# usage: python3 parse_result_example.py
 
+# sudo apt-get install python3-tk
+# sudo yum install python3-tk
+matplotlib.use('TkAgg')
 
 # create the dat file to load with:
 # qucsator < rc_ac_sweep.net > rc_ac_sweep.dat
-
-
 
 data = pr.parse_file('rc_ac_sweep.dat')
 
