@@ -2,6 +2,7 @@
  * schematicscene.h - define schematic scene
  *
  * Copyright (C) 2014, Yodalee, lc85301@gmail.com
+ * Copyright (C) 2019-2020, Guilherme Brondani Torri, guitorri@gmail.com
  *
  * This file is part of Qucs
  *
@@ -27,6 +28,22 @@
 
 class QUndoStack;
 
+// TODO: refactor here
+class WireList : public Q3PtrList<Wire> {
+};
+// TODO: refactor here
+class NodeList : public Q3PtrList<Node> {
+};
+// TODO: refactor here
+class DiagramList : public Q3PtrList<Diagram> {
+};
+// TODO: refactor here
+class ComponentList : public Q3PtrList<Component> {
+};
+// TODO: refactor here
+class PaintingList : public Q3PtrList<Painting> {
+};
+
 class SchematicScene : public QGraphicsScene
 {
 Q_OBJECT
@@ -44,6 +61,92 @@ protected:
   void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
   void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
   void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
+
+  // from schematicview
+  bool  rotateElements();
+  bool  mirrorXComponents();
+  bool  mirrorYComponents();
+  void  setOnGrid(int&, int&);
+  bool  elementsOnGrid();
+
+  // The pointers points to the current lists, either to the schematic
+  // elements "Doc..." or to the symbol elements "SymbolPaints".
+// private: //TODO. one at a time.
+  WireList      *Wires, DocWires;
+  NodeList      *Nodes, DocNodes;
+  DiagramList   *Diagrams, DocDiags;
+  PaintingList  *Paintings, DocPaints;
+  ComponentList *Components, DocComps;
+
+  PaintingList  SymbolPaints;  // symbol definition for subcircuit
+/* ********************************************************************
+   *****  The following methods are in the file                   *****
+   *****  "schematic_element.cpp". They only access the QPtrList  *****
+   *****  pointers "Wires", "Nodes", "Diagrams", "Paintings" and  *****
+   *****  "Components".                                           *****
+   ******************************************************************** */
+
+public:
+  Node* insertNode(int, int, Element*);
+  Node* selectedNode(int, int);
+
+  int   insertWireNode1(Wire*);
+  bool  connectHWires1(Wire*);
+  bool  connectVWires1(Wire*);
+  int   insertWireNode2(Wire*);
+  bool  connectHWires2(Wire*);
+  bool  connectVWires2(Wire*);
+  int   insertWire(Wire*);
+  void  selectWireLine(Element*, Node*, bool);
+  Wire* selectedWire(int, int);
+  Wire* splitWire(Wire*, Node*);
+  bool  oneTwoWires(Node*);
+  void  deleteWire(Wire*);
+
+  Marker* setMarker(int, int);
+  void    markerLeftRight(bool, Q3PtrList<Element>*);
+  void    markerUpDown(bool, Q3PtrList<Element>*);
+
+  void     deselectElements(Element*);
+  int      selectElements(int, int, int, int, bool);
+  void     selectMarkers();
+  void     newMovingWires(Q3PtrList<Element>*, Node*, int);
+  int      copySelectedElements(Q3PtrList<Element>*);
+  bool     deleteElements();
+  bool     aligning(int);
+  bool     distributeHorizontal();
+  bool     distributeVertical();
+
+  void       setComponentNumber(Component*);
+  void       insertRawComponent(Component*, bool noOptimize=true);
+  void       recreateComponent(Component*);
+  void       insertComponent(Component*);
+  void       activateCompsWithinRect(int, int, int, int);
+  bool       activateSpecifiedComponent(int, int);
+  bool       activateSelectedComponents();
+  void       setCompPorts(Component*);
+  Component* selectCompText(int, int, int&, int&);
+  Component* searchSelSubcircuit();
+  void       deleteComp(Component*);
+
+  void     oneLabel(Node*);
+  int      placeNodeLabel(WireLabel*);
+  Element* getWireLabel(Node*);
+  void     insertNodeLabel(WireLabel*);
+  void     copyLabels(int&, int&, int&, int&, QList<Element *> *);
+
+  void      copyPaintings(int&, int&, int&, int&, QList<Element *> *);
+
+
+private:
+  void insertComponentNodes(Component*, bool);
+  int  copyWires(int&, int&, int&, int&, QList<Element *> *);
+  int  copyComponents(int&, int&, int&, int&, QList<Element *> *);
+  void copyComponents2(int&, int&, int&, int&, QList<Element *> *);
+  bool copyComps2WiresPaints(int&, int&, int&, int&, QList<Element *> *);
+  int  copyElements(int&, int&, int&, int&, QList<Element *> *);
+
+
 };
 
 #endif /* SCHEMATICSCENE_H_ */
