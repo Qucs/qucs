@@ -21,6 +21,7 @@
  */
 
 #include "schematicview.h"
+#include "schematicscene.h"
 #include "imagewriter.h"
 #include "dialogs/exportdialog.h"
 
@@ -302,7 +303,9 @@ void ImageWriter::getSelAreaWidthAndHeight(SchematicView *sch, int &wsel, int &h
         xmax= INT_MIN,
         ymax= INT_MIN;
 
-     for(Component *pc = sch->Components->first(); pc != 0; pc = sch->Components->next()) {
+    SchematicScene *scene = sch->scene;
+
+     for(Component *pc = scene->Components->first(); pc != 0; pc = scene->Components->next()) {
          if (pc->ElemSelected) {
            int x1,y1,x2,y2;
            pc->entireBounds(x1,y1,x2,y2,sch->textCorr());
@@ -310,7 +313,7 @@ void ImageWriter::getSelAreaWidthAndHeight(SchematicView *sch, int &wsel, int &h
          }
     }
 
-    for(Wire *pw = sch->Wires->first(); pw != 0; pw = sch->Wires->next()) {
+    for(Wire *pw = scene->Wires->first(); pw != 0; pw = scene->Wires->next()) {
 
         if (pw->ElemSelected) {
             if(pw->x1 < xmin) xmin = pw->x1;
@@ -330,7 +333,7 @@ void ImageWriter::getSelAreaWidthAndHeight(SchematicView *sch, int &wsel, int &h
         }
     }
 
-    for(Node *pn = sch->Nodes->first(); pn != 0; pn = sch->Nodes->next()) {
+    for(Node *pn = scene->Nodes->first(); pn != 0; pn = scene->Nodes->next()) {
         WireLabel *pl = pn->Label;
         if(pl) {     // check position of node label
             if (pl->ElemSelected) {
@@ -344,7 +347,7 @@ void ImageWriter::getSelAreaWidthAndHeight(SchematicView *sch, int &wsel, int &h
         }
     }
 
-    for(Diagram *pd = sch->Diagrams->first(); pd != 0; pd =sch-> Diagrams->next()) {
+    for(Diagram *pd = scene->Diagrams->first(); pd != 0; pd = scene-> Diagrams->next()) {
 
 
 
@@ -365,7 +368,7 @@ void ImageWriter::getSelAreaWidthAndHeight(SchematicView *sch, int &wsel, int &h
         }
     }
 
-    for(Painting *pp = sch->Paintings->first(); pp != 0; pp = sch->Paintings->next()) {
+    for(Painting *pp = scene->Paintings->first(); pp != 0; pp = scene->Paintings->next()) {
 
        if (pp->ElemSelected) {
            int x1,y1,x2,y2;
