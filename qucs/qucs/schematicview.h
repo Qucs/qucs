@@ -85,7 +85,6 @@ public:
   void  enlargeView(int, int, int, int);
 
   void  switchPaintMode();
-  int   adjustPortNumbers();
   bool  createSubcircuitSymbol();
 
   void    becomeCurrent(bool);

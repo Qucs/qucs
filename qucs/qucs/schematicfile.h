@@ -126,6 +126,7 @@ public: // serializer
   int     save();
   int     saveSymbolCpp (void);
   int     saveSymbolJSON (void);
+  int   adjustPortNumbers();
 };
 
 #endif
