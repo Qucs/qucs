@@ -52,7 +52,7 @@ SubMap FileList;
 // -------------------------------------------------------------
 // Creates a Qucs file format (without document properties) in the returning
 // string. This is used to copy the selected elements into the clipboard.
-QString SchematicView::createClipboardFile()
+QString SchematicFile::createClipboardFile()
 {
   int z=0;  // counts selected elements
   Wire *pw;
@@ -109,7 +109,7 @@ QString SchematicView::createClipboardFile()
 
 // -------------------------------------------------------------
 // Only read fields without loading them.
-bool SchematicView::loadIntoNothing(QTextStream *stream)
+bool SchematicFile::loadIntoNothing(QTextStream *stream)
 {
   QString Line, cstr;
   while(!stream->atEnd()) {
@@ -124,7 +124,7 @@ bool SchematicView::loadIntoNothing(QTextStream *stream)
 
 // -------------------------------------------------------------
 // Paste from clipboard.
-bool SchematicView::pasteFromClipboard(QTextStream *stream, Q3PtrList<Element> *pe)
+bool SchematicFile::pasteFromClipboard(QTextStream *stream, Q3PtrList<Element> *pe)
 {
   QString Line;
 
@@ -192,7 +192,7 @@ bool SchematicView::pasteFromClipboard(QTextStream *stream, Q3PtrList<Element> *
 }
 
 // -------------------------------------------------------------
-int SchematicView::saveSymbolCpp (void)
+int SchematicFile::saveSymbolCpp (void)
 {
   QFileInfo info (DocName);
   QString cppfile = info.path () + QDir::separator() + DataSet;
@@ -260,7 +260,7 @@ int SchematicView::saveSymbolCpp (void)
 }
 
 // save symbol paintings in JSON format
-int SchematicView::saveSymbolJSON()
+int SchematicFile::saveSymbolJSON()
 {
   QFileInfo info (DocName);
   QString jsonfile = info.path () + QDir::separator()
@@ -345,7 +345,7 @@ int SchematicView::saveSymbolJSON()
 
 // -------------------------------------------------------------
 // Returns the number of subcircuit ports.
-int SchematicView::saveDocument()
+int SchematicFile::saveDocument()
 {
   QFile file(DocName);
   if(!file.open(QIODevice::WriteOnly)) {
@@ -543,7 +543,7 @@ int SchematicView::saveDocument()
 }
 
 // -------------------------------------------------------------
-bool SchematicView::loadProperties(QTextStream *stream)
+bool SchematicFile::loadProperties(QTextStream *stream)
 {
   bool ok = true;
   QString Line, cstr, nstr;
@@ -620,7 +620,7 @@ bool SchematicView::loadProperties(QTextStream *stream)
  *
  * @param c is pointing to the component to be inserted.
  */
-void SchematicView::simpleInsertComponent(Component *c)
+void SchematicFile::simpleInsertComponent(Component *c)
 {
   Node *pn;
   int x, y;
@@ -674,7 +674,7 @@ void SchematicView::simpleInsertComponent(Component *c)
  * Otherwise insert component into database and graphics scene.
  *
  */
-bool SchematicView::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
+bool SchematicFile::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
 {
   QString Line, cstr;
   Component *c;
@@ -727,7 +727,7 @@ bool SchematicView::loadComponents(QTextStream *stream, Q3PtrList<Component> *Li
  * - add wire label to scene
  *
  */
-void SchematicView::simpleInsertWire(Wire *pw)
+void SchematicFile::simpleInsertWire(Wire *pw)
 {
   Node *pn1 = 0;
   Node *pn2 = 0;
@@ -780,7 +780,7 @@ void SchematicView::simpleInsertWire(Wire *pw)
 }
 
 // -------------------------------------------------------------
-bool SchematicView::loadWires(QTextStream *stream, Q3PtrList<Element> *List)
+bool SchematicFile::loadWires(QTextStream *stream, Q3PtrList<Element> *List)
 {
   Wire *w;
   QString Line;
@@ -817,7 +817,7 @@ bool SchematicView::loadWires(QTextStream *stream, Q3PtrList<Element> *List)
 }
 
 // -------------------------------------------------------------
-bool SchematicView::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
+bool SchematicFile::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
 {
   Diagram *d;
   QString Line, cstr;
@@ -867,7 +867,7 @@ bool SchematicView::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
 }
 
 // -------------------------------------------------------------
-bool SchematicView::loadPaintings(QTextStream *stream, Q3PtrList<Painting> *List)
+bool SchematicFile::loadPaintings(QTextStream *stream, Q3PtrList<Painting> *List)
 {
   Painting *p=0;
   QString Line, cstr;
@@ -922,7 +922,7 @@ bool SchematicView::loadPaintings(QTextStream *stream, Q3PtrList<Painting> *List
  * \brief Schematic::loadDocument tries to load a schematic document.
  * \return true/false in case of success/failure
  */
-bool SchematicView::loadDocument()
+bool SchematicFile::loadDocument()
 {
   QFile file(DocName);
   if(!file.open(QIODevice::ReadOnly)) {
@@ -1011,7 +1011,7 @@ bool SchematicView::loadDocument()
 // -------------------------------------------------------------
 // Creates a Qucs file format (without document properties) in the returning
 // string. This is used to save state for undo operation.
-QString SchematicView::createUndoString(char Op)
+QString SchematicFile::createUndoString(char Op)
 {
   Wire *pw;
   Diagram *pd;
@@ -1048,7 +1048,7 @@ QString SchematicView::createUndoString(char Op)
 
 // -------------------------------------------------------------
 // Same as "createUndoString(char Op)" but for symbol edit mode.
-QString SchematicView::createSymbolUndoString(char Op)
+QString SchematicFile::createSymbolUndoString(char Op)
 {
   Painting *pp;
 
@@ -1069,7 +1069,7 @@ QString SchematicView::createSymbolUndoString(char Op)
 // -------------------------------------------------------------
 // Is quite similiar to "loadDocument()" but with less error checking.
 // Used for "undo" function.
-bool SchematicView::rebuild(QString *s)
+bool SchematicFile::rebuild(QString *s)
 {
   DocWires.clear();	// delete whole document
   DocNodes.clear();
@@ -1092,7 +1092,7 @@ bool SchematicView::rebuild(QString *s)
 
 // -------------------------------------------------------------
 // Same as "rebuild(QString *s)" but for symbol edit mode.
-bool SchematicView::rebuildSymbol(QString *s)
+bool SchematicFile::rebuildSymbol(QString *s)
 {
   SymbolPaints.clear();	// delete whole document
 
@@ -1116,7 +1116,7 @@ bool SchematicView::rebuildSymbol(QString *s)
 // *****                                                     *****
 // ***************************************************************
 
-void SchematicView::createNodeSet(QStringList& Collect, int& countInit,
+void SchematicFile::createNodeSet(QStringList& Collect, int& countInit,
 			      Conductor *pw, Node *p1)
 {
   if(pw->Label)
@@ -1126,7 +1126,7 @@ void SchematicView::createNodeSet(QStringList& Collect, int& countInit,
 }
 
 // ---------------------------------------------------
-void SchematicView::throughAllNodes(bool User, QStringList& Collect,
+void SchematicFile::throughAllNodes(bool User, QStringList& Collect,
 				int& countInit)
 {
   Node *pn;
@@ -1157,7 +1157,7 @@ void SchematicView::throughAllNodes(bool User, QStringList& Collect,
 // ----------------------------------------------------------
 // Checks whether this file is a qucs file and whether it is an subcircuit.
 // It returns the number of subcircuit ports.
-int SchematicView::testFile(const QString& DocName)
+int SchematicFile::testFile(const QString& DocName)
 {
   QFile file(DocName);
   if(!file.open(QIODevice::ReadOnly)) {
@@ -1223,7 +1223,7 @@ int SchematicView::testFile(const QString& DocName)
 
 // ---------------------------------------------------
 // Collects the signal names for digital simulations.
-void SchematicView::collectDigitalSignals(void)
+void SchematicFile::collectDigitalSignals(void)
 {
   Node *pn;
 
@@ -1239,7 +1239,7 @@ void SchematicView::collectDigitalSignals(void)
 
 // ---------------------------------------------------
 // Propagates the given node to connected component ports.
-void SchematicView::propagateNode(QStringList& Collect,
+void SchematicFile::propagateNode(QStringList& Collect,
 			      int& countInit, Node *pn)
 {
   bool setName=false;
@@ -1291,7 +1291,7 @@ void SchematicView::propagateNode(QStringList& Collect,
  * \param NumPorts counter for the number of ports
  * \return true in case of success (false otherwise)
  */
-bool SchematicView::throughAllComps(QTextStream *stream, int& countInit,
+bool SchematicFile::throughAllComps(QTextStream *stream, int& countInit,
                    QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts)
 {
   bool r;
@@ -1353,7 +1353,7 @@ bool SchematicView::throughAllComps(QTextStream *stream, int& countInit,
 
       // load subcircuit schematic
       s = pc->Props.first()->Value;
-      SchematicView *d = new SchematicView(0, pc->getSubcircuitFile());
+      SchematicFile *d = new SchematicFile(0, pc->getSubcircuitFile());
       if(!d->loadDocument())      // load document if possible
       {
           delete d;
@@ -1490,7 +1490,7 @@ bool SchematicView::throughAllComps(QTextStream *stream, int& countInit,
 // Follows the wire lines in order to determine the node names for
 // each component. Output into "stream", NodeSets are collected in
 // "Collect" and counted with "countInit".
-bool SchematicView::giveNodeNames(QTextStream *stream, int& countInit,
+bool SchematicFile::giveNodeNames(QTextStream *stream, int& countInit,
                    QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts)
 {
   // delete the node names
@@ -1533,7 +1533,7 @@ bool SchematicView::giveNodeNames(QTextStream *stream, int& countInit,
 }
 
 // ---------------------------------------------------
-bool SchematicView::createLibNetlist(QTextStream *stream, QPlainTextEdit *ErrText,
+bool SchematicFile::createLibNetlist(QTextStream *stream, QPlainTextEdit *ErrText,
 				 int NumPorts)
 {
   int countInit = 0;
@@ -1573,7 +1573,7 @@ bool SchematicView::createLibNetlist(QTextStream *stream, QPlainTextEdit *ErrTex
 #define VHDL_LIBRARIES   "\nlibrary ieee;\nuse ieee.std_logic_1164.all;\n"
 
 // ---------------------------------------------------
-void SchematicView::createSubNetlistPlain(QTextStream *stream, QPlainTextEdit *ErrText,
+void SchematicFile::createSubNetlistPlain(QTextStream *stream, QPlainTextEdit *ErrText,
 int NumPorts)
 {
   int i, z;
@@ -1841,7 +1841,7 @@ int NumPorts)
 }
 // ---------------------------------------------------
 // Write the netlist as subcircuit to the text stream 'stream'.
-bool SchematicView::createSubNetlist(QTextStream *stream, int& countInit,
+bool SchematicFile::createSubNetlist(QTextStream *stream, int& countInit,
                      QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts)
 {
 //  int Collect_count = Collect.count();   // position for this subcircuit
@@ -1869,7 +1869,7 @@ bool SchematicView::createSubNetlist(QTextStream *stream, int& countInit,
 
 // ---------------------------------------------------
 // Determines the node names and writes subcircuits into netlist file.
-int SchematicView::prepareNetlist(QTextStream& stream, QStringList& Collect,
+int SchematicFile::prepareNetlist(QTextStream& stream, QStringList& Collect,
                               QPlainTextEdit *ErrText)
 {
   if(showBias > 0) showBias = -1;  // do not show DC bias anymore
@@ -1964,7 +1964,7 @@ int SchematicView::prepareNetlist(QTextStream& stream, QStringList& Collect,
 
 // ---------------------------------------------------
 // Write the beginning of digital netlist to the text stream 'stream'.
-void SchematicView::beginNetlistDigital(QTextStream& stream)
+void SchematicFile::beginNetlistDigital(QTextStream& stream)
 {
   if (isVerilog) {
     stream << "module TestBench ();\n";
@@ -1997,7 +1997,7 @@ void SchematicView::beginNetlistDigital(QTextStream& stream)
 
 // ---------------------------------------------------
 // Write the end of digital netlist to the text stream 'stream'.
-void SchematicView::endNetlistDigital(QTextStream& stream)
+void SchematicFile::endNetlistDigital(QTextStream& stream)
 {
   if (isVerilog) {
   } else {
@@ -2007,7 +2007,7 @@ void SchematicView::endNetlistDigital(QTextStream& stream)
 
 // ---------------------------------------------------
 // write all components with node names into the netlist file
-QString SchematicView::createNetlist(QTextStream& stream, int NumPorts)
+QString SchematicFile::createNetlist(QTextStream& stream, int NumPorts)
 {
   if(!isAnalog) {
     beginNetlistDigital(stream);
