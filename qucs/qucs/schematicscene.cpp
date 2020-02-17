@@ -3421,3 +3421,16 @@ bool SchematicScene::elementsOnGrid()
   if(count) setChanged(true, true);
   return count;
 }
+
+// ---------------------------------------------------
+// Sets an arbitrary coordinate onto the next grid coordinate.
+void SchematicView::setOnGrid(int& x, int& y)
+{
+  if(x<0) x -= (GridX >> 1) - 1;
+  else x += GridX >> 1;
+  x -= x % GridX;
+
+  if(y<0) y -= (GridY >> 1) - 1;
+  else y += GridY >> 1;
+  y -= y % GridY;
+}

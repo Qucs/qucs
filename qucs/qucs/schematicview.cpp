@@ -713,19 +713,6 @@ void SchematicView::enlargeView(int x1, int y1, int x2, int y2)
 }
 
 // ---------------------------------------------------
-// Sets an arbitrary coordinate onto the next grid coordinate.
-void SchematicView::setOnGrid(int& x, int& y)
-{
-  if(x<0) x -= (GridX >> 1) - 1;
-  else x += GridX >> 1;
-  x -= x % GridX;
-
-  if(y<0) y -= (GridY >> 1) - 1;
-  else y += GridY >> 1;
-  y -= y % GridY;
-}
-
-// ---------------------------------------------------
 // Correction factor for unproportional font scaling.
 float SchematicView::textCorr()
 {
