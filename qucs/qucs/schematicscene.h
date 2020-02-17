@@ -62,6 +62,7 @@ protected:
   void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
   void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 
+public: ///\todo set public for now
   // from schematicview
   bool  rotateElements();
   bool  mirrorXComponents();
