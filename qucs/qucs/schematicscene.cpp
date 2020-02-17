@@ -38,6 +38,13 @@
 #include <QUndoStack>
 #include <QGraphicsSceneMouseEvent>
 
+// just dummies for empty lists
+WireList      SymbolWires;
+NodeList      SymbolNodes;
+DiagramList   SymbolDiags;
+ComponentList SymbolComps;
+
+
 SchematicScene::SchematicScene(QObject *parent) :
   QGraphicsScene(parent)
 {
@@ -2965,6 +2972,287 @@ void SchematicScene::copyLabels(int& x1, int& y1, int& x2, int& y2,
 }
 
 
+
+
+
+// ---------------------------------------------------
+bool SchematicView::createSubcircuitSymbol()
+{
+  // If the number of ports is not equal, remove or add some.
+  unsigned int countPort = adjustPortNumbers();
+
+  // If a symbol does not yet exist, create one.
+  if(SymbolPaints.count() != countPort)
+    return false;
+
+  int h = 30*((countPort-1)/2) + 10;
+  SymbolPaints.prepend(new ID_Text(-20, h+4));
+
+  SymbolPaints.append(
+     new GraphicLine(-20, -h, 40,  0, QPen(Qt::darkBlue,2)));
+  SymbolPaints.append(
+     new GraphicLine( 20, -h,  0,2*h, QPen(Qt::darkBlue,2)));
+  SymbolPaints.append(
+     new GraphicLine(-20,  h, 40,  0, QPen(Qt::darkBlue,2)));
+  SymbolPaints.append(
+     new GraphicLine(-20, -h,  0,2*h, QPen(Qt::darkBlue,2)));
+
+  unsigned int i=0, y = 10-h;
+  while(i<countPort) {
+    i++;
+    SymbolPaints.append(
+       new GraphicLine(-30, y, 10, 0, QPen(Qt::darkBlue,2)));
+    SymbolPaints.at(i)->setCenter(-30,  y);
+
+    if(i == countPort)  break;
+    i++;
+    SymbolPaints.append(
+       new GraphicLine( 20, y, 10, 0, QPen(Qt::darkBlue,2)));
+    SymbolPaints.at(i)->setCenter(30,  y);
+    y += 60;
+  }
+  return true;
+}
+
+
+// ---------------------------------------------------
+// Rotates all selected components around their midpoint.
+bool SchematicView::rotateElements()
+{
+  Wires->setAutoDelete(false);
+  Components->setAutoDelete(false);
+
+  int x1=INT_MAX, y1=INT_MAX;
+  int x2=INT_MIN, y2=INT_MIN;
+  QList<Element *> ElementCache;
+  copyLabels(x1, y1, x2, y2, &ElementCache);   // must be first of all !
+  copyComponents(x1, y1, x2, y2, &ElementCache);
+  copyWires(x1, y1, x2, y2, &ElementCache);
+  copyPaintings(x1, y1, x2, y2, &ElementCache);
+  if(y1 == INT_MAX) return false;   // no element selected
+
+  Wires->setAutoDelete(true);
+  Components->setAutoDelete(true);
+
+  x1 = (x1+x2) >> 1;   // center for rotation
+  y1 = (y1+y2) >> 1;
+  //setOnGrid(x1, y1);
+
+
+  Wire *pw;
+  Painting  *pp;
+  Component *pc;
+  WireLabel *pl;
+  // re-insert elements
+  foreach(Element *pe, ElementCache)
+    switch(pe->ElemType) {
+      case isComponent:
+      case isAnalogComponent:
+      case isDigitalComponent:
+        pc = (Component*)pe;
+        pc->rotate();   //rotate component !before! rotating its center
+        pc->setCenter(pc->cy - y1 + x1, x1 - pc->cx + y1);
+        insertRawComponent(pc);
+        break;
+
+      case isWire:
+        pw = (Wire*)pe;
+        x2 = pw->x1;
+        pw->x1 = pw->y1 - y1 + x1;
+        pw->y1 = x1 - x2 + y1;
+        x2 = pw->x2;
+        pw->x2 = pw->y2 - y1 + x1;
+        pw->y2 = x1 - x2 + y1;
+        pl = pw->Label;
+        if(pl) {
+          x2 = pl->cx;
+          pl->cx = pl->cy - y1 + x1;
+          pl->cy = x1 - x2 + y1;
+          if(pl->ElemType == isHWireLabel)
+            pl->ElemType = isVWireLabel;
+          else pl->ElemType = isHWireLabel;
+        }
+        insertWire(pw);
+        break;
+
+      case isHWireLabel:
+      case isVWireLabel:
+	pl = (WireLabel*)pe;
+	x2 = pl->x1;
+	pl->x1 = pl->y1 - y1 + x1;
+	pl->y1 = x1 - x2 + y1;
+	break;
+      case isNodeLabel:
+	pl = (WireLabel*)pe;
+	if(pl->pOwner == 0) {
+	  x2 = pl->x1;
+	  pl->x1 = pl->y1 - y1 + x1;
+	  pl->y1 = x1 - x2 + y1;
+	}
+	x2 = pl->cx;
+	pl->cx = pl->cy - y1 + x1;
+	pl->cy = x1 - x2 + y1;
+	insertNodeLabel(pl);
+	break;
+
+      case isPainting:
+        pp = (Painting*)pe;
+        pp->rotate();   // rotate painting !before! rotating its center
+        pp->getCenter(x2, y2);
+        //qDebug("pp->getCenter(x2, y2): (%i,%i)\n", x2, y2);
+        //qDebug("(x1,y1) (x2,y2): (%i,%i) (%i,%i)\n", x1,y1,x2,y2);
+        pp->setCenter(y2-y1 + x1, x1-x2 + y1);
+        Paintings->append(pp);
+        break;
+      default: ;
+    }
+
+  ElementCache.clear();
+
+  setChanged(true, true);
+  return true;
+}
+
+
+// ---------------------------------------------------
+// Mirrors all selected components.
+// First copy them to 'ElementCache', then mirror and insert again.
+bool SchematicView::mirrorXComponents()
+{
+  Wires->setAutoDelete(false);
+  Components->setAutoDelete(false);
+
+  int x1, y1, x2, y2;
+  QList<Element *> ElementCache;
+  if(!copyComps2WiresPaints(x1, y1, x2, y2, &ElementCache))
+    return false;
+  Wires->setAutoDelete(true);
+  Components->setAutoDelete(true);
+
+  y1 = (y1+y2) >> 1;   // axis for mirroring
+  setOnGrid(y2, y1);
+  y1 <<= 1;
+
+
+  Wire *pw;
+  Painting  *pp;
+  Component *pc;
+  WireLabel *pl;
+  // re-insert elements
+  foreach(Element *pe, ElementCache)
+    switch(pe->ElemType) {
+      case isComponent:
+      case isAnalogComponent:
+      case isDigitalComponent:
+	pc = (Component*)pe;
+	pc->mirrorX();   // mirror component !before! mirroring its center
+	pc->setCenter(pc->cx, y1 - pc->cy);
+	insertRawComponent(pc);
+	break;
+      case isWire:
+	pw = (Wire*)pe;
+	pw->y1 = y1 - pw->y1;
+	pw->y2 = y1 - pw->y2;
+	pl = pw->Label;
+	if(pl)  pl->cy = y1 - pl->cy;
+	insertWire(pw);
+	break;
+      case isHWireLabel:
+      case isVWireLabel:
+	pl = (WireLabel*)pe;
+	pl->y1 = y1 - pl->y1;
+	break;
+      case isNodeLabel:
+	pl = (WireLabel*)pe;
+	if(pl->pOwner == 0)
+	  pl->y1 = y1 - pl->y1;
+	pl->cy = y1 - pl->cy;
+	insertNodeLabel(pl);
+	break;
+      case isPainting:
+	pp = (Painting*)pe;
+	pp->getCenter(x2, y2);
+	pp->mirrorX();   // mirror painting !before! mirroring its center
+	pp->setCenter(x2, y1 - y2);
+	Paintings->append(pp);
+	break;
+      default: ;
+    }
+
+  ElementCache.clear();
+  setChanged(true, true);
+  return true;
+}
+
+// ---------------------------------------------------
+// Mirrors all selected components. First copy them to 'ElementCache', then mirror and insert again.
+bool SchematicView::mirrorYComponents()
+{
+  Wires->setAutoDelete(false);
+  Components->setAutoDelete(false);
+
+  int x1, y1, x2, y2;
+  QList<Element *> ElementCache;
+  if(!copyComps2WiresPaints(x1, y1, x2, y2, &ElementCache))
+    return false;
+  Wires->setAutoDelete(true);
+  Components->setAutoDelete(true);
+
+  x1 = (x1+x2) >> 1;   // axis for mirroring
+  setOnGrid(x1, x2);
+  x1 <<= 1;
+
+  Wire *pw;
+  Painting  *pp;
+  Component *pc;
+  WireLabel *pl;
+  // re-insert elements
+  foreach(Element *pe, ElementCache)
+    switch(pe->ElemType) {
+      case isComponent:
+      case isAnalogComponent:
+      case isDigitalComponent:
+        pc = (Component*)pe;
+        pc->mirrorY();   // mirror component !before! mirroring its center
+        pc->setCenter(x1 - pc->cx, pc->cy);
+        insertRawComponent(pc);
+        break;
+      case isWire:
+        pw = (Wire*)pe;
+        pw->x1 = x1 - pw->x1;
+        pw->x2 = x1 - pw->x2;
+        pl = pw->Label;
+        if(pl)  pl->cx = x1 - pl->cx;
+        insertWire(pw);
+        break;
+      case isHWireLabel:
+      case isVWireLabel:
+        pl = (WireLabel*)pe;
+        pl->x1 = x1 - pl->x1;
+        break;
+      case isNodeLabel:
+        pl = (WireLabel*)pe;
+        if(pl->pOwner == 0)
+          pl->x1 = x1 - pl->x1;
+        pl->cx = x1 - pl->cx;
+        insertNodeLabel(pl);
+        break;
+      case isPainting:
+        pp = (Painting*)pe;
+        pp->getCenter(x2, y2);
+        pp->mirrorY();   // mirror painting !before! mirroring its center
+        pp->setCenter(x1 - x2, y2);
+        Paintings->append(pp);
+        break;
+      default: ;
+    }
+
+  ElementCache.clear();
+  setChanged(true, true);
+  return true;
+}
+
+
 /* *******************************************************************
    *****                                                         *****
    *****                Actions with paintings                   *****
@@ -2994,4 +3282,142 @@ void SchematicScene::copyPaintings(int& x1, int& y1, int& x2, int& y2,
         else pp = Paintings->next();
 }
 
-// vim:ts=8:sw=2:noet
+
+
+// ---------------------------------------------------
+// Sets selected elements on grid.
+/// \bug pass list of selected instead of searching for them.
+bool SchematicView::elementsOnGrid()
+{
+  int x, y, No;
+  bool count = false;
+  WireLabel *pl, *pLabel;
+  Q3PtrList<WireLabel> LabelCache;
+
+  // test all components
+  Components->setAutoDelete(false);
+  for(Component *pc = Components->last(); pc != 0; pc = Components->prev())
+    if(pc->ElemSelected) {
+
+      // rescue non-selected node labels
+      foreach(Port *pp, pc->Ports)
+        if(pp->Connection->Label)
+          if(pp->Connection->Connections.count() < 2) {
+            LabelCache.append(pp->Connection->Label);
+            pp->Connection->Label->pOwner = 0;
+            pp->Connection->Label = 0;
+          }
+
+      x = pc->cx;
+      y = pc->cy;
+      No = Components->at();
+      deleteComp(pc);
+      setOnGrid(pc->cx, pc->cy);
+      insertRawComponent(pc);
+      Components->at(No);   // restore current list position
+      pc->ElemSelected = false;
+      count = true;
+
+      x -= pc->cx;
+      y -= pc->cy;    // re-insert node labels and correct position
+      for(pl = LabelCache.first(); pl != 0; pl = LabelCache.next()) {
+        pl->cx -= x;
+        pl->cy -= y;
+        insertNodeLabel(pl);
+      }
+      LabelCache.clear();
+    }
+  Components->setAutoDelete(true);
+
+  Wires->setAutoDelete(false);
+  // test all wires and wire labels
+  for(Wire *pw = Wires->last(); pw != 0; pw = Wires->prev()) {
+    pl = pw->Label;
+    pw->Label = 0;
+
+    if(pw->ElemSelected) {
+      // rescue non-selected node label
+      pLabel = 0;
+      if(pw->Port1->Label) {
+        if(pw->Port1->Connections.count() < 2) {
+            pLabel = pw->Port1->Label;
+            pw->Port1->Label = 0;
+        }
+      }
+      else if(pw->Port2->Label) {
+        if(pw->Port2->Connections.count() < 2) {
+            pLabel = pw->Port2->Label;
+            pw->Port2->Label = 0;
+        }
+      }
+
+      No = Wires->at();
+      deleteWire(pw);
+      setOnGrid(pw->x1, pw->y1);
+      setOnGrid(pw->x2, pw->y2);
+      insertWire(pw);
+      Wires->at(No);   // restore current list position
+      pw->ElemSelected = false;
+      count = true;
+      if(pl)
+        setOnGrid(pl->cx, pl->cy);
+
+      if(pLabel) {
+        setOnGrid(pLabel->cx, pLabel->cy);
+        insertNodeLabel(pLabel);
+      }
+    }
+
+    if(pl) {
+      pw->Label = pl;
+      if(pl->ElemSelected) {
+        setOnGrid(pl->x1, pl->y1);
+        pl->ElemSelected = false;
+        count = true;
+      }
+    }
+  }
+  Wires->setAutoDelete(true);
+
+  // test all node labels
+  for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
+    if(pn->Label)
+      if(pn->Label->ElemSelected) {
+        setOnGrid(pn->Label->x1, pn->Label->y1);
+        pn->Label->ElemSelected = false;
+        count = true;
+      }
+
+  // test all diagrams
+  for(Diagram *pd = Diagrams->last(); pd != 0; pd = Diagrams->prev()) {
+    if(pd->ElemSelected) {
+      setOnGrid(pd->cx, pd->cy);
+      pd->ElemSelected = false;
+      count = true;
+    }
+
+    foreach(Graph *pg,pd->Graphs)
+      // test markers of diagram
+      foreach(Marker *pm, pg->Markers)
+        if(pm->ElemSelected) {
+	  x = pm->x1 + pd->cx;
+	  y = pm->y1 + pd->cy;
+	  setOnGrid(x, y);
+	  pm->x1 = x - pd->cx;
+	  pm->y1 = y - pd->cy;
+	  pm->ElemSelected = false;
+	  count = true;
+        }
+  }
+
+  // test all paintings
+  for(Painting *pa = Paintings->last(); pa != 0; pa = Paintings->prev())
+    if(pa->ElemSelected) {
+      setOnGrid(pa->cx, pa->cy);
+      pa->ElemSelected = false;
+      count = true;
+    }
+
+  if(count) setChanged(true, true);
+  return count;
+}

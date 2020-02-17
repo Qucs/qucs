@@ -2061,4 +2061,314 @@ QString SchematicFile::createNetlist(QTextStream& stream, int NumPorts)
   return Time;
 }
 
+// Copy function,
+void SchematicView::copy()
+{
+  QString s = createClipboardFile();
+  QClipboard *cb = QApplication::clipboard();  // get system clipboard
+  if (!s.isEmpty()) {
+    cb->setText(s, QClipboard::Clipboard);
+  }
+}
+
+// ---------------------------------------------------
+// Cut function, copy followed by deletion
+void SchematicView::cut()
+{
+  copy();
+  deleteElements(); //delete selected elements
+  viewport()->update();
+}
+
+// ---------------------------------------------------
+// Performs paste function from clipboard
+bool SchematicView::paste(QTextStream *stream, Q3PtrList<Element> *pe)
+{
+  return pasteFromClipboard(stream, pe);
+}
+
+// ---------------------------------------------------
+// Loads this Qucs document.
+bool SchematicView::load()
+{
+  DocComps.clear();
+  DocWires.clear();
+  DocNodes.clear();
+  DocDiags.clear();
+  DocPaints.clear();
+  SymbolPaints.clear();
+
+  if(!loadDocument()) return false;
+  lastSaved = QDateTime::currentDateTime();
+
+  // have to call this to avoid crash at sizeOfAll
+  becomeCurrent(false);
+
+  sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
+  if(ViewX1 > UsedX1)  ViewX1 = UsedX1;
+  if(ViewY1 > UsedY1)  ViewY1 = UsedY1;
+  if(ViewX2 < UsedX2)  ViewX2 = UsedX2;
+  if(ViewY2 < UsedY2)  ViewY2 = UsedY2;
+  zoomReset();
+  TODO("Fix setContentsPos");
+  /// \todo setContentsPos(tmpViewX1, tmpViewY1);
+  tmpViewX1 = tmpViewY1 = -200;   // was used as temporary cache
+  return true;
+}
+
+// ---------------------------------------------------
+// Saves this Qucs document. Returns the number of subcircuit ports.
+int SchematicView::save()
+{
+  int result = adjustPortNumbers();// same port number for schematic and symbol
+  if(saveDocument() < 0)
+     return -1;
+
+  QFileInfo Info(DocName);
+  lastSaved = Info.lastModified();
+
+  // update the subcircuit file lookup hashes
+  QucsMain->updateSchNameHash();
+  QucsMain->updateSpiceNameHash();
+
+  return result;
+}
+
+// ---------------------------------------------------
+// If the port number of the schematic and of the symbol are not
+// equal add or remove some in the symbol.
+int SchematicView::adjustPortNumbers()
+{
+  int x1, x2, y1, y2;
+  // get size of whole symbol to know where to place new ports
+  if(symbolMode)  sizeOfAll(x1, y1, x2, y2);
+  else {
+    Components = &SymbolComps;
+    Wires      = &SymbolWires;
+    Nodes      = &SymbolNodes;
+    Diagrams   = &SymbolDiags;
+    Paintings  = &SymbolPaints;
+    sizeOfAll(x1, y1, x2, y2);
+    Components = &DocComps;
+    Wires      = &DocWires;
+    Nodes      = &DocNodes;
+    Diagrams   = &DocDiags;
+    Paintings  = &DocPaints;
+  }
+  x1 += 40;
+  y2 += 20;
+  setOnGrid(x1, y2);
+
+
+  Painting *pp;
+  // delete all port names in symbol
+  for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+    if(pp->Name == ".PortSym ")
+      ((PortSymbol*)pp)->nameStr = "";
+
+  QString Str;
+  int countPort = 0;
+
+  QFileInfo Info (DataDisplay);
+  QString Suffix = Info.suffix();
+
+  // handle VHDL file symbol
+  if (Suffix == "vhd" || Suffix == "vhdl") {
+    QStringList::iterator it;
+    QStringList Names, GNames, GTypes, GDefs;
+    int Number;
+
+    // get ports from VHDL file
+    QFileInfo Info(DocName);
+    QString Name = Info.path() + QDir::separator() + DataDisplay;
+
+    // obtain VHDL information either from open text document or the
+    // file directly
+    VHDL_File_Info VInfo;
+    TextDoc * d = (TextDoc*)App->findDoc (Name);
+    if (d)
+      VInfo = VHDL_File_Info (d->document()->toPlainText());
+    else
+      VInfo = VHDL_File_Info (Name, true);
+
+    if (!VInfo.PortNames.isEmpty())
+      Names = VInfo.PortNames.split(",", QString::SkipEmptyParts);
+
+    for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+      if(pp->Name == ".ID ") {
+	ID_Text * id = (ID_Text *) pp;
+	id->Prefix = VInfo.EntityName.toUpper();
+	id->Parameter.clear();
+	if (!VInfo.GenNames.isEmpty())
+	  GNames = VInfo.GenNames.split(",", QString::SkipEmptyParts);
+	if (!VInfo.GenTypes.isEmpty())
+	  GTypes = VInfo.GenTypes.split(",", QString::SkipEmptyParts);
+	if (!VInfo.GenDefs.isEmpty())
+	  GDefs = VInfo.GenDefs.split(",", QString::SkipEmptyParts);;
+	for(Number = 1, it = GNames.begin(); it != GNames.end(); ++it) {
+	  id->Parameter.append(new SubParameter(
+ 	    true,
+	    *it+"="+GDefs[Number-1],
+	    tr("generic")+" "+QString::number(Number),
+	    GTypes[Number-1]));
+	  Number++;
+	}
+      }
+
+    for(Number = 1, it = Names.begin(); it != Names.end(); ++it, Number++) {
+      countPort++;
+
+      Str = QString::number(Number);
+      // search for matching port symbol
+      for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+	if(pp->Name == ".PortSym ")
+	  if(((PortSymbol*)pp)->numberStr == Str) break;
+
+      if(pp)
+	((PortSymbol*)pp)->nameStr = *it;
+      else {
+	SymbolPaints.append(new PortSymbol(x1, y2, Str, *it));
+	y2 += 40;
+      }
+    }
+  }
+  // handle Verilog-HDL file symbol
+  else if (Suffix == "v") {
+
+    QStringList::iterator it;
+    QStringList Names;
+    int Number;
+
+    // get ports from Verilog-HDL file
+    QFileInfo Info (DocName);
+    QString Name = Info.path() + QDir::separator() + DataDisplay;
+
+    // obtain Verilog-HDL information either from open text document or the
+    // file directly
+    Verilog_File_Info VInfo;
+    TextDoc * d = (TextDoc*)App->findDoc (Name);
+    if (d)
+      VInfo = Verilog_File_Info (d->document()->toPlainText());
+    else
+      VInfo = Verilog_File_Info (Name, true);
+    if (!VInfo.PortNames.isEmpty())
+      Names = VInfo.PortNames.split(",", QString::SkipEmptyParts);
+
+    for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+      if(pp->Name == ".ID ") {
+	ID_Text * id = (ID_Text *) pp;
+	id->Prefix = VInfo.ModuleName.toUpper();
+	id->Parameter.clear();
+      }
+
+    for(Number = 1, it = Names.begin(); it != Names.end(); ++it, Number++) {
+      countPort++;
+
+      Str = QString::number(Number);
+      // search for matching port symbol
+      for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+	if(pp->Name == ".PortSym ")
+	  if(((PortSymbol*)pp)->numberStr == Str) break;
+
+      if(pp)
+	((PortSymbol*)pp)->nameStr = *it;
+      else {
+	SymbolPaints.append(new PortSymbol(x1, y2, Str, *it));
+	y2 += 40;
+      }
+    }
+  }
+  // handle Verilog-A file symbol
+  else if (Suffix == "va") {
+
+    QStringList::iterator it;
+    QStringList Names;
+    int Number;
+
+    // get ports from Verilog-A file
+    QFileInfo Info (DocName);
+    QString Name = Info.path() + QDir::separator() + DataDisplay;
+
+    // obtain Verilog-A information either from open text document or the
+    // file directly
+    VerilogA_File_Info VInfo;
+    TextDoc * d = (TextDoc*)App->findDoc (Name);
+    if (d)
+      VInfo = VerilogA_File_Info (d->toPlainText());
+    else
+      VInfo = VerilogA_File_Info (Name, true);
+
+    if (!VInfo.PortNames.isEmpty())
+      Names = VInfo.PortNames.split(",", QString::SkipEmptyParts);
+
+    for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+      if(pp->Name == ".ID ") {
+	ID_Text * id = (ID_Text *) pp;
+	id->Prefix = VInfo.ModuleName.toUpper();
+	id->Parameter.clear();
+      }
+
+    for(Number = 1, it = Names.begin(); it != Names.end(); ++it, Number++) {
+      countPort++;
+
+      Str = QString::number(Number);
+      // search for matching port symbol
+      for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+	if(pp->Name == ".PortSym ")
+	  if(((PortSymbol*)pp)->numberStr == Str) break;
+
+      if(pp)
+	((PortSymbol*)pp)->nameStr = *it;
+      else {
+	SymbolPaints.append(new PortSymbol(x1, y2, Str, *it));
+	y2 += 40;
+      }
+    }
+  }
+  // handle schematic symbol
+  else
+  {
+      // go through all components in a schematic
+      for(Component *pc = DocComps.first(); pc!=0; pc = DocComps.next())
+      {
+         if(pc->obsolete_model_hack() == "Port") { // BUG. move to device.
+             countPort++;
+
+             Str = pc->Props.getFirst()->Value;
+             // search for matching port symbol
+             for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+             {
+                 if(pp->Name == ".PortSym ")
+                 {
+                   if(((PortSymbol*)pp)->numberStr == Str) break;
+                 }
+             }
+
+             if(pp)
+             {
+                 ((PortSymbol*)pp)->nameStr = pc->name();
+             }
+             else
+             {
+                 SymbolPaints.append(new PortSymbol(x1, y2, Str, pc->name()));
+                 y2 += 40;
+             }
+          }
+      }
+  }
+
+  // delete not accounted port symbols
+  for(pp = SymbolPaints.first(); pp!=0; ) {
+    if(pp->Name == ".PortSym ")
+      if(((PortSymbol*)pp)->nameStr.isEmpty()) {
+        SymbolPaints.remove();
+        pp = SymbolPaints.current();
+        continue;
+      }
+    pp = SymbolPaints.next();
+  }
+
+  return countPort;
+}
+
 // vim:ts=8:sw=2:noet
