@@ -156,6 +156,9 @@ void SchematicView::becomeCurrent(bool update)
 {
   emit signalCursorPosChanged(0, 0);
 
+  TODO("Fix symbol mode");
+  /*
+
   // update appropriate menu entry
   if (symbolMode) {
     if (DocName.right(4) == ".sym") {
@@ -202,6 +205,7 @@ void SchematicView::becomeCurrent(bool update)
     if(update)
       reloadGraphs();   // load recent simulation data
   }
+  */
 }
 
 // ---------------------------------------------------
