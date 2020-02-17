@@ -2062,7 +2062,7 @@ QString SchematicFile::createNetlist(QTextStream& stream, int NumPorts)
 }
 
 // Copy function,
-void SchematicView::copy()
+void SchematicFile::copy()
 {
   QString s = createClipboardFile();
   QClipboard *cb = QApplication::clipboard();  // get system clipboard
@@ -2073,7 +2073,7 @@ void SchematicView::copy()
 
 // ---------------------------------------------------
 // Cut function, copy followed by deletion
-void SchematicView::cut()
+void SchematicFile::cut()
 {
   copy();
   deleteElements(); //delete selected elements
@@ -2082,14 +2082,14 @@ void SchematicView::cut()
 
 // ---------------------------------------------------
 // Performs paste function from clipboard
-bool SchematicView::paste(QTextStream *stream, Q3PtrList<Element> *pe)
+bool SchematicFile::paste(QTextStream *stream, Q3PtrList<Element> *pe)
 {
   return pasteFromClipboard(stream, pe);
 }
 
 // ---------------------------------------------------
 // Loads this Qucs document.
-bool SchematicView::load()
+bool SchematicFile::load()
 {
   DocComps.clear();
   DocWires.clear();
@@ -2118,7 +2118,7 @@ bool SchematicView::load()
 
 // ---------------------------------------------------
 // Saves this Qucs document. Returns the number of subcircuit ports.
-int SchematicView::save()
+int SchematicFile::save()
 {
   int result = adjustPortNumbers();// same port number for schematic and symbol
   if(saveDocument() < 0)
@@ -2137,7 +2137,7 @@ int SchematicView::save()
 // ---------------------------------------------------
 // If the port number of the schematic and of the symbol are not
 // equal add or remove some in the symbol.
-int SchematicView::adjustPortNumbers()
+int SchematicFile::adjustPortNumbers()
 {
   int x1, x2, y1, y2;
   // get size of whole symbol to know where to place new ports
