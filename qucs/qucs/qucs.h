@@ -33,6 +33,7 @@
 
 class QucsDoc;
 class SchematicView;
+class SchematicScene;
 class TextDoc;
 class SimMessage;
 class MouseActions;
@@ -134,7 +135,7 @@ bool saveApplSettings();
 
 // function pointers used with mouse actions handling
 /// function pointers used to handle mouse actions
-typedef bool (SchematicView::*pToggleFunc) ();
+typedef bool (SchematicScene::*pToggleFunc) ();
 typedef void (MouseActions::*pMouseFunc) (SchematicView*, QMouseEvent*);
 
 class QucsFileSystemModel : public QFileSystemModel {

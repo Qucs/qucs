@@ -96,8 +96,9 @@ bool QucsApp::performToggleAction(bool on, QAction *Action,
   }
 
   SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
+  SchematicScene *scene = Doc->scene;
   do {
-    if(Function) if((Doc->*Function)()) {
+    if(Function) if((scene->*Function)()) {
       Action->blockSignals(true);
       Action->setChecked(false);  // release toolbar button
       Action->blockSignals(false);
@@ -128,7 +129,7 @@ bool QucsApp::performToggleAction(bool on, QAction *Action,
 // Is called, when "set on grid" action is triggered.
 void QucsApp::slotOnGrid(bool on)
 {
-  performToggleAction(on, onGrid, &SchematicView::elementsOnGrid,
+  performToggleAction(on, onGrid, &SchematicScene::elementsOnGrid,
 		&MouseActions::MMoveOnGrid, &MouseActions::MPressOnGrid);
 }
 
@@ -136,7 +137,7 @@ void QucsApp::slotOnGrid(bool on)
 // Is called when the rotate toolbar button is pressed.
 void QucsApp::slotEditRotate(bool on)
 {
-  performToggleAction(on, editRotate, &SchematicView::rotateElements,
+  performToggleAction(on, editRotate, &SchematicScene::rotateElements,
 		&MouseActions::MMoveRotate, &MouseActions::MPressRotate);
 }
 
@@ -144,7 +145,7 @@ void QucsApp::slotEditRotate(bool on)
 // Is called when the mirror toolbar button is pressed.
 void QucsApp::slotEditMirrorX(bool on)
 {
-  performToggleAction(on, editMirror, &SchematicView::mirrorXComponents,
+  performToggleAction(on, editMirror, &SchematicScene::mirrorXComponents,
 		&MouseActions::MMoveMirrorX, &MouseActions::MPressMirrorX);
 }
 
@@ -152,7 +153,7 @@ void QucsApp::slotEditMirrorX(bool on)
 // Is called when the mirror toolbar button is pressed.
 void QucsApp::slotEditMirrorY(bool on)
 {
-  performToggleAction(on, editMirrorY, &SchematicView::mirrorYComponents,
+  performToggleAction(on, editMirrorY, &SchematicScene::mirrorYComponents,
 		&MouseActions::MMoveMirrorY, &MouseActions::MPressMirrorY);
 }
 
@@ -173,7 +174,7 @@ void QucsApp::slotEditActivate (bool on)
   }
   else
     performToggleAction (on, editActivate,
-        &SchematicView::activateSelectedComponents,
+        &SchematicScene::activateSelectedComponents,
         &MouseActions::MMoveActivate, &MouseActions::MPressActivate);
 }
 
@@ -192,7 +193,7 @@ void QucsApp::slotEditDelete(bool on)
     editDelete->blockSignals(false);
   }
   else
-    performToggleAction(on, editDelete, &SchematicView::deleteElements,
+    performToggleAction(on, editDelete, &SchematicScene::deleteElements,
           &MouseActions::MMoveDelete, &MouseActions::MPressDelete);
 }
 
@@ -309,7 +310,8 @@ void QucsApp::slotEditCut()
   if(isTextDocument (Doc)) {
     ((TextDoc *)Doc)->cut();
   } else {
-    ((SchematicView *)Doc)->cut();
+    TODO("fix cut"); // not sure if it is part of File or Scene
+    //((SchematicView *)Doc)->cut();
   }
 
   statusBar()->showMessage(tr("Ready."));
@@ -324,7 +326,8 @@ void QucsApp::slotEditCopy()
   if(isTextDocument (Doc)) {
     ((TextDoc *)Doc)->copy();
   } else {
-    ((SchematicView *)Doc)->copy();
+    TODO("fix cut"); // not sure if it is part of File or Scene
+    //((SchematicView *)Doc)->copy();
   }
 
   statusBar()->showMessage(tr("Ready."));
@@ -535,7 +538,7 @@ void QucsApp::slotAlignTop()
   slotHideEdit(); // disable text edit of component property
 
   SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
-  if(!Doc->aligning(0))
+  if(!Doc->scene->aligning(0))
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
   Doc->viewport()->update();
@@ -549,7 +552,7 @@ void QucsApp::slotAlignBottom()
   slotHideEdit(); // disable text edit of component property
 
   SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
-  if(!Doc->aligning(1))
+  if(!Doc->scene->aligning(1))
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
   Doc->viewport()->update();
@@ -563,7 +566,7 @@ void QucsApp::slotAlignLeft()
   slotHideEdit(); // disable text edit of component property
 
   SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
-  if(!Doc->aligning(2))
+  if(!Doc->scene->aligning(2))
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
   Doc->viewport()->update();
@@ -577,7 +580,7 @@ void QucsApp::slotAlignRight()
   slotHideEdit(); // disable text edit of component property
 
   SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
-  if(!Doc->aligning(3))
+  if(!Doc->scene->aligning(3))
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
   Doc->viewport()->update();
@@ -591,7 +594,7 @@ void QucsApp::slotDistribHoriz()
   slotHideEdit(); // disable text edit of component property
 
   SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
-  Doc->distributeHorizontal();
+  Doc->scene->distributeHorizontal();
   Doc->viewport()->update();
   mouseAction->drawn = false;
 }
@@ -603,7 +606,7 @@ void QucsApp::slotDistribVert()
   slotHideEdit(); // disable text edit of component property
 
   SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
-  Doc->distributeVertical();
+  Doc->scene->distributeVertical();
   Doc->viewport()->update();
   mouseAction->drawn = false;
 }
@@ -615,7 +618,7 @@ void QucsApp::slotCenterHorizontal()
   slotHideEdit(); // disable text edit of component property
 
   SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
-  if(!Doc->aligning(4))
+  if(!Doc->scene->aligning(4))
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
   Doc->viewport()->update();
@@ -629,7 +632,7 @@ void QucsApp::slotCenterVertical()
   slotHideEdit(); // disable text edit of component property
 
   SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
-  if(!Doc->aligning(5))
+  if(!Doc->scene->aligning(5))
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
   Doc->viewport()->update();
@@ -649,7 +652,7 @@ void QucsApp::slotSelectAll()
     ((TextDoc*)Doc)->selectAll();
   }
   else {
-    ((SchematicView*)Doc)->selectElements(INT_MIN, INT_MIN, INT_MAX, INT_MAX, true);
+    ((SchematicView*)Doc)->scene->selectElements(INT_MIN, INT_MIN, INT_MAX, INT_MAX, true);
     ((SchematicView*)Doc)->viewport()->update();
     mouseAction->drawn = false;
   }
@@ -662,7 +665,7 @@ void QucsApp::slotSelectMarker()
   slotHideEdit(); // disable text edit of component property
 
   SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
-  Doc->selectMarkers();
+  Doc->scene->selectMarkers();
   Doc->viewport()->update();
   mouseAction->drawn = false;
 }
@@ -1189,7 +1192,7 @@ void QucsApp::slotApplyCompText()
       Component *pc2;
       if(!editText->text().isEmpty())
         if(pc->name() != editText->text()) {
-          for(pc2 = Doc->Components->first(); pc2!=0; pc2 = Doc->Components->next())
+          for(pc2 = Doc->scene->Components->first(); pc2!=0; pc2 = Doc->scene->Components->next())
             if(pc2->name() == editText->text())
               break;  // found component with the same name ?
           if(!pc2) {
@@ -1201,7 +1204,7 @@ void QucsApp::slotApplyCompText()
     else if(pp) {  // property was applied
       if(pp->Value != editText->text()) {
         pp->Value = editText->text();
-        Doc->recreateComponent(pc);  // because of "Num" and schematic symbol
+        Doc->scene->recreateComponent(pc);  // because of "Num" and schematic symbol
         Doc->setChanged(true, true); // only one undo state
       }
     }
