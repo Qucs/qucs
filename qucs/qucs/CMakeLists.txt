@@ -182,13 +182,14 @@ SET(QUCS_SRCS
   element.cpp	octave_window.cpp	qucsdoc.cpp
   textdoc.cpp schematicview.cpp
   mnemo.cpp	qucs.cpp
-  module.cpp	schematic_element.cpp	wire.cpp
-  mouseactions.cpp qucs_actions.cpp	schematic_file.cpp
+  module.cpp wire.cpp
+  mouseactions.cpp qucs_actions.cpp
   wirelabel.cpp node.cpp qucs_init.cpp
   syntax.cpp misc.cpp messagedock.cpp
   imagewriter.cpp printerwriter.cpp projectView.cpp
   frame.cpp
   mousecursor.cpp
+  schematicfile.cpp
   schematicscene.cpp
   undocommands.cpp
 )
@@ -215,6 +216,7 @@ wire.h
 wirelabel.h
 frame.h
 mousecursor.h
+schematicfile.h
 schematicscene.h
 qt_compat.h
 undocommands.h
