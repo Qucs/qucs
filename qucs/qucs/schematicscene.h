@@ -69,6 +69,7 @@ public: ///\todo set public for now
   bool  mirrorYComponents();
   void  setOnGrid(int&, int&);
   bool  elementsOnGrid();
+  void highlightWireLabels (void);
 
 public:
   /// \todo make then public while we fix stuff

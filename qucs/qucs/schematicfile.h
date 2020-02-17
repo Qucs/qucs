@@ -73,7 +73,6 @@ public:
   int  prepareNetlist(QTextStream&, QStringList&, QPlainTextEdit*);
   QString createNetlist(QTextStream&, int);
   bool loadDocument();
-  void highlightWireLabels (void);
 
 private:
   int  saveDocument();

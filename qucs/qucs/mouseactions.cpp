@@ -85,7 +85,8 @@ bool MouseActions::pasteElements(SchematicView *Doc)
   QTextStream stream(&s, QIODevice::ReadOnly);
   movingElements.clear();
 
-  SchematicFile *sch = new SchematicFile();
+  TODO("fix schematic file ref")
+  SchematicFile *sch = new SchematicFile(0);
   if(!sch->paste(&stream, &movingElements)) return false;
 
   Element *pe;
@@ -164,6 +165,7 @@ void MouseActions::editLabel(SchematicView *Doc, WireLabel *pl)
 void MouseActions::endElementMoving(SchematicView *Doc, Q3PtrList<Element> *movElements)
 {
   Element *pe;
+  SchematicScene *scene = Doc->scene;
   for(pe = movElements->first(); pe!=0; pe = movElements->next()) {
 //    pe->isSelected = false;  // deselect first (maybe afterwards pe == NULL)
     switch(pe->ElemType) { // FIXME: use casts.
@@ -172,30 +174,30 @@ void MouseActions::endElementMoving(SchematicView *Doc, Q3PtrList<Element> *movE
           if(pe->y1 == pe->y2) {
             // Delete wires with zero length, but preserve label.
             if(((Wire*)pe)->Label) {
-              Doc->insertNodeLabel((WireLabel*)((Wire*)pe)->Label);
+              scene->insertNodeLabel((WireLabel*)((Wire*)pe)->Label);
               ((Wire*)pe)->Label = 0;
             }
             delete (Wire*)pe;
             break;
           }
 
-	Doc->insertWire((Wire*)pe);
+	scene->insertWire((Wire*)pe);
 	break;
       case isDiagram:
-	Doc->Diagrams->append((Diagram*)pe);
+	scene->Diagrams->append((Diagram*)pe);
 	break;
       case isPainting:
-	Doc->Paintings->append((Painting*)pe);
+	scene->Paintings->append((Painting*)pe);
 	break;
       case isComponent:
       case isAnalogComponent:
       case isDigitalComponent:
-	Doc->insertRawComponent((Component*)pe, false);
+	scene->insertRawComponent((Component*)pe, false);
 	break;
       case isMovingLabel:
       case isHMovingLabel:
       case isVMovingLabel:
-	Doc->insertNodeLabel((WireLabel*)pe);
+	scene->insertNodeLabel((WireLabel*)pe);
 	break;
       case isMarker:
 	assert(dynamic_cast<Marker*>(pe));
@@ -451,13 +453,15 @@ void MouseActions::MMoveMoving(SchematicView *Doc, QMouseEvent *Event)
   MAx2 = pos.x();
   MAy2 = pos.y();
 
-  Doc->scene->setOnGrid(MAx2, MAy2);
+  SchematicScene *scene = Doc->scene;
+
+  scene->setOnGrid(MAx2, MAy2);
   /// MAx1, MAy1 set on MPressSelect (?)
   MAx3 = MAx1 = MAx2 - MAx1;
   MAy3 = MAy1 = MAy2 - MAy1;
 
   movingElements.clear();
-  Doc->copySelectedElements(&movingElements);
+  scene->copySelectedElements(&movingElements);
   Doc->viewport()->repaint();
 
   Wire *pw;
@@ -889,19 +893,21 @@ void MouseActions::MPressLabel(SchematicView *Doc, QMouseEvent* Event)
   float x = pos.x();
   float y = pos.y();
 
+  SchematicScene *scene = Doc->scene;
+
   Wire *pw = 0;
   WireLabel *pl=0;
-  Node *pn = Doc->selectedNode(x, y);
+  Node *pn = scene->selectedNode(x, y);
   if(!pn) {
-    pw = Doc->selectedWire(x, y);
+    pw = scene->selectedWire(x, y);
     if(!pw) return;
   }
 
   QString Name, Value;
   Element *pe=0;
   // is wire line already labeled ?
-  if(pw) pe = Doc->getWireLabel(pw->Port1);
-  else pe = Doc->getWireLabel(pn);
+  if(pw) pe = scene->getWireLabel(pw->Port1);
+  else pe = scene->getWireLabel(pn);
   if(pe) {
     if(pe->ElemType & isComponent) {
       QMessageBox::information(0, QObject::tr("Info"),
@@ -992,6 +998,8 @@ void MouseActions::MPressSelect(SchematicView *Doc, QMouseEvent *Event)
   MAx1 = pos.x();
   MAy1 = pos.y();
 
+  SchematicScene *scene = Doc->scene;
+
   // FIXME Ctrl + press to select multiple is not working
   focusElement = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform() ));
 
@@ -1014,7 +1022,7 @@ void MouseActions::MPressSelect(SchematicView *Doc, QMouseEvent *Event)
       QucsMain->MouseDoubleClickAction = 0;
       Doc->grabKeyboard();  // no keyboard inputs during move actions
       // Update matching wire label highlighting
-      Doc->highlightWireLabels ();
+      scene->highlightWireLabels ();
       return;
 
     case isDiagramResize:  // resize diagram ?
@@ -1045,7 +1053,7 @@ void MouseActions::MPressSelect(SchematicView *Doc, QMouseEvent *Event)
       QucsMain->MouseDoubleClickAction = 0;
       Doc->grabKeyboard(); // no keyboard inputs during move actions
       // Update matching wire label highlighting
-      Doc->highlightWireLabels ();
+      scene->highlightWireLabels ();
       return;
 
     case isDiagramHScroll:  // scroll in tabular ?
@@ -1070,11 +1078,11 @@ void MouseActions::MPressSelect(SchematicView *Doc, QMouseEvent *Event)
           // Remember inital scroll bar position.
           MAx2 = int(((TabDiagram*)focusElement)->xAxis.limit_min);
           // Update matching wire label highlighting
-          Doc->highlightWireLabels ();
+          scene->highlightWireLabels ();
           return;
       }
       // Update matching wire label highlighting
-      Doc->highlightWireLabels ();
+      scene->highlightWireLabels ();
       Doc->viewport()->update();
       drawn = false;
       return;
@@ -1085,7 +1093,7 @@ void MouseActions::MPressSelect(SchematicView *Doc, QMouseEvent *Event)
       MAx3 = No;
       QucsMain->slotApplyCompText();
       // Update matching wire label highlighting
-      Doc->highlightWireLabels ();
+      scene->highlightWireLabels ();
       return;
 
     case isNode:
@@ -1110,7 +1118,7 @@ void MouseActions::MPressSelect(SchematicView *Doc, QMouseEvent *Event)
         QucsMain->insWire->setChecked(true);
         QucsMain->insWire->blockSignals(false);
         // Update matching wire label highlighting
-        Doc->highlightWireLabels ();
+        scene->highlightWireLabels ();
         return;
       }
   }
@@ -1133,14 +1141,14 @@ void MouseActions::MPressSelect(SchematicView *Doc, QMouseEvent *Event)
     if(!Ctrl)
     {
       if(!focusElement->ElemSelected)// Don't move selected elements if clicked
-        Doc->deselectElements(focusElement); // element was not selected.
+        scene->deselectElements(focusElement); // element was not selected.
       focusElement->ElemSelected = true;
     }
-    Doc->scene->setOnGrid(MAx1, MAy1);
+    scene->setOnGrid(MAx1, MAy1);
     QucsMain->MouseMoveAction = &MouseActions::MMoveMoving;
   }
   // Update matching wire label highlighting
-  Doc->highlightWireLabels ();
+  scene->highlightWireLabels ();
 }
 
 /*!
@@ -1154,11 +1162,12 @@ void MouseActions::MPressSelect(SchematicView *Doc, QMouseEvent *Event)
  */
 void MouseActions::MPressDelete(SchematicView *Doc, QMouseEvent* Event)
 {
-  Element *pe = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
+  SchematicScene *scene = Doc->scene;
+  Element *pe = dynamic_cast<Element*>(scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(pe)
   {
     pe->ElemSelected = true;
-    Doc->deleteElements();
+    scene->deleteElements();
 
     Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
     Doc->viewport()->update();
@@ -1178,7 +1187,7 @@ void MouseActions::MPressActivate(SchematicView *Doc, QMouseEvent* Event)
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx1 = pos.x();
   MAy1 = pos.y();
-  if(!Doc->activateSpecifiedComponent(MAx1, MAy1)) {
+  if(!Doc->scene->activateSpecifiedComponent(MAx1, MAy1)) {
 //    if(Event->button() != Qt::LeftButton) return;
     /// \bug get rid of these globals
     MAx2 = 0;  // if not clicking on a component => open a rectangle, updated by Move
@@ -1200,15 +1209,16 @@ void MouseActions::MPressActivate(SchematicView *Doc, QMouseEvent* Event)
  */
 void MouseActions::MPressMirrorX(SchematicView *Doc, QMouseEvent* Event)
 {
+  SchematicScene *scene = Doc->scene;
   // no use in mirroring wires or diagrams
-  Component *c = dynamic_cast<Component*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
+  Component *c = dynamic_cast<Component*>(scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(c) {
     if(c->Ports.count() < 1) return;  // only mirror components with ports
     c->mirrorX();
-    Doc->setCompPorts(c);
+    scene->setCompPorts(c);
   }
   else {
-    Painting *p = dynamic_cast<Painting*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
+    Painting *p = dynamic_cast<Painting*>(scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
     if(p == 0) return;
     p->mirrorX();
   }
@@ -1233,7 +1243,7 @@ void MouseActions::MPressMirrorY(SchematicView *Doc, QMouseEvent* Event)
   if(c) {
     if(c->Ports.count() < 1) return;  // only mirror components with ports
     c->mirrorY();
-    Doc->setCompPorts(c);
+    Doc->scene->setCompPorts(c);
   }
   else {
     Painting *p = dynamic_cast<Painting*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
@@ -1257,7 +1267,8 @@ void MouseActions::MPressMirrorY(SchematicView *Doc, QMouseEvent* Event)
  */
 void MouseActions::MPressRotate(SchematicView *Doc, QMouseEvent* Event)
 {
-  Element *e = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
+  SchematicScene *scene = Doc->scene;
+  Element *e = dynamic_cast<Element*>(scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(e == 0) return;
   e->ElemType &= isSpecialMask;  // remove special functions
 
@@ -1272,7 +1283,7 @@ void MouseActions::MPressRotate(SchematicView *Doc, QMouseEvent* Event)
       if(((Component*)e)->Ports.count() < 1)
         break;  // do not rotate components without ports
       ((Component*)e)->rotate();
-      Doc->setCompPorts((Component*)e);
+      scene->setCompPorts((Component*)e);
       // enlarge viewarea if component lies outside the view
       ((Component*)e)->entireBounds(x1,y1,x2,y2, Doc->textCorr());
       Doc->enlargeView(x1, y1, x2, y2);
@@ -1281,16 +1292,16 @@ void MouseActions::MPressRotate(SchematicView *Doc, QMouseEvent* Event)
     case isWire:
       pl = ((Wire*)e)->Label;
       ((Wire*)e)->Label = 0;    // prevent label to be deleted
-      Doc->Wires->setAutoDelete(false);
-      Doc->deleteWire((Wire*)e);
+      scene->Wires->setAutoDelete(false);
+      scene->deleteWire((Wire*)e);
       ((Wire*)e)->Label = pl;
       ((Wire*)e)->rotate();
       Doc->scene->setOnGrid(e->x1, e->y1);
       Doc->scene->setOnGrid(e->x2, e->y2);
       if(pl)  Doc->scene->setOnGrid(pl->cx, pl->cy);
-      Doc->insertWire((Wire*)e);
-      Doc->Wires->setAutoDelete(true);
-      if (Doc->Wires->containsRef ((Wire*)e))
+      scene->insertWire((Wire*)e);
+      scene->Wires->setAutoDelete(true);
+      if (scene->Wires->containsRef ((Wire*)e))
         Doc->enlargeView(e->x1, e->y1, e->x2, e->y2);
       break;
 
@@ -1342,7 +1353,7 @@ void MouseActions::MPressElement(SchematicView *Doc, QMouseEvent *Event)
 	// left mouse button inserts component into the schematic
 	// give the component a pointer to the schematic it's a
 	// part of
-	Comp->setSchematic (Doc);
+	Comp->setSchematic (Doc->scene);
 	Comp->textSize(x1, y1);
 
 	/// insert Component into scene
@@ -1356,7 +1367,7 @@ void MouseActions::MPressElement(SchematicView *Doc, QMouseEvent *Event)
     Doc->undoStack->push( new AddItemCommand(Comp, QPoint(gx,gy), Doc->scene) );
     
 	// Note: insertCopmponents does increment  name1 -> name2
-	Doc->insertComponent(Comp);
+	Doc->scene->insertComponent(Comp);
 	Comp->textSize(x2, y2);
 	if(Comp->tx < Comp->x1) Comp->tx -= x2 - x1;
 
@@ -1413,7 +1424,7 @@ void MouseActions::MPressElement(SchematicView *Doc, QMouseEvent *Event)
       return;
     }
     // add to list
-    Doc->Diagrams->append(Diag);
+    Doc->scene->Diagrams->append(Diag);
     // clear flag, draw whole Diagram, not only scheme
     selElem->drawScheme = false;
     /// \todo Doc->enlargeView(Diag->cx, Diag->cy-Diag->y2, Diag->cx+Diag->x2, Diag->cy);
@@ -1438,7 +1449,7 @@ void MouseActions::MPressElement(SchematicView *Doc, QMouseEvent *Event)
     // Note that MMoveElement keeps snapping to grid and updatig cx,cy
     if( finalPress )  {
       // add Element to list
-      Doc->Paintings->append((Painting*)selElem);
+      Doc->scene->Paintings->append((Painting*)selElem);
       // clear scheme flag
       selElem->drawScheme = false;
       // mark document as changed
@@ -1505,6 +1516,7 @@ void MouseActions::MPressWire1(SchematicView *Doc, QMouseEvent* Event)
 void MouseActions::MPressWire2(SchematicView *Doc, QMouseEvent *Event)
 {
   TODO("check MPressWire2");
+  SchematicScene *scene = Doc->scene;
   // needed inside the case
   QPointF pos = Doc->mapToScene(Event->pos());
   int set1 = 0, set2 = 0;
@@ -1512,18 +1524,18 @@ void MouseActions::MPressWire2(SchematicView *Doc, QMouseEvent *Event)
   case Qt::LeftButton :
     if(MAx1 == 0) { // which wire direction first ?
       if(MAy2 != MAy3)
-        set1 = Doc->insertWire(new Wire(MAx3, MAy3, MAx3, MAy2));
+        set1 = scene->insertWire(new Wire(MAx3, MAy3, MAx3, MAy2));
       if(MAx2 != MAx3) {
         set2 = set1;
-        set1 = Doc->insertWire(new Wire(MAx3, MAy2, MAx2, MAy2));
+        set1 = scene->insertWire(new Wire(MAx3, MAy2, MAx2, MAy2));
       }
     }
     else {
       if(MAx2 != MAx3)
-        set1 = Doc->insertWire(new Wire(MAx3, MAy3, MAx2, MAy3));
+        set1 = scene->insertWire(new Wire(MAx3, MAy3, MAx2, MAy3));
       if(MAy2 != MAy3) {
         set2 = set1;
-        set1 = Doc->insertWire(new Wire(MAx2, MAy3, MAx2, MAy2));
+        set1 = scene->insertWire(new Wire(MAx2, MAy3, MAx2, MAy2));
       }
     }
 
@@ -1604,7 +1616,7 @@ void MouseActions::MPressMarker(SchematicView *Doc, QMouseEvent* Event)
   float x = pos.x();
   float y = pos.y();
   /// \bug does it need to be int?
-  Marker *pm = Doc->setMarker(int(x), int(y));
+  Marker *pm = Doc->scene->setMarker(int(x), int(y));
 
   if(pm) {
     assert(pm->diag());
@@ -1624,18 +1636,19 @@ void MouseActions::MPressMarker(SchematicView *Doc, QMouseEvent* Event)
  */
 void MouseActions::MPressOnGrid(SchematicView *Doc, QMouseEvent* Event)
 {
-  Element *pe = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
+  SchematicScene *scene = Doc->scene;
+  Element *pe = dynamic_cast<Element*>(scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(pe)
   {
     pe->ElemType &= isSpecialMask;  // remove special functions (4 lowest bits)
 
     // onGrid is toggle action -> no other element can be selected
     pe->ElemSelected = true;
-    Doc->elementsOnGrid();
+    scene->elementsOnGrid();
 
     Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
     // Update matching wire label highlighting
-    Doc->highlightWireLabels ();
+    scene->highlightWireLabels ();
     Doc->viewport()->update();
     drawn = false;
   }
@@ -1655,7 +1668,7 @@ void MouseActions::MPressMoveText(SchematicView *Doc, QMouseEvent* Event)
   QPointF pos = Doc->mapToScene(Event->pos());
   MAx1 = int(pos.x());
   MAy1 = int(pos.y());
-  focusElement = Doc->selectCompText(MAx1, MAy1, MAx2, MAy2);
+  focusElement = Doc->scene->selectCompText(MAx1, MAy1, MAx2, MAy2);
 
   if(focusElement) {
     MAx3 = MAx1;
@@ -1700,12 +1713,14 @@ void MouseActions::MReleaseSelect(SchematicView *Doc, QMouseEvent *Event)
 {
   bool ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
-  if(!ctrl) Doc->deselectElements(focusElement);
+  SchematicScene *scene = Doc->scene;
+
+  if(!ctrl) scene->deselectElements(focusElement);
 
   if(focusElement)  if(Event->button() == Qt::LeftButton)
     if(focusElement->ElemType == isWire) {
-      Doc->selectWireLine(focusElement, ((Wire*)focusElement)->Port1, ctrl);
-      Doc->selectWireLine(focusElement, ((Wire*)focusElement)->Port2, ctrl);
+      scene->selectWireLine(focusElement, ((Wire*)focusElement)->Port1, ctrl);
+      scene->selectWireLine(focusElement, ((Wire*)focusElement)->Port2, ctrl);
     }
 
   Doc->releaseKeyboard();  // allow keyboard inputs again
@@ -1713,7 +1728,7 @@ void MouseActions::MReleaseSelect(SchematicView *Doc, QMouseEvent *Event)
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
   QucsMain->MouseMoveAction = 0;   // no element moving
-  Doc->highlightWireLabels ();
+  scene->highlightWireLabels ();
   Doc->viewport()->update();
   drawn = false;
 }
@@ -1727,14 +1742,14 @@ void MouseActions::MReleaseSelect2(SchematicView *Doc, QMouseEvent *Event)
   bool Ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
   // selects all elements within the rectangle
-  Doc->selectElements(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2, Ctrl);
+  Doc->scene->selectElements(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2, Ctrl);
 
   Doc->releaseKeyboard();  // allow keyboard inputs again
   QucsMain->MouseMoveAction = 0;
   QucsMain->MousePressAction = &MouseActions::MPressSelect;
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
-  Doc->highlightWireLabels ();
+  Doc->scene->highlightWireLabels ();
   Doc->viewport()->update();
   drawn = false;
 }
@@ -1751,13 +1766,13 @@ void MouseActions::MReleaseActivate(SchematicView *Doc, QMouseEvent *Event)
 
   // activates all components within the rectangle
   /// \bug get rid of globals, use rubberband instead
-  Doc->activateCompsWithinRect(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2);
+  Doc->scene->activateCompsWithinRect(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2);
 
   QucsMain->MouseMoveAction = &MouseActions::MMoveActivate;
   QucsMain->MousePressAction = &MouseActions::MPressActivate;
   QucsMain->MouseReleaseAction = 0;
   QucsMain->MouseDoubleClickAction = 0;
-  Doc->highlightWireLabels ();
+  Doc->scene->highlightWireLabels ();
   Doc->viewport()->update();
   drawn = false;
 }
@@ -1915,6 +1930,7 @@ void MouseActions::MReleasePaste(SchematicView *Doc, QMouseEvent *Event)
   int x1, y1, x2, y2, rot;
   QFileInfo Info(Doc->DocName);
   QPointF pos = Doc->mapToScene(Event->pos());
+  SchematicScene *scene = Doc->scene;
 
   Element *pe;
   switch(Event->button()) {
@@ -1925,30 +1941,30 @@ void MouseActions::MReleasePaste(SchematicView *Doc, QMouseEvent *Event)
       switch(pe->ElemType) {
 	case isWire:
 	  if(pe->x1 == pe->x2) if(pe->y1 == pe->y2)  break;
-	  Doc->insertWire((Wire*)pe);
-	  if (Doc->Wires->containsRef ((Wire*)pe))
+	  scene->insertWire((Wire*)pe);
+	  if (scene->Wires->containsRef ((Wire*)pe))
 	    Doc->enlargeView(pe->x1, pe->y1, pe->x2, pe->y2);
 	  else pe = NULL;
 	  break;
 	case isDiagram:
-      Doc->Diagrams->append((Diagram*)pe);
+      scene->Diagrams->append((Diagram*)pe);
       ((Diagram*)pe)->loadGraphData(Info.path() + QDir::separator() +
 					Doc->DataSet);
 	  Doc->enlargeView(pe->cx, pe->cy-pe->y2, pe->cx+pe->x2, pe->cy);
 	  break;
 	case isPainting:
-	  Doc->Paintings->append((Painting*)pe);
+	  scene->Paintings->append((Painting*)pe);
 	  ((Painting*)pe)->Bounding(x1,y1,x2,y2);
 	  Doc->enlargeView(x1, y1, x2, y2);
 	  break;
 	case isMovingLabel:
 	  pe->ElemType = isNodeLabel;
-	  Doc->placeNodeLabel((WireLabel*)pe);
+	  scene->placeNodeLabel((WireLabel*)pe);
 	  break;
 	case isComponent:
 	case isAnalogComponent:
 	case isDigitalComponent:
-	  Doc->insertComponent((Component*)pe);
+	  scene->insertComponent((Component*)pe);
 	  ((Component*)pe)->entireBounds(x1,y1,x2,y2, Doc->textCorr());
 	  Doc->enlargeView(x1, y1, x2, y2);
 	  break;
@@ -2105,6 +2121,8 @@ void MouseActions::editElement(SchematicView *Doc, QMouseEvent *Event)
 
   QFileInfo Info(Doc->DocName);
 
+  SchematicScene *scene = Doc->scene;
+
   QPointF pos = Doc->mapToScene(Event->pos());
   float fX = pos.x();
   float fY = pos.y();
@@ -2129,10 +2147,10 @@ void MouseActions::editElement(SchematicView *Doc, QMouseEvent *Event)
            ComponentDialog * cd = new ComponentDialog(c, Doc);
            if(cd->exec() != 1) break;   // dialog is WA_DeleteOnClose
 
-           Doc->Components->findRef(c);
-           Doc->Components->take();
-           Doc->setComponentNumber(c); // for ports/power sources
-           Doc->Components->append(c);
+           scene->Components->findRef(c);
+           scene->Components->take();
+           scene->setComponentNumber(c); // for ports/power sources
+           scene->Components->append(c);
          }
 
          Doc->setChanged(true, true);
@@ -2170,7 +2188,7 @@ void MouseActions::editElement(SchematicView *Doc, QMouseEvent *Event)
     case isGraph :
 	 pg = (Graph*)focusElement;
 	 // searching diagram for this graph
-	 for(dia = Doc->Diagrams->last(); dia != 0; dia = Doc->Diagrams->prev())
+	 for(dia = scene->Diagrams->last(); dia != 0; dia = scene->Diagrams->prev())
 	   if(dia->Graphs.indexOf(pg) >= 0)
 	     break;
 	 if(!dia) break;
@@ -2190,7 +2208,7 @@ void MouseActions::editElement(SchematicView *Doc, QMouseEvent *Event)
     case isVWireLabel:
          editLabel(Doc, (WireLabel*)focusElement);
          // update highlighting, labels may have changed
-         Doc->highlightWireLabels ();
+         scene->highlightWireLabels ();
          break;
 
     case isPainting:
