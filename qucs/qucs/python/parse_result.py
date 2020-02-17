@@ -65,7 +65,8 @@ def parse_file(name):
     data['variables'] = variables
     # reverse the shape variable in order to get the reshape operation (see below)
     # correct
-    shape = shape[::-1]
+    shape = shape[::-1].astype('int')
+    shape = shape.squeeze()
 
     # here comes the clever trick :-)
     # if a dependent variable depends on N > 1 (independent) variables,
@@ -75,6 +76,6 @@ def parse_file(name):
         temp = data['variables'][key]
         if temp == 'dep':
             temp_data = data[key]
-            data[key] = np.reshape(temp_data, shape)
+            data[key] = np.reshape(temp_data, shape).squeeze()
 
     return data
