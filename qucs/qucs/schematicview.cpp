@@ -87,16 +87,6 @@ SchematicView::SchematicView(QucsApp *App_, const QString& Name_)
   tmpUsedX2 = tmpUsedY2 = tmpViewX2 = tmpViewY2 =  200;
   tmpScale = 1.0;
 
-  DocComps.setAutoDelete(true);
-  DocWires.setAutoDelete(true);
-  DocNodes.setAutoDelete(true);
-  DocDiags.setAutoDelete(true);
-  DocPaints.setAutoDelete(true);
-  SymbolPaints.setAutoDelete(true);
-
-  isVerilog = false;
-  creatingLib = false;
-
   panMode= false;
 
   // create and set current scene

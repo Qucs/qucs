@@ -49,7 +49,11 @@
 // global to also work within the subcircuits.
 SubMap FileList;
 
-
+SchematicFile::SchematicFile()
+{
+  isVerilog = false;
+  creatingLib = false;
+}
 // -------------------------------------------------------------
 // Creates a Qucs file format (without document properties) in the returning
 // string. This is used to copy the selected elements into the clipboard.

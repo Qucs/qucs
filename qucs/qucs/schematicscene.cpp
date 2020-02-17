@@ -42,6 +42,15 @@ SchematicScene::SchematicScene(QObject *parent) :
   QGraphicsScene(parent)
 {
   undoStack = new QUndoStack(this);
+
+  /// \todo remove deprecated
+  DocComps.setAutoDelete(true);
+  DocWires.setAutoDelete(true);
+  DocNodes.setAutoDelete(true);
+  DocDiags.setAutoDelete(true);
+  DocPaints.setAutoDelete(true);
+  SymbolPaints.setAutoDelete(true);
+
 }
 
 SchematicScene::~SchematicScene()
