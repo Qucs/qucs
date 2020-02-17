@@ -23,6 +23,7 @@
 
 #include "projectView.h"
 #include "schematicview.h"
+#include "schematicfile.h"
 
 #include <QString>
 #include <QStringList>
@@ -159,7 +160,8 @@ ProjectView::refresh()
     }
     else if(extName == "sch") {
       // test if it's a valid schematic file
-      int n = SchematicView::testFile(workPath.filePath(fileName));
+      SchematicFile *sch = new SchematicFile();
+      int n = sch->testFile(workPath.filePath(fileName));
       if(n >= 0) {
         if(n > 0) { // is a subcircuit
           columnData.append(new QStandardItem(QString::number(n)+tr("-port")));
