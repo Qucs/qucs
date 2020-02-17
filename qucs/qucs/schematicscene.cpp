@@ -3434,3 +3434,12 @@ void SchematicView::setOnGrid(int& x, int& y)
   else y += GridY >> 1;
   y -= y % GridY;
 }
+
+// ---------------------------------------------------
+// Updates the graph data of all diagrams (load from data files).
+void SchematicView::reloadGraphs()
+{
+  QFileInfo Info(DocName);
+  for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
+    pd->loadGraphData(Info.path()+QDir::separator()+DataSet);
+}

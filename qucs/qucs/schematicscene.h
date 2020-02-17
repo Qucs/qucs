@@ -137,6 +137,7 @@ public:
 
   void      copyPaintings(int&, int&, int&, int&, QList<Element *> *);
 
+  void  reloadGraphs();
 
 private:
   void insertComponentNodes(Component*, bool);

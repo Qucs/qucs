@@ -86,7 +86,6 @@ public:
 
   void  switchPaintMode();
   int   adjustPortNumbers();
-  void  reloadGraphs();
   bool  createSubcircuitSymbol();
 
   void    becomeCurrent(bool);
