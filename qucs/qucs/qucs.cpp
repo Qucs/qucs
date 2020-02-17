@@ -203,7 +203,7 @@ void QucsApp::initView()
 
   connect(dock, SIGNAL(visibilityChanged(bool)), SLOT(slotToggleDock(bool)));
 
-  view = new MouseActions(this);
+  mouseAction = new MouseActions(this);
 
   editText = new QLineEdit(this);  // for editing component properties
   editText->setFrame(false);
@@ -1166,7 +1166,7 @@ void QucsApp::openProject(const QString& Path)
   if(!closeAllFiles()) return;   // close files and ask for saving them
   DocumentTab->createEmptySchematic("");
 
-  view->drawn = false;
+  mouseAction->drawn = false;
 
   slotResetWarnings();
 
@@ -1236,7 +1236,7 @@ void QucsApp::slotMenuProjClose()
   if(!closeAllFiles()) return;   // close files and ask for saving them
   DocumentTab->createEmptySchematic("");
 
-  view->drawn = false;
+  mouseAction->drawn = false;
 
   slotResetWarnings();
   setWindowTitle("Qucs " PACKAGE_VERSION + tr(" - Project: "));
@@ -1404,7 +1404,7 @@ bool QucsApp::gotoPage(const QString& Name)
   if(!d->load()) {    // load document if possible
     delete d;
     DocumentTab->setCurrentIndex(No);
-    view->drawn = false;
+    mouseAction->drawn = false;
     return false;
   }
   slotChangeView(DocumentTab->currentIndex());
@@ -1414,7 +1414,7 @@ bool QucsApp::gotoPage(const QString& Name)
     if(!getDoc(0)->DocChanged)
       delete DocumentTab->widget(0);
 
-  view->drawn = false;
+  mouseAction->drawn = false;
   return true;
 }
 
@@ -1607,7 +1607,7 @@ void QucsApp::slotFileSaveAll()
   if (tabType == "Schematic") {
     ((QGraphicsView*)DocumentTab->currentWidget())->viewport()->update();
   }
-  view->drawn = false;
+  mouseAction->drawn = false;
   statusBar()->showMessage(tr("Ready."));
 
   // refresh the schematic file path
@@ -1842,7 +1842,7 @@ void QucsApp::slotChangeView(int index)
   }
 
   Doc->becomeCurrent(true);
-  view->drawn = false;
+  mouseAction->drawn = false;
 
   HierarchyHistory.clear();
   popH->setEnabled(false);
@@ -1876,7 +1876,7 @@ void QucsApp::slotFileSettings ()
     SettingsDialog * d = new SettingsDialog ((SchematicView *) w);
     d->exec ();
   }
-  view->drawn = false;
+  mouseAction->drawn = false;
 }
 
 // --------------------------------------------------------------
@@ -1886,7 +1886,7 @@ void QucsApp::slotApplSettings()
 
   QucsSettingsDialog *d = new QucsSettingsDialog(this);
   d->exec();
-  view->drawn = false;
+  mouseAction->drawn = false;
 }
 
 // --------------------------------------------------------------
@@ -2228,7 +2228,7 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
       file.close();
       if(!d->load()) {
         delete d;
-        view->drawn = false;
+        mouseAction->drawn = false;
         return;
       }
     }
@@ -2388,8 +2388,8 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
   if (filename == tab_titl ) return; // Forbid to paste subcircuit into itself.
 
   // delete previously selected elements
-  if(view->selElem != 0)  delete view->selElem;
-  view->selElem = 0;
+  if(mouseAction->selElem != 0)  delete mouseAction->selElem;
+  mouseAction->selElem = 0;
 
   // toggle last toolbar button off
   if(activeAction) {
@@ -2408,11 +2408,11 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
     Comp = new Subcircuit();
   Comp->Props.first()->Value = idx.sibling(idx.row(), 0).data().toString();
   Comp->recreate(0);
-  view->selElem = Comp;
+  mouseAction->selElem = Comp;
 
-  if(view->drawn)
+  if(mouseAction->drawn)
     ((QGraphicsView*)DocumentTab->currentWidget())->viewport()->update();
-  view->drawn = false;
+  mouseAction->drawn = false;
   MouseMoveAction = &MouseActions::MMoveElement;
   MousePressAction = &MouseActions::MPressElement;
   MouseReleaseAction = 0;
@@ -2585,7 +2585,7 @@ void QucsApp::slotSymbolEdit()
     changeSchematicSymbolMode(SDoc);
     SDoc->becomeCurrent(true);
     SDoc->viewport()->update();
-    view->drawn = false;
+    mouseAction->drawn = false;
   }
   // in a normal schematic, data display or symbol file
   else {
@@ -2601,7 +2601,7 @@ void QucsApp::slotSymbolEdit()
       changeSchematicSymbolMode(SDoc);
       SDoc->becomeCurrent(true);
       SDoc->viewport()->update();
-      view->drawn = false;
+      mouseAction->drawn = false;
     }
   }
 }
@@ -2609,9 +2609,9 @@ void QucsApp::slotSymbolEdit()
 // -----------------------------------------------------------
 void QucsApp::slotPowerMatching()
 {
-  if(!view->focusElement) return;
-  if(view->focusElement->ElemType != isMarker) return;
-  Marker *pm = (Marker*)view->focusElement;
+  if(!mouseAction->focusElement) return;
+  if(mouseAction->focusElement->ElemType != isMarker) return;
+  Marker *pm = (Marker*)mouseAction->focusElement;
 
 //  double Z0 = 50.0;
   QString Var = pm->pGraph->Var;
@@ -2633,9 +2633,9 @@ void QucsApp::slotPowerMatching()
 // -----------------------------------------------------------
 void QucsApp::slot2PortMatching()
 {
-  if(!view->focusElement) return;
-  if(view->focusElement->ElemType != isMarker) return;
-  Marker *pm = (Marker*)view->focusElement;
+  if(!mouseAction->focusElement) return;
+  if(mouseAction->focusElement->ElemType != isMarker) return;
+  Marker *pm = (Marker*)mouseAction->focusElement;
 
   QString DataSet;
   SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
@@ -2717,8 +2717,8 @@ void QucsApp::slot2PortMatching()
 // Is called if the "edit" action is clicked on right mouse button menu.
 void QucsApp::slotEditElement()
 {
-  if(view->focusMEvent)
-    view->editElement((SchematicView*)DocumentTab->currentWidget(), view->focusMEvent);
+  if(mouseAction->focusMEvent)
+    mouseAction->editElement((SchematicView*)DocumentTab->currentWidget(), mouseAction->focusMEvent);
 }
 
 // -----------------------------------------------------------

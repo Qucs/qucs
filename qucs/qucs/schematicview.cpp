@@ -286,7 +286,7 @@ void SchematicView::mousePressEvent(QMouseEvent *Event)
   }
 
   // press over element, set focus, needed by view->editElement()
-  QucsMain->view->focusElement = dynamic_cast<Element*>(this->scene->itemAt(this->mapToScene(Event->pos()), QTransform() ));
+  QucsMain->mouseAction->focusElement = dynamic_cast<Element*>(this->scene->itemAt(this->mapToScene(Event->pos()), QTransform() ));
 
   QGraphicsView::mousePressEvent(Event);
 }
@@ -306,7 +306,7 @@ void SchematicView::mouseReleaseEvent(QMouseEvent *Event)
 void SchematicView::mouseDoubleClickEvent(QMouseEvent *Event)
 {
   TODO("trace");
-  QucsMain->view->MDoubleClickSelect(this, Event);
+  QucsMain->mouseAction->MDoubleClickSelect(this, Event);
 }
 
 // -----------------------------------------------------------
@@ -948,7 +948,7 @@ void SchematicView::slotScrollUp()
   App->editText->setHidden(true);  // disable edit of component property
   scrollUp(verticalScrollBar()->singleStep());
   viewport()->update(); // because QScrollView thinks nothing has changed
-  App->view->drawn = false;
+  App->mouseAction->drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -958,7 +958,7 @@ void SchematicView::slotScrollDown()
   App->editText->setHidden(true);  // disable edit of component property
   scrollDown(-verticalScrollBar()->singleStep());
   viewport()->update(); // because QScrollView thinks nothing has changed
-  App->view->drawn = false;
+  App->mouseAction->drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -968,7 +968,7 @@ void SchematicView::slotScrollLeft()
   App->editText->setHidden(true);  // disable edit of component property
   scrollLeft(horizontalScrollBar()->singleStep());
   viewport()->update(); // because QScrollView thinks nothing has changed
-  App->view->drawn = false;
+  App->mouseAction->drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -978,7 +978,7 @@ void SchematicView::slotScrollRight()
   App->editText->setHidden(true);  // disable edit of component property
   scrollRight(-horizontalScrollBar()->singleStep());
   viewport()->update(); // because QScrollView thinks nothing has changed
-  App->view->drawn = false;
+  App->mouseAction->drawn = false;
 }
 
 
@@ -1015,10 +1015,10 @@ void SchematicView::contentsDropEvent(QDropEvent *Event)
   QMouseEvent e(QEvent::MouseButtonPress, Event->pos(),
                 Qt::LeftButton, Qt::NoButton, Qt::NoModifier);
 
-  App->view->MPressElement(this, &e);
+  App->mouseAction->MPressElement(this, &e);
 
-  if(App->view->selElem) delete App->view->selElem;
-  App->view->selElem = 0;  // no component selected
+  if(App->mouseAction->selElem) delete App->mouseAction->selElem;
+  App->mouseAction->selElem = 0;  // no component selected
 
   if(formerAction)
     formerAction->setChecked(true);  // restore old action
@@ -1043,8 +1043,8 @@ void SchematicView::contentsDragEnterEvent(QDragEnterEvent *Event)
     QString s = Event->mimeData()->text();
     if(s.left(15) == "QucsComponent:<") {
       s = s.mid(14);
-      App->view->selElem = getComponentFromName(s);
-      if(App->view->selElem) {
+      App->mouseAction->selElem = getComponentFromName(s);
+      if(App->mouseAction->selElem) {
         Event->accept();
         return;
       }
@@ -1078,15 +1078,15 @@ void SchematicView::contentsDragEnterEvent(QDragEnterEvent *Event)
 // ---------------------------------------------------
 void SchematicView::contentsDragLeaveEvent(QDragLeaveEvent*)
 {
-  if(App->view->selElem)
-    if(App->view->selElem->ElemType & isComponent)
-      if(App->view->drawn) {
+  if(App->mouseAction->selElem)
+    if(App->mouseAction->selElem->ElemType & isComponent)
+      if(App->mouseAction->drawn) {
 
         QPainter painter(viewport());
         //App->view->setPainter(this);
         TODO("fix paintscheme")
         //((Component*)App->view->selElem)->paintScheme(this);
-        App->view->drawn = false;
+        App->mouseAction->drawn = false;
       }
 
   if(formerAction)
@@ -1097,14 +1097,14 @@ void SchematicView::contentsDragLeaveEvent(QDragLeaveEvent*)
 void SchematicView::contentsDragMoveEvent(QDragMoveEvent *Event)
 {
   if(!dragIsOkay) {
-    if(App->view->selElem == 0) {
+    if(App->mouseAction->selElem == 0) {
       Event->ignore();
       return;
     }
 
     QMouseEvent e(QEvent::MouseMove, Event->pos(), Qt::NoButton, 
 		  Qt::NoButton, Qt::NoModifier);
-    App->view->MMoveElement(this, &e);
+    App->mouseAction->MMoveElement(this, &e);
   }
 
   Event->accept();

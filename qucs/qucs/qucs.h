@@ -262,7 +262,7 @@ signals:
   void signalKillEmAll();
 
 public:
-  MouseActions *view;
+  MouseActions *mouseAction;
   ContextMenuTabWidget *DocumentTab;
   QListWidget *CompComps;
   QTreeWidget *libTreeWidget;

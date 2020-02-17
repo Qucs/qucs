@@ -120,7 +120,7 @@ bool QucsApp::performToggleAction(bool on, QAction *Action,
   } while(false);   // to perform "break"
 
   Doc->viewport()->update();
-  view->drawn = false;
+  mouseAction->drawn = false;
   return true;
 }
 
@@ -275,7 +275,7 @@ void QucsApp::slotSelect(bool on)
     MouseMoveAction = &MouseActions::MMoveWire1;
     MousePressAction = &MouseActions::MPressWire1;
     Doc->viewport()->update();
-    view->drawn = false;
+    mouseAction->drawn = false;
 
     select->blockSignals(true);
     select->setChecked(false);
@@ -284,10 +284,10 @@ void QucsApp::slotSelect(bool on)
   }
 
   // remove from scene and delete previously selected elements
-  if(view->selElem != 0)  {
-      Doc->scene->removeItem(view->selElem);
-      delete view->selElem;
-      view->selElem = 0;
+  if(mouseAction->selElem != 0)  {
+      Doc->scene->removeItem(mouseAction->selElem);
+      delete mouseAction->selElem;
+      mouseAction->selElem = 0;
   }
 
   // reset mouse cursor
@@ -359,13 +359,13 @@ void QucsApp::slotEditPaste(bool on)
       MouseReleaseAction = 0;
       MouseDoubleClickAction = 0;
       activeAction = 0;   // no action active
-      if(view->drawn) {
+      if(mouseAction->drawn) {
         ((SchematicView *)Doc)->viewport()->update();
       }
       return;
     }
 
-    if(!view->pasteElements((SchematicView *)Doc))
+    if(!mouseAction->pasteElements((SchematicView *)Doc))
     {
       editPaste->blockSignals(true); // do not call toggle slot
       editPaste->setChecked(false);       // set toolbar button off
@@ -381,9 +381,9 @@ void QucsApp::slotEditPaste(bool on)
     }
     activeAction = editPaste;
 
-    view->drawn = false;
+    mouseAction->drawn = false;
     MouseMoveAction = &MouseActions::MMovePaste;
-    view->movingRotated = 0;
+    mouseAction->movingRotated = 0;
     MousePressAction = 0;
     MouseReleaseAction = 0;
     MouseDoubleClickAction = 0;
@@ -507,7 +507,7 @@ void QucsApp::slotEditUndo()
 
   Doc->undo();
   Doc->viewport()->update();
-  view->drawn = false;
+  mouseAction->drawn = false;
 }
 
 // --------------------------------------------------------------
@@ -525,7 +525,7 @@ void QucsApp::slotEditRedo()
 
   Doc->redo();
   Doc->viewport()->update();
-  view->drawn = false;
+  mouseAction->drawn = false;
 }
 
 // --------------------------------------------------------------
@@ -539,7 +539,7 @@ void QucsApp::slotAlignTop()
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
   Doc->viewport()->update();
-  view->drawn = false;
+  mouseAction->drawn = false;
 }
 
 // --------------------------------------------------------------
@@ -553,7 +553,7 @@ void QucsApp::slotAlignBottom()
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
   Doc->viewport()->update();
-  view->drawn = false;
+  mouseAction->drawn = false;
 }
 
 // --------------------------------------------------------------
@@ -567,7 +567,7 @@ void QucsApp::slotAlignLeft()
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
   Doc->viewport()->update();
-  view->drawn = false;
+  mouseAction->drawn = false;
 }
 
 // --------------------------------------------------------------
@@ -581,7 +581,7 @@ void QucsApp::slotAlignRight()
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
   Doc->viewport()->update();
-  view->drawn = false;
+  mouseAction->drawn = false;
 }
 
 // --------------------------------------------------------------
@@ -593,7 +593,7 @@ void QucsApp::slotDistribHoriz()
   SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
   Doc->distributeHorizontal();
   Doc->viewport()->update();
-  view->drawn = false;
+  mouseAction->drawn = false;
 }
 
 // --------------------------------------------------------------
@@ -605,7 +605,7 @@ void QucsApp::slotDistribVert()
   SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
   Doc->distributeVertical();
   Doc->viewport()->update();
-  view->drawn = false;
+  mouseAction->drawn = false;
 }
 
 // --------------------------------------------------------------
@@ -619,7 +619,7 @@ void QucsApp::slotCenterHorizontal()
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
   Doc->viewport()->update();
-  view->drawn = false;
+  mouseAction->drawn = false;
 }
 
 // --------------------------------------------------------------
@@ -633,7 +633,7 @@ void QucsApp::slotCenterVertical()
     QMessageBox::information(this, tr("Info"),
 		      tr("At least two elements must be selected !"));
   Doc->viewport()->update();
-  view->drawn = false;
+  mouseAction->drawn = false;
 }
 
 // ---------------------------------------------------------------------
@@ -651,7 +651,7 @@ void QucsApp::slotSelectAll()
   else {
     ((SchematicView*)Doc)->selectElements(INT_MIN, INT_MIN, INT_MAX, INT_MAX, true);
     ((SchematicView*)Doc)->viewport()->update();
-    view->drawn = false;
+    mouseAction->drawn = false;
   }
 }
 
@@ -664,7 +664,7 @@ void QucsApp::slotSelectMarker()
   SchematicView *Doc = (SchematicView*)DocumentTab->currentWidget();
   Doc->selectMarkers();
   Doc->viewport()->update();
-  view->drawn = false;
+  mouseAction->drawn = false;
 }
 
 
@@ -1076,9 +1076,9 @@ void QucsApp::slotCursorUp(bool up)
 {
   if(editText->isHidden()) {  // for edit of component property ?
   }else if(up){
-    if(view->MAx3 == 0) return;  // edit component namen ?
-    Component *pc = (Component*)view->focusElement;
-    Property *pp = pc->Props.at(view->MAx3-1);  // current property
+    if(mouseAction->MAx3 == 0) return;  // edit component namen ?
+    Component *pc = (Component*)mouseAction->focusElement;
+    Property *pp = pc->Props.at(mouseAction->MAx3-1);  // current property
     int Begin = pp->Description.indexOf('[');
     if(Begin < 0) return;  // no selection list ?
     int End = pp->Description.indexOf(editText->text(), Begin); // current
@@ -1094,9 +1094,9 @@ void QucsApp::slotCursorUp(bool up)
     editText->selectAll();
     return;
   }else{ // down
-    if(view->MAx3 == 0) return;  // edit component namen ?
-    Component *pc = (Component*)view->focusElement;
-    Property *pp = pc->Props.at(view->MAx3-1);  // current property
+    if(mouseAction->MAx3 == 0) return;  // edit component namen ?
+    Component *pc = (Component*)mouseAction->focusElement;
+    Property *pp = pc->Props.at(mouseAction->MAx3-1);  // current property
     int Pos = pp->Description.indexOf('[');
     if(Pos < 0) return;  // no selection list ?
     Pos = pp->Description.indexOf(editText->text(), Pos); // current list item
@@ -1163,14 +1163,14 @@ void QucsApp::slotApplyCompText()
   editText->setFont(f);
 
   Property  *pp = 0;
-  Component *pc = (Component*)view->focusElement;
+  Component *pc = (Component*)mouseAction->focusElement;
   if(!pc) return;  // should never happen
-  view->MAx1 = pc->cx + pc->tx;
-  view->MAy1 = pc->cy + pc->ty;
+  mouseAction->MAx1 = pc->cx + pc->tx;
+  mouseAction->MAy1 = pc->cy + pc->ty;
 
   int z, n=0;  // "n" is number of property on screen
   pp = pc->Props.first();
-  for(z=view->MAx3; z>0; z--) {  // calculate "n"
+  for(z=mouseAction->MAx3; z>0; z--) {  // calculate "n"
     if(!pp) {  // should never happen
       slotHideEdit();
       return;
@@ -1180,12 +1180,12 @@ void QucsApp::slotApplyCompText()
   }
 
   pp = 0;
-  if(view->MAx3 > 0)  pp = pc->Props.at(view->MAx3-1); // current property
+  if(mouseAction->MAx3 > 0)  pp = pc->Props.at(mouseAction->MAx3-1); // current property
   else s = pc->name();
 
   if(!editText->isHidden()) {   // is called the first time ?
     // no -> apply value to current property
-    if(view->MAx3 == 0) {   // component name ?
+    if(mouseAction->MAx3 == 0) {   // component name ?
       Component *pc2;
       if(!editText->text().isEmpty())
         if(pc->name() != editText->text()) {
@@ -1207,11 +1207,11 @@ void QucsApp::slotApplyCompText()
     }
 
     n++;     // next row on screen
-    (view->MAx3)++;  // next property
-    pp = pc->Props.at(view->MAx3-1);  // search for next property
+    (mouseAction->MAx3)++;  // next property
+    pp = pc->Props.at(mouseAction->MAx3-1);  // search for next property
 
     Doc->viewport()->update();
-    view->drawn = false;
+    mouseAction->drawn = false;
 
     if(!pp) {     // was already last property ?
       slotHideEdit();
@@ -1220,7 +1220,7 @@ void QucsApp::slotApplyCompText()
 
 
     while(!pp->display) {  // search for next visible property
-      (view->MAx3)++;  // next property
+      (mouseAction->MAx3)++;  // next property
       pp = pc->Props.next();
       if(!pp) {     // was already last property ?
         slotHideEdit();
@@ -1243,7 +1243,7 @@ void QucsApp::slotApplyCompText()
   editText->setReadOnly(false);
   if(pp) {  // is it a property ?
     s = pp->Value;
-    view->MAx2 += editText->fontMetrics().width(pp->Name+"=");
+    mouseAction->MAx2 += editText->fontMetrics().width(pp->Name+"=");
     if(pp->Description.indexOf('[') >= 0)  // is selection list ?
       editText->setReadOnly(true);
     Expr_CompProp.setPattern("[^\"]*");
@@ -1255,13 +1255,13 @@ void QucsApp::slotApplyCompText()
   editText->setValidator(&Val_CompProp);
 
   z = editText->fontMetrics().lineSpacing();
-  view->MAy2 += n*z;
+  mouseAction->MAy2 += n*z;
   editText->setText(s);
   misc::setWidgetBackgroundColor(editText, QucsSettings.BGColor);
   editText->setFocus();
   editText->selectAll();
   // make QLineEdit editable on mouse click
-  QPoint p = QPoint(view->MAx2, view->MAy2);
+  QPoint p = QPoint(mouseAction->MAx2, mouseAction->MAy2);
   editText->setParent(Doc->viewport());
   editText->setGeometry(p.x(), p.y(), editText->width(), editText->height());
   editText->show();
@@ -1311,8 +1311,8 @@ void QucsApp::slotExportGraphAsCsv()
   slotHideEdit(); // disable text edit of component property
 
   for(;;) {
-    if(view->focusElement)
-      if(view->focusElement->ElemType == isGraph)
+    if(mouseAction->focusElement)
+      if(mouseAction->focusElement->ElemType == isGraph)
         break;
 
     QMessageBox::critical(this, tr("Error"), tr("Please select a diagram graph!"));
@@ -1352,7 +1352,7 @@ void QucsApp::slotExportGraphAsCsv()
 
 
   DataX const *pD;
-  Graph *g = (Graph*)view->focusElement;
+  Graph *g = (Graph*)mouseAction->focusElement;
   // First output the names of independent and dependent variables.
   for(unsigned ii=0; (pD=g->axis(ii)); ++ii)
     Stream << '\"' << pD->Var << "\";";
