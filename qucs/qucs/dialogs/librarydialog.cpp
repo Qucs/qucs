@@ -46,7 +46,8 @@
 
 #include "librarydialog.h"
 #include "qucs.h"
-#include "schematicview.h"
+#include "schematicfile.h"
+#include "misc.h"
 
 extern SubMap FileList;
 
@@ -421,6 +422,8 @@ void LibraryDialog::slotSave()
     ErrText->appendPlainText(tr("Error: Cannot create library!"));
     return;
   }
+
+  TODO("library write should go to SchematicFile");
   QTextStream Stream;
   Stream.setDevice(&LibFile);
   Stream << "<Qucs Library " PACKAGE_VERSION " \""
@@ -443,7 +446,10 @@ void LibraryDialog::slotSave()
            << description
            << "\n  </Description>\n";
 
-    SchematicView *Doc = new SchematicView(0, QucsSettings.QucsWorkDir.filePath(SelectedNames[i]));
+    /// \todo SchematicView *Doc = new SchematicView(0, QucsSettings.QucsWorkDir.filePath(SelectedNames[i]));
+    TODO("fix use of File, missing DocName");
+    SchematicFile *Doc = new SchematicFile(0);
+
     ErrText->insertPlainText(tr("Loading subcircuit \"%1\".\n").arg(SelectedNames[i]));
     if(!Doc->loadDocument()) {  // load document if possible
         delete Doc;
