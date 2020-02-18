@@ -22,6 +22,7 @@
 #include "qt_compat.h"
 
 class SchematicView;
+class SchematicScene;
 class QString;
 class QPen;
 class ComponentDialog;
@@ -67,8 +68,8 @@ public:
 
   virtual QString getSubcircuitFile() { return ""; }
   // set the pointer scematic associated with the component
-  virtual void setSchematic (SchematicView* p) { containingSchematic = p; }
-  virtual SchematicView* getSchematic () {return containingSchematic; }
+  virtual void setSchematic (SchematicScene* p) { containingSchematic = p; }
+  virtual SchematicScene* getSchematic () {return containingSchematic; }
   // do somehting with buttons. can sb think of a more descriptive name?
   virtual void dialgButtStuff(ComponentDialog&)const;
 
@@ -133,7 +134,7 @@ protected:
 
   void copyComponent(Component*);
   Property * getProperty(const QString&);
-  SchematicView* containingSchematic;
+  SchematicScene* containingSchematic;
 };
 
 
