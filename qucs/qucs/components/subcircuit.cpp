@@ -17,7 +17,9 @@
 
 #include "subcircuit.h"
 #include "qucs.h"
-#include "schematicview.h"
+#include "schematicscene.h"
+#include "schematicfile.h"
+#include "node.h"
 #include "misc.h"
 
 #include <QTextStream>
@@ -92,7 +94,7 @@ void Subcircuit::createSymbol()
     }
   }
   else {
-    No = SchematicView::testFile(FileName);
+    No = SchematicFile::testFile(FileName);
     if(No < 0)  No = 0;
 
     Ports.clear();
