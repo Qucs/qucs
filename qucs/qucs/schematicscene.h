@@ -154,7 +154,6 @@ public:
   void      copyPaintings(int&, int&, int&, int&, QList<Element *> *);
 
   void  reloadGraphs();
-  bool  createSubcircuitSymbol();
 
 private:
   void insertComponentNodes(Component*, bool);

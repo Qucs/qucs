@@ -2975,44 +2975,6 @@ void SchematicScene::copyLabels(int& x1, int& y1, int& x2, int& y2,
 
 
 
-// ---------------------------------------------------
-bool SchematicScene::createSubcircuitSymbol()
-{
-  // If the number of ports is not equal, remove or add some.
-  unsigned int countPort = adjustPortNumbers();
-
-  // If a symbol does not yet exist, create one.
-  if(SymbolPaints.count() != countPort)
-    return false;
-
-  int h = 30*((countPort-1)/2) + 10;
-  SymbolPaints.prepend(new ID_Text(-20, h+4));
-
-  SymbolPaints.append(
-     new GraphicLine(-20, -h, 40,  0, QPen(Qt::darkBlue,2)));
-  SymbolPaints.append(
-     new GraphicLine( 20, -h,  0,2*h, QPen(Qt::darkBlue,2)));
-  SymbolPaints.append(
-     new GraphicLine(-20,  h, 40,  0, QPen(Qt::darkBlue,2)));
-  SymbolPaints.append(
-     new GraphicLine(-20, -h,  0,2*h, QPen(Qt::darkBlue,2)));
-
-  unsigned int i=0, y = 10-h;
-  while(i<countPort) {
-    i++;
-    SymbolPaints.append(
-       new GraphicLine(-30, y, 10, 0, QPen(Qt::darkBlue,2)));
-    SymbolPaints.at(i)->setCenter(-30,  y);
-
-    if(i == countPort)  break;
-    i++;
-    SymbolPaints.append(
-       new GraphicLine( 20, y, 10, 0, QPen(Qt::darkBlue,2)));
-    SymbolPaints.at(i)->setCenter(30,  y);
-    y += 60;
-  }
-  return true;
-}
 
 
 // ---------------------------------------------------

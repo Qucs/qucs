@@ -187,6 +187,7 @@ public: // serializer
   int     saveSymbolCpp (void);
   int     saveSymbolJSON (void);
   int   adjustPortNumbers();
+  bool  createSubcircuitSymbol();
 };
 
 #endif
