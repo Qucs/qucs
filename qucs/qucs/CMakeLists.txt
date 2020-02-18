@@ -228,6 +228,7 @@ undocommands.h
 SET(QUCS_MOC_HDRS
   octave_window.h
   qucs.h
+  schematicfile.h
   schematicview.h
   schematicscene.h
   textdoc.h

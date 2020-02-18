@@ -49,7 +49,8 @@
 // global to also work within the subcircuits.
 SubMap FileList;
 
-SchematicFile::SchematicFile()
+SchematicFile::SchematicFile(QObject *parent) :
+    QObject(parent)
 {
   isVerilog = false;
   creatingLib = false;
@@ -433,8 +434,11 @@ int SchematicFile::saveDocument()
 
   // additionally save symbol C++ code if in a symbol drawing and the
   // associated file is a Verilog-A file
-  if (fileSuffix () == "sym") {
-    if (fileSuffix (DataDisplay) == "va") {
+
+  TODO("need a qucsdoc ref here")
+  QucsDoc *doc = new QucsDoc(0,QString());
+  if (doc->fileSuffix () == "sym") {
+    if (doc->fileSuffix (DataDisplay) == "va") {
       saveSymbolCpp ();
       saveSymbolJSON ();
 
@@ -473,7 +477,7 @@ int SchematicFile::saveDocument()
       qDebug() << "homedir"  << QucsSettings.QucsHomeDir.absolutePath();
       qDebug() << "projsdir"  << QucsSettings.projsDir.absolutePath();
 
-      vaFile = QucsSettings.QucsWorkDir.filePath(fileBase()+".va");
+      vaFile = QucsSettings.QucsWorkDir.filePath(doc->fileBase()+".va");
 
       QStringList Arguments;
       Arguments << QDir::toNativeSeparators(vaFile)
@@ -487,9 +491,10 @@ int SchematicFile::saveDocument()
       if(var) {
 	// don't do this. it will always report an error.
       }else if ( !file.exists() ){
-        QMessageBox::critical(this, tr("Error"),
-                              tr("Program admsXml not found: %1\n\n"
-                                  "Set the admsXml location on the application settings.").arg(admsXml));
+        QMessageBox(QMessageBox::Critical,
+                    tr("Error"),
+                    tr("Program admsXml not found: %1\n\n"
+                       "Set the admsXml location on the application settings.").arg(admsXml));
         return -1;
       }
 
@@ -509,17 +514,21 @@ int SchematicFile::saveDocument()
       if (!builder.waitForFinished()) {
         QString cmdString = QString("%1 %2\n\n").arg(admsXml, Arguments.join(" "));
         cmdString = cmdString + builder.errorString();
-        QMessageBox::critical(this, tr("Error"), cmdString);
+        QMessageBox(QMessageBox::Critical,
+                    tr("Error"),
+                    cmdString);
       }
       else {
         QString cmdString = QString("%1 %2\n\n").arg(admsXml, Arguments.join(" "));
         cmdString = cmdString + builder.readAll();
-        QMessageBox::information(this, tr("Status"), cmdString);
+        QMessageBox(QMessageBox::Information,
+                    tr("Status"),
+                    cmdString);
       }
 
       // Append _sym.json into _props.json, save into _symbol.json
-      QFile f1(QucsSettings.QucsWorkDir.filePath(fileBase()+"_props.json"));
-      QFile f2(QucsSettings.QucsWorkDir.filePath(fileBase()+"_sym.json"));
+      QFile f1(QucsSettings.QucsWorkDir.filePath(doc->fileBase()+"_props.json"));
+      QFile f2(QucsSettings.QucsWorkDir.filePath(doc->fileBase()+"_sym.json"));
       f1.open(QIODevice::ReadOnly | QIODevice::Text);
       f2.open(QIODevice::ReadOnly | QIODevice::Text);
 
@@ -530,7 +539,7 @@ int SchematicFile::saveDocument()
       // remove joining point
       finalJSON = finalJSON.replace("}{", "");
 
-      QFile f3(QucsSettings.QucsWorkDir.filePath(fileBase()+"_symbol.json"));
+      QFile f3(QucsSettings.QucsWorkDir.filePath(doc->fileBase()+"_symbol.json"));
       f3.open(QIODevice::WriteOnly | QIODevice::Text);
       QTextStream out(&f3);
       out << finalJSON;
@@ -559,13 +568,15 @@ bool SchematicFile::loadProperties(QTextStream *stream)
     if(Line.isEmpty()) continue;
 
     if(Line.at(0) != '<') {
-      QMessageBox::critical(0, QObject::tr("Error"),
-		QObject::tr("Format Error:\nWrong property field limiter!"));
+      QMessageBox(QMessageBox::Critical,
+                  QObject::tr("Error"),
+                  QObject::tr("Format Error:\nWrong property field limiter!"));
       return false;
     }
     if(Line.at(Line.length()-1) != '>') {
-      QMessageBox::critical(0, QObject::tr("Error"),
-		QObject::tr("Format Error:\nWrong property field limiter!"));
+      QMessageBox(QMessageBox::Critical,
+                  QObject::tr("Error"),
+		          QObject::tr("Format Error:\nWrong property field limiter!"));
       return false;
     }
     Line = Line.mid(1, Line.length()-2);   // cut off start and end character
@@ -601,19 +612,22 @@ bool SchematicFile::loadProperties(QTextStream *stream)
     else if(cstr == "FrameText2") misc::convert2Unicode(schematicFrame->Date = nstr);
     else if(cstr == "FrameText3") misc::convert2Unicode(schematicFrame->Revision= nstr);
     else {
-      QMessageBox::critical(0, QObject::tr("Error"),
-	   QObject::tr("Format Error:\nUnknown property: ")+cstr);
+       QMessageBox(QMessageBox::Critical,
+                   tr("Error"),
+                   QObject::tr("Format Error:\nUnknown property: ")+cstr);
       return false;
     }
     if(!ok) {
-      QMessageBox::critical(0, QObject::tr("Error"),
-	   QObject::tr("Format Error:\nNumber expected in property field!"));
+       QMessageBox(QMessageBox::Critical,
+                   tr("Error"),
+	               QObject::tr("Format Error:\nNumber expected in property field!"));
       return false;
     }
   }
 
-  QMessageBox::critical(0, QObject::tr("Error"),
-               QObject::tr("Format Error:\n'Property' field is not closed!"));
+  QMessageBox(QMessageBox::Critical,
+              tr("Error"),
+              QObject::tr("Format Error:\n'Property' field is not closed!"));
   return false;
 }
 
@@ -710,8 +724,9 @@ bool SchematicFile::loadComponents(QTextStream *stream, Q3PtrList<Component> *Li
     }
   }
 
-  QMessageBox::critical(0, QObject::tr("Error"),
-	   QObject::tr("Format Error:\n'Component' field is not closed!"));
+  QMessageBox(QMessageBox::Critical,
+              tr("Error"),
+	          QObject::tr("Format Error:\n'Component' field is not closed!"));
   return false;
 }
 

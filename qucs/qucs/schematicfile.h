@@ -32,6 +32,7 @@
 #include <QStringList>
 
 class Wire;
+class Frame;
 
 class QTextStream;
 class QPlainTextEdit;
@@ -63,7 +64,62 @@ typedef QMap<QString, SubFile> SubMap;
    *****  "schematic_file.cpp". They only access the QPtrLists    *****
    *****  and their pointers. ("DocComps", "Components" etc.)     *****
    ******************************************************************** */
-class SchematicFile {
+class SchematicFile : public QObject {
+  Q_OBJECT
+public:
+  SchematicFile(QObject *parent);
+  virtual ~SchematicFile ();
+
+// EVIL HACK. Duplicate members from SchematicScene to force compilation
+// SchematicFile need to get hold of a Scene to
+// filter ou the class of items as needed (wire, node, diagram, paiting, component...)
+public: // all duplicates
+  /// \todo make then public while we fix stuff
+  // The pointers points to the current lists, either to the schematic
+  // elements "Doc..." or to the symbol elements "SymbolPaints".
+// private: //TODO. one at a time.
+
+  // ===============
+  // from Scene
+  Q3PtrList<Wire> /*WireList*/      *Wires, DocWires;
+  Q3PtrList<Node> /*NodeList*/      *Nodes, DocNodes;
+  Q3PtrList<Diagram> /*DiagramList*/   *Diagrams, DocDiags;
+  Q3PtrList<Painting> /*PaintingList*/  *Paintings, DocPaints;
+  Q3PtrList<Component> /*ComponentList*/ *Components, DocComps;
+
+  Q3PtrList<Painting> /*PaintingList*/  SymbolPaints;  // symbol definition for subcircuit
+
+  // ===============
+  // from View
+  Frame *schematicFrame;
+  bool symbolMode;  // true if in symbol painting mode
+
+  int GridX, GridY;
+  int ViewX1, ViewY1, ViewX2, ViewY2;  // size of the document area
+  int UsedX1, UsedY1, UsedX2, UsedY2;  // document area used by elements
+
+  // Two of those data sets are needed for Schematic and for symbol.
+  // Which one is in "tmp..." depends on "symbolMode".
+  float tmpScale;
+  int tmpViewX1, tmpViewY1, tmpViewX2, tmpViewY2;
+  int tmpUsedX1, tmpUsedY1, tmpUsedX2, tmpUsedY2;
+
+  // ===============
+  // from View --> QucsDoc
+  QString DocName;
+  QString DataSet;     // name of the default dataset
+  QString DataDisplay; // name of the default data display
+  QString Script;
+  QString SimTime;     // used for VHDL simulation, but stored in datadisplay
+  QDateTime lastSaved;
+
+  float Scale;
+  bool DocChanged;
+  bool SimOpenDpl;   // open data display after simulation ?
+  bool SimRunScript; // run script after simulation ?
+  int  showBias;     // -1=no, 0=calculation running, >0=show DC bias points
+  bool GridOn;
+  int  tmpPosX, tmpPosY;
 
 public:
   static int testFile(const QString &);
