@@ -24,6 +24,7 @@
 #include "projectView.h"
 #include "schematicview.h"
 #include "schematicfile.h"
+#include "misc.h"
 
 #include <QString>
 #include <QStringList>
@@ -160,7 +161,8 @@ ProjectView::refresh()
     }
     else if(extName == "sch") {
       // test if it's a valid schematic file
-      SchematicFile *sch = new SchematicFile();
+      TODO("fix schematicfile ref");
+      SchematicFile *sch = new SchematicFile(0);
       int n = sch->testFile(workPath.filePath(fileName));
       if(n >= 0) {
         if(n > 0) { // is a subcircuit
