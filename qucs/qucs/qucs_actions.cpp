@@ -902,7 +902,8 @@ void QucsApp::slotChangeProps()
         ((TextDoc *)Doc)->textCursor().selectedText(), true);
   }
   else {
-    ChangeDialog *d = new ChangeDialog((SchematicView*)Doc);
+    const SchematicView* s = dynamic_cast<const SchematicView*>(Doc);
+    ChangeDialog *d = new ChangeDialog(s->scene);
     if(d->exec() == QDialog::Accepted) {
       ((SchematicView*)Doc)->setChanged(true, true);
       ((SchematicView*)Doc)->viewport()->update();
