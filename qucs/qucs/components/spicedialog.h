@@ -21,7 +21,7 @@
 #include <QDialog>
 #include <QRegExp>
 
-class SchematicView;
+class SchematicScene;
 class SpiceFile;
 class QLineEdit;
 class QPushButton;
@@ -38,7 +38,7 @@ class QTextStream;
 class SpiceDialog : public QDialog {
    Q_OBJECT
 public:
-  SpiceDialog(QucsApp*, SpiceFile*, SchematicView*);
+  SpiceDialog(QucsApp*, SpiceFile*, SchematicScene*);
  ~SpiceDialog();
 
 private slots:
@@ -78,7 +78,7 @@ private:
               *ButtOK, *ButtApply, *ButtCancel;
   QComboBox   *PrepCombo;
   SpiceFile   *Comp;
-  SchematicView   *Doc;
+  SchematicScene *scene;
   bool        changed;
   int         currentPrep;
 

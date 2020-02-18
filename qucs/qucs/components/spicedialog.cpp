@@ -18,6 +18,7 @@
 #include "spicefile.h"
 #include "qucs.h"
 #include "schematicview.h"
+#include "schematicscene.h"
 
 #include <QLabel>
 #include <QHBoxLayout>
@@ -37,8 +38,8 @@
 #include <QDebug>
 
 
-SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, SchematicView *d)
-    : QDialog(d)
+SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, SchematicScene *d)
+    : QDialog(App_)
 {
   App = App_; // pointer to main application
 
@@ -47,7 +48,7 @@ SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, SchematicView *d)
   resize(400, 250);
   setWindowTitle(tr("Edit SPICE Component Properties"));
   Comp = c;
-  Doc  = d;
+  scene  = d;
 
   all = new QVBoxLayout(); // to provide neccessary size
   this->setLayout(all);
@@ -211,7 +212,7 @@ void SpiceDialog::slotButtApply()
   if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->name());
   else if(CompNameEdit->text() != Comp->name())
   {
-    for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next())
+    for(pc = scene->Components->first(); pc!=0; pc = scene->Components->next())
       if(pc->name() == CompNameEdit->text()) {
         break;  // found component with the same name ?
       }
@@ -270,8 +271,8 @@ void SpiceDialog::slotButtApply()
 
   if(changed || Comp->withSim)    // because of "sim" text
   {
-    Doc->recreateComponent(Comp); // to apply changes to the schematic symbol
-    Doc->viewport()->repaint();
+    scene->recreateComponent(Comp); // to apply changes to the schematic symbol
+    scene->update();
   }
 }
 
@@ -600,7 +601,7 @@ void SpiceDialog::slotGetNetlist()
 // -------------------------------------------------------------------------
 void SpiceDialog::slotButtEdit()
 {
-  Doc->App->editFile(QucsSettings.QucsWorkDir.filePath(FileEdit->text()));
+  App->editFile(QucsSettings.QucsWorkDir.filePath(FileEdit->text()));
 }
 
 // -------------------------------------------------------------------------
