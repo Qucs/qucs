@@ -53,6 +53,7 @@
 #include "qucs.h"
 #include "schematicview.h"
 #include "schematicscene.h"
+#include "schematicfile.h"
 #include "node.h"
 #include "textdoc.h"
 #include "mouseactions.h"
