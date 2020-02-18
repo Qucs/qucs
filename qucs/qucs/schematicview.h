@@ -46,7 +46,6 @@
 #include "qt_compat.h"
 #include <QVector>
 #include <QStringList>
-#include <QFileInfo>
 
 class SchematicScene;
 class QTextStream;
@@ -119,10 +118,6 @@ public:
 
   QUndoStack *undoStack;
 
-  /*! \brief Get (schematic) file reference */
-  QFileInfo getFileInfo (void) { return FileInfo; }
-  /*! \brief Set reference to file (schematic) */
-  void setFileInfo(QString FileName) { FileInfo = QFileInfo(FileName); }
 
 signals:
   void signalCursorPosChanged(int, int);
@@ -150,8 +145,6 @@ protected slots:
 
 private:
   bool dragIsOkay;
-  /*! \brief hold system-independent information about a schematic file */
-  QFileInfo FileInfo;
 
   //! \brief Auxiliary pan variables
   bool panMode;

@@ -27,6 +27,7 @@
 #include "qt_compat.h"
 
 #include <QGraphicsScene>
+#include <QFileInfo>
 
 class QUndoStack;
 
@@ -159,6 +160,15 @@ private:
   bool copyComps2WiresPaints(int&, int&, int&, int&, QList<Element *> *);
   int  copyElements(int&, int&, int&, int&, QList<Element *> *);
 
+public:
+  /*! \brief Get (schematic) file reference */
+  QFileInfo getFileInfo (void) { return FileInfo; }
+  /*! \brief Set reference to file (schematic) */
+  void setFileInfo(QString FileName) { FileInfo = QFileInfo(FileName); }
+
+private:
+  /*! \brief hold system-independent information about a schematic file */
+  QFileInfo FileInfo;
 
 };
 
