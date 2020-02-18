@@ -22,6 +22,7 @@
 #include "node.h"
 #include "qucs.h"
 #include "schematicview.h"
+#include "schematicscene.h"
 #include "module.h"
 #include "misc.h"
 
@@ -1187,7 +1188,7 @@ void Component::copyComponent(Component *pc)
 // ********          Functions of class MultiViewComponent        ********
 // ********                                                       ********
 // ***********************************************************************
-void MultiViewComponent::recreate(SchematicView *Doc)
+void MultiViewComponent::recreate(SchematicScene *Doc)
 {
   if(Doc) {
     Doc->Components->setAutoDelete(false);

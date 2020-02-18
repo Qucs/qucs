@@ -21,7 +21,6 @@
 #include "element.h"
 #include "qt_compat.h"
 
-class SchematicView;
 class SchematicScene;
 class QString;
 class QPen;
@@ -33,7 +32,7 @@ public:
   virtual ~Component() {};
 
   virtual Component* newOne();
-  virtual void recreate(SchematicView*) {};
+  virtual void recreate(SchematicScene*) {}
   QString getNetlist();
   QString get_VHDL_Code(int);
   QString get_Verilog_Code(int);
@@ -143,7 +142,7 @@ public:
   MultiViewComponent() {};
   virtual ~MultiViewComponent() {};
 
-  void recreate(SchematicView*);
+  void recreate(SchematicScene*);
 
 protected:
   virtual void createSymbol() {};

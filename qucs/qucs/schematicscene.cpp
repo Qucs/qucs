@@ -2387,6 +2387,7 @@ void SchematicScene::recreateComponent(Component *Comp)
     int x = Comp->tx, y = Comp->ty;
     int x1 = Comp->x1, x2 = Comp->x2, y1 = Comp->y1, y2 = Comp->y2;
     QString tmp = Comp->name();    // is sometimes changed by "recreate"
+    // only MultiViewComponent is usin the recreate(this) with argument
     Comp->recreate(this);   // to apply changes to the schematic symbol
     Comp->obsolete_name_override_hack(tmp);
     if(x < x1)

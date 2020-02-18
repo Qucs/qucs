@@ -101,7 +101,7 @@ Element* TR_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-void TR_Sim::recreate(SchematicView*)
+void TR_Sim::recreate(SchematicScene*)
 {
   Property *pp = Props.first();
   if((pp->Value == "list") || (pp->Value == "const")) {

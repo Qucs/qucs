@@ -72,7 +72,7 @@ Element* Param_Sweep::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-void Param_Sweep::recreate(SchematicView*)
+void Param_Sweep::recreate(SchematicScene*)
 {
   Property *pp = Props.at(1);
   Props.next();
