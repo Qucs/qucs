@@ -24,9 +24,17 @@
 #ifndef SCHEMATICSCENE_H_
 #define SCHEMATICSCENE_H_
 
+#include "qt_compat.h"
+
 #include <QGraphicsScene>
 
 class QUndoStack;
+
+class Wire;
+class Node;
+class Diagram;
+class Component;
+class Painting;
 
 // TODO: refactor here
 class WireList : public Q3PtrList<Wire> {
