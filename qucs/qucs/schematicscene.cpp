@@ -48,6 +48,8 @@ ComponentList SymbolComps;
 SchematicScene::SchematicScene(QObject *parent) :
   QGraphicsScene(parent)
 {
+  GridX  = GridY  = 10;
+
   undoStack = new QUndoStack(this);
 
   /// \todo remove deprecated
@@ -143,7 +145,7 @@ void SchematicScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     int y = pos.y();
     int gx = x;
     int gy = y;
-    view->setOnGrid(gx, gy);
+    setOnGrid(gx, gy);
     chosen->setPos(gx,gy);
     chosen->drawScheme = true;
   }
@@ -1069,7 +1071,8 @@ Marker* SchematicScene::setMarker(int x, int y)
   // only diagrams ...
   for(Diagram *pd = Diagrams->last(); pd != 0; pd = Diagrams->prev()){
     if(Marker* m=pd->setMarker(x,y)){
-      setChanged(true, true);
+      TODO("callback to set changed");
+      //setChanged(true, true);
       return m;
     }
   }
@@ -1088,7 +1091,10 @@ void SchematicScene::markerLeftRight(bool left, Q3PtrList<Element> *Elements)
             acted = true;
     }
 
-    if(acted)  setChanged(true, true, 'm');
+    if(acted) {
+        TODO("callback to set changed");
+        //setChanged(true, true, 'm');
+    }
 }
 
 // ---------------------------------------------------
@@ -1103,7 +1109,10 @@ void SchematicScene::markerUpDown(bool up, Q3PtrList<Element> *Elements)
             acted = true;
     }
 
-    if(acted)  setChanged(true, true, 'm');
+    if(acted) {
+        TODO("callback to set changed");
+        //setChanged(true, true, 'm');
+    }
 }
 
 
@@ -1882,8 +1891,10 @@ bool SchematicScene::deleteElements()
 
     if(sel)
     {
-        sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);   // set new document size
-        setChanged(sel, true);
+        TODO("callback to set sizeofAll and setchanged");
+        // equivalent to fit() and update()?
+        //sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);   // set new document size
+        //setChanged(sel, true);
     }
     return sel;
 }
@@ -2023,7 +2034,8 @@ bool SchematicScene::aligning(int Mode)
     ElementCache.clear();
     if(count < 2) return false;
 
-    setChanged(true, true);
+    TODO("callback to set changed");
+    //setChanged(true, true);
     return true;
 }
 
@@ -2138,7 +2150,8 @@ bool SchematicScene::distributeHorizontal()
     ElementCache.clear();
     if(count < 2) return false;
 
-    setChanged(true, true);
+    TODO("callback to set changed");
+    //setChanged(true, true);
     return true;
 }
 
@@ -2244,7 +2257,8 @@ bool SchematicScene::distributeVertical()
     ElementCache.clear();
     if(count < 2) return false;
 
-    setChanged(true, true);
+    TODO("callback to set changed");
+    //setChanged(true, true);
     return true;
 }
 
@@ -2495,7 +2509,10 @@ void SchematicScene::activateCompsWithinRect(int x1, int y1, int x2, int y2)
                     }
     }
 
-    if(changed)  setChanged(true, true);
+    if(changed) {
+        TODO("callback to set changed");
+        //setChanged(true, true);
+    }
 }
 
 // ---------------------------------------------------
@@ -2525,7 +2542,8 @@ bool SchematicScene::activateSpecifiedComponent(int x, int y)
                                     oneLabel(pc->Ports.first()->Connection);
 				}
                         }
-                        setChanged(true, true);
+                        TODO("callback to set changed");
+                        //setChanged(true, true);
                         return true;
                     }
     }
@@ -2560,7 +2578,10 @@ bool SchematicScene::activateSelectedComponents()
             sel = true;
         }
 
-    if(sel) setChanged(true, true);
+    if(sel) {
+        TODO("callback to set changed");
+        //setChanged(true, true);
+    }
     return sel;
 }
 
@@ -3071,7 +3092,8 @@ bool SchematicScene::rotateElements()
 
   ElementCache.clear();
 
-  setChanged(true, true);
+  TODO("callback to set changed");
+  //setChanged(true, true);
   return true;
 }
 
@@ -3142,7 +3164,8 @@ bool SchematicScene::mirrorXComponents()
     }
 
   ElementCache.clear();
-  setChanged(true, true);
+  TODO("callback to set changed");
+  //setChanged(true, true);
   return true;
 }
 
@@ -3210,7 +3233,8 @@ bool SchematicScene::mirrorYComponents()
     }
 
   ElementCache.clear();
-  setChanged(true, true);
+  TODO("callback to set changed");
+  //setChanged(true, true);
   return true;
 }
 
@@ -3380,13 +3404,16 @@ bool SchematicScene::elementsOnGrid()
       count = true;
     }
 
-  if(count) setChanged(true, true);
+  if(count) {
+      TODO("callback to set changed");
+      //setChanged(true, true);
+  }
   return count;
 }
 
 // ---------------------------------------------------
 // Sets an arbitrary coordinate onto the next grid coordinate.
-void SchematicView::setOnGrid(int& x, int& y)
+void SchematicScene::setOnGrid(int& x, int& y)
 {
   if(x<0) x -= (GridX >> 1) - 1;
   else x += GridX >> 1;
@@ -3399,7 +3426,7 @@ void SchematicView::setOnGrid(int& x, int& y)
 
 // ---------------------------------------------------
 // Updates the graph data of all diagrams (load from data files).
-void SchematicView::reloadGraphs()
+void SchematicScene::reloadGraphs()
 {
   QFileInfo Info(DocName);
   for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())

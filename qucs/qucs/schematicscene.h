@@ -83,6 +83,11 @@ public: ///\todo set public for now
   bool  elementsOnGrid();
   void highlightWireLabels (void);
 
+  int GridX, GridY;
+
+  QString DocName; // from QucsDoc
+  QString DataSet; // from QucsDoc
+
 public:
   /// \todo make then public while we fix stuff
   // The pointers points to the current lists, either to the schematic

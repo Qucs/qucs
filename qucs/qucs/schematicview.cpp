@@ -70,7 +70,6 @@ SchematicView::SchematicView(QucsApp *App_, const QString& Name_)
   symbolMode = false;
 
   // ...........................................................
-  GridX  = GridY  = 10;
   ViewX1=ViewY1=0;
   ViewX2=ViewY2=800;
   UsedX1 = UsedY1 = INT_MAX;
