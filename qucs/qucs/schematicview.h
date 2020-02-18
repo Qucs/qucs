@@ -84,7 +84,6 @@ public:
   void  enlargeView(int, int, int, int);
 
   void  switchPaintMode();
-  bool  createSubcircuitSymbol();
 
   void    becomeCurrent(bool);
   bool    undo();
