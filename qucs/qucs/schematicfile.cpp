@@ -2391,7 +2391,7 @@ int SchematicFile::adjustPortNumbers()
 // save a component
 // FIXME: part of corresponding SchematicSerializer implementation
 // BUG: c must be const (cannot because of QT3)
-void SchematicView::saveComponent(QTextStream& s, Component /*const*/ * c) const
+void SchematicFile::saveComponent(QTextStream& s, Component /*const*/ * c) const
 {
 #if XML
   QDomDocument doc;
@@ -2459,7 +2459,7 @@ void SchematicView::saveComponent(QTextStream& s, Component /*const*/ * c) const
 }
 // -------------------------------------------------------
 // FIXME: must be Component* SchematicParser::loadComponent(Stream&, Component*);
-Component* SchematicView::loadComponent(const QString& _s, Component* c) const
+Component* SchematicFile::loadComponent(const QString& _s, Component* c) const
 {
   qDebug() << "load" << _s;
   bool ok;
