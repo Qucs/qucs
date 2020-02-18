@@ -33,6 +33,7 @@
 
 class Wire;
 class Frame;
+class SchematicScene;
 
 class QTextStream;
 class QPlainTextEdit;
@@ -89,6 +90,7 @@ public: // all duplicates
 
   Q3PtrList<Painting> /*PaintingList*/  SymbolPaints;  // symbol definition for subcircuit
 
+  SchematicScene *scene; // need a ref to a scene
   // ===============
   // from View
   Frame *schematicFrame;
