@@ -167,6 +167,9 @@ private:
 public: // for now. move to parser asap
 	Component* loadComponent(const QString& _s, Component* c) const;
 
+    // prototype of independent function
+    Component* getComponentFromName(QString& Line);
+
 public:
   bool isAnalog;
   bool isVerilog;

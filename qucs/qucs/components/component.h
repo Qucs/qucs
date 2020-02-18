@@ -160,7 +160,5 @@ protected:
   void createSymbol();
 };
 
-// prototype of independent function
-Component* getComponentFromName(QString& Line, SchematicView* p=NULL);
 
 #endif

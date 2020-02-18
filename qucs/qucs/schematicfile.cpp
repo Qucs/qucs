@@ -37,10 +37,7 @@
 #include "schematicscene.h"
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
-#include "components/spicefile.h"
-#include "components/vhdlfile.h"
-#include "components/verilogfile.h"
-#include "components/libcomp.h"
+#include "components.h"
 #include "module.h"
 #include "misc.h"
 
@@ -704,7 +701,7 @@ bool SchematicFile::loadComponents(QTextStream *stream, Q3PtrList<Component> *Li
     if(Line.isEmpty()) continue;
 
     /// \todo enable user to load partial schematic, skip unknown components
-    c = getComponentFromName(Line, this);
+    c = getComponentFromName(Line);
     if(!c) return false;
 
     // set component location
@@ -2657,7 +2654,7 @@ Component* SchematicFile::loadComponent(const QString& _s, Component* c) const
 // FIXME:
 // must be Component* SomeParserClass::getComponent(QString& Line)
 // better: Component* SomeParserClass::getComponent(SomeDataStream& s)
-Component* getComponentFromName(QString& Line, SchematicView* p)
+Component* SchematicFile::getComponentFromName(QString& Line)
 {
   Component *c = 0;
 
@@ -2710,8 +2707,7 @@ Component* getComponentFromName(QString& Line, SchematicView* p)
 
   }
 
-  // BUG: don't use schematic.
-  if(!p->loadComponent(Line, c)) {
+  if(!loadComponent(Line, c)) {
     QMessageBox::critical(0, QObject::tr("Error"),
 	QObject::tr("Format Error:\nWrong 'component' line format!"));
     delete c;
@@ -2720,7 +2716,7 @@ Component* getComponentFromName(QString& Line, SchematicView* p)
 
   cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
   int x = c->tx, y = c->ty;
-  c->setSchematic (p);
+  c->setSchematic (scene);
   c->recreate(0);
   c->obsolete_name_override_hack(cstr);
   c->tx = x;  c->ty = y;
