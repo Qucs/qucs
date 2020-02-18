@@ -170,8 +170,8 @@ SettingsDialog::SettingsDialog(SchematicView *Doc_)
     Check_OpenDpl->setChecked(Doc->SimOpenDpl);
     Check_RunScript->setChecked(Doc->SimRunScript);
     Check_GridOn->setChecked(Doc->GridOn);
-    Input_GridX->setText(QString::number(Doc->GridX));
-    Input_GridY->setText(QString::number(Doc->GridY));
+    Input_GridX->setText(QString::number(Doc->scene->GridX));
+    Input_GridY->setText(QString::number(Doc->scene->GridY));
     Combo_Frame->setCurrentIndex(Doc->schematicFrame->PageType);
 
     QString Text_;
@@ -264,15 +264,15 @@ void SettingsDialog::slotApply()
         changed = true;
     }
 
-    if(Doc->GridX != Input_GridX->text().toInt())
+    if(Doc->scene->GridX != Input_GridX->text().toInt())
     {
-        Doc->GridX = Input_GridX->text().toInt();
+        Doc->scene->GridX = Input_GridX->text().toInt();
         changed = true;
     }
 
-    if(Doc->GridY != Input_GridY->text().toInt())
+    if(Doc->scene->GridY != Input_GridY->text().toInt())
     {
-        Doc->GridY = Input_GridY->text().toInt();
+        Doc->scene->GridY = Input_GridY->text().toInt();
         changed = true;
     }
 
