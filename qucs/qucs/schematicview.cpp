@@ -1043,7 +1043,8 @@ void SchematicView::contentsDragEnterEvent(QDragEnterEvent *Event)
     QString s = Event->mimeData()->text();
     if(s.left(15) == "QucsComponent:<") {
       s = s.mid(14);
-      App->mouseAction->selElem = getComponentFromName(s);
+      SchematicFile *file = new SchematicFile(0);
+      App->mouseAction->selElem = file->getComponentFromName(s);
       if(App->mouseAction->selElem) {
         Event->accept();
         return;
