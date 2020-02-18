@@ -36,6 +36,9 @@ class Node;
 class Diagram;
 class Component;
 class Painting;
+class Marker;
+class Element;
+class WireLabel;
 
 // TODO: refactor here
 class WireList : public Q3PtrList<Wire> {
