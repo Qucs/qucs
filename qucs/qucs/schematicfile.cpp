@@ -2725,7 +2725,7 @@ Component* SchematicFile::getComponentFromName(QString& Line)
 
 
 // ---------------------------------------------------
-bool SchematicScene::createSubcircuitSymbol()
+bool SchematicFile::createSubcircuitSymbol()
 {
   // If the number of ports is not equal, remove or add some.
   unsigned int countPort = adjustPortNumbers();
