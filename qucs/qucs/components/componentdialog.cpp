@@ -17,7 +17,7 @@
 
 #include "componentdialog.h"
 #include "qucs.h"
-#include "schematicview.h"
+#include "schematicscene.h"
 #include "misc.h"
 
 #include <cmath>
@@ -37,9 +37,11 @@
 #include <QKeyEvent>
 #include <QDebug>
 
-ComponentDialog::ComponentDialog(Component *c, SchematicView *d)
-			: QDialog(d)
+ComponentDialog::ComponentDialog(QucsApp* App_, Component *c, SchematicScene *d)
+			: QDialog(App_)
 {
+  App = App_; // pointer to main application
+
   resize(450, 250);
   setWindowTitle(tr("Edit Component Properties"));
   Comp  = c;
@@ -1054,7 +1056,7 @@ void ComponentDialog::slotApplyInput()
     }
 
     Doc->recreateComponent(Comp);
-    Doc->viewport()->repaint();
+    Doc->update();
     if ( (int) Comp->Props.count() != prop->rowCount()) { // If props count was changed after recreation
       Q_ASSERT(prop->rowCount() >= 0);
       updateCompPropsList(); // of component we need to update properties
@@ -1127,7 +1129,7 @@ void ComponentDialog::slotBrowseFile()
 // -------------------------------------------------------------------------
 void ComponentDialog::slotEditFile()
 {
-  Doc->App->editFile(QucsSettings.QucsWorkDir.filePath(edit->text()));
+  App->editFile(QucsSettings.QucsWorkDir.filePath(edit->text()));
 }
 
 /*!

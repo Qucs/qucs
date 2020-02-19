@@ -22,7 +22,8 @@
 
 #include <QDialog>
 
-class SchematicView;
+class QucsApp;
+class SchematicScene;
 
 class QValidator;
 class QIntValidator;
@@ -41,7 +42,7 @@ class QVBoxLayout;
 class ComponentDialog : public QDialog {
    Q_OBJECT
 public:
-  ComponentDialog(Component*, SchematicView*);
+  ComponentDialog(QucsApp*, Component*, SchematicScene*);
  ~ComponentDialog();
 
 private slots:
@@ -96,7 +97,7 @@ private:
   QPushButton *ButtUp, *ButtDown;
   QCheckBox   *disp;
   Component   *Comp;
-  SchematicView   *Doc;
+  SchematicScene   *Doc;
   bool        changed;
   int         tx_Dist, ty_Dist;   // remember the text position
   bool        setAllVisible; // used for toggling visibility of properties
@@ -111,6 +112,8 @@ private:
   QComboBox *comboSim, *comboType;
 
   void updateCompPropsList(void);
+
+  QucsApp* App;
 };
 
 #endif
