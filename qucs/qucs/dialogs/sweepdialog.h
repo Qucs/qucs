@@ -27,8 +27,10 @@
 
 #include "node.h"
 
+class QucsApp;
 class Graph;
-class SchematicView;
+class SchematicScene;
+
 class QGridLayout;
 
 class mySpinBox : public QSpinBox {
@@ -48,7 +50,7 @@ private:
 class SweepDialog : public QDialog {
    Q_OBJECT
 public:
-  SweepDialog(SchematicView*);
+  SweepDialog(QucsApp*, SchematicScene *);
  ~SweepDialog();
 
 private slots:
@@ -61,7 +63,7 @@ private:
   QList<mySpinBox *> BoxList;
 
   Graph *pGraph;
-  SchematicView *Doc;
+  SchematicScene *scene;
   QList<Node *> NodeList;
   QList<double *> ValueList;
 };

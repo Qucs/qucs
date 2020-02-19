@@ -15,13 +15,14 @@
  *                                                                         *
  ***************************************************************************/
 #include "sweepdialog.h"
-#include "schematicview.h"
+#include "schematicscene.h"
 #include "qucs.h"
-
-#include <QGridLayout>
 #include "../diagrams/graph.h"
 #include "misc.h"
+#include "wire.h"
+#include "component.h"
 
+#include <QGridLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QValidator>
@@ -65,12 +66,12 @@ QValidator::State mySpinBox::validate ( QString & text, int & pos ) const
 /// \param Doc_
 /// This dialog is launched when the Calculate DC bias is requested
 /// for a project which contains a sweep.
-SweepDialog::SweepDialog(SchematicView *Doc_)
-			: QDialog(Doc_)
+SweepDialog::SweepDialog(QucsApp *App_, SchematicScene *Scene_)
+			: QDialog(App_)
 {
   qDebug() << "SweepDialog::SweepDialog()";
 
-  Doc = Doc_;
+  scene = Scene_;
 
   pGraph = setBiasPoints();
   // if simulation has no sweeps, terminate dialog before showing it
@@ -151,7 +152,7 @@ void SweepDialog::slotNewValue(int)
     value_it++;
   }
 
-  Doc->viewport()->update();
+  scene->update();
 }
 
 // ---------------------------------------------------
@@ -164,8 +165,8 @@ Graph* SweepDialog::setBiasPoints()
 
   bool hasNoComp;
   Graph *pg = new Graph(NULL, ""); // HACK!
-  QFileInfo Info(Doc->DocName);
-  QString DataSet = Info.path() + QDir::separator() + Doc->DataSet;
+  QFileInfo Info(scene->DocName);
+  QString DataSet = Info.path() + QDir::separator() + scene->DataSet;
 
   Node *pn;
   Element *pe;
@@ -179,7 +180,7 @@ Graph* SweepDialog::setBiasPoints()
   ValueList.clear();
 
   // create DC voltage for all nodes
-  for(pn = Doc->Nodes->first(); pn != 0; pn = Doc->Nodes->next()) {
+  for(pn = scene->Nodes->first(); pn != 0; pn = scene->Nodes->next()) {
     if(pn->Name.isEmpty()) continue;
 
     pn->x1 = 0;
@@ -231,7 +232,7 @@ Graph* SweepDialog::setBiasPoints()
 
   // create DC current through each probe
   Component *pc;
-  for(pc = Doc->Components->first(); pc != 0; pc = Doc->Components->next())
+  for(pc = scene->Components->first(); pc != 0; pc = scene->Components->next())
     if(pc->obsolete_model_hack() == "IProbe") { // BUG.
       pn = pc->Ports.first()->Connection;
       if(!pn->Name.isEmpty())   // preserve node voltage ?
@@ -259,7 +260,7 @@ Graph* SweepDialog::setBiasPoints()
     }
 
 
-  Doc->showBias = 1;
+  scene->showBias = 1;
 
   return pg;
 }
