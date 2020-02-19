@@ -46,6 +46,8 @@
 #include "imagewriter.h"
 
 #include "schematicview.h"
+#include "schematicscene.h"
+#include "schematicfile.h"
 #include "module.h"
 #include "misc.h"
 
@@ -108,7 +110,7 @@ void qucsMessageOutput(QtMsgType type, const QMessageLogContext &, const QString
  */
 void attach(const char* what);
 
-SchematicView *openSchematic(QString schematic)
+SchematicScene *openSchematic(QString schematic)
 {
   qDebug() << "*** try to load schematic :" << schematic;
 
@@ -129,20 +131,22 @@ SchematicView *openSchematic(QString schematic)
   Module::registerModules ();
 
   // new schematic from file
-  SchematicView *sch = new SchematicView(0, schematic);
-
+  TODO("check legacy");
+  //SchematicView *sch = new SchematicView(0, schematic);
+  SchematicFile *sch = new SchematicFile(0);
+  sch->DocName = schematic;
   // load schematic file if possible
   if(!sch->loadDocument()) {
     fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
     delete sch;
     return NULL;
   }
-  return sch;
+  return sch->scene;
 }
 
 int doNetlist(QString schematic, QString netlist)
 {
-  SchematicView *sch = openSchematic(schematic);
+  SchematicScene *sch = openSchematic(schematic);
   if (sch == NULL) {
     return 1;
   }
@@ -167,8 +171,12 @@ int doNetlist(QString schematic, QString netlist)
     return -1;
   }
 
+  TODO("check legacy");
+  SchematicFile *schFile = new SchematicFile(0);
+  schFile->scene = sch;
+
   Stream.setDevice(&NetlistFile);
-  int SimPorts = sch->prepareNetlist(Stream, Collect, ErrText);
+  int SimPorts = schFile->prepareNetlist(Stream, Collect, ErrText);
 
   if(SimPorts < -5) {
     NetlistFile.close();
@@ -192,7 +200,7 @@ int doNetlist(QString schematic, QString netlist)
 
   Stream << '\n';
 
-  QString SimTime = sch->createNetlist(Stream, SimPorts);
+  QString SimTime = schFile->createNetlist(Stream, SimPorts);
   delete(sch);
 
   NetlistFile.close();
@@ -203,7 +211,7 @@ int doNetlist(QString schematic, QString netlist)
 int doPrint(QString schematic, QString printFile,
     QString page, int dpi, QString color, QString orientation)
 {
-  SchematicView *sch = openSchematic(schematic);
+  SchematicScene *sch = openSchematic(schematic);
   if (sch == NULL) {
     return 1;
   }
@@ -222,10 +230,12 @@ int doPrint(QString schematic, QString printFile,
     //initial printer
     PrinterWriter *Printer = new PrinterWriter();
     Printer->setFitToPage(true);
-    Printer->noGuiPrint(sch, printFile, page, dpi, color, orientation);
+    TODO("rework print pdf")
+    //Printer->noGuiPrint(sch, printFile, page, dpi, color, orientation);
   } else {
     ImageWriter *Printer = new ImageWriter("");
-    Printer->noGuiPrint(sch, printFile, color);
+    TODO("rework CLI print")
+    //Printer->noGuiPrint(sch, printFile, color);
   }
   return 0;
 }
@@ -488,7 +498,11 @@ void createListComponentEntry(){
 
 		// FIXME: cleanup
 		QTextStream s;
-		c->getSchematic()->saveComponent(s, c);
+        TODO("check legacy");
+		//c->getSchematic()->saveComponent(s, c);
+        SchematicFile *schFile = new SchematicFile(0);
+        schFile->scene = c->getSchematic();
+        schFile->saveComponent(s, c);
       QString qucsEntry = *(s.string());
       fprintf(stdout, "%s; qucs    ; %s\n", c->obsolete_model_hack().toLatin1().data(), qucsEntry.toLatin1().data());
 
