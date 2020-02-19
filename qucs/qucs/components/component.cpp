@@ -1188,11 +1188,11 @@ void Component::copyComponent(Component *pc)
 // ********          Functions of class MultiViewComponent        ********
 // ********                                                       ********
 // ***********************************************************************
-void MultiViewComponent::recreate(SchematicScene *Doc)
+void MultiViewComponent::recreate(SchematicScene *scene)
 {
-  if(Doc) {
-    Doc->Components->setAutoDelete(false);
-    Doc->deleteComp(this);
+  if(scene) {
+    scene->Components->setAutoDelete(false);
+    scene->deleteComp(this);
   }
 
   Ellips.clear();
@@ -1217,9 +1217,9 @@ void MultiViewComponent::recreate(SchematicScene *Doc)
   rotated = rrot;   // restore properties (were changed by rotate/mirror)
   mirroredX = mmir;
 
-  if(Doc) {
-    Doc->insertRawComponent(this);
-    Doc->Components->setAutoDelete(true);
+  if(scene) {
+    scene->insertRawComponent(this);
+    scene->Components->setAutoDelete(true);
   }
 }
 

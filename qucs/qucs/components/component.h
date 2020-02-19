@@ -139,13 +139,13 @@ protected:
 
 class MultiViewComponent : public Component {
 public:
-  MultiViewComponent() {};
-  virtual ~MultiViewComponent() {};
+  MultiViewComponent() {}
+  virtual ~MultiViewComponent() {}
 
-  void recreate(SchematicScene*);
+  void recreate(SchematicScene *scene);
 
 protected:
-  virtual void createSymbol() {};
+  virtual void createSymbol() {}
 };
 
 
