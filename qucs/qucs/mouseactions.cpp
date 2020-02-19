@@ -2136,15 +2136,15 @@ void MouseActions::editElement(SchematicView *Doc, QMouseEvent *Event)
          if(c->obsolete_model_hack() == "GND") { // BUG
 	   return;
 	 }else if(c->obsolete_model_hack() == "SPICE") { // BUG. use cast
-           SpiceDialog *sd = new SpiceDialog(App, (SpiceFile*)c, Doc);
+           SpiceDialog *sd = new SpiceDialog(App, (SpiceFile*)c, Doc->scene);
            if(sd->exec() != 1) break;   // dialog is WA_DeleteOnClose
          }
          else if(c->obsolete_model_hack() == ".Opt") {
-           OptimizeDialog *od = new OptimizeDialog((Optimize_Sim*)c, Doc);
+           OptimizeDialog *od = new OptimizeDialog(App, (Optimize_Sim*)c, Doc->scene);
            if(od->exec() != 1) break;   // dialog is WA_DeleteOnClose
          }
          else {
-           ComponentDialog * cd = new ComponentDialog(c, Doc);
+           ComponentDialog * cd = new ComponentDialog(App, c, Doc->scene);
            if(cd->exec() != 1) break;   // dialog is WA_DeleteOnClose
 
            scene->Components->findRef(c);
