@@ -2156,7 +2156,7 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
   if(sim->showBias == 0) {  // paint dc bias into schematic ?
     sim->slotClose();   // close and delete simulation window
     if(w) {  // schematic still open ?
-      SweepDialog *Dia = new SweepDialog((SchematicView*)sim->DocWidget);
+      SweepDialog *Dia = new SweepDialog(this,(SchematicScene*)sim->DocWidget);
 
       // silence warning about unused variable.
       Q_UNUSED(Dia)
