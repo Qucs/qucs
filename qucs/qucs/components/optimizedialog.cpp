@@ -24,7 +24,7 @@
 #include "qucs.h"
 #include "optimizedialog.h"
 #include "opt_sim.h"
-#include "schematicview.h"
+#include "schematicscene.h"
 
 #include <QLabel>
 #include <QCheckBox>
@@ -46,11 +46,11 @@
 #include <QInputDialog>
 
 
-OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, SchematicView *d_)
-			: QDialog(d_)
+OptimizeDialog::OptimizeDialog(QucsApp *App_, Optimize_Sim *c_, SchematicScene *d_)
+			: QDialog(App_)
 {
   Comp = c_;
-  Doc  = d_;
+  scene  = d_;
   changed = false;
   numPrec = 3;
   setWindowTitle(tr("Edit Optimization Properties"));
@@ -351,7 +351,7 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, SchematicView *d_)
   // ...........................................................
 
   Component *pc;
-  for(pc=Doc->Components->first(); pc!=0; pc=Doc->Components->next())
+  for(pc=scene->Components->first(); pc!=0; pc=scene->Components->next())
     if(pc != Comp)
       if(pc->obsolete_model_hack()[0] == '.' && pc->obsolete_model_hack() != ".Opt")
         SimEdit->insertItem(SimEdit->count(), pc->name());
@@ -728,7 +728,7 @@ void OptimizeDialog::slotApply()
     NameEdit->setText(Comp->name());
   else
   if(NameEdit->text() != Comp->name()) {
-    for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next())
+    for(pc = scene->Components->first(); pc!=0; pc = scene->Components->next())
       if(pc->name() == NameEdit->text())
         break;  // found component with the same name ?
     if(pc)
@@ -859,7 +859,7 @@ void OptimizeDialog::slotApply()
   }
 
   if(changed)
-    Doc->viewport()->repaint();
+    scene->update();
 }
 
 // -------------------------------------------------------------------------
