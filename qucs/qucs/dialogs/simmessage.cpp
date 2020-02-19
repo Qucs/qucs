@@ -45,6 +45,8 @@ using namespace std;
 #include "qucs.h"
 #include "textdoc.h"
 #include "schematicview.h"
+#include "schematicscene.h"
+#include "schematicfile.h"
 #include "components/opt_sim.h"
 #include "components/vhdlfile.h"
 #include "misc.h"
@@ -175,8 +177,11 @@ bool SimMessage::startProcess()
   Stream.setDevice(&NetlistFile);
 
   if(!QucsApp::isTextDocument(DocWidget)) {
-    SimPorts =
-       ((SchematicView*)DocWidget)->prepareNetlist(Stream, Collect, ErrText);
+    TODO("fix access to File");
+    //SimPorts =
+    //   ((SchematicView*)DocWidget)->prepareNetlist(Stream, Collect, ErrText);
+    SchematicFile *schFile = new SchematicFile(0);
+    SimPorts = schFile->prepareNetlist(Stream, Collect, ErrText);
     if(SimPorts < -5) {
       NetlistFile.close();
       ErrText->appendPlainText(tr("ERROR: Cannot simulate a text file!"));
@@ -450,8 +455,12 @@ void SimMessage::startSimulator()
     }
     Stream << '\n';
 
-    isVerilog = ((SchematicView*)DocWidget)->isVerilog;
-    SimTime = ((SchematicView*)DocWidget)->createNetlist(Stream, SimPorts);
+    TODO("fix handling of File");
+    SchematicFile *schFile = new SchematicFile(0);
+    //isVerilog = ((SchematicView*)DocWidget)->isVerilog;
+    isVerilog = schFile->isVerilog;
+    //SimTime = ((SchematicView*)DocWidget)->createNetlist(Stream, SimPorts);
+    SimTime = schFile->createNetlist(Stream, SimPorts);
     if(SimTime.length()>0&&SimTime.at(0) == '\xA7') {
       NetlistFile.close();
       ErrText->insertPlainText(SimTime.mid(1));
@@ -524,7 +533,11 @@ void SimMessage::startSimulator()
           }
       } // vaComponents not empty
 
-      if((SimOpt = findOptimization((SchematicView*)DocWidget))) {
+      SchematicView *view = (SchematicView*)DocWidget;
+      SchematicScene *scene = view->scene;
+      //if((SimOpt = findOptimization((SchematicView*)DocWidget))) {
+      SimOpt = findOptimization(scene);
+      if( SimOpt ) {
 	    ((Optimize_Sim*)SimOpt)->createASCOnetlist();
 
         Program = QucsSettings.AscoBinDir.canonicalPath();
@@ -600,9 +613,9 @@ void SimMessage::startSimulator()
 }
 
 // ------------------------------------------------------------------------
-Component * SimMessage::findOptimization(SchematicView *Doc) {
+Component * SimMessage::findOptimization(SchematicScene *scene) {
   Component *pc;
-  for(pc=Doc->Components->first(); pc!=0; pc=Doc->Components->next())
+  for(pc=scene->Components->first(); pc!=0; pc=scene->Components->next())
     if(pc->isActive)
       if(pc->obsolete_model_hack() == ".Opt")
 	return pc;
