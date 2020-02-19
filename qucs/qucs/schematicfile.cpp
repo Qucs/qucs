@@ -1889,7 +1889,9 @@ bool SchematicFile::createSubNetlist(QTextStream *stream, int& countInit,
 int SchematicFile::prepareNetlist(QTextStream& stream, QStringList& Collect,
                               QPlainTextEdit *ErrText)
 {
-  if(showBias > 0) showBias = -1;  // do not show DC bias anymore
+  if(scene->showBias > 0) {
+      scene->showBias = -1;  // do not show DC bias anymore
+  }
 
   isVerilog = false;
   isAnalog = true;
@@ -2088,8 +2090,8 @@ void SchematicFile::copy()
 void SchematicFile::cut()
 {
   copy();
-  deleteElements(); //delete selected elements
-  viewport()->update();
+  scene->deleteElements(); //delete selected elements
+  scene->update();
 }
 
 // ---------------------------------------------------

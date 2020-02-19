@@ -19,7 +19,7 @@
 
 #include "qucsdoc.h"
 #include "qucs.h"
-
+#include "misc.h"
 
 QucsDoc::QucsDoc(QucsApp *App_, const QString& Name_)
 {
@@ -49,7 +49,8 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& Name_)
   SimRunScript = false;
 
   DocChanged = false;
-  showBias = -1;  // don't show DC bias (currently for "Schematic" only)
+  TODO("fix showBias, need to talk to scene");
+  //showBias = -1;  // don't show DC bias (currently for "Schematic" only)
   Scale = 1.0;
 }
 

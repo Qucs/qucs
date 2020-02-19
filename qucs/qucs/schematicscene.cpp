@@ -1253,6 +1253,33 @@ void SchematicScene::highlightWireLabels ()
     }
 }
 
+void SchematicScene::drawBias(QPainter *painter, const QRectF &rect)
+{
+    if(showBias > 0) {  // show DC bias points in schematic ?
+      int x, y, z;
+      for(Node* pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
+        if(pn->Name.isEmpty()) continue;
+        x = pn->cx;
+        y = pn->cy + 4;
+        z = pn->x1;
+        if(z & 1) x -= painter->fontMetrics().width(pn->Name);
+        if(!(z & 2)) {
+          /// \todo fix linespacing
+          //y -= (p->LineSpacing>>1) + 4;
+          y -= 4;
+          if(z & 1) x -= 4;
+          else x += 4;
+        }
+        if(z & 0x10)
+          painter->setPen(Qt::darkGreen);  // green for currents
+        else
+          painter->setPen(Qt::blue);   // blue for voltages
+
+        painter->drawText(x, y, pn->Name);
+      }
+    }
+}
+
 // ---------------------------------------------------
 // Deselects all elements except 'e'.
 void SchematicScene::deselectElements(Element *e)

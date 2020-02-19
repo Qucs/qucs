@@ -88,6 +88,11 @@ public: ///\todo set public for now
   QString DocName; // from QucsDoc
   QString DataSet; // from QucsDoc
 
+  int  showBias;     // -1=no, 0=calculation running, >0=show DC bias points
+
+private:
+  void drawBias(QPainter *painter, const QRectF& rect);
+
 public:
   /// \todo make then public while we fix stuff
   // The pointers points to the current lists, either to the schematic

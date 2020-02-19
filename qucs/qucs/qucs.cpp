@@ -2152,8 +2152,9 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
   while((w=DocumentTab->widget(i++)) != 0)
     if(w == sim->DocWidget)
       break;
-
-  if(sim->showBias == 0) {  // paint dc bias into schematic ?
+  TODO("fix showbias, need to talk to scene")
+  //if(sim->showBias == 0) {  // paint dc bias into schematic ?
+  if(0) {  // paint dc bias into schematic ?
     sim->slotClose();   // close and delete simulation window
     if(w) {  // schematic still open ?
       SweepDialog *Dia = new SweepDialog(this,(SchematicScene*)sim->DocWidget);
@@ -2193,7 +2194,8 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 // ------------------------------------------------------------------------
 void QucsApp::slotDCbias()
 {
-  getDoc()->showBias = 0;
+  TODO("fix showBias, need to talk to scene");
+  //getDoc()->showBias = 0;
   slotSimulate();
 }
 

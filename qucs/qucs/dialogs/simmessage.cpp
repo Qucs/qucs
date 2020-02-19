@@ -72,7 +72,8 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
   QFileInfo Info(DocName);
   DataSet = QDir::toNativeSeparators(Info.path()) +
     QDir::separator() + Doc->DataSet;
-  showBias = Doc->showBias;     // save some settings as the document...
+  TODO("fix show bias, need to talk to scene")
+  //showBias = Doc->showBias;     // save some settings as the document...
   SimOpenDpl = Doc->SimOpenDpl; // ...could be closed during the simulation.
   SimRunScript = Doc->SimRunScript;
 
