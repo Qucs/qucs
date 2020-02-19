@@ -29,6 +29,8 @@
 #include <QList>
 #include <QProcess>
 #include <QDebug>
+#include <QApplication>
+#include <QClipboard>
 
 #include "qucs.h"
 #include "node.h"
@@ -40,6 +42,8 @@
 #include "components.h"
 #include "module.h"
 #include "misc.h"
+#include "textdoc.h"
+#include "components/vafile.h" // why not components.h?
 
 
 // Here the subcircuits, SPICE components etc are collected. It must be
@@ -954,7 +958,7 @@ bool SchematicFile::loadDocument()
   }
 
   // Keep reference to source file (the schematic file)
-  setFileInfo(DocName);
+  scene->setFileInfo(DocName);
 
   QString Line;
   QTextStream stream(&file);
@@ -1344,7 +1348,7 @@ bool SchematicFile::throughAllComps(QTextStream *stream, int& countInit,
     {
       int i;
       // tell the subcircuit it belongs to this schematic
-      pc->setSchematic (this);
+      pc->setSchematic (scene);
       QString f = pc->getSubcircuitFile();
       SubMap::Iterator it = FileList.find(f);
       if(it != FileList.end())
@@ -1370,7 +1374,10 @@ bool SchematicFile::throughAllComps(QTextStream *stream, int& countInit,
 
       // load subcircuit schematic
       s = pc->Props.first()->Value;
-      SchematicFile *d = new SchematicFile(0, pc->getSubcircuitFile());
+      // legacy created a SchematicView->QucsDoc and set DocName
+      //SchematicFile *d = new SchematicFile(0, pc->getSubcircuitFile());
+      SchematicFile *d = new SchematicFile(0);
+      d->DocName = pc->getSubcircuitFile();
       if(!d->loadDocument())      // load document if possible
       {
           delete d;
@@ -1440,7 +1447,7 @@ bool SchematicFile::throughAllComps(QTextStream *stream, int& countInit,
     if(pc->obsolete_model_hack() == "SPICE") { // BUG
       s = pc->Props.first()->Value;
       // tell the spice component it belongs to this schematic
-      pc->setSchematic (this);
+      pc->setSchematic (scene);
       if(s.isEmpty()) {
         ErrText->appendPlainText(QObject::tr("ERROR: No file name in SPICE component \"%1\".").
                         arg(pc->name()));
@@ -2115,15 +2122,16 @@ bool SchematicFile::load()
   if(!loadDocument()) return false;
   lastSaved = QDateTime::currentDateTime();
 
+  TODO("check legacy load code");
   // have to call this to avoid crash at sizeOfAll
-  becomeCurrent(false);
+  //?becomeCurrent(false);
 
-  sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
+  //?sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
   if(ViewX1 > UsedX1)  ViewX1 = UsedX1;
   if(ViewY1 > UsedY1)  ViewY1 = UsedY1;
   if(ViewX2 < UsedX2)  ViewX2 = UsedX2;
   if(ViewY2 < UsedY2)  ViewY2 = UsedY2;
-  zoomReset();
+  //?zoomReset();
   TODO("Fix setContentsPos");
   /// \todo setContentsPos(tmpViewX1, tmpViewY1);
   tmpViewX1 = tmpViewY1 = -200;   // was used as temporary cache
@@ -2153,7 +2161,9 @@ int SchematicFile::save()
 // equal add or remove some in the symbol.
 int SchematicFile::adjustPortNumbers()
 {
+  TODO("fix legacy code");
   int x1, x2, y1, y2;
+  /* ??
   // get size of whole symbol to know where to place new ports
   if(symbolMode)  sizeOfAll(x1, y1, x2, y2);
   else {
@@ -2172,7 +2182,7 @@ int SchematicFile::adjustPortNumbers()
   x1 += 40;
   y2 += 20;
   setOnGrid(x1, y2);
-
+  */
 
   Painting *pp;
   // delete all port names in symbol
@@ -2199,7 +2209,7 @@ int SchematicFile::adjustPortNumbers()
     // obtain VHDL information either from open text document or the
     // file directly
     VHDL_File_Info VInfo;
-    TextDoc * d = (TextDoc*)App->findDoc (Name);
+    TextDoc * d = (TextDoc*)QucsMain->findDoc (Name);
     if (d)
       VInfo = VHDL_File_Info (d->document()->toPlainText());
     else
@@ -2260,7 +2270,7 @@ int SchematicFile::adjustPortNumbers()
     // obtain Verilog-HDL information either from open text document or the
     // file directly
     Verilog_File_Info VInfo;
-    TextDoc * d = (TextDoc*)App->findDoc (Name);
+    TextDoc * d = (TextDoc*)QucsMain->findDoc (Name);
     if (d)
       VInfo = Verilog_File_Info (d->document()->toPlainText());
     else
@@ -2306,7 +2316,7 @@ int SchematicFile::adjustPortNumbers()
     // obtain Verilog-A information either from open text document or the
     // file directly
     VerilogA_File_Info VInfo;
-    TextDoc * d = (TextDoc*)App->findDoc (Name);
+    TextDoc * d = (TextDoc*)QucsMain->findDoc (Name);
     if (d)
       VInfo = VerilogA_File_Info (d->toPlainText());
     else

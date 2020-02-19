@@ -69,7 +69,7 @@ class SchematicFile : public QObject {
   Q_OBJECT
 public:
   SchematicFile(QObject *parent);
-  virtual ~SchematicFile ();
+  ~SchematicFile() { }
 
 // EVIL HACK. Duplicate members from SchematicScene to force compilation
 // SchematicFile need to get hold of a Scene to
