@@ -19,6 +19,7 @@
 #include "qucs.h"
 #include "misc.h"
 #include "node.h"
+#include "schematicfile.h"
 
 #include <limits.h>
 
@@ -184,7 +185,9 @@ int LibComp::loadSymbol()
     z = loadSection("Model", Line);
     if(z < 0)  return z;
 
-    Component *pc = getComponentFromName(Line);
+    TODO("check legacy");
+    SchematicFile *schFile = new SchematicFile(0);
+    Component *pc = schFile->getComponentFromName(Line);
     if(pc == 0)  return -20;
 
     copyComponent(pc);
