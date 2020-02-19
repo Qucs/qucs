@@ -45,8 +45,6 @@
 #include <QUrl>
 #include <QListWidget>
 #include <QDebug>
-#include <QApplication>
-#include <QClipboard>
 #include <QScrollBar>
 #include <QUndoStack>
 
@@ -55,7 +53,6 @@
 #include "schematicscene.h"
 #include "schematicfile.h"
 #include "node.h"
-#include "textdoc.h"
 #include "mouseactions.h"
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"

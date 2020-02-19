@@ -41,13 +41,14 @@
 #include "components/component.h"
 #include "frame.h"
 #include "mousecursor.h"
+#include "qt_compat.h"
 
 #include <QGraphicsView>
-#include "qt_compat.h"
 #include <QVector>
 #include <QStringList>
 
 class SchematicScene;
+
 class QTextStream;
 class QTextEdit;
 class QPlainTextEdit;
