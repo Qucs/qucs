@@ -133,7 +133,7 @@ SchematicScene *openSchematic(QString schematic)
   // new schematic from file
   TODO("check legacy");
   //SchematicView *sch = new SchematicView(0, schematic);
-  SchematicFile *sch = new SchematicFile(0);
+  SchematicFile *sch = new SchematicFile();
   sch->DocName = schematic;
   // load schematic file if possible
   if(!sch->loadDocument()) {
@@ -172,7 +172,7 @@ int doNetlist(QString schematic, QString netlist)
   }
 
   TODO("check legacy");
-  SchematicFile *schFile = new SchematicFile(0);
+  SchematicFile *schFile = new SchematicFile();
   schFile->scene = sch;
 
   Stream.setDevice(&NetlistFile);
@@ -500,7 +500,7 @@ void createListComponentEntry(){
 		QTextStream s;
         TODO("check legacy");
 		//c->getSchematic()->saveComponent(s, c);
-        SchematicFile *schFile = new SchematicFile(0);
+        SchematicFile *schFile = new SchematicFile();
         schFile->scene = c->getSchematic();
         schFile->saveComponent(s, c);
       QString qucsEntry = *(s.string());

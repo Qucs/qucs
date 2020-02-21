@@ -68,7 +68,7 @@ typedef QMap<QString, SubFile> SubMap;
 class SchematicFile : public QObject {
   Q_OBJECT
 public:
-  SchematicFile(QObject *parent);
+  explicit SchematicFile(QObject *parent = 0);
   ~SchematicFile() { }
 
 // EVIL HACK. Duplicate members from SchematicScene to force compilation

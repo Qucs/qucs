@@ -186,7 +186,7 @@ int LibComp::loadSymbol()
     if(z < 0)  return z;
 
     TODO("check legacy");
-    SchematicFile *schFile = new SchematicFile(0);
+    SchematicFile *schFile = new SchematicFile();
     Component *pc = schFile->getComponentFromName(Line);
     if(pc == 0)  return -20;
 

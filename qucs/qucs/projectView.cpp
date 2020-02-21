@@ -162,7 +162,7 @@ ProjectView::refresh()
     else if(extName == "sch") {
       // test if it's a valid schematic file
       TODO("fix schematicfile ref");
-      SchematicFile *sch = new SchematicFile(0);
+      SchematicFile *sch = new SchematicFile();
       int n = sch->testFile(workPath.filePath(fileName));
       if(n >= 0) {
         if(n > 0) { // is a subcircuit

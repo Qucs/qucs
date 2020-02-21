@@ -921,7 +921,7 @@ bool SchematicView::scrollRight(int step)
  */
 bool SchematicView::load()
 {
-   SchematicFile *schFile = new SchematicFile(this);
+   SchematicFile *schFile = new SchematicFile();
    schFile->scene = scene;
    schFile->DocName = DocName;
    return schFile->load();
@@ -1029,7 +1029,7 @@ void SchematicView::contentsDragEnterEvent(QDragEnterEvent *Event)
     QString s = Event->mimeData()->text();
     if(s.left(15) == "QucsComponent:<") {
       s = s.mid(14);
-      SchematicFile *file = new SchematicFile(0);
+      SchematicFile *file = new SchematicFile();
       App->mouseAction->selElem = file->getComponentFromName(s);
       if(App->mouseAction->selElem) {
         Event->accept();

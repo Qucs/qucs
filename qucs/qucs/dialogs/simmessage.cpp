@@ -180,7 +180,7 @@ bool SimMessage::startProcess()
     TODO("fix access to File");
     //SimPorts =
     //   ((SchematicView*)DocWidget)->prepareNetlist(Stream, Collect, ErrText);
-    SchematicFile *schFile = new SchematicFile(0);
+    SchematicFile *schFile = new SchematicFile();
     SimPorts = schFile->prepareNetlist(Stream, Collect, ErrText);
     if(SimPorts < -5) {
       NetlistFile.close();
@@ -456,7 +456,7 @@ void SimMessage::startSimulator()
     Stream << '\n';
 
     TODO("fix handling of File");
-    SchematicFile *schFile = new SchematicFile(0);
+    SchematicFile *schFile = new SchematicFile();
     //isVerilog = ((SchematicView*)DocWidget)->isVerilog;
     isVerilog = schFile->isVerilog;
     //SimTime = ((SchematicView*)DocWidget)->createNetlist(Stream, SimPorts);

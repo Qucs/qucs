@@ -448,7 +448,7 @@ void LibraryDialog::slotSave()
 
     /// \todo SchematicView *Doc = new SchematicView(0, QucsSettings.QucsWorkDir.filePath(SelectedNames[i]));
     TODO("fix use of File, missing DocName");
-    SchematicFile *Doc = new SchematicFile(0);
+    SchematicFile *Doc = new SchematicFile();
 
     ErrText->insertPlainText(tr("Loading subcircuit \"%1\".\n").arg(SelectedNames[i]));
     if(!Doc->loadDocument()) {  // load document if possible

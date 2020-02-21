@@ -86,7 +86,7 @@ bool MouseActions::pasteElements(SchematicView *Doc)
   movingElements.clear();
 
   TODO("fix schematic file ref")
-  SchematicFile *sch = new SchematicFile(0);
+  SchematicFile *sch = new SchematicFile();
   if(!sch->paste(&stream, &movingElements)) return false;
 
   Element *pe;

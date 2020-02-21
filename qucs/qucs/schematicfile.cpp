@@ -1379,7 +1379,7 @@ bool SchematicFile::throughAllComps(QTextStream *stream, int& countInit,
       s = pc->Props.first()->Value;
       // legacy created a SchematicView->QucsDoc and set DocName
       //SchematicFile *d = new SchematicFile(0, pc->getSubcircuitFile());
-      SchematicFile *d = new SchematicFile(0);
+      SchematicFile *d = new SchematicFile();
       d->DocName = pc->getSubcircuitFile();
       if(!d->loadDocument())      // load document if possible
       {
