@@ -27,6 +27,7 @@
 #include "diagrams/diagram.h"
 #include "paintings/painting.h"
 #include "components/component.h"
+#include "schematicscene.h"
 
 #include <QString>
 #include <QStringList>
@@ -81,16 +82,24 @@ public: // all duplicates
 // private: //TODO. one at a time.
 
   // ===============
-  // from Scene
-  Q3PtrList<Wire> /*WireList*/      *Wires, DocWires;
-  Q3PtrList<Node> /*NodeList*/      *Nodes, DocNodes;
-  Q3PtrList<Diagram> /*DiagramList*/   *Diagrams, DocDiags;
-  Q3PtrList<Painting> /*PaintingList*/  *Paintings, DocPaints;
-  Q3PtrList<Component> /*ComponentList*/ *Components, DocComps;
-
-  Q3PtrList<Painting> /*PaintingList*/  SymbolPaints;  // symbol definition for subcircuit
-
+  // copy pointers from scene during setScene
+private:
   SchematicScene *scene; // need a ref to a scene
+  WireList      *Wires, DocWires;
+  NodeList      *Nodes, DocNodes;
+  DiagramList   *Diagrams, DocDiags;
+  PaintingList  *Paintings, DocPaints;
+  ComponentList *Components, DocComps;
+
+public:
+  // SymbolPaints cannot be private yet, it is being used by librarydialog.
+  PaintingList  SymbolPaints;  // symbol definition for subcircuit
+
+  void setScene(SchematicScene *scn);
+  void setFileName(QString name) {DocName = name;}
+  SchematicScene* getScene() {return scene;}
+  QString getFileName() {return DocName;}
+
   // ===============
   // from View
   bool symbolMode;  // true if in symbol painting mode

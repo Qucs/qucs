@@ -141,7 +141,7 @@ SchematicScene *openSchematic(QString schematic)
     delete sch;
     return NULL;
   }
-  return sch->scene;
+  return sch->getScene();
 }
 
 int doNetlist(QString schematic, QString netlist)
@@ -173,7 +173,7 @@ int doNetlist(QString schematic, QString netlist)
 
   TODO("check legacy");
   SchematicFile *schFile = new SchematicFile();
-  schFile->scene = sch;
+  schFile->setScene(sch);
 
   Stream.setDevice(&NetlistFile);
   int SimPorts = schFile->prepareNetlist(Stream, Collect, ErrText);
@@ -501,7 +501,7 @@ void createListComponentEntry(){
         TODO("check legacy");
 		//c->getSchematic()->saveComponent(s, c);
         SchematicFile *schFile = new SchematicFile();
-        schFile->scene = c->getSchematic();
+        schFile->setScene(c->getSchematic());
         schFile->saveComponent(s, c);
       QString qucsEntry = *(s.string());
       fprintf(stdout, "%s; qucs    ; %s\n", c->obsolete_model_hack().toLatin1().data(), qucsEntry.toLatin1().data());

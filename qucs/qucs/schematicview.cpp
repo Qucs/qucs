@@ -927,8 +927,8 @@ bool SchematicView::scrollRight(int step)
 bool SchematicView::load()
 {
    SchematicFile *schFile = new SchematicFile();
-   schFile->scene = scene;
-   schFile->DocName = DocName;
+   schFile->setScene(scene);
+   schFile->setFileName(DocName);
    return schFile->load();
 }
 

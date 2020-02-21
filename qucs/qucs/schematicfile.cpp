@@ -57,6 +57,30 @@ SchematicFile::SchematicFile(QObject *parent) :
   isVerilog = false;
   creatingLib = false;
 }
+
+/*!
+ * \brief SchematicFile::setScene
+ * \param scn
+ * Set scene and associated lists of items.
+ * - scene is need o load items into.
+ * - Lists of items are need to save back to file.
+ */
+void SchematicFile::setScene(SchematicScene *scn)
+{
+    scene = scn;
+    scene->Wires        = scn->Wires;
+    scene->DocWires     = scn->DocWires;
+    scene->Nodes        = scn->Nodes;
+    scene->DocNodes     = scn->DocNodes;
+    scene->Diagrams     = scn->Diagrams;
+    scene->DocDiags     = scn->DocDiags;
+    scene->Paintings    = scn->Paintings;
+    scene->DocPaints    = scn->DocPaints;
+    scene->Components   = scn->Components;
+    scene->DocComps     = scn->DocComps;
+    scene->SymbolPaints = scn->SymbolPaints;
+}
+
 // -------------------------------------------------------------
 // Creates a Qucs file format (without document properties) in the returning
 // string. This is used to copy the selected elements into the clipboard.
