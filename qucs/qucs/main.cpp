@@ -134,7 +134,7 @@ SchematicScene *openSchematic(QString schematic)
   TODO("check legacy");
   //SchematicView *sch = new SchematicView(0, schematic);
   SchematicFile *sch = new SchematicFile();
-  sch->DocName = schematic;
+  sch->setFileName(schematic);
   // load schematic file if possible
   if(!sch->loadDocument()) {
     fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);

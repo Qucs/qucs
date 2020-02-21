@@ -91,6 +91,7 @@ private:
   PaintingList  *Paintings, DocPaints;
   ComponentList *Components, DocComps;
 
+  QString DocName;
 public:
   // SymbolPaints cannot be private yet, it is being used by librarydialog.
   PaintingList  SymbolPaints;  // symbol definition for subcircuit
@@ -116,7 +117,6 @@ public:
 
   // ===============
   // from View --> QucsDoc
-  QString DocName;
   QString DataSet;     // name of the default dataset
   QString DataDisplay; // name of the default data display
   QString Script;
