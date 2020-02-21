@@ -304,6 +304,9 @@ void SchematicView::mouseDoubleClickEvent(QMouseEvent *Event)
 // -----------------------------------------------------------
 void SchematicView::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPage)
 {
+
+  TODO("Fix Schematic::print");
+  /*
   QPaintDevice *pdevice = Painter->device();
   float printerDpiX = (float)pdevice->logicalDpiX();
   float printerDpiY = (float)pdevice->logicalDpiY();
@@ -346,7 +349,7 @@ void SchematicView::print(QPrinter*, QPainter *Painter, bool printAll, bool fitT
     if(UsedX1 > 0)  StartX = 0;
     if(UsedY1 > 0)  StartY = 0;
   }
-
+  */
   QFont oldFont = Painter->font();
 
 #ifdef __MINGW32__
@@ -356,7 +359,6 @@ void SchematicView::print(QPrinter*, QPainter *Painter, bool printAll, bool fitT
   Painter->setFont(printFont);
 #endif
 
-  TODO("Fix Schematic::print");
   /// \todo print
   /*
   //bool selected;
@@ -661,6 +663,7 @@ void SchematicView::zoomIn()
 // visible area.
 void SchematicView::enlargeView(int x1, int y1, int x2, int y2)
 {
+  TODO("fixme");
   int dx=0, dy=0;
   if(x1 < UsedX1) UsedX1 = x1;
   if(y1 < UsedY1) UsedY1 = y1;
@@ -682,6 +685,8 @@ void SchematicView::enlargeView(int x1, int y1, int x2, int y2)
   /// \todo resizeContents(int(Scale*float(ViewX2 - ViewX1)),
   /// 		int(Scale*float(ViewY2 - ViewY1)));
   ///scrollBy(dx,dy);
+  Q_UNUSED(dx);
+  Q_UNUSED(dy);
 }
 
 // ---------------------------------------------------
