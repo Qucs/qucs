@@ -60,6 +60,7 @@
 #include "components/verilogfile.h"
 #include "components/vafile.h"
 #include "misc.h"
+#include "frame.h"
 
 SchematicView::SchematicView(QucsApp *App_, const QString& Name_)
     : QucsDoc(App_, Name_)
@@ -83,19 +84,13 @@ SchematicView::SchematicView(QucsApp *App_, const QString& Name_)
   scene = new SchematicScene(this);
   this->setScene(scene);
 
+  scene->DocName = Name_;
+
   // to be able to scroll, scene must be larger than view
   /// \todo for the intinite schematic, scene mulst alwas be larger than view
   /// when items are added on the border, increase size of scene/view
   /// move to constructor
   setSceneRect(-2000, -2000, 4000, 4000);
-
-
-  // add a Frame to the schematic
-  schematicFrame =  new Frame();
-  /// \todo Frame should be part of the drawBackground (?)
-  /// Having it as an item messes up the item count.
-  //scene->addItem(schematicFrame);
-
 
   // add a MouseCursor to the scene
   mouseCursor = new MouseCursor();
@@ -329,9 +324,9 @@ void SchematicView::print(QPrinter*, QPainter *Painter, bool printAll, bool fitT
     float ScaleY = float((printerH - 2*marginY) /
                    float((UsedY2-UsedY1) * printerDpiY)) * screenDpiY;
 
-    if(schematicFrame->PageType){
+    if(scene->schematicFrame->PageType){
         int xall, yall;
-        schematicFrame->sizeOfFrame(xall, yall);
+        scene->schematicFrame->sizeOfFrame(xall, yall);
         ScaleX = ((float)(printerW - 2*marginX) /
                        (float)(xall * printerDpiX)) * screenDpiX;
         ScaleY = ((float)(printerH - 2*marginY) /
@@ -347,7 +342,7 @@ void SchematicView::print(QPrinter*, QPainter *Painter, bool printAll, bool fitT
 
   int StartX = UsedX1;
   int StartY = UsedY1;
-  if(schematicFrame->PageType) {
+  if(scene->schematicFrame->PageType) {
     if(UsedX1 > 0)  StartX = 0;
     if(UsedY1 > 0)  StartY = 0;
   }
@@ -916,6 +911,20 @@ bool SchematicView::scrollRight(int step)
   }
   */
   return true;
+}
+
+/*!
+ * \brief SchematicView::load
+ * \return true if success
+ * Override QucsDoc::load().
+ * Parse schematic file and load items into scene.
+ */
+bool SchematicView::load()
+{
+   SchematicFile *schFile = new SchematicFile(this);
+   schFile->scene = scene;
+   schFile->DocName = DocName;
+   return schFile->load();
 }
 
 // -----------------------------------------------------------

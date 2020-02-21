@@ -24,6 +24,7 @@
 #include "schematicscene.h"
 #include "imagewriter.h"
 #include "dialogs/exportdialog.h"
+#include "frame.h"
 
 #include <QtSvg>
 
@@ -288,7 +289,7 @@ void ImageWriter::getSchWidthAndHeight(SchematicView *sch, int &w, int &h, int &
     h = abs(ymax - ymin);
 
     int f_w, f_h;
-    if (sch->schematicFrame->sizeOfFrame(f_w,f_h)) {
+    if (sch->scene->schematicFrame->sizeOfFrame(f_w,f_h)) {
         xmin = std::min(0,xmin); // For components
         ymin = std::min(0,ymin); // that fall out of frame
         w = abs(std::max(f_w,sch->UsedX2) - xmin);

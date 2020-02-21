@@ -32,6 +32,7 @@
 #include "qucs.h"
 #include "misc.h"
 #include "qt_compat.h"
+#include "frame.h"
 
 #include <QDebug>
 #include <QPainter>
@@ -51,6 +52,8 @@ SchematicScene::SchematicScene(QObject *parent) :
   GridX  = GridY  = 10;
 
   undoStack = new QUndoStack(this);
+
+  schematicFrame = new Frame();
 
   /// \todo remove deprecated
   DocComps.setAutoDelete(true);

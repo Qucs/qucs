@@ -22,6 +22,7 @@
 #include "mnemo.h"
 #include "schematicview.h"
 #include "schematicscene.h"
+#include "frame.h"
 
 #include <QGridLayout>
 #include <QVBoxLayout>
@@ -170,18 +171,19 @@ SettingsDialog::SettingsDialog(SchematicView *Doc_)
     Check_OpenDpl->setChecked(Doc->SimOpenDpl);
     Check_RunScript->setChecked(Doc->SimRunScript);
     Check_GridOn->setChecked(Doc->GridOn);
+
     Input_GridX->setText(QString::number(Doc->scene->GridX));
     Input_GridY->setText(QString::number(Doc->scene->GridY));
-    Combo_Frame->setCurrentIndex(Doc->schematicFrame->PageType);
+    Combo_Frame->setCurrentIndex(Doc->scene->schematicFrame->PageType);
 
     QString Text_;
-    decode_String(Text_ = Doc->schematicFrame->Title);
+    decode_String(Text_ = Doc->scene->schematicFrame->Title);
     Input_Frame0->setText(Text_);
-    decode_String(Text_ = Doc->schematicFrame->Author);
+    decode_String(Text_ = Doc->scene->schematicFrame->Author);
     Input_Frame1->setText(Text_);
-    decode_String(Text_ = Doc->schematicFrame->Date);
+    decode_String(Text_ = Doc->scene->schematicFrame->Date);
     Input_Frame2->setText(Text_);
-    decode_String(Text_ = Doc->schematicFrame->Revision);
+    decode_String(Text_ = Doc->scene->schematicFrame->Revision);
     Input_Frame3->setText(Text_);
 
     resize(250, 200);
@@ -276,38 +278,38 @@ void SettingsDialog::slotApply()
         changed = true;
     }
 
-    if(Doc->schematicFrame->PageType != Combo_Frame->currentIndex())
+    if(Doc->scene->schematicFrame->PageType != Combo_Frame->currentIndex())
     {
-        Doc->schematicFrame->PageType = Combo_Frame->currentIndex();
+        Doc->scene->schematicFrame->PageType = Combo_Frame->currentIndex();
         changed = true;
     }
 
     QString t;
     encode_String(Input_Frame0->toPlainText(), t);
-    if(Doc->schematicFrame->Title != t)
+    if(Doc->scene->schematicFrame->Title != t)
     {
-        Doc->schematicFrame->Title = t;
+        Doc->scene->schematicFrame->Title = t;
         changed = true;
     }
 
     encode_String(Input_Frame1->text(), t);
-    if(Doc->schematicFrame->Author != t)
+    if(Doc->scene->schematicFrame->Author != t)
     {
-        Doc->schematicFrame->Author = t;
+        Doc->scene->schematicFrame->Author = t;
         changed = true;
     }
 
     encode_String(Input_Frame2->text(), t);
-    if(Doc->schematicFrame->Date != t)
+    if(Doc->scene->schematicFrame->Date != t)
     {
-        Doc->schematicFrame->Date = t;
+        Doc->scene->schematicFrame->Date = t;
         changed = true;
     }
 
     encode_String(Input_Frame3->text(), t);
-    if(Doc->schematicFrame->Revision != t)
+    if(Doc->scene->schematicFrame->Revision != t)
     {
-        Doc->schematicFrame->Revision = t;
+        Doc->scene->schematicFrame->Revision = t;
         changed = true;
     }
 

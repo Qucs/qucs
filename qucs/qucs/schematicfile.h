@@ -93,7 +93,6 @@ public: // all duplicates
   SchematicScene *scene; // need a ref to a scene
   // ===============
   // from View
-  Frame *schematicFrame;
   bool symbolMode;  // true if in symbol painting mode
 
   int GridX, GridY;

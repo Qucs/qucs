@@ -39,6 +39,7 @@ class Painting;
 class Marker;
 class Element;
 class WireLabel;
+class Frame;
 
 // TODO: refactor here
 class WireList : public Q3PtrList<Wire> {
@@ -65,6 +66,9 @@ public:
 
 public:
   QUndoStack *undoStack;
+
+  // schematic frame item
+  Frame *schematicFrame;
 
 protected:
   void drawBackground(QPainter *painter, const QRectF& rect);

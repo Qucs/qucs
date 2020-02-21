@@ -44,6 +44,7 @@
 #include "misc.h"
 #include "textdoc.h"
 #include "components/vafile.h" // why not components.h?
+#include "frame.h"
 
 
 // Here the subcircuits, SPICE components etc are collected. It must be
@@ -385,16 +386,16 @@ int SchematicFile::saveDocument()
   stream << "  <OpenDisplay=" << SimOpenDpl << ">\n";
   stream << "  <Script=" << Script << ">\n";
   stream << "  <RunScript=" << SimRunScript << ">\n";
-  stream << "  <showFrame=" << schematicFrame->PageType << ">\n";
+  stream << "  <showFrame=" << scene->schematicFrame->PageType << ">\n";
 
   QString t;
-  misc::convert2ASCII(t = schematicFrame->Title);
+  misc::convert2ASCII(t = scene->schematicFrame->Title);
   stream << "  <FrameText0=" << t << ">\n";
-  misc::convert2ASCII(t = schematicFrame->Author);
+  misc::convert2ASCII(t = scene->schematicFrame->Author);
   stream << "  <FrameText1=" << t << ">\n";
-  misc::convert2ASCII(t = schematicFrame->Date);
+  misc::convert2ASCII(t = scene->schematicFrame->Date);
   stream << "  <FrameText2=" << t << ">\n";
-  misc::convert2ASCII(t = schematicFrame->Revision);
+  misc::convert2ASCII(t = scene->schematicFrame->Revision);
   stream << "  <FrameText3=" << t << ">\n";
   stream << "</Properties>\n";
 
@@ -606,12 +607,13 @@ bool SchematicFile::loadProperties(QTextStream *stream)
     else if(cstr == "RunScript")
 		if(nstr.toInt(&ok) == 0) SimRunScript = false;
 		else SimRunScript = true;
+
     else if(cstr == "showFrame")
-                schematicFrame->PageType= nstr.at(0).toLatin1() - '0';
-    else if(cstr == "FrameText0") misc::convert2Unicode(schematicFrame->Title = nstr);
-    else if(cstr == "FrameText1") misc::convert2Unicode(schematicFrame->Author = nstr);
-    else if(cstr == "FrameText2") misc::convert2Unicode(schematicFrame->Date = nstr);
-    else if(cstr == "FrameText3") misc::convert2Unicode(schematicFrame->Revision= nstr);
+                scene->schematicFrame->PageType= nstr.at(0).toLatin1() - '0';
+    else if(cstr == "FrameText0") misc::convert2Unicode(scene->schematicFrame->Title = nstr);
+    else if(cstr == "FrameText1") misc::convert2Unicode(scene->schematicFrame->Author = nstr);
+    else if(cstr == "FrameText2") misc::convert2Unicode(scene->schematicFrame->Date = nstr);
+    else if(cstr == "FrameText3") misc::convert2Unicode(scene->schematicFrame->Revision= nstr);
     else {
        QMessageBox(QMessageBox::Critical,
                    tr("Error"),
@@ -679,6 +681,7 @@ void SchematicFile::simpleInsertComponent(Component *c)
   DocComps.append(c);
   // add Component to scene
   scene->addItem(c);
+  scene->update();
 }
 
 // -------------------------------------------------------------

@@ -39,7 +39,6 @@
 #include "diagrams/diagram.h"
 #include "paintings/painting.h"
 #include "components/component.h"
-#include "frame.h"
 #include "mousecursor.h"
 #include "qt_compat.h"
 
@@ -98,9 +97,6 @@ public:
   // schematic Scene for this View
   SchematicScene *scene;
 
-  // schematic frame item
-  Frame *schematicFrame;
-
   bool symbolMode;  // true if in symbol painting mode
 
   // mouse decoration to reflect currently selected mode
@@ -117,6 +113,7 @@ public:
 
   QUndoStack *undoStack;
 
+  bool load();
 
 signals:
   void signalCursorPosChanged(int, int);
