@@ -143,9 +143,7 @@ private:
   int  saveDocument();
 
   bool loadProperties(QTextStream*);
-  void simpleInsertComponent(Component*);
   bool loadComponents(QTextStream*, Q3PtrList<Component> *List=0);
-  void simpleInsertWire(Wire*);
   bool loadWires(QTextStream*, Q3PtrList<Element> *List=0);
   bool loadDiagrams(QTextStream*, Q3PtrList<Diagram>*);
   bool loadPaintings(QTextStream*, Q3PtrList<Painting>*);

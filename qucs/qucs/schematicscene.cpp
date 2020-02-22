@@ -3463,3 +3463,125 @@ void SchematicScene::reloadGraphs()
   for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
     pd->loadGraphData(Info.path()+QDir::separator()+DataSet);
 }
+
+/*!
+ * @brief SchematicScene::simpleInsertComponent
+ *
+ * Inserts a component without performing logic for wire optimization.
+ * Used when loading from a schematic file.
+ *
+ * @param c is pointing to the component to be inserted.
+ */
+void SchematicScene::simpleInsertComponent(Component *c)
+{
+  Node *pn;
+  int x, y;
+  // connect every node of component
+  foreach(Port *pp, c->Ports) {
+    x = pp->x+c->cx;
+    y = pp->y+c->cy;
+
+    // check if new node lies upon existing node
+    for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
+      if(pn->cx == x) if(pn->cy == y) {
+	if (!pn->DType.isEmpty()) {
+	  pp->Type = pn->DType;
+	}
+	if (!pp->Type.isEmpty()) {
+	  pn->DType = pp->Type;
+	}
+	break;
+      }
+
+    if(pn == 0) { // create new node, if no existing one lies at this position
+      pn = new Node(x, y);
+      DocNodes.append(pn);
+
+      // add Node to scene
+      addItem(pn);
+    }
+    pn->Connections.append(c);  // connect schematic node to component node
+    if (!pp->Type.isEmpty()) {
+      pn->DType = pp->Type;
+    }
+
+    pp->Connection = pn;  // connect component node to schematic node
+  }
+
+  /// \todo just add to scene, filter Comps into returned list
+  DocComps.append(c);
+  // add Component to scene
+  addItem(c);
+  /// \todo check performance, no need to update scene on every addIte
+  update();
+}
+
+/*!
+ * \brief SchematicScene::simpleInsertWire
+ * \param pw
+ * Inserts a wire without performing logic for optimizing.
+ * \todo similar to insertNode
+ *
+ * - check for node 1 overlap
+ * - check for zero length wire
+ * - add node label (at wire corner) to scene
+ * - check for node 2 overlap
+ * - add nodes to list
+ * - add nodes to scene
+ * - add wire to list
+ * - add wire to scene
+ * - add wire label to scene
+ *
+ */
+void SchematicScene::simpleInsertWire(Wire *pw)
+{
+  TODO("fix append to DocNodes, DocWires");
+  Node *pn1 = 0;
+  Node *pn2 = 0;
+
+  // check if first wire node lies upon existing node
+  for(pn1 = DocNodes.first(); pn1 != 0; pn1 = DocNodes.next())
+    if(pn1->cx == pw->x1) if(pn1->cy == pw->y1) break;
+
+  // create new node, if no existing one lies at this position
+  if(!pn1) {
+    pn1 = new Node(pw->x1, pw->y1);
+    DocNodes.append(pn1);
+  }
+
+  // check for zero length wire
+  if(pw->x1 == pw->x2) if(pw->y1 == pw->y2) {
+    pn1->Label = pw->Label;   // wire with length zero are just node labels
+    if (pn1->Label) {
+      pn1->Label->ElemType = isNodeLabel;
+      pn1->Label->pOwner = pn1;
+      // add WireLabel to scene
+      addItem(pn1->Label);
+    }
+    delete pw;           // delete wire because this is not a wire
+    return;
+  }
+  pn1->Connections.append(pw);  // connect schematic node to component node
+  pw->Port1 = pn1;
+
+  // check if second wire node lies upon existing node
+  for(pn2 = DocNodes.first(); pn2 != 0; pn2 = DocNodes.next())
+    if(pn2->cx == pw->x2) if(pn2->cy == pw->y2) break;
+
+  if(!pn2) {   // create new node, if no existing one lies at this position
+    pn2 = new Node(pw->x2, pw->y2);
+    DocNodes.append(pn2);
+  }
+  pn2->Connections.append(pw);  // connect schematic node to component node
+  pw->Port2 = pn2;
+
+  DocWires.append(pw);
+
+  addItem(pn1);
+  addItem(pn2);
+  addItem(pw);
+
+  if(pw->Label) {
+    addItem(pw->Label);
+  }
+}

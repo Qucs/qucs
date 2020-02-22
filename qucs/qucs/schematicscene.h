@@ -169,6 +169,9 @@ public:
 
   void  reloadGraphs();
 
+  void simpleInsertComponent(Component*);
+  void simpleInsertWire(Wire*);
+
 private:
   void insertComponentNodes(Component*, bool);
   int  copyWires(int&, int&, int&, int&, QList<Element *> *);
