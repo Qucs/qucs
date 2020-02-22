@@ -143,6 +143,13 @@ private:
   int  saveDocument();
 
   bool loadProperties(QTextStream*);
+  /// \todo load and paste operations are combined. Very confusing!
+  /// load: inserts into scene
+  /// paste: append to lists which are returned by reference
+  /// on SchematicFile::paste(stream, list)
+  /// Each load[] is reading the [] block of entries.
+  /// Refactor into something loadBlock(Stream, enum::BlockType)
+  /// Use switch case inside method to handle each type
   bool loadComponents(QTextStream*, Q3PtrList<Component> *List=0);
   bool loadWires(QTextStream*, Q3PtrList<Element> *List=0);
   bool loadDiagrams(QTextStream*, Q3PtrList<Diagram>*);
