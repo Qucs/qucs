@@ -84,6 +84,7 @@ matrix:
       env: BUILD=autotools
       addons:
         homebrew:
+          update: true  # remove once Travis bug is fixed: https://travis-ci.community/t/macos-build-fails-because-of-homebrew-bundle-unknown-command/7296
           taps:
             - cartr/qt4
             - guitorri/tap
@@ -117,9 +118,7 @@ before_install:
   
   # python3
   - if [[ $LINUX ]]; then pyenv global 3.6; fi
-  #- if [[ ! $OSX ]]; then
-  #    source .travis_check.sh $TRAVIS_OS_NAME;
-  #  fi
+  #- source .travis_check.sh $TRAVIS_OS_NAME;
 
 install:
   # Setup Linux
@@ -136,7 +135,9 @@ install:
       export PATH="/usr/local/opt/bison/bin:$PATH";
       pip3 install matplotlib;
       brew install ccache;
-      export PATH="/usr/local/opt/ccache/libexec:$PATH";
+      brew tap cartr/qt4;
+      brew tap-pin cartr/qt4;
+      brew install qt@4;
     fi
 
 before_script:

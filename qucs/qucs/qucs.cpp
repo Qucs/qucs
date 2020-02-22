@@ -88,11 +88,17 @@ QStringList qucsPathList;
 VersionTriplet QucsVersion; // Qucs version string
 QucsApp *QucsMain = 0;  // the Qucs application itself
 
+enum tab_type
+{
+  TAB_PROJECT   = 0, // Projects
+  TAB_CONTENT   = 1, // Content of selected project
+  TAB_COMPONENT = 2, // Components
+};
 
 /*!
  * \brief QucsApp::QucsApp main application
  */
-QucsApp::QucsApp()
+QucsApp::QucsApp(const QString argvProjectPath, const QStringList argvFileList)
 {
   setWindowTitle("Qucs " PACKAGE_VERSION);
 
@@ -142,17 +148,12 @@ QucsApp::QucsApp()
 
   lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
 
+  initProjects(argvProjectPath);
   // load documents given as command line arguments
-  for(int z=1; z<qApp->arguments().size(); z++) {
-    QString arg = qApp->arguments()[z];
-    QByteArray ba = arg.toLatin1();
-    const char *c_arg= ba.data();
-    if(*(c_arg) != '-') {
-      QFileInfo Info(arg);
-      QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
-      arg = QucsSettings.QucsWorkDir.filePath(Info.fileName());
-      gotoPage(arg);
-    }
+  foreach(QString f, argvFileList) {
+    QFileInfo info(f);
+    QucsSettings.QucsWorkDir.setPath(info.absoluteDir().absolutePath());
+    gotoPage(QucsSettings.QucsWorkDir.filePath(info.fileName()));
   }
 }
 
@@ -332,7 +333,7 @@ void QucsApp::initView()
   dock->setWidget(TabView);
   dock->setAllowedAreas(Qt::LeftDockWidgetArea);
   this->addDockWidget(Qt::LeftDockWidgetArea, dock);
-  TabView->setCurrentIndex(0);
+  TabView->setCurrentIndex(TAB_PROJECT);
 
   // ----------------------------------------------------------
   // Octave docking window
@@ -353,22 +354,42 @@ void QucsApp::initView()
   //m_proxyModel->setDynamicSortFilter(true);
   // show all directories (project and non-project)
   m_homeDirModel->setFilter(QDir::NoDot | QDir::AllDirs);
-
-  // ............................................
-  QString path = QucsSettings.QucsHomeDir.absolutePath();
-  QDir ProjDir(path);
+}
+void QucsApp::initProjects(const QString argvProjsDir)
+{
+  QString path = argvProjsDir!=nullptr? argvProjsDir : QucsSettings.QucsHomeDir.absolutePath();
   // initial projects directory is the Qucs home directory
   QucsSettings.projsDir = path;
 
+  QDir projDir(path);
   // create home dir if not exist
-  if(!ProjDir.exists()) {
-    if(!ProjDir.mkdir(path)) {
+  if(!projDir.exists()) {
+    if(!projDir.mkdir(path)) {
       QMessageBox::warning(this, tr("Warning"),
-          tr("Cannot create work directory !"));
+          tr("Cannot create work directory !")+" "+path);
       return;
     }
   }
   readProjects(); // reads all projects and inserts them into the ListBox
+
+  if (argvProjsDir!=nullptr){
+    // last char of argvProjsDir is aways '/'
+    if (argvProjsDir.endsWith("_prj/")){
+      int lx0=0;
+      for (int lx=0; lx<argvProjsDir.length()-1; ++lx){
+        if(argvProjsDir.at(lx)=='/'){
+          lx0 = lx;
+        }
+      }
+      path = argvProjsDir.mid(0, lx0); //cat "/name_prj
+    }
+    QucsSettings.projsDir = path;
+    readProjects();
+    if (argvProjsDir.endsWith("_prj/")){
+      //QucsSettings.projsDir = argvProjsDir;
+      openProject(argvProjsDir);
+    }
+  }
 }
 
 // Put all available libraries into ComboBox.
@@ -1128,7 +1149,6 @@ void QucsApp::slotButtonProjNew()
   NewProjDialog *d = new NewProjDialog(this);
   if(d->exec() != QDialog::Accepted) return;
 
-  QDir projDir(QucsSettings.projsDir.path());
   QString name = d->ProjName->text();
   bool open = d->OpenProj->isChecked();
 
@@ -1136,6 +1156,7 @@ void QucsApp::slotButtonProjNew()
     name += "_prj";
   }
 
+  QDir projDir(QucsSettings.projsDir.path());
   if(!projDir.mkdir(name)) {
     QMessageBox::information(this, tr("Info"),
         tr("Cannot create project directory !"));
@@ -1177,8 +1198,13 @@ void QucsApp::openProject(const QString& Path)
   octave->adjustDirectory();
 
   Content->setProjPath(QucsSettings.QucsWorkDir.absolutePath());
+  //-------------------------------------------------------------------------------------------------------
+  // select (highlight) project in QListView (projects)
+  QModelIndex idx = m_homeDirModel->index(openProjName, 0); //FIXME
+  Projects->selectionModel()->select(idx, QItemSelectionModel::Select); //FIXME
+  //-------------------------------------------------------------------------------------------------------
 
-  TabView->setCurrentIndex(1);   // switch to "Content"-Tab
+  TabView->setCurrentIndex(TAB_CONTENT);   // switch to "Content"-Tab
 
   openProjName.chop(4); // remove "_prj" from name
   ProjName = openProjName;   // remember the name of project
@@ -1248,7 +1274,7 @@ void QucsApp::slotMenuProjClose()
 
   Content->setProjPath("");
 
-  TabView->setCurrentIndex(0);   // switch to "Projects"-Tab
+  TabView->setCurrentIndex(TAB_PROJECT);   // switch to "Projects"-Tab
   ProjName = "";
 }
 
@@ -2252,7 +2278,7 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
     if(!isTextDocument (w))
       ((Schematic*)w)->reloadGraphs();  // ... changes, reload here !
 
-  TabView->setCurrentIndex(2);   // switch to "Component"-Tab
+  TabView->setCurrentIndex(TAB_COMPONENT);   // switch to "Component"-Tab
   if (Name.right(4) == ".dpl") {
     int i = Category::getModulesNr (QObject::tr("diagrams"));
     CompChoose->setCurrentIndex(i);   // switch to diagrams
