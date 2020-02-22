@@ -85,11 +85,6 @@ public: // all duplicates
   // copy pointers from scene during setScene
 private:
   SchematicScene *scene; // need a ref to a scene
-  WireList      *Wires, DocWires;
-  NodeList      *Nodes, DocNodes;
-  DiagramList   *Diagrams, DocDiags;
-  PaintingList  *Paintings, DocPaints;
-  ComponentList *Components, DocComps;
 
   QString DocName;
 public:
