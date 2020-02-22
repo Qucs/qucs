@@ -702,7 +702,7 @@ void SchematicFile::simpleInsertComponent(Component *c)
     pp->Connection = pn;  // connect component node to schematic node
   }
 
-  DocComps.append(c);
+  scene->DocComps.append(c);
   // add Component to scene
   scene->addItem(c);
   scene->update();
@@ -1180,7 +1180,7 @@ void SchematicFile::throughAllNodes(bool User, QStringList& Collect,
   Node *pn;
   int z=0;
 
-  for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
+  for(pn = scene->DocNodes.first(); pn != 0; pn = scene->DocNodes.next()) {
     if(pn->Name.isEmpty() == User) {
       continue;  // already named ?
     }
@@ -1346,7 +1346,7 @@ bool SchematicFile::throughAllComps(QTextStream *stream, int& countInit,
   QString s;
 
   // give the ground nodes the name "gnd", and insert subcircuits etc.
-  for(auto it=DocComps.begin(); it!=DocComps.end(); ++it) {
+  for(auto it=scene->DocComps.begin(); it!=scene->DocComps.end(); ++it) {
     Component *pc=*it;
 
     if(pc->isActive != COMP_IS_ACTIVE) continue;
@@ -1545,7 +1545,7 @@ bool SchematicFile::giveNodeNames(QTextStream *stream, int& countInit,
                    QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts)
 {
   // delete the node names
-  for(Node *pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
+  for(Node *pn = scene->DocNodes.first(); pn != 0; pn = scene->DocNodes.next()) {
     pn->State = 0;
     if(pn->Label) {
       if(isAnalog)
@@ -1557,7 +1557,7 @@ bool SchematicFile::giveNodeNames(QTextStream *stream, int& countInit,
   }
 
   // set the wire names to the connected node
-  for(Wire *pw = DocWires.first(); pw != 0; pw = DocWires.next())
+  for(Wire *pw = scene->DocWires.first(); pw != 0; pw = scene->DocWires.next())
     if(pw->Label != 0) {
       if(isAnalog)
         pw->Port1->Name = pw->Label->Name;
@@ -1933,7 +1933,8 @@ int SchematicFile::prepareNetlist(QTextStream& stream, QStringList& Collect,
   int allTypes = 0, NumPorts = 0;
 
   // Detect simulation domain (analog/digital) by looking at component types.
-  for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+  //for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+  for(Component *pc = scene->DocComps.first(); pc != 0; pc = scene->DocComps.next()) {
     if(pc->isActive == COMP_IS_OPEN) continue;
     if(pc->obsolete_model_hack().at(0) == '.') {
       if(pc->obsolete_model_hack() == ".Digi") {
@@ -2070,7 +2071,7 @@ QString SchematicFile::createNetlist(QTextStream& stream, int NumPorts)
   FileList.clear();
 
   QString s, Time;
-  for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+  for(Component *pc = scene->DocComps.first(); pc != 0; pc = scene->DocComps.next()) {
     if(isAnalog) {
       s = pc->getNetlist();
     }
