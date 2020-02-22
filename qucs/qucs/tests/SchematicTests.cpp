@@ -9,7 +9,7 @@
 void SchematicTests::testConstructor()
 {
 
-    QucsApp *app = new QucsApp();
+    QucsApp *app = new QucsApp(nullptr, nullptr);
 
     QString name;
     Schematic *sch;
