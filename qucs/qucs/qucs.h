@@ -155,7 +155,7 @@ protected:
 class QucsApp : public QMainWindow {
   Q_OBJECT
 public:
-  QucsApp();
+  QucsApp(const QString argvPprojectPath, const QStringList argvFileList);
  ~QucsApp();
   bool closeTabsRange(int startTab, int stopTab, int exceptTab = -1);
   bool closeAllFiles(int exceptTab = -1);
@@ -305,6 +305,7 @@ private:
 
 // ********** Methods ***************************************************
   void initView();
+  void initProjects(const QString projs_Dir);
   void initCursorMenu();
 
   void printCurrentDocument(bool);
