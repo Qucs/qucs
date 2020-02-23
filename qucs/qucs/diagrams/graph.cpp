@@ -139,6 +139,9 @@ bool Graph::load(const QString& _s)
   s = s.mid(1, s.length()-2);   // cut off start and end character
 
   Var = s.section('"',1,1);  // Var
+  // Var can include a Dataset name, which can contain spaces
+  // remove the Var string so subsequent parsing of the other fields does not fail in this case
+  s = s.section('"', 2); // keep everything after the closing quotes
 
   QString n;
   n  = s.section(' ',1,1);    // Color
