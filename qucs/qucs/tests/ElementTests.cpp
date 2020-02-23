@@ -20,7 +20,7 @@
  *
  */
 
-#include "element.h"
+#include "graphicitem.h"
 
 #include <QTest>
 

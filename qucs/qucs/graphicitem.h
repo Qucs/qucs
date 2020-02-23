@@ -1,5 +1,5 @@
 /***************************************************************************
-                                 element.h
+                                 graphicitem.h
                                 -----------
     begin                : Sat Sep 20 2003
     copyright            : (C) 2003 by Michael Margraf
@@ -15,10 +15,10 @@
  *                                                                         *
  ***************************************************************************/
 
-/** \file element.h
+/** \file graphicitem.h
   * \brief Defines drawing elements for schematics
   *
-  * element.h contains definitions of various drawing elements used
+  * graphic.h contains definitions of various drawing elements used
   * used to render schematics and the schematic symbols. The following
   * structs are defined to hold information on various drawing types:
   *
@@ -137,7 +137,7 @@ struct Property {
 #define isDiagramVScroll   0x8003
 
 
-/** \class Element
+/**
   * \brief Superclass of all schematic drawing elements
   * Element and its derived classes can be used in the QGraphicsView canvas.
   *

@@ -3,7 +3,7 @@
 
 #include <QUndoCommand>
 
-#include "element.h"
+#include "graphicitem.h"
 
 class QGraphicsScene;
 

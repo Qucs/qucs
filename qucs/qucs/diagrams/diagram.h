@@ -20,7 +20,7 @@
 
 #include "graph.h"
 #include "marker.h"
-#include "element.h"
+#include "graphicitem.h"
 
 #include <QFile>
 #include <QTextStream>

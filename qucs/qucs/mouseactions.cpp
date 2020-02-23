@@ -1006,7 +1006,7 @@ void MouseActions::MPressSelect(SchematicView *Doc, QMouseEvent *Event)
   isMoveEqual = false;   // moving not neccessarily square
 
   if(focusElement)
-    // print define value in hex, see element.h
+    // print define value in hex, see graphicitem.h
     qDebug() << "MPressSelect: focusElement->Type" <<  QString("0x%1").arg(focusElement->ElemType, 0, 16);
   else
     qDebug() << "MPressSelect";

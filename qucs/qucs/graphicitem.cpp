@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "element.h"
+#include "graphicitem.h"
 
 Element::Element()
 {

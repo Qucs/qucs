@@ -20,7 +20,7 @@
 #include <QList>
 #include <QDebug>
 
-#include "element.h"
+#include "graphicitem.h"
 #include "components/component.h"
 #include "components/components.h"
 #include "paintings/paintings.h"

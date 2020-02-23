@@ -18,7 +18,7 @@
 #ifndef MARKER_H
 #define MARKER_H
 
-#include "element.h"
+#include "graphicitem.h"
 
 class QPainter;
 class Diagram;

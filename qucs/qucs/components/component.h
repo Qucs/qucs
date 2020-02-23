@@ -18,7 +18,7 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include "element.h"
+#include "graphicitem.h"
 #include "qt_compat.h"
 
 class SchematicScene;

@@ -24,7 +24,7 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include "element.h"
+#include "graphicitem.h"
 #include "qt_compat.h"
 
 

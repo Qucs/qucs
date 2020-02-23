@@ -18,7 +18,7 @@
 #ifndef WIRELABEL_H
 #define WIRELABEL_H
 
-#include "element.h"
+#include "graphicitem.h"
 
 #include <QString>
 

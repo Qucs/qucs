@@ -179,7 +179,8 @@ ADD_SUBDIRECTORY( tests )
 
 SET(QUCS_SRCS
   attach.cpp
-  element.cpp	octave_window.cpp	qucsdoc.cpp
+  graphicitem.cpp
+  octave_window.cpp	qucsdoc.cpp
   textdoc.cpp schematicview.cpp
   mnemo.cpp	qucs.cpp
   module.cpp wire.cpp
@@ -195,7 +196,7 @@ SET(QUCS_SRCS
 )
 
 SET(QUCS_HDRS
-element.h
+graphicitem.h
 messagedock.h
 imagewriter.h
 printerwriter.h

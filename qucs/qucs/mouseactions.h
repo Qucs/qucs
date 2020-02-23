@@ -18,7 +18,7 @@
 #ifndef MOUSEACTIONS_H
 #define MOUSEACTIONS_H
 
-#include "element.h"
+#include "graphicitem.h"
 #include "qt_compat.h"
 
 class Wire;

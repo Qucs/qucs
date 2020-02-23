@@ -18,7 +18,7 @@
 #ifndef WIRE_H
 #define WIRE_H
 
-#include "element.h"
+#include "graphicitem.h"
 #include "components/component.h"    // because of struct Port
 #include "wirelabel.h"
 

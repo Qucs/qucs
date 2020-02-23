@@ -20,7 +20,7 @@
 
 
 #include "marker.h"
-#include "element.h"
+#include "graphicitem.h"
 
 #include <cmath>
 #include <QColor>
