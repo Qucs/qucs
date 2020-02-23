@@ -88,6 +88,12 @@ QStringList qucsPathList;
 VersionTriplet QucsVersion; // Qucs version string
 QucsApp *QucsMain = 0;  // the Qucs application itself
 
+enum tab_type
+{
+  TAB_PROJECT   = 0, // Projects
+  TAB_CONTENT   = 1, // Content of selected project
+  TAB_COMPONENT = 2, // Components
+};
 
 /*!
  * \brief QucsApp::QucsApp main application
@@ -327,7 +333,7 @@ void QucsApp::initView()
   dock->setWidget(TabView);
   dock->setAllowedAreas(Qt::LeftDockWidgetArea);
   this->addDockWidget(Qt::LeftDockWidgetArea, dock);
-  TabView->setCurrentIndex(0);
+  TabView->setCurrentIndex(TAB_PROJECT);
 
   // ----------------------------------------------------------
   // Octave docking window
@@ -1198,7 +1204,7 @@ void QucsApp::openProject(const QString& Path)
   Projects->selectionModel()->select(idx, QItemSelectionModel::Select); //FIXME
   //-------------------------------------------------------------------------------------------------------
 
-  TabView->setCurrentIndex(1);   // switch to "Content"-Tab
+  TabView->setCurrentIndex(TAB_CONTENT);   // switch to "Content"-Tab
 
   openProjName.chop(4); // remove "_prj" from name
   ProjName = openProjName;   // remember the name of project
@@ -1268,7 +1274,7 @@ void QucsApp::slotMenuProjClose()
 
   Content->setProjPath("");
 
-  TabView->setCurrentIndex(0);   // switch to "Projects"-Tab
+  TabView->setCurrentIndex(TAB_PROJECT);   // switch to "Projects"-Tab
   ProjName = "";
 }
 
@@ -2272,7 +2278,7 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
     if(!isTextDocument (w))
       ((Schematic*)w)->reloadGraphs();  // ... changes, reload here !
 
-  TabView->setCurrentIndex(2);   // switch to "Component"-Tab
+  TabView->setCurrentIndex(TAB_COMPONENT);   // switch to "Component"-Tab
   if (Name.right(4) == ".dpl") {
     int i = Category::getModulesNr (QObject::tr("diagrams"));
     CompChoose->setCurrentIndex(i);   // switch to diagrams
