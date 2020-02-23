@@ -460,6 +460,7 @@ void createListComponentEntry(){
 
     QList<Module *> Comps;
     Comps = Category::getModules(category);
+
     // \fixme, crash with diagrams, skip
     if(category == "diagrams" || category == "paintings") continue;
 
@@ -468,7 +469,7 @@ void createListComponentEntry(){
 
     foreach (Module *Mod, Comps) {
       Element *e = (Mod->info) (Name, File, true);
-      // dangerous. better precheck cast
+		// dangerous. better precheck cast
       Component *c = (Component* ) e;
 
       // FIXME: cleanup
@@ -564,9 +565,9 @@ int main(int argc, char *argv[])
   QucsSettings.LangDir =     QucsDir.canonicalPath() + "/share/qucs/lang/";
   var = getenv("QUCS_LIBDIR");
   if(var != NULL) {
-      QucsSettings.LibDir = QString(var);
+	  QucsSettings.LibDir = QString(var);
   }else{
-      QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
+	  QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
   }
   QucsSettings.OctaveDir =   QucsDir.canonicalPath() + "/share/qucs/octave/";
   QucsSettings.ExamplesDir = QucsDir.canonicalPath() + "/share/qucs/examples/";
@@ -640,21 +641,31 @@ int main(int argc, char *argv[])
     QucsSettings.BGColor.setRgb(255, 250, 225);
 
   // syntax highlighting
-  if(!QucsSettings.Comment  .isValid())  QucsSettings.Comment   = Qt::gray;
-  if(!QucsSettings.String   .isValid())  QucsSettings.String    = Qt::red;
-  if(!QucsSettings.Integer  .isValid())  QucsSettings.Integer   = Qt::blue;
-  if(!QucsSettings.Real     .isValid())  QucsSettings.Real      = Qt::darkMagenta;
-  if(!QucsSettings.Character.isValid())  QucsSettings.Character = Qt::magenta;
-  if(!QucsSettings.Type     .isValid())  QucsSettings.Type      = Qt::darkRed;
-  if(!QucsSettings.Attribute.isValid())  QucsSettings.Attribute = Qt::darkCyan;
-  if(!QucsSettings.Directive.isValid())  QucsSettings.Directive = Qt::darkCyan;
-  if(!QucsSettings.Task     .isValid())  QucsSettings.Task      = Qt::darkRed;
+  if(!QucsSettings.Comment.isValid())
+    QucsSettings.Comment = Qt::gray;
+  if(!QucsSettings.String.isValid())
+    QucsSettings.String = Qt::red;
+  if(!QucsSettings.Integer.isValid())
+    QucsSettings.Integer = Qt::blue;
+  if(!QucsSettings.Real.isValid())
+    QucsSettings.Real = Qt::darkMagenta;
+  if(!QucsSettings.Character.isValid())
+    QucsSettings.Character = Qt::magenta;
+  if(!QucsSettings.Type.isValid())
+    QucsSettings.Type = Qt::darkRed;
+  if(!QucsSettings.Attribute.isValid())
+    QucsSettings.Attribute = Qt::darkCyan;
+  if(!QucsSettings.Directive.isValid())
+    QucsSettings.Directive = Qt::darkCyan;
+  if(!QucsSettings.Task.isValid())
+    QucsSettings.Task = Qt::darkRed;
+
 
   a.setFont(QucsSettings.font);
 
   // set codecs
   QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
-  QTextCodec::setCodecForTr    (QTextCodec::codecForName("UTF-8"));
+  QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
   QTranslator tor( 0 );
   QString lang = QucsSettings.Language;
@@ -724,9 +735,9 @@ int main(int argc, char *argv[])
         return 0;
       }else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
 #ifdef GIT
-        fprintf(stdout, "Qucs " PACKAGE_VERSION " (" GIT ")" "\n");
+      fprintf(stdout, "Qucs " PACKAGE_VERSION " (" GIT ")" "\n");
 #else
-        fprintf(stdout, "Qucs " PACKAGE_VERSION "\n");
+      fprintf(stdout, "Qucs " PACKAGE_VERSION "\n");
 #endif
         return 0;
       }

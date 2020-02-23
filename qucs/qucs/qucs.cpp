@@ -1235,7 +1235,7 @@ void QucsApp::slotButtonProjOpen()
   QModelIndex idx = Projects->currentIndex();
   if (!idx.isValid()) {
     QMessageBox::information(this, tr("Info"),
-                tr("No project is selected !"));
+				tr("No project is selected !"));
   } else {
     slotListProjOpen(idx);
   }
@@ -1531,12 +1531,12 @@ bool QucsApp::saveAs()
 
     if(isTextDocument (w))
       Filter = tr("VHDL Sources")+" (*.vhdl *.vhd);;" +
-           tr("Verilog Sources")+" (*.v);;"+
-           tr("Verilog-A Sources")+" (*.va);;"+
-           tr("Octave Scripts")+" (*.m *.oct);;"+
-           tr("Qucs Netlist")+" (*.net *.qnet);;"+
-           tr("Plain Text")+" (*.txt);;"+
-           tr("Any File")+" (*)";
+	       tr("Verilog Sources")+" (*.v);;"+
+	       tr("Verilog-A Sources")+" (*.va);;"+
+	       tr("Octave Scripts")+" (*.m *.oct);;"+
+	       tr("Qucs Netlist")+" (*.net *.qnet);;"+
+	       tr("Plain Text")+" (*.txt);;"+
+	       tr("Any File")+" (*)";
     else
       Filter = QucsFileFilter;
 
@@ -1560,9 +1560,9 @@ bool QucsApp::saveAs()
     Info.setFile(s);
     if(QFile::exists(s)) {
       n = QMessageBox::warning(this, tr("Warning"),
-        tr("The file '")+Info.fileName()+tr("' already exists!\n")+
-        tr("Saving will overwrite the old one! Continue?"),
-        tr("No"), tr("Yes"), tr("Cancel"));
+		tr("The file '")+Info.fileName()+tr("' already exists!\n")+
+		tr("Saving will overwrite the old one! Continue?"),
+		tr("No"), tr("Yes"), tr("Cancel"));
       if(n == 2) return false;    // cancel
       if(n == 0) continue;
     }
@@ -1571,7 +1571,7 @@ bool QucsApp::saveAs()
     QucsDoc * d = findDoc (s);
     if(d) {
       QMessageBox::information(this, tr("Info"),
-        tr("Cannot overwrite an open document"));
+		tr("Cannot overwrite an open document"));
       return false;
     }
 
@@ -2117,7 +2117,7 @@ void QucsApp::slotSimulate()
     if(Doc->SimTime.isEmpty() && ((TextDoc*)Doc)->simulation) {
       DigiSettingsDialog *d = new DigiSettingsDialog((TextDoc*)Doc);
       if(d->exec() == QDialog::Rejected)
-    return;
+	return;
     }
   }
   else
@@ -2154,9 +2154,9 @@ void QucsApp::slotSimulate()
   // disconnect is automatically performed, if one of the involved objects
   // is destroyed !
   connect(sim, SIGNAL(SimulationEnded(int, SimMessage*)), this,
-        SLOT(slotAfterSimulation(int, SimMessage*)));
+		SLOT(slotAfterSimulation(int, SimMessage*)));
   connect(sim, SIGNAL(displayDataPage(QString&, QString&)),
-        this, SLOT(slotChangePage(QString&, QString&)));
+		this, SLOT(slotChangePage(QString&, QString&)));
 
   sim->show();
   if(!sim->startProcess()) return;
@@ -2198,18 +2198,18 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
     if(sim->SimOpenDpl) {
       // switch to data display
       if(sim->DataDisplay.right(2) == ".m" ||
-     sim->DataDisplay.right(4) == ".oct") {  // Is it an Octave script?
-    octave->startOctave();
-    octave->runOctaveScript(sim->DataDisplay);
+	 sim->DataDisplay.right(4) == ".oct") {  // Is it an Octave script?
+	octave->startOctave();
+	octave->runOctaveScript(sim->DataDisplay);
       }
       else
-    slotChangePage(sim->DocName, sim->DataDisplay);
+	slotChangePage(sim->DocName, sim->DataDisplay);
       sim->slotClose();   // close and delete simulation window
     }
     else
       if(w) if(!isTextDocument (sim->DocWidget))
-    // load recent simulation data (if document is still open)
-    ((Schematic*)sim->DocWidget)->reloadGraphs();
+	// load recent simulation data (if document is still open)
+	((Schematic*)sim->DocWidget)->reloadGraphs();
   }
 
   if(!isTextDocument (sim->DocWidget))
@@ -2244,7 +2244,7 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
     QString ext = QucsDoc::fileSuffix (DataDisplay);
 
     if (ext != "vhd" && ext != "vhdl" && ext != "v" && ext != "va" &&
-    ext != "oct" && ext != "m") {
+	ext != "oct" && ext != "m") {
       d = DocumentTab->createEmptySchematic(Name);
     } else {
       d = DocumentTab->createEmptyTextDoc(Name);
