@@ -88,17 +88,11 @@ QStringList qucsPathList;
 VersionTriplet QucsVersion; // Qucs version string
 QucsApp *QucsMain = 0;  // the Qucs application itself
 
-enum tab_type
-{
-  TAB_PROJECT   = 0, // Projects
-  TAB_CONTENT   = 1, // Content of selected project
-  TAB_COMPONENT = 2, // Components
-};
 
 /*!
  * \brief QucsApp::QucsApp main application
  */
-QucsApp::QucsApp(const QString argvProjectPath, const QStringList argvFileList)
+QucsApp::QucsApp()
 {
   setWindowTitle("Qucs " PACKAGE_VERSION);
 
@@ -148,12 +142,17 @@ QucsApp::QucsApp(const QString argvProjectPath, const QStringList argvFileList)
 
   lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
 
-  initProjects(argvProjectPath);
   // load documents given as command line arguments
-  foreach(QString f, argvFileList) {
-    QFileInfo info(f);
-    QucsSettings.QucsWorkDir.setPath(info.absoluteDir().absolutePath());
-    gotoPage(QucsSettings.QucsWorkDir.filePath(info.fileName()));
+  for(int z=1; z<qApp->arguments().size(); z++) {
+    QString arg = qApp->arguments()[z];
+    QByteArray ba = arg.toLatin1();
+    const char *c_arg= ba.data();
+    if(*(c_arg) != '-') {
+      QFileInfo Info(arg);
+      QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
+      arg = QucsSettings.QucsWorkDir.filePath(Info.fileName());
+      gotoPage(arg);
+    }
   }
 }
 
@@ -333,7 +332,7 @@ void QucsApp::initView()
   dock->setWidget(TabView);
   dock->setAllowedAreas(Qt::LeftDockWidgetArea);
   this->addDockWidget(Qt::LeftDockWidgetArea, dock);
-  TabView->setCurrentIndex(TAB_PROJECT);
+  TabView->setCurrentIndex(0);
 
   // ----------------------------------------------------------
   // Octave docking window
@@ -354,42 +353,22 @@ void QucsApp::initView()
   //m_proxyModel->setDynamicSortFilter(true);
   // show all directories (project and non-project)
   m_homeDirModel->setFilter(QDir::NoDot | QDir::AllDirs);
-}
-void QucsApp::initProjects(const QString argvProjsDir)
-{
-  QString path = argvProjsDir!=nullptr? argvProjsDir : QucsSettings.QucsHomeDir.absolutePath();
+
+  // ............................................
+  QString path = QucsSettings.QucsHomeDir.absolutePath();
+  QDir ProjDir(path);
   // initial projects directory is the Qucs home directory
   QucsSettings.projsDir = path;
 
-  QDir projDir(path);
   // create home dir if not exist
-  if(!projDir.exists()) {
-    if(!projDir.mkdir(path)) {
+  if(!ProjDir.exists()) {
+    if(!ProjDir.mkdir(path)) {
       QMessageBox::warning(this, tr("Warning"),
-          tr("Cannot create work directory !")+" "+path);
+          tr("Cannot create work directory !"));
       return;
     }
   }
   readProjects(); // reads all projects and inserts them into the ListBox
-
-  if (argvProjsDir!=nullptr){
-    // last char of argvProjsDir is aways '/'
-    if (argvProjsDir.endsWith("_prj/")){
-      int lx0=0;
-      for (int lx=0; lx<argvProjsDir.length()-1; ++lx){
-        if(argvProjsDir.at(lx)=='/'){
-          lx0 = lx;
-        }
-      }
-      path = argvProjsDir.mid(0, lx0); //cat "/name_prj
-    }
-    QucsSettings.projsDir = path;
-    readProjects();
-    if (argvProjsDir.endsWith("_prj/")){
-      //QucsSettings.projsDir = argvProjsDir;
-      openProject(argvProjsDir);
-    }
-  }
 }
 
 // Put all available libraries into ComboBox.
@@ -1149,6 +1128,7 @@ void QucsApp::slotButtonProjNew()
   NewProjDialog *d = new NewProjDialog(this);
   if(d->exec() != QDialog::Accepted) return;
 
+  QDir projDir(QucsSettings.projsDir.path());
   QString name = d->ProjName->text();
   bool open = d->OpenProj->isChecked();
 
@@ -1156,7 +1136,6 @@ void QucsApp::slotButtonProjNew()
     name += "_prj";
   }
 
-  QDir projDir(QucsSettings.projsDir.path());
   if(!projDir.mkdir(name)) {
     QMessageBox::information(this, tr("Info"),
         tr("Cannot create project directory !"));
@@ -1198,13 +1177,8 @@ void QucsApp::openProject(const QString& Path)
   octave->adjustDirectory();
 
   Content->setProjPath(QucsSettings.QucsWorkDir.absolutePath());
-  //-------------------------------------------------------------------------------------------------------
-  // select (highlight) project in QListView (projects)
-  QModelIndex idx = m_homeDirModel->index(openProjName, 0); //FIXME
-  Projects->selectionModel()->select(idx, QItemSelectionModel::Select); //FIXME
-  //-------------------------------------------------------------------------------------------------------
 
-  TabView->setCurrentIndex(TAB_CONTENT);   // switch to "Content"-Tab
+  TabView->setCurrentIndex(1);   // switch to "Content"-Tab
 
   openProjName.chop(4); // remove "_prj" from name
   ProjName = openProjName;   // remember the name of project
@@ -1235,7 +1209,7 @@ void QucsApp::slotButtonProjOpen()
   QModelIndex idx = Projects->currentIndex();
   if (!idx.isValid()) {
     QMessageBox::information(this, tr("Info"),
-                tr("No project is selected !"));
+				tr("No project is selected !"));
   } else {
     slotListProjOpen(idx);
   }
@@ -1274,7 +1248,7 @@ void QucsApp::slotMenuProjClose()
 
   Content->setProjPath("");
 
-  TabView->setCurrentIndex(TAB_PROJECT);   // switch to "Projects"-Tab
+  TabView->setCurrentIndex(0);   // switch to "Projects"-Tab
   ProjName = "";
 }
 
@@ -1531,12 +1505,12 @@ bool QucsApp::saveAs()
 
     if(isTextDocument (w))
       Filter = tr("VHDL Sources")+" (*.vhdl *.vhd);;" +
-           tr("Verilog Sources")+" (*.v);;"+
-           tr("Verilog-A Sources")+" (*.va);;"+
-           tr("Octave Scripts")+" (*.m *.oct);;"+
-           tr("Qucs Netlist")+" (*.net *.qnet);;"+
-           tr("Plain Text")+" (*.txt);;"+
-           tr("Any File")+" (*)";
+	       tr("Verilog Sources")+" (*.v);;"+
+	       tr("Verilog-A Sources")+" (*.va);;"+
+	       tr("Octave Scripts")+" (*.m *.oct);;"+
+	       tr("Qucs Netlist")+" (*.net *.qnet);;"+
+	       tr("Plain Text")+" (*.txt);;"+
+	       tr("Any File")+" (*)";
     else
       Filter = QucsFileFilter;
 
@@ -1560,9 +1534,9 @@ bool QucsApp::saveAs()
     Info.setFile(s);
     if(QFile::exists(s)) {
       n = QMessageBox::warning(this, tr("Warning"),
-        tr("The file '")+Info.fileName()+tr("' already exists!\n")+
-        tr("Saving will overwrite the old one! Continue?"),
-        tr("No"), tr("Yes"), tr("Cancel"));
+		tr("The file '")+Info.fileName()+tr("' already exists!\n")+
+		tr("Saving will overwrite the old one! Continue?"),
+		tr("No"), tr("Yes"), tr("Cancel"));
       if(n == 2) return false;    // cancel
       if(n == 0) continue;
     }
@@ -1571,7 +1545,7 @@ bool QucsApp::saveAs()
     QucsDoc * d = findDoc (s);
     if(d) {
       QMessageBox::information(this, tr("Info"),
-        tr("Cannot overwrite an open document"));
+		tr("Cannot overwrite an open document"));
       return false;
     }
 
@@ -2117,7 +2091,7 @@ void QucsApp::slotSimulate()
     if(Doc->SimTime.isEmpty() && ((TextDoc*)Doc)->simulation) {
       DigiSettingsDialog *d = new DigiSettingsDialog((TextDoc*)Doc);
       if(d->exec() == QDialog::Rejected)
-    return;
+	return;
     }
   }
   else
@@ -2154,9 +2128,9 @@ void QucsApp::slotSimulate()
   // disconnect is automatically performed, if one of the involved objects
   // is destroyed !
   connect(sim, SIGNAL(SimulationEnded(int, SimMessage*)), this,
-        SLOT(slotAfterSimulation(int, SimMessage*)));
+		SLOT(slotAfterSimulation(int, SimMessage*)));
   connect(sim, SIGNAL(displayDataPage(QString&, QString&)),
-        this, SLOT(slotChangePage(QString&, QString&)));
+		this, SLOT(slotChangePage(QString&, QString&)));
 
   sim->show();
   if(!sim->startProcess()) return;
@@ -2198,18 +2172,18 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
     if(sim->SimOpenDpl) {
       // switch to data display
       if(sim->DataDisplay.right(2) == ".m" ||
-     sim->DataDisplay.right(4) == ".oct") {  // Is it an Octave script?
-    octave->startOctave();
-    octave->runOctaveScript(sim->DataDisplay);
+	 sim->DataDisplay.right(4) == ".oct") {  // Is it an Octave script?
+	octave->startOctave();
+	octave->runOctaveScript(sim->DataDisplay);
       }
       else
-    slotChangePage(sim->DocName, sim->DataDisplay);
+	slotChangePage(sim->DocName, sim->DataDisplay);
       sim->slotClose();   // close and delete simulation window
     }
     else
       if(w) if(!isTextDocument (sim->DocWidget))
-    // load recent simulation data (if document is still open)
-    ((Schematic*)sim->DocWidget)->reloadGraphs();
+	// load recent simulation data (if document is still open)
+	((Schematic*)sim->DocWidget)->reloadGraphs();
   }
 
   if(!isTextDocument (sim->DocWidget))
@@ -2244,7 +2218,7 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
     QString ext = QucsDoc::fileSuffix (DataDisplay);
 
     if (ext != "vhd" && ext != "vhdl" && ext != "v" && ext != "va" &&
-    ext != "oct" && ext != "m") {
+	ext != "oct" && ext != "m") {
       d = DocumentTab->createEmptySchematic(Name);
     } else {
       d = DocumentTab->createEmptyTextDoc(Name);
@@ -2278,7 +2252,7 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
     if(!isTextDocument (w))
       ((Schematic*)w)->reloadGraphs();  // ... changes, reload here !
 
-  TabView->setCurrentIndex(TAB_COMPONENT);   // switch to "Component"-Tab
+  TabView->setCurrentIndex(2);   // switch to "Component"-Tab
   if (Name.right(4) == ".dpl") {
     int i = Category::getModulesNr (QObject::tr("diagrams"));
     CompChoose->setCurrentIndex(i);   // switch to diagrams

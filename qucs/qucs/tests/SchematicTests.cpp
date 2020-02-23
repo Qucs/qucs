@@ -8,10 +8,8 @@
 
 void SchematicTests::testConstructor()
 {
-    QString projPath;
-    QStringList fileList;
 
-    QucsApp *app = new QucsApp(projPath, fileList);
+    QucsApp *app = new QucsApp();
 
     QString name;
     Schematic *sch;
