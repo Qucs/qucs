@@ -462,7 +462,7 @@ void createListComponentEntry(){
     Comps = Category::getModules(category);
 
     // \fixme, crash with diagrams, skip
-    if(category == "diagrams") break;
+    if(category == "diagrams" || category == "paintings") continue;
 
     char * File;
     QString Name;
@@ -472,9 +472,12 @@ void createListComponentEntry(){
 		// dangerous. better precheck cast
       Component *c = (Component* ) e;
 
-		// FIXME: cleanup
-		QTextStream s;
-		c->getSchematic()->saveComponent(s, c);
+      // FIXME: cleanup
+      QTextStream s;
+      if (c->getSchematic()==nullptr){
+        continue;
+      }
+      c->getSchematic()->saveComponent(s, c);
       QString qucsEntry = *(s.string());
       fprintf(stdout, "%s; qucs    ; %s\n", c->obsolete_model_hack().toAscii().data(), qucsEntry.toAscii().data());
 
