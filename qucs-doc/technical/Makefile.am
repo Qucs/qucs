@@ -24,6 +24,8 @@
 
 include $(top_srcdir)/qucstex.mk
 
+SUBDIRS = images/Synthesis/Impedance_Matching
+
 EXTRA_DIST = technical.tex l2h-init.cfg $(FIGURES) $(BIBFILE) \
   $(PSFILES) $(MATHFILES) $(MATHHELPS) $(CHAPTERS)
 
@@ -56,13 +58,8 @@ PSFILES = MNAexample.eps NLexample.eps CYexample.eps MNAnoise1.eps \
   Real_r.eps TLpiece.eps QuarterWavelengthFilter.eps               \
   rectwaveguide.eps circularwaveguide.eps                          \
   PlanarSpiralInductors.eps CircularLoop.eps PrintedInductorEC.eps \
-  ReflectionCoeffsTaper.eps capq.eps indq.eps \
-  DoubleStubOpen.eps DoubleStubShort.eps \
-  SingleStubOpen.eps SingleStubShort.eps \
-  DoubleStubOpenBalanced.eps DoubleStubShortBalanced.eps \
-  SingleStubOpenBalanced.eps SingleStubShortBalanced.eps \
-  Lsection.eps SmithChart-Lsection.eps SmithChartTL.eps \
-  Smithl8l4.eps CascadedLCsch.eps SmithCascadedLCsections.eps
+  ReflectionCoeffsTaper.eps capq.eps indq.eps
+
 EPSFILES = $(FIGURES:.fig=.eps)
 PSFRAGTEXS = $(FIGURES:.fig=.tex) $(MATHFILES:.m=.tex)
 PDFFILES = $(FIGURES:.fig=.pdf)

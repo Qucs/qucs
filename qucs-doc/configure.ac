@@ -100,6 +100,7 @@ dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([Makefile
 		 doxygen/Makefile
 		 technical/Makefile
+		 technical/images/Synthesis/Impedance_Matching/Makefile
 		 report/Makefile
 		 report/activefilter/Makefile
 		 report/activefilter/pics/Makefile

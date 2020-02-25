@@ -16,6 +16,8 @@ labeldialog.h
 librarydialog.h
 loaddialog.h
 matchdialog.h
+matchsettingsdialog.h
+matchsubstratedialog.h
 newprojdialog.h
 packagedialog.h
 qucssettingsdialog.h
@@ -36,7 +38,8 @@ importdialog.cpp		savedialog.cpp labeldialog.cpp
 searchdialog.cpp     librarydialog.cpp settingsdialog.cpp
 matchdialog.cpp			simmessage.cpp newprojdialog.cpp
 sweepdialog.cpp			exportdialog.cpp loaddialog.cpp
-aboutdialog.cpp
+aboutdialog.cpp                 matchsettingsdialog.cpp
+matchsubstratedialog.cpp
 )
 
 SET(DIALOGS_MOC_HDRS
@@ -49,6 +52,8 @@ labeldialog.h
 librarydialog.h
 loaddialog.h
 matchdialog.h
+matchsettingsdialog.h
+matchsubstratedialog.h
 newprojdialog.h
 packagedialog.h
 qucssettingsdialog.h
