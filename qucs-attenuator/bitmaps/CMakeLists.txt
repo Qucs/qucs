@@ -1,19 +1,11 @@
-
-SET(XPMS
-)
+set(XPMS)
 
 # toolbar images
-SET(PNGS
-att_pi.png
-att_tee.png
-att_bridge.png
-)
+set(PNGS att_pi.png att_tee.png att_bridge.png)
 
 # application images
-SET(ICONS
-)
+set(ICONS)
 
-INSTALL(FILES ${XPMS} DESTINATION share/qucs/bitmaps)
-INSTALL(FILES ${PNGS} DESTINATION share/qucs/bitmaps)
-INSTALL(FILES ${ICONS} DESTINATION share/qucs/bitmaps)
-
+install(FILES ${XPMS} DESTINATION share/qucs/bitmaps)
+install(FILES ${PNGS} DESTINATION share/qucs/bitmaps)
+install(FILES ${ICONS} DESTINATION share/qucs/bitmaps)

@@ -1,9 +1,9 @@
-PROJECT(qucsfilter CXX C)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+project(qucsfilter CXX C)
+cmake_minimum_required(VERSION 2.6)
 cmake_policy(VERSION 2.6)
 
 # use top VERSION file
-file (STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
+file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
 message(STATUS "Configuring ${PROJECT_NAME} (GUI): VERSION ${QUCS_VERSION}")
 
 set(PROJECT_VERSION "${QUCS_VERSION}")
@@ -13,111 +13,105 @@ set(PROJECT_COPYRIGHT_YEAR "2014")
 set(PROJECT_DOMAIN_FIRST "qucs")
 set(PROJECT_DOMAIN_SECOND "org")
 
-SET(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Debug)
 
-ADD_DEFINITIONS( -DHAVE_CONFIG_H )
+add_definitions(-DHAVE_CONFIG_H)
 
 # configure the header config.h
-CONFIGURE_FILE (
-    "${PROJECT_SOURCE_DIR}/../config.h.cmake"
-    "${PROJECT_BINARY_DIR}/config.h"
-)
+configure_file("${PROJECT_SOURCE_DIR}/../config.h.cmake"
+               "${PROJECT_BINARY_DIR}/config.h")
 
-INCLUDE_DIRECTORIES("${PROJECT_BINARY_DIR}")
+include_directories("${PROJECT_BINARY_DIR}")
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11
 
 # flag not available in mingw 4.8.2, MSVC10
-IF(NOT WIN32)
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
-ENDIF()
+if(NOT WIN32)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
+endif()
 
-FIND_PACKAGE( Qt4 REQUIRED )
-SET( QT_USE_QTGUI TRUE )
-SET( QT_USE_QTSVG TRUE )
+find_package(Qt4 REQUIRED)
+set(QT_USE_QTGUI TRUE)
+set(QT_USE_QTSVG TRUE)
 
-INCLUDE( ${QT_USE_FILE} )
+include(${QT_USE_FILE})
 
-ADD_DEFINITIONS(${QT_DEFINITIONS})
+add_definitions(${QT_DEFINITIONS})
 
-SET(QUCS-FILTER_SRCS
-  cline_filter.cpp
-  eqn_filter.cpp
-  filter.cpp
-  helpdialog.cpp
-  lc_filter.cpp
-  line_filter.cpp
-  main.cpp
-  qf_cauer.cpp
-  qf_filter.cpp
-  qf_poly.cpp
-  qucsfilter.cpp
-  stepz_filter.cpp
-  tl_filter.cpp
-  quarterwave_filter.cpp
-  qw_coupled_ring_filter.cpp
-  ccoupled_shunt_resonators.cpp
-)
+set(QUCS-FILTER_SRCS
+    cline_filter.cpp
+    eqn_filter.cpp
+    filter.cpp
+    helpdialog.cpp
+    lc_filter.cpp
+    line_filter.cpp
+    main.cpp
+    qf_cauer.cpp
+    qf_filter.cpp
+    qf_poly.cpp
+    qucsfilter.cpp
+    stepz_filter.cpp
+    tl_filter.cpp
+    quarterwave_filter.cpp
+    qw_coupled_ring_filter.cpp
+    ccoupled_shunt_resonators.cpp)
 
-SET(QUCS-FILTER_HDRS
-  cline_filter.h
-  eqn_filter.h
-  filter.h
-  lc_filter.h
-  line_filter.h
-  material_props.h
-  qf_cauer.h
-  qf_filter.h
-  qf_matrix.h
-  qf_poly.h
-  stepz_filter.h
-  tl_filter.h
-  quarterwave_filter.h
-)
+set(QUCS-FILTER_HDRS
+    cline_filter.h
+    eqn_filter.h
+    filter.h
+    lc_filter.h
+    line_filter.h
+    material_props.h
+    qf_cauer.h
+    qf_filter.h
+    qf_matrix.h
+    qf_poly.h
+    stepz_filter.h
+    tl_filter.h
+    quarterwave_filter.h)
 
-SET(QUCS-FILTER_MOC_HDRS
-  helpdialog.h
-  qucsfilter.h
-)
+set(QUCS-FILTER_MOC_HDRS helpdialog.h qucsfilter.h)
 
-QT4_WRAP_CPP(QUCS-FILTER_MOC_SRCS ${QUCS-FILTER_MOC_HDRS})
+qt4_wrap_cpp(QUCS-FILTER_MOC_SRCS ${QUCS-FILTER_MOC_HDRS})
 
-SET(RESOURCES qucsfilter_.qrc)
-QT4_ADD_RESOURCES(RESOURCES_SRCS ${RESOURCES})
+set(RESOURCES qucsfilter_.qrc)
+qt4_add_resources(RESOURCES_SRCS ${RESOURCES})
 
-
-IF(APPLE)
+if(APPLE)
   # set information on Info.plist file
-	SET(MACOSX_BUNDLE_INFO_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
-  SET(MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_NAME} ${PROJECT_VERSION}")
-  SET(MACOSX_BUNDLE_LONG_VERSION_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
-  SET(MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}")
-  SET(MACOSX_BUNDLE_COPYRIGHT "${PROJECT_COPYRIGHT_YEAR} ${PROJECT_VENDOR}")
-  SET(MACOSX_BUNDLE_GUI_IDENTIFIER "${PROJECT_DOMAIN_SECOND}.${PROJECT_DOMAIN_FIRST}")
-  SET(MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}")
-  SET(MACOSX_BUNDLE_ICON_FILE qucsfilter.icns)
+  set(MACOSX_BUNDLE_INFO_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
+  set(MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_NAME} ${PROJECT_VERSION}")
+  set(MACOSX_BUNDLE_LONG_VERSION_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
+  set(MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}")
+  set(MACOSX_BUNDLE_COPYRIGHT "${PROJECT_COPYRIGHT_YEAR} ${PROJECT_VENDOR}")
+  set(MACOSX_BUNDLE_GUI_IDENTIFIER
+      "${PROJECT_DOMAIN_SECOND}.${PROJECT_DOMAIN_FIRST}")
+  set(MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}")
+  set(MACOSX_BUNDLE_ICON_FILE qucsfilter.icns)
 
   # set where in the bundle to put the icns file
-  SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsfilter.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+  set_source_files_properties(
+    ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsfilter.icns
+    PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
   # include the icns file in the target
-  SET(QUCS-FILTER_SRCS ${QUCS-FILTER_SRCS} ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsfilter.icns)
+  set(QUCS-FILTER_SRCS
+      ${QUCS-FILTER_SRCS}
+      ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsfilter.icns)
 
-ENDIF(APPLE)
+endif(APPLE)
 
-ADD_EXECUTABLE(qucsfilter MACOSX_BUNDLE WIN32
-  ${QUCS-FILTER_SRCS}
-  ${QUCS-FILTER_HDRS}
-  ${QUCS-FILTER_MOC_SRCS}
-  ${RESOURCES_SRCS} )
+add_executable(
+  qucsfilter MACOSX_BUNDLE WIN32 ${QUCS-FILTER_SRCS} ${QUCS-FILTER_HDRS}
+                                 ${QUCS-FILTER_MOC_SRCS} ${RESOURCES_SRCS})
 
-TARGET_LINK_LIBRARIES(qucsfilter ${QT_LIBRARIES})
+target_link_libraries(qucsfilter ${QT_LIBRARIES})
 
-INSTALL(TARGETS qucsfilter
-    BUNDLE DESTINATION bin COMPONENT Runtime
-    RUNTIME DESTINATION bin COMPONENT Runtime
-    )
+install(
+  TARGETS qucsfilter
+  BUNDLE DESTINATION bin COMPONENT Runtime
+  RUNTIME DESTINATION bin COMPONENT Runtime)
 
 # man pages
-INSTALL( FILES qucsfilter.1 DESTINATION share/man/man1 )
-
+install(FILES qucsfilter.1 DESTINATION share/man/man1)
