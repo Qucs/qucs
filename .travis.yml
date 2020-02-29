@@ -84,6 +84,7 @@ matrix:
       env: BUILD=autotools
       addons:
         homebrew:
+          update: true  # remove once Travis bug is fixed: https://travis-ci.community/t/macos-build-fails-because-of-homebrew-bundle-unknown-command/7296
           taps:
             - cartr/qt4
             - guitorri/tap
