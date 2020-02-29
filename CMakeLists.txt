@@ -1,14 +1,12 @@
-PROJECT(qucs-project CXX)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+project(qucs-project CXX)
+cmake_minimum_required(VERSION 2.8)
 cmake_policy(VERSION 2.8)
 
-
-file (STRINGS "${qucs-project_SOURCE_DIR}/VERSION" QUCS_VERSION)
+file(STRINGS "${qucs-project_SOURCE_DIR}/VERSION" QUCS_VERSION)
 message(STATUS "Configuring Qucs Project: VERSION ${QUCS_VERSION}")
 
 # enable testing for current directory and below
-ENABLE_TESTING()
+enable_testing()
 
-ADD_SUBDIRECTORY( qucs )
-ADD_SUBDIRECTORY( qucs-core )
-
+add_subdirectory(qucs)
+add_subdirectory(qucs-core)

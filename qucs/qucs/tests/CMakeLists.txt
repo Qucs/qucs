@@ -1,27 +1,22 @@
-
 # Setup unit tests
 
 # run moc when necessary
 set(CMAKE_AUTOMOC ON)
 
-# moc files are generated in the binary dir
-# look there for includes
-SET(CMAKE_INCLUDE_CURRENT_DIR ON)
+# moc files are generated in the binary dir look there for includes
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+set(ElementTests_SRCS ElementTests.cpp)
+add_executable(ElementTests ${ElementTests_SRCS})
+target_link_libraries(ElementTests ${QT_LIBRARIES} qucsschematic)
+add_test(NAME ElementTests COMMAND ElementTests)
 
-SET( ElementTests_SRCS ElementTests.cpp )
-ADD_EXECUTABLE(ElementTests ${ElementTests_SRCS})
-TARGET_LINK_LIBRARIES(ElementTests ${QT_LIBRARIES} qucsschematic)
-ADD_TEST(NAME ElementTests COMMAND ElementTests)
+set(ComponentTests_SRCS ComponentTests.cpp)
+add_executable(ComponentTests ${ComponentTests_SRCS})
+target_link_libraries(ComponentTests ${QT_LIBRARIES} qucsschematic)
+add_test(NAME ComponentTests COMMAND ComponentTests)
 
-
-SET( ComponentTests_SRCS ComponentTests.cpp)
-ADD_EXECUTABLE(ComponentTests ${ComponentTests_SRCS})
-TARGET_LINK_LIBRARIES(ComponentTests ${QT_LIBRARIES} qucsschematic)
-ADD_TEST(NAME ComponentTests COMMAND ComponentTests)
-
-
-SET( SchematicTests_SRCS SchematicTests.cpp)
-ADD_EXECUTABLE(SchematicTests ${SchematicTests_SRCS})
-TARGET_LINK_LIBRARIES(SchematicTests ${QT_LIBRARIES} qucsschematic)
-ADD_TEST(NAME SchematicTests COMMAND SchematicTests)
+set(SchematicTests_SRCS SchematicTests.cpp)
+add_executable(SchematicTests ${SchematicTests_SRCS})
+target_link_libraries(SchematicTests ${QT_LIBRARIES} qucsschematic)
+add_test(NAME SchematicTests COMMAND SchematicTests)
