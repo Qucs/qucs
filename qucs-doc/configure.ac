@@ -134,6 +134,8 @@ AC_CONFIG_FILES([Makefile
 		 tutorial/getstarted/pics/Makefile
 		 tutorial/dcstatic/Makefile
 		 tutorial/dcstatic/pics/Makefile
+		 tutorial/linblocks/Makefile
+		 tutorial/linblocks/pics/Makefile
 		 tutorial/coupler/Makefile
 		 tutorial/coupler/pics/Makefile
 		 tutorial/modelbjt/Makefile
