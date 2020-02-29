@@ -357,7 +357,7 @@ void QucsApp::initView()
 }
 void QucsApp::initProjects(const QString argvProjsDir)
 {
-  QString path = argvProjsDir!=nullptr? argvProjsDir : QucsSettings.QucsHomeDir.absolutePath();
+  QString path = argvProjsDir.isNull()? QucsSettings.QucsHomeDir.absolutePath() : argvProjsDir;
   // initial projects directory is the Qucs home directory
   QucsSettings.projsDir = path;
 
