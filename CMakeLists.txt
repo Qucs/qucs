@@ -10,3 +10,13 @@ enable_testing()
 
 add_subdirectory(qucs)
 add_subdirectory(qucs-core)
+add_subdirectory(qucs-doc)
+
+# uninstall target
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/uninstall.cmake.in"
+               "${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake" IMMEDIATE @ONLY)
+
+add_custom_target(
+  uninstall COMMAND ${CMAKE_COMMAND} -P
+                  ${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake)
+

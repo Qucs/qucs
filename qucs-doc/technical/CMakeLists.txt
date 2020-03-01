@@ -208,4 +208,4 @@ add_latex_document(
 )
 
 # Handle install
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/technical.pdf DESTINATION share/qucs/docs/tecnical)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/technical.pdf DESTINATION share/qucs/docs/technical)
