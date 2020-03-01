@@ -138,7 +138,7 @@ install:
       export PATH="/usr/local/opt/ccache/libexec:$PATH";
       brew tap-pin cartr/qt4;
       brew install qt@4;
-    fi
+     fi
      
 before_script:
   - ccache --version
