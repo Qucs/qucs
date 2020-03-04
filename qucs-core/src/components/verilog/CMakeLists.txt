@@ -5,51 +5,52 @@ include_directories(
   ${qucs-core_SOURCE_DIR}/src/components # component.h
   ${qucs-core_SOURCE_DIR}/src/components/devices) # devices.h
 
-# TODO, test if VA files change, should recompile
-
 set(VA_FILES
-    andor4x2
-    andor4x3
-    andor4x4
-    binarytogrey4bit
-    comp_1bit
-    comp_2bit
-    comp_4bit
-    dff_SR
-    DLS_1ton
-    DLS_nto1
-    dmux2to4
-    dmux3to8
-    dmux4to16
-    EKV26MOS
-    fa1b
-    fa2b
-    gatedDlatch
-    greytobinary4bit
-    ha1b
-    hpribin4bit
-    jkff_SR
-    log_amp
-    logic_0
-    logic_1
-    MESFET
-    mod_amp
-    mux2to1
-    mux4to1
-    mux8to1
-    nigbt
-    pad2bit
-    pad3bit
-    pad4bit
-    photodiode
-    phototransistor
-    potentiometer
-    tff_SR
-    vcresistor)
+    andor4x2.va
+    andor4x3.va
+    andor4x4.va
+    binarytogrey4bit.va
+    comp_1bit.va
+    comp_2bit.va
+    comp_4bit.va
+    dff_SR.va
+    DLS_1ton.va
+    DLS_nto1.va
+    dmux2to4.va
+    dmux3to8.va
+    dmux4to16.va
+    EKV26MOS.va
+    fa1b.va
+    fa2b.va
+    gatedDlatch.va
+    greytobinary4bit.va
+    ha1b.va
+    hpribin4bit.va
+    jkff_SR.va
+    log_amp.va
+    logic_0.va
+    logic_1.va
+    MESFET.va
+    mod_amp.va
+    mux2to1.va
+    mux4to1.va
+    mux8to1.va
+    nigbt.va
+    pad2bit.va
+    pad3bit.va
+    pad4bit.va
+    photodiode.va
+    phototransistor.va
+    potentiometer.va
+    tff_SR.va
+    vcresistor.va)
 
 # XML sripts need to build, the order matters
-set(XML_BUILD analogfunction.xml qucsVersion.xml qucsMODULEcore.xml
-              qucsMODULEdefs.xml)
+set(XML_BUILD
+   analogfunction.xml
+   qucsVersion.xml
+   qucsMODULEcore.xml
+   qucsMODULEdefs.xml)
 
 # Concatenate scripts into command: -e script1 [-e script2]
 set(XML_CMD)
@@ -57,40 +58,27 @@ foreach(script ${XML_BUILD})
   set(XML_CMD ${XML_CMD} -e ${CMAKE_CURRENT_SOURCE_DIR}/${script})
 endforeach()
 
-# clear lists of generated files
-set(generated_SRC)
-
-# Process each Verilog-A file. * generated files get added to lists (analogfunc,
-# core)
-foreach(filename ${VA_FILES})
-  # Default
-  set(fileout ${filename}.va)
-
-  # Verilog-A file basename, strip suffix
-  get_filename_component(base ${fileout} NAME_WE)
-  set(base_abs ${CMAKE_CURRENT_BINARY_DIR}/${base})
-
-  # set outputs for each Verilog-A input
+# Process each Verilog-A file.
+set(gen_SRC)
+foreach(file ${VA_FILES})
+  get_filename_component(_name ${file} NAME_WE)
   set(output
-      ${base_abs}.analogfunction.cpp ${base_abs}.analogfunction.h
-      ${base_abs}.cpp ${base_abs}.core.cpp ${base_abs}.core.h
-      ${base_abs}.defs.h)
-
+      ${_name}.${_name}.analogfunction.h
+      ${_name}.${_name}.analogfunction.cpp
+      ${_name}.${_name}.core.cpp
+      ${_name}.core.h
+      ${_name}.cpp
+      ${_name}.defs.h)
   # custom command/rule to generate outputs with admsXml
   add_custom_command(
     OUTPUT ${output}
-    COMMAND ${ADMSXML} ${CMAKE_CURRENT_SOURCE_DIR}/${filename}.va ${XML_CMD} -o
-            ${filename}
-    DEPENDS ${filename}.va ${XML_BUILD})
-  set_source_files_properties(${output} PROPERTIES GENERATED TRUE)
-
-  # append outputs list of generated sources
-  set(generated_SRC ${generated_SRC} ${base_abs}.cpp)
+    COMMAND ${ADMSXML} ${CMAKE_CURRENT_SOURCE_DIR}/${file} ${XML_CMD} -o
+            ${_name}
+    DEPENDS ${file} ${XML_BUILD})
+  list(APPEND gen_SRC ${_name}.cpp)
 endforeach()
 
-# MESSAGE(STATUS " ==> generated\n " ${generated_SRC})
-
-add_library(coreVerilog OBJECT ${generated_SRC})
+add_library(coreVerilog OBJECT ${gen_SRC})
 
 # Distribute XML scripts
 set(XML_DIST ${XML_BUILD} qucsMODULEgui.xml qucsMODULEguiJSONsymbol.xml)
