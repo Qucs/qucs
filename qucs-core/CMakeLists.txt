@@ -1,15 +1,14 @@
 # ~~~
 
-# !!!! EXPERIMENTAL/DEVELOPMENT BUILD SYSTEM !!!! If you need support please
-# contact the maintainers
-
 #
 # You can change the install location by running cmake like this: mkdir build;
 # cd build cmake .. -DCMAKE_INSTALL_PREFIX=/new/install/prefix
 
-# Notes * By default, the prefix is "/usr/local" * Use -DADMSXML_DIR=[path] to
-# give the path containing admsXml * Use -DUSE_MAINTAINER_MODE=ON to rebuild
-# submodules (ADMS) * Bison can be pointed to with -DBISON_DIR=[path]
+# Notes:
+#
+# * By default, the prefix is "/usr/local"
+# * Use -DADMSXML_DIR=[path] to give the path containing admsXml submodules (ADMS)
+# * Bison can be pointed to with -DBISON_DIR=[path]
 
 # Running with QtCreator Open this CMakeLists.txt with 'Open File or Project..."
 # Provide CMake arguments: * Set admsXml path, (after building with Autotools) *
@@ -22,11 +21,10 @@
 # variable on the Build Environment. Prepend '/usr/local/bin' before '/usr/bin/'
 # otherwise it will find the older executables provided by Apple.
 
-# Dependencies * CMake 2.8.8 * adms 2.3.0+ (its dependencies if
-# USE_MAINTAINER_MODE) * sed * gperf * flex * bison * make * C++ compiler
-
-#
-# qucs-core * qucsator, libqucs * qucsconv
+# Build
+# * qucsator
+# * libqucs
+# * qucsconv
 #
 
 # ~~~
@@ -39,10 +37,6 @@ if(POLICY CMP0048)
   cmake_policy(SET CMP0048 OLD)
 endif(POLICY CMP0048)
 
-# default is off, assume one is building the released tarball (pre-configured)
-option(USE_MAINTAINER_MODE "development mode, rebuild ADMS submodule" OFF)
-
-# SET(CMAKE_VERBOSE_MAKEFILE ON)
 
 # otherwise qucsator cannot generate qucsdefs.h
 add_definitions(-DDEBUG)
@@ -83,9 +77,6 @@ message(STATUS "Configuring ${PROJECT_NAME}: VERSION ${QUCS_VERSION}")
 set(PROJECT_VERSION "${QUCS_VERSION}")
 
 set(PROJECT_VENDOR "Qucs team. This program is licensed under the GNU GPL")
-set(PROJECT_COPYRIGHT_YEAR "2013")
-set(PROJECT_DOMAIN_FIRST "qucs")
-set(PROJECT_DOMAIN_SECOND "org")
 
 set(QUCS_URL "https://sf.net/p/qucs")
 set(QUCS_BUGREPORT "qucs-bugs@lists.sourceforge.net")
@@ -151,7 +142,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 #
 find_package(FLEX 2.5.9 REQUIRED)
 if(FLEX_FOUND)
-  # MESSAGE(STATUS "Found flex: ${FLEX_EXECUTABLE} / Version: ${FLEX_VERSION}" )
 endif()
 
 # ~~~
@@ -164,10 +154,6 @@ endif()
 # ~~~
 if(WIN32)
   find_package(BISON 2.4 REQUIRED)
-  if(BISON_FOUND)
-    # MESSAGE(STATUS "Found bison: ${BISON_EXECUTABLE} / Version:
-    # ${BISON_VERSION}" )
-  endif()
 else() # Linux, OSX
   # use -DBISON_DIR=/path/ to provide the path to bison
   find_program(
