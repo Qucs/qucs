@@ -1,14 +1,4 @@
 
-set(MFILES
-    coplanarzl.m
-    mscomparezl.m
-    mszl.m
-    radius.m
-    stabbashford.m
-    stabgear.m
-    stabgearex.m
-    stabmoulton.m
-)
 
 set(FIGS
     acstrafo.fig
@@ -184,17 +174,21 @@ foreach(file ${FIGS})
 endforeach()
 
 
-# generate .m --> eps
-set(m_gen)
-foreach(file ${MFILES})
-  get_filename_component(_name ${file} NAME_WE)
-  add_custom_command(
-     OUTPUT ${_name}.eps
-     COMMAND octave --path ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/${file}
-     DEPENDS ${file})
-  list(APPEND m_gen ${_name}.eps)
-endforeach()
+# generate figures from python script
+set(pyFigs
+    coplanarzl.pdf
+    mscomparezl.pdf
+    mszl.pdf
+    radius.pdf
+    stabbashford.pdf
+    stabgear.pdf
+    stabgearex.pdf
+    stabmoulton.pdf)
 
+add_custom_command(
+   OUTPUT ${pyFigs}
+   COMMAND python3 ${CMAKE_CURRENT_SOURCE_DIR}/figures.py
+   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/figures.py)
 
 # Compile LaTeX document
 # If fig2eps and m2eps were known formatds they could be on IMAGE.
@@ -204,7 +198,7 @@ add_latex_document(
   INPUTS ${CHAPTERS}
   IMAGES ${PSFILES}
   BIBFILES literature.bib
-  DEPENDS ${fig_gen} ${m_gen}
+  DEPENDS ${fig_gen} ${pyFigs}
 )
 
 # Handle install

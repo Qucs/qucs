@@ -19,22 +19,11 @@ else()
     message(FATAL_ERROR "fig2dev was requested but not found.")
 endif()
 
-# check for octave
-find_program(OCTAVE octave)
-if(OCTAVE)
-    message(STATUS "Using ${OCTAVE} to generate figures.")
+find_program(PYTHON python3)
+if(PYTHON)
+    message(STATUS "Using ${PYTHON} to generate figures.")
 else()
-    message(FATAL_ERROR "octave was requested but not found.")
-endif()
-
-# check for epstk
-execute_process(
-  COMMAND ${OCTAVE} --eval eglobpar
-  OUTPUT_VARIABLE EPSTK )
-if(NOT EPSTK)
-    message(STATUS "Using epstk (octave) to generate figures.")
-else()
-    message(FATAL_ERROR "epstk (octave) was requested but not found.")
+    message(FATAL_ERROR "python3 was requested but not found.")
 endif()
 
 add_subdirectory(report)
