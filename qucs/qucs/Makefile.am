@@ -56,7 +56,8 @@ MOCHEADERS = \
   messagedock.h \
   octave_window.h \
   projectView.h \
-  schematic.h \
+  schematicfile.h \
+  schematicview.h \
   schematicscene.h \
   textdoc.h \
   qucs.h
@@ -67,19 +68,23 @@ noinst_LTLIBRARIES = libqucsschematic.la
 
 libqucsschematic_la_SOURCES= \
   attach.cpp \
-  node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
+  node.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
   qucs.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
-  mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
-  schematic_file.cpp syntax.cpp module.cpp octave_window.cpp \
+  mnemo.cpp textdoc.cpp \
+  syntax.cpp module.cpp octave_window.cpp \
   messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
 	projectView.cpp \
 	frame.cpp \
 	mousecursor.cpp \
-    schematicscene.cpp
+  undocommands.cpp \
+  graphicitem.cpp \
+  schematicfile.cpp \
+  schematicview.cpp \
+  schematicscene.cpp
 
 nodist_libqucsschematic_la_SOURCES = $(MOCFILES)
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs-lib
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs-lib -I$(top_srcdir)/qucs/components
 libqucsschematic_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 
 # TODO:
@@ -98,11 +103,13 @@ qucs_real_SOURCES = main.cpp qucs_.qrc
 qucs_real_LDADD = \
 	libqucsschematic.la
 
-noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
+noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h node.h \
 	qt_compat.h \
   wirelabel.h mnemo.h mouseactions.h syntax.h module.h misc.h \
+  graphicitem.h \
   frame.h \
 	mousecursor.h \
+  undocommands.h \
   projectView.h printerwriter.h imagewriter.h
 
 # must be installed. but later

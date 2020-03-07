@@ -49,7 +49,7 @@ nodist_libdialogs_la_SOURCES = $(MOCFILES)
 
 noinst_HEADERS = $(MOCHEADERS) $(UIHEADERS)
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs -I$(top_srcdir)/qucs/components
 
 # common?!
 ui_searchdialog.h: searchdialog.ui
