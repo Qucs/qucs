@@ -29,7 +29,7 @@
 #include <QPaintEvent>
 #include <QMessageBox>
 
-#include "element.h"
+#include "graphicitem.h"
 
 /*!
  * \file symbolwidget.h
