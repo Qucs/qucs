@@ -1,15 +1,14 @@
+set(XPMS)
 
-SET(XPMS )
+set(PNGS
+    c_microstrip.png
+    coax.png
+    microstrip.png
+    stripline.png
+    rectwaveguide.png
+    cpw.png
+    cpw_back.png)
 
-SET(PNGS
-c_microstrip.png
-coax.png
-microstrip.png
-stripline.png
-rectwaveguide.png
-cpw.png
-cpw_back.png)
+set(ICON)
 
-SET(ICON )
-
-INSTALL( FILES ${PNGS} DESTINATION share/qucs/bitmaps )
+install(FILES ${PNGS} DESTINATION share/qucs/bitmaps)

@@ -1,9 +1,9 @@
-PROJECT(qucsrescodes CXX C)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+project(qucsrescodes CXX C)
+cmake_minimum_required(VERSION 2.6)
 cmake_policy(VERSION 2.6)
 
 # use top VERSION file
-file (STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
+file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
 message(STATUS "Configuring ${PROJECT_NAME} (GUI): VERSION ${QUCS_VERSION}")
 
 set(PROJECT_VERSION "${QUCS_VERSION}")
@@ -13,17 +13,15 @@ set(PROJECT_COPYRIGHT_YEAR "2014")
 set(PROJECT_DOMAIN_FIRST "qucs")
 set(PROJECT_DOMAIN_SECOND "org")
 
-SET(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Debug)
 
-ADD_DEFINITIONS( -DHAVE_CONFIG_H )
+add_definitions(-DHAVE_CONFIG_H)
 
 # configure the header config.h
-CONFIGURE_FILE (
-    "${PROJECT_SOURCE_DIR}/../config.h.cmake"
-    "${PROJECT_BINARY_DIR}/config.h"
-)
+configure_file("${PROJECT_SOURCE_DIR}/../config.h.cmake"
+               "${PROJECT_BINARY_DIR}/config.h")
 
-INCLUDE_DIRECTORIES("${PROJECT_BINARY_DIR}")
+include_directories("${PROJECT_BINARY_DIR}")
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
 
@@ -39,12 +37,10 @@ else()
     message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
-
 # flag not available in mingw 4.8.2, MSVC10
-IF(NOT WIN32)
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
-ENDIF()
-
+if(NOT WIN32)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
+endif()
 
 #
 # Set position independed code PIC
@@ -76,23 +72,17 @@ IF(DISABLE_QDEBUG)
 ENDIF()
 
 
-SET(QUCS-RESCODES_SRCS
-  main.cpp
-	helpdialog.cpp
-  mycolorbox.cpp
-	myresistancebox.cpp
-	notation.cpp
-	qresistor.cpp
-	resistor.cpp
-)
+set(QUCS-RESCODES_SRCS
+    main.cpp
+    helpdialog.cpp
+    mycolorbox.cpp
+    myresistancebox.cpp
+    notation.cpp
+    qresistor.cpp
+    resistor.cpp)
 
-SET(QUCS-RESCODES_MOC_HDRS
-  helpdialog.h
-  mycolorbox.h
-  myresistancebox.h
-  mywidget.h
-  qresistor.h
-)
+set(QUCS-RESCODES_MOC_HDRS helpdialog.h mycolorbox.h myresistancebox.h
+                           mywidget.h qresistor.h)
 
 IF(${USE_QT_VERSION} MATCHES "4")
     QT4_WRAP_CPP(QUCS-RESCODES_MOC_SRCS ${QUCS-RESCODES_MOC_HDRS})
@@ -106,29 +96,32 @@ ELSE()
     QT5_ADD_RESOURCES(RESOURCES_SRCS ${RESOURCES})
 ENDIF()
 
-
-IF(APPLE)
+if(APPLE)
   # set information on Info.plist file
-	SET(MACOSX_BUNDLE_INFO_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
-  SET(MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_NAME} ${PROJECT_VERSION}")
-  SET(MACOSX_BUNDLE_LONG_VERSION_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
-  SET(MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}")
-  SET(MACOSX_BUNDLE_COPYRIGHT "${PROJECT_COPYRIGHT_YEAR} ${PROJECT_VENDOR}")
-  SET(MACOSX_BUNDLE_GUI_IDENTIFIER "${PROJECT_DOMAIN_SECOND}.${PROJECT_DOMAIN_FIRST}")
-  SET(MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}")
-  SET(MACOSX_BUNDLE_ICON_FILE qucsrescodes.icns)
+  set(MACOSX_BUNDLE_INFO_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
+  set(MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_NAME} ${PROJECT_VERSION}")
+  set(MACOSX_BUNDLE_LONG_VERSION_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
+  set(MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}")
+  set(MACOSX_BUNDLE_COPYRIGHT "${PROJECT_COPYRIGHT_YEAR} ${PROJECT_VENDOR}")
+  set(MACOSX_BUNDLE_GUI_IDENTIFIER
+      "${PROJECT_DOMAIN_SECOND}.${PROJECT_DOMAIN_FIRST}")
+  set(MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}")
+  set(MACOSX_BUNDLE_ICON_FILE qucsrescodes.icns)
 
   # set where in the bundle to put the icns file
-  SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsrescodes.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+  set_source_files_properties(
+    ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsrescodes.icns
+    PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
   # include the icns file in the target
-  SET(QUCS-RESCODES_SRCS ${QUCS-RESCODES_SRCS} ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsrescodes.icns)
+  set(QUCS-RESCODES_SRCS
+      ${QUCS-RESCODES_SRCS}
+      ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsrescodes.icns)
 
-ENDIF(APPLE)
+endif(APPLE)
 
-ADD_EXECUTABLE(qucsrescodes MACOSX_BUNDLE WIN32
-  ${QUCS-RESCODES_SRCS}
-  ${QUCS-RESCODES_MOC_SRCS}
-  ${RESOURCES_SRCS} )
+add_executable(
+  qucsrescodes MACOSX_BUNDLE WIN32 ${QUCS-RESCODES_SRCS}
+                                   ${QUCS-RESCODES_MOC_SRCS} ${RESOURCES_SRCS})
 
 IF(${USE_QT_VERSION} MATCHES "4")
     TARGET_LINK_LIBRARIES(qucsrescodes ${QT_LIBRARIES})
@@ -136,12 +129,10 @@ ELSE()
     TARGET_LINK_LIBRARIES(qucsrescodes ${QT_LIBRARIES} ${Qt5Core_LIBRARIES} ${Qt5Widgets_LIBRARIES})
 ENDIF()
 
-INSTALL(TARGETS qucsrescodes
-    BUNDLE DESTINATION bin COMPONENT Runtime
-    RUNTIME DESTINATION bin COMPONENT Runtime
-    )
+install(
+  TARGETS qucsrescodes
+  BUNDLE DESTINATION bin COMPONENT Runtime
+  RUNTIME DESTINATION bin COMPONENT Runtime)
 
 # man pages
-INSTALL( FILES qucsrescodes.1 DESTINATION share/man/man1 )
-
-
+install(FILES qucsrescodes.1 DESTINATION share/man/man1)

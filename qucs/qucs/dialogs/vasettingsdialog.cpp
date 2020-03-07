@@ -26,7 +26,6 @@
 #include <QGroupBox>
 #include <QString>
 #include <QStringList>
-#include <QPushButton>
 #include <QFileDialog>
 #include <QGridLayout>
 #include <QRadioButton>

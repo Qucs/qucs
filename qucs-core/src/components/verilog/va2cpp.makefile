@@ -14,7 +14,7 @@ MODEL=
 PREFIX=
 
 # Location of installed Qucs XML files
-INC=$(PREFIX)/include/qucs-core
+INC=$(PREFIX)/include/qucsator
 
 # Locate admsXml, typicaly on the same prefix as Qucs
 ADMSXML=$(PREFIX)/bin/admsXml

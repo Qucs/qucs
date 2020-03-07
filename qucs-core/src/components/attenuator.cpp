@@ -40,7 +40,7 @@ void attenuator::initSP (void) {
   nr_double_t a = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Zref");
   nr_double_t r = (z - z0) / (z + z0);
-  nr_double_t s11 = r * (1 - a) / (a - r * r);
+  nr_double_t s11 = r * (a - 1) / (a - r * r);
   nr_double_t s21 = std::sqrt (a) * (1 - r * r) / (a - r * r);
   setS (NODE_1, NODE_1, s11);
   setS (NODE_2, NODE_2, s11);

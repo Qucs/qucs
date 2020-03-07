@@ -1,9 +1,9 @@
-PROJECT(qucspowercombining CXX C)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+project(qucspowercombining CXX C)
+cmake_minimum_required(VERSION 2.6)
 cmake_policy(VERSION 2.6)
 
 # use top VERSION file
-file (STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
+file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
 message(STATUS "Configuring ${PROJECT_NAME} (GUI): VERSION ${QUCS_VERSION}")
 
 set(PROJECT_VERSION "${QUCS_VERSION}")
@@ -13,26 +13,23 @@ set(PROJECT_COPYRIGHT_YEAR "2016")
 set(PROJECT_DOMAIN_FIRST "qucs")
 set(PROJECT_DOMAIN_SECOND "org")
 
-SET(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Debug)
 
-ADD_DEFINITIONS( -DHAVE_CONFIG_H )
+add_definitions(-DHAVE_CONFIG_H)
 
 # define variables
-SET(BINARYDIR "${CMAKE_INSTALL_PREFIX}/bin/")
-SET(BITMAPDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/bitmaps/")
-SET(DOCDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/docs/")
-SET(LANGUAGEDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/lang/")
-SET(LIBRARYDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/library/")
-SET(OCTAVEDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/octave/")
+set(BINARYDIR "${CMAKE_INSTALL_PREFIX}/bin/")
+set(BITMAPDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/bitmaps/")
+set(DOCDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/docs/")
+set(LANGUAGEDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/lang/")
+set(LIBRARYDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/library/")
+set(OCTAVEDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/octave/")
 
 # configure the header config.h
-CONFIGURE_FILE (
-    "${PROJECT_SOURCE_DIR}/../config.h.cmake"
-    "${PROJECT_BINARY_DIR}/config.h"
-)
+configure_file("${PROJECT_SOURCE_DIR}/../config.h.cmake"
+               "${PROJECT_BINARY_DIR}/config.h")
 
-INCLUDE_DIRECTORIES("${PROJECT_BINARY_DIR}")
-
+include_directories("${PROJECT_BINARY_DIR}")
 
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
@@ -46,11 +43,11 @@ else()
     message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
-
 # flag not available in mingw 4.8.2, MSVC10
-IF(NOT WIN32)
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
-ENDIF()
+if(NOT WIN32)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
+endif()
+
 
 IF(${USE_QT_VERSION} MATCHES "4")
     FIND_PACKAGE( Qt4 REQUIRED  QtGui QtSvg )
@@ -70,19 +67,11 @@ IF(DISABLE_QDEBUG)
 ENDIF()
 
 
-SET(QUCS-POWCOMB_SRCS
-  qucspowercombiningtool.cpp
-  main.cpp
-)
+set(QUCS-POWCOMB_SRCS qucspowercombiningtool.cpp main.cpp)
 
-SET(QUCS-POWCOMB_HDRS
-  qucspowercombiningtool.h
-)
+set(QUCS-POWCOMB_HDRS qucspowercombiningtool.h)
 
-SET(QUCS-POWCOMB_MOC_HDRS
-  qucspowercombiningtool.h
-)
-
+set(QUCS-POWCOMB_MOC_HDRS qucspowercombiningtool.h)
 
 #
 # headers that need to be moc'ed
@@ -98,30 +87,33 @@ ELSE()
 ENDIF()
 
 
-
-IF(APPLE)
+if(APPLE)
   # set information on Info.plist file
-	SET(MACOSX_BUNDLE_INFO_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
-  SET(MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_NAME} ${PROJECT_VERSION}")
-  SET(MACOSX_BUNDLE_LONG_VERSION_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
-  SET(MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}")
-  SET(MACOSX_BUNDLE_COPYRIGHT "${PROJECT_COPYRIGHT_YEAR} ${PROJECT_VENDOR}")
-  SET(MACOSX_BUNDLE_GUI_IDENTIFIER "${PROJECT_DOMAIN_SECOND}.${PROJECT_DOMAIN_FIRST}")
-  SET(MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}")
-  SET(MACOSX_BUNDLE_ICON_FILE qucspowercombining.icns)
+  set(MACOSX_BUNDLE_INFO_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
+  set(MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_NAME} ${PROJECT_VERSION}")
+  set(MACOSX_BUNDLE_LONG_VERSION_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
+  set(MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}")
+  set(MACOSX_BUNDLE_COPYRIGHT "${PROJECT_COPYRIGHT_YEAR} ${PROJECT_VENDOR}")
+  set(MACOSX_BUNDLE_GUI_IDENTIFIER
+      "${PROJECT_DOMAIN_SECOND}.${PROJECT_DOMAIN_FIRST}")
+  set(MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}")
+  set(MACOSX_BUNDLE_ICON_FILE qucspowercombining.icns)
 
   # set where in the bundle to put the icns file
-  SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucspowercombining.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+  set_source_files_properties(
+    ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucspowercombining.icns
+    PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
   # include the icns file in the target
-  SET(QUCS-POWCOMB_SRCS ${QUCS-POWCOMB_SRCS} ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucspowercombining.icns)
+  set(QUCS-POWCOMB_SRCS
+      ${QUCS-POWCOMB_SRCS}
+      ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucspowercombining.icns)
 
-ENDIF(APPLE)
+endif(APPLE)
 
-ADD_EXECUTABLE(qucspowercombining MACOSX_BUNDLE WIN32
-  ${QUCS-POWCOMB_SRCS}
-  ${QUCS-POWCOMB_HDRS}
-  ${QUCS-POWCOMB_MOC_SRCS}
-  ${RESOURCES_SRCS} )
+add_executable(
+  qucspowercombining MACOSX_BUNDLE WIN32
+  ${QUCS-POWCOMB_SRCS} ${QUCS-POWCOMB_HDRS} ${QUCS-POWCOMB_MOC_SRCS}
+  ${RESOURCES_SRCS})
 
 #
 # Tell CMake which libraries we need to link our shared library against.
@@ -134,10 +126,10 @@ ELSE()
 ENDIF()
 
 
-INSTALL(TARGETS qucspowercombining
-    BUNDLE DESTINATION bin COMPONENT Runtime
-    RUNTIME DESTINATION bin COMPONENT Runtime
-    )
+install(
+  TARGETS qucspowercombining
+  BUNDLE DESTINATION bin COMPONENT Runtime
+  RUNTIME DESTINATION bin COMPONENT Runtime)
 
 # man pages
-INSTALL( FILES qucspowercombining.1 DESTINATION share/man/man1 )
+install(FILES qucspowercombining.1 DESTINATION share/man/man1)

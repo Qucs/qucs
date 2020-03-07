@@ -1,17 +1,16 @@
-PROJECT(qucsfilter-v2 CXX C)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+project(qucsfilter-v2 CXX C)
+cmake_minimum_required(VERSION 2.6)
 cmake_policy(VERSION 2.6)
 
-SET(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Debug)
 
-# The incomplete filter-v2 only builds withs -stdlib=libstc++
-# OSX defaults to libstc++. \fixme
-IF(APPLE)
-  SET(CMAKE_CXX_FLAGS  "-stdlib=libstdc++")
-ENDIF()
+# The incomplete filter-v2 only builds withs -stdlib=libstc++ OSX defaults to
+# libstc++. \fixme
+if(APPLE)
+  set(CMAKE_CXX_FLAGS "-stdlib=libstdc++")
+endif()
 
-
-ADD_DEFINITIONS( -DHAVE_CONFIG_H )
+add_definitions(-DHAVE_CONFIG_H)
 
 # configure the header config.h
 CONFIGURE_FILE (
@@ -112,5 +111,3 @@ ELSE()
 ENDIF()
 
 INSTALL(TARGETS qucs-filter-v2 DESTINATION bin)
-
-

@@ -26,7 +26,7 @@ include $(top_srcdir)/qucstex.mk
 
 SUBDIRS = dcstatic coupler bjtbias modelbjt poweramp lna digital ffmodels \
   functions opamp timer555 spicetoqucs getstarted equations textmode \
-  RFResModels activefilter sparameteramp
+  RFResModels activefilter sparameteramp linblocks
 
 EXTRA_DIST = $(SOURCES) $(TEXFILES)
 

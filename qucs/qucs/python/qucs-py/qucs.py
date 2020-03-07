@@ -14,10 +14,11 @@ class qucs_data:
     this.indeps={}
     this.deps={}
     if fname != "":
-        f=open(fname,"rb")
+        f=open(fname,"r")
         l=f.readline().strip()
         # In the first line check whether we have a qucs data
         if l != "<Qucs Dataset 0.0.18>":
+           print(l)
            raise("This is not a qucs data file!")
         # Now we should start reading dependent vars, and independent vars
         # The next line should be either dependend variable or independent variable
@@ -51,7 +52,7 @@ class qucs_data:
     #Reserve the data buffer
     dta = pylab.zeros(vsize,complex)
     #Read the data
-    for i in xrange(0,vsize):
+    for i in range(0,vsize):
         l=infile.readline().strip()
         dta[i]=this.conv_dta(l)
     #Now make sure, that the last line is "<indep>"
@@ -59,7 +60,7 @@ class qucs_data:
     if l != "</dep>":
        raise("Wrong syntax in line: "+l)
     #Reshape the data buffer into the multi-dimensional array
-    dta=pylab.reshape(dta,dims,'FORTRAN')
+    dta=pylab.reshape(dta,dims, "FORTRAN")
     this.deps[vnames[0]]=qucs_dep_var(dta,vnames[1:])
 
   def create_indep(this,ldef, infile):
@@ -70,7 +71,7 @@ class qucs_data:
     #Create the empty data
     dta = pylab.zeros(vsize,complex)
     #Read the data
-    for i in xrange(0,vsize):
+    for i in range(0,vsize):
         l=infile.readline().strip()
         dta[i]=this.conv_dta(l)
     #Now make sure, that the last line is "<indep>"

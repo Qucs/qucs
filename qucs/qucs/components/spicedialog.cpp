@@ -38,13 +38,13 @@
 #include <QDebug>
 
 
-SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, SchematicScene *d)
-    : QDialog(App_)
+SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
+    : QDialog(d)
 {
   App = App_; // pointer to main application
 
   setAttribute(Qt::WA_DeleteOnClose);
-  
+
   resize(400, 250);
   setWindowTitle(tr("Edit SPICE Component Properties"));
   Comp = c;
@@ -451,7 +451,8 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
 
   QucsConv->start(Program, Arguments);
 
-  if(QucsConv->Running!=0) {
+  if(QucsConv->state() != QProcess::Running)
+  {
     QMessageBox::critical(this, tr("Error"),
                           tr("Cannot execute \"%1\".").arg(QucsSettings.Qucsconv));
     return false;

@@ -266,7 +266,7 @@ void SimMessage::nextSPICE()
   qDebug() << "start QucsConv" << prog << com.join(" ");
   SimProcess.start(prog, com);
 
-  if(SimProcess.Running!=0) {
+  if(SimProcess.state() != QProcess::Running) {
     ErrText->appendPlainText(tr("SIM ERROR: Cannot start QucsConv!"));
     FinishSimulation(-1);
     return;

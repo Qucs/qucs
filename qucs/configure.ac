@@ -26,7 +26,7 @@ AC_PROG_CC
 AC_CHECK_TOOL(AR, ar, :)
 LT_INIT()
 
-PKG_CONFIG=pkg-config
+PKG_PROG_PKG_CONFIG
 
 AC_ARG_WITH(qt_name,
     AS_HELP_STRING([--with-qt-name],
@@ -187,190 +187,173 @@ AC_ARG_WITH(macosx-version-max-allowed,
 ,)
 
 
-if ! `$PKG_CONFIG --atleast-version=4.6.0 ${qt_name}Core`; then
-   AC_MSG_ERROR([Qt >= 4.6.0 is required.])
-fi
+# use pkg-config, if it exists
+if test "x$PKG_CONFIG" != "x"; then
 
-QT_MAJOR_VERSION=
-AC_MSG_CHECKING([Qt major version])
-AS_IF( [$PKG_CONFIG --atleast-version=5.0.0 ${qt_name}Core ],
-       [ QT_MAJOR_VERSION=5 ],
-       [ QT_MAJOR_VERSION=4 ] )
-AC_MSG_RESULT( $QT_MAJOR_VERSION )
+  if ! `$PKG_CONFIG --atleast-version=4.6.0 ${qt_name}Core`; then
+     AC_MSG_ERROR([Qt >= 4.6.0 is required.])
+  fi
 
-# this seems to work for both Qt4 and 5
-RCC_=`$PKG_CONFIG --variable rcc_location ${qt_name}Core`
-UIC_=`$PKG_CONFIG --variable uic_location ${qt_name}Core`
-MOC_=`$PKG_CONFIG --variable moc_location ${qt_name}Core`
-QT_VERSION=`$PKG_CONFIG --modversion ${qt_name}Core`
-AC_SUBST([QT_VERSION])
+  QT_MAJOR_VERSION=
+  AC_MSG_CHECKING([Qt major version])
+  AS_IF( [$PKG_CONFIG --atleast-version=5.0.0 ${qt_name}Core ],
+         [ QT_MAJOR_VERSION=5 ],
+         [ QT_MAJOR_VERSION=4 ] )
+  AC_MSG_RESULT( $QT_MAJOR_VERSION )
 
-# empty for Qt4
-QT_BINPATH=`$PKG_CONFIG --variable host_bins ${qt_name}Core`
+  # this seems to work for both Qt4 and 5
+  RCC_=`$PKG_CONFIG --variable rcc_location ${qt_name}Core`
+  UIC_=`$PKG_CONFIG --variable uic_location ${qt_name}Core`
+  MOC_=`$PKG_CONFIG --variable moc_location ${qt_name}Core`
+  QT_VERSION=`$PKG_CONFIG --modversion ${qt_name}Core`
+  AC_SUBST([QT_VERSION])
 
-dnl Platform specific, find libraries, setup compiler flags
-case $host_os in
-  *linux* | *cygwin* | *mingw* | *msys* | *bsd* )
+  # empty for Qt4
+  QT_BINPATH=`$PKG_CONFIG --variable host_bins ${qt_name}Core`
+fi # if pkg-config exists
 
-    dnl Set Clang
-    if test "$CXX -dM -E - < /dev/null | grep __clang__" ; then
-      CFLAGS="$CFLAGS -pipe"
-      CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -Wno-deprecated-register"
-      LDDFLAGS="$LDDFLAGS"
-      use_CLANG="yes"
-    fi
+  dnl Platform specific, find libraries, setup compiler flags
+  case $host_os in
+    *linux* | *cygwin* | *mingw* | *msys* | *bsd* )
 
-    dnl Set GCC.
-    if test "x$use_CLANG" != "xyes" -a "x$GCC" = "xyes" ; then
-      CFLAGS="$CFLAGS -pipe"
-      CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new"
-      if test x$WIN32 = xyes; then
-        CXXFLAGS="$CXXFLAGS"
-      fi
-    fi
-
-    if test "$enable_qucs_gui_debug" = yes; then
-      CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
-      CXXFLAGS="$CXXFLAGS -W -Wall"
-    fi
-
-    dnl Enable C++11 support
-    CXXFLAGS="$CXXFLAGS -std=c++0x"
-    PKG_CHECK_MODULES([QTest], [${qt_name}Test])
-
-    PKG_CHECK_MODULES([QT], [${qt_name}Core ${qt_name}Gui ${qt_name}Script ${qt_name}Svg ${qt_name}Xml], [
-      QT_CFLAGS="$QT_CFLAGS $QT_DEF -DQT_DEPRECATED_WARNINGS -DQT_THREAD_SUPPORT -D_REENTRANT"
-      case $host_os in
-        *freebsd*) QT_LIBS="$QT_LIBS -pthread" ;;
-        *mingw* | *msys*) QT_CFLAGS="$QT_CFLAGS -mthreads -DQT_DLL -DUNICODE" ;;
-      esac
-    ], [
-      AC_MSG_ERROR([pkgconfig did not work, see config.log])
-      # Fallback to old logic if pkg-config should fail
-      # this could work in principle, hands up, if you want to use it.
-      # (in any case it will hide the error above, which is bad)
-
-      dnl handle provided QTDIR environment variable
-      dnl   in Slackware when both Qt3 at Qt4 are installed the Qt4 path
-      dnl   is in QT4DIR while QTDIR contains the path to Qt3
-      QTDIR_paths=""
-      if test "x$QT4DIR" != "x"; then
-        echo "QT4DIR provided: $QT4DIR"
-        QTDIR=$QT4DIR
-      elif test "x$QTDIR" != "x"; then
-        echo "QTDIR provided: $QTDIR"
-        QTDIR_paths="$QTDIR/lib $QTDIR/lib64"
+      dnl Set Clang
+      if test "$CXX -dM -E - < /dev/null | grep __clang__" ; then
+        CFLAGS="$CFLAGS -pipe"
+        CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -Wno-deprecated-register"
+        LDDFLAGS="$LDDFLAGS"
+        use_CLANG="yes"
       fi
 
-      dnl Check include path to Qt.
-      QT_INCLUDES=""
-      QT_VER=2
-      AC_MSG_CHECKING([for Qt headers])
-      paths="$QTDIR/include $QTDIR/include/qt4 \
-        /usr/local/qt4/include /usr/include/qt4 \
-        /usr/include /usr/lib/qt/include /usr/X11R6/include/X11/qt4 \
-        /usr/X11R6/include/qt4 /usr/X11R6/include /sw/include/qt4 \
-        /usr/local/include/qt4"
-      for path in $paths; do
-        if test -f "$path/Qt/qapplication.h"; then
-          QT_INCLUDES="$path -I$path/Qt -I$path/QtGui -I$path/QtCore -I$path/QtSvg -I$path/QtXml -I$path/QtScript"
-          QT_VER=4
-          break
+      dnl Set GCC.
+      if test "x$use_CLANG" != "xyes" -a "x$GCC" = "xyes" ; then
+        CFLAGS="$CFLAGS -pipe"
+        CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new"
+        if test x$WIN32 = xyes; then
+          CXXFLAGS="$CXXFLAGS"
         fi
-      done
-      if test "x$QT_INCLUDES" != "x"; then
-        AC_MSG_RESULT([found in $QT_INCLUDES])
-        QT_INCLUDES="-I$QT_INCLUDES"
-      else
-        AC_MSG_ERROR([not found])
       fi
-      QT_CFLAGS="${QT_INCLUDES}"
-      AC_SUBST(QT_CFLAGS)
 
-      dnl Check for multi-threaded option.
-      AC_ARG_ENABLE([mt],
-        AC_HELP_STRING([--disable-mt],
-                       [link to non-threaded Qt (deprecated)]),
-        enable_mt="$enableval",
-        [if test $QT_VER = 4; then
-           enable_mt="yes"
-         else
-           enable_mt="no"
-         fi])
-      if test "$enable_mt" = yes; then
-        QT_LDF=""
-        QT_LIB="-lQtCore -lQtGui -lQtXml -lQtSvg -lQtScript"
-        QT_INC="$QT_DEF -DQT_DEPRECATED_WARNINGS -DQT_THREAD_SUPPORT -D_REENTRANT"
-        [case $host_os in
-          *freebsd*) QT_LIB="$QT_LIB -pthread" ;;
-          *mingw* | *msys*) QT_INC="$QT_INC -mthreads"; QT_LDF="$QT_LDF -mthreads" ;;
-        esac]
-        QT_MTS="multi-threaded"
-      else
-        QT_LDF=""
-        QT_LIB="-lQtCore -lQtGui -lQtXml -lQtSvg -lQtScript"
-        QT_INC="$QT_DEF"
-        QT_MTS="non-threaded"
+      if test "$enable_qucs_gui_debug" = yes; then
+        CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
+        CXXFLAGS="$CXXFLAGS -W -Wall"
       fi
-      case $host_os in
-        *mingw* | *msys*)
-        QT_LIB="-lQtCore4 -lQtGui4 -lQtXml4 -lQtSvg4 -lQtScript4"
-        QT_INC="$QT_INC -DQT_DLL -DUNICODE"
-        QT_LDF="$QT_LDF -mwindows"
-        ;;
-      esac
-      unset enable_mt
 
-      dnl Check library path to Qt.
-      QT_LDFLAGS=""
-      QT_LIBS=""
-      AC_MSG_RESULT([checking for Qt... $QT_VER ($QT_MTS)])
-      AC_MSG_CHECKING([for Qt library])
-      paths="$QTDIR_paths /usr/local/qt4/lib /usr/lib/qt4 /usr/lib/qt4/Qtconf /usr/lib \
-        /usr/X11R6/lib/X11/qt4 /usr/X11R6/lib/X11/qt4 /usr/X11R6/lib/qt4 \
-        /usr/X11R6/lib /sw/lib /usr/lib64/qt4 /usr/X11R6/lib/qt4 /usr/local/lib/qt4"
-      AC_LANG(C++)
-      for path in $paths; do
-        save_LIBS="$LIBS"
-        save_LDFLAGS="$LDFLAGS"
-        save_CXXFLAGS="$CXXFLAGS"
-        LIBS="$LIBS $X11_LIBS $QT_LIB"
-        LDFLAGS="$LDFLAGS $X11_LDFLAGS $QT_LDF"
-        CXXFLAGS="$CXXFLAGS $X11_INCLUDES $QT_CFLAGS $QT_INC"
-        AC_LINK_IFELSE(
-            [AC_LANG_SOURCE([#include <Qt/qapplication.h>
-                             int main (int argc, char ** argv) {
-                             QApplication a (argc, argv); a.exec (); return 0; }])],
-                             [
-                                   # QT_LDFLAGS="$path";
-                                   QT_CFLAGS="$QT_CFLAGS $QT_INC";
-                                   break;
-                             ]
-        )
-        LIBS="$save_LIBS"
-        LDFLAGS="$save_LDFLAGS"
-        CXXFLAGS="$save_CXXFLAGS"
-      done
+      dnl Enable C++11 support
+      CXXFLAGS="$CXXFLAGS -std=c++0x"
 
-      dnl Capture dir found for Qt
-      QT_DIR="$path"
+# use pkg-config, if it exists
+if test "x$PKG_CONFIG" != "x"; then
 
-      LIBS="$save_LIBS"
-      LDFLAGS="$save_LDFLAGS"
-      CXXFLAGS="$save_CXXFLAGS"
+      PKG_CHECK_MODULES([QTest], [${qt_name}Test])
+
+      PKG_CHECK_MODULES([QT], [${qt_name}Core ${qt_name}Gui ${qt_name}Script ${qt_name}Svg ${qt_name}Xml], [
+        QT_CFLAGS="$QT_CFLAGS $QT_DEF -DQT_DEPRECATED_WARNINGS -D_REENTRANT"
+        case $host_os in
+          *freebsd*) QT_LIBS="$QT_LIBS -pthread" ;;
+          *mingw* | *msys*) QT_CFLAGS="$QT_CFLAGS -mthreads -DQT_DLL -DUNICODE" ;;
+        esac
+      ], [
+        AC_MSG_ERROR([pkgconfig did not work, see config.log])
+	])
+else
+  # pkg-config not found
+  #
+  # Fallback to old logic if pkg-config should fail
+  # this could work in principle, hands up, if you want to use it.
+  # (in any case it will hide the error above, which is bad)
+
+  dnl handle provided QTDIR environment variable
+  dnl   in Slackware when both Qt3 at Qt4 are installed the Qt4 path
+  dnl   is in QT4DIR while QTDIR contains the path to Qt3
+  QTDIR_lib_paths=""
+  if test "x$QT4DIR" != "x"; then
+    echo "QT4DIR provided: $QT4DIR"
+    QTDIR=$QT4DIR
+  elif test "x$QTDIR" != "x"; then
+    echo "QTDIR provided: $QTDIR"
+    QTDIR_lib_paths="$QTDIR/lib $QTDIR/lib64"
+  fi
+
+  QT_CFLAGS="$QT_DEF -DQT3_SUPPORT -DQT_DEPRECATED_WARNINGS -D_REENTRANT"
+  [case $host_os in
+    *freebsd*)
+      QT_LIB="-lQtCore -lQtGui -lQtXml -lQtSvg -lQtScript -pthread" ;;
+    *mingw* | *msys*)
+      QT_LIB="-lQtCore4 -lQtGui4 -lQtXml4 -lQt3Support4 -lQtSvg4 -lQtScript4"
+      QT_CFLAGS="$QT_CFLAGS -mthreads -DQT_DLL -DUNICODE" ;;
+  esac]
+
+  dnl Check include path to Qt.
+  QT_INCLUDES=""
+  AC_MSG_CHECKING([for Qt headers])
+  paths="$QTDIR/include $QTDIR/include/qt4 \
+    /usr/local/qt4/include /usr/include/qt4 \
+    /usr/include /usr/lib/qt/include /usr/X11R6/include/X11/qt4 \
+    /usr/X11R6/include/qt4 /usr/X11R6/include /sw/include/qt4 \
+    /usr/local/include/qt4"
+  for path in $paths; do
+    if test -f "$path/Qt/qapplication.h"; then
+      QT_INCLUDES=$path
+      break
+    fi
+  done
+  if test "x$QT_INCLUDES" != "x"; then
+    AC_MSG_RESULT([found in $QT_INCLUDES])
+    QT_CFLAGS="$QT_CFLAGS -I$path -I$path/Qt -I$path/QtGui -I$path/QtCore -I$path/QtSvg -I$path/QtXml -I$path/QtScript -I$path/Qt3Support"
+  else
+    AC_MSG_ERROR([not found])
+  fi
+
+  dnl Check library path to Qt.
+  QT_LDFLAGS=""
+  QT_LIBS=""
+  AC_MSG_CHECKING([for Qt4 library])
+  paths="$QTDIR_lib_paths /usr/local/qt4/lib /usr/lib/qt4 /usr/lib/qt4/Qtconf /usr/lib \
+    /usr/X11R6/lib/X11/qt4 /usr/X11R6/lib/X11/qt4 /usr/X11R6/lib/qt4 \
+    /usr/X11R6/lib /sw/lib /usr/lib64/qt4 /usr/X11R6/lib/qt4 /usr/local/lib/qt4"
+  AC_LANG(C++)
+  for path in $paths; do
+    save_LIBS="$LIBS"
+    save_LDFLAGS="$LDFLAGS"
+    save_CXXFLAGS="$CXXFLAGS"
+    LIBS="$LIBS $X11_LIBS $QT_LIB"
+    LDFLAGS="$LDFLAGS -L$path"
+    CXXFLAGS="$CXXFLAGS $QT_CFLAGS"
+    AC_LINK_IFELSE(
+        [AC_LANG_SOURCE([#include <Qt/qapplication.h>
+                         int main (int argc, char ** argv) {
+                         QApplication a (argc, argv); a.exec (); return 0; }])],
+                         [
+                               QT_LDFLAGS="$path";
+                               break;
+                         ]
+    )
+    LIBS="$save_LIBS"
+    LDFLAGS="$save_LDFLAGS"
+    CXXFLAGS="$save_CXXFLAGS"
+  done
+
+  dnl 
+  QT_DIR=$QTDIR
+  QT_BINPATH="$QTDIR/bin"
+
+  LIBS="$save_LIBS"
+  LDFLAGS="$save_LDFLAGS"
+  CXXFLAGS="$save_CXXFLAGS"
   # BUG: check for library availibility. use AC_CHECK_LIBS
-  # ( no check is better than a broken one! )
-  #     if test "x$QT_LDFLAGS" != "x"; then
-         AC_MSG_RESULT([found in $QT_LDFLAGS])
-  #       QT_LDFLAGS="$QT_LDF"
-         QT_LIBS="$QT_LIB"
-  #     else
-  #       AC_MSG_ERROR([not found])
-  #     fi
+  # ( no check is better than a broken one! ) (?)
+  if test "x$QT_LDFLAGS" != "x"; then
+    AC_MSG_RESULT([found in $QT_LDFLAGS])
+    QT_LIBS="-L$QT_LDFLAGS $QT_LIB"
+  else
+    AC_MSG_ERROR([not found])
+  fi
+fi # end of Qt4 logic when pkg-config is not found
 
-    ]) # End of fallback Qt4 logic
 
-    AS_IF([test $QT_MAJOR_VERSION -ge 5],
+
+
+AS_IF([test $QT_MAJOR_VERSION -ge 5],
           [ QT_CFLAGS="$QT_CFLAGS -fPIC"
       PKG_CHECK_MODULES([QtPrintSupport], [${qt_name}PrintSupport])
       PKG_CHECK_MODULES([QtScript], [${qt_name}Script])
@@ -429,6 +412,9 @@ case $host_os in
     QT_DEF="-DQT_SHARED -DQT_DEPRECATED_WARNINGS"
     CPPFLAGS="$CPPFLAGS $QT_DEF"
     QT_LDFLAGS="$QT_LDFLAGS -headerpad_max_install_names"
+    
+    dnl Append linker flags
+    QT_LIBS="${QT_LIBS} ${QT_LDFLAGS}"
 
     if test "$enable_qucs_gui_debug" = yes; then
       CPPFLAGS="$CPPFLAGS -W -Wall"
@@ -750,8 +736,9 @@ if test "$enable_qucs_gui_debug" = yes; then
  fi
 fi
 
-QT_LIBS="${QT_LIBS} ${QT_LDFLAGS}"
 AC_SUBST(QT_LIBS)
+AC_SUBST(QT_CFLAGS)
+AC_SUBST(QT_LDFLAGS)
 AC_SUBST(QT_MOC)
 AC_LANG(C)
 
@@ -881,7 +868,6 @@ Configure Information:
   QT_LIBS         : $QT_LIBS
   QT_DEF          : $QT_DEF
   QT_LDFLAGS      : $QT_LDFLAGS
-  QT_INC          : $QT_INC
 ])
 AC_MSG_RESULT([])
 

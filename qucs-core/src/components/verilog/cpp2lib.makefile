@@ -22,7 +22,7 @@ PROJDIR=
 PREFIX=
 
 # Installed headers path
-INC=$(PREFIX)/include/qucs-core
+INC=$(PREFIX)/include/qucsator
 
 # Link to Qucs library
 LIBS=-lqucsator

@@ -1,18 +1,16 @@
-
 #
 # Handle Qucs translations
 
-# TODO
-# - get list of .cpp files to refresh/update the .ts files
-# - evaluate need to merge the qtgeneric_XX.ts into the final .qm (see translations/Makefile.am)
+# TODO - get list of .cpp files to refresh/update the .ts files - evaluate need
+# to merge the qtgeneric_XX.ts into the final .qm (see translations/Makefile.am)
 
 #
 # Qucs translations
 #
-file (GLOB TRANSLATIONS_FILES qucs_*.ts)
+file(GLOB TRANSLATIONS_FILES qucs_*.ts)
 
 # WARNING: make clean might delete the source .ts files! Danger!
-option (UPDATE_TRANSLATIONS "Update source translation translations/*.ts" "OFF")
+option(UPDATE_TRANSLATIONS "Update source translation translations/*.ts" "OFF")
 
 IF(${USE_QT_VERSION} MATCHES "4")
     IF (UPDATE_TRANSLATIONS)
@@ -28,20 +26,20 @@ ELSE()
     ENDIF (UPDATE_TRANSLATIONS)
 ENDIF()
 
-ADD_CUSTOM_TARGET (translations ALL DEPENDS ${QM_FILES})
+add_custom_target(translations ALL DEPENDS ${QM_FILES})
 
-IF (UPDATE_TRANSLATIONS)
-  ADD_CUSTOM_TARGET(translations_src ALL DEPENDS ${Tano_QMS_SRC})
-ENDIF (UPDATE_TRANSLATIONS)
+if(UPDATE_TRANSLATIONS)
+  add_custom_target(translations_src ALL DEPENDS ${Tano_QMS_SRC})
+endif(UPDATE_TRANSLATIONS)
 
 #
 # Qt translation
 #
-#FILE(GLOB QtTRANSLATIONS qtgeneric_*.ts)
+# FILE(GLOB QtTRANSLATIONS qtgeneric_*.ts)
 
 #
 # install tranlations
-INSTALL( FILES ${QM_FILES} DESTINATION share/qucs/lang)
+install(FILES ${QM_FILES} DESTINATION share/qucs/lang)
 
 # prevent the generated files from being deleted during make clean
-#set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM true)
+# set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM true)

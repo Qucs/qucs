@@ -42,6 +42,7 @@ Copyright (C) 2014 by Guilherme Brondani Torri <guitorri@gmail.com>
  */
 TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QPlainTextEdit(), QucsDoc(App_, Name_)
 {
+  App = App_;
   TextFont = QFont("Courier New");
   TextFont.setPointSize(QucsSettings.font.pointSize()-1);
   TextFont.setStyleHint(QFont::Courier);
@@ -89,6 +90,11 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QPlainTextEdit(), QucsDo
  */
 TextDoc::~TextDoc()
 {
+  // closing the doc may trigger a signalFileChanged which in turn will run QucsApp::slotFileChanged(), which
+  // if text document Tab is removed first, DocumentTab->currentIndex() will point to the previous tab and
+  // setSaveIcon() (called by slotFileChanged() ) will wrongly change that tab icon
+
+  disconnect(this, SIGNAL(signalFileChanged(bool)), App, SLOT(slotFileChanged(bool)));
   delete syntaxHighlight;
 }
 

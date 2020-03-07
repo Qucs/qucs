@@ -1,5 +1,5 @@
-PROJECT(qucs-suite CXX)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+project(qucs-suite CXX)
+cmake_minimum_required(VERSION 2.8)
 cmake_policy(VERSION 2.8)
 
 # set this to 4 or 5
@@ -8,7 +8,7 @@ OPTION (DISABLE_QDEBUG "Disabling of qDebug() messages" OFF)
 
 IF(${USE_QT5})
     SET(USE_QT_VERSION 5)
-ELSE(${USE_QT5})
+|   ELSE(${USE_QT5})
     SET(USE_QT_VERSION 4)
 ENDIF(${USE_QT5})
 
@@ -19,28 +19,27 @@ ENDIF(${USE_QT5})
 SET(USE_QT5 ${USE_QT5} CACHE BOOL "Set compiling with Qt5" FORCE)
 SET(DISABLE_QDEBUG ${DISABLE_QDEBUG} CACHE BOOL "Disable debug infos" FORCE)
 
+file(STRINGS "${qucs-suite_SOURCE_DIR}/VERSION" QUCS_VERSION)
 
-file (STRINGS "${qucs-suite_SOURCE_DIR}/VERSION" QUCS_VERSION)
 message(STATUS "Configuring Qucs: VERSION ${QUCS_VERSION}")
 
-SET(QUCS_URL "https://sf.net/p/qucs")
-SET(QUCS_BUGREPORT "qucs-bugs@lists.sourceforge.net")
+set(QUCS_URL "https://sf.net/p/qucs")
+set(QUCS_BUGREPORT "qucs-bugs@lists.sourceforge.net")
 
 set(GIT unknown)
-IF(EXISTS ${CMAKE_SOURCE_DIR}/../.git )
-  FIND_PACKAGE(Git)
+if(EXISTS ${CMAKE_SOURCE_DIR}/../.git)
+  find_package(Git)
   # Get the latest abbreviated commit hash of the working branch
   execute_process(
     COMMAND ${GIT_EXECUTABLE} log --pretty=format:%h -n 1u
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    OUTPUT_VARIABLE GIT_COMMIT_HASH
-  )
-  SET(GIT ${GIT_COMMIT_HASH})
+    OUTPUT_VARIABLE GIT_COMMIT_HASH)
+  set(GIT ${GIT_COMMIT_HASH})
   message(STATUS "Found Git repository, last commit hash: ${GIT}")
-ENDIF()
+endif()
 
 message(STATUS "${PROJECT_NAME} ${CMAKE_INSTALL_PREFIX}
-    ${qucs-suite_BINARY_DIR}" )
+    ${qucs-suite_BINARY_DIR}")
 
 
 IF (UNIX AND NOT APPLE)
@@ -90,46 +89,54 @@ IF(DISABLE_QDEBUG)
 ENDIF()
 
 
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucs.1.cmake.in
+               ${CMAKE_CURRENT_SOURCE_DIR}/man/qucs.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigi.1.cmake.in
+               ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigi.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigilib.1.cmake.in
+               ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigilib.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsveri.1.cmake.in
+               ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsveri.1)
 
+# Tools
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-activefilter/qucsactivefilter.1.cmake.in
+  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-activefilter/qucsactivefilter.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-filter/qucsfilter.1.cmake.in
+               ${CMAKE_CURRENT_SOURCE_DIR}/qucs-filter/qucsfilter.1)
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-attenuator/qucsattenuator.1.cmake.in
+  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-attenuator/qucsattenuator.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-lib/qucslib.1.cmake.in
+               ${CMAKE_CURRENT_SOURCE_DIR}/qucs-lib/qucslib.1)
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-powercombining/qucspowercombining.1.cmake.in
+  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-powercombining/qucspowercombining.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-rescodes/qucsrescodes.1.cmake.in
+               ${CMAKE_CURRENT_SOURCE_DIR}/qucs-rescodes/qucsrescodes.1)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1.cmake.in
+               ${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucs.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/man/qucs.1)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigi.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigi.1)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigilib.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigilib.1)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsveri.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsveri.1)
-
-#Tools
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-activefilter/qucsactivefilter.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-activefilter/qucsactivefilter.1)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-filter/qucsfilter.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-filter/qucsfilter.1)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-attenuator/qucsattenuator.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-attenuator/qucsattenuator.1)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-lib/qucslib.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-lib/qucslib.1)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-powercombining/qucspowercombining.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-powercombining/qucspowercombining.1)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-rescodes/qucsrescodes.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-rescodes/qucsrescodes.1)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1.cmake.in ${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1)
-
-ADD_SUBDIRECTORY( man )
-ADD_SUBDIRECTORY( qucs )
-ADD_SUBDIRECTORY( qucs-activefilter )
-ADD_SUBDIRECTORY( qucs-attenuator )
-#ADD_SUBDIRECTORY( qucs-doc )
-ADD_SUBDIRECTORY( qucs-filter )
-ADD_SUBDIRECTORY( qucs-lib )
-ADD_SUBDIRECTORY( qucs-transcalc )
-ADD_SUBDIRECTORY( qucs-rescodes )
-#ADD_SUBDIRECTORY( examples )
-ADD_SUBDIRECTORY( translations )
-ADD_SUBDIRECTORY( contrib )
-ADD_SUBDIRECTORY(qucs-powercombining)
+add_subdirectory(man)
+add_subdirectory(qucs)
+add_subdirectory(qucs-activefilter)
+add_subdirectory(qucs-attenuator)
+# ADD_SUBDIRECTORY( qucs-doc )
+add_subdirectory(qucs-filter)
+add_subdirectory(qucs-lib)
+add_subdirectory(qucs-transcalc)
+add_subdirectory(qucs-rescodes)
+# ADD_SUBDIRECTORY( examples )
+add_subdirectory(translations)
+add_subdirectory(contrib)
+add_subdirectory(qucs-powercombining)
 
 
 #
 # Custom uninstall target
 #
-configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/uninstall.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake"
-    IMMEDIATE @ONLY)
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/uninstall.cmake.in"
+               "${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake" IMMEDIATE @ONLY)
 
-add_custom_target(uninstall
-    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake)
-
-
+add_custom_target(uninstall-ui COMMAND ${CMAKE_COMMAND} -P
+                                    ${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake)
