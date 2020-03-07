@@ -11,39 +11,32 @@ set(QUCSCONV_SRC
     qucsconv.cpp
     touchstone_producer.cpp)
 
+
 set(ParserTypes spice vcd)
 
-# generated files are named like: - parse_spice.cpp scan_spice.cpp
-# tokens_spice.h
-
-# clear list of generated files
 set(conv_generated)
 foreach(type ${ParserTypes})
-
   # Create custom Bison
-  set(BO_${type} ${CMAKE_CURRENT_BINARY_DIR}/parse_${type}.cpp
-                 ${CMAKE_CURRENT_BINARY_DIR}/tokens_${type}.h)
+  set(bisonIn "${CMAKE_CURRENT_SOURCE_DIR}/parse_${type}.ypp")
+  set(bisonOut "parse_${type}.hpp"
+               "parse_${type}.cpp")
   add_custom_command(
-    OUTPUT ${BO_${type}}
+    OUTPUT ${bisonOut}
     COMMAND
       ${BISON_EXECUTABLE}
-      --defines=${CMAKE_CURRENT_BINARY_DIR}/parse_${type}.hpp
-      --output=${CMAKE_CURRENT_BINARY_DIR/}parse_${type}.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/parse_${type}.ypp
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/parse_${type}.ypp)
-
+      --defines=parse_${type}.hpp
+      --output=parse_${type}.cpp
+      ${bisonIn}
+    DEPENDS ${bisonIn})
   # Create custom Flex
-  set(FI_${type} ${CMAKE_CURRENT_SOURCE_DIR}/scan_${type}.lpp)
-  set(FO_${type} ${CMAKE_CURRENT_BINARY_DIR}/scan_${type}.cpp)
+  set(flexIn "${CMAKE_CURRENT_SOURCE_DIR}/scan_${type}.lpp")
+  set(flexOut "scan_${type}.cpp")
   add_custom_command(
-    OUTPUT ${FO_${type}}
-    COMMAND ${FLEX_EXECUTABLE} --outfile=${FO_${type}} ${FI_${type}}
-    DEPENDS ${BO_${type}} ${FI_${type}})
-  set(conv_generated ${conv_generated} ${FO_${type}})
-  set(conv_generated ${conv_generated} ${BO_${type}})
-endforeach()
-foreach(gfile ${conv_generated})
-  set_source_files_properties(${gfile} PROPERTIES GENERATED TRUE)
+    OUTPUT ${flexOut}
+    COMMAND ${FLEX_EXECUTABLE} --outfile=${flexOut} ${flexIn}
+    DEPENDS ${flexIn})
+  list(APPEND conv_generated ${bisonOut})
+  list(APPEND conv_generated ${flexOut})
 endforeach()
 
 #

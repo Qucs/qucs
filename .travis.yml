@@ -35,6 +35,18 @@ addons:
       - gperf
       - latex2html
       - octave
+      - doxygen # add packages for  Doxygen and qucs-doc PDF build
+      - texlive
+      - texlive-math-extra
+      - texlive-science
+      - transfig
+      - gnuplot
+      - texlive-publishers
+      - graphviz
+      - texlive-font-utils
+      - ps2eps
+      - pgf
+      - python-tk
 
 matrix:
   include:
@@ -63,18 +75,6 @@ matrix:
         apt:
           packages:
             - *native_deps
-            - doxygen # add packages for  Doxygen and qucs-doc PDF build
-            - texlive
-            - texlive-math-extra
-            - texlive-science
-            - transfig
-            - gnuplot
-            - texlive-publishers
-            - graphviz
-            - texlive-font-utils
-            - ps2eps
-            - pgf
-            - python-tk
 
     - os: osx
       # Qt 4.8.7 official installer works up to OSX 10.10 or xcode6.4
