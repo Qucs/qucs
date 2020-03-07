@@ -1927,6 +1927,19 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
 
     // start from the last to omit re-appended components
     SchematicView *Doc = (SchematicView*)w;
+    SchematicScene *scene = Doc->scene;
+    QList<QGraphicsItem*> items = scene->items();
+    QList<Component*> components = filterItems<Component>(items);
+
+    // legacy code traversed in reverse. why?
+    // if Model string is set and file name match, keep track on pc_tmp
+    // recreate component?
+    // if pc_tmp null, break
+    // otherwise findRef(?set current) pc_tmp reference
+    // set pc to current and continue
+    // if not model, keep lookig left
+    TODO("help figuring out this");
+    /*
     for(Component *pc=Doc->scene->Components->last(); pc!=0; ) {
       if(pc->obsolete_model_hack() == Model) { // BUG
         File = pc->Props.getFirst()->Value;
@@ -1941,6 +1954,7 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
       }
       pc = Doc->scene->Components->prev();
     }
+    */
   }
 }
 
