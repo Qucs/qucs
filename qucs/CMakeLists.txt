@@ -8,7 +8,7 @@ OPTION (DISABLE_QDEBUG "Disabling of qDebug() messages" OFF)
 
 IF(${USE_QT5})
     SET(USE_QT_VERSION 5)
-|   ELSE(${USE_QT5})
+ELSE(${USE_QT5})
     SET(USE_QT_VERSION 4)
 ENDIF(${USE_QT5})
 

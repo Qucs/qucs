@@ -161,20 +161,22 @@ add_subdirectory(tests)
 
 set(QUCS_SRCS
     attach.cpp
-    element.cpp
+    frame.cpp
+    graphicitem.cpp
     octave_window.cpp
     qucsdoc.cpp
     textdoc.cpp
-    schematic.cpp
     mnemo.cpp
     qucs.cpp
-    viewpainter.cpp
     module.cpp
-    schematic_element.cpp
     wire.cpp
     mouseactions.cpp
+    mousecursor.cpp
     qucs_actions.cpp
-    schematic_file.cpp
+    schematicfile.cpp
+    schematicview.cpp
+    schematicscene.cpp
+    undocommands.cpp
     wirelabel.cpp
     node.cpp
     qucs_init.cpp
@@ -186,21 +188,22 @@ set(QUCS_SRCS
     projectView.cpp)
 
 set(QUCS_HDRS
-    element.h
+    frame.h
+    graphicitem.h
     messagedock.h
     misc.h
     mnemo.h
     module.h
     mouseactions.h
+    mousecursor.h
     node.h
+    undocommands.h
     octave_window.h
     platform.h
     qucs.h
     qucsdoc.h
-    schematic.h
     syntax.h
     textdoc.h
-    viewpainter.h
     wire.h
     wirelabel.h)
 
