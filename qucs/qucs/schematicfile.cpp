@@ -940,64 +940,6 @@ bool SchematicFile::loadDocument()
 }
 
 // -------------------------------------------------------------
-// Creates a Qucs file format (without document properties) in the returning
-// string. This is used to save state for undo operation.
-QString SchematicFile::createUndoString(char Op)
-{
-  Wire *pw;
-  Diagram *pd;
-  Painting *pp;
-  Component *pc;
-
-  // Build element document.
-  QString s = "  \n";
-  s.replace(0,1,Op);
-  for(pc = scene->DocComps.first(); pc != 0; pc = scene->DocComps.next()) {
-    QTextStream str(&s);
-    saveComponent(str, pc);
-    s += "\n";
-  }
-  s += "</>\n";  // short end flag
-
-  for(pw = scene->DocWires.first(); pw != 0; pw = scene->DocWires.next())
-    s += pw->save()+"\n";
-  // save all labeled nodes as wires
-  for(Node *pn = scene->DocNodes.first(); pn != 0; pn = scene->DocNodes.next())
-    if(pn->Label) s += pn->Label->save()+"\n";
-  s += "</>\n";
-
-  for(pd = scene->DocDiags.first(); pd != 0; pd = scene->DocDiags.next())
-    s += pd->save()+"\n";
-  s += "</>\n";
-
-  for(pp = scene->DocPaints.first(); pp != 0; pp = scene->DocPaints.next())
-    s += "<"+pp->save()+">\n";
-  s += "</>\n";
-
-  return s;
-}
-
-// -------------------------------------------------------------
-// Same as "createUndoString(char Op)" but for symbol edit mode.
-QString SchematicFile::createSymbolUndoString(char Op)
-{
-  Painting *pp;
-
-  // Build element document.
-  QString s = "  \n";
-  s.replace(0,1,Op);
-  s += "</>\n";  // short end flag for components
-  s += "</>\n";  // short end flag for wires
-  s += "</>\n";  // short end flag for diagrams
-
-  for(pp = SymbolPaints.first(); pp != 0; pp = SymbolPaints.next())
-    s += "<"+pp->save()+">\n";
-  s += "</>\n";
-
-  return s;
-}
-
-// -------------------------------------------------------------
 // Is quite similiar to "loadDocument()" but with less error checking.
 // Used for "undo" function.
 bool SchematicFile::rebuild(QString *s)
