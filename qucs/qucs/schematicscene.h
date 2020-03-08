@@ -74,6 +74,7 @@ QList<T*> filterItems(QList<QGraphicsItem*> &items)  {
     return castItems;
 }
 
+
 class SchematicScene : public QGraphicsScene
 {
 Q_OBJECT
@@ -208,5 +209,22 @@ private:
   QFileInfo FileInfo;
 
 };
+
+/*!
+ * Given a scene and a type, return items from scene.
+ */
+template<typename T>
+QList<T*> filterItems(SchematicScene *sc)  {
+    QList<QGraphicsItem*> items;
+    items = sc->items();
+    QList<T*> castItems;
+    foreach(QGraphicsItem *item, items) {
+        T *cast = dynamic_cast<T*>(item);
+        if(cast) {
+            castItems << cast;
+        }
+    }
+    return castItems;
+}
 
 #endif /* SCHEMATICSCENE_H_ */
