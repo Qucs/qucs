@@ -57,23 +57,6 @@ class ComponentList : public Q3PtrList<Component> {
 class PaintingList : public Q3PtrList<Painting> {
 };
 
-/*!
- * Return list of objects of type T from provided list of items.
- * For instance (Element): Wire, Node, Diagram, Component,
- * Painting, Marker, WireLabel;
- */
-template<typename T>
-QList<T*> filterItems(QList<QGraphicsItem*> &items)  {
-    QList<T*> castItems;
-    foreach(QGraphicsItem *item, items) {
-        T *cast = dynamic_cast<T*>(item);
-        if(cast) {
-            castItems << cast;
-        }
-    }
-    return castItems;
-}
-
 
 class SchematicScene : public QGraphicsScene
 {
@@ -209,6 +192,25 @@ private:
   QFileInfo FileInfo;
 
 };
+
+
+
+/*!
+ * Return list of objects of type T from provided list of items.
+ * For instance (Element): Wire, Node, Diagram, Component,
+ * Painting, Marker, WireLabel;
+ */
+template<typename T>
+QList<T*> filterItems(QList<QGraphicsItem*> &items)  {
+    QList<T*> castItems;
+    foreach(QGraphicsItem *item, items) {
+        T *cast = dynamic_cast<T*>(item);
+        if(cast) {
+            castItems << cast;
+        }
+    }
+    return castItems;
+}
 
 /*!
  * Given a scene and a type, return items from scene.
