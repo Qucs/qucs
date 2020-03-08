@@ -417,8 +417,12 @@ int SchematicFile::saveDocument()
     stream << "  <" << pp->save() << ">\n";
   stream << "</Symbol>\n";
 
+  // get items on scene
+  QList<QGraphicsItem*> items = scene->items();
+
   stream << "<Components>\n";    // save all components
-  for(Component *pc = scene->DocComps.first(); pc != 0; pc = scene->DocComps.next()){
+  QList<Component*> components = filterItems<Component>(items);
+  foreach (auto pc, components) {
     stream << "  "; // BUG language specific.
     saveComponent(stream, pc);
     stream << "\n"; // BUG?
@@ -426,22 +430,31 @@ int SchematicFile::saveDocument()
   stream << "</Components>\n";
 
   stream << "<Wires>\n";    // save all wires
-  for(Wire *pw = scene->DocWires.first(); pw != 0; pw = scene->DocWires.next())
+  QList<Wire*> wires = filterItems<Wire>(items);
+  foreach (auto pw, wires) {
     stream << "  " << pw->save() << "\n";
-
+  }
   // save all labeled nodes as wires
-  for(Node *pn = scene->DocNodes.first(); pn != 0; pn = scene->DocNodes.next())
-    if(pn->Label) stream << "  " << pn->Label->save() << "\n";
+  QList<Node*> nodes = filterItems<Node>(items);
+  foreach (auto pn, nodes) {
+    if(pn->Label) {
+      stream << "  " << pn->Label->save() << "\n";
+    }
+  }
   stream << "</Wires>\n";
 
   stream << "<Diagrams>\n";    // save all diagrams
-  for(Diagram *pd = scene->DocDiags.first(); pd != 0; pd = scene->DocDiags.next())
+  QList<Diagram*> diagrams = filterItems<Diagram>(items);
+  foreach (auto pd, diagrams) {
     stream << "  " << pd->save() << "\n";
+  }
   stream << "</Diagrams>\n";
 
   stream << "<Paintings>\n";     // save all paintings
-  for(pp = scene->DocPaints.first(); pp != 0; pp = scene->DocPaints.next())
+  QList<Painting*> paintings = filterItems<Painting>(items);
+  foreach (auto pp, paintings) {
     stream << "  <" << pp->save() << ">\n";
+  }
   stream << "</Paintings>\n";
 
   file.close();
