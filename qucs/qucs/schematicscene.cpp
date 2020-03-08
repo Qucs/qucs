@@ -3491,12 +3491,15 @@ void SchematicScene::simpleInsertComponent(Component *c)
       // add Node to scene
       addItem(pn);
     }
+    /// \todo fix note to component connection
+    /*
     pn->Connections.append(c);  // connect schematic node to component node
     if (!pp->Type.isEmpty()) {
       pn->DType = pp->Type;
     }
 
     pp->Connection = pn;  // connect component node to schematic node
+    */
   }
 
   // add Component to scene
