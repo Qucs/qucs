@@ -98,16 +98,16 @@ public: ///\todo set public for now
 private:
   void drawBias(QPainter *painter, const QRectF& rect);
 
-public:
-  /// \todo make then public while we fix stuff
+  /// \todo refactor these things out
   // The pointers points to the current lists, either to the schematic
   // elements "Doc..." or to the symbol elements "SymbolPaints".
-// private: //TODO. one at a time.
-  WireList      *Wires, DocWires;
-  NodeList      *Nodes, DocNodes;
-  DiagramList   *Diagrams, DocDiags;
-  PaintingList  *Paintings, DocPaints;
-  ComponentList *Components, DocComps;
+  NodeList      *Nodes;
+  WireList      *Wires;
+  PaintingList  *Paintings;
+  DiagramList   *Diagrams;
+  ComponentList *Components;
+
+public:
 
   PaintingList  SymbolPaints;  // symbol definition for subcircuit
 /* ********************************************************************

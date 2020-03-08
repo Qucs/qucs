@@ -212,7 +212,7 @@ void SpiceDialog::slotButtApply()
   if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->name());
   else if(CompNameEdit->text() != Comp->name())
   {
-    for(pc = scene->Components->first(); pc!=0; pc = scene->Components->next())
+    foreach (pc, filterItems<Component>(scene))
       if(pc->name() == CompNameEdit->text()) {
         break;  // found component with the same name ?
       }

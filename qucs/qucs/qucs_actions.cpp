@@ -1193,7 +1193,7 @@ void QucsApp::slotApplyCompText()
       Component *pc2;
       if(!editText->text().isEmpty())
         if(pc->name() != editText->text()) {
-          for(pc2 = Doc->scene->Components->first(); pc2!=0; pc2 = Doc->scene->Components->next())
+          foreach (pc2, filterItems<Component>(Doc->scene))
             if(pc2->name() == editText->text())
               break;  // found component with the same name ?
           if(!pc2) {

@@ -306,7 +306,7 @@ void ImageWriter::getSelAreaWidthAndHeight(SchematicView *sch, int &wsel, int &h
 
     SchematicScene *scene = sch->scene;
 
-     for(Component *pc = scene->Components->first(); pc != 0; pc = scene->Components->next()) {
+     foreach (auto const pc, filterItems<Component>(scene)) {
          if (pc->ElemSelected) {
            int x1,y1,x2,y2;
            pc->entireBounds(x1,y1,x2,y2,sch->textCorr());
@@ -314,8 +314,7 @@ void ImageWriter::getSelAreaWidthAndHeight(SchematicView *sch, int &wsel, int &h
          }
     }
 
-    for(Wire *pw = scene->Wires->first(); pw != 0; pw = scene->Wires->next()) {
-
+    foreach (auto const pw, filterItems<Wire>(scene)) {
         if (pw->ElemSelected) {
             if(pw->x1 < xmin) xmin = pw->x1;
             if(pw->x2 > xmax) xmax = pw->x2;
@@ -333,8 +332,7 @@ void ImageWriter::getSelAreaWidthAndHeight(SchematicView *sch, int &wsel, int &h
           }
         }
     }
-
-    for(Node *pn = scene->Nodes->first(); pn != 0; pn = scene->Nodes->next()) {
+    foreach (auto pn, filterItems<Node>(scene)) {
         WireLabel *pl = pn->Label;
         if(pl) {     // check position of node label
             if (pl->ElemSelected) {
@@ -348,10 +346,7 @@ void ImageWriter::getSelAreaWidthAndHeight(SchematicView *sch, int &wsel, int &h
         }
     }
 
-    for(Diagram *pd = scene->Diagrams->first(); pd != 0; pd = scene-> Diagrams->next()) {
-
-
-
+    foreach (auto pd, filterItems<Diagram>(scene)) {
         if (pd->ElemSelected) {
             int x1,y1,x2,y2;
             pd->Bounding(x1,y1,x2,y2);
@@ -369,8 +364,7 @@ void ImageWriter::getSelAreaWidthAndHeight(SchematicView *sch, int &wsel, int &h
         }
     }
 
-    for(Painting *pp = scene->Paintings->first(); pp != 0; pp = scene->Paintings->next()) {
-
+    foreach (auto pp, filterItems<Painting>(scene)) {
        if (pp->ElemSelected) {
            int x1,y1,x2,y2;
            pp->Bounding(x1,y1,x2,y2);

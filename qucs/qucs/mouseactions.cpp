@@ -184,10 +184,12 @@ void MouseActions::endElementMoving(SchematicView *Doc, Q3PtrList<Element> *movE
 	scene->insertWire((Wire*)pe);
 	break;
       case isDiagram:
-	scene->Diagrams->append((Diagram*)pe);
+	    TODO("checj append diagram to scene");//scene->Diagrams->append((Diagram*)pe);
+        scene->addItem(pe);
 	break;
       case isPainting:
-	scene->Paintings->append((Painting*)pe);
+	    TODO("check append painting to scene");//scene->Paintings->append((Painting*)pe);
+        scene->addItem(pe);
 	break;
       case isComponent:
       case isAnalogComponent:
@@ -1292,6 +1294,8 @@ void MouseActions::MPressRotate(SchematicView *Doc, QMouseEvent* Event)
     case isWire:
       pl = ((Wire*)e)->Label;
       ((Wire*)e)->Label = 0;    // prevent label to be deleted
+      TODO("fix wire rotation");
+      /*
       scene->Wires->setAutoDelete(false);
       scene->deleteWire((Wire*)e);
       ((Wire*)e)->Label = pl;
@@ -1303,6 +1307,7 @@ void MouseActions::MPressRotate(SchematicView *Doc, QMouseEvent* Event)
       scene->Wires->setAutoDelete(true);
       if (scene->Wires->containsRef ((Wire*)e))
         Doc->enlargeView(e->x1, e->y1, e->x2, e->y2);
+      */
       break;
 
     case isPainting:
@@ -1424,7 +1429,8 @@ void MouseActions::MPressElement(SchematicView *Doc, QMouseEvent *Event)
       return;
     }
     // add to list
-    Doc->scene->Diagrams->append(Diag);
+    TODO("check add Diagram to scene");//Doc->scene->Diagrams->append(Diag);
+    Doc->scene->addItem(Diag);
     // clear flag, draw whole Diagram, not only scheme
     selElem->drawScheme = false;
     /// \todo Doc->enlargeView(Diag->cx, Diag->cy-Diag->y2, Diag->cx+Diag->x2, Diag->cy);
@@ -1449,7 +1455,8 @@ void MouseActions::MPressElement(SchematicView *Doc, QMouseEvent *Event)
     // Note that MMoveElement keeps snapping to grid and updatig cx,cy
     if( finalPress )  {
       // add Element to list
-      Doc->scene->Paintings->append((Painting*)selElem);
+      TODO("check painting append to scene");//Doc->scene->Paintings->append((Painting*)selElem);
+      Doc->scene->addItem(selElem);
       // clear scheme flag
       selElem->drawScheme = false;
       // mark document as changed
@@ -1942,18 +1949,23 @@ void MouseActions::MReleasePaste(SchematicView *Doc, QMouseEvent *Event)
 	case isWire:
 	  if(pe->x1 == pe->x2) if(pe->y1 == pe->y2)  break;
 	  scene->insertWire((Wire*)pe);
+      TODO("fix enlarge view on wire paste");
+      /*
 	  if (scene->Wires->containsRef ((Wire*)pe))
 	    Doc->enlargeView(pe->x1, pe->y1, pe->x2, pe->y2);
 	  else pe = NULL;
+      */
 	  break;
 	case isDiagram:
-      scene->Diagrams->append((Diagram*)pe);
+      TODO("check diagram insert");//scene->Diagrams->append((Diagram*)pe);
+      scene->addItem((Diagram*)pe);
       ((Diagram*)pe)->loadGraphData(Info.path() + QDir::separator() +
 					Doc->DataSet);
 	  Doc->enlargeView(pe->cx, pe->cy-pe->y2, pe->cx+pe->x2, pe->cy);
 	  break;
 	case isPainting:
-	  scene->Paintings->append((Painting*)pe);
+	  TODO("check painting insert");//scene->Paintings->append((Painting*)pe);
+      scene->addItem(pe);
 	  ((Painting*)pe)->Bounding(x1,y1,x2,y2);
 	  Doc->enlargeView(x1, y1, x2, y2);
 	  break;
@@ -2188,9 +2200,10 @@ void MouseActions::editElement(SchematicView *Doc, QMouseEvent *Event)
     case isGraph :
 	 pg = (Graph*)focusElement;
 	 // searching diagram for this graph
-	 for(dia = scene->Diagrams->last(); dia != 0; dia = scene->Diagrams->prev())
+     foreach (auto const dia, filterItems<Diagram>(scene)) {
 	   if(dia->Graphs.indexOf(pg) >= 0)
 	     break;
+     }
 	 if(!dia) break;
 
 

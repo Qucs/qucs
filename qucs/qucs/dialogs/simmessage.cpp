@@ -615,7 +615,7 @@ void SimMessage::startSimulator()
 // ------------------------------------------------------------------------
 Component * SimMessage::findOptimization(SchematicScene *scene) {
   Component *pc;
-  for(pc=scene->Components->first(); pc!=0; pc=scene->Components->next())
+  foreach (pc, filterItems<Component>(scene))
     if(pc->isActive)
       if(pc->obsolete_model_hack() == ".Opt")
 	return pc;

@@ -56,11 +56,6 @@ SchematicScene::SchematicScene(QObject *parent) :
   schematicFrame = new Frame();
 
   /// \todo remove deprecated
-  DocComps.setAutoDelete(true);
-  DocWires.setAutoDelete(true);
-  DocNodes.setAutoDelete(true);
-  DocDiags.setAutoDelete(true);
-  DocPaints.setAutoDelete(true);
   SymbolPaints.setAutoDelete(true);
 
 }
@@ -1072,7 +1067,7 @@ int SchematicScene::copyWires(int& x1, int& y1, int& x2, int& y2,
 Marker* SchematicScene::setMarker(int x, int y)
 {
   // only diagrams ...
-  for(Diagram *pd = Diagrams->last(); pd != 0; pd = Diagrams->prev()){
+  foreach (auto const pd, filterItems<Diagram>(this)) {
     if(Marker* m=pd->setMarker(x,y)){
       TODO("callback to set changed");
       //setChanged(true, true);
@@ -1303,8 +1298,7 @@ void SchematicScene::deselectElements(Element *e)
         if(pn->Label) if(pn->Label != e)  pn->Label->ElemSelected = false;
 
     // test all diagrams
-    for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
-    {
+    foreach (auto pd, filterItems<Diagram>(this)) {
         if(e != pd)  pd->ElemSelected = false;
 
         // test graphs of diagram
@@ -1320,7 +1314,7 @@ void SchematicScene::deselectElements(Element *e)
     }
 
     // test all paintings
-    for(Painting *pp = Paintings->first(); pp != 0; pp = Paintings->next())
+    foreach (auto pp, filterItems<Painting>(this))
         if(e != pp)  pp->ElemSelected = false;
 }
 
@@ -1406,8 +1400,7 @@ int SchematicScene::selectElements(int x1, int y1, int x2, int y2, bool flag)
 
 
     // test all diagrams *******************************************
-    for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
-    {
+    foreach (auto const pd, filterItems<Diagram>(this)) {
         // test graphs of diagram
         foreach(Graph *pg, pd->Graphs)
         {
@@ -1439,8 +1432,7 @@ int SchematicScene::selectElements(int x1, int y1, int x2, int y2, bool flag)
     }
 
     // test all paintings *******************************************
-    for(Painting *pp = Paintings->first(); pp != 0; pp = Paintings->next())
-    {
+    foreach (auto pp, filterItems<Painting>(this)) {
         pp->Bounding(cx1, cy1, cx2, cy2);
         if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2)
                     {
@@ -1458,7 +1450,7 @@ int SchematicScene::selectElements(int x1, int y1, int x2, int y2, bool flag)
 // Selects all markers.
 void SchematicScene::selectMarkers()
 {
-    for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
+    foreach (auto const pd, filterItems<Diagram>(this))
         foreach(Graph *pg, pd->Graphs)
             foreach(Marker *pm, pg->Markers)
                 pm->ElemSelected = true;
@@ -3460,7 +3452,7 @@ void SchematicScene::setOnGrid(int& x, int& y)
 void SchematicScene::reloadGraphs()
 {
   QFileInfo Info(DocName);
-  for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
+  foreach (auto const pd, filterItems<Diagram>(this))
     pd->loadGraphData(Info.path()+QDir::separator()+DataSet);
 }
 
@@ -3482,7 +3474,7 @@ void SchematicScene::simpleInsertComponent(Component *c)
     y = pp->y+c->cy;
 
     // check if new node lies upon existing node
-    for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
+    foreach (auto pn, filterItems<Node>(this)) {
       if(pn->cx == x) if(pn->cy == y) {
 	if (!pn->DType.isEmpty()) {
 	  pp->Type = pn->DType;
@@ -3492,11 +3484,10 @@ void SchematicScene::simpleInsertComponent(Component *c)
 	}
 	break;
       }
+    }
 
     if(pn == 0) { // create new node, if no existing one lies at this position
       pn = new Node(x, y);
-      DocNodes.append(pn);
-
       // add Node to scene
       addItem(pn);
     }
@@ -3508,8 +3499,6 @@ void SchematicScene::simpleInsertComponent(Component *c)
     pp->Connection = pn;  // connect component node to schematic node
   }
 
-  /// \todo just add to scene, filter Comps into returned list
-  DocComps.append(c);
   // add Component to scene
   addItem(c);
   /// \todo check performance, no need to update scene on every addIte
@@ -3540,13 +3529,13 @@ void SchematicScene::simpleInsertWire(Wire *pw)
   Node *pn2 = 0;
 
   // check if first wire node lies upon existing node
-  for(pn1 = DocNodes.first(); pn1 != 0; pn1 = DocNodes.next())
+  foreach (pn1, filterItems<Node>(this)) {
     if(pn1->cx == pw->x1) if(pn1->cy == pw->y1) break;
+  }
 
   // create new node, if no existing one lies at this position
   if(!pn1) {
     pn1 = new Node(pw->x1, pw->y1);
-    DocNodes.append(pn1);
   }
 
   // check for zero length wire
@@ -3565,17 +3554,15 @@ void SchematicScene::simpleInsertWire(Wire *pw)
   pw->Port1 = pn1;
 
   // check if second wire node lies upon existing node
-  for(pn2 = DocNodes.first(); pn2 != 0; pn2 = DocNodes.next())
+  foreach (pn2, filterItems<Node>(this)) {
     if(pn2->cx == pw->x2) if(pn2->cy == pw->y2) break;
+  }
 
   if(!pn2) {   // create new node, if no existing one lies at this position
     pn2 = new Node(pw->x2, pw->y2);
-    DocNodes.append(pn2);
   }
   pn2->Connections.append(pw);  // connect schematic node to component node
   pw->Port2 = pn2;
-
-  DocWires.append(pw);
 
   addItem(pn1);
   addItem(pn2);

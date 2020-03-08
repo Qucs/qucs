@@ -180,7 +180,7 @@ Graph* SweepDialog::setBiasPoints()
   ValueList.clear();
 
   // create DC voltage for all nodes
-  for(pn = scene->Nodes->first(); pn != 0; pn = scene->Nodes->next()) {
+  foreach (auto pn, filterItems<Node>(scene)) {
     if(pn->Name.isEmpty()) continue;
 
     pn->x1 = 0;
@@ -232,7 +232,7 @@ Graph* SweepDialog::setBiasPoints()
 
   // create DC current through each probe
   Component *pc;
-  for(pc = scene->Components->first(); pc != 0; pc = scene->Components->next())
+  foreach (pc, filterItems<Component>(scene))
     if(pc->obsolete_model_hack() == "IProbe") { // BUG.
       pn = pc->Ports.first()->Connection;
       if(!pn->Name.isEmpty())   // preserve node voltage ?

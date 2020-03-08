@@ -350,8 +350,7 @@ OptimizeDialog::OptimizeDialog(QucsApp *App_, Optimize_Sim *c_, SchematicScene *
 
   // ...........................................................
 
-  Component *pc;
-  for(pc=scene->Components->first(); pc!=0; pc=scene->Components->next())
+  foreach (auto const pc, filterItems<Component>(scene))
     if(pc != Comp)
       if(pc->obsolete_model_hack()[0] == '.' && pc->obsolete_model_hack() != ".Opt")
         SimEdit->insertItem(SimEdit->count(), pc->name());
@@ -728,7 +727,7 @@ void OptimizeDialog::slotApply()
     NameEdit->setText(Comp->name());
   else
   if(NameEdit->text() != Comp->name()) {
-    for(pc = scene->Components->first(); pc!=0; pc = scene->Components->next())
+  foreach (pc, filterItems<Component>(scene))
       if(pc->name() == NameEdit->text())
         break;  // found component with the same name ?
     if(pc)

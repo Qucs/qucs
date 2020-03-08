@@ -45,7 +45,7 @@ ComponentDialog::ComponentDialog(QucsApp* App_, Component *c, SchematicScene *d)
   resize(450, 250);
   setWindowTitle(tr("Edit Component Properties"));
   Comp  = c;
-  Doc   = d;
+  scene   = d;
   QString s;
   setAllVisible = true; // state when toggling properties visibility
 
@@ -178,8 +178,7 @@ ComponentDialog::ComponentDialog(QucsApp* App_, Component *c, SchematicScene *d)
 
 
     if(Comp->obsolete_model_hack() == ".SW") {   // parameter sweep
-      Component *pc;
-      for(pc=Doc->Components->first(); pc!=0; pc=Doc->Components->next()) {
+      foreach (auto const pc, filterItems<Component>(scene)) {
 	// insert all schematic available simulations in the Simulation combo box
         if(pc != Comp)
           if(pc->obsolete_model_hack()[0] == '.')
@@ -833,7 +832,7 @@ void ComponentDialog::slotApplyInput()
   if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->name());
   else
   if(CompNameEdit->text() != Comp->name()) {
-    for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next())
+    foreach (pc, filterItems<Component>(scene))
       if(pc->name() == CompNameEdit->text())
         break;  // found component with the same name ?
     if(pc)  CompNameEdit->setText(Comp->name());
@@ -1055,8 +1054,8 @@ void ComponentDialog::slotApplyInput()
       ty_Dist = dy;
     }
 
-    Doc->recreateComponent(Comp);
-    Doc->update();
+    scene->recreateComponent(Comp);
+    scene->update();
     if ( (int) Comp->Props.count() != prop->rowCount()) { // If props count was changed after recreation
       Q_ASSERT(prop->rowCount() >= 0);
       updateCompPropsList(); // of component we need to update properties

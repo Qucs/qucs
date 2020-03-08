@@ -147,8 +147,8 @@ private:
   /// Use switch case inside method to handle each type
   bool loadComponents(QTextStream*, Q3PtrList<Component> *List=0);
   bool loadWires(QTextStream*, Q3PtrList<Element> *List=0);
-  bool loadDiagrams(QTextStream*, Q3PtrList<Diagram>*);
-  bool loadPaintings(QTextStream*, Q3PtrList<Painting>*);
+  bool loadDiagrams(QTextStream*);
+  bool loadPaintings(QTextStream*);
   bool loadIntoNothing(QTextStream*);
 
   QString createClipboardFile();

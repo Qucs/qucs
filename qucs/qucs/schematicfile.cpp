@@ -72,19 +72,16 @@ void SchematicFile::setScene(SchematicScene *scn)
 // -------------------------------------------------------------
 // Creates a Qucs file format (without document properties) in the returning
 // string. This is used to copy the selected elements into the clipboard.
+/// \todo very similar to save document, refactor
 QString SchematicFile::createClipboardFile()
 {
   int z=0;  // counts selected elements
-  Wire *pw;
-  Diagram *pd;
-  Painting *pp;
-  Component *pc;
 
   QString s("<Qucs Schematic " PACKAGE_VERSION ">\n");
 
   // Build element document.
   s += "<Components>\n";
-  for(pc = scene->Components->first(); pc != 0; pc = scene->Components->next()){
+  foreach (auto const pc, filterItems<Component>(scene)) {
     if(pc->ElemSelected) {
       QTextStream str(&s);
       saveComponent(str, pc);
@@ -95,7 +92,7 @@ QString SchematicFile::createClipboardFile()
   s += "</Components>\n";
 
   s += "<Wires>\n";
-  for(pw = scene->Wires->first(); pw != 0; pw = scene->Wires->next())
+  foreach (auto const pw, filterItems<Wire>(scene)) {
     if(pw->ElemSelected) {
       z++;
       if(pw->Label) if(!pw->Label->ElemSelected) {
@@ -104,22 +101,26 @@ QString SchematicFile::createClipboardFile()
       }
       s += pw->save()+"\n";
     }
-  for(Node *pn = scene->Nodes->first(); pn != 0; pn = scene->Nodes->next())
+  }
+  foreach (auto const pn, filterItems<Node>(scene)) {
     if(pn->Label) if(pn->Label->ElemSelected) {
       s += pn->Label->save()+"\n";  z++; }
+  }
   s += "</Wires>\n";
 
   s += "<Diagrams>\n";
-  for(pd = scene->Diagrams->first(); pd != 0; pd = scene->Diagrams->next())
+  foreach (auto const pd, filterItems<Diagram>(scene)) {
     if(pd->ElemSelected) {
       s += pd->save()+"\n";  z++; }
+  }
   s += "</Diagrams>\n";
 
   s += "<Paintings>\n";
-  for(pp = scene->Paintings->first(); pp != 0; pp = scene->Paintings->next())
+  foreach (auto const pp, filterItems<Painting>(scene)) {
     if(pp->ElemSelected)
       if(pp->Name.at(0) != '.') {  // subcircuit specific -> do not copy
         s += "<"+pp->save()+">\n";  z++; }
+  }
   s += "</Paintings>\n";
 
   if(z == 0) return "";   // return empty if no selection
@@ -176,7 +177,7 @@ bool SchematicFile::pasteFromClipboard(QTextStream *stream, Q3PtrList<Element> *
         if(!loadIntoNothing(stream)) return false; }
       else
       if(Line == "<Paintings>") {
-        if(!loadPaintings(stream, (Q3PtrList<Painting>*)pe)) return false; }
+        if(!loadPaintings(stream)) return false; }
       else {
         QMessageBox::critical(0, QObject::tr("Error"),
 		   QObject::tr("Clipboard Format Error:\nUnknown field!"));
@@ -197,10 +198,10 @@ bool SchematicFile::pasteFromClipboard(QTextStream *stream, Q3PtrList<Element> *
       if(!loadWires(stream, pe)) return false; }
     else
     if(Line == "<Diagrams>") {
-      if(!loadDiagrams(stream, (Q3PtrList<Diagram>*)pe)) return false; }
+      if(!loadDiagrams(stream)) return false; }
     else
     if(Line == "<Paintings>") {
-      if(!loadPaintings(stream, (Q3PtrList<Painting>*)pe)) return false; }
+      if(!loadPaintings(stream)) return false; }
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 		   QObject::tr("Clipboard Format Error:\nUnknown field!"));
@@ -740,7 +741,7 @@ bool SchematicFile::loadWires(QTextStream *stream, Q3PtrList<Element> *List)
 }
 
 // -------------------------------------------------------------
-bool SchematicFile::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
+bool SchematicFile::loadDiagrams(QTextStream *stream)
 {
   Diagram *d;
   QString Line, cstr;
@@ -776,7 +777,6 @@ bool SchematicFile::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
       delete d;
       return false;
     }
-    List->append(d);
 
   qDebug() << __FUNCTION__ << d->Name;
   /// insert diagram into the scene
@@ -790,7 +790,7 @@ bool SchematicFile::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
 }
 
 // -------------------------------------------------------------
-bool SchematicFile::loadPaintings(QTextStream *stream, Q3PtrList<Painting> *List)
+bool SchematicFile::loadPaintings(QTextStream *stream)
 {
   Painting *p=0;
   QString Line, cstr;
@@ -828,7 +828,6 @@ bool SchematicFile::loadPaintings(QTextStream *stream, Q3PtrList<Painting> *List
       delete p;
       return false;
     }
-    List->append(p);
 
     qDebug() << __FUNCTION__ << p->Name;
     /// insert Paiting into the scene
@@ -898,7 +897,8 @@ bool SchematicFile::loadDocument()
     if(Line.isEmpty()) continue;
 
     if(Line == "<Symbol>") {
-      if(!loadPaintings(&stream, &SymbolPaints)) {
+      TODO("check symbol");//if(!loadPaintings(&stream, &SymbolPaints)) {
+      if(!loadPaintings(&stream)) {
         file.close();
         return false;
       }
@@ -914,10 +914,10 @@ bool SchematicFile::loadDocument()
       if(!loadWires(&stream)) { file.close(); return false; } }
     else
     if(Line == "<Diagrams>") {
-      if(!loadDiagrams(&stream, &scene->DocDiags)) { file.close(); return false; } }
+      if(!loadDiagrams(&stream)) { file.close(); return false; } }
     else
     if(Line == "<Paintings>") {
-      if(!loadPaintings(&stream, &scene->DocPaints)) { file.close(); return false; } }
+      if(!loadPaintings(&stream)) { file.close(); return false; } }
     else {
        qDebug() << Line;
        QMessageBox::critical(0, QObject::tr("Error"),
@@ -936,11 +936,8 @@ bool SchematicFile::loadDocument()
 // Used for "undo" function.
 bool SchematicFile::rebuild(QString *s)
 {
-  scene->DocWires.clear();	// delete whole document
-  scene->DocNodes.clear();
-  scene->DocComps.clear();
-  scene->DocDiags.clear();
-  scene->DocPaints.clear();
+
+  TODO("check what rebuild means, clear the scene?")
 
   QString Line;
   QTextStream stream(s, QIODevice::ReadOnly);
@@ -949,8 +946,8 @@ bool SchematicFile::rebuild(QString *s)
   // read content *************************
   if(!loadComponents(&stream))  return false;
   if(!loadWires(&stream))  return false;
-  if(!loadDiagrams(&stream, &scene->DocDiags))  return false;
-  if(!loadPaintings(&stream, &scene->DocPaints)) return false;
+  if(!loadDiagrams(&stream))  return false;
+  if(!loadPaintings(&stream)) return false;
 
   return true;
 }
@@ -969,7 +966,7 @@ bool SchematicFile::rebuildSymbol(QString *s)
   Line = stream.readLine();  // skip components
   Line = stream.readLine();  // skip wires
   Line = stream.readLine();  // skip diagrams
-  if(!loadPaintings(&stream, &SymbolPaints)) return false;
+  if(!loadPaintings(&stream)) return false;
 
   return true;
 }
@@ -994,10 +991,9 @@ void SchematicFile::createNodeSet(QStringList& Collect, int& countInit,
 void SchematicFile::throughAllNodes(bool User, QStringList& Collect,
 				int& countInit)
 {
-  Node *pn;
   int z=0;
 
-  for(pn = scene->DocNodes.first(); pn != 0; pn = scene->DocNodes.next()) {
+  foreach (auto pn, filterItems<Node>(scene)) {
     if(pn->Name.isEmpty() == User) {
       continue;  // already named ?
     }
@@ -1090,9 +1086,8 @@ int SchematicFile::testFile(const QString& DocName)
 // Collects the signal names for digital simulations.
 void SchematicFile::collectDigitalSignals(void)
 {
-  Node *pn;
 
-  for(pn = scene->DocNodes.first(); pn != 0; pn = scene->DocNodes.next()) {
+  foreach (auto const pn, filterItems<Node>(scene)) {
     DigMap::Iterator it = Signals.find(pn->Name);
     if(it == Signals.end()) { // avoid redeclaration of signal
       Signals.insert(pn->Name, DigSignal(pn->Name, pn->DType));
@@ -1163,8 +1158,7 @@ bool SchematicFile::throughAllComps(QTextStream *stream, int& countInit,
   QString s;
 
   // give the ground nodes the name "gnd", and insert subcircuits etc.
-  for(auto it=scene->DocComps.begin(); it!=scene->DocComps.end(); ++it) {
-    Component *pc=*it;
+  foreach (auto const pc, filterItems<Component>(scene)) {
 
     if(pc->isActive != COMP_IS_ACTIVE) continue;
 
@@ -1361,8 +1355,9 @@ bool SchematicFile::throughAllComps(QTextStream *stream, int& countInit,
 bool SchematicFile::giveNodeNames(QTextStream *stream, int& countInit,
                    QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts)
 {
-  // delete the node names
-  for(Node *pn = scene->DocNodes.first(); pn != 0; pn = scene->DocNodes.next()) {
+  // clear the node names
+
+  foreach (auto pn, filterItems<Node>(scene)) {
     pn->State = 0;
     if(pn->Label) {
       if(isAnalog)
@@ -1374,13 +1369,14 @@ bool SchematicFile::giveNodeNames(QTextStream *stream, int& countInit,
   }
 
   // set the wire names to the connected node
-  for(Wire *pw = scene->DocWires.first(); pw != 0; pw = scene->DocWires.next())
+  foreach (auto const pw, filterItems<Wire>(scene)) {
     if(pw->Label != 0) {
       if(isAnalog)
         pw->Port1->Name = pw->Label->Name;
       else  // avoid to use reserved VHDL words
         pw->Port1->Name = "net" + pw->Label->Name;
     }
+  }
 
   // go through components
   if(!throughAllComps(stream, countInit, Collect, ErrText, NumPorts)){
@@ -1471,7 +1467,7 @@ int NumPorts)
   // collect subcircuit ports and sort their node names into
   // "SubcircuitPortNames"
   PortTypes.clear();
-  for(pc = scene->DocComps.first(); pc != 0; pc = scene->DocComps.next()) {
+  foreach (auto const pc, filterItems<Component>(scene)) {
     if(pc->obsolete_model_hack().at(0) == '.') { // no simulations in subcircuits
       ErrText->appendPlainText(
         QObject::tr("WARNING: Ignore simulation component in subcircuit \"%1\".").arg(DocName)+"\n");
@@ -1566,8 +1562,9 @@ int NumPorts)
     (*tstream) << '\n';
 
     // write all components with node names into netlist file
-    for(pc = scene->DocComps.first(); pc != 0; pc = scene->DocComps.next())
+    foreach (auto const pc, filterItems<Component>(scene)){
       (*tstream) << pc->getNetlist();
+    }
 
     (*tstream) << ".Def:End\n";
 
@@ -1611,7 +1608,7 @@ int NumPorts)
         }
 
       // write all equations into netlist file
-      for(pc = scene->DocComps.first(); pc != 0; pc = scene->DocComps.next()) {
+      foreach (auto const pc, filterItems<Component>(scene)) {
         if(pc->obsolete_model_hack() == "Eqn") {
           (*tstream) << pc->get_Verilog_Code(NumPorts);
         }
@@ -1621,7 +1618,7 @@ int NumPorts)
       (*tstream) << " assign gnd = 0;\n"; // should appear only once
 
       // write all components into netlist file
-      for(pc = scene->DocComps.first(); pc != 0; pc = scene->DocComps.next()) {
+      foreach (auto const pc, filterItems<Component>(scene)) {
         if(pc->obsolete_model_hack() != "Eqn") {
           s = pc->get_Verilog_Code(NumPorts);
           if(s.length()>0 && s.at(0) == '\xA7') {  //section symbol
@@ -1672,7 +1669,7 @@ int NumPorts)
       }
 
       // write all equations into netlist file
-      for(pc = scene->DocComps.first(); pc != 0; pc = scene->DocComps.next()) {
+      foreach (auto const pc, filterItems<Component>(scene)) {
         if(pc->obsolete_model_hack() == "Eqn") {
           ErrText->appendPlainText(
                       QObject::tr("WARNING: Equations in \"%1\" are 'time' typed.").
@@ -1687,7 +1684,7 @@ int NumPorts)
       (*tstream) << " gnd <= '0';\n"; // should appear only once
 
       // write all components into netlist file
-      for(pc = scene->DocComps.first(); pc != 0; pc = scene->DocComps.next()) {
+      foreach (auto const pc, filterItems<Component>(scene)) {
         if(pc->obsolete_model_hack() != "Eqn") {
             s = pc->get_VHDL_Code(NumPorts);
             if(s.length()>0 && s.at(0) == '\xA7') {  //section symbol
@@ -1750,8 +1747,7 @@ int SchematicFile::prepareNetlist(QTextStream& stream, QStringList& Collect,
   int allTypes = 0, NumPorts = 0;
 
   // Detect simulation domain (analog/digital) by looking at component types.
-  //for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
-  for(Component *pc = scene->DocComps.first(); pc != 0; pc = scene->DocComps.next()) {
+  foreach (auto const pc, filterItems<Component>(scene)) {
     if(pc->isActive == COMP_IS_OPEN) continue;
     if(pc->obsolete_model_hack().at(0) == '.') {
       if(pc->obsolete_model_hack() == ".Digi") {
@@ -1888,7 +1884,7 @@ QString SchematicFile::createNetlist(QTextStream& stream, int NumPorts)
   FileList.clear();
 
   QString s, Time;
-  for(Component *pc = scene->DocComps.first(); pc != 0; pc = scene->DocComps.next()) {
+  foreach (auto const pc, filterItems<Component>(scene)) {
     if(isAnalog) {
       s = pc->getNetlist();
     }
@@ -1957,11 +1953,6 @@ bool SchematicFile::paste(QTextStream *stream, Q3PtrList<Element> *pe)
 // Loads this Qucs document.
 bool SchematicFile::load()
 {
-  scene->DocComps.clear();
-  scene->DocWires.clear();
-  scene->DocNodes.clear();
-  scene->DocDiags.clear();
-  scene->DocPaints.clear();
   SymbolPaints.clear();
 
   if(!loadDocument()) return false;
@@ -2198,8 +2189,7 @@ int SchematicFile::adjustPortNumbers()
   else
   {
       // go through all components in a schematic
-      for(Component *pc = scene->DocComps.first(); pc!=0; pc = scene->DocComps.next())
-      {
+      foreach (auto const pc, filterItems<Component>(scene)) {
          if(pc->obsolete_model_hack() == "Port") { // BUG. move to device.
              countPort++;
 
