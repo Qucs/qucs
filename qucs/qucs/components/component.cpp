@@ -1190,8 +1190,9 @@ void Component::copyComponent(Component *pc)
 // ***********************************************************************
 void MultiViewComponent::recreate(SchematicScene *scene)
 {
+
+  TODO("check item remove, do stuff, add back");
   if(scene) {
-    scene->Components->setAutoDelete(false);
     scene->deleteComp(this);
   }
 
@@ -1219,7 +1220,6 @@ void MultiViewComponent::recreate(SchematicScene *scene)
 
   if(scene) {
     scene->insertRawComponent(this);
-    scene->Components->setAutoDelete(true);
   }
 }
 
