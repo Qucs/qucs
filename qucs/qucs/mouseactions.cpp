@@ -2159,10 +2159,13 @@ void MouseActions::editElement(SchematicView *Doc, QMouseEvent *Event)
            ComponentDialog * cd = new ComponentDialog(App, c, Doc->scene);
            if(cd->exec() != 1) break;   // dialog is WA_DeleteOnClose
 
+           TODO("fix edit of digital component");
+           /*
            scene->Components->findRef(c);
            scene->Components->take();
            scene->setComponentNumber(c); // for ports/power sources
            scene->Components->append(c);
+           */
          }
 
          Doc->setChanged(true, true);
