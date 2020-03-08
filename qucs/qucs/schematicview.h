@@ -114,6 +114,7 @@ public:
   QUndoStack *undoStack;
 
   bool load();
+  int save();
 
 signals:
   void signalCursorPosChanged(int, int);

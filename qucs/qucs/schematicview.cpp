@@ -932,6 +932,20 @@ bool SchematicView::load()
    return schFile->load();
 }
 
+/*!
+ * \brief SchematicView::save
+ * \return true if success
+ * Override QucsDoc::save().
+ * Hand over scene to SchematicFile and save to disk.
+ */
+int SchematicView::save()
+{
+   SchematicFile *schFile = new SchematicFile();
+   schFile->setScene(scene);
+   schFile->setFileName(DocName);
+   return schFile->save();
+}
+
 // -----------------------------------------------------------
 // Is called if the scroll arrow of the ScrollBar is pressed.
 void SchematicView::slotScrollUp()
