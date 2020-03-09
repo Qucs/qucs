@@ -1749,7 +1749,10 @@ void MouseActions::MReleaseSelect2(SchematicView *Doc, QMouseEvent *Event)
   bool Ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
   // selects all elements within the rectangle
-  Doc->scene->selectElements(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2, Ctrl);
+  TODO("check select bBox");//Doc->scene->selectElements(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2, Ctrl);
+  QPainterPath path;
+  path.addRect(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2);
+  Doc->scene->setSelectionArea(path);
 
   Doc->releaseKeyboard();  // allow keyboard inputs again
   QucsMain->MouseMoveAction = 0;
