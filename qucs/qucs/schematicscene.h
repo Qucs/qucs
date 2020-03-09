@@ -139,7 +139,6 @@ public:
   void    markerUpDown(bool, Q3PtrList<Element>*);
 
   void     deselectElements(Element*);
-  int      selectElements(int, int, int, int, bool); //dead code, deprecated
   void     selectMarkers();
   void     newMovingWires(Q3PtrList<Element>*, Node*, int);
   int      copySelectedElements(Q3PtrList<Element>*);
