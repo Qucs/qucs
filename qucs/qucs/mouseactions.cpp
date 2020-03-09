@@ -1142,7 +1142,7 @@ void MouseActions::MPressSelect(SchematicView *Doc, QMouseEvent *Event)
     if(!Ctrl)
     {
       if(!focusElement->isSelected())// Don't move selected elements if clicked
-        scene->deselectElements(focusElement); // element was not selected.
+        TODO("check deselect all but focusElement?");//scene->deselectElements(focusElement); // element was not selected.
     }
     scene->setOnGrid(MAx1, MAy1);
     QucsMain->MouseMoveAction = &MouseActions::MMoveMoving;
@@ -1720,7 +1720,7 @@ void MouseActions::MReleaseSelect(SchematicView *Doc, QMouseEvent *Event)
 
   SchematicScene *scene = Doc->scene;
 
-  if(!ctrl) scene->deselectElements(focusElement);
+  TODO("check deselect all but focusElement?");//if(!ctrl) scene->deselectElements(focusElement);
 
   if(focusElement)  if(Event->button() == Qt::LeftButton)
     if(focusElement->ElemType == isWire) {

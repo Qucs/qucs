@@ -138,7 +138,6 @@ public:
   void    markerLeftRight(bool, Q3PtrList<Element>*);
   void    markerUpDown(bool, Q3PtrList<Element>*);
 
-  void     deselectElements(Element*);
   void     selectMarkers();
   void     newMovingWires(Q3PtrList<Element>*, Node*, int);
   int      copySelectedElements(Q3PtrList<Element>*);

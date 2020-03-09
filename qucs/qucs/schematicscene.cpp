@@ -1279,50 +1279,6 @@ void SchematicScene::drawBias(QPainter *painter, const QRectF &rect)
 }
 
 // ---------------------------------------------------
-// Deselects all elements except 'e'.
-void SchematicScene::deselectElements(Element *e)
-{
-    TODO("check deselect");
-    /*
-    // test all components
-    for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-        if(e != pc)  pc->isSelected() = false;
-
-    // test all wires
-    for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())
-    {
-        if(e != pw)  pw->isSelected() = false;
-        if(pw->Label) if(pw->Label != e)  pw->Label->isSelected() = false;
-    }
-
-    // test all node labels
-    for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
-        if(pn->Label) if(pn->Label != e)  pn->Label->isSelected() = false;
-
-    // test all diagrams
-    foreach (auto pd, filterItems<Diagram>(this)) {
-        if(e != pd)  pd->isSelected() = false;
-
-        // test graphs of diagram
-        foreach(Graph *pg, pd->Graphs)
-        {
-            if(e != pg) pg->isSelected() = false;
-
-            // test markers of graph
-            foreach(Marker *pm, pg->Markers)
-                if(e != pm) pm->isSelected() = false;
-        }
-
-    }
-
-    // test all paintings
-    foreach (auto pp, filterItems<Painting>(this))
-        if(e != pp)  pp->isSelected() = false;
-    */
-}
-
-
-// ---------------------------------------------------
 // Selects all markers.
 void SchematicScene::selectMarkers()
 {
