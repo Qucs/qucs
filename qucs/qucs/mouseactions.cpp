@@ -1367,7 +1367,7 @@ void MouseActions::MPressElement(SchematicView *Doc, QMouseEvent *Event)
 	Doc->scene->setOnGrid(gx, gy);
     /// clear flag, paint whole Element, not just outline
 	Comp->drawScheme = false;
-    Doc->undoStack->push( new AddItemCommand(Comp, QPoint(gx,gy), Doc->scene) );
+    Doc->undoStack->push( new AddItemCommand(Doc->scene, Comp, QPoint(gx,gy)) );
     
 	// Note: insertCopmponents does increment  name1 -> name2
 	Doc->scene->insertComponent(Comp);

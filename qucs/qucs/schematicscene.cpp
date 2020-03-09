@@ -122,7 +122,7 @@ void SchematicScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
     // insert copy
     Component *copy = comp->newOne();
-    undoStack->push( new AddItemCommand(copy, pos, this) );
+    undoStack->push( new AddItemCommand(this, copy, pos) );
   }
 
   // propagate to be able to drag items
@@ -1642,117 +1642,11 @@ int SchematicScene::copyElements(int& x1, int& y1, int& x2, int& y2,
 
 // ---------------------------------------------------
 // Deletes all selected elements.
+/// \todo there is no need to return bool
 bool SchematicScene::deleteElements()
 {
-    bool sel = false;
-
-    Component *pc = Components->first();
-    while(pc != 0)      // all selected component
-        if(pc->isSelected())
-        {
-            deleteComp(pc);
-            pc = Components->current();
-            sel = true;
-        }
-        else pc = Components->next();
-
-    Wire *pw = Wires->first();
-    while(pw != 0)        // all selected wires and their labels
-    {
-        if(pw->Label)
-            if(pw->Label->isSelected())
-            {
-                delete pw->Label;
-                pw->Label = 0;
-                sel = true;
-            }
-
-        if(pw->isSelected())
-        {
-            deleteWire(pw);
-            pw = Wires->current();
-            sel = true;
-        }
-        else pw = Wires->next();
-    }
-
-    // all selected labels on nodes ***************************
-    for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
-        if(pn->Label)
-            if(pn->Label->isSelected())
-            {
-                delete pn->Label;
-                pn->Label = 0;
-                sel = true;
-            }
-
-    Diagram *pd = Diagrams->first();
-    while(pd != 0)      // test all diagrams
-        if(pd->isSelected())
-        {
-            Diagrams->remove();
-            pd = Diagrams->current();
-            sel = true;
-        }
-        else
-        {
-            bool wasGraphDeleted = false;
-            // all graphs of diagram
-
-            QMutableListIterator<Graph *> ig(pd->Graphs);
-            Graph *pg;
-
-            while (ig.hasNext())
-            {
-                pg = ig.next();
-                // all markers of diagram
-                QMutableListIterator<Marker *> im(pg->Markers);
-                Marker *pm;
-                while (im.hasNext())
-                {
-                    pm = im.next();
-                    if(pm->isSelected())
-                    {
-                        im.remove();
-                        sel = true;
-                    }
-                }
-
-                if(pg->isSelected())
-                {
-                    ig.remove();
-                    sel = wasGraphDeleted = true;
-                }
-            }
-            if(wasGraphDeleted)
-                pd->recalcGraphData();  // update diagram (resize etc.)
-
-            pd = Diagrams->next();
-        } //else
-
-
-    Painting *pp = Paintings->first();
-    while(pp != 0)      // test all paintings
-    {
-        if(pp->isSelected())
-            if(pp->Name.at(0) != '.')    // do not delete "PortSym", "ID_text"
-            {
-                sel = true;
-                Paintings->remove();
-                pp = Paintings->current();
-                continue;
-            }
-        pp = Paintings->next();
-    }
-
-    if(sel)
-    {
-        TODO("callback to set sizeofAll and setchanged");
-        // equivalent to fit() and update()?
-        //sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);   // set new document size
-        //setChanged(sel, true);
-    }
-    return sel;
+    TODO("check legacy handling of Diagrams");
+    undoStack->push(new RemoveItemsCommand(this, selectedItems()));
 }
 
 // ---------------------------------------------------

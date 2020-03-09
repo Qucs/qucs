@@ -141,7 +141,7 @@ public:
   void     selectMarkers();
   void     newMovingWires(Q3PtrList<GraphicItem>*, Node*, int);
   int      copySelectedElements(Q3PtrList<GraphicItem>*);
-  bool     deleteElements();
+  bool deleteElements();
   bool     aligning(int);
   bool     distributeHorizontal();
   bool     distributeVertical();
