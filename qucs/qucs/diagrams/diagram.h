@@ -55,7 +55,7 @@ struct Axis {
 };
 
 
-class Diagram : public Element {
+class Diagram : public GraphicItem {
 public:
   Diagram(int _cx=0, int _cy=0);
   virtual ~Diagram();

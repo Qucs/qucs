@@ -79,7 +79,7 @@ Component* ecvs::newOne()
   return new ecvs();
 }
 
-Element* ecvs::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* ecvs::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Externally Controlled Voltage Source");
   BitmapFile = (char *) "ecvs";

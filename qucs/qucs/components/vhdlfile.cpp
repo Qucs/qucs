@@ -49,7 +49,7 @@ Component* VHDL_File::newOne()
 }
 
 // -------------------------------------------------------
-Element* VHDL_File::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* VHDL_File::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("VHDL file");
   BitmapFile = (char *) "vhdlfile";

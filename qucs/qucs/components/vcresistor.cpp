@@ -79,7 +79,7 @@ Component* vcresistor::newOne()
   return new vcresistor();
 }
 
-Element* vcresistor::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* vcresistor::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Voltage Controlled Resistor");
   BitmapFile = (char *) "vcresistor";

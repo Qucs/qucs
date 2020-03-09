@@ -65,7 +65,7 @@ Component* Attenuator::newOne()
   return new Attenuator();
 }
 
-Element* Attenuator::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Attenuator::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Attenuator");
   BitmapFile = (char *) "attenuator";

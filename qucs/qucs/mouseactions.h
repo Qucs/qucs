@@ -40,12 +40,12 @@ public:
   void editLabel(SchematicView*, WireLabel*);
 
   bool drawn;  // indicates whether the scheme element was drawn last time
-  Element *selElem;  // component/diagram/painting selected in IconView
-  Element *focusElement;
+  GraphicItem *selElem;  // component/diagram/painting selected in IconView
+  GraphicItem *focusElement;
   QMouseEvent *focusMEvent;
 
   int  MAx1, MAy1,MAx2, MAy2, MAx3, MAy3;  // cache for mouse movements
-  Q3PtrList<Element> movingElements;
+  Q3PtrList<GraphicItem> movingElements;
   int movingRotated;
 
   // menu appearing by right mouse button click on component
@@ -111,8 +111,8 @@ public:
   void paintElementsScheme(SchematicView*);
   void rotateElements(SchematicView*, int&, int&);
   void moveElements(SchematicView*, int&, int&);
-  void moveElements(Q3PtrList<Element>*, int, int);
-  void endElementMoving(SchematicView*, Q3PtrList<Element>*);
+  void moveElements(Q3PtrList<GraphicItem>*, int, int);
+  void endElementMoving(SchematicView*, Q3PtrList<GraphicItem>*);
   void rightPressMenu(SchematicView*, QMouseEvent*);
 };
 

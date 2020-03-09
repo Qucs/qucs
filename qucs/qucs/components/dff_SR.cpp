@@ -47,7 +47,7 @@ Component * dff_SR::newOne()
   return p;
 }
 
-Element * dff_SR::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * dff_SR::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("D-FlipFlop w/ SR");
   BitmapFile = (char *) "dff_SR";

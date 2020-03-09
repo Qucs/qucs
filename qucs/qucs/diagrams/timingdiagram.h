@@ -27,7 +27,7 @@ public:
  ~TimingDiagram();
 
   Diagram* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
   int calcDiagram();
   int scroll(int);

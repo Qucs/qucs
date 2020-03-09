@@ -45,7 +45,7 @@ Component * fa1b::newOne()
   return p;
 }
 
-Element * fa1b::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * fa1b::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("1Bit FullAdder");
   BitmapFile = (char *) "fa1b";

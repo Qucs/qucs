@@ -93,7 +93,7 @@ Component* Diode::newOne()
   return new Diode();
 }
 
-Element* Diode::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Diode::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Diode");
   BitmapFile = (char *) "diode";

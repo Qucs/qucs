@@ -64,7 +64,7 @@ Component* Hybrid::newOne()
   return new Hybrid();
 }
 
-Element* Hybrid::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Hybrid::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Hybrid");
   BitmapFile = (char *) "hybrid";

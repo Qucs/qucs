@@ -55,7 +55,7 @@ Component* dcBlock::newOne()
   return new dcBlock();
 }
 
-Element* dcBlock::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* dcBlock::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("dc Block");
   BitmapFile = (char *) "dcblock";

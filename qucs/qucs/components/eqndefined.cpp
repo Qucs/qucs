@@ -53,7 +53,7 @@ Component* EqnDefined::newOne()
 }
 
 // -------------------------------------------------------
-Element* EqnDefined::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* EqnDefined::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Equation Defined Device");
   BitmapFile = (char *) "edd";

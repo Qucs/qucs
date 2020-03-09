@@ -19,7 +19,7 @@ class DLS_nto1 : public Component
     DLS_nto1();
     ~DLS_nto1() { };
     Component* newOne();
-    static Element* info(QString&, char* &, bool getNewOne=false);
+    static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
 };

@@ -76,7 +76,7 @@ Component* DC_Sim::newOne()
   return new DC_Sim();
 }
 
-Element* DC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* DC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("dc simulation");
   BitmapFile = (char *) "dc";

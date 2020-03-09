@@ -84,7 +84,7 @@ Component * nigbt::newOne()
   return p;
 }
 
-Element * nigbt::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * nigbt::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("NIGBT");
   BitmapFile = (char *) "nigbt";

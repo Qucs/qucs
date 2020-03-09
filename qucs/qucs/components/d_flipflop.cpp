@@ -111,7 +111,7 @@ Component* D_FlipFlop::newOne()
 }
 
 // -------------------------------------------------------
-Element* D_FlipFlop::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* D_FlipFlop::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("D-FlipFlop");
   BitmapFile = (char *) "dflipflop";

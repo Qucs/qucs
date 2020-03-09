@@ -80,7 +80,7 @@ struct Axis;
  *
  * also stores markers.
  */
-class Graph : public Element {
+class Graph : public GraphicItem {
 public:
   Graph(const Diagram*, const QString& _Line="");
  ~Graph();

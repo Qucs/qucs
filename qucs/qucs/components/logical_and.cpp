@@ -40,7 +40,7 @@ Component* Logical_AND::newOne()
   return p;
 }
 
-Element* Logical_AND::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Logical_AND::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("n-port AND");
   BitmapFile = (char *) "and";

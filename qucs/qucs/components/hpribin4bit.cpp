@@ -45,7 +45,7 @@ Component * hpribin4bit::newOne()
   return p;
 }
 
-Element * hpribin4bit::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * hpribin4bit::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("4Bit HPRI-Bin");
   BitmapFile = (char *) "hpribin4bit";

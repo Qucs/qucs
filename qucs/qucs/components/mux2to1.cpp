@@ -45,7 +45,7 @@ Component * mux2to1::newOne()
   return p;
 }
 
-Element * mux2to1::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * mux2to1::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("2to1 Mux");
   BitmapFile = (char *) "mux2to1";

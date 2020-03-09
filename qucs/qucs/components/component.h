@@ -26,7 +26,7 @@ class QString;
 class QPen;
 class ComponentDialog;
 
-class Component : public Element {
+class Component : public GraphicItem {
 public:
   Component();
   virtual ~Component() {};

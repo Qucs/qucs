@@ -71,7 +71,7 @@ Component* Mutual::newOne()
   return new Mutual();
 }
 
-Element* Mutual::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Mutual::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Mutual Inductors");
   BitmapFile = (char *) "mutual";

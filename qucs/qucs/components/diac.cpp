@@ -64,7 +64,7 @@ Component* Diac::newOne()
   return new Diac();
 }
 
-Element* Diac::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Diac::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Diac");
   BitmapFile = (char *) "diac";

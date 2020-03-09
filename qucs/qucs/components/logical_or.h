@@ -26,7 +26,7 @@ public:
   Logical_OR();
  ~Logical_OR();
   Component* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

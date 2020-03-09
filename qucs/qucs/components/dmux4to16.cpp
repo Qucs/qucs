@@ -45,7 +45,7 @@ Component * dmux4to16::newOne()
   return p;
 }
 
-Element * dmux4to16::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * dmux4to16::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("4to16 Demux");
   BitmapFile = (char *) "dmux4to16";

@@ -70,7 +70,7 @@ Component* Triac::newOne()
   return new Triac();
 }
 
-Element* Triac::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Triac::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Triac");
   BitmapFile = (char *) "triac";

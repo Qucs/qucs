@@ -16,6 +16,9 @@
  ***************************************************************************/
 #include "painting.h"
 
+#include <QPainter>
+#include <QPen>
+
 Painting::Painting()
 {
   ElemType = isPainting;
@@ -29,7 +32,11 @@ QRectF Painting::boundingRect() const
 
 void Painting::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
-
+  // draw bounding box
+  if(isSelected()) {
+    painter->setPen(QPen(Qt::darkGray,3));
+    painter->drawRoundedRect(boundingRect(), 5.0, 5.0);
+  }
 }
 
 Painting* Painting::newOne()

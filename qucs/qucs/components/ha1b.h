@@ -19,7 +19,7 @@ class ha1b : public Component
     ha1b();
     ~ha1b() { };
     Component* newOne();
-    static Element* info(QString&, char* &, bool getNewOne=false);
+    static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
     QString vhdlCode(int);

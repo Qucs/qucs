@@ -78,7 +78,7 @@ Component * log_amp::newOne()
   return p;
 }
 
-Element * log_amp::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * log_amp::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Logarithmic Amplifier");
   BitmapFile = (char *) "log_amp";

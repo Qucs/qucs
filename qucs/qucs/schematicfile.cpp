@@ -145,7 +145,7 @@ bool SchematicFile::loadIntoNothing(QTextStream *stream)
 
 // -------------------------------------------------------------
 // Paste from clipboard.
-bool SchematicFile::pasteFromClipboard(QTextStream *stream, Q3PtrList<Element> *pe)
+bool SchematicFile::pasteFromClipboard(QTextStream *stream, Q3PtrList<GraphicItem> *pe)
 {
   QString Line;
 
@@ -704,7 +704,7 @@ bool SchematicFile::loadComponents(QTextStream *stream, Q3PtrList<Component> *Li
 }
 
 // -------------------------------------------------------------
-bool SchematicFile::loadWires(QTextStream *stream, Q3PtrList<Element> *List)
+bool SchematicFile::loadWires(QTextStream *stream, Q3PtrList<GraphicItem> *List)
 {
   Wire *w;
   QString Line;
@@ -1106,7 +1106,7 @@ void SchematicFile::propagateNode(QStringList& Collect,
   Q3PtrList<Node> Cons;
   Node *p2;
   Wire *pw;
-  Element *pe;
+  GraphicItem *pe;
 
   Cons.append(pn);
   for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
@@ -1944,7 +1944,7 @@ void SchematicFile::cut()
 
 // ---------------------------------------------------
 // Performs paste function from clipboard
-bool SchematicFile::paste(QTextStream *stream, Q3PtrList<Element> *pe)
+bool SchematicFile::paste(QTextStream *stream, Q3PtrList<GraphicItem> *pe)
 {
   return pasteFromClipboard(stream, pe);
 }

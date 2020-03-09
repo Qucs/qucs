@@ -47,7 +47,7 @@ Component * tff_SR::newOne()
   return p;
 }
 
-Element * tff_SR::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * tff_SR::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("T-FlipFlop w/ SR");
   BitmapFile = (char *) "tff_SR";

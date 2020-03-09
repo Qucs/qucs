@@ -71,7 +71,7 @@ Component* MSlange::newOne()
   return new MSlange();
 }
 
-Element* MSlange::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* MSlange::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Microstrip Lange Coupler");
   BitmapFile = (char *) "mslange";

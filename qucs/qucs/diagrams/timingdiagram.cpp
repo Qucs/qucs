@@ -519,7 +519,7 @@ Diagram* TimingDiagram::newOne()
 }
 
 // ------------------------------------------------------------
-Element* TimingDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* TimingDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Timing Diagram");
   BitmapFile = (char *) "timing";

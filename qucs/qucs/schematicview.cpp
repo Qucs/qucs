@@ -278,7 +278,7 @@ void SchematicView::mousePressEvent(QMouseEvent *Event)
   }
 
   // press over element, set focus, needed by view->editElement()
-  QucsMain->mouseAction->focusElement = dynamic_cast<Element*>(this->scene->itemAt(this->mapToScene(Event->pos()), QTransform() ));
+  QucsMain->mouseAction->focusElement = dynamic_cast<GraphicItem*>(this->scene->itemAt(this->mapToScene(Event->pos()), QTransform() ));
 
   QGraphicsView::mousePressEvent(Event);
 }

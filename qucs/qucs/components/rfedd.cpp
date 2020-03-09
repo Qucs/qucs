@@ -60,7 +60,7 @@ Component* RFedd::newOne()
 }
 
 // -------------------------------------------------------
-Element* RFedd::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* RFedd::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Equation Defined RF Device");
   BitmapFile = (char *) "rfedd";

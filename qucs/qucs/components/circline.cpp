@@ -76,7 +76,7 @@ Component* CircLine::newOne()
   return new CircLine();
 }
 
-Element* CircLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* CircLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Circular Waveguide");
   BitmapFile = (char *) "circline";

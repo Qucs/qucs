@@ -19,7 +19,7 @@ class dmux4to16 : public Component
     dmux4to16();
     ~dmux4to16() { };
     Component* newOne();
-    static Element* info(QString&, char* &, bool getNewOne=false);
+    static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
     QString vhdlCode(int);

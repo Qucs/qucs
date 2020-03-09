@@ -19,7 +19,7 @@ class jkff_SR : public Component
     jkff_SR();
     ~jkff_SR() { };
     Component* newOne();
-    static Element* info(QString&, char* &, bool getNewOne=false);
+    static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
     QString vhdlCode(int);

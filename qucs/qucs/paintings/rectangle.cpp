@@ -108,7 +108,7 @@ Painting* Rectangle::newOne()
 }
 
 // --------------------------------------------------------------------------
-Element* Rectangle::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Rectangle::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Rectangle");
   BitmapFile = (char *) "rectangle";
@@ -118,7 +118,7 @@ Element* Rectangle::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // --------------------------------------------------------------------------
-Element* Rectangle::info_filled(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Rectangle::info_filled(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("filled Rectangle");
   BitmapFile = (char *) "filledrect";

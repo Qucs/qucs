@@ -17,7 +17,7 @@
 
 #include "graphicitem.h"
 
-Element::Element()
+GraphicItem::GraphicItem()
 {
   ElemType = isDummyElement;
   cx = cy = x1 = y1 = x2 = y2 = 0;
@@ -31,27 +31,27 @@ Element::Element()
 #endif
 }
 
-Element::~Element()
+GraphicItem::~GraphicItem()
 {
 }
 
-void Element::paintScheme(QPainter *)
+void GraphicItem::paintScheme(QPainter *)
 {
 }
 
-void Element::setCenter(int, int, bool)
+void GraphicItem::setCenter(int, int, bool)
 {
 }
 
-void Element::getCenter(int&, int&)
+void GraphicItem::getCenter(int&, int&)
 {
 }
 
-QRectF Element::boundingRect() const
+QRectF GraphicItem::boundingRect() const
 {
   return QRectF(x1, y1, x2-x1, y2-y1);
 }
 
-void Element::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
+void GraphicItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
 }

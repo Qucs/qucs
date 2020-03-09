@@ -82,7 +82,7 @@ Component* Equation::newOne()
   return new Equation();
 }
 
-Element* Equation::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Equation::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Equation");
   BitmapFile = (char *) "";

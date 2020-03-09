@@ -74,7 +74,7 @@ Component* iRect::newOne()
   return new iRect();
 }
 
-Element* iRect::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* iRect::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Rectangle Current");
   BitmapFile = (char *) "irect";

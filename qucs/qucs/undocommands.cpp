@@ -2,7 +2,7 @@
 
 #include "undocommands.h"
 
-AddItemCommand::AddItemCommand(Element *item,
+AddItemCommand::AddItemCommand(GraphicItem *item,
                                QPointF pos,
                                QGraphicsScene *scene,
                                QUndoCommand *parent)

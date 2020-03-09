@@ -43,7 +43,7 @@ public:
 
 
   Diagram* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();
   void calcCoordinate(const double*, const double*, const double*, float*, float*, Axis const*) const;

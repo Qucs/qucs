@@ -96,7 +96,7 @@ Diagram* PolarDiagram::newOne()
 }
 
 // ------------------------------------------------------------
-Element* PolarDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* PolarDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Polar");
   BitmapFile = (char *) "polar";

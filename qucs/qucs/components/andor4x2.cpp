@@ -45,7 +45,7 @@ Component * andor4x2::newOne()
   return p;
 }
 
-Element * andor4x2::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * andor4x2::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("4x2 AndOr");
   BitmapFile = (char *) "andor4x2";

@@ -26,7 +26,7 @@ public:
   CoaxialLine();
  ~CoaxialLine();
   Component* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

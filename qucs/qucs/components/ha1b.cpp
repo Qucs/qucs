@@ -45,7 +45,7 @@ Component * ha1b::newOne()
   return p;
 }
 
-Element * ha1b::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * ha1b::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("1Bit HalfAdder");
   BitmapFile = (char *) "ha1b";

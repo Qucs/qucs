@@ -105,7 +105,7 @@ Component * phototransistor::newOne()
   return p;
 }
 
-Element * phototransistor::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * phototransistor::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Phototransistor");
   BitmapFile = (char *) "phototransistor";

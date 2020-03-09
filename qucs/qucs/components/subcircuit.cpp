@@ -55,7 +55,7 @@ Component* Subcircuit::newOne()
 }
 
 // -------------------------------------------------------
-Element* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Subcircuit");
   BitmapFile = (char *) "subcircuit";

@@ -264,7 +264,7 @@ void createIcons() {
     foreach (Module *Mod, Comps) {
       if (Mod->info) {
 
-        Element *e = (Mod->info) (Name, File, true);
+        GraphicItem *e = (Mod->info) (Name, File, true);
 
         Component *c = (Component* ) e;
 
@@ -409,7 +409,7 @@ void createDocData() {
 
         nComps += 1;
 
-        Element *e = (Mod->info) (Name, File, true);
+        GraphicItem *e = (Mod->info) (Name, File, true);
         Component *c = (Component* ) e;
 
         // object info
@@ -489,7 +489,7 @@ void createListComponentEntry(){
     QString Name;
 
     foreach (Module *Mod, Comps) {
-      Element *e = (Mod->info) (Name, File, true);
+      GraphicItem *e = (Mod->info) (Name, File, true);
 		// dangerous. better precheck cast
       Component *c = (Component* ) e;
 

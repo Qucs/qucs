@@ -115,7 +115,7 @@ Component *vacomponent::newOne(QString filename)
  * Used to get \p Name and \p BitmapFile.
  * It can also create new objects from symbol file.
  */
-Element *vacomponent::info(QString &Name, QString &BitmapFile,
+GraphicItem *vacomponent::info(QString &Name, QString &BitmapFile,
                            bool getNewOne, QString filename)
 {
   // get variables out of file

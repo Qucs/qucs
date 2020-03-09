@@ -19,7 +19,7 @@ class mux2to1 : public Component
     mux2to1();
     ~mux2to1() { };
     Component* newOne();
-    static Element* info(QString&, char* &, bool getNewOne=false);
+    static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
     QString vhdlCode(int);

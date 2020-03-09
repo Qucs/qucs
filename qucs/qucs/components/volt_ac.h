@@ -26,7 +26,7 @@ public:
   Volt_ac();
   ~Volt_ac();
   Component* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

@@ -412,7 +412,7 @@ Diagram* TabDiagram::newOne()
 }
 
 // ------------------------------------------------------------
-Element* TabDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* TabDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Tabular");
   BitmapFile = (char *) "tabular";

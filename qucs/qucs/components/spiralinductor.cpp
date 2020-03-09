@@ -76,7 +76,7 @@ Component* spiralinductor::newOne()
   return new spiralinductor();
 }
 
-Element* spiralinductor::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* spiralinductor::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Spiral inductor");
   BitmapFile = (char *) "spiralinductor";

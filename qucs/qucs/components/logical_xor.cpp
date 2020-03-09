@@ -40,7 +40,7 @@ Component* Logical_XOR::newOne()
   return p;
 }
 
-Element* Logical_XOR::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Logical_XOR::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("n-port XOR");
   BitmapFile = (char *) "xor";

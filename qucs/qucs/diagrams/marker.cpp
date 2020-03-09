@@ -47,7 +47,7 @@ static double default_Z0=50;
  */
 
 Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
-  Element(),
+  GraphicItem(),
   pGraph(pg_),
   Precision(3),
   numMode(0),

@@ -53,7 +53,7 @@ Component* Switch::newOne()
 }
 
 // -------------------------------------------------------
-Element* Switch::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Switch::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Switch");
   BitmapFile = (char *) "switch";

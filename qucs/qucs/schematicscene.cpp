@@ -115,7 +115,7 @@ void SchematicScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
   // need to figure out a way to get the element selected for insert
   QPointF pos = event->scenePos();
   SchematicView *view = static_cast<SchematicView *>(views().at(0));
-  Element *chosen = view->App->chosenElement;
+  GraphicItem *chosen = view->App->chosenElement;
 
   if (chosen) {
     Component *comp = static_cast<Component *>(chosen);
@@ -133,7 +133,7 @@ void SchematicScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
   QPointF pos = event->scenePos();
   SchematicView *view = static_cast<SchematicView *>(views().at(0));
-  Element *chosen = view->App->chosenElement;
+  GraphicItem *chosen = view->App->chosenElement;
 
   if (chosen){
     if (!this->items().contains(chosen)) {
@@ -175,7 +175,7 @@ void SchematicScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 
 // Inserts a port into the schematic and connects it to another node if
 // the coordinates are identical. The node is returned.
-Node* SchematicScene::insertNode(int x, int y, Element *e)
+Node* SchematicScene::insertNode(int x, int y, GraphicItem *e)
 {
     Node *pn;
     // check if new node lies upon existing node
@@ -760,7 +760,7 @@ int SchematicScene::insertWire(Wire *w)
     int  n1, n2;
     Wire *pw, *nw;
     Node *pn, *pn2;
-    Element *pe;
+    GraphicItem *pe;
     // ................................................................
     // Check if the new line covers existing nodes.
     // In order to also check new appearing wires -> use "for"-loop
@@ -867,7 +867,7 @@ int SchematicScene::insertWire(Wire *w)
 
 // ---------------------------------------------------
 // Follows a wire line and selects it.
-void SchematicScene::selectWireLine(Element *pe, Node *pn, bool ctrl)
+void SchematicScene::selectWireLine(GraphicItem *pe, Node *pn, bool ctrl)
 {
     Node *pn_1st = pn;
     while(pn->Connections.count() == 2)
@@ -1005,7 +1005,7 @@ void SchematicScene::deleteWire(Wire *w)
 
 // ---------------------------------------------------
 int SchematicScene::copyWires(int& x1, int& y1, int& x2, int& y2,
-                         QList<Element *> *ElementCache)
+                         QList<GraphicItem *> *ElementCache)
 {
     int count=0;
     Node *pn;
@@ -1079,7 +1079,7 @@ Marker* SchematicScene::setMarker(int x, int y)
 
 // ---------------------------------------------------
 // Moves the marker pointer left/right on the graph.
-void SchematicScene::markerLeftRight(bool left, Q3PtrList<Element> *Elements)
+void SchematicScene::markerLeftRight(bool left, Q3PtrList<GraphicItem> *Elements)
 {
     Marker *pm;
     bool acted = false;
@@ -1097,7 +1097,7 @@ void SchematicScene::markerLeftRight(bool left, Q3PtrList<Element> *Elements)
 
 // ---------------------------------------------------
 // Moves the marker pointer up/down on the more-dimensional graph.
-void SchematicScene::markerUpDown(bool up, Q3PtrList<Element> *Elements)
+void SchematicScene::markerUpDown(bool up, Q3PtrList<GraphicItem> *Elements)
 {
     Marker *pm;
     bool acted = false;
@@ -1294,9 +1294,9 @@ void SchematicScene::selectMarkers()
 // For moving elements: If the moving element is connected to a not
 // moving element, insert two wires. If the connected element is already
 // a wire, use this wire. Otherwise create new wire.
-void SchematicScene::newMovingWires(Q3PtrList<Element> *p, Node *pn, int pos)
+void SchematicScene::newMovingWires(Q3PtrList<GraphicItem> *p, Node *pn, int pos)
 {
-    Element *pe;
+    GraphicItem *pe;
 
     if(pn->State & 8)  // Were new wires already inserted ?
         return;
@@ -1325,7 +1325,7 @@ void SchematicScene::newMovingWires(Q3PtrList<Element> *p, Node *pn, int pos)
         if(pn2->Connections.count() == 2) // two existing wires connected ?
             if((pn2->State & (8+4)) == 0)
             {
-                Element *pe2 = pn2->Connections.getFirst();
+                GraphicItem *pe2 = pn2->Connections.getFirst();
                 if(pe2 == pe) pe2 = pn2->Connections.getLast();
                 // connected wire connected to exactly one wire ?
                 if(pe2->ElemType == isWire)
@@ -1416,13 +1416,13 @@ void SchematicScene::newMovingWires(Q3PtrList<Element> *p, Node *pn, int pos)
 // BUG: does not (only) copy, as the name suggests.
 //      cannot be used to make copies.
 // returns the number of "copied" _Markers_ only
-int SchematicScene::copySelectedElements(Q3PtrList<Element> *p)
+int SchematicScene::copySelectedElements(Q3PtrList<GraphicItem> *p)
 {
     int i, count = 0;
     Component *pc;
     Wire      *pw;
     Diagram   *pd;
-    Element   *pe;
+    GraphicItem   *pe;
     Node      *pn;
 
 
@@ -1437,7 +1437,7 @@ int SchematicScene::copySelectedElements(Q3PtrList<Element> *p)
             // delete all port connections
             foreach(Port *pp, pc->Ports)
             {
-                pp->Connection->Connections.removeRef((Element*)pc);
+                pp->Connection->Connections.removeRef((GraphicItem*)pc);
                 pp->Connection->State = 4;
             }
 
@@ -1480,7 +1480,7 @@ int SchematicScene::copySelectedElements(Q3PtrList<Element> *p)
         pc = (Component*)p->next();
     }
 
-    for(pe = (Element*)pc; pe != 0; pe = p->next())  // new wires
+    for(pe = (GraphicItem*)pc; pe != 0; pe = p->next())  // new wires
         if(pe->isSelected())
             break;
 
@@ -1577,7 +1577,7 @@ int SchematicScene::copySelectedElements(Q3PtrList<Element> *p)
 
 // ---------------------------------------------------
 bool SchematicScene::copyComps2WiresPaints(int& x1, int& y1, int& x2, int& y2,
-                                      QList<Element *> *ElementCache)
+                                      QList<GraphicItem *> *ElementCache)
 {
     x1=INT_MAX;
     y1=INT_MAX;
@@ -1595,7 +1595,7 @@ bool SchematicScene::copyComps2WiresPaints(int& x1, int& y1, int& x2, int& y2,
 // ---------------------------------------------------
 // Used in "aligning()", "distributeHorizontal()", "distributeVertical()".
 int SchematicScene::copyElements(int& x1, int& y1, int& x2, int& y2,
-                            QList<Element *> *ElementCache)
+                            QList<GraphicItem *> *ElementCache)
 {
     int bx1, by1, bx2, by2;
     Wires->setAutoDelete(false);
@@ -1765,7 +1765,7 @@ bool SchematicScene::aligning(int Mode)
 {
     int x1, y1, x2, y2;
     int bx1, by1, bx2, by2, *bx=0, *by=0, *ax=0, *ay=0;
-    QList<Element *> ElementCache;
+    QList<GraphicItem *> ElementCache;
     int count = copyElements(x1, y1, x2, y2, &ElementCache);
     if(count < 1) return false;
 
@@ -1816,10 +1816,10 @@ bool SchematicScene::aligning(int Mode)
 
     Wire      *pw;
     Component *pc;
-    Element   *pe;
+    GraphicItem   *pe;
     // re-insert elements
     // Go backwards in order to insert node labels before its component.
-    QListIterator<Element *> elementCacheIter(ElementCache);
+    QListIterator<GraphicItem *> elementCacheIter(ElementCache);
     elementCacheIter.toBack();
     while (elementCacheIter.hasPrevious()) {
         pe = elementCacheIter.previous();
@@ -1864,7 +1864,7 @@ bool SchematicScene::aligning(int Mode)
             break;
 
         case isNodeLabel:
-            if(((Element*)(((WireLabel*)pe)->pOwner))->ElemType & isComponent)
+            if(((GraphicItem*)(((WireLabel*)pe)->pOwner))->ElemType & isComponent)
             {
                 pc = (Component*)(((WireLabel*)pe)->pOwner);
                 pc->Bounding(bx1, by1, bx2, by2);
@@ -1903,11 +1903,11 @@ bool SchematicScene::distributeHorizontal()
 {
     int x1, y1, x2, y2;
     int bx1, by1, bx2, by2;
-    QList<Element *> ElementCache;
+    QList<GraphicItem *> ElementCache;
     int count = copyElements(x1, y1, x2, y2, &ElementCache);
     if(count < 1) return false;
 
-    Element *pe;
+    GraphicItem *pe;
     WireLabel *pl;
     // Node labels are not counted for, so put them to the end.
     /*  for(pe = ElementCache.last(); pe != 0; pe = ElementCache.prev())
@@ -1917,7 +1917,7 @@ bool SchematicScene::distributeHorizontal()
         }*/
 
     // using bubble sort to get elements x ordered
-    QListIterator<Element *> elementCacheIter(ElementCache);
+    QListIterator<GraphicItem *> elementCacheIter(ElementCache);
     if(count > 1)
         for(int i = count-1; i>0; i--)
         {
@@ -1981,7 +1981,7 @@ bool SchematicScene::distributeHorizontal()
 
         case isNodeLabel:
             pl = (WireLabel*)pe;
-            if(((Element*)(pl->pOwner))->ElemType & isComponent)
+            if(((GraphicItem*)(pl->pOwner))->ElemType & isComponent)
                 pe->cx += x - ((Component*)(pl->pOwner))->cx;
             else
             {
@@ -2019,13 +2019,13 @@ bool SchematicScene::distributeVertical()
 {
     int x1, y1, x2, y2;
     int bx1, by1, bx2, by2;
-    QList<Element *> ElementCache;
+    QList<GraphicItem *> ElementCache;
     int count = copyElements(x1, y1, x2, y2, &ElementCache);
     if(count < 1) return false;
 
     // using bubble sort to get elements y ordered
-    QListIterator<Element *> elementCacheIter(ElementCache);
-    Element *pe;
+    QListIterator<GraphicItem *> elementCacheIter(ElementCache);
+    GraphicItem *pe;
     if(count > 1)
         for(int i = count-1; i>0; i--)
         {
@@ -2088,7 +2088,7 @@ bool SchematicScene::distributeVertical()
             break;
 
         case isNodeLabel:
-            if(((Element*)(((WireLabel*)pe)->pOwner))->ElemType & isComponent)
+            if(((GraphicItem*)(((WireLabel*)pe)->pOwner))->ElemType & isComponent)
                 pe->cy += y - ((Component*)(((WireLabel*)pe)->pOwner))->cy;
             else
             {
@@ -2171,8 +2171,8 @@ void SchematicScene::insertComponentNodes(Component *c, bool noOptimize)
     if(noOptimize)  return;
 
     Node    *pn;
-    Element *pe, *pe1;
-    Q3PtrList<Element> *pL;
+    GraphicItem *pe, *pe1;
+    Q3PtrList<GraphicItem> *pL;
     // if component over wire then delete this wire
     QListIterator<Port *> iport(c->Ports);
     // omit the first element
@@ -2208,7 +2208,7 @@ void SchematicScene::insertRawComponent(Component *c, bool noOptimize)
     // a ground symbol erases an existing label on the wire line
     if(c->obsolete_model_hack() == "GND") { // BUG.
         c->gnd_obsolete_model_override_hack("x");
-        Element *pe = getWireLabel(c->Ports.first()->Connection);
+        GraphicItem *pe = getWireLabel(c->Ports.first()->Connection);
         if(pe) if((pe->ElemType & isComponent) == 0)
             {
                 delete ((Conductor*)pe)->Label;
@@ -2295,7 +2295,7 @@ void SchematicScene::insertComponent(Component *c)
         // a ground symbol erases an existing label on the wire line
         if(c->obsolete_model_hack() == "GND") { // BUG
             c->gnd_obsolete_model_override_hack("x");
-            Element *pe = getWireLabel(c->Ports.first()->Connection);
+            GraphicItem *pe = getWireLabel(c->Ports.first()->Connection);
             if(pe) if((pe->ElemType & isComponent) == 0)
                 {
                     delete ((Conductor*)pe)->Label;
@@ -2451,7 +2451,7 @@ void SchematicScene::setCompPorts(Component *pc)
 
     foreach(Port *pp, pc->Ports)
     {
-        pp->Connection->Connections.removeRef((Element*)pc);// delete connections
+        pp->Connection->Connections.removeRef((GraphicItem*)pc);// delete connections
         switch(pp->Connection->Connections.count())
         {
         case 0:
@@ -2551,7 +2551,7 @@ void SchematicScene::deleteComp(Component *c)
 
 // ---------------------------------------------------
 int SchematicScene::copyComponents(int& x1, int& y1, int& x2, int& y2,
-                              QList<Element *> *ElementCache)
+                              QList<GraphicItem *> *ElementCache)
 {
     Component *pc;
     int bx1, by1, bx2, by2, count=0;
@@ -2595,7 +2595,7 @@ int SchematicScene::copyComponents(int& x1, int& y1, int& x2, int& y2,
 
 // ---------------------------------------------------
 void SchematicScene::copyComponents2(int& x1, int& y1, int& x2, int& y2,
-                                QList<Element *> *ElementCache)
+                                QList<GraphicItem *> *ElementCache)
 {
     Component *pc;
     // find bounds of all selected components
@@ -2643,7 +2643,7 @@ void SchematicScene::oneLabel(Node *n1)
 {
     Wire *pw;
     Node *pn, *pNode;
-    Element *pe;
+    GraphicItem *pe;
     WireLabel *pl = 0;
     bool named=false;   // wire line already named ?
     Q3PtrList<Node> Cons;
@@ -2726,7 +2726,7 @@ int SchematicScene::placeNodeLabel(WireLabel *pl)
 
     if(!pn)  return -1;
 
-    Element *pe = getWireLabel(pn);
+    GraphicItem *pe = getWireLabel(pn);
     if(pe)      // name found ?
     {
         if(pe->ElemType & isComponent)
@@ -2748,11 +2748,11 @@ int SchematicScene::placeNodeLabel(WireLabel *pl)
 // ---------------------------------------------------
 // Test, if wire line is already labeled and returns a pointer to the
 // labeled element.
-Element* SchematicScene::getWireLabel(Node *pn_)
+GraphicItem* SchematicScene::getWireLabel(Node *pn_)
 {
     Wire *pw;
     Node *pn, *pNode;
-    Element *pe;
+    GraphicItem *pe;
     Q3PtrList<Node> Cons;
 
     for(pn = Nodes->first(); pn!=0; pn = Nodes->next())
@@ -2816,7 +2816,7 @@ void SchematicScene::insertNodeLabel(WireLabel *pl)
 
 // ---------------------------------------------------
 void SchematicScene::copyLabels(int& x1, int& y1, int& x2, int& y2,
-                           QList<Element *> *ElementCache)
+                           QList<GraphicItem *> *ElementCache)
 {
     WireLabel *pl;
     // find bounds of all selected wires
@@ -2864,7 +2864,7 @@ bool SchematicScene::rotateElements()
 
   int x1=INT_MAX, y1=INT_MAX;
   int x2=INT_MIN, y2=INT_MIN;
-  QList<Element *> ElementCache;
+  QList<GraphicItem *> ElementCache;
   copyLabels(x1, y1, x2, y2, &ElementCache);   // must be first of all !
   copyComponents(x1, y1, x2, y2, &ElementCache);
   copyWires(x1, y1, x2, y2, &ElementCache);
@@ -2884,7 +2884,7 @@ bool SchematicScene::rotateElements()
   Component *pc;
   WireLabel *pl;
   // re-insert elements
-  foreach(Element *pe, ElementCache)
+  foreach(GraphicItem *pe, ElementCache)
     switch(pe->ElemType) {
       case isComponent:
       case isAnalogComponent:
@@ -2964,7 +2964,7 @@ bool SchematicScene::mirrorXComponents()
   Components->setAutoDelete(false);
 
   int x1, y1, x2, y2;
-  QList<Element *> ElementCache;
+  QList<GraphicItem *> ElementCache;
   if(!copyComps2WiresPaints(x1, y1, x2, y2, &ElementCache))
     return false;
   Wires->setAutoDelete(true);
@@ -2980,7 +2980,7 @@ bool SchematicScene::mirrorXComponents()
   Component *pc;
   WireLabel *pl;
   // re-insert elements
-  foreach(Element *pe, ElementCache)
+  foreach(GraphicItem *pe, ElementCache)
     switch(pe->ElemType) {
       case isComponent:
       case isAnalogComponent:
@@ -3034,7 +3034,7 @@ bool SchematicScene::mirrorYComponents()
   Components->setAutoDelete(false);
 
   int x1, y1, x2, y2;
-  QList<Element *> ElementCache;
+  QList<GraphicItem *> ElementCache;
   if(!copyComps2WiresPaints(x1, y1, x2, y2, &ElementCache))
     return false;
   Wires->setAutoDelete(true);
@@ -3049,7 +3049,7 @@ bool SchematicScene::mirrorYComponents()
   Component *pc;
   WireLabel *pl;
   // re-insert elements
-  foreach(Element *pe, ElementCache)
+  foreach(GraphicItem *pe, ElementCache)
     switch(pe->ElemType) {
       case isComponent:
       case isAnalogComponent:
@@ -3104,7 +3104,7 @@ bool SchematicScene::mirrorYComponents()
 
 // ---------------------------------------------------
 void SchematicScene::copyPaintings(int& x1, int& y1, int& x2, int& y2,
-                              QList<Element *> *ElementCache)
+                              QList<GraphicItem *> *ElementCache)
 {
     Painting *pp;
     int bx1, by1, bx2, by2;

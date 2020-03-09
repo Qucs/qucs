@@ -19,7 +19,7 @@ class binarytogrey4bit : public Component
     binarytogrey4bit();
     ~binarytogrey4bit() { };
     Component* newOne();
-    static Element* info(QString&, char* &, bool getNewOne=false);
+    static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
     QString vhdlCode(int);

@@ -26,7 +26,7 @@ public:
   Logical_NOR();
  ~Logical_NOR();
   Component* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

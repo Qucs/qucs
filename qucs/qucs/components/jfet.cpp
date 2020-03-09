@@ -89,7 +89,7 @@ Component* JFET::newOne()
 }
 
 // -------------------------------------------------------
-Element* JFET::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* JFET::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("n-JFET");
   BitmapFile = (char *) "nfet";
@@ -99,7 +99,7 @@ Element* JFET::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-Element* JFET::info_p(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* JFET::info_p(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("p-JFET");
   BitmapFile = (char *) "pfet";

@@ -121,7 +121,7 @@ Painting* GraphicText::newOne()
 }
 
 // --------------------------------------------------------------------------
-Element* GraphicText::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* GraphicText::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Text");
   BitmapFile = (char *) "text";

@@ -89,7 +89,7 @@ bool MouseActions::pasteElements(SchematicView *Doc)
   SchematicFile *sch = new SchematicFile();
   if(!sch->paste(&stream, &movingElements)) return false;
 
-  Element *pe;
+  GraphicItem *pe;
   int xmax, xmin, ymax, ymin;
   xmin = ymin = INT_MAX;
   xmax = ymax = INT_MIN;
@@ -162,9 +162,9 @@ void MouseActions::editLabel(SchematicView *Doc, WireLabel *pl)
 
 // -----------------------------------------------------------
 // Reinserts all elements (moved by the user) back into the schematic.
-void MouseActions::endElementMoving(SchematicView *Doc, Q3PtrList<Element> *movElements)
+void MouseActions::endElementMoving(SchematicView *Doc, Q3PtrList<GraphicItem> *movElements)
 {
-  Element *pe;
+  GraphicItem *pe;
   SchematicScene *scene = Doc->scene;
   for(pe = movElements->first(); pe!=0; pe = movElements->next()) {
 //    pe->isSelected = false;  // deselect first (maybe afterwards pe == NULL)
@@ -220,10 +220,10 @@ void MouseActions::endElementMoving(SchematicView *Doc, Q3PtrList<Element> *movE
 
 // -----------------------------------------------------------
 // Moves elements in "movElements" by x/y
-void MouseActions::moveElements(Q3PtrList<Element> *movElements, int x, int y)
+void MouseActions::moveElements(Q3PtrList<GraphicItem> *movElements, int x, int y)
 {
   Wire *pw;
-  Element *pe;
+  GraphicItem *pe;
   for(pe = movElements->first(); pe != 0; pe = movElements->next()) {
     if(pe->ElemType == isWire) {
       pw = (Wire*)pe;   // connected wires are not moved completely
@@ -468,7 +468,7 @@ void MouseActions::MMoveMoving(SchematicView *Doc, QMouseEvent *Event)
 
   Wire *pw;
   // Changes the position of all moving elements by dx/dy
-  for(Element *pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
+  for(GraphicItem *pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
     if(pe->ElemType == isWire) {
       pw = (Wire*)pe;   // connecting wires are not moved completely
 
@@ -781,7 +781,7 @@ void MouseActions::MMoveZoomIn(SchematicView *Doc, QMouseEvent *Event)
  */
 void MouseActions::rightPressMenu(SchematicView *Doc, QMouseEvent *Event)
 {
-  focusElement = dynamic_cast<Element*>(Doc->scene->itemAt(Event->pos(), QTransform()));
+  focusElement = dynamic_cast<GraphicItem*>(Doc->scene->itemAt(Event->pos(), QTransform()));
 
   if(focusElement)  // remove special function (4 least significant bits)
     focusElement->ElemType &= isSpecialMask;
@@ -905,7 +905,7 @@ void MouseActions::MPressLabel(SchematicView *Doc, QMouseEvent* Event)
   }
 
   QString Name, Value;
-  Element *pe=0;
+  GraphicItem *pe=0;
   // is wire line already labeled ?
   if(pw) pe = scene->getWireLabel(pw->Port1);
   else pe = scene->getWireLabel(pn);
@@ -1002,7 +1002,7 @@ void MouseActions::MPressSelect(SchematicView *Doc, QMouseEvent *Event)
   SchematicScene *scene = Doc->scene;
 
   // FIXME Ctrl + press to select multiple is not working
-  focusElement = dynamic_cast<Element*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform() ));
+  focusElement = dynamic_cast<GraphicItem*>(Doc->scene->itemAt(Doc->mapToScene(Event->pos()), QTransform() ));
 
   isMoveEqual = false;   // moving not neccessarily square
 
@@ -1163,7 +1163,7 @@ void MouseActions::MPressSelect(SchematicView *Doc, QMouseEvent *Event)
 void MouseActions::MPressDelete(SchematicView *Doc, QMouseEvent* Event)
 {
   SchematicScene *scene = Doc->scene;
-  Element *pe = dynamic_cast<Element*>(scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
+  GraphicItem *pe = dynamic_cast<GraphicItem*>(scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(pe)
   {
     TODO("make sure is selected");//pe->isSelected() = true;
@@ -1268,7 +1268,7 @@ void MouseActions::MPressMirrorY(SchematicView *Doc, QMouseEvent* Event)
 void MouseActions::MPressRotate(SchematicView *Doc, QMouseEvent* Event)
 {
   SchematicScene *scene = Doc->scene;
-  Element *e = dynamic_cast<Element*>(scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
+  GraphicItem *e = dynamic_cast<GraphicItem*>(scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(e == 0) return;
   e->ElemType &= isSpecialMask;  // remove special functions
 
@@ -1642,7 +1642,7 @@ void MouseActions::MPressMarker(SchematicView *Doc, QMouseEvent* Event)
 void MouseActions::MPressOnGrid(SchematicView *Doc, QMouseEvent* Event)
 {
   SchematicScene *scene = Doc->scene;
-  Element *pe = dynamic_cast<Element*>(scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
+  GraphicItem *pe = dynamic_cast<GraphicItem*>(scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(pe)
   {
     pe->ElemType &= isSpecialMask;  // remove special functions (4 lowest bits)
@@ -1882,7 +1882,7 @@ void MouseActions::paintElementsScheme(SchematicView *p)
 // -----------------------------------------------------------
 void MouseActions::moveElements(SchematicView *Doc, int& x1, int& y1)
 {
-  Element *pe;
+  GraphicItem *pe;
   Doc->scene->setOnGrid(x1, y1);
 
   for(pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
@@ -1899,7 +1899,7 @@ void MouseActions::moveElements(SchematicView *Doc, int& x1, int& y1)
 void MouseActions::rotateElements(SchematicView *Doc, int& x1, int& y1)
 {
   int x2, y2;
-  Element *pe;
+  GraphicItem *pe;
   Doc->scene->setOnGrid(x1, y1);
 
   for(pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
@@ -1940,7 +1940,7 @@ void MouseActions::MReleasePaste(SchematicView *Doc, QMouseEvent *Event)
   QPointF pos = Doc->mapToScene(Event->pos());
   SchematicScene *scene = Doc->scene;
 
-  Element *pe;
+  GraphicItem *pe;
   switch(Event->button()) {
   case Qt::LeftButton :
     // insert all moved elements into document

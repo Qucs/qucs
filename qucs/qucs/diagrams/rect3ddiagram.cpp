@@ -1069,7 +1069,7 @@ Diagram* Rect3DDiagram::newOne()
 }
 
 // ------------------------------------------------------------
-Element* Rect3DDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Rect3DDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("3D-Cartesian");
   BitmapFile = (char *) "rect3d";

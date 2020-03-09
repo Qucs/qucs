@@ -40,7 +40,7 @@ Component* Logical_OR::newOne()
   return p;
 }
 
-Element* Logical_OR::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Logical_OR::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("n-port OR");
   BitmapFile = (char *) "or";

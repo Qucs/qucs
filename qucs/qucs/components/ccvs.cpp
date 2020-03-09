@@ -72,7 +72,7 @@ Component* CCVS::newOne()
   return new CCVS();
 }
 
-Element* CCVS::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* CCVS::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Current Controlled Voltage Source");
   BitmapFile = (char *) "ccvs";

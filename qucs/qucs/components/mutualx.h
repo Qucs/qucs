@@ -29,7 +29,7 @@ public:
   MutualX();
   ~MutualX() {};
   Component* newOne();
-  static Element* info(QString& Name, char* &BitmapFile, bool getNewOne);
+  static GraphicItem* info(QString& Name, char* &BitmapFile, bool getNewOne);
 
 protected:
   void createSymbol();

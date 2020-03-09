@@ -57,7 +57,7 @@ Component* RFedd2P::newOne()
 }
 
 // -------------------------------------------------------
-Element* RFedd2P::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* RFedd2P::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Equation Defined 2-port RF Device");
   BitmapFile = (char *) "rfedd";

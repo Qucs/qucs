@@ -34,8 +34,8 @@ public:
   void setCenter(int, int, bool relative=false);
 
   Painting* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
-  static Element* info_filled(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info_filled(QString&, char* &, bool getNewOne=false);
   bool load(const QString&);
   QString save();
   QString saveCpp();

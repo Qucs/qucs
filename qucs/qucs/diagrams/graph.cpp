@@ -26,7 +26,7 @@
 class Diagram;
 
 Graph::Graph(Diagram const* d, const QString& _Line) :
-  Element(),
+  GraphicItem(),
   Style(GRAPHSTYLE_SOLID),
   diagram(d)
 {

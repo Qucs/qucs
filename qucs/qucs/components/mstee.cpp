@@ -66,7 +66,7 @@ Component* MStee::newOne()
   return new MStee();
 }
 
-Element* MStee::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* MStee::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Microstrip Tee");
   BitmapFile = (char *) "mstee";

@@ -19,7 +19,7 @@ class log_amp : public Component
     log_amp();
     ~log_amp() { };
     Component* newOne();
-    static Element* info(QString&, char* &, bool getNewOne=false);
+    static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
 };

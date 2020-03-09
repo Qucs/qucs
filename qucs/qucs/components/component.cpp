@@ -44,7 +44,7 @@
  * \class Component
  * \brief The Component class implements a generic analog component
  */
-Component::Component() : Element()
+Component::Component() : GraphicItem()
 {
   ElemType = isAnalogComponent;
 

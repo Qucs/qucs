@@ -19,7 +19,7 @@ class greytobinary4bit : public Component
     greytobinary4bit();
     ~greytobinary4bit() { };
     Component* newOne();
-    static Element* info(QString&, char* &, bool getNewOne=false);
+    static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
     QString vhdlCode(int);

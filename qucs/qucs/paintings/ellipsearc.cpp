@@ -94,7 +94,7 @@ Painting* EllipseArc::newOne()
 }
 
 // --------------------------------------------------------------------------
-Element* EllipseArc::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* EllipseArc::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Elliptic Arc");
   BitmapFile = (char *) "ellipsearc";

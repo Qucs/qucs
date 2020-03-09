@@ -36,7 +36,7 @@ Component * DLS_nto1::newOne()
   return p;
 }
 
-Element * DLS_nto1::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * DLS_nto1::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("A2D Level Shifter");
   BitmapFile = (char *) "DLS_nto1";

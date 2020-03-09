@@ -47,7 +47,7 @@ Component * jkff_SR::newOne()
   return p;
 }
 
-Element * jkff_SR::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * jkff_SR::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("JK-FlipFlop w/ SR");
   BitmapFile = (char *) "jkff_SR";

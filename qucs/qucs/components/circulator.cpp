@@ -62,7 +62,7 @@ Component* Circulator::newOne()
   return new Circulator();
 }
 
-Element* Circulator::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Circulator::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Circulator");
   BitmapFile = (char *) "circulator";

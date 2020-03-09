@@ -124,7 +124,7 @@ Component* Logical_Buf::newOne()
 }
 
 // -------------------------------------------------------
-Element* Logical_Buf::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Logical_Buf::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Buffer");
   BitmapFile = (char *) "buffer";

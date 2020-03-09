@@ -70,7 +70,7 @@ Component* Transformer::newOne()
   return new Transformer();
 }
 
-Element* Transformer::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Transformer::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Transformer");
   BitmapFile = (char *) "transformer";

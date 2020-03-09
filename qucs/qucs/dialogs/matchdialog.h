@@ -33,7 +33,7 @@
 #include <QDialog>
 #include <cmath>
 
-class Element;
+class GraphicItem;
 class QLabel;
 class QLineEdit;
 class QComboBox;

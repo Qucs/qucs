@@ -45,7 +45,7 @@ Component * binarytogrey4bit::newOne()
   return p;
 }
 
-Element * binarytogrey4bit::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * binarytogrey4bit::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("4Bit Bin2Gray");
   BitmapFile = (char *) "binarytogrey4bit";

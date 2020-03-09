@@ -62,7 +62,7 @@ Component* SPDeEmbed::newOne()
   return p;
 }
 
-Element* SPDeEmbed::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* SPDeEmbed::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   // "de-embedding" at the beginning, so it's always visible in the component dock
   // to help distinguish it from the regular embedding component
@@ -80,7 +80,7 @@ Element* SPDeEmbed::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-Element* SPDeEmbed::info2(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* SPDeEmbed::info2(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("de-embedding 2-port S parameter file");
   BitmapFile = (char *) "spdfile2";
@@ -90,7 +90,7 @@ Element* SPDeEmbed::info2(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-Element* SPDeEmbed::info4(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* SPDeEmbed::info4(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("de-embedding 4-port S parameter file");
   BitmapFile = (char *) "spdfile4";

@@ -68,7 +68,7 @@ Component* CoaxialLine::newOne()
   return new CoaxialLine();
 }
 
-Element* CoaxialLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* CoaxialLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Coaxial Line");
   BitmapFile = (char *) "coaxial";

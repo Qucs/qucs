@@ -146,13 +146,13 @@ private:
   /// Refactor into something loadBlock(Stream, enum::BlockType)
   /// Use switch case inside method to handle each type
   bool loadComponents(QTextStream*, Q3PtrList<Component> *List=0);
-  bool loadWires(QTextStream*, Q3PtrList<Element> *List=0);
+  bool loadWires(QTextStream*, Q3PtrList<GraphicItem> *List=0);
   bool loadDiagrams(QTextStream*);
   bool loadPaintings(QTextStream*);
   bool loadIntoNothing(QTextStream*);
 
   QString createClipboardFile();
-  bool    pasteFromClipboard(QTextStream *, Q3PtrList<Element>*);
+  bool    pasteFromClipboard(QTextStream *, Q3PtrList<GraphicItem>*);
 
   bool    rebuild(QString *);
   bool    rebuildSymbol(QString *);
@@ -186,7 +186,7 @@ public: // serializer
   // from schematicview
   void    cut();
   void    copy();
-  bool    paste(QTextStream*, Q3PtrList<Element>*);
+  bool    paste(QTextStream*, Q3PtrList<GraphicItem>*);
   bool    load();
   int     save();
   int     saveSymbolCpp (void);

@@ -19,7 +19,7 @@ class logic_0 : public Component
     logic_0();
     ~logic_0() { };
     Component* newOne();
-    static Element* info(QString&, char* &, bool getNewOne=false);
+    static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
     QString vhdlCode(int);

@@ -27,7 +27,7 @@ public:
  ~TruthDiagram();
 
   Diagram* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   int calcDiagram();
 };
 

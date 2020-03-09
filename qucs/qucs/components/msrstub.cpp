@@ -57,7 +57,7 @@ Component* MSrstub::newOne()
   return new MSrstub();
 }
 
-Element* MSrstub::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* MSrstub::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Microstrip Radial Stub");
   BitmapFile = (char *) "msrstub";

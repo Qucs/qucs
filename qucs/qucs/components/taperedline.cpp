@@ -74,7 +74,7 @@ Component* taperedline::newOne()
   return new taperedline();
 }
 
-Element* taperedline::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* taperedline::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Tapered line");
   BitmapFile = (char *) "taperedline";

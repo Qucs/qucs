@@ -26,7 +26,7 @@ public:
   Digi_Source();
  ~Digi_Source();
   Component* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info(QString&, char* &, bool getNewOne=false);
 
 protected:
   QString netlist();

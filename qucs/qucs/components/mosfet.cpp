@@ -40,7 +40,7 @@ Component* MOSFET::newOne()
 }
 
 // -------------------------------------------------------
-Element* MOSFET::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* MOSFET::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("n-MOSFET");
   BitmapFile = (char *) "nmosfet";
@@ -50,7 +50,7 @@ Element* MOSFET::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-Element* MOSFET::info_p(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* MOSFET::info_p(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("p-MOSFET");
   BitmapFile = (char *) "pmosfet";
@@ -66,7 +66,7 @@ Element* MOSFET::info_p(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-Element* MOSFET::info_depl(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* MOSFET::info_depl(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("depletion MOSFET");
   BitmapFile = (char *) "dmosfet";

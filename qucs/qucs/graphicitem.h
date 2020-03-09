@@ -142,11 +142,11 @@ struct Property {
   * Element and its derived classes can be used in the QGraphicsView canvas.
   *
   */
-class Element : public QGraphicsItem{
+class GraphicItem : public QGraphicsItem{
 protected:
-  Element(); // Element is an abstract basetype. hence we hide the constructors.
+  GraphicItem(); // Element is an abstract basetype. hence we hide the constructors.
 public:
-  virtual ~Element();
+  virtual ~GraphicItem();
 
   virtual void paintScheme(QPainter *);
 
@@ -170,7 +170,7 @@ public:
   * \brief label for Node and Wire classes
   *
   */
-class Conductor : public Element {
+class Conductor : public GraphicItem {
 public:
   WireLabel *Label;
 };

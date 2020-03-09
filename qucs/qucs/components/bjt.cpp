@@ -39,7 +39,7 @@ Component* BJT::newOne()
 }
 
 // -------------------------------------------------------
-Element* BJT::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* BJT::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("npn transistor");
   BitmapFile = (char *) "npn";
@@ -49,7 +49,7 @@ Element* BJT::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-Element* BJT::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* BJT::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("pnp transistor");
   BitmapFile = (char *) "pnp";

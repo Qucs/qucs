@@ -63,7 +63,7 @@ Component * mod_amp::newOne()
   return p;
 }
 
-Element * mod_amp::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * mod_amp::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Modular OpAmp");
   BitmapFile = (char *) "mod_amp";

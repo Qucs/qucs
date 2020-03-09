@@ -26,7 +26,7 @@ public:
   Mutual2();
  ~Mutual2();
   Component* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

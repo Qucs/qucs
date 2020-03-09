@@ -66,7 +66,7 @@ Component* Thyristor::newOne()
   return new Thyristor();
 }
 
-Element* Thyristor::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Thyristor::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Thyristor");
   BitmapFile = (char *) "thyristor";

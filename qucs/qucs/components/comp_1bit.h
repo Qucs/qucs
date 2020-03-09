@@ -19,7 +19,7 @@ class comp_1bit : public Component
     comp_1bit();
     ~comp_1bit() { };
     Component* newOne();
-    static Element* info(QString&, char* &, bool getNewOne=false);
+    static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
     QString vhdlCode(int);

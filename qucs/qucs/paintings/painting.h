@@ -20,7 +20,7 @@
 
 #include "graphicitem.h"
 
-class Painting : public Element  {
+class Painting : public GraphicItem  {
 public:
   Painting();
  ~Painting() {}

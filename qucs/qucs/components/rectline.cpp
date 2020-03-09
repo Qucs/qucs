@@ -76,7 +76,7 @@ Component* RectLine::newOne()
   return new RectLine();
 }
 
-Element* RectLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* RectLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Rectangular Waveguide");
   BitmapFile = (char *) "rectline";

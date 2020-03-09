@@ -50,7 +50,7 @@ MutualX::MutualX()
 }
 
 // --------------------------------------------------------
-Element* MutualX::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* MutualX::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("N Mutual Inductors");
   BitmapFile = (char *) "mutualx";

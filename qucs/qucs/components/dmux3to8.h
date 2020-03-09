@@ -18,7 +18,7 @@ class dmux3to8 : public Component
     dmux3to8();
     ~dmux3to8() { };
     Component* newOne();
-    static Element* info(QString&, char* &, bool getNewOne=false);
+    static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
     QString vhdlCode(int);

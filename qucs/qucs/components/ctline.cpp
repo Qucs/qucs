@@ -76,7 +76,7 @@ Component* CoupledTLine::newOne()
   return new CoupledTLine();
 }
 
-Element* CoupledTLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* CoupledTLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Coupled Transmission Line");
   BitmapFile = (char *) "ctline";

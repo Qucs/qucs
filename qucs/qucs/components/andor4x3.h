@@ -19,7 +19,7 @@ class andor4x3 : public Component
     andor4x3();
     ~andor4x3() { };
     Component* newOne();
-    static Element* info(QString&, char* &, bool getNewOne=false);
+    static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
     QString vhdlCode(int);

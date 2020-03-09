@@ -57,7 +57,7 @@ Component* SPEmbed::newOne()
 }
 
 // -------------------------------------------------------
-Element* SPEmbed::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* SPEmbed::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("n-port S parameter file");
   BitmapFile = (char *) "spfile3";
@@ -73,7 +73,7 @@ Element* SPEmbed::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-Element* SPEmbed::info1(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* SPEmbed::info1(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("1-port S parameter file");
   BitmapFile = (char *) "spfile1";
@@ -83,7 +83,7 @@ Element* SPEmbed::info1(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-Element* SPEmbed::info2(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* SPEmbed::info2(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("2-port S parameter file");
   BitmapFile = (char *) "spfile2";

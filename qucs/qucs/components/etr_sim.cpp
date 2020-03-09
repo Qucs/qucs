@@ -83,7 +83,7 @@ Component* ETR_Sim::newOne()
   return new ETR_Sim();
 }
 
-Element* ETR_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* ETR_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("External transient simulation");
   BitmapFile = (char *) "etran";

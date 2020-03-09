@@ -45,7 +45,7 @@ Component * dmux2to4::newOne()
   return p;
 }
 
-Element * dmux2to4::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * dmux2to4::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("2to4 Demux");
   BitmapFile = (char *) "dmux2to4";

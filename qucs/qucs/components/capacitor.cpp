@@ -41,7 +41,7 @@ Component* Capacitor::newOne()
   return new Capacitor();
 }
 
-Element* Capacitor::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Capacitor::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Capacitor");
   BitmapFile = (char *) "capacitor";

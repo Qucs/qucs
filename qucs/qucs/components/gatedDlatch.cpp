@@ -47,7 +47,7 @@ Component * gatedDlatch::newOne()
   return p;
 }
 
-Element * gatedDlatch::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * gatedDlatch::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Gated D-Latch");
   BitmapFile = (char *) "gatedDlatch";

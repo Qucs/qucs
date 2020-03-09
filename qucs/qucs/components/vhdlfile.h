@@ -29,7 +29,7 @@ public:
   VHDL_File();
  ~VHDL_File() {};
   Component* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info(QString&, char* &, bool getNewOne=false);
 
   bool createSubNetlist(QTextStream *);
   QString getErrorText() { return ErrText; }

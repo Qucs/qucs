@@ -19,7 +19,7 @@ class pad2bit : public Component
     pad2bit();
     ~pad2bit() { };
     Component* newOne();
-    static Element* info(QString&, char* &, bool getNewOne=false);
+    static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
     QString vhdlCode(int);

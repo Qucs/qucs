@@ -32,7 +32,7 @@ typedef enum{
 
 struct Axis;
 
-class Marker : public Element {
+class Marker : public GraphicItem {
 public:
   Marker(Graph *pg_=0, int _nn=0, int cx_=0, int cy_=0);
   virtual ~Marker() {}

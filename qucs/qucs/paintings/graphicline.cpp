@@ -102,7 +102,7 @@ Painting* GraphicLine::newOne()
 }
 
 // --------------------------------------------------------------------------
-Element* GraphicLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* GraphicLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Line");
   BitmapFile = (char *) "line";

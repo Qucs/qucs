@@ -40,7 +40,7 @@ Component* Logical_NOR::newOne()
   return p;
 }
 
-Element* Logical_NOR::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Logical_NOR::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("n-port NOR");
   BitmapFile = (char *) "nor";

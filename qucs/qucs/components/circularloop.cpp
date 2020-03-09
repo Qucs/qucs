@@ -65,7 +65,7 @@ Component* circularloop::newOne()
   return new circularloop();
 }
 
-Element* circularloop::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* circularloop::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Circular loop");
   BitmapFile = (char *) "circularloop";

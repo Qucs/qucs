@@ -165,7 +165,7 @@ Component * MESFET::newOne()
   return p;
 }
 
-Element * MESFET::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * MESFET::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("MESFET");
   BitmapFile = (char *) "MESFET";

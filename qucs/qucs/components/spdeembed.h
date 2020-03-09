@@ -32,9 +32,9 @@ public:
   SPDeEmbed();
  ~SPDeEmbed() {};
   Component* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
-  static Element* info2(QString&, char* &, bool getNewOne=false);
-  static Element* info4(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info2(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info4(QString&, char* &, bool getNewOne=false);
 
   QString getSubcircuitFile();
 

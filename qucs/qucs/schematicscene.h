@@ -37,7 +37,7 @@ class Diagram;
 class Component;
 class Painting;
 class Marker;
-class Element;
+class GraphicItem;
 class WireLabel;
 class Frame;
 
@@ -118,7 +118,7 @@ public:
    ******************************************************************** */
 
 public:
-  Node* insertNode(int, int, Element*);
+  Node* insertNode(int, int, GraphicItem*);
   Node* selectedNode(int, int);
 
   int   insertWireNode1(Wire*);
@@ -128,19 +128,19 @@ public:
   bool  connectHWires2(Wire*);
   bool  connectVWires2(Wire*);
   int   insertWire(Wire*);
-  void  selectWireLine(Element*, Node*, bool);
+  void  selectWireLine(GraphicItem*, Node*, bool);
   Wire* selectedWire(int, int);
   Wire* splitWire(Wire*, Node*);
   bool  oneTwoWires(Node*);
   void  deleteWire(Wire*);
 
   Marker* setMarker(int, int);
-  void    markerLeftRight(bool, Q3PtrList<Element>*);
-  void    markerUpDown(bool, Q3PtrList<Element>*);
+  void    markerLeftRight(bool, Q3PtrList<GraphicItem>*);
+  void    markerUpDown(bool, Q3PtrList<GraphicItem>*);
 
   void     selectMarkers();
-  void     newMovingWires(Q3PtrList<Element>*, Node*, int);
-  int      copySelectedElements(Q3PtrList<Element>*);
+  void     newMovingWires(Q3PtrList<GraphicItem>*, Node*, int);
+  int      copySelectedElements(Q3PtrList<GraphicItem>*);
   bool     deleteElements();
   bool     aligning(int);
   bool     distributeHorizontal();
@@ -160,11 +160,11 @@ public:
 
   void     oneLabel(Node*);
   int      placeNodeLabel(WireLabel*);
-  Element* getWireLabel(Node*);
+  GraphicItem* getWireLabel(Node*);
   void     insertNodeLabel(WireLabel*);
-  void     copyLabels(int&, int&, int&, int&, QList<Element *> *);
+  void     copyLabels(int&, int&, int&, int&, QList<GraphicItem *> *);
 
-  void      copyPaintings(int&, int&, int&, int&, QList<Element *> *);
+  void      copyPaintings(int&, int&, int&, int&, QList<GraphicItem *> *);
 
   void  reloadGraphs();
 
@@ -173,11 +173,11 @@ public:
 
 private:
   void insertComponentNodes(Component*, bool);
-  int  copyWires(int&, int&, int&, int&, QList<Element *> *);
-  int  copyComponents(int&, int&, int&, int&, QList<Element *> *);
-  void copyComponents2(int&, int&, int&, int&, QList<Element *> *);
-  bool copyComps2WiresPaints(int&, int&, int&, int&, QList<Element *> *);
-  int  copyElements(int&, int&, int&, int&, QList<Element *> *);
+  int  copyWires(int&, int&, int&, int&, QList<GraphicItem *> *);
+  int  copyComponents(int&, int&, int&, int&, QList<GraphicItem *> *);
+  void copyComponents2(int&, int&, int&, int&, QList<GraphicItem *> *);
+  bool copyComps2WiresPaints(int&, int&, int&, int&, QList<GraphicItem *> *);
+  int  copyElements(int&, int&, int&, int&, QList<GraphicItem *> *);
 
 public:
   /*! \brief Get (schematic) file reference */

@@ -34,7 +34,7 @@ Component * pad2bit::newOne()
   return p;
 }
 
-Element * pad2bit::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * pad2bit::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("2Bit Pattern");
   BitmapFile = (char *) "pad2bit";

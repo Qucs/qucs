@@ -80,7 +80,7 @@ Component* indq::newOne()
   return new indq();
 }
 
-Element* indq::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* indq::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Inductor with Q");
   BitmapFile = (char *) "indq";

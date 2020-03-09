@@ -44,7 +44,7 @@ class ProjectView;
 class ContextMenuTabWidget;
 class VersionTriplet;
 class QucsApp;
-class Element;
+class GraphicItem;
 
 class QLabel;
 class QAction;
@@ -177,7 +177,7 @@ public:
   SearchDialog *SearchDia;  // global in order to keep values
 
   /// \brief Item chosen for insertion
-  Element *chosenElement;
+  GraphicItem *chosenElement;
 
   // current mouse methods
   void (MouseActions::*MouseMoveAction) (SchematicView*, QMouseEvent*);

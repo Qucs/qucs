@@ -45,7 +45,7 @@ Component * comp_4bit::newOne()
   return p;
 }
 
-Element * comp_4bit::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * comp_4bit::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("4Bit Comparator");
   BitmapFile = (char *) "comp_4bit";

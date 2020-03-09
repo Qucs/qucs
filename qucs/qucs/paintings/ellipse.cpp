@@ -110,7 +110,7 @@ Painting* Ellipse::newOne()
 }
 
 // --------------------------------------------------------------------------
-Element* Ellipse::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Ellipse::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Ellipse");
   BitmapFile = (char *) "ellipse";
@@ -120,7 +120,7 @@ Element* Ellipse::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // --------------------------------------------------------------------------
-Element* Ellipse::info_filled(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Ellipse::info_filled(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("filled Ellipse");
   BitmapFile = (char *) "filledellipse";

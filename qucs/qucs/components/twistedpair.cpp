@@ -84,7 +84,7 @@ Component* TwistedPair::newOne()
   return new TwistedPair();
 }
 
-Element* TwistedPair::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* TwistedPair::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Twisted-Pair");
   BitmapFile = (char *) "twistedpair";

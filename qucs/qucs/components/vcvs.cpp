@@ -74,7 +74,7 @@ Component* VCVS::newOne()
   return new VCVS();
 }
 
-Element* VCVS::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* VCVS::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Voltage Controlled Voltage Source");
   BitmapFile = (char *) "vcvs";

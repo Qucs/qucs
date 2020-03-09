@@ -35,7 +35,7 @@ Component * DLS_1ton::newOne()
   return p;
 }
 
-Element * DLS_1ton::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * DLS_1ton::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("D2A Level Shifter");
   BitmapFile = (char *) "DLS_1ton";

@@ -168,7 +168,7 @@ Painting* Arrow::newOne()
 }
 
 // --------------------------------------------------------------------------
-Element* Arrow::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* Arrow::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Arrow");
   BitmapFile = (char *) "arrow";

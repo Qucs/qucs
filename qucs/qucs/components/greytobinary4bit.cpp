@@ -45,7 +45,7 @@ Component * greytobinary4bit::newOne()
   return p;
 }
 
-Element * greytobinary4bit::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * greytobinary4bit::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("4Bit Gray2Bin");
   BitmapFile = (char *) "greytobinary4bit";

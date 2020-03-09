@@ -62,7 +62,7 @@ Component* vProbe::newOne()
   return new vProbe();
 }
 
-Element* vProbe::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* vProbe::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Voltage Probe");
   BitmapFile = (char *) "vprobe";

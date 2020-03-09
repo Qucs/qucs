@@ -26,7 +26,7 @@ public:
   Logical_AND();
  ~Logical_AND();
   Component* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

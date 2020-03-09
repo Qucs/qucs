@@ -63,7 +63,7 @@ Component* BondWire::newOne()
   return new BondWire();
 }
 
-Element* BondWire::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* BondWire::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Bond Wire");
   BitmapFile = (char *) "bondwire";

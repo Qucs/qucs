@@ -79,7 +79,7 @@ Component* TunnelDiode::newOne()
   return new TunnelDiode();
 }
 
-Element* TunnelDiode::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* TunnelDiode::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Tunnel Diode");
   BitmapFile = (char *) "tunneldiode";

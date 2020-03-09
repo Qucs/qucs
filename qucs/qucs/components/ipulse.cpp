@@ -72,7 +72,7 @@ Component* iPulse::newOne()
   return new iPulse();
 }
 
-Element* iPulse::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* iPulse::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Current Pulse");
   BitmapFile = (char *) "ipulse";

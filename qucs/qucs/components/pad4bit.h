@@ -19,7 +19,7 @@ class pad4bit : public Component
     pad4bit();
     ~pad4bit() { };
     Component* newOne();
-    static Element* info(QString&, char* &, bool getNewOne=false);
+    static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
     QString vhdlCode(int);

@@ -45,7 +45,7 @@ Component * comp_2bit::newOne()
   return p;
 }
 
-Element * comp_2bit::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * comp_2bit::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("2Bit Comparator");
   BitmapFile = (char *) "comp_2bit";

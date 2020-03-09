@@ -79,7 +79,7 @@ Component* CPWgap::newOne()
   return new CPWgap();
 }
 
-Element* CPWgap::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* CPWgap::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Coplanar Gap");
   BitmapFile = (char *) "cpwgap";

@@ -79,7 +79,7 @@ Component* RLCG::newOne()
   return new RLCG();
 }
 
-Element* RLCG::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* RLCG::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("RLCG Transmission Line");
   BitmapFile = (char *) "rlcg";

@@ -95,7 +95,7 @@ Component* wProbe::newOne()
   return new wProbe();
 }
 
-Element* wProbe::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* wProbe::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Power Probe");
   BitmapFile = (char *) "wprobe";

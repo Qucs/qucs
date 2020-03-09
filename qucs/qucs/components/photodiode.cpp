@@ -89,7 +89,7 @@ Component * photodiode::newOne()
   return p;
 }
 
-Element * photodiode::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * photodiode::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Photodiode");
   BitmapFile = (char *) "photodiode";

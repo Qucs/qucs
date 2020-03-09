@@ -19,7 +19,7 @@ class DLS_1ton : public Component
     DLS_1ton();
     ~DLS_1ton() { };
     Component* newOne();
-    static Element* info(QString&, char* &, bool getNewOne=false);
+    static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
 };

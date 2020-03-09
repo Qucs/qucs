@@ -60,7 +60,7 @@ Component * potentiometer::newOne()
   return p;
 }
 
-Element * potentiometer::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * potentiometer::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Potentiometer");
   BitmapFile = (char *) "potentiometer";

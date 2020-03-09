@@ -70,7 +70,7 @@ Component* iFile::newOne()
   return new iFile();
 }
 
-Element* iFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* iFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("File Based Current Source");
   BitmapFile = (char *) "ifile";

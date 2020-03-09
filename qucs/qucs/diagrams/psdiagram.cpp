@@ -123,7 +123,7 @@ Diagram* PSDiagram::newOne()
 }
 
 // ------------------------------------------------------------
-Element* PSDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* PSDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Polar-Smith Combi");
   BitmapFile = (char *) "polarsmith";
@@ -133,7 +133,7 @@ Element* PSDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // ------------------------------------------------------------
-Element* PSDiagram::info_sp(QString& Name, char* &BitmapFile, bool getNewOne)
+GraphicItem* PSDiagram::info_sp(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Smith-Polar Combi");
   BitmapFile = (char *) "smithpolar";

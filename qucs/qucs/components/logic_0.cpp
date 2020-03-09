@@ -42,7 +42,7 @@ Component * logic_0::newOne()
   return p;
 }
 
-Element * logic_0::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * logic_0::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Logic 0");
   BitmapFile = (char *) "logic_0";

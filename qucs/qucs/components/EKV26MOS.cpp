@@ -176,7 +176,7 @@ Component * EKV26MOS::newOne()
   return p;
 }
 
-Element * EKV26MOS::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * EKV26MOS::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("EPFL-EKV NMOS 2.6");
   BitmapFile = (char *) "EKV26nMOS";
@@ -185,7 +185,7 @@ Element * EKV26MOS::info(QString& Name, char * &BitmapFile, bool getNewOne)
   return 0;
 }
 
-Element * EKV26MOS::info_pmos(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * EKV26MOS::info_pmos(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("EPFL-EKV PMOS 2.6");
   BitmapFile = (char *) "EKV26pMOS";

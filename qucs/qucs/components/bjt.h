@@ -26,8 +26,8 @@ public:
   BJT();
  ~BJT() {};
   Component* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
-  static Element* info_pnp(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info_pnp(QString&, char* &, bool getNewOne=false);
 
 protected:
   void createSymbol();

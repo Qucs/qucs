@@ -46,7 +46,7 @@ Component * dmux3to8::newOne()
   return p;
 }
 
-Element * dmux3to8::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * dmux3to8::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("3to8 Demux");
   BitmapFile = (char *) "dmux3to8";

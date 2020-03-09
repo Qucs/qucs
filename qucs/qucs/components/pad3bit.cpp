@@ -34,7 +34,7 @@ Component * pad3bit::newOne()
   return p;
 }
 
-Element * pad3bit::info(QString& Name, char * &BitmapFile, bool getNewOne)
+GraphicItem * pad3bit::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("3Bit Pattern");
   BitmapFile = (char *) "pad3bit";

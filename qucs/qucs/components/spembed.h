@@ -26,9 +26,9 @@ public:
   SPEmbed();
  ~SPEmbed() {};
   Component* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
-  static Element* info1(QString&, char* &, bool getNewOne=false);
-  static Element* info2(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info1(QString&, char* &, bool getNewOne=false);
+  static GraphicItem* info2(QString&, char* &, bool getNewOne=false);
 
   QString getSubcircuitFile();
 

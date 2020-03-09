@@ -19,7 +19,7 @@ class comp_4bit : public Component
     comp_4bit();
     ~comp_4bit() { };
     Component* newOne();
-    static Element* info(QString&, char* &, bool getNewOne=false);
+    static GraphicItem* info(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
     QString vhdlCode(int);
