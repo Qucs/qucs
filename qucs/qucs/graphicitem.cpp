@@ -22,6 +22,13 @@ Element::Element()
   ElemType = isDummyElement;
   cx = cy = x1 = y1 = x2 = y2 = 0;
   drawScheme = false;
+
+  setFlags(ItemIsSelectable|ItemIsMovable);
+#if QT_VERSION < 0x050000
+  setAcceptsHoverEvents(true);
+#else
+  setAcceptHoverEvents(true);
+#endif
 }
 
 Element::~Element()
