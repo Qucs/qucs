@@ -876,8 +876,8 @@ void SchematicScene::selectWireLine(Element *pe, Node *pn, bool ctrl)
         else  pe = pn->Connections.first();
 
         if(pe->ElemType != isWire) break;
-        if(ctrl) pe->ElemSelected ^= ctrl;
-        else pe->ElemSelected = true;
+        TODO("check selection");//if(ctrl) pe->isSelected() ^= ctrl;
+        //else pe->isSelected() = true;
 
         if(((Wire*)pe)->Port1 == pn)  pn = ((Wire*)pe)->Port2;
         else  pn = ((Wire*)pe)->Port1;
@@ -900,7 +900,7 @@ Wire* SchematicScene::selectedWire(int x, int y)
 Wire* SchematicScene::splitWire(Wire *pw, Node *pn)
 {
     Wire *newWire = new Wire(pn->cx, pn->cy, pw->x2, pw->y2, pn, pw->Port2);
-    newWire->ElemSelected = pw->ElemSelected;
+    TODO("check selection");//newWire->isSelected() = pw->isSelected();
 
     pw->x2 = pn->cx;
     pw->y2 = pn->cy;
@@ -1012,7 +1012,7 @@ int SchematicScene::copyWires(int& x1, int& y1, int& x2, int& y2,
     Wire *pw;
     WireLabel *pl;
     for(pw = Wires->first(); pw != 0; )  // find bounds of all selected wires
-        if(pw->ElemSelected)
+        if(pw->isSelected())
         {
             if(pw->x1 < x1) x1 = pw->x1;
             if(pw->x2 > x2) x2 = pw->x2;
@@ -1154,7 +1154,7 @@ void SchematicScene::highlightWireLabels ()
         pltestouter = pwouter->Label;
         if (pltestouter)
         {
-            if (pltestouter->ElemSelected)
+            if (pltestouter->isSelected())
             {
                 bool hiLightOuter = false;
                 // Search for matching labels on wires
@@ -1207,7 +1207,7 @@ void SchematicScene::highlightWireLabels ()
         pltestouter = pnouter->Label;
         if (pltestouter)
         {
-            if (pltestouter->ElemSelected)
+            if (pltestouter->isSelected())
             {
                 bool hiLightOuter = false;
                 // Search for matching labels on wires
@@ -1282,40 +1282,43 @@ void SchematicScene::drawBias(QPainter *painter, const QRectF &rect)
 // Deselects all elements except 'e'.
 void SchematicScene::deselectElements(Element *e)
 {
+    TODO("check deselect");
+    /*
     // test all components
     for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-        if(e != pc)  pc->ElemSelected = false;
+        if(e != pc)  pc->isSelected() = false;
 
     // test all wires
     for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())
     {
-        if(e != pw)  pw->ElemSelected = false;
-        if(pw->Label) if(pw->Label != e)  pw->Label->ElemSelected = false;
+        if(e != pw)  pw->isSelected() = false;
+        if(pw->Label) if(pw->Label != e)  pw->Label->isSelected() = false;
     }
 
     // test all node labels
     for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
-        if(pn->Label) if(pn->Label != e)  pn->Label->ElemSelected = false;
+        if(pn->Label) if(pn->Label != e)  pn->Label->isSelected() = false;
 
     // test all diagrams
     foreach (auto pd, filterItems<Diagram>(this)) {
-        if(e != pd)  pd->ElemSelected = false;
+        if(e != pd)  pd->isSelected() = false;
 
         // test graphs of diagram
         foreach(Graph *pg, pd->Graphs)
         {
-            if(e != pg) pg->ElemSelected = false;
+            if(e != pg) pg->isSelected() = false;
 
             // test markers of graph
             foreach(Marker *pm, pg->Markers)
-                if(e != pm) pm->ElemSelected = false;
+                if(e != pm) pm->isSelected() = false;
         }
 
     }
 
     // test all paintings
     foreach (auto pp, filterItems<Painting>(this))
-        if(e != pp)  pp->ElemSelected = false;
+        if(e != pp)  pp->isSelected() = false;
+    */
 }
 
 // ---------------------------------------------------
@@ -1341,11 +1344,11 @@ int SchematicScene::selectElements(int x1, int y1, int x2, int y2, bool flag)
         pc->Bounding(cx1, cy1, cx2, cy2);
         if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2)
                     {
-                        pc->ElemSelected = true;
+                        pc->isSelected() = true;
                         z++;
                         continue;
                     }
-        if(pc->ElemSelected &= flag) z++;
+        if(pc->isSelected() &= flag) z++;
     }
 
 
@@ -1354,11 +1357,11 @@ int SchematicScene::selectElements(int x1, int y1, int x2, int y2, bool flag)
     {
         if(pw->x1 >= x1) if(pw->x2 <= x2) if(pw->y1 >= y1) if(pw->y2 <= y2)
                     {
-                        pw->ElemSelected = true;
+                        pw->isSelected() = true;
                         z++;
                         continue;
                     }
-        if(pw->ElemSelected &= flag) z++;
+        if(pw->isSelected() &= flag) z++;
     }
 
 
@@ -1372,11 +1375,11 @@ int SchematicScene::selectElements(int x1, int y1, int x2, int y2, bool flag)
             if(pl->x1 >= x1) if((pl->x1+pl->x2) <= x2)
                     if(pl->y1 >= y1) if((pl->y1+pl->y2) <= y2)
                         {
-                            pl->ElemSelected = true;
+                            pl->isSelected() = true;
                             z++;
                             continue;
                         }
-            if(pl->ElemSelected &= flag) z++;
+            if(pl->isSelected() &= flag) z++;
         }
     }
 
@@ -1390,11 +1393,11 @@ int SchematicScene::selectElements(int x1, int y1, int x2, int y2, bool flag)
             if(pl->x1 >= x1) if((pl->x1+pl->x2) <= x2)
                     if((pl->y1-pl->y2) >= y1) if(pl->y1 <= y2)
                         {
-                            pl->ElemSelected = true;
+                            pl->isSelected() = true;
                             z++;
                             continue;
                         }
-            if(pl->ElemSelected &= flag) z++;
+            if(pl->isSelected() &= flag) z++;
         }
     }
 
@@ -1404,7 +1407,7 @@ int SchematicScene::selectElements(int x1, int y1, int x2, int y2, bool flag)
         // test graphs of diagram
         foreach(Graph *pg, pd->Graphs)
         {
-            if(pg->ElemSelected &= flag) z++;
+            if(pg->isSelected() &= flag) z++;
 
             // test markers of graph
             foreach(Marker *pm, pg->Markers)
@@ -1412,11 +1415,11 @@ int SchematicScene::selectElements(int x1, int y1, int x2, int y2, bool flag)
                 pm->Bounding(cx1, cy1, cx2, cy2);
                 if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2)
                             {
-                                pm->ElemSelected = true;
+                                pm->isSelected() = true;
                                 z++;
                                 continue;
                             }
-                if(pm->ElemSelected &= flag) z++;
+                if(pm->isSelected() &= flag) z++;
             }
         }
 
@@ -1424,11 +1427,11 @@ int SchematicScene::selectElements(int x1, int y1, int x2, int y2, bool flag)
         pd->Bounding(cx1, cy1, cx2, cy2);
         if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2)
                     {
-                        pd->ElemSelected = true;
+                        pd->isSelected() = true;
                         z++;
                         continue;
                     }
-        if(pd->ElemSelected &= flag) z++;
+        if(pd->isSelected() &= flag) z++;
     }
 
     // test all paintings *******************************************
@@ -1436,11 +1439,11 @@ int SchematicScene::selectElements(int x1, int y1, int x2, int y2, bool flag)
         pp->Bounding(cx1, cy1, cx2, cy2);
         if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2)
                     {
-                        pp->ElemSelected = true;
+                        pp->isSelected() = true;
                         z++;
                         continue;
                     }
-        if(pp->ElemSelected &= flag) z++;
+        if(pp->isSelected() &= flag) z++;
     }
 
     return z;
@@ -1452,8 +1455,10 @@ void SchematicScene::selectMarkers()
 {
     foreach (auto const pd, filterItems<Diagram>(this))
         foreach(Graph *pg, pd->Graphs)
-            foreach(Marker *pm, pg->Markers)
-                pm->ElemSelected = true;
+            foreach(Marker *pm, pg->Markers) {
+                Q_UNUSED(pm);
+                TODO("select markers only");//pm->isSelected() = true;
+            }
 }
 
 // ---------------------------------------------------
@@ -1595,7 +1600,7 @@ int SchematicScene::copySelectedElements(Q3PtrList<Element> *p)
     // test all components *********************************
     // Insert components before wires in order to prevent short-cut removal.
     for(pc = Components->first(); pc != 0; )
-        if(pc->ElemSelected)
+        if(pc->isSelected())
         {
             p->append(pc);
             count++;
@@ -1615,10 +1620,10 @@ int SchematicScene::copySelectedElements(Q3PtrList<Element> *p)
     // test all wires and wire labels ***********************
     for(pw = Wires->first(); pw != 0; )
     {
-        if(pw->Label) if(pw->Label->ElemSelected)
+        if(pw->Label) if(pw->Label->isSelected())
                 p->append(pw->Label);
 
-        if(pw->ElemSelected)
+        if(pw->isSelected())
         {
             p->append(pw);
 
@@ -1647,7 +1652,7 @@ int SchematicScene::copySelectedElements(Q3PtrList<Element> *p)
     }
 
     for(pe = (Element*)pc; pe != 0; pe = p->next())  // new wires
-        if(pe->ElemSelected)
+        if(pe->isSelected())
             break;
 
     for(pw = (Wire*)pe; pw != 0; pw = (Wire*)p->next())
@@ -1695,13 +1700,13 @@ int SchematicScene::copySelectedElements(Q3PtrList<Element> *p)
     // test all node labels
     // do this last to avoid double copying
     for(pn = Nodes->first(); pn != 0; pn = Nodes->next())
-        if(pn->Label) if(pn->Label->ElemSelected)
+        if(pn->Label) if(pn->Label->isSelected())
                 p->append(pn->Label);
 
 
     // test all paintings **********************************
     for(Painting *ppa = Paintings->first(); ppa != 0; )
-        if(ppa->ElemSelected)
+        if(ppa->isSelected())
         {
             p->append(ppa);
             Paintings->take();
@@ -1712,7 +1717,7 @@ int SchematicScene::copySelectedElements(Q3PtrList<Element> *p)
     count = 0;  // count markers now
     // test all diagrams **********************************
     for(pd = Diagrams->first(); pd != 0; )
-        if(pd->ElemSelected)
+        if(pd->isSelected())
         {
             p->append(pd);
             Diagrams->take();
@@ -1727,7 +1732,7 @@ int SchematicScene::copySelectedElements(Q3PtrList<Element> *p)
                 while (im.hasNext())
                 {
                     pm = im.next();
-                    if(pm->ElemSelected)
+                    if(pm->isSelected())
                     {
                         count++;
                         p->append(pm);
@@ -1780,7 +1785,7 @@ int SchematicScene::copyElements(int& x1, int& y1, int& x2, int& y2,
 
     // find upper most selected diagram
     for(Diagram *pd = Diagrams->last(); pd != 0; pd = Diagrams->prev())
-        if(pd->ElemSelected)
+        if(pd->isSelected())
         {
             pd->Bounding(bx1, by1, bx2, by2);
             if(bx1 < x1) x1 = bx1;
@@ -1792,7 +1797,7 @@ int SchematicScene::copyElements(int& x1, int& y1, int& x2, int& y2,
         }
     // find upper most selected painting
     for(Painting *pp = Paintings->last(); pp != 0; pp = Paintings->prev())
-        if(pp->ElemSelected)
+        if(pp->isSelected())
         {
             pp->Bounding(bx1, by1, bx2, by2);
             if(bx1 < x1) x1 = bx1;
@@ -1814,7 +1819,7 @@ bool SchematicScene::deleteElements()
 
     Component *pc = Components->first();
     while(pc != 0)      // all selected component
-        if(pc->ElemSelected)
+        if(pc->isSelected())
         {
             deleteComp(pc);
             pc = Components->current();
@@ -1826,14 +1831,14 @@ bool SchematicScene::deleteElements()
     while(pw != 0)        // all selected wires and their labels
     {
         if(pw->Label)
-            if(pw->Label->ElemSelected)
+            if(pw->Label->isSelected())
             {
                 delete pw->Label;
                 pw->Label = 0;
                 sel = true;
             }
 
-        if(pw->ElemSelected)
+        if(pw->isSelected())
         {
             deleteWire(pw);
             pw = Wires->current();
@@ -1845,7 +1850,7 @@ bool SchematicScene::deleteElements()
     // all selected labels on nodes ***************************
     for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
         if(pn->Label)
-            if(pn->Label->ElemSelected)
+            if(pn->Label->isSelected())
             {
                 delete pn->Label;
                 pn->Label = 0;
@@ -1854,7 +1859,7 @@ bool SchematicScene::deleteElements()
 
     Diagram *pd = Diagrams->first();
     while(pd != 0)      // test all diagrams
-        if(pd->ElemSelected)
+        if(pd->isSelected())
         {
             Diagrams->remove();
             pd = Diagrams->current();
@@ -1877,14 +1882,14 @@ bool SchematicScene::deleteElements()
                 while (im.hasNext())
                 {
                     pm = im.next();
-                    if(pm->ElemSelected)
+                    if(pm->isSelected())
                     {
                         im.remove();
                         sel = true;
                     }
                 }
 
-                if(pg->ElemSelected)
+                if(pg->isSelected())
                 {
                     ig.remove();
                     sel = wasGraphDeleted = true;
@@ -1900,7 +1905,7 @@ bool SchematicScene::deleteElements()
     Painting *pp = Paintings->first();
     while(pp != 0)      // test all paintings
     {
-        if(pp->ElemSelected)
+        if(pp->isSelected())
             if(pp->Name.at(0) != '.')    // do not delete "PortSym", "ID_text"
             {
                 sel = true;
@@ -2579,7 +2584,7 @@ bool SchematicScene::activateSelectedComponents()
     int a;
     bool sel = false;
     for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-        if(pc->ElemSelected)
+        if(pc->isSelected())
         {
             a = pc->isActive - 1;
 
@@ -2678,7 +2683,7 @@ Component* SchematicScene::searchSelSubcircuit()
     // test all components
     for(Component *pc = Components->first(); pc != 0; pc = Components->next())
     {
-        if(!pc->ElemSelected) continue;
+        if(!pc->isSelected()) continue;
         if(pc->obsolete_model_hack() != "Sub")
             if(pc->obsolete_model_hack() != "VHDL")
                 if(pc->obsolete_model_hack() != "Verilog") continue;
@@ -2724,7 +2729,7 @@ int SchematicScene::copyComponents(int& x1, int& y1, int& x2, int& y2,
     // find bounds of all selected components
     for(pc = Components->first(); pc != 0; )
     {
-        if(pc->ElemSelected)
+        if(pc->isSelected())
         {
             pc->Bounding(bx1, by1, bx2, by2);  // is needed because of "distribute
             if(bx1 < x1) x1 = bx1;             // uniformly"
@@ -2767,7 +2772,7 @@ void SchematicScene::copyComponents2(int& x1, int& y1, int& x2, int& y2,
     // find bounds of all selected components
     for(pc = Components->first(); pc != 0; )
     {
-        if(pc->ElemSelected)
+        if(pc->isSelected())
         {
             // is better for unsymmetrical components
             if(pc->cx < x1)  x1 = pc->cx;
@@ -2989,7 +2994,7 @@ void SchematicScene::copyLabels(int& x1, int& y1, int& x2, int& y2,
     for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())
     {
         pl = pw->Label;
-        if(pl) if(pl->ElemSelected)
+        if(pl) if(pl->isSelected())
             {
                 if(pl->x1 < x1) x1 = pl->x1;
                 if(pl->y1-pl->y2 < y1) y1 = pl->y1-pl->y2;
@@ -3002,7 +3007,7 @@ void SchematicScene::copyLabels(int& x1, int& y1, int& x2, int& y2,
     for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
     {
         pl = pn->Label;
-        if(pl) if(pl->ElemSelected)
+        if(pl) if(pl->isSelected())
             {
                 if(pl->x1 < x1) x1 = pl->x1;
                 if(pl->y1-pl->y2 < y1) y1 = pl->y1-pl->y2;
@@ -3276,7 +3281,7 @@ void SchematicScene::copyPaintings(int& x1, int& y1, int& x2, int& y2,
     int bx1, by1, bx2, by2;
     // find boundings of all selected paintings
     for(pp = Paintings->first(); pp != 0; )
-        if(pp->ElemSelected)
+        if(pp->isSelected())
         {
             pp->Bounding(bx1, by1, bx2, by2);
             if(bx1 < x1) x1 = bx1;
@@ -3306,7 +3311,7 @@ bool SchematicScene::elementsOnGrid()
   // test all components
   Components->setAutoDelete(false);
   for(Component *pc = Components->last(); pc != 0; pc = Components->prev())
-    if(pc->ElemSelected) {
+    if(pc->isSelected()) {
 
       // rescue non-selected node labels
       foreach(Port *pp, pc->Ports)
@@ -3324,7 +3329,7 @@ bool SchematicScene::elementsOnGrid()
       setOnGrid(pc->cx, pc->cy);
       insertRawComponent(pc);
       Components->at(No);   // restore current list position
-      pc->ElemSelected = false;
+      TODO("why?");//pc->isSelected() = false;
       count = true;
 
       x -= pc->cx;
@@ -3344,7 +3349,7 @@ bool SchematicScene::elementsOnGrid()
     pl = pw->Label;
     pw->Label = 0;
 
-    if(pw->ElemSelected) {
+    if(pw->isSelected()) {
       // rescue non-selected node label
       pLabel = 0;
       if(pw->Port1->Label) {
@@ -3366,7 +3371,7 @@ bool SchematicScene::elementsOnGrid()
       setOnGrid(pw->x2, pw->y2);
       insertWire(pw);
       Wires->at(No);   // restore current list position
-      pw->ElemSelected = false;
+      TODO("why?");//pw->isSelected() = false;
       count = true;
       if(pl)
         setOnGrid(pl->cx, pl->cy);
@@ -3379,9 +3384,9 @@ bool SchematicScene::elementsOnGrid()
 
     if(pl) {
       pw->Label = pl;
-      if(pl->ElemSelected) {
+      if(pl->isSelected()) {
         setOnGrid(pl->x1, pl->y1);
-        pl->ElemSelected = false;
+        TODO("why?");//pl->isSelected() = false;
         count = true;
       }
     }
@@ -3391,39 +3396,39 @@ bool SchematicScene::elementsOnGrid()
   // test all node labels
   for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
     if(pn->Label)
-      if(pn->Label->ElemSelected) {
+      if(pn->Label->isSelected()) {
         setOnGrid(pn->Label->x1, pn->Label->y1);
-        pn->Label->ElemSelected = false;
+        TODO("why?");//pn->Label->isSelected() = false;
         count = true;
       }
 
   // test all diagrams
   for(Diagram *pd = Diagrams->last(); pd != 0; pd = Diagrams->prev()) {
-    if(pd->ElemSelected) {
+    if(pd->isSelected()) {
       setOnGrid(pd->cx, pd->cy);
-      pd->ElemSelected = false;
+      TODO("why?");//pd->isSelected() = false;
       count = true;
     }
 
     foreach(Graph *pg,pd->Graphs)
       // test markers of diagram
       foreach(Marker *pm, pg->Markers)
-        if(pm->ElemSelected) {
+        if(pm->isSelected()) {
 	  x = pm->x1 + pd->cx;
 	  y = pm->y1 + pd->cy;
 	  setOnGrid(x, y);
 	  pm->x1 = x - pd->cx;
 	  pm->y1 = y - pd->cy;
-	  pm->ElemSelected = false;
+	  TODO("why?");//pm->isSelected() = false;
 	  count = true;
         }
   }
 
   // test all paintings
   for(Painting *pa = Paintings->last(); pa != 0; pa = Paintings->prev())
-    if(pa->ElemSelected) {
+    if(pa->isSelected()) {
       setOnGrid(pa->cx, pa->cy);
-      pa->ElemSelected = false;
+      TODO("why?");//pa->isSelected() = false;
       count = true;
     }
 

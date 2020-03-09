@@ -82,7 +82,7 @@ QString SchematicFile::createClipboardFile()
   // Build element document.
   s += "<Components>\n";
   foreach (auto const pc, filterItems<Component>(scene)) {
-    if(pc->ElemSelected) {
+    if(pc->isSelected()) {
       QTextStream str(&s);
       saveComponent(str, pc);
       s += "\n";
@@ -93,9 +93,9 @@ QString SchematicFile::createClipboardFile()
 
   s += "<Wires>\n";
   foreach (auto const pw, filterItems<Wire>(scene)) {
-    if(pw->ElemSelected) {
+    if(pw->isSelected()) {
       z++;
-      if(pw->Label) if(!pw->Label->ElemSelected) {
+      if(pw->Label) if(!pw->Label->isSelected()) {
 	s += pw->save().section('"', 0, 0)+"\"\" 0 0 0>\n";
 	continue;
       }
@@ -103,21 +103,21 @@ QString SchematicFile::createClipboardFile()
     }
   }
   foreach (auto const pn, filterItems<Node>(scene)) {
-    if(pn->Label) if(pn->Label->ElemSelected) {
+    if(pn->Label) if(pn->Label->isSelected()) {
       s += pn->Label->save()+"\n";  z++; }
   }
   s += "</Wires>\n";
 
   s += "<Diagrams>\n";
   foreach (auto const pd, filterItems<Diagram>(scene)) {
-    if(pd->ElemSelected) {
+    if(pd->isSelected()) {
       s += pd->save()+"\n";  z++; }
   }
   s += "</Diagrams>\n";
 
   s += "<Paintings>\n";
   foreach (auto const pp, filterItems<Painting>(scene)) {
-    if(pp->ElemSelected)
+    if(pp->isSelected())
       if(pp->Name.at(0) != '.') {  // subcircuit specific -> do not copy
         s += "<"+pp->save()+">\n";  z++; }
   }

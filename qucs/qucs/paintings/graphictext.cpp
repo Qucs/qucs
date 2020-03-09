@@ -31,7 +31,6 @@
 GraphicText::GraphicText()
 {
   Name = "Text ";
-  ElemSelected = false;
   Color = QColor(0,0,0);
   Font = QucsSettings.font;
   cx = cy = 0;

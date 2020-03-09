@@ -84,7 +84,6 @@ Diagram::Diagram(int _cx, int _cy)
   hideLines = true;  // hide invisible lines
 
   ElemType = isDiagram;
-  ElemSelected = false;
   GridPen = QPen(Qt::lightGray,0);
 
   setFlags(ItemIsSelectable|ItemIsMovable);

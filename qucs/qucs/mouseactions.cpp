@@ -791,7 +791,6 @@ void MouseActions::rightPressMenu(SchematicView *Doc, QMouseEvent *Event)
   ComponentMenu->clear();
   while(true) {
     if(focusElement) {
-      focusElement->ElemSelected = true;
       QAction *editProp = new QAction(QObject::tr("Edit Properties"), QucsMain);
       QucsMain->connect(editProp, SIGNAL(triggered()), SLOT(slotEditElement()));
       ComponentMenu->addAction(editProp);
@@ -1142,9 +1141,8 @@ void MouseActions::MPressSelect(SchematicView *Doc, QMouseEvent *Event)
     // element could be moved
     if(!Ctrl)
     {
-      if(!focusElement->ElemSelected)// Don't move selected elements if clicked
+      if(!focusElement->isSelected())// Don't move selected elements if clicked
         scene->deselectElements(focusElement); // element was not selected.
-      focusElement->ElemSelected = true;
     }
     scene->setOnGrid(MAx1, MAy1);
     QucsMain->MouseMoveAction = &MouseActions::MMoveMoving;
@@ -1168,7 +1166,7 @@ void MouseActions::MPressDelete(SchematicView *Doc, QMouseEvent* Event)
   Element *pe = dynamic_cast<Element*>(scene->itemAt(Doc->mapToScene(Event->pos()), QTransform()));
   if(pe)
   {
-    pe->ElemSelected = true;
+    TODO("make sure is selected");//pe->isSelected() = true;
     scene->deleteElements();
 
     Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
@@ -1650,7 +1648,7 @@ void MouseActions::MPressOnGrid(SchematicView *Doc, QMouseEvent* Event)
     pe->ElemType &= isSpecialMask;  // remove special functions (4 lowest bits)
 
     // onGrid is toggle action -> no other element can be selected
-    pe->ElemSelected = true;
+    TODO("make sure is selected");//pe->isSelected() = true;
     scene->elementsOnGrid();
 
     Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
@@ -1947,7 +1945,7 @@ void MouseActions::MReleasePaste(SchematicView *Doc, QMouseEvent *Event)
   case Qt::LeftButton :
     // insert all moved elements into document
     for(pe = movingElements.first(); pe!=0; pe = movingElements.next()) {
-      pe->ElemSelected = false;
+      TODO("unselect");//pe->isSelected() = false;
       switch(pe->ElemType) {
 	case isWire:
 	  if(pe->x1 == pe->x2) if(pe->y1 == pe->y2)  break;

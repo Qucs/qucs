@@ -92,9 +92,7 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidge
   if (isSelected()) {
     painter->setPen(QPen(Qt::green,2));
     painter->drawRect(boundingRect());
-    ElemSelected = true;
   }
-  ElemSelected = false;
 }
 
 // ----------------------------------------------------------------

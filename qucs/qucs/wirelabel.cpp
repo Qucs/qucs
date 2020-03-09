@@ -32,7 +32,6 @@ WireLabel::WireLabel(const QString& _Name, int _cx, int _cy,
   initValue = "";
 
   ElemType = _Type;
-  ElemSelected = false;
   isHighlighted = false;
 
   setFlags(ItemIsSelectable|ItemIsMovable);
@@ -250,7 +249,7 @@ void WireLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, Q
   // line from Wire or Node to WireLabel label
   painter->drawLine(xpaint, ypaint, a, b);
 
-  if(ElemSelected)
+  if(isSelected())
   {
     painter->setPen(QPen(Qt::darkGray,3));
     painter->drawRoundRect(x1-2, y1-2, x2+6, y2+5);

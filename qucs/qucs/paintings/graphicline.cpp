@@ -27,7 +27,6 @@
 GraphicLine::GraphicLine(int cx_, int cy_, int x2_, int y2_, QPen Pen_)
 {
   Name = "Line ";
-  ElemSelected = false;
   Pen = Pen_;
   cx = cx_;
   cy = cy_;

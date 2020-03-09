@@ -28,7 +28,6 @@
 Ellipse::Ellipse(bool _filled)
 {
   Name = "Ellipse ";
-  ElemSelected = false;
   Pen = QPen(QColor());
   Brush = QBrush(Qt::lightGray);
   filled = _filled;

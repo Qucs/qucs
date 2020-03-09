@@ -35,7 +35,6 @@
 Arrow::Arrow()
 {
   Name = "Arrow ";
-  ElemSelected = false;
   Pen = QPen(QColor());
   cx = cy = 0;
   x1 = x2 = 0;

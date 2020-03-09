@@ -37,7 +37,6 @@ Graph::Graph(Diagram const* d, const QString& _Line) :
   Thick  = numMode = 0;
   Color  = 0x0000ff;   // blue
   Precision  = 3;
-  ElemSelected = false;
   yAxisNo = 0;   // left y axis
 
   cPointsY = 0;
@@ -75,7 +74,7 @@ void Graph::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidg
   // need to know parent to draw based on its coordinates
   const Diagram *parent= this->parentDiagram();
 
-  if(ElemSelected) {
+  if(isSelected()) {
     /// \todo  PrintScale
     //painter->setPen(QPen(Qt::darkGray,Thick*p->PrintScale+4));
     painter->setPen(QPen(Qt::darkGray,Thick));
@@ -282,7 +281,7 @@ void Graph::paintvect(int x0, int y0, QPainter *p) const
     if(!ScrPoints.size())
     return;
 
-  if(ElemSelected) {
+  if(isSelected()) {
     /// \todo p->setPen(QPen(Qt::darkGray,Thick*p->PrintScale+4));
     drawvect(x0, y0, p);
 

@@ -30,7 +30,6 @@ void ComponentTests::testConstructor() {
     Component *c = new Component();
 	 qDebug() << "elemType is" << c->elemType();
     QCOMPARE(static_cast<int>( c->elemType() ),  isAnalogComponent );
-    QCOMPARE(c->ElemSelected, false);
     QCOMPARE(c->cx, 0);
     QCOMPARE(c->cy, 0);
 }

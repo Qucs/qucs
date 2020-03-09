@@ -31,7 +31,6 @@ Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2)
   Label  = 0;
 
   ElemType = isWire;
-  ElemSelected = false;
 
   setFlags(ItemIsSelectable|ItemIsMovable);
 #if QT_VERSION < 0x050000
@@ -121,14 +120,12 @@ void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidge
 
 
  if(isSelected()) {
-   ElemSelected = true;
    painter->setPen(QPen(Qt::darkGray,6));
    painter->drawLine(x1, y1, x2, y2);
    painter->setPen(QPen(Qt::lightGray,2));
    painter->drawLine(x1, y1, x2, y2);
  }
  else {
-   ElemSelected = false;
    painter->setPen(QPen(Qt::darkBlue,2));
    painter->drawLine(x1, y1, x2, y2);
  }

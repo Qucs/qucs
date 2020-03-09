@@ -50,7 +50,6 @@ Component::Component() : Element()
 
   mirroredX = false;
   rotated = 0;
-  ElemSelected = false;
   isActive = COMP_IS_ACTIVE;
   showName = true;
 
@@ -396,12 +395,10 @@ void Component::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, Q
 
   // draw component bounding box
   if(isSelected()) {
-    ElemSelected = true;
     painter->setPen(QPen(Qt::darkGray,3));
     painter->drawRoundedRect(boundingRect(), 5.0, 5.0);
   }
   else {
-    ElemSelected = false;
     // else visualize boundingRect
     boundingBoxColor.setCosmetic(true); // do not scale thickness
     painter->setPen(boundingBoxColor);

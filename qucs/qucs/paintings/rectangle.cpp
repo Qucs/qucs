@@ -28,7 +28,6 @@
 Rectangle::Rectangle(bool _filled)
 {
   Name = "Rectangle ";
-  ElemSelected = false;
   Pen = QPen(QColor());
   Brush = QBrush(Qt::lightGray);
   filled = _filled;

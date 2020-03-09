@@ -23,7 +23,6 @@ PortSymbol::PortSymbol(int cx_, int cy_, const QString& numberStr_,
                                          const QString& nameStr_)
 {
   Name = ".PortSym ";
-  ElemSelected = false;
   cx = cx_;
   cy = cy_;
 

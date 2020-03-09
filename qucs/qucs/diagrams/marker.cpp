@@ -54,7 +54,7 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
   Z0(default_Z0) // BUG: see declaration.
 {
   ElemType = isMarker;
-  ElemSelected = transparent = false;
+  transparent = false;
 
   cx =  cx_;
   cy = -cy_;

@@ -20,7 +20,6 @@
 Element::Element()
 {
   ElemType = isDummyElement;
-  ElemSelected = false;
   cx = cy = x1 = y1 = x2 = y2 = 0;
   drawScheme = false;
 }

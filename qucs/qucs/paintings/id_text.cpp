@@ -22,7 +22,6 @@
 ID_Text::ID_Text(int cx_, int cy_)
 {
   Name = ".ID ";
-  ElemSelected = false;
   cx = cx_;
   cy = cy_;
   x2 = y2 = 20;

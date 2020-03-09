@@ -30,7 +30,6 @@
 EllipseArc::EllipseArc()
 {
   Name = "EArc ";
-  ElemSelected = false;
   Pen = QPen(QColor());
   cx = cy = x1 = x2 = y1 = y2 = Angle = ArcLen = 0;
 }
