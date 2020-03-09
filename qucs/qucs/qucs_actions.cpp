@@ -652,8 +652,12 @@ void QucsApp::slotSelectAll()
     ((TextDoc*)Doc)->selectAll();
   }
   else {
-    ((SchematicView*)Doc)->scene->selectElements(INT_MIN, INT_MIN, INT_MAX, INT_MAX, true);
-    ((SchematicView*)Doc)->viewport()->update();
+    SchematicScene *scene = ((SchematicView*)Doc)->scene;
+    QPainterPath path;
+    path.addRect(scene->sceneRect());
+    scene->setSelectionArea(path);
+    scene->update();
+    qDebug() << "Selected items: " << scene->selectedItems().length();
     mouseAction->drawn = false;
   }
 }
