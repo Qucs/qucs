@@ -255,6 +255,16 @@ void QucsApp::slotEscape()
     if(QucsMain->chosenElement)
         delete QucsMain->chosenElement;
     QucsMain->chosenElement = 0;
+
+    /// \todo fix this ugly pattern
+    // clear selection
+    QWidget *w = DocumentTab->currentWidget();
+    if(isTextDocument(w)) {
+        return;
+    }else{
+        SchematicView *Doc = (SchematicView*)w;
+        Doc->scene->clearSelection();
+    }
 }
 
 // -----------------------------------------------------------------------
