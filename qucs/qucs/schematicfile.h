@@ -154,7 +154,6 @@ private:
   QString createClipboardFile();
   bool    pasteFromClipboard(QTextStream *, Q3PtrList<GraphicItem>*);
 
-  bool    rebuild(QString *);
   bool    rebuildSymbol(QString *);
 
   static void createNodeSet(QStringList&, int&, Conductor*, Node*);

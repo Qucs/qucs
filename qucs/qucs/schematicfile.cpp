@@ -932,27 +932,6 @@ bool SchematicFile::loadDocument()
 }
 
 // -------------------------------------------------------------
-// Is quite similiar to "loadDocument()" but with less error checking.
-// Used for "undo" function.
-bool SchematicFile::rebuild(QString *s)
-{
-
-  TODO("check what rebuild means, clear the scene?")
-
-  QString Line;
-  QTextStream stream(s, QIODevice::ReadOnly);
-  Line = stream.readLine();  // skip identity byte
-
-  // read content *************************
-  if(!loadComponents(&stream))  return false;
-  if(!loadWires(&stream))  return false;
-  if(!loadDiagrams(&stream))  return false;
-  if(!loadPaintings(&stream)) return false;
-
-  return true;
-}
-
-// -------------------------------------------------------------
 // Same as "rebuild(QString *s)" but for symbol edit mode.
 bool SchematicFile::rebuildSymbol(QString *s)
 {
