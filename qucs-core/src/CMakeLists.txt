@@ -522,7 +522,8 @@ ADD_DEPENDENCIES( libqucsator equation )
 #
 # Link qucsator and libqucsator
 #
-TARGET_LINK_LIBRARIES( qucsator libqucsator ${CMAKE_DL_LIBS})
+TARGET_LINK_LIBRARIES( libqucsator ${CMAKE_DL_LIBS})
+TARGET_LINK_LIBRARIES( qucsator libqucsator )
 
 #
 # Handle install
