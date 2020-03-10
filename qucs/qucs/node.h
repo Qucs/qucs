@@ -25,8 +25,6 @@
 #define NODE_H
 
 #include "graphicitem.h"
-#include "qt_compat.h"
-
 
 class Node : public Conductor {
 public:
@@ -39,7 +37,7 @@ public:
   bool  getSelected(int, int);
   void  setName(const QString&, const QString&, int x_=0, int y_=0);
 
-  Q3PtrList<GraphicItem> Connections;
+  QList<GraphicItem *> Connections;
   QString Name;  // node name used by creation of netlist
   QString DType; // type of node (used by digital files)
   int State;	 // remember some things during some operations

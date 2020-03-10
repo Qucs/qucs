@@ -190,7 +190,7 @@ Graph* SweepDialog::setBiasPoints()
     }
     else {
       hasNoComp = true;
-      for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next())
+      foreach(pe, pn->Connections)
         if(pe->ElemType == isWire) {
           if( ((Wire*)pe)->isHorizontal() )  pn->x1 |= 2;
         }
@@ -221,7 +221,7 @@ Graph* SweepDialog::setBiasPoints()
       pn->Name = "0V";
 
 
-    for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next())
+    foreach(pe, pn->Connections)
       if(pe->ElemType == isWire) {
         if( ((Wire*)pe)->Port1 != pn )  // no text at next node
           ((Wire*)pe)->Port1->Name = "";
@@ -250,7 +250,7 @@ Graph* SweepDialog::setBiasPoints()
       else
         pn->Name = "0A";
 
-      for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next())
+      foreach(pe, pn->Connections)
         if(pe->ElemType == isWire) {
           if( ((Wire*)pe)->isHorizontal() )  pn->x1 |= 2;
         }

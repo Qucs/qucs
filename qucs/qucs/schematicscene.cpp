@@ -281,7 +281,9 @@ int SchematicScene::insertWireNode1(Wire *w)
                             w->Label = ptr2->Label;
                             w->Label->pOwner = w;
                         }
-                        ptr2->Port1->Connections.removeRef(ptr2);  // two -> one wire
+                        //ptr2->Port1->Connections.removeOne(ptr2);  // two -> one wire
+                        TODO("check legacy code");
+                        ptr2->Port1->Connections.removeOne(ptr2);
                         ptr2->Port1->Connections.append(w);
                         Nodes->removeRef(ptr2->Port2);
                         Wires->removeRef(ptr2);
@@ -322,7 +324,10 @@ int SchematicScene::insertWireNode1(Wire *w)
                             w->Label = ptr2->Label;
                             w->Label->pOwner = w;
                         }
-                        ptr2->Port1->Connections.removeRef(ptr2); // two -> one wire
+                        //ptr2->Port1->Connections.removeOne(ptr2);  // two -> one wire
+                        TODO("check legacy code");
+                        int pos = ptr2->Port1->Connections.indexOf(ptr2);
+                        ptr2->Port1->Connections.removeAt(pos);
                         ptr2->Port1->Connections.append(w);
                         Nodes->removeRef(ptr2->Port2);
                         Wires->removeRef(ptr2);
@@ -361,6 +366,8 @@ int SchematicScene::insertWireNode1(Wire *w)
 // if possible, connect two horizontal wires to one
 bool SchematicScene::connectHWires1(Wire *w)
 {
+    TODO("need help traversing this, why backwards?");
+    /*
     Wire *pw;
     Node *n = w->Port1;
 
@@ -386,14 +393,14 @@ bool SchematicScene::connectHWires1(Wire *w)
             w->x1 = pw->x1;
             w->Port1 = pw->Port1;      // new wire lengthens an existing one
             Nodes->removeRef(n);
-            w->Port1->Connections.removeRef(pw);
+            w->Port1->Connections.removeOne(pw);
             w->Port1->Connections.append(w);
             Wires->removeRef(pw);
             return true;
         }
         if(pw->x2 >= w->x2)    // new wire lies within an existing one ?
         {
-            w->Port1->Connections.removeRef(w); // second node not yet made
+            w->Port1->Connections.removeOne(w); // second node not yet made
             delete w;
             return false;
         }
@@ -405,18 +412,18 @@ bool SchematicScene::connectHWires1(Wire *w)
                 w->Label = pw->Label;
                 w->Label->pOwner = w;
             }
-            pw->Port1->Connections.removeRef(pw);
+            pw->Port1->Connections.removeOne(pw);
             Nodes->removeRef(pw->Port2);
             Wires->removeRef(pw);
             return true;
         }
         w->x1 = pw->x2;    // shorten new wire according to an existing one
-        w->Port1->Connections.removeRef(w);
+        w->Port1->Connections.removeOne(w);
         w->Port1 = pw->Port2;
         w->Port1->Connections.append(w);
         return true;
     }
-
+    */
     return true;
 }
 
@@ -424,6 +431,8 @@ bool SchematicScene::connectHWires1(Wire *w)
 // if possible, connect two vertical wires to one
 bool SchematicScene::connectVWires1(Wire *w)
 {
+    TODO("need help traversing this, why backwards?");
+    /*
     Wire *pw;
     Node *n = w->Port1;
 
@@ -449,14 +458,14 @@ bool SchematicScene::connectVWires1(Wire *w)
             w->y1 = pw->y1;
             w->Port1 = pw->Port1;         // new wire lengthens an existing one
             Nodes->removeRef(n);
-            w->Port1->Connections.removeRef(pw);
+            w->Port1->Connections.removeOne(pw);
             w->Port1->Connections.append(w);
             Wires->removeRef(pw);
             return true;
         }
         if(pw->y2 >= w->y2)    // new wire lies complete within an existing one ?
         {
-            w->Port1->Connections.removeRef(w); // second node not yet made
+            w->Port1->Connections.removeOne(w); // second node not yet made
             delete w;
             return false;
         }
@@ -468,18 +477,18 @@ bool SchematicScene::connectVWires1(Wire *w)
                 w->Label = pw->Label;
                 w->Label->pOwner = w;
             }
-            pw->Port1->Connections.removeRef(pw);
+            pw->Port1->Connections.removeOne(pw);
             Nodes->removeRef(pw->Port2);
             Wires->removeRef(pw);
             return true;
         }
         w->y1 = pw->y2;    // shorten new wire according to an existing one
-        w->Port1->Connections.removeRef(w);
+        w->Port1->Connections.removeOne(w);
         w->Port1 = pw->Port2;
         w->Port1->Connections.append(w);
         return true;
     }
-
+    */
     return true;
 }
 
@@ -525,7 +534,7 @@ int SchematicScene::insertWireNode2(Wire *w)
                     }
                     w->y2 = ptr2->y2;
                     w->Port2 = ptr2->Port2;
-                    ptr2->Port2->Connections.removeRef(ptr2);  // two -> one wire
+                    ptr2->Port2->Connections.removeOne(ptr2);  // two -> one wire
                     ptr2->Port2->Connections.append(w);
                     Nodes->removeRef(ptr2->Port1);
                     Wires->removeRef(ptr2);
@@ -559,7 +568,7 @@ int SchematicScene::insertWireNode2(Wire *w)
                     }
                     w->x2 = ptr2->x2;
                     w->Port2 = ptr2->Port2;
-                    ptr2->Port2->Connections.removeRef(ptr2);  // two -> one wire
+                    ptr2->Port2->Connections.removeOne(ptr2);  // two -> one wire
                     ptr2->Port2->Connections.append(w);
                     Nodes->removeRef(ptr2->Port1);
                     Wires->removeRef(ptr2);
@@ -597,6 +606,8 @@ int SchematicScene::insertWireNode2(Wire *w)
 // if possible, connect two horizontal wires to one
 bool SchematicScene::connectHWires2(Wire *w)
 {
+    TODO("need help traversing this, why backwards?");
+    /*
     Wire *pw;
     Node *n = w->Port2;
 
@@ -616,7 +627,7 @@ bool SchematicScene::connectHWires2(Wire *w)
             w->x2 = pw->x2;
             w->Port2 = pw->Port2;      // new wire lengthens an existing one
             Nodes->removeRef(n);
-            w->Port2->Connections.removeRef(pw);
+            w->Port2->Connections.removeOne(pw);
             w->Port2->Connections.append(w);
             Wires->removeRef(pw);
             return true;
@@ -632,18 +643,18 @@ bool SchematicScene::connectHWires2(Wire *w)
                 w->Label = pw->Label;
                 w->Label->pOwner = w;
             }
-            pw->Port2->Connections.removeRef(pw);
+            pw->Port2->Connections.removeOne(pw);
             Nodes->removeRef(pw->Port1);
             Wires->removeRef(pw);
             return true;
         }
         w->x2 = pw->x1;    // shorten new wire according to an existing one
-        w->Port2->Connections.removeRef(w);
+        w->Port2->Connections.removeOne(w);
         w->Port2 = pw->Port1;
         w->Port2->Connections.append(w);
         return true;
     }
-
+    */
     return true;
 }
 
@@ -651,6 +662,8 @@ bool SchematicScene::connectHWires2(Wire *w)
 // if possible, connect two vertical wires to one
 bool SchematicScene::connectVWires2(Wire *w)
 {
+    TODO("need help traversing this, why backwards?");
+    /*
     Wire *pw;
     Node *n = w->Port2;
 
@@ -670,7 +683,7 @@ bool SchematicScene::connectVWires2(Wire *w)
             w->y2 = pw->y2;
             w->Port2 = pw->Port2;     // new wire lengthens an existing one
             Nodes->removeRef(n);
-            w->Port2->Connections.removeRef(pw);
+            w->Port2->Connections.removeOne(pw);
             w->Port2->Connections.append(w);
             Wires->removeRef(pw);
             return true;
@@ -686,18 +699,18 @@ bool SchematicScene::connectVWires2(Wire *w)
                 w->Label = pw->Label;
                 w->Label->pOwner = w;
             }
-            pw->Port2->Connections.removeRef(pw);
+            pw->Port2->Connections.removeOne(pw);
             Nodes->removeRef(pw->Port1);
             Wires->removeRef(pw);
             return true;
         }
         w->y2 = pw->y1;    // shorten new wire according to an existing one
-        w->Port2->Connections.removeRef(w);
+        w->Port2->Connections.removeOne(w);
         w->Port2 = pw->Port1;
         w->Port2->Connections.append(w);
         return true;
     }
-
+    */
     return true;
 }
 
@@ -803,7 +816,7 @@ int SchematicScene::insertWire(Wire *w)
             n2 = 3;
             pn2 = pn;
             // check all connections of the current node
-            for(pe=pn->Connections.first(); pe!=0; pe=pn->Connections.next())
+            foreach(pe, pn->Connections)
             {
                 if(pe->ElemType != isWire) continue;
                 nw = (Wire*)pe;
@@ -817,13 +830,13 @@ int SchematicScene::insertWire(Wire *w)
                 if(n1 == 1)
                 {
                     Nodes->removeRef(pn);     // delete node 1 if open
-                    pn2->Connections.removeRef(nw);   // remove connection
+                    pn2->Connections.removeOne(nw);   // remove connection
                     pn = pn2;
                 }
 
                 if(n2 == 1)
                 {
-                    pn->Connections.removeRef(nw);   // remove connection
+                    pn->Connections.removeOne(nw);   // remove connection
                     Nodes->removeRef(pn2);     // delete node 2 if open
                     pn2 = pn;
                 }
@@ -851,7 +864,7 @@ int SchematicScene::insertWire(Wire *w)
                 Wires->findRef(pw);
                 pw->Port1->Connections.append(nw);
             }
-            pw->Port1->Connections.removeRef(pw);
+            pw->Port1->Connections.removeOne(pw);
             pw->x1 = pn2->cx;
             pw->y1 = pn2->cy;
             pw->Port1 = pn2;
@@ -909,7 +922,7 @@ Wire* SchematicScene::splitWire(Wire *pw, Node *pn)
     newWire->Port2->Connections.prepend(newWire);
     pn->Connections.prepend(pw);
     pn->Connections.prepend(newWire);
-    newWire->Port2->Connections.removeRef(pw);
+    newWire->Port2->Connections.removeOne(pw);
     Wires->append(newWire);
 
     if(pw->Label)
@@ -928,8 +941,8 @@ Wire* SchematicScene::splitWire(Wire *pw, Node *pn)
 bool SchematicScene::oneTwoWires(Node *n)
 {
     Wire *e3;
-    Wire *e1 = (Wire*)n->Connections.getFirst();  // two wires -> one wire
-    Wire *e2 = (Wire*)n->Connections.getLast();
+    Wire *e1 = (Wire*)n->Connections.first();  // two wires -> one wire
+    Wire *e2 = (Wire*)n->Connections.last();
 
     if(e1->ElemType == isWire) if(e2->ElemType == isWire)
             if(e1->isHorizontal() == e2->isHorizontal())
@@ -959,7 +972,7 @@ bool SchematicScene::oneTwoWires(Node *n)
                 e1->y2 = e2->y2;
                 e1->Port2 = e2->Port2;
                 Nodes->removeRef(n);    // delete node (is auto delete)
-                e1->Port2->Connections.removeRef(e2);
+                e1->Port2->Connections.removeOne(e2);
                 e1->Port2->Connections.append(e1);
                 Wires->removeRef(e2);
                 return true;
@@ -978,7 +991,7 @@ void SchematicScene::deleteWire(Wire *w)
     }
     else
     {
-        w->Port1->Connections.removeRef(w);   // remove connection
+        w->Port1->Connections.removeOne(w);   // remove connection
         if(w->Port1->Connections.count() == 2)
             oneTwoWires(w->Port1);  // two wires -> one wire
     }
@@ -990,7 +1003,7 @@ void SchematicScene::deleteWire(Wire *w)
     }
     else
     {
-        w->Port2->Connections.removeRef(w);   // remove connection
+        w->Port2->Connections.removeOne(w);   // remove connection
         if(w->Port2->Connections.count() == 2)
             oneTwoWires(w->Port2);  // two wires -> one wire
     }
@@ -1307,7 +1320,7 @@ void SchematicScene::newMovingWires(Q3PtrList<GraphicItem> *p, Node *pn, int pos
         if(pn->State & 16)  // node was already worked on
             break;
 
-        pe = pn->Connections.getFirst();
+        pe = pn->Connections.first();
         if(pe == 0)  return;
 
         if(pn->Connections.count() > 1)
@@ -1325,8 +1338,8 @@ void SchematicScene::newMovingWires(Q3PtrList<GraphicItem> *p, Node *pn, int pos
         if(pn2->Connections.count() == 2) // two existing wires connected ?
             if((pn2->State & (8+4)) == 0)
             {
-                GraphicItem *pe2 = pn2->Connections.getFirst();
-                if(pe2 == pe) pe2 = pn2->Connections.getLast();
+                GraphicItem *pe2 = pn2->Connections.first();
+                if(pe2 == pe) pe2 = pn2->Connections.last();
                 // connected wire connected to exactly one wire ?
                 if(pe2->ElemType == isWire)
                     pw2  = (Wire*)pe2;
@@ -1335,9 +1348,9 @@ void SchematicScene::newMovingWires(Q3PtrList<GraphicItem> *p, Node *pn, int pos
         // .................................................
         // reuse one wire
         p->insert(pos, pw);
-        pw->Port1->Connections.removeRef(pw);   // remove connection 1
+        pw->Port1->Connections.removeOne(pw);   // remove connection 1
         pw->Port1->State |= 16+4;
-        pw->Port2->Connections.removeRef(pw);   // remove connection 2
+        pw->Port2->Connections.removeOne(pw);   // remove connection 2
         pw->Port2->State |= 16+4;
         Wires->take(Wires->findRef(pw));
 
@@ -1383,9 +1396,9 @@ void SchematicScene::newMovingWires(Q3PtrList<GraphicItem> *p, Node *pn, int pos
         // .................................................
         // reuse a second wire
         p->insert(pos, pw2);
-        pw2->Port1->Connections.removeRef(pw2);   // remove connection 1
+        pw2->Port1->Connections.removeOne(pw2);   // remove connection 1
         pw2->Port1->State |= 16+4;
-        pw2->Port2->Connections.removeRef(pw2);   // remove connection 2
+        pw2->Port2->Connections.removeOne(pw2);   // remove connection 2
         pw2->Port2->State |= 16+4;
         Wires->take(Wires->findRef(pw2));
 
@@ -1437,7 +1450,7 @@ int SchematicScene::copySelectedElements(Q3PtrList<GraphicItem> *p)
             // delete all port connections
             foreach(Port *pp, pc->Ports)
             {
-                pp->Connection->Connections.removeRef((GraphicItem*)pc);
+                pp->Connection->Connections.removeOne((GraphicItem*)pc);
                 pp->Connection->State = 4;
             }
 
@@ -1456,9 +1469,9 @@ int SchematicScene::copySelectedElements(Q3PtrList<GraphicItem> *p)
         {
             p->append(pw);
 
-            pw->Port1->Connections.removeRef(pw);   // remove connection 1
+            pw->Port1->Connections.removeOne(pw);   // remove connection 1
             pw->Port1->State = 4;
-            pw->Port2->Connections.removeRef(pw);   // remove connection 2
+            pw->Port2->Connections.removeOne(pw);   // remove connection 2
             pw->Port2->State = 4;
             Wires->take();
             pw = Wires->current();
@@ -2066,7 +2079,7 @@ void SchematicScene::insertComponentNodes(Component *c, bool noOptimize)
 
     Node    *pn;
     GraphicItem *pe, *pe1;
-    Q3PtrList<GraphicItem> *pL;
+    QList<GraphicItem*> pL;
     // if component over wire then delete this wire
     QListIterator<Port *> iport(c->Ports);
     // omit the first element
@@ -2075,13 +2088,15 @@ void SchematicScene::insertComponentNodes(Component *c, bool noOptimize)
     {
         pp = iport.next();
         pn = pp->Connection;
-        for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next())
+        foreach(pe, pn->Connections)
             if(pe->ElemType == isWire)
             {
-                if(((Wire*)pe)->Port1 == pn)  pL = &(((Wire*)pe)->Port2->Connections);
-                else  pL = &(((Wire*)pe)->Port1->Connections);
+                if(((Wire*)pe)->Port1 == pn)
+                    pL = (((Wire*)pe)->Port2->Connections);
+                else
+                    pL = (((Wire*)pe)->Port1->Connections);
 
-                for(pe1 = pL->first(); pe1!=0; pe1 = pL->next())
+                foreach(pe1, pL)
                     if(pe1 == c)
                     {
                         deleteWire((Wire*)pe);
@@ -2345,7 +2360,7 @@ void SchematicScene::setCompPorts(Component *pc)
 
     foreach(Port *pp, pc->Ports)
     {
-        pp->Connection->Connections.removeRef((GraphicItem*)pc);// delete connections
+        pp->Connection->Connections.removeOne((GraphicItem*)pc);// delete connections
         switch(pp->Connection->Connections.count())
         {
         case 0:
@@ -2432,11 +2447,11 @@ void SchematicScene::deleteComp(Component *c)
             pn->Connection = 0;		  //  (auto-delete)
             break;
         case 3  :
-            pn->Connection->Connections.removeRef(c);// delete connection
+            pn->Connection->Connections.removeOne(c);// delete connection
             oneTwoWires(pn->Connection);  // two wires -> one wire
             break;
         default :
-            pn->Connection->Connections.removeRef(c);// remove connection
+            pn->Connection->Connections.removeOne(c);// remove connection
             break;
         }
 
@@ -2563,7 +2578,7 @@ void SchematicScene::oneLabel(Node *n1)
             }
         }
 
-        for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next())
+        foreach(pe, pn->Connections)
         {
             if(pe->ElemType != isWire)
             {
@@ -2657,7 +2672,7 @@ GraphicItem* SchematicScene::getWireLabel(Node *pn_)
     for(pn = Cons.first(); pn!=0; pn = Cons.next())
         if(pn->Label) return pn;
         else
-            for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next())
+            foreach(pe, pn->Connections)
             {
                 if(pe->ElemType != isWire)
                 {

@@ -1110,7 +1110,7 @@ void SchematicFile::propagateNode(QStringList& Collect,
 
   Cons.append(pn);
   for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
-    for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
+    foreach(pe, p2->Connections)
       if(pe->ElemType == isWire) {
 	pw = (Wire*)pe;
 	if(p2 != pw->Port1) {

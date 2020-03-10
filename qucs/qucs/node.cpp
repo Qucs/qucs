@@ -51,7 +51,7 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidge
   Q_UNUSED(item);
   Q_UNUSED(widget);
 
-  switch (Connections.count()) {
+  switch (Connections.size()) {
     case 1: {
       if (Label) {
         // open but labeled
@@ -65,8 +65,8 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidge
       return;
     }
     case 2: {
-      if(Connections.getFirst()->ElemType == isWire)
-        if(Connections.getLast()->ElemType == isWire)
+      if(Connections.first()->ElemType == isWire)
+        if(Connections.last()->ElemType == isWire)
           return;
       painter->fillRect(cx-2, cy-2, 4, 4, Qt::darkBlue);
       break;
