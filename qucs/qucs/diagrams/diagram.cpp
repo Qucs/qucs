@@ -85,9 +85,6 @@ Diagram::Diagram(int _cx, int _cy)
 
   ElemType = isDiagram;
   GridPen = QPen(Qt::lightGray,0);
-
-  setFlags(ItemIsSelectable|ItemIsMovable);
-  setAcceptHoverEvents(true);
 }
 
 Diagram::~Diagram()

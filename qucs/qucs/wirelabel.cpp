@@ -33,13 +33,6 @@ WireLabel::WireLabel(const QString& _Name, int _cx, int _cy,
 
   ElemType = _Type;
   isHighlighted = false;
-
-  setFlags(ItemIsSelectable|ItemIsMovable);
-#if QT_VERSION < 0x050000
-  setAcceptsHoverEvents(true);
-#else
-  setAcceptHoverEvents(true);
-#endif
 }
 
 QRectF WireLabel::boundingRect() const

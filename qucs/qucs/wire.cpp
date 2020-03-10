@@ -31,13 +31,6 @@ Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2)
   Label  = 0;
 
   ElemType = isWire;
-
-  setFlags(ItemIsSelectable|ItemIsMovable);
-#if QT_VERSION < 0x050000
-  setAcceptsHoverEvents(true);
-#else
-  setAcceptHoverEvents(true);
-#endif
 }
 
 
