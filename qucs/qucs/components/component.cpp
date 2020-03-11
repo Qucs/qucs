@@ -1182,7 +1182,6 @@ void Component::copyComponent(Component *pc)
 void MultiViewComponent::recreate(SchematicScene *scene)
 {
 
-  TODO("check item remove, do stuff, add back");
   if(scene) {
     scene->deleteComp(this);
   }

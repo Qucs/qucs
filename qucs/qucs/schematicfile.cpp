@@ -2351,6 +2351,7 @@ Component* SchematicFile::loadComponent(const QString& _s, Component* c) const
   c->ty = tty; // restore text position (was changed by rotate/mirror)
 
   QString Model = c->obsolete_model_hack(); // BUG: don't use names
+  qDebug() << "Model" << Model;
 
   unsigned int z=0, counts = s.count('"');
   // FIXME. use c->paramCount()
@@ -2442,7 +2443,6 @@ Component* SchematicFile::loadComponent(const QString& _s, Component* c) const
     }
 
     // for equations
-    qDebug() << "Model" << Model;
 #if 1
     if(Model != "EDD" && Model != "RFEDD" && Model != "RFEDD2P")
     if(p1->Description.isEmpty()) {  // unknown number of properties ?
