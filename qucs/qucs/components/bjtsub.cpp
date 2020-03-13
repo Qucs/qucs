@@ -134,7 +134,7 @@ BJTsub::BJTsub()
 Component* BJTsub::newOne()
 {
   BJTsub* p = new BJTsub();
-  p->Props.getFirst()->Value = Props.getFirst()->Value;
+  p->Props.first()->Value = Props.first()->Value;
   p->recreate(0);
   return p;
 }
@@ -157,7 +157,7 @@ GraphicItem* BJTsub::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne) {
     BJTsub* p = new BJTsub();
-    p->Props.getFirst()->Value = "pnp";
+    p->Props.first()->Value = "pnp";
     p->recreate(0);
     return p;
   }
@@ -177,7 +177,7 @@ void BJTsub::createSymbol()
   Lines.append(new Line(  9,  0, 30,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(  9, -7,  9,  7,QPen(Qt::darkBlue,3)));
 
-  if(Props.getFirst()->Value == "npn") {
+  if(Props.first()->Value == "npn") {
     Lines.append(new Line( -6, 15,  0, 15,QPen(Qt::darkBlue,2)));
     Lines.append(new Line(  0,  9,  0, 15,QPen(Qt::darkBlue,2)));
   }

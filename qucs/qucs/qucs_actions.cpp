@@ -1172,6 +1172,7 @@ void QucsApp::slotCursorUp(bool up)
 // Is called if user clicked on component text of if return is
 // pressed in the component text QLineEdit.
 // In "view->MAx3" is the number of the current property.
+/// \todo slotApplyCompText is way to complex, MAx MAy are deprecated
 void QucsApp::slotApplyCompText()
 {
   QString s;
@@ -1182,6 +1183,10 @@ void QucsApp::slotApplyCompText()
 
   Property  *pp = 0;
   Component *pc = (Component*)mouseAction->focusElement;
+  TODO("fix component text edit");
+  Q_UNUSED(pp);
+  Q_UNUSED(pc);
+  /*
   if(!pc) return;  // should never happen
   mouseAction->MAx1 = pc->cx + pc->tx;
   mouseAction->MAy1 = pc->cy + pc->ty;
@@ -1283,6 +1288,7 @@ void QucsApp::slotApplyCompText()
   editText->setParent(Doc->viewport());
   editText->setGeometry(p.x(), p.y(), editText->width(), editText->height());
   editText->show();
+  */
 }
 
 // -----------------------------------------------------------

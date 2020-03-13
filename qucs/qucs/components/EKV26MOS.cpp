@@ -279,15 +279,17 @@ QString EKV26MOS::netlist()
     s += " "+p1->Connection->Name;   // node names
 
   // output type npn/pnp property
-  Property *p2 = Props.first();
+  Property *p2 = Props.at(0);
   if(p2->Value == "nmos")
     s += " nmos=\"1\"";
   else
     s += " pmos=\"1\"";
 
   // output all remaining properties
-  for(p2 = Props.next(); p2 != 0; p2 = Props.next())
+  for(int i = 1; i < Props.size(); i++) {
+    p2 = Props.at(i);
     s += " "+p2->Name+"=\""+p2->Value+"\"";
+  }
 
   return s + '\n';
 }

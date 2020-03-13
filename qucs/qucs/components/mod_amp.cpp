@@ -58,7 +58,7 @@ mod_amp::mod_amp()
 Component * mod_amp::newOne()
 {
   mod_amp * p = new mod_amp();
-  p->Props.getFirst()->Value = Props.getFirst()->Value; 
+  p->Props.first()->Value = Props.first()->Value; 
   p->recreate(0); 
   return p;
 }

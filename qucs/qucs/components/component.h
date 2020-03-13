@@ -78,7 +78,7 @@ public:
   QList<Area *>     Ellips;
   QList<Port *>     Ports;
   QList<Text *>     Texts;
-  Q3PtrList<Property> Props;
+  QList<Property *> Props;
 
   #define COMP_IS_OPEN    0
   #define COMP_IS_ACTIVE  1

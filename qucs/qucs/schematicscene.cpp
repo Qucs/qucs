@@ -2039,7 +2039,7 @@ bool SchematicScene::distributeVertical()
 // digital sources and sets them accordingly.
 void SchematicScene::setComponentNumber(Component *c)
 {
-    Property *pp = c->Props.getFirst();
+    Property *pp = c->Props.first();
     if(!pp) return;
     if(pp->Name != "Num") return;
 
@@ -2050,7 +2050,7 @@ void SchematicScene::setComponentNumber(Component *c)
     // First look, if the port number already exists.
     for(pc = Components->first(); pc != 0; pc = Components->next())
         if(pc->obsolete_model_hack() == cSign)
-            if(pc->Props.getFirst()->Value == s) break;
+            if(pc->Props.first()->Value == s) break;
     if(!pc) return;   // was port number not yet in use ?
 
     // Find the first free number.
@@ -2060,7 +2060,7 @@ void SchematicScene::setComponentNumber(Component *c)
         // look for existing ports and their numbers
         for(pc = Components->first(); pc != 0; pc = Components->next())
             if(pc->obsolete_model_hack() == cSign)
-                if(pc->Props.getFirst()->Value == s) break;
+                if(pc->Props.first()->Value == s) break;
 
         n++;
     }

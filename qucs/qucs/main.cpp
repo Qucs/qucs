@@ -422,7 +422,7 @@ void createDocData() {
         compData << "Default name; ``"    + c->name()  + "``";
         compData << "Type; "              + typeMap.value(c->elemType());
         compData << "Bitmap file; "       + QString(File);
-        compData << "Properties; "        + QString::number(c->Props.count());
+        compData << "Properties; "        + QString::number(c->Props.size());
         compData << "Category; "          + category;
 
         // 001_data.csv - CSV file with component data

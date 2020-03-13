@@ -40,7 +40,7 @@ mux4to1::mux4to1()
 Component * mux4to1::newOne()
 {
   mux4to1 * p = new mux4to1();
-  p->Props.getFirst()->Value = Props.getFirst()->Value; 
+  p->Props.first()->Value = Props.first()->Value;
   p->recreate(0); 
   return p;
 }

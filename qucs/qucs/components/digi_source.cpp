@@ -88,12 +88,12 @@ QString Digi_Source::netlist()
   s += " "+Ports.first()->Connection->Name;
   
   // output all properties
-  Props.first();   // first property not needed
-  Property *pp = Props.next();
+  // first property not needed
+  Property *pp = Props.at(1);
   s += " "+pp->Name+"=\""+pp->Value+"\"";
-  pp = Props.next();
+  pp = Props.at(2);
   s += " "+pp->Name+"=\"["+pp->Value+"]\"";
-  pp = Props.next();
+  pp = Props.at(3);
   s += " "+pp->Name+"=\""+pp->Value+"\"\n";
 
   return s;
@@ -163,7 +163,7 @@ QString Digi_Source::verilogCode(int NumPorts)
       State = '1';
     s += "  always begin\n";
 
-    t = Props.next()->Value.section(';',z,z).trimmed();
+    t = Props.at(2)->Value.section(';',z,z).trimmed();
     while(!t.isEmpty()) {
       if(!misc::Verilog_Delay(t, Name))
         return t;    // time has not VHDL format
@@ -171,11 +171,11 @@ QString Digi_Source::verilogCode(int NumPorts)
       s += "   " + t + ";\n";
       State ^= 1;
       z++;
-      t = Props.current()->Value.section(';',z,z).trimmed();
+      t = Props.at(2)->Value.section(';',z,z).trimmed();
     }
   }
   else {  // truth table simulation
-    int Num = Props.getFirst()->Value.toInt() - 1;    
+    int Num = Props.first()->Value.toInt() - 1;    
     s += "  always begin\n";
     s += "    " + r + " = 0;\n";
     s += "    #"+ QString::number(1 << Num) + ";\n";

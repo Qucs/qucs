@@ -73,7 +73,7 @@ log_amp::log_amp()
 Component * log_amp::newOne()
 {
   log_amp * p = new log_amp();
-  p->Props.getFirst()->Value = Props.getFirst()->Value; 
+  p->Props.first()->Value = Props.first()->Value; 
   p->recreate(0); 
   return p;
 }

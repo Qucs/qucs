@@ -42,7 +42,7 @@ jkff_SR::jkff_SR()
 Component * jkff_SR::newOne()
 {
   jkff_SR * p = new jkff_SR();
-  p->Props.getFirst()->Value = Props.getFirst()->Value; 
+  p->Props.first()->Value = Props.first()->Value; 
   p->recreate(0); 
   return p;
 }

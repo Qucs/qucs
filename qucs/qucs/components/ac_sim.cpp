@@ -77,20 +77,20 @@ GraphicItem* AC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
 void AC_Sim::recreate(SchematicScene*)
 {
-  Property *pp = Props.first();
+  Property *pp = Props.at(0);
   if((pp->Value == "list") || (pp->Value == "const")) {
     // Call them "Symbol" to omit them in the netlist.
-    pp = Props.next();
+    pp = Props.at(1);
     pp->Name = "Symbol";
     pp->display = false;
-    pp = Props.next();
+    pp = Props.at(2);
     pp->Name = "Symbol";
     pp->display = false;
-    Props.next()->Name = "Values";
+    Props.at(3)->Name = "Values";
   }
   else {
-    Props.next()->Name = "Start";
-    Props.next()->Name = "Stop";
-    Props.next()->Name = "Points";
+    Props.at(1)->Name = "Start";
+    Props.at(2)->Name = "Stop";
+    Props.at(3)->Name = "Points";
   }
 }

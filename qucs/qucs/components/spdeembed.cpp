@@ -57,7 +57,7 @@ SPDeEmbed::SPDeEmbed()
 Component* SPDeEmbed::newOne()
 {
   SPDeEmbed* p = new SPDeEmbed();
-  p->Props.getLast()->Value = Props.getLast()->Value;
+  p->Props.last()->Value = Props.last()->Value;
   p->recreate(0);
   return p;
 }
@@ -71,8 +71,8 @@ GraphicItem* SPDeEmbed::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne) {
     SPDeEmbed* p = new SPDeEmbed();
-    p->Props.getFirst()->Value = "test.s6p";
-    p->Props.getLast()->Value = "6";
+    p->Props.first()->Value = "test.s6p";
+    p->Props.last()->Value = "6";
     p->recreate(0);
     return p;
   }
@@ -97,8 +97,8 @@ GraphicItem* SPDeEmbed::info4(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne) {
     SPDeEmbed* p = new SPDeEmbed();
-    p->Props.getFirst()->Value = "test.s4p";
-    p->Props.getLast()->Value = "4";
+    p->Props.first()->Value = "test.s4p";
+    p->Props.last()->Value = "4";
     p->recreate(0);
     return p;
   }
@@ -109,7 +109,7 @@ GraphicItem* SPDeEmbed::info4(QString& Name, char* &BitmapFile, bool getNewOne)
 QString SPDeEmbed::getSubcircuitFile()
 {
   // construct full filename
-  QString FileName = Props.getFirst()->Value;
+  QString FileName = Props.first()->Value;
   return misc::properAbsFileName(FileName);
 }
 
@@ -123,19 +123,19 @@ QString SPDeEmbed::netlist()
     s += " "+p1->Connection->Name;   // node names
 
   // output all properties
-  Property *p2 = Props.first();
+  Property *p2 = Props.at(0);
   s += " "+p2->Name+"=\"{"+getSubcircuitFile()+"}\"";
 
   // data type
-  p2 = Props.next();
+  p2 = Props.at(1);
   s += " "+p2->Name+"=\""+p2->Value+"\"";
 
   // interpolator type
-  p2 = Props.next();
+  p2 = Props.at(2);
   s += " "+p2->Name+"=\""+p2->Value+"\"";
 
   // DC property
-  p2 = Props.next();
+  p2 = Props.at(3);
   s += " "+p2->Name+"=\""+p2->Value+"\"\n";
 
   return s;
@@ -153,7 +153,7 @@ void SPDeEmbed::createSymbol()
   QString stmp;
 
   int w, PortDistance = 60;
-  int Num = Props.getLast()->Value.toInt();
+  int Num = Props.last()->Value.toInt();
 
   // adjust number of ports
   // force even port number
@@ -163,7 +163,7 @@ void SPDeEmbed::createSymbol()
     PortDistance = 20;
     if(Num > 40) Num = 40;
   }
-  Props.getLast()->Value = QString::number(Num);
+  Props.last()->Value = QString::number(Num);
 
   // draw symbol outline
   int h = (PortDistance/2)*((Num-1)/2) + 15;

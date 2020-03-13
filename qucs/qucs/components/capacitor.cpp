@@ -52,7 +52,7 @@ GraphicItem* Capacitor::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
 void Capacitor::createSymbol()
 {
-  if(Props.getLast()->Value.at(0) == 'n') {
+  if(Props.last()->Value.at(0) == 'n') {
     Lines.append(new Line( -4,-11, -4, 11,QPen(Qt::darkBlue,4)));
     Lines.append(new Line(  4,-11,  4, 11,QPen(Qt::darkBlue,4)));
   }

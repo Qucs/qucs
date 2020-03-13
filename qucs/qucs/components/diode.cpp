@@ -105,12 +105,12 @@ GraphicItem* Diode::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 void Diode::createSymbol()
 {
-  if(Props.getLast()->Value.at(0) == 'V') {
+  if(Props.last()->Value.at(0) == 'V') {
     Lines.append(new Line(-30,  0, -9,  0,QPen(Qt::darkBlue,2)));
     Lines.append(new Line( -6,  0, 30,  0,QPen(Qt::darkBlue,2)));
     Lines.append(new Line( -9, -9, -9,  9,QPen(Qt::darkBlue,2)));
   }
-  else if(Props.getLast()->Value.at(0) == 'U') {
+  else if(Props.last()->Value.at(0) == 'U') {
     Lines.append(new Line(-30,  0, -6,  0,QPen(Qt::darkBlue,2)));
     Lines.append(new Line(  6,  0, 30,  0,QPen(Qt::darkBlue,2)));
   }
@@ -122,11 +122,11 @@ void Diode::createSymbol()
   Lines.append(new Line( -6,  0,  6, -9,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( -6,  0,  6,  9,QPen(Qt::darkBlue,2)));
 
-  if(Props.getLast()->Value.at(0) == 'S') {
+  if(Props.last()->Value.at(0) == 'S') {
     Lines.append(new Line( -6, -9,-12,-12,QPen(Qt::darkBlue,2)));
     Lines.append(new Line( -6,  9,  0, 12,QPen(Qt::darkBlue,2)));
   }
-  else if(Props.getLast()->Value.at(0) == 'Z') {
+  else if(Props.last()->Value.at(0) == 'Z') {
     Lines.append(new Line( -6, 9, -1, 9,QPen(Qt::darkBlue,2)));
   }
 

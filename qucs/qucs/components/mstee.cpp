@@ -95,7 +95,7 @@ void MStee::createSymbol()
   Lines.append(new Line(  8,  8,  8, 18,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( -8, 18,  8, 18,QPen(Qt::darkBlue,2)));
 
-  if(Props.getLast()->Value.at(0) != 'n') {
+  if(Props.last()->Value.at(0) != 'n') {
     QString stmp = "1"; 
     int w = smallmetrics.width(stmp);
     int d = smallmetrics.descent();

@@ -48,8 +48,8 @@ LibComp::LibComp()
 Component* LibComp::newOne()
 {
   LibComp *p = new LibComp();
-  p->Props.first()->Value = Props.first()->Value;
-  p->Props.next()->Value = Props.next()->Value;
+  p->Props.at(0)->Value = Props.at(0)->Value;
+  p->Props.at(1)->Value = Props.at(1)->Value;
   p->recreate(0);
   return p;
 }
@@ -119,7 +119,10 @@ int LibComp::loadSection(const QString& Name, QString& Section,
   }
 
   // search component
-  Line = "\n<Component " + Props.next()->Value + ">";
+  TODO("check legacy");
+  // legacy used Props.next()-Value, but next() would advance the list.
+  // we don't actually know the current Props index.
+  Line = "\n<Component " + Props.first()->Value + ">";
   Start = Section.indexOf(Line);
   if(Start < 0)  return -4;  // component not found
   Start = Section.indexOf('\n', Start);
@@ -172,6 +175,7 @@ int LibComp::loadSection(const QString& Name, QString& Section,
 // ---------------------------------------------------------------------
 // Loads the symbol for the subcircuit from the schematic file and
 // returns the number of painting elements.
+/// \todo MOVE elsewhere
 int LibComp::loadSymbol()
 {
   int z, Result;
@@ -191,9 +195,6 @@ int LibComp::loadSymbol()
     if(pc == 0)  return -20;
 
     copyComponent(pc);
-
-    pc->Props.setAutoDelete(false);
-    delete pc;
 
     return 1;
   }
@@ -273,8 +274,8 @@ bool LibComp::createSubNetlist(QTextStream *stream, QStringList &FileList,
 // -------------------------------------------------------
 QString LibComp::createType()
 {
-  QString Type = misc::properFileName(Props.first()->Value);
-  return misc::properName(Type + "_" + Props.next()->Value);
+  QString Type = misc::properFileName(Props.at(0)->Value);
+  return misc::properName(Type + "_" + Props.at(1)->Value);
 }
 
 // -------------------------------------------------------
@@ -290,8 +291,11 @@ QString LibComp::netlist()
   s += " Type=\""+createType()+"\"";   // type for subcircuit
 
   // output user defined parameters
-  for(Property *pp = Props.at(2); pp != 0; pp = Props.next())
+  Property *pp;
+  for(int i = 2; i < Props.size(); i++) {
+    pp = Props.at(i);
     s += " "+pp->Name+"=\""+pp->Value+"\"";
+  }
 
   return s + '\n';
 }

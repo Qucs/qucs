@@ -33,7 +33,7 @@ BJT::BJT()
 Component* BJT::newOne()
 {
   BJT* p = new BJT();
-  p->Props.getFirst()->Value = Props.getFirst()->Value;
+  p->Props.first()->Value = Props.first()->Value;
   p->recreate(0);
   return p;
 }
@@ -56,7 +56,7 @@ GraphicItem* BJT::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne) {
     BJT* p = new BJT();
-    p->Props.getFirst()->Value = "pnp";
+    p->Props.first()->Value = "pnp";
     p->recreate(0);
     return p;
   }
@@ -73,7 +73,7 @@ void BJT::createSymbol()
   Lines.append(new Line(-10,  5,  0, 15,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(  0, 15,  0, 30,QPen(Qt::darkBlue,2)));
 
-  if(Props.getFirst()->Value == "npn") {
+  if(Props.first()->Value == "npn") {
     Lines.append(new Line( -6, 15,  0, 15,QPen(Qt::darkBlue,2)));
     Lines.append(new Line(  0,  9,  0, 15,QPen(Qt::darkBlue,2)));
   }
@@ -101,7 +101,7 @@ QString BJT::netlist()
   s += " "+Ports.at(1)->Connection->Name;  // connect substrate to collector
 
   // output all properties
-  for(Property *p2 = Props.first(); p2 != 0; p2 = Props.next())
+  foreach(Property *p2, Props)
     s += " "+p2->Name+"=\""+p2->Value+"\"";
 
   return s + '\n';

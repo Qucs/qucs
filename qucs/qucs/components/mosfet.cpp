@@ -33,8 +33,8 @@ MOSFET::MOSFET()
 Component* MOSFET::newOne()
 {
   MOSFET* p = new MOSFET();
-  p->Props.first()->Value = Props.first()->Value;
-  p->Props.next()->Value = Props.next()->Value;
+  p->Props.at(0)->Value = Props.at(0)->Value;
+  p->Props.at(1)->Value = Props.at(1)->Value;
   p->recreate(0);
   return p;
 }
@@ -57,8 +57,8 @@ GraphicItem* MOSFET::info_p(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne) {
     MOSFET* p = new MOSFET();
-    p->Props.first()->Value = "pfet";
-    p->Props.next()->Value = "-1.0 V";
+    p->Props.at(0)->Value = "pfet";
+    p->Props.at(1)->Value = "-1.0 V";
     p->recreate(0);
     return p;
   }
@@ -73,8 +73,8 @@ GraphicItem* MOSFET::info_depl(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne) {
     MOSFET* p = new MOSFET();
-    p->Props.first();
-    p->Props.next()->Value = "-1.0 V";
+    p->Props.at(0);
+    p->Props.at(1)->Value = "-1.0 V";
     p->recreate(0);
     return p;
   }
@@ -96,7 +96,7 @@ void MOSFET::createSymbol()
   Lines.append(new Line(-10,-16,-10, -7,QPen(Qt::darkBlue,3)));
   Lines.append(new Line(-10,  7,-10, 16,QPen(Qt::darkBlue,3)));
 
-  if(Props.first()->Value == "nfet") {
+  if(Props.at(0)->Value == "nfet") {
     Lines.append(new Line( -9,  0, -4, -5,QPen(Qt::darkBlue,2)));
     Lines.append(new Line( -9,  0, -4,  5,QPen(Qt::darkBlue,2)));
   }
@@ -105,8 +105,8 @@ void MOSFET::createSymbol()
     Lines.append(new Line( -1,  0, -6,  5,QPen(Qt::darkBlue,2)));
   }
 
-  if((Props.next()->Value.trimmed().at(0) == '-') ==
-     (Props.first()->Value == "nfet"))
+  if((Props.at(1)->Value.trimmed().at(0) == '-') ==
+     (Props.at(0)->Value == "nfet"))
     Lines.append(new Line(-10, -8,-10,  8,QPen(Qt::darkBlue,3)));
   else
     Lines.append(new Line(-10, -4,-10,  4,QPen(Qt::darkBlue,3)));
@@ -130,7 +130,7 @@ QString MOSFET::netlist()
   s += " "+Ports.at(2)->Connection->Name;  // connect substrate to source
 
   // output all properties
-  for(Property *p2 = Props.first(); p2 != 0; p2 = Props.next())
+  foreach(Property *p2, Props)
     s += " "+p2->Name+"=\""+p2->Value+"\"";
 
   return s + '\n';

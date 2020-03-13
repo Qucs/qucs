@@ -89,13 +89,12 @@ QString RFedd2P::netlist()
   p = p2->Value;
   p2 = Props.at(1);
   s += " "+p2->Name+"=\""+p2->Value+"\"";
-  p2 = Props.at(2);
-  while(p2) {
+  for(int i = 2; i < Props.size(); i++) {
+    p2 = Props.at(i);
     n = p2->Name.mid(1);
     s += " "+p2->Name+"=\""+Name+"."+p+n+"\"";
     e += "  Eqn:Eqn"+Name+p2->Name+" "+
       Name+"."+p+n+"=\""+p2->Value+"\" Export=\"no\"\n";
-    p2 = Props.next();
   }
 
   return s+e;

@@ -85,7 +85,7 @@ GraphicItem* vFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 QString vFile::getSubcircuitFile()
 {
   // construct full filename
-  QString FileName = Props.getFirst()->Value;
+  QString FileName = Props.first()->Value;
   return misc::properAbsFileName(FileName);
 }
 
@@ -99,12 +99,14 @@ QString vFile::netlist()
     s += " "+p1->Connection->Name;   // node names
 
   // output file properties
-  Property *p2 = Props.first();
+  Property *p2 = Props.at(0);
   s += " "+p2->Name+"=\"{"+getSubcircuitFile()+"}\"";
 
   // output all remaining properties
-  for(p2 = Props.next(); p2 != 0; p2 = Props.next())
+  for(int i = 1; i < Props.size(); i++) {
+    p2 = Props.at(i);
     s += " "+p2->Name+"=\""+p2->Value+"\"";
+  }
 
   return s + "\n";
 }

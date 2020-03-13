@@ -226,7 +226,8 @@ void SpiceDialog::slotButtApply()
   }
 
   // apply all the new property values
-  Property *pp = Comp->Props.first();
+  // see SpiceFile list of properties
+  Property *pp = Comp->Props.at(0);
   if(pp->Value != FileEdit->text())
   {
     pp->Value = FileEdit->text();
@@ -246,13 +247,13 @@ void SpiceDialog::slotButtApply()
     }
     tmp += "_net" + PortsList->item(i)->text();   // chosen ports
   }
-  pp = Comp->Props.next();
+  pp = Comp->Props.at(1);
   if(pp->Value != tmp)
   {
     pp->Value = tmp;
     changed = true;
   }
-  pp = Comp->Props.next();
+  pp = Comp->Props.at(2);
   if((pp->Value=="yes") != SimCheck->isChecked())
   {
     pp->Value = ((SimCheck->isChecked())? "yes" : "no");
@@ -262,7 +263,7 @@ void SpiceDialog::slotButtApply()
     Comp->withSim = false;
   }
 
-  pp = Comp->Props.next();
+  pp = Comp->Props.at(3);
   if(pp->Value != PrepCombo->currentText())
   {
     pp->Value = PrepCombo->currentText();

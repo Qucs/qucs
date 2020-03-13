@@ -75,22 +75,22 @@ GraphicItem* Param_Sweep::info(QString& Name, char* &BitmapFile, bool getNewOne)
 void Param_Sweep::recreate(SchematicScene*)
 {
   Property *pp = Props.at(1);
-  Props.next();
+  //Props.next();move to 2
   if((pp->Value == "list") || (pp->Value == "const")) {
     // Call them "Symbol" to omit them in the netlist.
-    pp = Props.next();
+    pp = Props.at(3);
     pp->Name = "Symbol";
     pp->display = false;
-    pp = Props.next();
+    pp = Props.at(4);
     pp->Name = "Symbol";
     pp->display = false;
-    Props.next()->Name = "Values";
+    Props.at(5)->Name = "Values";
   }else{
-    auto P=Props.next();
+    auto P=Props.at(3);
 	 assert(P);
     P->Name = "Start";
-    Props.next()->Name = "Stop";
-    Props.next()->Name = "Points";
+    Props.at(4)->Name = "Stop";
+    Props.at(5)->Name = "Points";
   }
 }
 

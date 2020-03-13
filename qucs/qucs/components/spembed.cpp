@@ -51,7 +51,7 @@ SPEmbed::SPEmbed()
 Component* SPEmbed::newOne()
 {
   SPEmbed* p = new SPEmbed();
-  p->Props.getLast()->Value = Props.getLast()->Value;
+  p->Props.last()->Value = Props.last()->Value;
   p->recreate(0);
   return p;
 }
@@ -64,8 +64,8 @@ GraphicItem* SPEmbed::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne) {
     SPEmbed* p = new SPEmbed();
-    p->Props.getFirst()->Value = "test.s3p";
-    p->Props.getLast()->Value = "3";
+    p->Props.first()->Value = "test.s3p";
+    p->Props.last()->Value = "3";
     p->recreate(0);
     return p;
   }
@@ -90,8 +90,8 @@ GraphicItem* SPEmbed::info2(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne) {
     SPEmbed* p = new SPEmbed();
-    p->Props.getFirst()->Value = "test.s2p";
-    p->Props.getLast()->Value = "2";
+    p->Props.first()->Value = "test.s2p";
+    p->Props.last()->Value = "2";
     p->recreate(0);
     return p;
   }
@@ -102,7 +102,7 @@ GraphicItem* SPEmbed::info2(QString& Name, char* &BitmapFile, bool getNewOne)
 QString SPEmbed::getSubcircuitFile()
 {
   // construct full filename
-  QString FileName = Props.getFirst()->Value;
+  QString FileName = Props.first()->Value;
   return misc::properAbsFileName(FileName);
 }
 
@@ -116,19 +116,19 @@ QString SPEmbed::netlist()
     s += " "+p1->Connection->Name;   // node names
 
   // output all properties
-  Property *p2 = Props.first();
+  Property *p2 = Props.at(0);
   s += " "+p2->Name+"=\"{"+getSubcircuitFile()+"}\"";
 
   // data type
-  p2 = Props.next();
+  p2 = Props.at(1);
   s += " "+p2->Name+"=\""+p2->Value+"\"";
 
   // interpolator type
-  p2 = Props.next();
+  p2 = Props.at(2);
   s += " "+p2->Name+"=\""+p2->Value+"\"";
 
   // DC property
-  p2 = Props.next();
+  p2 = Props.at(3);
   s += " "+p2->Name+"=\""+p2->Value+"\"\n";
 
   return s;
@@ -146,7 +146,7 @@ void SPEmbed::createSymbol()
   QString stmp;
 
   int w, PortDistance = 60;
-  int Num = Props.getLast()->Value.toInt();
+  int Num = Props.last()->Value.toInt();
 
   // adjust number of ports
   if(Num < 1) Num = 1;
@@ -154,7 +154,7 @@ void SPEmbed::createSymbol()
     PortDistance = 20;
     if(Num > 40) Num = 40;
   }
-  Props.getLast()->Value = QString::number(Num);
+  Props.last()->Value = QString::number(Num);
 
   // draw symbol outline
   int h = (PortDistance/2)*((Num-1)/2) + 15;

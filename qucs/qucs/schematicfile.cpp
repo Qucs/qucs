@@ -1307,7 +1307,7 @@ bool SchematicFile::throughAllComps(QTextStream *stream, int& countInit,
 	continue;
       if(!isVerilog && pc->obsolete_model_hack() == "Verilog")
 	continue;
-      s = pc->Props.getFirst()->Value;
+      s = pc->Props.first()->Value;
       if(s.isEmpty()) {
         ErrText->appendPlainText(QObject::tr("ERROR: No file name in %1 component \"%2\".").
 			arg(pc->obsolete_model_hack()).
@@ -1751,9 +1751,9 @@ int SchematicFile::prepareNetlist(QTextStream& stream, QStringList& Collect,
              QObject::tr("ERROR: Only one digital simulation allowed."));
           return -10;
         }
-        if(pc->Props.getFirst()->Value != "TimeList")
+        if(pc->Props.first()->Value != "TimeList")
           isTruthTable = true;
-	      if(pc->Props.getLast()->Value != "VHDL")
+	      if(pc->Props.last()->Value != "VHDL")
 	        isVerilog = true;
         allTypes |= isDigitalComponent;
 	      isAnalog = false;
@@ -2188,7 +2188,7 @@ int SchematicFile::adjustPortNumbers()
          if(pc->obsolete_model_hack() == "Port") { // BUG. move to device.
              countPort++;
 
-             Str = pc->Props.getFirst()->Value;
+             Str = pc->Props.first()->Value;
              // search for matching port symbol
              for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
              {
@@ -2280,7 +2280,7 @@ void SchematicFile::saveComponent(QTextStream& s, Component /*const*/ * c) const
 
   // write all properties
   // FIXME: ask component for properties, not for dictionary
-  for(Property *p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
+  foreach(Property *p1, c->Props) {
     if(p1->Description.isEmpty()){
       s << " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations
     }else{
@@ -2395,12 +2395,15 @@ Component* SchematicFile::loadComponent(const QString& _s, Component* c) const
 
   // load all properties
   Property *p1;
-  for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
+  //for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
+  foreach(p1, c->Props) {
     z++;
     n = s.section('"',z,z);    // property value
     z++;
     //qDebug() << "LOAD: " << p1->Description;
 
+    TODO("disabled a number of devices");
+#if 0
     // not all properties have to be mentioned (backward compatible)
     if(z > counts) {
       if(p1->Description.isEmpty()){
@@ -2459,13 +2462,12 @@ Component* SchematicFile::loadComponent(const QString& _s, Component* c) const
     }
 
     // for equations
-#if 1
     if(Model != "EDD" && Model != "RFEDD" && Model != "RFEDD2P")
     if(p1->Description.isEmpty()) {  // unknown number of properties ?
       p1->Name = n.section('=',0,0);
       n = n.section('=',1);
       // allocate memory for a new property (e.g. for equations)
-      if(c->Props.count() < (counts>>1)) {
+      if(c->Props.size() < (counts>>1)) {
         c->Props.insert(z >> 1, new Property("y", "1", true));
         c->Props.prev();
       }
@@ -2473,7 +2475,7 @@ Component* SchematicFile::loadComponent(const QString& _s, Component* c) const
 #endif
     if(z == 6)  if(counts == 6)     // backward compatible
       if(Model == "R") {
-        c->Props.getLast()->Value = n;
+        c->Props.last()->Value = n;
         return c;
       }
     p1->Value = n;
@@ -2516,7 +2518,7 @@ Component* SchematicFile::getComponentFromName(QString& Line)
   else if (cstr.left (6) == "SPfile" && cstr != "SPfile") {
     // backward compatible
     c = new SPEmbed ();
-    c->Props.getLast()->Value = cstr.mid (6);
+    c->Props.last()->Value = cstr.mid (6);
   }else{
 	  // FIXME: fetch proto from dictionary.
     c = Module::getComponent (cstr);

@@ -83,7 +83,7 @@ JFET::JFET()
 Component* JFET::newOne()
 {
   JFET* p = new JFET();
-  p->Props.getFirst()->Value = Props.getFirst()->Value;
+  p->Props.first()->Value = Props.first()->Value;
   p->recreate(0);
   return p;
 }
@@ -106,7 +106,7 @@ GraphicItem* JFET::info_p(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne) {
     JFET* p = new JFET();
-    p->Props.getFirst()->Value = "pfet";
+    p->Props.first()->Value = "pfet";
     p->recreate(0);
     return p;
   }
@@ -125,7 +125,7 @@ void JFET::createSymbol()
 
   Lines.append(new Line( -4, 24,  4, 20,QPen(Qt::darkBlue,2)));
 
-  if(Props.getFirst()->Value == "nfet") {
+  if(Props.first()->Value == "nfet") {
     Lines.append(new Line(-16, -5,-11,  0,QPen(Qt::darkBlue,2)));
     Lines.append(new Line(-16,  5,-11,  0,QPen(Qt::darkBlue,2)));
   }

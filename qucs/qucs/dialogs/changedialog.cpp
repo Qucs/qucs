@@ -174,7 +174,7 @@ void ChangeDialog::slotButtReplace()
   foreach (pc, filterItems<Component>(scene)) {
     if(matches(pc->obsolete_model_hack())) {
       if(Expr.indexIn(pc->name()) >= 0)
-        for(Property *pp = pc->Props.first(); pp!=0; pp = pc->Props.next())
+        foreach(Property *pp, pc->Props)
           if(pp->Name == PropNameEdit->currentText()) {
             pb = new QCheckBox(pc->name());
             Dia_Box->addWidget(pb);
@@ -216,7 +216,7 @@ void ChangeDialog::slotButtReplace()
     foreach (pc, filterItems<Component>(scene)) {
       if(pb->text() != pc->name())  continue;
 
-      for(Property *pp = pc->Props.first(); pp!=0; pp = pc->Props.next()) {
+      foreach(Property *pp, pc->Props) {
         if(pp->Name != PropNameEdit->currentText())  continue;
 
         int tx_Dist, ty_Dist, tmp;

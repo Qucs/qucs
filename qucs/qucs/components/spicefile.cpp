@@ -167,7 +167,7 @@ QString SpiceFile::netlist()
 QString SpiceFile::getSubcircuitFile()
 {
   // construct full filename
-  QString FileName = Props.getFirst()->Value;
+  QString FileName = Props.first()->Value;
 
   if (FileName.isEmpty())
   {

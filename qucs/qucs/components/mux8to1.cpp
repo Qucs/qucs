@@ -40,7 +40,7 @@ mux8to1::mux8to1()
 Component * mux8to1::newOne()
 {
   mux8to1 * p = new mux8to1();
-  p->Props.getFirst()->Value = Props.getFirst()->Value; 
+  p->Props.first()->Value = Props.first()->Value;
   p->recreate(0); 
   return p;
 }

@@ -79,12 +79,12 @@ QString EqnDefined::netlist()
     s += " "+p1->Connection->Name;   // node names
 
   // output all properties
-  Property *p2 = Props.at(2);
-  while(p2) {
+  Property *p2;
+  for(int i=2; i < Props.size(); i++) {
+    p2 = Props.at(i);
     s += " "+p2->Name+"=\""+Name+"."+p2->Name+"\"";
     e += "  Eqn:Eqn"+Name+p2->Name+" "+
       Name+"."+p2->Name+"=\""+p2->Value+"\" Export=\"no\"\n";
-    p2 = Props.next();
   }
 
   return s+e;
@@ -113,7 +113,7 @@ void EqnDefined::createSymbol()
   Props.at(1)->Value = QString::number(Num);
 
   // adjust actual number of properties
-  int NumProps = (Props.count() - 2) / 2; // current number of properties
+  int NumProps = (Props.size() - 2) / 2; // current number of properties
   if (NumProps < Num) {
     for(i = NumProps; i < Num; i++) {
       Props.append(new Property("I"+QString::number(i+1), "0", false,
@@ -129,12 +129,13 @@ void EqnDefined::createSymbol()
   }
 
   // adjust property names
+  // traverse I1, Q1 / I2, Q2 ...
   Property * p1 = Props.at(2);
-  for(i = 1; i <= Num; i++) {
+  for(int i = 0; i <= Num-1; i++) {
+    p1 = Props.at(2+i*2);
     p1->Name = "I"+QString::number(i);
-    p1 = Props.next();
+    p1 = Props.at(3+i*2);
     p1->Name = "Q"+QString::number(i);
-    p1 = Props.next();
   }
 
   // draw symbol

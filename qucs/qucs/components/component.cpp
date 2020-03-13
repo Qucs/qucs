@@ -58,8 +58,6 @@ Component::Component() : GraphicItem()
   tx = 0;
   ty = 0;
 
-  Props.setAutoDelete(true);
-
   containingSchematic = NULL;
 
 }
@@ -93,7 +91,7 @@ int Component::textSize(int& _dx, int& _dy)
     _dy = metrics.height();
     count++;
   }
-  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
+  foreach(Property *pp, Props)
     if(pp->display) {
       // get width of text
       tmp = metrics.width(pp->Name+"="+pp->Value);
@@ -161,6 +159,8 @@ int Component::getTextSelected(int x_, int y_, float Corr)
     dy--;
   }
 
+  TODO("DEAD CODE");
+  /*
   Property *pp;
   for(pp = Props.first(); pp != 0; pp = Props.next())
     if(pp->display)
@@ -171,6 +171,7 @@ int Component::getTextSelected(int x_, int y_, float Corr)
   w = metrics.width(pp->Name+"="+pp->Value);
   if(x_ > w) return -1; // clicked past the property text end - selection invalid
   return Props.at()+1;  // number the property
+  */
 }
 
 // -------------------------------------------------------
@@ -493,7 +494,7 @@ void Component::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
        .arg(Name)
        .arg(Model)
        .arg(QString::number(Ports.size()))
-       .arg(QString::number(Props.count()))
+       .arg(QString::number(Props.size()))
        .arg(QString::number(mirroredX))
        .arg(QString::number(rotated))
        .arg(QString::number(isActive))
@@ -593,7 +594,7 @@ void Component::rotate()
     dx = metrics.width(Name);
     dy = metrics.lineSpacing();
   }
-  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
+  foreach(Property *pp, Props)
     if(pp->display) {
       // get width of text
       tmp = metrics.width(pp->Name+"="+pp->Value);
@@ -661,7 +662,7 @@ void Component::mirrorX()
   int dy = 0;
   if(showName)
     dy = metrics.lineSpacing();   // for "Name"
-  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
+  foreach(Property *pp, Props)
     if(pp->display)  dy += metrics.lineSpacing();
   if((tx > x1) && (tx < x2)) ty = -ty-dy;     // mirror text position
   else ty = y1+ty+y2;
@@ -722,7 +723,7 @@ void Component::mirrorY()
   int dx = 0;
   if(showName)
     dx = metrics.width(Name);
-  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
+  foreach(Property *pp, Props)
     if(pp->display) {
       // get width of text
       tmp = metrics.width(pp->Name+"="+pp->Value);
@@ -752,7 +753,7 @@ QString Component::netlist()
   }
 
   // output all properties
-  for (Property *p2 = Props.first(); p2 != 0; p2 = Props.next()){
+  foreach(Property *p2, Props){
     if (p2->Name != "Symbol"){
       s += " " + p2->Name + "=\"" + p2->Value + "\"";
     }else{
@@ -842,7 +843,7 @@ QString Component::get_VHDL_Code(int NumPorts)
 
 // ***  The following functions are used to load the schematic symbol
 // ***  from file. (e.g. subcircuit, library component)
-
+/// \todo MOVE elsewhere
 int Component::analyseLine(const QString& Row, int numProps)
 {
   QPen Pen;
@@ -906,6 +907,8 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(Name.isEmpty())  Name = "SUB";
 
     i1 = 1;
+    TODO("fix symbol load for lib and subcircuit");
+    /* the Props logic is confusing
     Property *pp = Props.at(numProps-1);
     for(;;) {
       s = Row.section('"', i1,i1);
@@ -930,6 +933,7 @@ int Component::analyseLine(const QString& Row, int numProps)
 
     while(pp != Props.last())
       Props.remove();
+    */
     return 0;   // do not count IDs
   }
   else if(s == "Arrow") {
@@ -1137,7 +1141,7 @@ bool Component::getBrush(const QString& s, QBrush& Brush, int i)
 // ---------------------------------------------------------------------
 Property * Component::getProperty(const QString& name)
 {
-  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
+  foreach(Property *pp, Props)
     if(pp->Name == name) {
       return pp;
     }
@@ -1251,9 +1255,9 @@ QString GateComponent::netlist()
   // output all properties
   Property *p = Props.at(1);
   s += " " + p->Name + "=\"" + p->Value + "\"";
-  p = Props.next();
+  p = Props.at(2);
   s += " " + p->Name + "=\"" + p->Value + "\"";
-  p = Props.next();
+  p = Props.at(3);
   s += " " + p->Name + "=\"" + p->Value + "\"\n";
   return s;
 }
@@ -1377,10 +1381,10 @@ QString GateComponent::verilogCode(int NumPorts)
 // -------------------------------------------------------
 void GateComponent::createSymbol()
 {
-  int Num = Props.getFirst()->Value.toInt();
+  int Num = Props.first()->Value.toInt();
   if(Num < 2) Num = 2;
   else if(Num > 8) Num = 8;
-  Props.getFirst()->Value = QString::number(Num);
+  Props.first()->Value = QString::number(Num);
 
   int xl, xr, y = 10*Num, z;
   x1 = -30; y1 = -y-3;
@@ -1392,7 +1396,7 @@ void GateComponent::createSymbol()
   z = 0;
   if(Model.at(0) == 'N')  z = 1;
 
-  if(Props.getLast()->Value.at(0) == 'D') {  // DIN symbol
+  if(Props.last()->Value.at(0) == 'D') {  // DIN symbol
     xl = -15;
     xr =  15;
     Lines.append(new Line( 15,-y, 15, y,QPen(Qt::darkBlue,2)));

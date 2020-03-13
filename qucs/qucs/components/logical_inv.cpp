@@ -102,7 +102,7 @@ void Logical_Inv::createSymbol()
 {
   int xr;
 
-  if(Props.getLast()->Value.at(0) == 'D') {  // DIN symbol
+  if(Props.last()->Value.at(0) == 'D') {  // DIN symbol
     Lines.append(new Line( 15,-20, 15, 20,QPen(Qt::darkBlue,2)));
     Lines.append(new Line(-15,-20, 15,-20,QPen(Qt::darkBlue,2)));
     Lines.append(new Line(-15, 20, 15, 20,QPen(Qt::darkBlue,2)));
@@ -135,7 +135,7 @@ void Logical_Inv::createSymbol()
 Component* Logical_Inv::newOne()
 {
   Logical_Inv* p = new Logical_Inv();
-  p->Props.getLast()->Value = Props.getLast()->Value;
+  p->Props.last()->Value = Props.last()->Value;
   p->recreate(0);
   return p;
 }

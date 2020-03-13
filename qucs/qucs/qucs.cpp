@@ -1942,7 +1942,7 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
     /*
     for(Component *pc=Doc->scene->Components->last(); pc!=0; ) {
       if(pc->obsolete_model_hack() == Model) { // BUG
-        File = pc->Props.getFirst()->Value;
+        File = pc->Props.first()->Value;
         if((File == pathName) || (File == Name)) {
           pc_tmp = Doc->scene->Components->prev();
           Doc->scene->recreateComponent(pc);  // delete and re-append component

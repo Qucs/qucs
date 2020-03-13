@@ -176,7 +176,7 @@ ComponentDialog::ComponentDialog(QucsApp* App_, Component *c, SchematicScene *d)
     checkNumber = new QCheckBox(tr("display in schematic"), Tab1);
     gp->addWidget(checkNumber, row++,2);
 
-
+    /// \todo this is a mess, sort out.
     if(Comp->obsolete_model_hack() == ".SW") {   // parameter sweep
       foreach (auto const pc, filterItems<Component>(scene)) {
 	// insert all schematic available simulations in the Simulation combo box
@@ -192,23 +192,23 @@ ComponentDialog::ComponentDialog(QucsApp* App_, Component *c, SchematicScene *d)
       else  // current simulation not in the available simulations list
 	comboSim->setEditText(Comp->Props.first()->Value);
 
-      checkSim->setChecked(Comp->Props.current()->display);
-      s = Comp->Props.next()->Value;
-      checkType->setChecked(Comp->Props.current()->display);
-      editParam->setText(Comp->Props.next()->Value);
-      checkParam->setChecked(Comp->Props.current()->display);
+      checkSim->setChecked(Comp->Props.first()->display);
+      s = Comp->Props.at(1)->Value;
+      checkType->setChecked(Comp->Props.at(1)->display);
+      editParam->setText(Comp->Props.at(2)->Value);
+      checkParam->setChecked(Comp->Props.at(2)->display);
     }
     else {
       s = Comp->Props.first()->Value;
-      checkType->setChecked(Comp->Props.current()->display);
+      checkType->setChecked(Comp->Props.first()->display);
     }
-    pp = Comp->Props.next();
+    pp = Comp->Props.at(1);
     editStart->setText(pp->Value);
     checkStart->setChecked(pp->display);
-    pp = Comp->Props.next();
+    pp = Comp->Props.at(2);
     editStop->setText(pp->Value);
     checkStop->setChecked(pp->display);
-    pp = Comp->Props.next();  // remember last property for ListView
+    pp = Comp->Props.at(3);  // remember last property for ListView
     editNumber->setText(pp->Value);
     checkNumber->setChecked(pp->display);
 
@@ -227,7 +227,7 @@ ComponentDialog::ComponentDialog(QucsApp* App_, Component *c, SchematicScene *d)
     if(tNum > 1) {
       editValues->setText(
 		editNumber->text().mid(1, editNumber->text().length()-2));
-      checkValues->setChecked(Comp->Props.current()->display);
+      checkValues->setChecked(Comp->Props.at(3)->display);
       editNumber->setText("2");
     }
     slotNumberChanged(0);
@@ -434,7 +434,12 @@ ComponentDialog::ComponentDialog(QucsApp* App_, Component *c, SchematicScene *d)
 
   /*! Insert all \a Comp properties into the dialog \a prop list */
   int row=0; // row counter
-  for(Property *p = Comp->Props.at(Comp->Props.find(pp)+1); p != 0; p = Comp->Props.next()) {
+  //for(Property *p = Comp->Props.at(Comp->Props.find(pp)+1); p != 0; p = Comp->Props.next()) {
+  TODO("check legacy access to Props");
+  Property *p;
+  for(int i = 0; i <= Comp->Props.size()-1; i++) {
+
+      p = Comp->Props.at(i);
 
       // do not insert if already on first tab
       // this is the reason it was originally from back to front...
@@ -507,6 +512,7 @@ bool ComponentDialog::eventFilter(QObject *obj, QEvent *event)
 }
 
 // Updates component property list. Useful for MultiViewComponents
+/// \todo Fixme, this is a mess
 void ComponentDialog::updateCompPropsList()
 {
     int last_prop=0; // last property not to put in ListView
@@ -526,7 +532,10 @@ void ComponentDialog::updateCompPropsList()
     QString s;
     int row=0; // row counter
     //for(Property *p = Comp->Props.first(); p != 0; p = Comp->Props.next()) {
-    for(Property *p = Comp->Props.at(last_prop); p != 0; p = Comp->Props.next()) {
+    //for(Property *p = Comp->Props.at(last_prop); p != 0; p = Comp->Props.next()) {
+    Property *p;
+    for(int i = last_prop; i < Comp->Props.size()-1; i++) {
+      p = Comp->Props.at(i);
 
       // do not insert if already on first tab
       // this is the reason it was originally from back to front...
@@ -848,7 +857,8 @@ void ComponentDialog::slotApplyInput()
    *  Only check if the widgets were created (pointers checks are 'true')
    */
   bool display;
-  Property *pp = Comp->Props.first();
+  int pnum = 0;
+  Property *pp = Comp->Props.at(pnum);
   // apply all the new property values
 
   if(comboSim) {
@@ -861,8 +871,9 @@ void ComponentDialog::slotApplyInput()
       pp->Value = comboSim->currentText();
       changed = true;
     }
-    pp = Comp->Props.next();
+    pnum += 1 ;
   }
+  pp = Comp->Props.at(pnum);
   if(comboType) {
     display = checkType->isChecked();
     if(pp->display != display) {
@@ -879,8 +890,9 @@ void ComponentDialog::slotApplyInput()
       pp->Value = tmp;
       changed = true;
     }
-    pp = Comp->Props.next();
+    pnum += 1;
   }
+  pp = Comp->Props.at(pnum);
   if(checkParam) if(checkParam->isEnabled()) {
     display = checkParam->isChecked();
     if(pp->display != display) {
@@ -891,8 +903,9 @@ void ComponentDialog::slotApplyInput()
       pp->Value = editParam->text();
       changed = true;
     }
-    pp = Comp->Props.next();
+    pnum += 1;
   }
+  pp = Comp->Props.at(pnum);
   if(editStart) {
     if(comboType->currentIndex() < 2) {
       display = checkStart->isChecked();
@@ -905,7 +918,8 @@ void ComponentDialog::slotApplyInput()
         pp->Value = editStart->text();
         changed = true;
       }
-      pp = Comp->Props.next();
+      pnum += 1;
+      pp = Comp->Props.at(pnum);
 
       display = checkStop->isChecked();
       if(pp->display != display) {
@@ -917,7 +931,8 @@ void ComponentDialog::slotApplyInput()
         pp->Value = editStop->text();
         changed = true;
       }
-      pp = Comp->Props.next();
+      pnum += 1;
+      pp = Comp->Props.at(pnum);
 
       display = checkNumber->isChecked();
       if(pp->display != display) {
@@ -932,17 +947,20 @@ void ComponentDialog::slotApplyInput()
       qDebug() << "====> before ad"
                << pp->Description;
 
-      pp = Comp->Props.next();
+      pnum += 1;
+      pp = Comp->Props.at(pnum);
     }
     else {
       // If a value list is used, the properties "Start" and "Stop" are not
       // used. -> Call them "Symbol" to omit them in the netlist.
       pp->Name = "Symbol";
       pp->display = false;
-      pp = Comp->Props.next();
+      pnum += 1;
+      pp = Comp->Props.at(pnum);
       pp->Name = "Symbol";
       pp->display = false;
-      pp = Comp->Props.next();
+      pnum += 1;
+      pp = Comp->Props.at(pnum);
 
       display = checkValues->isChecked();
       if(pp->display != display) {
@@ -958,7 +976,8 @@ void ComponentDialog::slotApplyInput()
       qDebug() << "====> before ad"
                << pp;
 
-      pp = Comp->Props.next();
+      pnum += 1;
+      pp = Comp->Props.at(pnum);
     }
   }
 
@@ -996,7 +1015,7 @@ void ComponentDialog::slotApplyInput()
        QString desc = prop->item(row, 3)->text();
 
        qDebug() << "====>" <<name << value
-                << Comp->Props.count()
+                << Comp->Props.size()
                 << prop->rowCount() +1
                 << pp;
 
@@ -1021,17 +1040,22 @@ void ComponentDialog::slotApplyInput()
          // if properties where added in the dialog
          // -> create new on the Comp
          Q_ASSERT(prop->rowCount() >= 0);
-         if ( (int) Comp->Props.count() < prop->rowCount() +1) {
+         if ( (int) Comp->Props.size() < prop->rowCount() +1) {
              qDebug() << "adding to Comp ";
              Comp->Props.append(new Property(name, value, display, desc));
              changed = true;
          }
     }
-    pp = Comp->Props.next();
+
+    pnum += 1;
+    pp = Comp->Props.at(pnum);
   }
 
   // original Comp still has properties? (removed some in the dialog?)
   // if more properties than in ListView -> delete the rest
+  /// \todo turn this into model/view
+  TODO("check removal or extra properties");
+  /*
   if(pp) {
     pp = Comp->Props.prev();
     Comp->Props.last();
@@ -1039,6 +1063,7 @@ void ComponentDialog::slotApplyInput()
       Comp->Props.remove();
     changed = true;
   }
+  */
 
  } // end if (item !=0)
 
@@ -1056,7 +1081,7 @@ void ComponentDialog::slotApplyInput()
 
     scene->recreateComponent(Comp);
     scene->update();
-    if ( (int) Comp->Props.count() != prop->rowCount()) { // If props count was changed after recreation
+    if ( (int) Comp->Props.size() != prop->rowCount()) { // If props count was changed after recreation
       Q_ASSERT(prop->rowCount() >= 0);
       updateCompPropsList(); // of component we need to update properties
     }
