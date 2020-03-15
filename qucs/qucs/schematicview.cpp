@@ -352,13 +352,14 @@ void SchematicView::print(QPrinter*, QPainter *Painter, bool printAll, bool fitT
   */
   QFont oldFont = Painter->font();
 
+  /*
 #ifdef __MINGW32__
   float PrintRatio = printerDpiX / screenDpiX;
   QFont printFont = Painter->font();
   printFont.setPointSizeF(printFont.pointSizeF()/PrintRatio);
   Painter->setFont(printFont);
 #endif
-
+*/
   /// \todo print
   /*
   //bool selected;
