@@ -108,7 +108,7 @@ public:
   QPen    GridPen;
 
   QList<Graph *>  Graphs;
-  QList<Arc *>    Arcs;
+  QList<struct Arc *>    Arcs;
   QList<Line *>   Lines;
   QList<Text *>   Texts;
 
