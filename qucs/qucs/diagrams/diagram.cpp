@@ -29,7 +29,6 @@
 #endif
 #include <stdlib.h>
 #include <cmath>
-#include <float.h>
 #if HAVE_IEEEFP_H
 # include <ieeefp.h>
 #endif
@@ -740,8 +739,8 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
 
   double xmin = xAxis.min, ymin = yAxis.min, zmin = zAxis.min;
   double xmax = xAxis.max, ymax = yAxis.max, zmax = zAxis.max;
-  yAxis.min = zAxis.min = xAxis.min =  DBL_MAX;
-  yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
+  yAxis.min = zAxis.min = xAxis.min =  std::numeric_limits<double>::max();
+  yAxis.max = zAxis.max = xAxis.max = -std::numeric_limits<double>::max();
 
   int No=0;
   foreach(Graph *pg, Graphs) {
@@ -779,8 +778,8 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
 */
 void Diagram::recalcGraphData()
 {
-  yAxis.min = zAxis.min = xAxis.min =  DBL_MAX;
-  yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
+  yAxis.min = zAxis.min = xAxis.min =  std::numeric_limits<double>::max();
+  yAxis.max = zAxis.max = xAxis.max = -std::numeric_limits<double>::max();
   yAxis.numGraphs = zAxis.numGraphs = 0;
 
   // get maximum and minimum values
