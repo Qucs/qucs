@@ -112,7 +112,6 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
 
   Diag = d;
   setAttribute(Qt::WA_DeleteOnClose);
-  Graphs.setAutoDelete(true);
   copyDiagramGraphs();   // make a copy of all graphs
   if(parent){
 	  const SchematicView* s = dynamic_cast<const SchematicView*>(parent);
@@ -957,7 +956,7 @@ void DiagramDialog::slotDeleteGraph()
   }
 
   GraphList->takeItem(i);
-  Graphs.remove(i);
+  Graphs.removeAt(i);
 
   int k=0;
   if (GraphList->count()!=0) {
@@ -1190,11 +1189,9 @@ void DiagramDialog::slotApply()
   }   // of "if(Diag->Name != "Tab")"
 
   Diag->Graphs.clear();   // delete the graphs
-  Graphs.setAutoDelete(false);
-  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
+  foreach(Graph *pg, Graphs)
     Diag->Graphs.append(pg);  // transfer the new graphs to diagram
   Graphs.clear();
-  Graphs.setAutoDelete(true);
 
   Diag->loadGraphData(defaultDataSet);
   ((SchematicView*)parent())->viewport()->repaint();

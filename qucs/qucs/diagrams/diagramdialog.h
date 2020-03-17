@@ -22,7 +22,6 @@
 
 #include <QDialog>
 #include <QRegExp>
-#include "qt_compat.h"
 
 class QVBoxLayout;
 class Cross3D;
@@ -125,7 +124,7 @@ private:
   QSlider     *SliderRotX, *SliderRotY, *SliderRotZ;
   Cross3D     *DiagCross;
   bool changed, transfer, toTake;
-  Q3PtrList<Graph>  Graphs;
+  QList<Graph *>  Graphs;
 };
 
 #endif
