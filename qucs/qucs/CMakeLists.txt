@@ -14,6 +14,12 @@ project(qucs CXX)
 cmake_minimum_required(VERSION 2.6)
 cmake_policy(VERSION 2.6)
 
+# Work around sh.exe was found in your PATH
+# Fixed upstream https://cmake.org/cmake/help/v3.17/release/3.17.html#other-changes
+if(MINGW)
+  set(DCMAKE_SH "CMAKE_SH-NOTFOUND")
+endif()
+
 # use top VERSION file
 file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
 message(STATUS "Configuring ${PROJECT_NAME} (GUI): VERSION ${QUCS_VERSION}")
