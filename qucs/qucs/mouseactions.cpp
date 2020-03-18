@@ -87,14 +87,14 @@ bool MouseActions::pasteElements(SchematicView *Doc)
 
   TODO("fix schematic file ref")
   SchematicFile *sch = new SchematicFile();
-  if(!sch->paste(&stream, &movingElements)) return false;
+  if(!sch->paste(&stream, movingElements)) return false;
 
   GraphicItem *pe;
   int xmax, xmin, ymax, ymin;
   xmin = ymin = INT_MAX;
   xmax = ymax = INT_MIN;
   // First, get the max and min coordinates of all selected elements.
-  for(pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
+  foreach(pe, movingElements) {
     if(pe->ElemType == isWire) {
       if(pe->x1 < xmin) xmin = pe->x1;
       if(pe->x2 > xmax) xmax = pe->x2;
@@ -114,7 +114,7 @@ bool MouseActions::pasteElements(SchematicView *Doc)
   Doc->scene->setOnGrid(xmin, ymin);
 
   // moving with mouse cursor in the midpoint
-  for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
+  foreach(pe, movingElements)
     if(pe->ElemType & isLabel) {
       pe->cx += xmin;  pe->x1 += xmin;
       pe->cy += ymin;  pe->y1 += ymin;
@@ -162,11 +162,11 @@ void MouseActions::editLabel(SchematicView *Doc, WireLabel *pl)
 
 // -----------------------------------------------------------
 // Reinserts all elements (moved by the user) back into the schematic.
-void MouseActions::endElementMoving(SchematicView *Doc, Q3PtrList<GraphicItem> *movElements)
+void MouseActions::endElementMoving(SchematicView *Doc, QList<GraphicItem *> movElements)
 {
   GraphicItem *pe;
   SchematicScene *scene = Doc->scene;
-  for(pe = movElements->first(); pe!=0; pe = movElements->next()) {
+  foreach(pe, movElements) {
 //    pe->isSelected = false;  // deselect first (maybe afterwards pe == NULL)
     switch(pe->ElemType) { // FIXME: use casts.
       case isWire:
@@ -207,7 +207,7 @@ void MouseActions::endElementMoving(SchematicView *Doc, Q3PtrList<GraphicItem> *
     }
   }
 
-  movElements->clear();
+  movElements.clear();
   if((MAx3 != 0) || (MAy3 != 0))  // moved or put at the same place ?
     Doc->setChanged(true, true);
 
@@ -220,11 +220,12 @@ void MouseActions::endElementMoving(SchematicView *Doc, Q3PtrList<GraphicItem> *
 
 // -----------------------------------------------------------
 // Moves elements in "movElements" by x/y
-void MouseActions::moveElements(Q3PtrList<GraphicItem> *movElements, int x, int y)
+void MouseActions::moveElements(QList<GraphicItem *> movElements, int x, int y)
 {
   Wire *pw;
   GraphicItem *pe;
-  for(pe = movElements->first(); pe != 0; pe = movElements->next()) {
+  //for(pe = movElements->first(); pe != 0; pe = movElements->next()) {
+  foreach(pe, movElements) {
     if(pe->ElemType == isWire) {
       pw = (Wire*)pe;   // connected wires are not moved completely
 
@@ -463,12 +464,12 @@ void MouseActions::MMoveMoving(SchematicView *Doc, QMouseEvent *Event)
   MAy3 = MAy1 = MAy2 - MAy1;
 
   movingElements.clear();
-  scene->copySelectedElements(&movingElements);
+  scene->copySelectedElements(movingElements);
   Doc->viewport()->repaint();
 
   Wire *pw;
   // Changes the position of all moving elements by dx/dy
-  for(GraphicItem *pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
+  foreach(GraphicItem *pe, movingElements) {
     if(pe->ElemType == isWire) {
       pw = (Wire*)pe;   // connecting wires are not moved completely
 
@@ -524,7 +525,7 @@ void MouseActions::MMoveMoving2(SchematicView *Doc, QMouseEvent *Event)
   MAy1 = MAy2 - MAy1;
   MAx3 += MAx1;  MAy3 += MAy1;   // keep track of the complete movement
 
-  moveElements(&movingElements, MAx1, MAy1);  // moves elements by MAx1/MAy1
+  moveElements(movingElements, MAx1, MAy1);  // moves elements by MAx1/MAy1
 
   // paint afterwards to avoid conflict between wire and label painting
   //for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
@@ -1791,7 +1792,7 @@ void MouseActions::MReleaseMoving(SchematicView *Doc, QMouseEvent*)
 {
   // Allow all mouse buttons, because for others than the left one,
   // a menu has already created.
-  endElementMoving(Doc, &movingElements);
+  endElementMoving(Doc, movingElements);
   Doc->releaseKeyboard();  // allow keyboard inputs again
 
   QucsMain->MouseMoveAction = 0;
@@ -1885,7 +1886,7 @@ void MouseActions::moveElements(SchematicView *Doc, int& x1, int& y1)
   GraphicItem *pe;
   Doc->scene->setOnGrid(x1, y1);
 
-  for(pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
+  foreach(pe, movingElements) {
     if(pe->ElemType & isLabel) {
       pe->cx += x1;  pe->x1 += x1;
       pe->cy += y1;  pe->y1 += y1;
@@ -1902,7 +1903,7 @@ void MouseActions::rotateElements(SchematicView *Doc, int& x1, int& y1)
   GraphicItem *pe;
   Doc->scene->setOnGrid(x1, y1);
 
-  for(pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
+  foreach(pe, movingElements) {
     switch(pe->ElemType) {
     case isComponent:
     case isAnalogComponent:
@@ -1944,7 +1945,7 @@ void MouseActions::MReleasePaste(SchematicView *Doc, QMouseEvent *Event)
   switch(Event->button()) {
   case Qt::LeftButton :
     // insert all moved elements into document
-    for(pe = movingElements.first(); pe!=0; pe = movingElements.next()) {
+    foreach(pe, movingElements) {
       TODO("unselect");//pe->isSelected() = false;
       switch(pe->ElemType) {
 	case isWire:

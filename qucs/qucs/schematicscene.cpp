@@ -1429,7 +1429,7 @@ void SchematicScene::newMovingWires(Q3PtrList<GraphicItem> *p, Node *pn, int pos
 // BUG: does not (only) copy, as the name suggests.
 //      cannot be used to make copies.
 // returns the number of "copied" _Markers_ only
-int SchematicScene::copySelectedElements(Q3PtrList<GraphicItem> *p)
+int SchematicScene::copySelectedElements(QList<GraphicItem *> p)
 {
     int i, count = 0;
     Component *pc;
@@ -1444,7 +1444,7 @@ int SchematicScene::copySelectedElements(Q3PtrList<GraphicItem> *p)
     for(pc = Components->first(); pc != 0; )
         if(pc->isSelected())
         {
-            p->append(pc);
+            p.append(pc);
             count++;
 
             // delete all port connections
@@ -1463,11 +1463,11 @@ int SchematicScene::copySelectedElements(Q3PtrList<GraphicItem> *p)
     for(pw = Wires->first(); pw != 0; )
     {
         if(pw->Label) if(pw->Label->isSelected())
-                p->append(pw->Label);
+                p.append(pw->Label);
 
         if(pw->isSelected())
         {
-            p->append(pw);
+            p.append(pw);
 
             pw->Port1->Connections.removeOne(pw);   // remove connection 1
             pw->Port1->State = 4;
@@ -1483,28 +1483,30 @@ int SchematicScene::copySelectedElements(Q3PtrList<GraphicItem> *p)
     // Inserts wires, if a connection to a not moving element is found.
     // The order of the "for"-loops is important to guarantee a stable
     // operation: components, new wires, old wires
-    pc = (Component*)p->first();
+    TODO("check legacy code");
+#if 0
+    pc = (Component*)p.first();
     for(i=0; i<count; i++)
     {
         foreach(Port *pp, pc->Ports)
             newMovingWires(p, pp->Connection, count);
 
-        p->findRef(pc);   // back to the real current pointer
-        pc = (Component*)p->next();
+        p.findRef(pc);   // back to the real current pointer
+        pc = (Component*)p.next();
     }
 
-    for(pe = (GraphicItem*)pc; pe != 0; pe = p->next())  // new wires
+    for(pe = (GraphicItem*)pc; pe != 0; pe = p.next())  // new wires
         if(pe->isSelected())
             break;
 
-    for(pw = (Wire*)pe; pw != 0; pw = (Wire*)p->next())
+    for(pw = (Wire*)pe; pw != 0; pw = (Wire*)p.next())
         if(pw->ElemType == isWire)    // not working on labels
         {
             newMovingWires(p, pw->Port1, count);
             newMovingWires(p, pw->Port2, count);
-            p->findRef(pw);   // back to the real current pointer
+            p.findRef(pw);   // back to the real current pointer
         }
-
+#endif
 
     // ..............................................
     // delete the unused nodes
@@ -1528,7 +1530,7 @@ int SchematicScene::copySelectedElements(Q3PtrList<GraphicItem> *p)
                     if(!(pn->State & 2)) pn->Label->ElemType = isHMovingLabel;
                 }
                 else if(pn->State & 2) pn->Label->ElemType = isVMovingLabel;
-                p->append(pn->Label);    // do not forget the node labels
+                p.append(pn->Label);    // do not forget the node labels
             }
             Nodes->remove();
             pn = Nodes->current();
@@ -1543,14 +1545,14 @@ int SchematicScene::copySelectedElements(Q3PtrList<GraphicItem> *p)
     // do this last to avoid double copying
     for(pn = Nodes->first(); pn != 0; pn = Nodes->next())
         if(pn->Label) if(pn->Label->isSelected())
-                p->append(pn->Label);
+                p.append(pn->Label);
 
 
     // test all paintings **********************************
     for(Painting *ppa = Paintings->first(); ppa != 0; )
         if(ppa->isSelected())
         {
-            p->append(ppa);
+            p.append(ppa);
             Paintings->take();
             ppa = Paintings->current();
         }
@@ -1561,7 +1563,7 @@ int SchematicScene::copySelectedElements(Q3PtrList<GraphicItem> *p)
     for(pd = Diagrams->first(); pd != 0; )
         if(pd->isSelected())
         {
-            p->append(pd);
+            p.append(pd);
             Diagrams->take();
             pd = Diagrams->current();
         }
@@ -1577,7 +1579,7 @@ int SchematicScene::copySelectedElements(Q3PtrList<GraphicItem> *p)
                     if(pm->isSelected())
                     {
                         count++;
-                        p->append(pm);
+                        p.append(pm);
                     }
                 }
             }

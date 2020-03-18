@@ -145,7 +145,7 @@ bool SchematicFile::loadIntoNothing(QTextStream *stream)
 
 // -------------------------------------------------------------
 // Paste from clipboard.
-bool SchematicFile::pasteFromClipboard(QTextStream *stream, Q3PtrList<GraphicItem> *pe)
+bool SchematicFile::pasteFromClipboard(QTextStream *stream, QList<GraphicItem *> pe)
 {
   QString Line;
 
@@ -192,10 +192,14 @@ bool SchematicFile::pasteFromClipboard(QTextStream *stream, Q3PtrList<GraphicIte
   while(!stream->atEnd()) {
     Line = stream->readLine();
     if(Line == "<Components>") {
-      if(!loadComponents(stream, (Q3PtrList<Component>*)pe)) return false; }
+      TODO("check legacy code");
+      //if(!loadComponents(stream, (Q3PtrList<Component>*)pe)) return false;
+    }
     else
     if(Line == "<Wires>") {
-      if(!loadWires(stream, pe)) return false; }
+      TODO("check legacy code");
+      //if(!loadWires(stream, pe)) return false;
+    }
     else
     if(Line == "<Diagrams>") {
       if(!loadDiagrams(stream)) return false; }
@@ -1923,7 +1927,7 @@ void SchematicFile::cut()
 
 // ---------------------------------------------------
 // Performs paste function from clipboard
-bool SchematicFile::paste(QTextStream *stream, Q3PtrList<GraphicItem> *pe)
+bool SchematicFile::paste(QTextStream *stream, QList<GraphicItem *> pe)
 {
   return pasteFromClipboard(stream, pe);
 }

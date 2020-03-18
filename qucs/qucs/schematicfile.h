@@ -152,7 +152,7 @@ private:
   bool loadIntoNothing(QTextStream*);
 
   QString createClipboardFile();
-  bool    pasteFromClipboard(QTextStream *, Q3PtrList<GraphicItem>*);
+  bool    pasteFromClipboard(QTextStream *, QList<GraphicItem *>);
 
   bool    rebuildSymbol(QString *);
 
@@ -185,7 +185,7 @@ public: // serializer
   // from schematicview
   void    cut();
   void    copy();
-  bool    paste(QTextStream*, Q3PtrList<GraphicItem>*);
+  bool    paste(QTextStream*, QList<GraphicItem *>);
   bool    load();
   int     save();
   int     saveSymbolCpp (void);
