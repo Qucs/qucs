@@ -2359,7 +2359,7 @@ bool SchematicScene::activateSelectedComponents()
 void SchematicScene::setCompPorts(Component *pc)
 {
     WireLabel *pl;
-    Q3PtrList<WireLabel> LabelCache;
+    QList<WireLabel*> LabelCache;
 
     foreach(Port *pp, pc->Ports)
     {
@@ -2388,7 +2388,7 @@ void SchematicScene::setCompPorts(Component *pc)
     foreach(Port *pp, pc->Ports)
         pp->Connection = insertNode(pp->x+pc->cx, pp->y+pc->cy, pc);
 
-    for(pl = LabelCache.first(); pl != 0; pl = LabelCache.next())
+    foreach(pl, LabelCache)
         insertNodeLabel(pl);
 }
 
@@ -2558,15 +2558,16 @@ void SchematicScene::oneLabel(Node *n1)
     GraphicItem *pe;
     WireLabel *pl = 0;
     bool named=false;   // wire line already named ?
-    Q3PtrList<Node> Cons;
+    QList<Node*> Cons;
 
     for(pn = Nodes->first(); pn!=0; pn = Nodes->next())
         pn->y1 = 0;   // mark all nodes as not checked
 
     Cons.append(n1);
     n1->y1 = 1;  // mark Node as already checked
-    for(pn = Cons.first(); pn!=0; pn = Cons.next())
+    for(int i = 0; i < Cons.size(); i++)
     {
+        pn = Cons.at(i);
         if(pn->Label)
         {
             if(named)
@@ -2606,7 +2607,8 @@ void SchematicScene::oneLabel(Node *n1)
             if(pNode->y1) continue;
             pNode->y1 = 1;  // mark Node as already checked
             Cons.append(pNode);
-            Cons.findRef(pn);
+            //Cons.findRef(pn); // set index back to pn (?)
+            i = Cons.indexOf(pn);
 
             if(pw->Label)
             {
@@ -2665,14 +2667,15 @@ GraphicItem* SchematicScene::getWireLabel(Node *pn_)
     Wire *pw;
     Node *pn, *pNode;
     GraphicItem *pe;
-    Q3PtrList<Node> Cons;
+    QList<Node*> Cons;
 
     for(pn = Nodes->first(); pn!=0; pn = Nodes->next())
         pn->y1 = 0;   // mark all nodes as not checked
 
     Cons.append(pn_);
     pn_->y1 = 1;  // mark Node as already checked
-    for(pn = Cons.first(); pn!=0; pn = Cons.next())
+    for(int i = 0; i < Cons.size(); i++) {
+        pn = Cons.at(i);
         if(pn->Label) return pn;
         else
             foreach(pe, pn->Connections)
@@ -2693,8 +2696,10 @@ GraphicItem* SchematicScene::getWireLabel(Node *pn_)
                 if(pNode->y1) continue;
                 pNode->y1 = 1;  // mark Node as already checked
                 Cons.append(pNode);
-                Cons.findRef(pn);
+                //Cons.findRef(pn); // set index back to pn (?)
+                i = Cons.indexOf(pn);
             }
+    }
     return 0;   // no wire label found
 }
 
@@ -3047,7 +3052,7 @@ bool SchematicScene::elementsOnGrid()
   int x, y, No;
   bool count = false;
   WireLabel *pl, *pLabel;
-  Q3PtrList<WireLabel> LabelCache;
+  QList<WireLabel*> LabelCache;
 
   // test all components
   Components->setAutoDelete(false);
@@ -3075,7 +3080,7 @@ bool SchematicScene::elementsOnGrid()
 
       x -= pc->cx;
       y -= pc->cy;    // re-insert node labels and correct position
-      for(pl = LabelCache.first(); pl != 0; pl = LabelCache.next()) {
+      foreach(pl, LabelCache) {
         pl->cx -= x;
         pl->cy -= y;
         insertNodeLabel(pl);
