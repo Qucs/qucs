@@ -107,16 +107,12 @@ private:
   DiagramList   *Diagrams;
   ComponentList *Components;
 
-public:
-
-  PaintingList  SymbolPaints;  // symbol definition for subcircuit
 /* ********************************************************************
    *****  The following methods are in the file                   *****
    *****  "schematic_element.cpp". They only access the QPtrList  *****
    *****  pointers "Wires", "Nodes", "Diagrams", "Paintings" and  *****
    *****  "Components".                                           *****
    ******************************************************************** */
-
 public:
   Node* insertNode(int, int, GraphicItem*);
   Node* selectedNode(int, int);

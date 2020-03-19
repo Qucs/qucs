@@ -54,10 +54,6 @@ SchematicScene::SchematicScene(QObject *parent) :
   undoStack = new QUndoStack(this);
 
   schematicFrame = new Frame();
-
-  /// \todo remove deprecated
-  SymbolPaints.setAutoDelete(true);
-
 }
 
 SchematicScene::~SchematicScene()
