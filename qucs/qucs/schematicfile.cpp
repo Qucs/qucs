@@ -670,7 +670,7 @@ bool SchematicFile::loadProperties(QTextStream *stream)
  * Otherwise insert component into database and graphics scene.
  *
  */
-bool SchematicFile::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
+bool SchematicFile::loadComponents(QTextStream *stream)
 {
   QString Line, cstr;
   Component *c;
@@ -688,6 +688,8 @@ bool SchematicFile::loadComponents(QTextStream *stream, Q3PtrList<Component> *Li
     QPointF center(c->cx, c->cy);
     c->setPos(center);
 
+    TODO("Fix paste code");
+#if 0
     if(List) {  // "paste" ?
       int z;
       for(z=c->name().length()-1; z>=0; z--) // cut off number of component name
@@ -699,6 +701,9 @@ bool SchematicFile::loadComponents(QTextStream *stream, Q3PtrList<Component> *Li
       // insert component into database and scene
       scene->simpleInsertComponent(c);
     }
+#endif
+    // insert component into database and scene
+    scene->simpleInsertComponent(c);
   }
 
   QMessageBox(QMessageBox::Critical,
@@ -708,7 +713,7 @@ bool SchematicFile::loadComponents(QTextStream *stream, Q3PtrList<Component> *Li
 }
 
 // -------------------------------------------------------------
-bool SchematicFile::loadWires(QTextStream *stream, Q3PtrList<GraphicItem> *List)
+bool SchematicFile::loadWires(QTextStream *stream)
 {
   Wire *w;
   QString Line;
@@ -726,6 +731,8 @@ bool SchematicFile::loadWires(QTextStream *stream, Q3PtrList<GraphicItem> *List)
       delete w;
       return false;
     }
+    TODO("Fix paste code");
+#if 0
     if(List) {
       if(w->x1 == w->x2) if(w->y1 == w->y2) if(w->Label) {
         w->Label->ElemType = isMovingLabel;
@@ -737,6 +744,9 @@ bool SchematicFile::loadWires(QTextStream *stream, Q3PtrList<GraphicItem> *List)
       if(w->Label)  List->append(w->Label);
     }
     else scene->simpleInsertWire(w);
+#endif
+  // insert item into database and scene
+  scene->simpleInsertWire(w);
   }
 
   QMessageBox::critical(0, QObject::tr("Error"),
@@ -1086,13 +1096,14 @@ void SchematicFile::propagateNode(QStringList& Collect,
 			      int& countInit, Node *pn)
 {
   bool setName=false;
-  Q3PtrList<Node> Cons;
+  QList<Node*> Cons;
   Node *p2;
   Wire *pw;
   GraphicItem *pe;
 
   Cons.append(pn);
-  for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
+  for(int i = 0; i <= Cons.size(); i++) {
+    p2 = Cons.at(i);
     foreach(pe, p2->Connections)
       if(pe->ElemType == isWire) {
 	pw = (Wire*)pe;
@@ -1113,11 +1124,12 @@ void SchematicFile::propagateNode(QStringList& Collect,
 	  }
 	}
 	if(setName) {
-	  Cons.findRef(p2);   // back to current Connection
+      i = Cons.indexOf(p2);   // back to current Connection
 	  if (isAnalog) createNodeSet(Collect, countInit, pw, pn);
 	  setName = false;
 	}
       }
+  } // for
   Cons.clear();
 }
 

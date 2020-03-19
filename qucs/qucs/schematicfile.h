@@ -145,8 +145,9 @@ private:
   /// Each load[] is reading the [] block of entries.
   /// Refactor into something loadBlock(Stream, enum::BlockType)
   /// Use switch case inside method to handle each type
-  bool loadComponents(QTextStream*, Q3PtrList<Component> *List=0);
-  bool loadWires(QTextStream*, Q3PtrList<GraphicItem> *List=0);
+  /// Legacy paste code passing a list pointer is currently disabled.
+  bool loadComponents(QTextStream*);
+  bool loadWires(QTextStream*);
   bool loadDiagrams(QTextStream*);
   bool loadPaintings(QTextStream*);
   bool loadIntoNothing(QTextStream*);
