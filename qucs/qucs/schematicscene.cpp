@@ -1088,12 +1088,14 @@ Marker* SchematicScene::setMarker(int x, int y)
 
 // ---------------------------------------------------
 // Moves the marker pointer left/right on the graph.
-void SchematicScene::markerLeftRight(bool left, Q3PtrList<GraphicItem> *Elements)
+/// \todo currently dead code, disabled on qucs_actions
+void SchematicScene::markerLeftRight(bool left, QList<GraphicItem *> Elements)
 {
     Marker *pm;
     bool acted = false;
-    for(pm = (Marker*)Elements->first(); pm!=0; pm = (Marker*)Elements->next())
+    foreach(auto item, Elements)
     {
+        pm = dynamic_cast<Marker*>(item);
         if(pm->moveLeftRight(left))
             acted = true;
     }
@@ -1106,12 +1108,14 @@ void SchematicScene::markerLeftRight(bool left, Q3PtrList<GraphicItem> *Elements
 
 // ---------------------------------------------------
 // Moves the marker pointer up/down on the more-dimensional graph.
-void SchematicScene::markerUpDown(bool up, Q3PtrList<GraphicItem> *Elements)
+/// \todo currently dead code, disabled on qucs_actions
+void SchematicScene::markerUpDown(bool up, QList<GraphicItem *> Elements)
 {
     Marker *pm;
     bool acted = false;
-    for(pm = (Marker*)Elements->first(); pm!=0; pm = (Marker*)Elements->next())
+    foreach(auto item, Elements)
     {
+        pm = dynamic_cast<Marker*>(item);
         if(pm->moveUpDown(up))
             acted = true;
     }

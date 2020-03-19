@@ -131,8 +131,8 @@ public:
   void  deleteWire(Wire*);
 
   Marker* setMarker(int, int);
-  void    markerLeftRight(bool, Q3PtrList<GraphicItem>*);
-  void    markerUpDown(bool, Q3PtrList<GraphicItem>*);
+  void    markerLeftRight(bool, QList<GraphicItem *>);
+  void    markerUpDown(bool, QList<GraphicItem *>);
 
   void     selectMarkers();
   void     newMovingWires(Q3PtrList<GraphicItem>*, Node*, int);
