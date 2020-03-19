@@ -135,7 +135,7 @@ public:
   void    markerUpDown(bool, QList<GraphicItem *>);
 
   void     selectMarkers();
-  void     newMovingWires(Q3PtrList<GraphicItem>*, Node*, int);
+  void     newMovingWires(QList<GraphicItem *>, Node*, int);
   int      copySelectedElements(QList<GraphicItem *> );
   bool deleteElements();
   bool     aligning(int);

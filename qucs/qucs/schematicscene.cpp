@@ -1307,7 +1307,8 @@ void SchematicScene::selectMarkers()
 // For moving elements: If the moving element is connected to a not
 // moving element, insert two wires. If the connected element is already
 // a wire, use this wire. Otherwise create new wire.
-void SchematicScene::newMovingWires(Q3PtrList<GraphicItem> *p, Node *pn, int pos)
+/// \todo dead code, currently disabled in copySelectedElements
+void SchematicScene::newMovingWires(QList<GraphicItem *> p, Node *pn, int pos)
 {
     GraphicItem *pe;
 
@@ -1347,7 +1348,7 @@ void SchematicScene::newMovingWires(Q3PtrList<GraphicItem> *p, Node *pn, int pos
 
         // .................................................
         // reuse one wire
-        p->insert(pos, pw);
+        p.insert(pos, pw);
         pw->Port1->Connections.removeOne(pw);   // remove connection 1
         pw->Port1->State |= 16+4;
         pw->Port2->Connections.removeOne(pw);   // remove connection 2
@@ -1384,10 +1385,10 @@ void SchematicScene::newMovingWires(Q3PtrList<GraphicItem> *p, Node *pn, int pos
         if(pw2 == 0)
         {
             if(pw->Port1 != (Node*)(uintptr_t)mask)
-                p->insert(pos,
+                p.insert(pos,
                           new Wire(pw->x2, pw->y2, pw->x2, pw->y2, (Node*)(uintptr_t)mask, (Node*)(uintptr_t)invMask));
             else
-                p->insert(pos,
+                p.insert(pos,
                           new Wire(pw->x1, pw->y1, pw->x1, pw->y1, (Node*)(uintptr_t)mask, (Node*)(uintptr_t)invMask));
             return;
         }
@@ -1395,7 +1396,7 @@ void SchematicScene::newMovingWires(Q3PtrList<GraphicItem> *p, Node *pn, int pos
 
         // .................................................
         // reuse a second wire
-        p->insert(pos, pw2);
+        p.insert(pos, pw2);
         pw2->Port1->Connections.removeOne(pw2);   // remove connection 1
         pw2->Port1->State |= 16+4;
         pw2->Port2->Connections.removeOne(pw2);   // remove connection 2
@@ -1418,9 +1419,9 @@ void SchematicScene::newMovingWires(Q3PtrList<GraphicItem> *p, Node *pn, int pos
     }
 
     // only x2 moving
-    p->insert(pos, new Wire(pn->cx, pn->cy, pn->cx, pn->cy, (Node*)0, (Node*)1));
+    p.insert(pos, new Wire(pn->cx, pn->cy, pn->cx, pn->cy, (Node*)0, (Node*)1));
     // x1, x2, y2 moving
-    p->insert(pos, new Wire(pn->cx, pn->cy, pn->cx, pn->cy, (Node*)1, (Node*)3));
+    p.insert(pos, new Wire(pn->cx, pn->cy, pn->cx, pn->cy, (Node*)1, (Node*)3));
 }
 
 // ---------------------------------------------------
