@@ -39,7 +39,7 @@ include(${QT_USE_FILE})
 add_definitions(${QT_DEFINITIONS})
 
 set(QUCSLIB_SRCS main.cpp qucslib.cpp displaydialog.cpp symbolwidget.cpp
-                 librarydialog.cpp)
+                 librarydialog.cpp checklibraries.cpp)
 
 set(QUCSLIB_MOC_HDRS qucslib.h displaydialog.h symbolwidget.h librarydialog.h)
 

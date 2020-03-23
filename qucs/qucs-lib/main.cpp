@@ -33,6 +33,7 @@
 #include <QSettings>
 #include <QDebug>
 #include "qucslib.h"
+#include "checklibraries.h"
 
 tQucsSettings QucsSettings;
 QDir UserLibDir;
@@ -128,6 +129,49 @@ int main(int argc, char *argv[])
 
   a.setFont(QucsSettings.font);
 
+  if (argc > 1){
+    // simple command line parser
+    QStringList ignoreList;
+    QString compName;
+    for (int i = 1; i < argc; ++i) {
+      if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
+        fprintf(stdout,
+    "Usage: %s [-h] [--help] \n"
+    "  --check-libraries  check all libraries\n"
+    "  --check-component componentName\n"
+    "  --ignore-lib libName [--ignore-lib libName ...]\n"
+    "\n"
+    "examples:\n"
+    "   qucslib --check-libraries\n"
+    "   qucslib --check-component BSP171\n"
+    "   qucslib --check-libraries --ignore-lib Ideal.lib --ignore-lib LEDs.lib\n"
+    , argv[0]);
+        return 0;
+      }else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
+  #ifdef GIT
+        fprintf(stdout, "Qucs " PACKAGE_VERSION " (" GIT ")" "\n");
+  #else
+        fprintf(stdout, "Qucs " PACKAGE_VERSION "\n");
+  #endif
+        return 0;
+      }else
+      if (!strcmp(argv[i], "--check-libraries")) {
+        // all checkComponentLibraries anway
+      }else
+      if (!strcmp(argv[i], "--ignore-lib")) {
+        ignoreList.append(argv[++i]);
+      }else
+      if (!strcmp(argv[i], "--check-component")) {
+        compName = argv[++i];
+      }else{
+        fprintf(stderr, "invalid argument %s\n", argv[i]);
+        return -2;
+      }
+    }
+    CheckComponentLibraries checkCompLibraries;
+    return checkCompLibraries.checkComponentLibraries(argv[0], compName, ignoreList);// ~/local/qucs/bin/qucslib
+  }
+  
   QTranslator tor( 0 );
   QString lang = QucsSettings.Language;
   if(lang.isEmpty())
