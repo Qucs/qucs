@@ -1615,6 +1615,8 @@ bool SchematicScene::copyComps2WiresPaints(int& x1, int& y1, int& x2, int& y2,
 int SchematicScene::copyElements(int& x1, int& y1, int& x2, int& y2,
                             QList<GraphicItem *> *ElementCache)
 {
+    TODO("Deprecated. Find better way.");
+#if 0
     int bx1, by1, bx2, by2;
     Wires->setAutoDelete(false);
     Components->setAutoDelete(false);
@@ -1656,6 +1658,8 @@ int SchematicScene::copyElements(int& x1, int& y1, int& x2, int& y2,
         }
 
     return number;
+#endif
+    return 1;
 }
 
 // ---------------------------------------------------
