@@ -3029,6 +3029,8 @@ bool SchematicScene::mirrorYComponents()
 void SchematicScene::copyPaintings(int& x1, int& y1, int& x2, int& y2,
                               QList<GraphicItem *> *ElementCache)
 {
+    TODO("Deprecated");
+#if 0
     Painting *pp;
     int bx1, by1, bx2, by2;
     // find boundings of all selected paintings
@@ -3046,6 +3048,7 @@ void SchematicScene::copyPaintings(int& x1, int& y1, int& x2, int& y2,
             pp = Paintings->current();
         }
         else pp = Paintings->next();
+#endif
 }
 
 
