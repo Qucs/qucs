@@ -3055,6 +3055,8 @@ void SchematicScene::copyPaintings(int& x1, int& y1, int& x2, int& y2,
 /// \bug pass list of selected instead of searching for them.
 bool SchematicScene::elementsOnGrid()
 {
+  TODO("Deprecated. Find better way.");
+#if 0
   int x, y, No;
   bool count = false;
   WireLabel *pl, *pLabel;
@@ -3189,6 +3191,8 @@ bool SchematicScene::elementsOnGrid()
       //setChanged(true, true);
   }
   return count;
+#endif
+  return 1;
 }
 
 // ---------------------------------------------------
