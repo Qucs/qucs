@@ -1432,6 +1432,8 @@ void SchematicScene::newMovingWires(QList<GraphicItem *> p, Node *pn, int pos)
 // returns the number of "copied" _Markers_ only
 int SchematicScene::copySelectedElements(QList<GraphicItem *> p)
 {
+    TODO("deprecated. find better way");
+#if 0
     int i, count = 0;
     Component *pc;
     Wire      *pw;
@@ -1485,7 +1487,6 @@ int SchematicScene::copySelectedElements(QList<GraphicItem *> p)
     // The order of the "for"-loops is important to guarantee a stable
     // operation: components, new wires, old wires
     TODO("check legacy code");
-#if 0
     pc = (Component*)p.first();
     for(i=0; i<count; i++)
     {
@@ -1507,7 +1508,6 @@ int SchematicScene::copySelectedElements(QList<GraphicItem *> p)
             newMovingWires(p, pw->Port2, count);
             p.findRef(pw);   // back to the real current pointer
         }
-#endif
 
     // ..............................................
     // delete the unused nodes
@@ -1589,6 +1589,8 @@ int SchematicScene::copySelectedElements(QList<GraphicItem *> p)
         }
 
     return count;
+#endif
+    return 1;
 }
 
 // ---------------------------------------------------
