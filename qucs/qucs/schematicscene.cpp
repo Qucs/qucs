@@ -2865,7 +2865,6 @@ bool SchematicScene::rotateElements()
         //qDebug("pp->getCenter(x2, y2): (%i,%i)\n", x2, y2);
         //qDebug("(x1,y1) (x2,y2): (%i,%i) (%i,%i)\n", x1,y1,x2,y2);
         pp->setCenter(y2-y1 + x1, x1-x2 + y1);
-        Paintings->append(pp);
         break;
       default: ;
     }
@@ -2938,7 +2937,6 @@ bool SchematicScene::mirrorXComponents()
 	pp->getCenter(x2, y2);
 	pp->mirrorX();   // mirror painting !before! mirroring its center
 	pp->setCenter(x2, y1 - y2);
-	Paintings->append(pp);
 	break;
       default: ;
     }
@@ -3007,7 +3005,6 @@ bool SchematicScene::mirrorYComponents()
         pp->getCenter(x2, y2);
         pp->mirrorY();   // mirror painting !before! mirroring its center
         pp->setCenter(x1 - x2, y2);
-        Paintings->append(pp);
         break;
       default: ;
     }

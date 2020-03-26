@@ -103,7 +103,6 @@ private:
   // elements "Doc..." or to the symbol elements "SymbolPaints".
   NodeList      *Nodes;
   WireList      *Wires;
-  PaintingList  *Paintings;
   DiagramList   *Diagrams;
   ComponentList *Components;
 
