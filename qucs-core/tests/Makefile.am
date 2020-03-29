@@ -42,7 +42,13 @@ libqucsUnitTest_LDADD = $(top_builddir)/src/libqucsator.la
 libqucsUnitTest_CPPFLAGS = $(AM_CPPFLAGS) @GTEST_CPPFLAGS@ \
                            -DGTEST_HAS_PTHREAD=0
 libqucsUnitTest_SOURCES = testMain.cpp \
+  test_complex.cpp \
+  test_dataset.cpp \
+  test_equation.cpp \
   test_libqucs.cpp \
+  test_property.cpp \
+  test_strlist.cpp \
+  test_vector.cpp \
 	Fourier.cpp \
 	Math.cpp \
 	Matrix.cpp \

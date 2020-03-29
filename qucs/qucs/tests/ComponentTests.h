@@ -28,4 +28,6 @@ class ComponentTests : public QObject {
   Q_OBJECT
 private slots:
   void testConstructor();
+  void test_AC_Sim();
+  void test_Equation();
 };

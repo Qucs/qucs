@@ -25,6 +25,7 @@
 #include <QTest>
 
 #include "ElementTests.h"
+#include "../paintings/graphictext.h"
 
 void ElementTests::testConstructor() {
     Element *e = new Element();
@@ -37,6 +38,13 @@ void ElementTests::testConstructor() {
     QCOMPARE(e->y1, 0);
     QCOMPARE(e->x2, 0);
     QCOMPARE(e->y2, 0);
+}
+
+void ElementTests::test_GraphicText() {
+  QSKIP("see https://bugreports.qt.io/browse/QTBUG-83156", SkipAll);
+  GraphicText *c01 = new GraphicText();
+  bool ret = c01->load(" 330 70 16 #000000 0 \"Peltz oscillator\"");
+  QCOMPARE(ret, true); //<Text 330 70 16 #000000 0 "Peltz oscillator">
 }
 
 QTEST_MAIN(ElementTests)

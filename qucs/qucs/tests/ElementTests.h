@@ -28,4 +28,5 @@ class ElementTests : public QObject {
   Q_OBJECT
 private slots:
   void testConstructor();
+  void test_GraphicText();
 };
