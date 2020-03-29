@@ -39,13 +39,6 @@
 #include <QUndoStack>
 #include <QGraphicsSceneMouseEvent>
 
-// just dummies for empty lists
-WireList      SymbolWires;
-NodeList      SymbolNodes;
-DiagramList   SymbolDiags;
-ComponentList SymbolComps;
-
-
 SchematicScene::SchematicScene(QObject *parent) :
   QGraphicsScene(parent)
 {
