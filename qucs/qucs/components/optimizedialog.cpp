@@ -850,10 +850,8 @@ void OptimizeDialog::slotApply()
     }
     prop += 1;
   }
-
   // if more properties than in ListView -> delete the rest
- Property *pp = Comp->Props.at(prop);
-  if(pp) {
+  if (prop < Comp->Props.size()) {
     for(int i = prop; i < Comp->Props.size(); i++){
         Comp->Props.removeAt(i);
     }
