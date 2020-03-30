@@ -351,7 +351,7 @@
 <Component BUZ272>
   <Description>
    Enhancement p-channel power MOSFET
-   -100 V, -15 A, 0.3mOhm
+   -100 V, -15 A, 0.3 Ohm
    Manufacturer: Infineon Technologies
    added by Gunther Kraut <gn.kraut@online.de>
   </Description>
