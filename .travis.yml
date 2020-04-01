@@ -50,14 +50,14 @@ addons:
 
 matrix:
   include:
-    - os: linux
-      compiler: gcc
-      env: BUILD=cmake
-      addons:
-        apt:
-          packages:
-            - *native_deps
-
+#    - os: linux
+#      compiler: gcc
+#      env: BUILD=cmake
+#      addons:
+#        apt:
+#          packages:
+#            - *native_deps
+#
     - os: linux
       compiler: gcc
       env: BUILD=autotools
@@ -68,33 +68,33 @@ matrix:
             - lcov # lcov is required by configure, only gcov really needed thou
             - python-tk
 
-    - os: linux
-      compiler: clang
-      env: BUILD=autotools
-      addons:
-        apt:
-          packages:
-            - *native_deps
-
-    - os: osx
-      # Qt 4.8.7 official installer works up to OSX 10.10 or xcode6.4
-      # Use bottle (with Qt3Support) from cartr/qt4
-      osx_image: xcode11.3
-      compiler: clang
-      env: BUILD=autotools
-      addons:
-        homebrew:
-          update: true  # remove once Travis bug is fixed: https://travis-ci.community/t/macos-build-fails-because-of-homebrew-bundle-unknown-command/7296
-          taps:
-            - cartr/qt4
-            - guitorri/tap
-          packages:
-            - flex
-            - bison
-            - qt@4 # from tap
-            - adms # from tap
-            - python@3
-            - ccache
+#    - os: linux
+#      compiler: clang
+#      env: BUILD=autotools
+#      addons:
+#        apt:
+#          packages:
+#            - *native_deps
+#
+#    - os: osx
+#      # Qt 4.8.7 official installer works up to OSX 10.10 or xcode6.4
+#      # Use bottle (with Qt3Support) from cartr/qt4
+#      osx_image: xcode11.3
+#      compiler: clang
+#      env: BUILD=autotools
+#      addons:
+#        homebrew:
+#          update: true  # remove once Travis bug is fixed: https://travis-ci.community/t/macos-build-fails-because-of-homebrew-bundle-unknown-command/7296
+#          taps:
+#            - cartr/qt4
+#            - guitorri/tap
+#          packages:
+#            - flex
+#            - bison
+#            - qt@4 # from tap
+#            - adms # from tap
+#            - python@3
+#            - ccache
 
 # Set secure environment with encrypted string containing GIT_NAME, GIT_EMAIL and GH_TOKEN
 env:
@@ -118,9 +118,7 @@ before_install:
   
   # python3
   - if [[ $LINUX ]]; then pyenv global 3.6; fi
-  #- if [[ ! $OSX ]]; then
-  #    source .travis_check.sh $TRAVIS_OS_NAME;
-  #  fi
+  - if [[ ! $OSX ]]; then source .travis_check.sh $TRAVIS_OS_NAME; fi
 
 install:
   # Setup Linux
