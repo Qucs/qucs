@@ -118,7 +118,7 @@ before_install:
   
   # python3
   - if [[ $LINUX ]]; then pyenv global 3.6; fi
-  - if [[ ! $OSX ]]; then source .travis_check.sh $TRAVIS_OS_NAME; fi
+  - if [[ ! $OSX ]]; then source .travis_check.sh $TRAVIS_OS_NAME 0; fi
 
 install:
   # Setup Linux
@@ -202,28 +202,16 @@ script:
   # set CXXFLAGS also in 'make distcheck' as specifying DISTCHECK_CONFIGURE_FLAGS will retrigger configure
   - if [[ $LINUX && $AUTOTOOLS && $CLANG ]]; then
       ./configure CXXFLAGS="-Wno-unused-command-line-argument" --disable-dependency-tracking --with-gtest=/tmp/gtest --enable-doc || travis_terminate 1;
-      echo "----------------------------------------1---------------------------";
-      find . -name "checklibraries.*";
-      find . -name "displaydialog*";
-      echo "####################";
-      ls -la qucs/qucs-lib;
-      echo "----------------------------------------1---------------------------";
+      source .travis_check.sh $TRAVIS_OS_NAME 1 ;
       make distcheck DISTCHECK_CONFIGURE_FLAGS="CXXFLAGS=-Wno-unused-command-line-argument --with-gtest=/tmp/gtest --enable-doc";
-      find . -name "checklibraries.*";
-      find . -name "displaydialog*";
+      source .travis_check.sh $TRAVIS_OS_NAME 2 ;
     fi
 
   - if [[ $LINUX && $AUTOTOOLS && $GCC ]]; then
       ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest --disable-doc || travis_terminate 1;
-      echo "----------------------------------------2---------------------------";
-      find . -name "checklibraries.*";
-      echo "####################";
-      find . -name "displaydialog*";
-      ls -la qucs/qucs-lib;
-      echo "----------------------------------------2---------------------------";
+      source .travis_check.sh $TRAVIS_OS_NAME 3 ;
       make distcheck DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --disable-dependency-tracking --disable-doc"; 
-      find . -name "checklibraries.*";
-      find . -name "displaydialog*";
+      source .travis_check.sh $TRAVIS_OS_NAME 4 ;
     fi
 
   # with cmake build only
