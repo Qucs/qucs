@@ -101,7 +101,7 @@
 		<Unit filename="qucs-lib/Makefile.am" />
 		<Unit filename="qucs-lib/checklibraries.cpp" />
 		<Unit filename="qucs-lib/checklibraries.h" />
-		<Unit filename="qucs-lib/displaydialog.h" />
+		<Unit filename="qucs-lib/displaydialog.cpp" />
 		<Unit filename="qucs-lib/displaydialog.h" />
 		<Unit filename="qucs-lib/library/Makefile.am" />
 		<Unit filename="qucs-lib/librarydialog.cpp" />
