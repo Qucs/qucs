@@ -17,9 +17,9 @@
 #ifndef CHECKLIBRARIES_H
 #define CHECKLIBRARIES_H
 
-#include <QList>
 #include <QString>
 #include <QStringList>
+#include <QList>
 #include "qucslib_common.h"
 
 
