@@ -804,7 +804,6 @@ AC_CONFIG_FILES([Makefile
     qucs-lib/library/Makefile
     qucs-attenuator/Makefile
     qucs-attenuator/bitmaps/Makefile
-    qucs-rescodes/Makefile
     qucs-powercombining/Makefile
     qucs/Makefile
     qucs/bitmaps/Makefile
@@ -824,7 +823,6 @@ AC_CONFIG_FILES([Makefile
     qucs-attenuator/qucsattenuator.1
     qucs-filter/qucsfilter.1
     qucs-lib/qucslib.1
-    qucs-rescodes/qucsrescodes.1
     qucs-transcalc/qucstrans.1
     qucs-powercombining/qucspowercombining.1])
 

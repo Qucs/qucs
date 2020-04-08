@@ -398,7 +398,7 @@ public:
           *distrHor, *distrVert, *selectAll, *callLib, *callMatch, *changeProps,
           *addToProj, *editFind, *insEntity, *selectMarker, *callPowerComb,
           *createLib, *importData, *graph2csv, *createPkg, *extractPkg,
-          *callAtt, *callRes, *centerHor, *centerVert, *loadModule, *buildModule;
+          *callAtt, *centerHor, *centerVert, *loadModule, *buildModule;
 
 public slots:
   void slotEditRotate(bool);  // rotate the selected items
@@ -443,7 +443,6 @@ public slots:
   void slotCallLibrary();
   void slotCallMatch();
   void slotCallAtt();
-  void slotCallRes();
   void slotHelpOnline();
   void slotCallPowerComb();
   void slotChangeProps();

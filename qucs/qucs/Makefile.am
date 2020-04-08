@@ -137,7 +137,6 @@ EXTRA_DIST = \
 	bitmaps/qucshelp.icns \
 	bitmaps/qucslib.icns \
 	bitmaps/qucsedit.icns \
-	bitmaps/qucsrescodes.icns \
 	bitmaps/qucstrans.icns
 
 

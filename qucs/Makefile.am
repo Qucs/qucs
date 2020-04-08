@@ -30,7 +30,6 @@ SUBDIRS = \
 	qucs-attenuator \
 	qucs-filter \
 	qucs-lib \
-	qucs-rescodes \
 	qucs-transcalc \
         qucs-powercombining \
 	translations \
@@ -56,7 +55,6 @@ app_PROGS = $(top_builddir)/qucs/qucs \
   $(top_builddir)/qucs-filter/qucsfilter \
   $(top_builddir)/qucs-activefilter/qucsactivefilter \
   $(top_builddir)/qucs-lib/qucslib \
-  $(top_builddir)/qucs-rescodes/qucsrescodes \
   $(top_builddir)/qucs-powercombining/qucspowercombining \
   $(top_builddir)/qucs-transcalc/qucstrans
 
@@ -82,7 +80,6 @@ mac-install-apps:
 	  qucsactivefilter)	  desc="Qucs Active Filter";; \
 	  qucslib)	  desc="Qucs Library";; \
 	  qucsedit)	  desc="Qucs Editor";; \
-	  qucrescodes)	  desc="Qucs Resistor codes";; \
           qucspowercombining)	  desc="Qucs Power combining";; \
 	  qucstrans)	  desc="Qucs Transcalc";; \
 	esac && \

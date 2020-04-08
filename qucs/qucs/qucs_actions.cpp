@@ -782,13 +782,6 @@ void QucsApp::slotCallAtt()
   launchTool("qucsattenuator", "attenuator calculation");
 }
 
-// ------------------------------------------------------------------------
-// Is called to start the resistor color code calculation program.
-void QucsApp::slotCallRes()
-{
-  launchTool("qucsrescodes", "resistor color code calculation");
-}
-
 //-------------------------------------------------------------------
 // It starts the power combining synthesis tool
 void QucsApp::slotCallPowerComb()

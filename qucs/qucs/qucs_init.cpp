@@ -587,14 +587,6 @@ void QucsApp::initActions()
 	tr("Attenuator synthesis\n\nStarts attenuator calculation program"));
   connect(callAtt, SIGNAL(triggered()), SLOT(slotCallAtt()));
 
-  callRes = new QAction(tr("Resistor color codes"), this);
-  callRes->setShortcut(Qt::CTRL+Qt::Key_8);
-  callRes->setStatusTip(tr("Starts Qucs resistor color codes"));
-  callRes->setWhatsThis(
-  tr("Resistor color codes\n\nStarts standard resistor color code computation program"));
-  connect(callRes, SIGNAL(triggered()), SLOT(slotCallRes()));
-
-
   callPowerComb = new QAction(tr("Power combining"), this);
   callPowerComb->setShortcut(Qt::CTRL+Qt::Key_9);
   callPowerComb->setStatusTip(tr("Starts Qucs power combining tool"));
@@ -814,7 +806,6 @@ void QucsApp::initMenuBar()
   toolMenu->addAction(callLib);
   toolMenu->addAction(callMatch);
   toolMenu->addAction(callAtt);
-  toolMenu->addAction(callRes);
   toolMenu->addAction(callPowerComb);
 
 

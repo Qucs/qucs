@@ -61,8 +61,6 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-lib/qucslib.1.cmake.in
 configure_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/qucs-powercombining/qucspowercombining.1.cmake.in
   ${CMAKE_CURRENT_SOURCE_DIR}/qucs-powercombining/qucspowercombining.1)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-rescodes/qucsrescodes.1.cmake.in
-               ${CMAKE_CURRENT_SOURCE_DIR}/qucs-rescodes/qucsrescodes.1)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1.cmake.in
                ${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1)
 
@@ -74,7 +72,6 @@ add_subdirectory(qucs-attenuator)
 add_subdirectory(qucs-filter)
 add_subdirectory(qucs-lib)
 add_subdirectory(qucs-transcalc)
-add_subdirectory(qucs-rescodes)
 # ADD_SUBDIRECTORY( examples )
 add_subdirectory(translations)
 add_subdirectory(contrib)

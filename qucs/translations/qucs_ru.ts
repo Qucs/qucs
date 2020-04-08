@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="ru">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -713,7 +715,7 @@
 <context>
     <name>DiagramDialog</name>
     <message>
-        <location filename="../qucs/diagrams/diagramdialog.cpp" line="+122"/>
+        <location filename="../qucs/diagrams/diagramdialog.cpp" line="+124"/>
         <source>Edit Diagram Properties</source>
         <translation>Изменить свойства диаграммы</translation>
     </message>
@@ -1084,7 +1086,7 @@
 <context>
     <name>DisplayDialog</name>
     <message>
-        <location filename="../qucs-lib/displaydialog.cpp" line="+39"/>
+        <location filename="../qucs-lib/displaydialog.cpp" line="+40"/>
         <source>Analogue</source>
         <translation>Аналог</translation>
     </message>
@@ -1650,7 +1652,6 @@ Filter synthesis program
     <message>
         <location line="+31"/>
         <location filename="../qucs-filter/helpdialog.cpp" line="+67"/>
-        <location filename="../qucs-rescodes/helpdialog.cpp" line="+66"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -1660,9 +1661,8 @@ Filter synthesis program
         <translation>QucsFilter - это программа синтеза фильтров.  Для создания фильтра просто введите все параметры и нажмите большую кнопку внизу главного окна. Сразу после этого фильтр рассчитывается и помещается в буфер обмена. Теперь перейдите в Qucs, откройте пустой документ схемы и нажмите CTRL-V (вставить из буфера обмена). Теперь схема фильтра может быть вставлена и использована для моделирования. Удачи!</translation>
     </message>
     <message>
-        <location filename="../qucs-rescodes/helpdialog.cpp" line="-31"/>
         <source>A program to compute color codes for resistors and resistance values for color codes. To obtain the color codes, simply enter the resistance and tolerance values and press the &quot;To Colors&quot; button. Alternatively to obtain the resistance, select the appropriate color bands and press the &quot;To Resistance&quot; button. The program computes the closest standard resistor value. You can paste the computed resistor in the schematic (by pressing ctrl+v). Have fun!</source>
-        <translation>Программа расчёта кодов цветовой маркировки резисторов и значений сопротивления для цветовых кодов.
+        <translation type="obsolete">Программа расчёта кодов цветовой маркировки резисторов и значений сопротивления для цветовых кодов.
 Для получения цветового кода, просто введите значения сопротивления и допустимого отклонения и нажмите кнопку &quot;В цвет&quot;. Для получения значения сопротивления выберите соответствующие цветные полоски и нажмите кнопку &quot;В значение&quot;. Программа вычислит ближайшее стандартное значение резистора. Вычисленный резистор можно вставить в схему (нажав ctrl+v). Веселитесь!</translation>
     </message>
     <message>
@@ -2402,7 +2402,7 @@ Filter synthesis program
         <translation>Изменение свойств маркера</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+11"/>
         <source>Precision: </source>
         <translation>Точность: </translation>
     </message>
@@ -2695,56 +2695,46 @@ but is %1 !</source>
 <context>
     <name>MyWidget</name>
     <message>
-        <location filename="../qucs-rescodes/main.cpp" line="+62"/>
         <source>E&amp;xit</source>
-        <translation>&amp;Выйти</translation>
+        <translation type="obsolete">&amp;Выйти</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>&amp;File</source>
-        <translation>&amp;Файл</translation>
+        <translation type="obsolete">&amp;Файл</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Help...</source>
-        <translation>Помощь...</translation>
+        <translation type="obsolete">Помощь...</translation>
     </message>
     <message>
-        <location line="+4"/>
         <source>&amp;About ResistorCodes...</source>
-        <translation>О программе &quot;Коды резисторов&quot;</translation>
+        <translation type="obsolete">О программе &quot;Коды резисторов&quot;</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>&amp;About Qt...</source>
-        <translation>&amp;О Qt...</translation>
+        <translation type="obsolete">&amp;О Qt...</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>&amp;Help</source>
-        <translation>&amp;Справка</translation>
+        <translation type="obsolete">&amp;Справка</translation>
     </message>
     <message>
-        <location line="+69"/>
         <source>About...</source>
-        <translation>О...</translation>
+        <translation type="obsolete">О...</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>
 Resistor color code computation program
 </source>
-        <translation>Программа расчёта цветовой маркировки резисторов</translation>
+        <translation type="obsolete">Программа расчёта цветовой маркировки резисторов</translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>Copyright (c) 2012 by</source>
-        <translation>Copyright (c) 2012</translation>
+        <translation type="obsolete">Copyright (c) 2012</translation>
     </message>
     <message>
-        <location line="+10"/>
         <source>About Qt</source>
-        <translation>О Qt</translation>
+        <translation type="obsolete">О Qt</translation>
     </message>
 </context>
 <context>
@@ -3386,7 +3376,7 @@ Resistor color code computation program
 <context>
     <name>ProjectView</name>
     <message>
-        <location filename="../qucs/projectView.cpp" line="+77"/>
+        <location filename="../qucs/projectView.cpp" line="+117"/>
         <source>Content of %1</source>
         <translation>Содержимое %1</translation>
     </message>
@@ -3396,7 +3386,7 @@ Resistor color code computation program
         <translation>Примечание</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-27"/>
         <source>Datasets</source>
         <translation>Наборы данных</translation>
     </message>
@@ -3436,9 +3426,14 @@ Resistor color code computation program
         <translation>Другие</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+69"/>
         <source>-port</source>
         <translation>-портовый</translation>
+    </message>
+    <message>
+        <location line="+60"/>
+        <source>Title</source>
+        <translation type="unfinished">Название</translation>
     </message>
 </context>
 <context>
@@ -3831,7 +3826,7 @@ Resistor color code computation program
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../qucs/components/component.cpp" line="+1363"/>
+        <location filename="../qucs/components/component.cpp" line="+1361"/>
         <location filename="../qucs/components/greytobinary4bit.cpp" line="-3"/>
         <location filename="../qucs/components/hpribin4bit.cpp" line="-3"/>
         <location filename="../qucs/components/logical_buf.cpp" line="+34"/>
@@ -4424,7 +4419,7 @@ Resistor color code computation program
         <location line="+95"/>
         <location line="+34"/>
         <location line="+96"/>
-        <location filename="../qucs/qucs_actions.cpp" line="+1271"/>
+        <location filename="../qucs/qucs_actions.cpp" line="+1262"/>
         <location filename="../qucs/schematic_file.cpp" line="+119"/>
         <location line="+19"/>
         <location line="+22"/>
@@ -4432,7 +4427,7 @@ Resistor color code computation program
         <location line="+17"/>
         <location line="+72"/>
         <location line="+78"/>
-        <location line="+202"/>
+        <location line="+203"/>
         <location line="+5"/>
         <location line="+37"/>
         <location line="+5"/>
@@ -5652,7 +5647,7 @@ Wrong &apos;component&apos; line format!</source>
         <translation>земля (опорный потенциал)</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+31"/>
         <source>Ground</source>
         <translation>Земля</translation>
     </message>
@@ -8715,7 +8710,7 @@ Wrong &apos;component&apos; line format!</source>
         <translation>Смешанная Смита-полярная</translation>
     </message>
     <message>
-        <location filename="../qucs/diagrams/rect3ddiagram.cpp" line="+1075"/>
+        <location filename="../qucs/diagrams/rect3ddiagram.cpp" line="+1074"/>
         <source>3D-Cartesian</source>
         <translation>Трёхмерная декартовая</translation>
     </message>
@@ -8794,7 +8789,7 @@ Wrong &apos;component&apos; line format!</source>
 </translation>
     </message>
     <message>
-        <location filename="../qucs/imagewriter.cpp" line="+159"/>
+        <location filename="../qucs/imagewriter.cpp" line="+160"/>
         <source>Overwrite</source>
         <translation>Заменить</translation>
     </message>
@@ -8818,7 +8813,7 @@ Overwrite ?</source>
         <translation>Ошибка запуска Inkscape!</translation>
     </message>
     <message>
-        <location filename="../qucs/qucs.cpp" line="+2874"/>
+        <location filename="../qucs/qucs.cpp" line="+2882"/>
         <source>Successfully exported</source>
         <translation>Успешно экспортировано</translation>
     </message>
@@ -8842,7 +8837,7 @@ Use PNG, JPEG or SVG graphics!</source>
     </message>
     <message>
         <location filename="../qucs/module.cpp" line="+116"/>
-        <location filename="../qucs/qucs.cpp" line="-2258"/>
+        <location filename="../qucs/qucs.cpp" line="-2254"/>
         <location filename="../qucs/qucs_actions.cpp" line="+146"/>
         <location line="+20"/>
         <source>verilog-a user devices</source>
@@ -8906,14 +8901,14 @@ Use PNG, JPEG or SVG graphics!</source>
     <message>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="../qucs/qucs.cpp" line="+1625"/>
+        <location filename="../qucs/qucs.cpp" line="+1629"/>
         <source>diagrams</source>
         <translation>диаграммы</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="../qucs/qucs.cpp" line="-1670"/>
+        <location filename="../qucs/qucs.cpp" line="-1674"/>
         <source>paintings</source>
         <translation>рисунки</translation>
     </message>
@@ -9023,28 +9018,28 @@ Use PNG, JPEG or SVG graphics!</source>
         <translation>Не удаежётся создать выходной файл!</translation>
     </message>
     <message>
-        <location filename="../qucs/qucs.cpp" line="+2449"/>
+        <location filename="../qucs/qucs.cpp" line="+2446"/>
         <location line="+10"/>
-        <location filename="../qucs/qucs_actions.cpp" line="-599"/>
+        <location filename="../qucs/qucs_actions.cpp" line="-590"/>
         <source>untitled</source>
         <translation>без названия</translation>
     </message>
     <message>
-        <location filename="../qucs/schematic_file.cpp" line="-1264"/>
-        <location line="+725"/>
+        <location filename="../qucs/schematic_file.cpp" line="-1265"/>
+        <location line="+726"/>
         <source>Format Error:
 &apos;Painting&apos; field is not closed!</source>
         <translation>Ошибка формата:
 Поле &apos;Painting&apos; не закрыто!</translation>
     </message>
     <message>
-        <location line="-706"/>
-        <location line="+756"/>
+        <location line="-707"/>
+        <location line="+757"/>
         <source>Wrong document version: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-734"/>
+        <location line="-735"/>
         <location line="+24"/>
         <source>Clipboard Format Error:
 Unknown field!</source>
@@ -9067,7 +9062,7 @@ Unknown field!</source>
         <translation>Не удаётся сохранить документ!</translation>
     </message>
     <message>
-        <location line="+202"/>
+        <location line="+203"/>
         <location line="+5"/>
         <source>Format Error:
 Wrong property field limiter!</source>
@@ -9794,7 +9789,7 @@ Active Filter synthesis program
 <context>
     <name>QucsApp</name>
     <message>
-        <location filename="../qucs/qucs.cpp" line="-2930"/>
+        <location filename="../qucs/qucs.cpp" line="-2939"/>
         <source>Schematic</source>
         <translation>Схема</translation>
     </message>
@@ -9810,47 +9805,47 @@ Active Filter synthesis program
     </message>
     <message>
         <location line="+1"/>
-        <location line="+1389"/>
+        <location line="+1404"/>
         <source>VHDL Sources</source>
         <translation>Исходники VHDL</translation>
     </message>
     <message>
-        <location line="-1388"/>
-        <location line="+1389"/>
+        <location line="-1403"/>
+        <location line="+1404"/>
         <source>Verilog Sources</source>
         <translation>Исходные тексты Verilog</translation>
     </message>
     <message>
-        <location line="-1388"/>
-        <location line="+1389"/>
+        <location line="-1403"/>
+        <location line="+1404"/>
         <source>Verilog-A Sources</source>
         <translation>Исходные тексты Verilog-A</translation>
     </message>
     <message>
-        <location line="-1388"/>
-        <location line="+1389"/>
+        <location line="-1403"/>
+        <location line="+1404"/>
         <source>Octave Scripts</source>
         <translation>Скрипты Octave</translation>
     </message>
     <message>
-        <location line="-1388"/>
+        <location line="-1403"/>
         <source>Spice Files</source>
         <translation>Файлы Spice</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+1390"/>
-        <location filename="../qucs/qucs_actions.cpp" line="+580"/>
+        <location line="+1405"/>
+        <location filename="../qucs/qucs_actions.cpp" line="+571"/>
         <source>Any File</source>
         <translation>Любой файл</translation>
     </message>
     <message>
-        <location line="+384"/>
+        <location line="+386"/>
         <source>The schematic search path has been refreshed.</source>
         <translation>Путь для поиска файла схемы был обновлён.</translation>
     </message>
     <message>
-        <location line="+481"/>
+        <location line="+480"/>
         <source>Verilog</source>
         <translation>Verilog</translation>
     </message>
@@ -9865,8 +9860,8 @@ Active Filter synthesis program
         <translation>Схемы</translation>
     </message>
     <message>
-        <location line="-2134"/>
-        <location filename="../qucs/qucs_init.cpp" line="+698"/>
+        <location line="-2150"/>
+        <location filename="../qucs/qucs_init.cpp" line="+690"/>
         <source>New</source>
         <translation>Создать</translation>
     </message>
@@ -9947,19 +9942,19 @@ Active Filter synthesis program
         <translation>Прикрепляемое окно Octave</translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+77"/>
         <location line="+4"/>
         <location line="+65"/>
         <location line="+4"/>
         <location line="+522"/>
-        <location line="+25"/>
+        <location line="+23"/>
         <location line="+20"/>
-        <location line="+19"/>
+        <location line="+17"/>
         <location line="+10"/>
-        <location line="+73"/>
+        <location line="+77"/>
         <location line="+6"/>
-        <location line="+126"/>
-        <location line="+947"/>
+        <location line="+133"/>
+        <location line="+944"/>
         <location line="+28"/>
         <location line="+73"/>
         <location line="+315"/>
@@ -9967,22 +9962,22 @@ Active Filter synthesis program
         <location line="+7"/>
         <location line="+7"/>
         <location line="+6"/>
-        <location filename="../qucs/qucs_actions.cpp" line="-541"/>
-        <location line="+125"/>
+        <location filename="../qucs/qucs_actions.cpp" line="-532"/>
+        <location line="+118"/>
         <location line="+61"/>
         <location line="+32"/>
         <location line="+16"/>
         <location line="+10"/>
         <location line="+5"/>
-        <location line="+248"/>
+        <location line="+247"/>
         <location line="+15"/>
-        <location line="+19"/>
+        <location line="+18"/>
         <location line="+138"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location line="-2264"/>
+        <location line="-2268"/>
         <location line="+69"/>
         <source>Cannot open &quot;%1&quot;.</source>
         <translation>Не удаётся открыть &quot;%1&quot;.</translation>
@@ -9997,24 +9992,24 @@ Active Filter synthesis program
         <location line="+168"/>
         <location line="+483"/>
         <location line="+71"/>
-        <location line="+50"/>
+        <location line="+57"/>
         <location line="+8"/>
         <location line="+29"/>
         <location line="+11"/>
         <location line="+26"/>
-        <location line="+209"/>
-        <location filename="../qucs/qucs_actions.cpp" line="-860"/>
+        <location line="+205"/>
+        <location filename="../qucs/qucs_actions.cpp" line="-851"/>
         <location line="+14"/>
         <location line="+14"/>
         <location line="+14"/>
         <location line="+38"/>
         <location line="+14"/>
-        <location line="+650"/>
+        <location line="+641"/>
         <source>Info</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location line="-886"/>
+        <location line="-889"/>
         <source>Default icon not found:
  %1.png</source>
         <translation>Значок по умолчанию не найден:
@@ -10032,14 +10027,14 @@ Active Filter synthesis program
     </message>
     <message>
         <location line="+1"/>
-        <location line="+705"/>
+        <location line="+703"/>
         <source>The document contains unsaved changes!
 </source>
         <translation>В документе есть несохранённые изменения!
 </translation>
     </message>
     <message>
-        <location line="-704"/>
+        <location line="-702"/>
         <source>Do you want to save the changes before copying?</source>
         <translation>Хотите сохранить изменения перед копированием?</translation>
     </message>
@@ -10050,13 +10045,13 @@ Active Filter synthesis program
     </message>
     <message>
         <location line="+0"/>
-        <location line="+705"/>
-        <location filename="../qucs/qucs_init.cpp" line="-625"/>
+        <location line="+703"/>
+        <location filename="../qucs/qucs_init.cpp" line="-617"/>
         <source>&amp;Save</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location line="-683"/>
+        <location line="-681"/>
         <source>Copy file</source>
         <translation>Копировать файл</translation>
     </message>
@@ -10071,7 +10066,7 @@ Active Filter synthesis program
         <translation>ошибка</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+29"/>
         <source>Cannot rename an open file!</source>
         <translation>Не удаётся переименовать открытый файл!</translation>
     </message>
@@ -10081,40 +10076,40 @@ Active Filter synthesis program
         <translation>Переименовать файл</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+25"/>
         <source>Cannot delete an open file!</source>
         <translation>Невозможно удалить открытый файл!</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <location line="+32"/>
-        <location line="+192"/>
-        <location line="+229"/>
-        <location line="+569"/>
+        <location line="-705"/>
+        <location line="+710"/>
+        <location line="+235"/>
+        <location line="+225"/>
+        <location line="+571"/>
         <source>Warning</source>
         <translation>Предупреждение</translation>
     </message>
     <message>
-        <location line="-1021"/>
+        <location line="-1030"/>
         <source>This will delete the file permanently! Continue ?</source>
         <translation>Это безвозвратно удалит файл! Продолжить ?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+454"/>
-        <location line="+446"/>
+        <location line="+461"/>
+        <location line="+448"/>
         <source>No</source>
         <translation>Нет</translation>
     </message>
     <message>
-        <location line="-900"/>
-        <location line="+454"/>
-        <location line="+446"/>
+        <location line="-909"/>
+        <location line="+461"/>
+        <location line="+448"/>
         <source>Yes</source>
         <translation>Да</translation>
     </message>
     <message>
-        <location line="-1053"/>
+        <location line="-1058"/>
         <source>unknown</source>
         <translation>неизвестный</translation>
     </message>
@@ -10164,23 +10159,23 @@ Active Filter synthesis program
         <translation>конфигурация</translation>
     </message>
     <message>
-        <location line="+166"/>
+        <location line="-580"/>
         <source>Cannot create work directory !</source>
         <translation>Не удаётся создать рабочий каталог!</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+774"/>
         <source>Cannot create project directory !</source>
         <translation>Не удаётся создать каталог проекта!</translation>
     </message>
     <message>
         <location line="+46"/>
-        <location line="+51"/>
+        <location line="+58"/>
         <source> - Project: </source>
         <translation> - Проект: </translation>
     </message>
     <message>
-        <location line="-43"/>
+        <location line="-50"/>
         <source>Choose Project Directory for Opening</source>
         <translation>Выберите каталог проекта для открытия</translation>
     </message>
@@ -10190,18 +10185,18 @@ Active Filter synthesis program
         <translation>Проект не выбран !</translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+57"/>
         <source>Cannot remove directory: %1</source>
         <translation>Не удалось удалить каталог: %1</translation>
     </message>
     <message>
-        <location line="-176"/>
-        <location line="+184"/>
+        <location line="-187"/>
+        <location line="+195"/>
         <source>Cannot delete file: %1</source>
         <translation>Не удалось удалить файл: %1</translation>
     </message>
     <message>
-        <location line="-665"/>
+        <location line="-672"/>
         <location line="+97"/>
         <location line="+3"/>
         <location line="+92"/>
@@ -10225,7 +10220,7 @@ Active Filter synthesis program
         <translation>Не удаётся скопировать схему: %1</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+35"/>
         <source>Enter new filename:</source>
         <translation>Введите новое имя файла:</translation>
     </message>
@@ -10235,7 +10230,7 @@ Active Filter synthesis program
         <translation>Не удаётся переименовать файл: %1</translation>
     </message>
     <message>
-        <location line="+103"/>
+        <location line="+105"/>
         <source>Cannot access project directory: %1</source>
         <translation>Не удаётся получить доступ к каталогу проекта: %1</translation>
     </message>
@@ -10245,7 +10240,7 @@ Active Filter synthesis program
         <translation>Имя каталога проекта не заканчивается на &apos;_prj&apos;(%1)</translation>
     </message>
     <message>
-        <location line="+126"/>
+        <location line="+133"/>
         <source>Project directory name does not end in &apos;_prj&apos; (%1)</source>
         <translation>Имя каталога проекта не заканчивается на &apos;_prj&apos; (%1)</translation>
     </message>
@@ -10295,31 +10290,31 @@ Active Filter synthesis program
         <location line="+6"/>
         <location line="+16"/>
         <location line="+64"/>
-        <location line="+31"/>
+        <location line="+30"/>
         <location line="+5"/>
-        <location line="+101"/>
+        <location line="+97"/>
         <location line="+5"/>
-        <location line="+36"/>
-        <location line="+80"/>
-        <location line="+85"/>
+        <location line="+33"/>
+        <location line="+79"/>
+        <location line="+92"/>
         <location line="+176"/>
         <location line="+34"/>
-        <location filename="../qucs/qucs_actions.cpp" line="-982"/>
+        <location filename="../qucs/qucs_actions.cpp" line="-973"/>
         <location line="+15"/>
         <location line="+389"/>
-        <location line="+284"/>
-        <location filename="../qucs/qucs_init.cpp" line="+915"/>
+        <location line="+276"/>
+        <location filename="../qucs/qucs_init.cpp" line="+906"/>
         <source>Ready.</source>
         <translation>Готово.</translation>
     </message>
     <message>
-        <location line="-622"/>
+        <location line="-620"/>
         <source>Creating new text editor...</source>
         <translation>Создание нового текстового редактора...</translation>
     </message>
     <message>
         <location line="+56"/>
-        <location filename="../qucs/qucs_actions.cpp" line="-293"/>
+        <location filename="../qucs/qucs_actions.cpp" line="-285"/>
         <source>Opening file...</source>
         <translation>Открытие файла...</translation>
     </message>
@@ -10334,18 +10329,18 @@ Active Filter synthesis program
         <translation>Открытие прервано</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+30"/>
         <source>Saving file...</source>
         <translation>Сохранение файла...</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+106"/>
+        <location line="+102"/>
         <source>Saving aborted</source>
         <translation>Сохранение прервано</translation>
     </message>
     <message>
-        <location line="-65"/>
+        <location line="-64"/>
         <source>Qucs Netlist</source>
         <translation>Схема Qucs</translation>
     </message>
@@ -10366,7 +10361,7 @@ Active Filter synthesis program
     </message>
     <message>
         <location line="+0"/>
-        <source>' already exists!
+        <source>&apos; already exists!
 </source>
         <translation>&apos; уже существует!
 </translation>
@@ -10378,27 +10373,27 @@ Active Filter synthesis program
     </message>
     <message>
         <location line="+1"/>
-        <location line="+145"/>
+        <location line="+140"/>
         <source>Cancel</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location line="-136"/>
+        <location line="-131"/>
         <source>Cannot overwrite an open document</source>
         <translation>Не удаётся перезаписать открытый документ</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+21"/>
         <source>Saving file under new filename...</source>
         <translation>Сохранение файла под новым именем...</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+22"/>
         <source>Saving all files...</source>
         <translation>Сохранение всех файлов...</translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+79"/>
         <source>Closing file...</source>
         <translation>Закрытие файла...</translation>
     </message>
@@ -10418,7 +10413,7 @@ Active Filter synthesis program
         <translation>&amp;Закрыть без сохранения</translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+103"/>
         <source>Open examples directory...</source>
         <translation>Отрыть каталог с примерами</translation>
     </message>
@@ -10463,7 +10458,7 @@ Active Filter synthesis program
         <translation>Оставить</translation>
     </message>
     <message>
-        <location line="+132"/>
+        <location line="+131"/>
         <source>Cannot create </source>
         <translation>Не удаётся создать </translation>
     </message>
@@ -10535,7 +10530,7 @@ Active Filter synthesis program
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+126"/>
+        <location line="+119"/>
         <source>Cannot start %1 program! 
 
 (%2)</source>
@@ -10591,7 +10586,7 @@ Overwrite ?</source>
         <translation>Не удаётся записать файл &quot;%1&quot; !</translation>
     </message>
     <message>
-        <location line="+248"/>
+        <location line="+247"/>
         <source>Please open project with subcircuits!</source>
         <translation>Откройте проект с подсхемами!</translation>
     </message>
@@ -10601,7 +10596,7 @@ Overwrite ?</source>
         <translation>Сначала откройте проект!</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+18"/>
         <source>Please select a diagram graph!</source>
         <translation>Выберите график диаграммы!</translation>
     </message>
@@ -10637,7 +10632,7 @@ Have you saved the Verilog-A symbols?</source>
 Вы сохранили обозначения Verilog-A?</translation>
     </message>
     <message>
-        <location filename="../qucs/qucs_init.cpp" line="-939"/>
+        <location filename="../qucs/qucs_init.cpp" line="-930"/>
         <source>Creates a new document</source>
         <translation>Создаёт новый документ</translation>
     </message>
@@ -12092,26 +12087,23 @@ Starts attenuator calculation program</source>
 Запускает программу расчёта аттенюатора</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Resistor color codes</source>
-        <translation>Цветовые коды резисторов</translation>
+        <translation type="obsolete">Цветовые коды резисторов</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Starts Qucs resistor color codes</source>
-        <translation>Запускает Qucs цветовые коды резисторов</translation>
+        <translation type="obsolete">Запускает Qucs цветовые коды резисторов</translation>
     </message>
     <message>
-        <location line="+2"/>
         <source>Resistor color codes
 
 Starts standard resistor color code computation program</source>
-        <translation>Цветовые коды резисторов
+        <translation type="obsolete">Цветовые коды резисторов
 
 Запуск стандартной программы расчёта цветовой маркировки резисторов</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Power combining</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12414,7 +12406,7 @@ About Qt by Trolltech</source>
         <translation>&amp;Инструменты</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+11"/>
         <source>&amp;Simulation</source>
         <translation>&amp;Моделирование</translation>
     </message>
@@ -12728,19 +12720,19 @@ Attenuator synthesis program
         <location line="+6"/>
         <location line="+438"/>
         <location line="+93"/>
-        <location line="+45"/>
+        <location line="+55"/>
         <source>Corner frequency:</source>
         <translation>Частота среза:</translation>
     </message>
     <message>
-        <location line="-563"/>
+        <location line="-573"/>
         <location line="+519"/>
-        <location line="+45"/>
+        <location line="+55"/>
         <source>Stop frequency:</source>
         <translation>Конечная частота:</translation>
     </message>
     <message>
-        <location line="-551"/>
+        <location line="-561"/>
         <location line="+422"/>
         <source>Stop band frequency:</source>
         <translation>Частота режекторного фильтра:</translation>
@@ -14413,7 +14405,7 @@ Set the admsXml location on the application settings.</source>
         <translation>ОШИБКА: Не удаётся создать &quot;%1&quot;!</translation>
     </message>
     <message>
-        <location line="+270"/>
+        <location line="+273"/>
         <source>ERROR: Cannot start </source>
         <translation>ОШИБКА: Невозможно запустить</translation>
     </message>
@@ -14480,7 +14472,7 @@ Set the admsXml location on the application settings.</source>
 <context>
     <name>SpiceDialog</name>
     <message>
-        <location filename="../qucs/components/spicedialog.cpp" line="+46"/>
+        <location filename="../qucs/components/spicedialog.cpp" line="+48"/>
         <source>Edit SPICE Component Properties</source>
         <translation>Изменить свойства компонента SPICE</translation>
     </message>
@@ -14649,7 +14641,7 @@ Set the admsXml location on the application settings.</source>
     </message>
     <message>
         <location line="+272"/>
-        <source>Warning: Symbol '%1' missing in Qucs Library.
+        <source>Warning: Symbol &apos;%1&apos; missing in Qucs Library.
 Drag and Drop may still work.
 Please contact the developers.</source>
         <translation>Внимание: символ «%1» отсутствует в библиотеке Qucs.
@@ -14676,7 +14668,7 @@ Please contact the developers.</source>
 <context>
     <name>TextDoc</name>
     <message>
-        <location filename="../qucs/textdoc.cpp" line="+229"/>
+        <location filename="../qucs/textdoc.cpp" line="+235"/>
         <source>Edit Text Symbol</source>
         <translation>Изменить обозначение текста</translation>
     </message>
@@ -14813,7 +14805,7 @@ Inserts the skeleton of a Octave function</source>
 <context>
     <name>VASettingsDialog</name>
     <message>
-        <location filename="../qucs/dialogs/vasettingsdialog.cpp" line="+43"/>
+        <location filename="../qucs/dialogs/vasettingsdialog.cpp" line="+42"/>
         <source>Document Settings</source>
         <translation>Настройки документа</translation>
     </message>
