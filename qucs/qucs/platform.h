@@ -76,7 +76,7 @@ inline void* dlopen(const char* f, int)
   const size_t fSize = strlen(f)+1;
   std::wstring wf( fSize, L'#' );
   mbstowcs( &wf[0], f, fSize );
-  return LoadLibrary(wf.c_str());
+  return LoadLibraryW(wf.c_str());
 }
 
 inline void dlclose(void* h)
