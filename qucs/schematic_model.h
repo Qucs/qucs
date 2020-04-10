@@ -103,7 +103,7 @@ public:
 	Component* loadComponent(const QString& _s, Component* c) const;
 	Command* loadCommand(const QString& _s, Command* c) const;
 	bool loadDocument(QFile& /*BUG*/ file);
-	bool loadPaintings(QTextStream*, PaintingList* p=NULL);
+//	bool loadPaintings(QTextStream*, PaintingList* p=NULL);
 	bool loadProperties(QTextStream*);
 	bool loadComponents(QTextStream*);
 	// bool loadDiagrams(QTextStream*);
