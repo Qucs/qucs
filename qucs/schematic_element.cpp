@@ -947,6 +947,7 @@ Marker* Schematic::setMarker(int x, int y)
 // Moves the marker pointer left/right on the graph.
 void Schematic::markerLeftRight(bool left, Q3PtrList<ElementGraphics> *Elements)
 {
+#if 0
     bool acted = false;
     for(auto i : *Elements) {
         Marker* pm = prechecked_cast<Marker*>(i);
@@ -956,6 +957,7 @@ void Schematic::markerLeftRight(bool left, Q3PtrList<ElementGraphics> *Elements)
     }
 
     if(acted)  setChanged(true, true, 'm');
+#endif
 }
 
 // ---------------------------------------------------
