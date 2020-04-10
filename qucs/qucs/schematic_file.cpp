@@ -184,7 +184,7 @@ bool Schematic::pasteFromClipboard(DocumentStream *stream, EGPList* pe)
       if(Line == "<Paintings>") {
 	PaintingList pl;
 	incomplete(); // ignore paintings.
-        if(!DocModel.loadPaintings(stream, &pl)) return false;
+       // if(!DocModel.loadPaintings(stream, &pl)) return false;
       } else {
         QMessageBox::critical(0, QObject::tr("Error"),
 		   QObject::tr("Clipboard Format Error:\nUnknown field!"));
