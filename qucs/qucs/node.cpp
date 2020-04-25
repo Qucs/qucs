@@ -21,7 +21,9 @@
 
 #include <QPainter>
 
-Node::Node(int _x, int _y) : cn(-1u)
+enum { INVALID_NODE=-1u };
+
+Node::Node(int _x, int _y) : cn(INVALID_NODE), _visit(0u)
 {
   Label = nullptr; // BUG
   Type  = isNode;
