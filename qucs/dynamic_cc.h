@@ -37,11 +37,30 @@
 
 // ** this could be part of Conductor. but it' better kept separate ** //
 
+/*--------------------------------------------------------------------------*/
+// find a node in a graph
+template<class G, class V>
+class FindVertex{
+public:
+	enum status { sDUNNO, sSUCCESS, sFAIL };
+private:
+	FindVertex(FindVertex const&){ unreachable(); }
+public:
+	explicit FindVertex(G const&, V const& start, V const& needle);
+public:
+	status_t step();
 
+private:
+	G const& _graph;
+	std::stack<..> _where;
+	thing _needle;
+};
+/*--------------------------------------------------------------------------*/
 template<class T>
 class ConnectedComponents {
 public:
 	typedef T vertex;
+private:
 
 public:
 	vertex& registerVertex(vertex&);
