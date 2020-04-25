@@ -36,45 +36,29 @@
 Node* SchematicModel::insertNode(int x, int y, Element *e)
 {
     Node *pn;
-    // check if new node lies upon existing node
-    for(auto n : nodes()){
-	pn = n;
-        // check every node
-        if(pn->cx_() == x && pn->cy_() == y) {
-	    pn->connectionsAppend(e);
-            break;
-        }else{
-	    pn=nullptr;
-	}
-    }
-
-    if(pn == 0){
-      	// create new node, if no existing one lies at this position
-        pn = new Node(x, y);
-        nodes().append(pn);
-        pn->connectionsAppend(e);  // connect schematic node to component node
-    } else {
-	// node is not new
-	return pn;
-    }
+    pn = &nodes().at(x,y);
+    pn->connectionsAppend(e);
 
     // check if the new node lies within an existing wire
-    for(auto pw : wires()) {
-        if(pw->x1_() == x) {
-            if(pw->y1_() > y) continue;
-            if(pw->y2_() < y) continue;
-        } else if(pw->y1_() == y) {
-            if(pw->x1_() > x) continue;
-            if(pw->x2_() < x) continue;
-        }else{
-            continue;
-        }
+    //
+    if(pn->connectionsCount()==1){
+	for(auto pw : wires()) {
+	    if(pw->x1_() == x) {
+		if(pw->y1_() > y) continue;
+		if(pw->y2_() < y) continue;
+	    } else if(pw->y1_() == y) {
+		if(pw->x1_() > x) continue;
+		if(pw->x2_() < x) continue;
+	    }else{
+		continue;
+	    }
 
-        // split the wire into two wires
-        splitWire(pw, pn);
-        return pn;
+	    // split the wire into two wires
+	    splitWire(pw, pn);
+	    break;
+	}
+    }else{
     }
-
     return pn;
 }
 
