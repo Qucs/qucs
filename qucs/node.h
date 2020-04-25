@@ -90,7 +90,7 @@ public: // BUG
   QRectF boundingRect() const;
 
 private:
-  unsigned cn;
+  unsigned cn; // id of connected component this node is part of.
 
 public: // protected coordinate abuse
   void markUnChecked(){
