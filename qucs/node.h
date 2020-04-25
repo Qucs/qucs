@@ -51,6 +51,8 @@ public:
   void setName(QString const& x){
 	  setLabel(x);
   }
+
+  // number of connected component
   void resetNumber(){ cn = INVALID; }
   void setNumber(unsigned x){ cn = x; }
 
@@ -89,8 +91,13 @@ public: // BUG
 
   QRectF boundingRect() const;
 
+public: // internal. here?
+  bool visited(unsigned lvl)const{ return lvl<=_visit; }
+  void visit(unsigned lvl){ _visit = lvl; }
+
 private:
   unsigned cn; // id of connected component this node is part of.
+  unsigned _visit; // keep track of what has been done
 
 public: // protected coordinate abuse
   void markUnChecked(){
@@ -106,5 +113,6 @@ public: // protected coordinate abuse
 	  x1|=x;
   }
 };
+
 
 #endif
