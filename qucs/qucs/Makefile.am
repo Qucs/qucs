@@ -122,6 +122,7 @@ libqucs_la_SOURCES = \
 	mnemo.cpp \
 	mouseactions.cpp \
 	node.cpp \
+	nodelist.cpp \
 	object.cpp \
 	octave_window.cpp \
 	painting.cpp \
@@ -183,6 +184,7 @@ noinst_HEADERS = \
 	mouseactions.h \
 	port.h \
 	node.h \
+	nodelist.h \
 	printerwriter.h \
 	projectView.h \
 	qt_compat.h \
