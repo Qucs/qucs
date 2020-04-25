@@ -24,15 +24,14 @@
 #include "schematic_scene.h"
 #include "schematic_symbol.h"
 #include "qucsdoc.h"
+#include "nodelist.h"
 
 class QPlainTextEdit; //??!
 
 // TODO: refactor here
 class WireList : public Q3PtrList<Wire> {
 };
-// TODO: refactor here
-class NodeList : public Q3PtrList<Node> {
-};
+class NodeList;
 // TODO: refactor here
 class DiagramList : public Q3PtrList<Diagram> {
 };
@@ -128,7 +127,7 @@ public: // net access
 	}
 
 public: // node stuff. why public?
-	Node* insertNode(int x, int y, Element* e);
+	Node* insertNode(int x, int y, Element* owner);
 	void insertSymbolNodes(Symbol *c, bool noOptimize);
 	bool  oneTwoWires(Node* n);
 	Wire* splitWire(Wire*, Node*);

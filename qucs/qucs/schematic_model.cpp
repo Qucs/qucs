@@ -18,6 +18,7 @@
 #include "schematic.h"
 #include "schematic_lang.h"
 #include "globals.h"
+#include "nodelist.h"
 
 SchematicModel::SchematicModel(Schematic* s) : _doc(s)
 {
@@ -495,26 +496,13 @@ void SchematicModel::simpleInsertComponent(Component *c)
 	components().append(c);
 }
 
+// screw this.
 void SchematicModel::simpleInsertWire(Wire *pw)
 {
   Node *pn=nullptr;
+  pn = &nodes().at(pw->x1_(), pw->y1_());
 
-  // find_node_at
-  for(auto pn_ : nodes()){
-    if(pn_->cx_() == pw->x1_()) {
-      if(pn_->cy_() == pw->y1_()) {
-	pn = pn_;
-	break;
-      }
-    }
-  }
-
-  if(!pn) {   // create new node, if no existing one lies at this position
-    pn = new Node(pw->x1_(), pw->y1_());
-    nodes().append(pn);
-  }
-
-  if(pw->x1_() == pw->x2_()) if(pw->y1_() == pw->y2_()) {
+  if(pw->x1_() == pw->x2_() && pw->y1_() == pw->y2_()) {
     pn->Label = pw->Label;   // wire with length zero are just node labels
     if (pn->Label) {
       pn->Label->Type = isNodeLabel;

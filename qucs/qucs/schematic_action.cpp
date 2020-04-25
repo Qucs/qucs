@@ -646,6 +646,9 @@ bool Schematic::performToggleAction(bool on, QAction *Action,
     mouseActions()->drawn = false;
     return true;
   }
+
+  untested();
+  return false; // really?
 }
 
 // vim:ts=8:sw=2:et
