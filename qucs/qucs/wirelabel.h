@@ -19,9 +19,11 @@
 #define WIRELABEL_H
 
 #include "element.h"
-#include "viewpainter.h"
 
-#include <QString>
+#ifndef UNTANGLE_QT
+# include "viewpainter.h"
+# include <QString>
+#endif
 
 class QPainter;
 class Wire;

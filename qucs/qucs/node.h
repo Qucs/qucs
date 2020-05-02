@@ -35,7 +35,7 @@ public:
 	  return new Node(*this);
   }
 
-  void connectionsAppend(Element* e){
+  void connectionsAppend(Element* e){ // "connect"?
 	  Connections.append(e);
   }
   void connectionsRemove(Element const* ee){

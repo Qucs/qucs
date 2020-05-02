@@ -21,7 +21,9 @@
 #define QUCS_CONTAINER_H
 
 #include <list>
+#ifndef UNTANGLE_QT // later
 #include <QDebug>
+#endif
 
 #include "trace.h"
 
@@ -60,6 +62,7 @@ public:
 	};
 	~Q3PtrList() {
 		if(_autodelete){
+			incomplete();
 			for(auto x : localList){
 				delete x;
 			}
@@ -330,7 +333,7 @@ private:
 		}
 	}
 private:
-	std::list<T*> localList;
+	container_type localList;
 	bool _autodelete;
 	mutable iterator cur;
 };
