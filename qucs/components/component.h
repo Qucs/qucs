@@ -18,8 +18,8 @@
 #ifndef QUCS_COMPONENT_H
 #define QUCS_COMPONENT_H
 
-#include "symbol.h"
-#include "qt_compat.h"
+#include "../symbol.h" // FIXME
+#include "../qt_compat.h" // FIXME
 
 class SchematicModel;
 class Schematic;
@@ -27,6 +27,8 @@ class ViewPainter;
 class QString;
 class QPen;
 class ComponentDialog;
+
+class QTextStream; // BUG
 
 class Component : public Symbol {
 protected:
