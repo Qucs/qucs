@@ -502,36 +502,28 @@ void SchematicModel::simpleInsertWire(Wire *pw)
   Node *pn=nullptr;
   pn = &nodes().at(pw->x1_(), pw->y1_());
 
-  if(pw->x1_() == pw->x2_() && pw->y1_() == pw->y2_()) {
+  if(pw->x1_() == pw->x2_() && pw->y1_() == pw->y2_()) { untested();
     pn->Label = pw->Label;   // wire with length zero are just node labels
-    if (pn->Label) {
+    if (pn->Label) { untested();
       pn->Label->Type = isNodeLabel;
       pn->Label->pOwner = pn;
-    }
+    }else{ untested();
+	 }
+
+	 incomplete();
 #if 0 // gaaah
     delete pw;           // delete wire because this is not a wire
     return;
 #endif
+  }else{
   }
-  pn->Connections.append(pw);  // connect schematic node to component node
+  pn->connectionsAppend(pw);
   pw->Port1 = pn;
 
-  // find_node_at
   pn=nullptr;
-  for(auto pn_ : nodes()){
-    if(pn_->cx_() == pw->x2_()) {
-      if(pn_->cy_() == pw->y2_()) {
-	pn = pn_;
-	break;
-      }
-    }
-  }
+  pn = &nodes().at(pw->x2_(), pw->y2_());
 
-  if(!pn) {   // create new node, if no existing one lies at this position
-    pn = new Node(pw->x2_(), pw->y2_());
-    nodes().append(pn);
-  }
-  pn->Connections.append(pw);  // connect schematic node to component node
+  pn->connectionsAppend(pw);  // connect schematic node to component node
   pw->Port2 = pn;
 
   wires().append(pw);

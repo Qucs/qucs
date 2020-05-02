@@ -17,7 +17,9 @@
 #ifndef WIRE_H
 #define WIRE_H
 
-#include "viewpainter.h"
+#ifndef UNTANGLE_QT // BUG
+# include "viewpainter.h"
+#endif
 #include "element.h"
 #include "components/component.h"    // because of struct Port
 #include "wirelabel.h"

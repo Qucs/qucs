@@ -36,9 +36,13 @@
 #ifndef QUCS_ELEMENT_H
 #define QUCS_ELEMENT_H
 
-#include <QPen>
-#include <QBrush>
-#include <QDebug>
+# include <QPen> // BUG
+
+#ifndef UNTANGLE_QT // later
+# include <QBrush>
+# include <QDebug>
+#endif
+
 #include <assert.h>
 #include "object.h"
 #include "io_trace.h"

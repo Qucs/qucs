@@ -15,8 +15,11 @@
 #ifndef QUCS_SCHEMATIC_MODEL_H
 #define QUCS_SCHEMATIC_MODEL_H
 
-#include <QGraphicsScene>
-#include <QFileInfo> // BUG
+#ifndef UNTANGLE_QT // later.
+# include <QGraphicsScene>
+#endif
+# include <QFileInfo> // BUG
+
 #include "object.h"
 #include "wire.h"
 #include "node.h"
@@ -27,6 +30,7 @@
 #include "nodelist.h"
 
 class QPlainTextEdit; //??!
+// class QFileInfo;
 
 // TODO: refactor here
 class WireList : public Q3PtrList<Wire> {
