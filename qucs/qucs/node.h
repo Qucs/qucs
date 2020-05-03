@@ -18,7 +18,7 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include "element.h"
+#include "conductor.h"
 #include "qt_compat.h"
 
 class ViewPainter;
@@ -59,7 +59,7 @@ public:
   // BUG
   void setName(const QString&, const QString&, int x_=0, int y_=0);
   unsigned number() const{ return cn; }
-  unsigned hasNumber() const { return cn!=INVALID; }
+  bool hasNumber() const { return cn!=INVALID; }
   int cx() const{ return Element::cx; }
   int cy() const{ return Element::cy; }
 

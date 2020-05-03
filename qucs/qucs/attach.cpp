@@ -27,7 +27,7 @@
 
 class plugins{
   public:
-    ~plugins(){ untested();
+    ~plugins(){
       for (std::map<std::string, void*>::iterator ii = attach_list.begin();
 	  ii != attach_list.end(); ++ii) {
 	void* m=ii->second;

@@ -15,6 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "wire.h"
+#include "node.h"// bug. conductor.h
 
 #include <QPainter>
 
@@ -213,5 +214,18 @@ QRectF Wire::boundingRect() const
 { itested();
   return QRectF(x1-5, y1-5, x2-x1+10, y2-y1+10);
 }
-
+// ----------------------------------------------------------------
+// // -> conductor.cpp.
+unsigned Wire::netNumber()
+{
+  if (portByIndex(0)){
+    assert(portByIndex(1));
+    assert(portByIndex(0)->number() == portByIndex(1)->number());
+    return portByIndex(0)->number();
+  }else{
+    return -1u;
+  }
+}
+// ----------------------------------------------------------------
+// ----------------------------------------------------------------
 // vim:ts=8:sw=2:et

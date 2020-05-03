@@ -20,7 +20,7 @@
 #ifndef UNTANGLE_QT // BUG
 # include "viewpainter.h"
 #endif
-#include "element.h"
+#include "conductor.h"
 #include "components/component.h"    // because of struct Port
 #include "wirelabel.h"
 
@@ -67,7 +67,12 @@ public:
 	  }
   }
 
+public: // adapt, move to Conductor.
+  unsigned netNumber();
+  bool hasNumber(){ return netNumber()!=-1u; }
+
 //private:
+//Port*[2]??
   Node      *Port1, *Port2;
 
 public: // FIXME, these are still around.
