@@ -12,9 +12,6 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef QUCS_DYNAMIC_CC
-#define QUCS_DYNAMIC_CC
-
 // keep track of "nets", i.e. connected components in the circuit graph.
 // the Graph has vertices (aka Nodes) and edges (aka Wires).
 //
@@ -38,19 +35,28 @@
 
 // ** this could be part of Conductor. but it' better kept separate ** //
 
+#ifndef QUCS_DYNAMIC_CC
+#define QUCS_DYNAMIC_CC
+
+#include <stack>
+
+const size_t INVALID = -1;
+
 /*--------------------------------------------------------------------------*/
 // find a node in a graph
 template<class G, class V>
 class FindVertex{
+private:
+	typedef typename G::vertex_iterator vertex_iterator;
 public:
-	enum status { sDUNNO, sSUCCESS, sFAIL };
+	enum status_t { sDUNNO, sSUCCESS, sFAIL };
 private:
 	FindVertex(FindVertex const&){ unreachable(); }
 public:
-	explicit FindVertex(G const&, V const& start, V const& needle)
+	explicit FindVertex(G const& g, V const& start, V const& needle)
 		: _graph(g), _needle(needle) {
 
-		_stack.push(g, neighbors(next).begin();
+		_stack.push(start, neighbors(start).begin());
 	}
 public:
 	status_t step();
@@ -58,37 +64,46 @@ public:
 private:
 	G const& _graph;
 	V const& _needle;
-	std::stack<std::pair<V, VI> > _stack;
+	std::stack<std::pair<V, vertex_iterator> > _stack;
 };
 /*--------------------------------------------------------------------------*/
-FindVertex::status_t FindVertex::step()
+template<class G, class V>
+typename FindVertex<G, V>::status_t FindVertex<G, V>::step()
 {
-	t = _stack.top()
+	auto t = _stack.top();
 
-	if _stack.empty(){
+	if (_stack.empty()){ untested();
 		return sFAIL;
-	}else if(t.second == _needle){
+	}else if(t.second == _needle){ untested();
 		return sSUCCESS;
-	}else if(t.second=neighbors(t.first).end()){
+	}else if(t.second=neighbors(t.first).end()){ untested();
 		_stack.pop();
-	}else{
-		next = t.second;
+	}else{ untested();
+		auto next = t.second;
 		++t.second;
-		_stack.push(g, neighbors(next).begin();
+		_stack.push(std::make_pair(next, neighbors(next).begin()));
 	}
 
 	return sDUNNO;
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-template<class T>
+template<class G>
 class ConnectedComponents {
 public:
 	explicit ConnectedComponents() : _find_lvl(0) {}
 public:
-	typedef T vertex;
+	typedef typename graph_traits<G>::vertex_descriptor vertex;
 	typedef size_t ccid_t;
-private:
+
+	unsigned next_level(){
+		if(_find_lvl == -1u){
+			incomplete(); // reset all nodes
+			_find_lvl = 0;
+		}else{
+		}
+		return ++_find_lvl;
+	}
 
 public:
 	vertex& registerVertex(vertex&);
@@ -96,9 +111,10 @@ public:
 public:
 	void preAddEdge(vertex&, vertex&);
 	void postRemoveEdge(vertex&, vertex&);
-
 private:
-	size_t set_ccid_recursive(vertex&, cc_id i);
+	void separate(vertex&, vertex&);
+	ccid_t new_ccid();
+	size_t set_ccid_recursive(vertex&, ccid_t i);
 
 private:
   unsigned _find_lvl;
@@ -106,14 +122,16 @@ private:
 private:
 	std::stack<size_t> _garbage; // unused cc_numbers
 	std::vector<size_t> _cc_size; // size of connected component
-}
+};
 /*--------------------------------------------------------------------------*/
 // assign unused or new ccid to vertex.
 template<class T>
-T& ConnectedComponents::registerVertex(T t)
+typename ConnectedComponents<T>::vertex&
+ConnectedComponents<T>::registerVertex(
+		typename ConnectedComponents<T>::vertex& t)
 {
 	assert(index(t) == INVALID);
-	auto cc=new_ccid();
+	auto cc = ConnectedComponents<T>::new_ccid();
 
 	set_ccid(t, cc);
 	_cc_size[cc] += 1;
@@ -121,7 +139,7 @@ T& ConnectedComponents::registerVertex(T t)
 }
 /*--------------------------------------------------------------------------*/
 template<class T>
-T& ConnectedComponents::new_ccid()
+typename ConnectedComponents<T>::ccid_t ConnectedComponents<T>::new_ccid()
 {
 	ccid_t cc;
 	if(_garbage.size()){
@@ -139,13 +157,15 @@ T& ConnectedComponents::new_ccid()
 // take out vertex.
 // this may lead to an unused cc id. garbage collect it.
 template<class T>
-T& ConnectedComponents::deregisterVertex(vertex& t)
+typename ConnectedComponents<T>::vertex&
+ConnectedComponents<T>::deregisterVertex(
+		typename ConnectedComponents<T>::vertex& t)
 {
 	size_t idx=index(t);
 	assert(_cc_size[idx]);
 	size_t n = --_cc_size[idx];
 	if (n==0){ untested();
-		_garbage.push_back(idx);
+		_garbage.push(idx);
 	}else{ untested();
 	}
 	set_index(t, INVALID);
@@ -153,8 +173,9 @@ T& ConnectedComponents::deregisterVertex(vertex& t)
 /*--------------------------------------------------------------------------*/
 // set ccid for connected component containing v
 template<class T>
-size_t ConnectedComponents::set_ccid_recursive(
-		T& v, ConnectedComponents<T>::cc_id i)
+size_t ConnectedComponents<T>::set_ccid_recursive(
+		typename ConnectedComponents<T>::vertex& v,
+		typename ConnectedComponents<T>::ccid_t i)
 {
 	unsigned cnt=0;
 	if(ccid(v) != i){ untested();
@@ -169,13 +190,16 @@ size_t ConnectedComponents::set_ccid_recursive(
 }
 /*--------------------------------------------------------------------------*/
 template<class T>
-void ConnectedComponents::preAddEdge(
-		ConnectedComponents::vertex& v, ConnectedComponents::vertex& w)
+void ConnectedComponents<T>::preAddEdge(
+		typename ConnectedComponents<T>::vertex& v,
+		typename ConnectedComponents<T>::vertex& w)
 {
 }
 /*--------------------------------------------------------------------------*/
-void ConnectedComponents::void separate(
-		ConnectedComponents::vertex& v, ConnectedComponents::vertex& w)
+template<class T>
+void ConnectedComponents<T>::separate(
+		typename ConnectedComponents<T>::vertex& v,
+		typename ConnectedComponents<T>::vertex& w)
 {
 	vertex* smallerv = &v;
 	vertex* biggerv = &v;
@@ -185,7 +209,7 @@ void ConnectedComponents::void separate(
 		biggerv = &w;
 	}
 
-	auto nn=new_ccid();
+	auto nn = ConnectedComponents<T>::new_ccid();
 	size_t howmany = set_ccid_recursive(smallerv, nn);
 
 	_cc_size[nn] += howmany;
@@ -193,33 +217,32 @@ void ConnectedComponents::void separate(
 }
 /*--------------------------------------------------------------------------*/
 template<class T>
-void ConnectedComponents:: void postRemoveEdge(
+void ConnectedComponents<T>::postRemoveEdge(
 		ConnectedComponents::vertex& v, ConnectedComponents::vertex& w)
 {
 	assert(cc_id(v) == cc_id(w));
 	// now let's see if they are still connected.
 	//
-	FindVertex fv(*this, v, w);
-	FindVertex fw(*this, w, v);
-	if(_lvl == -1u){
-		// reset.
-		incomplete();
-	}else{
-		++_lvl;
-	}
+	typedef FindVertex<ConnectedComponents<T>, size_t> vertexfinder;
 
-	status_t stat = DUNNO;
+	vertexfinder fv(*this, v, w);
+	vertexfinder fw(*this, w, v);
 
-	while(stat == sDUNNO){
+	//_g.
+	next_level();
+
+	typename vertexfinder::status_t stat = vertexfinder::sDUNNO;
+
+	while(stat == vertexfinder::sDUNNO){
 		std::swap(fv, fw);
-		status = fv.step();
+		stat = fv.step();
 	}
 
 	switch(stat){
-	case sFAIL:
+	case vertexfinder::sFAIL:
 		separate(v, w);
 		break;
-	case sSUCCESS;
+	case vertexfinder::sSUCCESS:
 	   // still connected. done
 		break;
 	default:

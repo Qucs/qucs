@@ -235,14 +235,6 @@ protected: //BUG
 #endif
 };
 
-// nodes and wires?
-class Conductor : public Element {
-protected:
-  explicit Conductor() : Label(nullptr) {}
-public:
-  WireLabel *Label;
-};
-
 class Component;
 class Command;
 class Wire;

@@ -1,7 +1,5 @@
 /***************************************************************************
-                              schematic_model.h
-                             --------------------
-    copyright            : (C) 2018 Felix Salfelder
+    copyright            : (C) 2018-2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -29,6 +27,11 @@
 #include "qucsdoc.h"
 #include "nodelist.h"
 
+template<class G>
+struct graph_traits{};
+
+#include "dynamic_cc.h"
+
 class QPlainTextEdit; //??!
 // class QFileInfo;
 
@@ -54,6 +57,11 @@ public:
 // hmm, which?
 class DocumentLanguage;
 class SchematicLanguage;
+
+template<>
+struct graph_traits<SchematicModel>{
+	typedef Node* vertex_descriptor;
+};
 
 // Base class for all schematic models.
 // currently containging chunks/cruft from legacy Schematic implementation
@@ -119,7 +127,6 @@ public: // container
 	void erase(Element* what);
 	void merge(SchematicModel&);
 	void deleteItem(ElementGraphics*);
-
 
 private: // used in erase?
 	void       deleteComp(Component*c);
@@ -191,6 +198,9 @@ private: // net numbers and labels
 
 private:
 	Schematic* _doc;
+
+private:
+	ConnectedComponents<SchematicModel> _cc;
 
 public: // for now.
 	friend class Schematic;
