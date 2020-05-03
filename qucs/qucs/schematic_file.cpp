@@ -1034,28 +1034,30 @@ void SchematicModel::collectDigitalSignals(void)
 
 // ---------------------------------------------------
 // Propagates the given node to connected component ports.
+// obsolete.
 void SchematicModel::propagateNode(Node *pn) const
 {
+#if 0
   std::deque<Node*> q;
 
-  assert(pn->hasNumber());
-  int z=pn->number();
+  assert(pn->hasNetNumber());
+  int z=pn->netNumber();
 
   q.push_back(pn);
   while(!q.empty()){
     auto cur=q.front();
     q.pop_front();
-    cur->setNumber(z);
+    cur->setNetNumber(z);
 
     for(auto pe : cur->Connections){
       if(Wire* pw=wire(pe)){
 	if(cur == pw->Port2) {
-	  if(!pw->Port1->hasNumber()){
+	  if(!pw->Port1->hasNetNumber()){
 	    q.push_back(pw->Port1);
 	  }else{
 	  }
 	}else if(cur == pw->Port1) {
-	  if(!pw->Port2->hasNumber()){
+	  if(!pw->Port2->hasNetNumber()){
 	    q.push_back(pw->Port2);
 	  }else{
 	  }
@@ -1066,6 +1068,7 @@ void SchematicModel::propagateNode(Node *pn) const
       }
     }
   }
+#endif
 }
 
 #include <iostream>

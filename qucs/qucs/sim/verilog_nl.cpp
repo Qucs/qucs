@@ -125,8 +125,8 @@ void VerilogNetlister::nodeMap(SchematicSymbol const& m) const
 	qDebug() << "found" << nc << "nets";
 	
 	for(auto w : sm.wires()){
-		assert(w->Port1->number()==w->Port1->number());
-		unsigned i=w->Port1->number();
+		assert(w->Port1->netNumber()==w->Port1->netNumber());
+		unsigned i=w->Port1->netNumber();
 		//qDebug() << "wire" << i << w->Label;
 		if(!w->Label){
 		}else if (netLabels[i].size()){
@@ -137,7 +137,7 @@ void VerilogNetlister::nodeMap(SchematicSymbol const& m) const
 
 	for(auto pc : sm.components()){
 		if(pc->type() == "GND") { // BUG, use rails with net names.
-			unsigned i=pc->Ports.first()->Connection->number();
+			unsigned i=pc->Ports.first()->Connection->netNumber();
 			if (netLabels[i].size()){
 			}else{
 				qDebug() << "GND: warning: overriding label" << netLabels[i];

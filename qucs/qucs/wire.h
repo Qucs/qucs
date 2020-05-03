@@ -64,6 +64,9 @@ public:
 		  return Port1;
 	  }else if(i==1){
 		  return Port2;
+	  }else{
+		  unreachable();
+		  return NULL;
 	  }
   }
 
@@ -73,7 +76,8 @@ public: // adapt, move to Conductor.
 
 //private:
 //Port*[2]??
-  Node      *Port1, *Port2;
+  Node  *Port1;
+  Node  *Port2;
 
 public: // FIXME, these are still around.
 	//int & cx__() { return cx; }

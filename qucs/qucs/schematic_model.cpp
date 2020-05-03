@@ -310,19 +310,19 @@ bool SchematicModel::throughAllComps(DocumentStream& stream, int& countInit,
 #endif
 
 // find connected components (slow)
-// figure out later...
+// obsolete.
 void SchematicModel::throughAllNodes(unsigned& z) const
 { untested();
   z = 0; // number cc.
 
   for(auto pn : nodes()){
-    pn->resetNumber();
+    pn->resetNetNumber();
   }
 
   for(auto pn : nodes()){
-    if(pn->hasNumber()){
+    if(pn->hasNetNumber()){
     }else{
-      pn->setNumber(z++);
+      pn->setNetNumber(z++);
       propagateNode(pn);
     }
   }
@@ -485,7 +485,7 @@ void SchematicModel::simpleInsertComponent(Component *c)
 			pn = new Node(x, y);
 			nodes().append(pn);
 		}
-		pn->Connections.append(c);  // connect schematic node to component node
+		pn->appendConnection(c);  // connect schematic node to component node
 		if (!pp->Type.isEmpty()) {
 			//      pn->DType = pp->Type;
 		}
@@ -517,14 +517,19 @@ void SchematicModel::simpleInsertWire(Wire *pw)
 #endif
   }else{
   }
+
+  Node* p2 = &nodes().at(pw->x2_(), pw->y2_());
+
+  Conductor* c1 = pn;
+  Conductor* c2 = p2;
+
+  _cc.preAddEdge(c1, c2);
+
   pn->connectionsAppend(pw);
   pw->Port1 = pn;
 
-  pn=nullptr;
-  pn = &nodes().at(pw->x2_(), pw->y2_());
-
-  pn->connectionsAppend(pw);  // connect schematic node to component node
-  pw->Port2 = pn;
+  p2->connectionsAppend(pw);  // connect schematic node to component node
+  pw->Port2 = p2;
 
   wires().append(pw);
 }
@@ -555,6 +560,7 @@ void SchematicModel::disconnect(Symbol* c)
 	}
 }
 
+// obsolete. probably.
 void SchematicModel::updateNetLabels() const
 {
 	auto& sm=*this;
@@ -565,8 +571,8 @@ void SchematicModel::updateNetLabels() const
 	qDebug() << "found" << nc << "nets";
 
 	for(auto w : sm.wires()){
-		assert(w->Port1->number()==w->Port1->number());
-		unsigned i=w->Port1->number();
+		assert(w->Port1->netNumber()==w->Port1->netNumber());
+		unsigned i=w->Port1->netNumber();
 		// qDebug() << "wire" << i << w->Label;
 		if(!w->Label){
 		}else if (netLabels[i].size()){
@@ -577,7 +583,7 @@ void SchematicModel::updateNetLabels() const
 
 	for(auto pc : sm.components()){
 		if(pc->type() == "GND") { // BUG, use rails with net names.
-			unsigned i=pc->Ports.first()->Connection->number();
+			unsigned i=pc->Ports.first()->Connection->netNumber();
 			if (netLabels[i].size()){
 			}else{
 				qDebug() << "GND: warning: overriding label" << netLabels[i];

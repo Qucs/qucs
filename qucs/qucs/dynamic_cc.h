@@ -13,7 +13,8 @@
  *                                                                         *
  ***************************************************************************/
 // keep track of "nets", i.e. connected components in the circuit graph.
-// the Graph has vertices (aka Nodes) and edges (aka Wires).
+// the Graph has vertices (aka Conductors) and edges (one conductor connnecting
+// to another).
 //
 // each node x has a number n(x), two nodes have the same number, iff they
 // are connected by a sequence of edges. the number identifies a net (aka
@@ -42,6 +43,27 @@
 
 const size_t INVALID = -1;
 
+//////  BUG (not here) /////
+template<class T>
+unsigned cc_id(T const& t)
+{
+	return t->netNumber();
+}
+// a neighbor of a node x is a node y iff there is a wire connecting x and y.
+template<class T>
+auto adjacent_vertices(T const& t)
+{
+	auto n=t->neighbours();
+	return std::make_pair(n.begin(), n.end());
+}
+template<class T>
+auto set_ccid(T const& t, unsigned n)
+{
+	t->setNetNumber(n);
+}
+//////  end BUG (not here) /////
+
+
 /*--------------------------------------------------------------------------*/
 // find a node in a graph
 template<class G, class V>
@@ -56,7 +78,7 @@ public:
 	explicit FindVertex(G const& g, V const& start, V const& needle)
 		: _graph(g), _needle(needle) {
 
-		_stack.push(start, neighbors(start).begin());
+		_stack.push(start, adjacent_vertices(start).first);
 	}
 public:
 	status_t step();
@@ -76,12 +98,12 @@ typename FindVertex<G, V>::status_t FindVertex<G, V>::step()
 		return sFAIL;
 	}else if(t.second == _needle){ untested();
 		return sSUCCESS;
-	}else if(t.second=neighbors(t.first).end()){ untested();
+	}else if(t.second=adjacent_vertices(t.first).second){ untested();
 		_stack.pop();
 	}else{ untested();
 		auto next = t.second;
 		++t.second;
-		_stack.push(std::make_pair(next, neighbors(next).begin()));
+		_stack.push(std::make_pair(next, adjacent_vertices(next).first));
 	}
 
 	return sDUNNO;
@@ -178,9 +200,11 @@ size_t ConnectedComponents<T>::set_ccid_recursive(
 		typename ConnectedComponents<T>::ccid_t i)
 {
 	unsigned cnt=0;
-	if(ccid(v) != i){ untested();
-		for(auto n : neighbors(v)){
-			cnt += set_ccid_recursive(n, i);
+	if(cc_id(v) != i){ untested();
+		auto av = adjacent_vertices(v);
+		for(auto n=av.first; n!=av.second; ++n){
+			auto nn = *n;
+			cnt += set_ccid_recursive(nn, i);
 		}
 		cnt += 1;
 		set_ccid(v, i);
@@ -194,6 +218,24 @@ void ConnectedComponents<T>::preAddEdge(
 		typename ConnectedComponents<T>::vertex& v,
 		typename ConnectedComponents<T>::vertex& w)
 {
+	if(cc_id(v) == cc_id(w)){ untested();
+	}else{
+		auto nn = cc_id(w);
+		auto freed_cc = cc_id(v);
+		vertex* smallerv = &v;
+	  	if(_cc_size[cc_id(w)] < _cc_size[cc_id(v)]){ untested();
+			smallerv = &w;
+			nn = cc_id(v);
+			freed_cc = cc_id(w);
+		}else{ untested();
+		}
+
+		size_t howmany = set_ccid_recursive(*smallerv, nn);
+		_cc_size[nn] += howmany;
+		assert(_cc_size[freed_cc] == howmany);
+		_cc_size[freed_cc] = 0;
+		_garbage.push(freed_cc);
+	}
 }
 /*--------------------------------------------------------------------------*/
 template<class T>
@@ -203,6 +245,8 @@ void ConnectedComponents<T>::separate(
 {
 	vertex* smallerv = &v;
 	vertex* biggerv = &v;
+
+	// not really.
 	if(_cc_size[cc_id(w)] < _cc_size[cc_id(v)]){ untested();
 		smallerv = &w;
 	}else{ untested();

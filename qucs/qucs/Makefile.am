@@ -107,6 +107,7 @@ libqucs_la_SOURCES = \
 	attach.cpp \
 	command.cpp \
 	component.cpp \
+	conductor.cpp \
 	diagram.cpp \
 	docfmt.h \
 	element.cpp \

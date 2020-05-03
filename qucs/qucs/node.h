@@ -23,11 +23,7 @@
 
 class ViewPainter;
 
-
 class Node : public Conductor {
-  enum{
-	  INVALID=-1u
-  };
 public:
   Node(int, int);
   ~Node();
@@ -45,21 +41,29 @@ public:
   unsigned connectionsCount() const{
 	  return Connections.count();
   }
+  Element* firstConnection(){
+	  return Connections.first();
+  }
+  Element* lastConnection(){
+	  return Connections.last();
+  }
+  void appendConnection(Element* e){
+	  return Connections.append(e);
+  }
+  void prependConnection(Element* e){
+	  return Connections.prepend(e);
+  }
+#if 1 /// hmmm... pair<begin end>?
   Q3PtrList<Element> const& connections() const{
 	  return Connections;
   }
+#endif
   void setName(QString const& x){
 	  setLabel(x);
   }
 
-  // number of connected component
-  void resetNumber(){ cn = INVALID; }
-  void setNumber(unsigned x){ cn = x; }
-
   // BUG
   void setName(const QString&, const QString&, int x_=0, int y_=0);
-  unsigned number() const{ return cn; }
-  bool hasNumber() const { return cn!=INVALID; }
   int cx() const{ return Element::cx; }
   int cy() const{ return Element::cy; }
 
@@ -79,7 +83,7 @@ public: // obsolete
 private: //Element overrides
   void  paint(ViewPainter*);
 
-public: // BUG. does weird reverse iteration
+private: // BUG. does weird reverse iteration
   Q3PtrList<Element> Connections;
 
 private:
