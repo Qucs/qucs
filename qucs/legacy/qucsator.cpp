@@ -73,7 +73,7 @@ void QucsLang::printSubckt(SubcktProto const* p, stream_t& s) const
 		if(pc->type() == "Port"){
 			// BUG trainwreck.
 			// why does a port not have a label?!
-      	auto nn=pc->Ports.first()->Connection->number();
+      	auto nn=pc->Ports.first()->Connection->netNumber();
       	s << " " << netLabels[nn];
 		}else{
 		}
@@ -162,8 +162,8 @@ void QucsLang::printComponent(Component const* c, stream_t& s) const
 		for(unsigned i=0; i<sym->portCount(); ++i){
 			auto N=sym->portValue(i);
 			s << " ";
-			if(N.hasNumber()){
-				s << netLabels[N.number()];
+			if(N.hasNetNumber()){
+				s << netLabels[N.netNumber()];
 			}else{
 				// happens in list_entries ...
 				s << "open";
@@ -275,8 +275,8 @@ static void nodeMap(SchematicSymbol const& m)
 	qDebug() << "found" << nc << "nets";
 	
 	for(auto w : sm.wires()){
-		assert(w->Port1->number()==w->Port1->number());
-		unsigned i=w->Port1->number();
+		assert(w->Port1->netNumber()==w->Port1->netNumber());
+		unsigned i=w->Port1->netNumber();
 		// qDebug() << "wire" << i << w->Label;
 		if(!w->Label){
 		}else if (netLabels[i].size()){
@@ -287,7 +287,7 @@ static void nodeMap(SchematicSymbol const& m)
 
 	for(auto pc : sm.components()){
 		if(pc->type() == "GND") {
-			unsigned i=pc->Ports.first()->Connection->number();
+			unsigned i=pc->Ports.first()->Connection->netNumber();
 			if (netLabels[i].size()){
 			}else{
 				qDebug() << "GND: warning: overriding label" << netLabels[i];
