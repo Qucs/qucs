@@ -31,7 +31,7 @@ QString const& Symbol::netLabel(unsigned i) const
 	assert(s);
 //	assert(hasPort(i));
 	auto const& n=portValue(i);
-	auto nn=n.number();
+	auto nn=n.netNumber();
 	
 	return s->netLabel(nn);
 }

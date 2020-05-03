@@ -220,8 +220,8 @@ unsigned Wire::netNumber()
 {
   if (portByIndex(0)){
     assert(portByIndex(1));
-    assert(portByIndex(0)->number() == portByIndex(1)->number());
-    return portByIndex(0)->number();
+    assert(portByIndex(0)->netNumber() == portByIndex(1)->netNumber());
+    return portByIndex(0)->netNumber();
   }else{
     return -1u;
   }

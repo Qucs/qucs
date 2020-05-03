@@ -60,7 +60,7 @@ class SchematicLanguage;
 
 template<>
 struct graph_traits<SchematicModel>{
-	typedef Node* vertex_descriptor;
+	typedef Conductor* vertex_descriptor;
 };
 
 // Base class for all schematic models.
