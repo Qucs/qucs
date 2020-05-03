@@ -28,11 +28,11 @@ Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2)
   y1 = _y1;
   x2 = _x2;
   y2 = _y2;
-  Port1 = n1;
-  Port2 = n2;
   Label  = 0;
 
-  Type = isWire;
+  Type = isWire; // BUG
+  Ports.push_back(n1);
+  Ports.push_back(n2);
 }
 
 Wire::~Wire()

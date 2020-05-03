@@ -169,8 +169,8 @@ void SchematicModel::insertSymbolNodes(Symbol *c, bool noOptimize)
 		for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next()){
 			if(pe->Type == isWire)
 			{
-				if(((Wire*)pe)->Port1 == pn)  pL = &(((Wire*)pe)->Port2->Connections);
-				else  pL = &(((Wire*)pe)->Port1->Connections);
+				if(((Wire*)pe)->portByIndex(0) == pn)  pL = &(((Wire*)pe)->Port2->Connections);
+				else  pL = &(((Wire*)pe)->portByIndex(0)->Connections);
 
 				for(pe1 = pL->first(); pe1!=0; pe1 = pL->next())
 					if(pe1 == c)
@@ -347,11 +347,11 @@ void SchematicModel::propagateNode(QStringList& Collect,
 		for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
 			if(wire(pe)){
 				pw = (Wire*)pe;
-				if(p2 != pw->Port1) {
-					if(pw->Port1->name().isEmpty()) {
-						pw->Port1->setName(pn->name());
-						pw->Port1->State = 1;
-						Cons.append(pw->Port1);
+				if(p2 != pw->portByIndex(0)) {
+					if(pw->portByIndex(0)->name().isEmpty()) {
+						pw->portByIndex(0)->setName(pn->name());
+						pw->portByIndex(0)->State = 1;
+						Cons.append(pw->portByIndex(0));
 						setName = true;
 					}
 				}else{
@@ -405,9 +405,9 @@ bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
 	for(auto pw : wires()){
 		if(pw->Label != 0) {
 			if(isAnalog)
-				pw->Port1->setName(pw->Label->name());
+				pw->portByIndex(0)->setName(pw->Label->name());
 			else  // avoid to use reserved VHDL words
-				pw->Port1->setName("net" + pw->Label->name());
+				pw->portByIndex(0)->setName("net" + pw->Label->name());
 		}
 	}
 
@@ -526,10 +526,10 @@ void SchematicModel::simpleInsertWire(Wire *pw)
   _cc.preAddEdge(c1, c2);
 
   pn->connectionsAppend(pw);
-  pw->Port1 = pn;
+  pw->setPortByIndex(0, pn);
 
   p2->connectionsAppend(pw);  // connect schematic node to component node
-  pw->Port2 = p2;
+  pw->setPortByIndex(1, p2);
 
   wires().append(pw);
 }
@@ -571,8 +571,8 @@ void SchematicModel::updateNetLabels() const
 	qDebug() << "found" << nc << "nets";
 
 	for(auto w : sm.wires()){
-		assert(w->Port1->netNumber()==w->Port1->netNumber());
-		unsigned i=w->Port1->netNumber();
+		assert(w->portByIndex(0)->netNumber()==w->portByIndex(0)->netNumber());
+		unsigned i=w->portByIndex(0)->netNumber();
 		// qDebug() << "wire" << i << w->Label;
 		if(!w->Label){
 		}else if (netLabels[i].size()){
