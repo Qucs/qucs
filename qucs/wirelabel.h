@@ -19,6 +19,7 @@
 #define WIRELABEL_H
 
 #include "element.h"
+#include "conductor.h"
 
 #ifndef UNTANGLE_QT
 # include "viewpainter.h"
@@ -30,6 +31,7 @@ class Wire;
 class Node;
 
 
+// seems to be a ConductorLabel?
 class WireLabel : public Element {
 public:
   WireLabel(const QString& _Name=0, int _cx=0, int _cy=0,
