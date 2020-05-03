@@ -51,14 +51,15 @@ unsigned cc_id(T const& t)
 }
 // a neighbor of a node x is a node y iff there is a wire connecting x and y.
 template<class T>
-auto adjacent_vertices(T const& t)
+std::pair<AdjConductorIterator,AdjConductorIterator> adjacent_vertices(T const& t)
 {
 	auto n=t->neighbours();
 	return std::make_pair(n.begin(), n.end());
 }
 template<class T>
-auto set_ccid(T const& t, unsigned n)
-{
+void set_ccid(T const& t, unsigned n)
+{ untested();
+	trace1("set_ccid", n);
 	t->setNetNumber(n);
 }
 //////  end BUG (not here) /////
@@ -151,8 +152,8 @@ template<class T>
 typename ConnectedComponents<T>::vertex&
 ConnectedComponents<T>::registerVertex(
 		typename ConnectedComponents<T>::vertex& t)
-{
-	assert(index(t) == INVALID);
+{ untested();
+//	assert(index(t) == INVALID);
 	auto cc = ConnectedComponents<T>::new_ccid();
 
 	set_ccid(t, cc);

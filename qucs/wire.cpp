@@ -216,7 +216,8 @@ QRectF Wire::boundingRect() const
 }
 // ----------------------------------------------------------------
 // // -> conductor.cpp.
-unsigned Wire::netNumber()
+#if 0
+unsigned Wire::netNumber() const
 {
   if (portByIndex(0)){
     assert(portByIndex(1));
@@ -225,6 +226,32 @@ unsigned Wire::netNumber()
   }else{
     return -1u;
   }
+}
+#endif
+// ----------------------------------------------------------------
+void Wire::setPortByIndex(unsigned idx, Node* n)
+{
+  assert(idx<2);
+  auto a=Ports.begin();
+  if(idx){
+    ++a;
+  }else{
+  }
+  *a = n;
+}
+// ----------------------------------------------------------------
+Node* Wire::portByIndex(unsigned idx)
+{
+  assert(idx<2);
+  assert(Ports.size()==2);
+  auto a=Ports.begin();
+  if(idx){
+    ++a;
+  }else{
+  }
+  auto n = prechecked_cast<Node*>(*a);
+  assert(n || !*a);
+  return n;
 }
 // ----------------------------------------------------------------
 // ----------------------------------------------------------------

@@ -23,6 +23,7 @@
 #include "conductor.h"
 #include "components/component.h"    // because of struct Port
 #include "wirelabel.h"
+#include "platform.h"
 
 class QPainter;
 class QString;
@@ -60,33 +61,18 @@ public:
   QRectF boundingRect() const;
 
 public:
-  void setPortByIndex(unsigned idx, Node* n){
-	  assert(idx<2);
-	  auto a=Ports.begin();
-	  if(idx){
-		  ++a;
-	  }else{
-	  }
-	  *a = n;
-  }
-  Node* portByIndex(unsigned idx){
-	  assert(idx<2);
-	  assert(Ports.size()==2);
-	  auto a=Ports.begin();
-	  if(idx){
-		  ++a;
-	  }else{
-	  }
-	  return *a;
-  }
+  void setPortByIndex(unsigned idx, Node* n);
+  Node* portByIndex(unsigned idx);
   Node const* portByIndex(unsigned idx) const{
 	  auto w=const_cast<Wire*>(this);
 	  return w->portByIndex(idx);
   }
-
-public: // adapt, move to Conductor.
-  unsigned netNumber();
-  bool hasNumber(){ return netNumber()!=-1u; }
+  std::list<Element*>::iterator connectionsBegin(){
+	  return Ports.begin();
+  }
+  std::list<Element*>::iterator connectionsEnd(){
+	  return Ports.end();
+  }
 
 public: // aliases. don't use
   Node* Port1(){
@@ -97,7 +83,7 @@ public: // aliases. don't use
   }
 
 private:
-  std::list<Node*> Ports;
+  std::list<Element*> Ports;
 
 public: // FIXME, these are still around.
 	//int & cx__() { return cx; }
