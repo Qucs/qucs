@@ -11,7 +11,7 @@ int main()
 	auto w1 = new Wire(1,0,2,0);
 	auto w2 = new Wire(2,0,3,0);
 
-	assert(!w0->hasNumber());
+	assert(!w0->hasNetNumber());
 
 	M.pushBack(w0);
 	M.pushBack(w1);
@@ -25,7 +25,7 @@ int main()
 	}
 	assert(i==4);
 
-	assert(w0->hasNumber());
+	assert(w0->hasNetNumber());
 	assert(w1->netNumber() == w0->netNumber());
 
 

@@ -57,6 +57,12 @@ public:
   Q3PtrList<Element> const& connections() const{
 	  return Connections;
   }
+  std::list<Element*>::iterator connectionsBegin(){
+	  return Connections.begin();
+  }
+  std::list<Element*>::iterator connectionsEnd(){
+	  return Connections.end();
+  }
 #endif
   void setName(QString const& x){
 	  setLabel(x);

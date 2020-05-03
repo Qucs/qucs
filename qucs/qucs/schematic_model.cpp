@@ -499,6 +499,8 @@ void SchematicModel::simpleInsertComponent(Component *c)
 // screw this.
 void SchematicModel::simpleInsertWire(Wire *pw)
 {
+  Conductor* c = pw;
+  _cc.registerVertex(c);
   Node *pn=nullptr;
   pn = &nodes().at(pw->x1_(), pw->y1_());
 
