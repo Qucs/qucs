@@ -231,9 +231,9 @@ Graph* SweepDialog::setBiasPoints()
     for(auto i : pn->connections()){
 		 pe = i;
       if(pe->Type == isWire) {
-        if( ((Wire*)pe)->Port1 != pn )  // no text at next node
-          ((Wire*)pe)->Port1->setName("");
-        else  ((Wire*)pe)->Port2->setName("");
+        if( ((Wire*)pe)->portByIndex(0) != pn )  // no text at next node
+          ((Wire*)pe)->portByIndex(0)->setName("");
+        else  ((Wire*)pe)->portByIndex(1)->setName("");
       }
 	 }
   }

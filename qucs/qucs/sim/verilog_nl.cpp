@@ -125,8 +125,8 @@ void VerilogNetlister::nodeMap(SchematicSymbol const& m) const
 	qDebug() << "found" << nc << "nets";
 	
 	for(auto w : sm.wires()){
-		assert(w->Port1->netNumber()==w->Port1->netNumber());
-		unsigned i=w->Port1->netNumber();
+		assert(w->portByIndex(0)->netNumber()==w->portByIndex(0)->netNumber());
+		unsigned i=w->portByIndex(0)->netNumber();
 		//qDebug() << "wire" << i << w->Label;
 		if(!w->Label){
 		}else if (netLabels[i].size()){

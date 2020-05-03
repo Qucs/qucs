@@ -236,21 +236,21 @@ void MouseActions::moveElements(EGPList& what, int x, int y)
     if(pe->Type == isWire) { untested();
       pw = (Wire*)pe;   // connected wires are not moved completely
 
-      if(((uintptr_t)pw->Port1) > 3) { // wtf?
+      if(((uintptr_t)pw->portByIndex(0)) > 3) { // wtf?
 	pw->move1(x, y);
 	if(pw->Label) { untested();
 	  pw->Label->moveCenter(x, y);
 	}else{ untested();
 	}
       }else{ untested();
-      	if((uintptr_t)(pw->Port1) & 1) { pw->move1(x,0); }
-	if((uintptr_t)(pw->Port1) & 2) { pw->move1(0,y); }
+      	if((uintptr_t)(pw->portByIndex(0)) & 1) { pw->move1(x,0); }
+	if((uintptr_t)(pw->portByIndex(0)) & 2) { pw->move1(0,y); }
       }
 
-      if(((uintptr_t)pw->Port2) > 3) { pw->move2(x, y);
+      if(((uintptr_t)pw->portByIndex(1)) > 3) { pw->move2(x, y);
       }else{ untested();
-	if((uintptr_t)(pw->Port2) & 1) { pw->move2(x,0); }
-	if((uintptr_t)(pw->Port2) & 2) { pw->move2(0,y); }
+	if((uintptr_t)(pw->portByIndex(1)) & 1) { pw->move2(x,0); }
+	if((uintptr_t)(pw->portByIndex(1)) & 2) { pw->move2(0,y); }
       }
 
       if(pw->Label) { untested();
@@ -508,13 +508,13 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
       // connecting wires are not moved completely
       assert(pw);
 
-      if(((uintptr_t)pw->Port1) > 3) { pw->x1__() += MAx1;  pw->y1__() += MAy1; }
-      else {  if((uintptr_t)(pw->Port1) & 1) { pw->x1__() += MAx1; }
-              if((uintptr_t)(pw->Port1) & 2) { pw->y1__() += MAy1; } }
+      if(((uintptr_t)pw->portByIndex(0)) > 3) { pw->x1__() += MAx1;  pw->y1__() += MAy1; }
+      else {  if((uintptr_t)(pw->portByIndex(0)) & 1) { pw->x1__() += MAx1; }
+              if((uintptr_t)(pw->portByIndex(0)) & 2) { pw->y1__() += MAy1; } }
 
-      if(((uintptr_t)pw->Port2) > 3) { pw->x2__() += MAx1;  pw->y2__() += MAy1; }
-      else {  if((uintptr_t)(pw->Port2) & 1) pw->x2__() += MAx1;
-              if((uintptr_t)(pw->Port2) & 2) pw->y2__() += MAy1; }
+      if(((uintptr_t)pw->portByIndex(1)) > 3) { pw->x2__() += MAx1;  pw->y2__() += MAy1; }
+      else {  if((uintptr_t)(pw->portByIndex(1)) & 1) pw->x2__() += MAx1;
+              if((uintptr_t)(pw->portByIndex(1)) & 2) pw->y2__() += MAy1; }
 
       if(pw->Label) {  
 	// root of node label must lie on wire
@@ -964,7 +964,7 @@ void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent* Event)
   QString Name, Value;
   Element *pe=0;
   // is wire line already labeled ?
-  if(pw) pe = Doc->getWireLabel(pw->Port1);
+  if(pw) pe = Doc->getWireLabel(pw->portByIndex(0));
   else pe = Doc->getWireLabel(pn);
   if(pe) { untested();
     if(pe->Type & isComponent) { untested();
@@ -1688,8 +1688,8 @@ void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
 
   if(focusElement)  if(Event->button() == Qt::LeftButton)
     if(auto w=wire(focusElement)) { untested();
-      Doc->selectWireLine(element(focusElement), w->Port1, ctrl);
-      Doc->selectWireLine(element(focusElement), w->Port2, ctrl);
+      Doc->selectWireLine(element(focusElement), w->portByIndex(0), ctrl);
+      Doc->selectWireLine(element(focusElement), w->portByIndex(1), ctrl);
     }
 
   Doc->releaseKeyboard();  // allow keyboard inputs again

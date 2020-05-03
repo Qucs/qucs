@@ -59,25 +59,45 @@ public:
   bool    isHorizontal() const { return (y1 == y2);}
   QRectF boundingRect() const;
 
-  Node const* portByIndex(unsigned i){
-	  if(i==0){
-		  return Port1;
-	  }else if(i==1){
-		  return Port2;
+public:
+  void setPortByIndex(unsigned idx, Node* n){
+	  assert(idx<2);
+	  auto a=Ports.begin();
+	  if(idx){
+		  ++a;
 	  }else{
-		  unreachable();
-		  return NULL;
 	  }
+	  *a = n;
+  }
+  Node* portByIndex(unsigned idx){
+	  assert(idx<2);
+	  assert(Ports.size()==2);
+	  auto a=Ports.begin();
+	  if(idx){
+		  ++a;
+	  }else{
+	  }
+	  return *a;
+  }
+  Node const* portByIndex(unsigned idx) const{
+	  auto w=const_cast<Wire*>(this);
+	  return w->portByIndex(idx);
   }
 
 public: // adapt, move to Conductor.
   unsigned netNumber();
   bool hasNumber(){ return netNumber()!=-1u; }
 
-//private:
-//Port*[2]??
-  Node  *Port1;
-  Node  *Port2;
+public: // aliases. don't use
+  Node* Port1(){
+	  return portByIndex(0);
+  }
+  Node* Port2(){
+	  return portByIndex(1);
+  }
+
+private:
+  std::list<Node*> Ports;
 
 public: // FIXME, these are still around.
 	//int & cx__() { return cx; }
