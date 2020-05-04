@@ -62,10 +62,10 @@ public:
 
 public:
   void setPortByIndex(unsigned idx, Node* n);
-  Node* portByIndex(unsigned idx);
-  Node const* portByIndex(unsigned idx) const{
+  Node* portValue(unsigned idx);
+  Node const* portValue(unsigned idx) const{
 	  auto w=const_cast<Wire*>(this);
-	  return w->portByIndex(idx);
+	  return w->portValue(idx);
   }
   std::list<Element*>::iterator connectionsBegin(){
 	  return Ports.begin();
@@ -76,10 +76,10 @@ public:
 
 public: // aliases. don't use
   Node* Port1(){
-	  return portByIndex(0);
+	  return portValue(0);
   }
   Node* Port2(){
-	  return portByIndex(1);
+	  return portValue(1);
   }
 
 private:

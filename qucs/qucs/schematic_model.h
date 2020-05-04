@@ -61,13 +61,14 @@ class SchematicLanguage;
 template<>
 struct graph_traits<SchematicModel>{
 	typedef Conductor* vertex_descriptor;
+	typedef AdjConductorIterator adjacency_iterator;
 };
 
 // Base class for all schematic models.
 // currently containging chunks/cruft from legacy Schematic implementation
 class SchematicModel{
 private:
-	SchematicModel(){}
+	SchematicModel() : Nodes(*this) {}
 #if 0
 	SchematicModel() : _doc(nullptr),
 	_symbol(new SchematicSymbol());
@@ -96,6 +97,9 @@ public: // stuff saved from Schematic
 	void propagateNode(Node* z) const;
 	void updateNetLabels() const;
 
+private:
+	void detachFromNode(Element* what, Node* from);
+
 public:
 	void collectDigitalSignals(void);
 	QString createNetlist(DocumentStream&, int, NetLang const&);
@@ -119,7 +123,10 @@ public:
 	bool loadComponents(QTextStream*);
 	// bool loadDiagrams(QTextStream*);
 	bool loadWires(QTextStream*);
+
+	// BUG. Element?
 	void disconnect(Symbol* c);
+	void disconnect(Wire* c);
 
 public: // container
 	void clear();
@@ -204,6 +211,7 @@ private:
 
 public: // for now.
 	friend class Schematic;
+	friend class NodeList;
 }; // schematicmodel
 
 #endif
