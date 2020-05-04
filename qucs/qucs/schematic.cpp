@@ -61,7 +61,7 @@ class QPrinter;
 
 // just dummies for empty lists
 WireList      SymbolWires;
-NodeList      SymbolNodes;
+//NodeList      SymbolNodes;
 DiagramList   SymbolDiags;
 ComponentList SymbolComps;
 

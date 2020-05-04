@@ -219,10 +219,10 @@ QRectF Wire::boundingRect() const
 #if 0
 unsigned Wire::netNumber() const
 {
-  if (portByIndex(0)){
-    assert(portByIndex(1));
-    assert(portByIndex(0)->netNumber() == portByIndex(1)->netNumber());
-    return portByIndex(0)->netNumber();
+  if (portValue(0)){
+    assert(portValue(1));
+    assert(portValue(0)->netNumber() == portValue(1)->netNumber());
+    return portValue(0)->netNumber();
   }else{
     return -1u;
   }
@@ -240,7 +240,7 @@ void Wire::setPortByIndex(unsigned idx, Node* n)
   *a = n;
 }
 // ----------------------------------------------------------------
-Node* Wire::portByIndex(unsigned idx)
+Node* Wire::portValue(unsigned idx)
 {
   assert(idx<2);
   assert(Ports.size()==2);

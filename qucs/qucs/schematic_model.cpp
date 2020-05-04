@@ -20,7 +20,7 @@
 #include "globals.h"
 #include "nodelist.h"
 
-SchematicModel::SchematicModel(Schematic* s) : _doc(s)
+SchematicModel::SchematicModel(Schematic* s) : _doc(s), Nodes(*this)
 {
 	// presumably Q3PTRlist without this is just a QList<*> (check)
 //  _symbol=new SchematicSymbol();
@@ -169,8 +169,8 @@ void SchematicModel::insertSymbolNodes(Symbol *c, bool noOptimize)
 		for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next()){
 			if(pe->Type == isWire)
 			{
-				if(((Wire*)pe)->portByIndex(0) == pn)  pL = &(((Wire*)pe)->Port2->Connections);
-				else  pL = &(((Wire*)pe)->portByIndex(0)->Connections);
+				if(((Wire*)pe)->portValue(0) == pn)  pL = &(((Wire*)pe)->Port2->Connections);
+				else  pL = &(((Wire*)pe)->portValue(0)->Connections);
 
 				for(pe1 = pL->first(); pe1!=0; pe1 = pL->next())
 					if(pe1 == c)
@@ -193,7 +193,13 @@ void SchematicModel::erase(Element* what)
 	}else if(auto d=diagram(what)){
 		diagrams().removeRef(d);
 	}else if(auto w=wire(what)){
+		Conductor* n0 = w->portValue(0);
+		Conductor* n1 = w->portValue(1);
+		Conductor* cw = w;
 		wires().removeRef(w);
+		disconnect(w);
+		_cc.deregisterVertex(cw);
+		_cc.postRemoveEdge(n1, n0);
 	}else{
 		unreachable();
 	}
@@ -347,11 +353,11 @@ void SchematicModel::propagateNode(QStringList& Collect,
 		for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
 			if(wire(pe)){
 				pw = (Wire*)pe;
-				if(p2 != pw->portByIndex(0)) {
-					if(pw->portByIndex(0)->name().isEmpty()) {
-						pw->portByIndex(0)->setName(pn->name());
-						pw->portByIndex(0)->State = 1;
-						Cons.append(pw->portByIndex(0));
+				if(p2 != pw->portValue(0)) {
+					if(pw->portValue(0)->name().isEmpty()) {
+						pw->portValue(0)->setName(pn->name());
+						pw->portValue(0)->State = 1;
+						Cons.append(pw->portValue(0));
 						setName = true;
 					}
 				}else{
@@ -405,9 +411,9 @@ bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
 	for(auto pw : wires()){
 		if(pw->Label != 0) {
 			if(isAnalog)
-				pw->portByIndex(0)->setName(pw->Label->name());
+				pw->portValue(0)->setName(pw->Label->name());
 			else  // avoid to use reserved VHDL words
-				pw->portByIndex(0)->setName("net" + pw->Label->name());
+				pw->portValue(0)->setName("net" + pw->Label->name());
 		}
 	}
 
@@ -524,11 +530,14 @@ void SchematicModel::simpleInsertWire(Wire *pw)
 
   Conductor* c1 = pn;
   Conductor* c2 = p2;
+  Conductor* _w = pw;
 
-  _cc.preAddEdge(c1, c2);
+  _cc.preAddEdge(_w, c1);
 
   pn->connectionsAppend(pw);
   pw->setPortByIndex(0, pn);
+
+  _cc.preAddEdge(_w, c2);
 
   p2->connectionsAppend(pw);  // connect schematic node to component node
   pw->setPortByIndex(1, p2);
@@ -536,29 +545,47 @@ void SchematicModel::simpleInsertWire(Wire *pw)
   wires().append(pw);
 }
 
+void SchematicModel::detachFromNode(Element* what, Node* from)
+{
+	if(from->connectionsCount()==1){
+		if(from->Label){
+			incomplete();
+			delete from->Label;
+		}else{
+		}
+
+		nodes().removeRef(from);  // delete open nodes
+	}else if(from->connectionsCount()==3){
+		from->connectionsRemove(what);// delete connection
+		//			pn->disconnect(c);
+		oneTwoWires(from);  // two wires -> one wire
+	}else{
+		from->connectionsRemove(what);// remove connection
+		//			pn->disconnect(c);
+	}
+}
+
+// hmm, perhaps Elements need Ports
 void SchematicModel::disconnect(Symbol* c)
 {
-	// delete all port connections
+	// drop port connections
 	for(unsigned i=0; i<c->portCount(); ++i){
-		Node const* val=&(c->portValue(i));
-		Node* Connection=const_cast<Node*>(val); // ok, we are owner
+		Node const* val = &(c->portValue(i));
+		Node* Connection = const_cast<Node*>(val); // ok, we are owner
 
-		if(Connection->connectionsCount()==1){
-			if(Connection->Label){
-				delete Connection->Label;
-			}else{
-			}
+		detachFromNode(c, Connection);
+		c->setPort(i, nullptr); // TODO: check in ~Symbol
+	}
+}
 
-			nodes().removeRef(Connection);  // delete open nodes
-			c->setPort(i, nullptr);
-		}else if(Connection->connectionsCount()==3){
-			Connection->connectionsRemove(c);// delete connection
-//			pn->disconnect(c);
-			oneTwoWires(Connection);  // two wires -> one wire
-		}else{
-			Connection->connectionsRemove(c);// remove connection
-//			pn->disconnect(c);
-		}
+void SchematicModel::disconnect(Wire* c)
+{
+	for(unsigned i=0; i<2; ++i){
+		Node const* val = c->portValue(i);
+		Node* Connection = const_cast<Node*>(val); // ok, we are owner
+
+		detachFromNode(c, Connection);
+		c->setPortByIndex(i, nullptr); // TODO: check in ~Element
 	}
 }
 
@@ -573,8 +600,8 @@ void SchematicModel::updateNetLabels() const
 	qDebug() << "found" << nc << "nets";
 
 	for(auto w : sm.wires()){
-		assert(w->portByIndex(0)->netNumber()==w->portByIndex(0)->netNumber());
-		unsigned i=w->portByIndex(0)->netNumber();
+		assert(w->portValue(0)->netNumber()==w->portValue(0)->netNumber());
+		unsigned i=w->portValue(0)->netNumber();
 		// qDebug() << "wire" << i << w->Label;
 		if(!w->Label){
 		}else if (netLabels[i].size()){

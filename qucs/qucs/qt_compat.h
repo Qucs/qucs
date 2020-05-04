@@ -246,7 +246,7 @@ public:
 		}
 	};
 	void remove() {
-		if (cur!=localList.end()){ untested();
+		if (cur!=localList.end()){
 			auto next=cur;
 			++next;
 			maybe_delete(*cur);
