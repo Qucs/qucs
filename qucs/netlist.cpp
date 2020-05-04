@@ -1,7 +1,5 @@
 /***************************************************************************
-                                symbol.cpp
-                                -----------
-    copyright            : (C) 2016-2019 Felix Salfelder / QUCS team
+    copyright            : (C) 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -12,28 +10,35 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "symbol.h"
-#include "schematic_model.h"
-#include <assert.h>
+
+#include "netlist.h"
 #include "net.h"
 
-// recreate schematic symbol. not sure why, maybe after parameter changes
-// (why not just call "Symbol::create??!")
-void Symbol::recreate(){
+Net* NetList::newNet()
+{
+	unsigned idx;
+	if( _g.empty()){ untested();
+		idx = _l.size();
+		_l.push_back(new Net());
+	}else{ untested();
+		idx = _g.top();
+		_g.pop();
+	}
+
+	trace1("newNet", idx);
+	assert(_l[idx]);
+	_l[idx]->setPos(idx);
+	_l[idx]->setLabel("_net" + std::to_string(idx));
+	return _l[idx];
 }
 
-Symbol::~Symbol(){
-	// disconnect();
-}
+void NetList::delNet(Net* n)
+{
+	assert(n);
+	assert(n->size() == 0);
 
-QString const& Symbol::netLabel(unsigned i) const
-{ untested();
-	auto const* s=getScope();
-	assert(s);
-//	assert(hasPort(i));
-	auto const& n = portValue(i);
-	assert(n.getNet());
-	auto nn = n.getNet()->label();
-	
-	return nn;
+	size_t idx = n->getPos();
+	assert(n==_l[idx]);
+	trace1("gn", idx);
+	_g.push(idx);
 }

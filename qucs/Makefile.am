@@ -122,6 +122,7 @@ libqucs_la_SOURCES = \
 	misc.cpp \
 	mnemo.cpp \
 	mouseactions.cpp \
+	netlist.cpp \
 	node.cpp \
 	nodelist.cpp \
 	object.cpp \

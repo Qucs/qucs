@@ -19,6 +19,7 @@
 #include "schematic_lang.h"
 #include "globals.h"
 #include "nodelist.h"
+#include "net.h"
 #include "trace.h"
 
 
@@ -329,6 +330,7 @@ bool SchematicModel::throughAllComps(DocumentStream& stream, int& countInit,
 // obsolete.
 void SchematicModel::throughAllNodes(unsigned& z) const
 { untested();
+#if 0
   z = 0; // number cc.
 
   for(auto pn : nodes()){
@@ -345,6 +347,7 @@ void SchematicModel::throughAllNodes(unsigned& z) const
 
   qDebug() << "got" << nodes().size() << "nodes and" << z << "cc";
   nc = z;
+#endif
 } // throughAllNodes
 
 #if 0
@@ -598,8 +601,9 @@ void SchematicModel::updateNetLabels() const
 	netLabels.resize(nc);
 	qDebug() << "found" << nc << "nets";
 
+#if 0
 	for(auto w : sm.wires()){
-		assert(w->portValue(0)->netNumber()==w->portValue(0)->netNumber());
+		assert(w->portValue(0)->getNet()==w->portValue(1)->getNet());
 		unsigned i=w->portValue(0)->netNumber();
 		// qDebug() << "wire" << i << w->Label;
 		if(!w->Label){
@@ -608,15 +612,21 @@ void SchematicModel::updateNetLabels() const
 			netLabels[i] = w->Label->name();
 		}
 	}
+#endif
 
 	for(auto pc : sm.components()){
 		if(pc->type() == "GND") { // BUG, use rails with net names.
-			unsigned i=pc->Ports.first()->Connection->netNumber();
-			if (netLabels[i].size()){
+			Port* n = pc->Ports.first();
+			assert(n);
+			assert(n->Connection);
+			Net* net = n->Connection->getNet();
+			assert(net);
+
+			if (net->label().size()){
+				qDebug() << "GND: warning: overriding label" << net->label();
 			}else{
-				qDebug() << "GND: warning: overriding label" << netLabels[i];
 			}
-			netLabels[i] = "0"; // HACK
+			net->setLabel("0");
 		}
 	}
 
@@ -639,4 +649,19 @@ void SchematicModel::merge(SchematicModel& src)
 	  components().append(i);
   }
   src.components().clear();
+}
+
+Net* SchematicModel::new_net()
+{ untested();
+	return Nets.newNet();
+}
+void SchematicModel::del_net(Net* n)
+{ untested();
+	Nets.delNet(n);
+}
+
+size_t& graph_traits<SchematicModel>::cc_size(Net* n, SchematicModel const&)
+{
+	assert(n);
+	return n->size_hack();
 }
