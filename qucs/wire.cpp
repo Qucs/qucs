@@ -37,6 +37,8 @@ Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2)
 
 Wire::~Wire()
 {
+  assert(portValue(0) == nullptr);
+  assert(portValue(1) == nullptr);
 }
 
 // ----------------------------------------------------------------
