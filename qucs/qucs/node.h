@@ -101,10 +101,6 @@ public: // BUG
 
   QRectF boundingRect() const;
 
-private:
-  unsigned cn; // id of connected component this node is part of.
-  unsigned _visit; // keep track of what has been done
-
 public: // protected coordinate abuse
   void markUnChecked(){
 	  y1=0;

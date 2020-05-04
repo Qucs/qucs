@@ -26,6 +26,7 @@
 #include "schematic_symbol.h"
 #include "qucsdoc.h"
 #include "nodelist.h"
+#include "netlist.h"
 
 template<class G>
 struct graph_traits{};
@@ -67,7 +68,7 @@ template<>
 struct graph_traits<SchematicModel>{
 	typedef Conductor* vertex_descriptor;
 	typedef AdjConductorIterator adjacency_iterator;
-	typedef unsigned cc_descriptor;
+	typedef Net* cc_descriptor;
 
 	static std::pair<AdjConductorIterator,AdjConductorIterator>
 	adjacent_vertices(vertex_descriptor t, SchematicModel const&) {
@@ -75,13 +76,17 @@ struct graph_traits<SchematicModel>{
 		return std::make_pair(n.begin(), n.end());
 	}
 
-	static void set_cc(Conductor const* t, unsigned n) {
+	// connected components parameters
+	static void set_cc(Conductor const* t, Net* n) {
 		trace2("set_ccid", t, n);
-		t->setNetNumber(n);
+		t->setNet(n);
 	}
 	static cc_descriptor get_cc(vertex_descriptor t) {
-		return t->netNumber();
+		return t->getNet();
 	}
+	static Net* new_cc(SchematicModel& s);
+	static void del_cc(Net*, SchematicModel& s);
+	static size_t& cc_size(Net* n, SchematicModel const&);
 	// needed for searching
 	static void visit(Conductor* t, unsigned level) {
 		t->visit(level);
@@ -166,10 +171,12 @@ private: // used in erase?
 	void       deleteComp(Component*c);
 
 public: // net access
-	QString const& netLabel(unsigned n) const{
-		assert(n<netLabels.size());
-		return netLabels[n];
-	}
+	Net* new_net();
+	void del_net(Net*);
+// 	QString const& netLabel(unsigned n) const{
+// 		assert(n<netLabels.size());
+// 		return netLabels[n];
+// 	}
 
 public: // node stuff. why public?
 	Node* insertNode(int x, int y, Element* owner);
@@ -216,6 +223,7 @@ public:
 private:
 	ComponentList Components;
 	PaintingList Paintings;
+	NetList Nets;
 	NodeList Nodes;
 	DiagramList Diagrams;
 	WireList Wires;
@@ -240,5 +248,14 @@ public: // for now.
 	friend class Schematic;
 	friend class NodeList;
 }; // schematicmodel
+
+inline Net* graph_traits<SchematicModel>::new_cc(SchematicModel& s)
+{
+	return s.new_net();
+}
+inline void graph_traits<SchematicModel>::del_cc(Net* n, SchematicModel& s)
+{
+	return s.del_net(n);
+}
 
 #endif

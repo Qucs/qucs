@@ -54,7 +54,7 @@ private:
 	FindVertex(FindVertex const&){ unreachable(); }
 public:
 	explicit FindVertex(G const& g,
-			vertex_descriptor const& start, vertex_descriptor const& needle)
+			vertex_descriptor const& start, vertex_descriptor& needle)
 		: _graph(g), _needle(needle) {
 
 		_graph.visit(start);
@@ -63,6 +63,7 @@ public:
 		_stack.push(std::make_pair(start, f));
 	}
 public:
+	vertex_descriptor& needle() { return _needle; }
 	status_t step();
 
 private:
@@ -73,7 +74,7 @@ private:
 
 private:
 	G const& _graph;
-	vertex_descriptor const& _needle;
+	vertex_descriptor& _needle;
 	std::stack<std::pair<vertex_descriptor, adjacency_iterator> > _stack;
 };
 /*--------------------------------------------------------------------------*/
@@ -124,10 +125,10 @@ public:
 	typedef typename graph_traits<G>::adjacency_iterator adjacency_iterator;
 	typedef typename graph_traits<G>::vertex_descriptor vertex_descriptor;
 	typedef typename graph_traits<G>::vertex_descriptor vertex;
+	typedef typename graph_traits<G>::cc_descriptor ccid_t;
 public:
-	explicit ConnectedComponents(G const& g) : _find_lvl(0), _graph(g) {}
+	explicit ConnectedComponents(G& g) : _find_lvl(0), _graph(g) {}
 public:
-	typedef size_t ccid_t;
 
 	unsigned next_level(){
 		if(_find_lvl == -1u){
@@ -154,7 +155,7 @@ public:
 	void preAddEdge(vertex&, vertex&);
 	void postRemoveEdge(vertex&, vertex&);
 private:
-	void separate(vertex&, vertex&);
+	void assign_new_cc(vertex&, vertex&);
 	ccid_t new_ccid();
 	size_t set_ccid_recursive(vertex&, ccid_t i);
 public:
@@ -164,7 +165,7 @@ public:
 
 private:
   unsigned _find_lvl; // maybe not a good place
-  G const& _graph;
+  G& _graph;
 
 private:
 	std::stack<size_t> _garbage; // unused cc_numbers
@@ -178,27 +179,17 @@ ConnectedComponents<G>::registerVertex(
 		typename ConnectedComponents<G>::vertex& t)
 {
 //	assert(index(t) == INVALID);
-	auto cc = ConnectedComponents<G>::new_ccid();
+	auto cc = graph_traits<G>::new_cc(_graph);
 
 	graph_traits<G>::set_cc(t, cc);
-	_cc_size[cc] += 1;
+	graph_traits<G>::cc_size(cc, _graph) += 1;
 	return t;
 }
 /*--------------------------------------------------------------------------*/
 template<class T>
 typename ConnectedComponents<T>::ccid_t ConnectedComponents<T>::new_ccid()
-{
-	ccid_t cc;
-	if(_garbage.size()){
-		cc = _garbage.top();
-		_garbage.pop();
-
-		assert(!_cc_size[cc]);
-	}else{
-		cc = _cc_size.size();
-		_cc_size.push_back(0);
-	}
-	return cc;
+{ untested();
+	return graph_traits<T>::new_cc(_graph);
 }
 /*--------------------------------------------------------------------------*/
 // take out vertex.
@@ -208,15 +199,16 @@ typename ConnectedComponents<T>::vertex&
 ConnectedComponents<T>::deregisterVertex(
 		typename ConnectedComponents<T>::vertex& t)
 {
-	size_t idx = graph_traits<T>::get_cc(t);
-	assert(idx!=INVALID);
-	assert(_cc_size[idx]);
-	size_t n = --_cc_size[idx];
+	auto cc = graph_traits<T>::get_cc(t);
+	assert(cc); // BUG
+	assert(graph_traits<T>::cc_size(cc, _graph));
+	size_t n = --graph_traits<T>::cc_size(cc, _graph);
+
 	if (n==0){ untested();
-		_garbage.push(idx);
+		graph_traits<T>::del_cc(cc, _graph);
 	}else{
 	}
-	graph_traits<T>::set_cc(t, INVALID);
+	graph_traits<T>::set_cc(t, nullptr); // BUG
 }
 /*--------------------------------------------------------------------------*/
 // set ccid for connected component containing v
@@ -248,44 +240,41 @@ void ConnectedComponents<T>::preAddEdge(
 	if(graph_traits<T>::get_cc(v) == graph_traits<T>::get_cc(w)){
 		// we are done.
 	}else{
-		auto nn = graph_traits<T>::get_cc(w);
 		auto freed_cc = graph_traits<T>::get_cc(v);
 		vertex* smallerv = &v;
-	  	if(_cc_size[graph_traits<T>::get_cc(w)] < _cc_size[graph_traits<T>::get_cc(v)]){
+		auto ccv = graph_traits<T>::get_cc(v);
+		auto ccw = graph_traits<T>::get_cc(w);
+		auto nn = ccw;
+
+
+	  	if(graph_traits<T>::cc_size(ccw, _graph) < graph_traits<T>::cc_size(ccv, _graph)){
 			smallerv = &w;
-			nn = graph_traits<T>::get_cc(v);
+			nn = ccv;
 			freed_cc = graph_traits<T>::get_cc(w);
 		}else{
 		}
 
 		size_t howmany = set_ccid_recursive(*smallerv, nn);
-		_cc_size[nn] += howmany;
-		assert(_cc_size[freed_cc] == howmany);
-		_cc_size[freed_cc] = 0;
-		_garbage.push(freed_cc);
+		graph_traits<T>::cc_size(nn, _graph) += howmany;
+		assert(graph_traits<T>::cc_size(freed_cc, _graph) == howmany);
+		graph_traits<T>::cc_size(freed_cc, _graph) = 0;
+		graph_traits<T>::del_cc(freed_cc, _graph);
 	}
 }
 /*--------------------------------------------------------------------------*/
 template<class T>
-void ConnectedComponents<T>::separate(
+void ConnectedComponents<T>::assign_new_cc(
 		typename ConnectedComponents<T>::vertex& v,
 		typename ConnectedComponents<T>::vertex& w)
 {
-	vertex* smallerv = &v;
-	vertex* biggerv = &v;
-
-	// not really.
-	if(_cc_size[graph_traits<T>::get_cc(w)] < _cc_size[graph_traits<T>::get_cc(v)]){ untested();
-		smallerv = &w;
-	}else{
-		biggerv = &w;
-	}
-
 	auto nn = ConnectedComponents<T>::new_ccid();
-	size_t howmany = set_ccid_recursive(*smallerv, nn);
+	size_t howmany = set_ccid_recursive(v, nn);
 
-	_cc_size[nn] += howmany;
-	_cc_size[graph_traits<T>::get_cc(*biggerv)] -= howmany;
+	auto vcc = graph_traits<T>::get_cc(v);
+	auto wcc = graph_traits<T>::get_cc(w);
+
+	graph_traits<T>::cc_size(vcc, _graph) += howmany;
+	graph_traits<T>::cc_size(wcc, _graph) -= howmany;
 }
 /*--------------------------------------------------------------------------*/
 template<class T>
@@ -313,8 +302,8 @@ void ConnectedComponents<T>::postRemoveEdge(
 
 	switch(stat){
 	case vertexfinder::sFAIL:
-		// assert cc_size[fvp.target] <= cc_size[fwp.target]
-		separate(v, w);
+		// reassign the smaller one.
+		assign_new_cc(fvp->needle(), fwp->needle());
 		break;
 	case vertexfinder::sSUCCESS:
 	   // still connected. done

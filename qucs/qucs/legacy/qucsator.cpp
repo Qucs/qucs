@@ -29,6 +29,7 @@
 #include "exception.h"
 #include "sckt_proto.h"
 #include "subcircuit.h"
+#include "net.h"
 #include "misc.h"
 
 namespace {
@@ -59,6 +60,7 @@ void QucsLang::printSymbol(Symbol const* d, stream_t& s) const
 	}
 }
 
+// BUG
 std::vector<QString> netLabels;
 
 // partly from Schematic::createSubnetlistplain
@@ -73,8 +75,10 @@ void QucsLang::printSubckt(SubcktProto const* p, stream_t& s) const
 		if(pc->type() == "Port"){
 			// BUG trainwreck.
 			// why does a port not have a label?!
-      	auto nn=pc->Ports.first()->Connection->netNumber();
-      	s << " " << netLabels[nn];
+      	assert(pc->Ports.first()->Connection);
+      	assert(pc->Ports.first()->Connection->getNet());
+      	auto nn=pc->Ports.first()->Connection->getNet()->label();
+      	s << " " << nn;
 		}else{
 		}
 	}
@@ -135,8 +139,11 @@ void QucsLang::printCommand(Command const* c, stream_t& s) const
  */
 void QucsLang::printComponent(Component const* c, stream_t& s) const
 {
-	// BUG
-	assert(c->isActive == COMP_IS_ACTIVE);
+	if(c->isActive != COMP_IS_ACTIVE){
+		// comment out?
+		incomplete();
+	}else{
+	}
 
 	if(c->isOpen()) {
 		// nothing.
@@ -160,10 +167,10 @@ void QucsLang::printComponent(Component const* c, stream_t& s) const
 
 		Symbol const* sym=c;
 		for(unsigned i=0; i<sym->portCount(); ++i){
-			auto N=sym->portValue(i);
+			Node const& N = sym->portValue(i);
 			s << " ";
-			if(N.hasNetNumber()){
-				s << netLabels[N.netNumber()];
+			if(Net const* net=N.getNet()){
+				s << net->label() << "__"; //  << netLabels[N.netNumber()];
 			}else{
 				// happens in list_entries ...
 				s << "open";
@@ -266,8 +273,8 @@ static void nodeMap(SchematicSymbol const& m)
 {
 	unsigned count;
 	auto& sm=m.schematicModel();
-	sm.throughAllNodes(count); // hack: number connected components.
-	                           // should already be numbered...
+//	sm.throughAllNodes(count); // hack: number connected components.
+//	                           // should already be numbered...
 
 	unsigned nc=sm.numberOfNets();
 	netLabels.resize(0);
@@ -275,7 +282,8 @@ static void nodeMap(SchematicSymbol const& m)
 	qDebug() << "found" << nc << "nets";
 	
 	for(auto w : sm.wires()){
-		assert(w->portValue(0)->netNumber()==w->portValue(0)->netNumber());
+		assert(w->portValue(0)->getNet()==w->portValue(1)->getNet());
+#if 0
 		unsigned i=w->portValue(0)->netNumber();
 		// qDebug() << "wire" << i << w->Label;
 		if(!w->Label){
@@ -283,19 +291,23 @@ static void nodeMap(SchematicSymbol const& m)
 		}else{
 			netLabels[i] = w->Label->name();
 		}
+#endif
 	}
 
 	for(auto pc : sm.components()){
-		if(pc->type() == "GND") {
-			unsigned i=pc->Ports.first()->Connection->netNumber();
-			if (netLabels[i].size()){
-			}else{
-				qDebug() << "GND: warning: overriding label" << netLabels[i];
+		if(pc->type() == "GND") { untested();
+			assert(pc->Ports.first()->Connection);
+			Net* n = pc->Ports.first()->Connection->getNet();
+			assert(n);
+			if (n->label().size()){ untested();
+			}else{ untested();
+				qDebug() << "GND: warning: overriding label" << n->label();
 			}
-			netLabels[i] = "gnd";
+			n->setLabel("gnd");
 		}
 	}
 
+#if 0
 	unsigned z=0;
 	for(auto& i : netLabels){
 		if(!i.size()){
@@ -303,6 +315,7 @@ static void nodeMap(SchematicSymbol const& m)
 		}else{
 		}
 	}
+#endif
 
 
 	// if(allTypes & isAnalogComponent){
@@ -324,6 +337,7 @@ void LegacyNetlister::createDeclarations(DocumentStream& stream) const
 		//prepareSave(stream, m); // yikes
 		if(SchematicSymbol* sym=dynamic_cast<SchematicSymbol*>(si.second)){
 			nodeMap(*sym);
+		}else{
 		}
 
 		qucslang.printItem(si.second, stream);
@@ -457,7 +471,7 @@ void LegacyNetlister::createNetlist(DocumentStream& stream,
 	QString s, Time;
 	for(auto pc : m.schematicModel().components()){
 		if(isAnalog) {
-			if(pc->type()=="GND"){ // qucsator hack
+			if(pc->type()=="GND"){ // qucsator hack, just ignore.
 			}else{
 				qucslang.printItem(pc, stream);
 			}
