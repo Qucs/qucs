@@ -32,10 +32,6 @@ struct graph_traits{};
 
 #include "dynamic_cc.h"
 
-inline std::ostream& operator<<(std::ostream& o, QString const& q)
-{
-	return o << q.toStdString();
-}
 
 
 class QPlainTextEdit; //??!

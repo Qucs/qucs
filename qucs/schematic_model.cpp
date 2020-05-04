@@ -124,6 +124,7 @@ void SchematicModel::pushBack(Element* what)
 {
 	trace1("SchematicModel::pushBack", what->label());
 	if(auto c=component(what)){ untested();
+		trace1("SchematicModel::pushBack", c->type());
       simpleInsertComponent(c);
 	}else if(auto d=diagram(what)){
 		diagrams().append(d);

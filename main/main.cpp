@@ -547,7 +547,10 @@ void createListComponentEntry()
       qDebug() << "some module";
       Element const *e = Mod->element();
       Component const *c = prechecked_cast<Component const*>(e);
-      assert(c);
+      if(!c){
+	incomplete();
+	continue;
+      }
 
       // FIXME: cleanup
       s << "=====" << QString::fromStdString(c->type()) << "=========\n";
