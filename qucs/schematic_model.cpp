@@ -20,7 +20,11 @@
 #include "globals.h"
 #include "nodelist.h"
 
-SchematicModel::SchematicModel(Schematic* s) : _doc(s), Nodes(*this)
+
+SchematicModel::SchematicModel(Schematic* s)
+	: _doc(s),
+	  Nodes(*this),
+	  _cc(*this)
 {
 	// presumably Q3PTRlist without this is just a QList<*> (check)
 //  _symbol=new SchematicSymbol();
