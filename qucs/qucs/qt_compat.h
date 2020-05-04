@@ -234,6 +234,9 @@ public:
 			return *cur;
 		}
 	};
+	size_t size() const{
+		return localList.size();
+	};
 	unsigned int count() const{
 		return (unsigned int)localList.size();
 	};

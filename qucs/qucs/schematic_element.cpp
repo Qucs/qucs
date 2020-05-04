@@ -84,13 +84,7 @@ Node* Schematic::selectedNode(int x, int y)
 // If 2 is returned, the wire line ended.
 int SchematicModel::insertWireNode1(Wire *w)
 {
-    Node *pn;
-    // check if new node lies upon an existing node
-    for(pn = nodes().first(); pn != 0; pn=nodes().next()){
-        if(pn->cx_() == w->x1_() && (pn->cy_() == w->y1_())) {
-	    break;
-	}
-    }
+    Node *pn = nodes().find_at(w->x1_(), w->y1_());
 
     if(pn != 0) {
         pn->connectionsAppend(w);
@@ -339,13 +333,10 @@ bool SchematicModel::connectVWires1(Wire *w)
 // Inserts a port into the schematic and connects it to another node if the
 // coordinates are identical. If 0 is returned, no new wire is inserted.
 // If 2 is returned, the wire line ended.
+//  bug. this is the same as insertWireNode1, but with ports swapped.
 int SchematicModel::insertWireNode2(Wire *w)
 {
-    Node *pn;
-    // check if new node lies upon an existing node
-    for(pn = nodes().first(); pn != 0; pn = nodes().next()){
-        if(pn->cx_() == w->x2_()) if(pn->cy_() == w->y2_()) break;
-    }
+    Node *pn = nodes().find_at( w->x2_(),  w->x2_());
 
     if(pn != 0)
     {

@@ -337,7 +337,7 @@ void SchematicModel::throughAllNodes(unsigned& z) const
     }
   }
 
-  qDebug() << "got" << nodes().count() << "nodes and" << z << "cc";
+  qDebug() << "got" << nodes().size() << "nodes and" << z << "cc";
   nc = z;
 } // throughAllNodes
 
@@ -479,23 +479,10 @@ void SchematicModel::simpleInsertComponent(Component *c)
 		qDebug() << c->label() << "port" << x << y;
 
 		// check if new node lies upon existing node
-		for(pn = nodes().first(); pn != 0; pn = nodes().next()){
-			if(pn->cx_() == x) if(pn->cy_() == y) {
-				// 	if (!pn->DType.isEmpty()) {
-				// 	  pp->Type = pn->DType;
-				// 	}
-				// 	if (!pp->Type.isEmpty()) {
-				// 	  pn->DType = pp->Type;
-				// 	}
-				break;
-			}
-		}
-
-		if(pn == 0) { // create new node, if no existing one lies at this position
-			pn = new Node(x, y);
-			nodes().append(pn);
-		}
+		// creates a new node, if needed
+		pn = &nodes().at(x, y);
 		pn->appendConnection(c);  // connect schematic node to component node
+
 		if (!pp->Type.isEmpty()) {
 			//      pn->DType = pp->Type;
 		}
