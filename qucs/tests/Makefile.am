@@ -31,10 +31,10 @@ AM_TESTS_ENVIRONMENT = \
     export PATH='../qucs:$(PATH)' \
 	 REDIRECT='exec 2>&9'\
     export QUCS='qucs' \
-    REDIR='1>&9 2>&10' \
+    _REDIR='1>&9 2>&10' \
     srcdir='$(srcdir)' \
     examplesdir='$(examplesdir)';
-AM_TESTS_FD_REDIRECT = 9>&2 10>&2
+AM_TESTS_FD_REDIRECT = 9>&2
 
 if COND_WIN32
 helloworld.dll: %.dll: %.la

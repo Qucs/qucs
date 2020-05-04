@@ -37,7 +37,11 @@ Node::Node(int _x, int _y) : cn(INVALID_NODE), _visit(0u)
 
 Node::~Node()
 {
-  assert (connectionsCount() == 0);
+  if (connectionsCount()){
+    // something is wrong in cleanup.
+    unreachable();
+  }else{
+  }
 }
 
 // -------------------------------------------------------------
