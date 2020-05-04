@@ -126,7 +126,7 @@ public:
   #define COMP_IS_SHORTEN 2
   bool isShort() const{return isActive==COMP_IS_SHORTEN;}
   bool isOpen() const{return isActive==COMP_IS_OPEN;}
-  QString label() const{return Name;}
+//  QString label() const{return Name;}
   Q3PtrList<Property> const& params() const{return Props;}
   QList<Port*>const& ports() const{return Ports;}
 // private: // not yet

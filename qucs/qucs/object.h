@@ -44,7 +44,7 @@ protected:
 public:
 	virtual ~Object(){}
 
-	QString const& label() const{return Label;}
+	QString const& label() const{untested(); return Label;}
 	void setLabel(QString const& l) {Label = l;}
 
 protected: // error handling

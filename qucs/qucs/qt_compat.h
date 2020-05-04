@@ -374,6 +374,15 @@ private:
 # define contentsDragMoveEvent dragMoveEvent
 #endif
 
+inline std::ostream& operator<<(std::ostream& o, QString const& q)
+{
+	return o << q.toStdString();
+}
+inline QTextStream& operator<<(QTextStream& o, std::string const& q)
+{
+	return o << QString::fromStdString(q);
+}
+
 #endif
 
 //vim:ts=8:sw=4:et
