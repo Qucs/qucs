@@ -58,17 +58,42 @@ public:
 class DocumentLanguage;
 class SchematicLanguage;
 
+// describe the conductor graph.
+// Conductors are the vertices.
+// a connected component in this graph is a Net
 template<>
 struct graph_traits<SchematicModel>{
 	typedef Conductor* vertex_descriptor;
 	typedef AdjConductorIterator adjacency_iterator;
+	typedef unsigned cc_descriptor;
+
+	static std::pair<AdjConductorIterator,AdjConductorIterator>
+	adjacent_vertices(vertex_descriptor t, SchematicModel const&) {
+		auto n = t->neighbours();
+		return std::make_pair(n.begin(), n.end());
+	}
+
+	static void set_cc(Conductor const* t, unsigned n) {
+		trace1("set_ccid", n);
+		t->setNetNumber(n);
+	}
+	static cc_descriptor get_cc(vertex_descriptor t) {
+		return t->netNumber();
+	}
+	// needed for searching
+	static void visit(Conductor* t, unsigned level) {
+		t->visit(level);
+	}
+	static bool visited(Conductor const* t, unsigned level) {
+		return t->visited(level);
+	}
 };
 
 // Base class for all schematic models.
 // currently containging chunks/cruft from legacy Schematic implementation
 class SchematicModel{
 private:
-	SchematicModel() : Nodes(*this) {}
+	SchematicModel() : Nodes(*this), _cc(*this) {}
 #if 0
 	SchematicModel() : _doc(nullptr),
 	_symbol(new SchematicSymbol());
