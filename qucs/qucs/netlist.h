@@ -1,7 +1,5 @@
 /***************************************************************************
-                                symbol.cpp
-                                -----------
-    copyright            : (C) 2016-2019 Felix Salfelder / QUCS team
+    copyright            : (C) 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -12,28 +10,35 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "symbol.h"
-#include "schematic_model.h"
-#include <assert.h>
-#include "net.h"
 
-// recreate schematic symbol. not sure why, maybe after parameter changes
-// (why not just call "Symbol::create??!")
-void Symbol::recreate(){
-}
+// not a "netlist", but just a list of Nets.
+// a Net is a connected component in the conductor graph
+//
+// nets come and go. keep track and recycle.
+//
+//
+#include <stack>
+#include <vector>
+#include "trace.h"
+class Net;
 
-Symbol::~Symbol(){
-	// disconnect();
-}
+class NetList{
+public:
+	typedef std::vector<Net*> container_type;
+private:
+	typedef std::stack<unsigned> garbage_type;
 
-QString const& Symbol::netLabel(unsigned i) const
-{ untested();
-	auto const* s=getScope();
-	assert(s);
-//	assert(hasPort(i));
-	auto const& n = portValue(i);
-	assert(n.getNet());
-	auto nn = n.getNet()->label();
-	
-	return nn;
-}
+private:
+	NetList( const NetList&){ unreachable(); }
+public:
+	explicit NetList(){}
+
+public:
+	Net* newNet();
+	void delNet(Net*);
+
+private:
+	container_type _l;
+	garbage_type _g;
+};
+

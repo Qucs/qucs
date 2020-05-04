@@ -46,6 +46,8 @@ public:
 
 	QString const& label() const{untested(); return Label;}
 	void setLabel(QString const& l) {Label = l;}
+	void setLabel(std::string const& l) {Label = QString::fromStdString(l);}
+	void setLabel(char const* l) {Label = QString(l);}
 
 protected: // error handling
 	virtual void message(QucsMsgType, const char*) const;

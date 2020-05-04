@@ -1,7 +1,5 @@
 /***************************************************************************
-                                symbol.cpp
-                                -----------
-    copyright            : (C) 2016-2019 Felix Salfelder / QUCS team
+    copyright            : (C) 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -12,28 +10,22 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "symbol.h"
-#include "schematic_model.h"
-#include <assert.h>
-#include "net.h"
 
-// recreate schematic symbol. not sure why, maybe after parameter changes
-// (why not just call "Symbol::create??!")
-void Symbol::recreate(){
-}
+#include "object.h"
+class Net : public Object{
+public:
+	explicit Net() : Object(), _size(0) {}
+private:
+	Net( const Net& ) {unreachable();}
 
-Symbol::~Symbol(){
-	// disconnect();
-}
+public:
+	size_t size() const{return _size;}
+	size_t& size_hack(){return _size;}
 
-QString const& Symbol::netLabel(unsigned i) const
-{ untested();
-	auto const* s=getScope();
-	assert(s);
-//	assert(hasPort(i));
-	auto const& n = portValue(i);
-	assert(n.getNet());
-	auto nn = n.getNet()->label();
-	
-	return nn;
-}
+	void setPos(unsigned u){_pos=u;}
+	unsigned getPos(){return _pos;}
+
+private:
+	size_t _size; // number of Conductors
+	unsigned _pos; // position
+};

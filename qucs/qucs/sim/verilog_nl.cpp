@@ -21,6 +21,7 @@
 #include "schematic_model.h"
 #include "schematic_lang.h"
 #include "io.h"
+#include "net.h"
 #include "sckt_proto.h"
 #include "exception.h"
 
@@ -113,19 +114,21 @@ void VerilogNetlister::save(DocumentStream& Stream, SchematicSymbol const& m) co
 
 void VerilogNetlister::nodeMap(SchematicSymbol const& m) const
 {
+	incomplete(); // obsolete.
 	unsigned count;
 	auto& sm=m.schematicModel();
-	sm.throughAllNodes(count); // hack: number connected components.
+//	sm.throughAllNodes(count); // hack: number connected components.
 	                           // should already be numbered...
-	sm.updateNetLabels(); // HACK: should already be named.
+//	sm.updateNetLabels(); // HACK: should already be named.
 
 	unsigned nc=sm.numberOfNets();
 	netLabels.resize(0);
 	netLabels.resize(nc);
 	qDebug() << "found" << nc << "nets";
 	
+#if 0
 	for(auto w : sm.wires()){
-		assert(w->portValue(0)->netNumber()==w->portValue(0)->netNumber());
+		assert(w->portValue(0)->getNet()==w->portValue(1)->getNet());
 		unsigned i=w->portValue(0)->netNumber();
 		//qDebug() << "wire" << i << w->Label;
 		if(!w->Label){
@@ -134,18 +137,23 @@ void VerilogNetlister::nodeMap(SchematicSymbol const& m) const
 			netLabels[i] = w->Label->name();
 		}
 	}
+#endif
 
+	// maybe just s/gnd/0/??
 	for(auto pc : sm.components()){
-		if(pc->type() == "GND") { // BUG, use rails with net names.
-			unsigned i=pc->Ports.first()->Connection->netNumber();
-			if (netLabels[i].size()){
-			}else{
-				qDebug() << "GND: warning: overriding label" << netLabels[i];
+		if(pc->type() == "GND") { untested();
+			assert(pc->Ports.first()->Connection);
+			Net* n = pc->Ports.first()->Connection->getNet();
+			assert(n);
+			if (n->label().size()){ untested();
+			}else{ untested();
+				qDebug() << "GND: warning: overriding label" << n->label();
 			}
-			netLabels[i] = "0"; // HACK
+			n->setLabel("0");
 		}
 	}
 
+#if 0
 	unsigned z=0;
 	for(auto& i : netLabels){
 		if(!i.size()){
@@ -153,6 +161,7 @@ void VerilogNetlister::nodeMap(SchematicSymbol const& m) const
 		}else{
 		}
 	}
+#endif
 
 } // nodeMap
 
