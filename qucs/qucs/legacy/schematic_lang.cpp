@@ -13,6 +13,10 @@
 #include "diagram.h" // BUG
 #include "subcircuit.h"
 
+#ifdef DO_TRACE
+#include <typeinfo>
+#endif
+
 bool PaintingList::load(QTextStream& str)
 {
 	auto stream=&str;
@@ -159,14 +163,16 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 					incomplete();
 				}
 			}else if(mode=='W'){
+				qDebug() << "wire parse?" << Line;
 				// (Node*)4 =  move all ports (later on)
-				Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4);
+				// Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4); // this is entirely nuts.
+				Wire* w = new Wire();
 				incomplete(); // qt5 branch...
 				bool err=w->obsolete_load(Line);
-				if(!err){
+				if(!err){ untested();
 					qDebug() << "ERROR" << Line;
 					delete(w);
-				}else{
+				}else{ untested();
 					c = w;
 				}
 			}else if(mode=='D'){
@@ -187,6 +193,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 			}
 
 			if(c){
+				trace2("pushing back", c->label(), typeid(*c).name());
 				assert(s.schematicModel());
 				s.schematicModel()->pushBack(c);
 			}else{

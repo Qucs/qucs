@@ -19,6 +19,7 @@
 #include "schematic_lang.h"
 #include "globals.h"
 #include "nodelist.h"
+#include "trace.h"
 
 
 SchematicModel::SchematicModel(Schematic* s)
@@ -121,11 +122,15 @@ ComponentList& SchematicModel::components()
 
 void SchematicModel::pushBack(Element* what)
 {
+	trace1("SchematicModel::pushBack", what->label());
 	if(auto c=component(what)){ untested();
       simpleInsertComponent(c);
 	}else if(auto d=diagram(what)){
 		diagrams().append(d);
+	}else if(auto c=command(what)){
+		incomplete();
 	}else if(auto w=wire(what)){
+		trace4("pushback Wire", w->x1, w->y1, w->x2, w->y2);
 		simpleInsertWire(w);
 //		insertWire(w);?? wtf?
 	}else if(auto s=dynamic_cast<SchematicSymbol*>(what)){ untested();
@@ -476,7 +481,6 @@ void SchematicModel::simpleInsertComponent(Component *c)
 	for(auto pp : c->Ports){
 		int x=pp->x+c->cx_();
 		int y=pp->y+c->cy_();
-		qDebug() << c->label() << "port" << x << y;
 
 		// check if new node lies upon existing node
 		// creates a new node, if needed
@@ -495,7 +499,10 @@ void SchematicModel::simpleInsertComponent(Component *c)
 
 // screw this.
 void SchematicModel::simpleInsertWire(Wire *pw)
-{
+{ untested();
+  assert(pw->portValue(0) == nullptr);
+  assert(pw->portValue(1) == nullptr);
+
   Conductor* c = pw;
   _cc.registerVertex(c);
   Node *pn=nullptr;
@@ -514,7 +521,7 @@ void SchematicModel::simpleInsertWire(Wire *pw)
     delete pw;           // delete wire because this is not a wire
     return;
 #endif
-  }else{
+  }else{ untested();
   }
 
   Node* p2 = &nodes().at(pw->x2_(), pw->y2_());

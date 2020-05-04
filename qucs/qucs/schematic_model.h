@@ -32,6 +32,12 @@ struct graph_traits{};
 
 #include "dynamic_cc.h"
 
+inline std::ostream& operator<<(std::ostream& o, QString const& q)
+{
+	return o << q.toStdString();
+}
+
+
 class QPlainTextEdit; //??!
 // class QFileInfo;
 
@@ -74,7 +80,7 @@ struct graph_traits<SchematicModel>{
 	}
 
 	static void set_cc(Conductor const* t, unsigned n) {
-		trace1("set_ccid", n);
+		trace2("set_ccid", t, n);
 		t->setNetNumber(n);
 	}
 	static cc_descriptor get_cc(vertex_descriptor t) {
