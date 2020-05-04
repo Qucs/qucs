@@ -253,37 +253,19 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
 		return;
 	}else{ untested();
 	}
-#if XML
-	QDomDocument doc;
-	QDomElement el = doc.createElement (Model);
-	doc.appendChild (el);
-	el.setTagName (Model);
-	el.setAttribute ("inst", Name.isEmpty() ? "*" : Name);
-	el.setAttribute ("display", isActive | (showName ? 4 : 0));
-	el.setAttribute ("cx", cx);
-	el.setAttribute ("cy", cy);
-	el.setAttribute ("tx", tx);
-	el.setAttribute ("ty", ty);
-	el.setAttribute ("mirror", mirroredX);
-	el.setAttribute ("rotate", rotated);
-
-	for (Property *pr = Props.first(); pr != 0; pr = Props.next()) { untested();
-		el.setAttribute (pr->Name, (pr->display ? "1@" : "0@") + pr->Value);
-	}
-	qDebug << doc.toString();
-#endif
 	s << "  <";
-	if(dynamic_cast<Subcircuit const*>(c)){
-		s << "Sub";
+	if(auto ss=dynamic_cast<Subcircuit const*>(c)){
+		// print "Sub" instead of type.
+		s << "Sub " << c->label();
 	}else{
-		s << c->obsolete_model_hack();
-	}
+		s << c->obsolete_model_hack(); // c->type()
 
-	s << " ";
-	if(c->name().isEmpty()){
-		s << "*";
-	}else{
-		s << c->name();
+		s << " ";
+		if(c->name().isEmpty()){
+			s << "*";
+		}else{
+			s << c->name(); // label??
+		}
 	}
 	s << " ";
 
@@ -338,6 +320,7 @@ Command* LegacySchematicLanguage::loadCommand(const QString& _s, Command* c) con
   s = s.mid(1, s.length()-2);   // cut off start and end character
 
   QString label=s.section(' ',1,1);
+  trace1("NAME", label);
   c->setName(label);
 
   QString n;
@@ -426,6 +409,7 @@ Component* LegacySchematicLanguage::loadComponent(const QString& _s, Component* 
 
   QString label=s.section(' ',1,1);
   c->obsolete_name_override_hack(label); //??
+  trace1("loadComp", label);
   c->setLabel(label);
 
   QString n;

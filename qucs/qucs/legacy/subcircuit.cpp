@@ -51,6 +51,7 @@ Subcircuit::Subcircuit()
 Component* Subcircuit::newOne()
 { untested();
   Subcircuit *p = new Subcircuit();
+  p->setLabel("-newOne-"); // TODO
   p->Props.getFirst()->Value = Props.getFirst()->Value;
   p->recreate(0);
   return p;
@@ -63,7 +64,9 @@ Element* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
   BitmapFile = (char *) "subcircuit";
 
   if(getNewOne) {
+	  incomplete();
     Subcircuit *p = new Subcircuit();
+	 p->setLabel("-getnewOne-"); // TODO
     p->recreate(0);   // createSymbol() is NOT called in constructor !!!
     return p;
   }
@@ -352,32 +355,24 @@ QString Subcircuit::getSubcircuitFile(SchematicModel const* scope) const
       hashsearchresult = QucsMain->schNameHash.value(baseName);
     mutex.unlock();
 
-    if (hashsearchresult.isEmpty())
-    {
+    if (hashsearchresult.isEmpty()) { untested();
         // the schematic was not found in the hash table, return
         // what would always have been returned in this case
         return misc::properAbsFileName(FileName);
-    }
-    else
-    {
+    } else { untested();
         // we found an entry in the hash table, check it actually still exists
         FileInfo.setFile(hashsearchresult);
 
-        if (FileInfo.exists())
-        {
+        if (FileInfo.exists()) { untested();
             // it does exist so return the absolute file path
             return FileInfo.absoluteFilePath();
-        }
-        else
-        {
+        } else { untested();
             // the schematic file does not actually exist, return
             // what would always have been returned in this case
             return misc::properAbsFileName(FileName);
         }
     }
-
   }
-
 }
 
 static SubMap FileList;
@@ -549,6 +544,7 @@ Element* Subcircuit::proto(SchematicModel const* scope) const
 	Symbol* s=new pr(this);
 	QString t=Props.first()->Value;
 	
+	trace1("sckt::proto", type());
 	s->setType(type());
 
 	assert(scope);
