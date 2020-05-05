@@ -1,16 +1,13 @@
 /***************************************************************************
-                          node.cpp  -  description
-                             -------------------
-    begin                : Sat Sep 20 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -21,32 +18,38 @@
 
 #include <QPainter>
 
-Node::Node(int _x, int _y) : Conductor()
+#if 0
+Node::Node(int _x, int _y) : Conductor(), Element()
 {
-  Label = nullptr; // BUG
+  unreachable();
+}
+#endif
+
+Node::Node(std::pair<int, int> pos) 
+  : Conductor(), Element(), _position(pos)
+{
+  trace1("Node::Node", this);
+  // Label = nullptr; // BUG
   Type  = isNode;
   State = 0;
   DType = "";
 
   // BUG:
-  Element::cx = _x;
-  Element::cy = _y;
+//  Element::cx = _x;
+//  Element::cy = _y;
 }
 
 Node::~Node()
 {
-  if (connectionsCount()){
-    // something is wrong in cleanup.
-    unreachable();
-  }else{
-  }
+  trace1("~Node", this);
+  assert(!connectionsCount());
 }
 
 // -------------------------------------------------------------
 void Node::paint(ViewPainter *p)
 {
   switch(Connections.count()) {
-    case 1:  if(Label)
+    case 1:  if(hasLabel())
                p->fillRect(cx()-2, cy()-2, 4, 4, Qt::darkBlue); // open but labeled
              else {
                p->Painter->setPen(QPen(Qt::red,1));  // node is open
@@ -76,8 +79,11 @@ bool Node::getSelected(int x_, int y_)
 
 // ----------------------------------------------------------------
 // BUG: does not set Name
+// what is a "Name"??
 void Node::setName(const QString& Name_, const QString& Value_, int x_, int y_)
 {
+  incomplete();
+#if 0
   if(Name_.isEmpty() && Value_.isEmpty()) {
     if(Label) delete Label;
     Label = 0;
@@ -88,6 +94,7 @@ void Node::setName(const QString& Name_, const QString& Value_, int x_, int y_)
   else Label->setName(Name_);
   Label->pOwner = this;
   Label->initValue = Value_;
+#endif
 }
 
 // ----------------------------------------------------------------
@@ -96,5 +103,6 @@ QRectF Node::boundingRect() const
   QRectF b(cx()-4,cy()-4,8,8);
   return b;
 }
-
+// ----------------------------------------------------------------
+// ----------------------------------------------------------------
 // vim:ts=8:sw=2:et

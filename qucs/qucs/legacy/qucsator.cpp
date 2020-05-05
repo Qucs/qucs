@@ -73,11 +73,11 @@ void QucsLang::printSubckt(SubcktProto const* p, stream_t& s) const
 	for(auto pc : p->schematicModel().components()){
 
 		if(pc->type() == "Port"){
-			// BUG trainwreck.
+			incomplete(); // must expose Port
 			// why does a port not have a label?!
-      	assert(pc->Ports.first()->Connection);
-      	assert(pc->Ports.first()->Connection->getNet());
-      	auto nn=pc->Ports.first()->Connection->getNet()->label();
+      	// assert(pc->Ports.first()->Connection);
+      	// assert(pc->Ports.first()->Connection->getNet());
+      	auto nn=pc->label(); // .first()->Connection->getNet()->label();
       	s << " " << nn;
 		}else{
 		}
@@ -153,10 +153,10 @@ void QucsLang::printComponent(Component const* c, stream_t& s) const
 		int z=0;
 		QListIterator<Port *> iport(c->ports());
 		Port *pp = iport.next();
-		QString Node1 = pp->Connection->label();
+		QString Node1 = pp->value()->label();
 		while (iport.hasNext()){
 			s << "R:" << c->label() << "." << QString::number(z++) << " "
-				<< Node1 << " " << iport.next()->Connection->label() << " R=\"0\"\n";
+				<< Node1 << " " << iport.next()->value()->label() << " R=\"0\"\n";
 		}
 	}else{
 		if(dynamic_cast<Subcircuit const*>(c)) {
@@ -167,14 +167,15 @@ void QucsLang::printComponent(Component const* c, stream_t& s) const
 
 		Symbol const* sym=c;
 		for(unsigned i=0; i<sym->portCount(); ++i){
-			Node const& N = sym->portValue(i);
-			s << " ";
-			if(Net const* net=N.getNet()){
-				s << net->label() << "__"; //  << netLabels[N.netNumber()];
-			}else{
-				// happens in list_entries ...
-				s << "open";
-			}
+			QString const& N = sym->portValue(i);
+			  // BUG. print portName if not device.
+			s << " " << N;
+// 			if(Net const* net=N.getNet()){
+// 				s << net->label() << "__"; //  << netLabels[N.netNumber()];
+// 			}else{
+// 				// happens in list_entries ...
+// 				s << "open";
+// 			}
 		}
 
 		for(auto p2 : c->params()) {
@@ -282,7 +283,6 @@ static void nodeMap(SchematicSymbol const& m)
 	qDebug() << "found" << nc << "nets";
 	
 	for(auto w : sm.wires()){
-		assert(w->portValue(0)->getNet()==w->portValue(1)->getNet());
 #if 0
 		unsigned i=w->portValue(0)->netNumber();
 		// qDebug() << "wire" << i << w->Label;
@@ -296,8 +296,8 @@ static void nodeMap(SchematicSymbol const& m)
 
 	for(auto pc : sm.components()){
 		if(pc->type() == "GND") { untested();
-			assert(pc->Ports.first()->Connection);
-			Net* n = pc->Ports.first()->Connection->getNet();
+			assert(pc->Ports.first()->value());
+			Net* n = pc->Ports.first()->value()->getNet();
 			assert(n);
 			if (n->label().size()){ untested();
 			}else{ untested();
@@ -551,8 +551,10 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 				incomplete();
 			}
 		}else if(pc->obsolete_model_hack() == "GND") { // BUG.
-			qDebug() << "GND hack" << pc->Ports.first()->Connection->name();
-			pc->Ports.first()->Connection->setName("gnd");
+			qDebug() << "GND hack" << pc->Ports.first()->value()->name();
+			assert(pc->Ports.first()->value());
+			Net* n = pc->Ports.first()->value()->getNet();
+			n->setLabel("gnd"); // should already be "gnd". check instead.
 			continue;
 		// }else if(dynamic_cast<Subcircuit const*>(pc)) {
 		} else if(pc->obsolete_model_hack() == "Sub") { // BUG.

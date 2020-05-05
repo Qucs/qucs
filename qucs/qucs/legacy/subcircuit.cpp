@@ -218,6 +218,8 @@ int Subcircuit::loadSymbol(const QString& DocName)
 // BUG: obsolete callback
 QString Subcircuit::netlist() const
 {
+	incomplete();
+#if 0
   QString s = Model+":"+Name;
 
   // output all node names
@@ -232,11 +234,13 @@ QString Subcircuit::netlist() const
   for(Property *pp = Props.next(); pp != 0; pp = Props.next())
     s += " "+pp->name()+"=\""+pp->Value+"\"";
   return s + '\n';
+#endif
 }
 
 // -------------------------------------------------------
 QString Subcircuit::vhdlCode(int)
 {
+#if 0
   QString f = misc::properFileName(Props.first()->Value);
   QString s = "  " + name() + ": entity Sub_" + misc::properName(f);
 
@@ -265,11 +269,13 @@ QString Subcircuit::vhdlCode(int)
 
   s += ");\n";
   return s;
+#endif
 }
 
 // -------------------------------------------------------
 QString Subcircuit::verilogCode(int)
 {
+#if 0
   QString f = misc::properFileName(Props.first()->Value);
   QString s = "  Sub_" + misc::properName(f);
 
@@ -296,6 +302,7 @@ QString Subcircuit::verilogCode(int)
 
   s += ");\n";
   return s;
+#endif
 }
 
 // -------------------------------------------------------
@@ -526,6 +533,11 @@ public:
 private:
 	std::string getParameter(std::string const&) const{
 		return "incomplete";
+	}
+   unsigned portCount() const{ return 0; }
+	Port& port(unsigned){
+		unreachable();
+		return *new Port(0,0);
 	}
 
 };

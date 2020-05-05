@@ -172,6 +172,7 @@ public:
 public: // make old variables accessible
 	int const& cx_() const { return cx; }
 	int const& cy_() const { return cy; }
+
 	int const& x1_() const { return x1; }
 	int const& y1_() const { return y1; }
 	int const& x2_() const { return x2; }
@@ -220,7 +221,22 @@ private:
   bool Selected;
 public: // BUG
   int  Type;    // whether it is Component, Wire, ...
-  int  cx, cy, x1, y1;
+
+public: // set protected variables. don't use
+  void obsolete_set(std::string name, int value){
+	  incomplete();
+	  if(name=="cx"){
+		  cx=value;
+	  }else if(name=="cy"){
+		  cy=value;
+	  }
+  }
+
+protected:
+  int  cx, cy; // also used in Node. and in Diagrams
+ 
+public:
+  int x1, y1;
   
   // BUG; abused in Command
   mutable int x2, y2;  // center and relative boundings

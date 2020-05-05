@@ -1,9 +1,6 @@
 /***************************************************************************
-                          wire.cpp  -  description
-                             -------------------
-    begin                : Wed Sep 3 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -19,44 +16,45 @@
 
 #include <QPainter>
 
-Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2)
-	: Conductor()
+Wire::Wire(int _x1, int _y1, int _x2, int _y2)
+	: Conductor(), _port0(_x1, _y1), _port1(_x2, _y2)
 {
   cx = 0;
   cy = 0;
-  x1 = _x1;
-  y1 = _y1;
-  x2 = _x2;
-  y2 = _y2;
-  Label  = 0;
+  Conductor::Label  = 0; // BUG
 
   Type = isWire; // BUG
-  Ports.push_back(n1);
-  Ports.push_back(n2);
+  _node_hack.push_back(nullptr);
+  _node_hack.push_back(nullptr);
 }
 
 Wire::~Wire()
 {
-  assert(portValue(0) == nullptr);
-  assert(portValue(1) == nullptr);
+  assert(!port(0).connected());
+  assert(!port(1).connected());
 }
 
 // ----------------------------------------------------------------
 void Wire::rotate()
 {
+  int x1 = x1__();
+  int x2 = x2__();
+  int y1 = y1__();
+  int y2 = y2__();
   int xm, ym, tmp;
 
   xm = (x1+x2) >> 1;
   ym = (y1+y2) >> 1;
 
   tmp = x1;
-  x1  = xm + y1  - ym;
-  y1  = ym - tmp + xm;
+  x1__()  = xm + y1  - ym;
+  y1__()  = ym - tmp + xm;
 
   tmp = x2;
-  x2  = xm + y2  - ym;
-  y2  = ym - tmp + xm;
+  x2__()  = xm + y2  - ym;
+  y2__()  = ym - tmp + xm;
 
+#if 0
   if(Label) {
     tmp = Label->cx_();
     Label->moveTo(xm + Label->cy_() - ym, ym - tmp + xm);
@@ -69,33 +67,38 @@ void Wire::rotate()
   }else{
 	  unreachable(); /// ?!?!
   }
+#endif
 }
 
 // ----------------------------------------------------------------
 void Wire::setCenter(int x, int y, bool relative)
 {
   if(relative) {
-    x1 += x;  x2 += x;
-    y1 += y;  y2 += y;
+    x1() += x;  x2() += x;
+    y1() += y;  y2() += y;
 //    if(Label) Label->setCenter(x, y, true);
   }
   else {
-    x1 = x;  x2 = x;
-    y1 = y;  y2 = y;
+    x1() = x;  x2() = x;
+    y1() = y;  y2() = y;
   }
 }
 
 // ----------------------------------------------------------------
 void Wire::getCenter(int& x, int& y)
 {
-  x = (x1+x2) >> 1;
-  y = (y1+y2) >> 1;
+  x = (x1()+x2()) >> 1;
+  y = (y1()+y2()) >> 1;
 }
 
 // ----------------------------------------------------------------
 // Lie x/y on wire ? 5 is the precision the coordinates have to fit.
 bool Wire::getSelected(int x_, int y_)
 {
+  int x1 = x1__();
+  int x2 = x2__();
+  int y1 = y1__();
+  int y2 = y2__();
   if(x1-5 <= x_) if(x2+5 >= x_) if(y1-5 <= y_) if(y2+5 >= y_)
     return true;
 
@@ -105,7 +108,7 @@ bool Wire::getSelected(int x_, int y_)
 // ----------------------------------------------------------------
 void Wire::paintScheme(QPainter *p) const
 {
-  p->drawLine(x1, y1, x2, y2);
+  p->drawLine(x1(), y1(), x2(), y2());
 //  if(Label)
 //    if((Label->Type == isHWireLabel) || (Label->Type == isHWireLabel))
 //    if(Label->Type == isHWireLabel)
@@ -115,6 +118,11 @@ void Wire::paintScheme(QPainter *p) const
 // ----------------------------------------------------------------
 void Wire::paint(ViewPainter *p) const
 {
+  int x1 = Wire::x1();
+  int x2 = Wire::x2();
+  int y1 = Wire::y1();
+  int y2 = Wire::y2();
+
   if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,6));
     p->drawLine(x1, y1, x2, y2);
@@ -131,6 +139,7 @@ void Wire::paint(ViewPainter *p) const
 // ----------------------------------------------------------------
 void Wire::setName(const QString& Name_, const QString& Value_, int delta_, int x_, int y_)
 {
+#if 0
   qDebug() << "Wirelabelparse?!" << Name_;
   if(Name_.isEmpty() && Value_.isEmpty()) {
     if(Label) delete Label;
@@ -146,6 +155,7 @@ void Wire::setName(const QString& Name_, const QString& Value_, int delta_, int 
     Label->setName(Name_); // ?!
     Label->setLabel(Name_);
   }
+#endif
 }
 
 // ----------------------------------------------------------------
@@ -153,6 +163,9 @@ void Wire::setName(const QString& Name_, const QString& Value_, int delta_, int 
 // save it to an ASCII file or to transport it via the clipboard.
 QString Wire::save()
 {
+  incomplete();
+  return "nuts";
+#if 0
   QString s  = "<"+QString::number(x1)+" "+QString::number(y1);
           s += " "+QString::number(x2)+" "+QString::number(y2);
   if(Label) {
@@ -163,6 +176,7 @@ QString Wire::save()
   }
   else { s += " \"\" 0 0 0 \"\">"; }
   return s;
+#endif
 }
 
 // ----------------------------------------------------------------
@@ -178,19 +192,19 @@ bool Wire::obsolete_load(const QString& _s)
 
   QString n;
   n  = s.section(' ',0,0);    // x1
-  x1 = n.toInt(&ok);
+  x1() = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',1,1);    // y1
-  y1 = n.toInt(&ok);
+  y1() = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // x2
-  x2 = n.toInt(&ok);
+  x2() = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',3,3);    // y2
-  y2 = n.toInt(&ok);
+  y2() = n.toInt(&ok);
   if(!ok) return false;
 
   n = s.section('"',1,1);
@@ -214,7 +228,7 @@ bool Wire::obsolete_load(const QString& _s)
 // ----------------------------------------------------------------
 QRectF Wire::boundingRect() const
 { itested();
-  return QRectF(x1-5, y1-5, x2-x1+10, y2-y1+10);
+  return QRectF(x1()-5, y1()-5, x2()-x1()+10, y2()-y1()+10);
 }
 // ----------------------------------------------------------------
 // // -> conductor.cpp.
@@ -229,7 +243,6 @@ unsigned Wire::netNumber() const
     return -1u;
   }
 }
-#endif
 // ----------------------------------------------------------------
 void Wire::setPortByIndex(unsigned idx, Node* n)
 {
@@ -254,6 +267,18 @@ Node* Wire::portValue(unsigned idx)
   auto n = prechecked_cast<Node*>(*a);
   assert(n || !*a);
   return n;
+}
+#endif
+std::list<Element*>::iterator Wire::connectionsBegin()
+{
+  assert(_node_hack.size()==2);
+  auto a=_node_hack.begin();
+  *a = _port0.value();
+  ++a;
+  *a = _port1.value();
+  trace2("wireconnections", _port0.value(), _port1.value());
+
+  return _node_hack.begin();
 }
 // ----------------------------------------------------------------
 // ----------------------------------------------------------------

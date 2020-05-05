@@ -93,6 +93,7 @@ void BJT::createSymbol()
 // -------------------------------------------------------
 QString BJT::netlist() const
 {
+#if 0
   QString s = "BJT:"+name();
 
   // output all node names
@@ -105,4 +106,5 @@ QString BJT::netlist() const
     s += " "+p2->name()+"=\""+p2->Value+"\"";
 
   return s + '\n';
+#endif
 }

@@ -281,6 +281,7 @@ QString LibComp::createType() const
 // -------------------------------------------------------
 QString LibComp::netlist() const
 {
+#if 0
   QString s = "Sub:"+Name;   // output as subcircuit
 
   // output all node names
@@ -295,11 +296,13 @@ QString LibComp::netlist() const
     s += " "+pp->Name+"=\""+pp->Value+"\"";
 
   return s + '\n';
+#endif
 }
 
 // -------------------------------------------------------
 QString LibComp::verilogCode(int)
 {
+#if 0
   QString s = "  Sub_" + createType() + " " + Name + " (";
 
   // output all node names
@@ -313,11 +316,13 @@ QString LibComp::verilogCode(int)
 
   s += ");\n";
   return s;
+#endif
 }
 
 // -------------------------------------------------------
 QString LibComp::vhdlCode(int)
 {
+#if 0
   QString s = "  " + Name + ": entity Sub_" + createType() + " port map (";
 
   // output all node names
@@ -331,4 +336,5 @@ QString LibComp::vhdlCode(int)
 
   s += ");\n";
   return s;
+#endif
 }

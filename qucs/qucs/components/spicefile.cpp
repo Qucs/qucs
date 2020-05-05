@@ -144,6 +144,7 @@ void SpiceFile::createSymbol()
 // ---------------------------------------------------
 QString SpiceFile::netlist() const
 {
+#if 0
 // HACK around qt3 bug
 	Q3PtrList<Property>* P=const_cast<Q3PtrList<Property>*>(&Props);
   if(P->at(1)->Value.isEmpty())
@@ -156,6 +157,7 @@ QString SpiceFile::netlist() const
   QString f = misc::properFileName(P->first()->Value);
   s += " Type=\""+misc::properName(f)+"\"\n";
   return s;
+#endif
 }
 
 // -------------------------------------------------------

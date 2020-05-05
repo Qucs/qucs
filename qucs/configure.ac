@@ -218,7 +218,7 @@ case $host_os in
   *linux* | *cygwin* | *mingw* | *msys* | *bsd* )
 
     dnl Set Clang
-    if test "$CXX -dM -E - < /dev/null | grep __clang__" ; then
+    if $CXX -dM -E - < /dev/null | grep __clang__ ; then
       CFLAGS="$CFLAGS -pipe"
       CXXFLAGS="$CXXFLAGS -pipe -Wno-deprecated-register"
       LDDFLAGS="$LDDFLAGS"
@@ -240,12 +240,12 @@ case $host_os in
     fi
 
     if test "$enable_qucs_gui_debug" = yes; then
-      CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
+      CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes" #???
       CXXFLAGS="$CXXFLAGS -W -Wall"
     fi
 
-    dnl Enable C++11 support
-    CXXFLAGS="$CXXFLAGS -std=c++0x"
+    dnl Select C++14
+    CXXFLAGS="$CXXFLAGS -std=c++14"
     PKG_CHECK_MODULES([QTest], [${qt_name}Test])
 
     PKG_CHECK_MODULES([QT], [${qt_name}Core ${qt_name}Gui ${qt_name}Script ${qt_name}Svg ${qt_name}Xml], [

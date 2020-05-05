@@ -272,6 +272,7 @@ void EKV26MOS::createSymbol()
 
 QString EKV26MOS::netlist() const
 {
+#if 0
   QString s = Model+":"+name();
 
   // output all node names
@@ -290,4 +291,5 @@ QString EKV26MOS::netlist() const
     s += " "+p2->name()+"=\""+p2->Value+"\"";
 
   return s + '\n';
+#endif
 }

@@ -18,14 +18,14 @@
 #include "schematic.h"
 #include "schematic_lang.h"
 #include "globals.h"
-#include "nodelist.h"
+#include "nodemap.h"
 #include "net.h"
 #include "trace.h"
 
 
 // getting here in CLI mode
 SchematicModel::SchematicModel()
-  	: Nodes(*this), _cc(*this), _doc_(nullptr)
+  	: Nodes(Nets), _doc_(nullptr)
 {
 	trace2("::SchematicModel", this, _doc_);
 }
@@ -33,8 +33,7 @@ SchematicModel::SchematicModel()
 // getting here in GUI mode
 SchematicModel::SchematicModel(Schematic* s)
 	: _doc_(s),
-	  Nodes(*this),
-	  _cc(*this)
+	  Nodes(Nets)
 {
 	trace2("::SchematicModel s", this, _doc_);
 	assert(!s); // DEBUG
@@ -49,9 +48,15 @@ void SchematicModel::clear()
 {
 	// memory leak?!
 	components().clear();
-	nodes().clear();
 	diagrams().clear();
-	wires().clear();
+	{ // clearWires
+		// careful. deleting a wire may create another wire.
+		while(!wires().isEmpty()){
+			erase(wires().first());
+		}
+	}
+
+	nodes().clear();
 	paintings().clear();
 	//SymbolPaints.clear(); ??
 }
@@ -90,6 +95,12 @@ private: // ModelInserter
 	PaintingList& symbolPaintings(){
 		return _dummy;
 	}
+
+private: // internal. Portstuff
+  unsigned portCount() const {unreachable(); return 0;}
+  QString const& portValue(unsigned) const{ unreachable(); return "ERROR"; }
+  void setPort(unsigned i, Node* n){ unreachable(); }
+  Port& port(unsigned){unreachable(); return *new Port(0,0);}
 
 private: // SchematicSymbol
 	SchematicModel const& schematicModel() const{
@@ -130,7 +141,7 @@ void SchematicModel::parse(DocumentStream& s, SchematicLanguage const* L)
 // these are required to move model methods over to SchematicModel
 // note that _doc->...() functions still involve pointer hacks
 ComponentList& SchematicModel::components()
-{ untested();
+{
 	return Components;
 }
 
@@ -144,8 +155,8 @@ void SchematicModel::pushBack(Element* what)
 		diagrams().append(d);
 	}else if(auto c=command(what)){ untested();
 		incomplete();
-	}else if(auto w=wire(what)){ untested();
-		trace4("pushback Wire", w->x1, w->y1, w->x2, w->y2);
+	}else if(auto w=wire(what)){
+		trace4("pushback Wire", w->x1__(), w->y1__(), w->x2__(), w->y2__());
 		simpleInsertWire(w);
 //		insertWire(w);?? wtf?
 	}else if(auto s=dynamic_cast<SchematicSymbol*>(what)){ untested();
@@ -160,7 +171,7 @@ void SchematicModel::pushBack(Element* what)
 #ifndef USE_SCROLLVIEW
   if(doc()){ untested();
 	  doc()->addToScene(what);
-  }else{ untested();
+  }else{
   }
 #endif
 } // pushBack
@@ -170,9 +181,8 @@ void SchematicModel::insertSymbolNodes(Symbol *c, bool noOptimize)
 {
 	// connect every node of the component to corresponding schematic node
 	for(unsigned i=0; i<c->portCount(); ++i){
-		auto& pp=c->portValue(i);
-		Node* n=insertNode(pp.cx()+c->cx, pp.cy()+c->cy, c);
-		c->setPort(i, n);
+
+		c->connectNode(i, nodes());
 	}
 
 	if(noOptimize)  return;
@@ -217,13 +227,8 @@ void SchematicModel::erase(Element* what)
 	}else if(auto d=diagram(what)){
 		diagrams().removeRef(d);
 	}else if(auto w=wire(what)){
-		Conductor* n0 = w->portValue(0);
-		Conductor* n1 = w->portValue(1);
-		Conductor* cw = w;
-		wires().removeRef(w);
 		disconnect(w);
-		_cc.deregisterVertex(cw);
-		_cc.postRemoveEdge(n1, n0);
+		wires().removeRef(w);
 	}else{
 		unreachable();
 	}
@@ -256,7 +261,7 @@ WireList& SchematicModel::wires()
 	return Wires;
 }
 
-NodeList& SchematicModel::nodes()
+NodeMap& SchematicModel::nodes()
 {
 	return Nodes;
 }
@@ -294,7 +299,7 @@ WireList const& SchematicModel::wires() const
 	return Wires;
 }
 
-NodeList const& SchematicModel::nodes() const
+NodeMap const& SchematicModel::nodes() const
 {
 	return Nodes;
 }
@@ -494,6 +499,7 @@ bool SchematicModel::loadDocument(QFile& /*BUG*/ file)
 // called from PushBack...
 void SchematicModel::simpleInsertComponent(Component *c)
 {
+#if 0
 	Node *pn;
 	// connect every node of component
 	for(auto pp : c->Ports){
@@ -509,30 +515,33 @@ void SchematicModel::simpleInsertComponent(Component *c)
 			//      pn->DType = pp->Type;
 		}
 
-		pp->Connection = pn;  // connect component node to schematic node
+		pp->connect(pn);  // connect component node to schematic node
 	}
 
+#endif
+	assert(c);
+
+	connect(c);
 	components().append(c);
 }
 
 // screw this.
 void SchematicModel::simpleInsertWire(Wire *pw)
-{ untested();
-  assert(pw->portValue(0) == nullptr);
-  assert(pw->portValue(1) == nullptr);
-
+{
   Conductor* c = pw;
-  _cc.registerVertex(c);
+  Nodes.registerVertex(c);
   Node *pn=nullptr;
-  pn = &nodes().at(pw->x1_(), pw->y1_());
+  // pn = &nodes().at(pw->x1_(), pw->y1_());
 
-  if(pw->x1_() == pw->x2_() && pw->y1_() == pw->y2_()) { untested();
+  if(pw->x1_() == pw->x2_() && pw->y1_() == pw->y2_()) {
+#if 0
     pn->Label = pw->Label;   // wire with length zero are just node labels
     if (pn->Label) { untested();
       pn->Label->Type = isNodeLabel;
       pn->Label->pOwner = pn;
     }else{ untested();
 	 }
+#endif
 
 	 incomplete();
 #if 0 // gaaah
@@ -542,11 +551,17 @@ void SchematicModel::simpleInsertWire(Wire *pw)
   }else{ untested();
   }
 
-  Node* p2 = &nodes().at(pw->x2_(), pw->y2_());
+#if 1
 
-  Conductor* c1 = pn;
-  Conductor* c2 = p2;
+  // possibly do all ports in single call?
+  connect(pw);
+//  Conductor* n0 = pw->connectNode(0, nodes());
+//  Conductor* n1 = pw->connectNode(1, nodes());
+
   Conductor* _w = pw;
+
+#else
+  Node* p2 = &nodes().at(pw->x2_(), pw->y2_());
 
   _cc.preAddEdge(_w, c1);
 
@@ -557,18 +572,23 @@ void SchematicModel::simpleInsertWire(Wire *pw)
 
   p2->connectionsAppend(pw);  // connect schematic node to component node
   pw->setPortByIndex(1, p2);
+#endif
 
   wires().append(pw);
 }
 
+// obsolete?
 void SchematicModel::detachFromNode(Element* what, Node* from)
 {
+	unreachable();
 	if(from->connectionsCount()==1){
+#if 0
 		if(from->Label){
 			incomplete();
 			delete from->Label;
 		}else{
 		}
+#endif
 
 		incomplete(); // need a proper nodemap
 		// nodes().removeRef(from);  // delete open nodes
@@ -582,27 +602,42 @@ void SchematicModel::detachFromNode(Element* what, Node* from)
 	}
 }
 
-// hmm, perhaps Elements need Ports
 void SchematicModel::disconnect(Symbol* c)
 {
 	// drop port connections
-	for(unsigned i=0; i<c->portCount(); ++i){
-		Node const* val = &(c->portValue(i));
-		Node* Connection = const_cast<Node*>(val); // ok, we are owner
+	for(unsigned i=0; i<c->portCount(); ++i) {
+		trace1("sm:ds", i);
+		Node* nn = c->disconnectNode(i, nodes());
+		assert(nn);
 
-		detachFromNode(c, Connection);
-		c->setPort(i, nullptr); // TODO: check in ~Symbol
+		if(!nn){
+			unreachable();
+		}else if(nn->connectionsCount()==0){
+			Conductor* cc = nn;
+//			nodes().erase(cc);
+		}else if(nn->connectionsCount()==2){ untested();
+			oneTwoWires(nn);  // two wires -> one wire
+		}else{
+		}
+	}
+	if(Conductor* cw = dynamic_cast<Wire*>(c)){
+		assert(c->portCount()==2); // for now.
+		Nodes.deregisterVertex(cw);
+	}else{ untested();
 	}
 }
 
-void SchematicModel::disconnect(Wire* c)
+void SchematicModel::connect(Symbol* c)
 {
-	for(unsigned i=0; i<2; ++i){
-		Node const* val = c->portValue(i);
-		Node* Connection = const_cast<Node*>(val); // ok, we are owner
+	if(Conductor* cw = dynamic_cast<Wire*>(c)){
+		Nodes.registerVertex(cw);
+		assert(2==c->portCount());
+	}else{
+	}
 
-		detachFromNode(c, Connection);
-		c->setPortByIndex(i, nullptr); // TODO: check in ~Element
+	for(unsigned i=0; i<c->portCount(); ++i){
+		c->connectNode(i, nodes());
+		assert(dynamic_cast<Symbol const*>(c)->port(i).connected());
 	}
 }
 
@@ -615,8 +650,8 @@ void SchematicModel::updateNetLabels() const
 		if(pc->type() == "GND") { // BUG, use rails with net names.
 			Port* n = pc->Ports.first();
 			assert(n);
-			assert(n->Connection);
-			Net* net = n->Connection->getNet();
+			assert(n->connected());
+			Net* net = n->value()->getNet();
 			assert(net);
 
 			if (net->label().size()){
@@ -639,17 +674,14 @@ void SchematicModel::merge(SchematicModel& src)
   src.components().clear();
 }
 
-Net* SchematicModel::new_net()
-{ untested();
+#if 0
+Net* SchematicModel::newNet()
+{
 	return Nets.newNet();
 }
-void SchematicModel::del_net(Net* n)
-{ untested();
+void SchematicModel::delNet(Net* n)
+{
 	Nets.delNet(n);
 }
+#endif
 
-size_t& graph_traits<SchematicModel>::cc_size(Net* n, SchematicModel const&)
-{
-	assert(n);
-	return n->size_hack();
-}

@@ -105,6 +105,7 @@ QString DIODE_SPICE::netlist()
 
 QString DIODE_SPICE::spice_netlist(bool)
 {
+#if 0
     QString s = ""; // TODO spicecompat::check_refdes(Name,SpiceModel);
     foreach(Port *p1, Ports) {
         QString nam = p1->Connection->name();
@@ -125,6 +126,7 @@ QString DIODE_SPICE::spice_netlist(bool)
     if(  D_Line_5.length() > 0 )   s += QString("%1\n").arg(D_Line_5);
  
     return s;
+#endif
 }
 
 } // namespace

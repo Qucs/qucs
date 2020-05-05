@@ -25,23 +25,19 @@
 #include "schematic_scene.h"
 #include "schematic_symbol.h"
 #include "qucsdoc.h"
-#include "nodelist.h"
+#include "nodemap.h"
 #include "netlist.h"
 
-template<class G>
-struct graph_traits{};
-
-#include "dynamic_cc.h"
 
 
-
+class Electrical;
 class QPlainTextEdit; //??!
 // class QFileInfo;
 
 // TODO: refactor here
 class WireList : public Q3PtrList<Wire> {
 };
-class NodeList;
+class NodeMap;
 // TODO: refactor here
 class DiagramList : public Q3PtrList<Diagram> {
 };
@@ -61,40 +57,6 @@ public:
 class DocumentLanguage;
 class SchematicLanguage;
 
-// describe the conductor graph.
-// Conductors are the vertices.
-// a connected component in this graph is a Net
-template<>
-struct graph_traits<SchematicModel>{
-	typedef Conductor* vertex_descriptor;
-	typedef AdjConductorIterator adjacency_iterator;
-	typedef Net* cc_descriptor;
-
-	static std::pair<AdjConductorIterator,AdjConductorIterator>
-	adjacent_vertices(vertex_descriptor t, SchematicModel const&) {
-		auto n = t->neighbours();
-		return std::make_pair(n.begin(), n.end());
-	}
-
-	// connected components parameters
-	static void set_cc(Conductor const* t, Net* n) {
-		trace2("set_ccid", t, n);
-		t->setNet(n);
-	}
-	static cc_descriptor get_cc(vertex_descriptor t) {
-		return t->getNet();
-	}
-	static Net* new_cc(SchematicModel& s);
-	static void del_cc(Net*, SchematicModel& s);
-	static size_t& cc_size(Net* n, SchematicModel const&);
-	// needed for searching
-	static void visit(Conductor* t, unsigned level) {
-		t->visit(level);
-	}
-	static bool visited(Conductor const* t, unsigned level) {
-		return t->visited(level);
-	}
-};
 
 // Base class for all schematic models.
 // currently containging chunks/cruft from legacy Schematic implementation
@@ -157,9 +119,9 @@ public:
 	// bool loadDiagrams(QTextStream*);
 	bool loadWires(QTextStream*);
 
-	// BUG. Element?
+public: // not sure. leaves unconnected objects in the main container...
+	void connect(Symbol* c);
 	void disconnect(Symbol* c);
-	void disconnect(Wire* c);
 
 public: // container
 	void clear();
@@ -171,15 +133,8 @@ public: // container
 private: // used in erase?
 	void       deleteComp(Component*c);
 
-public: // net access
-	Net* new_net();
-	void del_net(Net*);
-// 	QString const& netLabel(unsigned n) const{
-// 		assert(n<netLabels.size());
-// 		return netLabels[n];
-// 	}
-
 public: // node stuff. why public?
+	size_t nodeCount(){ return nodes().size(); }
 	Node* insertNode(int x, int y, Element* owner);
 	void insertSymbolNodes(Symbol *c, bool noOptimize);
 	bool  oneTwoWires(Node* n);
@@ -202,13 +157,13 @@ public: // obsolete.
 	static void saveComponent(QTextStream& s, Component const* c);
 private: // TODO: actually store here.
 	WireList& wires();
-	NodeList& nodes();
+	NodeMap& nodes();
 	DiagramList& diagrams();
 	PaintingList& paintings();
 	ComponentList& components();
 public:
 	WireList const& wires() const;
-	NodeList const& nodes() const;
+	NodeMap const& nodes() const;
 	DiagramList const& diagrams() const;
 	PaintingList const& paintings() const;
 	ComponentList const& components() const;
@@ -225,7 +180,7 @@ private:
 	ComponentList Components;
 	PaintingList Paintings;
 	NetList Nets;
-	NodeList Nodes;
+	NodeMap Nodes;
 	DiagramList Diagrams;
 	WireList Wires;
 //	SchematicSymbol* _symbol;
@@ -236,21 +191,9 @@ private:
 private:
 	Schematic* _doc_;
 
-private:
-	ConnectedComponents<SchematicModel> _cc;
-
 public: // for now.
 	friend class Schematic;
-	friend class NodeList;
+	friend class NodeMap;
 }; // schematicmodel
-
-inline Net* graph_traits<SchematicModel>::new_cc(SchematicModel& s)
-{
-	return s.new_net();
-}
-inline void graph_traits<SchematicModel>::del_cc(Net* n, SchematicModel& s)
-{
-	return s.del_net(n);
-}
 
 #endif

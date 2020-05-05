@@ -1097,6 +1097,7 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
     if(pw->y1_() < ymin) ymin = pw->y1_();
     if(pw->y2_() > ymax) ymax = pw->y2_();
 
+#if 0
     pl = pw->Label;
     if(pl) {     // check position of wire label
         pl->getLabelBounding(x1,y1,x2,y2);
@@ -1105,8 +1106,10 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
         if(y1 < ymin) ymin = y1;
         if(y2 > ymax) ymax = y2;
     }
+#endif
   }
 
+#if 0
   // find boundings of all node labels
   for(auto pn : nodes()){
     pl = pn->Label;
@@ -1118,6 +1121,7 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
         if(y2 > ymax) ymax = y2;
     }
   }
+#endif
 
   // find boundings of all diagrams
   for(auto pd : diagrams()) {
@@ -1201,6 +1205,7 @@ bool Schematic::rotateElements()
         x2 = pw->x2_();
         pw->x2__() = pw->y2_() - y1 + x1;
         pw->y2__() = x1 - x2 + y1;
+#if 0
         pl = pw->Label;
         if(pl) {
           x2 = pl->cx_();
@@ -1210,6 +1215,7 @@ bool Schematic::rotateElements()
             pl->Type = isVWireLabel;
           else pl->Type = isHWireLabel;
         }
+#endif
         insertWire(pw);
         break;
 
@@ -1302,11 +1308,13 @@ bool Schematic::mirrorXComponents()
 	pw = (Wire*)pe;
 	pw->y1__() = y1 - pw->y1_();
 	pw->y2__() = y1 - pw->y2_();
+#if 0
 	pl = pw->Label;
 	if(pl){
           pl->cy__() = y1 - pl->cy_();
         }else{
         }
+#endif
 	break;
       case isHWireLabel:
       case isVWireLabel:
@@ -1379,11 +1387,13 @@ bool Schematic::mirrorYComponents()
         pw = (Wire*)pe;
         pw->x1__() = x1 - pw->x1_();
         pw->x2__() = x1 - pw->x2_();
+#if 0
         pl = pw->Label;
         if(pl) {
           pl->cx__() = x1 - pl->cx_();
         }else{
         }
+#endif
         insertWire(pw);
         break;
       case isHWireLabel:
@@ -1881,13 +1891,17 @@ bool Schematic::elementsOnGrid()
     if(auto pc=component(elt)){
 
       // rescue non-selected node labels
-      foreach(Port *pp, pc->Ports)
-        if(pp->Connection->Label)
+#if 0
+      foreach(Port *pp, pc->Ports){
+        if(pp->Connection->Label){
           if(pp->Connection->connectionsCount() < 2) {
             LabelCache.append(pp->Connection->Label);
             pp->Connection->Label->pOwner = 0;
             pp->Connection->Label = 0;
           }
+	}
+      }
+#endif
 
       x = pc->cx_();
       y = pc->cy_();
@@ -2637,7 +2651,7 @@ void SchematicModel::removeNode(Node const* x)
   //scene()->removeItem(x);
 #else
 #endif
-  nodes().removeRef((Node*)x);
+  nodes().erase((Node*)x);
 }
 
 QList<ElementGraphics*> Schematic::selectedItems()

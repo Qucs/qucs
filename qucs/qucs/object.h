@@ -44,7 +44,7 @@ protected:
 public:
 	virtual ~Object(){}
 
-	QString const& label() const{untested(); return Label;}
+	QString const& label() const{ return Label;}
 	void setLabel(QString const& l) {Label = l;}
 	void setLabel(std::string const& l) {Label = QString::fromStdString(l);}
 	void setLabel(char const* l) {Label = QString(l);}

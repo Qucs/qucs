@@ -68,19 +68,18 @@ public: // Element interface, private?!
 	  return E->newOne();
   }
 
-private: // symbol interface
-  virtual Port const* port(unsigned i) const { return Ports[i]; }
-  //virtual Port const* portValue(unsigned i) const { return Ports[i]; } ... ?
   virtual unsigned portCount() const{ return Ports.count(); }
-  virtual Node const& portValue(unsigned i) const{
+private: // symbol interface
+  Port& port(unsigned i) {
 	  assert(i<unsigned(Ports.count()));
-	  assert(Ports.at(i)->Connection);
-	  return *Ports.at(i)->Connection;
+	  return *Ports[i]; 
   }
-  void setPort(unsigned i, Node* n){
-	  assert(i<unsigned(Ports.count()));
-	  Ports[i]->Connection = n;
-  }
+  //virtual Port const* portValue(unsigned i) const { return Ports[i]; } ... ?
+
+//  void setPort(unsigned i, Node* n){
+//	  assert(i<unsigned(Ports.count()));
+//	  Ports[i]->connect(n);
+//  }
 
   virtual unsigned paramCount() const;
   virtual std::string paramValue(unsigned i) const;
@@ -133,6 +132,11 @@ public:
   int  isActive; // should it be used in simulation or not ?
   mutable /*BUGBUGBUG*/ int  tx, ty;   // upper left corner of text (position)
   bool showName;
+
+public:
+  int cx() const{return Element::cx;}
+  int cy() const{return Element::cy;}
+  std::pair<int, int> center() const{return std::make_pair(Element::cx, Element::cy);}
 
 public: // BUG
   virtual std::string type() const { return Model.toStdString(); }
@@ -190,15 +194,6 @@ protected:
 private: // (hopefully) obsolete callbacks
   void recreateCallback();
 
-public: // set protected variables. don't use
-  void obsolete_set(std::string name, int value){
-	  // qDebug() << "obsolete_set" << name.c_str() << value;
-	  if(name=="cx"){
-		  cx=value;
-	  }else if(name=="cy"){
-		  cy=value;
-	  }
-  }
 }; // Component
 
 

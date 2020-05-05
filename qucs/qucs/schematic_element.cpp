@@ -66,10 +66,12 @@ Node* SchematicModel::insertNode(int x, int y, Element *e)
 // ---------------------------------------------------
 Node* Schematic::selectedNode(int x, int y)
 {
+#if 0
     for(auto pn : nodes()){
         if(pn->getSelected(x, y))
             return pn;
     }
+#endif
     return nullptr;
 }
 
@@ -85,6 +87,7 @@ Node* Schematic::selectedNode(int x, int y)
 // If 2 is returned, the wire line ended.
 int SchematicModel::insertWireNode1(Wire *w)
 {
+#if 0 // is this really needed?
     Node *pn = nodes().find_at(w->x1_(), w->y1_());
 
     if(pn != 0) {
@@ -112,10 +115,12 @@ int SchematicModel::insertWireNode1(Wire *w)
                     {
                         w->y1__() = ptr2->y1_();
                         w->setPortByIndex(0, ptr2->portValue(0));
+#if 0
                         if(ptr2->Label) {
                             w->Label = ptr2->Label;
                             w->Label->pOwner = w;
                         }
+#endif
                         ptr2->portValue(0)->connectionsRemove(ptr2);  // two -> one wire
                         ptr2->portValue(0)->connectionsAppend(w);
 
@@ -154,11 +159,13 @@ int SchematicModel::insertWireNode1(Wire *w)
                     {
                         w->x1__() = ptr2->x1_();
                         w->setPortByIndex(0, ptr2->portValue(0));
-                        if(ptr2->Label)
-                        {
+
+#if 0
+                        if(ptr2->Label) {
                             w->Label = ptr2->Label;
                             w->Label->pOwner = w;
                         }
+#endif
                         ptr2->portValue(0)->connectionsRemove(ptr2); // two -> one wire
                         ptr2->portValue(0)->connectionsAppend(w);
 
@@ -192,6 +199,7 @@ int SchematicModel::insertWireNode1(Wire *w)
     pn->connectionsAppend(w);  // connect schematic node to the new wire
     w->setPortByIndex(0, pn);
     return 1;
+#endif
 }
 
 // ---------------------------------------------------
@@ -200,11 +208,11 @@ bool SchematicModel::connectHWires1(Wire *w)
 {
     Wire *pw;
     // only does port1 (why?)
-    Node *n = w->portValue(0);
 
     incomplete();
     // what does it do??
 #if 0
+    Node *n = w->portValue(0);
     pw = (Wire*)n->Connections.last();  // last connection is the new wire itself
     for(pw = (Wire*)n->Connections.prev(); pw!=0; pw = (Wire*)n->Connections.prev())
     {
@@ -267,9 +275,9 @@ bool SchematicModel::connectHWires1(Wire *w)
 bool SchematicModel::connectVWires1(Wire *w)
 {
     Wire *pw;
-    Node *n = w->portValue(0);
 
 #if 0 // see above.
+    Node *n = w->portValue(0);
     pw = (Wire*)n->Connections.last();  // last connection is the new wire itself
     for(pw = (Wire*)n->Connections.prev(); pw!=0; pw = (Wire*)n->Connections.prev())
     {
@@ -339,16 +347,15 @@ bool SchematicModel::connectVWires1(Wire *w)
 //  bug. this is the same as insertWireNode1, but with ports swapped.
 int SchematicModel::insertWireNode2(Wire *w)
 {
+#if 0
     Node *pn = nodes().find_at( w->x2_(),  w->x2_());
 
-    if(pn != 0)
-    {
+    if(pn != 0) {
         pn->connectionsAppend(w);
         w->setPortByIndex(1, pn);
         return 2;   // node is not new
+    }else{
     }
-
-
 
     // check if the new node lies upon an existing wire
     for(auto ptr2 : wires()){
@@ -362,13 +369,13 @@ int SchematicModel::insertWireNode2(Wire *w)
             {
                 // one part of the wire lies within an existing wire
                 // the other part not
-                if(ptr2->portValue(0)->connectionsCount() == 1)
-                {
-                    if(ptr2->Label)
-                    {
+                if(ptr2->portValue(0)->connectionsCount() == 1) {
+#if 0
+                    if(ptr2->Label) {
                         w->Label = ptr2->Label;
                         w->Label->pOwner = w;
                     }
+#endif
                     w->y2__() = ptr2->y2_();
                     w->setPortByIndex(1, ptr2->portValue(1));
                     ptr2->portValue(1)->connectionsRemove(ptr2);  // two -> one wire
@@ -396,13 +403,14 @@ int SchematicModel::insertWireNode2(Wire *w)
             {
                 // one part of the wire lies within an existing wire
                 // the other part not
-                if(ptr2->portValue(0)->connectionsCount() == 1)
-                {
-                    if(ptr2->Label)
-                    {
+                if(ptr2->portValue(0)->connectionsCount() == 1) {
+
+#if 0
+                    if(ptr2->Label) {
                         w->Label = ptr2->Label;
                         w->Label->pOwner = w;
                     }
+#endif
                     w->x2__() = ptr2->x2_();
                     w->setPortByIndex(1, ptr2->portValue(1));
                     ptr2->portValue(1)->connectionsRemove(ptr2);  // two -> one wire
@@ -435,6 +443,7 @@ int SchematicModel::insertWireNode2(Wire *w)
     pn->connectionsAppend(w);  // connect schematic node to the new wire
     w->setPortByIndex(1, pn);
     return 1;
+#endif
 }
 
 // ---------------------------------------------------
@@ -442,9 +451,9 @@ int SchematicModel::insertWireNode2(Wire *w)
 bool SchematicModel::connectHWires2(Wire *w)
 {
     Wire *pw;
-    Node *n = w->portValue(1);
 
 #if 0 // see above.
+    Node *n = w->portValue(1);
     pw = (Wire*)n->Connections.last(); // last connection is the new wire itself
     for(pw = (Wire*)n->Connections.prev(); pw!=0; pw = (Wire*)n->Connections.prev())
     {
@@ -496,9 +505,9 @@ bool SchematicModel::connectHWires2(Wire *w)
 bool SchematicModel::connectVWires2(Wire *w)
 {
     Wire *pw;
-    Node *n = w->portValue(1);
 
 #if 0 // see above
+    Node *n = w->portValue(1);
     pw = (Wire*)n->Connections.last(); // last connection is the new wire itself
     for(pw = (Wire*)n->Connections.prev(); pw!=0; pw = (Wire*)n->Connections.prev())
     {
@@ -714,9 +723,11 @@ int SchematicModel::insertWire(Wire *w)
 // other place.
 //
 // ---------------------------------------------------
-// Follows a wire line and selects it.
+// Follow a wire line and selects it.
 void Schematic::selectWireLine(ElementGraphics *g, Node *pn, bool ctrl)
 {
+incomplete();
+#if 0
     Element* pe=element(g);
     Node *pn_1st = pn;
     while(pn->connectionsCount() == 2)
@@ -735,6 +746,7 @@ void Schematic::selectWireLine(ElementGraphics *g, Node *pn, bool ctrl)
         else  pn = ((Wire*)pe)->portValue(0);
         if(pn == pn_1st) break;  // avoid endless loop in wire loops
     }
+#endif
 }
 
 // ---------------------------------------------------
@@ -750,8 +762,13 @@ Wire* Schematic::selectedWire(int x, int y)
 
 // ---------------------------------------------------
 // Splits the wire "*pw" into two pieces by the node "*pn".
+//
+// why return Wire*??
+// BUG Node* Wire::splitWire(x, y, NodeList&)
 Wire* SchematicModel::splitWire(Wire *pw, Node *pn)
 {
+    incomplete();
+#if 0
     Wire *newWire = new Wire(pn->cx_(), pn->cy_(), pw->x2_(), pw->y2_(), pn, pw->portValue(1));
     // newWire->setSelected(pw->isSelected());
 
@@ -774,6 +791,7 @@ Wire* SchematicModel::splitWire(Wire *pw, Node *pn)
         }
 
     return newWire;
+#endif
 }
 
 // ---------------------------------------------------
@@ -791,12 +809,14 @@ bool SchematicModel::oneTwoWires(Node *n)
     }else if(!e2){
     }else{
             if(e1->isHorizontal() == e2->isHorizontal()) {
-                if(e1->x1_() == e2->x2_()) if(e1->y1_() == e2->y2_())
-                    {
+                if(e1->x1_() == e2->x2_()) if(e1->y1_() == e2->y2_()){
                         e3 = e1;
                         e1 = e2;
                         e2 = e3;    // e1 must have lesser coordinates
-                    }
+		}
+
+#if 0
+		incomplete();
                 if(e2->Label)     // take over the node name label ?
                 {
                     e1->Label = e2->Label;
@@ -811,16 +831,18 @@ bool SchematicModel::oneTwoWires(Node *n)
                     else
                         e1->Label->Type = isVWireLabel;
                 }
+#endif
 
-                e1->x2__() = e2->x2_();
-                e1->y2__() = e2->y2_();
-                e1->setPortByIndex(1, e2->portValue(1));
-		incomplete();
+		e1->disconnectNode(1, nodes());
+                e1->setPos1( e2->x2_(), e2->y2_() );
+		e1->connectNode(1, nodes());
+
 		// model->remove(n); // or so.
                 // nodes().removeRef(n);    // delete node (is auto delete)
-                e1->portValue(1)->connectionsRemove(e2);
-                e1->portValue(1)->connectionsAppend(e1);
-                wires().removeRef(e2);
+                // e1->portValue(1)->connectionsRemove(e2);
+                // e1->portValue(1)->connectionsAppend(e1);
+                // wires().removeRef(e2);
+		erase(e2);
                 return true;
             }
     }
@@ -831,6 +853,7 @@ bool SchematicModel::oneTwoWires(Node *n)
 // Deletes the wire 'w'.
 void SchematicModel::deleteWire(Wire *w)
 {
+#if 0 // why?!
     if(w->portValue(0)->connectionsCount() == 1) {
 //        if(w->portValue(0)->Label) delete w->portValue(0)->Label;
          incomplete();
@@ -854,11 +877,13 @@ void SchematicModel::deleteWire(Wire *w)
             oneTwoWires(w->portValue(1));  // two wires -> one wire
     }
 
-    if(w->Label)
-    {
+#if 0
+    if(w->Label) {
         delete w->Label;
         w->Label = 0;
     }
+#endif
+#endif
 }
 
 // ---------------------------------------------------
@@ -1710,6 +1735,7 @@ void Schematic::selectMarkers()
 // use WireList?! SchematicModel?
 void Schematic::newMovingWires(QList<Element*> *p, Node *pn, int pos)
 {
+#if 0
     Element *pe;
 
     if(pn->hasState(8))  // Were new wires already inserted ?
@@ -1782,6 +1808,7 @@ void Schematic::newMovingWires(QList<Element*> *p, Node *pn, int pos)
         invMask ^= 3;
         // .................................................
         // create new wire ?
+#if 0 // the logic is entirely screwed.
         if(pw2 == 0)
         {
             if(pw->portValue(0) != (Node*)(uintptr_t)mask)
@@ -1792,6 +1819,7 @@ void Schematic::newMovingWires(QList<Element*> *p, Node *pn, int pos)
                           new Wire(pw->x1_(), pw->y1_(), pw->x1_(), pw->y1_(), (Node*)(uintptr_t)mask, (Node*)(uintptr_t)invMask));
             return;
         }
+#endif
 
 
         // .................................................
@@ -1818,10 +1846,13 @@ void Schematic::newMovingWires(QList<Element*> *p, Node *pn, int pos)
         return;
     }
 
+#if 0 // does not make sense.
     // only x2 moving
     p->insert(pos, new Wire(pn->cx_(), pn->cy_(), pn->cx_(), pn->cy_(), (Node*)0, (Node*)1));
     // x1, x2, y2 moving
     p->insert(pos, new Wire(pn->cx_(), pn->cy_(), pn->cx_(), pn->cy_(), (Node*)1, (Node*)3));
+#endif
+#endif
 }
 
 #ifndef USE_SCROLLVIEW
@@ -2872,8 +2903,11 @@ void Schematic::insertComponent(Component *c)
 } // insertComponent
 
 // ---------------------------------------------------
+// this is possibly obsolete. SchematicScene does it,
 void Schematic::activateCompsWithinRect(int x1, int y1, int x2, int y2)
 {
+    // CHECK: what is this used for?!
+#if 0
     bool changed = false;
     int  cx1, cy1, cx2, cy2, a;
     // exchange rectangle coordinates to obtain x1 < x2 and y1 < y2
@@ -2896,7 +2930,8 @@ void Schematic::activateCompsWithinRect(int x1, int y1, int x2, int y2)
                         if(pc->Ports.count() > 1)
                         {
                             if(a < 0)  a = 2;
-                            pc->isActive = a;    // change "active status"
+                            pc->isActive = a;    // change "active status" BUG
+                           // pc->activate();
                         }
                         else
                         {
@@ -2905,7 +2940,8 @@ void Schematic::activateCompsWithinRect(int x1, int y1, int x2, int y2)
                             if(a == COMP_IS_ACTIVE)  // only for active (not shorten)
                                 if(pc->obsolete_model_hack() == "GND"){
 				  // if existing, delete label on wire line
-                                    oneLabel(pc->Ports.first()->Connection);
+                                    oneLabel(pc->Ports.first()->value());
+				}else{
 				}
                         }
                         changed = true;
@@ -2913,6 +2949,7 @@ void Schematic::activateCompsWithinRect(int x1, int y1, int x2, int y2)
     }
 
     if(changed)  setChanged(true, true);
+#endif
 }
 
 // ---------------------------------------------------
@@ -2937,7 +2974,8 @@ bool Schematic::activateSpecifiedComponent(int x, int y)
                             if(a == COMP_IS_ACTIVE)  // only for active (not shorten)
                                 if(pc->obsolete_model_hack() == "GND"){
 				  // if existing, delete label on wire line
-                                    oneLabel(pc->Ports.first()->Connection);
+				  incomplete(); // labels are simpler now.
+                                  //  oneLabel(pc->Ports.first()->Connection);
 				}
                         }
                         setChanged(true, true);
@@ -2953,6 +2991,7 @@ bool Schematic::activateSelectedComponents()
     int a;
     bool sel = false;
     for(auto x : selectedItems()) {
+	// x.activate(); // that should do it.
         if(auto pc=component(x)) {
             a = pc->isActive - 1;
 
@@ -2965,11 +3004,13 @@ bool Schematic::activateSelectedComponents()
             {
                 a &= 1;
                 pc->isActive = a;    // change "active status"
+#if 0 // does not make any sense
                 if(a == COMP_IS_ACTIVE)  // only for active (not shorten)
                     if(pc->obsolete_model_hack() == "GND"){
 		      // if existing, delete label on wire line
-                        oneLabel(pc->Ports.first()->Connection);
+                        oneLabel(pc->Ports.first()->value());
 		    }
+#endif
             }
             sel = true;
         }
@@ -2983,25 +3024,27 @@ bool Schematic::activateSelectedComponents()
 // Sets the component ports anew. Used after rotate, mirror etc.
 void Schematic::setCompPorts(Component *pc)
 {
+    incomplete();
+#if 0
+    Symbol* sym=pc;
     WireLabel *pl;
     Q3PtrList<WireLabel> LabelCache;
 
-    foreach(Port *pp, pc->Ports)
-    {
-        pp->Connection->connectionsRemove((Element*)pc);// delete connections
-        switch(pp->Connection->connectionsCount()) {
+    foreach(Port *pp, pc->Ports) {
+        pp->value()->connectionsRemove(pc);
+        switch(pp->value()->connectionsCount()) {
         case 0:
-            pl = pp->Connection->Label;
-            if(pl)
-            {
+            pl = pp->value()->Label; // a node can have a Label... why is it not just a "connection"?!
+            if(pl) {
                 LabelCache.append(pl);
                 pl->cx__() = pp->x + pc->cx_();
                 pl->cx__() = pp->y + pc->cx_();
-            }
-            DocModel.removeNode(pp->Connection);
+            }else{
+	    }
+            DocModel.removeNode(pp->value()); // erase?!
             break;
         case 2:
-            oneTwoWires(pp->Connection); // try to connect two wires to one
+            oneTwoWires(pp->value()); // try to merge two wires to one
         default:
             ;
         }
@@ -3009,11 +3052,19 @@ void Schematic::setCompPorts(Component *pc)
 
     // Re-connect component node to schematic node. This must be done completely
     // after the first loop in order to avoid problems with node labels.
-    foreach(Port *pp, pc->Ports)
-        pp->Connection = insertNode(pp->x+pc->cx_(), pp->y+pc->cx_(), pc);
+    for(unsigned i=0; i<sym->portCount(); ++i){
+	auto pp=sym->port(i);
 
-    for(pl = LabelCache.first(); pl != 0; pl = LabelCache.next())
+	// BUG: duplicate connection routines.
+        Node* nn = insertNode(pp->x+pc->cx_(), pp->y+pc->cx_(), pc);
+        sym->setPort(i, nn);
+    }
+
+    for(pl = LabelCache.first(); pl != 0; pl = LabelCache.next()){
+	incomplete();
         insertNodeLabel(pl);
+    }
+#endif
 }
 
 // ---------------------------------------------------
@@ -3255,6 +3306,7 @@ void Schematic::oneLabel(Node *n1)
 // ---------------------------------------------------
 int Schematic::placeNodeLabel(WireLabel *pl)
 {
+#if 0
     Node *pn=nullptr;
     int x = pl->cx_();
     int y = pl->cx_();
@@ -3286,6 +3338,7 @@ int Schematic::placeNodeLabel(WireLabel *pl)
     pn->Label = pl;   // insert node label
     pl->Type = isNodeLabel;
     pl->pOwner = pn;
+#endif
     return 0;
 }
 
@@ -3342,6 +3395,8 @@ Element* Schematic::getWireLabel(Node *pn_)
 // Inserts a node label.
 void Schematic::insertNodeLabel(WireLabel *pl)
 {
+#if 0 // hopefully obsolete.
+
     if(placeNodeLabel(pl) != -1)
         return;
 
@@ -3363,6 +3418,7 @@ void Schematic::insertNodeLabel(WireLabel *pl)
 	pl->Type  = isNodeLabel;
 	pl->pOwner = pn;
     }
+#endif
 }
 
 // ---------------------------------------------------

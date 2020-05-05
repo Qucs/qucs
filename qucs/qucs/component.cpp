@@ -61,7 +61,8 @@ Component::Component(Component const& p)
   }
 
   for(auto i : p.Ports){
-	Ports.append(new Port(*i));
+    // how does this make any sense??
+	// Ports.append(new Port(*i));
   }
 
   setType(p.type()); // hmmm
@@ -80,8 +81,8 @@ Component::Component()
   isActive = COMP_IS_ACTIVE;
   showName = true;
 
-  cx = 0;
-  cy = 0;
+  Element::cx = 0;
+  Element::cy = 0;
   tx = 0;
   ty = 0;
 
@@ -91,10 +92,10 @@ Component::Component()
 // -------------------------------------------------------
 void Component::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
-  _x1 = x1+cx;
-  _y1 = y1+cy;
-  _x2 = x2+cx;
-  _y2 = y2+cy;
+  _x1 = x1+cx();
+  _y1 = y1+cy();
+  _x2 = x2+cx();
+  _y2 = y2+cy();
 }
 
 // -------------------------------------------------------
@@ -126,47 +127,47 @@ int Component::textSize(int& _dx, int& _dy)
 // Boundings including the component text.
 void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2, float Corr)
 {
-  _x1 = x1+cx;
-  _y1 = y1+cy;
-  _x2 = x2+cx;
-  _y2 = y2+cy;
+  _x1 = x1+cx();
+  _y1 = y1+cy();
+  _x2 = x2+cx();
+  _y2 = y2+cy();
 
   // text boundings
-  if(tx < x1) _x1 = tx+cx;
-  if(ty < y1) _y1 = ty+cy;
+  if(tx < x1) _x1 = tx+cx();
+  if(ty < y1) _y1 = ty+cy();
 
   int dx, dy, ny;
   ny = textSize(dx, dy);
   dy = int(float(ny) / Corr);  // correction for unproportional font scaling
 
-  if((tx+dx) > x2) _x2 = tx+dx+cx;
-  if((ty+dy) > y2) _y2 = ty+dy+cy;
+  if((tx+dx) > x2) _x2 = tx+dx+cx();
+  if((ty+dy) > y2) _y2 = ty+dy+cy();
 }
 
 // -------------------------------------------------------
 void Component::setCenter(int x, int y, bool relative)
 {
   if(relative) {
-    cx += x;
-    cy += y;
+    Element::cx += x;
+    Element::cy += y;
   } else {
-    cx = x;
-    cy = y;
+    Element::cx = x;
+    Element::cy = y;
   }
 }
 
 // -------------------------------------------------------
 void Component::getCenter(int& x, int& y)
 {
-  x = cx;
-  y = cy;
+  x = cx();
+  y = cy();
 }
 
 // -------------------------------------------------------
 int Component::getTextSelected(int x_, int y_, float Corr)
 {
-  x_ -= cx;
-  y_ -= cy;
+  x_ -= cx();
+  y_ -= cy();
   if(x_ < tx) return -1;
   if(y_ < ty) return -1;
 
@@ -199,8 +200,8 @@ int Component::getTextSelected(int x_, int y_, float Corr)
 // -------------------------------------------------------
 bool Component::getSelected(int x_, int y_)
 {
-  x_ -= cx;
-  y_ -= cy;
+  x_ -= cx();
+  y_ -= cy();
   if(x_ >= x1) if(x_ <= x2) if(y_ >= y1) if(y_ <= y2)
     return true;
 
@@ -211,6 +212,8 @@ bool Component::getSelected(int x_, int y_)
 void Component::paint(ViewPainter *p) const
 {
   int x, y;
+  int cx=cx_();
+  int cy=cy_();
 //  int a, b, xb, yb;
   Element::paint(p);
   QFont f = p->Painter->font();   // save current font
@@ -220,6 +223,9 @@ void Component::paint(ViewPainter *p) const
   }else{
     // normal components go here
     assert(!Model.size() || Model.at(0) != '.');
+
+    int cx=cx_();
+    int cy=cy_();
 
     // paint all lines
     foreach(Line *p1, Lines) {
@@ -319,6 +325,9 @@ void Component::paint(ViewPainter *p) const
 void Component::paintScheme(Schematic *p) const
 {
   // qDebug() << "paintScheme" << Model;
+  int cx=cx_();
+  int cy=cy_();
+
   if(dynamic_cast<Command const*>(this)) { // FIXME: separate Commands from Components
     int a, b, xb, yb;
     QFont newFont = p->font();
@@ -358,8 +367,9 @@ void Component::paintScheme(Schematic *p) const
     p->PostPaintEvent(_Line,cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
 
   // paint all ports
-  foreach(Port *p2, Ports)
-    if(p2->avail) p->PostPaintEvent(_Ellipse,cx+p2->x-4, cy+p2->y-4, 8, 8);
+  foreach(Port *p2, Ports){
+    if(p2->avail) p->PostPaintEvent(_Ellipse,cx+p2->x_()-4, cy+p2->y_()-4, 8, 8);
+  }
 
   foreach(Arc *p3, Arcs)   // paint all arcs
     p->PostPaintEvent(_Arc,cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
@@ -406,9 +416,9 @@ void Component::rotate()
 
   // rotate all ports
   foreach(Port *p2, Ports) {
-    tmp = -p2->x;
-    p2->x = p2->y;
-    p2->y = tmp;
+    // p2->rotate();
+    tmp = -p2->x_();
+    p2->setPosition(p2->y_(), tmp);
   }
 
   // rotate all arcs
@@ -488,6 +498,7 @@ void Component::rotate()
 
 // -------------------------------------------------------
 // Mirrors the component about the x-axis.
+// BUG? mirrors the Y axis.
 void Component::mirrorX()
 {
   // Port count only available after recreate, createSymbol
@@ -501,8 +512,9 @@ void Component::mirrorX()
   }
 
   // mirror all ports
-  foreach(Port *p2, Ports)
-    p2->y = -p2->y;
+  foreach(Port *p2, Ports){
+    p2->setPosition(p2->x_(), -p2->y_());
+  }
 
   // mirror all arcs
   foreach(Arc *p3, Arcs) {
@@ -564,8 +576,9 @@ void Component::mirrorY()
   }
 
   // mirror all ports
-  foreach(Port *p2, Ports)
-    p2->x = -p2->x;
+  foreach(Port *p2, Ports){
+    p2->setPosition(-p2->x_(), p2->y_());
+  }
 
   // mirror all arcs
   foreach(Arc *p3, Arcs) {
@@ -632,6 +645,8 @@ class obsolete_exception : public std::exception{
 
 QString Component::netlist() const
 {
+  return "obsolete";
+#if 0
   QString s = Model+":"+Name;
   int i=-1;
   // output all node names
@@ -658,11 +673,14 @@ QString Component::netlist() const
     }
 
   return s;
+#endif
 }
 
 // -------------------------------------------------------
 QString Component::getNetlist() const
 {
+return "obsolete";
+#if 0
   unreachable();
   switch(isActive) {
     case COMP_IS_ACTIVE:
@@ -681,6 +699,7 @@ QString Component::getNetlist() const
     s += "R:" + Name + "." + QString::number(z++) + " " +
       Node1 + " " + iport.next()->Connection->name() + " R=\"0\"\n";
   return s;
+#endif
 }
 
 // -------------------------------------------------------
@@ -692,6 +711,8 @@ QString Component::verilogCode(int)
 // -------------------------------------------------------
 QString Component::get_Verilog_Code(int NumPorts)
 {
+  return "obsolete";
+#if 0
   switch(isActive) {
     case COMP_IS_OPEN:
       return QString("");
@@ -707,6 +728,7 @@ QString Component::get_Verilog_Code(int NumPorts)
   while (iport.hasNext())
     s += "  assign " + iport.next()->Connection->name() + " = " + Node1 + ";\n";
   return s;
+#endif
 }
 
 // -------------------------------------------------------
@@ -718,6 +740,8 @@ QString Component::vhdlCode(int)
 // -------------------------------------------------------
 QString Component::get_VHDL_Code(int NumPorts)
 {
+  return "obsolete";
+#if 0
   switch(isActive) {
     case COMP_IS_OPEN:
       return QString("");
@@ -732,6 +756,7 @@ QString Component::get_VHDL_Code(int NumPorts)
   // Has anyone a better idea?
   QString Node1 = Ports.at(0)->Connection->name();
   return "  " + Node1 + " <= " + Ports.at(1)->Connection->name() + ";\n";
+#endif
 }
 
 // -------------------------------------------------------
@@ -949,8 +974,7 @@ int Component::analyseLine(const QString& Row, int numProps)
       Ports.append(new Port(0, 0, false));
 
     Port *po = Ports.at(i3-1);
-    po->x  = i1;
-    po->y = i2;
+    po->setPosition(i1, i2);
     po->avail = true;
 
     if(i1 < x1)  x1 = i1;  // keep track of component boundings
@@ -1324,6 +1348,8 @@ GateComponent::GateComponent()
 // -------------------------------------------------------
 QString GateComponent::netlist() const
 {
+  return "obsolete";
+#if 0
   QString s = Model+":"+Name;
 
   // output all node names
@@ -1341,11 +1367,14 @@ QString GateComponent::netlist() const
   p = P->next();
   s += " " + p->Name + "=\"" + p->Value + "\"\n";
   return s;
+#endif
 }
 
 // -------------------------------------------------------
 QString GateComponent::vhdlCode(int NumPorts)
 {
+  return "obsolete";
+#if 0
   QListIterator<Port *> iport(Ports);
   Port *pp = iport.next();
   QString s = "  " + pp->Connection->name() + " <= ";  // output port
@@ -1392,11 +1421,14 @@ QString GateComponent::vhdlCode(int NumPorts)
 
   s += ";\n";
   return s;
+#endif
 }
 
 // -------------------------------------------------------
 QString GateComponent::verilogCode(int NumPorts)
 {
+  return "obsolete";
+#if 0
   bool synthesize = true;
   QListIterator<Port *> iport(Ports);
   Port *pp = iport.next();
@@ -1457,6 +1489,7 @@ QString GateComponent::verilogCode(int NumPorts)
     s += ");\n";
   }
   return s;
+#endif
 }
 
 // -------------------------------------------------------

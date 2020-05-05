@@ -201,6 +201,12 @@ private: // SchematicSymbol
       throw ExceptionCantFind();
     }
   }
+
+private:
+  unsigned portCount() const{ incomplete(); return 0; }
+  QString const& portValue(unsigned)const {incomplete(); return "ERROR";}
+  void setPort(unsigned i, Node* n){incomplete();}
+
 private:
   SchematicModel const& _m;
 
@@ -566,7 +572,8 @@ void createListComponentEntry()
       foreach (Port *p, c->Ports) {
         // Node *n = new Node(0,0);
         // n->setName("_net"+QString::number(port));
-        p->Connection = nullptr;
+        // p->disconnect();
+	assert(!p->connected());
         port +=1;
       }
       if(verilog){

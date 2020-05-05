@@ -90,6 +90,7 @@ QString iFile::getSubcircuitFile() const
 // -------------------------------------------------------
 QString iFile::netlist() const
 {
+#if 0
   QString s = Model+":"+name();
 
   // output all node names
@@ -105,4 +106,5 @@ QString iFile::netlist() const
     s += " "+p2->name()+"=\""+p2->Value+"\"";
 
   return s + "\n";
+#endif
 }

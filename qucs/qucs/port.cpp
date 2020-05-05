@@ -1,5 +1,5 @@
 /***************************************************************************
-    copyright            : (C) 2020 Felix Salfelder
+    copyright            : (C) 2020 Felix Salfelder / QUCS team
  ***************************************************************************/
 
 /***************************************************************************
@@ -11,25 +11,11 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "object.h"
-class Net : public Object{
-public:
-private:
-	friend class NetList;
-	explicit Net() : Object(), _size(0) {}
-	~Net(){}
-private:
-	Net( const Net& ) {unreachable();}
+#include "port.h"
+#include "node.h"
 
-public:
-	size_t size() const{return _size;}
-	void setSize(size_t s) { _size = s;}
-	size_t& size_hack(){return _size;}
-
-	void setPos(unsigned u){_pos=u;}
-	unsigned getPos(){return _pos;}
-
-private:
-	size_t _size; // number of Conductors
-	unsigned _pos; // position
-};
+QString const& Port::netLabel() const
+{
+	assert(Connection);
+	return Connection->netLabel();
+}

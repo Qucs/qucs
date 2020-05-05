@@ -67,6 +67,7 @@ Element* Switch::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 QString Switch::netlist() const
 {
+#if 0
   QString s = Model+":"+name();
 
   // output all node names
@@ -82,6 +83,7 @@ QString Switch::netlist() const
     s += " "+p2->name()+"=\""+p2->Value+"\"";
 
   return s + '\n';
+#endif
 }
 
 // -------------------------------------------------------

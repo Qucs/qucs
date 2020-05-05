@@ -81,6 +81,7 @@ Element* RFedd::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 QString RFedd::netlist() const
 {
+#if 0
   QString s = Model+":"+name();
   QString e = "\n";
   QString n, p;
@@ -106,6 +107,7 @@ QString RFedd::netlist() const
   }
 
   return s+e;
+#endif
 }
 
 // -------------------------------------------------------

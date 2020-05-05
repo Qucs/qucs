@@ -71,6 +71,7 @@ void logic_1::createSymbol()
 
 QString logic_1::vhdlCode( int )
 {
+#if 0
   QString s = "";
 
   QString L1 = Ports.at(0)->Connection->name();
@@ -80,11 +81,12 @@ QString logic_1::vhdlCode( int )
      L1 + " <= '1';\n" + 
      "  end process;\n";
   return s;
+#endif
 }
 
 QString logic_1::verilogCode( int )
 {
-   
+#if 0
   QString l = "";
 
   QString L1 = Ports.at(0)->Connection->name();
@@ -98,6 +100,7 @@ QString logic_1::verilogCode( int )
       "    " + v + " <= 1;\n";
 
   return l;
+#endif
 }
 
 
