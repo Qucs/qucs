@@ -24,10 +24,16 @@
 class ViewPainter;
 
 class Node : public Conductor {
-public:
-  Node(int, int);
+	friend class NodeList;
+private:
+  Node(Node const&){ unreachable(); }
+private: // NodeList
+  explicit Node(int, int);
+// public: // BUG BUG BUG. Qptrlist
   ~Node();
+public:
   Element* clone()const{
+	  assert(false); // nodes are organised by NodeList
 	  return new Node(*this);
   }
 

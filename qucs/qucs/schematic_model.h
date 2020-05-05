@@ -100,7 +100,8 @@ struct graph_traits<SchematicModel>{
 // currently containging chunks/cruft from legacy Schematic implementation
 class SchematicModel{
 private:
-	SchematicModel() : Nodes(*this), _cc(*this) {}
+	SchematicModel(SchematicModel const&) = delete;
+	SchematicModel();
 #if 0
 	SchematicModel() : _doc(nullptr),
 	_symbol(new SchematicSymbol());
@@ -217,7 +218,7 @@ public:
 		return PortTypes[i];
 	}
 	unsigned numberOfNets() const{
-		return nc;
+		return Nets.size();
 	}
 
 private:
@@ -232,14 +233,8 @@ private:
 	QFileInfo FileInfo;
 	QString DevType; // BUG move to parent
 
-private: // net numbers and labels
-	mutable // tmp kludge.
-		unsigned nc; // number of connected components ("nets");
-	mutable // tmp kludgee.
-		std::vector<QString> netLabels;
-
 private:
-	Schematic* _doc;
+	Schematic* _doc_;
 
 private:
 	ConnectedComponents<SchematicModel> _cc;

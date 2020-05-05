@@ -42,6 +42,7 @@ Node* SchematicModel::insertNode(int x, int y, Element *e)
     // check if the new node lies within an existing wire
     //
     if(pn->connectionsCount()==1){
+	// BUG. the wire is connected. just use it.
 	for(auto pw : wires()) {
 	    if(pw->x1_() == x) {
 		if(pw->y1_() > y) continue;
@@ -117,7 +118,9 @@ int SchematicModel::insertWireNode1(Wire *w)
                         }
                         ptr2->portValue(0)->connectionsRemove(ptr2);  // two -> one wire
                         ptr2->portValue(0)->connectionsAppend(w);
-                        nodes().removeRef(ptr2->portValue(1));
+
+			// incomplete.
+                        // nodes().removeRef(ptr2->portValue(1));
                         wires().removeRef(ptr2);
                         return 2;
                     }
@@ -158,7 +161,9 @@ int SchematicModel::insertWireNode1(Wire *w)
                         }
                         ptr2->portValue(0)->connectionsRemove(ptr2); // two -> one wire
                         ptr2->portValue(0)->connectionsAppend(w);
-                        nodes().removeRef(ptr2->portValue(1));
+
+			incomplete();
+                        // nodes().removeRef(ptr2->portValue(1));
                         wires().removeRef(ptr2);
                         return 2;
                     }
@@ -174,8 +179,7 @@ int SchematicModel::insertWireNode1(Wire *w)
         }
         else continue;
 
-        pn = new Node(w->x1_(), w->y1_());   // create new node
-        nodes().append(pn);
+        pn = &nodes().new_at(w->x1_(), w->y1_() );   // create new node
         pn->connectionsAppend(w);  // connect schematic node to the new wire
         w->setPortByIndex(0, pn);
 
@@ -184,8 +188,7 @@ int SchematicModel::insertWireNode1(Wire *w)
         return 2;
     }
 
-    pn = new Node(w->x1_(), w->y1_());   // create new node
-    nodes().append(pn);
+    pn = &nodes().new_at(w->x1_(), w->y1_());   // create new node
     pn->connectionsAppend(w);  // connect schematic node to the new wire
     w->setPortByIndex(0, pn);
     return 1;
@@ -417,7 +420,7 @@ int SchematicModel::insertWireNode2(Wire *w)
         }
         else continue;
 
-        pn = new Node(w->x2_(), w->y2_());   // create new node
+        pn = &nodes().new_at(w->x2_(), w->y2_());   // create new node
         nodes().append(pn);
         pn->connectionsAppend(w);  // connect schematic node to the new wire
         w->setPortByIndex(1, pn);
@@ -427,7 +430,7 @@ int SchematicModel::insertWireNode2(Wire *w)
         return 2;
     }
 
-    pn = new Node(w->x2_(), w->y2_());   // create new node
+    pn = &nodes().new_at(w->x2_(), w->y2_());   // create new node
     nodes().append(pn);
     pn->connectionsAppend(w);  // connect schematic node to the new wire
     w->setPortByIndex(1, pn);
@@ -814,7 +817,7 @@ bool SchematicModel::oneTwoWires(Node *n)
                 e1->setPortByIndex(1, e2->portValue(1));
 		incomplete();
 		// model->remove(n); // or so.
-                nodes().removeRef(n);    // delete node (is auto delete)
+                // nodes().removeRef(n);    // delete node (is auto delete)
                 e1->portValue(1)->connectionsRemove(e2);
                 e1->portValue(1)->connectionsAppend(e1);
                 wires().removeRef(e2);
@@ -828,13 +831,11 @@ bool SchematicModel::oneTwoWires(Node *n)
 // Deletes the wire 'w'.
 void SchematicModel::deleteWire(Wire *w)
 {
-    if(w->portValue(0)->connectionsCount() == 1)
-    {
+    if(w->portValue(0)->connectionsCount() == 1) {
 //        if(w->portValue(0)->Label) delete w->portValue(0)->Label;
-        nodes().removeRef(w->portValue(0));     // delete node 1 if open
-    }
-    else
-    {
+         incomplete();
+        // nodes().removeRef(w->portValue(0));     // delete node 1 if open
+    } else {
         w->portValue(0)->connectionsRemove(w);   // remove connection
         if(w->portValue(0)->connectionsCount() == 2)
             oneTwoWires(w->portValue(0));  // two wires -> one wire
@@ -843,7 +844,8 @@ void SchematicModel::deleteWire(Wire *w)
     if(w->portValue(1)->connectionsCount() == 1)
     {
 //        if(w->portValue(1)->Label) delete w->portValue(1)->Label;
-        nodes().removeRef(w->portValue(1));     // delete node 2 if open
+	incomplete();
+	// nodes().removeRef(w->portValue(1));     // delete node 2 if open
     }
     else
     {
@@ -3172,6 +3174,8 @@ void Schematic::copyComponents2(int& x1, int& y1, int& x2, int& y2,
 // all further labels. Also delete all labels if wire line is grounded.
 void Schematic::oneLabel(Node *n1)
 {
+
+#if 0 // this is obsolete. (hooray!) just use the net label
     Wire *pw;
     Node *pn, *pNode;
     Element *pe;
@@ -3245,6 +3249,7 @@ void Schematic::oneLabel(Node *n1)
         }
 #endif
     }
+#endif
 }
 
 // ---------------------------------------------------
@@ -3287,10 +3292,11 @@ int Schematic::placeNodeLabel(WireLabel *pl)
 // ---------------------------------------------------
 // Test, if wire line is already labeled and returns a pointer to the
 // labeled element.
-//
 // possibly obsolete.
 Element* Schematic::getWireLabel(Node *pn_)
 {
+    // ...  pn->getNet()->label() or so.
+#if 0 // obsolete. just use the net label.
     Wire *pw;
     Node *pn, *pNode;
     Element *pe;
@@ -3329,6 +3335,7 @@ Element* Schematic::getWireLabel(Node *pn_)
 #endif
 	}
     return 0;   // no wire label found
+#endif
 }
 
 // ---------------------------------------------------
@@ -3349,8 +3356,8 @@ void Schematic::insertNodeLabel(WireLabel *pl)
         delete pl; // yikes.
     }else{
 
-	Node *pn = new Node(pl->cx_(), pl->cy_());
-	DocModel.nodes().append(pn);
+	// yikes.
+	Node *pn = &DocModel.nodes().new_at(pl->cx_(), pl->cy_());
 
 	pn->Label = pl;
 	pl->Type  = isNodeLabel;

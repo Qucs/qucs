@@ -37,6 +37,8 @@ public:
 	Net* newNet();
 	void delNet(Net*);
 
+	size_t size() const{ return _l.size() - _g.size(); }
+
 private:
 	container_type _l;
 	garbage_type _g;
