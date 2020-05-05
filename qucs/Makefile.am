@@ -4,7 +4,8 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2004-2011 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2004-2011  Stefan Jahn <stefan@lkcc.org>
+#               2018, 2020 Felix Salfelder
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -124,10 +125,11 @@ libqucs_la_SOURCES = \
 	mouseactions.cpp \
 	netlist.cpp \
 	node.cpp \
-	nodelist.cpp \
+	nodemap.cpp \
 	object.cpp \
 	octave_window.cpp \
 	painting.cpp \
+	port.cpp \
 	printerwriter.cpp \
 	projectView.cpp \
 	qucs_actions.cpp \
@@ -156,22 +158,6 @@ libqucs_la_SOURCES += qucs_.qrc
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs-lib
 
-libqucsschematic_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
-
-if COND_WIN32
-# non-posix woes.
-libqucsschematic_la_LIBADD = \
-	$(X11_LIBS) \
-	$(QT_LIBS)
-libqucs_la_LIBADD = \
-	libqucsschematic.la \
-	$(X11_LIBS) \
-	$(QT_LIBS)
-else
-# link order hack?
-libqucsschematic_la_LIBADD = libqucs.la
-endif
-
 noinst_HEADERS = \
 	actions.h \
 	command.h \
@@ -186,7 +172,7 @@ noinst_HEADERS = \
 	mouseactions.h \
 	port.h \
 	node.h \
-	nodelist.h \
+	nodemap.h \
 	printerwriter.h \
 	projectView.h \
 	qt_compat.h \

@@ -57,6 +57,7 @@ RS_FlipFlop::RS_FlipFlop()
 // -------------------------------------------------------
 QString RS_FlipFlop::vhdlCode(int NumPorts)
 {
+#if 0
   QString s = "";
   if(NumPorts <= 0) { // no truth table simulation ?
     QString td = Props.at(0)->Value;     // delay time
@@ -73,11 +74,13 @@ QString RS_FlipFlop::vhdlCode(int NumPorts)
     Ports.at(1)->Connection->name() + " nor " +
     Ports.at(2)->Connection->name() + s + '\n';
   return s;
+#endif
 }
 
 // -------------------------------------------------------
 QString RS_FlipFlop::verilogCode(int NumPorts)
 {
+#if 0
   QString t = "";
   if(NumPorts <= 0) { // no truth table simulation ?
     QString td = Props.at(0)->Value;        // delay time
@@ -97,6 +100,7 @@ QString RS_FlipFlop::verilogCode(int NumPorts)
     "  assign" + t + q + " = ~(" + r + " | " + b + ");\n" +
     "  assign" + t + b + " = ~(" + s + " | " + q + ");\n\n";
   return l;
+#endif
 }
 
 // -------------------------------------------------------

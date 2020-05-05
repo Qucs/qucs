@@ -72,6 +72,7 @@ Element* EqnDefined::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 QString EqnDefined::netlist() const
 {
+#if 0
   QString s = Model+":"+name();
   QString e = "\n";
 
@@ -89,6 +90,7 @@ QString EqnDefined::netlist() const
   }
 
   return s+e;
+#endif
 }
 
 // -------------------------------------------------------

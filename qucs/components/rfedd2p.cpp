@@ -77,6 +77,7 @@ Element* RFedd2P::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 QString RFedd2P::netlist() const
 {
+#if 0
   QString s = "RFEDD:"+name();
   QString e = "\n";
   QString n, p;
@@ -102,6 +103,7 @@ QString RFedd2P::netlist() const
   }
 
   return s+e;
+#endif
 }
 
 // -------------------------------------------------------

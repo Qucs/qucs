@@ -120,6 +120,7 @@ QString SubCirPort::netlist() const
 // -------------------------------------------------------
 QString SubCirPort::vhdlCode(int)
 {
+#if 0
   if(Props.at(1)->Value != "out")
     return QString("");
 
@@ -129,6 +130,7 @@ QString SubCirPort::vhdlCode(int)
   s += pn->name() + " <= ";
   s += pn->name() + ";\n";
   return s;
+#endif
 }
 
 // -------------------------------------------------------

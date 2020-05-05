@@ -50,19 +50,21 @@ qucs_default_components_la_SOURCES = \
   switch.cpp relais.cpp am_modulator.cpp pm_modulator.cpp        \
   tline_4port.cpp twistedpair.cpp bondwire.cpp rlcg.cpp    \
   vexp.cpp iexp.cpp eqndefined.cpp  \
-  vfile.cpp ifile.cpp mod_amp.cpp thyristor.cpp triac.cpp       \
+  ifile.cpp mod_amp.cpp thyristor.cpp triac.cpp       \
   diac.cpp log_amp.cpp potentiometer.cpp rfedd.cpp rfedd2p.cpp  \
   MESFET.cpp rectline.cpp photodiode.cpp     \
-  EKV26MOS.cpp dff_SR.cpp jkff_SR.cpp tff_SR.cpp              \
-  gatedDlatch.cpp logic_0.cpp logic_1.cpp mux2to1.cpp mux4to1.cpp mux8to1.cpp \
-  DLS_nto1.cpp DLS_1ton.cpp andor4x2.cpp andor4x3.cpp andor4x4.cpp            \
-  dmux2to4.cpp dmux3to8.cpp dmux4to16.cpp ha1b.cpp fa1b.cpp fa2b.cpp         
+  EKV26MOS.cpp
 
 LOGIC_STUFF =\
+  vfile.cpp \
+  dff_SR.cpp jkff_SR.cpp tff_SR.cpp \
   logical_or.cpp           \
   logical_nor.cpp logical_and.cpp logical_nand.cpp logical_xor.cpp            \
   logical_xnor.cpp logical_inv.cpp digi_source.cpp \
-  logical_buf.cpp
+  logical_buf.cpp \
+  gatedDlatch.cpp logic_0.cpp logic_1.cpp mux2to1.cpp mux4to1.cpp mux8to1.cpp \
+  DLS_nto1.cpp DLS_1ton.cpp andor4x2.cpp andor4x3.cpp andor4x4.cpp            \
+  dmux2to4.cpp dmux3to8.cpp dmux4to16.cpp ha1b.cpp fa1b.cpp fa2b.cpp         
 
 
 qucs_default_components_la_LIBADD = $(QT_LIBS)

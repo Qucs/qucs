@@ -1,40 +1,38 @@
 /***************************************************************************
-                                 node.h
-                                --------
-    begin                : Sat Sep 20 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#ifndef NODE_H
-#define NODE_H
+#ifndef QUCS_NODE_H
+#define QUCS_NODE_H
 
 #include "conductor.h"
 #include "qt_compat.h"
 
 class ViewPainter;
+class NodeMap;
 
-class Node : public Conductor {
-	friend class NodeList;
+class Node : public Conductor, public Element /* Object? */ {
 private:
   Node(Node const&){ unreachable(); }
-private: // NodeList
-  explicit Node(int, int);
-// public: // BUG BUG BUG. Qptrlist
+  Node(Node const&&){ unreachable(); }
+private: // managed by NodeMap
+  friend class NodeMap;
+  explicit Node(std::pair<int, int>);
   ~Node();
 public:
   Element* clone()const{
-	  assert(false); // nodes are organised by NodeList
-	  return new Node(*this);
+	  assert(false); // nodes are organised by NodeMap
+	  return NULL; // new Node(*this);
   }
 
   void connectionsAppend(Element* e){ // "connect"?
@@ -71,19 +69,31 @@ public:
   }
 #endif
   void setName(QString const& x){
-	  setLabel(x);
+	  incomplete();
+//	  setLabel(x);
   }
 
   // BUG
   void setName(const QString&, const QString&, int x_=0, int y_=0);
-  int cx() const{ return Element::cx; }
-  int cy() const{ return Element::cy; }
+  int cx() const{ return Element::cx_(); }
+  int cy() const{ return Element::cy_(); }
+
+  std::pair<int, int> position() const{
+	  return _position;
+  }
 
   void setState(int i){
 	  State |= i;
   }
   bool hasState(int i) const{
 	  return State & i;
+  }
+
+public:
+  bool hasLabel() const{
+	  // possibly "one of the connections is a label?"
+	  incomplete();
+	  return false;
   }
 
 private: // element (BUG?)
@@ -120,6 +130,8 @@ public: // protected coordinate abuse
   void set_something(int x){
 	  x1|=x;
   }
+private:
+  const std::pair<int, int> _position;
 };
 
 

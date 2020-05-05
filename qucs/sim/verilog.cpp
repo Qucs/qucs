@@ -1,9 +1,5 @@
 /***************************************************************************
-                              verilog.cc
-                              ----------
-    begin                : yes
-    copyright            : (C) 2015 by Felix Salfelder
-    email                : felix@salfelder.org
+    copyright            : (C) 2015, 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -31,7 +27,6 @@ unsigned gndhackn=0;
 class PaintingList;
 class DiagramList;
 class WireList;
-class NodeList;
 class ComponentList;
 
 namespace {
@@ -60,6 +55,7 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 	if(!c){
 		incomplete();
 		return;
+// 	}else if(!c->is_device) { ?
 	}else if(c->isOpen()) { untested();
 		unreachable(); // wrong place.
 	}else if(c->isShort()){ untested();
@@ -67,10 +63,10 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 		int z=0;
 		QListIterator<Port *> iport(c->ports());
 		Port *pp = iport.next();
-		QString Node1 = pp->Connection->name();
+		QString Node1 = pp->netLabel();
 		while (iport.hasNext()){
 			s << "R:" << c->label() << "." << QString::number(z++) << " "
-				<< Node1 << " " << iport.next()->Connection->name() << " R=\"0\"\n";
+				<< Node1 << " " << iport.next()->netLabel() << " R=\"0\"\n";
 		}
 	}else{
 		s << QString::fromStdString(c->type()) << " ";
@@ -87,9 +83,9 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 		auto parent=c->getScope(); // HACK. move to symbol
 
 		comma = "";
-		for(unsigned i; i < sym->portCount(); ++i){
+		for(unsigned i=0; i < sym->portCount(); ++i){
 			// s << comma << parent->netLabel(i);
-			s << comma << sym->netLabel(i); // portNetLabel?
+			s << comma << sym->portValue(i);
 			comma = ", ";
 		}
 
@@ -116,7 +112,7 @@ private: // legacy cruft
   WireList const& wires(SchematicSymbol const& m) const{
     return m.schematicModel().wires();
   }
-  NodeList const& nodes(SchematicSymbol const& m) const{
+  NodeMap const& nodes(SchematicSymbol const& m) const{
     return m.schematicModel().nodes();
   }
   ComponentList const& components(SchematicSymbol const& m) const{
@@ -187,7 +183,7 @@ void VerilogSchematicFormat::printSymbol(Symbol const* sym, stream_t& s) const
 
 		comma = "";
 		for(unsigned i=0; i<sym->portCount(); ++i){
-			auto p1=sym->port(i); // BUG
+			auto p1 = &sym->port(i); // BUG
 			s << comma << "net_" << p1->value()->cx() << "_" <<  p1->value()->cy();
 			comma = ", ";
 		}

@@ -140,6 +140,7 @@ void VerilogNetlister::nodeMap(SchematicSymbol const& m) const
 #endif
 
 	// maybe just s/gnd/0/??
+#if 0
 	for(auto pc : sm.components()){
 		if(pc->type() == "GND") { untested();
 			assert(pc->Ports.first()->Connection);
@@ -152,6 +153,7 @@ void VerilogNetlister::nodeMap(SchematicSymbol const& m) const
 			n->setLabel("0");
 		}
 	}
+#endif
 
 #if 0
 	unsigned z=0;
@@ -333,8 +335,8 @@ void VerilogNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol c
 				incomplete();
 			}
 		}else if(it->type() == "GND") { // BUG, use a rail?
-			qDebug() << "GND hack" << it->Ports.first()->Connection->name();
-			it->Ports.first()->Connection->setName("gnd");
+			qDebug() << "GND hack" << it->Ports.first()->netLabel();
+			// it->Ports.first()->Connection->setName("gnd");
 		}
 
 		if(it->isActive != COMP_IS_ACTIVE){

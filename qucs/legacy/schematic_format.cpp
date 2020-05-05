@@ -28,7 +28,7 @@ private: // legacy cruft
 	WireList const& wires(SchematicSymbol const& m) const{
 		return m.schematicModel().wires();
 	}
-	NodeList const& nodes(SchematicSymbol const& m) const{
+	NodeMap const& nodes(SchematicSymbol const& m) const{
 		return m.schematicModel().nodes();
 	}
 	ComponentList const& components(SchematicSymbol const& m) const{
@@ -170,9 +170,12 @@ void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& 
 		stream << "  " << pw->save() << "\n";
 	}
 
+#if 0
+	// BUG labels are stored as wires.
 	for(auto pn : nodes(m)){
 		if(pn->Label) stream << "  " << pn->Label->save() << "\n";
 	}
+#endif
 	stream << "</Wires>\n";
 
 	stream << "<Diagrams>\n";    // save all diagrams

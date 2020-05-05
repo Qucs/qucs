@@ -112,7 +112,7 @@ public:
 		incomplete();
 		return -1;
 	};
-	bool isEmpty() const { untested();
+	bool isEmpty() const {
 		return !localList.size();
 	};
 	int findPrev() { untested();
