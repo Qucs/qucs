@@ -186,11 +186,13 @@ void MouseActions::endElementMoving(Schematic *Doc, EGPList *movElements)
         if(pe->x1_() == pe->x2_()){ untested();
           if(pe->y1_() == pe->y2_()) { untested();
             // Delete wires with zero length, but preserve label.
+#if 0
             if(((Wire*)pe)->Label) { untested();
               Doc->insertNodeLabel((WireLabel*)((Wire*)pe)->Label);
               ((Wire*)pe)->Label = 0;
             }else{
 	    }
+#endif
             delete (Wire*)pe;
             break;
           }
@@ -236,12 +238,16 @@ void MouseActions::moveElements(EGPList& what, int x, int y)
     if(pe->Type == isWire) { untested();
       pw = (Wire*)pe;   // connected wires are not moved completely
 
+      incomplete();
+#if 0
       if(((uintptr_t)pw->portValue(0)) > 3) { // wtf?
 	pw->move1(x, y);
+#if 0
 	if(pw->Label) { untested();
 	  pw->Label->moveCenter(x, y);
 	}else{ untested();
 	}
+#endif
       }else{ untested();
       	if((uintptr_t)(pw->portValue(0)) & 1) { pw->move1(x,0); }
 	if((uintptr_t)(pw->portValue(0)) & 2) { pw->move1(0,y); }
@@ -253,6 +259,7 @@ void MouseActions::moveElements(EGPList& what, int x, int y)
 	if((uintptr_t)(pw->portValue(1)) & 2) { pw->move2(0,y); }
       }
 
+#if 0
       if(pw->Label) { untested();
 	// root of node label must lie on wire
         if(pw->Label->cx_() < pw->x1_()) pw->Label->moveTo(pw->x1_(), pw->Label->cy_());
@@ -261,7 +268,9 @@ void MouseActions::moveElements(EGPList& what, int x, int y)
         if(pw->Label->cy_() > pw->y2_()) pw->Label->moveTo(pw->Label->cx_(), pw->y2_());
       }else{ untested();
       }
+#endif
 
+#endif
     }
     else pe->setCenter(x, y, true);
   }
@@ -488,7 +497,6 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
 {
   setPainter(Doc);
 
-
   Set2(Event, Doc);
 
   Doc->setOnGrid(MAx2, MAy2);
@@ -506,8 +514,9 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
   for(auto pe : movingElements) { untested();
     if(auto pw=wire(pe)){
       // connecting wires are not moved completely
-      assert(pw);
+	incomplete();
 
+#if 0
       if(((uintptr_t)pw->portValue(0)) > 3) { pw->x1__() += MAx1;  pw->y1__() += MAy1; }
       else {  if((uintptr_t)(pw->portValue(0)) & 1) { pw->x1__() += MAx1; }
               if((uintptr_t)(pw->portValue(0)) & 2) { pw->y1__() += MAy1; } }
@@ -524,6 +533,7 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
         if(pw->Label->cy_() > pw->y2_()) pw->Label->cy__() = pw->y2_();
       }else{ untested();
       }
+#endif
 
     }else{ untested();
       assert(!pw);
@@ -964,8 +974,13 @@ void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent* Event)
   QString Name, Value;
   Element *pe=0;
   // is wire line already labeled ?
-  if(pw) pe = Doc->getWireLabel(pw->portValue(0));
-  else pe = Doc->getWireLabel(pn);
+#if 0
+  if(pw){
+    pe = Doc->getWireLabel(pw->portValue(0));
+  }else{
+    pe = Doc->getWireLabel(pn);
+  }
+#endif
   if(pe) { untested();
     if(pe->Type & isComponent) { untested();
       QMessageBox::information(0, QObject::tr("Info"),
@@ -1317,15 +1332,15 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
       Doc->enlargeView(x1, y1, x2, y2);
     }
   }else if(auto W=wire(e)){ untested();
-      pl = W->Label;
-      W->Label = 0;    // prevent label to be deleted
+////      pl = W->Label;
+///      W->Label = 0;    // prevent label to be deleted
 //      Doc->wires().setAutoDelete(false);
       Doc->deleteWire(W);
-      W->Label = pl;
+////      W->Label = pl;
       W->rotate();
       Doc->setOnGrid(W->x1__(), W->y1__());
       Doc->setOnGrid(W->x2__(), W->y2__());
-      if(pl)  Doc->setOnGrid(pl->cx__(), pl->cy__());
+////      if(pl)  Doc->setOnGrid(pl->cx__(), pl->cy__());
       Doc->insertWire(W);
  //     Doc->wires().setAutoDelete(true);
       if (Doc->wires().containsRef (W)){
@@ -1688,8 +1703,11 @@ void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
 
   if(focusElement)  if(Event->button() == Qt::LeftButton)
     if(auto w=wire(focusElement)) { untested();
+      incomplete();
+#if 0
       Doc->selectWireLine(element(focusElement), w->portValue(0), ctrl);
       Doc->selectWireLine(element(focusElement), w->portValue(1), ctrl);
+#endif
     }
 
   Doc->releaseKeyboard();  // allow keyboard inputs again

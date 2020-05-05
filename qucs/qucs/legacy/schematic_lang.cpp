@@ -275,7 +275,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
 	}
 	i |= c->isActive;
 	s << QString::number(i);
-	s << " "+QString::number(c->cx)+" "+QString::number(c->cy);
+	s << " "+QString::number(c->cx())+" "+QString::number(c->cy());
 	s << " "+QString::number(c->tx)+" "+QString::number(c->ty);
 	s << " ";
 	if(c->mirroredX){
@@ -338,11 +338,11 @@ Command* LegacySchematicLanguage::loadCommand(const QString& _s, Command* c) con
   }
 
   n  = s.section(' ',3,3);    // cx
-  c->cx = n.toInt(&ok);
+  int cx = n.toInt(&ok);
   if(!ok) return NULL;
 
   n  = s.section(' ',4,4);    // cy
-  c->cy = n.toInt(&ok);
+  c->setCenter(cx, n.toInt(&ok));
   if(!ok) return NULL;
 
   n  = s.section(' ',5,5);    // tx

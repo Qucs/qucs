@@ -2,10 +2,11 @@
 -- README
 --
 -- Copyright (C) 2003, 2005, 2011 Stefan Jahn <stefan@lkcc.org>
+--               2020 Felix Salfelder
 --
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
--- the Free Software Foundation; either version 2, or (at your option)
+-- the Free Software Foundation; either version 3, or (at your option)
 -- any later version.
 --
 -- This software is distributed in the hope that it will be useful,
@@ -23,22 +24,26 @@
 Description
 ===========
 
-Qucs is a circuit simulator with graphical user interface.  The
-software aims to support all kinds of circuit simulation types,
-e.g. DC, AC, S-parameter and harmonic balance analysis.  For
-details see homepage:
-
-http://qucs.sourceforge.net
-
+Qucs is a circuit simulator with a graphical user interface. "Qucs, the GUI",
+this package, is the graphical user interface for circuit simulation. The
+software aims to support various kinds of circuit simulation, e.g. DC, AC,
+S-parameter and harmonic balance analysis.
 
 Requirements
 ============
 
-Qucs needs Qt version 4.6 or later. For simplicity, the Qt configuration is
+Qucs needs Qt version 5. or later. For simplicity, the Qt configuration is
 currently obtained through pkg-config, which you need to install in addition
 to Qt.
 
-On Debian, consider the qtscript5-dev and libqt5svg5-dev packages.
+On Debian, install
+
+ pkg-config
+ build-essential
+ qtscript5-dev
+ libqt5svg5-dev
+
+For development purposes (i.e. in order to bootstrap) autotools are required.
 
 Installation
 ============

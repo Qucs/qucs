@@ -178,6 +178,7 @@ Graph* SweepDialog::setBiasPoints()
   ValueList.clear();
 
   // create DC voltage for all nodes
+#if 0 // use nets instead!
   for(auto pn : Doc->nodes()){
     if(pn->name().isEmpty()) continue;
 
@@ -231,17 +232,21 @@ Graph* SweepDialog::setBiasPoints()
     for(auto i : pn->connections()){
 		 pe = i;
       if(pe->Type == isWire) {
+#if 0
         if( ((Wire*)pe)->portValue(0) != pn )  // no text at next node
           ((Wire*)pe)->portValue(0)->setName("");
         else  ((Wire*)pe)->portValue(1)->setName("");
+#endif
       }
 	 }
   }
+#endif
 
 
   // create DC current through each probe
   Node* pn;
   for(auto pc : Doc->components()){
+#if 0
     if(pc->obsolete_model_hack() == "IProbe") { // BUG.
       pn = pc->Ports.first()->Connection;
       if(!pn->name().isEmpty())   // preserve node voltage ?
@@ -276,6 +281,7 @@ Graph* SweepDialog::setBiasPoints()
         }
 		}
     }
+#endif
   }
 
 

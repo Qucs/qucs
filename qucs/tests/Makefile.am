@@ -61,12 +61,18 @@ TESTS = \
 	${PRJ_TESTS}
 
 check_PROGRAMS = \
-	model0
+	model0 \
+	model1
 
 model0_CPPFLAGS = ${AM_CPPFLAGS} -I${top_srcdir} -DUNTANGLE_QT
 model0_CPPFLAGS += $(QT_CFLAGS) # yikes.
 model0_LDADD = ${top_builddir}/qucs/libqucs.la
 model0_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
+
+model1_CPPFLAGS = ${AM_CPPFLAGS} -I${top_srcdir} -DUNTANGLE_QT
+model1_CPPFLAGS += $(QT_CFLAGS) # yikes.
+model1_LDADD = ${top_builddir}/qucs/libqucs.la
+model1_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
 
 
 SH_TESTS = \

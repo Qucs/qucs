@@ -51,7 +51,8 @@ Command::Command(Command const& p)
   }
 
   for(auto i : p.Ports){
-	Ports.append(new Port(*i));
+    unreachable(); //?
+//	Ports.append(new Port(*i));
   }
 
 //  setType(p.type()); // hmmm
@@ -315,8 +316,11 @@ void Command::paintScheme(Schematic *p) const
     p->PostPaintEvent(_Line,cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
 
   // paint all ports
-  foreach(Port *p2, Ports)
-    if(p2->avail) p->PostPaintEvent(_Ellipse,cx+p2->x-4, cy+p2->y-4, 8, 8);
+  foreach(Port *p2, Ports){
+    if(p2->avail) {
+      p->PostPaintEvent(_Ellipse,cx+p2->x_()-4, cy+p2->y_()-4, 8, 8);
+    }
+  }
 
   foreach(Arc *p3, Arcs)   // paint all arcs
     p->PostPaintEvent(_Arc,cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
@@ -360,9 +364,8 @@ void Command::rotate()
 
   // rotate all ports
   foreach(Port *p2, Ports) {
-    tmp = -p2->x;
-    p2->x = p2->y;
-    p2->y = tmp;
+    tmp = -p2->x_();
+    p2->setPosition( p2->y_(), tmp );
   }
 
   // rotate all arcs
@@ -450,8 +453,9 @@ void Command::mirrorX()
   }
 
   // mirror all ports
-  foreach(Port *p2, Ports)
-    p2->y = -p2->y;
+  foreach(Port *p2, Ports){
+    p2->setPosition(p2->x_(), -p2->y_());
+  }
 
   // mirror all arcs
   foreach(Arc *p3, Arcs) {
@@ -499,6 +503,7 @@ void Command::mirrorX()
 
 // -------------------------------------------------------
 // Mirrors the component about the y-axis.
+// BUG. mirrors the X axis. (?!)
 void Command::mirrorY()
 {
   // mirror all lines
@@ -508,8 +513,10 @@ void Command::mirrorY()
   }
 
   // mirror all ports
-  foreach(Port *p2, Ports)
-    p2->x = -p2->x;
+  foreach(Port *p2, Ports){
+    // p2->mirrorX();
+    p2->setPosition(-p2->x_(), -p2->y_());
+  }
 
   // mirror all arcs
   foreach(Arc *p3, Arcs) {
@@ -613,8 +620,7 @@ int Command::analyseLine(const QString& Row, int numProps)
       Ports.append(new Port(0, 0, false));
 
     Port *po = Ports.at(i3-1);
-    po->x  = i1;
-    po->y = i2;
+    po->setPosition( i1, i2);
     po->avail = true;
 
     if(i1 < x1)  x1 = i1;  // keep track of component boundings

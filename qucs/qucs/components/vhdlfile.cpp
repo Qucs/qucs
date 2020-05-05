@@ -68,6 +68,7 @@ Element* VHDL_File::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 QString VHDL_File::vhdlCode(int)
 {
+#if 0
   QString s;
   QListIterator<Port *> iport(Ports);
   Port *pp = iport.next();
@@ -94,6 +95,7 @@ QString VHDL_File::vhdlCode(int)
     s += ");\n";
   }
   return s;
+#endif
 }
 
 // -------------------------------------------------------

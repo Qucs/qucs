@@ -72,6 +72,7 @@ Element* MSvia::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 QString MSvia::netlist() const
 {
+#if 0
   QString s = Model+":"+Name;
 
   // output node name and add ground node
@@ -82,4 +83,5 @@ QString MSvia::netlist() const
     s += " "+p2->Name+"=\""+p2->Value+"\"";
 
   return s + '\n';
+#endif
 }

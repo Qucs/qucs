@@ -172,7 +172,7 @@ public:
   ComponentList& components(){
      return DocModel.components();
   }
-  NodeList& nodes(){
+  NodeMap& nodes(){
 	  return DocModel.nodes();
   }
   DiagramList& diagrams(){
@@ -186,7 +186,7 @@ public:
   ComponentList const& components() const{
 	  return DocModel.components();
   }
-  NodeList const& nodes() const{
+  NodeMap const& nodes() const{
 	  return DocModel.nodes();
   }
   WireList const& wires() const{

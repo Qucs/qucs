@@ -17,26 +17,32 @@
 Net* NetList::newNet()
 {
 	unsigned idx;
-	if(_g.empty()){ untested();
+	if(_g.empty()){
 		idx = _l.size();
 		_l.push_back(new Net());
-		trace3("newNet", idx, _l.size(), this);
-	}else{ untested();
+		trace4("newNet", _l.back(), idx, _l.size(), this);
+		_l[idx]->setPos(idx);
+	}else{
 		idx = _g.top();
 		_g.pop();
+		assert(_l[idx]->size() == -1);
+		_l[idx]->setSize(0);
 		assert(_l[idx]->getPos() == idx);
 	}
 
+	assert(_l[idx]->size() == 0);
 	assert(_l[idx]);
-	_l[idx]->setPos(idx);
 	_l[idx]->setLabel("_net" + std::to_string(idx));
 	return _l[idx];
 }
 
 void NetList::delNet(Net* n)
 {
+	trace1("delNet", n);
 	assert(n);
+	trace1("delNet", n->size());
 	assert(n->size() == 0);
+	n->setSize(-1);
 
 	size_t idx = n->getPos();
 	trace3("delNet", idx, _l.size(), this);

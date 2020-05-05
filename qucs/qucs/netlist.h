@@ -30,8 +30,10 @@ private:
 
 private:
 	NetList( const NetList&){ unreachable(); }
+
 public:
 	explicit NetList(){}
+	~NetList(){}
 
 public:
 	Net* newNet();

@@ -122,6 +122,7 @@ void MOSFET::createSymbol()
 // -------------------------------------------------------
 QString MOSFET::netlist() const
 {
+#if 0
   QString s = "MOSFET:"+Name;
 
   // output all node names
@@ -134,4 +135,5 @@ QString MOSFET::netlist() const
     s += " "+p2->Name+"=\""+p2->Value+"\"";
 
   return s + '\n';
+#endif
 }

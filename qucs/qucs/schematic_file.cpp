@@ -373,6 +373,10 @@ class sda : public ModelAccess{
 public:
   sda(SchematicModel const& m, Schematic const& s) : _m(m), _s(s) {
   }
+
+private:
+  Port& port(unsigned){ unreachable(); return *new Port(0,0); }
+  unsigned portCount() const{ return 0; }
 private: // SchematicSymbol
   SchematicModel const& schematicModel() const{
     incomplete();
@@ -694,7 +698,8 @@ bool SchematicModel::loadWires(QTextStream *stream /*, EGPList *List */)
     if(Line.isEmpty()) continue;
 
     // (Node*)4 =  move all ports (later on)
-    w = new Wire(0,0,0,0, (Node*)4,(Node*)4);
+    // w = new Wire(0,0,0,0, (Node*)4,(Node*)4);
+    w = new Wire(0,0,0,0);
     if(!w->obsolete_load(Line)) {
       QMessageBox::critical(0, QObject::tr("Error"),
 		QObject::tr("Format Error:\nWrong 'wire' line format!"));
@@ -803,9 +808,11 @@ QString Schematic::createUndoString(char Op)
     s += pw->save()+"\n";
   }
   // save all labeled nodes as wires
+#if 0
   for(auto pn : nodes()) {
     if(pn->Label) s += pn->Label->save()+"\n";
   }
+#endif
   s += "</>\n";
 
   for(auto pd : diagrams()){

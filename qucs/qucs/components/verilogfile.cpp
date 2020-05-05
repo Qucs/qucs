@@ -69,6 +69,7 @@ Element* Verilog_File::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 QString Verilog_File::verilogCode(int)
 {
+#if 0
   QString s;
   QListIterator<Port *> iport(Ports);
   Port *pp = iport.next();
@@ -86,6 +87,7 @@ QString Verilog_File::verilogCode(int)
     s += ");\n";
   }
   return s;
+#endif
 }
 
 // -------------------------------------------------------

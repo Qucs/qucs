@@ -69,6 +69,7 @@ JK_FlipFlop::JK_FlipFlop()
 // -------------------------------------------------------
 QString JK_FlipFlop::vhdlCode(int NumPorts)
 {
+#if 0
   QString s = "";
   if(NumPorts <= 0) { // no truth table simulation ?
     QString td = Props.at(0)->Value;     // delay time
@@ -96,11 +97,13 @@ QString JK_FlipFlop::vhdlCode(int NumPorts)
       Ports.at(3)->Connection->name() + " <= not " +
       Ports.at(2)->Connection->name() + ";\n\n";
   return s;
+#endif
 }
 
 // -------------------------------------------------------
 QString JK_FlipFlop::verilogCode(int NumPorts)
 {
+#if 0
   QString t = "";
   if(NumPorts <= 0) { // no truth table simulation ?
     QString td = Props.at(0)->Value;        // delay time
@@ -131,6 +134,7 @@ QString JK_FlipFlop::verilogCode(int NumPorts)
     k + " && " + q + ");\n" +
     "  end\n\n";
   return l;
+#endif
 }
 
 // -------------------------------------------------------

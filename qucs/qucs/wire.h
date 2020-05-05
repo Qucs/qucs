@@ -2,7 +2,7 @@
                                   wire.h
                                  --------
     copyright            : (C) 2003 by Michael Margraf
-                               2018 Felix Salfelder / QUCS
+                               2018, 2020 Felix Salfelder / QUCS
  ***************************************************************************/
 
 /***************************************************************************
@@ -28,10 +28,12 @@
 class QPainter;
 class QString;
 
+class dummy {};
 
-class Wire : public Conductor {
+
+class Wire : public Conductor, public Symbol {
 public:
-  Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0);
+  Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0); //  Node *n1=0, Node *n2=0);
   ~Wire();
 
   Element* clone() const{
@@ -56,46 +58,62 @@ public:
 // private: not yet
   bool    obsolete_load(const QString&);
 
+private: // Symbol
+  unsigned portCount() const{ return 2; }
+
 public:
-  bool    isHorizontal() const { return (y1 == y2);}
+  bool    isHorizontal() const { return (y1() == y2());}
   QRectF boundingRect() const;
 
 public:
-  void setPortByIndex(unsigned idx, Node* n);
-  Node* portValue(unsigned idx);
-  Node const* portValue(unsigned idx) const{
-	  auto w=const_cast<Wire*>(this);
-	  return w->portValue(idx);
-  }
-  std::list<Element*>::iterator connectionsBegin(){
-	  return Ports.begin();
-  }
+//  void setPortByIndex(unsigned idx, Node* n);
+//  Node* portValue(unsigned idx);
+  std::list<Element*>::iterator connectionsBegin();
   std::list<Element*>::iterator connectionsEnd(){
-	  return Ports.end();
+	  return _node_hack.end();
   }
 
-public: // aliases. don't use
-  Node* Port1(){
-	  return portValue(0);
-  }
-  Node* Port2(){
-	  return portValue(1);
+private: // Symbol, internal port access.
+  Port& port(unsigned i){
+	  assert(i<2);
+	  if(i==0){
+		  return _port0;
+	  }else{
+		  return _port1;
+	  }
   }
 
 private:
-  std::list<Element*> Ports;
+  std::list<Element*> _node_hack;
 
-public: // FIXME, these are still around.
+public: // FIXME, these are still around. (from element)
 	//int & cx__() { return cx; }
 	//int & cy__() { return cy; }
-	int & x1__() { return x1; }
-	int & y1__() { return y1; }
-	int & x2__() { return x2; }
-	int & y2__() { return y2; }
+	int & x1__() { return _port0.x; }
+	int & y1__() { return _port0.y; }
+	int & x2__() { return _port1.x; }
+	int & y2__() { return _port1.y; }
+
+	int const& x1() const { return _port0.x; }
+	int const& y1() const { return _port0.y; }
+	int const& x2() const { return _port1.x; }
+	int const& y2() const { return _port1.y; }
+
+	void setPos0(int x, int y){ x1__() = x; y1__() = y; }
+	void setPos1(int x, int y){ x2__() = x; y2__() = y; }
 
 public: // stuff used in mouseactions.
-  void move1(int x, int y){ x1+=x; y1+=y; }
-  void move2(int x, int y){ x2+=x; y2+=y; }
+  void move1(int x, int y){ x1__()+=x; y1__()+=y; }
+  void move2(int x, int y){ x2__()+=x; y2__()+=y; }
+
+private:
+	int & x1() { return _port0.x; }
+	int & y1() { return _port0.y; }
+	int & x2() { return _port1.x; }
+	int & y2() { return _port1.y; }
+private: // avoid access to obsolete Element members
+  Port _port0;
+  Port _port1;
 };
 
 #endif

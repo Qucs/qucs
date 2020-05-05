@@ -32,7 +32,8 @@
   */
 
 class QPainter;
-class Schematic;
+//class Schematic;
+class NodeMap;
 
 // a component symbol. not necessarily one of the legacy components
 class Symbol : public Element{
@@ -63,15 +64,22 @@ public: // interface
   }
   virtual void build(){ }
 
-  virtual unsigned portCount() const{ return 0; } // pure?
-  virtual Port const* port(unsigned) const{ return nullptr; } // pure?
-  virtual Node const& portValue(unsigned) const{ throw "incomplete"; } // pure?
-  virtual void setPort(unsigned i, Node* n) = 0;
-
   virtual unsigned paramCount()const {return 0;}
+
 
 public: // non-virtual (on purpose)
   QString const& netLabel(unsigned i) const;
+  Node* connectNode(unsigned idx, NodeMap&);
+  Node* disconnectNode(unsigned idx, NodeMap&);
+
+public: // Port access
+  QString const& portValue(unsigned) const;
+  // TODO: rethink Port/Node semantics
+  virtual unsigned portCount() const = 0;
+  Port const& port(unsigned) const;
+
+private: // internal port access
+  virtual Port& port(unsigned){ unreachable(); return *new Port(0,0);}
 
 public: // graphics
         // hmm, maybe just dispatch a gfx object.
