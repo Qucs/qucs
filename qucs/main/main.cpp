@@ -561,11 +561,12 @@ void createListComponentEntry()
      // fprintf(stdout, "%s; qucs    ; %s\n", c->obsolete_model_hack().toAscii().data(), qucsEntry.toAscii().data());
 
       // add dummy ports/wires, avoid segfault
+      //  -- attempted FIX --
       int port = 0;
       foreach (Port *p, c->Ports) {
-        Node *n = new Node(0,0);
-        n->setName("_net"+QString::number(port));
-        p->Connection = n;
+        // Node *n = new Node(0,0);
+        // n->setName("_net"+QString::number(port));
+        p->Connection = nullptr;
         port +=1;
       }
       if(verilog){
