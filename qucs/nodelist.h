@@ -10,11 +10,12 @@ class SchematicModel;
 
 class NodeList {
 public:
-  	typedef Q3PtrList<Node> container_type; // TODO..
+  	typedef std::list<Node*> container_type;
 	typedef container_type::iterator iterator;
 	typedef container_type::const_iterator const_iterator;
 private:
-	NodeList(NodeList const& x) : _model(x._model){unreachable();}
+	// NodeList(NodeList const& x) : _model(x._model){unreachable();}
+	NodeList(NodeList const& x) = delete;
 public:
 	explicit NodeList(SchematicModel& m) : _model(m) {}
 
@@ -29,15 +30,21 @@ public:
 
 public: //obsolete interface
 	void append(Node* n){
-		return _nodes.append(n);
+		return _nodes.push_back(n);
 	}
+#if 0
 	bool removeRef(Node* tt) {
-		return _nodes.removeRef(tt);
+		if(n==_nodes.end()){ untested();
+		}else{ untested();
+			return _nodes.erase(n);
+		}
 	}
+#endif
 
 public:
 	Node* find_at(int x, int y);
 	Node& at(int x, int y);
+	Node& new_at(int x, int y); // same as at. but don't search
 	SchematicModel& _model;
 
 private:

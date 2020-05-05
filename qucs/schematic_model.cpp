@@ -23,11 +23,24 @@
 #include "trace.h"
 
 
+// getting here in CLI mode
+SchematicModel::SchematicModel()
+  	: Nodes(*this), _cc(*this), _doc_(nullptr)
+{
+	trace2("::SchematicModel", this, _doc_);
+}
+
+// getting here in GUI mode
 SchematicModel::SchematicModel(Schematic* s)
-	: _doc(s),
+	: _doc_(s),
 	  Nodes(*this),
 	  _cc(*this)
 {
+	trace2("::SchematicModel s", this, _doc_);
+	assert(!s); // DEBUG
+	if(s){ untested();
+	}else{
+	}
 	// presumably Q3PTRlist without this is just a QList<*> (check)
 //  _symbol=new SchematicSymbol();
 }
@@ -117,21 +130,21 @@ void SchematicModel::parse(DocumentStream& s, SchematicLanguage const* L)
 // these are required to move model methods over to SchematicModel
 // note that _doc->...() functions still involve pointer hacks
 ComponentList& SchematicModel::components()
-{
+{ untested();
 	return Components;
 }
 
 void SchematicModel::pushBack(Element* what)
 {
-	trace1("SchematicModel::pushBack", what->label());
+	trace2("SchematicModel::pushBack", what->label(), this);
 	if(auto c=component(what)){ untested();
 		trace1("SchematicModel::pushBack", c->type());
       simpleInsertComponent(c);
-	}else if(auto d=diagram(what)){
+	}else if(auto d=diagram(what)){ untested();
 		diagrams().append(d);
-	}else if(auto c=command(what)){
+	}else if(auto c=command(what)){ untested();
 		incomplete();
-	}else if(auto w=wire(what)){
+	}else if(auto w=wire(what)){ untested();
 		trace4("pushback Wire", w->x1, w->y1, w->x2, w->y2);
 		simpleInsertWire(w);
 //		insertWire(w);?? wtf?
@@ -145,9 +158,9 @@ void SchematicModel::pushBack(Element* what)
 	}
 
 #ifndef USE_SCROLLVIEW
-  if(doc()){
+  if(doc()){ untested();
 	  doc()->addToScene(what);
-  }else{
+  }else{ untested();
   }
 #endif
 } // pushBack
@@ -157,7 +170,7 @@ void SchematicModel::insertSymbolNodes(Symbol *c, bool noOptimize)
 {
 	// connect every node of the component to corresponding schematic node
 	for(unsigned i=0; i<c->portCount(); ++i){
-		auto pp=c->portValue(i);
+		auto& pp=c->portValue(i);
 		Node* n=insertNode(pp.cx()+c->cx, pp.cy()+c->cy, c);
 		c->setPort(i, n);
 	}
@@ -228,8 +241,9 @@ void SchematicModel::deleteItem(ElementGraphics *g)
 
 // should be a QucsDoc*, probably
 Schematic* SchematicModel::doc()
-{
-	return _doc;
+{  untested();
+	trace2("doc", _doc_, this);
+	return _doc_;
 }
 
 QFileInfo const& SchematicModel::getFileInfo ()const
@@ -556,7 +570,8 @@ void SchematicModel::detachFromNode(Element* what, Node* from)
 		}else{
 		}
 
-		nodes().removeRef(from);  // delete open nodes
+		incomplete(); // need a proper nodemap
+		// nodes().removeRef(from);  // delete open nodes
 	}else if(from->connectionsCount()==3){
 		from->connectionsRemove(what);// delete connection
 		//			pn->disconnect(c);
@@ -593,28 +608,10 @@ void SchematicModel::disconnect(Wire* c)
 
 // obsolete. probably.
 void SchematicModel::updateNetLabels() const
-{
-	auto& sm=*this;
+{ untested();
+	incomplete();
 
-	unsigned nc=sm.numberOfNets();
-	netLabels.resize(0);
-	netLabels.resize(nc);
-	qDebug() << "found" << nc << "nets";
-
-#if 0
-	for(auto w : sm.wires()){
-		assert(w->portValue(0)->getNet()==w->portValue(1)->getNet());
-		unsigned i=w->portValue(0)->netNumber();
-		// qDebug() << "wire" << i << w->Label;
-		if(!w->Label){
-		}else if (netLabels[i].size()){
-		}else{
-			netLabels[i] = w->Label->name();
-		}
-	}
-#endif
-
-	for(auto pc : sm.components()){
+	for(auto pc : components()){
 		if(pc->type() == "GND") { // BUG, use rails with net names.
 			Port* n = pc->Ports.first();
 			assert(n);
@@ -629,15 +626,6 @@ void SchematicModel::updateNetLabels() const
 			net->setLabel("0");
 		}
 	}
-
-	unsigned z=0;
-	for(auto& i : netLabels){
-		if(!i.size()){
-			i = "_net" + QString::number(z++);
-		}else{
-		}
-	}
-
 }
 
 ModelAccess::ModelAccess(){}

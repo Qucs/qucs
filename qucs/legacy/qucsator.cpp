@@ -277,8 +277,8 @@ static void nodeMap(SchematicSymbol const& m)
 //	                           // should already be numbered...
 
 	unsigned nc=sm.numberOfNets();
-	netLabels.resize(0);
-	netLabels.resize(nc);
+	// netLabels.resize(0);
+	// netLabels.resize(nc);
 	qDebug() << "found" << nc << "nets";
 	
 	for(auto w : sm.wires()){
