@@ -20,7 +20,7 @@
 #include <QRegExpValidator>
 #include <QFileDialog>
 #include <QUndoCommand>
-#include <QMouseEvent>
+#include <QGraphicsSceneEvent>
 
 #include "schematic_doc.h"
 #include "qucs.h"
@@ -428,6 +428,14 @@ QUndoCommand* MouseActionSelect::press(QMouseEvent* e)
 	return nullptr;
 } // select::press
 /*--------------------------------------------------------------------------*/
+int getX(std::pair<int, int> const& p)
+{
+	return p.first;
+}
+int getY(std::pair<int, int> const& p)
+{
+	return p.second;
+}
 // was MouseActions::MReleaseSelect(SchematicDoc *Doc, QMouseEvent *Event)
 QUndoCommand* MouseActionSelect::release(QMouseEvent *Event)
 { untested();
@@ -441,9 +449,12 @@ QUndoCommand* MouseActionSelect::release(QMouseEvent *Event)
 	cmd* c = nullptr;
 
 	auto s = doc().selectedItems();
-	if(s.isEmpty()){
+	if(s.isEmpty()){ untested();
 	}else{
-		auto delta = s.first()->pos().toPoint();
+		auto p = s.first()->pos().toPoint();
+		auto p1_ = element(s.first())->center();
+		auto p1 = QPoint(getX(p1_), getY(p1_));
+		auto delta = p-p1;
 		int fX = int(delta.x());
 		int fY = int(delta.y());
 	
@@ -484,7 +495,6 @@ QUndoCommand* MouseActionSelect::release(QMouseEvent *Event)
 } // select::release
 /*--------------------------------------------------------------------------*/
 // void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent* Event)
-// press a mouse while delete action is active.
 // Event tells us where...
 QUndoCommand* MouseActionDelete::press(QEvent* e)
 { untested();
@@ -513,7 +523,7 @@ QUndoCommand* MouseActionDelete::press(QEvent* e)
 	return d;
 } // delete::press
 /*--------------------------------------------------------------------------*/
-#include <QGraphicsSceneEvent>
+// press a mouse while delete action is active.
 QUndoCommand* MouseActionDelete::generic(QEvent* e)
 {
 	if(!e){ untested();
