@@ -11,47 +11,14 @@
 template<class G>
 struct graph_traits{};
 
-#include "dynamic_cc.h"
-
 class Node;
 class NodeMap;
 class NetList;
 // describe the conductor graph.
 // Conductors are the vertices.
 // a connected component in this graph is a Net
-template<>
-struct graph_traits<NodeMap>{
-	typedef Conductor* vertex_descriptor;
-	typedef AdjConductorIterator adjacency_iterator;
-	typedef Net* cc_descriptor;
-
-	static std::pair<AdjConductorIterator,AdjConductorIterator>
-	adjacent_vertices(vertex_descriptor t, NodeMap const&) {
-		auto n = t->neighbours();
-		return std::make_pair(n.begin(), n.end());
-	}
-
-	// connected components parameters
-	static cc_descriptor invalid_cc() { return nullptr; }
-	static void set_cc(Conductor* t, Net* n) {
-		// assert(n); // no. could as well detach
-		trace2("set_cc", t, n);
-		t->setNet(n);
-	}
-	static cc_descriptor get_cc(vertex_descriptor t) {
-		return t->getNet();
-	}
-	static Net* new_cc(NodeMap& s);
-	static void del_cc(Net*, NodeMap& s);
-	static size_t& cc_size(Net* n, NodeMap const&);
-	// needed for searching
-	static void visit(Conductor* t, unsigned level) {
-		t->visit(level);
-	}
-	static bool visited(Conductor const* t, unsigned level) {
-		return t->visited(level);
-	}
-};
+template<class M>
+class ConnectedComponents;
 
 class NodeMap {
 public:
@@ -86,8 +53,8 @@ private:
 	// NodeList(NodeList const& x) : _model(x._model){unreachable();}
 	NodeMap(NodeMap const& x) = delete;
 public:
-	explicit NodeMap(NetList& n)
-		: _nets(n), _cc(*this) {}
+	explicit NodeMap(NetList& n);
+	~NodeMap();
 
 public:
 // 	iterator begin(){return _nodes.begin();}
@@ -124,20 +91,14 @@ public: // net access
 	void deregisterVertex(Conductor*);
 
 private:
+	ConnectedComponents<NodeMap>* new_ccs();
+
+private:
 	NetList& _nets;
 	container_type _nodes;
 private:
-	ConnectedComponents<NodeMap> _cc;
+	ConnectedComponents<NodeMap>* _cc;
 };
-
-inline Net* graph_traits<NodeMap>::new_cc(NodeMap& s)
-{
-	return s.newNet();
-}
-inline void graph_traits<NodeMap>::del_cc(Net* n, NodeMap& s)
-{
-	return s.delNet(n);
-}
 
 
 #endif
