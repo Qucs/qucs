@@ -100,10 +100,10 @@ Element* Component::clone() const
 // -------------------------------------------------------
 void Component::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
-  _x1 = x1+cx();
-  _y1 = y1+cy();
-  _x2 = x2+cx();
-  _y2 = y2+cy();
+  _x1 = x1; // +cx();
+  _y1 = y1; // +cy();
+  _x2 = x2; // +cx();
+  _y2 = y2; // +cy();
 }
 
 // -------------------------------------------------------
@@ -154,17 +154,25 @@ void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2, float Corr)
 
 // -------------------------------------------------------
 // "center" is the position
+// move to Element?
 void Component::setCenter(int x, int y, bool relative)
 {
+  if(scope()){
+    scope()->disconnect(this);
+  }else{ untested();
+  }
+
   if(relative) {
-    trace2("Component::relative move", Element::cx, Element::cy);
-    trace2("Component::relative move", x, y);
     Element::cx += x;
     Element::cy += y;
-    trace2("Component::relative moved", Element::cx, Element::cy);
   } else {
     Element::cx = x;
     Element::cy = y;
+  }
+
+  if(scope()){ untested();
+    scope()->connect(this);
+  }else{ untested();
   }
 }
 
@@ -212,6 +220,7 @@ int Component::getTextSelected(int x_, int y_, float Corr)
 // -------------------------------------------------------
 bool Component::getSelected(int x_, int y_)
 {
+  unreachable(); // obsolete
   x_ -= cx();
   y_ -= cy();
   if(x_ >= x1) if(x_ <= x2) if(y_ >= y1) if(y_ <= y2)
@@ -224,8 +233,8 @@ bool Component::getSelected(int x_, int y_)
 void Component::paint(ViewPainter *p) const
 {
   int x, y;
-  int cx = cx_(); // "positionX"
-  int cy = cy_(); // "positionY"
+  int cx = 0; // cx_(); // "positionX"
+  int cy = 0; // cy_(); // "positionY"
 //  int a, b, xb, yb;
   Element::paint(p);
   QFont f = p->Painter->font();   // save current font
@@ -335,6 +344,7 @@ void Component::paint(ViewPainter *p) const
 // Paints the component when moved with the mouse.
 void Component::paintScheme(SchematicDoc *p) const
 { untested();
+  unreachable(); // obsolete.
   // qDebug() << "paintScheme" << Model;
   int cx=cx_();
   int cy=cy_();
@@ -980,6 +990,7 @@ Component* LegacySchematicLang::loadComponent(const QString& _s, Component* c) c
 
 int Component::analyseLine(const QString& Row, int numProps)
 {
+  incomplete(); // obsolete
   QPen Pen;
   QBrush Brush;
   QColor Color;
