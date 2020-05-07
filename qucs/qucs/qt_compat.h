@@ -382,6 +382,15 @@ inline std::ostream& operator<<(std::ostream& o, QString const& q)
 
 #include <QPoint>
 #include <QPointF>
+inline int getX(QPoint const p)
+{
+	return p.x();
+}
+inline int getY(QPoint const p)
+{
+	return p.y();
+}
+
 inline std::ostream& operator<<(std::ostream&o, QPoint const& p)
 {
   return o << "(" << p.x() << ", " << p.y() << ")";

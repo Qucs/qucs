@@ -113,8 +113,8 @@ void Symbol::new_subckt()
 	_subckt = new SchematicModel(nullptr);
 }
 
-Symbol::~Symbol(){
-	// disconnect();
+Symbol::~Symbol()
+{
 	delete _subckt;
 	_subckt = nullptr;
 }

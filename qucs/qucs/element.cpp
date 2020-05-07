@@ -72,7 +72,8 @@ void Element::paint(ViewPainter* p) const
 // does not work for nodes and diagrams
 QRectF Element::boundingRect() const
 {
-	QRectF b(cx+x1, cy+y1, x2-x1, y2-y1);
+	// QRectF b(cx+x1, cy+y1, x2-x1, y2-y1);
+	QRectF b(x1, y1, x2-x1, y2-y1);
 	return b;
 }
 
