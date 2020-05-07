@@ -204,7 +204,14 @@ void Command::paint(ViewPainter *p) const
   QFont f = p->Painter->font();   // save current font
   QFont newFont = f;
   {   // is simulation component (dc, ac, ...)
-    newFont.setPointSizeF(p->Scale * Texts.first()->Size);
+    unsigned size;
+    if(!Texts.isEmpty()){
+      size = Texts.first()->Size;
+    }else{
+      // possibly incomplete.
+      size = 1;
+    }
+    newFont.setPointSizeF(p->Scale * size);
     newFont.setWeight(QFont::DemiBold);
     p->Painter->setFont(newFont);
     p->map(cx, cy, x, y);

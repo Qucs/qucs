@@ -36,7 +36,6 @@ SchematicModel::SchematicModel(Schematic* s)
 	  Nodes(Nets)
 {
 	trace2("::SchematicModel s", this, _doc_);
-	assert(!s); // DEBUG
 	if(s){ untested();
 	}else{
 	}
