@@ -69,8 +69,10 @@ public: // interface
 
 public: // non-virtual (on purpose)
   QString const& netLabel(unsigned i) const;
-  Node* connectNode(unsigned idx, NodeMap&);
-  Node* disconnectNode(unsigned idx, NodeMap&);
+
+public: // Node stuff
+  virtual Node* connectNode(unsigned idx, NodeMap&);
+  virtual Node* disconnectNode(unsigned idx, NodeMap&);
 
 public: // Port access
   QString const& portValue(unsigned) const;

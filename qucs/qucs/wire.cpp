@@ -7,21 +7,21 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 #include "wire.h"
 #include "node.h"// bug. conductor.h
+#include "nodemap.h"
 
 #include <QPainter>
 
 Wire::Wire(int _x1, int _y1, int _x2, int _y2)
-	: Conductor(), _port0(_x1, _y1), _port1(_x2, _y2)
+	: _port0(_x1, _y1), _port1(_x2, _y2)
 {
   cx = 0;
   cy = 0;
-  Conductor::Label  = 0; // BUG
 
   Type = isWire; // BUG
   _node_hack.push_back(nullptr);
@@ -269,7 +269,7 @@ Node* Wire::portValue(unsigned idx)
   return n;
 }
 #endif
-std::list<Element*>::iterator Wire::connectionsBegin()
+std::list<Node*>::iterator Wire::connectionsBegin()
 {
   assert(_node_hack.size()==2);
   auto a=_node_hack.begin();
@@ -281,5 +281,60 @@ std::list<Element*>::iterator Wire::connectionsBegin()
   return _node_hack.begin();
 }
 // ----------------------------------------------------------------
+// // fishy. involve base case?
+Node* Wire::connectNode(unsigned i, NodeMap&l)
+{
+  //Symbol::connectNode(i, l);
+  Port const& pp = port(i);
+  Port& mp = port(i);
+  Node* n = &l.at(pp.x_()+cx_(), pp.y_()+cy_());
+  assert(n->hasNet());
+
+
+  if(Node* other_node = port((i+1)%2).value()){
+    trace3("wire::connectnode", i, n, other_node);
+    l.addEdge(n, other_node);
+  }else{
+  }
+
+  n->connectionsAppend(this);
+  mp.connect(n);
+  return n;
+}
+// ----------------------------------------------------------------
+// // fishy. involve base case?
+Node* Wire::disconnectNode(unsigned i, NodeMap&nm)
+{
+  trace1("wire::disconnectNode", i);
+//  Node* n = port(i%2).value();
+  Node* n = Symbol::disconnectNode(i, nm);
+
+  if(Node* other_node = port((i+1)%2).value()){
+
+    // it's a wire.
+    // // BUG. but where?
+    trace2("wire::disconnectNode pre", n, other_node);
+    trace2("wire::disconnectNode pre", n->getNet(), other_node->getNet());
+    trace2("wire::disconnectNode pre", n->connectionsCount(), other_node->connectionsCount());
+    nm.postRemoveEdge(n, other_node);
+  }else{
+  }
+  return n;
+}
+// ----------------------------------------------------------------
+// ----------------------------------------------------------------
+Net* Wire::getNet()
+{
+  assert(_port0.value());
+  assert(_port1.value());
+  assert(_port0.value()->getNet() == _port1.value()->getNet());
+  return _port0.value()->getNet();
+}
+// ----------------------------------------------------------------
+Net const* Wire::getNet() const
+{ untested();
+  assert(_port0.value());
+  return _port0.value()->getNet();
+}
 // ----------------------------------------------------------------
 // vim:ts=8:sw=2:et

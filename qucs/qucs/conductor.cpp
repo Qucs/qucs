@@ -30,11 +30,6 @@ Conductor* AdjConductorIterator::operator*()
 	return c;
 }
 
-AdjConductorRange Conductor::neighbours()
-{
-	return AdjConductorRange(*this);
-}
-
 void AdjConductorIterator::skip()
 {
 	while(_elt!=_end){
@@ -49,29 +44,9 @@ void AdjConductorIterator::skip()
 
 Conductor::~Conductor()
 {
-	assert(!_net);
-}
-
-QString const& Conductor::netLabel() const
-{
-  assert(_net);
-  return _net->label();
-}
-
-bool Conductor::visited(unsigned lvl) const
-{
-	trace1("visited", dynamic_cast<Wire const*>(this));
-	trace3("visited", dynamic_cast<Node const*>(this), lvl, _visit);
-  return lvl == _visit;
 }
 
 
-void Conductor::setNet(Net* x)
-{
-// NetList::setNet(Net* this, Net** to);
-	trace3("setnet", this, _net, x);
-	_net = x;
-}
 
 
 #endif

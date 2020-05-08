@@ -11,11 +11,11 @@
 
 template<>
 struct graph_traits<NodeMap>{
-	typedef Conductor* vertex_descriptor;
-	typedef AdjConductorIterator adjacency_iterator;
+	typedef Node* vertex_descriptor;
+	typedef AdjNodeIterator adjacency_iterator;
 	typedef Net* cc_descriptor;
 
-	static std::pair<AdjConductorIterator,AdjConductorIterator>
+	static std::pair<AdjNodeIterator,AdjNodeIterator>
 	adjacent_vertices(vertex_descriptor t, NodeMap const&) {
 		auto n = t->neighbours();
 		return std::make_pair(n.begin(), n.end());
@@ -23,22 +23,27 @@ struct graph_traits<NodeMap>{
 
 	// connected components parameters
 	static cc_descriptor invalid_cc() { return nullptr; }
-	static void set_cc(Conductor* t, Net* n) {
-		// assert(n); // no. could as well detach
-		trace2("set_cc", t, n);
-		t->setNet(n);
+	static void unset_cc(Node* t, Net* n) {
+		assert(t);
+		t->detachNet(n);
+	}
+	static void set_cc(Node* t, Net* n) {
+		assert(t);
+		t->attachNet(n);
 	}
 	static cc_descriptor get_cc(vertex_descriptor t) {
 		return t->getNet();
 	}
-	static Net* new_cc(NodeMap& s);
+	static Net* new_cc(Node*, NodeMap& s);
 	static void del_cc(Net*, NodeMap& s);
-	static size_t& cc_size(Net* n, NodeMap const&);
+	static size_t cc_size(Net* n, NodeMap const&);
 	// needed for searching
-	static void visit(Conductor* t, unsigned level) {
+	static void visit(Node* t, unsigned level) {
+		assert(t);
 		t->visit(level);
 	}
-	static bool visited(Conductor const* t, unsigned level) {
+	static bool visited(Node const* t, unsigned level) {
+		assert(t);
 		return t->visited(level);
 	}
 };
@@ -64,7 +69,7 @@ ConnectedComponents<NodeMap>* NodeMap::new_ccs()
 int NodeMap::erase(Node* tt)
 {
 	assert(tt->hasNet());
-	Conductor* c = tt;
+	Node* c = tt;
 	_cc->deregisterVertex(c);
 	assert(!tt->hasNet());
 
@@ -81,6 +86,7 @@ Node* NodeMap::find_at(std::pair<int, int> key)
 		return nullptr;
 	}
 }
+
 Node* NodeMap::find_at(int x, int y)
 {
 	auto key=std::make_pair(x,y);
@@ -96,16 +102,15 @@ Node& NodeMap::new_at(int x, int y)
 
 	trace2("new_at", x, y);
 
-//	auto status = _nodes.emplace(key);
 	auto status = _nodes.emplace(new Node(key));
 	assert(status.second);
-	Node* pn = *status.first;
-	Conductor* c = pn;
+	Node* c = *status.first;
+	assert(!c->hasNet());
 
 	_cc->registerVertex(c);
    assert(c->hasNet());
 
-	return *pn;
+	return *c;
 }
 
 Node& NodeMap::at(int x, int y)
@@ -124,44 +129,50 @@ Node& NodeMap::at(int x, int y)
 }
 
 Net* NodeMap::newNet()
-{
+{ untested();
 	return _nets.newNet();
 }
 void NodeMap::delNet(Net* n)
-{
+{ untested();
 	assert(n);
 	return _nets.delNet(n);
 }
 
-void NodeMap::postRemoveEdge(Conductor* a, Conductor* b)
+void NodeMap::postRemoveEdge(Node* a, Node* b)
 {
   _cc->postRemoveEdge(a, b);
 }
-void NodeMap::addEdge(Conductor* a, Conductor* b)
+void NodeMap::addEdge(Node* a, Node* b)
 {
   _cc->addEdge(a, b);
 }
-void NodeMap::registerVertex(Conductor*c)
-{
+void NodeMap::registerVertex(Node*c)
+{ untested();
   _cc->registerVertex(c);
 }
-void NodeMap::deregisterVertex(Conductor*c)
-{
+void NodeMap::deregisterVertex(Node*c)
+{ untested();
   _cc->deregisterVertex(c);
 }
 
 /* -------------------------------------------------------------- */
-size_t& graph_traits<NodeMap>::cc_size(Net* n, NodeMap const&)
+size_t graph_traits<NodeMap>::cc_size(Net* n, NodeMap const&)
 {
 	assert(n);
-	return n->size_hack();
+	return n->size();
 }
-Net* graph_traits<NodeMap>::new_cc(NodeMap& s)
+/* -------------------------------------------------------------- */
+Net* graph_traits<NodeMap>::new_cc(Node*n, NodeMap& s)
 {
-	return s.newNet();
+	assert(n);
+	assert(!n->hasNet());
+	return n->newNet(s.netList());
 }
+/* -------------------------------------------------------------- */
 void graph_traits<NodeMap>::del_cc(Net* n, NodeMap& s)
-{
-	return s.delNet(n);
+{ untested();
+	incomplete();
+	// return s.delNet(n);
 }
-
+/* -------------------------------------------------------------- */
+/* -------------------------------------------------------------- */

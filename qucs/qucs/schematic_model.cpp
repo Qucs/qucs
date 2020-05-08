@@ -30,6 +30,10 @@ SchematicModel::SchematicModel()
 	trace2("::SchematicModel", this, _doc_);
 }
 
+SchematicModel::~SchematicModel()
+{
+}
+
 // getting here in GUI mode
 SchematicModel::SchematicModel(Schematic* s)
 	: _doc_(s),
@@ -45,12 +49,14 @@ SchematicModel::SchematicModel(Schematic* s)
 
 void SchematicModel::clear()
 {
-	// memory leak?!
+	incomplete(); // disconnect components
 	components().clear();
+
 	diagrams().clear();
 	{ // clearWires
-		// careful. deleting a wire may create another wire.
-		while(!wires().isEmpty()){
+		// (in legacy code) deleting a wire may create another wire.
+		while(wires().size()){
+			trace2("clear wire", wires().size(), nodes().size());
 			erase(wires().first());
 		}
 	}
@@ -246,7 +252,7 @@ Element* SchematicModel::detach(Element* what)
 
 // should be a QucsDoc*, probably
 Schematic* SchematicModel::doc()
-{  untested();
+{
 	trace2("doc", _doc_, this);
 	return _doc_;
 }
@@ -258,7 +264,7 @@ QFileInfo const& SchematicModel::getFileInfo ()const
 
 WireList& SchematicModel::wires()
 {
-	return Wires;
+	return _wires;
 }
 
 NodeMap& SchematicModel::nodes()
@@ -296,7 +302,7 @@ ComponentList const& SchematicModel::components() const
 
 WireList const& SchematicModel::wires() const
 {
-	return Wires;
+	return _wires;
 }
 
 NodeMap const& SchematicModel::nodes() const
@@ -528,8 +534,6 @@ void SchematicModel::simpleInsertComponent(Component *c)
 // screw this.
 void SchematicModel::simpleInsertWire(Wire *pw)
 {
-  Conductor* c = pw;
-  Nodes.registerVertex(c);
   Node *pn=nullptr;
   // pn = &nodes().at(pw->x1_(), pw->y1_());
 
@@ -558,7 +562,6 @@ void SchematicModel::simpleInsertWire(Wire *pw)
 //  Conductor* n0 = pw->connectNode(0, nodes());
 //  Conductor* n1 = pw->connectNode(1, nodes());
 
-  Conductor* _w = pw;
 
 #else
   Node* p2 = &nodes().at(pw->x2_(), pw->y2_());
@@ -617,32 +620,24 @@ void SchematicModel::disconnect(Symbol* c)
 		if(!nn){
 			unreachable();
 		}else if(nn->connectionsCount()==0){
-			Conductor* cc = nn;
-//			nodes().erase(cc);
+			nodes().erase(nn); // possibly garbage collect only.
 		}else if(nn->connectionsCount()==2){ untested();
 			oneTwoWires(nn);  // two wires -> one wire
 		}else{
 		}
 	}
-
-	// TODO: drop after removing Conductor.
-	if(Conductor* cw = dynamic_cast<Wire*>(c)){
-		assert(c->portCount()==2); // for now.
-		Nodes.deregisterVertex(cw);
-	}else{ untested();
-	}
 }
 
 void SchematicModel::connect(Symbol* c)
 {
-	if(Conductor* cw = dynamic_cast<Wire*>(c)){
-		Nodes.registerVertex(cw);
-		assert(2==c->portCount());
-	}else{
-	}
+// 	if(Conductor* cw = dynamic_cast<Wire*>(c)){
+// 		Nodes.registerVertex(cw);
+// 		assert(2==c->portCount());
+// 	}else{
+// 	}
 
 	for(unsigned i=0; i<c->portCount(); ++i){
-		c->connectNode(i, nodes());
+		c->connectNode(i, nodes()); // use scope.
 		assert(dynamic_cast<Symbol const*>(c)->port(i).connected());
 	}
 }

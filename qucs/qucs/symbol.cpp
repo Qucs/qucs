@@ -36,17 +36,17 @@ QString const& Symbol::netLabel(unsigned i) const
 }
 
 // could as well be NodeMap::connect(Symbol). but why?
-Node* Symbol::connectNode(unsigned i, NodeMap&l)
+Node* Symbol::connectNode(unsigned i, NodeMap&nm)
 {
 	Port const& pp = port(i);
 	Port& mp = port(i);
-	Node* n = &l.at(pp.x_()+cx_(), pp.y_()+cy_());
+	Node* n = &nm.at(pp.x_()+cx_(), pp.y_()+cy_());
 	assert(n->hasNet());
 
-	if(auto c=dynamic_cast<Conductor*>(this)){
-		l.addEdge(n, c);
-	}else{
-	}
+// 	if(auto c=dynamic_cast<Conductor*>(this)){
+// 		l.addEdge(n, c);
+// 	}else{
+// 	}
 	n->connectionsAppend(this);
 	mp.connect(n);
 	return n;
@@ -59,14 +59,15 @@ Node* Symbol::disconnectNode(unsigned i, NodeMap&nm)
 	assert(n);
 	mp.disconnect();
 	n->connectionsRemove(this);
-	if(auto c=dynamic_cast<Conductor*>(this)){
-		// it's a wire.
-		nm.postRemoveEdge(n, c);
-	}else{ untested();
+
+#if 0
+	if(n->connectionsCount()==0){
+		incomplete(); // need node in removeEdge
+		nm.erase(nn);
+	}else{
 	}
-	if(n->connectionsCount() == 0){
-		nm.erase(n);
-	}
+#endif
+
 	return n;
 }
 

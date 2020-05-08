@@ -20,7 +20,6 @@
 #ifndef UNTANGLE_QT // BUG
 # include "viewpainter.h"
 #endif
-#include "conductor.h"
 #include "components/component.h"    // because of struct Port
 #include "wirelabel.h"
 #include "platform.h"
@@ -31,7 +30,7 @@ class QString;
 class dummy {};
 
 
-class Wire : public Conductor, public Symbol {
+class Wire : public Symbol {
 public:
   Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0); //  Node *n1=0, Node *n2=0);
   ~Wire();
@@ -58,6 +57,17 @@ public:
 // private: not yet
   bool    obsolete_load(const QString&);
 
+public: // Node xs
+  bool hasNet() const { return _port0.connected(); }
+  Net* getNet();
+  Net const* getNet() const;
+
+  QString const& netLabel() const;
+
+private: // symbol Node stuff
+  Node* connectNode(unsigned idx, NodeMap&) override;
+  Node* disconnectNode(unsigned idx, NodeMap&) override;
+
 private: // Symbol
   unsigned portCount() const{ return 2; }
 
@@ -68,8 +78,8 @@ public:
 public:
 //  void setPortByIndex(unsigned idx, Node* n);
 //  Node* portValue(unsigned idx);
-  std::list<Element*>::iterator connectionsBegin();
-  std::list<Element*>::iterator connectionsEnd(){
+  std::list<Node*>::iterator connectionsBegin();
+  std::list<Node*>::iterator connectionsEnd(){
 	  return _node_hack.end();
   }
 
@@ -84,7 +94,7 @@ private: // Symbol, internal port access.
   }
 
 private:
-  std::list<Element*> _node_hack;
+  std::list<Node*> _node_hack;
 
 public: // FIXME, these are still around. (from element)
 	//int & cx__() { return cx; }

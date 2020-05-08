@@ -15,19 +15,21 @@
 class Net : public Object{
 public:
 private:
-	friend class NetList;
-	explicit Net() : Object(), _size(0) {}
-	~Net(){}
+	friend class NetList; // TODO
+	friend class Node; // TODO
+	explicit Net() : Object(), _size(0), _pos(0) {}
+	~Net(){ assert(_size==0); }
 private:
 	Net( const Net& ) {unreachable();}
 
 public:
 	size_t size() const{return _size;}
-	void setSize(size_t s) { _size = s;}
-	size_t& size_hack(){return _size;}
 
 	void setPos(unsigned u){_pos=u;}
 	unsigned getPos(){return _pos;}
+
+	void inc_nodes(){++_size;}
+	void dec_nodes(){assert(_size!=-1); --_size;}
 
 private:
 	size_t _size; // number of Conductors
