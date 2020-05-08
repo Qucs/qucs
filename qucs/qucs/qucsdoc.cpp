@@ -23,9 +23,10 @@
 #include "io.h" // tmp?
 
 
-QucsDoc::QucsDoc(QucsApp *App_, const QString& Name_)
+QucsDoc::QucsDoc(QucsApp &App_, const QString& Name_)
+	: App(&App_),
+     _app(App_)
 {
-  App = App_;
   undoStack = new QUndoStack;
 
   GridOn = true;
@@ -94,6 +95,7 @@ QString QucsDoc::fileBase (void) {
 // cleanup debris
 QAction* QucsDoc::selectAction()
 {
+	assert(App);
   	return App->select;
 }
 

@@ -48,6 +48,7 @@ void ElementGraphics::setPos(int a, int b)
 #endif
 // ---------------------------------------------------
 // forward to graphicscene, once it is there.
+// BUG: what if there are multiple items?
 ElementGraphics* Schematic::itemAt(float x, float y)
 {
 #ifndef USE_SCROLLVIEW
@@ -61,6 +62,7 @@ ElementGraphics* Schematic::itemAt(float x, float y)
 		return nullptr;
 	}
 #else
+	incomplete don't use qt<5
 	for(auto pc : components()){
 		if(pc->getSelected(x, y))
 			return (ElementGraphics*)(pc);

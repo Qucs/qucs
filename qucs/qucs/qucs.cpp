@@ -1,9 +1,6 @@
 /***************************************************************************
-                                 qucs.cpp
-                                ----------
-    begin                : Thu Aug 28 2003
     copyright            : (C) 2003, 2004, 2005, 2006 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2018, 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -2332,6 +2329,8 @@ void QucsApp::slotOpenContent(const QModelIndex &idx)
   QString extName = Info.suffix();
 
   if (extName == "sch" || extName == "dpl") {
+
+    // BUG BUG BUG
     gotoPage(Info.absoluteFilePath());
     updateRecentFilesList(Info.absoluteFilePath());
     slotUpdateRecentFiles();
@@ -2431,12 +2430,13 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
   view->selElem = 0;
 
   // toggle last toolbar button off
+  //  toolbar->deactivate();
   if(activeAction) {
     activeAction->blockSignals(true); // do not call toggle slot
     activeAction->setChecked(false);       // set last toolbar button off
     activeAction->blockSignals(false);
   }
-  activeAction = 0;
+  activeAction = 0; //??
 
   Symbol* Symb;
   if(isVHDL){
@@ -3083,7 +3083,8 @@ Schematic *ContextMenuTabWidget::createEmptySchematic(const QString &name)
 {
   // create a schematic
   QFileInfo Info(name);
-  Schematic *d = new Schematic(App, name);
+  assert(App);
+  Schematic *d = new Schematic(*App, name);
   int i = addTab(d, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
   setCurrentIndex(i);
   return d;

@@ -2134,24 +2134,54 @@ int Schematic::copyElements(int& x1, int& y1, int& x2, int& y2,
 }
 
 // ---------------------------------------------------
-// Deletes all selected elements.
-// return what?
-// BUG: deletes selection
-bool Schematic::deleteElements()
-{
-#ifndef USE_SCROLLVIEW
-    // todo: elements seem to be entangled, see below old code.
-//    scene()->selectionChanged();
-    for(auto ge : scene()->selectedItems()){ untested();
-	qDebug() << "select" << ge << ge->isSelected();
-	if(auto e=dynamic_cast<ElementGraphics*>(ge)){
-	    DocModel.deleteItem(e);
-	}else{
-	    unreachable();
-	    incomplete();
+// // certainly not here.
+#include <QUndoCommand>
+class DeleteSelection : public QUndoCommand {
+public:
+    template<class IT>
+    DeleteSelection(Schematic& ctx, IT selection)
+	: _ctx(ctx){ untested();
+	for(auto i : selection){ untested();
+	    if(auto eg=dynamic_cast<ElementGraphics*>(i)){
+		_gfx.push_back(eg);
+	    }else{ untested();
+		unreachable(); // really? use prechecked_cast then.
+	    }
 	}
+	setText("delete $n items");
     }
-    return true; // ?
+    void undo() override { untested();
+	// push elements back into SchematicModel.
+	// create gfx objects and keep references here.
+	for(auto& d : _data){
+            auto handle = &_ctx.addToScene(d);
+	    _gfx.push_back(handle);
+	}
+	_data.clear();
+    }
+    void redo() override { untested();
+	// take ownership of Elements from SchematicModel.
+	// detach from SchematicModel. Deleting gfx objects will make them
+	// disappear.
+	for(auto& d : _gfx){ untested();
+	    Element* e = _ctx.eraseFromScene(d);
+	    _data.push_back(e);
+	}
+	_gfx.clear();
+    }
+private:
+    SchematicDocument& _ctx;
+    std::vector<ElementGraphics*> _gfx;
+    std::vector<Element*> _data;
+};
+// ---------------------------------------------------
+// Deletes all selected elements.
+// BUG: deletes selection
+QUndoCommand* Schematic::deleteElements()
+{ untested();
+#ifndef USE_SCROLLVIEW
+    return new DeleteSelection(*this, scene()->selectedItems());
+    // return true; // ??
 #else
     bool sel = false;
 

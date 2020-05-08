@@ -36,10 +36,13 @@ class MouseActions;
 class QUndoStack;
 
 class QucsDoc {
-public: 
-  QucsDoc(QucsApp*, const QString&);
+protected:
+	QucsDoc(const QucsDoc&);
+public:
+  explicit QucsDoc(QucsApp&, const QString&);
   virtual ~QucsDoc();
 
+public:
   virtual void  setName(const QString&) {};
   virtual bool  load() { return true; };
   virtual int   save() { return 0; };
@@ -68,7 +71,8 @@ public:
   QDateTime lastSaved;
 
   float Scale;
-  QucsApp *App;
+  QucsApp &_app;
+  QucsApp* App; // TODO: delete.
   bool DocChanged;
   bool SimOpenDpl;   // open data display after simulation ?
   bool SimRunScript; // run script after simulation ?

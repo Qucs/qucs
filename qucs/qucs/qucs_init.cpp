@@ -37,9 +37,7 @@
 
 #include <assert.h>
 
-/**
- * @brief QucsApp::initActions Initializes all QActions of the application
- */
+// BUG: this is the toolbar.
 void QucsApp::initActions()
 {
   activeAction = 0;   // no active action
@@ -315,6 +313,8 @@ void QucsApp::initActions()
   exportAsImage->setWhatsThis(tr("Export as image\n\nExports the current document to an image file"));
 
   // cursor left/right/up/down to move marker on a graph
+  // BUG: why can't we move Elements?!
+  // BUG: why is tnis not in SchematicDocument::init (or so?)
   cursorLeft = new QShortcut(QKeySequence(Qt::Key_Left), this);
   connect(cursorLeft, SIGNAL(activated()), SLOT(slotCursorLeft()));
 
