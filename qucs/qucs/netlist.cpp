@@ -22,11 +22,11 @@ Net* NetList::newNet()
 		_l.push_back(new Net());
 		trace4("newNet", _l.back(), idx, _l.size(), this);
 		_l[idx]->setPos(idx);
-	}else{
+	}else{ untested();
 		idx = _g.top();
 		_g.pop();
 		assert(_l[idx]->size() == -1);
-		_l[idx]->setSize(0);
+		_l[idx]->inc_nodes();
 		assert(_l[idx]->getPos() == idx);
 	}
 
@@ -37,12 +37,12 @@ Net* NetList::newNet()
 }
 
 void NetList::delNet(Net* n)
-{
+{ untested();
 	trace1("delNet", n);
 	assert(n);
 	trace1("delNet", n->size());
 	assert(n->size() == 0);
-	n->setSize(-1);
+	n->dec_nodes();
 
 	size_t idx = n->getPos();
 	trace3("delNet", idx, _l.size(), this);

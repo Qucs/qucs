@@ -50,7 +50,6 @@ public:
 	typedef container_type::iterator iterator;
 	typedef container_type::const_iterator const_iterator;
 private:
-	// NodeList(NodeList const& x) : _model(x._model){unreachable();}
 	NodeMap(NodeMap const& x) = delete;
 public:
 	explicit NodeMap(NetList& n);
@@ -74,8 +73,8 @@ public: //obsolete interface
 #endif
 
 public: // friend Symbol?
-	void addEdge(Conductor* a, Conductor* b);
-	void postRemoveEdge(Conductor* a, Conductor* b);
+	void addEdge(Node* a, Node* b);
+	void postRemoveEdge(Node* a, Node* b);
 
 public:
 	Node* find_at(int x, int y);
@@ -84,11 +83,12 @@ public:
 	Node& new_at(int x, int y); // same as at. but don't search
 
 public: // net access
+	NetList& netList(){return _nets;}
 	Net* newNet();
 	void delNet(Net*);
 
-	void registerVertex(Conductor*);
-	void deregisterVertex(Conductor*);
+	void registerVertex(Node*);
+	void deregisterVertex(Node*);
 
 private:
 	ConnectedComponents<NodeMap>* new_ccs();

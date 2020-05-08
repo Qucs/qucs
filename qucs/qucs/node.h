@@ -17,9 +17,13 @@
 
 #include "conductor.h"
 #include "qt_compat.h"
+#include "platform.h"
+//#include "wire.h" // bug
 
 class ViewPainter;
 class NodeMap;
+class NetList;
+class AdjNodeRange;
 
 class Node : public Conductor, public Element /* Object? */ {
 private:
@@ -35,6 +39,7 @@ public:
 	  return NULL; // new Node(*this);
   }
 
+  AdjNodeRange neighbours();
   void connectionsAppend(Element* e){ // "connect"?
 	  Connections.append(e);
   }
@@ -90,6 +95,7 @@ public:
   }
 
 public:
+  QString const& netLabel() const;
   bool hasLabel() const{
 	  // possibly "one of the connections is a label?"
 	  incomplete();
@@ -130,9 +136,84 @@ public: // protected coordinate abuse
   void set_something(int x){
 	  x1|=x;
   }
+public: // internal. here?
+  bool hasNet() const { return _net; }
+  Net* getNet() {assert(_net); return _net; }
+  Net* newNet(NetList&);
+  Net const* getNet() const {assert(_net);  return _net; }
+  void setNet(Net* x){_net = x; }
+  void attachNet(Net* x);
+  void detachNet(Net* x);
+  bool visited(unsigned lvl) const {return lvl == _visit;}
+  void visit(unsigned lvl){ _visit = lvl; }
+
 private:
+  // BUG: also stored in port?
   const std::pair<int, int> _position;
+private:
+  Net* _net;
+  unsigned _visit; // keep track of what has been done
 };
+/* ---------------------------------------------------------- */
+class AdjNodeIterator{
+public:
+	typedef std::list<Element*>::iterator elt_iter;
+	typedef std::list<Node*>::iterator node_iter;
+public:
+	AdjNodeIterator(elt_iter b, elt_iter e);
+public:
+	AdjNodeIterator(AdjNodeIterator const& o)
+		: _wire(o._wire),
+		  _wend(o._wend),
+		  _node(o._node),
+		  _nend(o._nend){
+			  assert(o.is_valid());
+			  assert(is_valid());
+	}
+public:
+	Node* operator*();
+	
+	AdjNodeIterator& operator++();
+	bool operator==(AdjNodeIterator const& o);
+	bool operator!=(AdjNodeIterator const& o){
+		return !(*this == o);
+	}
+private:
+	void next();
+	bool is_valid() const;
+	void skip();
+private:
+	elt_iter _wire;
+	elt_iter _wend;
+	node_iter _node;
+	node_iter _nend;
+	
+public:
+	friend class AdjNodeRange;
+};
+/* ---------------------------------------------------------- */
+// could use pair?
+class AdjNodeRange{
+public:
+	explicit AdjNodeRange(Node& c);
+public:
+	AdjNodeRange(AdjNodeRange const&o)
+		: _begin(o._begin),
+		  _end(o._end){
+		assert(_begin.is_valid());
+		assert(_end.is_valid());
+	}
+public:
+	AdjNodeIterator begin(){
+		return _begin;
+	}
+	AdjNodeIterator end(){
+		return _end;
+	}
 
-
+private:
+	AdjNodeIterator _begin;
+	AdjNodeIterator _end;
+};
+/* ---------------------------------------------------------- */
 #endif

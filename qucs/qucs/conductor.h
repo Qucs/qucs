@@ -15,6 +15,7 @@
 #define QUCS_CONDUCTOR_H
 
 #include "element.h"
+//#include "node.h"
 // access nodes connected to a Node though a Conductor
 //
 class Conductor;
@@ -82,22 +83,14 @@ public:
 	  INVALID=-1u
   };
 protected:
-  explicit Conductor() : _net(nullptr), _visit(0) {}
+  explicit Conductor()  {}
   ~Conductor();
 public:
 //  unsigned netNumber();
 //  void resetNetNumber(){ _cn = INVALID; }
-  void setNet(Net* x);
-  bool hasNet() const { return _net; }
-  Net* getNet() {assert(_net); return _net; }
-  Net const* getNet() const {assert(_net);  return _net; }
-  AdjConductorRange neighbours();
-
-  QString const& netLabel() const;
-
-public: // internal. here?
-  bool visited(unsigned lvl) const;
-  void visit(unsigned lvl){ _visit = lvl; }
+//   void setNet(Net* x);
+//   bool hasNet() const { return _net; }
+// 
 
 public:
   virtual std::list<Element*>::iterator connectionsBegin() = 0;
@@ -105,9 +98,6 @@ public:
 
 public:
   WireLabel *Label; // BUG
-private:
-  Net* _net;
-  unsigned _visit; // keep track of what has been done
 };
 
 #endif // guard
