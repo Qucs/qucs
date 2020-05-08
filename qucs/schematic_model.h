@@ -73,6 +73,7 @@ private:
 #endif
 public:
 	SchematicModel(Schematic* s);
+	~SchematicModel();
 public: // stuff saved from Schematic
 	QString createClipboardFile();
 	void sizeOfAll(int&, int&, int&, int&, float) const;
@@ -137,6 +138,7 @@ private: // used in erase?
 	void       deleteComp(Component*c);
 
 public: // node stuff. why public?
+	size_t wireCount(){ return wires().size(); }
 	size_t nodeCount(){ return nodes().size(); }
 	Node* insertNode(int x, int y, Element* owner);
 	void insertSymbolNodes(Symbol *c, bool noOptimize);
@@ -185,7 +187,7 @@ private:
 	NetList Nets;
 	NodeMap Nodes;
 	DiagramList Diagrams;
-	WireList Wires;
+	WireList _wires;
 //	SchematicSymbol* _symbol;
 	QStringList PortTypes;
 	QFileInfo FileInfo;

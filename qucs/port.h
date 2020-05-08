@@ -28,8 +28,10 @@ private:
 
 public:
  // Port() {};
-  explicit Port(int _x, int _y, bool _avail=true) : x(_x), y(_y), avail(_avail) {
-    Type=""; Name=""; Connection=nullptr;};
+  explicit Port(int _x, int _y, bool _avail=true)
+	  : x(_x), y(_y), avail(_avail), Connection(nullptr)
+  {
+    Type=""; Name=""; };
 
 public:
   int x_()const{return x;}

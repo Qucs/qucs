@@ -43,56 +43,55 @@ const unsigned INVALID = -1u;
 
 /*--------------------------------------------------------------------------*/
 // find a node in a graph
-template<class G, class V>
+template<class G>
 class FindVertex{
 private:
 	typedef typename G::adjacency_iterator adjacency_iterator;
 	typedef typename G::vertex_descriptor vertex_descriptor;
 public:
-	enum status_t { sDUNNO, sSUCCESS, sFAIL };
+	enum status_t { sDUNNO = 0, sSUCCESS = 1, sFAIL = 2};
 private:
 	FindVertex(FindVertex const&){ unreachable(); }
 public:
-	explicit FindVertex(G const& g,
-			vertex_descriptor const& start, vertex_descriptor& needle)
-		: _graph(g), _needle(needle) {
-
-		assert(!_graph.visited(start));
-		assert(start!=needle);
-
-		auto f = av(start).first;
-		auto fe = av(start).second;
-		if(f==fe){
-		}else{
-			assert(!_graph.visited(*f));
-		}
-//		skip_to_unvisited_or_end(f, g);
-		_graph.visit(start);
-		_stack.push(std::make_pair(start, f));
+	explicit FindVertex(int id, G const& g) : _id(id), _graph(g) {}
+	~FindVertex(){
+		clearstack();
 	}
 public:
+	void init(vertex_descriptor const& start, vertex_descriptor& needle);
+
+public:
 	vertex_descriptor& needle() { return _needle; }
-	status_t step();
+	status_t dfs_step();
 
 private:
-	void skip_to_unvisited_or_end(adjacency_iterator& i, adjacency_iterator const& end);
 	std::pair<adjacency_iterator, adjacency_iterator> av(vertex_descriptor v){
 		return _graph.av(v);
 	}
+	void skip_to_unvisited_or_end(adjacency_iterator& i, adjacency_iterator const& end);
+	void clearstack(){
+		while(_stack.size()){
+			_stack.pop();
+		}
+	}
 
 private:
+	int _id;
 	G const& _graph;
-	vertex_descriptor& _needle;
-	std::stack<std::pair<vertex_descriptor, adjacency_iterator> > _stack;
+	vertex_descriptor _needle;
+	std::stack<std::pair<adjacency_iterator, adjacency_iterator> > _stack;
 };
 /*--------------------------------------------------------------------------*/
-template<class G, class V>
-void FindVertex<G, V>::skip_to_unvisited_or_end(
-	typename  FindVertex<G, V>::adjacency_iterator& i,
-	typename  FindVertex<G, V>::adjacency_iterator const& end)
+template<class G>
+void FindVertex<G>::skip_to_unvisited_or_end(
+	typename  FindVertex<G>::adjacency_iterator& i,
+	typename  FindVertex<G>::adjacency_iterator const& end)
 {
 	while (i!=end){
-		if(_graph.visited(*i)){
+		if(_graph.visited(*i, (_id-1)%2)){
+			// the other process has been here.
+			break;
+		}else if(_graph.visited(*i, _id)){
 			++i;
 		}else{
 			break;
@@ -100,32 +99,36 @@ void FindVertex<G, V>::skip_to_unvisited_or_end(
 	}
 }
 /*--------------------------------------------------------------------------*/
-template<class G, class V>
-typename FindVertex<G, V>::status_t FindVertex<G, V>::step()
+template<class G>
+typename FindVertex<G>::status_t FindVertex<G>::dfs_step()
 {
 	status_t st = sDUNNO;
 
 	if (_stack.empty()){
 		st = sFAIL;
 	}else{
+		trace1("step", _stack.size());
 		auto& t = _stack.top();
 
-		if(t.second == av(t.first).second){
+		assert(t.first == t.second || *t.first);
+
+		if(t.first == t.second){
 			_stack.pop();
-		}else if(*t.second == _needle){ untested();
+		}else if(_graph.visited(*t.first, (_id+1)%2)){
 			st = sSUCCESS;
 		}else{
-			auto current = *t.second;
-			++t.second;
-			skip_to_unvisited_or_end(t.second, av(t.first).second);
-			_graph.visit(current);
+			vertex_descriptor current = *t.first;
+			++t.first;
+			skip_to_unvisited_or_end(t.first, t.second);
+			_graph.visit(current, _id);
 
 			auto ff = av(current).first;
 			auto gg = av(current).second;
 			skip_to_unvisited_or_end(ff, gg);
 
 			// TODO: tail recursion if t.second==t.first
-			_stack.push(std::make_pair(current, ff));
+			assert(ff == gg || *ff);
+			_stack.push(std::make_pair(ff, gg));
 		}
 	}
 
@@ -135,13 +138,20 @@ typename FindVertex<G, V>::status_t FindVertex<G, V>::step()
 /*--------------------------------------------------------------------------*/
 template<class G>
 class ConnectedComponents {
+private:
+	typedef FindVertex<ConnectedComponents<G> > vertexfinder;
 public:
 	typedef typename graph_traits<G>::adjacency_iterator adjacency_iterator;
 	typedef typename graph_traits<G>::vertex_descriptor vertex_descriptor;
 	typedef typename graph_traits<G>::vertex_descriptor vertex;
 	typedef typename graph_traits<G>::cc_descriptor ccid_t;
 public:
-	explicit ConnectedComponents(G& g) : _find_lvl(0), _graph(g) {}
+	explicit ConnectedComponents(G& g)
+	  	: _find_lvl(0),
+		  _graph(g),
+        _fv(0, *this),
+        _fw(1, *this)
+	{}
 public:
 
 	unsigned next_level(){
@@ -156,14 +166,11 @@ public:
 	unsigned level() const{ return _find_lvl; }
 
 public:
-	void visit(vertex_descriptor const& v) const{
-		trace2("visit", v, _find_lvl);
-		graph_traits<G>::visit(v, _find_lvl);
+	void visit(vertex_descriptor const& v, int id) const{
+		graph_traits<G>::visit(v, _find_lvl-id);
 	}
-	bool visited(vertex_descriptor const& v) const{
-		bool vis = graph_traits<G>::visited(v, _find_lvl);
-		trace3("visited?", v, _find_lvl, vis);
-		return vis;
+	bool visited(vertex_descriptor const& v, int id) const{
+		return graph_traits<G>::visited(v, _find_lvl-id);
 	}
 
 public:
@@ -176,7 +183,7 @@ private:
 	size_t cc_size(vertex const&) const;
 	void assign_new_cc(vertex&, vertex&);
 	ccid_t new_ccid();
-	size_t set_ccid_recursive(vertex&, ccid_t i);
+	size_t swap_cc_recursive(vertex&, ccid_t from, ccid_t to, bool root=false);
 public:
 	std::pair<adjacency_iterator, adjacency_iterator> av(vertex_descriptor v) const{
 		return graph_traits<G>::adjacent_vertices(v, _graph);
@@ -188,7 +195,10 @@ private:
 
 private:
 	std::stack<size_t> _garbage; // unused cc_numbers
-};
+
+	vertexfinder _fv;
+	vertexfinder _fw;
+}; // ConnectedComponents
 /*--------------------------------------------------------------------------*/
 // assign unused or new ccid to vertex.
 template<class G>
@@ -196,20 +206,18 @@ typename ConnectedComponents<G>::vertex&
 ConnectedComponents<G>::registerVertex(
 		typename ConnectedComponents<G>::vertex& t)
 {
-//	assert(index(t) == INVALID);
-	auto cc = new_ccid();
-	assert(cc); // BUG
-
-	graph_traits<G>::set_cc(t, cc);
-	graph_traits<G>::cc_size(cc, _graph) += 1;
+	trace1("dcc::rv", t);
+	graph_traits<G>::new_cc(t, _graph);
 	return t;
 }
 /*--------------------------------------------------------------------------*/
+#if 0
 template<class T>
 typename ConnectedComponents<T>::ccid_t ConnectedComponents<T>::new_ccid()
 {
 	return graph_traits<T>::new_cc(_graph);
 }
+#endif
 /*--------------------------------------------------------------------------*/
 // take out vertex.
 // this may lead to an unused cc id. garbage collect it.
@@ -222,33 +230,34 @@ ConnectedComponents<T>::deregisterVertex(
 	assert(cc != graph_traits<T>::invalid_cc());
 
 	assert(graph_traits<T>::cc_size(cc, _graph));
-	size_t n = --graph_traits<T>::cc_size(cc, _graph);
 
-	graph_traits<T>::set_cc(t, graph_traits<T>::invalid_cc());
+	graph_traits<T>::unset_cc(t, cc);
 
-	trace1("more vertices?", n);
-	if (n==0){
-		graph_traits<T>::del_cc(cc, _graph);
-	}else{
-		trace1("strange", n);
-	}
 	return t;
 }
 /*--------------------------------------------------------------------------*/
 // set ccid for connected component containing v
 template<class T>
-size_t ConnectedComponents<T>::set_ccid_recursive(
+size_t ConnectedComponents<T>::swap_cc_recursive(
 		typename ConnectedComponents<T>::vertex& v,
-		typename ConnectedComponents<T>::ccid_t i)
+		typename ConnectedComponents<T>::ccid_t from,
+		typename ConnectedComponents<T>::ccid_t to,
+		bool cont)
 {
 	unsigned cnt=0;
-	if(graph_traits<T>::get_cc(v) != i){
-		graph_traits<T>::set_cc(v, i);
+	if(graph_traits<T>::get_cc(v) != to){
+		graph_traits<T>::unset_cc(v, from);
+		graph_traits<T>::set_cc(v, to);
+		cont = true;
+	}else{
+	}
+
+	if(cont){
 		auto a = av(v);
 		for(auto n=a.first; n!=a.second; ++n){
 			auto nn = *n;
 			assert(nn);
-			cnt += set_ccid_recursive(nn, i);
+			cnt += swap_cc_recursive(nn, from, to);
 		}
 		cnt += 1;
 	}else{
@@ -268,25 +277,26 @@ void ConnectedComponents<T>::addEdge(
 	if(graph_traits<T>::get_cc(v) == graph_traits<T>::get_cc(w)){
 		// we are done.
 	}else{
-		auto freed_cc = graph_traits<T>::get_cc(v);
+		trace0("addEdge merge");
+		auto from = graph_traits<T>::get_cc(v);
 		vertex* smallerv = &v;
 		auto ccv = graph_traits<T>::get_cc(v);
 		auto ccw = graph_traits<T>::get_cc(w);
-		auto nn = ccw;
+		auto to = ccw;
 
 
-	  	if(graph_traits<T>::cc_size(ccw, _graph) < graph_traits<T>::cc_size(ccv, _graph)){
+		if(graph_traits<T>::cc_size(ccw, _graph) < graph_traits<T>::cc_size(ccv, _graph)){
 			smallerv = &w;
-			nn = ccv;
-			freed_cc = graph_traits<T>::get_cc(w);
+			to = ccv;
+			from = graph_traits<T>::get_cc(w);
 		}else{
 		}
+		trace1("addedge", graph_traits<T>::cc_size(from, _graph) );
+		trace1("addedge", graph_traits<T>::cc_size(to, _graph) );
 
-		size_t howmany = set_ccid_recursive(*smallerv, nn);
-		graph_traits<T>::cc_size(nn, _graph) += howmany;
-		assert(graph_traits<T>::cc_size(freed_cc, _graph) == howmany);
-		graph_traits<T>::cc_size(freed_cc, _graph) = 0;
-		graph_traits<T>::del_cc(freed_cc, _graph);
+		size_t howmany = swap_cc_recursive(*smallerv, from, to);
+		trace1("addedge", howmany);
+		assert(graph_traits<T>::cc_size(from, _graph) == 0);
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -303,15 +313,20 @@ void ConnectedComponents<T>::assign_new_cc(
 		typename ConnectedComponents<T>::vertex& v,
 		typename ConnectedComponents<T>::vertex& w)
 {
-	auto nn = ConnectedComponents<T>::new_ccid();
-	size_t howmany = set_ccid_recursive(v, nn);
-
-	auto vcc = graph_traits<T>::get_cc(v);
+	auto from = graph_traits<T>::get_cc(v);
 	auto wcc = graph_traits<T>::get_cc(w);
 
-	graph_traits<T>::cc_size(vcc, _graph) += howmany;
-	graph_traits<T>::cc_size(wcc, _graph) -= howmany;
+	trace1("reassign", graph_traits<T>::cc_size(from, _graph));
+	trace1("reassign", graph_traits<T>::cc_size(wcc, _graph));
+
+	graph_traits<T>::unset_cc(v, from);
+	ccid_t to = graph_traits<T>::new_cc(v, _graph);
+
+	size_t howmany = swap_cc_recursive(v, from, to, true);
+
 	trace1("reassigned", howmany);
+	assert(graph_traits<T>::cc_size(wcc, _graph));
+	assert(graph_traits<T>::cc_size(from, _graph));
 }
 /*--------------------------------------------------------------------------*/
 template<class T>
@@ -323,23 +338,23 @@ void ConnectedComponents<T>::postRemoveEdge(
 
 	assert(graph_traits<T>::get_cc(v) == graph_traits<T>::get_cc(w));
 	// now let's see if they are still connected.
-	typedef FindVertex<ConnectedComponents<T>, size_t> vertexfinder;
-	//_g.
+
+	next_level();
 	next_level();
 
-	// TODO: reuse memory
-	// _fv->init(v,w);
-	// _fw->init(w,v);
-	vertexfinder fv(*this, v, w);
-	vertexfinder fw(*this, w, v);
-	vertexfinder* fvp=&fv;
-	vertexfinder* fwp=&fw;
+	_fv.init(v,w);
+	_fw.init(w,v);
+	vertexfinder* fvp=&_fv;
+	vertexfinder* fwp=&_fw;
 
 	typename vertexfinder::status_t stat = vertexfinder::sDUNNO;
 
 	while(stat == vertexfinder::sDUNNO){
-		std::swap(fvp, fwp);
-		stat = fvp->step();
+		if(1){
+			std::swap(fvp, fwp);
+		}else{
+		}
+		stat = fvp->dfs_step();
 	}
 
 	auto vbig = fvp->needle(); // starting fom v failed, hence the
@@ -347,19 +362,40 @@ void ConnectedComponents<T>::postRemoveEdge(
 	auto vsmall = fwp->needle();
 	assert(graph_traits<T>::get_cc(vsmall) == graph_traits<T>::get_cc(vbig));
 
-	trace2("find", stat, cc_size(vsmall));
-
 	switch(stat){
 	case vertexfinder::sFAIL:
 		// no longer connected. reassign the smaller one.
+		trace3("find fail", stat, cc_size(vsmall), cc_size(vbig));
 		assign_new_cc(vsmall, vbig); // ??!
 		break;
 	case vertexfinder::sSUCCESS:
+		trace3("find success", stat, cc_size(vsmall), cc_size(vbig));
 	   // still connected. done
 		break;
 	default:
-		unreachable();
+		assert(false);
 	}
+}
+/*--------------------------------------------------------------------------*/
+template<class G>
+void FindVertex<G>::init(vertex_descriptor const& start, vertex_descriptor& needle)
+{
+	clearstack();
+	_needle = needle; // bug
+
+	assert(!_graph.visited(start, _id));
+	assert(start != needle);
+
+	auto f = av(start).first;
+	auto fe = av(start).second;
+	if(f==fe){
+	}else{
+		assert(!_graph.visited(*f, _id));
+	}
+	_graph.visit(start, _id);
+	skip_to_unvisited_or_end(f, fe);
+	assert(f==fe || *f);
+	_stack.push(std::make_pair(f, fe));
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

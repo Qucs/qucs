@@ -796,8 +796,12 @@ Wire* SchematicModel::splitWire(Wire *pw, Node *pn)
 
 // ---------------------------------------------------
 // If possible, make one wire out of two wires.
+// BUG: do in SchematicDocument?
 bool SchematicModel::oneTwoWires(Node *n)
 {
+incomplete();
+return false;
+#if 0
     Wire *e3;
     Element *_e1 = n->firstConnection();  // two wires -> one wire
     Element *_e2 = n->lastConnection();
@@ -847,6 +851,7 @@ bool SchematicModel::oneTwoWires(Node *n)
             }
     }
     return false;
+#endif
 }
 
 // ---------------------------------------------------
