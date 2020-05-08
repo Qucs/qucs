@@ -80,11 +80,10 @@ typedef Element ElementGraphics;
 class ElementGraphics : public QGraphicsItem {
 private:
 	ElementGraphics();
+	ElementGraphics(ElementGraphics const&){unreachable();}
 public:
 	explicit ElementGraphics(Element* e);
-
-	~ElementGraphics(){
-	}
+	~ElementGraphics(){ }
 public:
 	bool operator!=(Element const* e) const{
 		return _e!=e;
@@ -101,6 +100,9 @@ public:
   // TODO: move coordinate stuff here.
   void setPos(int a, int b);
 public:
+  Element& operator*(){ itested();
+	  assert(_e); return *_e;
+  }
   Element* operator->(){ itested();
 	  assert(_e); return _e;
   }

@@ -218,7 +218,16 @@ void SchematicModel::insertSymbolNodes(Symbol *c, bool noOptimize)
 }
 
 // called from schematic::erase only
+// // possibly not needed. all actions must be undoable anyway
+// -> use detach, store reference in UndoAction.
 void SchematicModel::erase(Element* what)
+{
+	Element* e = detach(what);
+	delete(e);
+}
+
+// TODO: take iterator.
+Element* SchematicModel::detach(Element* what)
 {
 	if(auto c=component(what)){
 		disconnect(c);
@@ -231,15 +240,7 @@ void SchematicModel::erase(Element* what)
 	}else{
 		unreachable();
 	}
-	delete(what);
-}
-
-void SchematicModel::deleteItem(ElementGraphics *g)
-{
-    Element* e=element(g);
-    delete(g); // will it detach from scene?
-
-	 erase(e); // also get rid of the payload.
+	return what;
 }
 
 
@@ -594,12 +595,16 @@ void SchematicModel::detachFromNode(Element* what, Node* from)
 	}else if(from->connectionsCount()==3){
 		from->connectionsRemove(what);// delete connection
 		//			pn->disconnect(c);
+		//
+		//			// BUG //
+		//			must be undoable
 		oneTwoWires(from);  // two wires -> one wire
 	}else{
 		from->connectionsRemove(what);// remove connection
 		//			pn->disconnect(c);
 	}
 }
+
 
 void SchematicModel::disconnect(Symbol* c)
 {
@@ -619,6 +624,8 @@ void SchematicModel::disconnect(Symbol* c)
 		}else{
 		}
 	}
+
+	// TODO: drop after removing Conductor.
 	if(Conductor* cw = dynamic_cast<Wire*>(c)){
 		assert(c->portCount()==2); // for now.
 		Nodes.deregisterVertex(cw);
@@ -644,6 +651,7 @@ void SchematicModel::connect(Symbol* c)
 void SchematicModel::updateNetLabels() const
 { untested();
 	incomplete();
+#if 0
 
 	for(auto pc : components()){
 		if(pc->type() == "GND") { // BUG, use rails with net names.
@@ -660,6 +668,7 @@ void SchematicModel::updateNetLabels() const
 			net->setLabel("0");
 		}
 	}
+#endif
 }
 
 ModelAccess::ModelAccess(){}

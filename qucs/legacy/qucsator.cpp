@@ -296,6 +296,7 @@ static void nodeMap(SchematicSymbol const& m)
 
 	for(auto pc : sm.components()){
 		if(pc->type() == "GND") { untested();
+#if 0
 			assert(pc->Ports.first()->value());
 			Net* n = pc->Ports.first()->value()->getNet();
 			assert(n);
@@ -304,6 +305,7 @@ static void nodeMap(SchematicSymbol const& m)
 				qDebug() << "GND: warning: overriding label" << n->label();
 			}
 			n->setLabel("gnd");
+#endif
 		}
 	}
 
@@ -551,10 +553,12 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 				incomplete();
 			}
 		}else if(pc->obsolete_model_hack() == "GND") { // BUG.
+#if 0
 			qDebug() << "GND hack" << pc->Ports.first()->value()->name();
 			assert(pc->Ports.first()->value());
 			Net* n = pc->Ports.first()->value()->getNet();
 			n->setLabel("gnd"); // should already be "gnd". check instead.
+#endif
 			continue;
 		// }else if(dynamic_cast<Subcircuit const*>(pc)) {
 		} else if(pc->obsolete_model_hack() == "Sub") { // BUG.

@@ -123,12 +123,15 @@ public: // not sure. leaves unconnected objects in the main container...
 	void connect(Symbol* c);
 	void disconnect(Symbol* c);
 
+public:
+	// TODO: take iterator.
+	Element* detach(Element* c);
+
 public: // container
 	void clear();
 	void pushBack(Element* what);
 	void erase(Element* what);
 	void merge(SchematicModel&);
-	void deleteItem(ElementGraphics*);
 
 private: // used in erase?
 	void       deleteComp(Component*c);
