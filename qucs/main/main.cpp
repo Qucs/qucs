@@ -245,6 +245,14 @@ void doNetlist(QString schematic, QString netlist, DocumentFormat const& NLN)
 int doPrint(QString schematic, QString printFile,
     QString page, int dpi, QString color, QString orientation)
 {
+
+  // there are two ways:
+  // - just write a pdf, svg, (e)ps or whatever from schematicModel
+  // - start the application and take a screenshot.
+  //   (for taking screenshots, this function is not needed)
+
+  return 0; // why?!
+#if 0
   Schematic sch(nullptr, "..."); // need X?
   // sch.setFileInfo(schematic);
   QFile file(schematic);  // save simulator messages
@@ -278,6 +286,7 @@ int doPrint(QString schematic, QString printFile,
     Printer->noGuiPrint(&sch, printFile, color);
   }
   return 0;
+#endif
 }
 
 /*!

@@ -32,14 +32,13 @@ void Schematic::actionSelect(bool on)
     selectAction()->blockSignals(true);
     selectAction()->setChecked(false);
     selectAction()->blockSignals(false);
-    return;
-  }
 
-  if(performToggleAction(on, selectAction(), 0, 0, &MouseActions::MPressSelect)) {
+  }else if(performToggleAction(on, selectAction(), 0, 0, &MouseActions::MPressSelect)) {
     App->MouseReleaseAction = &MouseActions::MReleaseSelect;
     App->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
-  }
 
+  }else{ untested();
+  }
 }
 
 void Schematic::actionOnGrid(bool on)
@@ -73,10 +72,18 @@ void Schematic::actionEditActivate(bool on)
         &MouseActions::MMoveActivate, &MouseActions::MPressActivate);
 }
 
+// getting here after somebody presses "del"
+// what is on?!
 void Schematic::actionEditDelete(bool on)
 {
+  trace1("actionEditDelete", on);
+  incomplete();
+
+  // BUG global App->editDelete. why?!
+#if 0
     performToggleAction(on, App->editDelete, &Schematic::deleteElements,
           &MouseActions::MMoveDelete, &MouseActions::MPressDelete);
+#endif
 }
 
 void Schematic::actionSetWire(bool on)
@@ -613,6 +620,8 @@ bool Schematic::performToggleAction(bool on, QAction *Action,
   App->hideEdit(); // disable text edit of component property
 
   if(!on) {
+
+    // toolbar button has been switched off.
     App->MouseMoveAction = 0;
     App->MousePressAction = 0;
     App->MouseReleaseAction = 0;

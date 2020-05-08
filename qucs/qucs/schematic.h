@@ -51,9 +51,11 @@ class QWheelEvent;
 class QMouseEvent;
 class QDragEnterEvent;
 class QPainter;
+class QUndoCommand;
 
 // TODO: rename to SchematicDocument
-class Schematic;
+#define SchematicDocument Schematic
+class SchematicDocument;
 class MouseActions;
 typedef bool (Schematic::*pToggleFunc) ();
 typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
@@ -84,6 +86,8 @@ struct SubFile {
 typedef QMap<QString, SubFile> SubMap;
 
 #if QT_MAJOR_VERSION < 5
+this_does_no_longer_work
+TODO: cleanup all mentions of Qt<5 and Q3ScrollView
 typedef Element ElementGraphics;
 #define SchematicBase Q3ScrollView
 #else
@@ -93,6 +97,8 @@ class ElementGraphics;
 #endif
 
 // TODO: rename to SchematicDocument
+// TODO: add SymbolDocument
+// TODO: move to schematic_doc.h
 class Schematic : public SchematicBase, public QucsDoc {
   Q_OBJECT
 private:
@@ -100,7 +106,7 @@ private:
 public:
   typedef QList<ElementGraphics*> EGPList;
 public:
-  Schematic(QucsApp*, const QString&);
+  Schematic(QucsApp&, const QString&);
  ~Schematic();
 
   void setName(const QString&);
@@ -151,6 +157,9 @@ public:
   bool scrollLeft(int);
   bool scrollRight(int);
 
+private:
+  void deleteItem(ElementGraphics*);
+
 #ifndef USE_SCROLLVIEW
 private:
   // schematic Scene for this View
@@ -160,6 +169,11 @@ private:
   // Frame *SchematicFrame;
 public:
   SchematicScene *sceneHACK() { return Scene; }
+
+  // TODO: take iterator?
+  Element* detachFromModel(Element* e){
+	  return DocModel.detach(e);
+  }
 
   void deselectElements();
 #endif
@@ -282,7 +296,10 @@ protected:
 #ifdef USE_SCROLLVIEW
   void drawContents(QPainter*, int, int, int, int);
 #endif
-  void contentsMouseMoveEvent(QMouseEvent*);
+
+
+protected: // these are the overrides that collect mouse actions
+  void contentsMouseMoveEvent(QMouseEvent*) override;
   void contentsMousePressEvent(QMouseEvent*);
   void contentsMouseDoubleClickEvent(QMouseEvent*);
   void contentsMouseReleaseEvent(QMouseEvent*);
@@ -296,10 +313,14 @@ public:
 #ifdef USE_SCROLLVIEW
   QPointF mapToScene(QPoint const& p) const;
 #endif
-  void addToScene(Element*); // called from SM::pushBack.
 
 private:
-  void erase(ElementGraphics*);
+public:
+  // possible rule: return pointer:   transfer ownership
+  //                return reference: don't
+  // (same for arguments?)
+  Element* eraseFromScene(ElementGraphics*);
+  ElementGraphics& addToScene(Element*); // called from SM::pushBack.
 
 protected slots:
   void slotScrollUp();
@@ -390,7 +411,7 @@ public:
   void     newMovingWires(QList<Element*>*, Node*, int);
   QList<ElementGraphics*> cropSelectedElements();
   QList<ElementGraphics*> selectedItems();
-  bool     deleteElements();
+  QUndoCommand* deleteElements();
   bool     aligning(int);
   bool     distributeHorizontal();
   bool     distributeVertical();

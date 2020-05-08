@@ -77,7 +77,7 @@ void Schematic::printCursorPosition(int x, int y)
   App->printCursorPosition(mp.x(),mp.y());
 }
 
-Schematic::Schematic(QucsApp *App_, const QString& Name_)
+Schematic::Schematic(QucsApp& App_, const QString& Name_)
     : QucsDoc(App_, Name_), DocModel(this),
   SymbolMode(false)
 { untested();
@@ -144,7 +144,8 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
       viewport(), SLOT(update()));
   */
 
-  if (App_) {
+  //if (App_)
+  {
     connect(this, SIGNAL(signalCursorPosChanged(int, int)), 
         this, SLOT(printCursorPosition(int, int)));
     /** \todo
@@ -154,13 +155,13 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
         App_, SLOT(slotHideEdit()));
     */
     connect(this, SIGNAL(signalUndoState(bool)),
-        App_, SLOT(slotUpdateUndo(bool)));
+        this, SLOT(slotUpdateUndo(bool)));
     connect(this, SIGNAL(signalRedoState(bool)),
-        App_, SLOT(slotUpdateRedo(bool)));
+        this, SLOT(slotUpdateRedo(bool)));
     connect(this, SIGNAL(signalFileChanged(bool)),
-        App_, SLOT(slotFileChanged(bool)));
+        this, SLOT(slotFileChanged(bool)));
   }
-}
+} // ::SchematicDocument
 
 Schematic::~Schematic()
 {
@@ -225,6 +226,7 @@ bool Schematic::createSubcircuitSymbol()
 }
 
 // ---------------------------------------------------
+// // expose tab?
 void Schematic::becomeCurrent(bool update)
 {
   emit signalCursorPosChanged(0, 0);
@@ -273,8 +275,11 @@ void Schematic::becomeCurrent(bool update)
 
     emit signalUndoState(undoActionIdx != 0);
     emit signalRedoState(undoActionIdx != undoAction.size()-1);
-    if(update)
+    if(update){
+      incomplete();
       reloadGraphs();   // load recent simulation data
+    }else{ untested();
+    }
   }
 }
 
@@ -592,6 +597,7 @@ void Schematic::PostPaintEvent (PE pe, int x1, int y1, int x2, int y2, int a, in
 
 
 // ---------------------------------------------------
+// // is this an override?!
 void Schematic::contentsMouseMoveEvent(QMouseEvent *Event)
 {
   emit signalCursorPosChanged(Event->pos().x(), Event->pos().y());
@@ -2261,7 +2267,7 @@ void Schematic::slotScrollRight()
 
 // Is called if an object is dropped (after drag'n drop).
 void Schematic::contentsDropEvent(QDropEvent *Event)
-{
+{ untested();
   if(dragIsOkay) {
     QList<QUrl> urls = Event->mimeData()->urls();
     if (urls.isEmpty()) {
@@ -2287,7 +2293,7 @@ void Schematic::contentsDropEvent(QDropEvent *Event)
   int y = int(Event->pos().y()/Scale) + ViewY1;
   QPoint p(x, y);
 
-  qDebug() << "nestedEvent e?";
+  qDebug() << "nestedEvent in contentsDropEvent? at" << p;
   QMouseEvent e(QEvent::MouseButtonPress, p,
                 Qt::LeftButton, Qt::NoButton, Qt::NoModifier);
 
@@ -2532,12 +2538,20 @@ void Schematic::addToScene(Element* x)
   // not needed.
 }
 #else
-void Schematic::addToScene(Element* x)
+ElementGraphics& Schematic::addToScene(Element* x)
 {
   auto i=new ElementGraphics(x);
   scene()->addItem(i);
+  return *i;
 }
 #endif
+
+Element* Schematic::eraseFromScene(ElementGraphics* g)
+{
+  Element* e = element(g);
+  delete(g); // CHECK: does it detach itself?!
+  return e;
+}
 
 namespace{
 class ins : public SchematicSymbol{
@@ -2573,6 +2587,16 @@ private:
   Schematic* _m;
 };
 }
+
+// undo action?
+void Schematic::deleteItem(ElementGraphics *g)
+{
+    Element* e=element(g);
+    delete(g); // will it detach from scene?
+	
+    DocModel.erase(e); // also get rid of the payload.
+}
+
 
 #if 0 // transition. obsolete
 void Schematic::parse(DocumentStream& s, SchematicLanguage const* L)
