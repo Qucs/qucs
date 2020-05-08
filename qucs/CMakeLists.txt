@@ -1,3 +1,53 @@
+#BUG include contrib/CMake/toplevel.txt
+
+# read variable from file.
+# (c) 2020 Felix Salfelder
+#     GPLv3
+macro( readVariable FILENAME VARIABLE OUTVAR_NAME)
+    # not sure about the scoping
+    unset(FILE_BUFFER)
+    unset(_RESULT)
+    file( READ MakeList FILE_BUFFER )
+
+    # foreach does not work with newlines.
+    string(REGEX REPLACE "\n" "${Esc};" BUFFER "${FILE_BUFFER}")
+
+    foreach(LINE ${BUFFER})
+	if(CONT)
+	    set(CONT False)
+	    if("${LINE}" MATCHES "\\\\${Esc}$")
+		set(CONT True)
+	    endif()
+	    list( APPEND _RESULT ${LINE})
+	    string(REGEX REPLACE "\\\\" "" LINE ${LINE})
+	endif()
+	if("${LINE}" MATCHES "${VARIABLE}")
+	    string(REPLACE "${VARIABLE} =" "" _RESULT ${LINE})
+	    if("${LINE}" MATCHES "\\\\${Esc}$")
+		set(CONT True)
+	    endif()
+	    string(REGEX REPLACE "\\\\" "" LINE ${LINE})
+	endif()
+    endforeach()
+
+    # turn whitespace into ;
+    separate_arguments(_RESULT)
+
+    # seems to be global
+    set(${OUTVAR_NAME} ${_RESULT})
+endmacro()
+
+# Avoid build system maintenance madness. Use one list for all of them
+readVariable("MakeList" "TARGET" "TARGET")
+readVariable("MakeList" "MOCFILES" "MOCFILES")
+readVariable("MakeList" "HEADERS" "HEADERS")
+
+message(STATUS "===========TEST===============")
+message(STATUS "TARGET ${TARGET}")
+message(STATUS "MOCFILES ${MOCFILES}")
+message(STATUS "HEADERS ${HEADERS}")
+message(STATUS "===========END TEST===============")
+
 project(qucs-suite CXX)
 cmake_minimum_required(VERSION 2.8)
 cmake_policy(VERSION 2.8)
@@ -88,3 +138,5 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/uninstall.cmake.in"
 
 add_custom_target(uninstall-ui COMMAND ${CMAKE_COMMAND} -P
                                     ${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake)
+
+# vim:ts=8:sw=4:noet

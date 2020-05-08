@@ -1,0 +1,12 @@
+# (c) 2020 Felix Salfelder
+#
+# This file looks like a Makefile fragment, but its totally limited.
+# Include this file from any build system.
+
+HEADERS = hdr1 hdr2 hdr2 \
+          hdr4 \
+          hdr5
+MOCFILES = moc1 moc2 moc2 \
+           moc3
+
+TARGET = some_library_or_executable
