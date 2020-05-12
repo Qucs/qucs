@@ -21,7 +21,7 @@
  */
 
 #include "printerwriter.h"
-#include "schematic.h"
+#include "schematic_doc.h"
 #include "textdoc.h"
 #include "qucs.h"
 
@@ -48,9 +48,10 @@ PrinterWriter::~PrinterWriter()
 }
 
 //allow user pass parameter and print document
-void
-PrinterWriter::noGuiPrint(Schematic* doc, QString printFile,
-    QString page, int dpi, QString color, QString orientation)
+void PrinterWriter::noGuiPrint(
+		SchematicDoc* doc, QString printFile,
+		QString page, int dpi, QString color,
+		QString orientation)
 {
   //set property
   Printer->setOutputFileName(printFile);
@@ -118,7 +119,7 @@ PrinterWriter::print(QWidget *doc)
           break;
         }
 
-        static_cast<Schematic *>(doc)->print(Printer, &Painter,
+        static_cast<SchematicDoc *>(doc)->print(Printer, &Painter,
                 Printer->printRange() == QPrinter::AllPages, fitToPage);
         if (z > 1 && !Printer->newPage()) {
           delete dialog;

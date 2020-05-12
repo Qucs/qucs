@@ -10,7 +10,7 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -28,7 +28,7 @@ public:
   EllipseArc();
  ~EllipseArc();
 
-  void paintScheme(Schematic*);
+  void paintScheme(SchematicDoc*);
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
@@ -39,11 +39,11 @@ public:
   QString saveCpp();
   QString saveJSON();
   void paint(ViewPainter*);
-  void MouseMoving(Schematic*, int, int, int, int, Schematic*, int, int, bool);
+  void MouseMoving(SchematicDoc*, int, int, int, int, SchematicDoc*, int, int, bool);
   bool MousePressing();
   bool getSelected(float, float, float);
   bool resizeTouched(float, float, float);
-  void MouseResizeMoving(int, int, Schematic*);
+  void MouseResizeMoving(int, int, SchematicDoc*);
 
   void rotate();
   void mirrorX();

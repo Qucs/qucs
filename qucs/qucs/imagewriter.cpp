@@ -20,7 +20,7 @@
  *
  */
 
-#include "schematic.h"
+#include "schematic_doc.h"
 #include "imagewriter.h"
 #include "exportdialog.h"
 
@@ -40,7 +40,7 @@ ImageWriter::~ImageWriter()
 void
 ImageWriter::noGuiPrint(QWidget *doc, QString printFile, QString color)
 {
-  Schematic *sch = static_cast<Schematic*>(doc);
+  SchematicDoc *sch = static_cast<SchematicDoc*>(doc);
   const int bourder = 30;
   int w,h,wsel,hsel,
       xmin, ymin, xmin_sel, ymin_sel;
@@ -129,7 +129,7 @@ QString ImageWriter::getLastSavedFile()
 // BUG: this is all exportdialog. d'uh
 int ImageWriter::print(QWidget *doc)
 {
-  Schematic *sch = static_cast<Schematic*>(doc);
+  SchematicDoc *sch = static_cast<SchematicDoc*>(doc);
   const int border = 30;
 
   int w,h,wsel,hsel,
@@ -295,7 +295,7 @@ int ImageWriter::print(QWidget *doc)
   return status;
 }
 
-void ImageWriter::getSchWidthAndHeight(Schematic *sch, int &w, int &h, int &xmin, int &ymin)
+void ImageWriter::getSchWidthAndHeight(SchematicDoc *sch, int &w, int &h, int &xmin, int &ymin)
 {
     int xmax,ymax;
     sch->sizeOfAll(xmin,ymin,xmax,ymax);
@@ -311,7 +311,7 @@ void ImageWriter::getSchWidthAndHeight(Schematic *sch, int &w, int &h, int &xmin
     }
 }
 
-void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel, int& xmin_sel_, int& ymin_sel_)
+void ImageWriter::getSelAreaWidthAndHeight(SchematicDoc *sch, int &wsel, int &hsel, int& xmin_sel_, int& ymin_sel_)
 {
 #if 0
     int xmin= INT_MAX,

@@ -16,12 +16,17 @@
 
 #include "mouseactions.h"
 
+class SchematicDoc;
+
 class SchematicActions : public MouseActions{
 public:
-	explicit SchematicActions(Schematic& d);
+	explicit SchematicActions(SchematicDoc& d);
 	~SchematicActions();
 
 public: // actions...
+  MouseAction* maDelete;
+  MouseAction* maThis;
+  MouseAction* maThat;
 };
 
 #endif

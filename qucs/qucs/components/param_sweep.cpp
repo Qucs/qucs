@@ -27,7 +27,7 @@ public:
   ~Param_Sweep();
   Element* clone()const {return new Param_Sweep(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
-  void recreate(Schematic*);
+  void recreate(SchematicDoc*);
 }D;
 Dispatcher<Command>::INSTALL p(&command_dispatcher, ".SW", &D);
 Module::INSTALL pp("simulations", &D);
@@ -79,7 +79,7 @@ Element* Param_Sweep::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-void Param_Sweep::recreate(Schematic*)
+void Param_Sweep::recreate(SchematicDoc*)
 {
   Property *pp = Props.at(1);
   Props.next();

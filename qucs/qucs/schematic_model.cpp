@@ -1,7 +1,7 @@
 /***************************************************************************
                            schematic_model.cpp
                              ---------------
-    begin                : 2018
+    begin                : 2018, 2020
     copyright            : Felix
     email                : felix@salfelder.org
  ***************************************************************************/
@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "schematic.h"
+#include "schematic_doc.h"
 #include "schematic_lang.h"
 #include "globals.h"
 #include "nodemap.h"
@@ -35,7 +35,7 @@ SchematicModel::~SchematicModel()
 }
 
 // getting here in GUI mode
-SchematicModel::SchematicModel(Schematic* s)
+SchematicModel::SchematicModel(SchematicDoc* s)
 	: _doc_(s),
 	  Nodes(Nets)
 {
@@ -252,7 +252,7 @@ Element* SchematicModel::detach(Element* what)
 
 
 // should be a QucsDoc*, probably
-Schematic* SchematicModel::doc()
+SchematicDoc* SchematicModel::doc()
 {
 	trace2("doc", _doc_, this);
 	return _doc_;

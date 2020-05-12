@@ -10,13 +10,13 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 #include "ellipse.h"
 #include "filldialog.h"
-#include "schematic.h"
+#include "schematic_doc.h" // BUG
 #include "viewpainter.h"
 #include "misc.h"
 
@@ -66,8 +66,9 @@ void Ellipse::paint(ViewPainter *p)
 }
 
 // --------------------------------------------------------------------------
-void Ellipse::paintScheme(Schematic *p) const
+void Ellipse::paintScheme(SchematicDoc *p) const
 {
+	incomplete();
   p->PostPaintEvent(_Ellipse, cx, cy, x2, y2);
 }
 
@@ -228,7 +229,7 @@ bool Ellipse::resizeTouched(float fX, float fY, float len)
 
 // --------------------------------------------------------------------------
 // Mouse move action during resize.
-void Ellipse::MouseResizeMoving(int x, int y, Schematic *p)
+void Ellipse::MouseResizeMoving(int x, int y, SchematicDoc *p)
 {
   paintScheme(p);  // erase old painting
   switch(State) {
@@ -251,8 +252,8 @@ void Ellipse::MouseResizeMoving(int x, int y, Schematic *p)
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
 void Ellipse::MouseMoving(
-	Schematic *paintScale, int, int, int gx, int gy,
-	Schematic *p, int x, int y, bool drawn)
+	SchematicDoc *paintScale, int, int, int gx, int gy,
+	SchematicDoc *p, int x, int y, bool drawn)
 {
   if(State > 0) {
     if(State > 1)

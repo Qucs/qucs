@@ -35,7 +35,7 @@ public:
   PrinterWriter ();
   virtual ~PrinterWriter ();
   void print(QWidget *);
-  void noGuiPrint(Schematic /* const?? */ * doc, QString printFile,
+  void noGuiPrint(SchematicDoc /* const?? */ * doc, QString printFile,
       QString page, int dpi, QString color, QString orientation);
 
   void setFitToPage(bool _fitToPage) { fitToPage = _fitToPage; };

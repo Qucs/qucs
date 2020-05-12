@@ -35,7 +35,7 @@ public:
   virtual ~Command() {};
 
 //  virtual Object* newOne(); from Symbol.
-  virtual void recreate(Schematic*) {};
+  virtual void recreate(SchematicDoc*) {};
   QString getNetlist();
   QString get_VHDL_Code(int);
   QString get_Verilog_Code(int);
@@ -48,7 +48,7 @@ private:
   }
   void    paint(ViewPainter*) const;
 public:
-  void    paintScheme(Schematic*) const;
+  void    paintScheme(SchematicDoc*) const;
   void    print(ViewPainter*, float);
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
@@ -114,7 +114,7 @@ protected:
 
   void copyComponent(Component*);
   Property * getProperty(const QString&);
-  Schematic* containingSchematic;
+  SchematicDoc* containingSchematic;
 };
 
 

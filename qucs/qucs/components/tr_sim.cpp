@@ -27,7 +27,7 @@ public:
   ~TR_Sim();
   Element* clone() const{return new TR_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
-  void recreate(Schematic*);
+  void recreate(SchematicDoc*);
 } D;
 Dispatcher<Command>::INSTALL p(&command_dispatcher, ".TR", &D);
 Module::INSTALL pp("simulations", &D);
@@ -113,7 +113,7 @@ Element* TR_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-void TR_Sim::recreate(Schematic*)
+void TR_Sim::recreate(SchematicDoc*)
 {
   Property *pp = Props.first();
   if((pp->Value == "list") || (pp->Value == "const")) {

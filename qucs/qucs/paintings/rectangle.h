@@ -28,7 +28,7 @@ public:
   Rectangle(bool _filled=false);
  ~Rectangle();
 
-  void paintScheme(Schematic*) const;
+  void paintScheme(SchematicDoc*) const;
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
@@ -41,11 +41,11 @@ public:
   QString saveCpp();
   QString saveJSON();
   void paint(ViewPainter*);
-  void MouseMoving(Schematic*, int, int, int, int, Schematic*, int, int, bool);
+  void MouseMoving(SchematicDoc*, int, int, int, int, SchematicDoc*, int, int, bool);
   bool MousePressing();
   bool getSelected(float, float, float);
   bool resizeTouched(float, float, float);
-  void MouseResizeMoving(int, int, Schematic*);
+  void MouseResizeMoving(int, int, SchematicDoc*);
 
   void rotate();
   void mirrorX();

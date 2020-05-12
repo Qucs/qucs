@@ -22,7 +22,7 @@
 #include <QRegExp>
 #include "schematic_dialog.h"
 
-class Schematic;
+class SchematicDoc;
 class Optimize_Sim;
 class QTableWidget;
 class QCheckBox;
@@ -68,7 +68,7 @@ private:
 
 public:
   Optimize_Sim *Comp;
-  Schematic *Doc;
+  SchematicDoc *Doc;
   bool changed;
   int numPrec;
 

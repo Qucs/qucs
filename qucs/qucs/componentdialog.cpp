@@ -10,14 +10,14 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
 #include "components/componentdialog.h"
 #include "qucs.h"
-#include "schematic.h"
+#include "schematic_doc.h"
 #include "misc.h"
 
 #include <cmath>
@@ -38,10 +38,10 @@
 #include <QDebug>
 
 SchematicDialog::SchematicDialog(QucsDoc* d)
-  : QDialog(prechecked_cast<Schematic*>(d))
+  : QDialog(prechecked_cast<SchematicDoc*>(d))
 {
   assert(d);
-  Doc=prechecked_cast<Schematic*>(d);
+  Doc=dynamic_cast<SchematicDoc*>(d);
   assert(Doc);
 }
 

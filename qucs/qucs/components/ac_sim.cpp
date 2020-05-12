@@ -26,7 +26,7 @@ public:
  ~AC_Sim();
   Element* clone() const{return new AC_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
-  void recreate(Schematic*);
+  void recreate(SchematicDoc*);
 }D;
 
 Dispatcher<Command>::INSTALL p(&command_dispatcher, ".AC", &D);
@@ -83,7 +83,7 @@ Element* AC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-void AC_Sim::recreate(Schematic*)
+void AC_Sim::recreate(SchematicDoc*)
 {
   Property *pp = Props.first();
   if((pp->Value == "list") || (pp->Value == "const")) {

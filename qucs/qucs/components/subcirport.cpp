@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "node.h"
-#include "schematic.h"
+// #include "schematic.h"
 #include "component.h"
 #include "globals.h"
 #include "module.h"

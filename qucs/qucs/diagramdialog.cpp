@@ -21,7 +21,7 @@
 */
 #include "diagrams/diagramdialog.h"
 #include "qucs.h"
-#include "schematic.h"
+#include "schematic_doc.h"
 #include "platform.h"
 // #include "rect3ddiagram.h" BUG
 #include "misc.h"
@@ -119,7 +119,7 @@ void DiagramDialog::attach(Object* d)
   Graphs.setAutoDelete(true);
   copyDiagramGraphs();   // make a copy of all graphs
   if(schematic()){
-	  const Schematic* s = dynamic_cast<const Schematic*>(schematic());
+	  const SchematicDoc* s = dynamic_cast<const SchematicDoc*>(schematic());
 	  assert(s);
 	  QFileInfo Info(s->docName());
 	  defaultDataSet = Info.path() + QDir::separator() + s->DataSet;
@@ -1202,7 +1202,7 @@ void DiagramDialog::slotApply()
   Graphs.setAutoDelete(true);
 
   Diag->loadGraphData(defaultDataSet);
-  ((Schematic*)parent())->viewport()->repaint();
+  ((SchematicDoc*)parent())->viewport()->repaint();
   copyDiagramGraphs();
   if(changed) transfer = true;   // changes have been applied ?
 }

@@ -45,8 +45,10 @@
 #include "node.h"
 #include "printerwriter.h"
 #include "imagewriter.h"
+#include "schematic_lang.h"
+#include "sim/sim.h"
 
-#include "schematic.h"
+//#include "schematic.h"
 #include "module.h"
 #include "misc.h"
 #include "exception.h"

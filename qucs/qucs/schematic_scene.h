@@ -89,10 +89,10 @@ public:
 		return _e!=e;
 	}
 public: //?
-  void paintScheme(Schematic *p);
+  void paintScheme(SchematicDoc *p);
 private: // later: Qgraphics virtual overrides
 //  void paint() { assert(_e); _e->paint(); }
-//  void paintScheme(Schematic *s) { assert(_e); _e->paintScheme(s); }
+//  void paintScheme(SchematicDoc *s) { assert(_e); _e->paintScheme(s); }
   QRectF boundingRect() const;
   void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*); // const...
 

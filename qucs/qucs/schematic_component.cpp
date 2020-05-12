@@ -1,2 +1,2 @@
 #include "components/component.h" // BUG
-#include "schematic.h"
+#include "schematic_doc.h"

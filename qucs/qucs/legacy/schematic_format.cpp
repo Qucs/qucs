@@ -6,7 +6,10 @@
 #include "schematic_model.h"
 #include "misc.h" //?!!
 
-#include "schematic.h" // BUG, transition
+#include "paintings/painting.h" // BUG
+#include "diagrams/diagrams.h" // BUG
+
+//#include "schematic.h" // BUG, transition
 
 namespace{
 
@@ -153,6 +156,7 @@ void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& 
 
 	stream << "<Symbol>\n";     // save all paintings for symbol
 	for(auto pp : symbolPaints(m)){
+		// BUG callback
 		stream << "  <" << pp->save() << ">\n";
 	}
 	stream << "</Symbol>\n";

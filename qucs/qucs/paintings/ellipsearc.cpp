@@ -10,7 +10,7 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -18,7 +18,7 @@
 #include "filldialog.h"
 #include "qucs.h"
 #include "misc.h"
-#include "schematic.h"
+#include "schematic_doc.h" // BUG
 
 #include <QPainter>
 #include <QPushButton>
@@ -59,7 +59,7 @@ void EllipseArc::paint(ViewPainter *p)
 }
 
 // --------------------------------------------------------------------------
-void EllipseArc::paintScheme(Schematic *p)
+void EllipseArc::paintScheme(SchematicDoc *p)
 {
   p->PostPaintEvent(_Arc, cx, cy, x2, y2, Angle, ArcLen);
 }
@@ -196,7 +196,7 @@ bool EllipseArc::resizeTouched(float fX, float fY, float len)
 
 // --------------------------------------------------------------------------
 // Mouse move action during resize.
-void EllipseArc::MouseResizeMoving(int x, int y, Schematic *p)
+void EllipseArc::MouseResizeMoving(int x, int y, SchematicDoc *p)
 {
   paintScheme(p);  // erase old painting
   switch(State) {
@@ -219,8 +219,8 @@ void EllipseArc::MouseResizeMoving(int x, int y, Schematic *p)
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
 void EllipseArc::MouseMoving(
-	Schematic *paintScale, int fx, int fy, int gx, int gy,
-	Schematic *p, int x, int y, bool drawn)
+	SchematicDoc *paintScale, int fx, int fy, int gx, int gy,
+	SchematicDoc *p, int x, int y, bool drawn)
 {
   switch(State) {
     case 0 :

@@ -72,7 +72,7 @@ MOCHEADERS = \
   messagedock.h \
   octave_window.h \
   projectView.h \
-  schematic.h \
+  schematic_doc.h \
   schematic_scene.h \
   schematic_model.h \
   textdoc.h \

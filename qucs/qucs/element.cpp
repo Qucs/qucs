@@ -15,7 +15,7 @@
  ***************************************************************************/
 
 #include "element.h"
-#include "schematic.h"
+#include "schematic_doc.h"
 
 Element::Element() :
 	Selected(false)
@@ -29,7 +29,7 @@ Element::~Element()
 {
 }
 
-void Element::paintScheme(Schematic *) const
+void Element::paintScheme(SchematicDoc *) const
 {
 }
 
@@ -47,7 +47,7 @@ void Element::getCenter(int&, int&)
 	incomplete();
 }
 
-void Element::snapToGrid(Schematic& s)
+void Element::snapToGrid(SchematicDoc& s)
 {
 	s.setOnGrid(cx, cy);
 }
