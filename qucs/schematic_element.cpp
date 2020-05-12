@@ -198,8 +198,8 @@ int SchematicModel::insertWireNode1(Wire *w)
     pn = &nodes().new_at(w->x1_(), w->y1_());   // create new node
     pn->connectionsAppend(w);  // connect schematic node to the new wire
     w->setPortByIndex(0, pn);
-    return 1;
 #endif
+    return 1;
 }
 
 // ---------------------------------------------------
@@ -442,8 +442,8 @@ int SchematicModel::insertWireNode2(Wire *w)
     nodes().append(pn);
     pn->connectionsAppend(w);  // connect schematic node to the new wire
     w->setPortByIndex(1, pn);
-    return 1;
 #endif
+    return 1;
 }
 
 // ---------------------------------------------------
@@ -792,6 +792,7 @@ Wire* SchematicModel::splitWire(Wire *pw, Node *pn)
 
     return newWire;
 #endif
+    return 0;
 }
 
 // ---------------------------------------------------
@@ -1019,7 +1020,7 @@ void Schematic::markerUpDown(bool up, Q3PtrList<ElementGraphics> *Elements)
    as right-clicking on a selected element to get a context
    menu.
 */
-ElementMouseAction MouseActions::selectElement(Schematic* Doc,
+ElementMouseAction MouseActions::selectElement(
 	QPoint const& xy, bool flag, int *index)
 { untested();
     (void) index;
@@ -1029,6 +1030,7 @@ ElementMouseAction MouseActions::selectElement(Schematic* Doc,
 #ifndef USE_SCROLLVIEW
     ElementGraphics *pe_sel=nullptr;
     ElementGraphics *pe_1st=nullptr;
+    Schematic* Doc = prechecked_cast<Schematic*>(&_doc);
     assert(Doc);
    auto scenepos=Doc->mapToScene(xy);
 
@@ -1489,9 +1491,11 @@ void Schematic::highlightWireLabels ()
 // ---------------------------------------------------
 // Deselects all elements except 'e'.
 // bug: why do we not have a list of selected elements?!
-void MouseActions::deselectElements(Schematic* Doc, ElementMouseAction e)
+void MouseActions::deselectElements(ElementMouseAction e)
 {
 #ifndef USE_SCROLLVIEW
+    Schematic* Doc = prechecked_cast<Schematic*>(&_doc);
+    assert(Doc);
     Doc->deselectElements();
     e->setSelected(true); //?!
 #else
@@ -3422,8 +3426,8 @@ Element* Schematic::getWireLabel(Node *pn_)
             }
 #endif
 	}
-    return 0;   // no wire label found
 #endif
+    return 0;   // no wire label found
 }
 
 // ---------------------------------------------------

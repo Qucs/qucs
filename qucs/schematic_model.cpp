@@ -77,6 +77,7 @@ void SchematicModel::setDevType(QString const& s)
 }
 
 namespace{
+  static const QString QSTRING_ERROR("ERROR");
 // TODO: use Object
 class ins : public SchematicSymbol{
 public:
@@ -103,7 +104,7 @@ private: // ModelInserter
 
 private: // internal. Portstuff
   unsigned portCount() const {unreachable(); return 0;}
-  QString const& portValue(unsigned) const{ unreachable(); return "ERROR"; }
+  QString const& portValue(unsigned) const{ unreachable(); return QSTRING_ERROR; } // BUG
   void setPort(unsigned i, Node* n){ unreachable(); }
   Port& port(unsigned){unreachable(); return *new Port(0,0);}
 

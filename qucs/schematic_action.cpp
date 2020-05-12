@@ -6,15 +6,90 @@
 #include <QRegExp> // BUG?
 #include <QRegExpValidator>
 #include <QFileDialog>
+#include <QUndoCommand>
 
 #include "schematic.h"
 #include "qucs.h"
 #include "misc.h"
 #include "globals.h"
-#include "mouseactions.h"
+#include "schematic_action.h"
 #include "globals.h"
 
 #include "changedialog.h"
+
+// TODO: different file.
+class MouseActionDelete : public MouseAction{
+public:
+	explicit MouseActionDelete(MouseActions& ctx)
+		: MouseAction(ctx){}
+
+private:
+	cmd* move(QMouseEvent*);
+	cmd* press(QMouseEvent*);
+	cmd* release(QMouseEvent*);
+};
+//   Paint a cross under the mouse cursor to show the delete mode.
+QUndoCommand* MouseActionDelete::move(QMouseEvent *Event)
+{
+  // TODO: inactive initially?
+  _ctx.Set3(Event); // BUG: use a variable with a name.
+
+  // cannot draw on the viewport, it is displaced by the size of dock and toolbar
+  //
+//  there are no postpaint events. change the mouse appearance some other way?
+  incomplete();
+//  Doc->PostPaintEvent (_Line, MAx3-15, MAy3-15, MAx3+15, MAy3+15,0,0,false);
+//  Doc->PostPaintEvent (_Line, MAx3-15, MAy3+15, MAx3+15, MAy3-15,0,0,false);
+
+  return nullptr;
+}
+
+QUndoCommand* MouseActionDelete::release(QMouseEvent *Event){
+  incomplete();
+}
+
+class deleteCommand : public QUndoCommand {
+public:
+  explicit deleteCommand(ElementMouseAction e){
+    incomplete();
+  }
+};
+// void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent* Event)
+// press a mouse while delete action is active.
+// Event tells us where...
+QUndoCommand* MouseActionDelete::press(QMouseEvent* Event)
+{
+  // QPointF pos=Doc->mapToScene(Event->pos());
+
+  ElementMouseAction pe = _ctx.selectElement(Event->pos(), false); // BUG
+  QUndoCommand* d = nullptr;
+
+  if(pe) { untested();
+    d = new deleteCommand(pe);
+
+    // pe->setSelected();
+    // Doc->deleteElements();
+
+    // Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
+    // Doc->viewport()->update();
+    // drawn = false;
+  }else{
+
+  }
+  return d;
+}
+/*==================================================================================*/
+
+SchematicActions::SchematicActions(Schematic& ctx)
+  : MouseActions(ctx)
+{
+  maDelete = new MouseActionDelete(*this);
+}
+
+SchematicActions::~SchematicActions()
+{
+  delete maDelete;
+}
 
 QRegExp Expr_CompProp;
 QRegExpValidator Val_CompProp(Expr_CompProp, 0);
@@ -27,17 +102,21 @@ void Schematic::actionSelect(bool on)
     App->MouseMoveAction = &MouseActions::MMoveWire1;
     App->MousePressAction = &MouseActions::MPressWire1;
     viewport()->update();
-    mouseActions()->drawn = false;
+    mouseActions().setDrawn(false);
 
+    // this is implemented somewhere else
+    {
     selectAction()->blockSignals(true);
     selectAction()->setChecked(false);
     selectAction()->blockSignals(false);
+    }
 
-  }else if(performToggleAction(on, selectAction(), 0, 0, &MouseActions::MPressSelect)) {
-    App->MouseReleaseAction = &MouseActions::MReleaseSelect;
-    App->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
-
-  }else{ untested();
+    // see EditDelete
+//  }else if(performToggleAction(on, selectAction(), 0, 0, &MouseActions::MPressSelect)) {
+//    App->MouseReleaseAction = &MouseActions::MReleaseSelect;
+//    App->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
+//
+//  }else{ untested();
   }
 }
 
@@ -72,17 +151,37 @@ void Schematic::actionEditActivate(bool on)
         &MouseActions::MMoveActivate, &MouseActions::MPressActivate);
 }
 
+
+
 // getting here after somebody presses "del"
-// what is on?!
+// on looks obsolete...?
 void Schematic::actionEditDelete(bool on)
 {
   trace1("actionEditDelete", on);
   incomplete();
 
-  // BUG global App->editDelete. why?!
-#if 0
-    performToggleAction(on, App->editDelete, &Schematic::deleteElements,
-          &MouseActions::MMoveDelete, &MouseActions::MPressDelete);
+#if 0 // old code
+  performToggleAction(on, App->editDelete, &Schematic::deleteElements,
+      &MouseActions::MMoveDelete, &MouseActions::MPressDelete);
+#else // approximately this.
+  incomplete();
+  // why is this not done by the caller?
+  // Toolbar->uncheck_current();
+  //
+  // if(App->activeAction) {
+  //   // // App->activeAction->blockSignals(true); // do not call toggle slot
+  //   // // App->activeAction->setChecked(false);       // set last toolbar button off
+  //   // // App->activeAction->blockSignals(false);
+  // }else{
+  // }
+
+  // App->activeAction = Action; /// another toolbar issue?
+
+  mouseAction = mouseActions().maDelete;
+  assert(mouseAction);
+
+  viewport()->update();
+  mouseActions().setDrawn(false);
 #endif
 }
 
@@ -90,30 +189,36 @@ void Schematic::actionSetWire(bool on)
 {
 	performToggleAction(on, App->insWire, 0,
 			&MouseActions::MMoveWire1, &MouseActions::MPressWire1);
+
+  // mouseAction = mouseActions().maSetWire;
 }
 
 void Schematic::actionInsertLabel(bool on)
 {
   performToggleAction(on, App->insLabel, 0,
 		&MouseActions::MMoveLabel, &MouseActions::MPressLabel);
+  // mouseAction = mouseActions().maInsLabel;
 }
 
 void Schematic::actionSetMarker(bool on)
 {
   performToggleAction(on, App->setMarker, 0,
 		&MouseActions::MMoveMarker, &MouseActions::MPressMarker);
+  // mouseAction = mouseActions().maSetMarker;
 }
 
 void Schematic::actionMoveText(bool on)
 {
   performToggleAction(on, App->moveText, 0,
 		&MouseActions::MMoveMoveTextB, &MouseActions::MPressMoveText);
+  // mouseAction = mouseActions().maMoveText;
 }
 
 void Schematic::actionZoomIn(bool on)
 {
     performToggleAction(on, App->magPlus, 0,
 		&MouseActions::MMoveZoomIn, &MouseActions::MPressZoomIn);
+  // mouseAction = mouseActions().maZoomIn;
 }
 
 void Schematic::actionInsertEquation(bool on)
@@ -135,60 +240,70 @@ void Schematic::actionInsertEquation(bool on)
   }
   App->activeAction = App->insEquation;
 
-  if(mouseActions()->selElem)
-    delete mouseActions()->selElem;  // delete previously selected component
+  if(mouseActions().hasElem()){
+    incomplete(); // undo??
+    delete mouseActions().getElem();  // delete previously selected component
+  }else{
+  }
 
   Symbol* sym=symbol_dispatcher.clone("Eqn");
   assert(sym);
-  mouseActions()->selElem = prechecked_cast<Component*>(sym);
-  assert(mouseActions()->selElem);
+  mouseActions().setElem(prechecked_cast<Component*>(sym));
+  assert(mouseActions().hasElem());
 
-  if(mouseActions()->drawn) viewport()->update();
-  mouseActions()->drawn = false;
+  if(mouseActions().wasDrawn()){
+    viewport()->update();
+  }else{
+  }
+  mouseActions().setDrawn(false);
   App->MouseMoveAction = &MouseActions::MMoveElement;
   App->MousePressAction = &MouseActions::MPressElement;
 }
 
 void Schematic::actionEditPaste(bool on)
 {
+#if 0
 	// if it's not a text doc, prevent the user from editing
 	// while we perform the paste operation
 	App->hideEdit();
 
-	if(!on)
-	{
+	if(!on) {
 		App->MouseMoveAction = 0;
 		App->MousePressAction = 0;
 		App->MouseReleaseAction = 0;
 		App->MouseDoubleClickAction = 0;
 		App->activeAction = 0;   // no action active
-		if(mouseActions()->drawn) {
+		if(mouseActions().wasDrawn()) {
 			viewport()->update();
 		}
 		return;
-	}
+	}else{
+        }
 
 	if(!mouseActions()->pasteElements(this)) {
 		App->editPaste->blockSignals(true); // do not call toggle slot
 		App->editPaste->setChecked(false);       // set toolbar button off
 		App->editPaste->blockSignals(false);
 		return;   // if clipboard empty
-	}
+	}else{
+        }
 
 	uncheckActive();
 	App->activeAction = App->editPaste;
 
-	mouseActions()->drawn = false;
+        mouseActions().setDrawn(false)
 	App->MouseMoveAction = &MouseActions::MMovePaste;
 	mouseActions()->movingRotated = 0;
 	App->MousePressAction = 0;
 	App->MouseReleaseAction = 0;
 	App->MouseDoubleClickAction = 0;
 
+#endif
 }
 
 void Schematic::actionInsertGround(bool on)
 {
+#if 0
   App->hideEdit(); // disable text edit of component property
   App->MouseReleaseAction = 0;
   App->MouseDoubleClickAction = 0;
@@ -203,22 +318,29 @@ void Schematic::actionInsertGround(bool on)
   uncheckActive();
   App->activeAction = App->insGround;
 
-  if(mouseActions()->selElem)
-    delete mouseActions()->selElem;  // delete previously selected component
+  if(mouseActions().hasElem()){
+    incomplete(); // undo.
+//    delete mouseActions()->selElem;  // delete previously selected component
+  }
 
   Symbol* sym=symbol_dispatcher.clone("GND");
   assert(sym);
   mouseActions()->selElem = prechecked_cast<Component*>(sym);
   assert(mouseActions()->selElem);
 
-  if(mouseActions()->drawn) viewport()->update();
-  mouseActions()->drawn = false;
+  if(mouseActions().wasDrawn()){
+    updateViewport();
+  }else{
+  }
+  mouseActions().setDrawn(false)
   App->MouseMoveAction = &MouseActions::MMoveElement;
   App->MousePressAction = &MouseActions::MPressElement;
+#endif
 }
 
 void Schematic::actionInsertPort(bool on)
 {
+#if 0
   App->hideEdit(); // disable text edit of component property
   App->MouseReleaseAction = 0;
   App->MouseDoubleClickAction = 0;
@@ -248,15 +370,17 @@ void Schematic::actionInsertPort(bool on)
   mouseActions()->drawn = false;
   App->MouseMoveAction = &MouseActions::MMoveElement;
   App->MousePressAction = &MouseActions::MPressElement;
+#endif
 }
 
 void Schematic::actionEditUndo()
 {
+  // really?
   App->hideEdit(); // disable text edit of component property
 
   undo();
   viewport()->update();
-  mouseActions()->drawn = false;
+  mouseActions().setDrawn(false);
 }
 
 void Schematic::actionEditRedo()
@@ -265,7 +389,7 @@ void Schematic::actionEditRedo()
 
   redo();
   viewport()->update();
-  mouseActions()->drawn = false;
+  mouseActions().setDrawn(false);
 }
 
 void Schematic::actionAlign(int what)
@@ -277,7 +401,7 @@ void Schematic::actionAlign(int what)
 		      tr("At least two elements must be selected !"));
   }
   viewport()->update();
-  mouseActions()->drawn = false;
+  mouseActions().setDrawn(false);
 }
 
 void Schematic::actionDistrib(int d)
@@ -292,7 +416,7 @@ void Schematic::actionDistrib(int d)
 	  unreachable();
   }
   viewport()->update();
-  mouseActions()->drawn = false;
+  mouseActions().setDrawn(false);
 }
 
 void Schematic::actionSelectAll()
@@ -307,7 +431,7 @@ void Schematic::actionSelectMarker()
 
   selectMarkers();
   viewport()->update();
-  mouseActions()->drawn = false;
+  mouseActions().setDrawn(false);
 }
 
 void Schematic::actionChangeProps()
@@ -420,6 +544,7 @@ void Schematic::actionCursor(arrow_dir_t dir)
 
 void Schematic::actionApplyCompText()
 {
+#if 0 // what is focusElement??
 	auto Doc=this;
 	auto editText=App->editText;
 
@@ -474,7 +599,7 @@ void Schematic::actionApplyCompText()
 		pp = pc->Props.at(mouseActions()->MAx3-1);  // search for next property
 
 		viewport()->update();
-		mouseActions()->drawn = false;
+                mouseActions().setDrawn(false);
 
 		if(!pp) {     // was already last property ?
 			App->hideEdit();
@@ -526,11 +651,14 @@ void Schematic::actionApplyCompText()
 	editText->setParent(Doc->viewport());
 	App->editText->setGeometry(p.x(), p.y(), App->editText->width(), App->editText->height());
 	App->editText->show();
+#endif
 }
 
 // BUG: this is a diagram function.
 void Schematic::actionExportGraphAsCsv()
 {
+  // focusElement->exportGraphAsCsv? or so.
+#if 0
   for(;;) {
     if(!mouseActions()->focusElement){
     }else if(graph(mouseActions()->focusElement)){
@@ -598,6 +726,7 @@ void Schematic::actionExportGraphAsCsv()
   }
 
   File.close();
+#endif
 }
 
 // -----------------------------------------------------------------------
@@ -631,11 +760,15 @@ bool Schematic::performToggleAction(bool on, QAction *Action,
   }else{
 
     if(Function && (this->*Function)()) {
+    // if(Function && Function->do_it(this)) {
+      // some action "done"??
       Action->blockSignals(true);
       Action->setChecked(false);  // release toolbar button
       Action->blockSignals(false);
       viewport()->update();
     }else{
+      // action not "done"? still active.
+      //    assign some of supplementary mouseactions
 
       if(App->activeAction) {
         App->activeAction->blockSignals(true); // do not call toggle slot
@@ -644,7 +777,7 @@ bool Schematic::performToggleAction(bool on, QAction *Action,
       }else{
       }
 
-      App->activeAction = Action;
+      App->activeAction = Action; /// this is a toolbar button
       App->MouseMoveAction = MouseMove;
       App->MousePressAction = MousePress;
       App->MouseReleaseAction = 0;
@@ -652,7 +785,7 @@ bool Schematic::performToggleAction(bool on, QAction *Action,
     }
 
     viewport()->update();
-    mouseActions()->drawn = false;
+    mouseActions().setDrawn(false);
     return true;
   }
 
