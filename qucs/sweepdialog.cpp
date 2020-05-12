@@ -10,12 +10,12 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 #include "sweepdialog.h"
-#include "schematic.h"
+#include "schematic_doc.h"
 #include "qucs.h"
 
 #include <QGridLayout>
@@ -65,7 +65,7 @@ QValidator::State mySpinBox::validate ( QString & text, int & pos ) const
 /// \param Doc_
 /// This dialog is launched when the Calculate DC bias is requested
 /// for a project which contains a sweep.
-SweepDialog::SweepDialog(Schematic *Doc_)
+SweepDialog::SweepDialog(SchematicDoc *Doc_)
 			: QDialog(Doc_)
 {
   qDebug() << "SweepDialog::SweepDialog()";

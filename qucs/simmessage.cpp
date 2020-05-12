@@ -44,7 +44,7 @@ using namespace std;
 #include "module.h"
 #include "qucs.h"
 #include "textdoc.h"
-#include "schematic.h"
+#include "schematic_doc.h"
 #include "components/opt_sim.h"
 #include "components/vhdlfile.h"
 #include "misc.h"
@@ -65,7 +65,7 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
   if(QucsApp::isTextDocument(DocWidget))
     Doc = (QucsDoc*) ((TextDoc*)DocWidget);
   else
-    Doc = (QucsDoc*) ((Schematic*)DocWidget);
+    Doc = (QucsDoc*) ((SchematicDoc*)DocWidget);
 
   DocName = Doc->docName();
   DataDisplay = Doc->DataDisplay;
@@ -183,7 +183,7 @@ bool SimMessage::startProcess()
   if(!QucsApp::isTextDocument(DocWidget)) {
     incomplete(); // use a netlister.
   // auto& nl=*n;
-//    SimPorts = ((Schematic*)DocWidget)->prepareNetlist(Stream, Collect, ErrText, nl);
+//    SimPorts = ((SchematicDoc*)DocWidget)->prepareNetlist(Stream, Collect, ErrText, nl);
     if(SimPorts < -5) {
       NetlistFile.close();
       ErrText->appendPlainText(tr("ERROR: Cannot simulate a text file!"));
@@ -459,12 +459,12 @@ void SimMessage::startSimulator()
     }
     Stream << '\n';
 
-    isVerilog = ((Schematic*)DocWidget)->isVerilog;
+    isVerilog = ((SchematicDoc*)DocWidget)->isVerilog;
     Simulator const* sd=simulator_dispatcher["qucsator"];
     assert(sd); //for now.
     auto nl = sd->netLang();
     assert(nl);
-    SimTime = ((Schematic*)DocWidget)->createNetlist(Stream, SimPorts, *nl);
+    SimTime = ((SchematicDoc*)DocWidget)->createNetlist(Stream, SimPorts, *nl);
     if(SimTime.length()>0&&SimTime.at(0) == '\xA7') {
       NetlistFile.close();
       ErrText->insertPlainText(SimTime.mid(1));
@@ -538,7 +538,7 @@ void SimMessage::startSimulator()
       } // vaComponents not empty
 
 #if 0 // BUG
-      if((SimOpt = findOptimization((Schematic*)DocWidget))) {
+      if((SimOpt = findOptimization((SchematicDoc*)DocWidget))) {
 	    ((Optimize_Sim*)SimOpt)->createASCOnetlist();
 
         Program = QucsSettings.AscoBinDir.canonicalPath();
@@ -615,7 +615,7 @@ void SimMessage::startSimulator()
 }
 
 // ------------------------------------------------------------------------
-Component * SimMessage::findOptimization(Schematic *Doc)
+Component * SimMessage::findOptimization(SchematicDoc *Doc)
 {
   for(auto pc : Doc->components()){
     if(pc->isActive){
@@ -831,7 +831,7 @@ void SimMessage::FinishSimulation(int Status)
 #if 0
       BUG.
       if(((Optimize_Sim*)SimOpt)->loadASCOout()){
-	((Schematic*)DocWidget)->setChanged(true,true);
+	((SchematicDoc*)DocWidget)->setChanged(true,true);
       }
 #endif
     }

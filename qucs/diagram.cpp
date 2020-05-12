@@ -39,7 +39,7 @@
 #include "diagrams/diagramdialog.h"
 #include "qucs.h"
 #include "mnemo.h"
-#include "schematic.h"
+#include "schematic_doc.h"
 #include "platform.h"
 
 #include "diagrams/rect3ddiagram.h" // BUG
@@ -178,7 +178,7 @@ void Diagram::paintMarkers(ViewPainter *p, bool paintAll)
 }
 
 // ------------------------------------------------------------
-void Diagram::paintScheme(Schematic *p) const
+void Diagram::paintScheme(SchematicDoc *p) const
 {
   p->PostPaintEvent(_Rect, cx, cy-y2, x2, y2);
 }
@@ -2362,7 +2362,7 @@ double Diagram::wavevalX(int i) const
 }
 */
 
-bool Diagram::pressElement(Schematic* Doc, Element*& selElem, QMouseEvent* Event)
+bool Diagram::pressElement(SchematicDoc* Doc, Element*& selElem, QMouseEvent* Event)
 {
 
 	if(Event->button() != Qt::LeftButton){ untested();

@@ -21,7 +21,7 @@
 #include "components/component.h"
 #include "node.h"
 #include "qucs.h"
-#include "schematic.h"
+#include "schematic_doc.h"
 #include "viewpainter.h"
 #include "module.h"
 #include "misc.h"
@@ -322,7 +322,7 @@ void Component::paint(ViewPainter *p) const
 
 // -------------------------------------------------------
 // Paints the component when moved with the mouse.
-void Component::paintScheme(Schematic *p) const
+void Component::paintScheme(SchematicDoc *p) const
 {
   // qDebug() << "paintScheme" << Model;
   int cx=cx_();
@@ -333,7 +333,7 @@ void Component::paintScheme(Schematic *p) const
     QFont newFont = p->font();
 
     float Scale =
-          ((Schematic*)QucsMain->DocumentTab->currentWidget())->Scale;
+          ((SchematicDoc*)QucsMain->DocumentTab->currentWidget())->Scale;
     newFont.setPointSizeF(float(Scale) * QucsSettings.largeFontSize);
     newFont.setWeight(QFont::DemiBold);
     // here the font metric is already the screen metric, since the font

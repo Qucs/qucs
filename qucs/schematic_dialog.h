@@ -22,7 +22,7 @@
 #include "object.h"
 #include "platform.h"
 
-class Schematic;
+class SchematicDoc;
 
 class QValidator;
 class QIntValidator;
@@ -90,12 +90,12 @@ protected slots:
 private:
   virtual void updateCompPropsList(void){}
 protected:
-  Schematic* schematic(){ untested();
+  SchematicDoc* schematic(){ untested();
 	  return Doc;
   }
 
 private:
-  Schematic* Doc;
+  SchematicDoc* Doc;
 };
 
 #endif

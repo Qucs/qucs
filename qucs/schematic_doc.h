@@ -29,6 +29,7 @@
 #include "schematic_scene.h"
 #include "schematic_model.h"
 #include "schematic_lang.h"
+#include "schematic_action.h"
 #include "qt_compat.h"
 
 #ifdef USE_SCROLLVIEW
@@ -55,12 +56,11 @@ class QUndoCommand;
 class MouseAction;
 
 // TODO: rename to SchematicDocument
-#define SchematicDocument Schematic
-class SchematicDocument;
+class SchematicDoc;
 class MouseActions;
-typedef bool (Schematic::*pToggleFunc) ();
-typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
-typedef void (MouseActions::*pMouseFunc2) (Schematic*, QMouseEvent*);
+typedef bool (SchematicDoc::*pToggleFunc) ();
+typedef void (MouseActions::*pMouseFunc) (SchematicDoc*, QMouseEvent*);
+typedef void (MouseActions::*pMouseFunc2) (SchematicDoc*, QMouseEvent*);
 
 // digital signal data
 struct DigSignal {
@@ -100,15 +100,15 @@ class ElementGraphics;
 // TODO: rename to SchematicDocument
 // TODO: add SymbolDocument
 // TODO: move to schematic_doc.h
-class Schematic : public SchematicBase, public QucsDoc {
+class SchematicDoc : public SchematicBase, public QucsDoc {
   Q_OBJECT
 private:
-  Schematic(Schematic const&x): SchematicBase(), QucsDoc(x), DocModel(this){ unreachable(); }
+  SchematicDoc(SchematicDoc const&x): SchematicBase(), QucsDoc(x), DocModel(this){ unreachable(); }
 public:
   typedef QList<ElementGraphics*> EGPList;
 public:
-  Schematic(QucsApp&, const QString&);
- ~Schematic();
+  SchematicDoc(QucsApp&, const QString&);
+ ~SchematicDoc();
 
   void setName(const QString&);
   void setChanged(bool, bool fillStack=false, char Op='*');
@@ -571,8 +571,8 @@ private: // action overrides, schematic_action.cpp
 private:
   bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2); // this is nuts.
 
-  MouseActions* _mouseActions; //needed?
-  MouseActions& mouseActions() { assert(_mouseActions); return *_mouseActions; }
+  SchematicActions* _mouseActions; //needed?
+  SchematicActions& mouseActions() { assert(_mouseActions); return *_mouseActions; }
   MouseAction* mouseAction;
 
 public: // serializer
@@ -599,7 +599,7 @@ private: // obsolete.
 // ---------------------------------------------------
 // Peeforms paste function from clipboard
 template<class SOME_LIST>
-inline bool Schematic::paste(DocumentStream *stream, SOME_LIST *pe)
+inline bool SchematicDoc::paste(DocumentStream *stream, SOME_LIST *pe)
 { untested();
   return pasteFromClipboard(stream, pe);
 }

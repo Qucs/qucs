@@ -22,7 +22,7 @@
 #include <QRegExp>
 #include <QGridLayout>
 
-class Schematic;
+class SchematicDoc;
 class QLineEdit;
 class QComboBox;
 class QGridLayout;
@@ -32,7 +32,7 @@ class QRegExpValidator;
 class ChangeDialog : public QDialog {
    Q_OBJECT
 public:
-  ChangeDialog(Schematic*);
+  ChangeDialog(SchematicDoc*);
  ~ChangeDialog();
 
 private slots:
@@ -41,7 +41,7 @@ private slots:
 private:
   bool matches(const QString&);
 
-  Schematic *Doc;
+  SchematicDoc *Doc;
   QGridLayout *all;   // the mother of all widgets
   QRegExpValidator  *Validator, *ValRestrict;
   QRegExp     Expr;

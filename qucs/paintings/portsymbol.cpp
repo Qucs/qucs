@@ -17,7 +17,7 @@
 #include "portsymbol.h"
 #include "globals.h"
 #include "module.h"
-#include "schematic.h"
+#include "schematic_doc.h"
 #include "some_font_stuff.h"
 
 #include <QPainter>
@@ -123,8 +123,9 @@ void PortSymbol::paint(ViewPainter *p)
 }
 
 // --------------------------------------------------------------------------
-void PortSymbol::paintScheme(Schematic *p)
+void PortSymbol::paintScheme(SchematicDoc *p)
 {
+	incomplete();
   p->PostPaintEvent(_Ellipse, cx-4, cy-4, 8, 8);
   p->PostPaintEvent(_Rect, cx+x1, cy+y1, x2, y2);
 }

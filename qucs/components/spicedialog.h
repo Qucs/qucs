@@ -22,7 +22,7 @@
 #include <QRegExp>
 #include "schematic_dialog.h"
 
-class Schematic;
+class SchematicDoc;
 class SpiceFile;
 class QLineEdit;
 class QPushButton;
@@ -38,7 +38,7 @@ class QTextStream;
 
 class SpiceDialog : public SchematicDialog {
 public:
-  SpiceDialog(QucsDoc*); // , SpiceFile*, Schematic*) wtf?
+  SpiceDialog(QucsDoc*); // , SpiceFile*, SchematicDoc*) wtf?
  ~SpiceDialog();
 
  void attach(Object* spicecomponent);
@@ -79,7 +79,7 @@ private:
               *ButtOK, *ButtApply, *ButtCancel;
   QComboBox   *PrepCombo;
   SpiceFile   *Comp;
-  Schematic   *Doc;
+  SchematicDoc*Doc;
   bool        changed;
   int         currentPrep;
 

@@ -1,6 +1,6 @@
 
 #include "schematic_scene.h"
-#include "schematic.h"
+#include "schematic_doc.h"
 #include "qt_compat.h"
 
 #include <QFileInfo>
@@ -49,7 +49,7 @@ void ElementGraphics::setPos(int a, int b)
 // ---------------------------------------------------
 // forward to graphicscene, once it is there.
 // BUG: what if there are multiple items?
-ElementGraphics* Schematic::itemAt(float x, float y)
+ElementGraphics* SchematicDoc::itemAt(float x, float y)
 {
 #ifndef USE_SCROLLVIEW
 	QPointF p(x, y);
@@ -167,7 +167,7 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 	int GridY = 10;
 
 	// Get associated view, assume single view
-	Schematic *v = static_cast<Schematic *>(views().at(0));
+	SchematicDoc *v = static_cast<SchematicDoc *>(views().at(0));
 
 	// When scaling, adjust visible grid spacing
 	float scale = v->Scale;
@@ -184,7 +184,7 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 #endif
 
 #ifndef USE_SCROLLVIEW
-void ElementGraphics::paintScheme(Schematic *p)
+void ElementGraphics::paintScheme(SchematicDoc *p)
 {
   	assert(_e);
 	_e->paintScheme(p);

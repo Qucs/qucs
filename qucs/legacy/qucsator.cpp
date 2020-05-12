@@ -24,13 +24,15 @@
 #include "command.h"
 #include "docfmt.h"
 #include "schematic_model.h"
-#include "schematic.h" // BUG. fixed in qt branch
+#include "schematic_doc.h" // BUG
 #include "schematic_lang.h"
 #include "exception.h"
 #include "sckt_proto.h"
 #include "subcircuit.h"
 #include "net.h"
 #include "misc.h"
+
+#include "paintings/paintings.h"
 
 namespace {
 // qucslang language implementation
@@ -86,6 +88,7 @@ void QucsLang::printSubckt(SubcktProto const* p, stream_t& s) const
 	s << "\n";
 
 	for(auto pi : p->symbolPaintings()){
+		incomplete();
 		if(pi->name() == ".ID ") {
 			incomplete();
 			s<<"TODO " << pi->label() << pi->name() << "\n";

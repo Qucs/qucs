@@ -34,7 +34,7 @@
 
 #include "qucs.h"
 #include "node.h"
-#include "schematic.h"
+#include "schematic_doc.h"
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
 #include "components/spicefile.h"
@@ -133,7 +133,7 @@ QString SchematicModel::createClipboardFile()
 
 // -------------------------------------------------------------
 // Only read fields without loading them.
-bool Schematic::loadIntoNothing(DocumentStream *stream)
+bool SchematicDoc::loadIntoNothing(DocumentStream *stream)
 {
   QString Line, cstr;
   while(!stream->atEnd()) {
@@ -148,7 +148,7 @@ bool Schematic::loadIntoNothing(DocumentStream *stream)
 
 // -------------------------------------------------------------
 // Paste from clipboard. into pe. wtf is pe?
-bool Schematic::pasteFromClipboard(DocumentStream *stream, EGPList* pe)
+bool SchematicDoc::pasteFromClipboard(DocumentStream *stream, EGPList* pe)
 { untested();
 #if 1
   QString Line;
@@ -216,7 +216,7 @@ bool Schematic::pasteFromClipboard(DocumentStream *stream, EGPList* pe)
 }
 
 // -------------------------------------------------------------
-int Schematic::saveSymbolCpp (void)
+int SchematicDoc::saveSymbolCpp (void)
 {
   QFileInfo info (docName());
   QString cppfile = info.path () + QDir::separator() + DataSet;
@@ -284,7 +284,7 @@ int Schematic::saveSymbolCpp (void)
 }
 
 // save symbol paintings in JSON format
-int Schematic::saveSymbolJSON()
+int SchematicDoc::saveSymbolJSON()
 {
   QFileInfo info (docName());
   QString jsonfile = info.path () + QDir::separator()
@@ -371,7 +371,7 @@ int Schematic::saveSymbolJSON()
 namespace{
 class sda : public ModelAccess{
 public:
-  sda(SchematicModel const& m, Schematic const& s) : _m(m), _s(s) {
+  sda(SchematicModel const& m, SchematicDoc const& s) : _m(m), _s(s) {
   }
 
 private:
@@ -391,12 +391,12 @@ private: // SchematicSymbol
   }
 private:
   SchematicModel const& _m;
-  Schematic const& _s;
+  SchematicDoc const& _s;
 };
 }
 
 // -------------------------------------------------------------
-void Schematic::saveDocument() const
+void SchematicDoc::saveDocument() const
 {
   // QFile file(DocName);
   // if(!file.open(QIODevice::ReadOnly)) {
@@ -415,10 +415,10 @@ void Schematic::saveDocument() const
 
 // -------------------------------------------------------------
 #if 0// moved
-bool Schematic::loadProperties(QTextStream *stream)
+bool SchematicDoc::loadProperties(QTextStream *stream)
 #endif
 // // TODO: move to frame::setParameters
-void Schematic::setFrameText(int idx, QString s)
+void SchematicDoc::setFrameText(int idx, QString s)
 {
   incomplete();
 }
@@ -439,7 +439,7 @@ void Schematic::setFrameText(int idx, QString s)
 // // TODO: move to frame::setParameters
 bool SchematicModel::loadProperties(QTextStream *stream)
 {
-  Schematic* d = _doc;
+  SchematicDoc* d = _doc;
   bool ok = true;
   QString Line, cstr, nstr;
   while(!stream->atEnd()) {
@@ -511,7 +511,7 @@ bool SchematicModel::loadProperties(QTextStream *stream)
 // ---------------------------------------------------
 // Inserts a component without performing logic for wire optimization.
 #if 0
-void Schematic::simpleInsertComponent(Component *c)
+void SchematicDoc::simpleInsertComponent(Component *c)
 {
 #if 0
   // assert(&_doc->components() == &components());
@@ -756,10 +756,10 @@ bool SchematicModel::loadPaintings(QTextStream *stream)
 #endif
 
 /*!
- * \brief Schematic::loadDocument tries to load a schematic document.
+ * \brief SchematicDoc::loadDocument tries to load a schematic document.
  * \return true/false in case of success/failure
  */
-bool Schematic::loadDocument()
+bool SchematicDoc::loadDocument()
 {
   QFile file(docName());
   qDebug() << "opening" << docName();
@@ -769,7 +769,7 @@ bool Schematic::loadDocument()
       QMessageBox::critical(0, QObject::tr("Error"),
                  QObject::tr("Cannot load document: ")+docName());
     else
-      qCritical() << "Schematic::loadDocument:"
+      qCritical() << "SchematicDoc::loadDocument:"
                   << QObject::tr("Cannot load document: ")+docName();
     return false;
   }else{
@@ -788,7 +788,7 @@ bool Schematic::loadDocument()
 // -------------------------------------------------------------
 // Creates a Qucs file format (without document properties) in the returning
 // string. This is used to save state for undo operation.
-QString Schematic::createUndoString(char Op)
+QString SchematicDoc::createUndoString(char Op)
 {
   incomplete();
   Painting *pp;
@@ -829,7 +829,7 @@ QString Schematic::createUndoString(char Op)
 
 // -------------------------------------------------------------
 // Same as "createUndoString(char Op)" but for symbol edit mode.
-QString Schematic::createSymbolUndoString(char Op)
+QString SchematicDoc::createSymbolUndoString(char Op)
 {
   Painting *pp;
 
@@ -872,7 +872,7 @@ static void parser_temporary_kludge(SchematicModel& m, ModelStream& stream)
 // -------------------------------------------------------------
 // Is quite similiar to "loadDocument()" but with less error checking.
 // Abused for "undo" function.
-bool Schematic::rebuild(QString *s)
+bool SchematicDoc::rebuild(QString *s)
 {
   incomplete();
   DocModel.clear();
@@ -890,7 +890,7 @@ bool Schematic::rebuild(QString *s)
 
 // -------------------------------------------------------------
 // Same as "rebuild(QString *s)" but for symbol edit mode.
-bool Schematic::rebuildSymbol(QString *s)
+bool SchematicDoc::rebuildSymbol(QString *s)
 {
   incomplete();
 #if 0
@@ -957,7 +957,7 @@ void SchematicModel::throughAllNodes(unsigned& z) const
 // ----------------------------------------------------------
 // Checks whether this file is a qucs file and whether it is an subcircuit.
 // It returns the number of subcircuit ports.
-int Schematic::testFile(const QString& DocName)
+int SchematicDoc::testFile(const QString& DocName)
 {
   QFile file(DocName);
   if(!file.open(QIODevice::ReadOnly)) {
@@ -1081,7 +1081,7 @@ void SchematicModel::propagateNode(Node *pn) const
 #include <iostream>
 
 /*!
- * \brief Schematic::throughAllComps
+ * \brief SchematicDoc::throughAllComps
  * Goes through all schematic components and allows special component
  * handling, e.g. like subcircuit netlisting.
  * \param stream is a pointer to the text stream used to collect the netlist
@@ -1095,7 +1095,7 @@ void SchematicModel::propagateNode(Node *pn) const
 // BUG: produces output
 // to be called from qucsator language only..
 #if 0 // moved to qucsator.cc
-bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
+bool SchematicDoc::throughAllComps(QTextStream *stream, int& countInit,
                    QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
 		   NetLang const& nl)
 #endif
@@ -1562,7 +1562,7 @@ bool SchematicModel::createSubNetlist(stream_t& stream, int& countInit,
 // Determines the node names and writes subcircuits into netlist file.
 // moved to QucsatorNetlister::prepareSave
 #if 0
-int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
+int SchematicDoc::prepareNetlist(QTextStream& stream, QStringList& Collect,
                               QPlainTextEdit *ErrText, NetLang const& nl)
 {
   incomplete();
@@ -1665,7 +1665,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
 // ---------------------------------------------------
 // Write the beginning of digital netlist to the text stream 'stream'.
 // FIXME: really use lang. get rid of isVerilog
-void Schematic::beginNetlistDigital(QTextStream& stream, NetLang const& /*lang*/)
+void SchematicDoc::beginNetlistDigital(QTextStream& stream, NetLang const& /*lang*/)
 {
   if (isVerilog) {
     stream << "module TestBench ();\n";
@@ -1699,7 +1699,7 @@ void Schematic::beginNetlistDigital(QTextStream& stream, NetLang const& /*lang*/
 // ---------------------------------------------------
 // Write the end of digital netlist to the text stream 'stream'.
 // FIXME: use lang, not isVerilog
-void Schematic::endNetlistDigital(QTextStream& stream, NetLang const& /*lang*/)
+void SchematicDoc::endNetlistDigital(QTextStream& stream, NetLang const& /*lang*/)
 {
   if (isVerilog) {
   } else {

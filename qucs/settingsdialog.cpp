@@ -20,7 +20,7 @@
 #include "node.h"
 #include "qucs.h"
 #include "mnemo.h"
-#include "schematic.h"
+#include "schematic_doc.h"
 
 #include <QGridLayout>
 #include <QVBoxLayout>
@@ -42,7 +42,7 @@
 #include <QModelIndex>
 #include <QDebug>
 
-SettingsDialog::SettingsDialog(Schematic *Doc_)
+SettingsDialog::SettingsDialog(SchematicDoc *Doc_)
     : QDialog(Doc_) 
 {
     Doc = Doc_;

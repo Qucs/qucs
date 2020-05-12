@@ -178,10 +178,10 @@ public:
   MouseActions(QucsDoc& /* was: App?? */);
   virtual ~MouseActions();
 
-  void setPainter(Schematic*);
-  bool pasteElements(Schematic*);
-  void editElement(Schematic*, QMouseEvent*);
-  void editLabel(Schematic*, WireLabel*);
+  void setPainter(SchematicDoc*);
+  bool pasteElements(SchematicDoc*);
+  void editElement(SchematicDoc*, QMouseEvent*);
+  void editLabel(SchematicDoc*, WireLabel*);
 
   bool drawn;  // indicates whether the scheme element was drawn last time
   void setDrawn(bool b=true){drawn = b;}
@@ -198,9 +198,9 @@ public: // really?
 
 private:
 public: // BUG? called from MouseAction.
-  void Set1(QMouseEvent*, Schematic*ignore=nullptr);
-  void Set2(QMouseEvent*, Schematic*ignore=nullptr);
-  void Set3(QMouseEvent*, Schematic*ignore=nullptr);
+  void Set1(QMouseEvent*, SchematicDoc*ignore=nullptr);
+  void Set2(QMouseEvent*, SchematicDoc*ignore=nullptr);
+  void Set3(QMouseEvent*, SchematicDoc*ignore=nullptr);
 public: // BUG
   int MAx1, MAy1, MAx2, MAy2;
   int MAx3, MAy3;
@@ -218,7 +218,7 @@ private:
   // (does it matter?)
 public:
   ElementMouseAction selectElement(QPoint const&, bool, int *index=0);
-  Component* selectCompText(Schematic*, int, int, int&, int&);
+  Component* selectCompText(SchematicDoc*, int, int, int&, int&);
   void     deselectElements(ElementMouseAction);
 
 private:
@@ -227,11 +227,8 @@ private:
   QucsDoc& _doc;
 
   // -------------------------------------------------------------------
-public: // BUG: Schematic only.
-  MouseAction* maDelete;
-  MouseAction* maThis;
-  MouseAction* maThat;
 public:
+#define Schematic SchematicDoc
   void MMoveSelect(Schematic*, QMouseEvent*);
   void MMoveElement(Schematic*, QMouseEvent*);
   void MMoveWire1(Schematic*, QMouseEvent*);
@@ -288,6 +285,7 @@ public:
   void moveElements(QList<ElementGraphics*>&, int, int);
   void endElementMoving(Schematic*, EGPList*);
   void rightPressMenu(QMouseEvent*);
+#undef Schematic
 }; // MouseActions
 
 class Label;

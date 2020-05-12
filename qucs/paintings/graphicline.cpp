@@ -18,7 +18,7 @@
 #include "misc.h"
 #include "globals.h"
 #include "module.h"
-#include "schematic.h"
+#include "schematic_doc.h" // BUG
 
 #include <QPainter>
 #include <QPushButton>
@@ -69,8 +69,9 @@ void GraphicLine::paint(ViewPainter *p)
 }
 
 // --------------------------------------------------------------------------
-void GraphicLine::paintScheme(Schematic *p)
+void GraphicLine::paintScheme(SchematicDoc *p)
 {
+	incomplete();
   p->PostPaintEvent(_Line, cx, cy, cx+x2, cy+y2);
 }
 
@@ -194,7 +195,7 @@ bool GraphicLine::resizeTouched(float fX, float fY, float len)
 
 // --------------------------------------------------------------------------
 // Mouse move action during resize.
-void GraphicLine::MouseResizeMoving(int x, int y, Schematic *p)
+void GraphicLine::MouseResizeMoving(int x, int y, SchematicDoc *p)
 {
   paintScheme(p);  // erase old painting
   if(State == 1) { x2 += cx-x; y2 += cy-y; cx = x; cy = y; } // move beginning
@@ -207,8 +208,8 @@ void GraphicLine::MouseResizeMoving(int x, int y, Schematic *p)
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
 void GraphicLine::MouseMoving(
-	Schematic *paintScale, int, int, int gx, int gy,
-	Schematic *p, int x, int y, bool drawn)
+	SchematicDoc *paintScale, int, int, int gx, int gy,
+	SchematicDoc *p, int x, int y, bool drawn)
 {
   if(State > 0) {
     if(State > 1)

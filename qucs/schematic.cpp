@@ -41,7 +41,7 @@
 #include <QMimeData>
 
 #include "qucs.h"
-#include "schematic.h"
+#include "schematic_doc.h"
 #include "node.h"
 #include "textdoc.h"
 #include "viewpainter.h"
@@ -65,23 +65,23 @@ WireList      SymbolWires;
 DiagramList   SymbolDiags;
 ComponentList SymbolComps;
 
-//PaintingList& Schematic::symbolPaintings()
+//PaintingList& SchematicDoc::symbolPaintings()
 //{ untested();
 //  return DocModel.symbolPaintings();
 //}
 
-void Schematic::printCursorPosition(int x, int y)
+void SchematicDoc::printCursorPosition(int x, int y)
 {
   QPoint p(x,y);
   QPointF mp=mapToScene(p);
   App->printCursorPosition(mp.x(),mp.y());
 }
 
-Schematic::Schematic(QucsApp& App_, const QString& Name_)
+SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
     : QucsDoc(App_, Name_), DocModel(this),
   SymbolMode(false)
 { untested();
-  qDebug() << "Schematic::Schematic" << Name_;
+  qDebug() << "SchematicDoc::SchematicDoc" << Name_;
 
   // ...........................................................
   GridX  = GridY  = 10;
@@ -163,12 +163,12 @@ Schematic::Schematic(QucsApp& App_, const QString& Name_)
   }
 } // ::SchematicDocument
 
-Schematic::~Schematic()
+SchematicDoc::~SchematicDoc()
 {
 }
 
 // ---------------------------------------------------
-bool Schematic::createSubcircuitSymbol()
+bool SchematicDoc::createSubcircuitSymbol()
 {
   incomplete();
 #if 0
@@ -227,7 +227,7 @@ bool Schematic::createSubcircuitSymbol()
 
 // ---------------------------------------------------
 // // expose tab?
-void Schematic::becomeCurrent(bool update)
+void SchematicDoc::becomeCurrent(bool update)
 {
   emit signalCursorPosChanged(0, 0);
 
@@ -284,7 +284,7 @@ void Schematic::becomeCurrent(bool update)
 }
 
 // ---------------------------------------------------
-void Schematic::setName (const QString& Name_)
+void SchematicDoc::setName (const QString& Name_)
 {
   setDocName(Name_);
   QFileInfo Info (docName());
@@ -300,7 +300,7 @@ void Schematic::setName (const QString& Name_)
 
 // ---------------------------------------------------
 // Sets the document to be changed or not to be changed.
-void Schematic::setChanged(bool c, bool fillStack, char Op)
+void SchematicDoc::setChanged(bool c, bool fillStack, char Op)
 {
   if((!DocChanged) && c)
     emit signalFileChanged(true);
@@ -378,7 +378,7 @@ void Schematic::setChanged(bool c, bool fillStack, char Op)
 static int frameX[10]= {0, 1020, 765, 1530, 1020, 2295, 1530, 1414, 1054 };
 static int frameY[10]= {0, 765, 1020, 1020, 1530, 1530, 2295, 1054, 1414 };
 
-bool Schematic::sizeOfFrame(int& xall, int& yall)
+bool SchematicDoc::sizeOfFrame(int& xall, int& yall)
 {
   int i = showFrame();
   if(!i) {
@@ -394,7 +394,7 @@ bool Schematic::sizeOfFrame(int& xall, int& yall)
 }
 
 // -----------------------------------------------------------
-void Schematic::paintFrame(ViewPainter *p)
+void SchematicDoc::paintFrame(ViewPainter *p)
 {
   // dimensions:  X cm / 2.54 * 144
   int xall, yall;
@@ -462,7 +462,7 @@ void Schematic::paintFrame(ViewPainter *p)
 // -----------------------------------------------------------
 #if QT_VERSION < 0x050000
 // Is called when the content (schematic or data display) has to be drawn.
-void Schematic::drawContents(QPainter *p, int, int, int, int)
+void SchematicDoc::drawContents(QPainter *p, int, int, int, int)
 {
   // no longer used.
   ViewPainter Painter;
@@ -587,7 +587,7 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
 }
 #endif
 
-void Schematic::PostPaintEvent (PE pe, int x1, int y1, int x2, int y2, int a, int b, bool PaintOnViewport)
+void SchematicDoc::PostPaintEvent (PE pe, int x1, int y1, int x2, int y2, int a, int b, bool PaintOnViewport)
 {
   PostedPaintEvent p = {pe, x1,y1,x2,y2,a,b,PaintOnViewport};
   PostedPaintEvents.push_back(p);
@@ -600,7 +600,7 @@ void Schematic::PostPaintEvent (PE pe, int x1, int y1, int x2, int y2, int a, in
 // // is this an override?!
 // the mousemove stuff is collected here (it's an override) and then funnelled
 // into App->MouseMoveAction, which should just have subscribed the event
-void Schematic::contentsMouseMoveEvent(QMouseEvent *Event)
+void SchematicDoc::contentsMouseMoveEvent(QMouseEvent *Event)
 {
   // "emit" does not seem to do anything.
   emit signalCursorPosChanged(Event->pos().x(), Event->pos().y());
@@ -618,7 +618,7 @@ void Schematic::contentsMouseMoveEvent(QMouseEvent *Event)
 // -----------------------------------------------------------
 // override function. catch mouse presses.
 //  why not just forward?!
-void Schematic::mousePressEvent(QMouseEvent *Event)
+void SchematicDoc::mousePressEvent(QMouseEvent *Event)
 {
   App->editText->setHidden(true); // disable text edit of component property
   if(App->MouseReleaseAction == &MouseActions::MReleasePaste){
@@ -665,7 +665,7 @@ void Schematic::mousePressEvent(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void Schematic::contentsMouseReleaseEvent(QMouseEvent *Event)
+void SchematicDoc::contentsMouseReleaseEvent(QMouseEvent *Event)
 {
   // if(App->MouseReleaseAction)
   //   (App->view->*(App->MouseReleaseAction))(this, Event);
@@ -677,7 +677,7 @@ void Schematic::contentsMouseReleaseEvent(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void Schematic::mouseDoubleClickEvent(QMouseEvent *Event)
+void SchematicDoc::mouseDoubleClickEvent(QMouseEvent *Event)
 {
   if(mouseAction){ untested();
     mouseAction->release(Event);
@@ -686,7 +686,7 @@ void Schematic::mouseDoubleClickEvent(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPage)
+void SchematicDoc::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPage)
 {
 #ifndef USE_SCROLLVIEW
   (void) Painter;
@@ -759,7 +759,7 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
 }
 
 
-void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImage, int screenDpiX, int printerDpiX)
+void SchematicDoc::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImage, int screenDpiX, int printerDpiX)
 {
   (void) toImage;
   (void) screenDpiX;
@@ -885,7 +885,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
 }
 
 // -----------------------------------------------------------
-float Schematic::zoom(float s)
+float SchematicDoc::zoom(float s)
 {
   Scale *= s;
   if(Scale > 10.0) Scale = 10.0f;
@@ -907,7 +907,7 @@ float Schematic::zoom(float s)
 }
 
 // -----------------------------------------------------------
-float Schematic::zoomBy(float s)
+float SchematicDoc::zoomBy(float s)
 {
   zoom(s);
   s -= 1.0;
@@ -918,7 +918,7 @@ float Schematic::zoomBy(float s)
 }
 
 // ---------------------------------------------------
-void Schematic::showAll()
+void SchematicDoc::showAll()
 {
 #ifndef USE_SCROLLVIEW
   incomplete();
@@ -948,7 +948,7 @@ void Schematic::showAll()
 }
 
 // ---------------------------------------------------
-void Schematic::showNoZoom()
+void SchematicDoc::showNoZoom()
 {
   Scale = 1.0;
 
@@ -980,7 +980,7 @@ void Schematic::showNoZoom()
 // -----------------------------------------------------------
 // Enlarge the viewport area if the coordinates x1-x2/y1-y2 exceed the
 // visible area.
-void Schematic::enlargeView(int x1, int y1, int x2, int y2)
+void SchematicDoc::enlargeView(int x1, int y1, int x2, int y2)
 {
   int dx=0, dy=0;
   (void) (dx+dy);
@@ -1009,7 +1009,7 @@ void Schematic::enlargeView(int x1, int y1, int x2, int y2)
 // ---------------------------------------------------
 // Sets an arbitrary coordinate onto the next grid coordinate.
 // BUG: fp?
-QPoint Schematic::setOnGrid(int x, int y)
+QPoint SchematicDoc::setOnGrid(int x, int y)
 {
   //qDebug() << "setongrid in" << x << y;
   if(x<0) x -= (GridX >> 1) - 1;
@@ -1025,7 +1025,7 @@ QPoint Schematic::setOnGrid(int x, int y)
 }
 
 // ---------------------------------------------------
-void Schematic::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
+void SchematicDoc::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
 {
   if(!GridOn) return;
 
@@ -1078,7 +1078,7 @@ void Schematic::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
 
 // ---------------------------------------------------
 // Correction factor for unproportional font scaling.
-float Schematic::textCorr()
+float SchematicDoc::textCorr()
 {
   QFont Font = QucsSettings.font;
   Font.setPointSizeF( Scale * float(Font.pointSize()) );
@@ -1181,7 +1181,7 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
 
 // ---------------------------------------------------
 // Rotates all selected components around their midpoint.
-bool Schematic::rotateElements()
+bool SchematicDoc::rotateElements()
 {
   // disconnect();?
 
@@ -1189,7 +1189,7 @@ bool Schematic::rotateElements()
   QList<ElementGraphics*> ElementCache;
 
 #ifdef USE_SCROLLVIEW
-  ElementCache = Schematic::cropSelectedElements();
+  ElementCache = SchematicDoc::cropSelectedElements();
 #else
   assert(scene());
   scene()->selectedItemsAndBoundingBox(ElementCache, BB);
@@ -1286,13 +1286,13 @@ bool Schematic::rotateElements()
 // ---------------------------------------------------
 // Mirrors all selected components.
 // First copy them to 'ElementCache', then mirror and insert again.
-bool Schematic::mirrorXComponents()
+bool SchematicDoc::mirrorXComponents()
 { untested();
   QRectF BB(1., 1., -1. , -1.);
   QList<ElementGraphics*> ElementCache;
 
 #ifdef USE_SCROLLVIEW
-  ElementCache = Schematic::cropSelectedElements();
+  ElementCache = SchematicDoc::cropSelectedElements();
 #else
   assert(scene());
   scene()->selectedItemsAndBoundingBox(ElementCache, BB);
@@ -1370,13 +1370,13 @@ bool Schematic::mirrorXComponents()
 
 // ---------------------------------------------------
 // Mirrors all selected components. First copy them to 'ElementCache', then mirror and insert again.
-bool Schematic::mirrorYComponents()
+bool SchematicDoc::mirrorYComponents()
 {
 
   QRectF BB(1., 1., -1. , -1.);
   QList<ElementGraphics*> ElementCache;
 #ifdef USE_SCROLLVIEW
-  ElementCache = Schematic::cropSelectedElements();
+  ElementCache = SchematicDoc::cropSelectedElements();
 #else
   assert(scene());
   scene()->selectedItemsAndBoundingBox(ElementCache, BB);
@@ -1453,7 +1453,7 @@ bool Schematic::mirrorYComponents()
 
 // ---------------------------------------------------
 // Updates the graph data of all diagrams (load from data files).
-void Schematic::reloadGraphs()
+void SchematicDoc::reloadGraphs()
 {
   QFileInfo Info(docName());
   for(auto pd : diagrams()){
@@ -1462,7 +1462,7 @@ void Schematic::reloadGraphs()
 }
 
 // Copy function, 
-void Schematic::copy()
+void SchematicDoc::copy()
 {
   QString s = DocModel.createClipboardFile();
   QClipboard *cb = QApplication::clipboard();  // get system clipboard
@@ -1473,7 +1473,7 @@ void Schematic::copy()
 
 // ---------------------------------------------------
 // Cut function, copy followed by deletion
-void Schematic::cut()
+void SchematicDoc::cut()
 {
   copy();
   deleteElements(); //delete selected elements
@@ -1483,7 +1483,7 @@ void Schematic::cut()
 
 // ---------------------------------------------------
 // Loads this Qucs document.
-bool Schematic::load()
+bool SchematicDoc::load()
 { untested();
   DocModel.clear();
 
@@ -1533,7 +1533,7 @@ bool Schematic::load()
 
 // ---------------------------------------------------
 // Saves this Qucs document. Returns the number of subcircuit ports.
-int Schematic::save()
+int SchematicDoc::save()
 {
   int result = adjustPortNumbers();// same port number for schematic and symbol
   saveDocument();
@@ -1569,7 +1569,7 @@ int Schematic::save()
 // equal add or remove some in the symbol.
 // BUG: this is far to complex.
 // (not even sure, what it is trying to do...)
-int Schematic::adjustPortNumbers()
+int SchematicDoc::adjustPortNumbers()
 {
   int x1, x2, y1, y2;
   // get size of whole symbol to know where to place new ports
@@ -1808,7 +1808,7 @@ int Schematic::adjustPortNumbers()
 
 // ---------------------------------------------------
 #if 0 // does not work
-bool Schematic::undo()
+bool SchematicDoc::undo()
 {
   if(isSymbolMode()) {
     if (undoSymbolIdx == 0) { return false; }
@@ -1855,7 +1855,7 @@ bool Schematic::undo()
 }
 
 // ---------------------------------------------------
-bool Schematic::redo()
+bool SchematicDoc::redo()
 {
   if(isSymbolMode()) {
     if (undoSymbolIdx == undoSymbol.size() - 1) { return false; }
@@ -1906,7 +1906,7 @@ bool Schematic::redo()
 
 // ---------------------------------------------------
 // Sets selected elements on grid.
-bool Schematic::elementsOnGrid()
+bool SchematicDoc::elementsOnGrid()
 {
   int x, y, No;
   bool count = false;
@@ -2049,7 +2049,7 @@ bool Schematic::elementsOnGrid()
 }
 
 // ---------------------------------------------------
-void Schematic::switchPaintMode()
+void SchematicDoc::switchPaintMode()
 {
   // BUG. this messes with SchematicModel functions
   setSymbolMode(!isSymbolMode());
@@ -2081,7 +2081,7 @@ void Schematic::switchPaintMode()
 // **********      Function for serving mouse wheel moving    **********
 // **********                                                 **********
 // *********************************************************************
-void Schematic::contentsWheelEvent(QWheelEvent * Event)
+void SchematicDoc::contentsWheelEvent(QWheelEvent * Event)
 {
 #ifndef USE_SCROLLVIEW
   (void) Event;
@@ -2124,7 +2124,7 @@ void Schematic::contentsWheelEvent(QWheelEvent * Event)
 // -----------------------------------------------------------
 // Scrolls the visible area upwards and enlarges or reduces the view
 // area accordingly.
-bool Schematic::scrollUp(int step)
+bool SchematicDoc::scrollUp(int step)
 {
 #ifndef USE_SCROLLVIEW
   incomplete();
@@ -2153,7 +2153,7 @@ bool Schematic::scrollUp(int step)
 // -----------------------------------------------------------
 // Scrolls the visible area downwards and enlarges or reduces the view
 // area accordingly. ("step" must be negative!)
-bool Schematic::scrollDown(int step)
+bool SchematicDoc::scrollDown(int step)
 {
 #ifndef USE_SCROLLVIEW
   incomplete();
@@ -2183,7 +2183,7 @@ bool Schematic::scrollDown(int step)
 // -----------------------------------------------------------
 // Scrolls the visible area to the left and enlarges or reduces the view
 // area accordingly.
-bool Schematic::scrollLeft(int step)
+bool SchematicDoc::scrollLeft(int step)
 {
 #ifndef SCROLLVIEW
   incomplete();
@@ -2212,7 +2212,7 @@ bool Schematic::scrollLeft(int step)
 // -----------------------------------------------------------
 // Scrolls the visible area to the right and enlarges or reduces the
 // view area accordingly. ("step" must be negative!)
-bool Schematic::scrollRight(int step)
+bool SchematicDoc::scrollRight(int step)
 {
 #ifndef SCROLLVIEW
   incomplete();
@@ -2241,7 +2241,7 @@ bool Schematic::scrollRight(int step)
 
 // -----------------------------------------------------------
 // Is called if the scroll arrow of the ScrollBar is pressed.
-void Schematic::slotScrollUp()
+void SchematicDoc::slotScrollUp()
 {
   App->editText->setHidden(true);  // disable edit of component property
   scrollUp(verticalScrollBar()->singleStep());
@@ -2251,7 +2251,7 @@ void Schematic::slotScrollUp()
 
 // -----------------------------------------------------------
 // Is called if the scroll arrow of the ScrollBar is pressed.
-void Schematic::slotScrollDown()
+void SchematicDoc::slotScrollDown()
 {
   App->editText->setHidden(true);  // disable edit of component property
   scrollDown(-verticalScrollBar()->singleStep());
@@ -2261,7 +2261,7 @@ void Schematic::slotScrollDown()
 
 // -----------------------------------------------------------
 // Is called if the scroll arrow of the ScrollBar is pressed.
-void Schematic::slotScrollLeft()
+void SchematicDoc::slotScrollLeft()
 {
   App->editText->setHidden(true);  // disable edit of component property
   scrollLeft(horizontalScrollBar()->singleStep());
@@ -2271,7 +2271,7 @@ void Schematic::slotScrollLeft()
 
 // -----------------------------------------------------------
 // Is called if the scroll arrow of the ScrollBar is pressed.
-void Schematic::slotScrollRight()
+void SchematicDoc::slotScrollRight()
 {
   App->editText->setHidden(true);  // disable edit of component property
   scrollRight(-horizontalScrollBar()->singleStep());
@@ -2287,7 +2287,7 @@ void Schematic::slotScrollRight()
 // *********************************************************************
 
 // Is called if an object is dropped (after drag'n drop).
-void Schematic::contentsDropEvent(QDropEvent *Event)
+void SchematicDoc::contentsDropEvent(QDropEvent *Event)
 { untested();
   if(dragIsOkay) {
     QList<QUrl> urls = Event->mimeData()->urls();
@@ -2330,7 +2330,7 @@ void Schematic::contentsDropEvent(QDropEvent *Event)
 }
 
 // ---------------------------------------------------
-void Schematic::contentsDragEnterEvent(QDragEnterEvent *Event)
+void SchematicDoc::contentsDragEnterEvent(QDragEnterEvent *Event)
 {
   //FIXME: the function of drag library component seems not working?
   formerAction = 0;
@@ -2383,7 +2383,7 @@ void Schematic::contentsDragEnterEvent(QDragEnterEvent *Event)
 }
 
 // ---------------------------------------------------
-void Schematic::contentsDragLeaveEvent(QDragLeaveEvent*)
+void SchematicDoc::contentsDragLeaveEvent(QDragLeaveEvent*)
 {
   if(App->view->selElem)
     if(App->view->selElem->Type & isComponent)
@@ -2400,7 +2400,7 @@ void Schematic::contentsDragLeaveEvent(QDragLeaveEvent*)
 }
 
 // ---------------------------------------------------
-void Schematic::contentsDragMoveEvent(QDragMoveEvent *Event)
+void SchematicDoc::contentsDragMoveEvent(QDragMoveEvent *Event)
 {
   if(!dragIsOkay) {
     if(App->view->selElem == 0) {
@@ -2417,7 +2417,7 @@ void Schematic::contentsDragMoveEvent(QDragMoveEvent *Event)
 }
 
 #if 0
-void Schematic::getSelAreaWidthAndHeight(int &wsel, int &hsel, int& xmin_sel_, int& ymin_sel_)
+void SchematicDoc::getSelAreaWidthAndHeight(int &wsel, int &hsel, int& xmin_sel_, int& ymin_sel_)
 {
     int xmin= INT_MAX,
         ymin= INT_MAX,
@@ -2495,7 +2495,7 @@ void Schematic::getSelAreaWidthAndHeight(int &wsel, int &hsel, int& xmin_sel_, i
 #endif
 
 // insert an Element into the schematic.
-void Schematic::simpleInsertElement(Element* e)
+void SchematicDoc::simpleInsertElement(Element* e)
 {
   assert(false); // use PushBack
 	if(Wire* c=dynamic_cast<Wire*>(e)){
@@ -2534,7 +2534,7 @@ void PaintingList::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const
   }
 }
 
-Component* Schematic::find_component(QString const& n)
+Component* SchematicDoc::find_component(QString const& n)
 {
     for(auto pc : components()){
        if(pc->name() == n){
@@ -2546,7 +2546,7 @@ Component* Schematic::find_component(QString const& n)
 
 // ---------------------------------------------------
 #ifdef USE_SCROLLVIEW
-QPointF Schematic::mapToScene(QPoint const& p) const
+QPointF SchematicDoc::mapToScene(QPoint const& p) const
 {
   float fX=float(p.x())/Scale + float(ViewX1);
   float fY=float(p.y())/Scale + float(ViewY1);
@@ -2554,12 +2554,12 @@ QPointF Schematic::mapToScene(QPoint const& p) const
   return QPointF(fX, fY);
 }
 
-void Schematic::addToScene(Element* x)
+void SchematicDoc::addToScene(Element* x)
 {
   // not needed.
 }
 #else
-ElementGraphics& Schematic::addToScene(Element* x)
+ElementGraphics& SchematicDoc::addToScene(Element* x)
 {
   auto i=new ElementGraphics(x);
   scene()->addItem(i);
@@ -2567,7 +2567,7 @@ ElementGraphics& Schematic::addToScene(Element* x)
 }
 #endif
 
-Element* Schematic::eraseFromScene(ElementGraphics* g)
+Element* SchematicDoc::eraseFromScene(ElementGraphics* g)
 {
   Element* e = element(g);
   delete(g); // CHECK: does it detach itself?!
@@ -2577,7 +2577,7 @@ Element* Schematic::eraseFromScene(ElementGraphics* g)
 namespace{
 class ins : public SchematicSymbol{
 public:
-  ins(Schematic* m) : _m(m) {
+  ins(SchematicDoc* m) : _m(m) {
     assert(m);
   }
 private:
@@ -2605,12 +2605,12 @@ private: // SchematicSymbol
     return "ins, incomplete";
   }
 private:
-  Schematic* _m;
+  SchematicDoc* _m;
 };
 }
 
 // undo action?
-void Schematic::deleteItem(ElementGraphics *g)
+void SchematicDoc::deleteItem(ElementGraphics *g)
 {
     Element* e=element(g);
     delete(g); // will it detach from scene?
@@ -2620,7 +2620,7 @@ void Schematic::deleteItem(ElementGraphics *g)
 
 
 #if 0 // transition. obsolete
-void Schematic::parse(DocumentStream& s, SchematicLanguage const* L)
+void SchematicDoc::parse(DocumentStream& s, SchematicLanguage const* L)
 {
   if(!L){
     auto D=doclang_dispatcher["leg_sch"];
@@ -2638,9 +2638,9 @@ void Schematic::parse(DocumentStream& s, SchematicLanguage const* L)
 #endif
 
 // pre qt5 kludge
-void Schematic::pushBack(Element* what)
+void SchematicDoc::pushBack(Element* what)
 {
-  qDebug() << "Schematic::pushBack" << what;
+  qDebug() << "SchematicDoc::pushBack" << what;
 #ifndef USE_SCROLLVIEW
   incomplete();
   DocModel.pushBack(what);
@@ -2667,7 +2667,7 @@ void Schematic::pushBack(Element* what)
 }
 
 // ----------------------------------------------------------------
-QString Schematic::getParameter(std::string const& x) const
+QString SchematicDoc::getParameter(std::string const& x) const
 {
   if(x=="DocName"){
     return docName();
@@ -2679,7 +2679,7 @@ QString Schematic::getParameter(std::string const& x) const
 }
 
 // ----------------------------------------------------------------
-void Schematic::removeWire(Wire const* x)
+void SchematicDoc::removeWire(Wire const* x)
 {
 #ifndef USE_SCROLLVIEW
 incomplete();
@@ -2699,7 +2699,7 @@ void SchematicModel::removeNode(Node const* x)
   nodes().erase((Node*)x);
 }
 
-QList<ElementGraphics*> Schematic::selectedItems()
+QList<ElementGraphics*> SchematicDoc::selectedItems()
 {
 #ifndef USE_SCROLLVIEW
   assert(scene());

@@ -43,15 +43,15 @@
 #include "qucs.h"
 #include "qucsdoc.h"
 #include "textdoc.h"
-#include "schematic.h"
+#include "schematic_doc.h" // BUG
 #include "mouseactions.h"
 #include "messagedock.h"
-#include "wire.h"
+//#include "wire.h" // BUG
 #include "module.h"
 #include "projectView.h"
-#include "components/component.h"
-#include "paintings/paintings.h"
-#include "diagrams/diagrams.h"
+#include "components/component.h" // BUG
+#include "paintings/paintings.h" // BUG
+#include "diagrams/diagrams.h" // BUG
 
 // BUG: cleanup dialogs. how?!
 #include "savedialog.h"
@@ -559,7 +559,7 @@ QucsDoc* QucsApp::getDoc(int No)
     if(isTextDocument (w))
       return (QucsDoc*) ((TextDoc*)w);
     else
-      return (QucsDoc*) ((Schematic*)w);
+      return (QucsDoc*) ((SchematicDoc*)w);
   }
 
   return 0;
@@ -1385,7 +1385,7 @@ void QucsApp::slotFileNew(bool enableOpenDpl)
   statusBar()->showMessage(tr("Creating new schematic..."));
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *d = DocumentTab->createEmptySchematic("");
+  SchematicDoc *d = DocumentTab->createEmptySchematic("");
   d->SimOpenDpl = enableOpenDpl;
 
   statusBar()->showMessage(tr("Ready."));
@@ -1856,10 +1856,7 @@ void QucsApp::slotChangeView(QWidget *w)
     magAll->setDisabled(true);
     if(cursorLeft->isEnabled())
       switchSchematicDoc (false);
-  }
-  // for schematic documents
-  else {
-    Schematic *d = (Schematic*)w;
+  } else if(auto d=dynamic_cast<SchematicDoc*>(w)){
     Doc = (QucsDoc*)d;
     magAll->setDisabled(false);
     // already in schematic?
@@ -1906,7 +1903,7 @@ void QucsApp::slotFileSettings ()
   }
   // schematic properties
   else {
-    SettingsDialog * d = new SettingsDialog ((Schematic *) w);
+    SettingsDialog * d = new SettingsDialog ((SchematicDoc *) w);
     d->exec ();
   }
   view->drawn = false;
@@ -1963,7 +1960,7 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
     if(isTextDocument (w))  continue;
 
     // start from the last to omit re-appended components
-    Schematic *Doc = (Schematic*)w;
+    SchematicDoc *Doc = (SchematicDoc*)w;
     for(Component *pc=Doc->components().last(); pc!=0; ) {
       if(pc->obsolete_model_hack() == Model) { // BUG
         File = pc->Props.getFirst()->Value;
@@ -2059,7 +2056,7 @@ void QucsApp::slotIntoHierarchy()
 {
   slotHideEdit(); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
+  SchematicDoc *Doc = (SchematicDoc*)DocumentTab->currentWidget();
   Component *pc = Doc->searchSelSubcircuit();
   if(pc == 0) { return; }
 
@@ -2133,7 +2130,7 @@ void QucsApp::slotSimulate()
     }
   }
   else
-    Doc = (QucsDoc*)((Schematic*)w);
+    Doc = (QucsDoc*)((SchematicDoc*)w);
 
   if(Doc->docName().isEmpty()) // if document 'untitled' ...
     if(!saveAs()) return;    // ... save schematic before
@@ -2195,7 +2192,7 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
   if(sim->showBias == 0) {  // paint dc bias into schematic ?
     sim->slotClose();   // close and delete simulation window
     if(w) {  // schematic still open ?
-      SweepDialog *Dia = new SweepDialog((Schematic*)sim->DocWidget);
+      SweepDialog *Dia = new SweepDialog((SchematicDoc*)sim->DocWidget);
 
       // silence warning about unused variable.
       Q_UNUSED(Dia)
@@ -2221,11 +2218,11 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
     else
       if(w) if(!isTextDocument (sim->DocWidget))
 	// load recent simulation data (if document is still open)
-	((Schematic*)sim->DocWidget)->reloadGraphs();
+	((SchematicDoc*)sim->DocWidget)->reloadGraphs();
   }
 
   if(!isTextDocument (sim->DocWidget))
-    ((Schematic*)sim->DocWidget)->viewport()->update();
+    ((SchematicDoc*)sim->DocWidget)->viewport()->update();
 
 }
 
@@ -2288,7 +2285,7 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
 
   if(DocumentTab->currentWidget() == w)      // if page not ...
     if(!isTextDocument (w))
-      ((Schematic*)w)->reloadGraphs();  // ... changes, reload here !
+      ((SchematicDoc*)w)->reloadGraphs();  // ... changes, reload here !
 
   TabView->setCurrentIndex(2);   // switch to "Component"-Tab
   if (Name.right(4) == ".dpl") {
@@ -2478,7 +2475,7 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
 void QucsApp::slotSelectLibComponent(QTreeWidgetItem *item)
 {
     // get the current document
-    Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
+    SchematicDoc *Doc = (SchematicDoc*)DocumentTab->currentWidget();
 
     // if the current document is a schematic activate the paste
     if(!isTextDocument(Doc))
@@ -2590,7 +2587,7 @@ void QucsApp::switchEditMode(bool SchematicMode)
 }
 
 // ---------------------------------------------------------
-void QucsApp::changeSchematicSymbolMode(Schematic *Doc)
+void QucsApp::changeSchematicSymbolMode(SchematicDoc *Doc)
 {
   if(Doc->isSymbolMode()) {
     // go into select modus to avoid placing a forbidden element
@@ -2609,7 +2606,7 @@ bool QucsApp::isTextDocument(QWidget *w) {
 
 // ---------------------------------------------------------
 // Is called if the "symEdit" action is activated, i.e. if the user
-// switches between the two painting mode: Schematic and (subcircuit)
+// switches between the two painting mode: SchematicDoc and (subcircuit)
 // symbol.
 void QucsApp::slotSymbolEdit()
 {
@@ -2634,7 +2631,7 @@ void QucsApp::slotSymbolEdit()
     TDoc->setDocName(s);
 
     // set 'DataDisplay' document of symbol file to original text file
-    Schematic *SDoc = (Schematic*)DocumentTab->currentWidget();
+    SchematicDoc *SDoc = (SchematicDoc*)DocumentTab->currentWidget();
     SDoc->DataDisplay = Info.fileName();
 
     // change into symbol mode
@@ -2648,7 +2645,7 @@ void QucsApp::slotSymbolEdit()
   }
   // in a normal schematic, data display or symbol file
   else {
-    Schematic *SDoc = (Schematic*)w;
+    SchematicDoc *SDoc = (SchematicDoc*)w;
     // in a symbol file
     if(SDoc->docName().right(4) == ".sym") {
       QString dn=SDoc->docName();
@@ -2706,7 +2703,7 @@ void QucsApp::slot2PortMatching()
   Marker *pm = (Marker*)view->focusElement;
 
   QString DataSet;
-  Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
+  SchematicDoc *Doc = (SchematicDoc*)DocumentTab->currentWidget();
   int z = pm->pGraph->Var.indexOf(':');
   if(z <= 0)  DataSet = Doc->DataSet;
   else  DataSet = pm->pGraph->Var.mid(z+1);
@@ -2788,7 +2785,7 @@ void QucsApp::slot2PortMatching()
 void QucsApp::slotEditElement()
 {
   if(view->focusMEvent){
-    view->editElement((Schematic*)DocumentTab->currentWidget(), view->focusMEvent);
+    view->editElement((SchematicDoc*)DocumentTab->currentWidget(), view->focusMEvent);
   }else{
 	 // ?!
   }
@@ -3092,12 +3089,12 @@ void ContextMenuTabWidget::showContextMenu(const QPoint& point)
   }
 }
 
-Schematic *ContextMenuTabWidget::createEmptySchematic(const QString &name)
+SchematicDoc *ContextMenuTabWidget::createEmptySchematic(const QString &name)
 {
   // create a schematic
   QFileInfo Info(name);
   assert(App);
-  Schematic *d = new Schematic(*App, name);
+  SchematicDoc *d = new SchematicDoc(*App, name);
   int i = addTab(d, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
   setCurrentIndex(i);
   return d;

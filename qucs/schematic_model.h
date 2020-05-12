@@ -30,7 +30,7 @@
 
 
 
-class Electrical;
+class SchematicDoc;
 class QPlainTextEdit; //??!
 // class QFileInfo;
 
@@ -72,7 +72,7 @@ private:
 	}
 #endif
 public:
-	SchematicModel(Schematic* s);
+	SchematicModel(SchematicDoc* s);
 	~SchematicModel();
 public: // stuff saved from Schematic
 	QString createClipboardFile();
@@ -173,7 +173,7 @@ public:
 	PaintingList const& paintings() const;
 	ComponentList const& components() const;
 
-	Schematic* doc();
+	SchematicDoc* doc();
 	QString const& portType(int i) const{
 		return PortTypes[i];
 	}
@@ -194,10 +194,10 @@ private:
 	QString DevType; // BUG move to parent
 
 private:
-	Schematic* _doc_;
+	SchematicDoc* _doc_;
 
 public: // for now.
-	friend class Schematic;
+	friend class SchematicDoc;
 	friend class NodeMap;
 }; // schematicmodel
 

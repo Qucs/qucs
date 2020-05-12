@@ -8,7 +8,7 @@
 #include <QFileDialog>
 #include <QUndoCommand>
 
-#include "schematic.h"
+#include "schematic_doc.h"
 #include "qucs.h"
 #include "misc.h"
 #include "globals.h"
@@ -80,7 +80,7 @@ QUndoCommand* MouseActionDelete::press(QMouseEvent* Event)
 }
 /*==================================================================================*/
 
-SchematicActions::SchematicActions(Schematic& ctx)
+SchematicActions::SchematicActions(SchematicDoc& ctx)
   : MouseActions(ctx)
 {
   maDelete = new MouseActionDelete(*this);
@@ -94,7 +94,7 @@ SchematicActions::~SchematicActions()
 QRegExp Expr_CompProp;
 QRegExpValidator Val_CompProp(Expr_CompProp, 0);
 
-void Schematic::actionSelect(bool on)
+void SchematicDoc::actionSelect(bool on)
 {
 
   // goto to insertWire mode if ESC pressed during wiring
@@ -120,34 +120,34 @@ void Schematic::actionSelect(bool on)
   }
 }
 
-void Schematic::actionOnGrid(bool on)
+void SchematicDoc::actionOnGrid(bool on)
 {
-  performToggleAction(on, App->onGrid, &Schematic::elementsOnGrid,
+  performToggleAction(on, App->onGrid, &SchematicDoc::elementsOnGrid,
 		&MouseActions::MMoveOnGrid, &MouseActions::MPressOnGrid);
 }
 
-void Schematic::actionEditRotate(bool on)
+void SchematicDoc::actionEditRotate(bool on)
 {
-  performToggleAction(on, App->editRotate, &Schematic::rotateElements,
+  performToggleAction(on, App->editRotate, &SchematicDoc::rotateElements,
 		&MouseActions::MMoveRotate, &MouseActions::MPressRotate);
 }
 
-void Schematic::actionEditMirrorX(bool on)
+void SchematicDoc::actionEditMirrorX(bool on)
 {
-  performToggleAction(on, App->editMirror, &Schematic::mirrorXComponents,
+  performToggleAction(on, App->editMirror, &SchematicDoc::mirrorXComponents,
 		&MouseActions::MMoveMirrorX, &MouseActions::MPressMirrorX);
 }
 
-void Schematic::actionEditMirrorY(bool on)
+void SchematicDoc::actionEditMirrorY(bool on)
 {
-  performToggleAction(on, App->editMirrorY, &Schematic::mirrorYComponents,
+  performToggleAction(on, App->editMirrorY, &SchematicDoc::mirrorYComponents,
 		&MouseActions::MMoveMirrorY, &MouseActions::MPressMirrorY);
 }
 
-void Schematic::actionEditActivate(bool on)
+void SchematicDoc::actionEditActivate(bool on)
 {
     performToggleAction (on, App->editActivate,
-        &Schematic::activateSelectedComponents,
+        &SchematicDoc::activateSelectedComponents,
         &MouseActions::MMoveActivate, &MouseActions::MPressActivate);
 }
 
@@ -155,13 +155,13 @@ void Schematic::actionEditActivate(bool on)
 
 // getting here after somebody presses "del"
 // on looks obsolete...?
-void Schematic::actionEditDelete(bool on)
+void SchematicDoc::actionEditDelete(bool on)
 {
   trace1("actionEditDelete", on);
   incomplete();
 
 #if 0 // old code
-  performToggleAction(on, App->editDelete, &Schematic::deleteElements,
+  performToggleAction(on, App->editDelete, &SchematicDoc::deleteElements,
       &MouseActions::MMoveDelete, &MouseActions::MPressDelete);
 #else // approximately this.
   incomplete();
@@ -185,7 +185,7 @@ void Schematic::actionEditDelete(bool on)
 #endif
 }
 
-void Schematic::actionSetWire(bool on)
+void SchematicDoc::actionSetWire(bool on)
 {
 	performToggleAction(on, App->insWire, 0,
 			&MouseActions::MMoveWire1, &MouseActions::MPressWire1);
@@ -193,35 +193,35 @@ void Schematic::actionSetWire(bool on)
   // mouseAction = mouseActions().maSetWire;
 }
 
-void Schematic::actionInsertLabel(bool on)
+void SchematicDoc::actionInsertLabel(bool on)
 {
   performToggleAction(on, App->insLabel, 0,
 		&MouseActions::MMoveLabel, &MouseActions::MPressLabel);
   // mouseAction = mouseActions().maInsLabel;
 }
 
-void Schematic::actionSetMarker(bool on)
+void SchematicDoc::actionSetMarker(bool on)
 {
   performToggleAction(on, App->setMarker, 0,
 		&MouseActions::MMoveMarker, &MouseActions::MPressMarker);
   // mouseAction = mouseActions().maSetMarker;
 }
 
-void Schematic::actionMoveText(bool on)
+void SchematicDoc::actionMoveText(bool on)
 {
   performToggleAction(on, App->moveText, 0,
 		&MouseActions::MMoveMoveTextB, &MouseActions::MPressMoveText);
   // mouseAction = mouseActions().maMoveText;
 }
 
-void Schematic::actionZoomIn(bool on)
+void SchematicDoc::actionZoomIn(bool on)
 {
     performToggleAction(on, App->magPlus, 0,
 		&MouseActions::MMoveZoomIn, &MouseActions::MPressZoomIn);
   // mouseAction = mouseActions().maZoomIn;
 }
 
-void Schematic::actionInsertEquation(bool on)
+void SchematicDoc::actionInsertEquation(bool on)
 {
   App->hideEdit(); // disable text edit of component property
   App->MouseReleaseAction = 0;
@@ -260,7 +260,7 @@ void Schematic::actionInsertEquation(bool on)
   App->MousePressAction = &MouseActions::MPressElement;
 }
 
-void Schematic::actionEditPaste(bool on)
+void SchematicDoc::actionEditPaste(bool on)
 {
 #if 0
 	// if it's not a text doc, prevent the user from editing
@@ -301,7 +301,7 @@ void Schematic::actionEditPaste(bool on)
 #endif
 }
 
-void Schematic::actionInsertGround(bool on)
+void SchematicDoc::actionInsertGround(bool on)
 {
 #if 0
   App->hideEdit(); // disable text edit of component property
@@ -338,7 +338,7 @@ void Schematic::actionInsertGround(bool on)
 #endif
 }
 
-void Schematic::actionInsertPort(bool on)
+void SchematicDoc::actionInsertPort(bool on)
 {
 #if 0
   App->hideEdit(); // disable text edit of component property
@@ -373,7 +373,7 @@ void Schematic::actionInsertPort(bool on)
 #endif
 }
 
-void Schematic::actionEditUndo()
+void SchematicDoc::actionEditUndo()
 {
   // really?
   App->hideEdit(); // disable text edit of component property
@@ -383,7 +383,7 @@ void Schematic::actionEditUndo()
   mouseActions().setDrawn(false);
 }
 
-void Schematic::actionEditRedo()
+void SchematicDoc::actionEditRedo()
 {
   App->hideEdit(); // disable text edit of component property
 
@@ -392,7 +392,7 @@ void Schematic::actionEditRedo()
   mouseActions().setDrawn(false);
 }
 
-void Schematic::actionAlign(int what)
+void SchematicDoc::actionAlign(int what)
 {
   App->hideEdit(); // disable text edit of component property
 
@@ -404,7 +404,7 @@ void Schematic::actionAlign(int what)
   mouseActions().setDrawn(false);
 }
 
-void Schematic::actionDistrib(int d)
+void SchematicDoc::actionDistrib(int d)
 {
   App->hideEdit(); // disable text edit of component property
 
@@ -419,13 +419,13 @@ void Schematic::actionDistrib(int d)
   mouseActions().setDrawn(false);
 }
 
-void Schematic::actionSelectAll()
+void SchematicDoc::actionSelectAll()
 {
     selectElements(INT_MIN, INT_MIN, INT_MAX, INT_MAX, true);
     viewport()->update();
 }
 
-void Schematic::actionSelectMarker()
+void SchematicDoc::actionSelectMarker()
 {
   App->hideEdit(); // disable text edit of component property
 
@@ -434,7 +434,7 @@ void Schematic::actionSelectMarker()
   mouseActions().setDrawn(false);
 }
 
-void Schematic::actionChangeProps()
+void SchematicDoc::actionChangeProps()
 {
 	ChangeDialog *d = new ChangeDialog(this);
 	if(d->exec() == QDialog::Accepted) {
@@ -443,7 +443,7 @@ void Schematic::actionChangeProps()
 	}
 }
 
-void Schematic::actionCursor(arrow_dir_t dir)
+void SchematicDoc::actionCursor(arrow_dir_t dir)
 {
 #ifdef USE_SCROLLVIEW
 	int sign = 1;
@@ -542,7 +542,7 @@ void Schematic::actionCursor(arrow_dir_t dir)
 #endif
 } // actionCursor
 
-void Schematic::actionApplyCompText()
+void SchematicDoc::actionApplyCompText()
 {
 #if 0 // what is focusElement??
 	auto Doc=this;
@@ -655,7 +655,7 @@ void Schematic::actionApplyCompText()
 }
 
 // BUG: this is a diagram function.
-void Schematic::actionExportGraphAsCsv()
+void SchematicDoc::actionExportGraphAsCsv()
 {
   // focusElement->exportGraphAsCsv? or so.
 #if 0
@@ -742,7 +742,7 @@ void Schematic::actionExportGraphAsCsv()
  * Used in combination with slots to set function pointers to the methods
  * that serve the mouse actions, ie. press, move, release, double click.
  */
-bool Schematic::performToggleAction(bool on, QAction *Action,
+bool SchematicDoc::performToggleAction(bool on, QAction *Action,
 	pToggleFunc Function, pMouseFunc MouseMove, pMouseFunc2 MousePress)
 {
   assert(App);

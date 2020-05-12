@@ -15,7 +15,7 @@
  ***************************************************************************/
 #include "id_text.h"
 #include "id_dialog.h"
-#include "schematic.h"
+#include "schematic_doc.h" // BUG
 #include "globals.h"
 #include "module.h"
 
@@ -78,7 +78,7 @@ void ID_Text::paint(ViewPainter *p)
 }
 
 // --------------------------------------------------------------------------
-void ID_Text::paintScheme(Schematic *p)
+void ID_Text::paintScheme(SchematicDoc *p)
 {
   p->PostPaintEvent(_Rect, cx, cy, x2, y2);
 }
