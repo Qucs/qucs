@@ -51,10 +51,11 @@
 
 QAction *formerAction;   // remember action before drag n'drop etc.
 
-
-MouseActions::MouseActions(QucsApp* App_)
+// TODO/BUG. is this intended for all docs? it only seems to make most sense
+// for schematic right now. Do we need SchematicMouseActions??
+MouseActions::MouseActions(QucsDoc& d)
   : focusElement(nullptr), // hmm
-    App(App_)
+    _doc(d)
 { untested();
   selElem  = 0;  // no component/diagram is selected
   isMoveEqual = false;  // mouse cursor move x and y the same way
@@ -396,6 +397,7 @@ static void paintGhostLineV(Schematic *Doc, int fx, int fy, int fyy){ untested()
  */
 void MouseActions::MMoveWire2(Schematic *Doc, QMouseEvent *Event)
 { untested();
+#if 0
   Set2(Event, Doc);
   Doc->setOnGrid(MAx2, MAy2);
   /// \todo paint aim
@@ -415,25 +417,32 @@ void MouseActions::MMoveWire2(Schematic *Doc, QMouseEvent *Event)
   */
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickWire2;
   Doc->viewport()->update();
+#endif
 }
 
-void MouseActions::Set1(QMouseEvent* Event, Schematic const* Doc)
+void MouseActions::Set1(QMouseEvent* Event, Schematic*)
 {
-  QPointF pos=Doc->mapToScene(Event->pos());
+  Schematic* s = prechecked_cast<Schematic*>(&_doc);
+  assert(s);
+  QPointF pos=s->mapToScene(Event->pos());
   MAx1 = pos.x();
   MAy1 = pos.y();
 }
 
-void MouseActions::Set2(QMouseEvent* Event, Schematic const* Doc)
+void MouseActions::Set2(QMouseEvent* Event, Schematic*)
 {
-  QPointF pos=Doc->mapToScene(Event->pos());
+  Schematic* s = prechecked_cast<Schematic*>(&_doc);
+  assert(s);
+  QPointF pos=s->mapToScene(Event->pos());
   MAx2 = pos.x();
   MAy2 = pos.y();
 }
 
-void MouseActions::Set3(QMouseEvent* Event, Schematic const* Doc)
+void MouseActions::Set3(QMouseEvent* Event, Schematic*)
 {
-  QPointF pos=Doc->mapToScene(Event->pos());
+  Schematic* s = prechecked_cast<Schematic*>(&_doc);
+  assert(s);
+  QPointF pos=s->mapToScene(Event->pos());
   MAx3 = pos.x();
   MAy3 = pos.y();
 }
@@ -445,7 +454,7 @@ void MouseActions::Set3(QMouseEvent* Event, Schematic const* Doc)
  */
 void MouseActions::MMoveWire1(Schematic *Doc, QMouseEvent *Event)
 { untested();
-  Set3(Event, Doc);
+  Set3(Event);
   Doc->setOnGrid(MAx3, MAy3);
   /// \todo paint aim
   //paintAim(Doc,MAx3,MAy3);
@@ -464,7 +473,7 @@ void MouseActions::MMoveWire1(Schematic *Doc, QMouseEvent *Event)
 void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
 {
   //qDebug() << "MMoveSelect " << "select area";
-  Set2(Event, Doc);
+  Set2(Event);
   if(isMoveEqual) {    // x and y size must be equal ?
     if(abs(MAx2) > abs(MAy2)) { untested();
       if(MAx2<0) MAx2 = -abs(MAy2); else MAx2 = abs(MAy2);
@@ -630,20 +639,6 @@ void MouseActions::MMoveScrollBar(Schematic *Doc, QMouseEvent *Event)
 }
 
 
-/**
-* @brief MouseActions::MMoveDelete
-*   Paints a cross under the mouse cursor to show the delete mode.
-* @param Doc Schematic document
-* @param Event
-*/
-void MouseActions::MMoveDelete(Schematic *Doc, QMouseEvent *Event)
-{
-  Set3(Event, Doc);
-
-  // cannot draw on the viewport, it is displaced by the size of dock and toolbar
-  Doc->PostPaintEvent (_Line, MAx3-15, MAy3-15, MAx3+15, MAy3+15,0,0,false);
-  Doc->PostPaintEvent (_Line, MAx3-15, MAy3+15, MAx3+15, MAy3-15,0,0,false);
-}
 
 
 /**
@@ -826,11 +821,13 @@ void MouseActions::MMoveZoomIn(Schematic *Doc, QMouseEvent *Event)
 // ************************************************************************
 
 // Is called from several MousePress functions to show right button menu.
-void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::rightPressMenu(QMouseEvent *Event)
 { untested();
-  Set1(Event, Doc);
+  Set1(Event);
 
-  focusElement = selectElement(Doc, Event->pos(), false);
+  Schematic* Doc = prechecked_cast<Schematic*>(&_doc);
+  assert(Doc);
+  focusElement = selectElement(Event->pos(), false);
 
   if(focusElement){  // remove special function (4 least significant bits)
     incomplete();
@@ -1034,8 +1031,11 @@ void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent* Event)
 }
 
 // -----------------------------------------------------------
-void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
+// yikes.
+void MouseActions::MPressSelect(QMouseEvent *Event)
 { untested();
+  Schematic* Doc = prechecked_cast<Schematic*>(&_doc);
+  assert(Doc);
   QPointF pos=Doc->mapToScene(Event->pos());
   float fX=pos.x();
   float fY=pos.y();
@@ -1045,7 +1045,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
   int No=0;
   MAx1 = int(fX);
   MAy1 = int(fY);
-  focusElement = selectElement(Doc, Event->pos(), Ctrl, &No);
+  focusElement = selectElement(Event->pos(), Ctrl, &No);
   isMoveEqual = false;   // moving not neccessarily square
 
   incomplete(); //this does not add up.
@@ -1206,7 +1206,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
     }else{ untested();
       if(!focusElement->isSelected()) { untested();
 	// Don't move selected elements if clicked
-        deselectElements(Doc, focusElement); // element was not selected.
+        deselectElements(focusElement); // element was not selected.
       }else{ untested();
       }
       focusElement->setSelected();
@@ -1219,21 +1219,6 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event)
 } // MPressSelect
 
 // -----------------------------------------------------------
-void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent* Event)
-{
-  // QPointF pos=Doc->mapToScene(Event->pos());
-
-  ElementMouseAction pe = selectElement(Doc, Event->pos(), false); // BUG
-  if(pe)
-  { untested();
-    pe->setSelected();
-    Doc->deleteElements();
-
-    Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
-    Doc->viewport()->update();
-    drawn = false;
-  }
-}
 
 // -----------------------------------------------------------
 void MouseActions::MPressActivate(Schematic *Doc, QMouseEvent* Event)
@@ -1312,7 +1297,7 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent* Event)
   // QPointF pos=Doc->mapToScene(Event->pos());
 
   // why is this not part of the event?
-  ElementMouseAction e=selectElement(Doc, Event->pos(), false);
+  ElementMouseAction e=selectElement(Event->pos(), false);
   if(!e) return;
   e->Type &= isSpecialMask;  // remove special functions
 
@@ -1614,7 +1599,7 @@ void MouseActions::MPressOnGrid(Schematic *Doc, QMouseEvent* Event)
 {
   //QPointF pos=Doc->mapToScene(Event->pos());
 
-  auto pe = selectElement(Doc, Event->pos(), false);
+  auto pe = selectElement(Event->pos(), false);
   if(pe)
   { untested();
     pe->Type &= isSpecialMask;  // remove special functions (4 lowest bits)
@@ -1697,7 +1682,7 @@ void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
   if(!ctrl) { untested();
     untested();
     // BUG this does not make any sense at all.
-    deselectElements(Doc, focusElement);
+    deselectElements(focusElement);
   }else{ untested();
   }
 
@@ -1711,10 +1696,17 @@ void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
     }
 
   Doc->releaseKeyboard();  // allow keyboard inputs again
+
+#if 0
+  QucsMain->MouseMoveAction = 0;
   QucsMain->MousePressAction = &MouseActions::MPressSelect;
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
-  QucsMain->MouseMoveAction = 0;   // no element moving
+#else
+  // MouseAction = actionSelect;
+#endif
+
+
   Doc->highlightWireLabels ();
   Doc->viewport()->update();
   drawn = false;
@@ -1736,10 +1728,14 @@ void MouseActions::MReleaseSelect2(Schematic *Doc, QMouseEvent *Event)
   Doc->selectElements(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2, Ctrl);
 
   Doc->releaseKeyboard();  // allow keyboard inputs again
+#if 0
   QucsMain->MouseMoveAction = 0;
   QucsMain->MousePressAction = &MouseActions::MPressSelect;
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
+#else
+  // MouseAction = actionSelect;
+#endif
   Doc->highlightWireLabels ();
   Doc->viewport()->update();
   drawn = false;
@@ -1771,10 +1767,14 @@ void MouseActions::MReleaseMoving(Schematic *Doc, QMouseEvent*)
   endElementMoving(Doc, &movingElements);
   Doc->releaseKeyboard();  // allow keyboard inputs again
 
+#if 0
   QucsMain->MouseMoveAction = 0;
   QucsMain->MousePressAction = &MouseActions::MPressSelect;
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
+#else
+  // MouseAction = actionSelect;
+#endif
 }
 
 // -----------------------------------------------------------
@@ -1826,10 +1826,14 @@ void MouseActions::MReleaseResizeDiagram(Schematic *Doc, QMouseEvent *Event)
   pd->Bounding(x1, x2, y1, y2);
   Doc->enlargeView(x1, x2, y1, y2);
 
+#if 0
   QucsMain->MouseMoveAction = 0;
   QucsMain->MousePressAction = &MouseActions::MPressSelect;
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
+#else
+  // MouseAction = actionSelect;
+#endif
   Doc->releaseKeyboard();  // allow keyboard inputs again
 
   Doc->viewport()->update();
@@ -1842,10 +1846,16 @@ void MouseActions::MReleaseResizePainting(Schematic *Doc, QMouseEvent *Event)
 { untested();
   if(Event->button() != Qt::LeftButton) return;
 
+#if 0
   QucsMain->MouseMoveAction = 0;
   QucsMain->MousePressAction = &MouseActions::MPressSelect;
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
+#else
+  // MouseAction = actionSelect;
+#endif
+
+
   Doc->releaseKeyboard();  // allow keyboard inputs again
 
   Doc->viewport()->update();

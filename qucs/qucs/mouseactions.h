@@ -1,16 +1,13 @@
 /***************************************************************************
-                              mouseactions.h
-                             ----------------
-    begin                : Thu Aug 28 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -22,7 +19,39 @@
 #include "qt_compat.h"
 #include "schematic_scene.h"
 
-// a mouse action on an element.
+class Schematic;
+class QUndoCommand;
+class QMouseEvent;
+
+// something happens to the mouse on a schematic
+// BUG: wrong file. schematic_mouse.h maybe?
+class MouseAction {
+public:
+	typedef QUndoCommand cmd;
+
+protected:
+	MouseAction(MouseActions& ctx):_ctx(ctx){}
+public:
+	virtual ~MouseAction(){}
+
+public:
+ /// 	cmd* do_it(QMouseEvent*) {  }
+ //   switch type, forward to virtual
+
+// private: TODO
+	// TODO: only use POS in those
+	virtual cmd* move(QMouseEvent*) { return nullptr; }
+	virtual cmd* press(QMouseEvent*) { return nullptr; }
+	virtual cmd* release(QMouseEvent*) { return nullptr; }
+	virtual cmd* dblclk(QMouseEvent*) { return nullptr; }
+
+protected:
+	MouseActions& _ctx;
+};
+
+
+
+// a mouse action on an element (first attempt)
 // formerly, a mouse action was implemented by means of messing with element
 // internals.
 class ElementMouseAction {
@@ -146,7 +175,7 @@ class MouseActions {
 public:
   typedef QList<ElementGraphics*> EGPList;
 public:
-  MouseActions(QucsApp*);
+  MouseActions(QucsDoc& /* was: App?? */);
   virtual ~MouseActions();
 
   void setPainter(Schematic*);
@@ -155,15 +184,23 @@ public:
   void editLabel(Schematic*, WireLabel*);
 
   bool drawn;  // indicates whether the scheme element was drawn last time
+  void setDrawn(bool b=true){drawn = b;}
+  bool wasDrawn() const{return drawn;}
 // private: BUG.
   Element *selElem;  // component/diagram/painting selected in IconView
   ElementMouseAction focusElement; // BUG: use focusMEvent instead
   QMouseEvent *focusMEvent;
 
+public: // really?
+  bool hasElem(){ return selElem; }
+  Element* getElem(){assert(selElem); return selElem; }
+  void setElem(Element* e){selElem=e;}
+
 private:
-  void Set1(QMouseEvent*, Schematic const*);
-  void Set2(QMouseEvent*, Schematic const*);
-  void Set3(QMouseEvent*, Schematic const*);
+public: // BUG? called from MouseAction.
+  void Set1(QMouseEvent*, Schematic*ignore=nullptr);
+  void Set2(QMouseEvent*, Schematic*ignore=nullptr);
+  void Set3(QMouseEvent*, Schematic*ignore=nullptr);
 public: // BUG
   int MAx1, MAy1, MAx2, MAy2;
   int MAx3, MAy3;
@@ -178,15 +215,22 @@ public:
 private:
   // former Schematic::select*
   // but that does not work, because ElementMouseAction lives here.
-  ElementMouseAction selectElement(Schematic*, QPoint const&, bool, int *index=0);
+  // (does it matter?)
+public:
+  ElementMouseAction selectElement(QPoint const&, bool, int *index=0);
   Component* selectCompText(Schematic*, int, int, int&, int&);
-  void     deselectElements(Schematic*, ElementMouseAction);
+  void     deselectElements(ElementMouseAction);
 
 private:
   bool isMoveEqual;
-  QucsApp* App;
+  //QucsApp* App;
+  QucsDoc& _doc;
 
   // -------------------------------------------------------------------
+public: // BUG: Schematic only.
+  MouseAction* maDelete;
+  MouseAction* maThis;
+  MouseAction* maThat;
 public:
   void MMoveSelect(Schematic*, QMouseEvent*);
   void MMoveElement(Schematic*, QMouseEvent*);
@@ -195,7 +239,7 @@ public:
   void MMoveMoving(Schematic*, QMouseEvent*);
   void MMoveMoving2(Schematic*, QMouseEvent*);
   void MMovePaste(Schematic*, QMouseEvent*);
-  void MMoveDelete(Schematic*, QMouseEvent*);
+//  void MMoveDelete(Schematic*, QMouseEvent*);
   void MMoveLabel(Schematic*, QMouseEvent*);
   void MMoveMarker(Schematic*, QMouseEvent*);
   void MMoveMirrorY(Schematic*, QMouseEvent*);
@@ -209,8 +253,8 @@ public:
   void MMoveZoomIn(Schematic*, QMouseEvent*);
   void MMoveScrollBar(Schematic*, QMouseEvent*);
 
-  void MPressSelect(Schematic*, QMouseEvent*);
-  void MPressDelete(Schematic*, QMouseEvent*);
+  void MPressSelect(QMouseEvent*);
+//  void MPressDelete(Schematic*, QMouseEvent*);
   void MPressActivate(Schematic*, QMouseEvent*);
   void MPressMirrorX(Schematic*, QMouseEvent*);
   void MPressMirrorY(Schematic*, QMouseEvent*);
@@ -243,11 +287,12 @@ public:
   void moveElements(Schematic*, int&, int&);
   void moveElements(QList<ElementGraphics*>&, int, int);
   void endElementMoving(Schematic*, EGPList*);
-  void rightPressMenu(Schematic*, QMouseEvent*);
-};
+  void rightPressMenu(QMouseEvent*);
+}; // MouseActions
 
 class Label;
 
+// really?
 ElementGraphics* element(ElementMouseAction);
 Component* component(ElementMouseAction);
 Wire* wire(ElementMouseAction);

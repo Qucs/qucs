@@ -62,7 +62,7 @@ ElementGraphics* Schematic::itemAt(float x, float y)
 		return nullptr;
 	}
 #else
-	incomplete don't use qt<5
+	incomplete dont use qt<5
 	for(auto pc : components()){
 		if(pc->getSelected(x, y))
 			return (ElementGraphics*)(pc);

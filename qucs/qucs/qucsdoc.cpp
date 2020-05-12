@@ -74,21 +74,25 @@ void QucsDoc::redo(){
   return undoStack->redo();
 }
 
-QString QucsDoc::fileSuffix (const QString& Name) {
+QString QucsDoc::fileSuffix (const QString& Name)
+{
   QFileInfo Info (Name);
   return Info.suffix();
 }
 
-QString QucsDoc::fileSuffix (void) {
+QString QucsDoc::fileSuffix (void)
+{
   return fileSuffix (DocName);
 }
 
-QString QucsDoc::fileBase (const QString& Name) {
+QString QucsDoc::fileBase (const QString& Name)
+{
   QFileInfo Info (Name);
   return Info.completeBaseName();
 }
 
-QString QucsDoc::fileBase (void) {
+QString QucsDoc::fileBase (void)
+{
   return fileBase (DocName);
 }
 
@@ -99,7 +103,8 @@ QAction* QucsDoc::selectAction()
   	return App->select;
 }
 
-void QucsDoc::uncheckActive(){
+void QucsDoc::uncheckActive()
+{
 	if(App->activeAction) {
 		App->activeAction->blockSignals(true); // do not call toggle slot
 		App->activeAction->setChecked(false);       // set last toolbar button off

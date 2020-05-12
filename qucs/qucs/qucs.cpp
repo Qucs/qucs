@@ -212,7 +212,10 @@ void QucsApp::initView()
 
   connect(dock, SIGNAL(visibilityChanged(bool)), SLOT(slotToggleDock(bool)));
 
-  view = new MouseActions(this);
+  view = nullptr; // what's this.
+#if 0
+  view = new MouseActions(*this);
+#endif
 
   editText = new QLineEdit(this);  // for editing component properties
   editText->setFrame(false);
@@ -827,6 +830,8 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
 {
   slotHideEdit(); // disable text edit of component property
 
+  incomplete();
+#if 0
   // delete previously selected elements
   if(view->selElem != 0)  delete view->selElem;
   view->selElem  = 0;   // no component/diagram/painting selected
@@ -903,6 +908,7 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
     //!! comment out the above two lines if you would like that the search
     //!!   returns back to the last selected category instead
   }
+#endif
 #endif
 }
 
@@ -2344,9 +2350,13 @@ void QucsApp::slotOpenContent(const QModelIndex &idx)
 
     activeAction = select;
     MouseMoveAction = 0;
+#if 0
     MousePressAction = &MouseActions::MPressSelect;
     MouseReleaseAction = &MouseActions::MReleaseSelect;
     MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
+#else
+    // MouseAction = actionSelect;
+#endif
     return;
   }
 
@@ -2514,10 +2524,13 @@ void QucsApp::switchSchematicDoc (bool SchematicMode)
   }
   // schematic document
   else {
-    MouseMoveAction = 0;
+#if 0
     MousePressAction = &MouseActions::MPressSelect;
     MouseReleaseAction = &MouseActions::MReleaseSelect;
     MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
+#else
+    // MouseAction = actionSelect;
+#endif
   }
 
   selectMarker->setEnabled (SchematicMode);
