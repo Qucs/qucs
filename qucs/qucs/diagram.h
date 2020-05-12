@@ -90,7 +90,7 @@ public: // ??!
   void paintMarkers(ViewPainter* p, bool paintAll = true);
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
-  void    paintScheme(Schematic*) const;
+  void    paintScheme(SchematicDoc*) const;
   void    Bounding(int&, int&, int&, int&);
 	QRectF boundingRect() const;
   bool    getSelected(int, int);
@@ -157,7 +157,7 @@ public: // from mouseactions.cpp
   }
 
   // returns drawn, for now.
-  bool pressElement(Schematic* Doc, Element*& selElem, QMouseEvent* Event);
+  bool pressElement(SchematicDoc* Doc, Element*& selElem, QMouseEvent* Event);
 
 public: // FIXME, these are still around.
 	int & cx__() { return cx; }

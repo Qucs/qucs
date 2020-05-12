@@ -10,7 +10,7 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -22,7 +22,7 @@
 
 #include "arrow.h"
 #include "arrowdialog.h"
-#include "schematic.h"
+#include "schematic_doc.h" // BUG
 #include "misc.h"
 #include <cmath>
 
@@ -107,7 +107,7 @@ void Arrow::paint(ViewPainter *p)
 }
 
 // --------------------------------------------------------------------------
-void Arrow::paintScheme(Schematic *p)
+void Arrow::paintScheme(SchematicDoc *p)
 {
   p->PostPaintEvent(_Line, cx, cy, cx+x2, cy+y2,0,0,false);
   p->PostPaintEvent(_Line, cx+x2, cy+y2, cx+xp1, cy+yp1,0,0,false);
@@ -253,7 +253,7 @@ bool Arrow::resizeTouched(float fX, float fY, float len)
 
 // --------------------------------------------------------------------------
 // Mouse move action during resize.
-void Arrow::MouseResizeMoving(int x, int y, Schematic *p)
+void Arrow::MouseResizeMoving(int x, int y, SchematicDoc *p)
 {
   paintScheme(p);  // erase old painting
   if(State == 1) { x2 += cx-x; y2 += cy-y; cx = x; cy = y; } // moving shaft
@@ -281,8 +281,8 @@ void Arrow::calcArrowHead()
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
 void Arrow::MouseMoving(
-	Schematic *paintScale, int, int, int gx, int gy,
-	Schematic *p, int x, int y, bool drawn)
+	SchematicDoc *paintScale, int, int, int gx, int gy,
+	SchematicDoc *p, int x, int y, bool drawn)
 {
   if(State > 0) {
     if(State > 1) {

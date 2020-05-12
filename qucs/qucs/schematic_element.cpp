@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#include "schematic.h"
+#include "schematic_doc.h"
 #include "mouseactions.h"
 #include "qt_compat.h"
 #include <QDebug>
@@ -64,7 +64,8 @@ Node* SchematicModel::insertNode(int x, int y, Element *e)
 }
 
 // ---------------------------------------------------
-Node* Schematic::selectedNode(int x, int y)
+// obsolete
+Node* SchematicDoc::selectedNode(int x, int y)
 {
 #if 0
     for(auto pn : nodes()){
@@ -724,7 +725,7 @@ int SchematicModel::insertWire(Wire *w)
 //
 // ---------------------------------------------------
 // Follow a wire line and selects it.
-void Schematic::selectWireLine(ElementGraphics *g, Node *pn, bool ctrl)
+void SchematicDoc::selectWireLine(ElementGraphics *g, Node *pn, bool ctrl)
 {
 incomplete();
 #if 0
@@ -750,7 +751,7 @@ incomplete();
 }
 
 // ---------------------------------------------------
-Wire* Schematic::selectedWire(int x, int y)
+Wire* SchematicDoc::selectedWire(int x, int y)
 {
     for(auto pw : wires()){
         if(pw->getSelected(x, y))
@@ -894,7 +895,7 @@ void SchematicModel::deleteWire(Wire *w)
 
 // ---------------------------------------------------
 // BUG: does not copy
-int Schematic::copyWires(int& x1, int& y1, int& x2, int& y2,
+int SchematicDoc::copyWires(int& x1, int& y1, int& x2, int& y2,
                          QList<Element *> *ElementCache)
 {
     incomplete();
@@ -960,7 +961,7 @@ int Schematic::copyWires(int& x1, int& y1, int& x2, int& y2,
    *****                                                         *****
    ******************************************************************* */
 
-Marker* Schematic::setMarker(int x, int y)
+Marker* SchematicDoc::setMarker(int x, int y)
 {
   // only diagrams ...
   for(auto pd : diagrams()){
@@ -974,7 +975,7 @@ Marker* Schematic::setMarker(int x, int y)
 
 // ---------------------------------------------------
 // Moves the marker pointer left/right on the graph.
-void Schematic::markerLeftRight(bool left, Q3PtrList<ElementGraphics> *Elements)
+void SchematicDoc::markerLeftRight(bool left, Q3PtrList<ElementGraphics> *Elements)
 {
 #if 0
     bool acted = false;
@@ -991,7 +992,7 @@ void Schematic::markerLeftRight(bool left, Q3PtrList<ElementGraphics> *Elements)
 
 // ---------------------------------------------------
 // Move the marker pointer up/down on the more-dimensional graph.
-void Schematic::markerUpDown(bool up, Q3PtrList<ElementGraphics> *Elements)
+void SchematicDoc::markerUpDown(bool up, Q3PtrList<ElementGraphics> *Elements)
 {
     Marker *pm;
     bool acted = false;
@@ -1030,7 +1031,7 @@ ElementMouseAction MouseActions::selectElement(
 #ifndef USE_SCROLLVIEW
     ElementGraphics *pe_sel=nullptr;
     ElementGraphics *pe_1st=nullptr;
-    Schematic* Doc = prechecked_cast<Schematic*>(&_doc);
+    SchematicDoc* Doc = prechecked_cast<SchematicDoc*>(&_doc);
     assert(Doc);
    auto scenepos=Doc->mapToScene(xy);
 
@@ -1357,7 +1358,7 @@ ElementMouseAction MouseActions::selectElement(
 #endif
 }
 
-void Schematic::highlightWireLabels ()
+void SchematicDoc::highlightWireLabels ()
 {
     incomplete();
 #if 0
@@ -1494,7 +1495,7 @@ void Schematic::highlightWireLabels ()
 void MouseActions::deselectElements(ElementMouseAction e)
 {
 #ifndef USE_SCROLLVIEW
-    Schematic* Doc = prechecked_cast<Schematic*>(&_doc);
+    SchematicDoc* Doc = prechecked_cast<SchematicDoc*>(&_doc);
     assert(Doc);
     Doc->deselectElements();
     e->setSelected(true); //?!
@@ -1543,7 +1544,7 @@ void MouseActions::deselectElements(ElementMouseAction e)
 // flags elements that lie within the rectangle x1/y1, x2/y2.
 // return the number of elements selected.
 // flag?! is is the shift key?
-int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
+int SchematicDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
 {
 #ifndef USE_SCROLLVIEW
     QRectF bb(x1, y1, x2, y2);
@@ -1725,7 +1726,7 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
 
 // ---------------------------------------------------
 // Selects all markers.
-void Schematic::selectMarkers()
+void SchematicDoc::selectMarkers()
 {
     incomplete();
 #if 0
@@ -1742,7 +1743,7 @@ void Schematic::selectMarkers()
 // moving element, insert two wires. If the connected element is already
 // a wire, use this wire. Otherwise create new wire.
 // use WireList?! SchematicModel?
-void Schematic::newMovingWires(QList<Element*> *p, Node *pn, int pos)
+void SchematicDoc::newMovingWires(QList<Element*> *p, Node *pn, int pos)
 {
 #if 0
     Element *pe;
@@ -1866,7 +1867,7 @@ void Schematic::newMovingWires(QList<Element*> *p, Node *pn, int pos)
 
 #ifndef USE_SCROLLVIEW
 // SchematicScene?
-void Schematic::deselectElements()
+void SchematicDoc::deselectElements()
 { untested();
     qDebug() << "deselectElements";
     assert(scene());
@@ -1887,7 +1888,7 @@ void Schematic::deselectElements()
 // For moving of elements: Copies all selected elements into the
 // list 'p' and deletes them from the document.
 // returns the number of "copied" _Markers_ only
-QList<ElementGraphics*> Schematic::cropSelectedElements()
+QList<ElementGraphics*> SchematicDoc::cropSelectedElements()
 {
     QList<ElementGraphics*> P;
     auto p=&P;
@@ -2072,7 +2073,7 @@ QList<ElementGraphics*> Schematic::cropSelectedElements()
 
 // ---------------------------------------------------
 // BUG: collect stuff in Qlist
-bool Schematic::copyComps2WiresPaints(int& x1, int& y1, int& x2, int& y2,
+bool SchematicDoc::copyComps2WiresPaints(int& x1, int& y1, int& x2, int& y2,
                                       QList<Element *> *ElementCache)
 {
     x1=INT_MAX;
@@ -2090,7 +2091,7 @@ bool Schematic::copyComps2WiresPaints(int& x1, int& y1, int& x2, int& y2,
 
 // ---------------------------------------------------
 // Used in "aligning()", "distributeHorizontal()", "distributeVertical()".
-int Schematic::copyElements(int& x1, int& y1, int& x2, int& y2,
+int SchematicDoc::copyElements(int& x1, int& y1, int& x2, int& y2,
                             QList<Element *> *ElementCache)
 {
     (void) (x1+x2+y1+y2);
@@ -2148,7 +2149,7 @@ int Schematic::copyElements(int& x1, int& y1, int& x2, int& y2,
 class DeleteSelection : public QUndoCommand {
 public:
     template<class IT>
-    DeleteSelection(Schematic& ctx, IT selection)
+    DeleteSelection(SchematicDoc& ctx, IT selection)
 	: _ctx(ctx){ untested();
 	for(auto i : selection){ untested();
 	    if(auto eg=dynamic_cast<ElementGraphics*>(i)){
@@ -2179,14 +2180,14 @@ public:
 	_gfx.clear();
     }
 private:
-    SchematicDocument& _ctx;
+    SchematicDoc& _ctx;
     std::vector<ElementGraphics*> _gfx;
     std::vector<Element*> _data;
 };
 // ---------------------------------------------------
 // Deletes all selected elements.
 // BUG: deletes selection
-QUndoCommand* Schematic::deleteElements()
+QUndoCommand* SchematicDoc::deleteElements()
 { untested();
 #ifndef USE_SCROLLVIEW
     return new DeleteSelection(*this, scene()->selectedItems());
@@ -2305,11 +2306,11 @@ QUndoCommand* Schematic::deleteElements()
 
 // ---------------------------------------------------
 /*!
- * \brief Schematic::aligning align selected elements.
+ * \brief SchematicDoc::aligning align selected elements.
  * \param Mode: top, bottom, left, right, center vertical, center horizontal
  * \return True if aligned
  */
-bool Schematic::aligning(int Mode)
+bool SchematicDoc::aligning(int Mode)
 {
     int x1, y1, x2, y2;
     int bx1, by1, bx2, by2, *bx=0, *by=0, *ax=0, *ay=0;
@@ -2444,10 +2445,10 @@ bool Schematic::aligning(int Mode)
 }
 
 /*!
- * \brief Schematic::distributeHorizontal sort selection horizontally
+ * \brief SchematicDoc::distributeHorizontal sort selection horizontally
  * \return True if sorted
  */
-bool Schematic::distributeHorizontal()
+bool SchematicDoc::distributeHorizontal()
 {
     int x1, y1, x2, y2;
     int bx1, by1, bx2, by2;
@@ -2566,10 +2567,10 @@ bool Schematic::distributeHorizontal()
 }
 
 /*!
- * \brief Schematic::distributeVertical sort selection vertically.
+ * \brief SchematicDoc::distributeVertical sort selection vertically.
  * \return True if sorted
  */
-bool Schematic::distributeVertical()
+bool SchematicDoc::distributeVertical()
 {
     int x1, y1, x2, y2;
     int bx1, by1, bx2, by2;
@@ -2686,7 +2687,7 @@ bool Schematic::distributeVertical()
 
 // Finds the correct number for power sources, subcircuit ports and
 // digital sources and sets them accordingly.
-void Schematic::setComponentNumber(Component *c)
+void SchematicDoc::setComponentNumber(Component *c)
 {
     Property *pp = c->Props.getFirst();
     if(!pp) return;
@@ -2727,7 +2728,7 @@ void Schematic::setComponentNumber(Component *c)
 // ---------------------------------------------------
 // connect?
 #if 0
-void Schematic::insertComponentNodes(Component *c, bool noOptimize)
+void SchematicDoc::insertComponentNodes(Component *c, bool noOptimize)
 {
     (void) sch;
     (void) noOptimize;
@@ -2774,7 +2775,7 @@ void Schematic::insertComponentNodes(Component *c, bool noOptimize)
 
 // ---------------------------------------------------
 // Used for example in moving components.
-void Schematic::insertRawComponent(Component *c, bool noOptimize)
+void SchematicDoc::insertRawComponent(Component *c, bool noOptimize)
 { untested();
     (void) c;
     (void) noOptimize;
@@ -2807,7 +2808,7 @@ void Schematic::insertRawComponent(Component *c, bool noOptimize)
 }
 
 // ---------------------------------------------------
-// was void Schematic::recreateComponent(Component *Comp)
+// was void SchematicDoc::recreateComponent(Component *Comp)
 // what does it do?! only call symbol->recreate.
 //
 // apparently label are owned by nodes,
@@ -2881,7 +2882,7 @@ void SchematicModel::recreateSymbol(Symbol *Comp)
 #endif
 }
 // ---------------------------------------------------
-void Schematic::insertElement(Element *c)
+void SchematicDoc::insertElement(Element *c)
 {
   if(Component* x=dynamic_cast<Component*>(c)){
     // legacy code
@@ -2898,7 +2899,7 @@ void Schematic::insertElement(Element *c)
 }
 
 // ---------------------------------------------------
-void Schematic::insertComponent(Component *c)
+void SchematicDoc::insertComponent(Component *c)
 {
     DocModel.pushBack(c);
     // connect every node of component to corresponding schematic node
@@ -2943,7 +2944,7 @@ void Schematic::insertComponent(Component *c)
 
 // ---------------------------------------------------
 // this is possibly obsolete. SchematicScene does it,
-void Schematic::activateCompsWithinRect(int x1, int y1, int x2, int y2)
+void SchematicDoc::activateCompsWithinRect(int x1, int y1, int x2, int y2)
 {
     // CHECK: what is this used for?!
 #if 0
@@ -2992,7 +2993,7 @@ void Schematic::activateCompsWithinRect(int x1, int y1, int x2, int y2)
 }
 
 // ---------------------------------------------------
-bool Schematic::activateSpecifiedComponent(int x, int y)
+bool SchematicDoc::activateSpecifiedComponent(int x, int y)
 {
     int x1, y1, x2, y2, a;
     for(auto pc : components()) {
@@ -3025,7 +3026,7 @@ bool Schematic::activateSpecifiedComponent(int x, int y)
 }
 
 // ---------------------------------------------------
-bool Schematic::activateSelectedComponents()
+bool SchematicDoc::activateSelectedComponents()
 {
     int a;
     bool sel = false;
@@ -3061,7 +3062,7 @@ bool Schematic::activateSelectedComponents()
 
 // ---------------------------------------------------
 // Sets the component ports anew. Used after rotate, mirror etc.
-void Schematic::setCompPorts(Component *pc)
+void SchematicDoc::setCompPorts(Component *pc)
 {
     incomplete();
 #if 0
@@ -3108,7 +3109,7 @@ void Schematic::setCompPorts(Component *pc)
 
 // ---------------------------------------------------
 // Returns a pointer of the component on whose text x/y points.
-Component* MouseActions::selectCompText(Schematic* Doc, int x_, int y_, int& w, int& h)
+Component* MouseActions::selectCompText(SchematicDoc* Doc, int x_, int y_, int& w, int& h)
 {
     int a, b, dx, dy;
     for(auto *pc : Doc->components()) {
@@ -3131,7 +3132,7 @@ Component* MouseActions::selectCompText(Schematic* Doc, int x_, int y_, int& w, 
 
 // ---------------------------------------------------
 //  what does this do?!
-Component* Schematic::searchSelSubcircuit()
+Component* SchematicDoc::searchSelSubcircuit()
 {
     Component *sub=0;
 #if 0
@@ -3151,7 +3152,7 @@ Component* Schematic::searchSelSubcircuit()
 }
 
 // ---------------------------------------------------
-Component* Schematic::selectedComponent(int x, int y)
+Component* SchematicDoc::selectedComponent(int x, int y)
 {
     incomplete();
     // test all components
@@ -3164,7 +3165,7 @@ Component* Schematic::selectedComponent(int x, int y)
 }
 
 // ---------------------------------------------------
-int Schematic::copyComponents(int& x1, int& y1, int& x2, int& y2,
+int SchematicDoc::copyComponents(int& x1, int& y1, int& x2, int& y2,
                               QList<Element *> *ElementCache)
 {
     assert(0);
@@ -3216,7 +3217,7 @@ int Schematic::copyComponents(int& x1, int& y1, int& x2, int& y2,
 
 // ---------------------------------------------------
 // ???
-void Schematic::copyComponents2(int& x1, int& y1, int& x2, int& y2,
+void SchematicDoc::copyComponents2(int& x1, int& y1, int& x2, int& y2,
                                 QList<Element *> *ElementCache)
 {
     assert(false);
@@ -3262,7 +3263,7 @@ void Schematic::copyComponents2(int& x1, int& y1, int& x2, int& y2,
 
 // Test, if wire connects wire line with more than one label and delete
 // all further labels. Also delete all labels if wire line is grounded.
-void Schematic::oneLabel(Node *n1)
+void SchematicDoc::oneLabel(Node *n1)
 {
 
 #if 0 // this is obsolete. (hooray!) just use the net label
@@ -3343,7 +3344,7 @@ void Schematic::oneLabel(Node *n1)
 }
 
 // ---------------------------------------------------
-int Schematic::placeNodeLabel(WireLabel *pl)
+int SchematicDoc::placeNodeLabel(WireLabel *pl)
 {
 #if 0
     Node *pn=nullptr;
@@ -3385,7 +3386,7 @@ int Schematic::placeNodeLabel(WireLabel *pl)
 // Test, if wire line is already labeled and returns a pointer to the
 // labeled element.
 // possibly obsolete.
-Element* Schematic::getWireLabel(Node *pn_)
+Element* SchematicDoc::getWireLabel(Node *pn_)
 {
     // ...  pn->getNet()->label() or so.
 #if 0 // obsolete. just use the net label.
@@ -3432,7 +3433,7 @@ Element* Schematic::getWireLabel(Node *pn_)
 
 // ---------------------------------------------------
 // Inserts a node label.
-void Schematic::insertNodeLabel(WireLabel *pl)
+void SchematicDoc::insertNodeLabel(WireLabel *pl)
 {
 #if 0 // hopefully obsolete.
 
@@ -3462,7 +3463,7 @@ void Schematic::insertNodeLabel(WireLabel *pl)
 
 // ---------------------------------------------------
 // why?!
-void Schematic::copyLabels(int& x1, int& y1, int& x2, int& y2,
+void SchematicDoc::copyLabels(int& x1, int& y1, int& x2, int& y2,
                            QList<Element *> *ElementCache)
 {
     WireLabel *pl;
@@ -3506,7 +3507,7 @@ void Schematic::copyLabels(int& x1, int& y1, int& x2, int& y2,
    ******************************************************************* */
 
 // don't use this.
-Painting* Schematic::selectedPainting(float fX, float fY)
+Painting* SchematicDoc::selectedPainting(float fX, float fY)
 {
     float Corr = 5.0 / Scale; // size of line select
 
@@ -3519,7 +3520,7 @@ Painting* Schematic::selectedPainting(float fX, float fY)
 
 // ---------------------------------------------------
 // BUG: does not copy
-void Schematic::copyPaintings(int& x1, int& y1, int& x2, int& y2,
+void SchematicDoc::copyPaintings(int& x1, int& y1, int& x2, int& y2,
                               QList<Element *> *ElementCache)
 {
     incomplete();

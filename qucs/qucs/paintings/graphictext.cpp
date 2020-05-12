@@ -17,7 +17,7 @@
 #include "viewpainter.h"
 #include "graphictext.h"
 #include "graphictextdialog.h"
-#include "schematic.h"
+#include "schematic_doc.h" // BUG
 #include "misc.h"
 #include "globals.h"
 #include "module.h"
@@ -95,8 +95,9 @@ void GraphicText::paint(ViewPainter *p)
 }
 
 // -----------------------------------------------------------------------
-void GraphicText::paintScheme(Schematic *p)
+void GraphicText::paintScheme(SchematicDoc *p)
 {
+	incomplete();
   // FIXME #warning QMatrix wm = p->worldMatrix();
   // FIXME #warning QMatrix Mat (wm.m11(), 0.0, 0.0, wm.m22(),
 // FIXME #warning 		wm.dx() + double(cx) * wm.m11(),
@@ -220,8 +221,8 @@ QString GraphicText::saveJSON()
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
 void GraphicText::MouseMoving(
-	Schematic*, int, int, int gx, int gy,
-	Schematic *p, int x, int y, bool drawn)
+	SchematicDoc*, int, int, int gx, int gy,
+	SchematicDoc *p, int x, int y, bool drawn)
 {
   // FIXME #warning p->setPen(Qt::SolidLine);
   if(drawn) {

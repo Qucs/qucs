@@ -16,7 +16,7 @@
 
 #include "sckt_proto.h"
 #include "qucs.h"
-#include "schematic.h"
+#include "schematic_doc.h"
 #include "misc.h"
 
 #include <QTextStream>
@@ -109,7 +109,7 @@ void Subcircuit::createSymbol()
     }
   }
   else {
-    No = Schematic::testFile(FileName);
+    No = SchematicDoc::testFile(FileName);
     if(No < 0)  No = 0;
 	 Ports.clear();
     remakeSymbol(No);  // no symbol was found -> create standard symbol

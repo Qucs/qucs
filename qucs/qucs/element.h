@@ -53,7 +53,7 @@ class Node;
 class QucsDoc;
 class QPainter;
 class WireLabel;
-class Schematic;
+class SchematicDoc;
 class SchematicModel;
 
 struct Line {
@@ -177,7 +177,7 @@ public: // make old variables accessible
 	int const& y1_() const { return y1; }
 	int const& x2_() const { return x2; }
 	int const& y2_() const { return y2; }
-	void snapToGrid(Schematic& s);
+	void snapToGrid(SchematicDoc& s);
 
 	void setObsoleteType(int t){
 		Type = t;
@@ -185,7 +185,7 @@ public: // make old variables accessible
 
   virtual QRectF boundingRect() const;
 public: // other stuff
-  virtual void paintScheme(Schematic *) const; // obsolete?
+  virtual void paintScheme(SchematicDoc *) const; // obsolete?
   virtual void paintScheme(QPainter *) const; // obsolete?
   virtual void draw(QPainter&) { incomplete(); }
   virtual void setCenter(int, int, bool relative=false);

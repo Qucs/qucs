@@ -16,7 +16,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "ifile.h"
-#include "schematic.h"
+//#include "schematic.h"
 #include "misc.h"
 
 iFile::iFile()

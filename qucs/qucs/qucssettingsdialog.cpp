@@ -33,7 +33,7 @@
 #include <QVBoxLayout>
 #include "qucs.h"
 #include "textdoc.h"
-#include "schematic.h"
+#include "schematic_doc.h"
 #include "misc.h"
 
 #include <QWidget>
@@ -523,7 +523,7 @@ void QucsSettingsDialog::slotApply()
           if(QucsApp::isTextDocument(w)) {
             vp = ((TextDoc*)w)->viewport();
           } else {
-            vp = ((Schematic*)w)->viewport();
+            vp = ((SchematicDoc*)w)->viewport();
           }
           misc::setWidgetBackgroundColor(vp, QucsSettings.BGColor);
         }

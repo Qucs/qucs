@@ -22,7 +22,7 @@
 #include "../qt_compat.h" // FIXME
 
 class SchematicModel;
-class Schematic;
+class SchematicDoc;
 class ViewPainter;
 class QString;
 class QPen;
@@ -88,7 +88,7 @@ private: // symbol interface
   // virtual void setParam...
 
 public:
-  void    paintScheme(Schematic*) const;
+  void    paintScheme(SchematicDoc*) const;
   void    print(ViewPainter*, float);
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);

@@ -47,12 +47,12 @@ public:
   virtual QString saveCpp();
   virtual QString saveJSON();
   virtual void paint(ViewPainter*) const {}
-  virtual void MouseMoving(Schematic*, int, int, int, int,
-                           Schematic*, int, int, bool) {}
+  virtual void MouseMoving(SchematicDoc*, int, int, int, int,
+                           SchematicDoc*, int, int, bool) {}
   virtual bool MousePressing() { return false; }
   virtual void Bounding(int&, int&, int&, int&);
   virtual bool resizeTouched(float, float, float) { return false; }
-  virtual void MouseResizeMoving(int, int, Schematic*) {}
+  virtual void MouseResizeMoving(int, int, SchematicDoc*) {}
 
   virtual void rotate() {}
   virtual void mirrorX() {}

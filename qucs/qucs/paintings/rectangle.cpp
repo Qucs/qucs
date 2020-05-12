@@ -10,14 +10,14 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 #include "rectangle.h"
 #include "filldialog.h"
 #include "misc.h"
-#include "schematic.h"
+#include "schematic_doc.h"
 
 #include <QPainter>
 #include <QPushButton>
@@ -65,8 +65,9 @@ void Rectangle::paint(ViewPainter *p)
 }
 
 // --------------------------------------------------------------------------
-void Rectangle::paintScheme(Schematic *p) const
+void Rectangle::paintScheme(SchematicDoc *p) const
 {
+	incomplete();
   p->PostPaintEvent(_Rect, cx, cy, x2, y2);
 }
 
@@ -228,7 +229,7 @@ bool Rectangle::resizeTouched(float fX, float fY, float len)
 
 // --------------------------------------------------------------------------
 // Mouse move action during resize.
-void Rectangle::MouseResizeMoving(int x, int y, Schematic *p)
+void Rectangle::MouseResizeMoving(int x, int y, SchematicDoc *p)
 {
   paintScheme(p);  // erase old painting
   switch(State) {
@@ -251,8 +252,8 @@ void Rectangle::MouseResizeMoving(int x, int y, Schematic *p)
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
 void Rectangle::MouseMoving(
-	Schematic *paintScale, int, int, int gx, int gy,
-	Schematic *p, int x, int y, bool drawn)
+	SchematicDoc *paintScale, int, int, int gx, int gy,
+	SchematicDoc *p, int x, int y, bool drawn)
 {
   if(State > 0) {
     if(State > 1)

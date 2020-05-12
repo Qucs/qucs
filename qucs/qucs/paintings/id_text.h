@@ -44,7 +44,7 @@ public:
 	  return new ID_Text(*this);
   }
 
-  void paintScheme(Schematic*);
+  void paintScheme(SchematicDoc*);
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
