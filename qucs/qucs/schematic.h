@@ -52,6 +52,7 @@ class QMouseEvent;
 class QDragEnterEvent;
 class QPainter;
 class QUndoCommand;
+class MouseAction;
 
 // TODO: rename to SchematicDocument
 #define SchematicDocument Schematic
@@ -299,15 +300,16 @@ protected:
 
 
 protected: // these are the overrides that collect mouse actions
-  void contentsMouseMoveEvent(QMouseEvent*) override;
-  void contentsMousePressEvent(QMouseEvent*);
-  void contentsMouseDoubleClickEvent(QMouseEvent*);
-  void contentsMouseReleaseEvent(QMouseEvent*);
-  void contentsWheelEvent(QWheelEvent*);
-  void contentsDropEvent(QDropEvent*);
-  void contentsDragEnterEvent(QDragEnterEvent*);
-  void contentsDragLeaveEvent(QDragLeaveEvent*);
-  void contentsDragMoveEvent(QDragMoveEvent*);
+           // forward to mouseAction instances to produce UndoActions
+  void mouseMoveEvent(QMouseEvent*) override;
+  void mousePressEvent(QMouseEvent*) override;
+  void mouseDoubleClickEvent(QMouseEvent*) override;
+  void mouseReleaseEvent(QMouseEvent*) override;
+  void wheelEvent(QWheelEvent*) override;
+  void dropEvent(QDropEvent*) override;
+  void dragEnterEvent(QDragEnterEvent*) override;
+  void dragLeaveEvent(QDragLeaveEvent*) override;
+  void dragMoveEvent(QDragMoveEvent*) override;
 
 public:
 #ifdef USE_SCROLLVIEW
@@ -567,7 +569,11 @@ private: // action overrides, schematic_action.cpp
   void actionExportGraphAsCsv(); // BUG
 
 private:
-  bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2);
+  bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2); // this is nuts.
+
+  MouseActions* _mouseActions; //needed?
+  MouseActions& mouseActions() { assert(_mouseActions); return *_mouseActions; }
+  MouseAction* mouseAction;
 
 public: // serializer
   void saveComponent(QTextStream& s, Component const* c) const;
@@ -588,7 +594,7 @@ private: // obsolete.
 	  unreachable();
 	  return DocModel.erase(c);
   }
-};
+}; // SchematicDocument
 
 // ---------------------------------------------------
 // Peeforms paste function from clipboard

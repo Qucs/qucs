@@ -145,12 +145,12 @@ AdjNodeIterator::AdjNodeIterator(elt_iter b, elt_iter e)
   :_wire(b), _wend(e)
 {
   if (b==e){
-      _node=_nend; // needed?
-  }else{
-    auto w=prechecked_cast<Wire*>(*_wire);
-    assert(w);
+      _node = _nend; // needed?
+  }else if(auto w=prechecked_cast<Wire*>(*_wire)){
     _node = w->connectionsBegin();
     _nend = w->connectionsEnd();
+  }else{
+    // there is a wire, but it is null.
   }
   skip();
   assert(is_valid());

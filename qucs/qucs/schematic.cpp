@@ -598,20 +598,37 @@ void Schematic::PostPaintEvent (PE pe, int x1, int y1, int x2, int y2, int a, in
 
 // ---------------------------------------------------
 // // is this an override?!
+// the mousemove stuff is collected here (it's an override) and then funnelled
+// into App->MouseMoveAction, which should just have subscribed the event
 void Schematic::contentsMouseMoveEvent(QMouseEvent *Event)
 {
+  // "emit" does not seem to do anything.
   emit signalCursorPosChanged(Event->pos().x(), Event->pos().y());
-  if(App->MouseMoveAction)
+
+  // mouse moveaction set by toggleaction
+  // toggleaction should instead subscribe.
+  //
+  // what is view?
+  if(App->MouseMoveAction){
     (App->view->*(App->MouseMoveAction))(this, Event);
+  }else{
+  }
 }
 
 // -----------------------------------------------------------
-void Schematic::contentsMousePressEvent(QMouseEvent *Event)
+// override function. catch mouse presses.
+//  why not just forward?!
+void Schematic::mousePressEvent(QMouseEvent *Event)
 {
   App->editText->setHidden(true); // disable text edit of component property
-  if(App->MouseReleaseAction == &MouseActions::MReleasePaste)
+  if(App->MouseReleaseAction == &MouseActions::MReleasePaste){
+    // wtf?
     return;
+  }else{
+  }
 
+  // map screen coordinates do scene coordinates.
+  // FIXME there must be a sane way.
   float x = float(Event->pos().x())/Scale + float(ViewX1);
   float y = float(Event->pos().y())/Scale + float(ViewY1);
   QPoint p(x, y);
@@ -620,9 +637,20 @@ void Schematic::contentsMousePressEvent(QMouseEvent *Event)
   QMouseEvent nestedEvent(Event->type(), Event->pos(), Event->globalPos(),
       Event->button(), Event->buttons(), Event->modifiers());
 
+#if 1
+  if(mouseAction){
+    mouseAction->press(Event);
+  }else{
+  }
+#else
+  //TODO: move cruft to actions.
   if(Event->button() != Qt::LeftButton){
     if(App->MousePressAction == &MouseActions::MPressElement){
-    }else if(App->MousePressAction != &MouseActions::MPressWire2) {
+      // hmm
+    }else if(App->MousePressAction == &MouseActions::MPressWire2) {
+      // hmm
+    }else{
+	// some action needs to handle right button
         // show menu on right mouse button
         App->view->rightPressMenu(this, Event);
         if(App->MouseReleaseAction){
@@ -630,38 +658,31 @@ void Schematic::contentsMousePressEvent(QMouseEvent *Event)
           (App->view->*(App->MouseReleaseAction))(this, &nestedEvent);
         }
         return;
-    }else{
     }
-  }
-
-  if(App->MousePressAction){
-    qDebug() << "nestedEvent Action?";
-    // // does not make sense.
-    // try and figure out what events are nested here.
-    if(App->MousePressAction == &MouseActions::MPressElement){ untested();
-    }else if(App->MousePressAction == &MouseActions::MPressWire2){ untested();
-    }else if(App->MousePressAction == &MouseActions::MPressWire1){ untested();
-    }else if(App->MousePressAction == &MouseActions::MPressSelect){ itested();
-    }else if(App->MousePressAction == &MouseActions::MReleasePaste){ untested();
-    }else{ untested();
-    }
-    (App->view->*(App->MousePressAction))(this, &nestedEvent);
   }else{
   }
+#endif
 }
 
 // -----------------------------------------------------------
 void Schematic::contentsMouseReleaseEvent(QMouseEvent *Event)
 {
-  if(App->MouseReleaseAction)
-    (App->view->*(App->MouseReleaseAction))(this, Event);
+  // if(App->MouseReleaseAction)
+  //   (App->view->*(App->MouseReleaseAction))(this, Event);
+
+  if(mouseAction){ untested();
+    mouseAction->release(Event);
+  }else{ untested();
+  }
 }
 
 // -----------------------------------------------------------
-void Schematic::contentsMouseDoubleClickEvent(QMouseEvent *Event)
+void Schematic::mouseDoubleClickEvent(QMouseEvent *Event)
 {
-  if(App->MouseDoubleClickAction)
-    (App->view->*(App->MouseDoubleClickAction))(this, Event);
+  if(mouseAction){ untested();
+    mouseAction->release(Event);
+  }else{
+  }
 }
 
 // -----------------------------------------------------------
