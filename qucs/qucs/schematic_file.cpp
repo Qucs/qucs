@@ -376,7 +376,7 @@ public:
 
 private:
   Port& port(unsigned){ unreachable(); return *new Port(0,0); }
-  unsigned portCount() const{ return 0; }
+  unsigned numPorts() const{ return 0; }
 private: // SchematicSymbol
   SchematicModel const& schematicModel() const{
     incomplete();

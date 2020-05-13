@@ -63,7 +63,7 @@ public:
 	~Q3PtrList() {
 		if(_autodelete){
 			incomplete();
-			for(auto x : localList){
+			for(auto x : localList){ untested();
 				delete x;
 			}
 		}else{
@@ -84,7 +84,8 @@ public:
 		return -1;
 	};
 	void setAutoDelete(bool b) {
-		_autodelete = b;
+		incomplete(); // this is nuts
+		_autodelete = false; // b;
 	};
 	T* first() {
 		cur = localList.begin();

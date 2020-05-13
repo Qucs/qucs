@@ -30,6 +30,9 @@ class testComponent : public Component{
 public:
 	testComponent() : Component() {
 	}
+private:
+	Element* clone()const {untested(); return new testComponent(*this); }
+	void paint(ViewPainter*) const {unreachable();}
 };
 
 void ComponentTests::testConstructor() {

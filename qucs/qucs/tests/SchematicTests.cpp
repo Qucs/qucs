@@ -1,6 +1,6 @@
 
 #include "qucs.h"
-#include "schematic.h"
+#include "schematic_doc.h"
 #include "SchematicTests.h"
 
 #include <QTest>
@@ -12,16 +12,16 @@ void SchematicTests::testConstructor()
     QucsApp *app = new QucsApp();
 
     QString name;
-    Schematic *sch;
+    SchematicDoc *sch;
 
     name = QString("");
-    sch = new Schematic(app, name);
+    sch = new SchematicDoc(*app, name);
     QCOMPARE(sch->isSymbolMode(), false);
     // go up to QucsDoc, empy name
     QCOMPARE(sch->docName(), name);
 
     name = QString("DocumentName");
-    sch = new Schematic(app, name);
+    sch = new SchematicDoc(*app, name);
     // go up to QucsDoc, make up name with absolute path
     QFileInfo Info(name);
     QCOMPARE(sch->docName(), Info.absoluteFilePath());

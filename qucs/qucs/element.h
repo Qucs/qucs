@@ -1,8 +1,6 @@
 /***************************************************************************
-                                 element.h
-                                -----------
     copyright            : (C) 2003 by Michael Margraf
-	                           2018 Felix Salfelder / QUCS
+                               2018 Felix Salfelder / QUCS
  ***************************************************************************/
 
 /***************************************************************************
@@ -55,6 +53,7 @@ class QPainter;
 class WireLabel;
 class SchematicDoc;
 class SchematicModel;
+class Symbol;
 
 struct Line {
   Line(int _x1, int _y1, int _x2, int _y2, QPen _style)
@@ -242,14 +241,34 @@ public:
   mutable int x2, y2;  // center and relative boundings
 
   // create a declaration, e.g. subcircuit definition or include directive
-  virtual Element* proto(SchematicModel const*) const{return nullptr;}
+  virtual Symbol const* proto(SchematicModel const*) const{return nullptr;}
+  SchematicModel const* scope() const;
+  virtual SchematicModel* scope(){unreachable(); return nullptr;}
 
 protected: //BUG
   QString Name; // the label, but sometimes the type. yikes.
 #ifndef USE_SCROLLVIEW
   friend class ElementGraphics;
 #endif
-};
+
+public:
+  Element const* owner() const{return _owner;}
+
+protected:
+  Element* owner(){untested(); return _owner;}
+
+public:
+  void setOwner(Element* e) {untested(); _owner=e;}
+
+private:
+  Element* _owner;
+}; // Element
+
+inline SchematicModel const* Element::scope() const
+{
+	auto e=const_cast<Element*>(this);
+	return e->scope();
+}
 
 class Component;
 class Command;

@@ -46,6 +46,7 @@ QUndoCommand* MouseActionDelete::move(QMouseEvent *Event)
 
 QUndoCommand* MouseActionDelete::release(QMouseEvent *Event){
   incomplete();
+  return nullptr;
 }
 
 class deleteCommand : public QUndoCommand {

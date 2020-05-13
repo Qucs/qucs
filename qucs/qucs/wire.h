@@ -69,7 +69,7 @@ private: // symbol Node stuff
   Node* disconnectNode(unsigned idx, NodeMap&) override;
 
 private: // Symbol
-  unsigned portCount() const{ return 2; }
+  unsigned numPorts() const{ return 2; }
 
 public:
   bool    isHorizontal() const { return (y1() == y2());}
