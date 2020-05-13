@@ -20,6 +20,13 @@
 #include "module.h"
 #include "globals.h"
 
+Ground::Ground(Ground const& g) : Component(g)
+{
+	incomplete();
+	if(!Ports.count()){
+		Ports.append(new Port(  0,  0));
+	}
+}
 
 Ground::Ground()
 {

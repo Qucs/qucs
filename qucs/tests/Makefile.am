@@ -21,12 +21,28 @@ AM_DEFAULT_SOURCE_EXT = .cpp
 AM_CXXFLAGS = -fPIC
 AM_LDFLAGS = -Wl,--no-as-needed
 
+guitests = \
+	SchematicTests ElementTests ComponentTests
+
 if COND_WIN32
 check_PROGRAMS =
 else
-#entirely useless.
-check_PROGRAMS = # SchematicTests ElementTests ComponentTests
+check_PROGRAMS = \
+	${guitests} \
+	model0 \
+	model1
 endif
+
+model0_CPPFLAGS = ${AM_CPPFLAGS} -I${top_srcdir} -DUNTANGLE_QT
+model0_CPPFLAGS += $(QT_CFLAGS) # yikes.
+model0_LDADD = ${top_builddir}/qucs/libqucs.la
+model0_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
+
+model1_CPPFLAGS = ${AM_CPPFLAGS} -I${top_srcdir} -DUNTANGLE_QT
+model1_CPPFLAGS += $(QT_CFLAGS) # yikes.
+model1_LDADD = ${top_builddir}/qucs/libqucs.la
+model1_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
+
 
 NO_PLUGINS = \
 	../components/libcomponents.la \

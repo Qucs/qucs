@@ -102,54 +102,9 @@ DIALOG_SRC+= \
      aboutdialog.cpp
 
 
+include MakeList
 libqucs_la_SOURCES = \
-	globals.cpp \
-	module.cpp \
-	attach.cpp \
-	command.cpp \
-	component.cpp \
-	conductor.cpp \
-	diagram.cpp \
-	docfmt.h \
-	element.cpp \
-	element_graphics.cpp \
-	graph.cpp \
-	imagewriter.cpp \
-	io.cpp \
-	io_error.cpp \
-	language.cpp \
-	marker.cpp \
-	messagedock.cpp \
-	misc.cpp \
-	mnemo.cpp \
-	mouseactions.cpp \
-	netlist.cpp \
-	node.cpp \
-	nodemap.cpp \
-	object.cpp \
-	octave_window.cpp \
-	painting.cpp \
-	port.cpp \
-	printerwriter.cpp \
-	projectView.cpp \
-	qucs_actions.cpp \
-	qucs.cpp \
-	qucsdoc.cpp \
-	qucs_init.cpp \
-	schematic_action.cpp \
-	schematic_component.cpp \
-	schematic.cpp \
-	schematic_element.cpp \
-	schematic_file.cpp \
-	schematic_model.cpp \
-	schematic_scene.cpp \
-	schematic_symbol.cpp \
-	symbol.cpp \
-	syntax.cpp \
-	textdoc.cpp \
-	viewpainter.cpp \
-	wire.cpp \
-	wirelabel.cpp \
+	${CPP_SRC} \
 	$(MOCFILES) \
 	${DIALOG_SRC}
 

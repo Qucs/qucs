@@ -23,19 +23,19 @@ private: // legacy cruft
 		return m.symbolPaintings();
 	}
 	DiagramList const& diagrams(SchematicSymbol const& m) const{
-		return m.schematicModel().diagrams();
+		return m.diagrams();
 	}
 	PaintingList const& paintings(SchematicSymbol const& m) const{
-		return m.schematicModel().paintings();
+		return m.paintings();
 	}
 	WireList const& wires(SchematicSymbol const& m) const{
-		return m.schematicModel().wires();
+		return m.wires();
 	}
 	NodeMap const& nodes(SchematicSymbol const& m) const{
-		return m.schematicModel().nodes();
+		return m.nodes();
 	}
 	ComponentList const& components(SchematicSymbol const& m) const{
-		return m.schematicModel().components();
+		return m.components();
 	}
 }D;
 static Dispatcher<DocumentFormat>::INSTALL
