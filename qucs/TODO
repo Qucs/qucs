@@ -17,7 +17,7 @@
 -- Boston, MA 02110-1301, USA.  
 --
 
-===== 0.1.0 TODO =====
+===== 0.1.* TODO =====
 
 - error message handling (Object)
 - parse verilog schematic and round trip
@@ -28,7 +28,17 @@
 - untangle tAC and other callbacks
 - implement symbol editor (standalone, not as "mode")
 - connect disconnect ports/wires
-- proper undo/redo stack
+- undo/redo stack
+- make code (human) readable where possible
+  - const correctness
+  - "override", "delete" where applicable
+  - exception Semantics
+  - appropriate types
+  - avoid preprocessor
+  - break up functions
+  - literals
+  - auto
+  - is it thingCount or numberOfThings or numThings?
 
 ===== old stuff, mostly obsolete, implement plugins instead =====
 

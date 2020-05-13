@@ -1,9 +1,8 @@
 /***************************************************************************
                                subcirport.cpp
                               ----------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -15,7 +14,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "node.h"
-// #include "schematic.h"
+#include "schematic_model.h"
 #include "component.h"
 #include "globals.h"
 #include "module.h"
@@ -29,6 +28,12 @@ public:
   Component* newOne() {return new SubCirPort(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 
+private:
+  Node* connectNode(unsigned n, NodeMap& l) override;
+
+private:
+  void setParameter(unsigned i, QString const&) override;
+
 protected:
   QString netlist() const;
   QString vhdlCode(int);
@@ -39,7 +44,7 @@ Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Port", &D);
 Module::INSTALL pp("lumped", &D);
 
 SubCirPort::SubCirPort()
-{
+{ untested();
   info(Name, bitmap_file);
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("port of a subcircuit");
@@ -60,33 +65,64 @@ SubCirPort::SubCirPort()
 }
 
 // -------------------------------------------------------
+Node* SubCirPort::connectNode(unsigned i, NodeMap& l)
+{ untested();
+	Node* N = Symbol::connectNode(i, l);
+	trace2("cn", i, N);
+
+	bool ok=true;
+	QString pp;
+	try{ untested();
+		pp = QString::fromStdString(paramValue(0));
+	}catch(ExceptionCantFind const&){ untested();
+		ok = false;
+	}
+
+	int pos;
+	if(ok){ untested();
+		pos = pp.toInt(&ok);
+	}else{ untested();
+	}
+
+	--pos; // QUCS numbers start at 1.
+
+	if(ok){ untested();
+		assert(scope());
+		trace2("setting port", pos, N->netLabel());
+		scope()->setPort(pos, N);
+	}else{ untested();
+		incomplete();
+	}
+	return N;
+}
+// -------------------------------------------------------
 void SubCirPort::createSymbol()
-{
+{ untested();
   x1 = -27; y1 = -8;
   x2 =   0; y2 =  8;
 
-  if(Props.at(1)->Value.at(0) == 'a') {
+  if(Props.at(1)->Value.at(0) == 'a') { untested();
     Arcs.append(new Arc(-25, -6, 12, 12,  0, 16*360,QPen(Qt::darkBlue,2)));
     Lines.append(new Line(-13,  0,  0,  0,QPen(Qt::darkBlue,2)));
   }
-  else {
+  else { untested();
     Lines.append(new Line( -9,  0,  0,  0,QPen(Qt::darkBlue,2)));
-    if(Props.at(1)->Value == "out") {
+    if(Props.at(1)->Value == "out") { untested();
       Lines.append(new Line(-20, -5,-25,  0,QPen(Qt::red,2)));
       Lines.append(new Line(-20,  5,-25,  0,QPen(Qt::red,2)));
       Lines.append(new Line(-20, -5, -9, -5,QPen(Qt::red,2)));
       Lines.append(new Line(-20,  5, -9,  5,QPen(Qt::red,2)));
       Lines.append(new Line( -9, -5, -9,  5,QPen(Qt::red,2)));
     }
-    else {
+    else { untested();
       Lines.append(new Line(-14, -5, -9,  0,QPen(Qt::darkGreen,2)));
       Lines.append(new Line(-14,  5, -9,  0,QPen(Qt::darkGreen,2)));
-      if(Props.at(1)->Value == "in") {
+      if(Props.at(1)->Value == "in") { untested();
         Lines.append(new Line(-25, -5,-14, -5,QPen(Qt::darkGreen,2)));
         Lines.append(new Line(-25,  5,-14,  5,QPen(Qt::darkGreen,2)));
         Lines.append(new Line(-25, -5,-25,  5,QPen(Qt::darkGreen,2)));
       }
-      else {
+      else { untested();
         x1 = -30;
         Lines.append(new Line(-18, -5,-14, -5,QPen(Qt::darkGreen,2)));
         Lines.append(new Line(-18,  5,-14,  5,QPen(Qt::darkGreen,2)));
@@ -100,10 +136,31 @@ void SubCirPort::createSymbol()
 
   Ports.append(new Port(  0,  0));
 }
+// -------------------------------------------------------
+void SubCirPort::setParameter(unsigned n, QString const& v)
+{ untested();
+	trace3("SubCirPort::setParameter", label(), n, v);
+	Component::setParameter(n, v);
 
+	bool ok;
+	int pos = v.toInt(&ok);
+
+	--pos; // QUCS numbers start at 1.
+	if(!ok){ untested();
+		incomplete();
+		// throw approriate error
+	}else if(portExists(pos)){ untested();
+		// possibly missing more error handling
+		assert(scope());
+		assert(owner());
+		trace2("setting scope port", owner()->label(), pos);
+		scope()->setPort(pos, port(pos).value());
+	}else{ untested();
+	}
+}
 // -------------------------------------------------------
 Element* SubCirPort::info(QString& Name, char* &BitmapFile, bool getNewOne)
-{
+{ untested();
   Name = QObject::tr("Subcircuit Port");
   BitmapFile = (char *) "subport";
 
@@ -113,13 +170,13 @@ Element* SubCirPort::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
 // -------------------------------------------------------
 QString SubCirPort::netlist() const
-{
+{ untested();
   return QString("");
 }
 
 // -------------------------------------------------------
 QString SubCirPort::vhdlCode(int)
-{
+{ untested();
 #if 0
   if(Props.at(1)->Value != "out")
     return QString("");
@@ -135,7 +192,7 @@ QString SubCirPort::vhdlCode(int)
 
 // -------------------------------------------------------
 QString SubCirPort::verilogCode(int)
-{
+{ untested();
   return QString("");
 }
 }

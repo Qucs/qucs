@@ -80,11 +80,8 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 		s << ") ";
 		s << c->label() << "(";
 
-		auto parent=c->getScope(); // HACK. move to symbol
-
 		comma = "";
-		for(unsigned i=0; i < sym->portCount(); ++i){
-			// s << comma << parent->netLabel(i);
+		for(unsigned i=0; i < sym->numPorts(); ++i){
 			s << comma << sym->portValue(i);
 			comma = ", ";
 		}
@@ -104,19 +101,19 @@ private: // legacy cruft
     return m.symbolPaintings();
   }
   DiagramList const& diagrams(SchematicSymbol const& m) const{
-    return m.schematicModel().diagrams();
+    return m.diagrams();
   }
   PaintingList const& paintings(SchematicSymbol const& m) const{
-    return m.schematicModel().paintings();
+    return m.paintings();
   }
   WireList const& wires(SchematicSymbol const& m) const{
-    return m.schematicModel().wires();
+    return m.wires();
   }
   NodeMap const& nodes(SchematicSymbol const& m) const{
-    return m.schematicModel().nodes();
+    return m.nodes();
   }
   ComponentList const& components(SchematicSymbol const& m) const{
-    return m.schematicModel().components();
+    return m.components();
   }
 
 private: // hacks.
@@ -182,7 +179,7 @@ void VerilogSchematicFormat::printSymbol(Symbol const* sym, stream_t& s) const
 		s << QString::fromStdString(label) << "(";
 
 		comma = "";
-		for(unsigned i=0; i<sym->portCount(); ++i){
+		for(unsigned i=0; i<sym->numPorts(); ++i){
 			auto p1 = &sym->port(i); // BUG
 			s << comma << "net_" << p1->value()->cx() << "_" <<  p1->value()->cy();
 			comma = ", ";

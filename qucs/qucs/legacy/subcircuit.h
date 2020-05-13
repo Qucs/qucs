@@ -20,7 +20,9 @@
 
 #include "../components/component.h"
 
+// namespace {
 
+// BUG: move to .cpp
 // BUG: must derive from subckt_model (or so)
 class Subcircuit : public MultiViewComponent  {
 public:
@@ -37,15 +39,27 @@ protected:
   QString netlist() const;
   QString vhdlCode(int);
   QString verilogCode(int);
-  void createSymbol();
+  void createSymbol(); // SchematicModel const& scope);
   void remakeSymbol(int No);
   int  loadSymbol(const QString&);
 
+private: // Symbol
+// unsigned numPorts() const override;
+  bool portExists(unsigned) const override;
+  QString portName(unsigned) const override;
+
+  // void setParameter(QString const& name, QString const& value);
+  void setParameter(unsigned i, QString const& value) override;
+
 private: // overrides
   void build();
-  Element* proto(SchematicModel const* schem) const;
-	  // obsolete.
+
+  // create full prototype element, bit of a hack
+  Symbol const* proto(SchematicModel const* schem) const override;
+  
+  // obsolete?
   void tAC(QTextStream&, SchematicModel const*, QStringList&, int&, int, NetLang const&);
 };
 
+// } // namespace
 #endif

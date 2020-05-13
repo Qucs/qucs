@@ -2818,7 +2818,7 @@ void SchematicModel::recreateSymbol(Symbol *Comp)
     incomplete();
 #if 0 // does not work like this.
     WireLabel **plMem=0, **pl;
-    int PortCount = Comp->portCount();
+    int PortCount = Comp->numPorts();
 
     if(PortCount > 0) {
         // Save the labels whose node is not connected to somewhere else.
@@ -2843,7 +2843,7 @@ void SchematicModel::recreateSymbol(Symbol *Comp)
     int x1 = Comp->x1_(), x2 = Comp->x2_(), y1 = Comp->y1_(), y2 = Comp->y2_();
     QString tmp = Comp->name();    // is sometimes changed by "recreate"
 #endif
-    Comp->recreate();
+    Comp->recreate(); // *this);
 #if 0
     Comp->obsolete_name_override_hack(tmp);
     if(x < x1)
@@ -3092,7 +3092,7 @@ void SchematicDoc::setCompPorts(Component *pc)
 
     // Re-connect component node to schematic node. This must be done completely
     // after the first loop in order to avoid problems with node labels.
-    for(unsigned i=0; i<sym->portCount(); ++i){
+    for(unsigned i=0; i<sym->numPorts(); ++i){
 	auto pp=sym->port(i);
 
 	// BUG: duplicate connection routines.

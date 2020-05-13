@@ -13,7 +13,7 @@
 class SchematicModel;
 
 // could be redundant, once schematicModels are some kind of
-// symbol/object
+// symbol/object (getting there)
 #if 0 // remove
 class ModelInserter{
 protected:
@@ -30,6 +30,10 @@ public:
 class ModelAccess : public SchematicSymbol{
 protected:
 	explicit ModelAccess();
+private:
+//   SchematicModel const* subckt() const override{
+// 	  return SchematicSymbol::subckt();
+//   }
 };
 
 class SchematicLanguage : public DocumentLanguage{

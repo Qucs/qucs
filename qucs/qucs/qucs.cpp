@@ -2456,7 +2456,8 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
   Component *Comp = prechecked_cast<Component*>(Symb);
   assert(Comp);
   Comp->Props.first()->Value = idx.sibling(idx.row(), 0).data().toString();
-  Symb->recreate();
+  incomplete();
+  // Symb->recreate(Scktmodel);
   view->selElem = Comp;
 
   if(view->drawn){

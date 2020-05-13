@@ -65,12 +65,12 @@ void VerilogNetlister::clear() const
 // was main::doNetlist
 void VerilogNetlister::save(DocumentStream& Stream, SchematicSymbol const& m) const
 {
-	modelhack=&m.schematicModel();
+	modelhack = m.subckt();
 	clear();
 
 	qDebug() << "*** VerilogNetlister::save";
 
-	SchematicModel const *sch = &m.schematicModel();
+	SchematicModel const *sch = m.subckt();
 	if (sch == NULL) {
 		throw "incomplete_exception";
 	}else{
@@ -116,7 +116,7 @@ void VerilogNetlister::nodeMap(SchematicSymbol const& m) const
 {
 	incomplete(); // obsolete.
 	unsigned count;
-	auto& sm=m.schematicModel();
+	auto& sm = *m.subckt();
 //	sm.throughAllNodes(count); // hack: number connected components.
 	                           // should already be numbered...
 //	sm.updateNetLabels(); // HACK: should already be named.
@@ -295,19 +295,22 @@ void VerilogNetlister::createNetlist(DocumentStream& stream,
 	nodeMap(m);
 
 	QString s, Time;
-	for(auto pc : m.schematicModel().components()){
+	for(auto pc : m.components()){
 		assert(verilog);
 		verilog->printItem(pc, stream);
 	}
 }
 
+/// hmm same as qucsator? cleanup and share.
 void VerilogNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol const& m) const
 { incomplete();
 	bool r;
 	QString s;
 	bool isAnalog=true;
 
-	for(auto it : m.schematicModel().components()){
+	auto const& sckt = *m.subckt();
+
+	for(auto it : sckt.components()){
 
 		if(it->isActive != COMP_IS_ACTIVE){
 			stream << "#ifdef QUCS_INACTIVE\n";
@@ -319,22 +322,13 @@ void VerilogNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol c
 		int NumPorts=0; // ??!
 		qDebug() << "call tAC" << QString::fromStdString(it->type());
 
-		Element* decl=it->proto(&m.schematicModel());
-
-		if(decl){
-			if(SubcktProto* s=dynamic_cast<SubcktProto*>(decl)){
-				qDebug() << "got proto" << QString::fromStdString(s->type());
-				auto& ex=declarations[s->type()];
-				if(ex){
-					// already got this one.
-				}else{
-					ex = s;
-					s->build();
-				}
-			}else{
-				incomplete();
-			}
+		auto sym = it; // dynamic_cast<Symbol const*>(pc);
+		if(sym && sym->subckt()){
+			trace1("need expand?", sym->label());
+			// if there is a sckt, make sure it is populated.
+			sym->proto(&sckt); // just expand?
 		}else if(it->type() == "GND") { // BUG, use a rail?
+
 			qDebug() << "GND hack" << it->Ports.first()->netLabel();
 			// it->Ports.first()->Connection->setName("gnd");
 		}

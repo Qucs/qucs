@@ -32,6 +32,9 @@ public:
 		// setSelected(false);
 		qDebug() << cx;
 	}
+private:
+	Element* clone()const {untested(); return new testElement(*this); }
+	void paint(ViewPainter*) const {unreachable();}
 };
 
 void ElementTests::testConstructor() {

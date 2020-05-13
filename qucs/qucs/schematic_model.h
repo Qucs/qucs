@@ -27,12 +27,14 @@
 #include "qucsdoc.h"
 #include "nodemap.h"
 #include "netlist.h"
+#include "protomap.h"
 
 
 
 class SchematicDoc;
 class QPlainTextEdit; //??!
 // class QFileInfo;
+//
 
 // TODO: refactor here
 class WireList : public Q3PtrList<Wire> {
@@ -109,6 +111,7 @@ public:
 
 public:
 	void parse(DocumentStream& stream, SchematicLanguage const*l=nullptr);
+	void setOwner(Element* s);
 	int  prepareNetlist(DocumentStream&, QStringList&, QPlainTextEdit*,
 			bool creatingLib, NetLang const&);
 	Component* loadComponent(const QString& _s, Component* c) const;
@@ -165,23 +168,35 @@ private: // TODO: actually store here.
 	NodeMap& nodes();
 	DiagramList& diagrams();
 	PaintingList& paintings();
-	ComponentList& components();
+	ComponentList& components(); // possibly "devices". lets see.
 public:
 	WireList const& wires() const;
 	NodeMap const& nodes() const;
 	DiagramList const& diagrams() const;
 	PaintingList const& paintings() const;
 	ComponentList const& components() const;
+	PrototypeMap const& declarations() const;
+
+	Symbol const* findProto(QString const& what) const;
+	void cacheProto(Symbol const* what) const;
 
 	SchematicDoc* doc();
 	QString const& portType(int i) const{
 		return PortTypes[i];
 	}
-	unsigned numberOfNets() const{
+	unsigned numberOfNets() const{ // numNets
 		return Nets.size();
 	}
 
+	unsigned numPorts() const;
+
+	// not so sure about these
+	void setPort(unsigned i, Node* n);
+	QString portValue(unsigned i) const;
+
+
 private:
+	mutable PrototypeMap _protos; // bit of a hack.
 	ComponentList Components;
 	PaintingList Paintings;
 	NetList Nets;
@@ -189,16 +204,19 @@ private:
 	DiagramList Diagrams;
 	WireList _wires;
 //	SchematicSymbol* _symbol;
-	QStringList PortTypes;
+	QStringList PortTypes; // obsolete.
+	std::vector<Node*> _ports; // -> symbol?
 	QFileInfo FileInfo;
 	QString DevType; // BUG move to parent
 
 private:
 	SchematicDoc* _doc_;
 
+
 public: // for now.
 	friend class SchematicDoc;
 	friend class NodeMap;
+	friend class SchematicSymbol;
 }; // schematicmodel
 
 #endif

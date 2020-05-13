@@ -1360,6 +1360,7 @@ void MouseActions::MPressElement(SchematicDoc *Doc, QMouseEvent *Event)
 //    qDebug() << "+-+ got to switch:" << Comp->name();
     QString entryName = Comp->name();
 
+    const Component* cComp = Comp;
     switch(Event->button()) {
       case Qt::LeftButton :
 	// left mouse button inserts component into the schematic
@@ -1367,7 +1368,7 @@ void MouseActions::MPressElement(SchematicDoc *Doc, QMouseEvent *Event)
 	// part of
 	Comp->textSize(x1, y1);
 	Doc->insertElement(Comp);
-	assert(&Doc->DocModel == Comp->getScope());
+//	assert(&Doc->DocModel == &cComp->getScope());
 	Comp->textSize(x2, y2);
 	if(Comp->tx < Comp->x1_()) Comp->tx -= x2 - x1;
 

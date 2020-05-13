@@ -55,8 +55,9 @@ protected: // wrap legacy. don't use in new code.
 	  return recreate();
   }
 
-public: // legacy stuff. don't use/
-  virtual Component* newOne() = 0; // legacy interfase. use clone.
+public: // legacy stuff. don't use
+  //private:
+  virtual Component* newOne(){unreachable(); return nullptr;} // use clone instead.
   virtual void tAC(QTextStream&, SchematicModel const*, QStringList&, int&, int, NetLang const&){
 	  unreachable();
   }
@@ -68,8 +69,8 @@ public: // Element interface, private?!
 	  return E->newOne();
   }
 
-  virtual unsigned portCount() const{ return Ports.count(); }
-private: // symbol interface
+  virtual unsigned numPorts() const override{ untested(); return Ports.count(); }
+protected: // symbol interface
   Port& port(unsigned i) {
 	  assert(i<unsigned(Ports.count()));
 	  return *Ports[i]; 
@@ -85,7 +86,8 @@ private: // symbol interface
   virtual std::string paramValue(unsigned i) const;
   virtual std::string paramName(unsigned i) const;
 
-  // virtual void setParam...
+protected:
+  void setParameter(unsigned i, QString const&);
 
 public:
   void    paintScheme(SchematicDoc*) const;
@@ -193,6 +195,7 @@ protected:
   Property * getProperty(const QString&);
 private: // (hopefully) obsolete callbacks
   void recreateCallback();
+  QString getParameter(unsigned pos);
 
 }; // Component
 

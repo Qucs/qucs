@@ -18,7 +18,8 @@
 #include "schematic_doc.h"
 
 Element::Element() :
-	Selected(false)
+	_owner(nullptr),
+	Selected(false)// BUG
 {
   Type = isDummyElement;
   cx = cy = x1 = y1 = x2 = y2 = 0;

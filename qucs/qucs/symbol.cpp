@@ -19,18 +19,34 @@
 
 // recreate schematic symbol. not sure why, maybe after parameter changes
 // (why not just call "Symbol::create??!")
-void Symbol::recreate(){
+void Symbol::recreate(){ // }SchematicModel const&){
 }
 
-Symbol::~Symbol(){
-	// disconnect();
+Symbol::Symbol()
+    : Element(),
+		_subckt(nullptr)
+{
+}
+
+SchematicModel* Symbol::scope()
+{
+	if(auto o=dynamic_cast<Symbol*>(owner())){ untested();
+		return o->subckt();
+	}else{ untested();
+		return nullptr;
+	}
+}
+
+// reuse overrides to give both const and non-const access.
+SchematicModel const* Symbol::scope() const
+{
+	auto s=const_cast<Symbol*>(this);
+	return s->scope();
 }
 
 // obsolete? portValue?
 QString const& Symbol::netLabel(unsigned i) const
 { untested();
-	auto const* s=getScope();
-	assert(s);
 //	assert(hasPort(i));
 	return portValue(i);
 }
@@ -74,7 +90,7 @@ Node* Symbol::disconnectNode(unsigned i, NodeMap&nm)
 static const QString OPEN_PORT("open");
 QString const& Symbol::portValue(unsigned i) const
 {
-  assert(i<unsigned(portCount()));
+  assert(i<unsigned(numPorts()));
   if(port(i).connected()){
 	  return port(i).netLabel();
   }else{
@@ -86,4 +102,17 @@ Port const& Symbol::port(unsigned i) const
 {
 	Symbol* s=const_cast<Symbol*>(this);
 	return s->port(i);
+}
+
+// BUG: not here. legacy stuff...
+void Symbol::new_subckt()
+{
+	assert(!_subckt);
+	_subckt = new SchematicModel(nullptr);
+}
+
+Symbol::~Symbol(){
+	// disconnect();
+	delete _subckt;
+	_subckt = nullptr;
 }

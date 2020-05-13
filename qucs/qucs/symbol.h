@@ -24,11 +24,13 @@
 #define QUCS_SYMBOL_H
 
 #include "element.h"
+#include "exception.h"
 
 /** \class Symbol
-  * \brief Superclass of all circuit components (except wires).
-  *
-  *
+  * \brief Superclass of circuit components
+  *     (basically a Component,
+  *     but "Component" already exists.
+  *     It should be an implemenation only. maybe rename later.)
   */
 
 class QPainter;
@@ -38,23 +40,16 @@ class NodeMap;
 // a component symbol. not necessarily one of the legacy components
 class Symbol : public Element{
 public: // construct
-  Symbol() : Element(), containingSchematic(nullptr) {}
+  explicit Symbol();
   virtual ~Symbol();
 
 private: // Element
 	void paint(ViewPainter*) const{unreachable();}	
 
 public: // interface
-
-  // obsolete
-  virtual void setSchematic (SchematicModel const* p) { unreachable(); containingSchematic = p; }
-  SchematicModel const* getSchematic() const{ unreachable(); return containingSchematic;}
-
-  // use these, TODO: parent.
-  void setScope (SchematicModel const* p) { containingSchematic = p; }
-  SchematicModel const* getScope() const{return containingSchematic;}
-
-  virtual void recreate();
+  // what is this?
+  // some kind of "init"??!
+  virtual void recreate(); // SchematicModel const& ctx);
 
   virtual std::string /* const& */ type() const{
 	  return _type;
@@ -62,10 +57,19 @@ public: // interface
   void setType(std::string const& x){
 	  _type = x;
   }
-  virtual void build(){ }
-
+  virtual void build() {} // what does it do?
   virtual unsigned paramCount()const {return 0;}
 
+public:
+  SchematicModel const* scope() const;
+
+protected: // needed in netlister
+  virtual SchematicModel* scope();
+
+public: // Parameters // yikes there's param{Name,Value} already
+  virtual void setParameter(QString const& name, QString const& value){}
+  virtual void setParameter(unsigned pos, QString const& value){}
+  virtual QString getParameter(unsigned pos){ throw ExceptionCantFind(); }
 
 public: // non-virtual (on purpose)
   QString const& netLabel(unsigned i) const;
@@ -77,8 +81,14 @@ public: // Node stuff
 public: // Port access
   QString const& portValue(unsigned) const;
   // TODO: rethink Port/Node semantics
-  virtual unsigned portCount() const = 0;
+  virtual unsigned numPorts() const = 0;
   Port const& port(unsigned) const;
+  virtual bool portExists(unsigned) const{ return false; }
+  virtual QString portName(unsigned) const{return "invalid"; }
+
+  SchematicModel const* subckt() const{ return _subckt; }
+  SchematicModel* subckt(){ return _subckt; }
+  void new_subckt();
 
 private: // internal port access
   virtual Port& port(unsigned){ unreachable(); return *new Port(0,0);}
@@ -90,12 +100,14 @@ public: // graphics
   virtual unsigned width()const {return 0;}
 //  virtual void draw(QPainter&)const=0;
   //...  more to come
-private: // good idea?
-  SchematicModel const* containingSchematic;
-
+protected: // maybe not here. but need to rebase MultiViewComponent to ScktProto first.
+  SchematicModel* _subckt; // stuff contained in this symbol.
+                           // such as subckt components. meta data or symbol gfx
 private:
   std::string _type;
-};
+}; // symbol
+
+
 
 
 #endif

@@ -75,31 +75,9 @@ private: // stuff saved from schematic_file.cpp
 	Diagram* loadDiagram(QString const& Line, DocumentStream& /*, DiagramList *List */) const;
 private: // stuff from component.cc
 	void loadProperties(QTextStream& stream, SchematicSymbol& m) const;
-	Component* loadComponent(const QString& _s, Component* c) const;
+	Component* parseComponentObsoleteCallback(const QString& _s, Component* c) const;
 	Command* loadCommand(const QString& _s, Command* c) const;
-	Element* loadElement(const QString& _s, Element* e) const {
-		if(Command* c=dynamic_cast<Command*>(e)){
-			c = loadCommand(_s, c);
-			// incomplete();
-		}else if(Component* c=dynamic_cast<Component*>(e)){
-			// legacy components
-			// will not work non-qucs-.sch languages
-			c = loadComponent(_s, c);
-
-			 QString cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
-			 int x = c->tx;
-			 int y = c->ty;
-			 // c->setSchematic (p);
-			 Symbol* s(c);
-			 s->recreate();
-			 c->setLabel(cstr);
-			 c->tx = x;  c->ty = y;
-		}else{
-			incomplete();
-			return e;
-		}
-		return nullptr;
-	}
+	Element* loadElement(const QString& _s, Element* e) const;
 	Element* getComponentFromName(QString& Line) const;
 private: // overrides
 	// BUG: need parseItem
@@ -111,6 +89,33 @@ private:
 static Dispatcher<DocumentLanguage>::INSTALL
     p(&doclang_dispatcher, "leg_sch", &defaultSchematicLanguage_);
 // ------------------------------------------------------
+// // "parseElement"?
+Element* LegacySchematicLanguage::loadElement(const QString& _s, Element* e) const
+{ untested();
+	if(Command* c=dynamic_cast<Command*>(e)){
+		c = loadCommand(_s, c);
+		// incomplete();
+	}else if(Component* c=dynamic_cast<Component*>(e)){
+		// legacy components
+		// will not work non-qucs-.sch languages
+		incomplete();
+		c = parseComponentObsoleteCallback(_s, c);
+
+		QString cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
+		int x = c->tx;
+		int y = c->ty;
+		// c->setSchematic (p);
+		Symbol* s(c);
+	//	s->recreate(); // half-expand subcircuits? why not "precalc"?
+	//	               // why not in constructor? it needs parameters.
+		c->setLabel(cstr);
+		c->tx = x;  c->ty = y;
+	}else{
+		incomplete();
+		return e;
+	}
+	return nullptr;
+}
 
 // BUG: this is schematicFormat
 void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) const
@@ -147,10 +152,14 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 			Element*c=nullptr;
 			if(mode=='C'){
 				c = getComponentFromName(Line);
+				c->setOwner(&s);
 				if(Symbol* sym=dynamic_cast<Symbol*>(c) ){
 					//always do this?
-					sym->setScope(s.schematicModel());
-					sym->build();
+
+//					assert(s.scope());
+					// what are those?!
+					sym->recreate(); // re? create symbol gfx and random other things. needs owner
+					sym->build(); // what's this?!
 				}else{
 				}
 			}else if(mode=='S'){
@@ -167,6 +176,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 				// (Node*)4 =  move all ports (later on)
 				// Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4); // this is entirely nuts.
 				Wire* w = new Wire();
+				w->setOwner(&s);
 				incomplete(); // qt5 branch...
 				bool err=w->obsolete_load(Line);
 				if(!err){ untested();
@@ -181,6 +191,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 				Diagram* d=loadDiagram(Line, stream);
 				if(d){
 					c = d;
+					c->setOwner(&s);
 				}else{
 					incomplete();
 				}
@@ -194,8 +205,10 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 
 			if(c){
 				trace2("pushing back", c->label(), typeid(*c).name());
-				assert(s.schematicModel());
-				s.schematicModel()->pushBack(c);
+				assert(s.subckt());
+				Element const* cc = c;
+				assert(cc->owner() == &s);
+				s.subckt()->pushBack(c);
 			}else{
 			}
 
@@ -308,283 +321,288 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
 
 Command* LegacySchematicLanguage::loadCommand(const QString& _s, Command* c) const
 {
-  bool ok;
-  int  ttx, tty, tmp;
-  QString s = _s;
+	bool ok;
+	int  ttx, tty, tmp;
+	QString s = _s;
 
-  if(s.at(0) != '<'){
-    return NULL;
-  }else if(s.at(s.length()-1) != '>'){
-    return NULL;
-  }
-  s = s.mid(1, s.length()-2);   // cut off start and end character
+	if(s.at(0) != '<'){
+		return NULL;
+	}else if(s.at(s.length()-1) != '>'){
+		return NULL;
+	}
+	s = s.mid(1, s.length()-2);   // cut off start and end character
 
-  QString label=s.section(' ',1,1);
-  trace1("NAME", label);
-  c->setName(label);
+	QString label=s.section(' ',1,1);
+	trace1("NAME", label);
+	c->setName(label);
 
-  QString n;
-  n  = s.section(' ',2,2);      // isActive
-  tmp = n.toInt(&ok);
-  if(!ok){
-    return NULL;
-  }
-  c->isActive = tmp & 3;
+	QString n;
+	n  = s.section(' ',2,2);      // isActive
+	tmp = n.toInt(&ok);
+	if(!ok){
+		return NULL;
+	}
+	c->isActive = tmp & 3;
 
-  if(tmp & 4){
-    c->showName = false;
-  }else{
-    // use default, e.g. never show name for GND (bug?)
-  }
+	if(tmp & 4){
+		c->showName = false;
+	}else{
+		// use default, e.g. never show name for GND (bug?)
+	}
 
-  n  = s.section(' ',3,3);    // cx
-  int cx = n.toInt(&ok);
-  if(!ok) return NULL;
+	n  = s.section(' ',3,3);    // cx
+	int cx = n.toInt(&ok);
+	if(!ok) return NULL;
 
-  n  = s.section(' ',4,4);    // cy
-  c->setCenter(cx, n.toInt(&ok));
-  if(!ok) return NULL;
+	n  = s.section(' ',4,4);    // cy
+	c->setCenter(cx, n.toInt(&ok));
+	if(!ok) return NULL;
 
-  n  = s.section(' ',5,5);    // tx
-  ttx = n.toInt(&ok);
-  if(!ok) return NULL;
+	n  = s.section(' ',5,5);    // tx
+	ttx = n.toInt(&ok);
+	if(!ok) return NULL;
 
-  n  = s.section(' ',6,6);    // ty
-  tty = n.toInt(&ok);
-  if(!ok) return NULL;
+	n  = s.section(' ',6,6);    // ty
+	tty = n.toInt(&ok);
+	if(!ok) return NULL;
 
-  assert(c);
+	assert(c);
 
-  c->tx = ttx;
-  c->ty = tty; // restore text position (was changed by rotate/mirror)
+	c->tx = ttx;
+	c->ty = tty; // restore text position (was changed by rotate/mirror)
 
-  unsigned int z=0, counts = s.count('"');
-  // FIXME. use c->paramCount()
+	unsigned int z=0, counts = s.count('"');
+	// FIXME. use c->paramCount()
 
-  /// BUG FIXME. dont use Component parameter dictionary.
-  for(; tmp<=(int)counts/2; tmp++)
-    c->Props.append(new Property("p", "", true, " "));
+	/// BUG FIXME. dont use Component parameter dictionary.
+	for(; tmp<=(int)counts/2; tmp++)
+		c->Props.append(new Property("p", "", true, " "));
 
-  // load all properties
-  Property *p1;
-  qDebug() << "load command props" << s;
-  for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
-    qDebug() << "load command props" << z;
-    z++;
-    n = s.section('"',z,z);    // property value
-    z++;
-    //qDebug() << "LOAD: " << p1->Description;
+	// load all properties
+	Property *p1;
+	qDebug() << "load command props" << s;
+	for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
+		qDebug() << "load command props" << z;
+		z++;
+		n = s.section('"',z,z);    // property value
+		z++;
+		//qDebug() << "LOAD: " << p1->Description;
 
-    // not all properties have to be mentioned (backward compatible)
-    if(z > counts) {
-      if(p1->Description.isEmpty()){
-        c->Props.remove();    // remove if allocated in vain
-      }
+		// not all properties have to be mentioned (backward compatible)
+		if(z > counts) {
+			if(p1->Description.isEmpty()){
+				c->Props.remove();    // remove if allocated in vain
+			}
 
-      return c;
-    }
+			return c;
+		}
 
-    p1->Value = n;
+		p1->Value = n;
 
-    n  = s.section('"',z,z);    // display
-    p1->display = (n.at(1) == '1');
-  }
+		n  = s.section('"',z,z);    // display
+		p1->display = (n.at(1) == '1');
+	}
 
-  return c;
+	return c;
 }
 
-Component* LegacySchematicLanguage::loadComponent(const QString& _s, Component* c) const
+Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString& _s, Component* c) const
 {
-  qDebug() << "loadComponent" << _s;
-  bool ok;
-  int  ttx, tty, tmp;
-  QString s = _s;
+	qDebug() << "parseComponentObsoleteCallback" << _s;
+	bool ok;
+	int  ttx, tty, tmp;
+	QString s = _s;
 
-  if(s.at(0) != '<'){
-    return NULL;
-  }else if(s.at(s.length()-1) != '>'){
-    return NULL;
-  }
-  s = s.mid(1, s.length()-2);   // cut off start and end character
-
-  QString label=s.section(' ',1,1);
-  c->obsolete_name_override_hack(label); //??
-  trace1("loadComp", label);
-  c->setLabel(label);
-
-  QString n;
-  n  = s.section(' ',2,2);      // isActive
-  tmp = n.toInt(&ok);
-  if(!ok){
-    return NULL;
-  }
-  c->isActive = tmp & 3;
-
-  if(tmp & 4){
-    c->showName = false;
-  }else{
-    // use default, e.g. never show name for GND (bug?)
-  }
-
-  n  = s.section(' ',3,3);    // cx
-  int cx=n.toInt(&ok);
-  qDebug() << "cx" << cx;
-  c->obsolete_set("cx", cx);
-  if(!ok) return NULL;
-
-  n  = s.section(' ',4,4);    // cy
-  c->obsolete_set("cy", n.toInt(&ok));
-  if(!ok) return NULL;
-
-  n  = s.section(' ',5,5);    // tx
-  ttx = n.toInt(&ok);
-  if(!ok) return NULL;
-
-  n  = s.section(' ',6,6);    // ty
-  tty = n.toInt(&ok);
-  if(!ok) return NULL;
-
-  assert(c);
-  assert(c->obsolete_model_hack().at(0) != '.');
-
-  {
-
-    n  = s.section(' ',7,7);    // mirroredX
-    if(n.toInt(&ok) == 1){
-      c->mirrorX();
-    }
-    if(!ok) return NULL;
-
-    n  = s.section(' ',8,8);    // rotated
-    tmp = n.toInt(&ok);
-    if(!ok) return NULL;
-    if(c->rotated > tmp)  // neccessary because of historical flaw in ...
-      tmp += 4;        // ... components like "volt_dc"
-    for(int z=c->rotated; z<tmp; z++){
-      c->rotate();
-    }
-  }
-
-  c->tx = ttx;
-  c->ty = tty; // restore text position (was changed by rotate/mirror)
-
-  QString Model = c->obsolete_model_hack(); // BUG: don't use names
-
-  unsigned int z=0, counts = s.count('"');
-  // FIXME. use c->paramCount()
-  if(Model == "Sub"){
-    tmp = 2;   // first property (File) already exists
-  }else if(Model == "Lib"){
-    tmp = 3;
-  }else if(Model == "EDD"){
-    tmp = 5;
-  }else if(Model == "RFEDD"){
-    tmp = 8;
-  }else if(Model == "VHDL"){
-    tmp = 2;
-  }else if(Model == "MUTX"){
-    tmp = 5; // number of properties for the default MUTX (2 inductors)
-  }else{
-    // "+1" because "counts" could be zero
-    tmp = counts + 1;
-  }
-
-  /// BUG FIXME. dont use Component parameter dictionary.
-  for(; tmp<=(int)counts/2; tmp++){
-    c->Props.append(new Property("p", "", true, " "));
-  }
-
-  // load all properties
-  Property *p1;
-  for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
-    z++;
-    n = s.section('"',z,z);    // property value
-    z++;
-    //qDebug() << "LOAD: " << p1->Description;
-
-    // not all properties have to be mentioned (backward compatible)
-    if(z > counts) {
-      if(p1->Description.isEmpty()){
-        c->Props.remove();    // remove if allocated in vain
-      }else{
-      }
-
-      if(Model == "Diode") { // BUG: don't use names
-	if(counts < 56) {  // backward compatible
-          counts >>= 1;
-          p1 = c->Props.at(counts-1);
-          for(; p1 != 0; p1 = c->Props.current()) {
-            if(counts-- < 19){
-              break;
-	    }
-
-            n = c->Props.prev()->Value;
-            p1->Value = n;
-          }
-
-          p1 = c->Props.at(17);
-          p1->Value = c->Props.at(11)->Value;
-          c->Props.current()->Value = "0";
-        }
-      }else if(Model == "AND" || Model == "NAND" || Model == "NOR" ||
-	       Model == "OR" ||  Model == "XNOR"|| Model == "XOR") {
-	if(counts < 10) {   // backward compatible
-          counts >>= 1;
-          p1 = c->Props.at(counts);
-          for(; p1 != 0; p1 = c->Props.current()) {
-            if(counts-- < 4)
-              break;
-            n = c->Props.prev()->Value;
-            p1->Value = n;
-          }
-          c->Props.current()->Value = "10";
+	if(s.at(0) != '<'){
+		return NULL;
+	}else if(s.at(s.length()-1) != '>'){
+		return NULL;
 	}
-      }else if(Model == "Buf" || Model == "Inv") {
-	if(counts < 8) {   // backward compatible
-          counts >>= 1;
-          p1 = c->Props.at(counts);
-          for(; p1 != 0; p1 = c->Props.current()) {
-            if(counts-- < 3)
-              break;
-            n = c->Props.prev()->Value;
-            p1->Value = n;
-          }
-          c->Props.current()->Value = "10";
+	s = s.mid(1, s.length()-2);   // cut off start and end character
+
+	QString label=s.section(' ',1,1);
+	c->obsolete_name_override_hack(label); //??
+	trace1("loadComp", label);
+	c->setLabel(label);
+
+	QString n;
+	n  = s.section(' ',2,2);      // isActive
+	tmp = n.toInt(&ok);
+	if(!ok){
+		return NULL;
 	}
-      }else{
-      }
+	c->isActive = tmp & 3;
 
-      return c;
-    }else{
-      // z <= counts
-    }
+	if(tmp & 4){
+		c->showName = false;
+	}else{
+		// use default, e.g. never show name for GND (bug?)
+	}
 
-    // for equations
-    qDebug() << "Model" << Model;
+	n  = s.section(' ',3,3);    // cx
+	int cx=n.toInt(&ok);
+	qDebug() << "cx" << cx;
+	c->obsolete_set("cx", cx);
+	if(!ok) return NULL;
+
+	n  = s.section(' ',4,4);    // cy
+	c->obsolete_set("cy", n.toInt(&ok));
+	if(!ok) return NULL;
+
+	n  = s.section(' ',5,5);    // tx
+	ttx = n.toInt(&ok);
+	if(!ok) return NULL;
+
+	n  = s.section(' ',6,6);    // ty
+	tty = n.toInt(&ok);
+	if(!ok) return NULL;
+
+	assert(c);
+	assert(c->obsolete_model_hack().at(0) != '.');
+
+	{
+
+		n  = s.section(' ',7,7);    // mirroredX
+		if(n.toInt(&ok) == 1){
+			c->mirrorX();
+		}
+		if(!ok) return NULL;
+
+		n  = s.section(' ',8,8);    // rotated
+		tmp = n.toInt(&ok);
+		if(!ok) return NULL;
+		if(c->rotated > tmp)  // neccessary because of historical flaw in ...
+			tmp += 4;        // ... components like "volt_dc"
+		for(int z=c->rotated; z<tmp; z++){
+			c->rotate();
+		}
+	}
+
+	c->tx = ttx;
+	c->ty = tty; // restore text position (was changed by rotate/mirror)
+
+	QString Model = c->obsolete_model_hack(); // BUG: don't use names
+
+	unsigned int z=0, counts = s.count('"');
+	// FIXME. use c->paramCount()
+	if(Model == "Sub"){ untested();
+		tmp = 2;   // first property (File) already exists
+	}else if(Model == "Lib"){
+		tmp = 3;
+	}else if(Model == "EDD"){
+		tmp = 5;
+	}else if(Model == "RFEDD"){
+		tmp = 8;
+	}else if(Model == "VHDL"){
+		tmp = 2;
+	}else if(Model == "MUTX"){
+		tmp = 5; // number of properties for the default MUTX (2 inductors)
+	}else{
+		// "+1" because "counts" could be zero
+		tmp = counts + 1;
+	}
+
+	/// BUG FIXME. dont use Component parameter dictionary.
+	for(; tmp<=(int)counts/2; tmp++){
+		c->Props.append(new Property("p", "", true, " "));
+	}
+
+	// set parameters.
+	Property *p1;
+	unsigned position=0;
+	for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
+		z++;
+		n = s.section('"',z,z);    // property value. gaah parse over and over again?
+		z++;
+		//qDebug() << "LOAD: " << p1->Description;
+
+		// not all properties have to be mentioned (backward compatible)
+		if(z > counts) {
+			if(p1->Description.isEmpty()){
+				c->Props.remove();    // remove if allocated in vain
+			}else{
+			}
+
+			if(Model == "Diode") { // BUG: don't use names
+				if(counts < 56) {  // backward compatible
+					counts >>= 1;
+					p1 = c->Props.at(counts-1);
+					for(; p1 != 0; p1 = c->Props.current()) {
+						if(counts-- < 19){
+							break;
+						}
+
+						n = c->Props.prev()->Value;
+						p1->Value = n;
+					}
+
+					p1 = c->Props.at(17);
+					p1->Value = c->Props.at(11)->Value;
+					c->Props.current()->Value = "0";
+				}
+			}else if(Model == "AND" || Model == "NAND" || Model == "NOR" ||
+					Model == "OR" ||  Model == "XNOR"|| Model == "XOR") {
+				if(counts < 10) {   // backward compatible
+					counts >>= 1;
+					p1 = c->Props.at(counts);
+					for(; p1 != 0; p1 = c->Props.current()) {
+						if(counts-- < 4)
+							break;
+						n = c->Props.prev()->Value;
+						p1->Value = n;
+					}
+					c->Props.current()->Value = "10";
+				}
+			}else if(Model == "Buf" || Model == "Inv") {
+				if(counts < 8) {   // backward compatible
+					counts >>= 1;
+					p1 = c->Props.at(counts);
+					for(; p1 != 0; p1 = c->Props.current()) {
+						if(counts-- < 3)
+							break;
+						n = c->Props.prev()->Value;
+						p1->Value = n;
+					}
+					c->Props.current()->Value = "10";
+				}
+			}else{
+			}
+
+			return c;
+		}else{
+			// z <= counts
+		}
+
+		// for equations
+		qDebug() << "Model" << Model;
 #if 1
-    if(Model != "EDD" && Model != "RFEDD" && Model != "RFEDD2P")
-    if(p1->Description.isEmpty()) {  // unknown number of properties ?
-      p1->Name = n.section('=',0,0);
-      n = n.section('=',1);
-      // allocate memory for a new property (e.g. for equations)
-      if(c->Props.count() < (counts>>1)) {
-        c->Props.insert(z >> 1, new Property("y", "1", true));
-        c->Props.prev();
-      }
-    }
+		if(Model != "EDD" && Model != "RFEDD" && Model != "RFEDD2P")
+			if(p1->Description.isEmpty()) {  // unknown number of properties ?
+				p1->Name = n.section('=',0,0);
+				n = n.section('=',1);
+				// allocate memory for a new property (e.g. for equations)
+				if(c->Props.count() < (counts>>1)) {
+					c->Props.insert(z >> 1, new Property("y", "1", true));
+					c->Props.prev();
+				}
+			}
 #endif
-    if(z == 6)  if(counts == 6)     // backward compatible
-      if(Model == "R") {
-        c->Props.getLast()->Value = n;
-        return c;
-      }
-    p1->Value = n;
+		if(z == 6)  if(counts == 6)     // backward compatible
+			if(Model == "R") {
+				c->Props.getLast()->Value = n;
+				return c;
+			}
+		p1->Value = n; // TODO: remove
 
-    n  = s.section('"',z,z);    // display
-    p1->display = (n.at(1) == '1');
-  }
+		Symbol* sym = c;
+		sym->setParameter(position++, n); // BUG: also do for non-Components.
 
-  return c;
+		n  = s.section('"',z,z);    // display
+		p1->display = (n.at(1) == '1');
+	}
+
+	trace1("done legacy load", c->label());
+	return c;
 }
 
 Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
@@ -636,6 +654,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 	}
 
 	if(e) {
+		incomplete();
 		loadElement(Line, e);
 	}else{
 		qDebug() << "error with" << cstr;
@@ -660,7 +679,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 	if(Command* cmd=command(e)){
 		p->loadCommand(Line, cmd);
 	}else if(Component* c=component(e)){
-		if(!p->loadComponent(Line, c)) {
+		if(!p->parseComponentObsoleteCallback(Line, c)) {
 			QMessageBox::critical(0, QObject::tr("Error"),
 					QObject::tr("Format Error:\nWrong 'component' line format!"));
 			delete e;

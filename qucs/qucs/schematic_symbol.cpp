@@ -36,3 +36,34 @@ PaintingList const& SchematicSymbol::symbolPaintings() const
 	assert(_paint);
 	return *_paint;
 }
+
+WireList const& SchematicSymbol::wires() const
+{
+	auto s = subckt();
+	assert(s);
+	return s->wires();
+}
+NodeMap const& SchematicSymbol::nodes() const
+{
+	auto s = subckt();
+	assert(s);
+	return s->nodes();
+}
+DiagramList const& SchematicSymbol::diagrams() const
+{
+	auto s = subckt();
+	assert(s);
+	return s->diagrams(); // really?
+}
+PaintingList const& SchematicSymbol::paintings() const
+{
+	auto s = subckt();
+	assert(s);
+	return s->paintings(); // really?
+}
+ComponentList const& SchematicSymbol::components() const // possibly "devices". lets see.
+{
+	auto s = subckt();
+	assert(s);
+	return s->components();
+}
