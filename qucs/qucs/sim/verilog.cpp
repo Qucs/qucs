@@ -52,7 +52,9 @@ void Verilog::printCommand(Command const* c, QTextStream& s) const
 void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 {
 	Component const* c=dynamic_cast<Component const*>(sym);
+#if 0
 	if(!c){
+		/// wires...
 		incomplete();
 		return;
 // 	}else if(!c->is_device) { ?
@@ -68,7 +70,9 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 			s << "R:" << c->label() << "." << QString::number(z++) << " "
 				<< Node1 << " " << iport.next()->netLabel() << " R=\"0\"\n";
 		}
-	}else{
+	}else
+#endif
+	{
 		s << QString::fromStdString(c->type()) << " ";
 
 		QString comma="";
@@ -80,6 +84,7 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 		s << ") ";
 		s << c->label() << "(";
 
+		// printPorts()
 		comma = "";
 		for(unsigned i=0; i < sym->numPorts(); ++i){
 			s << comma << sym->portValue(i);
@@ -131,8 +136,7 @@ void VerilogSchematicFormat::load(DocumentStream& stream, SchematicSymbol& s) co
 
 void VerilogSchematicFormat::save(DocumentStream& stream, SchematicSymbol const& m) const
 {
-  //modelhack=&m.schematicModel();
-  for(auto pc : components(m)){ untested();
+  for(auto pc : components(m)){
 	  if(dynamic_cast<Command const*>(pc)){
 		  unreachable();
 		  // BUG. a Command is not a Component
@@ -141,12 +145,30 @@ void VerilogSchematicFormat::save(DocumentStream& stream, SchematicSymbol const&
 	  printSymbol(pc, stream); // BUG: use V::printItem
 	                           // but uses different port names...
   }
+  for(auto w : wires(m)){ untested();
+	  printSymbol(w, stream); // BUG: use V::printItem
+  }
+  for(auto const& n : nodes(m)){
+	  int x, y;
+	  std::tie(x, y) = n.position();
+	  stream << "place #(.$xposition(" << x << "),"
+		                 ".$yposition(" << y << "))"
+							 <<  " place_" << x << "_" << y
+							 << "(net_" << x << "_" << y << ");\n";
+  }
+}
+
+// not here.
+QTextStream& operator<<(QTextStream& o, std::string const& s)
+{
+		return o << QString::fromStdString(s);
 }
 
 // similar to Verilog::printSymbol, but with the actual node names and
 // coordinates.
 void VerilogSchematicFormat::printSymbol(Symbol const* sym, stream_t& s) const
-{ untested();
+{
+#if 0
 	Component const* c=dynamic_cast<Component const*>(sym);
 	if(!c){
 		incomplete();
@@ -158,9 +180,12 @@ void VerilogSchematicFormat::printSymbol(Symbol const* sym, stream_t& s) const
 		// }else if(c->isShort()){ untested();
 		//   // parameter?
 		//   incomplete();
-	}else{ untested();
-		std::string type = c->type();
-		std::string label = c->label().toStdString();
+	}else
+#endif
+	
+	{
+		std::string type = sym->type();
+		std::string label = sym->label().toStdString();
 		s << QString::fromStdString(type) << " ";
 
 		if(label == "*"){
@@ -171,8 +196,8 @@ void VerilogSchematicFormat::printSymbol(Symbol const* sym, stream_t& s) const
 
 		QString comma="";
 		s << "#(";
-		for(auto p2 : c->params()) {
-			s << comma << "." << p2->name() << "(" << p2->Value << ")";
+		for(unsigned i=0; i<sym->paramCount(); ++i) {
+			s << comma << "." << sym->paramName(i) << "(" << sym->paramValue(i) << ")";
 			comma = ", ";
 		}
 		s << ") ";
@@ -180,8 +205,10 @@ void VerilogSchematicFormat::printSymbol(Symbol const* sym, stream_t& s) const
 
 		comma = "";
 		for(unsigned i=0; i<sym->numPorts(); ++i){
-			auto p1 = &sym->port(i); // BUG
-			s << comma << "net_" << p1->value()->cx() << "_" <<  p1->value()->cy();
+			auto p = sym->portPosition(i);
+			auto x=p.first;
+			auto y=p.second;
+			s << comma << "net_" << x << "_" << y;
 			comma = ", ";
 		}
 

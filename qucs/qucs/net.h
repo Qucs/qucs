@@ -20,7 +20,7 @@ private:
 	explicit Net() : Object(), _size(0), _pos(0) {}
 	~Net(){ assert(_size==0); }
 private:
-	Net( const Net& ) {unreachable();}
+	Net( const Net& ) = delete;
 
 public:
 	size_t size() const{return _size;}

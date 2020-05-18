@@ -66,10 +66,14 @@ public:
 protected: // needed in netlister
   virtual SchematicModel* scope();
 
-public: // Parameters // yikes there's param{Name,Value} already
-  virtual void setParameter(QString const& name, QString const& value){}
-  virtual void setParameter(unsigned pos, QString const& value){}
-  virtual QString getParameter(unsigned pos){ throw ExceptionCantFind(); }
+public: // Parameters
+  virtual void setParameter(QString const&, QString const&){ throw ExceptionCantFind();}
+  virtual void setParameter(unsigned, QString const&){ throw ExceptionCantFind();}
+  virtual QString getParameter(unsigned){ throw ExceptionCantFind(); }
+
+  // yikes there's param{Name,Value} already..
+  virtual std::string paramValue(unsigned i) const;
+  virtual std::string paramName(unsigned i) const;
 
 public: // non-virtual (on purpose)
   QString const& netLabel(unsigned i) const;
@@ -79,6 +83,7 @@ public: // Node stuff
   virtual Node* disconnectNode(unsigned idx, NodeMap&);
 
 public: // Port access
+  virtual std::pair<int, int> const& portPosition(unsigned) const;
   QString const& portValue(unsigned) const;
   // TODO: rethink Port/Node semantics
   virtual unsigned numPorts() const = 0;

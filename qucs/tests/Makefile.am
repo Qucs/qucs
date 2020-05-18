@@ -62,7 +62,6 @@ TESTS = \
 
 
 SH_TESTS = \
-	dump.sh \
 	helloworld.sh \
 	element.sh \
 	doesnotexist.sh \
@@ -72,7 +71,8 @@ SH_TESTS = \
 PRJ_TESTS = \
 	AC_bandpass.prj \
 	AC_groupdelay_ac.prj \
-	AC_SW_resonance.prj
+	AC_SW_resonance.prj \
+	DC_SP_LPF-Balun2.prj
 
 LATER_TESTS = \
 	AC_SW_swr_meter.prj \
@@ -88,7 +88,6 @@ LATER_TESTS = \
 	DC_AC_SP_Spiral_BPF.prj \
 	DC_AC_SP_stab.prj \
 	DC_SP_HICUM-fig10.prj \
-	DC_SP_LPF-Balun2.prj \
 	DC_SP_LPF-Balun3.prj \
 	DC_SP_opamp_gyrator.prj \
 	DC_SW_bridge.prj \
