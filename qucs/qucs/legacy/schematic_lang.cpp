@@ -69,7 +69,7 @@ namespace{
 
 class LegacySchematicLanguage : public SchematicLanguage {
 public:
-	LegacySchematicLanguage() : SchematicLanguage(){ untested();
+	LegacySchematicLanguage() : SchematicLanguage(){
 	}
 private: // stuff saved from schematic_file.cpp
 	Diagram* loadDiagram(QString const& Line, DocumentStream& /*, DiagramList *List */) const;
@@ -91,7 +91,7 @@ static Dispatcher<DocumentLanguage>::INSTALL
 // ------------------------------------------------------
 // // "parseElement"?
 Element* LegacySchematicLanguage::loadElement(const QString& _s, Element* e) const
-{ untested();
+{
 	if(Command* c=dynamic_cast<Command*>(e)){
 		c = loadCommand(_s, c);
 		// incomplete();
@@ -140,11 +140,11 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 			mode='S';
 		}else if(Line == "<Wires>") {
 			mode='W';
-		}else if(Line == "<Diagrams>") { untested();
+		}else if(Line == "<Diagrams>") {
 			mode='D';
-		}else if(Line == "<Properties>") { untested();
+		}else if(Line == "<Properties>") {
 			mode='Q';
-		}else if(Line == "<Paintings>") { untested();
+		}else if(Line == "<Paintings>") {
 			mode='P';
 		}else{
 
@@ -182,7 +182,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 				if(!err){ untested();
 					qDebug() << "ERROR" << Line;
 					delete(w);
-				}else{ untested();
+				}else{
 					c = w;
 				}
 			}else if(mode=='D'){
@@ -218,11 +218,11 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 
 Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 		DocumentStream& stream /*, DiagramList *List */)const
-{ untested();
+{
 	Diagram *d;
 	QString Line=line_in;
 	QString cstr;
-	if(!stream.atEnd()) { untested();
+	if(!stream.atEnd()) {
 		qDebug() << "diagram?" << Line;
 		if(Line.at(0) == '<') if(Line.at(1) == '/') return nullptr;
 		Line = Line.trimmed();
@@ -247,7 +247,7 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 			incomplete();
 			delete d;
 			return nullptr;
-		}else{ untested();
+		}else{
 		}
 		return d;
 	}
@@ -259,12 +259,12 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 // -------------------------------------------------------
 // was: void Schematic::saveComponent(QTextStream& s, Component const* c) const
 void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
-{ untested();
+{
 	Component const* c=dynamic_cast<Component const*>(sym);
 	if(!c){ untested();
 		incomplete();
 		return;
-	}else{ untested();
+	}else{
 	}
 	s << "  <";
 	if(auto ss=dynamic_cast<Subcircuit const*>(c)){
@@ -485,7 +485,7 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 
 	unsigned int z=0, counts = s.count('"');
 	// FIXME. use c->paramCount()
-	if(Model == "Sub"){ untested();
+	if(Model == "Sub"){
 		tmp = 2;   // first property (File) already exists
 	}else if(Model == "Lib"){
 		tmp = 3;
@@ -647,7 +647,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 		// legacy component
 		Element* k=sc->clone(); // memory leak?
 		e=prechecked_cast<Element*>(k);
-	}else{ untested();
+	}else{
 		e = command_dispatcher.clone(cstr.toStdString());
 		// don't know what this is (yet);
 		incomplete();

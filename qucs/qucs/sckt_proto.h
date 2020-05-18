@@ -21,7 +21,7 @@ public: // accessed from netlister..
 	SchematicModel const& schematicModel() const{ return sm; }
 
 protected:
-	Element const* instance() const{ untested(); incomplete(); return _instance; }
+	Element const* instance() const{ incomplete(); return _instance; }
 	SchematicModel* schematicModel(){ return &sm; }
 
 //	SchematicModel* scope() override { return &sm; }

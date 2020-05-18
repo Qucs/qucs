@@ -83,7 +83,7 @@ public:
   int cx() const{ return Element::cx_(); }
   int cy() const{ return Element::cy_(); }
 
-  std::pair<int, int> position() const{
+  std::pair<int, int> const& position() const{
 	  return _position;
   }
 

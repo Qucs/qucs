@@ -36,21 +36,32 @@ private:
 		bool operator()(key_type const& n1, Node const* n2) const{
 			return c(n1, n2->position());
 		}
-//		bool operator()(key_type const& n1, key_type const& n2) const{ untested();
-//			return c(n1, n2);
-//		}
 	private:
 		std::less< std::pair<int, int> > c;
 	};
-public:
+public: // really?
 	// need *set*, because map splits key from payload.
 	// using a set of *pointers* because nodes must be mutable.
 	// adds another indirection, but it is not exposed.
-  	typedef std::set<Node*, NodeCompare > container_type;
-	typedef container_type::iterator iterator;
-	typedef container_type::const_iterator const_iterator;
+  	typedef std::set<Node*, NodeCompare> container_type;
+
+private:
+	typedef container_type::iterator iterator_;
+	typedef container_type::const_iterator const_iterator_;
+
+public:
+	class const_iterator : public const_iterator_{
+	public:
+		explicit const_iterator(const_iterator_ i)
+			: const_iterator_(i) {}
+		Node const& operator*() const{
+			return *const_iterator_::operator*();
+		}
+	};
+
 private:
 	NodeMap(NodeMap const& x) = delete;
+
 public:
 	explicit NodeMap(NetList& n);
 	~NodeMap();
@@ -58,8 +69,8 @@ public:
 public:
 // 	iterator begin(){return _nodes.begin();}
 // 	iterator end(){return _nodes.end();}
-// 	const_iterator begin() const{return _nodes.begin();}
-// 	const_iterator end() const{return _nodes.end();}
+	const_iterator begin() const{return const_iterator(_nodes.begin());}
+	const_iterator end() const{return const_iterator(_nodes.end());}
 
 	void clear(){ return _nodes.clear(); }
 	size_t size() const{ return _nodes.size(); }

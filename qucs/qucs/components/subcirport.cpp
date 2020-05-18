@@ -44,7 +44,7 @@ Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Port", &D);
 Module::INSTALL pp("lumped", &D);
 
 SubCirPort::SubCirPort()
-{ untested();
+{
   info(Name, bitmap_file);
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("port of a subcircuit");
@@ -66,27 +66,27 @@ SubCirPort::SubCirPort()
 
 // -------------------------------------------------------
 Node* SubCirPort::connectNode(unsigned i, NodeMap& l)
-{ untested();
+{
 	Node* N = Symbol::connectNode(i, l);
 	trace2("cn", i, N);
 
 	bool ok=true;
 	QString pp;
-	try{ untested();
+	try{
 		pp = QString::fromStdString(paramValue(0));
 	}catch(ExceptionCantFind const&){ untested();
 		ok = false;
 	}
 
 	int pos;
-	if(ok){ untested();
+	if(ok){
 		pos = pp.toInt(&ok);
 	}else{ untested();
 	}
 
 	--pos; // QUCS numbers start at 1.
 
-	if(ok){ untested();
+	if(ok){
 		assert(scope());
 		trace2("setting port", pos, N->netLabel());
 		scope()->setPort(pos, N);
@@ -97,11 +97,11 @@ Node* SubCirPort::connectNode(unsigned i, NodeMap& l)
 }
 // -------------------------------------------------------
 void SubCirPort::createSymbol()
-{ untested();
+{
   x1 = -27; y1 = -8;
   x2 =   0; y2 =  8;
 
-  if(Props.at(1)->Value.at(0) == 'a') { untested();
+  if(Props.at(1)->Value.at(0) == 'a') {
     Arcs.append(new Arc(-25, -6, 12, 12,  0, 16*360,QPen(Qt::darkBlue,2)));
     Lines.append(new Line(-13,  0,  0,  0,QPen(Qt::darkBlue,2)));
   }
@@ -138,7 +138,7 @@ void SubCirPort::createSymbol()
 }
 // -------------------------------------------------------
 void SubCirPort::setParameter(unsigned n, QString const& v)
-{ untested();
+{
 	trace3("SubCirPort::setParameter", label(), n, v);
 	Component::setParameter(n, v);
 
@@ -146,7 +146,7 @@ void SubCirPort::setParameter(unsigned n, QString const& v)
 	int pos = v.toInt(&ok);
 
 	--pos; // QUCS numbers start at 1.
-	if(!ok){ untested();
+	if(!ok){
 		incomplete();
 		// throw approriate error
 	}else if(portExists(pos)){ untested();
@@ -155,12 +155,12 @@ void SubCirPort::setParameter(unsigned n, QString const& v)
 		assert(owner());
 		trace2("setting scope port", owner()->label(), pos);
 		scope()->setPort(pos, port(pos).value());
-	}else{ untested();
+	}else{
 	}
 }
 // -------------------------------------------------------
 Element* SubCirPort::info(QString& Name, char* &BitmapFile, bool getNewOne)
-{ untested();
+{
   Name = QObject::tr("Subcircuit Port");
   BitmapFile = (char *) "subport";
 

@@ -283,7 +283,7 @@ void VerilogNetlister::prepareSave(DocumentStream& stream, SchematicSymbol const
 // former Schematic::createNetlist
 void VerilogNetlister::createNetlist(DocumentStream& stream,
 		SchematicSymbol const& m) const
-{ untested();
+{
 
 	/// include directives. qucsator does not seem to do that.
 	// for(auto si : directives){

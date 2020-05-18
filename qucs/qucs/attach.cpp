@@ -45,9 +45,9 @@ class plugins{
       void* handle;
 
       handle = dlopen((what).c_str(), check | dl_scope);
-      if (handle) { untested();
+      if (handle) {
 	attach_list[what] = handle;
-      }else{ untested();
+      }else{
 	std::cerr << "failed to attach " << what << " (" << errno << ")\n";
 	std::cerr << dlerror() << "\n";
 	exit(1); // temporary, should actually throw.

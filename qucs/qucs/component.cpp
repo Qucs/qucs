@@ -47,6 +47,7 @@ Component::Component(Component const& p)
   : Symbol(p),
     mirroredX(p.mirroredX),
     rotated(p.rotated),
+    isActive(p.isActive),
     //cx(p.cx),
     //cy(p.cy),
     tx(p.tx),
@@ -57,12 +58,11 @@ Component::Component(Component const& p)
 
   assert(!Props.count());
   for(auto i : p.Props){
-	Props.append(new Property(*i));
+    Props.append(new Property(*i));
   }
 
   for(auto i : p.Ports){
-    // how does this make any sense??
-	// Ports.append(new Port(*i));
+    Ports.append(new Port(*i));
   }
 
   setType(p.type()); // hmmm
@@ -87,6 +87,14 @@ Component::Component()
   ty = 0;
 
   Props.setAutoDelete(true);
+}
+
+Element* Component::clone() const
+{
+  Component const* e=this;
+  Component* E=const_cast<Component*>(e);
+  Component* ret = E->newOne();
+  return ret;
 }
 
 // -------------------------------------------------------
@@ -1301,7 +1309,7 @@ void Component::copyComponent(Component *pc)
 // ********                                                       ********
 // ***********************************************************************
 void MultiViewComponent::recreate()
-{ untested();
+{
   Ellips.clear();
   Texts.clear();
   Ports.clear();
@@ -1649,7 +1657,7 @@ unsigned Component::paramCount() const
   return Props.count();
 }
 std::string Component::paramValue(unsigned i) const
-{ untested();
+{
   assert( Props.at(i));
   return Props.at(i)->value().toStdString();
 }

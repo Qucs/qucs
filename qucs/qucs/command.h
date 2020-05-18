@@ -20,13 +20,6 @@
 #include "components/component.h"
 #include "platform.h"
 
-/*!
- * this is a bug. commands are not components, maybe elements?
- * decide later. we only need this base class.
- */
-// need a baseclass for commands.
-// formerly, they were components, but that does not make sense.
-// (a command does not have ports etc.)
 class Command : public Element {
 protected:
   Command(const Command&);

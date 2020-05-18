@@ -30,7 +30,7 @@ Symbol::Symbol()
 
 SchematicModel* Symbol::scope()
 {
-	if(auto o=dynamic_cast<Symbol*>(owner())){ untested();
+	if(auto o=dynamic_cast<Symbol*>(owner())){
 		return o->subckt();
 	}else{ untested();
 		return nullptr;
@@ -104,6 +104,15 @@ Port const& Symbol::port(unsigned i) const
 	return s->port(i);
 }
 
+std::pair<int, int> const& Symbol::portPosition(unsigned i) const
+{
+	trace3("portPosition", this, i, &port(i));
+	trace1("portPosition", port(i).connected());
+	trace2("portPosition", port(i).position().first, port(i).position().second);
+	assert(port(i).connected());
+	return port(i)->position();	
+}
+
 // BUG: not here. legacy stuff...
 void Symbol::new_subckt()
 {
@@ -115,4 +124,15 @@ Symbol::~Symbol(){
 	// disconnect();
 	delete _subckt;
 	_subckt = nullptr;
+}
+
+std::string Symbol::paramValue(unsigned i) const
+{ untested();
+	unreachable();
+	return "NA";
+}
+std::string Symbol::paramName(unsigned i) const
+{ untested();
+	unreachable();
+	return "NA";
 }

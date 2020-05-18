@@ -49,12 +49,12 @@ private: // local
 static Dispatcher<DocumentLanguage>::INSTALL pl(&doclang_dispatcher, "qucsator", &qucslang);
 
 void QucsLang::printSymbol(Symbol const* d, stream_t& s) const
-{ untested();
-	if(auto c=dynamic_cast<SubcktProto const*>(d)){ untested();
+{
+	if(auto c=dynamic_cast<SubcktProto const*>(d)){
 		printSubckt(c, s);
 	}else if(auto c=dynamic_cast<Command const*>(d)){ untested();
 		printCommand(c, s);
-	}else if(auto c=dynamic_cast<Component const*>(d)){ untested();
+	}else if(auto c=dynamic_cast<Component const*>(d)){
 		printComponent(c, s);
 	}else{ untested();
 		s<<"incomplete\n";
@@ -67,12 +67,12 @@ std::vector<QString> netLabels;
 
 // partly from Schematic::createSubnetlistplain
 void QucsLang::printSubckt(SubcktProto const* p, stream_t& s) const
-{ untested();
+{
 	trace2("prinSckt", p, p->subckt());
 	Symbol const* sym = p;
 
 	s << "\n";
-	s << ".Def:" << QString::fromStdString(p->type());
+	s << ".Def:" << p->label();
 
 	// print_ports();
 	//
@@ -103,9 +103,9 @@ void QucsLang::printSubckt(SubcktProto const* p, stream_t& s) const
 	trace1("sckt components", sym->scope());
 	assert(sym->scope());
 	for(auto i : p->schematicModel().components()){ untested();
-      if(i->type() == "Port"){ untested();
-		}else if(i->type() == "GND"){ untested();
-		}else{ untested();
+      if(i->type() == "Port"){
+		}else if(i->type() == "GND"){
+		}else{
 			printSymbol(i, s);
 		}
 	}
@@ -114,8 +114,8 @@ void QucsLang::printSubckt(SubcktProto const* p, stream_t& s) const
 }
 
 void QucsLang::printCommand(Command const* c, stream_t& s) const
-{ untested();
-	{ untested();
+{
+	{
 		{ // todo: introduce proper exceptions
 			// normal netlisting
 
@@ -126,7 +126,7 @@ void QucsLang::printCommand(Command const* c, stream_t& s) const
 				if(p2->name() == "Symbol") { // hack??
 				}else if(p2->name()=="p" && p2->value()==""){ untested();
 					// unreachable
-				}else{ untested();
+				}else{
 					s << " " << p2->name() << "=\"" << p2->value() << "\"";
 				}
 			}
@@ -139,11 +139,11 @@ void QucsLang::printCommand(Command const* c, stream_t& s) const
  * print Components in qucs language
  */
 void QucsLang::printComponent(Component const* c, stream_t& s) const
-{ untested();
-	if(c->isActive != COMP_IS_ACTIVE){ untested();
+{
+	if(c->isActive != COMP_IS_ACTIVE){
 		// comment out?
 		incomplete();
-	}else{ untested();
+	}else{
 	}
 
 	if(c->isOpen()) { untested();
@@ -159,16 +159,16 @@ void QucsLang::printComponent(Component const* c, stream_t& s) const
 			s << "R:" << c->label() << "." << QString::number(z++) << " "
 				<< Node1 << " " << iport.next()->value()->label() << " R=\"0\"\n";
 		}
-	}else{ untested();
-		if(dynamic_cast<Subcircuit const*>(c)) { untested();
+	}else{
+		if(dynamic_cast<Subcircuit const*>(c)) {
 			s << "Sub:" << c->label();
-		}else{ untested();
+		}else{
 			s << QString::fromStdString(c->type()) << ":" << c->label();
 		}
 
 		Symbol const* sym=c;
 		trace2("print", sym->numPorts(), sym->label());
-		for(unsigned i=0; i<sym->numPorts(); ++i){ untested();
+		for(unsigned i=0; i<sym->numPorts(); ++i){
 			QString const& N = sym->portValue(i);
 			  // BUG. print portName if not device.
 			s << " " << N;
@@ -180,15 +180,15 @@ void QucsLang::printComponent(Component const* c, stream_t& s) const
 // 			}
 		}
 
-		for(auto p2 : c->params()) { untested();
+		for(auto p2 : c->params()) {
 			if(p2->name() == "Symbol") { // hack??
-			}else{ untested();
+			}else{
 				s << " " << p2->name() << "=\"" << p2->value() << "\"";
 			}
 		}
-		if(dynamic_cast<Subcircuit const*>(c)) { untested();
+		if(dynamic_cast<Subcircuit const*>(c)) {
 			s << " Type=\"" << QString::fromStdString(c->type()) << "\"";
-		}else{ untested();
+		}else{
 		}
 		s << '\n';
 	}
@@ -294,7 +294,7 @@ static void nodeMap(SchematicSymbol const& m)
 	}
 
 	for(auto pc : sm.components()){ untested();
-		if(pc->type() == "GND") { untested();
+		if(pc->type() == "GND") {
 #if 0
 			assert(pc->Ports.first()->value());
 			Net* n = pc->Ports.first()->value()->getNet();
@@ -398,7 +398,7 @@ void LegacyNetlister::prepareSave(DocumentStream& stream, SchematicSymbol const&
 #endif
 
 	if((allTypes & isAnalogComponent) == 0) { untested();
-		if(allTypes == 0) { untested();
+		if(allTypes == 0) {
 			// If no simulation exists, assume analog simulation. There may
 			// be a simulation within a SPICE file. Otherwise Qucsator will
 			// output an error.
@@ -473,7 +473,7 @@ void LegacyNetlister::createNetlist(DocumentStream& stream,
 
 	QString s, Time;
 	for(auto pc : m.components()){ untested();
-		if(isAnalog) { untested();
+		if(isAnalog) {
 			if(pc->type()=="GND"){ // qucsator hack, just ignore.
 			}else{ untested();
 				qucslang.printItem(pc, stream);

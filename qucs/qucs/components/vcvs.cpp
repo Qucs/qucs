@@ -21,8 +21,10 @@
 namespace{
 
 class VCVS : public Component  {
+private:
+  VCVS(VCVS const& c) : Component(c){}
 public:
-  VCVS();
+  explicit VCVS();
   ~VCVS();
   Component* newOne(){
 	  return new VCVS(*this);
