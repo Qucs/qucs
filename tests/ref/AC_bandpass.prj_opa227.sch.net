@@ -1,0 +1,10 @@
+# Qucs
+## declarations end
+
+VCVS:SRC2 _net6 _net1 _net2 _net4 G="1" T="0"
+R:R1 _net10 _net6 R="1 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+C:C1 _net4 _net6 C="1.98944 mF" V=""
+VCVS:SRC1 _net13 _net10 _net4 _net15 G="1e8" T="0"
+Port:P1 _net13 Num="1" Type="analog"
+Port:P3 _net1 Num="3" Type="analog"
+Port:P2 _net15 Num="2" Type="analog"

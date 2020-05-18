@@ -282,7 +282,7 @@ public:
 			return false;
 		}
 	};
-	void insert(unsigned int i, T *t) { untested();
+	void insert(unsigned int i, T *t) {
 		cur=localList.begin();
 		std::advance(cur, i);
 		cur=localList.insert(cur, t);

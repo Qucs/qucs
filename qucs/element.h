@@ -255,10 +255,10 @@ public:
   Element const* owner() const{return _owner;}
 
 protected:
-  Element* owner(){untested(); return _owner;}
+  Element* owner(){ return _owner;}
 
 public:
-  void setOwner(Element* e) {untested(); _owner=e;}
+  void setOwner(Element* e) { _owner=e;}
 
 private:
   Element* _owner;

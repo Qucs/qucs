@@ -109,11 +109,11 @@ void qucsMessageOutput(QtMsgType type, const char *msg)
 void attach(const char* what);
 
 static std::string plugpath()
-{ untested();
+{
   const char* ppenv=getenv("QUCS_PLUGPATH");
   if(!ppenv){ untested();
     return QUCS_PLUGPATH;
-  }else{ untested();
+  }else{
     return ppenv;
   }
 }
@@ -155,14 +155,14 @@ Schematic *openSchematic(QString schematic)
 namespace{
 class sda : public ModelAccess{ // Symbol?
 public:
-  sda() { untested();
+  sda() {
     unsigned u;
 
     new_subckt();
     _subckt->throughAllNodes(u); // hack
     _subckt->updateNetLabels(); // hack
   }
-  ~sda(){ untested();
+  ~sda(){
   }
 private: // SchematicSymbol
   SchematicModel* schematicModel(){ untested();
@@ -170,34 +170,34 @@ private: // SchematicSymbol
     return nullptr;
   }
   // bug, forward to schematic object (it doesn't exist yet).
-  std::string getParameter(std::string const&x) const{ untested();
-    if(x=="DocName"){ untested();
+  std::string getParameter(std::string const&x) const{
+    if(x=="DocName"){
       return DocName;
-    }else if(x=="ViewX1"){ untested();
+    }else if(x=="ViewX1"){
       incomplete(); // there is no view.
       return "0";
-    }else if(x=="ViewX2"){ untested();
+    }else if(x=="ViewX2"){
       incomplete(); // there is no view.
       return "0";
-    }else if(x=="ViewY1"){ untested();
+    }else if(x=="ViewY1"){
       incomplete(); // there is no view.
       return "0";
-    }else if(x=="ViewY2"){ untested();
+    }else if(x=="ViewY2"){
       incomplete(); // there is no view.
       return "0";
-    }else if(x=="Scale"){ untested();
+    }else if(x=="Scale"){
       incomplete(); // there is no view.
       return "0";
-    }else if(x=="GridOn"){ untested();
+    }else if(x=="GridOn"){
       incomplete(); // there is no view.
       return "0";
-    }else if(x=="GridX"){ untested();
+    }else if(x=="GridX"){
       incomplete(); // there is no view.
       return "0";
-    }else if(x=="GridY"){ untested();
+    }else if(x=="GridY"){
       incomplete(); // there is no view.
       return "0";
-    }else{ untested();
+    }else{
       qDebug() << "unknown parameter" << QString::fromStdString(x);
       incomplete();
       return "unknown";
@@ -223,7 +223,7 @@ public: // tmo hack
 
 // moved to legacy/qucsator, QucsatorNetlister::save
 void doNetlist(QString schematic_fn, QString netlist, DocumentFormat const& NLN)
-{ untested();
+{
   sda xs;
   xs.setLabel(schematic_fn);
   assert(xs.subckt());
@@ -235,14 +235,14 @@ void doNetlist(QString schematic_fn, QString netlist, DocumentFormat const& NLN)
   DocumentStream stream (&file);
   SchematicLanguage const* L=nullptr;
 
-  if(!L){ untested();
+  if(!L){
     auto D=doclang_dispatcher["leg_sch"];
     L = dynamic_cast<SchematicLanguage const*>(D);
   }else{ untested();
   }
   assert(L);
 
-  while(!stream.atEnd()){ untested();
+  while(!stream.atEnd()){
     L->parse(stream, xs);
   }
 
@@ -250,7 +250,7 @@ void doNetlist(QString schematic_fn, QString netlist, DocumentFormat const& NLN)
   if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
 //    fprintf(stderr, "Error: Could not load netlist %s\n", c_net);
     throw "sthwrong";
-  }else{ untested();
+  }else{
   }
   DocumentStream os(&NetlistFile);
 
@@ -552,7 +552,7 @@ void createDocData() { untested();
  */
   // table for quick reference, schematic and netlist entry
 void createListComponentEntry()
-{ untested();
+{
   QStringList cats = Category::getCategories ();
   QFile data("/dev/stdout");
   data.open (QFile::WriteOnly | QFile::Truncate);
@@ -563,9 +563,8 @@ void createListComponentEntry()
   auto qucsatorlang=doclang_dispatcher["qucsator"];
   assert(qucsatorlang);
   auto verilog=doclang_dispatcher["verilog"];
-  // assert(verilog); it's optional!
 
-  foreach(QString category, cats) { untested();
+  foreach(QString category, cats) {
 
     QList<Module *> Comps;
     Comps = Category::getModules(category);
@@ -576,65 +575,46 @@ void createListComponentEntry()
     char * File;
     QString Name;
 
-    foreach (Module *Mod, Comps) { untested();
+    foreach (Module *Mod, Comps) {
       qDebug() << "some module";
       Element const *e = Mod->element();
-      Component const *c = prechecked_cast<Component const*>(e);
-      if(!c){ untested();
-	incomplete();
-	continue;
+      Component const *cc = prechecked_cast<Component const*>(e);
+      Element *ce = e->clone();
+      assert(ce);
+
+      s << "=====" << e->label() << "=========\n";
+
+      if(Symbol *c = dynamic_cast<Symbol*>(ce)){
+	ce->setLabel("my_" + c->type());
+      }else{
+	// not sure.
       }
 
-      // FIXME: cleanup
-      s << "=====" << QString::fromStdString(c->type()) << "=========\n";
-      lang->printItem(c, s);
+      lang->printItem(ce, s);
       s << "\n";
 
-     // QString qucsEntry = s.string();
-     // fprintf(stdout, "%s; qucs    ; %s\n", c->obsolete_model_hack().toAscii().data(), qucsEntry.toAscii().data());
-
-      // add dummy ports/wires, avoid segfault
-      //  -- attempted FIX --
-      int port = 0;
-      foreach (Port *p, c->Ports) { untested();
-        // Node *n = new Node(0,0);
-        // n->setName("_net"+QString::number(port));
-        // p->disconnect();
-	assert(!p->connected());
-        port +=1;
-      }
-      if(verilog){ untested();
-	verilog->printItem(c, s);
-	// s << "\n"; included in verilog line.
+      if(verilog){
+	verilog->printItem(ce, s);
       }else{ untested();
       }
 
-      // skip Subcircuit, segfault, there is nothing to netlist
-      if (c->obsolete_model_hack() == "Sub" or c->obsolete_model_hack() == ".Opt") { untested();
-        fprintf(stdout, "WARNING, qucsator netlist not generated for %s\n\n", c->obsolete_model_hack().toAscii().data());
-        continue;
-      }else{ untested();
-	qucsatorlang->printItem(c, s);
-	//s << "\n";
-      }
+      qucsatorlang->printItem(ce, s);
 
-      // QString qucsatorEntry = c->getNetlist();
-      // fprintf(stdout, "%s; qucsator; %s\n", c->obsolete_model_hack().toAscii().data(), qucsatorEntry.toAscii().data());
-      } // module
-    } // category
+    } // module
+  } // category
 }
 
 void attach_single(std::string const&path, std::string const& what)
-{ untested();
+{
   std::string full_file_name;
   if(what.size()==0){ untested();
-  }else if(what[0]=='.'){ untested();
+  }else if(what[0]=='.'){
     full_file_name=what;
-  }else{ untested();
+  }else{
     full_file_name = findfile(what, path, R_OK);
   }
 
-  if (full_file_name != "") { untested();
+  if (full_file_name != "") {
     // found it, with search
   }else{untested();
     std::cerr << "something seriously wrong with installation\n";
@@ -645,7 +625,7 @@ void attach_single(std::string const&path, std::string const& what)
 }
 
 void attach_default_plugins()
-{ untested();
+{
   std::string pp=plugpath();
   attach_single(pp, "legacy" SOEXT);
 
@@ -668,7 +648,7 @@ void qucsMessageHandler(QtMsgType type, const QMessageLogContext &, const QStrin
 // ##########                                                     ##########
 // #########################################################################
 int main(int argc, char *argv[])
-{ untested();
+{
   qInstallMsgHandler(qucsMessageHandler);
   // set the Qucs version string
   QucsVersion = VersionTriplet(PACKAGE_VERSION);
@@ -703,7 +683,7 @@ int main(int argc, char *argv[])
   if (var!= NULL) { untested();
       QucsDir = QDir(QString(var));
       qDebug() << "QUCSDIR set: " << QucsDir.absolutePath();
-  }else{ untested();
+  }else{
   }
 
   QucsSettings.BinDir =      QucsDir.absolutePath() + "/bin/";
@@ -711,7 +691,7 @@ int main(int argc, char *argv[])
   var = getenv("QUCS_LIBDIR");
   if(var != NULL) { untested();
 	  QucsSettings.LibDir = QString(var);
-  }else{ untested();
+  }else{
 	  QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
   }
   QucsSettings.OctaveDir =   QucsDir.canonicalPath() + "/share/qucs/octave/";
@@ -722,15 +702,15 @@ int main(int argc, char *argv[])
 
   /// \todo Make the setting up of all executables below more consistent
   var = getenv("QUCSATOR");
-  if(var != NULL) { untested();
+  if(var != NULL) {
       QucsSettings.Qucsator = QString(var);
   }
-  else { untested();
+  else {
       QucsSettings.Qucsator = QucsSettings.BinDir + "qucsator" + executableSuffix;
   }
 
   var = getenv("QUCSCONV");
-  if(var != NULL) { untested();
+  if(var != NULL) {
       QucsSettings.Qucsconv = QString(var);
   }
   else { untested();
@@ -745,7 +725,7 @@ int main(int argc, char *argv[])
   if(var != NULL) { untested();
       QucsSettings.AdmsXmlBinDir.setPath(QString(var));
   }
-  else { untested();
+  else {
       // default admsXml bindir same as Qucs
       QString admsExec;
 #ifdef __MINGW32__
@@ -759,10 +739,10 @@ int main(int argc, char *argv[])
   }
 
   var = getenv("ASCOBINDIR");
-  if(var != NULL)  { untested();
+  if(var != NULL)  {
       QucsSettings.AscoBinDir.setPath(QString(var));
   }
-  else  { untested();
+  else  {
       // default ASCO bindir same as Qucs
       QString ascoExec;
 #ifdef __MINGW32__
@@ -779,7 +759,7 @@ int main(int argc, char *argv[])
   var = getenv("QUCS_OCTAVE");
   if (var != NULL) { untested();
       QucsSettings.QucsOctave = QString(var);
-  } else { untested();
+  } else {
       QucsSettings.QucsOctave.clear();
   }
 
@@ -815,7 +795,7 @@ int main(int argc, char *argv[])
 
   QTranslator tor( 0 );
   QString lang = QucsSettings.Language;
-  if(lang.isEmpty()) { untested();
+  if(lang.isEmpty()) {
     QLocale loc;
     lang = loc.name();
   }
@@ -840,7 +820,7 @@ int main(int argc, char *argv[])
   std::string netlang_name = default_simulator;
 
   // simple command line parser
-  for (int i = 1; i < argc; ++i) { untested();
+  for (int i = 1; i < argc; ++i) {
     if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) { untested();
       fprintf(stdout,
   "Usage: %s [COMMAND] [OPTIONS]\n\n"
@@ -883,7 +863,7 @@ int main(int argc, char *argv[])
       return 0;
     } else if (!strcmp(argv[i], "-d") || !strcmp(argv[i], "--dump")) { untested();
       dump_flag = true;
-    } else if (!strcmp(argv[i], "-n") || !strcmp(argv[i], "--netlist")) { untested();
+    } else if (!strcmp(argv[i], "-n") || !strcmp(argv[i], "--netlist")) {
       dump_flag = true;
     } else if (!strcmp(argv[i], "-p") || !strcmp(argv[i], "--print")) { untested();
       print_flag = true;
@@ -897,31 +877,31 @@ int main(int argc, char *argv[])
     else if (!strcmp(argv[i], "--color")) { untested();
       color = argv[++i];
     }
-    else if (!strcmp(argv[i], "--orin")) { untested();
+    else if (!strcmp(argv[i], "--orin")) {
       orientation = argv[++i];
     }
-    else if (!strcmp(argv[i], "-a")) { untested();
+    else if (!strcmp(argv[i], "-a")) {
       ++i;
       qDebug() << "attaching" << argv[i];
       std::string pp=plugpath();
       std::string what=argv[i];
       if(what.size()<4){ untested();
-      }else if(what[what.size()-3]!='.'){ untested();
+      }else if(what[what.size()-3]!='.'){
 	what += SOEXT;
-      }else{ untested();
+      }else{
       }
       attach_single(pp, what);
     }
-    else if(!strcmp(argv[i], "-q") || !strcmp(argv[i], "--quit")) { untested();
+    else if(!strcmp(argv[i], "-q") || !strcmp(argv[i], "--quit")) {
 	exit(0);
     }
-    else if (!strcmp(argv[i], "-i")) { untested();
+    else if (!strcmp(argv[i], "-i")) {
       inputfile = argv[++i];
     }
-    else if (!strcmp(argv[i], "-o")) { untested();
+    else if (!strcmp(argv[i], "-o")) {
       outputfile = argv[++i];
     }
-    else if (!strcmp(argv[i], "-l")) { untested();
+    else if (!strcmp(argv[i], "-l")) {
       netlang_name = argv[++i];
     }
     else if(!strcmp(argv[i], "-icons")) { untested();
@@ -935,7 +915,7 @@ int main(int argc, char *argv[])
       incomplete(); // don't use.
       createListComponentEntry();
       return 0;
-    } else if(!strcmp(argv[i], "--list-entries")) { untested();
+    } else if(!strcmp(argv[i], "--list-entries")) {
       createListComponentEntry();
       return 0;
     }
@@ -947,7 +927,7 @@ int main(int argc, char *argv[])
 
   DocumentFormat const* fmt = docfmt_dispatcher[netlang_name];
 
-  if(fmt){ untested();
+  if(fmt){
     // just use it.
   }else if(auto sd = simulator_dispatcher[netlang_name]){ untested();
     incomplete();
@@ -965,7 +945,7 @@ int main(int argc, char *argv[])
   if (dump_flag and print_flag) { untested();
     fprintf(stderr, "Error: --print and --netlist cannot be used together\n");
     return -1;
-  } else if (dump_flag or print_flag) { untested();
+  } else if (dump_flag or print_flag) {
     if (inputfile.isEmpty()) { untested();
       fprintf(stderr, "Error: Expected input file.\n");
       return -1;
@@ -975,7 +955,7 @@ int main(int argc, char *argv[])
       return -1;
     }
     // create netlist from schematic
-    if (dump_flag) { untested();
+    if (dump_flag) {
       auto NLN=docfmt_dispatcher[netlang_name];
       if(!NLN){ untested();
 	qDebug() << "no lang" << QString::fromStdString(netlang_name);
@@ -989,7 +969,7 @@ int main(int argc, char *argv[])
           page, dpi, color, orientation);
     }
   }
-  //{ untested();
+  //{
   QApplication a(argc, argv);
 //  Q_INIT_RESOURCE();
   QDesktopWidget *d = a.desktop();

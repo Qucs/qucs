@@ -26,6 +26,9 @@ Wire::Wire(int _x1, int _y1, int _x2, int _y2)
   Type = isWire; // BUG
   _node_hack.push_back(nullptr);
   _node_hack.push_back(nullptr);
+
+  setType("wire");
+  setLabel("noname");
 }
 
 Wire::~Wire()

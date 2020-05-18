@@ -48,7 +48,7 @@ void LegacySchematicFormat::load(DocumentStream& s, SchematicSymbol& c) const
 	auto L=dynamic_cast<SchematicLanguage const*>(l);
 	assert(L);
 
-	while(!s.atEnd()){ untested();
+	while(!s.atEnd()){
 		L->parse(s, c);
 		assert(s.atEnd()); // happens with legacy lang
 	}
@@ -58,6 +58,34 @@ void LegacySchematicFormat::load(DocumentStream& s, SchematicSymbol& c) const
 static QString QG(SchematicSymbol const& m, std::string const& key)
 {
 	return QString::fromStdString(m.getParameter(key));
+}
+
+static void wirehack(Wire const* w, DocumentStream& d)
+{
+	assert(w);
+  int x1=0, x2=0, y1=0, y2=0;
+  trace1("wirehack", w);
+  std::pair<int, int> X = w->portPosition(0);
+  trace1("wirehack", X.first);
+  x1 = X.first;
+  y1 = X.second;
+  X = w->portPosition(1);
+  x2 = X.first;
+  y2 = X.second;
+  std::tie(x1, y1) = w->portPosition(0);
+  std::tie(x2, y2) = w->portPosition(1);
+
+  d << "<"+QString::number(x1)+" "+QString::number(y1);
+  d << " "+QString::number(x2)+" "+QString::number(y2);
+
+  if(false) { untested();
+          // d << " \""+Label->name()+"\" ";
+          // d << QString::number(Label->x1_())+" "+QString::number(Label->y1_())+" ";
+          // d << QString::number(Label->cx_()-x1 + Label->cy_()-y1);
+          // d << " \""+Label->initValue+"\">";
+  } else { untested();
+	  d << " \"\" 0 0 0 \"\">\n";
+  }
 }
 
 void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& m) const
@@ -162,7 +190,7 @@ void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& 
 	stream << "</Symbol>\n";
 
 	stream << "<Components>\n";    // save all components
-	for(auto pc : components(m)){ untested();
+	for(auto pc : components(m)){
 		stream << "  ";
 		L->printItem(pc, stream);
 		stream << "\n"; // BUG?
@@ -170,8 +198,9 @@ void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& 
 	stream << "</Components>\n";
 
 	stream << "<Wires>\n";    // save all wires
-	for(auto pw : wires(m)){
-		stream << "  " << pw->save() << "\n";
+	for(Wire const* pw : wires(m)){ untested();
+		wirehack(pw, stream);
+//		stream << "  " << pw->save() << "\n";
 	}
 
 #if 0

@@ -31,31 +31,31 @@ SchematicModel::SchematicModel()
 }
 
 SchematicModel::~SchematicModel()
-{ untested();
+{
 }
 
 // getting here in GUI mode
 SchematicModel::SchematicModel(SchematicDoc* s)
 	: _doc_(s),
 	  Nodes(Nets)
-{ untested();
+{
 	trace2("::SchematicModel s", this, _doc_);
 	if(s){ untested();
-	}else{ untested();
+	}else{
 	}
 	// presumably Q3PTRlist without this is just a QList<*> (check)
 //  _symbol=new SchematicSymbol();
 }
 
 void SchematicModel::clear()
-{ untested();
+{
 	incomplete(); // disconnect components
 	components().clear();
 
 	diagrams().clear();
 	{ // clearWires
 		// (in legacy code) deleting a wire may create another wire.
-		while(wires().size()){ untested();
+		while(wires().size()){
 			trace2("clear wire", wires().size(), nodes().size());
 			erase(wires().first());
 		}
@@ -72,7 +72,7 @@ QString const& SchematicModel::devType() const
 }
 
 void SchematicModel::setDevType(QString const& s)
-{ untested();
+{
 	DevType = s;
 }
 
@@ -153,21 +153,21 @@ void SchematicModel::parse(DocumentStream& s, SchematicLanguage const* L)
 // these are required to move model methods over to SchematicModel
 // note that _doc->...() functions still involve pointer hacks
 ComponentList& SchematicModel::components()
-{ untested();
+{
 	return Components;
 }
 
 void SchematicModel::pushBack(Element* what)
-{ untested();
+{
 	trace2("SchematicModel::pushBack", what->label(), this);
-	if(auto c=component(what)){ untested();
+	if(auto c=component(what)){
 		trace1("SchematicModel::pushBack", c->type());
       simpleInsertComponent(c);
-	}else if(auto d=diagram(what)){ untested();
+	}else if(auto d=diagram(what)){
 		diagrams().append(d);
-	}else if(auto c=command(what)){ untested();
+	}else if(auto c=command(what)){
 		incomplete();
-	}else if(auto w=wire(what)){ untested();
+	}else if(auto w=wire(what)){
 		trace4("pushback Wire", w->x1__(), w->y1__(), w->x2__(), w->y2__());
 		simpleInsertWire(w);
 //		insertWire(w);?? wtf?
@@ -183,7 +183,7 @@ void SchematicModel::pushBack(Element* what)
 #ifndef USE_SCROLLVIEW
   if(doc()){ untested();
 	  doc()->addToScene(what);
-  }else{ untested();
+  }else{
   }
 #endif
 } // pushBack
@@ -234,20 +234,20 @@ void SchematicModel::insertSymbolNodes(Symbol *c, bool noOptimize)
 // // possibly not needed. all actions must be undoable anyway
 // -> use detach, store reference in UndoAction.
 void SchematicModel::erase(Element* what)
-{ untested();
+{
 	Element* e = detach(what);
 	delete(e);
 }
 
 // TODO: take iterator.
 Element* SchematicModel::detach(Element* what)
-{ untested();
+{
 	if(auto c=component(what)){ untested();
 		disconnect(c);
 		components().removeRef(c);
 	}else if(auto d=diagram(what)){ untested();
 		diagrams().removeRef(d);
-	}else if(auto w=wire(what)){ untested();
+	}else if(auto w=wire(what)){
 		disconnect(w);
 		wires().removeRef(w);
 	}else{ untested();
@@ -259,23 +259,23 @@ Element* SchematicModel::detach(Element* what)
 
 // should be a QucsDoc*, probably
 SchematicDoc* SchematicModel::doc()
-{ untested();
+{
 	trace2("doc", _doc_, this);
 	return _doc_;
 }
 
 QFileInfo const& SchematicModel::getFileInfo ()const
-{ untested();
+{
 	return FileInfo;
 }
 
 WireList& SchematicModel::wires()
-{ untested();
+{
 	return _wires;
 }
 
 NodeMap& SchematicModel::nodes()
-{ untested();
+{
 	return Nodes;
 }
 
@@ -285,7 +285,7 @@ NodeMap& SchematicModel::nodes()
 //}
 
 PaintingList& SchematicModel::paintings()
-{ untested();
+{
 	return Paintings;
 }
 //
@@ -297,18 +297,18 @@ PaintingList& SchematicModel::paintings()
 //}
 //
 DiagramList& SchematicModel::diagrams()
-{ untested();
+{
 	return Diagrams;
 }
 
 // same, but const.
 ComponentList const& SchematicModel::components() const
-{ untested();
+{
 	return Components;
 }
 
 WireList const& SchematicModel::wires() const
-{ untested();
+{
 	return _wires;
 }
 
@@ -318,12 +318,12 @@ NodeMap const& SchematicModel::nodes() const
 }
 
 PaintingList const& SchematicModel::paintings() const
-{ untested();
+{
 	return Paintings;
 }
 
 DiagramList const& SchematicModel::diagrams() const
-{ untested();
+{
 	return Diagrams;
 }
 
@@ -361,7 +361,7 @@ bool SchematicModel::throughAllComps(DocumentStream& stream, int& countInit,
 // find connected components (slow)
 // obsolete.
 void SchematicModel::throughAllNodes(unsigned& z) const
-{ untested();
+{
 #if 0
   z = 0; // number cc.
 
@@ -511,7 +511,7 @@ bool SchematicModel::loadDocument(QFile& /*BUG*/ file)
 
 // called from PushBack...
 void SchematicModel::simpleInsertComponent(Component *c)
-{ untested();
+{
 #if 0
 	Node *pn;
 	// connect every node of component
@@ -540,7 +540,7 @@ void SchematicModel::simpleInsertComponent(Component *c)
 
 // screw this.
 void SchematicModel::simpleInsertWire(Wire *pw)
-{ untested();
+{
   Node *pn=nullptr;
   // pn = &nodes().at(pw->x1_(), pw->y1_());
   //
@@ -589,35 +589,35 @@ void SchematicModel::detachFromNode(Element* what, Node* from)
 
 
 void SchematicModel::disconnect(Symbol* c)
-{ untested();
+{
 	// drop port connections
-	for(unsigned i=0; i<c->numPorts(); ++i) { untested();
+	for(unsigned i=0; i<c->numPorts(); ++i) {
 		trace1("sm:ds", i);
 		Node* nn = c->disconnectNode(i, nodes());
 		assert(nn);
 
 		if(!nn){ untested();
 			unreachable();
-		}else if(nn->connectionsCount()==0){ untested();
+		}else if(nn->connectionsCount()==0){
 			nodes().erase(nn); // possibly garbage collect only.
 		}else if(nn->connectionsCount()==2){ untested();
 			// done in GUI, must be undoable.
 			// oneTwoWires(nn);  // two wires -> one wire
-		}else{ untested();
+		}else{
 		}
 	}
 }
 
 void SchematicModel::connect(Symbol* c)
-{ untested();
-	for(unsigned i=0; i<c->numPorts(); ++i){ untested();
+{
+	for(unsigned i=0; i<c->numPorts(); ++i){
 		c->connectNode(i, nodes()); // use scope.
 		assert(dynamic_cast<Symbol const*>(c)->port(i).connected());
 	}
 }
 
 unsigned SchematicModel::numPorts() const
-{ untested();
+{
 	assert(this);
 	trace1("SchematicModel::numPorts", this);
 	// incomplete
@@ -625,7 +625,7 @@ unsigned SchematicModel::numPorts() const
 }
 
 void SchematicModel::setPort(unsigned i, Node* n)
-{ untested();
+{
 	_ports.resize(std::max(_ports.size(), size_t(i)+1));
 	_ports[i] = n;
 }
@@ -653,7 +653,7 @@ void SchematicModel::setOwner(Element* o)
 
 // obsolete. probably.
 void SchematicModel::updateNetLabels() const
-{ untested();
+{
 	incomplete();
 #if 0
 	for(auto pc : components()){ untested();
@@ -699,17 +699,17 @@ void SchematicModel::delNet(Net* n)
 }
 #endif
 Symbol const* SchematicModel::findProto(QString const& what) const
-{ untested();
+{
 	return _protos[what];
 }
 
 PrototypeMap const& SchematicModel::declarations() const
-{ untested();
+{
 	return _protos;
 }
 
 void SchematicModel::cacheProto(Symbol const* what) const
-{ untested();
+{
 	auto key = what->label();
 	trace1("pushProto", key);
 	assert(!_protos[key]);
@@ -728,8 +728,8 @@ Symbol const* PrototypeMap::operator[](QString const& s) const
 }
 
 void PrototypeMap::clear()
-{ untested();
-	for(auto i: _map){ untested();
+{
+	for(auto i: _map){
 		// no, we don't own them
 		// delete i.second;
 	}
@@ -737,5 +737,5 @@ void PrototypeMap::clear()
 }
 
 PrototypeMap::PrototypeMap()
-{ untested();
+{
 }

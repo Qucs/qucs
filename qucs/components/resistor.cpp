@@ -26,7 +26,7 @@ public:
   Resistor(bool european=true);
   Resistor(const Resistor& r) 
 	 : MultiViewComponent(r)
-  { untested(); }
+  { }
  ~Resistor() {};
   // return new Resistor(Props.getLast()->Value != "US"); ?!
   Component* newOne() {

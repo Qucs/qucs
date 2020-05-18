@@ -22,11 +22,13 @@
 
 class Node;
 
+// TODO: move cruft to components
 class Port {
 private:
-  Port(Port const&){unreachable();}
+  // Port(Port const&){unreachable();}
 
 public:
+  Port(Port const&) = default; // BUG
  // Port() {};
   explicit Port(int _x, int _y, bool _avail=true)
 	  : x(_x), y(_y), avail(_avail), Connection(nullptr)
@@ -36,12 +38,15 @@ public:
 public:
   int x_()const{return x;}
   int y_()const{return y;}
-  std::pair<int, int> position() const { return std::make_pair(x,y); }
+  std::pair<int, int> position() const { return std::make_pair(x,y); } // BUG
   void setPosition(int x_, int y_) { x=x_; y=y_; }
+
+  // This makes Port behave like a pointer (and that's what it will be).
+  Node const* operator->() const {return Connection;}
 
 private:
   friend class Wire; // HACK
-  int   x, y;
+  int   x, y; // BUG. nodes have coordinates.
 public:
   bool  avail;
   QString Type; // BUG. type is "Port".

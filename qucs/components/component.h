@@ -63,13 +63,9 @@ public: // legacy stuff. don't use
   }
 
 public: // Element interface, private?!
-  Element* clone() const{
-	  Component const* e=this;
-	  Component* E=const_cast<Component*>(e);
-	  return E->newOne();
-  }
+  Element* clone() const;
 
-  virtual unsigned numPorts() const override{ untested(); return Ports.count(); }
+  virtual unsigned numPorts() const override{ return Ports.count(); }
 protected: // symbol interface
   Port& port(unsigned i) {
 	  assert(i<unsigned(Ports.count()));
@@ -82,9 +78,9 @@ protected: // symbol interface
 //	  Ports[i]->connect(n);
 //  }
 
-  virtual unsigned paramCount() const;
-  virtual std::string paramValue(unsigned i) const;
-  virtual std::string paramName(unsigned i) const;
+  unsigned paramCount() const override;
+  std::string paramValue(unsigned i) const override;
+  std::string paramName(unsigned i) const override;
 
 protected:
   void setParameter(unsigned i, QString const&);
@@ -203,7 +199,7 @@ private: // (hopefully) obsolete callbacks
 
 class MultiViewComponent : public Component {
 public:
-  MultiViewComponent() { untested();
+  MultiViewComponent() {
   };
   virtual ~MultiViewComponent() {};
 

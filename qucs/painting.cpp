@@ -17,7 +17,7 @@
 #include "paintings/painting.h"
 
 Painting::Painting()
-{ untested();
+{
   Type = isPainting;
   State = 0;
   setLabel(Name); // legacy hack
