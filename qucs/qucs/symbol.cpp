@@ -76,14 +76,6 @@ Node* Symbol::disconnectNode(unsigned i, NodeMap&nm)
 	mp.disconnect();
 	n->connectionsRemove(this);
 
-#if 0
-	if(n->connectionsCount()==0){
-		incomplete(); // need node in removeEdge
-		nm.erase(nn);
-	}else{
-	}
-#endif
-
 	return n;
 }
 

@@ -85,6 +85,11 @@ QString const& Node::netLabel() const
   assert(_net);
   return _net->label();
 }
+void Node::setNetLabel(QString const& l)
+{
+  assert(_net);
+  _net->setLabel(l);
+}
 // ----------------------------------------------------------------
 // BUG: does not set Name
 // what is a "Name"??

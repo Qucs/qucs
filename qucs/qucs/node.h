@@ -96,6 +96,8 @@ public:
 
 public:
   QString const& netLabel() const;
+  void setNetLabel(QString const&);
+
   bool hasLabel() const{
 	  // possibly "one of the connections is a label?"
 	  incomplete();

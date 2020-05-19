@@ -1,9 +1,9 @@
 # Qucs
 ## declarations end
 
-C:C1 _net0 _net16 C="39.01pF" V=""
+C:C1 gnd _net16 C="39.01pF" V=""
 L:L1 _net16 _net17 L="280.9nH" I=""
-C:C2 _net4 _net17 C="39.01pF" V=""
+C:C2 gnd _net17 C="39.01pF" V=""
 Vac:V1 _net19 _net8 U="1 V" f="1 GHz" Phase="0" Theta="0"
 Vac:V2 _net13 _net10 U="0 V" f="1 GHz" Phase="0" Theta="0"
 R:R2 _net17 _net13 R="Z0" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

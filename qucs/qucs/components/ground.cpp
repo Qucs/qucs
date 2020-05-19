@@ -1,16 +1,13 @@
 /***************************************************************************
-                                ground.cpp
-                               ------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -19,6 +16,24 @@
 #include "node.h"
 #include "module.h"
 #include "globals.h"
+
+namespace{
+class Ground : public Component  {
+private:
+	Ground(Ground const& g);
+public:
+  Ground();
+ ~Ground();
+  Component* newOne() {return new Ground(*this);}
+  static Element* info(QString&, char* &, bool getNewOne=false);
+
+private:
+	Node* connectNode(unsigned i, NodeMap&l);
+	Node* disconnectNode(unsigned i, NodeMap&l);
+
+protected:
+  QString netlist() const;
+};
 
 Ground::Ground(Ground const& g) : Component(g)
 {
@@ -55,6 +70,20 @@ Ground::~Ground()
 {
 }
 
+Node* Ground::connectNode(unsigned i, NodeMap&l)
+{
+  Node* n = Component::connectNode(i, l);
+  assert(n);
+  n->setNetLabel("gnd");
+}
+
+Node* Ground::disconnectNode(unsigned i, NodeMap&l)
+{
+  Node* n = Component::disconnectNode(i, l);
+  assert(n);
+  incomplete();
+}
+
 // -------------------------------------------------------
 Element* Ground::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
@@ -71,7 +100,6 @@ QString Ground::netlist() const
   return QString("");
 }
 
-namespace{
 Ground D;
 Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "GND", &D);
 Module::INSTALL pp("lumped", &D);
