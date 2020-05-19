@@ -22,17 +22,5 @@
 #include "component.h"
 
 
-class Ground : public Component  {
-private:
-	Ground(Ground const& g);
-public:
-  Ground();
- ~Ground();
-  Component* newOne() {return new Ground(*this);}
-  static Element* info(QString&, char* &, bool getNewOne=false);
-
-protected:
-  QString netlist() const;
-};
 
 #endif

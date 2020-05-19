@@ -1,10 +1,10 @@
 # Qucs 0.1.0  ../../tests/AC_groupdelay_ac.prj/groupdelay_ac.sch
 
-C #(.C(39.01pF), .V(), .Symbol(neutral)) C1(_net0, _net16);
-GND #() *(_net0);
+C #(.C(39.01pF), .V(), .Symbol(neutral)) C1(gnd, _net16);
+GND #() *(gnd);
 L #(.L(280.9nH), .I()) L1(_net16, _net17);
-C #(.C(39.01pF), .V(), .Symbol(neutral)) C2(_net4, _net17);
-GND #() *(_net4);
+C #(.C(39.01pF), .V(), .Symbol(neutral)) C2(gnd, _net17);
+GND #() *(gnd);
 GND #() *(_net8);
 Vac #(.U(1 V), .f(1 GHz), .Phase(0), .Theta(0)) V1(_net19, _net8);
 Vac #(.U(0 V), .f(1 GHz), .Phase(0), .Theta(0)) V2(_net13, _net10);
