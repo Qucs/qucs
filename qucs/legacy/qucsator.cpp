@@ -77,8 +77,12 @@ void QucsLang::printSubckt(SubcktProto const* p, stream_t& s) const
 	// print_ports();
 	//
 	for(unsigned i=0; sym->portExists(i); ++i){ untested();
-		auto nn=p->portValue(i);
-		s << " " << nn;
+		auto N=p->portValue(i);
+//		if(N=="0"){
+//			N = "gnd";
+//		}else{
+//		}
+		s << " " << N;
 	}
 	s << "\n";
 
@@ -169,15 +173,13 @@ void QucsLang::printComponent(Component const* c, stream_t& s) const
 		Symbol const* sym=c;
 		trace2("print", sym->numPorts(), sym->label());
 		for(unsigned i=0; i<sym->numPorts(); ++i){
-			QString const& N = sym->portValue(i);
-			  // BUG. print portName if not device.
+			QString N = sym->portValue(i);
+
+//			if(N=="0"){
+//				N = "gnd";
+//			}else{
+//			}
 			s << " " << N;
-// 			if(Net const* net=N.getNet()){ untested();
-// 				s << net->label() << "__"; //  << netLabels[N.netNumber()];
-// 			}else{ untested();
-// 				// happens in list_entries ...
-// 				s << "open";
-// 			}
 		}
 
 		for(auto p2 : c->params()) {

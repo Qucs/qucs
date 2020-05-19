@@ -309,16 +309,9 @@ Node* Wire::connectNode(unsigned i, NodeMap&l)
 Node* Wire::disconnectNode(unsigned i, NodeMap&nm)
 {
   trace1("wire::disconnectNode", i);
-//  Node* n = port(i%2).value();
   Node* n = Symbol::disconnectNode(i, nm);
 
   if(Node* other_node = port((i+1)%2).value()){
-
-    // it's a wire.
-    // // BUG. but where?
-    trace2("wire::disconnectNode pre", n, other_node);
-    trace2("wire::disconnectNode pre", n->getNet(), other_node->getNet());
-    trace2("wire::disconnectNode pre", n->connectionsCount(), other_node->connectionsCount());
     nm.postRemoveEdge(n, other_node);
   }else{
   }
