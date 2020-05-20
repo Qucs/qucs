@@ -30,7 +30,8 @@ AM_DEFAULT_SOURCE_EXT = .cpp
 SUBDIRS = \
 	. \
 	bitmaps \
-	components diagrams \
+	components \
+	diagrams \
 	paintings \
 	octave \
 	legacy \

@@ -684,76 +684,14 @@ void Schemati::simpleInsertWire(Wire *pw)
 
 // -------------------------------------------------------------
 // obsolete.
-bool SchematicModel::loadWires(QTextStream *stream /*, EGPList *List */)
+bool SchematicModel::loadWires(QTextStream * /*, EGPList *List */)
 {
   incomplete();
   unreachable();
-  QList<ElementGraphics*>* List=nullptr; //?
-  Wire *w;
-  QString Line;
-  while(!stream->atEnd()) {
-    Line = stream->readLine();
-    if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
-    Line = Line.trimmed();
-    if(Line.isEmpty()) continue;
-
-    // (Node*)4 =  move all ports (later on)
-    // w = new Wire(0,0,0,0, (Node*)4,(Node*)4);
-    w = new Wire(0,0,0,0);
-    if(!w->obsolete_load(Line)) {
-      QMessageBox::critical(0, QObject::tr("Error"),
-		QObject::tr("Format Error:\nWrong 'wire' line format!"));
-      delete w;
-      return false;
-    }
-#if 0
-    incomplete();
-    if(List) {
-      if(w->x1_() == w->x2_()) if(w->y1_() == w->y2_()) if(w->Label) {
-	w->Label->Type = isMovingLabel;
-#ifdef USE_SCROLLVIEW
-	List->append(w->Label);
-#else
-	List->append(new ElementGraphics(w->Label));
-#endif
-	delete w;
-	continue;
-      }
-#ifdef USE_SCROLLVIEW
-      List->append(w);
-#else
-      List->append(new ElementGraphics(w));
-#endif
-      if(w->Label){
-#ifdef USE_SCROLLVIEW
-      	List->append(w);
-#else
-      	List->append(new ElementGraphics(w->Label));
-#endif
-      }else{
-      }
-#endif
-    {
-      simpleInsertWire(w);
-    }
-  }
-
-  QMessageBox::critical(0, QObject::tr("Error"),
-		QObject::tr("Format Error:\n'Wire' field is not closed!"));
   return false;
 }
 
 // -------------------------------------------------------------
-
-// -------------------------------------------------------------
-// obsolete. see qt5 rework
-#if 0
-bool SchematicModel::loadPaintings(QTextStream *stream)
-{
-  incomplete();
-  return false;
-}
-#endif
 
 /*!
  * \brief SchematicDoc::loadDocument tries to load a schematic document.

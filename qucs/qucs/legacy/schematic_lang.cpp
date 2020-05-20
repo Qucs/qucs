@@ -31,7 +31,7 @@ bool PaintingList::load(QTextStream& str)
 
     Line = Line.trimmed();
     if(Line.isEmpty()) continue;
-    if( (Line.at(0) != '<') || (Line.at(Line.length()-1) != '>')) {
+    if( (Line.at(0) != '<') || (Line.at(Line.length()-1) != '>')) { untested();
 		 incomplete();
 		 // QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line delimiter!"));
       return false;
@@ -43,13 +43,13 @@ bool PaintingList::load(QTextStream& str)
     if(Painting const* pp=painting_dispatcher[cstr.toStdString()]){
       p=prechecked_cast<Painting*>(pp->clone());
       assert(p);
-    }else{
+    }else{ untested();
 		 // incomplete();
       // QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nUnknown painting " + cstr));
       return false;
     }
 
-    if(!p->load(Line)) {
+    if(!p->load(Line)) { untested();
 		 incomplete();
       // QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line format!"));
       delete p;
@@ -110,16 +110,79 @@ Element* LegacySchematicLanguage::loadElement(const QString& _s, Element* e) con
 	//	               // why not in constructor? it needs parameters.
 		c->setLabel(cstr);
 		c->tx = x;  c->ty = y;
-	}else{
+	}else{ untested();
 		incomplete();
 		return e;
 	}
 	return nullptr;
 }
 
+static std::list<Element*> implicit_hack;
+
+static bool obsolete_load(Wire* w, const QString& sc)
+{
+	QString s(sc);
+	trace1("obsolete_load", s);
+	bool ok;
+
+	if(s.at(0) != '<'){
+		throw ExceptionCantParse();
+	}else if(s.at(s.length()-1) != '>'){
+		throw ExceptionCantParse();
+	}
+	s = s.mid(1, s.length()-2);   // cut off start and end character
+
+	QString n;
+	n  = s.section(' ',0,0);    // x1
+	w->x1__() = n.toInt(&ok);
+	if(!ok) return false; // BUG: throw
+
+	n  = s.section(' ',1,1);    // y1
+	w->y1__() = n.toInt(&ok);
+	if(!ok) return false; // BUG: throw
+
+	n  = s.section(' ',2,2);    // x2
+	int x2 = w->x2__() = n.toInt(&ok);
+	if(!ok) return false; // BUG: throw
+
+	n  = s.section(' ',3,3);    // y2
+	int y2 = w->y2__() = n.toInt(&ok);
+	if(!ok) return false; // BUG: throw
+
+	n = s.section('"',1,1);
+	trace1("parse node label", n);
+	if(!n.isEmpty()) {
+		Symbol* sym=w;
+		// there is a label hidden in this wire. go get it.
+		//
+		// a label has a position and is connected to a node.
+		// nodelabel #(.$xposition(x), .$yposition(y)) name(node);
+		// name may be used to identify the net connected to node in a flat netlist.
+		auto nx = s.section(' ',5,5);
+		auto ny = s.section(' ',6,6);
+		auto delta = s.section(' ',7,7);
+		auto sth = s.section('"',3,3);
+
+		// nl->setLabel(n, s.section('"',3,3), delta, nx, ny);  // Wire Label
+
+		// not sure what the parameters mean, need to compute label position and
+		// node position from it.
+		auto nn = s.section('"',3,3);
+		trace7("hack push", s, sth, delta, nx, ny, nn, n);
+		sym->setParameter("netname", n); // what is this?
+		sym->setParameter("delta", delta); // what is this?
+		sym->setParameter("nx", nx); // not the node position, maybe the label position?
+		sym->setParameter("ny", ny); // not the node position, maybe the label position?
+	}else{
+	}
+
+	return true;
+}
+
 // BUG: this is schematicFormat
 void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) const
 {
+	assert(!implicit_hack.size());
 	QString Line;
 
 	// mode: a throwback to the legacy format:
@@ -129,11 +192,11 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 	while(!stream.atEnd()) {
 		Line = stream.readLine();
 		Line = Line.trimmed();
-		if(Line.size()<2){
+		if(Line.size()<2){ untested();
 		}else if(Line.at(0) == '<'
 				&& Line.at(1) == '/'){
 			qDebug() << "endtag?" << Line;
-		}else if(Line.isEmpty()){
+		}else if(Line.isEmpty()){ untested();
 		}else if(Line == "<Components>") {
 			mode='C';
 		}else if(Line == "<Symbol>") {
@@ -168,7 +231,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 					qDebug() << "symbol Paintings";
 					s.symbolPaintings().load(stream);
 					c = nullptr;
-				}catch(...){
+				}catch(...){ untested();
 					incomplete();
 				}
 			}else if(mode=='W'){
@@ -178,7 +241,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 				Wire* w = new Wire();
 				w->setOwner(&s);
 				incomplete(); // qt5 branch...
-				bool err=w->obsolete_load(Line);
+				bool err = obsolete_load(w, Line);
 				if(!err){ untested();
 					qDebug() << "ERROR" << Line;
 					delete(w);
@@ -192,7 +255,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 				if(d){
 					c = d;
 					c->setOwner(&s);
-				}else{
+				}else{ untested();
 					incomplete();
 				}
 
@@ -203,9 +266,9 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 				incomplete();
 			}
 
+			assert(s.subckt());
 			if(c){
 				trace2("pushing back", c->label(), typeid(*c).name());
-				assert(s.subckt());
 				Element const* cc = c;
 				assert(cc->owner() == &s);
 				s.subckt()->pushBack(c);
@@ -213,6 +276,16 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 			}
 
 		}
+	}
+
+
+	/// some components are implicit, collect them here
+	assert(s.subckt());
+	while(implicit_hack.size()){ untested();
+		auto cc = implicit_hack.front();
+		cc->setOwner(&s);
+		implicit_hack.pop_front();
+		s.subckt()->pushBack(cc);
 	}
 }
 
@@ -226,7 +299,7 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 		qDebug() << "diagram?" << Line;
 		if(Line.at(0) == '<') if(Line.at(1) == '/') return nullptr;
 		Line = Line.trimmed();
-		if(Line.isEmpty()){
+		if(Line.isEmpty()){ untested();
 			return nullptr;
 		}else{
 		}
@@ -274,7 +347,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
 		s << c->obsolete_model_hack(); // c->type()
 
 		s << " ";
-		if(c->name().isEmpty()){
+		if(c->name().isEmpty()){ untested();
 			s << "*";
 		}else{
 			s << c->name(); // label??
@@ -325,9 +398,9 @@ Command* LegacySchematicLanguage::loadCommand(const QString& _s, Command* c) con
 	int  ttx, tty, tmp;
 	QString s = _s;
 
-	if(s.at(0) != '<'){
+	if(s.at(0) != '<'){ untested();
 		return NULL;
-	}else if(s.at(s.length()-1) != '>'){
+	}else if(s.at(s.length()-1) != '>'){ untested();
 		return NULL;
 	}
 	s = s.mid(1, s.length()-2);   // cut off start and end character
@@ -339,12 +412,12 @@ Command* LegacySchematicLanguage::loadCommand(const QString& _s, Command* c) con
 	QString n;
 	n  = s.section(' ',2,2);      // isActive
 	tmp = n.toInt(&ok);
-	if(!ok){
+	if(!ok){ untested();
 		return NULL;
 	}
 	c->isActive = tmp & 3;
 
-	if(tmp & 4){
+	if(tmp & 4){ untested();
 		c->showName = false;
 	}else{
 		// use default, e.g. never show name for GND (bug?)
@@ -390,7 +463,7 @@ Command* LegacySchematicLanguage::loadCommand(const QString& _s, Command* c) con
 
 		// not all properties have to be mentioned (backward compatible)
 		if(z > counts) {
-			if(p1->Description.isEmpty()){
+			if(p1->Description.isEmpty()){ untested();
 				c->Props.remove();    // remove if allocated in vain
 			}
 
@@ -413,9 +486,9 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 	int  ttx, tty, tmp;
 	QString s = _s;
 
-	if(s.at(0) != '<'){
+	if(s.at(0) != '<'){ untested();
 		return NULL;
-	}else if(s.at(s.length()-1) != '>'){
+	}else if(s.at(s.length()-1) != '>'){ untested();
 		return NULL;
 	}
 	s = s.mid(1, s.length()-2);   // cut off start and end character
@@ -428,12 +501,12 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 	QString n;
 	n  = s.section(' ',2,2);      // isActive
 	tmp = n.toInt(&ok);
-	if(!ok){
+	if(!ok){ untested();
 		return NULL;
 	}
 	c->isActive = tmp & 3;
 
-	if(tmp & 4){
+	if(tmp & 4){ untested();
 		c->showName = false;
 	}else{
 		// use default, e.g. never show name for GND (bug?)
@@ -487,15 +560,15 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 	// FIXME. use c->paramCount()
 	if(Model == "Sub"){
 		tmp = 2;   // first property (File) already exists
-	}else if(Model == "Lib"){
+	}else if(Model == "Lib"){ untested();
 		tmp = 3;
-	}else if(Model == "EDD"){
+	}else if(Model == "EDD"){ untested();
 		tmp = 5;
-	}else if(Model == "RFEDD"){
+	}else if(Model == "RFEDD"){ untested();
 		tmp = 8;
-	}else if(Model == "VHDL"){
+	}else if(Model == "VHDL"){ untested();
 		tmp = 2;
-	}else if(Model == "MUTX"){
+	}else if(Model == "MUTX"){ untested();
 		tmp = 5; // number of properties for the default MUTX (2 inductors)
 	}else{
 		// "+1" because "counts" could be zero
@@ -503,7 +576,7 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 	}
 
 	/// BUG FIXME. dont use Component parameter dictionary.
-	for(; tmp<=(int)counts/2; tmp++){
+	for(; tmp<=(int)counts/2; tmp++){ untested();
 		c->Props.append(new Property("p", "", true, " "));
 	}
 
@@ -518,7 +591,7 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 
 		// not all properties have to be mentioned (backward compatible)
 		if(z > counts) {
-			if(p1->Description.isEmpty()){
+			if(p1->Description.isEmpty()){ untested();
 				c->Props.remove();    // remove if allocated in vain
 			}else{
 			}
@@ -527,8 +600,8 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 				if(counts < 56) {  // backward compatible
 					counts >>= 1;
 					p1 = c->Props.at(counts-1);
-					for(; p1 != 0; p1 = c->Props.current()) {
-						if(counts-- < 19){
+					for(; p1 != 0; p1 = c->Props.current()) { untested();
+						if(counts-- < 19){ untested();
 							break;
 						}
 
@@ -541,11 +614,11 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 					c->Props.current()->Value = "0";
 				}
 			}else if(Model == "AND" || Model == "NAND" || Model == "NOR" ||
-					Model == "OR" ||  Model == "XNOR"|| Model == "XOR") {
+					Model == "OR" ||  Model == "XNOR"|| Model == "XOR") { untested();
 				if(counts < 10) {   // backward compatible
 					counts >>= 1;
 					p1 = c->Props.at(counts);
-					for(; p1 != 0; p1 = c->Props.current()) {
+					for(; p1 != 0; p1 = c->Props.current()) { untested();
 						if(counts-- < 4)
 							break;
 						n = c->Props.prev()->Value;
@@ -553,11 +626,11 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 					}
 					c->Props.current()->Value = "10";
 				}
-			}else if(Model == "Buf" || Model == "Inv") {
+			}else if(Model == "Buf" || Model == "Inv") { untested();
 				if(counts < 8) {   // backward compatible
 					counts >>= 1;
 					p1 = c->Props.at(counts);
-					for(; p1 != 0; p1 = c->Props.current()) {
+					for(; p1 != 0; p1 = c->Props.current()) { untested();
 						if(counts-- < 3)
 							break;
 						n = c->Props.prev()->Value;
@@ -611,7 +684,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 	Element *e = 0;
 
 	Line = Line.trimmed();
-	if(Line.at(0) != '<') {
+	if(Line.at(0) != '<') { untested();
 		throw "notyet_exception"
 			"Format Error:\nWrong line start!";
 	}
@@ -620,16 +693,16 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 	cstr.remove (0,1);    // remove leading "<"
 
 	// TODO: get rid of the exceptional cases.
-	if (cstr == "Lib"){
+	if (cstr == "Lib"){ untested();
 		incomplete();
 		// c = new LibComp ();
 	}else if (cstr == "Eqn"){
 		incomplete();
 		// c = new Equation ();
-	}else if (cstr == "SPICE"){
+	}else if (cstr == "SPICE"){ untested();
 		incomplete();
 		// c = new SpiceFile();
-	}else if (cstr.left (6) == "SPfile" && cstr != "SPfile"){
+	}else if (cstr.left (6) == "SPfile" && cstr != "SPfile"){ untested();
 		incomplete();
 		// backward compatible
 		//c = new SParamFile ();
@@ -643,7 +716,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 		// legacy component
 		Element* k=sc->clone(); // memory leak?
 		e = prechecked_cast<Element*>(k);
-	}else if(Command const* sc=dynamic_cast<Command const*>(s)){
+	}else if(Command const* sc=dynamic_cast<Command const*>(s)){ untested();
 		// legacy component
 		Element* k=sc->clone(); // memory leak?
 		e=prechecked_cast<Element*>(k);
@@ -656,7 +729,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 	if(e) {
 		incomplete();
 		loadElement(Line, e);
-	}else{
+	}else{ untested();
 		qDebug() << "error with" << cstr;
 		message(QucsWarningMsg,
 			"Format Error:\nUnknown component!\n"
@@ -676,15 +749,15 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 
 #if 0 // legacy cruft?
 	// BUG: don't use schematic.
-	if(Command* cmd=command(e)){
+	if(Command* cmd=command(e)){ untested();
 		p->loadCommand(Line, cmd);
-	}else if(Component* c=component(e)){
-		if(!p->parseComponentObsoleteCallback(Line, c)) {
+	}else if(Component* c=component(e)){ untested();
+		if(!p->parseComponentObsoleteCallback(Line, c)) { untested();
 			QMessageBox::critical(0, QObject::tr("Error"),
 					QObject::tr("Format Error:\nWrong 'component' line format!"));
 			delete e;
 			return 0;
-		}else{
+		}else{ untested();
 		}
 		cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
 		int x = c->tx, y = c->ty;
@@ -701,29 +774,29 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 // was Schematic::loadProperties
 void LegacySchematicLanguage::loadProperties(QTextStream& s_in,
 		SchematicSymbol& m) const
-{
+{ untested();
 	auto stream=&s_in;
 	bool ok = true;
 	QString Line, cstr, nstr;
-	while(!stream->atEnd()) {
+	while(!stream->atEnd()) { untested();
 		Line = stream->readLine();
 		if(Line.at(0) == '<') if(Line.at(1) == '/') return; //?!
 		Line = Line.trimmed();
 		if(Line.isEmpty()) continue;
 
 		// move up.
-		if(Line.size() < 2){
+		if(Line.size() < 2){ untested();
 			throw "incomplete_exception1";
-		}else if(Line.at(0) != '<') {
+		}else if(Line.at(0) != '<') { untested();
 			throw "incomplete_exception1";
-		}else if(Line.at(Line.length()-1) != '>') {
+		}else if(Line.at(Line.length()-1) != '>') { untested();
 			throw "incomplete_exception2";
 		}
 		Line = Line.mid(1, Line.length()-2);   // cut off start and end character
 
 		cstr = Line.section('=',0,0);    // property type
 		nstr = Line.section('=',1,1);    // property value
-		if(cstr == "View") {
+		if(cstr == "View") { untested();
 			incomplete(); // setParameter
 		 	QString tmp;
 			tmp=nstr.section(',',0,0).toInt(&ok);
@@ -735,10 +808,10 @@ void LegacySchematicLanguage::loadProperties(QTextStream& s_in,
 			tmp=nstr.section(',',2,2).toInt(&ok);
 			m.setParameter("ViewY2", tmp.toStdString());
 
-		// 					Scale  = nstr.section(',',4,4).toDouble(&ok); if(ok) {
+		// 					Scale  = nstr.section(',',4,4).toDouble(&ok); if(ok) { untested();
 		// 						tmpViewX1 = nstr.section(',',5,5).toInt(&ok); if(ok)
 		// 							tmpViewY1 = nstr.section(',',6,6).toInt(&ok); }}}}}
-		} else if(cstr == "Grid") {
+		} else if(cstr == "Grid") { untested();
 			m.setParameter("GridX", nstr.section(',',0,0).toStdString());
 			m.setParameter("GridY", nstr.section(',',1,1).toStdString());
 			m.setParameter("GridOn",nstr.section(',',2,2).toStdString());
@@ -750,7 +823,7 @@ void LegacySchematicLanguage::loadProperties(QTextStream& s_in,
 		       ||cstr == "FrameText3"
 		       ||cstr == "showFrame"
 		       ||cstr == "DataDisplay"
-		       ||cstr == "OpenDisplay"){
+		       ||cstr == "OpenDisplay"){ untested();
 			m.setParameter(cstr.toStdString(), nstr.toStdString());
 		}
 		// else if(cstr == "OpenDisplay") // bool SimOpenDpl
@@ -760,14 +833,14 @@ void LegacySchematicLanguage::loadProperties(QTextStream& s_in,
 		//else if(cstr == "FrameText1") misc::convert2Unicode(Frame_Text1 = nstr);
 		//else if(cstr == "FrameText2") misc::convert2Unicode(Frame_Text2 = nstr);
 		//else if(cstr == "FrameText3") misc::convert2Unicode(Frame_Text3 = nstr);
-		else {
+		else { untested();
 			throw "incomplete_exception" + cstr.toStdString();
 		}
-		if(!ok) {
+		if(!ok) { untested();
 			incomplete();
 					//QObject::tr("Format Error:\nNumber expected in property field!"));
 			throw "something wrong";
-		}else{
+		}else{ untested();
 		}
 	}
 

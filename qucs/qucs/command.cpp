@@ -50,14 +50,7 @@ Command::Command(Command const& p)
 	Props.append(new Property(*i));
   }
 
-  for(auto i : p.Ports){
-    unreachable(); //?
-//	Ports.append(new Port(*i));
-  }
-
-//  setType(p.type()); // hmmm
-
-  Name=p.Name;
+  Name = p.Name;
 }
 
 /*!

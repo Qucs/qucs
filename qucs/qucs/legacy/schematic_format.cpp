@@ -83,7 +83,7 @@ static void wirehack(Wire const* w, DocumentStream& d)
           // d << QString::number(Label->x1_())+" "+QString::number(Label->y1_())+" ";
           // d << QString::number(Label->cx_()-x1 + Label->cy_()-y1);
           // d << " \""+Label->initValue+"\">";
-  } else { untested();
+  } else {
 	  d << " \"\" 0 0 0 \"\">\n";
   }
 }
@@ -198,7 +198,7 @@ void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& 
 	stream << "</Components>\n";
 
 	stream << "<Wires>\n";    // save all wires
-	for(Wire const* pw : wires(m)){ untested();
+	for(Wire const* pw : wires(m)){
 		wirehack(pw, stream);
 //		stream << "  " << pw->save() << "\n";
 	}
