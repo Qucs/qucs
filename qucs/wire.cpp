@@ -142,7 +142,7 @@ void Wire::paint(ViewPainter *p) const
 // ----------------------------------------------------------------
 void Wire::setName(const QString& Name_, const QString& Value_, int delta_, int x_, int y_)
 {
-#if 0
+#if 0 // not here. this is graphics stuff.
   qDebug() << "Wirelabelparse?!" << Name_;
   if(Name_.isEmpty() && Value_.isEmpty()) {
     if(Label) delete Label;
@@ -161,73 +161,20 @@ void Wire::setName(const QString& Name_, const QString& Value_, int delta_, int 
 #endif
 }
 
-// ----------------------------------------------------------------
-// Converts all necessary data of the wire into a string. This can be used to
-// save it to an ASCII file or to transport it via the clipboard.
-QString Wire::save()
+void Wire::setParameter(QString const& name, QString const& value)
 {
-  incomplete();
-  return "nuts";
-#if 0
-  QString s  = "<"+QString::number(x1)+" "+QString::number(y1);
-          s += " "+QString::number(x2)+" "+QString::number(y2);
-  if(Label) {
-          s += " \""+Label->name()+"\" ";
-          s += QString::number(Label->x1_())+" "+QString::number(Label->y1_())+" ";
-          s += QString::number(Label->cx_()-x1 + Label->cy_()-y1);
-          s += " \""+Label->initValue+"\">";
+  if(name=="nx"){
+    nx = value;
+  }else if(name=="ny"){
+    ny = value;
+  }else if(name=="delta"){
+    delta = value;
+  }else if(name=="netname"){
+    _netname = value;
+  }else{ untested();
   }
-  else { s += " \"\" 0 0 0 \"\">"; }
-  return s;
-#endif
 }
-
-// ----------------------------------------------------------------
-// move to schematic_lang.
-bool Wire::obsolete_load(const QString& _s)
-{
-  bool ok;
-  QString s = _s;
-
-  if(s.at(0) != '<') return false;
-  if(s.at(s.length()-1) != '>') return false;
-  s = s.mid(1, s.length()-2);   // cut off start and end character
-
-  QString n;
-  n  = s.section(' ',0,0);    // x1
-  x1() = n.toInt(&ok);
-  if(!ok) return false;
-
-  n  = s.section(' ',1,1);    // y1
-  y1() = n.toInt(&ok);
-  if(!ok) return false;
-
-  n  = s.section(' ',2,2);    // x2
-  x2() = n.toInt(&ok);
-  if(!ok) return false;
-
-  n  = s.section(' ',3,3);    // y2
-  y2() = n.toInt(&ok);
-  if(!ok) return false;
-
-  n = s.section('"',1,1);
-  if(!n.isEmpty()) {     // is wire labeled ?
-    int nx = s.section(' ',5,5).toInt(&ok);   // x coordinate
-    if(!ok) return false;
-
-    int ny = s.section(' ',6,6).toInt(&ok);   // y coordinate
-    if(!ok) return false;
-
-    int delta = s.section(' ',7,7).toInt(&ok);// delta for x/y root coordinate
-    if(!ok) return false;
-
-	 qDebug() << "wire name" << n;
-    setName(n, s.section('"',3,3), delta, nx, ny);  // Wire Label
-  }
-
-  return true;
-}
-
+//
 // ----------------------------------------------------------------
 QRectF Wire::boundingRect() const
 { itested();
@@ -302,6 +249,10 @@ Node* Wire::connectNode(unsigned i, NodeMap&l)
 
   n->connectionsAppend(this);
   mp.connect(n);
+
+  if(_netname!=""){
+    n->setNetLabel(_netname);
+  }
   return n;
 }
 // ----------------------------------------------------------------

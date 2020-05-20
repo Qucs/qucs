@@ -73,10 +73,10 @@ public:
 	  return Connections.end();
   }
 #endif
-  void setName(QString const& x){
-	  incomplete();
-//	  setLabel(x);
-  }
+// /  void setName(QString const&);
+// /	  incomplete();
+// ///	  setLabel(x);
+// /  }
 
   // BUG
   void setName(const QString&, const QString&, int x_=0, int y_=0);
