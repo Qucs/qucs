@@ -110,13 +110,11 @@ public:
 	QString const& devType() const;
 
 public:
-	void parse(DocumentStream& stream, SchematicLanguage const*l=nullptr);
 	void setOwner(Element* s);
 	int  prepareNetlist(DocumentStream&, QStringList&, QPlainTextEdit*,
 			bool creatingLib, NetLang const&);
 	Component* loadComponent(const QString& _s, Component* c) const;
 	Command* loadCommand(const QString& _s, Command* c) const;
-	bool loadDocument(QFile& /*BUG*/ file);
 //	bool loadPaintings(QTextStream*, PaintingList* p=NULL);
 	bool loadProperties(QTextStream*);
 	bool loadComponents(QTextStream*);
@@ -209,9 +207,14 @@ private:
 	QFileInfo FileInfo;
 	QString DevType; // BUG move to parent
 
+public:
+	void attachDoc(SchematicDoc*d){
+		assert(!_doc_);
+		_doc_ = d;
+	}
+
 private:
 	SchematicDoc* _doc_;
-
 
 public: // for now.
 	friend class SchematicDoc;

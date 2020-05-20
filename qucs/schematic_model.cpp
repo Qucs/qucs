@@ -48,14 +48,14 @@ SchematicModel::SchematicModel(SchematicDoc* s)
 }
 
 void SchematicModel::clear()
-{
+{ untested();
 	incomplete(); // disconnect components
 	components().clear();
 
 	diagrams().clear();
 	{ // clearWires
 		// (in legacy code) deleting a wire may create another wire.
-		while(wires().size()){
+		while(wires().size()){ untested();
 			trace2("clear wire", wires().size(), nodes().size());
 			erase(wires().first());
 		}
@@ -82,6 +82,7 @@ namespace{
 class ins : public SchematicSymbol{
 public:
 	ins(SchematicModel* m) : _m(m) { untested();
+		assert(false); // still used?
 		_subckt=m;
 		assert(m);
 	}
@@ -131,23 +132,6 @@ private:
 }
 
 // BUG: not here.
-void SchematicModel::parse(DocumentStream& s, SchematicLanguage const* L)
-{ untested();
-	assert(false);
-	incomplete(); //parse directly into non-temporary object.
-	if(!L){ untested();
-		auto D=doclang_dispatcher["leg_sch"];
-		L = dynamic_cast<SchematicLanguage const*>(D);
-	}else{ untested();
-	}
-	assert(L);
-	ins i(this); // BUG
-	while(!s.atEnd()){ untested();
-		qDebug() << "entering parse";
-		L->parse(s, i);
-		assert(s.atEnd()); // happens with legacy lang
-	}
-}
 
 /// ACCESS FUNCTIONS.
 // these are required to move model methods over to SchematicModel
@@ -171,12 +155,12 @@ void SchematicModel::pushBack(Element* what)
 		trace4("pushback Wire", w->x1__(), w->y1__(), w->x2__(), w->y2__());
 		simpleInsertWire(w);
 //		insertWire(w);?? wtf?
-	}else if(auto s=dynamic_cast<SchematicSymbol*>(what)){ untested();
+	}else if(auto s=dynamic_cast<SchematicSymbol*>(what)){
 		(void)s;
 		assert(false);
 		//delete _symbol;
 		//_symbol = s;
-	}else{ untested();
+	}else{
 		incomplete();
 	}
 
@@ -234,20 +218,20 @@ void SchematicModel::insertSymbolNodes(Symbol *c, bool noOptimize)
 // // possibly not needed. all actions must be undoable anyway
 // -> use detach, store reference in UndoAction.
 void SchematicModel::erase(Element* what)
-{
+{ untested();
 	Element* e = detach(what);
 	delete(e);
 }
 
 // TODO: take iterator.
 Element* SchematicModel::detach(Element* what)
-{
+{ untested();
 	if(auto c=component(what)){ untested();
 		disconnect(c);
 		components().removeRef(c);
 	}else if(auto d=diagram(what)){ untested();
 		diagrams().removeRef(d);
-	}else if(auto w=wire(what)){
+	}else if(auto w=wire(what)){ untested();
 		disconnect(w);
 		wires().removeRef(w);
 	}else{ untested();
@@ -285,7 +269,7 @@ NodeMap& SchematicModel::nodes()
 //}
 
 PaintingList& SchematicModel::paintings()
-{
+{ untested();
 	return Paintings;
 }
 //
@@ -482,32 +466,6 @@ bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
 	return true;
 }
 
-bool SchematicModel::loadDocument(QFile& /*BUG*/ file)
-{ untested();
-  QString Line;
-  DocumentStream stream(&file);
-
-  // read header **************************
-  do { untested();
-    if(stream.atEnd()) { untested();
-      file.close(); // BUG
-      return true;
-    }
-
-    Line = stream.readLine();
-  } while(Line.isEmpty());
-
-  if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
-    file.close();
-    throw "incomplete_exception";
-  }
-
-  Line = Line.mid(16, Line.length()-17);
-
-  parse(stream);
-  file.close();
-  return true;
-}
 
 // called from PushBack...
 void SchematicModel::simpleInsertComponent(Component *c)
@@ -589,21 +547,21 @@ void SchematicModel::detachFromNode(Element* what, Node* from)
 
 
 void SchematicModel::disconnect(Symbol* c)
-{
+{ untested();
 	// drop port connections
-	for(unsigned i=0; i<c->numPorts(); ++i) {
+	for(unsigned i=0; i<c->numPorts(); ++i) { untested();
 		trace1("sm:ds", i);
 		Node* nn = c->disconnectNode(i, nodes());
 		assert(nn);
 
 		if(!nn){ untested();
 			unreachable();
-		}else if(nn->connectionsCount()==0){
+		}else if(nn->connectionsCount()==0){ untested();
 			nodes().erase(nn); // possibly garbage collect only.
 		}else if(nn->connectionsCount()==2){ untested();
 			// done in GUI, must be undoable.
 			// oneTwoWires(nn);  // two wires -> one wire
-		}else{
+		}else{ untested();
 		}
 	}
 }
@@ -635,7 +593,7 @@ QString SchematicModel::portValue(unsigned i) const
 	assert(i<numPorts());
 	if(_ports[i]){
 		return _ports[i]->netLabel();
-	}else{
+	}else{ untested();
 		return "open";
 	}
 }
@@ -675,8 +633,6 @@ void SchematicModel::updateNetLabels() const
 #endif
 }
 
-ModelAccess::ModelAccess(){}
-//
 // needed?
 void SchematicModel::merge(SchematicModel& src)
 { untested();
