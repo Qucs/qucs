@@ -39,6 +39,7 @@ CPP_SRC = \
 	schematic_action.cpp \
 	schematic_component.cpp \
 	schematic.cpp \
+	schematic_doc.cpp \
 	schematic_element.cpp \
 	schematic_file.cpp \
 	schematic_model.cpp \

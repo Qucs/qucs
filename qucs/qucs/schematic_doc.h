@@ -86,24 +86,14 @@ struct SubFile {
 };
 typedef QMap<QString, SubFile> SubMap;
 
-#if QT_MAJOR_VERSION < 5
-this_does_no_longer_work
-TODO: cleanup all mentions of Qt<5 and Q3ScrollView
-typedef Element ElementGraphics;
-#define SchematicBase Q3ScrollView
-#else
-// strictly, this should also work with qt4.
 class ElementGraphics;
-#define SchematicBase QGraphicsView
-#endif
 
 // TODO: rename to SchematicDocument
 // TODO: add SymbolDocument
-// TODO: move to schematic_doc.h
-class SchematicDoc : public SchematicBase, public QucsDoc {
+class SchematicDoc : public QGraphicsView, public QucsDoc {
   Q_OBJECT
 private:
-  SchematicDoc(SchematicDoc const&x): SchematicBase(), QucsDoc(x), DocModel(this){ unreachable(); }
+  SchematicDoc(SchematicDoc const&x) = delete;
 public:
   typedef QList<ElementGraphics*> EGPList;
 public:
@@ -123,7 +113,8 @@ public:
   bool sizeOfFrame(int&, int&);
 private: //temporary/obsolete
   void sizeOfAll(int&a, int&b, int&c, int&d){
-	  return DocModel.sizeOfAll(a, b, c, d, textCorr());
+	  assert(_model);
+	  return _model->sizeOfAll(a, b, c, d, textCorr());
   }
 public:
   void pushBack(Element* what);
@@ -173,7 +164,8 @@ public:
 
   // TODO: take iterator?
   Element* detachFromModel(Element* e){
-	  return DocModel.detach(e);
+	  assert(_model);
+	  return _model->detach(e);
   }
 
   void deselectElements();
@@ -182,42 +174,33 @@ public:
   // find_symbol
   Component* find_component(QString const&);
 
-#ifdef USE_SCROLLVIEW
-  // selection does not work, hence this hack
-  ComponentList& components(){
-     return DocModel.components();
-  }
-  NodeMap& nodes(){
-	  return DocModel.nodes();
-  }
-  DiagramList& diagrams(){
-	  return DocModel.diagrams();
-  }
-  WireList& wires(){
-	  return DocModel.wires();
-  }
-#endif
-
   ComponentList const& components() const{
-	  return DocModel.components();
+	  assert(_model);
+	  return _model->components();
   }
   NodeMap const& nodes() const{
-	  return DocModel.nodes();
+	  assert(_model);
+	  return _model->nodes();
   }
   WireList const& wires() const{
-	  return DocModel.wires();
+	  assert(_model);
+	  return _model->wires();
   }
   DiagramList const& diagrams() const{
-	  return DocModel.diagrams();
+	  assert(_model);
+	  return _model->diagrams();
   }
   PaintingList& paintings(){
-	  return DocModel.paintings();
+	  assert(_model);
+	  return _model->paintings();
   }
   PaintingList const& paintings() const{
-	  return DocModel.paintings();
+	  assert(_model);
+	  return _model->paintings();
   }
   unsigned numberOfNets() const{
-	  return DocModel.numberOfNets();
+	  assert(_model);
+	  return _model->numberOfNets();
   }
   
 	// transition
@@ -281,7 +264,10 @@ public:
   QVector<QString *> undoSymbol;    // undo stack for circuit symbol
 
   /*! \brief Get (schematic) file reference */
-  QFileInfo getFileInfo (void) { return DocModel.getFileInfo();}
+  QFileInfo getFileInfo (void) {
+	  assert(_model);
+	  return _model->getFileInfo();
+  }
   /*! \brief Set reference to file (schematic) */
 
 signals:
@@ -345,44 +331,55 @@ private:
    *****  "Components".                                           *****
    ******************************************************************** */
 
-public:
+public: // mostly not here
   Node* insertNode(int x, int y, Element* e){
-	  return DocModel.insertNode(x, y, e);
+	  assert(_model);
+	  return _model->insertNode(x, y, e);
   }
   Node* selectedNode(int, int);
 
   int   insertWireNode1(Wire* w){
-	  return DocModel.insertWireNode1(w);
+	  assert(_model);
+	  return _model->insertWireNode1(w);
   }
   bool  connectHWires1(Wire* w){
-	  return DocModel.connectHWires1(w);
+	  assert(_model);
+	  return _model->connectHWires1(w);
   }
   bool  connectVWires1(Wire* w){
-	  return DocModel.connectVWires1(w);
+	  assert(_model);
+	  return _model->connectVWires1(w);
   }
   int   insertWireNode2(Wire* w){
-	  return DocModel.insertWireNode2(w);
+	  assert(_model);
+	  return _model->insertWireNode2(w);
   }
   bool  connectHWires2(Wire* w){
-	  return DocModel.connectHWires2(w);
+	  assert(_model);
+	  return _model->connectHWires2(w);
   }
   bool  connectVWires2(Wire* w){
-	  return DocModel.connectVWires2(w);
+	  assert(_model);
+	  return _model->connectVWires2(w);
   }
   int   insertWire(Wire* w){
-	  return DocModel.insertWire(w);
+	  assert(_model);
+	  return _model->insertWire(w);
   }
   void  selectWireLine(ElementGraphics*, Node*, bool);
   Wire* selectedWire(int, int);
   Wire* splitWire(Wire* w, Node* n){
-	  return DocModel.splitWire(w, n);
+	  assert(_model);
+	  return _model->splitWire(w, n);
   }
   bool  oneTwoWires(Node* n){
-	  return DocModel.oneTwoWires(n);
+	  assert(_model);
+	  return _model->oneTwoWires(n);
   }
   void  deleteWire(Wire* w){
 	  //called from mouse actions...?
-	  return DocModel.deleteWire(w);
+	  assert(_model);
+	  return _model->deleteWire(w);
   }
 
   Marker* setMarker(int, int);
@@ -421,7 +418,8 @@ public:
   void       setComponentNumber(Component*);
   void       insertRawComponent(Component*, bool noOptimize=true);
   void       recreateSymbol(Symbol* s){
-	  DocModel.recreateSymbol(s);
+	  assert(_model);
+	  _model->recreateSymbol(s);
   }
   void       insertElement(Element*);
 private: // old legacy stuff.
@@ -462,10 +460,26 @@ public: // not here.
   bool loadDocument();
   void highlightWireLabels (void);
 
+public:
+	bool loadDocument(QFile& /*BUG*/ file);
+	bool load(QTextStream& stream);
+
+private:
+	void parse(DocumentStream& stream, SchematicLanguage const*l=nullptr);
+
 private: // legacy, don't use
-  void simpleInsertComponent(Component* c) { return DocModel.simpleInsertComponent(c); }
-  void simpleInsertCommand(Command* c) { return DocModel.simpleInsertCommand(c); }
-  void simpleInsertWire(Wire* w) { return DocModel.simpleInsertWire(w); }
+  void simpleInsertComponent(Component* c) {
+	  assert(_model);
+	  return _model->simpleInsertComponent(c);
+  }
+  void simpleInsertCommand(Command* c) {
+	  assert(_model);
+	  return _model->simpleInsertCommand(c);
+  }
+  void simpleInsertWire(Wire* w) {
+	  assert(_model);
+	  return _model->simpleInsertWire(w);
+  }
 private:
   void simpleInsertElement(Element*);
 
@@ -485,7 +499,8 @@ private:
 
 public:
   void throughAllNodes(unsigned& count) const{
-	  return DocModel.throughAllNodes(count);
+	  assert(_model);
+	  return _model->throughAllNodes(count);
   }
 
 private:
@@ -502,22 +517,26 @@ private:
 
 public: // for now
 	Command* loadCommand(const QString& _s, Command* c) const{
-		return DocModel.loadCommand(_s, c);
+		assert(_model);
+		return _model->loadCommand(_s, c);
 	}
 	Component* loadComponent(const QString& _s, Component* c) const{
-		return DocModel.loadComponent(_s, c);
+		assert(_model);
+		return _model->loadComponent(_s, c);
 	}
    int  prepareNetlist(DocumentStream& a, QStringList& b, QPlainTextEdit* c,
 			bool creatingLib, NetLang const& nl){
 		assert(!creatingLib); // ?!
- 	  return DocModel.prepareNetlist(a,b,c, creatingLib, nl);
+ 	  return _model->prepareNetlist(a,b,c, creatingLib, nl);
    }
   bool createLibNetlist(DocumentStream& a, QPlainTextEdit* b, int c, NetLang const& nl){
-		return DocModel.createLibNetlist(a,b,c, nl);
+	  assert(_model);
+		return _model->createLibNetlist(a,b,c, nl);
   }
   // used in main?
   QString createNetlist(DocumentStream& a, int b, NetLang const& nl){
-	  return DocModel.createNetlist(a, b, nl);
+	  assert(_model);
+	  return _model->createNetlist(a, b, nl);
   }
 
 	QString getParameter(std::string const& key) const;
@@ -583,17 +602,17 @@ public: // need access to SchematicModel. grr
   friend class ImageWriter;
 
 private:
-public: // BUG. use symbol
-  SchematicModel DocModel;
+  SchematicSymbol* _root;
+  SchematicModel* _model;
 private:
-  bool SymbolMode;
+  bool SymbolMode; // BUG
 
 
 private: // obsolete.
-  void       deleteComp(Component*c){
-	  unreachable();
-	  return DocModel.erase(c);
-  }
+//  void       deleteComp(Component*c){
+//	  unreachable();
+//	  return DocModel.erase(c);
+//  }
 }; // SchematicDocument
 
 // ---------------------------------------------------

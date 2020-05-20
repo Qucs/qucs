@@ -153,9 +153,9 @@ Schematic *openSchematic(QString schematic)
 
 // BUG: move to SchematicModel
 namespace{
-class sda : public ModelAccess{ // Symbol?
+class sda : public SchematicSymbol{
 public:
-  sda() {
+  explicit sda() : SchematicSymbol() {
     unsigned u;
 
     new_subckt();

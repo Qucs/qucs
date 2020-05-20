@@ -198,7 +198,8 @@ bool SchematicDoc::pasteFromClipboard(DocumentStream *stream, EGPList* pe)
   // read content in schematic edit mode *************************
   SchematicModel x(NULL);
   try{
-    x.parse(*stream);
+    incomplete();
+//    x.parse(*stream);
   }catch( std::string ){
     incomplete();
 //    messagebox?
@@ -209,7 +210,8 @@ bool SchematicDoc::pasteFromClipboard(DocumentStream *stream, EGPList* pe)
 #ifndef USE_SCROLLVIEW
   x.toScene(*scene(), pe);
 #endif
-  DocModel.merge(x);
+  assert(_model);
+  _model->merge(x);
 
 #endif
   return true;
@@ -368,32 +370,6 @@ int SchematicDoc::saveSymbolJSON()
 }
 
 // BUG: move to SchematicModel
-namespace{
-class sda : public ModelAccess{
-public:
-  sda(SchematicModel const& m, SchematicDoc const& s) : _m(m), _s(s) {
-  }
-
-private:
-  Port& port(unsigned){ unreachable(); return *new Port(0,0); }
-  unsigned numPorts() const{ return 0; }
-private: // SchematicSymbol
-  SchematicModel const& schematicModel() const{
-    incomplete();
-    return _m;
-  }
-  SchematicModel* schematicModel() {
-    return nullptr;
-  }
-  std::string getParameter(std::string const&) const{
-    incomplete();
-    return "incomplete";
-  }
-private:
-  SchematicModel const& _m;
-  SchematicDoc const& _s;
-};
-}
 
 // -------------------------------------------------------------
 void SchematicDoc::saveDocument() const
@@ -406,11 +382,12 @@ void SchematicDoc::saveDocument() const
   file.open(QIODevice::WriteOnly | QIODevice::Truncate);
   DocumentStream stream(&file);
 
-  sda a(DocModel, *this);
+//  sda a(DocModel, *this);
 
   // TODO: provide selection GUI
   auto D=docfmt_dispatcher["leg_sch"];
-  D->save(stream, a);
+  assert(_root);
+  D->save(stream, *_root);
 }
 
 // -------------------------------------------------------------
@@ -711,10 +688,10 @@ bool SchematicDoc::loadDocument()
                   << QObject::tr("Cannot load document: ")+docName();
     return false;
   }else{
-    DocModel.setFileInfo(docName());
+    assert(_model);
+    _model->setFileInfo(docName());
+    loadDocument(file);
 
-    DocModel.loadDocument(file);
-    // scene()->loadModel(DocModel); // ??
 #ifndef USE_SCROLLVIEW
     QGraphicsScene& s=*scene();
 //    DocModel.toScene(s);
@@ -812,7 +789,9 @@ static void parser_temporary_kludge(SchematicModel& m, ModelStream& stream)
 // Abused for "undo" function.
 bool SchematicDoc::rebuild(QString *s)
 {
-  incomplete();
+  incomplete(); // obsolete
+
+#if 0
   DocModel.clear();
 
   QString Line;
@@ -822,6 +801,7 @@ bool SchematicDoc::rebuild(QString *s)
 
   // read content *************************
   DocModel.parse(stream);;
+#endif
 
   return true;
 }
