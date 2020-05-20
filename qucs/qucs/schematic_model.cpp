@@ -313,7 +313,7 @@ WireList const& SchematicModel::wires() const
 }
 
 NodeMap const& SchematicModel::nodes() const
-{ untested();
+{
 	return Nodes;
 }
 

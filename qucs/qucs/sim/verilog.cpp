@@ -145,7 +145,7 @@ void VerilogSchematicFormat::save(DocumentStream& stream, SchematicSymbol const&
 	  printSymbol(pc, stream); // BUG: use V::printItem
 	                           // but uses different port names...
   }
-  for(auto w : wires(m)){ untested();
+  for(auto w : wires(m)){
 	  printSymbol(w, stream); // BUG: use V::printItem
   }
   for(auto const& n : nodes(m)){

@@ -80,7 +80,7 @@ typedef Element ElementGraphics;
 class ElementGraphics : public QGraphicsItem {
 private:
 	ElementGraphics();
-	ElementGraphics(ElementGraphics const&){unreachable();}
+	ElementGraphics(ElementGraphics const&) = delete;
 public:
 	explicit ElementGraphics(Element* e);
 	~ElementGraphics(){ }

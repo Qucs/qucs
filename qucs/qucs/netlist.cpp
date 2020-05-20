@@ -32,6 +32,8 @@ Net* NetList::newNet()
 
 	assert(_l[idx]->size() == 0);
 	assert(_l[idx]);
+
+	// incomplete. need to negotiate more.
 	_l[idx]->setLabel("_net" + std::to_string(idx));
 	return _l[idx];
 }

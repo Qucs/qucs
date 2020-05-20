@@ -119,7 +119,7 @@ void Subcircuit::createSymbol() // SchematicModel const& scope)
           ip.remove();
       }
     }
-  }else{ untested();
+  }else{
     No = SchematicDoc::testFile(FileName);
     if(No < 0)  No = 0;
 	 Ports.clear();
@@ -129,7 +129,7 @@ void Subcircuit::createSymbol() // SchematicModel const& scope)
 
 // ---------------------------------------------------------------------
 void Subcircuit::remakeSymbol(int No)
-{ untested();
+{
 	incomplete();
   int h = 30*((No-1)/2) + 15;
   Lines.append(new Line(-15, -h, 15, -h,QPen(Qt::darkBlue,2)));
@@ -139,7 +139,7 @@ void Subcircuit::remakeSymbol(int No)
   Texts.append(new Text(-10, -6,"sub"));
 
   int i=0, y = 15-h;
-  while(i<No) { untested();
+  while(i<No) {
     i++;
     Lines.append(new Line(-30,  y,-15,  y,QPen(Qt::darkBlue,2)));
     Ports.append(new Port(-30,  y));

@@ -52,10 +52,7 @@ public:
   void setName(const QString&, const QString&, int delta_=0, int x_=0, int y_=0);
 
   void    rotate();
-  QString save();
-
-// private: not yet
-  bool    obsolete_load(const QString&);
+  QString save(){unreachable(); return "";}
 
 public: // Node xs
   bool hasNet() const { return _port0.connected(); }
@@ -63,6 +60,9 @@ public: // Node xs
   Net const* getNet() const;
 
   QString const& netLabel() const;
+
+private: // Symbol
+  void setParameter(QString const& name, QString const& value);
 
 private: // symbol Node stuff
   Node* connectNode(unsigned idx, NodeMap&) override;
@@ -124,6 +124,10 @@ private:
 private: // avoid access to obsolete Element members
   Port _port0;
   Port _port1;
+
+private:
+  QString nx, ny, delta;
+  QString _netname;
 };
 
 #endif
