@@ -1449,7 +1449,7 @@ bool QucsApp::gotoPage(const QString& Name)
     if(!getDoc(0)->DocChanged)
       delete DocumentTab->widget(0);
 
-  view->drawn = false;
+  //view->drawn = false;
   return true;
 }
 
@@ -1642,7 +1642,7 @@ void QucsApp::slotFileSaveAll()
   if (tabType == "Schematic") {
     ((SchematicBase*)DocumentTab->currentWidget())->viewport()->update();
   }
-  view->drawn = false;
+  //view->drawn = false;
   statusBar()->showMessage(tr("Ready."));
 
   // refresh the schematic file path
@@ -1872,7 +1872,7 @@ void QucsApp::slotChangeView(QWidget *w)
   }
 
   Doc->becomeCurrent(true);
-  view->drawn = false;
+  // view->drawn = false;
 
   HierarchyHistory.clear();
   popH->setEnabled(false);
@@ -1906,7 +1906,7 @@ void QucsApp::slotFileSettings ()
     SettingsDialog * d = new SettingsDialog ((SchematicDoc *) w);
     d->exec ();
   }
-  view->drawn = false;
+  // view->drawn = false;
 }
 
 // --------------------------------------------------------------
@@ -1916,7 +1916,7 @@ void QucsApp::slotApplSettings()
 
   QucsSettingsDialog *d = new QucsSettingsDialog(this);
   d->exec();
-  view->drawn = false;
+  //view->drawn = false;
 }
 
 // --------------------------------------------------------------
@@ -2264,7 +2264,7 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
       file.close();
       if(!d->load()) {
         delete d;
-        view->drawn = false;
+        // view->drawn = false;
         return;
       }
     }
@@ -2400,6 +2400,7 @@ void QucsApp::slotOpenContent(const QModelIndex &idx)
 // Is called when the mouse is clicked within the Content QListView.
 void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
 {
+  incomplete();
   editText->setHidden(true); // disable text edit of component property
 
   if(!idx.isValid()) {   // mouse button pressed not over an item ?
@@ -2458,13 +2459,13 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
   Comp->Props.first()->Value = idx.sibling(idx.row(), 0).data().toString();
   incomplete();
   // Symb->recreate(Scktmodel);
-  view->selElem = Comp;
+  // view->selElem = Comp;
 
-  if(view->drawn){
-    ((SchematicBase*)DocumentTab->currentWidget())->viewport()->update();
-  }else{
-  }
-  view->drawn = false;
+///   if(view->drawn){
+     ((SchematicBase*)DocumentTab->currentWidget())->viewport()->update();
+///   }else{
+///   }
+///   view->drawn = false;
   MouseMoveAction = &MouseActions::MMoveElement;
   MousePressAction = &MouseActions::MPressElement;
   MouseReleaseAction = 0;
@@ -2642,7 +2643,7 @@ void QucsApp::slotSymbolEdit()
     changeSchematicSymbolMode(SDoc);
     SDoc->becomeCurrent(true);
     SDoc->viewport()->update();
-    view->drawn = false;
+    // view->drawn = false;
   }
   // in a normal schematic, data display or symbol file
   else {
@@ -2659,7 +2660,7 @@ void QucsApp::slotSymbolEdit()
       changeSchematicSymbolMode(SDoc);
       SDoc->becomeCurrent(true);
       SDoc->viewport()->update();
-      view->drawn = false;
+      // view->drawn = false;
     }
   }
 }
@@ -2785,6 +2786,7 @@ void QucsApp::slot2PortMatching()
 // Is called if the "edit" action is clicked on right mouse button menu.
 void QucsApp::slotEditElement()
 {
+  incomplete();
   if(view->focusMEvent){
     view->editElement((SchematicDoc*)DocumentTab->currentWidget(), view->focusMEvent);
   }else{

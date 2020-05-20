@@ -405,12 +405,11 @@ QString Subcircuit::getSubcircuitFile(SchematicModel const* scp) const
 
 static SubMap FileList;
 
-// moved from schematic_file.cpp
 void Subcircuit::tAC(QTextStream& stream, SchematicModel const* schem, QStringList&
 		Collect, int& countInit, int NumPorts, NetLang const& nl)
 {untested();
-	assert(false);
-	unreachable(); // use decl
+	assert(false); // obsolete
+#if 0
 	stream << "# subckt declaration\n";
 	Component* pc=this;
 	int i;
@@ -482,6 +481,7 @@ void Subcircuit::tAC(QTextStream& stream, SchematicModel const* schem, QStringLi
 		FileList.insert(f, sub);
 	}else{ untested();
 	}
+#endif
 }
 
 namespace{

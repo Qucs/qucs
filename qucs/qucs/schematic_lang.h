@@ -27,14 +27,6 @@ public:
 };
 #endif
 
-class ModelAccess : public SchematicSymbol{
-protected:
-	explicit ModelAccess();
-private:
-//   SchematicModel const* subckt() const override{
-// 	  return SchematicSymbol::subckt();
-//   }
-};
 
 class SchematicLanguage : public DocumentLanguage{
 protected:
