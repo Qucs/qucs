@@ -1,16 +1,13 @@
 /***************************************************************************
-                               qucs_init.cpp
-                              ---------------
-    begin                : Sat May 1 2004
     copyright            : (C) 2004 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -40,7 +37,7 @@
 // BUG: this is the toolbar.
 void QucsApp::initActions()
 {
-  activeAction = 0;   // no active action
+  activeAction = nullptr;   // no active action
 
   // note: first argument of QAction() for backward compatibility Qt < 3.2
 
@@ -239,6 +236,7 @@ void QucsApp::initActions()
 	tr("Set on Grid\n\nSets selected elements on grid"));
   onGrid->setCheckable(true);
   connect(onGrid, SIGNAL(toggled(bool)), SLOT(slotOnGrid(bool)));
+  connect(onGrid, &QAction::toggled, this, &QucsApp::slotToggle);
 
   moveText = new QAction(tr("Move Component Text"), this);
   moveText->setShortcut(Qt::CTRL+Qt::Key_K);
@@ -247,6 +245,7 @@ void QucsApp::initActions()
 	tr("Move Component Text\n\nMoves the property text of components"));
   moveText->setCheckable(true);
   connect(moveText, SIGNAL(toggled(bool)), SLOT(slotMoveText(bool)));
+  connect(moveText, &QAction::toggled, this, &QucsApp::slotToggle);
 
   changeProps = new QAction(tr("Replace..."), this);
   changeProps->setShortcut(Qt::Key_F7);
@@ -279,13 +278,15 @@ void QucsApp::initActions()
 	tr("Paste\n\nPastes the clipboard contents to the cursor position"));
   editPaste->setCheckable(true);
   connect(editPaste, SIGNAL(toggled(bool)), SLOT(slotEditPaste(bool)));
+  connect(editPaste, &QAction::toggled, this, &QucsApp::slotToggle);
 
   editDelete = new QAction(QIcon((":/bitmaps/editdelete.png")), tr("&Delete"), this);
   editDelete->setShortcut(Qt::Key_Delete);
   editDelete->setStatusTip(tr("Deletes the selected components"));
   editDelete->setWhatsThis(tr("Delete\n\nDeletes the selected components"));
   editDelete->setCheckable(true);
-  connect(editDelete, SIGNAL(toggled(bool)), SLOT(slotEditDelete(bool)));
+  connect(editDelete, &QAction::toggled, this, &QucsApp::slotEditDelete);
+  connect(editDelete, &QAction::toggled, this, &QucsApp::slotToggle);
 
   editFind = new QAction(tr("Find..."), this);
   editFind->setShortcut(Qt::CTRL+Qt::Key_F);
@@ -439,6 +440,7 @@ void QucsApp::initActions()
   magPlus->setWhatsThis(tr("Zoom in\n\nZooms the current view"));
   magPlus->setCheckable(true);
   connect(magPlus, SIGNAL(toggled(bool)), SLOT(slotZoomIn(bool)));
+  connect(magPlus, &QAction::toggled, this, &QucsApp::slotToggle);
 
   magMinus = new QAction(QIcon((":/bitmaps/viewmag-.png")), tr("Zoom out"), this);
   magMinus->setShortcut(Qt::Key_Minus);
@@ -456,6 +458,7 @@ void QucsApp::initActions()
   select->setWhatsThis(tr("Select\n\nActivates select mode"));
   select->setCheckable(true);
   connect(select, SIGNAL(toggled(bool)), SLOT(slotSelect(bool)));
+  connect(select, &QAction::toggled, this, &QucsApp::slotToggle);
 
   selectAll = new QAction(tr("Select All"), this);
   selectAll->setShortcut(Qt::CTRL+Qt::Key_A);
@@ -478,6 +481,7 @@ void QucsApp::initActions()
     tr("Rotate\n\nRotates the selected component by 90\x00B0 counter-clockwise"));
   editRotate->setCheckable(true);
   connect(editRotate, SIGNAL(toggled(bool)), SLOT(slotEditRotate(bool)));
+  connect(editRotate, &QAction::toggled, this, &QucsApp::slotToggle);
 
   editMirror = new QAction(QIcon((":/bitmaps/mirror.png")), tr("Mirror about X Axis"), this);
   editMirror->setShortcut(Qt::CTRL+Qt::Key_J);
@@ -486,6 +490,7 @@ void QucsApp::initActions()
 	tr("Mirror about X Axis\n\nMirrors the selected item about X Axis"));
   editMirror->setCheckable(true);
   connect(editMirror, SIGNAL(toggled(bool)), SLOT(slotEditMirrorX(bool)));
+  connect(editMirror, &QAction::toggled, this, &QucsApp::slotToggle);
 
   editMirrorY = new QAction(QIcon((":/bitmaps/mirrory.png")), tr("Mirror about Y Axis"), this);
   editMirrorY->setShortcut(Qt::CTRL+Qt::Key_M);
@@ -494,6 +499,7 @@ void QucsApp::initActions()
 	tr("Mirror about Y Axis\n\nMirrors the selected item about Y Axis"));
   editMirrorY->setCheckable(true);
   connect(editMirrorY, SIGNAL(toggled(bool)), SLOT(slotEditMirrorY(bool)));
+  connect(editMirrorY, &QAction::toggled, this, &QucsApp::slotToggle);
 
   intoH = new QAction(QIcon((":/bitmaps/bottom.png")), tr("Go into Subcircuit"), this);
   intoH->setShortcut(Qt::CTRL+Qt::Key_I);
@@ -517,6 +523,7 @@ void QucsApp::initActions()
 	tr("Deactivate/Activate\n\nDeactivate/Activate the selected components"));
   editActivate->setCheckable(true);
   connect(editActivate, SIGNAL(toggled(bool)), SLOT(slotEditActivate(bool)));
+  connect(editActivate, &QAction::toggled, this, &QucsApp::slotToggle);
 
   insEquation = new QAction(QIcon((":/bitmaps/equation.png")),	tr("Insert Equation"), this);
   insEquation->setShortcut(Qt::CTRL+Qt::Key_Less);
@@ -525,6 +532,7 @@ void QucsApp::initActions()
 	tr("Insert Equation\n\nInserts a user defined equation"));
   insEquation->setCheckable(true);
   connect(insEquation, SIGNAL(toggled(bool)), SLOT(slotInsertEquation(bool)));
+  connect(insEquation, &QAction::toggled, this, &QucsApp::slotToggle);
 
   insGround = new QAction(QIcon((":/bitmaps/ground.png")), tr("Insert Ground"), this);
   insGround->setShortcut(Qt::CTRL+Qt::Key_G);
@@ -532,12 +540,14 @@ void QucsApp::initActions()
   insGround->setWhatsThis(tr("Insert Ground\n\nInserts a ground symbol"));
   insGround->setCheckable(true);
   connect(insGround, SIGNAL(toggled(bool)), SLOT(slotInsertGround(bool)));
+  connect(insGround, &QAction::toggled, this, &QucsApp::slotToggle);
 
   insPort = new QAction(QIcon((":/bitmaps/port.png")),	tr("Insert Port"), this);
   insPort->setStatusTip(tr("Inserts a port symbol"));
   insPort->setWhatsThis(tr("Insert Port\n\nInserts a port symbol"));
   insPort->setCheckable(true);
   connect(insPort, SIGNAL(toggled(bool)), SLOT(slotInsertPort(bool)));
+  connect(insPort, &QAction::toggled, this, &QucsApp::slotToggle);
 
   insWire = new QAction(QIcon((":/bitmaps/wire.png")),	tr("Wire"), this);
   insWire->setShortcut(Qt::CTRL+Qt::Key_E);
@@ -545,6 +555,7 @@ void QucsApp::initActions()
   insWire->setWhatsThis(tr("Wire\n\nInserts a wire"));
   insWire->setCheckable(true);
   connect(insWire, SIGNAL(toggled(bool)), SLOT(slotSetWire(bool)));
+  connect(insWire, &QAction::toggled, this, &QucsApp::slotToggle);
 
   insLabel = new QAction(QIcon((":/bitmaps/nodename.png")), tr("Wire Label"), this);
   insLabel->setShortcut(Qt::CTRL+Qt::Key_L);
@@ -552,6 +563,7 @@ void QucsApp::initActions()
   insLabel->setWhatsThis(tr("Wire Label\n\nInserts a wire or pin label"));
   insLabel->setCheckable(true);
   connect(insLabel, SIGNAL(toggled(bool)), SLOT(slotInsertLabel(bool)));
+  connect(insLabel, &QAction::toggled, this, &QucsApp::slotToggle);
 
   insEntity = new QAction(tr("VHDL entity"), this);
   insEntity->setShortcut(Qt::CTRL+Qt::Key_Space);
@@ -650,6 +662,7 @@ void QucsApp::initActions()
 	tr("Set Marker\n\nSets a marker on a diagram's graph"));
   setMarker->setCheckable(true);
   connect(setMarker, SIGNAL(toggled(bool)), SLOT(slotSetMarker(bool)));
+  connect(setMarker, &QAction::toggled, this, &QucsApp::slotToggle);
 
   showMsg = new QAction(tr("Show Last Messages"), this);
   showMsg->setShortcut(Qt::Key_F5);
@@ -664,6 +677,7 @@ void QucsApp::initActions()
   showNet->setWhatsThis(
 	tr("Show Last Netlist\n\nShows the netlist of the last simulation"));
   connect(showNet, SIGNAL(triggered()), SLOT(slotShowLastNetlist()));
+  connect(showNet, &QAction::toggled, this, &QucsApp::slotToggle);
 
   viewToolBar = new QAction(tr("Tool&bar"), this);
   viewToolBar->setCheckable(true);

@@ -124,33 +124,38 @@ void SchematicDoc::actionSelect(bool on)
 
 void SchematicDoc::actionOnGrid(bool on)
 {
-  performToggleAction(on, App->onGrid, &SchematicDoc::elementsOnGrid,
-		&MouseActions::MMoveOnGrid, &MouseActions::MPressOnGrid);
+  incomplete();
+//  performToggleAction(on, App->onGrid, &SchematicDoc::elementsOnGrid,
+//		&MouseActions::MMoveOnGrid, &MouseActions::MPressOnGrid);
 }
 
 void SchematicDoc::actionEditRotate(bool on)
 {
-  performToggleAction(on, App->editRotate, &SchematicDoc::rotateElements,
-		&MouseActions::MMoveRotate, &MouseActions::MPressRotate);
+  incomplete();
+//  performToggleAction(on, App->editRotate, &SchematicDoc::rotateElements,
+//		&MouseActions::MMoveRotate, &MouseActions::MPressRotate);
 }
 
 void SchematicDoc::actionEditMirrorX(bool on)
 {
-  performToggleAction(on, App->editMirror, &SchematicDoc::mirrorXComponents,
-		&MouseActions::MMoveMirrorX, &MouseActions::MPressMirrorX);
+  incomplete();
+//  performToggleAction(on, App->editMirror, &SchematicDoc::mirrorXComponents,
+//		&MouseActions::MMoveMirrorX, &MouseActions::MPressMirrorX);
 }
 
 void SchematicDoc::actionEditMirrorY(bool on)
 {
-  performToggleAction(on, App->editMirrorY, &SchematicDoc::mirrorYComponents,
-		&MouseActions::MMoveMirrorY, &MouseActions::MPressMirrorY);
+  incomplete();
+//  performToggleAction(on, App->editMirrorY, &SchematicDoc::mirrorYComponents,
+//		&MouseActions::MMoveMirrorY, &MouseActions::MPressMirrorY);
 }
 
 void SchematicDoc::actionEditActivate(bool on)
 {
-    performToggleAction (on, App->editActivate,
-        &SchematicDoc::activateSelectedComponents,
-        &MouseActions::MMoveActivate, &MouseActions::MPressActivate);
+  incomplete();
+ //   performToggleAction (on, App->editActivate,
+ //       &SchematicDoc::activateSelectedComponents,
+ //       &MouseActions::MMoveActivate, &MouseActions::MPressActivate);
 }
 
 
@@ -189,37 +194,42 @@ void SchematicDoc::actionEditDelete(bool on)
 
 void SchematicDoc::actionSetWire(bool on)
 {
-	performToggleAction(on, App->insWire, 0,
-			&MouseActions::MMoveWire1, &MouseActions::MPressWire1);
-
+  incomplete();
+//	performToggleAction(on, App->insWire, 0,
+//			&MouseActions::MMoveWire1, &MouseActions::MPressWire1);
+//
   // mouseAction = mouseActions().maSetWire;
 }
 
 void SchematicDoc::actionInsertLabel(bool on)
 {
-  performToggleAction(on, App->insLabel, 0,
-		&MouseActions::MMoveLabel, &MouseActions::MPressLabel);
+  incomplete();
+//  performToggleAction(on, App->insLabel, 0,
+//		&MouseActions::MMoveLabel, &MouseActions::MPressLabel);
   // mouseAction = mouseActions().maInsLabel;
 }
 
 void SchematicDoc::actionSetMarker(bool on)
 {
-  performToggleAction(on, App->setMarker, 0,
-		&MouseActions::MMoveMarker, &MouseActions::MPressMarker);
+  incomplete();
+//  performToggleAction(on, App->setMarker, 0,
+//		&MouseActions::MMoveMarker, &MouseActions::MPressMarker);
   // mouseAction = mouseActions().maSetMarker;
 }
 
 void SchematicDoc::actionMoveText(bool on)
 {
-  performToggleAction(on, App->moveText, 0,
-		&MouseActions::MMoveMoveTextB, &MouseActions::MPressMoveText);
+  incomplete();
+//  performToggleAction(on, App->moveText, 0,
+//		&MouseActions::MMoveMoveTextB, &MouseActions::MPressMoveText);
   // mouseAction = mouseActions().maMoveText;
 }
 
 void SchematicDoc::actionZoomIn(bool on)
 {
-    performToggleAction(on, App->magPlus, 0,
-		&MouseActions::MMoveZoomIn, &MouseActions::MPressZoomIn);
+  incomplete();
+//    performToggleAction(on, App->magPlus, 0,
+//		&MouseActions::MMoveZoomIn, &MouseActions::MPressZoomIn);
   // mouseAction = mouseActions().maZoomIn;
 }
 
