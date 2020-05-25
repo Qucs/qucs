@@ -178,15 +178,14 @@ QucsApp::~QucsApp()
 // ##########                                                   ##########
 // #######################################################################
 /**
- * @brief QucsApp::initView Setup the layour of all widgets
+ * @brief QucsApp::initView Setup the layout of all widgets
  */
 void QucsApp::initView()
 {
-
-
   // set application icon
   // APPLE sets the QApplication icon with Info.plist
 #ifndef __APPLE__
+  // BUG: platform.h
   setWindowIcon (QPixmap(":/bitmaps/big.qucs.xpm"));
 #endif
 
@@ -217,16 +216,19 @@ void QucsApp::initView()
   view = new MouseActions(*this);
 #endif
 
-  editText = new QLineEdit(this);  // for editing component properties
-  editText->setFrame(false);
-  editText->setHidden(true);
 
-  misc::setWidgetBackgroundColor(editText, QucsSettings.BGColor);
+  { // something about editText
+    editText = new QLineEdit(this);  // for editing component properties
+    editText->setFrame(false);
+    editText->setHidden(true);
 
-  connect(editText, SIGNAL(returnPressed()), SLOT(slotApplyCompText()));
-  connect(editText, SIGNAL(textChanged(const QString&)),
-          SLOT(slotResizePropEdit(const QString&)));
-  connect(editText, SIGNAL(lostFocus()), SLOT(slotHideEdit()));
+    misc::setWidgetBackgroundColor(editText, QucsSettings.BGColor);
+
+    connect(editText, SIGNAL(returnPressed()), SLOT(slotApplyCompText()));
+    connect(editText, SIGNAL(textChanged(const QString&)),
+            SLOT(slotResizePropEdit(const QString&)));
+    connect(editText, SIGNAL(lostFocus()), SLOT(slotHideEdit()));
+  }
 
   // ----------------------------------------------------------
   // "Project Tab" of the left QTabWidget
@@ -260,18 +262,19 @@ void QucsApp::initView()
           this, SLOT(slotListProjOpen(const QModelIndex &)));
 
   // ----------------------------------------------------------
-  // "Content" Tab of the left QTabWidget
-  Content = new ProjectView(this);
-  Content->setContextMenuPolicy(Qt::CustomContextMenu);
+  { // "Content" Tab of the left QTabWidget
+    Content = new ProjectView(this);
+    Content->setContextMenuPolicy(Qt::CustomContextMenu);
 
-  TabView->addTab(Content, tr("Content"));
-  TabView->setTabToolTip(TabView->indexOf(Content), tr("content of current project"));
+    TabView->addTab(Content, tr("Content"));
+    TabView->setTabToolTip(TabView->indexOf(Content), tr("content of current project"));
 
-  connect(Content, SIGNAL(clicked(const QModelIndex &)), 
-          SLOT(slotSelectSubcircuit(const QModelIndex &)));
+    connect(Content, SIGNAL(clicked(const QModelIndex &)), 
+            SLOT(slotSelectSubcircuit(const QModelIndex &)));
 
-  connect(Content, SIGNAL(doubleClicked(const QModelIndex &)),
-          SLOT(slotOpenContent(const QModelIndex &)));
+    connect(Content, SIGNAL(doubleClicked(const QModelIndex &)),
+            SLOT(slotOpenContent(const QModelIndex &)));
+  }
 
   // ----------------------------------------------------------
   // "Component" Tab of the left QTabWidget
@@ -407,8 +410,7 @@ void QucsApp::fillLibrariesTreeView ()
     LibFiles = LibDir.entryList(QStringList("*.lib"), QDir::Files, QDir::Name);
 
     // create top level library items, base on the library names
-    for(it = LibFiles.begin(); it != LibFiles.end(); it++)
-    {
+    for(it = LibFiles.begin(); it != LibFiles.end(); it++) {
         QString libPath(*it);
         libPath.chop(4); // remove extension
 
@@ -421,8 +423,7 @@ void QucsApp::fillLibrariesTreeView ()
 
         QTreeWidgetItem* newlibitem = new QTreeWidgetItem((QTreeWidget*)0, nameAndFileName);
 
-        switch (result)
-        {
+        switch (result) {
             case QUCS_COMP_LIB_IO_ERROR:
             {
                 QString filename = getLibAbsPath(libPath);
@@ -436,8 +437,7 @@ void QucsApp::fillLibrariesTreeView ()
                 break;
         }
 
-        for (int i = 0; i < parsedlibrary.components.count (); i++)
-        {
+        for (int i = 0; i < parsedlibrary.components.count (); i++) {
             QStringList compNameAndDefinition;
 
             compNameAndDefinition.append (parsedlibrary.components[i].name);
@@ -472,12 +472,11 @@ void QucsApp::fillLibrariesTreeView ()
     LibFiles = UserLibDir.entryList(QStringList("*.lib"), QDir::Files, QDir::Name);
     int UserLibCount = LibFiles.count();
 
-    if (UserLibCount > 0) // there are user libraries
-    {
+    if (UserLibCount > 0) {
+      // there are user libraries
 
         // create top level library itmes, base on the library names
-        for(it = LibFiles.begin(); it != LibFiles.end(); it++)
-        {
+        for(it = LibFiles.begin(); it != LibFiles.end(); it++) {
             QString libPath(UserLibDir.absoluteFilePath(*it));
             libPath.chop(4); // remove extension
 
@@ -490,8 +489,7 @@ void QucsApp::fillLibrariesTreeView ()
 
             QTreeWidgetItem* newlibitem = new QTreeWidgetItem((QTreeWidget*)0, nameAndFileName);
 
-            switch (result)
-            {
+            switch (result) {
                 case QUCS_COMP_LIB_IO_ERROR:
                 {
                     QString filename = getLibAbsPath(libPath);
@@ -505,8 +503,7 @@ void QucsApp::fillLibrariesTreeView ()
                     break;
             }
 
-            for (int i = 0; i < parsedlibrary.components.count (); i++)
-            {
+            for (int i = 0; i < parsedlibrary.components.count (); i++) {
                 QStringList compNameAndDefinition;
 
                 compNameAndDefinition.append (parsedlibrary.components[i].name);
@@ -544,25 +541,34 @@ void QucsApp::fillLibrariesTreeView ()
 }
 
 
+#if 0
+QucsDoc* QucsApp::getCurrentDoc()
+{
+  return DocumentTab->currentWidget();
+}
+#endif
 // ---------------------------------------------------------------
 // Returns a pointer to the QucsDoc object whose number is "No".
 // If No < 0 then a pointer to the current document is returned.
 QucsDoc* QucsApp::getDoc(int No)
 {
   QWidget *w;
-  if(No < 0)
+  if(No < 0){
+    incomplete();
     w = DocumentTab->currentWidget();
-  else
+  } else{
     w = DocumentTab->widget(No);
-
-  if(w) {
-    if(isTextDocument (w))
-      return (QucsDoc*) ((TextDoc*)w);
-    else
-      return (QucsDoc*) ((SchematicDoc*)w);
   }
 
-  return 0;
+   // why all this??
+  if(!w) {
+    return NULL;
+  }else if(isTextDocument (w)){
+    return (QucsDoc*) ((TextDoc*)w);
+  }else{
+    // assert(isSchematic?!);
+    return (QucsDoc*) ((SchematicDoc*)w);
+  }
 }
 
 // ---------------------------------------------------------------
@@ -3255,27 +3261,25 @@ bool QucsSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelInd
     QString rightFileName = model->fileName(right);
 
     // If DotAndDot move in the beginning
-    if (sourceModel()->data(left).toString() == "..")
+    if (sourceModel()->data(left).toString() == ".."){
       return asc;
-    if (sourceModel()->data(right).toString() == "..")
+    }else if (sourceModel()->data(right).toString() == ".."){
       return !asc;
+    }
 
     // move dirs upper
     if (!leftFileInfo.isDir() && rightFileInfo.isDir()) {
       return !asc;
-    }
-    if (leftFileInfo.isDir() && !rightFileInfo.isDir()) {
+    }else if (leftFileInfo.isDir() && !rightFileInfo.isDir()) {
+      return asc;
+    } else if (!leftFileInfo.isDir() || rightFileInfo.isDir()) {
+       //?
+    }else if (!leftFileName.endsWith("_prj") && rightFileName.endsWith("_prj")) {
+      return !asc;
+    }else if (leftFileName.endsWith("_prj") && !rightFileName.endsWith("_prj")) {
       return asc;
     }
-    // move dirs ending in '_prj' upper
-    if (leftFileInfo.isDir() && rightFileInfo.isDir()) {
-      if (!leftFileName.endsWith("_prj") && rightFileName.endsWith("_prj")) {
-        return !asc;
-      }
-      if (leftFileName.endsWith("_prj") && !rightFileName.endsWith("_prj")) {
-        return asc;
-      }
-    }
+  }else{
   }
 
   return QSortFilterProxyModel::lessThan(left, right);
