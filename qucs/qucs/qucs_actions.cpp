@@ -1,14 +1,8 @@
 /***************************************************************************
-                               qucs_actions.cpp
-                              -----------------
-    begin                : Sat May 1 2004
     copyright            : (C) 2004 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
- ***************************************************************************/
-
-/* Copyright (C) 2014 Guilherme Brondani Torri <guitorri@gmail.com>        */
-
-/***************************************************************************
+                               2014 Guilherme Brondani Torri
+                               2020 Felix Salfelder
+ ***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -62,6 +56,23 @@
 #include "actions.h"
 #include "platform.h"
 
+// BUG: not QucsApp
+void QucsApp::slotToggle(bool on)
+{
+  if(activeAction) {
+    activeAction->blockSignals(true); // do not call toggle slot
+    activeAction->setChecked(false);
+    activeAction->blockSignals(false);
+  }else{
+  }
+  if(!on) {
+    activeAction = nullptr;
+  }else if(auto s=dynamic_cast<QAction*>(sender())){
+    activeAction = s;
+  }else{
+    unreachable();
+  }
+}
 // -----------------------------------------------------------------------
 // Is called, when "set on grid" action is triggered.
 void QucsApp::slotOnGrid(bool on)
@@ -436,16 +447,13 @@ extern QString lastDirOpenSave; // to remember last directory and file
 ///
 void QucsApp::editFile(const QString& File)
 {
-    if ((QucsSettings.Editor.toLower() == "qucs") | QucsSettings.Editor.isEmpty())
-    {
+    if ((QucsSettings.Editor.toLower() == "qucs") | QucsSettings.Editor.isEmpty()) {
         // The Editor is 'qucs' or empty, open a net document tab
         if (File.isEmpty()) {
             TextDoc *d = new TextDoc(this, "");
             int i = DocumentTab->addTab(d, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
             DocumentTab->setCurrentIndex(i);
-        }
-        else
-        {
+        } else {
             slotHideEdit(); // disable text edit of component property
 
             statusBar()->showMessage(tr("Opening file..."));
@@ -460,9 +468,7 @@ void QucsApp::editFile(const QString& File)
                 statusBar()->showMessage(tr("Ready."));
             }
         }
-    }
-    else
-    {
+    } else {
       // use an external editor
       QString prog;
       QStringList args;

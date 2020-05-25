@@ -10,14 +10,11 @@ Copyright (C) 2014 by Guilherme Brondani Torri <guitorri@gmail.com>
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
 #include <QAction>
 #include <QMessageBox>
 #include <QTextStream>
@@ -25,9 +22,6 @@ Copyright (C) 2014 by Guilherme Brondani Torri <guitorri@gmail.com>
 #include "qucs.h"
 #include "textdoc.h"
 #include "syntax.h"
-#include "components/vhdlfile.h"
-#include "components/verilogfile.h"
-#include "components/vafile.h"
 #include "misc.h"
 
 /*!
@@ -66,7 +60,8 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QPlainTextEdit(), QucsDo
   connect(this, SIGNAL(textChanged()), SLOT(slotSetChanged()));
   connect(this, SIGNAL(cursorPositionChanged()),
           SLOT(slotCursorPosChanged()));
-  if (App_) {
+
+  if (App_) { untested();
     connect(this, SIGNAL(signalCursorPosChanged(int, int)),
         App_, SLOT(printCursorPosition(int, int)));
     connect(this, SIGNAL(signalUndoState(bool)),
@@ -75,6 +70,7 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QPlainTextEdit(), QucsDo
         App_, SLOT(slotUpdateRedo(bool)));
     connect(this, SIGNAL(signalFileChanged(bool)),
         App_, SLOT(slotFileChanged(bool)));
+  }else{ untested();
   }
 
   syntaxHighlight = new SyntaxHighlighter(this);

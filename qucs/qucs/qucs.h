@@ -380,14 +380,7 @@ private:
 
   QLabel *WarningLabel, *PositionLabel;  // labels in status bar
 
-
-
-/* **************************************************
-   *****  The following methods are located in  *****
-   *****  "qucs_actions.cpp".                   *****
-   ************************************************** */
-
-public:
+public: // Toolbar?
   void editFile(const QString&);
 
   QAction *insWire, *insLabel, *insGround, *insPort, *insEquation, *magPlus,
@@ -402,8 +395,8 @@ public:
 
   QAction* selectAction(){ return select; }
 
-public slots: // BUG. why is this here?
-	           // what if a plugin wants to add menu items?
+public slots: // BUG. why is this here? (fix later)
+  void slotToggle(bool);  // Toggle mode
   void slotEditRotate(bool);  // rotate the selected items
   void slotEditMirrorX(bool); // mirror the selected items about X axis
   void slotEditMirrorY(bool); // mirror the selected items about Y axis
