@@ -71,7 +71,7 @@ ComponentList SymbolComps;
 //}
 
 void SchematicDoc::printCursorPosition(int x, int y)
-{ untested();
+{ itested();
   QPoint p(x,y);
   QPointF mp=mapToScene(p);
   App->printCursorPosition(mp.x(),mp.y());
@@ -135,27 +135,26 @@ bool SchematicDoc::createSubcircuitSymbol()
 #endif
   return true;
 }
-
 // ---------------------------------------------------
 // // expose tab?
+// same as showEvent?
 void SchematicDoc::becomeCurrent(bool update)
 { untested();
   emit signalCursorPosChanged(0, 0);
 
   // update appropriate menu entry
   if (isSymbolMode()) { untested();
+    incomplete(); // SymbolDoc.
     if (docName().right(4) == ".sym") { untested();
       App->symEdit->setText(tr("Edit Text"));
       App->symEdit->setStatusTip(tr("Edits the Text"));
       App->symEdit->setWhatsThis(tr("Edit Text\n\nEdits the text file"));
-    }
-    else { untested();
+    }else{ untested();
       App->symEdit->setText(tr("Edit Schematic"));
       App->symEdit->setStatusTip(tr("Edits the schematic"));
       App->symEdit->setWhatsThis(tr("Edit Schematic\n\nEdits the schematic"));
     }
-  }
-  else { untested();
+  }else{ untested();
     App->symEdit->setText(tr("Edit Circuit Symbol"));
     App->symEdit->setStatusTip(tr("Edits the symbol for this schematic"));
     App->symEdit->setWhatsThis(
@@ -499,101 +498,11 @@ void SchematicDoc::drawContents(QPainter *p, int, int, int, int)
 #endif
 
 void SchematicDoc::PostPaintEvent (PE pe, int x1, int y1, int x2, int y2, int a, int b, bool PaintOnViewport)
-{ untested();
+{ itested();
   PostedPaintEvent p = {pe, x1,y1,x2,y2,a,b,PaintOnViewport};
   PostedPaintEvents.push_back(p);
-  viewport()->update();
+  updateViewport();
   update();
-}
-
-
-// ---------------------------------------------------
-// // is this an override?!
-// the mousemove stuff is collected here (it's an override) and then funnelled
-// into App->MouseMoveAction, which should just have subscribed the event
-void SchematicDoc::contentsMouseMoveEvent(QMouseEvent *Event)
-{ untested();
-  // "emit" does not seem to do anything.
-  emit signalCursorPosChanged(Event->pos().x(), Event->pos().y());
-
-  // mouse moveaction set by toggleaction
-  // toggleaction should instead subscribe.
-  //
-  // what is view?
-  if(App->MouseMoveAction){ untested();
-    (App->view->*(App->MouseMoveAction))(this, Event);
-  }else{ untested();
-  }
-}
-
-// -----------------------------------------------------------
-// override function. catch mouse presses.
-//  why not just forward?!
-void SchematicDoc::mousePressEvent(QMouseEvent *Event)
-{ untested();
-  App->editText->setHidden(true); // disable text edit of component property
-  if(App->MouseReleaseAction == &MouseActions::MReleasePaste){ untested();
-    // wtf?
-    return;
-  }else{ untested();
-  }
-
-  // map screen coordinates do scene coordinates.
-  // FIXME there must be a sane way.
-  float x = float(Event->pos().x())/Scale + float(ViewX1);
-  float y = float(Event->pos().y())/Scale + float(ViewY1);
-  QPoint p(x, y);
-
-  qDebug() << "nestedEvent?"; // this does not work right. need both...
-  QMouseEvent nestedEvent(Event->type(), Event->pos(), Event->globalPos(),
-      Event->button(), Event->buttons(), Event->modifiers());
-
-#if 1
-  if(mouseAction){ untested();
-    mouseAction->press(Event);
-  }else{ untested();
-  }
-#else
-  //TODO: move cruft to actions.
-  if(Event->button() != Qt::LeftButton){ untested();
-    if(App->MousePressAction == &MouseActions::MPressElement){ untested();
-      // hmm
-    }else if(App->MousePressAction == &MouseActions::MPressWire2) { untested();
-      // hmm
-    }else{ untested();
-	// some action needs to handle right button
-        // show menu on right mouse button
-        App->view->rightPressMenu(this, Event);
-        if(App->MouseReleaseAction){ untested();
-           // Is not called automatically because menu has focus.
-          (App->view->*(App->MouseReleaseAction))(this, &nestedEvent);
-        }
-        return;
-    }
-  }else{ untested();
-  }
-#endif
-}
-
-// -----------------------------------------------------------
-void SchematicDoc::contentsMouseReleaseEvent(QMouseEvent *Event)
-{ untested();
-  // if(App->MouseReleaseAction)
-  //   (App->view->*(App->MouseReleaseAction))(this, Event);
-
-  if(mouseAction){ untested();
-    mouseAction->release(Event);
-  }else{ untested();
-  }
-}
-
-// -----------------------------------------------------------
-void SchematicDoc::mouseDoubleClickEvent(QMouseEvent *Event)
-{ untested();
-  if(mouseAction){ untested();
-    mouseAction->release(Event);
-  }else{ untested();
-  }
 }
 
 // -----------------------------------------------------------
@@ -886,8 +795,8 @@ void SchematicDoc::showNoZoom()
   ViewY2 = y2+40;
   TODO("Fix resizeContents");
   ///\todo resizeContents(x2-x1+80, y2-y1+80);
-  viewport()->update();
-  App->view->drawn = false;
+  updateViewport();
+  // App->view->drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -1995,45 +1904,7 @@ void SchematicDoc::switchPaintMode()
 // **********      Function for serving mouse wheel moving    **********
 // **********                                                 **********
 // *********************************************************************
-void SchematicDoc::contentsWheelEvent(QWheelEvent * Event)
-{ untested();
-#ifndef USE_SCROLLVIEW
-  (void) Event;
-#else
-  App->editText->setHidden(true);  // disable edit of component property
-  // use smaller steps; typically the returned delta() is a multiple of 120
 
-  int delta = Event->delta() >> 1;
-
-  // ...................................................................
-  if((Event->modifiers() & Qt::ShiftModifier) ||
-     (Event->orientation() == Qt::Horizontal)) { // scroll horizontally ?
-      if(delta > 0) { if(scrollLeft(delta)) scrollBy(-delta, 0); }
-      else { if(scrollRight(delta)) scrollBy(-delta, 0); }
-      viewport()->update(); // because QScrollView thinks nothing has changed
-      App->view->drawn = false;
-  }
-  // ...................................................................
-  else if(Event->modifiers() & Qt::ControlModifier) {  // use mouse wheel to zoom ?
-      // zoom factor scaled according to the wheel delta, to accomodate
-      //  values different from 60 (slower or faster zoom)
-      float Scaling = pow(1.1, delta/60.0);
-      zoom(Scaling);
-      Scaling -= 1.0;
-      scrollBy( int(Scaling * float(Event->pos().x())),
-                int(Scaling * float(Event->pos().y())) );
-  }
-  // ...................................................................
-  else {     // scroll vertically !
-      if(delta > 0) { if(scrollUp(delta)) scrollBy(0, -delta); }
-      else { if(scrollDown(delta)) scrollBy(0, -delta); }
-      viewport()->update(); // because QScrollView thinks nothing has changed
-      App->view->drawn = false;
-  }
-
-  Event->accept();   // QScrollView must not handle this event
-#endif
-}
 
 // -----------------------------------------------------------
 // Scrolls the visible area upwards and enlarges or reduces the view
@@ -2159,8 +2030,8 @@ void SchematicDoc::slotScrollUp()
 { untested();
   App->editText->setHidden(true);  // disable edit of component property
   scrollUp(verticalScrollBar()->singleStep());
-  viewport()->update(); // because QScrollView thinks nothing has changed
-  App->view->drawn = false;
+  updateViewport();
+  // App->view->drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -2169,8 +2040,8 @@ void SchematicDoc::slotScrollDown()
 { untested();
   App->editText->setHidden(true);  // disable edit of component property
   scrollDown(-verticalScrollBar()->singleStep());
-  viewport()->update(); // because QScrollView thinks nothing has changed
-  App->view->drawn = false;
+  updateViewport();
+  // App->view->drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -2179,8 +2050,8 @@ void SchematicDoc::slotScrollLeft()
 { untested();
   App->editText->setHidden(true);  // disable edit of component property
   scrollLeft(horizontalScrollBar()->singleStep());
-  viewport()->update(); // because QScrollView thinks nothing has changed
-  App->view->drawn = false;
+  updateViewport();
+  // App->view->drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -2189,8 +2060,8 @@ void SchematicDoc::slotScrollRight()
 { untested();
   App->editText->setHidden(true);  // disable edit of component property
   scrollRight(-horizontalScrollBar()->singleStep());
-  viewport()->update(); // because QScrollView thinks nothing has changed
-  App->view->drawn = false;
+  updateViewport();
+  // App->view->drawn = false;
 }
 
 
@@ -2201,134 +2072,10 @@ void SchematicDoc::slotScrollRight()
 // *********************************************************************
 
 // Is called if an object is dropped (after drag'n drop).
-void SchematicDoc::contentsDropEvent(QDropEvent *Event)
-{ untested();
-  if(dragIsOkay) { untested();
-    QList<QUrl> urls = Event->mimeData()->urls();
-    if (urls.isEmpty()) { untested();
-      return;
-    }
-
-    // do not close untitled document to avoid segfault
-    QucsDoc *d = QucsMain->getDoc(0);
-    bool changed = d->DocChanged;
-    d->DocChanged = true;
-
-    // URI:  file:/home/linuxuser/Desktop/example.sch
-    foreach(QUrl url, urls) { untested();
-      App->gotoPage(QDir::toNativeSeparators(url.toLocalFile()));
-    }
-
-    d->DocChanged = changed;
-    return;
-  }
-
-
-  int x = int(Event->pos().x()/Scale) + ViewX1;
-  int y = int(Event->pos().y()/Scale) + ViewY1;
-  QPoint p(x, y);
-
-  qDebug() << "nestedEvent in contentsDropEvent? at" << p;
-  QMouseEvent e(QEvent::MouseButtonPress, p,
-                Qt::LeftButton, Qt::NoButton, Qt::NoModifier);
-
-  App->view->MPressElement(this, &e);
-
-  if(App->view->selElem) delete App->view->selElem;
-  App->view->selElem = 0;  // no component selected
-
-  if(formerAction){ untested();
-    formerAction->setChecked(true);  // restore old action
-  }else{ untested();
-  }
-}
 
 // ---------------------------------------------------
-void SchematicDoc::contentsDragEnterEvent(QDragEnterEvent *Event)
-{ untested();
-  //FIXME: the function of drag library component seems not working?
-  formerAction = 0;
-  dragIsOkay = false;
-
-  // file dragged in ?
-  if(Event->mimeData()->hasUrls()) { untested();
-    dragIsOkay = true;
-    Event->accept();
-    return;
-  }
-
-  // drag library component
-  if(Event->mimeData()->hasText()) { untested();
-    QString s = Event->mimeData()->text();
-    if(s.left(15) == "QucsComponent:<") { untested();
-      s = s.mid(14);
-      incomplete();
-      //App->view->selElem = legacySchematicLanguage::getComponentFromName(s);
-      if(App->view->selElem) { untested();
-        Event->accept();
-        return;
-      }else{ untested();
-      }
-    }
-    Event->ignore();
-    return;
-  }
-
-
-//   if(Event->format(1) == 0) {  // only one MIME type ?
-
-    // drag component from listview
-//     if(Event->provides("application/x-qabstractitemmodeldatalist")) { untested();
-    if(Event->mimeData()->hasFormat("application/x-qabstractitemmodeldatalist")) { untested();
-      QListWidgetItem *Item = App->CompComps->currentItem();
-      if(Item) { untested();
-        formerAction = App->activeAction;
-        App->slotSelectComponent(Item);  // also sets drawn=false
-        App->MouseMoveAction = 0;
-        App->MousePressAction = 0;
-
-        Event->accept();
-        return;
-      }
-    }
-//   }
-
-  Event->ignore();
-}
 
 // ---------------------------------------------------
-void SchematicDoc::contentsDragLeaveEvent(QDragLeaveEvent*)
-{ untested();
-  if(App->view->selElem)
-    if(App->view->selElem->Type & isComponent)
-      if(App->view->drawn) { untested();
-
-        QPainter painter(viewport());
-        //App->view->setPainter(this);
-        ((Component*)App->view->selElem)->paintScheme(this);
-        App->view->drawn = false;
-      }
-
-  if(formerAction)
-    formerAction->setChecked(true);  // restore old action
-}
-
-// ---------------------------------------------------
-void SchematicDoc::contentsDragMoveEvent(QDragMoveEvent *Event)
-{ untested();
-  if(!dragIsOkay) { untested();
-    if(App->view->selElem == 0) { untested();
-      Event->ignore();
-      return;
-    }
-
-    QMouseEvent e(QEvent::MouseMove, Event->pos(), Qt::NoButton, 
-		  Qt::NoButton, Qt::NoModifier);
-    App->view->MMoveElement(this, &e);
-  }
-
-  Event->accept();
-}
 
 #if 0
 void SchematicDoc::getSelAreaWidthAndHeight(int &wsel, int &hsel, int& xmin_sel_, int& ymin_sel_)

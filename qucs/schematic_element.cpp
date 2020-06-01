@@ -65,7 +65,7 @@ Node* SchematicModel::insertNode(int x, int y, Element *e)
 
 // ---------------------------------------------------
 // obsolete
-Node* SchematicDoc::selectedNode(int x, int y)
+Node* SchematicDoc::selectedNode(int , int )
 {
 #if 0
     for(auto pn : nodes()){
@@ -88,7 +88,9 @@ Node* SchematicDoc::selectedNode(int x, int y)
 // If 2 is returned, the wire line ended.
 int SchematicModel::insertWireNode1(Wire *w)
 {
+    (void)w;
 #if 0 // is this really needed?
+      // maybe in SchematicDoc.
     Node *pn = nodes().find_at(w->x1_(), w->y1_());
 
     if(pn != 0) {
@@ -205,13 +207,16 @@ int SchematicModel::insertWireNode1(Wire *w)
 
 // ---------------------------------------------------
 // if possible, connect two horizontal wires to one
+// // move to SchematicDoc
 bool SchematicModel::connectHWires1(Wire *w)
 {
     Wire *pw;
     // only does port1 (why?)
 
     incomplete();
-    // what does it do??
+
+    (void) pw;
+    (void) w;
 #if 0
     Node *n = w->portValue(0);
     pw = (Wire*)n->Connections.last();  // last connection is the new wire itself
@@ -276,6 +281,8 @@ bool SchematicModel::connectHWires1(Wire *w)
 bool SchematicModel::connectVWires1(Wire *w)
 {
     Wire *pw;
+    (void)pw;
+    (void)w;
 
 #if 0 // see above.
     Node *n = w->portValue(0);
@@ -348,6 +355,7 @@ bool SchematicModel::connectVWires1(Wire *w)
 //  bug. this is the same as insertWireNode1, but with ports swapped.
 int SchematicModel::insertWireNode2(Wire *w)
 {
+(void)w;
 #if 0
     Node *pn = nodes().find_at( w->x2_(),  w->x2_());
 
@@ -452,6 +460,8 @@ int SchematicModel::insertWireNode2(Wire *w)
 bool SchematicModel::connectHWires2(Wire *w)
 {
     Wire *pw;
+(void)w;
+(void)pw;
 
 #if 0 // see above.
     Node *n = w->portValue(1);
@@ -506,6 +516,8 @@ bool SchematicModel::connectHWires2(Wire *w)
 bool SchematicModel::connectVWires2(Wire *w)
 {
     Wire *pw;
+(void)w;
+(void)pw;
 
 #if 0 // see above
     Node *n = w->portValue(1);
@@ -563,6 +575,7 @@ bool SchematicModel::connectVWires2(Wire *w)
 // (the ports of the wire) are connected or not.
 int SchematicModel::insertWire(Wire *w)
 {
+(void)w;
 
 #if 0 // it looks obsolete
     int  tmp, con = 0;

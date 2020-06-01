@@ -29,7 +29,7 @@ public:
 	unsigned getPos(){return _pos;}
 
 	void inc_nodes(){++_size;}
-	void dec_nodes(){assert(_size!=-1); --_size;}
+	void dec_nodes(){assert(_size!=size_t(-1)); --_size;}
 
 private:
 	size_t _size; // number of Conductors

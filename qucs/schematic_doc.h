@@ -88,10 +88,14 @@ typedef QMap<QString, SubFile> SubMap;
 
 class ElementGraphics;
 
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
 // TODO: rename to SchematicDocument
 // TODO: add SymbolDocument
 class SchematicDoc : public QGraphicsView, public QucsDoc {
   Q_OBJECT
+private:
+  friend class SchematicActions;
 private:
   SchematicDoc(SchematicDoc const&x) = delete;
 public:
@@ -284,18 +288,21 @@ protected:
   void drawContents(QPainter*, int, int, int, int);
 #endif
 
+protected:
+  void showEvent(QShowEvent*) override;
+//  void hideEvent(QShowEvent*) override;
 
 protected: // these are the overrides that collect mouse actions
            // forward to mouseAction instances to produce UndoActions
-  void mouseMoveEvent(QMouseEvent*) override;
-  void mousePressEvent(QMouseEvent*) override;
-  void mouseDoubleClickEvent(QMouseEvent*) override;
-  void mouseReleaseEvent(QMouseEvent*) override;
-  void wheelEvent(QWheelEvent*) override;
-  void dropEvent(QDropEvent*) override;
-  void dragEnterEvent(QDragEnterEvent*) override;
-  void dragLeaveEvent(QDragLeaveEvent*) override;
-  void dragMoveEvent(QDragMoveEvent*) override;
+   void mouseMoveEvent(QMouseEvent*) override;
+//   void mousePressEvent(QMouseEvent*) override;
+//   void mouseDoubleClickEvent(QMouseEvent*) override;
+//   void mouseReleaseEvent(QMouseEvent*) override;
+//   void wheelEvent(QWheelEvent*) override;
+//   void dropEvent(QDropEvent*) override;
+//   void dragEnterEvent(QDragEnterEvent*) override;
+//   void dragLeaveEvent(QDragLeaveEvent*) override;
+//   void dragMoveEvent(QDragMoveEvent*) override;
 
 public:
 #ifdef USE_SCROLLVIEW
@@ -497,6 +504,8 @@ private:
 
   static void createNodeSet(QStringList&, int&, Conductor*, Node*);
 
+  void updateViewport() { viewport()->update(); }
+
 public:
   void throughAllNodes(unsigned& count) const{
 	  assert(_model);
@@ -551,49 +560,52 @@ public:
   bool isVerilog;
   bool creatingLib;
 
-private: // action overrides, schematic_action.cpp
-  void actionCopy(){
+private: // QucsDoc overrides, schematic_action.cpp
+  void actionCopy(QAction*) override{
 	  copy();
   }
-  void actionCut(){
+  void actionCut(QAction*) override{
 	  cut();
   }
-  void actionEditUndo();
-  void actionEditRedo();
-  void actionAlign(int what);
-  void actionDistrib(int dir); // 0=horiz, 1=vert
+  void actionEditUndo(QAction*) override;
+  void actionEditRedo(QAction*) override;
+  void actionAlign(int what) override;
+  void actionDistrib(int dir) override; // 0=horiz, 1=vert
 
-  void actionApplyCompText();
-  void actionSelect(bool);
-  void actionSelectMarker();
-  void actionSelectAll();
-  void actionChangeProps();
-  void actionCursor(arrow_dir_t);
+  void actionApplyCompText() override;
+  void actionSelect(QAction*) override;
+  void actionSelectMarker() override;
+  void actionSelectAll(QAction*) override;
+  void actionChangeProps(QAction*) override;
+  void actionCursor(arrow_dir_t) override;
 
-  void actionOnGrid(bool);
-  void actionEditRotate(bool);
-  void actionEditMirrorX(bool);
-  void actionEditMirrorY(bool);
-  void actionEditActivate(bool);
-  void actionEditDelete(bool);
-  void actionEditPaste(bool);
-  void actionSetWire(bool);
-  void actionInsertLabel(bool);
-  void actionInsertEquation(bool);
-  void actionInsertPort(bool);
-  void actionInsertGround(bool);
-  void actionSetMarker(bool);
-  void actionMoveText(bool);
-  void actionZoomIn(bool);
+  void actionOnGrid(QAction*) override;
+  void actionEditRotate(QAction*) override;
+  void actionEditMirrorX(QAction*) override;
+  void actionEditMirrorY(QAction*) override;
+  void actionEditActivate(QAction*) override;
+  void actionEditDelete(QAction*) override;
+  void actionEditPaste(QAction*) override;
+  void actionSetWire(QAction*) override;
+  void actionInsertLabel(QAction*) override;
+  void actionInsertEquation(QAction*) override;
+  void actionInsertPort(QAction*) override;
+  void actionInsertGround(QAction*) override;
+  void actionSetMarker(QAction*) override;
+  void actionMoveText(QAction*) override;
+  void actionZoomIn(QAction*) override;
   void actionExportGraphAsCsv(); // BUG
 
 private:
   bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2); // this is nuts.
 
-  SchematicActions* _mouseActions; //needed?
-  SchematicActions& mouseActions() { assert(_mouseActions); return *_mouseActions; }
-  MouseAction* mouseAction;
+  SchematicActions* _mouseActions; //needed? no. FIXME
+  MouseActions* mouseActions() override { assert(_mouseActions); return _mouseActions; }
+  SchematicActions& schematicActions() { assert(_mouseActions); return *_mouseActions; }
+//  MouseAction* mouseAction(); QucsDoc
 
+  void setDrawn(bool b=true){mouseActions()->setDrawn(b);}
+  QUndoStack* undoStack() override{ return _undoStack; }
 public: // serializer
   void saveComponent(QTextStream& s, Component const* c) const;
 
@@ -607,12 +619,7 @@ private:
 private:
   bool SymbolMode; // BUG
 
-
-private: // obsolete.
-//  void       deleteComp(Component*c){
-//	  unreachable();
-//	  return DocModel.erase(c);
-//  }
+  QUndoStack* _undoStack;
 }; // SchematicDocument
 
 // ---------------------------------------------------

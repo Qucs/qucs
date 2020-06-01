@@ -1386,7 +1386,7 @@ QString GateComponent::netlist() const
 }
 
 // -------------------------------------------------------
-QString GateComponent::vhdlCode(int NumPorts)
+QString GateComponent::vhdlCode(int )
 {
   return "obsolete";
 #if 0

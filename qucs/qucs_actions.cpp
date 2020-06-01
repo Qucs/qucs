@@ -56,6 +56,7 @@
 #include "actions.h"
 #include "platform.h"
 
+#if 0
 // BUG: not QucsApp
 void QucsApp::slotToggle(bool on)
 {
@@ -73,272 +74,180 @@ void QucsApp::slotToggle(bool on)
     unreachable();
   }
 }
+#endif
 // -----------------------------------------------------------------------
-// Is called, when "set on grid" action is triggered.
-void QucsApp::slotOnGrid(bool on)
-{
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionOnGrid(on);
-}
-
-// -----------------------------------------------------------------------
-// Is called when the rotate toolbar button is pressed.
-void QucsApp::slotEditRotate(bool on)
-{
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionEditRotate(on);
-}
-
-// -----------------------------------------------------------------------
-// Is called when the mirror toolbar button is pressed.
-void QucsApp::slotEditMirrorX(bool on)
-{
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionEditMirrorX(on);
-}
-
-// -----------------------------------------------------------------------
-// Is called when the mirror toolbar button is pressed.
-void QucsApp::slotEditMirrorY(bool on)
-{
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionEditMirrorY(on);
-}
-
-// -----------------------------------------------------------------------
-// Is called when the activate/deactivate toolbar button is pressed.
-// It also comments out the selected text on a text document
-// \todo update the status or tooltip message
-void QucsApp::slotEditActivate(bool on)
-{
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionEditActivate(on);
-}
-
-// ------------------------------------------------------------------------
-// Is called if "Delete"-Button is pressed.
+//
+// /// workaround. deduplicate event forwarding.
+// this could be done using Qt. but not yet.
 // Toolbar::?
-void QucsApp::slotEditDelete(bool on)
-{
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionEditDelete(on);
-}
+#define ASSIGN_STUFF \
+  QWidget *w = DocumentTab->currentWidget(); \
+  auto qd = dynamic_cast<QucsDoc*>(w); \
+  assert(qd); \
+  auto s = prechecked_cast<QAction*>(sender()); \
+  assert(s);
 
 // -----------------------------------------------------------------------
-// Is called if "Wire"-Button is pressed.
-void QucsApp::slotSetWire(bool on)
+void QucsApp::slotOnGrid()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionSetWire(on);
+  ASSIGN_STUFF
+  qd->actionOnGrid(s);
 }
-
 // -----------------------------------------------------------------------
-void QucsApp::slotInsertLabel(bool on)
+void QucsApp::slotEditRotate()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionInsertLabel(on);
+  ASSIGN_STUFF
+  qd->actionEditRotate(s);
 }
-
 // -----------------------------------------------------------------------
-void QucsApp::slotSetMarker(bool on)
+void QucsApp::slotEditMirrorX()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionSetMarker(on);
+  ASSIGN_STUFF
+  qd->actionEditMirrorX(s);
 }
-
 // -----------------------------------------------------------------------
-// Is called, when "move component text" action is triggered.
-void QucsApp::slotMoveText(bool on)
+void QucsApp::slotEditMirrorY()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionMoveText(on);
+  ASSIGN_STUFF
+  qd->actionEditMirrorY(s);
 }
-
 // -----------------------------------------------------------------------
-// Is called, when "Zoom in" action is triggered.
-void QucsApp::slotZoomIn(bool on)
+// TODO?   comment out the selected text on a text document
+// \todo update the status or tooltip message
+void QucsApp::slotEditActivate()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionZoomIn(on);
+  ASSIGN_STUFF
+  qd->actionEditActivate(s);
 }
-
+// ------------------------------------------------------------------------
+void QucsApp::slotEditDelete()
+{
+  ASSIGN_STUFF
+  qd->actionEditDelete(s);
+}
+// -----------------------------------------------------------------------
+void QucsApp::slotSetWire()
+{
+  ASSIGN_STUFF
+  qd->actionSetWire(s);
+}
+// -----------------------------------------------------------------------
+void QucsApp::slotInsertLabel()
+{
+  ASSIGN_STUFF
+  qd->actionInsertLabel(s);
+}
+// -----------------------------------------------------------------------
+void QucsApp::slotSetMarker()
+{
+  ASSIGN_STUFF
+  qd->actionSetMarker(s);
+}
+// -----------------------------------------------------------------------
+void QucsApp::slotMoveText()
+{
+  ASSIGN_STUFF
+  qd->actionMoveText(s);
+}
+// -----------------------------------------------------------------------
+void QucsApp::slotZoomIn()
+{
+  ASSIGN_STUFF
+  qd->actionZoomIn(s);
+}
 // -----------------------------------------------------------------------
 void QucsApp::slotEscape()
 {
-    select->setChecked(true);
-    slotSearchClear();
+  // what?!
+  select->setChecked(true);
+  slotSearchClear();
 }
-
 // -----------------------------------------------------------------------
-// Is called when the select toolbar button is pressed.
-void QucsApp::slotSelect(bool on)
+void QucsApp::slotSelect()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionSelect(on);
+  ASSIGN_STUFF
+  qd->actionSelect(s);
 }
-
 // --------------------------------------------------------------------
 void QucsApp::slotEditCut()
 {
   statusBar()->showMessage(tr("Cutting selection..."));
   slotHideEdit(); // disable text edit of component property
 
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionCut();
+  ASSIGN_STUFF
+  qd->actionCut(s);
 
   statusBar()->showMessage(tr("Ready."));
 }
-
 // --------------------------------------------------------------------
 void QucsApp::slotEditCopy()
 {
   statusBar()->showMessage(tr("Copying selection to clipboard..."));
 
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionCopy();
+  ASSIGN_STUFF
+  qd->actionCopy(s);
 
   statusBar()->showMessage(tr("Ready."));
 }
-
 // -----------------------------------------------------------------------
-void QucsApp::slotEditPaste(bool on)
+void QucsApp::slotEditPaste()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionEditPaste(on);
+  ASSIGN_STUFF
+  qd->actionEditPaste(s);
 }
-
-
 // -----------------------------------------------------------------------
 void QucsApp::slotInsertEntity ()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionInsertEntity();
+  ASSIGN_STUFF
+  qd->actionInsertEntity(s);
 }
-
 // -----------------------------------------------------------------------
-// Is called when the mouse is clicked upon the equation toolbar button.
-void QucsApp::slotInsertEquation(bool on)
+void QucsApp::slotInsertEquation()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionInsertEquation(on);
+  ASSIGN_STUFF
+  qd->actionInsertEquation(s);
 }
-
 // -----------------------------------------------------------------------
-// Is called when the mouse is clicked upon the ground toolbar button.
-void QucsApp::slotInsertGround(bool on)
+void QucsApp::slotInsertGround()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionInsertGround(on);
+  ASSIGN_STUFF
+  qd->actionInsertGround(s);
 }
-
-
 // -----------------------------------------------------------------------
-// Is called when the mouse is clicked upon the port toolbar button.
-void QucsApp::slotInsertPort(bool on)
+void QucsApp::slotInsertPort()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionInsertPort(on);
+  ASSIGN_STUFF
+  qd->actionInsertPort(s);
 }
-
 // --------------------------------------------------------------
-// Is called, when "Undo"-Button is pressed.
 void QucsApp::slotEditUndo()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionEditUndo();
+  ASSIGN_STUFF
+  qd->actionEditUndo(s);
 }
-
 // --------------------------------------------------------------
-// Is called, when "Undo"-Button is pressed.
 void QucsApp::slotEditRedo()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionEditRedo();
+  ASSIGN_STUFF
+  qd->actionEditRedo(s);
 }
-
 // --------------------------------------------------------------
-// Is called, when "Align top" action is triggered.
 void QucsApp::slotAlignTop()
 {
   QWidget *w=DocumentTab->currentWidget();
   QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
-  qd->actionAlign(0);
+  qd->actionAlign(0); // BUG use enum
 }
-
 // --------------------------------------------------------------
-// Is called, when "Align bottom" action is triggered.
 void QucsApp::slotAlignBottom()
 {
   QWidget *w=DocumentTab->currentWidget();
   QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
   assert(qd);
 
-  qd->actionAlign(1);
+  qd->actionAlign(1); // BUG use enum
 }
 
 // --------------------------------------------------------------
@@ -411,12 +320,10 @@ void QucsApp::slotCenterVertical()
 // Is called when the "select all" action is triggered.
 void QucsApp::slotSelectAll()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
   hideEdit();
-  qd->actionSelectAll();
+
+  ASSIGN_STUFF
+  qd->actionSelectAll(s);
 }
 
 // ---------------------------------------------------------------------
@@ -650,11 +557,8 @@ void QucsApp::slotEditFind()
 // --------------------------------------------------------------
 void QucsApp::slotChangeProps()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
-  assert(qd);
-
-  qd->actionChangeProps();
+  ASSIGN_STUFF
+  qd->actionChangeProps(s);
 }
 
 // --------------------------------------------------------------

@@ -70,6 +70,7 @@ ui_searchdialog.h: $(top_builddir)/qt_version
 
 MOCHEADERS = \
 	${DIALG_MOCHEADERS} \
+  mouseactions.h \
   messagedock.h \
   octave_window.h \
   projectView.h \
@@ -125,7 +126,6 @@ noinst_HEADERS = \
 	misc.h \
 	mnemo.h \
 	module.h \
-	mouseactions.h \
 	port.h \
 	node.h \
 	nodemap.h \

@@ -3,7 +3,6 @@
 #include <QGraphicsScene>
 
 
-#ifndef USE_SCROLLVIEW
 void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
 	assert(_e);
@@ -20,4 +19,3 @@ void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, 
 
 	_e->paint(&v);
 }
-#endif

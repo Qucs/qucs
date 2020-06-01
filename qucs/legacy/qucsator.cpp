@@ -232,7 +232,7 @@ void LegacyNetlister::save(DocumentStream& Stream, SchematicSymbol const& m) con
 
 	qDebug() << "*** LegacyNetlister::save";
 
-	SchematicModel const *sch = m.subckt();
+//	SchematicModel const *sch = m.subckt();
 	QStringList Collect;
 	Collect.clear();  // clear list for NodeSets, SPICE components etc.
 
