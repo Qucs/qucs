@@ -380,6 +380,17 @@ inline std::ostream& operator<<(std::ostream& o, QString const& q)
 	return o << q.toStdString();
 }
 
+#include <QPoint>
+#include <QPointF>
+inline std::ostream& operator<<(std::ostream&o, QPoint const& p)
+{
+  return o << "(" << p.x() << ", " << p.y() << ")";
+}
+inline std::ostream& operator<<(std::ostream&o, QPointF const& p)
+{
+  return o << "(" << p.x() << ", " << p.y() << ")";
+}
+
 #endif
 
 //vim:ts=8:sw=4:et

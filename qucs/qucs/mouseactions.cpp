@@ -101,7 +101,7 @@ bool MouseActions::pasteElements(SchematicDoc *Doc)
   QString s = cb->text(QClipboard::Clipboard);
   DocumentStream stream(&s, QIODevice::ReadOnly);
   movingElements.clear();
-#if 1
+#if 0
   if(!Doc->paste(&stream, &movingElements)){
     // something went wrong during parse.
     // throw?!
@@ -144,7 +144,7 @@ bool MouseActions::pasteElements(SchematicDoc *Doc)
       L->setCenter(xmin, ymin, true /*relative*/);
       L->Type = oldtype;
     } else{
-      pe->setCenter(xmin, ymin, true);
+      pe->setPos(xmin, ymin, true);
     }
   }
 
@@ -195,6 +195,7 @@ void MouseActions::editLabel(SchematicDoc *Doc, WireLabel *pl)
 // but why?!
 void MouseActions::endElementMoving(SchematicDoc *Doc, EGPList *movElements)
 { untested();
+  unreachable(); // obsolete
   for(auto pe : *movElements){ untested();
 //    pe->setSelected(false);  // deselect first (maybe afterwards pe == NULL)
     if(wire(pe)){ untested();
@@ -247,6 +248,8 @@ void MouseActions::endElementMoving(SchematicDoc *Doc, EGPList *movElements)
 // Moves elements in "movElements" by x/y
 void MouseActions::moveElements(EGPList& what, int x, int y)
 { itested();
+  unreachable(); // obsolete
+#if 0
   auto movElements=&what;
   Wire *pw;
   (void)pw;
@@ -255,7 +258,6 @@ void MouseActions::moveElements(EGPList& what, int x, int y)
       pw = (Wire*)pe;   // connected wires are not moved completely
 
       incomplete();
-#if 0
       if(((uintptr_t)pw->portValue(0)) > 3) { // wtf?
 	pw->move1(x, y);
 #if 0
@@ -286,10 +288,11 @@ void MouseActions::moveElements(EGPList& what, int x, int y)
       }
 #endif
 
-#endif
+    } else{
+      pe->setCenter(x, y, true);
     }
-    else pe->setCenter(x, y, true);
   }
+#endif
 }
 
 
@@ -513,6 +516,8 @@ void MouseActions::MMoveResizePainting(SchematicDoc *Doc, QMouseEvent *Event)
 // Moves components by keeping the mouse button pressed.
 void MouseActions::MMoveMoving(SchematicDoc *Doc, QMouseEvent *Event)
 {
+  unreachable(); // obsolete
+#if 0
   setPainter(Doc);
 
   Set2(Event, Doc);
@@ -567,6 +572,7 @@ void MouseActions::MMoveMoving(SchematicDoc *Doc, QMouseEvent *Event)
   QucsMain->MouseMoveAction = &MouseActions::MMoveMoving2;
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseMoving;
 
+#endif
 }
 
 // -----------------------------------------------------------
@@ -735,16 +741,37 @@ void MouseActions::MMoveRotate(SchematicDoc *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Arc, MAx3-10, MAy3-10, 21, 21, -16*20, 16*240,false);
 }
 
+// this is probably not needed.
 bool MouseActions::eventFilter(QObject *obj, QEvent *e)
 {
+  if(e->isAccepted()){ itested();
+  }else{ untested();
+  }
 //  assert(obj==&doc());
-
   assert(e);
+  e->ignore(); // but why??
+  return false; // don't filter
+
+  bool f = QObject::eventFilter(obj, e);
 
   QMouseEvent* m = dynamic_cast<QMouseEvent*>(e);
-  if(m){ untested();
-    trace1("mouse", e->type());
-    handle(e);
+  if(!f){ untested();
+  }else if(m){ itested();
+    switch(e->type()){
+    case QEvent::MouseButtonPress:
+      break;
+    case QEvent::MouseMove:
+      break;
+    default:
+	trace1("mouse", e->type());
+    }
+    auto ee = doc().snapToGrid(m);
+    handle(&ee);
+    if(ee.isAccepted()){ untested();
+      e->accept();
+    }else{ untested();
+      e->ignore();
+    }
   }else{
     //trace1("not mouse?", e->type());
     assert(e->type() != QEvent::MouseMove);
@@ -754,7 +781,7 @@ bool MouseActions::eventFilter(QObject *obj, QEvent *e)
 // e->ignore(); // really?
 //   return false;
 //   return e->isAccepted();
-   return QObject::eventFilter(obj, e);
+  return f;
 }
 
 /**
@@ -1698,6 +1725,8 @@ void MouseActions::paintElementsScheme(SchematicDoc *p)
 // -----------------------------------------------------------
 void MouseActions::moveElements(SchematicDoc *Doc, int& x1, int& y1)
 { untested();
+  unreachable(); // obsolete
+#if 0
   Doc->setOnGrid(x1, y1);
 
   for(auto pe : movingElements) {
@@ -1711,6 +1740,7 @@ void MouseActions::moveElements(SchematicDoc *Doc, int& x1, int& y1)
       pe->setCenter(x1, y1, true);
     }
   }
+#endif
 }
 
 // -----------------------------------------------------------
@@ -2160,7 +2190,7 @@ void MouseAction::uncheck()
   }
 }
 
-void MouseActions::handle(QEvent*e)
+bool MouseActions::handle(QEvent*e)
 { itested();
   QUndoCommand* c=nullptr;
   if(_maCurrent){ itested();
@@ -2168,9 +2198,11 @@ void MouseActions::handle(QEvent*e)
   }else{
   }
 
-  if(c){
+  if(c){ untested();
     executeCommand(c);
+    return true;
   }else{
+    return false;
   }
 
 }
@@ -2180,7 +2212,7 @@ void MouseActions::executeCommand(QUndoCommand* c)
   assert(c);
   QUndoStack* u = _doc.undoStack();
 
-  c->redo();
+//   c->redo(); does it do that in push?!
   if(u){ untested();
     u->push(c);
     // signal something?
@@ -2191,24 +2223,38 @@ void MouseActions::executeCommand(QUndoCommand* c)
   }
 }
 
+#include <QGraphicsSceneEvent>
 QUndoCommand* MouseAction::handle(QEvent* e)
 {
   e->ignore(); // pass on to other places unless accepted somewhere else.
   assert(e);
-  QMouseEvent* m = prechecked_cast<QMouseEvent*>(e);
-  assert(m);
+  auto* m = prechecked_cast<QMouseEvent*>(e);
+  auto* s = prechecked_cast<QGraphicsSceneEvent*>(e);
+
   switch(e->type()){
   case QEvent::MouseMove:
+    assert(m);
     return move(m);
   case QEvent::GraphicsSceneMouseRelease: untested();
+    return nullptr;
     //fallthrough
   case QEvent::MouseButtonRelease: untested();
+    assert(m);
     return release(m);
   case QEvent::GraphicsSceneMousePress: untested();
+    trace1("AAAAAA", e->type());
+    return generic(e);
+    assert(s);
+    return nullptr; // scene(s);
+  case QEvent::GrabMouse: untested();
+    return nullptr;
+//    return grab(s);
   case QEvent::MouseButtonPress: untested();
+    assert(m);
     return press(m);
   default:
-    trace1("handle", e->type());
+    trace1("mouseaction miss", e->type());
+    e->ignore();
     return nullptr;
   }
 }

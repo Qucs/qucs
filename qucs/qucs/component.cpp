@@ -153,13 +153,15 @@ void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2, float Corr)
 }
 
 // -------------------------------------------------------
-// // is "center" the position??
-void Component::setPos(int x, int y, bool relative)
+// "center" is the position
+void Component::setCenter(int x, int y, bool relative)
 {
   if(relative) {
-    trace2("relative move", x, y);
+    trace2("Component::relative move", Element::cx, Element::cy);
+    trace2("Component::relative move", x, y);
     Element::cx += x;
     Element::cy += y;
+    trace2("Component::relative moved", Element::cx, Element::cy);
   } else {
     Element::cx = x;
     Element::cy = y;
@@ -167,7 +169,7 @@ void Component::setPos(int x, int y, bool relative)
 }
 
 // -------------------------------------------------------
-void Component::getCenter(int& x, int& y)
+void Component::getCenter(int& x, int& y) const
 {
   x = cx();
   y = cy();

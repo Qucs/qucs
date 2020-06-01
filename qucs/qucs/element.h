@@ -187,12 +187,9 @@ public: // other stuff
   virtual void paintScheme(SchematicDoc *) const; // obsolete?
   virtual void paintScheme(QPainter *) const; // obsolete?
   virtual void draw(QPainter&) { incomplete(); }
-  virtual void setPos(int x, int y, bool relative=false);
-  virtual void setCenter(int x, int y, bool relative=false){
-	  unreachable(); // use the other. "Pos" is QT terminology
-	  return setPos(x,y,relative);
-  }
-  virtual void getCenter(int&, int&); // BUG
+  virtual void setCenter(int x, int y, bool relative=false);
+  std::pair<int, int> center()const;
+  virtual void getCenter(int&, int&) const; // BUG
   virtual void paint(ViewPainter*) const = 0;
   virtual void editElement(QucsDoc*);
 
@@ -248,6 +245,10 @@ public:
   virtual Symbol const* proto(SchematicModel const*) const{return nullptr;}
   SchematicModel const* scope() const;
   virtual SchematicModel* scope(){unreachable(); return nullptr;}
+
+public: // friend ElementGraphics?
+  void attachToModel();
+  void detachFromModel();
 
 protected: //BUG
   QString Name; // the label, but sometimes the type. yikes.
