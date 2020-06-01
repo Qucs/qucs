@@ -125,7 +125,8 @@ public:
   bool  rotateElements();
   bool  mirrorXComponents();
   bool  mirrorYComponents();
-  QPoint  setOnGrid(int, int);
+  QPoint  setOnGrid(int, int) const;
+  QMouseEvent snapToGrid(QMouseEvent* e) const;
   bool  elementsOnGrid();
 
   float zoom(float);
@@ -294,6 +295,7 @@ protected:
 
 protected: // these are the overrides that collect mouse actions
            // forward to mouseAction instances to produce UndoActions
+   bool event(QEvent*) override;
    void mouseMoveEvent(QMouseEvent*) override;
 //   void mousePressEvent(QMouseEvent*) override;
 //   void mouseDoubleClickEvent(QMouseEvent*) override;
@@ -596,6 +598,11 @@ private: // QucsDoc overrides, schematic_action.cpp
   void actionZoomIn(QAction*) override;
   void actionExportGraphAsCsv(); // BUG
 
+public:
+	bool handleMouseActions(QEvent* e){
+		assert(mouseActions());
+		return mouseActions()->handle(e);
+	}
 private:
   bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2); // this is nuts.
 

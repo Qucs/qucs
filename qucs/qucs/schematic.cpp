@@ -831,20 +831,6 @@ void SchematicDoc::enlargeView(int x1, int y1, int x2, int y2)
 // ---------------------------------------------------
 // Sets an arbitrary coordinate onto the next grid coordinate.
 // BUG: fp?
-QPoint SchematicDoc::setOnGrid(int x, int y)
-{ untested();
-  //qDebug() << "setongrid in" << x << y;
-  if(x<0) x -= (GridX >> 1) - 1;
-  else x += GridX >> 1;
-  x -= x % GridX;
-
-  if(y<0) y -= (GridY >> 1) - 1;
-  else y += GridY >> 1;
-  y -= y % GridY;
-
-  //qDebug() << "setongrid out" << x << y;
-  return QPoint(x, y);
-}
 
 // ---------------------------------------------------
 void SchematicDoc::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
@@ -1144,7 +1130,7 @@ bool SchematicDoc::mirrorXComponents()
     assert(pe);
     if(auto c=component(pe)){ untested();
 	c->mirrorX();   // mirror component !before! mirroring its center
-	g->setCenter(c->cx_(), y1 - c->cy_());
+	c->setCenter(c->cx_(), y1 - c->cy_());
     }else{ untested();
       incomplete();
     }
@@ -2350,16 +2336,12 @@ void SchematicModel::removeNode(Node const* x)
 }
 
 QList<ElementGraphics*> SchematicDoc::selectedItems()
-{ untested();
-#ifndef USE_SCROLLVIEW
+{ itested();
   assert(scene());
   // TODO/BUG: proper iterator.
   auto L = scene()->selectedItems();
   auto EL = reinterpret_cast<QList<ElementGraphics*>* >(&L);
   return *EL;
-#else
-  return cropSelectedElements();
-#endif
 }
 
 // vim:ts=8:sw=2:noet

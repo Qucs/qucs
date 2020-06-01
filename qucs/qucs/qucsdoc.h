@@ -18,6 +18,7 @@
 #include "object.h"
 #include <QString>
 #include <QDateTime>
+#include <QMouseEvent>
 #include <QTextStream> // tmp: used as baseclass, should be member.
 #include <assert.h>
 
@@ -128,6 +129,10 @@ protected: // cleaning up debris
 	virtual MouseActions* mouseActions();
 public:
 	MouseActions const* mouseActions() const;
+	virtual QMouseEvent snapToGrid(QMouseEvent* e) const{
+		assert(e);
+		return QMouseEvent(*e);
+	}
 private:
 	void setActiveAction(MouseAction* a);
 	void executeCommand(QUndoCommand*);

@@ -88,8 +88,8 @@ protected:
 public:
   void    paintScheme(SchematicDoc*) const; // BUG
   void    print(ViewPainter*, float);
-  void    setPos(int, int, bool relative=false) override;
-  void    getCenter(int&, int&); // BUG
+  void    setCenter(int, int, bool relative=false) override;
+  void    getCenter(int&, int&) const; // BUG
   int     textSize(int&, int&);
   void    Bounding(int&, int&, int&, int&);
   void    entireBounds(int&, int&, int&, int&, float);

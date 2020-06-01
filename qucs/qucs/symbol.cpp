@@ -70,9 +70,10 @@ Node* Symbol::connectNode(unsigned i, NodeMap&nm)
 
 Node* Symbol::disconnectNode(unsigned i, NodeMap&nm)
 {
+	trace2("disconnectNode", label(), i);
 	Port& mp = port(i);
 	Node* n = mp.value();
-	assert(n);
+	assert(n); // disconnecting twice is not allowed.
 	mp.disconnect();
 	n->connectionsRemove(this);
 

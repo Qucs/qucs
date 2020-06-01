@@ -33,19 +33,14 @@
 #include "qt_compat.h"
 
 class Element;
+class SchematicDoc;
 
-#ifdef USE_SCROLLVIEW
-class SchematicScene {
-  SchematicScene (QObject *);
-  virtual ~SchematicScene ();
-};
-#else
 class ElementGraphics;
 class SchematicScene : public QGraphicsScene
 {
 Q_OBJECT
 public:
-  SchematicScene (QObject *);
+  SchematicScene (QObject* parent);
   virtual ~SchematicScene ();
 
 //  void addItem(ElementGraphics*);
@@ -56,45 +51,25 @@ public:
 	  QGraphicsScene::removeItem((QGraphicsItem*)x);
   }
 
+
   void selectedItemsAndBoundingBox(QList<ElementGraphics*>& ElementCache, QRectF& BB);
   void removeItem(Element const*);
+  bool itemEvent(QEvent*);
+
+protected:
+	SchematicDoc* doc();
 
 private:
+  bool event(QEvent* e) override;
+  void dropEvent(QGraphicsSceneDragDropEvent* e) override;
 
 protected:
   void drawBackground(QPainter *painter, const QRectF& rect);
 };
-#endif
 
 #include "qt_compat.h"
 #include "element.h" // TODO: move implementation to .cpp
                      // also: this relates to scene, but is this the right place?
 							// (having other problems, still)
-
-#if QT_MAJOR_VERSION < 5
-// use naked pointer, as legacy qucs does.
-typedef Element ElementGraphics;
-#else
-
-#endif
-
-
-// a mouse action on an element.
-// formerly, a mouse action was implemented by means of messing with element
-// internals.
-
-#if 0
-Component const* component(ElementMouseAction const*);
-Wire const* wire(ElementMouseAction const*);
-WireLabel const* wireLabel(ElementMouseAction const*);
-Diagram const* diagram(ElementMouseAction const*);
-Painting const* painting(ElementMouseAction const*);
-
-Component* component(ElementMouseAction*);
-Wire* wire(ElementMouseAction*);
-WireLabel* wireLabel(ElementMouseAction*);
-Diagram* diagram(ElementMouseAction*);
-Painting* painting(ElementMouseAction*);
-#endif
 
 #endif /* SCHEMATICSCENE_H_ */

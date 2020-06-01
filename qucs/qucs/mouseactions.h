@@ -47,9 +47,12 @@ public:
 // private: TODO
 	// TODO: only use POS in those
 	virtual cmd* move(QMouseEvent*) { return nullptr; }
-	virtual cmd* press(QMouseEvent*) { return nullptr; }
+	virtual cmd* press(QEvent*) { return nullptr; }
+	// virtual cmd* grab(QGraphicsSceneEvent*) { return nullptr; }
 	virtual cmd* release(QMouseEvent*) { return nullptr; }
 	virtual cmd* dblclk(QMouseEvent*) { return nullptr; }
+
+	virtual cmd* generic(QEvent*) { return nullptr; }
 
 	void uncheck();
 
@@ -307,7 +310,7 @@ public:
 #undef Schematic
 
   bool eventFilter(QObject *obj, QEvent *event);
-  virtual void handle(QEvent*);
+  virtual bool handle(QEvent*);
   void executeCommand(QUndoCommand* c);
   MouseAction* activeAction(){ return _maCurrent; }
   void setActive(MouseAction* a);
