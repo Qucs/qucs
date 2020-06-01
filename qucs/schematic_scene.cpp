@@ -5,17 +5,11 @@
 
 #include <QFileInfo>
 
-
-// ---------------------------------------------------
-//
-#ifndef USE_SCROLLVIEW
-#endif
 // ---------------------------------------------------
 // forward to graphicscene, once it is there.
 // BUG: what if there are multiple items?
 ElementGraphics* SchematicDoc::itemAt(float x, float y)
 {
-#ifndef USE_SCROLLVIEW
 	QPointF p(x, y);
 	QGraphicsItem* I=scene()->itemAt(p, QTransform());
 	if(ElementGraphics* G=dynamic_cast<ElementGraphics*>(I)){ untested();
@@ -25,23 +19,6 @@ ElementGraphics* SchematicDoc::itemAt(float x, float y)
 		qDebug() << "miss";
 		return nullptr;
 	}
-#else
-	incomplete dont use qt<5
-	for(auto pc : components()){
-		if(pc->getSelected(x, y))
-			return (ElementGraphics*)(pc);
-	}
-
-	float Corr = 5.0 / Scale; // size of line select
-
-    for(auto pp : paintings()) {
-        if(pp->getSelected(x, y, Corr))
-            return (ElementGraphics*)(pp);
-	 }
-
-	incomplete(); // also select the other stuff.
-	return nullptr;
-#endif
 }
 
 #ifndef USE_SCROLLVIEW
@@ -104,21 +81,24 @@ Graph* graph(QGraphicsItem* g)
 #endif
 
 SchematicScene::SchematicScene(QObject *parent)
-#ifndef USE_SCROLLVIEW
   : QGraphicsScene(parent)
-#endif
 {
+}
+
+SchematicDoc* SchematicScene::doc()
+{
+	assert(parent());
+	return dynamic_cast<SchematicDoc*>(parent());
+
 }
 
 SchematicScene::~SchematicScene()
 {
 }
 
-#ifndef USE_SCROLLVIEW
 void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 {
 	QGraphicsScene::drawBackground(painter, rect);
-	return;
 
 	// Draw origin when visible
 	if(rect.contains(QPointF(0, 0))) {
@@ -126,6 +106,7 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 		painter->drawLine(QLine(0.0, -3.0, 0.0, 3.0));
 	}else{
 	}
+	return;
 	/// \todo getter and setter
 	int GridX = 10;
 	int GridY = 10;
@@ -145,11 +126,10 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 		}
 	}
 }
-#endif
 
 #ifndef USE_SCROLLVIEW
 void ElementGraphics::paintScheme(SchematicDoc *p)
-{
+{ untested();
   	assert(_e);
 	_e->paintScheme(p);
 }
@@ -158,6 +138,7 @@ void ElementGraphics::paintScheme(SchematicDoc *p)
 // 'l' is a bit of a hack. let's see
 void SchematicModel::toScene(QGraphicsScene& s, QList<ElementGraphics*>* l) const
 {
+	incomplete(); // this is too strange.
   for(auto i : components()){ untested();
     auto x=new ElementGraphics(i);
 	 if(l){
@@ -179,13 +160,7 @@ void SchematicModel::toScene(QGraphicsScene& s, QList<ElementGraphics*>* l) cons
 }
 
 void SchematicScene::removeItem(Element const* xx)
-{
-	Element* x=(Element*)(xx);
-	if(auto w=wire(x)){ untested();
-	}else if(auto n=node(x)){ untested();
-	}else{
-	  	unreachable();
-	}
+{ unreachable();
 }
 
 // FIXME: is the weird order really necessary?
@@ -233,3 +208,46 @@ void SchematicScene::selectedItemsAndBoundingBox(QList<ElementGraphics*>& Elemen
 	}
 }
 #endif
+
+void SchematicScene::dropEvent(QGraphicsSceneDragDropEvent* e)
+{
+	incomplete();
+}
+
+bool SchematicScene::itemEvent(QEvent* e)
+{ untested();
+	trace1("scene::itemEvent", e->type());
+	return doc()->handleMouseActions(e);
+}
+
+// https://stackoverflow.com/questions/14631098/qt-properly-integrating-undo-framework-with-qgraphicsscene
+
+// should return true if the event e was "recognized and processed."
+// (whatever that means)
+//
+// this is called before SchematicDoc::event
+bool SchematicScene::event(QEvent* e)
+{ untested();
+	trace2("SchematicScene::event", e->isAccepted(), e->type());
+	bool r = QGraphicsScene::event(e);
+	trace2("SchematicScene::event post", e->isAccepted(), e->type());
+	if(e->isAccepted()){ itested();
+		// move objects is here.
+		//
+		// // but also release.
+		// signal/slot instead? (why/how?)
+		// doc()->handleMouseActions(e);
+//		e->ignore(); // pass on to view??
+	}else{ untested();
+		// rectangle draw is here
+		// recrangle release also here.
+		// done in the "View".
+		//
+//		doc()->handleMouseActions(e);
+	}
+	assert(doc());
+
+
+
+	return r;
+}

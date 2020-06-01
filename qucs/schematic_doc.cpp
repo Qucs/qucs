@@ -255,23 +255,71 @@ void SchematicDoc::insertComponent(Component *c)
 
 
 // -----------------------------------------------------------
-// the mousemove stuff is collected here (it's an override) and then funnelled
-// into App->MouseMoveAction, which should just have subscribed the event
+QPoint SchematicDoc::setOnGrid(int x, int y) const
+{ untested();
+  //qDebug() << "setongrid in" << x << y;
+  if(x<0) x -= (GridX >> 1) - 1;
+  else x += GridX >> 1;
+  x -= x % GridX;
+
+  if(y<0) y -= (GridY >> 1) - 1;
+  else y += GridY >> 1;
+  y -= y % GridY;
+
+  qDebug() << "setongrid out" << x << y;
+  return QPoint(x, y);
+}
+//
+QMouseEvent SchematicDoc::snapToGrid(QMouseEvent* e)const
+{
+	  auto type = e->type();
+	  auto localPos = e->localPos();
+	  auto& windowPos = e->windowPos();
+	  auto& screenPos = e->screenPos();
+	  auto button = e->button();
+	  auto buttons = e->buttons();
+	  auto modifiers = e->modifiers();
+	  auto source = e->source();
+
+	  // if snapToGrid?
+	  localPos = setOnGrid(localPos.x(), localPos.y());
+	  auto ee = QMouseEvent( type, localPos, windowPos, screenPos, button, buttons,  modifiers, source);
+	  return ee;
+}
+
+#if 0
+void SchematicDoc::mouseReleaseEvent(QMouseEvent *e)
+{ untested();
+  if(e->isAccepted()){ itested();
+  }else{ itested();
+	  // not necessary.
+	  // does not mattter where QGraphics* sees the release
+	  //auto ee = snapToGrid(e);
+	  QGraphicsView::mouseReleaseEvent(e);
+  }
+}
+#endif
+
+
+// why is this here and not in SchematicScene?
 void SchematicDoc::mouseMoveEvent(QMouseEvent *e)
 { itested();
   assert(e);
-  if(e->isAccepted()){ untested();
-  }else{ untested();
+  if(e->isAccepted()){ itested();
+  }else{ itested();
+	  auto ee = snapToGrid(e);
+
+	  // move actions go through here.
+	  QGraphicsView::mouseMoveEvent(&ee);
   }
+
 
   // "emit" does not seem to do anything.
   emit signalCursorPosChanged(e->pos().x(), e->pos().y());
-  QGraphicsView::mouseMoveEvent(e);
   return;
 
   // mouse moveaction set by toggleaction
   // toggleaction should instead subscribe.
-  //
 #if 0
   // what is view?
   if(App->MouseMoveAction){ untested();
@@ -293,13 +341,43 @@ void SchematicDoc::mouseMoveEvent(QMouseEvent *e)
 	  QGraphicsView::mouseMoveEvent(e);
   }
 }
+
+// "should return true if the event e was recognized and processed."
+// (whatever that means)
+//
+// getting here *after* the event has passed through Scene
+bool SchematicDoc::event(QEvent* e)
+{ untested();
+	assert(mouseActions());
+	trace2("SchematicDoc::event", e->type(), e->isAccepted());
+
+//	e->ignore();
+
+	if(e->isAccepted()){ untested();
+		// move actions are highjacked.
+		// (that's okay);
+		// releaseEvent is also here.
+		handleMouseActions(e); //
+	}else{ untested();
+		// need releaseEvent here.
+		// but maybe not.
+		//mouserelease?!
+		// handleMouseActions(e); //
+		handleMouseActions(e); //
+	}
+	bool a = QGraphicsView::event(e);
+
+
+//	mouseActions()->handle(e); // try scene
+	return a;
+}
 #ifdef INDIVIDUAL_MOUSE_CALLBACKS
 // -----------------------------------------------------------
 // override function. catch mouse presses.
 //  why not just forward?!
 void SchematicDoc::mousePressEvent(QMouseEvent *e)
 { untested();
-  QGraphicsView::mouseReleaseEvent(e);
+  QGraphicsView::mousePressEvent(e);
 
 //  App->editText->setHidden(true); // disable text edit of component property
   return;
@@ -350,14 +428,6 @@ void SchematicDoc::mouseDoubleClickEvent(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void SchematicDoc::MouseReleaseEvent(QMouseEvent *e)
-{ untested();
-  assert(mouseActions());
-//  mouseActions()->handle(e);
-  QGraphicsView::mouseReleaseEvent(e);
-  return;
-}
-
 void SchematicDoc::wheelEvent(QWheelEvent * Event)
 { untested();
 #ifndef USE_SCROLLVIEW

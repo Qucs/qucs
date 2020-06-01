@@ -38,4 +38,11 @@ public:
 	}
 };
 typedef QTextStream stream_t; //  BUG
+
+// not here
+inline std::ostream& operator<<(std::ostream&o, std::pair<int, int> const& p)
+{
+  return o << "(" << p.first << ", " << p.second << ")";
+}
+
 #endif

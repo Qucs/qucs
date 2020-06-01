@@ -239,6 +239,16 @@ Element* SchematicModel::detach(Element* what)
 	}
 	return what;
 }
+// TODO: take iterator.
+Element* SchematicModel::attach(Element* what)
+{ untested();
+	if(auto c=component(what)){ untested();
+		connect(c);
+		components().append(c);
+	}else{ untested();
+	}
+	return what;
+}
 
 
 // should be a QucsDoc*, probably

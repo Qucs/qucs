@@ -75,6 +75,7 @@ Node* Ground::connectNode(unsigned i, NodeMap&l)
   Node* n = Component::connectNode(i, l);
   assert(n);
   n->setNetLabel("gnd");
+  return n;
 }
 
 Node* Ground::disconnectNode(unsigned i, NodeMap&l)
@@ -82,6 +83,7 @@ Node* Ground::disconnectNode(unsigned i, NodeMap&l)
   Node* n = Component::disconnectNode(i, l);
   assert(n);
   incomplete();
+  return n;
 }
 
 // -------------------------------------------------------

@@ -20,6 +20,7 @@
 #include "schematic_scene.h"
 #include <QGraphicsScene>
 #include "element_graphics.h"
+#include "io.h"
 
 void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
@@ -69,11 +70,86 @@ void ElementGraphics::setSelected(bool s)
 	_e->setSelected(s); // BUG
 }
 
-// ?!
-void ElementGraphics::setPos(int a, int b)
+// Reimplement this function to intercept events before they are dispatched to the specialized event handlers
+// should return true if the event e was recognized and processed.
+bool ElementGraphics::sceneEvent(QEvent* e)
+{ untested();
+	trace1("ElementGraphics::sceneEvent", e->type());
+	assert(scene());
+
+	auto sc = scene();
+	auto s = dynamic_cast<SchematicScene*>(sc);
+	assert(s);
+
+	//186
+	//156 <= item press
+	//187
+	
+	ItemEvent ie(*e, *this);
+
+	return s->itemEvent(&ie)
+		|| QGraphicsItem::sceneEvent(e);
+}
+
+void ElementGraphics::setPos(int i, int j, bool relative)
+{ untested();
+
+	assert(false); // obsolete
+#if 0
+  assert(_e);
+  auto p = _e->center();
+  trace1("setPos pre", p);
+  _e->setPos(i, j, relative);
+
+  p = _e->getCenter();
+  trace1("setPos post", p);
+
+  QGraphicsItem::setPos(p.first, p.second);
+#endif
+}
+//	assert(_e);
+//	qDebug() << "EG::setPos" << a << _e->cx_();
+//	QGraphicsItem::setPos(QPointF(a, b));
+//	qDebug() << "EG::setPos" << boundingRect();
+//}
+
+void ElementGraphics::show()
 {
+	_e->attachToModel();
+	QGraphicsItem::show();
+}
+void ElementGraphics::hide()
+{ untested();
 	assert(_e);
-	qDebug() << "EG::setPos" << a << _e->cx_();
-	QGraphicsItem::setPos(QPointF(a, b));
-	qDebug() << "EG::setPos" << boundingRect();
+	_e->detachFromModel();
+	untested();
+	QGraphicsItem::hide();
+}
+
+template<class P>
+void ElementGraphics::moveElement(P const& delta)
+{
+	// TODO: delta might be not needed.
+	auto gp = QGraphicsItem::pos();
+	assert(_e);
+	int dx = getX(delta);
+	int dy = getY(delta);
+	trace3("moveElement", gp, dx, dy);
+	
+	QGraphicsItem::setPos(0, 0); // avoid drawing?!
+	_e->setCenter(dx, dy, true);
+}
+
+template
+void ElementGraphics::moveElement<QPoint>(QPoint const& delta);
+
+ItemEvent::ItemEvent(QEvent const& a, ElementGraphics& b)
+	: QEvent(a), _item(b)
+{ untested();
+}
+
+// inline?
+ElementGraphics& ItemEvent::item()
+{
+	return _item;
 }

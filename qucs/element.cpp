@@ -1,8 +1,6 @@
 /***************************************************************************
-                          element.cpp  -  description
-                             -------------------
     copyright            : (C) 2003 by Michael Margraf
-                               2018 Felix Salfelder
+                               2018, 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -38,12 +36,13 @@ void Element::paintScheme(QPainter *) const
 {
 }
 
-void Element::setPos(int, int, bool)
+// pure?
+void Element::setCenter(int, int, bool)
 {
 	unreachable();
 }
 
-void Element::getCenter(int&, int&)
+void Element::getCenter(int&, int&) const
 {
 	incomplete();
 }
@@ -77,6 +76,25 @@ QRectF Element::boundingRect() const
 	return b;
 }
 
+void Element::attachToModel()
+{
+	assert(scope());
+	scope()->attach(this);
+}
+
+void Element::detachFromModel()
+{
+	assert(scope());
+	scope()->detach(this);
+}
+
+std::pair<int, int> Element::center()const
+{
+	std::pair<int, int> ret;
+	getCenter( ret.first, ret.second);
+	return ret;
+
+}
 
 // legacy stuff. pretend that Element points to an Element
 #include "components/component.h"
