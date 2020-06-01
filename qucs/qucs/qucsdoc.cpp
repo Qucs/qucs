@@ -18,6 +18,7 @@
 #include <QAction>
 
 #include "qucsdoc.h"
+#include "mouseactions.h"
 #include "qucs.h"
 #include <QUndoStack>
 #include "io.h" // tmp?
@@ -27,8 +28,6 @@ QucsDoc::QucsDoc(QucsApp &App_, const QString& Name_)
 	: App(&App_),
      _app(App_)
 {
-  undoStack = new QUndoStack;
-
   GridOn = true;
   DocName = Name_;
   QFileInfo Info(DocName);
@@ -60,18 +59,17 @@ QucsDoc::QucsDoc(QucsApp &App_, const QString& Name_)
 // vtable here?
 QucsDoc::~QucsDoc()
 {
-	delete undoStack;
 }
 
 // really?!
-void QucsDoc::undo(){
-  assert(undoStack);
-  return undoStack->undo();
+void QucsDoc::undo()
+{
+	incomplete();
 }
 
-void QucsDoc::redo(){
-  assert(undoStack);
-  return undoStack->redo();
+void QucsDoc::redo()
+{
+	incomplete();
 }
 
 QString QucsDoc::fileSuffix (const QString& Name)
@@ -99,22 +97,79 @@ QString QucsDoc::fileBase (void)
 // cleanup debris
 QAction* QucsDoc::selectAction()
 {
+	unreachable();
 	assert(App);
   	return App->select;
 }
 
-void QucsDoc::uncheckActive()
+void QucsDoc::setActiveAction(MouseAction* a)
 {
-	if(App->activeAction) {
-		App->activeAction->blockSignals(true); // do not call toggle slot
-		App->activeAction->setChecked(false);       // set last toolbar button off
-		App->activeAction->blockSignals(false);
-	}else{
+	if(mouseActions()){ untested();
+		mouseActions()->setActive(a);
+	}else{ untested();
 	}
 }
 
+MouseActions const* QucsDoc::mouseActions() const
+{ untested();
+	auto ma = const_cast<MouseActions*>(mouseActions());
+	return ma;
+}
+
 MouseActions* QucsDoc::mouseActions()
+{ untested();
+	return nullptr;
+}
+
+// similar to former Schematic::performtoggleaction. but take care of actions,
+// and deal with undoable commands.
+void QucsDoc::possiblyToggleAction(MouseAction* a, QAction* sender)
 {
-	assert(App);
-	return App->view;
+	QUndoCommand* cmd = nullptr;
+	assert(a);
+	if(!sender){
+		unreachable();
+	}else if(!sender->isCheckable()){ untested();
+		cmd = a->activate(sender);
+	}else if(sender->isChecked()){ untested();
+
+		cmd = a->activate(sender);
+
+		if(cmd){ untested();
+			sender->setChecked(false);
+			// possible 'delete' after select.
+			// don't do anything else
+		}else{ untested();
+			// sender->setChecked(true); // assert?
+			setActiveAction(a);
+		}
+	}else{ untested();
+		setActiveAction(nullptr);
+	}
+
+	if(cmd){ untested();
+		executeCommand(cmd);
+	}else{ untested();
+	}
+}
+
+// maybe this only works for SchematicDoc.
+// SchematicDoc has input modes coupled to "MouseActions" that deal with user input.
+// TextDoc also has modes, but somehow redirects input to another widget.
+MouseAction* QucsDoc::activeAction()
+{
+	if(mouseActions()){ untested();
+	}else{ untested();
+		return mouseActions()->activeAction();
+	}
+}
+MouseAction const* QucsDoc::activeAction() const
+{
+	auto d = const_cast<QucsDoc*>(this);
+	return d->activeAction();
+}
+
+void QucsDoc::executeCommand(QUndoCommand* c)
+{
+	incomplete();
 }

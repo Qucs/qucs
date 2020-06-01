@@ -258,7 +258,7 @@ public: // called directly from Schematic... bug?
   void hideEdit(){ slotHideEdit(); }
 
 public:
-  MouseActions *view;
+//  MouseActions *view;
   ContextMenuTabWidget *DocumentTab;
   QListWidget *CompComps;
   QTreeWidget *libTreeWidget;
@@ -396,27 +396,26 @@ public: // Toolbar?
   QAction* selectAction(){ return select; }
 
 public slots: // BUG. why is this here? (fix later)
-  void slotToggle(bool);  // Toggle mode
-  void slotEditRotate(bool);  // rotate the selected items
-  void slotEditMirrorX(bool); // mirror the selected items about X axis
-  void slotEditMirrorY(bool); // mirror the selected items about Y axis
+  void slotEditRotate();  // rotate the selected items
+  void slotEditMirrorX(); // mirror the selected items about X axis
+  void slotEditMirrorY(); // mirror the selected items about Y axis
   void slotEditCut();         // put marked object into clipboard and delete it
   void slotEditCopy();        // put the marked object into the clipboard
-  void slotEditPaste(bool);   // paste the clipboard into the document
-  void slotEditDelete(bool);  // delete the selected items
-  void slotInsertEquation(bool);
-  void slotInsertGround(bool);
-  void slotInsertPort(bool);
+  void slotEditPaste();   // paste the clipboard into the document
+  void slotEditDelete();  // delete the selected items
+  void slotInsertEquation();
+  void slotInsertGround();
+  void slotInsertPort();
   void slotInsertEntity();
-  void slotSetWire(bool);
+  void slotSetWire();
   void slotEscape();
-  void slotSelect(bool);
-  void slotEditActivate(bool);
-  void slotInsertLabel(bool);
-  void slotSetMarker(bool);
-  void slotOnGrid(bool);      // set selected elements on grid
-  void slotMoveText(bool);    // move property text of components
-  void slotZoomIn(bool);
+  void slotSelect();
+  void slotEditActivate();
+  void slotInsertLabel();
+  void slotSetMarker();
+  void slotOnGrid();      // set selected elements on grid
+  void slotMoveText();    // move property text of components
+  void slotZoomIn();
   void slotEditUndo();    // makes the last operation undone
   void slotEditRedo();    // makes the last undo undone
   void slotEditFind();    // searches for a piece of text

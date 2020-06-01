@@ -16,11 +16,12 @@
 #include "misc.h"
 #include "globals.h"
 #include "qucs.h" // BUG. QucsSettings?
+#include <QUndoStack>
 
 namespace{
 class sda : public SchematicSymbol{
 public:
-  sda(SchematicDoc& s) : SchematicSymbol(), _s(s) {
+  sda(SchematicDoc& s) : SchematicSymbol(), _s(s) { untested();
 	  new_subckt();
 	  subckt()->attachDoc(&s);
   }
@@ -29,14 +30,14 @@ private:
   Port& port(unsigned){ unreachable(); return *new Port(0,0); }
   unsigned numPorts() const{ return 0; }
 private: // SchematicSymbol
-  SchematicModel const& schematicModel() const{
+  SchematicModel const& schematicModel() const{ untested();
     incomplete();
     return *subckt();
   }
-  SchematicModel* schematicModel() {
+  SchematicModel* schematicModel() { untested();
     return nullptr;
   }
-  std::string getParameter(std::string const&) const{
+  std::string getParameter(std::string const&) const{ untested();
     incomplete();
     return "incomplete";
   }
@@ -46,14 +47,20 @@ private:
 }
 
 SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
-    : QucsDoc(App_, Name_), _model(nullptr), _root(nullptr),
-	 mouseAction(nullptr),
-  SymbolMode(false)
+    : QGraphicsView(), QucsDoc(App_, Name_), _root(nullptr), _model(nullptr),
+  SymbolMode(false), _undoStack(nullptr)
 { untested();
   qDebug() << "SchematicDoc::SchematicDoc" << Name_;
 
   _root = new sda(*this);
   _model = _root->subckt();
+
+  _mouseActions = new SchematicActions(*this);
+  _undoStack = new QUndoStack();
+
+  installEventFilter(_mouseActions);
+  assert(viewport());
+  viewport()->installEventFilter(_mouseActions);
 
   // ...........................................................
   GridX  = GridY  = 10;
@@ -76,7 +83,6 @@ SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
   isVerilog = false;
   creatingLib = false;
 
-#ifndef USE_SCROLLVIEW
   // HUH?
   setSceneRect(-2000, -2000, 4000, 4000);
   Scene = new SchematicScene(this);
@@ -87,7 +93,6 @@ SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
   setDragMode(QGraphicsView::RubberBandDrag); // why?
 
   this->setScene(Scene);
-#endif
 
   ShowFrame = 0;  // don't show
   FrameText[0] = tr("Title");
@@ -104,6 +109,7 @@ SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
 #endif
 
   misc::setWidgetBackgroundColor(viewport(), QucsSettings.BGColor);
+  assert(viewport());
   viewport()->setMouseTracking(true);
   viewport()->setAcceptDrops(true);  // enable drag'n drop
 
@@ -138,7 +144,25 @@ SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
 SchematicDoc::~SchematicDoc()
 { untested();
 	delete _root;
+	delete _undoStack;
+	delete _mouseActions;
 }
+
+void SchematicDoc::showEvent(QShowEvent*e)
+{ untested();
+	QGraphicsView::showEvent(e);
+}
+#if 0 // not yet
+}
+  incomplete();
+  app().connectToolbar(*this);
+}
+
+// void SchematicDoc::hideEvent(QEvent*)
+// { untested();
+//   incomplete();
+// }
+#endif
 
 bool SchematicDoc::loadDocument(QFile& /*BUG*/ file)
 { untested();
@@ -228,3 +252,294 @@ void SchematicDoc::insertComponent(Component *c)
     setComponentNumber(c); // important for power sources and subcircuit ports
 
 } // insertComponent
+
+
+// -----------------------------------------------------------
+// the mousemove stuff is collected here (it's an override) and then funnelled
+// into App->MouseMoveAction, which should just have subscribed the event
+void SchematicDoc::mouseMoveEvent(QMouseEvent *e)
+{ itested();
+  assert(e);
+  if(e->isAccepted()){ untested();
+  }else{ untested();
+  }
+
+  // "emit" does not seem to do anything.
+  emit signalCursorPosChanged(e->pos().x(), e->pos().y());
+  QGraphicsView::mouseMoveEvent(e);
+  return;
+
+  // mouse moveaction set by toggleaction
+  // toggleaction should instead subscribe.
+  //
+#if 0
+  // what is view?
+  if(App->MouseMoveAction){ untested();
+    (App->view->*(App->MouseMoveAction))(this, e);
+  }else{ itested();
+  }
+#else
+
+  // just subscribe?
+  assert(mouseActions());
+  mouseActions()->handle(e);
+#endif
+
+  // how to do this for all callbacks at once?!
+  if(e->isAccepted()){ untested();
+	  // nice
+  }else{ untested();
+	  // is this a good way to propagate?
+	  QGraphicsView::mouseMoveEvent(e);
+  }
+}
+#ifdef INDIVIDUAL_MOUSE_CALLBACKS
+// -----------------------------------------------------------
+// override function. catch mouse presses.
+//  why not just forward?!
+void SchematicDoc::mousePressEvent(QMouseEvent *e)
+{ untested();
+  QGraphicsView::mouseReleaseEvent(e);
+
+//  App->editText->setHidden(true); // disable text edit of component property
+  return;
+  if(App->MouseReleaseAction == &MouseActions::MReleasePaste){ untested();
+    // wtf?
+    return;
+  }else{ untested();
+  }
+
+  // map screen coordinates do scene coordinates.
+  // FIXME there must be a sane way.
+  float x = float(e->pos().x())/Scale + float(ViewX1);
+  float y = float(e->pos().y())/Scale + float(ViewY1);
+  QPoint p(x, y);
+
+  qDebug() << "nestedEvent?"; // this does not work right. need both...
+  QMouseEvent nestedEvent(e->type(), e->pos(), e->globalPos(),
+      e->button(), e->buttons(), e->modifiers());
+
+#if 1
+  assert(mouseActions());
+  mouseActions()->handle(e);
+#else
+  //TODO: move cruft to actions.
+  if(Event->button() != Qt::LeftButton){ untested();
+    if(App->MousePressAction == &MouseActions::MPressElement){ untested();
+      // hmm
+    }else if(App->MousePressAction == &MouseActions::MPressWire2) { untested();
+      // hmm
+    }else{ untested();
+	// some action needs to handle right button
+        // show menu on right mouse button
+        App->view->rightPressMenu(this, Event);
+        if(App->MouseReleaseAction){ untested();
+           // Is not called automatically because menu has focus.
+          (App->view->*(App->MouseReleaseAction))(this, &nestedEvent);
+        }
+        return;
+    }
+  }else{ untested();
+  }
+#endif
+}
+void SchematicDoc::mouseDoubleClickEvent(QMouseEvent *Event)
+{ untested();
+  assert(mouseActions());
+  mouseActions()->handle(Event);
+}
+
+// -----------------------------------------------------------
+void SchematicDoc::MouseReleaseEvent(QMouseEvent *e)
+{ untested();
+  assert(mouseActions());
+//  mouseActions()->handle(e);
+  QGraphicsView::mouseReleaseEvent(e);
+  return;
+}
+
+void SchematicDoc::wheelEvent(QWheelEvent * Event)
+{ untested();
+#ifndef USE_SCROLLVIEW
+  (void) Event;
+#else
+  App->editText->setHidden(true);  // disable edit of component property
+  // use smaller steps; typically the returned delta() is a multiple of 120
+
+  int delta = Event->delta() >> 1;
+
+  // ...................................................................
+  if((Event->modifiers() & Qt::ShiftModifier) ||
+     (Event->orientation() == Qt::Horizontal)) { // scroll horizontally ?
+      if(delta > 0) { if(scrollLeft(delta)) scrollBy(-delta, 0); }
+      else { if(scrollRight(delta)) scrollBy(-delta, 0); }
+      viewport()->update(); // because QScrollView thinks nothing has changed
+      App->view->drawn = false;
+  }
+  // ...................................................................
+  else if(Event->modifiers() & Qt::ControlModifier) {  // use mouse wheel to zoom ?
+      // zoom factor scaled according to the wheel delta, to accomodate
+      //  values different from 60 (slower or faster zoom)
+      float Scaling = pow(1.1, delta/60.0);
+      zoom(Scaling);
+      Scaling -= 1.0;
+      scrollBy( int(Scaling * float(Event->pos().x())),
+                int(Scaling * float(Event->pos().y())) );
+  }
+  // ...................................................................
+  else {     // scroll vertically !
+      if(delta > 0) { if(scrollUp(delta)) scrollBy(0, -delta); }
+      else { if(scrollDown(delta)) scrollBy(0, -delta); }
+      viewport()->update(); // because QScrollView thinks nothing has changed
+      App->view->drawn = false;
+  }
+
+  Event->accept();   // QScrollView must not handle this event
+#endif
+}
+
+void SchematicDoc::dropEvent(QDropEvent *Event)
+{ untested();
+  if(dragIsOkay) { untested();
+    QList<QUrl> urls = Event->mimeData()->urls();
+    if (urls.isEmpty()) { untested();
+      return;
+    }
+
+    // do not close untitled document to avoid segfault
+    QucsDoc *d = QucsMain->getDoc(0);
+    bool changed = d->DocChanged;
+    d->DocChanged = true;
+
+    // URI:  file:/home/linuxuser/Desktop/example.sch
+    foreach(QUrl url, urls) { untested();
+      App->gotoPage(QDir::toNativeSeparators(url.toLocalFile()));
+    }
+
+    d->DocChanged = changed;
+    return;
+  }else{
+    // not okay
+
+
+    int x = int(Event->pos().x()/Scale) + ViewX1;
+    int y = int(Event->pos().y()/Scale) + ViewY1;
+    QPoint p(x, y);
+
+    qDebug() << "nestedEvent in contentsDropEvent? at" << p;
+    QMouseEvent e(QEvent::MouseButtonPress, p,
+		  Qt::LeftButton, Qt::NoButton, Qt::NoModifier);
+
+#if 0
+    App->view->MPressElement(this, &e);
+
+    if(App->view->selElem) delete App->view->selElem;
+    App->view->selElem = 0;  // no component selected
+#endif
+
+    if(formerAction){ untested();
+      formerAction->setChecked(true);  // restore old action
+    }else{ untested();
+    }
+  }
+}
+
+void SchematicDoc::contentsDragEnterEvent(QDragEnterEvent *Event)
+{ untested();
+  //FIXME: the function of drag library component seems not working?
+  formerAction = 0;
+  dragIsOkay = false;
+
+  // file dragged in ?
+  if(Event->mimeData()->hasUrls()) { untested();
+    dragIsOkay = true;
+    Event->accept();
+    return;
+  }else{
+  }
+
+  // drag library component
+  if(Event->mimeData()->hasText()) { untested();
+    QString s = Event->mimeData()->text();
+    if(s.left(15) == "QucsComponent:<") { untested();
+      s = s.mid(14);
+      incomplete();
+#if 0
+      App->view->selElem = legacySchematicLanguage::getComponentFromName(s);
+      if(App->view->selElem) { untested();
+        Event->accept();
+        return;
+      }else{ untested();
+      }
+#endif
+    }
+    Event->ignore();
+    return;
+  }
+
+
+//   if(Event->format(1) == 0) {  // only one MIME type ? }
+
+    // drag component from listview
+//     if(Event->provides("application/x-qabstractitemmodeldatalist")) { untested();
+    if(Event->mimeData()->hasFormat("application/x-qabstractitemmodeldatalist")) { untested();
+      QListWidgetItem *Item = App->CompComps->currentItem();
+      if(Item) { untested();
+        formerAction = App->activeAction;
+        App->slotSelectComponent(Item);  // also sets drawn=false
+        App->MouseMoveAction = 0;
+        App->MousePressAction = 0;
+
+        Event->accept();
+        return;
+      }
+    }
+//   }
+
+  Event->ignore();
+}
+void SchematicDoc::contentsDragLeaveEvent(QDragLeaveEvent*)
+{ untested();
+#if 0
+  if(!App->view->selElem){
+  }else if(App->view->selElem->Type & isComponent){
+    if(App->view->drawn) { untested();
+
+      QPainter painter(viewport());
+      //App->view->setPainter(this);
+      ((Component*)App->view->selElem)->paintScheme(this);
+      App->view->drawn = false;
+    }else{
+    }
+  }else{
+  }
+#endif
+
+  if(formerAction){
+    formerAction->setChecked(true);  // restore old action
+  }else{
+  }
+}
+
+// ---------------------------------------------------
+void SchematicDoc::contentsDragMoveEvent(QDragMoveEvent *Event)
+{ untested();
+  assert(Event);
+
+  if(!dragIsOkay) { untested();
+#if 0
+    if(App->view->selElem == 0) { untested();
+      Event->ignore();
+      return;
+    }
+#endif
+
+    QMouseEvent e(QEvent::MouseMove, Event->pos(), Qt::NoButton, 
+		  Qt::NoButton, Qt::NoModifier);
+    assert(mouseActions());
+    mouseActions()->handle(&e);
+  }else{
+    Event->accept();
+  }
+}
+#endif

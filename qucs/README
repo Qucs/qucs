@@ -91,3 +91,13 @@ version might not even compile.
 Press 'Enter' when asked for a password.  Run `sh bootstrap' and `configure'
 (see above) with the appropriate options.  Maintainance currently requires
 Autoconf version 2.57 and GNU automake 1.7.0.
+
+Debugging
+=========
+
+It's not normally recommended to install during development. Debugging is
+still possible with libtool, but the environment variables that are not
+handled by autotools need to be set first.
+
+$ . main/qucs       # set environment variables for running from builddir
+$ libtool --mode=execute gdb --args main/qucs.real -i examples/bandpass.sch

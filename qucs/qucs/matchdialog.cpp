@@ -739,7 +739,8 @@ void MatchDialog::slotButtCreate() {
                                   gamma_MAX, BalancedStubs);
   }
 
-  QucsMain->slotEditPaste(success);
+  incomplete();
+//  QucsMain->slotEditPaste(success);
   accept();
 }
 
