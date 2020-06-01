@@ -23,10 +23,23 @@ public:
 	explicit SchematicActions(SchematicDoc& d);
 	~SchematicActions();
 
-public: // actions...
-  MouseAction* maDelete;
-  MouseAction* maThis;
-  MouseAction* maThat;
+private: // MouseActions
+	// void handle(QEvent*) override;
+
+protected: // Doc stuff
+	SchematicDoc* doc();
+	void updateViewport();
+
+public: // actions... private?
+	MouseAction* maDelete;
+	MouseAction* maSelect;
+//	MouseAction* maMove;
+	MouseAction* maMirror;
+	MouseAction* maActivate;
+	MouseAction* maRotate;
+	MouseAction* maOnGrid;
+	MouseAction* maMirrorX;
+	MouseAction* maMirrorY;
 };
 
 #endif

@@ -211,7 +211,6 @@ void QucsApp::initView()
 
   connect(dock, SIGNAL(visibilityChanged(bool)), SLOT(slotToggleDock(bool)));
 
-  view = nullptr; // what's this.
 #if 0
   view = new MouseActions(*this);
 #endif
@@ -836,6 +835,8 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
 {
   slotHideEdit(); // disable text edit of component property
 
+  (void)item;
+
   incomplete();
 #if 0
   // delete previously selected elements
@@ -1199,25 +1200,28 @@ void QucsApp::openProject(const QString& Path)
     return;
   }
 
-  if(!closeAllFiles()) return;   // close files and ask for saving them
-  DocumentTab->createEmptySchematic("");
+  if(closeAllFiles()){
+    // close files and ask for saving them
+  }else{
+    DocumentTab->createEmptySchematic("");
 
-  view->drawn = false;
+  //  view->drawn = false;
 
-  slotResetWarnings();
+    slotResetWarnings();
 
-  QucsSettings.QucsWorkDir.setPath(ProjDir.path());
-  octave->adjustDirectory();
+    QucsSettings.QucsWorkDir.setPath(ProjDir.path());
+    octave->adjustDirectory();
 
-  Content->setProjPath(QucsSettings.QucsWorkDir.absolutePath());
+    Content->setProjPath(QucsSettings.QucsWorkDir.absolutePath());
 
-  TabView->setCurrentIndex(1);   // switch to "Content"-Tab
+    TabView->setCurrentIndex(1);   // switch to "Content"-Tab
 
-  openProjName.chop(4); // remove "_prj" from name
-  ProjName = openProjName;   // remember the name of project
+    openProjName.chop(4); // remove "_prj" from name
+    ProjName = openProjName;   // remember the name of project
 
-  // show name in title of main window
-  setWindowTitle("Qucs " PACKAGE_VERSION + tr(" - Project: ")+ProjName);
+    // show name in title of main window
+    setWindowTitle("Qucs " PACKAGE_VERSION + tr(" - Project: ")+ProjName);
+  }
 }
 
 // ----------------------------------------------------------
@@ -1272,7 +1276,7 @@ void QucsApp::slotMenuProjClose()
   if(!closeAllFiles()) return;   // close files and ask for saving them
   DocumentTab->createEmptySchematic("");
 
-  view->drawn = false;
+  // view->drawn = false;
 
   slotResetWarnings();
   setWindowTitle("Qucs " PACKAGE_VERSION + tr(" - Project: "));
@@ -1444,19 +1448,19 @@ bool QucsApp::gotoPage(const QString& Name)
   if(!d->load()) { untested();
     delete d;
     DocumentTab->setCurrentIndex(No);
-    view->drawn = false;
+    // view->drawn = false;
     return false;
   }else{ untested();
+    slotChangeView(DocumentTab->currentWidget());
+
+    // if only an untitled document was open -> close it
+    if(getDoc(0)->docName().isEmpty())
+      if(!getDoc(0)->DocChanged)
+        delete DocumentTab->widget(0);
+
+    //view->drawn = false;
+    return true;
   }
-  slotChangeView(DocumentTab->currentWidget());
-
-  // if only an untitled document was open -> close it
-  if(getDoc(0)->docName().isEmpty())
-    if(!getDoc(0)->DocChanged)
-      delete DocumentTab->widget(0);
-
-  //view->drawn = false;
-  return true;
 }
 
 QString lastDirOpenSave; // to remember last directory and file
@@ -2440,8 +2444,12 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
   if (filename == tab_titl ) return; // Forbid to paste subcircuit into itself.
 
   // delete previously selected elements
-  if(view->selElem != 0)  delete view->selElem;
+#if 0
+  if(view->selElem != 0){
+    delete view->selElem;
+  }
   view->selElem = 0;
+#endif
 
   // toggle last toolbar button off
   //  toolbar->deactivate();
@@ -2486,8 +2494,7 @@ void QucsApp::slotSelectLibComponent(QTreeWidgetItem *item)
     SchematicDoc *Doc = (SchematicDoc*)DocumentTab->currentWidget();
 
     // if the current document is a schematic activate the paste
-    if(!isTextDocument(Doc))
-    {
+    if(!isTextDocument(Doc)) {
         // if theres not a higher level item, this is a top level item,
         // not a component item so return
         if(item->parent() == 0) return;
@@ -2498,9 +2505,9 @@ void QucsApp::slotSelectLibComponent(QTreeWidgetItem *item)
         cb->setText(item->text(1));
 
         // activate the paste command
-        slotEditPaste (true);
+        slotEditPaste (); // who is the sender now??
+    }else{
     }
-
 }
 
 
@@ -2608,7 +2615,8 @@ void QucsApp::changeSchematicSymbolMode(SchematicDoc *Doc)
 }
 
 // ---------------------------------------------------------
-bool QucsApp::isTextDocument(QWidget *w) {
+bool QucsApp::isTextDocument(QWidget *w)
+{
   return w->inherits("QPlainTextEdit");
 }
 
@@ -2618,6 +2626,7 @@ bool QucsApp::isTextDocument(QWidget *w) {
 // symbol.
 void QucsApp::slotSymbolEdit()
 {
+  incomplete();
   QWidget *w = DocumentTab->currentWidget();
 
   // in a text document (e.g. VHDL)
@@ -2650,9 +2659,8 @@ void QucsApp::slotSymbolEdit()
     SDoc->becomeCurrent(true);
     SDoc->viewport()->update();
     // view->drawn = false;
-  }
-  // in a normal schematic, data display or symbol file
-  else {
+  }else{
+    // in a normal schematic, data display or symbol file
     SchematicDoc *SDoc = (SchematicDoc*)w;
     // in a symbol file
     if(SDoc->docName().right(4) == ".sym") {
@@ -2793,11 +2801,13 @@ void QucsApp::slot2PortMatching()
 void QucsApp::slotEditElement()
 {
   incomplete();
+#if 0 // SchematicDoc?
   if(view->focusMEvent){
     view->editElement((SchematicDoc*)DocumentTab->currentWidget(), view->focusMEvent);
   }else{
 	 // ?!
   }
+#endif
 }
 
 // -----------------------------------------------------------

@@ -1,8 +1,7 @@
 /***************************************************************************
-                               textdoc.cpp
-                              -------------
 Copyright (C) 2006 by Michael Margraf <michael.margraf@alumni.tu-berlin.de>
-Copyright (C) 2014 by Guilherme Brondani Torri <guitorri@gmail.com>
+              2014 by Guilherme Brondani Torri <guitorri@gmail.com>
+              2020 Felix Salfelder
 
  ***************************************************************************/
 
@@ -218,12 +217,14 @@ void TextDoc::setName (const QString& Name_)
  * \brief TextDoc::becomeCurrent sets text document as current
  *
  * \detail Make sure the menu options are adjusted.
+ * why is this not some event handler? (showEvent?)
  */
 void TextDoc::becomeCurrent (bool)
 {
   slotCursorPosChanged();
   viewport()->setFocus ();
 
+  // does this grey/ungrey the undo/redo buttons?
   emit signalUndoState(document()->isUndoAvailable());
   emit signalRedoState(document()->isRedoAvailable());
 
@@ -338,9 +339,9 @@ void TextDoc::slotSetChanged()
 {
   if((document()->isModified() && !DocChanged) || SetChanged) {
     DocChanged = true;
-  }
-  else if((!document()->isModified() && DocChanged)) {
+  }else if((!document()->isModified() && DocChanged)) {
     DocChanged = false;
+  }else{
   }
   emit signalFileChanged(DocChanged);
   emit signalUndoState(document()->isUndoAvailable());
@@ -397,8 +398,11 @@ int TextDoc::save ()
   saveSettings ();
 
   QFile file (docName());
-  if (!file.open (QIODevice::WriteOnly))
+  if (!file.open (QIODevice::WriteOnly)){
+	  // throw
     return -1;
+  }else{
+  }
   setLanguage (docName());
 
   QTextStream stream (&file);
@@ -431,8 +435,7 @@ float TextDoc::zoomBy(float s)
       QFont f = document()->defaultFont();
       f.setPointSize(f.pointSize()*2);
       document()->setDefaultFont(f);
-  }
-  else {
+  }else{
       QFont f = document()->defaultFont();
       f.setPointSize(f.pointSize()*s);
       document()->setDefaultFont(f);
@@ -603,50 +606,53 @@ void TextDoc::refreshLanguage()
     syntaxHighlight->setDocument(document());
 }
 
-void TextDoc::actionSelect(bool){
+void TextDoc::actionSelect(QAction*s)
+{
+	incomplete(); // toggle?!
 	viewport()->setFocus();
+//	toggleAction(s);
 	selectAction()->blockSignals(true);
 	selectAction()->setChecked(true);
 	selectAction()->blockSignals(false);
 }
 
-void TextDoc::actionEditActivate(bool)
+void TextDoc::actionEditActivate(QAction*s)
 {
 	commentSelected();
+	// toggleAction(s);
+	incomplete();
 
-	App->editActivate->blockSignals (true);
-	App->editActivate->setChecked(false);  // release toolbar button
-	App->editActivate->blockSignals (false);
+	// App->editActivate->blockSignals (true);
+	// App->editActivate->setChecked(false);  // release toolbar button
+	// App->editActivate->blockSignals (false);
 }
 
-void TextDoc::actionEditDelete(bool)
+void TextDoc::actionEditDelete(QAction*s)
 {
 	viewport()->setFocus();
 	textCursor().deleteChar();
 
-	App->editDelete->blockSignals(true);
-	App->editDelete->setChecked(false);  // release toolbar button
-	App->editDelete->blockSignals(false);
+//	toggleAction(s);
 }
 
-void TextDoc::actionEditPaste(bool)
+void TextDoc::actionEditPaste(QAction*s)
 {
 	paste();
-
-	App->editPaste->blockSignals(true);
-	App->editPaste->setChecked(false);  // release toolbar button
-	App->editPaste->blockSignals(false);
+//	toggleAction(s);
 }
 
-void TextDoc::actionZoomIn(bool)
+void TextDoc::actionZoomIn(QAction*)
 {
 	zoomBy(1.5f);
+
+#if 0 // why is magPlos checkable?!
 	App->magPlus->blockSignals(true);
 	App->magPlus->setChecked(false);
 	App->magPlus->blockSignals(false);
+#endif
 }
 
-void TextDoc::actionChangeProps()
+void TextDoc::actionChangeProps(QAction*)
 {
 	viewport()->setFocus();
 	App->SearchDia->initSearch(this, textCursor().selectedText(), true);

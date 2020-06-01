@@ -103,34 +103,35 @@ private:
   QucsApp *App;
 
 private: // actions. here?
-  void actionCopy(){
+  void actionCopy(QAction*) override{
+	  copy();
+  }
+  void actionCut(QAction*) override{
 	  cut();
   }
-  void actionCut(){
-	  cut();
-  }
-  void actionSelect(bool);
-  void actionEditActivate(bool);
-  void actionEditDelete(bool);
-  void actionEditPaste(bool);
-  void actionZoomIn(bool);
+  void actionSelect(QAction*) override;
+  void actionEditActivate(QAction*) override;
+  void actionEditDelete(QAction*) override;
+  void actionEditPaste(QAction*) override;
+  void actionZoomIn(QAction*) override;
 
-  void actionEditUndo(){
+  // BUG: qucsDoc
+  void actionEditUndo(QAction*) override{
     viewport()->setFocus();
 	 QPlainTextEdit::undo();
   }
-  void actionEditRedo(){
+  void actionEditRedo(QAction*) override{
 	  viewport()->setFocus();
 	  QPlainTextEdit::redo();
   }
 
-  void actionInsertEntity();
-  void actionSelectAll() {
+  void actionInsertEntity(QAction*) override;
+  void actionSelectAll(QAction*) override{
 	  viewport()->setFocus();
 	  //->selectAll(true);
 	  selectAll();
   }
-  void actionChangeProps();
+  void actionChangeProps(QAction*) override;
 
 
 private slots:
@@ -138,7 +139,7 @@ private slots:
   bool baseSearch(const QString &, bool, bool, bool);
 };
 
-inline void TextDoc::actionInsertEntity()
+inline void TextDoc::actionInsertEntity(QAction*)
 {
   viewport()->setFocus ();
   //TODO Doc->clearParagraphBackground (Doc->tmpPosX);

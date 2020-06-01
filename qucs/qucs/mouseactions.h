@@ -22,22 +22,27 @@
 class Schematic;
 class QUndoCommand;
 class QMouseEvent;
+class MouseActions;
 
 // something happens to the mouse on a schematic
 // BUG: wrong file. schematic_mouse.h maybe?
+// FIXME: why Mouse? User??
 class MouseAction {
 public:
 	typedef QUndoCommand cmd;
-
 protected:
-	MouseAction(MouseActions& ctx):_ctx(ctx){}
+public:
+	explicit MouseAction(MouseActions& ctx)
+		:_ctx(ctx), _sender(nullptr){}
+	MouseAction(MouseAction const&) = delete;
+
 public:
 	virtual ~MouseAction(){}
 
 public:
- /// 	cmd* do_it(QMouseEvent*) {  }
- //   switch type, forward to virtual
+	cmd* handle(QEvent*);
 
+	virtual cmd* activate(QAction* sender);
 // private: TODO
 	// TODO: only use POS in those
 	virtual cmd* move(QMouseEvent*) { return nullptr; }
@@ -45,10 +50,19 @@ public:
 	virtual cmd* release(QMouseEvent*) { return nullptr; }
 	virtual cmd* dblclk(QMouseEvent*) { return nullptr; }
 
-protected:
-	MouseActions& _ctx;
-};
+	void uncheck();
 
+protected:
+	MouseActions& ctx(){return _ctx;}
+
+protected:
+	SchematicDoc& doc(); // BUG _ctx.
+	void updateViewport();
+
+private:
+	MouseActions& _ctx;
+	QAction* _sender;
+};
 
 
 // a mouse action on an element (first attempt)
@@ -171,11 +185,13 @@ class QucsApp;
 
 extern QAction *formerAction;
 
-class MouseActions {
+// must be QObject so it can receive/filter events
+class MouseActions : public QObject {
+	Q_OBJECT
 public:
   typedef QList<ElementGraphics*> EGPList;
 public:
-  MouseActions(QucsDoc& /* was: App?? */);
+  MouseActions(QucsDoc&);
   virtual ~MouseActions();
 
   void setPainter(SchematicDoc*);
@@ -183,9 +199,8 @@ public:
   void editElement(SchematicDoc*, QMouseEvent*);
   void editLabel(SchematicDoc*, WireLabel*);
 
-  bool drawn;  // indicates whether the scheme element was drawn last time
-  void setDrawn(bool b=true){drawn = b;}
-  bool wasDrawn() const{return drawn;}
+  void setDrawn(bool b=true){_drawn = b;}
+  bool wasDrawn() const{return _drawn;}
 // private: BUG.
   Element *selElem;  // component/diagram/painting selected in IconView
   ElementMouseAction focusElement; // BUG: use focusMEvent instead
@@ -221,12 +236,10 @@ public:
   Component* selectCompText(SchematicDoc*, int, int, int&, int&);
   void     deselectElements(ElementMouseAction);
 
-private:
-  bool isMoveEqual;
-  //QucsApp* App;
-  QucsDoc& _doc;
+public: // really?
+  QucsDoc& doc();
+  void updateViewport();
 
-  // -------------------------------------------------------------------
 public:
 #define Schematic SchematicDoc
   void MMoveSelect(Schematic*, QMouseEvent*);
@@ -286,6 +299,25 @@ public:
   void endElementMoving(Schematic*, EGPList*);
   void rightPressMenu(QMouseEvent*);
 #undef Schematic
+
+  bool eventFilter(QObject *obj, QEvent *event);
+  virtual void handle(QEvent*);
+  MouseAction* activeAction(){ return _maCurrent; }
+  void setActive(MouseAction* a);
+
+public:
+  void undo();
+  void redo();
+
+protected:
+	MouseAction* _maCurrent;
+private:
+	// QUndoStack* _undoStack; // Doc
+  bool _drawn;  // indicates whether the scheme element was drawn last time
+private:
+  bool isMoveEqual;
+protected:
+  QucsDoc& _doc;
 }; // MouseActions
 
 class Label;

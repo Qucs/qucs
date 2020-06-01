@@ -21,8 +21,8 @@
  *
  */
 
-#ifndef SCHEMATICSCENE_H_
-#define SCHEMATICSCENE_H_
+#ifndef QUCS_SCHEMATIC_SCENE_H_
+#define QUCS_SCHEMATIC_SCENE_H_
 
 #include <QGraphicsScene>
 #include <QList> // BUG

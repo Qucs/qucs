@@ -1,18 +1,13 @@
 /***************************************************************************
-                              mouseactions.cpp
-                             ------------------
-    begin                : Thu Aug 28 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
- ***************************************************************************/
+                               2014 Guilherme Brondani Torri
+                               2020 Felix Salfelder
 
-/* Copyright (C) 2014 Guilherme Brondani Torri <guitorri@gmail.com>        */
-
-/***************************************************************************
+ ***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -42,6 +37,7 @@
 #include <QAction>
 #include <QLineEdit>
 #include <QDebug>
+#include <QUndoStack>
 
 #include <limits.h>
 #include <stdlib.h>
@@ -51,8 +47,7 @@
 
 QAction *formerAction;   // remember action before drag n'drop etc.
 
-// TODO/BUG. is this intended for all docs? it only seems to make most sense
-// for schematic right now. Do we need SchematicMouseActions??
+// only mouse actions? how about undoable keyboard actions?
 MouseActions::MouseActions(QucsDoc& d)
   : focusElement(nullptr), // hmm
     _doc(d)
@@ -66,13 +61,32 @@ MouseActions::MouseActions(QucsDoc& d)
   ComponentMenu = new QMenu(QucsMain);
   focusMEvent   = new QMouseEvent(QEvent::MouseButtonPress, QPoint(0,0),
                   Qt::NoButton, Qt::NoButton, Qt::NoModifier);
-}
 
+  // _undoStack = new QUndoStack();
+}
 
 MouseActions::~MouseActions()
 { untested();
   delete ComponentMenu;
   delete focusMEvent;
+//  delete _undoStack;
+}
+void MouseActions::setActive(MouseAction* a)
+{
+  if(_maCurrent){ untested();
+    _maCurrent->uncheck();
+  }else{ untested();
+  }
+  _maCurrent = a;
+}
+
+void MouseActions::undo()
+{
+  incomplete();
+}
+void MouseActions::redo()
+{
+  incomplete();
 }
 
 // -----------------------------------------------------------
@@ -171,8 +185,8 @@ void MouseActions::editLabel(SchematicDoc *Doc, WireLabel *pl)
   }
 
   Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
-  Doc->viewport()->update();
-  drawn = false;
+  updateViewport();
+  setDrawn(false);
   Doc->setChanged(true, true);
 }
 
@@ -225,8 +239,8 @@ void MouseActions::endElementMoving(SchematicDoc *Doc, EGPList *movElements)
   // enlarge viewarea if components lie outside the view
   Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
   Doc->enlargeView(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
-  Doc->viewport()->update();
-  drawn = false;
+  updateViewport();
+  setDrawn(false);
 }
 
 // -----------------------------------------------------------
@@ -235,6 +249,7 @@ void MouseActions::moveElements(EGPList& what, int x, int y)
 { itested();
   auto movElements=&what;
   Wire *pw;
+  (void)pw;
   for(auto pe : *movElements) { itested();
     if(pe->Type == isWire) { untested();
       pw = (Wire*)pe;   // connected wires are not moved completely
@@ -326,17 +341,19 @@ void MouseActions::MMoveElement(SchematicDoc *Doc, QMouseEvent *Event)
     x -= Doc->contentsX();
     y -= Doc->contentsY();
 #endif
-    P->MouseMoving(Doc, x, y, gx, gy, Doc, x, y, drawn);
-    drawn = true;
-    Doc->viewport()->update();
+    incomplete();
+    (void)P;
+//    P->MouseMoving(Doc, x, y, gx, gy, Doc, x, y, drawn);
+    setDrawn();
+    updateViewport();
   }else{
 
     // ********** it is a component or diagram
-    if(drawn){
+    if(_drawn){
       // erase old scheme
       selElem->paintScheme(Doc);
     }else{
-      drawn = true;
+      setDrawn();
     }
 
   //  Component *comp = (Component*)selElem;
@@ -395,7 +412,7 @@ static void paintGhostLineV(SchematicDoc *Doc, int fx, int fy, int fyy){ unteste
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveWire2(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MMoveWire2(SchematicDoc *, QMouseEvent *)
 { untested();
 #if 0
   Set2(Event, Doc);
@@ -470,18 +487,10 @@ void MouseActions::MMoveWire1(SchematicDoc *Doc, QMouseEvent *Event)
  * @param Event
  */
 // can't we use Qt builtin ractangle selector?
-void MouseActions::MMoveSelect(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MMoveSelect(SchematicDoc *, QMouseEvent *)
 {
-  //qDebug() << "MMoveSelect " << "select area";
-  Set2(Event);
-  if(isMoveEqual) {    // x and y size must be equal ?
-    if(abs(MAx2) > abs(MAy2)) { untested();
-      if(MAx2<0) MAx2 = -abs(MAy2); else MAx2 = abs(MAy2);
-    }
-    else { if(MAy2<0) MAy2 = -abs(MAx2); else MAy2 = abs(MAx2); }
-  }
 
-  Doc->PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);
+ // now  SelectAction::move
 }
 
 // -----------------------------------------------------------
@@ -552,7 +561,7 @@ void MouseActions::MMoveMoving(SchematicDoc *Doc, QMouseEvent *Event)
   pe->paintScheme(Doc);
   }
 
-  drawn = true;
+  setDrawn();
   MAx1 = MAx2;
   MAy1 = MAy2;
   QucsMain->MouseMoveAction = &MouseActions::MMoveMoving2;
@@ -568,6 +577,7 @@ void MouseActions::MMoveMoving2(SchematicDoc *Doc, QMouseEvent *Event)
 
   Set2(Event, Doc);
 
+#if 0
   if(drawn){
     // erase old scheme
     for(auto pe : movingElements) {
@@ -577,8 +587,9 @@ void MouseActions::MMoveMoving2(SchematicDoc *Doc, QMouseEvent *Event)
 //          ((Wire*)pe)->Label->paintScheme(&painter);
     }
   }
+#endif
 
-  drawn = true;
+  setDrawn();
   if (!Event->modifiers().testFlag(Qt::ControlModifier))
     Doc->setOnGrid(MAx2, MAy2);  // use grid only if CTRL key not pressed
   MAx1 = MAx2 - MAx1;
@@ -611,7 +622,7 @@ void MouseActions::MMovePaste(SchematicDoc *Doc, QMouseEvent *Event)
   moveElements(Doc,MAx1,MAy1);
   paintElementsScheme(Doc);
 
-  drawn = true;
+  setDrawn();
   QucsMain->MouseMoveAction = &MouseActions::MMoveMoving2;
   QucsMain->MouseReleaseAction = &MouseActions::MReleasePaste;
 }
@@ -724,6 +735,27 @@ void MouseActions::MMoveRotate(SchematicDoc *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Arc, MAx3-10, MAy3-10, 21, 21, -16*20, 16*240,false);
 }
 
+bool MouseActions::eventFilter(QObject *obj, QEvent *e)
+{
+//  assert(obj==&doc());
+
+  assert(e);
+
+  QMouseEvent* m = dynamic_cast<QMouseEvent*>(e);
+  if(m){ untested();
+    trace1("mouse", e->type());
+    handle(e);
+  }else{ untested();
+    trace1("not mouse?", e->type());
+    assert(e->type() != QEvent::MouseMove);
+    assert(e->type() != QEvent::MouseButtonPress);
+    assert(e->type() != QEvent::MouseButtonRelease);
+  }
+// e->ignore(); // really?
+//   return false;
+//   return e->isAccepted();
+   return QObject::eventFilter(obj, e);
+}
 
 /**
  * @brief MouseActions::MMoveActivate Paints a crossed box mouse cursor to "(de)activate" components.
@@ -891,6 +923,7 @@ void MouseActions::rightPressMenu(QMouseEvent *Event)
   if(!QucsMain->editDelete->isChecked()){ untested();
     // still ElementGraphics->rightMenuAction?!
     ComponentMenu->addAction(QucsMain->editDelete);
+  }else{
   }
 
   if(!focusElement){ untested();
@@ -948,8 +981,8 @@ void MouseActions::rightPressMenu(QMouseEvent *Event)
 
   *focusMEvent = *Event;  // remember event for "edit component" action
   ComponentMenu->popup(Event->globalPos());
-  Doc->viewport()->update();
-  drawn = false;
+  updateViewport();
+  setDrawn(false);
 }
 
 // -----------------------------------------------------------
@@ -1025,198 +1058,13 @@ void MouseActions::MPressLabel(SchematicDoc *Doc, QMouseEvent* Event)
   }
 
   Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
-  Doc->viewport()->update();
-  drawn = false;
+  updateViewport();
+  setDrawn(false);
   Doc->setChanged(true, true);
 }
 
 // -----------------------------------------------------------
 // yikes.
-void MouseActions::MPressSelect(QMouseEvent *Event)
-{ untested();
-  SchematicDoc* Doc = prechecked_cast<SchematicDoc*>(&_doc);
-  assert(Doc);
-  QPointF pos=Doc->mapToScene(Event->pos());
-  float fX=pos.x();
-  float fY=pos.y();
-
-  bool Ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
-
-  int No=0;
-  MAx1 = int(fX);
-  MAy1 = int(fY);
-  focusElement = selectElement(Event->pos(), Ctrl, &No);
-  isMoveEqual = false;   // moving not neccessarily square
-
-  incomplete(); //this does not add up.
-#if 0
-  if(!focusElement){ untested();
-  }else if(focusElement->Type == isDiagramHScroll){ untested();
-    // BUG: move to selectElement? what is MAy1?!
-      MAy1 = MAx1;
-  }else{ untested();
-  }
-#endif
-
-  if(!focusElement){ untested();
-    qDebug() << "MPressSelect miss" << Event->pos() << pos;
-  }else if(focusElement->Type == isPaintingResize){ untested();
-    incomplete();
-      focusElement->Type = isPainting;
-      QucsMain->MouseReleaseAction = &MouseActions::MReleaseResizePainting;
-      QucsMain->MouseMoveAction = &MouseActions::MMoveResizePainting;
-      QucsMain->MousePressAction = 0;
-      QucsMain->MouseDoubleClickAction = 0;
-      Doc->grabKeyboard();  // no keyboard inputs during move actions
-      // Update matching wire label highlighting
-      Doc->highlightWireLabels ();
-      return;
-  }else if(focusElement->Type == isDiagramResize){ untested();
-    incomplete();
-
-#if 0
-      if(((Diagram*)focusElement)->name().left(4) != "Rect")
-        if(((Diagram*)focusElement)->name().at(0) != 'T')
-          if(((Diagram*)focusElement)->name() != "Curve")
-           /* if(((Diagram*)focusElement)->name() != "Waveac")
-          if(((Diagram*)focusElement)->name() != "Phasor")*/
-            isMoveEqual = true;  // diagram must be square
-#endif
-
-      focusElement->Type = isDiagram;
-      MAx1 = focusElement->cx_();
-      MAx2 = focusElement->x2_();
-
-#if 0
-      focusElement->someDiagramStateCallback()
-
-	// old:
-     // if(diagram(focusElement)->State & 1) { untested();
-     //   MAx1 += MAx2;
-     //   MAx2 *= -1;
-     // }
-
-      MAy1 =  focusElement->cy_();
-      MAy2 = -focusElement->y2_();
-      if(((Diagram*)focusElement)->State & 2) { untested();
-        MAy1 += MAy2;
-        MAy2 *= -1;
-      }
-#endif
-
-      QucsMain->MouseReleaseAction = &MouseActions::MReleaseResizeDiagram;
-      QucsMain->MouseMoveAction = &MouseActions::MMoveSelect;
-      QucsMain->MousePressAction = 0;
-      QucsMain->MouseDoubleClickAction = 0;
-      Doc->grabKeyboard(); // no keyboard inputs during move actions
-      // Update matching wire label highlighting
-      Doc->highlightWireLabels ();
-      return;
-
-  }else if(focusElement->Type == isDiagramHScroll
-   || focusElement->Type == isDiagramVScroll){ untested();
-    incomplete();
-
-      focusElement->Type = isDiagram; // reset happens here. FIXME.
-
-      auto d=diagram(focusElement); // is this necessary?!
-      assert(d);
-      No = d->scroll(MAy1);
-
-      switch(No) {
-        case 1:
-          Doc->setChanged(true, true, 'm'); // 'm' = only the first time
-          break;
-        case 2:  // move scroll bar with mouse cursor
-          QucsMain->MouseMoveAction = &MouseActions::MMoveScrollBar;
-          QucsMain->MousePressAction = 0;
-          QucsMain->MouseDoubleClickAction = 0;
-          Doc->grabKeyboard();  // no keyboard inputs during move actions
-
-          // Remember inital scroll bar position.
-          MAx2 = int(d->xAxis_limit_min());
-          // Update matching wire label highlighting
-          Doc->highlightWireLabels ();
-          return;
-      }
-      // Update matching wire label highlighting
-      Doc->highlightWireLabels ();
-      Doc->viewport()->update();
-      drawn = false;
-      return;
-
-  }else if(focusElement->Type == isComponentText){ untested();
-    incomplete();
-
-      focusElement->Type &= (~isComponentText) | isComponent;
-
-      MAx3 = No;
-      QucsMain->slotApplyCompText();
-      // Update matching wire label highlighting
-      Doc->highlightWireLabels ();
-      return;
-
-  }else if(auto n=node(focusElement)){ untested();
-    (void)n;
-      if (QucsSettings.NodeWiring) { untested();
-    incomplete();
-
-        MAx1 = 0;   // paint wire corner first up, then left/right
-        MAx3 = focusElement->cx_();  // works even if node is not on grid
-        MAy3 = focusElement->cy_();
-        QucsMain->MouseMoveAction = &MouseActions::MMoveWire2;
-        QucsMain->MousePressAction = &MouseActions::MPressWire2;
-        QucsMain->MouseReleaseAction = 0; // if function is called from elsewhere
-        QucsMain->MouseDoubleClickAction = 0;
-
-        formerAction = QucsMain->select; // to restore action afterwards
-        QucsMain->activeAction = QucsMain->insWire;
-
-        QucsMain->select->blockSignals(true);
-        QucsMain->select->setChecked(false);
-        QucsMain->select->blockSignals(false);
-
-        QucsMain->insWire->blockSignals(true);
-        QucsMain->insWire->setChecked(true);
-        QucsMain->insWire->blockSignals(false);
-        // Update matching wire label highlighting
-        Doc->highlightWireLabels ();
-        return;
-      }else{ untested();
-      }
-  }else{ untested();
-    // default case
-    // unreachable?
-  }
-
-  QucsMain->MousePressAction = 0;
-  QucsMain->MouseDoubleClickAction = 0;
-  Doc->grabKeyboard();  // no keyboard inputs during move actions
-  Doc->viewport()->update();
-  drawn = false;
-
-  if(!focusElement) { untested();
-    MAx2 = 0;  // if not clicking on an element => open a rectangle
-    MAy2 = 0;
-    QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect2;
-    QucsMain->MouseMoveAction = &MouseActions::MMoveSelect;
-  }else{ untested();
-    // element could be moved
-    if(Ctrl) { untested();
-    }else{ untested();
-      if(!focusElement->isSelected()) { untested();
-	// Don't move selected elements if clicked
-        deselectElements(focusElement); // element was not selected.
-      }else{ untested();
-      }
-      focusElement->setSelected();
-    }
-    Doc->setOnGrid(MAx1, MAy1);
-    QucsMain->MouseMoveAction = &MouseActions::MMoveMoving;
-  }
-  // Update matching wire label highlighting
-  Doc->highlightWireLabels ();
-} // MPressSelect
 
 // -----------------------------------------------------------
 
@@ -1237,8 +1085,8 @@ void MouseActions::MPressActivate(SchematicDoc *Doc, QMouseEvent* Event)
     QucsMain->MouseReleaseAction = &MouseActions::MReleaseActivate;
     QucsMain->MouseMoveAction = &MouseActions::MMoveSelect;
   }
-  Doc->viewport()->update();
-  drawn = false;
+  updateViewport();
+  setDrawn(false);
 }
 
 // -----------------------------------------------------------
@@ -1261,8 +1109,8 @@ void MouseActions::MPressMirrorX(SchematicDoc *Doc, QMouseEvent* Event)
     p->mirrorX();
   }
 
-  Doc->viewport()->update();
-  drawn = false;
+  updateViewport();
+  setDrawn(false);
   Doc->setChanged(true, true);
 }
 
@@ -1286,8 +1134,8 @@ void MouseActions::MPressMirrorY(SchematicDoc *Doc, QMouseEvent* Event)
     // missed something.
   }
 
-  Doc->viewport()->update();
-  drawn = false;
+  updateViewport();
+  setDrawn(false);
   Doc->setChanged(true, true);
 }
 
@@ -1341,8 +1189,8 @@ void MouseActions::MPressRotate(SchematicDoc *Doc, QMouseEvent* Event)
     qDebug()<<"dont know how to rotate this thing\n";
     return;
   }
-  Doc->viewport()->update();
-  drawn = false;
+  updateViewport();
+  setDrawn(false);
   Doc->setChanged(true, true);
 }
 
@@ -1379,8 +1227,8 @@ void MouseActions::MPressElement(SchematicDoc *Doc, QMouseEvent *Event)
 	Comp->entireBounds(x1,y1,x2,y2, Doc->textCorr());
 	Doc->enlargeView(x1, y1, x2, y2);
 
-	drawn = false;
-	Doc->viewport()->update();
+	setDrawn(false);
+	updateViewport();
 	Doc->setChanged(true, true);
 	rot = Comp->rotated;
 
@@ -1431,7 +1279,7 @@ void MouseActions::MPressElement(SchematicDoc *Doc, QMouseEvent *Event)
     Doc->setChanged(true, true);
 
     MMoveElement(Doc, Event);  // needed before next mouse pressing
-    drawn = false;
+    setDrawn(false);
   }else{
   }
 }
@@ -1457,7 +1305,7 @@ void MouseActions::MPressWire1(SchematicDoc *Doc, QMouseEvent* Event)
     Doc->PostPaintEvent (_Line, MAx3, 0, MAx3, MAy2);
 #endif
   //}
-  //drawn = false;
+  setDrawn(false);
 
   MAx1 = 0;   // paint wire corner first up, then left/right
   MAx3 = int(fX);
@@ -1527,7 +1375,7 @@ void MouseActions::MPressWire2(SchematicDoc *Doc, QMouseEvent *Event)
     //ALYS: excessive update. end of function does it.
 	//Doc->viewport()->update();
 
-	drawn = false;
+    setDrawn(false);
     if(set1 | set2) Doc->setChanged(true, true);
     MAx3 = MAx2;
     MAy3 = MAy2;
@@ -1591,8 +1439,8 @@ void MouseActions::MPressMarker(SchematicDoc *Doc, QMouseEvent* Event)
     int y0 = pm->diag()->cy_();
     Doc->enlargeView(x0+pm->x1_(), y0-pm->y1_()-pm->y2_(), x0+pm->x1_()+pm->x2_(), y0-pm->y1_());
   }
-  Doc->viewport()->update();
-  drawn = false;
+  updateViewport();
+  setDrawn(false);
 }
 
 // -----------------------------------------------------------
@@ -1613,7 +1461,7 @@ void MouseActions::MPressOnGrid(SchematicDoc *Doc, QMouseEvent* Event)
     // Update matching wire label highlighting
     Doc->highlightWireLabels ();
     Doc->viewport()->update();
-    drawn = false;
+    setDrawn(false);
   }
 
 }
@@ -1642,7 +1490,7 @@ void MouseActions::MPressMoveText(SchematicDoc *Doc, QMouseEvent* Event)
     MAx1 = C->cx_() + C->tx;
     MAy1 = C->cy_() + C->ty;
     Doc->viewport()->update();
-    drawn = false;
+    setDrawn(false);
     QucsMain->MouseMoveAction = &MouseActions::MMoveMoveText;
     QucsMain->MouseReleaseAction = &MouseActions::MReleaseMoveText;
     Doc->grabKeyboard();  // no keyboard inputs during move actions
@@ -1667,7 +1515,7 @@ void MouseActions::MPressZoomIn(SchematicDoc *Doc, QMouseEvent* Event)
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseZoomIn;
   Doc->grabKeyboard();  // no keyboard inputs during move actions
   Doc->viewport()->update();
-  drawn = false;
+  setDrawn(false);
 }
 
 
@@ -1678,39 +1526,7 @@ void MouseActions::MPressZoomIn(SchematicDoc *Doc, QMouseEvent* Event)
 // ***********************************************************************
 void MouseActions::MReleaseSelect(SchematicDoc *Doc, QMouseEvent *Event)
 { untested();
-  bool ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
-
-  if(!ctrl) { untested();
-    untested();
-    // BUG this does not make any sense at all.
-    deselectElements(focusElement);
-  }else{ untested();
-  }
-
-  if(focusElement)  if(Event->button() == Qt::LeftButton)
-    if(auto w=wire(focusElement)) { untested();
-      incomplete();
-#if 0
-      Doc->selectWireLine(element(focusElement), w->portValue(0), ctrl);
-      Doc->selectWireLine(element(focusElement), w->portValue(1), ctrl);
-#endif
-    }
-
-  Doc->releaseKeyboard();  // allow keyboard inputs again
-
-#if 0
-  QucsMain->MouseMoveAction = 0;
-  QucsMain->MousePressAction = &MouseActions::MPressSelect;
-  QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
-  QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
-#else
-  // MouseAction = actionSelect;
-#endif
-
-
-  Doc->highlightWireLabels ();
-  Doc->viewport()->update();
-  drawn = false;
+  incomplete(); // obsolete
 }
 
 // -----------------------------------------------------------
@@ -1739,7 +1555,7 @@ void MouseActions::MReleaseSelect2(SchematicDoc *Doc, QMouseEvent *Event)
 #endif
   Doc->highlightWireLabels ();
   Doc->viewport()->update();
-  drawn = false;
+  setDrawn(false);
 }
 
 // -----------------------------------------------------------
@@ -1756,7 +1572,7 @@ void MouseActions::MReleaseActivate(SchematicDoc *Doc, QMouseEvent *Event)
   QucsMain->MouseDoubleClickAction = 0;
   Doc->highlightWireLabels ();
   Doc->viewport()->update();
-  drawn = false;
+  setDrawn(false);
 }
 
 // -----------------------------------------------------------
@@ -1838,7 +1654,7 @@ void MouseActions::MReleaseResizeDiagram(SchematicDoc *Doc, QMouseEvent *Event)
   Doc->releaseKeyboard();  // allow keyboard inputs again
 
   Doc->viewport()->update();
-  drawn = false;
+  setDrawn(false);
   Doc->setChanged(true, true);
 }
 
@@ -1860,7 +1676,7 @@ void MouseActions::MReleaseResizePainting(SchematicDoc *Doc, QMouseEvent *Event)
   Doc->releaseKeyboard();  // allow keyboard inputs again
 
   Doc->viewport()->update();
-  drawn = false;
+  setDrawn(false);
   Doc->setChanged(true, true);
 }
 
@@ -2000,7 +1816,7 @@ void MouseActions::MReleasePaste(SchematicDoc *Doc, QMouseEvent *Event)
     QucsMain->MouseReleaseAction = 0;
     QucsMain->MouseDoubleClickAction = 0;
 
-    drawn = false;
+    setDrawn(false);
     Doc->viewport()->update();
     Doc->setChanged(true, true);
     break;
@@ -2008,9 +1824,12 @@ void MouseActions::MReleasePaste(SchematicDoc *Doc, QMouseEvent *Event)
   // ............................................................
   case Qt::RightButton :  // right button rotates the elements
 
-    if(drawn) // erase old scheme
+    if(wasDrawn()){
+      // erase old scheme
       paintElementsScheme(Doc);
-    drawn = true;
+    }else{
+    }
+    setDrawn();
 
     x1 = pos.x();
     y1 = pos.y();
@@ -2041,7 +1860,7 @@ void MouseActions::MReleaseMoveText(SchematicDoc *Doc, QMouseEvent *Event)
   c->tx = MAx1 - c->cx_();
   c->ty = MAy1 - c->cy_();
   Doc->viewport()->update();
-  drawn = false;
+  setDrawn(false);
   Doc->setChanged(true, true);
 }
 
@@ -2234,7 +2053,7 @@ void MouseActions::editElement(SchematicDoc *Doc, QMouseEvent *Event)
   Doc->setFocus();
 
   Doc->viewport()->update();
-  drawn = false;
+  setDrawn(false);
 }
 
 // -----------------------------------------------------------
@@ -2280,4 +2099,91 @@ bool ElementMouseAction::isSelected() const
   return _e->isSelected();
 }
 
+QucsDoc& MouseActions::doc()
+{
+  return _doc;
+}
+
+// SchematicMouseAction::doc?
+SchematicDoc& MouseAction::doc()
+{ untested();
+  QucsDoc* c=&_ctx.doc();
+  auto cc=dynamic_cast<SchematicDoc*>(c);
+  assert(cc);
+  return *cc;
+}
+
+void MouseAction::updateViewport()
+{ untested();
+  ctx().updateViewport(); // use a signal?
+}
+void MouseActions::updateViewport()
+{ untested();
+
+  SchematicDoc* s = dynamic_cast<SchematicDoc*>(&doc());
+  if(s){
+    s->updateViewport(); // use a signal?
+  }else{ untested();
+  }
+}
+
+QUndoCommand* MouseAction::activate(QAction* sender)
+{ untested();
+  _sender = sender;
+  return nullptr;
+}
+
+void MouseAction::uncheck()
+{
+  if(_sender){ untested();
+    _sender->blockSignals(true); // do not call toggle slot
+    _sender->setChecked(false);       // set last toolbar button off
+    _sender->blockSignals(false);
+  }else{ untested();
+  }
+}
+
+void MouseActions::handle(QEvent*e)
+{ untested();
+  QUndoCommand* c=nullptr;
+  if(_maCurrent){ untested();
+    c = _maCurrent->handle(e);
+  }else{
+  }
+
+  QUndoStack* u = _doc.undoStack();
+
+  if(!c){
+    // nothing to do
+  }else if(u){
+    u->push(c);
+    // signal something?
+    // emit haveSthToUndo
+  }else{
+    // forget about it.
+    delete c;
+  }
+}
+
+QUndoCommand* MouseAction::handle(QEvent* e)
+{
+  e->ignore(); // pass on to other places unless accepted somewhere else.
+  assert(e);
+  QMouseEvent* m = prechecked_cast<QMouseEvent*>(e);
+  assert(m);
+  switch(e->type()){
+  case QEvent::MouseMove:
+    return move(m);
+  case QEvent::GraphicsSceneMouseRelease: untested();
+    //fallthrough
+  case QEvent::MouseButtonRelease: untested();
+    return release(m);
+  case QEvent::GraphicsSceneMousePress: untested();
+  case QEvent::MouseButtonPress: untested();
+    return press(m);
+  default:
+    trace1("handle", e->type());
+    return nullptr;
+  }
+}
 // vim:ts=8:sw=2:noet

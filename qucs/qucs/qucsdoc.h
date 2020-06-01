@@ -1,16 +1,13 @@
 /***************************************************************************
-                                 qucsdoc.h
-                                -----------
-    begin                : Wed Sep 3 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -33,7 +30,9 @@ class QAction;
 class QPrinter;
 class QPainter;
 class MouseActions;
+class MouseAction;
 class QUndoStack;
+class QUndoCommand;
 
 class QucsDoc {
 protected:
@@ -47,7 +46,7 @@ public:
   virtual bool  load() { return true; };
   virtual int   save() { return 0; };
   virtual void  print(QPrinter*, QPainter*, bool, bool) {};
-  virtual void  becomeCurrent(bool) {};
+  virtual void  becomeCurrent(bool) = 0;
   virtual float zoomBy(float) { return 1.0; };
   virtual void  showAll() {};
   virtual void  showNoZoom() {};
@@ -71,8 +70,8 @@ public:
   QDateTime lastSaved;
 
   float Scale;
-  QucsApp &_app;
   QucsApp* App; // TODO: delete.
+  QucsApp &_app;
   bool DocChanged;
   bool SimOpenDpl;   // open data display after simulation ?
   bool SimRunScript; // run script after simulation ?
@@ -84,16 +83,19 @@ protected: // why not directly connect to undostack slots?!
   virtual void undo();
   virtual void redo();
 
+protected:
+//  void toggleAction(QAction* sender);
+
 public: // actions: These somehow correspond to buttons.
         // needs cleanup...
-	virtual void actionSelect(bool on) = 0;
-	virtual void actionCopy() = 0;
-	virtual void actionCut() = 0;
-	virtual void actionEditActivate(bool) = 0;
-	virtual void actionEditUndo() = 0;
-	virtual void actionEditRedo() = 0;
-	virtual void actionSelectAll() = 0;
-	virtual void actionChangeProps() = 0;
+	virtual void actionSelect(QAction* sender) = 0;
+	virtual void actionCopy(QAction* sender) = 0;
+	virtual void actionCut(QAction* sender) = 0;
+	virtual void actionEditActivate(QAction* sender) = 0;
+	virtual void actionEditUndo(QAction* sender) = 0;
+	virtual void actionEditRedo(QAction* sender) = 0;
+	virtual void actionSelectAll(QAction* sender) = 0;
+	virtual void actionChangeProps(QAction* sender) = 0;
 
 	// these are not implemented for qucstext, not called perhaps?
 	virtual void actionApplyCompText() { unreachable(); }
@@ -103,30 +105,40 @@ public: // actions: These somehow correspond to buttons.
 	virtual void actionCursor(arrow_dir_t) { unreachable();}
 	virtual void actionExportGraphAsCsv(){ unreachable();}
 
-	virtual void actionOnGrid(bool) {unreachable();}
-	virtual void actionEditRotate(bool) {unreachable();}
-	virtual void actionEditMirrorX(bool) {unreachable();}
-	virtual void actionEditMirrorY(bool) {unreachable();}
-	virtual void actionEditDelete(bool) {unreachable();}
-	virtual void actionEditPaste(bool) {unreachable();}
-	virtual void actionSetWire(bool) {unreachable();}
-	virtual void actionInsertLabel(bool) {unreachable();}
-	virtual void actionInsertEquation(bool) {unreachable();}
-	virtual void actionInsertEntity() {unreachable();}
-	virtual void actionInsertPort(bool) {unreachable();}
-	virtual void actionInsertGround(bool) {unreachable();}
-	virtual void actionSetMarker(bool) {unreachable();}
-	virtual void actionMoveText(bool) {unreachable();}
-	virtual void actionZoomIn(bool) = 0;
+	virtual void actionOnGrid(QAction*) {unreachable();}
+	virtual void actionEditRotate(QAction*) {unreachable();}
+	virtual void actionEditMirrorX(QAction*) {unreachable();}
+	virtual void actionEditMirrorY(QAction*) {unreachable();}
+	virtual void actionEditDelete(QAction*) {unreachable();}
+	virtual void actionEditPaste(QAction*) {unreachable();}
+	virtual void actionSetWire(QAction*) {unreachable();}
+	virtual void actionInsertLabel(QAction*) {unreachable();}
+	virtual void actionInsertEquation(QAction*) {unreachable();}
+	virtual void actionInsertEntity(QAction*) {unreachable();}
+	virtual void actionInsertPort(QAction*) {unreachable();}
+	virtual void actionInsertGround(QAction*) {unreachable();}
+	virtual void actionSetMarker(QAction*) {unreachable();}
+	virtual void actionMoveText(QAction*) {unreachable();}
+	virtual void actionZoomIn(QAction*) = 0;
 
 	void uncheckActive();
 
 protected: // cleaning up debris
 	QAction* selectAction();
-	MouseActions* mouseActions();
-
+	virtual MouseActions* mouseActions();
+public:
+	MouseActions const* mouseActions() const;
 private:
-	QUndoStack* undoStack;
-};
+	void setActiveAction(MouseAction* a);
+	void executeCommand(QUndoCommand*);
+	MouseAction* activeAction();
+
+public: // hmm
+	virtual QUndoStack* undoStack(){return nullptr;}
+
+public:
+	void possiblyToggleAction(MouseAction* a, QAction* sender);
+	MouseAction const* activeAction() const;
+}; // QucsDoc
 
 #endif

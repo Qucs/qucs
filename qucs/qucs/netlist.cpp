@@ -25,7 +25,7 @@ Net* NetList::newNet()
 	}else{ untested();
 		idx = _g.top();
 		_g.pop();
-		assert(_l[idx]->size() == -1);
+		assert(_l[idx]->size() == size_t(-1));
 		_l[idx]->inc_nodes();
 		assert(_l[idx]->getPos() == idx);
 	}
