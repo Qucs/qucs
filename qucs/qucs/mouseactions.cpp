@@ -745,8 +745,8 @@ bool MouseActions::eventFilter(QObject *obj, QEvent *e)
   if(m){ untested();
     trace1("mouse", e->type());
     handle(e);
-  }else{ untested();
-    trace1("not mouse?", e->type());
+  }else{
+    //trace1("not mouse?", e->type());
     assert(e->type() != QEvent::MouseMove);
     assert(e->type() != QEvent::MouseButtonPress);
     assert(e->type() != QEvent::MouseButtonRelease);
@@ -2151,15 +2151,24 @@ void MouseActions::handle(QEvent*e)
   }else{
   }
 
+  if(c){
+    executeCommand(c);
+  }else{
+  }
+
+}
+
+void MouseActions::executeCommand(QUndoCommand* c)
+{
+  assert(c);
   QUndoStack* u = _doc.undoStack();
 
-  if(!c){
-    // nothing to do
-  }else if(u){
+  c->redo();
+  if(u){ untested();
     u->push(c);
     // signal something?
     // emit haveSthToUndo
-  }else{
+  }else{ untested();
     // forget about it.
     delete c;
   }

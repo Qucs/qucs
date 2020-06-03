@@ -302,6 +302,7 @@ public:
 
   bool eventFilter(QObject *obj, QEvent *event);
   virtual void handle(QEvent*);
+  void executeCommand(QUndoCommand* c);
   MouseAction* activeAction(){ return _maCurrent; }
   void setActive(MouseAction* a);
 

@@ -33,16 +33,93 @@
 
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+class MouseActionSelect : public MouseAction{
+public:
+	explicit MouseActionSelect(MouseActions& ctx)
+		: MouseAction(ctx), focusElement(nullptr) {}
+
+private:
+//	cmd* activate(QAction* sender) override;
+	cmd* move(QMouseEvent*);
+	cmd* press(QMouseEvent*); //was MouseActions::MPressSelect
+	cmd* release(QMouseEvent*);
+	//	cmd* release2(QMouseEvent*); // what is this?
+
+private: // rectangles?
+	int MAx1;
+	int MAy1;
+	int MAx2;
+	int MAy2;
+private: // more decoupling
+	ElementMouseAction focusElement;
+	bool isMoveEqual; //?
+};
+/*--------------------------------------------------------------------------*/
 class MouseActionDelete : public MouseAction{
 public:
 	explicit MouseActionDelete(MouseActions& ctx)
 		: MouseAction(ctx){}
 
 private:
-	cmd* move(QMouseEvent*);
-	cmd* press(QMouseEvent*);
-	cmd* release(QMouseEvent*);
+	cmd* activate(QAction* sender) override;
+	cmd* move(QMouseEvent*) override;
+	cmd* press(QMouseEvent*) override;
+	cmd* release(QMouseEvent*) override;
 };
+/*--------------------------------------------------------------------------*/
+class DeleteSelection : public QUndoCommand {
+public:
+    template<class IT>
+    DeleteSelection(SchematicDoc& ctx, IT selection)
+	: _ctx(ctx){ untested();
+	for(auto i : selection){ untested();
+	    if(auto eg=dynamic_cast<ElementGraphics*>(i)){
+		_gfx.push_back(eg);
+	    }else{ untested();
+		unreachable(); // really? use prechecked_cast then.
+	    }
+	}
+	setText("delete $n items");
+    }
+    void undo() override { untested();
+	// push elements back into SchematicModel.
+	// create gfx objects and keep references here.
+	for(auto& d : _data){
+            auto handle = &_ctx.addToScene(d);
+	    _gfx.push_back(handle);
+	}
+	_data.clear();
+    }
+    void redo() override { untested();
+	// take ownership of Elements from SchematicModel.
+	// detach from SchematicModel. Deleting gfx objects will make them
+	// disappear.
+	for(auto& d : _gfx){ untested();
+	    Element* e = _ctx.eraseFromScene(d);
+	    _data.push_back(e);
+	}
+	_gfx.clear();
+    }
+private:
+    SchematicDoc& _ctx;
+    std::vector<ElementGraphics*> _gfx;
+    std::vector<Element*> _data;
+}; // DeleteSelection
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionDelete::activate(QAction *sender)
+{ incomplete();
+	MouseAction::activate(sender);
+
+	auto s = doc().selectedItems();
+	bool selected = !s.empty();
+
+	if(selected){
+		auto cmd = new DeleteSelection(doc(), s);
+		return cmd;
+	}else{
+		return nullptr;
+	}
+}
 /*--------------------------------------------------------------------------*/
 //   was Mouseactions::MMove or so.
 QUndoCommand* MouseActionDelete::move(QMouseEvent *e)
@@ -63,27 +140,6 @@ QUndoCommand* MouseActionDelete::move(QMouseEvent *e)
   return nullptr;
 }
 /*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-class MouseActionSelect : public MouseAction{
-public:
-	explicit MouseActionSelect(MouseActions& ctx)
-		: MouseAction(ctx), focusElement(nullptr) {}
-
-private:
-	cmd* move(QMouseEvent*);
-	cmd* press(QMouseEvent*); //was MouseActions::MPressSelect
-	cmd* release(QMouseEvent*);
-	//	cmd* release2(QMouseEvent*); // what is this?
-
-private: // rectangles?
-	int MAx1;
-	int MAy1;
-	int MAx2;
-	int MAy2;
-private: // more decoupling
-	ElementMouseAction focusElement;
-	bool isMoveEqual; //?
-};
 /*--------------------------------------------------------------------------*/
 // was MouseActions::MMoveSelect
 QUndoCommand* MouseActionSelect::move(QMouseEvent *Event)
@@ -363,24 +419,25 @@ public:
 // Event tells us where...
 QUndoCommand* MouseActionDelete::press(QMouseEvent* Event)
 { untested();
-  // QPointF pos=Doc->mapToScene(Event->pos());
+	// QPointF pos=Doc->mapToScene(Event->pos());
 
-  ElementMouseAction pe = ctx().selectElement(Event->pos(), false); // BUG
-  QUndoCommand* d = nullptr;
+	ElementMouseAction pe = ctx().selectElement(Event->pos(), false); // BUG
+	QUndoCommand* d = nullptr;
 
-  if(pe) { untested();
-    d = new deleteCommand(pe);
+	if(pe) { untested();
+		trace0("deletecommand?");
+		d = new deleteCommand(pe);
 
-    // pe->setSelected();
-    // Doc->deleteElements();
+		// pe->setSelected();
+		// Doc->deleteElements();
 
-    // Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
-    // Doc->viewport()->update();
-    // drawn = false;
-  }else{ untested();
+		// Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
+		// Doc->viewport()->update();
+		// drawn = false;
+	}else{ untested();
 
-  }
-  return d;
+	}
+	return d;
 } // delete::press
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionDelete::release(QMouseEvent*)
@@ -412,6 +469,10 @@ SchematicActions::~SchematicActions()
 { untested();
 	delete maDelete;
 	delete maSelect;
+	delete maActivate;
+	delete maMirrorX;
+	delete maMirrorY;
+	delete maRotate;
 }
 /*--------------------------------------------------------------------------*/
 SchematicDoc* SchematicActions::doc()
@@ -495,16 +556,9 @@ void SchematicDoc::actionEditActivate(QAction* sender)
   possiblyToggleAction(schematicActions().maActivate, sender);
 }
 
-// getting here after somebody presses "del"
-// on looks obsolete...?
 void SchematicDoc::actionEditDelete(QAction* sender)
 { untested();
-#if 0 // old code
-  performToggleAction(on, App->editDelete, &SchematicDoc::deleteElements,
-      &MouseActions::MMoveDelete, &MouseActions::MPressDelete);
-#else // approximately this.
   possiblyToggleAction(schematicActions().maDelete, sender);
-#endif
 
   updateViewport();
   assert(mouseActions());

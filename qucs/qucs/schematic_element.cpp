@@ -2157,51 +2157,14 @@ int SchematicDoc::copyElements(int& x1, int& y1, int& x2, int& y2,
 }
 
 // ---------------------------------------------------
-// // certainly not here.
-#include <QUndoCommand>
-class DeleteSelection : public QUndoCommand {
-public:
-    template<class IT>
-    DeleteSelection(SchematicDoc& ctx, IT selection)
-	: _ctx(ctx){ untested();
-	for(auto i : selection){ untested();
-	    if(auto eg=dynamic_cast<ElementGraphics*>(i)){
-		_gfx.push_back(eg);
-	    }else{ untested();
-		unreachable(); // really? use prechecked_cast then.
-	    }
-	}
-	setText("delete $n items");
-    }
-    void undo() override { untested();
-	// push elements back into SchematicModel.
-	// create gfx objects and keep references here.
-	for(auto& d : _data){
-            auto handle = &_ctx.addToScene(d);
-	    _gfx.push_back(handle);
-	}
-	_data.clear();
-    }
-    void redo() override { untested();
-	// take ownership of Elements from SchematicModel.
-	// detach from SchematicModel. Deleting gfx objects will make them
-	// disappear.
-	for(auto& d : _gfx){ untested();
-	    Element* e = _ctx.eraseFromScene(d);
-	    _data.push_back(e);
-	}
-	_gfx.clear();
-    }
-private:
-    SchematicDoc& _ctx;
-    std::vector<ElementGraphics*> _gfx;
-    std::vector<Element*> _data;
-};
 // ---------------------------------------------------
 // Deletes all selected elements.
 // BUG: deletes selection
 QUndoCommand* SchematicDoc::deleteElements()
 { untested();
+    unreachable();
+    return nullptr;
+#if 0 // obsolete
 #ifndef USE_SCROLLVIEW
     return new DeleteSelection(*this, scene()->selectedItems());
     // return true; // ??
@@ -2314,6 +2277,7 @@ QUndoCommand* SchematicDoc::deleteElements()
         setChanged(sel, true);
     }
     return sel;
+#endif
 #endif
 }
 

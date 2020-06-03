@@ -64,12 +64,20 @@ QucsDoc::~QucsDoc()
 // really?!
 void QucsDoc::undo()
 {
-	incomplete();
+	QUndoStack* u = undoStack();
+	if(u){
+		u->undo();
+	}else{
+	}
 }
 
 void QucsDoc::redo()
 {
-	incomplete();
+	QUndoStack* u = undoStack();
+	if(u){
+		u->redo();
+	}else{
+	}
 }
 
 QString QucsDoc::fileSuffix (const QString& Name)
@@ -123,6 +131,8 @@ MouseActions* QucsDoc::mouseActions()
 
 // similar to former Schematic::performtoggleaction. but take care of actions,
 // and deal with undoable commands.
+// https://www.walletfox.com/course/qundocommandexample.php?
+// https://stackoverflow.com/questions/32973326/qgraphicsscene-how-to-map-item-movements-into-qundocommand
 void QucsDoc::possiblyToggleAction(MouseAction* a, QAction* sender)
 {
 	QUndoCommand* cmd = nullptr;
@@ -159,8 +169,9 @@ void QucsDoc::possiblyToggleAction(MouseAction* a, QAction* sender)
 MouseAction* QucsDoc::activeAction()
 {
 	if(mouseActions()){ untested();
-	}else{ untested();
 		return mouseActions()->activeAction();
+	}else{ untested();
+		return nullptr;
 	}
 }
 MouseAction const* QucsDoc::activeAction() const
@@ -171,5 +182,8 @@ MouseAction const* QucsDoc::activeAction() const
 
 void QucsDoc::executeCommand(QUndoCommand* c)
 {
-	incomplete();
+	if(mouseActions()){
+		mouseActions()->executeCommand(c);
+	}else{
+	}
 }
