@@ -282,8 +282,7 @@ void QucsApp::initActions()
   editDelete->setStatusTip(tr("Deletes the selected components"));
   editDelete->setWhatsThis(tr("Delete\n\nDeletes the selected components"));
   editDelete->setCheckable(true);
-  //connect(editDelete, &QAction::toggled, this, &QucsApp::slotEditDelete);
-  //connect(editDelete, &QAction::toggled, this, &QucsApp::slotToggle);
+  connect(editDelete, &QAction::toggled, this, &QucsApp::slotEditDelete);
 
   editFind = new QAction(tr("Find..."), this);
   editFind->setShortcut(Qt::CTRL+Qt::Key_F);
