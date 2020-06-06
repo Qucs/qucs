@@ -1,8 +1,8 @@
 /*
  * schematic_scene.h - define schematic scene
  *
- * Copyright (C) 2014, Yodalee, lc85301@gmail.com
- *               2018, Felix Salfelder
+ * Copyright (C) 2014 Yodalee, lc85301@gmail.com
+ *               2018, 2020 Felix Salfelder
  *
  * This file is part of Qucs
  *
@@ -75,82 +75,7 @@ protected:
 // use naked pointer, as legacy qucs does.
 typedef Element ElementGraphics;
 #else
-// A graphics element on the screen.
-// kind of smart-pointer/proxy.
-class ElementGraphics : public QGraphicsItem {
-private:
-	ElementGraphics();
-	ElementGraphics(ElementGraphics const&) = delete;
-public:
-	explicit ElementGraphics(Element* e);
-	~ElementGraphics(){ }
-public:
-	bool operator!=(Element const* e) const{
-		return _e!=e;
-	}
-public: //?
-  void paintScheme(SchematicDoc *p);
-private: // later: Qgraphics virtual overrides
-//  void paint() { assert(_e); _e->paint(); }
-//  void paintScheme(SchematicDoc *s) { assert(_e); _e->paintScheme(s); }
-  QRectF boundingRect() const;
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*); // const...
 
-public:
-  // TODO: move coordinate stuff here.
-  void setPos(int a, int b);
-public:
-  Element& operator*(){ itested();
-	  assert(_e); return *_e;
-  }
-  Element* operator->(){ itested();
-	  assert(_e); return _e;
-  }
-  Element const* operator->() const{ untested();
-	  assert(_e); return _e;
-  }
-  void setCenter(int i, int j, bool relative=false){
-	  assert(_e);
-	  _e->setCenter(i, j, relative);
-  }
-  void getCenter(int& i, int& j){
-	  assert(_e);
-	  _e->getCenter(i, j);
-  }
-	void toggleSelected(){
-		assert(_e);
-		setSelected(!isSelected());
-	}
-
-	// BUG: selected is stored in Element.
-	void setSelected(bool s);
-
-	int const& cx_() const { assert(_e); return _e->cx_(); }
-	int const& cy_() const { assert(_e); return _e->cy_(); }
-	int const& x1_() const { assert(_e); return _e->x1_(); }
-	int const& y1_() const { assert(_e); return _e->y1_(); }
-	int const& x2_() const { assert(_e); return _e->x2_(); }
-	int const& y2_() const { assert(_e); return _e->y2_(); }
-private:
-  Element* _e;
-}; // ElementGraphics
-
-Component const* const_component(ElementGraphics const);
-Wire const* const_wire(ElementGraphics const);
-WireLabel const* const_wireLabel(ElementGraphics const);
-Diagram const* const_diagram(ElementGraphics const);
-Painting const* const_painting(ElementGraphics const);
-
-Element* element(QGraphicsItem*);
-Component* component(QGraphicsItem*);
-Wire* wire(QGraphicsItem*);
-WireLabel* wireLabel(QGraphicsItem*);
-Diagram* diagram(QGraphicsItem*);
-Painting* painting(QGraphicsItem*);
-Graph* graph(QGraphicsItem*);
-Marker* marker(QGraphicsItem*);
-Node* node(QGraphicsItem*);
-// Label* label(QGraphicsItem*);
 #endif
 
 

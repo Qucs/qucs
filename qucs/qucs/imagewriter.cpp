@@ -146,6 +146,7 @@ int ImageWriter::print(QWidget *doc)
   bool noselect = false;
   if ((wsel == (border+1)) && (hsel == (border+1))) {
     noselect = true;
+  }else{
   }
 
   incomplete();

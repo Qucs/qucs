@@ -38,9 +38,9 @@ void Element::paintScheme(QPainter *) const
 {
 }
 
-void Element::setCenter(int, int, bool)
+void Element::setPos(int, int, bool)
 {
-	incomplete();
+	unreachable();
 }
 
 void Element::getCenter(int&, int&)

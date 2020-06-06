@@ -9,42 +9,6 @@
 // ---------------------------------------------------
 //
 #ifndef USE_SCROLLVIEW
-ElementGraphics::ElementGraphics() : QGraphicsItem()
-{
-	unreachable();
-}
-
-ElementGraphics::ElementGraphics(Element* e)
-	: QGraphicsItem(), _e(e)
-{
-	setFlags(ItemIsSelectable|ItemIsMovable);
-	setAcceptHoverEvents(true);
-	assert(_e);
-}
-
-QRectF ElementGraphics::boundingRect() const
-{ itested();
-	assert(_e);
-	return _e->boundingRect();
-}
-
-void ElementGraphics::setSelected(bool s)
-{
-	qDebug() << "setSeletected" << s << this;
-	QGraphicsItem::setSelected(s);
-	assert(QGraphicsItem::isSelected()==s);
-	assert(_e);
-	_e->setSelected(s); // BUG
-}
-
-// ?!
-void ElementGraphics::setPos(int a, int b)
-{
-	assert(_e);
-	qDebug() << "EG::setPos" << a << _e->cx_();
-	QGraphicsItem::setPos(QPointF(a, b));
-	qDebug() << "EG::setPos" << boundingRect();
-}
 #endif
 // ---------------------------------------------------
 // forward to graphicscene, once it is there.

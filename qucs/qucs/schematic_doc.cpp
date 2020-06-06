@@ -58,7 +58,7 @@ SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
   _mouseActions = new SchematicActions(*this);
   _undoStack = new QUndoStack();
 
-  installEventFilter(_mouseActions);
+//  installEventFilter(_mouseActions);
   assert(viewport());
   viewport()->installEventFilter(_mouseActions);
 

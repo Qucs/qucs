@@ -18,6 +18,7 @@
 #include "element.h"
 #include "qt_compat.h"
 #include "schematic_scene.h"
+#include "element_graphics.h"
 
 class Schematic;
 class QUndoCommand;
@@ -55,8 +56,13 @@ public:
 protected:
 	MouseActions& ctx(){return _ctx;}
 
+public:
+	SchematicDoc const& doc() const;
+
 protected:
 	SchematicDoc& doc(); // BUG _ctx.
+	QList<ElementGraphics*> selectedItems(); // BUG. copies.
+	QPointF mapToScene(QPoint const& p) const;
 	void updateViewport();
 
 private:

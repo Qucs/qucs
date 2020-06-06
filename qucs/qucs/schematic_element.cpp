@@ -34,7 +34,7 @@
 // Inserts a port into the schematic and connects it to another node if
 // the coordinates are identical. The node is returned.
 Node* SchematicModel::insertNode(int x, int y, Element *e)
-{
+{   untested();
     Node *pn;
     pn = &nodes().at(x,y);
     pn->connectionsAppend(e);
@@ -1329,14 +1329,10 @@ ElementMouseAction MouseActions::selectElement(
     }
 
     // test all paintings
-    for(Painting *pp = Doc->paintings().last(); pp!=nullptr; pp=Doc->paintings().prev())
-    {
-        if(pp->isSelected())
-        {
-            if(pp->resizeTouched(fX, fY, Corr))
-            {
-                if(pe_1st == 0)
-                {
+    for(Painting *pp = Doc->paintings().last(); pp!=nullptr; pp=Doc->paintings().prev()) {
+        if(pp->isSelected()) {
+            if(pp->resizeTouched(fX, fY, Corr)) {
+                if(pe_1st == 0) {
                     pp->Type = isPaintingResize;
                     return ElementMouseAction(pp);
                 }

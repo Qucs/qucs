@@ -1530,9 +1530,17 @@ void MouseActions::MReleaseSelect(SchematicDoc *Doc, QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
+QList<ElementGraphics*> MouseAction::selectedItems()
+{
+   // BUG. copies.
+  return doc().selectedItems();
+}
 // Is called after the rectangle for selection is released.
 void MouseActions::MReleaseSelect2(SchematicDoc *Doc, QMouseEvent *Event)
-{ untested();
+{
+  unreachable();
+  // obsolete. Qt Scene does rectangle select for us
+#if 0
   if(Event->button() != Qt::LeftButton){
     unreachable(); // yikes.
     return;
@@ -1545,17 +1553,15 @@ void MouseActions::MReleaseSelect2(SchematicDoc *Doc, QMouseEvent *Event)
   Doc->selectElements(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2, Ctrl);
 
   Doc->releaseKeyboard();  // allow keyboard inputs again
-#if 0
   QucsMain->MouseMoveAction = 0;
   QucsMain->MousePressAction = &MouseActions::MPressSelect;
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
-#else
   // MouseAction = actionSelect;
-#endif
   Doc->highlightWireLabels ();
   Doc->viewport()->update();
   setDrawn(false);
+#endif
 }
 
 // -----------------------------------------------------------
@@ -2105,12 +2111,23 @@ QucsDoc& MouseActions::doc()
 }
 
 // SchematicMouseAction::doc?
+SchematicDoc const& MouseAction::doc() const
+{ untested();
+  auto cc = const_cast<MouseAction*>(this);
+  return cc->doc();
+}
+
 SchematicDoc& MouseAction::doc()
 { untested();
   QucsDoc* c=&_ctx.doc();
-  auto cc=dynamic_cast<SchematicDoc*>(c);
+  auto cc = dynamic_cast<SchematicDoc*>(c);
   assert(cc);
   return *cc;
+}
+
+QPointF MouseAction::mapToScene(QPoint const& p) const
+{
+  return doc().mapToScene(p);
 }
 
 void MouseAction::updateViewport()
@@ -2144,9 +2161,9 @@ void MouseAction::uncheck()
 }
 
 void MouseActions::handle(QEvent*e)
-{ untested();
+{ itested();
   QUndoCommand* c=nullptr;
-  if(_maCurrent){ untested();
+  if(_maCurrent){ itested();
     c = _maCurrent->handle(e);
   }else{
   }

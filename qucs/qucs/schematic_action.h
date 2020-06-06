@@ -33,7 +33,6 @@ protected: // Doc stuff
 public: // actions... private?
 	MouseAction* maDelete;
 	MouseAction* maSelect;
-//	MouseAction* maMove;
 	MouseAction* maMirror;
 	MouseAction* maActivate;
 	MouseAction* maRotate;

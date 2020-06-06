@@ -2206,27 +2206,12 @@ Component* SchematicDoc::find_component(QString const& n)
 }
 
 // ---------------------------------------------------
-#ifdef USE_SCROLLVIEW
-QPointF SchematicDoc::mapToScene(QPoint const& p) const
-{ untested();
-  float fX=float(p.x())/Scale + float(ViewX1);
-  float fY=float(p.y())/Scale + float(ViewY1);
-
-  return QPointF(fX, fY);
-}
-
-void SchematicDoc::addToScene(Element* x)
-{ untested();
-  // not needed.
-}
-#else
 ElementGraphics& SchematicDoc::addToScene(Element* x)
-{ untested();
+{ itested();
   auto i=new ElementGraphics(x);
   scene()->addItem(i);
   return *i;
 }
-#endif
 
 Element* SchematicDoc::eraseFromScene(ElementGraphics* g)
 { untested();

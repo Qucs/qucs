@@ -27,7 +27,7 @@ public:
   Resistor(const Resistor& r) 
 	 : MultiViewComponent(r)
   { }
- ~Resistor() {};
+  ~Resistor() {};
   // return new Resistor(Props.getLast()->Value != "US"); ?!
   Component* newOne() {
 	  return new Resistor(*this);
