@@ -36,8 +36,8 @@ SchematicModel::~SchematicModel()
 
 // getting here in GUI mode
 SchematicModel::SchematicModel(SchematicDoc* s)
-	: _doc_(s),
-	  Nodes(Nets)
+	: Nodes(Nets),
+	  _doc_(s)
 {
 	trace2("::SchematicModel s", this, _doc_);
 	if(s){ untested();

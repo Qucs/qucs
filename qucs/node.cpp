@@ -28,8 +28,10 @@ Node::Node(int _x, int _y) : Conductor(), Element()
 #endif
 
 Node::Node(std::pair<int, int> pos)
-  : _net(nullptr), _visit(0),
-   Conductor(), Element(), _position(pos)
+  :Conductor(), Element(),
+   _position(pos),
+   _net(nullptr),
+   _visit(0)
 {
   trace1("Node::Node", this);
   // Label = nullptr; // BUG
