@@ -187,8 +187,12 @@ public: // other stuff
   virtual void paintScheme(SchematicDoc *) const; // obsolete?
   virtual void paintScheme(QPainter *) const; // obsolete?
   virtual void draw(QPainter&) { incomplete(); }
-  virtual void setCenter(int, int, bool relative=false);
-  virtual void getCenter(int&, int&);
+  virtual void setPos(int x, int y, bool relative=false);
+  virtual void setCenter(int x, int y, bool relative=false){
+	  unreachable(); // use the other. "Pos" is QT terminology
+	  return setPos(x,y,relative);
+  }
+  virtual void getCenter(int&, int&); // BUG
   virtual void paint(ViewPainter*) const = 0;
   virtual void editElement(QucsDoc*);
 

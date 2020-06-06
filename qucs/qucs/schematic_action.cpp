@@ -45,14 +45,24 @@ private:
 	cmd* release(QMouseEvent*);
 	//	cmd* release2(QMouseEvent*); // what is this?
 
-private: // rectangles?
+private: // rectangles?  // this was in MouseActions. BUG. remove
 	int MAx1;
 	int MAy1;
 	int MAx2;
 	int MAy2;
+
+protected:
+	void setPos1(QPointF pos){
+		_pos1 = pos;
+	}
+	QPointF const& pos1() const{
+		return _pos1;
+	}
+
 private: // more decoupling
 	ElementMouseAction focusElement;
 	bool isMoveEqual; //?
+	QPointF _pos1;
 };
 /*--------------------------------------------------------------------------*/
 class MouseActionDelete : public MouseAction{
@@ -66,6 +76,40 @@ private:
 	cmd* press(QMouseEvent*) override;
 	cmd* release(QMouseEvent*) override;
 };
+/*--------------------------------------------------------------------------*/
+class MoveSelection : public QUndoCommand {
+public:
+	template<class IT>
+	MoveSelection(QPoint delta, SchematicDoc& ctx, IT selection)
+	: _delta(delta),_ctx(ctx){ untested();
+		for(auto i : selection){ untested();
+			if(auto eg=dynamic_cast<ElementGraphics*>(i)){
+				_gfx.push_back(eg);
+			}else{ untested();
+				unreachable(); // really? use prechecked_cast then.
+			}
+		}
+		setText("delete $n items");
+	}
+	void undo() override { untested();
+		do_it();
+	}
+	void redo() override { untested();
+		do_it();
+	}
+private:
+	void do_it() {
+		_delta = -_delta;
+		trace2("moveSelection", _delta.x(), _delta.y());
+		for(auto& d : _gfx){ untested();
+			d->moveElement(_delta);
+		}
+	}
+private:
+	SchematicDoc& _ctx; // needed?
+	std::vector<ElementGraphics*> _gfx;
+	QPoint _delta;
+}; // MoveSelection
 /*--------------------------------------------------------------------------*/
 class DeleteSelection : public QUndoCommand {
 public:
@@ -143,11 +187,11 @@ QUndoCommand* MouseActionDelete::move(QMouseEvent *e)
 /*--------------------------------------------------------------------------*/
 // was MouseActions::MMoveSelect
 QUndoCommand* MouseActionSelect::move(QMouseEvent *Event)
-{ untested();
+{ itested();
 	//qDebug() << "MMoveSelect " << "select area";
 	ctx().Set2(Event); // BUG
 	if(isMoveEqual) {    // x and y size must be equal ?
-		if(abs(MAx2) > abs(MAy2)) { untested();
+		if(abs(MAx2) > abs(MAy2)) {
 			if(MAx2<0){ untested();
 				MAx2 = -abs(MAy2);
 			}else{ untested();
@@ -163,7 +207,7 @@ QUndoCommand* MouseActionSelect::move(QMouseEvent *Event)
 	}else{ untested();
 	}
 
-	doc().PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);
+//	doc().PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
@@ -172,15 +216,19 @@ QUndoCommand* MouseActionSelect::press(QMouseEvent* e)
 	auto Event = e;
 	SchematicDoc* Doc = &doc();
 	assert(Doc);
-	QPointF pos=Doc->mapToScene(Event->pos());
+	QPointF pos = Doc->mapToScene(Event->pos());
+	setPos1(pos);
 	float fX=pos.x();
 	float fY=pos.y();
 
 	bool Ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
 	int No=0;
+
+	// memorise first click position
 	MAx1 = int(fX);
 	MAy1 = int(fY);
+
 	focusElement = ctx().selectElement(Event->pos(), Ctrl, &No);
 	isMoveEqual = false;   // moving not neccessarily square
 
@@ -198,6 +246,7 @@ QUndoCommand* MouseActionSelect::press(QMouseEvent* e)
 		qDebug() << "MPressSelect miss" << Event->pos() << pos;
 	}else if(focusElement->Type == isPaintingResize){ untested();
 		incomplete(); // delegate. how?
+#if 0
 		focusElement->Type = isPainting;
 		QucsMain->MouseReleaseAction = &MouseActions::MReleaseResizePainting;
 		QucsMain->MouseMoveAction = &MouseActions::MMoveResizePainting;
@@ -210,20 +259,17 @@ QUndoCommand* MouseActionSelect::press(QMouseEvent* e)
 	}else if(focusElement->Type == isDiagramResize){ untested();
 		incomplete();
 
-#if 0
 		if(((Diagram*)focusElement)->name().left(4) != "Rect")
 			if(((Diagram*)focusElement)->name().at(0) != 'T')
 				if(((Diagram*)focusElement)->name() != "Curve")
 					/* if(((Diagram*)focusElement)->name() != "Waveac")
 						if(((Diagram*)focusElement)->name() != "Phasor")*/
 					isMoveEqual = true;  // diagram must be square
-#endif
 
 		focusElement->Type = isDiagram;
 		MAx1 = focusElement->cx_();
 		MAx2 = focusElement->x2_();
 
-#if 0
 		focusElement->someDiagramStateCallback()
 
 			// old:
@@ -238,7 +284,6 @@ QUndoCommand* MouseActionSelect::press(QMouseEvent* e)
 			MAy1 += MAy2;
 			MAy2 *= -1;
 		}
-#endif
 
 		 // diagram_action?
 		QucsMain->MouseReleaseAction = &MouseActions::MReleaseResizeDiagram;
@@ -250,7 +295,6 @@ QUndoCommand* MouseActionSelect::press(QMouseEvent* e)
 		Doc->highlightWireLabels ();
 		return nullptr;
 
-#if 0
 	}else if(focusElement->Type == isDiagramHScroll
 			|| focusElement->Type == isDiagramVScroll){ untested();
 		incomplete();
@@ -335,6 +379,8 @@ QUndoCommand* MouseActionSelect::press(QMouseEvent* e)
 	//setDrawn(false);
 
 	if(!focusElement) { untested();
+		unreachable();
+		// rectangleselect obsolete.
 		MAx2 = 0;  // if not clicking on an element => open a rectangle
 		MAy2 = 0;
 		// QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect2;
@@ -349,27 +395,52 @@ QUndoCommand* MouseActionSelect::press(QMouseEvent* e)
 				// deselectElements(focusElement); // element was not selected.
 			}else{ untested();
 			}
-			focusElement->setSelected();
+			//focusElement->setSelected();
 		}
 		Doc->setOnGrid(MAx1, MAy1);
-		QucsMain->MouseMoveAction = &MouseActions::MMoveMoving;
+
+//    it seems move is done by QT scene.
+//		QucsMain->MouseMoveAction = &MouseActions::MMoveMoving;
 	}
 	// Update matching wire label highlighting
 	assert(Doc);
 	// Doc->highlightWireLabels ();
-	e->ignore(); // handle in QGraphicsView?
+//	e->ignore(); // handle in QGraphicsView?
 	return nullptr;
 } // select::press
 /*--------------------------------------------------------------------------*/
 // was MouseActions::MReleaseSelect(SchematicDoc *Doc, QMouseEvent *Event)
 QUndoCommand* MouseActionSelect::release(QMouseEvent *Event)
 { untested();
+	std::vector<QGraphicsItem*> _modifiedItems;
+	_modifiedItems.clear();
+
+	int k = 0;
+	for(auto& i : selectedItems()){ untested();
+		++k;
+		_modifiedItems.push_back(i);
+	}
+	QPointF pos = mapToScene(Event->pos());
+	int fX = int(pos.x());
+	int fY = int(pos.y());
+
+	trace5("releasing", k, fX, fY, MAx1, MAy1);
 	bool ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
-	if(!ctrl) { untested();
+	if(!ctrl) {
 		incomplete();
 //		ctx().deselectElements(focusElement);
 	}else{ untested();
+	}
+
+	cmd* c = nullptr;
+
+	if(pos1()!=pos){
+		// possible move action.
+		auto s = doc().selectedItems();
+		QPointF delta = pos - pos1();
+		c = new MoveSelection(delta.toPoint(), doc(), s);
+	}else{
 	}
 
 	if(focusElement && Event->button() == Qt::LeftButton){ untested();
@@ -398,21 +469,8 @@ QUndoCommand* MouseActionSelect::release(QMouseEvent *Event)
 //	Doc->highlightWireLabels ();
 	updateViewport();
 	// drawn = false;
-	return nullptr;
+	return c;
 } // select::release
-/*--------------------------------------------------------------------------*/
-class deleteCommand : public QUndoCommand {
-public:
-  explicit deleteCommand(ElementMouseAction e){ untested();
-    incomplete();
-  }
-  void undo() override{ untested();
-    incomplete();
-  }
-  void redo() override{ untested();
-    incomplete();
-  }
-};
 /*--------------------------------------------------------------------------*/
 // void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent* Event)
 // press a mouse while delete action is active.
@@ -426,9 +484,11 @@ QUndoCommand* MouseActionDelete::press(QMouseEvent* Event)
 
 	if(pe) { untested();
 		trace0("deletecommand?");
-		d = new deleteCommand(pe);
+		pe->setSelected();
+		auto s = doc().selectedItems();
+		assert(s.size()==1);
+		d = new DeleteSelection(doc(), s);
 
-		// pe->setSelected();
 		// Doc->deleteElements();
 
 		// Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);

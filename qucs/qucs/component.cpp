@@ -90,7 +90,7 @@ Component::Component()
 }
 
 Element* Component::clone() const
-{
+{ unreachable();
   Component const* e=this;
   Component* E=const_cast<Component*>(e);
   Component* ret = E->newOne();
@@ -153,9 +153,11 @@ void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2, float Corr)
 }
 
 // -------------------------------------------------------
-void Component::setCenter(int x, int y, bool relative)
+// // is "center" the position??
+void Component::setPos(int x, int y, bool relative)
 {
   if(relative) {
+    trace2("relative move", x, y);
     Element::cx += x;
     Element::cy += y;
   } else {
@@ -220,8 +222,8 @@ bool Component::getSelected(int x_, int y_)
 void Component::paint(ViewPainter *p) const
 {
   int x, y;
-  int cx=cx_();
-  int cy=cy_();
+  int cx = cx_(); // "positionX"
+  int cy = cy_(); // "positionY"
 //  int a, b, xb, yb;
   Element::paint(p);
   QFont f = p->Painter->font();   // save current font
@@ -231,9 +233,6 @@ void Component::paint(ViewPainter *p) const
   }else{
     // normal components go here
     assert(!Model.size() || Model.at(0) != '.');
-
-    int cx=cx_();
-    int cy=cy_();
 
     // paint all lines
     foreach(Line *p1, Lines) {
@@ -321,7 +320,9 @@ void Component::paint(ViewPainter *p) const
   }
 
   // draw component bounding box
-  if(isSelected()) {
+  // not here.
+  if(1){
+  }else if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(cx+x1, cy+y1, x2-x1, y2-y1);
   }else{
@@ -331,7 +332,7 @@ void Component::paint(ViewPainter *p) const
 // -------------------------------------------------------
 // Paints the component when moved with the mouse.
 void Component::paintScheme(SchematicDoc *p) const
-{
+{ untested();
   // qDebug() << "paintScheme" << Model;
   int cx=cx_();
   int cy=cy_();
@@ -368,26 +369,28 @@ void Component::paintScheme(SchematicDoc *p) const
     p->PostPaintEvent(_Line,cx+xb-2, cy+yb, cx+xb-2, cy);
     p->PostPaintEvent(_Line,cx+xb-2, cy, cx+xb-6, cy-5);
     return;
+  }else{
   }
 
-  // paint all lines
-  foreach(Line *p1, Lines)
+  foreach(Line *p1, Lines){
     p->PostPaintEvent(_Line,cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
+  }
 
-  // paint all ports
   foreach(Port *p2, Ports){
     if(p2->avail) p->PostPaintEvent(_Ellipse,cx+p2->x_()-4, cy+p2->y_()-4, 8, 8);
   }
 
-  foreach(Arc *p3, Arcs)   // paint all arcs
+  foreach(Arc *p3, Arcs){
     p->PostPaintEvent(_Arc,cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
+  }
 
-
-  foreach(Area *pa, Rects) // paint all rectangles
+  foreach(Area *pa, Rects){
     p->PostPaintEvent(_Rect,cx+pa->x, cy+pa->y, pa->w, pa->h);
+  }
 
-  foreach(Area *pa, Ellips) // paint all ellipses
+  foreach(Area *pa, Ellips){
     p->PostPaintEvent(_Ellipse,cx+pa->x, cy+pa->y, pa->w, pa->h);
+  }
 }
 
 // -------------------------------------------------------
@@ -507,7 +510,7 @@ void Component::rotate()
 
 void Component::setParameter(unsigned pos, QString const& v)
 {
-  // incomplete();
+  incomplete();
   // Param[i].set(v);
 }
 
