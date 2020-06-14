@@ -1,5 +1,4 @@
 [Desktop Entry]
-Encoding=UTF-8
 Name=Qucs
 Comment=A Universal Circuit Simulator
 Comment[es]=Un simulador universal de circuitos
@@ -13,5 +12,5 @@ Icon=qucs
 Terminal=false
 
 Type=Application
-Categories=Education;Electronics
+Categories=Education;Electronics;
 StartupNotify=false
