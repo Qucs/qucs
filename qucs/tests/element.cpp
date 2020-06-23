@@ -48,6 +48,6 @@ Element::~Element(){}
 //void Element::paintScheme(Schematic*){}
 //void Element::paintScheme(QPainter*){}
 void Element::setCenter(int, int, bool){}
-void Element::getCenter(int&, int&){}
+//void Element::getCenter(int&, int&){}
 void Element::paint(ViewPainter*) const{}
 QRectF Element::boundingRect() const { return QRect(cx-4,cy-4,8,8); }
