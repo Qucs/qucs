@@ -80,24 +80,6 @@ matrix:
 #            - qtscript5-dev
 #            - libqt5svg5-dev
 
-    - os: linux
-      compiler: gcc
-      env: BUILD=autotools QT=qt4
-      addons:
-        apt:
-          packages:
-            - *native_deps
-            - lcov # lcov is required by configure, only gcov really needed thou
-            - python-tk
-
-    - os: linux
-      compiler: clang
-      env: BUILD=autotools QT=qt4
-      addons:
-        apt:
-          packages:
-            - *native_deps
-
     - os: osx
       # Qt 4.8.7 official installer works up to OSX 10.10 or xcode6.4
       # Use bottle (with Qt3Support) from cartr/qt4
