@@ -4,6 +4,9 @@ cmake_policy(VERSION 2.8)
 
 file(STRINGS "${qucs-suite_SOURCE_DIR}/VERSION" QUCS_VERSION)
 message(STATUS "Configuring Qucs: VERSION ${QUCS_VERSION}")
+message(STATUS "THIS IS INCOMPLETE -- use autotools for now")
+message(STATUS "(please help completing the cmake files)")
+use_autotools_for_now()
 
 set(QUCS_URL "https://sf.net/p/qucs")
 set(QUCS_BUGREPORT "qucs-bugs@lists.sourceforge.net")
