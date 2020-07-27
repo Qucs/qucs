@@ -120,6 +120,12 @@ void ElementGraphics::moveElement(P const& delta)
 	auto p = _e->center();
 	QGraphicsItem::setPos(p.first, p.second);
 }
+	
+// void ElementGraphics::setPos(int i, int j, bool relative=false)
+// {
+// 	_e->setCenter(dx, dy, true);
+// }
+	
 
 template
 void ElementGraphics::moveElement<QPoint>(QPoint const& delta);

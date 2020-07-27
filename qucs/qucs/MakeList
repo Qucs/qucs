@@ -7,6 +7,7 @@ CPP_SRC = \
 	attach.cpp \
 	command.cpp \
 	component.cpp \
+	component_widget.cpp \
 	conductor.cpp \
 	diagram.cpp \
 	docfmt.h \
@@ -52,3 +53,16 @@ CPP_SRC = \
 	viewpainter.cpp \
 	wire.cpp \
 	wirelabel.cpp
+
+QMOCHEADERS = \
+  component_widget.h \
+  mouseactions.h \
+  messagedock.h \
+  octave_window.h \
+  projectView.h \
+  schematic_doc.h \
+  schematic_scene.h \
+  schematic_model.h \
+  textdoc.h \
+  schematic_dialog.h \
+  qucs.h

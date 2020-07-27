@@ -43,6 +43,7 @@ public:
   SchematicScene (QObject* parent);
   virtual ~SchematicScene ();
 
+#if 0
 //  void addItem(ElementGraphics*);
   void addItem(QGraphicsItem* x){
 	  QGraphicsScene::addItem(x);
@@ -50,11 +51,15 @@ public:
   void removeItem(QGraphicsItem const*x){
 	  QGraphicsScene::removeItem((QGraphicsItem*)x);
   }
+#endif
 
 
   void selectedItemsAndBoundingBox(QList<ElementGraphics*>& ElementCache, QRectF& BB);
-  void removeItem(Element const*);
+//  void removeItem(Element const*);
   bool itemEvent(QEvent*);
+
+private:
+  void selectAll(bool v=true);
 
 protected:
 	SchematicDoc* doc();

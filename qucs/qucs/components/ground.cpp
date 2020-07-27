@@ -28,6 +28,8 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
 
 private:
+  void init();
+private:
 	Node* connectNode(unsigned i, NodeMap&l);
 	Node* disconnectNode(unsigned i, NodeMap&l);
 
@@ -37,13 +39,15 @@ protected:
 
 Ground::Ground(Ground const& g) : Component(g)
 {
-	incomplete();
-	if(!Ports.count()){
-		Ports.append(new Port(  0,  0));
-	}
+	init();
 }
 
 Ground::Ground()
+{
+	init();
+}
+
+void	Ground::init()
 {
   info(Name, bitmap_file);
   Type = isComponent;   // both analog and digital

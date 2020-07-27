@@ -43,7 +43,7 @@ private: // later: Qgraphics virtual overrides
   QRectF boundingRect() const;
   void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*); // const...
 
-private:
+public:
   bool sceneEvent(QEvent*) override;
 
 public:
@@ -60,7 +60,7 @@ public:
 	  assert(_e); return _e;
   }
   QPoint getPos() const;
-  void setPos(int i, int j, bool relative=false);
+//  void setPos(int i, int j, bool relative=false);
   template<class P>
   void moveElement(P const& delta);
   void getCenter(int& i, int& j);

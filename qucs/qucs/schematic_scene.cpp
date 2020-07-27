@@ -4,6 +4,7 @@
 #include "qt_compat.h"
 
 #include <QFileInfo>
+#include <QGraphicsSceneDragDropEvent>
 
 // ---------------------------------------------------
 // forward to graphicscene, once it is there.
@@ -89,7 +90,6 @@ SchematicDoc* SchematicScene::doc()
 {
 	assert(parent());
 	return dynamic_cast<SchematicDoc*>(parent());
-
 }
 
 SchematicScene::~SchematicScene()
@@ -159,9 +159,11 @@ void SchematicModel::toScene(QGraphicsScene& s, QList<ElementGraphics*>* l) cons
   s.update();
 }
 
+#if 0
 void SchematicScene::removeItem(Element const* xx)
 { unreachable();
 }
+#endif
 
 // FIXME: is the weird order really necessary?
 void SchematicScene::selectedItemsAndBoundingBox(QList<ElementGraphics*>& ElementCache, QRectF& BB)
@@ -211,35 +213,62 @@ void SchematicScene::selectedItemsAndBoundingBox(QList<ElementGraphics*>& Elemen
 
 void SchematicScene::dropEvent(QGraphicsSceneDragDropEvent* e)
 {
+	// getting here when dropping stuff from the component menu
 	incomplete();
 }
 
 bool SchematicScene::itemEvent(QEvent* e)
 { untested();
+	if(!e){ untested();
+		unreachable();
+	}else if(e->type()==158){ itested();
+		incomplete();
+		// double click on item. TODO open dialog
+	}else{
+	}
 	trace1("scene::itemEvent", e->type());
 	return doc()->handleMouseActions(e);
 }
 
+//
+#include "component_widget.h"
+#include <QMimeData>
 // https://stackoverflow.com/questions/14631098/qt-properly-integrating-undo-framework-with-qgraphicsscene
 
 // should return true if the event e was "recognized and processed."
 // (whatever that means)
 //
 // this is called before SchematicDoc::event
+// (bound to some condition??)
 bool SchematicScene::event(QEvent* e)
-{ untested();
+{ itested();
+	// 155 for move.
 	trace2("SchematicScene::event", e->isAccepted(), e->type());
-	bool r = QGraphicsScene::event(e);
-	trace2("SchematicScene::event post", e->isAccepted(), e->type());
+
+	doc()->handleMouseActions(e);
+	bool r = false;
+	if(e->isAccepted()){
+	}else{ untested();
+		trace0("fwd");
+		r = QGraphicsScene::event(e);
+	}
+
+	trace3("SchematicScene::event post", e->isAccepted(), e->type(), r);
+
 	if(e->isAccepted()){ itested();
-		// move objects is here.
-		//
-		// // but also release.
-		// signal/slot instead? (why/how?)
+		if(r){ itested();
+			// move objects is here.
+		}else{untested();
+		}
+
 		// doc()->handleMouseActions(e);
 //		e->ignore(); // pass on to view??
 	}else{ untested();
-		// rectangle draw is here
+		if(r){ untested();
+			// "new ground".
+			// "rectangle draw"
+		}else{untested();
+		}
 		// recrangle release also here.
 		// done in the "View".
 		//
@@ -247,7 +276,74 @@ bool SchematicScene::event(QEvent* e)
 	}
 	assert(doc());
 
+	// TODO: this is just a stub, untangle!
+	if(dynamic_cast<QDragEnterEvent*>(e)){ untested();
+		trace1("scene leave", e->isAccepted());
+	}else if(dynamic_cast<QDragLeaveEvent*>(e)){ untested();
+		trace1("scene enter", e->isAccepted());
+	}else if(auto de=dynamic_cast<QGraphicsSceneDragDropEvent*>(e)){
+		// 164 == QEvent::GraphicsSceneDragEnter
+		// 165 == QEvent::GraphicsSceneDragMove
+		// 166 == QEvent::GraphicsSceneDragLeave
+		trace2("scene dragdrop", e->type(), e->isAccepted());
+		auto a = ComponentWidget::itemMimeType();
 
+		if(e->type()==QEvent::GraphicsSceneDragEnter){
+			selectAll(false);
+			// create element and switch to "move" mode?
+			 if (de->mimeData()->hasFormat(a)){ untested();
+				trace2("got payload", e->type(), e->isAccepted());
+
+				QByteArray eltInfo = de->mimeData()->data(a);
+				QDataStream dataStream(&eltInfo, QIODevice::ReadOnly);
+				ComponentListWidgetItem a;
+				dataStream >> a;
+
+				Element* elt = a.cloneElement();
+				assert(elt);
+
+				trace1("setting pos", de->scenePos());
+				auto pos = de->scenePos();
+				elt->setCenter(pos.x(), pos.y());
+				doc()->takeOwnership(elt); // BUG
+				assert(elt->scope());
+				auto gfx = new ElementGraphics(elt);
+				{ untested();
+					addItem(gfx);
+				}
+
+				gfx->setSelected(true);
+
+				if(0){
+					QGraphicsSceneMouseEvent fake(QEvent::GraphicsSceneMousePress);
+					gfx->sceneEvent(&fake);
+				}
+			 }else{
+			 }
+		}else if(e->type()==165){
+			e->accept(); // this sets the plus
+			             // only do if mime type match...
+		}else{
+		}
+	}else if(dynamic_cast<QGraphicsSceneMoveEvent*>(e)){
+		trace1("GSM", e->type());
+	}else if(auto gse=dynamic_cast<QGraphicsSceneEvent*>(e)){
+		trace1("GSE", e->type());
+		if(e->type()==155){ itested();
+			// getting here when moving around elements.
+		}else{
+		}
+	}else{
+		// 11 = leave?
+		trace1("scene unknown?", e->type());
+	}
 
 	return r;
+}
+
+void SchematicScene::selectAll(bool v)
+{
+	for(auto i : items()){ untested();
+		i->setSelected(v);
+	}
 }

@@ -90,8 +90,7 @@ class ElementGraphics;
 
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
-// TODO: rename to SchematicDocument
-// TODO: add SymbolDocument
+// TODO: add SymbolDocument (some other place)
 class SchematicDoc : public QGraphicsView, public QucsDoc {
   Q_OBJECT
 private:
@@ -154,10 +153,13 @@ public:
   bool scrollLeft(int);
   bool scrollRight(int);
 
-private:
-  void deleteItem(ElementGraphics*);
+public: // scene
+  void sceneAddItem(ElementGraphics*);
+  void sceneRemoveItem(ElementGraphics*);
 
-#ifndef USE_SCROLLVIEW
+private:
+	void deleteItem(ElementGraphics*);
+
 private:
   // schematic Scene for this View
   SchematicScene *Scene;
@@ -173,10 +175,15 @@ public:
 	  return _model->detach(e);
   }
 
+  void takeOwnership(Element* e){
+	  // bit of a hack.
+	  e->setOwner(_root);
+  }
+
   void deselectElements();
-#endif
 
   // find_symbol
+public:
   Component* find_component(QString const&);
 
   ComponentList const& components() const{
@@ -301,15 +308,18 @@ protected: // these are the overrides that collect mouse actions
 //   void mouseDoubleClickEvent(QMouseEvent*) override;
 //   void mouseReleaseEvent(QMouseEvent*) override;
 //   void wheelEvent(QWheelEvent*) override;
-//   void dropEvent(QDropEvent*) override;
+   void dropEvent(QDropEvent*e) override { untested();
+		QGraphicsView::dropEvent(e);
+	}
+   void dragEnterEvent(QDragEnterEvent*e) override { untested();
+		QGraphicsView::dragEnterEvent(e);
+	}
 //   void dragEnterEvent(QDragEnterEvent*) override;
 //   void dragLeaveEvent(QDragLeaveEvent*) override;
 //   void dragMoveEvent(QDragMoveEvent*) override;
 
-public:
-#ifdef USE_SCROLLVIEW
-  QPointF mapToScene(QPoint const& p) const;
-#endif
+public: // qt4 debris
+//   QPointF mapToScene(QPoint const& p) const;
 
 private:
 public:
@@ -599,10 +609,7 @@ private: // QucsDoc overrides, schematic_action.cpp
   void actionExportGraphAsCsv(); // BUG
 
 public:
-	bool handleMouseActions(QEvent* e){
-		assert(mouseActions());
-		return mouseActions()->handle(e);
-	}
+	bool handleMouseActions(QEvent* e);
 private:
   bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2); // this is nuts.
 

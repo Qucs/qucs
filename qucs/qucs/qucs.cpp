@@ -166,6 +166,9 @@ QucsApp::QucsApp()
   }
 }
 
+#include "component_widget.h"
+
+
 QucsApp::~QucsApp()
 {
   Module::unregisterModules ();
@@ -282,7 +285,7 @@ void QucsApp::initView()
   QHBoxLayout *CompSearchLayout = new QHBoxLayout();
 
   CompChoose = new QComboBox(this);
-  CompComps = new QListWidget(this);
+  CompComps = new ComponentWidget(this);
   CompComps->setViewMode(QListView::IconMode);
   CompComps->setGridSize(QSize(110,90));
   CompSearch = new QLineEdit(this);
@@ -539,13 +542,6 @@ void QucsApp::fillLibrariesTreeView ()
     libTreeWidget->insertTopLevelItems(0, topitems);
 }
 
-
-#if 0
-QucsDoc* QucsApp::getCurrentDoc()
-{
-  return DocumentTab->currentWidget();
-}
-#endif
 // ---------------------------------------------------------------
 // Returns a pointer to the QucsDoc object whose number is "No".
 // If No < 0 then a pointer to the current document is returned.
@@ -610,9 +606,11 @@ void QucsApp::fillComboBox (bool setAll)
 // ----------------------------------------------------------
 // Whenever the Component Library ComboBox is changed, this slot fills the
 // Component IconView with the appropriate components.
+//
+// BUG: not here.
 void QucsApp::slotSetCompView (int index)
-{
-  //qDebug() << "QucsApp::slotSetCompView(" << index << ")";
+{ untested();
+  trace1("QucsApp::slotSetCompView", index);
 
   editText->setHidden (true); // disable text edit of component property
 
@@ -643,7 +641,9 @@ void QucsApp::slotSetCompView (int index)
   QString Name;
 
   // if something was registered dynamicaly, get and draw icons into dock
-  if (item == QObject::tr("verilog-a user devices")) {
+  if (item == QObject::tr("verilog-a user devices")) { untested();
+    unreachable();
+    incomplete();
 
     compIdx = 0;
     QMapIterator<QString, QString> i(Module::vaComponents);
@@ -671,9 +671,7 @@ void QucsApp::slotSetCompView (int index)
       {
         // load bitmap defined on the JSON symbol file
         vaIcon = QPixmap(iconPath);
-      }
-      else
-      {
+      }else{
         QMessageBox::information(this, tr("Info"),
                      tr("Default icon not found:\n %1.png").arg(vaBitmap));
         // default icon
@@ -688,27 +686,22 @@ void QucsApp::slotSetCompView (int index)
       compIdx++;
     }
   } else {
-    // static components
     QString File;
-    // Populate list of component bitmaps
-    compIdx = 0;
+    // Populate list of ComponentListWidgetItems
     QList<Module *>::const_iterator it;
     for (it = Comps.constBegin(); it != Comps.constEnd(); it++) {
       if (Element const* e = (*it)->element()) {
         Name = e->description();
         File = e->iconBasename();
-        qDebug() << "icon" << File;
-        // BUG use normal files, not qrc mess.
-        QListWidgetItem *icon = new QListWidgetItem(QPixmap(":/bitmaps/" + File + ".png"), Name);
-        icon->setToolTip(Name);
-        iconCompInfo = iconCompInfoStruct{catIdx, compIdx};
-        v.setValue(iconCompInfo);
-        icon->setData(Qt::UserRole, v);
+        trace1("adding icon?", File);
+        QListWidgetItem *icon = new ComponentListWidgetItem(e);
+      //   iconCompInfo = iconCompInfoStruct{catIdx, compIdx};
+      //   v.setValue(iconCompInfo);
+      //   icon->setData(Qt::UserRole, v);
         CompComps->addItem(icon);
       }else{
-			incomplete();
-		}
-      compIdx++;
+        incomplete();
+      }
     }
   }
 }
@@ -718,6 +711,7 @@ void QucsApp::slotSetCompView (int index)
 // search result
 void QucsApp::slotSearchComponent(const QString &searchText)
 {
+  incomplete();
   qDebug() << "User search: " << searchText;
   CompComps->clear ();   // clear the IconView
 
@@ -736,8 +730,6 @@ void QucsApp::slotSearchComponent(const QString &searchText)
     editText->setHidden (true); // disable text edit of component property
 
     //traverse all component and match searchText with name
-    QString Name;
-    QString File;
     QList<Module *> Comps;
     iconCompInfoStruct iconCompInfo;
     QVariant v;
@@ -752,8 +744,8 @@ void QucsApp::slotSearchComponent(const QString &searchText)
       int compIdx = 0;
       for (modit = Comps.constBegin(); modit != Comps.constEnd(); modit++) {
         if (Element const* e = (*modit)->element()) {
-          File=e->iconBasename();
-          Name=e->name();
+          QString File = e->iconBasename();
+          auto Name = e->name();
 
           if((Name.indexOf(searchText, 0, Qt::CaseInsensitive)) != -1) {
             incomplete();

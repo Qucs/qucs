@@ -2192,19 +2192,6 @@ Component* SchematicDoc::find_component(QString const& n)
 }
 
 // ---------------------------------------------------
-ElementGraphics& SchematicDoc::addToScene(Element* x)
-{ itested();
-  auto i=new ElementGraphics(x);
-  scene()->addItem(i);
-  return *i;
-}
-
-Element* SchematicDoc::eraseFromScene(ElementGraphics* g)
-{ untested();
-  Element* e = element(g);
-  delete(g); // CHECK: does it detach itself?!
-  return e;
-}
 
 #if 0
 namespace{
@@ -2242,16 +2229,6 @@ private:
 };
 }
 #endif
-
-// undo action?
-void SchematicDoc::deleteItem(ElementGraphics *g)
-{ untested();
-    Element* e=element(g);
-    delete(g); // will it detach from scene?
-	
-    assert(_model);
-    _model->erase(e); // also get rid of the payload.
-}
 
 
 #if 0 // transition. obsolete
@@ -2319,7 +2296,7 @@ void SchematicDoc::removeWire(Wire const* x)
 { untested();
 #ifndef USE_SCROLLVIEW
 incomplete();
-  scene()->removeItem(x);
+//  scene()->removeItem(x);
 #else
   wires().removeRef((Wire*)x);
 #endif
