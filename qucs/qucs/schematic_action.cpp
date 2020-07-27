@@ -40,10 +40,12 @@ public:
 
 private:
 //	cmd* activate(QAction* sender) override;
-	cmd* move(QMouseEvent*);
-	cmd* press(QMouseEvent*); //was MouseActions::MPressSelect
-	cmd* release(QMouseEvent*);
+	cmd* move(QEvent*) override;
+	cmd* press(QEvent*) override;
+	cmd* release(QMouseEvent*) override;
 	//	cmd* release2(QMouseEvent*); // what is this?
+	// cmd* enter(QEvent*) override;
+	cmd* dblclick(QEvent*) /*override*/;
 
 private: // rectangles?  // this was in MouseActions. BUG. remove
 	int MAx1;
@@ -64,6 +66,16 @@ private: // more decoupling
 	bool isMoveEqual; //?
 	QPointF _pos1;
 };
+
+//void MouseActions::MDoubleClickSelect(SchematicDoc *Doc, QMouseEvent *Event)
+QUndoCommand* MouseActionSelect::dblclick(QEvent* e)
+{
+	incomplete();
+	//  Doc->releaseKeyboard();  // allow keyboard inputs again
+	//  QucsMain->editText->setHidden(true);
+	//  editElement(Doc, Event);
+	return nullptr;
+}
 /*--------------------------------------------------------------------------*/
 class MouseActionDelete : public MouseAction{
 public:
@@ -72,11 +84,127 @@ public:
 
 private:
 	cmd* activate(QAction* sender) override;
-	cmd* move(QMouseEvent*) override;
+	cmd* move(QEvent*) override;
 	cmd* press(QEvent*) override;
 	cmd* release(QMouseEvent*) override;
-	cmd* generic(QEvent*) override;
+//	cmd* generic(QEvent*) override;
 };
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+class MouseActionNewElement : public MouseAction{
+public:
+	explicit MouseActionNewElement(MouseActions& ctx)
+		: MouseAction(ctx), _gfx(nullptr) {}
+private:
+//	cmd* activate(QAction* sender) override;
+	cmd* move(QEvent*) override;
+	cmd* press(QEvent*) override;
+	cmd* enter(QEvent*) override;
+	cmd* leave(QEvent*) override;
+	cmd* release(QMouseEvent*) override;
+//	cmd* generic(QEvent*) override;
+private:
+	Element* _proto;
+	ElementGraphics* _gfx;
+};
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionNewElement::release(QMouseEvent* ev)
+{
+	// assert(ev->widget=doc->scene()) // or so.
+	trace1("RELEASE", ev->type());
+	if(ev->type() == QEvent::MouseButtonRelease){ itested();
+	}else{ untested();
+		unreachable();
+	}
+
+	assert(element(_gfx));
+	auto elt = element(_gfx);
+
+	doc().takeOwnership(elt); // BUG?
+	elt = elt->clone(); // BUG, clone replicates port connections
+
+	incomplete(); // produce undocommand instead, and transfer _gfx
+	element(_gfx)->attachToModel();
+
+	_gfx = new ElementGraphics(elt);
+	doc().sceneAddItem(_gfx); // does not attach.
+
+	ev->accept();
+	return nullptr;
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionNewElement::move(QEvent* ev)
+{
+	QPointF sp;
+	trace1("move", ev->type());
+	if(auto ee=dynamic_cast<QMouseEvent*>(ev)){
+		unreachable();
+		QPointF wp;
+		wp = ee->localPos(); // use oldPos?
+		sp = doc().mapToScene(wp.toPoint());
+	}else if(auto ee=dynamic_cast<QGraphicsSceneMouseEvent*>(ev)){
+		sp = ee->scenePos();
+	}else{
+		unreachable();
+	}
+
+	if(_gfx){
+		_gfx->setPos(sp.x(), sp.y());
+	}else{
+		unreachable();
+	}
+
+	ev->accept();
+	return nullptr;
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionNewElement::enter(QEvent* ev)
+{
+	trace1("new enter", ev->type());
+	auto ee = prechecked_cast<QEnterEvent*>(ev);
+	assert(ee);
+	
+	auto wp = ee->localPos();
+
+	// not here.
+	Element const* s=symbol_dispatcher["GND"];
+	assert(s);
+
+	SchematicDoc* d = &doc();
+	auto sp = d->mapToScene(wp.toPoint());
+
+	Element* elt;
+	//			trace1("setting pos", de->scenePos());
+	// doc().takeOwnership(elt); // BUG
+	//
+	if(!_gfx){
+		elt = s->clone();
+		elt->setCenter(sp.x(), sp.y());
+		_gfx = new ElementGraphics(elt); // BUG
+	}else{ untested();
+		_gfx->setPos(sp.x(), sp.y());
+	}
+	
+	doc().sceneAddItem(_gfx); // does not attach.
+// 		elt->detachFromModel();
+//			gfx->setSelected(true);
+
+	ev->accept();
+	return nullptr;
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionNewElement::leave(QEvent* ev)
+{
+	sceneRemoveItem(_gfx);
+	ev->accept();
+	return nullptr;
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionNewElement::press(QEvent* ev)
+{
+	ev->accept();
+	return nullptr;
+}
 /*--------------------------------------------------------------------------*/
 class MoveSelection : public QUndoCommand {
 public:
@@ -182,10 +310,12 @@ QUndoCommand* MouseActionDelete::activate(QAction *sender)
 }
 /*--------------------------------------------------------------------------*/
 //   was Mouseactions::MMove or so.
-QUndoCommand* MouseActionDelete::move(QMouseEvent *e)
+QUndoCommand* MouseActionDelete::move(QEvent *e)
 { untested();
+
+//	QGraphicsSceneEvent ?
   // TODO: inactive initially?
-  ctx().Set3(e); // BUG: use a variable with a name.
+//  ctx().Set3(e); // BUG: use a variable with a name.
 
   // cannot draw on the viewport, it is displaced by the size of dock and toolbar
   //
@@ -202,10 +332,10 @@ QUndoCommand* MouseActionDelete::move(QMouseEvent *e)
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // was MouseActions::MMoveSelect
-QUndoCommand* MouseActionSelect::move(QMouseEvent *Event)
+QUndoCommand* MouseActionSelect::move(QEvent *Event)
 { itested();
 	//qDebug() << "MMoveSelect " << "select area";
-	ctx().Set2(Event); // BUG
+//	ctx().Set2(Event); // BUG
 
 #if 0 // not here!!
 	if(isMoveEqual) {    // x and y size must be equal ?
@@ -230,8 +360,13 @@ QUndoCommand* MouseActionSelect::move(QMouseEvent *Event)
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
-QUndoCommand* MouseActionSelect::press(QMouseEvent* e)
+	//was MouseActions::MPressSelect
+QUndoCommand* MouseActionSelect::press(QEvent* ev)
 { untested();
+
+	incomplete();
+	return nullptr;
+	QMouseEvent* e;
 	SchematicDoc* Doc = &doc();
 	assert(Doc);
 	QPointF pos = Doc->mapToScene(e->pos());
@@ -496,6 +631,7 @@ QUndoCommand* MouseActionSelect::release(QMouseEvent *Event)
 /*--------------------------------------------------------------------------*/
 // void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent* Event)
 // Event tells us where...
+#if 0
 QUndoCommand* MouseActionDelete::press(QEvent* e)
 { untested();
 	auto Event = prechecked_cast<QMouseEvent*>(e);
@@ -522,9 +658,10 @@ QUndoCommand* MouseActionDelete::press(QEvent* e)
 	}
 	return d;
 } // delete::press
+#endif
 /*--------------------------------------------------------------------------*/
 // press a mouse while delete action is active.
-QUndoCommand* MouseActionDelete::generic(QEvent* e)
+QUndoCommand* MouseActionDelete::press(QEvent* e)
 {
 	if(!e){ untested();
 		return nullptr;
@@ -551,12 +688,15 @@ SchematicActions::SchematicActions(SchematicDoc& ctx)
   maDelete = new MouseActionDelete(*this);
   maSelect = new MouseActionSelect(*this);
 //  maMove = new MouseActionMove(*this);
+  maInsertGround = new MouseActionNewElement(*this);
+  maInsertPort = new MouseActionNewElement(*this);
 
   // TODO
   maActivate = new MouseAction(*this);
   maMirrorX = new MouseAction(*this);
   maMirrorY = new MouseAction(*this);
   maRotate = new MouseAction(*this);
+
 
   // this was in App previously, and scattered across a couple of pointer hacks.
   // possibly initialised to "select". recheck.
@@ -789,6 +929,7 @@ void SchematicDoc::actionEditPaste(QAction* on)
 
 void SchematicDoc::actionInsertGround(QAction* sender)
 { untested();
+  possiblyToggleAction(schematicActions().maInsertGround, sender);
 #if 0
   App->hideEdit(); // disable text edit of component property
   App->MouseReleaseAction = 0;

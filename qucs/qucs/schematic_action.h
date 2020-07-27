@@ -39,6 +39,8 @@ public: // actions... private?
 	MouseAction* maOnGrid;
 	MouseAction* maMirrorX;
 	MouseAction* maMirrorY;
+	MouseAction* maInsertGround;
+	MouseAction* maInsertPort;
 };
 
 #endif

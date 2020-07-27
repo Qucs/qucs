@@ -225,10 +225,10 @@ public: // BUG
 public: // set protected variables. don't use
   void obsolete_set(std::string name, int value){
 	  incomplete();
-	  if(name=="cx"){
-		  cx=value;
-	  }else if(name=="cy"){
-		  cy=value;
+	  if(name == "cx"){
+		  cx = value;
+	  }else if(name == "cy"){
+		  cy = value;
 	  }
   }
 

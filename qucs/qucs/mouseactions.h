@@ -20,11 +20,15 @@
 #include "schematic_scene.h"
 #include "element_graphics.h"
 
-class Schematic;
-class QUndoCommand;
-class QMouseEvent;
+class Label;
 class MouseActions;
 class QAction;
+class QMenu;
+class QMouseEvent;
+class QPainter;
+class QUndoCommand;
+class Schematic;
+class Wire;
 
 // something happens to the mouse on a schematic
 // BUG: wrong file. schematic_mouse.h maybe?
@@ -47,21 +51,27 @@ public:
 	virtual cmd* activate(QAction* sender);
 // private: TODO
 	// TODO: only use POS in those
-	virtual cmd* move(QMouseEvent*) { return nullptr; }
+	virtual cmd* move(QEvent*) { return nullptr; }
 	virtual cmd* press(QEvent*) { return nullptr; }
 	// virtual cmd* grab(QGraphicsSceneEvent*) { return nullptr; }
 	virtual cmd* release(QMouseEvent*) { return nullptr; }
 	virtual cmd* dblclk(QMouseEvent*) { return nullptr; }
 
 	virtual cmd* generic(QEvent*) { return nullptr; }
+	virtual cmd* enter(QEvent*) { untested(); return nullptr; }
+	virtual cmd* leave(QEvent*) { untested(); return nullptr; }
 
 	void uncheck();
 
 protected:
 	MouseActions& ctx(){return _ctx;}
 
-public:
+protected: // bug. private
 	SchematicDoc const& doc() const;
+
+protected:
+	void sceneAddItem(ElementGraphics*);
+	void sceneRemoveItem(ElementGraphics*);
 
 protected:
 	SchematicDoc& doc(); // BUG _ctx.
@@ -144,9 +154,6 @@ private:
   ElementGraphics* _e;
 };
 
-class Wire;
-class Label;
-
 // enable access to attached elements.
 // this might be temporary
 inline ElementGraphics* element(ElementMouseAction e)
@@ -187,11 +194,6 @@ inline Node* node(ElementMouseAction e)
 }
 Label* label(ElementMouseAction e);
 
-class Schematic;
-class QPainter;
-class QMenu;
-class QMouseEvent;
-class QucsApp;
 
 extern QAction *formerAction;
 

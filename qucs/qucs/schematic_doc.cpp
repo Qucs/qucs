@@ -47,8 +47,12 @@ private:
 }
 
 SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
-    : QGraphicsView(), QucsDoc(App_, Name_), _root(nullptr), _model(nullptr),
-  SymbolMode(false), _undoStack(nullptr)
+   : QGraphicsView(),
+     QucsDoc(App_, Name_),
+     _root(nullptr),
+     _model(nullptr),
+     SymbolMode(false),
+     _undoStack(nullptr)
 { untested();
   qDebug() << "SchematicDoc::SchematicDoc" << Name_;
 
@@ -58,7 +62,7 @@ SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
   _mouseActions = new SchematicActions(*this);
   _undoStack = new QUndoStack();
 
-//  installEventFilter(_mouseActions);
+//  what is the viewport, and where is it initialised?
   assert(viewport());
   viewport()->installEventFilter(_mouseActions);
 
@@ -146,6 +150,7 @@ SchematicDoc::~SchematicDoc()
 	delete _root;
 	delete _undoStack;
 	delete _mouseActions;
+//	delete Scene; ???
 }
 
 void SchematicDoc::showEvent(QShowEvent*e)
@@ -350,7 +355,6 @@ bool SchematicDoc::event(QEvent* e)
 { untested();
 	assert(mouseActions());
 	trace2("SchematicDoc::event", e->type(), e->isAccepted());
-
 //	e->ignore();
 
 	if(e->isAccepted()){ untested();
@@ -365,12 +369,27 @@ bool SchematicDoc::event(QEvent* e)
 		// handleMouseActions(e); //
 		handleMouseActions(e); //
 	}
+	
+	// TODO: what is this call?
 	bool a = QGraphicsView::event(e);
-
 
 //	mouseActions()->handle(e); // try scene
 	return a;
 }
+
+bool SchematicDoc::handleMouseActions(QEvent* e)
+{
+	assert(mouseActions());
+	return mouseActions()->handle(e);
+}
+
+#if 0
+QPointF SchematicDoc::mapToScene(QPoint const& p) const
+{
+	return QGraphicsView::mapToScene(p);
+}
+#endif
+
 #ifdef INDIVIDUAL_MOUSE_CALLBACKS
 // -----------------------------------------------------------
 // override function. catch mouse presses.
@@ -514,9 +533,13 @@ void SchematicDoc::dropEvent(QDropEvent *Event)
   }
 }
 
-void SchematicDoc::contentsDragEnterEvent(QDragEnterEvent *Event)
+#if 0
+void SchematicDoc::dragLeaveEvent(QDragLeaveEvent *Event)
+{ incomplete();
+}
+
+void SchematicDoc::dragEnterEvent(QDragEnterEvent *Event)
 { untested();
-  //FIXME: the function of drag library component seems not working?
   formerAction = 0;
   dragIsOkay = false;
 
@@ -525,11 +548,7 @@ void SchematicDoc::contentsDragEnterEvent(QDragEnterEvent *Event)
     dragIsOkay = true;
     Event->accept();
     return;
-  }else{
-  }
-
-  // drag library component
-  if(Event->mimeData()->hasText()) { untested();
+  }else if(Event->mimeData()->hasText()) { untested();
     QString s = Event->mimeData()->text();
     if(s.left(15) == "QucsComponent:<") { untested();
       s = s.mid(14);
@@ -542,7 +561,8 @@ void SchematicDoc::contentsDragEnterEvent(QDragEnterEvent *Event)
       }else{ untested();
       }
 #endif
-    }
+    }else{
+	 }
     Event->ignore();
     return;
   }
@@ -550,9 +570,13 @@ void SchematicDoc::contentsDragEnterEvent(QDragEnterEvent *Event)
 
 //   if(Event->format(1) == 0) {  // only one MIME type ? }
 
-    // drag component from listview
-//     if(Event->provides("application/x-qabstractitemmodeldatalist")) { untested();
-    if(Event->mimeData()->hasFormat("application/x-qabstractitemmodeldatalist")) { untested();
+    auto ll = ComponentWidget::elementRefMimeType();
+    if(Event->mimeData()->hasFormat(ll)) { untested();
+		 // drag component from listview
+		 incomplete();
+
+#if 0
+	 }else if(Event->mimeData()->hasFormat("application/x-qabstractitemmodeldatalist")) { untested();
       QListWidgetItem *Item = App->CompComps->currentItem();
       if(Item) { untested();
         formerAction = App->activeAction;
@@ -563,11 +587,14 @@ void SchematicDoc::contentsDragEnterEvent(QDragEnterEvent *Event)
         Event->accept();
         return;
       }
-    }
-//   }
+#endif
+    }else{
+	 }
 
   Event->ignore();
 }
+#endif
+
 void SchematicDoc::contentsDragLeaveEvent(QDragLeaveEvent*)
 { untested();
 #if 0
@@ -613,3 +640,43 @@ void SchematicDoc::contentsDragMoveEvent(QDragMoveEvent *Event)
   }
 }
 #endif
+
+// take ownership.
+void SchematicDoc::sceneAddItem(ElementGraphics* x)
+{
+	assert(scene());
+	scene()->addItem(x);
+}
+void SchematicDoc::sceneRemoveItem(ElementGraphics* x)
+{
+	assert(scene());
+	scene()->removeItem(x);
+}
+
+// questionable.
+ElementGraphics& SchematicDoc::addToScene(Element* x)
+{ itested();
+  auto i=new ElementGraphics(x);
+  scene()->addItem(i);
+  return *i;
+}
+
+// questionable.
+Element* SchematicDoc::eraseFromScene(ElementGraphics* g)
+{ untested();
+  Element* e = element(g);
+  scene()->removeItem(g);
+  delete g;
+  return e;
+}
+
+// undo action?
+void SchematicDoc::deleteItem(ElementGraphics *g)
+{ untested();
+    Element* e=element(g);
+    delete(g); // will it detach from scene?
+	
+    assert(_model);
+    _model->erase(e); // also get rid of the payload.
+}
+

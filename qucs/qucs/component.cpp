@@ -90,7 +90,7 @@ Component::Component()
 }
 
 Element* Component::clone() const
-{ unreachable();
+{
   Component const* e=this;
   Component* E=const_cast<Component*>(e);
   Component* ret = E->newOne();

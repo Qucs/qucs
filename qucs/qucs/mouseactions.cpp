@@ -38,11 +38,23 @@
 #include <QLineEdit>
 #include <QDebug>
 #include <QUndoStack>
+#include <QStringLiteral> //bug
+#include <QMimeData> //bug
 
 #include <limits.h>
 #include <stdlib.h>
 #include "trace.h"
 #include "schematic_scene.h"
+
+
+void MouseAction::sceneAddItem(ElementGraphics* x)
+{
+	doc().sceneAddItem(x);
+}
+void MouseAction::sceneRemoveItem(ElementGraphics* x)
+{
+	doc().sceneRemoveItem(x);
+}
 
 
 QAction *formerAction;   // remember action before drag n'drop etc.
@@ -95,7 +107,7 @@ void MouseActions::setPainter(SchematicDoc *)
 }
 
 // -----------------------------------------------------------
-bool MouseActions::pasteElements(SchematicDoc *Doc)
+bool MouseActions::pasteElements(SchematicDoc *)
 { untested();
   QClipboard *cb = QApplication::clipboard();   // get system clipboard
   QString s = cb->text(QClipboard::Clipboard);
@@ -246,7 +258,7 @@ void MouseActions::endElementMoving(SchematicDoc *Doc, EGPList *movElements)
 
 // -----------------------------------------------------------
 // Moves elements in "movElements" by x/y
-void MouseActions::moveElements(EGPList& what, int x, int y)
+void MouseActions::moveElements(EGPList& , int, int)
 { itested();
   unreachable(); // obsolete
 #if 0
@@ -514,7 +526,7 @@ void MouseActions::MMoveResizePainting(SchematicDoc *Doc, QMouseEvent *Event)
 
 // -----------------------------------------------------------
 // Moves components by keeping the mouse button pressed.
-void MouseActions::MMoveMoving(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MMoveMoving(SchematicDoc *Doc, QMouseEvent*)
 {
   unreachable(); // obsolete
 #if 0
@@ -746,6 +758,7 @@ bool MouseActions::eventFilter(QObject *obj, QEvent *e)
 {
   if(e->isAccepted()){ itested();
   }else{ untested();
+    // drop event?
   }
 //  assert(obj==&doc());
   assert(e);
@@ -763,7 +776,7 @@ bool MouseActions::eventFilter(QObject *obj, QEvent *e)
     case QEvent::MouseMove:
       break;
     default:
-	trace1("mouse", e->type());
+	trace1("possibly incomplete mouseaction", e->type());
     }
     auto ee = doc().snapToGrid(m);
     handle(&ee);
@@ -778,9 +791,6 @@ bool MouseActions::eventFilter(QObject *obj, QEvent *e)
     assert(e->type() != QEvent::MouseButtonPress);
     assert(e->type() != QEvent::MouseButtonRelease);
   }
-// e->ignore(); // really?
-//   return false;
-//   return e->isAccepted();
   return f;
 }
 
@@ -2093,6 +2103,7 @@ void MouseActions::editElement(SchematicDoc *Doc, QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
+#if 0
 void MouseActions::MDoubleClickSelect(SchematicDoc *Doc, QMouseEvent *Event)
 {
   qDebug() << "doubleclick";
@@ -2100,6 +2111,7 @@ void MouseActions::MDoubleClickSelect(SchematicDoc *Doc, QMouseEvent *Event)
   QucsMain->editText->setHidden(true);
   editElement(Doc, Event);
 }
+#endif
 
 
 /**
@@ -2223,35 +2235,73 @@ void MouseActions::executeCommand(QUndoCommand* c)
   }
 }
 
-#include <QGraphicsSceneEvent>
+#include <QGraphicsSceneEvent> // probably bug
+#include "component_widget.h" // bug
 QUndoCommand* MouseAction::handle(QEvent* e)
 {
+  untested();
+
   e->ignore(); // pass on to other places unless accepted somewhere else.
   assert(e);
   auto* m = prechecked_cast<QMouseEvent*>(e);
   auto* s = prechecked_cast<QGraphicsSceneEvent*>(e);
+  auto a = ComponentWidget::itemMimeType();
 
+  if(auto de = dynamic_cast<QDragLeaveEvent*>(e)){ untested();
+    unreachable();
+    return leave(m);
+  }else if(auto de = dynamic_cast<QDragEnterEvent*>(e)){ untested();
+    trace1("dragenter", de->mimeData()->formats()[0]);
+    unreachable();
+
+    if (de->mimeData()->hasFormat(a)){ untested();
+      // got a pointer. possibly from ComponentWidget
+      e->accept();
+    // }else if (de->mimeData()->hasFormat(someThingElse)){ untested();
+    //   unreachable();
+    //   e->accept();
+    } else{ untested();
+      e->ignore();
+    }
+
+    return enter(m);
+
+    return nullptr;
+  }else if(auto de = dynamic_cast<QDragMoveEvent*>(e)){ untested();
+    trace1("dragmove", de->mimeData()->formats()[0]);
+  }else if(auto de = dynamic_cast<QDropEvent*>(e)){ untested();
+    trace1("dragdrop", de->mimeData()->formats()[0]);
+  }else{
+  }
+
+  // why??
   switch(e->type()){
+//  case QEvent::MouseLeave:
+//    assert(m);
+//    return leave(m);
+  case QEvent::Leave:
+    return leave(e);
+  case QEvent::Enter:
+    return enter(e);
+  case QEvent::GraphicsSceneMouseMove:
+    // getting here when moving elements.
   case QEvent::MouseMove:
-    assert(m);
-    return move(m);
+    return move(e);
   case QEvent::GraphicsSceneMouseRelease: untested();
     return nullptr;
     //fallthrough
   case QEvent::MouseButtonRelease: untested();
     assert(m);
     return release(m);
-  case QEvent::GraphicsSceneMousePress: untested();
-    trace1("AAAAAA", e->type());
-    return generic(e);
-    assert(s);
-    return nullptr; // scene(s);
   case QEvent::GrabMouse: untested();
     return nullptr;
 //    return grab(s);
+  case QEvent::DragEnter: untested();
+    unreachable(); // proper type check above
+    return nullptr;
   case QEvent::MouseButtonPress: untested();
-    assert(m);
-    return press(m);
+  case QEvent::GraphicsSceneMousePress: untested();
+    return press(e);
   default:
     trace1("mouseaction miss", e->type());
     e->ignore();

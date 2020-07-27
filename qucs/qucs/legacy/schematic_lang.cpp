@@ -479,6 +479,7 @@ Command* LegacySchematicLanguage::loadCommand(const QString& _s, Command* c) con
 	return c;
 }
 
+// BUG raise exceptions if something goes wrong.
 Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString& _s, Component* c) const
 {
 	qDebug() << "parseComponentObsoleteCallback" << _s;
@@ -718,8 +719,8 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 		e = prechecked_cast<Element*>(k);
 	}else if(Command const* sc=dynamic_cast<Command const*>(s)){ untested();
 		// legacy component
-		Element* k=sc->clone(); // memory leak?
-		e=prechecked_cast<Element*>(k);
+		Element* k = sc->clone(); // memory leak?
+		e = prechecked_cast<Element*>(k);
 	}else{
 		e = command_dispatcher.clone(cstr.toStdString());
 		// don't know what this is (yet);
