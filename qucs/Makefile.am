@@ -70,18 +70,9 @@ ui_searchdialog.h: $(top_builddir)/qt_version
 
 MOCHEADERS = \
 	${DIALG_MOCHEADERS} \
-  mouseactions.h \
-  messagedock.h \
-  octave_window.h \
-  projectView.h \
-  schematic_doc.h \
-  schematic_scene.h \
-  schematic_model.h \
-  textdoc.h \
-  schematic_dialog.h \
-  qucs.h
+	${QMOCHEADERS}
 
-MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
+MOCCPP = $(MOCHEADERS:.h=.moc.cpp)
 
 pqucsdir=${pkglibdir}
 pqucs_LTLIBRARIES = \
@@ -107,7 +98,7 @@ DIALOG_SRC+= \
 include MakeList
 libqucs_la_SOURCES = \
 	${CPP_SRC} \
-	$(MOCFILES) \
+	$(MOCCPP) \
 	${DIALOG_SRC}
 
 libqucs_la_SOURCES += qucs_.qrc
