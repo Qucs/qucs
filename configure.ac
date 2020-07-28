@@ -233,6 +233,11 @@ fi # if pkg-config exists
         fi
       fi
 
+      dnl Windows GUI programs should not have console window visible
+      if test x$WIN32 = xyes; then
+        LDFLAGS="$LDFLAGS -mwindows"
+      fi
+
       if test "$enable_qucs_gui_debug" = yes; then
         CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
         CXXFLAGS="$CXXFLAGS -W -Wall"
