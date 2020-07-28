@@ -16,12 +16,25 @@
 #include "schematic_doc.h"
 
 Element::Element() :
-	Selected(false),// BUG
 	_owner(nullptr)
 {
   Type = isDummyElement;
   cx = cy = x1 = y1 = x2 = y2 = 0;
   setLabel(name());
+
+  // BUG
+  Selected = false;
+}
+
+Element::Element(Element const& e) :
+	cx(e.cx),
+	cy(e.cy),
+	_owner(nullptr) // sic.
+{
+  setLabel(e.label());
+
+  // BUG
+  Selected = false;
 }
 
 Element::~Element()

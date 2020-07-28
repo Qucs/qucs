@@ -28,6 +28,12 @@ Symbol::Symbol()
 {
 }
 
+Symbol::Symbol(Symbol const& s)
+    : Element(s),
+		_subckt(nullptr)
+{
+}
+
 SchematicModel* Symbol::scope()
 {
 	if(auto o=dynamic_cast<Symbol*>(owner())){
