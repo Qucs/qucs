@@ -166,6 +166,7 @@ class SchematicModel;
 class Element : public Object {
 public:
   Element();
+  Element(Element const&);
   virtual ~Element();
 
 public: // make old variables accessible

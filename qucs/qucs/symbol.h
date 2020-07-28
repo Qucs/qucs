@@ -40,6 +40,7 @@ class NodeMap;
 // a component symbol. not necessarily one of the legacy components
 class Symbol : public Element{
 public: // construct
+  explicit Symbol(Symbol const&);
   explicit Symbol();
   virtual ~Symbol();
 
