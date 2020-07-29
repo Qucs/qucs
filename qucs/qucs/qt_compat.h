@@ -83,7 +83,7 @@ public:
 		incomplete();
 		return -1;
 	};
-	void setAutoDelete(bool b) {
+	void setAutoDelete(bool) {
 		incomplete(); // this is nuts
 		_autodelete = false; // b;
 	};

@@ -15,8 +15,8 @@
 #include "element.h"
 #include "schematic_doc.h"
 
-Element::Element() :
-	_owner(nullptr)
+Element::Element()
+ : _owner(nullptr)
 {
   Type = isDummyElement;
   cx = cy = x1 = y1 = x2 = y2 = 0;
@@ -26,10 +26,11 @@ Element::Element() :
   Selected = false;
 }
 
-Element::Element(Element const& e) :
-	cx(e.cx),
-	cy(e.cy),
-	_owner(nullptr) // sic.
+Element::Element(Element const& e)
+ : Object(e),
+   cx(e.cx),
+   cy(e.cy),
+   _owner(nullptr) // sic.
 {
   setLabel(e.label());
 

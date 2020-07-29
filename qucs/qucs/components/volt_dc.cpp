@@ -63,6 +63,7 @@ Volt_dc::~Volt_dc()
 {
 }
 
+#if 0 // ??
 Element* Volt_dc::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("dc Voltage Source");
@@ -71,4 +72,5 @@ Element* Volt_dc::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new Volt_dc();
   return 0;
 }
+#endif
 }

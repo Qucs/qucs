@@ -257,10 +257,10 @@ public:
 #define Schematic SchematicDoc
   void MMoveSelect(Schematic*, QMouseEvent*);
   void MMoveElement(Schematic*, QMouseEvent*);
-  void MMoveWire1(Schematic*, QMouseEvent*);
-  void MMoveWire2(Schematic*, QMouseEvent*);
-  void MMoveMoving(Schematic*, QMouseEvent*);
-  void MMoveMoving2(Schematic*, QMouseEvent*);
+//  void MMoveWire1(Schematic*, QMouseEvent*);
+//  void MMoveWire2(Schematic*, QMouseEvent*);
+//  void MMoveMoving(Schematic*, QMouseEvent*);
+//  void MMoveMoving2(Schematic*, QMouseEvent*);
   void MMovePaste(Schematic*, QMouseEvent*);
 //  void MMoveDelete(Schematic*, QMouseEvent*);
   void MMoveLabel(Schematic*, QMouseEvent*);
@@ -282,10 +282,10 @@ public:
   void MPressMirrorX(Schematic*, QMouseEvent*);
   void MPressMirrorY(Schematic*, QMouseEvent*);
   void MPressRotate(Schematic*, QMouseEvent*);
-  void MPressElement(Schematic*, QMouseEvent*);
+//  void MPressElement(Schematic*, QMouseEvent*);
   void MPressLabel(Schematic*, QMouseEvent*);
-  void MPressWire1(Schematic*, QMouseEvent*);
-  void MPressWire2(Schematic*, QMouseEvent*);
+//  void MPressWire1(Schematic*, QMouseEvent*);
+//  void MPressWire2(Schematic*, QMouseEvent*);
   void MPressPainting(Schematic*, QMouseEvent*);
   void MPressMarker(Schematic*, QMouseEvent*);
   void MPressOnGrid(Schematic*, QMouseEvent*);
@@ -306,8 +306,8 @@ public:
   void MReleaseZoomIn(Schematic*, QMouseEvent*);
 
   void paintElementsScheme(Schematic*);
-  void rotateElements(Schematic*, int&, int&);
-  void moveElements(Schematic*, int&, int&);
+//  void rotateElements(Schematic*, int&, int&);
+//  void moveElements(Schematic*, int&, int&);
   void moveElements(QList<ElementGraphics*>&, int, int);
   void endElementMoving(Schematic*, EGPList*);
   void rightPressMenu(QMouseEvent*);

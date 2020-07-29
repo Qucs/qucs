@@ -58,7 +58,7 @@ void Module::registerElement (QString category, Element const* e)
 
 // Component registration using a category name and the appropriate
 // function returning a components instance object.
-void Module::registerComponent (QString category, pInfoFunc info)
+void Module::registerComponent (QString, pInfoFunc)
 {
 	incomplete();
 #if 0 // pointless?
@@ -493,9 +493,12 @@ void Module::registerModules (void) {
 
 // This function has to be called once at application end.  It removes
 // all categories and registered modules from memory.
-void Module::unregisterModules (void) {
+// (why?)
+void Module::unregisterModules (void)
+{
   while(!Category::categories.isEmpty()) {
-    delete Category::categories.takeFirst();
+    incomplete();
+//    delete Category::categories.takeFirst();
   }
 
   //remove all modules by iterator, require in qhash
