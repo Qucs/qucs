@@ -523,9 +523,10 @@ void Component::rotate()
 // -------------------------------------------------------
 
 void Component::setParameter(unsigned pos, QString const& v)
-{
-  incomplete();
-  // Param[i].set(v);
+{ incomplete();
+  (void) pos;
+  (void) v;
+  // Param[pos].set(v);
 }
 
 // -------------------------------------------------------
@@ -741,7 +742,7 @@ QString Component::verilogCode(int)
 }
 
 // -------------------------------------------------------
-QString Component::get_Verilog_Code(int NumPorts)
+QString Component::get_Verilog_Code(int)
 {
   return "obsolete";
 #if 0
@@ -770,7 +771,7 @@ QString Component::vhdlCode(int)
 }
 
 // -------------------------------------------------------
-QString Component::get_VHDL_Code(int NumPorts)
+QString Component::get_VHDL_Code(int)
 {
   return "obsolete";
 #if 0
@@ -1458,7 +1459,7 @@ QString GateComponent::vhdlCode(int )
 }
 
 // -------------------------------------------------------
-QString GateComponent::verilogCode(int NumPorts)
+QString GateComponent::verilogCode(int)
 {
   return "obsolete";
 #if 0

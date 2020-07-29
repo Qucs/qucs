@@ -127,8 +127,9 @@ QString ImageWriter::getLastSavedFile()
 
 // FIXME: should check if filename exists and not silently overwrite
 // BUG: this is all exportdialog. d'uh
-int ImageWriter::print(QWidget *doc)
+int ImageWriter::print(QWidget *)
 {
+#if 0
   SchematicDoc *sch = static_cast<SchematicDoc*>(doc);
   const int border = 30;
 
@@ -153,7 +154,6 @@ int ImageWriter::print(QWidget *doc)
   
   ExportDialog *dlg = nullptr;
   
-#if 0
   new ExportDialog(
       w, h, wsel, hsel, lastExportFilename, noselect, 0);
   
@@ -293,7 +293,7 @@ int ImageWriter::print(QWidget *doc)
   }
   delete dlg;
 #endif
-  return status;
+  return 0;
 }
 
 void ImageWriter::getSchWidthAndHeight(SchematicDoc *sch, int &w, int &h, int &xmin, int &ymin)
@@ -312,7 +312,7 @@ void ImageWriter::getSchWidthAndHeight(SchematicDoc *sch, int &w, int &h, int &x
     }
 }
 
-void ImageWriter::getSelAreaWidthAndHeight(SchematicDoc *sch, int &wsel, int &hsel, int& xmin_sel_, int& ymin_sel_)
+void ImageWriter::getSelAreaWidthAndHeight(SchematicDoc *, int &, int &, int&, int&)
 {
 #if 0
     int xmin= INT_MAX,

@@ -68,7 +68,7 @@ private: // more decoupling
 };
 
 //void MouseActions::MDoubleClickSelect(SchematicDoc *Doc, QMouseEvent *Event)
-QUndoCommand* MouseActionSelect::dblclick(QEvent* e)
+QUndoCommand* MouseActionSelect::dblclick(QEvent*)
 {
 	incomplete();
 	//  Doc->releaseKeyboard();  // allow keyboard inputs again
@@ -84,10 +84,13 @@ public:
 
 private:
 	cmd* activate(QAction* sender) override;
-	cmd* move(QEvent*) override;
+	cmd* deactivate() override;
+//	cmd* move(QEvent*) override;
 	cmd* press(QEvent*) override;
 	cmd* release(QMouseEvent*) override;
 //	cmd* generic(QEvent*) override;
+private:
+	QCursor _oldcursor;
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
@@ -168,7 +171,7 @@ QUndoCommand* MouseActionNewElement::deactivate()
 	delete _gfx; // TODO: owns _elt?
 	_gfx = nullptr;
 	incomplete();
-	return nullptr;
+	return MouseAction::deactivate();
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionNewElement::move(QEvent* ev)
@@ -309,7 +312,7 @@ public:
 		setText("delete " + QString::number(k) + " items");
 	}
 	void undo() override { untested();
-		QUndoCommand::undo(); // does not check?!
+		QUndoCommand::undo(); // does not check
 
 		assert(_done);
 		for(auto& d : _gfx){
@@ -318,7 +321,7 @@ public:
 		_done = false;
 	}
 	void redo() override { untested();
-		QUndoCommand::redo(); // does not check?!
+		QUndoCommand::redo(); // does not check
 
 		assert(!_done);
 		for(auto& d : _gfx){ untested();
@@ -332,9 +335,18 @@ private:
 	 bool _done;
 }; // DeleteSelection
 /*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionDelete::deactivate()
+{ untested();
+	doc().setCursor(_oldcursor);
+	return MouseAction::deactivate();
+}
+/*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionDelete::activate(QAction *sender)
-{ incomplete();
-	MouseAction::activate(sender);
+{ itested();
+	MouseAction::activate(sender); // ...
+
+	_oldcursor = doc().cursor();
+	doc().setCursor(Qt::CrossCursor);
 
 	auto s = doc().selectedItems();
 	bool selected = !s.empty();
@@ -347,7 +359,8 @@ QUndoCommand* MouseActionDelete::activate(QAction *sender)
 	}
 }
 /*--------------------------------------------------------------------------*/
-//   was Mouseactions::MMove or so.
+#if 0
+//   was Mouseactions::MMove or so. unnecessary
 QUndoCommand* MouseActionDelete::move(QEvent *e)
 { untested();
 
@@ -367,10 +380,11 @@ QUndoCommand* MouseActionDelete::move(QEvent *e)
 
   return nullptr;
 }
+#endif
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // was MouseActions::MMoveSelect
-QUndoCommand* MouseActionSelect::move(QEvent *Event)
+QUndoCommand* MouseActionSelect::move(QEvent *)
 { itested();
 	//qDebug() << "MMoveSelect " << "select area";
 //	ctx().Set2(Event); // BUG
@@ -399,7 +413,7 @@ QUndoCommand* MouseActionSelect::move(QEvent *Event)
 }
 /*--------------------------------------------------------------------------*/
 	//was MouseActions::MPressSelect
-QUndoCommand* MouseActionSelect::press(QEvent* ev)
+QUndoCommand* MouseActionSelect::press(QEvent*)
 { untested();
 
 	incomplete();
@@ -771,10 +785,10 @@ QRegExpValidator Val_CompProp(Expr_CompProp, 0);
 void SchematicDoc::actionSelect(QAction* sender)
 { untested();
 
+#if 0
   // goto to insertWire mode if ESC pressed during wiring
   if(App->MouseMoveAction == &MouseActions::MMoveWire2) { untested();
 	  incomplete();
-#if 0
     App->MouseMoveAction = &MouseActions::MMoveWire1;
     App->MousePressAction = &MouseActions::MPressWire1;
     viewport()->update();
@@ -787,9 +801,9 @@ void SchematicDoc::actionSelect(QAction* sender)
 //    App->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
 //
 //  }else{ untested();
-#endif
   }else{ untested();
   }
+#endif
 
   // sender is a button. maSelect is an action. connect the two.
   // this looks a bit redundant

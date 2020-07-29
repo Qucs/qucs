@@ -145,6 +145,7 @@ void SpiceFile::createSymbol()
 // ---------------------------------------------------
 QString SpiceFile::netlist() const
 {
+	return "";
 #if 0
 // HACK around qt3 bug
 	Q3PtrList<Property>* P=const_cast<Q3PtrList<Property>*>(&Props);
