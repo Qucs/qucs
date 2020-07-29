@@ -105,7 +105,6 @@ Element* LegacySchematicLanguage::loadElement(const QString& _s, Element* e) con
 		int x = c->tx;
 		int y = c->ty;
 		// c->setSchematic (p);
-		Symbol* s(c);
 	//	s->recreate(); // half-expand subcircuits? why not "precalc"?
 	//	               // why not in constructor? it needs parameters.
 		c->setLabel(cstr);
@@ -142,11 +141,11 @@ static bool obsolete_load(Wire* w, const QString& sc)
 	if(!ok) return false; // BUG: throw
 
 	n  = s.section(' ',2,2);    // x2
-	int x2 = w->x2__() = n.toInt(&ok);
+	w->x2__() = n.toInt(&ok);
 	if(!ok) return false; // BUG: throw
 
 	n  = s.section(' ',3,3);    // y2
-	int y2 = w->y2__() = n.toInt(&ok);
+	w->y2__() = n.toInt(&ok);
 	if(!ok) return false; // BUG: throw
 
 	n = s.section('"',1,1);
@@ -340,7 +339,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
 	}else{
 	}
 	s << "  <";
-	if(auto ss=dynamic_cast<Subcircuit const*>(c)){
+	if(dynamic_cast<Subcircuit const*>(c)){
 		// print "Sub" instead of type.
 		s << "Sub " << c->label();
 	}else{
@@ -811,7 +810,7 @@ void LegacySchematicLanguage::loadProperties(QTextStream& s_in,
 
 		// 					Scale  = nstr.section(',',4,4).toDouble(&ok); if(ok) { untested();
 		// 						tmpViewX1 = nstr.section(',',5,5).toInt(&ok); if(ok)
-		// 							tmpViewY1 = nstr.section(',',6,6).toInt(&ok); }}}}}
+		// 							tmpViewY1 = nstr.section(',',6,6).toInt(&ok); }
 		} else if(cstr == "Grid") { untested();
 			m.setParameter("GridX", nstr.section(',',0,0).toStdString());
 			m.setParameter("GridY", nstr.section(',',1,1).toStdString());
@@ -848,4 +847,4 @@ void LegacySchematicLanguage::loadProperties(QTextStream& s_in,
 	throw "QObject::tr(\"Format Error:\n'Property' field is not closed!\")";
 }
 
-}
+} // namespace

@@ -34,18 +34,25 @@ ElementGraphics::ElementGraphics(ElementGraphics const& e)
 	assert(e._e);
 	_e = e._e->clone();
 
-//	_e->disconnect(); // BUG?
+	// attachElement(_e);
+	// BUG: ask element
+	setFlags(ItemIsSelectable|ItemIsMovable);
+	setAcceptHoverEvents(true);
 
 	auto sp = e._e->center();
+	prepareGeometryChange();
 	QGraphicsItem::setPos(sp.first, sp.second);
 }
 
 ElementGraphics::ElementGraphics(Element* e)
 	: QGraphicsItem(), _e(e)
 {
+	assert(_e);
+	// attachElement(_e);
+
+	// BUG: ask element
 	setFlags(ItemIsSelectable|ItemIsMovable);
 	setAcceptHoverEvents(true);
-	assert(_e);
 	auto p = _e->center();
 	prepareGeometryChange(); // needed??
 	trace1("EGE", p);

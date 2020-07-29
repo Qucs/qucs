@@ -99,6 +99,7 @@ QString Equation::vhdlCode(int)
   return s;
 }
 
+#if 0
 Element* Equation::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Equation");
@@ -107,6 +108,7 @@ Element* Equation::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new Equation();
   return 0;
 }
+#endif
 
 void Equation::dialgButtStuff(ComponentDialog& d)const
 {

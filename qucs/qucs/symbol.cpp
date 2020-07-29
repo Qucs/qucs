@@ -74,7 +74,7 @@ Node* Symbol::connectNode(unsigned i, NodeMap&nm)
 	return n;
 }
 
-Node* Symbol::disconnectNode(unsigned i, NodeMap&nm)
+Node* Symbol::disconnectNode(unsigned i, NodeMap&)
 {
 	trace2("disconnectNode", label(), i);
 	Port& mp = port(i);
@@ -125,12 +125,12 @@ Symbol::~Symbol()
 	_subckt = nullptr;
 }
 
-std::string Symbol::paramValue(unsigned i) const
+std::string Symbol::paramValue(unsigned) const
 { untested();
 	unreachable();
 	return "NA";
 }
-std::string Symbol::paramName(unsigned i) const
+std::string Symbol::paramName(unsigned) const
 { untested();
 	unreachable();
 	return "NA";
