@@ -522,7 +522,7 @@ void Component::rotate()
 }
 // -------------------------------------------------------
 
-void Component::setParameter(unsigned pos, QString const& v)
+void Component::setParameter(unsigned pos, std::string const& v)
 { incomplete();
   (void) pos;
   (void) v;

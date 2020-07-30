@@ -29,34 +29,19 @@ ElementGraphics::ElementGraphics() : QGraphicsItem()
 }
 
 ElementGraphics::ElementGraphics(ElementGraphics const& e) 
-	: QGraphicsItem() // copy disabled
+	: QGraphicsItem(), _e(nullptr)
 { untested();
 	assert(e._e);
-	_e = e._e->clone();
-
-	// attachElement(_e);
-	// BUG: ask element
-	setFlags(ItemIsSelectable|ItemIsMovable);
-	setAcceptHoverEvents(true);
-
-	auto sp = e._e->center();
-	prepareGeometryChange();
-	QGraphicsItem::setPos(sp.first, sp.second);
+	Element* el = e._e->clone();
+	assert(el);
+	attachElement(el);
 }
 
 ElementGraphics::ElementGraphics(Element* e)
-	: QGraphicsItem(), _e(e)
+	: QGraphicsItem(), _e(nullptr)
 {
-	assert(_e);
-	// attachElement(_e);
-
-	// BUG: ask element
-	setFlags(ItemIsSelectable|ItemIsMovable);
-	setAcceptHoverEvents(true);
-	auto p = _e->center();
-	prepareGeometryChange(); // needed??
-	trace1("EGE", p);
-	QGraphicsItem::setPos(p.first, p.second);
+	assert(e);
+	attachElement(e);
 }
 
 ElementGraphics* ElementGraphics::clone() const
@@ -67,10 +52,23 @@ ElementGraphics* ElementGraphics::clone() const
 ElementGraphics::~ElementGraphics()
 {
 	if(isVisible()){ untested();
-		delete(_e);
-	}else{ untested();
 		// element is owned by SchematicModel.
+	}else{ untested();
+		delete(_e);
 	}
+}
+
+void ElementGraphics::attachElement(Element* e)
+{ untested();
+	assert(e);
+	_e = e;
+	// BUG: ask element
+	setFlags(ItemIsSelectable|ItemIsMovable);
+	setAcceptHoverEvents(true);
+
+	auto sp = _e->center();
+	prepareGeometryChange();
+	QGraphicsItem::setPos(sp.first, sp.second);
 }
 
 void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*)
@@ -121,11 +119,14 @@ bool ElementGraphics::sceneEvent(QEvent* e)
 
 	ItemEvent ie(*e, *this);
 	if(s->itemEvent(&ie)){ untested();
+		return e->isAccepted();
 		return true;
 	}else if(QGraphicsItem::sceneEvent(e)){ untested();
+		return e->isAccepted();
 		return true;
 	}else{ untested();
 		return false;
+		return e->isAccepted();
 	}
 }
 

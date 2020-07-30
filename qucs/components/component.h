@@ -83,7 +83,7 @@ protected: // symbol interface
   std::string paramName(unsigned i) const override;
 
 protected:
-  void setParameter(unsigned i, QString const&);
+  void setParameter(unsigned i, std::string const&) override;
 
 public:
   void    paintScheme(SchematicDoc*) const; // BUG

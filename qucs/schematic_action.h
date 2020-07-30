@@ -31,8 +31,10 @@ protected: // Doc stuff
 	void updateViewport();
 
 public: // actions... private?
+	     // not yet. still toggled from outside
 	MouseAction* maDelete;
 	MouseAction* maSelect;
+	MouseAction* maWire;
 	MouseAction* maMirror;
 	MouseAction* maActivate;
 	MouseAction* maRotate;
