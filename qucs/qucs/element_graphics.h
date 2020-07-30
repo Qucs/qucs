@@ -28,14 +28,19 @@ class ElementGraphics : public QGraphicsItem {
 private:
 	ElementGraphics();
 	ElementGraphics(ElementGraphics const&);
+
 public:
 	explicit ElementGraphics(Element* e);
 	~ElementGraphics();
+
 public:
 	ElementGraphics* clone() const;
 	bool operator!=(Element const* e) const{
 		return _e!=e;
 	}
+private:
+	void attachElement(Element* e);
+
 public: //?
   void paintScheme(SchematicDoc *p);
 private: // later: Qgraphics virtual overrides
@@ -68,6 +73,11 @@ public:
 	void toggleSelected(){
 		assert(_e);
 		setSelected(!isSelected());
+	}
+
+	// BUG
+	void prepareGeometryChange(){
+		return QGraphicsItem::prepareGeometryChange();
 	}
 
 	// BUG: selected is stored in Element.

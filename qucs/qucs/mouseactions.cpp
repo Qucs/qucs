@@ -49,11 +49,11 @@
 
 void MouseAction::sceneAddItem(ElementGraphics* x)
 {
-	doc().sceneAddItem(x);
+  doc().sceneAddItem(x);
 }
 void MouseAction::sceneRemoveItem(ElementGraphics* x)
 {
-	doc().sceneRemoveItem(x);
+  doc().sceneRemoveItem(x);
 }
 
 
@@ -74,14 +74,12 @@ MouseActions::MouseActions(QucsDoc& d)
   focusMEvent   = new QMouseEvent(QEvent::MouseButtonPress, QPoint(0,0),
                   Qt::NoButton, Qt::NoButton, Qt::NoModifier);
 
-  // _undoStack = new QUndoStack();
 }
 
 MouseActions::~MouseActions()
 { untested();
   delete ComponentMenu;
   delete focusMEvent;
-//  delete _undoStack;
 }
 void MouseActions::setActive(MouseAction* a)
 {
@@ -92,6 +90,7 @@ void MouseActions::setActive(MouseAction* a)
   _maCurrent = a;
 }
 
+#if 0
 void MouseActions::undo()
 {
   incomplete();
@@ -100,6 +99,7 @@ void MouseActions::redo()
 {
   incomplete();
 }
+#endif
 
 // -----------------------------------------------------------
 void MouseActions::setPainter(SchematicDoc *)
@@ -1328,145 +1328,6 @@ void MouseActions::MPressElement(SchematicDoc *Doc, QMouseEvent *Event)
 #endif
 
 
-#if 0
-/**
- * @brief MouseActions::MPressWire1 Is called if starting point of wire is pressed
- * @param Doc
- * @param fX
- * @param fY
- */
-void MouseActions::MPressWire1(SchematicDoc *Doc, QMouseEvent* Event)
-{ untested();
-  QPointF pos=Doc->mapToScene(Event->pos());
-  float fX=pos.x();
-  float fY=pos.y();
-
-  //Doc->PostPaintEvent (_DotLine);
-  //Doc->PostPaintEvent (_NotRop);
-  //if(drawn) { untested();
-#if 0  //ALYS - it draws some garbage, not deleted because of possible questions
-	Doc->PostPaintEvent (_Line, 0, MAy3, MAx2, MAy3); // erase old mouse cross
-    Doc->PostPaintEvent (_Line, MAx3, 0, MAx3, MAy2);
-#endif
-  //}
-  setDrawn(false);
-
-  MAx1 = 0;   // paint wire corner first up, then left/right
-  MAx3 = int(fX);
-  MAy3 = int(fY);
-  Doc->setOnGrid(MAx3, MAy3);
-
-//ALYS - draw aiming cross
-  /// \todo paintAim(Doc,MAx3, MAy3);
-//#######################
-
-  formerAction = 0; // keep wire action active after first wire finished
-  QucsMain->MouseMoveAction = &MouseActions::MMoveWire2;
-  QucsMain->MousePressAction = &MouseActions::MPressWire2;
-  // Double-click action is set in "MMoveWire2" to not initiate it
-  // during "Wire1" actions.
-  Doc->viewport()->update();
-}
-#endif
-
-
-#if 0
-/**
- * @brief MouseActions::MPressWire2 Is called if ending point of wire is pressed
- * @param Doc
- * @param Event
- * @param fX
- * @param fY
- */
-void MouseActions::MPressWire2(SchematicDoc *Doc, QMouseEvent *Event)
-{ untested();
-  QPointF pos=Doc->mapToScene(Event->pos());
-  float fX=pos.x();
-  float fY=pos.y();
-
-  int set1 = 0, set2 = 0;
-  switch(Event->button()) {
-  case Qt::LeftButton :
-    if(MAx1 == 0) { // which wire direction first ?
-      if(MAy2 != MAy3)
-        set1 = Doc->insertWire(new Wire(MAx3, MAy3, MAx3, MAy2));
-      if(MAx2 != MAx3) { untested();
-        set2 = set1;
-        set1 = Doc->insertWire(new Wire(MAx3, MAy2, MAx2, MAy2));
-      }
-    }
-    else { untested();
-      if(MAx2 != MAx3)
-        set1 = Doc->insertWire(new Wire(MAx3, MAy3, MAx2, MAy3));
-      if(MAy2 != MAy3) { untested();
-        set2 = set1;
-        set1 = Doc->insertWire(new Wire(MAx2, MAy3, MAx2, MAy2));
-      }
-    }
-
-    if(set1 & 2) { untested();
-      // if last port is connected, then...
-      if(formerAction) { untested();
-        // ...restore old action
-        QucsMain->select->setChecked(true);
-      }
-      else { untested();
-        // ...start a new wire
-        QucsMain->MouseMoveAction = &MouseActions::MMoveWire1;
-        QucsMain->MousePressAction = &MouseActions::MPressWire1;
-        QucsMain->MouseDoubleClickAction = 0;
-      }
-    }
-
-    //ALYS: excessive update. end of function does it.
-	//Doc->viewport()->update();
-
-    setDrawn(false);
-    if(set1 | set2) Doc->setChanged(true, true);
-    MAx3 = MAx2;
-    MAy3 = MAy2;
-    break;
-
-   /// \todo document right mouse button changes the wire corner
-  case Qt::RightButton :
-      TODO("Sort out paintAim and GhostLine")
-
-#if 0
-	//ALYS - old code preserved because isn't clear - what it was???
-	//looks like deletion via painting.
-	//i'll delete it after possible clarification from team
-	if(MAx1 == 0) { untested();
-      Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx3, MAy2); // erase old
-      Doc->PostPaintEvent (_Line, MAx3, MAy2, MAx2, MAy2); // erase old
-    }
-    else { untested();
-      Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx2, MAy3); // erase old
-      Doc->PostPaintEvent (_Line, MAx2, MAy3, MAx2, MAy2); // erase old
-    }
-#endif
-
-    MAx2  = int(fX);
-    MAy2  = int(fY);
-    Doc->setOnGrid(MAx2, MAy2);
-
-    MAx1 ^= 1;    // change the painting direction of wire corner
-	if(MAx1 == 0) { untested();
-		/// \todo paintGhostLineV(Doc,MAx3,MAy3,MAy2);
-		///paintGhostLineH(Doc,MAx3,MAy2,MAx2);
-    }
-    else { untested();
-                /// \todo paintGhostLineH(Doc,MAx3,MAy3,MAx2);
-                //paintGhostLineV(Doc,MAx2,MAy3,MAy2);
-    }
-    break;
-
-  default: ;    // avoids compiler warnings
-  }
-
-  /// \todo paintAim(Doc,MAx2,MAy2); //ALYS - added missed aiming cross
-  Doc->viewport()->update();
-}
-#endif
 
 // -----------------------------------------------------------
 // Is called for setting a marker on a diagram's graph
@@ -2209,13 +2070,18 @@ void MouseActions::executeCommand(QUndoCommand* c)
 #if 0
 QUndoCommand* MouseAction::handle(QEvent* e)
 { itested();
-  e->ignore(); // pass on to other places unless accepted somewhere else.
+
+  {
+    // pass to other places unless accepted somewhere else.
+    // assert(is_ignored) instead!
+    e->ignore();
+  }
   assert(e);
   auto* m = prechecked_cast<QMouseEvent*>(e);
   auto* s = prechecked_cast<QGraphicsSceneEvent*>(e);
   auto a = ComponentWidget::itemMimeType();
 
-  if(auto de = dynamic_cast<QDragLeaveEvent*>(e)){ untested();
+  if(auto de=dynamic_cast<QDragLeaveEvent*>(e)){ untested();
     unreachable();
     return leave(m);
   }else if(auto de = dynamic_cast<QDragEnterEvent*>(e)){ untested();

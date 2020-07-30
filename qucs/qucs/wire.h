@@ -62,7 +62,7 @@ public: // Node xs
   QString const& netLabel() const;
 
 private: // Symbol
-  void setParameter(QString const& name, QString const& value);
+  void setParameter(std::string const& name, std::string const& value) override;
 
 private: // symbol Node stuff
   Node* connectNode(unsigned idx, NodeMap&) override;
@@ -126,8 +126,8 @@ private: // avoid access to obsolete Element members
   Port _port1;
 
 private:
-  QString nx, ny, delta;
-  QString _netname;
+  std::string nx, ny, delta;
+  std::string _netname;
 };
 
 #endif

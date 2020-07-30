@@ -32,7 +32,7 @@ private:
   Node* connectNode(unsigned n, NodeMap& l) override;
 
 private:
-  void setParameter(unsigned i, QString const&) override;
+  void setParameter(unsigned i, std::string const&) override;
 
 protected:
   QString netlist() const;
@@ -137,10 +137,11 @@ void SubCirPort::createSymbol()
   Ports.append(new Port(  0,  0));
 }
 // -------------------------------------------------------
-void SubCirPort::setParameter(unsigned n, QString const& v)
+void SubCirPort::setParameter(unsigned n, std::string const& vv)
 {
-	trace3("SubCirPort::setParameter", label(), n, v);
-	Component::setParameter(n, v);
+	trace3("SubCirPort::setParameter", label(), n, vv);
+	Component::setParameter(n, vv);
+	QString v = QString::fromStdString(vv);
 
 	bool ok;
 	int pos = v.toInt(&ok);

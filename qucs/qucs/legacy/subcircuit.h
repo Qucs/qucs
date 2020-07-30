@@ -49,7 +49,7 @@ private: // Symbol
   QString portName(unsigned) const override;
 
   // void setParameter(QString const& name, QString const& value);
-  void setParameter(unsigned i, QString const& value) override;
+  void setParameter(unsigned i, std::string const& value) override;
 
 private: // overrides
   void build();

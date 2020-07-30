@@ -126,13 +126,12 @@ void Wire::paint(ViewPainter *p) const
   int y1 = Wire::y1();
   int y2 = Wire::y2();
 
-  if(isSelected()) {
+  if(isSelected()){ untested();
     p->Painter->setPen(QPen(Qt::darkGray,6));
     p->drawLine(x1, y1, x2, y2);
     p->Painter->setPen(QPen(Qt::lightGray,2));
     p->drawLine(x1, y1, x2, y2);
-  }
-  else {
+  }else{ untested();
     p->Painter->setPen(QPen(Qt::darkBlue,2));
     p->drawLine(x1, y1, x2, y2);
   }
@@ -161,7 +160,7 @@ void Wire::setName(const QString& Name_, const QString& Value_, int delta_, int 
 #endif
 }
 
-void Wire::setParameter(QString const& name, QString const& value)
+void Wire::setParameter(std::string const& name, std::string const& value)
 {
   if(name=="nx"){
     nx = value;
@@ -251,7 +250,7 @@ Node* Wire::connectNode(unsigned i, NodeMap&l)
   mp.connect(n);
 
   if(_netname!=""){
-    n->setNetLabel(_netname);
+    n->setNetLabel(QString::fromStdString(_netname));
   }
   return n;
 }

@@ -279,6 +279,8 @@ bool SchematicScene::event(QEvent* e)
 	// TODO: this is just a stub, untangle!
 	if(dynamic_cast<QDragEnterEvent*>(e)){ untested();
 		trace1("scene leave", e->isAccepted());
+	}else if(dynamic_cast<QMouseEvent*>(e)){ untested();
+		trace1("MOUSE", e->isAccepted());
 	}else if(dynamic_cast<QDragLeaveEvent*>(e)){ untested();
 		trace1("scene enter", e->isAccepted());
 	}else if(auto de=dynamic_cast<QGraphicsSceneDragDropEvent*>(e)){

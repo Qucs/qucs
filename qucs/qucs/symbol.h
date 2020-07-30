@@ -68,13 +68,16 @@ protected: // needed in netlister
   virtual SchematicModel* scope();
 
 public: // Parameters
-  virtual void setParameter(QString const&, QString const&){ throw ExceptionCantFind();}
-  virtual void setParameter(unsigned, QString const&){ throw ExceptionCantFind();}
-  virtual QString getParameter(unsigned){ throw ExceptionCantFind(); }
+  virtual void setParameter(std::string const&, std::string const&){throw ExceptionCantFind();}
+  virtual void setParameter(unsigned, std::string const&){ throw ExceptionCantFind(); }
 
   // yikes there's param{Name,Value} already..
   virtual std::string paramValue(unsigned i) const;
   virtual std::string paramName(unsigned i) const;
+
+public: // qt?
+  void setParameter(QString const&, QString const&);
+  void setParameter(unsigned, QString const&);
 
 public: // non-virtual (on purpose)
   QString const& netLabel(unsigned i) const;

@@ -130,8 +130,22 @@ std::string Symbol::paramValue(unsigned) const
 	unreachable();
 	return "NA";
 }
+
 std::string Symbol::paramName(unsigned) const
 { untested();
 	unreachable();
 	return "NA";
+}
+
+void Symbol::setParameter(QString const& name, QString const& b)
+{
+	std::string n = name.toStdString();
+	std::string v = b.toStdString();
+	setParameter(n, v);
+}
+
+void Symbol::setParameter(unsigned pos, QString const& b)
+{
+	auto v = b.toStdString();
+	setParameter(pos, v);
 }
