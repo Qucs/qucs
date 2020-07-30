@@ -396,6 +396,8 @@ QPointF SchematicDoc::mapToScene(QPoint const& p) const
 //  why not just forward?!
 void SchematicDoc::mousePressEvent(QMouseEvent *e)
 { untested();
+
+	return;
   QGraphicsView::mousePressEvent(e);
 
 //  App->editText->setHidden(true); // disable text edit of component property

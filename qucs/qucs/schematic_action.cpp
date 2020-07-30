@@ -31,14 +31,299 @@
 
 #include "changedialog.h"
 
+// not here.
+int getX(std::pair<int, int> const& p)
+{
+	return p.first;
+}
+int getY(std::pair<int, int> const& p)
+{
+	return p.second;
+}
 /*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+class MouseActionWire : public MouseAction{
+public:
+	explicit MouseActionWire(MouseActions& ctx)
+		: MouseAction(ctx), _mode(0), _phase(0) {
+		_proto = symbol_dispatcher.clone("__ma_ghostwire");
+		assert(_proto);
+	}
+
+private: // override
+	cmd* press(QEvent*) override;
+	cmd* move(QEvent*) override;
+	cmd* release(QMouseEvent*) override;
+	cmd* activate(QAction* sender) override;
+	cmd* deactivate() override;
+
+private: // legacy code
+	cmd* press1(QGraphicsSceneMouseEvent*);
+	cmd* press2(QGraphicsSceneMouseEvent*);
+
+	void toggleMode(){
+		assert(_gfx.size());
+		auto w = _gfx.back();
+		Element* ee = element(w);
+		auto e = prechecked_cast<Symbol*>(ee);
+		assert(e);
+		_mode = 1-_mode;
+		auto s = std::to_string(_mode);
+		e->setParameter("mode", s);
+		w->update();
+	}
+	void new_gfx();
+private:
+	int _mode; // V/H
+	int _phase;
+
+	int _MAx1;
+	int _MAx3;
+	int _MAy3;
+	QCursor _oldcursor;
+	std::vector<ElementGraphics*> _gfx;
+	Element* _proto;
+};
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionWire::activate(QAction* sender)
+{
+	assert(!_gfx.size());
+	new_gfx();
+	_phase = 1;
+	_oldcursor = doc().cursor();
+	doc().setCursor(Qt::CrossCursor);
+	return MouseAction::activate(sender);
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionWire::deactivate()
+{ untested();
+	doc().setCursor(_oldcursor);
+	for(auto i: _gfx){
+		delete i;
+	}
+	_gfx.resize(0);
+	return MouseAction::deactivate();
+}
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+void MouseActionWire::new_gfx()
+{ untested();
+	Element* elt = _proto->clone();
+	assert(elt);
+
+	auto gfx = new ElementGraphics(elt);
+	_gfx.push_back(gfx);
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionWire::release(QMouseEvent* m)
+{ untested();
+	if(!m){ untested();
+		unreachable();
+	}else if(m->button() == Qt::RightButton){ untested();
+		// toggleMode();
+	}
+	return nullptr;
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionWire::press(QEvent* e)
+{ untested();
+	auto m = dynamic_cast<QMouseEvent*>(e);
+	auto se = dynamic_cast<QGraphicsSceneMouseEvent*>(e);
+	trace3("wirepress", m, se, e->type());
+	e->accept();
+
+	if(!se){ untested();
+		unreachable();
+	}else if(se->button() == Qt::RightButton){ untested();
+		toggleMode();
+	}else if(_phase == 1){ untested();
+		return press1(se);
+	}else if(_phase == 2){ untested();
+		return press2(se);
+	}else{
+		unreachable();
+	}
+
+	return nullptr;
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionWire::move(QEvent* e)
+{ untested();
+	if(auto se=dynamic_cast<QGraphicsSceneMouseEvent*>(e)){
+		QPointF pos = se->scenePos(); // mapToScene(ev->pos());
+		float fX = pos.x();
+		float fY = pos.y();
+
+		ElementGraphics* cur = _gfx.back();
+		Element* ee = element(cur);
+		auto elt = prechecked_cast<Symbol*>(ee);
+
+		elt->setParameter("x1", std::to_string(fX));
+		elt->setParameter("y1", std::to_string(fY));
+		cur->prepareGeometryChange();
+
+		e->accept();
+	}else if(dynamic_cast<QMouseEvent*>(e)){
+		incomplete();
+		e->accept();
+	}else{
+		incomplete();
+	}
+	return nullptr;
+}
+/*--------------------------------------------------------------------------*/
+ // MouseActions::MPressWire1 Is called if starting point of wire is pressed
+QUndoCommand* MouseActionWire::press1(QGraphicsSceneMouseEvent* ev)
+{ untested();
+	assert(ev);
+	QPointF pos = ev->scenePos(); // mapToScene(ev->pos());
+	float fX = pos.x();
+	float fY = pos.y();
+
+	ElementGraphics* cur = _gfx.back();
+	Element* ee = element(cur);
+	auto e = prechecked_cast<Symbol*>(ee);
+
+	e->setParameter("x0", std::to_string(fX));
+	e->setParameter("y0", std::to_string(fY));
+	e->setParameter("x1", std::to_string(fX));
+	e->setParameter("y1", std::to_string(fY));
+
+	cur->prepareGeometryChange();
+	doc().sceneAddItem(cur); // show, does not attach.
+
+	//Doc->PostPaintEvent (_DotLine);
+	//Doc->PostPaintEvent (_NotRop);
+	//if(drawn) { untested();
+#if 0  //ALYS - it draws some garbage, not deleted because of possible questions
+	Doc->PostPaintEvent (_Line, 0, MAy3, MAx2, MAy3); // erase old mouse cross
+	Doc->PostPaintEvent (_Line, MAx3, 0, MAx3, MAy2);
+#endif
+	//}
+	// setDrawn(false);
+
+	_MAx1 = 0;   // paint wire corner first up, then left/right
+	_MAx3 = int(fX);
+	_MAy3 = int(fY);
+	//   Doc->setOnGrid(MAx3, MAy3);
+	//
+	//ALYS - draw aiming cross
+	/// \todo paintAim(Doc,MAx3, MAy3);
+	//#######################
+
+	//  formerAction = 0; // keep wire action active after first wire finished
+	_phase = 2;
+	//  QucsMain->MouseMoveAction = &MouseActions::MMoveWire2;
+	//  QucsMain->MousePressAction = &MouseActions::MPressWire2;
+	// Double-click action is set in "MMoveWire2" to not initiate it
+	// during "Wire1" actions.
+	//  Doc->viewport()->update();
+	return nullptr;
+}
+#if 0
+#endif
+//* MouseActions::MPressWire2 Is called if ending point of wire is pressed
+QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* e)
+{ untested();
+  QPointF pos = e->scenePos(); // mapToScene(e->pos());
+  float fX = pos.x();
+  float fY = pos.y();
+
+  int set1 = 0, set2 = 0;
+#if 0
+  switch(e->button()) {
+  case Qt::LeftButton :
+    if(MAx1 == 0) { // which wire direction first ?
+      if(MAy2 != MAy3)
+        set1 = Doc->insertWire(new Wire(MAx3, MAy3, MAx3, MAy2));
+
+      if(MAx2 != MAx3) { untested();
+        set2 = set1;
+        set1 = Doc->insertWire(new Wire(MAx3, MAy2, MAx2, MAy2));
+      }
+    }else{ untested();
+      if(MAx2 != MAx3)
+        set1 = Doc->insertWire(new Wire(MAx3, MAy3, MAx2, MAy3));
+
+      if(MAy2 != MAy3) { untested();
+        set2 = set1;
+        set1 = Doc->insertWire(new Wire(MAx2, MAy3, MAx2, MAy2));
+      }
+    }
+
+    if(set1 & 2) { untested();
+      // if last port is connected, then...
+      if(formerAction) { untested();
+        // ...restore old action
+        QucsMain->select->setChecked(true);
+      }
+      else { untested();
+        // ...start a new wire
+        QucsMain->MouseMoveAction = &MouseActions::MMoveWire1;
+        QucsMain->MousePressAction = &MouseActions::MPressWire1;
+        QucsMain->MouseDoubleClickAction = 0;
+      }
+    }
+
+    //ALYS: excessive update. end of function does it.
+	//Doc->viewport()->update();
+
+    setDrawn(false);
+    if(set1 | set2) Doc->setChanged(true, true);
+    MAx3 = MAx2;
+    MAy3 = MAy2;
+    break;
+
+   /// \todo document right mouse button changes the wire corner
+  case Qt::RightButton :
+      TODO("Sort out paintAim and GhostLine")
+
+#if 0
+	//ALYS - old code preserved because isn't clear - what it was???
+	//looks like deletion via painting.
+	//i'll delete it after possible clarification from team
+	if(MAx1 == 0) { untested();
+      Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx3, MAy2); // erase old
+      Doc->PostPaintEvent (_Line, MAx3, MAy2, MAx2, MAy2); // erase old
+    }
+    else { untested();
+      Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx2, MAy3); // erase old
+      Doc->PostPaintEvent (_Line, MAx2, MAy3, MAx2, MAy2); // erase old
+    }
+#endif
+
+    MAx2 = int(fX);
+    MAy2 = int(fY);
+//     Doc->setOnGrid(MAx2, MAy2);
+
+    MAx1 ^= 1;    // change the painting direction of wire corner
+	if(MAx1 == 0) { untested();
+		/// \todo paintGhostLineV(Doc,MAx3,MAy3,MAy2);
+		///paintGhostLineH(Doc,MAx3,MAy2,MAx2);
+    }
+    else { untested();
+                /// \todo paintGhostLineH(Doc,MAx3,MAy3,MAx2);
+                //paintGhostLineV(Doc,MAx2,MAy3,MAy2);
+    }
+    break;
+
+  default: ;    // avoids compiler warnings
+  }
+#endif
+
+  /// \todo paintAim(Doc,MAx2,MAy2); //ALYS - added missed aiming cross
+  // Doc->viewport()->update();
+	return nullptr;
+}
+#if 0
+#endif
 /*--------------------------------------------------------------------------*/
 class MouseActionSelect : public MouseAction{
 public:
 	explicit MouseActionSelect(MouseActions& ctx)
 		: MouseAction(ctx), focusElement(nullptr) {}
 
-private:
+private: // override
 //	cmd* activate(QAction* sender) override;
 	cmd* move(QEvent*) override;
 	cmd* press(QEvent*) override;
@@ -47,11 +332,13 @@ private:
 	// cmd* enter(QEvent*) override;
 	cmd* dblclick(QEvent*) /*override*/;
 
+#if 0
 private: // rectangles?  // this was in MouseActions. BUG. remove
 	int MAx1;
 	int MAy1;
 	int MAx2;
 	int MAy2;
+#endif
 
 protected:
 	void setPos1(QPointF pos){
@@ -66,6 +353,7 @@ private: // more decoupling
 	bool isMoveEqual; //?
 	QPointF _pos1;
 };
+/*--------------------------------------------------------------------------*/
 
 //void MouseActions::MDoubleClickSelect(SchematicDoc *Doc, QMouseEvent *Event)
 QUndoCommand* MouseActionSelect::dblclick(QEvent*)
@@ -182,7 +470,7 @@ QUndoCommand* MouseActionNewElement::move(QEvent* ev)
 		unreachable();
 		QPointF wp;
 		wp = ee->localPos(); // use oldPos?
-		sp = doc().mapToScene(wp.toPoint());
+		sp = mapToScene(wp.toPoint());
 	}else if(auto ee=dynamic_cast<QGraphicsSceneMouseEvent*>(ev)){
 		sp = ee->scenePos();
 	}else{
@@ -243,6 +531,14 @@ QUndoCommand* MouseActionNewElement::leave(QEvent* ev)
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionNewElement::press(QEvent* ev)
 {
+	auto m = dynamic_cast<QMouseEvent*>(ev);
+	if(!m){
+	}else if(m->button() == Qt::LeftButton){ untested();
+	}else if(m->button() == Qt::RightButton){ untested();
+		incomplete(); // rotate.
+	}else{
+		unreachable();
+	}
 	ev->accept();
 	return nullptr;
 }
@@ -387,28 +683,11 @@ QUndoCommand* MouseActionDelete::move(QEvent *e)
 QUndoCommand* MouseActionSelect::move(QEvent *)
 { itested();
 	//qDebug() << "MMoveSelect " << "select area";
-//	ctx().Set2(Event); // BUG
-
-#if 0 // not here!!
-	if(isMoveEqual) {    // x and y size must be equal ?
-		if(abs(MAx2) > abs(MAy2)) {
-			if(MAx2<0){ untested();
-				MAx2 = -abs(MAy2);
-			}else{ untested();
-				MAx2 = abs(MAy2);
-			}
-		} else { itested();
-			if(MAy2<0) { untested();
-				MAy2 = -abs(MAx2);
-			} else { untested();
-				MAy2 = abs(MAx2);
-			}
-		}
-	}else{ untested();
+	if(isMoveEqual) {
+		// square?
+	}else{
 	}
-#endif
 
-//	doc().PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
@@ -418,6 +697,7 @@ QUndoCommand* MouseActionSelect::press(QEvent*)
 
 	incomplete();
 	return nullptr;
+#if 0
 	QMouseEvent* e;
 	SchematicDoc* Doc = &doc();
 	assert(Doc);
@@ -432,8 +712,8 @@ QUndoCommand* MouseActionSelect::press(QEvent*)
 	int No=0;
 
 	// memorise first click position
-	MAx1 = int(fX);
-	MAy1 = int(fY);
+	//MAx1 = int(fX);
+	//MAy1 = int(fY);
 
 	focusElement = ctx().selectElement(e->pos(), Ctrl, &No);
 	isMoveEqual = false;   // moving not neccessarily square
@@ -584,6 +864,7 @@ QUndoCommand* MouseActionSelect::press(QEvent*)
 	Doc->viewport()->update();
 	//setDrawn(false);
 
+#if 0 // obsolete
 	if(!focusElement) { untested();
 		unreachable();
 		// rectangleselect obsolete.
@@ -608,21 +889,15 @@ QUndoCommand* MouseActionSelect::press(QEvent*)
 //    it seems move is done by QT scene.
 //		QucsMain->MouseMoveAction = &MouseActions::MMoveMoving;
 	}
+#endif
 	// Update matching wire label highlighting
 	assert(Doc);
 	// Doc->highlightWireLabels ();
 //	e->ignore(); // handle in QGraphicsView?
 	return nullptr;
+#endif
 } // select::press
 /*--------------------------------------------------------------------------*/
-int getX(std::pair<int, int> const& p)
-{
-	return p.first;
-}
-int getY(std::pair<int, int> const& p)
-{
-	return p.second;
-}
 // was MouseActions::MReleaseSelect(SchematicDoc *Doc, QMouseEvent *Event)
 QUndoCommand* MouseActionSelect::release(QMouseEvent *Event)
 { untested();
@@ -681,46 +956,15 @@ QUndoCommand* MouseActionSelect::release(QMouseEvent *Event)
 	return c;
 } // select::release
 /*--------------------------------------------------------------------------*/
-// void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent* Event)
-// Event tells us where...
-#if 0
-QUndoCommand* MouseActionDelete::press(QEvent* e)
-{ untested();
-	auto Event = prechecked_cast<QMouseEvent*>(e);
-	assert(Event);
-	// QPointF pos=Doc->mapToScene(Event->pos());
-
-	ElementMouseAction pe = ctx().selectElement(Event->pos(), false); // BUG
-	QUndoCommand* d = nullptr;
-
-	if(pe) { untested();
-		trace0("deletecommand?");
-		pe->setSelected();
-		auto s = doc().selectedItems();
-		assert(s.size()==1);
-		d = new DeleteSelection(doc(), s);
-
-		// Doc->deleteElements();
-
-		// Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
-		// Doc->viewport()->update();
-		// drawn = false;
-	}else{ untested();
-
-	}
-	return d;
-} // delete::press
-#endif
-/*--------------------------------------------------------------------------*/
 // press a mouse while delete action is active.
 QUndoCommand* MouseActionDelete::press(QEvent* e)
 {
 	if(!e){ untested();
 		return nullptr;
 	}else if(auto i = dynamic_cast<ItemEvent*>(e)){
-			QList<ElementGraphics*> l;
-			l.push_back(&i->item());
-			return new DeleteSelection(doc(), l);
+		QList<ElementGraphics*> l;
+		l.push_back(&i->item());
+		return new DeleteSelection(doc(), l);
 	}else{
 		trace1("delete::scene unknown sender", e->type());
 		return nullptr;
@@ -729,35 +973,40 @@ QUndoCommand* MouseActionDelete::press(QEvent* e)
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionDelete::release(QMouseEvent*)
 { untested();
-  incomplete();
-  return nullptr;
+	incomplete(); // why?
+	return nullptr;
 } // delete::release
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 SchematicActions::SchematicActions(SchematicDoc& ctx)
   : MouseActions(ctx)
 { untested();
-  maDelete = new MouseActionDelete(*this);
-  maSelect = new MouseActionSelect(*this);
-//  maMove = new MouseActionMove(*this);
-  maInsertGround = new MouseActionNewElement(*this);
-  maInsertPort = new MouseActionNewElement(*this);
 
-  // TODO
-  maActivate = new MouseAction(*this);
-  maMirrorX = new MouseAction(*this);
-  maMirrorY = new MouseAction(*this);
-  maRotate = new MouseAction(*this);
+	// not entirely clear how to do this
+	// maybe dispatch mouse actions.
+	maDelete = new MouseActionDelete(*this);
+	maSelect = new MouseActionSelect(*this);
+	maWire = new MouseActionWire(*this);
+	//  maMove = new MouseActionMove(*this);
+	maInsertGround = new MouseActionNewElement(*this);
+	maInsertPort = new MouseActionNewElement(*this);
 
-  // this was in App previously, and scattered across a couple of pointer hacks.
-  // possibly initialised to "select". recheck.
-  _maCurrent = maSelect;
+	// TODO
+	maActivate = new MouseAction(*this);
+	maMirrorX = new MouseAction(*this);
+	maMirrorY = new MouseAction(*this);
+	maRotate = new MouseAction(*this);
+
+	// this was in App previously, and scattered across a couple of pointer hacks.
+	// possibly initialised to "select". recheck.
+	_maCurrent = maSelect;
 }
 /*--------------------------------------------------------------------------*/
 SchematicActions::~SchematicActions()
 { untested();
 	delete maDelete;
 	delete maSelect;
+	delete maWire;
 	delete maActivate;
 	delete maMirrorX;
 	delete maMirrorY;
@@ -854,13 +1103,9 @@ void SchematicDoc::actionEditDelete(QAction* sender)
 //  mouseActions()->setDrawn(false);
 }
 
-void SchematicDoc::actionSetWire(QAction* on)
+void SchematicDoc::actionSetWire(QAction* sender)
 { untested();
-  incomplete();
-//	performToggleAction(on, App->insWire, 0,
-//			&MouseActions::MMoveWire1, &MouseActions::MPressWire1);
-//
-  // mouseAction = mouseActions().maSetWire;
+  possiblyToggleAction(schematicActions().maWire, sender);
 }
 
 void SchematicDoc::actionInsertLabel(QAction* on)

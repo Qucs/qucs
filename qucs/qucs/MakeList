@@ -13,6 +13,7 @@ CPP_SRC = \
 	docfmt.h \
 	element.cpp \
 	element_graphics.cpp \
+	ghostwire.cpp \
 	gatecomponent.cpp \
 	graph.cpp \
 	imagewriter.cpp \

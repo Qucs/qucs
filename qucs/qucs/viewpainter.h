@@ -33,7 +33,6 @@ class QColor;
    some thing anew each time the paint function is called. The class
    "ViewPainter" supports this. */
 
-#if QT_VERSION >= 0x050000
 class ViewPainter{
 	ViewPainter(const ViewPainter&);
 public:
@@ -42,6 +41,9 @@ public: // viewpainter.cpp
 	     // don't use in new code
 	void map(int xin, int yin, int& x, int& y);
 public: // just forward
+	void drawLine (QPoint a, QPoint b){
+		Painter->drawLine(a, b);
+	}
 	void drawLine (int a, int b, int c, int d){
 		Painter->drawLine(a, b, c, d);
 	}
@@ -75,6 +77,11 @@ public: // just forward
 		Painter->eraseRect(a, b, c, d);
 	}
 	void drawResizeRect(int, int);
+
+	template<class T>
+	void setPen(T t){
+		Painter->setPen(t);
+	}
 public: // obsolete?
   void init(QPainter*, float, int, int, int, int, 
 	    float FontScale_=0.0, float PrintScale_=1.0)
@@ -92,34 +99,6 @@ public: // BUG, is accessed directly.
 	float DX;
 	float DY;
 	int LineSpacing;
-
 };
-#else
-class ViewPainter {
-public:
-  ViewPainter(QPainter *p=0);
- ~ViewPainter();
-
-  void init(QPainter*, float, int, int, int, int, 
-	    float FontScale_=0.0, float PrintScale_=1.0);
-  void map(int, int, int&, int&);
-  void drawPoint(int, int);
-  void drawLine (int, int, int, int);
-  void drawRect (int, int, int, int);
-  void drawRectD(int, int, int, int);
-  void drawRoundRect(int, int, int, int);
-  void drawEllipse(int, int, int, int);
-  void drawArc(int, int, int, int, int, int);
-  int  drawText(const QString&, int, int, int *Height=0);
-  int  drawTextMapped(const QString&, int, int, int *Height=0);
-  void fillRect(int, int, int, int, const QColor&);
-  void eraseRect(int, int, int, int);
-  void drawResizeRect(int, int);
-
-  QPainter *Painter;
-  float Scale, FontScale, PrintScale, DX , DY;
-  int LineSpacing;   // updated by init(), just for info
-};
-#endif
 
 #endif

@@ -623,12 +623,13 @@ QString Subcircuit::portName(unsigned) const
 	return "invalid";
 }
 
-void Subcircuit::setParameter(unsigned i, QString const& value)
+void Subcircuit::setParameter(unsigned i, std::string const& value)
 {
+	QString v = QString::fromStdString(value);
 	if(i==0){
-		trace1("Subcircuit::setParameter", value);
+		trace1("Subcircuit::setParameter", v);
 ///		setType(value.toStdString());
-		setType(value.left(value.length()-4).toStdString());
+		setType(v.left(v.length()-4).toStdString());
 	}else{
 		incomplete();
 	}

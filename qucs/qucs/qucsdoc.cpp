@@ -149,6 +149,7 @@ void QucsDoc::possiblyToggleAction(MouseAction* a, QAction* sender)
 			sender->setChecked(false);
 			// possible 'delete' after select.
 			// don't do anything else
+			a->deactivate();
 		}else{ untested();
 			// sender->setChecked(true); // assert?
 			setActiveAction(a);
