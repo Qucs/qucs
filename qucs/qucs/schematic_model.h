@@ -169,6 +169,9 @@ private: // TODO: actually store here.
 	PaintingList& paintings();
 	ComponentList& components(); // possibly "devices". lets see.
 public:
+	bool isNode(int x, int y) const{
+		return nodes().find_at(x,y);
+	}
 	WireList const& wires() const;
 	NodeMap const& nodes() const;
 	DiagramList const& diagrams() const;
@@ -192,7 +195,6 @@ public:
 	// not so sure about these
 	void setPort(unsigned i, Node* n);
 	QString portValue(unsigned i) const;
-
 
 private:
 	mutable PrototypeMap _protos; // bit of a hack.

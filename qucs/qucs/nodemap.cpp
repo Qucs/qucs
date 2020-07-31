@@ -1,14 +1,14 @@
 // (C) 2020 Felix Salfelder
-//
+// GPLv3+
+/* -------------------------------------------------------------- */
 #include "nodemap.h"
 #include "node.h"
 #include "trace.h"
 #include "netlist.h"
 #include "net.h"
-// #include "schematic_model.h"
-
 #include "dynamic_cc.h"
-
+/* -------------------------------------------------------------- */
+/* -------------------------------------------------------------- */
 template<>
 struct graph_traits<NodeMap>{
 	typedef Node* vertex_descriptor;
@@ -47,22 +47,23 @@ struct graph_traits<NodeMap>{
 		return t->visited(level);
 	}
 };
-
+/* -------------------------------------------------------------- */
 NodeMap::NodeMap(NetList& n)
-		: _nets(n),
-		   _cc(new_ccs())
+  : _nets(n),
+    _cc(new_ccs())
 {
 }
+/* -------------------------------------------------------------- */
 NodeMap::~NodeMap()
 {
 	delete _cc;
 }
-		
+/* -------------------------------------------------------------- */
 ConnectedComponents<NodeMap>* NodeMap::new_ccs()
 {
 	return new ConnectedComponents<NodeMap>(*this);
 }
-
+/* -------------------------------------------------------------- */
 // Qucs schematic node.
 // at most one node in one place,
 // may have strange side effects.
@@ -76,7 +77,7 @@ int NodeMap::erase(Node* tt)
 	_nodes.erase(tt);
 	return 1;
 }
-
+/* -------------------------------------------------------------- */
 Node* NodeMap::find_at(std::pair<int, int> key)
 {
 	auto f = _nodes.find(key);
@@ -86,17 +87,23 @@ Node* NodeMap::find_at(std::pair<int, int> key)
 		return nullptr;
 	}
 }
-
+/* -------------------------------------------------------------- */
 Node* NodeMap::find_at(int x, int y)
 {
 	auto key=std::make_pair(x,y);
 	return find_at(key);
 }
-
+/* -------------------------------------------------------------- */
+Node const* NodeMap::find_at(int x, int y) const
+{
+	auto key=std::make_pair(x,y);
+	NodeMap* cc = const_cast<NodeMap*>(this);
+	return cc->find_at(key);
+}
+/* -------------------------------------------------------------- */
 // TODO: is this really needed with a proper map??
 Node& NodeMap::new_at(int x, int y)
 {
-
 	auto key=std::make_pair(x,y);
 	assert(!find_at(key)); // (!)
 
@@ -112,7 +119,7 @@ Node& NodeMap::new_at(int x, int y)
 
 	return *c;
 }
-
+/* -------------------------------------------------------------- */
 Node& NodeMap::at(int x, int y)
 {
 	Node* pn = find_at(x,y);
@@ -127,34 +134,37 @@ Node& NodeMap::at(int x, int y)
 	assert(pn->hasNet());
 	return *pn;
 }
-
+/* -------------------------------------------------------------- */
 Net* NodeMap::newNet()
 { untested();
 	return _nets.newNet();
 }
+/* -------------------------------------------------------------- */
 void NodeMap::delNet(Net* n)
 { untested();
 	assert(n);
 	return _nets.delNet(n);
 }
-
+/* -------------------------------------------------------------- */
 void NodeMap::postRemoveEdge(Node* a, Node* b)
 {
   _cc->postRemoveEdge(a, b);
 }
+/* -------------------------------------------------------------- */
 void NodeMap::addEdge(Node* a, Node* b)
 {
   _cc->addEdge(a, b);
 }
+/* -------------------------------------------------------------- */
 void NodeMap::registerVertex(Node*c)
 { untested();
   _cc->registerVertex(c);
 }
+/* -------------------------------------------------------------- */
 void NodeMap::deregisterVertex(Node*c)
 { untested();
   _cc->deregisterVertex(c);
 }
-
 /* -------------------------------------------------------------- */
 size_t graph_traits<NodeMap>::cc_size(Net* n, NodeMap const&)
 {

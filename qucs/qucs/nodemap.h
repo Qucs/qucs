@@ -89,6 +89,7 @@ public: // friend Symbol?
 
 public:
 	Node* find_at(int x, int y);
+	Node const* find_at(int x, int y) const;
 	Node* find_at(key_type);
 	Node& at(int x, int y);
 	Node& new_at(int x, int y); // same as at. but don't search

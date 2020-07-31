@@ -35,7 +35,7 @@ Node::Node(std::pair<int, int> pos)
 {
   trace1("Node::Node", this);
   // Label = nullptr; // BUG
-  Type  = isNode;
+//  Type  = isNode;
   State = 0;
   DType = "";
 
