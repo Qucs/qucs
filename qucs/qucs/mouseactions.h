@@ -80,8 +80,9 @@ protected:
 	SchematicDoc& doc(); // BUG _ctx.
 	QList<ElementGraphics*> selectedItems(); // BUG. copies.
 	QPointF mapToScene(QPoint const& p) const;
-	void updateViewport();
+	void updateViewport(); // why?
 	void setCursor(QCursor const& c);
+   bool isNode(int fX, int fY) const;
 
 private:
 	MouseActions& _ctx;

@@ -143,9 +143,7 @@ void MouseAction::uncheck()
   deactivate();
 }
 
-#if 0
 bool MouseAction::isNode(int fX, int fY) const
 {
   return doc().isNode(fX, fY);
 }
-#endif

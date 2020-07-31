@@ -184,6 +184,10 @@ public:
 
   // find_symbol
 public:
+  bool isNode(int x, int y) const{
+	  assert(_model);
+	  return _model->isNode(x,y);
+  }
   Component* find_component(QString const&);
 
   ComponentList const& components() const{
