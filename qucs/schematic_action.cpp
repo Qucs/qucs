@@ -116,6 +116,7 @@ private: // legacy code
 		w->update();
 	}
 	void new_gfx();
+
 private:
 	int _mode; // V/H
 	int _phase;
@@ -267,13 +268,32 @@ QUndoCommand* MouseActionWire::press1(QGraphicsSceneMouseEvent* ev)
 #if 0
 #endif
 //* MouseActions::MPressWire2 Is called if ending point of wire is pressed
-QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* e)
+QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* ev)
 { untested();
-  QPointF pos = e->scenePos(); // mapToScene(e->pos());
-  float fX = pos.x();
-  float fY = pos.y();
-
+  new_gfx();
   int set1 = 0, set2 = 0;
+
+	assert(ev);
+	QPointF pos = ev->scenePos(); // mapToScene(ev->pos());
+	float fX = pos.x();
+	float fY = pos.y();
+
+   if(isNode(fX, fY)){
+
+	}else{  // same as press1?
+
+	ElementGraphics* cur = _gfx.back();
+	Element* ee = element(cur);
+	auto e = prechecked_cast<Symbol*>(ee);
+
+	e->setParameter("x0", std::to_string(fX));
+	e->setParameter("y0", std::to_string(fY));
+	e->setParameter("x1", std::to_string(fX));
+	e->setParameter("y1", std::to_string(fY));
+
+	cur->prepareGeometryChange();
+	doc().sceneAddItem(cur); // show, does not attach.
+  }
 #if 0
   switch(e->button()) {
   case Qt::LeftButton :

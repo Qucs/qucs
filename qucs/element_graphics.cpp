@@ -85,7 +85,9 @@ void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, 
 		painter->drawRoundRect(br);
 	}else{
 		// debug.
-		painter->fillRect(br, QColor("white"));
+		// painter->fillRect(br, QColor("white"));
+		painter->setPen(QPen(Qt::yellow,3));
+		painter->drawRoundRect(br);
 	}
 
 	_e->paint(&v);
