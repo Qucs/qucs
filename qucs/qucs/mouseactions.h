@@ -19,6 +19,8 @@
 #include "qt_compat.h"
 #include "schematic_scene.h"
 #include "element_graphics.h"
+#include <QEvent>
+#include <QAction>
 
 class Label;
 class MouseActions;
