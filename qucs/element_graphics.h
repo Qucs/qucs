@@ -110,6 +110,8 @@ Marker* marker(QGraphicsItem*);
 Node* node(QGraphicsItem*);
 // Label* label(QGraphicsItem*);
 
+#include <QEvent> // TODO: check if ItemEvent is needed at all, if so,
+                  // move to a different place
 
 class ItemEvent: public QEvent{
 public:
