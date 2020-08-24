@@ -24,8 +24,10 @@
 #include <QFont>
 #include <QDebug>
 #include <QPolygon>
+#include <QPainterPath>
 
 #ifdef USE_SCROLLVIEW
+obsolete
 
 ViewPainter::ViewPainter(QPainter *p)
 {
@@ -82,7 +84,7 @@ void ViewPainter::map(int x1, int y1, int& x, int& y)
 }
 
 #ifdef USE_SCROLLVIEW
-
+obsolete
 // -------------------------------------------------------------
 void ViewPainter::drawPoint(int x1i, int y1i)
 {
@@ -107,6 +109,7 @@ void ViewPainter::drawLine(int x1i, int y1i, int x2i, int y2i)
 
 #else
 
+// check: could as well derive from QPainter?
 ViewPainter::ViewPainter(QPainter* p)
   : Painter(p),
   Scale(1.f),
@@ -190,6 +193,7 @@ void Graph::drawLines(int x0, int y0, ViewPainter *p) const
 }
 
 #ifdef USE_SCROLLVIEW
+obsolete
 // -------------------------------------------------------------
 //draws the vectors of phasor diagram
 void Graph::drawvect(int x0, int y0, ViewPainter *p) const
