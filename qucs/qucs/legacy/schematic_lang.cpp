@@ -237,7 +237,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 				qDebug() << "wire parse?" << Line;
 				// (Node*)4 =  move all ports (later on)
 				// Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4); // this is entirely nuts.
-				Wire* w = new Wire();
+				Wire* w = new Wire(0,0,0,0); // BUG: ask dispatcher
 				w->setOwner(&s);
 				incomplete(); // qt5 branch...
 				bool err = obsolete_load(w, Line);
