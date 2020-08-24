@@ -2030,7 +2030,6 @@ QucsDoc& MouseActions::doc()
 }
 
 
-#if 0
 bool MouseActions::handle(QEvent*e)
 { itested();
   QUndoCommand* c=nullptr;
@@ -2047,7 +2046,6 @@ bool MouseActions::handle(QEvent*e)
   }
 
 }
-#endif
 
 void MouseActions::executeCommand(QUndoCommand* c)
 {
