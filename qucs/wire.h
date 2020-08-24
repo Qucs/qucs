@@ -31,8 +31,11 @@ class dummy {};
 
 
 class Wire : public Symbol {
+private:
+  Wire(Wire const&) = delete;
+  Wire() = delete;
 public:
-  Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0); //  Node *n1=0, Node *n2=0);
+  explicit Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0); //  Node *n1=0, Node *n2=0);
   ~Wire();
 
   Element* clone() const{

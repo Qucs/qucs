@@ -559,6 +559,7 @@ bool SchematicModel::loadComponents(QTextStream *stream)
   assert(false);
   (void) stream;
   unreachable();
+  return 0;
 #if 0
   void* List=nullptr; // incomplete
   QString Line, cstr;

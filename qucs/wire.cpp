@@ -24,8 +24,10 @@ Wire::Wire(int _x1, int _y1, int _x2, int _y2)
   cy = 0;
 
   Type = isWire; // BUG
+  assert(_node_hack.empty());
   _node_hack.push_back(nullptr);
   _node_hack.push_back(nullptr);
+  assert(_node_hack.size()==2);
 
   setType("wire");
   setLabel("noname");
@@ -97,7 +99,8 @@ void Wire::getCenter(int& x, int& y)
 // ----------------------------------------------------------------
 // Lie x/y on wire ? 5 is the precision the coordinates have to fit.
 bool Wire::getSelected(int x_, int y_)
-{
+{ incomplete();
+
   int x1 = x1__();
   int x2 = x2__();
   int y1 = y1__();
@@ -220,8 +223,9 @@ Node* Wire::portValue(unsigned idx)
 #endif
 std::list<Node*>::iterator Wire::connectionsBegin()
 {
+  trace1("DBG", _node_hack.size());
   assert(_node_hack.size()==2);
-  auto a=_node_hack.begin();
+  auto a = _node_hack.begin();
   *a = _port0.value();
   ++a;
   *a = _port1.value();
@@ -238,7 +242,6 @@ Node* Wire::connectNode(unsigned i, NodeMap&l)
   Port& mp = port(i);
   Node* n = &l.at(pp.x_()+cx_(), pp.y_()+cy_());
   assert(n->hasNet());
-
 
   if(Node* other_node = port((i+1)%2).value()){
     trace3("wire::connectnode", i, n, other_node);

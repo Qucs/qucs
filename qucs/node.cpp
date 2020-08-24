@@ -153,7 +153,7 @@ AdjNodeIterator::AdjNodeIterator(elt_iter b, elt_iter e)
 {
   if (b==e){
       _node = _nend; // needed?
-  }else if(auto w=prechecked_cast<Wire*>(*_wire)){
+  }else if(auto w=dynamic_cast<Wire*>(*_wire)){
     _node = w->connectionsBegin();
     _nend = w->connectionsEnd();
   }else{
