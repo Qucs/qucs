@@ -5,10 +5,11 @@
 # Automake input file.
 #
 # Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+#               2020 Felix Salfelder
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2, or (at your option)
+# the Free Software Foundation; either version 3, or (at your option)
 # any later version.
 # 
 # This software is distributed in the hope that it will be useful,
@@ -23,10 +24,18 @@
 #
 
 SUBDIRS = vadim
+AM_DEFAULT_SOURCE_EXT = .cpp
 
 dist_bin_SCRIPTS = ps2sp
-
 dist_man_MANS = ps2sp.1
 
-CLEANFILES = *~ *.rej *.orig
-MAINTAINERCLEANFILES = Makefile.in
+plugindir = ${pkglibdir}
+plugin_LTLIBRARIES = hidpi.la
+
+AM_CPPFLAGS = -I$(top_srcdir)/qucs
+
+hidpi_la_LDFLAGS = -shared -module -avoid-version
+hidpi_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
+hidpi_la_CPPFLAGS = ${AM_CPPFLAGS} ${QT_CFLAGS}
+
+CLEANFILES = *~ Makefile.in *.rej *.orig
