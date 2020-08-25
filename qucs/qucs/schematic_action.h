@@ -43,6 +43,7 @@ public: // actions... private?
 	MouseAction* maMirrorY;
 	MouseAction* maInsertGround;
 	MouseAction* maInsertPort;
+	MouseAction* maZoomIn;
 };
 
 #endif
