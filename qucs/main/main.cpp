@@ -604,6 +604,7 @@ void createListComponentEntry()
   } // category
 }
 
+// TODO: turn into command.
 void attach_single(std::string const&path, std::string const& what)
 {
   std::string full_file_name;
@@ -626,7 +627,7 @@ void attach_single(std::string const&path, std::string const& what)
 
 void attach_default_plugins()
 {
-  std::string pp=plugpath();
+  std::string pp = plugpath();
   attach_single(pp, "legacy" SOEXT);
 
   // TODO: remove "lib" prefix
@@ -883,8 +884,8 @@ int main(int argc, char *argv[])
     else if (!strcmp(argv[i], "-a")) {
       ++i;
       qDebug() << "attaching" << argv[i];
-      std::string pp=plugpath();
-      std::string what=argv[i];
+      std::string pp = plugpath();
+      std::string what = argv[i];
       if(what.size()<4){ untested();
       }else if(what[what.size()-3]!='.'){
 	what += SOEXT;
