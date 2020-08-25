@@ -60,7 +60,7 @@ public:
 	virtual cmd* release(QMouseEvent*) { return nullptr; }
 	virtual cmd* dblclk(QEvent*) { return nullptr; }
 
-	virtual cmd* generic(QEvent*) { return nullptr; }
+	virtual cmd* generic(QEvent*) { return nullptr; } // remove
 	virtual cmd* enter(QEvent*) { untested(); return nullptr; }
 	virtual cmd* leave(QEvent*) { untested(); return nullptr; }
 
@@ -81,6 +81,7 @@ protected:
 	QList<ElementGraphics*> selectedItems(); // BUG. copies.
 	QPointF mapToScene(QPoint const& p) const;
 	void updateViewport();
+	void setCursor(QCursor const& c);
 
 private:
 	MouseActions& _ctx;

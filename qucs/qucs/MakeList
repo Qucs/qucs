@@ -3,6 +3,7 @@
 
 CPP_SRC = \
 	globals.cpp \
+	cursors.cpp \
 	module.cpp \
 	attach.cpp \
 	command.cpp \

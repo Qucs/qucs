@@ -2063,6 +2063,11 @@ void MouseActions::executeCommand(QUndoCommand* c)
   }
 }
 
+void MouseAction::setCursor(QCursor const& c)
+{
+  doc().setCursor(c);
+}
+
 #include <QGraphicsSceneEvent> // probably bug
 #include "component_widget.h" // bug
 #if 0
