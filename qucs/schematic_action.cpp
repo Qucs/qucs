@@ -42,6 +42,49 @@ int getY(std::pair<int, int> const& p)
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+class MouseActionZoomIn : public MouseAction{
+public:
+	explicit MouseActionZoomIn(MouseActions& ctx)
+		: MouseAction(ctx) {
+	}
+private: // MouseAction
+	cmd* press(QEvent*) override;
+
+private:
+	int _MAx1;
+	int _MAx2;
+	int _MAy1;
+	int _MAy2;
+};
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionZoomIn::press(QEvent* e)
+{ untested();
+	QPointF pos;
+	if(auto se=dynamic_cast<QGraphicsSceneMouseEvent*>(e)){
+		pos = se->scenePos();
+	}else{
+		incomplete();
+	}
+	float fX = pos.x();
+	float fY = pos.y();
+
+	qDebug() << "zoom into box";
+	_MAx1 = int(fX);
+	_MAy1 = int(fY);
+	_MAx2 = 0;  // rectangle size
+	_MAy2 = 0;
+
+//  QucsMain->MouseMoveAction = &MouseActions::MMoveSelect;
+//  QucsMain->MouseReleaseAction = &MouseActions::MReleaseZoomIn;
+	
+	//grabKeyboard();  // no keyboard inputs during move actions
+	                 // why not redirect events to mode?!
+
+	
+//  Doc->viewport()->update();
+//  setDrawn(false);
+}
+/*--------------------------------------------------------------------------*/
 class MouseActionWire : public MouseAction{
 public:
 	explicit MouseActionWire(MouseActions& ctx)
@@ -85,13 +128,14 @@ private:
 	Element* _proto;
 };
 /*--------------------------------------------------------------------------*/
+extern QCursor& crosshair();
 QUndoCommand* MouseActionWire::activate(QAction* sender)
 {
 	assert(!_gfx.size());
 	new_gfx();
 	_phase = 1;
 	_oldcursor = doc().cursor();
-	doc().setCursor(Qt::CrossCursor);
+	setCursor(crosshair()); // Qt::CrossCursor);
 	return MouseAction::activate(sender);
 }
 /*--------------------------------------------------------------------------*/
@@ -633,7 +677,7 @@ private:
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionDelete::deactivate()
 { untested();
-	doc().setCursor(_oldcursor);
+	setCursor(_oldcursor);
 	return MouseAction::deactivate();
 }
 /*--------------------------------------------------------------------------*/
@@ -642,7 +686,7 @@ QUndoCommand* MouseActionDelete::activate(QAction *sender)
 	MouseAction::activate(sender); // ...
 
 	_oldcursor = doc().cursor();
-	doc().setCursor(Qt::CrossCursor);
+	setCursor(Qt::CrossCursor);
 
 	auto s = doc().selectedItems();
 	bool selected = !s.empty();
@@ -987,6 +1031,7 @@ SchematicActions::SchematicActions(SchematicDoc& ctx)
 	maDelete = new MouseActionDelete(*this);
 	maSelect = new MouseActionSelect(*this);
 	maWire = new MouseActionWire(*this);
+	maZoomIn = new MouseActionZoomIn(*this);
 	//  maMove = new MouseActionMove(*this);
 	maInsertGround = new MouseActionNewElement(*this);
 	maInsertPort = new MouseActionNewElement(*this);
@@ -1004,13 +1049,16 @@ SchematicActions::SchematicActions(SchematicDoc& ctx)
 /*--------------------------------------------------------------------------*/
 SchematicActions::~SchematicActions()
 { untested();
-	delete maDelete;
-	delete maSelect;
-	delete maWire;
 	delete maActivate;
+	delete maDelete;
+	delete maInsertGround;
+	delete maInsertPort;
 	delete maMirrorX;
 	delete maMirrorY;
 	delete maRotate;
+	delete maSelect;
+	delete maWire;
+	delete maZoomIn;
 }
 /*--------------------------------------------------------------------------*/
 SchematicDoc* SchematicActions::doc()
@@ -1132,12 +1180,9 @@ void SchematicDoc::actionMoveText(QAction* on)
   // mouseAction = mouseActions().maMoveText;
 }
 
-void SchematicDoc::actionZoomIn(QAction* on)
+void SchematicDoc::actionZoomIn(QAction* sender)
 { untested();
-  incomplete();
-//    performToggleAction(on, App->magPlus, 0,
-//		&MouseActions::MMoveZoomIn, &MouseActions::MPressZoomIn);
-  // mouseAction = mouseActions().maZoomIn;
+  possiblyToggleAction(schematicActions().maZoomIn, sender);
 }
 
 void SchematicDoc::actionInsertEquation(QAction* on)
