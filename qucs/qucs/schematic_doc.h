@@ -129,7 +129,7 @@ public:
   bool  elementsOnGrid();
 
   float zoom(float);
-  float zoomBy(float);
+  float zoomBy(float) override;
   void  showAll();
   void  showNoZoom();
   void  enlargeView(int, int, int, int);

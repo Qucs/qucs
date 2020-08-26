@@ -44,6 +44,7 @@ public: // actions... private?
 	MouseAction* maInsertGround;
 	MouseAction* maInsertPort;
 	MouseAction* maZoomIn;
+	// MouseAction* maZoomOut; // not a mouseaction
 };
 
 #endif

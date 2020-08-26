@@ -55,7 +55,7 @@ public: // just forward
 		Painter->drawRect(a, b, c, d);
 	}
 	void drawRoundRect (int a, int b, int c, int d){
-		Painter->drawRoundRect(a, b, c, d);
+		Painter->drawRoundedRect(a, b, c, d, 25., 25.);
 	}
 	void drawArc (int a, int b, int c, int d, int e, int f){
 		Painter->drawArc(a, b, c, d, e, f);

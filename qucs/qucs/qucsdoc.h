@@ -70,7 +70,7 @@ public:
   QString SimTime;     // used for VHDL simulation, but stored in datadisplay
   QDateTime lastSaved;
 
-  float Scale;
+//  float Scale;
   QucsApp* App; // TODO: delete.
   QucsApp &_app;
   bool DocChanged;

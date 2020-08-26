@@ -705,105 +705,19 @@ void SchematicDoc::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toI
 }
 
 // -----------------------------------------------------------
-float SchematicDoc::zoom(float s)
-{ untested();
-  Scale *= s;
-  if(Scale > 10.0) Scale = 10.0f;
-  if(Scale < 0.1) Scale = 0.1f;
-
-  // "resizeContents()" performs an immediate repaint. So, set widget
-  // to hidden. This causes some flicker, but it is still nicer.
-  assert(viewport());
-  viewport()->setHidden(true);
-//  setHidden(true);
-  TODO("Fix resizeContents");
-  /// todo resizeContents(int(Scale*float(ViewX2 - ViewX1)),
-  ///               int(Scale*float(ViewY2 - ViewY1)));
-//  setHidden(false);
-  viewport()->setHidden(false);
-
-  viewport()->update();
-  // App->view->drawn = false;
-
-  return Scale;
-}
-
-// -----------------------------------------------------------
-float SchematicDoc::zoomBy(float s)
-{ untested();
-  zoom(s);
-  s -= 1.0;
-  TODO("Fix contentsX");
-  /// todo scrollBy( int(s * float(contentsX()+visibleWidth()/2)),
-  ///          int(s * float(contentsY()+visibleHeight()/2)) );
-  return Scale;
-}
+// ---------------------------------------------------
 
 // ---------------------------------------------------
-void SchematicDoc::showAll()
-{ untested();
-#ifndef USE_SCROLLVIEW
-  incomplete();
-  fitInView(this->sceneRect(), Qt::KeepAspectRatio);
-#else
-  sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
-  if(UsedX1 == 0)
-    if(UsedX2 == 0)
-      if(UsedY1 == 0)
-        if(UsedY2 == 0) { untested();
-    UsedX1 = UsedY1 = INT_MAX;
-    UsedX2 = UsedY2 = INT_MIN;
-    return;
-  }
-
-  float xScale = float(visibleWidth()) / float(UsedX2-UsedX1+80);
-  float yScale = float(visibleHeight()) / float(UsedY2-UsedY1+80);
-  if(xScale > yScale) xScale = yScale;
-  xScale /= Scale;
-
-  ViewX1 = UsedX1 - 40;
-  ViewY1 = UsedY1 - 40;
-  ViewX2 = UsedX2 + 40;
-  ViewY2 = UsedY2 + 40;
-  zoom(xScale);
-#endif
-}
-
-// ---------------------------------------------------
-void SchematicDoc::showNoZoom()
-{ untested();
-  Scale = 1.0;
-
-  int x1 = UsedX1;
-  int y1 = UsedY1;
-  int x2 = UsedX2;
-  int y2 = UsedY2;
-
-  if(x1 > x2) {  // happens e.g. if untitled without changes
-    x1 = 0;
-    x2 = 800;
-  }
-  if(y1 > y2) { untested();
-    y1 = 0;
-    y2 = 800;
-  }
-  if(x2==0) if(y2==0) if(x1==0) if(y1==0) x2 = y2 = 800;
-
-  ViewX1 = x1-40;
-  ViewY1 = y1-40;
-  ViewX2 = x2+40;
-  ViewY2 = y2+40;
-  TODO("Fix resizeContents");
-  ///\todo resizeContents(x2-x1+80, y2-y1+80);
-  updateViewport();
-  // App->view->drawn = false;
-}
 
 // -----------------------------------------------------------
 // Enlarge the viewport area if the coordinates x1-x2/y1-y2 exceed the
 // visible area.
+//
+// same as center on union(current, rectangle(xy))??
 void SchematicDoc::enlargeView(int x1, int y1, int x2, int y2)
 { untested();
+  incomplete();
+#if 0
   int dx=0, dy=0;
   (void) (dx+dy);
   if(x1 < UsedX1) UsedX1 = x1;
@@ -826,6 +740,7 @@ void SchematicDoc::enlargeView(int x1, int y1, int x2, int y2)
   /// \todo resizeContents(int(Scale*float(ViewX2 - ViewX1)),
   /// 		int(Scale*float(ViewY2 - ViewY1)));
   ///scrollBy(dx,dy);
+#endif
 }
 
 // ---------------------------------------------------
@@ -835,6 +750,7 @@ void SchematicDoc::enlargeView(int x1, int y1, int x2, int y2)
 // ---------------------------------------------------
 void SchematicDoc::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
 { untested();
+#if 0 // obsolete
   if(!GridOn) return;
 
   p->Painter->setPen(QPen(Qt::black,0));
@@ -882,17 +798,22 @@ void SchematicDoc::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Heig
     X += DX;
     x1 = X > 0.0 ? int(X + 0.5) : int(X - 0.5);
   }
+#endif
 }
 
 // ---------------------------------------------------
 // Correction factor for unproportional font scaling.
 float SchematicDoc::textCorr()
 { untested();
+  incomplete();
+  return 1.;
+#if 0
   QFont Font = QucsSettings.font;
   Font.setPointSizeF( Scale * float(Font.pointSize()) );
   // use the screen-compatible metric
   QFontMetrics  metrics(Font, 0);
   return (Scale / float(metrics.lineSpacing()));
+#endif
 }
 
 // ---------------------------------------------------

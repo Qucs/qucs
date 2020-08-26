@@ -3437,12 +3437,14 @@ void SchematicDoc::copyLabels(int& x1, int& y1, int& x2, int& y2,
 // don't use this.
 Painting* SchematicDoc::selectedPainting(float fX, float fY)
 {
+#if 0
     float Corr = 5.0 / Scale; // size of line select
 
     for(Painting *pp = paintings().first(); pp != 0; pp = paintings().next())
         if(pp->getSelected(fX, fY, Corr))
             return pp;
 
+#endif
     return 0;
 }
 

@@ -49,6 +49,7 @@ public:
 	}
 private: // MouseAction
 	cmd* press(QEvent*) override;
+	cmd* release(QMouseEvent*) override;
 
 private:
 	int _MAx1;
@@ -79,10 +80,56 @@ QUndoCommand* MouseActionZoomIn::press(QEvent* e)
 	
 	//grabKeyboard();  // no keyboard inputs during move actions
 	                 // why not redirect events to mode?!
+	doc().zoomBy(1.5);
 
 	
 //  Doc->viewport()->update();
 //  setDrawn(false);
+	return nullptr; // zoom is not undoable (good idea?)
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionZoomIn::release(QMouseEvent* e)
+{
+  if(e->button() == Qt::LeftButton){
+
+	  _MAx1 = e->pos().x();
+	  _MAy1 = e->pos().y();
+	  TODO("Sort out contentsX");
+	  return nullptr; // not undoable.
+	  /**
+	  float DX = float(MAx2);
+	  float DY = float(MAy2);
+
+	  float initialScale = Doc->Scale;
+	  float scale = 1;
+	  float xShift = 0;
+	  float yShift = 0;
+	  if((Doc->Scale * DX) < 6.0) { untested();
+		 // a simple click zooms by constant factor
+		 scale = Doc->zoom(1.5)/initialScale;
+
+		 xShift = scale * Event->pos().x();
+		 yShift = scale * Event->pos().y();
+	  } else { untested();
+		 float xScale = float(Doc->visibleWidth())  / std::abs(DX);
+		 float yScale = float(Doc->visibleHeight()) / std::abs(DY);
+		 scale = qMin(xScale, yScale)/initialScale;
+		 scale = Doc->zoom(scale)/initialScale;
+
+		 xShift = scale * (MAx1 - 0.5*DX);
+		 yShift = scale * (MAy1 - 0.5*DY);
+	  }
+	  xShift -= (0.5*Doc->visibleWidth() + Doc->contentsX());
+	  yShift -= (0.5*Doc->visibleHeight() + Doc->contentsY());
+	  Doc->scrollBy(xShift, yShift);
+	  */
+	  QucsMain->MouseMoveAction = &MouseActions::MMoveZoomIn;
+	  QucsMain->MouseReleaseAction = 0;
+	  doc().releaseKeyboard();  // allow keyboard inputs again
+
+  }else{
+  }
+  return nullptr;
 }
 /*--------------------------------------------------------------------------*/
 class MouseActionWire : public MouseAction{
@@ -1052,6 +1099,8 @@ SchematicActions::SchematicActions(SchematicDoc& ctx)
 	maSelect = new MouseActionSelect(*this);
 	maWire = new MouseActionWire(*this);
 	maZoomIn = new MouseActionZoomIn(*this);
+//	maZoomOut = new MouseActionZoomOut(*this); // not a mouseaction.
+
 	//  maMove = new MouseActionMove(*this);
 	maInsertGround = new MouseActionNewElement(*this);
 	maInsertPort = new MouseActionNewElement(*this);

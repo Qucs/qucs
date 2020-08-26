@@ -304,6 +304,106 @@ void SchematicDoc::mouseReleaseEvent(QMouseEvent *e)
   }
 }
 #endif
+void SchematicDoc::showAll()
+{ untested();
+  fitInView(this->sceneRect(), Qt::KeepAspectRatio);
+}
+
+void SchematicDoc::showNoZoom()
+{ untested();
+
+	QTransform matrix = transform();
+	double d = matrix.m11();
+	assert(d == matrix.m22());
+
+	// yikes.
+	double di = 1./d;
+	scale(di,di);
+
+#if 0
+  Scale = 1.0;
+
+  int x1 = UsedX1;
+  int y1 = UsedY1;
+  int x2 = UsedX2;
+  int y2 = UsedY2;
+
+  if(x1 > x2) {  // happens e.g. if untitled without changes
+    x1 = 0;
+    x2 = 800;
+  }else{
+  }
+  if(y1 > y2) { untested();
+    y1 = 0;
+    y2 = 800;
+  }else{
+  }
+
+  if(x2==0 && y2==0 && x1==0 && y1==0){
+    x2 = y2 = 800;
+  }else{
+  }
+
+  ViewX1 = x1-40;
+  ViewY1 = y1-40;
+  ViewX2 = x2+40;
+  ViewY2 = y2+40;
+  TODO("Fix resizeContents");
+  ///\todo resizeContents(x2-x1+80, y2-y1+80);
+  updateViewport();
+  // App->view->drawn = false;
+#endif
+}
+
+float SchematicDoc::zoomBy(float s)
+{ untested();
+	QTransform matrix = transform();
+	double d = matrix.m11();
+	assert(d == matrix.m22());
+	double Scale = d * s;
+
+	if(Scale > 10.0){ untested();
+		Scale = 10.0f;
+	}else if(Scale < 0.1){ untested();
+		Scale = 0.1f;
+	}else{ untested();
+	}
+
+	s = Scale / d;
+
+	scale(s, s); // scale is relative...
+	s -= 1.0;
+	TODO("Fix contentsX");
+	/// todo scrollBy( int(s * float(contentsX()+visibleWidth()/2)),
+	///          int(s * float(contentsY()+visibleHeight()/2)) );
+	return Scale;
+}
+
+// directly call scale??
+float SchematicDoc::zoom(float s)
+{ untested();
+	incomplete();
+#if 0
+
+
+	// "resizeContents()" performs an immediate repaint. So, set widget
+	// to hidden. This causes some flicker, but it is still nicer.
+	assert(viewport());
+	viewport()->setHidden(true);
+	//  setHidden(true);
+	TODO("Fix resizeContents");
+	/// todo resizeContents(int(Scale*float(ViewX2 - ViewX1)),
+	///               int(Scale*float(ViewY2 - ViewY1)));
+	//  setHidden(false);
+	viewport()->setHidden(false);
+
+	viewport()->update();
+	// App->view->drawn = false;
+
+	return 0;
+#endif
+}
+
 
 
 // why is this here and not in SchematicScene?
