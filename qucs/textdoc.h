@@ -137,6 +137,9 @@ private: // actions. here?
 private slots:
   void highlightCurrentLine();
   bool baseSearch(const QString &, bool, bool, bool);
+
+private: // TODO
+  float Scale;
 };
 
 inline void TextDoc::actionInsertEntity(QAction*)

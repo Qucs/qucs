@@ -271,6 +271,8 @@ void Command::paint(ViewPainter *p) const
 // Paints the component when moved with the mouse.
 void Command::paintScheme(SchematicDoc *p) const
 {
+  unreachable(); // obsolete.
+#if 0
   // qDebug() << "paintScheme" << Model;
   {   // is simulation component (dc, ac, ...)
     int a, b, xb, yb;
@@ -331,6 +333,7 @@ void Command::paintScheme(SchematicDoc *p) const
 
   foreach(Area *pa, Ellips) // paint all ellipses
     p->PostPaintEvent(_Ellipse,cx+pa->x, cy+pa->y, pa->w, pa->h);
+#endif
 }
 
 // -------------------------------------------------------
