@@ -347,6 +347,7 @@ void Component::paint(ViewPainter *p) const
 void Component::paintScheme(SchematicDoc *p) const
 { untested();
   unreachable(); // obsolete.
+#if 0
   // qDebug() << "paintScheme" << Model;
   int cx=cx_();
   int cy=cy_();
@@ -405,6 +406,7 @@ void Component::paintScheme(SchematicDoc *p) const
   foreach(Area *pa, Ellips){
     p->PostPaintEvent(_Ellipse,cx+pa->x, cy+pa->y, pa->w, pa->h);
   }
+#endif
 }
 
 // -------------------------------------------------------

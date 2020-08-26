@@ -98,6 +98,8 @@ SchematicScene::~SchematicScene()
 
 void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 {
+	incomplete();
+#if 0
 	QGraphicsScene::drawBackground(painter, rect);
 
 	// Draw origin when visible
@@ -125,6 +127,7 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 			GridY *= 16;
 		}
 	}
+#endif
 }
 
 #ifndef USE_SCROLLVIEW
@@ -218,7 +221,7 @@ void SchematicScene::dropEvent(QGraphicsSceneDragDropEvent* e)
 }
 
 bool SchematicScene::itemEvent(QEvent* e)
-{ untested();
+{ itested();
 	if(!e){ untested();
 		unreachable();
 	}else if(e->type()==158){ itested();

@@ -167,6 +167,7 @@ bool MouseActions::pasteElements(SchematicDoc *)
 // -----------------------------------------------------------
 void MouseActions::editLabel(SchematicDoc *Doc, WireLabel *pl)
 { untested();
+  unreachable();
   LabelDialog *Dia = new LabelDialog(pl, Doc);
   int Result = Dia->exec();
   if(Result == 0) return;
@@ -178,8 +179,7 @@ void MouseActions::editLabel(SchematicDoc *Doc, WireLabel *pl)
   if(Name.isEmpty() && Value.isEmpty()) { // if nothing entered, delete label
     pl->pOwner->Label = 0;   // delete name of wire
     delete pl;
-  }
-  else { untested();
+  } else { untested();
 /*    Name.replace(' ', '_');	// label must not contain spaces
     while(Name.at(0) == '_') Name.remove(0,1);  // must not start with '_'
     if(Name.isEmpty()) return;
@@ -1409,6 +1409,8 @@ void MouseActions::MPressMoveText(SchematicDoc *Doc, QMouseEvent* Event)
 // -----------------------------------------------------------
 void MouseActions::MPressZoomIn(SchematicDoc *Doc, QMouseEvent* Event)
 { untested();
+  unreachable();
+#if 0
   QPointF pos=Doc->mapToScene(Event->pos());
   float fX=pos.x();
   float fY=pos.y();
@@ -1424,6 +1426,7 @@ void MouseActions::MPressZoomIn(SchematicDoc *Doc, QMouseEvent* Event)
   Doc->grabKeyboard();  // no keyboard inputs during move actions
   Doc->viewport()->update();
   setDrawn(false);
+#endif
 }
 
 
@@ -1441,6 +1444,7 @@ void MouseActions::MReleaseSelect(SchematicDoc *, QMouseEvent *)
 QList<ElementGraphics*> MouseAction::selectedItems()
 {
    // BUG. copies.
+  unreachable();
   return doc().selectedItems();
 }
 #if 0
@@ -1511,6 +1515,7 @@ void MouseActions::MReleaseMoving(SchematicDoc *Doc, QMouseEvent*)
 // -----------------------------------------------------------
 void MouseActions::MReleaseResizeDiagram(SchematicDoc *Doc, QMouseEvent *Event)
 { untested();
+  unreachable();
   if(Event->button() != Qt::LeftButton){ untested();
     return;
   }
@@ -1790,41 +1795,8 @@ void MouseActions::MReleaseMoveText(SchematicDoc *Doc, QMouseEvent *Event)
 // -----------------------------------------------------------
 void MouseActions::MReleaseZoomIn(SchematicDoc *Doc, QMouseEvent *Event)
 { untested();
-  if(Event->button() != Qt::LeftButton) return;
-
-  MAx1 = Event->pos().x();
-  MAy1 = Event->pos().y();
-  TODO("Sort out contentsX");
-  /**
-  float DX = float(MAx2);
-  float DY = float(MAy2);
-
-  float initialScale = Doc->Scale;
-  float scale = 1;
-  float xShift = 0;
-  float yShift = 0;
-  if((Doc->Scale * DX) < 6.0) { untested();
-    // a simple click zooms by constant factor
-    scale = Doc->zoom(1.5)/initialScale;
-
-    xShift = scale * Event->pos().x();
-    yShift = scale * Event->pos().y();
-  } else { untested();
-    float xScale = float(Doc->visibleWidth())  / std::abs(DX);
-    float yScale = float(Doc->visibleHeight()) / std::abs(DY);
-    scale = qMin(xScale, yScale)/initialScale;
-    scale = Doc->zoom(scale)/initialScale;
-
-    xShift = scale * (MAx1 - 0.5*DX);
-    yShift = scale * (MAy1 - 0.5*DY);
-  }
-  xShift -= (0.5*Doc->visibleWidth() + Doc->contentsX());
-  yShift -= (0.5*Doc->visibleHeight() + Doc->contentsY());
-  Doc->scrollBy(xShift, yShift);
-  */
-  QucsMain->MouseMoveAction = &MouseActions::MMoveZoomIn;
-  QucsMain->MouseReleaseAction = 0;
-  Doc->releaseKeyboard();  // allow keyboard inputs again
+  unreachable();
+  return;
 }
 
 
