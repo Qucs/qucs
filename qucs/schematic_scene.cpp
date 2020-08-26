@@ -99,25 +99,19 @@ SchematicScene::~SchematicScene()
 void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 {
 	incomplete();
-#if 0
+#if 1
 	QGraphicsScene::drawBackground(painter, rect);
 
-	// Draw origin when visible
-	if(rect.contains(QPointF(0, 0))) {
-		painter->drawLine(QLine(-3.0, 0.0, 3.0, 0.0));
-		painter->drawLine(QLine(0.0, -3.0, 0.0, 3.0));
-	}else{
-	}
 	return;
 	/// \todo getter and setter
 	int GridX = 10;
 	int GridY = 10;
 
 	// Get associated view, assume single view
-	SchematicDoc *v = static_cast<SchematicDoc *>(views().at(0));
+	// SchematicDoc *v = static_cast<SchematicDoc *>(views().at(0));
 
 	// When scaling, adjust visible grid spacing
-	float scale = v->Scale;
+	float scale = 1;// v->Scale;
 	if(scale < 1) {
 		if(scale > 0.5) {
 			GridX *= 4;
