@@ -142,11 +142,12 @@ void QucsDoc::possiblyToggleAction(MouseAction* a, QAction* sender)
 	}else if(!sender->isCheckable()){ untested();
 		cmd = a->activate(sender);
 	}else if(sender->isChecked()){ untested();
-
 		cmd = a->activate(sender);
 
 		if(cmd){ untested();
+			sender->blockSignals(true);
 			sender->setChecked(false);
+			sender->blockSignals(false);
 			// possible 'delete' after select.
 			// don't do anything else
 			a->deactivate();
