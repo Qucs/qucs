@@ -714,6 +714,7 @@ void SchematicDoc::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toI
 // visible area.
 //
 // same as center on union(current, rectangle(xy))??
+// // implemented in QGraphicsView::ensureVisible, it seems
 void SchematicDoc::enlargeView(int x1, int y1, int x2, int y2)
 { untested();
   incomplete();

@@ -89,14 +89,15 @@ SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
 
   // HUH?
   setSceneRect(-2000, -2000, 4000, 4000);
-  Scene = new SchematicScene(this);
+  SchematicScene* Scene = new SchematicScene(this);
   QBrush b(Qt::Dense7Pattern);
   Scene->setBackgroundBrush(b);
-  //Scene->setBackgroundBrush(Qt::blue);
+  // Scene->setBackgroundBrush(Qt::blue);
+  // setBackgroundBrush(Qt::blue);
 
   setDragMode(QGraphicsView::RubberBandDrag); // why?
 
-  this->setScene(Scene);
+  setScene(Scene);
 
   ShowFrame = 0;  // don't show
   FrameText[0] = tr("Title");
@@ -104,13 +105,8 @@ SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
   FrameText[2] = tr("Date:");
   FrameText[3] = tr("Revision:");
 
-#ifdef USE_SCROLLVIEW
-  setVScrollBarMode(Q3ScrollView::AlwaysOn);
-  setHScrollBarMode(Q3ScrollView::AlwaysOn);
-#else
-  this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-  this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-#endif
+  setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+  setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
   misc::setWidgetBackgroundColor(viewport(), QucsSettings.BGColor);
   assert(viewport());
@@ -379,8 +375,22 @@ float SchematicDoc::zoomBy(float s)
 	return Scale;
 }
 
+void SchematicDoc::drawBackground(QPainter *painter, const QRectF &rect)
+{
+	QGraphicsView::drawBackground(painter, rect);
+
+	double n = 10;
+
+	// Draw origin when visible
+	if(rect.contains(QPointF(0, 0))) {
+		painter->drawLine(QLine(-n, 0.0, n, 0.0));
+		painter->drawLine(QLine(0.0, -n, 0.0, n));
+	}else{
+	}
+}
+
 // directly call scale??
-float SchematicDoc::zoom(float s)
+float SchematicDoc::zoom(float)
 { untested();
 	incomplete();
 #if 0
@@ -400,8 +410,8 @@ float SchematicDoc::zoom(float s)
 	viewport()->update();
 	// App->view->drawn = false;
 
-	return 0;
 #endif
+	return 0;
 }
 
 
