@@ -318,7 +318,7 @@ QUndoCommand* MouseActionWire::press1(QGraphicsSceneMouseEvent* ev)
 QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* ev)
 { untested();
   new_gfx();
-  int set1 = 0, set2 = 0;
+//  int set1 = 0, set2 = 0;
 
 	assert(ev);
 	QPointF pos = ev->scenePos(); // mapToScene(ev->pos());
@@ -1225,15 +1225,16 @@ void SchematicDoc::actionSetWire(QAction* sender)
   possiblyToggleAction(schematicActions().maWire, sender);
 }
 
-void SchematicDoc::actionInsertLabel(QAction* on)
+void SchematicDoc::actionInsertLabel(QAction* sender)
 { untested();
+//  possiblyToggleAction(schematicActions().maInsertLabel, sender);
   incomplete();
 //  performToggleAction(on, App->insLabel, 0,
 //		&MouseActions::MMoveLabel, &MouseActions::MPressLabel);
   // mouseAction = mouseActions().maInsLabel;
 }
 
-void SchematicDoc::actionSetMarker(QAction* on)
+void SchematicDoc::actionSetMarker(QAction*)
 { untested();
   incomplete();
 //  performToggleAction(on, App->setMarker, 0,
@@ -1241,7 +1242,7 @@ void SchematicDoc::actionSetMarker(QAction* on)
   // mouseAction = mouseActions().maSetMarker;
 }
 
-void SchematicDoc::actionMoveText(QAction* on)
+void SchematicDoc::actionMoveText(QAction*)
 { untested();
   incomplete();
 //  performToggleAction(on, App->moveText, 0,
@@ -1254,7 +1255,7 @@ void SchematicDoc::actionZoomIn(QAction* sender)
   possiblyToggleAction(schematicActions().maZoomIn, sender);
 }
 
-void SchematicDoc::actionInsertEquation(QAction* on)
+void SchematicDoc::actionInsertEquation(QAction*)
 { untested();
 	incomplete();
 #if 0
@@ -1296,7 +1297,7 @@ void SchematicDoc::actionInsertEquation(QAction* on)
 #endif
 }
 
-void SchematicDoc::actionEditPaste(QAction* on)
+void SchematicDoc::actionEditPaste(QAction* sender)
 { untested();
 #if 0
 	// if it's not a text doc, prevent the user from editing

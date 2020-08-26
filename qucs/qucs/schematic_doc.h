@@ -162,12 +162,13 @@ private:
 
 private:
   // schematic Scene for this View
-  SchematicScene *Scene;
-  SchematicScene *scene() { return Scene; }
+//  SchematicScene *Scene;
+  SchematicScene *scene() {untested(); return prechecked_cast<SchematicScene*>(QGraphicsView::scene()); }
   // schematic frame item
   // Frame *SchematicFrame;
+  void drawBackground(QPainter *painter, const QRectF& rect);
 public:
-  SchematicScene *sceneHACK() { return Scene; }
+  SchematicScene *sceneHACK() {untested(); return scene(); }
 
   // TODO: take iterator?
   Element* detachFromModel(Element* e){
