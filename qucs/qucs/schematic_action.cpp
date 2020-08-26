@@ -691,7 +691,7 @@ QUndoCommand* MouseActionDelete::activate(QAction *sender)
 	auto s = doc().selectedItems();
 	bool selected = !s.empty();
 
-	if(selected){
+	if(selected){ untested();
 		auto cmd = new DeleteSelection(doc(), s);
 		return cmd;
 	}else{
@@ -1147,7 +1147,7 @@ void SchematicDoc::actionEditDelete(QAction* sender)
   possiblyToggleAction(schematicActions().maDelete, sender);
 
   updateViewport();
-  assert(mouseActions());
+//  assert(mouseActions());
 //  mouseActions()->setDrawn(false);
 }
 

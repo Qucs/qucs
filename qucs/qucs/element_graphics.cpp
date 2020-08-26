@@ -120,10 +120,8 @@ bool ElementGraphics::sceneEvent(QEvent* e)
 	ItemEvent ie(*e, *this);
 	if(s->itemEvent(&ie)){ untested();
 		return e->isAccepted();
-		return true;
 	}else if(QGraphicsItem::sceneEvent(e)){ untested();
 		return e->isAccepted();
-		return true;
 	}else{ untested();
 		return false;
 		return e->isAccepted();
