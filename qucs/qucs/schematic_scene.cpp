@@ -97,12 +97,9 @@ SchematicScene::~SchematicScene()
 }
 
 void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
-{
-	incomplete();
-#if 1
+{ itested(); // for now.
 	QGraphicsScene::drawBackground(painter, rect);
-
-	return;
+#if 0
 	/// \todo getter and setter
 	int GridX = 10;
 	int GridY = 10;
@@ -218,13 +215,11 @@ bool SchematicScene::itemEvent(QEvent* e)
 { itested();
 	if(!e){ untested();
 		unreachable();
-	}else if(e->type()==158){ itested();
-		incomplete();
-		// double click on item. TODO open dialog
+		return false;
 	}else{
+		trace1("scene::itemEvent", e->type());
+		return doc()->handleMouseActions(e);
 	}
-	trace1("scene::itemEvent", e->type());
-	return doc()->handleMouseActions(e);
 }
 
 //
