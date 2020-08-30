@@ -221,17 +221,20 @@ QUndoCommand* MouseActionWire::press(QEvent* e)
 { untested();
 	auto m = dynamic_cast<QMouseEvent*>(e);
 	auto se = dynamic_cast<QGraphicsSceneMouseEvent*>(e);
-	trace3("wirepress", m, se, e->type());
-	e->accept();
 
 	if(!se){ untested();
 		unreachable();
+		// QEvent::GraphicsSceneMousePress == 156
+		trace3("wirepress", m, se, e->type());
 	}else if(se->button() == Qt::RightButton){ untested();
 		toggleMode();
+		e->accept();
 	}else if(_phase == 1){ untested();
 		return press1(se);
+		e->accept();
 	}else if(_phase == 2){ untested();
 		return press2(se);
+		e->accept();
 	}else{
 		unreachable();
 	}
@@ -441,7 +444,7 @@ private: // override
 	cmd* release(QMouseEvent*) override;
 	//	cmd* release2(QMouseEvent*); // what is this?
 	// cmd* enter(QEvent*) override;
-	cmd* dblclick(QEvent*) /*override*/;
+	cmd* dblclk(QEvent*) override;
 
 #if 0
 private: // rectangles?  // this was in MouseActions. BUG. remove
@@ -467,12 +470,26 @@ private: // more decoupling
 /*--------------------------------------------------------------------------*/
 
 //void MouseActions::MDoubleClickSelect(SchematicDoc *Doc, QMouseEvent *Event)
-QUndoCommand* MouseActionSelect::dblclick(QEvent*)
+QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
 {
 	incomplete();
 	//  Doc->releaseKeyboard();  // allow keyboard inputs again
 	//  QucsMain->editText->setHidden(true);
 	//  editElement(Doc, Event);
+	Element* elt = nullptr;
+	//
+	if(auto i = dynamic_cast<ItemEvent*>(evt)){
+		// QList<ElementGraphics*> l;
+		elt = element(&i->item());
+		// l.push_back(&i->item());
+	}else{
+	}
+
+	if(elt){
+		elt->editElement(&doc());
+	}else{
+	}
+
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/

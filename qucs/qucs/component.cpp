@@ -1688,8 +1688,9 @@ std::string Component::paramName(unsigned i) const
   return Props.at(i)->name().toStdString();
 }
 
+// undocommand??
 void Component::editElement(QucsDoc* Doc)
-{
+{ untested();
   ComponentDialog* cd = new ComponentDialog(Doc);
   cd->attach(this);
   if(cd->exec() != 1){

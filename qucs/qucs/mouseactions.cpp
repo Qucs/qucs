@@ -38,8 +38,6 @@
 #include <QLineEdit>
 #include <QDebug>
 #include <QUndoStack>
-#include <QStringLiteral> //bug
-#include <QMimeData> //bug
 
 #include <limits.h>
 #include <stdlib.h>
@@ -2002,6 +2000,7 @@ QucsDoc& MouseActions::doc()
 }
 
 
+// TODO: move to schematic_doc or _scene
 bool MouseActions::handle(QEvent*e)
 { itested();
   QUndoCommand* c=nullptr;
@@ -2040,82 +2039,4 @@ void MouseAction::setCursor(QCursor const& c)
   doc().setCursor(c);
 }
 
-#include <QGraphicsSceneEvent> // probably bug
-#include "component_widget.h" // bug
-#if 0
-QUndoCommand* MouseAction::handle(QEvent* e)
-{ itested();
-
-  {
-    // pass to other places unless accepted somewhere else.
-    // assert(is_ignored) instead!
-    e->ignore();
-  }
-  assert(e);
-  auto* m = prechecked_cast<QMouseEvent*>(e);
-  auto* s = prechecked_cast<QGraphicsSceneEvent*>(e);
-  auto a = ComponentWidget::itemMimeType();
-
-  if(auto de=dynamic_cast<QDragLeaveEvent*>(e)){ untested();
-    unreachable();
-    return leave(m);
-  }else if(auto de = dynamic_cast<QDragEnterEvent*>(e)){ untested();
-    trace1("dragenter", de->mimeData()->formats()[0]);
-    unreachable();
-
-    if (de->mimeData()->hasFormat(a)){ untested();
-      // got a pointer. possibly from ComponentWidget
-      e->accept();
-    // }else if (de->mimeData()->hasFormat(someThingElse)){ untested();
-    //   unreachable();
-    //   e->accept();
-    } else{ untested();
-      e->ignore();
-    }
-
-    return enter(m);
-
-    return nullptr;
-  }else if(auto de = dynamic_cast<QDragMoveEvent*>(e)){ untested();
-    trace1("dragmove", de->mimeData()->formats()[0]);
-  }else if(auto de = dynamic_cast<QDropEvent*>(e)){ untested();
-    trace1("dragdrop", de->mimeData()->formats()[0]);
-  }else{
-  }
-
-  // why??
-  switch(e->type()){
-//  case QEvent::MouseLeave:
-//    assert(m);
-//    return leave(m);
-  case QEvent::Leave:
-    return leave(e);
-  case QEvent::Enter:
-    return enter(e);
-  case QEvent::GraphicsSceneMouseMove:
-    // getting here when moving elements.
-  case QEvent::MouseMove:
-    return move(e);
-  case QEvent::GraphicsSceneMouseRelease: untested();
-    return nullptr;
-    //fallthrough
-  case QEvent::MouseButtonRelease: untested();
-    assert(m);
-    return release(m);
-  case QEvent::GrabMouse: untested();
-    return nullptr;
-//    return grab(s);
-  case QEvent::DragEnter: untested();
-    unreachable(); // proper type check above
-    return nullptr;
-  case QEvent::MouseButtonPress: untested();
-  case QEvent::GraphicsSceneMousePress: untested();
-    return press(e);
-  default:
-    trace1("mouseaction miss", e->type());
-    e->ignore();
-    return nullptr;
-  }
-}
-#endif
 // vim:ts=8:sw=2:noet

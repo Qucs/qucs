@@ -22,7 +22,7 @@ public:
 	}
 
 public:
-	void paint(ViewPainter *p) const { untested();
+	void paint(ViewPainter *p) const { itested();
 		assert(p);
 
 		QPoint pm = pmid();
@@ -36,7 +36,7 @@ private:
 	QPoint pmid() const{
 		QPoint pm;
 		switch(_mode){
-		case am_H: untested();
+		case am_H: itested();
 			pm = _p0;
 			pm.setX(_p1.x());
 			break;
@@ -52,7 +52,7 @@ private: // symbol
 	unsigned numPorts() const{ return 2; }
 	void setParameter(std::string const& n, std::string const& v);
 
-	QRectF boundingRect() const { untested();
+	QRectF boundingRect() const { itested();
 	  int xlo = std::min(_p0.x(), _p1.x());
 	  int xhi = std::max(_p0.x(), _p1.x());
 	  int ylo = std::min(_p0.y(), _p1.y());
