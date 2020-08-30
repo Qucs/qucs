@@ -33,10 +33,10 @@ PKG_CONFIG=pkg-config
 
 AC_ARG_WITH(qt_name,
     AS_HELP_STRING([--with-qt-name],
-        [Use a specific Qt for building. @<:@default=Qt@:>@])
-    [ Various platforms provide Qt, Qt4 and/or Qt5 ] )
+        [Use a specific Qt for building. @<:@default=Qt5@:>@ \
+    Various platforms provide Qt, Qt4 and/or Qt5 ] ) )
 
-qt_name=Qt
+qt_name=Qt5
 
 AS_IF( [ test -n "$with_qt_name" ],
        [ qt_name=$with_qt_name ] )
