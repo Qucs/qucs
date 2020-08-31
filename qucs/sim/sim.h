@@ -1,8 +1,5 @@
 /***************************************************************************
-                                sim.h
-                              ----------
-    begin                : yes
-    copyright            : (C) 2015 by Felix Salfelder
+    copyright            : (C) 2015, 2020 by Felix Salfelder
     email                : felix@salfelder.org
  ***************************************************************************/
 
@@ -31,15 +28,19 @@ class Component;
 #include "object.h"
 #include "language.h"
 
-/*!
- * class to provide simulator duties
- */
+class DocumentFormat;
+
+// simulatorDriver maybe?
 class Simulator : public Object{
 public:
   virtual ~Simulator(){}
 
   virtual NetLang const* netLang() const{return nullptr;}
+  virtual DocumentFormat const* netLister() const{return nullptr;}
 //  virtual SimOutputData const* results(){}
+//
+public:
+  // virtual void attach_control(QucsDoc*); maybe?
 };
 
 //obsolete?
