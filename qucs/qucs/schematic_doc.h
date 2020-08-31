@@ -560,7 +560,7 @@ public: // for now
 		return _model->createLibNetlist(a,b,c, nl);
   }
   // used in main?
-  QString createNetlist(DocumentStream& a, int b, NetLang const& nl){
+  QString createNetlist(DocumentStream& a, int b, NetLang const& nl) const{
 	  assert(_model);
 	  return _model->createNetlist(a, b, nl);
   }
@@ -627,6 +627,7 @@ private:
   QUndoStack* undoStack() override{ return _undoStack; }
 public: // serializer
   void saveComponent(QTextStream& s, Component const* c) const;
+  SchematicSymbol const* root() const { return _root; }
 
 public: // need access to SchematicModel. grr
   friend class MouseActions;

@@ -49,6 +49,7 @@ using namespace std;
 #include "components/vhdlfile.h"
 #include "misc.h"
 #include "globals.h"
+#include "docfmt.h"
 
 /*!
  * \brief Create a simulation messages dialog.
@@ -62,10 +63,13 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
   setWindowTitle(tr("Qucs Simulation Messages"));
   QucsDoc *Doc;
   DocWidget = w;
-  if(QucsApp::isTextDocument(DocWidget))
+
+  // huh? setup_doc?
+  if(QucsApp::isTextDocument(DocWidget)){
     Doc = (QucsDoc*) ((TextDoc*)DocWidget);
-  else
+  } else{
     Doc = (QucsDoc*) ((SchematicDoc*)DocWidget);
+  }
 
   DocName = Doc->docName();
   DataDisplay = Doc->DataDisplay;
@@ -131,12 +135,6 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
   connect(this,SIGNAL(rejected()),SLOT(AbortSim()));
 }
 
-/*!
- * \brief Delete the simulation messages dialog.
- *
- *  Delete the simulation messages dialog and kill the simulation process,
- *  if still running.
- */
 SimMessage::~SimMessage()
 {
   if(SimProcess.state()==QProcess::Running)  SimProcess.kill();
@@ -156,43 +154,60 @@ bool SimMessage::startProcess()
 
   SimProcess.blockSignals(false);
  /* On Qt4 it shows as running even before we .start it. FIXME*/
-  if(SimProcess.state()==QProcess::Running ||SimProcess.state()==QProcess::Starting) {
-    qDebug() << "running!";
-    ErrText->appendPlainText(tr("ERROR: Simulator is still running!"));
+  if(SimProcess.state()==QProcess::Running ||SimProcess.state()==QProcess::Starting) { untested();
+    qDebug() << "running";
+    ErrText->appendPlainText(tr("ERROR: Simulator is still running"));
     FinishSimulation(-1);
     return false;
+  }else{ untested();
   }
 
   Collect.clear();  // clear list for NodeSets, SPICE components etc.
   ProgText->appendPlainText(tr("creating netlist... "));
   NetlistFile.setFileName(QucsSettings.QucsHomeDir.filePath("netlist.txt"));
-   if(!NetlistFile.open(QIODevice::WriteOnly)) {
+  if(!NetlistFile.open(QIODevice::WriteOnly)) {
     ErrText->appendPlainText(tr("ERROR: Cannot write netlist file!"));
     FinishSimulation(-1);
+    incomplete();
     return false;
+  }else{ untested();
   }
 
   Stream.setDevice(&NetlistFile);
 
-  // BUG: ask simulator
-  auto dl=doclang_dispatcher["qucsator"];
+  // BUG: ask simulator driver
+  auto dl=docfmt_dispatcher["qucsator"];
   assert(dl);
-  NetLang const* n=prechecked_cast<NetLang const*>(dl);
+  DocumentFormat const* n = prechecked_cast<DocumentFormat const*>(dl);
   assert(n);
 
-  if(!QucsApp::isTextDocument(DocWidget)) {
-    incomplete(); // use a netlister.
+  if(QucsApp::isTextDocument(DocWidget)) { untested();
+    incomplete();
+    // throw(Error(" Cannot simulate a text file");
+  }else if(SchematicDoc const* d=dynamic_cast<SchematicDoc const*>(DocWidget)){ untested();
+    assert(d->root());
+    trace1("save", dl);
+
+    /// BUG. previously, there was an obsolete "prepareNetlist" call in "startProcess". ///
+    // n->save(Stream, *d->root());
   // auto& nl=*n;
 //    SimPorts = ((SchematicDoc*)DocWidget)->prepareNetlist(Stream, Collect, ErrText, nl);
-    if(SimPorts < -5) {
-      NetlistFile.close();
-      ErrText->appendPlainText(tr("ERROR: Cannot simulate a text file!"));
-      FinishSimulation(-1);
-      return false;
-    }
+  }else{ untested();
+    incomplete();
   }
-  Collect.append("*");   // mark the end
 
+#if 0 //???
+  if(SimPorts < -5) {
+    NetlistFile.close();
+    ErrText->appendPlainText(tr("ERROR: Cannot simulate a text file!"));
+    FinishSimulation(-1);
+    return false;
+  }
+#endif
+
+  // Collect.append("*");   // mark the end??
+  //
+  // simulator->init(doc)??
 
   disconnect(&SimProcess, 0, 0, 0);
   connect(&SimProcess, SIGNAL(readyReadStandardError()), SLOT(slotDisplayErr()));
@@ -201,17 +216,17 @@ bool SimMessage::startProcess()
   connect(&SimProcess, SIGNAL(finished(int)),
                        SLOT(slotFinishSpiceNetlist(int)));
 
-  nextSPICE();
+//  nextSPICE(); /// ???
+  startSimulator();
   return true;
   // Since now, the Doc pointer may be obsolete, as the user could have
   // closed the schematic !!!
 }
 
-/*!
- * \brief Converts a spice netlist into Qucs format and outputs it.
- */
+// BUG: must create netlist in netlister.
 void SimMessage::nextSPICE()
-{
+{ untested();
+  incomplete();
   QString Line;
   for(;;) {  // search for next SPICE component
     Line = *(Collect.begin());
@@ -233,25 +248,34 @@ void SimMessage::nextSPICE()
 
   QString FileName = Line.section('"', 1,1);
   Line = Line.section('"', 2);  // port nodes
-  if(Line.isEmpty())  makeSubcircuit = false;
-  else  makeSubcircuit = true;
+  if(Line.isEmpty()){
+    makeSubcircuit = false;
+  } else{
+    makeSubcircuit = true;
+  }
 
   QString prog;
   QStringList com;
   prog = QucsSettings.Qucsconv;
-  if(makeSubcircuit)
+  if(makeSubcircuit){
     com << "-g" << "_ref";
+  }else{
+  }
   com << "-if" << "spice" << "-of" << "qucs";
 
   QFile SpiceFile;
-  if(FileName.indexOf(QDir::separator()) < 0)  // add path ?
+  if(FileName.indexOf(QDir::separator()) < 0){
+    // add path ?
     SpiceFile.setFileName(QucsSettings.QucsWorkDir.path() + QDir::separator() + FileName);
-  else
+  }else{
     SpiceFile.setFileName(FileName);
+  }
+
   if(!SpiceFile.open(QIODevice::ReadOnly)) {
     ErrText->appendPlainText(tr("ERROR: Cannot open SPICE file \"%1\".").arg(FileName));
     FinishSimulation(-1);
     return;
+  }else{
   }
 
   if(makeSubcircuit) {
@@ -260,6 +284,7 @@ void SimMessage::nextSPICE()
     Line.replace(',', ' ');
     Stream << Line;
     if(!Line.isEmpty()) Stream << " _ref";
+  }else{
   }
   Stream << "\n";
 
@@ -272,6 +297,7 @@ void SimMessage::nextSPICE()
     ErrText->appendPlainText(tr("SIM ERROR: Cannot start QucsConv!"));
     FinishSimulation(-1);
     return;
+  }else{
   }
 
   QByteArray SpiceContent = SpiceFile.readAll();
@@ -318,14 +344,16 @@ void SimMessage::slotFinishSpiceNetlist(int status )
 {
   Q_UNUSED(status);
 
-  if(makeSubcircuit)
+  if(makeSubcircuit){ untested();
     Stream << ".Def:End\n\n";
+  }else{ untested();
+  }
 
   nextSPICE();
 }
 
 // ------------------------------------------------------------------------
-#ifdef __MINGW32__
+#ifdef __MINGW32__ // -> platform.h
 #include <windows.h>
 static QString pathName(QString longpath) {
   const char * lpath = QDir::toNativeSeparators(longpath).toAscii();
@@ -346,14 +374,17 @@ static QString pathName(QString longpath) {
  */
 void SimMessage::startSimulator()
 {
-  // Using the Doc pointer here is risky as the user may have closed
-  // the schematic, but converting the SPICE netlists is (hopefully)
-  // faster than the user (I have no other idea).
+  // BUG: Using the Doc pointer here is wrong as the user may have closed the
+  // schematic, but netlisting may be faster than the user.
+
+  // something like this?
+  // _simulator->attach(doc);
+  // _simulator->run();
 
   QString SimTime;
   QStringList Arguments;
   QString SimPath = QDir::toNativeSeparators(QucsSettings.QucsHomeDir.absolutePath());
-#ifdef __MINGW32__
+#ifdef __MINGW32__ // -> platform.h
   QString QucsDigiLib = "qucsdigilib.bat";
   QString QucsDigi = "qucsdigi.bat";
   QString QucsVeri = "qucsveri.bat";
@@ -366,44 +397,39 @@ void SimMessage::startSimulator()
   bool isVerilog = false;
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
 
-  // Simulate text window.
-  if(QucsApp::isTextDocument(DocWidget)) {
-
-    TextDoc * Doc = (TextDoc*)DocWidget;
+  if(TextDoc const* Doc=dynamic_cast<TextDoc const*>(DocWidget)){ untested();
+    incomplete();
 
     // Take VHDL file in memory as it could contain unsaved changes.
     Stream << Doc->toPlainText();
     NetlistFile.close();
     ProgText->insertPlainText(tr("done.\n"));  // of "creating netlist...
 
-    // Simulation.
     if (Doc->simulation) {
       SimTime = Doc->SimTime;
+
       QString libs = Doc->Libraries.toLower();
-      /// \todo \bug error: unrecognized command line option '-Wl'
-#ifdef __MINGW32__
+#ifdef __MINGW32__ // -> platform.h
       if(libs.isEmpty()) {
         libs = "";
-      }
-      else {
+      } else {
         libs.replace(" ",",-l");
         libs = "-Wl,-l" + libs;
       }
 #else
       if(libs.isEmpty()) {
         libs = "-c";
-      }
-      else {
+      } else {
         libs.replace(" ",",-l");
         libs = "-c,-l" + libs;
       }
 #endif
+
       Program = pathName(QucsSettings.BinDir + QucsDigi);
       Arguments  << QucsSettings.QucsHomeDir.filePath("netlist.txt")
                  << DataSet << SimTime << pathName(SimPath)
                  << pathName(QucsSettings.BinDir) << libs;
-    }else{
-      // no simulation
+    }else{ // no Doc->simulation, but textDoc
       incomplete();
 #if 0
       QString text = Doc->toPlainText();
@@ -443,9 +469,8 @@ void SimMessage::startSimulator()
                 << lib;
 #endif
     }
-  }
-  // Simulate schematic window.
-  else {
+  }else if(SchematicDoc const* d=dynamic_cast<SchematicDoc const*>(DocWidget)){ untested();
+
     // output NodeSets, SPICE simulations etc.
     for(QStringList::Iterator it = Collect.begin();
 	it != Collect.end(); ++it) {
@@ -459,18 +484,24 @@ void SimMessage::startSimulator()
     }
     Stream << '\n';
 
-    isVerilog = ((SchematicDoc*)DocWidget)->isVerilog;
+//    isVerilog = ((SchematicDoc*)DocWidget)->isVerilog;
     Simulator const* sd=simulator_dispatcher["qucsator"];
     assert(sd); //for now.
-    auto nl = sd->netLang();
-    assert(nl);
-    SimTime = ((SchematicDoc*)DocWidget)->createNetlist(Stream, SimPorts, *nl);
+    // BUG: ask simulator driver
+    auto dl=sd->netLister();
+    assert(dl);
+    DocumentFormat const* n=prechecked_cast<DocumentFormat const*>(dl);
+    assert(n);
+
+//    SimTime = d->createNetlist(Stream, SimPorts, *nl);
+    n->save(Stream, *d->root());
     if(SimTime.length()>0&&SimTime.at(0) == '\xA7') {
       NetlistFile.close();
       ErrText->insertPlainText(SimTime.mid(1));
       FinishSimulation(-1);
       return;
     }
+#if 0
     if (isVerilog) {
       Stream << "\n"
 	     << "  initial begin\n"
@@ -480,6 +511,7 @@ void SimMessage::startSimulator()
 	     << "  end\n\n"
 	     << "endmodule // TestBench\n";
     }
+#endif
     NetlistFile.close();
     ProgText->insertPlainText(tr("done.\n"));  // of "creating netlist...
 
@@ -487,7 +519,12 @@ void SimMessage::startSimulator()
 
       // append command arguments
       // append netlist with same arguments
-      if (! Module::vaComponents.isEmpty()) {
+      if (Module::vaComponents.isEmpty()) {
+      }else if(0){ untested();
+        // ?
+        // BUG: use netlist format
+        // BUG: parsing netlist.txt here??
+        incomplete();
 
           /*! Only pass modules to Qucsator that are indeed used on
            * the schematic,it might be the case that the user loaded the icons,
@@ -500,9 +537,9 @@ void SimMessage::startSimulator()
           */
           QStringList usedComponents;
 
-          if (!NetlistFile.open(QIODevice::ReadOnly))
+          if (!NetlistFile.open(QIODevice::ReadOnly)) {
              QMessageBox::critical(this, tr("Error"), tr("Cannot read netlist!"));
-          else {
+          }else{
              QString net = QString(NetlistFile.readAll());
 
              QMapIterator<QString, QString> i(Module::vaComponents);
@@ -515,8 +552,6 @@ void SimMessage::startSimulator()
           }
 
           if (! usedComponents.isEmpty()) {
-
-
             /// \todo remvoe the command line arguments? use only netlist annotation?
             //Arguments << "-p" << QucsSettings.QucsWorkDir.absolutePath()
             //          << "-m" << usedComponents;
@@ -524,9 +559,9 @@ void SimMessage::startSimulator()
 
             /// Anotate netlist with Verilog-A dynamic path and module names
             ///
-            if (!NetlistFile.open(QFile::Append | QFile::Text))
+            if (!NetlistFile.open(QFile::Append | QFile::Text)){
                QMessageBox::critical(this, tr("Error"), tr("Cannot read netlist!"));
-            else {
+            }else{
                QTextStream out(&NetlistFile);
                out << "\n";
                out << "# --path=" << QucsSettings.QucsWorkDir.absolutePath() << "\n";
@@ -537,8 +572,8 @@ void SimMessage::startSimulator()
           }
       } // vaComponents not empty
 
-#if 0 // BUG
-      if((SimOpt = findOptimization((SchematicDoc*)DocWidget))) {
+#if 0 // not here.
+      if(SimOpt = findOptimization(d)) {
 	    ((Optimize_Sim*)SimOpt)->createASCOnetlist();
 
         Program = QucsSettings.AscoBinDir.canonicalPath();
@@ -548,16 +583,15 @@ void SimMessage::startSimulator()
         Arguments << "-qucs" << QucsSettings.QucsHomeDir.filePath("asco_netlist.txt")
                   << "-o" << "asco_out"
                   << "-s" << "\"" + QDir::toNativeSeparators(QucsSettings.Qucsator) + "\"";
-      }
-      else {
+      } else
+#endif
+      {
         Program = QucsSettings.Qucsator;
         Arguments << "-b" << "-g" << "-i"
                   << QucsSettings.QucsHomeDir.filePath("netlist.txt")
                   << "-o" << DataSet;
       }
-#endif
-    }
-    else {
+    } else {
       if (isVerilog) {
           Program = QDir::toNativeSeparators(QucsSettings.BinDir + QucsVeri);
           Arguments << QDir::toNativeSeparators(QucsSettings.QucsHomeDir.filePath("netlist.txt"))
@@ -568,7 +602,7 @@ void SimMessage::startSimulator()
                     << "-c";
       } else {
 /// \todo \bug error: unrecognized command line option '-Wl'
-#ifdef __MINGW32__
+#ifdef __MINGW32__ // -> platform.h
     Program = QDir::toNativeSeparators(pathName(QucsSettings.BinDir + QucsDigi));
     Arguments << QDir::toNativeSeparators(QucsSettings.QucsHomeDir.filePath("netlist.txt"))
               << DataSet
@@ -584,6 +618,9 @@ void SimMessage::startSimulator()
 #endif
       }
     }
+  }else{
+    incomplete();
+//    throw ..
   }
 
   disconnect(&SimProcess, 0, 0, 0);
@@ -601,17 +638,11 @@ void SimMessage::startSimulator()
 
   ProgressText = "";
 
-#ifdef __MINGW32__
-  QString sep(";"); // path separator
-#else
-  QString sep(":");
-#endif
-
+  QString sep(PATHSEP);
   SimProcess.setProcessEnvironment(env);
 
   qDebug() << "Command :" << Program << Arguments.join(" ");
   SimProcess.start(Program, Arguments); // launch the program
-
 }
 
 // ------------------------------------------------------------------------
