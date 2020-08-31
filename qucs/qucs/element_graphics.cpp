@@ -51,9 +51,10 @@ ElementGraphics* ElementGraphics::clone() const
 
 ElementGraphics::~ElementGraphics()
 {
-	if(isVisible()){ untested();
+	if(isVisible()){ itested();
 		// element is owned by SchematicModel.
 	}else{ untested();
+		// check: is this correct?
 		delete(_e);
 	}
 }
