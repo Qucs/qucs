@@ -5,32 +5,21 @@
 
 0.1.0
 =====
-* qt4 with qt3 support
-  USE_SCROLLVIEW
-* possibly qucs only
-  use qucsator 0.0.20
+* move to qt5, graphicsView etc.
+  - mouse/user actions rework
+  - undo stack
+  - hidpi (?)
+* possibly qucs only (use qucsator 0.0.20)
 * refactoring
   - dissect Schematic into model, actions and doc
   - pluggable netlister and schematic parser/writer
   - pluggable components
-  - untangled QucsDoc
-  - mouse actions cleanup (qt5 compliant)
+  - untangle QucsDoc
 * postponed to 0.1.*
-  - SymbolEditor (does not work)
-  - undo stack (it never existed)
-  - isThis, isThat hacks in netlister (use different plugins)
+  - SymbolEditor
+  - netlister hacks
+  - some plugins
 
-0.1.20 (optional)
+0.1.20
 ======
 * 0.0.20, feature-wise
-
-0.2.0
-=====
-* qt5
-  - make schematicScene work
-* qt4+qt3support
-  - should still run, for reference & debugging
-
-0.3.0
-=====
-* drop all scrollview code
