@@ -2152,55 +2152,6 @@ QucsDoc& MouseActions::doc()
   return _doc;
 }
 
-// SchematicMouseAction::doc?
-SchematicDoc const& MouseAction::doc() const
-{ untested();
-  auto cc = const_cast<MouseAction*>(this);
-  return cc->doc();
-}
-
-SchematicDoc& MouseAction::doc()
-{ untested();
-  QucsDoc* c=&_ctx.doc();
-  auto cc = dynamic_cast<SchematicDoc*>(c);
-  assert(cc);
-  return *cc;
-}
-
-QPointF MouseAction::mapToScene(QPoint const& p) const
-{
-  return doc().mapToScene(p);
-}
-
-void MouseAction::updateViewport()
-{ untested();
-  ctx().updateViewport(); // use a signal?
-}
-void MouseActions::updateViewport()
-{ untested();
-
-  SchematicDoc* s = dynamic_cast<SchematicDoc*>(&doc());
-  if(s){
-    s->updateViewport(); // use a signal?
-  }else{ untested();
-  }
-}
-
-QUndoCommand* MouseAction::activate(QAction* sender)
-{ untested();
-  _sender = sender;
-  return nullptr;
-}
-
-void MouseAction::uncheck()
-{
-  if(_sender){ untested();
-    _sender->blockSignals(true); // do not call toggle slot
-    _sender->setChecked(false);       // set last toolbar button off
-    _sender->blockSignals(false);
-  }else{ untested();
-  }
-}
 
 bool MouseActions::handle(QEvent*e)
 { itested();
@@ -2237,6 +2188,7 @@ void MouseActions::executeCommand(QUndoCommand* c)
 
 #include <QGraphicsSceneEvent> // probably bug
 #include "component_widget.h" // bug
+#if 0
 QUndoCommand* MouseAction::handle(QEvent* e)
 {
   untested();
@@ -2308,4 +2260,5 @@ QUndoCommand* MouseAction::handle(QEvent* e)
     return nullptr;
   }
 }
+#endif
 // vim:ts=8:sw=2:noet

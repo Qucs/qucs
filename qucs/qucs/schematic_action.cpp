@@ -97,6 +97,7 @@ public:
 		: MouseAction(ctx), _gfx(nullptr) {}
 private:
 //	cmd* activate(QAction* sender) override;
+	cmd* deactivate() override;
 	cmd* move(QEvent*) override;
 	cmd* press(QEvent*) override;
 	cmd* enter(QEvent*) override;
@@ -146,17 +147,27 @@ QUndoCommand* MouseActionNewElement::release(QMouseEvent* ev)
 
 	assert(element(_gfx));
 	auto elt = element(_gfx);
+	assert(elt);
 
-	doc().takeOwnership(elt); // BUG?
-	elt = elt->clone(); // BUG, clone replicates port connections
+	cmd* c = new NewElementCommand(doc(), _gfx);
 
-	incomplete(); // produce undocommand instead, and transfer _gfx
-	element(_gfx)->attachToModel();
-
-	_gfx = new ElementGraphics(elt);
-	doc().sceneAddItem(_gfx); // does not attach.
+	{ untested();
+		_gfx = _gfx->clone(); // new ElementGraphics(elt);
+		doc().sceneAddItem(_gfx); // does not attach.
+		assert(!element(_gfx)->scope());
+	}
 
 	ev->accept();
+	return c;
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionNewElement::deactivate()
+{
+	// assert(!attached);
+	doc().sceneRemoveItem(_gfx);
+	delete _gfx; // TODO: owns _elt?
+	_gfx = nullptr;
+	incomplete();
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
@@ -175,9 +186,9 @@ QUndoCommand* MouseActionNewElement::move(QEvent* ev)
 		unreachable();
 	}
 
-	if(_gfx){
+	if(_gfx){ untested();
 		_gfx->setPos(sp.x(), sp.y());
-	}else{
+	}else{ untested();
 		unreachable();
 	}
 
@@ -616,7 +627,7 @@ QUndoCommand* MouseActionSelect::release(QMouseEvent *Event)
 		auto p = s.first()->pos().toPoint();
 		auto p1_ = element(s.first())->center();
 		auto p1 = QPoint(getX(p1_), getY(p1_));
-		auto delta = p-p1;
+		auto delta = p - p1;
 		int fX = int(delta.x());
 		int fY = int(delta.y());
 	
@@ -723,7 +734,6 @@ SchematicActions::SchematicActions(SchematicDoc& ctx)
   maMirrorX = new MouseAction(*this);
   maMirrorY = new MouseAction(*this);
   maRotate = new MouseAction(*this);
-
 
   // this was in App previously, and scattered across a couple of pointer hacks.
   // possibly initialised to "select". recheck.

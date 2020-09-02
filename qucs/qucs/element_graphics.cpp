@@ -28,6 +28,18 @@ ElementGraphics::ElementGraphics() : QGraphicsItem()
 	unreachable();
 }
 
+ElementGraphics::ElementGraphics(ElementGraphics const& e) 
+	: QGraphicsItem() // copy disabled
+{ untested();
+	assert(e._e);
+	_e = e._e->clone();
+
+//	_e->disconnect(); // BUG?
+
+	auto sp = e._e->center();
+	QGraphicsItem::setPos(sp.first, sp.second);
+}
+
 ElementGraphics::ElementGraphics(Element* e)
 	: QGraphicsItem(), _e(e)
 {
@@ -35,7 +47,23 @@ ElementGraphics::ElementGraphics(Element* e)
 	setAcceptHoverEvents(true);
 	assert(_e);
 	auto p = _e->center();
+	prepareGeometryChange(); // needed??
+	trace1("EGE", p);
 	QGraphicsItem::setPos(p.first, p.second);
+}
+
+ElementGraphics* ElementGraphics::clone() const
+{
+	return new ElementGraphics(*this);
+}
+
+ElementGraphics::~ElementGraphics()
+{
+	if(isVisible()){ untested();
+		delete(_e);
+	}else{ untested();
+		// element is owned by SchematicModel.
+	}
 }
 
 void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*)
@@ -121,10 +149,13 @@ void ElementGraphics::moveElement(P const& delta)
 	QGraphicsItem::setPos(p.first, p.second);
 }
 	
-// void ElementGraphics::setPos(int i, int j, bool relative=false)
-// {
-// 	_e->setCenter(dx, dy, true);
-// }
+void ElementGraphics::setPos(int i, int j, bool relative)
+{
+	assert(!relative); // use move, for now.
+	// prepareGeometryChange();
+	QGraphicsItem::setPos(i, j);
+	_e->setCenter(i, j, false);
+}
 	
 
 template

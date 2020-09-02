@@ -157,7 +157,8 @@ void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2, float Corr)
 // move to Element?
 void Component::setCenter(int x, int y, bool relative)
 {
-  if(scope()){
+  // to Symbol
+  if(scope()){ untested();
     scope()->disconnect(this);
   }else{ untested();
   }
@@ -170,6 +171,7 @@ void Component::setCenter(int x, int y, bool relative)
     Element::cy = y;
   }
 
+  // to Symbol
   if(scope()){ untested();
     scope()->connect(this);
   }else{ untested();

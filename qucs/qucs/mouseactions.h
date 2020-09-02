@@ -49,13 +49,14 @@ public:
 	cmd* handle(QEvent*);
 
 	virtual cmd* activate(QAction* sender);
+	virtual cmd* deactivate();
 // private: TODO
 	// TODO: only use POS in those
 	virtual cmd* move(QEvent*) { return nullptr; }
 	virtual cmd* press(QEvent*) { return nullptr; }
 	// virtual cmd* grab(QGraphicsSceneEvent*) { return nullptr; }
 	virtual cmd* release(QMouseEvent*) { return nullptr; }
-	virtual cmd* dblclk(QMouseEvent*) { return nullptr; }
+	virtual cmd* dblclk(QEvent*) { return nullptr; }
 
 	virtual cmd* generic(QEvent*) { return nullptr; }
 	virtual cmd* enter(QEvent*) { untested(); return nullptr; }

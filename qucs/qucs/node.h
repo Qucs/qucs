@@ -27,8 +27,8 @@ class AdjNodeRange;
 
 class Node : public Conductor, public Element /* Object? */ {
 private:
-  Node(Node const&){ unreachable(); }
-  Node(Node const&&){ unreachable(); }
+  Node(Node const&) = delete;
+  Node(Node const&&) = delete;
 private: // managed by NodeMap
   friend class NodeMap;
   explicit Node(std::pair<int, int>);
