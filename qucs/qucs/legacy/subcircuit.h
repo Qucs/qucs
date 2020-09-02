@@ -63,9 +63,6 @@ private: // overrides
 
   // create full prototype element, bit of a hack
   Symbol const* proto(SchematicModel const* schem) const override;
-  
-  // obsolete?
-  void tAC(QTextStream&, SchematicModel const*, QStringList&, int&, int, NetLang const&);
 };
 
 // } // namespace
