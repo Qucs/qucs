@@ -35,8 +35,8 @@ Subcircuit::Subcircuit() : Component() // gaah sckt_base
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("subcircuit");
 
-  Props.append(new Property("File", "", false,
-		QObject::tr("name of qucs schematic file")));
+//  Props.append(new Property("File", "", false,
+//		QObject::tr("name of qucs schematic file")));
 
   setType("Sub");
 
@@ -47,8 +47,20 @@ Subcircuit::Subcircuit() : Component() // gaah sckt_base
 }
 
 // ---------------------------------------------------------------------
+Subcircuit::Subcircuit(Subcircuit const&x) : Component(x)
+{
+  Props.append(new Property("File", "", false,
+		QObject::tr("name of qucs schematic file")));
+
+  setType("Sub");
+
+  new_subckt(); // triggers sckt expansion
+}
+
+// ---------------------------------------------------------------------
 Component* Subcircuit::newOne()
 {
+	unreachable();
   Subcircuit *p = new Subcircuit();
   p->setLabel("-newOne-"); // TODO
   p->Props.getFirst()->Value = Props.getFirst()->Value;
