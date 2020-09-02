@@ -21,19 +21,25 @@
 namespace{
 
 class DC_Sim : public Command  {
+private:
+	DC_Sim(DC_Sim const&);
 public:
-  DC_Sim();
+  explicit DC_Sim();
   ~DC_Sim();
   Element* clone() const{
 	  return new DC_Sim(*this);
   }
   static Element* info(QString&, char* &, bool getNewOne=false);
 }D;
-Dispatcher<Command>::INSTALL p(&command_dispatcher, ".DC", &D);
+Dispatcher<Command>::INSTALL p(&command_dispatcher, "DC", &D);
 Module::INSTALL pp("simulations", &D);
 
+DC_Sim::DC_Sim(DC_Sim const& s) : Command(s)
+{
+	setName("DC"); // really?
+}
 
-DC_Sim::DC_Sim()
+DC_Sim::DC_Sim() : Command()
 {
   Description = QObject::tr("dc simulation");
 
@@ -55,7 +61,6 @@ DC_Sim::DC_Sim()
 
   tx = 0;
   ty = y2+1;
-  setName("DC");
 
   Props.append(new Property("Temp", "26.85", false,
 		QObject::tr("simulation temperature in degree Celsius")));
@@ -87,6 +92,7 @@ DC_Sim::~DC_Sim()
 
 Element* DC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
+	unreachable();
   Name = QObject::tr("dc simulation");
   BitmapFile = (char *) "dc";
 

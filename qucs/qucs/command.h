@@ -87,6 +87,7 @@ public:
 protected:
 public: // HACK
   void obsolete_name_override_hack(QString x){
+	  unreachable(); // not sure what this was meant to do.
 	  Name = x;
   }
   // BUG: a command is not a symbol
