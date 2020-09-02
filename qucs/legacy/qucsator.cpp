@@ -1,7 +1,5 @@
 /***************************************************************************
-                             qucsator.cc
-                              ----------
-    copyright            : (C) 2015, 2019 Felix Salfelder
+    copyright            : (C) 2015, 2019, 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -35,6 +33,7 @@
 #include "paintings/paintings.h"
 
 namespace {
+
 // qucslang language implementation
 class QucsLang : public NetLang {
 private: // NetLang
@@ -65,9 +64,6 @@ void QucsLang::printSymbol(Symbol const* d, stream_t& s) const
 	}
 }
 
-// BUG
-std::vector<QString> netLabels;
-
 // partly from Schematic::createSubnetlistplain
 void QucsLang::printSubckt(SubcktProto const* p, stream_t& s) const
 {
@@ -80,7 +76,7 @@ void QucsLang::printSubckt(SubcktProto const* p, stream_t& s) const
 	// print_ports();
 	//
 	for(unsigned i=0; sym->portExists(i); ++i){
-		auto N=p->portValue(i);
+		auto N = p->portValue(i);
 //		if(N=="0"){
 //			N = "gnd";
 //		}else{
@@ -146,15 +142,13 @@ void QucsLang::printCommand(Command const* c, stream_t& s) const
 	}
 }
 
-/*!
- * print Components in qucs language
- */
+// print Component in qucsator language
 void QucsLang::printComponent(Component const* c, stream_t& s) const
 {
 	if(c->isActive != COMP_IS_ACTIVE){
 		// comment out?
 		incomplete();
-	}else{ untested();
+	}else{ itested();
 	}
 	assert(c);
 	trace2("pc", c->label(), c->type());
@@ -172,7 +166,7 @@ void QucsLang::printComponent(Component const* c, stream_t& s) const
 			s << "R:" << c->label() << "." << QString::number(z++) << " "
 				<< Node1 << " " << iport.next()->value()->label() << " R=\"0\"\n";
 		}
-	}else{ untested();
+	}else{ itested();
 		if(dynamic_cast<Subcircuit const*>(c)) { untested();
 			s << "Sub:" << c->label();
 		}else{ untested();
@@ -181,7 +175,7 @@ void QucsLang::printComponent(Component const* c, stream_t& s) const
 
 		Symbol const* sym=c;
 		trace2("print", sym->numPorts(), sym->label());
-		for(unsigned i=0; i<sym->numPorts(); ++i){ untested();
+		for(unsigned i=0; i<sym->numPorts(); ++i){ itested();
 			QString N = sym->portValue(i);
 
 //			if(N=="0"){
@@ -191,30 +185,28 @@ void QucsLang::printComponent(Component const* c, stream_t& s) const
 			s << " " << N;
 		}
 
-		for(auto p2 : c->params()) { untested();
+		for(auto p2 : c->params()) { itested();
 			if(!p2){ untested();
 				incomplete();
-			}else if(p2->name() == "Symbol") { untested();
+			}else if(p2->name() == "Symbol") { itested();
 				// hack??
-			}else{ untested();
+			}else{ itested();
 				s << " " << p2->name() << "=\"" << p2->value() << "\"";
 			}
 		}
 		if(dynamic_cast<Subcircuit const*>(c)) { untested();
 			s << " Type=\"" << QString::fromStdString(c->type()) << "\"";
-		}else{ untested();
+		}else{ itested();
 		}
 		s << '\n';
-		untested();
 	}
 	untested();
 }
 
-
-
 // -------------------------------------------------------------------
 // PLAN/TODO: merge into (legacy) qucsator driver below
 //    meant to produce a netlist including the qucsator commands and process
+// (this is reminiscent of a "command", but qucs does not have commands)
 class LegacyNetlister : public DocumentFormat{
 private: // legacy implementation
   void createNetlist(DocumentStream& stream, SchematicSymbol const& m) const;
@@ -230,12 +222,36 @@ private:
 }LNL;
 static Dispatcher<DocumentFormat>::INSTALL p1(&docfmt_dispatcher, "qucsator|legacy_nl", &LNL);
 
-// qucsator simulator backend
+#if 1
+// qucsator simulator backend. move to sim/qucsator.cpp
 class Qucsator : public Simulator{
-  NetLang const* netLang() const override {return &qucslang;}
+public:
+	explicit Qucsator() : Simulator() {}
+	Qucsator(Qucsator const&) = delete;
+	~Qucsator(){}
+private: // Simulator
+  NetLang const* netLang() const override {
+	  return dynamic_cast<NetLang const*>(doclang_dispatcher["qucsator"]);
+  }
   DocumentFormat const* netLister() const override {return &LNL;}
 }QS;
 static Dispatcher<Simulator>::INSTALL p(&simulator_dispatcher, "qucsator", &QS);
+
+#else
+// "simulator" backend emulating legacy behaviour
+class LegacySimulator : public Simulator{
+public:
+	explicit LegacySimulator() : Simulator() {}
+	LegacySimulator(LegacySimulator const&) = delete;
+	~LegacySimulator(){}
+private: // Simulator
+  NetLang const* netLang() const override {
+	  return doclang_dispatcher["qucsator"];
+  }
+  DocumentFormat const* netLister() const override {return &LNL;}
+}QS;
+static Dispatcher<Simulator>::INSTALL p(&simulator_dispatcher, "legacy", &QS);
+#endif
 
 void LegacyNetlister::clear() const
 {
@@ -248,8 +264,6 @@ void LegacyNetlister::save(DocumentStream& Stream, SchematicSymbol const& m) con
 	clear();
 
 	qDebug() << "*** LegacyNetlister::save";
-
-//	SchematicModel const *sch = m.subckt();
 	QStringList Collect;
 	Collect.clear();  // clear list for NodeSets, SPICE components etc.
 
@@ -288,7 +302,6 @@ void LegacyNetlister::save(DocumentStream& Stream, SchematicSymbol const& m) con
 
 void LegacyNetlister::printDeclarations(DocumentStream& stream, SchematicSymbol const& m) const
 {
-
 	assert(m.subckt());
 	for(auto si : m.subckt()->declarations()){
 		//prepareSave(stream, m); // yikes
@@ -425,7 +438,7 @@ void LegacyNetlister::createNetlist(DocumentStream& stream,
 
 	QString s, Time;
 	for(auto pc : m.components()){
-		// if dynamic_cast<Label*>{
+		// if dynamic_cast<Label*>
 		//   ignore
 		if(pc->type()=="GND"){
 			// qucsator hack, just ignore.
@@ -463,7 +476,13 @@ void LegacyNetlister::createNetlist(DocumentStream& stream,
 			}
 			stream << s;
 		}
+	} // components
+
+#if 0
+	for(auto pc : m.commands()){
+		qucslang.printItem(pc, stream);
 	}
+#endif
 
 	if(!isAnalog) { untested();
 		// endNetlistDigital(stream, qucslang);
@@ -508,16 +527,13 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 			// check analog/digital typed components
 			if((pc->Type & isAnalogComponent) == 0) { untested();
 				incomplete();
+				// throw??
 				return;
+			}else{
 			}
 		} else if((pc->Type & isDigitalComponent) == 0) { untested();
 			return;
-		}
-
-//		QStringList Collect; // BUG
-		qDebug() << "call tAC" << QString::fromStdString(pc->type());
-		
-		if(sym && sym->subckt()){
+		}else if(sym && sym->subckt()){
 			trace1("need expand?", sym->label());
 			// if there is a sckt, make sure it is populated.
 			Symbol const* p = pc->proto(&sckt); // just expand?
@@ -561,13 +577,16 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 				ErrText->appendPlainText(
 						QObject::tr("ERROR: \"%1\": Cannot load library component \"%2\" from \"%3\"").
 						arg(pc->name(), pc->Props.at(1)->Value, scfile));
+				// throw??
 				return false;
 			}
 			continue; // BUG
 		}
 #endif
 
-		// handle SPICE subcircuit components
+//		if(pc->has_obsolete_qucsator_callback()){
+//		   pc->obsolete_qucsator_callback();
+//		}else
 		if(pc->obsolete_model_hack() == "SPICE") { // BUG
 			incomplete(); // move to Symbol->tac
 			s = pc->Props.first()->Value;
@@ -635,5 +654,53 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 		}
 	}
 }
+
+#if 0 // stuff collected from schematicFile.
+      // make qucsdigi work, then try and restore legacy hacks seperately
+// ---------------------------------------------------
+// Write the end of digital netlist to the text stream 'stream'.
+// FIXME: use lang, not isVerilog
+void SchematicDoc::endNetlistDigital(QTextStream& stream, NetLang const& /*lang*/)
+{
+  if (isVerilog) {
+  } else {
+    stream << "end architecture;\n";
+  }
+}
+
+// ---------------------------------------------------
+// Write the beginning of digital netlist to the text stream 'stream'.
+// FIXME: really use lang. get rid of isVerilog
+void SchematicDoc::beginNetlistDigital(QTextStream& stream, NetLang const& /*lang*/)
+{
+  if (isVerilog) {
+    stream << "module TestBench ();\n";
+    QList<DigSignal> values = Signals.values();
+    QList<DigSignal>::const_iterator it;
+    for (it = values.constBegin(); it != values.constEnd(); ++it) {
+      stream << "  wire " << (*it).Name << ";\n";
+    }
+    stream << "\n";
+  } else {
+    stream << "architecture Arch_TestBench of TestBench is\n";
+    QList<DigSignal> values = Signals.values();
+    QList<DigSignal>::const_iterator it;
+    for (it = values.constBegin(); it != values.constEnd(); ++it) {
+      stream << "  signal " << (*it).Name << " : "
+	     << ((*it).Type.isEmpty() ?
+		 QString::fromStdString(VHDL_SIGNAL_TYPE) : (*it).Type) << ";\n";
+    }
+    stream << "begin\n";
+  }
+
+  if(Signals.find("gnd") != Signals.end()) {
+    if (isVerilog) {
+      stream << "  assign gnd = 0;\n";
+    } else {
+      stream << "  gnd <= '0';\n";  // should appear only once
+    }
+  }
+}
+#endif
 
 }
