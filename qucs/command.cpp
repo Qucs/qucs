@@ -98,15 +98,20 @@ int Command::textSize(int& _dx, int& _dy)
     _dx = metrics.width(Name);
     _dy = metrics.height();
     count++;
+  }else{
   }
-  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
+  for(Property *pp = Props.first(); pp != 0; pp = Props.next()){
     if(pp->display) {
       // get width of text
       tmp = metrics.width(pp->Name+"="+pp->Value);
-      if(tmp > _dx)  _dx = tmp;
+      if(tmp > _dx) {
+	_dx = tmp;
+      }else{
+      }
       _dy += metrics.height();
       count++;
     }
+  }
   return count;
 }
 

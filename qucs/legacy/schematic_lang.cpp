@@ -179,7 +179,7 @@ static bool obsolete_load(Wire* w, const QString& sc)
 }
 
 // BUG: this is schematicFormat
-void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) const
+void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& owner) const
 {
 	assert(!implicit_hack.size());
 	QString Line;
@@ -214,7 +214,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 			Element*c=nullptr;
 			if(mode=='C'){ untested();
 				c = getComponentFromName(Line);
-				c->setOwner(&s);
+				c->setOwner(&owner);
 				if(Symbol* sym=dynamic_cast<Symbol*>(c) ){
 					//always do this?
 
@@ -222,13 +222,13 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 					// what are those?!
 					sym->recreate(); // re? create symbol gfx and random other things. needs owner
 					sym->build(); // what's this?!
-				}else{
+				}else{ untested();
 				}
 			}else if(mode=='S'){
 				incomplete();
 				try{
 					qDebug() << "symbol Paintings";
-					s.symbolPaintings().load(stream);
+					owner.symbolPaintings().load(stream);
 					c = nullptr;
 				}catch(...){ untested();
 					incomplete();
@@ -238,7 +238,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 				// (Node*)4 =  move all ports (later on)
 				// Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4); // this is entirely nuts.
 				Wire* w = new Wire(0,0,0,0); // BUG: ask dispatcher
-				w->setOwner(&s);
+				w->setOwner(&owner);
 				incomplete(); // qt5 branch...
 				bool err = obsolete_load(w, Line);
 				if(!err){ untested();
@@ -253,7 +253,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 				Diagram* d=loadDiagram(Line, stream);
 				if(d){
 					c = d;
-					c->setOwner(&s);
+					c->setOwner(&owner);
 				}else{ untested();
 					incomplete();
 				}
@@ -265,26 +265,25 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 				incomplete();
 			}
 
-			assert(s.subckt());
+			assert(owner.subckt());
 			if(c){
 				trace2("pushing back", c->label(), typeid(*c).name());
 				Element const* cc = c;
-				assert(cc->owner() == &s);
-				s.subckt()->pushBack(c);
+				assert(cc->owner() == &owner);
+				owner.subckt()->pushBack(c);
 			}else{
 			}
 
 		}
 	}
 
-
 	/// some components are implicit, collect them here
-	assert(s.subckt());
+	assert(owner.subckt());
 	while(implicit_hack.size()){ untested();
 		auto cc = implicit_hack.front();
-		cc->setOwner(&s);
+		cc->setOwner(&owner);
 		implicit_hack.pop_front();
-		s.subckt()->pushBack(cc);
+		owner.subckt()->pushBack(cc);
 	}
 }
 
@@ -392,7 +391,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
 } // printSymbol
 
 Command* LegacySchematicLanguage::loadCommand(const QString& _s, Command* c) const
-{
+{ untested();
 	bool ok;
 	int  ttx, tty, tmp;
 	QString s = _s;
@@ -401,81 +400,86 @@ Command* LegacySchematicLanguage::loadCommand(const QString& _s, Command* c) con
 		return NULL;
 	}else if(s.at(s.length()-1) != '>'){ untested();
 		return NULL;
-	}
-	s = s.mid(1, s.length()-2);   // cut off start and end character
-
-	QString label=s.section(' ',1,1);
-	trace1("NAME", label);
-	c->setName(label);
-
-	QString n;
-	n  = s.section(' ',2,2);      // isActive
-	tmp = n.toInt(&ok);
-	if(!ok){ untested();
-		return NULL;
-	}
-	c->isActive = tmp & 3;
-
-	if(tmp & 4){ untested();
-		c->showName = false;
 	}else{
-		// use default, e.g. never show name for GND (bug?)
-	}
+		s = s.mid(1, s.length()-2);   // cut off start and end character
 
-	n  = s.section(' ',3,3);    // cx
-	int cx = n.toInt(&ok);
-	if(!ok) return NULL;
+		QString label=s.section(' ',1,1);
+		trace1("NAME", label);
+		c->setName(label);//???
+		c->setLabel(label);
 
-	n  = s.section(' ',4,4);    // cy
-	c->setCenter(cx, n.toInt(&ok));
-	if(!ok) return NULL;
+		QString n;
+		n  = s.section(' ',2,2);      // isActive
+		tmp = n.toInt(&ok);
+		if(!ok){ untested();
+			return NULL;
+		}
+		c->isActive = tmp & 3;
 
-	n  = s.section(' ',5,5);    // tx
-	ttx = n.toInt(&ok);
-	if(!ok) return NULL;
-
-	n  = s.section(' ',6,6);    // ty
-	tty = n.toInt(&ok);
-	if(!ok) return NULL;
-
-	assert(c);
-
-	c->tx = ttx;
-	c->ty = tty; // restore text position (was changed by rotate/mirror)
-
-	unsigned int z=0, counts = s.count('"');
-	// FIXME. use c->paramCount()
-
-	/// BUG FIXME. dont use Component parameter dictionary.
-	for(; tmp<=(int)counts/2; tmp++)
-		c->Props.append(new Property("p", "", true, " "));
-
-	// load all properties
-	Property *p1;
-	qDebug() << "load command props" << s;
-	for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
-		qDebug() << "load command props" << z;
-		z++;
-		n = s.section('"',z,z);    // property value
-		z++;
-		//qDebug() << "LOAD: " << p1->Description;
-
-		// not all properties have to be mentioned (backward compatible)
-		if(z > counts) {
-			if(p1->Description.isEmpty()){ untested();
-				c->Props.remove();    // remove if allocated in vain
-			}
-
-			return c;
+		if(tmp & 4){ untested();
+			c->showName = false;
+		}else{
+			// use default, e.g. never show name for GND (bug?)
 		}
 
-		p1->Value = n;
+		n  = s.section(' ',3,3);    // cx
+		int cx = n.toInt(&ok);
+		if(!ok) return NULL;
 
-		n  = s.section('"',z,z);    // display
-		p1->display = (n.at(1) == '1');
+		n  = s.section(' ',4,4);    // cy
+		c->setCenter(cx, n.toInt(&ok));
+		if(!ok) return NULL;
+
+		n  = s.section(' ',5,5);    // tx
+		ttx = n.toInt(&ok);
+		if(!ok) return NULL;
+
+		n  = s.section(' ',6,6);    // ty
+		tty = n.toInt(&ok);
+		if(!ok) return NULL;
+
+		assert(c);
+
+		c->tx = ttx;
+		c->ty = tty; // restore text position (was changed by rotate/mirror)
+
+		unsigned int z=0, counts = s.count('"');
+		// FIXME. use c->paramCount()
+
+		/// BUG FIXME. dont use Component parameter dictionary.
+		for(; tmp<=(int)counts/2; tmp++){
+			c->Props.append(new Property("p", "", true, " "));
+		}
+
+		// load all properties
+		Property *p1;
+		qDebug() << "load command props" << s;
+		for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
+			qDebug() << "load command props" << z;
+			z++;
+			n = s.section('"',z,z);    // property value
+			z++;
+			//qDebug() << "LOAD: " << p1->Description;
+
+			// not all properties have to be mentioned (backward compatible)
+			if(z > counts) {
+				if(p1->Description.isEmpty()){ untested();
+					c->Props.remove();    // remove if allocated in vain
+				}else{
+				}
+
+				return c;
+			}else{
+			}
+
+			p1->Value = n;
+
+			n  = s.section('"',z,z);    // display
+			p1->display = (n.at(1) == '1');
+		}
+
+		return c;
 	}
-
-	return c;
 }
 
 // BUG raise exceptions if something goes wrong.
@@ -597,6 +601,7 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 			}
 
 			if(Model == "Diode") { // BUG: don't use names
+				incomplete();
 				if(counts < 56) {  // backward compatible
 					counts >>= 1;
 					p1 = c->Props.at(counts-1);
@@ -680,13 +685,14 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 
 Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 {
-	qDebug() << "component" << Line;
+	qDebug() << "component?" << Line;
 	Element *e = 0;
 
 	Line = Line.trimmed();
 	if(Line.at(0) != '<') { untested();
 		throw "notyet_exception"
 			"Format Error:\nWrong line start!";
+	}else{
 	}
 
 	QString cstr = Line.section (' ',0,0); // component type

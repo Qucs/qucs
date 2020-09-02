@@ -150,7 +150,12 @@ void SchematicModel::pushBack(Element* what)
 	}else if(auto d=diagram(what)){
 		diagrams().append(d);
 	}else if(auto c=command(what)){
-		incomplete();
+		//trace1("SchematicModel::pushBack", owner());
+		if(doc()){
+			doc()->commands().push_back(c);
+		}else{
+			// possibly a subcircuit model? ignore commands.
+		}
 	}else if(auto w=wire(what)){
 		trace4("pushback Wire", w->x1__(), w->y1__(), w->x2__(), w->y2__());
 		simpleInsertWire(w);
@@ -164,12 +169,10 @@ void SchematicModel::pushBack(Element* what)
 		incomplete();
 	}
 
-#ifndef USE_SCROLLVIEW
   if(doc()){ untested();
 	  doc()->addToScene(what);
   }else{
   }
-#endif
 } // pushBack
 
 // was Schematic::insertComponentNodes.
@@ -177,7 +180,6 @@ void SchematicModel::insertSymbolNodes(Symbol *c, bool noOptimize)
 { untested();
 	// connect every node of the component to corresponding schematic node
 	for(unsigned i=0; i<c->numPorts(); ++i){ untested();
-
 		c->connectNode(i, nodes());
 	}
 
