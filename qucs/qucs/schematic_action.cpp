@@ -7,6 +7,7 @@
 #include <QRegExpValidator>
 #include <QFileDialog>
 #include <QUndoCommand>
+#include <QMouseEvent>
 
 #include "schematic_doc.h"
 #include "qucs.h"
