@@ -65,7 +65,7 @@ SH_TESTS = \
 	helloworld.sh \
 	element.sh \
 	doesnotexist.sh \
-	lce.sh \
+	entries.sh \
 	run.sh
 
 PRJ_TESTS = \

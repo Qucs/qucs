@@ -51,13 +51,12 @@ void QucsatorLang::printSymbol(Symbol const* d, stream_t& s) const
 {
 	if(!d){
 		incomplete();
-	}else if(auto c=dynamic_cast<SubcktProto const*>(d)){ untested();
+	}else if(auto c=dynamic_cast<SubcktProto const*>(d)){
 		printSubckt(c, s);
 	}else if(auto c=dynamic_cast<Command const*>(d)){ untested();
 		printCommand(c, s);
-	}else if(auto c=dynamic_cast<Component const*>(d)){ untested();
+	}else if(auto c=dynamic_cast<Component const*>(d)){
 		printComponent(c, s);
-		untested();
 	}else{ untested();
 		s<<"incomplete\n";
 		incomplete();
@@ -105,12 +104,12 @@ void QucsatorLang::printSubckt(SubcktProto const* p, stream_t& s) const
 	trace1("sckt components", &p->schematicModel());
 	trace1("sckt components", sym->scope());
 	assert(sym->scope());
-	for(auto i : p->schematicModel().components()){ untested();
+	for(auto i : p->schematicModel().components()){
       if(!i){
 			incomplete();
 		}else if(i->type() == "Port"){
 		}else if(i->type() == "GND"){
-		}else{ untested();
+		}else{
 			trace1("ps", i->type());
 			printSymbol(i, s);
 		}
@@ -142,7 +141,7 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 	if(c->isActive != COMP_IS_ACTIVE){
 		// comment out?
 		incomplete();
-	}else{ itested();
+	}else{
 	}
 	assert(c);
 	trace2("pc", c->label(), c->type());
@@ -160,16 +159,16 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 			s << "R:" << c->label() << "." << QString::number(z++) << " "
 				<< Node1 << " " << iport.next()->value()->label() << " R=\"0\"\n";
 		}
-	}else{ itested();
-		if(dynamic_cast<Subcircuit const*>(c)) { untested();
+	}else{
+		if(dynamic_cast<Subcircuit const*>(c)) {
 			s << "Sub:" << c->label();
-		}else{ untested();
+		}else{
 			s << QString::fromStdString(c->type()) << ":" << c->label();
 		}
 
 		Symbol const* sym=c;
 		trace2("print", sym->numPorts(), sym->label());
-		for(unsigned i=0; i<sym->numPorts(); ++i){ itested();
+		for(unsigned i=0; i<sym->numPorts(); ++i){
 			QString N = sym->portValue(i);
 
 //			if(N=="0"){
@@ -179,22 +178,21 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 			s << " " << N;
 		}
 
-		for(auto p2 : c->params()) { itested();
+		for(auto p2 : c->params()) {
 			if(!p2){ untested();
 				incomplete();
-			}else if(p2->name() == "Symbol") { itested();
+			}else if(p2->name() == "Symbol") {
 				// hack??
-			}else{ itested();
+			}else{
 				s << " " << p2->name() << "=\"" << p2->value() << "\"";
 			}
 		}
-		if(dynamic_cast<Subcircuit const*>(c)) { untested();
+		if(dynamic_cast<Subcircuit const*>(c)) {
 			s << " Type=\"" << QString::fromStdString(c->type()) << "\"";
-		}else{ itested();
+		}else{
 		}
 		s << '\n';
 	}
-	untested();
 }
 
 // -------------------------------------------------------------------
@@ -305,6 +303,8 @@ void LegacyNetlister::save(DocumentStream& Stream, SchematicSymbol const& m) con
 void LegacyNetlister::printDeclarations(DocumentStream& stream, SchematicSymbol const& m) const
 {
 	assert(m.subckt());
+
+	trace1("printing declarations", m.subckt()->declarations().size());
 	for(auto si : m.subckt()->declarations()){
 		//prepareSave(stream, m); // yikes
 // 		if(SchematicSymbol const* sym=dynamic_cast<SchematicSymbol const*>(si)){ untested();
@@ -503,7 +503,7 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 { incomplete();
 	trace3("tac", m.label(), &m, m.owner());
 	if(m.owner()){ untested();
-	}else{ untested();
+	}else{
 	}
 	bool r;
 	QString s;
@@ -512,7 +512,7 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 	assert(m.subckt());
 	auto const& sckt = *m.subckt();
 
-	for(auto pc : sckt.components()){ untested();
+	for(auto pc : sckt.components()){
 		Symbol const* sym = pc;
 		assert(pc);
 		trace3("tac", pc->label(), pc, sym->owner());
@@ -527,15 +527,17 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 			continue;
 		}else if(isAnalog) {
 			// check analog/digital typed components
-			if((pc->Type & isAnalogComponent) == 0) { untested();
+			if((pc->Type & isAnalogComponent) == 0) {
 				incomplete();
 				// throw??
-				return;
+				// return;
 			}else{
 			}
-		} else if((pc->Type & isDigitalComponent) == 0) { untested();
-			return;
-		}else if(sym && sym->subckt()){
+//		} else if((pc->Type & isDigitalComponent) == 0) { untested();
+//			return;
+		}else{
+		}
+		if(sym && sym->subckt()){
 			trace1("need expand?", sym->label());
 			// if there is a sckt, make sure it is populated.
 			Symbol const* p = pc->proto(&sckt); // just expand?

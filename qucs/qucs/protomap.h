@@ -32,6 +32,9 @@ public:
 		assert(!_map[s]);
 		_map[s] = e;
 	}
+	size_t size() const{
+		return _map.size();
+	}
 
 public:
 	const_iterator begin() const{
