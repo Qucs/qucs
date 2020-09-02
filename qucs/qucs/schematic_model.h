@@ -100,7 +100,7 @@ private:
 
 public:
 	void collectDigitalSignals(void);
-	QString createNetlist(DocumentStream&, int, NetLang const&);
+//	QString createNetlist(DocumentStream&, int, NetLang const&);
 	void createSubNetlistPlain(stream_t&, QPlainTextEdit*, int,
 			bool creatingLib, NetLang const&);
 	QFileInfo const& getFileInfo ()const;
@@ -118,8 +118,6 @@ public:
 //	bool loadPaintings(QTextStream*, PaintingList* p=NULL);
 	bool loadProperties(QTextStream*);
 	bool loadComponents(QTextStream*);
-	// bool loadDiagrams(QTextStream*);
-	bool loadWires(QTextStream*);
 
 public: // not sure. leaves unconnected objects in the main container...
 	void connect(Symbol* c);

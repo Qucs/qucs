@@ -30,8 +30,6 @@ public:
 //  virtual Object* newOne(); from Symbol.
   virtual void recreate(SchematicDoc*) {};
   QString getNetlist();
-  QString get_VHDL_Code(int);
-  QString get_Verilog_Code(int);
 private:
   Component* newOne(){ unreachable();
 	  Element* hack=clone();
@@ -96,8 +94,6 @@ public: // HACK
 
 protected:
   virtual QString netlist();
-  virtual QString vhdlCode(int);
-  virtual QString verilogCode(int);
 
   int  analyseLine(const QString&, int);
   bool getIntegers(const QString&, int *i1=0, int *i2=0, int *i3=0,

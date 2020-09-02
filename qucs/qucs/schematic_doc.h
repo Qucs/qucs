@@ -534,8 +534,6 @@ private:
   void collectDigitalSignals(void);
   bool giveNodeNames(QTextStream *, int&, QStringList&, QPlainTextEdit*,
 		  int, NetLang const&);
-  void beginNetlistDigital(QTextStream &, NetLang const&);
-  void endNetlistDigital(QTextStream &, NetLang const&);
 //  bool throughAllComps(QTextStream *, int&, QStringList&, QPlainTextEdit *,
 //		  int, NetLang const&);
 
@@ -560,10 +558,10 @@ public: // for now
 		return _model->createLibNetlist(a,b,c, nl);
   }
   // used in main?
-  QString createNetlist(DocumentStream& a, int b, NetLang const& nl) const{
-	  assert(_model);
-	  return _model->createNetlist(a, b, nl);
-  }
+//  QString createNetlist(DocumentStream& a, int b, NetLang const& nl) const{
+//	  assert(_model);
+//	  return _model->createNetlist(a, b, nl);
+//  }
 
 	QString getParameter(std::string const& key) const;
 
