@@ -33,7 +33,7 @@ legacy_la_SOURCES = \
 	schematic_format.cpp \
 	schematic_lang.cpp \
 	subcircuit.cpp \
-	qucsator.cpp
+	simulator.cpp
 
 EXTRA_DIST = \
 	subcircuit.h

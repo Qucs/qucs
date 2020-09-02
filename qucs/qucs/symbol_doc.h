@@ -1,6 +1,6 @@
 /***************************************************************************
     copyright            : (C) 2006 by Michael Margraf
-                               2018, 2019, 2020 Felix Salfelder
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -12,18 +12,14 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef QUCS_SCHEMATIC_DOC_H
-#define QUCS_SCHEMATIC_DOC_H
+#ifndef QUCS_SYMBOL_DOC_H
+#define QUCS_SYMBOL_DOC_H
 
 #include "actions.h"
-#include "wire.h"
-#include "node.h"
 #include "qucsdoc.h"
 #include "viewpainter.h"
 #include "diagram.h"
 #include "paintings/painting.h"
-#include "components/component.h"
-#include "sim/sim.h"
 #include "schematic_scene.h"
 #include "schematic_model.h"
 #include "schematic_lang.h"
@@ -49,12 +45,10 @@ class QPainter;
 class QUndoCommand;
 class MouseAction;
 
-// TODO: rename to SchematicDocument
-class SchematicDoc;
 class MouseActions;
-typedef bool (SchematicDoc::*pToggleFunc) ();
-typedef void (MouseActions::*pMouseFunc) (SchematicDoc*, QMouseEvent*);
-typedef void (MouseActions::*pMouseFunc2) (SchematicDoc*, QMouseEvent*);
+typedef bool (SymbolDoc::*pToggleFunc) ();
+typedef void (MouseActions::*pMouseFunc) (SymbolDoc*, QMouseEvent*);
+typedef void (MouseActions::*pMouseFunc2) (SymbolDoc*, QMouseEvent*);
 
 // digital signal data
 struct DigSignal {
@@ -84,18 +78,17 @@ class ElementGraphics;
 
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
-// TODO: add SymbolDocument (some other place)
-class SchematicDoc : public QGraphicsView, public QucsDoc {
+class SymbolDoc : public QGraphicsView, public QucsDoc {
   Q_OBJECT
 private:
   friend class SchematicActions;
 private:
-  SchematicDoc(SchematicDoc const&x) = delete;
+  SymbolDoc(SymbolDoc const&x) = delete;
 public:
   typedef QList<ElementGraphics*> EGPList;
 public:
-  SchematicDoc(QucsApp&, const QString&);
- ~SchematicDoc();
+  SymbolDoc(QucsApp&, const QString&);
+ ~SymbolDoc();
 
   void setName(const QString&);
   void setChanged(bool, bool fillStack=false, char Op='*');
@@ -632,12 +625,12 @@ private:
   bool SymbolMode; // BUG
 
   QUndoStack* _undoStack;
-}; // SchematicDocument
+}; // SymbolDocument
 
 // ---------------------------------------------------
 // Peeforms paste function from clipboard
 template<class SOME_LIST>
-inline bool SchematicDoc::paste(DocumentStream *stream, SOME_LIST *pe)
+inline bool SymbolDoc::paste(DocumentStream *stream, SOME_LIST *pe)
 { untested();
   return pasteFromClipboard(stream, pe);
 }
