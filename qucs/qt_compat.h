@@ -94,7 +94,7 @@ public:
 		return *cur;
 	};
 	T* last() {
-		if (localList.size()) { itested();
+		if (localList.size()) {
 			cur = localList.end();
 			--cur;
 			return *cur;
@@ -195,10 +195,10 @@ public:
 			return nullptr;
 		}
 	};
-	T* getFirst() { itested();
+	T* getFirst() {
 		return localList.front();
 	};
-	T* getLast() { itested();
+	T* getLast() {
 		return localList.back();
 	};
 	T const* next() const{
@@ -223,7 +223,7 @@ public:
 		}else if (cur == localList.begin()){ itested();
 			cur=localList.end();
 			return nullptr;
-		}else{ itested();
+		}else{
 			cur--;
 			return *cur;
 		}

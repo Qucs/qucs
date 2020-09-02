@@ -56,7 +56,6 @@ Component* Subcircuit::newOne()
   p->Props.getFirst()->Value = Props.getFirst()->Value;
   trace1("Subcircuit::clone", Props.getFirst()->Value);
 
-  untested();
   // p->recreate(0); // does not make sense.
   return p;
 }

@@ -27,5 +27,4 @@ SubcktProto::SubcktProto(Element const* p)
 	assert(sym);
 //	assert(sym->owner());
 //	assert(dynamic_cast<Symbol const*>(sym->owner())); ///!!!
-	untested();
 }
