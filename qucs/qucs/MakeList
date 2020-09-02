@@ -23,6 +23,7 @@ CPP_SRC = \
 	messagedock.cpp \
 	misc.cpp \
 	mnemo.cpp \
+	mouseaction.cpp \
 	mouseactions.cpp \
 	netlist.cpp \
 	node.cpp \
