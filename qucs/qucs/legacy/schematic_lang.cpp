@@ -212,7 +212,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& s) 
 
 			/// \todo enable user to load partial schematic, skip unknown components
 			Element*c=nullptr;
-			if(mode=='C'){
+			if(mode=='C'){ untested();
 				c = getComponentFromName(Line);
 				c->setOwner(&s);
 				if(Symbol* sym=dynamic_cast<Symbol*>(c) ){

@@ -350,10 +350,14 @@ void Command::print(ViewPainter *p, float FontScale)
 }
 
 // -------------------------------------------------------
-// Rotates the component 90 counter-clockwise around its center
+// Rotates 90 degree counter-clockwise
 void Command::rotate()
 {
   int tmp, dx, dy;
+  // for(auto d : drawings()){
+  //   assert(d);
+  //   d->rotate();
+  // }
 
   // rotate all lines
   foreach(Line *p1, Lines) {
@@ -446,7 +450,7 @@ void Command::rotate()
 }
 
 // -------------------------------------------------------
-// Mirrors the component about the x-axis.
+// Mirrors vertically ("Y").
 void Command::mirrorX()
 {
   // mirror all lines
@@ -505,8 +509,7 @@ void Command::mirrorX()
 }
 
 // -------------------------------------------------------
-// Mirrors the component about the y-axis.
-// BUG. mirrors the X axis. (?!)
+// Mirror horizontally (X)
 void Command::mirrorY()
 {
   // mirror all lines
@@ -572,6 +575,7 @@ void Command::mirrorY()
 // -------------------------------------------------------
 QString Command::netlist()
 {
+  incomplete(); // remove.
   return "obsolete";
 }
 
@@ -583,25 +587,6 @@ QString Command::getNetlist()
 }
 
 // -------------------------------------------------------
-QString Command::verilogCode(int)
-{
-  return QString("");   // no digital model
-}
-
-// -------------------------------------------------------
-QString Command::get_Verilog_Code(int)
-{
-  unreachable(); // obsolete
-  return "?!";
-}
-
-// -------------------------------------------------------
-QString Command::vhdlCode(int)
-{
-  return QString("");   // no digital model
-}
-
-// -------------------------------------------------------
 
 // *******************************************************************
 // ***  The following functions are used to load the schematic symbol
@@ -609,6 +594,9 @@ QString Command::vhdlCode(int)
 
 int Command::analyseLine(const QString& Row, int numProps)
 {
+  incomplete();
+  unreachable();
+
   QPen Pen;
   QBrush Brush;
   QColor Color;
@@ -807,6 +795,7 @@ int Command::analyseLine(const QString& Row, int numProps)
 }
 
 // ---------------------------------------------------------------------
+// not sure what this is. parse schematic?
 bool Command::getIntegers(const QString& s, int *i1, int *i2, int *i3,
 			     int *i4, int *i5, int *i6)
 {
@@ -850,6 +839,7 @@ bool Command::getIntegers(const QString& s, int *i1, int *i2, int *i3,
 // ---------------------------------------------------------------------
 bool Command::getPen(const QString& s, QPen& Pen, int i)
 {
+  unreachable();
   bool ok;
   QString n;
 
@@ -875,6 +865,7 @@ bool Command::getPen(const QString& s, QPen& Pen, int i)
 // ---------------------------------------------------------------------
 bool Command::getBrush(const QString& s, QBrush& Brush, int i)
 {
+  unreachable();
   bool ok;
   QString n;
 
@@ -900,10 +891,13 @@ bool Command::getBrush(const QString& s, QBrush& Brush, int i)
 // ---------------------------------------------------------------------
 Property * Command::getProperty(const QString& name)
 {
-  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
+  incomplete();
+  for(Property *pp = Props.first(); pp != 0; pp = Props.next()){
     if(pp->Name == name) {
       return pp;
+    }else{
     }
+  }
   return NULL;
 }
 
@@ -952,115 +946,5 @@ void SchematicModel::simpleInsertCommand(Command *)
 {
   unreachable();
 }
-
-#if 0
-Command* Schematic::loadCommand(const QString& _s, Command* c) const
-{
-  bool ok;
-  int  ttx, tty, tmp;
-  QString s = _s;
-
-  if(s.at(0) != '<'){
-    return NULL;
-  }else if(s.at(s.length()-1) != '>'){
-    return NULL;
-  }
-  s = s.mid(1, s.length()-2);   // cut off start and end character
-
-  QString label=s.section(' ',1,1);
-  c->setName(label);
-
-  QString n;
-  n  = s.section(' ',2,2);      // isActive
-  tmp = n.toInt(&ok);
-  if(!ok){
-    return NULL;
-  }
-  c->isActive = tmp & 3;
-
-  if(tmp & 4){
-    c->showName = false;
-  }else{
-    // use default, e.g. never show name for GND (bug?)
-  }
-
-  n  = s.section(' ',3,3);    // cx
-  c->cx = n.toInt(&ok);
-  if(!ok) return NULL;
-
-  n  = s.section(' ',4,4);    // cy
-  c->cy = n.toInt(&ok);
-  if(!ok) return NULL;
-
-  n  = s.section(' ',5,5);    // tx
-  ttx = n.toInt(&ok);
-  if(!ok) return NULL;
-
-  n  = s.section(' ',6,6);    // ty
-  tty = n.toInt(&ok);
-  if(!ok) return NULL;
-
-  assert(c);
-    // avoid segfault in obsolete code...
-  {
-    n  = s.section(' ',7,7);    // mirroredX
-    if(n.toInt(&ok) == 1){
-      c->mirrorX();
-    }
-    if(!ok) return NULL;
-
-    n  = s.section(' ',8,8);    // rotated
-    tmp = n.toInt(&ok);
-    if(!ok) return NULL;
-    if(c->rotated > tmp)  // neccessary because of historical flaw in ...
-      tmp += 4;        // ... components like "volt_dc"
-    for(int z=c->rotated; z<tmp; z++){
-      c->rotate();
-    }
-  }
-
-  c->tx = ttx;
-  c->ty = tty; // restore text position (was changed by rotate/mirror)
-
-  //QString Model = c->obsolete_model_hack(); // BUG: don't use names
-
-  unsigned int z=0, counts = s.count('"');
-  // FIXME. use c->paramCount()
-
-  /// BUG FIXME. dont use Component parameter dictionary.
-  for(; tmp<=(int)counts/2; tmp++)
-    c->Props.append(new Property("p", "", true, " "));
-
-  // load all properties
-  Property *p1;
-  qDebug() << "load command props" << s;
-  for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
-    qDebug() << "load command props" << z;
-    z++;
-    n = s.section('"',z,z);    // property value
-    z++;
-    //qDebug() << "LOAD: " << p1->Description;
-
-    // not all properties have to be mentioned (backward compatible)
-    if(z > counts) {
-      if(p1->Description.isEmpty()){
-        c->Props.remove();    // remove if allocated in vain
-      }
-
-      return c;
-    }
-
-    p1->Value = n;
-
-    n  = s.section('"',z,z);    // display
-    p1->display = (n.at(1) == '1');
-  }
-
-  incomplete(); // pushBack?
-  return c;
-
-  // DocComps.append(c);
-}
-#endif
 
 // vim:ts=8:sw=2:noet
