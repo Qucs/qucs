@@ -1,7 +1,7 @@
 ==============
   <Sub my_Sub 1 0 0 0 0 0 0 "" 0>
 Sub #(.File()) my_Sub(open);
-Sub:my_Sub open File="" Type="Sub"
+Sub:my_Sub open Type="Sub"
 ==============
   <Vdc * 1 0 0 18 -26 0 1 "1 V" 1>
 Vdc #(.U(1 V)) my_Vdc(open, open);
@@ -69,7 +69,7 @@ Pac:my_Pac open open Num="1" Z="50 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
 ==============
 
 //
-.: Temp="26.85" reltol="0.001" abstol="1 pA" vntol="1 uV" saveOPs="no" MaxIter="150" saveAll="no" convHelper="none" Solver="CroutLU"
+.DC: Temp="26.85" reltol="0.001" abstol="1 pA" vntol="1 uV" saveOPs="no" MaxIter="150" saveAll="no" convHelper="none" Solver="CroutLU"
 =====TR=========
 
 //
@@ -81,7 +81,7 @@ Pac:my_Pac open open Num="1" Z="50 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
 ==============
 
 //
-.: Type="lin" Start="1 GHz" Stop="10 GHz" Points="19" Noise="no"
+.AC: Type="lin" Start="1 GHz" Stop="10 GHz" Points="19" Noise="no"
 ==============
 
 //

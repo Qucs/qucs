@@ -405,7 +405,7 @@ Command* LegacySchematicLanguage::loadCommand(const QString& _s, Command* c) con
 
 		QString label=s.section(' ',1,1);
 		trace1("NAME", label);
-		c->setName(label);//???
+///		c->setName(label);//???
 		c->setLabel(label);
 
 		QString n;
@@ -695,48 +695,59 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 	}else{
 	}
 
-	QString cstr = Line.section (' ',0,0); // component type
-	cstr.remove (0,1);    // remove leading "<"
+	QString type = Line.section (' ',0,0); // component type
+	type.remove (0,1);    // remove leading "<"
+	std::string typestring = type.toStdString();
 
 	// TODO: get rid of the exceptional cases.
-	if (cstr == "Lib"){ untested();
+	if (type == "Lib"){ untested();
 		incomplete();
 		// c = new LibComp ();
-	}else if (cstr == "Eqn"){
+	}else if (type == "Eqn"){
 		incomplete();
 		// c = new Equation ();
-	}else if (cstr == "SPICE"){ untested();
+	}else if (type == "SPICE"){ untested();
 		incomplete();
 		// c = new SpiceFile();
-	}else if (cstr.left (6) == "SPfile" && cstr != "SPfile"){ untested();
+	}else if (type.left (6) == "SPfile" && type != "SPfile"){ untested();
 		incomplete();
 		// backward compatible
 		//c = new SParamFile ();
-		//c->Props.getLast()->Value = cstr.mid (6);
+		//c->Props.getLast()->Value = type.mid (6);
 	}
 
 	// fetch proto from dictionary.
-	Element const* s=symbol_dispatcher[cstr.toStdString()];
+	Element const* s=symbol_dispatcher[typestring];
 
 	if(Component const* sc=dynamic_cast<Component const*>(s)){
 		// legacy component
 		Element* k=sc->clone(); // memory leak?
 		e = prechecked_cast<Element*>(k);
+
+		// set_type?
 	}else if(Command const* sc=dynamic_cast<Command const*>(s)){ untested();
 		// legacy component
 		Element* k = sc->clone(); // memory leak?
 		e = prechecked_cast<Element*>(k);
-	}else{
-		e = command_dispatcher.clone(cstr.toStdString());
-		// don't know what this is (yet);
+	}else if(typestring.size() == 0){
 		incomplete();
+	}else if(typestring.c_str()[0] == '.'){
+		std::string type = typestring.substr(1); // drop dot.
+		e = command_dispatcher.clone(type);
+		if(e){
+			// should use setType lower down. drop name.
+			e->setName(QString::fromStdString(type));
+		}else{
+			untested();
+		}
 	}
 
 	if(e) {
 		incomplete();
 		loadElement(Line, e);
+		// setType()
 	}else{ untested();
-		qDebug() << "error with" << cstr;
+		qDebug() << "error with" << type;
 		message(QucsWarningMsg,
 			"Format Error:\nUnknown component!\n"
 			"%1\n\n"

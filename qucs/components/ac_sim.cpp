@@ -21,15 +21,21 @@
 namespace{
 
 class AC_Sim : public Command  {
+private:
+  AC_Sim(AC_Sim const& s);
 public:
-  AC_Sim();
+  explicit AC_Sim();
  ~AC_Sim();
   Element* clone() const{return new AC_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(SchematicDoc*);
+private: // Command
+//  QString const& name() const override{
+//	  return "AC";
+//  }
 }D;
 
-Dispatcher<Command>::INSTALL p(&command_dispatcher, ".AC", &D);
+Dispatcher<Command>::INSTALL p(&command_dispatcher, "AC", &D);
 Module::INSTALL pp("simulations", &D);
 
 AC_Sim::AC_Sim()
@@ -54,7 +60,6 @@ AC_Sim::AC_Sim()
 
   tx = 0;
   ty = y2+1;
-  setName("AC");
 
   // The index of the first 4 properties must not changed. Used in recreate().
   Props.append(new Property("Type", "lin", true,
@@ -74,8 +79,14 @@ AC_Sim::~AC_Sim()
 {
 }
 
+AC_Sim::AC_Sim(AC_Sim const& x): Command(x)
+{
+	setName("AC");
+}
+
 Element* AC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
+	unreachable();
   Name = QObject::tr("ac simulation");
   BitmapFile = (char *) "ac";
 

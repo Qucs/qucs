@@ -248,8 +248,8 @@ void SchematicDoc::insertComponent(Component *c)
                 if(ok) if(z >= max) max = z + 1;
             }
 	}
-        c->obsolete_name_override_hack(
-	    c->name() + QString::number(max));  // create name with new number
+//        c->obsolete_name_override_hack(
+//	    c->name() + QString::number(max));  // create name with new number
     }
 
     setComponentNumber(c); // important for power sources and subcircuit ports
