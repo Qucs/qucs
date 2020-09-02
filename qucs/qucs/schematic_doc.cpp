@@ -210,9 +210,11 @@ void SchematicDoc::parse(DocumentStream& s, SchematicLanguage const* L)
 	}
 }
 
+// obsolete?
 void SchematicDoc::insertComponent(Component *c)
 { untested();
     assert(_model);
+	 assert(false); // obsolete?
     _model->pushBack(c);
     // connect every node of component to corresponding schematic node
     _model->insertSymbolNodes(c, false);

@@ -35,7 +35,7 @@
 namespace {
 
 // qucslang language implementation
-class QucsLang : public NetLang {
+class QucsatorLang : public NetLang {
 private: // NetLang
   // inline void printItem(Element const* c, stream_t& s) const;
 
@@ -47,7 +47,7 @@ private: // local
 }qucslang;
 static Dispatcher<DocumentLanguage>::INSTALL pl(&doclang_dispatcher, "qucsator", &qucslang);
 
-void QucsLang::printSymbol(Symbol const* d, stream_t& s) const
+void QucsatorLang::printSymbol(Symbol const* d, stream_t& s) const
 {
 	if(!d){
 		incomplete();
@@ -65,7 +65,7 @@ void QucsLang::printSymbol(Symbol const* d, stream_t& s) const
 }
 
 // partly from Schematic::createSubnetlistplain
-void QucsLang::printSubckt(SubcktProto const* p, stream_t& s) const
+void QucsatorLang::printSubckt(SubcktProto const* p, stream_t& s) const
 {
 	trace2("prinSckt", p, p->subckt());
 	Symbol const* sym = p;
@@ -119,31 +119,25 @@ void QucsLang::printSubckt(SubcktProto const* p, stream_t& s) const
 	s << ".Def:End\n";
 }
 
-void QucsLang::printCommand(Command const* c, stream_t& s) const
+void QucsatorLang::printCommand(Command const* c, stream_t& s) const
 { untested();
 	assert(c);
-	{
-		{ // todo: introduce proper exceptions
-			// normal netlisting
+	s << "." << c->name() << ":" << c->label();
 
-			s << "." << c->name() << ":" << c->label();
-
-			//for(auto p2 : c->params())
-			for(auto p2 : c->Props){ // BUG
-				if(p2->name() == "Symbol") { // hack??
-				}else if(p2->name()=="p" && p2->value()==""){ untested();
-					// unreachable
-				}else{
-					s << " " << p2->name() << "=\"" << p2->value() << "\"";
-				}
-			}
-			s << '\n';
+	//for(auto p2 : c->params())
+	for(auto p2 : c->Props){ // BUG
+		if(p2->name() == "Symbol") { // hack??
+		}else if(p2->name()=="p" && p2->value()==""){ untested();
+			// unreachable
+		}else{
+			s << " " << p2->name() << "=\"" << p2->value() << "\"";
 		}
 	}
+	s << '\n';
 }
 
 // print Component in qucsator language
-void QucsLang::printComponent(Component const* c, stream_t& s) const
+void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 {
 	if(c->isActive != COMP_IS_ACTIVE){
 		// comment out?
@@ -298,6 +292,14 @@ void LegacyNetlister::save(DocumentStream& Stream, SchematicSymbol const& m) con
 	Stream << '\n';
 
 	createNetlist(Stream, m);
+
+#if 0
+	if(m.doc()){
+		Stream << "doc??\n";
+	}else{
+		Stream << "nodoc??\n";
+	}
+#endif
 }
 
 void LegacyNetlister::printDeclarations(DocumentStream& stream, SchematicSymbol const& m) const
@@ -549,7 +551,6 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 			// continue;
 		// }else if(dynamic_cast<Subcircuit const*>(pc)) { untested();
 		} else if(pc->obsolete_model_hack() == "Sub") { // BUG.
-
 				incomplete();
 			// save(pc, stream);
 		}
