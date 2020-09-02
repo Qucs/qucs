@@ -24,6 +24,7 @@ class Schematic;
 class QUndoCommand;
 class QMouseEvent;
 class MouseActions;
+class QAction;
 
 // something happens to the mouse on a schematic
 // BUG: wrong file. schematic_mouse.h maybe?
