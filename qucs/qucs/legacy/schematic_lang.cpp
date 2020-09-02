@@ -212,7 +212,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 
 			/// \todo enable user to load partial schematic, skip unknown components
 			Element*c=nullptr;
-			if(mode=='C'){ untested();
+			if(mode=='C'){
 				c = getComponentFromName(Line);
 				c->setOwner(&owner);
 				if(Symbol* sym=dynamic_cast<Symbol*>(c) ){
@@ -222,7 +222,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 					// what are those?!
 					sym->recreate(); // re? create symbol gfx and random other things. needs owner
 					sym->build(); // what's this?!
-				}else{ untested();
+				}else{
 				}
 			}else if(mode=='S'){
 				incomplete();
@@ -254,7 +254,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 				if(d){
 					c = d;
 					c->setOwner(&owner);
-				}else{ untested();
+				}else{
 					incomplete();
 				}
 
@@ -314,7 +314,7 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 			return nullptr;
 		}
 
-		if(!d->load(Line, stream)) { untested();
+		if(!d->load(Line, stream)) {
 			incomplete();
 			delete d;
 			return nullptr;
@@ -391,7 +391,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
 } // printSymbol
 
 Command* LegacySchematicLanguage::loadCommand(const QString& _s, Command* c) const
-{ untested();
+{
 	bool ok;
 	int  ttx, tty, tmp;
 	QString s = _s;

@@ -80,7 +80,7 @@ static const std::string default_simulator="qucsator"; // FIXME: get from rc? ma
  * <http://qt-project.org/doc/qt-4.8/qtglobal.html#qInstallMsgHandler>
  */
 void qucsMessageOutput(QtMsgType type, const char *msg)
-{ itested();
+{
   switch (type) {
   case QtDebugMsg:
     fprintf(stderr, "Debug: %s\n", msg);
@@ -638,7 +638,7 @@ void attach_default_plugins()
 }
 
 void qucsMessageHandler(QtMsgType type, const QMessageLogContext &, const QString & str)
-{ itested();
+{
   auto msg=str.toStdString();
   qucsMessageOutput(type, msg.c_str());
 }
