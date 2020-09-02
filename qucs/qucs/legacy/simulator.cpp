@@ -180,12 +180,21 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 
 		for(auto p2 : c->params()) {
 			if(!p2){ untested();
+			}else if(!dynamic_cast<Subcircuit const*>(c)) { untested();
+			}else if(p2->name()=="File"){ untested();
+				// unreachable(); // BUG. subckt must decide.
+				p2 = nullptr;
+			}else{ untested();
+			}
+
+			if(!p2){ untested();
 				incomplete();
 			}else if(p2->name() == "Symbol") {
 				// hack??
 			}else{
 				s << " " << p2->name() << "=\"" << p2->value() << "\"";
 			}
+
 		}
 		if(dynamic_cast<Subcircuit const*>(c)) {
 			s << " Type=\"" << QString::fromStdString(c->type()) << "\"";

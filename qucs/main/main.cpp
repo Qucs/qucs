@@ -558,11 +558,11 @@ void createListComponentEntry()
   data.open (QFile::WriteOnly | QFile::Truncate);
   QTextStream s(&data);
 
-  auto lang=doclang_dispatcher["leg_sch"];
+  auto lang = doclang_dispatcher["leg_sch"];
   assert(lang);
-  auto qucsatorlang=doclang_dispatcher["qucsator"];
+  auto qucsatorlang = doclang_dispatcher["qucsator"];
   assert(qucsatorlang);
-  auto verilog=doclang_dispatcher["verilog"];
+  auto verilog = doclang_dispatcher["verilog"];
 
   foreach(QString category, cats) {
 

@@ -164,6 +164,7 @@ class ViewPainter;
 class SchematicModel;
 
 class Element : public Object {
+  friend class ElementGraphics;
 public:
   Element();
   Element(Element const&);
@@ -253,9 +254,7 @@ public: // friend ElementGraphics?
 
 protected: //BUG
   QString Name; // the label, but sometimes the type. yikes.
-#ifndef USE_SCROLLVIEW
-  friend class ElementGraphics;
-#endif
+  // std::string _type; // get from symbol?
 
 public:
   Element const* owner() const{return _owner;}
