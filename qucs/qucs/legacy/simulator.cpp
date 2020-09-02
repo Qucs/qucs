@@ -58,7 +58,7 @@ void QucsatorLang::printSymbol(Symbol const* d, stream_t& s) const
 	}else if(auto c=dynamic_cast<Component const*>(d)){
 		printComponent(c, s);
 	}else{ untested();
-		s<<"incomplete\n";
+		s << "QucsatorLang::printSymbol incomplete\n";
 		incomplete();
 	}
 }
@@ -160,7 +160,7 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 				<< Node1 << " " << iport.next()->value()->label() << " R=\"0\"\n";
 		}
 	}else{
-		if(dynamic_cast<Subcircuit const*>(c)) {
+		if(dynamic_cast<Subcircuit const*>(c)) { // sckt_proto?
 			s << "Sub:" << c->label();
 		}else{
 			s << QString::fromStdString(c->type()) << ":" << c->label();
@@ -180,7 +180,7 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 
 		for(auto p2 : c->params()) {
 			if(!p2){ untested();
-			}else if(!dynamic_cast<Subcircuit const*>(c)) { untested();
+			}else if(!dynamic_cast<Subcircuit const*>(c)) { itested();
 			}else if(p2->name()=="File"){ untested();
 				// unreachable(); // BUG. subckt must decide.
 				p2 = nullptr;
@@ -327,7 +327,7 @@ void LegacyNetlister::printDeclarations(DocumentStream& stream, SchematicSymbol 
 }
 
 // was Schematic::prepareNetlist
-//  visit lot of components, strange callbacks...
+// visit lot of components, strange callbacks...
 void LegacyNetlister::prepareSave(DocumentStream& stream, SchematicSymbol const& m) const
 {
 	incomplete();
@@ -516,7 +516,7 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 	}
 	bool r;
 	QString s;
-	bool isAnalog=true;
+	bool isAnalog = true;
 
 	assert(m.subckt());
 	auto const& sckt = *m.subckt();
@@ -524,7 +524,7 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 	for(auto pc : sckt.components()){
 		Symbol const* sym = pc;
 		assert(pc);
-		trace3("tac", pc->label(), pc, sym->owner());
+		trace4("tac", pc->label(), pc, sym->owner(), pc->type());
 		trace1("tac", sym->owner()->label());
 
 		// because they are components
@@ -546,12 +546,13 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 //			return;
 		}else{
 		}
+
 		if(sym && sym->subckt()){
 			trace1("need expand?", sym->label());
 			// if there is a sckt, make sure it is populated.
 			Symbol const* p = pc->proto(&sckt); // just expand?
 			assert(p->subckt());
-			//	}
+			//
 		}else if(pc->obsolete_model_hack() == "GND") { // BUG.
 #if 0
 			qDebug() << "GND hack" << pc->portValue(0);
@@ -564,6 +565,7 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 		} else if(pc->obsolete_model_hack() == "Sub") { // BUG.
 				incomplete();
 			// save(pc, stream);
+		}else{
 		}
 
 #if 0 // does not work
@@ -664,7 +666,7 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 			continue; // BUG
 #endif
 		}
-	}
+	} // sckt component loop
 }
 
 #if 0 // stuff collected from schematicFile.

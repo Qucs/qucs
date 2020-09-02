@@ -1,8 +1,6 @@
 /***************************************************************************
-                               subcircuit.cpp
-                              ----------------
     copyright            : (C) 2003 by Michael Margraf
-                               2018 Felix Salfelder / QUCS team
+                               2018, 2019, 2020 Felix Salfelder / QUCS team
  ***************************************************************************/
 
 /***************************************************************************
@@ -32,7 +30,7 @@
 
 #include "subcircuit.h" // possibly unneeded. let's see.
 
-Subcircuit::Subcircuit()
+Subcircuit::Subcircuit() : MultiViewComponent() // gaah sckt_base
 {
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("subcircuit");
@@ -88,41 +86,42 @@ void Subcircuit::createSymbol() // SchematicModel const& scope)
   qDebug() << "FileName" << FileName; // seems okay, sth like opa227.sch
 
   if(FileName.length()<4){ unreachable();
+	  // throw?
 	  return;
   }else{
-  }
 
-//  trace2("sckt::createSymbol", this, scope);
-  incomplete();
-  assert(owner());
-  auto os = prechecked_cast<Symbol*>(owner());
-  assert(os);
-  trace1("hmm", typeid(*os).name());
-  assert(os->subckt());
-  FileName = getSubcircuitFile(os->subckt());
-  trace2("getting symbol", FileName, os->subckt());
+	  //  trace2("sckt::createSymbol", this, scope);
+	  incomplete();
+	  assert(owner());
+	  auto os = prechecked_cast<Symbol*>(owner());
+	  assert(os);
+	  trace1("hmm", typeid(*os).name());
+	  assert(os->subckt());
+	  FileName = getSubcircuitFile(os->subckt());
+	  trace2("getting symbol", FileName, os->subckt());
 
-  tx = INT_MIN;
-  ty = INT_MIN;
-  // BUG // not cached. why?
-  if(loadSymbol(FileName) > 0) {  // try to load subcircuit symbol
-    if(tx == INT_MIN)  tx = x1+4;
-    if(ty == INT_MIN)  ty = y2+4;
-    // remove unused ports
-    QMutableListIterator<Port *> ip(Ports);
-    Port *pp;
-    while (ip.hasNext()) {
-      pp = ip.next();
-      if(!pp->avail) { untested();
-          pp = ip.peekNext();
-          ip.remove();
-      }
-    }
-  }else{
-    No = SchematicDoc::testFile(FileName);
-    if(No < 0)  No = 0;
-	 Ports.clear();
-    remakeSymbol(No);  // no symbol was found -> create standard symbol
+	  tx = INT_MIN;
+	  ty = INT_MIN;
+	  // BUG // not cached. why?
+	  if(loadSymbol(FileName) > 0) {  // try to load subcircuit symbol
+		  if(tx == INT_MIN)  tx = x1+4;
+		  if(ty == INT_MIN)  ty = y2+4;
+		  // remove unused ports
+		  QMutableListIterator<Port *> ip(Ports);
+		  Port *pp;
+		  while (ip.hasNext()) {
+			  pp = ip.next();
+			  if(!pp->avail) { untested();
+				  pp = ip.peekNext();
+				  ip.remove();
+			  }
+		  }
+	  }else{
+		  No = SchematicDoc::testFile(FileName);
+		  if(No < 0)  No = 0;
+		  Ports.clear();
+		  remakeSymbol(No);  // no symbol was found -> create standard symbol
+	  }
   }
 }
 
@@ -602,10 +601,14 @@ Symbol const* Subcircuit::proto(SchematicModel const* scope) const
 
 		assert(s->subckt());
 		assert(scope);
-//		build(*scope);
 		scope->cacheProto(s);
-		return s;
+		p = s;
 	}
+
+//	_proto = p;?
+//	set_type(p->type())?
+
+	return p;
 }
 
 bool Subcircuit::portExists(unsigned i) const
@@ -628,6 +631,7 @@ void Subcircuit::setParameter(unsigned i, std::string const& value)
 	if(i==0){
 		trace1("Subcircuit::setParameter", v);
 ///		setType(value.toStdString());
+/// possibly bad idea. do in "expand" instead.
 		setType(v.left(v.length()-4).toStdString());
 	}else{
 		incomplete();
