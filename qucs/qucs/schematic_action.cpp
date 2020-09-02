@@ -108,6 +108,33 @@ private:
 	ElementGraphics* _gfx;
 };
 /*--------------------------------------------------------------------------*/
+class NewElementCommand : public QUndoCommand {
+public:
+	NewElementCommand(SchematicDoc& ctx, ElementGraphics* gfx)
+	: _ctx(ctx), _gfx(gfx){ untested();
+		ctx.takeOwnership(element(gfx)); // BUG?
+		setText("NewElement"); // tr?
+	}
+	~NewElementCommand(){ untested();
+		// _gfx is owned by ctx
+	}
+public:
+	void undo() override { untested();
+		QUndoCommand::undo();
+		_gfx->hide();
+		_done = false;
+	}
+	void redo() override { untested();
+		QUndoCommand::redo();
+		_gfx->show();
+		_done = true;
+	}
+private:
+    SchematicDoc& _ctx;
+    ElementGraphics* _gfx;
+	 bool _done;
+}; // NewElementCommand
+/*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionNewElement::release(QMouseEvent* ev)
 {
 	// assert(ev->widget=doc->scene()) // or so.
