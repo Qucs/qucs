@@ -20,6 +20,8 @@
 #ifndef QUCS_ELEMENT_GFX_H
 #define QUCS_ELEMENT_GFX_H
 
+#include <QEvent>
+
 // A graphics element on the screen.
 // kind of smart-pointer/proxy.
 class ElementGraphics : public QGraphicsItem {
