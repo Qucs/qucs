@@ -24,7 +24,8 @@
 
 // BUG: move to .cpp
 // BUG: must derive from subckt_model (or so)
-class Subcircuit : public MultiViewComponent  {
+// Subcircuit is used as "subcircuit instance"..
+class Subcircuit : public Component  {
 public:
   Subcircuit();
  ~Subcircuit() {};
