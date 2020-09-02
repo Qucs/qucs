@@ -30,7 +30,7 @@
 
 #include "subcircuit.h" // possibly unneeded. let's see.
 
-Subcircuit::Subcircuit() : MultiViewComponent() // gaah sckt_base
+Subcircuit::Subcircuit() : Component() // gaah sckt_base
 {
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("subcircuit");
