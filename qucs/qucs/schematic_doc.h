@@ -24,6 +24,7 @@
 #include "paintings/painting.h"
 #include "components/component.h"
 #include "sim/sim.h"
+#include "sim/tasks.h"
 #include "schematic_scene.h"
 #include "schematic_model.h"
 #include "schematic_lang.h"
@@ -49,7 +50,6 @@ class QPainter;
 class QUndoCommand;
 class MouseAction;
 
-// TODO: rename to SchematicDocument
 class SchematicDoc;
 class MouseActions;
 typedef bool (SchematicDoc::*pToggleFunc) ();
@@ -185,6 +185,16 @@ public:
   }
   Component* find_component(QString const&);
 
+  // really?
+  // CommandList const& commands() const{
+  //    return _commands;
+  // }
+  SimTaskList& commands(){
+	  return _commands;
+  }
+  SimTaskList const& commands() const{
+	  return _commands;
+  }
   ComponentList const& components() const{
 	  assert(_model);
 	  return _model->components();
@@ -628,6 +638,7 @@ public: // need access to SchematicModel. grr
 private:
   SchematicSymbol* _root;
   SchematicModel* _model;
+  SimTaskList _commands;
 private:
   bool SymbolMode; // BUG
 

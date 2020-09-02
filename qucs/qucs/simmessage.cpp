@@ -495,6 +495,13 @@ void SimMessage::startSimulator()
 
 //    SimTime = d->createNetlist(Stream, SimPorts, *nl);
     n->save(Stream, *d->root());
+
+    NetLang const* nl = sd->netLang();
+
+    for(auto c : d->commands()){
+      nl->printItem(c, Stream);
+    }
+
     if(SimTime.length()>0&&SimTime.at(0) == '\xA7') {
       NetlistFile.close();
       ErrText->insertPlainText(SimTime.mid(1));

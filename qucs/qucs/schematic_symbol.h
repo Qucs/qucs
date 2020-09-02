@@ -25,7 +25,7 @@ private: // Symbol
   virtual void setPort(unsigned, Node*){ incomplete(); }
 
 protected:
-public:
+public: // subckt. could rename to "model", but is it really worth it?
   SchematicModel* subckt() {return _subckt;}
   SchematicModel const* subckt() const {return _subckt;}
 
@@ -35,6 +35,9 @@ public:
 	DiagramList const& diagrams() const;
 	PaintingList const& paintings() const;
 	ComponentList const& components() const; // possibly "devices". lets see.
+
+	// commands were part of the circuit model. fix this.
+	// CommandList const& commands() const;
 
 public:
 	virtual std::string getParameter(std::string const&) const = 0;

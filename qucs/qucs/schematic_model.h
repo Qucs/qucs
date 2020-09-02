@@ -28,7 +28,7 @@
 #include "nodemap.h"
 #include "netlist.h"
 #include "protomap.h"
-
+#include "sim/tasks.h"
 
 
 class SchematicDoc;
@@ -62,6 +62,7 @@ class SchematicLanguage;
 
 // Base class for all schematic models.
 // currently containging chunks/cruft from legacy Schematic implementation
+// reminiscent of "subckt", "cardlist" ...
 class SchematicModel{
 private:
 	SchematicModel(SchematicModel const&) = delete;
@@ -160,12 +161,13 @@ public: // scene interaction
 	void toScene(QGraphicsScene& s, QList<ElementGraphics*>* l=nullptr) const;
 public: // obsolete.
 	static void saveComponent(QTextStream& s, Component const* c);
-private: // TODO: actually store here.
+private:
 	WireList& wires();
 	NodeMap& nodes();
 	DiagramList& diagrams();
 	PaintingList& paintings();
 	ComponentList& components(); // possibly "devices". lets see.
+//	CommandList& commands(); // really??
 public:
 	bool isNode(int x, int y) const{
 		return nodes().find_at(x,y);
