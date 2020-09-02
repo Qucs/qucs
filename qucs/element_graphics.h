@@ -27,11 +27,12 @@
 class ElementGraphics : public QGraphicsItem {
 private:
 	ElementGraphics();
-	ElementGraphics(ElementGraphics const&) = delete;
+	ElementGraphics(ElementGraphics const&);
 public:
 	explicit ElementGraphics(Element* e);
-	~ElementGraphics(){ }
+	~ElementGraphics();
 public:
+	ElementGraphics* clone() const;
 	bool operator!=(Element const* e) const{
 		return _e!=e;
 	}
@@ -59,11 +60,11 @@ public:
   Element const* operator->() const{ untested();
 	  assert(_e); return _e;
   }
-  QPoint getPos() const;
-//  void setPos(int i, int j, bool relative=false);
+//  QPointF pos() const; // QGraphicsItem
+  void setPos(int i, int j, bool relative=false);
   template<class P>
   void moveElement(P const& delta);
-  void getCenter(int& i, int& j);
+  void center(int& i, int& j);
 	void toggleSelected(){
 		assert(_e);
 		setSelected(!isSelected());
