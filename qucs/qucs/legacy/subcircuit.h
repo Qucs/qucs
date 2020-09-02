@@ -25,14 +25,20 @@
 // BUG: move to .cpp
 // BUG: must derive from subckt_model (or so)
 // Subcircuit is used as "subcircuit instance"..
+// but a subcircuit instance is not a Component...
 class Subcircuit : public Component  {
 public:
   Subcircuit();
  ~Subcircuit() {};
+private:
+  Subcircuit(Subcircuit const&x);
   Component* newOne();
+
+public: // obsolete.
   static Element* info(QString&, char* &, bool getNewOne=false);
 
-private: // not yet
+private:
+  Element* clone() const override{ untested(); return new Subcircuit(*this); }
 public:
   QString getSubcircuitFile(SchematicModel const* scope) const;
 
