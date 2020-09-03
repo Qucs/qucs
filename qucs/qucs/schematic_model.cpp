@@ -108,8 +108,8 @@ private: // ModelInserter
 
 private: // internal. Portstuff
   unsigned numPorts() const {unreachable(); return 0;}
-  QString const& portValue(unsigned) const{ unreachable(); return QSTRING_ERROR; } // BUG
-  void setPort(unsigned i, Node* n){ unreachable(); }
+  Net const* portValue(unsigned) const{ unreachable(); return nullptr; } // BUG
+  void setPort(unsigned, Node*){ unreachable(); }
   Port& port(unsigned){unreachable(); return *new Port(0,0);}
 
 private: // SchematicSymbol
@@ -328,7 +328,7 @@ DiagramList const& SchematicModel::diagrams() const
 //	return SymbolPaintings;
 //}
 
-// TODO: what is this? (perhaps DocumentFormat?)
+#if 0 // TODO: what is this? (perhaps DocumentFormat?)
 static void createNodeSet(QStringList& Collect, int& countInit,
 		Conductor *pw, Node *p1)
 { untested();
@@ -337,6 +337,7 @@ static void createNodeSet(QStringList& Collect, int& countInit,
 			Collect.append("NodeSet:NS" + QString::number(countInit++) + " " +
 					p1->name() + " U=\"" + pw->Label->initValue + "\"");
 }
+#endif
 
 #if 0
 bool SchematicModel::throughAllComps(DocumentStream& stream, int& countInit,
@@ -356,7 +357,7 @@ bool SchematicModel::throughAllComps(DocumentStream& stream, int& countInit,
 
 // find connected components (slow)
 // obsolete.
-void SchematicModel::throughAllNodes(unsigned& z) const
+void SchematicModel::throughAllNodes(unsigned&) const
 {
 #if 0
   z = 0; // number cc.
@@ -511,7 +512,7 @@ void SchematicModel::simpleInsertComponent(Component *c)
 // screw this.
 void SchematicModel::simpleInsertWire(Wire *pw)
 {
-  Node *pn=nullptr;
+//  Node *pn=nullptr;
   // pn = &nodes().at(pw->x1_(), pw->y1_());
   //
 #if 0
@@ -582,7 +583,7 @@ void SchematicModel::connect(Symbol* c)
 {
 	for(unsigned i=0; i<c->numPorts(); ++i){
 		c->connectNode(i, nodes()); // use scope.
-		assert(dynamic_cast<Symbol const*>(c)->port(i).connected());
+//		assert(dynamic_cast<Symbol const*>(c)->port(i).connected());
 	}
 }
 
@@ -600,13 +601,13 @@ void SchematicModel::setPort(unsigned i, Node* n)
 	_ports[i] = n;
 }
 
-QString SchematicModel::portValue(unsigned i) const
+Net const* SchematicModel::portValue(unsigned i) const
 {
 	assert(i<numPorts());
 	if(_ports[i]){
-		return _ports[i]->netLabel();
+		return _ports[i]->net();
 	}else{ untested();
-		return "open";
+		return nullptr;
 	}
 }
 

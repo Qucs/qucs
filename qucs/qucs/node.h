@@ -140,9 +140,9 @@ public: // protected coordinate abuse
   }
 public: // internal. here?
   bool hasNet() const { return _net; }
-  Net* getNet() {assert(_net); return _net; }
+  Net* net() {assert(_net); return _net; }
   Net* newNet(NetList&);
-  Net const* getNet() const {assert(_net);  return _net; }
+  Net const* net() const {assert(_net);  return _net; }
   void setNet(Net* x){_net = x; }
   void attachNet(Net* x);
   void detachNet(Net* x);

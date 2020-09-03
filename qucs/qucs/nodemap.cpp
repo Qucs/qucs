@@ -32,7 +32,7 @@ struct graph_traits<NodeMap>{
 		t->attachNet(n);
 	}
 	static cc_descriptor get_cc(vertex_descriptor t) {
-		return t->getNet();
+		return t->net();
 	}
 	static Net* new_cc(Node*, NodeMap& s);
 	static void del_cc(Net*, NodeMap& s);

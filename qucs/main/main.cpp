@@ -207,7 +207,7 @@ private: // SchematicSymbol
 
 private:
   unsigned numPorts() const{ incomplete(); return 0; }
-  QString const& portValue(unsigned)const {incomplete(); return "ERROR";}
+  Net const* portValue(unsigned)const {unreachable(); nullptr;}
   void setPort(unsigned i, Node* n){incomplete();}
 
 public:

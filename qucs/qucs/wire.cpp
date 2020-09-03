@@ -245,6 +245,10 @@ Node* Wire::connectNode(unsigned i, NodeMap&l)
 
   if(Node* other_node = port((i+1)%2).value()){
     trace3("wire::connectnode", i, n, other_node);
+    trace2("wire addedge", n->netLabel(), other_node->netLabel());
+
+    // BUG. label may go the wrong way
+    // resolve conflicts more carefully...
     l.addEdge(n, other_node);
   }else{
   }
@@ -253,7 +257,9 @@ Node* Wire::connectNode(unsigned i, NodeMap&l)
   mp.connect(n);
 
   if(_netname!=""){
+    trace2("wire override netlabel", n->netLabel(), _netname);
     n->setNetLabel(QString::fromStdString(_netname));
+  }else{
   }
   return n;
 }
@@ -272,18 +278,18 @@ Node* Wire::disconnectNode(unsigned i, NodeMap&nm)
 }
 // ----------------------------------------------------------------
 // ----------------------------------------------------------------
-Net* Wire::getNet()
+Net* Wire::net()
 {
   assert(_port0.value());
   assert(_port1.value());
-  assert(_port0.value()->getNet() == _port1.value()->getNet());
-  return _port0.value()->getNet();
+  assert(_port0.value()->net() == _port1.value()->net());
+  return _port0.value()->net();
 }
 // ----------------------------------------------------------------
-Net const* Wire::getNet() const
+Net const* Wire::net() const
 { untested();
   assert(_port0.value());
-  return _port0.value()->getNet();
+  return _port0.value()->net();
 }
 // ----------------------------------------------------------------
 // vim:ts=8:sw=2:et

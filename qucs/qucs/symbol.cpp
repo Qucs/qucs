@@ -50,12 +50,14 @@ SchematicModel const* Symbol::scope() const
 	return s->scope();
 }
 
+#if 0
 // obsolete? portValue?
 QString const& Symbol::netLabel(unsigned i) const
 { untested();
 //	assert(hasPort(i));
 	return portValue(i);
 }
+#endif
 
 // could as well be NodeMap::connect(Symbol). but why?
 Node* Symbol::connectNode(unsigned i, NodeMap&nm)
@@ -87,13 +89,14 @@ Node* Symbol::disconnectNode(unsigned i, NodeMap&)
 }
 
 static const QString OPEN_PORT("open");
-QString const& Symbol::portValue(unsigned i) const
+Net const* Symbol::portValue(unsigned i) const
 {
   assert(i<unsigned(numPorts()));
   if(port(i).connected()){
-	  return port(i).netLabel();
+	  assert( port(i).value()->net() );
+	  return port(i).value()->net();
   }else{
-	  return OPEN_PORT;
+	  return nullptr;
   }
 }
 

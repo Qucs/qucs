@@ -59,8 +59,8 @@ public:
 
 public: // Node xs
   bool hasNet() const { return _port0.connected(); }
-  Net* getNet();
-  Net const* getNet() const;
+  Net* net();
+  Net const* net() const;
 
   QString const& netLabel() const;
 

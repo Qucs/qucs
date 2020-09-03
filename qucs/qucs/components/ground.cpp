@@ -80,7 +80,9 @@ Node* Ground::connectNode(unsigned i, NodeMap&l)
 {
   Node* n = Component::connectNode(i, l);
   assert(n);
+  trace1("ground set netlabel1", n->netLabel());
   n->setNetLabel("gnd");
+  trace1("ground set netlabel2", n->netLabel());
   return n;
 }
 

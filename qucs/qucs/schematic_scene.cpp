@@ -173,7 +173,7 @@ void SchematicScene::selectedItemsAndBoundingBox(QList<ElementGraphics*>& Elemen
 		qDebug() << "selected" << element(eg)->name() << element(eg)->boundingRect();
 		qDebug() << "unite" << BB;
 		assert(eg);
-		if(auto l=wireLabel(elt)){
+		if(wireLabel(elt)){
 			ElementCache.append(eg);
 		}else{
 		}
@@ -181,7 +181,7 @@ void SchematicScene::selectedItemsAndBoundingBox(QList<ElementGraphics*>& Elemen
 	for(auto elt : selectedItems()){
 		ElementGraphics* eg=prechecked_cast<ElementGraphics*>(elt);
 		assert(eg);
-		if(auto c=component(elt)){
+		if(component(elt)){
 			ElementCache.append(eg);
 		}else{
 		}
@@ -189,7 +189,7 @@ void SchematicScene::selectedItemsAndBoundingBox(QList<ElementGraphics*>& Elemen
 	for(auto elt : selectedItems()){
 		ElementGraphics* eg=prechecked_cast<ElementGraphics*>(elt);
 		assert(eg);
-		if(auto w=wire(elt)){
+		if(wire(elt)){
 			ElementCache.append(eg);
 		}else{
 		}
@@ -197,7 +197,7 @@ void SchematicScene::selectedItemsAndBoundingBox(QList<ElementGraphics*>& Elemen
 	for(auto elt : selectedItems()){
 		ElementGraphics* eg=prechecked_cast<ElementGraphics*>(elt);
 		assert(eg);
-		if(auto p=painting(elt)){
+		if(painting(elt)){
 			ElementCache.append(eg);
 		}else{
 		}
@@ -205,7 +205,7 @@ void SchematicScene::selectedItemsAndBoundingBox(QList<ElementGraphics*>& Elemen
 }
 #endif
 
-void SchematicScene::dropEvent(QGraphicsSceneDragDropEvent* e)
+void SchematicScene::dropEvent(QGraphicsSceneDragDropEvent*)
 {
 	// getting here when dropping stuff from the component menu
 	incomplete();
@@ -321,7 +321,7 @@ bool SchematicScene::event(QEvent* e)
 		}
 	}else if(dynamic_cast<QGraphicsSceneMoveEvent*>(e)){
 		trace1("GSM", e->type());
-	}else if(auto gse=dynamic_cast<QGraphicsSceneEvent*>(e)){
+	}else if(dynamic_cast<QGraphicsSceneEvent*>(e)){
 		trace1("GSE", e->type());
 		if(e->type()==155){ itested();
 			// getting here when moving around elements.
