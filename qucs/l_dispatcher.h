@@ -232,7 +232,7 @@ TT* DISPATCHER<TT>::clone(std::string s)
     TT* c=prechecked_cast<TT*>(proto->clone());
     assert(c);
     return c;
-  }else{untested();
+  }else{
     return NULL;
   }
 }

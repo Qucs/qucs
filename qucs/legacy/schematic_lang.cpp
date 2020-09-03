@@ -746,7 +746,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 		incomplete();
 		loadElement(Line, e);
 		// setType()
-	}else{ untested();
+	}else{
 		qDebug() << "error with" << type;
 		message(QucsWarningMsg,
 			"Format Error:\nUnknown component!\n"

@@ -32,12 +32,6 @@
 
 #include "paintings/paintings.h"
 
-// not here.
-inline QTextStream& operator<< (QTextStream& o, std::string const& s)
-{
-	return o << QString::fromStdString(s);
-}
-
 namespace {
 
 static std::string netLabel(Net const* n)

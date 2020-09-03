@@ -24,9 +24,9 @@ void more()
 	assert(!w0->hasNet());
 	M.pushBack(w0);
 	assert(w0->hasNet());
-	assert(dynamic_cast<Symbol const*>(w0)->port(0).connected());
-	assert(dynamic_cast<Symbol const*>(w0)->port(1).connected());
-	trace1("w0", w0->getNet());
+	assert(dynamic_cast<Symbol const*>(w0)->portValue(0));
+	assert(dynamic_cast<Symbol const*>(w0)->portValue(1));
+	trace1("w0", w0->net());
 
 	std::cout << "disconnect\n";
 	M.disconnect(w0);
@@ -39,7 +39,7 @@ void more()
 	std::cout << "...\n";
 	w1 = new Wire(1,0,1,1);
 	M.pushBack(w1);
-	trace1("w1", w1->getNet());
+	trace1("w1", w1->net());
 
 	std::cout << "disconnect\n";
 	M.disconnect(w1);
@@ -52,30 +52,30 @@ void more()
 	auto w2 = new Wire(0,1,1,1);
 	M.pushBack(w2);
 	assert(M.wireCount()==3);
-	trace1("w2", w2->getNet());
+	trace1("w2", w2->net());
 
 	unsigned i = M.nodeCount();
 	trace1("nodecount", i);
 	assert(i==4);
 
-	assert(w0->getNet());
-	assert(w1->getNet() == w0->getNet());
-	assert(w1->getNet() == w2->getNet());
+	assert(w0->net());
+	assert(w1->net() == w0->net());
+	assert(w1->net() == w2->net());
 
 	std::cout << "=== try detach\n";
 	delete(M.detach(w1));
 	std::cout << "=== detached\n";
 	assert(M.wireCount()==2);
-	trace2("different", w0->getNet(), w2->getNet());
-	assert(w0->getNet() != w2->getNet());
+	trace2("different", w0->net(), w2->net());
+	assert(w0->net() != w2->net());
 
 	std::cout << "=== U test\n";
 	auto w3 = new Wire(0,0,0,1);
 	M.pushBack(w3);
 	assert(M.wireCount()==3);
-	trace2("same", w0->getNet(), w2->getNet());
-	assert(w2->getNet() == w0->getNet());
-	assert(w3->getNet() == w0->getNet());
+	trace2("same", w0->net(), w2->net());
+	assert(w2->net() == w0->net());
+	assert(w3->net() == w0->net());
 
 	w1 = new Wire(1,0,1,1);
 	// W0010
@@ -91,7 +91,7 @@ void more()
 	}
 	
 	assert(M.wireCount()==4);
-	trace1("w1", w1->getNet());
+	trace1("w1", w1->net());
 
 	std::cout << "=== try clear\n";
 	M.clear();
