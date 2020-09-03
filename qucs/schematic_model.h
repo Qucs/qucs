@@ -194,7 +194,7 @@ public:
 
 	// not so sure about these
 	void setPort(unsigned i, Node* n);
-	QString portValue(unsigned i) const;
+	Net const* portValue(unsigned i) const;
 
 private:
 	mutable PrototypeMap _protos; // bit of a hack.

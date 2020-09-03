@@ -27,14 +27,15 @@ Net* NetList::newNet()
 		_g.pop();
 		assert(_l[idx]->size() == size_t(-1));
 		_l[idx]->inc_nodes();
-		assert(_l[idx]->getPos() == idx);
+		assert(_l[idx]->pos() == idx);
+		_l[idx]->setLabel("");
 	}
 
 	assert(_l[idx]->size() == 0);
 	assert(_l[idx]);
 
 	// incomplete. need to negotiate more.
-	_l[idx]->setLabel("_net" + std::to_string(idx));
+	assert(!_l[idx]->hasLabel());
 	return _l[idx];
 }
 
@@ -46,7 +47,7 @@ void NetList::delNet(Net* n)
 	assert(n->size() == 0);
 	n->dec_nodes();
 
-	size_t idx = n->getPos();
+	size_t idx = n->pos();
 	trace3("delNet", idx, _l.size(), this);
 	assert(n==_l[idx]);
 	_g.push(idx);

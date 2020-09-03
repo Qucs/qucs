@@ -32,7 +32,25 @@
 
 #include "paintings/paintings.h"
 
+// not here.
+inline QTextStream& operator<< (QTextStream& o, std::string const& s)
+{
+	return o << QString::fromStdString(s);
+}
+
 namespace {
+
+static std::string netLabel(Net const* n)
+{
+	if(!n){
+		unreachable();
+		return("(null)");
+	}else if(n->hasLabel()){
+		return n->label().toStdString();
+	}else{
+		return "_net" + std::to_string(n->pos());
+	}
+}
 
 // qucslang language implementation
 class QucsatorLang : public NetLang {
@@ -75,7 +93,7 @@ void QucsatorLang::printSubckt(SubcktProto const* p, stream_t& s) const
 	// print_ports();
 	//
 	for(unsigned i=0; sym->portExists(i); ++i){
-		auto N = p->portValue(i);
+		std::string N = netLabel(p->portValue(i));
 //		if(N=="0"){
 //			N = "gnd";
 //		}else{
@@ -135,6 +153,7 @@ void QucsatorLang::printCommand(Command const* c, stream_t& s) const
 	s << '\n';
 }
 
+
 // print Component in qucsator language
 void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 {
@@ -153,11 +172,13 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 		incomplete();
 		int z=0;
 		QListIterator<Port *> iport(c->ports());
-		Port *pp = iport.next();
-		QString Node1 = pp->value()->label();
+		Port *pp = iport.next(); // BUG
+		unsigned k=0;
+		std::string Node1 = netLabel(c->portValue(k));
 		while (iport.hasNext()){ untested();
+			++k;
 			s << "R:" << c->label() << "." << QString::number(z++) << " "
-				<< Node1 << " " << iport.next()->value()->label() << " R=\"0\"\n";
+				<< Node1 << " " << netLabel( c->portValue(k) ) << " R=\"0\"\n";
 		}
 	}else{
 		if(dynamic_cast<Subcircuit const*>(c)) { // sckt_proto?
@@ -169,7 +190,7 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 		Symbol const* sym=c;
 		trace2("print", sym->numPorts(), sym->label());
 		for(unsigned i=0; i<sym->numPorts(); ++i){
-			QString N = sym->portValue(i);
+			std::string N = netLabel(sym->portValue(i));
 
 //			if(N=="0"){
 //				N = "gnd";
@@ -240,6 +261,7 @@ static Dispatcher<Simulator>::INSTALL p(&simulator_dispatcher, "qucsator", &QS);
 
 #else
 // "simulator" backend emulating legacy behaviour
+// TODO: forward to other simulator following legacy heuristic.
 class LegacySimulator : public Simulator{
 public:
 	explicit LegacySimulator() : Simulator() {}
