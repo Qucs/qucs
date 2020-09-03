@@ -147,10 +147,10 @@ bool SchematicDoc::loadIntoNothing(DocumentStream *stream)
 }
 
 // -------------------------------------------------------------
+#if 0
 // Paste from clipboard. into pe. wtf is pe?
 bool SchematicDoc::pasteFromClipboard(DocumentStream *stream, EGPList* pe)
 { untested();
-#if 1
   QString Line;
 
   Line = stream->readLine();
@@ -207,15 +207,12 @@ bool SchematicDoc::pasteFromClipboard(DocumentStream *stream, EGPList* pe)
 
   // better interface for this kind of stuff?
   assert(!pe->count());
-#ifndef USE_SCROLLVIEW
-  x.toScene(*scene(), pe);
-#endif
   assert(_model);
   _model->merge(x);
 
-#endif
   return true;
 }
+#endif
 
 // -------------------------------------------------------------
 int SchematicDoc::saveSymbolCpp (void)

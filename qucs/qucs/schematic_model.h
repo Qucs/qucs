@@ -94,7 +94,7 @@ public: // stuff saved from Schematic
 			bool creatingLib, NetLang const&);
 	void throughAllNodes(unsigned& z) const;
 	void propagateNode(Node* z) const;
-	void updateNetLabels() const;
+//	void updateNetLabels() const;
 
 private:
 	void detachFromNode(Element* what, Node* from);
@@ -133,7 +133,7 @@ public: // container
 	void clear();
 	void pushBack(Element* what);
 	void erase(Element* what);
-	void merge(SchematicModel&);
+//	void merge(SchematicModel&);
 
 private: // used in erase?
 	void       deleteComp(Component*c);
