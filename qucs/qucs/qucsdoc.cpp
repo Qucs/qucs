@@ -112,7 +112,7 @@ QAction* QucsDoc::selectAction()
 
 void QucsDoc::setActiveAction(MouseAction* a)
 {
-	if(mouseActions()){ untested();
+	if(mouseActions()){itested();
 		mouseActions()->setActive(a);
 	}else{ untested();
 	}
@@ -141,7 +141,7 @@ void QucsDoc::possiblyToggleAction(MouseAction* a, QAction* sender)
 		unreachable();
 	}else if(!sender->isCheckable()){ untested();
 		cmd = a->activate(sender);
-	}else if(sender->isChecked()){ untested();
+	}else if(sender->isChecked()){itested();
 		cmd = a->activate(sender);
 
 		if(cmd){ untested();
@@ -151,7 +151,7 @@ void QucsDoc::possiblyToggleAction(MouseAction* a, QAction* sender)
 			// possible 'delete' after select.
 			// don't do anything else
 			a->deactivate();
-		}else{ untested();
+		}else{itested();
 			// sender->setChecked(true); // assert?
 			setActiveAction(a);
 		}
@@ -161,7 +161,7 @@ void QucsDoc::possiblyToggleAction(MouseAction* a, QAction* sender)
 
 	if(cmd){ untested();
 		executeCommand(cmd);
-	}else{ untested();
+	}else{itested();
 	}
 }
 

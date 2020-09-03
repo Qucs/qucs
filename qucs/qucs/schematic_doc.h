@@ -157,7 +157,7 @@ private:
 private:
   // schematic Scene for this View
 //  SchematicScene *Scene;
-  SchematicScene *scene() {untested(); return prechecked_cast<SchematicScene*>(QGraphicsView::scene()); }
+  SchematicScene *scene() {itested(); return prechecked_cast<SchematicScene*>(QGraphicsView::scene()); }
   // schematic frame item
   // Frame *SchematicFrame;
   void drawBackground(QPainter *painter, const QRectF& rect);

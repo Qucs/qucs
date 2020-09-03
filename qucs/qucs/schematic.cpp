@@ -139,7 +139,7 @@ bool SchematicDoc::createSubcircuitSymbol()
 // // expose tab?
 // same as showEvent?
 void SchematicDoc::becomeCurrent(bool update)
-{ untested();
+{itested();
   emit signalCursorPosChanged(0, 0);
 
   // update appropriate menu entry
@@ -154,7 +154,7 @@ void SchematicDoc::becomeCurrent(bool update)
       App->symEdit->setStatusTip(tr("Edits the schematic"));
       App->symEdit->setWhatsThis(tr("Edit Schematic\n\nEdits the schematic"));
     }
-  }else{ untested();
+  }else{itested();
     App->symEdit->setText(tr("Edit Circuit Symbol"));
     App->symEdit->setStatusTip(tr("Edits the symbol for this schematic"));
     App->symEdit->setWhatsThis(
@@ -173,7 +173,7 @@ void SchematicDoc::becomeCurrent(bool update)
 
     emit signalUndoState(undoSymbolIdx != 0);
     emit signalRedoState(undoSymbolIdx != undoSymbol.size()-1);
-  } else { untested();
+  } else {itested();
     incomplete();
 #if 0
     Nodes = &DocNodes;
@@ -185,10 +185,10 @@ void SchematicDoc::becomeCurrent(bool update)
 
     emit signalUndoState(undoActionIdx != 0);
     emit signalRedoState(undoActionIdx != undoAction.size()-1);
-    if(update){ untested();
+    if(update){itested();
       incomplete();
       reloadGraphs();   // load recent simulation data
-    }else{ untested();
+    }else{itested();
     }
   }
 }
@@ -211,7 +211,7 @@ void SchematicDoc::setName (const QString& Name_)
 // ---------------------------------------------------
 // Sets the document to be changed or not to be changed.
 void SchematicDoc::setChanged(bool c, bool fillStack, char Op)
-{ untested();
+{itested();
   if((!DocChanged) && c)
     emit signalFileChanged(true);
   else if(DocChanged && (!c))
@@ -805,7 +805,7 @@ void SchematicDoc::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Heig
 // ---------------------------------------------------
 // Correction factor for unproportional font scaling.
 float SchematicDoc::textCorr()
-{ untested();
+{itested();
   incomplete();
   return 1.;
 #if 0
@@ -819,7 +819,7 @@ float SchematicDoc::textCorr()
 
 // ---------------------------------------------------
 void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float textCorr) const
-{ untested();
+{itested();
   xmin=INT_MAX;
   ymin=INT_MAX;
   xmax=INT_MIN;
@@ -829,7 +829,7 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
   if(components().isEmpty())
     if(wires().isEmpty())
       if(diagrams().isEmpty())
-        if(paintings().isEmpty()) { untested();
+        if(paintings().isEmpty()) {itested();
           xmin = xmax = 0;
           ymin = ymax = 0;
           return;
@@ -839,7 +839,7 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
   float Corr = textCorr;
   int x1, y1, x2, y2;
   // find boundings of all components
-  for(auto pc : components()) { untested();
+  for(auto pc : components()) {itested();
     pc->entireBounds(x1, y1, x2, y2, Corr);
     if(x1 < xmin) xmin = x1;
     if(x2 > xmax) xmax = x2;
@@ -848,7 +848,7 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
   }
 
   // find boundings of all wires
-  for(auto pw : wires()) { untested();
+  for(auto pw : wires()) {itested();
     if(pw->x1_() < xmin) xmin = pw->x1_();
     if(pw->x2_() > xmax) xmax = pw->x2_();
     if(pw->y1_() < ymin) ymin = pw->y1_();
@@ -1184,7 +1184,7 @@ bool SchematicDoc::mirrorYComponents()
 // ---------------------------------------------------
 // Updates the graph data of all diagrams (load from data files).
 void SchematicDoc::reloadGraphs()
-{ untested();
+{itested();
   QFileInfo Info(docName());
   for(auto pd : diagrams()){ untested();
     pd->loadGraphData(Info.path()+QDir::separator()+DataSet);
@@ -1214,24 +1214,24 @@ void SchematicDoc::cut()
 // ---------------------------------------------------
 // Loads this Qucs document.
 bool SchematicDoc::load()
-{ untested();
+{itested();
   assert(_model);
   _model->clear();
 
   if(!loadDocument()){ untested();
     return false;
-  }else{ untested();
+  }else{itested();
     // Keep reference to source file (the schematic file)
     // setFileInfo(DocName);
   }
   lastSaved = QDateTime::currentDateTime();
 
-  while(!undoAction.isEmpty()) { untested();
+  while(!undoAction.isEmpty()) {itested();
     delete undoAction.last();
     undoAction.pop_back();
   }
   undoActionIdx = 0;
-  while(!undoSymbol.isEmpty()) { untested();
+  while(!undoSymbol.isEmpty()) {itested();
     delete undoSymbol.last();
     undoSymbol.pop_back();
   }

@@ -121,19 +121,19 @@ void MouseActions::updateViewport()
 }
 
 QUndoCommand* MouseAction::activate(QAction* sender)
-{ untested();
+{itested();
   _sender = sender;
   return nullptr;
 }
 
 QUndoCommand* MouseAction::deactivate()
-{ untested();
+{itested();
   return nullptr;
 }
 
 void MouseAction::uncheck()
 {
-  if(_sender){ untested();
+  if(_sender){itested();
     _sender->blockSignals(true); // do not call toggle slot
     _sender->setChecked(false);       // set last toolbar button off
     _sender->blockSignals(false);

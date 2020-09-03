@@ -61,7 +61,7 @@ QAction *formerAction;   // remember action before drag n'drop etc.
 MouseActions::MouseActions(QucsDoc& d)
   : focusElement(nullptr), // hmm
     _doc(d)
-{ untested();
+{itested();
   selElem  = 0;  // no component/diagram is selected
   isMoveEqual = false;  // mouse cursor move x and y the same way
   focusElement.clear(); //element being interacted with mouse
@@ -75,13 +75,13 @@ MouseActions::MouseActions(QucsDoc& d)
 }
 
 MouseActions::~MouseActions()
-{ untested();
+{itested();
   delete ComponentMenu;
   delete focusMEvent;
 }
 void MouseActions::setActive(MouseAction* a)
 {
-  if(_maCurrent){ untested();
+  if(_maCurrent){itested();
     _maCurrent->uncheck();
   }else{ untested();
   }
@@ -757,7 +757,7 @@ void MouseActions::MMoveRotate(SchematicDoc *Doc, QMouseEvent *Event)
 bool MouseActions::eventFilter(QObject *obj, QEvent *e)
 {
   if(e->isAccepted()){ itested();
-  }else{ untested();
+  }else{itested();
     // drop event?
   }
 //  assert(obj==&doc());

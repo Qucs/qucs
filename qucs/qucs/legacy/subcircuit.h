@@ -38,7 +38,7 @@ public: // obsolete.
   static Element* info(QString&, char* &, bool getNewOne=false);
 
 private:
-  Element* clone() const override{ untested(); return new Subcircuit(*this); }
+  Element* clone() const override{itested(); return new Subcircuit(*this); }
 public:
   QString getSubcircuitFile(SchematicModel const* scope) const;
 

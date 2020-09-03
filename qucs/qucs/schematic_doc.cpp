@@ -21,7 +21,7 @@
 namespace{
 class sda : public SchematicSymbol{
 public:
-  sda(SchematicDoc& s) : SchematicSymbol(), _s(s) { untested();
+  sda(SchematicDoc& s) : SchematicSymbol(), _s(s) {itested();
 	  new_subckt();
 	  subckt()->attachDoc(&s);
   }
@@ -37,7 +37,7 @@ private: // SchematicSymbol
   SchematicModel* schematicModel() { untested();
     return nullptr;
   }
-  std::string getParameter(std::string const&) const{ untested();
+  std::string getParameter(std::string const&) const{itested();
     incomplete();
     return "incomplete";
   }
@@ -53,7 +53,7 @@ SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
      _model(nullptr),
      SymbolMode(false),
      _undoStack(nullptr)
-{ untested();
+{itested();
   qDebug() << "SchematicDoc::SchematicDoc" << Name_;
 
   _root = new sda(*this);
@@ -123,7 +123,7 @@ SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
   */
 
   //if (App_)
-  { untested();
+  {itested();
     connect(this, SIGNAL(signalCursorPosChanged(int, int)), 
         this, SLOT(printCursorPosition(int, int)));
     /** \todo
@@ -142,7 +142,7 @@ SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
 } // ::SchematicDocument
 
 SchematicDoc::~SchematicDoc()
-{ untested();
+{itested();
 	delete _root;
 	delete _undoStack;
 	delete _mouseActions;
@@ -150,7 +150,7 @@ SchematicDoc::~SchematicDoc()
 }
 
 void SchematicDoc::showEvent(QShowEvent*e)
-{ untested();
+{itested();
 	QGraphicsView::showEvent(e);
 }
 #if 0 // not yet
@@ -166,14 +166,14 @@ void SchematicDoc::showEvent(QShowEvent*e)
 #endif
 
 bool SchematicDoc::loadDocument(QFile& /*BUG*/ file)
-{ untested();
+{itested();
 	incomplete();
   QString Line;
   DocumentStream stream(&file);
 
   // read header **************************
-  do { untested();
-    if(stream.atEnd()) { untested();
+  do {itested();
+    if(stream.atEnd()) {itested();
       file.close(); // BUG
       return true;
     }
@@ -194,8 +194,8 @@ bool SchematicDoc::loadDocument(QFile& /*BUG*/ file)
 }
 
 void SchematicDoc::parse(DocumentStream& s, SchematicLanguage const* L)
-{ untested();
-	if(!L){ untested();
+{itested();
+	if(!L){itested();
 		auto D=doclang_dispatcher["leg_sch"];
 		L = dynamic_cast<SchematicLanguage const*>(D);
 	}else{ untested();
@@ -203,7 +203,7 @@ void SchematicDoc::parse(DocumentStream& s, SchematicLanguage const* L)
 	assert(L);
 	assert(_root);
 	// ins i(this); // BUG
-	while(!s.atEnd()){ untested();
+	while(!s.atEnd()){itested();
 		qDebug() << "entering parse";
 		L->parse(s, *_root);
 		assert(s.atEnd()); // happens with legacy lang
@@ -393,7 +393,7 @@ void SchematicDoc::drawBackground(QPainter *painter, const QRectF &rect)
 
 // directly call scale??
 float SchematicDoc::zoom(float)
-{ untested();
+{itested();
 	incomplete();
 #if 0
 
@@ -464,17 +464,17 @@ void SchematicDoc::mouseMoveEvent(QMouseEvent *e)
 //
 // getting here *after* the event has passed through Scene
 bool SchematicDoc::event(QEvent* e)
-{ untested();
+{itested();
 	assert(mouseActions());
 	trace2("SchematicDoc::event", e->type(), e->isAccepted());
 //	e->ignore();
 
-	if(e->isAccepted()){ untested();
+	if(e->isAccepted()){itested();
 		// move actions are highjacked.
 		// (that's okay);
 		// releaseEvent is also here.
 		handleMouseActions(e); //
-	}else{ untested();
+	}else{itested();
 		// need releaseEvent here.
 		// but maybe not.
 		//mouserelease?!
