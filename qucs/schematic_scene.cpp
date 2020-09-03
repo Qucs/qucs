@@ -240,7 +240,7 @@ bool SchematicScene::event(QEvent* e)
 	doc()->handleMouseActions(e);
 	bool r = false;
 	if(e->isAccepted()){
-	}else{ untested();
+	}else{itested();
 		trace0("fwd");
 		r = QGraphicsScene::event(e);
 	}
@@ -255,8 +255,8 @@ bool SchematicScene::event(QEvent* e)
 
 		// doc()->handleMouseActions(e);
 //		e->ignore(); // pass on to view??
-	}else{ untested();
-		if(r){ untested();
+	}else{itested();
+		if(r){itested();
 			// "new ground".
 			// "rectangle draw"
 		}else{untested();

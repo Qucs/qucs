@@ -60,7 +60,7 @@ ElementGraphics::~ElementGraphics()
 }
 
 void ElementGraphics::attachElement(Element* e)
-{ untested();
+{itested();
 	assert(e);
 	_e = e;
 	// BUG: ask element
