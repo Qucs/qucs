@@ -36,6 +36,7 @@
 class QPainter;
 //class Schematic;
 class NodeMap;
+class Net;
 
 // a component symbol. not necessarily one of the legacy components
 class Symbol : public Element{
@@ -86,14 +87,16 @@ public: // Node stuff
   virtual Node* connectNode(unsigned idx, NodeMap&);
   virtual Node* disconnectNode(unsigned idx, NodeMap&);
 
+private:
+  Port const& port(unsigned) const; // TODO. don't expose "Port"
+
 public: // Port access
   virtual std::pair<int, int> const& portPosition(unsigned) const;
-  QString const& portValue(unsigned) const;
+  virtual Net const* portValue(unsigned) const;
   // TODO: rethink Port/Node semantics
   virtual unsigned numPorts() const = 0;
-  Port const& port(unsigned) const;
   virtual bool portExists(unsigned) const{ return false; }
-  virtual QString portName(unsigned) const{return "invalid"; }
+  virtual /*?*/ QString portName(unsigned) const{return "invalid"; }
 
   SchematicModel const* subckt() const{ return _subckt; }
   SchematicModel* subckt(){ return _subckt; }

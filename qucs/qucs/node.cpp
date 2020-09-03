@@ -87,6 +87,7 @@ QString const& Node::netLabel() const
   assert(_net);
   return _net->label();
 }
+// ----------------------------------------------------------------
 void Node::setNetLabel(QString const& l)
 {
   assert(_net);
@@ -95,7 +96,7 @@ void Node::setNetLabel(QString const& l)
 // ----------------------------------------------------------------
 // BUG: does not set Name
 // what is a "Name"??
-void Node::setName(const QString& Name_, const QString& Value_, int x_, int y_)
+void Node::setName(const QString& , const QString& , int, int )
 { untested();
   incomplete();
 #if 0

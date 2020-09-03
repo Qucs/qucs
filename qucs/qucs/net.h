@@ -23,10 +23,11 @@ private:
 	Net( const Net& ) = delete;
 
 public:
+	bool hasLabel() const{ return label() != ""; }
 	size_t size() const{return _size;}
 
 	void setPos(unsigned u){_pos=u;}
-	unsigned getPos(){return _pos;}
+	unsigned pos() const{return _pos;}
 
 	void inc_nodes(){++_size;}
 	void dec_nodes(){assert(_size!=size_t(-1)); --_size;}
