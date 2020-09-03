@@ -1,7 +1,7 @@
 ==============
   <Sub my_Sub 1 0 0 0 0 0 0 "" 0>
 Sub #(.File()) my_Sub((null));
-Sub:my_Sub (null) Type="Sub"
+Sub:my_Sub (null)
 ==============
   <Vdc * 1 0 0 18 -26 0 1 "1 V" 1>
 Vdc #(.U(1 V)) my_Vdc((null), (null));
