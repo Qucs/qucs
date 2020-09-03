@@ -98,12 +98,8 @@ public:
   QString const& netLabel() const;
   void setNetLabel(QString const&);
 
-  bool hasLabel() const{
-	  // possibly "one of the connections is a label?"
-	  incomplete();
-	  return false;
-  }
-
+  bool hasLabel() const;
+  bool hasNetLabel() const;
 private: // element (BUG?)
   void paint(ViewPainter*) const{ }
 

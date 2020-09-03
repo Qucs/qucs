@@ -20,16 +20,16 @@ int main()
 		M.pushBack(w1);
 		trace2("new wires", w0, w1);
 	}
-	assert(w1->getNet() != w0->getNet());
+	assert(w1->net() != w0->net());
 
 	std::cout << "joining nets.\n";
 	auto w2 = new Wire(0,0,0,1);
 	M.pushBack(w2);
-	assert(w1->getNet() == w0->getNet());
+	assert(w1->net() == w0->net());
 
 	std::cout << "disjoining nets.\n";
 	M.erase(w2);
-	assert(w1->getNet() != w0->getNet());
+	assert(w1->net() != w0->net());
 
 	// this takes ages in comparison
 	std::cout << "clearing\n";

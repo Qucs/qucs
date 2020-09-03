@@ -243,13 +243,23 @@ Node* Wire::connectNode(unsigned i, NodeMap&l)
   Node* n = &l.at(pp.x_()+cx_(), pp.y_()+cy_());
   assert(n->hasNet());
 
-  if(Node* other_node = port((i+1)%2).value()){
-    trace3("wire::connectnode", i, n, other_node);
-    trace2("wire addedge", n->netLabel(), other_node->netLabel());
+  if(Node* n2 = port((i+1)%2).value()){
+    trace3("wire::connectnode", i, n, n2);
+    trace2("wire addedge", n->netLabel(), n2->netLabel());
 
-    // BUG. label may go the wrong way
     // resolve conflicts more carefully...
-    l.addEdge(n, other_node);
+    if(!n->hasNetLabel()){
+      n->setNetLabel(n2->netLabel());
+    }else if(!n2->hasNetLabel()){
+      n2->setNetLabel(n->netLabel());
+    }else{ untested();
+      std::cerr << "possible label conflict. not sure what to do\n";
+      std::cerr << n->netLabel() << " vs " << n2->netLabel() << "\n";
+    }
+    trace2("wire addededge", n->netLabel(), n2->netLabel());
+
+    l.addEdge(n, n2);
+    trace2("wire addededge2", n->netLabel(), n2->netLabel());
   }else{
   }
 

@@ -20,4 +20,12 @@ public:
 	virtual void save(DocumentStream&, SchematicSymbol const&) const{incomplete();}
 };
 
+#include <QTextStream>
+// here?
+inline QTextStream& operator<< (QTextStream& o, std::string const& s)
+{
+	return o << QString::fromStdString(s);
+}
+
+
 #endif

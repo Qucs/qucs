@@ -19,6 +19,7 @@
 #include "command.h"
 #include "schematic_lang.h"
 #include "schematic_model.h"
+#include "net.h"
 
 // #include "schematic.h" // BUG, transition
 
@@ -30,6 +31,19 @@ class WireList;
 class ComponentList;
 
 namespace {
+
+static std::string netLabel(Net const* n)
+{
+	if(!n){
+		unreachable();
+		return("(null)");
+	}else if(n->hasLabel()){
+		return n->label().toStdString();
+	}else{
+		return "_net" + std::to_string(n->pos());
+	}
+}
+
 class Verilog : public NetLang
 {
   virtual void printCommand(Command const*, QTextStream&) const;
@@ -87,7 +101,7 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 		// printPorts()
 		comma = "";
 		for(unsigned i=0; i < sym->numPorts(); ++i){
-			s << comma << sym->portValue(i);
+			s << comma << netLabel(sym->portValue(i));
 			comma = ", ";
 		}
 
@@ -158,11 +172,11 @@ void VerilogSchematicFormat::save(DocumentStream& stream, SchematicSymbol const&
   }
 }
 
-// not here.
-QTextStream& operator<<(QTextStream& o, std::string const& s)
-{
-		return o << QString::fromStdString(s);
-}
+//// not here.
+//QTextStream& operator<<(QTextStream& o, std::string const& s)
+//{
+//		return o << QString::fromStdString(s);
+//}
 
 // similar to Verilog::printSymbol, but with the actual node names and
 // coordinates.
