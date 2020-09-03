@@ -622,30 +622,7 @@ void SchematicModel::setOwner(Element* o)
 	}
 }
 
-// obsolete. probably.
-void SchematicModel::updateNetLabels() const
-{
-	incomplete();
 #if 0
-	for(auto pc : components()){ untested();
-		if(pc->type() == "GND") { untested();
-			// BUG, use rails with net names.
-			Port* n = pc->Ports.first();
-			assert(n);
-			assert(n->connected());
-			Net* net = n->value()->getNet();
-			assert(net);
-
-			if (net->label().size()){ untested();
-				qDebug() << "GND: warning: overriding label" << net->label();
-			}else{ untested();
-			}
-			net->setLabel("0");
-		}
-	}
-#endif
-}
-
 // needed?
 void SchematicModel::merge(SchematicModel& src)
 { untested();
@@ -656,17 +633,8 @@ void SchematicModel::merge(SchematicModel& src)
   }
   src.components().clear();
 }
-
-#if 0
-Net* SchematicModel::newNet()
-{ untested();
-	return Nets.newNet();
-}
-void SchematicModel::delNet(Net* n)
-{ untested();
-	Nets.delNet(n);
-}
 #endif
+
 Symbol const* SchematicModel::findProto(QString const& what) const
 {
 	return _protos[what];

@@ -156,11 +156,7 @@ namespace{
 class sda : public SchematicSymbol{
 public:
   explicit sda() : SchematicSymbol() {
-    unsigned u;
-
     new_subckt();
-    _subckt->throughAllNodes(u); // hack
-    _subckt->updateNetLabels(); // hack
   }
   ~sda(){
   }
