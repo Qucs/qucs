@@ -94,6 +94,28 @@ void Node::setNetLabel(QString const& l)
   _net->setLabel(l);
 }
 // ----------------------------------------------------------------
+bool Node::hasNetLabel() const
+{
+  if(_net){
+    return _net->hasLabel();
+  }else{ untested();
+    // reachable??
+    return false;
+  }
+}
+// ----------------------------------------------------------------
+bool Node::hasLabel() const
+{
+  unreachable(); //???
+  if(_net){
+    return _net->hasLabel();
+  }else{ untested();
+    // reachable??
+    return false;
+  }
+}
+// ----------------------------------------------------------------
+
 // BUG: does not set Name
 // what is a "Name"??
 void Node::setName(const QString& , const QString& , int, int )
