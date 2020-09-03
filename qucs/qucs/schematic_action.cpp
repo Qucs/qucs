@@ -1108,7 +1108,7 @@ QUndoCommand* MouseActionDelete::release(QMouseEvent*)
 /*--------------------------------------------------------------------------*/
 SchematicActions::SchematicActions(SchematicDoc& ctx)
   : MouseActions(ctx)
-{ untested();
+{itested();
 
 	// not entirely clear how to do this
 	// maybe dispatch mouse actions.
@@ -1134,7 +1134,7 @@ SchematicActions::SchematicActions(SchematicDoc& ctx)
 }
 /*--------------------------------------------------------------------------*/
 SchematicActions::~SchematicActions()
-{ untested();
+{itested();
 	delete maActivate;
 	delete maDelete;
 	delete maInsertGround;
@@ -1166,7 +1166,7 @@ QRegExpValidator Val_CompProp(Expr_CompProp, 0);
 
 // forward to mouseActions...
 void SchematicDoc::actionSelect(QAction* sender)
-{ untested();
+{itested();
 
 #if 0
   // goto to insertWire mode if ESC pressed during wiring

@@ -559,7 +559,7 @@ static std::string find_type_in_string(QString& Line)
  * \return true/false in case of success/failure
  */
 bool SchematicDoc::loadDocument()
-{ untested();
+{itested();
   QFile file(docName());
   qDebug() << "opening" << docName();
   if(!file.open(QIODevice::ReadOnly)) { untested();

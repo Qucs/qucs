@@ -48,7 +48,7 @@ SchematicModel::SchematicModel(SchematicDoc* s)
 }
 
 void SchematicModel::clear()
-{ untested();
+{itested();
 	incomplete(); // disconnect components
 	components().clear();
 
@@ -169,7 +169,7 @@ void SchematicModel::pushBack(Element* what)
 		incomplete();
 	}
 
-  if(doc()){ untested();
+  if(doc()){itested();
 	  doc()->addToScene(what);
   }else{
   }
@@ -281,7 +281,7 @@ NodeMap& SchematicModel::nodes()
 //}
 
 PaintingList& SchematicModel::paintings()
-{ untested();
+{itested();
 	return Paintings;
 }
 //

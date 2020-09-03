@@ -159,7 +159,7 @@ bool SimMessage::startProcess()
     ErrText->appendPlainText(tr("ERROR: Simulator is still running"));
     FinishSimulation(-1);
     return false;
-  }else{ untested();
+  }else{itested();
   }
 
   Collect.clear();  // clear list for NodeSets, SPICE components etc.
@@ -170,7 +170,7 @@ bool SimMessage::startProcess()
     FinishSimulation(-1);
     incomplete();
     return false;
-  }else{ untested();
+  }else{itested();
   }
 
   Stream.setDevice(&NetlistFile);
@@ -184,7 +184,7 @@ bool SimMessage::startProcess()
   if(QucsApp::isTextDocument(DocWidget)) { untested();
     incomplete();
     // throw(Error(" Cannot simulate a text file");
-  }else if(SchematicDoc const* d=dynamic_cast<SchematicDoc const*>(DocWidget)){ untested();
+  }else if(SchematicDoc const* d=dynamic_cast<SchematicDoc const*>(DocWidget)){itested();
     assert(d->root());
     trace1("save", dl);
 
@@ -469,7 +469,7 @@ void SimMessage::startSimulator()
                 << lib;
 #endif
     }
-  }else if(SchematicDoc const* d=dynamic_cast<SchematicDoc const*>(DocWidget)){ untested();
+  }else if(SchematicDoc const* d=dynamic_cast<SchematicDoc const*>(DocWidget)){itested();
 
     // output NodeSets, SPICE simulations etc.
     for(QStringList::Iterator it = Collect.begin();

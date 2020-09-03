@@ -609,7 +609,7 @@ void QucsApp::fillComboBox (bool setAll)
 //
 // BUG: not here.
 void QucsApp::slotSetCompView (int index)
-{ untested();
+{itested();
   trace1("QucsApp::slotSetCompView", index);
 
   editText->setHidden (true); // disable text edit of component property
@@ -1430,7 +1430,7 @@ bool QucsApp::gotoPage(const QString& Name)
 
   QFileInfo Info(Name);
   if(Info.suffix() == "sch" || Info.suffix() == "dpl" ||
-     Info.suffix() == "sym") { untested();
+     Info.suffix() == "sym") {itested();
     d = DocumentTab->createEmptySchematic(Name);
   } else { untested();
     d = DocumentTab->createEmptyTextDoc(Name);
@@ -1442,7 +1442,7 @@ bool QucsApp::gotoPage(const QString& Name)
     DocumentTab->setCurrentIndex(No);
     // view->drawn = false;
     return false;
-  }else{ untested();
+  }else{itested();
     slotChangeView(DocumentTab->currentWidget());
 
     // if only an untitled document was open -> close it

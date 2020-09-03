@@ -119,14 +119,14 @@ void QucsatorLang::printSubckt(SubcktProto const* p, stream_t& s) const
 }
 
 void QucsatorLang::printCommand(Command const* c, stream_t& s) const
-{ untested();
+{itested();
 	assert(c);
 	s << "." << c->name() << ":" << c->label();
 
 	//for(auto p2 : c->params())
 	for(auto p2 : c->Props){ // BUG
 		if(p2->name() == "Symbol") { // hack??
-		}else if(p2->name()=="p" && p2->value()==""){ untested();
+		}else if(p2->name()=="p" && p2->value()==""){itested();
 			// unreachable
 		}else{
 			s << " " << p2->name() << "=\"" << p2->value() << "\"";
@@ -180,14 +180,14 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 
 		for(auto p2 : c->params()) {
 			if(!p2){ untested();
-			}else if(!dynamic_cast<Subcircuit const*>(c)) { itested();
-			}else if(p2->name()=="File"){ untested();
+			}else if(!dynamic_cast<Subcircuit const*>(c)) {itested();
+			}else if(p2->name()=="File"){itested();
 				// unreachable(); // BUG. subckt must decide.
 				p2 = nullptr;
 			}else{ untested();
 			}
 
-			if(!p2){ untested();
+			if(!p2){itested();
 				incomplete();
 			}else if(p2->name() == "Symbol") {
 				// hack??
