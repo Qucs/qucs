@@ -518,9 +518,7 @@ private:
 
   bool    pasteFromClipboard(DocumentStream *, EGPList*);
 
-  QString createUndoString(char);
   bool    rebuild(QString *);
-  QString createSymbolUndoString(char);
   bool    rebuildSymbol(QString *);
 
   static void createNodeSet(QStringList&, int&, Conductor*, Node*);

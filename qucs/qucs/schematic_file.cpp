@@ -392,7 +392,7 @@ void SchematicDoc::saveDocument() const
 bool SchematicDoc::loadProperties(QTextStream *stream)
 #endif
 // // TODO: move to frame::setParameters
-void SchematicDoc::setFrameText(int idx, QString s)
+void SchematicDoc::setFrameText(int, QString)
 {
   incomplete();
 }
@@ -573,22 +573,17 @@ bool SchematicDoc::loadDocument()
     _model->setFileInfo(docName());
     loadDocument(file);
 
-#ifndef USE_SCROLLVIEW
     QGraphicsScene& s=*scene();
-//    DocModel.toScene(s);
-#endif
     return true;
   }
 }
 
+#if 0 // obsolete
 // -------------------------------------------------------------
 // Creates a Qucs file format (without document properties) in the returning
 // string. This is used to save state for undo operation.
 QString SchematicDoc::createUndoString(char Op)
 {
-  incomplete(); // use undostack.
-  return QString("obsolete");
-#if 0
   Painting *pp;
 
   // Build element document.
@@ -623,7 +618,6 @@ QString SchematicDoc::createUndoString(char Op)
   s += "</>\n";
 
   return s;
-#endif
 }
 
 // -------------------------------------------------------------
@@ -631,8 +625,6 @@ QString SchematicDoc::createUndoString(char Op)
 QString SchematicDoc::createSymbolUndoString(char Op)
 {
   incomplete(); // use undostack.
-  return QString("obsolete");
-#if 0
   Painting *pp;
 
   // Build element document.
@@ -647,8 +639,8 @@ QString SchematicDoc::createSymbolUndoString(char Op)
   s += "</>\n";
 
   return s;
-#endif
 }
+#endif
 
 class ModelStream : public QTextStream {
 public:
@@ -662,13 +654,13 @@ class ParseError : public std::exception{
 };
 
 // -------------------------------------------------------------
+#if 0
 // Is quite similiar to "loadDocument()" but with less error checking.
 // Abused for "undo" function.
 bool SchematicDoc::rebuild(QString *s)
 {
   incomplete(); // obsolete
 
-#if 0
   DocModel.clear();
 
   QString Line;
@@ -678,7 +670,6 @@ bool SchematicDoc::rebuild(QString *s)
 
   // read content *************************
   DocModel.parse(stream);;
-#endif
 
   return true;
 }
@@ -687,8 +678,6 @@ bool SchematicDoc::rebuild(QString *s)
 // Same as "rebuild(QString *s)" but for symbol edit mode.
 bool SchematicDoc::rebuildSymbol(QString *s)
 {
-  incomplete();
-#if 0
   symbolPaintings().clear();	// delete whole document
 
   QString Line;
@@ -704,9 +693,9 @@ bool SchematicDoc::rebuildSymbol(QString *s)
     return false;
   }
 
-#endif
   return true;
 }
+#endif
 
 
 // ***************************************************************
@@ -812,14 +801,7 @@ void SchematicModel::collectDigitalSignals(void)
 //  }
 }
 
-// ---------------------------------------------------
-// Propagates the given node to connected component ports.
-// obsolete.
-void SchematicModel::propagateNode(Node *pn) const
-{
-}
-
-#include <iostream>
+//#include <iostream>
 
 /*!
  * \brief SchematicDoc::throughAllComps

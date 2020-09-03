@@ -225,6 +225,7 @@ void SchematicDoc::setChanged(bool c, bool fillStack, char Op)
 
 
   // ................................................
+  #if 0 // -> SymbolDoc
   if(isSymbolMode()) {  // for symbol edit mode
     while(undoSymbol.size() > undoSymbolIdx + 1) { untested();
       delete undoSymbol.last();
@@ -244,6 +245,7 @@ void SchematicDoc::setChanged(bool c, bool fillStack, char Op)
     }
     return;
   }
+#endif
 
   // ................................................
   // for schematic edit mode
@@ -260,6 +262,7 @@ void SchematicDoc::setChanged(bool c, bool fillStack, char Op)
     }
   }
 
+#if 0 // obsolete?
   undoAction.append(new QString(createUndoString(Op)));
   undoActionIdx++;
 
@@ -272,6 +275,7 @@ void SchematicDoc::setChanged(bool c, bool fillStack, char Op)
     undoActionIdx--;
   }
   return;
+#endif
 }
 
 // -----------------------------------------------------------
