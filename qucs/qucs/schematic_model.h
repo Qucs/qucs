@@ -93,8 +93,7 @@ public: // stuff saved from Schematic
 	bool createSubNetlist(stream_t&, int&, QStringList&, QPlainTextEdit*, int,
 			bool creatingLib, NetLang const&);
 	void throughAllNodes(unsigned& z) const;
-	void propagateNode(Node* z) const;
-//	void updateNetLabels() const;
+//	void propagateNode(Node* z) const;
 
 private:
 	void detachFromNode(Element* what, Node* from);
