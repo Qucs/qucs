@@ -203,8 +203,8 @@ private: // SchematicSymbol
 
 private:
   unsigned numPorts() const{ incomplete(); return 0; }
-  Net const* portValue(unsigned)const {unreachable(); nullptr;}
-  void setPort(unsigned i, Node* n){incomplete();}
+  Net const* portValue(unsigned)const {unreachable(); return nullptr;}
+  void setPort(unsigned, Node*){incomplete();}
 
 public:
   SchematicModel* subckt(){return _subckt;}

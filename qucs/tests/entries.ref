@@ -1,5 +1,5 @@
 ==============
-  <Sub my_Sub 1 0 0 0 0 0 0 "" 0>
+  <Sub * 1 0 0 0 0 0 0 "" 0>
 Sub #(.File()) my_Sub((null));
 Sub:my_Sub (null)
 ==============
@@ -11,7 +11,7 @@ Vdc:my_Vdc (null) (null) U="1 V"
 Idc #(.I(1 mA)) my_Idc((null), (null));
 Idc:my_Idc (null) (null) I="1 mA"
 ==============
-  <VProbe Pr 1 0 0 28 -31 0 0>
+  <VProbe my_VProbe 1 0 0 28 -31 0 0>
 VProbe #() my_VProbe((null), (null));
 VProbe:my_VProbe (null) (null)
 ==============
@@ -19,7 +19,7 @@ VProbe:my_VProbe (null) (null)
 VCVS #(.G(1), .T(0)) my_VCVS((null), (null), (null), (null));
 VCVS:my_VCVS (null) (null) (null) (null) G="1" T="0"
 ==============
-  <VCCS SRC 1 0 0 -26 34 0 0 "1 S" 1 "0" 0>
+  <VCCS my_VCCS 1 0 0 -26 34 0 0 "1 S" 1 "0" 0>
 VCCS #(.G(1 S), .T(0)) my_VCCS((null), (null), (null), (null));
 VCCS:my_VCCS (null) (null) (null) (null) G="1 S" T="0"
 ==============
@@ -87,6 +87,6 @@ Pac:my_Pac (null) (null) Num="1" Z="50 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
 //
 .: Sim="" Type="lin" Param="R1" Start="5 Ohm" Stop="50 Ohm" Points="20"
 ==============
-  <Diode D 1 0 0 -26 15 0 0 "1e-15 A" 1 "1" 1 "10 fF" 1 "0.5" 0 "0.7 V" 0 "0.5" 0 "0.0 fF" 0 "0.0" 0 "2.0" 0 "0.0 Ohm" 0 "0.0 ps" 0 "0" 0 "0.0" 0 "1.0" 0 "1.0" 0 "0" 0 "1 mA" 0 "26.85" 0 "3.0" 0 "1.11" 0 "0.0" 0 "0.0" 0 "0.0" 0 "0.0" 0 "0.0" 0 "0.0" 0 "26.85" 0 "1.0" 0 "normal" 0>
+  <Diode my_Diode 1 0 0 -26 15 0 0 "1e-15 A" 1 "1" 1 "10 fF" 1 "0.5" 0 "0.7 V" 0 "0.5" 0 "0.0 fF" 0 "0.0" 0 "2.0" 0 "0.0 Ohm" 0 "0.0 ps" 0 "0" 0 "0.0" 0 "1.0" 0 "1.0" 0 "0" 0 "1 mA" 0 "26.85" 0 "3.0" 0 "1.11" 0 "0.0" 0 "0.0" 0 "0.0" 0 "0.0" 0 "0.0" 0 "0.0" 0 "26.85" 0 "1.0" 0 "normal" 0>
 Diode #(.Is(1e-15 A), .N(1), .Cj0(10 fF), .M(0.5), .Vj(0.7 V), .Fc(0.5), .Cp(0.0 fF), .Isr(0.0), .Nr(2.0), .Rs(0.0 Ohm), .Tt(0.0 ps), .Ikf(0), .Kf(0.0), .Af(1.0), .Ffe(1.0), .Bv(0), .Ibv(1 mA), .Temp(26.85), .Xti(3.0), .Eg(1.11), .Tbv(0.0), .Trs(0.0), .Ttt1(0.0), .Ttt2(0.0), .Tm1(0.0), .Tm2(0.0), .Tnom(26.85), .Area(1.0), .Symbol(normal)) my_Diode((null), (null));
 Diode:my_Diode (null) (null) Is="1e-15 A" N="1" Cj0="10 fF" M="0.5" Vj="0.7 V" Fc="0.5" Cp="0.0 fF" Isr="0.0" Nr="2.0" Rs="0.0 Ohm" Tt="0.0 ps" Ikf="0" Kf="0.0" Af="1.0" Ffe="1.0" Bv="0" Ibv="1 mA" Temp="26.85" Xti="3.0" Eg="1.11" Tbv="0.0" Trs="0.0" Ttt1="0.0" Ttt2="0.0" Tm1="0.0" Tm2="0.0" Tnom="26.85" Area="1.0"

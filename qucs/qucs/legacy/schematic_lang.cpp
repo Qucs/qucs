@@ -11,7 +11,7 @@
 #include "command.h"
 #include "paintings/painting.h"
 #include "diagram.h" // BUG
-#include "subcircuit.h"
+#include "docfmt.h" // BUG
 
 #ifdef DO_TRACE
 #include <typeinfo>
@@ -328,6 +328,12 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 //
 //
 // -------------------------------------------------------
+static std::string mangle(std::string t)
+{ untested();
+	auto pos = t.find("$");
+	std::string ret="";
+	return t.substr(0, pos);
+}
 // was: void Schematic::saveComponent(QTextStream& s, Component const* c) const
 void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
 {
@@ -337,19 +343,12 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
 		return;
 	}else{
 	}
-	s << "  <";
-	if(dynamic_cast<Subcircuit const*>(c)){
-		// print "Sub" instead of type.
-		s << "Sub " << c->label();
-	}else{
-		s << c->obsolete_model_hack(); // c->type()
+	s << "  <" << mangle(c->type()) << " ";
 
-		s << " ";
-		if(c->name().isEmpty()){ untested();
-			s << "*";
-		}else{
-			s << c->name(); // label??
-		}
+	if(c->name().isEmpty()){ untested();
+		s << "*";
+	}else{
+		s << c->label(); // label??
 	}
 	s << " ";
 

@@ -26,7 +26,6 @@
 #include "schematic_lang.h"
 #include "exception.h"
 #include "sckt_proto.h"
-#include "subcircuit.h"
 #include "net.h"
 #include "misc.h"
 
