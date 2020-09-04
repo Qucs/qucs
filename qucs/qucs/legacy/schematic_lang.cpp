@@ -329,7 +329,7 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 //
 // -------------------------------------------------------
 static std::string mangle(std::string t)
-{ untested();
+{
 	auto pos = t.find("$");
 	std::string ret="";
 	return t.substr(0, pos);
@@ -345,7 +345,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
 	}
 	s << "  <" << mangle(c->type()) << " ";
 
-	if(c->name().isEmpty()){ untested();
+	if(c->name().isEmpty()){
 		s << "*";
 	}else{
 		s << c->label(); // label??

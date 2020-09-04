@@ -23,23 +23,23 @@
 namespace {
 
 static std::string netLabel(Net const* n)
-{ untested();
-	if(!n){ untested();
+{
+	if(!n){
 		unreachable();
 		return("(null)");
-	}else if(n->hasLabel()){ untested();
+	}else if(n->hasLabel()){
 		return n->label().toStdString();
-	}else{ untested();
+	}else{
 		return "_net" + std::to_string(n->pos());
 	}
 }
 
 static std::string mangleType(std::string& t)
-{ untested();
+{
 	auto pos = t.find("$");
 	std::string ret="";
-	if(pos == std::string::npos){ untested();
-	}else{ untested();
+	if(pos == std::string::npos){
+	}else{
 		ret = " Type=\"" + t.substr(pos+1) + "\"";
 	}
 	t = t.substr(0, pos);
@@ -61,14 +61,14 @@ static Dispatcher<DocumentFormat>::INSTALL p(&doclang_dispatcher, "qucsator", &q
 
 
 void QucsatorLang::printSymbol(Symbol const* d, stream_t& s) const
-{ untested();
+{
 	if(!d){ untested();
 		incomplete();
-	}else if(auto c=dynamic_cast<SubcktProto const*>(d)){ untested();
+	}else if(auto c=dynamic_cast<SubcktProto const*>(d)){
 		printSubckt(c, s);
 	}else if(auto c=dynamic_cast<Command const*>(d)){ untested();
 		printCommand(c, s);
-	}else if(auto c=dynamic_cast<Component const*>(d)){ untested();
+	}else if(auto c=dynamic_cast<Component const*>(d)){
 		printComponent(c, s);
 	}else{ untested();
 		s << "QucsatorLang::printSymbol incomplete\n";
@@ -78,7 +78,7 @@ void QucsatorLang::printSymbol(Symbol const* d, stream_t& s) const
 
 // partly from Schematic::createSubnetlistplain
 void QucsatorLang::printSubckt(SubcktProto const* p, stream_t& s) const
-{ untested();
+{
 	trace2("prinSckt", p, p->subckt());
 	Symbol const* sym = p;
 	std::string label = p->label().toStdString();
@@ -92,7 +92,7 @@ void QucsatorLang::printSubckt(SubcktProto const* p, stream_t& s) const
 
 	// print_ports();
 	//
-	for(unsigned i=0; sym->portExists(i); ++i){ untested();
+	for(unsigned i=0; sym->portExists(i); ++i){
 		std::string N = netLabel(p->portValue(i));
 //		if(N=="0"){ untested();
 //			N = "gnd";
@@ -102,7 +102,7 @@ void QucsatorLang::printSubckt(SubcktProto const* p, stream_t& s) const
 	}
 	s << "\n";
 
-	for(auto pi : p->symbolPaintings()){ untested();
+	for(auto pi : p->symbolPaintings()){
 		incomplete();
 		if(pi->name() == ".ID ") { untested();
 			incomplete();
@@ -113,7 +113,7 @@ void QucsatorLang::printSubckt(SubcktProto const* p, stream_t& s) const
 	//			s = (*it)->Name; // keep 'Name' unchanged
 	//			(*tstream) << " " << s.replace("=", "=\"") << '"';
 	//			}
-		}else{ untested();
+		}else{
 		}
 	//		break;
 	}
@@ -123,12 +123,12 @@ void QucsatorLang::printSubckt(SubcktProto const* p, stream_t& s) const
 	trace1("sckt components", &p->schematicModel());
 	trace1("sckt components", sym->scope());
 	assert(sym->scope());
-	for(auto i : p->schematicModel().components()){ untested();
+	for(auto i : p->schematicModel().components()){
       if(!i){ untested();
 			incomplete();
-		}else if(i->type() == "Port"){ untested();
-		}else if(i->type() == "GND"){ untested();
-		}else{ untested();
+		}else if(i->type() == "Port"){
+		}else if(i->type() == "GND"){
+		}else{
 			trace1("ps", i->type());
 			printSymbol(i, s);
 		}
@@ -147,7 +147,7 @@ void QucsatorLang::printCommand(Command const* c, stream_t& s) const
 		if(p2->name() == "Symbol") { // hack??
 		}else if(p2->name()=="p" && p2->value()==""){itested();
 			// unreachable
-		}else{ untested();
+		}else{
 			s << " " << p2->name() << "=\"" << p2->value() << "\"";
 		}
 	}
@@ -156,11 +156,11 @@ void QucsatorLang::printCommand(Command const* c, stream_t& s) const
 
 // print Component in qucsator language
 void QucsatorLang::printComponent(Component const* c, stream_t& s) const
-{ untested();
+{
 	if(c->isActive != COMP_IS_ACTIVE){ untested();
 		// comment out?
 		incomplete();
-	}else{ untested();
+	}else{
 	}
 	assert(c);
 	trace2("pc", c->label(), c->type());
@@ -180,7 +180,7 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 			s << "R:" << c->label() << "." << QString::number(z++) << " "
 				<< Node1 << " " << netLabel( c->portValue(k) ) << " R=\"0\"\n";
 		}
-	}else{ untested();
+	}else{
 
 		std::string type = c->type();
 		std::string hack_type = mangleType(type);
@@ -189,13 +189,13 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 
 		Symbol const* sym=c;
 		trace3("print", c->label(), sym->numPorts(), sym->label());
-		for(unsigned i=0; i<sym->numPorts(); ++i){ untested();
+		for(unsigned i=0; i<sym->numPorts(); ++i){
 			std::string N = netLabel(sym->portValue(i));
 
 			s << " " << N;
 		}
 
-		for(unsigned ii=0; ii<sym->paramCount(); ++ii) { untested();
+		for(unsigned ii=0; ii<sym->paramCount(); ++ii) {
 			trace3("param", c->label(), ii, sym->paramCount());
 			std::string name = sym->paramName(ii);
 			std::string value = sym->paramValue(ii);
@@ -203,11 +203,11 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 
 			if(name==""){itested();
 				incomplete(); // is_printable...
-			}else if(name == "File") { untested();
+			}else if(name == "File") {
 				// hack
-			}else if(name == "Symbol") { untested();
+			}else if(name == "Symbol") {
 				// hack??
-			}else{ untested();
+			}else{
 				s << " " << name << "=\"" << value << "\"";
 			}
 		}
