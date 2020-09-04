@@ -563,9 +563,7 @@ void Subcircuit::setParameter(unsigned i, std::string const& value)
 	QString v = QString::fromStdString(value);
 	if(i==0){
 		trace1("Subcircuit::setParameter", v);
-///		setType(value.toStdString());
-/// possibly bad idea. do in "expand" instead.
-		setType(v.left(v.length()-4).toStdString());
+		setType("Sub$" + v.left(v.length()-4).toStdString());
 	}else{
 		incomplete();
 	}
