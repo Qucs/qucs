@@ -28,7 +28,50 @@
 #include "module.h"
 
 
-#include "subcircuit.h" // possibly unneeded. let's see.
+namespace {
+
+// BUG: move to .cpp
+// BUG: must derive from subckt_model (or so)
+// Subcircuit is used as "subcircuit instance"..
+// but a subcircuit instance is not a Component...
+class Subcircuit : public Component  {
+public:
+  Subcircuit();
+ ~Subcircuit() {};
+private:
+  Subcircuit(Subcircuit const&x);
+  Component* newOne();
+
+public: // obsolete.
+  static Element* info(QString&, char* &, bool getNewOne=false);
+
+private:
+  Element* clone() const override{itested(); return new Subcircuit(*this); }
+public:
+  QString getSubcircuitFile(SchematicModel const* scope) const;
+
+protected:
+  QString netlist() const;
+  QString vhdlCode(int);
+  void createSymbol(); // SchematicModel const& scope);
+  void remakeSymbol(int No);
+  int  loadSymbol(const QString&);
+
+private: // Symbol
+// unsigned numPorts() const override;
+  bool portExists(unsigned) const override;
+  QString portName(unsigned) const override;
+
+  // void setParameter(QString const& name, QString const& value);
+  void setParameter(unsigned i, std::string const& value) override;
+  unsigned paramCount() const override{ untested(); incomplete(); return 1; }
+
+private: // overrides
+  void build();
+
+  // create full prototype element, bit of a hack
+  Symbol const* proto(SchematicModel const* schem) const override;
+};
 
 Subcircuit::Subcircuit() : Component() // gaah sckt_base
 {
@@ -296,9 +339,9 @@ QString Subcircuit::vhdlCode(int)
 }
 
 // -------------------------------------------------------
+#if 0
 QString Subcircuit::verilogCode(int)
 { untested();
-#if 0
   QString f = misc::properFileName(Props.first()->Value);
   QString s = "  Sub_" + misc::properName(f);
 
@@ -325,8 +368,8 @@ QString Subcircuit::verilogCode(int)
 
   s += ");\n";
   return s;
-#endif
 }
+#endif
 
 // -------------------------------------------------------
 QString Subcircuit::getSubcircuitFile(SchematicModel const* scp) const
@@ -336,7 +379,7 @@ QString Subcircuit::getSubcircuitFile(SchematicModel const* scp) const
 	if(scp){
 	}else{ untested();
 		assert(owner());
-		auto scp=scope();
+		// auto scp=scope();
 	}
 	assert(scp);
   // construct full filename
@@ -573,4 +616,6 @@ namespace{
 Subcircuit D;
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Sub", &D);
 static Module::INSTALL pp("stuff", &D);
+}
+
 }

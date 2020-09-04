@@ -18,7 +18,6 @@
 #include "net.h"
 #include "docfmt.h" // <<
 #include "paintings/paintings.h" // really??
-#include "legacy/subcircuit.h" // BUG BUG
 #include "globals.h"
 
 namespace {
@@ -214,12 +213,6 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 		}
 
 		s << hack_type;
-#if 0
-		if(dynamic_cast<Subcircuit const*>(c)) { untested();
-			s << " Type=\"" << QString::fromStdString(c->type()) << "\"";
-		}else{ untested();
-		}
-#endif
 		s << '\n';
 	}
 }
