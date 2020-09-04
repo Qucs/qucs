@@ -53,15 +53,15 @@ Component::Component(Component const& p)
     tx(p.tx),
     ty(p.ty),
     showName(p.showName)
-{ untested();
+{
   qDebug() << "component copy" << p.Name << p.Model;
 
   assert(!Props.count());
-  for(auto i : p.Props){ untested();
+  for(auto i : p.Props){
     Props.append(new Property(*i));
   }
 
-  for(auto i : p.Ports){ untested();
+  for(auto i : p.Ports){
     Ports.append(new Port(*i));
   }
 
@@ -73,7 +73,7 @@ Component::Component(Component const& p)
  * \brief The Component class implements a legacy qucs component symbol
  */
 Component::Component()
-{ untested();
+{
   Type = isAnalogComponent;
 
   mirroredX = false;
@@ -90,7 +90,7 @@ Component::Component()
 }
 
 Element* Component::clone() const
-{ untested();
+{
   Component const* e=this;
   Component* E=const_cast<Component*>(e);
   Component* ret = E->newOne();
@@ -425,14 +425,14 @@ void Component::print(ViewPainter *p, float FontScale)
 // -------------------------------------------------------
 // Rotates the component 90 counter-clockwise around its center
 void Component::rotate()
-{ untested();
+{
   // Port count only available after recreate, createSymbol
   if ((Model != "Sub") && (Model !="VHDL") && (Model != "Verilog")) // skip port count
     if(Ports.count() < 1) return;  // do not rotate components without ports
   int tmp, dx, dy;
 
   // rotate all lines
-  foreach(Line *p1, Lines) { untested();
+  foreach(Line *p1, Lines) {
     tmp = -p1->x1;
     p1->x1 = p1->y1;
     p1->y1 = tmp;
@@ -442,14 +442,14 @@ void Component::rotate()
   }
 
   // rotate all ports
-  foreach(Port *p2, Ports) { untested();
+  foreach(Port *p2, Ports) {
     // p2->rotate();
     tmp = -p2->x_();
     p2->setPosition(p2->y_(), tmp);
   }
 
   // rotate all arcs
-  foreach(Arc *p3, Arcs) { untested();
+  foreach(Arc *p3, Arcs) {
     tmp = -p3->x;
     p3->x = p3->y;
     p3->y = tmp - p3->w;
@@ -503,12 +503,12 @@ void Component::rotate()
   FontMetrics metrics;
 
   dx = dy = 0;
-  if(showName) { untested();
+  if(showName) {
     dx = metrics.width(Name);
     dy = metrics.lineSpacing();
   }
   for(Property *pp = Props.first(); pp != 0; pp = Props.next())
-    if(pp->display) { untested();
+    if(pp->display) {
       // get width of text
       tmp = metrics.width(pp->Name+"="+pp->Value);
       if(tmp > dx) dx = tmp;
@@ -535,19 +535,19 @@ void Component::setParameter(unsigned pos, std::string const& v)
 // Mirrors the component about the x-axis.
 // BUG? mirrors the Y axis.
 void Component::mirrorX()
-{ untested();
+{
   // Port count only available after recreate, createSymbol
   if ((Model != "Sub") && (Model !="VHDL") && (Model != "Verilog")) // skip port count
     if(Ports.count() < 1) return;  // do not rotate components without ports
 
   // mirror all lines
-  foreach(Line *p1, Lines) { untested();
+  foreach(Line *p1, Lines) {
     p1->y1 = -p1->y1;
     p1->y2 = -p1->y2;
   }
 
   // mirror all ports
-  foreach(Port *p2, Ports){ untested();
+  foreach(Port *p2, Ports){
     p2->setPosition(p2->x_(), -p2->y_());
   }
 
@@ -599,24 +599,24 @@ void Component::mirrorX()
 // -------------------------------------------------------
 // Mirrors the component about the y-axis.
 void Component::mirrorY()
-{ untested();
+{
   // Port count only available after recreate, createSymbol
   if ((Model != "Sub") && (Model !="VHDL") && (Model != "Verilog")) // skip port count
     if(Ports.count() < 1) return;  // do not rotate components without ports
 
   // mirror all lines
-  foreach(Line *p1, Lines) { untested();
+  foreach(Line *p1, Lines) {
     p1->x1 = -p1->x1;
     p1->x2 = -p1->x2;
   }
 
   // mirror all ports
-  foreach(Port *p2, Ports){ untested();
+  foreach(Port *p2, Ports){
     p2->setPosition(-p2->x_(), p2->y_());
   }
 
   // mirror all arcs
-  foreach(Arc *p3, Arcs) { untested();
+  foreach(Arc *p3, Arcs) {
     p3->x = -p3->x - p3->w;
     p3->angle = 16*180 - p3->angle - p3->arclen;  // mirror
     if(p3->angle < 0) p3->angle += 16*360;   // angle has to be > 0
@@ -651,7 +651,7 @@ void Component::mirrorY()
   if(showName)
     dx = metrics.width(Name);
   for(Property *pp = Props.first(); pp != 0; pp = Props.next())
-    if(pp->display) { untested();
+    if(pp->display) {
       // get width of text
       tmp = metrics.width(pp->Name+"="+pp->Value);
       if(tmp > dx)  dx = tmp;
@@ -994,7 +994,7 @@ Component* LegacySchematicLang::loadComponent(const QString& _s, Component* c) c
 // ***  from file. (e.g. subcircuit, library component)
 
 int Component::analyseLine(const QString& Row, int numProps)
-{ untested();
+{
   incomplete(); // obsolete
   QPen Pen;
   QBrush Brush;
@@ -1019,7 +1019,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(i2 > y2)  y2 = i2;
     return 0;   // do not count Ports
   }
-  else if(s == "Line") { untested();
+  else if(s == "Line") {
     if(!getIntegers(Row, &i1, &i2, &i3, &i4))  return -1;
     if(!getPen(Row, Pen, 5))  return -1;
     i3 += i1;
@@ -1048,7 +1048,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(i2+i4 > y2)  y2 = i2+i4;
     return 1;
   }
-  else if(s == ".ID") { untested();
+  else if(s == ".ID") {
     if(!getIntegers(Row, &i1, &i2))  return -1;
     tx = i1;
     ty = i2;
@@ -1057,7 +1057,7 @@ int Component::analyseLine(const QString& Row, int numProps)
 
     i1 = 1;
     Property *pp = Props.at(numProps-1);
-    for(;;) { untested();
+    for(;;) {
       s = Row.section('"', i1,i1);
       if(s.isEmpty())  break;
 
@@ -1196,7 +1196,7 @@ int Component::analyseLine(const QString& Row, int numProps)
 // ---------------------------------------------------------------------
 bool Component::getIntegers(const QString& s, int *i1, int *i2, int *i3,
 			     int *i4, int *i5, int *i6)
-{ untested();
+{
   bool ok;
   QString n;
 
@@ -1215,7 +1215,7 @@ bool Component::getIntegers(const QString& s, int *i1, int *i2, int *i3,
   *i3 = n.toInt(&ok);
   if(!ok) return false;
 
-  if(i4) { untested();
+  if(i4) {
     n  = s.section(' ',4,4);
     *i4 = n.toInt(&ok);
     if(!ok) return false;
@@ -1236,7 +1236,7 @@ bool Component::getIntegers(const QString& s, int *i1, int *i2, int *i3,
 
 // ---------------------------------------------------------------------
 bool Component::getPen(const QString& s, QPen& Pen, int i)
-{ untested();
+{
   bool ok;
   QString n;
 
@@ -1330,7 +1330,7 @@ void Component::copyComponent(Component *pc)
 // ********                                                       ********
 // ***********************************************************************
 void MultiViewComponent::recreate()
-{ untested();
+{
   Ellips.clear();
   Texts.clear();
   Ports.clear();
@@ -1343,7 +1343,7 @@ void MultiViewComponent::recreate()
   int  rrot = rotated;
   if (mmir && rrot==2) // mirrorX and rotate 180 = mirrorY
     mirrorY();
-  else  { untested();
+  else  {
     if(mmir)
       mirrorX();   // mirror
     if (rrot)
@@ -1674,17 +1674,17 @@ void Component::setSchematic(Schematic* p)
 # endif
 
 unsigned Component::paramCount() const
-{ untested();
+{
   trace2("Component::paramCount", label(), Props.count());
   return Props.count();
 }
 std::string Component::paramValue(unsigned i) const
-{ untested();
+{
   assert( Props.at(i));
   return Props.at(i)->value().toStdString();
 }
 std::string Component::paramName(unsigned i) const
-{ untested();
+{
   assert( Props.at(i));
   return Props.at(i)->name().toStdString();
 }
