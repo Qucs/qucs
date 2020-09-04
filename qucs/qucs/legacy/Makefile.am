@@ -34,6 +34,3 @@ legacy_la_SOURCES = \
 	schematic_lang.cpp \
 	subcircuit.cpp \
 	simulator.cpp
-
-EXTRA_DIST = \
-	subcircuit.h
