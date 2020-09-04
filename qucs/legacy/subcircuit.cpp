@@ -64,7 +64,7 @@ private: // Symbol
 
   // void setParameter(QString const& name, QString const& value);
   void setParameter(unsigned i, std::string const& value) override;
-  unsigned paramCount() const override{ untested(); incomplete(); return 1; }
+  unsigned paramCount() const override{ incomplete(); return 1; }
 
 private: // overrides
   void build();
