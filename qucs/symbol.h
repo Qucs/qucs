@@ -62,6 +62,10 @@ public: // interface
   virtual void build() {} // what does it do?
   virtual unsigned paramCount()const {return 0;}
 
+public: // TODO. something like this.
+  // virtual void prepare();
+  // virtual void unPrepare();
+
 public:
   SchematicModel const* scope() const;
 
