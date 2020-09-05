@@ -1,7 +1,7 @@
 # Qucs
 ## declarations end
 
-Vac:V1 _net7 _net1 U="1 V" f="1 GHz" Phase="0" Theta="0"
+Vac:V1 _net7 gnd U="1 V" f="1 GHz" Phase="0" Theta="0"
 R:R1 _net4 _net7 R="R_par" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 C:C1 gnd Voltage C="2 pF" V=""
 L:L1 Voltage _net4 L="13 nH" I=""

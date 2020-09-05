@@ -18,6 +18,7 @@ for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 	eval echo more $base $schname ${REDIR}
 
 	# dump qucsator netlist
+	rm -f "${out}/${base}_${schname}.net"
 	cmd="$QUCS -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.net"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
@@ -26,16 +27,19 @@ for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 	sed -i '1 s/Qucs.*/Qucs/' ${out}/${base}_${schname}.net
 
 	# dump verilog netlist
+	rm -f "${out}/${base}_${schname}.v"
 	cmd="$QUCS -a ../qucs/sim/.libs/verilog.so -l verilog_nl -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.v"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
 	
 	# dump legacy schematic
+	rm -f "${out}/${base}_${schname}.dup"
 	cmd="$QUCS -l leg_sch -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.dup"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
 
 	# dump verilog schematic
+	rm -f "${out}/${base}_${schname}.vs"
 	cmd="$QUCS -a ../qucs/sim/.libs/verilog.so -l v_sch -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.vs"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}

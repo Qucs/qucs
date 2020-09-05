@@ -29,7 +29,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(SchematicDoc*);
 }D;
-Dispatcher<Command>::INSTALL p(&command_dispatcher, ".SW", &D);
+Dispatcher<Command>::INSTALL p(&command_dispatcher, "SW", &D);
 Module::INSTALL pp("simulations", &D);
 
 Param_Sweep::Param_Sweep()
