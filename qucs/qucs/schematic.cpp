@@ -1230,6 +1230,7 @@ bool SchematicDoc::load()
   }
   lastSaved = QDateTime::currentDateTime();
 
+#if 0 // obsolete
   while(!undoAction.isEmpty()) {itested();
     delete undoAction.last();
     undoAction.pop_back();
@@ -1247,6 +1248,7 @@ bool SchematicDoc::load()
   setChanged(false, true); // "not changed" state, but put on undo stack
   undoActionIdx = 0;
   undoAction.at(undoActionIdx)->replace(1, 1, 'i');
+#endif
 
   // The undo stack of the circuit symbol is initialized when first
   // entering its edit mode.
