@@ -274,3 +274,5 @@ Element* RectDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new RectDiagram();
   return 0;
 }
+
+// vim:ts=8:sw=2:noet

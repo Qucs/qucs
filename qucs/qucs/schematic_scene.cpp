@@ -259,7 +259,7 @@ bool SchematicScene::event(QEvent* e)
 		if(r){itested();
 			// "new ground".
 			// "rectangle draw"
-		}else{untested();
+		}else{itested();
 		}
 		// recrangle release also here.
 		// done in the "View".

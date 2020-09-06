@@ -35,7 +35,8 @@ bool PaintingList::load(QTextStream& str)
 		 incomplete();
 		 // QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line delimiter!"));
       return false;
-    }
+    }else{
+	 }
     Line = Line.mid(1, Line.length()-2);  // cut off start and end character
 
     cstr = Line.section(' ',0,0);    // painting type
@@ -54,7 +55,8 @@ bool PaintingList::load(QTextStream& str)
       // QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line format!"));
       delete p;
       return false;
-    }
+    }else{
+	 }
 	 qDebug() << "got painting" << cstr << p->name();
     List->append(p);
   }
@@ -266,14 +268,13 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 			}
 
 			assert(owner.subckt());
-			if(c){
+			if(c){itested();
 				trace2("pushing back", c->label(), typeid(*c).name());
 				Element const* cc = c;
 				assert(cc->owner() == &owner);
 				owner.subckt()->pushBack(c);
-			}else{
+			}else{itested();
 			}
-
 		}
 	}
 
@@ -289,13 +290,17 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 
 Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 		DocumentStream& stream /*, DiagramList *List */)const
-{
+{itested();
 	Diagram *d;
 	QString Line=line_in;
 	QString cstr;
-	if(!stream.atEnd()) {
-		qDebug() << "diagram?" << Line;
-		if(Line.at(0) == '<') if(Line.at(1) == '/') return nullptr;
+	if(!stream.atEnd()) {itested();
+		trace1("diagram?", Line);
+		if(Line.at(0) == '<' && Line.at(1) == '/'){ untested();
+			return nullptr;
+		}else{
+			untested();
+		}
 		Line = Line.trimmed();
 		if(Line.isEmpty()){ untested();
 			return nullptr;
@@ -304,17 +309,21 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 		cstr = Line.section(' ',0,0);    // diagram type
 		std::string what=cstr.toStdString();
 
-		if(auto x=diagram_dispatcher[what.c_str()+1]){
+		auto type = what.c_str()+1;
+		if(auto x=diagram_dispatcher[what.c_str()+1]){itested();
 			d=prechecked_cast<Diagram*>(x->clone());
 			assert(d);
-			qDebug() << "gotit" << what.c_str();
+			qDebug() << "got diagram" << what.c_str();
+			d->setName(type); // yuck
 		}else{ untested();
+			trace1("diagram doesntexist", type);
 			incomplete();
 			// throw ...
 			return nullptr;
 		}
 
 		if(!d->load(Line, stream)) {
+			trace1("loadfail", Line);
 			incomplete();
 			delete d;
 			return nullptr;
