@@ -51,7 +51,7 @@ ElementGraphics* ElementGraphics::clone() const
 
 ElementGraphics::~ElementGraphics()
 {
-	if(isVisible()){ itested();
+	if(isVisible()){itested();
 		// element is owned by SchematicModel.
 	}else{ untested();
 		// check: is this correct?
@@ -95,7 +95,7 @@ void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, 
 }
 
 QRectF ElementGraphics::boundingRect() const
-{ itested();
+{itested();
 	assert(_e);
 	return _e->boundingRect();
 }
@@ -123,7 +123,7 @@ bool ElementGraphics::sceneEvent(QEvent* e)
 	ItemEvent ie(*e, *this);
 	if(s->itemEvent(&ie)){ untested();
 		return e->isAccepted();
-	}else if(QGraphicsItem::sceneEvent(e)){ itested();
+	}else if(QGraphicsItem::sceneEvent(e)){itested();
 		return e->isAccepted();
 	}else{ untested();
 		return false;
@@ -172,5 +172,5 @@ void ElementGraphics::moveElement<QPoint>(QPoint const& delta);
 
 ItemEvent::ItemEvent(QEvent const& a, ElementGraphics& b)
 	: QEvent(a), _item(b)
-{ itested();
+{itested();
 }

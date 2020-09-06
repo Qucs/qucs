@@ -61,8 +61,8 @@ public:
 	virtual cmd* dblclk(QEvent*) { return nullptr; }
 
 	virtual cmd* generic(QEvent*) { return nullptr; } // remove
-	virtual cmd* enter(QEvent*) { untested(); return nullptr; }
-	virtual cmd* leave(QEvent*) { untested(); return nullptr; }
+	virtual cmd* enter(QEvent*) {itested(); return nullptr; }
+	virtual cmd* leave(QEvent*) {itested(); return nullptr; }
 
 	void uncheck();
 
