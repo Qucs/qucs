@@ -109,19 +109,19 @@ void Component::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 // -------------------------------------------------------
 // Size of component text.
 int Component::textSize(int& _dx, int& _dy)
-{ untested();
+{itested();
   // get size of text using the screen-compatible metric
   FontMetrics metrics;
 
   int tmp, count=0;
   _dx = _dy = 0;
-  if(showName) { untested();
+  if(showName) {itested();
     _dx = metrics.width(Name);
     _dy = metrics.height();
     count++;
   }
   for(Property *pp = Props.first(); pp != 0; pp = Props.next())
-    if(pp->display) { untested();
+    if(pp->display) {itested();
       // get width of text
       tmp = metrics.width(pp->Name+"="+pp->Value);
       if(tmp > _dx)  _dx = tmp;
@@ -134,7 +134,7 @@ int Component::textSize(int& _dx, int& _dy)
 // -------------------------------------------------------
 // Boundings including the component text.
 void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2, float Corr)
-{ untested();
+{itested();
   _x1 = x1+cx();
   _y1 = y1+cy();
   _x2 = x2+cx();
@@ -180,7 +180,7 @@ void Component::setCenter(int x, int y, bool relative)
 
 // -------------------------------------------------------
 void Component::getCenter(int& x, int& y) const
-{ untested();
+{itested();
   x = cx();
   y = cy();
 }
@@ -233,7 +233,7 @@ bool Component::getSelected(int x_, int y_)
 
 // -------------------------------------------------------
 void Component::paint(ViewPainter *p) const
-{ untested();
+{itested();
   int x, y;
   int cx = 0; // cx_(); // "positionX"
   int cy = 0; // cy_(); // "positionY"
@@ -243,12 +243,12 @@ void Component::paint(ViewPainter *p) const
   QFont newFont = f;
   if(dynamic_cast<Command const*>(this)) { untested();
     unreachable();
-  }else{ untested();
+  }else{itested();
     // normal components go here
     assert(!Model.size() || Model.at(0) != '.');
 
     // paint all lines
-    foreach(Line *p1, Lines) { untested();
+    foreach(Line *p1, Lines) {itested();
       p->Painter->setPen(p1->style);
       p->drawLine(cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
     }
@@ -281,7 +281,7 @@ void Component::paint(ViewPainter *p) const
 
     QMatrix wm = p->Painter->worldMatrix();
     // write all text
-    foreach(Text *pt, Texts) { untested();
+    foreach(Text *pt, Texts) {itested();
       p->Painter->setWorldMatrix(
           QMatrix(pt->mCos, -pt->mSin, pt->mSin, pt->mCos,
                    p->DX + float(cx+pt->x) * p->Scale,
@@ -293,7 +293,7 @@ void Component::paint(ViewPainter *p) const
       p->Painter->setPen(pt->Color);
       if (0) { untested();
 	p->Painter->drawText(0, 0, 0, 0, Qt::AlignLeft|Qt::TextDontClip, pt->s);
-      } else { untested();
+      } else {itested();
 	int w, h;
 	w = p->drawTextMapped (pt->s, 0, 0, &h);
     Q_UNUSED(w);
@@ -311,13 +311,13 @@ void Component::paint(ViewPainter *p) const
 
   p->Painter->setPen(QPen(Qt::black,1));
   p->map(cx+tx, cy+ty, x, y);
-  if(showName) { untested();
+  if(showName) {itested();
     p->Painter->drawText(x, y, 0, 0, Qt::TextDontClip, Name);
     y += p->LineSpacing;
   }
   // write all properties
   for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next())
-    if(p4->display) { untested();
+    if(p4->display) {itested();
       p->Painter->drawText(x, y, 0, 0, Qt::TextDontClip, p4->Name+"="+p4->Value);
       y += p->LineSpacing;
     }
@@ -334,7 +334,7 @@ void Component::paint(ViewPainter *p) const
 
   // draw component bounding box
   // not here.
-  if(1){ untested();
+  if(1){itested();
   }else if(isSelected()) { untested();
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(cx+x1, cy+y1, x2-x1, y2-y1);

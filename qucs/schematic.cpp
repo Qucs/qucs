@@ -71,7 +71,7 @@ ComponentList SymbolComps;
 //}
 
 void SchematicDoc::printCursorPosition(int x, int y)
-{ itested();
+{itested();
   QPoint p(x,y);
   QPointF mp=mapToScene(p);
   App->printCursorPosition(mp.x(),mp.y());
@@ -885,7 +885,7 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
 #endif
 
   // find boundings of all diagrams
-  for(auto pd : diagrams()) { untested();
+  for(auto pd : diagrams()) {itested();
     pd->Bounding(x1, y1, x2, y2);
     if(x1 < xmin) xmin = x1;
     if(x2 > xmax) xmax = x2;
@@ -1190,7 +1190,7 @@ bool SchematicDoc::mirrorYComponents()
 void SchematicDoc::reloadGraphs()
 {itested();
   QFileInfo Info(docName());
-  for(auto pd : diagrams()){ untested();
+  for(auto pd : diagrams()){itested();
     pd->loadGraphData(Info.path()+QDir::separator()+DataSet);
   }
 }

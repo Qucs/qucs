@@ -252,7 +252,7 @@ Node* Wire::connectNode(unsigned i, NodeMap&l)
       n->setNetLabel(n2->netLabel());
     }else if(!n2->hasNetLabel()){
       n2->setNetLabel(n->netLabel());
-    }else{ untested();
+    }else{
       std::cerr << "possible label conflict. not sure what to do\n";
       std::cerr << n->netLabel() << " vs " << n2->netLabel() << "\n";
     }
