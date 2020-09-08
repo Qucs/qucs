@@ -172,7 +172,7 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 		incomplete();
 		int z=0;
 		QListIterator<Port *> iport(c->ports());
-		Port *pp = iport.next(); // BUG
+		iport.next(); // BUG
 		unsigned k=0;
 		std::string Node1 = netLabel(c->portValue(k));
 		while (iport.hasNext()){ untested();
@@ -217,6 +217,17 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 	}
 }
 
-// partly from Schematic::createSubnetlistplain
+class Qucsator : public Simulator{
+public:
+	explicit Qucsator() : Simulator() {}
+	Qucsator(Qucsator const&) = delete;
+	~Qucsator(){}
+private: // Simulator
+  NetLang const* netLang() const override { untested();
+	  return dynamic_cast<NetLang const*>(doclang_dispatcher["qucsator"]);
+  }
+  DocumentFormat const* netLister() const override {return docfmt_dispatcher["qucsator"];}
+}QS;
+static Dispatcher<Simulator>::INSTALL qq(&simulator_dispatcher, "qucsator", &QS);
 
 }//namespace
