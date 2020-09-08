@@ -2010,6 +2010,7 @@ bool MouseActions::handle(QEvent*e)
   }
 
   if(c){ untested();
+    // emit signalUndoState(true);
     executeCommand(c);
     return true;
   }else{
@@ -2023,11 +2024,13 @@ void MouseActions::executeCommand(QUndoCommand* c)
   assert(c);
   QUndoStack* u = _doc.undoStack();
 
-//   c->redo(); does it do that in push?!
   if(u){ untested();
-    u->push(c);
-    // signal something?
-    // emit haveSthToUndo
+    u->push(c); // also calls redo
+
+    // train wreck. must be part of push. fix later.
+    assert(doc().App);
+    assert(doc().App->undo);
+    doc().App->undo->setEnabled(true);
   }else{ untested();
     // forget about it.
     delete c;

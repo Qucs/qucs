@@ -237,6 +237,10 @@ bool SchematicScene::event(QEvent* e)
 	// 155 for move.
 	trace2("SchematicScene::event", e->isAccepted(), e->type());
 
+	if(dynamic_cast<QGraphicsSceneEvent*>(e)){ itested();
+	}else{ itested();
+	}
+
 	doc()->handleMouseActions(e);
 	bool r = false;
 	if(e->isAccepted()){

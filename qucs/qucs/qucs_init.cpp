@@ -19,6 +19,7 @@
 #include "qucs.h"
 #include "octave_window.h"
 #include "misc.h"
+#include "io_trace.h"
 
 #include <QAction>
 #include <QShortcut>
@@ -1032,14 +1033,16 @@ void QucsApp::printCursorPosition(int x, int y)
 // --------------------------------------------------------------
 // called by document, update undo state
 void QucsApp::slotUpdateUndo(bool isEnabled)
-{
+{ untested();
+  assert(undo);
   undo->setEnabled(isEnabled);
 }
 
 // --------------------------------------------------------------
 // called by document, update redo state
 void QucsApp::slotUpdateRedo(bool isEnabled)
-{
+{ untested();
+  assert(redo);
   redo->setEnabled(isEnabled);
 }
 
