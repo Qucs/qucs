@@ -133,12 +133,16 @@ SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
         App_, SLOT(slotHideEdit()));
     */
     connect(this, SIGNAL(signalUndoState(bool)),
-        this, SLOT(slotUpdateUndo(bool)));
+        &App_, SLOT(slotUpdateUndo(bool)));
     connect(this, SIGNAL(signalRedoState(bool)),
-        this, SLOT(slotUpdateRedo(bool)));
+        &App_, SLOT(slotUpdateRedo(bool)));
     connect(this, SIGNAL(signalFileChanged(bool)),
         this, SLOT(slotFileChanged(bool)));
   }
+  
+  // really?
+    emit signalUndoState(true);
+    emit signalRedoState(false);
 } // ::SchematicDocument
 
 SchematicDoc::~SchematicDoc()
