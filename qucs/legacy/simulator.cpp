@@ -11,9 +11,7 @@
  *                                                                         *
  ***************************************************************************/
 
-// stuff collected from schematic_file.cc and others
-//
-// WARNING: function names are unchanged, and still counterintuitive.
+// stuff related to "simulation" collected from from lots of other files.
 
 #include "../sim/sim.h"
 #include "node.h"
@@ -30,10 +28,6 @@
 #include "misc.h"
 
 namespace {
-
-
-
-
 
 // -------------------------------------------------------------------
 // PLAN/TODO: merge into (legacy) qucsator driver below
@@ -58,22 +52,6 @@ private:
 }LNL;
 static Dispatcher<DocumentFormat>::INSTALL p1(&docfmt_dispatcher, "qucsator|legacy_nl", &LNL);
 
-#if 0
-// qucsator simulator backend. move to sim/qucsator.cpp
-class Qucsator : public Simulator{
-public:
-	explicit Qucsator() : Simulator() {}
-	Qucsator(Qucsator const&) = delete;
-	~Qucsator(){}
-private: // Simulator
-  NetLang const* netLang() const override { untested();
-	  return dynamic_cast<NetLang const*>(doclang_dispatcher["qucsator"]);
-  }
-  DocumentFormat const* netLister() const override {return &LNL;}
-}QS;
-static Dispatcher<Simulator>::INSTALL p(&simulator_dispatcher, "qucsator", &QS);
-
-#else
 // "simulator" backend emulating legacy behaviour
 // TODO: forward to other simulator following legacy heuristic.
 class LegacySimulator : public Simulator{
@@ -93,7 +71,6 @@ private: // Simulator
   DocumentFormat const* netLister() const override {return &LNL;}
 }QS;
 static Dispatcher<Simulator>::INSTALL p(&simulator_dispatcher, "legacy", &QS);
-#endif
 
 void LegacyNetlister::clear() const
 {
