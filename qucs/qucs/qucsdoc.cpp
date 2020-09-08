@@ -65,9 +65,12 @@ QucsDoc::~QucsDoc()
 void QucsDoc::undo()
 {
 	QUndoStack* u = undoStack();
-	if(u){
+	if(u){ untested();
 		u->undo();
-	}else{
+		assert(App);
+		assert(App->redo);
+		App->redo->setEnabled(true); // yikes.
+	}else{ untested();
 	}
 }
 
@@ -184,7 +187,7 @@ MouseAction const* QucsDoc::activeAction() const
 
 void QucsDoc::executeCommand(QUndoCommand* c)
 {
-	if(mouseActions()){
+	if(mouseActions()){ untested();
 		mouseActions()->executeCommand(c);
 	}else{
 	}
