@@ -1999,8 +1999,8 @@ QucsDoc& MouseActions::doc()
   return _doc;
 }
 
-
 // TODO: move to schematic_doc or _scene
+// what does it return?
 bool MouseActions::handle(QEvent*e)
 { itested();
   QUndoCommand* c=nullptr;

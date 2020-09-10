@@ -30,6 +30,7 @@
 #include "globals.h"
 
 #include "changedialog.h"
+#include "components/component.h" // BUG
 
 // not here.
 int getX(std::pair<int, int> const& p)
@@ -453,6 +454,8 @@ private: // rectangles?  // this was in MouseActions. BUG. remove
 	int MAx2;
 	int MAy2;
 #endif
+private:
+	cmd* release_left(QMouseEvent*);
 
 protected:
 	void setPos1(QPointF pos){
@@ -522,7 +525,11 @@ private:
 	cmd* enter(QEvent*) override;
 	cmd* leave(QEvent*) override;
 	cmd* release(QMouseEvent*) override;
-//	cmd* generic(QEvent*) override;
+
+private:
+	cmd* makeNew(QMouseEvent*);
+	cmd* rotate(QEvent*);
+
 private:
 	Element* _proto;
 	ElementGraphics* _gfx;
@@ -556,6 +563,18 @@ private:
 }; // NewElementCommand
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionNewElement::release(QMouseEvent* ev)
+{
+	QUndoCommand* cmd = nullptr;
+	auto m = dynamic_cast<QMouseEvent*>(ev);
+	if(!m){
+	}else if(m->button() == Qt::LeftButton){ untested();
+		cmd = makeNew(ev);
+	}else if(m->button() == Qt::RightButton){ untested();
+	}
+	return cmd;
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionNewElement::makeNew(QMouseEvent* ev)
 {
 	// assert(ev->widget=doc->scene()) // or so.
 	trace1("RELEASE", ev->type());
@@ -631,9 +650,6 @@ QUndoCommand* MouseActionNewElement::enter(QEvent* ev)
 	auto sp = d->mapToScene(wp.toPoint());
 
 	Element* elt;
-	//			trace1("setting pos", de->scenePos());
-	// doc().takeOwnership(elt); // BUG
-	//
 	if(!_gfx){
 		elt = s->clone();
 		elt->setCenter(sp.x(), sp.y());
@@ -642,9 +658,7 @@ QUndoCommand* MouseActionNewElement::enter(QEvent* ev)
 		_gfx->setPos(sp.x(), sp.y());
 	}
 	
-	doc().sceneAddItem(_gfx); // does not attach.
-// 		elt->detachFromModel();
-//			gfx->setSelected(true);
+	doc().sceneAddItem(_gfx);
 
 	ev->accept();
 	return nullptr;
@@ -657,19 +671,43 @@ QUndoCommand* MouseActionNewElement::leave(QEvent* ev)
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
-QUndoCommand* MouseActionNewElement::press(QEvent* ev)
+QUndoCommand* MouseActionNewElement::rotate(QEvent* ev)
 {
-	auto m = dynamic_cast<QMouseEvent*>(ev);
-	if(!m){
-	}else if(m->button() == Qt::LeftButton){ untested();
-	}else if(m->button() == Qt::RightButton){ untested();
-		incomplete(); // rotate.
+	if(!_gfx){
+		unreachable();
+	}else if(Component* c=dynamic_cast<Component*>(element(_gfx))){ untested();
+		_gfx->hide();
+		c->rotate();
+		_gfx->show();
+	}else if(Symbol* s=dynamic_cast<Symbol*>(element(_gfx))){ untested();
+		incomplete();
 	}else{
 		unreachable();
 	}
-	ev->accept();
 	return nullptr;
 }
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionNewElement::press(QEvent* ev)
+{
+	auto a = dynamic_cast<QMouseEvent*>(ev);
+	auto m = dynamic_cast<QGraphicsSceneMouseEvent*>(ev);
+	QUndoCommand* cmd = nullptr;
+	if(a){ untested();
+		unreachable();
+		// somehow it is a scene event??
+	}else if(!m){ untested();
+		trace1("MouseActionNewElement::press", ev->type());
+		unreachable();
+	}else if(m->button() == Qt::LeftButton){ untested();
+	}else if(m->button() == Qt::RightButton){ untested();
+		cmd = MouseActionNewElement::rotate(ev);
+		ev->accept(); // really?
+	}else{ untested();
+		unreachable();
+	}
+	return cmd;
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 class MoveSelection : public QUndoCommand {
 public:
@@ -1027,8 +1065,20 @@ QUndoCommand* MouseActionSelect::press(QEvent*)
 } // select::press
 /*--------------------------------------------------------------------------*/
 // was MouseActions::MReleaseSelect(SchematicDoc *Doc, QMouseEvent *Event)
-QUndoCommand* MouseActionSelect::release(QMouseEvent *Event)
+QUndoCommand* MouseActionSelect::release(QMouseEvent *ev)
 { untested();
+	QUndoCommand* cmd = nullptr;
+	auto m = dynamic_cast<QMouseEvent*>(ev);
+	if(!m){
+	}else if(m->button() == Qt::LeftButton){ untested();
+		cmd = release_left(ev);
+	}else if(m->button() == Qt::RightButton){ untested();
+	}
+	return cmd;
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
+{
 	bool ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
 	if(!ctrl) {
