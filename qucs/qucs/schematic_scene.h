@@ -36,6 +36,8 @@ class Element;
 class SchematicDoc;
 
 class ElementGraphics;
+
+// TODO: merge schematic mouse actions into this.
 class SchematicScene : public QGraphicsScene
 {
 Q_OBJECT

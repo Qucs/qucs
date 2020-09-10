@@ -264,7 +264,7 @@ void SchematicDoc::insertComponent(Component *c)
 // -----------------------------------------------------------
 QPoint SchematicDoc::setOnGrid(int x, int y) const
 { untested();
-  //qDebug() << "setongrid in" << x << y;
+  qDebug() << "setongrid in" << x << y;
   if(x<0) x -= (GridX >> 1) - 1;
   else x += GridX >> 1;
   x -= x % GridX;
@@ -290,7 +290,8 @@ QMouseEvent SchematicDoc::snapToGrid(QMouseEvent* e)const
 
 	  // if snapToGrid?
 	  localPos = setOnGrid(localPos.x(), localPos.y());
-	  auto ee = QMouseEvent( type, localPos, windowPos, screenPos, button, buttons,  modifiers, source);
+	  trace1("SchematicDoc::snapToGrid", localPos);
+	  auto ee = QMouseEvent(type, localPos, windowPos, screenPos, button, buttons, modifiers, source);
 	  return ee;
 }
 
@@ -431,12 +432,10 @@ void SchematicDoc::mouseMoveEvent(QMouseEvent *e)
 	  auto ee = snapToGrid(e);
 
 	  // move actions go through here.
+	  signalCursorPosChanged(ee.localPos().x(), ee.localPos().y());
 	  QGraphicsView::mouseMoveEvent(&ee);
   }
 
-
-  // "emit" does not seem to do anything.
-  emit signalCursorPosChanged(e->pos().x(), e->pos().y());
   return;
 
   // mouse moveaction set by toggleaction
@@ -477,14 +476,14 @@ bool SchematicDoc::event(QEvent* e)
 		// move actions are highjacked.
 		// (that's okay);
 		// releaseEvent is also here.
-		handleMouseActions(e); //
 	}else{itested();
 		// need releaseEvent here.
 		// but maybe not.
 		//mouserelease?!
 		// handleMouseActions(e); //
-		handleMouseActions(e); //
 	}
+
+	handleMouseActions(e);
 	
 	// TODO: what is this call?
 	bool a = QGraphicsView::event(e);
@@ -565,6 +564,9 @@ void SchematicDoc::mouseDoubleClickEvent(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
+// possibly manufacture a GraphicsView::wheelEvent (or so) from this.
+// the current qt implementation does not do the modifiers, but scrolling
+// works, including multitouch
 void SchematicDoc::wheelEvent(QWheelEvent * Event)
 { untested();
 #ifndef USE_SCROLLVIEW

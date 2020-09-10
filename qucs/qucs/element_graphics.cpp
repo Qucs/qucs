@@ -133,7 +133,10 @@ bool ElementGraphics::sceneEvent(QEvent* e)
 
 void ElementGraphics::show()
 { untested();
-	_e->attachToModel();
+	if(_e->scope()){
+		_e->attachToModel();
+	}else{
+	}
 	QGraphicsItem::show();
 }
 
@@ -141,7 +144,11 @@ void ElementGraphics::hide()
 { untested();
 	assert(_e);
 	QGraphicsItem::hide();
-	_e->detachFromModel();
+
+	if(_e->scope()){
+		_e->detachFromModel();
+	}else{
+	}
 }
 
 template<class P>
