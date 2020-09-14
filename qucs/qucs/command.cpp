@@ -274,9 +274,10 @@ void Command::paint(ViewPainter *p) const
 
 // -------------------------------------------------------
 // Paints the component when moved with the mouse.
-void Command::paintScheme(SchematicDoc *p) const
+void Command::paintScheme(SchematicDoc *) const
 {
-  unreachable(); // obsolete.
+  unreachable(); // obsolete. but some of the code highlighting open ports etc
+                 // needs to go to elementgraphics
 #if 0
   // qDebug() << "paintScheme" << Model;
   {   // is simulation component (dc, ac, ...)

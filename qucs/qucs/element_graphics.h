@@ -22,6 +22,22 @@
 
 #include <QEvent>
 
+class angle_t{
+public:
+	angle_t(int d):_degrees(d){ }
+
+public:
+	angle_t operator-() const{
+		return angle_t(-_degrees);
+	}
+public:
+	int degrees_int() const{return _degrees;}
+
+private:
+	int _degrees;
+};
+static const angle_t ninety_degree(90);
+
 // A graphics element on the screen.
 // kind of smart-pointer/proxy.
 class ElementGraphics : public QGraphicsItem {
@@ -52,9 +68,14 @@ private: // later: Qgraphics virtual overrides
 public:
   bool sceneEvent(QEvent*) override;
 
-public:
+public: // manipulate (used in UndoCommands)
   void hide();
   void show();
+  void rotate(angle_t);
+  void mirrorX();
+  void mirrorY();
+  void snap();
+
 public:
   Element& operator*(){ itested();
 	  assert(_e); return *_e;

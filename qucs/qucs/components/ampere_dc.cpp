@@ -60,7 +60,7 @@ Ampere_dc::Ampere_dc()
   Props.append(new Property("I", "1 mA", true,
 		QObject::tr("current in Ampere")));
 
-  rotate();  // fix historical flaw
+  set_rotated(1);  // fix historical flaw ??
 }
 
 Ampere_dc::~Ampere_dc()

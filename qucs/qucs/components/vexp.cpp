@@ -66,7 +66,7 @@ vExp::vExp()
   Props.append(new Property("Tf", "1 ns", false,
 		QObject::tr("fall time of the falling edge")));
 
-  rotate();  // fix historical flaw
+  set_rotated(1);  // fix historical flaw ??
 }
 
 vExp::~vExp()

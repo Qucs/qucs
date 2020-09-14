@@ -58,7 +58,7 @@ iFile::iFile()
   Props.append(new Property("G", "1", false, QObject::tr("current gain")));
   Props.append(new Property("T", "0", false, QObject::tr("delay time")));
 
-  rotate();  // fix historical flaw
+  set_rotated(1);  // fix historical flaw ??
 }
 
 iFile::~iFile()

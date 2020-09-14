@@ -496,9 +496,13 @@ QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
-class MouseActionDelete : public MouseAction{
+/*--------------------------------------------------------------------------*/
+// stange glue that should perhaps go into a class derived from QAction and
+// replace the button in the toolbar.
+template<class CMD>
+class MouseActionSelCmd : public MouseAction{
 public:
-	explicit MouseActionDelete(MouseActions& ctx)
+	explicit MouseActionSelCmd(MouseActions& ctx)
 		: MouseAction(ctx){}
 
 private:
@@ -512,6 +516,133 @@ private:
 	QCursor _oldcursor;
 };
 /*--------------------------------------------------------------------------*/
+template<class CMD>
+QUndoCommand* MouseActionSelCmd<CMD>::deactivate()
+{ untested();
+	setCursor(_oldcursor);
+	return MouseAction::deactivate();
+}
+/*--------------------------------------------------------------------------*/
+template<class CMD>
+QUndoCommand* MouseActionSelCmd<CMD>::activate(QAction *sender)
+{ itested();
+	MouseAction::activate(sender); // ...
+
+	_oldcursor = doc().cursor();
+	setCursor(Qt::CrossCursor);
+
+	auto s = doc().selectedItems();
+	bool selected = !s.empty();
+
+	if(selected){ untested();
+		auto cmd = new CMD(doc(), s);
+		return cmd;
+	}else{
+		return nullptr;
+	}
+}
+/*--------------------------------------------------------------------------*/
+template<class CMD>
+QUndoCommand* MouseActionSelCmd<CMD>::press(QEvent* e)
+{
+	if(!e){ untested();
+		return nullptr;
+	}else if(auto i = dynamic_cast<ItemEvent*>(e)){
+		QList<ElementGraphics*> l;
+		l.push_back(&i->item());
+		return new CMD(doc(), l);
+	}else{
+		trace1("delete::scene unknown sender", e->type());
+		return nullptr;
+	}
+} // delete::scene
+/*--------------------------------------------------------------------------*/
+template<class CMD>
+QUndoCommand* MouseActionSelCmd<CMD>::release(QMouseEvent*)
+{ untested();
+	incomplete(); // why?
+	return nullptr;
+} // delete::release
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+class DeleteSelection : public QUndoCommand {
+public:
+	template<class IT>
+	DeleteSelection(SchematicDoc& ctx, IT selection)
+	: _ctx(ctx), _done(false){ untested();
+		size_t k = 0;
+		for(auto i : selection){ untested();
+			++k;
+			if(auto eg=dynamic_cast<ElementGraphics*>(i)){
+				_gfx.push_back(eg);
+			}else{ untested();
+				unreachable(); // really? use prechecked_cast then.
+			}
+		}
+		setText("delete " + QString::number(k) + " items");
+	}
+	void undo() override { untested();
+		QUndoCommand::undo(); // does not check
+
+		assert(_done);
+		for(auto& d : _gfx){
+			d->show();
+		}
+		_done = false;
+	}
+	void redo() override { untested();
+		QUndoCommand::redo(); // does not check
+
+		assert(!_done);
+		for(auto& d : _gfx){ untested();
+			d->hide();
+		}
+		_done = true;
+	}
+private:
+    SchematicDoc& _ctx;
+    std::vector<ElementGraphics*> _gfx;
+	 bool _done;
+}; // DeleteSelection
+typedef MouseActionSelCmd<DeleteSelection> MouseActionDelete;
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+class RotateSelection : public QUndoCommand {
+public:
+	template<class IT>
+	RotateSelection(SchematicDoc& ctx, IT selection)
+	: _ctx(ctx){ untested();
+		size_t k = 0;
+		for(auto i : selection){ untested();
+			++k;
+			if(auto eg=dynamic_cast<ElementGraphics*>(i)){
+				_gfx.push_back(eg);
+			}else{ untested();
+				unreachable(); // really? use prechecked_cast then.
+			}
+		}
+		setText("rotate " + QString::number(k) + " items");
+	}
+	void undo() override { untested();
+		for(auto& d : _gfx){
+			d->rotate(ninety_degree);
+		}
+	}
+	void redo() override { untested();
+		for(auto& d : _gfx){ untested();
+			d->rotate(-ninety_degree);
+		}
+	}
+private:
+    SchematicDoc& _ctx;
+    std::vector<ElementGraphics*> _gfx;
+}; // RotateSelection
+/*--------------------------------------------------------------------------*/
+typedef MouseActionSelCmd<DeleteSelection> MouseActionDelete;
+typedef MouseActionSelCmd<RotateSelection> MouseActionRotate;
+typedef MouseActionSelCmd<RotateSelection> MouseActionActivate;
+typedef MouseActionSelCmd<RotateSelection> MouseActionMirrorX;
+typedef MouseActionSelCmd<RotateSelection> MouseActionMirrorY;
 /*--------------------------------------------------------------------------*/
 class MouseActionNewElement : public MouseAction{
 public:
@@ -675,12 +806,10 @@ QUndoCommand* MouseActionNewElement::rotate(QEvent* ev)
 {
 	if(!_gfx){
 		unreachable();
-	}else if(Component* c=dynamic_cast<Component*>(element(_gfx))){ untested();
-		_gfx->hide();
-		c->rotate();
-		_gfx->show();
 	}else if(Symbol* s=dynamic_cast<Symbol*>(element(_gfx))){ untested();
-		incomplete();
+		_gfx->hide();
+		_gfx->rotate(ninety_degree);
+		_gfx->show();
 	}else{
 		unreachable();
 	}
@@ -756,70 +885,6 @@ private:
 	std::vector<ElementGraphics*> _gfx;
 	bool _done;
 }; // MoveSelection
-/*--------------------------------------------------------------------------*/
-class DeleteSelection : public QUndoCommand {
-public:
-	template<class IT>
-	DeleteSelection(SchematicDoc& ctx, IT selection)
-	: _ctx(ctx), _done(false){ untested();
-		size_t k = 0;
-		for(auto i : selection){ untested();
-			++k;
-			if(auto eg=dynamic_cast<ElementGraphics*>(i)){
-				_gfx.push_back(eg);
-			}else{ untested();
-				unreachable(); // really? use prechecked_cast then.
-			}
-		}
-		setText("delete " + QString::number(k) + " items");
-	}
-	void undo() override { untested();
-		QUndoCommand::undo(); // does not check
-
-		assert(_done);
-		for(auto& d : _gfx){
-			d->show();
-		}
-		_done = false;
-	}
-	void redo() override { untested();
-		QUndoCommand::redo(); // does not check
-
-		assert(!_done);
-		for(auto& d : _gfx){ untested();
-			d->hide();
-		}
-		_done = true;
-	}
-private:
-    SchematicDoc& _ctx;
-    std::vector<ElementGraphics*> _gfx;
-	 bool _done;
-}; // DeleteSelection
-/*--------------------------------------------------------------------------*/
-QUndoCommand* MouseActionDelete::deactivate()
-{ untested();
-	setCursor(_oldcursor);
-	return MouseAction::deactivate();
-}
-/*--------------------------------------------------------------------------*/
-QUndoCommand* MouseActionDelete::activate(QAction *sender)
-{ itested();
-	MouseAction::activate(sender); // ...
-
-	_oldcursor = doc().cursor();
-	setCursor(Qt::CrossCursor);
-
-	auto s = doc().selectedItems();
-	bool selected = !s.empty();
-
-	if(selected){ untested();
-		auto cmd = new DeleteSelection(doc(), s);
-		return cmd;
-	}else{
-		return nullptr;
-	}
-}
 /*--------------------------------------------------------------------------*/
 #if 0
 //   was Mouseactions::MMove or so. unnecessary
@@ -1134,34 +1199,15 @@ QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
 	return c;
 } // select::release
 /*--------------------------------------------------------------------------*/
-// press a mouse while delete action is active.
-QUndoCommand* MouseActionDelete::press(QEvent* e)
-{
-	if(!e){ untested();
-		return nullptr;
-	}else if(auto i = dynamic_cast<ItemEvent*>(e)){
-		QList<ElementGraphics*> l;
-		l.push_back(&i->item());
-		return new DeleteSelection(doc(), l);
-	}else{
-		trace1("delete::scene unknown sender", e->type());
-		return nullptr;
-	}
-} // delete::scene
-/*--------------------------------------------------------------------------*/
-QUndoCommand* MouseActionDelete::release(QMouseEvent*)
-{ untested();
-	incomplete(); // why?
-	return nullptr;
-} // delete::release
-/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 SchematicActions::SchematicActions(SchematicDoc& ctx)
   : MouseActions(ctx)
 {itested();
 
-	// not entirely clear how to do this
+	// not entirely clear how to refactor this
 	// maybe dispatch mouse actions.
+	// or merge into QAction buttons (connect as needed?)
+
 	maDelete = new MouseActionDelete(*this);
 	maSelect = new MouseActionSelect(*this);
 	maWire = new MouseActionWire(*this);
@@ -1172,11 +1218,10 @@ SchematicActions::SchematicActions(SchematicDoc& ctx)
 	maInsertGround = new MouseActionNewElement(*this);
 	maInsertPort = new MouseActionNewElement(*this);
 
-	// TODO
-	maActivate = new MouseAction(*this);
-	maMirrorX = new MouseAction(*this);
-	maMirrorY = new MouseAction(*this);
-	maRotate = new MouseAction(*this);
+	maActivate = new MouseActionActivate(*this);
+	maMirrorX = new MouseActionMirrorX(*this);
+	maMirrorY = new MouseActionMirrorY(*this);
+	maRotate = new MouseActionRotate(*this);
 
 	// this was in App previously, and scattered across a couple of pointer hacks.
 	// possibly initialised to "select". recheck.
