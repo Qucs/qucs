@@ -46,7 +46,7 @@
 Component::Component(Component const& p)
   : Symbol(p),
     mirroredX(p.mirroredX),
-    rotated(p.rotated),
+    _rotated(p._rotated),
     isActive(p.isActive),
     //cx(p.cx),
     //cy(p.cy),
@@ -72,12 +72,11 @@ Component::Component(Component const& p)
  * \class Component
  * \brief The Component class implements a legacy qucs component symbol
  */
-Component::Component()
+Component::Component() : _rotated(0)
 {
   Type = isAnalogComponent;
 
   mirroredX = false;
-  rotated = 0;
   isActive = COMP_IS_ACTIVE;
   showName = true;
 
@@ -518,9 +517,6 @@ void Component::rotate()
   else if(ty < y1) ty -= dy;
   else if(tx < x1) { tx += dy-dx;  ty = y1-ty+y2; }
   else ty -= dx;
-
-  rotated++;  // keep track of what's done
-  rotated &= 3;
 }
 // -------------------------------------------------------
 
@@ -529,6 +525,41 @@ void Component::setParameter(unsigned pos, std::string const& v)
   (void) pos;
   (void) v;
   // Param[pos].set(v);
+}
+
+// -------------------------------------------------------
+void Component::setParameter(std::string const& name, std::string const& v)
+{ untested();
+  if(name=="rotated"){ untested();
+    unsigned r = atoi(v.c_str());
+    r %= 4;
+    set_rotated(r);
+  }else{ untested();
+    Symbol::setParameter(name, v);
+  }
+}
+
+// -------------------------------------------------------
+std::string Component::getParameter(std::string const& name)
+{ untested();
+  if(name=="rotated"){ untested();
+    return std::to_string(_rotated);
+  }else{ untested();
+    return Symbol::getParameter(name);
+  }
+}
+
+// -------------------------------------------------------
+void Component::set_rotated(unsigned r)
+{
+  assert(r<4);
+  while(r != _rotated){
+    rotate();
+
+    // keep track of what's done
+    ++_rotated;
+    _rotated %= 4;
+  }
 }
 
 // -------------------------------------------------------
@@ -592,8 +623,8 @@ void Component::mirrorX()
   else ty = y1+ty+y2;
 
   mirroredX = !mirroredX;    // keep track of what's done
-  rotated += rotated << 1;
-  rotated &= 3;
+  _rotated += _rotated << 1;
+  _rotated &= 3;
 }
 
 // -------------------------------------------------------
@@ -660,9 +691,9 @@ void Component::mirrorY()
   else tx = x1+tx+x2;
 
   mirroredX = !mirroredX;   // keep track of what's done
-  rotated += rotated << 1;
-  rotated += 2;
-  rotated &= 3;
+  _rotated += _rotated << 1;
+  _rotated += 2;
+  _rotated &= 3;
 }
 
 // -------------------------------------------------------
@@ -793,199 +824,6 @@ QString Component::get_VHDL_Code(int)
   return "  " + Node1 + " <= " + Ports.at(1)->Connection->name() + ";\n";
 #endif
 }
-
-// -------------------------------------------------------
-#if 0 // moved.
-Component* LegacySchematicLang::loadComponent(const QString& _s, Component* c) const
-{ untested();
-  qDebug() << "load" << _s;
-  bool ok;
-  int  ttx, tty, tmp;
-  QString s = _s;
-
-  if(s.at(0) != '<'){ untested();
-    return NULL;
-  }else if(s.at(s.length()-1) != '>'){ untested();
-    return NULL;
-  }
-  s = s.mid(1, s.length()-2);   // cut off start and end character
-
-  QString label=s.section(' ',1,1);
-  c->obsolete_name_override_hack(label);
-
-  QString n;
-  n  = s.section(' ',2,2);      // isActive
-  tmp = n.toInt(&ok);
-  if(!ok){ untested();
-    return NULL;
-  }
-  c->isActive = tmp & 3;
-
-  if(tmp & 4){ untested();
-    c->showName = false;
-  }else{ untested();
-    // use default, e.g. never show name for GND (bug?)
-  }
-
-  n  = s.section(' ',3,3);    // cx
-  c->obsolete_set("cx", n.toInt(&ok));
-  if(!ok) return NULL;
-
-  n  = s.section(' ',4,4);    // cy
-  c->obsolete_set("cy", n.toInt(&ok));
-  if(!ok) return NULL;
-
-  n  = s.section(' ',5,5);    // tx
-  ttx = n.toInt(&ok);
-  if(!ok) return NULL;
-
-  n  = s.section(' ',6,6);    // ty
-  tty = n.toInt(&ok);
-  if(!ok) return NULL;
-
-  assert(c);
-  if(!c->obsolete_model_hack().size()){ untested();
-    // avoid segfault in obsolete code...
-  }else if(c->obsolete_model_hack().at(0) != '.') {  // is simulation component (dc, ac, ...) ?
-
-    n  = s.section(' ',7,7);    // mirroredX
-    if(n.toInt(&ok) == 1){ untested();
-      c->mirrorX();
-    }
-    if(!ok) return NULL;
-
-    n  = s.section(' ',8,8);    // rotated
-    tmp = n.toInt(&ok);
-    if(!ok) return NULL;
-    if(c->rotated > tmp)  // neccessary because of historical flaw in ...
-      tmp += 4;        // ... components like "volt_dc"
-    for(int z=c->rotated; z<tmp; z++){ untested();
-      c->rotate();
-    }
-  }
-
-  c->tx = ttx;
-  c->ty = tty; // restore text position (was changed by rotate/mirror)
-
-  QString Model = c->obsolete_model_hack(); // BUG: don't use names
-
-  unsigned int z=0, counts = s.count('"');
-  // FIXME. use c->paramCount()
-  if(Model == "Sub"){ untested();
-    tmp = 2;   // first property (File) already exists
-  }else if(Model == "Lib"){ untested();
-    tmp = 3;
-  }else if(Model == "EDD"){ untested();
-    tmp = 5;
-  }else if(Model == "RFEDD"){ untested();
-    tmp = 8;
-  }else if(Model == "VHDL"){ untested();
-    tmp = 2;
-  }else if(Model == "MUTX"){ untested();
-    tmp = 5; // number of properties for the default MUTX (2 inductors)
-  }else{ untested();
-    // "+1" because "counts" could be zero
-    tmp = counts + 1;
-  }
-
-  /// BUG FIXME. dont use Component parameter dictionary.
-  for(; tmp<=(int)counts/2; tmp++){ untested();
-    c->Props.append(new Property("p", "", true, " "));
-  }
-
-  // load all properties
-  Property *p1;
-  for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) { untested();
-    z++;
-    n = s.section('"',z,z);    // property value
-    z++;
-    //qDebug() << "LOAD: " << p1->Description;
-
-    // not all properties have to be mentioned (backward compatible)
-    if(z > counts) { untested();
-      if(p1->Description.isEmpty()){ untested();
-        c->Props.remove();    // remove if allocated in vain
-      }else{ untested();
-      }
-
-      if(Model == "Diode") { // BUG: don't use names
-	if(counts < 56) {  // backward compatible
-          counts >>= 1;
-          p1 = c->Props.at(counts-1);
-          for(; p1 != 0; p1 = c->Props.current()) { untested();
-            if(counts-- < 19){ untested();
-              break;
-	    }
-
-            n = c->Props.prev()->Value;
-            p1->Value = n;
-          }
-
-          p1 = c->Props.at(17);
-          p1->Value = c->Props.at(11)->Value;
-          c->Props.current()->Value = "0";
-        }
-      }else if(Model == "AND" || Model == "NAND" || Model == "NOR" ||
-	       Model == "OR" ||  Model == "XNOR"|| Model == "XOR") { untested();
-	if(counts < 10) {   // backward compatible
-          counts >>= 1;
-          p1 = c->Props.at(counts);
-          for(; p1 != 0; p1 = c->Props.current()) { untested();
-            if(counts-- < 4)
-              break;
-            n = c->Props.prev()->Value;
-            p1->Value = n;
-          }
-          c->Props.current()->Value = "10";
-	}
-      }else if(Model == "Buf" || Model == "Inv") { untested();
-	if(counts < 8) {   // backward compatible
-          counts >>= 1;
-          p1 = c->Props.at(counts);
-          for(; p1 != 0; p1 = c->Props.current()) { untested();
-            if(counts-- < 3)
-              break;
-            n = c->Props.prev()->Value;
-            p1->Value = n;
-          }
-          c->Props.current()->Value = "10";
-	}
-      }else{ untested();
-      }
-
-      return c;
-    }else{ untested();
-      // z <= counts
-    }
-
-    // for equations
-    qDebug() << "Schematic::loadComponent Model" << Model;
-#if 1
-    if(Model != "EDD" && Model != "RFEDD" && Model != "RFEDD2P")
-    if(p1->Description.isEmpty()) {  // unknown number of properties ?
-      p1->Name = n.section('=',0,0);
-      n = n.section('=',1);
-      // allocate memory for a new property (e.g. for equations)
-      if(c->Props.count() < (counts>>1)) { untested();
-        c->Props.insert(z >> 1, new Property("y", "1", true));
-        c->Props.prev();
-      }
-    }
-#endif
-    if(z == 6)  if(counts == 6)     // backward compatible
-      if(Model == "R") { untested();
-        c->Props.getLast()->Value = n;
-        return c;
-      }
-    p1->Value = n;
-
-    n  = s.section('"',z,z);    // display
-    p1->display = (n.at(1) == '1');
-  }
-
-  return c;
-}
-#endif
 
 // -------------------------------------------------------
 
@@ -1297,6 +1135,9 @@ Property * Component::getProperty(const QString& name)
 // ---------------------------------------------------------------------
 void Component::copyComponent(Component *pc)
 { untested();
+  unreachable();
+  assert(false);
+#if 0
   Type = pc->Type;
   x1 = pc->x1;
   y1 = pc->y1;
@@ -1321,6 +1162,7 @@ void Component::copyComponent(Component *pc)
   Rects  = pc->Rects;
   Ellips = pc->Ellips;
   Texts  = pc->Texts;
+#endif
 }
 
 
@@ -1331,6 +1173,7 @@ void Component::copyComponent(Component *pc)
 // ***********************************************************************
 void MultiViewComponent::recreate()
 {
+  incomplete();
   Ellips.clear();
   Texts.clear();
   Ports.clear();
@@ -1340,18 +1183,22 @@ void MultiViewComponent::recreate()
   createSymbol(); // requires context //
 
   bool mmir = mirroredX;
-  int  rrot = rotated;
-  if (mmir && rrot==2) // mirrorX and rotate 180 = mirrorY
+  int  rrot = _rotated;
+  if (mmir && rrot==2){ // mirrorX and rotate 180 = mirrorY
     mirrorY();
-  else  {
-    if(mmir)
-      mirrorX();   // mirror
-    if (rrot)
-      for(int z=0; z<rrot; z++)  rotate(); // rotate
+  } else  {
+    if(mmir){
+      mirrorX();
+    }
+    if (rrot){
+      // for(int z=0; z<rrot; z++)  rotate(); // rotate
+      set_rotated( (rotated() + rrot)%4 );
+    }
   }
 
-  rotated = rrot;   // restore properties (were changed by rotate/mirror)
-  mirroredX = mmir;
+  // ????
+  // rotated = rrot;   // restore properties (were changed by rotate/mirror)
+  // mirroredX = mmir;
 
 }
 

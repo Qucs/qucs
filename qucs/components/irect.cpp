@@ -62,7 +62,7 @@ iRect::iRect()
   Props.append(new Property("Td", "0 ns", false,
 		QObject::tr("initial delay time")));
 
-  rotate();  // fix historical flaw
+  set_rotated(1);  // fix historical flaw
 }
 
 iRect::~iRect()

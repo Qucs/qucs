@@ -375,7 +375,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
 	}else{
 		s << "0";
 	}
-	s << " " << QString::number(c->rotated);
+	s << " " << QString::number(c->rotated());
 
 	// write all properties
 	// FIXME: ask component for properties, not for dictionary
@@ -555,12 +555,23 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 
 		n  = s.section(' ',8,8);    // rotated
 		tmp = n.toInt(&ok);
-		if(!ok) return NULL;
-		if(c->rotated > tmp)  // neccessary because of historical flaw in ...
-			tmp += 4;        // ... components like "volt_dc"
+		if(!ok){
+			return NULL;
+		}else if(int(c->rotated()) > tmp){
+		  	// neccessary because of historical flaw in ...
+		  	// ... components like "volt_dc"
+			// ????
+			tmp += 4;
+		}
+
+#if 1
+		c->setParameter("rotated", n.toStdString());
+#else
 		for(int z=c->rotated; z<tmp; z++){
 			c->rotate();
 		}
+#endif
+
 	}
 
 	c->tx = ttx;

@@ -85,7 +85,10 @@ protected: // symbol interface
 protected:
   void setParameter(unsigned i, std::string const&) override;
 
-public:
+public: // BUG
+  void setParameter(std::string const& name, std::string const& value) override;
+
+public: // BUG
   void    paintScheme(SchematicDoc*) const; // BUG
   void    print(ViewPainter*, float);
   void    setCenter(int, int, bool relative=false) override;
@@ -95,14 +98,22 @@ public:
   void    entireBounds(int&, int&, int&, int&, float);
   bool    getSelected(int, int);
   int     getTextSelected(int, int, float);
-  void    rotate();
+
+private:
+  void rotate();
+
+protected:
+  void set_rotated(unsigned r);
+
+public: // BUG
+  unsigned rotated() const{return _rotated;}
   void    mirrorX();  // mirror about X axis
   void    mirrorY();  // mirror about Y axis
   bool    load(const QString&);
 
   // to hold track of the component appearance for saving and copying
   bool mirroredX;   // is it mirrored about X axis or not
-  int  rotated;     // rotation angle divided by 90 degrees
+  int  _rotated;     // rotation angle divided by 90 degrees
 
   virtual QString getSubcircuitFile() const { return ""; }
   // set the pointer scematic associated with the component
@@ -189,6 +200,9 @@ protected:
 
   void copyComponent(Component*);
   Property * getProperty(const QString&);
+private:
+  std::string getParameter(std::string const& name) override;
+
 private: // (hopefully) obsolete callbacks
   void recreateCallback();
   QString getParameter(unsigned pos);

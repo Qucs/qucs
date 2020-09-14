@@ -868,7 +868,7 @@ return false;
 
 // ---------------------------------------------------
 // Deletes the wire 'w'.
-void SchematicModel::deleteWire(Wire *w)
+void SchematicModel::deleteWire(Wire *)
 {
 #if 0 // why?!
     if(w->portValue(0)->connectionsCount() == 1) {
