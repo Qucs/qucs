@@ -66,7 +66,7 @@ Volt_ac::Volt_ac()
   Props.append(new Property("Theta", "0", false,
 		QObject::tr("damping factor (transient simulation only)")));
 
-  rotate();  // fix historical flaw
+  set_rotated(1);  // fix historical flaw ??
 }
 
 Volt_ac::~Volt_ac()

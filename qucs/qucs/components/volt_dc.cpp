@@ -56,7 +56,7 @@ Volt_dc::Volt_dc()
   Props.append(new Property("U", "1 V", true,
 		QObject::tr("voltage in Volts")));
 
-  rotate();  // fix historical flaw
+  set_rotated(1);  // fix historical flaw ??
 }
 
 Volt_dc::~Volt_dc()

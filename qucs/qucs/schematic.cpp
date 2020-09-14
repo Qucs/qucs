@@ -917,18 +917,16 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
 // Rotates all selected components around their midpoint.
 bool SchematicDoc::rotateElements()
 { untested();
+  incomplete();
+#if 0 // move(d) to schematic_action
   // disconnect();?
 
   QRectF BB(1., 1., -1. , -1.);
   QList<ElementGraphics*> ElementCache;
 
-#ifdef USE_SCROLLVIEW
-  ElementCache = SchematicDoc::cropSelectedElements();
-#else
   assert(scene());
   scene()->selectedItemsAndBoundingBox(ElementCache, BB);
   assert(BB.isEmpty() == ElementCache.isEmpty());
-#endif
 
   qreal _x1, _x2, _y1, _y2;
   BB.getCoords(&_x1, &_y1, &_x2, &_y2);
@@ -1014,6 +1012,7 @@ bool SchematicDoc::rotateElements()
   }
 
   setChanged(true, true);
+#endif
   return true;
 }
 

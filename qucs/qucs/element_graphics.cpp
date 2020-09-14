@@ -17,6 +17,7 @@
  *
  */
 #include "element.h"
+#include "symbol.h"
 #include "schematic_scene.h"
 #include <QGraphicsScene>
 #include "element_graphics.h"
@@ -92,6 +93,21 @@ void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, 
 	}
 
 	_e->paint(&v);
+}
+
+void ElementGraphics::rotate(angle_t a)
+{
+	assert(_e);
+	if(Symbol* s=dynamic_cast<Symbol*>(_e)){ untested();
+		std::string rs=s->getParameter("rotated");
+		unsigned r = atoi(rs.c_str());
+		assert(r<4); // yikes //
+		r += a.degrees_int()/90;
+		r%=4;
+		s->setParameter("rotated", std::to_string(r));
+	}else{
+	}
+//	update();
 }
 
 QRectF ElementGraphics::boundingRect() const

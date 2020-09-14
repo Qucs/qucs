@@ -75,6 +75,7 @@ protected: // needed in netlister
 public: // Parameters
   virtual void setParameter(std::string const&, std::string const&){throw ExceptionCantFind();}
   virtual void setParameter(unsigned, std::string const&){ throw ExceptionCantFind(); }
+  virtual std::string getParameter(std::string const& w){ throw ExceptionCantFind(w); }
 
   // yikes there's param{Name,Value} already..
   virtual std::string paramValue(unsigned i) const;
