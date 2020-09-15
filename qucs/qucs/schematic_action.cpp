@@ -808,9 +808,9 @@ QUndoCommand* MouseActionNewElement::rotate(QEvent* ev)
 	if(!_gfx){
 		unreachable();
 	}else if(Symbol* s=dynamic_cast<Symbol*>(element(_gfx))){ untested();
-		_gfx->hide();
+//		_gfx->hide();
 		_gfx->rotate(ninety_degree);
-		_gfx->show();
+//		_gfx->show();
 	}else{
 		unreachable();
 	}
