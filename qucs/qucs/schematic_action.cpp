@@ -624,13 +624,14 @@ public:
 		setText("rotate " + QString::number(k) + " items");
 	}
 	void undo() override { untested();
-		for(auto& d : _gfx){
-			d->rotate(ninety_degree);
+		for(auto& d : _gfx){ untested();
+			d->rotate(-ninety_degree);
 		}
 	}
 	void redo() override { untested();
+		trace1("redo", _gfx.size());
 		for(auto& d : _gfx){ untested();
-			d->rotate(-ninety_degree);
+			d->rotate(ninety_degree);
 		}
 	}
 private:

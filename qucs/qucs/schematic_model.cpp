@@ -236,6 +236,8 @@ Element* SchematicModel::detach(Element* what)
 	}else if(auto w=wire(what)){ untested();
 		disconnect(w);
 		wires().removeRef(w);
+	}else if(auto w=dynamic_cast<Symbol*>(what)){ untested();
+		incomplete();
 	}else{ untested();
 		unreachable();
 	}
@@ -247,6 +249,11 @@ Element* SchematicModel::attach(Element* what)
 	if(auto c=component(what)){ untested();
 		connect(c);
 		components().append(c);
+	}else if(auto w=wire(what)){ untested();
+		connect(w);
+		wires().append(w);
+	}else if(auto w=dynamic_cast<Symbol*>(what)){ untested();
+		incomplete();
 	}else{ untested();
 	}
 	return what;

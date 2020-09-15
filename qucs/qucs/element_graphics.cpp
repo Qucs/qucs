@@ -18,6 +18,7 @@
  */
 #include "element.h"
 #include "symbol.h"
+#include "wire.h"
 #include "schematic_scene.h"
 #include <QGraphicsScene>
 #include "element_graphics.h"
@@ -95,19 +96,68 @@ void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, 
 	_e->paint(&v);
 }
 
-void ElementGraphics::rotate(angle_t a)
+inline int dsin(int angle)
+{
+	int d = angle%2;
+	d *= 1-2*(angle/2);
+	return d;
+}
+inline int dcos(int angle)
+{
+	return dsin(angle-1);
+}
+
+// not here.
+inline std::pair<int, int> angle_t::apply(std::pair<int, int> const& p) const
+{
+	assert(! (_degrees%90) ); //for now
+	int a = _degrees/90;
+	int s = dsin(a);
+	int c = dcos(a);
+
+	int rx =  c*p.first - s*p.second;
+	int ry =  s*p.first + c*p.second;
+	return std::make_pair(rx, ry);
+}
+
+// rotate around center in local coordinates.
+void ElementGraphics::rotate(angle_t a, std::pair<int, int> center)
 {
 	assert(_e);
-	if(Symbol* s=dynamic_cast<Symbol*>(_e)){ untested();
+	if(auto s=dynamic_cast<Wire*>(_e)){ untested();
+		trace0("start wire rotate");
+		hide();
+		s->rotate(); // does not work
+		show();
+		trace0("done wire rotate");
+	}else if(auto* s=dynamic_cast<Symbol*>(_e)){ untested();
+		hide();
 		std::string rs=s->getParameter("rotated");
 		unsigned r = atoi(rs.c_str());
 		assert(r<4); // yikes //
 		r += a.degrees_int()/90;
 		r%=4;
 		s->setParameter("rotated", std::to_string(r));
+
+		std::string x_ = s->getParameter("$xposition");
+		std::string y_ = s->getParameter("$yposition");
+		int x = atoi(x_.c_str());
+		int y = atoi(y_.c_str());
+
+		// c = (x,y);
+		x -= center.first;
+		y -= center.second;
+
+		std::pair<int, int> ac = a.apply(center);
+
+		x += ac.first;
+		y += ac.second;
+
+		s->setParameter("$xposition", std::to_string(x));
+		s->setParameter("$yposition", std::to_string(y));
+		show();
 	}else{
 	}
-//	update();
 }
 
 QRectF ElementGraphics::boundingRect() const
@@ -138,8 +188,11 @@ bool ElementGraphics::sceneEvent(QEvent* e)
 
 	ItemEvent ie(*e, *this);
 	if(s->itemEvent(&ie)){ untested();
-		return e->isAccepted();
-	}else if(QGraphicsItem::sceneEvent(e)){itested();
+		bool acc = e->isAccepted();
+		trace1("ElementGraphics::sceneEvent itemEvent", acc);
+		return acc;
+	}else if(QGraphicsItem::sceneEvent(e)){untested();
+		trace1("ElementGraphics::sceneEvent fwd", e->type());
 		return e->isAccepted();
 	}else{ untested();
 		return false;
@@ -148,10 +201,10 @@ bool ElementGraphics::sceneEvent(QEvent* e)
 }
 
 void ElementGraphics::show()
-{ untested();
-	if(_e->scope()){
+{
+	if(_e->scope()){ untested();
 		_e->attachToModel();
-	}else{
+	}else{ untested();
 	}
 	QGraphicsItem::show();
 }

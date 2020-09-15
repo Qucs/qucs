@@ -62,6 +62,7 @@ QString const& Symbol::netLabel(unsigned i) const
 // could as well be NodeMap::connect(Symbol). but why?
 Node* Symbol::connectNode(unsigned i, NodeMap&nm)
 {
+	trace2("connectNode", label(), i);
 	Port const& pp = port(i);
 	Port& mp = port(i);
 	Node* n = &nm.at(pp.x_()+cx_(), pp.y_()+cy_());

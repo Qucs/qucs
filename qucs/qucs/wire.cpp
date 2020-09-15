@@ -42,6 +42,7 @@ Wire::~Wire()
 // ----------------------------------------------------------------
 void Wire::rotate()
 {
+  incomplete();
   int x1 = x1__();
   int x2 = x2__();
   int y1 = y1__();
@@ -82,8 +83,7 @@ void Wire::setCenter(int x, int y, bool relative)
     x1() += x;  x2() += x;
     y1() += y;  y2() += y;
 //    if(Label) Label->setCenter(x, y, true);
-  }
-  else {
+  } else {
     x1() = x;  x2() = x;
     y1() = y;  y2() = y;
   }
