@@ -39,7 +39,35 @@ protected:
 
 Ground::Ground(Ground const& g) : Component(g)
 {
-	init();
+//	init();
+  info(Name, bitmap_file);
+  Type = isComponent;   // both analog and digital
+  Description = QObject::tr("ground (reference potential)");
+
+ // Lines.clear(); // why??
+ // Lines.append(new Line(  0,  0,  0, 10,QPen(Qt::darkBlue,2)));
+ // Lines.append(new Line(-11, 10, 11, 10,QPen(Qt::darkBlue,3)));
+ // Lines.append(new Line( -7, 16,  7, 16,QPen(Qt::darkBlue,3)));
+ // Lines.append(new Line( -3, 22,  3, 22,QPen(Qt::darkBlue,3)));
+ // BUG: do in Component??
+  for(auto i : g.Lines){
+    Lines.append(new Line(*i));
+  }
+
+ // Ports.clear(); // why??
+ // Ports.append(new Port(  0,  0));
+
+  x1 = g.x1;
+  y1 = g.y1;
+
+  x2 = g.x2;
+  y2 = g.y2;
+
+  tx = g.tx;
+  ty = g.ty;
+  Model = "GND";
+  Name  = "";
+  showName = false;
 }
 
 Ground::Ground()
