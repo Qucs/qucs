@@ -156,11 +156,12 @@ void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2, float Corr)
 // move to Element?
 void Component::setCenter(int x, int y, bool relative)
 { untested();
-  // to Symbol
+#if 0 // does not make sense.
   if(scope()){ untested();
     scope()->disconnect(this);
   }else{ untested();
   }
+#endif
 
   if(relative) { untested();
     Element::cx += x;
@@ -170,19 +171,22 @@ void Component::setCenter(int x, int y, bool relative)
     Element::cy = y;
   }
 
-  // to Symbol
+#if 0
   if(scope()){ untested();
     scope()->connect(this);
   }else{ untested();
   }
+#endif
 }
 
 // -------------------------------------------------------
+#if 1 // REMOVE
 void Component::getCenter(int& x, int& y) const
 {itested();
   x = cx();
   y = cy();
 }
+#endif
 
 // -------------------------------------------------------
 int Component::getTextSelected(int x_, int y_, float Corr)
@@ -534,6 +538,16 @@ void Component::setParameter(std::string const& name, std::string const& v)
     unsigned r = atoi(v.c_str());
     r %= 4;
     set_rotated(r);
+  }else if(name=="$xposition"){ untested();
+    int x = atoi(v.c_str());
+    auto c = center();
+    c.first = x;
+    Element::setCenter(c);
+  }else if(name=="$yposition"){ untested();
+    int y = atoi(v.c_str());
+    auto c = center();
+    c.second = y;
+    Element::setCenter(c);
   }else{ untested();
     Symbol::setParameter(name, v);
   }
@@ -544,6 +558,10 @@ std::string Component::getParameter(std::string const& name)
 { untested();
   if(name=="rotated"){ untested();
     return std::to_string(_rotated);
+  }else if(name=="$xposition"){ untested();
+    return std::to_string(center().first);
+  }else if(name=="$yposition"){ untested();
+    return std::to_string(center().second);
   }else{ untested();
     return Symbol::getParameter(name);
   }

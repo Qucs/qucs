@@ -197,6 +197,11 @@ public: // other stuff
 
   virtual void MPressElement(){}
 
+public: // alias
+  void setCenter(std::pair<int, int> const& c){
+    setCenter(c.first, c.second);
+  }
+
 public:
   virtual Element* clone()const = 0;
   virtual QString const& name() const{return Name;}
