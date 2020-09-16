@@ -21,7 +21,8 @@
 #define QUCS_ELEMENT_GFX_H
 
 #include <QEvent>
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 class angle_t{
 public:
 	angle_t(int d):_degrees(d){ }
@@ -32,14 +33,14 @@ public:
 	}
 public:
 	int degrees_int() const{return _degrees;}
-
 	std::pair<int,int> apply(std::pair<int,int> const&) const;
 
 private:
 	int _degrees;
 };
 static const angle_t ninety_degree(90);
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 // A graphics element on the screen.
 // kind of smart-pointer/proxy.
 class ElementGraphics : public QGraphicsItem {
@@ -115,13 +116,15 @@ public:
 private:
   Element* _e;
 }; // ElementGraphics
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 Component const* const_component(ElementGraphics const);
 Wire const* const_wire(ElementGraphics const);
 WireLabel const* const_wireLabel(ElementGraphics const);
 Diagram const* const_diagram(ElementGraphics const);
 Painting const* const_painting(ElementGraphics const);
 
+// obsolete stuff (historic attempt to rescue legacy code)
 Element* element(QGraphicsItem*);
 Component* component(QGraphicsItem*);
 Wire* wire(QGraphicsItem*);
