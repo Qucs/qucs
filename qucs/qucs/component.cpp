@@ -54,7 +54,7 @@ Component::Component(Component const& p)
     ty(p.ty),
     showName(p.showName)
 {
-  qDebug() << "component copy" << p.Name << p.Model;
+  trace3("Component::Component", p.Name, p.Model, _rotated);
 
   assert(!Props.count());
   for(auto i : p.Props){
@@ -578,6 +578,7 @@ void Component::set_rotated(unsigned r)
     ++_rotated;
     _rotated %= 4;
   }
+  trace3("Component::set_rotated", label(), r, _rotated);
 }
 
 // -------------------------------------------------------
@@ -1198,26 +1199,34 @@ void MultiViewComponent::recreate()
   Lines.clear();
   Rects.clear();
   Arcs.clear();
-  createSymbol(); // requires context //
 
+  // save
   bool mmir = mirroredX;
   int  rrot = _rotated;
-  if (mmir && rrot==2){ // mirrorX and rotate 180 = mirrorY
+
+  _rotated = 0;
+  mirroredX = 0;
+
+  createSymbol(); // requires context //
+
+  // restore symbol orientation state.
+  // this is half-fixed optimised legacy code. don't copy.
+
+  if (mirroredX && rrot==2){ // mirrorX and rotate 180 = mirrorY
     mirrorY();
   } else  {
     if(mmir){
       mirrorX();
     }
-    if (rrot){
-      // for(int z=0; z<rrot; z++)  rotate(); // rotate
-      set_rotated( (rotated() + rrot)%4 );
+    if (rrot){ untested();
+      set_rotated( rrot%4 );
+    }else{
     }
   }
 
-  // ????
-  // rotated = rrot;   // restore properties (were changed by rotate/mirror)
-  // mirroredX = mmir;
-
+  // let's see if it worked
+  assert(mmir==mirroredX);
+  assert(rrot==_rotated);
 }
 
 

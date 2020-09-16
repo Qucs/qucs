@@ -493,6 +493,7 @@ Command* LegacySchematicLanguage::loadCommand(const QString& _s, Command* c) con
 // BUG raise exceptions if something goes wrong.
 Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString& _s, Component* c) const
 {
+	Symbol* sym = c;
 	qDebug() << "parseComponentObsoleteCallback" << _s;
 	bool ok;
 	int  ttx, tty, tmp;
@@ -565,7 +566,9 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 		}
 
 #if 1
-		c->setParameter("rotated", n.toStdString());
+		sym->setParameter("rotated", n.toStdString());
+		assert(sym->getParameter("rotated") == n.toStdString());
+		trace2("DBG rot", c->rotated(), n);
 #else
 		for(int z=c->rotated; z<tmp; z++){
 			c->rotate();
