@@ -24,12 +24,13 @@
 #include "element_graphics.h"
 #include "io.h"
 #include "qt_compat.h"
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 ElementGraphics::ElementGraphics() : QGraphicsItem()
 {
 	unreachable();
 }
-
+/*--------------------------------------------------------------------------*/
 ElementGraphics::ElementGraphics(ElementGraphics const& e) 
 	: QGraphicsItem(), _e(nullptr)
 { untested();
@@ -38,19 +39,19 @@ ElementGraphics::ElementGraphics(ElementGraphics const& e)
 	assert(el);
 	attachElement(el);
 }
-
+/*--------------------------------------------------------------------------*/
 ElementGraphics::ElementGraphics(Element* e)
 	: QGraphicsItem(), _e(nullptr)
 {
 	assert(e);
 	attachElement(e);
 }
-
+/*--------------------------------------------------------------------------*/
 ElementGraphics* ElementGraphics::clone() const
 {
 	return new ElementGraphics(*this);
 }
-
+/*--------------------------------------------------------------------------*/
 ElementGraphics::~ElementGraphics()
 {
 	if(isVisible()){itested();
@@ -60,7 +61,7 @@ ElementGraphics::~ElementGraphics()
 		delete(_e);
 	}
 }
-
+/*--------------------------------------------------------------------------*/
 void ElementGraphics::attachElement(Element* e)
 {itested();
 	assert(e);
@@ -73,7 +74,7 @@ void ElementGraphics::attachElement(Element* e)
 	prepareGeometryChange();
 	QGraphicsItem::setPos(sp.first, sp.second);
 }
-
+/*--------------------------------------------------------------------------*/
 void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
 	assert(_e);
@@ -95,7 +96,8 @@ void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, 
 
 	_e->paint(&v);
 }
-
+/*--------------------------------------------------------------------------*/
+// not here.
 inline int dsin(int angle)
 {
 	int d = angle%2;
@@ -106,8 +108,6 @@ inline int dcos(int angle)
 {
 	return dsin(angle-1);
 }
-
-// not here.
 inline std::pair<int, int> angle_t::apply(std::pair<int, int> const& p) const
 {
 	assert(! (_degrees%90) ); //for now
@@ -119,7 +119,7 @@ inline std::pair<int, int> angle_t::apply(std::pair<int, int> const& p) const
 	int ry =  s*p.first + c*p.second;
 	return std::make_pair(rx, ry);
 }
-
+/*--------------------------------------------------------------------------*/
 // rotate around center in local coordinates.
 void ElementGraphics::rotate(angle_t a, std::pair<int, int> center)
 {
@@ -139,8 +139,10 @@ void ElementGraphics::rotate(angle_t a, std::pair<int, int> center)
 		r%=4;
 		s->setParameter("rotated", std::to_string(r));
 
+		// is this needed? QGraphicsItem::pos should be the same
 		std::string x_ = s->getParameter("$xposition");
 		std::string y_ = s->getParameter("$yposition");
+
 		int x = atoi(x_.c_str());
 		int y = atoi(y_.c_str());
 
@@ -159,13 +161,13 @@ void ElementGraphics::rotate(angle_t a, std::pair<int, int> center)
 	}else{
 	}
 }
-
+/*--------------------------------------------------------------------------*/
 QRectF ElementGraphics::boundingRect() const
 {itested();
 	assert(_e);
 	return _e->boundingRect();
 }
-
+/*--------------------------------------------------------------------------*/
 void ElementGraphics::setSelected(bool s)
 {
 	qDebug() << "setSeletected" << s << this;
@@ -174,12 +176,21 @@ void ElementGraphics::setSelected(bool s)
 	assert(_e);
 	_e->setSelected(s); // BUG
 }
-
-// Reimplement this function to intercept events before they are dispatched to the specialized event handlers
-// should return true if the event e was recognized and processed.
+/*--------------------------------------------------------------------------*/
+// Reimplement this function to intercept events before they are dispatched to
+// the specialized event handlers. should return true if the event e was
+// recognized and processed.
 bool ElementGraphics::sceneEvent(QEvent* e)
 {
-	trace1("ElementGraphics::sceneEvent", e->type());
+	if(e->type() == QEvent::WindowActivate){
+	}else if(e->type() == QEvent::WindowDeactivate){
+	}else if(!e->isAccepted()){
+		// possibly set in filter?
+	}else{
+		unreachable();
+		// strange.
+		trace1("ElementGraphics::sceneEvent already accepted", e->type());
+	}
 	assert(scene());
 
 	auto sc = scene();
@@ -190,8 +201,13 @@ bool ElementGraphics::sceneEvent(QEvent* e)
 	if(s->itemEvent(&ie)){ untested();
 		bool acc = e->isAccepted();
 		trace1("ElementGraphics::sceneEvent itemEvent", acc);
+		if(acc){ itested();
+		}else{
+			// what's the difference between "acc" and the condition above?!
+			unreachable();
+		}
 		return acc;
-	}else if(QGraphicsItem::sceneEvent(e)){untested();
+	}else if(QGraphicsItem::sceneEvent(e)){ itested();
 		trace1("ElementGraphics::sceneEvent fwd", e->type());
 		return e->isAccepted();
 	}else{ untested();
@@ -199,7 +215,7 @@ bool ElementGraphics::sceneEvent(QEvent* e)
 		return e->isAccepted();
 	}
 }
-
+/*--------------------------------------------------------------------------*/
 void ElementGraphics::show()
 {
 	if(_e->scope()){ untested();
@@ -208,7 +224,7 @@ void ElementGraphics::show()
 	}
 	QGraphicsItem::show();
 }
-
+/*--------------------------------------------------------------------------*/
 void ElementGraphics::hide()
 { untested();
 	assert(_e);
@@ -219,7 +235,7 @@ void ElementGraphics::hide()
 	}else{
 	}
 }
-
+/*--------------------------------------------------------------------------*/
 template<class P>
 void ElementGraphics::moveElement(P const& delta)
 {
@@ -233,7 +249,7 @@ void ElementGraphics::moveElement(P const& delta)
 	auto p = _e->center();
 	QGraphicsItem::setPos(p.first, p.second);
 }
-	
+/*--------------------------------------------------------------------------*/
 void ElementGraphics::setPos(int i, int j, bool relative)
 {
 	assert(!relative); // use move, for now.
@@ -241,12 +257,12 @@ void ElementGraphics::setPos(int i, int j, bool relative)
 	QGraphicsItem::setPos(i, j);
 	_e->setCenter(i, j, false);
 }
-	
-
+/*--------------------------------------------------------------------------*/
 template
 void ElementGraphics::moveElement<QPoint>(QPoint const& delta);
-
+/*--------------------------------------------------------------------------*/
 ItemEvent::ItemEvent(QEvent const& a, ElementGraphics& b)
 	: QEvent(a), _item(b)
 {itested();
 }
+/*--------------------------------------------------------------------------*/

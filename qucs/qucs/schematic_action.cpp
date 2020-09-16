@@ -617,6 +617,7 @@ public:
 			++k;
 			if(auto eg=dynamic_cast<ElementGraphics*>(i)){
 				_gfx.push_back(eg);
+				// _pivot_g += _gfx.center(); pos?
 			}else{ untested();
 				unreachable(); // really? use prechecked_cast then.
 			}
@@ -637,6 +638,7 @@ public:
 private:
     SchematicDoc& _ctx;
     std::vector<ElementGraphics*> _gfx;
+	 std::pair<int, int> _pivot_g; // pivot in global coordinates
 }; // RotateSelection
 /*--------------------------------------------------------------------------*/
 typedef MouseActionSelCmd<DeleteSelection> MouseActionDelete;
@@ -735,7 +737,7 @@ QUndoCommand* MouseActionNewElement::deactivate()
 {
 	// assert(!attached);
 	doc().sceneRemoveItem(_gfx);
-	delete _gfx; // TODO: owns _elt?
+	delete _gfx; // CHECK: who owns _elt?
 	_gfx = nullptr;
 	incomplete();
 	return MouseAction::deactivate();
@@ -808,9 +810,7 @@ QUndoCommand* MouseActionNewElement::rotate(QEvent* ev)
 	if(!_gfx){
 		unreachable();
 	}else if(Symbol* s=dynamic_cast<Symbol*>(element(_gfx))){ untested();
-//		_gfx->hide();
 		_gfx->rotate(ninety_degree);
-//		_gfx->show();
 	}else{
 		unreachable();
 	}
@@ -887,34 +887,11 @@ private:
 	bool _done;
 }; // MoveSelection
 /*--------------------------------------------------------------------------*/
-#if 0
-//   was Mouseactions::MMove or so. unnecessary
-QUndoCommand* MouseActionDelete::move(QEvent *e)
-{ untested();
-
-//	QGraphicsSceneEvent ?
-  // TODO: inactive initially?
-//  ctx().Set3(e); // BUG: use a variable with a name.
-
-  // cannot draw on the viewport, it is displaced by the size of dock and toolbar
-  //
-//   Paint a cross under the mouse cursor to show the delete mode.
-//  there are no postpaint events. change the mouse appearance some other way?
-  incomplete();
-//  Doc->PostPaintEvent (_Line, MAx3-15, MAy3-15, MAx3+15, MAy3+15,0,0,false);
-//  Doc->PostPaintEvent (_Line, MAx3-15, MAy3+15, MAx3+15, MAy3-15,0,0,false);
-//
-  //e->ignore(); // handle in QGraphicsView?
-
-  return nullptr;
-}
-#endif
 /*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-// was MouseActions::MMoveSelect
+// was: MouseActions::MMoveSelect
 QUndoCommand* MouseActionSelect::move(QEvent *)
-{ itested();
-	//qDebug() << "MMoveSelect " << "select area";
+{ untested();
+	// obsolete?
 	if(isMoveEqual) {
 		// square?
 	}else{
@@ -923,7 +900,7 @@ QUndoCommand* MouseActionSelect::move(QEvent *)
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
-	//was MouseActions::MPressSelect
+// was: MouseActions::MPressSelect
 QUndoCommand* MouseActionSelect::press(QEvent*)
 { untested();
 
