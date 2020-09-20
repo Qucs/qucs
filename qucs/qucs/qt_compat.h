@@ -390,6 +390,14 @@ inline int getY(QPoint const p)
 {
 	return p.y();
 }
+inline float getX(QPointF const p)
+{
+	return p.x();
+}
+inline float getY(QPointF const p)
+{
+	return p.y();
+}
 
 inline std::ostream& operator<<(std::ostream&o, QPoint const& p)
 {

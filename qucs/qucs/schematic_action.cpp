@@ -613,26 +613,33 @@ public:
 	RotateSelection(SchematicDoc& ctx, IT selection)
 	: _ctx(ctx){ untested();
 		size_t k = 0;
+		_pivot_g.first = _pivot_g.second = 0; //?
 		for(auto i : selection){ untested();
 			++k;
 			if(auto eg=dynamic_cast<ElementGraphics*>(i)){
+				assert(eg);
+				_pivot_g.first += getX(eg->pos());
+				_pivot_g.second += getY(eg->pos());
 				_gfx.push_back(eg);
-				// _pivot_g += _gfx.center(); pos?
 			}else{ untested();
 				unreachable(); // really? use prechecked_cast then.
 			}
 		}
+		_pivot_g.first /= k;
+		_pivot_g.second /= k;
+		//_pivot_g.first = 0;
+		//_pivot_g.second = 0;
 		setText("rotate " + QString::number(k) + " items");
 	}
 	void undo() override { untested();
 		for(auto& d : _gfx){ untested();
-			d->rotate(-ninety_degree);
+			d->rotate(-ninety_degree, _pivot_g);
 		}
 	}
 	void redo() override { untested();
 		trace1("redo", _gfx.size());
 		for(auto& d : _gfx){ untested();
-			d->rotate(ninety_degree);
+			d->rotate(ninety_degree, _pivot_g);
 		}
 	}
 private:
