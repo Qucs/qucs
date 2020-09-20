@@ -120,8 +120,8 @@ inline std::pair<int, int> angle_t::apply(std::pair<int, int> const& p) const
 	return std::make_pair(rx, ry);
 }
 /*--------------------------------------------------------------------------*/
-// rotate around center in local coordinates.
-void ElementGraphics::rotate(angle_t a, std::pair<int, int> center)
+// rotate around pivot (in global coordinates).
+void ElementGraphics::rotate(angle_t a, std::pair<int, int> pivot)
 {
 	assert(_e);
 	if(auto s=dynamic_cast<Wire*>(_e)){ untested();
@@ -137,27 +137,34 @@ void ElementGraphics::rotate(angle_t a, std::pair<int, int> center)
 		unsigned r = atoi(rs.c_str());
 		assert(r<4); // yikes //
 		r += a.degrees_int()/90;
-		r%=4;
+		r %= 4;
 		s->setParameter("rotated", std::to_string(r));
 
-		// is this needed? QGraphicsItem::pos should be the same
+		auto p = pos();
+		int x = getX(p.toPoint());
+		int y = getY(p.toPoint());
+
+#ifndef NDEBUG
 		std::string x_ = s->getParameter("$xposition");
 		std::string y_ = s->getParameter("$yposition");
-
-		int x = atoi(x_.c_str());
-		int y = atoi(y_.c_str());
+		assert(x == atoi(x_.c_str()));
+		assert(y == atoi(y_.c_str()));
+#endif
 
 		// c = (x,y);
-		x -= center.first;
-		y -= center.second;
+		trace4("DBG", x,y,pivot.first,pivot.second);
+		x -= pivot.first;
+		y -= pivot.second;
 
-		std::pair<int, int> ac = a.apply(center);
+		auto new_xy = std::make_pair(x,y);
+		trace1("DBG", new_xy);
+		new_xy = a.apply(new_xy);
+		trace1("DBG post", new_xy);
 
-		x += ac.first;
-		y += ac.second;
+		x = pivot.first + new_xy.first;
+		y = pivot.second + new_xy.second;
 
-		s->setParameter("$xposition", std::to_string(x));
-		s->setParameter("$yposition", std::to_string(y));
+		setPos(x,y);
 		show();
 		setSelected(sel);
 	}else{
