@@ -43,6 +43,7 @@ Rectangle::~Rectangle()
 // --------------------------------------------------------------------------
 void Rectangle::paint(ViewPainter *p)
 {
+#if 0
   if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
     if(filled)  p->Painter->setBrush(Brush);
@@ -58,6 +59,7 @@ void Rectangle::paint(ViewPainter *p)
     p->drawResizeRect(cx+x2, cy);
     return;
   }
+#endif
   p->Painter->setPen(Pen);
   if(filled)  p->Painter->setBrush(Brush);
   p->drawRect(cx, cy, x2, y2);

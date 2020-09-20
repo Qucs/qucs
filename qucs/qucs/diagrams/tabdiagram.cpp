@@ -113,6 +113,7 @@ void TabDiagram::paintDiagram(ViewPainter *p)
     p->drawText(pt->s, cx+pt->x, cy-pt->y);
 
 
+#if 0
   if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRect(cx-5, cy-y2-5, x2+10, y2+10);
@@ -122,6 +123,7 @@ void TabDiagram::paintDiagram(ViewPainter *p)
     p->drawResizeRect(cx+x2, cy-y2);
     p->drawResizeRect(cx+x2, cy);
   }
+#endif
 }
 
 // ------------------------------------------------------------

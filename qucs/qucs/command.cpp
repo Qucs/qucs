@@ -265,12 +265,14 @@ void Command::paint(ViewPainter *p) const
     p->drawLine(cx+x1, cy+y2, cx+x2, cy+y1);
   }
 
+#if 0
   // draw component bounding box
   if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(cx+x1, cy+y1, x2-x1, y2-y1);
   }
-}
+#endif
+} // Command::paint
 
 // -------------------------------------------------------
 // Paints the component when moved with the mouse.

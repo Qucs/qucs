@@ -77,10 +77,12 @@ void GraphicText::paint(ViewPainter *p)
   int w, h;
   w = p->drawTextMapped(Text, 0, 0, &h);
 
+#if 0
   if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->Painter->drawRect(-3, -2, w+6, h+5);
   }
+#endif
 
   Font.setPointSize(Size);   // restore real font size
   p->Painter->setWorldMatrix(wm);

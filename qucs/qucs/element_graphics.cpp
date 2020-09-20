@@ -131,6 +131,7 @@ void ElementGraphics::rotate(angle_t a, std::pair<int, int> center)
 		show();
 		trace0("done wire rotate");
 	}else if(auto* s=dynamic_cast<Symbol*>(_e)){ untested();
+		bool sel = isSelected();
 		hide();
 		std::string rs=s->getParameter("rotated");
 		unsigned r = atoi(rs.c_str());
@@ -158,6 +159,7 @@ void ElementGraphics::rotate(angle_t a, std::pair<int, int> center)
 		s->setParameter("$xposition", std::to_string(x));
 		s->setParameter("$yposition", std::to_string(y));
 		show();
+		setSelected(sel);
 	}else{
 	}
 }
@@ -174,7 +176,7 @@ void ElementGraphics::setSelected(bool s)
 	QGraphicsItem::setSelected(s);
 	assert(QGraphicsItem::isSelected()==s);
 	assert(_e);
-	_e->setSelected(s); // BUG
+//	_e->setSelected(s); // BUG
 }
 /*--------------------------------------------------------------------------*/
 // Reimplement this function to intercept events before they are dispatched to

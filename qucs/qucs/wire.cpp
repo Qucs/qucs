@@ -129,12 +129,15 @@ void Wire::paint(ViewPainter *p) const
   int y1 = Wire::y1();
   int y2 = Wire::y2();
 
+#if 0
   if(isSelected()){ untested();
     p->Painter->setPen(QPen(Qt::darkGray,6));
     p->drawLine(x1, y1, x2, y2);
     p->Painter->setPen(QPen(Qt::lightGray,2));
     p->drawLine(x1, y1, x2, y2);
-  }else{ itested();
+  }else
+#endif
+  { itested();
     p->Painter->setPen(QPen(Qt::darkBlue,2));
     p->drawLine(x1, y1, x2, y2);
   }

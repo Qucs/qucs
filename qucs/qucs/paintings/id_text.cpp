@@ -68,10 +68,12 @@ void ID_Text::paint(ViewPainter *p)
     }
   }
 
+#if 0
   if(isSelected()) {
     p->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(x-4, y-4, x2+8, y2+8);
   }
+#endif
 
   x2 = int(float(x2) / p->Scale);
   y2 = int(float(y2) / p->Scale);

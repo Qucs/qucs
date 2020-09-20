@@ -56,6 +56,7 @@ void Arrow::paint(ViewPainter *p)
 {
   QPolygon Points;
   int x1_, y1_, x2_, y2_, x3_, y3_;
+#if 0
   if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
     p->drawLine(cx, cy, cx+x2, cy+y2);
@@ -88,6 +89,7 @@ void Arrow::paint(ViewPainter *p)
     p->drawResizeRect(cx+x2, cy+y2);
     return;
   }
+#endif
   p->Painter->setPen(Pen);
   p->drawLine(cx, cy, cx+x2, cy+y2);
   p->Painter->setPen(QPen(Pen.color(), Pen.width(), Qt::SolidLine));

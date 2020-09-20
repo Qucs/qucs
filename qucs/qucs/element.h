@@ -212,20 +212,23 @@ public:
 #ifndef USE_SCROLLVIEW
 private: // only called from ElementGraphics
 #endif
+
+#if 0
   void setSelected(bool b=true){
 	  Selected = b;
   }
   void toggleSelected(){
 	  Selected = !Selected;
   }
+#endif
 
 #ifndef USE_SCROLLVIEW
 protected:
 #endif
-  bool isSelected() const{return Selected;}
+//  bool isSelected() const{return Selected;}
 
 private:
-  bool Selected; // BUG
+//  bool Selected; // BUG
 public: // BUG
   int  Type;    // whether it is Component, Wire, ...
 
