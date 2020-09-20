@@ -116,10 +116,12 @@ void PortSymbol::paint(ViewPainter *p)
   p->Painter->setPen(Qt::lightGray);
   p->drawRect(cx+x1, cy+y1, x2, y2);
 
+#if 0
   if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(cx+x1-4, cy+y1-4, x2+8, y2+8);
   }
+#endif
 }
 
 // --------------------------------------------------------------------------

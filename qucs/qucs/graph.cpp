@@ -62,6 +62,7 @@ void Graph::paint(ViewPainter *p, int x0, int y0)
   if(!ScrPoints.size())
     return;
 
+#if 0
   if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,Thick*p->PrintScale+4));
     paintLines(p, x0, y0);
@@ -70,6 +71,7 @@ void Graph::paint(ViewPainter *p, int x0, int y0)
     paintLines(p, x0, y0);
     return;
   }
+#endif
 
   // **** not selected ****
   p->Painter->setPen(QPen(QColor(Color), Thick*p->PrintScale, Qt::SolidLine));

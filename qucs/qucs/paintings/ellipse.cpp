@@ -44,6 +44,7 @@ Ellipse::~Ellipse()
 // --------------------------------------------------------------------------
 void Ellipse::paint(ViewPainter *p)
 {
+#if 0
   if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
     if(filled)  p->Painter->setBrush(Brush);
@@ -59,6 +60,7 @@ void Ellipse::paint(ViewPainter *p)
     p->drawResizeRect(cx+x2, cy);
     return;
   }
+#endif
   p->Painter->setPen(Pen);
   if(filled)  p->Painter->setBrush(Brush);
   p->drawEllipse(cx, cy, x2, y2);

@@ -187,10 +187,12 @@ void WireLabel::paint(ViewPainter *p) const
   x2 = int(double(x2) / p->Scale);
   y2 = int(double(y2) / p->Scale);
 
+#if 0
   if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(x1-2, y1-2, x2+6, y2+5);
   }
+#endif
 }
 
 // ----------------------------------------------------------------

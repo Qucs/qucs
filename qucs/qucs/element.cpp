@@ -18,12 +18,12 @@
 Element::Element()
  : _owner(nullptr)
 {
-  Type = isDummyElement;
-  cx = cy = x1 = y1 = x2 = y2 = 0;
+  Type = isDummyElement; // BUG
+  cx = cy = x1 = y1 = x2 = y2 = 0; // relly?
   setLabel(name());
 
   // BUG
-  Selected = false;
+  // Selected = false;
 }
 
 Element::Element(Element const& e)
@@ -35,7 +35,7 @@ Element::Element(Element const& e)
   setLabel(e.label());
 
   // BUG
-  Selected = false;
+  // Selected = false;
 }
 
 Element::~Element()
@@ -75,9 +75,10 @@ void /*really?*/ Element::editElement(QucsDoc*)
 void Element::paint(ViewPainter* p) const
 {
 	// draw bounding box for debugging.
-	if(isSelected()){
-		p->Painter->setPen(QPen(Qt::red,2));
-	}else{
+	//if(isSelected()){
+	//	p->Painter->setPen(QPen(Qt::red,2));
+	//}else
+	{
 		p->Painter->setPen(QPen(Qt::yellow,1));
 	}
 	p->Painter->drawRoundRect(boundingRect());

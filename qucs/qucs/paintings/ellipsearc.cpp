@@ -41,6 +41,7 @@ EllipseArc::~EllipseArc()
 // --------------------------------------------------------------------------
 void EllipseArc::paint(ViewPainter *p)
 {
+#if 0
   if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
     p->drawArc(cx, cy, x2, y2, Angle, ArcLen);
@@ -54,6 +55,7 @@ void EllipseArc::paint(ViewPainter *p)
     p->drawResizeRect(cx+x2, cy);
     return;
   }
+#endif
   p->Painter->setPen(Pen);
   p->drawArc(cx, cy, x2, y2, Angle, ArcLen);
 }
