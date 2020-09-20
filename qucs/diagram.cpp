@@ -151,7 +151,7 @@ void Diagram::paintDiagram(ViewPainter *p)
     // restore painter state
     p->Painter->restore();
 
-
+#if 0
     if(isSelected()) { untested();
       int x_, y_;
       float fx_, fy_;
@@ -167,6 +167,7 @@ void Diagram::paintDiagram(ViewPainter *p)
       p->drawResizeRect(cx+x2, cy-y2);
       p->drawResizeRect(cx+x2, cy);
     }
+#endif
 }
 
 void Diagram::paintMarkers(ViewPainter *p, bool paintAll)

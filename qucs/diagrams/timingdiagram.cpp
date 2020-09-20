@@ -109,7 +109,7 @@ void TimingDiagram::paintDiagram(ViewPainter *p)
     p->Painter->setBrush(QBrush(Qt::NoBrush));
   }
 
-
+#if 0
   if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRect(cx-5, cy-y2-5, x2+10, y2+10);
@@ -119,6 +119,7 @@ void TimingDiagram::paintDiagram(ViewPainter *p)
     p->drawResizeRect(cx+x2, cy-y2);
     p->drawResizeRect(cx+x2, cy);
   }
+#endif
 }
 
 // ------------------------------------------------------------
