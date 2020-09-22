@@ -52,6 +52,10 @@ Component::Component(Component const& p)
     //cy(p.cy),
     tx(p.tx),
     ty(p.ty),
+    x1(p.x1),
+    y1(p.y1),
+    x2(p.x2),
+    y2(p.y2),
     showName(p.showName)
 {
   trace3("Component::Component", p.Name, p.Model, _rotated);

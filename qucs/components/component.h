@@ -99,6 +99,12 @@ public: // BUG
   bool    getSelected(int, int);
   int     getTextSelected(int, int, float);
 
+
+	int const& x1_() const { return x1; }
+	int const& y1_() const { return y1; }
+	int const& x2_() const { return x2; }
+	int const& y2_() const { return y2; }
+
 private:
   void rotate();
 
@@ -209,6 +215,16 @@ private: // (hopefully) obsolete callbacks
   void recreateCallback();
   QString getParameter(unsigned pos);
 
+	QRectF boundingRect() const override {
+		// QRectF b(cx+x1, cy+y1, x2-x1, y2-y1);
+		QRectF b(x1, y1, x2-x1, y2-y1);
+		return b;
+	}
+
+public: // BUG
+  // center and relative boundings
+  int x1, y1;
+  int x2, y2;
 }; // Component
 
 
