@@ -53,6 +53,11 @@ ComponentListWidgetItem::ComponentListWidgetItem(Element const* e)
 	setToolTip("element: " + Name);
 }
 
+Element const* ComponentListWidgetItem::proto() const
+{
+	return _e;
+}
+
 Element* ComponentListWidgetItem::cloneElement() const
 {
 	if(_e){

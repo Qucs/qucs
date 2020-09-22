@@ -56,6 +56,8 @@
 #include "actions.h"
 #include "platform.h"
 
+#include "component_widget.h"
+
 #if 0
 // BUG: not QucsApp
 void QucsApp::slotToggle(bool on)
@@ -86,6 +88,105 @@ void QucsApp::slotToggle(bool on)
   assert(qd); \
   auto s = prechecked_cast<QAction*>(sender()); \
   assert(s);
+
+#include <QListWidgetItem>
+
+// Is called when the mouse is clicked within the Component QIconView.
+void QucsApp::slotSelectComponent(QListWidgetItem *item)
+{
+  slotHideEdit(); // disable text edit of component property
+
+  QWidget *w = DocumentTab->currentWidget();
+  auto qd = dynamic_cast<QucsDoc*>(w);
+  assert(qd);
+//  auto s = prechecked_cast<QAction*>(sender());
+//  assert(s);
+
+  if(auto ci=dynamic_cast<ComponentListWidgetItem*>(item)){
+    qd->actionSelectElement(ci);
+  }
+
+  // incomplete(); possibly
+#if 0
+  // delete previously selected elements
+  if(view->selElem != 0)  delete view->selElem;
+  view->selElem  = 0;   // no component/diagram/painting selected
+
+  if(item == 0) {   // mouse button pressed not over an item ?
+    CompComps->clearSelection();  // deselect component in ViewList
+    return;
+  }
+
+  if(view->drawn){
+    ((SchematicBase*)DocumentTab->currentWidget())->viewport()->update();
+  }else{
+  }
+  view->drawn = false;
+
+  // toggle last toolbar button off
+  if(activeAction) {
+    activeAction->blockSignals(true); // do not call toggle slot
+    activeAction->setChecked(false);       // set last toolbar button off
+    activeAction->blockSignals(false);
+  }
+  activeAction = 0;
+
+  MouseMoveAction = &MouseActions::MMoveElement;
+  MousePressAction = &MouseActions::MPressElement;
+  MouseReleaseAction = 0;
+  MouseDoubleClickAction = 0;
+
+  int i = CompComps->row(item);
+  QList<Module *> Comps;
+
+  // if symbol mode, only paintings are enabled.
+  Comps = Category::getModules(CompChoose->currentText());
+
+  QString name = CompComps->item(i)->text();
+  QString CompName;
+  QString CompFile_qstr;
+  char *CompFile_cptr;
+
+  qDebug() << "pressed CompComps id" << i << name;
+  QVariant v = CompComps->item(i)->data(Qt::UserRole);
+  iconCompInfoStruct iconCompInfo = v.value<iconCompInfoStruct>();
+  qDebug() << "slotSelectComponent()" << iconCompInfo.catIdx << iconCompInfo.compIdx;
+
+  Category const* cat = Category::categories.at(iconCompInfo.catIdx);
+  assert(cat);
+  Module *mod = (*cat)[iconCompInfo.compIdx];
+  assert(mod);
+  qDebug() << "mod->info" << mod->element()->name();
+  Element const* e = mod->element();
+  if (e) {
+    // static component
+    view->selElem = prechecked_cast<Element*>(e->clone()); // BUG. memory leak
+    assert(view->selElem);
+  } else {
+    incomplete();
+#if 0 // pointless
+    // Verilog-A component
+    InfosVA = mod->infoVA;
+    // get JSON file out of item name on widgetitem
+    QString filename = Module::vaComponents[name];
+    if (InfosVA) {
+      view->selElem = (*InfosVA) (CompName, CompFile_qstr, true, filename);
+    }
+#endif
+  }
+
+#if 0 // what is this?
+  if (Infos || InfosVA) {
+    // change currently selected category, so the user will
+    //   see where the component comes from
+    CompChoose->setCurrentIndex(iconCompInfo.catIdx+1); // +1 due to the added "Search Results" item
+    ccCurIdx = iconCompInfo.catIdx; // remember the category to select when exiting search
+    //!! comment out the above two lines if you would like that the search
+    //!!   returns back to the last selected category instead
+  }
+#endif
+#endif
+}
 
 // -----------------------------------------------------------------------
 void QucsApp::slotOnGrid()

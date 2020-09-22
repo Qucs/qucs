@@ -50,7 +50,7 @@ public:
 public:
 	cmd* handle(QEvent*);
 
-	virtual cmd* activate(QAction* sender);
+	virtual cmd* activate(QObject* sender);
 	virtual cmd* deactivate();
 // private: TODO
 	// TODO: only use POS in those
