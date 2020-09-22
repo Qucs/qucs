@@ -245,8 +245,8 @@ public: // set protected variables. don't use
 protected:
   int  cx, cy; // also used in Node. and in Diagrams
  
-public:
   int x1, y1;
+public:
   
   // BUG; abused in Command
   mutable int x2, y2;  // center and relative boundings

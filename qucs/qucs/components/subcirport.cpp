@@ -28,6 +28,8 @@ private:
 		  for(auto i : p.Lines){ untested();
 			 Lines.append(new Line(*i));
 		  }
+
+
 	  }
 public:
   SubCirPort();
@@ -184,6 +186,7 @@ QString SubCirPort::netlist() const
 // -------------------------------------------------------
 QString SubCirPort::vhdlCode(int)
 { untested();
+    return QString("");
 #if 0
   if(Props.at(1)->Value != "out")
     return QString("");
