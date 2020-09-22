@@ -39,8 +39,8 @@ public: // actions... private?
 	MouseAction* maActivate;
 	MouseAction* maRotate;
 	MouseAction* maOnGrid;
-	MouseAction* maMirrorX;
-	MouseAction* maMirrorY;
+	MouseAction* maMirrorXaxis;
+	MouseAction* maMirrorYaxis;
 	MouseAction* maInsertGround;
 	MouseAction* maInsertPort;
 	MouseAction* maZoomIn;

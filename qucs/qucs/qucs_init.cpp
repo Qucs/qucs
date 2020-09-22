@@ -1033,7 +1033,7 @@ void QucsApp::printCursorPosition(int x, int y)
 // --------------------------------------------------------------
 // called by document, update undo state
 void QucsApp::slotUpdateUndo(bool isEnabled)
-{ untested();
+{itested();
   assert(undo);
   undo->setEnabled(isEnabled);
 }
@@ -1041,7 +1041,7 @@ void QucsApp::slotUpdateUndo(bool isEnabled)
 // --------------------------------------------------------------
 // called by document, update redo state
 void QucsApp::slotUpdateRedo(bool isEnabled)
-{ untested();
+{itested();
   assert(redo);
   redo->setEnabled(isEnabled);
 }

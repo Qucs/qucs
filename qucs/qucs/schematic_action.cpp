@@ -34,11 +34,11 @@
 
 // not here.
 int getX(std::pair<int, int> const& p)
-{
+{itested();
 	return p.first;
 }
 int getY(std::pair<int, int> const& p)
-{
+{itested();
 	return p.second;
 }
 /*--------------------------------------------------------------------------*/
@@ -46,7 +46,7 @@ int getY(std::pair<int, int> const& p)
 class MouseActionZoomIn : public MouseAction{
 public:
 	explicit MouseActionZoomIn(MouseActions& ctx)
-		: MouseAction(ctx) {
+		: MouseAction(ctx) {itested();
 	}
 private: // MouseAction
 	cmd* press(QEvent*) override;
@@ -62,9 +62,9 @@ private:
 QUndoCommand* MouseActionZoomIn::press(QEvent* e)
 { untested();
 	QPointF pos;
-	if(auto se=dynamic_cast<QGraphicsSceneMouseEvent*>(e)){
+	if(auto se=dynamic_cast<QGraphicsSceneMouseEvent*>(e)){ untested();
 		pos = se->scenePos();
-	}else{
+	}else{ untested();
 		incomplete();
 	}
 	float fX = pos.x();
@@ -90,8 +90,8 @@ QUndoCommand* MouseActionZoomIn::press(QEvent* e)
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionZoomIn::release(QMouseEvent* e)
-{
-  if(e->button() == Qt::LeftButton){
+{ untested();
+  if(e->button() == Qt::LeftButton){ untested();
 
 	  _MAx1 = e->pos().x();
 	  _MAy1 = e->pos().y();
@@ -128,7 +128,7 @@ QUndoCommand* MouseActionZoomIn::release(QMouseEvent* e)
 	  QucsMain->MouseReleaseAction = 0;
 	  doc().releaseKeyboard();  // allow keyboard inputs again
 
-  }else{
+  }else{ untested();
   }
   return nullptr;
 }
@@ -136,7 +136,7 @@ QUndoCommand* MouseActionZoomIn::release(QMouseEvent* e)
 class MouseActionWire : public MouseAction{
 public:
 	explicit MouseActionWire(MouseActions& ctx)
-		: MouseAction(ctx), _mode(0), _phase(0) {
+		: MouseAction(ctx), _mode(0), _phase(0) {itested();
 		_proto = symbol_dispatcher.clone("__ma_ghostwire");
 		assert(_proto);
 	}
@@ -152,7 +152,7 @@ private: // legacy code
 	cmd* press1(QGraphicsSceneMouseEvent*);
 	cmd* press2(QGraphicsSceneMouseEvent*);
 
-	void toggleMode(){
+	void toggleMode(){ untested();
 		assert(_gfx.size());
 		auto w = _gfx.back();
 		Element* ee = element(w);
@@ -179,7 +179,7 @@ private:
 /*--------------------------------------------------------------------------*/
 extern QCursor& crosshair();
 QUndoCommand* MouseActionWire::activate(QAction* sender)
-{
+{ untested();
 	assert(!_gfx.size());
 	new_gfx();
 	_phase = 1;
@@ -191,7 +191,7 @@ QUndoCommand* MouseActionWire::activate(QAction* sender)
 QUndoCommand* MouseActionWire::deactivate()
 { untested();
 	doc().setCursor(_oldcursor);
-	for(auto i: _gfx){
+	for(auto i: _gfx){ untested();
 		delete i;
 	}
 	_gfx.resize(0);
@@ -236,7 +236,7 @@ QUndoCommand* MouseActionWire::press(QEvent* e)
 	}else if(_phase == 2){ untested();
 		return press2(se);
 		e->accept();
-	}else{
+	}else{ untested();
 		unreachable();
 	}
 
@@ -245,7 +245,7 @@ QUndoCommand* MouseActionWire::press(QEvent* e)
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionWire::move(QEvent* e)
 { untested();
-	if(auto se=dynamic_cast<QGraphicsSceneMouseEvent*>(e)){
+	if(auto se=dynamic_cast<QGraphicsSceneMouseEvent*>(e)){ untested();
 		QPointF pos = se->scenePos(); // mapToScene(ev->pos());
 		float fX = pos.x();
 		float fY = pos.y();
@@ -259,10 +259,10 @@ QUndoCommand* MouseActionWire::move(QEvent* e)
 		cur->prepareGeometryChange();
 
 		e->accept();
-	}else if(dynamic_cast<QMouseEvent*>(e)){
+	}else if(dynamic_cast<QMouseEvent*>(e)){ untested();
 		incomplete();
 		e->accept();
-	}else{
+	}else{ untested();
 		incomplete();
 	}
 	return nullptr;
@@ -329,7 +329,7 @@ QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* ev)
 	float fX = pos.x();
 	float fY = pos.y();
 
-   if(isNode(fX, fY)){
+   if(isNode(fX, fY)){ untested();
 
 	}else{  // same as press1?
 
@@ -458,10 +458,10 @@ private:
 	cmd* release_left(QMouseEvent*);
 
 protected:
-	void setPos1(QPointF pos){
+	void setPos1(QPointF pos){ untested();
 		_pos1 = pos;
 	}
-	QPointF const& pos1() const{
+	QPointF const& pos1() const{ untested();
 		return _pos1;
 	}
 
@@ -474,23 +474,23 @@ private: // more decoupling
 
 //void MouseActions::MDoubleClickSelect(SchematicDoc *Doc, QMouseEvent *Event)
 QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
-{
+{ untested();
 	incomplete();
 	//  Doc->releaseKeyboard();  // allow keyboard inputs again
 	//  QucsMain->editText->setHidden(true);
 	//  editElement(Doc, Event);
 	Element* elt = nullptr;
 	//
-	if(auto i = dynamic_cast<ItemEvent*>(evt)){
+	if(auto i = dynamic_cast<ItemEvent*>(evt)){ untested();
 		// QList<ElementGraphics*> l;
 		elt = element(&i->item());
 		// l.push_back(&i->item());
-	}else{
+	}else{ untested();
 	}
 
-	if(elt){
+	if(elt){ untested();
 		elt->editElement(&doc());
-	}else{
+	}else{ untested();
 	}
 
 	return nullptr;
@@ -518,14 +518,14 @@ private:
 /*--------------------------------------------------------------------------*/
 template<class CMD>
 QUndoCommand* MouseActionSelCmd<CMD>::deactivate()
-{ untested();
+{itested();
 	setCursor(_oldcursor);
 	return MouseAction::deactivate();
 }
 /*--------------------------------------------------------------------------*/
 template<class CMD>
 QUndoCommand* MouseActionSelCmd<CMD>::activate(QAction *sender)
-{ itested();
+{itested();
 	MouseAction::activate(sender); // ...
 
 	_oldcursor = doc().cursor();
@@ -534,24 +534,24 @@ QUndoCommand* MouseActionSelCmd<CMD>::activate(QAction *sender)
 	auto s = doc().selectedItems();
 	bool selected = !s.empty();
 
-	if(selected){ untested();
+	if(selected){itested();
 		auto cmd = new CMD(doc(), s);
 		return cmd;
-	}else{
+	}else{ untested();
 		return nullptr;
 	}
 }
 /*--------------------------------------------------------------------------*/
 template<class CMD>
 QUndoCommand* MouseActionSelCmd<CMD>::press(QEvent* e)
-{
+{ untested();
 	if(!e){ untested();
 		return nullptr;
-	}else if(auto i = dynamic_cast<ItemEvent*>(e)){
+	}else if(auto i = dynamic_cast<ItemEvent*>(e)){ untested();
 		QList<ElementGraphics*> l;
 		l.push_back(&i->item());
 		return new CMD(doc(), l);
-	}else{
+	}else{ untested();
 		trace1("delete::scene unknown sender", e->type());
 		return nullptr;
 	}
@@ -573,7 +573,7 @@ public:
 		size_t k = 0;
 		for(auto i : selection){ untested();
 			++k;
-			if(auto eg=dynamic_cast<ElementGraphics*>(i)){
+			if(auto eg=dynamic_cast<ElementGraphics*>(i)){ untested();
 				_gfx.push_back(eg);
 			}else{ untested();
 				unreachable(); // really? use prechecked_cast then.
@@ -585,7 +585,7 @@ public:
 		QUndoCommand::undo(); // does not check
 
 		assert(_done);
-		for(auto& d : _gfx){
+		for(auto& d : _gfx){ untested();
 			d->show();
 		}
 		_done = false;
@@ -616,7 +616,7 @@ public:
 		_pivot_g.first = _pivot_g.second = 0; //?
 		for(auto i : selection){ untested();
 			++k;
-			if(auto eg=dynamic_cast<ElementGraphics*>(i)){
+			if(auto eg=dynamic_cast<ElementGraphics*>(i)){ untested();
 				assert(eg);
 				_pivot_g.first += getX(eg->pos());
 				_pivot_g.second += getY(eg->pos());
@@ -648,11 +648,83 @@ private:
 	 std::pair<int, int> _pivot_g; // pivot in global coordinates
 }; // RotateSelection
 /*--------------------------------------------------------------------------*/
+template<class T>
+class TransformSelection : public QUndoCommand {
+public:
+	template<class IT>
+	TransformSelection(SchematicDoc& ctx, IT selection, T const& transform)
+	: _ctx(ctx), _t(transform){itested();
+		size_t k = 0;
+		_pivot_g.first = _pivot_g.second = 0; //?
+		for(auto i : selection){itested();
+			++k;
+			if(auto eg=dynamic_cast<ElementGraphics*>(i)){itested();
+				assert(eg);
+				_pivot_g.first += getX(eg->pos());
+				_pivot_g.second += getY(eg->pos());
+				_gfx.push_back(eg);
+			}else{ untested();
+				unreachable(); // really? use prechecked_cast then.
+			}
+		}
+		_pivot_g.first /= k;
+		_pivot_g.second /= k;
+		//_pivot_g.first = 0;
+		//_pivot_g.second = 0;
+		setText("rotate " + QString::number(k) + " items");
+	}
+	void undo() override { untested();
+		auto t = _t.inverse();
+		trace1("..", t.degrees_int());
+		for(auto& d : _gfx){ untested();
+			d->transform(t, _pivot_g);
+		}
+	}
+	void redo() override {itested();
+		trace2("redo", _gfx.size(), _t.degrees_int());
+		for(auto& d : _gfx){itested();
+			d->transform(_t, _pivot_g);
+		}
+	}
+private:
+    SchematicDoc& _ctx;
+    std::vector<ElementGraphics*> _gfx;
+	 std::pair<int, int> _pivot_g; // pivot in global coordinates
+	 T const& _t;
+}; // TransformSelection
+/*--------------------------------------------------------------------------*/
+//class RotateSelection : public TransformSelection<qucsSymbolTransform> // TODO
+static const rotate_after_mirror1_t ninety_degree_transform(90, false);
+class RotateSelectionTransform : public TransformSelection<qucsSymbolTransform>{
+	typedef TransformSelection<qucsSymbolTransform> base;
+public:
+	template<class IT>
+	RotateSelectionTransform(SchematicDoc& ctx, IT selection)
+	  : base(ctx, selection, ninety_degree_transform) {}
+};
+/*--------------------------------------------------------------------------*/
+class MirrorXaxisSelection : public TransformSelection<qucsSymbolTransform>{
+	typedef TransformSelection<qucsSymbolTransform> base;
+public:
+	template<class IT>
+	MirrorXaxisSelection(SchematicDoc& ctx, IT selection)
+	  : base(ctx, selection, mirrorXaxis) {}
+};
+/*--------------------------------------------------------------------------*/
+class MirrorYaxisSelection : public TransformSelection<qucsSymbolTransform>{
+	typedef TransformSelection<qucsSymbolTransform> base;
+public:
+	template<class IT>
+	MirrorYaxisSelection(SchematicDoc& ctx, IT selection)
+	  : base(ctx, selection, mirrorYaxis) {}
+};
+/*--------------------------------------------------------------------------*/
 typedef MouseActionSelCmd<DeleteSelection> MouseActionDelete;
+typedef MouseActionSelCmd<RotateSelection> MouseActionActivate; // TODO
+// typedef MouseActionSelCmd<RotateSelectionTransform> MouseActionRotate;
 typedef MouseActionSelCmd<RotateSelection> MouseActionRotate;
-typedef MouseActionSelCmd<RotateSelection> MouseActionActivate;
-typedef MouseActionSelCmd<RotateSelection> MouseActionMirrorX;
-typedef MouseActionSelCmd<RotateSelection> MouseActionMirrorY;
+typedef MouseActionSelCmd<MirrorXaxisSelection> MouseActionMirrorXaxis;
+typedef MouseActionSelCmd<MirrorYaxisSelection> MouseActionMirrorYaxis;
 /*--------------------------------------------------------------------------*/
 class MouseActionNewElement : public MouseAction{
 public:
@@ -704,10 +776,10 @@ private:
 }; // NewElementCommand
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionNewElement::release(QMouseEvent* ev)
-{
+{ untested();
 	QUndoCommand* cmd = nullptr;
 	auto m = dynamic_cast<QMouseEvent*>(ev);
-	if(!m){
+	if(!m){ untested();
 	}else if(m->button() == Qt::LeftButton){ untested();
 		cmd = makeNew(ev);
 	}else if(m->button() == Qt::RightButton){ untested();
@@ -716,7 +788,7 @@ QUndoCommand* MouseActionNewElement::release(QMouseEvent* ev)
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionNewElement::makeNew(QMouseEvent* ev)
-{
+{ untested();
 	// assert(ev->widget=doc->scene()) // or so.
 	trace1("RELEASE", ev->type());
 	if(ev->type() == QEvent::MouseButtonRelease){ itested();
@@ -741,7 +813,7 @@ QUndoCommand* MouseActionNewElement::makeNew(QMouseEvent* ev)
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionNewElement::deactivate()
-{
+{ untested();
 	// assert(!attached);
 	doc().sceneRemoveItem(_gfx);
 	delete _gfx; // CHECK: who owns _elt?
@@ -751,17 +823,17 @@ QUndoCommand* MouseActionNewElement::deactivate()
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionNewElement::move(QEvent* ev)
-{
+{ untested();
 	QPointF sp;
 	trace1("move", ev->type());
-	if(auto ee=dynamic_cast<QMouseEvent*>(ev)){
+	if(auto ee=dynamic_cast<QMouseEvent*>(ev)){ untested();
 		unreachable();
 		QPointF wp;
 		wp = ee->localPos(); // use oldPos?
 		sp = mapToScene(wp.toPoint());
-	}else if(auto ee=dynamic_cast<QGraphicsSceneMouseEvent*>(ev)){
+	}else if(auto ee=dynamic_cast<QGraphicsSceneMouseEvent*>(ev)){ untested();
 		sp = ee->scenePos();
-	}else{
+	}else{ untested();
 		unreachable();
 	}
 
@@ -776,7 +848,7 @@ QUndoCommand* MouseActionNewElement::move(QEvent* ev)
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionNewElement::enter(QEvent* ev)
-{
+{ untested();
 	trace1("new enter", ev->type());
 	auto ee = prechecked_cast<QEnterEvent*>(ev);
 	assert(ee);
@@ -791,7 +863,7 @@ QUndoCommand* MouseActionNewElement::enter(QEvent* ev)
 	auto sp = d->mapToScene(wp.toPoint());
 
 	Element* elt;
-	if(!_gfx){
+	if(!_gfx){ untested();
 		elt = s->clone();
 		elt->setCenter(sp.x(), sp.y());
 		_gfx = new ElementGraphics(elt); // BUG
@@ -806,26 +878,27 @@ QUndoCommand* MouseActionNewElement::enter(QEvent* ev)
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionNewElement::leave(QEvent* ev)
-{
+{ untested();
 	sceneRemoveItem(_gfx);
 	ev->accept();
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
-QUndoCommand* MouseActionNewElement::rotate(QEvent* ev)
-{
-	if(!_gfx){
+QUndoCommand* MouseActionNewElement::rotate(QEvent*)
+{ untested();
+	if(!_gfx){ untested();
 		unreachable();
-	}else if(Symbol* s=dynamic_cast<Symbol*>(element(_gfx))){ untested();
+	}else if(dynamic_cast<Symbol*>(element(_gfx))){ untested();
+		// always do this?
 		_gfx->rotate(ninety_degree);
-	}else{
+	}else{ untested();
 		unreachable();
 	}
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionNewElement::press(QEvent* ev)
-{
+{ untested();
 	auto a = dynamic_cast<QMouseEvent*>(ev);
 	auto m = dynamic_cast<QGraphicsSceneMouseEvent*>(ev);
 	QUndoCommand* cmd = nullptr;
@@ -854,7 +927,7 @@ public:
 		trace1("MoveSelection", delta);
 		size_t k = 0;
 		for(auto i : selection){ untested();
-			if(auto eg=dynamic_cast<ElementGraphics*>(i)){
+			if(auto eg=dynamic_cast<ElementGraphics*>(i)){ untested();
 				++k;
 				_gfx.push_back(eg);
 			}else{ untested();
@@ -878,7 +951,7 @@ public:
 		do_it();
 	}
 private:
-	void do_it() {
+	void do_it() { untested();
 		trace3("moveSelection", _delta.x(), _delta.y(), _done);
 		for(auto& d : _gfx){ untested();
 			d->moveElement(_delta);
@@ -897,11 +970,11 @@ private:
 /*--------------------------------------------------------------------------*/
 // was: MouseActions::MMoveSelect
 QUndoCommand* MouseActionSelect::move(QEvent *)
-{ untested();
+{itested();
 	// obsolete?
-	if(isMoveEqual) {
+	if(isMoveEqual) {itested();
 		// square?
-	}else{
+	}else{itested();
 	}
 
 	return nullptr;
@@ -909,7 +982,7 @@ QUndoCommand* MouseActionSelect::move(QEvent *)
 /*--------------------------------------------------------------------------*/
 // was: MouseActions::MPressSelect
 QUndoCommand* MouseActionSelect::press(QEvent*)
-{ untested();
+{itested();
 
 	incomplete();
 	return nullptr;
@@ -1116,11 +1189,11 @@ QUndoCommand* MouseActionSelect::press(QEvent*)
 /*--------------------------------------------------------------------------*/
 // was MouseActions::MReleaseSelect(SchematicDoc *Doc, QMouseEvent *Event)
 QUndoCommand* MouseActionSelect::release(QMouseEvent *ev)
-{ untested();
+{itested();
 	QUndoCommand* cmd = nullptr;
 	auto m = dynamic_cast<QMouseEvent*>(ev);
-	if(!m){
-	}else if(m->button() == Qt::LeftButton){ untested();
+	if(!m){ untested();
+	}else if(m->button() == Qt::LeftButton){itested();
 		cmd = release_left(ev);
 	}else if(m->button() == Qt::RightButton){ untested();
 	}
@@ -1128,10 +1201,10 @@ QUndoCommand* MouseActionSelect::release(QMouseEvent *ev)
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
-{
+{itested();
 	bool ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
-	if(!ctrl) {
+	if(!ctrl) {itested();
 		incomplete();
 	}else{ untested();
 	}
@@ -1140,7 +1213,7 @@ QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
 
 	auto s = doc().selectedItems();
 	if(s.isEmpty()){ untested();
-	}else{
+	}else{itested();
 		auto p = s.first()->pos().toPoint();
 		auto p1_ = element(s.first())->center();
 		auto p1 = QPoint(getX(p1_), getY(p1_));
@@ -1148,10 +1221,10 @@ QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
 		int fX = int(delta.x());
 		int fY = int(delta.y());
 	
-		if(fX || fY){
+		if(fX || fY){ untested();
 			trace1("possible move", delta);
 			c = new MoveSelection(delta, doc(), s);
-		}else{
+		}else{itested();
 		}
 	}
 
@@ -1165,7 +1238,7 @@ QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
 #endif
 		}else{ untested();
 		}
-	}else{ untested();
+	}else{itested();
 	}
 
 	doc().releaseKeyboard();
@@ -1204,8 +1277,8 @@ SchematicActions::SchematicActions(SchematicDoc& ctx)
 	maInsertPort = new MouseActionNewElement(*this);
 
 	maActivate = new MouseActionActivate(*this);
-	maMirrorX = new MouseActionMirrorX(*this);
-	maMirrorY = new MouseActionMirrorY(*this);
+	maMirrorXaxis = new MouseActionMirrorXaxis(*this);
+	maMirrorYaxis = new MouseActionMirrorYaxis(*this);
 	maRotate = new MouseActionRotate(*this);
 
 	// this was in App previously, and scattered across a couple of pointer hacks.
@@ -1219,8 +1292,8 @@ SchematicActions::~SchematicActions()
 	delete maDelete;
 	delete maInsertGround;
 	delete maInsertPort;
-	delete maMirrorX;
-	delete maMirrorY;
+	delete maMirrorXaxis;
+	delete maMirrorYaxis;
 	delete maRotate;
 	delete maSelect;
 	delete maWire;
@@ -1291,14 +1364,14 @@ void SchematicDoc::actionEditRotate(QAction* sender)
 
 void SchematicDoc::actionEditMirrorX(QAction* sender)
 { untested();
-  possiblyToggleAction(schematicActions().maMirrorX, sender);
+  possiblyToggleAction(schematicActions().maMirrorYaxis, sender);
 //  performToggleAction(on, App->editMirror, &SchematicDoc::mirrorXComponents,
 //		&MouseActions::MMoveMirrorX, &MouseActions::MPressMirrorX);
 }
 
 void SchematicDoc::actionEditMirrorY(QAction* sender)
 { untested();
-  possiblyToggleAction(schematicActions().maMirrorY, sender);
+  possiblyToggleAction(schematicActions().maMirrorXaxis, sender);
 //  performToggleAction(on, App->editMirrorY, &SchematicDoc::mirrorYComponents,
 //		&MouseActions::MMoveMirrorY, &MouseActions::MPressMirrorY);
 }
@@ -1322,7 +1395,7 @@ void SchematicDoc::actionSetWire(QAction* sender)
   possiblyToggleAction(schematicActions().maWire, sender);
 }
 
-void SchematicDoc::actionInsertLabel(QAction* sender)
+void SchematicDoc::actionInsertLabel(QAction*)
 { untested();
 //  possiblyToggleAction(schematicActions().maInsertLabel, sender);
   incomplete();
@@ -1394,7 +1467,7 @@ void SchematicDoc::actionInsertEquation(QAction*)
 #endif
 }
 
-void SchematicDoc::actionEditPaste(QAction* sender)
+void SchematicDoc::actionEditPaste(QAction*)
 { untested();
 #if 0
 	// if it's not a text doc, prevent the user from editing
@@ -1473,7 +1546,7 @@ void SchematicDoc::actionInsertGround(QAction* sender)
 #endif
 }
 
-void SchematicDoc::actionInsertPort(QAction* sender)
+void SchematicDoc::actionInsertPort(QAction*)
 { untested();
 #if 0
   App->hideEdit(); // disable text edit of component property
@@ -1508,7 +1581,8 @@ void SchematicDoc::actionInsertPort(QAction* sender)
 #endif
 }
 
-void SchematicDoc::actionEditUndo(QAction* sender)
+// is this still in use?
+void SchematicDoc::actionEditUndo(QAction*)
 { untested();
   // really?
   App->hideEdit(); // disable text edit of component property
@@ -1519,7 +1593,8 @@ void SchematicDoc::actionEditUndo(QAction* sender)
   setDrawn(false);
 }
 
-void SchematicDoc::actionEditRedo(QAction* sender)
+// is this still in use?
+void SchematicDoc::actionEditRedo(QAction*)
 { untested();
   App->hideEdit(); // disable text edit of component property
 
@@ -1580,8 +1655,9 @@ void SchematicDoc::actionChangeProps(QAction*)
 	}
 }
 
-void SchematicDoc::actionCursor(arrow_dir_t dir)
+void SchematicDoc::actionCursor(arrow_dir_t)
 { untested();
+	incomplete();
 #ifdef USE_SCROLLVIEW
 	int sign = 1;
 

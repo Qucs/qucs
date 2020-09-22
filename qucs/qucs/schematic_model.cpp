@@ -227,8 +227,8 @@ void SchematicModel::erase(Element* what)
 
 // TODO: take iterator.
 Element* SchematicModel::detach(Element* what)
-{ untested();
-	if(auto c=component(what)){ untested();
+{itested();
+	if(auto c=component(what)){itested();
 		disconnect(c);
 		components().removeRef(c);
 	}else if(auto d=diagram(what)){ untested();
@@ -245,8 +245,8 @@ Element* SchematicModel::detach(Element* what)
 }
 // TODO: take iterator.
 Element* SchematicModel::attach(Element* what)
-{ untested();
-	if(auto c=component(what)){ untested();
+{itested();
+	if(auto c=component(what)){itested();
 		connect(c);
 		components().append(c);
 	}else if(auto w=wire(what)){ untested();
@@ -567,9 +567,9 @@ void SchematicModel::detachFromNode(Element* what, Node* from)
 
 
 void SchematicModel::disconnect(Symbol* c)
-{ untested();
+{itested();
 	// drop port connections
-	for(unsigned i=0; i<c->numPorts(); ++i) { untested();
+	for(unsigned i=0; i<c->numPorts(); ++i) {itested();
 		trace1("sm:ds", i);
 		Node* nn = c->disconnectNode(i, nodes());
 		assert(nn);
@@ -581,7 +581,7 @@ void SchematicModel::disconnect(Symbol* c)
 		}else if(nn->connectionsCount()==2){ untested();
 			// done in GUI, must be undoable.
 			// oneTwoWires(nn);  // two wires -> one wire
-		}else{ untested();
+		}else{itested();
 		}
 	}
 }

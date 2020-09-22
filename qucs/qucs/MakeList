@@ -14,6 +14,7 @@ CPP_SRC = \
 	docfmt.h \
 	element.cpp \
 	element_graphics.cpp \
+	geometry.cpp \
 	ghostwire.cpp \
 	gatecomponent.cpp \
 	graph.cpp \

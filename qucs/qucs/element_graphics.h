@@ -21,24 +21,8 @@
 #define QUCS_ELEMENT_GFX_H
 
 #include <QEvent>
+#include "geometry.h"
 /*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-class angle_t{
-public:
-	angle_t(int d):_degrees(d){ }
-
-public:
-	angle_t operator-() const{
-		return angle_t(-_degrees);
-	}
-public:
-	int degrees_int() const{return _degrees;}
-	std::pair<int,int> apply(std::pair<int,int> const&) const;
-
-private:
-	int _degrees;
-};
-static const angle_t ninety_degree(90);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // A graphics element on the screen.
@@ -74,9 +58,8 @@ public:
 public: // manipulate (used in UndoCommands)
   void hide();
   void show();
-  void rotate(angle_t, std::pair<int, int> center=std::make_pair(0,0));
-  void mirrorX(int x);
-  void mirrorY(int y);
+  void rotate(angle_t, std::pair<int, int> pivot=std::make_pair(0,0));
+  void transform(rotate_after_mirror1_t, std::pair<int, int> pivot=std::make_pair(0,0));
   void snap();
 
 public:

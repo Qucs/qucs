@@ -1196,7 +1196,7 @@ void SchematicDoc::reloadGraphs()
 
 // Copy function, 
 void SchematicDoc::copy()
-{ untested();
+{itested();
   QString s = _model->createClipboardFile();
   QClipboard *cb = QApplication::clipboard();  // get system clipboard
   if (!s.isEmpty()) { untested();

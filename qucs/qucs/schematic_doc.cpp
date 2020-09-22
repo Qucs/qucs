@@ -263,7 +263,7 @@ void SchematicDoc::insertComponent(Component *c)
 
 // -----------------------------------------------------------
 QPoint SchematicDoc::setOnGrid(int x, int y) const
-{ untested();
+{itested();
   qDebug() << "setongrid in" << x << y;
   if(x<0) x -= (GridX >> 1) - 1;
   else x += GridX >> 1;
@@ -425,10 +425,10 @@ float SchematicDoc::zoom(float)
 
 // why is this here and not in SchematicScene?
 void SchematicDoc::mouseMoveEvent(QMouseEvent *e)
-{ itested();
+{itested();
   assert(e);
   if(e->isAccepted()){ itested();
-  }else{ itested();
+  }else{itested();
 	  auto ee = snapToGrid(e);
 
 	  // move actions go through here.
@@ -775,7 +775,7 @@ void SchematicDoc::sceneRemoveItem(ElementGraphics* x)
 
 // questionable.
 ElementGraphics& SchematicDoc::addToScene(Element* x)
-{ itested();
+{itested();
   auto i=new ElementGraphics(x);
   scene()->addItem(i);
   return *i;

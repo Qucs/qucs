@@ -27,7 +27,7 @@
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 ElementGraphics::ElementGraphics() : QGraphicsItem()
-{
+{ untested();
 	unreachable();
 }
 /*--------------------------------------------------------------------------*/
@@ -42,18 +42,18 @@ ElementGraphics::ElementGraphics(ElementGraphics const& e)
 /*--------------------------------------------------------------------------*/
 ElementGraphics::ElementGraphics(Element* e)
 	: QGraphicsItem(), _e(nullptr)
-{
+{itested();
 	assert(e);
 	attachElement(e);
 }
 /*--------------------------------------------------------------------------*/
 ElementGraphics* ElementGraphics::clone() const
-{
+{ untested();
 	return new ElementGraphics(*this);
 }
 /*--------------------------------------------------------------------------*/
 ElementGraphics::~ElementGraphics()
-{
+{itested();
 	if(isVisible()){itested();
 		// element is owned by SchematicModel.
 	}else{ untested();
@@ -76,18 +76,18 @@ void ElementGraphics::attachElement(Element* e)
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*)
-{
+{itested();
 	assert(_e);
 	assert(painter);
 	ViewPainter v(painter);
 
 	auto br = boundingRect();
 
-	if(isSelected()){
+	if(isSelected()){itested();
 		// painter->fillRect(br, QColor("grey"));
 		painter->setPen(QPen(Qt::darkGray,3));
 		painter->drawRoundRect(br);
-	}else{
+	}else{itested();
 		// debug.
 		// painter->fillRect(br, QColor("white"));
 		painter->setPen(QPen(Qt::yellow,3));
@@ -97,32 +97,10 @@ void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, 
 	_e->paint(&v);
 }
 /*--------------------------------------------------------------------------*/
-// not here.
-inline int dsin(int angle)
-{
-	int d = angle%2;
-	d *= 1-2*(angle/2);
-	return d;
-}
-inline int dcos(int angle)
-{
-	return dsin(angle-1);
-}
-inline std::pair<int, int> angle_t::apply(std::pair<int, int> const& p) const
-{
-	assert(! (_degrees%90) ); //for now
-	int a = _degrees/90;
-	int s = dsin(a);
-	int c = dcos(a);
-
-	int rx =  c*p.first - s*p.second;
-	int ry =  s*p.first + c*p.second;
-	return std::make_pair(rx, ry);
-}
 /*--------------------------------------------------------------------------*/
-// rotate around pivot (in global coordinates).
+// rotate around pivot (in global coordinates). obsolete.
 void ElementGraphics::rotate(angle_t a, std::pair<int, int> pivot)
-{
+{ untested();
 	assert(_e);
 	if(auto s=dynamic_cast<Wire*>(_e)){ untested();
 		trace0("start wire rotate");
@@ -133,12 +111,15 @@ void ElementGraphics::rotate(angle_t a, std::pair<int, int> pivot)
 	}else if(auto* s=dynamic_cast<Symbol*>(_e)){ untested();
 		bool sel = isSelected();
 		hide();
-		std::string rs=s->getParameter("rotated");
-		unsigned r = atoi(rs.c_str());
-		assert(r<4); // yikes //
-		r += a.degrees_int()/90;
-		r %= 4;
-		s->setParameter("rotated", std::to_string(r));
+		std::string rs = s->getParameter("$angle");
+		int r = atoi(rs.c_str());
+		assert(!(r%90));
+		assert(!(a.degrees_int()%90));
+		r += a.degrees_int();
+		assert(!(r%90));
+		r += 360;
+		r %= 360;
+		s->setParameter("$angle", std::to_string(r));
 
 		auto p = pos();
 		int x = getX(p.toPoint());
@@ -164,11 +145,93 @@ void ElementGraphics::rotate(angle_t a, std::pair<int, int> pivot)
 		x = pivot.first + new_xy.first;
 		y = pivot.second + new_xy.second;
 
-		setPos(x,y);
+		setPos(x, y);
 		show();
 		setSelected(sel);
-	}else{
+	}else{ untested();
 	}
+}
+/*--------------------------------------------------------------------------*/
+// transform around pivot (in global coordinates).
+void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot)
+{itested();
+	trace1("..", a.degrees_int());
+	assert(!(a.degrees_int()%90));
+	assert(_e);
+	bool sel = isSelected();
+	if(auto s=dynamic_cast<Wire*>(_e)){ untested();
+		incomplete();
+	}else if(auto* s=dynamic_cast<Symbol*>(_e)){itested();
+		hide();
+		int mx = 0;
+		int my = 0;
+		unsigned r = 0;
+		try {itested();
+			std::string mxs = s->getParameter("$hflip"); // indicates if x axis is mirrored
+			mx = atoi(mxs.c_str()); // \pm 1
+			trace3("hflip", mx, my, r);
+			assert(mx == 1);
+			mx -= 1;
+			mx /= -2;
+		}catch(ExceptionCantFind const&){ untested();
+		}
+		try {itested();
+			std::string mys = s->getParameter("$vflip"); // indicates if y axis is mirrored
+			my = atoi(mys.c_str());
+			my -= 1;
+			my /= -2;
+		}catch(ExceptionCantFind const&){ untested();
+		}
+		try {itested();
+			std::string rs = s->getParameter("$angle");
+			r = atoi(rs.c_str());
+			assert(!(r%90));
+			r /= 90;
+		}catch(ExceptionCantFind const&){ untested();
+		}
+
+		trace3("stuff", mx, my, r);
+
+		assert(mx==0 || mx==1);
+		assert(my==0 || my==1);
+		assert(r < 4); // yikes //
+
+		assert(!mx); // for now.
+
+		rotate_after_mirror1_t current(int(r*90), bool(my));
+		assert(!(current.degrees_int()%90));
+		rotate_after_mirror1_t new_mr = a * current;
+		assert(!(new_mr.degrees_int()%90));
+
+		auto vflip = -2 * int(new_mr.mirror()) + 1;
+		trace2("transform", vflip, new_mr.mirror());
+
+		s->setParameter(std::string("$hflip"), std::string("1"));
+		s->setParameter(std::string("$vflip"), std::to_string(vflip));
+		s->setParameter(std::string("$angle"), std::to_string(new_mr.degrees_int()));
+
+		auto p = pos();
+		int x = getX(p.toPoint());
+		int y = getY(p.toPoint());
+
+		// c = (x,y);
+		trace4("DBG", x,y,pivot.first,pivot.second);
+		x -= pivot.first;
+		y -= pivot.second;
+
+		auto new_xy = std::make_pair(x,y);
+		trace1("DBG", new_xy);
+		new_xy = a.apply(new_xy);
+		trace2("DBG post", new_xy, a.degrees_int());
+
+		x = pivot.first + new_xy.first;
+		y = pivot.second + new_xy.second;
+
+		setPos(x, y);
+		show();
+	}else{ untested();
+	}
+	setSelected(sel);
 }
 /*--------------------------------------------------------------------------*/
 QRectF ElementGraphics::boundingRect() const
@@ -178,7 +241,7 @@ QRectF ElementGraphics::boundingRect() const
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::setSelected(bool s)
-{
+{itested();
 	qDebug() << "setSeletected" << s << this;
 	QGraphicsItem::setSelected(s);
 	assert(QGraphicsItem::isSelected()==s);
@@ -190,12 +253,12 @@ void ElementGraphics::setSelected(bool s)
 // the specialized event handlers. should return true if the event e was
 // recognized and processed.
 bool ElementGraphics::sceneEvent(QEvent* e)
-{
-	if(e->type() == QEvent::WindowActivate){
-	}else if(e->type() == QEvent::WindowDeactivate){
-	}else if(!e->isAccepted()){
+{itested();
+	if(e->type() == QEvent::WindowActivate){itested();
+	}else if(e->type() == QEvent::WindowDeactivate){itested();
+	}else if(!e->isAccepted()){itested();
 		// possibly set in filter?
-	}else{
+	}else{itested();
 		unreachable();
 		// strange.
 		trace1("ElementGraphics::sceneEvent already accepted", e->type());
@@ -211,23 +274,23 @@ bool ElementGraphics::sceneEvent(QEvent* e)
 		bool acc = e->isAccepted();
 		trace1("ElementGraphics::sceneEvent itemEvent", acc);
 		if(acc){ itested();
-		}else{
+		}else{ untested();
 			// what's the difference between "acc" and the condition above?!
 			unreachable();
 		}
 		return acc;
-	}else if(QGraphicsItem::sceneEvent(e)){ itested();
+	}else if(QGraphicsItem::sceneEvent(e)){itested();
 		trace1("ElementGraphics::sceneEvent fwd", e->type());
 		return e->isAccepted();
-	}else{ untested();
+	}else{itested();
 		return false;
 		return e->isAccepted();
 	}
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::show()
-{
-	if(_e->scope()){ untested();
+{itested();
+	if(_e->scope()){itested();
 		_e->attachToModel();
 	}else{ untested();
 	}
@@ -235,19 +298,19 @@ void ElementGraphics::show()
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::hide()
-{ untested();
+{itested();
 	assert(_e);
 	QGraphicsItem::hide();
 
-	if(_e->scope()){
+	if(_e->scope()){itested();
 		_e->detachFromModel();
-	}else{
+	}else{ untested();
 	}
 }
 /*--------------------------------------------------------------------------*/
 template<class P>
 void ElementGraphics::moveElement(P const& delta)
-{
+{ untested();
 	assert(_e);
 	int dx = getX(delta);
 	int dy = getY(delta);
@@ -260,7 +323,7 @@ void ElementGraphics::moveElement(P const& delta)
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::setPos(int i, int j, bool relative)
-{
+{itested();
 	assert(!relative); // use move, for now.
 	// prepareGeometryChange();
 	QGraphicsItem::setPos(i, j);

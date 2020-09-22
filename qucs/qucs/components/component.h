@@ -104,11 +104,13 @@ private:
 
 protected:
   void set_rotated(unsigned r);
+  void set_mirror_xaxis(unsigned r);
+  void set_mirror_yaxis(unsigned r);
 
 public: // BUG
   unsigned rotated() const{return _rotated;}
-  void    mirrorX();  // mirror about X axis
-  void    mirrorY();  // mirror about Y axis
+  void    mirrorX();  // mirror Y axis
+  void    mirrorY();  // mirror X axis
   bool    load(const QString&);
 
   // to hold track of the component appearance for saving and copying
