@@ -1,6 +1,4 @@
 /***************************************************************************
-                               subcirport.cpp
-                              ----------------
     copyright            : (C) 2003 by Michael Margraf
                                2020 Felix Salfelder
  ***************************************************************************/
@@ -19,13 +17,23 @@
 #include "globals.h"
 #include "module.h"
 
-
 namespace{
-class SubCirPort : public MultiViewComponent  {
+class SubCirPort : public Component  {
+private:
+  SubCirPort(SubCirPort const& p)
+	  : Component(p){
+
+		 // BUG: do in Component??
+		 // (this does not work either way)
+		  for(auto i : p.Lines){ untested();
+			 Lines.append(new Line(*i));
+		  }
+	  }
 public:
   SubCirPort();
  ~SubCirPort() {};
-  Component* newOne() {return new SubCirPort(*this);}
+  Component* newOne() {untested(); return new SubCirPort(*this);}
+  Element* clone() const {untested(); return new SubCirPort(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 
 private:
@@ -43,7 +51,7 @@ protected:
 Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Port", &D);
 Module::INSTALL pp("lumped", &D);
 
-SubCirPort::SubCirPort()
+SubCirPort::SubCirPort() : Component()
 {
   info(Name, bitmap_file);
   Type = isComponent;   // both analog and digital
@@ -101,11 +109,10 @@ void SubCirPort::createSymbol()
   x1 = -27; y1 = -8;
   x2 =   0; y2 =  8;
 
-  if(Props.at(1)->Value.at(0) == 'a') {
+  if(Props.at(1)->Value.at(0) == 'a') { untested();
     Arcs.append(new Arc(-25, -6, 12, 12,  0, 16*360,QPen(Qt::darkBlue,2)));
     Lines.append(new Line(-13,  0,  0,  0,QPen(Qt::darkBlue,2)));
-  }
-  else { untested();
+  }else{ untested();
     Lines.append(new Line( -9,  0,  0,  0,QPen(Qt::darkBlue,2)));
     if(Props.at(1)->Value == "out") { untested();
       Lines.append(new Line(-20, -5,-25,  0,QPen(Qt::red,2)));
@@ -113,16 +120,14 @@ void SubCirPort::createSymbol()
       Lines.append(new Line(-20, -5, -9, -5,QPen(Qt::red,2)));
       Lines.append(new Line(-20,  5, -9,  5,QPen(Qt::red,2)));
       Lines.append(new Line( -9, -5, -9,  5,QPen(Qt::red,2)));
-    }
-    else { untested();
+    }else{ untested();
       Lines.append(new Line(-14, -5, -9,  0,QPen(Qt::darkGreen,2)));
       Lines.append(new Line(-14,  5, -9,  0,QPen(Qt::darkGreen,2)));
       if(Props.at(1)->Value == "in") { untested();
         Lines.append(new Line(-25, -5,-14, -5,QPen(Qt::darkGreen,2)));
         Lines.append(new Line(-25,  5,-14,  5,QPen(Qt::darkGreen,2)));
         Lines.append(new Line(-25, -5,-25,  5,QPen(Qt::darkGreen,2)));
-      }
-      else { untested();
+      }else{ untested();
         x1 = -30;
         Lines.append(new Line(-18, -5,-14, -5,QPen(Qt::darkGreen,2)));
         Lines.append(new Line(-18,  5,-14,  5,QPen(Qt::darkGreen,2)));
@@ -162,6 +167,7 @@ void SubCirPort::setParameter(unsigned n, std::string const& vv)
 // -------------------------------------------------------
 Element* SubCirPort::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
+	unreachable();
   Name = QObject::tr("Subcircuit Port");
   BitmapFile = (char *) "subport";
 
@@ -196,4 +202,4 @@ QString SubCirPort::verilogCode(int)
 { untested();
   return QString("");
 }
-}
+} // namespace

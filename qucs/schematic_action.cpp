@@ -145,7 +145,7 @@ private: // override
 	cmd* press(QEvent*) override;
 	cmd* move(QEvent*) override;
 	cmd* release(QMouseEvent*) override;
-	cmd* activate(QAction* sender) override;
+	cmd* activate(QObject* sender) override;
 	cmd* deactivate() override;
 
 private: // legacy code
@@ -178,7 +178,7 @@ private:
 };
 /*--------------------------------------------------------------------------*/
 extern QCursor& crosshair();
-QUndoCommand* MouseActionWire::activate(QAction* sender)
+QUndoCommand* MouseActionWire::activate(QObject* sender)
 { untested();
 	assert(!_gfx.size());
 	new_gfx();
@@ -506,7 +506,7 @@ public:
 		: MouseAction(ctx){}
 
 private:
-	cmd* activate(QAction* sender) override;
+	cmd* activate(QObject* sender) override;
 	cmd* deactivate() override;
 //	cmd* move(QEvent*) override;
 	cmd* press(QEvent*) override;
@@ -524,7 +524,7 @@ QUndoCommand* MouseActionSelCmd<CMD>::deactivate()
 }
 /*--------------------------------------------------------------------------*/
 template<class CMD>
-QUndoCommand* MouseActionSelCmd<CMD>::activate(QAction *sender)
+QUndoCommand* MouseActionSelCmd<CMD>::activate(QObject* sender)
 {itested();
 	MouseAction::activate(sender); // ...
 
@@ -607,47 +607,6 @@ private:
 typedef MouseActionSelCmd<DeleteSelection> MouseActionDelete;
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-class RotateSelection : public QUndoCommand {
-public:
-	template<class IT>
-	RotateSelection(SchematicDoc& ctx, IT selection)
-	: _ctx(ctx){ untested();
-		size_t k = 0;
-		_pivot_g.first = _pivot_g.second = 0; //?
-		for(auto i : selection){ untested();
-			++k;
-			if(auto eg=dynamic_cast<ElementGraphics*>(i)){ untested();
-				assert(eg);
-				_pivot_g.first += getX(eg->pos());
-				_pivot_g.second += getY(eg->pos());
-				_gfx.push_back(eg);
-			}else{ untested();
-				unreachable(); // really? use prechecked_cast then.
-			}
-		}
-		_pivot_g.first /= k;
-		_pivot_g.second /= k;
-		//_pivot_g.first = 0;
-		//_pivot_g.second = 0;
-		setText("rotate " + QString::number(k) + " items");
-	}
-	void undo() override { untested();
-		for(auto& d : _gfx){ untested();
-			d->rotate(-ninety_degree, _pivot_g);
-		}
-	}
-	void redo() override { untested();
-		trace1("redo", _gfx.size());
-		for(auto& d : _gfx){ untested();
-			d->rotate(ninety_degree, _pivot_g);
-		}
-	}
-private:
-    SchematicDoc& _ctx;
-    std::vector<ElementGraphics*> _gfx;
-	 std::pair<int, int> _pivot_g; // pivot in global coordinates
-}; // RotateSelection
-/*--------------------------------------------------------------------------*/
 template<class T>
 class TransformSelection : public QUndoCommand {
 public:
@@ -655,6 +614,7 @@ public:
 	TransformSelection(SchematicDoc& ctx, IT selection, T const& transform)
 	: _ctx(ctx), _t(transform){itested();
 		size_t k = 0;
+		// TODO: bounding box center?
 		_pivot_g.first = _pivot_g.second = 0; //?
 		for(auto i : selection){itested();
 			++k;
@@ -669,19 +629,15 @@ public:
 		}
 		_pivot_g.first /= k;
 		_pivot_g.second /= k;
-		//_pivot_g.first = 0;
-		//_pivot_g.second = 0;
-		setText("rotate " + QString::number(k) + " items");
+		setText("transform " + QString::number(k) + " items");
 	}
 	void undo() override { untested();
 		auto t = _t.inverse();
-		trace1("..", t.degrees_int());
 		for(auto& d : _gfx){ untested();
 			d->transform(t, _pivot_g);
 		}
 	}
 	void redo() override {itested();
-		trace2("redo", _gfx.size(), _t.degrees_int());
 		for(auto& d : _gfx){itested();
 			d->transform(_t, _pivot_g);
 		}
@@ -693,8 +649,7 @@ private:
 	 T const& _t;
 }; // TransformSelection
 /*--------------------------------------------------------------------------*/
-//class RotateSelection : public TransformSelection<qucsSymbolTransform> // TODO
-static const rotate_after_mirror1_t ninety_degree_transform(90, false);
+static const rotate_after_mirror1_t ninety_degree_transform(270, false); // !!
 class RotateSelectionTransform : public TransformSelection<qucsSymbolTransform>{
 	typedef TransformSelection<qucsSymbolTransform> base;
 public:
@@ -720,18 +675,18 @@ public:
 };
 /*--------------------------------------------------------------------------*/
 typedef MouseActionSelCmd<DeleteSelection> MouseActionDelete;
-typedef MouseActionSelCmd<RotateSelection> MouseActionActivate; // TODO
-// typedef MouseActionSelCmd<RotateSelectionTransform> MouseActionRotate;
-typedef MouseActionSelCmd<RotateSelection> MouseActionRotate;
+typedef MouseActionSelCmd<DeleteSelection> MouseActionActivate; // TODO
+typedef MouseActionSelCmd<RotateSelectionTransform> MouseActionRotate;
 typedef MouseActionSelCmd<MirrorXaxisSelection> MouseActionMirrorXaxis;
 typedef MouseActionSelCmd<MirrorYaxisSelection> MouseActionMirrorYaxis;
 /*--------------------------------------------------------------------------*/
 class MouseActionNewElement : public MouseAction{
 public:
-	explicit MouseActionNewElement(MouseActions& ctx)
-		: MouseAction(ctx), _gfx(nullptr) {}
+	explicit MouseActionNewElement(MouseActions& ctx, Element const* proto=nullptr)
+		: MouseAction(ctx), _gfx(nullptr), _proto(proto)
+  	{}
 private:
-//	cmd* activate(QAction* sender) override;
+	cmd* activate(QObject* sender) override;
 	cmd* deactivate() override;
 	cmd* move(QEvent*) override;
 	cmd* press(QEvent*) override;
@@ -744,8 +699,8 @@ private:
 	cmd* rotate(QEvent*);
 
 private:
-	Element* _proto;
 	ElementGraphics* _gfx;
+	Element const* _proto;
 };
 /*--------------------------------------------------------------------------*/
 class NewElementCommand : public QUndoCommand {
@@ -774,6 +729,16 @@ private:
     ElementGraphics* _gfx;
 	 bool _done;
 }; // NewElementCommand
+/*--------------------------------------------------------------------------*/
+#include <component_widget.h> // not here.
+QUndoCommand* MouseActionNewElement::activate(QObject* sender)
+{
+	if(auto s=dynamic_cast<ComponentListWidgetItem*>(sender)){
+		_proto = s->proto(); // better clone?
+	}else{
+	}
+	return MouseAction::activate(sender);
+}
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionNewElement::release(QMouseEvent* ev)
 { untested();
@@ -855,16 +820,13 @@ QUndoCommand* MouseActionNewElement::enter(QEvent* ev)
 	
 	auto wp = ee->localPos();
 
-	// not here.
-	Element const* s=symbol_dispatcher["GND"];
-	assert(s);
-
 	SchematicDoc* d = &doc();
 	auto sp = d->mapToScene(wp.toPoint());
 
 	Element* elt;
 	if(!_gfx){ untested();
-		elt = s->clone();
+		assert(_proto);
+		elt = _proto->clone();
 		elt->setCenter(sp.x(), sp.y());
 		_gfx = new ElementGraphics(elt); // BUG
 	}else{ untested();
@@ -1273,8 +1235,15 @@ SchematicActions::SchematicActions(SchematicDoc& ctx)
 //	maZoomOut = new MouseActionZoomOut(*this); // not a mouseaction.
 
 	//  maMove = new MouseActionMove(*this);
-	maInsertGround = new MouseActionNewElement(*this);
-	maInsertPort = new MouseActionNewElement(*this);
+	Element const* gnd = symbol_dispatcher["GND"];
+	assert(gnd);
+	maInsertGround = new MouseActionNewElement(*this, gnd);
+
+	Element const* port = symbol_dispatcher["Port"];
+	assert(port);
+	maInsertPort = new MouseActionNewElement(*this, port);
+
+	maInsertElement = new MouseActionNewElement(*this);
 
 	maActivate = new MouseActionActivate(*this);
 	maMirrorXaxis = new MouseActionMirrorXaxis(*this);
@@ -1508,6 +1477,12 @@ void SchematicDoc::actionEditPaste(QAction*)
 #endif
 }
 
+void SchematicDoc::actionSelectElement(QObject*e)
+{ untested();
+  schematicActions().maInsertElement->activate(e);
+  possiblyToggleAction(schematicActions().maInsertElement, nullptr);
+}
+
 void SchematicDoc::actionInsertGround(QAction* sender)
 { untested();
   possiblyToggleAction(schematicActions().maInsertGround, sender);
@@ -1546,8 +1521,9 @@ void SchematicDoc::actionInsertGround(QAction* sender)
 #endif
 }
 
-void SchematicDoc::actionInsertPort(QAction*)
+void SchematicDoc::actionInsertPort(QAction* sender)
 { untested();
+  possiblyToggleAction(schematicActions().maInsertPort, sender);
 #if 0
   App->hideEdit(); // disable text edit of component property
   App->MouseReleaseAction = 0;

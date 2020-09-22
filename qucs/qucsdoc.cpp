@@ -140,8 +140,10 @@ void QucsDoc::possiblyToggleAction(MouseAction* a, QAction* sender)
 {
 	QUndoCommand* cmd = nullptr;
 	assert(a);
-	if(!sender){
-		unreachable();
+	if(!sender){ untested();
+		setActiveAction(nullptr);
+		// cmd = a->activate(sender);
+		setActiveAction(a);
 	}else if(!sender->isCheckable()){ untested();
 		cmd = a->activate(sender);
 	}else if(sender->isChecked()){itested();

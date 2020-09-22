@@ -34,6 +34,7 @@ class MouseActions;
 class MouseAction;
 class QUndoStack;
 class QUndoCommand;
+class Element;
 
 class QucsDoc {
 protected:
@@ -121,6 +122,7 @@ public: // actions: These somehow correspond to buttons.
 	virtual void actionSetMarker(QAction*) {unreachable();}
 	virtual void actionMoveText(QAction*) {unreachable();}
 	virtual void actionZoomIn(QAction*) = 0;
+	virtual void actionSelectElement(QObject*) {untested(); }
 
 	void uncheckActive();
 

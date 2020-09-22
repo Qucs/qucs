@@ -612,6 +612,7 @@ private: // QucsDoc overrides, schematic_action.cpp
   void actionMoveText(QAction*) override;
   void actionZoomIn(QAction*) override;
   void actionExportGraphAsCsv(); // BUG
+  void actionSelectElement(QObject*) override;
 
 public:
 	bool handleMouseActions(QEvent* e);

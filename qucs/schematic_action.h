@@ -42,6 +42,7 @@ public: // actions... private?
 	MouseAction* maMirrorXaxis;
 	MouseAction* maMirrorYaxis;
 	MouseAction* maInsertGround;
+	MouseAction* maInsertElement;
 	MouseAction* maInsertPort;
 	MouseAction* maZoomIn;
 	// MouseAction* maZoomOut; // not a mouseaction

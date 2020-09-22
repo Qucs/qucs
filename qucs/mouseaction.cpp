@@ -121,9 +121,9 @@ void MouseActions::updateViewport()
   }
 }
 
-QUndoCommand* MouseAction::activate(QAction* sender)
+QUndoCommand* MouseAction::activate(QObject* sender)
 {itested();
-  _sender = sender;
+  _sender = dynamic_cast<QAction*>(sender);
   return nullptr;
 }
 

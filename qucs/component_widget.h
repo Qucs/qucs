@@ -18,14 +18,15 @@ public:
 };
 
 class Element;
-class ComponentListWidgetItem : public QListWidgetItem{
+class ComponentListWidgetItem : public QListWidgetItem, public QObject{
 public:
-	explicit ComponentListWidgetItem() : _e(nullptr) {};
+	explicit ComponentListWidgetItem() : QListWidgetItem(), QObject(), _e(nullptr) {};
 	ComponentListWidgetItem(Element const* e);
 	ComponentListWidgetItem(ComponentListWidgetItem const&) = delete;
 
 public:
 	Element* cloneElement() const;
+	Element const* proto() const;
 
 public:
 	QDataStream & dump(QDataStream &x) const;

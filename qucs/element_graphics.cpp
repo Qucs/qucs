@@ -214,15 +214,11 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 		int x = getX(p.toPoint());
 		int y = getY(p.toPoint());
 
-		// c = (x,y);
-		trace4("DBG", x,y,pivot.first,pivot.second);
 		x -= pivot.first;
 		y -= pivot.second;
 
 		auto new_xy = std::make_pair(x,y);
-		trace1("DBG", new_xy);
 		new_xy = a.apply(new_xy);
-		trace2("DBG post", new_xy, a.degrees_int());
 
 		x = pivot.first + new_xy.first;
 		y = pivot.second + new_xy.second;
