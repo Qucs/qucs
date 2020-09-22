@@ -756,7 +756,7 @@ void MouseActions::MMoveRotate(SchematicDoc *Doc, QMouseEvent *Event)
 // this is probably not needed.
 bool MouseActions::eventFilter(QObject *obj, QEvent *e)
 {
-  if(e->isAccepted()){ itested();
+  if(e->isAccepted()){itested();
   }else{itested();
     // drop event?
   }
@@ -1405,7 +1405,7 @@ void MouseActions::MPressMoveText(SchematicDoc *Doc, QMouseEvent* Event)
 }
 
 // -----------------------------------------------------------
-void MouseActions::MPressZoomIn(SchematicDoc *Doc, QMouseEvent* Event)
+void MouseActions::MPressZoomIn(SchematicDoc *, QMouseEvent* )
 { untested();
   unreachable();
 #if 0
@@ -2002,9 +2002,9 @@ QucsDoc& MouseActions::doc()
 // TODO: move to schematic_doc or _scene
 // what does it return?
 bool MouseActions::handle(QEvent*e)
-{ itested();
+{itested();
   QUndoCommand* c=nullptr;
-  if(_maCurrent){ itested();
+  if(_maCurrent){itested();
     c = _maCurrent->handle(e);
   }else{
   }
@@ -2024,7 +2024,7 @@ void MouseActions::executeCommand(QUndoCommand* c)
   assert(c);
   QUndoStack* u = _doc.undoStack();
 
-  if(u){ untested();
+  if(u){itested();
     u->push(c); // also calls redo
 
     // train wreck. must be part of push. fix later.

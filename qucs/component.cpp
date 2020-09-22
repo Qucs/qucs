@@ -155,7 +155,7 @@ void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2, float Corr)
 // "center" is the position
 // move to Element?
 void Component::setCenter(int x, int y, bool relative)
-{ untested();
+{itested();
 #if 0 // does not make sense.
   if(scope()){ untested();
     scope()->disconnect(this);
@@ -166,7 +166,7 @@ void Component::setCenter(int x, int y, bool relative)
   if(relative) { untested();
     Element::cx += x;
     Element::cy += y;
-  } else { untested();
+  } else {itested();
     Element::cx = x;
     Element::cy = y;
   }
@@ -485,7 +485,7 @@ void Component::rotate()
 
   // rotate all text
   float ftmp;
-  foreach(Text *pt, Texts) { untested();
+  foreach(Text *pt, Texts) {itested();
     tmp = -pt->x;
     pt->x = pt->y;
     pt->y = tmp;
@@ -533,11 +533,27 @@ void Component::setParameter(unsigned pos, std::string const& v)
 
 // -------------------------------------------------------
 void Component::setParameter(std::string const& name, std::string const& v)
-{ untested();
-  if(name=="rotated"){ untested();
-    unsigned r = atoi(v.c_str());
+{itested();
+  if(name=="$angle"){itested();
+    int r = atoi(v.c_str());
+    trace3("Component::setParameter", name, v, label());
+    assert(!(r % 90)); // for now.
+    r /= 90;
     r %= 4;
     set_rotated(r);
+  }else if(name=="$vflip"){itested();
+    int r = atoi(v.c_str());
+    assert(r==1 || r==-1);
+    r -= 1;
+    r /= -2;
+    set_mirror_yaxis(r);
+  }else if(name=="$hflip"){itested();
+    unsigned r = atoi(v.c_str());
+    assert(r==1 || r==-1);
+    assert(r==1); // for now;
+    r -= 1;
+    r /= -2;
+    set_mirror_xaxis(r);
   }else if(name=="$xposition"){ untested();
     int x = atoi(v.c_str());
     auto c = center();
@@ -555,13 +571,19 @@ void Component::setParameter(std::string const& name, std::string const& v)
 
 // -------------------------------------------------------
 std::string Component::getParameter(std::string const& name)
-{ untested();
-  if(name=="rotated"){ untested();
-    return std::to_string(_rotated);
+{itested();
+  if(name=="$angle"){itested();
+    trace1("Component::getParameter", _rotated);
+    return std::to_string(_rotated*90);
   }else if(name=="$xposition"){ untested();
     return std::to_string(center().first);
   }else if(name=="$yposition"){ untested();
     return std::to_string(center().second);
+  }else if(name=="$vflip"){itested();
+    int m = mirroredX * 2 - 1;
+    return std::to_string(m);
+  }else if(name=="$hflip"){itested();
+    return "1";
   }else{ untested();
     return Symbol::getParameter(name);
   }
@@ -581,6 +603,30 @@ void Component::set_rotated(unsigned r)
   trace3("Component::set_rotated", label(), r, _rotated);
 }
 
+// -------------------------------------------------------
+void Component::set_mirror_yaxis(unsigned x)
+{
+  auto rot_bak = rotated();
+  if(x != mirroredX){
+    mirrorX(); // sic.
+  }else{
+    assert(x==0);
+  }
+
+  set_rotated(rot_bak);
+}
+// -------------------------------------------------------
+void Component::set_mirror_xaxis(unsigned x)
+{
+  auto rot_bak = rotated();
+  if(x != mirroredX){
+    mirrorY(); // six.
+  }else{
+    assert(x==0);
+  }
+
+  set_rotated(rot_bak);
+}
 // -------------------------------------------------------
 // Mirrors the component about the x-axis.
 // BUG? mirrors the Y axis.
@@ -620,7 +666,7 @@ void Component::mirrorX()
 
 //  QFont f = QucsSettings.font;
   // mirror all text
-  foreach(Text *pt, Texts) { untested();
+  foreach(Text *pt, Texts) {itested();
 //    f.setPointSizeF(pt->Size);
     // use the screen-compatible metric
     FontMetrics smallMetrics;
@@ -642,15 +688,22 @@ void Component::mirrorX()
   else ty = y1+ty+y2;
 
   mirroredX = !mirroredX;    // keep track of what's done
+
+  // 0 |-> 0
+  // 1 |-> 3
+  // 2 |-> 2
+  // 3 |-> 1
+
   _rotated += _rotated << 1;
   _rotated &= 3;
 }
 
 // -------------------------------------------------------
-// Mirrors the component about the y-axis.
+// Mirrors the component x axis
 void Component::mirrorY()
 {
   // Port count only available after recreate, createSymbol
+  // BUG.
   if ((Model != "Sub") && (Model !="VHDL") && (Model != "Verilog")) // skip port count
     if(Ports.count() < 1) return;  // do not rotate components without ports
 
@@ -683,7 +736,7 @@ void Component::mirrorY()
   int tmp;
   QFont f = QucsSettings.font;
   // mirror all text
-  foreach(Text *pt, Texts) { untested();
+  foreach(Text *pt, Texts) {itested();
     f.setPointSizeF(pt->Size);
     // use the screen-compatible metric
     FontMetrics smallMetrics;
@@ -1218,7 +1271,7 @@ void MultiViewComponent::recreate()
     if(mmir){
       mirrorX();
     }
-    if (rrot){ untested();
+    if (rrot){itested();
       set_rotated( rrot%4 );
     }else{
     }

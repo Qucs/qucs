@@ -1432,12 +1432,12 @@ bool QucsApp::gotoPage(const QString& Name)
   if(Info.suffix() == "sch" || Info.suffix() == "dpl" ||
      Info.suffix() == "sym") {itested();
     d = DocumentTab->createEmptySchematic(Name);
-  } else { untested();
+  } else {itested();
     d = DocumentTab->createEmptyTextDoc(Name);
   }
 
      // load document if possible
-  if(!d->load()) { untested();
+  if(!d->load()) {itested();
     delete d;
     DocumentTab->setCurrentIndex(No);
     // view->drawn = false;

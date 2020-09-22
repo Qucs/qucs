@@ -147,7 +147,7 @@ void QucsDoc::possiblyToggleAction(MouseAction* a, QAction* sender)
 	}else if(sender->isChecked()){itested();
 		cmd = a->activate(sender);
 
-		if(cmd){ untested();
+		if(cmd){itested();
 			sender->blockSignals(true);
 			sender->setChecked(false);
 			sender->blockSignals(false);
@@ -162,7 +162,7 @@ void QucsDoc::possiblyToggleAction(MouseAction* a, QAction* sender)
 		setActiveAction(nullptr);
 	}
 
-	if(cmd){ untested();
+	if(cmd){itested();
 		executeCommand(cmd);
 	}else{itested();
 	}
@@ -187,7 +187,7 @@ MouseAction const* QucsDoc::activeAction() const
 
 void QucsDoc::executeCommand(QUndoCommand* c)
 {
-	if(mouseActions()){ untested();
+	if(mouseActions()){itested();
 		mouseActions()->executeCommand(c);
 	}else{
 	}
