@@ -10,7 +10,7 @@
 #include <QStringLiteral> //bug
 #include <QMimeData> //bug
 QUndoCommand* MouseAction::handle(QEvent* e)
-{ itested();
+{itested();
 
   {
     // pass to other places unless accepted somewhere else.
@@ -19,10 +19,10 @@ QUndoCommand* MouseAction::handle(QEvent* e)
   }
   assert(e);
   auto* m = prechecked_cast<QMouseEvent*>(e);
-  auto* s = prechecked_cast<QGraphicsSceneEvent*>(e);
+//  auto* s = prechecked_cast<QGraphicsSceneEvent*>(e);
   auto a = ComponentWidget::itemMimeType();
 
-  if(auto de=dynamic_cast<QDragLeaveEvent*>(e)){ untested();
+  if(dynamic_cast<QDragLeaveEvent*>(e)){ untested();
     unreachable();
     return leave(m);
   }else if(auto de = dynamic_cast<QDragEnterEvent*>(e)){ untested();
@@ -65,20 +65,21 @@ QUndoCommand* MouseAction::handle(QEvent* e)
     // getting here when moving elements.
   case QEvent::MouseMove:
     return move(e);
-  case QEvent::GraphicsSceneMouseRelease: untested();
+  case QEvent::GraphicsSceneMouseRelease:itested();
     return nullptr;
     //fallthrough
-  case QEvent::MouseButtonRelease: untested();
+  case QEvent::MouseButtonRelease:itested();
     assert(m);
     return release(m);
-  case QEvent::GrabMouse: untested();
+  case QEvent::GrabMouse:itested();
     return nullptr;
 //    return grab(s);
   case QEvent::DragEnter: untested();
     unreachable(); // proper type check above
     return nullptr;
   case QEvent::MouseButtonPress: untested();
-  case QEvent::GraphicsSceneMousePress: untested();
+    // fallthrough
+  case QEvent::GraphicsSceneMousePress:itested();
     return press(e);
   default:
     trace1("mouseaction miss", e->type());
@@ -94,7 +95,7 @@ SchematicDoc const& MouseAction::doc() const
 }
 
 SchematicDoc& MouseAction::doc()
-{ untested();
+{itested();
   QucsDoc* c=&_ctx.doc();
   auto cc = dynamic_cast<SchematicDoc*>(c);
   assert(cc);
@@ -107,11 +108,11 @@ QPointF MouseAction::mapToScene(QPoint const& p) const
 }
 
 void MouseAction::updateViewport()
-{ untested();
+{itested();
   ctx().updateViewport(); // use a signal?
 }
 void MouseActions::updateViewport()
-{ untested();
+{itested();
 
   SchematicDoc* s = dynamic_cast<SchematicDoc*>(&doc());
   if(s){

@@ -73,9 +73,15 @@ protected: // needed in netlister
   virtual SchematicModel* scope();
 
 public: // Parameters
-  virtual void setParameter(std::string const&, std::string const&){throw ExceptionCantFind();}
-  virtual void setParameter(unsigned, std::string const&){ throw ExceptionCantFind(); }
-  virtual std::string getParameter(std::string const& w){ throw ExceptionCantFind(w); }
+  virtual void setParameter(std::string const& name, std::string const&){
+	  throw ExceptionCantFind(name, label().toStdString());
+  }
+  virtual void setParameter(unsigned i, std::string const&){
+	  throw ExceptionCantFind(std::to_string(i), label().toStdString());
+  }
+  virtual std::string getParameter(std::string const& w){
+	  throw ExceptionCantFind(w, label().toStdString());
+  }
 
   // yikes there's param{Name,Value} already..
   virtual std::string paramValue(unsigned i) const;

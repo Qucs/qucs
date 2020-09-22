@@ -60,7 +60,7 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QPlainTextEdit(), QucsDo
   connect(this, SIGNAL(cursorPositionChanged()),
           SLOT(slotCursorPosChanged()));
 
-  if (App_) { untested();
+  if (App_) {itested();
     connect(this, SIGNAL(signalCursorPosChanged(int, int)),
         App_, SLOT(printCursorPosition(int, int)));
     connect(this, SIGNAL(signalUndoState(bool)),

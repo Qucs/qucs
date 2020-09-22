@@ -548,7 +548,7 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 
 	{
 
-		n  = s.section(' ',7,7);    // mirroredX
+		n  = s.section(' ',7,7);    // mirror y axis
 		if(n.toInt(&ok) == 1){
 			c->mirrorX();
 		}
@@ -566,8 +566,9 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 		}
 
 #if 1
-		sym->setParameter("rotated", n.toStdString());
-		assert(sym->getParameter("rotated") == n.toStdString());
+		tmp *= 90;
+		sym->setParameter("$angle", std::to_string(tmp));
+		assert(sym->getParameter("$angle") == std::to_string(tmp));
 		trace2("DBG rot", c->rotated(), n);
 #else
 		for(int z=c->rotated; z<tmp; z++){

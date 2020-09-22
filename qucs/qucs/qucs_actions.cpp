@@ -101,13 +101,13 @@ void QucsApp::slotEditRotate()
 }
 // -----------------------------------------------------------------------
 void QucsApp::slotEditMirrorX()
-{
+{ untested();
   ASSIGN_STUFF
   qd->actionEditMirrorX(s);
 }
 // -----------------------------------------------------------------------
 void QucsApp::slotEditMirrorY()
-{
+{ untested();
   ASSIGN_STUFF
   qd->actionEditMirrorY(s);
 }
