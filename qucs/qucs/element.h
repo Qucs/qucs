@@ -79,6 +79,7 @@ struct Area {
   QBrush Brush;    // filling style/color
 };
 
+// does not work. move to legacy stuff.
 struct Text {
   Text(int _x, int _y, const QString& _s, QColor _Color = QColor(0,0,0),
 	float _Size = 10.0, float _mCos=1.0, float _mSin=0.0)

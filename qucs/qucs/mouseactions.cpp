@@ -1602,7 +1602,7 @@ void MouseActions::paintElementsScheme(SchematicDoc *p)
 {
   for(auto const& pe : movingElements){
     // something with mouse cursor
-    pe->paintScheme(p);
+    // pe->paintScheme(p);
   }
 }
 

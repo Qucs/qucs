@@ -62,6 +62,20 @@ ElementGraphics::~ElementGraphics()
 	}
 }
 /*--------------------------------------------------------------------------*/
+// there is also QGraphicsSimpleTextItem, but is does not allow for edits.
+class TextGraphics : public QGraphicsTextItem{
+public:
+	explicit TextGraphics(Text& t, QGraphicsItem* parent) : QGraphicsTextItem(parent), _t(t){
+		setPlainText(t.s);
+		trace1("TextGraphics", t.s);
+		setParentItem(parent);
+	}
+public:
+private:
+	Text& _t;
+};
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 void ElementGraphics::attachElement(Element* e)
 {itested();
 	assert(e);
@@ -73,6 +87,17 @@ void ElementGraphics::attachElement(Element* e)
 	auto sp = _e->center();
 	prepareGeometryChange();
 	QGraphicsItem::setPos(sp.first, sp.second);
+
+	if(auto c=dynamic_cast<Component*>(e)){ untested();
+		trace2("attachElement", e->label(), c->Texts.size());
+		for(auto& i : c->Texts){ untested();
+			//auto t=
+			new TextGraphics(*i, this);
+
+		}
+	}
+	auto t=new QGraphicsTextItem(this);
+	t->setPlainText(e->label());
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*)
