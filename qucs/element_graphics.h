@@ -45,7 +45,7 @@ private:
 	void attachElement(Element* e);
 
 public: //?
-  void paintScheme(SchematicDoc *p);
+//  void paintScheme(SchematicDoc *p);
 private: // later: Qgraphics virtual overrides
 //  void paint() { assert(_e); _e->paint(); }
 //  void paintScheme(SchematicDoc *s) { assert(_e); _e->paintScheme(s); }

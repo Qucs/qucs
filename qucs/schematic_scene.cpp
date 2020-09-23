@@ -122,11 +122,11 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
 }
 
 #ifndef USE_SCROLLVIEW
-void ElementGraphics::paintScheme(SchematicDoc *p)
-{ untested();
-  	assert(_e);
-	_e->paintScheme(p);
-}
+// void ElementGraphics::paintScheme(SchematicDoc *p)
+// { untested();
+//   	assert(_e);
+// 	_e->paintScheme(p);
+// }
 
 // scene::display(SchematicModel&)?
 // 'l' is a bit of a hack. let's see

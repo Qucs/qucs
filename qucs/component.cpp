@@ -329,6 +329,7 @@ void Component::paint(ViewPainter *p) const
       y += p->LineSpacing;
     }
 
+  // not here.
   if(isActive == COMP_IS_OPEN)
     p->Painter->setPen(QPen(Qt::red,0));
   else if(isActive & COMP_IS_SHORTEN)
@@ -339,14 +340,6 @@ void Component::paint(ViewPainter *p) const
     p->drawLine(cx+x1, cy+y2, cx+x2, cy+y1);
   }
 
-  // draw component bounding box
-  // not here.
-  if(1){itested();
-//  }else if(isSelected()) { untested();
-//    p->Painter->setPen(QPen(Qt::darkGray,3));
-//    p->drawRoundRect(cx+x1, cy+y1, x2-x1, y2-y1);
-//  }else{ untested();
-  }
 }
 
 // -------------------------------------------------------
