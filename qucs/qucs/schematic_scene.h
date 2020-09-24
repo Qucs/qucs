@@ -60,11 +60,15 @@ public:
 //  void removeItem(Element const*);
   bool itemEvent(QEvent*);
 
+  QPoint gridSize() const;
+  QPoint snapToGrid(QPointF const&) const;
+
 private:
   void selectAll(bool v=true);
 
 protected:
 	SchematicDoc* doc();
+	SchematicDoc const* doc() const;
 
 private:
   bool event(QEvent* e) override;

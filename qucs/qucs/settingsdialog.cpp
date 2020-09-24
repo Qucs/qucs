@@ -169,8 +169,9 @@ SettingsDialog::SettingsDialog(SchematicDoc *Doc_)
     Check_OpenDpl->setChecked(Doc->SimOpenDpl);
     Check_RunScript->setChecked(Doc->SimRunScript);
     Check_GridOn->setChecked(Doc->GridOn);
-    Input_GridX->setText(QString::number(Doc->GridX));
-    Input_GridY->setText(QString::number(Doc->GridY));
+	 QPoint grid = Doc->gridSize();
+    Input_GridX->setText(QString::number(getX(grid)));
+    Input_GridY->setText(QString::number(getY(grid)));
     Combo_Frame->setCurrentIndex(Doc->showFrame());
 
     QString Text_;
@@ -263,17 +264,18 @@ void SettingsDialog::slotApply()
         changed = true;
     }
 
-    if(Doc->GridX != Input_GridX->text().toInt())
-    {
-        Doc->GridX = Input_GridX->text().toInt();
-        changed = true;
-    }
+	 incomplete(); // use parameters.
+    // if(Doc->GridX != Input_GridX->text().toInt())
+    // {
+    //     Doc->GridX = Input_GridX->text().toInt();
+    //     changed = true;
+    // }
 
-    if(Doc->GridY != Input_GridY->text().toInt())
-    {
-        Doc->GridY = Input_GridY->text().toInt();
-        changed = true;
-    }
+    // if(Doc->GridY != Input_GridY->text().toInt())
+    // {
+    //     Doc->GridY = Input_GridY->text().toInt();
+    //     changed = true;
+    // }
 
 	 Doc->setFrameType(Combo_Frame->currentIndex());
 

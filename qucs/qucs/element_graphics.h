@@ -54,6 +54,8 @@ private: // later: Qgraphics virtual overrides
 
 public:
   bool sceneEvent(QEvent*) override;
+private:
+  QVariant itemChange(GraphicsItemChange c, const QVariant &v) override;
 
 public: // manipulate (used in UndoCommands)
   void hide();

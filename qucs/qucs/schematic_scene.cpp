@@ -22,6 +22,12 @@ ElementGraphics* SchematicDoc::itemAt(float x, float y)
 	}
 }
 
+QPoint SchematicScene::gridSize() const
+{
+	assert(doc());
+	return doc()->gridSize();
+}
+
 #ifndef USE_SCROLLVIEW
 // scene()->selectedItems gives QGraphicsItems
 Element* element(QGraphicsItem* g)
@@ -91,14 +97,39 @@ SchematicDoc* SchematicScene::doc()
 	assert(parent());
 	return dynamic_cast<SchematicDoc*>(parent());
 }
+SchematicDoc const* SchematicScene::doc() const
+{
+	assert(parent());
+	return dynamic_cast<SchematicDoc const*>(parent());
+}
 
 SchematicScene::~SchematicScene()
 {
 }
 
-void SchematicScene::drawBackground(QPainter *painter, const QRectF &rect)
-{ itested(); // for now.
-	QGraphicsScene::drawBackground(painter, rect);
+QPoint SchematicScene::snapToGrid(QPointF const& p) const
+{
+	assert(doc());
+	return doc()->setOnGrid(getX(p), getY(p));
+}
+
+void SchematicScene::drawBackground(QPainter *painter, const QRectF &r)
+{ untested(); // for now.
+	//	QGraphicsScene::drawBackground(painter, r);
+
+	double gridSize = 20; // TODO
+
+	QPen pen;
+	painter->setPen(pen);
+
+	// not sure if this is good.
+	double left = r.left() - fmod(r.left(), gridSize);
+	double top = r.top() - fmod(r.top(), gridSize);
+	for (double x=left; x<r.right(); x+=gridSize){
+		for (double y=top; y<r.bottom(); y+=gridSize){
+			painter->drawPoint(QPointF(x,y));
+		}
+	}
 #if 0
 	/// \todo getter and setter
 	int GridX = 10;

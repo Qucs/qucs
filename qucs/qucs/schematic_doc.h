@@ -249,7 +249,6 @@ public:
   }
 
 
-  int GridX, GridY;
   int ViewX1, ViewY1, ViewX2, ViewY2;  // size of the document area
   int UsedX1, UsedY1, UsedX2, UsedY2;  // document area used by elements
 
@@ -266,12 +265,15 @@ public:
   // BUG: use Frame::setParameter
   void setFrameText(int idx, QString s);
 private:
-  QString FrameText[4];
+  QString _frameText[4];
+  int GridX, GridY;
+
 public:
-  QString frameText0() const { return FrameText[0]; }
-  QString frameText1() const { return FrameText[1]; }
-  QString frameText2() const { return FrameText[2]; }
-  QString frameText3() const { return FrameText[3]; }
+  QPoint gridSize() const{ return QPoint(GridX, GridY); }
+  QString frameText0() const { return _frameText[0]; }
+  QString frameText1() const { return _frameText[1]; }
+  QString frameText2() const { return _frameText[2]; }
+  QString frameText3() const { return _frameText[3]; }
 
   // Two of those data sets are needed for Schematic and for symbol.
   // Which one is in "tmp..." depends on "symbolMode".

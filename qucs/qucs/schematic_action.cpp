@@ -1162,6 +1162,15 @@ QUndoCommand* MouseActionSelect::release(QMouseEvent *ev)
 	return cmd;
 }
 /*--------------------------------------------------------------------------*/
+static QPoint getDelta(ElementGraphics* e)
+{
+	auto p = e->pos().toPoint();
+	assert(element(e));
+	auto p1_ = element(e)->center();
+	auto p1 = QPoint(getX(p1_), getY(p1_));
+	return p - p1;
+}
+/*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
 {itested();
 	bool ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
@@ -1176,12 +1185,17 @@ QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
 	auto s = doc().selectedItems();
 	if(s.isEmpty()){ untested();
 	}else{itested();
-		auto p = s.first()->pos().toPoint();
-		auto p1_ = element(s.first())->center();
-		auto p1 = QPoint(getX(p1_), getY(p1_));
-		auto delta = p - p1;
+
+		auto delta = getDelta(s.first());
+#ifndef NDEBUG
+		for(auto i : s){
+			assert(delta == getDelta(i));
+		}
+#endif
 		int fX = int(delta.x());
 		int fY = int(delta.y());
+
+		// TODO: check if it is the same delta in all of them.
 	
 		if(fX || fY){ untested();
 			trace1("possible move", delta);
