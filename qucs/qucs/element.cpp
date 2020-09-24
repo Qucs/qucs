@@ -16,10 +16,10 @@
 #include "schematic_doc.h"
 
 Element::Element()
- : _owner(nullptr)
+ : _owner(nullptr), _cx(0), _cy(0)
 {
   Type = isDummyElement; // BUG
-  cx = cy = x1 = y1 = x2 = y2 = 0; // relly?
+  x1 = y1 = x2 = y2 = 0; // really?
   setLabel(name());
 
   // BUG
@@ -28,8 +28,8 @@ Element::Element()
 
 Element::Element(Element const& e)
  : Object(e),
-   cx(e.cx),
-   cy(e.cy),
+   _cx(e._cx),
+   _cy(e._cy),
    _owner(nullptr) // sic.
 {
   setLabel(e.label());
@@ -53,17 +53,20 @@ void Element::paintScheme(QPainter *) const
 // pure?
 void Element::setCenter(int, int, bool)
 {
+	assert(false);
 	unreachable();
 }
 
-void Element::getCenter(int&, int&) const
+void Element::getCenter(int&x, int&y) const
 {
 	incomplete();
+	x=y=-100;
 }
 
 void Element::snapToGrid(SchematicDoc& s)
 {
-	s.setOnGrid(cx, cy);
+	incomplete();
+//	s.setOnGrid(cx, cy);
 }
 
 void /*really?*/ Element::editElement(QucsDoc*)
@@ -106,10 +109,10 @@ void Element::detachFromModel()
 
 std::pair<int, int> Element::center()const
 {
+	// incomplete. bug. wrong.
 	std::pair<int, int> ret;
 	getCenter( ret.first, ret.second);
 	return ret;
-
 }
 
 // legacy stuff. pretend that Element points to an Element

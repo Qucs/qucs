@@ -119,6 +119,7 @@ public:
   bool  mirrorXComponents();
   bool  mirrorYComponents();
   QPoint  setOnGrid(int, int) const;
+  QPoint  snapToGrid(QPointF const&) const;
   QMouseEvent snapToGrid(QMouseEvent* e) const;
   bool  elementsOnGrid();
 
@@ -157,6 +158,8 @@ private:
 private:
   // schematic Scene for this View
 //  SchematicScene *Scene;
+  SchematicScene const* scene() const{itested();
+	  return prechecked_cast<SchematicScene const*>(QGraphicsView::scene()); }
   SchematicScene *scene() {itested(); return prechecked_cast<SchematicScene*>(QGraphicsView::scene()); }
   // schematic frame item
   // Frame *SchematicFrame;

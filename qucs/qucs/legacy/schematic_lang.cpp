@@ -122,6 +122,7 @@ static std::list<Element*> implicit_hack;
 
 static bool obsolete_load(Wire* w, const QString& sc)
 {
+	Symbol* sym = w;
 	QString s(sc);
 	trace1("obsolete_load", s);
 	bool ok;
@@ -134,21 +135,37 @@ static bool obsolete_load(Wire* w, const QString& sc)
 	s = s.mid(1, s.length()-2);   // cut off start and end character
 
 	QString n;
-	n  = s.section(' ',0,0);    // x1
-	w->x1__() = n.toInt(&ok);
-	if(!ok) return false; // BUG: throw
+	n  = s.section(' ',0,0);
+	int x1 = n.toInt(&ok);
+	if(!ok) {
+		return false; // BUG: throw
+	}else{
+	}
+	sym->setParameter("$xposition", std::to_string(x1));
 
 	n  = s.section(' ',1,1);    // y1
-	w->y1__() = n.toInt(&ok);
-	if(!ok) return false; // BUG: throw
+	int y1 = n.toInt(&ok);
+	if(!ok) {
+		return false; // BUG: throw
+	}else{
+	}
+	sym->setParameter("$yposition", std::to_string(y1));
 
 	n  = s.section(' ',2,2);    // x2
-	w->x2__() = n.toInt(&ok);
-	if(!ok) return false; // BUG: throw
+	int x2 = n.toInt(&ok);
+	if(!ok) {
+		return false; // BUG: throw
+	}else{
+	}
+	sym->setParameter("deltax", std::to_string(x2 - x1));
 
 	n  = s.section(' ',3,3);    // y2
-	w->y2__() = n.toInt(&ok);
-	if(!ok) return false; // BUG: throw
+	int y2 = n.toInt(&ok);
+	if(!ok) {
+		return false; // BUG: throw
+	}else{
+	}
+	sym->setParameter("deltay", std::to_string(y2 - y1));
 
 	n = s.section('"',1,1);
 	trace1("parse node label", n);
@@ -239,8 +256,10 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 				qDebug() << "wire parse?" << Line;
 				// (Node*)4 =  move all ports (later on)
 				// Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4); // this is entirely nuts.
-				Wire* w = new Wire(0,0,0,0); // BUG: ask dispatcher
-				w->setOwner(&owner);
+				Symbol* sw= symbol_dispatcher.clone("Wire");
+				assert(sw);
+				Wire* w = prechecked_cast<Wire*>(sw); // BUG;
+				sw->setOwner(&owner);
 				incomplete(); // qt5 branch...
 				bool err = obsolete_load(w, Line);
 				if(!err){ untested();
@@ -528,11 +547,14 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 	n  = s.section(' ',3,3);    // cx
 	int cx=n.toInt(&ok);
 	qDebug() << "cx" << cx;
-	c->obsolete_set("cx", cx);
+	sym->setParameter("$xposition", std::to_string(cx));
+	// c->obsolete_set("cx", cx);
 	if(!ok) return NULL;
 
 	n  = s.section(' ',4,4);    // cy
-	c->obsolete_set("cy", n.toInt(&ok));
+	int cy=n.toInt(&ok);
+	sym->setParameter("$yposition", std::to_string(cy));
+	// c->obsolete_set("cy", n.toInt(&ok));
 	if(!ok) return NULL;
 
 	n  = s.section(' ',5,5);    // tx

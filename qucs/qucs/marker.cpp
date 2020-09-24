@@ -57,10 +57,10 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
   Type = isMarker;
   transparent = false;
 
-  cx =  cx_;
-  cy = -cy_;
-  fCX = float(cx);
-  fCY = float(cy);
+  _cx =  cx_;
+  _cy = -cy_;
+  fCX = float(cx());
+  fCY = float(cy());
 
   // BUG
   if (diag()->name() == "Smith") {
@@ -79,8 +79,8 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
     createText();
   }
 
-  x1 =  cx + 60;
-  y1 = -cy - 60;
+  x1 =  cx() + 60;
+  y1 = -cy() - 60;
 
 }
 
@@ -145,8 +145,8 @@ void Marker::initText(int n)
 	pz += 2*(pD->count-1);
       }
       
-      x = int(fCX+0.5) - cx;
-      y = int(fCY+0.5) - cy;
+      x = int(fCX+0.5) - cx();
+      y = int(fCY+0.5) - cy();
       d = x*x + y*y;
       if(d < dmin) {
 	dmin = d;
@@ -217,6 +217,7 @@ void Marker::fix()
  */
 void Marker::createText()
 {
+#if 0
   if(!(pGraph->cPointsY)) {
     makeInvalid();
     return;
@@ -299,6 +300,7 @@ void Marker::createText()
   cx = int(fCX+0.5);
   cy = int(fCY+0.5);
   getTextSize();
+#endif
 }
 
 // ---------------------------------------------------------------------
@@ -307,8 +309,9 @@ void Marker::makeInvalid()
   fCX = fCY = -1e3; // invalid coordinates
   assert(diag());
   diag()->finishMarkerCoordinates(fCX, fCY); // leave to diagram
-  cx = int(fCX+0.5);
-  cy = int(fCY+0.5);
+  incomplete();
+//  cx = int(fCX+0.5);
+//  cy = int(fCY+0.5);
 
   Text = QObject::tr("invalid");
   getTextSize();
@@ -445,13 +448,13 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
   int x1_, y1_;
   p->map(x0+x1, y0+y1, x1_, y1_);
   // which corner of rectangle should be connected to line ?
-  if(cx < x1+(x2>>1)) {
-    if(-cy >= y1+(y2>>1))
+  if(cx() < x1+(x2>>1)) {
+    if(-cy() >= y1+(y2>>1))
       y1_ += y2_ - 1;
   }
   else {
     x1_ += x2_ - 1;
-    if(-cy >= y1+(y2>>1))
+    if(-cy() >= y1+(y2>>1))
       y1_ += y2_ - 1;
   }
   float fx2, fy2;
@@ -470,9 +473,10 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
 // ---------------------------------------------------------------------
 void Marker::paintScheme(QPainter *p) const
 {
+#if 0
   assert(diag());
-  int x0 = diag()->cx_();
-  int y0 = diag()->cy_();
+  int x0 = diag()->cx();
+  int y0 = diag()->cy();
   p->drawRect(x0+x1, y0+y1, x2, y2);
 
   // which corner of rectangle should be connected to line ?
@@ -488,6 +492,7 @@ void Marker::paintScheme(QPainter *p) const
     else
       p->drawLine(x0+cx, y0-cy, x0+x1+x2-1, y0+y1+y2-1);
   }
+#endif
 }
 
 // ------------------------------------------------------------
@@ -505,10 +510,10 @@ void Marker::setCenter(int x, int y, bool relative)
 void Marker::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
   if(diag()) {
-    _x1 = diag()->cx_() + x1;
-    _y1 = diag()->cy_() + y1;
-    _x2 = diag()->cx_() + x1+x2;
-    _y2 = diag()->cy_() + y1+y2;
+    _x1 = diag()->cx() + x1;
+    _y1 = diag()->cy() + y1;
+    _x2 = diag()->cx() + x1+x2;
+    _y2 = diag()->cy() + y1+y2;
   }
   else {
     _x1 = x1;
@@ -646,7 +651,7 @@ const Diagram* Marker::diag() const
 // ------------------------------------------------------------------------
 Marker* Marker::sameNewOne(Graph *pGraph_)
 {
-  Marker *pm = new Marker(pGraph_, 0, cx ,cy);
+  Marker *pm = new Marker(pGraph_, 0, cx() ,cy());
 
   pm->x1 = x1;  pm->y1 = y1;
   pm->x2 = x2;  pm->y2 = y2;

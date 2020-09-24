@@ -33,19 +33,18 @@ class ComponentList;
 namespace {
 
 static std::string netLabel(Net const* n)
-{
-	if(!n){
+{ untested();
+	if(!n){ untested();
 		unreachable();
 		return("(null)");
-	}else if(n->hasLabel()){
+	}else if(n->hasLabel()){ untested();
 		return n->label().toStdString();
-	}else{
+	}else{ untested();
 		return "_net" + std::to_string(n->pos());
 	}
 }
 
-class Verilog : public NetLang
-{
+class Verilog : public NetLang {
   virtual void printCommand(Command const*, QTextStream&) const;
   virtual void printSymbol(Symbol const*, QTextStream&) const;
 
@@ -59,15 +58,15 @@ static Dispatcher<DocumentLanguage>::INSTALL p(&doclang_dispatcher, "verilog", &
  * verilog does not know about commands
  */
 void Verilog::printCommand(Command const* c, QTextStream& s) const
-{
+{ untested();
   s << "//" << c->label() << "\n";
 }
 
 void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
-{
+{ untested();
 	Component const* c=dynamic_cast<Component const*>(sym);
 #if 0
-	if(!c){
+	if(!c){ untested();
 		/// wires...
 		incomplete();
 		return;
@@ -80,18 +79,18 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 		QListIterator<Port *> iport(c->ports());
 		Port *pp = iport.next();
 		QString Node1 = pp->netLabel();
-		while (iport.hasNext()){
+		while (iport.hasNext()){ untested();
 			s << "R:" << c->label() << "." << QString::number(z++) << " "
 				<< Node1 << " " << iport.next()->netLabel() << " R=\"0\"\n";
 		}
 	}else
 #endif
-	{
+	{ untested();
 		s << QString::fromStdString(c->type()) << " ";
 
 		QString comma="";
 		s << "#(";
-		for(auto p2 : c->params()) {
+		for(auto p2 : c->params()) { untested();
 			s << comma << "." << p2->name() << "(" << p2->Value << ")";
 			comma = ", ";
 		}
@@ -100,7 +99,7 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 
 		// printPorts()
 		comma = "";
-		for(unsigned i=0; i < sym->numPorts(); ++i){
+		for(unsigned i=0; i < sym->numPorts(); ++i){ untested();
 			s << comma << netLabel(sym->portValue(i));
 			comma = ", ";
 		}
@@ -116,22 +115,22 @@ class VerilogSchematicFormat : public DocumentFormat{
 
 private: // legacy cruft
   bool isSymbolMode() const{ return false; }
-  PaintingList const& symbolPaints(SchematicSymbol const& m) const{
+  PaintingList const& symbolPaints(SchematicSymbol const& m) const{ untested();
     return m.symbolPaintings();
   }
-  DiagramList const& diagrams(SchematicSymbol const& m) const{
+  DiagramList const& diagrams(SchematicSymbol const& m) const{ untested();
     return m.diagrams();
   }
-  PaintingList const& paintings(SchematicSymbol const& m) const{
+  PaintingList const& paintings(SchematicSymbol const& m) const{ untested();
     return m.paintings();
   }
-  WireList const& wires(SchematicSymbol const& m) const{
+  WireList const& wires(SchematicSymbol const& m) const{ untested();
     return m.wires();
   }
-  NodeMap const& nodes(SchematicSymbol const& m) const{
+  NodeMap const& nodes(SchematicSymbol const& m) const{ untested();
     return m.nodes();
   }
-  ComponentList const& components(SchematicSymbol const& m) const{
+  ComponentList const& components(SchematicSymbol const& m) const{ untested();
     return m.components();
   }
 
@@ -144,14 +143,14 @@ pp(&docfmt_dispatcher, "v_sch", &VS);
 // ------------------------------------------------------
 
 void VerilogSchematicFormat::load(DocumentStream& stream, SchematicSymbol& s) const
-{
+{ untested();
   incomplete();
 }
 
 void VerilogSchematicFormat::save(DocumentStream& stream, SchematicSymbol const& m) const
-{
-  for(auto pc : components(m)){
-	  if(dynamic_cast<Command const*>(pc)){
+{ untested();
+  for(auto pc : components(m)){ untested();
+	  if(dynamic_cast<Command const*>(pc)){ untested();
 		  unreachable();
 		  // BUG. a Command is not a Component
 		  continue;
@@ -159,10 +158,10 @@ void VerilogSchematicFormat::save(DocumentStream& stream, SchematicSymbol const&
 	  printSymbol(pc, stream); // BUG: use V::printItem
 	                           // but uses different port names...
   }
-  for(auto w : wires(m)){
+  for(auto w : wires(m)){ untested();
 	  printSymbol(w, stream); // BUG: use V::printItem
   }
-  for(auto const& n : nodes(m)){
+  for(auto const& n : nodes(m)){ untested();
 	  int x, y;
 	  std::tie(x, y) = n.position();
 	  stream << "place #(.$xposition(" << x << "),"
@@ -174,17 +173,17 @@ void VerilogSchematicFormat::save(DocumentStream& stream, SchematicSymbol const&
 
 //// not here.
 //QTextStream& operator<<(QTextStream& o, std::string const& s)
-//{
+//{ untested();
 //		return o << QString::fromStdString(s);
 //}
 
 // similar to Verilog::printSymbol, but with the actual node names and
 // coordinates.
 void VerilogSchematicFormat::printSymbol(Symbol const* sym, stream_t& s) const
-{
+{ untested();
 #if 0
 	Component const* c=dynamic_cast<Component const*>(sym);
-	if(!c){
+	if(!c){ untested();
 		incomplete();
 		unreachable();
 		return;
@@ -197,20 +196,20 @@ void VerilogSchematicFormat::printSymbol(Symbol const* sym, stream_t& s) const
 	}else
 #endif
 	
-	{
+	{ untested();
 		std::string type = sym->type();
 		std::string label = sym->label().toStdString();
 		s << QString::fromStdString(type) << " ";
 
-		if(label == "*"){
+		if(label == "*"){ untested();
 			// bug/feature/wtf?
 			label="anonymous_gnd_hack_" + std::to_string(gndhackn++);
-		}else{
+		}else{ untested();
 		}
 
 		QString comma="";
 		s << "#(";
-		for(unsigned i=0; i<sym->paramCount(); ++i) {
+		for(unsigned i=0; i<sym->paramCount(); ++i) { untested();
 			s << comma << "." << sym->paramName(i) << "(" << sym->paramValue(i) << ")";
 			comma = ", ";
 		}
@@ -218,10 +217,11 @@ void VerilogSchematicFormat::printSymbol(Symbol const* sym, stream_t& s) const
 		s << QString::fromStdString(label) << "(";
 
 		comma = "";
-		for(unsigned i=0; i<sym->numPorts(); ++i){
+		for(unsigned i=0; i<sym->numPorts(); ++i){ untested();
+			trace3("...", sym->label(), i, sym->numPorts());
 			auto p = sym->portPosition(i);
-			auto x=p.first;
-			auto y=p.second;
+			auto x = p.first;
+			auto y = p.second;
 			s << comma << "net_" << x << "_" << y;
 			comma = ", ";
 		}

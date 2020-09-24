@@ -41,7 +41,6 @@ GraphicText::GraphicText() : Painting()
   Name = "Text ";
   Color = QColor(0,0,0);
   Font = QucsSettings.font;
-  cx = cy = 0;
   x1 = x2 = 0;
   y1 = y2 = 0;
   Angle = 0;
@@ -54,6 +53,9 @@ GraphicText::~GraphicText()
 // -----------------------------------------------------------------------
 void GraphicText::paint(ViewPainter *p)
 {
+	   auto cx=Element::cx();
+     auto cy=Element::cy();
+
   // keep track of painter state
   p->Painter->save();
 
@@ -114,6 +116,9 @@ void GraphicText::paintScheme(SchematicDoc *p)
 // ------------------------------------------------------------------------
 void GraphicText::getCenter(int& x, int &y)
 {
+	   auto cx=Element::cx();
+     auto cy=Element::cy();
+
   x = cx+(x2>>1);
   y = cy+(y2>>1);
 }
@@ -122,8 +127,13 @@ void GraphicText::getCenter(int& x, int &y)
 // Sets the center of the painting to x/y.
 void GraphicText::setCenter(int x, int y, bool relative)
 {
-  if(relative) {  cx += x;  cy += y;  }
-  else {  cx = x-(x2>>1);  cy = y-(y2>>1);  }
+  if(relative) {
+	  _cx += x;
+	  _cy += y;
+  }else{
+	  _cx = x-(x2>>1);
+	  _cy = y-(y2>>1);
+  }
 }
 
 // -----------------------------------------------------------------------
@@ -143,11 +153,11 @@ bool GraphicText::load(const QString& s)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  cx = n.toInt(&ok);
+  _cx = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  cy = n.toInt(&ok);
+  _cy = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',3,3);    // Size
@@ -179,6 +189,9 @@ bool GraphicText::load(const QString& s)
 // -----------------------------------------------------------------------
 QString GraphicText::save()
 {
+	   auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString t = Text;
   misc::convert2ASCII(t);
 
@@ -192,6 +205,9 @@ QString GraphicText::save()
 // --------------------------------------------------------------------------
 QString GraphicText::saveCpp()
 {
+	   auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString t = Text;
   misc::convert2ASCII(t);
 
@@ -206,6 +222,9 @@ QString GraphicText::saveCpp()
 
 QString GraphicText::saveJSON()
 {
+	   auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString t = Text;
   misc::convert2ASCII(t);
 
@@ -226,6 +245,7 @@ void GraphicText::MouseMoving(
 	SchematicDoc*, int, int, int gx, int gy,
 	SchematicDoc *p, int x, int y, bool drawn)
 {
+#if 0
   // FIXME #warning p->setPen(Qt::SolidLine);
   if(drawn) {
     p->PostPaintEvent(_Line, x1+15, y1+15, x1+20, y1,0,0,true);  // erase old cursor symbol
@@ -240,6 +260,7 @@ void GraphicText::MouseMoving(
 
   cx = gx;
   cy = gy;
+#endif
 }
 
 // ------------------------------------------------------------------------
@@ -253,6 +274,9 @@ bool GraphicText::MousePressing()
 // 5 is the precision the user must point onto the painting.
 bool GraphicText::getSelected(float fX, float fY, float)
 {
+	   auto cx=Element::cx();
+     auto cy=Element::cy();
+
   double phi  = pi/180.0*double(Angle);
   float  sine = sin(phi), cosine = cos(phi);
 
@@ -270,6 +294,9 @@ bool GraphicText::getSelected(float fX, float fY, float)
 // ------------------------------------------------------------------------
 void GraphicText::Bounding(int& xmin, int& ymin, int& xmax, int& ymax)
 {
+	   auto cx=Element::cx();
+     auto cy=Element::cy();
+
   double phi = pi/180.0*double(Angle);
   double sine = sin(phi), cosine = cos(phi);
   int dx = int( double(y2) * sine );
@@ -302,8 +329,8 @@ void GraphicText::rotate()
 {
   Angle += 90;
   Angle %= 360;
-  cx -= x2 >> 1;
-  cy -= y2 >> 1;
+  _cx -= x2 >> 1;
+  _cy -= y2 >> 1;
 }
 
 // -----------------------------------------------------------------------

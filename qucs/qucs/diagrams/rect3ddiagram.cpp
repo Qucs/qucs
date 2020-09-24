@@ -39,6 +39,8 @@
 
 Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
+	auto cx=Element::cx();
+	auto cy=Element::cy();
   x1 = 10;     // position of label text
   y1 = y3 = 7;
   x2 = 200;    // initial size of diagram

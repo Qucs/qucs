@@ -168,12 +168,13 @@ class Element : public Object {
   friend class ElementGraphics;
 public:
   Element();
+  Element(int cx, int cy) : _cx(cx), _cy(cy) {} // BUG
   Element(Element const&);
   virtual ~Element();
 
 public: // make old variables accessible
-	int const& cx_() const { return cx; }
-	int const& cy_() const { return cy; }
+	int const& cx() const { return _cx; }
+	int const& cy() const { return _cy; }
 
 	int const& x1_() const { return x1; }
 	int const& y1_() const { return y1; }
@@ -191,7 +192,7 @@ public: // other stuff
   virtual void paintScheme(QPainter *) const; // obsolete?
   virtual void draw(QPainter&) { incomplete(); }
   virtual void setCenter(int x, int y, bool relative=false);
-  std::pair<int, int> center()const;
+  virtual std::pair<int, int> center()const;
   virtual void getCenter(int&, int&) const; // BUG
   virtual void paint(ViewPainter*) const = 0;
   virtual void editElement(QucsDoc*);
@@ -210,22 +211,9 @@ public:
   virtual QString const& description() const{return incomplete_description;}
   virtual char const* iconBasename() const{return nullptr;}
 
-#ifndef USE_SCROLLVIEW
 private: // only called from ElementGraphics
-#endif
 
-#if 0
-  void setSelected(bool b=true){
-	  Selected = b;
-  }
-  void toggleSelected(){
-	  Selected = !Selected;
-  }
-#endif
-
-#ifndef USE_SCROLLVIEW
 protected:
-#endif
 //  bool isSelected() const{return Selected;}
 
 private:
@@ -234,18 +222,18 @@ public: // BUG
   int  Type;    // whether it is Component, Wire, ...
 
 public: // set protected variables. don't use
-  void obsolete_set(std::string name, int value){
-	  incomplete();
-	  if(name == "cx"){
-		  cx = value;
-	  }else if(name == "cy"){
-		  cy = value;
-	  }
-  }
+//   void obsolete_set(std::string name, int value){
+// 	  incomplete();
+// 	  if(name == "cx"){
+// 		  cx = value;
+// 	  }else if(name == "cy"){
+// 		  cy = value;
+// 	  }
+//   }
 
 protected:
-  int  cx, cy; // also used in Node. and in Diagrams
- 
+  int _cx, _cy; // BUG: store in symbol.
+               // also used in Node. and in Diagrams
   int x1, y1;
 public:
   

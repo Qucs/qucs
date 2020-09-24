@@ -30,7 +30,7 @@ class testElement : public Element{
 public:
 	testElement() : Element() {
 		// setSelected(false);
-		qDebug() << cx;
+		qDebug() << cx();
 	}
 private:
 	Element* clone()const {untested(); return new testElement(*this); }
@@ -42,9 +42,9 @@ void ElementTests::testConstructor() {
     // check defaults
 //    QCOMPARE(int( e->elemType() ), isDummyElement);
 //    QCOMPARE(e->isSelected(), false);
-	 qDebug() << e->cx_();
-    QCOMPARE(e->cx_(), 0);
-    QCOMPARE(e->cy_(), 0);
+	 qDebug() << e->cx();
+    QCOMPARE(e->cx(), 0);
+    QCOMPARE(e->cy(), 0);
     QCOMPARE(e->x1_(), 0);
     QCOMPARE(e->y1_(), 0);
     QCOMPARE(e->x2_(), 0);

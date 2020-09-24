@@ -54,6 +54,8 @@ void TabDiagram::paint(ViewPainter *p)
 // ------------------------------------------------------------
 void TabDiagram::paintDiagram(ViewPainter *p)
 {
+	auto cx=Element::cx();
+	auto cy=Element::cy();
   // paint all lines
   foreach(Line *pl, Lines) {
     p->Painter->setPen(pl->style);
@@ -356,6 +358,8 @@ funcEnd:
 // ------------------------------------------------------------
 int TabDiagram::scroll(int clickPos)
 {
+	auto cx=Element::cx();
+	auto cy=Element::cy();
   if(x1 <= 0) return 0;   // no scroll bar ?
   int tmp = int(xAxis.limit_min + 0.5);
 

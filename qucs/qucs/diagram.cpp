@@ -57,9 +57,10 @@
 #include "some_font_stuff.h"
 
 
-Diagram::Diagram(int _cx, int _cy)
+Diagram::Diagram(int cx, int cy)
 {itested();
-  cx = _cx;  cy = _cy;
+  _cx = cx;
+  _cy = cy;
   
   // x1, x2, y1, y2 are the selectable boundings of the diagram, but these
   // are the real boundings. They are set in "createAxisLabels()".
@@ -116,19 +117,19 @@ void Diagram::paintDiagram(ViewPainter *p)
     // paint all lines
     foreach(Line *pl, Lines) {itested();
       p->Painter->setPen(pl->style);
-      p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
+      p->drawLine(cx()+pl->x1, cy()-pl->y1, cx()+pl->x2, cy()-pl->y2);
     }
 
     // paint all arcs (1 pixel larger to compensate for strange circle method)
     foreach(Arc *pa, Arcs) { untested();
       p->Painter->setPen(pa->style);
-      p->drawArc(cx+pa->x, cy-pa->y, pa->w, pa->h, pa->angle, pa->arclen);
+      p->drawArc(cx()+pa->x, cy()-pa->y, pa->w, pa->h, pa->angle, pa->arclen);
     }
 
     // draw all graphs
   foreach(Graph *pg, Graphs)
   {itested();
-      pg->paint(p, cx, cy);
+      pg->paint(p, cx(), cy());
   }
     // keep track of painter state
     p->Painter->save();
@@ -143,7 +144,7 @@ void Diagram::paintDiagram(ViewPainter *p)
 //
       // qDebug() << p->DX << p->DY << cy;
       p->Painter->setPen(pt->Color);
-      p->Painter->drawText(QPoint(cx+pt->x, cy-pt->y), pt->s);
+      p->Painter->drawText(QPoint(cx()+pt->x, cy()-pt->y), pt->s);
     }
     p->Painter->setWorldMatrix(wm);
     p->Painter->setWorldMatrixEnabled(false);
@@ -175,13 +176,13 @@ void Diagram::paintMarkers(ViewPainter *p, bool paintAll)
     // draw markers last, so they are at the top of painting layers
     foreach(Graph *pg, Graphs)
       foreach(Marker *pm, pg->Markers)
-          if ((pm->Type & 1)||paintAll) pm->paint(p, cx, cy);
+          if ((pm->Type & 1)||paintAll) pm->paint(p, cx(), cy());
 }
 
 // ------------------------------------------------------------
 void Diagram::paintScheme(SchematicDoc *p) const
 { untested();
-  p->PostPaintEvent(_Rect, cx, cy-y2, x2, y2);
+  p->PostPaintEvent(_Rect, cx(), cy()-y2, x2, y2);
 }
 
 /*!
@@ -353,10 +354,10 @@ Marker* Diagram::setMarker(int x, int y)
   if(getSelected(x, y)) { untested();
     // test all graphs of the diagram
     foreach(Graph *pg,Graphs) { untested();
-      int n  = pg->getSelected(x-cx, cy-y); // sic!
+      int n  = pg->getSelected(x-cx(), cy()-y); // sic!
       if(n >= 0) { untested();
 	assert(pg->parentDiagram() == this);
-	Marker *pm = new Marker(pg, n, x-cx, y-cy);
+	Marker *pm = new Marker(pg, n, x-cx(), y-cy());
 	pg->Markers.append(pm);
 	return pm;
       }
@@ -603,10 +604,10 @@ for(int zz=0; zz<60; zz+=2)
 // doesn't seem to be the bounding box
 void Diagram::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {itested();
-  _x1 = cx - Bounding_x1;
-  _y1 = cy - y2 - Bounding_y2;
-  _x2 = cx + x2 + Bounding_x2;
-  _y2 = cy - Bounding_y1;
+  _x1 = cx() - Bounding_x1;
+  _y1 = cy() - y2 - Bounding_y2;
+  _x2 = cx() + x2 + Bounding_x2;
+  _y2 = cy() - Bounding_y1;
 }
 
 // -------------------------------------------------------
@@ -617,14 +618,14 @@ QRectF Diagram::boundingRect() const
 	Diagram* d=const_cast<Diagram*>(this);
 	d->Bounding(x1, y1, x2, y2);
 	QRectF b(x1, y1, x2, y2); // WRONG
-	return QRectF(cx, cy, +x2-x1+30, y1-y2+30);
+	return QRectF(cx(), cy(), +x2-x1+30, y1-y2+30);
 	return b;
 }
 
 // -------------------------------------------------------
 bool Diagram::getSelected(int x_, int y_)
 { untested();
-  if(x_ >= cx-x1) if(x_ <= cx+x3) if(y_ >= cy-y2) if(y_ <= cy+y1)
+  if(x_ >= cx()-x1) if(x_ <= cx()+x3) if(y_ >= cy()-y2) if(y_ <= cy()+y1)
     return true;
 
   return false;
@@ -636,8 +637,8 @@ bool Diagram::getSelected(int x_, int y_)
 */
 bool Diagram::resizeTouched(float fX, float fY, float len)
 { untested();
-  float fCX = float(cx), fCY = float(cy);
-  float fX2 = float(cx+x2), fY2 = float(cy-y2);
+  float fCX = float(cx()), fCY = float(cy());
+  float fX2 = float(cx()+x2), fY2 = float(cy()-y2);
   if(fX < fCX-len) return false;
   if(fX > fX2+len) return false;
   if(fY < fY2-len) return false;
@@ -1193,18 +1194,18 @@ int Diagram::checkColumnWidth(const QString& Str,
 void Diagram::setCenter(int x, int y, bool relative)
 { untested();
   if(relative) { untested();
-    cx += x;  cy += y;
+    _cx += x;  _cy += y;
   }
   else { untested();
-    cx = x;  cy = y;
+    _cx = x;  _cy = y;
   }
 }
 
 // -------------------------------------------------------
 void Diagram::getCenter(int& x, int& y)
 { untested();
-  x = cx + (x2 >> 1);
-  y = cy - (y2 >> 1);
+  x = cx() + (x2 >> 1);
+  y = cy() - (y2 >> 1);
 }
 
 // ------------------------------------------------------------
@@ -1226,7 +1227,7 @@ void Diagram::finishMarkerCoordinates(float& fCX, float& fCY) const
 // ------------------------------------------------------------
 QString Diagram::save()
 {
-  QString s = "<"+Name+" "+QString::number(cx)+" "+QString::number(cy)+" ";
+  QString s = "<"+Name+" "+QString::number(cx())+" "+QString::number(cy())+" ";
   s += QString::number(x2)+" "+QString::number(y2)+" ";
   char c = '0';
   if(xAxis.GridOn) c |= 1;
@@ -1285,11 +1286,11 @@ bool Diagram::load(const QString& Line, DocumentStream& stream)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  cx = n.toInt(&ok);
+  _cx = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  cy = n.toInt(&ok);
+  _cy = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',3,3);    // x2
@@ -2403,7 +2404,7 @@ bool Diagram::pressElement(SchematicDoc* Doc, Element*& selElem, QMouseEvent* Ev
 	}else{ untested();
 
 		Doc->pushBack(Diag);
-		Doc->enlargeView(Diag->cx_(), Diag->cy_()-Diag->y2_(), Diag->cx_()+Diag->x2_(), Diag->cy_());
+		Doc->enlargeView(Diag->cx(), Diag->cy()-Diag->y2_(), Diag->cx()+Diag->x2_(), Diag->cy());
 		Doc->setChanged(true, true);   // document has been changed
 
 		Doc->viewport()->repaint();
