@@ -1,7 +1,5 @@
 /***************************************************************************
-                                 symbol.h
-                                -----------
-    copyright            : (C) 2016, 2019 Felix Salfelder
+    copyright            : (C) 2016, 2019, 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -63,6 +61,9 @@ public: // interface
   virtual unsigned paramCount()const {return 0;}
 
 public: // TODO. something like this.
+  virtual void expand() { untested(); }
+  virtual void unExpand() { untested(); }
+  // TODO: clarify relation to "recreate"...
   // virtual void prepare();
   // virtual void unPrepare();
 
@@ -79,9 +80,7 @@ public: // Parameters
   virtual void setParameter(unsigned i, std::string const&){
 	  throw ExceptionCantFind(std::to_string(i), label().toStdString());
   }
-  virtual std::string getParameter(std::string const& w){
-	  throw ExceptionCantFind(w, label().toStdString());
-  }
+  virtual std::string getParameter(std::string const& w) const;
 
   // yikes there's param{Name,Value} already..
   virtual std::string paramValue(unsigned i) const;
@@ -102,7 +101,7 @@ private:
   Port const& port(unsigned) const; // TODO. don't expose "Port"
 
 public: // Port access
-  virtual std::pair<int, int> const& portPosition(unsigned) const;
+  virtual std::pair<int, int> portPosition(unsigned) const;
   virtual Net const* portValue(unsigned) const;
   // TODO: rethink Port/Node semantics
   virtual unsigned numPorts() const = 0;
@@ -117,6 +116,7 @@ private: // internal port access
   virtual Port& port(unsigned){ unreachable(); return *new Port(0,0);}
 
 public: // graphics
+  std::pair<int, int> center()const;
         // hmm, maybe just dispatch a gfx object.
 		  // leave it like that, for now.
   virtual unsigned height()const {return 0;}

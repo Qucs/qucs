@@ -23,7 +23,7 @@ private:
 	Ground(Ground const& g);
 public:
   Ground();
- ~Ground();
+  ~Ground();
   Component* newOne() {return new Ground(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 
@@ -38,7 +38,7 @@ protected:
 };
 
 Ground::Ground(Ground const& g) : Component(g)
-{
+{ untested();
 //	init();
   info(Name, bitmap_file);
   Type = isComponent;   // both analog and digital
@@ -50,12 +50,12 @@ Ground::Ground(Ground const& g) : Component(g)
  // Lines.append(new Line( -7, 16,  7, 16,QPen(Qt::darkBlue,3)));
  // Lines.append(new Line( -3, 22,  3, 22,QPen(Qt::darkBlue,3)));
  // BUG: do in Component??
-  for(auto i : g.Lines){
+  for(auto i : g.Lines){ untested();
     Lines.append(new Line(*i));
   }
 
- // Ports.clear(); // why??
- // Ports.append(new Port(  0,  0));
+//  Ports.clear(); // why??
+//  Ports.append(new Port(  0,  0));
 
   x1 = g.x1;
   y1 = g.y1;
@@ -71,12 +71,12 @@ Ground::Ground(Ground const& g) : Component(g)
 }
 
 Ground::Ground()
-{
+{ untested();
 	init();
 }
 
 void	Ground::init()
-{
+{ untested();
   info(Name, bitmap_file);
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("ground (reference potential)");
@@ -101,11 +101,11 @@ void	Ground::init()
 }
 
 Ground::~Ground()
-{
+{ untested();
 }
 
 Node* Ground::connectNode(unsigned i, NodeMap&l)
-{
+{ untested();
   Node* n = Component::connectNode(i, l);
   assert(n);
   trace1("ground set netlabel1", n->netLabel());
@@ -115,7 +115,7 @@ Node* Ground::connectNode(unsigned i, NodeMap&l)
 }
 
 Node* Ground::disconnectNode(unsigned i, NodeMap&l)
-{
+{ untested();
   Node* n = Component::disconnectNode(i, l);
   assert(n);
   incomplete();
@@ -124,7 +124,7 @@ Node* Ground::disconnectNode(unsigned i, NodeMap&l)
 
 // -------------------------------------------------------
 Element* Ground::info(QString& Name, char* &BitmapFile, bool getNewOne)
-{
+{ untested();
   Name = QObject::tr("Ground");
   BitmapFile = (char *) "gnd";
 
@@ -134,7 +134,7 @@ Element* Ground::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
 // -------------------------------------------------------
 QString Ground::netlist() const
-{
+{ untested();
   return QString("");
 }
 

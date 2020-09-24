@@ -244,8 +244,8 @@ int SchematicDoc::saveSymbolCpp (void)
     if (pp->name() == ".PortSym ") {
       if (((PortSymbol*)pp)->numberStr.toInt() > maxNum)
 	maxNum = ((PortSymbol*)pp)->numberStr.toInt();
-      x1 = ((PortSymbol*)pp)->cx_();
-      y1 = ((PortSymbol*)pp)->cy_();
+      x1 = ((PortSymbol*)pp)->cx();
+      y1 = ((PortSymbol*)pp)->cy();
       if (x1 < xmin) xmin = x1;
       if (x1 > xmax) xmax = x1;
       if (y1 < ymin) ymin = y1;
@@ -320,8 +320,8 @@ int SchematicDoc::saveSymbolJSON()
     if (pp->name() == ".PortSym ") {
       if (((PortSymbol*)pp)->numberStr.toInt() > maxNum)
 	maxNum = ((PortSymbol*)pp)->numberStr.toInt();
-      x1 = ((PortSymbol*)pp)->cx_();
-      y1 = ((PortSymbol*)pp)->cy_();
+      x1 = ((PortSymbol*)pp)->cx();
+      y1 = ((PortSymbol*)pp)->cy();
       if (x1 < xmin) xmin = x1;
       if (x1 > xmax) xmax = x1;
       if (y1 < ymin) ymin = y1;

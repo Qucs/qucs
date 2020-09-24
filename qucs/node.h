@@ -80,8 +80,8 @@ public:
 
   // BUG
   void setName(const QString&, const QString&, int x_=0, int y_=0);
-  int cx() const{ return Element::cx_(); }
-  int cy() const{ return Element::cy_(); }
+  int cx() const{ return Element::_cx; }
+  int cy() const{ return Element::_cy; }
 
   std::pair<int, int> const& position() const{
 	  return _position;

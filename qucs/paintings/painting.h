@@ -25,6 +25,7 @@
 class Painting : public Element  {
 public:
   Painting();
+  Painting(int cx, int cy) : Element(cx, cy) {}
  ~Painting() {}
 
   virtual void getCenter(int&, int &) {}

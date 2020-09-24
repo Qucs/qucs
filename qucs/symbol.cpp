@@ -65,7 +65,7 @@ Node* Symbol::connectNode(unsigned i, NodeMap&nm)
 	trace2("connectNode", label(), i);
 	Port const& pp = port(i);
 	Port& mp = port(i);
-	Node* n = &nm.at(pp.x_()+cx_(), pp.y_()+cy_());
+	Node* n = &nm.at(pp.x_()+cx(), pp.y_()+cy());
 	assert(n->hasNet());
 
 // 	if(auto c=dynamic_cast<Conductor*>(this)){
@@ -101,19 +101,34 @@ Net const* Symbol::portValue(unsigned i) const
   }
 }
 
+// "position"?
+std::pair<int, int> Symbol::center()const
+{ untested();
+	return std::make_pair(_cx, _cy);
+}
+
 Port const& Symbol::port(unsigned i) const
 {
 	Symbol* s=const_cast<Symbol*>(this);
 	return s->port(i);
 }
 
-std::pair<int, int> const& Symbol::portPosition(unsigned i) const
+std::string Symbol::getParameter(std::string const& n) const
 {
-	trace3("portPosition", this, i, &port(i));
-	trace1("portPosition", port(i).connected());
-	trace2("portPosition", port(i).position().first, port(i).position().second);
+	if(n=="$xposition"){
+		return std::to_string(cx());
+	}else if(n=="$yposition"){
+		return std::to_string(cy());
+	}else{
+	  throw ExceptionCantFind(n, label().toStdString());
+	}
+}
+
+std::pair<int, int> Symbol::portPosition(unsigned i) const
+{
 	assert(port(i).connected());
-	return port(i)->position();	
+	auto p = port(i)->position();	
+	return p;
 }
 
 // BUG: not here. legacy stuff...

@@ -31,7 +31,7 @@ EllipseArc::EllipseArc() : Painting()
 {
   Name = "EArc ";
   Pen = QPen(QColor());
-  cx = cy = x1 = x2 = y1 = y2 = Angle = ArcLen = 0;
+  x1 = x2 = y1 = y2 = Angle = ArcLen = 0;
 }
 
 EllipseArc::~EllipseArc()
@@ -56,6 +56,9 @@ void EllipseArc::paint(ViewPainter *p)
     return;
   }
 #endif
+   auto cx=Element::cx();
+     auto cy=Element::cy();
+
   p->Painter->setPen(Pen);
   p->drawArc(cx, cy, x2, y2, Angle, ArcLen);
 }
@@ -63,12 +66,15 @@ void EllipseArc::paint(ViewPainter *p)
 // --------------------------------------------------------------------------
 void EllipseArc::paintScheme(SchematicDoc *p)
 {
-  p->PostPaintEvent(_Arc, cx, cy, x2, y2, Angle, ArcLen);
+	incomplete();
 }
 
 // --------------------------------------------------------------------------
 void EllipseArc::getCenter(int& x, int &y)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   x = cx+(x2>>1);
   y = cy+(y2>>1);
 }
@@ -77,8 +83,8 @@ void EllipseArc::getCenter(int& x, int &y)
 // Sets the center of the painting to x/y.
 void EllipseArc::setCenter(int x, int y, bool relative)
 {
-  if(relative) { cx += x;  cy += y; }
-  else { cx = x-(x2>>1);  cy = y-(y2>>1); }
+  if(relative) { _cx += x;  _cy += y; }
+  else { _cx = x-(x2>>1);  _cy = y-(y2>>1); }
 }
 
 // --------------------------------------------------------------------------
@@ -98,11 +104,11 @@ bool EllipseArc::load(const QString& s)
   QString n;
 
   n  = s.section(' ',1,1);    // cx
-  cx = n.toInt(&ok);
+  _cx = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  cy = n.toInt(&ok);
+  _cy = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',3,3);    // x2
@@ -141,6 +147,9 @@ bool EllipseArc::load(const QString& s)
 // --------------------------------------------------------------------------
 QString EllipseArc::save()
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString s = Name +
 	QString::number(cx) + " " + QString::number(cy) + " " +
 	QString::number(x2) + " " + QString::number(y2) + " " +
@@ -153,6 +162,9 @@ QString EllipseArc::save()
 // --------------------------------------------------------------------------
 QString EllipseArc::saveCpp()
 {
+	   auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString s =
     QString ("new Arc (%1, %2, %3, %4, %5, %6, "
 	     "QPen (QColor (\"%7\"), %8, %9))").
@@ -164,6 +176,9 @@ QString EllipseArc::saveCpp()
 
 QString EllipseArc::saveJSON()
 {
+	   auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString s =
     QString ("{\"type\" : \"ellipsearc\", "
       "\"x\" : %1, \"y\" : %2, \"w\" : %3, \"h\" : %4, "
@@ -178,6 +193,9 @@ QString EllipseArc::saveJSON()
 // Checks if the resize area was clicked.
 bool EllipseArc::resizeTouched(float fX, float fY, float len)
 {
+	   auto cx=Element::cx();
+     auto cy=Element::cy();
+
   float fCX = float(cx), fCY = float(cy);
   float fX2 = float(cx+x2), fY2 = float(cy+y2);
 
@@ -200,6 +218,7 @@ bool EllipseArc::resizeTouched(float fX, float fY, float len)
 // Mouse move action during resize.
 void EllipseArc::MouseResizeMoving(int x, int y, SchematicDoc *p)
 {
+#if 0
   paintScheme(p);  // erase old painting
   switch(State) {
     case 0: x2 = x-cx; y2 = y-cy; // lower right corner
@@ -215,6 +234,7 @@ void EllipseArc::MouseResizeMoving(int x, int y, SchematicDoc *p)
   if(y2 < 0) { State ^= 2; y2 *= -1; cy -= y2; }
 
   paintScheme(p);  // paint new painting
+#endif
 }
 
 // --------------------------------------------------------------------------
@@ -224,6 +244,7 @@ void EllipseArc::MouseMoving(
 	SchematicDoc *paintScale, int fx, int fy, int gx, int gy,
 	SchematicDoc *p, int x, int y, bool drawn)
 {
+#if 0
   switch(State) {
     case 0 :
        x2 = gx;
@@ -290,11 +311,13 @@ void EllipseArc::MouseMoving(
   x1 = x;
   y1 = y;
   p->PostPaintEvent(_Arc, x1+13, y1, 18, 12, 16*45, 16*200,true);  // paint new cursor symbol
+#endif
 }
 
 // --------------------------------------------------------------------------
 bool EllipseArc::MousePressing()
 {
+#if 0
   State++;
   switch(State) {
     case 1 :
@@ -306,6 +329,7 @@ bool EllipseArc::MousePressing()
 	State = 0;
 	return true;    // painting is ready
   }
+#endif
   return false;
 }
 
@@ -313,6 +337,9 @@ bool EllipseArc::MousePressing()
 // Checks if the coordinates x/y point to the painting.
 bool EllipseArc::getSelected(float fX, float fY, float w)
 {
+	   auto cx=Element::cx();
+     auto cy=Element::cy();
+
   float fX2 = float(x2)/2.0;
   float fY2 = float(y2)/2.0;
   fX -= float(cx) + fX2;
@@ -342,8 +369,8 @@ bool EllipseArc::getSelected(float fX, float fY, float w)
 // Rotates around the center.
 void EllipseArc::rotate()
 {
-  cy += (y2-x2) >> 1;
-  cx += (x2-y2) >> 1;
+  _cy += (y2-x2) >> 1;
+  _cx += (x2-y2) >> 1;
   int tmp = x2;
   x2 = y2;
   y2 = tmp;

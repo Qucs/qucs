@@ -36,7 +36,6 @@ Arrow::Arrow() : Painting()
 {
   Name = "Arrow ";
   Pen = QPen(QColor());
-  cx = cy = 0;
   x1 = x2 = 0;
   y1 = y2 = 0;
 
@@ -54,6 +53,9 @@ Arrow::~Arrow()
 // --------------------------------------------------------------------------
 void Arrow::paint(ViewPainter *p)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QPolygon Points;
   int x1_, y1_, x2_, y2_, x3_, y3_;
 #if 0
@@ -111,6 +113,9 @@ void Arrow::paint(ViewPainter *p)
 // --------------------------------------------------------------------------
 void Arrow::paintScheme(SchematicDoc *p)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   p->PostPaintEvent(_Line, cx, cy, cx+x2, cy+y2,0,0,false);
   p->PostPaintEvent(_Line, cx+x2, cy+y2, cx+xp1, cy+yp1,0,0,false);
   p->PostPaintEvent(_Line, cx+x2, cy+y2, cx+xp2, cy+yp2,0,0,false);
@@ -119,6 +124,9 @@ void Arrow::paintScheme(SchematicDoc *p)
 // --------------------------------------------------------------------------
 void Arrow::getCenter(int& x, int &y)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   x = cx+(x2>>1);
   y = cy+(y2>>1);
 }
@@ -127,6 +135,9 @@ void Arrow::getCenter(int& x, int &y)
 // Sets the center of the painting to x/y.
 void Arrow::setCenter(int x, int y, bool relative)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   if(relative) { cx += x;  cy += y; }
   else { cx = x-(x2>>1);  cy = y-(y2>>1); }
 }
@@ -148,11 +159,11 @@ bool Arrow::load(const QString& s)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  cx = n.toInt(&ok);
+  _cx = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  cy = n.toInt(&ok);
+  _cy = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',3,3);    // x2
@@ -200,6 +211,9 @@ bool Arrow::load(const QString& s)
 // --------------------------------------------------------------------------
 QString Arrow::save()
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString s = Name+QString::number(cx)+" "+QString::number(cy)+" ";
   s += QString::number(x2)+" "+QString::number(y2)+" ";
   s += QString::number(int(Height))+" "+QString::number(int(Width))+" ";
@@ -211,6 +225,9 @@ QString Arrow::save()
 // --------------------------------------------------------------------------
 QString Arrow::saveCpp()
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   // arrow not allowed in symbols, thus we use line here
   QString s =
     QString ("new Line (%1, %2, %3, %4, QPen (QColor (\"%5\"), %6, %7))").
@@ -222,6 +239,9 @@ QString Arrow::saveCpp()
 
 QString Arrow::saveJSON()
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   // arrow not allowed in symbols, thus we use line here
   QString s =
     QString("{\"type\" : \"arrow\", "
@@ -236,6 +256,9 @@ QString Arrow::saveJSON()
 // Checks if the resize area was clicked.
 bool Arrow::resizeTouched(float fX, float fY, float len)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   float fCX = float(cx),fCY = float(cy);
   if(fX < fCX+len) if(fX > fCX-len) if(fY < fCY+len) if(fY > fCY-len) {
     State = 1;
@@ -257,6 +280,9 @@ bool Arrow::resizeTouched(float fX, float fY, float len)
 // Mouse move action during resize.
 void Arrow::MouseResizeMoving(int x, int y, SchematicDoc *p)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   paintScheme(p);  // erase old painting
   if(State == 1) { x2 += cx-x; y2 += cy-y; cx = x; cy = y; } // moving shaft
   else { x2 = x-cx;  y2 = y-cy; }  // moving head
@@ -286,6 +312,8 @@ void Arrow::MouseMoving(
 	SchematicDoc *paintScale, int, int, int gx, int gy,
 	SchematicDoc *p, int x, int y, bool drawn)
 {
+	incomplete();
+#if 0
   if(State > 0) {
     if(State > 1) {
       calcArrowHead();
@@ -311,6 +339,7 @@ void Arrow::MouseMoving(
   p->PostPaintEvent(_Line, x1+25, y1, x1+13, y1+12,0,0,true);  // paint new cursor symbol
   p->PostPaintEvent(_Line, x1+18, y1+2, x1+25, y1,0,0,true);
   p->PostPaintEvent(_Line, x1+23, y1+7, x1+25, y1,0,0,true);
+#endif
 }
 
 // --------------------------------------------------------------------------
@@ -332,6 +361,9 @@ bool Arrow::MousePressing()
 // 5 is the precision the user must point onto the painting.
 bool Arrow::getSelected(float fX, float fY, float w)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   float A, xn, yn;
   // first check if coordinates match the arrow body
   fX -= float(cx);
@@ -426,6 +458,9 @@ Head2:    // check if coordinates match the second arrow head line
 // --------------------------------------------------------------------------
 void Arrow::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   if(x2 < 0) { _x1 = cx+x2; _x2 = cx; }
   else { _x1 = cx; _x2 = cx+x2; }
 
@@ -437,8 +472,8 @@ void Arrow::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 // Rotates around the center.
 void Arrow::rotate()
 {
-  cx += (x2>>1) - (y2>>1);
-  cy += (x2>>1) + (y2>>1);
+  _cx += (x2>>1) - (y2>>1);
+  _cy += (x2>>1) + (y2>>1);
 
   int tmp = x2;
   x2  =  y2;
@@ -459,7 +494,7 @@ void Arrow::mirrorX()
 {
   yp1 = -yp1;
   yp2 = -yp2;
-  cy +=  y2;   // change cy after the other changes !
+  _cy +=  y2;   // change cy after the other changes !
   y2  = -y2;
 }
 
@@ -469,7 +504,7 @@ void Arrow::mirrorY()
 {
   xp1 = -xp1;
   xp2 = -xp2;
-  cx +=  x2;   // change cx after the other changes !
+  _cx +=  x2;   // change cx after the other changes !
   x2  = -x2;
 }
 

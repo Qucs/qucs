@@ -80,8 +80,6 @@ public: // power matching stuff. some sort of VarPos (ab?)use
   Graph const *pGraph;   // the corresponding graph
 
 public: // FIXME, these are still around.
-	int & cx__() { return cx; }
-	int & cy__() { return cy; }
 	int & x1__() { return x1; }
 	int & y1__() { return y1; }
 	int & x2__() { return x2; }

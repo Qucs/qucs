@@ -25,8 +25,8 @@ Painting::Painting()
 
 void Painting::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
-  _x1 = cx;     _y1 = cy;
-  _x2 = cx+x2;  _y2 = cy+y2;
+  _x1 = _cx;     _y1 = _cy;
+  _x2 = _cx+x2;  _y2 = _cy+y2;
 }
 
 QString Painting::save()
