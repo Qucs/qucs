@@ -80,8 +80,8 @@ void ElementGraphics::attachElement(Element* e)
 {itested();
 	assert(e);
 	_e = e;
-	// BUG: ask element
-	setFlags(ItemIsSelectable|ItemIsMovable);
+	// BUG: ask element?
+	setFlags(ItemIsSelectable|ItemIsMovable|ItemSendsGeometryChanges);
 	setAcceptHoverEvents(true);
 
 	auto sp = _e->center();
@@ -280,8 +280,8 @@ bool ElementGraphics::sceneEvent(QEvent* e)
 	}else if(!e->isAccepted()){itested();
 		// possibly set in filter?
 	}else{itested();
-		unreachable();
-		// strange.
+		// unreachable();
+		// strange. getting here when shutting down?
 		trace1("ElementGraphics::sceneEvent already accepted", e->type());
 	}
 	assert(scene());
@@ -358,4 +358,28 @@ ItemEvent::ItemEvent(QEvent const& a, ElementGraphics& b)
 	: QEvent(a), _item(b)
 {itested();
 }
+/*--------------------------------------------------------------------------*/
+#include <QApplication> // BUG
+#include <QtMath> // really?
+QVariant ElementGraphics::itemChange(GraphicsItemChange c, const QVariant &v)
+{
+    if (!scene()){ untested();
+	 }else if(c == ItemPositionChange){ untested();
+        QPointF tmp = v.toPointF();
+        if(QApplication::mouseButtons() != Qt::LeftButton){ untested();
+            return tmp;
+		  }else if(auto scn = dynamic_cast<SchematicScene*> (scene())){ untested();
+//            int gridSizeX = 20; // getX(scn->gridSize());
+//            int gridSizeY = 20; // getY(scn->gridSize());
+//            qreal x = round(tmp.x()/gridSizeX)*gridSizeX;
+//            qreal y = round(tmp.y()/gridSizeY)*gridSizeY;
+            return scn->snapToGrid(tmp.toPoint()); // does toPoint round as intended?
+        }else{ untested();
+            return tmp;
+		  }
+    }else{ untested();
+	 }
+	 return QGraphicsItem::itemChange(c, v);
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

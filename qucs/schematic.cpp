@@ -362,15 +362,15 @@ void SchematicDoc::paintFrame(ViewPainter *p)
   z = int(200.0 * p->Scale);
   y1_ -= p->LineSpacing + d;
   p->Painter->drawLine(x1_, y1_, x2_, y1_);
-  p->Painter->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, FrameText[2]);
+  p->Painter->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, _frameText[2]);
   p->Painter->drawLine(x1_+z, y1_, x1_+z, y1_ + p->LineSpacing+d);
-  p->Painter->drawText(x1_+d+z, y1_+(d>>1), 0, 0, Qt::TextDontClip, FrameText[3]);
+  p->Painter->drawText(x1_+d+z, y1_+(d>>1), 0, 0, Qt::TextDontClip, _frameText[3]);
   y1_ -= p->LineSpacing + d;
   p->Painter->drawLine(x1_, y1_, x2_, y1_);
-  p->Painter->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, FrameText[1]);
-  y1_ -= (FrameText[0].count('\n')+1) * p->LineSpacing + d;
+  p->Painter->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, _frameText[1]);
+  y1_ -= (_frameText[0].count('\n')+1) * p->LineSpacing + d;
   p->Painter->drawRect(x2_, y2_, x1_-x2_-1, y1_-y2_-1);
-  p->Painter->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, FrameText[0]);
+  p->Painter->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, _frameText[0]);
 }
 
 // -----------------------------------------------------------

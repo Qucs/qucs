@@ -15,7 +15,8 @@
   - pluggable netlister and schematic parser/writer
   - pluggable components
   - untangle QucsDoc
-* postponed to 0.1.*
+* probably postponed to 0.1.*
+  - some user interactions
   - SymbolEditor
   - netlister hacks
   - some plugins
