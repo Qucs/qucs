@@ -100,10 +100,10 @@ SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
   setScene(Scene);
 
   ShowFrame = 0;  // don't show
-  FrameText[0] = tr("Title");
-  FrameText[1] = tr("Drawn By:");
-  FrameText[2] = tr("Date:");
-  FrameText[3] = tr("Revision:");
+  _frameText[0] = tr("Title");
+  _frameText[1] = tr("Drawn By:");
+  _frameText[2] = tr("Date:");
+  _frameText[3] = tr("Revision:");
 
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -433,7 +433,7 @@ void SchematicDoc::mouseMoveEvent(QMouseEvent *e)
 
 	  // move actions go through here.
 	  signalCursorPosChanged(ee.localPos().x(), ee.localPos().y());
-	  QGraphicsView::mouseMoveEvent(&ee);
+	  QGraphicsView::mouseMoveEvent(e);
   }
 
   return;
