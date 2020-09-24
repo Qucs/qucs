@@ -63,6 +63,7 @@ static QString QG(SchematicSymbol const& m, std::string const& key)
 static void wirehack(Wire const* w, DocumentStream& d)
 {
 	assert(w);
+	Symbol const* sym = w;
   int x1=0, x2=0, y1=0, y2=0;
   trace1("wirehack", w);
   std::pair<int, int> X = w->portPosition(0);
@@ -75,8 +76,13 @@ static void wirehack(Wire const* w, DocumentStream& d)
   std::tie(x1, y1) = w->portPosition(0);
   std::tie(x2, y2) = w->portPosition(1);
 
-  d << "<"+QString::number(x1)+" "+QString::number(y1);
-  d << " "+QString::number(x2)+" "+QString::number(y2);
+  int cx = atoi(sym->getParameter("$xposition").c_str());
+  int cy = atoi(sym->getParameter("$yposition").c_str());
+  int dx = atoi(sym->getParameter("deltax").c_str());
+  int dy = atoi(sym->getParameter("deltay").c_str());
+
+  d << "<" << cx << " " << cy
+    << " " << cx+dx << " " << cy+dy;
 
   if(false) { untested();
           // d << " \""+Label->name()+"\" ";

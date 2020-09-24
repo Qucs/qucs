@@ -14,6 +14,11 @@
 #include "port.h"
 #include "node.h"
 
+Port::Port(Port const& p)
+	: _x(p._x), _y(p._y), Connection(nullptr)
+{
+}
+
 QString const& Port::netLabel() const
 {
 	assert(Connection);

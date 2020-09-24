@@ -1019,8 +1019,11 @@ bool SchematicDoc::rotateElements()
 // ---------------------------------------------------
 // Mirrors all selected components.
 // First copy them to 'ElementCache', then mirror and insert again.
+// obsolete.
 bool SchematicDoc::mirrorXComponents()
 { untested();
+  assert(false);
+#if 0
   QRectF BB(1., 1., -1. , -1.);
   QList<ElementGraphics*> ElementCache;
 
@@ -1055,7 +1058,7 @@ bool SchematicDoc::mirrorXComponents()
     assert(pe);
     if(auto c=component(pe)){ untested();
 	c->mirrorX();   // mirror component !before! mirroring its center
-	c->setCenter(c->cx_(), y1 - c->cy_());
+	c->setCenter(c->cx(), y1 - c->cy());
     }else{ untested();
       incomplete();
     }
@@ -1066,9 +1069,9 @@ bool SchematicDoc::mirrorXComponents()
 	break;
       case isWire:
 	pw = (Wire*)pe;
+#if 0
 	pw->y1__() = y1 - pw->y1_();
 	pw->y2__() = y1 - pw->y2_();
-#if 0
 	pl = pw->Label;
 	if(pl){ untested();
           pl->cy__() = y1 - pl->cy_();
@@ -1099,12 +1102,16 @@ bool SchematicDoc::mirrorXComponents()
 
   setChanged(true, true);
   return true;
+#endif
 }
 
 // ---------------------------------------------------
 // Mirrors all selected components. First copy them to 'ElementCache', then mirror and insert again.
+// obsolete
 bool SchematicDoc::mirrorYComponents()
 { untested();
+  assert(false);
+# if 0
 
   QRectF BB(1., 1., -1. , -1.);
   QList<ElementGraphics*> ElementCache;
@@ -1145,9 +1152,9 @@ bool SchematicDoc::mirrorYComponents()
         break;
       case isWire:
         pw = (Wire*)pe;
+#if 0
         pw->x1__() = x1 - pw->x1_();
         pw->x2__() = x1 - pw->x2_();
-#if 0
         pl = pw->Label;
         if(pl) { untested();
           pl->cx__() = x1 - pl->cx_();
@@ -1181,6 +1188,7 @@ bool SchematicDoc::mirrorYComponents()
   }
 
   setChanged(true, true);
+#endif
   return true;
 }
 
@@ -1644,6 +1652,8 @@ bool SchematicDoc::redo()
 // Sets selected elements on grid.
 bool SchematicDoc::elementsOnGrid()
 { untested();
+  incomplete();
+#if 0
   int x, y, No;
   bool count = false;
   WireLabel *pl, *pLabel;
@@ -1782,6 +1792,8 @@ bool SchematicDoc::elementsOnGrid()
 #endif
   if(count) setChanged(true, true);
   return count;
+#endif
+  return 0;
 }
 
 // ---------------------------------------------------

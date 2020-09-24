@@ -27,11 +27,9 @@ Dispatcher<Painting>::INSTALL p(&painting_dispatcher, ".ID", &D);
 Module::INSTALL pp("paintings", &D);
 }
 
-ID_Text::ID_Text(int cx_, int cy_) : Painting()
+ID_Text::ID_Text(int cx_, int cy_) : Painting(cx_, cy_)
 {
   Name = ".ID ";
-  cx = cx_;
-  cy = cy_;
   x2 = y2 = 20;
 
   Prefix = "SUB";
@@ -46,6 +44,8 @@ ID_Text::~ID_Text()
 // --------------------------------------------------------------------------
 void ID_Text::paint(ViewPainter *p)
 {
+	  auto cx=Element::cx();
+       auto cy=Element::cy();
   int x, y;
   p->Painter->setPen(QPen(Qt::black,1));
   p->map(cx, cy, x, y);
@@ -82,12 +82,16 @@ void ID_Text::paint(ViewPainter *p)
 // --------------------------------------------------------------------------
 void ID_Text::paintScheme(SchematicDoc *p)
 {
+	  auto cx=Element::cx();
+      auto cy=Element::cy();
   p->PostPaintEvent(_Rect, cx, cy, x2, y2);
 }
 
 // --------------------------------------------------------------------------
 void ID_Text::getCenter(int& x, int &y)
 {
+	  auto cx=Element::cx();
+      auto cy=Element::cy();
   x = cx+(x2>>1);
   y = cy+(y2>>1);
 }
@@ -96,6 +100,8 @@ void ID_Text::getCenter(int& x, int &y)
 // Sets the center of the painting to x/y.
 void ID_Text::setCenter(int x, int y, bool relative)
 {
+	  auto cx=Element::cx();
+      auto cy=Element::cy();
   if(relative) { cx += x;  cy += y; }
   else { cx = x-(x2>>1);  cy = y-(y2>>1); }
 }
@@ -103,15 +109,16 @@ void ID_Text::setCenter(int x, int y, bool relative)
 // --------------------------------------------------------------------------
 bool ID_Text::load(const QString& s)
 {
+	incomplete();
   bool ok;
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  cx = n.toInt(&ok);
+  Element::_cx = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  cy = n.toInt(&ok);
+  Element::_cy = n.toInt(&ok);
   if(!ok) return false;
 
   Prefix = s.section(' ',3,3);    // Prefix
@@ -137,6 +144,8 @@ bool ID_Text::load(const QString& s)
 // --------------------------------------------------------------------------
 QString ID_Text::save()
 {
+	  auto cx=Element::cx();
+     auto cy=Element::cy();
   QString s = Name+QString::number(cx)+" "+QString::number(cy)+" ";
   s += Prefix;
 
@@ -153,14 +162,13 @@ QString ID_Text::save()
 QString ID_Text::saveCpp()
 {
   QString s =
-    QString ("tx = %1; ty = %2;").
-    arg(cx).arg(cy);
+    QString ("tx = %1; ty = %2;").arg(cx()).arg(cy());
   return s;
 }
 
 QString ID_Text::saveJSON()
 {
-  QString s =  QString ("\"tx\" : %1,\n  \"ty\" : %2,").arg(cx).arg(cy);
+  QString s =  QString ("\"tx\" : %1,\n  \"ty\" : %2,").arg(cx()).arg(cy());
   return s;
 }
 
@@ -168,6 +176,9 @@ QString ID_Text::saveJSON()
 // Checks if the coordinates x/y point to the painting.
 bool ID_Text::getSelected(float fX, float fY, float)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   if(int(fX) < cx)  return false;
   if(int(fY) < cy)  return false;
   if(int(fX) > cx+x2)  return false;

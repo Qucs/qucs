@@ -31,7 +31,8 @@ Rectangle::Rectangle(bool _filled) : Painting()
   Pen = QPen(QColor());
   Brush = QBrush(Qt::lightGray);
   filled = _filled;
-  cx = cy = 0;
+  assert(cx() == 0);
+  assert(cy() == 0);
   x1 = x2 = 0;
   y1 = y2 = 0;
 }
@@ -43,6 +44,9 @@ Rectangle::~Rectangle()
 // --------------------------------------------------------------------------
 void Rectangle::paint(ViewPainter *p)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
 #if 0
   if(isSelected()) {
     p->Painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
@@ -67,15 +71,18 @@ void Rectangle::paint(ViewPainter *p)
 }
 
 // --------------------------------------------------------------------------
-void Rectangle::paintScheme(SchematicDoc *p) const
+void Rectangle::paintScheme(SchematicDoc *) const
 {
 	incomplete();
-  p->PostPaintEvent(_Rect, cx, cy, x2, y2);
+//  p->PostPaintEvent(_Rect, cx, cy, x2, y2);
 }
 
 // --------------------------------------------------------------------------
 void Rectangle::getCenter(int& x, int &y)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   x = cx+(x2>>1);
   y = cy+(y2>>1);
 }
@@ -84,6 +91,9 @@ void Rectangle::getCenter(int& x, int &y)
 // Sets the center of the painting to x/y.
 void Rectangle::setCenter(int x, int y, bool relative)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   if(relative) { cx += x;  cy += y; }
   else { cx = x-(x2>>1);  cy = y-(y2>>1); }
 }
@@ -115,11 +125,11 @@ bool Rectangle::load(const QString& s)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  cx = n.toInt(&ok);
+  _cx = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  cy = n.toInt(&ok);
+  _cy = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',3,3);    // x2
@@ -164,6 +174,9 @@ bool Rectangle::load(const QString& s)
 // --------------------------------------------------------------------------
 QString Rectangle::save()
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString s = Name +
 	QString::number(cx) + " " + QString::number(cy) + " " +
 	QString::number(x2) + " " + QString::number(y2) + " " +
@@ -178,6 +191,9 @@ QString Rectangle::save()
 // --------------------------------------------------------------------------
 QString Rectangle::saveCpp()
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString b = filled ?
     QString (", QBrush (QColor (\"%1\"), %2)").
     arg(Brush.color().name()).arg(toBrushString(Brush.style())) : "";
@@ -193,6 +209,9 @@ QString Rectangle::saveCpp()
 
 QString Rectangle::saveJSON()
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString b = filled ?
     QString ("\"colorfill\" : \"%1\", \"stylefill\" : \"%2\"").
     arg(Brush.color().name()).arg(toBrushString(Brush.style())) : "";
@@ -211,6 +230,9 @@ QString Rectangle::saveJSON()
 // Checks if the resize area was clicked.
 bool Rectangle::resizeTouched(float fX, float fY, float len)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   float fCX = float(cx), fCY = float(cy);
   float fX2 = float(cx+x2), fY2 = float(cy+y2);
 
@@ -231,8 +253,10 @@ bool Rectangle::resizeTouched(float fX, float fY, float len)
 
 // --------------------------------------------------------------------------
 // Mouse move action during resize.
-void Rectangle::MouseResizeMoving(int x, int y, SchematicDoc *p)
+void Rectangle::MouseResizeMoving(int , int , SchematicDoc *)
 {
+incomplete();
+#if 0
   paintScheme(p);  // erase old painting
   switch(State) {
     case 0: x2 = x-cx; y2 = y-cy; // lower right corner
@@ -248,6 +272,7 @@ void Rectangle::MouseResizeMoving(int x, int y, SchematicDoc *p)
   if(y2 < 0) { State ^= 2; y2 *= -1; cy -= y2; }
 
   paintScheme(p);  // paint new painting
+#endif
 }
 
 // --------------------------------------------------------------------------
@@ -257,6 +282,8 @@ void Rectangle::MouseMoving(
 	SchematicDoc *paintScale, int, int, int gx, int gy,
 	SchematicDoc *p, int x, int y, bool drawn)
 {
+	incomplete();
+#if 0
   if(State > 0) {
     if(State > 1)
       paintScale->PostPaintEvent(_Rect,x1, y1, x2-x1, y2-y1);  // erase old painting
@@ -285,11 +312,15 @@ void Rectangle::MouseMoving(
     p->PostPaintEvent(_Line, cx+26, cy+1, cx+17, cy+10,0,0,true);
     p->PostPaintEvent(_Line, cx+29, cy+5, cx+24, cy+10,0,0,true);
   }
+#endif
 }
 
 // --------------------------------------------------------------------------
 bool Rectangle::MousePressing()
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   State++;
   if(State == 1) {
     x1 = x2;
@@ -311,6 +342,9 @@ bool Rectangle::MousePressing()
 // Checks if the coordinates x/y point to the painting.
 bool Rectangle::getSelected(float fX, float fY, float w)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   if(filled) {
     if(int(fX) > cx+x2) return false;   // coordinates outside the rectangle ?
     if(int(fY) > cy+y2) return false;
@@ -340,8 +374,8 @@ bool Rectangle::getSelected(float fX, float fY, float w)
 // Rotates around the center.
 void Rectangle::rotate()
 {
-  cy += (y2-x2) >> 1;
-  cx += (x2-y2) >> 1;
+  _cy += (y2-x2) >> 1;
+  _cx += (x2-y2) >> 1;
   int tmp = x2;
   x2 = y2;
   y2 = tmp;

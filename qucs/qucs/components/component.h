@@ -151,9 +151,9 @@ public: // BUG
   bool showName;
 
 public:
-  int cx() const{return Element::cx;}
-  int cy() const{return Element::cy;}
-  std::pair<int, int> center() const{return std::make_pair(Element::cx, Element::cy);}
+  int cx() const{return Element::_cx;}
+  int cy() const{return Element::_cy;}
+  std::pair<int, int> center() const{return std::make_pair(Element::_cx, Element::_cy);}
 
 public: // BUG
   virtual std::string type() const { return Model.toStdString(); }
@@ -209,7 +209,7 @@ protected:
   void copyComponent(Component*);
   Property * getProperty(const QString&);
 private:
-  std::string getParameter(std::string const& name) override;
+  std::string getParameter(std::string const& name) const override;
 
 private: // (hopefully) obsolete callbacks
   void recreateCallback();

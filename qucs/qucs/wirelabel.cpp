@@ -23,11 +23,12 @@
 #include <QString>
 #include <QPainter>
 
-WireLabel::WireLabel(const QString& _Name, int _cx, int _cy,
+WireLabel::WireLabel(const QString& _Name, int cx, int cy,
                      int _x1, int _y1, int _Type) : Element()
 {
-  cx = _cx;
-  cy = _cy;
+	incomplete();
+  _cx = cx;
+  _cy = cy;
   x1 = _x1;
   y1 = _y1;
   setName(_Name); //?!
@@ -45,26 +46,30 @@ WireLabel::~WireLabel()
 // ----------------------------------------------------------------
 void WireLabel::paintScheme(QPainter *p) const
 {
+#if 0 // obsolete
   p->drawRect(x1, y1, x2, y2);
 
   // which corner of rectangle should be connected to line ?
-  if(cx < x1+(x2>>1)) {
-    if(cy < y1+(y2>>1))
-      p->drawLine(cx, cy, x1, y1);
+  if(cx() < x1+(x2>>1)) {
+    if(cy() < y1+(y2>>1))
+      p->drawLine(cx(), cy, x1, y1);
     else
-      p->drawLine(cx, cy, x1, y1+y2);
+      p->drawLine(cx(), cy, x1, y1+y2);
   }
   else {
-    if(cy < y1+(y2>>1))
-      p->drawLine(cx, cy, x1+x2, y1);
+    if(cy() < y1+(y2>>1))
+      p->drawLine(cx(), cy, x1+x2, y1);
     else
-      p->drawLine(cx, cy, x1+x2, y1+y2);
+      p->drawLine(cx(), cy, x1+x2, y1+y2);
   }
+#endif
 }
 
 // ----------------------------------------------------------------
 void WireLabel::setCenter(int x_, int y_, bool relative)
 {
+	incomplete();
+#if 0
   switch(Type) {
     case isMovingLabel:
       if(relative) {
@@ -90,6 +95,7 @@ void WireLabel::setCenter(int x_, int y_, bool relative)
       }
       else { x1 = x_; y1 = y_; }
   }
+#endif
 }
 
 // ----------------------------------------------------------------
@@ -138,13 +144,13 @@ void WireLabel::paint(ViewPainter *p) const
   int c, d;
   int a = int(double(x2) / p->Scale) >> 1;
   int b = int(double(y2) / p->Scale) >> 1;
-  if(cx < x1+a) {    // where should frame be painted ?
-    if(cy < y1+b) {
+  if(cx() < x1+a) {    // where should frame be painted ?
+    if(cy() < y1+b) {
       if(phi == 16*50)  phi += 16*180;
       p->map(x1-3, y1-2, a, b);    // low right
       c = a + (x2>>1);
       d = b + y2;
-      p->map(cx+xpaint, cy+ypaint, xpaint, ypaint);
+      p->map(cx()+xpaint, cy()+ypaint, xpaint, ypaint);
     }
     else {
       if(phi != 0)  phi += 16*180;
@@ -152,16 +158,16 @@ void WireLabel::paint(ViewPainter *p) const
       b += y2;
       c  = a + (x2>>1);
       d  = b - y2;
-      p->map(cx+xpaint, cy-ypaint, xpaint, ypaint);
+      p->map(cx()+xpaint, cy()-ypaint, xpaint, ypaint);
     }
   }
   else {
-    if(cy < y1+b) {
+    if(cy() < y1+b) {
       p->map(x1+3, y1-2, a, b);   // low left
       a += x2;
       c  = a - (x2>>1);
       d  = b + y2;
-      p->map(cx-xpaint, cy+ypaint, xpaint, ypaint);
+      p->map(cx()-xpaint, cy()+ypaint, xpaint, ypaint);
     }
     else {
       if(phi > 16*90)  phi += 16*180;
@@ -170,7 +176,7 @@ void WireLabel::paint(ViewPainter *p) const
       b += y2;
       c  = a - (x2>>1);
       d  = b - y2;
-      p->map(cx-xpaint, cy-ypaint, xpaint, ypaint);
+      p->map(cx()-xpaint, cy()-ypaint, xpaint, ypaint);
     }
   }
 
@@ -179,7 +185,7 @@ void WireLabel::paint(ViewPainter *p) const
   else
     p->Painter->setPen(QPen(Qt::red,0));
 
-  if(phi)  p->drawArc(cx-4, cy-4, 8, 8, phi, 16*255);
+  if(phi)  p->drawArc(cx()-4, cy()-4, 8, 8, phi, 16*255);
   p->Painter->drawLine(a, b, c, b);
   p->Painter->drawLine(a, b, a, d);
   p->Painter->drawLine(xpaint, ypaint, a, b);
@@ -215,8 +221,8 @@ void WireLabel::setName(const QString& Name_)
 QString WireLabel::save()
 {
   QString s("<");
-	s += QString::number(cx)+" "+QString::number(cy)+" "
-	  +  QString::number(cx)+" "+QString::number(cy)
+	s += QString::number(cx())+" "+QString::number(cy())+" "
+	  +  QString::number(cx())+" "+QString::number(cy())
 	  +  " \""+Name +"\" "
 	  +  QString::number(x1)+" "+QString::number(y1)+" 0 \""
 	  +  initValue+"\">";
@@ -230,5 +236,5 @@ void WireLabel::getLabelBounding(int& _xmin, int& _ymin, int& _xmax, int& _ymax)
     _xmax = std::max(x1,x1+(x2+6));
     _ymin = std::min(y1,y1+(y2+6));
     _ymax = std::max(y1,y1+(y2+5));
-    _ymax = std::max(cy,_ymax);
+    _ymax = std::max(cy(),_ymax);
 }

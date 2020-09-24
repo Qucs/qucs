@@ -187,7 +187,7 @@ void MouseActions::editLabel(SchematicDoc *Doc, WireLabel *pl)
     int old_x2 = pl->x2_();
     pl->setName(Name);   // set new name
     pl->initValue = Value;
-    if(pl->cx_() > (pl->x1_()+(pl->x2_()>>1))){ untested();
+    if(pl->cx() > (pl->x1_()+(pl->x2_()>>1))){ untested();
 
       // pl->x1_() -= pl->x2_() - old_x2; // don't change position due to text width
       pl->moveLeft(pl->x2_() - old_x2);
@@ -1341,8 +1341,8 @@ void MouseActions::MPressMarker(SchematicDoc *Doc, QMouseEvent* Event)
 
   if(pm) { untested();
     assert(pm->diag());
-    int x0 = pm->diag()->cx_();
-    int y0 = pm->diag()->cy_();
+    int x0 = pm->diag()->cx();
+    int y0 = pm->diag()->cy();
     Doc->enlargeView(x0+pm->x1_(), y0-pm->y1_()-pm->y2_(), x0+pm->x1_()+pm->x2_(), y0-pm->y1_());
   }
   updateViewport();
@@ -1783,8 +1783,8 @@ void MouseActions::MReleaseMoveText(SchematicDoc *Doc, QMouseEvent *Event)
   auto c=component(focusElement);
   assert(c);
 
-  c->tx = MAx1 - c->cx_();
-  c->ty = MAy1 - c->cy_();
+  c->tx = MAx1 - c->cx();
+  c->ty = MAy1 - c->cy();
   Doc->viewport()->update();
   setDrawn(false);
   Doc->setChanged(true, true);
@@ -1870,12 +1870,12 @@ void MouseActions::editElement(SchematicDoc *Doc, QMouseEvent *Event)
          bool done=false;
          if(dia->name().at(0) == 'T') { // don't open dialog on scrollbar
            if(dia->name() == "Time") {
-             if(dia->cy_() < int(fY)) {
+             if(dia->cy() < int(fY)) {
 	       if(dia->scroll(MAx1))
 	         Doc->setChanged(true, true, 'm'); // 'm' = only the first time
 	       done=true;
              }
-	   }else if(dia->cx_() > int(fX)) { untested();
+	   }else if(dia->cx() > int(fX)) { untested();
 	       if(dia->scroll(MAy1)){ untested();
 	         Doc->setChanged(true, true, 'm'); // 'm' = only the first time
 	       }

@@ -64,7 +64,7 @@ void PSDiagram::calcCoordinate(const double*, const double* yD, const double*,
     if(std::isfinite(*py))
       return;
 
-  *px = *py = float(cx) / 2.0;
+  *px = *py = float(cx()) / 2.0;
 }
 
 // --------------------------------------------------------------

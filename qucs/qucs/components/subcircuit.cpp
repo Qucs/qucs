@@ -31,7 +31,7 @@
 
 
 Subcircuit::Subcircuit()
-{
+{ untested();
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("subcircuit");
 
@@ -47,7 +47,7 @@ Subcircuit::Subcircuit()
 
 // ---------------------------------------------------------------------
 Component* Subcircuit::newOne()
-{
+{ untested();
   Subcircuit *p = new Subcircuit();
   p->Props.getFirst()->Value = Props.getFirst()->Value;
   p->recreate(0);
@@ -56,11 +56,11 @@ Component* Subcircuit::newOne()
 
 // -------------------------------------------------------
 Element* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
-{
+{ untested();
   Name = QObject::tr("Subcircuit");
   BitmapFile = (char *) "subcircuit";
 
-  if(getNewOne) {
+  if(getNewOne) { untested();
     Subcircuit *p = new Subcircuit();
     p->recreate(0);   // createSymbol() is NOT called in constructor !!!
     return p;
@@ -72,7 +72,7 @@ Element* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // Makes the schematic symbol subcircuit with the correct number
 // of ports.
 void Subcircuit::createSymbol()
-{
+{ untested();
   int No;
   QString FileName(Props.getFirst()->Value);
   FileName = getSubcircuitFile();
@@ -85,15 +85,15 @@ void Subcircuit::createSymbol()
     // remove unused ports
     QMutableListIterator<Port *> ip(Ports);
     Port *pp;
-    while (ip.hasNext()) {
+    while (ip.hasNext()) { untested();
       pp = ip.next();
-      if(!pp->avail) {
+      if(!pp->avail) { untested();
           pp = ip.peekNext();
           ip.remove();
       }
     }
   }
-  else {
+  else { untested();
     No = Schematic::testFile(FileName);
     if(No < 0)  No = 0;
 
@@ -104,7 +104,7 @@ void Subcircuit::createSymbol()
 
 // ---------------------------------------------------------------------
 void Subcircuit::remakeSymbol(int No)
-{
+{ untested();
   int h = 30*((No-1)/2) + 15;
   Lines.append(new Line(-15, -h, 15, -h,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 15, -h, 15,  h,QPen(Qt::darkBlue,2)));
@@ -113,7 +113,7 @@ void Subcircuit::remakeSymbol(int No)
   Texts.append(new Text(-10, -6,"sub"));
 
   int i=0, y = 15-h;
-  while(i<No) {
+  while(i<No) { untested();
     i++;
     Lines.append(new Line(-30,  y,-15,  y,QPen(Qt::darkBlue,2)));
     Ports.append(new Port(-30,  y));
@@ -137,7 +137,7 @@ void Subcircuit::remakeSymbol(int No)
 // Loads the symbol for the subcircuit from the schematic file and
 // returns the number of painting elements.
 int Subcircuit::loadSymbol(const QString& DocName)
-{
+{ untested();
   QFile file(DocName);
   if(!file.open(QIODevice::ReadOnly))
     return -1;
@@ -153,7 +153,7 @@ int Subcircuit::loadSymbol(const QString& DocName)
 
 
   // read header **************************
-  do {
+  do { untested();
     if(stream.atEnd()) return -2;
     Line = stream.readLine();
     Line = Line.trimmed();
@@ -168,7 +168,7 @@ int Subcircuit::loadSymbol(const QString& DocName)
     return -4;
 
   // read content *************************
-  while(!stream.atEnd()) {
+  while(!stream.atEnd()) { untested();
     Line = stream.readLine();
     if(Line == "<Symbol>") break;
   }
@@ -177,9 +177,9 @@ int Subcircuit::loadSymbol(const QString& DocName)
   x2 = y2 = INT_MIN;
 
   int z=0, Result;
-  while(!stream.atEnd()) {
+  while(!stream.atEnd()) { untested();
     Line = stream.readLine();
-    if(Line == "</Symbol>") {
+    if(Line == "</Symbol>") { untested();
       x1 -= 4;   // enlarge component boundings a little
       x2 += 4;
       y1 -= 4;
@@ -202,7 +202,7 @@ int Subcircuit::loadSymbol(const QString& DocName)
 // -------------------------------------------------------
 // BUG: obsolete callback
 QString Subcircuit::netlist() const
-{
+{ untested();
   QString s = Model+":"+Name;
 
   // output all node names
@@ -221,13 +221,13 @@ QString Subcircuit::netlist() const
 
 // -------------------------------------------------------
 QString Subcircuit::vhdlCode(int)
-{
+{ untested();
   QString f = misc::properFileName(Props.first()->Value);
   QString s = "  " + name() + ": entity Sub_" + misc::properName(f);
 
   // output all user defined properties
   Property *pr = Props.next();
-  if (pr) {
+  if (pr) { untested();
     s += " generic map (";
     s += pr->Value;
     for(pr = Props.next(); pr != 0; pr = Props.next())
@@ -241,7 +241,7 @@ QString Subcircuit::vhdlCode(int)
   Port *pp = iport.next();
   if(pp)
     s += pp->Connection->name();
-  while (iport.hasNext()) {
+  while (iport.hasNext()) { untested();
     pp = iport.next();
     s += ", "+pp->Connection->name();   // node names
   }
@@ -252,13 +252,13 @@ QString Subcircuit::vhdlCode(int)
 
 // -------------------------------------------------------
 QString Subcircuit::verilogCode(int)
-{
+{ untested();
   QString f = misc::properFileName(Props.first()->Value);
   QString s = "  Sub_" + misc::properName(f);
 
   // output all user defined properties
   Property *pr = Props.next();
-  if (pr) {
+  if (pr) { untested();
     s += " #(";
     s += misc::Verilog_Param(pr->Value);
     for(pr = Props.next(); pr != 0; pr = Props.next())
@@ -272,7 +272,7 @@ QString Subcircuit::verilogCode(int)
   Port *pp = iport.next();
   if(pp)
     s += pp->Connection->name();
-  while (iport.hasNext()) {
+  while (iport.hasNext()) { untested();
     pp = iport.next();
     s += ", "+pp->Connection->name();   // node names
   }
@@ -283,11 +283,11 @@ QString Subcircuit::verilogCode(int)
 
 // -------------------------------------------------------
 QString Subcircuit::getSubcircuitFile() const
-{
+{ untested();
   // construct full filename
   QString FileName = Props.getFirst()->Value;
 
-  if (FileName.isEmpty()) {
+  if (FileName.isEmpty()) { untested();
 	  incomplete();
       return misc::properAbsFileName(FileName);
   }else{ untested();
@@ -295,10 +295,10 @@ QString Subcircuit::getSubcircuitFile() const
 
   QFileInfo FileInfo(FileName);
 
-  if (FileInfo.exists()) {
+  if (FileInfo.exists()) { untested();
       // the file must be an absolute path to a schematic file
      return FileInfo.absoluteFilePath();
-  } else {
+  } else { untested();
 	  qDebug() << FileName << "doesnt exist";
     // get the complete base name (everything except the last '.'
     // and whatever follows
@@ -308,7 +308,7 @@ QString Subcircuit::getSubcircuitFile() const
     // same directory as the schematic file it is a part of
     if (FileInfo.fileName () != FileName) { untested();
         // the file has no path information, just the file name
-	 }else if (getSchematic()) {
+	 }else if (getSchematic()) { untested();
 		 qDebug() << "trying to inherit path from sch";
 		 // check if a file of the same name is in the same directory
 		 // as the schematic file, if we have a pointer to it, in
@@ -336,23 +336,23 @@ QString Subcircuit::getSubcircuitFile() const
     mutex.unlock();
 
     if (hashsearchresult.isEmpty())
-    {
+    { untested();
         // the schematic was not found in the hash table, return
         // what would always have been returned in this case
         return misc::properAbsFileName(FileName);
     }
     else
-    {
+    { untested();
         // we found an entry in the hash table, check it actually still exists
         FileInfo.setFile(hashsearchresult);
 
         if (FileInfo.exists())
-        {
+        { untested();
             // it does exist so return the absolute file path
             return FileInfo.absoluteFilePath();
         }
         else
-        {
+        { untested();
             // the schematic file does not actually exist, return
             // what would always have been returned in this case
             return misc::properAbsFileName(FileName);
@@ -380,11 +380,11 @@ void Subcircuit::tAC(QTextStream& stream, SchematicModel const* schem, QStringLi
 	SubMap::Iterator it = FileList.find(f);
 	if(it != FileList.end()) { untested();
 		if (!it.value().PortTypes.isEmpty())
-		{
+		{ untested();
 			i = 0;
 			// apply in/out signal types of subcircuit
 			foreach(Port *pp, pc->Ports)
-			{
+			{ untested();
 				pp->Type = it.value().PortTypes[i];
 				incomplete();
 				//pp->Connection->DType = pp->Type;
@@ -420,11 +420,11 @@ void Subcircuit::tAC(QTextStream& stream, SchematicModel const* schem, QStringLi
 	bool creatingLib=false;
 	auto r = d->createSubNetlist(pstream, countInit, Collect, nullptr, NumPorts, creatingLib, nl);
 	if (r)
-	{
+	{ untested();
 		i = 0;
 		// save in/out signal types of subcircuit
 		foreach(Port *pp, pc->Ports)
-		{
+		{ untested();
 			//if(i>=d->PortTypes.count())break;
 			pp->Type = d->portType(i);
 			incomplete();
@@ -434,7 +434,7 @@ void Subcircuit::tAC(QTextStream& stream, SchematicModel const* schem, QStringLi
 		incomplete();
 		//sub.PortTypes = d->PortTypes;
 		FileList.insert(f, sub);
-	}else{
+	}else{ untested();
 	}
 }
 

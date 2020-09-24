@@ -32,15 +32,14 @@ class dummy {};
 
 class Wire : public Symbol {
 private:
-  Wire(Wire const&) = delete;
-  Wire() = delete;
+  Wire(Wire const&);
 public:
-  explicit Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0); //  Node *n1=0, Node *n2=0);
+  explicit Wire();
+  explicit Wire(int _x1, int _y1, int _x2, int _y2);
   ~Wire();
 
   Element* clone() const{
-	  incomplete();
-	  return nullptr;
+	  return new Wire(*this);
   }
   Component* newOne(){
 	  incomplete();
@@ -48,14 +47,15 @@ public:
   }
 
   void paint(ViewPainter*) const;
-  void paintScheme(QPainter*) const;
   void setCenter(int, int, bool relative=false);
   void getCenter(int&, int&);
   bool getSelected(int, int);
   void setName(const QString&, const QString&, int delta_=0, int x_=0, int y_=0);
 
-  void    rotate();
   QString save(){unreachable(); return "";}
+
+private:
+  void findScaleAndAngle();
 
 public: // Node xs
   bool hasNet() const { return _port0.connected(); }
@@ -66,6 +66,7 @@ public: // Node xs
 
 private: // Symbol
   void setParameter(std::string const& name, std::string const& value) override;
+  std::string getParameter(std::string const& name) const override;
 
 private: // symbol Node stuff
   Node* connectNode(unsigned idx, NodeMap&) override;
@@ -99,31 +100,33 @@ private: // Symbol, internal port access.
 private:
   std::list<Node*> _node_hack;
 
+private: // FIXME, these are still around. (from element)
+//	int & x1__() { return _port0.x; }
+//	int & y1__() { return _port0.y; }
+//	int & x2__() { return _port1.x; }
+//	int & y2__() { return _port1.y; }
+
+	void updatePort();
+
 public: // FIXME, these are still around. (from element)
-	//int & cx__() { return cx; }
-	//int & cy__() { return cy; }
-	int & x1__() { return _port0.x; }
-	int & y1__() { return _port0.y; }
-	int & x2__() { return _port1.x; }
-	int & y2__() { return _port1.y; }
 
-	int const& x1() const { return _port0.x; }
-	int const& y1() const { return _port0.y; }
-	int const& x2() const { return _port1.x; }
-	int const& y2() const { return _port1.y; }
+	int x1() const { return _port0.x(); }
+	int y1() const { return _port0.y(); }
+	int x2() const { return _port1.x(); }
+	int y2() const { return _port1.y(); }
 
-	void setPos0(int x, int y){ x1__() = x; y1__() = y; }
-	void setPos1(int x, int y){ x2__() = x; y2__() = y; }
+// 	void setPos0(int x, int y){ x1__() = x; y1__() = y; }
+// 	void setPos1(int x, int y){ x2__() = x; y2__() = y; }
 
 public: // stuff used in mouseactions.
-  void move1(int x, int y){ x1__()+=x; y1__()+=y; }
-  void move2(int x, int y){ x2__()+=x; y2__()+=y; }
+  void move1(int x, int y){ unreachable(); } // {x1__()+=x; y1__()+=y; }
+  void move2(int x, int y){ unreachable(); } // {x2__()+=x; y2__()+=y; }
 
 private:
-	int & x1() { return _port0.x; }
-	int & y1() { return _port0.y; }
-	int & x2() { return _port1.x; }
-	int & y2() { return _port1.y; }
+	int & x1() { return _port0.x(); }
+	int & y1() { return _port0.y(); }
+	int & x2() { return _port1.x(); }
+	int & y2() { return _port1.y(); }
 private: // avoid access to obsolete Element members
   Port _port0;
   Port _port1;
@@ -131,6 +134,9 @@ private: // avoid access to obsolete Element members
 private:
   std::string nx, ny, delta;
   std::string _netname;
+
+  int _angle;
+  int _scale;
 };
 
 #endif

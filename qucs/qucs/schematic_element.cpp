@@ -2370,8 +2370,8 @@ bool SchematicDoc::aligning(int Mode)
 //        ((Diagram*)pe)->Bounding(bx1, by1, bx2, by2);
 
             // Take size without axis label.
-            bx1 = ((Diagram*)pe)->cx_();
-            by2 = ((Diagram*)pe)->cy_();
+            bx1 = ((Diagram*)pe)->cx();
+            by2 = ((Diagram*)pe)->cy();
             bx2 = bx1 + ((Diagram*)pe)->x2_();
             by1 = by2 - ((Diagram*)pe)->y2_();
             ((Diagram*)pe)->setCenter(x1-((*bx)+(*ax))/y2, y1-((*by)+(*ay))/y2, true);
@@ -2420,6 +2420,7 @@ bool SchematicDoc::aligning(int Mode)
  */
 bool SchematicDoc::distributeHorizontal()
 {
+#if 0
     int x1, y1, x2, y2;
     int bx1, by1, bx2, by2;
     QList<Element *> ElementCache;
@@ -2477,19 +2478,20 @@ bool SchematicDoc::distributeHorizontal()
         case isDigitalComponent:
             assert(C);
 
-            C->setCenter(x, C->cy_());
+            C->setCenter(x, C->cy());
             insertRawComponent(C);
             break;
 
         case isWire:
 	    assert(pw);
-            if(pw->isHorizontal()) {
-                x1 = pw->x2_() - pw->x1_();
-                pw->x1__() = x - (x1 >> 1);
-                pw->x2__() = pw->x1_() + x1;
-            }else{
-	      pw->x1__() = pw->x2__() = x;
-	    }
+	    incomplete();
+//            if(pw->isHorizontal()) {
+//                x1 = pw->x2_() - pw->x1_();
+//                pw->x1__() = x - (x1 >> 1);
+//                pw->x2__() = pw->x1_() + x1;
+//            }else{
+//	      pw->x1__() = pw->x2__() = x;
+//	    }
 //        if(pw->Label) {	}
             insertWire(pw);
             break;
@@ -2507,7 +2509,7 @@ bool SchematicDoc::distributeHorizontal()
             pl = (WireLabel*)pe;
             if(auto oc=dynamic_cast<Component*>(pl->pOwner)){
 		//pe->cx += x - ((Component*)(pl->pOwner))->cx;
-		pl->setCenter(x - oc->cx_(), 0, true);
+		pl->setCenter(x - oc->cx(), 0, true);
 	
 	    }else if((pw=dynamic_cast<Wire*>(pl->pOwner))){
                 if(pw->isHorizontal()) {
@@ -2533,6 +2535,7 @@ bool SchematicDoc::distributeHorizontal()
     if(count < 2) return false;
 
     setChanged(true, true);
+#endif
     return true;
 }
 
@@ -2590,18 +2593,19 @@ bool SchematicDoc::distributeVertical()
         case isAnalogComponent:
         case isDigitalComponent:
             assert(C);
-            C->setCenter(C->cx_(), y);
+            C->setCenter(C->cx(), y);
             insertRawComponent(C);
             break;
 
         case isWire:
-            if(pw->isHorizontal())  pw->y1__() = pw->y2__() = y;
-            else
-            {
-                y1 = pw->y2_() - pw->y1_();
-                pw->y1__() = y - (y1 >> 1);
-                pw->y2__() = pe->y1_() + y1;
-            }
+	    incomplete();
+//            if(pw->isHorizontal())  pw->y1__() = pw->y2__() = y;
+//            else
+//            {
+//                y1 = pw->y2_() - pw->y1_();
+//                pw->y1__() = y - (y1 >> 1);
+//                pw->y2__() = pe->y1_() + y1;
+//            }
 //        if(pw->Label) {	}
             insertWire(pw);
             break;
@@ -2619,7 +2623,7 @@ bool SchematicDoc::distributeVertical()
         case isNodeLabel:
             // if(((Element*)(((WireLabel*)pe)->pOwner))->Type & isComponent)
             if(auto oc=dynamic_cast<Component*>(pl->pOwner)){
-	        oc->setCenter(y - oc->cx_(), 0, true);
+	        oc->setCenter(y - oc->cx(), 0, true);
 	    }else if((pw=dynamic_cast<Wire*>(pl->pOwner))){
                 if(!pw->isHorizontal())
                 {
@@ -3039,11 +3043,12 @@ void SchematicDoc::setCompPorts(Component *pc)
 // Returns a pointer of the component on whose text x/y points.
 Component* MouseActions::selectCompText(SchematicDoc* Doc, int x_, int y_, int& w, int& h)
 {
+    incomplete();
     int a, b, dx, dy;
     for(auto *pc : Doc->components()) {
-        a = pc->cx_() + pc->tx;
+        a = pc->cx() + pc->tx;
         if(x_ < a)  continue;
-        b = pc->cx_() + pc->ty;
+        b = pc->cx() + pc->ty;
         if(y_ < b)  continue;
 
         pc->textSize(dx, dy);

@@ -54,6 +54,8 @@ void TimingDiagram::paint(ViewPainter *p)
 // ------------------------------------------------------------
 void TimingDiagram::paintDiagram(ViewPainter *p)
 {
+	auto cx=Element::cx();
+	auto cy=Element::cy();
   // paint all lines
   foreach(Line *pl, Lines) {
     p->Painter->setPen(pl->style);
@@ -466,6 +468,8 @@ funcEnd:
 // ------------------------------------------------------------
 int TimingDiagram::scroll(int clickPos)
 {
+	auto cx=Element::cx();
+	auto cy=Element::cy();
   if(y1 <= 0) return 0;   // no scroll bar ?
   int tmp = int(xAxis.limit_min + 0.5);
 

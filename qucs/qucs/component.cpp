@@ -84,8 +84,8 @@ Component::Component() : _rotated(0)
   isActive = COMP_IS_ACTIVE;
   showName = true;
 
-  Element::cx = 0;
-  Element::cy = 0;
+  Element::_cx = 0;
+  Element::_cy = 0;
   tx = 0;
   ty = 0;
 
@@ -168,11 +168,11 @@ void Component::setCenter(int x, int y, bool relative)
 #endif
 
   if(relative) { untested();
-    Element::cx += x;
-    Element::cy += y;
+    Element::_cx += x;
+    Element::_cy += y;
   } else {itested();
-    Element::cx = x;
-    Element::cy = y;
+    Element::_cx = x;
+    Element::_cy = y;
   }
 
 #if 0
@@ -567,7 +567,7 @@ void Component::setParameter(std::string const& name, std::string const& v)
 }
 
 // -------------------------------------------------------
-std::string Component::getParameter(std::string const& name)
+std::string Component::getParameter(std::string const& name) const
 {itested();
   if(name=="$angle"){itested();
     trace1("Component::getParameter", _rotated);

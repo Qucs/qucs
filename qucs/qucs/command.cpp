@@ -1,19 +1,18 @@
 /***************************************************************************
-                               component.cpp
-                              ---------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+
+// TODO: move
 #include <stdlib.h>
 #include <cmath>
 
@@ -66,8 +65,8 @@ Command::Command() : Element()
   isActive = COMP_IS_ACTIVE;
   showName = true;
 
-  cx = 0;
-  cy = 0;
+  _cx = 0;
+  _cy = 0;
   tx = 0;
   ty = 0;
 
@@ -78,11 +77,11 @@ Command::Command() : Element()
 
 // -------------------------------------------------------
 void Command::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
-{
-  _x1 = x1+cx;
-  _y1 = y1+cy;
-  _x2 = x2+cx;
-  _y2 = y2+cy;
+{ untested();
+  _x1 = x1+cx();
+  _y1 = y1+cy();
+  _x2 = x2+cx();
+  _y2 = y2+cy();
 }
 
 // -------------------------------------------------------
@@ -119,42 +118,33 @@ int Command::textSize(int& _dx, int& _dy)
 // Boundings including the component text.
 void Command::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2, float Corr)
 {
-  _x1 = x1+cx;
-  _y1 = y1+cy;
-  _x2 = x2+cx;
-  _y2 = y2+cy;
-
-  // text boundings
-  if(tx < x1) _x1 = tx+cx;
-  if(ty < y1) _y1 = ty+cy;
-
-  int dx, dy, ny;
-  ny = textSize(dx, dy);
-  dy = int(float(ny) / Corr);  // correction for unproportional font scaling
-
-  if((tx+dx) > x2) _x2 = tx+dx+cx;
-  if((ty+dy) > y2) _y2 = ty+dy+cy;
+  // qt does that.
 }
 
 // -------------------------------------------------------
+// obsolete?
 void Command::setCenter(int x, int y, bool relative)
 {
-  if(relative) { cx += x;  cy += y; }
-  else { cx = x;  cy = y; }
+  if(relative) {
+    _cx += x;  _cy += y;
+  } else {
+    _cx = x;  _cy = y;
+  }
 }
 
 // -------------------------------------------------------
 void Command::getCenter(int& x, int& y)
 {
-  x = cx;
-  y = cy;
+  unreachable();
+  x = cx();
+  y = cy();
 }
 
 // -------------------------------------------------------
 int Command::getTextSelected(int x_, int y_, float Corr)
 {
-  x_ -= cx;
-  y_ -= cy;
+  x_ -= cx();
+  y_ -= cy();
   if(x_ < tx) return -1;
   if(y_ < ty) return -1;
 
@@ -187,8 +177,8 @@ int Command::getTextSelected(int x_, int y_, float Corr)
 // -------------------------------------------------------
 bool Command::getSelected(int x_, int y_)
 {
-  x_ -= cx;
-  y_ -= cy;
+  x_ -= cx();
+  y_ -= cy();
   if(x_ >= x1) if(x_ <= x2) if(y_ >= y1) if(y_ <= y2)
     return true;
 
@@ -212,7 +202,7 @@ void Command::paint(ViewPainter *p) const
     newFont.setPointSizeF(p->Scale * size);
     newFont.setWeight(QFont::DemiBold);
     p->Painter->setFont(newFont);
-    p->map(cx, cy, x, y);
+    p->map(cx(), cy(), x, y);
 
     p->Painter->setPen(QPen(Qt::darkBlue,2));
     a = b = 0;
@@ -229,8 +219,8 @@ void Command::paint(ViewPainter *p) const
     y2 = y1+23 + int(float(b) / p->Scale);
     if(ty < y2+1) if(ty > y1-r.height())  ty = y2 + 1;
 
-    p->map(cx-1, cy, x, y);
-    p->map(cx-6, cy-5, a, b);
+    p->map(cx()-1, cy(), x, y);
+    p->map(cx()-6, cy()-5, a, b);
     p->Painter->drawRect(a, b, xb, yb);
     p->Painter->drawLine(x,      y+yb, a,      b+yb);
     p->Painter->drawLine(x+xb-1, y+yb, x,      y+yb);
@@ -243,7 +233,7 @@ void Command::paint(ViewPainter *p) const
   p->Painter->setFont(f);
 
   p->Painter->setPen(QPen(Qt::black,1));
-  p->map(cx+tx, cy+ty, x, y);
+  p->map(cx()+tx, cy()+ty, x, y);
   if(showName) {
     p->Painter->drawText(x, y, 0, 0, Qt::TextDontClip, Name);
     y += p->LineSpacing;
@@ -260,9 +250,9 @@ void Command::paint(ViewPainter *p) const
   else if(isActive & COMP_IS_SHORTEN)
     p->Painter->setPen(QPen(Qt::darkGreen,0));
   if(isActive != COMP_IS_ACTIVE) {
-    p->drawRect(cx+x1, cy+y1, x2-x1+1, y2-y1+1);
-    p->drawLine(cx+x1, cy+y1, cx+x2, cy+y2);
-    p->drawLine(cx+x1, cy+y2, cx+x2, cy+y1);
+    p->drawRect(cx()+x1, cy()+y1, x2-x1+1, y2-y1+1);
+    p->drawLine(cx()+x1, cy()+y1, cx()+x2, cy()+y2);
+    p->drawLine(cx()+x1, cy()+y2, cx()+x2, cy()+y1);
   }
 
 #if 0

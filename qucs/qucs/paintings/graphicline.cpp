@@ -39,8 +39,8 @@ void GraphicLine::setSomeStuff(int cx_, int cy_, int x2_, int y2_, QPen Pen_)
 {
   Name = "Line ";
   Pen = Pen_;
-  cx = cx_;
-  cy = cy_;
+  _cx = cx_;
+  _cy = cy_;
   x1 = y1 = 0;
   x2 = x2_;
   y2 = y2_;
@@ -67,19 +67,21 @@ void GraphicLine::paint(ViewPainter *p)
   }
 #endif
   p->Painter->setPen(Pen);
-  p->drawLine(cx, cy, cx+x2, cy+y2);
+  p->drawLine(_cx, _cy, _cx+x2, _cy+y2);
 }
 
 // --------------------------------------------------------------------------
 void GraphicLine::paintScheme(SchematicDoc *p)
 {
 	incomplete();
-  p->PostPaintEvent(_Line, cx, cy, cx+x2, cy+y2);
 }
 
 // --------------------------------------------------------------------------
 void GraphicLine::getCenter(int& x, int &y)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   x = cx+(x2>>1);
   y = cy+(y2>>1);
 }
@@ -88,6 +90,9 @@ void GraphicLine::getCenter(int& x, int &y)
 // Sets the center of the painting to x/y.
 void GraphicLine::setCenter(int x, int y, bool relative)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   if(relative) { cx += x;  cy += y; }
   else { cx = x-(x2>>1);  cy = y-(y2>>1); }
 }
@@ -109,11 +114,11 @@ bool GraphicLine::load(const QString& s)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  cx = n.toInt(&ok);
+  _cx = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  cy = n.toInt(&ok);
+  _cy = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',3,3);    // x2
@@ -144,6 +149,9 @@ bool GraphicLine::load(const QString& s)
 // --------------------------------------------------------------------------
 QString GraphicLine::save()
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString s = Name+QString::number(cx)+" "+QString::number(cy)+" ";
   s += QString::number(x2)+" "+QString::number(y2)+" ";
   s += Pen.color().name()+" "+QString::number(Pen.width())+" ";
@@ -154,6 +162,9 @@ QString GraphicLine::save()
 // --------------------------------------------------------------------------
 QString GraphicLine::saveCpp()
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString s =
     QString ("new Line (%1, %2, %3, %4, QPen (QColor (\"%5\"), %6, %7))").
     arg(cx+x1).arg(cy+y1).arg(cx+x2).arg(cy+y2).
@@ -164,6 +175,9 @@ QString GraphicLine::saveCpp()
 
 QString GraphicLine::saveJSON()
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString s =
     QString ("{\"type\" : \"line\", "
       "\"x1\" : %1, \"y1\" : %2, \"x2\" : %3, \"y2\" : %4, "
@@ -177,6 +191,9 @@ QString GraphicLine::saveJSON()
 // Checks if the resize area was clicked.
 bool GraphicLine::resizeTouched(float fX, float fY, float len)
 {
+	   auto cx=Element::cx();
+     auto cy=Element::cy();
+
   float fCX = float(cx), fCY = float(cy);
 
   if(fX <= fCX+len) if(fX >= fCX-len) if(fY <= fCY+len) if(fY >= fCY-len) {
@@ -199,11 +216,14 @@ bool GraphicLine::resizeTouched(float fX, float fY, float len)
 // Mouse move action during resize.
 void GraphicLine::MouseResizeMoving(int x, int y, SchematicDoc *p)
 {
+#if 0
+
   paintScheme(p);  // erase old painting
   if(State == 1) { x2 += cx-x; y2 += cy-y; cx = x; cy = y; } // move beginning
   else { x2 = x-cx;  y2 = y-cy; }  // move ending
 
   paintScheme(p);  // paint new painting
+#endif
 }
 
 // --------------------------------------------------------------------------
@@ -213,6 +233,7 @@ void GraphicLine::MouseMoving(
 	SchematicDoc *paintScale, int, int, int gx, int gy,
 	SchematicDoc *p, int x, int y, bool drawn)
 {
+#if 0
   if(State > 0) {
     if(State > 1)
       paintScale->PostPaintEvent(_Line, cx, cy, cx+x2, cy+y2);  // erase old painting
@@ -235,6 +256,7 @@ void GraphicLine::MouseMoving(
   p->PostPaintEvent(_Line, x1+27, y1, x1+15, y1+12,0,0,true);  // paint new cursor symbol
   p->PostPaintEvent(_Line, x1+25, y1-2, x1+29, y1+2,0,0,true);
   p->PostPaintEvent(_Line, x1+13, y1+10, x1+17, y1+14,0,0,true);
+#endif
 }
 
 // --------------------------------------------------------------------------
@@ -254,6 +276,9 @@ bool GraphicLine::MousePressing()
 // 5 is the precision the user must point onto the painting.
 bool GraphicLine::getSelected(float fX, float fY, float w)
 {
+	   auto cx=Element::cx();
+     auto cy=Element::cy();
+
   fX -= float(cx);
   fY -= float(cy);
 
@@ -289,6 +314,9 @@ bool GraphicLine::getSelected(float fX, float fY, float w)
 // --------------------------------------------------------------------------
 void GraphicLine::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
+	   auto cx=Element::cx();
+     auto cy=Element::cy();
+
   if(x2 < 0) { _x1 = cx+x2; _x2 = cx; }
   else { _x1 = cx; _x2 = cx+x2; }
 
@@ -300,8 +328,8 @@ void GraphicLine::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 // Rotates around the center.
 void GraphicLine::rotate()
 {
-  cx += (x2>>1) - (y2>>1);
-  cy += (x2>>1) + (y2>>1);
+  _cx += (x2>>1) - (y2>>1);
+  _cy += (x2>>1) + (y2>>1);
 
   int tmp = x2;
   x2  =  y2;
@@ -312,16 +340,18 @@ void GraphicLine::rotate()
 // Mirrors about center line.
 void GraphicLine::mirrorX()
 {
-  cy +=  y2;
-  y2  = -y2;
+	// obsolete.
+//  cy +=  y2;
+//  y2  = -y2;
 }
 
 // --------------------------------------------------------------------------
 // Mirrors about center line.
 void GraphicLine::mirrorY()
 {
-  cx +=  x2;
-  x2  = -x2;
+	// obsolete
+  //cx +=  x2;
+  //x2  = -x2;
 }
 
 // --------------------------------------------------------------------------

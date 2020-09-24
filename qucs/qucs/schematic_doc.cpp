@@ -264,7 +264,6 @@ void SchematicDoc::insertComponent(Component *c)
 // -----------------------------------------------------------
 QPoint SchematicDoc::setOnGrid(int x, int y) const
 {itested();
-  qDebug() << "setongrid in" << x << y;
   if(x<0) x -= (GridX >> 1) - 1;
   else x += GridX >> 1;
   x -= x % GridX;
@@ -273,10 +272,13 @@ QPoint SchematicDoc::setOnGrid(int x, int y) const
   else y += GridY >> 1;
   y -= y % GridY;
 
-  qDebug() << "setongrid out" << x << y;
   return QPoint(x, y);
 }
 //
+QPoint SchematicDoc::snapToGrid(QPointF const& e)const
+{
+	return setOnGrid(getX(e), getY(e));
+}
 QMouseEvent SchematicDoc::snapToGrid(QMouseEvent* e)const
 {
 	  auto type = e->type();

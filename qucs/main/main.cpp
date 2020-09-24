@@ -193,11 +193,14 @@ private: // SchematicSymbol
     }else if(x=="GridY"){
       incomplete(); // there is no view.
       return "0";
+    }else if(x=="tmpViewX1"){
+      incomplete(); // there is no view.
+      return "0";
     }else{
       qDebug() << "unknown parameter" << QString::fromStdString(x);
       incomplete();
       return "unknown";
-      throw ExceptionCantFind();
+      throw ExceptionCantFind(x, "main");
     }
   }
 
@@ -218,7 +221,7 @@ public: // tmo hack
 }
 
 // moved to legacy/qucsator, QucsatorNetlister::save
-void doNetlist(QString schematic_fn, QString netlist, DocumentFormat const& NLN)
+void doNetlist(QString schematic_fn, std::string netlist, DocumentFormat const& NLN)
 {
   sda xs;
   xs.setLabel(schematic_fn);
@@ -242,10 +245,10 @@ void doNetlist(QString schematic_fn, QString netlist, DocumentFormat const& NLN)
     L->parse(stream, xs);
   }
 
-  QFile NetlistFile(netlist);
+  QFile NetlistFile(QString::fromStdString(netlist));
   if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
-//    fprintf(stderr, "Error: Could not load netlist %s\n", c_net);
-    throw "sthwrong";
+    fprintf(stderr, "Error: Could write to %s\n", netlist.c_str());
+    exit(1);
   }else{
   }
   DocumentStream os(&NetlistFile);
@@ -256,7 +259,7 @@ void doNetlist(QString schematic_fn, QString netlist, DocumentFormat const& NLN)
   NLN.save(os, xs);
 }
 
-int doPrint(QString schematic, QString printFile,
+int doPrint(QString schematic, std::string printFile,
     QString page, int dpi, QString color, QString orientation)
 { untested();
 
@@ -807,7 +810,7 @@ int main(int argc, char *argv[])
   setlocale (LC_NUMERIC, "C");
 
   QString inputfile;
-  QString outputfile;
+  std::string outputfile;
 
   bool dump_flag = false;
   bool print_flag = false;
@@ -948,7 +951,7 @@ int main(int argc, char *argv[])
       fprintf(stderr, "Error: Expected input file.\n");
       return -1;
     }
-    if (outputfile.isEmpty()) { untested();
+    if (outputfile == "") { untested();
       fprintf(stderr, "Error: Expected output file.\n");
       return -1;
     }

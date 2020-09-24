@@ -36,8 +36,8 @@ void PortSymbol::setSomeArgsHack(int cx_, int cy_, const QString& numberStr_,
                                          const QString& nameStr_)
 {
   Name = ".PortSym ";
-  cx = cx_;
-  cy = cy_;
+  Element::_cx = cx_;
+  Element::_cy = cy_;
 
   Angel = 0;
   nameStr = nameStr_;
@@ -58,6 +58,9 @@ PortSymbol::~PortSymbol()
 // --------------------------------------------------------------------------
 void PortSymbol::paint(ViewPainter *p)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   // keep track of painter state
   p->Painter->save();
 
@@ -127,6 +130,9 @@ void PortSymbol::paint(ViewPainter *p)
 // --------------------------------------------------------------------------
 void PortSymbol::paintScheme(SchematicDoc *p)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
 	incomplete();
   p->PostPaintEvent(_Ellipse, cx-4, cy-4, 8, 8);
   p->PostPaintEvent(_Rect, cx+x1, cy+y1, x2, y2);
@@ -135,14 +141,17 @@ void PortSymbol::paintScheme(SchematicDoc *p)
 // --------------------------------------------------------------------------
 void PortSymbol::getCenter(int& x, int &y)
 {
-  x = cx;
-  y = cy;
+  x = cx();
+  y = cy();
 }
 
 // --------------------------------------------------------------------------
 // Sets the center of the painting to x/y.
 void PortSymbol::setCenter(int x, int y, bool relative)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   if(relative) { cx += x;  cy += y; }
   else { cx = x;  cy = y; }
 }
@@ -154,11 +163,11 @@ bool PortSymbol::load(const QString& s)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  cx = n.toInt(&ok);
+  _cx = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  cy = n.toInt(&ok);
+  _cy = n.toInt(&ok);
   if(!ok) return false;
 
   numberStr  = s.section(' ',3,3);    // number
@@ -175,6 +184,9 @@ bool PortSymbol::load(const QString& s)
 // --------------------------------------------------------------------------
 QString PortSymbol::save()
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString s = Name+QString::number(cx)+" "+QString::number(cy)+" ";
   s += numberStr+" "+QString::number(Angel);
   return s;
@@ -183,6 +195,9 @@ QString PortSymbol::save()
 // --------------------------------------------------------------------------
 QString PortSymbol::saveCpp()
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString s =
     QString ("new Port (%1, %2)").
     arg(cx).arg(cy);
@@ -192,6 +207,9 @@ QString PortSymbol::saveCpp()
 
 QString PortSymbol::saveJSON()
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString s = QString ("{\"type\" : \"portsymbol\", "
                        "\"x\" : %1, \"y\" : %2},").arg(cx).arg(cy);
   return s;
@@ -201,6 +219,9 @@ QString PortSymbol::saveJSON()
 // Checks if the coordinates x/y point to the painting.
 bool PortSymbol::getSelected(float fX, float fY, float)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   if(int(fX) < cx+x1)  return false;
   if(int(fY) < cy+y1)  return false;
   if(int(fX) > cx+x1+x2)  return false;
@@ -212,6 +233,9 @@ bool PortSymbol::getSelected(float fX, float fY, float)
 // --------------------------------------------------------------------------
 void PortSymbol::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   _x1 = cx+x1;     _y1 = cy+y1;
   _x2 = cx+x1+x2;  _y2 = cy+y1+y2;
 }

@@ -145,8 +145,8 @@ void SchematicModel::pushBack(Element* what)
 {
 	trace2("SchematicModel::pushBack", what->label(), this);
 	if(auto c=component(what)){
-		trace1("SchematicModel::pushBack", c->type());
-      simpleInsertComponent(c);
+		connect(c);
+		components().append(c);
 	}else if(auto d=diagram(what)){
 		diagrams().append(d);
 	}else if(auto c=command(what)){
@@ -157,9 +157,9 @@ void SchematicModel::pushBack(Element* what)
 			// possibly a subcircuit model? ignore commands.
 		}
 	}else if(auto w=wire(what)){
-		trace4("pushback Wire", w->x1__(), w->y1__(), w->x2__(), w->y2__());
-		simpleInsertWire(w);
-//		insertWire(w);?? wtf?
+	  connect(w);
+	  // why not components??
+	  wires().append(w); // it's now ours.
 	}else if(auto s=dynamic_cast<SchematicSymbol*>(what)){
 		(void)s;
 		assert(false);
@@ -490,26 +490,6 @@ bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
 // called from PushBack...
 void SchematicModel::simpleInsertComponent(Component *c)
 {
-#if 0
-	Node *pn;
-	// connect every node of component
-	for(auto pp : c->Ports){ untested();
-		int x=pp->x+c->cx_();
-		int y=pp->y+c->cy_();
-
-		// check if new node lies upon existing node
-		// creates a new node, if needed
-		pn = &nodes().at(x, y);
-		pn->appendConnection(c);  // connect schematic node to component node
-
-		if (!pp->Type.isEmpty()) { untested();
-			//      pn->DType = pp->Type;
-		}
-
-		pp->connect(pn);  // connect component node to schematic node
-	}
-
-#endif
 	assert(c);
 
 	connect(c);
@@ -517,7 +497,7 @@ void SchematicModel::simpleInsertComponent(Component *c)
 }
 
 // screw this.
-void SchematicModel::simpleInsertWire(Wire *pw)
+void SchematicModel::simpleInsertWire(Wire *)
 {
 //  Node *pn=nullptr;
   // pn = &nodes().at(pw->x1_(), pw->y1_());
@@ -533,8 +513,6 @@ void SchematicModel::simpleInsertWire(Wire *pw)
 	 }
 #endif
 
-  connect(pw);
-  wires().append(pw); // it's now ours.
 }
 
 // obsolete?

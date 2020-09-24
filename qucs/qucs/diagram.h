@@ -160,12 +160,12 @@ public: // from mouseactions.cpp
   bool pressElement(SchematicDoc* Doc, Element*& selElem, QMouseEvent* Event);
 
 public: // FIXME, these are still around.
-	int & cx__() { return cx; }
-	int & cy__() { return cy; }
-	int & x1__() { return x1; }
-	int & y1__() { return y1; }
-	int & x2__() { return x2; }
-	int & y2__() { return y2; }
+	int & cx__() {incomplete(); return _cx; }
+	int & cy__() {incomplete(); return _cy; }
+	int & x1__() {incomplete(); return x1; }
+	int & y1__() {incomplete(); return y1; }
+	int & x2__() {incomplete(); return x2; }
+	int & y2__() {incomplete(); return y2; }
 
 private:
   int Bounding_x1, Bounding_x2, Bounding_y1, Bounding_y2;

@@ -18,7 +18,6 @@
  */
 #include "element.h"
 #include "symbol.h"
-#include "wire.h"
 #include "schematic_scene.h"
 #include <QGraphicsScene>
 #include "element_graphics.h"
@@ -31,7 +30,7 @@ ElementGraphics::ElementGraphics() : QGraphicsItem()
 	unreachable();
 }
 /*--------------------------------------------------------------------------*/
-ElementGraphics::ElementGraphics(ElementGraphics const& e) 
+ElementGraphics::ElementGraphics(ElementGraphics const& e)
 	: QGraphicsItem(), _e(nullptr)
 { untested();
 	assert(e._e);
@@ -76,6 +75,7 @@ private:
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+#include "components/component.h" // BUG
 void ElementGraphics::attachElement(Element* e)
 {itested();
 	assert(e);
@@ -86,6 +86,7 @@ void ElementGraphics::attachElement(Element* e)
 
 	auto sp = _e->center();
 	prepareGeometryChange();
+	trace3("attachElement", e->label(), sp.first, sp.second);
 	QGraphicsItem::setPos(sp.first, sp.second);
 
 	if(auto c=dynamic_cast<Component*>(e)){ untested();
@@ -126,14 +127,19 @@ void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, 
 // rotate around pivot (in global coordinates). obsolete.
 void ElementGraphics::rotate(angle_t a, std::pair<int, int> pivot)
 { untested();
+	assert(false);
+}
+#if 0
+{
 	assert(_e);
-	if(auto s=dynamic_cast<Wire*>(_e)){ untested();
-		trace0("start wire rotate");
-		hide();
-		s->rotate(); // does not work
-		show();
-		trace0("done wire rotate");
-	}else if(auto* s=dynamic_cast<Symbol*>(_e)){ untested();
+// 	if(auto s=dynamic_cast<Wire*>(_e)){ untested();
+// 		trace0("start wire rotate");
+// 		hide();
+// 		s->rotate(); // does not work
+// 		show();
+// 		trace0("done wire rotate");
+// 	}else
+	if(auto* s=dynamic_cast<Symbol*>(_e)){ untested();
 		bool sel = isSelected();
 		hide();
 		std::string rs = s->getParameter("$angle");
@@ -176,6 +182,7 @@ void ElementGraphics::rotate(angle_t a, std::pair<int, int> pivot)
 	}else{ untested();
 	}
 }
+#endif
 /*--------------------------------------------------------------------------*/
 // transform around pivot (in global coordinates).
 void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot)
@@ -184,9 +191,10 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 	assert(!(a.degrees_int()%90));
 	assert(_e);
 	bool sel = isSelected();
-	if(auto s=dynamic_cast<Wire*>(_e)){ untested();
-		incomplete();
-	}else if(auto* s=dynamic_cast<Symbol*>(_e)){itested();
+//	if(auto s=dynamic_cast<Wire*>(_e)){ untested();
+//		incomplete();
+//	}else
+	if(auto* s=dynamic_cast<Symbol*>(_e)){ untested();
 		hide();
 		int mx = 0;
 		int my = 0;
@@ -199,6 +207,7 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 			mx -= 1;
 			mx /= -2;
 		}catch(ExceptionCantFind const&){ untested();
+			incomplete();
 		}
 		try {itested();
 			std::string mys = s->getParameter("$vflip"); // indicates if y axis is mirrored
@@ -211,6 +220,7 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 			std::string rs = s->getParameter("$angle");
 			r = atoi(rs.c_str());
 			assert(!(r%90));
+			assert(r<360);
 			r /= 90;
 		}catch(ExceptionCantFind const&){ untested();
 		}
@@ -229,11 +239,12 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 		assert(!(new_mr.degrees_int()%90));
 
 		auto vflip = -2 * int(new_mr.mirror()) + 1;
-		trace2("transform", vflip, new_mr.mirror());
+		trace2("transform", vflip, new_mr.degrees_int());
 
+		// BUG. vflip last.
+		s->setParameter(std::string("$angle"), std::to_string(new_mr.degrees_int()));
 		s->setParameter(std::string("$hflip"), std::string("1"));
 		s->setParameter(std::string("$vflip"), std::to_string(vflip));
-		s->setParameter(std::string("$angle"), std::to_string(new_mr.degrees_int()));
 
 		auto p = pos();
 		int x = getX(p.toPoint());
@@ -248,7 +259,9 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 		x = pivot.first + new_xy.first;
 		y = pivot.second + new_xy.second;
 
+		trace2("posttransform setpos", x ,y);
 		setPos(x, y);
+	// prepareGeometryChange(); // needed??
 		show();
 	}else{ untested();
 	}
@@ -332,6 +345,7 @@ void ElementGraphics::hide()
 template<class P>
 void ElementGraphics::moveElement(P const& delta)
 { untested();
+	hide();
 	assert(_e);
 	int dx = getX(delta);
 	int dy = getY(delta);
@@ -340,7 +354,10 @@ void ElementGraphics::moveElement(P const& delta)
 	prepareGeometryChange(); // needed??
 	_e->setCenter(dx, dy, true);
 	auto p = _e->center();
+
+	// possibly redundant
 	QGraphicsItem::setPos(p.first, p.second);
+	show();
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::setPos(int i, int j, bool relative)
@@ -360,24 +377,19 @@ ItemEvent::ItemEvent(QEvent const& a, ElementGraphics& b)
 }
 /*--------------------------------------------------------------------------*/
 #include <QApplication> // BUG
-#include <QtMath> // really?
 QVariant ElementGraphics::itemChange(GraphicsItemChange c, const QVariant &v)
 {
     if (!scene()){ untested();
-	 }else if(c == ItemPositionChange){ untested();
+	 }else if(c == ItemPositionChange){ itested();
         QPointF tmp = v.toPointF();
         if(QApplication::mouseButtons() != Qt::LeftButton){ untested();
             return tmp;
-		  }else if(auto scn = dynamic_cast<SchematicScene*> (scene())){ untested();
-//            int gridSizeX = 20; // getX(scn->gridSize());
-//            int gridSizeY = 20; // getY(scn->gridSize());
-//            qreal x = round(tmp.x()/gridSizeX)*gridSizeX;
-//            qreal y = round(tmp.y()/gridSizeY)*gridSizeY;
+		  }else if(auto scn = dynamic_cast<SchematicScene*> (scene())){ itested();
             return scn->snapToGrid(tmp.toPoint()); // does toPoint round as intended?
         }else{ untested();
             return tmp;
 		  }
-    }else{ untested();
+    }else{ itested();
 	 }
 	 return QGraphicsItem::itemChange(c, v);
 }

@@ -32,7 +32,6 @@ Ellipse::Ellipse(bool _filled) : Painting()
   Pen = QPen(QColor());
   Brush = QBrush(Qt::lightGray);
   filled = _filled;
-  cx = cy = 0;
   x1 = x2 = 0;
   y1 = y2 = 0;
 }
@@ -61,6 +60,9 @@ void Ellipse::paint(ViewPainter *p)
     return;
   }
 #endif
+   auto cx=Element::cx();
+     auto cy=Element::cy();
+
   p->Painter->setPen(Pen);
   if(filled)  p->Painter->setBrush(Brush);
   p->drawEllipse(cx, cy, x2, y2);
@@ -70,6 +72,9 @@ void Ellipse::paint(ViewPainter *p)
 // --------------------------------------------------------------------------
 void Ellipse::paintScheme(SchematicDoc *p) const
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
 	incomplete();
   p->PostPaintEvent(_Ellipse, cx, cy, x2, y2);
 }
@@ -77,6 +82,9 @@ void Ellipse::paintScheme(SchematicDoc *p) const
 // --------------------------------------------------------------------------
 void Ellipse::getCenter(int& x, int &y)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   x = cx+(x2>>1);
   y = cy+(y2>>1);
 }
@@ -85,6 +93,9 @@ void Ellipse::getCenter(int& x, int &y)
 // Sets the center of the painting to x/y.
 void Ellipse::setCenter(int x, int y, bool relative)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   if(relative) { cx += x;  cy += y; }
   else { cx = x-(x2>>1);  cy = y-(y2>>1); }
 }
@@ -116,11 +127,11 @@ bool Ellipse::load(const QString& s)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  cx = n.toInt(&ok);
+  _cx = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  cy = n.toInt(&ok);
+  _cy = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',3,3);    // x2
@@ -165,6 +176,9 @@ bool Ellipse::load(const QString& s)
 // --------------------------------------------------------------------------
 QString Ellipse::save()
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString s = Name +
 	QString::number(cx) + " " + QString::number(cy) + " " +
 	QString::number(x2) + " " + QString::number(y2) + " " +
@@ -179,6 +193,9 @@ QString Ellipse::save()
 // --------------------------------------------------------------------------
 QString Ellipse::saveCpp()
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString b = filled ?
     QString (", QBrush (QColor (\"%1\"), %2)").
     arg(Brush.color().name()).arg(toBrushString(Brush.style())) : "";
@@ -194,6 +211,9 @@ QString Ellipse::saveCpp()
 
 QString Ellipse::saveJSON()
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   QString b = filled ?
     QString ("\"colorfill\" : \"%1\", \"stylefill\" : \"%2\"").
     arg(Brush.color().name()).arg(toBrushString(Brush.style())) : "";
@@ -211,6 +231,9 @@ QString Ellipse::saveJSON()
 // Checks if the resize area was clicked.
 bool Ellipse::resizeTouched(float fX, float fY, float len)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   float fCX = float(cx), fCY = float(cy);
   float fX2 = float(cx+x2), fY2 = float(cy+y2);
 
@@ -231,8 +254,9 @@ bool Ellipse::resizeTouched(float fX, float fY, float len)
 
 // --------------------------------------------------------------------------
 // Mouse move action during resize.
-void Ellipse::MouseResizeMoving(int x, int y, SchematicDoc *p)
+void Ellipse::MouseResizeMoving(int, int, SchematicDoc *p)
 {
+#if 0
   paintScheme(p);  // erase old painting
   switch(State) {
     case 0: x2 = x-cx; y2 = y-cy; // lower right corner
@@ -247,6 +271,7 @@ void Ellipse::MouseResizeMoving(int x, int y, SchematicDoc *p)
   if(x2 < 0) { State ^= 1; x2 *= -1; cx -= x2; }
   if(y2 < 0) { State ^= 2; y2 *= -1; cy -= y2; }
 
+#endif
   paintScheme(p);  // paint new painting
 }
 
@@ -257,6 +282,7 @@ void Ellipse::MouseMoving(
 	SchematicDoc *paintScale, int, int, int gx, int gy,
 	SchematicDoc *p, int x, int y, bool drawn)
 {
+#if 0
   if(State > 0) {
     if(State > 1)
       // _Ellipse hang/crash application, using _Arc solved, see bug 141 (closed)
@@ -284,11 +310,13 @@ void Ellipse::MouseMoving(
     p->PostPaintEvent(_Line, cx+25, cy+2, cx+18, cy+9,0,0,true);
     p->PostPaintEvent(_Line, cx+29, cy+4, cx+23, cy+10,0,0,true);
   }
+#endif
 }
 
 // --------------------------------------------------------------------------
 bool Ellipse::MousePressing()
 {
+#if 0
   State++;
   if(State == 1) {
     x1 = x2;
@@ -303,6 +331,7 @@ bool Ellipse::MousePressing()
     State = 0;
     return true;    // painting is ready
   }
+#endif
   return false;
 }
 
@@ -310,6 +339,9 @@ bool Ellipse::MousePressing()
 // Checks if the coordinates x/y point to the painting.
 bool Ellipse::getSelected(float fX, float fY, float w)
 {
+	 auto cx=Element::cx();
+     auto cy=Element::cy();
+
   float fX2 = float(x2);
   float fY2 = float(y2);
   fX -= float(cx) + fX2/2.0;
@@ -339,8 +371,8 @@ bool Ellipse::getSelected(float fX, float fY, float w)
 // Rotates around the center.
 void Ellipse::rotate()
 {
-  cy += (y2-x2) >> 1;
-  cx += (x2-y2) >> 1;
+  _cy += (y2-x2) >> 1;
+  _cx += (x2-y2) >> 1;
   int tmp = x2;
   x2 = y2;
   y2 = tmp;
