@@ -60,7 +60,6 @@ private:
 public: // manipulate (used in UndoCommands)
   void hide();
   void show();
-  void rotate(angle_t, std::pair<int, int> pivot=std::make_pair(0,0));
   void transform(rotate_after_mirror1_t, std::pair<int, int> pivot=std::make_pair(0,0));
   void snap();
 

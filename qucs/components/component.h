@@ -148,7 +148,12 @@ public: // BUG
 // private: // not yet
   int  isActive; // should it be used in simulation or not ?
   mutable /*BUGBUGBUG*/ int  tx, ty;   // upper left corner of text (position)
+
+// private: !!!
   bool showName;
+
+public:
+  bool showLabel() const override{ return showName; }
 
 public:
   int cx() const{return Element::_cx;}
