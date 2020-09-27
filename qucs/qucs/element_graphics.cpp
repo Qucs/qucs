@@ -97,8 +97,12 @@ void ElementGraphics::attachElement(Element* e)
 
 		}
 	}
-	auto t=new QGraphicsTextItem(this);
-	t->setPlainText(e->label());
+
+	if(e->showLabel()){
+		auto t=new QGraphicsTextItem(this);
+		t->setPlainText(e->label());
+	}else{
+	}
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*)
@@ -114,75 +118,15 @@ void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, 
 		painter->setPen(QPen(Qt::darkGray,3));
 		painter->drawRoundRect(br);
 	}else{itested();
-		// debug.
-		// painter->fillRect(br, QColor("white"));
+#ifdef DO_TRACE
 		painter->setPen(QPen(Qt::yellow,3));
 		painter->drawRoundRect(br);
+#endif
 	}
 
 	_e->paint(&v);
 }
 /*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-// rotate around pivot (in global coordinates). obsolete.
-void ElementGraphics::rotate(angle_t a, std::pair<int, int> pivot)
-{ untested();
-	assert(false);
-}
-#if 0
-{
-	assert(_e);
-// 	if(auto s=dynamic_cast<Wire*>(_e)){ untested();
-// 		trace0("start wire rotate");
-// 		hide();
-// 		s->rotate(); // does not work
-// 		show();
-// 		trace0("done wire rotate");
-// 	}else
-	if(auto* s=dynamic_cast<Symbol*>(_e)){ untested();
-		bool sel = isSelected();
-		hide();
-		std::string rs = s->getParameter("$angle");
-		int r = atoi(rs.c_str());
-		assert(!(r%90));
-		assert(!(a.degrees_int()%90));
-		r += a.degrees_int();
-		assert(!(r%90));
-		r += 360;
-		r %= 360;
-		s->setParameter("$angle", std::to_string(r));
-
-		auto p = pos();
-		int x = getX(p.toPoint());
-		int y = getY(p.toPoint());
-
-#ifndef NDEBUG
-		std::string x_ = s->getParameter("$xposition");
-		std::string y_ = s->getParameter("$yposition");
-		assert(x == atoi(x_.c_str()));
-		assert(y == atoi(y_.c_str()));
-#endif
-
-		// c = (x,y);
-		trace4("DBG", x,y,pivot.first,pivot.second);
-		x -= pivot.first;
-		y -= pivot.second;
-
-		auto new_xy = std::make_pair(x,y);
-		trace1("DBG", new_xy);
-		new_xy = a.apply(new_xy);
-		trace1("DBG post", new_xy);
-
-		x = pivot.first + new_xy.first;
-		y = pivot.second + new_xy.second;
-
-		setPos(x, y);
-		show();
-		setSelected(sel);
-	}else{ untested();
-	}
-}
-#endif
 /*--------------------------------------------------------------------------*/
 // transform around pivot (in global coordinates).
 void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot)
@@ -191,9 +135,6 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 	assert(!(a.degrees_int()%90));
 	assert(_e);
 	bool sel = isSelected();
-//	if(auto s=dynamic_cast<Wire*>(_e)){ untested();
-//		incomplete();
-//	}else
 	if(auto* s=dynamic_cast<Symbol*>(_e)){ untested();
 		hide();
 		int mx = 0;
@@ -242,9 +183,9 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 		trace2("transform", vflip, new_mr.degrees_int());
 
 		// BUG. vflip last.
-		s->setParameter(std::string("$angle"), std::to_string(new_mr.degrees_int()));
 		s->setParameter(std::string("$hflip"), std::string("1"));
 		s->setParameter(std::string("$vflip"), std::to_string(vflip));
+		s->setParameter(std::string("$angle"), std::to_string(new_mr.degrees_int()));
 
 		auto p = pos();
 		int x = getX(p.toPoint());

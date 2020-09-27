@@ -21,16 +21,37 @@
 namespace{
 
 class Volt_ac : public Component  {
+  Volt_ac(Volt_ac const&p);
 public:
   Volt_ac();
   ~Volt_ac();
-  Component* newOne(){
+  Component* newOne(){ untested();
 	  return new Volt_ac(*this);
   }
   static Element* info(QString&, char* &, bool getNewOne=false);
 }D;
 Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Vac", &D);
 Module::INSTALL pp("lumped", &D);
+
+Volt_ac::Volt_ac(Volt_ac const&p)
+	: Component(p)
+{
+
+#if 0
+	Arcs.clear();
+	for(auto p1 : p.Arcs) {untested();
+		Arcs.append(new Arc(*p1));
+	}
+	Lines.clear();
+	for(auto p1 : p.Lines) {untested();
+		Lines.append(new Line(*p1));
+	}
+#endif
+
+	assert(p.cx() == cx());
+	assert(p.cy() == cy());
+	assert(p.x1 == x1);
+}
 
 Volt_ac::Volt_ac()
 {
@@ -75,6 +96,7 @@ Volt_ac::~Volt_ac()
 
 Element* Volt_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
+	assert(!getNewOne);
   Name = QObject::tr("ac Voltage Source");
   BitmapFile = (char *) "ac_voltage";
 

@@ -70,6 +70,22 @@ Component::Component(Component const& p)
   }
 
   setType(p.type()); // hmmm
+
+  { // copyGraphics(p)
+    // graphics must be shared (and transformed upon use).
+    // but leave it like that in legacy Components.
+    //
+    // perhaps old Qt did not have transforms, and gave rise to the
+    // obsolete mirror and rotate code.
+    Arcs.clear();
+    for(auto p1 : p.Arcs) {untested();
+	    Arcs.append(new Arc(*p1));
+    }
+    Lines.clear();
+    for(auto p1 : p.Lines) {untested();
+	    Lines.append(new Line(*p1));
+    }
+  }
 }
 
 /*!

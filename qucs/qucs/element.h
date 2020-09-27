@@ -56,6 +56,7 @@ class SchematicModel;
 class Symbol;
 
 struct Line {
+	Line(Line const&) = default;
   Line(int _x1, int _y1, int _x2, int _y2, QPen _style)
        : x1(_x1), y1(_y1), x2(_x2), y2(_y2), style(_style) {};
   int   x1, y1, x2, y2;
@@ -63,6 +64,7 @@ struct Line {
 };
 
 struct Arc {
+	Arc(Arc const&) = default;
   Arc(int _x, int _y, int _w, int _h, int _angle, int _arclen, QPen _style)
       : x(_x), y(_y), w(_w), h(_h), angle(_angle),
 	arclen(_arclen), style(_style) {};
@@ -188,6 +190,9 @@ public: // make old variables accessible
 
   virtual QRectF boundingRect() const;
 public: // other stuff
+  virtual bool showLabel() const{ return true; }
+  //virtual bool showParam(int i) const{ return true; } // later
+
   virtual void paintScheme(SchematicDoc *) const; // obsolete?
   virtual void paintScheme(QPainter *) const; // obsolete?
   virtual void draw(QPainter&) { incomplete(); }
