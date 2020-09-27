@@ -67,6 +67,7 @@ public: // Node xs
 private: // Symbol
   void setParameter(std::string const& name, std::string const& value) override;
   std::string getParameter(std::string const& name) const override;
+  bool showLabel() const override{ return false; }
 
 private: // symbol Node stuff
   Node* connectNode(unsigned idx, NodeMap&) override;
@@ -119,8 +120,8 @@ public: // FIXME, these are still around. (from element)
 // 	void setPos1(int x, int y){ x2__() = x; y2__() = y; }
 
 public: // stuff used in mouseactions.
-  void move1(int x, int y){ unreachable(); } // {x1__()+=x; y1__()+=y; }
-  void move2(int x, int y){ unreachable(); } // {x2__()+=x; y2__()+=y; }
+//  void move1(int x, int y){ unreachable(); } // {x1__()+=x; y1__()+=y; }
+//  void move2(int x, int y){ unreachable(); } // {x2__()+=x; y2__()+=y; }
 
 private:
 	int & x1() { return _port0.x(); }

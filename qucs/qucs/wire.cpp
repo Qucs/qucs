@@ -40,7 +40,7 @@ Wire::Wire()
   assert(_node_hack.size()==2);
 
   setType("wire");
-  setLabel("noname");
+  setLabel("noname"); // BUG
 }
 
 Wire::Wire(Wire const& w)
@@ -52,8 +52,8 @@ Wire::Wire(Wire const& w)
   _node_hack.push_back(nullptr);
   assert(_node_hack.size()==2);
 
-  setType("wire");
-  setLabel("noname");
+  setType(w.type()); // BUG. why not in Component?
+  setLabel(w.label());
 }
 
 void Wire::findScaleAndAngle()
