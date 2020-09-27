@@ -551,12 +551,12 @@ void Component::setParameter(std::string const& name, std::string const& v)
     r -= 1;
     r /= -2;
     set_mirror_xaxis(r);
-  }else if(name=="$xposition"){ untested();
+  }else if(name=="$xposition"){
     int x = atoi(v.c_str());
     auto c = center();
     c.first = x;
     Element::setCenter(c);
-  }else if(name=="$yposition"){ untested();
+  }else if(name=="$yposition"){
     int y = atoi(v.c_str());
     auto c = center();
     c.second = y;

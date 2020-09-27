@@ -4,7 +4,7 @@
 
 
 void more()
-{ untested();
+{
 	SchematicModel M(NULL);
 
 	untested();
@@ -88,7 +88,7 @@ void more()
 	std::cout << "=== square test\n";
 	M.pushBack(w1);
 	SchematicModel const& cM = M;
-	for(auto i : cM.wires()){ untested();
+	for(auto i : cM.wires()){
 		Symbol* s = i;
 		int cx = atoi(s->getParameter("$xposition").c_str());
 		int cy = atoi(s->getParameter("$xposition").c_str());
@@ -103,7 +103,7 @@ void more()
 }
 
 int main()
-{ untested();
+{
 	SchematicModel M(NULL);
 	auto w0 = new Wire(0,0,1,0);
 	auto w1 = new Wire(1,0,0,0);
@@ -122,14 +122,14 @@ int main()
 	Node* n1 = *i1;
 
 	auto ni0 = n0->connectionsBegin();
-	{ untested();
+	{
 		// BUG: could be the other way around
 		assert(*ni0 == w0);
 		++ni0;
 		assert(*ni0 == w1);
 	}
 	auto ni1 = n1->connectionsBegin();
-	{ untested();
+	{
 		// BUG: could be the other way around
 		assert(*ni1 == w0);
 		++ni1;
@@ -142,19 +142,19 @@ int main()
 	++i1;
 	assert(*i0 != *i1);
 
-	{ untested();
+	{
 		auto N = n0->neighbours();
 		unsigned k=0;
-		for(auto Ni=N.begin(); Ni!=N.end(); ++Ni){ untested();
+		for(auto Ni=N.begin(); Ni!=N.end(); ++Ni){
 			++k;
 		}
 		// wire induces self loops, hence 4.
 		assert(k==4);
 	}
-	{ untested();
+	{
 		auto N = n1->neighbours();
 		unsigned k=0;
-		for(auto Ni=N.begin(); Ni!=N.end(); ++Ni){ untested();
+		for(auto Ni=N.begin(); Ni!=N.end(); ++Ni){
 			++k;
 		}
 		assert(k==4);

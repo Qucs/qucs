@@ -25,7 +25,7 @@ private:
 
 		 // BUG: do in Component??
 		 // (this does not work either way)
-		  for(auto i : p.Lines){ untested();
+		  for(auto i : p.Lines){
 			 Lines.append(new Line(*i));
 		  }
 
@@ -35,7 +35,7 @@ public:
   SubCirPort();
  ~SubCirPort() {};
   Component* newOne() {untested(); return new SubCirPort(*this);}
-  Element* clone() const {untested(); return new SubCirPort(*this);}
+  Element* clone() const { return new SubCirPort(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 
 private:
@@ -111,7 +111,7 @@ void SubCirPort::createSymbol()
   x1 = -27; y1 = -8;
   x2 =   0; y2 =  8;
 
-  if(Props.at(1)->Value.at(0) == 'a') { untested();
+  if(Props.at(1)->Value.at(0) == 'a') {
     Arcs.append(new Arc(-25, -6, 12, 12,  0, 16*360,QPen(Qt::darkBlue,2)));
     Lines.append(new Line(-13,  0,  0,  0,QPen(Qt::darkBlue,2)));
   }else{ untested();

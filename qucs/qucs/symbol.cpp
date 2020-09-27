@@ -103,7 +103,7 @@ Net const* Symbol::portValue(unsigned i) const
 
 // "position"?
 std::pair<int, int> Symbol::center()const
-{ untested();
+{
 	return std::make_pair(_cx, _cy);
 }
 

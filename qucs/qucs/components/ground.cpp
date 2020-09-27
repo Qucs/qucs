@@ -38,7 +38,7 @@ protected:
 };
 
 Ground::Ground(Ground const& g) : Component(g)
-{ untested();
+{
 //	init();
   info(Name, bitmap_file);
   Type = isComponent;   // both analog and digital
@@ -50,7 +50,7 @@ Ground::Ground(Ground const& g) : Component(g)
  // Lines.append(new Line( -7, 16,  7, 16,QPen(Qt::darkBlue,3)));
  // Lines.append(new Line( -3, 22,  3, 22,QPen(Qt::darkBlue,3)));
  // BUG: do in Component??
-  for(auto i : g.Lines){ untested();
+  for(auto i : g.Lines){
     Lines.append(new Line(*i));
   }
 
@@ -71,12 +71,12 @@ Ground::Ground(Ground const& g) : Component(g)
 }
 
 Ground::Ground()
-{ untested();
+{
 	init();
 }
 
 void	Ground::init()
-{ untested();
+{
   info(Name, bitmap_file);
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("ground (reference potential)");
@@ -101,11 +101,11 @@ void	Ground::init()
 }
 
 Ground::~Ground()
-{ untested();
+{
 }
 
 Node* Ground::connectNode(unsigned i, NodeMap&l)
-{ untested();
+{
   Node* n = Component::connectNode(i, l);
   assert(n);
   trace1("ground set netlabel1", n->netLabel());
@@ -124,7 +124,7 @@ Node* Ground::disconnectNode(unsigned i, NodeMap&l)
 
 // -------------------------------------------------------
 Element* Ground::info(QString& Name, char* &BitmapFile, bool getNewOne)
-{ untested();
+{
   Name = QObject::tr("Ground");
   BitmapFile = (char *) "gnd";
 
