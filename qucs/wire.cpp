@@ -238,9 +238,9 @@ std::string Wire::getParameter(std::string const& n) const
     return std::to_string(_angle*90);
   }else if(n=="$vflip"){ untested();
     return "1";
-  }else if(n=="deltax"){ untested();
+  }else if(n=="deltax"){
     return std::to_string(x2());
-  }else if(n=="deltay"){ untested();
+  }else if(n=="deltay"){
     return std::to_string(y2());
   }else{
     return Symbol::getParameter(n);
@@ -279,7 +279,7 @@ void Wire::setParameter(std::string const& n, std::string const& v)
     }
   }else if(n=="delta"){
     delta = v;
-  }else if(n=="deltax"){ untested();
+  }else if(n=="deltax"){
     int V = atoi(v.c_str());
     x2() = V;
     if(V){
@@ -287,7 +287,7 @@ void Wire::setParameter(std::string const& n, std::string const& v)
     }else{
     }
     findScaleAndAngle();
-  }else if(n=="deltay"){ untested();
+  }else if(n=="deltay"){
     int V = atoi(v.c_str());
     y2() = V;
     if(V){

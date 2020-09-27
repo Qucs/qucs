@@ -33,13 +33,13 @@ class ComponentList;
 namespace {
 
 static std::string netLabel(Net const* n)
-{ untested();
+{
 	if(!n){ untested();
 		unreachable();
 		return("(null)");
-	}else if(n->hasLabel()){ untested();
+	}else if(n->hasLabel()){
 		return n->label().toStdString();
-	}else{ untested();
+	}else{
 		return "_net" + std::to_string(n->pos());
 	}
 }
@@ -63,7 +63,7 @@ void Verilog::printCommand(Command const* c, QTextStream& s) const
 }
 
 void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
-{ untested();
+{
 	Component const* c=dynamic_cast<Component const*>(sym);
 #if 0
 	if(!c){ untested();
@@ -85,12 +85,12 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 		}
 	}else
 #endif
-	{ untested();
+	{
 		s << QString::fromStdString(c->type()) << " ";
 
 		QString comma="";
 		s << "#(";
-		for(auto p2 : c->params()) { untested();
+		for(auto p2 : c->params()) {
 			s << comma << "." << p2->name() << "(" << p2->Value << ")";
 			comma = ", ";
 		}
@@ -99,7 +99,7 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 
 		// printPorts()
 		comma = "";
-		for(unsigned i=0; i < sym->numPorts(); ++i){ untested();
+		for(unsigned i=0; i < sym->numPorts(); ++i){
 			s << comma << netLabel(sym->portValue(i));
 			comma = ", ";
 		}
@@ -124,13 +124,13 @@ private: // legacy cruft
   PaintingList const& paintings(SchematicSymbol const& m) const{ untested();
     return m.paintings();
   }
-  WireList const& wires(SchematicSymbol const& m) const{ untested();
+  WireList const& wires(SchematicSymbol const& m) const{
     return m.wires();
   }
-  NodeMap const& nodes(SchematicSymbol const& m) const{ untested();
+  NodeMap const& nodes(SchematicSymbol const& m) const{
     return m.nodes();
   }
-  ComponentList const& components(SchematicSymbol const& m) const{ untested();
+  ComponentList const& components(SchematicSymbol const& m) const{
     return m.components();
   }
 
@@ -148,8 +148,8 @@ void VerilogSchematicFormat::load(DocumentStream& stream, SchematicSymbol& s) co
 }
 
 void VerilogSchematicFormat::save(DocumentStream& stream, SchematicSymbol const& m) const
-{ untested();
-  for(auto pc : components(m)){ untested();
+{
+  for(auto pc : components(m)){
 	  if(dynamic_cast<Command const*>(pc)){ untested();
 		  unreachable();
 		  // BUG. a Command is not a Component
@@ -158,10 +158,10 @@ void VerilogSchematicFormat::save(DocumentStream& stream, SchematicSymbol const&
 	  printSymbol(pc, stream); // BUG: use V::printItem
 	                           // but uses different port names...
   }
-  for(auto w : wires(m)){ untested();
+  for(auto w : wires(m)){
 	  printSymbol(w, stream); // BUG: use V::printItem
   }
-  for(auto const& n : nodes(m)){ untested();
+  for(auto const& n : nodes(m)){
 	  int x, y;
 	  std::tie(x, y) = n.position();
 	  stream << "place #(.$xposition(" << x << "),"
@@ -180,7 +180,7 @@ void VerilogSchematicFormat::save(DocumentStream& stream, SchematicSymbol const&
 // similar to Verilog::printSymbol, but with the actual node names and
 // coordinates.
 void VerilogSchematicFormat::printSymbol(Symbol const* sym, stream_t& s) const
-{ untested();
+{
 #if 0
 	Component const* c=dynamic_cast<Component const*>(sym);
 	if(!c){ untested();
@@ -196,20 +196,20 @@ void VerilogSchematicFormat::printSymbol(Symbol const* sym, stream_t& s) const
 	}else
 #endif
 	
-	{ untested();
+	{
 		std::string type = sym->type();
 		std::string label = sym->label().toStdString();
 		s << QString::fromStdString(type) << " ";
 
-		if(label == "*"){ untested();
+		if(label == "*"){
 			// bug/feature/wtf?
 			label="anonymous_gnd_hack_" + std::to_string(gndhackn++);
-		}else{ untested();
+		}else{
 		}
 
 		QString comma="";
 		s << "#(";
-		for(unsigned i=0; i<sym->paramCount(); ++i) { untested();
+		for(unsigned i=0; i<sym->paramCount(); ++i) {
 			s << comma << "." << sym->paramName(i) << "(" << sym->paramValue(i) << ")";
 			comma = ", ";
 		}
@@ -217,7 +217,7 @@ void VerilogSchematicFormat::printSymbol(Symbol const* sym, stream_t& s) const
 		s << QString::fromStdString(label) << "(";
 
 		comma = "";
-		for(unsigned i=0; i<sym->numPorts(); ++i){ untested();
+		for(unsigned i=0; i<sym->numPorts(); ++i){
 			trace3("...", sym->label(), i, sym->numPorts());
 			auto p = sym->portPosition(i);
 			auto x = p.first;
