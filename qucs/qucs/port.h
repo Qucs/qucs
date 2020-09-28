@@ -31,7 +31,7 @@ public:
   Port(Port const&);
  // Port() {};
   explicit Port(int x, int y, bool _avail=true)
-	  : _x(x), _y(y), avail(_avail), Connection(nullptr)
+	  : _x(x), _y(y), avail(_avail), _node(nullptr)
   {
     Type=""; Name=""; };
 
@@ -42,7 +42,7 @@ public:
   void setPosition(int x, int y) { _x=x; _y=y; }
 
   // This makes Port behave like a pointer (and that's what it will be).
-  Node const* operator->() const {return Connection;}
+  Node const* operator->() const {return _node;}
 
   int x() const{ return _x; }
   int y() const{ return _y; }
@@ -60,20 +60,21 @@ public:
   QString Name; // BUG?
 
 private:
-  Node *Connection;
+  Node *_node;
+
 public:
   QString const& netLabel() const;
 
 public: // perhaps not here
-  Node* value() const{return Connection;}
-  bool connected() const{return Connection;}
+  Node* value() const{return _node;}
+  bool isConnected() const{return _node;}
   QString const& name() const{return Name;}
 
 private:
   // "connections" are bidirectional, this is taken care of in Symbol::(dis)connectNode
   friend class Symbol;
-  void connect(Node* n) { assert(!Connection); Connection = n; }
-  void disconnect() { assert(Connection); Connection = NULL; }
+  void connect(Node* n) { assert(!_node); _node = n; }
+  void disconnect() { assert(_node); _node = NULL; }
 };
 
 

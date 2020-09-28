@@ -58,7 +58,7 @@ private:
   void findScaleAndAngle();
 
 public: // Node xs
-  bool hasNet() const { return _port0.connected(); }
+  bool hasNet() const { return _port0.isConnected(); }
   Net* net();
   Net const* net() const;
 

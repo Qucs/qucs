@@ -43,8 +43,8 @@ public: // construct
   explicit Symbol();
   virtual ~Symbol();
 
-private: // Element
-	void paint(ViewPainter*) const{unreachable();}	
+protected: // Element
+	void paint(ViewPainter*) const;
 
 public: // interface
   // what is this?

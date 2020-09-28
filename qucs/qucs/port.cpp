@@ -15,12 +15,12 @@
 #include "node.h"
 
 Port::Port(Port const& p)
-	: _x(p._x), _y(p._y), Connection(nullptr)
+	: _x(p._x), _y(p._y), _node(nullptr)
 {
 }
 
 QString const& Port::netLabel() const
 {
-	assert(Connection);
-	return Connection->netLabel();
+	assert(_node);
+	return _node->netLabel();
 }

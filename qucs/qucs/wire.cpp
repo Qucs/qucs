@@ -111,8 +111,8 @@ static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Wire", &w);
 // ----------------------------------------------------------------
 Wire::~Wire()
 {
-  assert(!port(0).connected());
-  assert(!port(1).connected());
+  assert(!port(0).isConnected());
+  assert(!port(1).isConnected());
 }
 
 // ----------------------------------------------------------------
@@ -169,6 +169,8 @@ void Wire::paint(ViewPainter *p) const
     p->drawLine(x1, y1, x2, y2);
     // p->drawEllipse(x1-2, y1-2, 4, 4);
   }
+
+  Symbol::paint(p);
 }
 
 // ----------------------------------------------------------------
