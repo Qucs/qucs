@@ -5,43 +5,31 @@
 #include "symbol.h"
 #include "viewpainter.h"
 #include "schematic_model.h"
-
+/*--------------------------------------------------------------------------*/
 namespace{
 
 // BUG/FEATURE. Wires can't go around the corner
-// constructing a ghostwire, which is then converted to a (pair of) wires
-class GhostWire : public Symbol /*subckt*/ {
+// wire under construction does. convert to pair of Wires eventually
+class WireUC : public Symbol /*subckt*/ {
 public:
 	enum angle_mode_t{ am_H=0, am_V=1 };
 private:
-	GhostWire(GhostWire const&) = default;
+	WireUC(WireUC const&) = default;
+
 public:
-	GhostWire() : _mode(am_H) { }
-	~GhostWire() { }
+	WireUC() : _mode(am_H), _proto(nullptr) {
+	}
+	~WireUC() { }
 
 private:
 	Element* clone() const override{ untested();
-		return new GhostWire(*this);
+		return new WireUC(*this);
 	}
-
-public:
-	void paint(ViewPainter *p) const;
+	void paint(ViewPainter *p) const override;
 
 private:
-	QPoint pmid() const{ untested();
-		QPoint pm;
-		switch(_mode){
-		case am_H: itested();
-			pm = _p0;
-			pm.setX(_p1.x());
-			break;
-		case am_V: untested();
-			pm = _p0;
-			pm.setY(_p1.y());
-			break;
-		}
-		return pm;
-	}
+	QPoint pmid() const;
+	void pushWire(int x, int y, int mx, int my);
 
 private: // symbol
 	unsigned numPorts() const override{ return 2; }
@@ -53,9 +41,10 @@ private:
 	angle_mode_t _mode;
 	QPoint _p0;
 	QPoint _p1;
+	Element const* _proto;
 } w;
-
-void GhostWire::paint(ViewPainter *p) const
+/*--------------------------------------------------------------------------*/
+void WireUC::paint(ViewPainter *p) const
 { itested();
 	assert(p);
 
@@ -65,46 +54,78 @@ void GhostWire::paint(ViewPainter *p) const
 	p->drawLine(_p0, pm);
 	p->drawLine(pm, _p1);
 }
+/*--------------------------------------------------------------------------*/
+void WireUC::pushWire(int x, int y, int mx, int my)
+{
+	trace4("pw", x, y, mx, my);
+	Element* wc = _proto->clone();
+	Symbol* w = prechecked_cast<Symbol*>(wc);
+	assert(w);
 
-void GhostWire::expand()
+	w->setParameter("$xposition", std::to_string(x));
+	w->setParameter("$yposition", std::to_string(y));
+	w->setParameter("deltax", std::to_string(mx));
+	w->setParameter("deltay", std::to_string(my));
+
+	trace2("expand", _p0, _p1);
+	subckt()->pushBack(w);
+}
+/*--------------------------------------------------------------------------*/
+QPoint WireUC::pmid() const{ untested();
+	QPoint pm;
+	switch(_mode){
+	case am_H: itested();
+				  pm = _p0;
+				  pm.setX(_p1.x());
+				  break;
+	case am_V: untested();
+				  pm = _p0;
+				  pm.setY(_p1.y());
+				  break;
+	}
+	return pm;
+}
+/*--------------------------------------------------------------------------*/
+void WireUC::expand()
 { untested();
 	assert(!subckt());
 	new_subckt();
 	assert(subckt());
 
-	Symbol* proto = symbol_dispatcher["Wire"];
-	assert(proto);
+	if(!_proto){
+		_proto	= symbol_dispatcher["Wire"];
+	}else{
+		unreachable();
+	}
+	assert(_proto);
+
 	auto pm = pmid();
+	int x = getX(_p0);
+	int y = getY(_p0);
+	int dx = getX(pm) - getX(_p0);
+	int dy = getY(pm) - getY(_p0);
 
-	Element* wc = proto->clone();
-	Symbol* w = prechecked_cast<Symbol*>(wc);
-	assert(w);
+	if(dx || dy){
+		pushWire(x, y, dx, dy);
+	}else{
+	}
 
-	w->setParameter("$xposition", std::to_string(getX(_p0)));
-	w->setParameter("$yposition", std::to_string(getY(_p0)));
-	w->setParameter("deltax", std::to_string(getX(pm)-getX(_p0)));
-	w->setParameter("deltay", std::to_string(getY(pm)-getY(_p0)));
+	x = getX(_p1);
+	y = getY(_p1);
+	dx = getX(pm) - getX(_p1);
+	dy = getY(pm) - getY(_p1);
 
-	trace2("expand", _p0, _p1);
-	subckt()->pushBack(w);
-
-	wc = proto->clone();
-	w = prechecked_cast<Symbol*>(wc);
-	assert(w);
-
-	w->setParameter("$xposition", std::to_string(getX(_p1)));
-	w->setParameter("$yposition", std::to_string(getY(_p1)));
-	w->setParameter("deltax", std::to_string(getX(pm)-getX(_p1)));
-	w->setParameter("deltay", std::to_string(getY(pm)-getY(_p1)));
-
-	trace2("expand", _p0, _p1);
-	subckt()->pushBack(w);
+	if(dx || dy){
+		pushWire(x, y, dx, dy);
+	}else{
+	}
 
 	SchematicModel const* sc = subckt();
+	trace1("expanded", sc->wires().size());
 	assert(sc->wires().size()); // BUG?
 }
-
-QRectF GhostWire::boundingRect() const { itested();
+/*--------------------------------------------------------------------------*/
+QRectF WireUC::boundingRect() const { itested();
   int xlo = std::min(_p0.x(), _p1.x());
   int xhi = std::max(_p0.x(), _p1.x());
   int ylo = std::min(_p0.y(), _p1.y());
@@ -115,8 +136,8 @@ QRectF GhostWire::boundingRect() const { itested();
   assert(!r.isEmpty());
   return r;
 }
-
-void GhostWire::setParameter(std::string const& n, std::string const& v)
+/*--------------------------------------------------------------------------*/
+void WireUC::setParameter(std::string const& n, std::string const& v)
 { untested();
 	trace2("gwsp", n, v);
 	if(n=="x0"){ untested();
@@ -140,7 +161,7 @@ void GhostWire::setParameter(std::string const& n, std::string const& v)
 		Symbol::setParameter(n, v);
 	}
 }
-
+/*--------------------------------------------------------------------------*/
 Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "__ma_ghostwire", &w);
 
 } // namespace
@@ -303,8 +324,8 @@ QUndoCommand* MouseActionWire::press(QEvent* e)
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionWire::move(QEvent* e)
-{ untested();
-	if(!_gfx.size()){ untested();
+{ itested();
+	if(!_gfx.size()){ itested();
 		// no ghost yet.
 	}else if(auto se=dynamic_cast<QGraphicsSceneMouseEvent*>(e)){ untested();
 		QPointF pos = se->scenePos(); // mapToScene(ev->pos());
