@@ -2,7 +2,14 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/6wm4mmnk59h7soh1/branch/master?svg=true)](https://ci.appveyor.com/project/qucs/qucs/branch/master)
 [![Coverage Status](https://img.shields.io/coveralls/Qucs/qucs.svg)](https://coveralls.io/r/Qucs/qucs?branch=master)
 
+## WIP WIP WIP
+
+This is the Qucs refactoring repository which will bring Qt5 support among
+other things. Help make it happen with your donation.
+[![donate](https://liberapay.com/assets/widgets/donate.svg "donate through lp")](https://liberapay.com/Gnucap_and_Qucs/donate)
+
 ## QUCS - Quite Universal Circuit Simulator
+
 
 
 Qucs is an integrated circuit simulator which means you are able to setup a circuit with a graphical user interface (GUI) and simulate the large-signal, small-signal and noise behaviour of the circuit. After that simulation has finished you can view the simulation results on a presentation page or window.
