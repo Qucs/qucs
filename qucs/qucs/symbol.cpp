@@ -126,7 +126,7 @@ std::string Symbol::getParameter(std::string const& n) const
 #include "geometry.h"
 void Symbol::paint(ViewPainter* p) const
 {
-	for(unsigned i=0; i<numPorts(); ++i){ untested();
+	for(unsigned i=0; i<numPorts(); ++i){ itested();
 		auto pp = portPosition(i);
 		auto x = getX(pp)-_cx;
 		auto y = getY(pp)-_cy;
