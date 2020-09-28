@@ -519,7 +519,7 @@ void SchematicModel::simpleInsertWire(Wire *)
 void SchematicModel::detachFromNode(Element* what, Node* from)
 { untested();
 	unreachable();
-	if(from->connectionsCount()==1){ untested();
+	if(from->degree()==1){ untested();
 #if 0
 		if(from->Label){ untested();
 			incomplete();
@@ -530,7 +530,7 @@ void SchematicModel::detachFromNode(Element* what, Node* from)
 
 		incomplete(); // need a proper nodemap
 		// nodes().removeRef(from);  // delete open nodes
-	}else if(from->connectionsCount()==3){ untested();
+	}else if(from->degree()==3){ untested();
 		from->connectionsRemove(what);// delete connection
 		//			pn->disconnect(c);
 		//
@@ -554,9 +554,9 @@ void SchematicModel::disconnect(Symbol* c)
 
 		if(!nn){ untested();
 			unreachable();
-		}else if(nn->connectionsCount()==0){ untested();
+		}else if(nn->degree()==0){ untested();
 			nodes().erase(nn); // possibly garbage collect only.
-		}else if(nn->connectionsCount()==2){ untested();
+		}else if(nn->degree()==2){ untested();
 			// done in GUI, must be undoable.
 			// oneTwoWires(nn);  // two wires -> one wire
 		}else{itested();

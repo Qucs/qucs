@@ -47,7 +47,7 @@ Node::Node(std::pair<int, int> pos)
 Node::~Node()
 { untested();
   trace1("~Node", this);
-  assert(!connectionsCount());
+  assert(!degree());
   assert(!_net);
 }
 
@@ -146,7 +146,7 @@ AdjNodeRange::AdjNodeRange(Node& n)
   : _begin(AdjNodeIterator(n.connectionsBegin(), n.connectionsEnd())),
     _end(AdjNodeIterator(n.connectionsEnd(), n.connectionsEnd()))
 {
-  trace2("AdjNodeRange", n.connectionsCount(), &n);
+  trace2("AdjNodeRange", n.degree(), &n);
 }
 // ----------------------------------------------------------------
 bool AdjNodeIterator::operator==(AdjNodeIterator const& o)
