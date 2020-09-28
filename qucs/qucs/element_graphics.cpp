@@ -113,30 +113,32 @@ void ElementGraphics::attachElement(Element* e)
 #endif
 }
 /*--------------------------------------------------------------------------*/
-void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*)
+void ElementGraphics::paint(QPainter *p, const QStyleOptionGraphicsItem *o,
+		QWidget* w)
 {itested();
 	assert(_e);
-	assert(painter);
-	ViewPainter v(painter);
+	ViewPainter v(p); // TODO
+	_e->paint(&v);
+	assert(p);
 
 	auto br = boundingRect();
 
 	if(isSelected()){itested();
-		// painter->fillRect(br, QColor("grey"));
-		painter->setPen(QPen(Qt::darkGray,3));
-		painter->drawRoundRect(br);
+		// p->fillRect(br, QColor("grey"));
+		p->setPen(QPen(Qt::darkGray,3));
+		p->drawRoundedRect(br, 3, 3);
 	}else{itested();
 #ifdef DO_TRACE
-		painter->setPen(QPen(Qt::yellow,3));
-		painter->drawRoundRect(br);
+		p->setPen(QPen(Qt::yellow,3));
+		p->drawRoundedRect(br, 3, 3);
 #endif
 	}
 
-	_e->paint(&v);
+	// QGraphicsItem::paint(p, o, w); //?
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-// transform around pivot (in global coordinates).
+// transform around pivot (in scope coordinates).
 void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot)
 {itested();
 	trace1("..", a.degrees_int());
