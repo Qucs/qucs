@@ -20,9 +20,18 @@
 #include <utility> // std::pair
 #include "io_trace.h"
 
-// class transform_t // maybe.
-
 /*--------------------------------------------------------------------------*/
+inline int getX(std::pair<int, int> const& p)
+{itested();
+	return p.first;
+}
+/*--------------------------------------------------------------------------*/
+inline int getY(std::pair<int, int> const& p)
+{itested();
+	return p.second;
+}
+/*--------------------------------------------------------------------------*/
+// class transform_t // maybe.
 class angle_t{
 public:
 	angle_t(int d);
