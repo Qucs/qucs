@@ -376,7 +376,7 @@ void QucsApp::initView()
   QString path = QucsSettings.QucsHomeDir.absolutePath();
   QDir ProjDir(path);
   // initial projects directory is the Qucs home directory
-  QucsSettings.projsDir = path;
+  QucsSettings.projsDir.setPath(path);
 
   // create home dir if not exist
   if(!ProjDir.exists()) {
@@ -1165,7 +1165,7 @@ void QucsApp::slotListProjOpen(const QModelIndex &idx)
     openProject(QucsSettings.projsDir.filePath(dName));
   } else { // it's a normal directory
     // change projects directory to the selected one
-    QucsSettings.projsDir = QucsSettings.projsDir.filePath(dName);
+    QucsSettings.projsDir.setPath(QucsSettings.projsDir.filePath(dName));
     readProjects();
     //repaint();
   }
