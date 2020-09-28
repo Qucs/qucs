@@ -103,6 +103,14 @@ void ElementGraphics::attachElement(Element* e)
 		t->setPlainText(e->label());
 	}else{
 	}
+
+#if 0 // maybe not
+	if(auto c=dynamic_cast<Symbol*>(e)){ untested();
+		for(unsigned i : c->numPorts()){ untested();
+			new NodeGraphics(*i, this);
+		}
+	}
+#endif
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*)

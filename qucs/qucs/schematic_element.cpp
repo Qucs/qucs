@@ -38,7 +38,7 @@ Node* SchematicModel::insertNode(int x, int y, Element *e)
 
     // check if the new node lies within an existing wire
     //
-    if(pn->connectionsCount()==1){
+    if(pn->degree()==1){
 	// BUG. the wire is connected. just use it.
 	for(auto pw : wires()) {
 	    if(pw->x1_() == x) {
@@ -111,7 +111,7 @@ int SchematicModel::insertWireNode1(Wire *w)
                 } else {
                     // one part of the wire lies within an existing wire
                     // the other part not
-                    if(ptr2->portValue(1)->connectionsCount() == 1)
+                    if(ptr2->portValue(1)->degree() == 1)
                     {
                         w->y1__() = ptr2->y1_();
                         w->setPortByIndex(0, ptr2->portValue(0));
@@ -155,7 +155,7 @@ int SchematicModel::insertWireNode1(Wire *w)
                 {
                     // one part of the wire lies within an existing wire
                     // the other part not
-                    if(ptr2->portValue(1)->connectionsCount() == 1)
+                    if(ptr2->portValue(1)->degree() == 1)
                     {
                         w->x1__() = ptr2->x1_();
                         w->setPortByIndex(0, ptr2->portValue(0));
@@ -223,7 +223,7 @@ bool SchematicModel::connectHWires1(Wire *w)
         if(!pw->isHorizontal()) continue;
         if(pw->x1_() < w->x1_())
         {
-            if(n->connectionsCount() != 2) continue;
+            if(n->degree() != 2) continue;
             if(pw->Label)
             {
                 w->Label = pw->Label;
@@ -249,7 +249,7 @@ bool SchematicModel::connectHWires1(Wire *w)
             delete w;
             return false;
         }
-        if(pw->portValue(1)->connectionsCount() < 2)
+        if(pw->portValue(1)->degree() < 2)
         {
             // existing wire lies within the new one
             if(pw->Label)
@@ -290,7 +290,7 @@ bool SchematicModel::connectVWires1(Wire *w)
         if(pw->isHorizontal()) continue;
         if(pw->y1_() < w->y1_())
         {
-            if(n->connectionsCount() != 2) continue;
+            if(n->degree() != 2) continue;
             if(pw->Label)
             {
                 w->Label = pw->Label;
@@ -320,7 +320,7 @@ bool SchematicModel::connectVWires1(Wire *w)
             delete w;
             return false;
         }
-        if(pw->portValue(1)->connectionsCount() < 2)
+        if(pw->portValue(1)->degree() < 2)
         {
             // existing wire lies within the new one
             if(pw->Label)
@@ -375,7 +375,7 @@ int SchematicModel::insertWireNode2(Wire *w)
             {
                 // one part of the wire lies within an existing wire
                 // the other part not
-                if(ptr2->portValue(0)->connectionsCount() == 1) {
+                if(ptr2->portValue(0)->degree() == 1) {
 #if 0
                     if(ptr2->Label) {
                         w->Label = ptr2->Label;
@@ -409,7 +409,7 @@ int SchematicModel::insertWireNode2(Wire *w)
             {
                 // one part of the wire lies within an existing wire
                 // the other part not
-                if(ptr2->portValue(0)->connectionsCount() == 1) {
+                if(ptr2->portValue(0)->degree() == 1) {
 
 #if 0
                     if(ptr2->Label) {
@@ -469,7 +469,7 @@ bool SchematicModel::connectHWires2(Wire *w)
         if(!pw->isHorizontal()) continue;
         if(pw->x2_() > w->x2_())
         {
-            if(n->connectionsCount() != 2) continue;
+            if(n->degree() != 2) continue;
             if(pw->Label)
             {
                 w->Label = pw->Label;
@@ -482,7 +482,7 @@ bool SchematicModel::connectHWires2(Wire *w)
             w->portValue(1)->connectionsAppend(w);
             erase(pw);
             return true;
-        }else if(pw->portValue(0)->connectionsCount() < 2) {
+        }else if(pw->portValue(0)->degree() < 2) {
 	    // (if new wire lies complete within an existing one, was already
 	    // checked before). existing wire lies within the new one
             if(pw->Label)
@@ -525,7 +525,7 @@ bool SchematicModel::connectVWires2(Wire *w)
         if(pw->isHorizontal()) continue;
         if(pw->y2_() > w->y2_())
         {
-            if(n->connectionsCount() != 2) continue;
+            if(n->degree() != 2) continue;
             if(pw->Label)
             {
                 w->Label = pw->Label;
@@ -542,7 +542,7 @@ bool SchematicModel::connectVWires2(Wire *w)
         // (if new wire lies complete within an existing one, was already
         // checked before)
 
-        if(pw->portValue(0)->connectionsCount() < 2)
+        if(pw->portValue(0)->degree() < 2)
         {
             // existing wire lies within the new one
             if(pw->Label)
@@ -674,8 +674,8 @@ int SchematicModel::insertWire(Wire *w)
 
                 pn  = nw->portValue(0);
                 pn2 = nw->portValue(1);
-                n1  = pn->connectionsCount();
-                n2  = pn2->connectionsCount();
+                n1  = pn->degree();
+                n2  = pn2->degree();
                 if(n1 == 1) {
                     removeNode(pn);
                     pn2->connectionsRemove(nw);   // remove connection
@@ -741,7 +741,7 @@ incomplete();
 #if 0
     Element* pe=element(g);
     Node *pn_1st = pn;
-    while(pn->connectionsCount() == 2)
+    while(pn->degree() == 2)
     {
         if(pn->firstConnection() == element(pe)){
 	    pe = pn->lastConnection();
@@ -871,17 +871,17 @@ return false;
 void SchematicModel::deleteWire(Wire *)
 {
 #if 0 // why?!
-    if(w->portValue(0)->connectionsCount() == 1) {
+    if(w->portValue(0)->degree() == 1) {
 //        if(w->portValue(0)->Label) delete w->portValue(0)->Label;
          incomplete();
         // nodes().removeRef(w->portValue(0));     // delete node 1 if open
     } else {
         w->portValue(0)->connectionsRemove(w);   // remove connection
-        if(w->portValue(0)->connectionsCount() == 2)
+        if(w->portValue(0)->degree() == 2)
             oneTwoWires(w->portValue(0));  // two wires -> one wire
     }
 
-    if(w->portValue(1)->connectionsCount() == 1)
+    if(w->portValue(1)->degree() == 1)
     {
 //        if(w->portValue(1)->Label) delete w->portValue(1)->Label;
 	incomplete();
@@ -890,7 +890,7 @@ void SchematicModel::deleteWire(Wire *)
     else
     {
         w->portValue(1)->connectionsRemove(w);   // remove connection
-        if(w->portValue(1)->connectionsCount() == 2)
+        if(w->portValue(1)->degree() == 2)
             oneTwoWires(w->portValue(1));  // two wires -> one wire
     }
 
@@ -931,7 +931,7 @@ int SchematicDoc::copyWires(int& x1, int& y1, int& x2, int& y2,
             // rescue non-selected node labels
             pn = pw->portValue(0);
             if(pn->Label)
-                if(pn->connectionsCount() < 2)
+                if(pn->degree() < 2)
                 {
                     ElementCache->append(pn->Label);
 
@@ -942,7 +942,7 @@ int SchematicDoc::copyWires(int& x1, int& y1, int& x2, int& y2,
                 }
             pn = pw->portValue(1);
             if(pn->Label)
-                if(pn->connectionsCount() < 2)
+                if(pn->degree() < 2)
                 {
                     ElementCache->append(pn->Label);
 
@@ -1766,7 +1766,7 @@ void SchematicDoc::newMovingWires(QList<Element*> *p, Node *pn, int pos)
         pe = pn->firstConnection();
         if(pe == 0)  return;
 
-        if(pn->connectionsCount() > 1)
+        if(pn->degree() > 1)
             break;
         if(pe->Type != isWire)  // is it connected to exactly one wire ?
             break;
@@ -1778,7 +1778,7 @@ void SchematicDoc::newMovingWires(QList<Element*> *p, Node *pn, int pos)
         Node *pn2 = pw->portValue(0);
         if(pn2 == pn) pn2 = pw->portValue(1);
 
-        if(pn2->connectionsCount() == 2) // two existing wires connected ?
+        if(pn2->degree() == 2) // two existing wires connected ?
             if((pn2->State & (8+4)) == 0)
             {
                 Element *pe2 = pn2->firstConnection();
@@ -2002,14 +2002,14 @@ QList<ElementGraphics*> SchematicDoc::cropSelectedElements()
     for(pn = nodes().first(); pn!=0; )
     {
         if(pn->State & 8)
-            if(pn->connectionsCount() == 2)
+            if(pn->degree() == 2)
                 if(oneTwoWires(pn))    // if possible, connect two wires to one
                 {
                     pn = nodes().current();
                     continue;
                 }
 
-        if(pn->connectionsCount() == 0)
+        if(pn->degree() == 0)
         {
             if(pn->Label)
             {
@@ -2799,7 +2799,7 @@ void SchematicModel::recreateSymbol(Symbol *Comp)
         // Otherwise the label would be deleted.
         pl = plMem = (WireLabel**)malloc(PortCount * sizeof(WireLabel*));
         foreach(Port *pp, Comp->Ports)
-            if(pp->Connection->connectionsCount() < 2)
+            if(pp->Connection->degree() < 2)
             {
                 *(pl++) = pp->Connection->Label;
                 pp->Connection->Label = 0;
@@ -3004,7 +3004,7 @@ void SchematicDoc::setCompPorts(Component *pc)
 
     foreach(Port *pp, pc->Ports) {
         pp->value()->connectionsRemove(pc);
-        switch(pp->value()->connectionsCount()) {
+        switch(pp->value()->degree()) {
         case 0:
             pl = pp->value()->Label; // a node can have a Label... why is it not just a "connection"?!
             if(pl) {
@@ -3126,7 +3126,7 @@ int SchematicDoc::copyComponents(int& x1, int& y1, int& x2, int& y2,
             // rescue non-selected node labels
             foreach(Port *pp, pc->Ports)
                 if(pp->Connection->Label)
-                    if(pp->Connection->connectionsCount() < 2)
+                    if(pp->Connection->degree() < 2)
                     {
                         ElementCache->append(pp->Connection->Label);
 
@@ -3170,7 +3170,7 @@ void SchematicDoc::copyComponents2(int& x1, int& y1, int& x2, int& y2,
             // rescue non-selected node labels
             foreach(Port *pp, pc->Ports)
                 if(pp->Connection->Label)
-                    if(pp->Connection->connectionsCount() < 2)
+                    if(pp->Connection->degree() < 2)
                     {
                         ElementCache->append(pp->Connection->Label);
                         pp->Connection->Label = 0;

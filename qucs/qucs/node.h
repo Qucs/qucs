@@ -47,7 +47,7 @@ public:
      Element* e=const_cast<Element*>(ee);
 	  Connections.removeRef(e);
   }
-  unsigned connectionsCount() const{
+  unsigned degree() const{
 	  return Connections.count();
   }
   Element* firstConnection(){

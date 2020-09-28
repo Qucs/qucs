@@ -339,23 +339,28 @@ void Component::paint(ViewPainter *p) const
     y += p->LineSpacing;
   }
   // write all properties
-  for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next())
+  for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next()){
     if(p4->display) {itested();
       p->Painter->drawText(x, y, 0, 0, Qt::TextDontClip, p4->Name+"="+p4->Value);
       y += p->LineSpacing;
     }
+  }
 
   // not here.
-  if(isActive == COMP_IS_OPEN)
+  if(isActive == COMP_IS_OPEN){
     p->Painter->setPen(QPen(Qt::red,0));
-  else if(isActive & COMP_IS_SHORTEN)
+  }else if(isActive & COMP_IS_SHORTEN){
     p->Painter->setPen(QPen(Qt::darkGreen,0));
+  }else{
+  }
   if(isActive != COMP_IS_ACTIVE) { untested();
     p->drawRect(cx+x1, cy+y1, x2-x1+1, y2-y1+1);
     p->drawLine(cx+x1, cy+y1, cx+x2, cy+y2);
     p->drawLine(cx+x1, cy+y2, cx+x2, cy+y1);
+  }else{
   }
 
+  Symbol::paint(p);
 }
 
 // -------------------------------------------------------

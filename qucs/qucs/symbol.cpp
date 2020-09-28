@@ -89,11 +89,10 @@ Node* Symbol::disconnectNode(unsigned i, NodeMap&)
 	return n;
 }
 
-static const QString OPEN_PORT("open");
 Net const* Symbol::portValue(unsigned i) const
 {
   assert(i<unsigned(numPorts()));
-  if(port(i).connected()){
+  if(port(i).isConnected()){
 	  assert( port(i).value()->net() );
 	  return port(i).value()->net();
   }else{
@@ -124,9 +123,30 @@ std::string Symbol::getParameter(std::string const& n) const
 	}
 }
 
+#include "geometry.h"
+void Symbol::paint(ViewPainter* p) const
+{
+	for(unsigned i=0; i<numPorts(); ++i){ untested();
+		auto pp = portPosition(i);
+		auto x = getX(pp)-_cx;
+		auto y = getY(pp)-_cy;
+		if(!port(i).isConnected()){
+			p->setPen(QPen(Qt::red,2));
+		}else if(port(i)->degree()==0){
+			unreachable();
+		}else if(port(i)->degree()==1){
+			p->setPen(QPen(Qt::red,2));
+		}else{
+			p->setPen(QPen(Qt::black,2));
+		}
+		p->drawEllipse(x-1, y-1, 2, 2);
+	}
+}
+
+// global position? rename to netPosition??
 std::pair<int, int> Symbol::portPosition(unsigned i) const
 {
-	assert(port(i).connected());
+	assert(port(i).isConnected());
 	auto p = port(i)->position();	
 	return p;
 }
