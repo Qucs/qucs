@@ -31,6 +31,18 @@ inline int getY(std::pair<int, int> const& p)
 	return p.second;
 }
 /*--------------------------------------------------------------------------*/
+inline int dsin(int angle)
+{itested();
+	int d = angle%2;
+	d *= 1-2*(angle/2);
+	return d;
+}
+/*--------------------------------------------------------------------------*/
+inline int dcos(int angle)
+{itested();
+  return dsin(angle+1);
+}
+/*--------------------------------------------------------------------------*/
 // class transform_t // maybe.
 class angle_t{
 public:

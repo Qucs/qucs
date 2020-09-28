@@ -15,19 +15,9 @@
 #include "node.h"// bug. conductor.h
 #include "nodemap.h"
 #include "globals.h"
-
+#include "geometry.h"
 #include <QPainter>
-
 #include "qt_compat.h" // geometry?
-// not here.
-inline int getX(std::pair<int, int> const& p)
-{itested();
-	return p.first;
-}
-inline int getY(std::pair<int, int> const& p)
-{itested();
-	return p.second;
-}
 
 Wire::Wire()
    : _port0(0, 0), _port1(1, 0), _angle(0), _scale(1.)
@@ -195,28 +185,13 @@ void Wire::setName(const QString&, const QString&, int, int, int)
 #endif
 }
 
-//#include "geometry.h"
-static int dsin(int angle)
-{itested();
-	int d = angle%2;
-	d *= 1-2*(angle/2);
-	return d;
-}
-/*--------------------------------------------------------------------------*/
-static int dcos(int angle)
-{itested();
-  return dsin(angle+1);
-}
-/*--------------------------------------------------------------------------*/
 // ----------------------------------------------------------------
 void Wire::updatePort()
 {
-
   assert(dsin(0) == 0);
   assert(dsin(1) == 1);
   assert(dsin(2) == 0);
   assert(dsin(3) == -1);
-
 
   assert(x1() == 0);
   assert(y1() == 0);
