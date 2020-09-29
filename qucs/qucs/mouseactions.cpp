@@ -203,6 +203,7 @@ void MouseActions::editLabel(SchematicDoc *Doc, WireLabel *pl)
 // -----------------------------------------------------------
 // Reinserts all elements (moved by the user) back into the schematic.
 // but why?!
+#if 0
 void MouseActions::endElementMoving(SchematicDoc *Doc, EGPList *movElements)
 { untested();
   unreachable(); // obsolete
@@ -253,13 +254,14 @@ void MouseActions::endElementMoving(SchematicDoc *Doc, EGPList *movElements)
   updateViewport();
   setDrawn(false);
 }
+#endif
 
 // -----------------------------------------------------------
 // Moves elements in "movElements" by x/y
+#if 0
 void MouseActions::moveElements(EGPList& , int, int)
 { itested();
   unreachable(); // obsolete
-#if 0
   auto movElements=&what;
   Wire *pw;
   (void)pw;
@@ -302,8 +304,8 @@ void MouseActions::moveElements(EGPList& , int, int)
       pe->setCenter(x, y, true);
     }
   }
-#endif
 }
+#endif
 
 
 // ***********************************************************************
@@ -636,9 +638,10 @@ void MouseActions::MMoveMoving2(SchematicDoc *Doc, QMouseEvent *Event)
  */
 void MouseActions::MMovePaste(SchematicDoc *Doc, QMouseEvent *Event)
 {
+  unreachable();
   Set1(Event, Doc);
 //  moveElements(Doc,MAx1,MAy1);
-  paintElementsScheme(Doc);
+  // paintElementsScheme(Doc);
 
   setDrawn();
 //  QucsMain->MouseMoveAction = &MouseActions::MMoveMoving2;
@@ -889,6 +892,7 @@ void MouseActions::MMoveZoomIn(SchematicDoc *Doc, QMouseEvent *Event)
 // **********                                                    **********
 // ************************************************************************
 
+#if 0
 // Is called from several MousePress functions to show right button menu.
 void MouseActions::rightPressMenu(QMouseEvent *Event)
 { untested();
@@ -1021,10 +1025,12 @@ void MouseActions::rightPressMenu(QMouseEvent *Event)
   updateViewport();
   setDrawn(false);
 }
+#endif
 
 // -----------------------------------------------------------
-void MouseActions::MPressLabel(SchematicDoc *Doc, QMouseEvent* Event)
+void MouseActions::MPressLabel(SchematicDoc*, QMouseEvent*)
 { untested();
+#if 0
   QPointF pos=Doc->mapToScene(Event->pos());
   float fX=pos.x();
   float fY=pos.y();
@@ -1098,6 +1104,7 @@ void MouseActions::MPressLabel(SchematicDoc *Doc, QMouseEvent* Event)
   updateViewport();
   setDrawn(false);
   Doc->setChanged(true, true);
+#endif
 }
 
 // -----------------------------------------------------------
@@ -1497,7 +1504,7 @@ void MouseActions::MReleaseMoving(SchematicDoc *Doc, QMouseEvent*)
 { untested();
   // Allow all mouse buttons, because for others than the left one,
   // a menu has already created.
-  endElementMoving(Doc, &movingElements);
+  // endElementMoving(Doc, &movingElements);
   Doc->releaseKeyboard();  // allow keyboard inputs again
 
 #if 0
@@ -1595,15 +1602,6 @@ void MouseActions::MReleaseResizePainting(SchematicDoc *Doc, QMouseEvent *Event)
   Doc->viewport()->update();
   setDrawn(false);
   Doc->setChanged(true, true);
-}
-
-// -----------------------------------------------------------
-void MouseActions::paintElementsScheme(SchematicDoc *p)
-{
-  for(auto const& pe : movingElements){
-    // something with mouse cursor
-    // pe->paintScheme(p);
-  }
 }
 
 // -----------------------------------------------------------
@@ -1752,7 +1750,7 @@ void MouseActions::MReleasePaste(SchematicDoc *Doc, QMouseEvent *Event)
 
     if(wasDrawn()){
       // erase old scheme
-      paintElementsScheme(Doc);
+      // paintElementsScheme(Doc);
     }else{
     }
     setDrawn();
@@ -1760,7 +1758,7 @@ void MouseActions::MReleasePaste(SchematicDoc *Doc, QMouseEvent *Event)
     x1 = pos.x();
     y1 = pos.y();
     // rotateElements(Doc,x1,y1);
-    paintElementsScheme(Doc);
+    // paintElementsScheme(Doc);
     // save rotation
     movingRotated++;
     movingRotated &= 3;
@@ -1791,7 +1789,7 @@ void MouseActions::MReleaseMoveText(SchematicDoc *Doc, QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void MouseActions::MReleaseZoomIn(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MReleaseZoomIn(SchematicDoc *, QMouseEvent *)
 { untested();
   unreachable();
   return;
@@ -1965,7 +1963,7 @@ void MouseActions::MDoubleClickSelect(SchematicDoc *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MDoubleClickWire2(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MDoubleClickWire2(SchematicDoc *, QMouseEvent *)
 {
   incomplete();
   // MPressWire2(Doc, Event);

@@ -170,8 +170,6 @@ Graph* SweepDialog::setBiasPoints()
   QFileInfo Info(Doc->docName());
   QString DataSet = Info.path() + QDir::separator() + Doc->DataSet;
 
-  Element *pe;
-
   // Note 1:
   // Invalidate it so that "Graph::loadDatFile()" does not check for the previously loaded time.
   // This is a current hack as "Graph::loadDatFile()" does not support multi-node data loading

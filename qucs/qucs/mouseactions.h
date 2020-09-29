@@ -309,12 +309,13 @@ public:
   void MReleaseMoveText(Schematic*, QMouseEvent*);
   void MReleaseZoomIn(Schematic*, QMouseEvent*);
 
-  void paintElementsScheme(Schematic*);
+  // obsolete
+//  void paintElementsScheme(Schematic*);
 //  void rotateElements(Schematic*, int&, int&);
 //  void moveElements(Schematic*, int&, int&);
-  void moveElements(QList<ElementGraphics*>&, int, int);
-  void endElementMoving(Schematic*, EGPList*);
-  void rightPressMenu(QMouseEvent*);
+//  void moveElements(QList<ElementGraphics*>&, int, int);
+//  void endElementMoving(Schematic*, EGPList*);
+//  void rightPressMenu(QMouseEvent*);
 #undef Schematic
 
   bool eventFilter(QObject *obj, QEvent *event);

@@ -395,12 +395,13 @@ public: // mostly not here
 	  assert(_model);
 	  return _model->connectVWires2(w);
   }
-  int   insertWire(Wire* w){
-	  assert(_model);
-	  return _model->insertWire(w);
-  }
+//  int   insertWire(Wire* w){
+//	  assert(_model);
+//	  unreachable();
+//	  return _model->insertWire(w);
+//  }
   void  selectWireLine(ElementGraphics*, Node*, bool);
-  Wire* selectedWire(int, int);
+//  Wire* selectedWire(int, int);
   Wire* splitWire(Wire* w, Node* n){
 	  assert(_model);
 	  return _model->splitWire(w, n);

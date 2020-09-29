@@ -16,7 +16,7 @@
 #include "schematic_doc.h"
 
 Element::Element()
- : _owner(nullptr), _cx(0), _cy(0)
+  : _cx(0), _cy(0), _owner(nullptr)
 {
   Type = isDummyElement; // BUG
   x1 = y1 = x2 = y2 = 0; // really?
@@ -61,12 +61,6 @@ void Element::getCenter(int&x, int&y) const
 {
 	incomplete();
 	x=y=-100;
-}
-
-void Element::snapToGrid(SchematicDoc& s)
-{
-	incomplete();
-//	s.setOnGrid(cx, cy);
 }
 
 void /*really?*/ Element::editElement(QucsDoc*)
