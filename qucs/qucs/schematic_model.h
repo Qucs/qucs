@@ -150,7 +150,7 @@ public: // node stuff. why public?
 	int   insertWireNode2(Wire* w);
 	bool  connectHWires2(Wire* w);
 	bool  connectVWires2(Wire* w);
-	int   insertWire(Wire* w); // BUG, what is simpleInsertWire?
+//	int   insertWire(Wire* w); // BUG, what is simpleInsertWire?
 	void  deleteWire(Wire*);
 
 private:
