@@ -19,6 +19,7 @@
 #include <QPainter>
 #include "qt_compat.h" // geometry?
 
+// ----------------------------------------------------------------
 Wire::Wire()
    : _port0(0, 0), _port1(1, 0), _angle(0), _scale(1.)
 {
@@ -32,7 +33,7 @@ Wire::Wire()
   setType("wire");
   setLabel("noname"); // BUG
 }
-
+// ----------------------------------------------------------------
 Wire::Wire(Wire const& w)
   : Symbol(w), _port0(w._port0), _port1(w._port1),
    _angle(w._angle), _scale(w._scale)
@@ -45,7 +46,7 @@ Wire::Wire(Wire const& w)
   setType(w.type()); // BUG. why not in Component?
   setLabel(w.label());
 }
-
+// ----------------------------------------------------------------
 void Wire::findScaleAndAngle()
 {
   _scale = std::max(abs(x2()), abs(y2()));
@@ -97,19 +98,16 @@ Wire::Wire(int _x1, int _y1, int _x2, int _y2)
 // not here.
 static Wire w;
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Wire", &w);
-
 // ----------------------------------------------------------------
 Wire::~Wire()
 {
   assert(!port(0).isConnected());
   assert(!port(1).isConnected());
 }
-
 // ----------------------------------------------------------------
-//
-// // element??
 void Wire::setCenter(int x, int y, bool relative)
 {
+//  Symbol::setCenter(x, y, relative);
   if(relative) {
     _cx += x;
     _cy += y;
@@ -119,7 +117,6 @@ void Wire::setCenter(int x, int y, bool relative)
     _cy = y;
   }
 }
-
 // ----------------------------------------------------------------
 void Wire::getCenter(int& x, int& y)
 {
@@ -128,11 +125,11 @@ void Wire::getCenter(int& x, int& y)
   x = (x1()+x2()) >> 1;
   y = (y1()+y2()) >> 1;
 }
-
 // ----------------------------------------------------------------
 // Lie x/y on wire ? 5 is the precision the coordinates have to fit.
 bool Wire::getSelected(int x_, int y_)
 { incomplete();
+  unreachable();
 
 #if 0
   int x1 = x1__();
@@ -162,7 +159,6 @@ void Wire::paint(ViewPainter *p) const
 
   Symbol::paint(p);
 }
-
 // ----------------------------------------------------------------
 void Wire::setName(const QString&, const QString&, int, int, int)
 {
@@ -184,7 +180,6 @@ void Wire::setName(const QString&, const QString&, int, int, int)
   }
 #endif
 }
-
 // ----------------------------------------------------------------
 void Wire::updatePort()
 {
@@ -198,7 +193,6 @@ void Wire::updatePort()
   x2() = dcos(_angle) * _scale;
   y2() = dsin(_angle) * _scale;
 }
-
 // ----------------------------------------------------------------
 std::string Wire::getParameter(std::string const& n) const
 {
@@ -274,14 +268,6 @@ void Wire::setParameter(std::string const& n, std::string const& v)
     findScaleAndAngle();
   }else if(n=="netname"){
     _netname = v;
-//  }else if(n=="x0"){
-//    x1() = atoi(v.c_str());
-//  }else if(n=="y0"){
-//    y1() = atoi(v.c_str());
-//  }else if(n=="x1"){
-//    x2() = atoi(v.c_str());
-//  }else if(n=="y1"){
-//    y2() = atoi(v.c_str());
   }else{ untested();
     Symbol::setParameter(n, v);
   }
@@ -293,55 +279,13 @@ QRectF Wire::boundingRect() const
   assert(y1() == 0);
   int N = 10;
 
-  if(_angle==0 || _angle==1){
-//    assert(x2()>=0);
-//    assert(y2()>=0);
+  if(_angle==0 || _angle==1){ itested();
     return QRectF(-5, -5, x2()-x1()+N, y2()-y1()+N);
-  }else{
-//    assert(x2()<=0);
-//    assert(y2()<=0);
+  }else{ itested();
     return QRectF(x2()-5, y2()-5, -x2()+x1()+N, -y2()+y1()+N);
   }
 }
 // ----------------------------------------------------------------
-// // -> conductor.cpp.
-#if 0
-unsigned Wire::netNumber() const
-{
-  if (portValue(0)){
-    assert(portValue(1));
-    assert(portValue(0)->netNumber() == portValue(1)->netNumber());
-    return portValue(0)->netNumber();
-  }else{
-    return -1u;
-  }
-}
-// ----------------------------------------------------------------
-void Wire::setPortByIndex(unsigned idx, Node* n)
-{
-  assert(idx<2);
-  auto a=Ports.begin();
-  if(idx){
-    ++a;
-  }else{
-  }
-  *a = n;
-}
-// ----------------------------------------------------------------
-Node* Wire::portValue(unsigned idx)
-{
-  assert(idx<2);
-  assert(Ports.size()==2);
-  auto a=Ports.begin();
-  if(idx){
-    ++a;
-  }else{
-  }
-  auto n = prechecked_cast<Node*>(*a);
-  assert(n || !*a);
-  return n;
-}
-#endif
 std::list<Node*>::iterator Wire::connectionsBegin()
 {
   trace1("DBG", _node_hack.size());
@@ -355,11 +299,10 @@ std::list<Node*>::iterator Wire::connectionsBegin()
   return _node_hack.begin();
 }
 // ----------------------------------------------------------------
-// // fishy. involve base case?
 Node* Wire::connectNode(unsigned i, NodeMap&l)
 {
   assert(i<2);
-  //Symbol::connectNode(i, l);
+  //Symbol::connectNode(i, l); maybe use this?
   Port const& pp = port(i);
   Port& mp = port(i);
   auto c = center();
@@ -408,7 +351,7 @@ Node* Wire::connectNode(unsigned i, NodeMap&l)
 // // fishy. involve base case?
 Node* Wire::disconnectNode(unsigned i, NodeMap&nm)
 {
-  trace1("wire::disconnectNode", i);
+  //Symbol::disconnectNode(i, l); maybe use this?
   Node* n = Symbol::disconnectNode(i, nm);
 
   if(Node* other_node = port((i+1)%2).value()){
