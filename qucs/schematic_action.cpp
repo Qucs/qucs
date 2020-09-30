@@ -374,6 +374,13 @@ QUndoCommand* MouseActionNewElement::makeNew(QMouseEvent* ev)
 	auto elt = element(_gfx);
 	assert(elt);
 
+	if(auto se=dynamic_cast<QGraphicsSceneMouseEvent*>(ev)){ untested();
+		QPointF pos = se->scenePos();
+		QPoint xx = doc().snapToGrid(pos);
+		_gfx->setPos(xx);
+	}else{
+	}
+
 	cmd* c = new NewElementCommand(doc(), _gfx);
 	// _gfx = nullptr;
 
@@ -408,6 +415,9 @@ QUndoCommand* MouseActionNewElement::move(QEvent* ev)
 		sp = mapToScene(wp.toPoint());
 	}else if(auto ee=dynamic_cast<QGraphicsSceneMouseEvent*>(ev)){ untested();
 		sp = ee->scenePos();
+
+		QPoint xx = doc().snapToGrid(sp);
+		sp = xx;
 	}else{ untested();
 		unreachable();
 	}

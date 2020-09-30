@@ -318,6 +318,11 @@ void ElementGraphics::moveElement(P const& delta)
 	show();
 }
 /*--------------------------------------------------------------------------*/
+void ElementGraphics::setPos(QPoint const& p)
+{
+	setPos(getX(p), getY(p), false);
+}
+/*--------------------------------------------------------------------------*/
 void ElementGraphics::setPos(int i, int j, bool relative)
 {itested();
 	assert(!relative); // use move, for now.
