@@ -21,7 +21,7 @@
 namespace{
 
 
-class TR_Sim : public Command  {
+class TR_Sim : public CmdElement  {
 public:
   TR_Sim();
   ~TR_Sim();
@@ -29,7 +29,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(SchematicDoc*);
 } D;
-Dispatcher<Command>::INSTALL p(&command_dispatcher, ".TR", &D);
+Dispatcher<CmdElement>::INSTALL p(&command_dispatcher, ".TR", &D);
 Module::INSTALL pp("simulations", &D);
 
 TR_Sim::TR_Sim()
@@ -104,6 +104,7 @@ TR_Sim::~TR_Sim()
 {
 }
 
+#if 0
 Element* TR_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Transient simulation");
@@ -112,6 +113,7 @@ Element* TR_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new TR_Sim();
   return 0;
 }
+#endif
 
 void TR_Sim::recreate(SchematicDoc*)
 {

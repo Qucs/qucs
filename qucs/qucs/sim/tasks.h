@@ -13,12 +13,12 @@
 #ifndef QUCS_SIM_TASK_H
 #define QUCS_SIM_TASK_H
 
-// command "objects" in a document. typically simulation commands.
+// command "elements" in a document. typically simulation commands.
 //
 #include <list>
 
-class Command; // Task??
+class CmdElement; // Task??
 
-class SimTaskList /*HACK, for now */ : public std::list<Command*> {
+class CmdEltList /*HACK, for now */ : public std::list<CmdElement*> {
 };
 #endif

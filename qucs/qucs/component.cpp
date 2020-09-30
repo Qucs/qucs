@@ -264,7 +264,7 @@ void Component::paint(ViewPainter *p) const
   Element::paint(p);
   QFont f = p->Painter->font();   // save current font
   QFont newFont = f;
-  if(dynamic_cast<Command const*>(this)) { untested();
+  if(dynamic_cast<CmdElement const*>(this)) { untested();
     unreachable();
   }else{itested();
     // normal components go here
@@ -373,7 +373,7 @@ void Component::paintScheme(SchematicDoc *p) const
   int cx=cx_();
   int cy=cy_();
 
-  if(dynamic_cast<Command const*>(this)) { // FIXME: separate Commands from Components
+  if(dynamic_cast<CmdElement const*>(this)) { // FIXME: separate Commands from Components
     int a, b, xb, yb;
     QFont newFont = p->font();
 
@@ -1524,7 +1524,7 @@ Element* getComponentFromName(QString& Line)
       // legacy component
     Element* s=sc->clone(); // memory leak?
     e=prechecked_cast<Element*>(s);
-  }else if(Command const* sc=dynamic_cast<Command const*>(s)){ untested();
+  }else if(CmdElement const* sc=dynamic_cast<CmdElement const*>(s)){ untested();
       // legacy component
     Element* s=sc->clone(); // memory leak?
     e=prechecked_cast<Element*>(s);
@@ -1569,7 +1569,7 @@ Element* getComponentFromName(QString& Line)
 
 #if 0 // legacy cruft?
   // BUG: don't use schematic.
-  if(Command* cmd=command(e)){ untested();
+  if(CmdElement* cmd=command(e)){ untested();
     sp->loadCommand(Line, cmd);
   }else if(Component* c=component(e)){ untested();
     if(!sp->loadComponent(Line, c)) { untested();

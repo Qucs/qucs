@@ -52,7 +52,7 @@ private: // NetLang
   // inline void printItem(Element const* c, stream_t& s) const;
 
 private: // local
-  void printCommand(Command const*, stream_t&) const;
+  void printCommand(CmdElement const*, stream_t&) const;
   void printSymbol(Symbol const*, stream_t&) const;
   void printSubckt(SubcktProto const*, stream_t&) const;
   void printComponent(Component const*, stream_t&) const;
@@ -66,7 +66,7 @@ void QucsatorLang::printSymbol(Symbol const* d, stream_t& s) const
 		incomplete();
 	}else if(auto c=dynamic_cast<SubcktProto const*>(d)){
 		printSubckt(c, s);
-	}else if(auto c=dynamic_cast<Command const*>(d)){ untested();
+	}else if(auto c=dynamic_cast<CmdElement const*>(d)){ untested();
 		printCommand(c, s);
 	}else if(auto c=dynamic_cast<Component const*>(d)){
 		printComponent(c, s);
@@ -137,7 +137,7 @@ void QucsatorLang::printSubckt(SubcktProto const* p, stream_t& s) const
 	s << ".Def:End\n";
 }
 
-void QucsatorLang::printCommand(Command const* c, stream_t& s) const
+void QucsatorLang::printCommand(CmdElement const* c, stream_t& s) const
 {itested();
 	assert(c);
 	s << "." << c->name() << ":" << c->label();
