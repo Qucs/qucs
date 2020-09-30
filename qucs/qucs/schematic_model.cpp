@@ -147,6 +147,10 @@ void SchematicModel::pushBack(Element* what)
 	if(auto c=component(what)){
 		connect(c);
 		components().append(c);
+	}else if(auto w=wire(what)){
+	  connect(w);
+	  // why not components??
+	  wires().append(w); // it's now ours.
 	}else if(auto d=diagram(what)){
 		diagrams().append(d);
 	}else if(auto c=command(what)){
@@ -156,10 +160,6 @@ void SchematicModel::pushBack(Element* what)
 		}else{
 			// possibly a subcircuit model? ignore commands.
 		}
-	}else if(auto w=wire(what)){
-	  connect(w);
-	  // why not components??
-	  wires().append(w); // it's now ours.
 	}else if(auto s=dynamic_cast<SchematicSymbol*>(what)){
 		(void)s;
 		assert(false);

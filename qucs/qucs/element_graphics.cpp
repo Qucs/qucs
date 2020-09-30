@@ -27,6 +27,7 @@
 /*--------------------------------------------------------------------------*/
 ElementGraphics::ElementGraphics() : QGraphicsItem()
 { untested();
+	assert(false);
 	unreachable();
 }
 /*--------------------------------------------------------------------------*/
@@ -64,7 +65,8 @@ ElementGraphics::~ElementGraphics()
 // there is also QGraphicsSimpleTextItem, but is does not allow for edits.
 class TextGraphics : public QGraphicsTextItem{
 public:
-	explicit TextGraphics(Text& t, QGraphicsItem* parent) : QGraphicsTextItem(parent), _t(t){
+	explicit TextGraphics(Text& t, QGraphicsItem* parent)
+	  : QGraphicsTextItem(parent), _t(t){
 		setPlainText(t.s);
 		trace1("TextGraphics", t.s);
 		setParentItem(parent);
@@ -74,6 +76,11 @@ private:
 	Text& _t;
 };
 /*--------------------------------------------------------------------------*/
+inline std::ostream& operator<<(std::ostream& o, QRectF const& r)
+{
+	o << r.topLeft() << ":" << r.bottomRight();
+	return o;
+}
 /*--------------------------------------------------------------------------*/
 #include "components/component.h" // BUG
 void ElementGraphics::attachElement(Element* e)
@@ -87,6 +94,7 @@ void ElementGraphics::attachElement(Element* e)
 	auto sp = _e->center();
 	prepareGeometryChange();
 	trace3("attachElement", e->label(), sp.first, sp.second);
+	trace2("attachElement", e->label(), boundingRect());
 	QGraphicsItem::setPos(sp.first, sp.second);
 
 	if(auto c=dynamic_cast<Component*>(e)){ untested();
@@ -129,8 +137,9 @@ void ElementGraphics::paint(QPainter *p, const QStyleOptionGraphicsItem *o,
 		p->drawRoundedRect(br, 3, 3);
 	}else{itested();
 #ifdef DO_TRACE
-		p->setPen(QPen(Qt::yellow,3));
+		p->setPen(QPen(Qt::green,3));
 		p->drawRoundedRect(br, 3, 3);
+	  p->drawEllipse(-3, -3, 6, 6);
 #endif
 	}
 
@@ -192,7 +201,6 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 		auto vflip = -2 * int(new_mr.mirror()) + 1;
 		trace2("transform", vflip, new_mr.degrees_int());
 
-		// BUG. vflip last.
 		s->setParameter(std::string("$hflip"), std::string("1"));
 		s->setParameter(std::string("$vflip"), std::to_string(vflip));
 		s->setParameter(std::string("$angle"), std::to_string(new_mr.degrees_int()));

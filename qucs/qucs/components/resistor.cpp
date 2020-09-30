@@ -113,6 +113,7 @@ Element* Resistor::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
+#if 0
 Element* Resistor::info_us(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Resistor US");
@@ -121,5 +122,6 @@ Element* Resistor::info_us(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new Resistor(false);
   return 0;
 }
+#endif
 
 } // namespace

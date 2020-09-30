@@ -35,7 +35,7 @@
 #include "qucs.h"
 #include "node.h"
 #include "schematic_doc.h"
-#include "diagrams/diagrams.h"
+// #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
 #include "components/spicefile.h"
 #include "components/vhdlfile.h"

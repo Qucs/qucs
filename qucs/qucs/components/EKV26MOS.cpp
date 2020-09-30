@@ -292,4 +292,5 @@ QString EKV26MOS::netlist() const
 
   return s + '\n';
 #endif
+  return QString("incomplete");
 }

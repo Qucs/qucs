@@ -341,7 +341,7 @@ public:
   //                return reference: don't
   // (same for arguments?)
   Element* eraseFromScene(ElementGraphics*);
-  ElementGraphics& addToScene(Element*); // called from SM::pushBack.
+  QGraphicsItem& addToScene(Element*); // called from SM::pushBack.
 
 protected slots:
   void slotScrollUp();

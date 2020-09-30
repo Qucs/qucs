@@ -107,4 +107,5 @@ QString iFile::netlist() const
 
   return s + "\n";
 #endif
+  return QString("incomplete");
 }
