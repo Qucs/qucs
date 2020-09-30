@@ -127,18 +127,21 @@ std::string Symbol::getParameter(std::string const& n) const
 void Symbol::paint(ViewPainter* p) const
 {
 	for(unsigned i=0; i<numPorts(); ++i){ itested();
-		auto pp = portPosition(i);
-		auto x = getX(pp)-_cx;
-		auto y = getY(pp)-_cy;
 		if(!port(i).isConnected()){
 			p->setPen(QPen(Qt::red,2));
 		}else if(port(i)->degree()==0){
 			unreachable();
 		}else if(port(i)->degree()==1){
+			auto pp = portPosition(i);
+			auto x = getX(pp)-_cx;
+			auto y = getY(pp)-_cy;
 			// p->setPen(QPen(Qt::red,2));
 			p->setPen(QPen(Qt::red,1));
 			p->drawEllipse(x-2, y-2, 4, 4);
 		}else if(port(i)->degree()==3){
+			auto pp = portPosition(i);
+			auto x = getX(pp)-_cx;
+			auto y = getY(pp)-_cy;
 			p->setPen(QPen(Qt::black,2));
 			p->drawEllipse(x-1, y-1, 2, 2);
 		}else{

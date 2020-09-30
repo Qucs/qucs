@@ -329,12 +329,10 @@ QUndoCommand* MouseActionWire::move(QEvent* e)
 		// no ghost yet.
 	}else if(auto se=dynamic_cast<QGraphicsSceneMouseEvent*>(e)){ untested();
 		QPointF pos = se->scenePos(); // mapToScene(ev->pos());
-		float fX = pos.x();
-		float fY = pos.y();
 
-		QPoint xx = doc().setOnGrid(fX, fY);
-		fX = getX(xx);
-		fY = getY(xx);
+		QPoint xx = doc().snapToGrid(pos);
+		float fX = getX(xx);
+		float fY = getY(xx);
 		trace2("build wire", fX, fY);
 
 		ElementGraphics* cur = _gfx.back();
@@ -363,7 +361,7 @@ QUndoCommand* MouseActionWire::press1(QGraphicsSceneMouseEvent* ev)
 	QPointF pos = ev->scenePos(); // mapToScene(ev->pos());
 	float fX = pos.x();
 	float fY = pos.y();
-	QPoint xx = doc().setOnGrid(fX, fY);
+	QPoint xx = doc().snapToGrid(pos);
 	fX = getX(xx);
 	fY = getY(xx);
 
@@ -392,7 +390,7 @@ QUndoCommand* MouseActionWire::press1(QGraphicsSceneMouseEvent* ev)
 	_MAx1 = 0;   // paint wire corner first up, then left/right
 	_MAx3 = int(fX);
 	_MAy3 = int(fY);
-	//   Doc->setOnGrid(MAx3, MAy3);
+	//   Doc->snapToGrid(MAx3, MAy3);
 	//
 	//ALYS - draw aiming cross
 	/// \todo paintAim(Doc,MAx3, MAy3);
@@ -517,7 +515,7 @@ QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* ev)
 
 		MAx2 = int(fX);
 		MAy2 = int(fY);
-		//     Doc->setOnGrid(MAx2, MAy2);
+		//     Doc->snapToGrid(MAx2, MAy2);
 
 		MAx1 ^= 1;    // change the painting direction of wire corner
 		if(MAx1 == 0) { untested();
