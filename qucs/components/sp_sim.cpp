@@ -20,7 +20,7 @@
 
 namespace{
 
-class SP_Sim : public Command  {
+class SP_Sim : public CmdElement  {
 public:
   SP_Sim();
   ~SP_Sim();
@@ -28,7 +28,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(SchematicDoc*);
 }D;
-Dispatcher<Command>::INSTALL d(&command_dispatcher, "SP", &D);
+Dispatcher<CmdElement>::INSTALL d(&command_dispatcher, "SP", &D);
 Module::INSTALL pp("simulations", &D);
 
 SP_Sim::SP_Sim()
@@ -82,6 +82,7 @@ SP_Sim::~SP_Sim()
 {
 }
 
+#if 0
 Element* SP_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("S-parameter simulation");
@@ -90,6 +91,7 @@ Element* SP_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new SP_Sim();
   return 0;
 }
+#endif
 
 void SP_Sim::recreate(SchematicDoc*)
 {

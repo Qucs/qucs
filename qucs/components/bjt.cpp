@@ -107,4 +107,5 @@ QString BJT::netlist() const
 
   return s + '\n';
 #endif
+  return QString("incompleteBJT");
 }

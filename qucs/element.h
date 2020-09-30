@@ -278,7 +278,7 @@ inline SchematicModel const* Element::scope() const
 }
 
 class Component;
-class Command;
+class CmdElement;
 class Wire;
 class WireLabel;
 class Diagram;
@@ -294,7 +294,7 @@ Painting const* painting(Element const*);
 Graph const* graph(Element const*);
 
 Component* component(Element*);
-Command* command(Element*);
+CmdElement* command(Element*);
 inline Element*& element(Element*& x){return x;}
 Wire* wire(Element*);
 WireLabel* wireLabel(Element*);

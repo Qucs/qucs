@@ -112,7 +112,7 @@ std::pair<int, int> Element::center()const
 #include "command.h"
 
 Component* component(Element* e){ return dynamic_cast<Component*>(e); }
-Command* command(Element* e){ return dynamic_cast<Command*>(e); }
+CmdElement* command(Element* e){ return dynamic_cast<CmdElement*>(e); }
 Wire* wire(Element* e){ return dynamic_cast<Wire*>(e); }
 WireLabel* wireLabel(Element* e){ return dynamic_cast<WireLabel*>(e); }
 Diagram* diagram(Element* e){ return dynamic_cast<Diagram*>(e); }

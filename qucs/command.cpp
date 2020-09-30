@@ -31,7 +31,7 @@
 #include <QPainter>
 #include <QDebug>
 
-Command::Command(Command const& p)
+CmdElement::CmdElement(CmdElement const& p)
   : Element(),
     mirroredX(p.mirroredX),
     rotated(p.rotated),
@@ -54,11 +54,11 @@ Command::Command(Command const& p)
 
 /*!
  * \class Component
- * \brief The Command class constitutes a baseclass for commands.
+ * \brief The CmdElement class constitutes a baseclass for commands.
  *        this one is a copy of the legacy Component class, the former
- *        baseclass for Commands. As such, it contains unneeded stuff.
+ *        baseclass for CmdElements. As such, it contains unneeded stuff.
  */
-Command::Command() : Element()
+CmdElement::CmdElement() : Element()
 {
   mirroredX = false;
   rotated = 0;
@@ -76,7 +76,7 @@ Command::Command() : Element()
 }
 
 // -------------------------------------------------------
-void Command::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
+void CmdElement::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 { untested();
   _x1 = x1+cx();
   _y1 = y1+cy();
@@ -86,7 +86,7 @@ void Command::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 
 // -------------------------------------------------------
 // Size of component text.
-int Command::textSize(int& _dx, int& _dy)
+int CmdElement::textSize(int& _dx, int& _dy)
 {
   // get size of text using the screen-compatible metric
   QFontMetrics metrics(QucsSettings.font, 0);
@@ -116,7 +116,7 @@ int Command::textSize(int& _dx, int& _dy)
 
 // -------------------------------------------------------
 // Boundings including the component text.
-void Command::entireBounds(int&, int&, int&, int&, float)
+void CmdElement::entireBounds(int&, int&, int&, int&, float)
 {
   // qt does that.
   assert(false);
@@ -124,7 +124,7 @@ void Command::entireBounds(int&, int&, int&, int&, float)
 
 // -------------------------------------------------------
 // obsolete?
-void Command::setCenter(int x, int y, bool relative)
+void CmdElement::setCenter(int x, int y, bool relative)
 {
   if(relative) {
     _cx += x;  _cy += y;
@@ -134,7 +134,7 @@ void Command::setCenter(int x, int y, bool relative)
 }
 
 // -------------------------------------------------------
-void Command::getCenter(int& x, int& y)
+void CmdElement::getCenter(int& x, int& y)
 {
   unreachable();
   x = cx();
@@ -142,7 +142,7 @@ void Command::getCenter(int& x, int& y)
 }
 
 // -------------------------------------------------------
-int Command::getTextSelected(int x_, int y_, float Corr)
+int CmdElement::getTextSelected(int x_, int y_, float Corr)
 {
   x_ -= cx();
   y_ -= cy();
@@ -176,7 +176,7 @@ int Command::getTextSelected(int x_, int y_, float Corr)
 }
 
 // -------------------------------------------------------
-bool Command::getSelected(int x_, int y_)
+bool CmdElement::getSelected(int x_, int y_)
 {
   x_ -= cx();
   y_ -= cy();
@@ -187,8 +187,10 @@ bool Command::getSelected(int x_, int y_)
 }
 
 // -------------------------------------------------------
-void Command::paint(ViewPainter *p) const
+void CmdElement::paint(ViewPainter *p) const
 {
+  int cx=_cx;
+  int cy=_cy;
   int x, y, a, b, xb, yb;
   QFont f = p->Painter->font();   // save current font
   QFont newFont = f;
@@ -203,7 +205,7 @@ void Command::paint(ViewPainter *p) const
     newFont.setPointSizeF(p->Scale * size);
     newFont.setWeight(QFont::DemiBold);
     p->Painter->setFont(newFont);
-    p->map(cx(), cy(), x, y);
+    p->map(cx, cy, x, y);
 
     p->Painter->setPen(QPen(Qt::darkBlue,2));
     a = b = 0;
@@ -220,8 +222,8 @@ void Command::paint(ViewPainter *p) const
     y2 = y1+23 + int(float(b) / p->Scale);
     if(ty < y2+1) if(ty > y1-r.height())  ty = y2 + 1;
 
-    p->map(cx()-1, cy(), x, y);
-    p->map(cx()-6, cy()-5, a, b);
+    p->map(-1, 0, x, y);
+    p->map(-6, -5, a, b);
     p->Painter->drawRect(a, b, xb, yb);
     p->Painter->drawLine(x,      y+yb, a,      b+yb);
     p->Painter->drawLine(x+xb-1, y+yb, x,      y+yb);
@@ -234,7 +236,7 @@ void Command::paint(ViewPainter *p) const
   p->Painter->setFont(f);
 
   p->Painter->setPen(QPen(Qt::black,1));
-  p->map(cx()+tx, cy()+ty, x, y);
+  p->map(tx, ty, x, y);
   if(showName) {
     p->Painter->drawText(x, y, 0, 0, Qt::TextDontClip, Name);
     y += p->LineSpacing;
@@ -251,9 +253,9 @@ void Command::paint(ViewPainter *p) const
   else if(isActive & COMP_IS_SHORTEN)
     p->Painter->setPen(QPen(Qt::darkGreen,0));
   if(isActive != COMP_IS_ACTIVE) {
-    p->drawRect(cx()+x1, cy()+y1, x2-x1+1, y2-y1+1);
-    p->drawLine(cx()+x1, cy()+y1, cx()+x2, cy()+y2);
-    p->drawLine(cx()+x1, cy()+y2, cx()+x2, cy()+y1);
+    p->drawRect(+x1, +y1, x2-x1+1, y2-y1+1);
+    p->drawLine(+x1, +y1, +x2, +y2);
+    p->drawLine(+x1, +y2, +x2, +y1);
   }
 
 #if 0
@@ -263,81 +265,11 @@ void Command::paint(ViewPainter *p) const
     p->drawRoundRect(cx+x1, cy+y1, x2-x1, y2-y1);
   }
 #endif
-} // Command::paint
-
-// -------------------------------------------------------
-// Paints the component when moved with the mouse.
-void Command::paintScheme(SchematicDoc *) const
-{
-  unreachable(); // obsolete. but some of the code highlighting open ports etc
-                 // needs to go to elementgraphics
-#if 0
-  // qDebug() << "paintScheme" << Model;
-  {   // is simulation component (dc, ac, ...)
-    int a, b, xb, yb;
-    QFont newFont = p->font();
-
-    float Scale =
-          ((SchematicDoc*)QucsMain->DocumentTab->currentWidget())->Scale;
-    newFont.setPointSizeF(float(Scale) * QucsSettings.largeFontSize);
-    newFont.setWeight(QFont::DemiBold);
-    // here the font metric is already the screen metric, since the font
-    // is the current font the painter is using
-    QFontMetrics  metrics(newFont);
-
-    a = b = 0;
-    QSize r;
-    foreach(Text *pt, Texts) {
-      r = metrics.size(0, pt->s);
-      b += r.height();
-      if(a < r.width())  a = r.width();
-    }
-    xb = a + int(12.0*Scale);
-    yb = b + int(10.0*Scale);
-
-    // BUG. modifies const object
-    x2 = x1+25 + int(float(a) / Scale);
-    y2 = y1+23 + int(float(b) / Scale);
-    if(ty < y2+1) if(ty > y1-r.height())
-    {
-      ty = y2 + 1;
-    }
-
-    p->PostPaintEvent(_Rect,cx-6, cy-5, xb, yb);
-    p->PostPaintEvent(_Line,cx-1, cy+yb, cx-6, cy+yb-5);
-    p->PostPaintEvent(_Line,cx+xb-2, cy+yb, cx-1, cy+yb);
-    p->PostPaintEvent(_Line,cx+xb-2, cy+yb, cx+xb-6, cy+yb-5);
-    p->PostPaintEvent(_Line,cx+xb-2, cy+yb, cx+xb-2, cy);
-    p->PostPaintEvent(_Line,cx+xb-2, cy, cx+xb-6, cy-5);
-    return;
-  }
-
-  // paint all lines
-  foreach(Line *p1, Lines)
-    p->PostPaintEvent(_Line,cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
-
-  // paint all ports
-  foreach(Port *p2, Ports){
-    if(p2->avail) {
-      p->PostPaintEvent(_Ellipse,cx+p2->x_()-4, cy+p2->y_()-4, 8, 8);
-    }
-  }
-
-  foreach(Arc *p3, Arcs)   // paint all arcs
-    p->PostPaintEvent(_Arc,cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
-
-
-  foreach(Area *pa, Rects) // paint all rectangles
-    p->PostPaintEvent(_Rect,cx+pa->x, cy+pa->y, pa->w, pa->h);
-
-  foreach(Area *pa, Ellips) // paint all ellipses
-    p->PostPaintEvent(_Ellipse,cx+pa->x, cy+pa->y, pa->w, pa->h);
-#endif
-}
+} // CmdElement::paint
 
 // -------------------------------------------------------
 // For output on a printer device.
-void Command::print(ViewPainter *p, float FontScale)
+void CmdElement::print(ViewPainter *p, float FontScale)
 {
   foreach(Text *pt, Texts)
     pt->Size *= FontScale;
@@ -347,254 +279,29 @@ void Command::print(ViewPainter *p, float FontScale)
  foreach(Text *pt, Texts)
     pt->Size /= FontScale;
 }
-
 // -------------------------------------------------------
-// Rotates 90 degree counter-clockwise
-void Command::rotate()
-{
-  int tmp, dx, dy;
-  // for(auto d : drawings()){
-  //   assert(d);
-  //   d->rotate();
-  // }
-
-  // rotate all lines
-  foreach(Line *p1, Lines) {
-    tmp = -p1->x1;
-    p1->x1 = p1->y1;
-    p1->y1 = tmp;
-    tmp = -p1->x2;
-    p1->x2 = p1->y2;
-    p1->y2 = tmp;
-  }
-
-  // rotate all ports
-  foreach(Port *p2, Ports) {
-    tmp = -p2->x_();
-    p2->setPosition( p2->y_(), tmp );
-  }
-
-  // rotate all arcs
-  foreach(Arc *p3, Arcs) {
-    tmp = -p3->x;
-    p3->x = p3->y;
-    p3->y = tmp - p3->w;
-    tmp = p3->w;
-    p3->w = p3->h;
-    p3->h = tmp;
-    p3->angle += 16*90;
-    if(p3->angle >= 16*360) p3->angle -= 16*360;;
-  }
-
-  // rotate all rectangles
-  foreach(Area *pa, Rects) {
-    tmp = -pa->x;
-    pa->x = pa->y;
-    pa->y = tmp - pa->w;
-    tmp = pa->w;
-    pa->w = pa->h;
-    pa->h = tmp;
-  }
-
-  // rotate all ellipses
-  foreach(Area *pa, Ellips) {
-    tmp = -pa->x;
-    pa->x = pa->y;
-    pa->y = tmp - pa->w;
-    tmp = pa->w;
-    pa->w = pa->h;
-    pa->h = tmp;
-  }
-
-  // rotate all text
-  float ftmp;
-  foreach(Text *pt, Texts) {
-    tmp = -pt->x;
-    pt->x = pt->y;
-    pt->y = tmp;
-
-    ftmp = -pt->mSin;
-    pt->mSin = pt->mCos;
-    pt->mCos = ftmp;
-  }
-
-  tmp = -x1;   // rotate boundings
-  x1  = y1; y1 = -x2;
-  x2  = y2; y2 = tmp;
-
-  tmp = -tx;    // rotate text position
-  tx  = ty;
-  ty  = tmp;
-  // use the screen-compatible metric
-  QFontMetrics  metrics(QucsSettings.font, 0);   // get size of text
-  dx = dy = 0;
-  if(showName) {
-    dx = metrics.width(Name);
-    dy = metrics.lineSpacing();
-  }
-  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
-    if(pp->display) {
-      // get width of text
-      tmp = metrics.width(pp->Name+"="+pp->Value);
-      if(tmp > dx) dx = tmp;
-      dy += metrics.lineSpacing();
-    }
-  if(tx > x2) ty = y1-ty+y2;    // rotate text position
-  else if(ty < y1) ty -= dy;
-  else if(tx < x1) { tx += dy-dx;  ty = y1-ty+y2; }
-  else ty -= dx;
-
-  rotated++;  // keep track of what's done
-  rotated &= 3;
-}
-
-// -------------------------------------------------------
-// Mirrors vertically ("Y").
-void Command::mirrorX()
-{
-  // mirror all lines
-  foreach(Line *p1, Lines) {
-    p1->y1 = -p1->y1;
-    p1->y2 = -p1->y2;
-  }
-
-  // mirror all ports
-  foreach(Port *p2, Ports){
-    p2->setPosition(p2->x_(), -p2->y_());
-  }
-
-  // mirror all arcs
-  foreach(Arc *p3, Arcs) {
-    p3->y = -p3->y - p3->h;
-    if(p3->angle > 16*180) p3->angle -= 16*360;
-    p3->angle  = -p3->angle;    // mirror
-    p3->angle -= p3->arclen;    // go back to end of arc
-    if(p3->angle < 0) p3->angle += 16*360;  // angle has to be > 0
-  }
-
-  // mirror all rectangles
-  foreach(Area *pa, Rects)
-    pa->y = -pa->y - pa->h;
-
-  // mirror all ellipses
-  foreach(Area *pa, Ellips)
-    pa->y = -pa->y - pa->h;
-
-  QFont f = QucsSettings.font;
-  // mirror all text
-  foreach(Text *pt, Texts) {
-    f.setPointSizeF(pt->Size);
-    // use the screen-compatible metric
-    QFontMetrics  smallMetrics(f, 0);
-    QSize s = smallMetrics.size(0, pt->s);   // use size for more lines
-    pt->y = -pt->y - int(pt->mCos)*s.height() + int(pt->mSin)*s.width();
-  }
-
-  int tmp = y1;
-  y1  = -y2; y2 = -tmp;   // mirror boundings
-  // use the screen-compatible metric
-  QFontMetrics  metrics(QucsSettings.font, 0);   // get size of text
-  int dy = 0;
-  if(showName)
-    dy = metrics.lineSpacing();   // for "Name"
-  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
-    if(pp->display)  dy += metrics.lineSpacing();
-  if((tx > x1) && (tx < x2)) ty = -ty-dy;     // mirror text position
-  else ty = y1+ty+y2;
-
-  mirroredX = !mirroredX;    // keep track of what's done
-  rotated += rotated << 1;
-  rotated &= 3;
-}
-
-// -------------------------------------------------------
-// Mirror horizontally (X)
-void Command::mirrorY()
-{
-  // mirror all lines
-  foreach(Line *p1, Lines) {
-    p1->x1 = -p1->x1;
-    p1->x2 = -p1->x2;
-  }
-
-  // mirror all ports
-  foreach(Port *p2, Ports){
-    // p2->mirrorX();
-    p2->setPosition(-p2->x_(), -p2->y_());
-  }
-
-  // mirror all arcs
-  foreach(Arc *p3, Arcs) {
-    p3->x = -p3->x - p3->w;
-    p3->angle = 16*180 - p3->angle - p3->arclen;  // mirror
-    if(p3->angle < 0) p3->angle += 16*360;   // angle has to be > 0
-  }
-
-  // mirror all rectangles
-  foreach(Area *pa, Rects)
-    pa->x = -pa->x - pa->w;
-
-  // mirror all ellipses
-  foreach(Area *pa, Ellips)
-    pa->x = -pa->x - pa->w;
-
-  int tmp;
-  QFont f = QucsSettings.font;
-  // mirror all text
-  foreach(Text *pt, Texts) {
-    f.setPointSizeF(pt->Size);
-    // use the screen-compatible metric
-    QFontMetrics  smallMetrics(f, 0);
-    QSize s = smallMetrics.size(0, pt->s);   // use size for more lines
-    pt->x = -pt->x - int(pt->mSin)*s.height() - int(pt->mCos)*s.width();
-  }
-
-  tmp = x1;
-  x1  = -x2; x2 = -tmp;   // mirror boundings
-  // use the screen-compatible metric
-  QFontMetrics  metrics(QucsSettings.font, 0);   // get size of text
-  int dx = 0;
-  if(showName)
-    dx = metrics.width(Name);
-  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
-    if(pp->display) {
-      // get width of text
-      tmp = metrics.width(pp->Name+"="+pp->Value);
-      if(tmp > dx)  dx = tmp;
-    }
-  if((ty > y1) && (ty < y2)) tx = -tx-dx;     // mirror text position
-  else tx = x1+tx+x2;
-
-  mirroredX = !mirroredX;   // keep track of what's done
-  rotated += rotated << 1;
-  rotated += 2;
-  rotated &= 3;
-}
-
-// -------------------------------------------------------
-QString Command::netlist()
+QString CmdElement::netlist()
 {
   incomplete(); // remove.
   return "obsolete";
 }
-
 // -------------------------------------------------------
-QString Command::getNetlist()
+QString CmdElement::getNetlist()
 {
   unreachable(); // obsolete
   return QString("");
 }
-
 // -------------------------------------------------------
 
 // *******************************************************************
 // ***  The following functions are used to load the schematic symbol
 // ***  from file. (e.g. subcircuit, library component)
 
-int Command::analyseLine(const QString& Row, int numProps)
+int CmdElement::analyseLine(const QString& Row, int numProps)
 {
   incomplete();
   unreachable();
+  assert(false);
 
   QPen Pen;
   QBrush Brush;
@@ -795,7 +502,7 @@ int Command::analyseLine(const QString& Row, int numProps)
 
 // ---------------------------------------------------------------------
 // not sure what this is. parse schematic?
-bool Command::getIntegers(const QString& s, int *i1, int *i2, int *i3,
+bool CmdElement::getIntegers(const QString& s, int *i1, int *i2, int *i3,
 			     int *i4, int *i5, int *i6)
 {
   bool ok;
@@ -836,7 +543,7 @@ bool Command::getIntegers(const QString& s, int *i1, int *i2, int *i3,
 }
 
 // ---------------------------------------------------------------------
-bool Command::getPen(const QString& s, QPen& Pen, int i)
+bool CmdElement::getPen(const QString& s, QPen& Pen, int i)
 {
   unreachable();
   bool ok;
@@ -862,7 +569,7 @@ bool Command::getPen(const QString& s, QPen& Pen, int i)
 }
 
 // ---------------------------------------------------------------------
-bool Command::getBrush(const QString& s, QBrush& Brush, int i)
+bool CmdElement::getBrush(const QString& s, QBrush& Brush, int i)
 {
   unreachable();
   bool ok;
@@ -888,7 +595,7 @@ bool Command::getBrush(const QString& s, QBrush& Brush, int i)
 }
 
 // ---------------------------------------------------------------------
-Property * Command::getProperty(const QString& name)
+Property * CmdElement::getProperty(const QString& name)
 {
   incomplete();
   for(Property *pp = Props.first(); pp != 0; pp = Props.next()){
@@ -902,7 +609,7 @@ Property * Command::getProperty(const QString& name)
 
 // ---------------------------------------------------------------------
 // // BUG: implements assign
-void Command::copyComponent(Component *)
+void CmdElement::copyComponent(Component *)
 {
   incomplete();
 #if 0 // WTF?
@@ -934,14 +641,14 @@ void Command::copyComponent(Component *)
 }
 
 // do something with Dialog Buttons
-void Command::dialgButtStuff(ComponentDialog& /*d*/)const
+void CmdElement::dialgButtStuff(ComponentDialog& /*d*/)const
 {
   incomplete();
   // d.disableButtons();
 }
 //
 // BUG, tmp.
-void SchematicModel::simpleInsertCommand(Command *)
+void SchematicModel::simpleInsertCommand(CmdElement *)
 {
   unreachable();
 }

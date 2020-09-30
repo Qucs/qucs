@@ -21,7 +21,7 @@
 #include "command.h"
 
 
-class Digi_Sim : public Command {
+class Digi_Sim : public CmdElement {
 public:
   Digi_Sim();
  ~Digi_Sim();
