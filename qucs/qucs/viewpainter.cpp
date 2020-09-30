@@ -76,6 +76,8 @@ void ViewPainter::init(QPainter *p, float Scale_, int DX_, int DY_,
 // -------------------------------------------------------------
 void ViewPainter::map(int x1, int y1, int& x, int& y)
 {
+  unreachable();
+  incomplete(); // obsolete
   float z;
   z = float(x1)*Scale + DX;
   x = TO_INT(z);
@@ -525,8 +527,8 @@ void ViewPainter::eraseRect(int x1i, int y1i, int dx, int dy)
 void ViewPainter::drawResizeRect(int x1i, int y1i)
 {
   float x1, y1;
-  x1 = float(x1i)*Scale + DX;
-  y1 = float(y1i)*Scale + DY;
+  x1 = float(x1i); // *Scale + DX;
+  y1 = float(y1i); // *Scale + DY;
 
   Painter->drawRect(QRectF(x1-5, y1-5, 10, 10));
 }

@@ -59,8 +59,7 @@ Node* SchematicModel::insertNode(int x, int y, Element *e)
     }
     return pn;
 }
-
-// ---------------------------------------------------
+/*--------------------------------------------------------------------------*/
 // obsolete
 Node* SchematicDoc::selectedNode(int , int )
 {
@@ -72,9 +71,7 @@ Node* SchematicDoc::selectedNode(int , int )
 #endif
     return nullptr;
 }
-
-
-// ---------------------------------------------------
+/*--------------------------------------------------------------------------*/
 // Follow a wire line and selects it.
 // TODO: not so sure when/where this is used.
 void SchematicDoc::selectWireLine(ElementGraphics *g, Node *pn, bool ctrl)
@@ -101,9 +98,7 @@ incomplete();
     }
 #endif
 }
-
-
-// ---------------------------------------------------
+/*--------------------------------------------------------------------------*/
 // Splits the wire "*pw" into two pieces by the node "*pn".
 //
 // why return Wire*??
@@ -137,8 +132,7 @@ Wire* SchematicModel::splitWire(Wire *pw, Node *pn)
 #endif
     return 0;
 }
-
-// ---------------------------------------------------
+/*--------------------------------------------------------------------------*/
 // If possible, make one wire out of two wires.
 // BUG: do in SchematicDocument?
 bool SchematicModel::oneTwoWires(Node *n)

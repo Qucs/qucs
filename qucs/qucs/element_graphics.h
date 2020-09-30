@@ -50,7 +50,7 @@ private: // later: Qgraphics virtual overrides
 //  void paint() { assert(_e); _e->paint(); }
 //  void paintScheme(SchematicDoc *s) { assert(_e); _e->paintScheme(s); }
   QRectF boundingRect() const;
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*); // const...
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override; // const...
 
 public:
   bool sceneEvent(QEvent*) override;

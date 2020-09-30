@@ -42,7 +42,7 @@
 #include "schematic_doc.h"
 #include "platform.h"
 
-#include "diagrams/rect3ddiagram.h" // BUG
+// #include "diagrams/rect3ddiagram.h" // BUG
 #include "misc.h"
 
 #include <QTextStream>
@@ -56,11 +56,29 @@
 #include <QRectF>
 #include "some_font_stuff.h"
 
+Diagram::Diagram(Diagram const& p)
+  : Element(p),
+    Bounding_x1(p.Bounding_x1),
+    Bounding_x2(p.Bounding_x2),
+    Bounding_y1(p.Bounding_y1),
+    Bounding_y2(p.Bounding_y2)
+{
+
+    Arcs.clear();
+    for(auto p1 : p.Arcs) {untested();
+	    Arcs.append(new Arc(*p1));
+    }
+    Lines.clear();
+    for(auto p1 : p.Lines) {untested();
+	    Lines.append(new Line(*p1));
+    }
+}
 
 Diagram::Diagram(int cx, int cy)
+  : Element(cx, cy)
 {itested();
-  _cx = cx;
-  _cy = cy;
+  assert(_cx == cx);
+  assert(_cy == cy);
   
   // x1, x2, y1, y2 are the selectable boundings of the diagram, but these
   // are the real boundings. They are set in "createAxisLabels()".
@@ -93,6 +111,9 @@ Diagram::Diagram(int cx, int cy)
 
   Type = isDiagram;
   GridPen = QPen(Qt::lightGray,0);
+
+  setLabel("diag");
+
 }
 
 Diagram::~Diagram()
@@ -101,36 +122,39 @@ Diagram::~Diagram()
   freq= nullptr;
 }
 
-/*!
-   Paint function for most diagrams (cartesian, smith, polar, ...)
-*/
 void Diagram::paint(ViewPainter *p) const
 {itested();
-	Diagram* d=const_cast<Diagram*>(this);
-	d->paintDiagram(p);
-	d->paintMarkers(p);
-	Element::paint(p);
+
+  Diagram* d=const_cast<Diagram*>(this);
+  d->paintDiagram(p); // just use the old call for now.
+  // d->paintMarkers(p); // markers must/will become sub-objects.
+  Element::paint(p);
 }
 
 void Diagram::paintDiagram(ViewPainter *p)
 {itested();
-    // paint all lines
-    foreach(Line *pl, Lines) {itested();
-      p->Painter->setPen(pl->style);
-      p->drawLine(cx()+pl->x1, cy()-pl->y1, cx()+pl->x2, cy()-pl->y2);
-    }
 
+  { // does not paint anything?
     // paint all arcs (1 pixel larger to compensate for strange circle method)
     foreach(Arc *pa, Arcs) { untested();
       p->Painter->setPen(pa->style);
-      p->drawArc(cx()+pa->x, cy()-pa->y, pa->w, pa->h, pa->angle, pa->arclen);
+      p->drawArc(pa->x, pa->y, pa->w, pa->h, pa->angle, pa->arclen);
     }
+    // paint all lines
+    foreach(Line *pl, Lines) {itested();
+      p->Painter->setPen(pl->style);
+      p->drawLine(pl->x1, pl->y1, pl->x2, pl->y2);
+    }
+
+  }
+
 
     // draw all graphs
   foreach(Graph *pg, Graphs)
   {itested();
       pg->paint(p, cx(), cy());
   }
+
     // keep track of painter state
     p->Painter->save();
 
@@ -144,7 +168,7 @@ void Diagram::paintDiagram(ViewPainter *p)
 //
       // qDebug() << p->DX << p->DY << cy;
       p->Painter->setPen(pt->Color);
-      p->Painter->drawText(QPoint(cx()+pt->x, cy()-pt->y), pt->s);
+      p->Painter->drawText(QPoint(pt->x, -pt->y), pt->s);
     }
     p->Painter->setWorldMatrix(wm);
     p->Painter->setWorldMatrixEnabled(false);
@@ -152,21 +176,23 @@ void Diagram::paintDiagram(ViewPainter *p)
     // restore painter state
     p->Painter->restore();
 
-#if 0
-    if(isSelected()) { untested();
+#if 1
+    // draws some box with corners to resize.
+    // need a similar thing for scalable symbols.
+    if(1) { untested();
       int x_, y_;
       float fx_, fy_;
-      p->map(cx, cy-y2, x_, y_);
+      p->map(cx(), cy()-y2, x_, y_);
       fx_ = float(x2)*p->Scale + 10;
       fy_ = float(y2)*p->Scale + 10;
 
       p->Painter->setPen(QPen(Qt::darkGray,3));
       p->Painter->drawRect(x_-5, y_-5, TO_INT(fx_), TO_INT(fy_));
       p->Painter->setPen(QPen(Qt::darkRed,2));
-      p->drawResizeRect(cx, cy-y2);  // markers for changing the size
-      p->drawResizeRect(cx, cy);
-      p->drawResizeRect(cx+x2, cy-y2);
-      p->drawResizeRect(cx+x2, cy);
+      p->drawResizeRect(0, y2);  // markers for changing the size
+      p->drawResizeRect(0, 0);
+      p->drawResizeRect(x2, y2);
+      p->drawResizeRect(x2, 0 );
     }
 #endif
 }
@@ -215,10 +241,10 @@ void Diagram::createAxisLabels()
 	    if(w > wmax)  wmax = w;
   	    Texts.append(new Text(x-w, y, "real("+pg->Var+")",
                                 pg->Color, 12.0));
+	  }else{
 	  }
     }
-  }
-  else { untested();
+  } else { untested();
     y -= LineSpacing;
     encode_String(xAxis.Label, Str);
     w = metrics.width(Str) >> 1;
@@ -244,15 +270,13 @@ void Diagram::createAxisLabels()
           w = metrics.width(pg->Var) >> 1;
           if(w > wmax)  wmax = w;
           Texts.append(new Text(x, y-w, pg->Var, pg->Color, 12.0, 0.0, 1.0));
-	}
-	else { untested();
+	}else{ untested();
           w = metrics.width("imag("+pg->Var+")") >> 1;
           if(w > wmax)  wmax = w;
           Texts.append(new Text(x, y-w, "imag("+pg->Var+")",
                                 pg->Color, 12.0, 0.0, 1.0));
 	}
-      }
-      else {     // if no data => <invalid>
+      }else{     // if no data => <invalid>
         w = metrics.width(pg->Var+INVALID_STR) >> 1;
         if(w > wmax)  wmax = w;
         Texts.append(new Text(x, y-w, pg->Var+INVALID_STR,
@@ -260,8 +284,7 @@ void Diagram::createAxisLabels()
       }
       x -= LineSpacing;
     }
-  }
-  else { untested();
+  }else{ untested();
     encode_String(yAxis.Label, Str);
     w = metrics.width(Str) >> 1;
     if(w > wmax)  wmax = w;
@@ -299,21 +322,24 @@ void Diagram::createAxisLabels()
       }
       x += LineSpacing;
     }
-  }
-  else { untested();
+  }else{ untested();
     encode_String(zAxis.Label, Str);
     w = metrics.width(Str) >> 1;
     if(w > wmax)  wmax = w;
     Texts.append(new Text(x, y+w, Str, Qt::black, 12.0, 0.0, -1.0));
   }
   x -= x2;
-  if(Bounding_x2 < x) Bounding_x2 = x;
+  if(Bounding_x2 < x){
+    Bounding_x2 = x;
+  }else{
+  }
 
   wmax -= y2 >> 1;
   if(wmax > 0) { untested();
     Bounding_y2 = wmax;
     wmax *= -1;
     if(wmax < Bounding_y1) Bounding_y1 = wmax;
+  }else{
   }
 }
 
@@ -366,9 +392,9 @@ Marker* Diagram::setMarker(int x, int y)
   return NULL;
 }
 
-/*!
-   Cohen-Sutherland clipping algorithm
-*/
+// Cohen-Sutherland clipping algorithm
+// possibly better to leave this to Qt.
+// the real issue is resampling, not clipping.
 void Diagram::rectClip(Graph::iterator &p) const
 { untested();
   int code, z=0;
@@ -383,6 +409,7 @@ void Diagram::rectClip(Graph::iterator &p) const
   if(code1 != 0) if((p-3)->isPt()) { untested();
     p++;
     (p-3)->setStrokeEnd();
+  }else{
   }
   if(code1 & code2)   // line not visible at all ?
     goto endWithHidden;
@@ -391,6 +418,7 @@ void Diagram::rectClip(Graph::iterator &p) const
     p->setStrokeEnd();
     (p+1)->setScr(x_2, y_2);
     z += 2;
+  }else{
   }
 
 
@@ -405,32 +433,31 @@ void Diagram::rectClip(Graph::iterator &p) const
     if(code & 1) { untested();
       y = y_1 - dy * x_1 / dx;
       x = 0.0;
-    }
-    else if(code & 2) { untested();
+    } else if(code & 2) { untested();
       y = y_1 + dy * (x2-x_1) / dx;
       x = float(x2);
-    }
-    else if(code & 4) { untested();
+    } else if(code & 4) { untested();
       x = x_1 - dx * y_1 / dy;
       y = 0.0;
-    }
-    else if(code & 8) { untested();
+    } else if(code & 8) { untested();
       x = x_1 + dx * (y2-y_1) / dy;
       y = float(y2);
+    }else{
     }
 
     if(code == code1) { untested();
       x_1 = x;
       y_1 = y;
       code1 = regionCode(x, y);
-    }
-    else { untested();
+    } else { untested();
       x_2 = x;
       y_2 = y;
       code2 = regionCode(x, y);
     }
-    if(code1 & code2)
+    if(code1 & code2){
       goto endWithHidden; // line not visible at all ?
+    }else{
+    }
   }
 
   (p-2)->setScr(x_1, y_1);
@@ -604,27 +631,30 @@ for(int zz=0; zz<60; zz+=2)
 // doesn't seem to be the bounding box
 void Diagram::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {itested();
-  _x1 = cx() - Bounding_x1;
-  _y1 = cy() - y2 - Bounding_y2;
-  _x2 = cx() + x2 + Bounding_x2;
-  _y2 = cy() - Bounding_y1;
+  _x1 =  - Bounding_x1;
+  _y1 =  - y2 - Bounding_y2;
+  _x2 =  + x2 + Bounding_x2;
+  _y2 =  - Bounding_y1;
+  trace5("bounding diag", label(), _x1, _x2, _y1, _y2);
 }
 
 // -------------------------------------------------------
 QRectF Diagram::boundingRect() const
-{itested();
-	int x1, y1, x2, y2;
+{untested();
+  int x1_, y1_, x2_, y2_;
 
-	Diagram* d=const_cast<Diagram*>(this);
-	d->Bounding(x1, y1, x2, y2);
-	QRectF b(x1, y1, x2, y2); // WRONG
-	return QRectF(cx(), cy(), +x2-x1+30, y1-y2+30);
-	return b;
+  Diagram* d=const_cast<Diagram*>(this);
+  d->Bounding(x1_, y1_, x2_, y2_);
+
+  QPointF tl(0, -y2);
+  QPointF br(x2, 0);
+  return QRectF(tl, br);
 }
 
 // -------------------------------------------------------
 bool Diagram::getSelected(int x_, int y_)
 { untested();
+  assert(false);
   if(x_ >= cx()-x1) if(x_ <= cx()+x3) if(y_ >= cy()-y2) if(y_ <= cy()+y1)
     return true;
 
@@ -675,6 +705,7 @@ void Diagram::getAxisLimits(Graph *pg)
     }
   }
 
+#if 0 // BUG
   if(Name == "Rect3D") { untested();
     DataX const *pDy = pg->axis(1);
     if(pDy) { untested();
@@ -688,6 +719,7 @@ void Diagram::getAxisLimits(Graph *pg)
       }
     }
   }
+#endif
 
   Axis *pa;
   if(pg->yAxisNo == 0)  pa = &yAxis;
@@ -1195,17 +1227,28 @@ void Diagram::setCenter(int x, int y, bool relative)
 { untested();
   if(relative) { untested();
     _cx += x;  _cy += y;
-  }
-  else { untested();
+  } else { untested();
     _cx = x;  _cy = y;
   }
 }
 
 // -------------------------------------------------------
+// override Element::center...
+std::pair<int, int> Diagram::center() const
+{ untested();
+  trace3("diag center", label(), _cx, _cy);
+  return std::make_pair(_cx, _cy);
+}
+
+// -------------------------------------------------------
 void Diagram::getCenter(int& x, int& y)
 { untested();
-  x = cx() + (x2 >> 1);
-  y = cy() - (y2 >> 1);
+
+  trace3("diag getcenter", label(), _cx, _cy);
+  assert(false);
+  //????
+  x = _cx;
+  y = _cy;
 }
 
 // ------------------------------------------------------------
@@ -1271,6 +1314,7 @@ QString Diagram::save()
 }
 
 // ------------------------------------------------------------
+// // MOVE to legacy lang
 bool Diagram::load(const QString& Line, DocumentStream& stream)
 {itested();
 	incomplete(); // use Lang
@@ -1286,12 +1330,14 @@ bool Diagram::load(const QString& Line, DocumentStream& stream)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  _cx = n.toInt(&ok);
+  int cx = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  _cy = n.toInt(&ok);
+  int cy = n.toInt(&ok);
   if(!ok) return false;
+
+  setCenter(cx, cy);
 
   n  = s.section(' ',3,3);    // x2
   x2 = n.toInt(&ok);
@@ -1396,6 +1442,9 @@ bool Diagram::load(const QString& Line, DocumentStream& stream)
 	 }
   }
 
+  trace3("load diag", label(), Element::cx(), Element::cy());
+
+
   xAxis.Label = s.section('"',1,1);   // xLabel
   yAxis.Label = s.section('"',3,3);   // yLabel left
   zAxis.Label = s.section('"',5,5);   // yLabel right
@@ -1438,7 +1487,6 @@ bool Diagram::load(const QString& Line, DocumentStream& stream)
     }
     Graphs.append(pg);
   }
-
   return false;   // end tag missing
 }
 
@@ -2113,16 +2161,6 @@ bool Diagram::newcoordinate(Graph::iterator const& p,float* xn, float* yn) const
 	
   }  
 }
-//scales use in phasor and waveac this function only reset the value of the limits every scale
-void Diagram::phasorscale() 
-{ untested();
-  xAxisV.min = xAxisI.min = xAxisP.min = xAxisZ.min = DBL_MAX;
-  xAxisV.max = xAxisI.max = xAxisP.max = xAxisZ.max = -DBL_MAX;
-  yAxisV.min = yAxisI.min = yAxisP.min = yAxisZ.min = DBL_MAX;
-  yAxisV.max = yAxisI.max = yAxisP.max = yAxisZ.max = -DBL_MAX;
-  zAxisV.min = zAxisI.min = zAxisP.min = zAxisZ.min = DBL_MAX;
-  zAxisV.max = zAxisI.max = zAxisP.max = zAxisZ.max = -DBL_MAX;
-}
 //for phasor diagram while detect with type of graph it is (voltage, current....) and save in the auxiliary axis
 void Diagram::findaxisA(Graph *g) 
 { untested();
@@ -2385,6 +2423,7 @@ double Diagram::wavevalX(int i) const
 
 bool Diagram::pressElement(SchematicDoc* Doc, Element*& selElem, QMouseEvent* Event)
 { untested();
+  assert(false); // obsolete.
 
 	if(Event->button() != Qt::LeftButton){ untested();
 	  	return false; // sets drawn to false! (correct?)

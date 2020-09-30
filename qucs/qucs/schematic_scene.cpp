@@ -1,3 +1,15 @@
+/***************************************************************************
+    copyright            : (C) 2018, 2019, 2020 Felix Salfelder
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 
 #include "schematic_scene.h"
 #include "schematic_doc.h"
@@ -5,30 +17,31 @@
 
 #include <QFileInfo>
 #include <QGraphicsSceneDragDropEvent>
-
-// ---------------------------------------------------
-// forward to graphicscene, once it is there.
-// BUG: what if there are multiple items?
-ElementGraphics* SchematicDoc::itemAt(float x, float y)
-{
-	QPointF p(x, y);
-	QGraphicsItem* I=scene()->itemAt(p, QTransform());
-	if(ElementGraphics* G=dynamic_cast<ElementGraphics*>(I)){ untested();
-		qDebug() << "got something" << element(G)->name();
-		return G;
-	}else{ untested();
-		qDebug() << "miss";
-		return nullptr;
-	}
-}
-
+#include <QGraphicsProxyWidget>
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 QPoint SchematicScene::gridSize() const
 {
 	assert(doc());
 	return doc()->gridSize();
 }
+/*--------------------------------------------------------------------------*/
+QGraphicsItem& SchematicScene::addElement(Element* x)
+{
+	QGraphicsItem* i=nullptr;
+	if(auto w=x->newWidget()){ untested();
+		i = addWidget(w);
+	}else{ untested();
+		i = new ElementGraphics(x);
+		addItem(i);
+	}
+	return *i;
+}
 
-#ifndef USE_SCROLLVIEW
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+/* remove. later. */
 // scene()->selectedItems gives QGraphicsItems
 Element* element(QGraphicsItem* g)
 {
@@ -84,35 +97,36 @@ Graph* graph(QGraphicsItem* g)
 	if(!e) return nullptr;
 	return graph(e->operator->());
 }
-
-#endif
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 SchematicScene::SchematicScene(QObject *parent)
   : QGraphicsScene(parent)
 {
 }
-
+/*--------------------------------------------------------------------------*/
 SchematicDoc* SchematicScene::doc()
 {
 	assert(parent());
 	return dynamic_cast<SchematicDoc*>(parent());
 }
+/*--------------------------------------------------------------------------*/
 SchematicDoc const* SchematicScene::doc() const
 {
 	assert(parent());
 	return dynamic_cast<SchematicDoc const*>(parent());
 }
-
+/*--------------------------------------------------------------------------*/
 SchematicScene::~SchematicScene()
 {
 }
-
+/*--------------------------------------------------------------------------*/
 QPoint SchematicScene::snapToGrid(QPointF const& p) const
 {
 	assert(doc());
 	return doc()->setOnGrid(getX(p), getY(p));
 }
-
+/*--------------------------------------------------------------------------*/
 void SchematicScene::drawBackground(QPainter *painter, const QRectF &r)
 { untested(); // for now.
 	//	QGraphicsScene::drawBackground(painter, r);
@@ -164,6 +178,7 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &r)
 void SchematicModel::toScene(QGraphicsScene& s, QList<ElementGraphics*>* l) const
 {
 	incomplete(); // this is too strange.
+	assert(false); // obsolete
   for(auto i : components()){ untested();
     auto x=new ElementGraphics(i);
 	 if(l){
@@ -193,6 +208,7 @@ void SchematicScene::removeItem(Element const* xx)
 // FIXME: is the weird order really necessary?
 void SchematicScene::selectedItemsAndBoundingBox(QList<ElementGraphics*>& ElementCache, QRectF& BB)
 {
+	assert(false); // obsolete
 	for(auto elt : selectedItems()){
 		if(BB.isEmpty()){
 			// BUG
@@ -369,10 +385,11 @@ bool SchematicScene::event(QEvent* e)
 
 	return r;
 }
-
+/*--------------------------------------------------------------------------*/
 void SchematicScene::selectAll(bool v)
 {
 	for(auto i : items()){ untested();
 		i->setSelected(v);
 	}
 }
+/*--------------------------------------------------------------------------*/

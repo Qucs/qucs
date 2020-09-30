@@ -55,7 +55,10 @@ public:
   }
 #endif
 
+public:
+  QGraphicsItem& addElement(Element* x);
 
+  // qt implements that.
   void selectedItemsAndBoundingBox(QList<ElementGraphics*>& ElementCache, QRectF& BB);
 //  void removeItem(Element const*);
   bool itemEvent(QEvent*);

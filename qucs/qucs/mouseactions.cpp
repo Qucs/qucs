@@ -23,7 +23,7 @@
 #include "components/optimizedialog.h"
 #include "components/componentdialog.h"
 #include "components/vacomponent.h"
-#include "diagrams/markerdialog.h"
+#include "legacy/markerdialog.h" // BUG
 #include "labeldialog.h"
 
 #include <QTextStream>
@@ -332,6 +332,7 @@ void MouseActions::moveElements(EGPList& , int, int)
  */
 void MouseActions::MMoveElement(SchematicDoc *Doc, QMouseEvent *Event)
 { untested();
+#if 0 // obsolete?
   if(selElem == 0) return;
 
 //  qDebug() << "MMoveElement got selElem";
@@ -378,6 +379,7 @@ void MouseActions::MMoveElement(SchematicDoc *Doc, QMouseEvent *Event)
     selElem->paintScheme(Doc); // paint scheme at new position
     Doc->viewport()->update();
   }
+#endif
 }
 
 

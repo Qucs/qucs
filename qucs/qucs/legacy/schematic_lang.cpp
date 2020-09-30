@@ -269,7 +269,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 					c = w;
 				}
 			}else if(mode=='D'){
-				qDebug() << "diagram parse?" << Line;
+				trace1("diagram parse?", Line);
 
 				Diagram* d=loadDiagram(Line, stream);
 				if(d){

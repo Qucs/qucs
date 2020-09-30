@@ -632,9 +632,13 @@ void attach_default_plugins()
 
   // TODO: remove "lib" prefix
   attach_single(pp, "qucs-default-components" SOEXT);
-  attach_single(pp, "libdiagrams" SOEXT);
   attach_single(pp, "libpaintings" SOEXT);
  // attach_single(pp, "libdialogs" SOEXT);
+ //
+ //
+ // not yet. legacy diagrams are now part of legacy (above)
+ // new diagrams: load manually.
+  // attach_single(pp, "libdiagrams" SOEXT);
 }
 
 void qucsMessageHandler(QtMsgType type, const QMessageLogContext &, const QString & str)

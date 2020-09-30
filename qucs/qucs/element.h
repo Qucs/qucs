@@ -193,20 +193,20 @@ public: // other stuff
   virtual bool showLabel() const{ return true; }
   //virtual bool showParam(int i) const{ return true; } // later
 
-  virtual void paintScheme(SchematicDoc *) const; // obsolete?
-  virtual void paintScheme(QPainter *) const; // obsolete?
-  virtual void draw(QPainter&) { incomplete(); }
+  // virtual void draw(QPainter&) { incomplete(); }
   virtual void setCenter(int x, int y, bool relative=false);
   virtual std::pair<int, int> center()const;
   virtual void getCenter(int&, int&) const; // BUG
   virtual void paint(ViewPainter*) const = 0;
   virtual void editElement(QucsDoc*);
 
-  virtual void MPressElement(){}
+  // really?
+  virtual QWidget* newWidget() {return nullptr;}
 
 public: // alias
   void setCenter(std::pair<int, int> const& c){
-    setCenter(c.first, c.second);
+    _cx = c.first;
+	 _cy = c.second;
   }
 
 public:
