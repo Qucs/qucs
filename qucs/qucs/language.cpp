@@ -6,7 +6,7 @@
 void DocumentLanguage::printItem(Element const* c, stream_t& s) const
 {
   assert(c);
-  if (auto C=dynamic_cast<const Command*>(c)) {
+  if (auto C=dynamic_cast<const CmdElement*>(c)) {
     printCommand(C, s);
   }else if (auto C=dynamic_cast<const Symbol*>(c)) {
     printSymbol(C, s);

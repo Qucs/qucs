@@ -1,8 +1,5 @@
 /***************************************************************************
-                               command.h
-                              -------------
     copyright            : (C) 2018 Felix Salfelder
-    email                : yes
  ***************************************************************************/
 
 /***************************************************************************
@@ -20,12 +17,12 @@
 #include "components/component.h"
 #include "platform.h"
 
-class Command : public Element {
+class CmdElement : public Element {
 protected:
-  Command(const Command&);
-  explicit Command();
+  CmdElement(const CmdElement&);
+  explicit CmdElement();
 public:
-  virtual ~Command() {};
+  virtual ~CmdElement() {};
 
 //  virtual Object* newOne(); from Symbol.
   virtual void recreate(SchematicDoc*) {};

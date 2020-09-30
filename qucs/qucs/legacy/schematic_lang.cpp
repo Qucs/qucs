@@ -78,7 +78,7 @@ private: // stuff saved from schematic_file.cpp
 private: // stuff from component.cc
 	void loadProperties(QTextStream& stream, SchematicSymbol& m) const;
 	Component* parseComponentObsoleteCallback(const QString& _s, Component* c) const;
-	Command* loadCommand(const QString& _s, Command* c) const;
+	CmdElement* loadCommand(const QString& _s, CmdElement* c) const;
 	Element* loadElement(const QString& _s, Element* e) const;
 	Element* getComponentFromName(QString& Line) const;
 private: // overrides
@@ -94,7 +94,7 @@ static Dispatcher<DocumentLanguage>::INSTALL
 // // "parseElement"?
 Element* LegacySchematicLanguage::loadElement(const QString& _s, Element* e) const
 {
-	if(Command* c=dynamic_cast<Command*>(e)){
+	if(CmdElement* c=dynamic_cast<CmdElement*>(e)){
 		c = loadCommand(_s, c);
 		// incomplete();
 	}else if(Component* c=dynamic_cast<Component*>(e)){
@@ -420,7 +420,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
 	s << ">";
 } // printSymbol
 
-Command* LegacySchematicLanguage::loadCommand(const QString& _s, Command* c) const
+CmdElement* LegacySchematicLanguage::loadCommand(const QString& _s, CmdElement* c) const
 {
 	bool ok;
 	int  ttx, tty, tmp;
@@ -773,7 +773,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 		e = prechecked_cast<Element*>(k);
 
 		// set_type?
-	}else if(Command const* sc=dynamic_cast<Command const*>(s)){ untested();
+	}else if(CmdElement const* sc=dynamic_cast<CmdElement const*>(s)){ untested();
 		// legacy component
 		Element* k = sc->clone(); // memory leak?
 		e = prechecked_cast<Element*>(k);
@@ -814,7 +814,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 
 #if 0 // legacy cruft?
 	// BUG: don't use schematic.
-	if(Command* cmd=command(e)){ untested();
+	if(CmdElement* cmd=command(e)){ untested();
 		p->loadCommand(Line, cmd);
 	}else if(Component* c=component(e)){ untested();
 		if(!p->parseComponentObsoleteCallback(Line, c)) { untested();

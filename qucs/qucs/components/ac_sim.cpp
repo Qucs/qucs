@@ -20,7 +20,7 @@
 
 namespace{
 
-class AC_Sim : public Command  {
+class AC_Sim : public CmdElement  {
 private:
   AC_Sim(AC_Sim const& s);
 public:
@@ -29,13 +29,13 @@ public:
   Element* clone() const{return new AC_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(SchematicDoc*);
-private: // Command
+private: // CmdElement
 //  QString const& name() const override{
 //	  return "AC";
 //  }
 }D;
 
-Dispatcher<Command>::INSTALL p(&command_dispatcher, "AC", &D);
+Dispatcher<CmdElement>::INSTALL p(&command_dispatcher, "AC", &D);
 Module::INSTALL pp("simulations", &D);
 
 AC_Sim::AC_Sim()
@@ -79,11 +79,12 @@ AC_Sim::~AC_Sim()
 {
 }
 
-AC_Sim::AC_Sim(AC_Sim const& x): Command(x)
+AC_Sim::AC_Sim(AC_Sim const& x): CmdElement(x)
 {
 	setName("AC");
 }
 
+#if 0
 Element* AC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
 	unreachable();
@@ -93,6 +94,7 @@ Element* AC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new AC_Sim();
   return 0;
 }
+#endif
 
 void AC_Sim::recreate(SchematicDoc*)
 {

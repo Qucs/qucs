@@ -45,7 +45,7 @@ static std::string netLabel(Net const* n)
 }
 
 class Verilog : public NetLang {
-  virtual void printCommand(Command const*, QTextStream&) const;
+  virtual void printCommand(CmdElement const*, QTextStream&) const;
   virtual void printSymbol(Symbol const*, QTextStream&) const;
 
 private:
@@ -57,7 +57,7 @@ static Dispatcher<DocumentLanguage>::INSTALL p(&doclang_dispatcher, "verilog", &
 /*!
  * verilog does not know about commands
  */
-void Verilog::printCommand(Command const* c, QTextStream& s) const
+void Verilog::printCommand(CmdElement const* c, QTextStream& s) const
 { untested();
   s << "//" << c->label() << "\n";
 }
@@ -150,9 +150,9 @@ void VerilogSchematicFormat::load(DocumentStream& stream, SchematicSymbol& s) co
 void VerilogSchematicFormat::save(DocumentStream& stream, SchematicSymbol const& m) const
 {
   for(auto pc : components(m)){
-	  if(dynamic_cast<Command const*>(pc)){ untested();
+	  if(dynamic_cast<CmdElement const*>(pc)){ untested();
 		  unreachable();
-		  // BUG. a Command is not a Component
+		  // BUG. a CmdElement is not a Component
 		  continue;
 	  }
 	  printSymbol(pc, stream); // BUG: use V::printItem

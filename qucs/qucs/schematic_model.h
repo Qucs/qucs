@@ -33,6 +33,7 @@
 
 class SchematicDoc;
 class QPlainTextEdit; //??!
+class CmdElement;
 // class QFileInfo;
 //
 
@@ -81,7 +82,7 @@ public: // stuff saved from Schematic
 	QString createClipboardFile();
 	void sizeOfAll(int&, int&, int&, int&, float) const;
 	void simpleInsertComponent(Component* c);
-	void simpleInsertCommand(Command* c);
+	void simpleInsertCommand(CmdElement* c);
 	void simpleInsertWire(Wire*);
 	void recreateSymbol(Symbol* s); // yikes.
 	//private??
@@ -114,7 +115,7 @@ public:
 	int  prepareNetlist(DocumentStream&, QStringList&, QPlainTextEdit*,
 			bool creatingLib, NetLang const&);
 	Component* loadComponent(const QString& _s, Component* c) const;
-	Command* loadCommand(const QString& _s, Command* c) const;
+	CmdElement* loadCommand(const QString& _s, CmdElement* c) const;
 //	bool loadPaintings(QTextStream*, PaintingList* p=NULL);
 	bool loadProperties(QTextStream*);
 	bool loadComponents(QTextStream*);

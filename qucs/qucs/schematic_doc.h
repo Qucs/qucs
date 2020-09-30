@@ -192,10 +192,10 @@ public:
   // CommandList const& commands() const{
   //    return _commands;
   // }
-  SimTaskList& commands(){
+  CmdEltList& commands(){
 	  return _commands;
   }
-  SimTaskList const& commands() const{
+  CmdEltList const& commands() const{
 	  return _commands;
   }
   ComponentList const& components() const{
@@ -502,15 +502,15 @@ private:
 	void parse(DocumentStream& stream, SchematicLanguage const*l=nullptr);
 
 private: // legacy, don't use
-  void simpleInsertComponent(Component* c) {
+  void simpleInsertComponent(Component* c) { untested();
 	  assert(_model);
 	  return _model->simpleInsertComponent(c);
   }
-  void simpleInsertCommand(Command* c) {
+  void simpleInsertCommand(CmdElement* c) { untested();
 	  assert(_model);
 	  return _model->simpleInsertCommand(c);
   }
-  void simpleInsertWire(Wire* w) {
+  void simpleInsertWire(Wire* w) { untested();
 	  assert(_model);
 	  return _model->simpleInsertWire(w);
   }
@@ -548,7 +548,7 @@ private:
   DigMap Signals; // collecting node names for VHDL signal declarations
 
 public: // for now
-	Command* loadCommand(const QString& _s, Command* c) const{
+	CmdElement* loadCommand(const QString& _s, CmdElement* c) const{
 		assert(_model);
 		return _model->loadCommand(_s, c);
 	}
@@ -643,7 +643,7 @@ public: // need access to SchematicModel. grr
 private:
   SchematicSymbol* _root;
   SchematicModel* _model;
-  SimTaskList _commands;
+  CmdEltList _commands;
 private:
   bool SymbolMode; // BUG
 

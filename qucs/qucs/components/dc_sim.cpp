@@ -20,7 +20,7 @@
 
 namespace{
 
-class DC_Sim : public Command  {
+class DC_Sim : public CmdElement  {
 private:
 	DC_Sim(DC_Sim const&);
 public:
@@ -31,15 +31,15 @@ public:
   }
   static Element* info(QString&, char* &, bool getNewOne=false);
 }D;
-Dispatcher<Command>::INSTALL p(&command_dispatcher, "DC", &D);
+Dispatcher<CmdElement>::INSTALL p(&command_dispatcher, "DC", &D);
 Module::INSTALL pp("simulations", &D);
 
-DC_Sim::DC_Sim(DC_Sim const& s) : Command(s)
+DC_Sim::DC_Sim(DC_Sim const& s) : CmdElement(s)
 {
 	setName("DC"); // really?
 }
 
-DC_Sim::DC_Sim() : Command()
+DC_Sim::DC_Sim() : CmdElement()
 {
   Description = QObject::tr("dc simulation");
 
@@ -90,6 +90,7 @@ DC_Sim::~DC_Sim()
 {
 }
 
+#if 0
 Element* DC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
 	unreachable();
@@ -99,5 +100,6 @@ Element* DC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new DC_Sim();
   return 0;
 }
+#endif
 
 }

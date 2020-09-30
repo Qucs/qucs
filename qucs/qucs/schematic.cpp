@@ -2088,7 +2088,7 @@ void SchematicDoc::simpleInsertElement(Element* e)
 		simpleInsertWire(c);
 	}else if(Component* c=dynamic_cast<Component*>(e)){ untested();
 		simpleInsertComponent(c);
-	}else if(Command* c=dynamic_cast<Command*>(e)){ untested();
+	}else if(CmdElement* c=dynamic_cast<CmdElement*>(e)){ untested();
 		simpleInsertCommand(c);
 	}else{ untested();
 		incomplete();

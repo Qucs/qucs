@@ -21,7 +21,7 @@
 #include "command.h"
 
 
-class HB_Sim : public Command {
+class HB_Sim : public CmdElement {
 public:
   HB_Sim();
   ~HB_Sim();
