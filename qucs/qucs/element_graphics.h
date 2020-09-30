@@ -75,6 +75,7 @@ public:
   }
 //  QPointF pos() const; // QGraphicsItem
   void setPos(int i, int j, bool relative=false);
+  void setPos(QPoint const&);
   template<class P>
   void moveElement(P const& delta);
   void center(int& i, int& j);
