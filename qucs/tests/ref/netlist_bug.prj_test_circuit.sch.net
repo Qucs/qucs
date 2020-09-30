@@ -1,0 +1,9 @@
+# Qucs
+
+.Def:short_circuit _net1 _net1
+.Def:End
+## declarations end
+
+Vdc:V1 in gnd U="1 V"
+R:R1 out gnd R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Sub:SC1 out in Type="short_circuit"
