@@ -233,7 +233,10 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 			Element*c=nullptr;
 			if(mode=='C'){
 				c = getComponentFromName(Line);
-				c->setOwner(&owner);
+				if(c){
+					c->setOwner(&owner);
+				}else{
+				}
 				if(Symbol* sym=dynamic_cast<Symbol*>(c) ){
 					//always do this?
 
