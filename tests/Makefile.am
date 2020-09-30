@@ -69,6 +69,7 @@ SH_TESTS = \
 	run.sh
 
 PRJ_TESTS = \
+	netlist_bug.prj \
 	AC_bandpass.prj \
 	AC_groupdelay_ac.prj \
 	AC_SW_resonance.prj \
