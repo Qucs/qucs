@@ -62,7 +62,8 @@ private:
 
 	QWidget* newWidget(){ untested();
 		QWidget* w=new RectDiagramWidget(this);
-		w->move(_cx, _cy-y2); // gaah. the origin must be in the top left corner.
+		//w->move(_cx, _cy-y2); // gaah. the origin must be in the top left corner.
+		w->move(0, -y2); // gaah. the origin must be in the top left corner.
 		return w;
 	}
 }D;

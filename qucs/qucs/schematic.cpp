@@ -2251,13 +2251,4 @@ void SchematicModel::removeNode(Node const* x)
   nodes().erase((Node*)x);
 }
 
-QList<ElementGraphics*> SchematicDoc::selectedItems()
-{ itested();
-  assert(scene());
-  // TODO/BUG: proper iterator.
-  auto L = scene()->selectedItems();
-  auto EL = reinterpret_cast<QList<ElementGraphics*>* >(&L);
-  return *EL;
-}
-
 // vim:ts=8:sw=2:noet

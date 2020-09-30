@@ -83,6 +83,7 @@ inline std::ostream& operator<<(std::ostream& o, QRectF const& r)
 }
 /*--------------------------------------------------------------------------*/
 #include "components/component.h" // BUG
+#include <QGraphicsProxyWidget>
 void ElementGraphics::attachElement(Element* e)
 {itested();
 	assert(e);
@@ -112,13 +113,11 @@ void ElementGraphics::attachElement(Element* e)
 	}else{
 	}
 
-#if 0 // maybe not
-	if(auto c=dynamic_cast<Symbol*>(e)){ untested();
-		for(unsigned i : c->numPorts()){ untested();
-			new NodeGraphics(*i, this);
-		}
+	if (auto w=_e->newWidget()){
+		auto p = new QGraphicsProxyWidget(this);
+		p->setWidget(w);
+	}else{
 	}
-#endif
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::paint(QPainter *p, const QStyleOptionGraphicsItem *o,

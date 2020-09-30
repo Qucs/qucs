@@ -727,7 +727,7 @@ QUndoCommand* MouseActionSelect::release(QMouseEvent *ev)
 }
 /*--------------------------------------------------------------------------*/
 static QPoint getDelta(ElementGraphics* e)
-{
+{ untested();
 	auto p = e->pos().toPoint();
 	assert(element(e));
 	auto p1_ = element(e)->center();
@@ -736,7 +736,7 @@ static QPoint getDelta(ElementGraphics* e)
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
-{itested();
+{untested();
 	bool ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
 	if(!ctrl) {itested();
