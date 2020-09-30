@@ -815,3 +815,13 @@ ElementGraphics* SchematicDoc::itemAt(float x, float y)
 	}
 }
 /*--------------------------------------------------------------------------*/
+QList<ElementGraphics*> SchematicDoc::selectedItems()
+{ itested();
+	assert(scene());
+	// TODO/BUG: proper iterator.
+	auto L = scene()->selectedItems();
+	auto EL = reinterpret_cast<QList<ElementGraphics*>* >(&L);
+	return *EL;
+}
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
