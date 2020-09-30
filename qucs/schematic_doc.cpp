@@ -775,12 +775,10 @@ void SchematicDoc::sceneRemoveItem(ElementGraphics* x)
 	scene()->removeItem(x);
 }
 
-// questionable.
-ElementGraphics& SchematicDoc::addToScene(Element* x)
+QGraphicsItem& SchematicDoc::addToScene(Element* x)
 {itested();
-  auto i=new ElementGraphics(x);
-  scene()->addItem(i);
-  return *i;
+	assert(scene());
+	return scene()->addElement(x);
 }
 
 // questionable.
@@ -802,3 +800,18 @@ void SchematicDoc::deleteItem(ElementGraphics *g)
     _model->erase(e); // also get rid of the payload.
 }
 
+// forward to graphicscene
+// BUG: what if there are multiple items?
+ElementGraphics* SchematicDoc::itemAt(float x, float y)
+{
+	QPointF p(x, y);
+	QGraphicsItem* I=scene()->itemAt(p, QTransform());
+	if(ElementGraphics* G=dynamic_cast<ElementGraphics*>(I)){ untested();
+		qDebug() << "got something" << element(G)->name();
+		return G;
+	}else{ untested();
+		qDebug() << "miss";
+		return nullptr;
+	}
+}
+/*--------------------------------------------------------------------------*/

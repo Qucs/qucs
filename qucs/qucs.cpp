@@ -51,7 +51,7 @@
 #include "projectView.h"
 #include "components/component.h" // BUG
 #include "paintings/paintings.h" // BUG
-#include "diagrams/diagrams.h" // BUG
+// #include "diagrams/diagrams.h" // BUG
 
 // BUG: cleanup dialogs. how?!
 #include "savedialog.h"

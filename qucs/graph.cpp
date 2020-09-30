@@ -1,7 +1,4 @@
 /***************************************************************************
-                          graph.cpp  -  description
-                             -------------------
-    begin                : Thu Oct 2 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
@@ -10,11 +7,12 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 #include "diagrams/graph.h"
+#include "viewpainter.h"
 
 #include <stdlib.h>
 #include <iostream>
@@ -52,7 +50,9 @@ Graph::~Graph()
 void Graph::createMarkerText() const
 {
   for(auto pm : Markers) {
-    pm->createText();
+    incomplete();
+    (void) pm;
+    // pm->createText();
   }
 }
 
@@ -125,8 +125,9 @@ QString Graph::save()
 	      " "+QString::number(numMode)+" "+QString::number(Style)+
 	      " "+QString::number(yAxisNo)+">";
 
-  foreach(Marker *pm, Markers)
-    s += "\n\t  "+pm->save();
+  incomplete();
+//   foreach(Marker *pm, Markers)
+//     s += "\n\t  "+pm->save();
 
   return s;
 }
@@ -337,8 +338,9 @@ Graph* Graph::sameNewOne()
   pg->numMode   = numMode;
   pg->yAxisNo   = yAxisNo;
 
-  foreach(Marker *pm, Markers)
-    pg->Markers.append(pm->sameNewOne(pg));
+  incomplete();
+//  foreach(Marker *pm, Markers)
+//    pg->Markers.append(pm->sameNewOne(pg));
 
   return pg;
 }

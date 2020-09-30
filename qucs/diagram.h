@@ -1,16 +1,13 @@
 /***************************************************************************
-                               diagram.h
-                              -----------
-    begin                : Thu Oct 2 2003
-    copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+    copyright            : (C) 2003 Michael Margraf
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -19,7 +16,7 @@
 #define DIAGRAM_H
 
 #include "diagrams/graph.h"
-#include "diagrams/marker.h"
+#include "legacy/marker.h"
 #include "element.h"
 #include "viewpainter.h"
 
@@ -61,6 +58,8 @@ struct Axis {
 
 
 class Diagram : public Element {
+protected:
+	Diagram(Diagram const& d);
 public:
   Diagram(int _cx=0, int _cy=0);
   virtual ~Diagram();
@@ -83,16 +82,19 @@ public:
   virtual QString extraMarkerText(Marker const*) const {return "";}
   
 private:
-  virtual void paint(ViewPainter*) const;
+  virtual void paint(ViewPainter*) const override;
+  std::pair<int, int> center() const override;
+  void    getCenter(int&, int&); //override; //remove this.
+
+public:
+  QRectF boundingRect() const override;
 
 public: // ??!
   virtual void paintDiagram(ViewPainter* p);
   void paintMarkers(ViewPainter* p, bool paintAll = true);
   void    setCenter(int, int, bool relative=false);
-  void    getCenter(int&, int&);
   void    paintScheme(SchematicDoc*) const;
   void    Bounding(int&, int&, int&, int&);
-	QRectF boundingRect() const;
   bool    getSelected(int, int);
   bool    resizeTouched(float, float, float);
   QString save();

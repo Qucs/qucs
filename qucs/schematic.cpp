@@ -46,7 +46,7 @@
 #include "textdoc.h"
 #include "viewpainter.h"
 #include "mouseactions.h"
-#include "diagrams/diagrams.h"
+// #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
 #include "components/vhdlfile.h"
 #include "components/verilogfile.h"

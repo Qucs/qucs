@@ -7,7 +7,8 @@
 #include "misc.h" //?!!
 
 #include "paintings/painting.h" // BUG
-#include "diagrams/diagrams.h" // BUG
+#include "diagram.h" // BUG?
+//#include "diagrams/diagrams.h" // BUG
 
 //#include "schematic.h" // BUG, transition
 

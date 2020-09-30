@@ -30,6 +30,7 @@ Element::Element(Element const& e)
  : Object(e),
    _cx(e._cx),
    _cy(e._cy),
+   x1(e.x1), y1(e.y1), x2(e.x2), y2(e.y2), // BUG diagram & whatever.
    _owner(nullptr) // sic.
 {
   setLabel(e.label());
@@ -39,14 +40,6 @@ Element::Element(Element const& e)
 }
 
 Element::~Element()
-{
-}
-
-void Element::paintScheme(SchematicDoc *) const
-{
-}
-
-void Element::paintScheme(QPainter *) const
 {
 }
 
@@ -60,7 +53,8 @@ void Element::setCenter(int, int, bool)
 void Element::getCenter(int&x, int&y) const
 {
 	incomplete();
-	x=y=-100;
+	x=_cx;
+	y=_cy;
 }
 
 void /*really?*/ Element::editElement(QucsDoc*)
@@ -103,6 +97,7 @@ void Element::detachFromModel()
 
 std::pair<int, int> Element::center()const
 {
+	incomplete();
 	// incomplete. bug. wrong.
 	std::pair<int, int> ret;
 	getCenter( ret.first, ret.second);

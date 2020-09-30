@@ -116,9 +116,10 @@ int Command::textSize(int& _dx, int& _dy)
 
 // -------------------------------------------------------
 // Boundings including the component text.
-void Command::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2, float Corr)
+void Command::entireBounds(int&, int&, int&, int&, float)
 {
   // qt does that.
+  assert(false);
 }
 
 // -------------------------------------------------------

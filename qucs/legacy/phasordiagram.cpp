@@ -289,3 +289,15 @@ Element* PhasorDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
+#if 0 // later
+//scales use in phasor and waveac this function only reset the value of the limits every scale
+void Diagram::phasorscale() 
+{ untested();
+  xAxisV.min = xAxisI.min = xAxisP.min = xAxisZ.min = DBL_MAX;
+  xAxisV.max = xAxisI.max = xAxisP.max = xAxisZ.max = -DBL_MAX;
+  yAxisV.min = yAxisI.min = yAxisP.min = yAxisZ.min = DBL_MAX;
+  yAxisV.max = yAxisI.max = yAxisP.max = yAxisZ.max = -DBL_MAX;
+  zAxisV.min = zAxisI.min = zAxisP.min = zAxisZ.min = DBL_MAX;
+  zAxisV.max = zAxisI.max = zAxisP.max = zAxisZ.max = -DBL_MAX;
+}
+#endif
