@@ -135,11 +135,14 @@ void Symbol::paint(ViewPainter* p) const
 		}else if(port(i)->degree()==0){
 			unreachable();
 		}else if(port(i)->degree()==1){
-			p->setPen(QPen(Qt::red,2));
-		}else{
+			// p->setPen(QPen(Qt::red,2));
+			p->setPen(QPen(Qt::red,1));
+			p->drawEllipse(x-2, y-2, 4, 4);
+		}else if(port(i)->degree()==3){
 			p->setPen(QPen(Qt::black,2));
+			p->drawEllipse(x-1, y-1, 2, 2);
+		}else{
 		}
-		p->drawEllipse(x-1, y-1, 2, 2);
 	}
 }
 
