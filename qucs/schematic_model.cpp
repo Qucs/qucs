@@ -519,6 +519,7 @@ void SchematicModel::simpleInsertWire(Wire *)
 void SchematicModel::detachFromNode(Element* what, Node* from)
 { untested();
 	unreachable();
+#if 0
 	if(from->degree()==1){ untested();
 #if 0
 		if(from->Label){ untested();
@@ -541,6 +542,7 @@ void SchematicModel::detachFromNode(Element* what, Node* from)
 		from->connectionsRemove(what);// remove connection
 		//			pn->disconnect(c);
 	}
+#endif
 }
 
 

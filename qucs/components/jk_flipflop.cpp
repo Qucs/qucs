@@ -98,6 +98,7 @@ QString JK_FlipFlop::vhdlCode(int NumPorts)
       Ports.at(2)->Connection->name() + ";\n\n";
   return s;
 #endif
+  return QString("incomplet");
 }
 
 // -------------------------------------------------------
