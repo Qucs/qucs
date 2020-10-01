@@ -73,8 +73,7 @@ Node* Symbol::connectNode(unsigned i, NodeMap&nm)
 // 		l.addEdge(n, c);
 // 	}else{ untested();
 // 	}
-//	n->connectionsAppend(this); // why??
-	mp.connect(n);
+	mp.connect(n /*,this*/);
 	return n;
 }
 
@@ -83,9 +82,7 @@ Node* Symbol::disconnectNode(unsigned i, NodeMap&)
 	trace2("disconnectNode", label(), i);
 	Port& mp = port(i);
 	Node* n = mp.value();
-	assert(n); // disconnecting twice is not allowed.
-	mp.disconnect();
-	//n->connectionsRemove(this);
+	mp.disconnect(n /*, this*/);
 
 	return n;
 }
@@ -137,12 +134,18 @@ std::string Symbol::getParameter(std::string const& n) const
 #include "geometry.h"
 void Symbol::paint(ViewPainter* p) const
 { untested();
+
+	 // does not make a lot of sense right now
 	for(unsigned i=0; i<numPorts(); ++i){ itested();
 		if(!port(i).isConnected()){ untested();
+			auto pp = portPosition(i);
+			auto x = getX(pp)-_cx;
+			auto y = getY(pp)-_cy;
 			p->setPen(QPen(Qt::red,2));
-		}else if(port(i)->degree()==0){ untested();
+			p->drawEllipse(x-1, y-1, 2, 2);
+		}else if(port(i)->degree()==10){ untested();
 			unreachable();
-		}else if(port(i)->degree()==1){ untested();
+		}else if(port(i)->degree()==0){ untested();
 			auto pp = portPosition(i);
 			auto x = getX(pp)-_cx;
 			auto y = getY(pp)-_cy;

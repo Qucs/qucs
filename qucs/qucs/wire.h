@@ -57,9 +57,11 @@ private:
   void findScaleAndAngle();
 
 public: // Node xs
-  bool hasNet() const { return _port0.isConnected(); }
+//  bool hasNet() const { return _port0.isConnected(); }
+#if 0
   Net* net();
   Net const* net() const;
+#endif
 
   QString const& netLabel() const;
 

@@ -550,18 +550,15 @@ void SchematicModel::disconnect(Symbol* c)
 {itested();
 	// drop port connections
 	for(unsigned i=0; i<c->numPorts(); ++i) {itested();
-		trace1("sm:ds", i);
+		trace2("sm:ds", i, c->portPosition(i));
 		Node* nn = c->disconnectNode(i, nodes());
 		assert(nn);
 
 		if(!nn){ untested();
 			unreachable();
-		}else if(nn->degree()==0){ untested();
+		}else if(!nn->has_ports()){ untested();
 			nodes().erase(nn); // possibly garbage collect only.
-		}else if(nn->degree()==2){ untested();
-			// done in GUI, must be undoable.
-			// oneTwoWires(nn);  // two wires -> one wire
-		}else{itested();
+		}else{
 		}
 	}
 }
