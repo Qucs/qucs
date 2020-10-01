@@ -49,7 +49,7 @@ public:
   void paint(ViewPainter*) const;
   void setCenter(int, int, bool relative=false);
   void getCenter(int&, int&);
-  bool getSelected(int, int);
+//  bool getSelected(int, int);
   void setName(const QString&, const QString&, int delta_=0, int x_=0, int y_=0);
 
   QString save(){unreachable(); return "";}

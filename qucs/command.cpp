@@ -176,6 +176,7 @@ int CmdElement::getTextSelected(int x_, int y_, float Corr)
 }
 
 // -------------------------------------------------------
+#if 0
 bool CmdElement::getSelected(int x_, int y_)
 {
   x_ -= cx();
@@ -185,6 +186,7 @@ bool CmdElement::getSelected(int x_, int y_)
 
   return false;
 }
+#endif
 
 // -------------------------------------------------------
 void CmdElement::paint(ViewPainter *p) const

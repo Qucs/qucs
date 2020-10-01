@@ -786,8 +786,8 @@ void SchematicDoc::selectWireLine(ElementGraphics *g, Node const* pn, bool ctrl)
 		if(!isWire(pe)){
 			break;
 		}else if(ctrl){
-			g->toggleSelected();
-		} else{
+			g->setSelected(!g->isSelected());
+		} else{ untested();
 			g->setSelected(true);
 		}
 
@@ -838,10 +838,12 @@ QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
 
 	if(c){
 	}else if(s.size()!=1){
+	}else if(!symbol(s.front())){
 	}else if(Event->button() == Qt::LeftButton){ untested();
 			// if it's a wire, select the whole thing?
 			// (what is a wire?)
-		if(auto w=wire(s.front())) { untested();
+		if(isWire(symbol(s.front()))) { untested();
+			incomplete();
 #if 0
 			doc().selectWireLine(w, w->portValue(0), ctrl);
 			doc().selectWireLine(w, w->portValue(1), ctrl);
