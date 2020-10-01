@@ -216,13 +216,6 @@ public:
   virtual QString const& description() const{return incomplete_description;}
   virtual char const* iconBasename() const{return nullptr;}
 
-private: // only called from ElementGraphics
-
-protected:
-//  bool isSelected() const{return Selected;}
-
-private:
-//  bool Selected; // BUG
 public: // BUG
   int  Type;    // whether it is Component, Wire, ...
 

@@ -126,22 +126,22 @@ void Wire::getCenter(int& x, int& y)
   y = (y1()+y2()) >> 1;
 }
 // ----------------------------------------------------------------
+#if 0
 // Lie x/y on wire ? 5 is the precision the coordinates have to fit.
 bool Wire::getSelected(int , int )
 { incomplete();
   unreachable();
 
-#if 0
   int x1 = x1__();
   int x2 = x2__();
   int y1 = y1__();
   int y2 = y2__();
   if(x1-5 <= x_) if(x2+5 >= x_) if(y1-5 <= y_) if(y2+5 >= y_)
     return true;
-#endif
 
   return false;
 }
+#endif
 
 // ----------------------------------------------------------------
 void Wire::paint(ViewPainter *p) const

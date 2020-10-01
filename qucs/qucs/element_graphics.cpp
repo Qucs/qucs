@@ -238,7 +238,6 @@ void ElementGraphics::setSelected(bool s)
 	QGraphicsItem::setSelected(s);
 	assert(QGraphicsItem::isSelected()==s);
 	assert(_e);
-//	_e->setSelected(s); // BUG
 }
 /*--------------------------------------------------------------------------*/
 // Reimplement this function to intercept events before they are dispatched to

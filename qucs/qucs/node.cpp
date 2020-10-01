@@ -52,9 +52,10 @@ Node::~Node()
 }
 
 // -------------------------------------------------------------
+#if 0
+TODO: untangle Label <-> Node
 void Node::paint(ViewPainter *)
 { untested();
-#if 0
   switch(Connections.count()) {
     case 1:  if(hasLabel())
                p->fillRect(cx()-2, cy()-2, 4, 4, Qt::darkBlue); // open but labeled
@@ -73,7 +74,6 @@ void Node::paint(ViewPainter *)
 	     p->Painter->setBrush(Qt::NoBrush);
              break;
   }
-#endif
 }
 // ----------------------------------------------------------------
 bool Node::getSelected(int x_, int y_)
@@ -83,6 +83,7 @@ bool Node::getSelected(int x_, int y_)
 
   return false;
 }
+#endif
 // ----------------------------------------------------------------
 QString const& Node::netLabel() const
 {
@@ -138,11 +139,13 @@ void Node::setName(const QString& , const QString& , int, int )
 }
 
 // ----------------------------------------------------------------
+#if 0
 QRectF Node::boundingRect() const
 { untested();
   QRectF b(cx()-4,cy()-4,8,8);
   return b;
 }
+#endif
 // ----------------------------------------------------------------
 AdjNodeRange::AdjNodeRange(Node& n)
   : _begin(AdjNodeIterator(n.connectionsBegin(), n.connectionsEnd())),

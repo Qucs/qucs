@@ -18,13 +18,13 @@
 #include "conductor.h"
 #include "qt_compat.h"
 #include "platform.h"
-//#include "wire.h" // bug
 
 class ViewPainter;
 class NodeMap;
 class NetList;
 class AdjNodeRange;
 
+// TODO: fix hierarchy
 class Node : public Conductor, public Element /* Object? */ {
 private:
   Node(Node const&) = delete;
@@ -104,22 +104,19 @@ private: // element (BUG?)
   void paint(ViewPainter*) const{ }
 
 public: // obsolete
-  bool  getSelected(int, int);
-
-private: //Element overrides
-  void  paint(ViewPainter*);
+//  bool  getSelected(int, int);
+//  QRectF boundingRect() const override;
 
 private: // BUG. does weird reverse iteration
+//  element_list_t
   Q3PtrList<Element> Connections;
 
 private:
-  // QString Name;  //Element?
   QString DType; // type of node (used by digital files)
 
 public: // BUG
   int State;	 // remember some things during some operations, BUG
 
-  QRectF boundingRect() const;
 
 public: // protected coordinate abuse
   void markUnChecked(){

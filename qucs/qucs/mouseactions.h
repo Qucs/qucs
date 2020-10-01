@@ -127,11 +127,6 @@ public: // compat with old code
 	void setSelected(bool x=true);
 	bool isSelected() const;
 
-	void toggleSelected() const{
-		assert(_e);
-		_e->toggleSelected();
-	}
-
 public: // access coordinates from old code.
 	     // newer code might use Qt conventions...?
 	int const& cx_() const { assert(_e); return _e->cx_(); }
