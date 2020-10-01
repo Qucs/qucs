@@ -25,9 +25,9 @@ class NetList;
 class AdjNodeRange;
 
 // TODO: fix hierarchy
+// // maybe: Place : Conductor?
 class Node : public Element /* Object? */, public Conductor {
 public:
-	typedef std::list<Element /*const?*/ *> element_list_t;
 
 private:
   Node(Node const&) = delete;
@@ -67,8 +67,12 @@ public:
 	  ++_degree;
   }
 #endif
+  void inc_ports(){ ++_ports; }
+  void dec_ports(){ assert(_ports); --_ports; }
+  bool has_ports() const{ return _ports; }
 
 #if 0 /// hmmm... pair<begin end>?
+	typedef std::list<Element /*const?*/ *> element_list_t;
   element_list_t const& connections() const{
 	  return _conn;
   }
@@ -114,9 +118,6 @@ public: // obsolete
 //  QRectF boundingRect() const override;
 
 private:
-  unsigned _degree;
-
-private:
   QString DType; // type of node (used by digital files)
 
 public: // BUG
@@ -140,67 +141,8 @@ public: // protected coordinate abuse
 private:
   // BUG: also stored in port?
   const std::pair<int, int> _position;
+  unsigned _ports; // number of ports connecting to this node
 };
 /* ---------------------------------------------------------- */
-class AdjNodeIterator{
-public:
-	typedef std::list<Element*>::iterator elt_iter;
-	typedef std::list<Node*>::iterator node_iter;
-public:
-	AdjNodeIterator(elt_iter b, elt_iter e);
-public:
-	AdjNodeIterator(AdjNodeIterator const& o)
-		: _wire(o._wire),
-		  _wend(o._wend),
-		  _node(o._node),
-		  _nend(o._nend){
-			  assert(o.is_valid());
-			  assert(is_valid());
-	}
-public:
-	Node* operator*();
-	
-	AdjNodeIterator& operator++();
-	bool operator==(AdjNodeIterator const& o);
-	bool operator!=(AdjNodeIterator const& o){
-		return !(*this == o);
-	}
-private:
-	void next();
-	bool is_valid() const;
-	void skip();
-private:
-	elt_iter _wire;
-	elt_iter _wend;
-	node_iter _node;
-	node_iter _nend;
-	
-public:
-	friend class AdjNodeRange;
-};
-/* ---------------------------------------------------------- */
-// could use pair?
-class AdjNodeRange{
-public:
-	explicit AdjNodeRange(Node& c);
-public:
-	AdjNodeRange(AdjNodeRange const&o)
-		: _begin(o._begin),
-		  _end(o._end){
-		assert(_begin.is_valid());
-		assert(_end.is_valid());
-	}
-public:
-	AdjNodeIterator begin(){
-		return _begin;
-	}
-	AdjNodeIterator end(){
-		return _end;
-	}
-
-private:
-	AdjNodeIterator _begin;
-	AdjNodeIterator _end;
-};
 /* ---------------------------------------------------------- */
 #endif

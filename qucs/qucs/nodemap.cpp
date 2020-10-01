@@ -67,8 +67,11 @@ ConnectedComponents<NodeMap>* NodeMap::new_ccs()
 // Qucs schematic node.
 // at most one node in one place,
 // may have strange side effects.
+#include "io.h"
 int NodeMap::erase(Node* tt)
-{
+{ untested();
+	assert(tt);
+	trace2("NodeMap::erase", tt->degree(), tt->position());
 	assert(tt->hasNet());
 	Conductor* c = tt;
 	_cc->deregisterVertex(c);
