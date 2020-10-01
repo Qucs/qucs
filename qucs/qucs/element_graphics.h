@@ -46,22 +46,21 @@ private:
 
 public: //?
 //  void paintScheme(SchematicDoc *p);
-private: // later: Qgraphics virtual overrides
-//  void paint() { assert(_e); _e->paint(); }
-//  void paintScheme(SchematicDoc *s) { assert(_e); _e->paintScheme(s); }
-  QRectF boundingRect() const;
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override; // const...
-
-public:
-  bool sceneEvent(QEvent*) override;
 private:
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override; // const...
+  QRectF boundingRect() const override;
+  bool sceneEvent(QEvent*) override;
   QVariant itemChange(GraphicsItemChange c, const QVariant &v) override;
 
 public: // manipulate (used in UndoCommands)
   void hide();
   void show();
+
+  template<class P>
+  void moveElement(P const& delta);
   void transform(rotate_after_mirror1_t, std::pair<int, int> pivot=std::make_pair(0,0));
-  void snap();
+
+  // void snap();
 
 public:
   Element& operator*(){ itested();
@@ -76,13 +75,7 @@ public:
 //  QPointF pos() const; // QGraphicsItem
   void setPos(int i, int j, bool relative=false);
   void setPos(QPoint const&);
-  template<class P>
-  void moveElement(P const& delta);
   void center(int& i, int& j);
-	void toggleSelected(){
-		assert(_e);
-		setSelected(!isSelected());
-	}
 
 	// BUG
 	void prepareGeometryChange(){
@@ -120,10 +113,11 @@ Graph* graph(QGraphicsItem*);
 Marker* marker(QGraphicsItem*);
 Node* node(QGraphicsItem*);
 // Label* label(QGraphicsItem*);
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 #include <QEvent> // TODO: check if ItemEvent is needed at all, if so,
                   // move to a different place
-
+/*--------------------------------------------------------------------------*/
 class ItemEvent: public QEvent{
 public:
 	explicit ItemEvent(QEvent const& e, ElementGraphics& item);
@@ -133,5 +127,6 @@ private:
 	ItemEvent(ItemEvent const& e) = delete;
 	ElementGraphics& _item;
 };
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 #endif

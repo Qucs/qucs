@@ -43,7 +43,6 @@ public:
   int     textSize(int&, int&);
   void    Bounding(int&, int&, int&, int&);
   void    entireBounds(int&, int&, int&, int&, float);
-  bool    getSelected(int, int);
   int     getTextSelected(int, int, float);
   void    rotate();
   void    mirrorX();  // mirror about X axis

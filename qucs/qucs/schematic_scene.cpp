@@ -368,7 +368,7 @@ bool SchematicScene::event(QEvent* e)
 
 				if(0){
 					QGraphicsSceneMouseEvent fake(QEvent::GraphicsSceneMousePress);
-					gfx->sceneEvent(&fake);
+//					gfx->sceneEvent(&fake);
 				}
 			 }else{
 			 }
