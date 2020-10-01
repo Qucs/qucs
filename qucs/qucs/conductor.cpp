@@ -13,40 +13,83 @@
 #include "conductor.h"
 #include "node.h"
 #include "wire.h"
+#include "netlist.h"
 #include "net.h"
 
-#if 1
-inline AdjConductorRange::AdjConductorRange(Conductor& c)
-{
-	_cond_begin = c.connectionsBegin();
-	_cond_end = c.connectionsEnd();
-}
-
-Conductor* AdjConductorIterator::operator*()
-{
-	assert(_elt!=_end);
-	auto c = dynamic_cast<Conductor*>(*_elt); // yikes
-	assert(c);
-	return c;
-}
-
-void AdjConductorIterator::skip()
-{
-	while(_elt!=_end){
-		assert(intptr_t(*_elt)!=intptr_t(4)); // yes some weid code actually does that.
-		if(dynamic_cast<Conductor const*>(*_elt)){
-			break;
-		}else{
-			++_elt;
-		}
-	}
-}
-
 Conductor::~Conductor()
+{ untested();
+	assert(!_adj.size());
+	assert(!_net);
+}
+/*--------------------------------------------------------------------------*/
+Conductor::Conductor()
+   : _net(nullptr),
+     _visit(0)
 {
 }
-
-
-
-
+/*--------------------------------------------------------------------------*/
+QString const& Conductor::netLabel() const
+{
+	assert(_net);
+	return _net->label();
+}
+/*--------------------------------------------------------------------------*/
+void Conductor::setNetLabel(QString const& l)
+{
+  assert(_net);
+  _net->setLabel(l);
+}
+/*--------------------------------------------------------------------------*/
+bool Conductor::hasNetLabel() const
+{
+  if(_net){
+    return _net->hasLabel();
+  }else{ untested();
+    // reachable??
+    return false;
+  }
+}
+/*--------------------------------------------------------------------------*/
+#if 0
+bool Node::hasLabel() const
+{
+  unreachable(); //???
+  if(_net){
+    return _net->hasLabel();
+  }else{ untested();
+    // reachable??
+    return false;
+  }
+}
 #endif
+/*--------------------------------------------------------------------------*/
+void Conductor::detachNet(Net* n)
+{
+  assert(_net == n);
+  assert(_net);
+  _net->dec_nodes();
+  // if(!_net->size()){
+  //   delete _net;
+  // }else{
+  // }
+  _net = nullptr;
+}
+// ----------------------------------------------------------------
+Net* Conductor::newNet(NetList& nl)
+{
+  assert(!_net);
+  _net = nl.newNet();
+  assert(_net);
+  _net->inc_nodes();
+  return _net;
+}
+// ----------------------------------------------------------------
+void Conductor::attachNet(Net* n)
+{
+  trace2("Conductor::att", this, n);
+  assert(n);
+  assert(!_net);
+  _net = n;
+  _net->inc_nodes();
+}
+/*--------------------------------------------------------------------------*/

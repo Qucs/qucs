@@ -29,8 +29,7 @@ class QString;
 
 class dummy {};
 
-
-class Wire : public Symbol {
+class Wire : public Symbol, public Conductor {
 private:
   Wire(Wire const&);
 public:
@@ -83,10 +82,6 @@ public:
 public:
 //  void setPortByIndex(unsigned idx, Node* n);
 //  Node* portValue(unsigned idx);
-  std::list<Node*>::iterator connectionsBegin();
-  std::list<Node*>::iterator connectionsEnd(){
-	  return _node_hack.end();
-  }
 
 private: // Symbol, internal port access.
   Port& port(unsigned i){
@@ -98,8 +93,6 @@ private: // Symbol, internal port access.
 	  }
   }
 
-private:
-  std::list<Node*> _node_hack;
 
 private: // FIXME, these are still around. (from element)
 //	int & x1__() { return _port0.x; }
