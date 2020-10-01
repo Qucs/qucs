@@ -43,30 +43,29 @@ public:
   }
 
   AdjNodeRange neighbours();
-  void connectionsAppend(Element* e){ // "connect"?
-	  _conn.push_back(e);
+  void connectionsAppend(Element*){ // "connect"?
+	  ++_degree;
   }
-  void connectionsRemove(Element const* ee){
-	  auto i = std::find(_conn.begin(), _conn.end(), ee);
-	  assert(i!=_conn.end());
-	  _conn.erase(i);
+  void connectionsRemove(Element const*){
+	  assert(_degree);
+	  --_degree;
   }
   unsigned degree() const{
-	  return _conn.size();
+	  return _degree;
   }
-  Element const* firstConnection() const{
-	  return _conn.front();
+//  Element* firstConnection() const{
+//	  return Connections.getFirst();
+//  }
+//  Element* lastConnection() const{
+//	  return Connections.getLast();
+//  }
+  void appendConnection(Element*){
+	  ++_degree;
   }
-  Element const* lastConnection() const{
-	  return _conn.back();
+  void prependConnection(Element*){
+	  ++_degree;
   }
-  void appendConnection(Element* e){
-	  return _conn.push_back(e);
-  }
-  void prependConnection(Element* e){
-	  return _conn.push_front(e);
-  }
-#if 1 /// hmmm... pair<begin end>?
+#if 0 /// hmmm... pair<begin end>?
   element_list_t const& connections() const{
 	  return _conn;
   }
@@ -111,8 +110,8 @@ public: // obsolete
 //  bool  getSelected(int, int);
 //  QRectF boundingRect() const override;
 
-private: // BUG. does weird reverse iteration
-	element_list_t _conn;
+private:
+  unsigned _degree;
 
 private:
   QString DType; // type of node (used by digital files)
