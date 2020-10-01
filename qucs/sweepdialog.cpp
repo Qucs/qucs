@@ -145,7 +145,7 @@ void SweepDialog::slotNewValue(int)
   QList<Node *>::iterator node_it;
   QList<double *>::const_iterator value_it = ValueList.begin();
   for(node_it = NodeList.begin(); node_it != NodeList.end(); node_it++) {
-    qDebug() << "SweepDialog::slotNewValue:(*node_it)->Name:" << (*node_it)->name();
+//    qDebug() << "SweepDialog::slotNewValue:(*node_it)->Name:" << (*node_it)->name();
 
 	 incomplete();
 	 // BUG: a voltage tag is not a name.
