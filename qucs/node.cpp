@@ -52,8 +52,9 @@ Node::~Node()
 }
 
 // -------------------------------------------------------------
-void Node::paint(ViewPainter *p)
+void Node::paint(ViewPainter *)
 { untested();
+#if 0
   switch(Connections.count()) {
     case 1:  if(hasLabel())
                p->fillRect(cx()-2, cy()-2, 4, 4, Qt::darkBlue); // open but labeled
@@ -72,6 +73,7 @@ void Node::paint(ViewPainter *p)
 	     p->Painter->setBrush(Qt::NoBrush);
              break;
   }
+#endif
 }
 // ----------------------------------------------------------------
 bool Node::getSelected(int x_, int y_)

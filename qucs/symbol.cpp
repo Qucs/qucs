@@ -89,6 +89,16 @@ Node* Symbol::disconnectNode(unsigned i, NodeMap&)
 	return n;
 }
 
+Node const* Symbol::portNode(unsigned i) const
+{
+  assert(i<unsigned(numPorts()));
+  if(port(i).isConnected()){
+	  assert( port(i).value() );
+	  return port(i).value();
+  }else{
+	  return nullptr;
+  }
+}
 Net const* Symbol::portValue(unsigned i) const
 {
   assert(i<unsigned(numPorts()));
