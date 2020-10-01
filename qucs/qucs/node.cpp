@@ -20,15 +20,9 @@
 
 #include <QPainter>
 
-#if 0
-Node::Node(int _x, int _y) : Conductor(), Element()
-{ untested();
-  unreachable();
-}
-#endif
-
 Node::Node(std::pair<int, int> pos)
   : Element(),
+   _degree(0),
    _position(pos),
    _net(nullptr),
    _visit(0)
