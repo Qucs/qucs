@@ -50,11 +50,11 @@ public:
   unsigned degree() const{
 	  return Connections.count();
   }
-  Element* firstConnection(){
-	  return Connections.first();
+  Element* firstConnection() const{
+	  return Connections.getFirst();
   }
-  Element* lastConnection(){
-	  return Connections.last();
+  Element* lastConnection() const{
+	  return Connections.getLast();
   }
   void appendConnection(Element* e){
 	  return Connections.append(e);

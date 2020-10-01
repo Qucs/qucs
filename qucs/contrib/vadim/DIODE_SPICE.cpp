@@ -127,6 +127,7 @@ QString DIODE_SPICE::spice_netlist(bool)
  
     return s;
 #endif
+	 return QString("incomlete");
 }
 
 } // namespace

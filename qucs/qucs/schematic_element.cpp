@@ -72,12 +72,11 @@ Node* SchematicDoc::selectedNode(int , int )
     return nullptr;
 }
 /*--------------------------------------------------------------------------*/
+#if 0
 // Follow a wire line and selects it.
-// TODO: not so sure when/where this is used.
 void SchematicDoc::selectWireLine(ElementGraphics *g, Node *pn, bool ctrl)
 {
 incomplete();
-#if 0
     Element* pe=element(g);
     Node *pn_1st = pn;
     while(pn->degree() == 2)
@@ -96,8 +95,8 @@ incomplete();
         else  pn = ((Wire*)pe)->portValue(0);
         if(pn == pn_1st) break;  // avoid endless loop in wire loops
     }
-#endif
 }
+#endif
 /*--------------------------------------------------------------------------*/
 // Splits the wire "*pw" into two pieces by the node "*pn".
 //

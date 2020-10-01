@@ -745,6 +745,66 @@ static QPoint getDelta(ElementGraphics* e)
 	return p - p1;
 }
 /*--------------------------------------------------------------------------*/
+// it's a "wire" if it has two ports that connect to the same net.
+static bool isWire(Symbol const* e)
+{
+	assert(e);
+	if(e->numPorts()!=2){
+		return false;
+	}else if(e->portValue(0) == e->portValue(1)){
+		return true;
+	}else{
+		return false;
+	}
+}
+/*--------------------------------------------------------------------------*/
+Symbol* symbol(Element* e)
+{
+	return dynamic_cast<Symbol*>(e);
+}
+Symbol* symbol(QGraphicsItem* g)
+{
+	auto e=dynamic_cast<ElementGraphics*>(g);
+	if(!e) return nullptr;
+	return symbol(e->operator->());
+}
+// Follow a wire line and select it.
+/*--------------------------------------------------------------------------*/
+// static??
+void SchematicDoc::selectWireLine(ElementGraphics *g, Node const* pn, bool ctrl)
+{ untested();
+	Symbol* pe = symbol(g);
+	Node const* pn_1st = pn;
+	while(pn->degree() == 2) {
+		if(pn->firstConnection() == pe){
+			pe = symbol(pn->lastConnection());
+		}else{
+			pe = symbol(pn->firstConnection());
+		}
+		assert(pe);
+
+		if(!isWire(pe)){
+			break;
+		}else if(ctrl){
+			g->toggleSelected();
+		} else{
+			g->setSelected(true);
+		}
+
+		if(pe->portNode(0) == pn){
+		  	pn = pe->portNode(1);
+		} else {
+			assert(pe->portNode(1) == pn);
+			pn = pe->portNode(0);
+		}
+
+		if(pn == pn_1st){
+		  	break;  // avoid endless loop in wire loops
+		}else{
+		}
+	}
+}
+/*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
 {untested();
 	bool ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
@@ -769,8 +829,6 @@ QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
 		int fX = int(delta.x());
 		int fY = int(delta.y());
 
-		// TODO: check if it is the same delta in all of them.
-	
 		if(fX || fY){ untested();
 			trace1("possible move", delta);
 			c = new MoveSelection(delta, doc(), s);
@@ -778,13 +836,15 @@ QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
 		}
 	}
 
-	if(focusElement && Event->button() == Qt::LeftButton){ untested();
-		if(auto w=wire(focusElement)) { untested();
-			incomplete();
-			(void)w;
+	if(c){
+	}else if(s.size()!=1){
+	}else if(Event->button() == Qt::LeftButton){ untested();
+			// if it's a wire, select the whole thing?
+			// (what is a wire?)
+		if(auto w=wire(s.front())) { untested();
 #if 0
-			Doc->selectWireLine(element(focusElement), w->portValue(0), ctrl);
-			Doc->selectWireLine(element(focusElement), w->portValue(1), ctrl);
+			doc().selectWireLine(w, w->portValue(0), ctrl);
+			doc().selectWireLine(w, w->portValue(1), ctrl);
 #endif
 		}else{ untested();
 		}
