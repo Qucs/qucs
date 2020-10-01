@@ -288,7 +288,22 @@ std::list<Node*>::iterator Wire::connectionsBegin()
 Node* Wire::connectNode(unsigned i, NodeMap& nm)
 { untested();
   assert(i<2);
-  //Symbol::connectNode(i, nm); maybe use this?
+
+  if(hasNet()){
+  }else{
+    nm.registerVertex(this);
+  }
+
+  Node* n = Symbol::connectNode(i, nm); // maybe use this?
+//	Port const& pp = port(i);
+//	Port& mp = port(i);
+//	Node* n = &nm.at(pp.x_()+cx(), pp.y_()+cy());
+//	assert(n->hasNet());
+//
+//	mp.connect(n);
+//	return n;
+
+#if 0
   Port const& pp = port(i);
   Port& mp = port(i);
   auto c = center();
@@ -297,16 +312,14 @@ Node* Wire::connectNode(unsigned i, NodeMap& nm)
   assert(cx==_cx);
   assert(cy==_cy);
 
-  if(hasNet()){
-  }else{
-    nm.registerVertex(this);
-  }
-
   Node* n;
   trace3("wire::connectnode", cx, cy, i);
   trace2("wire::connectnode", pp.x_(), pp.y_());
   n = &nm.at(cx+pp.x_(), cy+pp.y_());
   assert(n->hasNet());
+
+  mp.connect(n);
+#endif
 
   if(Node* n2 = port((i+1)%2).value()){ untested();
     trace3("wire::connectnode", i, n, n2);
@@ -332,7 +345,6 @@ Node* Wire::connectNode(unsigned i, NodeMap& nm)
   trace3("Wire::connect", i, n->degree(), degree());
 
   //n->connectionsAppend(this);
-  mp.connect(n);
 
   if(_netname!=""){ untested();
     trace2("wire override netlabel", n->netLabel(), _netname);
@@ -345,7 +357,6 @@ Node* Wire::connectNode(unsigned i, NodeMap& nm)
 // // fishy. involve base case?
 Node* Wire::disconnectNode(unsigned i, NodeMap& nm)
 { untested();
-  //Symbol::disconnectNode(i, nm); maybe use this?
   Node* n = Symbol::disconnectNode(i, nm);
   trace3("Wire::disconnect", i, n->degree(), degree());
 
