@@ -4,7 +4,7 @@
 
 
 void more()
-{
+{ untested();
 	SchematicModel M(NULL);
 
 	untested();
@@ -30,13 +30,17 @@ void more()
 	assert(dynamic_cast<Symbol const*>(w0)->portValue(1));
 	trace1("w0", w0->net());
 
-	std::cout << "disconnect\n";
-	M.disconnect(w0);
-	assert(M.wireCount()==1);
-	assert(!w0->hasNet());
-	std::cout << "reconnect\n";
-	M.connect(w0);
-	assert(w0->hasNet());
+	{ untested();
+		std::cout << "disconnect\n";
+		M.disconnect(w0);
+		assert(M.wireCount()==1);
+		assert(!w0->hasNet());
+	}
+	{ untested();
+		std::cout << "reconnect\n";
+		M.connect(w0);
+		assert(w0->hasNet());
+	}
 
 	std::cout << "...\n";
 	w1 = new Wire(1,0,1,1);
@@ -88,7 +92,7 @@ void more()
 	std::cout << "=== square test\n";
 	M.pushBack(w1);
 	SchematicModel const& cM = M;
-	for(auto i : cM.wires()){
+	for(auto i : cM.wires()){ untested();
 		Symbol* s = i;
 		int cx = atoi(s->getParameter("$xposition").c_str());
 		int cy = atoi(s->getParameter("$xposition").c_str());
@@ -103,33 +107,36 @@ void more()
 }
 
 int main()
-{
+{ untested();
 	SchematicModel M(NULL);
 	auto w0 = new Wire(0,0,1,0);
 	auto w1 = new Wire(1,0,0,0);
 
-	M.pushBack(w0);
-	assert(M.nodeCount() == 2);
-	M.pushBack(w1);
-	assert(M.nodeCount() == 2);
+	{ untested();
+		M.pushBack(w0);
+		assert(M.nodeCount() == 2);
+		M.pushBack(w1);
+		assert(M.nodeCount() == 2);
+	}
 
 	auto i0 = w0->connectionsBegin();
 	auto e0 = w0->connectionsEnd();
 	auto i1 = w1->connectionsBegin();
 	auto e1 = w1->connectionsEnd();
 
-	Node* n0 = *i0;
-	Node* n1 = *i1;
+	auto n0 = *i0;
+	auto n1 = *i1;
 
-	auto ni0 = n0->connectionsBegin();
-	{
+#if 0
+	{ untested();
+		auto ni0 = n0->connectionsBegin();
 		// BUG: could be the other way around
 		assert(*ni0 == w0);
 		++ni0;
 		assert(*ni0 == w1);
 	}
-	auto ni1 = n1->connectionsBegin();
-	{
+	{ untested();
+		auto ni1 = n1->connectionsBegin();
 		// BUG: could be the other way around
 		assert(*ni1 == w0);
 		++ni1;
@@ -141,29 +148,19 @@ int main()
 	assert(*i0 == *i1);
 	++i1;
 	assert(*i0 != *i1);
+#endif
 
-	{
-		auto N = n0->neighbours();
-		unsigned k=0;
-		for(auto Ni=N.begin(); Ni!=N.end(); ++Ni){
-			++k;
-		}
-		// wire induces self loops, hence 4.
-		assert(k==4);
-	}
-	{
-		auto N = n1->neighbours();
-		unsigned k=0;
-		for(auto Ni=N.begin(); Ni!=N.end(); ++Ni){
-			++k;
-		}
-		assert(k==4);
+	{ untested();
+		//assert(n0->degree()==2);
+		//assert(n1->degree()==2);
 	}
 
 
-	std::cout << "== detach\n";
-	M.detach(w0);
-	M.detach(w1);
+	{ untested();
+		std::cout << "== detach\n";
+		M.detach(w0);
+		M.detach(w1);
+	}
 
 	more();
 }

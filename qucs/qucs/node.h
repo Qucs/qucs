@@ -25,7 +25,7 @@ class NetList;
 class AdjNodeRange;
 
 // TODO: fix hierarchy
-class Node : public Element /* Object? */ {
+class Node : public Element /* Object? */, public Conductor {
 public:
 	typedef std::list<Element /*const?*/ *> element_list_t;
 
@@ -42,6 +42,7 @@ public:
 	  return NULL; // new Node(*this);
   }
 
+#if 0
   AdjNodeRange neighbours();
   void connectionsAppend(Element*){ // "connect"?
 	  ++_degree;
@@ -65,6 +66,8 @@ public:
   void prependConnection(Element*){
 	  ++_degree;
   }
+#endif
+
 #if 0 /// hmmm... pair<begin end>?
   element_list_t const& connections() const{
 	  return _conn;
@@ -98,11 +101,11 @@ public:
   }
 
 public:
-  QString const& netLabel() const;
-  void setNetLabel(QString const&);
+  // QString const& netLabel() const;
+  // void setNetLabel(QString const&);
+  // bool hasLabel() const;
+  // bool hasNetLabel() const;
 
-  bool hasLabel() const;
-  bool hasNetLabel() const;
 private: // element (BUG?)
   void paint(ViewPainter*) const{ }
 
@@ -133,23 +136,10 @@ public: // protected coordinate abuse
   void set_something(int x){
 	  x1|=x;
   }
-public: // internal. here?
-  bool hasNet() const { return _net; }
-  Net* net() {assert(_net); return _net; }
-  Net* newNet(NetList&);
-  Net const* net() const {assert(_net);  return _net; }
-  void setNet(Net* x){_net = x; }
-  void attachNet(Net* x);
-  void detachNet(Net* x);
-  bool visited(unsigned lvl) const {return lvl == _visit;}
-  void visit(unsigned lvl){ _visit = lvl; }
 
 private:
   // BUG: also stored in port?
   const std::pair<int, int> _position;
-private:
-  Net* _net;
-  unsigned _visit; // keep track of what has been done
 };
 /* ---------------------------------------------------------- */
 class AdjNodeIterator{

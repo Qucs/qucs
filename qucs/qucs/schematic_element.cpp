@@ -32,6 +32,9 @@
 // the coordinates are identical. The node is returned.
 Node* SchematicModel::insertNode(int x, int y, Element *e)
 {   untested();
+    unreachable();
+
+#if 0
     Node *pn;
     pn = &nodes().at(x,y);
     pn->connectionsAppend(e);
@@ -58,6 +61,7 @@ Node* SchematicModel::insertNode(int x, int y, Element *e)
     }else{
     }
     return pn;
+#endif
 }
 /*--------------------------------------------------------------------------*/
 // obsolete

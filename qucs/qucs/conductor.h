@@ -15,6 +15,8 @@
 #define QUCS_CONDUCTOR_H
 
 #include "element.h"
+class Net;
+class NetList;
 //#include "node.h"
 // access nodes connected to a Node though a Conductor
 //
@@ -83,21 +85,60 @@ public:
 	  INVALID=-1u
   };
 protected:
-  explicit Conductor()  {}
+  explicit Conductor();
   ~Conductor();
 public:
+  Net* net() {assert(_net); return _net; }
 //  unsigned netNumber();
 //  void resetNetNumber(){ _cn = INVALID; }
 //   void setNet(Net* x);
 //   bool hasNet() const { return _net; }
 // 
 
-public:
-  virtual std::list<Element*>::iterator connectionsBegin() = 0;
-  virtual std::list<Element*>::iterator connectionsEnd() = 0;
+public: //pair?
+  std::list<Conductor*>::iterator connectionsBegin(){
+	  return _adj.begin();
+  }
+  std::list<Conductor*>::iterator connectionsEnd(){
+	  return _adj.end();
+  }
 
 public:
   WireLabel *Label; // BUG
+
+public: // internal net stuff
+	bool hasNet() const { return _net; }
+	Net* newNet(NetList&);
+	Net const* net() const {assert(_net);  return _net; }
+	void setNet(Net* x){_net = x; }
+	void attachNet(Net* x);
+	void detachNet(Net* x);
+	bool visited(unsigned lvl) const {return lvl == _visit;}
+	void visit(unsigned lvl){ _visit = lvl; }
+
+	QString const& netLabel() const;
+	void setNetLabel(QString const& l);
+	bool hasNetLabel() const;
+// ----------------------------------------------------------------
+// ----------------------------------------------------------------
+public:
+	size_t degree() const{ untested();
+		return _adj.size();
+	}
+	void addAdj(Conductor* c){ untested();
+		_adj.push_back(c);
+	}
+	void rmAdj(Conductor* c){ untested();
+		auto i = std::find(_adj.begin(), _adj.end(), c);
+		assert(i != _adj.end());
+		_adj.erase(i);
+	}
+
+private:
+	std::list<Conductor*> _adj;
+private:
+	Net* _net;
+	unsigned _visit; // keep track of what has been done
 };
 
 #endif // guard

@@ -53,9 +53,18 @@ public: // interface
 	virtual void recreate(); // SchematicModel const& ctx);
 
 	virtual std::string /* const& */ type() const{
+		incomplete(); unreachable(); // typeName
 		return _type;
 	}
+	virtual std::string /* const& */ typeName() const{
+		return _type;
+	}
+	void setTypeName(std::string const& x){
+		incomplete(); unreachable(); // typeName
+		_type = x;
+	}
 	void setType(std::string const& x){
+		incomplete(); unreachable(); // typeName
 		_type = x;
 	}
 	virtual void build() {} // what does it do?

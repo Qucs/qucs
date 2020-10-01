@@ -83,9 +83,9 @@ public: //obsolete interface
 	int erase(Node* tt);
 #endif
 
-public: // friend Symbol?
-	void addEdge(Node* a, Node* b);
-	void postRemoveEdge(Node* a, Node* b);
+public: // friend Symbol? move to Conductor?
+	void addEdge(Conductor* a, Conductor* b);
+	void removeEdge(Conductor* a, Conductor* b);
 
 public:
 	Node* find_at(int x, int y);
@@ -99,8 +99,8 @@ public: // net access
 	Net* newNet();
 	void delNet(Net*);
 
-	void registerVertex(Node*);
-	void deregisterVertex(Node*);
+	void registerVertex(Conductor*);
+	void deregisterVertex(Conductor*);
 
 private:
 	ConnectedComponents<NodeMap>* new_ccs();
