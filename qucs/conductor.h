@@ -87,13 +87,6 @@ public:
 protected:
   explicit Conductor();
   ~Conductor();
-public:
-  Net* net() {assert(_net); return _net; }
-//  unsigned netNumber();
-//  void resetNetNumber(){ _cn = INVALID; }
-//   void setNet(Net* x);
-//   bool hasNet() const { return _net; }
-// 
 
 public: //pair?
   std::list<Conductor*>::iterator connectionsBegin(){
@@ -107,6 +100,7 @@ public:
   WireLabel *Label; // BUG
 
 public: // internal net stuff
+	Net* net() {assert(_net); return _net; }
 	bool hasNet() const { return _net; }
 	Net* newNet(NetList&);
 	Net const* net() const {assert(_net);  return _net; }

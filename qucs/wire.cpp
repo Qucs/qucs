@@ -141,6 +141,11 @@ void Wire::paint(ViewPainter *p) const
     // p->drawEllipse(x1-2, y1-2, 4, 4);
   }
 
+  if(degree()){
+    p->setPen(QPen(Qt::green,2));
+   p->drawEllipse(x2/2-2, y2/2-2, 4, 4);
+  }
+
   Symbol::paint(p);
 }
 // ----------------------------------------------------------------
@@ -293,33 +298,9 @@ Node* Wire::connectNode(unsigned i, NodeMap& nm)
   }else{
     nm.registerVertex(this);
   }
+  assert(hasNet());
 
   Node* n = Symbol::connectNode(i, nm); // maybe use this?
-//	Port const& pp = port(i);
-//	Port& mp = port(i);
-//	Node* n = &nm.at(pp.x_()+cx(), pp.y_()+cy());
-//	assert(n->hasNet());
-//
-//	mp.connect(n);
-//	return n;
-
-#if 0
-  Port const& pp = port(i);
-  Port& mp = port(i);
-  auto c = center();
-  int cx = getX(c);
-  int cy = getY(c);
-  assert(cx==_cx);
-  assert(cy==_cy);
-
-  Node* n;
-  trace3("wire::connectnode", cx, cy, i);
-  trace2("wire::connectnode", pp.x_(), pp.y_());
-  n = &nm.at(cx+pp.x_(), cy+pp.y_());
-  assert(n->hasNet());
-
-  mp.connect(n);
-#endif
 
   if(Node* n2 = port((i+1)%2).value()){ untested();
     trace3("wire::connectnode", i, n, n2);
@@ -357,23 +338,23 @@ Node* Wire::connectNode(unsigned i, NodeMap& nm)
 // // fishy. involve base case?
 Node* Wire::disconnectNode(unsigned i, NodeMap& nm)
 { untested();
+  assert(hasNet());
   Node* n = Symbol::disconnectNode(i, nm);
   trace3("Wire::disconnect", i, n->degree(), degree());
 
-  //removeEdge(n, nm);?
+  //Conductor::removeEdge(n, nm);?
   nm.removeEdge(n, this);
 
   if(degree()){
   }else{
-    trace3("Wire::disconnect dereg", i, n->degree(), degree());
     nm.deregisterVertex(this);
-    trace3("Wire::disconnect dereg done", i, n->degree(), degree());
   }
 
   return n;
 }
 // ----------------------------------------------------------------
 // ----------------------------------------------------------------
+#if 0
 Net* Wire::net()
 { untested();
   assert(_port0.value());
@@ -387,5 +368,6 @@ Net const* Wire::net() const
   assert(_port0.value());
   return _port0.value()->net();
 }
+#endif
 // ----------------------------------------------------------------
 // vim:ts=8:sw=2:et

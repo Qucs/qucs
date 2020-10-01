@@ -22,8 +22,8 @@
 
 Node::Node(std::pair<int, int> pos)
   : Element(),
-   _degree(0),
-   _position(pos)
+   _position(pos),
+   _ports(0)
 {
   trace1("Node::Node", this);
   // Label = nullptr; // BUG

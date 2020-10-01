@@ -73,8 +73,8 @@ public: // perhaps not here
 private:
   // "connections" are bidirectional, this is taken care of in Symbol::(dis)connectNode
   friend class Symbol;
-  void connect(Node* n) { assert(!_node); _node = n; }
-  void disconnect() { assert(_node); _node = NULL; }
+  void connect(Node*);
+  void disconnect(Node*);
 };
 
 
