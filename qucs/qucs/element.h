@@ -123,7 +123,7 @@ struct Property // : public Object
 #define isGraph            0x0020
 //#define isNode             0x0040
 #define isMarker           0x0080
-#define isWire             0x0100
+//#define isWire             0x0100
 
 #define isPainting         0x2000
 #define isPaintingResize   0x2001

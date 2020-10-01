@@ -400,7 +400,7 @@ public: // mostly not here
 //	  unreachable();
 //	  return _model->insertWire(w);
 //  }
-  void  selectWireLine(ElementGraphics*, Node*, bool);
+  void  selectWireLine(ElementGraphics*, Node const*, bool ctrl);
 //  Wire* selectedWire(int, int);
   Wire* splitWire(Wire* w, Node* n){
 	  assert(_model);

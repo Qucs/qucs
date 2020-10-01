@@ -57,6 +57,7 @@ Element* element(QGraphicsItem* g)
 }
 Component* component(QGraphicsItem* g)
 {
+	incomplete();
 	auto e=dynamic_cast<ElementGraphics*>(g);
 	if(!e) return nullptr;
 	return component(e->operator->());

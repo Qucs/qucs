@@ -112,7 +112,8 @@ private:
 
 public: // Port access
 	virtual std::pair<int, int> portPosition(unsigned) const;
-	virtual Net const* portValue(unsigned) const;
+	virtual Net const* portValue(unsigned) const; // why virtual?
+	Node const* portNode(unsigned) const;
 	// TODO: rethink Port/Node semantics
 	virtual unsigned numPorts() const = 0;
 	virtual bool portExists(unsigned) const{ return false; }
@@ -123,7 +124,9 @@ public: // Port access
 	void new_subckt();
 
 private: // internal port access
-	virtual Port& port(unsigned){ unreachable(); return *new Port(0,0);}
+	virtual Port& port(unsigned i){
+		throw ExceptionCantFind(std::to_string(i), label().toStdString());
+	}
 
 public: // graphics
 	// hmm, maybe just dispatch a gfx object.

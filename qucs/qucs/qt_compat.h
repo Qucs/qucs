@@ -93,6 +93,12 @@ public:
 			return nullptr;
 		return *cur;
 	};
+	T* first() const {
+		cur = localList.begin();
+		if (localList.size() == 0)
+			return nullptr;
+		return *cur;
+	};
 	T* last() {
 		if (localList.size()) {
 			cur = localList.end();
@@ -194,6 +200,12 @@ public:
 		} else { untested();
 			return nullptr;
 		}
+	};
+	T* getFirst() const {
+		return localList.front();
+	};
+	T* getLast() const {
+		return localList.back();
 	};
 	T* getFirst() {
 		return localList.front();

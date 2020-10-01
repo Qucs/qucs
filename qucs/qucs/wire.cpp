@@ -85,7 +85,7 @@ Wire::Wire(int _x1, int _y1, int _x2, int _y2)
   assert(x2() == _x2-_x1);
   assert(y2() == _y2-_y1);
 
-  Type = isWire; // BUG
+//  Type = isWire; // BUG
   assert(_node_hack.empty());
   _node_hack.push_back(nullptr);
   _node_hack.push_back(nullptr);
@@ -127,7 +127,7 @@ void Wire::getCenter(int& x, int& y)
 }
 // ----------------------------------------------------------------
 // Lie x/y on wire ? 5 is the precision the coordinates have to fit.
-bool Wire::getSelected(int x_, int y_)
+bool Wire::getSelected(int , int )
 { incomplete();
   unreachable();
 
