@@ -25,7 +25,7 @@ class NetList;
 class AdjNodeRange;
 
 // TODO: fix hierarchy
-class Node : public Conductor, public Element /* Object? */ {
+class Node : public Element /* Object? */ {
 public:
 	typedef std::list<Element /*const?*/ *> element_list_t;
 
@@ -70,10 +70,10 @@ public:
   element_list_t const& connections() const{
 	  return _conn;
   }
-  element_list_t::iterator connectionsBegin(){
+  element_list_t::iterator connectionsBegin() override{
 	  return _conn.begin();
   }
-  element_list_t::iterator connectionsEnd(){
+  element_list_t::iterator connectionsEnd() override{
 	  return _conn.end();
   }
 #endif

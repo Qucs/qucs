@@ -28,7 +28,7 @@ Node::Node(int _x, int _y) : Conductor(), Element()
 #endif
 
 Node::Node(std::pair<int, int> pos)
-  :Conductor(), Element(),
+  : Element(),
    _position(pos),
    _net(nullptr),
    _visit(0)
