@@ -26,7 +26,7 @@ class AdjNodeRange;
 
 // TODO: fix hierarchy
 // // maybe: Place : Conductor?
-class Node : public Element /* Object? */, public Conductor {
+class Node : public Object, public Conductor {
 public:
 
 private:
@@ -90,8 +90,8 @@ public:
 
   // BUG
   void setName(const QString&, const QString&, int x_=0, int y_=0);
-  int cx() const{ return Element::_cx; }
-  int cy() const{ return Element::_cy; }
+//  int cx() const{ return Element::_cx; }
+//  int cy() const{ return Element::_cy; }
 
   std::pair<int, int> const& position() const{
 	  return _position;
@@ -125,6 +125,7 @@ public: // BUG
 
 
 public: // protected coordinate abuse
+#if 0
   void markUnChecked(){
 	  y1=0;
   }
@@ -137,6 +138,7 @@ public: // protected coordinate abuse
   void set_something(int x){
 	  x1|=x;
   }
+#endif
 
 private:
   // BUG: also stored in port?

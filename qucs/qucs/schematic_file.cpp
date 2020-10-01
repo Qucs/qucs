@@ -708,10 +708,10 @@ void createNodeSet(QStringList& Collect, int& countInit,
 			      Conductor *pw, Node *p1)
 {
   incomplete(); // obsolete.
-  if(pw->Label)
-    if(!pw->Label->initValue.isEmpty())
-      Collect.append("NodeSet:NS" + QString::number(countInit++) + " " +
-                     p1->name() + " U=\"" + pw->Label->initValue + "\"");
+//  if(pw->Label)
+//    if(!pw->Label->initValue.isEmpty())
+//      Collect.append("NodeSet:NS" + QString::number(countInit++) + " " +
+//                     p1->name() + " U=\"" + pw->Label->initValue + "\"");
 }
 
 // ----------------------------------------------------------

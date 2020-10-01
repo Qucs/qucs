@@ -21,7 +21,7 @@
 #include <QPainter>
 
 Node::Node(std::pair<int, int> pos)
-  : Element(),
+  : Object(),
    _position(pos),
    _ports(0)
 {
