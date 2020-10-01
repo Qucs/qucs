@@ -72,7 +72,7 @@ Node* Symbol::connectNode(unsigned i, NodeMap&nm)
 // 		l.addEdge(n, c);
 // 	}else{
 // 	}
-	n->connectionsAppend(this);
+	n->connectionsAppend(this); // why??
 	mp.connect(n);
 	return n;
 }
