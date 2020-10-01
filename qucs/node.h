@@ -26,6 +26,9 @@ class AdjNodeRange;
 
 // TODO: fix hierarchy
 class Node : public Conductor, public Element /* Object? */ {
+public:
+	typedef std::list<Element /*const?*/ *> element_list_t;
+
 private:
   Node(Node const&) = delete;
   Node(Node const&&) = delete;
@@ -41,36 +44,37 @@ public:
 
   AdjNodeRange neighbours();
   void connectionsAppend(Element* e){ // "connect"?
-	  Connections.append(e);
+	  _conn.push_back(e);
   }
   void connectionsRemove(Element const* ee){
-     Element* e=const_cast<Element*>(ee);
-	  Connections.removeRef(e);
+	  auto i = std::find(_conn.begin(), _conn.end(), ee);
+	  assert(i!=_conn.end());
+	  _conn.erase(i);
   }
   unsigned degree() const{
-	  return Connections.count();
+	  return _conn.size();
   }
-  Element* firstConnection() const{
-	  return Connections.getFirst();
+  Element const* firstConnection() const{
+	  return _conn.front();
   }
-  Element* lastConnection() const{
-	  return Connections.getLast();
+  Element const* lastConnection() const{
+	  return _conn.back();
   }
   void appendConnection(Element* e){
-	  return Connections.append(e);
+	  return _conn.push_back(e);
   }
   void prependConnection(Element* e){
-	  return Connections.prepend(e);
+	  return _conn.push_front(e);
   }
 #if 1 /// hmmm... pair<begin end>?
-  Q3PtrList<Element> const& connections() const{
-	  return Connections;
+  element_list_t const& connections() const{
+	  return _conn;
   }
-  std::list<Element*>::iterator connectionsBegin(){
-	  return Connections.begin();
+  element_list_t::iterator connectionsBegin(){
+	  return _conn.begin();
   }
-  std::list<Element*>::iterator connectionsEnd(){
-	  return Connections.end();
+  element_list_t::iterator connectionsEnd(){
+	  return _conn.end();
   }
 #endif
 // /  void setName(QString const&);
@@ -108,8 +112,7 @@ public: // obsolete
 //  QRectF boundingRect() const override;
 
 private: // BUG. does weird reverse iteration
-//  element_list_t
-  Q3PtrList<Element> Connections;
+	element_list_t _conn;
 
 private:
   QString DType; // type of node (used by digital files)

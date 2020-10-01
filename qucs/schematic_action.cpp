@@ -773,7 +773,8 @@ Symbol* symbol(QGraphicsItem* g)
 // static??
 void SchematicDoc::selectWireLine(ElementGraphics *g, Node const* pn, bool ctrl)
 { untested();
-	Symbol* pe = symbol(g);
+#if 0
+	Symbol const* pe = symbol(g);
 	Node const* pn_1st = pn;
 	while(pn->degree() == 2) {
 		if(pn->firstConnection() == pe){
@@ -803,6 +804,7 @@ void SchematicDoc::selectWireLine(ElementGraphics *g, Node const* pn, bool ctrl)
 		}else{
 		}
 	}
+#endif
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
