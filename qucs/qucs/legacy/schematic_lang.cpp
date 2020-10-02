@@ -157,6 +157,8 @@ static bool obsolete_load(Wire* w, const QString& sc)
 		return false; // BUG: throw
 	}else{
 	}
+
+	assert(x1<=x2); // possibly the case in all legacy files
 	sym->setParameter("deltax", std::to_string(x2 - x1));
 
 	n  = s.section(' ',3,3);    // y2
@@ -165,6 +167,8 @@ static bool obsolete_load(Wire* w, const QString& sc)
 		return false; // BUG: throw
 	}else{
 	}
+
+	assert(y1<=y2); // possibly the case in all legacy files
 	sym->setParameter("deltay", std::to_string(y2 - y1));
 
 	n = s.section('"',1,1);
@@ -337,7 +341,7 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 			assert(d);
 			qDebug() << "got diagram" << what.c_str();
 			d->setName(type); // yuck
-		}else{ untested();
+		}else{
 			trace1("diagram doesntexist", type);
 			incomplete();
 			// throw ...

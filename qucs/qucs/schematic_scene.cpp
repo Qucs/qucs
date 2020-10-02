@@ -37,7 +37,7 @@ QGraphicsItem& SchematicScene::addElement(Element* x)
 ///		           //|QGraphicsItem::ItemSendsGeometryChanges
 ///					  );
 ///	}else
-	{ untested();
+	{itested();
 		i = new ElementGraphics(x);
 		addItem(i);
 	}
@@ -135,7 +135,7 @@ QPoint SchematicScene::snapToGrid(QPointF const& p) const
 }
 /*--------------------------------------------------------------------------*/
 void SchematicScene::drawBackground(QPainter *painter, const QRectF &r)
-{ untested(); // for now.
+{itested(); // for now.
 	//	QGraphicsScene::drawBackground(painter, r);
 
 	double gridSize = 20; // TODO
@@ -399,4 +399,32 @@ void SchematicScene::selectAll(bool v)
 		i->setSelected(v);
 	}
 }
+/*--------------------------------------------------------------------------*/
+#if 0
+QList<ElementGraphics*> SchematicDoc::selectedItems()
+{ itested();
+	assert(scene());
+	// TODO/BUG: proper iterator.
+	auto L = scene()->selectedItems();
+	auto EL = reinterpret_cast<QList<ElementGraphics*>* >(&L);
+	return *EL;
+}
+#endif
+/*--------------------------------------------------------------------------*/
+QList<ElementGraphics*> SchematicScene::items() const
+{ untested();
+	auto L = QGraphicsScene::items();
+	auto EL = reinterpret_cast<QList<ElementGraphics*>* >(&L);
+	return *EL;
+}
+/*--------------------------------------------------------------------------*/
+QList<ElementGraphics*> SchematicScene::items(
+		const QPointF &pos, Qt::ItemSelectionMode mode,
+		Qt::SortOrder order) const
+{ untested();
+	auto L = QGraphicsScene::items(pos, mode, order);
+	auto EL = reinterpret_cast<QList<ElementGraphics*>* >(&L);
+	return *EL;
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

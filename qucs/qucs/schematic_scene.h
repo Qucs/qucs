@@ -66,6 +66,12 @@ public:
   QPoint gridSize() const;
   QPoint snapToGrid(QPointF const&) const;
 
+public: // wrap items
+  QList<ElementGraphics*> items() const;
+  QList<ElementGraphics*> items(const QPointF &pos,
+                                Qt::ItemSelectionMode mode=Qt::IntersectsItemShape,
+                                Qt::SortOrder order = Qt::DescendingOrder) const;
+
 private:
   void selectAll(bool v=true);
 

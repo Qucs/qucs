@@ -17,7 +17,7 @@
 #include "net.h"
 
 Conductor::~Conductor()
-{ untested();
+{
 	assert(!_adj.size());
 	assert(!_net);
 }

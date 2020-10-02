@@ -25,7 +25,7 @@ class Volt_ac : public Component  {
 public:
   Volt_ac();
   ~Volt_ac();
-  Component* newOne(){ untested();
+  Component* newOne(){
 	  return new Volt_ac(*this);
   }
   static Element* info(QString&, char* &, bool getNewOne=false);

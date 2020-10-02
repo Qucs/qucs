@@ -771,7 +771,7 @@ Symbol* symbol(QGraphicsItem* g)
 // Follow a wire line and select it.
 /*--------------------------------------------------------------------------*/
 // static??
-void SchematicDoc::selectWireLine(ElementGraphics *g, Node const* pn, bool ctrl)
+void SchematicDoc::selectWireLine(ElementGraphics *, Node const*, bool /*ctrl*/)
 { untested();
 #if 0
 	Symbol const* pe = symbol(g);
@@ -805,6 +805,38 @@ void SchematicDoc::selectWireLine(ElementGraphics *g, Node const* pn, bool ctrl)
 		}
 	}
 #endif
+}
+
+QPointF makeQPointF(std::pair<int,int> p)
+{
+	return QPointF(p.first, p.second);
+}
+/*--------------------------------------------------------------------------*/
+static void selectWireLine(ElementGraphics *g)
+{
+	Symbol* s = symbol(g);
+	assert(isWire(s));
+	auto scn = g->scene();
+	assert(scn);
+	
+	for(unsigned i=0; i<s->numPorts(); ++i){
+		auto pos = makeQPointF(s->portPosition(i));
+		auto items = scn->items(pos);
+		if(items.size()==2){
+
+			for(auto ii : scn->items(pos)){
+				Symbol* si = symbol(ii);
+				if(!si){
+				}else if(g->isSelected()==ii->isSelected()){
+				}else if(si == s){
+				}else if(isWire(si)){
+					ii->setSelected(g->isSelected());
+					selectWireLine(ii);
+				}else{
+				}
+			}
+		}
+	}
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
@@ -846,9 +878,8 @@ QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
 			// (what is a wire?)
 		if(isWire(symbol(s.front()))) { untested();
 			incomplete();
-#if 0
-			doc().selectWireLine(w, w->portValue(0), ctrl);
-			doc().selectWireLine(w, w->portValue(1), ctrl);
+#if 1
+			selectWireLine(s.front());
 #endif
 		}else{ untested();
 		}

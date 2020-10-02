@@ -76,6 +76,9 @@ void ViewPainter::init(QPainter *p, float Scale_, int DX_, int DY_,
 // -------------------------------------------------------------
 void ViewPainter::map(int x1, int y1, int& x, int& y)
 {
+  x=x1;
+  y=y1;
+  return;
   unreachable();
   incomplete(); // obsolete
   float z;

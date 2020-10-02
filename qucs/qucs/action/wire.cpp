@@ -22,7 +22,7 @@ public:
 	~WireUC() { }
 
 private:
-	Element* clone() const override{ untested();
+	Element* clone() const override{itested();
 		return new WireUC(*this);
 	}
 	void paint(ViewPainter *p) const override;

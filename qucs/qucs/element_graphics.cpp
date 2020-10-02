@@ -22,6 +22,7 @@
 #include <QGraphicsScene>
 #include "element_graphics.h"
 #include "io.h"
+#include "platform.h"
 #include "qt_compat.h"
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
@@ -98,9 +99,9 @@ void ElementGraphics::attachElement(Element* e)
 	trace2("attachElement", e->label(), boundingRect());
 	QGraphicsItem::setPos(sp.first, sp.second);
 
-	if(auto c=dynamic_cast<Component*>(e)){ untested();
+	if(auto c=dynamic_cast<Component*>(e)){itested();
 		trace2("attachElement", e->label(), c->Texts.size());
-		for(auto& i : c->Texts){ untested();
+		for(auto& i : c->Texts){itested();
 			//auto t=
 			new TextGraphics(*i, this);
 
@@ -142,6 +143,9 @@ void ElementGraphics::paint(QPainter *p, const QStyleOptionGraphicsItem *o,
 #endif
 	}
 
+	(void) p;
+	(void) o;
+	(void) w;
 	// QGraphicsItem::paint(p, o, w); //?
 }
 /*--------------------------------------------------------------------------*/
@@ -224,6 +228,15 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 	}else{ untested();
 	}
 	setSelected(sel);
+}
+/*--------------------------------------------------------------------------*/
+SchematicScene* ElementGraphics::scene()
+{
+	auto s = prechecked_cast<SchematicScene*>(QGraphicsItem::scene());
+	if(s){itested();
+	}else{itested();
+	}
+	return s;
 }
 /*--------------------------------------------------------------------------*/
 QRectF ElementGraphics::boundingRect() const
@@ -345,7 +358,7 @@ ItemEvent::ItemEvent(QEvent const& a, ElementGraphics& b)
 #include <QApplication> // BUG
 QVariant ElementGraphics::itemChange(GraphicsItemChange c, const QVariant &v)
 {
-    if (!scene()){ untested();
+    if (!scene()){itested();
 	 }else if(c == ItemPositionChange){ itested();
         QPointF tmp = v.toPointF();
         if(QApplication::mouseButtons() != Qt::LeftButton){ untested();

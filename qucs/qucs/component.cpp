@@ -78,11 +78,11 @@ Component::Component(Component const& p)
     // perhaps old Qt did not have transforms, and gave rise to the
     // obsolete mirror and rotate code.
     Arcs.clear();
-    for(auto p1 : p.Arcs) {untested();
+    for(auto p1 : p.Arcs) {
 	    Arcs.append(new Arc(*p1));
     }
     Lines.clear();
-    for(auto p1 : p.Lines) {untested();
+    for(auto p1 : p.Lines) {
 	    Lines.append(new Line(*p1));
     }
   }
@@ -277,7 +277,7 @@ void Component::paint(ViewPainter *p) const
     }
 
     // paint all arcs
-    foreach(Arc *p3, Arcs) { untested();
+    foreach(Arc *p3, Arcs) {itested();
       p->Painter->setPen(p3->style);
       p->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
     }
@@ -666,7 +666,7 @@ void Component::mirrorX()
   }
 
   // mirror all arcs
-  foreach(Arc *p3, Arcs) { untested();
+  foreach(Arc *p3, Arcs) {
     p3->y = -p3->y - p3->h;
     if(p3->angle > 16*180) p3->angle -= 16*360;
     p3->angle  = -p3->angle;    // mirror

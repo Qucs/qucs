@@ -157,7 +157,7 @@ void QucsatorLang::printCommand(CmdElement const* c, stream_t& s) const
 // print Component in qucsator language
 void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 {
-	if(c->isActive != COMP_IS_ACTIVE){ untested();
+	if(c->isActive != COMP_IS_ACTIVE){
 		// comment out?
 		incomplete();
 	}else{
@@ -165,7 +165,7 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 	assert(c);
 	trace2("pc", c->label(), c->type());
 
-	if(c->isOpen()) { untested();
+	if(c->isOpen()) {
 		// nothing.
 	}else if(c->isShort()){ untested();
 		// replace by some resistors (hack?)
