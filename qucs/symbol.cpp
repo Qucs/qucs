@@ -137,25 +137,20 @@ void Symbol::paint(ViewPainter* p) const
 
 	 // does not make a lot of sense right now
 	for(unsigned i=0; i<numPorts(); ++i){ itested();
+		auto pp = portPosition(i);
+		auto x = getX(pp)-_cx;
+		auto y = getY(pp)-_cy;
+
 		if(!port(i).isConnected()){ untested();
-			auto pp = portPosition(i);
-			auto x = getX(pp)-_cx;
-			auto y = getY(pp)-_cy;
 			p->setPen(QPen(Qt::red,2));
 			p->drawEllipse(x-1, y-1, 2, 2);
-		}else if(port(i)->degree()==10){ untested();
+		}else if(port(i)->numPorts()==0){ untested();
 			unreachable();
-		}else if(port(i)->degree()==0){itested();
-			auto pp = portPosition(i);
-			auto x = getX(pp)-_cx;
-			auto y = getY(pp)-_cy;
+		}else if(port(i)->numPorts()==1){itested();
 			// p->setPen(QPen(Qt::red,2));
 			p->setPen(QPen(Qt::red,1));
 			p->drawEllipse(x-2, y-2, 4, 4);
-		}else if(port(i)->degree()==3){itested();
-			auto pp = portPosition(i);
-			auto x = getX(pp)-_cx;
-			auto y = getY(pp)-_cy;
+		}else if(port(i)->numPorts()==3){itested();
 			p->setPen(QPen(Qt::black,2));
 			p->drawEllipse(x-1, y-1, 2, 2);
 		}else{itested();

@@ -556,7 +556,7 @@ void SchematicModel::disconnect(Symbol* c)
 
 		if(!nn){ untested();
 			unreachable();
-		}else if(!nn->has_ports()){ untested();
+		}else if(!nn->hasPorts()){ untested();
 			nodes().erase(nn); // possibly garbage collect only.
 		}else{
 		}
