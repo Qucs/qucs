@@ -15,13 +15,16 @@
 // a Net is a connected component in the conductor graph
 //
 // nets come and go. keep track and recycle.
-//
-//
+/* ---------------------------------------------------------- */
+#ifndef QUCS_NETLIST_H
+#define QUCS_NETLIST_H
+/* ---------------------------------------------------------- */
 #include <stack>
 #include <vector>
 #include "trace.h"
+/* ---------------------------------------------------------- */
 class Net;
-
+/* ---------------------------------------------------------- */
 class NetList{
 public:
 	typedef std::vector<Net*> container_type;
@@ -45,4 +48,6 @@ private:
 	container_type _l;
 	garbage_type _g;
 };
-
+/* ---------------------------------------------------------- */
+/* ---------------------------------------------------------- */
+#endif

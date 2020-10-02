@@ -310,10 +310,14 @@ void ElementGraphics::moveElement(P const& delta)
 	
 	prepareGeometryChange(); // needed??
 	_e->setCenter(dx, dy, true);
-	auto p = _e->center();
 
-	// possibly redundant
-	QGraphicsItem::setPos(p.first, p.second);
+#ifndef NDEBUG
+	auto p = _e->center();
+	auto pp = pos();
+	assert(getX(p) == getX(pp));
+	assert(getY(p) == getY(pp));
+#endif
+
 	show();
 }
 /*--------------------------------------------------------------------------*/
