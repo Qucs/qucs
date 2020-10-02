@@ -37,61 +37,13 @@ private: // managed by NodeMap
   explicit Node(std::pair<int, int>);
   ~Node();
 public:
-  Element* clone()const{
-	  assert(false); // nodes are organised by NodeMap
-	  return NULL; // new Node(*this);
-  }
 
-#if 0
-  AdjNodeRange neighbours();
-  void connectionsAppend(Element*){ // "connect"?
-	  ++_degree;
-  }
-  void connectionsRemove(Element const*){
-	  assert(_degree);
-	  --_degree;
-  }
-  unsigned degree() const{
-	  return _degree;
-  }
-//  Element* firstConnection() const{
-//	  return Connections.getFirst();
-//  }
-//  Element* lastConnection() const{
-//	  return Connections.getLast();
-//  }
-  void appendConnection(Element*){
-	  ++_degree;
-  }
-  void prependConnection(Element*){
-	  ++_degree;
-  }
-#endif
   void inc_ports(){ ++_ports; }
   void dec_ports(){ assert(_ports); --_ports; }
   bool has_ports() const{ return _ports; }
 
-#if 0 /// hmmm... pair<begin end>?
-	typedef std::list<Element /*const?*/ *> element_list_t;
-  element_list_t const& connections() const{
-	  return _conn;
-  }
-  element_list_t::iterator connectionsBegin() override{
-	  return _conn.begin();
-  }
-  element_list_t::iterator connectionsEnd() override{
-	  return _conn.end();
-  }
-#endif
-// /  void setName(QString const&);
-// /	  incomplete();
-// ///	  setLabel(x);
-// /  }
-
   // BUG
   void setName(const QString&, const QString&, int x_=0, int y_=0);
-//  int cx() const{ return Element::_cx; }
-//  int cy() const{ return Element::_cy; }
 
   std::pair<int, int> const& position() const{
 	  return _position;
@@ -104,25 +56,8 @@ public:
 	  return State & i;
   }
 
-public:
-  // QString const& netLabel() const;
-  // void setNetLabel(QString const&);
-  // bool hasLabel() const;
-  // bool hasNetLabel() const;
-
-private: // element (BUG?)
-  void paint(ViewPainter*) const{ }
-
-public: // obsolete
-//  bool  getSelected(int, int);
-//  QRectF boundingRect() const override;
-
 private:
-  QString DType; // type of node (used by digital files)
-
-public: // BUG
-  int State;	 // remember some things during some operations, BUG
-
+  // QString DType; // type of node (used by digital files)
 
 public: // protected coordinate abuse
 #if 0
@@ -141,7 +76,6 @@ public: // protected coordinate abuse
 #endif
 
 private:
-  // BUG: also stored in port?
   const std::pair<int, int> _position;
   unsigned _ports; // number of ports connecting to this node
 };

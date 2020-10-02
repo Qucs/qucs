@@ -26,14 +26,8 @@ Node::Node(std::pair<int, int> pos)
    _ports(0)
 {
   trace1("Node::Node", this);
-  // Label = nullptr; // BUG
-//  Type  = isNode;
   State = 0;
-  DType = "";
-
-  // BUG:
-//  Element::cx = _x;
-//  Element::cy = _y;
+  DType = ""; //?
 }
 /*--------------------------------------------------------------------------*/
 Node::~Node()
@@ -67,13 +61,6 @@ void Node::paint(ViewPainter *)
   }
 }
 // ----------------------------------------------------------------
-bool Node::getSelected(int x_, int y_)
-{ untested();
-  if(cx()-5 <= x_) if(cx()+5 >= x_) if(cy()-5 <= y_) if(cy()+5 >= y_)
-    return true;
-
-  return false;
-}
 #endif
 // ----------------------------------------------------------------
 
