@@ -815,6 +815,7 @@ ElementGraphics* SchematicDoc::itemAt(float x, float y)
 	}
 }
 /*--------------------------------------------------------------------------*/
+// SchematicScene??
 QList<ElementGraphics*> SchematicDoc::selectedItems()
 { itested();
 	assert(scene());

@@ -43,6 +43,8 @@ public:
 	}
 private:
 	void attachElement(Element* e);
+public:
+	SchematicScene* scene();
 
 public: //?
 //  void paintScheme(SchematicDoc *p);

@@ -164,7 +164,7 @@ void NodeMap::addEdge(Conductor* a, Conductor* b)
 }
 /* -------------------------------------------------------------- */
 void NodeMap::registerVertex(Conductor*c)
-{ untested();
+{
   _cc->registerVertex(c);
 }
 /* -------------------------------------------------------------- */
