@@ -62,6 +62,7 @@ Node* SchematicModel::insertNode(int x, int y, Element *e)
     }
     return pn;
 #endif
+    return nullptr;
 }
 /*--------------------------------------------------------------------------*/
 // obsolete
@@ -881,7 +882,8 @@ void MouseActions::deselectElements(ElementMouseAction e)
 // flag?! is is the shift key?
 int SchematicDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
 {
-#ifndef USE_SCROLLVIEW
+    incomplete();
+#if 0 // needed?
     QRectF bb(x1, y1, x2, y2);
     int n=0;
 
@@ -902,7 +904,9 @@ int SchematicDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
 	}
     }
     return n;
-#else
+#endif
+
+#if 0 // SCROLLVIEW code
     int  z=0;   // counts selected elements
     int  cx1, cy1, cx2, cy2;
 

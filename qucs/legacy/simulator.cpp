@@ -353,7 +353,7 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 		assert(sym->owner()==&m);
 		assert(sym->scope()==&sckt);
 
-		if(pc->isActive != COMP_IS_ACTIVE){ untested();
+		if(pc->isActive != COMP_IS_ACTIVE){
 			incomplete();
 			continue;
 		}else if(isAnalog) {

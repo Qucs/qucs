@@ -69,7 +69,7 @@ Diagram::Diagram(Diagram const& p)
 	    Arcs.append(new Arc(*p1));
     }
     Lines.clear();
-    for(auto p1 : p.Lines) {untested();
+    for(auto p1 : p.Lines) {
 	    Lines.append(new Line(*p1));
     }
 }
@@ -179,7 +179,7 @@ void Diagram::paintDiagram(ViewPainter *p)
 #if 1
     // draws some box with corners to resize.
     // need a similar thing for scalable symbols.
-    if(1) { untested();
+    if(1) {itested();
       int x_, y_;
       float fx_, fy_;
       p->map(cx(), cy()-y2, x_, y_);
@@ -640,7 +640,7 @@ void Diagram::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 
 // -------------------------------------------------------
 QRectF Diagram::boundingRect() const
-{untested();
+{itested();
   int x1_, y1_, x2_, y2_;
 
   Diagram* d=const_cast<Diagram*>(this);
@@ -1224,10 +1224,10 @@ int Diagram::checkColumnWidth(const QString& Str,
 
 // ------------------------------------------------------------
 void Diagram::setCenter(int x, int y, bool relative)
-{ untested();
+{
   if(relative) { untested();
     _cx += x;  _cy += y;
-  } else { untested();
+  } else {
     _cx = x;  _cy = y;
   }
 }

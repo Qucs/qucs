@@ -116,10 +116,10 @@ public: // internal net stuff
 // ----------------------------------------------------------------
 // ----------------------------------------------------------------
 public:
-	size_t degree() const{ untested();
+	size_t degree() const{itested();
 		return _adj.size();
 	}
-	void addAdj(Conductor* c){ untested();
+	void addAdj(Conductor* c){
 		_adj.push_back(c);
 	}
 	void rmAdj(Conductor* c){ untested();

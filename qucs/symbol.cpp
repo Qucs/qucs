@@ -25,19 +25,19 @@ void Symbol::recreate(){ // }SchematicModel const&){ untested();
 Symbol::Symbol()
     : Element(),
 		_subckt(nullptr)
-{ untested();
+{
 }
 
 Symbol::Symbol(Symbol const& s)
     : Element(s),
 		_subckt(nullptr)
-{ untested();
+{
   setTypeName(s.typeName());
 }
 
 SchematicModel* Symbol::scope()
-{ untested();
-	if(auto o=dynamic_cast<Symbol*>(owner())){ untested();
+{
+	if(auto o=dynamic_cast<Symbol*>(owner())){
 		return o->subckt();
 	}else{ untested();
 		return nullptr;
@@ -46,7 +46,7 @@ SchematicModel* Symbol::scope()
 
 // reuse overrides to give both const and non-const access.
 SchematicModel const* Symbol::scope() const
-{ untested();
+{
 	auto s=const_cast<Symbol*>(this);
 	return s->scope();
 }
@@ -62,7 +62,7 @@ QString const& Symbol::netLabel(unsigned i) const
 
 // could as well be NodeMap::connect(Symbol). but why?
 Node* Symbol::connectNode(unsigned i, NodeMap&nm)
-{ untested();
+{
 	trace2("connectNode", label(), i);
 	Port const& pp = port(i);
 	Port& mp = port(i);
@@ -98,9 +98,9 @@ Node const* Symbol::portNode(unsigned i) const
   }
 }
 Net const* Symbol::portValue(unsigned i) const
-{ untested();
+{
   assert(i<unsigned(numPorts()));
-  if(port(i).isConnected()){ untested();
+  if(port(i).isConnected()){
 	  assert( port(i).value()->net() );
 	  return port(i).value()->net();
   }else{ untested();
@@ -110,21 +110,21 @@ Net const* Symbol::portValue(unsigned i) const
 
 // "position"?
 std::pair<int, int> Symbol::center()const
-{ untested();
+{itested();
 	return std::make_pair(_cx, _cy);
 }
 
 Port const& Symbol::port(unsigned i) const
-{ untested();
+{
 	Symbol* s=const_cast<Symbol*>(this);
 	return s->port(i);
 }
 
 std::string Symbol::getParameter(std::string const& n) const
-{ untested();
-	if(n=="$xposition"){ untested();
+{
+	if(n=="$xposition"){
 		return std::to_string(cx());
-	}else if(n=="$yposition"){ untested();
+	}else if(n=="$yposition"){
 		return std::to_string(cy());
 	}else{ untested();
 	  throw ExceptionCantFind(n, label().toStdString());
@@ -133,7 +133,7 @@ std::string Symbol::getParameter(std::string const& n) const
 
 #include "geometry.h"
 void Symbol::paint(ViewPainter* p) const
-{ untested();
+{itested();
 
 	 // does not make a lot of sense right now
 	for(unsigned i=0; i<numPorts(); ++i){ itested();
@@ -145,27 +145,27 @@ void Symbol::paint(ViewPainter* p) const
 			p->drawEllipse(x-1, y-1, 2, 2);
 		}else if(port(i)->degree()==10){ untested();
 			unreachable();
-		}else if(port(i)->degree()==0){ untested();
+		}else if(port(i)->degree()==0){itested();
 			auto pp = portPosition(i);
 			auto x = getX(pp)-_cx;
 			auto y = getY(pp)-_cy;
 			// p->setPen(QPen(Qt::red,2));
 			p->setPen(QPen(Qt::red,1));
 			p->drawEllipse(x-2, y-2, 4, 4);
-		}else if(port(i)->degree()==3){ untested();
+		}else if(port(i)->degree()==3){itested();
 			auto pp = portPosition(i);
 			auto x = getX(pp)-_cx;
 			auto y = getY(pp)-_cy;
 			p->setPen(QPen(Qt::black,2));
 			p->drawEllipse(x-1, y-1, 2, 2);
-		}else{ untested();
+		}else{itested();
 		}
 	}
 }
 
 // global position? rename to netPosition??
 std::pair<int, int> Symbol::portPosition(unsigned i) const
-{ untested();
+{
 	assert(port(i).isConnected());
 	auto p = port(i)->position();	
 	return p;
@@ -173,13 +173,13 @@ std::pair<int, int> Symbol::portPosition(unsigned i) const
 
 // BUG: not here. legacy stuff...
 void Symbol::new_subckt()
-{ untested();
+{
 	assert(!_subckt);
 	_subckt = new SchematicModel(nullptr);
 }
 
 Symbol::~Symbol()
-{ untested();
+{
 	delete _subckt;
 	_subckt = nullptr;
 }
@@ -197,14 +197,14 @@ std::string Symbol::paramName(unsigned) const
 }
 
 void Symbol::setParameter(QString const& name, QString const& b)
-{ untested();
+{
 	std::string n = name.toStdString();
 	std::string v = b.toStdString();
 	setParameter(n, v);
 }
 
 void Symbol::setParameter(unsigned pos, QString const& b)
-{ untested();
+{
 	auto v = b.toStdString();
 	setParameter(pos, v);
 }
