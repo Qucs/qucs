@@ -40,7 +40,8 @@ public:
 
   void inc_ports(){ ++_ports; }
   void dec_ports(){ assert(_ports); --_ports; }
-  bool has_ports() const{ return _ports; }
+  bool hasPorts() const{ return _ports; }
+  unsigned numPorts() const{ return _ports; }
 
   // BUG
   void setName(const QString&, const QString&, int x_=0, int y_=0);
@@ -49,12 +50,14 @@ public:
 	  return _position;
   }
 
+#if 0 // what is this?
   void setState(int i){
 	  State |= i;
   }
   bool hasState(int i) const{
 	  return State & i;
   }
+#endif
 
 private:
   // QString DType; // type of node (used by digital files)

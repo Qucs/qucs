@@ -26,8 +26,8 @@ Node::Node(std::pair<int, int> pos)
    _ports(0)
 {
   trace1("Node::Node", this);
-  State = 0;
-  DType = ""; //?
+  // State = 0;
+  // DType = ""; //?
 }
 /*--------------------------------------------------------------------------*/
 Node::~Node()
