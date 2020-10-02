@@ -151,10 +151,12 @@ void Wire::paint(ViewPainter *p) const
     // p->drawEllipse(x1-2, y1-2, 4, 4);
   }
 
+#if 0
   if(degree()){
     p->setPen(QPen(Qt::green,2));
    p->drawEllipse(x2/2-2, y2/2-2, 4, 4);
   }
+#endif
 
   Symbol::paint(p);
 }
