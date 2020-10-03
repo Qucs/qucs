@@ -1,7 +1,4 @@
 /***************************************************************************
-                                  misc.h
-                                 --------
-    begin                : Wed Nov 12 2004
     copyright            : (C) 2014 by YodaLee
     email                : lc85301@gmail.com
  ***************************************************************************/
@@ -10,7 +7,7 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -29,7 +26,6 @@ class QString;
 
 #define TODO(msg) qDebug() << "TODO" << msg << __FILE__ << __LINE__ << __func__;
 
-
 namespace misc {
   QString complexRect(double, double, int Precision=3);
   QString complexDeg (double, double, int Precision=3);
@@ -39,17 +35,19 @@ namespace misc {
   QString num2str    (double, int Precision=6, QString unit="");
   QString StringNiceNum(double);
   void    convert2Unicode(QString&);
-  void    convert2ASCII(QString&);
+  QString& convert2ASCII(QString&);
   QString properName(const QString&);
   QString properAbsFileName(const QString&);
   QString properFileName(const QString&);
+
+// not here.
   bool    VHDL_Time(QString&, const QString&);
   bool    VHDL_Delay(QString&, const QString&);
   bool    Verilog_Time(QString&, const QString&);
   bool    Verilog_Delay(QString&, const QString&);
   QString Verilog_Param(const QString);
-  bool    checkVersion(QString&);
 
+  bool    checkVersion(QString&);
 
   inline const QColor getWidgetForegroundColor(const QWidget *q)
   { return q->palette().color(q->foregroundRole()); }

@@ -45,9 +45,10 @@ static std::string netLabel(Net const* n)
 }
 
 class Verilog : public NetLang {
-  virtual void printCommand(CmdElement const*, QTextStream&) const;
-  virtual void printSymbol(Symbol const*, QTextStream&) const;
-
+	void printCommand(CmdElement const*, QTextStream&) const override;
+	void printSymbol(Symbol const*, QTextStream&) const override;
+	void printPainting(Painting const*, stream_t&) const override {incomplete();}
+	void printDiagram(Symbol const*, stream_t&) const override {incomplete();}
 private:
   SchematicModel const* modelhack;
 } V;
@@ -86,7 +87,7 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 	}else
 #endif
 	{
-		s << QString::fromStdString(c->type()) << " ";
+		s << QString::fromStdString(c->typeName()) << " ";
 
 		QString comma="";
 		s << "#(";
@@ -197,7 +198,7 @@ void VerilogSchematicFormat::printSymbol(Symbol const* sym, stream_t& s) const
 #endif
 	
 	{
-		std::string type = sym->type();
+		std::string type = sym->typeName();
 		std::string label = sym->label().toStdString();
 		s << QString::fromStdString(type) << " ";
 

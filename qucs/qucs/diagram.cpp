@@ -406,7 +406,8 @@ void Diagram::rectClip(Graph::iterator &p) const
   int code2 = regionCode(x_2, y_2);
   if((code1 | code2) == 0)  return;  // line completly inside ?
 
-  if(code1 != 0) if((p-3)->isPt()) { untested();
+  if(code1 == 0){
+  }else if((p-3)->isPt()) { untested();
     p++;
     (p-3)->setStrokeEnd();
   }else{

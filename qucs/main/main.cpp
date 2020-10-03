@@ -162,6 +162,7 @@ public:
   }
 private: // SchematicSymbol
   SchematicModel* schematicModel(){ untested();
+    // obsolete.
     unreachable();
     return nullptr;
   }
@@ -211,9 +212,7 @@ private:
 
 public:
   SchematicModel* subckt(){return _subckt;}
-
-private:
-//  SchematicModel const& _m;
+  // Commanlist* commands(){ ... }
 
 public: // tmo hack
   std::string DocName;
@@ -433,8 +432,8 @@ void createIcons() { untested();
  *    - CSV with component data fields. Ex [component#]_data.csv
  *    - CSV with component properties. Ex [component#]_props.csv
  */
-void createDocData() { untested();
-
+void createDocData()
+{ untested();
   QMap<int, QString> typeMap;
   typeMap.insert(0x30000, "Component");
   typeMap.insert(0x30002, "ComponentText");
@@ -512,7 +511,9 @@ void createDocData() { untested();
         QTextStream out(&file);
         out << compData.join("\n");
         file.close();
-        fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(), c->obsolete_model_hack().toAscii().data(), file.fileName().toAscii().data());
+	fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(),
+	    c->obsolete_model_hack().toAscii().data(),
+	    file.fileName().toAscii().data());
 
         QStringList compProps;
         compProps << "# Note: auto-generated file (changes will be lost on update)";
@@ -534,22 +535,23 @@ void createDocData() { untested();
         outProps << compProps.join("\n");
         compProps.clear();
         file.close();
-        fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(), c->obsolete_model_hack().toAscii().data(), fileProps.fileName().toAscii().data());
+	fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(),
+	    c->obsolete_model_hack().toAscii().data(),
+	    fileProps.fileName().toAscii().data());
     } // module
   } // category
   fprintf(stdout, "Created data for %i components from %i categories\n", nComps, nCats);
 }
 
-/*!
- * \brief createListNetEntry prints to stdout the available netlist formats
- *
- * Prints the default component entries format for:
- *  - Qucs schematic
- *  - Qucsator netlist
- *
- *  ... not so sure what this is about.
- */
-  // table for quick reference, schematic and netlist entry
+// createListNetEntry prints to stdout the available netlist formats
+//
+//  Prints the default component entries format for
+//   - Qucs schematic
+//   - Qucsator netlist
+//   - Verilog netlist
+//   - Verilog schematic
+//
+// table for quick reference and testing
 void createListComponentEntry()
 { untested();
   QStringList cats = Category::getCategories ();
@@ -584,7 +586,7 @@ void createListComponentEntry()
       s << "=====" << e->label() << "=========\n";
 
       if(Symbol *c = dynamic_cast<Symbol*>(ce)){ untested();
-	ce->setLabel("my_" + c->type());
+	ce->setLabel("my_" + c->typeName());
       }else{ untested();
 	// not sure.
       }
