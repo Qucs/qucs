@@ -33,7 +33,7 @@ verilog_la_LDFLAGS = -module -avoid-version
 # need Qt for TextStream (BUG?)
 verilog_la_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES)
 
-qucsator_la_SOURCES = qucsator.cpp
+qucsator_la_SOURCES = qucsator.cpp dat.cpp
 qucsator_la_LDFLAGS = -module -avoid-version
 # qucsator_la_CPPFLAGS = $(AM_CPPFLAGS)
 # need Qt for TextStream. (BUG?)

@@ -141,6 +141,7 @@ ComponentList& SchematicModel::components()
 	return Components;
 }
 
+// same as attach??
 void SchematicModel::pushBack(Element* what)
 {
 	trace2("SchematicModel::pushBack", what->label(), this);
@@ -151,7 +152,7 @@ void SchematicModel::pushBack(Element* what)
 	  connect(w);
 	  // why not components??
 	  wires().append(w); // it's now ours.
-	}else if(auto d=diagram(what)){
+	}else if(auto d=diagram(what)){ untested();
 		diagrams().append(d);
 	}else if(auto c=command(what)){
 		//trace1("SchematicModel::pushBack", owner());
@@ -246,12 +247,15 @@ Element* SchematicModel::detach(Element* what)
 // TODO: take iterator.
 Element* SchematicModel::attach(Element* what)
 {itested();
+	trace2("SchematicModel::attach", what->label(), this);
 	if(auto c=dynamic_cast<CmdElement*>(what)){ untested();
 		commands().push_back(c);
 	}else if(auto c=component(what)){itested();
 		// really?
 		connect(c);
 		components().append(c);
+	}else if(auto d=diagram(what)){ untested();
+		diagrams().append(d);
 	}else if(auto w=wire(what)){ untested();
 		connect(w);
 		wires().append(w);
@@ -260,6 +264,7 @@ Element* SchematicModel::attach(Element* what)
 		//connect(c);
 		//components().append(c);
 	}else{ untested();
+		incomplete();
 	}
 	return what;
 }

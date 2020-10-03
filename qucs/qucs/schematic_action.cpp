@@ -318,6 +318,7 @@ public:
 		ctx.takeOwnership(element(gfx)); // BUG?
 		// elment->setOwner(ctx)...?
 		setText("NewElement" /*element(gfx)->label()*/); // tr?
+		trace0("NewElementCommand::NewElementCommand");
 	}
 	~NewElementCommand(){ untested();
 		// _gfx is owned by ctx
@@ -330,6 +331,7 @@ public:
 	}
 	void redo() override { untested();
 		QUndoCommand::redo();
+		trace0("NewElementCommand::redo");
 		_gfx->show();
 		_done = true;
 	}
