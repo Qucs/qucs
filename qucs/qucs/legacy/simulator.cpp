@@ -60,17 +60,54 @@ public:
 	LegacySimulator(LegacySimulator const&) = delete;
 	~LegacySimulator(){}
 private: // Simulator
-  NetLang const* netLang() const override { untested();
-	  DocumentLanguage const* d = doclang_dispatcher["qucsator"];
-	  assert(d);
-	  auto n = prechecked_cast<NetLang const*>(d);
-	  assert(n);
+	virtual Simulator* clone() const override {return new LegacySimulator();}
+	NetLang const* netLang() const override;
+	DocumentFormat const* netLister() const override {return &LNL;}
 
-	  return n;
-  }
-  DocumentFormat const* netLister() const override {return &LNL;}
+	void run() override{incomplete();}
+	void init() override{incomplete();}
+
+
+private: // implementation
+	Simulator* chooseBackend();
 }QS;
 static Dispatcher<Simulator>::INSTALL p(&simulator_dispatcher, "legacy", &QS);
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
+NetLang const* LegacySimulator::netLang() const
+{ untested();
+	DocumentLanguage const* d = doclang_dispatcher["qucsator"];
+	assert(d);
+	auto n = prechecked_cast<NetLang const*>(d);
+	assert(n);
+
+	return n;
+}
+/* -------------------------------------------------------------------------------- */
+// find backend the way legacy qucs does
+// that would be one out of
+// qucsator, qucsdigi, asco
+Simulator* LegacySimulator::chooseBackend()
+{
+	incomplete(); // only run qucstor for now
+	return simulator_dispatcher["qucsator"];
+#if 0
+      if(SimOpt = findOptimization(d)) {
+			return simulator_dispatcher["asco"];
+
+			// move to ASCO driver (or so)
+	    ((Optimize_Sim*)SimOpt)->createASCOnetlist();
+
+        Program = QucsSettings.AscoBinDir.canonicalPath();
+        Program = QDir::toNativeSeparators(Program+"/"+"asco"+QString(executableSuffix));
+        // pass full path of simulator to ASCO so it does not be to be in PATH
+        // and QUCSATOR environment variable is honored
+        Arguments << "-qucs" << QucsSettings.QucsHomeDir.filePath("asco_netlist.txt")
+                  << "-o" << "asco_out"
+                  << "-s" << "\"" + QDir::toNativeSeparators(QucsSettings.Qucsator) + "\"";
+      } else
+#endif
+}
 
 void LegacyNetlister::clear() const
 {

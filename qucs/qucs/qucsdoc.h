@@ -35,6 +35,7 @@ class MouseAction;
 class QUndoStack;
 class QUndoCommand;
 class Element;
+class QucsData;
 
 class QucsDoc {
 protected:
@@ -80,6 +81,10 @@ public:
   int  showBias;     // -1=no, 0=calculation running, >0=show DC bias points
   bool GridOn;
   int  tmpPosX, tmpPosY;
+
+private:
+  void decSimulators(){ --_simulators; }
+  void incSimulators(){ ++_simulators; }
 
 protected: // why not directly connect to undostack slots?!
   virtual void undo();
@@ -146,6 +151,14 @@ public: // hmm
 public:
 	void possiblyToggleAction(MouseAction* a, QAction* sender);
 	MouseAction const* activeAction() const;
+
+	QucsData* qucsData(std::string const& key);
+
+private:
+	friend class Simulator;
+
+	std::map<std::string, QucsData*> _data;
+	unsigned _simulators;
 }; // QucsDoc
 
 #endif

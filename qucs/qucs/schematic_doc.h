@@ -649,8 +649,8 @@ private:
 
   QUndoStack* _undoStack;
 }; // SchematicDocument
-
-// ---------------------------------------------------
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
 // Peeforms paste function from clipboard
 template<class SOME_LIST>
 inline bool SchematicDoc::paste(DocumentStream *stream, SOME_LIST *pe)

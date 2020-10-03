@@ -14,9 +14,6 @@
 
 #ifndef QUCS_SIM_H__
 
-class NetLang;
-class Component;
-
 #include "object.h"
 #include <assert.h>
 #include <command.h>
@@ -29,19 +26,40 @@ class Component;
 #include "language.h"
 
 class DocumentFormat;
+class NetLang;
+class Component;
+class QucsData;
+
 
 // simulatorDriver maybe?
 class Simulator : public Object{
+protected:
+  explicit Simulator() : _doc(nullptr) {
+  }
 public:
-  virtual ~Simulator(){}
+  virtual ~Simulator();
+  virtual Simulator* clone() const = 0;
 
   virtual NetLang const* netLang() const{return nullptr;}
   virtual DocumentFormat const* netLister() const{return nullptr;}
 //  virtual SimOutputData const* results(){}
-//
+
 public:
-  // virtual void attach_control(QucsDoc*); maybe?
+  void attachDoc(QucsDoc*);
+  QucsDoc const* doc() const {return _doc;}
+  virtual void run() = 0;
+
+private:
+  virtual void init() = 0;
+
+protected:
+  QucsData* data() {return _data;}
+
+private:
+  QucsDoc* _doc;
+  QucsData* _data;
 };
+
 
 //obsolete?
 class NetLang : public DocumentLanguage {
