@@ -87,7 +87,13 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 	}else
 #endif
 	{
-		s << QString::fromStdString(c->typeName()) << " ";
+		auto label = c->label();
+		auto type = c->typeName();
+		// : is not allowed in verilog
+      std::replace( type.begin(), type.end(), ':', '$');
+
+
+		s << QString::fromStdString(type) << " ";
 
 		QString comma="";
 		s << "#(";
@@ -96,7 +102,7 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 			comma = ", ";
 		}
 		s << ") ";
-		s << c->label() << "(";
+		s << label << "(";
 
 		// printPorts()
 		comma = "";
@@ -199,7 +205,9 @@ void VerilogSchematicFormat::printSymbol(Symbol const* sym, stream_t& s) const
 	
 	{
 		std::string type = sym->typeName();
+      std::replace( type.begin(), type.end(), ':', '$');
 		std::string label = sym->label().toStdString();
+
 		s << QString::fromStdString(type) << " ";
 
 		if(label == "*"){
@@ -215,7 +223,8 @@ void VerilogSchematicFormat::printSymbol(Symbol const* sym, stream_t& s) const
 			comma = ", ";
 		}
 		s << ") ";
-		s << QString::fromStdString(label) << "(";
+		// s << QString::fromStdString(label) << "(";
+		s << label << "(";
 
 		comma = "";
 		for(unsigned i=0; i<sym->numPorts(); ++i){
