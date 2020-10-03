@@ -294,9 +294,10 @@ bool ElementGraphics::sceneEvent(QEvent* e)
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::show()
 {itested();
-	if(_e->scope()){itested();
+	if(_e->scope()){ untested();
 		_e->attachToModel();
 	}else{ untested();
+		trace0("no attachToModel");
 	}
 	QGraphicsItem::show();
 }

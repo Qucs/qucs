@@ -1,24 +1,16 @@
 /***************************************************************************
-                               tabdiagram.cpp
-                              ----------------
-    begin                : Fri Oct 24 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-
-/*!
-  \class TabDiagram
-  \brief The TabDiagram class implements the Tabular diagram
-*/
 
 #include <QPolygon>
 #include <QPainter>
@@ -27,8 +19,35 @@
 #include "qucs.h"
 #include <cmath>
 #include "misc.h"
+#include "globals.h"
+#include "module.h"
 
 #include "some_font_stuff.h"
+
+namespace{
+class TabDiagram : public Diagram  {
+private:
+	TabDiagram(TabDiagram const& d) : Diagram(d) {}
+public: 
+  TabDiagram(int _cx=0, int _cy=0);
+ ~TabDiagram();
+
+  Diagram* newOne() { unreachable(); return nullptr; }
+  Element* clone() const { return new TabDiagram(*this); }
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  virtual void paint(ViewPainter*);
+  virtual void paintDiagram(ViewPainter *p);
+  virtual int calcDiagram();
+  int scroll(int);
+  bool scrollTo(int, int, int);
+
+  void createAxisLabels() {};   // no labels in this diagram
+
+protected:
+  void calcData(Graph*) {};  // no graph data
+}D;
+Dispatcher<Diagram>::INSTALL p(&diagram_dispatcher, "Tab", &D);
+Module::INSTALL pp("diagrams", &D);
 
 TabDiagram::TabDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
@@ -39,6 +58,7 @@ TabDiagram::TabDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
   Name = "Tab";
   xAxis.limit_min = 0.0;  // scroll bar position (needs to be saved in file)
 
+  // setName("Tab");
   calcDiagram();
 }
 
@@ -418,4 +438,6 @@ Element* TabDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new TabDiagram();
   return 0;
+}
+
 }

@@ -18,22 +18,5 @@
 #ifndef TIMINGDIAGRAM_H
 #define TIMINGDIAGRAM_H
 
-#include "tabdiagram.h"
-
-
-class TimingDiagram : public TabDiagram  {
-public: 
-  TimingDiagram(int _cx=0, int _cy=0);
- ~TimingDiagram();
-
-  Diagram* newOne() const { return new TimingDiagram(*this); }
-
-  static Element* info(QString&, char* &, bool getNewOne=false);
-  void paint(ViewPainter *p);
-  void paintDiagram(ViewPainter *p);
-  int calcDiagram();
-  int scroll(int);
-  bool scrollTo(int, int, int);
-};
 
 #endif

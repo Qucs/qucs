@@ -19,20 +19,21 @@
 // (why not just call "Symbol::create??!")
 void Symbol::recreate(){ // }SchematicModel const&){ untested();
 }
-
+/*--------------------------------------------------------------------------*/
 Symbol::Symbol()
     : Element(),
 		_subckt(nullptr)
 {
 }
-
+/*--------------------------------------------------------------------------*/
 Symbol::Symbol(Symbol const& s)
     : Element(s),
 		_subckt(nullptr)
 {
   setTypeName(s.typeName());
 }
-
+/*--------------------------------------------------------------------------*/
+// dup
 SchematicModel* Symbol::scope()
 {
 	if(auto o=dynamic_cast<Symbol*>(owner())){
@@ -135,9 +136,10 @@ void Symbol::paint(ViewPainter* p) const
 
 	 // does not make a lot of sense right now
 	for(unsigned i=0; i<numPorts(); ++i){ itested();
+//		auto pp = common()->portPosition(i);
 		auto pp = portPosition(i);
-		auto x = getX(pp)-_cx;
-		auto y = getY(pp)-_cy;
+		int x = getX(pp);
+		int y = getY(pp);
 
 		if(!port(i).isConnected()){ untested();
 			p->setPen(QPen(Qt::red,2));
@@ -159,8 +161,8 @@ void Symbol::paint(ViewPainter* p) const
 // global position? rename to netPosition??
 std::pair<int, int> Symbol::portPosition(unsigned i) const
 {
-	assert(port(i).isConnected());
-	auto p = port(i)->position();	
+//	assert(port(i).isConnected());
+	auto p = port(i).position();	
 	return p;
 }
 
@@ -170,32 +172,32 @@ void Symbol::new_subckt()
 	assert(!_subckt);
 	_subckt = new SchematicModel(nullptr);
 }
-
+/*--------------------------------------------------------------------------*/
 Symbol::~Symbol()
 {
 	delete _subckt;
 	_subckt = nullptr;
 }
-
+/*--------------------------------------------------------------------------*/
 std::string Symbol::paramValue(unsigned) const
 { untested();
 	unreachable();
 	return "NA";
 }
-
+/*--------------------------------------------------------------------------*/
 std::string Symbol::paramName(unsigned) const
 { untested();
 	unreachable();
 	return "NA";
 }
-
+/*--------------------------------------------------------------------------*/
 void Symbol::setParameter(QString const& name, QString const& b)
 {
 	std::string n = name.toStdString();
 	std::string v = b.toStdString();
 	setParameter(n, v);
 }
-
+/*--------------------------------------------------------------------------*/
 void Symbol::setParameter(unsigned pos, QString const& b)
 {
 	auto v = b.toStdString();

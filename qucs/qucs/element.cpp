@@ -31,7 +31,8 @@ Element::Element(Element const& e)
    _cx(e._cx),
    _cy(e._cy),
    x1(e.x1), y1(e.y1), x2(e.x2), y2(e.y2), // BUG diagram & whatever.
-   _owner(nullptr) // sic.
+   _owner(nullptr), // sic.
+	Name(e.Name) // yikes.
 {
   setLabel(e.label());
 
@@ -85,6 +86,7 @@ QRectF Element::boundingRect() const
 
 void Element::attachToModel()
 { untested();
+	trace1("attachToModel", label());
 	assert(scope());
 	scope()->attach(this);
 }
@@ -93,6 +95,15 @@ void Element::detachFromModel()
 {
 	assert(scope());
 	scope()->detach(this);
+}
+
+SchematicModel* Element::scope()
+{
+	if(auto o=dynamic_cast<Symbol*>(owner())){
+		return o->subckt();
+	}else{ untested();
+		return nullptr;
+	}
 }
 
 std::pair<int, int> Element::center()const

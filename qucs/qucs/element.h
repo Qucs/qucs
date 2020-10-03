@@ -241,7 +241,7 @@ public:
   // create a declaration, e.g. subcircuit definition or include directive
   virtual Symbol const* proto(SchematicModel const*) const{return nullptr;}
   SchematicModel const* scope() const;
-  virtual SchematicModel* scope(){unreachable(); return nullptr;}
+  virtual SchematicModel* scope();
 
 public: // friend ElementGraphics?
   void attachToModel();
