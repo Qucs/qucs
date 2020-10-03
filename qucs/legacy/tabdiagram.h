@@ -21,24 +21,5 @@
 #include "diagram.h"
 
 
-class TabDiagram : public Diagram  {
-public: 
-  TabDiagram(int _cx=0, int _cy=0);
- ~TabDiagram();
-
-  Diagram* newOne() { return new TabDiagram(*this); }
-  Element* clone() const { return new TabDiagram(*this); }
-  static Element* info(QString&, char* &, bool getNewOne=false);
-  virtual void paint(ViewPainter*);
-  virtual void paintDiagram(ViewPainter *p);
-  virtual int calcDiagram();
-  int scroll(int);
-  bool scrollTo(int, int, int);
-
-  void createAxisLabels() {};   // no labels in this diagram
-
-protected:
-  void calcData(Graph*) {};  // no graph data
-};
 
 #endif

@@ -22,10 +22,41 @@
 
 #include <cmath>
 
-#include "truthdiagram.h"
 #include "qucs.h"
 #include "some_font_stuff.h"
+#include "diagram.h"
 
+namespace{
+
+class TabDiagram : public Diagram  {
+public: 
+  TabDiagram(int _cx=0, int _cy=0) : Diagram() { incomplete();}
+ ~TabDiagram() {}
+
+  Diagram* newOne() { return new TabDiagram(*this); }
+  Element* clone() const { return new TabDiagram(*this); }
+//  static Element* info(QString&, char* &, bool getNewOne=false);
+  virtual void paint(ViewPainter*){}
+  virtual void paintDiagram(ViewPainter *p){}
+  virtual int calcDiagram() { incomplete(); return 0; }
+  int scroll(int) {incomplete(); return 0; }
+  bool scrollTo(int, int, int) { incomplete(); return false;}
+
+  void createAxisLabels() {};   // no labels in this diagram
+
+protected:
+  void calcData(Graph*) {};  // no graph data
+};
+
+class TruthDiagram : public TabDiagram  {
+public: 
+  TruthDiagram(int _cx=0, int _cy=0);
+ ~TruthDiagram();
+
+  Diagram* newOne() const {return new TruthDiagram(*this);}
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  int calcDiagram();
+};
 
 TruthDiagram::TruthDiagram(int _cx, int _cy) : TabDiagram(_cx, _cy)
 {
@@ -269,4 +300,6 @@ Element* TruthDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new TruthDiagram();
   return 0;
+}
+
 }

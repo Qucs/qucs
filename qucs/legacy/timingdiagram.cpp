@@ -28,7 +28,43 @@
 #include <QPolygon>
 #include <QPainter>
 #include "some_font_stuff.h"
+#include "diagram.h"
 
+namespace {
+class TabDiagram : public Diagram  {
+public: 
+  TabDiagram(int _cx=0, int _cy=0) : Diagram() { incomplete();}
+ ~TabDiagram() {}
+
+  Diagram* newOne() { return new TabDiagram(*this); }
+  Element* clone() const { return new TabDiagram(*this); }
+//  static Element* info(QString&, char* &, bool getNewOne=false);
+  virtual void paint(ViewPainter*){}
+  virtual void paintDiagram(ViewPainter *p){}
+  virtual int calcDiagram() { incomplete(); return 0; }
+  int scroll(int) {incomplete(); return 0; }
+  bool scrollTo(int, int, int) { incomplete(); return false;}
+
+  void createAxisLabels() {};   // no labels in this diagram
+
+protected:
+  void calcData(Graph*) {};  // no graph data
+};
+
+class TimingDiagram : public TabDiagram  {
+public: 
+  TimingDiagram(int _cx=0, int _cy=0);
+ ~TimingDiagram();
+
+  Diagram* newOne() const { return new TimingDiagram(*this); }
+
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  void paint(ViewPainter *p);
+  void paintDiagram(ViewPainter *p);
+  int calcDiagram();
+  int scroll(int);
+  bool scrollTo(int, int, int);
+};
 
 TimingDiagram::TimingDiagram(int _cx, int _cy) : TabDiagram(_cx, _cy)
 {
@@ -527,4 +563,6 @@ Element* TimingDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new TimingDiagram();
   return 0;
+}
+
 }

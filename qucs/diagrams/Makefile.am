@@ -46,7 +46,6 @@ NOTYET = \
 	psdiagram.cpp \
 	rect3ddiagram.cpp \
 	smithdiagram.cpp \
-	tabdiagram.cpp \
 	timingdiagram.cpp \
 	truthdiagram.cpp \
 	waveac.cpp

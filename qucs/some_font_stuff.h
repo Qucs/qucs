@@ -3,6 +3,7 @@
 
 #include <QFontMetrics> // BUG
 #include <QRect>
+#include "io_trace.h"
 
 // need some cleanup. but at least it works...
 
