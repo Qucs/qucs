@@ -149,9 +149,6 @@ public: // BUG
   int  isActive; // should it be used in simulation or not ?
   mutable /*BUGBUGBUG*/ int  tx, ty;   // upper left corner of text (position)
 
-// private: !!!
-  bool showName;
-
 public:
   bool showLabel() const override{ return showName; }
 
@@ -160,8 +157,6 @@ public:
   int cy() const{return Element::_cy;}
   std::pair<int, int> center() const{return std::make_pair(Element::_cx, Element::_cy);}
 
-public: // BUG
-  virtual std::string type() const { return Model.toStdString(); }
 
 public:
   QString const& obsolete_model_hack() const{
@@ -183,7 +178,13 @@ public:
   QString const& description() const{
 	  return Description;
   }
-  void setType(std::string const& x){
+
+public: // BUG
+  std::string typeName() const override {
+	  return Model.toStdString();
+  }
+  void setTypeName(std::string const& x) override{
+	  Symbol::setTypeName(x);
 	  // tmp kludge, store type in Model...
 	  Model = QString::fromStdString(x);
   }
@@ -230,6 +231,9 @@ public: // BUG
   // center and relative boundings
   int x1, y1;
   int x2, y2;
+
+// private: !!!
+  bool showName;
 }; // Component
 
 

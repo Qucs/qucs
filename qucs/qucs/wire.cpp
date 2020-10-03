@@ -26,7 +26,7 @@ Wire::Wire()
   _cx = 0;
   _cy = 0;
 
-  setType("wire");
+  setTypeName("wire");
   setLabel("noname"); // BUG
 }
 // ----------------------------------------------------------------

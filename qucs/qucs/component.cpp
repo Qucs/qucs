@@ -59,6 +59,9 @@ Component::Component(Component const& p)
     showName(p.showName)
 {
   trace3("Component::Component", p.Name, p.Model, _rotated);
+  trace2("Component::Component", typeName(), p.typeName());
+
+  setTypeName(p.Model.toStdString()); // BUG
 
   assert(!Props.count());
   for(auto i : p.Props){
@@ -69,7 +72,7 @@ Component::Component(Component const& p)
     Ports.append(new Port(*i));
   }
 
-  setType(p.type()); // hmmm
+  assert(typeName() == p.typeName());
 
   { // copyGraphics(p)
     // graphics must be shared (and transformed upon use).

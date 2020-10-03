@@ -18,10 +18,10 @@ public:
 // virtual void parse(DocumentStream& stream, SchematicModel*) const=0;
   virtual void printItem(Element const*, stream_t&) const;
 private: //called by printItem
-  virtual void printPainting(Painting const*, stream_t&) const {incomplete();}
-  virtual void printDiagram(Symbol const*, stream_t&) const {incomplete();}
-  virtual void printSymbol(Symbol const*, stream_t&) const {incomplete();}
-  virtual void printCommand(CmdElement const*, stream_t&) const {incomplete();}
+  virtual void printPainting(Painting const*, stream_t&) const = 0;
+  virtual void printDiagram(Symbol const*, stream_t&) const = 0;
+  virtual void printSymbol(Symbol const*, stream_t&) const = 0;
+  virtual void printCommand(CmdElement const*, stream_t&) const = 0;
 };
 
 #endif

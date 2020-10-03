@@ -34,9 +34,10 @@ static std::string netLabel(Net const* n)
 	}
 }
 
+static const std::string typesep(":");
 static std::string mangleType(std::string& t)
 {
-	auto pos = t.find("$");
+	auto pos = t.find(typesep);
 	std::string ret="";
 	if(pos == std::string::npos){
 	}else{
@@ -56,6 +57,8 @@ private: // local
   void printSymbol(Symbol const*, stream_t&) const;
   void printSubckt(SubcktProto const*, stream_t&) const;
   void printComponent(Component const*, stream_t&) const;
+  void printPainting(Painting const*, stream_t&) const override {incomplete();}
+  void printDiagram(Symbol const*, stream_t&) const override {incomplete();}
 }qucslang;
 static Dispatcher<DocumentFormat>::INSTALL p(&doclang_dispatcher, "qucsator", &qucslang);
 
@@ -126,10 +129,10 @@ void QucsatorLang::printSubckt(SubcktProto const* p, stream_t& s) const
 	for(auto i : p->schematicModel().components()){
       if(!i){ untested();
 			incomplete();
-		}else if(i->type() == "Port"){
-		}else if(i->type() == "GND"){
+		}else if(i->typeName() == "Port"){
+		}else if(i->typeName() == "GND"){
 		}else{
-			trace1("ps", i->type());
+			trace1("ps", i->typeName());
 			printSymbol(i, s);
 		}
 	}
@@ -163,7 +166,7 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 	}else{
 	}
 	assert(c);
-	trace2("pc", c->label(), c->type());
+	trace2("pc", c->label(), c->typeName());
 
 	if(c->isOpen()) {
 		// nothing.
@@ -182,7 +185,7 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 		}
 	}else{
 
-		std::string type = c->type();
+		std::string type = c->typeName();
 		std::string hack_type = mangleType(type);
 
 		s << type << ":" << c->label();

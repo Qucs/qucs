@@ -23,19 +23,20 @@ namespace{
 
 class TR_Sim : public CmdElement  {
 public:
+  TR_Sim(TR_Sim const&) = default;
   TR_Sim();
   ~TR_Sim();
   Element* clone() const{return new TR_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(SchematicDoc*);
 } D;
-Dispatcher<CmdElement>::INSTALL p(&command_dispatcher, ".TR", &D);
+Dispatcher<CmdElement>::INSTALL p(&command_dispatcher, "TR", &D);
 Module::INSTALL pp("simulations", &D);
 
 TR_Sim::TR_Sim()
 {
   Description = QObject::tr("transient simulation");
-  Name = QObject::tr("Transient simulation");
+  Name = "TR";
   // BitmapFile = (char *) "tran";
 
   QString  s = Description;
@@ -51,7 +52,6 @@ TR_Sim::TR_Sim()
 
   tx = 0;
   ty = y2+1;
-  //Model = "TR";
   setLabel("TR");
   setName("TR");
 
@@ -127,8 +127,7 @@ void TR_Sim::recreate(SchematicDoc*)
     pp->Name = "Symbol";
     pp->display = false;
     Props.next()->Name = "Values";
-  }
-  else {
+  } else {
     Props.next()->Name = "Start";
     Props.next()->Name = "Stop";
     Props.next()->Name = "Points";

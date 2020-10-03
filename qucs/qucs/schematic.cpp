@@ -719,7 +719,7 @@ void SchematicDoc::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toI
 //
 // same as center on union(current, rectangle(xy))??
 // // implemented in QGraphicsView::ensureVisible, it seems
-void SchematicDoc::enlargeView(int x1, int y1, int x2, int y2)
+void SchematicDoc::enlargeView(int , int, int, int )
 { untested();
   incomplete();
 #if 0
@@ -753,7 +753,7 @@ void SchematicDoc::enlargeView(int x1, int y1, int x2, int y2)
 // BUG: fp?
 
 // ---------------------------------------------------
-void SchematicDoc::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
+void SchematicDoc::paintGrid(ViewPainter *, int , int, int, int )
 { untested();
 #if 0 // obsolete
   if(!GridOn) return;
@@ -2084,6 +2084,7 @@ void SchematicDoc::getSelAreaWidthAndHeight(int &wsel, int &hsel, int& xmin_sel_
 void SchematicDoc::simpleInsertElement(Element* e)
 { untested();
   assert(false); // use PushBack
+#if 0
 	if(Wire* c=dynamic_cast<Wire*>(e)){ untested();
 		simpleInsertWire(c);
 	}else if(Component* c=dynamic_cast<Component*>(e)){ untested();
@@ -2093,7 +2094,7 @@ void SchematicDoc::simpleInsertElement(Element* e)
 	}else{ untested();
 		incomplete();
 	}
-
+#endif
 }
 // ===============================================================
 void PaintingList::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const

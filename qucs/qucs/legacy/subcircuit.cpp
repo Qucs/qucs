@@ -81,7 +81,7 @@ Subcircuit::Subcircuit() : Component() // gaah sckt_base
 //  Props.append(new Property("File", "", false,
 //		QObject::tr("name of qucs schematic file")));
 
-  setType("Sub");
+  setTypeName("Sub");
 
   // Do NOT call createSymbol() here. But create port to let it rotate.
   Ports.append(new Port(0, 0, false));
@@ -95,7 +95,7 @@ Subcircuit::Subcircuit(Subcircuit const&x) : Component(x)
   Props.append(new Property("File", "", false,
 		QObject::tr("name of qucs schematic file")));
 
-  setType("Sub");
+  setTypeName("Sub");
 
   new_subckt(); // triggers sckt expansion
 }
@@ -553,10 +553,10 @@ void Subcircuit::build()
 // does not fullymake sense.
 Symbol const* Subcircuit::proto(SchematicModel const* scope) const
 {
-   auto t = QString::fromStdString(type());
+   auto t = QString::fromStdString(typeName());
 	auto p = scope->findProto(t);
 	if(p){
-		trace1("cached", type());
+		trace1("cached", typeName());
 		return p;
 	}else{
 		Symbol const* ownersym = dynamic_cast<Symbol const*>(owner());
@@ -572,8 +572,8 @@ Symbol const* Subcircuit::proto(SchematicModel const* scope) const
 		QString t = Props.first()->Value;
 		trace3("Subcircuit::proto", t, owner(), typeid(*owner()).name());
 		
-		s->setLabel(type());
-		trace2("sckt::proto", type(), s->type());
+		s->setLabel(typeName());
+		trace2("sckt::proto", typeName(), s->typeName());
 
 		assert(s->subckt());
 		assert(scope);
@@ -601,12 +601,14 @@ QString Subcircuit::portName(unsigned) const
 	return "invalid";
 }
 
+static const std::string typesep(":");
+
 void Subcircuit::setParameter(unsigned i, std::string const& value)
 {
 	QString v = QString::fromStdString(value);
 	if(i==0){
 		trace1("Subcircuit::setParameter", v);
-		setType("Sub$" + v.left(v.length()-4).toStdString());
+		setTypeName("Sub" + typesep + v.left(v.length()-4).toStdString());
 	}else{
 		incomplete();
 	}

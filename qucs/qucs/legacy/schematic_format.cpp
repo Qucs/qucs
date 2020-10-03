@@ -8,12 +8,11 @@
 
 #include "paintings/painting.h" // BUG
 #include "diagram.h" // BUG?
-//#include "diagrams/diagrams.h" // BUG
-
-//#include "schematic.h" // BUG, transition
+#include "command.h" // BUG?
 
 namespace{
 
+// TODO this is a command
 class LegacySchematicFormat : public DocumentFormat{
 	void save(DocumentStream& stream, SchematicSymbol const&) const;
 	void load(DocumentStream& stream, SchematicSymbol&) const;
@@ -168,24 +167,15 @@ void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& 
 	QString Frame_Text1(QG(m,"FrameText1"));
 	QString Frame_Text2(QG(m,"FrameText2"));
 	QString Frame_Text3(QG(m,"FrameText3"));
-  // QString t;
-  // misc::convert2ASCII(t = FrameText[0]);
-  // stream << "  <FrameText0=" << t << ">\n";
-  // misc::convert2ASCII(t = FrameText[1]);
-  // stream << "  <FrameText1=" << t << ">\n";
-  // misc::convert2ASCII(t = FrameText[2]);
-  // stream << "  <FrameText2=" << t << ">\n";
-  // misc::convert2ASCII(t = FrameText[3]);
-  // stream << "  <FrameText3=" << t << ">\n";
 
 	QString t;
-	misc::convert2ASCII(t = Frame_Text0);
+	t = misc::convert2ASCII(Frame_Text0);
 	stream << "  <FrameText0=" << t << ">\n";
-	misc::convert2ASCII(t = Frame_Text1);
+	t = misc::convert2ASCII(Frame_Text1);
 	stream << "  <FrameText1=" << t << ">\n";
-	misc::convert2ASCII(t = Frame_Text2);
+	t = misc::convert2ASCII(Frame_Text2);
 	stream << "  <FrameText2=" << t << ">\n";
-	misc::convert2ASCII(t = Frame_Text3);
+	t = misc::convert2ASCII(Frame_Text3);
 	stream << "  <FrameText3=" << t << ">\n";
 	stream << "</Properties>\n";
 
@@ -201,6 +191,14 @@ void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& 
 		stream << "  ";
 		L->printItem(pc, stream);
 		stream << "\n"; // BUG?
+	}
+	if(m.commands()){
+		for(auto pc : *(m.commands())){
+			stream << "  ";
+			L->printItem(pc, stream);
+			stream << "\n"; // BUG?
+		}
+	}else{
 	}
 	stream << "</Components>\n";
 

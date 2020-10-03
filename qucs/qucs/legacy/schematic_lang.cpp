@@ -86,7 +86,10 @@ private: // overrides
 	void parse(DocumentStream& stream, SchematicSymbol& s) const;
 
 private:
-	void printSymbol(Symbol const*, stream_t&) const;
+	void printSymbol(Symbol const*, stream_t&) const override;
+	void printCommand(CmdElement const*, stream_t&) const override;
+	void printPainting(Painting const*, stream_t&) const override {incomplete();}
+   void printDiagram(Symbol const*, stream_t&) const override {incomplete();}
 }defaultSchematicLanguage_;
 static Dispatcher<DocumentLanguage>::INSTALL
     p(&doclang_dispatcher, "leg_sch", &defaultSchematicLanguage_);
@@ -168,7 +171,11 @@ static bool obsolete_load(Wire* w, const QString& sc)
 	}else{
 	}
 
-	assert(y1<=y2); // possibly the case in all legacy files
+	if(y1<=y2){ untested();
+		// possibly the case in all legacy files
+	}else{ untested();
+		// nothing wrong with that, really?
+	}
 	sym->setParameter("deltay", std::to_string(y2 - y1));
 
 	n = s.section('"',1,1);
@@ -363,11 +370,57 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 //
 //
 // -------------------------------------------------------
+static const std::string typesep(":");
 static std::string mangle(std::string t)
 {
-	auto pos = t.find("$");
+	auto pos = t.find(typesep);
 	std::string ret="";
 	return t.substr(0, pos);
+}
+
+void LegacySchematicLanguage::printCommand(CmdElement const* c, stream_t& s) const
+{
+	s << "  <" << c->Name << " ";
+
+	if(c->name().isEmpty()){
+		s << "*";
+	}else{
+		s << c->label(); // label??
+	}
+	s << " ";
+
+	int i = 0;
+	if(!c->showName){
+		i = 4;
+	}else{
+	}
+	i |= c->isActive;
+	s << QString::number(i);
+	s << " "+QString::number(c->cx())+" "+QString::number(c->cy());
+	s << " "+QString::number(c->tx)+" "+QString::number(c->ty);
+	s << " ";
+	s << " 0"; // mirrored
+	s << " 0"; // rotated
+
+	// write all properties
+	// FIXME: ask element for properties, not for dictionary
+	auto cc=const_cast<CmdElement*>(c); // BUGBUGBUGBUG
+	// cannot access Props without this hack
+	for(Property *p1 = cc->Props.first(); p1 != 0; p1 = cc->Props.next()) {
+		if(p1->Description.isEmpty()){
+			s << " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations
+		}else{
+			s << " \""+p1->Value+"\"";
+		}
+		s << " ";
+		if(p1->display){
+			s << "1";
+		}else{
+			s << "0";
+		}
+	}
+
+	s << ">";
 }
 // was: void Schematic::saveComponent(QTextStream& s, Component const* c) const
 void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
@@ -378,7 +431,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
 		return;
 	}else{
 	}
-	s << "  <" << mangle(c->type()) << " ";
+	s << "  <" << mangle(c->typeName()) << " ";
 
 	if(c->name().isEmpty()){
 		s << "*";

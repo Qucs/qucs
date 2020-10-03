@@ -140,7 +140,7 @@ void VerilogNetlister::nodeMap(SchematicSymbol const& m) const
 	// maybe just s/gnd/0/??
 #if 0
 	for(auto pc : sm.components()){
-		if(pc->type() == "GND") { untested();
+		if(pc->typeName() == "GND") { untested();
 			assert(pc->Ports.first()->Connection);
 			Net* n = pc->Ports.first()->Connection->getNet();
 			assert(n);
@@ -318,14 +318,14 @@ void VerilogNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol c
 		QStringList Collect; // BUG
 		int countInit = 0;  // ??
 		int NumPorts=0; // ??!
-		qDebug() << "call tAC" << QString::fromStdString(it->type());
+		qDebug() << "call tAC" << QString::fromStdString(it->typeName());
 
 		auto sym = it; // dynamic_cast<Symbol const*>(pc);
 		if(sym && sym->subckt()){
 			trace1("need expand?", sym->label());
 			// if there is a sckt, make sure it is populated.
 			sym->proto(&sckt); // just expand?
-		}else if(it->type() == "GND") { // BUG, use a rail?
+		}else if(it->typeName() == "GND") { // BUG, use a rail?
 
 			qDebug() << "GND hack" << it->Ports.first()->netLabel();
 			// it->Ports.first()->Connection->setName("gnd");

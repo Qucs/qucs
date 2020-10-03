@@ -89,6 +89,9 @@ public: // HACK
   // BUG: a command is not a symbol
   void setPort(unsigned, Node*){ unreachable(); }
 
+private:
+  virtual SchematicModel* scope() override;
+
 protected:
   virtual QString netlist();
 

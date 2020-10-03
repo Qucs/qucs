@@ -246,7 +246,10 @@ Element* SchematicModel::detach(Element* what)
 // TODO: take iterator.
 Element* SchematicModel::attach(Element* what)
 {itested();
-	if(auto c=component(what)){itested();
+	if(auto c=dynamic_cast<CmdElement*>(what)){ untested();
+		commands().push_back(c);
+	}else if(auto c=component(what)){itested();
+		// really?
 		connect(c);
 		components().append(c);
 	}else if(auto w=wire(what)){ untested();
@@ -254,6 +257,8 @@ Element* SchematicModel::attach(Element* what)
 		wires().append(w);
 	}else if(auto w=dynamic_cast<Symbol*>(what)){ untested();
 		incomplete();
+		//connect(c);
+		//components().append(c);
 	}else{ untested();
 	}
 	return what;
@@ -299,6 +304,11 @@ PaintingList& SchematicModel::paintings()
 //	return _symbol->symbolPaintings();
 //}
 //
+CmdEltList& SchematicModel::commands()
+{ untested();
+	assert(doc());
+	return doc()->commands();
+}
 DiagramList& SchematicModel::diagrams()
 {
 	return Diagrams;
@@ -488,6 +498,7 @@ bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
 
 
 // called from PushBack...
+#if 0
 void SchematicModel::simpleInsertComponent(Component *c)
 {
 	assert(c);
@@ -495,14 +506,14 @@ void SchematicModel::simpleInsertComponent(Component *c)
 	connect(c);
 	components().append(c);
 }
+#endif
 
-// screw this.
+#if 0 // screw this.
 void SchematicModel::simpleInsertWire(Wire *)
 {
 //  Node *pn=nullptr;
   // pn = &nodes().at(pw->x1_(), pw->y1_());
   //
-#if 0
   incomplete(); // but not here.
   some label crazyness. propagate labels to nets in wire::connect.
     pn->Label = pw->Label;   // wire with length zero are just node labels
@@ -511,9 +522,8 @@ void SchematicModel::simpleInsertWire(Wire *)
       pn->Label->pOwner = pn;
     }else{ untested();
 	 }
-#endif
-
 }
+#endif
 
 // obsolete?
 void SchematicModel::detachFromNode(Element* what, Node* from)

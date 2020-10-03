@@ -44,7 +44,7 @@ static Module::INSTALL pp("vadim", &D);
 DIODE_SPICE::DIODE_SPICE()
 {
 	info(Name, bitmap_file);
-	setType("DIODE_SPICE");
+	setTypeName("DIODE_SPICE");
     Description = QObject::tr("SPICE D:\nMultiple line ngspice or Xyce D model specifications allowed using \"+\" continuation lines.\nLeave continuation lines blank when NOT in use.");
 
 
