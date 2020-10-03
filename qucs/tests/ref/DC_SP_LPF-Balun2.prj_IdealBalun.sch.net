@@ -1,9 +1,9 @@
 # Qucs
 ## declarations end
 
-sTr:Tr1 _net0 _net10 _net13 _net3 _net5 _net5 T1="0.5" T2="0.5"
+sTr:Tr1 _net0 _net10 _net19 _net3 _net5 _net5 T1="0.5" T2="0.5"
 Port:P3 _net3 Num="3" Type="analog"
 Port:P4 _net0 Num="4" Type="analog"
-Port:P5 _net13 Num="5" Type="analog"
+Port:P5 _net19 Num="5" Type="analog"
 Port:P2 _net5 Num="2" Type="analog"
 Port:P1 _net10 Num="1" Type="analog"

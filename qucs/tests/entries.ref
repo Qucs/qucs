@@ -67,23 +67,23 @@ Eqn:my_Eqn y="1" Export="yes"
 Pac #(.Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) my_Pac((null), (null));
 Pac:my_Pac (null) (null) Num="1" Z="50 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
 ==============
-
+  <.  0 0 0 0 33  0 0 "26.85" 0 "0.001" 0 "1 pA" 0 "1 uV" 0 "no" 0 "150" 0 "no" 0 "none" 0 "CroutLU" 0>
 //
 .DC: Temp="26.85" reltol="0.001" abstol="1 pA" vntol="1 uV" saveOPs="no" MaxIter="150" saveAll="no" convHelper="none" Solver="CroutLU"
 =====TR=========
-
+  <.TR * 0 0 0 0 51  0 0 "lin" 1 "0" 1 "1 ms" 1 "11" 0 "Trapezoidal" 0 "2" 0 "1 ns" 0 "1e-16" 0 "150" 0 "0.001" 0 "1 pA" 0 "1 uV" 0 "26.85" 0 "1e-3" 0 "1e-6" 0 "1" 0 "CroutLU" 0 "no" 0 "yes" 0 "0" 0>
 //
 .: Type="lin" Start="0" Stop="1 ms" Points="11" IntegrationMethod="Trapezoidal" Order="2" InitialStep="1 ns" MinStep="1e-16" MaxIter="150" reltol="0.001" abstol="1 pA" vntol="1 uV" Temp="26.85" LTEreltol="1e-3" LTEabstol="1e-6" LTEfactor="1" Solver="CroutLU" relaxTSR="no" initialDC="yes" MaxStep="0"
 ==============
-
+  <. * 0 0 0 0 51  0 0 "lin" 1 "1 GHz" 1 "10 GHz" 1 "19" 1 "no" 0 "1" 0 "2" 0 "no" 0 "no" 0>
 //
 .: Type="lin" Start="1 GHz" Stop="10 GHz" Points="19" Noise="no" NoiseIP="1" NoiseOP="2" saveCVs="no" saveAll="no"
 ==============
-
+  <.  0 0 0 0 33  0 0 "lin" 1 "1 GHz" 1 "10 GHz" 1 "19" 1 "no" 0>
 //
 .AC: Type="lin" Start="1 GHz" Stop="10 GHz" Points="19" Noise="no"
 ==============
-
+  <. * 0 0 0 0 51  0 0 "" 1 "lin" 1 "R1" 1 "5 Ohm" 1 "50 Ohm" 1 "20" 1>
 //
 .: Sim="" Type="lin" Param="R1" Start="5 Ohm" Stop="50 Ohm" Points="20"
 ==============

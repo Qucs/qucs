@@ -79,6 +79,8 @@ void QucsatorLang::printSymbol(Symbol const* d, stream_t& s) const
 	}
 }
 
+static const char _typesep = ':';
+
 // partly from Schematic::createSubnetlistplain
 void QucsatorLang::printSubckt(SubcktProto const* p, stream_t& s) const
 {
@@ -87,7 +89,7 @@ void QucsatorLang::printSubckt(SubcktProto const* p, stream_t& s) const
 	std::string label = p->label().toStdString();
 
 	s << "\n";
-	if(label.c_str()[3] == '$'){
+	if(label.c_str()[3] == _typesep){
 		s << ".Def:" << label.substr(4);
 	}else{
 		incomplete();
