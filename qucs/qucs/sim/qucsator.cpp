@@ -228,10 +228,13 @@ public:
 	Qucsator(Qucsator const&) = delete;
 	~Qucsator(){}
 private: // Simulator
+  Simulator* clone() const override {return new Qucsator();}
   NetLang const* netLang() const override { untested();
 	  return dynamic_cast<NetLang const*>(doclang_dispatcher["qucsator"]);
   }
   DocumentFormat const* netLister() const override {return docfmt_dispatcher["qucsator"];}
+  void run() override{incomplete();}
+  void init() override{incomplete();}
 }QS;
 static Dispatcher<Simulator>::INSTALL qq(&simulator_dispatcher, "qucsator", &QS);
 
