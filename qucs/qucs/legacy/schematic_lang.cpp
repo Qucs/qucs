@@ -380,7 +380,7 @@ static std::string mangle(std::string t)
 
 void LegacySchematicLanguage::printCommand(CmdElement const* c, stream_t& s) const
 {
-	s << "  <" << c->Name << " ";
+	s << "  <." << c->Name << " ";
 
 	if(c->name().isEmpty()){
 		s << "*";
