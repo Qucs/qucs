@@ -81,9 +81,9 @@ public:
 public: // stuff saved from Schematic
 	QString createClipboardFile();
 	void sizeOfAll(int&, int&, int&, int&, float) const;
-	void simpleInsertComponent(Component* c);
-	void simpleInsertCommand(CmdElement* c);
-	void simpleInsertWire(Wire*);
+	//void simpleInsertComponent(Component* c);
+	//void simpleInsertCommand(CmdElement* c);
+	//void simpleInsertWire(Wire*);
 	void recreateSymbol(Symbol* s); // yikes.
 	//private??
 	bool giveNodeNames(DocumentStream&, int&, QStringList&, QPlainTextEdit*, int,
@@ -167,7 +167,7 @@ private:
 	DiagramList& diagrams();
 	PaintingList& paintings();
 	ComponentList& components(); // possibly "devices". lets see.
-//	CommandList& commands(); // really??
+	CmdEltList& commands();
 public:
 	bool isNode(int x, int y) const{
 		return nodes().find_at(x,y);
@@ -183,6 +183,10 @@ public:
 	void cacheProto(Symbol const* what) const;
 
 	SchematicDoc* doc();
+	SchematicDoc const* doc() const{
+		auto c=const_cast<SchematicModel*>(this);
+		return c->doc();
+	}
 	QString const& portType(int i) const{
 		return PortTypes[i];
 	}

@@ -254,7 +254,7 @@ void misc::convert2Unicode(QString& Text)
 }
 
 // #########################################################################
-void misc::convert2ASCII(QString& Text)
+QString& misc::convert2ASCII(QString& Text)
 {
   Text.replace('\\', "\\\\");
   Text.replace('\n', "\\n");
@@ -268,6 +268,7 @@ void misc::convert2ASCII(QString& Text)
       Text.replace(ch, Str);
     }
   }
+  return Text;
 }
 
 // #########################################################################

@@ -280,9 +280,9 @@ void LegacyNetlister::createNetlist(DocumentStream& stream,
 	for(auto pc : m.components()){
 		// if dynamic_cast<Label*>
 		//   ignore
-		if(pc->type()=="GND"){
+		if(pc->typeName()=="GND"){
 			// qucsator hack, just ignore.
-		}else if(pc->type()=="NodeLabel"){ untested();
+		}else if(pc->typeName()=="NodeLabel"){ untested();
 			// qucsator hack, just ignore.
 		}else{
 			_qucslang->printItem(pc, stream);
@@ -346,7 +346,7 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 	for(auto pc : sckt.components()){
 		Symbol const* sym = pc;
 		assert(pc);
-		trace4("tac", pc->label(), pc, sym->owner(), pc->type());
+		trace4("tac", pc->label(), pc, sym->owner(), pc->typeName());
 		trace1("tac", sym->owner()->label());
 
 		// because they are components

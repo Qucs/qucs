@@ -15,55 +15,75 @@
 
 #include "schematic_symbol.h"
 #include "schematic_model.h"
-
+#include "schematic_doc.h"
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 SchematicSymbol::SchematicSymbol(){
 	_paint = new PaintingList();
 }
-
+/*--------------------------------------------------------------------------*/
 SchematicSymbol::~SchematicSymbol(){
 	delete _paint;
 	_paint = nullptr;
 }
-
+/*--------------------------------------------------------------------------*/
 PaintingList& SchematicSymbol::symbolPaintings()
 {
 	assert(_paint);
 	return *_paint;
 }
-
+/*--------------------------------------------------------------------------*/
 PaintingList const& SchematicSymbol::symbolPaintings() const
 {
 	assert(_paint);
 	return *_paint;
 }
-
+/*--------------------------------------------------------------------------*/
 WireList const& SchematicSymbol::wires() const
 {
 	auto s = subckt();
 	assert(s);
 	return s->wires();
 }
+/*--------------------------------------------------------------------------*/
 NodeMap const& SchematicSymbol::nodes() const
 {
 	auto s = subckt();
 	assert(s);
 	return s->nodes();
 }
+/*--------------------------------------------------------------------------*/
 DiagramList const& SchematicSymbol::diagrams() const
 {
 	auto s = subckt();
 	assert(s);
 	return s->diagrams(); // really?
 }
+/*--------------------------------------------------------------------------*/
 PaintingList const& SchematicSymbol::paintings() const
 {
 	auto s = subckt();
 	assert(s);
 	return s->paintings(); // really?
 }
+/*--------------------------------------------------------------------------*/
 ComponentList const& SchematicSymbol::components() const // possibly "devices". lets see.
 {
 	auto s = subckt();
 	assert(s);
 	return s->components();
 }
+/*--------------------------------------------------------------------------*/
+CmdEltList const* SchematicSymbol::commands() const
+{
+	auto s = subckt();
+	assert(s);
+	auto d = s->doc();
+	if (!d){
+		return nullptr;
+	}else{
+		return &d->commands();
+	}
+}
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/

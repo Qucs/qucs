@@ -12,6 +12,7 @@ class WireList;
 class NodeMap;
 class DiagramList;
 class PaintingList;
+class CmdEltList;
 class ComponentList;
 
 class SchematicSymbol : public Symbol{
@@ -34,6 +35,7 @@ public:
 	NodeMap const& nodes() const;
 	DiagramList const& diagrams() const;
 	PaintingList const& paintings() const;
+	CmdEltList const* commands() const;
 	ComponentList const& components() const; // possibly "devices". lets see.
 
 	// commands were part of the circuit model. fix this.

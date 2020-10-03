@@ -84,7 +84,7 @@ QRectF Element::boundingRect() const
 }
 
 void Element::attachToModel()
-{
+{ untested();
 	assert(scope());
 	scope()->attach(this);
 }

@@ -502,18 +502,18 @@ private:
 	void parse(DocumentStream& stream, SchematicLanguage const*l=nullptr);
 
 private: // legacy, don't use
-  void simpleInsertComponent(Component* c) { untested();
-	  assert(_model);
-	  return _model->simpleInsertComponent(c);
-  }
-  void simpleInsertCommand(CmdElement* c) { untested();
-	  assert(_model);
-	  return _model->simpleInsertCommand(c);
-  }
-  void simpleInsertWire(Wire* w) { untested();
-	  assert(_model);
-	  return _model->simpleInsertWire(w);
-  }
+//  void simpleInsertComponent(Component* c) { untested();
+//	  assert(_model);
+//	  return _model->simpleInsertComponent(c);
+//  }
+//  void simpleInsertCommand(CmdElement* c) { untested();
+//	  assert(_model);
+//	  return _model->simpleInsertCommand(c);
+//  }
+//  void simpleInsertWire(Wire* w) { untested();
+//	  assert(_model);
+//	  return _model->simpleInsertWire(w);
+//  }
 private:
   void simpleInsertElement(Element*);
 
