@@ -368,18 +368,23 @@ static QString pathName(QString longpath) {
 }
 #endif
 
-
-/*!
- * \brief SimMessage::startSimulator simulates the document in view.
- */
+// "run" simulator?
 void SimMessage::startSimulator()
 {
-  // BUG: Using the Doc pointer here is wrong as the user may have closed the
-  // schematic, but netlisting may be faster than the user.
+  // TODO: let user choose
+  Simulator const* proto=simulator_dispatcher["legacy"];
+  Simulator* sim = proto->clone();
 
-  // something like this?
-  // _simulator->attach(doc);
-  // _simulator->run();
+  { // not here
+
+    auto qucsdoc = prechecked_cast<QucsDoc*>(DocWidget);
+    assert(qucsdoc);
+
+    sim->attachDoc(qucsdoc); // TODO: disallow closing schematic as long as simulator is attached.
+  }
+
+    // wrong place.
+//    isVerilog = ((SchematicDoc*)DocWidget)->isVerilog;
 
   QString SimTime;
   QStringList Arguments;
@@ -484,11 +489,10 @@ void SimMessage::startSimulator()
     }
     Stream << '\n';
 
-//    isVerilog = ((SchematicDoc*)DocWidget)->isVerilog;
-    Simulator const* sd=simulator_dispatcher["qucsator"];
-    assert(sd); //for now.
+
+    assert(sim); //for now.
     // BUG: ask simulator driver
-    auto dl=sd->netLister();
+    auto dl=sim->netLister();
     assert(dl);
     DocumentFormat const* n=prechecked_cast<DocumentFormat const*>(dl);
     assert(n);
@@ -496,7 +500,7 @@ void SimMessage::startSimulator()
 //    SimTime = d->createNetlist(Stream, SimPorts, *nl);
     n->save(Stream, *d->root());
 
-    NetLang const* nl = sd->netLang();
+    NetLang const* nl = sim->netLang();
 
     for(auto c : d->commands()){
       nl->printItem(c, Stream);
@@ -522,7 +526,7 @@ void SimMessage::startSimulator()
     NetlistFile.close();
     ProgText->insertPlainText(tr("done.\n"));  // of "creating netlist...
 
-    if(SimPorts < 0) {
+    if(1 || SimPorts < 0) {
 
       // append command arguments
       // append netlist with same arguments
@@ -579,19 +583,6 @@ void SimMessage::startSimulator()
           }
       } // vaComponents not empty
 
-#if 0 // not here.
-      if(SimOpt = findOptimization(d)) {
-	    ((Optimize_Sim*)SimOpt)->createASCOnetlist();
-
-        Program = QucsSettings.AscoBinDir.canonicalPath();
-        Program = QDir::toNativeSeparators(Program+"/"+"asco"+QString(executableSuffix));
-        // pass full path of simulator to ASCO so it does not be to be in PATH
-        // and QUCSATOR environment variable is honored
-        Arguments << "-qucs" << QucsSettings.QucsHomeDir.filePath("asco_netlist.txt")
-                  << "-o" << "asco_out"
-                  << "-s" << "\"" + QDir::toNativeSeparators(QucsSettings.Qucsator) + "\"";
-      } else
-#endif
       {
         Program = QucsSettings.Qucsator;
         Arguments << "-b" << "-g" << "-i"
@@ -650,6 +641,8 @@ void SimMessage::startSimulator()
 
   qDebug() << "Command :" << Program << Arguments.join(" ");
   SimProcess.start(Program, Arguments); // launch the program
+
+  delete sim;
 }
 
 // ------------------------------------------------------------------------

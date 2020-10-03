@@ -26,7 +26,7 @@
 
 QucsDoc::QucsDoc(QucsApp &App_, const QString& Name_)
 	: App(&App_),
-     _app(App_)
+     _app(App_), _simulators(0)
 {
   GridOn = true;
   DocName = Name_;
@@ -59,6 +59,7 @@ QucsDoc::QucsDoc(QucsApp &App_, const QString& Name_)
 // vtable here?
 QucsDoc::~QucsDoc()
 {
+	assert(_simulators == 0);
 }
 
 // really?!
@@ -169,7 +170,7 @@ void QucsDoc::possiblyToggleAction(MouseAction* a, QAction* sender)
 	}else{itested();
 	}
 }
-
+/* -------------------------------------------------------------------------------- */
 // maybe this only works for SchematicDoc.
 // SchematicDoc has input modes coupled to "MouseActions" that deal with user input.
 // TextDoc also has modes, but somehow redirects input to another widget.
@@ -181,12 +182,13 @@ MouseAction* QucsDoc::activeAction()
 		return nullptr;
 	}
 }
+/* -------------------------------------------------------------------------------- */
 MouseAction const* QucsDoc::activeAction() const
 {
 	auto d = const_cast<QucsDoc*>(this);
 	return d->activeAction();
 }
-
+/* -------------------------------------------------------------------------------- */
 void QucsDoc::executeCommand(QUndoCommand* c)
 {
 	if(mouseActions()){itested();
@@ -194,3 +196,10 @@ void QucsDoc::executeCommand(QUndoCommand* c)
 	}else{
 	}
 }
+/* -------------------------------------------------------------------------------- */
+QucsData* QucsDoc::qucsData(std::string const& key)
+{
+	return nullptr; // _data[key];
+}
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
