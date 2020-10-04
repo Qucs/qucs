@@ -111,7 +111,9 @@ private:
 	Port const& port(unsigned) const; // TODO. don't expose "Port"
 
 public: // Port access
-	virtual std::pair<int, int> portPosition(unsigned) const;
+	virtual std::pair<int, int> portPosition(unsigned) const; // why virtual?
+	virtual std::pair<int, int> nodePosition(unsigned) const; // why virtual?
+
 	virtual Net const* portValue(unsigned) const; // why virtual?
 	Node const* portNode(unsigned) const;
 	// TODO: rethink Port/Node semantics
