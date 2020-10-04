@@ -32,7 +32,7 @@
 #include <locale.h>
 
 #include "diagram.h"
-#include "diagrams/diagramdialog.h"
+#include "diagramdialog.h"
 #include "qucs.h"
 #include "mnemo.h"
 #include "schematic_doc.h"
