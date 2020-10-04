@@ -1,24 +1,20 @@
 /***************************************************************************
-                                diagram.cpp
-                               -------------
-    begin                : Thu Oct 2 2003
     copyright            : (C) 2003, 2004, 2005 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-/*!
-  \class Diagram
-  \brief The Diagram class is a superclass for diagrams.
-
+// Diagrams: elements that show data.
+//
+/*
   \todo Should probably use QFontMetrics::boundingRect(QString).width instead
         of QFontMetrics::width(QString), since only the first gives the actual
 	width (see Qt docs)
@@ -2456,6 +2452,12 @@ bool Diagram::pressElement(SchematicDoc* Doc, Element*& selElem, QMouseEvent* Ev
 	}
 
 	return drawn;
+}
+
+QDialog* Diagram::editElement(QucsDoc* Doc) const
+{ untested();
+  trace0("Component::editElement");
+  return new DiagramDialog(Doc); // memory leak?
 }
 
 // vim:ts=8:sw=2:noet
