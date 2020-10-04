@@ -1805,6 +1805,7 @@ void MouseActions::MReleaseZoomIn(SchematicDoc *, QMouseEvent *)
 // ***********************************************************************
 void MouseActions::editElement(SchematicDoc *Doc, QMouseEvent *Event)
 { untested();
+  assert(false); // obsolete;
 //    qDebug() << "+double click, editElement";
 //
 // BUG: focusElement is a parameter

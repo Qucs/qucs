@@ -140,9 +140,9 @@ public:
 		assert(e);
 		return QMouseEvent(*e);
 	}
+	void executeCommand(QUndoCommand*);
 private:
 	void setActiveAction(MouseAction* a);
-	void executeCommand(QUndoCommand*);
 	MouseAction* activeAction();
 
 public: // hmm

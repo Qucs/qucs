@@ -58,11 +58,6 @@ void Element::getCenter(int&x, int&y) const
 	y=_cy;
 }
 
-void /*really?*/ Element::editElement(QucsDoc*)
-{
-	incomplete();
-}
-
 // pure? maybe not. there could be non-paintable elements...
 void Element::paint(ViewPainter* p) const
 {

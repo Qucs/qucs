@@ -44,7 +44,7 @@ public: //??!
 
 private: // Element override
   void    paint(ViewPainter*) const;
-  void editElement(QucsDoc*);
+  QDialog* editElement(QucsDoc*) const override;
 
 private: // Symbol interface.
   virtual void recreate() {}; // obsolete?
@@ -240,10 +240,9 @@ public: // BUG
 
 class MultiViewComponent : public Component {
 public:
-  MultiViewComponent() {
-  };
+  MultiViewComponent(MultiViewComponent const&c) : Component(c) {}
+  MultiViewComponent() {};
   virtual ~MultiViewComponent() {};
-
 
 private: // Symbol
   void recreate();

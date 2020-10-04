@@ -28,8 +28,8 @@ Simulator::~Simulator()
 void Simulator::attachDoc(QucsDoc* d)
 {
 	assert(!_doc);
-	_doc->incSimulators();
 	_doc = d;
+	_doc->incSimulators();
 	_data = _doc->qucsData(label().toStdString());
 	init();
 }

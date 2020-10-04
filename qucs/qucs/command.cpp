@@ -307,7 +307,10 @@ QString CmdElement::getNetlist()
 // ***  from file. (e.g. subcircuit, library component)
 
 int CmdElement::analyseLine(const QString& Row, int numProps)
-{}
+{
+	unreachable();
+	return 0;
+}
 
 // ---------------------------------------------------------------------
 // not sure what this is. parse schematic?
