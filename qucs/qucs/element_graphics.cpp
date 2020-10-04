@@ -333,8 +333,11 @@ void ElementGraphics::moveElement(P const& delta)
 	prepareGeometryChange(); // needed??
 	_e->setCenter(dx, dy, true);
 
-#ifndef NDEBUG
+	// not redundant.
 	auto p = _e->center();
+	QGraphicsItem::setPos(p.first, p.second);
+
+#ifndef NDEBUG
 	auto pp = pos();
 	assert(getX(p) == getX(pp));
 	assert(getY(p) == getY(pp));
