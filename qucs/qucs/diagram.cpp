@@ -57,7 +57,8 @@ Diagram::Diagram(Diagram const& p)
     Bounding_x1(p.Bounding_x1),
     Bounding_x2(p.Bounding_x2),
     Bounding_y1(p.Bounding_y1),
-    Bounding_y2(p.Bounding_y2)
+    Bounding_y2(p.Bounding_y2),
+    Name(p.Name) // yikes.
 {
 
     Arcs.clear();

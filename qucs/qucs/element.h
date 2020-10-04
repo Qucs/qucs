@@ -212,8 +212,8 @@ public: // alias
 
 public:
   virtual Element* clone()const = 0;
-  virtual QString const& name() const{return Name;}
-  void setName(QString const& n){ Name = n; }
+//  virtual QString const& name() const{return Name;}
+//  void setName(QString const& n){ Name = n; }
   virtual QString const& description() const{return incomplete_description;}
   virtual char const* iconBasename() const{return nullptr;}
 
@@ -249,8 +249,6 @@ public: // friend ElementGraphics?
   void detachFromModel();
 
 protected: //BUG
-  QString Name; // the label, but sometimes the type. yikes.
-  // std::string _type; // get from symbol?
 
 public:
   Element const* owner() const{return _owner;}

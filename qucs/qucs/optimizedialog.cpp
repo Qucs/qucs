@@ -729,14 +729,15 @@ void OptimizeDialog::slotOK()
 void OptimizeDialog::slotApply()
 {
   if(NameEdit->text().isEmpty())
-    NameEdit->setText(Comp->name());
+    NameEdit->setText(Comp->label());
   else
-  if(NameEdit->text() != Comp->name()) {
+  if(NameEdit->text() != Comp->label()) {
     auto pc = Doc->find_component(NameEdit->text());
     if(pc){
-      NameEdit->setText(Comp->name());
+      NameEdit->setText(Comp->label());
 	 } else {
-      Comp->obsolete_name_override_hack(NameEdit->text());
+		 incomplete();
+      // Comp->obsolete_name_override_hack(NameEdit->text());
       changed = true;
     }
   }

@@ -47,7 +47,7 @@ ComponentListWidgetItem::ComponentListWidgetItem(Element const* e)
 {
 	assert(e);
 	QString File = e->iconBasename();
-	auto Name = e->name();
+	auto Name = e->label();
 	setIcon( QPixmap(":/bitmaps/" + File + ".png"));
 	setText(Name);
 	setToolTip("element: " + Name);

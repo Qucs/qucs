@@ -122,6 +122,7 @@ void MouseActionSelect::showSchematicWidget(QWidget* ew, ElementGraphics* gfx)
 		}else{ untested();
 			incomplete();
 		}
+		delete eew;
 	}else{
 	}
 }

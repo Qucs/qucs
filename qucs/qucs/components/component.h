@@ -157,6 +157,8 @@ public:
   int cy() const{return Element::_cy;}
   std::pair<int, int> center() const{return std::make_pair(Element::_cx, Element::_cy);}
 
+protected:
+  QString Name; // the label, but sometimes the type. yikes.
 
 public:
   QString const& obsolete_model_hack() const{
@@ -190,8 +192,11 @@ public: // BUG
   }
 
 protected:
-public: // ?!
+public: // old mess
   QString const& name() const{ return Name; }
+//  virtual QString const& name() const{return Name;}
+  void setName(QString const& n){ Name = n; }
+
 
 private:
   char const* iconBasename() const{return bitmap_file;}

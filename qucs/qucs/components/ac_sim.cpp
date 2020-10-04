@@ -81,7 +81,7 @@ AC_Sim::~AC_Sim()
 
 AC_Sim::AC_Sim(AC_Sim const& x): CmdElement(x)
 {
-	setName("AC");
+	setTypeName("AC");
 }
 
 #if 0

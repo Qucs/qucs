@@ -84,4 +84,5 @@ QString MSvia::netlist() const
 
   return s + '\n';
 #endif
+  return "";
 }

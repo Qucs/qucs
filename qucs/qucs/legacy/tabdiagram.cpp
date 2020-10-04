@@ -74,8 +74,8 @@ void TabDiagram::paint(ViewPainter *p)
 // ------------------------------------------------------------
 void TabDiagram::paintDiagram(ViewPainter *p)
 {
-	auto cx=Element::cx();
-	auto cy=Element::cy();
+	auto cx=0; Element::cx();
+	auto cy=0; Element::cy();
   // paint all lines
   foreach(Line *pl, Lines) {
     p->Painter->setPen(pl->style);

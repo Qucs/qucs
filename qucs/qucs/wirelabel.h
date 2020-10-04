@@ -31,14 +31,13 @@ class Wire;
 class Node;
 
 
-// seems to be a ConductorLabel?
+// seems to be a ConductorLabel? or just a Symbol?!
 class WireLabel : public Element {
 public:
   WireLabel(const QString& _Name=0, int _cx=0, int _cy=0,
             int _x1=0, int _y1=0, int _Type=isNodeLabel);
   ~WireLabel();
 
-  void paintScheme(QPainter *p) const;
   void setCenter(int x, int y, bool relative=false);
   bool getSelected(int, int);
   void setName(const QString& Name_);

@@ -89,7 +89,11 @@ private:
 
 public:
   QRectF boundingRect() const override;
+  virtual QString const& name() const{return Name;}
+  void setName(QString const& n){ Name = n; }
 
+protected:
+  QString Name; // the label, but sometimes the type. yikes.
 
 public: // ??!
   virtual void paintDiagram(ViewPainter* p);

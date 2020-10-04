@@ -1,24 +1,18 @@
 /***************************************************************************
-                              diagramdialog.cpp
-                             -------------------
-    begin                : Sun Oct 5 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-/*!
-  \class DiagramDialog
-  \brief The DiagramDialog is used to setup and edit diagrams.
-*/
+// DiagramDialog: setup and edit diagrams.
+//
 #include "diagrams/diagramdialog.h"
 #include "qucs.h"
 #include "schematic_doc.h"
@@ -214,8 +208,9 @@ void DiagramDialog::attach(ElementGraphics* g)
     Property2->setMaxLength(2);
     Property2->setMaximumWidth(25);
     Property2->setText("3");
-  }
-  else if(Diag->name() != "Truth") {
+  }else if(Diag->name() == "Truth") {
+	  // ??
+  }else{
     Label1 = new QLabel(tr("Color:"));
     Box2Layout->addWidget(Label1);
     ColorButt = new QPushButton("");
@@ -266,6 +261,7 @@ void DiagramDialog::attach(ElementGraphics* g)
       connect(yAxisBox, SIGNAL(activated(int)), SLOT(slotSetYAxis(int)));
     }
   }
+
   if(Property2) {
     connect(Property2, SIGNAL(textChanged(const QString&)),
 			SLOT(slotSetProp2(const QString&)));
@@ -274,6 +270,7 @@ void DiagramDialog::attach(ElementGraphics* g)
     PropertyBox->setEnabled(false);
     Label2->setEnabled(false);
     Property2->setEnabled(false);
+  }else{
   }
 
   QWidget *Box1 = new QWidget();
@@ -294,7 +291,7 @@ void DiagramDialog::attach(ElementGraphics* g)
   // todo: replace by QTableWidget
   // see https://gist.github.com/ClemensFMN/8955411
 
-    Name=Diag->name();
+    Name = Diag->label();
     connect(ChooseData, SIGNAL(activated(int)), SLOT(slotReadVars(int)));
     ChooseVars = new QTableWidget(1, 3);
     ChooseVars->verticalHeader()->setVisible(false);
@@ -396,8 +393,7 @@ void DiagramDialog::attach(ElementGraphics* g)
       GridOn->setChecked(Diag->xAxis.GridOn);
       if(!Diag->xAxis.GridOn) slotSetGridBox(0);
       connect(GridOn, SIGNAL(stateChanged(int)), SLOT(slotSetGridBox(int)));
-    }
-    else {
+    }else{
       GridOn = 0;
       GridColorButt = 0;
       GridStyleBox = 0;
@@ -740,6 +736,7 @@ void DiagramDialog::attach(ElementGraphics* g)
       QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
       misc::setPickerColor(ColorButt, selectedColor);
     }
+  }else{
   }
 }
 

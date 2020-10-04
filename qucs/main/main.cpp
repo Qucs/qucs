@@ -484,7 +484,7 @@ void createDocData()
         Element *e = prechecked_cast<Element*>(Mod->element()->clone()); // memory leak?!
 	assert(e);
       // 	(Name, File, true);
-        Name = e->name();
+        Name = e->label();
         File = e->iconBasename();
         Component *c = (Component* ) e;
 
@@ -585,7 +585,9 @@ void createListComponentEntry()
 
       s << "=====" << e->label() << "=========\n";
 
-      if(Symbol *c = dynamic_cast<Symbol*>(ce)){ untested();
+      if(auto c = dynamic_cast<Symbol*>(ce)){ untested();
+	ce->setLabel("my_" + c->typeName());
+      }else if(auto c = dynamic_cast<CmdElement*>(ce)){ untested();
 	ce->setLabel("my_" + c->typeName());
       }else{ untested();
 	// not sure.

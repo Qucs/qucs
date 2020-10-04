@@ -80,14 +80,11 @@ public:
   QString  Name;
   QString  Description;
 
-protected:
-public: // HACK
-  void obsolete_name_override_hack(QString x){
-	  unreachable(); // not sure what this was meant to do.
-	  Name = x;
+public:
+  QString typeName() const{ return Name;}
+  void setTypeName(QString const& s){
+	  Name = s;
   }
-  // BUG: a command is not a symbol
-  void setPort(unsigned, Node*){ unreachable(); }
 
 private:
   virtual SchematicModel* scope() override;
