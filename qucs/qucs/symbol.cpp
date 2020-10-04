@@ -159,6 +159,13 @@ void Symbol::paint(ViewPainter* p) const
 }
 
 // global position? rename to netPosition??
+std::pair<int, int> Symbol::nodePosition(unsigned i) const
+{
+	assert(port(i).isConnected());
+	auto p = port(i)->position();	
+	return p;
+}
+// global position? rename to netPosition??
 std::pair<int, int> Symbol::portPosition(unsigned i) const
 {
 //	assert(port(i).isConnected());
