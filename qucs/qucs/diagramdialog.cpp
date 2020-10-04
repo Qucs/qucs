@@ -1036,12 +1036,12 @@ void DiagramDialog::slotButtOK()
   slotButtCancel();
 }
 
-/*!
- Is called if "Apply" button is pressed.
-*/
+// "Apply" button pressed
 void DiagramDialog::slotButtApply()
 {
-  if(Diag->name().at(0) != 'T') {  // not tabular or timing
+  if(Diag->name().at(0) == 'T') {
+	  // tabular or timing
+  }else{
     if(Diag->xAxis.Label.isEmpty())
       Diag->xAxis.Label = ""; // can be not 0 and empty!
     if(xLabel->text().isEmpty()) xLabel->setText("");
@@ -1205,12 +1205,12 @@ void DiagramDialog::slotButtApply()
 // --------------------------------------------------------------------------
 // Is called if "Cancel" button is pressed.
 void DiagramDialog::slotButtCancel()
-{
+{ untested();
 //  Diag->loadGraphData(defaultDataSet);
 //  ((QucsView*)parent())->viewport()->repaint();
   if(transfer){ untested();
 	  done(QDialog::Accepted);
-  }else{
+  }else{ untested();
 	  done(QDialog::Rejected);
   }
 }

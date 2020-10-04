@@ -826,8 +826,13 @@ void ComponentDialog::slotButtOK()
 // Is called if the "Cancel"-button is pressed.
 void ComponentDialog::slotButtCancel()
 {
-  if(changed) done(1);	// changed could have been done before
-  else done(0);		// (by "Apply"-button)
+  if(changed){
+    // changed could have been done before
+    done(1);
+  } else{
+    // (by "Apply"-button)
+    done(0);	
+  }
 }
 
 //-----------------------------------------------------------------
