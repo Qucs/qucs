@@ -229,7 +229,7 @@ void VerilogSchematicFormat::printSymbol(Symbol const* sym, stream_t& s) const
 		comma = "";
 		for(unsigned i=0; i<sym->numPorts(); ++i){
 			trace3("...", sym->label(), i, sym->numPorts());
-			auto p = sym->portPosition(i);
+			auto p = sym->nodePosition(i);
 			auto x = p.first;
 			auto y = p.second;
 			s << comma << "net_" << x << "_" << y;
