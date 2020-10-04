@@ -49,7 +49,7 @@ Param_Sweep::Param_Sweep()
 
   tx = 0;
   ty = y2+1;
-  setName("SW");
+  setTypeName("SW");
 
   // The index of the first 6 properties must not changed. Used in recreate().
   Props.append(new Property("Sim", "", true,

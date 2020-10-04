@@ -20,7 +20,7 @@ Element::Element()
 {
   Type = isDummyElement; // BUG
   x1 = y1 = x2 = y2 = 0; // really?
-  setLabel(name());
+//  setLabel(name());
 
   // BUG
   // Selected = false;
@@ -31,8 +31,8 @@ Element::Element(Element const& e)
    _cx(e._cx),
    _cy(e._cy),
    x1(e.x1), y1(e.y1), x2(e.x2), y2(e.y2), // BUG diagram & whatever.
-   _owner(nullptr), // sic.
-	Name(e.Name) // yikes.
+   _owner(nullptr) // sic.
+	//Name(e.Name) // yikes.
 {
   setLabel(e.label());
 

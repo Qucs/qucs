@@ -63,6 +63,11 @@ public:
   QString toPenString (int);
   QString toBrushString (int);
   int  State;   // state for different mouse operations. yikes
+
+  QString name() const{return Name;}
+
+protected:
+  QString Name; // the type
 };
 
 #endif

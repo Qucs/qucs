@@ -36,7 +36,6 @@ Module::INSTALL pp("simulations", &D);
 
 DC_Sim::DC_Sim(DC_Sim const& s) : CmdElement(s)
 {
-	setName("DC"); // really?
 }
 
 DC_Sim::DC_Sim() : CmdElement()

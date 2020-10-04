@@ -745,7 +745,7 @@ void QucsApp::slotSearchComponent(const QString &searchText)
       for (modit = Comps.constBegin(); modit != Comps.constEnd(); modit++) {
         if (Element const* e = (*modit)->element()) {
           QString File = e->iconBasename();
-          auto Name = e->name();
+          auto Name = e->label();
 
           if((Name.indexOf(searchText, 0, Qt::CaseInsensitive)) != -1) {
             incomplete();

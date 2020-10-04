@@ -44,9 +44,9 @@ WireLabel::~WireLabel()
 }
 
 // ----------------------------------------------------------------
+#if 0 // obsolete
 void WireLabel::paintScheme(QPainter *p) const
 {
-#if 0 // obsolete
   p->drawRect(x1, y1, x2, y2);
 
   // which corner of rectangle should be connected to line ?
@@ -62,8 +62,8 @@ void WireLabel::paintScheme(QPainter *p) const
     else
       p->drawLine(cx(), cy, x1+x2, y1+y2);
   }
-#endif
 }
+#endif
 
 // ----------------------------------------------------------------
 void WireLabel::setCenter(int x_, int y_, bool relative)
@@ -130,7 +130,7 @@ void WireLabel::paint(ViewPainter *p) const
     p->Painter->setPen(QPen(Qt::black,1));
   }
   p->Painter->setFont (newFont);
-  x2 = p->drawText(Name, x1, y1, &y2);
+  x2 = p->drawText("TODO", x1, y1, &y2);
   p->Painter->setFont(f); // restore old font
 
   int xpaint=0, ypaint=4, phi=0;
@@ -204,12 +204,12 @@ void WireLabel::paint(ViewPainter *p) const
 // ----------------------------------------------------------------
 void WireLabel::setName(const QString& Name_)
 {
-  Name = Name_; //?!
+  //setTypeName("wirelabel"); //  = Name_; //?!
   setLabel(Name_);
   
   // get size of text using the screen-compatible metric
   FontMetrics metrics;
-  QSize r = metrics.size(0, Name);
+  QSize r = metrics.size(0, Name_);
   x2 = r.width();
   y2 = r.height()-2;    // remember size of text
 }
@@ -220,10 +220,11 @@ void WireLabel::setName(const QString& Name_)
 // Wire labels use the same format like wires, but with length zero.
 QString WireLabel::save()
 {
+	unreachable();
   QString s("<");
 	s += QString::number(cx())+" "+QString::number(cy())+" "
 	  +  QString::number(cx())+" "+QString::number(cy())
-	  +  " \""+Name +"\" "
+	  +  " \""+label() +"\" "
 	  +  QString::number(x1)+" "+QString::number(y1)+" 0 \""
 	  +  initValue+"\">";
   return s;

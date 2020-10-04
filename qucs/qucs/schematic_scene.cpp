@@ -224,7 +224,6 @@ void SchematicScene::selectedItemsAndBoundingBox(QList<ElementGraphics*>& Elemen
 			BB = BB.united(elt->boundingRect());
 		}
 		ElementGraphics* eg=prechecked_cast<ElementGraphics*>(elt);
-		qDebug() << "selected" << element(eg)->name() << element(eg)->boundingRect();
 		qDebug() << "unite" << BB;
 		assert(eg);
 		if(wireLabel(elt)){
