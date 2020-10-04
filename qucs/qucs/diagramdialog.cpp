@@ -13,7 +13,7 @@
 
 // DiagramDialog: setup and edit diagrams.
 //
-#include "diagrams/diagramdialog.h"
+#include "diagramdialog.h"
 #include "qucs.h"
 #include "schematic_doc.h"
 #include "platform.h"
@@ -106,13 +106,13 @@ DiagramDialog::DiagramDialog(QucsDoc* d)
 }
 
 void DiagramDialog::attach(ElementGraphics* g)
-{
-	auto d=diagram(g);
+{ untested();
+	auto d = diagram(g);
 	assert(d);
   Diag = prechecked_cast<Diagram*>(d);
   assert(Diag);
   Graphs.setAutoDelete(true);
-  copyDiagramGraphs();   // make a copy of all graphs
+  copyDiagramGraphs();   // why??
   if(schematic()){
 	  const SchematicDoc* s = dynamic_cast<const SchematicDoc*>(schematic());
 	  assert(s);
@@ -135,25 +135,21 @@ void DiagramDialog::attach(ElementGraphics* g)
   if((Diag->name() == "Rect") || (Diag->name() == "Curve") || (Diag->name() == "Waveac")) {
     NameY = tr("left Axis");
     NameZ = tr("right Axis");
-  }
-  else if(Diag->name() == "Polar") {
+  } else if(Diag->name() == "Polar") {
     NameY = tr("y-Axis");
-  }
-  else if((Diag->name() == "Smith") || (Diag->name() == "ySmith")) {
+  } else if((Diag->name() == "Smith") || (Diag->name() == "ySmith")) {
     NameY = tr("y-Axis");
-  }
-  else if(Diag->name() == "PS") {
+  } else if(Diag->name() == "PS") {
     NameY = tr("smith Axis");
     NameZ = tr("polar Axis");
-  }
-  else if(Diag->name() == "SP") {
+  } else if(Diag->name() == "SP") {
     NameY = tr("polar Axis");
     NameZ = tr("smith Axis");
-  }
-  else if(Diag->name() == "Rect3D") {
+  } else if(Diag->name() == "Rect3D") {
     NameY = tr("y-Axis");
     NameZ = tr("z-Axis");
   }
+  // whatever->getnames()
   
   all = new QVBoxLayout(this); // to provide neccessary size
   QTabWidget *t = new QTabWidget();
@@ -188,7 +184,7 @@ void DiagramDialog::attach(ElementGraphics* g)
   Box2Layout->setSpacing(5);
 
   // BUG
-  if(Diag->name() == "Tab") {
+  if(Diag->typeName() == "Tab") {
     Label1 = new QLabel(tr("Number Notation: "));
     Box2Layout->addWidget(Label1);
     PropertyBox = new QComboBox();
@@ -693,13 +689,13 @@ void DiagramDialog::attach(ElementGraphics* g)
 
   QPushButton *OkButt = new QPushButton(tr("OK"));
   ButtsLayout->addWidget(OkButt);
-  connect(OkButt, SIGNAL(clicked()), SLOT(slotOK()));
+  connect(OkButt, SIGNAL(clicked()), SLOT(slotButtOK()));
   QPushButton *ApplyButt = new QPushButton(tr("Apply"));
   ButtsLayout->addWidget(ApplyButt);
-  connect(ApplyButt, SIGNAL(clicked()), SLOT(slotApply()));
+  connect(ApplyButt, SIGNAL(clicked()), SLOT(slotButtApply()));
   QPushButton *CancelButt = new QPushButton(tr("Cancel"));
   ButtsLayout->addWidget(CancelButt);
-  connect(CancelButt, SIGNAL(clicked()), SLOT(slotCancel()));
+  connect(CancelButt, SIGNAL(clicked()), SLOT(slotButtCancel()));
 
   OkButt->setDefault(true);
 
@@ -1034,16 +1030,16 @@ void DiagramDialog::slotNewGraph()
 /*!
  Is called if "Ok" button is pressed.
 */
-void DiagramDialog::slotOK()
+void DiagramDialog::slotButtOK()
 {
-  slotApply();
-  slotCancel();
+  slotButtApply();
+  slotButtCancel();
 }
 
 /*!
  Is called if "Apply" button is pressed.
 */
-void DiagramDialog::slotApply()
+void DiagramDialog::slotButtApply()
 {
   if(Diag->name().at(0) != 'T') {  // not tabular or timing
     if(Diag->xAxis.Label.isEmpty())
@@ -1208,19 +1204,22 @@ void DiagramDialog::slotApply()
 
 // --------------------------------------------------------------------------
 // Is called if "Cancel" button is pressed.
-void DiagramDialog::slotCancel()
+void DiagramDialog::slotButtCancel()
 {
 //  Diag->loadGraphData(defaultDataSet);
 //  ((QucsView*)parent())->viewport()->repaint();
-  if(transfer) done(QDialog::Accepted);
-  else done(QDialog::Rejected);
+  if(transfer){ untested();
+	  done(QDialog::Accepted);
+  }else{
+	  done(QDialog::Rejected);
+  }
 }
 
 //-----------------------------------------------------------------
 // To get really all close events (even <Escape> key).
 void DiagramDialog::reject()
-{
-  slotCancel();
+{ untested();
+  slotButtCancel();
 }
 
 // --------------------------------------------------------------------------

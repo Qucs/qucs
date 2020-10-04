@@ -54,11 +54,26 @@ endif
 
 bin_SCRIPTS = qucsdigi${BAT_EXT} qucsveri${BAT_EXT} qucsdigilib${BAT_EXT}
 
-DIALG_MOCHEADERS = settingsdialog.h simmessage.h qucssettingsdialog.h      \
-     labeldialog.h changedialog.h matchdialog.h digisettingsdialog.h \
-     sweepdialog.h searchdialog.h librarydialog.h importdialog.h     \
-     packagedialog.h savedialog.h vasettingsdialog.h                 \
-     exportdialog.h loaddialog.h newprojdialog.h aboutdialog.h
+DIALG_MOCHEADERS = \
+	aboutdialog.h \
+	changedialog.h \
+	diagramdialog.h \
+	digisettingsdialog.h \
+	exportdialog.h \
+	importdialog.h \
+	labeldialog.h \
+	librarydialog.h \
+	loaddialog.h \
+	matchdialog.h \
+	newprojdialog.h \
+	packagedialog.h \
+	qucssettingsdialog.h \
+	savedialog.h \
+	searchdialog.h \
+	settingsdialog.h \
+	simmessage.h \
+	sweepdialog.h \
+	vasettingsdialog.h
 
 UICFILES = ui_searchdialog.h
 BUILT_SOURCES = $(UICFILES)

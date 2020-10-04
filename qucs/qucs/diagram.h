@@ -89,7 +89,8 @@ private:
 
 public:
   QRectF boundingRect() const override;
-  virtual QString const& name() const{return Name;}
+  QString const& name() const{ incomplete(); return Name;}
+  QString const& typeName() const{return Name;}
   void setName(QString const& n){ Name = n; }
 
 protected:
