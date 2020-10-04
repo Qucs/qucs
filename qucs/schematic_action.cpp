@@ -21,12 +21,14 @@
 #include <QFileDialog>
 #include <QUndoCommand>
 #include <QGraphicsSceneEvent>
+#include <QGraphicsItem>
 
 #include "schematic_doc.h"
 #include "qucs.h"
 #include "misc.h"
 #include "globals.h"
 #include "schematic_action.h"
+#include "schematic_dialog.h"
 #include "globals.h"
 
 #include "changedialog.h"
@@ -60,6 +62,7 @@ private: // rectangles?  // this was in MouseActions. BUG. remove
 	int MAy2;
 #endif
 private:
+	void showSchematicWidget(QWidget*, ElementGraphics*);
 	cmd* release_left(QMouseEvent*);
 
 protected:
@@ -85,20 +88,42 @@ QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
 	//  QucsMain->editText->setHidden(true);
 	//  editElement(Doc, Event);
 	Element* elt = nullptr;
+	ElementGraphics* gfx = nullptr;
 	//
 	if(auto i = dynamic_cast<ItemEvent*>(evt)){ untested();
 		// QList<ElementGraphics*> l;
-		elt = element(&i->item());
+		gfx = &i->item();
+		elt = element(gfx);
 		// l.push_back(&i->item());
 	}else{ untested();
 	}
 
-	if(elt){ untested();
-		elt->editElement(&doc());
+	if(!elt){ untested();
+	}else if(auto ew = elt->editElement(&doc())){ untested();
+		trace0("got editElement");
+		assert(gfx);
+		showSchematicWidget(ew, gfx);
 	}else{ untested();
+		trace0("no editElement");
+		incomplete(); // memory leak
 	}
 
 	return nullptr;
+}
+/*--------------------------------------------------------------------------*/
+// not sure I like this.
+void MouseActionSelect::showSchematicWidget(QWidget* ew, ElementGraphics* gfx)
+{
+	if(auto eew=dynamic_cast<SchematicDialog*>(ew)){ untested();
+		assert(gfx);
+		eew->attach(gfx);
+		if(eew->exec() != 1){ untested();
+			// done=true;   // dialog is WDestructiveClose
+		}else{ untested();
+			incomplete();
+		}
+	}else{
+	}
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

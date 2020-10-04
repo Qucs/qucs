@@ -1636,11 +1636,12 @@ std::string Component::paramName(unsigned i) const
   assert( Props.at(i));
   return Props.at(i)->name().toStdString();
 }
-
-// undocommand??
-void Component::editElement(QucsDoc* Doc)
+/*--------------------------------------------------------------------------*/
+QDialog* Component::editElement(QucsDoc* Doc) const
 { untested();
-  ComponentDialog* cd = new ComponentDialog(Doc);
+  trace0("Component::editElement");
+  return new ComponentDialog(Doc); // memory leak?
+#if 0
   cd->attach(this);
   if(cd->exec() != 1){ untested();
     // done=true;   // dialog is WDestructiveClose
@@ -1651,6 +1652,7 @@ void Component::editElement(QucsDoc* Doc)
 //    Doc->setComponentNumber(this); // for ports/power sources
 ///    Doc->Components->append(c); ???
   }
+#endif
 }
 
 QString Component::getParameter(unsigned int)

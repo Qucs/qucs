@@ -83,6 +83,14 @@ inline std::ostream& operator<<(std::ostream& o, QRectF const& r)
 	return o;
 }
 /*--------------------------------------------------------------------------*/
+// really?
+Element* ElementGraphics::detachElement()
+{
+	Element* tmp = _e;
+	_e = nullptr;
+	return tmp;
+}
+/*--------------------------------------------------------------------------*/
 #include "components/component.h" // BUG
 #include <QGraphicsProxyWidget>
 void ElementGraphics::attachElement(Element* e)

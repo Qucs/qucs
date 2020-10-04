@@ -1,16 +1,13 @@
 /***************************************************************************
-                          componentdialog.h  -  description
-                             -------------------
-    begin                : Tue Sep 9 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -46,7 +43,7 @@ public:
   ComponentDialog(QucsDoc*);
   ~ComponentDialog();
 
-  void attach(Component* c);
+  void attach(ElementGraphics* c) override;
 
 private: // slot overrides.
   void slotButtOK();
@@ -99,7 +96,6 @@ private:
   QPushButton *BrowseButt, *EditButt, *ButtAdd, *ButtRem;
   QPushButton *ButtUp, *ButtDown;
   QCheckBox   *disp;
-  Component   *Comp;
   bool        changed;
   int         tx_Dist, ty_Dist;   // remember the text position
   bool        setAllVisible; // used for toggling visibility of properties
@@ -114,6 +110,10 @@ private:
   QComboBox *comboSim, *comboType;
 
   void updateCompPropsList(void);
+
+private:
+  ElementGraphics* _gfx;
+  Component const* _comp;
 };
 
 #endif
