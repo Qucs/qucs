@@ -807,7 +807,6 @@ ElementGraphics* SchematicDoc::itemAt(float x, float y)
 	QPointF p(x, y);
 	QGraphicsItem* I=scene()->itemAt(p, QTransform());
 	if(ElementGraphics* G=dynamic_cast<ElementGraphics*>(I)){ untested();
-		qDebug() << "got something" << element(G)->name();
 		return G;
 	}else{ untested();
 		qDebug() << "miss";

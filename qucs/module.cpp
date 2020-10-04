@@ -50,7 +50,6 @@ Module::~Module () {
 // function returning a modules instance object.
 void Module::registerElement (QString category, Element const* e)
 {
-  qDebug() << "regElt" << category << e->name() << e->description();
   Module * m = new Module (e);
   // m->category = category; // OUCH, incomplete?
   intoCategory(category.toStdString(), m);

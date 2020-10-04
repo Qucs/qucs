@@ -145,7 +145,7 @@ void QucsatorLang::printSubckt(SubcktProto const* p, stream_t& s) const
 void QucsatorLang::printCommand(CmdElement const* c, stream_t& s) const
 {itested();
 	assert(c);
-	s << "." << c->name() << ":" << c->label();
+	s << "." << c->typeName() << ":" << c->label();
 
 	//for(auto p2 : c->params())
 	for(auto p2 : c->Props){ // BUG

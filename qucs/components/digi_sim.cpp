@@ -36,7 +36,7 @@ Digi_Sim::Digi_Sim()
 
   tx = 0;
   ty = y2+1;
-  setName("Digi");
+  setTypeName("Digi");
 
   // Property list must keeps its order !
   Props.append(new Property("Type", "TruthTable", true,

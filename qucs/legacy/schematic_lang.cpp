@@ -382,10 +382,8 @@ void LegacySchematicLanguage::printCommand(CmdElement const* c, stream_t& s) con
 {
 	s << "  <." << c->Name << " ";
 
-	if(c->name().isEmpty()){
-		s << "*";
-	}else{
-		s << c->label(); // label??
+	{
+		s << c->label();
 	}
 	s << " ";
 
@@ -839,9 +837,9 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 	}else if(typestring.c_str()[0] == '.'){
 		std::string type = typestring.substr(1); // drop dot.
 		e = command_dispatcher.clone(type);
-		if(e){
+		if(auto ce = dynamic_cast<CmdElement*>(e)){
 			// should use setType lower down. drop name.
-			e->setName(QString::fromStdString(type));
+			ce->setTypeName(QString::fromStdString(type));
 		}else{
 			untested();
 		}

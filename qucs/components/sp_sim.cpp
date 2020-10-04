@@ -52,7 +52,7 @@ SP_Sim::SP_Sim()
 
   tx = 0;
   ty = y2+1;
-  setName("SP");
+  setTypeName("SP");
 
   // The index of the first 4 properties must not changed. Used in recreate().
   Props.append(new Property("Type", "lin", true,
