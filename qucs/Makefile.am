@@ -54,26 +54,6 @@ endif
 
 bin_SCRIPTS = qucsdigi${BAT_EXT} qucsveri${BAT_EXT} qucsdigilib${BAT_EXT}
 
-DIALG_MOCHEADERS = \
-	aboutdialog.h \
-	changedialog.h \
-	diagramdialog.h \
-	digisettingsdialog.h \
-	exportdialog.h \
-	importdialog.h \
-	labeldialog.h \
-	librarydialog.h \
-	loaddialog.h \
-	matchdialog.h \
-	newprojdialog.h \
-	packagedialog.h \
-	qucssettingsdialog.h \
-	savedialog.h \
-	searchdialog.h \
-	settingsdialog.h \
-	simmessage.h \
-	sweepdialog.h \
-	vasettingsdialog.h
 
 UICFILES = ui_searchdialog.h
 BUILT_SOURCES = $(UICFILES)
@@ -118,37 +98,10 @@ libqucs_la_SOURCES = \
 
 libqucs_la_SOURCES += qucs_.qrc
 
-
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs-lib
 
-noinst_HEADERS = \
-	actions.h \
-	command.h \
-	element.h \
-	exception.h \
-	imagewriter.h \
-  	imagewriter.h \
-	language.h \
-	misc.h \
-	mnemo.h \
-	module.h \
-	port.h \
-	node.h \
-	nodemap.h \
-	printerwriter.h \
-	projectView.h \
-	qt_compat.h \
-	qucsdoc.h \
-	symbol.h \
-	syntax.h \
-	schematic_lang.h \
-	schematic_symbol.h \
-	some_font_stuff.h \
-	trace.h \
-	viewpainter.h \
-	wire.h \
-	wirelabel.h \
-	$(MOCHEADERS)
+
+noinst_HEADERS += $(MOCHEADERS)
 
 # must be installed. but later
 noinst_HEADERS += \

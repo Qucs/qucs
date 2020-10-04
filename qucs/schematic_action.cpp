@@ -122,7 +122,7 @@ void MouseActionSelect::showSchematicWidget(QWidget* ew, ElementGraphics* gfx)
 		}else{ untested();
 			incomplete();
 		}
-		delete eew;
+		//delete eew; // crash. why?
 	}else{
 	}
 }
