@@ -111,8 +111,9 @@ DiagramDialog::DiagramDialog(QucsDoc* d)
   setAttribute(Qt::WA_DeleteOnClose);
 }
 
-void DiagramDialog::attach(Object* d)
+void DiagramDialog::attach(ElementGraphics* g)
 {
+	auto d=diagram(g);
 	assert(d);
   Diag = prechecked_cast<Diagram*>(d);
   assert(Diag);

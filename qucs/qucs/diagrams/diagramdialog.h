@@ -1,9 +1,6 @@
 /***************************************************************************
-                              diagramdialog.h
-                             -----------------
-    begin                : Sun Oct 5 2003
     copyright            : (C) 2003 by Michael Margraf
-	                            2018 Felix Salfelder / QUCS team
+	                            2018, 2020 Felix Salfelder / QUCS team
  ***************************************************************************/
 
 /***************************************************************************
@@ -47,10 +44,11 @@ public:
   DiagramDialog(QucsDoc* d);
   ~DiagramDialog();
 
-
   bool loadVarData(const QString&);
   void copyDiagramGraphs();
-  void attach(Object* d);
+
+private: // SchematicDialog
+  void attach(ElementGraphics* gfx) override;
 
 private slots:
   void slotReadVars(int);
