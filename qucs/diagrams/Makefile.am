@@ -23,13 +23,13 @@
 #
 
 # private library
-qucsdir=${pkglibdir}
+qucsdir = ${pkglibdir}
 
 qucs_LTLIBRARIES = diagrams.la
 
 include ../../common.mk
 
-# MOCHEADERS = diagramdialog.h markerdialog.h
+# MOCHEADERS = diagramdialog.h  markerdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 diagrams_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC

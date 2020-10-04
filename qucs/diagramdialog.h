@@ -39,7 +39,7 @@ class QListWidget;
 
 
 class DiagramDialog : public SchematicDialog {
-	// Q_OBJECT // does not work. StaticMetaobject...
+	Q_OBJECT // does not work. StaticMetaobject...??
 public:
   DiagramDialog(QucsDoc* d);
   ~DiagramDialog();
@@ -57,9 +57,9 @@ private slots:
   void slotSelectGraph(QListWidgetItem*);
   void slotNewGraph();
   void slotDeleteGraph();
-  void slotOK();
-  void slotApply();
-  void slotCancel();
+  void slotButtOK();
+  void slotButtApply();
+  void slotButtCancel();
   void slotSetColor();
   void slotSetGridColor();
   void slotResetToTake(const QString&);
