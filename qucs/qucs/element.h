@@ -54,6 +54,7 @@ class WireLabel;
 class SchematicDoc;
 class SchematicModel;
 class Symbol;
+class QDialog;
 
 struct Line {
 	Line(Line const&) = default;
@@ -198,7 +199,7 @@ public: // other stuff
   virtual std::pair<int, int> center()const;
   virtual void getCenter(int&, int&) const; // BUG
   virtual void paint(ViewPainter*) const = 0;
-  virtual void editElement(QucsDoc*);
+  virtual QDialog* editElement(QucsDoc*) const { return nullptr; }
 
   // really?
   virtual QWidget* newWidget() {return nullptr;}
@@ -253,6 +254,7 @@ protected: //BUG
 
 public:
   Element const* owner() const{return _owner;}
+  Element* mutable_owner() const{return _owner;}
 
 protected:
   Element* owner(){ return _owner;}
@@ -261,7 +263,7 @@ public:
   void setOwner(Element* e) { _owner=e;}
 
 private:
-  Element* _owner;
+  Element* _owner; // should probably be const all the way
 }; // Element
 
 inline SchematicModel const* Element::scope() const

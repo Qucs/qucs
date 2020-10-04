@@ -1,9 +1,6 @@
 /***************************************************************************
-                             componentdialog.cpp
-                             -------------------
-    begin                : Tue Sep 9 2003
     copyright            : (C) 2003, 2004 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -51,13 +48,17 @@ ComponentDialog::ComponentDialog(QucsDoc* d) : SchematicDialog(d)
   setWindowTitle(tr("Edit Component Properties"));
 }
 
-void ComponentDialog::attach(Component* c)
+void ComponentDialog::attach(ElementGraphics* gfx)
 {
-  if(Comp){
+  trace0("ComponentDialog::attach");
+  auto Comp=component(gfx);
+  assert(Comp);
+  if(_comp){
     incomplete();
   }else{
   }
-  Comp = c;
+  _comp = Comp;
+  _gfx = gfx;
   QString s;
   setAllVisible = true; // state when toggling properties visibility
 
@@ -432,7 +433,7 @@ void ComponentDialog::attach(Component* c)
   connect(cancel, SIGNAL(clicked()), SLOT(slotButtCancel()));
 
   // ------------------------------------------------------------
-  CompNameEdit->setText(Comp->name());
+  CompNameEdit->setText(Comp->label());
   showName->setChecked(Comp->showName);
   changed = false;
 
@@ -458,10 +459,11 @@ void ComponentDialog::attach(Component* c)
       // the 'pp' is the lasted property stepped over while filling the Swep tab
   //    if(p == pp)
   //      break;
-      if(p->display)
+      if(p->display){
         s = tr("yes");
-      else
+      }else{
         s = tr("no");
+      }
 
       // add Props into TableWidget
       qDebug() << " Loading Comp->Props :" << p->Name << p->Value << p->display << p->Description ;
@@ -523,9 +525,10 @@ bool ComponentDialog::eventFilter(QObject *obj, QEvent *event)
   return QDialog::eventFilter(obj, event); // standard event processing
 }
 
-// Updates component property list. Useful for MultiViewComponents
+// Updates component property list. Useful for MultiViewComponents (really?)
 void ComponentDialog::updateCompPropsList()
 {
+ auto Comp=_comp;
     int last_prop=0; // last property not to put in ListView
         // ...........................................................
         // if simulation component: .TR, .AC, .SW, (.SP ?)
@@ -550,10 +553,11 @@ void ComponentDialog::updateCompPropsList()
       // the 'pp' is the lasted property stepped over while filling the Swep tab
   //    if(p == pp)
   //      break;
-      if(p->display)
+      if(p->display){
         s = tr("yes");
-      else
+      }else{
         s = tr("no");
+      }
 
       // add Props into TableWidget
       qDebug() << " Loading Comp->Props :" << p->Name << p->Value << p->display << p->Description ;
@@ -582,10 +586,12 @@ void ComponentDialog::updateCompPropsList()
     if(prop->rowCount() > 0) {
         prop->setCurrentItem(prop->item(0,0));
         slotSelectProperty(prop->item(0,0));
+    }else{
     }
 
     if (row < prop->rowCount()-1) {
         prop->setRowCount(row);
+    }else{
     }
 }
 
@@ -595,6 +601,7 @@ void ComponentDialog::updateCompPropsList()
 // It transfers the values to the right side for editing.
 void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
 {
+  auto Comp=_comp;
   if(item == 0) return;
   item->setSelected(true);  // if called from elsewhere, this was not yet done
 
@@ -605,16 +612,16 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
   QString show  = prop->item(item->row(),2)->text();
   QString desc  = prop->item(item->row(),3)->text();
 
-  if(show == tr("yes"))
+  if(show == tr("yes")){
     disp->setChecked(true);
-  else
+  }else{
     disp->setChecked(false);
+  }
 
   if(name == "File") {
     EditButt->setEnabled(true);
     BrowseButt->setEnabled(true);
-  }
-  else {
+  }else{
     EditButt->setEnabled(false);
     BrowseButt->setEnabled(false);
   }
@@ -637,8 +644,7 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
     ComboEdit->setVisible(false);
 
     NameEdit->setFocus();   // edit QLineEdit
-  }
-  else {  // show standard line edit (description and value)
+  }else{  // show standard line edit (description and value)
     ButtAdd->setEnabled(false);
     ButtRem->setEnabled(false);
     ButtUp->setEnabled(false);
@@ -686,8 +692,7 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
       edit->setVisible(false);
       ComboEdit->setVisible(true);
       ComboEdit->setFocus();
-    }
-    else {
+    }else{
       edit->setVisible(true);
       ComboEdit->setVisible(false);
       edit->setFocus();   // edit QLineEdit
@@ -697,7 +702,7 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
 
 // -------------------------------------------------------------------------
 void ComponentDialog::slotApplyChange(const QString& Text)
-{
+{ untested();
   /// \bug what if the table have no items?
   // pick selected row
   QList<QTableWidgetItem *> items = prop->selectedItems();
@@ -736,8 +741,6 @@ void ComponentDialog::slotApplyProperty()
 
   QString name  = prop->item(row, 0)->text();
   QString value = prop->item(row, 1)->text();
-
- 
 
   if (!ComboEdit->isHidden())   // take text from ComboBox ?
     edit->setText(ComboEdit->currentText());
@@ -834,21 +837,62 @@ void ComponentDialog::reject()
   slotButtCancel();
 }
 
+#include <QUndoCommand>
+
+class SwapSymbolCommand : public QUndoCommand {
+  SwapSymbolCommand() = delete;
+  SwapSymbolCommand(SwapSymbolCommand const&) = delete;
+public:
+  ~SwapSymbolCommand(){
+    delete _elt;
+  }
+  SwapSymbolCommand(ElementGraphics* g, Element* e)
+    : _gfx(g), _elt(e)
+  {
+    assert(e);
+    setText("Swap Element " + e->label());
+  }
+private:
+  void undo(){
+    redo();
+  }
+  void redo(){
+    assert(_gfx);
+    _gfx->hide();
+    if(1){
+      Element* tmp = _gfx->detachElement();
+      _gfx->attachElement(_elt);
+      _elt = tmp;
+    }
+    _gfx->show();
+  }
+private:
+  ElementGraphics* _gfx;
+  Element* _elt;
+};
 // -------------------------------------------------------------------------
 // Is called, if the "Apply"-button is pressed.
 void ComponentDialog::slotApplyInput()
 {
+  assert(_comp);
+  auto C = _comp->clone();
+  C->setOwner( _comp->mutable_owner() );
+  auto Comp = prechecked_cast<Component*>(C);
+  assert(Comp);
+
   qDebug() << " \n == Apply ";
   if(Comp->showName != showName->isChecked()) {
     Comp->showName = showName->isChecked();
     changed = true;
+  }else{
   }
 
   QString tmp;
-  Component *pc;
-  if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->name());
-  else
-  if(CompNameEdit->text() != Comp->name()) {
+  Component *pc = nullptr;
+  if(CompNameEdit->text().isEmpty()){
+    CompNameEdit->setText(Comp->name());
+  }else if(CompNameEdit->text() != Comp->label()) {
+    trace2("Apply", Comp->label(), CompNameEdit->text());
 #if 0
     for(pc = schematic()->components().first(); pc!=0;
         pc=schematic()->components().next()){
@@ -857,13 +901,13 @@ void ComponentDialog::slotApplyInput()
       }else{
       }
     }
+#endif
     if(pc){
       CompNameEdit->setText(Comp->name());
-    } else {
-      Comp->obsolete_name_override_hack(CompNameEdit->text());
+    } else if (Comp->label() != CompNameEdit->text()) {
+      Comp->setLabel(CompNameEdit->text().toStdString());
       changed = true;
     }
-#endif
   }
 
   /*! Walk the original Comp->Props and compare with the
@@ -957,8 +1001,7 @@ void ComponentDialog::slotApplyInput()
                << pp->Description;
 
       pp = Comp->Props.next();
-    }
-    else {
+    }else{
       // If a value list is used, the properties "Start" and "Stop" are not
       // used. -> Call them "Symbol" to omit them in the netlist.
       pp->Name = "Symbol";
@@ -1030,18 +1073,23 @@ void ComponentDialog::slotApplyInput()
          if(pp->display != display) {
              pp->display = display;
              changed = true;
+         }else{
          }
+
          if(pp->Value != value) {
             pp->Value = value;
             changed = true;
+         }else{
          }
+
          if(pp->Name != name) {
            pp->Name = name;   // override if previous one was removed
            changed = true;
+         }else{
          }
+
          pp->Description = desc;
-         }
-       else {
+       } else {
          // if properties where added in the dialog
          // -> create new on the Comp
          Q_ASSERT(prop->rowCount() >= 0);
@@ -1072,13 +1120,28 @@ void ComponentDialog::slotApplyInput()
     if(tx_Dist != 0) {
       Comp->tx += tx_Dist-dx;
       tx_Dist = dx;
+    }else{
     }
     if(ty_Dist != 0) {
       Comp->ty += ty_Dist-dy;
       ty_Dist = dy;
+    }else{
     }
 
-    schematic()->recreateSymbol(Comp);
+
+    auto pos = _gfx->pos();
+
+    auto cmd = new SwapSymbolCommand(_gfx, Comp);
+    execute(cmd);
+
+    assert(_gfx->pos() == pos); // for now.
+
+    _comp = Comp = component(_gfx);
+
+    // BUG: cannot modify while shown.
+    // maybe do in ElementGraohics::attach?
+//    schematic()->recreateSymbol(Comp);
+//
     auto V=schematic()->viewport();
     assert(V);
     V->repaint();
@@ -1086,6 +1149,7 @@ void ComponentDialog::slotApplyInput()
       Q_ASSERT(prop->rowCount() >= 0);
       updateCompPropsList(); // of component we need to update properties
     }
+  }else{
   }
 }
 
@@ -1363,6 +1427,7 @@ void ComponentDialog::slotSimTypeChange(int Type)
 
 // -------------------------------------------------------------------------
 // Is called when "Start", "Stop" or "Number" is edited.
+// // BUG: transient only
 void ComponentDialog::slotNumberChanged(const QString&)
 {
   QString Unit, tmp;
@@ -1400,6 +1465,7 @@ void ComponentDialog::slotNumberChanged(const QString&)
 }
 
 // -------------------------------------------------------------------------
+// // BUG: transient only
 void ComponentDialog::slotStepChanged(const QString& Step)
 {
   QString Unit;
@@ -1438,10 +1504,11 @@ void ComponentDialog::slotStepChanged(const QString& Step)
 // Is called if return is pressed in LineEdit "Parameter".
 void ComponentDialog::slotParamEntered()
 {
-  if(editValues->isEnabled())
+  if(editValues->isEnabled()){ untested();
     editValues->setFocus();
-  else
+  }else{ untested();
     editStart->setFocus();
+  }
 }
 
 // -------------------------------------------------------------------------

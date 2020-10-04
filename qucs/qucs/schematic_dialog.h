@@ -1,8 +1,5 @@
 /***************************************************************************
-                          schematic_dialog.h
-                             -------------------
-    begin                : 2018
-    copyright            : Felix Salfelder
+    copyright            : 2018, 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -22,22 +19,23 @@
 #include "object.h"
 #include "platform.h"
 
-class SchematicDoc;
-
-class QValidator;
+class QCheckBox;
+class QComboBox;
+class QGraphicsItem;
 class QIntValidator;
+class QLabel;
+class QLineEdit;
+class QPushButton;
+class QRegExp;
 class QRegExpValidator;
 class QTableWidget;
 class QTableWidgetItem;
-class QLabel;
-class QLineEdit;
-class QCheckBox;
-class QRegExp;
-class QComboBox;
-class QPushButton;
-class QVBoxLayout;
+class QUndoCommand;
 class QucsDoc;
-
+class QValidator;
+class QVBoxLayout;
+class SchematicDoc;
+class ElementGraphics;
 
 class SchematicDialog : public QDialog {
    Q_OBJECT //?
@@ -46,7 +44,7 @@ public:
   virtual ~SchematicDialog(){}
 
   // slot?
-  virtual void attach(Object*){ incomplete(); } // not yet.
+  virtual void attach(ElementGraphics*){ assert(false); unreachable(); }
 
 private slots: // BUG: sane interface!!
   virtual void slotButtOK(){incomplete();}
@@ -93,6 +91,7 @@ protected:
   SchematicDoc* schematic(){ untested();
 	  return Doc;
   }
+  void execute(QUndoCommand* c);
 
 private:
   SchematicDoc* Doc;
