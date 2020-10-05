@@ -41,7 +41,7 @@ public: //??!
 
 private: // Element override
   void    paint(ViewPainter*) const;
-  QDialog* editElement(QucsDoc*) const override;
+  QDialog* schematicWidget(QucsDoc*) const override;
 
 private: // Symbol interface.
   virtual void recreate() {}; // obsolete?

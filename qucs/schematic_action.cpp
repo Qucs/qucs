@@ -99,7 +99,7 @@ QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
 	}
 
 	if(!elt){ untested();
-	}else if(auto ew = elt->editElement(&doc())){ untested();
+	}else if(auto ew = elt->schematicWidget(&doc())){ untested();
 		trace0("got editElement");
 		assert(gfx);
 		showSchematicWidget(ew, gfx);

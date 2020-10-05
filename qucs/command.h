@@ -35,6 +35,7 @@ private:
 	  return e;
   }
   void    paint(ViewPainter*) const;
+  QDialog* schematicWidget(QucsDoc* Doc) const;
 public:
   void    paintScheme(SchematicDoc*) const;
   void    print(ViewPainter*, float);

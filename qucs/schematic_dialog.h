@@ -19,82 +19,70 @@
 #include "object.h"
 #include "platform.h"
 
-class QCheckBox;
-class QComboBox;
-class QGraphicsItem;
-class QIntValidator;
-class QLabel;
-class QLineEdit;
-class QPushButton;
-class QRegExp;
-class QRegExpValidator;
-class QTableWidget;
+class QucsDoc;
 class QTableWidgetItem;
 class QUndoCommand;
-class QucsDoc;
-class QValidator;
-class QVBoxLayout;
-class SchematicDoc;
 class ElementGraphics;
+class SchematicDoc;
 
 class SchematicDialog : public QDialog {
-   Q_OBJECT //?
+	Q_OBJECT //?
 public:
-  SchematicDialog(QucsDoc* d);
-  virtual ~SchematicDialog(){}
+	SchematicDialog(QucsDoc* d);
+	virtual ~SchematicDialog(){}
 
-  // slot?
-  virtual void attach(ElementGraphics*){ assert(false); unreachable(); }
+	// slot?
+	virtual void attach(ElementGraphics*){ assert(false); unreachable(); }
 
 private slots: // BUG: sane interface!!
-  virtual void slotButtOK(){incomplete();}
-  virtual void slotButtCancel(){incomplete();}
-  virtual void slotSelectProperty(QTableWidgetItem * /*item*/){incomplete();}
-  virtual void slotApplyInput(){incomplete();}
-  virtual void slotApplyState(int /* State */){incomplete();}
-  virtual void slotBrowseFile(){incomplete();}
-  virtual void slotEditFile(){incomplete();}
-  virtual void slotApplyChange(const QString& /*Text*/){incomplete();}
-  virtual void slotApplyProperty(){incomplete();}
-  virtual void slotApplyPropName(){incomplete();}
+	virtual void slotButtOK(){incomplete();}
+	virtual void slotButtCancel(){incomplete();}
+	virtual void slotSelectProperty(QTableWidgetItem * /*item*/){incomplete();}
+	virtual void slotApplyInput(){incomplete();}
+	virtual void slotApplyState(int /* State */){incomplete();}
+	virtual void slotBrowseFile(){incomplete();}
+	virtual void slotEditFile(){incomplete();}
+	virtual void slotApplyChange(const QString& /*Text*/){incomplete();}
+	virtual void slotApplyProperty(){incomplete();}
+	virtual void slotApplyPropName(){incomplete();}
 
-  virtual void slotButtAdd(){incomplete();}
-  virtual void slotButtRem(){incomplete();}
+	virtual void slotButtAdd(){incomplete();}
+	virtual void slotButtRem(){incomplete();}
 
-  virtual void slotButtUp(){incomplete();}
-  virtual void slotButtDown(){incomplete();}
+	virtual void slotButtUp(){incomplete();}
+	virtual void slotButtDown(){incomplete();}
 
-  virtual void slotSimTypeChange(int){incomplete();}
-  virtual void slotNumberChanged(const QString&){incomplete();}
-  virtual void slotStepChanged(const QString&){incomplete();}
+	virtual void slotSimTypeChange(int){incomplete();}
+	virtual void slotNumberChanged(const QString&){incomplete();}
+	virtual void slotStepChanged(const QString&){incomplete();}
 
-  virtual void slotParamEntered(){incomplete();}
-  virtual void slotSimEntered(int){incomplete();}
-  virtual void slotValuesEntered(){incomplete();}
-  virtual void slotStartEntered(){incomplete();}
-  virtual void slotStopEntered(){incomplete();}
-  virtual void slotStepEntered(){incomplete();}
-  virtual void slotNumberEntered(){incomplete();}
-  virtual void slotHHeaderClicked(int /*headerIdx*/){incomplete();}
+	virtual void slotParamEntered(){incomplete();}
+	virtual void slotSimEntered(int){incomplete();}
+	virtual void slotValuesEntered(){incomplete();}
+	virtual void slotStartEntered(){incomplete();}
+	virtual void slotStopEntered(){incomplete();}
+	virtual void slotStepEntered(){incomplete();}
+	virtual void slotNumberEntered(){incomplete();}
+	virtual void slotHHeaderClicked(int /*headerIdx*/){incomplete();}
 
 public:
-  void enableButtons(){}
-  void disableButtons(){}
+	void enableButtons(){}
+	void disableButtons(){}
 
-protected slots:
-    virtual void reject(){}
-    virtual bool eventFilter(QObject * /*obj*/, QEvent * /*event*/){return false;}
+	protected slots:
+		virtual void reject(){}
+	virtual bool eventFilter(QObject * /*obj*/, QEvent * /*event*/){return false;}
 
 private:
-  virtual void updateCompPropsList(void){}
+	virtual void updateCompPropsList(void){}
 protected:
-  SchematicDoc* schematic(){ untested();
-	  return Doc;
-  }
-  void execute(QUndoCommand* c);
+	SchematicDoc* schematic(){ untested();
+		return Doc;
+	}
+	void execute(QUndoCommand* c);
 
 private:
-  SchematicDoc* Doc;
+	SchematicDoc* Doc;
 };
 
 #endif
