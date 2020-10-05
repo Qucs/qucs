@@ -223,12 +223,7 @@ private:
 private: // (hopefully) obsolete callbacks
   void recreateCallback();
 
-	QRectF boundingRect() const override {
-		unreachable();
-		// QRectF b(cx+x1, cy+y1, x2-x1, y2-y1);
-		QRectF b(x1, y1, x2-x1, y2-y1);
-		return b;
-	}
+	QRectF boundingRect() const override;
 
 public: // BUG
   // center and relative boundings

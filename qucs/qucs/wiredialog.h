@@ -15,28 +15,17 @@
 #ifndef QUCS_WIRE_DIALOG_H
 #define QUCS_WIRE_DIALOG_H
 
-#include "symbol.h"
-#include "platform.h"
+// #include "platform.h"
 #include "schematic_dialog.h"
 
 #include <QDialog>
 #include <assert.h>
 
-class Schematic;
-
-class QValidator;
-class QIntValidator;
-class QRegExpValidator;
-class QTableWidget;
-class QTableWidgetItem;
-class QLabel;
 class QLineEdit;
-class QCheckBox;
-class QRegExp;
-class QComboBox;
-class QPushButton;
+class QValidator;
 class QVBoxLayout;
-
+class Schematic;
+class Symbol;
 
 class WireDialog : public SchematicDialog {
 public:

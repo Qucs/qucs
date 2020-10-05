@@ -44,9 +44,11 @@ void WireDialog::attach(ElementGraphics* gfx)
   this->setLayout(_all);
   _all->setContentsMargins(1,1,1,1);
   QGridLayout *gp1;
+  gp1 = new QGridLayout();
+  _all->addLayout(gp1);
 
   // ...........................................................
-  // BUG: memory leak?
+  // BUG: memory leak? CHECK: does addWidget transfer??
   gp1->addWidget(new QLabel(Comp->description()), 0,0,1,2);
 
   QHBoxLayout *h5 = new QHBoxLayout;
@@ -56,6 +58,10 @@ void WireDialog::attach(ElementGraphics* gfx)
 
   CompNameEdit = new QLineEdit;
   h5->addWidget(CompNameEdit);
+
+  QRegExp expr;
+  expr.setPattern("[\\w_]+");  // valid expression for property 'NameEdit'
+  _labelValidator = new QRegExpValidator(expr, this);
 
   CompNameEdit->setValidator(_labelValidator);
   connect(CompNameEdit, SIGNAL(returnPressed()), SLOT(slotButtOK()));
@@ -73,11 +79,6 @@ void WireDialog::attach(ElementGraphics* gfx)
   QWidget *vboxPropsL = new QWidget;
   QVBoxLayout *vL = new QVBoxLayout;
   vboxPropsL->setLayout(vL);
-
-  QRegExp expr;
-  expr.setPattern("[\\w_]+");  // valid expression for property 'NameEdit'
-  _labelValidator = new QRegExpValidator(expr, this);
-
 
 
   // ...........................................................
