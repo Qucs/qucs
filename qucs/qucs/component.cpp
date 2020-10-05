@@ -1633,6 +1633,7 @@ std::string Component::paramValue(unsigned i) const
   assert( Props.at(i));
   return Props.at(i)->value().toStdString();
 }
+/*--------------------------------------------------------------------------*/
 std::string Component::paramName(unsigned i) const
 {
   assert( Props.at(i));
@@ -1643,24 +1644,13 @@ QDialog* Component::editElement(QucsDoc* Doc) const
 { untested();
   trace0("Component::editElement");
   return new ComponentDialog(Doc); // memory leak?
-#if 0
-  cd->attach(this);
-  if(cd->exec() != 1){ untested();
-    // done=true;   // dialog is WDestructiveClose
-  }else{ untested();
-    incomplete();
-//    Doc->Components->findRef(c); ???
-//    Doc->Components->take(); ???
-//    Doc->setComponentNumber(this); // for ports/power sources
-///    Doc->Components->append(c); ???
-  }
-#endif
 }
-
-QString Component::getParameter(unsigned int)
+/*--------------------------------------------------------------------------*/
+std::string Component::getParameter(unsigned i) const
 { untested();
   incomplete();
-  return "INCOMPLETE";
+  return Props.at(i)->value().toStdString();
 }
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 // vim:ts=8:sw=2:noet

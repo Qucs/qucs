@@ -91,6 +91,7 @@ public: // Parameters
 		throw ExceptionCantFind(std::to_string(i), label().toStdString());
 	}
 	virtual std::string getParameter(std::string const& w) const;
+	virtual std::string getParameter(unsigned) const;
 
 	// yikes there's param{Name,Value} already..
 	virtual std::string paramValue(unsigned i) const;
