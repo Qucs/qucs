@@ -605,6 +605,8 @@ std::string Component::getParameter(std::string const& name) const
     return std::to_string(m);
   }else if(name=="$hflip"){itested();
     return "1";
+  }else if(name=="$mfactor"){ untested();
+    return isActive?"1":"0";
   }else{ untested();
     return Symbol::getParameter(name);
   }

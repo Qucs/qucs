@@ -189,7 +189,7 @@ public: // make old variables accessible
 		Type = t;
 	}
 
-  virtual QRectF boundingRect() const;
+  virtual QRectF boundingRect() const; // BUG.
 public: // other stuff
   virtual bool showLabel() const{ return true; }
   //virtual bool showParam(int i) const{ return true; } // later

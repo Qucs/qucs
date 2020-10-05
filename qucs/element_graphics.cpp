@@ -19,6 +19,7 @@
 #include "element.h"
 #include "symbol.h"
 #include "schematic_scene.h"
+#include "schematic_model.h"
 #include <QGraphicsScene>
 #include "element_graphics.h"
 #include "io.h"
@@ -122,9 +123,19 @@ void ElementGraphics::attachElement(Element* e)
 	}else{
 	}
 
+	auto sym = dynamic_cast<Symbol const*>(_e);
+
 	if (auto w=_e->newWidget()){
 		auto p = new QGraphicsProxyWidget(this);
 		p->setWidget(w);
+	}else if(!sym){
+	}else if(auto s = sym->subckt()){
+		trace0("child gfx");
+		for(auto i : s->components()){ untested();
+			trace0("child gfx clone");
+			auto e=new ElementGraphics(i);
+			e->setParentItem(this);
+		}
 	}else{
 	}
 }

@@ -45,7 +45,23 @@ class NodeMap;
 class DiagramList : public Q3PtrList<Diagram> {
 };
 // TODO: refactor here
-class ComponentList : public Q3PtrList<Component> {
+class ComponentList : public std::list<Symbol*> {
+private:
+	ComponentList(ComponentList const&) = delete;
+public:
+	explicit ComponentList() {}
+	~ComponentList() {
+		while(!empty()){
+			delete(front());
+			pop_front();
+		}
+	}
+
+public:
+	void pushBack(Symbol*s) {push_back(s);}
+	void append(Symbol*s) {push_back(s);}
+	bool isEmpty() const { return empty(); }
+	void removeRef(Symbol* s) { erase(std::find(begin(), end(), s)); }
 	// void first(){} // GOAL: hide, still compile.
 };
 // TODO: refactor here

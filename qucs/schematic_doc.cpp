@@ -245,9 +245,9 @@ void SchematicDoc::insertComponent(Component *c)
         // determines the name by looking for names with the same
         // prefix and increment the number
         for(auto pc : components()){ untested();
-            if(pc->name().left(len) == c->name())
+            if(pc->label().left(len) == c->name())
             { untested();
-                s = pc->name().right(pc->name().length()-len);
+                s = pc->label().right(pc->label().length()-len);
                 z = s.toInt(&ok);
                 if(ok) if(z >= max) max = z + 1;
             }

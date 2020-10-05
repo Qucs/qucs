@@ -147,7 +147,7 @@ void SchematicModel::pushBack(Element* what)
 	trace2("SchematicModel::pushBack", what->label(), this);
 	if(auto c=component(what)){
 		connect(c);
-		components().append(c);
+		components().push_back(c);
 	}else if(auto w=wire(what)){
 	  connect(w);
 	  // why not components??
@@ -161,6 +161,9 @@ void SchematicModel::pushBack(Element* what)
 		}else{
 			// possibly a subcircuit model? ignore commands.
 		}
+	}else if(auto s=dynamic_cast<Symbol*>(what)){
+		connect(s);
+		components().push_back(s);
 	}else if(auto s=dynamic_cast<SchematicSymbol*>(what)){
 		(void)s;
 		assert(false);

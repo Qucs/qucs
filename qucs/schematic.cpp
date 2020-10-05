@@ -828,7 +828,7 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
   ymin=INT_MAX;
   xmax=INT_MIN;
   ymax=INT_MIN;
-  WireLabel *pl;
+//  WireLabel *pl;
 
   if(components().isEmpty())
     if(wires().isEmpty())
@@ -843,6 +843,9 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
   float Corr = textCorr;
   int x1, y1, x2, y2;
   // find boundings of all components
+
+  incomplete();
+#if 0
   for(auto pc : components()) {itested();
     pc->entireBounds(x1, y1, x2, y2, Corr);
     if(x1 < xmin) xmin = x1;
@@ -850,6 +853,7 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
     if(y1 < ymin) ymin = y1;
     if(y2 > ymax) ymax = y2;
   }
+#endif
 
   // find boundings of all wires
   for(auto pw : wires()) {itested();
@@ -1511,10 +1515,12 @@ int SchematicDoc::adjustPortNumbers()
   }else{ untested();
       // go through all components in a schematic
       for(auto pc : components()){ untested();
-         if(pc->obsolete_model_hack() == "Port") { // BUG. move to device.
+         if(pc->typeName() == "Port") { // BUG. move to device.
              countPort++;
 
-             Str = pc->Props.getFirst()->Value;
+             // Str = pc->Props.getFirst()->Value;
+	     // try
+             Str = QString::fromStdString(pc->getParameter("portname"));
              // search for matching port symbol
              for(pp = symbolPaintings().first(); pp!=0; pp = symbolPaintings().next())
              { untested();
@@ -1525,10 +1531,10 @@ int SchematicDoc::adjustPortNumbers()
              }
 
              if(pp) { untested();
-                 ((PortSymbol*)pp)->nameStr = pc->name();
+                 ((PortSymbol*)pp)->nameStr = pc->label();
              } else { untested();
 	         Painting* ps=painting_dispatcher.clone("PortSymbol");
-                 ps->setSomeArgsHack(x1, y2, Str, pc->name());
+                 ps->setSomeArgsHack(x1, y2, Str, pc->label());
                  symbolPaintings().append(ps);
                  y2 += 40;
              }
@@ -2124,8 +2130,9 @@ void PaintingList::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const
 Component* SchematicDoc::find_component(QString const& n)
 { untested();
     for(auto pc : components()){ untested();
-       if(pc->name() == n){ untested();
-	 return pc;
+       if(pc->label() == n){ untested();
+	 incomplete();
+	 return dynamic_cast<Component*>(pc);
        }
     }
     return nullptr;
