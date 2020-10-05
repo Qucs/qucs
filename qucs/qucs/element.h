@@ -167,8 +167,11 @@ class ViewPainter;
 
 class SchematicModel;
 
+
 class Element : public Object {
+public:
   friend class ElementGraphics;
+  typedef QRectF Rect; // BUG.
 public:
   Element();
   Element(int cx, int cy) : _cx(cx), _cy(cy) {} // BUG

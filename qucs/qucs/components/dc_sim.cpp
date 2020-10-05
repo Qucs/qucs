@@ -1,8 +1,6 @@
 /***************************************************************************
-                          dc_sim.cpp  -  description
-                             -------------------
     copyright            : (C) 2003 by Michael Margraf
-                               2018 Felix Salfelder / QUCS
+                               2018, 2020 Felix Salfelder / QUCS
  ***************************************************************************/
 
 /***************************************************************************
@@ -41,6 +39,8 @@ DC_Sim::DC_Sim(DC_Sim const& s) : CmdElement(s)
 DC_Sim::DC_Sim() : CmdElement()
 {
   Description = QObject::tr("dc simulation");
+  setLabel("DC");
+  setTypeName("DC");
 
   QString s = Description;
   int a = s.indexOf(" ");

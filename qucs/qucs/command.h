@@ -41,12 +41,8 @@ public:
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
   int     textSize(int&, int&);
-  void    Bounding(int&, int&, int&, int&);
   void    entireBounds(int&, int&, int&, int&, float);
   int     getTextSelected(int, int, float);
-  void    rotate();
-  void    mirrorX();  // mirror about X axis
-  void    mirrorY();  // mirror about Y axis
   bool    load(const QString&);
 
 //  QString const& type() const{ // HACK

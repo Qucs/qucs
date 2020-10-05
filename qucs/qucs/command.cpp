@@ -82,16 +82,7 @@ SchematicModel* CmdElement::scope()
 		return nullptr;
 	}
 }
-// -------------------------------------------------------
-void CmdElement::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
-{ untested();
-  _x1 = x1+cx();
-  _y1 = y1+cy();
-  _x2 = x2+cx();
-  _y2 = y2+cy();
-}
-
-// -------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 // Size of component text.
 int CmdElement::textSize(int& _dx, int& _dy)
 {
