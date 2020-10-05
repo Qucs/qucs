@@ -1623,11 +1623,19 @@ void Component::setSchematic(Schematic* p)
 }
 # endif
 
+/*--------------------------------------------------------------------------*/
+QRectF Component::boundingRect() const
+{
+  QRectF b(x1, y1, x2-x1, y2-y1);
+  return b;
+}
+/*--------------------------------------------------------------------------*/
 unsigned Component::paramCount() const
 {
   trace2("Component::paramCount", label(), Props.count());
   return Props.count();
 }
+/*--------------------------------------------------------------------------*/
 std::string Component::paramValue(unsigned i) const
 {
   assert( Props.at(i));
