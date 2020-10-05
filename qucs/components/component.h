@@ -1,9 +1,6 @@
 /***************************************************************************
-                               component.h
-                              -------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -221,12 +218,13 @@ protected:
   Property * getProperty(const QString&);
 private:
   std::string getParameter(std::string const& name) const override;
+  std::string getParameter(unsigned pos) const override;
 
 private: // (hopefully) obsolete callbacks
   void recreateCallback();
-  QString getParameter(unsigned pos);
 
 	QRectF boundingRect() const override {
+		unreachable();
 		// QRectF b(cx+x1, cy+y1, x2-x1, y2-y1);
 		QRectF b(x1, y1, x2-x1, y2-y1);
 		return b;

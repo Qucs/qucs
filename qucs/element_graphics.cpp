@@ -133,8 +133,8 @@ void ElementGraphics::attachElement(Element* e)
 		trace0("child gfx");
 		for(auto i : s->components()){ untested();
 			trace0("child gfx clone");
-			auto e=new ElementGraphics(i);
-			e->setParentItem(this);
+			QGraphicsItem* cg = new ElementGraphics(i);
+			cg->setParentItem(this);
 		}
 	}else{
 	}

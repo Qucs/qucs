@@ -213,7 +213,6 @@ std::string Wire::getParameter(std::string const& n) const
     return Symbol::getParameter(n);
   }
 }
-
 // ----------------------------------------------------------------
 void Wire::setParameter(std::string const& n, std::string const& v)
 {
@@ -309,21 +308,6 @@ QRectF Wire::boundingRect() const
   }
 }
 // ----------------------------------------------------------------
-#if 0
-std::list<Node*>::iterator Wire::connectionsBegin()
-{ untested();
-  trace1("DBG", _node_hack.size());
-  assert(_node_hack.size()==2);
-  auto a = _node_hack.begin();
-  *a = _port0.value();
-  ++a;
-  *a = _port1.value();
-  trace2("wireconnections", _port0.value(), _port1.value());
-
-  return _node_hack.begin();
-}
-#endif
-// ----------------------------------------------------------------
 Node* Wire::connectNode(unsigned i, NodeMap& nm)
 {
   assert(i<2);
@@ -334,7 +318,7 @@ Node* Wire::connectNode(unsigned i, NodeMap& nm)
   }
   assert(hasNet());
 
-  Node* n = Symbol::connectNode(i, nm); // maybe use this?
+  Node* n = Symbol::connectNode(i, nm);
 
   if(Node* n2 = port((i+1)%2).value()){
     trace3("wire::connectnode", i, n, n2);
@@ -350,16 +334,12 @@ Node* Wire::connectNode(unsigned i, NodeMap& nm)
       std::cerr << n->netLabel() << " vs " << n2->netLabel() << "\n";
     }
     trace2("wire addededge", n->netLabel(), n2->netLabel());
-
     trace2("wire addededge2", n->netLabel(), n2->netLabel());
   }else{
   }
 
-  // addEdge(n, nm);?
   nm.addEdge(this, n);
   trace3("Wire::connect", i, n->degree(), degree());
-
-  //n->connectionsAppend(this);
 
   if(_netname!=""){
     trace2("wire override netlabel", n->netLabel(), _netname);
@@ -387,21 +367,5 @@ Node* Wire::disconnectNode(unsigned i, NodeMap& nm)
   return n;
 }
 // ----------------------------------------------------------------
-// ----------------------------------------------------------------
-#if 0
-Net* Wire::net()
-{ untested();
-  assert(_port0.value());
-  assert(_port1.value());
-  assert(_port0.value()->net() == _port1.value()->net());
-  return _port0.value()->net();
-}
-// ----------------------------------------------------------------
-Net const* Wire::net() const
-{ untested();
-  assert(_port0.value());
-  return _port0.value()->net();
-}
-#endif
 // ----------------------------------------------------------------
 // vim:ts=8:sw=2:et

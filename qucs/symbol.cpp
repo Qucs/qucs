@@ -131,7 +131,12 @@ std::string Symbol::getParameter(std::string const& n) const
 	  throw ExceptionCantFind(n, label().toStdString());
 	}
 }
-
+/*--------------------------------------------------------------------------*/
+std::string Symbol::getParameter(unsigned i) const
+{
+	throw ExceptionCantFind(std::to_string(i), label().toStdString());
+}
+/*--------------------------------------------------------------------------*/
 #include "geometry.h"
 void Symbol::paint(ViewPainter* p) const
 {itested();

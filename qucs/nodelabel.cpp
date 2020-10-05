@@ -33,7 +33,7 @@ private:
 	std::string getParameter(std::string const& n) const override;
 	void setParameter(std::string const& n, std::string const& v) override;
 	virtual unsigned numPorts() const {return 1;}
-	QRectF boundingRect() const override;
+	Rect boundingRect() const override;
 	Port& port(unsigned i);
 private:
 	Port _port;
@@ -64,7 +64,7 @@ Port& NodeLabel::port(unsigned n)
 /*--------------------------------------------------------------------------*/
 QRectF NodeLabel::boundingRect() const
 {
-    return QRectF(-5, -5, 5, 5);
+    return QRectF(0, 0, 15, 15);
 }
 /*--------------------------------------------------------------------------*/
 void NodeLabel::paint(ViewPainter* p) const
