@@ -2455,7 +2455,7 @@ bool Diagram::pressElement(SchematicDoc* Doc, Element*& selElem, QMouseEvent* Ev
 	return drawn;
 }
 
-QDialog* Diagram::editElement(QucsDoc* Doc) const
+QDialog* Diagram::schematicWidget(QucsDoc* Doc) const
 { untested();
   trace0("Component::editElement");
   return new DiagramDialog(Doc); // memory leak?

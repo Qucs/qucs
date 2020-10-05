@@ -12,7 +12,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "components/componentdialog.h"
+#include "cmdeltdlg.h"
 #include "qucs.h"
 #include "schematic_doc.h"
 #include "misc.h"
@@ -33,8 +33,8 @@
 #include <QEvent>
 #include <QKeyEvent>
 #include <QDebug>
+#include <QUndoCommand>
 
-#if 0
 SchematicDialog::SchematicDialog(QucsDoc* d)
   : QDialog(prechecked_cast<SchematicDoc*>(d))
 {
@@ -42,18 +42,17 @@ SchematicDialog::SchematicDialog(QucsDoc* d)
   Doc=dynamic_cast<SchematicDoc*>(d);
   assert(Doc);
 }
-#endif
 
-ComponentDialog::ComponentDialog(QucsDoc* d) : SchematicDialog(d)
+CmdElementDialog::CmdElementDialog(QucsDoc* d) : SchematicDialog(d)
 {
   resize(450, 250);
   setWindowTitle(tr("Edit Component Properties"));
 }
 
-void ComponentDialog::attach(ElementGraphics* gfx)
+void CmdElementDialog::attach(ElementGraphics* gfx)
 {
-  trace0("ComponentDialog::attach");
-  auto Comp=component(gfx);
+  trace0("CmdElementDialog::attach");
+  auto Comp = prechecked_cast<CmdElement*>(element(gfx));
   assert(Comp);
   if(_comp){
     incomplete();
@@ -83,9 +82,201 @@ void ComponentDialog::attach(ElementGraphics* gfx)
   
   Property *pp = 0; // last property shown elsewhere outside the properties table, not to put in TableView
   // ...........................................................
-  //gp1 = new QGridLayout(0, 9,2,5,5);
-  gp1 = new QGridLayout();
-  _all->addLayout(gp1);
+  // if simulation component: .TR, .AC, .SW, (.SP ?)
+  if((Comp->typeName() != "DC") && (Comp->typeName() != "HB") &&
+     (Comp->typeName() != "Digi") && (Comp->typeName() != "ETR")) {
+    QTabWidget *t = new QTabWidget(this);
+    _all->addWidget(t);
+
+    QWidget *Tab1 = new QWidget(t);
+    t->addTab(Tab1, tr("Sweep"));
+    QGridLayout *gp = new QGridLayout;
+    Tab1->setLayout(gp);
+
+	 // BUG: memory leak?
+    gp->addWidget(new QLabel(Comp->description(), Tab1), 0,0,1,2);
+
+    int row=1;
+    editParam = new QLineEdit(Tab1);
+    editParam->setValidator(ValRestrict);
+    connect(editParam, SIGNAL(returnPressed()), SLOT(slotParamEntered()));
+    checkParam = new QCheckBox(tr("display in schematic"), Tab1);
+
+    if(Comp->typeName() == "SW") {   // parameter sweep
+      textSim = new QLabel(tr("Simulation:"), Tab1);
+      gp->addWidget(textSim, row,0);
+      comboSim = new QComboBox(Tab1);
+      comboSim->setEditable(true);
+      connect(comboSim, SIGNAL(activated(int)), SLOT(slotSimEntered(int)));
+      gp->addWidget(comboSim, row,1);
+      checkSim = new QCheckBox(tr("display in schematic"), Tab1);
+      gp->addWidget(checkSim, row++,2);
+    } else {
+      editParam->setReadOnly(true);
+      checkParam->setDisabled(true);
+
+	  // editParam->setText(Comp->axisName());
+		if(Comp->typeName() == "TR"){
+			// transient simulation ?
+			editParam->setText("time");
+		} else if(Comp->typeName() == "AC") {
+			// AC simulation ?
+			editParam->setText("acfrequency");
+		}else {
+			editParam->setText("frequency");
+		}
+	 }
+
+    gp->addWidget(new QLabel(tr("Sweep Parameter:"), Tab1), row,0);
+    gp->addWidget(editParam, row,1);
+    gp->addWidget(checkParam, row++,2);
+
+    textType = new QLabel(tr("Type:"), Tab1);
+    gp->addWidget(textType, row,0);
+    comboType = new QComboBox(Tab1);
+
+    QStringList sweeptypes;
+    sweeptypes << tr("linear") 
+	       << tr("logarithmic") 
+	       << tr("list") 
+	       << tr("constant");
+    comboType->insertItems(0, sweeptypes);
+			   
+    gp->addWidget(comboType, row,1);
+    connect(comboType, SIGNAL(activated(int)), SLOT(slotSimTypeChange(int)));
+    checkType = new QCheckBox(tr("display in schematic"), Tab1);
+    gp->addWidget(checkType, row++,2);
+
+    textValues = new QLabel(tr("Values:"), Tab1);
+    gp->addWidget(textValues, row,0);
+    editValues = new QLineEdit(Tab1);
+    editValues->setValidator(Validator);
+    connect(editValues, SIGNAL(returnPressed()), SLOT(slotValuesEntered()));
+    gp->addWidget(editValues, row,1);
+    checkValues = new QCheckBox(tr("display in schematic"), Tab1);
+    gp->addWidget(checkValues, row++,2);
+
+    textStart  = new QLabel(tr("Start:"), Tab1);
+    gp->addWidget(textStart, row,0);
+    editStart  = new QLineEdit(Tab1);
+    editStart->setValidator(Validator);
+    connect(editStart, SIGNAL(returnPressed()), SLOT(slotStartEntered()));
+    gp->addWidget(editStart, row,1);
+    checkStart = new QCheckBox(tr("display in schematic"), Tab1);
+    gp->addWidget(checkStart, row++,2);
+
+    textStop   = new QLabel(tr("Stop:"), Tab1);
+    gp->addWidget(textStop, row,0);
+    editStop   = new QLineEdit(Tab1);
+    editStop->setValidator(Validator);
+    connect(editStop, SIGNAL(returnPressed()), SLOT(slotStopEntered()));
+    gp->addWidget(editStop, row,1);
+    checkStop = new QCheckBox(tr("display in schematic"), Tab1);
+    gp->addWidget(checkStop, row++,2);
+
+    textStep   = new QLabel(tr("Step:"), Tab1);
+    gp->addWidget(textStep, row,0);
+    editStep   = new QLineEdit(Tab1);
+    editStep->setValidator(Validator);
+    connect(editStep, SIGNAL(returnPressed()), SLOT(slotStepEntered()));
+    gp->addWidget(editStep, row++,1);
+
+    textNumber = new QLabel(tr("Number:"), Tab1);
+    gp->addWidget(textNumber, row,0);
+    editNumber = new QLineEdit(Tab1);
+    editNumber->setValidator(ValInteger);
+    connect(editNumber, SIGNAL(returnPressed()), SLOT(slotNumberEntered()));
+    gp->addWidget(editNumber, row,1);
+    checkNumber = new QCheckBox(tr("display in schematic"), Tab1);
+    gp->addWidget(checkNumber, row++,2);
+
+
+    if(Comp->typeName() == "SW") {   // parameter sweep
+		 // BUG: not here.
+      incomplete();
+#if 0
+      for(ComponentList::const_iterator pi=Doc->components().begin(); pi!=Doc->components().end(); ++pi) {
+        Component const* pc=*pi;
+	// insert all schematic available simulations in the Simulation combo box
+        if(pc != Comp)
+          if(pc->obsolete_model_hack()[0] == '.')
+            comboSim->insertItem(comboSim->count(), pc->name());
+      }
+      qDebug() << "[]" << Comp->Props.first()->Value;
+      // set selected simulations in combo box to the currently used one
+      int i = comboSim->findText(Comp->Props.first()->Value);
+      if (i != -1) // current simulation is in the available simulations list (normal case)
+	comboSim->setCurrentIndex(i);
+      else  // current simulation not in the available simulations list
+	comboSim->setEditText(Comp->Props.first()->Value);
+
+      checkSim->setChecked(Comp->Props.current()->display);
+      s = Comp->Props.next()->Value;
+      checkType->setChecked(Comp->Props.current()->display);
+      editParam->setText(Comp->Props.next()->Value);
+      checkParam->setChecked(Comp->Props.current()->display);
+#endif
+    } else {
+      s = Comp->Props.first()->Value;
+      checkType->setChecked(Comp->Props.current()->display);
+    }
+    pp = Comp->Props.next();
+    editStart->setText(pp->Value);
+    checkStart->setChecked(pp->display);
+    pp = Comp->Props.next();
+    editStop->setText(pp->Value);
+    checkStop->setChecked(pp->display);
+    pp = Comp->Props.next();  // remember last property for ListView
+    editNumber->setText(pp->Value);
+    checkNumber->setChecked(pp->display);
+
+    int tNum = 0;
+    if(s[0] == 'l') {
+      if(s[1] == 'i') {
+	if(s[2] != 'n')
+	  tNum = 2;
+      }
+      else  tNum = 1;
+    }
+    else  tNum = 3;
+    comboType->setCurrentIndex(tNum);
+
+    slotSimTypeChange(tNum);   // not automatically ?!?
+    if(tNum > 1) {
+      editValues->setText(
+		editNumber->text().mid(1, editNumber->text().length()-2));
+      checkValues->setChecked(Comp->Props.current()->display);
+      editNumber->setText("2");
+    }
+    slotNumberChanged(0);
+
+/*    connect(editValues, SIGNAL(textChanged(const QString&)),
+	    SLOT(slotTextChanged(const QString&)));*/
+    connect(editStart, SIGNAL(textChanged(const QString&)),
+	    SLOT(slotNumberChanged(const QString&)));
+    connect(editStop, SIGNAL(textChanged(const QString&)),
+	    SLOT(slotNumberChanged(const QString&)));
+    connect(editStep, SIGNAL(textChanged(const QString&)),
+	    SLOT(slotStepChanged(const QString&)));
+    connect(editNumber, SIGNAL(textChanged(const QString&)),
+	    SLOT(slotNumberChanged(const QString&)));
+
+/*    if(checkSim)
+      connect(checkSim, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));
+    connect(checkType, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));
+    connect(checkParam, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));
+    connect(checkStart, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));
+    connect(checkStop, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));
+    connect(checkNumber, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));*/
+
+
+    QWidget *tabProperties = new QWidget(t);
+    t->addTab(tabProperties, tr("Properties"));
+    //gp1 = new QGridLayout(tabProperties, 9,2,5,5);
+    gp1 = new QGridLayout(tabProperties);
+  } else {
+	  // "DC" "HB" "Digi" "ETR". nothing to do??
+  }
 
 
   // ...........................................................
@@ -306,7 +497,7 @@ void ComponentDialog::attach(ElementGraphics* gfx)
                 SLOT(slotSelectProperty(QTableWidgetItem*)));
 }
 
-ComponentDialog::~ComponentDialog()
+CmdElementDialog::~CmdElementDialog()
 {
   delete _all;
   delete Validator;
@@ -318,7 +509,7 @@ ComponentDialog::~ComponentDialog()
 // check if Enter is pressed while the ComboEdit has focus
 // in case, behave as for the LineEdits
 // (QComboBox by default does not handle the Enter/Return key)
-bool ComponentDialog::eventFilter(QObject *obj, QEvent *event)
+bool CmdElementDialog::eventFilter(QObject *obj, QEvent *event)
 {
   if (obj == ComboEdit) {
     if (event->type() == QEvent::KeyPress) {
@@ -334,10 +525,22 @@ bool ComponentDialog::eventFilter(QObject *obj, QEvent *event)
 }
 
 // Updates component property list. Useful for MultiViewComponents (really?)
-void ComponentDialog::updateCompPropsList()
+void CmdElementDialog::updateCompPropsList()
 {
- auto Comp=_comp;
+	auto Comp=_comp;
     int last_prop=0; // last property not to put in ListView
+        // ...........................................................
+        // if simulation component: .TR, .AC, .SW, (.SP ?)
+    if( (Comp->typeName() != "DC") && (Comp->typeName() != "HB") &&
+       (Comp->typeName() != "Digi") && (Comp->typeName() != "ETR")) {
+        if(Comp->typeName() == "SW") {   // parameter sweep
+           last_prop = 2;
+        } else {
+            last_prop = 0;
+        }
+            last_prop += 4;  // remember last property for ListView
+    }else{
+	 }
 
     QString s;
     int row=0; // row counter
@@ -395,9 +598,9 @@ void ComponentDialog::updateCompPropsList()
 // Is called if a property is selected.
 // Handle the Property editor tab.
 // It transfers the values to the right side for editing.
-void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
+void CmdElementDialog::slotSelectProperty(QTableWidgetItem *item)
 {
-  auto Comp=_comp;
+  auto Comp = _comp;
   if(item == 0) return;
   item->setSelected(true);  // if called from elsewhere, this was not yet done
 
@@ -429,7 +632,9 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
     ButtAdd->setEnabled(true);
     ButtRem->setEnabled(true);
 
-    Comp->dialgButtStuff(*this);
+	 incomplete();
+//    Comp->dialgButtStuff(*this);
+//
     Name->setText("");
     NameEdit->setText(name);
     edit->setText(value);
@@ -469,10 +674,11 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
     qDebug() << "desc = " << desc << metrics.width(desc);
     while(metrics.width(desc) > 270) {  // if description too long, cut it nicely
       // so 270 above will be the maximum size of the name label and associated edit line widget 
-      if (desc.lastIndexOf(' ') != -1)
+      if (desc.lastIndexOf(' ') != -1){
         desc = desc.left(desc.lastIndexOf(' ')) + "....";
-      else
+		}else{
         desc = desc.left(desc.length()-5) + "....";
+		}
     }
     Description->setText(desc);
 
@@ -497,7 +703,7 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
 }
 
 // -------------------------------------------------------------------------
-void ComponentDialog::slotApplyChange(const QString& Text)
+void CmdElementDialog::slotApplyChange(const QString& Text)
 { untested();
   /// \bug what if the table have no items?
   // pick selected row
@@ -517,6 +723,7 @@ void ComponentDialog::slotApplyChange(const QString& Text)
   if ( row < (prop->rowCount() - 1)) {
     prop->setCurrentItem(prop->item(row+1,0));
     slotSelectProperty(prop->item(row+1,0));
+  }else{
   }
 }
 
@@ -525,7 +732,7 @@ void ComponentDialog::slotApplyChange(const QString& Text)
  The parameter is edited on the right pane.
  Return key commits the change, and steps to the next parameter in the list.
 */
-void ComponentDialog::slotApplyProperty()
+void CmdElementDialog::slotApplyProperty()
 {
   // pick selected row
   QTableWidgetItem *item = prop->currentItem();
@@ -568,7 +775,7 @@ void ComponentDialog::slotApplyProperty()
 
 // -------------------------------------------------------------------------
 // Is called if the "RETURN"-button is pressed in the "NameEdit" Widget.
-void ComponentDialog::slotApplyPropName()
+void CmdElementDialog::slotApplyPropName()
 {
   // pick selected row
   QTableWidgetItem *item = prop->selectedItems()[0];
@@ -589,7 +796,7 @@ void ComponentDialog::slotApplyPropName()
 
 // -------------------------------------------------------------------------
 // Is called if the checkbox is pressed (changed).
-void ComponentDialog::slotApplyState(int State)
+void CmdElementDialog::slotApplyState(int State)
 {
   // pick selected row
   QTableWidgetItem *item = prop->selectedItems()[0];
@@ -612,7 +819,7 @@ void ComponentDialog::slotApplyState(int State)
 
 // -------------------------------------------------------------------------
 // Is called if the "OK"-button is pressed.
-void ComponentDialog::slotButtOK()
+void CmdElementDialog::slotButtOK()
 {
   slotApplyInput();
   slotButtCancel();
@@ -620,7 +827,7 @@ void ComponentDialog::slotButtOK()
 
 // -------------------------------------------------------------------------
 // Is called if the "Cancel"-button is pressed.
-void ComponentDialog::slotButtCancel()
+void CmdElementDialog::slotButtCancel()
 {
   if(changed){
     // changed could have been done before
@@ -633,12 +840,11 @@ void ComponentDialog::slotButtCancel()
 
 //-----------------------------------------------------------------
 // To get really all close events (even <Escape> key).
-void ComponentDialog::reject()
+void CmdElementDialog::reject()
 {
   slotButtCancel();
 }
 
-#include <QUndoCommand>
 
 class SwapSymbolCommand : public QUndoCommand {
   SwapSymbolCommand() = delete;
@@ -673,12 +879,12 @@ private:
 };
 // -------------------------------------------------------------------------
 // Is called, if the "Apply"-button is pressed.
-void ComponentDialog::slotApplyInput()
+void CmdElementDialog::slotApplyInput()
 {
   assert(_comp);
   auto C = _comp->clone();
   C->setOwner( _comp->mutable_owner() );
-  auto Comp = prechecked_cast<Component*>(C);
+  auto Comp = prechecked_cast<CmdElement*>(C);
   assert(Comp);
 
   qDebug() << " \n == Apply ";
@@ -691,7 +897,7 @@ void ComponentDialog::slotApplyInput()
   QString tmp;
   Component *pc = nullptr;
   if(CompNameEdit->text().isEmpty()){
-    CompNameEdit->setText(Comp->name());
+    CompNameEdit->setText(Comp->label());
   }else if(CompNameEdit->text() != Comp->label()) {
     trace2("Apply", Comp->label(), CompNameEdit->text());
 #if 0
@@ -704,7 +910,7 @@ void ComponentDialog::slotApplyInput()
     }
 #endif
     if(pc){
-      CompNameEdit->setText(Comp->name());
+      CompNameEdit->setText(Comp->label());
     } else if (Comp->label() != CompNameEdit->text()) {
       Comp->setLabel(CompNameEdit->text().toStdString());
       changed = true;
@@ -935,9 +1141,11 @@ void ComponentDialog::slotApplyInput()
     auto cmd = new SwapSymbolCommand(_gfx, Comp);
     execute(cmd);
 
-    assert(_gfx->pos() == pos); // for now.
+//    assert(_gfx->pos() == pos); // for now.
 
-    _comp = Comp = component(_gfx);
+	 assert(Comp == prechecked_cast<CmdElement*>(element(_gfx)));
+
+    _comp = Comp;
 
     // BUG: cannot modify while shown.
     // maybe do in ElementGraohics::attach?
@@ -955,7 +1163,7 @@ void ComponentDialog::slotApplyInput()
 }
 
 // -------------------------------------------------------------------------
-void ComponentDialog::slotBrowseFile()
+void CmdElementDialog::slotBrowseFile()
 {
   incomplete();
   // current file name from the component properties
@@ -1018,7 +1226,7 @@ void ComponentDialog::slotBrowseFile()
 }
 
 // -------------------------------------------------------------------------
-void ComponentDialog::slotEditFile()
+void CmdElementDialog::slotEditFile()
 {
   schematic()->App->editFile(QucsSettings.QucsWorkDir.filePath(edit->text()));
 }
@@ -1044,7 +1252,7 @@ void ComponentDialog::slotEditFile()
    If new name, insert item after selected, set it to focus
 
 */
-void ComponentDialog::slotButtAdd()
+void CmdElementDialog::slotButtAdd()
 {
   // Set existing equation into focus, return
   for(int row=0; row < prop->rowCount(); row++) {
@@ -1094,7 +1302,7 @@ void ComponentDialog::slotButtAdd()
  If desc is empy, ButtRem is enabled, this slot handles if it is clicked.
  Used with: Equations, ?
 */
-void ComponentDialog::slotButtRem()
+void CmdElementDialog::slotButtRem()
 {
   if(prop->rowCount() < 3)
     return;  // the last property cannot be removed
@@ -1114,10 +1322,10 @@ void ComponentDialog::slotButtRem()
 }
 
 /*!
- * \brief ComponentDialog::slotButtUp
+ * \brief CmdElementDialog::slotButtUp
  * Move a table item up. Enabled for Equation component.
  */
-void ComponentDialog::slotButtUp()
+void CmdElementDialog::slotButtUp()
 {
   qDebug() << "slotButtUp" << prop->currentRow() << prop->rowCount();
 
@@ -1141,10 +1349,10 @@ void ComponentDialog::slotButtUp()
 }
 
 /*!
- * \brief ComponentDialog::slotButtDown
+ * \brief CmdElementDialog::slotButtDown
  * Move a table item down. Enabled for Equation component.
  */
-void ComponentDialog::slotButtDown()
+void CmdElementDialog::slotButtDown()
 {
   qDebug() << "slotButtDown" << prop->currentRow() << prop->rowCount();
 
@@ -1168,7 +1376,7 @@ void ComponentDialog::slotButtDown()
 }
 
 // -------------------------------------------------------------------------
-void ComponentDialog::slotSimTypeChange(int Type)
+void CmdElementDialog::slotSimTypeChange(int Type)
 {
   if(Type < 2) {  // new type is "linear" or "logarithmic"
     if(!editNumber->isEnabled()) {  // was the other mode before ?
@@ -1229,7 +1437,7 @@ void ComponentDialog::slotSimTypeChange(int Type)
 // -------------------------------------------------------------------------
 // Is called when "Start", "Stop" or "Number" is edited.
 // // BUG: transient only
-void ComponentDialog::slotNumberChanged(const QString&)
+void CmdElementDialog::slotNumberChanged(const QString&)
 {
   QString Unit, tmp;
   double x, y, Factor;
@@ -1267,7 +1475,7 @@ void ComponentDialog::slotNumberChanged(const QString&)
 
 // -------------------------------------------------------------------------
 // // BUG: transient only
-void ComponentDialog::slotStepChanged(const QString& Step)
+void CmdElementDialog::slotStepChanged(const QString& Step)
 {
   QString Unit;
   double x, y, Factor;
@@ -1303,7 +1511,7 @@ void ComponentDialog::slotStepChanged(const QString& Step)
 
 // -------------------------------------------------------------------------
 // Is called if return is pressed in LineEdit "Parameter".
-void ComponentDialog::slotParamEntered()
+void CmdElementDialog::slotParamEntered()
 {
   if(editValues->isEnabled()){ untested();
     editValues->setFocus();
@@ -1314,49 +1522,48 @@ void ComponentDialog::slotParamEntered()
 
 // -------------------------------------------------------------------------
 // Is called if return is pressed in LineEdit "Simulation".
-void ComponentDialog::slotSimEntered(int)
+void CmdElementDialog::slotSimEntered(int)
 {
-  unreachable();
   editParam->setFocus();
 }
 
 // -------------------------------------------------------------------------
 // Is called if return is pressed in LineEdit "Values".
-void ComponentDialog::slotValuesEntered()
+void CmdElementDialog::slotValuesEntered()
 {
   slotButtOK();
 }
 
 // -------------------------------------------------------------------------
 // Is called if return is pressed in LineEdit "Start".
-void ComponentDialog::slotStartEntered()
+void CmdElementDialog::slotStartEntered()
 {
   editStop->setFocus();
 }
 
 // -------------------------------------------------------------------------
 // Is called if return is pressed in LineEdit "Stop".
-void ComponentDialog::slotStopEntered()
+void CmdElementDialog::slotStopEntered()
 {
   editStep->setFocus();
 }
 
 // -------------------------------------------------------------------------
 // Is called if return is pressed in LineEdit "Step".
-void ComponentDialog::slotStepEntered()
+void CmdElementDialog::slotStepEntered()
 {
   editNumber->setFocus();
 }
 
 // -------------------------------------------------------------------------
 // Is called if return is pressed in LineEdit "Number".
-void ComponentDialog::slotNumberEntered()
+void CmdElementDialog::slotNumberEntered()
 {
   slotButtOK();
 }
 
 // if clicked on 'display' header toggle visibility for all items
-void ComponentDialog::slotHHeaderClicked(int headerIdx)
+void CmdElementDialog::slotHHeaderClicked(int headerIdx)
 {
   if (headerIdx != 2) return; // clicked on header other than 'display'
 
@@ -1379,17 +1586,14 @@ void ComponentDialog::slotHHeaderClicked(int headerIdx)
   setAllVisible = not setAllVisible; // toggle visibility for the next double-click
 }
 
-void ComponentDialog::disableButtons()
+void CmdElementDialog::disableButtons()
 {
   ButtUp->setEnabled(false);
   ButtDown->setEnabled(false);
 }
 
-void ComponentDialog::enableButtons()
+void CmdElementDialog::enableButtons()
 {
   ButtUp->setEnabled(true);
   ButtDown->setEnabled(true);
 }
-
-
-// vim:ts=8:sw=2:et

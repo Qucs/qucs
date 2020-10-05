@@ -1640,7 +1640,7 @@ std::string Component::paramName(unsigned i) const
   return Props.at(i)->name().toStdString();
 }
 /*--------------------------------------------------------------------------*/
-QDialog* Component::editElement(QucsDoc* Doc) const
+QDialog* Component::schematicWidget(QucsDoc* Doc) const
 { untested();
   trace0("Component::editElement");
   return new ComponentDialog(Doc); // memory leak?

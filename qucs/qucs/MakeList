@@ -6,6 +6,7 @@ CPP_SRC = \
 	cursors.cpp \
 	module.cpp \
 	attach.cpp \
+	cmdeltdlg.cpp \
 	command.cpp \
 	component.cpp \
 	component_widget.cpp \
@@ -58,6 +59,7 @@ CPP_SRC = \
 	textdoc.cpp \
 	viewpainter.cpp \
 	wire.cpp \
+	wiredialog.cpp \
 	wirelabel.cpp
 
 QMOCHEADERS = \

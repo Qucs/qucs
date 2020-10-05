@@ -12,10 +12,10 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef COMPONENTDIALOG_H
-#define COMPONENTDIALOG_H
+#ifndef QUCS_CMDELTDLG_H
+#define QUCS_CMDELTDLG_H
 
-#include "component.h"
+#include "command.h"
 #include "platform.h"
 #include "schematic_dialog.h"
 
@@ -23,25 +23,20 @@
 #include <assert.h>
 
 class Schematic;
-
+class QVBoxLayout;
 class QValidator;
 class QIntValidator;
-class QRegExpValidator;
 class QTableWidget;
-class QTableWidgetItem;
-class QLabel;
 class QLineEdit;
-class QCheckBox;
-class QRegExp;
 class QComboBox;
+class QCheckBox;
 class QPushButton;
-class QVBoxLayout;
+class QLabel;
 
-
-class ComponentDialog : public SchematicDialog {
+class CmdElementDialog : public SchematicDialog {
 public:
-  ComponentDialog(QucsDoc*);
-  ~ComponentDialog();
+  CmdElementDialog(QucsDoc*);
+  ~CmdElementDialog();
 
   void attach(ElementGraphics* c) override;
 
@@ -113,7 +108,7 @@ private:
 
 private:
   ElementGraphics* _gfx;
-  Component const* _comp;
+  CmdElement const* _comp;
 };
 
 #endif

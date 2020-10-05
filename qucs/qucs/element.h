@@ -202,7 +202,7 @@ public: // other stuff
   virtual std::pair<int, int> center()const;
   virtual void getCenter(int&, int&) const; // BUG
   virtual void paint(ViewPainter*) const = 0;
-  virtual QDialog* editElement(QucsDoc*) const { return nullptr; }
+  virtual QDialog* schematicWidget(QucsDoc*) const { return nullptr; }
 
   // really?
   virtual QWidget* newWidget() {return nullptr;}
