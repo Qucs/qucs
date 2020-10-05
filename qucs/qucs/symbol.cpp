@@ -125,6 +125,8 @@ std::string Symbol::getParameter(std::string const& n) const
 		return std::to_string(cx());
 	}else if(n=="$yposition"){
 		return std::to_string(cy());
+	}else if(n=="$mfactor"){
+		return "1"; // isActive in Component.
 	}else{ untested();
 	  throw ExceptionCantFind(n, label().toStdString());
 	}

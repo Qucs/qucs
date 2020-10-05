@@ -48,13 +48,8 @@ public:
   void moveCenter(int x, int y){ _cx+=x; _cy+=y; }
   void moveLeft(int x){ x1-=x; }
 
-  Component* newOne(){
-	  incomplete();
-	  return nullptr;
-  }
-  Element* clone()const{
-	  incomplete();
-	  return nullptr;
+  Element* clone()const override{
+	  return new WireLabel(*this);
   }
 
   Conductor *pOwner;  // Wire or Node where label belongs to

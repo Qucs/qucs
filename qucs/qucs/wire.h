@@ -1,6 +1,4 @@
 /***************************************************************************
-                                  wire.h
-                                 --------
     copyright            : (C) 2003 by Michael Margraf
                                2018, 2020 Felix Salfelder / QUCS
  ***************************************************************************/
@@ -17,12 +15,11 @@
 #ifndef WIRE_H
 #define WIRE_H
 
-#ifndef UNTANGLE_QT // BUG
-# include "viewpainter.h"
-#endif
-#include "components/component.h"    // because of struct Port
+#include "viewpainter.h"
+//#include "components/component.h"    // because of struct Port
 #include "wirelabel.h"
 #include "platform.h"
+#include "symbol.h"
 
 class QPainter;
 class QString;
@@ -75,7 +72,8 @@ private: // symbol Node stuff
   Node* disconnectNode(unsigned idx, NodeMap&) override;
 
 private: // Symbol
-  unsigned numPorts() const{ return 2; }
+  void expand() override;
+  unsigned numPorts() const;
 
 public:
   bool    isHorizontal() const { return (y1() == y2());}

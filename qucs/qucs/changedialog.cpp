@@ -127,6 +127,8 @@ bool ChangeDialog::matches(const QString& CompModel)
 // Is called if the "Replace"-button is pressed.
 void ChangeDialog::slotButtReplace()
 {
+	incomplete();
+#if 0
   Expr.setPatternSyntax(QRegExp::Wildcard);  // switch into wildcard mode
   Expr.setPattern(CompNameEdit->text());
   if(!Expr.isValid()) {
@@ -250,4 +252,5 @@ void ChangeDialog::slotButtReplace()
   delete Dia;
   if(changed) accept();
   else reject();
+#endif
 }

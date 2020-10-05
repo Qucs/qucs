@@ -29,6 +29,7 @@ CPP_SRC = \
 	mouseactions.cpp \
 	netlist.cpp \
 	node.cpp \
+	nodelabel.cpp \
 	nodemap.cpp \
 	object.cpp \
 	octave_window.cpp \

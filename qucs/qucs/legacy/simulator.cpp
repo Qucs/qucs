@@ -327,6 +327,7 @@ void LegacyNetlister::createNetlist(DocumentStream& stream,
 
 		if(isAnalog) {
 		} else { // FIXME: use different lang to print things differently
+#if 0
 			if(pc->obsolete_model_hack() == ".Digi" && pc->isActive) {  // simulation component ?
 				if(NumPorts > 0) { // truth table simulation ?
 					if (isVerilog){ untested();
@@ -352,6 +353,7 @@ void LegacyNetlister::createNetlist(DocumentStream& stream,
 				throw "strange_character";
 			}
 			stream << s;
+#endif
 		}
 	} // components
 
@@ -390,7 +392,7 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 		assert(sym->owner()==&m);
 		assert(sym->scope()==&sckt);
 
-		if(pc->isActive != COMP_IS_ACTIVE){
+		if(pc->getParameter("$mfactor") == "0"){
 			incomplete();
 			continue;
 		}else if(isAnalog) {
@@ -412,7 +414,7 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 			Symbol const* p = pc->proto(&sckt); // just expand?
 			assert(p->subckt());
 			//
-		}else if(pc->obsolete_model_hack() == "GND") { // BUG.
+		}else if(pc->typeName() == "GND") { // BUG.
 #if 0
 			qDebug() << "GND hack" << pc->portValue(0);
 			assert(pc->Ports.first()->value());
@@ -421,7 +423,7 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 #endif
 			// continue;
 		// }else if(dynamic_cast<Subcircuit const*>(pc)) { untested();
-		} else if(pc->obsolete_model_hack() == "Sub") { // BUG.
+		} else if(pc->typeName() == "Sub") { // BUG.
 				incomplete();
 			// save(pc, stream);
 		}else{
@@ -460,9 +462,12 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 //		if(pc->has_obsolete_qucsator_callback()){ untested();
 //		   pc->obsolete_qucsator_callback();
 //		}else
-		if(pc->obsolete_model_hack() == "SPICE") { // BUG
+//
+		std::string model_hack = "notyet";
+		if(model_hack == "SPICE") { // BUG
 			incomplete(); // move to Symbol->tac
-			s = pc->Props.first()->Value;
+			//s = pc->Props.first()->Value;
+			s = QString::fromStdString(pc->getParameter("filename_maybe"));
 			// tell the spice component it belongs to this schematic
 			//      pc->setSchematic (this);
 			if(s.isEmpty()) { untested();
@@ -470,7 +475,7 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 				//                       arg(pc->name()));
 				throw "incomplete_exception_something_about_SPICE";
 			}
-			QString f = pc->getSubcircuitFile();
+			QString f = "some_filename"; // pc->getSubcircuitFile();
 			SubMap::Iterator it = FileList.find(f);
 			if(it != FileList.end())
 				continue;   // insert each spice component just one time
@@ -483,7 +488,7 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 			//	return false;
 			// }
 			// continue; // BUG
-		} else if(pc->obsolete_model_hack() == "VHDL" || pc->obsolete_model_hack() == "Verilog") { untested();
+		} else if(model_hack == "VHDL" || model_hack == "Verilog") { untested();
 			incomplete();
 #if 0
 			if(isVerilog && pc->obsolete_model_hack() == "VHDL")

@@ -14,6 +14,7 @@
 #include <map>
 #include "docfmt.h"
 #include "element.h"
+#include "components/component.h" // BUG
 #include "globals.h"
 #include "schematic_symbol.h"
 #include "schematic_model.h"
@@ -310,7 +311,7 @@ void VerilogNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol c
 
 	for(auto it : sckt.components()){
 
-		if(it->isActive != COMP_IS_ACTIVE){
+		if(it->getParameter("$mfactor") == "0") {
 			stream << "#ifdef QUCS_INACTIVE\n";
 		}else{
 		}
@@ -327,12 +328,10 @@ void VerilogNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol c
 			sym->proto(&sckt); // just expand?
 		}else if(it->typeName() == "GND") { // BUG, use a rail?
 
-			qDebug() << "GND hack" << it->Ports.first()->netLabel();
 			// it->Ports.first()->Connection->setName("gnd");
 		}
 
-		if(it->isActive != COMP_IS_ACTIVE){
-			// BUG: could it be gnd?!
+		if(it->getParameter("$mfactor") == "0") {
 			stream << "#endif // QUCS_INACTIVE\n";
 		}else{
 		}

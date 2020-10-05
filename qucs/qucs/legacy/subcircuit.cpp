@@ -523,7 +523,6 @@ public:
 		D->load(pstream, *this);
 		//d->parse(pstream);
 
-		qDebug() << "got" << dc->components().count() << "components";
 		d->setDevType(s);
 
 		// Ports.resize(5);
