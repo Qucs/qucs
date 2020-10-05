@@ -648,6 +648,7 @@ void SimMessage::startSimulator()
 // ------------------------------------------------------------------------
 Component * SimMessage::findOptimization(SchematicDoc *Doc)
 {
+#if 0
   for(auto pc : Doc->components()){
     if(pc->isActive){
       if(pc->obsolete_model_hack() == ".Opt"){
@@ -655,6 +656,7 @@ Component * SimMessage::findOptimization(SchematicDoc *Doc)
       }
     }
   }
+#endif
   return NULL;
 }
 

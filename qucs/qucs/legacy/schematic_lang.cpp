@@ -123,7 +123,7 @@ Element* LegacySchematicLanguage::loadElement(const QString& _s, Element* e) con
 
 static std::list<Element*> implicit_hack;
 
-static bool obsolete_load(Wire* w, const QString& sc)
+static bool obsolete_load(Symbol* w, const QString& sc)
 {
 	Symbol* sym = w;
 	QString s(sc);
@@ -202,6 +202,7 @@ static bool obsolete_load(Wire* w, const QString& sc)
 		sym->setParameter("delta", delta); // what is this?
 		sym->setParameter("nx", nx); // not the node position, maybe the label position?
 		sym->setParameter("ny", ny); // not the node position, maybe the label position?
+		sym->expand(); //always?
 	}else{
 	}
 
@@ -277,7 +278,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 				incomplete(); // qt5 branch...
 				bool err = obsolete_load(w, Line);
 				if(!err){ untested();
-					qDebug() << "ERROR" << Line;
+					incomplete();
 					delete(w);
 				}else{
 					c = w;
@@ -589,14 +590,16 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 	c->setLabel(label);
 
 	QString n;
-	n  = s.section(' ',2,2);      // isActive
+	n  = s.section(' ',2,2);      // flags
 	tmp = n.toInt(&ok);
 	if(!ok){ untested();
 		return NULL;
 	}
 	c->isActive = tmp & 3;
+	// sym->setParameter("is_active", std::to_string(tmp & 3));
 
 	if(tmp & 4){ untested();
+	// sym->setParameter("hide_label", std::to_string(tmp & 4));
 		c->showName = false;
 	}else{
 		// use default, e.g. never show name for GND (bug?)
@@ -606,13 +609,13 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 	int cx=n.toInt(&ok);
 	qDebug() << "cx" << cx;
 	sym->setParameter("$xposition", std::to_string(cx));
-	// c->obsolete_set("cx", cx);
+//	sym->setParameter(3, std::to_string(cx));
 	if(!ok) return NULL;
 
 	n  = s.section(' ',4,4);    // cy
 	int cy=n.toInt(&ok);
 	sym->setParameter("$yposition", std::to_string(cy));
-	// c->obsolete_set("cy", n.toInt(&ok));
+//	sym->setParameter(4, std::to_string(cy));
 	if(!ok) return NULL;
 
 	n  = s.section(' ',5,5);    // tx
@@ -627,7 +630,6 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 	assert(c->obsolete_model_hack().at(0) != '.');
 
 	{
-
 		n  = s.section(' ',7,7);    // mirror y axis
 		if(n.toInt(&ok) == 1){
 			c->mirrorX();
@@ -645,17 +647,10 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 			tmp += 4;
 		}
 
-#if 1
 		tmp *= 90;
 		sym->setParameter("$angle", std::to_string(tmp));
 		assert(sym->getParameter("$angle") == std::to_string(tmp));
 		trace2("DBG rot", c->rotated(), n);
-#else
-		for(int z=c->rotated; z<tmp; z++){
-			c->rotate();
-		}
-#endif
-
 	}
 
 	c->tx = ttx;
@@ -681,10 +676,12 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 		// "+1" because "counts" could be zero
 		tmp = counts + 1;
 	}
+//	assert(tmp == c->ParamPositionHack()); //?
 
 	/// BUG FIXME. dont use Component parameter dictionary.
 	for(; tmp<=(int)counts/2; tmp++){ untested();
 		c->Props.append(new Property("p", "", true, " "));
+		//	sym->setParameter("p__" + std::to_string(tmp), "");
 	}
 
 	// set parameters.

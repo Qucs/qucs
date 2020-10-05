@@ -11,11 +11,10 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "wire.h"
-#include "node.h"// bug. conductor.h
 #include "nodemap.h"
 #include "globals.h"
 #include "geometry.h"
+#include "schematic_model.h"
 #include <QPainter>
 #include "qt_compat.h" // geometry?
 
@@ -40,14 +39,14 @@ Wire::Wire(Wire const& w)
 void Wire::findScaleAndAngle()
 {
   _scale = std::max(abs(x2()), abs(y2()));
-  _angle = 0;
-  if(x2() > 0){
+  if(!_scale){ untested();
+  }else if(x2() > 0){
     _angle = 0;
   }else if(x2()<0){ untested();
     _angle = 2;
   }else if(y2()>0){ untested();
     _angle = 1;
-  }else{
+  }else if(y2()<0){
     _angle = 3;
   }
 #ifndef NDEBUG
@@ -110,14 +109,6 @@ void Wire::setCenter(int x, int y, bool relative)
     _cx = x;
     _cy = y;
   }
-}
-// ----------------------------------------------------------------
-void Wire::getCenter(int& x, int& y)
-{ untested();
-  unreachable();
-  assert(false);
-  x = (x1()+x2()) >> 1;
-  y = (y1()+y2()) >> 1;
 }
 // ----------------------------------------------------------------
 #if 0
@@ -277,6 +268,30 @@ void Wire::setParameter(std::string const& n, std::string const& v)
     _netname = v;
   }else{ untested();
     Symbol::setParameter(n, v);
+  }
+}
+// ----------------------------------------------------------------
+unsigned Wire::numPorts() const
+{
+  return 2; /* really? */
+}
+// ----------------------------------------------------------------
+void Wire::expand()
+{
+  // stash NodeLabels as subdevices.
+  // just not sure where exactly.
+  if (_netname != ""){ untested();
+    new_subckt();
+    Symbol* n = symbol_dispatcher.clone("NodeLabel");
+    n->setLabel(_netname);
+    // n->setParameters("$xposition");
+    // n->setParameters("$yposition");
+    // n->setParameters("dx", 5);
+    // n->setParameters("dy", 5);
+    assert(n);
+    trace1("Wire::expand", _netname);
+    subckt()->pushBack(n);
+  }else{
   }
 }
 // ----------------------------------------------------------------

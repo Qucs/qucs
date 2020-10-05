@@ -30,7 +30,7 @@
 
 // Inserts a port into the schematic and connects it to another node if
 // the coordinates are identical. The node is returned.
-Node* SchematicModel::insertNode(int x, int y, Element *e)
+Node* SchematicModel::insertNode(int , int , Element *)
 {   untested();
     unreachable();
 
@@ -882,7 +882,8 @@ void MouseActions::deselectElements(ElementMouseAction e)
 // flag?! is is the shift key?
 int SchematicDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
 {
-    incomplete();
+    incomplete(); // obsolete. use QT
+    return 0;
 #if 0 // needed?
     QRectF bb(x1, y1, x2, y2);
     int n=0;
@@ -2265,6 +2266,10 @@ void SchematicDoc::activateCompsWithinRect(int x1, int y1, int x2, int y2)
 // ---------------------------------------------------
 bool SchematicDoc::activateSpecifiedComponent(int x, int y)
 {
+    incomplete();
+    return 0;
+
+#if 0
     int x1, y1, x2, y2, a;
     for(auto pc : components()) {
         pc->Bounding(x1, y1, x2, y2);
@@ -2293,6 +2298,7 @@ bool SchematicDoc::activateSpecifiedComponent(int x, int y)
                     }
     }
     return false;
+#endif
 }
 
 // ---------------------------------------------------
@@ -2381,6 +2387,7 @@ void SchematicDoc::setCompPorts(Component *pc)
 // Returns a pointer of the component on whose text x/y points.
 Component* MouseActions::selectCompText(SchematicDoc* Doc, int x_, int y_, int& w, int& h)
 {
+#if 0
     incomplete();
     int a, b, dx, dy;
     for(auto *pc : Doc->components()) {
@@ -2397,6 +2404,7 @@ Component* MouseActions::selectCompText(SchematicDoc* Doc, int x_, int y_, int& 
         h = dy;
         return pc;
     }
+#endif
 
     return 0;
 }
@@ -2426,11 +2434,13 @@ Component* SchematicDoc::searchSelSubcircuit()
 Component* SchematicDoc::selectedComponent(int x, int y)
 {
     incomplete();
+#if 0
     // test all components
     for(auto pc : components()) {
         if(pc->getSelected(x, y))
             return pc;
     }
+#endif
 
     return nullptr;
 }
