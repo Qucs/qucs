@@ -34,15 +34,17 @@ public:
   explicit Wire(int _x1, int _y1, int _x2, int _y2);
   ~Wire();
 
-  Element* clone() const{
+  Element* clone() const override{
 	  return new Wire(*this);
   }
+  QDialog* schematicWidget(QucsDoc*) const override;
+
   Component* newOne(){
-	  incomplete();
+	  assert(false);
 	  return nullptr;
   }
 
-  void paint(ViewPainter*) const;
+  void paint(ViewPainter*) const override;
   void setCenter(int, int, bool relative=false);
   void getCenter(int&, int&);
 //  bool getSelected(int, int);

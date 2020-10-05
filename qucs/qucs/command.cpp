@@ -24,6 +24,7 @@
 #include "viewpainter.h"
 #include "module.h"
 #include "misc.h"
+#include "cmdeltdlg.h"
 
 #include <QPen>
 #include <QString>
@@ -111,6 +112,13 @@ int CmdElement::textSize(int& _dx, int& _dy)
   }
   return count;
 }
+/*--------------------------------------------------------------------------*/
+QDialog* CmdElement::schematicWidget(QucsDoc* Doc) const
+{ untested();
+  trace0("Component::editElement");
+  return new CmdElementDialog(Doc); // memory leak?
+}
+/*--------------------------------------------------------------------------*/
 
 // -------------------------------------------------------
 // Boundings including the component text.
@@ -292,61 +300,6 @@ QString CmdElement::getNetlist()
   return QString("");
 }
 // -------------------------------------------------------
-
-// *******************************************************************
-// ***  The following functions are used to load the schematic symbol
-// ***  from file. (e.g. subcircuit, library component)
-
-int CmdElement::analyseLine(const QString& Row, int numProps)
-{
-	unreachable();
-	return 0;
-}
-
-// ---------------------------------------------------------------------
-// not sure what this is. parse schematic?
-bool CmdElement::getIntegers(const QString& s, int *i1, int *i2, int *i3,
-			     int *i4, int *i5, int *i6)
-{
-	assert(false);
-	bool ok;
-	QString n;
-
-	if(!i1) return true;
-	n  = s.section(' ',1,1);
-	*i1 = n.toInt(&ok);
-	if(!ok) return false;
-
-	if(!i2) return true;
-	n  = s.section(' ',2,2);
-	*i2 = n.toInt(&ok);
-	if(!ok) return false;
-
-	if(!i3) return true;
-	n  = s.section(' ',3,3);
-	*i3 = n.toInt(&ok);
-	if(!ok) return false;
-
-	if(i4) {
-		n  = s.section(' ',4,4);
-		*i4 = n.toInt(&ok);
-		if(!ok) return false;
-	}
-
-	if(!i5) return true;
-	n  = s.section(' ',5,5);
-	*i5 = n.toInt(&ok);
-	if(!ok) return false;
-
-	if(!i6) return true;
-	n  = s.section(' ',6,6);
-	*i6 = n.toInt(&ok);
-	if(!ok) return false;
-
-	return true;
-}
-
-// ---------------------------------------------------------------------
 bool CmdElement::getPen(const QString& s, QPen& Pen, int i)
 {
 	unreachable();

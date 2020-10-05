@@ -1829,7 +1829,7 @@ void MouseActions::editElement(SchematicDoc *Doc, QMouseEvent *Event)
  // Element* E=element();
   ElementGraphics* EG=focusElement->element();
   Element* E=element(EG);
-  E->editElement(Doc);
+  E->schematicWidget(Doc);
 
   // BUG. move to respective classes. 1 at a time...
   if(auto c=component(focusElement)){ untested();

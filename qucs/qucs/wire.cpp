@@ -12,6 +12,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "nodemap.h"
+#include "wiredialog.h"
 #include "globals.h"
 #include "geometry.h"
 #include "schematic_model.h"
@@ -110,7 +111,13 @@ void Wire::setCenter(int x, int y, bool relative)
     _cy = y;
   }
 }
-// ----------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
+QDialog* Wire::schematicWidget(QucsDoc* Doc) const
+{ untested();
+  trace0("Component::editElement");
+  return new WireDialog(Doc); // memory leak?
+}
+/*--------------------------------------------------------------------------*/
 #if 0
 // Lie x/y on wire ? 5 is the precision the coordinates have to fit.
 bool Wire::getSelected(int , int )
