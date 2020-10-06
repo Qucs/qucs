@@ -25,7 +25,7 @@ check_LTLIBRARIES = helloworld.la element.la
 
 helloworld_la_LDFLAGS = -shared -no-undefined -module -avoid-version -rpath /dev/null
 element_la_LDFLAGS = -shared -no-undefined -module -avoid-version -rpath /dev/null
-element_la_CPPFLAGS = ${AM_CPPFLAGS}  $(QT_CFLAGS)
+element_la_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) -I$(top_srcdir)/include
 
 AM_TESTS_ENVIRONMENT = \
     export PATH='../qucs:$(PATH)' \

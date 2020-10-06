@@ -186,10 +186,9 @@ Net* graph_traits<NodeMap>::new_cc(Conductor*n, NodeMap& s)
 	return n->newNet(s.netList());
 }
 /* -------------------------------------------------------------- */
-void graph_traits<NodeMap>::del_cc(Net*, NodeMap&)
+void graph_traits<NodeMap>::del_cc(Net* n, NodeMap& s)
 { untested();
-	incomplete();
-	// return s.delNet(n);
+	s.delNet(n);
 }
 /* -------------------------------------------------------------- */
 /* -------------------------------------------------------------- */

@@ -153,9 +153,17 @@ public: // container
 private: // used in erase?
 	void       deleteComp(Component*c);
 
-public: // node stuff. why public?
-	size_t wireCount(){ return wires().size(); }
-	size_t nodeCount(){ return nodes().size(); }
+public: // gone
+	size_t wireCount() const{ return wires().size(); }
+	size_t nodeCount() const{ return nodes().size(); }
+	unsigned numberOfNets() const{ return Nets.size(); }
+
+public:
+	size_t numWires() const{ return wires().size(); }
+	size_t numNodes() const{ return nodes().size(); }
+	unsigned numNets() const{ return Nets.size(); }
+
+public: // why?
 	Node* insertNode(int x, int y, Element* owner);
 	void insertSymbolNodes(Symbol *c, bool noOptimize);
 	bool  oneTwoWires(Node* n);
@@ -207,9 +215,6 @@ public:
 	}
 	QString const& portType(int i) const{
 		return PortTypes[i];
-	}
-	unsigned numberOfNets() const{ // numNets
-		return Nets.size();
 	}
 
 	unsigned numPorts() const;
