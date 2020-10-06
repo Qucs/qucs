@@ -22,7 +22,7 @@
 #
 
 pkglib_LTLIBRARIES = legacy.la
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include -I$(top_srcdir)/qucs
 AM_CXXFLAGS = ${CXXFLAGS} -fPIC
 
 legacy_la_LDFLAGS = -module -avoid-version

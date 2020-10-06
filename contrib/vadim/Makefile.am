@@ -32,6 +32,8 @@ vadim_components_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 # BUG: components.h still uses Q3Ptrlist from qt4
 vadim_components_la_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS)
 
-AM_CPPFLAGS = -I$(top_srcdir)/qucs
+AM_CPPFLAGS = \
+		-I${top_srcdir}/include \
+		-I$(top_srcdir)/qucs
 
 CLEANFILES = *~ Makefile.in
