@@ -12,7 +12,6 @@
  ***************************************************************************/
 #include "conductor.h"
 #include "node.h"
-#include "wire.h"
 #include "netlist.h"
 #include "net.h"
 

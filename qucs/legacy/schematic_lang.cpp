@@ -7,7 +7,6 @@
 #include "schematic_symbol.h"
 #include "schematic_model.h" /// hmm
 #include "globals.h"
-#include "wire.h"
 #include "command.h"
 #include "paintings/painting.h"
 #include "diagram.h" // BUG
@@ -123,11 +122,11 @@ Element* LegacySchematicLanguage::loadElement(const QString& _s, Element* e) con
 
 static std::list<Element*> implicit_hack;
 
-static bool obsolete_load(Symbol* w, const QString& sc)
+static bool obsolete_wireload(Symbol* w, const QString& sc)
 {
 	Symbol* sym = w;
 	QString s(sc);
-	trace1("obsolete_load", s);
+	trace1("obsolete_wireload", s);
 	bool ok;
 
 	if(s.at(0) != '<'){
@@ -273,15 +272,15 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 				// Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4); // this is entirely nuts.
 				Symbol* sw= symbol_dispatcher.clone("Wire");
 				assert(sw);
-				Wire* w = prechecked_cast<Wire*>(sw); // BUG;
+//				Wire* w = prechecked_cast<Wire*>(sw); // BUG;
 				sw->setOwner(&owner);
 				incomplete(); // qt5 branch...
-				bool err = obsolete_load(w, Line);
+				bool err = obsolete_wireload(sw, Line);
 				if(!err){ untested();
 					incomplete();
-					delete(w);
+					delete(sw);
 				}else{
-					c = w;
+					c = sw;
 				}
 			}else if(mode=='D'){
 				trace1("diagram parse?", Line);

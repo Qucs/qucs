@@ -12,7 +12,6 @@
  *                                                                         *
  ***************************************************************************/
 #include "node.h"
-#include "wire.h"
 #include "viewpainter.h" //?
 #include "wirelabel.h"
 #include "net.h"

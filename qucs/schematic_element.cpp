@@ -107,10 +107,10 @@ incomplete();
 //
 // why return Wire*??
 // BUG Node* Wire::splitWire(x, y, NodeList&)
+#if 0
 Wire* SchematicModel::splitWire(Wire *pw, Node *pn)
 {
     incomplete();
-#if 0
     Wire *newWire = new Wire(pn->cx_(), pn->cy_(), pw->x2_(), pw->y2_(), pn, pw->portValue(1));
     // newWire->setSelected(pw->isSelected());
 
@@ -133,9 +133,9 @@ Wire* SchematicModel::splitWire(Wire *pw, Node *pn)
         }
 
     return newWire;
-#endif
     return 0;
 }
+#endif
 /*--------------------------------------------------------------------------*/
 // If possible, make one wire out of two wires.
 // BUG: do in SchematicDocument?
@@ -197,10 +197,10 @@ return false;
 }
 
 // ---------------------------------------------------
+#if 0
 // Deletes the wire 'w'.
 void SchematicModel::deleteWire(Wire *)
 {
-#if 0 // why?!
     if(w->portValue(0)->degree() == 1) {
 //        if(w->portValue(0)->Label) delete w->portValue(0)->Label;
          incomplete();
@@ -230,8 +230,8 @@ void SchematicModel::deleteWire(Wire *)
         w->Label = 0;
     }
 #endif
-#endif
 }
+#endif
 
 // ---------------------------------------------------
 // BUG: does not copy
@@ -361,8 +361,16 @@ void SchematicDoc::markerUpDown(bool up, Q3PtrList<ElementGraphics> *Elements)
    as right-clicking on a selected element to get a context
    menu.
 */
+
+#if 1 // obsolete.
 ElementMouseAction MouseActions::selectElement(
 	QPoint const& xy, bool flag, int *index)
+{
+    assert(false);
+
+}
+#endif
+#if 0 // obsolete.
 { untested();
     (void) index;
    // THIS IS MISLEADING. it is also used to generate mouse actions.
@@ -693,6 +701,7 @@ ElementMouseAction MouseActions::selectElement(
     return ElementMouseAction(pe_1st);
 #endif
 }
+#endif
 
 void SchematicDoc::highlightWireLabels ()
 {

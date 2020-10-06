@@ -16,7 +16,6 @@
 #define QUCS_SCHEMATIC_DOC_H
 
 #include "actions.h"
-#include "wire.h"
 #include "node.h"
 #include "qucsdoc.h"
 #include "viewpainter.h"
@@ -341,7 +340,7 @@ private:
   bool dragIsOkay;
   /*! \brief hold system-independent information about a schematic file */
 
-  void removeWire(Wire const* w);
+//  void removeWire(Wire const* w);
 
 private:
 /* ********************************************************************
@@ -358,6 +357,7 @@ public: // mostly not here
   }
   Node* selectedNode(int, int);
 
+#if 0
   int   insertWireNode1(Wire* w){
 	  assert(_model);
 	  return _model->insertWireNode1(w);
@@ -395,6 +395,7 @@ public: // mostly not here
 	  assert(_model);
 	  return _model->deleteWire(w);
   }
+#endif
 
   Marker* setMarker(int, int);
 

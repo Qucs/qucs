@@ -30,7 +30,6 @@ class QMouseEvent;
 class QPainter;
 class QUndoCommand;
 class Schematic;
-class Wire;
 
 // something happens to the mouse on a schematic
 // BUG: wrong file. schematic_mouse.h maybe?
@@ -163,10 +162,6 @@ inline ElementGraphics* element(ElementMouseAction e)
 inline Component* component(ElementMouseAction e)
 {
   return component(element(e));
-}
-inline Wire* wire(ElementMouseAction e)
-{
-  return wire(element(e));
 }
 inline WireLabel* wireLabel(ElementMouseAction e)
 {
@@ -326,7 +321,6 @@ class Label;
 // really?
 ElementGraphics* element(ElementMouseAction);
 Component* component(ElementMouseAction);
-Wire* wire(ElementMouseAction);
 WireLabel* wireLabel(ElementMouseAction);
 Diagram* diagram(ElementMouseAction);
 Painting* painting(ElementMouseAction);
