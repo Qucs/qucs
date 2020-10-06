@@ -143,8 +143,22 @@ void MouseAction::uncheck()
 
   deactivate();
 }
-
+/*--------------------------------------------------------------------------*/
+SchematicScene const* MouseAction::scene() const
+{
+	return doc().scene();
+}
+/*--------------------------------------------------------------------------*/
 bool MouseAction::isNode(int fX, int fY) const
 {
-  return doc().isNode(fX, fY);
+	// return scene()->isNode(fX, fY);?
+	return doc().isNode(fX, fY);
 }
+/*--------------------------------------------------------------------------*/
+bool MouseAction::isConductor(int fX, int fY) const
+{ untested();
+	assert(scene());
+	return scene()->isConductor(fX, fY);
+}
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/

@@ -815,7 +815,7 @@ static void selectWireLine(ElementGraphics *g)
 		auto items = scn->items(pos);
 		if(items.size()==2){
 
-			for(auto ii : scn->items(pos)){
+			for(auto ii : items){
 				Symbol* si = symbol(ii);
 				if(!si){
 				}else if(g->isSelected()==ii->isSelected()){

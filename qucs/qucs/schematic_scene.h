@@ -66,6 +66,9 @@ public:
   QPoint gridSize() const;
   QPoint snapToGrid(QPointF const&) const;
 
+  bool isNode(int, int) const;
+  bool isConductor(int, int) const;
+
 public: // wrap items
   QList<ElementGraphics*> items() const;
   QList<ElementGraphics*> items(const QPointF &pos,

@@ -418,7 +418,7 @@ QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* ev)
 	auto fX = getX(xx);
 	auto fY = getY(xx);
 
-	if(isNode(fX, fY)){ untested();
+	if(isConductor(fX, fY)){ untested();
 		std::list<Element*> new_wires;
 		for(auto& i: _gfx){ untested();
 			auto s = prechecked_cast<Symbol*>(element(i));
@@ -434,8 +434,6 @@ QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* ev)
 		}
 		c = new MakeWire(doc(), new_wires);
 		_gfx.clear();
-
-//	}else if(is_on_wire){ untested();
 	}else{  // same as press1?
 		new_gfx();
 
@@ -451,88 +449,9 @@ QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* ev)
 		cur->prepareGeometryChange();
 		doc().sceneAddItem(cur); // show, does not attach.
 	}
-#if 0
-	switch(e->button()) {
-	case Qt::LeftButton :
-		if(MAx1 == 0) { // which wire direction first ?
-			if(MAy2 != MAy3)
-				set1 = Doc->insertWire(new Wire(MAx3, MAy3, MAx3, MAy2));
-
-			if(MAx2 != MAx3) { untested();
-				set2 = set1;
-				set1 = Doc->insertWire(new Wire(MAx3, MAy2, MAx2, MAy2));
-			}
-		}else{ untested();
-			if(MAx2 != MAx3)
-				set1 = Doc->insertWire(new Wire(MAx3, MAy3, MAx2, MAy3));
-
-			if(MAy2 != MAy3) { untested();
-				set2 = set1;
-				set1 = Doc->insertWire(new Wire(MAx2, MAy3, MAx2, MAy2));
-			}
-		}
-
-		if(set1 & 2) { untested();
-			// if last port is connected, then...
-			if(formerAction) { untested();
-				// ...restore old action
-				QucsMain->select->setChecked(true);
-			}
-			else { untested();
-				// ...start a new wire
-				QucsMain->MouseMoveAction = &MouseActions::MMoveWire1;
-				QucsMain->MousePressAction = &MouseActions::MPressWire1;
-				QucsMain->MouseDoubleClickAction = 0;
-			}
-		}
-
-		//ALYS: excessive update. end of function does it.
-		//Doc->viewport()->update();
-
-		setDrawn(false);
-		if(set1 | set2) Doc->setChanged(true, true);
-		MAx3 = MAx2;
-		MAy3 = MAy2;
-		break;
-
-		/// \todo document right mouse button changes the wire corner
-	case Qt::RightButton :
-		TODO("Sort out paintAim and GhostLine")
-
-#if 0
-			//ALYS - old code preserved because isn't clear - what it was???
-			//looks like deletion via painting.
-			//i'll delete it after possible clarification from team
-			if(MAx1 == 0) { untested();
-				Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx3, MAy2); // erase old
-				Doc->PostPaintEvent (_Line, MAx3, MAy2, MAx2, MAy2); // erase old
-			}
-			else { untested();
-				Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx2, MAy3); // erase old
-				Doc->PostPaintEvent (_Line, MAx2, MAy3, MAx2, MAy2); // erase old
-			}
-#endif
-
-		MAx2 = int(fX);
-		MAy2 = int(fY);
-		//     Doc->snapToGrid(MAx2, MAy2);
-
-		MAx1 ^= 1;    // change the painting direction of wire corner
-		if(MAx1 == 0) { untested();
-			/// \todo paintGhostLineV(Doc,MAx3,MAy3,MAy2);
-			///paintGhostLineH(Doc,MAx3,MAy2,MAx2);
-		}
-		else { untested();
-			/// \todo paintGhostLineH(Doc,MAx3,MAy3,MAx2);
-			//paintGhostLineV(Doc,MAx2,MAy3,MAy2);
-		}
-		break;
-
-	default: ;    // avoids compiler warnings
-	}
-#endif
 
 	/// \todo paintAim(Doc,MAx2,MAy2); //ALYS - added missed aiming cross
+		/// \todo document right mouse button changes the wire corner
 	// Doc->viewport()->update();
 	return c;
 }

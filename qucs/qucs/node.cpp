@@ -35,7 +35,11 @@ Node::~Node()
   trace1("~Node", this);
   assert(!degree());
 }
-
+/*--------------------------------------------------------------------------*/
+bool Node::isNet(int x, int y) const
+{ untested();
+  return x==_position.first && y==_position.second;
+}
 // -------------------------------------------------------------
 #if 0
 TODO: untangle Label <-> Node

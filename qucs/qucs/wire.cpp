@@ -18,6 +18,7 @@
 #include "schematic_model.h"
 #include <QPainter>
 #include "qt_compat.h" // geometry?
+#include "l_compar.h"
 
 // ----------------------------------------------------------------
 Wire::Wire()
@@ -374,6 +375,13 @@ Node* Wire::disconnectNode(unsigned i, NodeMap& nm)
   }
 
   return n;
+}
+// ----------------------------------------------------------------
+bool Wire::isNet(int x, int y) const
+{ untested();
+  x -= cx();
+  y -= cy();
+  return in_order(x1(), x, x2()) && in_order(y1(), y, y2());
 }
 // ----------------------------------------------------------------
 // ----------------------------------------------------------------

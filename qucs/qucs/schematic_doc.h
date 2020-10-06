@@ -155,11 +155,12 @@ public: // scene
 private:
 	void deleteItem(ElementGraphics*);
 
+public:
+  SchematicScene const* scene() const{itested();
+	  return prechecked_cast<SchematicScene const*>(QGraphicsView::scene()); }
 private:
   // schematic Scene for this View
 //  SchematicScene *Scene;
-  SchematicScene const* scene() const{itested();
-	  return prechecked_cast<SchematicScene const*>(QGraphicsView::scene()); }
   SchematicScene *scene() {itested(); return prechecked_cast<SchematicScene*>(QGraphicsView::scene()); }
   // schematic frame item
   // Frame *SchematicFrame;

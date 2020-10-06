@@ -59,25 +59,24 @@ QAction *formerAction;   // remember action before drag n'drop etc.
 
 // only mouse actions? how about undoable keyboard actions?
 MouseActions::MouseActions(QucsDoc& d)
-  : focusElement(nullptr), // hmm
-    _doc(d)
+  : _doc(d)
 {itested();
-  selElem  = 0;  // no component/diagram is selected
+  //selElem  = 0;  // no component/diagram is selected
   isMoveEqual = false;  // mouse cursor move x and y the same way
-  focusElement.clear(); //element being interacted with mouse
+  //focusElement.clear(); //element being interacted with mouse
 
   // ...............................................................
   // initialize menu appearing by right mouse button click on component
   ComponentMenu = new QMenu(QucsMain);
-  focusMEvent   = new QMouseEvent(QEvent::MouseButtonPress, QPoint(0,0),
-                  Qt::NoButton, Qt::NoButton, Qt::NoModifier);
+  // focusMEvent   = new QMouseEvent(QEvent::MouseButtonPress, QPoint(0,0),
+  //                 Qt::NoButton, Qt::NoButton, Qt::NoModifier);
 
 }
 
 MouseActions::~MouseActions()
 {itested();
   delete ComponentMenu;
-  delete focusMEvent;
+//  delete focusMEvent;
 }
 void MouseActions::setActive(MouseAction* a)
 {
@@ -313,6 +312,7 @@ void MouseActions::moveElements(EGPList& , int, int)
 // **********       Functions for serving mouse moving          **********
 // **********                                                   **********
 // ***********************************************************************
+#if 0 // obsolete?
 /*!
  * \brief MouseActions::MMoveElement
  * \param Doc
@@ -332,7 +332,6 @@ void MouseActions::moveElements(EGPList& , int, int)
  */
 void MouseActions::MMoveElement(SchematicDoc *Doc, QMouseEvent *Event)
 { untested();
-#if 0 // obsolete?
   if(selElem == 0) return;
 
 //  qDebug() << "MMoveElement got selElem";
@@ -379,8 +378,8 @@ void MouseActions::MMoveElement(SchematicDoc *Doc, QMouseEvent *Event)
     selElem->paintScheme(Doc); // paint scheme at new position
     Doc->viewport()->update();
   }
-#endif
 }
+#endif
 
 
 /**
@@ -513,9 +512,10 @@ void MouseActions::MMoveSelect(SchematicDoc *, QMouseEvent *)
 }
 
 // -----------------------------------------------------------
-void MouseActions::MMoveResizePainting(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MMoveResizePainting(SchematicDoc *Doc, QMouseEvent *)
 {
   setPainter(Doc);
+#if 0
 
   Set1(Event, Doc);
   Doc->setOnGrid(MAx1, MAy1);
@@ -526,6 +526,7 @@ void MouseActions::MMoveResizePainting(SchematicDoc *Doc, QMouseEvent *Event)
     // why not always?
     // e->MouseResizeMoving(MAx1, MAy1, Doc);
   }
+#endif
 }
 
 // -----------------------------------------------------------
@@ -652,6 +653,7 @@ void MouseActions::MMovePaste(SchematicDoc *Doc, QMouseEvent *Event)
 
 // -----------------------------------------------------------
 // Moves scroll bar of diagram (e.g. tabular) according the mouse cursor.
+#if 0
 void MouseActions::MMoveScrollBar(SchematicDoc *Doc, QMouseEvent *Event)
 { untested();
   Diagram *d = diagram(focusElement);
@@ -671,6 +673,7 @@ void MouseActions::MMoveScrollBar(SchematicDoc *Doc, QMouseEvent *Event)
 // FIXME #warning     d->paint(&Painter);
   }
 }
+#endif
 
 
 
@@ -1520,6 +1523,7 @@ void MouseActions::MReleaseMoving(SchematicDoc *Doc, QMouseEvent*)
 }
 
 // -----------------------------------------------------------
+#if 0
 void MouseActions::MReleaseResizeDiagram(SchematicDoc *Doc, QMouseEvent *Event)
 { untested();
   unreachable();
@@ -1583,6 +1587,7 @@ void MouseActions::MReleaseResizeDiagram(SchematicDoc *Doc, QMouseEvent *Event)
   setDrawn(false);
   Doc->setChanged(true, true);
 }
+#endif
 
 // -----------------------------------------------------------
 void MouseActions::MReleaseResizePainting(SchematicDoc *Doc, QMouseEvent *Event)
@@ -1772,6 +1777,7 @@ void MouseActions::MReleasePaste(SchematicDoc *Doc, QMouseEvent *Event)
 #endif
 
 // -----------------------------------------------------------
+#if 0
 void MouseActions::MReleaseMoveText(SchematicDoc *Doc, QMouseEvent *Event)
 { untested();
   if(Event->button() != Qt::LeftButton) return;
@@ -1789,6 +1795,7 @@ void MouseActions::MReleaseMoveText(SchematicDoc *Doc, QMouseEvent *Event)
   setDrawn(false);
   Doc->setChanged(true, true);
 }
+#endif
 
 // -----------------------------------------------------------
 void MouseActions::MReleaseZoomIn(SchematicDoc *, QMouseEvent *)
@@ -1803,6 +1810,7 @@ void MouseActions::MReleaseZoomIn(SchematicDoc *, QMouseEvent *)
 // **********    Functions for mouse button double clicking     **********
 // **********                                                   **********
 // ***********************************************************************
+#if 0
 void MouseActions::editElement(SchematicDoc *Doc, QMouseEvent *Event)
 { untested();
   assert(false); // obsolete;
@@ -1948,6 +1956,7 @@ void MouseActions::editElement(SchematicDoc *Doc, QMouseEvent *Event)
   Doc->viewport()->update();
   setDrawn(false);
 }
+#endif
 
 // -----------------------------------------------------------
 #if 0
