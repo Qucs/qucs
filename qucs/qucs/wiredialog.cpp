@@ -22,7 +22,10 @@
 #include <QVBoxLayout>
 #include "swap.h"
 
-WireDialog::WireDialog(QucsDoc* d) : SchematicDialog(d)
+WireDialog::WireDialog(QucsDoc* d)
+	: SchematicDialog(d),
+     CompNameEdit(nullptr),
+     _changed(false)
 {
   resize(450, 250);
   setWindowTitle(tr("Edit Wire Properties"));
@@ -55,7 +58,7 @@ void WireDialog::attach(ElementGraphics* gfx)
   QHBoxLayout *h5 = new QHBoxLayout;
   h5->setSpacing(5);
 
-  h5->addWidget(new QLabel(tr("Name:")) );
+  h5->addWidget(new QLabel(tr("Wire label")) );
 
   CompNameEdit = new QLineEdit;
   h5->addWidget(CompNameEdit);
@@ -99,7 +102,8 @@ void WireDialog::attach(ElementGraphics* gfx)
   connect(cancel, SIGNAL(clicked()), SLOT(slotButtCancel()));
 
   // ------------------------------------------------------------
-  CompNameEdit->setText(Comp->label());
+  std::string netname = Comp->getParameter("netname");
+  CompNameEdit->setText(QString::fromStdString(netname));
   // showName->setChecked(Comp->showName);
   _changed = false;
 
@@ -177,36 +181,15 @@ void WireDialog::slotApplyInput()
 ///
   QString tmp;
   Component *pc = nullptr;
-  if(CompNameEdit->text().isEmpty()){
-    CompNameEdit->setText(Comp->label());
-  }else if(CompNameEdit->text() != Comp->label()) {
+  if(CompNameEdit->text() != Comp->label()) {
     trace2("Apply", Comp->label(), CompNameEdit->text());
-#if 0
-    for(pc = schematic()->components().first(); pc!=0;
-        pc=schematic()->components().next()){
-      if(pc->name() == CompNameEdit->text()){
-        break;  // found component with this name?
-      }else{
-      }
-    }
-#endif
-    if(pc){
-      CompNameEdit->setText(Comp->label());
-    } else if (Comp->label() != CompNameEdit->text()) {
-      Comp->setLabel(CompNameEdit->text().toStdString());
-      _changed = true;
-    }
+
+	 Comp->setParameter("netname", CompNameEdit->text().toStdString());
+	 _changed = true;
+  }else{
   }
 
-  /*! Walk the original Comp->Props and compare with the
-   *  data in the dialog.
-   *  The pointers to the combo, edits,... are set to 0.
-   *  Only check if the widgets were created (pointers checks are 'true')
-   */
   bool display;
-//  Property *pp = Comp->Props.first();
-
-  // pick selected row
   QTableWidgetItem *item = 0;
 
   //  make sure we have one item, take selected
