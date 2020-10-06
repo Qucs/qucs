@@ -2384,7 +2384,7 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
 ///   }else{
 ///   }
 ///   view->drawn = false;
-  MouseMoveAction = &MouseActions::MMoveElement;
+  MouseMoveAction = nullptr; // &MouseActions::MMoveElement;
 //  MousePressAction = &MouseActions::MPressElement;
   incomplete();
   MouseReleaseAction = 0;

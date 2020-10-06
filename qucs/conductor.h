@@ -95,6 +95,7 @@ public: //pair?
   std::list<Conductor*>::iterator connectionsEnd(){
 	  return _adj.end();
   }
+  virtual bool isNet(int, int) const = 0;
 
 public:
   WireLabel *Label; // BUG

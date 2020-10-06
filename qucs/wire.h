@@ -29,6 +29,7 @@ class dummy {};
 class Wire : public Symbol, public Conductor {
 private:
   Wire(Wire const&);
+
 public:
   explicit Wire();
   explicit Wire(int _x1, int _y1, int _x2, int _y2);
@@ -49,8 +50,10 @@ public:
   void getCenter(int&, int&);
 //  bool getSelected(int, int);
   void setName(const QString&, const QString&, int delta_=0, int x_=0, int y_=0);
-
   QString save(){unreachable(); return "";}
+
+private: // Conductor
+  bool isNet(int, int) const override;
 
 private:
   void findScaleAndAngle();

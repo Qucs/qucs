@@ -27,17 +27,16 @@ class AdjNodeRange;
 // TODO: fix hierarchy
 // // maybe: Place : Conductor?
 class Node : public Object, public Conductor {
-public:
-
 private:
   Node(Node const&) = delete;
   Node(Node const&&) = delete;
+
 private: // managed by NodeMap
   friend class NodeMap;
   explicit Node(std::pair<int, int>);
   ~Node();
-public:
 
+public:
   void inc_ports(){ ++_ports; }
   void dec_ports(){ assert(_ports); --_ports; }
   bool hasPorts() const{ return _ports; }
@@ -49,6 +48,7 @@ public:
   std::pair<int, int> const& position() const{
 	  return _position;
   }
+  bool isNet(int, int) const override;
 
 #if 0 // what is this?
   void setState(int i){

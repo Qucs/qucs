@@ -98,7 +98,7 @@ libqucs_la_SOURCES = \
 
 libqucs_la_SOURCES += qucs_.qrc
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs-lib
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include -I$(top_srcdir)/qucs-lib
 
 
 noinst_HEADERS += $(MOCHEADERS)
