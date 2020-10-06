@@ -69,7 +69,7 @@ ConnectedComponents<NodeMap>* NodeMap::new_ccs()
 // may have strange side effects.
 #include "io.h"
 int NodeMap::erase(Node* tt)
-{ untested();
+{
 	assert(tt);
 	trace2("NodeMap::erase", tt->degree(), tt->position());
 	assert(tt->hasNet());
@@ -144,7 +144,7 @@ Net* NodeMap::newNet()
 }
 /* -------------------------------------------------------------- */
 void NodeMap::delNet(Net* n)
-{ untested();
+{
 	assert(n);
 	return _nets.delNet(n);
 }
@@ -169,7 +169,7 @@ void NodeMap::registerVertex(Conductor*c)
 }
 /* -------------------------------------------------------------- */
 void NodeMap::deregisterVertex(Conductor*c)
-{ untested();
+{
   _cc->deregisterVertex(c);
 }
 /* -------------------------------------------------------------- */
@@ -187,7 +187,7 @@ Net* graph_traits<NodeMap>::new_cc(Conductor*n, NodeMap& s)
 }
 /* -------------------------------------------------------------- */
 void graph_traits<NodeMap>::del_cc(Net* n, NodeMap& s)
-{ untested();
+{
 	s.delNet(n);
 }
 /* -------------------------------------------------------------- */

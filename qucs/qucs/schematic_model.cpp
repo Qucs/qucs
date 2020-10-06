@@ -51,7 +51,7 @@ void SchematicModel::clear()
 	diagrams().clear();
 	{ // clearWires
 		// (in legacy code) deleting a wire may create another wire.
-		while(wires().size()){ untested();
+		while(wires().size()){
 			trace2("clear wire", wires().size(), nodes().size());
 			erase(wires().first());
 		}
@@ -149,7 +149,7 @@ void SchematicModel::pushBack(Element* what)
 	  connect(s);
 	  // why not components??
 	  wires().append(s);
-	}else if(auto d=diagram(what)){ untested();
+	}else if(auto d=diagram(what)){
 		diagrams().append(d);
 	}else if(auto c=command(what)){
 		//trace1("SchematicModel::pushBack", owner());
@@ -221,7 +221,7 @@ void SchematicModel::insertSymbolNodes(Symbol *c, bool noOptimize)
 // // possibly not needed. all actions must be undoable anyway
 // -> use detach, store reference in UndoAction.
 void SchematicModel::erase(Element* what)
-{ untested();
+{
 	Element* e = detach(what);
 	delete(e);
 }
@@ -573,7 +573,7 @@ void SchematicModel::disconnect(Symbol* c)
 
 		if(!nn){ untested();
 			unreachable();
-		}else if(!nn->hasPorts()){ untested();
+		}else if(!nn->hasPorts()){
 			nodes().erase(nn); // possibly garbage collect only.
 		}else{
 		}

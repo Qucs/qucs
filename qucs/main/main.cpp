@@ -553,7 +553,7 @@ void createDocData()
 //
 // table for quick reference and testing
 void createListComponentEntry()
-{ untested();
+{
   QStringList cats = Category::getCategories ();
   QFile data("/dev/stdout");
   data.open (QFile::WriteOnly | QFile::Truncate);
@@ -565,7 +565,7 @@ void createListComponentEntry()
   assert(qucsatorlang);
   auto verilog = doclang_dispatcher["verilog"];
 
-  foreach(QString category, cats) { untested();
+  foreach(QString category, cats) {
 
     QList<Module *> Comps;
     Comps = Category::getModules(category);
@@ -576,7 +576,7 @@ void createListComponentEntry()
     char * File;
     QString Name;
 
-    foreach (Module *Mod, Comps) { untested();
+    foreach (Module *Mod, Comps) {
       qDebug() << "some module";
       Element const *e = Mod->element();
       Component const *cc = prechecked_cast<Component const*>(e);
@@ -585,18 +585,18 @@ void createListComponentEntry()
 
       s << "=====" << e->label() << "=========\n";
 
-      if(auto c = dynamic_cast<Symbol*>(ce)){ untested();
+      if(auto c = dynamic_cast<Symbol*>(ce)){
 	ce->setLabel("my_" + c->typeName());
-      }else if(auto c = dynamic_cast<CmdElement*>(ce)){ untested();
+      }else if(auto c = dynamic_cast<CmdElement*>(ce)){
 	ce->setLabel("my_" + c->typeName());
-      }else{ untested();
+      }else{
 	// not sure.
       }
 
       lang->printItem(ce, s);
       s << "\n";
 
-      if(verilog){ untested();
+      if(verilog){
 	verilog->printItem(ce, s);
       }else{ untested();
       }
@@ -924,7 +924,7 @@ int main(int argc, char *argv[])
       incomplete(); // don't use.
       createListComponentEntry();
       return 0;
-    } else if(!strcmp(argv[i], "--list-entries")) { untested();
+    } else if(!strcmp(argv[i], "--list-entries")) {
       createListComponentEntry();
       return 0;
     }

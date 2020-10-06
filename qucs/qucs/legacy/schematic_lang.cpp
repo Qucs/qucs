@@ -170,7 +170,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	}else{
 	}
 
-	if(y1<=y2){ untested();
+	if(y1<=y2){
 		// possibly the case in all legacy files
 	}else{ untested();
 		// nothing wrong with that, really?
