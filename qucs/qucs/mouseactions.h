@@ -71,6 +71,7 @@ protected:
 
 protected: // bug. private
 	SchematicDoc const& doc() const;
+	SchematicScene const* scene() const;
 
 protected:
 	void sceneAddItem(ElementGraphics*);
@@ -82,7 +83,8 @@ protected:
 	QPointF mapToScene(QPoint const& p) const;
 	void updateViewport(); // why?
 	void setCursor(QCursor const& c);
-   bool isNode(int fX, int fY) const;
+   bool isNode(int fX, int fY) const; // needed??
+   bool isConductor(int fX, int fY) const;
 
 private:
 	MouseActions& _ctx;
@@ -113,14 +115,12 @@ public: // compat with old code
 	bool operator!=(ElementGraphics const* e) const{
 		return _e!=e;
 	}
-#ifndef USE_SCROLLVIEW
 	bool operator==(Element const* e) const{
 		return ::element(_e)==e;
 	}
 	bool operator!=(Element const* e) const{
 		return *_e!=e;
 	}
-#endif
 	operator bool() const{
 		return _e;
 	}
@@ -198,6 +198,7 @@ Label* label(ElementMouseAction e);
 extern QAction *formerAction;
 
 // must be QObject so it can receive/filter events
+// // merge into schematic_scene?
 class MouseActions : public QObject {
 	Q_OBJECT
 public:
@@ -214,14 +215,14 @@ public:
   void setDrawn(bool b=true){_drawn = b;}
   bool wasDrawn() const{return _drawn;}
 // private: BUG.
-  Element *selElem;  // component/diagram/painting selected in IconView
-  ElementMouseAction focusElement; // BUG: use focusMEvent instead
-  QMouseEvent *focusMEvent;
+//  Element *selElem;  // component/diagram/painting selected in IconView
+//  ElementMouseAction focusElement; // BUG: use focusMEvent instead
+//  QMouseEvent *focusMEvent;
 
 public: // really?
-  bool hasElem(){ return selElem; }
-  Element* getElem(){assert(selElem); return selElem; }
-  void setElem(Element* e){selElem=e;}
+//  bool hasElem(){ return selElem; }
+//  Element* getElem(){assert(selElem); return selElem; }
+//  void setElem(Element* e){selElem=e;}
 
 private:
 public: // BUG? called from MouseAction.
@@ -252,16 +253,11 @@ public: // really?
   QucsDoc& doc();
   void updateViewport();
 
-public:
+public: // TODO. move into mouse actions
 #define Schematic SchematicDoc
   void MMoveSelect(Schematic*, QMouseEvent*);
-  void MMoveElement(Schematic*, QMouseEvent*);
-//  void MMoveWire1(Schematic*, QMouseEvent*);
-//  void MMoveWire2(Schematic*, QMouseEvent*);
-//  void MMoveMoving(Schematic*, QMouseEvent*);
-//  void MMoveMoving2(Schematic*, QMouseEvent*);
+//  void MMoveElement(Schematic*, QMouseEvent*);
   void MMovePaste(Schematic*, QMouseEvent*);
-//  void MMoveDelete(Schematic*, QMouseEvent*);
   void MMoveLabel(Schematic*, QMouseEvent*);
   void MMoveMarker(Schematic*, QMouseEvent*);
   void MMoveMirrorY(Schematic*, QMouseEvent*);
@@ -276,15 +272,11 @@ public:
   void MMoveScrollBar(Schematic*, QMouseEvent*);
 
   void MPressSelect(QMouseEvent*);
-//  void MPressDelete(Schematic*, QMouseEvent*);
   void MPressActivate(Schematic*, QMouseEvent*);
   void MPressMirrorX(Schematic*, QMouseEvent*);
   void MPressMirrorY(Schematic*, QMouseEvent*);
   void MPressRotate(Schematic*, QMouseEvent*);
-//  void MPressElement(Schematic*, QMouseEvent*);
   void MPressLabel(Schematic*, QMouseEvent*);
-//  void MPressWire1(Schematic*, QMouseEvent*);
-//  void MPressWire2(Schematic*, QMouseEvent*);
   void MPressPainting(Schematic*, QMouseEvent*);
   void MPressMarker(Schematic*, QMouseEvent*);
   void MPressOnGrid(Schematic*, QMouseEvent*);
@@ -305,11 +297,6 @@ public:
   void MReleaseZoomIn(Schematic*, QMouseEvent*);
 
   // obsolete
-//  void paintElementsScheme(Schematic*);
-//  void rotateElements(Schematic*, int&, int&);
-//  void moveElements(Schematic*, int&, int&);
-//  void moveElements(QList<ElementGraphics*>&, int, int);
-//  void endElementMoving(Schematic*, EGPList*);
 //  void rightPressMenu(QMouseEvent*);
 #undef Schematic
 

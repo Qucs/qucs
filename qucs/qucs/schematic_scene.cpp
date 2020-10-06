@@ -392,6 +392,19 @@ bool SchematicScene::event(QEvent* e)
 	return r;
 }
 /*--------------------------------------------------------------------------*/
+bool SchematicScene::isConductor(int x, int y) const
+{ untested();
+	QPointF pos(x, y);
+	auto it = items(pos);
+	for(auto i : it){ untested();
+		if(auto c = dynamic_cast<Conductor const*>(element(i))){
+			return c->isNet(x, y);
+		}else{ untested();
+		}
+	}
+	return false;
+}
+/*--------------------------------------------------------------------------*/
 void SchematicScene::selectAll(bool v)
 {
 	for(auto i : items()){ untested();
