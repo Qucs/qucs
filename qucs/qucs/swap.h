@@ -20,13 +20,17 @@ private:
   }
   void redo(){
     assert(_gfx);
+//	  _elt = _gfx->swap(_elt);
+
+	 bool sel = _gfx->isSelected();
     _gfx->hide();
-    if(1){
+    {
       Element* tmp = _gfx->detachElement();
       _gfx->attachElement(_elt);
       _elt = tmp;
     }
     _gfx->show();
+	 _gfx->setSelected(sel);
   }
 private:
   ElementGraphics* _gfx;

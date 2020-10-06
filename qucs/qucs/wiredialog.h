@@ -29,7 +29,7 @@ class Symbol;
 
 class WireDialog : public SchematicDialog {
 public:
-  WireDialog(QucsDoc*);
+  explicit WireDialog(QucsDoc*);
   ~WireDialog();
 
   void attach(ElementGraphics* c) override;
