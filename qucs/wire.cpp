@@ -216,6 +216,8 @@ std::string Wire::getParameter(std::string const& n) const
     return std::to_string(x2());
   }else if(n=="deltay"){
     return std::to_string(y2());
+  }else if(n=="netname"){
+    return _netname;
   }else{
     return Symbol::getParameter(n);
   }
