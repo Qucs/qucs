@@ -16,7 +16,6 @@
  ***************************************************************************/
 #include "wirelabel.h"
 #include "viewpainter.h"
-#include "wire.h"
 #include "qucs.h"
 #include "some_font_stuff.h"
 

@@ -155,7 +155,6 @@ class ViewPainter;
 static QString incomplete_description="incomplete_description";
 // will be gone soon.
 class Component;
-class Wire;
 class Label;
 class WireLabel;
 class Diagram;
@@ -275,7 +274,6 @@ inline SchematicModel const* Element::scope() const
 
 class Component;
 class CmdElement;
-class Wire;
 class WireLabel;
 class Diagram;
 class Painting;
@@ -283,7 +281,6 @@ class Graph;
 class Marker;
 
 Component const* component(Element const*);
-Wire const* wire(Element const*);
 WireLabel const* wireLabel(Element const*);
 Diagram const* diagram(Element const*);
 Painting const* painting(Element const*);
@@ -292,7 +289,6 @@ Graph const* graph(Element const*);
 Component* component(Element*);
 CmdElement* command(Element*);
 inline Element*& element(Element*& x){return x;}
-Wire* wire(Element*);
 WireLabel* wireLabel(Element*);
 Diagram* diagram(Element*);
 Painting* painting(Element*);

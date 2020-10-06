@@ -43,6 +43,7 @@
 #include <stdlib.h>
 #include "trace.h"
 #include "schematic_scene.h"
+#include "wirelabel.h"
 
 
 void MouseAction::sceneAddItem(ElementGraphics* x)

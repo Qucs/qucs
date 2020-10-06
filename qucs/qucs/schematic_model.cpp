@@ -148,10 +148,11 @@ void SchematicModel::pushBack(Element* what)
 	if(auto c=component(what)){
 		connect(c);
 		components().push_back(c);
-	}else if(auto w=wire(what)){
-	  connect(w);
+	}else if(prechecked_cast<Conductor*>(element(what))){
+		auto s=dynamic_cast<Symbol*>(what);
+	  connect(s);
 	  // why not components??
-	  wires().append(w); // it's now ours.
+	  wires().append(s);
 	}else if(auto d=diagram(what)){ untested();
 		diagrams().append(d);
 	}else if(auto c=command(what)){
@@ -237,9 +238,10 @@ Element* SchematicModel::detach(Element* what)
 		components().removeRef(c);
 	}else if(auto d=diagram(what)){ untested();
 		diagrams().removeRef(d);
-	}else if(auto w=wire(what)){ untested();
-		disconnect(w);
-		wires().removeRef(w);
+	}else if(prechecked_cast<Conductor*>(element(what))){
+		auto s=dynamic_cast<Symbol*>(what);
+		disconnect(s);
+		wires().removeRef(s);
 	}else if(auto w=dynamic_cast<Symbol*>(what)){ untested();
 		incomplete();
 	}else{ untested();
@@ -259,9 +261,10 @@ Element* SchematicModel::attach(Element* what)
 		components().append(c);
 	}else if(auto d=diagram(what)){ untested();
 		diagrams().append(d);
-	}else if(auto w=wire(what)){ untested();
-		connect(w);
-		wires().append(w);
+	}else if(prechecked_cast<Conductor*>(element(what))){
+		auto s=dynamic_cast<Symbol*>(what);
+		connect(s);
+		wires().append(s);
 	}else if(auto w=dynamic_cast<Symbol*>(what)){ untested();
 		incomplete();
 		//connect(c);

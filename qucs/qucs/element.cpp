@@ -113,13 +113,12 @@ std::pair<int, int> Element::center()const
 // legacy stuff. pretend that Element points to an Element
 #include "components/component.h"
 #include "diagram.h"
-#include "wire.h"
 #include "wirelabel.h"
 #include "command.h"
 
 Component* component(Element* e){ return dynamic_cast<Component*>(e); }
 CmdElement* command(Element* e){ return dynamic_cast<CmdElement*>(e); }
-Wire* wire(Element* e){ return dynamic_cast<Wire*>(e); }
+// Wire* wire(Element* e){ return dynamic_cast<Wire*>(e); }
 WireLabel* wireLabel(Element* e){ return dynamic_cast<WireLabel*>(e); }
 Diagram* diagram(Element* e){ return dynamic_cast<Diagram*>(e); }
 Painting* painting(Element* e){ return dynamic_cast<Painting*>(e); }
@@ -129,7 +128,7 @@ Node* node(Element* e){ return dynamic_cast<Node*>(e); }
 //Label* label(Element* e){ return dynamic_cast<Label*>(e); }
 
 Component const* component(Element const* e){ return dynamic_cast<Component const*>(e); }
-Wire const* wire(Element const* e){ return dynamic_cast<Wire const*>(e); }
+// Wire const* wire(Element const* e){ return dynamic_cast<Wire const*>(e); }
 WireLabel const* wireLabel(Element const* e){ return dynamic_cast<WireLabel const*>(e); }
 Diagram const* diagram(Element const* e){ return dynamic_cast<Diagram const*>(e); }
 Painting const* painting(Element const* e){ return dynamic_cast<Painting const*>(e); }

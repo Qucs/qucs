@@ -121,5 +121,4 @@ noinst_HEADERS = \
 	some_font_stuff.h \
 	trace.h \
 	viewpainter.h \
-	wire.h \
 	wirelabel.h

@@ -2227,15 +2227,6 @@ QString SchematicDoc::getParameter(std::string const& x) const
 }
 
 // ----------------------------------------------------------------
-void SchematicDoc::removeWire(Wire const* x)
-{ untested();
-#ifndef USE_SCROLLVIEW
-incomplete();
-//  scene()->removeItem(x);
-#else
-  wires().removeRef((Wire*)x);
-#endif
-}
 
 void SchematicModel::removeNode(Node const* x)
 { untested();

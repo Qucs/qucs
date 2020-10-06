@@ -99,7 +99,6 @@ private:
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 Component const* const_component(ElementGraphics const);
-Wire const* const_wire(ElementGraphics const);
 WireLabel const* const_wireLabel(ElementGraphics const);
 Diagram const* const_diagram(ElementGraphics const);
 Painting const* const_painting(ElementGraphics const);
@@ -107,7 +106,6 @@ Painting const* const_painting(ElementGraphics const);
 // obsolete stuff (historic attempt to rescue legacy code)
 Element* element(QGraphicsItem*);
 Component* component(QGraphicsItem*);
-Wire* wire(QGraphicsItem*);
 WireLabel* wireLabel(QGraphicsItem*);
 Diagram* diagram(QGraphicsItem*);
 Painting* painting(QGraphicsItem*);

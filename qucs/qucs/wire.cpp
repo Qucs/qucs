@@ -20,6 +20,130 @@
 #include "qt_compat.h" // geometry?
 #include "l_compar.h"
 
+#include "viewpainter.h"
+#include "wirelabel.h"
+#include "platform.h"
+#include "symbol.h"
+
+class QPainter;
+class QString;
+
+class dummy {};
+
+namespace{
+
+class Wire : public Symbol, public Conductor {
+private:
+  Wire(Wire const&);
+
+public:
+  explicit Wire();
+  explicit Wire(int _x1, int _y1, int _x2, int _y2);
+  ~Wire();
+
+  Element* clone() const override{
+	  return new Wire(*this);
+  }
+  QDialog* schematicWidget(QucsDoc*) const override;
+
+  Component* newOne(){
+	  assert(false);
+	  return nullptr;
+  }
+
+  void paint(ViewPainter*) const override;
+  void setCenter(int, int, bool relative=false);
+  void getCenter(int&, int&);
+//  bool getSelected(int, int);
+  void setName(const QString&, const QString&, int delta_=0, int x_=0, int y_=0);
+  QString save(){unreachable(); return "";}
+
+private: // Conductor
+  bool isNet(int, int) const override;
+
+private:
+  void findScaleAndAngle();
+
+public: // Node xs
+//  bool hasNet() const { return _port0.isConnected(); }
+#if 0
+  Net* net();
+  Net const* net() const;
+#endif
+
+  QString const& netLabel() const;
+
+private: // Symbol
+  void setParameter(std::string const& name, std::string const& value) override;
+  std::string getParameter(std::string const& name) const override;
+  bool showLabel() const override{ return false; }
+
+private: // symbol Node stuff
+  Node* connectNode(unsigned idx, NodeMap&) override;
+  Node* disconnectNode(unsigned idx, NodeMap&) override;
+
+private: // Symbol
+  void expand() override;
+  unsigned numPorts() const;
+
+public:
+  bool    isHorizontal() const { return (y1() == y2());}
+  QRectF boundingRect() const;
+
+public:
+//  void setPortByIndex(unsigned idx, Node* n);
+//  Node* portValue(unsigned idx);
+
+private: // Symbol, internal port access.
+  Port& port(unsigned i){
+	  assert(i<2);
+	  if(i==0){
+		  return _port0;
+	  }else{
+		  return _port1;
+	  }
+  }
+
+
+private: // FIXME, these are still around. (from element)
+//	int & x1__() { return _port0.x; }
+//	int & y1__() { return _port0.y; }
+//	int & x2__() { return _port1.x; }
+//	int & y2__() { return _port1.y; }
+
+	void updatePort();
+
+public: // FIXME, these are still around. (from element)
+
+	int x1() const { return _port0.x(); }
+	int y1() const { return _port0.y(); }
+	int x2() const { return _port1.x(); }
+	int y2() const { return _port1.y(); }
+
+// 	void setPos0(int x, int y){ x1__() = x; y1__() = y; }
+// 	void setPos1(int x, int y){ x2__() = x; y2__() = y; }
+
+public: // stuff used in mouseactions.
+//  void move1(int x, int y){ unreachable(); } // {x1__()+=x; y1__()+=y; }
+//  void move2(int x, int y){ unreachable(); } // {x2__()+=x; y2__()+=y; }
+
+private:
+	int & x1() { return _port0.x(); }
+	int & y1() { return _port0.y(); }
+	int & x2() { return _port1.x(); }
+	int & y2() { return _port1.y(); }
+private: // avoid access to obsolete Element members
+  Port _port0;
+  Port _port1;
+
+private:
+  std::string nx, ny, delta;
+  std::string _netname;
+
+  int _angle;
+  int _scale;
+};
+
 // ----------------------------------------------------------------
 Wire::Wire()
    : _port0(0, 0), _port1(1, 0), _angle(0), _scale(1.)
@@ -382,6 +506,8 @@ bool Wire::isNet(int x, int y) const
   x -= cx();
   y -= cy();
   return in_order(x1(), x, x2()) && in_order(y1(), y, y2());
+}
+// ----------------------------------------------------------------
 }
 // ----------------------------------------------------------------
 // ----------------------------------------------------------------
