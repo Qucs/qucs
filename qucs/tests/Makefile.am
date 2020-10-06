@@ -16,7 +16,7 @@
 # Boston, MA 02110-1301, USA.
 #
 
-AM_CPPFLAGS = -I${srcdir}/.. ${QT_CFLAGS} ${QTest_CFLAGS} -DPIC
+AM_CPPFLAGS = -I${top_srcdir}/include -I${srcdir}/.. ${QT_CFLAGS} ${QTest_CFLAGS} -DPIC
 AM_DEFAULT_SOURCE_EXT = .cpp
 # AM_CXXFLAGS = -fPIC
 AM_LDFLAGS = -Wl,--no-as-needed

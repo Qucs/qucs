@@ -483,7 +483,6 @@ Node* Wire::connectNode(unsigned i, NodeMap& nm)
   return n;
 }
 // ----------------------------------------------------------------
-// // fishy. involve base case?
 Node* Wire::disconnectNode(unsigned i, NodeMap& nm)
 { untested();
   assert(hasNet());
