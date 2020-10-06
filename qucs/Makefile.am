@@ -38,6 +38,7 @@ SUBDIRS = \
 	qucs-powercombining \
 	translations \
 	examples \
+	include \
 	main \
 	contrib \
 	tests \

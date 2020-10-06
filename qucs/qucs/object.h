@@ -1,9 +1,5 @@
 /***************************************************************************
-                                 object.h
-                                -----------
-    begin                : 2016
-    copyright            : (C) 2016 Felix Salfelder
-    email                : felix@salfelder.org
+    copyright            : (C) 2016, 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -15,14 +11,11 @@
  *                                                                         *
  ***************************************************************************/
 
-/** \file object.h
-  * \brief base class for all sorts of objects
-  *
-  */
+// \brief base class for all sorts of objects
 
 #ifndef QUCS_OBJECT_H
 #define QUCS_OBJECT_H
-#include "io_trace.h"
+#include "../include/io_trace.h"
 
 #include <QString> // yikes
 

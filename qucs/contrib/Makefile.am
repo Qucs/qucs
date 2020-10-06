@@ -32,7 +32,9 @@ dist_man_MANS = ps2sp.1
 plugindir = ${pkglibdir}
 plugin_LTLIBRARIES = hidpi.la
 
-AM_CPPFLAGS = -I$(top_srcdir)/qucs
+AM_CPPFLAGS = \
+	-I$(top_srcdir)/include \
+	-I$(top_srcdir)/qucs
 
 hidpi_la_LDFLAGS = -shared -module -avoid-version
 hidpi_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
