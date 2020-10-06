@@ -112,8 +112,6 @@ noinst_HEADERS += \
 	globals.h \
 	imagewriter.h \
 	io.h \
-	io_trace.h \
-	l_dispatcher.h \
 	misc.h \
 	mnemo.h \
 	module.h \

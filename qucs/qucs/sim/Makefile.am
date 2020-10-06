@@ -25,7 +25,7 @@
 pkglib_LTLIBRARIES = verilog.la qucsator.la
 noinst_HEADERS = sim.h
 AM_DEFAULT_SOURCE_EXT = .cpp
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include -I$(top_srcdir)/qucs
 
 verilog_la_SOURCES = verilog.cpp verilog_nl.cpp
 verilog_la_LDFLAGS = -module -avoid-version

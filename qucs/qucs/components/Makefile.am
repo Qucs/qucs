@@ -144,7 +144,7 @@ noinst_HEADERS = $(MOCHEADERS) components.h    \
   mutualx.h circline.h taperedline.h \
   capq.h indq.h spiralinductor.h circularloop.h spdeembed.h
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include -I$(top_srcdir)/qucs
 
 CLEANFILES = *~ *.moc.cpp
 MAINTAINERCLEANFILES = Makefile.in
