@@ -33,7 +33,7 @@
 #include <QEvent>
 #include <QKeyEvent>
 #include <QDebug>
-#include <QUndoCommand>
+#include "swap.h"
 
 SchematicDialog::SchematicDialog(QucsDoc* d)
   : QDialog(prechecked_cast<SchematicDoc*>(d))
@@ -845,38 +845,6 @@ void CmdElementDialog::reject()
   slotButtCancel();
 }
 
-
-class SwapSymbolCommand : public QUndoCommand {
-  SwapSymbolCommand() = delete;
-  SwapSymbolCommand(SwapSymbolCommand const&) = delete;
-public:
-  ~SwapSymbolCommand(){
-    delete _elt;
-  }
-  SwapSymbolCommand(ElementGraphics* g, Element* e)
-    : _gfx(g), _elt(e)
-  {
-    assert(e);
-    setText("Swap Element " + e->label());
-  }
-private:
-  void undo(){
-    redo();
-  }
-  void redo(){
-    assert(_gfx);
-    _gfx->hide();
-    if(1){
-      Element* tmp = _gfx->detachElement();
-      _gfx->attachElement(_elt);
-      _elt = tmp;
-    }
-    _gfx->show();
-  }
-private:
-  ElementGraphics* _gfx;
-  Element* _elt;
-};
 // -------------------------------------------------------------------------
 // Is called, if the "Apply"-button is pressed.
 void CmdElementDialog::slotApplyInput()

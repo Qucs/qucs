@@ -196,6 +196,7 @@ QUndoCommand* MouseActionSelCmd<CMD>::release(QMouseEvent*)
 } // delete::release
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+// swapSelection?
 class DeleteSelection : public QUndoCommand {
 public:
 	template<class IT>
