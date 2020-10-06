@@ -62,12 +62,6 @@ Component* component(QGraphicsItem* g)
 	if(!e) return nullptr;
 	return component(e->operator->());
 }
-Wire* wire(QGraphicsItem* g)
-{
-	auto e=dynamic_cast<ElementGraphics*>(g);
-	if(!e) return nullptr;
-	return wire(e->operator->());
-}
 WireLabel* wireLabel(QGraphicsItem* g)
 {
 	auto e=dynamic_cast<ElementGraphics*>(g);
@@ -211,6 +205,10 @@ void SchematicScene::removeItem(Element const* xx)
 { unreachable();
 }
 #endif
+
+#endif
+
+#if 0
 
 // FIXME: is the weird order really necessary?
 void SchematicScene::selectedItemsAndBoundingBox(QList<ElementGraphics*>& ElementCache, QRectF& BB)

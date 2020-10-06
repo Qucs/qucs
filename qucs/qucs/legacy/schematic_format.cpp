@@ -60,7 +60,7 @@ static QString QG(SchematicSymbol const& m, std::string const& key)
 	return QString::fromStdString(m.getParameter(key));
 }
 
-static void wirehack(Wire const* w, DocumentStream& d)
+static void wirehack(Symbol const* w, DocumentStream& d)
 {
 	assert(w);
 	Symbol const* sym = w;
@@ -203,7 +203,7 @@ void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& 
 	stream << "</Components>\n";
 
 	stream << "<Wires>\n";    // save all wires
-	for(Wire const* pw : wires(m)){
+	for(Symbol const* pw : wires(m)){
 		wirehack(pw, stream);
 //		stream << "  " << pw->save() << "\n";
 	}
