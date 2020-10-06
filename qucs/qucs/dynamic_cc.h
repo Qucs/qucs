@@ -225,7 +225,7 @@ template<class T>
 typename ConnectedComponents<T>::vertex&
 ConnectedComponents<T>::deregisterVertex(
 		typename ConnectedComponents<T>::vertex& t)
-{ untested();
+{
 	auto cc = graph_traits<T>::get_cc(t);
 	assert(cc != graph_traits<T>::invalid_cc());
 
@@ -233,7 +233,7 @@ ConnectedComponents<T>::deregisterVertex(
 
 	graph_traits<T>::unset_cc(t, cc);
 
-	if(!graph_traits<T>::cc_size(cc, _graph)) { untested();
+	if(!graph_traits<T>::cc_size(cc, _graph)) {
 		graph_traits<T>::del_cc(cc, _graph);
 	}else{ untested();
 	}

@@ -34,7 +34,7 @@ namespace {
 
 static std::string netLabel(Net const* n)
 {
-	if(!n){ untested();
+	if(!n){
 		unreachable();
 		return("(null)");
 	}else if(n->hasLabel()){
@@ -59,7 +59,7 @@ static Dispatcher<DocumentLanguage>::INSTALL p(&doclang_dispatcher, "verilog", &
  * verilog does not know about commands
  */
 void Verilog::printCommand(CmdElement const* c, QTextStream& s) const
-{ untested();
+{
   s << "//" << c->label() << "\n";
 }
 

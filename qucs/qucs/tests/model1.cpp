@@ -19,7 +19,7 @@ int main()
 	///w0->setParameter(std::string("deltax"), "1");
 
 	std::cout << "building nets.\n";
-	for(unsigned i=0; i<N; ++i){ untested();
+	for(unsigned i=0; i<N; ++i){
 		// w0 = new Wire(i,0,i+1,0);
 		w0 = prechecked_cast<Symbol*>(wp->clone());
 		w0->setParameter(std::string("$xposition"), std::to_string(i));
