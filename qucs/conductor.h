@@ -123,7 +123,7 @@ public:
 	void addAdj(Conductor* c){
 		_adj.push_back(c);
 	}
-	void rmAdj(Conductor* c){ untested();
+	void rmAdj(Conductor* c){
 		auto i = std::find(_adj.begin(), _adj.end(), c);
 		assert(i != _adj.end());
 		_adj.erase(i);

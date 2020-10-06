@@ -6,7 +6,7 @@
 #include "globals.h"
 
 void more()
-{ untested();
+{
 	SchematicModel M(NULL);
 
 	auto wp=symbol_dispatcher["Wire"];
@@ -36,13 +36,13 @@ void more()
 	assert(dynamic_cast<Symbol const*>(w0)->portValue(1));
 //	trace1("w0", w0->net());
 
-	{ untested();
+	{
 		std::cout << "disconnect\n";
 		M.disconnect(w0);
 		assert(M.wireCount()==1);
 //		assert(!w0->hasNet());
 	}
-	{ untested();
+	{
 		std::cout << "reconnect\n";
 		M.connect(w0);
 //		assert(w0->hasNet());
@@ -113,7 +113,7 @@ void more()
 	std::cout << "=== square test\n";
 	M.pushBack(w1);
 	SchematicModel const& cM = M;
-	for(auto i : cM.wires()){ untested();
+	for(auto i : cM.wires()){
 		Symbol* s = i;
 		int cx = atoi(s->getParameter("$xposition").c_str());
 		int cy = atoi(s->getParameter("$xposition").c_str());
@@ -128,7 +128,7 @@ void more()
 }
 
 int main()
-{ untested();
+{
 	SchematicModel M(NULL);
 	//auto w0 = new Wire(0,0,1,0);
 	auto wp=symbol_dispatcher["Wire"];
@@ -140,7 +140,7 @@ int main()
 	w1->setParameter(std::string("$xposition"), "1");
 	w1->setParameter(std::string("deltax"), "-1");
 
-	{ untested();
+	{
 		M.pushBack(w0);
 		assert(M.nodeCount() == 2);
 		M.pushBack(w1);
@@ -178,13 +178,13 @@ int main()
 	assert(*i0 != *i1);
 #endif
 
-	{ untested();
+	{
 		//assert(n0->degree()==2);
 		//assert(n1->degree()==2);
 	}
 
 
-	{ untested();
+	{
 		std::cout << "== detach\n";
 		M.detach(w0);
 		M.detach(w1);

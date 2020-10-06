@@ -77,7 +77,7 @@ Node* Symbol::connectNode(unsigned i, NodeMap&nm)
 }
 
 Node* Symbol::disconnectNode(unsigned i, NodeMap&)
-{ untested();
+{
 	trace2("disconnectNode", label(), i);
 	Port& mp = port(i);
 	Node* n = mp.value();
@@ -102,7 +102,7 @@ Net const* Symbol::portValue(unsigned i) const
   if(port(i).isConnected()){
 	  assert( port(i).value()->net() );
 	  return port(i).value()->net();
-  }else{ untested();
+  }else{
 	  return nullptr;
   }
 }

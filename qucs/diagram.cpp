@@ -1204,10 +1204,10 @@ bool Diagram::sameDependencies(Graph const*g1, Graph const*g2) const
 // ------------------------------------------------------------
 int Diagram::checkColumnWidth(const QString& Str,
 		const FontMetrics& metrics, int colWidth, int x, int y)
-{ untested();
+{
   //qDebug("%i", metrics.charWidth(Str,0));
   int w = metrics.boundingRect(Str).width();  // width of text
-  if(w > colWidth) { untested();
+  if(w > colWidth) {
     colWidth = w;
     if((x+colWidth) >= x2) {    // enough space for text ?
       // mark lack of space with a small arrow

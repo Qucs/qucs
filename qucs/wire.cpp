@@ -165,12 +165,12 @@ Wire::Wire(Wire const& w)
 void Wire::findScaleAndAngle()
 {
   _scale = std::max(abs(x2()), abs(y2()));
-  if(!_scale){ untested();
+  if(!_scale){
   }else if(x2() > 0){
     _angle = 0;
-  }else if(x2()<0){ untested();
+  }else if(x2()<0){
     _angle = 2;
-  }else if(y2()>0){ untested();
+  }else if(y2()>0){
     _angle = 1;
   }else if(y2()<0){
     _angle = 3;
@@ -306,7 +306,7 @@ void Wire::setName(const QString&, const QString&, int, int, int)
 }
 // ----------------------------------------------------------------
 void Wire::updatePort()
-{ untested();
+{
   assert(dsin(0) == 0);
   assert(dsin(1) == 1);
   assert(dsin(2) == 0);
@@ -413,7 +413,7 @@ void Wire::expand()
 {
   // stash NodeLabels as subdevices.
   // just not sure where exactly.
-  if (_netname != ""){ untested();
+  if (_netname != ""){
     new_subckt();
     Symbol* n = symbol_dispatcher.clone("NodeLabel");
     n->setLabel(_netname);
@@ -484,7 +484,7 @@ Node* Wire::connectNode(unsigned i, NodeMap& nm)
 }
 // ----------------------------------------------------------------
 Node* Wire::disconnectNode(unsigned i, NodeMap& nm)
-{ untested();
+{
   assert(hasNet());
   Node* n = Symbol::disconnectNode(i, nm);
   trace3("Wire::disconnect", i, n->degree(), degree());
