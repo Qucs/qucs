@@ -797,44 +797,6 @@ Symbol* symbol(QGraphicsItem* g)
 	if(!e) return nullptr;
 	return symbol(e->operator->());
 }
-// Follow a wire line and select it.
-/*--------------------------------------------------------------------------*/
-// static??
-void SchematicDoc::selectWireLine(ElementGraphics *, Node const*, bool /*ctrl*/)
-{ untested();
-#if 0
-	Symbol const* pe = symbol(g);
-	Node const* pn_1st = pn;
-	while(pn->degree() == 2) {
-		if(pn->firstConnection() == pe){
-			pe = symbol(pn->lastConnection());
-		}else{
-			pe = symbol(pn->firstConnection());
-		}
-		assert(pe);
-
-		if(!isWire(pe)){
-			break;
-		}else if(ctrl){
-			g->setSelected(!g->isSelected());
-		} else{ untested();
-			g->setSelected(true);
-		}
-
-		if(pe->portNode(0) == pn){
-		  	pn = pe->portNode(1);
-		} else {
-			assert(pe->portNode(1) == pn);
-			pn = pe->portNode(0);
-		}
-
-		if(pn == pn_1st){
-		  	break;  // avoid endless loop in wire loops
-		}else{
-		}
-	}
-#endif
-}
 
 QPointF makeQPointF(std::pair<int,int> p)
 {
@@ -849,7 +811,7 @@ static void selectWireLine(ElementGraphics *g)
 	assert(scn);
 	
 	for(unsigned i=0; i<s->numPorts(); ++i){
-		auto pos = makeQPointF(s->portPosition(i));
+		auto pos = makeQPointF(s->nodePosition(i));
 		auto items = scn->items(pos);
 		if(items.size()==2){
 

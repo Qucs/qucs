@@ -244,13 +244,9 @@ public:
 
   QList<PostedPaintEvent>   PostedPaintEvents;
 public:
-  void setSymbolMode(bool x){
-	  SymbolMode = x;
-  }
   bool isSymbolMode() const{
-	  return SymbolMode;
+	  return false;
   }
-
 
   int ViewX1, ViewY1, ViewX2, ViewY2;  // size of the document area
   int UsedX1, UsedY1, UsedX2, UsedY2;  // document area used by elements
@@ -284,11 +280,6 @@ public:
   int tmpViewX1, tmpViewY1, tmpViewX2, tmpViewY2;
   int tmpUsedX1, tmpUsedY1, tmpUsedX2, tmpUsedY2;
 
-  int undoActionIdx;
-  QVector<QString *> undoAction;
-  int undoSymbolIdx;
-  QVector<QString *> undoSymbol;    // undo stack for circuit symbol
-
   /*! \brief Get (schematic) file reference */
   QFileInfo getFileInfo (void) {
 	  assert(_model);
@@ -304,11 +295,6 @@ signals:
 
 protected:
   void paintFrame(ViewPainter*);
-
-  // overloaded function to get actions of user
-#ifdef USE_SCROLLVIEW
-  void drawContents(QPainter*, int, int, int, int);
-#endif
 
 protected:
   void showEvent(QShowEvent*) override;
@@ -395,13 +381,6 @@ public: // mostly not here
 	  assert(_model);
 	  return _model->connectVWires2(w);
   }
-//  int   insertWire(Wire* w){
-//	  assert(_model);
-//	  unreachable();
-//	  return _model->insertWire(w);
-//  }
-  void  selectWireLine(ElementGraphics*, Node const*, bool ctrl);
-//  Wire* selectedWire(int, int);
   Wire* splitWire(Wire* w, Node* n){
 	  assert(_model);
 	  return _model->splitWire(w, n);
@@ -501,19 +480,6 @@ public:
 private:
 	void parse(DocumentStream& stream, SchematicLanguage const*l=nullptr);
 
-private: // legacy, don't use
-//  void simpleInsertComponent(Component* c) { untested();
-//	  assert(_model);
-//	  return _model->simpleInsertComponent(c);
-//  }
-//  void simpleInsertCommand(CmdElement* c) { untested();
-//	  assert(_model);
-//	  return _model->simpleInsertCommand(c);
-//  }
-//  void simpleInsertWire(Wire* w) { untested();
-//	  assert(_model);
-//	  return _model->simpleInsertWire(w);
-//  }
 private:
   void simpleInsertElement(Element*);
 
@@ -542,8 +508,6 @@ private:
   void collectDigitalSignals(void);
   bool giveNodeNames(QTextStream *, int&, QStringList&, QPlainTextEdit*,
 		  int, NetLang const&);
-//  bool throughAllComps(QTextStream *, int&, QStringList&, QPlainTextEdit *,
-//		  int, NetLang const&);
 
   DigMap Signals; // collecting node names for VHDL signal declarations
 
@@ -565,18 +529,8 @@ public: // for now
 	  assert(_model);
 		return _model->createLibNetlist(a,b,c, nl);
   }
-  // used in main?
-//  QString createNetlist(DocumentStream& a, int b, NetLang const& nl) const{
-//	  assert(_model);
-//	  return _model->createNetlist(a, b, nl);
-//  }
 
 	QString getParameter(std::string const& key) const;
-
-public: // schematicModel
-	//QString const& portType(int i) const{
-	//	return PortTypes[i];
-	//}
 
 public:
   bool isAnalog;
@@ -644,9 +598,6 @@ private:
   SchematicSymbol* _root;
   SchematicModel* _model;
   CmdEltList _commands;
-private:
-  bool SymbolMode; // BUG
-
   QUndoStack* _undoStack;
 }; // SchematicDocument
 /* -------------------------------------------------------------------------------- */

@@ -161,19 +161,7 @@ void SchematicDoc::becomeCurrent(bool update)
 	tr("Edit Circuit Symbol\n\nEdits the symbol for this schematic"));
   }
 
-  if(isSymbolMode()) { untested();
-    incomplete();
-    assert(0);
-
-    // if no symbol yet exists -> create one
-    if(createSubcircuitSymbol()) { untested();
-      symbolPaintings().sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
-      setChanged(true, true);
-    }
-
-    emit signalUndoState(undoSymbolIdx != 0);
-    emit signalRedoState(undoSymbolIdx != undoSymbol.size()-1);
-  } else {itested();
+  {itested();
     incomplete();
 #if 0
     Nodes = &DocNodes;
@@ -181,10 +169,10 @@ void SchematicDoc::becomeCurrent(bool update)
     Diagrams = &DocDiags;
     Paintings = &DocPaints;
     Components = &DocComps;
-#endif
 
     emit signalUndoState(undoActionIdx != 0);
     emit signalRedoState(undoActionIdx != undoAction.size()-1);
+#endif
     if(update){itested();
       incomplete();
       reloadGraphs();   // load recent simulation data
@@ -249,18 +237,18 @@ void SchematicDoc::setChanged(bool c, bool fillStack, char Op)
 
   // ................................................
   // for schematic edit mode
-  while(undoAction.size() > undoActionIdx + 1) { untested();
-    delete undoAction.last();
-    undoAction.pop_back();
-  }
+//  while(undoAction.size() > undoActionIdx + 1) { untested();
+//    delete undoAction.last();
+//    undoAction.pop_back();
+//  }
 
-  if(Op == 'm') {   // only one for move marker
-    if (undoAction.at(undoActionIdx)->at(0) == Op) { untested();
-      delete undoAction.last();
-      undoAction.pop_back();
-      undoActionIdx--;
-    }
-  }
+//  if(Op == 'm') {   // only one for move marker
+//    if (undoAction.at(undoActionIdx)->at(0) == Op) { untested();
+//      delete undoAction.last();
+//      undoAction.pop_back();
+//      undoActionIdx--;
+//    }
+//  }
 
 #if 0 // obsolete?
   undoAction.append(new QString(createUndoString(Op)));
@@ -1293,17 +1281,17 @@ int SchematicDoc::save()
     setChanged(false);
 
     QVector<QString *>::iterator it;
-    for (it = undoAction.begin(); it != undoAction.end(); it++) { untested();
-      (*it)->replace(1, 1, ' '); //at(1) = ' '; state of being changed
-    }
+//    for (it = undoAction.begin(); it != undoAction.end(); it++) { untested();
+//      (*it)->replace(1, 1, ' '); //at(1) = ' '; state of being changed
+//    }
     //(1) = 'i';   // state of being unchanged
-    undoAction.at(undoActionIdx)->replace(1, 1, 'i');
-
-    for (it = undoSymbol.begin(); it != undoSymbol.end(); it++) { untested();
-      (*it)->replace(1, 1, ' '); //at(1) = ' '; state of being changed
-    }
+//    undoAction.at(undoActionIdx)->replace(1, 1, 'i');
+//
+//    for (it = undoSymbol.begin(); it != undoSymbol.end(); it++) { untested();
+//      (*it)->replace(1, 1, ' '); //at(1) = ' '; state of being changed
+//    }
     //at(1) = 'i';   // state of being unchanged
-    undoSymbol.at(undoSymbolIdx)->replace(1, 1, 'i');
+//    undoSymbol.at(undoSymbolIdx)->replace(1, 1, 'i');
   }
   // update the subcircuit file lookup hashes
   QucsMain->updateSchNameHash();
@@ -1806,7 +1794,7 @@ bool SchematicDoc::elementsOnGrid()
 void SchematicDoc::switchPaintMode()
 { untested();
   // BUG. this messes with SchematicModel functions
-  setSymbolMode(!isSymbolMode());
+  // setSymbolMode(!isSymbolMode());
 
   TODO("Fix contentsY");
   /** \todo switch paint mode
