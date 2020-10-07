@@ -2559,10 +2559,14 @@ void QucsApp::slotSymbolEdit()
     // change into symbol mode
     if (paint_mode) // but only switch coordinates if newly loaded
       SDoc->switchPaintMode(); // toggles SymbolMode (wtf?)
+
+    incomplete(); // symbol mode missing.
+#if 0
     SDoc->setSymbolMode(true);
     changeSchematicSymbolMode(SDoc);
     SDoc->becomeCurrent(true);
     SDoc->viewport()->update();
+#endif
     // view->drawn = false;
   }else{
     // in a normal schematic, data display or symbol file

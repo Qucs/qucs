@@ -51,7 +51,6 @@ SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
      QucsDoc(App_, Name_),
      _root(nullptr),
      _model(nullptr),
-     SymbolMode(false),
      _undoStack(nullptr)
 {itested();
   qDebug() << "SchematicDoc::SchematicDoc" << Name_;
@@ -77,12 +76,6 @@ SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
   tmpUsedX1 = tmpUsedY1 = tmpViewX1 = tmpViewY1 = -200;
   tmpUsedX2 = tmpUsedY2 = tmpViewX2 = tmpViewY2 =  200;
   tmpScale = 1.0;
-
-  // The 'i' means state for being unchanged.
-  undoActionIdx = 0;
-  undoAction.append(new QString(" i\n</>\n</>\n</>\n</>\n"));
-  undoSymbolIdx = 0;
-  undoSymbol.append(new QString(" i\n</>\n</>\n</>\n</>\n"));
 
   isVerilog = false;
   creatingLib = false;
