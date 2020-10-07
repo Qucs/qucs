@@ -83,7 +83,7 @@ void MouseActions::setActive(MouseAction* a)
 {
   if(_maCurrent){itested();
     _maCurrent->uncheck();
-  }else{ untested();
+  }else{itested();
   }
   _maCurrent = a;
 }
@@ -2020,7 +2020,7 @@ bool MouseActions::handle(QEvent*e)
   }else{
   }
 
-  if(c){ untested();
+  if(c){itested();
     // emit signalUndoState(true);
     executeCommand(c);
     return true;

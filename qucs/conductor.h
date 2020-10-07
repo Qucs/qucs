@@ -17,11 +17,11 @@
 #include "element.h"
 class Net;
 class NetList;
-//#include "node.h"
-// access nodes connected to a Node though a Conductor
-//
 class Conductor;
 class Net;
+class Symbol;
+
+#if 0
 class AdjConductorIterator{
 public:
 	typedef std::list<Element*>::iterator elt_iter;
@@ -76,6 +76,7 @@ private:
 	AdjConductorIterator::elt_iter _cond_begin;
 	AdjConductorIterator::elt_iter _cond_end;
 };
+#endif
 
 // nodes and wires?
 // (this does not make sense, move to Node, rebase Wire)
@@ -96,6 +97,7 @@ public: //pair?
 	  return _adj.end();
   }
   virtual bool isNet(int, int) const = 0;
+  virtual Symbol* newUnion(const Symbol*) const{ return nullptr; }
 
 public:
   WireLabel *Label; // BUG

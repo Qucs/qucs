@@ -131,7 +131,7 @@ void ElementGraphics::attachElement(Element* e)
 	}else if(!sym){
 	}else if(auto s = sym->subckt()){
 		trace0("child gfx");
-		for(auto i : s->components()){ untested();
+		for(auto i : s->components()){itested();
 			trace0("child gfx clone");
 			QGraphicsItem* cg = new ElementGraphics(i);
 			cg->setParentItem(this);
@@ -168,6 +168,32 @@ void ElementGraphics::paint(QPainter *p, const QStyleOptionGraphicsItem *o,
 	// QGraphicsItem::paint(p, o, w); //?
 }
 /*--------------------------------------------------------------------------*/
+Symbol const* symbol(ElementGraphics const* e)
+{
+	return dynamic_cast<Symbol const*>(e->operator->());
+}
+/*--------------------------------------------------------------------------*/
+Element const* element(ElementGraphics const* e)
+{
+	return e->operator->();
+}
+/*--------------------------------------------------------------------------*/
+// built the union of two ElementGraphics
+// only Conductors, for now,
+ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
+{
+	ElementGraphics* ng = nullptr;
+	if(auto* c=dynamic_cast<Conductor const*>(_e)){ untested();
+		if(auto u = c->newUnion(symbol(s)) ){ untested();
+			ng = new ElementGraphics(u);
+			return ng;
+		}else{ untested();
+		}
+	}else{ untested();
+	}
+
+	return ng;
+}
 /*--------------------------------------------------------------------------*/
 // transform around pivot (in scope coordinates).
 void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot)
@@ -313,7 +339,7 @@ bool ElementGraphics::sceneEvent(QEvent* e)
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::show()
 {itested();
-	if(_e->scope()){ untested();
+	if(_e->scope()){itested();
 		_e->attachToModel();
 	}else{ untested();
 		trace0("no attachToModel");

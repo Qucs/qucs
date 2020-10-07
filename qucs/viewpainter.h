@@ -54,20 +54,48 @@ public: // just forward
 		/// there is no drawRectD.
 		Painter->drawRect(a, b, c, d);
 	}
+	void drawRoundedRect (QRectF const& x){
+		Painter->drawRoundedRect(x, 10, 10);
+	}
 	void drawRoundRect (int a, int b, int c, int d){
 		Painter->drawRoundedRect(a, b, c, d, 25., 25.);
 	}
 	void drawArc (int a, int b, int c, int d, int e, int f){
 		Painter->drawArc(a, b, c, d, e, f);
 	}
+	void drawEllipse (QRectF a){
+		Painter->drawEllipse(a);
+	}
 	void drawEllipse (int a, int b, int c, int d){
 		Painter->drawEllipse(a, b, c, d);
+	}
+	void drawText(QRect a, Qt::TextFlag b, char const* s, QRect* r){
+		Painter->drawText(a, b, s, r);
+	}
+	void drawText(QRect a, Qt::TextFlag b, QString& s, QRect* r){
+		Painter->drawText(a, b, s, r);
 	}
 	int drawText(const QString& s, int a, int b, int *Height=0){
 		(void)Height;
 		Painter->drawText(a, b, s);
 		incomplete(); // return some bounding box width?
 		return 0;
+	}
+	template<class FT>
+	void drawText(int a, int b, int c, int d, FT e, const QString& f){
+		return Painter->drawText(a, b, c, d, e, f);
+	}
+//	void drawText(int a, int b, int c, int d, Qt::TextFlag e, const QString& f){
+//		return Painter->drawText(a, b, c, d, e, f);
+//	}
+	void drawText(QPoint const& s, QString const& a){
+		return Painter->drawText(s, a);
+	}
+	void drawText(QRect const& s, QString const& a){
+		return Painter->drawText(s, a);
+	}
+	void drawText(QRect a, QIncompatibleFlag b, QString c, QRect* d){
+		return Painter->drawText(a, b, c, d);
 	}
 	int  drawTextMapped(const QString&, int, int, int *Height=0);
 	void fillRect(int a, int b, int c, int d, const QColor& e){
@@ -82,6 +110,42 @@ public: // just forward
 	void setPen(T t){
 		Painter->setPen(t);
 	}
+	template<class T>
+	void setBrush(T t){
+		Painter->setBrush(t);
+	}
+	template<class T>
+	void drawLine(T t){
+		return Painter->drawLine(t);
+	}
+	template<class T>
+	void drawPath(T t){
+		return Painter->drawPath(t);
+	}
+	QPen pen(){
+		return Painter->pen();
+	}
+	QMatrix worldMatrix(){
+		return Painter->worldMatrix();
+	}
+	void setWorldMatrixEnabled(bool b){
+		Painter->setWorldMatrixEnabled(b);
+	}
+	void setWorldMatrix(QMatrix const& m){
+		 Painter->setWorldMatrix(m);
+	}
+	template<class T>
+	void rotate(T t){
+		Painter->rotate(t);
+	}
+	template<class T>
+	void setFont(T t){
+		Painter->setFont(t);
+	}
+	template<class T>
+	void drawConvexPolygon(T t){
+		Painter->drawConvexPolygon(t);
+	}
 public: // obsolete?
   void init(QPainter*, float, int, int, int, int, 
 	    float FontScale_=0.0, float PrintScale_=1.0)
@@ -90,9 +154,14 @@ public: // obsolete?
 	  (void)PrintScale_;
 	  incomplete();
   }
+  QFont font() {return Painter->font();}
+  void save() {return Painter->save();}
+  void restore() {return Painter->restore();}
+
+private:
+	QPainter *Painter;
 public: // BUG, is accessed directly.
         // some of them are used in random places
-	QPainter *Painter;
 	float Scale;
 	float PrintScale;
 	float FontScale;

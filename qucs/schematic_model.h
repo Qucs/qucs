@@ -19,7 +19,7 @@
 # include <QFileInfo> // BUG
 
 #include "object.h"
-#include "node.h"
+//#include "node.h"
 #include "io.h"
 #include "schematic_scene.h"
 #include "schematic_symbol.h"
@@ -30,6 +30,7 @@
 #include "sim/tasks.h"
 
 
+class Node;
 class SchematicDoc;
 class QPlainTextEdit; //??!
 class CmdElement;

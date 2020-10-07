@@ -420,7 +420,7 @@ public:
   // Element* selectElement(QPoint const&, bool, int *index=0);
   ElementGraphics* itemAt(float, float);
   ElementGraphics* itemAt(QPointF x) { return itemAt(x.x(), x.y());}
-  int      selectElements(int, int, int, int, bool);
+//  int      selectElements(int, int, int, int, bool);
   void     selectMarkers();
   void     newMovingWires(QList<Element*>*, Node*, int);
   QList<ElementGraphics*> cropSelectedElements();

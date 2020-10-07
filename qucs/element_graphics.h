@@ -43,8 +43,11 @@ public:
 	}
 	void attachElement(Element* e);
 	Element* detachElement();
+	ElementGraphics* newUnion(ElementGraphics const*) const;
 public:
-	SchematicScene* scene();
+	SchematicScene* scene(); // really?
+
+
 
 public: //?
 //  void paintScheme(SchematicDoc *p);
@@ -103,8 +106,10 @@ WireLabel const* const_wireLabel(ElementGraphics const);
 Diagram const* const_diagram(ElementGraphics const);
 Painting const* const_painting(ElementGraphics const);
 
+Element* element(ElementGraphics*);
+Element const* element(ElementGraphics const*);
+
 // obsolete stuff (historic attempt to rescue legacy code)
-Element* element(QGraphicsItem*);
 Component* component(QGraphicsItem*);
 WireLabel* wireLabel(QGraphicsItem*);
 Diagram* diagram(QGraphicsItem*);

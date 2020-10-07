@@ -196,28 +196,97 @@ QUndoCommand* MouseActionSelCmd<CMD>::release(QMouseEvent*)
 } // delete::release
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+// when adding or removing stuff, may need to remove/add different/more items
+// subject to geometry.
+template<class T>
+static void restructure(T& rem, T& add)
+{
+	// ...
+}
+/*--------------------------------------------------------------------------*/
+#if 0
+template<class T>
+void split_wires(pos_t portpos, T& rem, T& add)
+{
+	for(auto it : scene()->items(portpos)) {
+
+	}
+}
+#endif
+
+static std::vector<pos_t> portvector(ElementGraphics const* e)
+{
+	std::vector<pos_t> p;
+	if(auto s=prechecked_cast<Symbol const*>(element(e))){
+
+		for(unsigned i=0; i<s->numPorts(); ++i){
+			// if s->isConnected(i) ...
+			auto pp = s->nodePosition(i);
+			p.push_back(pp);
+		}
+	}else{
+	}
+}
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+// perform action for the first time. keep track of induced changes.
+template<class T>
+static void do_first(T& rem, T& add)
+{
+	T rem_uc;
+	T add_uc;
+
+	for(auto& r: rem){
+		auto ps = portvector(r);
+		r->hide();
+		for(auto portremove : ps){
+			possibly_merge_symbols(portremove, rem_uc, add);
+		}
+	}
+
+	for(auto& r : add){
+		for(auto p : ports(r)){
+			// when adding a port, wires may need splitting.
+			split_wires(graphics_near(r->nodeposition), rem_uc, add_uc);
+		}
+		r->show();
+	}
+
+	for(auto i : rem_uc){
+		rem.push_back(i);
+	}
+	for(auto i : add_uc){
+		add.push_back(i);
+	}
+}
+/*--------------------------------------------------------------------------*/
 // swapSelection?
 class DeleteSelection : public QUndoCommand {
 public:
 	template<class IT>
 	DeleteSelection(SchematicDoc& ctx, IT selection)
-	: _ctx(ctx), _done(false){ untested();
+	  : _ctx(ctx),
+	    _done(false){ untested();
 		size_t k = 0;
 		for(auto i : selection){ untested();
 			++k;
 			if(auto eg=dynamic_cast<ElementGraphics*>(i)){ untested();
-				_gfx.push_back(eg);
+				_gfxrem.push_back(eg);
 			}else{ untested();
 				unreachable(); // really? use prechecked_cast then.
 			}
 		}
+
+		 // here?
+		// restructure(_gfxrem, _gfxadd);
+
 		setText("delete " + QString::number(k) + " items");
 	}
 	void undo() override { untested();
 		QUndoCommand::undo(); // does not check
 
 		assert(_done);
-		for(auto& d : _gfx){ untested();
+		for(auto& d : _gfxrem){ untested();
 			d->show();
 		}
 		_done = false;
@@ -225,15 +294,25 @@ public:
 	void redo() override { untested();
 		QUndoCommand::redo(); // does not check
 
+		// or here?
+		// if(_raw){
+		// do_first(_gfxrem, _gfxadd);
+		// }else{
 		assert(!_done);
-		for(auto& d : _gfx){ untested();
+		for(auto& d : _gfxrem){ untested();
 			d->hide();
 		}
+		for(auto& d : _gfxadd){ untested();
+			d->show();
+		}
+		// }
+
 		_done = true;
 	}
 private:
     SchematicDoc& _ctx;
-    std::vector<ElementGraphics*> _gfx;
+    std::vector<ElementGraphics*> _gfxrem;
+    std::vector<ElementGraphics*> _gfxadd;
 	 bool _done;
 }; // DeleteSelection
 typedef MouseActionSelCmd<DeleteSelection> MouseActionDelete;
@@ -798,10 +877,6 @@ Symbol* symbol(QGraphicsItem* g)
 	return symbol(e->operator->());
 }
 
-QPointF makeQPointF(std::pair<int,int> p)
-{
-	return QPointF(p.first, p.second);
-}
 /*--------------------------------------------------------------------------*/
 static void selectWireLine(ElementGraphics *g)
 {
@@ -1041,7 +1116,7 @@ void SchematicDoc::actionEditDelete(QAction* sender)
 }
 
 void SchematicDoc::actionSetWire(QAction* sender)
-{ untested();
+{itested();
   possiblyToggleAction(schematicActions().maWire, sender);
 }
 
@@ -1290,7 +1365,8 @@ void SchematicDoc::actionDistrib(int d)
 
 void SchematicDoc::actionSelectAll(QAction*)
 { untested();
-    selectElements(INT_MIN, INT_MIN, INT_MAX, INT_MAX, true);
+	incomplete();
+    // selectElements(INT_MIN, INT_MIN, INT_MAX, INT_MAX, true);
     updateViewport();
 }
 

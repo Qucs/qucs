@@ -89,7 +89,7 @@ QUndoCommand* MouseAction::handle(QEvent* e)
 }
 // SchematicMouseAction::doc?
 SchematicDoc const& MouseAction::doc() const
-{ untested();
+{itested();
   auto cc = const_cast<MouseAction*>(this);
   return cc->doc();
 }
@@ -138,7 +138,7 @@ void MouseAction::uncheck()
     _sender->blockSignals(true); // do not call toggle slot
     _sender->setChecked(false);       // set last toolbar button off
     _sender->blockSignals(false);
-  }else{ untested();
+  }else{itested();
   }
 
   deactivate();
@@ -156,9 +156,44 @@ bool MouseAction::isNode(int fX, int fY) const
 }
 /*--------------------------------------------------------------------------*/
 bool MouseAction::isConductor(int fX, int fY) const
-{ untested();
+{itested();
 	assert(scene());
 	return scene()->isConductor(fX, fY);
+}
+/*--------------------------------------------------------------------------*/
+// was: bool oneTwoWires(Node *n)
+// when removing a port, wires may collapse.
+// remove the collapsed wires, and add a longer one.
+// keep track of what's been done.
+template<class T>
+void MouseAction::possibly_merge_symbols(pos_t remove_at, T& rem, T& add)
+{
+	auto it = items(makeQPointF(remove_at));
+	auto node = nodeAt(remove_at);
+
+	if(!node){
+		unreachable();
+	}else if(node->degree() == 2){
+		auto gfxi = it.begin();
+		auto next = gfxi;
+		++next;
+		
+		for(; next!=it.end(); gfxi=next, ++next){
+			assert(*gfxi);
+			if(auto _union = (*gfxi)->newUnion(*next) ){
+				(*gfxi)->hide();
+				(*next)->hide();
+				_union->show();
+
+				rem.push_back(*gfxi);
+				rem.push_back(*next);
+				add.push_back(_union);
+				break; // only attempt to merge once, for now.
+			}else{
+			}
+		}
+	}else{
+	}
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

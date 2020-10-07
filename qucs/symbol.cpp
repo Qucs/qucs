@@ -157,7 +157,7 @@ void Symbol::paint(ViewPainter* p) const
 			// p->setPen(QPen(Qt::red,2));
 			p->setPen(QPen(Qt::red,1));
 			p->drawEllipse(x-2, y-2, 4, 4);
-		}else if(port(i)->numPorts()==3){itested();
+		}else if(port(i)->numPorts()>2){itested();
 			p->setPen(QPen(Qt::black,2));
 			p->drawEllipse(x-1, y-1, 2, 2);
 		}else{itested();

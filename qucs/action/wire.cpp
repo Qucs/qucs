@@ -71,7 +71,7 @@ void WireUC::pushWire(int x, int y, int mx, int my)
 	subckt()->pushBack(w);
 }
 /*--------------------------------------------------------------------------*/
-QPoint WireUC::pmid() const{ untested();
+QPoint WireUC::pmid() const{itested();
 	QPoint pm;
 	switch(_mode){
 	case am_H: itested();
@@ -87,7 +87,7 @@ QPoint WireUC::pmid() const{ untested();
 }
 /*--------------------------------------------------------------------------*/
 void WireUC::expand()
-{ untested();
+{itested();
 	assert(!subckt());
 	new_subckt();
 	assert(subckt());
@@ -138,15 +138,15 @@ QRectF WireUC::boundingRect() const { itested();
 }
 /*--------------------------------------------------------------------------*/
 void WireUC::setParameter(std::string const& n, std::string const& v)
-{ untested();
+{itested();
 	trace2("gwsp", n, v);
-	if(n=="x0"){ untested();
+	if(n=="x0"){itested();
 		_p0.setX(atoi(v.c_str()));
-	}else if(n=="y0"){ untested();
+	}else if(n=="y0"){itested();
 		_p0.setY(atoi(v.c_str()));
-	}else if(n=="x1"){ untested();
+	}else if(n=="x1"){itested();
 		_p1.setX(atoi(v.c_str()));
-	}else if(n=="y1"){ untested();
+	}else if(n=="y1"){itested();
 		_p1.setY(atoi(v.c_str()));
 	}else if(n=="mode"){ untested();
 		switch(atoi(v.c_str())){
@@ -172,7 +172,7 @@ class MakeWire : public QUndoCommand {
 public:
 	template<class IT>
 	MakeWire(SchematicDoc& ctx, IT wires)
-	: _ctx(ctx){ untested();
+	: _ctx(ctx){itested();
 		trace1("newwire", wires.size());
 		size_t k = 0;
 
@@ -182,9 +182,9 @@ public:
 		// TODO //
 		// TODO //
 
-		for(auto i : wires){ untested();
+		for(auto i : wires){itested();
 			++k;
-			if(auto e=dynamic_cast<Element*>(i)){ untested();
+			if(auto e=dynamic_cast<Element*>(i)){itested();
 				auto eg = new ElementGraphics(e);
 				ctx.sceneAddItem(eg);
 				ctx.takeOwnership(e); // BUG?
@@ -201,9 +201,9 @@ private:
 			d->hide();
 		}
 	}
-	void redo() override { untested();
+	void redo() override {itested();
 		trace1("newwire redo", _gfx.size());
-		for(auto& d : _gfx){ untested();
+		for(auto& d : _gfx){itested();
 			d->show();
 		}
 	}
@@ -259,7 +259,7 @@ private:
 extern QCursor& crosshair();
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionWire::activate(QObject* sender)
-{ untested();
+{itested();
 	assert(!_gfx.size());
 	new_gfx();
 	_phase = 1;
@@ -269,7 +269,7 @@ QUndoCommand* MouseActionWire::activate(QObject* sender)
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionWire::deactivate()
-{ untested();
+{itested();
 	doc().setCursor(_oldcursor);
 	for(auto i: _gfx){ untested();
 		delete i;
@@ -280,7 +280,7 @@ QUndoCommand* MouseActionWire::deactivate()
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 void MouseActionWire::new_gfx()
-{ untested();
+{itested();
 	Element* elt = _proto->clone();
 	assert(elt);
 
@@ -289,7 +289,7 @@ void MouseActionWire::new_gfx()
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionWire::release(QMouseEvent* m)
-{ untested();
+{itested();
 	if(!m){ untested();
 		unreachable();
 	}else if(m->button() == Qt::RightButton){ untested();
@@ -299,21 +299,21 @@ QUndoCommand* MouseActionWire::release(QMouseEvent* m)
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionWire::press(QEvent* e)
-{ untested();
+{itested();
 	auto m = dynamic_cast<QMouseEvent*>(e);
 	auto se = dynamic_cast<QGraphicsSceneMouseEvent*>(e);
 
-	if(!se){ untested();
+	if(!se){itested();
 		// unreachable(); no.
 		// QEvent::GraphicsSceneMousePress == 156
 		trace3("wirepress", m, se, e->type());
 	}else if(se->button() == Qt::RightButton){ untested();
 		toggleMode();
 		e->accept();
-	}else if(_phase == 1){ untested();
+	}else if(_phase == 1){itested();
 		return press1(se);
 		e->accept();
-	}else if(_phase == 2){ untested();
+	}else if(_phase == 2){itested();
 		return press2(se);
 		e->accept();
 	}else{ untested();
@@ -327,7 +327,7 @@ QUndoCommand* MouseActionWire::move(QEvent* e)
 { itested();
 	if(!_gfx.size()){ itested();
 		// no ghost yet.
-	}else if(auto se=dynamic_cast<QGraphicsSceneMouseEvent*>(e)){ untested();
+	}else if(auto se=dynamic_cast<QGraphicsSceneMouseEvent*>(e)){itested();
 		QPointF pos = se->scenePos(); // mapToScene(ev->pos());
 
 		QPoint xx = doc().snapToGrid(pos);
@@ -356,7 +356,7 @@ QUndoCommand* MouseActionWire::move(QEvent* e)
 /*--------------------------------------------------------------------------*/
  // MouseActions::MPressWire1 Is called if starting point of wire is pressed
 QUndoCommand* MouseActionWire::press1(QGraphicsSceneMouseEvent* ev)
-{ untested();
+{itested();
 	assert(ev);
 	QPointF pos = ev->scenePos(); // mapToScene(ev->pos());
 	float fX = pos.x();
@@ -408,7 +408,7 @@ QUndoCommand* MouseActionWire::press1(QGraphicsSceneMouseEvent* ev)
 /*--------------------------------------------------------------------------*/
 //* MouseActions::MPressWire2 Is called if ending point of wire is pressed
 QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* ev)
-{ untested();
+{itested();
 	cmd* c=nullptr;
 
 	assert(ev);
@@ -418,16 +418,16 @@ QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* ev)
 	auto fX = getX(xx);
 	auto fY = getY(xx);
 
-	if(isConductor(fX, fY)){ untested();
+	if(isConductor(fX, fY)){itested();
 		std::list<Element*> new_wires;
-		for(auto& i: _gfx){ untested();
+		for(auto& i: _gfx){itested();
 			auto s = prechecked_cast<Symbol*>(element(i));
 			assert(s);
 			s->expand();
 			SchematicModel const* cs = s->subckt();
 			assert(cs);
 			trace1("prepare NewWire", cs->wires().size());
-			for(Element const* j : cs->wires()){ untested();
+			for(Element const* j : cs->wires()){itested();
 				new_wires.push_back(j->clone());
 			}
 			delete(i);

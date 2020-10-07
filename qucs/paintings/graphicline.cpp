@@ -55,18 +55,18 @@ void GraphicLine::paint(ViewPainter *p)
 {
 #if 0
   if(isSelected()) {
-    p->Painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
+    p->setPen(QPen(Qt::darkGray,Pen.width()+5));
     p->drawLine(cx, cy, cx+x2, cy+y2);
-    p->Painter->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
+    p->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
     p->drawLine(cx, cy, cx+x2, cy+y2);
 
-    p->Painter->setPen(QPen(Qt::darkRed,2));
+    p->setPen(QPen(Qt::darkRed,2));
     p->drawResizeRect(cx, cy);  // markers for changing the size
     p->drawResizeRect(cx+x2, cy+y2);
     return;
   }
 #endif
-  p->Painter->setPen(Pen);
+  p->setPen(Pen);
   p->drawLine(_cx, _cy, _cx+x2, _cy+y2);
 }
 
