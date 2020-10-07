@@ -47,22 +47,22 @@ void ID_Text::paint(ViewPainter *p)
 	  auto cx=Element::cx();
        auto cy=Element::cy();
   int x, y;
-  p->Painter->setPen(QPen(Qt::black,1));
+  p->setPen(QPen(Qt::black,1));
   p->map(cx, cy, x, y);
 
   QRect r;
-  p->Painter->drawText(QRect(x, y, 0, 0), Qt::TextDontClip, Prefix, &r);
+  p->drawText(QRect(x, y, 0, 0), Qt::TextDontClip, Prefix, &r);
   x2 = r.width();
   y2 = p->LineSpacing;
 
-  p->Painter->drawText(QRect(x, y+y2, 0, 0), Qt::TextDontClip, "File=name", &r);
+  p->drawText(QRect(x, y+y2, 0, 0), Qt::TextDontClip, "File=name", &r);
   if(x2 < r.width())  x2 = r.width();
   y2 += p->LineSpacing;
 
   QList<SubParameter *>::const_iterator it;
   for(it = Parameter.constBegin(); it != Parameter.constEnd(); it++) {
     if((*it)->display) {
-      p->Painter->drawText(QRect(x, y+y2, 0, 0), Qt::TextDontClip, (*it)->Name, &r);
+      p->drawText(QRect(x, y+y2, 0, 0), Qt::TextDontClip, (*it)->Name, &r);
       if(x2 < r.width())  x2 = r.width();
       y2 += p->LineSpacing;
     }

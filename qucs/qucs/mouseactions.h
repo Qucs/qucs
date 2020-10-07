@@ -85,6 +85,15 @@ protected:
    bool isNode(int fX, int fY) const; // needed??
    bool isConductor(int fX, int fY) const;
 
+protected: // UC
+	template<class T>
+	void possibly_merge_symbols(pos_t remove_at, T& rem, T& add);
+	QList<ElementGraphics*> items(const QPointF &pos,
+                                 Qt::ItemSelectionMode mode=Qt::IntersectsItemShape,
+                                 Qt::SortOrder order = Qt::DescendingOrder) const;
+
+	Node const* nodeAt(pos_t) const;
+
 private:
 	MouseActions& _ctx;
 	QAction* _sender;

@@ -34,7 +34,7 @@ public:
 // };
 
 QCursor const& crosshair()
-{ untested();
+{itested();
 	static cb0 c;
 	static QCursor x(c,c);
 //	if(!x){

@@ -134,7 +134,7 @@ void Graph::drawLines(int x0, int y0, ViewPainter *p) const
   float DX_, DY_;
   float x1, y1;
   auto Scale = p->Scale;
-  auto Painter = p->Painter;
+  auto Painter = p;//->Painter;
   QVector<qreal> dashes;
 
   double Stroke=10., Space=0.;
@@ -262,7 +262,7 @@ void Graph::drawStarSymbols(int x0i, int y0i, ViewPainter *p) const
   float x3, x0, y0, x1, x2, y1, y2;
   float z, DX_, DY_;
   auto Scale = p->Scale;
-  auto Painter = p->Painter;
+  auto Painter = p;
   auto pp = begin();
   if(!pp->isPt())
     pp++;
@@ -295,7 +295,7 @@ void Graph::drawCircleSymbols(int x0i, int y0i, ViewPainter *p) const
   float x0, y0;
   float z, DX_, DY_;
   auto Scale = p->Scale;
-  auto Painter = p->Painter;
+  auto Painter = p;
   auto pp = begin();
   if(!pp->isPt())
     pp++;
@@ -320,7 +320,7 @@ void Graph::drawArrowSymbols(int x0i, int y0i, ViewPainter *p) const
   int x0, y0, x1, x2, y1, y2;
   float DX_, DY_;
   auto Scale = p->Scale;
-  auto Painter = p->Painter;
+  auto Painter = p;
   auto pp = begin();
   if(!pp->isPt())
     pp++;

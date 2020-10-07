@@ -265,7 +265,7 @@ void Component::paint(ViewPainter *p) const
   int cy = 0; // cy_(); // "positionY"
 //  int a, b, xb, yb;
   Element::paint(p);
-  QFont f = p->Painter->font();   // save current font
+  QFont f = p->font();   // save current font
   QFont newFont = f;
   if(dynamic_cast<CmdElement const*>(this)) { untested();
     unreachable();
@@ -275,85 +275,85 @@ void Component::paint(ViewPainter *p) const
 
     // paint all lines
     foreach(Line *p1, Lines) {itested();
-      p->Painter->setPen(p1->style);
+      p->setPen(p1->style);
       p->drawLine(cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
     }
 
     // paint all arcs
     foreach(Arc *p3, Arcs) {itested();
-      p->Painter->setPen(p3->style);
+      p->setPen(p3->style);
       p->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
     }
 
     // paint all rectangles
     foreach(Area *pa, Rects) { untested();
-      p->Painter->setPen(pa->Pen);
-      p->Painter->setBrush(pa->Brush);
+      p->setPen(pa->Pen);
+      p->setBrush(pa->Brush);
       p->drawRect(cx+pa->x, cy+pa->y, pa->w, pa->h);
     }
 
     // paint all ellipses
     foreach(Area *pa, Ellips) { untested();
-      p->Painter->setPen(pa->Pen);
-      p->Painter->setBrush(pa->Brush);
+      p->setPen(pa->Pen);
+      p->setBrush(pa->Brush);
       p->drawEllipse(cx+pa->x, cy+pa->y, pa->w, pa->h);
     }
-    p->Painter->setBrush(Qt::NoBrush);
+    p->setBrush(Qt::NoBrush);
 
     newFont.setWeight(QFont::Light);
 
     // keep track of painter state
-    p->Painter->save();
+    p->save();
 
-    QMatrix wm = p->Painter->worldMatrix();
+    QMatrix wm = p->worldMatrix();
     // write all text
     foreach(Text *pt, Texts) {itested();
-      p->Painter->setWorldMatrix(
+      p->setWorldMatrix(
           QMatrix(pt->mCos, -pt->mSin, pt->mSin, pt->mCos,
                    p->DX + float(cx+pt->x) * p->Scale,
                    p->DY + float(cy+pt->y) * p->Scale));
       newFont.setPointSizeF(p->Scale * pt->Size);
       newFont.setOverline(pt->over);
       newFont.setUnderline(pt->under);
-      p->Painter->setFont(newFont);
-      p->Painter->setPen(pt->Color);
+      p->setFont(newFont);
+      p->setPen(pt->Color);
       if (0) { untested();
-	p->Painter->drawText(0, 0, 0, 0, Qt::AlignLeft|Qt::TextDontClip, pt->s);
+	p->drawText(0, 0, 0, 0, Qt::AlignLeft|Qt::TextDontClip, pt->s);
       } else {itested();
 	int w, h;
 	w = p->drawTextMapped (pt->s, 0, 0, &h);
     Q_UNUSED(w);
       }
     }
-    p->Painter->setWorldMatrix(wm);
-    p->Painter->setWorldMatrixEnabled(false);
+    p->setWorldMatrix(wm);
+    p->setWorldMatrixEnabled(false);
 
     // restore painter state
-    p->Painter->restore();
+    p->restore();
   }
 
   // restore old font
-  p->Painter->setFont(f);
+  p->setFont(f);
 
-  p->Painter->setPen(QPen(Qt::black,1));
+  p->setPen(QPen(Qt::black,1));
   p->map(cx+tx, cy+ty, x, y);
   if(showName) {itested();
-    p->Painter->drawText(x, y, 0, 0, Qt::TextDontClip, Name);
+    p->drawText(x, y, 0, 0, Qt::TextDontClip, Name);
     y += p->LineSpacing;
   }
   // write all properties
   for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next()){
     if(p4->display) {itested();
-      p->Painter->drawText(x, y, 0, 0, Qt::TextDontClip, p4->Name+"="+p4->Value);
+      p->drawText(x, y, 0, 0, Qt::TextDontClip, p4->Name+"="+p4->Value);
       y += p->LineSpacing;
     }
   }
 
   // not here.
   if(isActive == COMP_IS_OPEN){
-    p->Painter->setPen(QPen(Qt::red,0));
+    p->setPen(QPen(Qt::red,0));
   }else if(isActive & COMP_IS_SHORTEN){
-    p->Painter->setPen(QPen(Qt::darkGreen,0));
+    p->setPen(QPen(Qt::darkGreen,0));
   }else{
   }
   if(isActive != COMP_IS_ACTIVE) { untested();

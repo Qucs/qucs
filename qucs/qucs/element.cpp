@@ -63,12 +63,13 @@ void Element::paint(ViewPainter* p) const
 {
 	// draw bounding box for debugging.
 	//if(isSelected()){
-	//	p->Painter->setPen(QPen(Qt::red,2));
+	//	p->setPen(QPen(Qt::red,2));
 	//}else
-	{
-		p->Painter->setPen(QPen(Qt::yellow,1));
-	}
-	p->Painter->drawRoundRect(boundingRect());
+	
+#ifndef NDEBUG
+	p->setPen(QPen(Qt::yellow,1));
+	p->drawRoundedRect(boundingRect());
+#endif
 }
 
 // does not work for nodes and diagrams
@@ -80,7 +81,7 @@ QRectF Element::boundingRect() const
 }
 
 void Element::attachToModel()
-{ untested();
+{itested();
 	trace1("attachToModel", label());
 	assert(scope());
 	scope()->attach(this);

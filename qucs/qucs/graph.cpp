@@ -74,7 +74,7 @@ void Graph::paint(ViewPainter *p, int x0, int y0)
 #endif
 
   // **** not selected ****
-  p->Painter->setPen(QPen(QColor(Color), Thick*p->PrintScale, Qt::SolidLine));
+  p->setPen(QPen(QColor(Color), Thick*p->PrintScale, Qt::SolidLine));
   paintLines(p, x0, y0);
 }
 

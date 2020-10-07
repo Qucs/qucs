@@ -134,12 +134,12 @@ void Diagram::paintDiagram(ViewPainter *p)
   { // does not paint anything?
     // paint all arcs (1 pixel larger to compensate for strange circle method)
     foreach(Arc *pa, Arcs) { untested();
-      p->Painter->setPen(pa->style);
+      p->setPen(pa->style);
       p->drawArc(pa->x, pa->y, pa->w, pa->h, pa->angle, pa->arclen);
     }
     // paint all lines
     foreach(Line *pl, Lines) {itested();
-      p->Painter->setPen(pl->style);
+      p->setPen(pl->style);
       p->drawLine(pl->x1, pl->y1, pl->x2, pl->y2);
     }
 
@@ -153,25 +153,25 @@ void Diagram::paintDiagram(ViewPainter *p)
   }
 
     // keep track of painter state
-    p->Painter->save();
+    p->save();
 
     // write whole text (axis label inclusively)
-    QMatrix wm = p->Painter->worldMatrix();
+    QMatrix wm = p->worldMatrix();
     foreach(Text *pt, Texts) {itested();
-//      p->Painter->setWorldMatrix(
+//      p->setWorldMatrix(
 //          QMatrix(pt->mCos, -pt->mSin, pt->mSin, pt->mCos,
 //                   p->DX   + float(cx+pt->x) * p->Scale,
 //                   p->DY   + float(cy+pt->y) * p->Scale));
 //
       // qDebug() << p->DX << p->DY << cy;
-      p->Painter->setPen(pt->Color);
-      p->Painter->drawText(QPoint(pt->x, -pt->y), pt->s);
+      p->setPen(pt->Color);
+      p->drawText(QPoint(pt->x, -pt->y), pt->s);
     }
-    p->Painter->setWorldMatrix(wm);
-    p->Painter->setWorldMatrixEnabled(false);
+    p->setWorldMatrix(wm);
+    p->setWorldMatrixEnabled(false);
 
     // restore painter state
-    p->Painter->restore();
+    p->restore();
 
 #if 1
     // draws some box with corners to resize.
@@ -183,9 +183,9 @@ void Diagram::paintDiagram(ViewPainter *p)
       fx_ = float(x2)*p->Scale + 10;
       fy_ = float(y2)*p->Scale + 10;
 
-      p->Painter->setPen(QPen(Qt::darkGray,3));
-      p->Painter->drawRect(x_-5, y_-5, TO_INT(fx_), TO_INT(fy_));
-      p->Painter->setPen(QPen(Qt::darkRed,2));
+      p->setPen(QPen(Qt::darkGray,3));
+      p->drawRect(x_-5, y_-5, TO_INT(fx_), TO_INT(fy_));
+      p->setPen(QPen(Qt::darkRed,2));
       p->drawResizeRect(0, y2);  // markers for changing the size
       p->drawResizeRect(0, 0);
       p->drawResizeRect(x2, y2);

@@ -49,11 +49,11 @@ QGraphicsItem& SchematicScene::addElement(Element* x)
 /*--------------------------------------------------------------------------*/
 /* remove. later. */
 // scene()->selectedItems gives QGraphicsItems
-Element* element(QGraphicsItem* g)
+Element* element(ElementGraphics* g)
 {
-	auto e=dynamic_cast<ElementGraphics*>(g);
-	if(!e) return nullptr;
-	return e->operator->();
+//	auto e=dynamic_cast<ElementGraphics*>(g);
+	if(!g) return nullptr;
+	return g->operator->();
 }
 Component* component(QGraphicsItem* g)
 {
@@ -305,7 +305,7 @@ bool SchematicScene::event(QEvent* e)
 	if(e->isAccepted()){ itested();
 		if(r){ itested();
 			// move objects is here.
-		}else{untested();
+		}else{itested();
 		}
 
 		// doc()->handleMouseActions(e);
@@ -391,13 +391,13 @@ bool SchematicScene::event(QEvent* e)
 }
 /*--------------------------------------------------------------------------*/
 bool SchematicScene::isConductor(int x, int y) const
-{ untested();
+{itested();
 	QPointF pos(x, y);
 	auto it = items(pos);
-	for(auto i : it){ untested();
+	for(auto i : it){itested();
 		if(auto c = dynamic_cast<Conductor const*>(element(i))){
 			return c->isNet(x, y);
-		}else{ untested();
+		}else{itested();
 		}
 	}
 	return false;
@@ -431,7 +431,7 @@ QList<ElementGraphics*> SchematicScene::items() const
 QList<ElementGraphics*> SchematicScene::items(
 		const QPointF &pos, Qt::ItemSelectionMode mode,
 		Qt::SortOrder order) const
-{ untested();
+{itested();
 	auto L = QGraphicsScene::items(pos, mode, order);
 	auto EL = reinterpret_cast<QList<ElementGraphics*>* >(&L);
 	return *EL;

@@ -50,7 +50,6 @@ public:
 	  assert(false);
 	  return nullptr;
   }
-
   void paint(ViewPainter*) const override;
   void setCenter(int, int, bool relative=false);
   void getCenter(int&, int&);
@@ -59,6 +58,7 @@ public:
   QString save(){unreachable(); return "";}
 
 private: // Conductor
+  Symbol* newUnion(const Symbol*) const override;
   bool isNet(int, int) const override;
 
 private:
@@ -142,9 +142,10 @@ private:
 
   int _angle;
   int _scale;
-};
-
-// ----------------------------------------------------------------
+}w;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Wire", &w);
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 Wire::Wire()
    : _port0(0, 0), _port1(1, 0), _angle(0), _scale(1.)
 {
@@ -154,7 +155,7 @@ Wire::Wire()
   setTypeName("wire");
   setLabel("noname"); // BUG
 }
-// ----------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 Wire::Wire(Wire const& w)
   : Symbol(w), _port0(w._port0), _port1(w._port1),
    _angle(w._angle), _scale(w._scale)
@@ -186,6 +187,7 @@ void Wire::findScaleAndAngle()
 #endif
 }
 
+#if 0
 // gaah. don't use this. (but it is used in a unit test.)
 Wire::Wire(int _x1, int _y1, int _x2, int _y2)
   : Symbol(), _port0(0, 0),
@@ -213,15 +215,21 @@ Wire::Wire(int _x1, int _y1, int _x2, int _y2)
   setTypeName("wire");
   setLabel("noname");
 }
-
-// not here.
-static Wire w;
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Wire", &w);
+#endif
 // ----------------------------------------------------------------
 Wire::~Wire()
 {
   assert(!port(0).isConnected());
   assert(!port(1).isConnected());
+}
+// ----------------------------------------------------------------
+Symbol* Wire::newUnion(Symbol const* s) const
+{
+  if(auto o = dynamic_cast<Wire const*>(s)){ untested();
+    incomplete();
+  }else{ untested();
+    return nullptr;
+  }
 }
 // ----------------------------------------------------------------
 void Wire::setCenter(int x, int y, bool relative)
@@ -499,15 +507,15 @@ Node* Wire::disconnectNode(unsigned i, NodeMap& nm)
 
   return n;
 }
-// ----------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 bool Wire::isNet(int x, int y) const
-{ untested();
+{itested();
   x -= cx();
   y -= cy();
   return in_order(x1(), x, x2()) && in_order(y1(), y, y2());
 }
-// ----------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 }
-// ----------------------------------------------------------------
-// ----------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 // vim:ts=8:sw=2:et
