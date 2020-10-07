@@ -77,32 +77,6 @@ Node* SchematicDoc::selectedNode(int , int )
     return nullptr;
 }
 /*--------------------------------------------------------------------------*/
-#if 0
-// Follow a wire line and selects it.
-void SchematicDoc::selectWireLine(ElementGraphics *g, Node *pn, bool ctrl)
-{
-incomplete();
-    Element* pe=element(g);
-    Node *pn_1st = pn;
-    while(pn->degree() == 2)
-    {
-        if(pn->firstConnection() == element(pe)){
-	    pe = pn->lastConnection();
-	}else{
-	    pe = pn->firstConnection();
-	}
-
-        if(pe->Type != isWire) break;
-        if(ctrl) g->toggleSelected();
-        else g->setSelected(true);
-
-        if(((Wire*)pe)->portValue(0) == pn)  pn = ((Wire*)pe)->portValue(1);
-        else  pn = ((Wire*)pe)->portValue(0);
-        if(pn == pn_1st) break;  // avoid endless loop in wire loops
-    }
-}
-#endif
-/*--------------------------------------------------------------------------*/
 // Splits the wire "*pw" into two pieces by the node "*pn".
 //
 // why return Wire*??
@@ -139,7 +113,7 @@ Wire* SchematicModel::splitWire(Wire *pw, Node *pn)
 /*--------------------------------------------------------------------------*/
 // If possible, make one wire out of two wires.
 // BUG: do in SchematicDocument?
-bool SchematicModel::oneTwoWires(Node *n)
+bool SchematicModel::oneTwoWires(Node *)
 {
 incomplete();
 return false;
@@ -315,9 +289,9 @@ Marker* SchematicDoc::setMarker(int x, int y)
 
 // ---------------------------------------------------
 // Moves the marker pointer left/right on the graph.
+#if 0
 void SchematicDoc::markerLeftRight(bool left, Q3PtrList<ElementGraphics> *Elements)
 {
-#if 0
     bool acted = false;
     for(auto i : *Elements) {
         Marker* pm = prechecked_cast<Marker*>(i);
@@ -327,8 +301,8 @@ void SchematicDoc::markerLeftRight(bool left, Q3PtrList<ElementGraphics> *Elemen
     }
 
     if(acted)  setChanged(true, true, 'm');
-#endif
 }
+#endif
 
 // ---------------------------------------------------
 // Move the marker pointer up/down on the more-dimensional graph.
@@ -364,7 +338,7 @@ void SchematicDoc::markerUpDown(bool up, Q3PtrList<ElementGraphics> *Elements)
 
 #if 1 // obsolete.
 ElementMouseAction MouseActions::selectElement(
-	QPoint const& xy, bool flag, int *index)
+	QPoint const&, bool, int*)
 {
     assert(false);
 
@@ -889,11 +863,11 @@ void MouseActions::deselectElements(ElementMouseAction e)
 // flags elements that lie within the rectangle x1/y1, x2/y2.
 // return the number of elements selected.
 // flag?! is is the shift key?
+#if 0 // needed?
 int SchematicDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
 {
     incomplete(); // obsolete. use QT
     return 0;
-#if 0 // needed?
     QRectF bb(x1, y1, x2, y2);
     int n=0;
 
@@ -1070,8 +1044,8 @@ int SchematicDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
     }
 
     return z;
-#endif
 }
+#endif
 
 // ---------------------------------------------------
 // Selects all markers.
@@ -1092,9 +1066,9 @@ void SchematicDoc::selectMarkers()
 // moving element, insert two wires. If the connected element is already
 // a wire, use this wire. Otherwise create new wire.
 // use WireList?! SchematicModel?
+#if 0
 void SchematicDoc::newMovingWires(QList<Element*> *p, Node *pn, int pos)
 {
-#if 0
     Element *pe;
 
     if(pn->hasState(8))  // Were new wires already inserted ?
@@ -1211,8 +1185,8 @@ void SchematicDoc::newMovingWires(QList<Element*> *p, Node *pn, int pos)
     // x1, x2, y2 moving
     p->insert(pos, new Wire(pn->cx_(), pn->cy_(), pn->cx_(), pn->cy_(), (Node*)1, (Node*)3));
 #endif
-#endif
 }
+#endif
 
 #ifndef USE_SCROLLVIEW
 // SchematicScene?

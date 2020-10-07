@@ -62,22 +62,22 @@ void PortSymbol::paint(ViewPainter *p)
      auto cy=Element::cy();
 
   // keep track of painter state
-  p->Painter->save();
+  p->save();
 
-  p->Painter->setPen(QPen(Qt::red,1));  // like open node
+  p->setPen(QPen(Qt::red,1));  // like open node
   p->drawEllipse(cx-4, cy-4, 8, 8);
 
-  QSize r = p->Painter->fontMetrics().size(0, nameStr);
+  QSize r = QSize(5, 10); // p->fontMetrics().size(0, nameStr);
   int Unit = int(8.0 * p->Scale);
   x1 = -r.width() - Unit;
   y1 = -((r.height() + Unit) >> 1);
   x2 = Unit - x1;
   y2 = r.height() + Unit;
 
-  QMatrix wm = p->Painter->worldMatrix();
+  QMatrix wm = p->worldMatrix();
   QMatrix Mat(1.0, 0.0, 0.0, 1.0, p->DX + float(cx) * p->Scale,
 				   p->DY + float(cy) * p->Scale);
-  p->Painter->setWorldMatrix(Mat);
+  p->setWorldMatrix(Mat);
 
   int tmp, tx, ty;
   tx = x1 + (Unit >> 1);
@@ -87,7 +87,7 @@ void PortSymbol::paint(ViewPainter *p)
       x1 = y1;
       y1 = -Unit;
       tmp = x2;  x2 = y2;  y2 = tmp;
-      p->Painter->rotate(-90.0); // automatically enables transformation
+      p->rotate(-90.0); // automatically enables transformation
       break;
     case 180:
       x1 = -Unit;
@@ -97,31 +97,31 @@ void PortSymbol::paint(ViewPainter *p)
       tx = Unit >> 1;
       tmp = x1;  x1 = y1;  y1 = tmp;
       tmp = x2;  x2 = y2;  y2 = tmp;
-      p->Painter->rotate(-90.0); // automatically enables transformation
+      p->rotate(-90.0); // automatically enables transformation
       break;
   }
 
-  p->Painter->setPen(Qt::black);
-  p->Painter->drawText(tx, ty, 0, 0, Qt::TextDontClip, nameStr);
+  p->setPen(Qt::black);
+  p->drawText(tx, ty, 0, 0, Qt::TextDontClip, nameStr);
 
 
-  p->Painter->setWorldMatrix(wm);
-  p->Painter->setWorldMatrixEnabled(false);
+  p->setWorldMatrix(wm);
+  p->setWorldMatrixEnabled(false);
 
   // restore painter state
-  p->Painter->restore();
+  p->restore();
 
   x1 = int(float(x1) / p->Scale);
   x2 = int(float(x2) / p->Scale);
   y1 = int(float(y1) / p->Scale);
   y2 = int(float(y2) / p->Scale);
 
-  p->Painter->setPen(Qt::lightGray);
+  p->setPen(Qt::lightGray);
   p->drawRect(cx+x1, cy+y1, x2, y2);
 
 #if 0
   if(isSelected()) {
-    p->Painter->setPen(QPen(Qt::darkGray,3));
+    p->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(cx+x1-4, cy+y1-4, x2+8, y2+8);
   }
 #endif

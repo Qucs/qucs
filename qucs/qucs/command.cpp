@@ -200,7 +200,7 @@ void CmdElement::paint(ViewPainter *p) const
   int cx=_cx;
   int cy=_cy;
   int x, y, a, b, xb, yb;
-  QFont f = p->Painter->font();   // save current font
+  QFont f = p->font();   // save current font
   QFont newFont = f;
   {   // is simulation component (dc, ac, ...)
     unsigned size;
@@ -212,15 +212,15 @@ void CmdElement::paint(ViewPainter *p) const
     }
     newFont.setPointSizeF(p->Scale * size);
     newFont.setWeight(QFont::DemiBold);
-    p->Painter->setFont(newFont);
+    p->setFont(newFont);
     p->map(cx, cy, x, y);
 
-    p->Painter->setPen(QPen(Qt::darkBlue,2));
+    p->setPen(QPen(Qt::darkBlue,2));
     a = b = 0;
     QRect r, t;
     foreach(Text *pt, Texts) {
       t.setRect(x, y+b, 0, 0);
-      p->Painter->drawText(t, Qt::AlignLeft|Qt::TextDontClip, pt->s, &r);
+      p->drawText(t, Qt::AlignLeft|Qt::TextDontClip, pt->s, &r);
       b += r.height();
       if(a < r.width())  a = r.width();
     }
@@ -232,34 +232,34 @@ void CmdElement::paint(ViewPainter *p) const
 
     p->map(-1, 0, x, y);
     p->map(-6, -5, a, b);
-    p->Painter->drawRect(a, b, xb, yb);
-    p->Painter->drawLine(x,      y+yb, a,      b+yb);
-    p->Painter->drawLine(x+xb-1, y+yb, x,      y+yb);
-    p->Painter->drawLine(x+xb-1, y+yb, a+xb,   b+yb);
-    p->Painter->drawLine(x+xb-1, y+yb, x+xb-1, y);
-    p->Painter->drawLine(x+xb-1, y,    a+xb,   b);
+    p->drawRect(a, b, xb, yb);
+    p->drawLine(x,      y+yb, a,      b+yb);
+    p->drawLine(x+xb-1, y+yb, x,      y+yb);
+    p->drawLine(x+xb-1, y+yb, a+xb,   b+yb);
+    p->drawLine(x+xb-1, y+yb, x+xb-1, y);
+    p->drawLine(x+xb-1, y,    a+xb,   b);
   }
 
   // restore old font
-  p->Painter->setFont(f);
+  p->setFont(f);
 
-  p->Painter->setPen(QPen(Qt::black,1));
+  p->setPen(QPen(Qt::black,1));
   p->map(tx, ty, x, y);
   if(showName) {
-    p->Painter->drawText(x, y, 0, 0, Qt::TextDontClip, Name);
+    p->drawText(x, y, 0, 0, Qt::TextDontClip, Name);
     y += p->LineSpacing;
   }
   // write all properties
   for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next())
     if(p4->display) {
-      p->Painter->drawText(x, y, 0, 0, Qt::TextDontClip, p4->Name+"="+p4->Value);
+      p->drawText(x, y, 0, 0, Qt::TextDontClip, p4->Name+"="+p4->Value);
       y += p->LineSpacing;
     }
 
   if(isActive == COMP_IS_OPEN)
-    p->Painter->setPen(QPen(Qt::red,0));
+    p->setPen(QPen(Qt::red,0));
   else if(isActive & COMP_IS_SHORTEN)
-    p->Painter->setPen(QPen(Qt::darkGreen,0));
+    p->setPen(QPen(Qt::darkGreen,0));
   if(isActive != COMP_IS_ACTIVE) {
     p->drawRect(+x1, +y1, x2-x1+1, y2-y1+1);
     p->drawLine(+x1, +y1, +x2, +y2);
@@ -269,7 +269,7 @@ void CmdElement::paint(ViewPainter *p) const
 #if 0
   // draw component bounding box
   if(isSelected()) {
-    p->Painter->setPen(QPen(Qt::darkGray,3));
+    p->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(cx+x1, cy+y1, x2-x1, y2-y1);
   }
 #endif

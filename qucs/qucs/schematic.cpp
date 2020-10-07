@@ -302,42 +302,42 @@ void SchematicDoc::paintFrame(ViewPainter *p)
   int xall, yall;
   if(!sizeOfFrame(xall, yall))
     return;
-  p->Painter->setPen(QPen(Qt::darkGray,1));
-  //p->Painter->setPen(QPen(Qt::black,0));
+  p->setPen(QPen(Qt::darkGray,1));
+  //p->setPen(QPen(Qt::black,0));
   int d = p->LineSpacing + int(4.0 * p->Scale);
   int x1_, y1_, x2_, y2_;
   p->map(xall, yall, x1_, y1_);
   x2_ = int(xall * p->Scale) + 1;
   y2_ = int(yall * p->Scale) + 1;
-  p->Painter->drawRect(x1_, y1_, -x2_, -y2_);
-  p->Painter->drawRect(x1_-d, y1_-d, 2*d-x2_, 2*d-y2_);
+  p->drawRect(x1_, y1_, -x2_, -y2_);
+  p->drawRect(x1_-d, y1_-d, 2*d-x2_, 2*d-y2_);
 
   int z;
   int step = xall / ((xall+127) / 255);
   for(z=step; z<=xall-step; z+=step) { untested();
     p->map(z, 0, x2_, y2_);
-    p->Painter->drawLine(x2_, y2_, x2_, y2_+d);
-    p->Painter->drawLine(x2_, y1_-d, x2_, y1_);
+    p->drawLine(x2_, y2_, x2_, y2_+d);
+    p->drawLine(x2_, y1_-d, x2_, y1_);
   }
   char Letter[2] = "1";
   for(z=step/2+5; z<xall; z+=step) { untested();
     p->drawText(Letter, z, 3, 0);
     p->map(z, yall+3, x2_, y2_);
-    p->Painter->drawText(x2_, y2_-d, 0, 0, Qt::TextDontClip, Letter);
+    p->drawText(x2_, y2_-d, 0, 0, Qt::TextDontClip, Letter);
     Letter[0]++;
   }
 
   step = yall / ((yall+127) / 255);
   for(z=step; z<=yall-step; z+=step) { untested();
     p->map(0, z, x2_, y2_);
-    p->Painter->drawLine(x2_, y2_, x2_+d, y2_);
-    p->Painter->drawLine(x1_-d, y2_, x1_, y2_);
+    p->drawLine(x2_, y2_, x2_+d, y2_);
+    p->drawLine(x1_-d, y2_, x1_, y2_);
   }
   Letter[0] = 'A';
   for(z=step/2+5; z<yall; z+=step) { untested();
     p->drawText(Letter, 5, z, 0);
     p->map(xall+5, z, x2_, y2_);
-    p->Painter->drawText(x2_-d, y2_, 0, 0, Qt::TextDontClip, Letter);
+    p->drawText(x2_-d, y2_, 0, 0, Qt::TextDontClip, Letter);
     Letter[0]++;
   }
 
@@ -349,16 +349,16 @@ void SchematicDoc::paintFrame(ViewPainter *p)
   d = int(6.0 * p->Scale);
   z = int(200.0 * p->Scale);
   y1_ -= p->LineSpacing + d;
-  p->Painter->drawLine(x1_, y1_, x2_, y1_);
-  p->Painter->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, _frameText[2]);
-  p->Painter->drawLine(x1_+z, y1_, x1_+z, y1_ + p->LineSpacing+d);
-  p->Painter->drawText(x1_+d+z, y1_+(d>>1), 0, 0, Qt::TextDontClip, _frameText[3]);
+  p->drawLine(x1_, y1_, x2_, y1_);
+  p->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, _frameText[2]);
+  p->drawLine(x1_+z, y1_, x1_+z, y1_ + p->LineSpacing+d);
+  p->drawText(x1_+d+z, y1_+(d>>1), 0, 0, Qt::TextDontClip, _frameText[3]);
   y1_ -= p->LineSpacing + d;
-  p->Painter->drawLine(x1_, y1_, x2_, y1_);
-  p->Painter->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, _frameText[1]);
+  p->drawLine(x1_, y1_, x2_, y1_);
+  p->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, _frameText[1]);
   y1_ -= (_frameText[0].count('\n')+1) * p->LineSpacing + d;
-  p->Painter->drawRect(x2_, y2_, x1_-x2_-1, y1_-y2_-1);
-  p->Painter->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, _frameText[0]);
+  p->drawRect(x2_, y2_, x1_-x2_-1, y1_-y2_-1);
+  p->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, _frameText[0]);
 }
 
 // -----------------------------------------------------------
@@ -416,16 +416,16 @@ void SchematicDoc::drawContents(QPainter *p, int, int, int, int)
       x = pn->cx_();
       y = pn->cy_() + 4;
       z = pn->x1_();
-      if(z & 1) x -= Painter.Painter->fontMetrics().width(pn->name());
+      if(z & 1) x -= Painter.fontMetrics().width(pn->name());
       if(!(z & 2)) { untested();
         y -= (Painter.LineSpacing>>1) + 4;
         if(z & 1) x -= 4;
         else x += 4;
       }
       if(z & 0x10)
-        Painter.Painter->setPen(Qt::darkGreen);  // green for currents
+        Painter.setPen(Qt::darkGreen);  // green for currents
       else
-        Painter.Painter->setPen(Qt::blue);   // blue for voltages
+        Painter.setPen(Qt::blue);   // blue for voltages
       Painter.drawText(pn->name(), x, y);
     }
   }
@@ -446,7 +446,7 @@ void SchematicDoc::drawContents(QPainter *p, int, int, int, int)
         if(p.PaintOnViewport)
           painter2.setCompositionMode(QPainter::RasterOp_SourceAndNotDestination);
         else
-          Painter.Painter->setCompositionMode(QPainter::RasterOp_SourceAndNotDestination);
+          Painter.setCompositionMode(QPainter::RasterOp_SourceAndNotDestination);
         break;
       case _Rect:
         if(p.PaintOnViewport)
@@ -473,7 +473,7 @@ void SchematicDoc::drawContents(QPainter *p, int, int, int, int)
           Painter.drawArc(p.x1, p.y1, p.x2, p.y2, p.a, p.b);
         break;
       case _DotLine:
-        Painter.Painter->setPen(Qt::DotLine);
+        Painter.setPen(Qt::DotLine);
         break;
       case _Translate:
 
@@ -506,7 +506,7 @@ void SchematicDoc::print(QPrinter*, QPainter *Painter, bool printAll, bool fitTo
   (void) fitToPage;
   incomplete(); // does not work with qt5
 #else
-  QPaintDevice *pdevice = Painter->device();
+  QPaintDevice *pdevice = device();
   float printerDpiX = (float)pdevice->logicalDpiX();
   float printerDpiY = (float)pdevice->logicalDpiY();
   float printerW = (float)pdevice->width();

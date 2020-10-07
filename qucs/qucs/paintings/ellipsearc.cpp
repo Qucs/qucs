@@ -59,7 +59,7 @@ void EllipseArc::paint(ViewPainter *p)
    auto cx=Element::cx();
      auto cy=Element::cy();
 
-  p->Painter->setPen(Pen);
+  p->setPen(Pen);
   p->drawArc(cx, cy, x2, y2, Angle, ArcLen);
 }
 

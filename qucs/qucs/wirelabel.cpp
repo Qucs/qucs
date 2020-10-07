@@ -112,7 +112,7 @@ bool WireLabel::getSelected(int x, int y)
 // ----------------------------------------------------------------
 void WireLabel::paint(ViewPainter *p) const
 {
-  QFont f = p->Painter->font(); // save current font
+  QFont f = p->font(); // save current font
   QFont newFont = f;
 
   if (isHighlighted)
@@ -120,17 +120,17 @@ void WireLabel::paint(ViewPainter *p) const
 //    QColor highlightfill (Qt::blue);
 //    highlightfill.setAlpha(50);
 //    p->fillRect(x1-1, y1-1, x2, y2, highlightfill);
-    p->Painter->setPen(QPen(Qt::darkBlue,3));
+    p->setPen(QPen(Qt::darkBlue,3));
     newFont.setWeight (QFont::Bold);
   }
   else
   {
     newFont.setWeight (QFont::Normal);
-    p->Painter->setPen(QPen(Qt::black,1));
+    p->setPen(QPen(Qt::black,1));
   }
-  p->Painter->setFont (newFont);
+  p->setFont (newFont);
   x2 = p->drawText("TODO", x1, y1, &y2);
-  p->Painter->setFont(f); // restore old font
+  p->setFont(f); // restore old font
 
   int xpaint=0, ypaint=4, phi=0;
   switch(Type) {
@@ -180,21 +180,21 @@ void WireLabel::paint(ViewPainter *p) const
   }
 
   if(initValue.isEmpty())
-    p->Painter->setPen(QPen(Qt::darkMagenta,0));
+    p->setPen(QPen(Qt::darkMagenta,0));
   else
-    p->Painter->setPen(QPen(Qt::red,0));
+    p->setPen(QPen(Qt::red,0));
 
   if(phi)  p->drawArc(cx()-4, cy()-4, 8, 8, phi, 16*255);
-  p->Painter->drawLine(a, b, c, b);
-  p->Painter->drawLine(a, b, a, d);
-  p->Painter->drawLine(xpaint, ypaint, a, b);
+  p->drawLine(a, b, c, b);
+  p->drawLine(a, b, a, d);
+  p->drawLine(xpaint, ypaint, a, b);
 
   x2 = int(double(x2) / p->Scale);
   y2 = int(double(y2) / p->Scale);
 
 #if 0
   if(isSelected()) {
-    p->Painter->setPen(QPen(Qt::darkGray,3));
+    p->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(x1-2, y1-2, x2+6, y2+5);
   }
 #endif

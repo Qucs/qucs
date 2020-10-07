@@ -161,7 +161,7 @@ void QucsDoc::possiblyToggleAction(MouseAction* a, QAction* sender)
 			// sender->setChecked(true); // assert?
 			setActiveAction(a);
 		}
-	}else{ untested();
+	}else{itested();
 		setActiveAction(nullptr);
 	}
 
@@ -197,7 +197,7 @@ void QucsDoc::executeCommand(QUndoCommand* c)
 	}
 }
 /* -------------------------------------------------------------------------------- */
-QucsData* QucsDoc::qucsData(std::string const& key)
+QucsData* QucsDoc::qucsData(std::string const& /*key*/)
 {
 	return nullptr; // _data[key];
 }

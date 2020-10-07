@@ -21,12 +21,14 @@
 #include "io_trace.h"
 
 /*--------------------------------------------------------------------------*/
-inline int getX(std::pair<int, int> const& p)
+typedef std::pair<int, int> pos_t;
+/*--------------------------------------------------------------------------*/
+inline int getX(pos_t const& p)
 {itested();
 	return p.first;
 }
 /*--------------------------------------------------------------------------*/
-inline int getY(std::pair<int, int> const& p)
+inline int getY(pos_t const& p)
 {itested();
 	return p.second;
 }
@@ -55,7 +57,7 @@ public:
 	}
 public:
 	int degrees_int() const{return _degrees;}
-	std::pair<int,int> apply(std::pair<int,int> const&) const;
+	pos_t apply(pos_t const&) const;
 	angle_t inverse() const{
 		int a = _degrees;
 		a *= -1;
@@ -83,7 +85,7 @@ public:
 	rotate_after_mirror1_t(rotate_after_mirror1_t const& d) = default;
 
 public:
-	std::pair<int,int> apply(std::pair<int,int> const&) const;
+	pos_t apply(pos_t const&) const;
 	rotate_after_mirror1_t operator*(rotate_after_mirror1_t const&);
 
 public:
@@ -108,7 +110,7 @@ public:
 	rotate_after_mirror0_t(angle_t const& d) : angle_t(d), _m(false){ }
 
 public:
-	std::pair<int,int> apply(std::pair<int,int> const&) const;
+	pos_t apply(pos_t const&) const;
 	rotate_after_mirror0_t operator*(rotate_after_mirror0_t const&);
 
 	rotate_after_mirror0_t inverse() const{

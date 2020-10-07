@@ -420,6 +420,11 @@ inline std::ostream& operator<<(std::ostream&o, QPointF const& p)
   return o << "(" << p.x() << ", " << p.y() << ")";
 }
 
+inline QPointF makeQPointF(std::pair<int,int> p)
+{
+	return QPointF(p.first, p.second);
+}
+
 #endif
 
 //vim:ts=8:sw=4:et

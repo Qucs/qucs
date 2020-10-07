@@ -45,14 +45,14 @@ void Ellipse::paint(ViewPainter *p)
 {
 #if 0
   if(isSelected()) {
-    p->Painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
-    if(filled)  p->Painter->setBrush(Brush);
+    p->setPen(QPen(Qt::darkGray,Pen.width()+5));
+    if(filled)  p->setBrush(Brush);
     p->drawEllipse(cx, cy, x2, y2);
-    p->Painter->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
-    p->Painter->setBrush(Qt::NoBrush);
+    p->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
+    p->setBrush(Qt::NoBrush);
     p->drawEllipse(cx, cy, x2, y2);
 
-    p->Painter->setPen(QPen(Qt::darkRed,2));
+    p->setPen(QPen(Qt::darkRed,2));
     p->drawResizeRect(cx, cy+y2);  // markers for changing the size
     p->drawResizeRect(cx, cy);
     p->drawResizeRect(cx+x2, cy+y2);
@@ -63,10 +63,10 @@ void Ellipse::paint(ViewPainter *p)
    auto cx=Element::cx();
      auto cy=Element::cy();
 
-  p->Painter->setPen(Pen);
-  if(filled)  p->Painter->setBrush(Brush);
+  p->setPen(Pen);
+  if(filled)  p->setBrush(Brush);
   p->drawEllipse(cx, cy, x2, y2);
-  p->Painter->setBrush(Qt::NoBrush); // no filling for the next paintings
+  p->setBrush(Qt::NoBrush); // no filling for the next paintings
 }
 
 // --------------------------------------------------------------------------
