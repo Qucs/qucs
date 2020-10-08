@@ -14,6 +14,7 @@
 #include "schematic_model.h"
 #include <assert.h>
 #include "net.h"
+#include "geometry.h"
 
 // recreate schematic symbol. not sure why, maybe after parameter changes
 // (why not just call "Symbol::create??!")
@@ -42,14 +43,15 @@ SchematicModel* Symbol::scope()
 		return nullptr;
 	}
 }
-
+/*--------------------------------------------------------------------------*/
 // reuse overrides to give both const and non-const access.
+// (move to header)
 SchematicModel const* Symbol::scope() const
 {
 	auto s=const_cast<Symbol*>(this);
 	return s->scope();
 }
-
+/*--------------------------------------------------------------------------*/
 #if 0
 // obsolete? portValue?
 QString const& Symbol::netLabel(unsigned i) const
@@ -58,8 +60,8 @@ QString const& Symbol::netLabel(unsigned i) const
 	return portValue(i);
 }
 #endif
-
-// could as well be NodeMap::connect(Symbol). but why?
+/*--------------------------------------------------------------------------*/
+// connect to a node. (connectPort?)
 Node* Symbol::connectNode(unsigned i, NodeMap&nm)
 {
 	trace2("connectNode", label(), i);
@@ -68,14 +70,12 @@ Node* Symbol::connectNode(unsigned i, NodeMap&nm)
 	Node* n = &nm.at(pp.x_()+cx(), pp.y_()+cy());
 	assert(n->hasNet());
 
-// 	if(auto c=dynamic_cast<Conductor*>(this)){ untested();
-// 		l.addEdge(n, c);
-// 	}else{ untested();
-// 	}
 	mp.connect(n /*,this*/);
 	return n;
 }
-
+/*--------------------------------------------------------------------------*/
+// disconnect a node. (disconnectPort?)
+// (does not use the map, but could)
 Node* Symbol::disconnectNode(unsigned i, NodeMap&)
 {
 	trace2("disconnectNode", label(), i);
@@ -85,7 +85,7 @@ Node* Symbol::disconnectNode(unsigned i, NodeMap&)
 
 	return n;
 }
-
+/*--------------------------------------------------------------------------*/
 Node const* Symbol::portNode(unsigned i) const
 { untested();
   assert(i<unsigned(numPorts()));
@@ -96,6 +96,7 @@ Node const* Symbol::portNode(unsigned i) const
 	  return nullptr;
   }
 }
+/*--------------------------------------------------------------------------*/
 Net const* Symbol::portValue(unsigned i) const
 {
   assert(i<unsigned(numPorts()));
@@ -106,19 +107,19 @@ Net const* Symbol::portValue(unsigned i) const
 	  return nullptr;
   }
 }
-
+/*--------------------------------------------------------------------------*/
 // "position"?
 std::pair<int, int> Symbol::center()const
 {itested();
 	return std::make_pair(_cx, _cy);
 }
-
+/*--------------------------------------------------------------------------*/
 Port const& Symbol::port(unsigned i) const
 {
 	Symbol* s=const_cast<Symbol*>(this);
 	return s->port(i);
 }
-
+/*--------------------------------------------------------------------------*/
 std::string Symbol::getParameter(std::string const& n) const
 {
 	if(n=="$xposition"){
@@ -137,7 +138,6 @@ std::string Symbol::getParameter(unsigned i) const
 	throw ExceptionCantFind(std::to_string(i), label().toStdString());
 }
 /*--------------------------------------------------------------------------*/
-#include "geometry.h"
 void Symbol::paint(ViewPainter* p) const
 {itested();
 
@@ -164,22 +164,22 @@ void Symbol::paint(ViewPainter* p) const
 		}
 	}
 }
-
-// global position? rename to netPosition??
+/*--------------------------------------------------------------------------*/
+// global/external position
 std::pair<int, int> Symbol::nodePosition(unsigned i) const
 {
 	assert(port(i).isConnected());
 	auto p = port(i)->position();	
 	return p;
 }
-// global position? rename to netPosition??
+/*--------------------------------------------------------------------------*/
+// local/relative position
 std::pair<int, int> Symbol::portPosition(unsigned i) const
 {
-//	assert(port(i).isConnected());
 	auto p = port(i).position();	
 	return p;
 }
-
+/*--------------------------------------------------------------------------*/
 // BUG: not here. legacy stuff...
 void Symbol::new_subckt()
 {
@@ -217,3 +217,5 @@ void Symbol::setParameter(unsigned pos, QString const& b)
 	auto v = b.toStdString();
 	setParameter(pos, v);
 }
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
