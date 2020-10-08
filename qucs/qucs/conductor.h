@@ -18,6 +18,7 @@
 #include <algorithm> // std::find
 #include <assert.h>
 #include "io_trace.h"
+#include "geometry.h"
 /*--------------------------------------------------------------------------*/
 class Net;
 class NetList;
@@ -46,6 +47,7 @@ public: //pair?
   }
   virtual bool isNet(int, int) const = 0;
   virtual Symbol* newUnion(const Symbol*) const{ return nullptr; }
+  virtual Symbol* newPort(pos_t const&) const{ return nullptr; }
 
 public:
   WireLabel *Label; // BUG
