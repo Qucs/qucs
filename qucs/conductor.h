@@ -13,73 +13,21 @@
  ***************************************************************************/
 #ifndef QUCS_CONDUCTOR_H
 #define QUCS_CONDUCTOR_H
-
-#include "element.h"
+/*--------------------------------------------------------------------------*/
+#include <list>
+#include <algorithm> // std::find
+#include <assert.h>
+#include "io_trace.h"
+/*--------------------------------------------------------------------------*/
 class Net;
 class NetList;
 class Conductor;
 class Net;
 class Symbol;
-
-#if 0
-class AdjConductorIterator{
-public:
-	typedef std::list<Element*>::iterator elt_iter;
-public:
-	AdjConductorIterator(elt_iter b, elt_iter e)
-		:_elt(b), _end(e){
-		skip();
-	}
-public:
-	AdjConductorIterator(AdjConductorIterator const& o)
-		: _elt(o._elt),
-		  _end(o._end){
-	}
-public:
-	Conductor* operator*();
-	
-	AdjConductorIterator& operator++(){
-		assert(_elt!=_end);
-		++_elt;
-		skip();
-		return *this;
-	}
-	bool operator==(AdjConductorIterator const& o){
-		return _elt==o._elt;
-	}
-	bool operator!=(AdjConductorIterator const& o){
-		return !(*this == o);
-	}
-	void skip();
-private:
-	elt_iter _elt;
-	elt_iter _end;
-};
-
-class AdjConductorRange{
-public:
-	explicit AdjConductorRange(Conductor& c);
-public:
-	AdjConductorRange(AdjConductorRange const&o)
-		: _cond_begin(o._cond_begin),
-		  _cond_end(o._cond_end){
-	}
-public:
-	AdjConductorIterator begin(){
-		return AdjConductorIterator(_cond_begin, _cond_end);
-	}
-	AdjConductorIterator end(){
-		return AdjConductorIterator(_cond_end, _cond_end);
-	}
-
-private:
-	AdjConductorIterator::elt_iter _cond_begin;
-	AdjConductorIterator::elt_iter _cond_end;
-};
-#endif
-
-// nodes and wires?
-// (this does not make sense, move to Node, rebase Wire)
+class WireLabel; // BUG
+class QString; // BUG
+/*--------------------------------------------------------------------------*/
+// nodes and wires. can connect together, form a net.
 class Conductor {
 public:
   enum{
@@ -116,8 +64,7 @@ public: // internal net stuff
 	QString const& netLabel() const;
 	void setNetLabel(QString const& l);
 	bool hasNetLabel() const;
-// ----------------------------------------------------------------
-// ----------------------------------------------------------------
+
 public:
 	size_t degree() const{itested();
 		return _adj.size();
@@ -137,5 +84,6 @@ private:
 	Net* _net;
 	unsigned _visit; // keep track of what has been done
 };
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 #endif // guard

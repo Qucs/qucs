@@ -18,13 +18,14 @@
 #include "conductor.h"
 #include "qt_compat.h"
 #include "platform.h"
-
+#include "object.h"
+/*--------------------------------------------------------------------------*/
 class ViewPainter;
 class NodeMap;
 class NetList;
 class AdjNodeRange;
-
-// TODO: fix hierarchy
+/*--------------------------------------------------------------------------*/
+// CHECK: hierarchy
 // // maybe: Place : Conductor?
 class Node : public Object, public Conductor {
 private:
