@@ -567,13 +567,9 @@ private: // QucsDoc overrides, schematic_action.cpp
   void actionEditPaste(QAction*) override;
   void actionSetWire(QAction*) override;
   void actionInsertLabel(QAction*) override;
-  void actionInsertEquation(QAction*) override;
-  void actionInsertPort(QAction*) override;
-  void actionInsertGround(QAction*) override;
   void actionSetMarker(QAction*) override;
   void actionMoveText(QAction*) override;
   void actionZoomIn(QAction*) override;
-  void actionExportGraphAsCsv(); // BUG
   void actionSelectElement(QObject*) override;
 
 public:
