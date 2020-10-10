@@ -6,7 +6,7 @@
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // rotate counterclockwise. NB: the y axis points downwards on the screen.
-std::pair<int, int> angle_t::apply(std::pair<int, int> const& p) const
+pos_t angle_t::apply(pos_t const& p) const
 {itested();
 	trace3("angle_apply", _degrees, p.first, p.second);
 	assert(! (_degrees%90) ); //for now
@@ -19,7 +19,7 @@ std::pair<int, int> angle_t::apply(std::pair<int, int> const& p) const
 	int rx = c*p.first - s*p.second;
 	int ry = s*p.first + c*p.second;
 	trace3("angle_apply", _degrees, rx, ry);
-	return std::make_pair(rx, ry);
+	return pos_t(rx, ry);
 }
 /*--------------------------------------------------------------------------*/
 rotate_after_mirror1_t rotate_after_mirror1_t::inverse() const
@@ -34,7 +34,7 @@ rotate_after_mirror1_t rotate_after_mirror1_t::inverse() const
 	}
 }
 /*--------------------------------------------------------------------------*/
-std::pair<int, int> rotate_after_mirror1_t::apply(std::pair<int, int> const& p) const
+pos_t rotate_after_mirror1_t::apply(pos_t const& p) const
 {itested();
 	auto tmp = p;
 	if(_m){itested();
@@ -65,8 +65,4 @@ rotate_after_mirror1_t rotate_after_mirror1_t::operator*(rotate_after_mirror1_t 
 	return rotate_after_mirror1_t(m1m2, new_angle);
 }
 /*--------------------------------------------------------------------------*/
-angle_t::angle_t(int d) : _degrees(d)
-{
-	trace1("...", d);
-	assert(!(d%90)); // for now.
-}
+/*--------------------------------------------------------------------------*/

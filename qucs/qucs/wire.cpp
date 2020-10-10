@@ -28,8 +28,6 @@
 class QPainter;
 class QString;
 
-class dummy {};
-
 namespace{
 
 class Wire : public Symbol, public Conductor {
@@ -38,7 +36,7 @@ private:
 
 public:
   explicit Wire();
-  explicit Wire(int _x1, int _y1, int _x2, int _y2);
+  explicit Wire(pos_t const&, pos_t const&);
   ~Wire();
 
   Element* clone() const override{
@@ -59,7 +57,7 @@ public:
 
 private: // Conductor
   Symbol* newUnion(const Symbol*) const override;
-  bool isNet(int, int) const override;
+  bool isNet(pos_t const&) const override;
 
 private:
   void findScaleAndAngle();
@@ -105,33 +103,31 @@ private: // Symbol, internal port access.
   }
 
 
-private: // FIXME, these are still around. (from element)
-//	int & x1__() { return _port0.x; }
-//	int & y1__() { return _port0.y; }
-//	int & x2__() { return _port1.x; }
-//	int & y2__() { return _port1.y; }
+private:
+        pos_t pP1() const{
+          return _port1.position();
+        }
+        void setP1(pos_t const& p){
+          _port1.setPosition(p);
+        }
 
 	void updatePort();
 
 public: // FIXME, these are still around. (from element)
-
 	int x1() const { return _port0.x(); }
 	int y1() const { return _port0.y(); }
 	int x2() const { return _port1.x(); }
 	int y2() const { return _port1.y(); }
-
-// 	void setPos0(int x, int y){ x1__() = x; y1__() = y; }
-// 	void setPos1(int x, int y){ x2__() = x; y2__() = y; }
 
 public: // stuff used in mouseactions.
 //  void move1(int x, int y){ unreachable(); } // {x1__()+=x; y1__()+=y; }
 //  void move2(int x, int y){ unreachable(); } // {x2__()+=x; y2__()+=y; }
 
 private:
-	int & x1() { return _port0.x(); }
-	int & y1() { return _port0.y(); }
-	int & x2() { return _port1.x(); }
-	int & y2() { return _port1.y(); }
+//	int & x1() { return _port0.x(); }
+//	int & y1() { return _port0.y(); }
+//	int & x2() { return _port1.x(); }
+//	int & y2() { return _port1.y(); }
 private: // avoid access to obsolete Element members
   Port _port0;
   Port _port1;
@@ -181,42 +177,46 @@ void Wire::findScaleAndAngle()
   auto x=x2();
   auto y=y2();
   updatePort();
-  trace4("dbg", x, y, x2(), y2());
+  trace4("dbg same?", x, y, x2(), y2());
   assert(x==x2());
   assert(y==y2());
 #endif
 }
-
-#if 0
-// gaah. don't use this. (but it is used in a unit test.)
-Wire::Wire(int _x1, int _y1, int _x2, int _y2)
+/*--------------------------------------------------------------------------*/
+pos_t operator-(pos_t const& p, pos_t const& q)
+{
+  pos_t r(p);
+  r.first -= q.first;
+  r.second -= q.second;
+  return r;
+}
+/*--------------------------------------------------------------------------*/
+Wire::Wire(pos_t const& p0, pos_t const& p1)
   : Symbol(), _port0(0, 0),
-    _port1(_x2-_x1, _y2-_y1),
+    _port1((p1 - p0).first, (p1 - p0).second),
     _angle(0), _scale(1)
 { untested();
 
-  _cx = _x1;
-  _cy = _y1;
+  _cx = getX(p0);
+  _cy = getY(p0);
+  trace2("new Wire", p0, p1);
+  trace2("new Wire", _cx, _cy);
 
-  // not here.
   findScaleAndAngle();
-
-  trace4("== created wire", _x1, _y1, _x2, _y2);
-  assert(_x1 || _x2 || _y1 || _y2);
-  trace2("created wire", _angle, _scale);
-
   updatePort();
 
-  assert(cx() == _x1);
-  assert(cy() == _y1);
-  assert(x2() == _x2-_x1);
-  assert(y2() == _y2-_y1);
+  trace3("new Wire", _scale, _cx, _cy);
+  assert(_scale>0); // for now?
+
+  // assert(cx() == _x1);
+  // assert(cy() == _y1);
+  // assert(x2() == _x2-_x1);
+  // assert(y2() == _y2-_y1);
 
   setTypeName("wire");
   setLabel("noname");
 }
-#endif
-// ----------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 Wire::~Wire()
 {
   assert(!port(0).isConnected());
@@ -225,11 +225,22 @@ Wire::~Wire()
 // ----------------------------------------------------------------
 Symbol* Wire::newUnion(Symbol const* s) const
 {
-  if(auto o = dynamic_cast<Wire const*>(s)){ untested();
-    incomplete();
+  auto o = dynamic_cast<Wire const*>(s);
+  if(!o){ untested();
+    // not a Wire.
+  }else if( ( _angle - o->_angle )%2 ){ untested();
+    // different angle
+  }else if(nodePosition(0) == s->nodePosition(0)){ untested();
+    return new Wire(nodePosition(1), s->nodePosition(1));
+  }else if(nodePosition(0) == s->nodePosition(1)){ untested();
+    return new Wire(nodePosition(1), s->nodePosition(0));
+  }else if(nodePosition(1) == s->nodePosition(0)){ untested();
+    return new Wire(nodePosition(0), s->nodePosition(1));
+  }else if(nodePosition(1) == s->nodePosition(1)){ untested();
+    return new Wire(nodePosition(0), s->nodePosition(0));
   }else{ untested();
-    return nullptr;
   }
+  return nullptr;
 }
 // ----------------------------------------------------------------
 void Wire::setCenter(int x, int y, bool relative)
@@ -326,8 +337,9 @@ void Wire::updatePort()
 
   assert(x1() == 0);
   assert(y1() == 0);
-  x2() = dcos(_angle) * _scale;
-  y2() = dsin(_angle) * _scale;
+  int x = dcos(_angle) * _scale;
+  int y = dsin(_angle) * _scale;
+  setP1(pos_t(x, y));
 }
 // ----------------------------------------------------------------
 std::string Wire::getParameter(std::string const& n) const
@@ -389,20 +401,24 @@ void Wire::setParameter(std::string const& n, std::string const& v)
     delta = v;
   }else if(n=="deltax"){
     int V = atoi(v.c_str());
-    x2() = V;
+    auto p1 = pP1();
+    p1.first = V;
     if(V){
-      y2() = 0;
+      p1.second = 0;
     }else{
     }
+    setP1(p1);
     findScaleAndAngle();
     updatePort();
   }else if(n=="deltay"){
     int V = atoi(v.c_str());
-    y2() = V;
+    auto p1 = pP1();
+    p1.second = V;
     if(V){
-      x2() = 0;
+      p1.first = 0;
     }else{
     }
+    setP1(p1);
     findScaleAndAngle();
     updatePort();
   }else if(n=="netname"){
@@ -508,8 +524,10 @@ Node* Wire::disconnectNode(unsigned i, NodeMap& nm)
   return n;
 }
 /*--------------------------------------------------------------------------*/
-bool Wire::isNet(int x, int y) const
+bool Wire::isNet(pos_t const& p) const
 {itested();
+  int x = getX(p);
+  int y = getY(p);
   x -= cx();
   y -= cy();
   return in_order(x1(), x, x2()) && in_order(y1(), y, y2());

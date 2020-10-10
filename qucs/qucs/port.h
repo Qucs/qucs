@@ -1,6 +1,4 @@
 /***************************************************************************
-                                 node.h
-                                --------
     copyright            : (C) 2003 by Michael Margraf
                                2018, 2020 Felix Salfelder / QUCS team
  ***************************************************************************/
@@ -19,6 +17,7 @@
 
 #include <QString> // BUG??
 #include "trace.h"
+#include "geometry.h"
 
 class Node;
 
@@ -31,36 +30,27 @@ public:
   Port(Port const&);
  // Port() {};
   explicit Port(int x, int y, bool _avail=true)
-	  : _x(x), _y(y), avail(_avail), _node(nullptr)
+	  : _p(x, y),
+	    avail(_avail), _node(nullptr)
   {
     Type=""; Name=""; };
 
 public:
-  int x_()const{return _x;}
-  int y_()const{return _y;}
-  std::pair<int, int> position() const { return std::make_pair(_x, _y); } // BUG
-  void setPosition(int x, int y) { _x=x; _y=y; }
+  int x_()const{return getX(_p);}
+  int y_()const{return getY(_p);}
+  pos_t const& position() const { return _p; }
+  void setPosition(int x, int y) { _p=pos_t(x,y); }
+  void setPosition(pos_t p) { _p=p; }
 
   // This makes Port behave like a pointer (and that's what it will be).
   Node const* operator->() const {return _node;}
 
-  int x() const{ return _x; }
-  int y() const{ return _y; }
+  int x() const{ return getX(_p); }
+  int y() const{ return getY(_p); }
 
 public: // bug
-  int& x(){ return _x; }
-  int& y(){ return _y; }
-
-private:
-  friend class Wire; // HACK
-  int _x, _y;
-public:
-  bool  avail;
-  QString Type; // BUG. type is "Port".
-  QString Name; // BUG?
-
-private:
-  Node *_node;
+//  int& x(){ return _x; }
+//  int& y(){ return _y; }
 
 public:
   QString const& netLabel() const;
@@ -75,6 +65,18 @@ private:
   friend class Symbol;
   void connect(Node*);
   void disconnect(Node*);
+
+private:
+  pos_t _p;
+
+public:
+  bool  avail;
+  QString Type; // BUG. type is "Port".
+  QString Name; // BUG?
+
+private:
+  Node *_node;
+
 };
 
 

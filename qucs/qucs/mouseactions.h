@@ -82,12 +82,12 @@ protected:
 	QPointF mapToScene(QPoint const& p) const;
 	void updateViewport(); // why?
 	void setCursor(QCursor const& c);
-   bool isNode(int fX, int fY) const; // needed??
-   bool isConductor(int fX, int fY) const;
+   bool isNode(pos_t const&) const; // needed??
+   bool isConductor(pos_t const&) const;
 
 protected: // UC
-	template<class T>
-	void possibly_merge_symbols(pos_t remove_at, T& rem, T& add);
+	//template<class T>
+	//void possibly_merge_symbols(pos_t remove_at, T& rem, T& add);
 	QList<ElementGraphics*> items(const QPointF &pos,
                                  Qt::ItemSelectionMode mode=Qt::IntersectsItemShape,
                                  Qt::SortOrder order = Qt::DescendingOrder) const;

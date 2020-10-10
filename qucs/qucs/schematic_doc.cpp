@@ -817,4 +817,10 @@ QList<ElementGraphics*> SchematicDoc::selectedItems()
 	return *EL;
 }
 /*--------------------------------------------------------------------------*/
+Node const* SchematicDoc::nodeAt(pos_t const& p) const
+{
+	assert(_model);
+	return _model->nodeAt(p);
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

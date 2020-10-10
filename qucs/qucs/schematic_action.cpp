@@ -226,94 +226,200 @@ static std::vector<pos_t> portvector(ElementGraphics const* e)
 		}
 	}else{
 	}
+	return p;
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-// perform action for the first time. keep track of induced changes.
-template<class T>
-static void do_first(T& rem, T& add)
-{
-	T rem_uc;
-	T add_uc;
+// edit a schematic edit/delete/alter
+class SchematicEdit : public QUndoCommand {
+public:
+	typedef std::list<ElementGraphics*> gfxlist_t;
+	struct swap_t{
+		swap_t(ElementGraphics* gfx, Element* elt)
+			: _gfx(gfx), _elt(elt) {}
+		ElementGraphics* _gfx;
+		Element* _elt;
+		~swap_t(){
+			delete _elt;
+		}
+	};
+protected:
+	explicit SchematicEdit(SchematicScene& s)
+	  : QUndoCommand(), _first(true), _scn(s) {}
+	SchematicEdit(SchematicEdit const&) = delete;
 
-	for(auto& r: rem){
-		auto ps = portvector(r);
-		r->hide();
-		for(auto portremove : ps){
-			possibly_merge_symbols(portremove, rem_uc, add);
+
+	template<class IT>
+	void setDelete(IT const& deletelist){
+		for(auto i : deletelist){ untested();
+			// ++k; // TODO: set label
+			if(auto eg=dynamic_cast<ElementGraphics*>(i)){ untested();
+				_rem.push_back(eg);
+			}else{ untested();
+				unreachable(); // really? use prechecked_cast then.
+			}
 		}
 	}
 
-	for(auto& r : add){
-		for(auto p : ports(r)){
-			// when adding a port, wires may need splitting.
-			split_wires(graphics_near(r->nodeposition), rem_uc, add_uc);
+private: // QUndoCommand
+	void undo() override { untested();
+		redo();
+	}
+	void redo() override { untested();
+		if(_first){
+			do_it_first();
+			_first = false;
+		}else{
+			do_it();
+		}
+	}
+
+private:
+	void do_it_first();
+	void do_it();
+
+	template<class T>
+	void postRmPort(pos_t, T& rem, T& add);
+	template<class T>
+	void preAddPort(pos_t, T& rem, T& add);
+
+	QList<ElementGraphics*> items(const QPointF &pos,
+                                 Qt::ItemSelectionMode mode=Qt::IntersectsItemShape,
+                                 Qt::SortOrder order = Qt::DescendingOrder) const;
+	Node const* nodeAt(pos_t const&) const;
+	SchematicScene const* scene() const{
+		return &_scn;
+	}
+
+private:
+	gfxlist_t _add;
+	gfxlist_t _rem;
+	std::list<swap_t> _swap;
+	bool _first;
+	SchematicScene& _scn; // scene?
+};
+/*--------------------------------------------------------------------------*/
+Node const* SchematicEdit::nodeAt(pos_t const& p) const
+{
+	assert(scene());
+	return scene()->nodeAt(p);
+}
+/*--------------------------------------------------------------------------*/
+QList<ElementGraphics*> SchematicEdit::items(
+           const QPointF &pos, Qt::ItemSelectionMode mode,
+           Qt::SortOrder order) const
+{
+	return _scn.items(pos, mode, order);
+}
+/*--------------------------------------------------------------------------*/
+// was: bool oneTwoWires(Node *n)
+// when removing a port, wires may collapse.
+// remove the collapsed wires, and add a longer one.
+// keep track of what's been done.
+template<class T>
+void SchematicEdit::postRmPort(pos_t remove_at, T& rem, T& add)
+{
+	auto it = items(makeQPointF(remove_at));
+	auto node = nodeAt(remove_at);
+
+	if(!node){
+		trace1("no node at", remove_at);
+	}else if(node->degree() == 2){
+		auto gfxi = it.begin();
+		auto next = gfxi;
+		++next;
+		
+		for(; next!=it.end(); gfxi=next, ++next){
+			assert(*gfxi);
+			if(auto _union = (*gfxi)->newUnion(*next) ){
+				trace0("got union");
+				(*gfxi)->hide();
+				(*next)->hide();
+				_union->show();
+
+				rem.push_back(*gfxi);
+				rem.push_back(*next);
+				add.push_back(_union);
+				break; // only attempt to merge once, for now.
+			}else{
+			}
+		}
+	}else{
+	}
+}
+/*--------------------------------------------------------------------------*/
+void SchematicEdit::do_it()
+{
+	for(auto& d : _rem){ untested();
+		d->hide();
+	}
+	for(auto& d : _add){ untested();
+		d->show();
+	}
+
+	incomplete(); // alter.
+
+	std::swap(_rem, _add);
+}
+/*--------------------------------------------------------------------------*/
+template<class T>
+void SchematicEdit::preAddPort(pos_t, T& rem, T& add)
+{
+	incomplete();
+}
+/*--------------------------------------------------------------------------*/
+// Perform an edit action for the first time. keep track of induced changes.
+// This is a generic version of legacy implementation, and it still requires a
+// scene implementing the geometry.
+void SchematicEdit::do_it_first()
+{ untested();
+	gfxlist_t rem_uc;
+	gfxlist_t add_uc;
+
+	for(auto& r: _rem){
+		auto ps = portvector(r);
+		r->hide();
+		for(auto portremove : ps){ untested();
+			trace1("postremove", portremove);
+			postRmPort(portremove, rem_uc, add_uc);
+		}
+	}
+
+	for(auto& r : _add){
+		if(auto sym = dynamic_cast<Symbol*>(element(r))){
+			for(unsigned i=0; i<sym->numPorts(); ++i){
+				auto np = sym->portPosition(i); // nope.
+				// when adding a port, wires may need splitting.
+				preAddPort(np, rem_uc, add_uc);
+			}
 		}
 		r->show();
 	}
 
 	for(auto i : rem_uc){
-		rem.push_back(i);
+		_rem.push_back(i);
 	}
 	for(auto i : add_uc){
-		add.push_back(i);
+		_add.push_back(i);
 	}
+
+	std::swap(_add, _rem);
 }
 /*--------------------------------------------------------------------------*/
 // swapSelection?
-class DeleteSelection : public QUndoCommand {
+class DeleteSelection : public SchematicEdit {
 public:
 	template<class IT>
-	DeleteSelection(SchematicDoc& ctx, IT selection)
-	  : _ctx(ctx),
-	    _done(false){ untested();
+	DeleteSelection(SchematicDoc& ctx, IT deletelist)
+	  : SchematicEdit(*ctx.sceneHACK()) { untested();
 		size_t k = 0;
-		for(auto i : selection){ untested();
-			++k;
-			if(auto eg=dynamic_cast<ElementGraphics*>(i)){ untested();
-				_gfxrem.push_back(eg);
-			}else{ untested();
-				unreachable(); // really? use prechecked_cast then.
-			}
-		}
+		setDelete(deletelist);
 
 		 // here?
 		// restructure(_gfxrem, _gfxadd);
 
 		setText("delete " + QString::number(k) + " items");
 	}
-	void undo() override { untested();
-		QUndoCommand::undo(); // does not check
-
-		assert(_done);
-		for(auto& d : _gfxrem){ untested();
-			d->show();
-		}
-		_done = false;
-	}
-	void redo() override { untested();
-		QUndoCommand::redo(); // does not check
-
-		// or here?
-		// if(_raw){
-		// do_first(_gfxrem, _gfxadd);
-		// }else{
-		assert(!_done);
-		for(auto& d : _gfxrem){ untested();
-			d->hide();
-		}
-		for(auto& d : _gfxadd){ untested();
-			d->show();
-		}
-		// }
-
-		_done = true;
-	}
-private:
-    SchematicDoc& _ctx;
-    std::vector<ElementGraphics*> _gfxrem;
-    std::vector<ElementGraphics*> _gfxadd;
-	 bool _done;
 }; // DeleteSelection
 typedef MouseActionSelCmd<DeleteSelection> MouseActionDelete;
 /*--------------------------------------------------------------------------*/

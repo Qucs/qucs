@@ -34,7 +34,7 @@ private:
 
 private: // managed by NodeMap
   friend class NodeMap;
-  explicit Node(std::pair<int, int>);
+  explicit Node(pos_t);
   ~Node();
 
 public:
@@ -46,10 +46,10 @@ public:
   // BUG
   void setName(const QString&, const QString&, int x_=0, int y_=0);
 
-  std::pair<int, int> const& position() const{
+  pos_t const& position() const{
 	  return _position;
   }
-  bool isNet(int, int) const override;
+  bool isNet(pos_t const&) const override;
 
 #if 0 // what is this?
   void setState(int i){
@@ -80,7 +80,7 @@ public: // protected coordinate abuse
 #endif
 
 private:
-  const std::pair<int, int> _position;
+  const pos_t _position;
   unsigned _ports; // number of ports connecting to this node
 };
 /* ---------------------------------------------------------- */

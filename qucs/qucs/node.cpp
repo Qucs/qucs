@@ -19,7 +19,7 @@
 
 #include <QPainter>
 
-Node::Node(std::pair<int, int> pos)
+Node::Node(pos_t pos)
   : Object(),
    _position(pos),
    _ports(0)
@@ -35,9 +35,9 @@ Node::~Node()
   assert(!degree());
 }
 /*--------------------------------------------------------------------------*/
-bool Node::isNet(int x, int y) const
+bool Node::isNet(pos_t const& p) const
 { untested();
-  return x==_position.first && y==_position.second;
+  return p == _position;
 }
 // -------------------------------------------------------------
 #if 0
