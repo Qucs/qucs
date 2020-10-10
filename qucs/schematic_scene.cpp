@@ -390,13 +390,18 @@ bool SchematicScene::event(QEvent* e)
 	return r;
 }
 /*--------------------------------------------------------------------------*/
-bool SchematicScene::isConductor(int x, int y) const
+Node const* SchematicScene::nodeAt(pos_t p) const
+{
+	return doc()->nodeAt(p);
+}
+/*--------------------------------------------------------------------------*/
+bool SchematicScene::isConductor(pos_t p) const
 {itested();
-	QPointF pos(x, y);
+	QPointF pos(p.first, p.second);
 	auto it = items(pos);
 	for(auto i : it){itested();
 		if(auto c = dynamic_cast<Conductor const*>(element(i))){
-			return c->isNet(x, y);
+			return c->isNet(p);
 		}else{itested();
 		}
 	}
@@ -424,6 +429,15 @@ QList<ElementGraphics*> SchematicDoc::selectedItems()
 QList<ElementGraphics*> SchematicScene::items() const
 { untested();
 	auto L = QGraphicsScene::items();
+	for(auto l = L.begin(); l!=L.end(); ){ untested();
+		if(prechecked_cast<ElementGraphics*>(*l)){ untested();
+			++l;
+		}else{ untested();
+			// incomplete(); // actually
+			auto prev = l;
+			l = L.erase(prev);
+		}
+	}
 	auto EL = reinterpret_cast<QList<ElementGraphics*>* >(&L);
 	return *EL;
 }
@@ -433,6 +447,15 @@ QList<ElementGraphics*> SchematicScene::items(
 		Qt::SortOrder order) const
 {itested();
 	auto L = QGraphicsScene::items(pos, mode, order);
+	for(auto l = L.begin(); l!=L.end(); ){ untested();
+		if(prechecked_cast<ElementGraphics*>(*l)){ untested();
+			++l;
+		}else{ untested();
+			// incomplete(); // actually
+			auto prev = l;
+			l = L.erase(prev);
+		}
+	}
 	auto EL = reinterpret_cast<QList<ElementGraphics*>* >(&L);
 	return *EL;
 }

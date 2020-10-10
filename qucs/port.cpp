@@ -13,12 +13,12 @@
 
 #include "port.h"
 #include "node.h"
-
+/*--------------------------------------------------------------------------*/
 Port::Port(Port const& p)
-	: _x(p._x), _y(p._y), _node(nullptr)
+	: _p(p._p), _node(nullptr)
 {
 }
-
+/*--------------------------------------------------------------------------*/
 QString const& Port::netLabel() const
 {
 	assert(_node);

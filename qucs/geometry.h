@@ -19,9 +19,23 @@
 
 #include <utility> // std::pair
 #include "io_trace.h"
+#include "assert.h"
 
 /*--------------------------------------------------------------------------*/
-typedef std::pair<int, int> pos_t;
+class pos_t : public std::pair<int, int>{
+public:
+	pos_t(int a, int b) : std::pair<int, int>(a,b) {}
+};
+/*--------------------------------------------------------------------------*/
+inline int getX(std::pair<int, int> const& p)
+{itested();
+	return p.first;
+}
+/*--------------------------------------------------------------------------*/
+inline int getY(std::pair<int, int> const& p)
+{itested();
+	return p.second;
+}
 /*--------------------------------------------------------------------------*/
 inline int getX(pos_t const& p)
 {itested();
@@ -70,6 +84,7 @@ protected:
 	int _degrees;
 };
 static const angle_t ninety_degree(90);
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // elements of O(2) decomposed as rotation * mirror.
 // rotation is counterclockwise, and mirror is
@@ -128,6 +143,12 @@ public:
 private:
 	bool _m;
 };
+/*--------------------------------------------------------------------------*/
+inline angle_t::angle_t(int d) : _degrees(d)
+{
+	trace1("...", d);
+	assert(!(d%90)); // for now.
+}
 
 typedef rotate_after_mirror1_t qucsSymbolTransform;
 typedef rotate_after_mirror0_t gedaSymbolTransform;

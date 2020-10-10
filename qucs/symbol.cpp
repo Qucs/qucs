@@ -67,7 +67,8 @@ Node* Symbol::connectNode(unsigned i, NodeMap&nm)
 	trace2("connectNode", label(), i);
 	Port const& pp = port(i);
 	Port& mp = port(i);
-	Node* n = &nm.at(pp.x_()+cx(), pp.y_()+cy());
+	pos_t p(pp.x_()+cx(), pp.y_()+cy());
+	Node* n = &nm.at(p);
 	assert(n->hasNet());
 
 	mp.connect(n /*,this*/);
@@ -166,15 +167,15 @@ void Symbol::paint(ViewPainter* p) const
 }
 /*--------------------------------------------------------------------------*/
 // global/external position
-std::pair<int, int> Symbol::nodePosition(unsigned i) const
+pos_t Symbol::nodePosition(unsigned i) const
 {
 	assert(port(i).isConnected());
-	auto p = port(i)->position();	
+	pos_t p = port(i)->position();	
 	return p;
 }
 /*--------------------------------------------------------------------------*/
 // local/relative position
-std::pair<int, int> Symbol::portPosition(unsigned i) const
+pos_t Symbol::portPosition(unsigned i) const
 {
 	auto p = port(i).position();	
 	return p;
