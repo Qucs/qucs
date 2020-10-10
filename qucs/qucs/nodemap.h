@@ -22,7 +22,7 @@ class ConnectedComponents;
 
 class NodeMap {
 public:
-  	typedef std::pair<int, int> key_type;
+  	typedef pos_t key_type;
 private:
 	class NodeCompare{
 	public:
@@ -88,11 +88,12 @@ public: // friend Symbol? move to Conductor?
 	void removeEdge(Conductor* a, Conductor* b);
 
 public:
-	Node* find_at(int x, int y);
-	Node const* find_at(int x, int y) const;
-	Node* find_at(key_type);
-	Node& at(int x, int y);
-	Node& new_at(int x, int y); // same as at. but don't search
+	Node* find_at(key_type const&);
+	Node const* find_at(key_type const&) const;
+	Node& at(pos_t const&);
+
+private:
+	Node& new_at(pos_t const&); // same as at. but don't search
 
 public: // net access
 	NetList& netList(){return _nets;}

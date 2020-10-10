@@ -23,6 +23,7 @@
 
 #include "element.h"
 #include "exception.h"
+#include "geometry.h"
 
 /** \class Symbol
   * \brief Superclass of circuit components
@@ -112,8 +113,8 @@ private:
 	Port const& port(unsigned) const; // TODO. don't expose "Port"
 
 public: // Port access
-	virtual std::pair<int, int> portPosition(unsigned) const; // why virtual?
-	virtual std::pair<int, int> nodePosition(unsigned) const; // why virtual?
+	virtual pos_t portPosition(unsigned) const; // why virtual?
+	virtual pos_t nodePosition(unsigned) const; // why virtual?
 
 	virtual Net const* portValue(unsigned) const; // why virtual?
 	Node const* portNode(unsigned) const;

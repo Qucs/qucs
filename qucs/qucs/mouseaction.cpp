@@ -149,51 +149,16 @@ SchematicScene const* MouseAction::scene() const
 	return doc().scene();
 }
 /*--------------------------------------------------------------------------*/
-bool MouseAction::isNode(int fX, int fY) const
+bool MouseAction::isNode(pos_t const& p) const
 {
 	// return scene()->isNode(fX, fY);?
-	return doc().isNode(fX, fY);
+	return doc().isNode(p);
 }
 /*--------------------------------------------------------------------------*/
-bool MouseAction::isConductor(int fX, int fY) const
+bool MouseAction::isConductor(pos_t const&p) const
 {itested();
 	assert(scene());
-	return scene()->isConductor(fX, fY);
-}
-/*--------------------------------------------------------------------------*/
-// was: bool oneTwoWires(Node *n)
-// when removing a port, wires may collapse.
-// remove the collapsed wires, and add a longer one.
-// keep track of what's been done.
-template<class T>
-void MouseAction::possibly_merge_symbols(pos_t remove_at, T& rem, T& add)
-{
-	auto it = items(makeQPointF(remove_at));
-	auto node = nodeAt(remove_at);
-
-	if(!node){
-		unreachable();
-	}else if(node->degree() == 2){
-		auto gfxi = it.begin();
-		auto next = gfxi;
-		++next;
-		
-		for(; next!=it.end(); gfxi=next, ++next){
-			assert(*gfxi);
-			if(auto _union = (*gfxi)->newUnion(*next) ){
-				(*gfxi)->hide();
-				(*next)->hide();
-				_union->show();
-
-				rem.push_back(*gfxi);
-				rem.push_back(*next);
-				add.push_back(_union);
-				break; // only attempt to merge once, for now.
-			}else{
-			}
-		}
-	}else{
-	}
+	return scene()->isConductor(p);
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

@@ -196,8 +196,11 @@ private:
 	ComponentList& components(); // possibly "devices". lets see.
 	CmdEltList& commands();
 public:
-	bool isNode(int x, int y) const{
-		return nodes().find_at(x,y);
+	bool isNode(pos_t p) const{
+		return nodes().find_at(p);
+	}
+	Node const* nodeAt(pos_t p) const{
+		return nodes().find_at(p);
 	}
 	WireList const& wires() const;
 	NodeMap const& nodes() const;

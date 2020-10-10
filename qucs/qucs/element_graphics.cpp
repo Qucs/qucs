@@ -184,8 +184,14 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 {
 	ElementGraphics* ng = nullptr;
 	if(auto* c=dynamic_cast<Conductor const*>(_e)){ untested();
-		if(auto u = c->newUnion(symbol(s)) ){ untested();
+		assert(symbol(s));
+
+		if(Symbol* u = c->newUnion(symbol(s)) ){ untested();
 			ng = new ElementGraphics(u);
+			assert(_e->mutable_owner());
+			u->setOwner(_e->mutable_owner());
+//			ng->setParentItem(scene());
+			scene()->addItem(ng);
 			return ng;
 		}else{ untested();
 		}
@@ -260,7 +266,7 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 		x -= pivot.first;
 		y -= pivot.second;
 
-		auto new_xy = std::make_pair(x,y);
+		pos_t new_xy(x,y);
 		new_xy = a.apply(new_xy);
 
 		x = pivot.first + new_xy.first;
@@ -275,7 +281,7 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 	setSelected(sel);
 }
 /*--------------------------------------------------------------------------*/
-SchematicScene* ElementGraphics::scene()
+SchematicScene* ElementGraphics::scene() const
 {
 	auto s = prechecked_cast<SchematicScene*>(QGraphicsItem::scene());
 	if(s){itested();

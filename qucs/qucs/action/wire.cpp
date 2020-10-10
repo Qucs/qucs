@@ -417,8 +417,9 @@ QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* ev)
 	QPoint xx = doc().snapToGrid(pos);
 	auto fX = getX(xx);
 	auto fY = getY(xx);
+	pos_t p(fX, fY);
 
-	if(isConductor(fX, fY)){itested();
+	if(isConductor(p)){itested();
 		std::list<Element*> new_wires;
 		for(auto& i: _gfx){itested();
 			auto s = prechecked_cast<Symbol*>(element(i));

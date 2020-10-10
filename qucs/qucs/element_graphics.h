@@ -45,7 +45,7 @@ public:
 	Element* detachElement();
 	ElementGraphics* newUnion(ElementGraphics const*) const;
 public:
-	SchematicScene* scene(); // really?
+	SchematicScene* scene() const; // really?
 
 
 

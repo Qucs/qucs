@@ -81,7 +81,7 @@ int NodeMap::erase(Node* tt)
 	return 1;
 }
 /* -------------------------------------------------------------- */
-Node* NodeMap::find_at(std::pair<int, int> key)
+Node* NodeMap::find_at(pos_t const& key)
 {
 	auto f = _nodes.find(key);
 	if(f != _nodes.end()){
@@ -91,26 +91,16 @@ Node* NodeMap::find_at(std::pair<int, int> key)
 	}
 }
 /* -------------------------------------------------------------- */
-Node* NodeMap::find_at(int x, int y)
+Node const* NodeMap::find_at(pos_t const& key) const
 {
-	auto key=std::make_pair(x,y);
-	return find_at(key);
-}
-/* -------------------------------------------------------------- */
-Node const* NodeMap::find_at(int x, int y) const
-{
-	auto key=std::make_pair(x,y);
 	NodeMap* cc = const_cast<NodeMap*>(this);
 	return cc->find_at(key);
 }
 /* -------------------------------------------------------------- */
 // TODO: is this really needed with a proper map??
-Node& NodeMap::new_at(int x, int y)
+Node& NodeMap::new_at(pos_t const& key)
 {
-	auto key=std::make_pair(x,y);
 	assert(!find_at(key)); // (!)
-
-	trace2("new_at", x, y);
 
 	auto status = _nodes.emplace(new Node(key));
 	assert(status.second);
@@ -123,13 +113,13 @@ Node& NodeMap::new_at(int x, int y)
 	return **status.first;
 }
 /* -------------------------------------------------------------- */
-Node& NodeMap::at(int x, int y)
+Node& NodeMap::at(pos_t const& p)
 {
-	Node* pn = find_at(x,y);
+	Node* pn = find_at(p);
 
 	// create new node, if no existing one lies at this position
 	if(!pn) {
-		pn = &new_at(x, y);
+		pn = &new_at(p);
 	}else{
 	}
 

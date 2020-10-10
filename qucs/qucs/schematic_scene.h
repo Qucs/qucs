@@ -24,18 +24,19 @@
 #ifndef QUCS_SCHEMATIC_SCENE_H_
 #define QUCS_SCHEMATIC_SCENE_H_
 
-#include <QGraphicsScene>
-#include <QList> // BUG
-#include <QGraphicsItem>
 #include <assert.h>
+#include <QGraphicsItem>
+#include <QGraphicsScene>
+#include <QList> // BUG?
 
-#include "viewpainter.h"
+#include "geometry.h"
 #include "qt_compat.h"
+#include "viewpainter.h"
 
 class Element;
-class SchematicDoc;
-
 class ElementGraphics;
+class Node;
+class SchematicDoc;
 
 // TODO: merge schematic mouse actions into this.
 class SchematicScene : public QGraphicsScene
@@ -66,8 +67,9 @@ public:
   QPoint gridSize() const;
   QPoint snapToGrid(QPointF const&) const;
 
-  bool isNode(int, int) const;
-  bool isConductor(int, int) const;
+  bool isNode(pos_t) const;
+  Node const* nodeAt(pos_t) const;
+  bool isConductor(pos_t) const;
 
 public: // wrap items
   QList<ElementGraphics*> items() const;
