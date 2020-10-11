@@ -26,7 +26,6 @@ class SubcktProto : public SchematicSymbol{
 public:
 	explicit SubcktProto(Element const* p);
 
-
 	virtual void build()=0;
 
 public: // accessed from netlister..

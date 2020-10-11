@@ -10,34 +10,20 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-
-/** \file symbol.h
-  * \brief Defines symbols for components, to be used in schematics.
-  *
-  * a symbol mostly takes care of ports, parameters and connectivity.
-  * (this is under construction)
-  *
-  */
+// base class for circuit components.
+// basically Component, but "Component" already existed.
+// maybe rename later.
 #ifndef QUCS_SYMBOL_H
 #define QUCS_SYMBOL_H
-
+/*--------------------------------------------------------------------------*/
 #include "element.h"
 #include "exception.h"
 #include "geometry.h"
-
-/** \class Symbol
-  * \brief Superclass of circuit components
-  *     (basically a Component,
-  *     but "Component" already exists.
-  *     It should be an implemenation only. maybe rename later.)
-  */
-
+/*--------------------------------------------------------------------------*/
 class QPainter;
-//class Schematic;
 class NodeMap;
 class Net;
-
-// a component symbol. not necessarily one of the legacy components
+/*--------------------------------------------------------------------------*/
 class Symbol : public Element{
 public: // construct
 	explicit Symbol(Symbol const&);
@@ -145,5 +131,6 @@ protected: // maybe not here. but need to rebase MultiViewComponent to ScktProto
 private:
 	std::string _type;
 }; // symbol
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 #endif

@@ -167,12 +167,11 @@ Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "__ma_ghostwire", &w);
 } // namespace
 
 // namespace {
-// // reuse newElementCommand?
-class MakeWire : public QUndoCommand {
+class MakeWire : public SchematicEdit {
 public:
 	template<class IT>
 	MakeWire(SchematicDoc& ctx, IT wires)
-	: _ctx(ctx){itested();
+	: SchematicEdit(*ctx.sceneHACK()){ itested();
 		trace1("newwire", wires.size());
 		size_t k = 0;
 
@@ -186,9 +185,13 @@ public:
 			++k;
 			if(auto e=dynamic_cast<Element*>(i)){itested();
 				auto eg = new ElementGraphics(e);
-				ctx.sceneAddItem(eg);
-				ctx.takeOwnership(e); // BUG?
-				_gfx.push_back(eg);
+
+				{ // BUG: not here/one call or do later?
+					ctx.sceneAddItem(eg);
+					ctx.takeOwnership(e);
+				}
+
+				qAdd_(eg);
 			}else{ untested();
 				unreachable(); // really? use prechecked_cast then.
 			}
@@ -196,6 +199,7 @@ public:
 		setText("create" + QString::number(k) + " wires");
 	}
 private:
+#if 0
 	void undo() override { untested();
 		for(auto& d : _gfx){ untested();
 			d->hide();
@@ -207,9 +211,9 @@ private:
 			d->show();
 		}
 	}
+#endif
 private:
-    SchematicDoc& _ctx;
-    std::vector<ElementGraphics*> _gfx;
+    // std::vector<ElementGraphics*> _gfx;
 }; // MakeWire
 /*--------------------------------------------------------------------------*/
 class MouseActionWire : public MouseAction{

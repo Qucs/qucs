@@ -16,16 +16,32 @@
  */
 #ifndef QUCS_GEOMETRY_H
 #define QUCS_GEOMETRY_H
-
+/*--------------------------------------------------------------------------*/
 #include <utility> // std::pair
 #include "io_trace.h"
 #include "assert.h"
-
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 class pos_t : public std::pair<int, int>{
 public:
 	pos_t(int a, int b) : std::pair<int, int>(a,b) {}
 };
+/*--------------------------------------------------------------------------*/
+inline pos_t operator+(pos_t const& p, pos_t const& q)
+{
+  pos_t r(p);
+  r.first += q.first;
+  r.second += q.second;
+  return r;
+}
+/*--------------------------------------------------------------------------*/
+inline pos_t operator-(pos_t const& p, pos_t const& q)
+{
+  pos_t r(p);
+  r.first -= q.first;
+  r.second -= q.second;
+  return r;
+}
 /*--------------------------------------------------------------------------*/
 inline int getX(std::pair<int, int> const& p)
 {itested();
