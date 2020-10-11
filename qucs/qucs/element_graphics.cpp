@@ -196,6 +196,9 @@ ElementGraphics* ElementGraphics::newPort(pos_t where) const
 
 		if(u){
 			ng = new ElementGraphics(u);
+			assert(scene());
+			scene()->addItem(ng);
+			((QGraphicsItem*)ng)->hide(); // yikes.
 			assert(_e->mutable_owner());
 			u->setOwner(_e->mutable_owner());
 		}else{
@@ -207,8 +210,12 @@ ElementGraphics* ElementGraphics::newPort(pos_t where) const
 			SchematicModel const* sc=u->subckt();
 			for(auto c : sc->wires() /*BUG*/ ){ untested();
 				auto cg = new ElementGraphics(c->clone());
-				c->setOwner(_e->mutable_owner());
+				assert(_e->mutable_owner());
+				assert(!element(cg)->mutable_owner());
+				element(cg)->setOwner(_e->mutable_owner());
+				assert(!cg->scene());
 				cg->setParentItem(ng);
+				assert(cg->scene());
 			}
 		}else{
 			incomplete();
