@@ -44,6 +44,7 @@ public:
 	void attachElement(Element* e);
 	Element* detachElement();
 	ElementGraphics* newUnion(ElementGraphics const*) const;
+	ElementGraphics* newPort(pos_t) const;
 public:
 	SchematicScene* scene() const; // really?
 

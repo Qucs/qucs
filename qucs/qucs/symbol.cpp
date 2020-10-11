@@ -15,7 +15,8 @@
 #include <assert.h>
 #include "net.h"
 #include "geometry.h"
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 // recreate schematic symbol. not sure why, maybe after parameter changes
 // (why not just call "Symbol::create??!")
 void Symbol::recreate(){ // }SchematicModel const&){ untested();
@@ -169,9 +170,12 @@ void Symbol::paint(ViewPainter* p) const
 // global/external position
 pos_t Symbol::nodePosition(unsigned i) const
 {
-	assert(port(i).isConnected());
-	pos_t p = port(i)->position();	
-	return p;
+	if(port(i).isConnected()){
+		return port(i)->position();	
+	}else{
+		pos_t c(center().first, center().second); // ...
+		return port(i).position() + c;
+	}
 }
 /*--------------------------------------------------------------------------*/
 // local/relative position

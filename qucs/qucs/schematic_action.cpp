@@ -230,74 +230,6 @@ static std::vector<pos_t> portvector(ElementGraphics const* e)
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-// edit a schematic edit/delete/alter
-class SchematicEdit : public QUndoCommand {
-public:
-	typedef std::list<ElementGraphics*> gfxlist_t;
-	struct swap_t{
-		swap_t(ElementGraphics* gfx, Element* elt)
-			: _gfx(gfx), _elt(elt) {}
-		ElementGraphics* _gfx;
-		Element* _elt;
-		~swap_t(){
-			delete _elt;
-		}
-	};
-protected:
-	explicit SchematicEdit(SchematicScene& s)
-	  : QUndoCommand(), _first(true), _scn(s) {}
-	SchematicEdit(SchematicEdit const&) = delete;
-
-
-	template<class IT>
-	void setDelete(IT const& deletelist){
-		for(auto i : deletelist){ untested();
-			// ++k; // TODO: set label
-			if(auto eg=dynamic_cast<ElementGraphics*>(i)){ untested();
-				_rem.push_back(eg);
-			}else{ untested();
-				unreachable(); // really? use prechecked_cast then.
-			}
-		}
-	}
-
-private: // QUndoCommand
-	void undo() override { untested();
-		redo();
-	}
-	void redo() override { untested();
-		if(_first){
-			do_it_first();
-			_first = false;
-		}else{
-			do_it();
-		}
-	}
-
-private:
-	void do_it_first();
-	void do_it();
-
-	template<class T>
-	void postRmPort(pos_t, T& rem, T& add);
-	template<class T>
-	void preAddPort(pos_t, T& rem, T& add);
-
-	QList<ElementGraphics*> items(const QPointF &pos,
-                                 Qt::ItemSelectionMode mode=Qt::IntersectsItemShape,
-                                 Qt::SortOrder order = Qt::DescendingOrder) const;
-	Node const* nodeAt(pos_t const&) const;
-	SchematicScene const* scene() const{
-		return &_scn;
-	}
-
-private:
-	gfxlist_t _add;
-	gfxlist_t _rem;
-	std::list<swap_t> _swap;
-	bool _first;
-	SchematicScene& _scn; // scene?
-};
 /*--------------------------------------------------------------------------*/
 Node const* SchematicEdit::nodeAt(pos_t const& p) const
 {
@@ -310,6 +242,30 @@ QList<ElementGraphics*> SchematicEdit::items(
            Qt::SortOrder order) const
 {
 	return _scn.items(pos, mode, order);
+}
+/*--------------------------------------------------------------------------*/
+template<class T>
+void SchematicEdit::preAddPort(pos_t where, T& remq, T& addq)
+{
+	auto it = items(makeQPointF(where));
+	for(auto gfxi : it){
+		if(auto n = gfxi->newPort(where)){
+			gfxi->hide();
+			n->show();
+
+			remq.push_back(gfxi);
+			for(auto c : n->childItems()){
+				auto cc = prechecked_cast<ElementGraphics*>(c); // BUG
+				assert(cc);
+				addq.push_back(cc);
+				c->setParentItem(nullptr);
+			}
+			delete n; // does it delete them all?
+			break; // only attempt once, for now.
+		}else{
+		}
+	}
+
 }
 /*--------------------------------------------------------------------------*/
 // was: bool oneTwoWires(Node *n)
@@ -362,12 +318,6 @@ void SchematicEdit::do_it()
 	std::swap(_rem, _add);
 }
 /*--------------------------------------------------------------------------*/
-template<class T>
-void SchematicEdit::preAddPort(pos_t, T& rem, T& add)
-{
-	incomplete();
-}
-/*--------------------------------------------------------------------------*/
 // Perform an edit action for the first time. keep track of induced changes.
 // This is a generic version of legacy implementation, and it still requires a
 // scene implementing the geometry.
@@ -385,10 +335,10 @@ void SchematicEdit::do_it_first()
 		}
 	}
 
-	for(auto& r : _add){
+	for(auto& r : _add){ untested();
 		if(auto sym = dynamic_cast<Symbol*>(element(r))){
 			for(unsigned i=0; i<sym->numPorts(); ++i){
-				auto np = sym->portPosition(i); // nope.
+				auto np = sym->nodePosition(i); // nope.
 				// when adding a port, wires may need splitting.
 				preAddPort(np, rem_uc, add_uc);
 			}
@@ -413,10 +363,8 @@ public:
 	DeleteSelection(SchematicDoc& ctx, IT deletelist)
 	  : SchematicEdit(*ctx.sceneHACK()) { untested();
 		size_t k = 0;
-		setDelete(deletelist);
 
-		 // here?
-		// restructure(_gfxrem, _gfxadd);
+		qDelete(deletelist);
 
 		setText("delete " + QString::number(k) + " items");
 	}
