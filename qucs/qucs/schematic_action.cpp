@@ -325,7 +325,7 @@ void SchematicEdit::do_it()
 /*--------------------------------------------------------------------------*/
 // turn swap into add/delete
 template<class T>
-void SchematicEdit::expandSwap(T& rem_uc)
+void SchematicEdit::expandSwap(T&)
 {
 	for(auto i=_swap.begin(); i!=_swap.end(); ++i){ untested();
 		swap_t* r = *i;
@@ -506,34 +506,20 @@ private:
 	Element const* _proto;
 };
 /*--------------------------------------------------------------------------*/
-class NewElementCommand : public QUndoCommand {
+class NewElementCommand : public SchematicEdit {
 public:
 	NewElementCommand(SchematicDoc& ctx, ElementGraphics* gfx)
-	: _ctx(ctx), _gfx(gfx){ untested();
+	: SchematicEdit(*ctx.sceneHACK()) { untested();
 		ctx.takeOwnership(element(gfx)); // BUG?
 		// elment->setOwner(ctx)...?
 		setText("NewElement" /*element(gfx)->label()*/); // tr?
 		trace0("NewElementCommand::NewElementCommand");
+		qAdd_(gfx);
 	}
 	~NewElementCommand(){ untested();
 		// _gfx is owned by ctx
+		// _gfx owns element(_gfx)
 	}
-public:
-	void undo() override { untested();
-		QUndoCommand::undo();
-		_gfx->hide();
-		_done = false;
-	}
-	void redo() override { untested();
-		QUndoCommand::redo();
-		trace0("NewElementCommand::redo");
-		_gfx->show();
-		_done = true;
-	}
-private:
-    SchematicDoc& _ctx;
-    ElementGraphics* _gfx;
-	 bool _done;
 }; // NewElementCommand
 /*--------------------------------------------------------------------------*/
 #include <component_widget.h> // not here.
@@ -1102,7 +1088,7 @@ void SchematicDoc::actionInsertGround(QAction* sender)
 	possiblyToggleAction(schematicActions().maInsertGround, sender);
 }
 /*--------------------------------------------------------------------------*/
-void SchematicDoc::actionInsertEquation(QAction* sender)
+void SchematicDoc::actionInsertEquation(QAction*)
 {
 	incomplete();
   //possiblyToggleAction(schematicActions().maInsertEqn, sender);
