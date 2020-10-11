@@ -572,6 +572,9 @@ private: // QucsDoc overrides, schematic_action.cpp
   void actionMoveText(QAction*) override;
   void actionZoomIn(QAction*) override;
   void actionSelectElement(QObject*) override;
+  void actionInsertEquation(QAction*) override;
+  void actionInsertPort(QAction*) override;
+  void actionInsertGround(QAction*) override;
 
 public:
 	bool handleMouseActions(QEvent* e);
