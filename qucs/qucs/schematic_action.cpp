@@ -254,12 +254,21 @@ void SchematicEdit::preAddPort(pos_t where, T& remq, T& addq)
 			n->show();
 
 			remq.push_back(gfxi);
-			for(auto c : n->childItems()){
-				auto cc = prechecked_cast<ElementGraphics*>(c); // BUG
-				assert(cc);
-				addq.push_back(cc);
-				c->setParentItem(nullptr);
+			auto nc = n->childItems();
+
+			size_t kk=0;
+			// unpack.
+			for(auto c : nc){ untested();
+				if( auto cc = dynamic_cast<ElementGraphics*>(c)){
+					assert(cc);
+					addq.push_back(cc);
+					c->setParentItem(nullptr);
+					++kk;
+				}else{
+					unreachable();
+				}
 			}
+			trace2("unpacked", kk, nc.size());
 			delete n; // does it delete them all?
 			break; // only attempt once, for now.
 		}else{

@@ -43,12 +43,12 @@ public:
 	}
 	void attachElement(Element* e);
 	Element* detachElement();
+	Element* cloneElement() const;
 	ElementGraphics* newUnion(ElementGraphics const*) const;
 	ElementGraphics* newPort(pos_t) const;
+
 public:
 	SchematicScene* scene() const; // really?
-
-
 
 public: //?
 //  void paintScheme(SchematicDoc *p);
