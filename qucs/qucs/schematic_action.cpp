@@ -204,16 +204,6 @@ static void restructure(T& rem, T& add)
 	// ...
 }
 /*--------------------------------------------------------------------------*/
-#if 0
-template<class T>
-void split_wires(pos_t portpos, T& rem, T& add)
-{
-	for(auto it : scene()->items(portpos)) {
-
-	}
-}
-#endif
-
 static std::vector<pos_t> portvector(ElementGraphics const* e)
 {
 	std::vector<pos_t> p;
@@ -260,9 +250,15 @@ void SchematicEdit::preAddPort(pos_t where, T& remq, T& addq)
 			// unpack.
 			for(auto c : nc){ untested();
 				if( auto cc = dynamic_cast<ElementGraphics*>(c)){
+					c->hide(); // yikes
 					assert(cc);
 					addq.push_back(cc);
+					assert(element(cc)->scope());
 					c->setParentItem(nullptr);
+					assert(element(cc)->scope());
+
+					assert(cc->scene() == &_scn);
+					cc->show();
 					++kk;
 				}else{
 					unreachable();
