@@ -178,6 +178,36 @@ Element const* element(ElementGraphics const* e)
 	return e->operator->();
 }
 /*--------------------------------------------------------------------------*/
+// add new port into ElementGraphics, build new
+ElementGraphics* ElementGraphics::newPort(pos_t where) const
+{
+	ElementGraphics* ng = nullptr;
+	if(auto* c=dynamic_cast<Conductor const*>(_e)){ untested();
+		Symbol* u = c->newPort(where);
+
+		if(u){
+			ng = new ElementGraphics(u);
+			assert(_e->mutable_owner());
+			u->setOwner(_e->mutable_owner());
+		}else{
+		}
+
+		if(!ng){ untested();
+		}else if(u->subckt()){ untested();
+			// multiple Symbols?
+			SchematicModel const* sc=u->subckt();
+			for(auto c : sc->wires() /*BUG*/ ){ untested();
+				auto cg = new ElementGraphics(c->clone());
+				c->setOwner(_e->mutable_owner());
+				cg->setParentItem(ng);
+			}
+		}else{
+			incomplete();
+		}
+	}
+	return ng;
+}
+/*--------------------------------------------------------------------------*/
 // built the union of two ElementGraphics
 // only Conductors, for now,
 ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const

@@ -24,6 +24,7 @@
 #include "wirelabel.h"
 #include "platform.h"
 #include "symbol.h"
+#include "sckt_base.h"
 
 class QPainter;
 class QString;
@@ -57,6 +58,7 @@ public:
 
 private: // Conductor
   Symbol* newUnion(const Symbol*) const override;
+  Symbol* newPort(pos_t const& where) const;
   bool isNet(pos_t const&) const override;
 
 private:
@@ -183,14 +185,6 @@ void Wire::findScaleAndAngle()
 #endif
 }
 /*--------------------------------------------------------------------------*/
-pos_t operator-(pos_t const& p, pos_t const& q)
-{
-  pos_t r(p);
-  r.first -= q.first;
-  r.second -= q.second;
-  return r;
-}
-/*--------------------------------------------------------------------------*/
 Wire::Wire(pos_t const& p0, pos_t const& p1)
   : Symbol(), _port0(0, 0),
     _port1((p1 - p0).first, (p1 - p0).second),
@@ -222,7 +216,26 @@ Wire::~Wire()
   assert(!port(0).isConnected());
   assert(!port(1).isConnected());
 }
-// ----------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
+Symbol* Wire::newPort(pos_t const& where) const
+{
+  incomplete();
+
+  if(nodePosition(0) == where) {
+  }else if(nodePosition(1) == where) {
+  }else if(isNet(where)) {
+    Symbol *s = new SubcktBase(); // BUG: inherit.
+    s->new_subckt();
+    SchematicModel* m = s->subckt();
+    m->pushBack( new Wire(nodePosition(0), where));
+    m->pushBack( new Wire(nodePosition(1), where));
+
+    return s;
+  }else{
+  }
+  return nullptr;
+}
+/*--------------------------------------------------------------------------*/
 Symbol* Wire::newUnion(Symbol const* s) const
 {
   auto o = dynamic_cast<Wire const*>(s);
