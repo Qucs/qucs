@@ -1096,7 +1096,23 @@ void SchematicActions::updateViewport()
 QRegExp Expr_CompProp;
 QRegExpValidator Val_CompProp(Expr_CompProp, 0);
 
-// forward to mouseActions...
+// forward to mouseActions... TODO rearrange.
+void SchematicDoc::actionInsertGround(QAction* sender)
+{ untested();
+	possiblyToggleAction(schematicActions().maInsertGround, sender);
+}
+/*--------------------------------------------------------------------------*/
+void SchematicDoc::actionInsertEquation(QAction* sender)
+{
+	incomplete();
+  //possiblyToggleAction(schematicActions().maInsertEqn, sender);
+}
+/*--------------------------------------------------------------------------*/
+void SchematicDoc::actionInsertPort(QAction* sender)
+{ untested();
+  possiblyToggleAction(schematicActions().maInsertPort, sender);
+}
+/*--------------------------------------------------------------------------*/
 void SchematicDoc::actionSelect(QAction* sender)
 {itested();
   // sender is a button. maSelect is an action. connect the two.
@@ -1104,7 +1120,7 @@ void SchematicDoc::actionSelect(QAction* sender)
   possiblyToggleAction(schematicActions().maSelect, sender);
 
 } // SchematicDoc::actionSelect
-
+/*--------------------------------------------------------------------------*/
 void SchematicDoc::actionOnGrid(QAction* sender)
 { untested();
   possiblyToggleAction(schematicActions().maOnGrid, sender);
