@@ -252,6 +252,7 @@ Symbol* Wire::newUnion(Symbol const* s) const
   }else if(nodePosition(1) == s->nodePosition(1)){ untested();
     return new Wire(nodePosition(0), s->nodePosition(0));
   }else{ untested();
+    incomplete(); // merge overlapping wires.
   }
   return nullptr;
 }
