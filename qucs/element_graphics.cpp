@@ -92,6 +92,15 @@ Element* ElementGraphics::detachElement()
 	return tmp;
 }
 /*--------------------------------------------------------------------------*/
+Element* ElementGraphics::cloneElement() const
+{
+	if(_e){ untested();
+		return _e->clone();
+	}else{ untested();
+		return nullptr;
+	}
+}
+/*--------------------------------------------------------------------------*/
 #include "components/component.h" // BUG
 #include <QGraphicsProxyWidget>
 void ElementGraphics::attachElement(Element* e)
