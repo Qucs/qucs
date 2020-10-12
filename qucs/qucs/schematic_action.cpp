@@ -323,6 +323,35 @@ void SchematicEdit::do_it()
 	std::swap(_rem, _add);
 }
 /*--------------------------------------------------------------------------*/
+// turn swap into add/delete
+template<class T>
+void SchematicEdit::expandSwap(T& rem_uc)
+{
+	for(auto i=_swap.begin(); i!=_swap.end(); ++i){ untested();
+		swap_t* r = *i;
+		assert(r->_gfx);
+//		r->_gfx->hide();
+		_rem.push_back(r->_gfx); // remove later.
+
+		Element* e = element(r->_gfx);
+		Element* c = r->_elt->clone();
+
+		auto ng = new ElementGraphics(c);
+		{// ?
+			assert(!element(ng)->scope());
+			_scn.addItem(ng);
+			ng->hide(); // what??
+			assert(e->mutable_owner()); // not here.
+			c->setOwner(e->mutable_owner()); // not here.
+			assert(element(ng)->scope());
+		}
+
+		_add.push_back(ng);
+		// delete *i; MEMORY LEAK
+		*i = nullptr;
+	}
+	_swap.clear();
+}
 // Perform an edit action for the first time. keep track of induced changes.
 // This is a generic version of legacy implementation, and it still requires a
 // scene implementing the geometry.
@@ -331,7 +360,9 @@ void SchematicEdit::do_it_first()
 	gfxlist_t rem_uc;
 	gfxlist_t add_uc;
 
-	for(auto& r: _rem){
+	expandSwap(rem_uc);
+
+	for(auto& r: _rem){ untested();
 		auto ps = portvector(r);
 		r->hide();
 		for(auto portremove : ps){ untested();
@@ -343,8 +374,7 @@ void SchematicEdit::do_it_first()
 	for(auto& r : _add){ untested();
 		if(auto sym = dynamic_cast<Symbol*>(element(r))){
 			for(unsigned i=0; i<sym->numPorts(); ++i){
-				auto np = sym->nodePosition(i); // nope.
-				// when adding a port, wires may need splitting.
+				auto np = sym->nodePosition(i);
 				preAddPort(np, rem_uc, add_uc);
 			}
 		}
