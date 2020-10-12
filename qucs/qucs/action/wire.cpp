@@ -183,7 +183,7 @@ public:
 
 		for(auto i : wires){itested();
 			++k;
-			if(auto e=dynamic_cast<Element*>(i)){itested();
+			if(auto e = dynamic_cast<Element*>(i)){itested();
 				auto eg = new ElementGraphics(e);
 
 				{ // BUG: not here/one call or do later?

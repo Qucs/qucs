@@ -101,6 +101,10 @@ protected:
 		assert(eg);
 		_add.push_back(eg);
 	}
+	void qSwap(ElementGraphics* eg, Element* e){
+		assert(eg);
+		_swap.push_back(new swap_t(eg, e));
+	}
 
 private: // QUndoCommand
 	void undo() override { untested();
@@ -120,6 +124,8 @@ private:
 	void do_it();
 
 	template<class T>
+	void expandSwap(T& rem);
+	template<class T>
 	void postRmPort(pos_t, T& rem, T& add);
 	template<class T>
 	void preAddPort(pos_t, T& rem, T& add);
@@ -135,7 +141,7 @@ private:
 private:
 	gfxlist_t _add;
 	gfxlist_t _rem;
-	std::list<swap_t> _swap;
+	std::vector<swap_t*> _swap;
 	bool _first;
 	SchematicScene& _scn;
 };
