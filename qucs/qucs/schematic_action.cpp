@@ -259,6 +259,8 @@ bool SchematicEdit::addmerge(ElementGraphics* s, T& del_done)
 		if(n){ untested();
 			trace0("got union");
 			gfxi->hide();
+
+			// collision delete.
 			del_done.push_back(gfxi);
 			auto nc = n->childItems();
 			trace1("got union", nc.size());
@@ -277,7 +279,7 @@ bool SchematicEdit::addmerge(ElementGraphics* s, T& del_done)
 					c->setParentItem(nullptr);
 					element(cc)->setOwner(element(n)->mutable_owner()); // not here.
 					assert(element(cc)->scope());
-					_ins.push_front(cc);
+					_ins.push_front(cc); // BUG // need a different q for derived objects
 					++kk;
 				}else{
 					// text, maybe
@@ -286,7 +288,7 @@ bool SchematicEdit::addmerge(ElementGraphics* s, T& del_done)
 			}
 			if(nc.size()){
 				trace2("unpacked", kk, nc.size());
-				// delete n; // does it delete them all?
+				delete n; // does it delete them all?
 			}else{
 				_ins.push_front(n);
 			}
@@ -306,7 +308,7 @@ template<class T>
 void SchematicEdit::postRmPort(pos_t remove_at, T& del_done)
 {
 	auto it = items(makeQPointF(remove_at));
-	auto node = nodeAt(remove_at);
+	Node const* node = nodeAt(remove_at);
 
 	if(!node){
 		trace1("no node at", remove_at);
@@ -314,6 +316,7 @@ void SchematicEdit::postRmPort(pos_t remove_at, T& del_done)
 		trace1("postrm, degree 2", remove_at);
 		for(auto gfx : it){
 			gfx->hide();
+			// additional delete
 			del_done.push_back(gfx);
 			_ins.push_front(gfx); // hmm.
 			trace1("queued", gfx);
@@ -327,10 +330,12 @@ void SchematicEdit::do_it()
 	trace2("do_it", _del.size(), _ins.size());
 	for(auto& d : _del){ untested();
 		trace1("hide", d);
+		assert(d->isVisible());
 		d->hide();
 	}
 	for(auto& d : _ins){ untested();
 		trace1("show", d);
+		assert(!d->isVisible());
 		d->show();
 	}
 	std::swap(_ins, _del);
@@ -381,6 +386,8 @@ void SchematicEdit::remove(T& del_done)
 			trace1("postremove", portremove);
 			postRmPort(portremove, del_done);
 		}
+
+		// queued delete.
 		del_done.push_back(r);
 	}
 }
@@ -401,6 +408,8 @@ void SchematicEdit::save(T& del, T& ins)
 	assert(!_del.size());
 	std::sort(ins.begin(), ins.end(), lt);
 	std::sort(del.begin(), del.end(), lt);
+	std::unique(ins.begin(), ins.end(), lt);
+	std::unique(del.begin(), del.end(), lt);
 
 	auto ii = ins.begin();
 	auto di = del.begin();
@@ -412,17 +421,27 @@ void SchematicEdit::save(T& del, T& ins)
 
 		if(i==d){ untested();
 			if(i->isVisible()){
+				// has been added eventually
 			}else{
-				incomplete();
-				// delete i; // memory leak.
+				// has been deleted eventually, but added before.
+				// -> temporary? no it could have been in the initial insert q.
+//				delete i; // crash.
 			};
 			++ii;
 			++di;
 		}else if(i<d){ untested();
-			_ins.push_back(i);
+			if(i->isVisible()){
+				delete i;
+			}else{
+				_ins.push_back(i);
+			}
 			++ii;
 		}else{ untested();
-			_del.push_back(d);
+			if(d->isVisible()){
+				_del.push_back(d);
+			}else{
+				delete d;
+			}
 			++di;
 		}
 	}
