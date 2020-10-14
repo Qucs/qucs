@@ -122,8 +122,6 @@ private:
 	template<class T>
 	void postRmPort(pos_t, T&);
 	template<class T>
-	void remove(T& rem);
-	template<class T>
 	bool addmerge(ElementGraphics*, T& rem);
 	template<class T>
 	void save(T& rem, T& add);
