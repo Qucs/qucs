@@ -186,23 +186,15 @@ QUndoCommand* MouseActionSelCmd<CMD>::press(QEvent* e)
 		trace1("delete::scene unknown sender", e->type());
 		return nullptr;
 	}
-} // delete::scene
+} // select::press
 /*--------------------------------------------------------------------------*/
 template<class CMD>
 QUndoCommand* MouseActionSelCmd<CMD>::release(QMouseEvent*)
 { untested();
 	incomplete(); // why?
 	return nullptr;
-} // delete::release
+} // select::release
 /*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-// when adding or removing stuff, may need to remove/add different/more items
-// subject to geometry.
-template<class T>
-static void restructure(T& rem, T& add)
-{
-	// ...
-}
 /*--------------------------------------------------------------------------*/
 static std::vector<pos_t> placeVector(ElementGraphics const* e)
 {
@@ -373,26 +365,6 @@ void SchematicEdit::qSwap(ElementGraphics* gfx, Element* e)
 	qInsert(ng);
 }
 /*--------------------------------------------------------------------------*/
-template<class T>
-void SchematicEdit::remove(T& del_done)
-{
-	while(_del.size()){
-		auto r = _del.front();
-		trace1("remove", r);
-		_del.pop_front();
-		auto ps = placeVector(r);
-		r->hide();
-		for(auto portremove : ps){ untested();
-			trace1("postremove", portremove);
-			postRmPort(portremove, del_done);
-		}
-
-		// queued delete.
-		del_done.push_back(r);
-	}
-}
-/*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
 struct{
 	bool operator ()(ElementGraphics* a, ElementGraphics* b) const{
 		return intptr_t(a) < intptr_t(b);
@@ -459,23 +431,31 @@ void SchematicEdit::do_it_first()
 { untested();
 
 	std::vector<ElementGraphics*> done_ins;
-	std::vector<ElementGraphics*> done_rem;
+	std::vector<ElementGraphics*> done_del;
 
-	remove(done_rem); // remove ports and join adjacent wires. keep track.
-//	split(done_rem); // split wires
+	// remove ports and join adjacent wires. keep track.
+	while(_del.size()){
+		auto r = _del.front();
+		trace1("remove", r);
+		_del.pop_front();
+		auto ps = placeVector(r);
+		r->hide();
+		for(auto portremove : ps){ untested();
+			trace1("postremove", portremove);
+			postRmPort(portremove, done_del);
+		}
+
+		// queued delete.
+		done_del.push_back(r);
+	}
 
 	while(_ins.size()){
 		trace1("try insert...", _ins.size());
 		ElementGraphics* gfx = _ins.front();
 		_ins.pop_front();
 
-		if(addmerge(gfx, done_rem)){
+		if(addmerge(gfx, done_del)){
 			trace0("merged");
-			// delete gfx;
-			if(0){ //  deferred delete
-			done_rem.push_back(gfx);
-			done_ins.push_back(gfx);
-			}
 		}else{
 			trace1("done insert, show", element(gfx)->label());
 			gfx->show();
@@ -483,7 +463,7 @@ void SchematicEdit::do_it_first()
 		}
 	}
 
-	save(done_ins, done_rem);
+	save(done_ins, done_del);
 }
 /*--------------------------------------------------------------------------*/
 // swapSelection?
