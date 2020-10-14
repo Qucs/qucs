@@ -338,7 +338,7 @@ Symbol* Wire::newUnion(Symbol const* s) const
 			return extendTowards(o->nodePosition(0));
 		}else{ untested();
 		}
-	}else{
+	}else{ untested();
 		return intersectPorts(s);
 	}
 	return nullptr;
