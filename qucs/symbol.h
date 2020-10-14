@@ -25,8 +25,9 @@ class NodeMap;
 class Net;
 /*--------------------------------------------------------------------------*/
 class Symbol : public Element{
-public: // construct
+protected:
 	explicit Symbol(Symbol const&);
+public: // construct
 	explicit Symbol();
 	virtual ~Symbol();
 

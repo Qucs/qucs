@@ -40,6 +40,7 @@ QGraphicsItem& SchematicScene::addElement(Element* x)
 	{itested();
 		i = new ElementGraphics(x);
 		addItem(i);
+		i->show();
 	}
 	return *i;
 }
@@ -431,6 +432,22 @@ QList<ElementGraphics*> SchematicScene::items() const
 	auto L = QGraphicsScene::items();
 	for(auto l = L.begin(); l!=L.end(); ){ untested();
 		if(prechecked_cast<ElementGraphics*>(*l)){ untested();
+			++l;
+		}else{ untested();
+			// incomplete(); // actually
+			auto prev = l;
+			l = L.erase(prev);
+		}
+	}
+	auto EL = reinterpret_cast<QList<ElementGraphics*>* >(&L);
+	return *EL;
+}
+/*--------------------------------------------------------------------------*/
+QList<ElementGraphics*> SchematicScene::items(QRectF const& r) const
+{ untested();
+	auto L = QGraphicsScene::items(r);
+	for(auto l = L.begin(); l!=L.end(); ){ itested();
+		if(prechecked_cast<ElementGraphics*>(*l)){ itested();
 			++l;
 		}else{ untested();
 			// incomplete(); // actually

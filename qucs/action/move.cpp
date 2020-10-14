@@ -22,12 +22,16 @@ public:
 			if(auto eg=dynamic_cast<ElementGraphics*>(i)){ untested();
 				++k;
 				Element* elt = eg->cloneElement();
+				eg->hide();
+				auto ec = elt->center();
+				eg->setPos(QPoint(getX(ec), getY(ec)));
+				eg->show();
 				assert(elt);
 				int dx = getX(delta);
 				int dy = getY(delta);
 				elt->setCenter(dx, dy, true);
 
-				qSwap(eg, elt);
+				qSwap(eg, elt); // gaah.
 			}else{ untested();
 				unreachable(); // really? use prechecked_cast then.
 			}

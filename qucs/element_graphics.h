@@ -50,11 +50,13 @@ public:
 public:
 	SchematicScene* scene() const; // really?
 
-public: //?
-//  void paintScheme(SchematicDoc *p);
-private:
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override; // const...
+public: // QGraphicsItem
   QRectF boundingRect() const override;
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override;
+
+  QRectF absoluteBoundingRect() const;
+
+private: // QGraphicsItem
   bool sceneEvent(QEvent*) override;
   QVariant itemChange(GraphicsItemChange c, const QVariant &v) override;
 

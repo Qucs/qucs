@@ -59,7 +59,7 @@ public: // actions... private?
 // edit a schematic add/delete/alter
 class SchematicEdit : public QUndoCommand {
 public:
-	typedef std::list<ElementGraphics*> gfxlist_t;
+	typedef std::list<ElementGraphics*> list_t;
 	struct swap_t{
 		swap_t(ElementGraphics* gfx, Element* elt)
 			: _gfx(gfx), _elt(elt) {}
@@ -75,36 +75,30 @@ protected:
 	SchematicEdit(SchematicEdit const&) = delete;
 
 	template<class IT>
-	void qDelete(IT const& deletelist){
+	void qDelete(IT const& deletelist) {
 		for(auto i : deletelist){ untested();
 			// ++k; // TODO: set label
 			if(auto eg=dynamic_cast<ElementGraphics*>(i)){ untested();
-				_rem.push_back(eg);
+				qDelete(eg);
 			}else{ untested();
 				unreachable(); // really? use prechecked_cast then.
 			}
 		}
 	}
+	void qDelete(ElementGraphics* eg);
 	template<class IT>
-	void qAdd(IT const& deletelist){
+	void qInsert(IT const& deletelist) {
 		for(auto i : deletelist){ untested();
 			// ++k; // TODO: set label
 			if(auto eg=dynamic_cast<ElementGraphics*>(i)){ untested();
-				assert(eg);
-				_add.push_back(eg);
+				qInsert(eg);
 			}else{ untested();
 				unreachable(); // really? use prechecked_cast then.
 			}
 		}
 	}
-	void qAdd_(ElementGraphics* eg){
-		assert(eg);
-		_add.push_back(eg);
-	}
-	void qSwap(ElementGraphics* eg, Element* e){
-		assert(eg);
-		_swap.push_back(new swap_t(eg, e));
-	}
+	void qInsert(ElementGraphics* eg);
+	void qSwap(ElementGraphics* eg, Element* e);
 
 private: // QUndoCommand
 	void undo() override { untested();
@@ -126,11 +120,16 @@ private:
 	template<class T>
 	void expandSwap(T& rem);
 	template<class T>
-	void postRmPort(pos_t, T& rem, T& add);
+	void postRmPort(pos_t, T&);
 	template<class T>
-	void preAddPort(pos_t, T& rem, T& add);
+	void remove(T& rem);
+	template<class T>
+	bool addmerge(ElementGraphics*, T& rem);
+	template<class T>
+	void save(T& rem, T& add);
 
-	QList<ElementGraphics*> items(const QPointF &pos,
+	QList<ElementGraphics*> items(QRectF const& area) const;
+	QList<ElementGraphics*> items(QPointF const &pos,
                                  Qt::ItemSelectionMode mode=Qt::IntersectsItemShape,
                                  Qt::SortOrder order = Qt::DescendingOrder) const;
 	Node const* nodeAt(pos_t const&) const;
@@ -139,8 +138,8 @@ private:
 	}
 
 private:
-	gfxlist_t _add;
-	gfxlist_t _rem;
+	list_t _ins;
+	list_t _del;
 	std::vector<swap_t*> _swap;
 	bool _first;
 	SchematicScene& _scn;

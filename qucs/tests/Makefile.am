@@ -16,7 +16,7 @@
 # Boston, MA 02110-1301, USA.
 #
 
-AM_CPPFLAGS = -I${top_srcdir}/include -I${srcdir}/.. ${QT_CFLAGS} ${QTest_CFLAGS} -DPIC
+AM_CPPFLAGS = -I${top_srcdir}/include -I${srcdir}/.. -I${top_srcdir} ${QT_CFLAGS} ${QTest_CFLAGS} -DPIC
 AM_DEFAULT_SOURCE_EXT = .cpp
 # AM_CXXFLAGS = -fPIC
 AM_LDFLAGS = -Wl,--no-as-needed
@@ -30,19 +30,26 @@ else
 check_PROGRAMS = \
 	${guitests} \
 	model0 \
-	model1
+	model1 \
+	wire0 \
+	wire1
 endif
 
-model0_CPPFLAGS = ${AM_CPPFLAGS} -I${top_srcdir} -DUNTANGLE_QT
-model0_CPPFLAGS += $(QT_CFLAGS) # yikes.
+# model0_CPPFLAGS = ${AM_CPPFLAGS} -I${top_srcdir} -DUNTANGLE_QT
+model0_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) # yikes.
 model0_LDADD = ${top_builddir}/qucs/libqucs.la
 model0_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
 
-model1_CPPFLAGS = ${AM_CPPFLAGS} -I${top_srcdir} -DUNTANGLE_QT
-model1_CPPFLAGS += $(QT_CFLAGS) # yikes.
+# model1_CPPFLAGS = ${AM_CPPFLAGS} -I${top_srcdir} -DUNTANGLE_QT
+model1_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) # yikes.
 model1_LDADD = ${top_builddir}/qucs/libqucs.la
 model1_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
 
+wire0_LDADD = ${top_builddir}/qucs/libqucs.la
+wire0_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
+
+wire1_LDADD = ${top_builddir}/qucs/libqucs.la
+wire1_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
 
 NO_PLUGINS = \
 	../components/libcomponents.la \

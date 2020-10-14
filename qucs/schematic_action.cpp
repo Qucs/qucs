@@ -204,7 +204,7 @@ static void restructure(T& rem, T& add)
 	// ...
 }
 /*--------------------------------------------------------------------------*/
-static std::vector<pos_t> portvector(ElementGraphics const* e)
+static std::vector<pos_t> placeVector(ElementGraphics const* e)
 {
 	std::vector<pos_t> p;
 	if(auto s=prechecked_cast<Symbol const*>(element(e))){
@@ -234,51 +234,76 @@ QList<ElementGraphics*> SchematicEdit::items(
 	return _scn.items(pos, mode, order);
 }
 /*--------------------------------------------------------------------------*/
-template<class T>
-void SchematicEdit::preAddPort(pos_t where, T& remq, T& addq)
+QList<ElementGraphics*> SchematicEdit::items(QRectF const& r) const
 {
-	auto it = items(makeQPointF(where));
-	for(auto gfxi : it){
-		if(auto n = gfxi->newPort(where)){
-			gfxi->hide();
-			n->show();
+	return _scn.items(r);
+}
+/*--------------------------------------------------------------------------*/
+// merge new item into existing.
+// return false if new item does not interfere with existing.
+template<class T>
+bool SchematicEdit::addmerge(ElementGraphics* s, T& del_done)
+{
+	bool collision = false;
+	assert(!s->isVisible());
+	assert(s->scene());
+	QRectF bb = s->absoluteBoundingRect();
+	auto it = items(bb);
+	trace3("addmerge", s, element(s)->label(), it.size());
+	for(auto gfxi : it){ untested();
+		assert(gfxi!=s); // s is invisible.
+		trace1("addmerge coll?", element(gfxi)->label());
 
-			remq.push_back(gfxi);
+		// gfxi is already on scene.
+		auto n = gfxi->newUnion(s);
+		if(n){ untested();
+			trace0("got union");
+			gfxi->hide();
+			del_done.push_back(gfxi);
 			auto nc = n->childItems();
+			trace1("got union", nc.size());
 
 			size_t kk=0;
-			// unpack.
-			for(auto c : nc){ untested();
-				if( auto cc = dynamic_cast<ElementGraphics*>(c)){
-					c->hide(); // yikes
-					assert(cc);
-					addq.push_back(cc);
-					assert(element(cc)->scope());
-					c->setParentItem(nullptr);
-					assert(element(cc)->scope());
 
-					assert(cc->scene() == &_scn);
-					cc->show();
+			// unpack q insert.
+			for(auto c : nc){ untested();
+				if(auto g = dynamic_cast<ElementGraphics*>(c)){
+					auto cc = g->clone();
+					assert(cc);
+					assert(!cc->isVisible());
+					_scn.addItem(cc);
+					assert(!cc->isVisible());
+					assert(!element(cc)->scope());
+					c->setParentItem(nullptr);
+					element(cc)->setOwner(element(n)->mutable_owner()); // not here.
+					assert(element(cc)->scope());
+					_ins.push_front(cc);
 					++kk;
 				}else{
-					unreachable();
+					// text, maybe
+					// unreachable();
 				}
 			}
-			trace2("unpacked", kk, nc.size());
-			delete n; // does it delete them all?
-			break; // only attempt once, for now.
+			if(nc.size()){
+				trace2("unpacked", kk, nc.size());
+				// delete n; // does it delete them all?
+			}else{
+				_ins.push_front(n);
+			}
+			collision = true;
+			break;
 		}else{
+			trace0("no union");
 		}
 	}
 
+	trace1("done addmerge", collision);
+	return collision;
 }
 /*--------------------------------------------------------------------------*/
-// was: bool oneTwoWires(Node *n)
-// when removing a port, wires may collapse.
-// remove the collapsed wires, and add a longer one.
-// keep track of what's been done.
+// remove stuff adjacent to degree-2 nodes. add back later.
 template<class T>
-void SchematicEdit::postRmPort(pos_t remove_at, T& rem, T& add)
+void SchematicEdit::postRmPort(pos_t remove_at, T& del_done)
 {
 	auto it = items(makeQPointF(remove_at));
 	auto node = nodeAt(remove_at);
@@ -286,24 +311,12 @@ void SchematicEdit::postRmPort(pos_t remove_at, T& rem, T& add)
 	if(!node){
 		trace1("no node at", remove_at);
 	}else if(node->degree() == 2){
-		auto gfxi = it.begin();
-		auto next = gfxi;
-		++next;
-		
-		for(; next!=it.end(); gfxi=next, ++next){
-			assert(*gfxi);
-			if(auto _union = (*gfxi)->newUnion(*next) ){
-				trace0("got union");
-				(*gfxi)->hide();
-				(*next)->hide();
-				_union->show();
-
-				rem.push_back(*gfxi);
-				rem.push_back(*next);
-				add.push_back(_union);
-				break; // only attempt to merge once, for now.
-			}else{
-			}
+		trace1("postrm, degree 2", remove_at);
+		for(auto gfx : it){
+			gfx->hide();
+			del_done.push_back(gfx);
+			_ins.push_front(gfx); // hmm.
+			trace1("queued", gfx);
 		}
 	}else{
 	}
@@ -311,84 +324,147 @@ void SchematicEdit::postRmPort(pos_t remove_at, T& rem, T& add)
 /*--------------------------------------------------------------------------*/
 void SchematicEdit::do_it()
 {
-	for(auto& d : _rem){ untested();
+	trace2("do_it", _del.size(), _ins.size());
+	for(auto& d : _del){ untested();
+		trace1("hide", d);
 		d->hide();
 	}
-	for(auto& d : _add){ untested();
+	for(auto& d : _ins){ untested();
+		trace1("show", d);
 		d->show();
 	}
-
-	incomplete(); // alter.
-
-	std::swap(_rem, _add);
+	std::swap(_ins, _del);
+}
+/*--------------------------------------------------------------------------*/
+void SchematicEdit::qDelete(ElementGraphics* gfx)
+{
+	assert(gfx->isVisible());
+	_del.push_back(gfx);
+}
+/*--------------------------------------------------------------------------*/
+void SchematicEdit::qInsert(ElementGraphics* gfx)
+{
+	assert(!gfx->isVisible());
+	assert(gfx->scene() == &_scn); // wrong?
+	_ins.push_back(gfx);
 }
 /*--------------------------------------------------------------------------*/
 // turn swap into add/delete
-template<class T>
-void SchematicEdit::expandSwap(T&)
+void SchematicEdit::qSwap(ElementGraphics* gfx, Element* e)
 {
-	for(auto i=_swap.begin(); i!=_swap.end(); ++i){ untested();
-		swap_t* r = *i;
-		assert(r->_gfx);
-//		r->_gfx->hide();
-		_rem.push_back(r->_gfx); // remove later.
+	assert(!e->mutable_owner());
 
-		Element* e = element(r->_gfx);
-		Element* c = r->_elt->clone();
-
-		auto ng = new ElementGraphics(c);
-		{// ?
-			assert(!element(ng)->scope());
-			_scn.addItem(ng);
-			ng->hide(); // what??
-			assert(e->mutable_owner()); // not here.
-			c->setOwner(e->mutable_owner()); // not here.
-			assert(element(ng)->scope());
-		}
-
-		_add.push_back(ng);
-		// delete *i; MEMORY LEAK
-		*i = nullptr;
+	auto ng = new ElementGraphics(e);
+	{// ?
+		assert(!element(ng)->scope());
+		_scn.addItem(ng);
+		ng->hide(); // what??
+		e->setOwner(element(gfx)->mutable_owner()); // not here.
+		assert(e->mutable_owner());
+		//	assert(element(ng)->scope());
 	}
-	_swap.clear();
+
+	qDelete(gfx);
+	qInsert(ng);
 }
+/*--------------------------------------------------------------------------*/
+template<class T>
+void SchematicEdit::remove(T& del_done)
+{
+	while(_del.size()){
+		auto r = _del.front();
+		trace1("remove", r);
+		_del.pop_front();
+		auto ps = placeVector(r);
+		r->hide();
+		for(auto portremove : ps){ untested();
+			trace1("postremove", portremove);
+			postRmPort(portremove, del_done);
+		}
+		del_done.push_back(r);
+	}
+}
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+struct{
+	bool operator ()(ElementGraphics* a, ElementGraphics* b) const{
+		return intptr_t(a) < intptr_t(b);
+	}
+}lt;
+/*--------------------------------------------------------------------------*/
+template<class T>
+void SchematicEdit::save(T& del, T& ins)
+{
+	trace2("save", del.size(), ins.size());
+	// return;
+	assert(!_ins.size());
+	assert(!_del.size());
+	std::sort(ins.begin(), ins.end(), lt);
+	std::sort(del.begin(), del.end(), lt);
+
+	auto ii = ins.begin();
+	auto di = del.begin();
+
+	while(ii != ins.end() && di != del.end()){
+		ElementGraphics* i = *ii;
+		ElementGraphics* d = *di;
+		// trace2("save", i, d);
+
+		if(i==d){ untested();
+			if(i->isVisible()){
+			}else{
+				incomplete();
+				// delete i; // memory leak.
+			};
+			++ii;
+			++di;
+		}else if(i<d){ untested();
+			_ins.push_back(i);
+			++ii;
+		}else{ untested();
+			_del.push_back(d);
+			++di;
+		}
+	}
+
+	_ins.insert(_ins.end(), ii, ins.end());
+	_del.insert(_del.end(), di, del.end());
+
+	trace2("saved", _del.size(), _ins.size());
+}
+/*--------------------------------------------------------------------------*/
 // Perform an edit action for the first time. keep track of induced changes.
 // This is a generic version of legacy implementation, and it still requires a
 // scene implementing the geometry.
 void SchematicEdit::do_it_first()
 { untested();
-	gfxlist_t rem_uc;
-	gfxlist_t add_uc;
 
-	expandSwap(rem_uc);
+	std::vector<ElementGraphics*> done_ins;
+	std::vector<ElementGraphics*> done_rem;
 
-	for(auto& r: _rem){ untested();
-		auto ps = portvector(r);
-		r->hide();
-		for(auto portremove : ps){ untested();
-			trace1("postremove", portremove);
-			postRmPort(portremove, rem_uc, add_uc);
-		}
-	}
+	remove(done_rem); // remove ports and join adjacent wires. keep track.
+//	split(done_rem); // split wires
 
-	for(auto& r : _add){ untested();
-		if(auto sym = dynamic_cast<Symbol*>(element(r))){
-			for(unsigned i=0; i<sym->numPorts(); ++i){
-				auto np = sym->nodePosition(i);
-				preAddPort(np, rem_uc, add_uc);
+	while(_ins.size()){
+		trace1("try insert...", _ins.size());
+		ElementGraphics* gfx = _ins.front();
+		_ins.pop_front();
+
+		if(addmerge(gfx, done_rem)){
+			trace0("merged");
+			// delete gfx;
+			if(0){ //  deferred delete
+			done_rem.push_back(gfx);
+			done_ins.push_back(gfx);
 			}
+		}else{
+			trace1("done insert, show", element(gfx)->label());
+			gfx->show();
+			done_ins.push_back(gfx);
 		}
-		r->show();
 	}
 
-	for(auto i : rem_uc){
-		_rem.push_back(i);
-	}
-	for(auto i : add_uc){
-		_add.push_back(i);
-	}
-
-	std::swap(_add, _rem);
+	save(done_ins, done_rem);
 }
 /*--------------------------------------------------------------------------*/
 // swapSelection?
@@ -510,11 +586,12 @@ class NewElementCommand : public SchematicEdit {
 public:
 	NewElementCommand(SchematicDoc& ctx, ElementGraphics* gfx)
 	: SchematicEdit(*ctx.sceneHACK()) { untested();
+		gfx->hide();
 		ctx.takeOwnership(element(gfx)); // BUG?
 		// elment->setOwner(ctx)...?
 		setText("NewElement" /*element(gfx)->label()*/); // tr?
 		trace0("NewElementCommand::NewElementCommand");
-		qAdd_(gfx);
+		qInsert(gfx);
 	}
 	~NewElementCommand(){ untested();
 		// _gfx is owned by ctx
