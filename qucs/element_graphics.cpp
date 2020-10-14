@@ -202,6 +202,7 @@ Element const* element(ElementGraphics const* e)
 }
 /*--------------------------------------------------------------------------*/
 // add new port into ElementGraphics, build new
+#if 0
 ElementGraphics* ElementGraphics::newPort(pos_t where) const
 {
 	ElementGraphics* ng = nullptr;
@@ -238,13 +239,14 @@ ElementGraphics* ElementGraphics::newPort(pos_t where) const
 	}
 	return ng;
 }
+#endif
 /*--------------------------------------------------------------------------*/
 // built the union of two ElementGraphics
-// only Conductors, for now,
+// BUG: only Conductors, for now
 ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 {
 	ElementGraphics* ng = nullptr;
-	if(auto* c=dynamic_cast<Conductor const*>(_e)){ untested();
+	if(auto c=dynamic_cast<Conductor const*>(_e)){ untested();
 		assert(symbol(s));
 
 		if(Symbol* u = c->newUnion(symbol(s)) ){ untested();
@@ -257,7 +259,19 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 			return ng;
 		}else{ untested();
 		}
-	}else{ untested();
+	}else if(auto o=dynamic_cast<Conductor const*>(element(s))){ untested();
+		// HACK HACK HACK
+		if(Symbol* u = o->newUnion(symbol(this)) ){ untested();
+			trace1("new union2", u);
+			ng = new ElementGraphics(u);
+			assert(_e->mutable_owner());
+			u->setOwner(_e->mutable_owner());
+//			ng->setParentItem(scene());
+			scene()->addItem(ng);
+			return ng;
+		}else{ untested();
+		}
+	}else{
 	}
 
 	return ng;
