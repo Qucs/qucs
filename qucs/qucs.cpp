@@ -1803,9 +1803,8 @@ void QucsApp::slotFileSettings ()
     QString ext = Doc->fileSuffix ();
     // Octave properties
     if (ext == "m" || ext == "oct") {
-    }
+    }else if (ext == "va") {
     // Verilog-A properties
-    else if (ext == "va") {
       VASettingsDialog * d = new VASettingsDialog ((TextDoc *) w);
       d->exec ();
     }
@@ -1814,9 +1813,7 @@ void QucsApp::slotFileSettings ()
       DigiSettingsDialog * d = new DigiSettingsDialog ((TextDoc *) w);
       d->exec ();
     }
-  }
-  // schematic properties
-  else {
+  }else{
     SettingsDialog * d = new SettingsDialog ((SchematicDoc *) w);
     d->exec ();
   }
@@ -1893,7 +1890,6 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
 #endif
 }
 
-
 // --------------------------------------------------------------
 // printCurrentDocument: call printerwriter to print document
 void QucsApp::printCurrentDocument(bool fitToPage)
@@ -1956,12 +1952,12 @@ void QucsApp::closeEvent(QCloseEvent* Event)
     saveApplSettings();
 
    if(closeAllFiles()) {
-      emit signalKillEmAll();   // kill all subprocesses
+      emit signalKillEmAll();   // what?
       Event->accept();
       qApp->quit();
-   }
-   else
+   }else{
       Event->ignore();
+   }
 }
 
 // --------------------------------------------------------------------
@@ -2025,10 +2021,7 @@ void QucsApp::slotZoomOut()
 }
 
 
-/*!
- * \brief QucsApp::slotSimulate
- *  is called when the simulate toolbar button is pressed.
- */
+// call Doc->simulate (instead)?
 void QucsApp::slotSimulate()
 {
   slotHideEdit(); // disable text edit of component property
@@ -2082,7 +2075,10 @@ void QucsApp::slotSimulate()
 		this, SLOT(slotChangePage(QString&, QString&)));
 
   sim->show();
-  if(!sim->startProcess()) return;
+  if(!sim->startProcess()){
+    return;
+  }else{
+  }
 
   // to kill it before qucs ends
   connect(this, SIGNAL(signalKillEmAll()), sim, SLOT(slotClose()));
@@ -2111,29 +2107,35 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
       // silence warning about unused variable.
       Q_UNUSED(Dia)
     }
+  }else{
   }
+#if 0 // not here
   else {
     if(sim->SimRunScript) {
       // run script
       octave->startOctave();
       octave->runOctaveScript(sim->Script);
+    }else{
     }
+#endif
+#if 0 // not here
     if(sim->SimOpenDpl) {
       // switch to data display
       if(sim->DataDisplay.right(2) == ".m" ||
 	 sim->DataDisplay.right(4) == ".oct") {  // Is it an Octave script?
 	octave->startOctave();
 	octave->runOctaveScript(sim->DataDisplay);
-      }
-      else
+      } else{
 	slotChangePage(sim->DocName, sim->DataDisplay);
+      }
       sim->slotClose();   // close and delete simulation window
-    }
-    else
+    }else{
       if(w) if(!isTextDocument (sim->DocWidget))
 	// load recent simulation data (if document is still open)
 	((SchematicDoc*)sim->DocWidget)->reloadGraphs();
+    }
   }
+#endif
 
   if(!isTextDocument (sim->DocWidget))
     ((SchematicDoc*)sim->DocWidget)->viewport()->update();
