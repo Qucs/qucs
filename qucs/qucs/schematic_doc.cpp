@@ -761,6 +761,7 @@ void SchematicDoc::sceneAddItem(ElementGraphics* x)
 {
 	assert(scene());
 	scene()->addItem(x);
+	x->show();
 }
 void SchematicDoc::sceneRemoveItem(ElementGraphics* x)
 {
@@ -770,6 +771,7 @@ void SchematicDoc::sceneRemoveItem(ElementGraphics* x)
 
 QGraphicsItem& SchematicDoc::addToScene(Element* x)
 {itested();
+	unreachable();
 	assert(scene());
 	return scene()->addElement(x);
 }

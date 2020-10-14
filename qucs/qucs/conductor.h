@@ -47,7 +47,6 @@ public: //pair?
   }
   virtual bool isNet(pos_t const&) const = 0;
   virtual Symbol* newUnion(const Symbol*) const{ return nullptr; }
-  virtual Symbol* newPort(pos_t const&) const{ return nullptr; }
 
 public:
   WireLabel *Label; // BUG
