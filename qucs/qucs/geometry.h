@@ -24,8 +24,15 @@
 /*--------------------------------------------------------------------------*/
 class pos_t : public std::pair<int, int>{
 public:
+	pos_t(std::pair<int, int> const& p) : std::pair<int, int>(p) {}
 	pos_t(int a, int b) : std::pair<int, int>(a,b) {}
+	bool operator<=(pos_t const& b) const;
 };
+/*--------------------------------------------------------------------------*/
+inline bool pos_t::operator<=(pos_t const& b) const
+{
+	return first<=b.first && second<=b.second;
+}
 /*--------------------------------------------------------------------------*/
 inline pos_t operator+(pos_t const& p, pos_t const& q)
 {

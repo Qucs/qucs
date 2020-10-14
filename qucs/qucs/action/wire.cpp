@@ -17,11 +17,10 @@ private:
 	WireUC(WireUC const&) = default;
 
 public:
-	WireUC() : _mode(am_H), _proto(nullptr) {
-	}
+	WireUC() : _mode(am_H), _proto(nullptr) { }
 	~WireUC() { }
 
-private:
+private: // Element
 	Element* clone() const override{itested();
 		return new WireUC(*this);
 	}
@@ -31,8 +30,8 @@ private:
 	QPoint pmid() const;
 	void pushWire(int x, int y, int mx, int my);
 
-private: // symbol
-	unsigned numPorts() const override{ return 2; }
+private: // Symbol
+	unsigned numPorts() const override{ return 0; }
 	void setParameter(std::string const& n, std::string const& v) override;
 	QRectF boundingRect() const override;
 	void expand() override;
@@ -175,12 +174,6 @@ public:
 		trace1("newwire", wires.size());
 		size_t k = 0;
 
-		// optimise and find tees.
-		// TODO //
-		// TODO //
-		// TODO //
-		// TODO //
-
 		for(auto i : wires){itested();
 			++k;
 			if(auto e = dynamic_cast<Element*>(i)){itested();
@@ -188,10 +181,11 @@ public:
 
 				{ // BUG: not here/one call or do later?
 					ctx.sceneAddItem(eg);
+					eg->hide();
 					ctx.takeOwnership(e);
 				}
 
-				qAdd_(eg);
+				qInsert(eg);
 			}else{ untested();
 				unreachable(); // really? use prechecked_cast then.
 			}
@@ -337,7 +331,6 @@ QUndoCommand* MouseActionWire::move(QEvent* e)
 		QPoint xx = doc().snapToGrid(pos);
 		float fX = getX(xx);
 		float fY = getY(xx);
-		trace2("build wire", fX, fY);
 
 		ElementGraphics* cur = _gfx.back();
 		assert(cur);
@@ -423,7 +416,7 @@ QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* ev)
 	auto fY = getY(xx);
 	pos_t p(fX, fY);
 
-	if(isConductor(p)){itested();
+	if(isNode(p) || isConductor(p)){itested();
 		std::list<Element*> new_wires;
 		for(auto& i: _gfx){itested();
 			auto s = prechecked_cast<Symbol*>(element(i));

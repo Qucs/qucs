@@ -24,6 +24,7 @@
 #include "element_graphics.h"
 #include "io.h"
 #include "platform.h"
+#include "place.h"
 #include "qt_compat.h"
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
@@ -105,6 +106,7 @@ Element* ElementGraphics::cloneElement() const
 #include <QGraphicsProxyWidget>
 void ElementGraphics::attachElement(Element* e)
 {itested();
+	QGraphicsItem::hide();
 	assert(e);
 	_e = e;
 	// BUG: ask element?
@@ -116,6 +118,11 @@ void ElementGraphics::attachElement(Element* e)
 	trace3("attachElement", e->label(), sp.first, sp.second);
 	trace2("attachElement", e->label(), boundingRect());
 	QGraphicsItem::setPos(sp.first, sp.second);
+
+	if(dynamic_cast<Conductor*>(e)){ untested();
+		setZValue(-1.);
+	}else{ untested();
+	}
 
 	if(auto c=dynamic_cast<Component*>(e)){itested();
 		trace2("attachElement", e->label(), c->Texts.size());
@@ -141,8 +148,15 @@ void ElementGraphics::attachElement(Element* e)
 	}else if(auto s = sym->subckt()){
 		trace0("child gfx");
 		for(auto i : s->components()){itested();
+			trace0("child comp clone");
+			QGraphicsItem* cg = new ElementGraphics(i->clone());
+			cg->setParentItem(this);
+		}
+
+		// BUG
+		for(auto i : s->wires()){itested();
 			trace0("child gfx clone");
-			QGraphicsItem* cg = new ElementGraphics(i);
+			QGraphicsItem* cg = new ElementGraphics(i->clone());
 			cg->setParentItem(this);
 		}
 	}else{
@@ -192,7 +206,8 @@ ElementGraphics* ElementGraphics::newPort(pos_t where) const
 {
 	ElementGraphics* ng = nullptr;
 	if(auto* c=dynamic_cast<Conductor const*>(_e)){ untested();
-		Symbol* u = c->newPort(where);
+		auto place = new Place(where);
+		Symbol* u = c->newUnion(place);
 
 		if(u){
 			ng = new ElementGraphics(u);
@@ -233,6 +248,7 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 		assert(symbol(s));
 
 		if(Symbol* u = c->newUnion(symbol(s)) ){ untested();
+			trace1("new union", u);
 			ng = new ElementGraphics(u);
 			assert(_e->mutable_owner());
 			u->setOwner(_e->mutable_owner());
@@ -342,6 +358,22 @@ QRectF ElementGraphics::boundingRect() const
 	return _e->boundingRect();
 }
 /*--------------------------------------------------------------------------*/
+QRectF ElementGraphics::absoluteBoundingRect() const
+{
+#ifdef DO_TRACE
+	if(auto sym=dynamic_cast<Symbol const*>(_e)){
+		for(unsigned i=0; i<sym->numPorts(); ++i){
+			trace3("abr", sym->label(), i, sym->nodePosition(i));
+		}
+	}
+#endif
+	auto b=boundingRect();
+	auto p=pos();
+
+	b.moveTopLeft(p + b.topLeft());
+	return b;
+}
+/*--------------------------------------------------------------------------*/
 void ElementGraphics::setSelected(bool s)
 {itested();
 	qDebug() << "setSeletected" << s << this;
@@ -381,7 +413,7 @@ bool ElementGraphics::sceneEvent(QEvent* e)
 		}
 		return acc;
 	}else if(QGraphicsItem::sceneEvent(e)){itested();
-		trace1("ElementGraphics::sceneEvent fwd", e->type());
+//		trace1("ElementGraphics::sceneEvent fwd", e->type());
 		return e->isAccepted();
 	}else{itested();
 		return false;
@@ -396,6 +428,17 @@ void ElementGraphics::show()
 	}else{ untested();
 		trace0("no attachToModel");
 	}
+#ifdef DO_TRACE
+	if(auto sym=dynamic_cast<Symbol const*>(_e)){
+		if(sym->numPorts() == 1){
+			trace2("show", sym->label(), sym->nodePosition(0));
+		}else if(sym->numPorts() == 2){
+			trace3("show", sym->label(), sym->nodePosition(0), sym->nodePosition(1));
+		}else{
+		}
+	}
+#endif
+
 	QGraphicsItem::show();
 }
 /*--------------------------------------------------------------------------*/
@@ -403,6 +446,17 @@ void ElementGraphics::hide()
 {itested();
 	assert(_e);
 	QGraphicsItem::hide();
+
+#ifdef DO_TRACE
+	if(auto sym=dynamic_cast<Symbol const*>(_e)){
+		if(sym->numPorts() == 1){
+			trace2("hide", sym->label(), sym->nodePosition(0));
+		}else if(sym->numPorts() == 2){
+			trace3("hide", sym->label(), sym->nodePosition(0), sym->nodePosition(1));
+		}else{
+		}
+	}
+#endif
 
 	if(_e->scope()){itested();
 		_e->detachFromModel();

@@ -73,7 +73,8 @@ public:
 
 public: // wrap items
   QList<ElementGraphics*> items() const;
-  QList<ElementGraphics*> items(const QPointF &pos,
+  QList<ElementGraphics*> items(QRectF const&) const;
+  QList<ElementGraphics*> items(QPointF const& pos,
                                 Qt::ItemSelectionMode mode=Qt::IntersectsItemShape,
                                 Qt::SortOrder order = Qt::DescendingOrder) const;
 
