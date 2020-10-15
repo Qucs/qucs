@@ -485,9 +485,10 @@ class ContextMenuTabWidget : public QTabWidget
   Q_OBJECT
 public:
   ContextMenuTabWidget(QucsApp *parent = 0);
-  SchematicDoc *createEmptySchematic(const QString &name);
-  TextDoc *createEmptyTextDoc(const QString &name);
   void setSaveIcon(bool state=true, int index=-1);
+public: // BUG, obsolete.
+  QucsDoc *createEmptySchematic(const QString &name);
+  QucsDoc *createEmptyTextDoc(const QString &name);
 public slots:
   void showContextMenu(const QPoint& point);
 private:
