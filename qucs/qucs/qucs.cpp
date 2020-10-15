@@ -39,6 +39,7 @@
 #include <QSettings>
 #include <QVariant>
 #include <QDebug>
+#include <QPlainTextEdit> // what?
 
 #include "qucs.h"
 #include "qucsdoc.h"
@@ -1309,7 +1310,6 @@ void QucsApp::slotTextNew()
 // --------------------------------------------------------------
 // Changes to the document "Name". If already open then it goes to it
 // directly, otherwise it loads it.
-#include "textdoc.h" // BUG
 bool QucsApp::gotoPage(const QString& Name)
 { untested();
     // is Name the filename?!
@@ -2028,8 +2028,11 @@ void QucsApp::slotSimulate()
 { untested();
   slotHideEdit(); // disable text edit of component property
 
-  QucsDoc *Doc;
   QWidget *w = DocumentTab->currentWidget();
+  auto Doc = prechecked_cast<QucsDoc*>(w);
+  assert(Doc);
+
+#if 0 //not sure
   if(isTextDocument (w)) { untested();
     Doc = (QucsDoc*)((TextDoc*)w);
     if(Doc->SimTime.isEmpty() && ((TextDoc*)Doc)->simulation) { untested();
@@ -2037,9 +2040,10 @@ void QucsApp::slotSimulate()
       if(d->exec() == QDialog::Rejected)
 	return;
     }
-  }
-  else
+  } else {
     Doc = (QucsDoc*)((SchematicDoc*)w);
+  }
+#endif
 
   if(Doc->docName().isEmpty()) // if document 'untitled' ...
     if(!saveAs()) return;    // ... save schematic before
@@ -2553,14 +2557,20 @@ void QucsApp::slotSymbolEdit()
 { untested();
   incomplete();
   QWidget *w = DocumentTab->currentWidget();
+  auto Doc = prechecked_cast<QucsDoc*>(w);
+  assert(Doc);
 
   // in a text document (e.g. VHDL)
   if (isTextDocument (w)) { untested();
     TextDoc *TDoc = (TextDoc*)w;
     // set 'DataDisplay' document of text file to symbol file
-    QFileInfo Info(TDoc->docName());
+    QFileInfo Info(Doc->docName());
     QString sym = Info.completeBaseName()+".sym";
+#if 0
     TDoc->DataDisplay = sym;
+#else
+    // TODO: Doc->displayData(sym); // what is this?
+#endif
 
     // symbol file already loaded?
     int paint_mode = 0;
@@ -2568,9 +2578,11 @@ void QucsApp::slotSymbolEdit()
       paint_mode = 1;
 
     // change current page to appropriate symbol file
-    QString s=TDoc->docName();
-    slotChangePage(s, TDoc->DataDisplay);
-    TDoc->setDocName(s);
+    QString s = Doc->docName();
+
+    incomplete(); // what does this do?
+//    slotChangePage(s, TDoc->DataDisplay);
+    Doc->setDocName(s);
 
     // set 'DataDisplay' document of symbol file to original text file
 #if 0
@@ -3057,12 +3069,16 @@ QucsDoc *ContextMenuTabWidget::createEmptySchematic(const QString &name)
   return d;
 }
 
+QucsDoc* newTextDoc(QucsApp&, QString const&); // tmp hack.
+
 QucsDoc *ContextMenuTabWidget::createEmptyTextDoc(const QString &name)
 { untested();
   // create a text document
   QFileInfo Info(name);
-  TextDoc *d = new TextDoc(App, name);
-  int i = addTab(d, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
+  QucsDoc *d = newTextDoc(*App, name);
+  QWidget* w = prechecked_cast<QWidget*>(d);
+  assert(w);
+  int i = addTab(w, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
   setCurrentIndex(i);
   return d;
 }

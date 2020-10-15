@@ -28,14 +28,16 @@ Copyright (C) 2006 by Michael Margraf <michael.margraf@alumni.tu-berlin.de>
  * \brief Implementation of the TextDoc class.
  */
 
-/*!
- * \brief TextDoc::TextDoc Text document constructor
- * \param App_ is the parent object
- * \param Name_ is the initial text document name
- */
-TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QPlainTextEdit(), QucsDoc(*App_, Name_)
+// tmp hack.
+QucsDoc* newTextDoc(QucsApp& a, QString const& b)
 {
-  App = App_; // BUG? should be in base class.
+	return new TextDoc(&a, b);
+}
+
+TextDoc::TextDoc(QucsApp *parent, const QString& initial_name)
+   : QPlainTextEdit(), QucsDoc(*parent, initial_name)
+{
+  App = parent; // BUG? should be in base class.
   TextFont = QFont("Courier New");
   TextFont.setPointSize(QucsSettings.font.pointSize()-1);
   TextFont.setStyleHint(QFont::Courier);
@@ -50,7 +52,7 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QPlainTextEdit(), QucsDo
 
   tmpPosX = tmpPosY = 1;  // set to 1 to trigger line highlighting
   Scale = (float)TextFont.pointSize();
-  setLanguage (Name_);
+  setLanguage (initial_name);
 
   viewport()->setFocus();
 
@@ -60,15 +62,15 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QPlainTextEdit(), QucsDo
   connect(this, SIGNAL(cursorPositionChanged()),
           SLOT(slotCursorPosChanged()));
 
-  if (App_) {itested();
+  if (parent) {itested();
     connect(this, SIGNAL(signalCursorPosChanged(int, int)),
-        App_, SLOT(printCursorPosition(int, int)));
+        parent, SLOT(printCursorPosition(int, int)));
     connect(this, SIGNAL(signalUndoState(bool)),
-        App_, SLOT(slotUpdateUndo(bool)));
+        parent, SLOT(slotUpdateUndo(bool)));
     connect(this, SIGNAL(signalRedoState(bool)),
-        App_, SLOT(slotUpdateRedo(bool)));
+        parent, SLOT(slotUpdateRedo(bool)));
     connect(this, SIGNAL(signalFileChanged(bool)),
-        App_, SLOT(slotFileChanged(bool)));
+        parent, SLOT(slotFileChanged(bool)));
   }else{ untested();
   }
 
