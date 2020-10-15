@@ -147,6 +147,8 @@ private:
 
 public: // hmm
 	virtual QUndoStack* undoStack(){return nullptr;}
+   virtual void updateViewport() {}
+   virtual void reloadGraphs() {} // fix later.
 
 public:
 	void possiblyToggleAction(MouseAction* a, QAction* sender);

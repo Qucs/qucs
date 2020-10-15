@@ -129,7 +129,6 @@ public:
   void  enlargeView(int, int, int, int);
   void  switchPaintMode();
   int   adjustPortNumbers();
-  void  reloadGraphs();
   bool  createSubcircuitSymbol();
 
   void    cut();
@@ -498,7 +497,7 @@ private:
 
   static void createNodeSet(QStringList&, int&, Conductor*, Node*);
 
-  void updateViewport() { viewport()->update(); }
+  void updateViewport() override { viewport()->update(); }
 
 public:
   void throughAllNodes(unsigned& count) const{
@@ -541,6 +540,7 @@ public:
   bool creatingLib;
 
 private: // QucsDoc overrides, schematic_action.cpp
+  void  reloadGraphs() override; // fix later
   void actionCopy(QAction*) override{
 	  copy();
   }

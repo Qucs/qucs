@@ -18,6 +18,12 @@
 #include "qucs.h" // BUG. QucsSettings?
 #include <QUndoStack>
 
+// tmp hack.
+QucsDoc* newSchematicDoc(QucsApp& a, QString const& b)
+{
+	return new SchematicDoc(a, b);
+}
+
 namespace{
 class sda : public SchematicSymbol{
 public:
