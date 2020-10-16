@@ -1508,7 +1508,7 @@ int SchematicDoc::adjustPortNumbers()
 
              // Str = pc->Props.getFirst()->Value;
 	     // try
-             Str = QString::fromStdString(pc->getParameter("portname"));
+             Str = QString::fromStdString(pc->paramValue("portname"));
              // search for matching port symbol
              for(pp = symbolPaintings().first(); pp!=0; pp = symbolPaintings().next())
              { untested();
@@ -2215,6 +2215,7 @@ void SchematicDoc::pushBack(Element* what)
 }
 
 // ----------------------------------------------------------------
+#if 0
 QString SchematicDoc::getParameter(std::string const& x) const
 { untested();
   if(x=="DocName"){ untested();
@@ -2225,6 +2226,7 @@ QString SchematicDoc::getParameter(std::string const& x) const
     throw "Exception_cantfind";
   }
 }
+#endif
 
 // ----------------------------------------------------------------
 

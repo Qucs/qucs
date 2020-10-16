@@ -26,7 +26,7 @@ void union0()
 	assert(w);
 	assert(!w->subckt());
 
-	trace2("DBG", w->getParameter("$xposition"), w->getParameter("$yposition"));
+	trace2("DBG", w->paramValue("$xposition"), w->paramValue("$yposition"));
 
 	assert(w->nodePosition(0) == pos_t(0,0));
 	assert(w->nodePosition(1) == pos_t(10,0));
@@ -69,7 +69,7 @@ void union2()
 	Symbol* w = c->newUnion(w1);
 	assert(w);
 
-	trace2("DBG", w->getParameter("$xposition"), w->getParameter("$yposition"));
+	trace2("DBG", w->paramValue("$xposition"), w->paramValue("$yposition"));
 	trace2("DBG", w->nodePosition(0), w->nodePosition(1));
 }
 

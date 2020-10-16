@@ -57,7 +57,7 @@ void LegacySchematicFormat::load(DocumentStream& s, SchematicSymbol& c) const
 
 static QString QG(SchematicSymbol const& m, std::string const& key)
 {
-	return QString::fromStdString(m.getParameter(key));
+	return QString::fromStdString(m.paramValue(key));
 }
 
 static void wirehack(Symbol const* w, DocumentStream& d)
@@ -76,10 +76,10 @@ static void wirehack(Symbol const* w, DocumentStream& d)
   std::tie(x1, y1) = w->portPosition(0);
   std::tie(x2, y2) = w->portPosition(1);
 
-  int cx = atoi(sym->getParameter("$xposition").c_str());
-  int cy = atoi(sym->getParameter("$yposition").c_str());
-  int dx = atoi(sym->getParameter("deltax").c_str());
-  int dy = atoi(sym->getParameter("deltay").c_str());
+  int cx = atoi(sym->paramValue("$xposition").c_str());
+  int cy = atoi(sym->paramValue("$yposition").c_str());
+  int dx = atoi(sym->paramValue("deltax").c_str());
+  int dy = atoi(sym->paramValue("deltay").c_str());
 
   d << "<" << cx << " " << cy
     << " " << cx+dx << " " << cy+dy;
@@ -114,22 +114,22 @@ void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& 
 	int GridOn;
 
 	try{
-		ViewX1=std::stoi(m.getParameter("ViewX1"));
-		ViewY1=std::stoi(m.getParameter("ViewY1"));
-		ViewX2=std::stoi(m.getParameter("ViewX2"));
-		ViewY2=std::stoi(m.getParameter("ViewY2"));
-		Scale=std::stoi(m.getParameter("Scale"));
-		GridX=std::stoi(m.getParameter("GridX"));
-		GridY=std::stoi(m.getParameter("GridY"));
-		GridOn=std::stoi(m.getParameter("GridOn"));
+		ViewX1=std::stoi(m.paramValue("ViewX1"));
+		ViewY1=std::stoi(m.paramValue("ViewY1"));
+		ViewX2=std::stoi(m.paramValue("ViewX2"));
+		ViewY2=std::stoi(m.paramValue("ViewY2"));
+		Scale=std::stoi(m.paramValue("Scale"));
+		GridX=std::stoi(m.paramValue("GridX"));
+		GridY=std::stoi(m.paramValue("GridY"));
+		GridOn=std::stoi(m.paramValue("GridOn"));
 
-		tmpViewX1=std::stoi(m.getParameter("tmpViewX1"));
-		tmpViewX2=std::stoi(m.getParameter("tmpViewX2"));
-		tmpViewY1=std::stoi(m.getParameter("tmpViewY1"));
-		tmpViewY2=std::stoi(m.getParameter("tmpViewY2"));
-		tmpScale=std::stof(m.getParameter("tmpScale"));
-		tmpPosX=std::stoi(m.getParameter("tmpPosX"));
-		tmpPosY=std::stoi(m.getParameter("tmpPosY"));
+		tmpViewX1=std::stoi(m.paramValue("tmpViewX1"));
+		tmpViewX2=std::stoi(m.paramValue("tmpViewX2"));
+		tmpViewY1=std::stoi(m.paramValue("tmpViewY1"));
+		tmpViewY2=std::stoi(m.paramValue("tmpViewY2"));
+		tmpScale=std::stof(m.paramValue("tmpScale"));
+		tmpPosX=std::stoi(m.paramValue("tmpPosX"));
+		tmpPosY=std::stoi(m.paramValue("tmpPosY"));
 	}catch (std::invalid_argument const&){
 		incomplete();
 	}

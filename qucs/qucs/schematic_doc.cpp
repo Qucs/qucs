@@ -43,7 +43,7 @@ private: // SchematicSymbol
   SchematicModel* schematicModel() { untested();
     return nullptr;
   }
-  std::string getParameter(std::string const&) const{itested();
+  std::string paramValue(std::string const&) const override{itested();
     incomplete();
     return "incomplete";
   }

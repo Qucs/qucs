@@ -47,7 +47,8 @@ public: // interface
 		_type = x;
 	}
 	virtual void build() {} // what does it do?
-	virtual unsigned paramCount()const {return 0;}
+	virtual unsigned paramCount()const;
+	virtual bool paramIsPrintable()const;
 
 public: // TODO. something like this.
 	virtual void expand() { untested(); }
@@ -78,10 +79,8 @@ public: // Parameters
 	virtual void setParameter(unsigned i, std::string const&){
 		throw ExceptionCantFind(std::to_string(i), label().toStdString());
 	}
-	virtual std::string getParameter(std::string const& w) const;
-	virtual std::string getParameter(unsigned) const;
 
-	// yikes there's param{Name,Value} already..
+	virtual std::string paramValue(std::string const&s) const;
 	virtual std::string paramValue(unsigned i) const;
 	virtual std::string paramName(unsigned i) const;
 

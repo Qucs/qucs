@@ -21,6 +21,7 @@ bool SubcktProto::portExists(unsigned i) const
 
 unsigned SubcktProto::numPorts() const
 { untested();
+	assert(subckt());
 	trace1("sckt_proto::numPorts", subckt()->numPorts());
 	return subckt()->numPorts();
 }

@@ -261,7 +261,7 @@ void VerilogNetlister::prepareSave(DocumentStream& stream, SchematicSymbol const
 
 	std::string DocName;
 	try{
-		DocName=m.getParameter("DocName");
+		DocName=m.paramValue("DocName");
 	}catch(ExceptionCantFind const&){
 		DocName="unknown";
 	}
@@ -311,7 +311,7 @@ void VerilogNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol c
 
 	for(auto it : sckt.components()){
 
-		if(it->getParameter("$mfactor") == "0") {
+		if(it->paramValue("$mfactor") == "0") {
 			stream << "#ifdef QUCS_INACTIVE\n";
 		}else{
 		}
@@ -331,7 +331,7 @@ void VerilogNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol c
 			// it->Ports.first()->Connection->setName("gnd");
 		}
 
-		if(it->getParameter("$mfactor") == "0") {
+		if(it->paramValue("$mfactor") == "0") {
 			stream << "#endif // QUCS_INACTIVE\n";
 		}else{
 		}

@@ -115,8 +115,8 @@ void more()
 	SchematicModel const& cM = M;
 	for(auto i : cM.wires()){
 		Symbol* s = i;
-		int cx = atoi(s->getParameter("$xposition").c_str());
-		int cy = atoi(s->getParameter("$xposition").c_str());
+		int cx = atoi(s->paramValue("$xposition").c_str());
+		int cy = atoi(s->paramValue("$xposition").c_str());
 		std::cout << "W" << cx << cy << "\n";
 	}
 	

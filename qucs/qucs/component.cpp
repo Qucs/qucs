@@ -590,12 +590,37 @@ void Component::setParameter(std::string const& name, std::string const& v)
   }
 }
 
+
 // -------------------------------------------------------
-std::string Component::getParameter(std::string const& name) const
+template<class P>
+static int paramDisplay(P const& p, int offset)
+{
+  int ret = 0;
+  int s = 1 << offset;
+
+  for(auto i : p){
+    if(!i){
+    }else if(i->display){
+      trace2("display", i->Name, i->Value);
+      ret += s;
+    }else{
+    }
+    s *= 2;
+  }
+  trace1("display", ret);
+  return ret;
+}
+
+// -------------------------------------------------------
+std::string Component::paramValue(std::string const& name) const
 {itested();
   if(name=="$angle"){itested();
-    trace1("Component::getParameter", _rotated);
+    trace1("Component::paramValue", _rotated);
     return std::to_string(_rotated*90);
+  }else if(name=="$tx"){ untested();
+    return std::to_string(tx);
+  }else if(name=="$ty"){ untested();
+    return std::to_string(ty);
   }else if(name=="$xposition"){ untested();
     return std::to_string(center().first);
   }else if(name=="$yposition"){ untested();
@@ -605,10 +630,12 @@ std::string Component::getParameter(std::string const& name) const
     return std::to_string(m);
   }else if(name=="$hflip"){itested();
     return "1";
+  }else if(name=="$param_display"){
+    return std::to_string(paramDisplay(Props, 2 + Symbol::paramCount()));
   }else if(name=="$mfactor"){
     return isActive?"1":"0";
   }else{ untested();
-    return Symbol::getParameter(name);
+    return Symbol::paramValue(name);
   }
 }
 
@@ -1632,32 +1659,45 @@ QRectF Component::boundingRect() const
 /*--------------------------------------------------------------------------*/
 unsigned Component::paramCount() const
 {
-  trace2("Component::paramCount", label(), Props.count());
-  return Props.count();
+  return Props.count() + Symbol::paramCount() + 2;
 }
 /*--------------------------------------------------------------------------*/
 std::string Component::paramValue(unsigned i) const
 {
-  assert( Props.at(i));
-  return Props.at(i)->value().toStdString();
+  unsigned s = Symbol::paramCount();
+  if(i<Symbol::paramCount()){ untested();
+    return Symbol::paramValue(i);
+  }else if(i==s){ untested();
+    return std::to_string(tx);
+  }else if(i==s+1){ untested();
+    return std::to_string(tx);
+  }else{ untested();
+    i -= (s+2);
+    assert( Props.at(i));
+    return Props.at(i)->value().toStdString();
+  }
 }
 /*--------------------------------------------------------------------------*/
 std::string Component::paramName(unsigned i) const
 {
-  assert( Props.at(i));
-  return Props.at(i)->name().toStdString();
+  unsigned s = Symbol::paramCount();
+  if(i<Symbol::paramCount()){ untested();
+    return Symbol::paramName(i);
+  }else if(i==s){ untested();
+    return "$tx";
+  }else if(i==s+1){ untested();
+    return "$ty";
+  }else{ untested();
+    i -= (s+2);
+    assert( Props.at(i));
+    return Props.at(i)->name().toStdString();
+  }
 }
 /*--------------------------------------------------------------------------*/
 QDialog* Component::schematicWidget(QucsDoc* Doc) const
 { untested();
   trace0("Component::editElement");
   return new ComponentDialog(Doc); // memory leak?
-}
-/*--------------------------------------------------------------------------*/
-std::string Component::getParameter(unsigned i) const
-{ untested();
-  incomplete();
-  return Props.at(i)->value().toStdString();
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

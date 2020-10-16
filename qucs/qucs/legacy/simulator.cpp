@@ -275,9 +275,9 @@ void LegacyNetlister::prepareSave(DocumentStream& stream, SchematicSymbol const&
 
 	std::string DocName;
 	try{
-		DocName=m.getParameter("DocName");
+		DocName = m.paramValue("DocName");
 	}catch(ExceptionCantFind const&){ untested();
-		DocName="unknown";
+		DocName = "unknown";
 	}
 	stream << " Qucs " << PACKAGE_VERSION << "  "
 	       << QString::fromStdString(DocName) << "\n";
@@ -392,7 +392,7 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 		assert(sym->owner()==&m);
 		assert(sym->scope()==&sckt);
 
-		if(pc->getParameter("$mfactor") == "0"){
+		if(pc->paramValue("$mfactor") == "0"){
 			incomplete();
 			continue;
 		}else if(isAnalog) {
@@ -467,7 +467,7 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 		if(model_hack == "SPICE") { // BUG
 			incomplete(); // move to Symbol->tac
 			//s = pc->Props.first()->Value;
-			s = QString::fromStdString(pc->getParameter("filename_maybe"));
+			s = QString::fromStdString(pc->paramValue("filename_maybe"));
 			// tell the spice component it belongs to this schematic
 			//      pc->setSchematic (this);
 			if(s.isEmpty()) { untested();
