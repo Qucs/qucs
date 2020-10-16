@@ -102,7 +102,7 @@ void WireDialog::attach(ElementGraphics* gfx)
   connect(cancel, SIGNAL(clicked()), SLOT(slotButtCancel()));
 
   // ------------------------------------------------------------
-  std::string netname = Comp->getParameter("netname");
+  std::string netname = Comp->paramValue("netname");
   CompNameEdit->setText(QString::fromStdString(netname));
   // showName->setChecked(Comp->showName);
   _changed = false;

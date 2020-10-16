@@ -17,60 +17,57 @@
 #endif
 
 bool PaintingList::load(QTextStream& str)
-{
+{ untested();
 	auto stream=&str;
 	auto List=this;
-  incomplete();
-# if 1
-  Painting *p=0;
-  QString Line, cstr;
-  while(!stream->atEnd()) {
-    Line = stream->readLine();
-    if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
+	Painting *p=0;
+	QString Line, cstr;
+	while(!stream->atEnd()) { untested();
+		Line = stream->readLine();
+		if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
 
-    Line = Line.trimmed();
-    if(Line.isEmpty()) continue;
-    if( (Line.at(0) != '<') || (Line.at(Line.length()-1) != '>')) { untested();
-		 incomplete();
-		 // QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line delimiter!"));
-      return false;
-    }else{
-	 }
-    Line = Line.mid(1, Line.length()-2);  // cut off start and end character
+		Line = Line.trimmed();
+		if(Line.isEmpty()) continue;
+		if( (Line.at(0) != '<') || (Line.at(Line.length()-1) != '>')) { untested();
+			incomplete();
+			// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line delimiter!"));
+			return false;
+		}else{ untested();
+		}
+		Line = Line.mid(1, Line.length()-2);  // cut off start and end character
 
-    cstr = Line.section(' ',0,0);    // painting type
-    qDebug() << cstr;
-    if(Painting const* pp=painting_dispatcher[cstr.toStdString()]){
-      p=prechecked_cast<Painting*>(pp->clone());
-      assert(p);
-    }else{ untested();
-		 // incomplete();
-      // QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nUnknown painting " + cstr));
-      return false;
-    }
+		cstr = Line.section(' ',0,0);    // painting type
+		qDebug() << cstr;
+		if(Painting const* pp=painting_dispatcher[cstr.toStdString()]){ untested();
+			p=prechecked_cast<Painting*>(pp->clone());
+			assert(p);
+		}else{ untested();
+			// incomplete();
+			// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nUnknown painting " + cstr));
+			return false;
+		}
 
-    if(!p->load(Line)) { untested();
-		 incomplete();
-      // QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line format!"));
-      delete p;
-      return false;
-    }else{
-	 }
-	 qDebug() << "got painting" << cstr << p->name();
-    List->append(p);
-  }
+		if(!p->load(Line)) { untested();
+			incomplete();
+			// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line format!"));
+			delete p;
+			return false;
+		}else{ untested();
+		}
+		qDebug() << "got painting" << cstr << p->name();
+		List->append(p);
+	}
 
-  incomplete();
-  // QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\n'Painting' field is not closed!"));
-  return false;
-#endif
+	incomplete();
+	// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\n'Painting' field is not closed!"));
+	return false;
 }
 
 namespace{
 
 class LegacySchematicLanguage : public SchematicLanguage {
 public:
-	LegacySchematicLanguage() : SchematicLanguage(){
+	LegacySchematicLanguage() : SchematicLanguage(){ untested();
 	}
 private: // stuff saved from schematic_file.cpp
 	Diagram* loadDiagram(QString const& Line, DocumentStream& /*, DiagramList *List */) const;
@@ -95,11 +92,11 @@ static Dispatcher<DocumentLanguage>::INSTALL
 // ------------------------------------------------------
 // // "parseElement"?
 Element* LegacySchematicLanguage::loadElement(const QString& _s, Element* e) const
-{
-	if(CmdElement* c=dynamic_cast<CmdElement*>(e)){
+{ untested();
+	if(CmdElement* c=dynamic_cast<CmdElement*>(e)){ untested();
 		c = loadCommand(_s, c);
 		// incomplete();
-	}else if(Component* c=dynamic_cast<Component*>(e)){
+	}else if(Component* c=dynamic_cast<Component*>(e)){ untested();
 		// legacy components
 		// will not work non-qucs-.sch languages
 		incomplete();
@@ -112,7 +109,8 @@ Element* LegacySchematicLanguage::loadElement(const QString& _s, Element* e) con
 	//	s->recreate(); // half-expand subcircuits? why not "precalc"?
 	//	               // why not in constructor? it needs parameters.
 		c->setLabel(cstr);
-		c->tx = x;  c->ty = y;
+		c->tx = x;
+		c->ty = y;
 	}else{ untested();
 		incomplete();
 		return e;
@@ -123,15 +121,15 @@ Element* LegacySchematicLanguage::loadElement(const QString& _s, Element* e) con
 static std::list<Element*> implicit_hack;
 
 static bool obsolete_wireload(Symbol* w, const QString& sc)
-{
+{ untested();
 	Symbol* sym = w;
 	QString s(sc);
 	trace1("obsolete_wireload", s);
 	bool ok;
 
-	if(s.at(0) != '<'){
+	if(s.at(0) != '<'){ untested();
 		throw ExceptionCantParse();
-	}else if(s.at(s.length()-1) != '>'){
+	}else if(s.at(s.length()-1) != '>'){ untested();
 		throw ExceptionCantParse();
 	}
 	s = s.mid(1, s.length()-2);   // cut off start and end character
@@ -139,25 +137,25 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	QString n;
 	n  = s.section(' ',0,0);
 	int x1 = n.toInt(&ok);
-	if(!ok) {
+	if(!ok) { untested();
 		return false; // BUG: throw
-	}else{
+	}else{ untested();
 	}
 	sym->setParameter("$xposition", std::to_string(x1));
 
 	n  = s.section(' ',1,1);    // y1
 	int y1 = n.toInt(&ok);
-	if(!ok) {
+	if(!ok) { untested();
 		return false; // BUG: throw
-	}else{
+	}else{ untested();
 	}
 	sym->setParameter("$yposition", std::to_string(y1));
 
 	n  = s.section(' ',2,2);    // x2
 	int x2 = n.toInt(&ok);
-	if(!ok) {
+	if(!ok) { untested();
 		return false; // BUG: throw
-	}else{
+	}else{ untested();
 	}
 
 	assert(x1<=x2); // possibly the case in all legacy files
@@ -165,12 +163,12 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 
 	n  = s.section(' ',3,3);    // y2
 	int y2 = n.toInt(&ok);
-	if(!ok) {
+	if(!ok) { untested();
 		return false; // BUG: throw
-	}else{
+	}else{ untested();
 	}
 
-	if(y1<=y2){
+	if(y1<=y2){ untested();
 		// possibly the case in all legacy files
 	}else{ untested();
 		// nothing wrong with that, really?
@@ -179,7 +177,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 
 	n = s.section('"',1,1);
 	trace1("parse node label", n);
-	if(!n.isEmpty()) {
+	if(!n.isEmpty()) { untested();
 		Symbol* sym=w;
 		// there is a label hidden in this wire. go get it.
 		//
@@ -202,7 +200,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 		sym->setParameter("nx", nx); // not the node position, maybe the label position?
 		sym->setParameter("ny", ny); // not the node position, maybe the label position?
 		sym->expand(); //always?
-	}else{
+	}else{ untested();
 	}
 
 	return true;
@@ -210,7 +208,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 
 // BUG: this is schematicFormat
 void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& owner) const
-{
+{ untested();
 	assert(!implicit_hack.size());
 	QString Line;
 
@@ -218,84 +216,80 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 	//       connect legacy "parsers".
 	// this is not needed in a proper SchematicLanguage
 	char mode='\0';
-	while(!stream.atEnd()) {
+	while(!stream.atEnd()) { untested();
 		Line = stream.readLine();
 		Line = Line.trimmed();
 		if(Line.size()<2){ untested();
 		}else if(Line.at(0) == '<'
-				&& Line.at(1) == '/'){
+				&& Line.at(1) == '/'){ untested();
 			qDebug() << "endtag?" << Line;
 		}else if(Line.isEmpty()){ untested();
-		}else if(Line == "<Components>") {
+		}else if(Line == "<Components>") { untested();
 			mode='C';
-		}else if(Line == "<Symbol>") {
+		}else if(Line == "<Symbol>") { untested();
 			mode='S';
-		}else if(Line == "<Wires>") {
+		}else if(Line == "<Wires>") { untested();
 			mode='W';
-		}else if(Line == "<Diagrams>") {
+		}else if(Line == "<Diagrams>") { untested();
 			mode='D';
-		}else if(Line == "<Properties>") {
+		}else if(Line == "<Properties>") { untested();
 			mode='Q';
-		}else if(Line == "<Paintings>") {
+		}else if(Line == "<Paintings>") { untested();
 			mode='P';
-		}else{
+		}else{ untested();
 
 			/// \todo enable user to load partial schematic, skip unknown components
 			Element*c=nullptr;
-			if(mode=='C'){
+			if(mode=='C'){ untested();
 				c = getComponentFromName(Line);
-				if(c){
+				if(c){ untested();
 					c->setOwner(&owner);
-				}else{
+				}else{ untested();
 				}
-				if(Symbol* sym=dynamic_cast<Symbol*>(c) ){
+				if(Symbol* sym=dynamic_cast<Symbol*>(c) ){ untested();
 					//always do this?
 
 //					assert(s.scope());
 					// what are those?!
 					sym->recreate(); // re? create symbol gfx and random other things. needs owner
 					sym->build(); // what's this?!
-				}else{
+				}else{ untested();
 				}
-			}else if(mode=='S'){
+			}else if(mode=='S'){ untested();
 				incomplete();
-				try{
+				try{ untested();
 					qDebug() << "symbol Paintings";
 					owner.symbolPaintings().load(stream);
 					c = nullptr;
 				}catch(...){ untested();
 					incomplete();
 				}
-			}else if(mode=='W'){
+			}else if(mode=='W'){ untested();
 				qDebug() << "wire parse?" << Line;
-				// (Node*)4 =  move all ports (later on)
-				// Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4); // this is entirely nuts.
 				Symbol* sw= symbol_dispatcher.clone("Wire");
 				assert(sw);
-//				Wire* w = prechecked_cast<Wire*>(sw); // BUG;
 				sw->setOwner(&owner);
-				incomplete(); // qt5 branch...
 				bool err = obsolete_wireload(sw, Line);
 				if(!err){ untested();
 					incomplete();
 					delete(sw);
-				}else{
+				}else{ untested();
 					c = sw;
 				}
-			}else if(mode=='D'){
+			}else if(mode=='D'){ untested();
 				trace1("diagram parse?", Line);
 
 				Diagram* d=loadDiagram(Line, stream);
-				if(d){
+				if(d){ untested();
 					c = d;
 					c->setOwner(&owner);
-				}else{
+				}else{ untested();
 					incomplete();
 				}
 
-			}else if(mode=='Q'){
+			}else if(mode=='Q'){ untested();
 
-			}else{
+			}else{ untested();
 				qDebug() << "LSL::parse" <<  Line;
 				incomplete();
 			}
@@ -322,7 +316,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 }
 
 Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
-		DocumentStream& stream /*, DiagramList *List */)const
+		DocumentStream& stream)const
 {itested();
 	Diagram *d;
 	QString Line=line_in;
@@ -331,13 +325,13 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 		trace1("diagram?", Line);
 		if(Line.at(0) == '<' && Line.at(1) == '/'){ untested();
 			return nullptr;
-		}else{
+		}else{ untested();
 			untested();
 		}
 		Line = Line.trimmed();
 		if(Line.isEmpty()){ untested();
 			return nullptr;
-		}else{
+		}else{ untested();
 		}
 		cstr = Line.section(' ',0,0);    // diagram type
 		std::string what=cstr.toStdString();
@@ -348,19 +342,19 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 			assert(d);
 			qDebug() << "got diagram" << what.c_str();
 			d->setName(type); // yuck
-		}else{
+		}else{ untested();
 			trace1("diagram doesntexist", type);
 			incomplete();
 			// throw ...
 			return nullptr;
 		}
 
-		if(!d->load(Line, stream)) {
+		if(!d->load(Line, stream)) { untested();
 			trace1("loadfail", Line);
 			incomplete();
 			delete d;
 			return nullptr;
-		}else{
+		}else{ untested();
 		}
 		return d;
 	}
@@ -372,25 +366,25 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 // -------------------------------------------------------
 static const std::string typesep(":");
 static std::string mangle(std::string t)
-{
+{ untested();
 	auto pos = t.find(typesep);
 	std::string ret="";
 	return t.substr(0, pos);
 }
 
 void LegacySchematicLanguage::printCommand(CmdElement const* c, stream_t& s) const
-{
+{ untested();
 	s << "  <." << c->Name << " ";
 
-	{
+	{ untested();
 		s << c->label();
 	}
 	s << " ";
 
 	int i = 0;
-	if(!c->showName){
+	if(!c->showName){ untested();
 		i = 4;
-	}else{
+	}else{ untested();
 	}
 	i |= c->isActive;
 	s << QString::number(i);
@@ -404,79 +398,114 @@ void LegacySchematicLanguage::printCommand(CmdElement const* c, stream_t& s) con
 	// FIXME: ask element for properties, not for dictionary
 	auto cc=const_cast<CmdElement*>(c); // BUGBUGBUGBUG
 	// cannot access Props without this hack
-	for(Property *p1 = cc->Props.first(); p1 != 0; p1 = cc->Props.next()) {
-		if(p1->Description.isEmpty()){
+	for(Property *p1 = cc->Props.first(); p1 != 0; p1 = cc->Props.next()) { untested();
+		if(p1->Description.isEmpty()){ untested();
 			s << " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations
-		}else{
+		}else{ untested();
 			s << " \""+p1->Value+"\"";
 		}
 		s << " ";
-		if(p1->display){
+		if(p1->display){ untested();
 			s << "1";
-		}else{
+		}else{ untested();
 			s << "0";
 		}
 	}
 
 	s << ">";
 }
+
+static void printArgs(Symbol const* sym, stream_t& s)
+{
+	s << " " << sym->paramValue("$mfactor");
+	s << " " << sym->paramValue("$xposition");
+	s << " " << sym->paramValue("$yposition");
+	s << " " << sym->paramValue("$tx");
+	s << " " << sym->paramValue("$ty");
+	int angle = atoi(sym->paramValue("$angle").c_str());
+	int hflip = atoi(sym->paramValue("$hflip").c_str());
+	int vflip = atoi(sym->paramValue("$vflip").c_str());
+	assert(hflip);
+	assert(vflip);
+	if(hflip==1){ untested();
+		s << " " << (1+vflip) / 2;
+		s << " " << (angle/90) % 4;
+	}else if(vflip==1){ untested();
+		assert(hflip==-1);
+		s << " 1";
+		s << " TODO" << ((180-angle)/90) % 4;
+	}else{ untested();
+		assert(hflip==-1);
+		assert(vflip==-1);
+		s << " 0";
+		s << " TODO" << ((180+angle)/90) % 4;
+	}
+
+	int show = atoi(sym->paramValue("$param_display").c_str());
+	for(unsigned i=0; i<sym->paramCount(); ++i){ untested();
+		trace3("display", i, show, sym->paramName(i));
+		// if(sym->paramIsPrintabl(i))
+		std::string n = sym->paramName(i);
+		if(n.at(0)=='$'){
+		}else{
+			s << " \"" << sym->paramValue(i) << "\" " << (show % 2);
+		}
+		show /= 2;
+	}
+}
 // was: void Schematic::saveComponent(QTextStream& s, Component const* c) const
 void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
-{
-	Component const* c=dynamic_cast<Component const*>(sym);
-	if(!c){ untested();
-		incomplete();
-		return;
-	}else{
-	}
-	s << "  <" << mangle(c->typeName()) << " ";
+{ untested();
+	s << "  <" << mangle(sym->typeName()) << " ";
 
-	if(c->name().isEmpty()){
+	if(sym->label()==""){ untested();
 		s << "*";
 	}else{
-		s << c->label(); // label??
+		s << sym->label();
 	}
-	s << " ";
 
-	int i=0;
-	if(!c->showName){
-		i = 4;
-	}
-	i |= c->isActive;
-	s << QString::number(i);
-	s << " "+QString::number(c->cx())+" "+QString::number(c->cy());
-	s << " "+QString::number(c->tx)+" "+QString::number(c->ty);
-	s << " ";
-	if(c->mirroredX){
-		s << "1";
-	}else{
-		s << "0";
-	}
-	s << " " << QString::number(c->rotated());
-
-	// write all properties
-	// FIXME: ask component for properties, not for dictionary
+	Component const* c=dynamic_cast<Component const*>(sym);
 	Component* cc=const_cast<Component*>(c); // BUGBUGBUGBUG
-	// cannot access Props without this hack
-	for(Property *p1 = cc->Props.first(); p1 != 0; p1 = cc->Props.next()) {
-		if(p1->Description.isEmpty()){
-			s << " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations
-		}else{
-			s << " \""+p1->Value+"\"";
-		}
+	if(c && c->useObsoleteProps()){ untested();
 		s << " ";
-		if(p1->display){
+		int i=0;
+		if(!c->showName){ untested();
+			i = 4;
+		}else{ untested();
+		}
+		i |= c->isActive;
+		s << QString::number(i);
+		s << " "+QString::number(c->cx())+" "+QString::number(c->cy());
+		s << " "+QString::number(c->tx)+" "+QString::number(c->ty);
+		s << " ";
+		if(c->mirroredX){ untested();
 			s << "1";
 		}else{
 			s << "0";
 		}
+		s << " " << QString::number(c->rotated());
+		for(Property *p1 = cc->Props.first(); p1 != 0; p1 = cc->Props.next()) {
+			if(p1->Description.isEmpty()){ untested();
+				s << " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations
+			}else{
+				s << " \""+p1->Value+"\"";
+			}
+			s << " ";
+			if(p1->display){
+				s << "1";
+			}else{
+				s << "0";
+			}
+		}
+	}else{ untested();
+		printArgs(sym, s);
 	}
 
 	s << ">";
 } // printSymbol
 
 CmdElement* LegacySchematicLanguage::loadCommand(const QString& _s, CmdElement* c) const
-{
+{ untested();
 	bool ok;
 	int  ttx, tty, tmp;
 	QString s = _s;
@@ -485,7 +514,7 @@ CmdElement* LegacySchematicLanguage::loadCommand(const QString& _s, CmdElement* 
 		return NULL;
 	}else if(s.at(s.length()-1) != '>'){ untested();
 		return NULL;
-	}else{
+	}else{ untested();
 		s = s.mid(1, s.length()-2);   // cut off start and end character
 
 		QString label=s.section(' ',1,1);
@@ -503,7 +532,7 @@ CmdElement* LegacySchematicLanguage::loadCommand(const QString& _s, CmdElement* 
 
 		if(tmp & 4){ untested();
 			c->showName = false;
-		}else{
+		}else{ untested();
 			// use default, e.g. never show name for GND (bug?)
 		}
 
@@ -532,14 +561,14 @@ CmdElement* LegacySchematicLanguage::loadCommand(const QString& _s, CmdElement* 
 		// FIXME. use c->paramCount()
 
 		/// BUG FIXME. dont use Component parameter dictionary.
-		for(; tmp<=(int)counts/2; tmp++){
+		for(; tmp<=(int)counts/2; tmp++){ untested();
 			c->Props.append(new Property("p", "", true, " "));
 		}
 
 		// load all properties
 		Property *p1;
 		qDebug() << "load command props" << s;
-		for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
+		for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) { untested();
 			qDebug() << "load command props" << z;
 			z++;
 			n = s.section('"',z,z);    // property value
@@ -547,14 +576,14 @@ CmdElement* LegacySchematicLanguage::loadCommand(const QString& _s, CmdElement* 
 			//qDebug() << "LOAD: " << p1->Description;
 
 			// not all properties have to be mentioned (backward compatible)
-			if(z > counts) {
+			if(z > counts) { untested();
 				if(p1->Description.isEmpty()){ untested();
 					c->Props.remove();    // remove if allocated in vain
-				}else{
+				}else{ untested();
 				}
 
 				return c;
-			}else{
+			}else{ untested();
 			}
 
 			p1->Value = n;
@@ -569,7 +598,7 @@ CmdElement* LegacySchematicLanguage::loadCommand(const QString& _s, CmdElement* 
 
 // BUG raise exceptions if something goes wrong.
 Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString& _s, Component* c) const
-{
+{ untested();
 	Symbol* sym = c;
 	qDebug() << "parseComponentObsoleteCallback" << _s;
 	bool ok;
@@ -600,7 +629,7 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 	if(tmp & 4){ untested();
 	// sym->setParameter("hide_label", std::to_string(tmp & 4));
 		c->showName = false;
-	}else{
+	}else{ untested();
 		// use default, e.g. never show name for GND (bug?)
 	}
 
@@ -628,18 +657,18 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 	assert(c);
 	assert(c->obsolete_model_hack().at(0) != '.');
 
-	{
+	{ untested();
 		n  = s.section(' ',7,7);    // mirror y axis
-		if(n.toInt(&ok) == 1){
+		if(n.toInt(&ok) == 1){ untested();
 			c->mirrorX();
 		}
 		if(!ok) return NULL;
 
 		n  = s.section(' ',8,8);    // rotated
 		tmp = n.toInt(&ok);
-		if(!ok){
+		if(!ok){ untested();
 			return NULL;
-		}else if(int(c->rotated()) > tmp){
+		}else if(int(c->rotated()) > tmp){ untested();
 		  	// neccessary because of historical flaw in ...
 		  	// ... components like "volt_dc"
 			// ????
@@ -648,7 +677,7 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 
 		tmp *= 90;
 		sym->setParameter("$angle", std::to_string(tmp));
-		assert(sym->getParameter("$angle") == std::to_string(tmp));
+		assert(sym->paramValue("$angle") == std::to_string(tmp));
 		trace2("DBG rot", c->rotated(), n);
 	}
 
@@ -659,7 +688,7 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 
 	unsigned int z=0, counts = s.count('"');
 	// FIXME. use c->paramCount()
-	if(Model == "Sub"){
+	if(Model == "Sub"){ untested();
 		tmp = 2;   // first property (File) already exists
 	}else if(Model == "Lib"){ untested();
 		tmp = 3;
@@ -671,7 +700,7 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 		tmp = 2;
 	}else if(Model == "MUTX"){ untested();
 		tmp = 5; // number of properties for the default MUTX (2 inductors)
-	}else{
+	}else{ untested();
 		// "+1" because "counts" could be zero
 		tmp = counts + 1;
 	}
@@ -686,17 +715,17 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 	// set parameters.
 	Property *p1;
 	unsigned position=0;
-	for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
+	for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) { untested();
 		z++;
 		n = s.section('"',z,z);    // property value. gaah parse over and over again?
 		z++;
 		//qDebug() << "LOAD: " << p1->Description;
 
 		// not all properties have to be mentioned (backward compatible)
-		if(z > counts) {
+		if(z > counts) { untested();
 			if(p1->Description.isEmpty()){ untested();
 				c->Props.remove();    // remove if allocated in vain
-			}else{
+			}else{ untested();
 			}
 
 			if(Model == "Diode") { // BUG: don't use names
@@ -742,11 +771,11 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 					}
 					c->Props.current()->Value = "10";
 				}
-			}else{
+			}else{ untested();
 			}
 
 			return c;
-		}else{
+		}else{ untested();
 			// z <= counts
 		}
 
@@ -758,14 +787,14 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 				p1->Name = n.section('=',0,0);
 				n = n.section('=',1);
 				// allocate memory for a new property (e.g. for equations)
-				if(c->Props.count() < (counts>>1)) {
+				if(c->Props.count() < (counts>>1)) { untested();
 					c->Props.insert(z >> 1, new Property("y", "1", true));
 					c->Props.prev();
 				}
 			}
 #endif
 		if(z == 6)  if(counts == 6)     // backward compatible
-			if(Model == "R") {
+			if(Model == "R") { untested();
 				c->Props.getLast()->Value = n;
 				return c;
 			}
@@ -783,7 +812,7 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 }
 
 Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
-{
+{ untested();
 	qDebug() << "component?" << Line;
 	Element *e = 0;
 
@@ -791,7 +820,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 	if(Line.at(0) != '<') { untested();
 		throw "notyet_exception"
 			"Format Error:\nWrong line start!";
-	}else{
+	}else{ untested();
 	}
 
 	QString type = Line.section (' ',0,0); // component type
@@ -802,7 +831,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 	if (type == "Lib"){ untested();
 		incomplete();
 		// c = new LibComp ();
-	}else if (type == "Eqn"){
+	}else if (type == "Eqn"){ untested();
 		incomplete();
 		// c = new Equation ();
 	}else if (type == "SPICE"){ untested();
@@ -818,7 +847,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 	// fetch proto from dictionary.
 	Element const* s=symbol_dispatcher[typestring];
 
-	if(Component const* sc=dynamic_cast<Component const*>(s)){
+	if(Component const* sc=dynamic_cast<Component const*>(s)){ untested();
 		// legacy component
 		Element* k=sc->clone(); // memory leak?
 		e = prechecked_cast<Element*>(k);
@@ -828,24 +857,24 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 		// legacy component
 		Element* k = sc->clone(); // memory leak?
 		e = prechecked_cast<Element*>(k);
-	}else if(typestring.size() == 0){
+	}else if(typestring.size() == 0){ untested();
 		incomplete();
-	}else if(typestring.c_str()[0] == '.'){
+	}else if(typestring.c_str()[0] == '.'){ untested();
 		std::string type = typestring.substr(1); // drop dot.
 		e = command_dispatcher.clone(type);
-		if(auto ce = dynamic_cast<CmdElement*>(e)){
+		if(auto ce = dynamic_cast<CmdElement*>(e)){ untested();
 			// should use setType lower down. drop name.
 			ce->setTypeName(QString::fromStdString(type));
-		}else{
+		}else{ untested();
 			untested();
 		}
 	}
 
-	if(e) {
+	if(e) { untested();
 		incomplete();
 		loadElement(Line, e);
 		// setType()
-	}else{
+	}else{ untested();
 		qDebug() << "error with" << type;
 		message(QucsWarningMsg,
 			"Format Error:\nUnknown component!\n"
@@ -915,13 +944,13 @@ void LegacySchematicLanguage::loadProperties(QTextStream& s_in,
 		if(cstr == "View") { untested();
 			incomplete(); // setParameter
 		 	QString tmp;
-			tmp=nstr.section(',',0,0).toInt(&ok);
+			tmp = nstr.section(',',0,0).toInt(&ok);
 			m.setParameter("ViewX1", tmp.toStdString());
-			tmp=nstr.section(',',1,1).toInt(&ok);
+			tmp = nstr.section(',',1,1).toInt(&ok);
 			m.setParameter("ViewY1", tmp.toStdString());
-			tmp=nstr.section(',',2,2).toInt(&ok);
+			tmp = nstr.section(',',2,2).toInt(&ok);
 			m.setParameter("ViewX2", tmp.toStdString());
-			tmp=nstr.section(',',2,2).toInt(&ok);
+			tmp = nstr.section(',',2,2).toInt(&ok);
 			m.setParameter("ViewY2", tmp.toStdString());
 
 		// 					Scale  = nstr.section(',',4,4).toDouble(&ok); if(ok) { untested();

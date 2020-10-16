@@ -68,7 +68,7 @@ private:
 
 private: // Symbol
 	void setParameter(std::string const& name, std::string const& value) override;
-	std::string getParameter(std::string const& name) const override;
+	std::string paramValue(std::string const& name) const override;
 	bool showLabel() const override{ return false; }
 	void expand() override;
 	unsigned numPorts() const override;
@@ -425,7 +425,7 @@ void Wire::updatePort()
   setP1(pos_t(x, y));
 }
 /*--------------------------------------------------------------------------*/
-std::string Wire::getParameter(std::string const& n) const
+std::string Wire::paramValue(std::string const& n) const
 {
   if(n=="$hflip"){ untested();
     if (_scale<0){ untested();
@@ -440,14 +440,14 @@ std::string Wire::getParameter(std::string const& n) const
     return std::to_string(_angle*90);
   }else if(n=="$vflip"){ untested();
     return "1";
-  }else if(n=="deltax"){ untested();
+  }else if(n=="deltax"){
     return std::to_string(x2());
-  }else if(n=="deltay"){ untested();
+  }else if(n=="deltay"){
     return std::to_string(y2());
   }else if(n=="netname"){ untested();
     return _netname;
   }else{
-    return Symbol::getParameter(n);
+    return Symbol::paramValue(n);
   }
 }
 // ----------------------------------------------------------------

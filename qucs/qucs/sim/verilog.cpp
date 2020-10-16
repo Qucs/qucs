@@ -91,15 +91,17 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 		auto type = c->typeName();
 		// : is not allowed in verilog
       std::replace( type.begin(), type.end(), ':', '$');
-
-
 		s << QString::fromStdString(type) << " ";
-
 		QString comma="";
 		s << "#(";
+
+			// DUPLICATE		print_args
 		for(auto p2 : c->params()) {
-			s << comma << "." << p2->name() << "(" << p2->Value << ")";
-			comma = ", ";
+			if(p2->name().at(0) == '$'){
+			}else{
+				s << comma << "." << p2->name() << "(" << p2->Value << ")";
+				comma = ", ";
+			}
 		}
 		s << ") ";
 		s << label << "(";
@@ -218,9 +220,16 @@ void VerilogSchematicFormat::printSymbol(Symbol const* sym, stream_t& s) const
 
 		QString comma="";
 		s << "#(";
+
+
+			// DUPLICATE		print_args
 		for(unsigned i=0; i<sym->paramCount(); ++i) {
-			s << comma << "." << sym->paramName(i) << "(" << sym->paramValue(i) << ")";
-			comma = ", ";
+			auto name = sym->paramName(i);
+			if(name.at(0) == '$'){
+			}else{
+				s << comma << "." << sym->paramName(i) << "(" << sym->paramValue(i) << ")";
+				comma = ", ";
+			}
 		}
 		s << ") ";
 		// s << QString::fromStdString(label) << "(";

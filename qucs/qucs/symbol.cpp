@@ -122,7 +122,7 @@ Port const& Symbol::port(unsigned i) const
 	return s->port(i);
 }
 /*--------------------------------------------------------------------------*/
-std::string Symbol::getParameter(std::string const& n) const
+std::string Symbol::paramValue(std::string const& n) const
 {
 	if(n=="$xposition"){
 		return std::to_string(cx());
@@ -133,11 +133,6 @@ std::string Symbol::getParameter(std::string const& n) const
 	}else{ untested();
 	  throw ExceptionCantFind(n, label().toStdString());
 	}
-}
-/*--------------------------------------------------------------------------*/
-std::string Symbol::getParameter(unsigned i) const
-{
-	throw ExceptionCantFind(std::to_string(i), label().toStdString());
 }
 /*--------------------------------------------------------------------------*/
 void Symbol::paint(ViewPainter* p) const
@@ -198,16 +193,39 @@ Symbol::~Symbol()
 	_subckt = nullptr;
 }
 /*--------------------------------------------------------------------------*/
-std::string Symbol::paramValue(unsigned) const
-{ untested();
-	unreachable();
-	return "NA";
+bool Symbol::paramIsPrintable() const
+{
+	return true;
 }
 /*--------------------------------------------------------------------------*/
-std::string Symbol::paramName(unsigned) const
+unsigned Symbol::paramCount() const
+{
+	return 2;
+}
+/*--------------------------------------------------------------------------*/
+std::string Symbol::paramValue(unsigned i) const
+{
+	switch(i){
+	case 0:
+		return std::to_string(cx());
+	case 1:
+		return std::to_string(cy());
+	default:
+		throw ExceptionCantFind(std::to_string(i), label().toStdString());
+	}
+}
+/*--------------------------------------------------------------------------*/
+std::string Symbol::paramName(unsigned i) const
 { untested();
-	unreachable();
-	return "NA";
+	trace2("Symbol::paramName", label(), i);
+	switch(i){
+	case 0:
+		return "$xposition";
+	case 1:
+		return "$yposition";
+	default:
+		throw ExceptionCantFind(std::to_string(i), label().toStdString());
+	}
 }
 /*--------------------------------------------------------------------------*/
 void Symbol::setParameter(QString const& name, QString const& b)

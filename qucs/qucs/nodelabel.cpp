@@ -30,7 +30,7 @@ private:
 	}
 
 	void paint(ViewPainter*) const override;
-	std::string getParameter(std::string const& n) const override;
+	std::string paramValue(std::string const& n) const override;
 	void setParameter(std::string const& n, std::string const& v) override;
 	virtual unsigned numPorts() const {return 1;}
 	Rect boundingRect() const override;
@@ -42,9 +42,9 @@ private:
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "NodeLabel", &d);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-std::string NodeLabel::getParameter(std::string const& n) const
+std::string NodeLabel::paramValue(std::string const& n) const
 {
-	return Symbol::getParameter(n);
+	return Symbol::paramValue(n);
 }
 /*--------------------------------------------------------------------------*/
 void NodeLabel::setParameter(std::string const& n, std::string const& v)

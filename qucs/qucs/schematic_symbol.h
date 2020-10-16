@@ -42,7 +42,7 @@ public:
 	// CommandList const& commands() const;
 
 public:
-	virtual std::string getParameter(std::string const&) const = 0;
+	std::string paramValue(std::string const&) const = 0;
 	virtual void setParameter(std::string const&, std::string const&){ unreachable(); }
 
 private: // SchematicSymbol

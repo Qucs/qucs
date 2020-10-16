@@ -18,10 +18,11 @@
 #include "module.h"
 
 namespace{
-class SubCirPort : public Component  {
+
+class SubCirPort : public Component /*Symbol*/  {
 private:
   SubCirPort(SubCirPort const& p)
-	  : Component(p){
+	  : Component(p), _pos(p._pos){
 
 		 // BUG: do in Component??
 		 // (this does not work either way)
@@ -40,20 +41,29 @@ public:
 
 private:
   Node* connectNode(unsigned n, NodeMap& l) override;
+  bool useObsoleteProps() const override{ return true; }
 
 private:
   void setParameter(unsigned i, std::string const&) override;
+  std::string paramName(unsigned i) const override;
+  std::string paramValue(unsigned i) const override;
+  unsigned paramCount() const override{ untested();
+	  return Symbol::paramCount() + 2;
+  }
 
 protected:
   QString netlist() const;
   QString vhdlCode(int);
   QString verilogCode(int);
   void createSymbol();
+private:
+  int _pos;
+  std::string _some_type; // domain? discipline?
 }D;
 Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Port", &D);
 Module::INSTALL pp("lumped", &D);
 
-SubCirPort::SubCirPort() : Component()
+SubCirPort::SubCirPort() : Component(), _pos(1)
 {
   info(Name, bitmap_file);
   Type = isComponent;   // both analog and digital
@@ -83,6 +93,8 @@ Node* SubCirPort::connectNode(unsigned i, NodeMap& l)
 	bool ok=true;
 	QString pp;
 	try{
+		// don't know why this is a parameter and not a local variable
+		// (does it make any sense?)
 		pp = QString::fromStdString(paramValue(0));
 	}catch(ExceptionCantFind const&){ untested();
 		ok = false;
@@ -144,25 +156,58 @@ void SubCirPort::createSymbol()
   Ports.append(new Port(  0,  0));
 }
 // -------------------------------------------------------
+std::string SubCirPort::paramName(unsigned n) const
+{
+	if(n == 0){
+		return "Num";
+	}else if(n==1){
+		return "Type";
+	}else{
+		return Symbol::paramName(n-2);
+	}
+}
+std::string SubCirPort::paramValue(unsigned n) const
+{
+//	this is not correct.
+	if(n == 0){
+		trace1("SubCirPort::paramValue", _pos);
+		return std::to_string(_pos);
+	}else if(n==1){
+		return _some_type;
+	}else{
+		return "incomplete";
+		incomplete();
+	}
+}
+// -------------------------------------------------------
 void SubCirPort::setParameter(unsigned n, std::string const& vv)
 {
 	trace3("SubCirPort::setParameter", label(), n, vv);
-	Component::setParameter(n, vv);
+	Component::setParameter(n, vv); // noop?
 	QString v = QString::fromStdString(vv);
 
-	bool ok;
-	int pos = v.toInt(&ok);
+	if(n==0){
+		bool ok;
+		int pos = v.toInt(&ok);
+		trace1("SubCirPort::setParameter portno", pos);
 
-	--pos; // QUCS numbers start at 1.
-	if(!ok){
-		incomplete();
-		// throw approriate error
-	}else if(portExists(pos)){ untested();
-		// possibly missing more error handling
-		assert(scope());
-		assert(owner());
-		trace2("setting scope port", owner()->label(), pos);
-		scope()->setPort(pos, port(pos).value());
+		--pos; // QUCS numbers start at 1.
+		if(!ok){
+			incomplete();
+			throw Exception("can't parse " + vv);
+			// throw approriate error
+		}else if(portExists(pos)){ untested();
+			// possibly missing more error handling
+			assert(scope());
+			assert(owner());
+			trace2("setting scope port", owner()->label(), pos);
+			scope()->setPort(pos, port(pos).value());
+			_pos = pos+1;
+		}else{
+			_pos = pos+1;
+		}
+	}else if(n==1){
+		_some_type = vv;
 	}else{
 	}
 }
