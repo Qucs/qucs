@@ -30,7 +30,6 @@
 
 namespace {
 
-// BUG: move to .cpp
 // BUG: must derive from subckt_model (or so)
 // Subcircuit is used as "subcircuit instance"..
 // but a subcircuit instance is not a Component...
@@ -64,7 +63,21 @@ private: // Symbol
 
   // void setParameter(QString const& name, QString const& value);
   void setParameter(unsigned i, std::string const& value) override;
-  unsigned paramCount() const override{ incomplete(); return 1; }
+  unsigned paramCount() const override;
+
+  std::string paramName(unsigned i) const override;
+  std::string paramValue(unsigned i) const override{
+	  if(!i){
+		  // BUG. don't use Props
+		  return Props.at(0)->Value.toStdString();
+	  }else{
+		  return Symbol::paramName(i-1);
+	  }
+  }
+  std::string paramValue(std::string const& x) const override{
+	  incomplete();
+	  return Component::paramValue(x);
+  }
 
 private: // overrides
   void build();
@@ -89,6 +102,20 @@ Subcircuit::Subcircuit() : Component() // gaah sckt_base
   new_subckt(); // triggers sckt expansion
 }
 
+// ---------------------------------------------------------------------
+std::string Subcircuit::paramName(unsigned i) const
+{
+  if(!i){
+	  return "File";
+  }else{
+	  return Symbol::paramName(i-1);
+  }
+}
+// ---------------------------------------------------------------------
+unsigned Subcircuit::paramCount() const
+{
+  return 1 + Symbol::paramCount();
+}
 // ---------------------------------------------------------------------
 Subcircuit::Subcircuit(Subcircuit const&x) : Component(x)
 {
@@ -519,7 +546,6 @@ public:
 		auto D=docfmt_dispatcher["leg_sch"];
 		assert(D);
 
-		qDebug() << "reading subckt .sch";
 		D->load(pstream, *this);
 		//d->parse(pstream);
 
@@ -531,7 +557,8 @@ public:
 	SchematicModel* scope() override{return _subckt;};
 
 private:
-	std::string getParameter(std::string const&) const{ untested();
+	std::string paramValue(std::string const&) const{ untested();
+		incomplete();
 		return "incomplete";
 	}
 	Port& port(unsigned){ untested();

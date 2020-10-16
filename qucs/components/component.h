@@ -78,6 +78,7 @@ protected: // symbol interface
   unsigned paramCount() const override;
   std::string paramValue(unsigned i) const override;
   std::string paramName(unsigned i) const override;
+  std::string paramValue(std::string const& name) const override;
 
 protected:
   void setParameter(unsigned i, std::string const&) override;
@@ -193,6 +194,7 @@ public: // old mess
   QString const& name() const{ return Name; }
 //  virtual QString const& name() const{return Name;}
   void setName(QString const& n){ Name = n; }
+  virtual bool useObsoleteProps() const {return true;}
 
 
 private:
@@ -216,9 +218,6 @@ protected:
 
   void copyComponent(Component*);
   Property * getProperty(const QString&);
-private:
-  std::string getParameter(std::string const& name) const override;
-  std::string getParameter(unsigned pos) const override;
 
 private: // (hopefully) obsolete callbacks
   void recreateCallback();

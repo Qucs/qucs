@@ -11,10 +11,8 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-/*!
- * \file main.cpp
- * \brief Implementation of the main application.
- */
+
+// QUCS (the GUI)
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
@@ -164,7 +162,7 @@ private: // SchematicSymbol
     return nullptr;
   }
   // bug, forward to schematic object (it doesn't exist yet).
-  std::string getParameter(std::string const&x) const{
+  std::string paramValue(std::string const&x) const{
     if(x=="DocName"){
       return DocName;
     }else if(x=="ViewX1"){

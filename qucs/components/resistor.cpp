@@ -40,6 +40,8 @@ public:
 
 protected:
   void createSymbol();
+private:
+  virtual bool useObsoleteProps() const{ return false; }
 }D;
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "R", &D);
 static Module::INSTALL pp("lumped", &D);

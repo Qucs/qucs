@@ -290,7 +290,7 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 		int my = 0;
 		unsigned r = 0;
 		try {itested();
-			std::string mxs = s->getParameter("$hflip"); // indicates if x axis is mirrored
+			std::string mxs = s->paramValue("$hflip"); // indicates if x axis is mirrored
 			mx = atoi(mxs.c_str()); // \pm 1
 			trace3("hflip", mx, my, r);
 			assert(mx == 1);
@@ -300,14 +300,14 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 			incomplete();
 		}
 		try {itested();
-			std::string mys = s->getParameter("$vflip"); // indicates if y axis is mirrored
+			std::string mys = s->paramValue("$vflip"); // indicates if y axis is mirrored
 			my = atoi(mys.c_str());
 			my -= 1;
 			my /= -2;
 		}catch(ExceptionCantFind const&){ untested();
 		}
 		try {itested();
-			std::string rs = s->getParameter("$angle");
+			std::string rs = s->paramValue("$angle");
 			r = atoi(rs.c_str());
 			assert(!(r%90));
 			assert(r<360);

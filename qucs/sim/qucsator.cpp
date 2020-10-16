@@ -203,16 +203,19 @@ void QucsatorLang::printComponent(Component const* c, stream_t& s) const
 		for(unsigned ii=0; ii<sym->paramCount(); ++ii) {
 			trace3("param", c->label(), ii, sym->paramCount());
 			std::string name = sym->paramName(ii);
-			std::string value = sym->paramValue(ii);
-			trace2("param", name, value);
+			//trace2("param", name, value);
 
-			if(name==""){itested();
-				incomplete(); // is_printable...
+			if(name.at(0)=='$'){itested();
+				// hmmm
+//			}else if(!sym->paramIsPrintable(ii)){ untested();
+			}else if(name==""){itested();
+				incomplete();
 			}else if(name == "File") {
 				// hack
 			}else if(name == "Symbol") {
 				// hack??
 			}else{
+				std::string value = sym->paramValue(ii);
 				s << " " << name << "=\"" << value << "\"";
 			}
 		}

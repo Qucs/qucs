@@ -118,6 +118,7 @@ private: // SchematicSymbol
 		return _m;
 	}
 	std::string getParameter(std::string const&) const{ untested();
+		incomplete();
 		return "incomplete getParameter";
 	}
 
@@ -598,6 +599,7 @@ unsigned SchematicModel::numPorts() const
 
 void SchematicModel::setPort(unsigned i, Node* n)
 {
+	trace2("setPort", i, _ports.size());
 	_ports.resize(std::max(_ports.size(), size_t(i)+1));
 	_ports[i] = n;
 }
