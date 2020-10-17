@@ -337,17 +337,19 @@ void Component::paint(ViewPainter *p) const
 
   p->setPen(QPen(Qt::black,1));
   p->map(cx+tx, cy+ty, x, y);
-  if(showName) {itested();
-    p->drawText(x, y, 0, 0, Qt::TextDontClip, Name);
-    y += p->LineSpacing;
-  }
+///  if(showName) {itested();
+///    p->drawText(x, y, 0, 0, Qt::TextDontClip, Name);
+///    y += p->LineSpacing;
+///  }
   // write all properties
+#if 0
   for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next()){
     if(p4->display) {itested();
       p->drawText(x, y, 0, 0, Qt::TextDontClip, p4->Name+"="+p4->Value);
       y += p->LineSpacing;
     }
   }
+#endif
 
   // not here.
   if(isActive == COMP_IS_OPEN){

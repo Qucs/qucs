@@ -66,6 +66,54 @@ ElementGraphics::~ElementGraphics()
 }
 /*--------------------------------------------------------------------------*/
 // there is also QGraphicsSimpleTextItem, but is does not allow for edits.
+class ElementText : public QGraphicsItem{
+private:
+	ElementText(ElementText const&) = delete;
+public:
+	explicit ElementText(ElementGraphics* parent)
+	  : QGraphicsItem(parent), _labeltext(nullptr) {
+		Element const* e = element(parent);
+		setParentItem(parent);
+
+		int k=0;
+		if(e->showLabel()){
+			_labeltext = new QGraphicsTextItem(this);
+			_labeltext->setPlainText(e->label());
+			k += _labeltext->boundingRect().height();
+		}else{
+		}
+		if(auto s=dynamic_cast<Symbol const*>(e)){
+			int show = atoi(s->paramValue("$param_display").c_str());
+			for(unsigned i=0; i<s->paramCount(); ++i){
+				auto n = QString::fromStdString(s->paramName(i));
+				if(n.at(0)=='$'){
+				}else if(show % 2){
+					auto t=new QGraphicsTextItem(this);
+					auto v = QString::fromStdString(s->paramValue(i));
+					t->setPlainText(n+"="+v);
+					t->setPos(0, k/2);
+					k += t->boundingRect().height();
+				}else{
+				}
+				show/=2;
+			}
+		}else{
+		}
+	}
+	~ElementText(){
+		// delete stuff?
+	}
+private:
+	virtual QRectF boundingRect() const override{
+		return QRectF();
+	}
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override{}
+public:
+private:
+	QGraphicsTextItem* _labeltext;
+	std::vector<QGraphicsTextItem*> _more;
+};
+/*--------------------------------------------------------------------------*/
 class TextGraphics : public QGraphicsTextItem{
 public:
 	explicit TextGraphics(Text& t, QGraphicsItem* parent)
@@ -133,11 +181,8 @@ void ElementGraphics::attachElement(Element* e)
 		}
 	}
 
-	if(e->showLabel()){
-		auto t=new QGraphicsTextItem(this);
-		t->setPlainText(e->label());
-	}else{
-	}
+	// who owns this?
+	auto t = new ElementText(this);
 
 	auto sym = dynamic_cast<Symbol const*>(_e);
 
