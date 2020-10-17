@@ -130,6 +130,8 @@ std::string Symbol::paramValue(std::string const& n) const
 		return std::to_string(cy());
 	}else if(n=="$mfactor"){
 		return "1"; // isActive in Component.
+	}else if(n=="$param_display"){
+		return "0";
 	}else{ untested();
 	  throw ExceptionCantFind(n, label().toStdString());
 	}
