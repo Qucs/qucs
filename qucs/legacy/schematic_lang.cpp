@@ -655,7 +655,7 @@ Component* LegacySchematicLanguage::parseComponentObsoleteCallback(const QString
 	if(!ok) return NULL;
 
 	assert(c);
-	assert(c->obsolete_model_hack().at(0) != '.');
+//	assert(c->obsolete_model_hack().at(0) != '.');
 
 	{ untested();
 		n  = s.section(' ',7,7);    // mirror y axis
@@ -845,11 +845,14 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 	}
 
 	// fetch proto from dictionary.
-	Element const* s=symbol_dispatcher[typestring];
+	Element const* s = symbol_dispatcher[typestring];
 
-	if(Component const* sc=dynamic_cast<Component const*>(s)){ untested();
+	if(!s){
+		incomplete(); // throw? warn? error?
+		trace1("cannot find", typestring);
+	} else if(Component const* sc=dynamic_cast<Component const*>(s)){ untested();
 		// legacy component
-		Element* k=sc->clone(); // memory leak?
+		Element* k = sc->clone(); // memory leak?
 		e = prechecked_cast<Element*>(k);
 
 		// set_type?
@@ -868,6 +871,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 		}else{ untested();
 			untested();
 		}
+	}else{
 	}
 
 	if(e) { untested();

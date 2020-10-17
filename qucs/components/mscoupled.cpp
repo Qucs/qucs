@@ -1,24 +1,38 @@
 /***************************************************************************
-                          mscoupled.cpp  -  description
-                             -------------------
-    begin                : Sat Aug 23 2003
-    copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+    copyright            : (C) 2003 Michael Margraf
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "mscoupled.h"
+#include "component.h"
+#include "globals.h"
+#include "module.h"
 
+namespace{
 
-MScoupled::MScoupled()
+class MScoupled : public Component  {
+public:
+  explicit MScoupled();
+  MScoupled(MScoupled const& c) : Component(c) {}
+  ~MScoupled();
+private:
+  Element* clone() const override{
+	  return new MScoupled(*this);
+  }
+  // static Element* info(QString&, char* &, bool getNewOne=false);
+}D;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "MCOUPLED", &D);
+static Module::INSTALL pp("RF", &D);
+
+MScoupled::MScoupled() : Component()
 {
   Description = QObject::tr("coupled microstrip line");
 
@@ -50,8 +64,7 @@ MScoupled::MScoupled()
 
   tx = x1+4;
   ty = y2+4;
-  Model = "MCOUPLED";
-  Name  = "MS";
+  setTypeName("MCOUPLED");
 
   Props.append(new Property("Subst", "Subst1", true,
 	QObject::tr("name of substrate definition")));
@@ -74,11 +87,7 @@ MScoupled::~MScoupled()
 {
 }
 
-Component* MScoupled::newOne()
-{
-  return new MScoupled();
-}
-
+#if 0
 Element* MScoupled::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Coupled Microstrip Line");
@@ -86,4 +95,7 @@ Element* MScoupled::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new MScoupled();
   return 0;
+}
+#endif
+
 }
