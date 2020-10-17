@@ -109,6 +109,8 @@ Component::Component() : _rotated(0)
   ty = 0;
 
   Props.setAutoDelete(true);
+
+  Model=""; //remove later.
 }
 
 Element* Component::clone() const
