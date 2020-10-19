@@ -345,7 +345,6 @@ bool LibComp::createSubNetlist(DocumentStream& stream, QStringList &FileList,
       file.close();
       //?stream->writeRawBytes(FileContent.value(), FileContent.size());
       stream << FileContent.data(); // BUG. lang?!
-      qDebug() << "hi from libcomp";
     }
   }
 
