@@ -26,7 +26,7 @@ struct tQucsSettings {
   QString Qucsconv;
   QString BinDir;
   QString LangDir;
-  QString const& libDir() const{ untested(); return _libDir;}
+  QString const& libDir() const{ return _libDir;}
   void setLibDir(QString const& l){
 	  trace1("setLibDir", l);
 	  untested(); _libDir = l;

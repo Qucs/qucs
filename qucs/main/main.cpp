@@ -695,7 +695,7 @@ int main(int argc, char *argv[])
 
   // BUG BUG BUG. not here
   var = getenv("QUCS_LIBRARY");
-  if(var != NULL) { untested();
+  if(var != NULL) {
     trace2("QUCS_LIBRARY", var, QucsDir.canonicalPath());
     QucsSettings.setLibDir(QString(var));
   }else{

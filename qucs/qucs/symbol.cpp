@@ -225,7 +225,7 @@ std::string Symbol::paramValue(unsigned i) const
 }
 /*--------------------------------------------------------------------------*/
 std::string Symbol::paramName(unsigned i) const
-{ untested();
+{
 	trace2("Symbol::paramName", label(), i);
 	switch(i){
 	case 0:

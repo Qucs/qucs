@@ -47,7 +47,7 @@ private:
   void setParameter(unsigned i, std::string const&) override;
   std::string paramName(unsigned i) const override;
   std::string paramValue(unsigned i) const override;
-  unsigned paramCount() const override{ untested();
+  unsigned paramCount() const override{
 	  return Symbol::paramCount() + 2;
   }
 
