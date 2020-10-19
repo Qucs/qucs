@@ -16,6 +16,21 @@
 #include <typeinfo>
 #endif
 /*--------------------------------------------------------------------------*/
+static void parseItem(QString Line, Element*e)
+{
+	assert(e);
+	// BUG: callback
+	if(auto p=dynamic_cast<Painting*>(e)) { untested();
+		if(!p->load(Line)) { untested();
+			incomplete();
+			// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line format!"));
+			throw Exception("cannot parse painting");
+
+		}else{ untested();
+		}
+	}else{
+	}
+}
 /*--------------------------------------------------------------------------*/
 static bool PaintingListLoad(QTextStream& str, PaintingList& List)
 { untested();
@@ -23,6 +38,7 @@ static bool PaintingListLoad(QTextStream& str, PaintingList& List)
 	Painting *p=0;
 	QString Line, cstr;
 	while(!stream->atEnd()) { untested();
+
 		Line = stream->readLine();
 		if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
 
@@ -38,7 +54,7 @@ static bool PaintingListLoad(QTextStream& str, PaintingList& List)
 
 		cstr = Line.section(' ',0,0);    // painting type
 		qDebug() << cstr;
-		if(Painting const* pp=painting_dispatcher[cstr.toStdString()]){ untested();
+		if(Painting const* pp = painting_dispatcher[cstr.toStdString()]){ untested();
 			p=prechecked_cast<Painting*>(pp->clone());
 			assert(p);
 		}else{ untested();
@@ -47,14 +63,8 @@ static bool PaintingListLoad(QTextStream& str, PaintingList& List)
 			return false;
 		}
 
-		if(!p->load(Line)) { untested();
-			incomplete();
-			// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line format!"));
-			delete p;
-			return false;
-		}else{ untested();
-		}
-		qDebug() << "got painting" << cstr << p->name();
+		parseItem(Line, p);
+
 		List.append(p);
 	}
 
@@ -69,7 +79,7 @@ namespace{
 /*--------------------------------------------------------------------------*/
 class LegacySchematicLanguage : public SchematicLanguage {
 public:
-	LegacySchematicLanguage() : SchematicLanguage(){ untested();
+	LegacySchematicLanguage() : SchematicLanguage(){
 	}
 private: // stuff saved from schematic_file.cpp
 	Diagram* loadDiagram(QString const& Line, DocumentStream& /*, DiagramList *List */) const;
@@ -212,6 +222,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	return true;
 }
 
+// some kind of parse_module_body
 // BUG: this is schematicFormat
 void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& owner) const
 { untested();
@@ -264,14 +275,13 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 			}else if(mode=='S'){ untested();
 				incomplete();
 				try{ untested();
-					qDebug() << "symbol Paintings";
+					// incomplete. use parseItem.
 					PaintingListLoad(stream, owner.symbolPaintings());
 					c = nullptr;
 				}catch(...){ untested();
 					incomplete();
 				}
 			}else if(mode=='W'){ untested();
-				qDebug() << "wire parse?" << Line;
 				Symbol* sw= symbol_dispatcher.clone("Wire");
 				assert(sw);
 				sw->setOwner(&owner);
@@ -372,17 +382,17 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 // -------------------------------------------------------
 static const std::string typesep(":");
 static std::string mangle(std::string t)
-{ untested();
+{
 	auto pos = t.find(typesep);
 	std::string ret="";
 	return t.substr(0, pos);
 }
 
 void LegacySchematicLanguage::printCommand(CmdElement const* c, stream_t& s) const
-{ untested();
+{
 	s << "  <." << c->Name << " ";
 
-	{ untested();
+	{
 		s << c->label();
 	}
 	s << " ";
@@ -390,7 +400,7 @@ void LegacySchematicLanguage::printCommand(CmdElement const* c, stream_t& s) con
 	int i = 0;
 	if(!c->showName){ untested();
 		i = 4;
-	}else{ untested();
+	}else{
 	}
 	std::string active = c->paramValue("$mfactor");
 	i |= atoi(active.c_str());
@@ -405,16 +415,16 @@ void LegacySchematicLanguage::printCommand(CmdElement const* c, stream_t& s) con
 	// FIXME: ask element for properties, not for dictionary
 	auto cc=const_cast<CmdElement*>(c); // BUGBUGBUGBUG
 	// cannot access Props without this hack
-	for(Property *p1 = cc->Props.first(); p1 != 0; p1 = cc->Props.next()) { untested();
+	for(Property *p1 = cc->Props.first(); p1 != 0; p1 = cc->Props.next()) {
 		if(p1->Description.isEmpty()){ untested();
 			s << " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations
-		}else{ untested();
+		}else{
 			s << " \""+p1->Value+"\"";
 		}
 		s << " ";
-		if(p1->display){ untested();
+		if(p1->display){
 			s << "1";
-		}else{ untested();
+		}else{
 			s << "0";
 		}
 	}
@@ -434,7 +444,7 @@ static void printArgs(Symbol const* sym, stream_t& s)
 	int vflip = atoi(sym->paramValue("$vflip").c_str());
 	assert(hflip);
 	assert(vflip);
-	if(hflip==1){ untested();
+	if(hflip==1){
 		s << " " << (1+vflip) / 2;
 		s << " " << (angle/90) % 4;
 	}else if(vflip==1){ untested();
@@ -449,7 +459,7 @@ static void printArgs(Symbol const* sym, stream_t& s)
 	}
 
 	int show = atoi(sym->paramValue("$param_display").c_str());
-	for(unsigned i=0; i<sym->paramCount(); ++i){ untested();
+	for(unsigned i=0; i<sym->paramCount(); ++i){
 		trace3("display", i, show, sym->paramName(i));
 		// if(sym->paramIsPrintabl(i))
 		std::string n = sym->paramName(i);
@@ -462,7 +472,7 @@ static void printArgs(Symbol const* sym, stream_t& s)
 }
 // was: void Schematic::saveComponent(QTextStream& s, Component const* c) const
 void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
-{ untested();
+{
 	s << "  <" << mangle(sym->typeName()) << " ";
 
 	if(sym->label()==""){ untested();
@@ -473,12 +483,12 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
 
 	Component const* c=dynamic_cast<Component const*>(sym);
 	Component* cc=const_cast<Component*>(c); // BUGBUGBUGBUG
-	if(c && c->useObsoleteProps()){ untested();
+	if(c && c->useObsoleteProps()){
 		s << " ";
 		int i=0;
-		if(!c->showName){ untested();
+		if(!c->showName){
 			i = 4;
-		}else{ untested();
+		}else{
 		}
 		i |= c->isActive;
 		s << QString::number(i);
@@ -492,7 +502,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
 		}
 		s << " " << QString::number(c->rotated());
 		for(Property *p1 = cc->Props.first(); p1 != 0; p1 = cc->Props.next()) {
-			if(p1->Description.isEmpty()){ untested();
+			if(p1->Description.isEmpty()){
 				s << " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations
 			}else{
 				s << " \""+p1->Value+"\"";
@@ -504,7 +514,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
 				s << "0";
 			}
 		}
-	}else{ untested();
+	}else{
 		printArgs(sym, s);
 	}
 

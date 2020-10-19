@@ -530,39 +530,39 @@ void QucsLib::slotShowComponent(QListWidgetItem *Item)
     }
 
     QString content;
-    if(!getSection("Description", lineCompInfo.compDef, content))
-    {
+    if(!getSection("Description", lineCompInfo.compDef, content)) {
         QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
         return;
-    }
+    }else{
+	 }
     CompDescr->append(content);
 
-    if(!getSection("Model", lineCompInfo.compDef, content))
-    {
+    if(!getSection("Model", lineCompInfo.compDef, content)) {
         QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
         return;
-    }
+    }else{
+	 }
     Symbol->ModelString = content;
 
-    if(!getSection("VHDLModel", lineCompInfo.compDef, content))
-    {
+    if(!getSection("VHDLModel", lineCompInfo.compDef, content)) {
         QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
         return;
-    }
+    }else{
+	 }
     Symbol->VHDLModelString = content;
 
-    if(!getSection("VerilogModel", lineCompInfo.compDef, content))
-    {
+    if(!getSection("VerilogModel", lineCompInfo.compDef, content)) {
         QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
         return;
-    }
+    }else{
+	 }
     Symbol->VerilogModelString = content;
 
-    if(!getSection("Symbol", lineCompInfo.compDef, content))
-    {
+    if(!getSection("Symbol", lineCompInfo.compDef, content)) {
         QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
         return;
-    }
+    }else{
+	 }
     Symbol->setSymbol(content, lineCompInfo.libPath, Item->text());
 
     // change currently selected category, so the user will 

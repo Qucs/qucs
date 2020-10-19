@@ -123,7 +123,7 @@ void QucsatorLang::printSymbol(Symbol const* d, stream_t& s) const
 		printCommand(c, s);
 	}else if(auto c=dynamic_cast<Component const*>(d)){
 		printComponent(c, s);
-	}else if(d){ untested();
+	}else if(d){
 		printSymbol_(d, s);
 	}else{
 		assert(false);

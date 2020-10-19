@@ -2927,7 +2927,7 @@ void QucsApp::slotSaveSchematicToGraphicsFile(bool diagram)
 // BUG: move to QucsSettings::QucsSettings
 tQucsSettings::tQucsSettings(){ incomplete(); }
 bool loadSettings()
-{ untested();
+{
     QSettings settings("qucs","qucs");
 
     if(settings.contains("x"))QucsSettings.x=settings.value("x").toInt();
@@ -2961,7 +2961,7 @@ bool loadSettings()
     //if(settings.contains("OctaveDir"))QucsSettings.OctaveDir = settings.value("OctaveDir").toString();
     //if(settings.contains("ExamplesDir"))QucsSettings.ExamplesDir = settings.value("ExamplesDir").toString();
     //if(settings.contains("DocDir"))QucsSettings.DocDir = settings.value("DocDir").toString();
-    if(settings.contains("OctaveExecutable")) { untested();
+    if(settings.contains("OctaveExecutable")) {
         QucsSettings.OctaveExecutable = settings.value("OctaveExecutable").toString();
     } else { untested();
         if(settings.contains("OctaveBinDir")) { untested();

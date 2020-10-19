@@ -23,7 +23,7 @@ class DocumentStream : public QTextStream {
 public:
 	explicit DocumentStream(){ incomplete(); }
 	explicit DocumentStream(QFile* /* BUG const */ file);
-	explicit DocumentStream(QString /* BUG const */ * filename, QIODevice::OpenModeFlag flag) :
+	explicit DocumentStream(QString /* BUG const */ * filename, QIODevice::OpenModeFlag flag = QIODevice::ReadOnly) :
 		QTextStream(filename, flag){}
 
 public:

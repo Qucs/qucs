@@ -16,6 +16,7 @@
 
 #include "globals.h"
 #include "module.h"
+#include "schematic_lang.h"
 #include "symbol.h"
 #include "io_trace.h"
 #include "qt_compat.h"
@@ -26,7 +27,7 @@ namespace{
 
 class LIB{
 public:
-	LIB(){ untested();
+	LIB(){
 		loadLibFiles();
 	}
 private:
@@ -37,7 +38,7 @@ private:
 }l;
 
 void LIB::loadLibFiles()
-{ untested();
+{
     QList<QPair<QString, bool> > LibFiles;
     ComponentLibrary parsedlib;
     QString libPath;
@@ -61,12 +62,12 @@ void LIB::loadLibFiles()
 	 QDir SysLibDir(QucsSettings.libDir());
     // system libraries
     QStringList SysLibFiles = SysLibDir.entryList(QStringList("*.lib"), QDir::Files, QDir::Name);
-    foreach(QString s, SysLibFiles) { untested();
+    foreach(QString s, SysLibFiles) {
 		 // build list with relative path
       LibFiles.append(qMakePair(s, true));
 	 }
 
-    for (int i = 0; i < LibFiles.count(); ++i ) { untested();
+    for (int i = 0; i < LibFiles.count(); ++i ) {
       libPath = LibFiles[i].first;
       libPath.chop(4); // remove extension
       int result = parseComponentLibrary(libPath, parsedlib);
@@ -82,7 +83,7 @@ void LIB::loadLibFiles()
       case QUCS_COMP_LIB_CORRUPT: untested();
         error(3, "Library is corrupt.");
         return;
-      default: untested();
+      default:
         break;
       }
 
@@ -90,16 +91,36 @@ void LIB::loadLibFiles()
 		// turn it into Element...
 		for(ComponentLibraryItem c : parsedlib){
 //			trace2("libcomp", parsedlib.name, c.name); // ->label());
-			// trace4("libcomp", c.name, c.modelString, c.symbol, c.definition);
-			Symbol* e = symbol_dispatcher.clone("Lib");
+			trace0("=================");
+			if(c.symbol==""){
+				c.symbol=parsedlib.defaultSymbol;
+			}else{
+			}
+			trace4("libcomp", c.name, c.modelString, c.symbol, c.definition);
+			trace0("=================");
+			Symbol* sym = symbol_dispatcher.clone("Lib");
+
+			if (0){
+				auto D = doclang_dispatcher["leg_sch"];
+				auto L = dynamic_cast<SchematicLanguage const*>(D);
+				assert(L);
+
+				DocumentStream stream(&c.symbol);
+
+//				while(!stream.atEnd()){
+//					incomplete();
+//					auto type = L->find_type(stream);
+//				}
+			}
+
 			// e->setTypeName(parsedlib.name.toStdString() + ":" + c.name.toStdString());
 
-			e->setLabel(parsedlib.name.toStdString() + ":" + c.name.toStdString());
+			sym->setLabel(parsedlib.name.toStdString() + ":" + c.name.toStdString());
 
-			e->setParameter("section", parsedlib.name.toStdString());
-		   e->setParameter("component", c.name.toStdString());
+			sym->setParameter("section", parsedlib.name.toStdString());
+		   sym->setParameter("component", c.name.toStdString());
 
-			new Module::INSTALL(parsedlib.name.toStdString(), e);
+			new Module::INSTALL(parsedlib.name.toStdString(), sym);
 			// todo: memory leak.
 		}
 
@@ -116,7 +137,7 @@ void LIB::loadLibFiles()
     if (UserLibCount > 0) { untested();
       // add a separator to distinguish between user libraries and system libs
       // Library->insertSeparator(UserLibCount);
-    }else{ untested();
+    }else{
 	 }
     // slotSelectLibrary(0);
 }
