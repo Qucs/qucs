@@ -540,7 +540,7 @@ QRectF Wire::boundingRect() const
   assert(x1() == 0);
   assert(y1() == 0);
   int N = 10;
-  assert(_scale>0);
+  // assert(_scale>0); oops??
 
   if(_angle==0 || _angle==1){ itested();
     return QRectF(-5, -5, x2()+N, y2()+N);

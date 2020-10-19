@@ -1,9 +1,5 @@
 /***************************************************************************
-                               module.cpp
-                              ------------
-    begin                : Thu Nov 5 2009
     copyright            : (C) 2009 by Stefan Jahn
-    email                : stefan@lkcc.org
     refactored           : (C) 2016 Felix Salfelder
  ***************************************************************************/
 
@@ -22,7 +18,7 @@
 #include <QDebug>
 
 #include "element.h"
-#include "components/component.h"
+// #include "components/component.h"
 // #include "paintings/paintings.h"
 // #include "diagrams/diagrams.h"
 #include "module.h"
@@ -36,7 +32,7 @@ Categories Category::categories;
 QMap<QString, QString> Module::vaComponents;
 
 // register Elements to the gui.
-// the implementation is legacy, but the interface should be able to survive.
+// the implementation is legacy, but the interface might survive.
 INTERFACE void guiRegisterElement (std::string const& cat, Element const* e)
 {
 	Module::registerElement(QString::fromStdString(cat), e);
@@ -55,12 +51,12 @@ void Module::registerElement (QString category, Element const* e)
   intoCategory(category.toStdString(), m);
 }
 
+#if 0 // hmm
 // Component registration using a category name and the appropriate
 // function returning a components instance object.
 void Module::registerComponent (QString, pInfoFunc)
 {
 	incomplete();
-#if 0 // pointless?
   Module * m = new Module ();
   m->info = info;
   m->category = category; // OUCH
@@ -77,8 +73,8 @@ void Module::registerComponent (QString, pInfoFunc)
   intoCategory (m);
   if (!Modules.contains (Model))
     Modules.insert (Model, m);
-#endif
 }
+#endif
 
 #if 0 // dont understand.
 // Returns instantiated component based on the given "Model" name.  If
@@ -161,7 +157,7 @@ incomplete();
 // If there is no such category yet, then the category gets created.
 void Module::intoCategory(std::string const& cat, Module * m)
 {
-  QString category=QString::fromStdString(cat);
+  QString category = QString::fromStdString(cat);
 
   // look through existing categories
   // // BUG linear search
@@ -517,23 +513,24 @@ Category::Category () {
   }
 }
 
-// Constructor creates named instance of module object.
-Category::Category (const QString name) {
+Category::Category (const QString name)
+{
   Name = name;
   while(!Content.isEmpty()) {
     delete Content.takeFirst();
   }
 }
 
-// Destructor removes instance of module object from memory.
-Category::~Category () {
+Category::~Category ()
+{
   while(!Content.isEmpty()) {
     delete Content.takeFirst();
   }
 }
 
 // Returns the available category names in a list of strings.
-QStringList Category::getCategories (void) {
+QStringList Category::getCategories (void)
+{
   QStringList res;
   QList<Category *>::const_iterator it;
   for (it = Category::categories.constBegin(); 
@@ -546,7 +543,8 @@ QStringList Category::getCategories (void) {
 // The function returns the registered modules in the given category
 // as a pointer list.  The pointer list is empty if there is no such
 // category available.
-QList<Module *> Category::getModules (QString category) {
+QList<Module *> Category::getModules (QString category)
+{
   QList<Module *> res;
   QList<Category *>::const_iterator it;
   for (it = Category::categories.constBegin();
@@ -561,7 +559,8 @@ QList<Module *> Category::getModules (QString category) {
 // Returns the index number into the category list for the given
 // category name.  The function returns minus 1 if there is no such
 // category.
-int Category::getModulesNr (QString category) {
+int Category::getModulesNr (QString category)
+{
   for (int i = 0; i < Category::categories.size(); i++) {
     if (category == Category::categories.at(i)->Name)
       return i;

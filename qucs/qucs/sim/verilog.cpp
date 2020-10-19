@@ -87,8 +87,8 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 	}else
 #endif
 	{
-		auto label = c->label();
-		auto type = c->typeName();
+		auto label = sym->label();
+		auto type = sym->typeName();
 		// : is not allowed in verilog
       std::replace( type.begin(), type.end(), ':', '$');
 		s << QString::fromStdString(type) << " ";
@@ -96,6 +96,9 @@ void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
 		s << "#(";
 
 			// DUPLICATE		print_args
+			if(!c){
+				incomplete();
+			}else
 		for(auto p2 : c->params()) {
 			if(p2->name().at(0) == '$'){
 			}else{
