@@ -111,6 +111,8 @@ Component::Component() : _rotated(0)
   Props.setAutoDelete(true);
 
   Model=""; //remove later.
+
+  setLabel(typeName());
 }
 
 Element* Component::clone() const

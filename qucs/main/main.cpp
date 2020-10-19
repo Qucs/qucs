@@ -692,11 +692,15 @@ int main(int argc, char *argv[])
 
   QucsSettings.BinDir =      QucsDir.absolutePath() + "/bin/";
   QucsSettings.LangDir =     QucsDir.canonicalPath() + "/share/qucs/lang/";
-  var = getenv("QUCS_LIBDIR");
+
+  // BUG BUG BUG. not here
+  var = getenv("QUCS_LIBRARY");
   if(var != NULL) { untested();
-	  QucsSettings.LibDir = QString(var);
+    trace2("QUCS_LIBRARY", var, QucsDir.canonicalPath());
+    QucsSettings.setLibDir(QString(var));
   }else{
-	  QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
+    trace0("no QUCS_LIBRARY");
+    QucsSettings.setLibDir(QucsDir.canonicalPath() + "/share/qucs/library/");
   }
   QucsSettings.OctaveDir =   QucsDir.canonicalPath() + "/share/qucs/octave/";
   QucsSettings.ExamplesDir = QucsDir.canonicalPath() + "/share/qucs/examples/";
@@ -708,8 +712,7 @@ int main(int argc, char *argv[])
   var = getenv("QUCSATOR");
   if(var != NULL) {
       QucsSettings.Qucsator = QString(var);
-  }
-  else { untested();
+  } else { untested();
       QucsSettings.Qucsator = QucsSettings.BinDir + "qucsator" + executableSuffix;
   }
 

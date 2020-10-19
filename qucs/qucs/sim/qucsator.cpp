@@ -53,8 +53,8 @@ private: // NetLang
   // inline void printItem(Element const* c, stream_t& s) const;
 
 private: // local
-  void printCommand(CmdElement const*, stream_t&) const;
-  void printSymbol(Symbol const*, stream_t&) const;
+  void printCommand(CmdElement const*, stream_t&) const; // override?
+  void printSymbol(Symbol const*, stream_t&) const override;
   void printSubckt(SubcktProto const*, stream_t&) const;
   void printComponent(Component const*, stream_t&) const;
   void printPainting(Painting const*, stream_t&) const override {incomplete();}
@@ -62,19 +62,71 @@ private: // local
 }qucslang;
 static Dispatcher<DocumentFormat>::INSTALL p(&doclang_dispatcher, "qucsator", &qucslang);
 
+static void printSymbol_(Symbol const* c, stream_t& s)
+{
+	// todo: mfactor.
+	//
+	assert(c);
+	trace2("pc", c->label(), c->typeName());
+
+	// if(c->isOpen())  TODO
+	if(0){
+	}else{
+
+		std::string type = c->typeName();
+		std::string hack_type = mangleType(type);
+
+		s << type << ":" << c->label();
+
+		Symbol const* sym=c;
+		trace3("print", c->label(), sym->numPorts(), sym->label());
+		for(unsigned i=0; i<sym->numPorts(); ++i){
+			std::string N = netLabel(sym->portValue(i));
+
+			s << " " << N;
+		}
+
+		for(unsigned ii=0; ii<sym->paramCount(); ++ii) {
+			trace3("param", c->label(), ii, sym->paramCount());
+			std::string name = sym->paramName(ii);
+			//trace2("param", name, value);
+
+			if(name.at(0)=='$'){itested();
+				// hmmm
+//			}else if(!sym->paramIsPrintable(ii)){ untested();
+			}else if(name==""){itested();
+				incomplete();
+			}else if(name == "File") {
+				// hack
+			}else if(name == "Symbol") {
+				// hack??
+			}else{
+				std::string value = sym->paramValue(ii);
+				s << " " << name << "=\"" << value << "\"";
+			}
+		}
+
+		s << hack_type;
+		s << '\n';
+	}
+}
 
 void QucsatorLang::printSymbol(Symbol const* d, stream_t& s) const
 {
 	if(!d){ untested();
 		incomplete();
 	}else if(auto c=dynamic_cast<SubcktProto const*>(d)){
+		// why is this a Symbol??
 		printSubckt(c, s);
 	}else if(auto c=dynamic_cast<CmdElement const*>(d)){ untested();
+		// why is this a Symbol??
 		printCommand(c, s);
 	}else if(auto c=dynamic_cast<Component const*>(d)){
 		printComponent(c, s);
-	}else{ untested();
-		s << "QucsatorLang::printSymbol incomplete\n";
+	}else if(d){ untested();
+		printSymbol_(d, s);
+	}else{
+		assert(false);
 		incomplete();
 	}
 }

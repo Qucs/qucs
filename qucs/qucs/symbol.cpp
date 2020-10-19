@@ -132,6 +132,12 @@ std::string Symbol::paramValue(std::string const& n) const
 		return "1"; // isActive in Component.
 	}else if(n=="$param_display"){
 		return "0";
+	}else if(n=="$hflip"){
+		incomplete();
+		return std::to_string(1);
+	}else if(n=="$vflip"){
+		incomplete();
+		return std::to_string(1);
 	}else{ untested();
 	  throw ExceptionCantFind(n, label().toStdString());
 	}
@@ -202,7 +208,8 @@ bool Symbol::paramIsPrintable() const
 /*--------------------------------------------------------------------------*/
 unsigned Symbol::paramCount() const
 {
-	return 2;
+	return 2; // TODO:  vflip hflip angle mfactor ...?
+	return 6;
 }
 /*--------------------------------------------------------------------------*/
 std::string Symbol::paramValue(unsigned i) const
@@ -227,6 +234,23 @@ std::string Symbol::paramName(unsigned i) const
 		return "$yposition";
 	default:
 		throw ExceptionCantFind(std::to_string(i), label().toStdString());
+	}
+}
+/*--------------------------------------------------------------------------*/
+void Symbol::setParameter(std::string const& name, std::string const& v)
+{
+	if(name == "$xposition"){
+		_cx = atoi(v.c_str());
+	}else if(name == "$yposition"){
+		_cy = atoi(v.c_str());
+	}else if(name == "$angle"){
+		incomplete();
+	}else if(name == "$hflip"){
+		incomplete();
+	}else if(name == "$vflip"){
+		incomplete();
+	}else{
+		throw ExceptionCantFind(name, label().toStdString());
 	}
 }
 /*--------------------------------------------------------------------------*/

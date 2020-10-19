@@ -66,6 +66,7 @@
 #include "printerwriter.h"
 #include "imagewriter.h"
 
+#include "settings.h"
 #include "../qucs-lib/qucslib_common.h"
 #include "misc.h"
 #include "platform.h"
@@ -382,6 +383,7 @@ void QucsApp::initView()
 }
 
 // Put all available libraries into ComboBox.
+// // BUG no here.
 void QucsApp::fillLibrariesTreeView ()
 { untested();
     QStringList LibFiles;
@@ -400,7 +402,7 @@ void QucsApp::fillLibrariesTreeView ()
 //    newitem->setBackground
     topitems.append (newitem);
 
-    QDir LibDir(QucsSettings.LibDir);
+    QDir LibDir(QucsSettings.libDir());
     LibFiles = LibDir.entryList(QStringList("*.lib"), QDir::Files, QDir::Name);
 
     // create top level library items, base on the library names
@@ -413,7 +415,7 @@ void QucsApp::fillLibrariesTreeView ()
         int result = parseComponentLibrary (libPath , parsedlibrary);
         QStringList nameAndFileName;
         nameAndFileName.append (parsedlibrary.name);
-        nameAndFileName.append (QucsSettings.LibDir + *it);
+        nameAndFileName.append (QucsSettings.libDir() + *it);
 
         QTreeWidgetItem* newlibitem = new QTreeWidgetItem((QTreeWidget*)0, nameAndFileName);
 
@@ -674,6 +676,7 @@ void QucsApp::slotSetCompView (int index)
   } else { untested();
     QString File;
     // Populate list of ComponentListWidgetItems
+    // // BUG: not here.
     QList<Module *>::const_iterator it;
     for (it = Comps.constBegin(); it != Comps.constEnd(); it++) { untested();
       if (Element const* e = (*it)->element()) { untested();
@@ -684,7 +687,7 @@ void QucsApp::slotSetCompView (int index)
       //   iconCompInfo = iconCompInfoStruct{catIdx, compIdx};
       //   v.setValue(iconCompInfo);
       //   icon->setData(Qt::UserRole, v);
-        CompComps->addItem(icon);
+        CompComps->addItem(icon); // takes ownership?
       }else{ untested();
         incomplete();
       }
@@ -1606,10 +1609,11 @@ void QucsApp::closeFile(int index)
 
     QucsDoc *Doc = getDoc(index);
     if(Doc->DocChanged) { untested();
-      switch(QMessageBox::warning(this,tr("Closing Qucs document"),
+      int m = QMessageBox::warning(this,tr("Closing Qucs document"),
         tr("The document contains unsaved changes!\n")+
         tr("Do you want to save the changes before closing?"),
-        tr("&Save"), tr("&Discard"), tr("Cancel"), 0, 2)) { untested();
+        tr("&Save"), tr("&Discard"), tr("Cancel"), 0, 2);
+        switch (m) {
         case 0 : slotFileSave();
                  break;
         case 2 : return;
@@ -2920,6 +2924,8 @@ void QucsApp::slotSaveSchematicToGraphicsFile(bool diagram)
 
 // #########################################################################
 // Loads the settings file and stores the settings.
+// BUG: move to QucsSettings::QucsSettings
+tQucsSettings::tQucsSettings(){ incomplete(); }
 bool loadSettings()
 { untested();
     QSettings settings("qucs","qucs");
@@ -3002,6 +3008,14 @@ bool loadSettings()
     settings.endArray();
 
     QucsSettings.numRecentDocs = 0;
+
+    // BUG: not here.
+    if(char* qucslibdir=getenv("QUCS_LIBRARY")){
+      trace1("override library", qucslibdir);
+      QucsSettings.setLibDir( QDir(QString(qucslibdir)).canonicalPath() );
+    }else{ untested();
+    }
+    trace2("loadSettings done", QucsSettings.libDir(), &QucsSettings);
 
     return true;
 }

@@ -44,11 +44,10 @@ Element::~Element()
 {
 }
 
-// pure?
-void Element::setCenter(int, int, bool)
+void Element::setCenter(int x, int y, bool relative)
 {
-	assert(false);
-	unreachable();
+	assert(!relative);
+	setCenter(pos_t(x,y));
 }
 
 void Element::getCenter(int&x, int&y) const

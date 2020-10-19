@@ -1,9 +1,6 @@
 /***************************************************************************
-                               module.h
-                              ----------
-    begin                : Thu Nov 5 2009
     copyright            : (C) 2009 by Stefan Jahn
-    email                : stefan@lkcc.org
+                               2016, 18, 20 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -29,8 +26,8 @@
 class Element;
 
 // function typedefs for circuits and analyses
-typedef Element * (* pInfoFunc) (QString&, char * &, bool);
-#if 1 // pointless
+//typedef Element * (* pInfoFunc) (QString&, char * &, bool);
+#if 0 // pointless
 typedef Element * (* pInfoVAFunc) (QString&, QString&, bool, QString);
 //typedef Component * (* pCreatorFunc) ();
 #endif
@@ -39,55 +36,55 @@ INTERFACE void guiRegisterElement (std::string const& category, Element const*);
 
 // sort of element wrapper for stuff displayed in the select menu.
 // each module is part of a Category. see below.
-class Module
-{
- public:
-  Module (Element const* e) : myElement(e) { }
+class Module {
+public:
+	Module (Element const* e) : _e(e) { }
 
-  ~Module ();
+	~Module ();
 
- public: // BUG: this is not part of Module
-  static void registerComponent (QString, pInfoFunc);
-  static void registerElement (QString, Element const*);
-  static void intoCategory( std::string const& cat, Module *);
+public: // BUG: this is not part of Module
+//	static void registerComponent (QString, pInfoFunc);
+	static void registerElement (QString, Element const*);
+	static void intoCategory( std::string const& cat, Module *);
 
-  // static Component * getComponent (QString);
+public:
+	static QHash<QString, Module *> Modules;
+	static QMap<QString, QString> vaComponents;
 
- public:
-  static QHash<QString, Module *> Modules;
-  static QMap<QString, QString> vaComponents;
+public:
+	static void registerModules (void);
+	static void unregisterModules (void);
 
- public:
-  static void registerModules (void);
-  static void unregisterModules (void);
+	bool has_element() const{ return _e; }
+	Element const* element() const{ return _e; }
 
-  bool has_element() const{ return myElement; }
-  Element const* element() const{ return myElement; }
- private:
-  Element const* myElement;
-  QString category; // why this?!
+public:
+	// TODO: this is somewhat redundant...
+	class INSTALL {
+	private:
+		const std::string _cat;
+		Element const* _p;
+	public:
+		INSTALL(const std::string& cat, Element const* p) :
+			_cat(cat),
+			_p(p)
+		{
+			if(p){
+				registerElement(QString::fromStdString(cat), p);
+			}else{
+				unreachable();
+			}
+		}
 
- public:
-  // TODO: this is somewhat redundant...
-  class INSTALL {
-  private:
-    const std::string _cat;
-    Element const* _p;
-  public:
-    INSTALL(const std::string& cat, Element const* p) :
-      _cat(cat),
-      _p(p)
-    {
-		qDebug() << "INSTALL" << QString::fromStdString(cat);
-      assert(p);
-		registerElement(QString::fromStdString(cat), p);
-    }
-    
-    ~INSTALL() {
-		 // remove stuff from GUI display
-		 // incomplete();
-    }
-  };
+		~INSTALL() {
+			// remove stuff from GUI display
+			// incomplete();
+		}
+	};
+
+private:
+	Element const* _e;
+	QString category; // why this?!
 };
 
 class Category;
@@ -95,34 +92,33 @@ class Categories : public QList<Category*>{};
 
 // a category. something like "lumped" or "simulations"
 // will show up in the dropdown thing.
-class Category
-{
- public:
-  Category ();
-  Category (const QString);
-  ~Category ();
+class Category {
+public:
+	Category ();
+	Category (const QString);
+	~Category ();
 
- public:
-  static Categories categories;
+public:
+	static Categories categories;
 
- public:
-  static QStringList getCategories (void);
-  static QList<Module *> getModules (QString);
-  static int getModulesNr (QString);
+public:
+	static QStringList getCategories (void);
+	static QList<Module *> getModules (QString);
+	static int getModulesNr (QString);
 
- public:
-  virtual QString const& name(){return Name;}
-  Module* operator[](unsigned x) const{
-	  return Content.at(x);
-  }
-  void push_back(Module* x){
-	  // incomplete(); // must refresh gui.
-	  Content.append(x);
-  }
- private: // internal
-  QString Name;
-  QList<Module *> Content;
+public:
+	virtual QString const& name(){return Name;}
+	Module* operator[](unsigned x) const{
+		return Content.at(x);
+	}
+	void push_back(Module* x){
+		// incomplete(); // must refresh gui.
+		Content.append(x);
+	}
+
+private: // internal
+	QString Name;
+	QList<Module *> Content;
 };
-
 
 #endif /* __MODULE_H__ */

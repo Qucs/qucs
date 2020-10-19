@@ -83,6 +83,7 @@ public:
 	  Name = s;
   }
 
+	virtual std::string paramValue(std::string const& n) const;
 private:
   virtual SchematicModel* scope() override;
 

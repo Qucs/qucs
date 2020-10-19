@@ -4,6 +4,7 @@
 #include <QMimeData>
 #include "io_trace.h"
 #include "element.h"
+#include "symbol.h"
 #include <QDrag>
 
 void ComponentWidget::startDrag(Qt::DropActions x)
@@ -48,6 +49,10 @@ ComponentListWidgetItem::ComponentListWidgetItem(Element const* e)
 	assert(e);
 	QString File = e->iconBasename();
 	auto Name = e->label();
+////	if(auto s=dynamic_cast<Symbol const*>(e)){
+////		Name = QString::fromStdString(s->typeName());
+////	}else{
+////	}
 	setIcon( QPixmap(":/bitmaps/" + File + ".png"));
 	setText(Name);
 	setToolTip("element: " + Name);
