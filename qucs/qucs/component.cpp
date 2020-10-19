@@ -623,13 +623,13 @@ std::string Component::paramValue(std::string const& name) const
   if(name=="$angle"){itested();
     trace1("Component::paramValue", _rotated);
     return std::to_string(_rotated*90);
-  }else if(name=="$tx"){ untested();
+  }else if(name=="$tx"){
     return std::to_string(tx);
-  }else if(name=="$ty"){ untested();
+  }else if(name=="$ty"){
     return std::to_string(ty);
-  }else if(name=="$xposition"){ untested();
+  }else if(name=="$xposition"){
     return std::to_string(center().first);
-  }else if(name=="$yposition"){ untested();
+  }else if(name=="$yposition"){
     return std::to_string(center().second);
   }else if(name=="$vflip"){itested();
     int m = mirroredX * 2 - 1;
@@ -1677,7 +1677,7 @@ std::string Component::paramValue(unsigned i) const
     return std::to_string(tx);
   }else if(i==s+1){ untested();
     return std::to_string(tx);
-  }else{ untested();
+  }else{
     i -= (s+2);
     assert( Props.at(i));
     return Props.at(i)->value().toStdString();
@@ -1687,13 +1687,13 @@ std::string Component::paramValue(unsigned i) const
 std::string Component::paramName(unsigned i) const
 {
   unsigned s = Symbol::paramCount();
-  if(i<Symbol::paramCount()){ untested();
+  if(i<Symbol::paramCount()){
     return Symbol::paramName(i);
-  }else if(i==s){ untested();
+  }else if(i==s){
     return "$tx";
-  }else if(i==s+1){ untested();
+  }else if(i==s+1){
     return "$ty";
-  }else{ untested();
+  }else{
     i -= (s+2);
     assert( Props.at(i));
     return Props.at(i)->name().toStdString();

@@ -368,35 +368,42 @@ int SymbolWidget::setSymbol( QString& SymbolString,
 {
   Warning.clear(); // clear any message possibly previously set by createStandardSymbol()
 
-  if(ModelString.count('\n') < 2) // single-line model: is a standard component
+  if(ModelString.count('\n') < 2){
+	    // single-line model: is a standard component
       return createStandardSymbol(Lib_, Comp_);  // build symbol from component type
+  }else{
+  }
 
-  if (SymbolString.isEmpty())//Whenever SymbolString is empty, it tries to load the default symbol
-  {
+	  //Whenever SymbolString is empty, it tries to load the default symbol
+  if (SymbolString.isEmpty()) {
       //Load the default symbol for the current Qucs library
       ComponentLibrary parsedlib;
       int result = parseComponentLibrary (Lib_, parsedlib, QUCS_COMP_LIB_HEADER_ONLY); // need just the default symbol
 
-      switch (result)//Check if the library was properly loaded
-      {
-        case QUCS_COMP_LIB_IO_ERROR:
-        {
+		//Check if the library was properly loaded
+      switch (result) {
+      case QUCS_COMP_LIB_IO_ERROR:
+			{
             QString filename = getLibAbsPath(Lib_);
             QMessageBox::critical(0, tr ("Error"), tr("Cannot open \"%1\".").arg (filename));
             return -1;
-        }
-        case QUCS_COMP_LIB_CORRUPT:
+			}
+      case QUCS_COMP_LIB_CORRUPT:
             QMessageBox::critical(0, tr("Error"), tr("Library is corrupt."));
             return -1;
-        default:
+      default:
             break;
       }
 
     // copy the contents of default symbol section to a string
     SymbolString = parsedlib.defaultSymbol;
+  }else{
   }
 
-  if (SymbolString.isEmpty()) return -1; // should not happen...
+  if (SymbolString.isEmpty()) {
+	  unreachable();
+	  return -1;
+  }
 
   Arcs.clear();
   Lines.clear();
@@ -447,8 +454,10 @@ int SymbolWidget::setSymbol( QString& SymbolString,
 }
 
 // ---------------------------------------------------------------------
+// gaah. again!!
 int SymbolWidget::analyseLine(const QString& Row)
 {
+	incomplete();
   QPen Pen;
   QBrush Brush;
   QColor Color;
