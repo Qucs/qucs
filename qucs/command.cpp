@@ -50,6 +50,7 @@ CmdElement::CmdElement(CmdElement const& p)
   for(auto i : p.Props){
     Props.append(new Property(*i));
   }
+  isActive = COMP_IS_ACTIVE; // bug.
 }
 
 /*!
@@ -179,6 +180,20 @@ int CmdElement::getTextSelected(int x_, int y_, float Corr)
   w = metrics.width(pp->Name+"="+pp->Value);
   if(x_ > w) return -1; // clicked past the property text end - selection invalid
   return Props.at()+1;  // number the property
+}
+
+std::string CmdElement::paramValue(std::string const& n) const
+{
+	if(n=="$xposition"){
+		return std::to_string(cx());
+	}else if(n=="$yposition"){
+		return std::to_string(cy());
+	}else if(n=="$mfactor"){
+		return std::to_string(isActive); // move to element? it does not have params (yet).
+	}else{
+		incomplete();
+		return "incomplete";
+	}
 }
 
 // -------------------------------------------------------

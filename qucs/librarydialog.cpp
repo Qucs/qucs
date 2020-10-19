@@ -268,7 +268,7 @@ void LibraryDialog::slotCreateNext()
     LibDir.cd("user_lib");
   }
 
-  LibFile.setFileName(QucsSettings.LibDir + NameEdit->text() + ".lib");
+  LibFile.setFileName(QucsSettings.libDir() + NameEdit->text() + ".lib");
   if(LibFile.exists()) {
     QMessageBox::critical(this, tr("Error"), tr("A system library with this name already exists!"));
     return;

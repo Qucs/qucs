@@ -173,7 +173,8 @@ qucs_default_components_la_SOURCES += \
 	${COMMANDS} \
 	${LUMPED_COMPONENTS} \
 	vacomponent.cpp \
-	vhdlfile.cpp libcomp.cpp ground.cpp \
+	vhdlfile.cpp \
+	ground.cpp \
 	verilogfile.cpp \
 	equation.cpp \
 	vafile.cpp \
@@ -191,7 +192,7 @@ noinst_HEADERS = $(MOCHEADERS) components.h \
   iprobe.h wprobe.h volt_noise.h ampere_noise.h msmbend.h msopen.h ampere_ac.h bjt.h \
   jfet.h mosfet.h msgap.h bjtsub.h mosfet_sub.h vpulse.h ipulse.h vrect.h \
   irect.h msvia.h amplifier.h opamp.h spicefile.h cpwopen.h cpwshort.h \
-  cpwgap.h cpwstep.h libcomp.h mutual.h mutual2.h noise_ii.h noise_iv.h \
+  cpwgap.h cpwstep.h mutual.h mutual2.h noise_ii.h noise_iv.h \
   noise_vv.h logical_or.h logical_nor.h logical_and.h logical_nand.h \
   logical_xor.h logical_xnor.h logical_inv.h digi_sim.h digi_source.h \
   coupler.h rs_flipflop.h d_flipflop.h jk_flipflop.h coaxialline.h \

@@ -42,7 +42,7 @@ QDir SysLibDir;
 // #########################################################################
 // Loads the settings file and stores the settings.
 bool loadSettings()
-{
+{ untested();
     QSettings settings("qucs","qucs");
     // Qucs Library Tool specific settings
     settings.beginGroup("QucsLib");
@@ -85,7 +85,7 @@ bool saveApplSettings(QucsLib *qucs)
 // #########################################################################
 
 int main(int argc, char *argv[])
-{
+{ untested();
   QApplication a(argc, argv);
 
   // apply default settings
@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
   if (var != NULL) {
     QucsDir = QDir(QString(var));
     QucsSettings.LangDir =     QucsDir.canonicalPath() + "/share/qucs/lang/";
-    QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
+    QucsSettings.setLibDir(   QucsDir.canonicalPath() + "/share/qucs/library/" );
   } else {
     QString QucsApplicationPath = QCoreApplication::applicationDirPath();
 #ifdef __APPLE__
@@ -112,18 +112,19 @@ int main(int argc, char *argv[])
     QucsDir.cdUp();
 #endif
     QucsSettings.LangDir = QucsDir.canonicalPath() + "/share/qucs/lang/";
-    QucsSettings.LibDir  = QucsDir.canonicalPath() + "/share/qucs/library/";
+    QucsSettings.setLibDir( QucsDir.canonicalPath() + "/share/qucs/library/" );
   }
 
   if(char* qucslibdir=getenv("QUCS_LIBRARY")){
-    qDebug() << "setting library" << qucslibdir;
-    QucsSettings.LibDir = QDir(QString(qucslibdir)).canonicalPath();
+	  trace1("QUCS_LIBRARY", qucslibdir);
+    QucsSettings.setLibDir( QDir(QString(qucslibdir)).canonicalPath());
   }else{
+	  trace0("no QUCS_LIBRARY");
   }
 
   loadSettings();
 
-  SysLibDir.setPath(QucsSettings.LibDir);
+  SysLibDir.setPath(QucsSettings.libDir());
   UserLibDir.setPath(QucsSettings.QucsHomeDir.canonicalPath() + "/user_lib/");
 
   a.setFont(QucsSettings.font);
@@ -146,3 +147,5 @@ int main(int argc, char *argv[])
   delete qucs;
   return result;
 }
+
+tQucsSettings::tQucsSettings(){ incomplete(); }

@@ -1,8 +1,6 @@
 /***************************************************************************
-                               qucslib.h
-                              -----------
-    begin                : Thur Jan 30 2014
     copyright            : (C) 2014 by Richard Crozier
+                               2020 Felix Salfelder
     email                : richard DOT crozier AT yahoo DOT co DOT uk
  ***************************************************************************/
 
@@ -10,7 +8,7 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -22,9 +20,11 @@
 #include <QFileInfo>
 #include <QTextStream>
 #include <QDebug>
+#include <QDir>
+#include "settings.h" // yikes.
 
 // global functions and data structures for the processing of
-// qucs library files
+// legacy qucs library files
 
 enum LIB_PARSE_RESULT { QUCS_COMP_LIB_OK,
                         QUCS_COMP_LIB_IO_ERROR,
@@ -47,16 +47,14 @@ struct ComponentLibrary
     QString name;
     QString defaultSymbol;
     QList<ComponentLibraryItem> components;
-} ;
 
-// convert relative path to system library path
-// absolute paths (user libs) remain unchanged
-inline QString getLibAbsPath(QString libPath)
-{
-    QDir libdir(QucsSettings.LibDir); // system libraries paths
-    QString libAbsPath = libdir.absoluteFilePath(libPath + ".lib");
-    return libAbsPath;
-}
+	 QList<ComponentLibraryItem>::iterator begin(){
+		 return components.begin();
+	 }
+	 QList<ComponentLibraryItem>::iterator end(){
+		 return components.end();
+	 }
+} ;
 
 // gets the contents of a section from a component description
 //
@@ -215,6 +213,16 @@ inline int makeModelString (QString libPath, QString compname, QString compstrin
     return QUCS_COMP_LIB_OK;
 
 }
+
+// convert relative path to system library path
+// absolute paths (user libs) remain unchanged
+inline QString getLibAbsPath(QString libPath)
+{
+    QDir libdir(QucsSettings.libDir()); // system libraries paths
+    QString libAbsPath = libdir.absoluteFilePath(libPath + ".lib");
+    return libAbsPath;
+}
+
 
 inline int parseComponentLibrary (QString libPath, ComponentLibrary &library, LIB_PARSE_WHAT what = QUCS_COMP_LIB_FULL)
 {

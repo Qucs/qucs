@@ -30,22 +30,29 @@
 #include <QComboBox>
 
 #include "symbolwidget.h"
+#include "settings.h"
 
-
-// Application settings.
+#if 0
+// Application settings duplicate
 struct tQucsSettings {
   int x, y, dx, dy;    // position and size of main window
   QFont font;          // font
   QString LangDir;     // translation directory
-  QString LibDir;      // library directory
   QString Language;
   QDir QucsWorkDir;  // Qucs user directory where user works (usually same as QucsWorkDir
   QDir QucsHomeDir;  // Qucs user directory where all projects are located
+
+  QString const& libDir() const{ untested();return _libDir;}
+  void setLibDir( QString const& s){_libDir = s;}
+private:
+  QString _libDir;      // library directory
 };
+#endif
 
 extern tQucsSettings QucsSettings;
 extern QDir UserLibDir;
 extern QDir SysLibDir;
+
 
 class QucsLib : public QMainWindow  {
    Q_OBJECT

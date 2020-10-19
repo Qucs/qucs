@@ -32,7 +32,8 @@
 
 #ifndef QUCS_ELEMENT_H
 #define QUCS_ELEMENT_H
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 # include <QPen> // BUG
 
 #ifndef UNTANGLE_QT // later
@@ -193,7 +194,7 @@ public: // other stuff
   virtual QWidget* newWidget() {return nullptr;}
 
 public: // alias
-  void setCenter(std::pair<int, int> const& c){
+  void setCenter(pos_t const& c){
     _cx = c.first;
 	 _cy = c.second;
   }
@@ -257,7 +258,7 @@ inline SchematicModel const* Element::scope() const
 	auto e=const_cast<Element*>(this);
 	return e->scope();
 }
-
+/*--------------------------------------------------------------------------*/
 class Component;
 class CmdElement;
 class WireLabel;
@@ -265,13 +266,13 @@ class Diagram;
 class Painting;
 class Graph;
 class Marker;
-
+/*--------------------------------------------------------------------------*/
 Component const* component(Element const*);
 WireLabel const* wireLabel(Element const*);
 Diagram const* diagram(Element const*);
 Painting const* painting(Element const*);
 Graph const* graph(Element const*);
-
+/*--------------------------------------------------------------------------*/
 Component* component(Element*);
 CmdElement* command(Element*);
 inline Element*& element(Element*& x){return x;}
@@ -281,5 +282,6 @@ Painting* painting(Element*);
 Graph* graph(Element*);
 Marker* marker(Element*);
 Node* node(Element*);
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 #endif

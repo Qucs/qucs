@@ -39,7 +39,7 @@ qrc_qucspowercombining.cpp: qucspowercombining.qrc
 
 nodist_qucspowercombining_SOURCES = $(MOCFILES)
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS)
+AM_CPPFLAGS = -I$(top_srcdir)/include $(X11_INCLUDES) $(QT_CFLAGS)
 qucspowercombining_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 qucspowercombining_LDADD = $(X11_LIBS) $(QT_LIBS)
 

@@ -1,7 +1,4 @@
 /**************************************************************************
-                               qucslib.cpp
-                              -------------
-    begin                : Sat May 28 2005
     copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
@@ -10,7 +7,7 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -214,8 +211,10 @@ void QucsLib::putLibrariesIntoCombobox()
 
     // system libraries
     QStringList SysLibFiles = SysLibDir.entryList(QStringList("*.lib"), QDir::Files, QDir::Name);
-    foreach(QString s, SysLibFiles) // build list with relative path
+    foreach(QString s, SysLibFiles){
+		 // build list with relative path
       LibFiles.append(qMakePair(s, true));
+	 }
 
     for (int i = 0; i < LibFiles.count(); ++i ) {
       libPath = LibFiles[i].first;
@@ -467,7 +466,7 @@ void QucsLib::slotSearchComponent(const QString &searchText)
       // does search criterion match ?
       if(CompName.indexOf(searchText, 0, Qt::CaseInsensitive) >= 0) {
         if(!findComponent) {
-	  CompList->clear();
+			  CompList->clear();
         }
         findComponent = true;
         QListWidgetItem *CompItem = new QListWidgetItem(CompName);

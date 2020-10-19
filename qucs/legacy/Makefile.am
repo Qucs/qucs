@@ -30,20 +30,22 @@ legacy_la_CPPFLAGS = $(AM_CPPFLAGS)
 # need Qt for TextStream.
 legacy_la_CPPFLAGS += $(QT_INCLUDES)
 legacy_la_SOURCES = \
-	rectdiagram.cpp \
 	curvediagram.cpp \
+	libcomp.cpp \
+	libfiles.cpp \
 	markerdialog.cpp \
 	polardiagram.cpp \
 	psdiagram.cpp \
 	rect3ddiagram.cpp \
-	smithdiagram.cpp \
-	tabdiagram.cpp \
-	timingdiagram.cpp \
-	truthdiagram.cpp \
+	rectdiagram.cpp \
 	schematic_format.cpp \
 	schematic_lang.cpp \
+	simulator.cpp \
+	smithdiagram.cpp \
 	subcircuit.cpp \
-	simulator.cpp
+	tabdiagram.cpp \
+	timingdiagram.cpp \
+	truthdiagram.cpp
 # phasordiagram.cpp
 # waveac.cpp
 

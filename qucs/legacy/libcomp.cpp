@@ -1,9 +1,6 @@
 /***************************************************************************
-                               libcomp.cpp
-                              -------------
-    begin                : Fri Jun 10 2005
     copyright            : (C) 2005 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -15,10 +12,10 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "libcomp.h"
 #include "qucs.h"
 #include "schematic_doc.h"
 #include "misc.h"
+#include "globals.h"
 
 #include <limits.h>
 
@@ -27,12 +24,99 @@
 #include <QRegExp>
 #include <QDebug>
 
+
+class QTextStream;
+class DocumentStream;
+class QString;
+
+namespace{
+
+class LibComp : public MultiViewComponent  {
+public:
+	LibComp();
+	~LibComp() {};
+	Symbol* clone() const{return new LibComp(*this);}
+
+	bool createSubNetlist(DocumentStream&, QStringList&, int type=1); // BUG
+	QString getSubcircuitFile() const;
+
+protected:
+	QString netlist() const;
+	QString vhdlCode(int);
+	QString verilogCode(int);
+	void createSymbol();
+
+private:
+	int  loadSymbol();
+	int  loadSection(const QString&, QString&, QStringList* i=0);
+	QString createType() const;
+};
+
+class Lib : public Symbol{
+public:
+	explicit Lib():Symbol(){
+		setTypeName("Lib"); // really?
+	}
+	Lib( Lib const& l) : Symbol(l){}
+
+private: // Element
+	Symbol* clone()const override{
+		return new Lib(*this);
+	}
+
+private: // Symbol
+	unsigned numPorts() const override{ incomplete(); return 0; }
+	void setParameter(std::string const& n, std::string const& v) override{
+		if(n == "section"){ itested();
+			_section.Value = QString::fromStdString(v);
+		}else if(n=="component"){ itested();
+			_section.Value = QString::fromStdString(v);
+		}else{ untested();
+			trace2("fwd", n, v);
+			Symbol::setParameter(n, v);
+		}
+	}
+	void setParameter(unsigned n, std::string const& v) override{
+		int m = int(n) - int(Symbol::paramCount());
+		switch(n){
+		case 0:
+			_section.Value = QString::fromStdString(v);
+		case 1:
+			_section.Value = QString::fromStdString(v);
+		default: untested();
+			trace2("fwd", n, v);
+			Symbol::setParameter(n, v);
+		}
+	}
+	std::string paramValue(std::string const& n) const override{
+		if (n=="$angle"){
+			 // Symbol?
+			  incomplete();
+			return "0";
+		}else if (n=="$tx"){
+			return std::to_string(_tx);
+		}else if (n=="$ty"){
+			return std::to_string(_ty);
+		}else{
+			return Symbol::paramValue(n);
+		}
+	}
+
+private:
+	int _tx;
+	int _ty;
+	Property _section;
+	Property _component;
+	Symbol const* _parent; // BUG. common.
+}D;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Lib", &D);
+
 LibComp::LibComp()
 {
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("Component taken from Qucs library");
 
-  Ports.append(new Port(0,  0));  // dummy port because of being device
+  Ports.append(new Port(0, 0)); // dummy port because of being device
 
   Model = "Lib";
   Name  = "X";
@@ -42,19 +126,9 @@ LibComp::LibComp()
   Props.append(new Property("Comp", "", true,
 		QObject::tr("name of component in library")));
 }
+static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "LegacyLibProto", &D);
 
 // ---------------------------------------------------------------------
-// BUG: too complicated.
-Component* LibComp::newOne()
-{
-  LibComp *p = new LibComp();
-  p->Props.first()->Value =
-	  const_cast<Q3PtrList<Property>& >(Props).first()->Value;
-  p->Props.next()->Value =
-	  const_cast<Q3PtrList<Property>& >(Props).next()->Value;
-  p->recreate(0);
-  return p;
-}
 
 // ---------------------------------------------------------------------
 // Makes the schematic symbol subcircuit with the correct number
@@ -66,8 +140,7 @@ void LibComp::createSymbol()
   if(loadSymbol() > 0) {
     if(tx == INT_MIN)  tx = x1+4;
     if(ty == INT_MIN)  ty = y2+4;
-  }
-  else {
+  }else{
     // only paint a rectangle
     Lines.append(new Line(-15, -15, 15, -15, QPen(Qt::darkBlue,2)));
     Lines.append(new Line( 15, -15, 15,  15, QPen(Qt::darkBlue,2)));
@@ -84,13 +157,17 @@ void LibComp::createSymbol()
 
 // ---------------------------------------------------------------------
 // Loads the section with name "Name" from library file into "Section".
+//  negative return value seems to indicate an error state.
 int LibComp::loadSection(const QString& Name, QString& Section,
 			 QStringList *Includes)
 {
-  QDir Directory(QucsSettings.LibDir);
+  QDir Directory(QucsSettings.libDir());
   QFile file(Directory.absoluteFilePath(Props.first()->Value + ".lib"));
-  if(!file.open(QIODevice::ReadOnly))
+  if(!file.open(QIODevice::ReadOnly)){
+	  // throw?
     return -1;
+  }else{
+  }
 
   QString libDefaultSymbol;
 
@@ -99,8 +176,11 @@ int LibComp::loadSection(const QString& Name, QString& Section,
   file.close();
 
 
-  if(Section.left(14) != "<Qucs Library ")  // wrong file type ?
+  if(Section.left(14) != "<Qucs Library "){
+	  // wrong file type ?
     return -2;
+  }else{
+  }
 
   int Start, End = Section.indexOf(' ', 14);
   if(End < 15) return -3;
@@ -117,7 +197,9 @@ int LibComp::loadSection(const QString& Name, QString& Section,
         End = Section.indexOf("\n</DefaultSymbol>", Start);
         if(End < 0)  return -9;
         libDefaultSymbol = Section.mid(Start, End-Start);
-      }
+      }else{
+		}
+  }else{
   }
 
   // search component
@@ -225,7 +307,7 @@ int LibComp::loadSymbol()
 // -------------------------------------------------------
 QString LibComp::getSubcircuitFile() const
 {
-  QDir Directory(QucsSettings.LibDir);
+  QDir Directory(QucsSettings.libDir());
   QString FileName = Directory.absoluteFilePath(Props.first()->Value);
   return misc::properAbsFileName(FileName);
 }
@@ -338,3 +420,5 @@ QString LibComp::vhdlCode(int)
   return s;
 #endif
 }
+
+} //namespace
