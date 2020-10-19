@@ -17,10 +17,9 @@
 #endif
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-bool PaintingList::load(QTextStream& str)
+static bool PaintingListLoad(QTextStream& str, PaintingList& List)
 { untested();
 	auto stream=&str;
-	auto List=this;
 	Painting *p=0;
 	QString Line, cstr;
 	while(!stream->atEnd()) { untested();
@@ -56,13 +55,14 @@ bool PaintingList::load(QTextStream& str)
 		}else{ untested();
 		}
 		qDebug() << "got painting" << cstr << p->name();
-		List->append(p);
+		List.append(p);
 	}
 
 	incomplete();
 	// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\n'Painting' field is not closed!"));
 	return false;
 }
+
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 namespace{
@@ -265,7 +265,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 				incomplete();
 				try{ untested();
 					qDebug() << "symbol Paintings";
-					owner.symbolPaintings().load(stream);
+					PaintingListLoad(stream, owner.symbolPaintings());
 					c = nullptr;
 				}catch(...){ untested();
 					incomplete();
@@ -789,7 +789,10 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 
 		tmp *= 90;
 		sym->setParameter("$angle", std::to_string(tmp));
-		assert(sym->paramValue("$angle") == std::to_string(tmp));
+		if(sym->paramValue("$angle") == std::to_string(tmp)){
+		}else{
+			unreachable();
+		}
 		trace2("DBG rot", c->rotated(), n);
 	}
 

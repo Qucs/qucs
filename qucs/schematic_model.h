@@ -64,10 +64,9 @@ public:
 	void removeRef(Symbol* s) { erase(std::find(begin(), end(), s)); }
 	// void first(){} // GOAL: hide, still compile.
 };
-// TODO: refactor here
+
+// TODO: use generic list.
 class PaintingList : public Q3PtrList<Painting> {
-public:
-	bool load(QTextStream& stream);
 public:
 	void sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const;
 };
