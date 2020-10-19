@@ -89,12 +89,11 @@ void LIB::loadLibFiles()
 		// TODO: ComponentLibraryItem are not Elements, but just a concoction of QStrings.
 		// turn it into Element...
 		for(ComponentLibraryItem c : parsedlib){
-			trace2("libcomp", parsedlib.name, c.name); // ->label());
+//			trace2("libcomp", parsedlib.name, c.name); // ->label());
 			// trace4("libcomp", c.name, c.modelString, c.symbol, c.definition);
 			Symbol* e = symbol_dispatcher.clone("Lib");
 			// e->setTypeName(parsedlib.name.toStdString() + ":" + c.name.toStdString());
 
-			// d
 			e->setLabel(parsedlib.name.toStdString() + ":" + c.name.toStdString());
 
 			e->setParameter("section", parsedlib.name.toStdString());
