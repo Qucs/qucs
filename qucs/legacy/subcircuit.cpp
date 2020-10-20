@@ -66,15 +66,16 @@ private: // Symbol
   unsigned paramCount() const override;
 
   std::string paramName(unsigned i) const override;
-  std::string paramValue(unsigned i) const override{
-	  if(!i){
+  std::string paramValue(unsigned i) const override{ untested();
+	  if(i == num_component_params + Symbol::paramCount()){ untested();
 		  // BUG. don't use Props
+		  assert(Props.at(0));
 		  return Props.at(0)->Value.toStdString();
-	  }else{
-		  return Symbol::paramName(i-1);
+	  }else{ untested();
+		  return Component::paramName(i);
 	  }
   }
-  std::string paramValue(std::string const& x) const override{
+  std::string paramValue(std::string const& x) const override{ untested();
 	  incomplete();
 	  return Component::paramValue(x);
   }
@@ -87,7 +88,7 @@ private: // overrides
 };
 
 Subcircuit::Subcircuit() : Component() // gaah sckt_base
-{
+{ untested();
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("subcircuit");
 
@@ -104,21 +105,23 @@ Subcircuit::Subcircuit() : Component() // gaah sckt_base
 
 // ---------------------------------------------------------------------
 std::string Subcircuit::paramName(unsigned i) const
-{
-  if(!i){
+{ untested();
+  if(i==num_component_params + Symbol::paramCount()){ untested();
 	  return "File";
-  }else{
-	  return Symbol::paramName(i-1);
+  }else if(i==num_component_params + Symbol::paramCount()+1){ untested();
+	  return "porttype"; // or so
+  }else{ untested();
+	  return Component::paramName(i);
   }
 }
 // ---------------------------------------------------------------------
 unsigned Subcircuit::paramCount() const
-{
-  return 1 + Symbol::paramCount();
+{ untested();
+  return 1 + Symbol::paramCount() + num_component_params;
 }
 // ---------------------------------------------------------------------
 Subcircuit::Subcircuit(Subcircuit const&x) : Component(x)
-{
+{ untested();
   Props.append(new Property("File", "", false,
 		QObject::tr("name of qucs schematic file")));
 
@@ -129,7 +132,7 @@ Subcircuit::Subcircuit(Subcircuit const&x) : Component(x)
 
 // ---------------------------------------------------------------------
 Component* Subcircuit::newOne()
-{
+{ untested();
 	unreachable();
   Subcircuit *p = new Subcircuit();
   p->setLabel("-newOne-"); // TODO
@@ -161,7 +164,7 @@ Element* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // Makes the schematic symbol subcircuit with the correct number
 // of ports.
 void Subcircuit::createSymbol() // SchematicModel const& scope)
-{
+{ untested();
   int No;
   QString FileName(Props.getFirst()->Value);
 
@@ -170,7 +173,7 @@ void Subcircuit::createSymbol() // SchematicModel const& scope)
   if(FileName.length()<4){ unreachable();
 	  // throw?
 	  return;
-  }else{
+  }else{ untested();
 
 	  //  trace2("sckt::createSymbol", this, scope);
 	  incomplete();
@@ -191,14 +194,14 @@ void Subcircuit::createSymbol() // SchematicModel const& scope)
 		  // remove unused ports
 		  QMutableListIterator<Port *> ip(Ports);
 		  Port *pp;
-		  while (ip.hasNext()) {
+		  while (ip.hasNext()) { untested();
 			  pp = ip.next();
 			  if(!pp->avail) { untested();
 				  pp = ip.peekNext();
 				  ip.remove();
 			  }
 		  }
-	  }else{
+	  }else{ untested();
 		  No = SchematicDoc::testFile(FileName);
 		  if(No < 0)  No = 0;
 		  Ports.clear();
@@ -209,7 +212,7 @@ void Subcircuit::createSymbol() // SchematicModel const& scope)
 
 // ---------------------------------------------------------------------
 void Subcircuit::remakeSymbol(int No)
-{
+{ untested();
 	incomplete();
   int h = 30*((No-1)/2) + 15;
   Lines.append(new Line(-15, -h, 15, -h,QPen(Qt::darkBlue,2)));
@@ -219,7 +222,7 @@ void Subcircuit::remakeSymbol(int No)
   Texts.append(new Text(-10, -6,"sub"));
 
   int i=0, y = 15-h;
-  while(i<No) {
+  while(i<No) { untested();
     i++;
     Lines.append(new Line(-30,  y,-15,  y,QPen(Qt::darkBlue,2)));
     Ports.append(new Port(-30,  y));
@@ -243,7 +246,7 @@ void Subcircuit::remakeSymbol(int No)
 // Loads the symbol for the subcircuit from the schematic file and
 // returns the number of painting elements.
 int Subcircuit::loadSymbol(const QString& DocName)
-{
+{ untested();
   QFile file(DocName);
   if(!file.open(QIODevice::ReadOnly))
     return -1;
@@ -259,7 +262,7 @@ int Subcircuit::loadSymbol(const QString& DocName)
 
 
   // read header **************************
-  do {
+  do { untested();
     if(stream.atEnd()) return -2;
     Line = stream.readLine();
     Line = Line.trimmed();
@@ -274,7 +277,7 @@ int Subcircuit::loadSymbol(const QString& DocName)
     return -4;
 
   // read content *************************
-  while(!stream.atEnd()) {
+  while(!stream.atEnd()) { untested();
     Line = stream.readLine();
     if(Line == "<Symbol>") break;
   }
@@ -283,9 +286,9 @@ int Subcircuit::loadSymbol(const QString& DocName)
   x2 = y2 = INT_MIN;
 
   int z=0, Result;
-  while(!stream.atEnd()) {
+  while(!stream.atEnd()) { untested();
     Line = stream.readLine();
-    if(Line == "</Symbol>") {
+    if(Line == "</Symbol>") { untested();
       x1 -= 4;   // enlarge component boundings a little
       x2 += 4;
       y1 -= 4;
@@ -400,10 +403,10 @@ QString Subcircuit::verilogCode(int)
 
 // -------------------------------------------------------
 QString Subcircuit::getSubcircuitFile(SchematicModel const* scp) const
-{
+{ untested();
   trace3("getSubcircuitFile", this, scp, scope());
 
-	if(scp){
+	if(scp){ untested();
 	}else{ untested();
 		assert(owner());
 		// auto scp=scope();
@@ -415,7 +418,7 @@ QString Subcircuit::getSubcircuitFile(SchematicModel const* scp) const
   if (FileName.isEmpty()) { untested();
 	  incomplete();
       return misc::properAbsFileName(FileName);
-  }else{
+  }else{ untested();
   }
 
   QFileInfo FileInfo(FileName);
@@ -423,7 +426,7 @@ QString Subcircuit::getSubcircuitFile(SchematicModel const* scp) const
   if (FileInfo.exists()) { untested();
       // the file must be an absolute path to a schematic file
      return FileInfo.absoluteFilePath();
-  } else {
+  } else { untested();
 	  qDebug() << FileName << "doesnt exist";
     // get the complete base name (everything except the last '.'
     // and whatever follows
@@ -434,7 +437,7 @@ QString Subcircuit::getSubcircuitFile(SchematicModel const* scp) const
     if (FileInfo.fileName () != FileName) { untested();
         // the file has no path information, just the file name
 		 qDebug() << "no path info";
-	 }else if (scp) {
+	 }else if (scp) { untested();
 		 qDebug() << "trying to inherit path from sch";
 		 // check if a file of the same name is in the same directory
 		 // as the schematic file, if we have a pointer to it, in
@@ -442,7 +445,7 @@ QString Subcircuit::getSubcircuitFile(SchematicModel const* scp) const
 		 QFileInfo schematicFileInfo = scp->getFileInfo ();
 		 QFileInfo localFIleInfo (schematicFileInfo.canonicalPath () + "/" + baseName + ".sch");
 		 qDebug() << schematicFileInfo.canonicalPath() << "seems to exist";
-		 if (localFIleInfo.exists ()) {
+		 if (localFIleInfo.exists ()) { untested();
 			 // return the subcircuit saved in the same directory
 			 // as the schematic file
 			 return localFIleInfo.absoluteFilePath();
@@ -491,11 +494,11 @@ namespace{
 //
 class pr : public SubcktProto{
 public:
-  	pr(Element const* e) : SubcktProto(e){
+  	pr(Element const* e) : SubcktProto(e){ untested();
 	}
 	~pr() { untested(); }
 
-	void build() override{
+	void build() override{ untested();
 		assert(owner());
 		assert(scope()==subckt());
 
@@ -570,7 +573,7 @@ private:
 }
 
 void Subcircuit::build()
-{
+{ untested();
 	incomplete();
 	createSymbol(); // why?!
 }
@@ -578,13 +581,13 @@ void Subcircuit::build()
 // partially tAC. build a new sckt proto.
 // does not fullymake sense.
 Symbol const* Subcircuit::proto(SchematicModel const* scope) const
-{
+{ untested();
    auto t = QString::fromStdString(typeName());
 	auto p = scope->findProto(t);
-	if(p){
+	if(p){ untested();
 		trace1("cached", typeName());
 		return p;
-	}else{
+	}else{ untested();
 		Symbol const* ownersym = dynamic_cast<Symbol const*>(owner());
 		Symbol* s = new pr(this);
 
@@ -630,12 +633,12 @@ QString Subcircuit::portName(unsigned) const
 static const std::string typesep(":");
 
 void Subcircuit::setParameter(unsigned i, std::string const& value)
-{
+{ untested();
 	QString v = QString::fromStdString(value);
-	if(i==0){
+	if(i==num_component_params + Symbol::paramCount()){ untested();
 		trace1("Subcircuit::setParameter", v);
 		setTypeName("Sub" + typesep + v.left(v.length()-4).toStdString());
-	}else{
+	}else{ untested();
 		incomplete();
 	}
 }

@@ -38,10 +38,7 @@
 
 #include "some_font_stuff.h"
 
-/*!
- * \file component.cpp
- * \brief Implementation of the Component class.
- */
+const int Component::num_component_params = 2; // tx and ty.
 
 Component::Component(Component const& p)
   : Symbol(p),
@@ -553,9 +550,14 @@ void Component::rotate()
 
 void Component::setParameter(unsigned pos, std::string const& v)
 {
-  int p = int(pos) - int(Symbol::paramCount());
+  int p = int(pos) - int(Symbol::paramCount()) - num_component_params ;
 
-  if(p<0){ untested();
+  trace2("Component::setParameter", pos, v);
+  if(pos==Symbol::paramCount()){ untested();
+    // tx
+  }else if(pos==Symbol::paramCount()+1){ untested();
+    // ty
+  }else if(pos<Symbol::paramCount()){ untested();
     Symbol::setParameter(pos, v);
   }else if (p<Props.size()){ untested();
     assert(Props.at(p));
@@ -1673,7 +1675,7 @@ QRectF Component::boundingRect() const
 /*--------------------------------------------------------------------------*/
 unsigned Component::paramCount() const
 {
-  return Props.count() + Symbol::paramCount() + 2;
+  return Props.count() + Symbol::paramCount() + num_component_params;
 }
 /*--------------------------------------------------------------------------*/
 std::string Component::paramValue(unsigned i) const
@@ -1686,7 +1688,9 @@ std::string Component::paramValue(unsigned i) const
   }else if(i==s+1){ untested();
     return std::to_string(tx);
   }else{
-    i -= (s+2);
+    i -= (s + num_component_params);
+    assert(i>=0);
+
     assert( Props.at(i));
     return Props.at(i)->value().toStdString();
   }
@@ -1702,7 +1706,7 @@ std::string Component::paramName(unsigned i) const
   }else if(i==s+1){
     return "$ty";
   }else{
-    i -= (s+2);
+    i -= (s + num_component_params);
     assert( Props.at(i));
     return Props.at(i)->name().toStdString();
   }
