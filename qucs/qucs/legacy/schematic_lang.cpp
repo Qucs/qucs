@@ -838,7 +838,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 
 	// set parameters.
 	Property *p1;
-	unsigned position=0;
+	unsigned position=4;
 	for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) { untested();
 		z++;
 		n = s.section('"',z,z);    // property value. gaah parse over and over again?

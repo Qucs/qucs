@@ -48,7 +48,7 @@ private:
   std::string paramName(unsigned i) const override;
   std::string paramValue(unsigned i) const override;
   unsigned paramCount() const override{
-	  return Symbol::paramCount() + 2;
+	  return Symbol::paramCount() + num_component_params + 2;
   }
 
 protected:
@@ -95,7 +95,7 @@ Node* SubCirPort::connectNode(unsigned i, NodeMap& l)
 	try{
 		// don't know why this is a parameter and not a local variable
 		// (does it make any sense?)
-		pp = QString::fromStdString(paramValue(0));
+		pp = QString::fromStdString(paramValue(num_component_params + Symbol::paramCount()));
 	}catch(ExceptionCantFind const&){ untested();
 		ok = false;
 	}
@@ -158,21 +158,21 @@ void SubCirPort::createSymbol()
 // -------------------------------------------------------
 std::string SubCirPort::paramName(unsigned n) const
 {
-	if(n == 0){
+	if(n == num_component_params + Symbol::paramCount()){
 		return "Num";
-	}else if(n==1){
+	}else if(n== num_component_params + Symbol::paramCount() + 1){
 		return "Type";
 	}else{
-		return Symbol::paramName(n-2);
+		return Component::paramName(n);
 	}
 }
 std::string SubCirPort::paramValue(unsigned n) const
 {
 //	this is not correct.
-	if(n == 0){
+	if(n == num_component_params + Symbol::paramCount()){
 		trace1("SubCirPort::paramValue", _pos);
 		return std::to_string(_pos);
-	}else if(n==1){
+	}else if(n==num_component_params + Symbol::paramCount() + 1){
 		return _some_type;
 	}else{
 		return "incomplete";
@@ -186,7 +186,7 @@ void SubCirPort::setParameter(unsigned n, std::string const& vv)
 	Component::setParameter(n, vv); // noop?
 	QString v = QString::fromStdString(vv);
 
-	if(n==0){
+	if(n==num_component_params + Symbol::paramCount()){
 		bool ok;
 		int pos = v.toInt(&ok);
 		trace1("SubCirPort::setParameter portno", pos);
@@ -206,9 +206,10 @@ void SubCirPort::setParameter(unsigned n, std::string const& vv)
 		}else{
 			_pos = pos+1;
 		}
-	}else if(n==1){
+	}else if(n==1 + num_component_params + Symbol::paramCount()){
 		_some_type = vv;
 	}else{
+		incomplete();
 	}
 }
 // -------------------------------------------------------
