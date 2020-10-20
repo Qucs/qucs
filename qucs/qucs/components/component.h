@@ -95,6 +95,8 @@ protected: // symbol interface
 
 protected:
   void setParameter(unsigned i, std::string const&) override;
+	static const int num_component_params;
+
 
 public: // BUG
   void setParameter(std::string const& name, std::string const& value) override;
