@@ -200,7 +200,10 @@ public: // alias
   }
 
 public:
-  virtual Element* clone()const = 0;
+	virtual Element* clone()const = 0;
+	virtual Element* clone_instance()const{
+		return clone();
+	}
 //  virtual QString const& name() const{return Name;}
 //  void setName(QString const& n){ Name = n; }
   virtual QString const& description() const{return incomplete_description;}

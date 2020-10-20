@@ -51,18 +51,19 @@ static std::string mangleType(std::string& t)
 class QucsatorLang : public NetLang {
 private: // NetLang
   // inline void printItem(Element const* c, stream_t& s) const;
+  std::string findType(istream_t&) const override {incomplete();}
 
 private: // local
-  void printCommand(CmdElement const*, stream_t&) const; // override?
-  void printSymbol(Symbol const*, stream_t&) const override;
-  void printSubckt(SubcktProto const*, stream_t&) const;
-  void printComponent(Component const*, stream_t&) const;
-  void printPainting(Painting const*, stream_t&) const override {incomplete();}
-  void printDiagram(Symbol const*, stream_t&) const override {incomplete();}
+  void printCommand(CmdElement const*, ostream_t&) const; // override?
+  void printSymbol(Symbol const*, ostream_t&) const override;
+  void printSubckt(SubcktProto const*, ostream_t&) const;
+  void printComponent(Component const*, ostream_t&) const;
+  void printPainting(Painting const*, ostream_t&) const override {incomplete();}
+  void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
 }qucslang;
 static Dispatcher<DocumentFormat>::INSTALL p(&doclang_dispatcher, "qucsator", &qucslang);
 
-static void printSymbol_(Symbol const* c, stream_t& s)
+static void printSymbol_(Symbol const* c, ostream_t& s)
 {
 	// todo: mfactor.
 	//
@@ -111,7 +112,7 @@ static void printSymbol_(Symbol const* c, stream_t& s)
 	}
 }
 
-void QucsatorLang::printSymbol(Symbol const* d, stream_t& s) const
+void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 {
 	if(!d){ untested();
 		incomplete();
@@ -134,7 +135,7 @@ void QucsatorLang::printSymbol(Symbol const* d, stream_t& s) const
 static const char _typesep = ':';
 
 // partly from Schematic::createSubnetlistplain
-void QucsatorLang::printSubckt(SubcktProto const* p, stream_t& s) const
+void QucsatorLang::printSubckt(SubcktProto const* p, ostream_t& s) const
 {
 	trace2("prinSckt", p, p->subckt());
 	Symbol const* sym = p;
@@ -194,7 +195,7 @@ void QucsatorLang::printSubckt(SubcktProto const* p, stream_t& s) const
 	s << ".Def:End\n";
 }
 
-void QucsatorLang::printCommand(CmdElement const* c, stream_t& s) const
+void QucsatorLang::printCommand(CmdElement const* c, ostream_t& s) const
 {itested();
 	assert(c);
 	s << "." << c->typeName() << ":" << c->label();
@@ -212,7 +213,7 @@ void QucsatorLang::printCommand(CmdElement const* c, stream_t& s) const
 }
 
 // print Component in qucsator language
-void QucsatorLang::printComponent(Component const* c, stream_t& s) const
+void QucsatorLang::printComponent(Component const* c, ostream_t& s) const
 {
 	if(c->isActive != COMP_IS_ACTIVE){
 		// comment out?

@@ -552,10 +552,18 @@ void Component::rotate()
 // -------------------------------------------------------
 
 void Component::setParameter(unsigned pos, std::string const& v)
-{ incomplete();
-  (void) pos;
-  (void) v;
-  // Param[pos].set(v);
+{
+  int p = int(pos) - int(Symbol::paramCount());
+
+  if(p<0){ untested();
+    Symbol::setParameter(pos, v);
+  }else if (p<Props.size()){ untested();
+    assert(Props.at(p));
+    //Props.at(p)->setValue(v);
+    Props.at(p)->Value = QString::fromStdString(v);
+  }else{ untested();
+    incomplete();
+  }
 }
 
 // -------------------------------------------------------

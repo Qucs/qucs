@@ -12,22 +12,6 @@
 
 class SchematicModel;
 
-// could be redundant, once schematicModels are some kind of
-// symbol/object (getting there)
-#if 0 // remove
-class ModelInserter{
-protected:
-	explicit ModelInserter();
-public:
-	virtual void pushBack(Element*) = 0;
-	virtual SchematicModel* model() const{return nullptr;} // BUG
-	virtual void setParameter(std::string const&, std::string) = 0;
-
-	virtual PaintingList& symbolPaintings() = 0; // hmmm
-};
-#endif
-
-
 class SchematicLanguage : public DocumentLanguage{
 protected:
 	SchematicLanguage() : DocumentLanguage() {}

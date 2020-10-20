@@ -863,7 +863,7 @@ static const std::string VHDL_SIGNAL_TYPE("std_logic");
 static const std::string VHDL_LIBRARIES("\nlibrary ieee;\nuse ieee.std_logic_1164.all;\n");
 
 // ---------------------------------------------------
-void SchematicModel::createSubNetlistPlain(stream_t& str, QPlainTextEdit *ErrText,
+void SchematicModel::createSubNetlistPlain(ostream_t& str, QPlainTextEdit *ErrText,
 int NumPorts, bool creatingLib, NetLang const& )
 {
   incomplete(); // obsolete.
@@ -871,7 +871,7 @@ int NumPorts, bool creatingLib, NetLang const& )
 // ---------------------------------------------------
 // Write the netlist as subcircuit to the text stream 'stream'.
 // BUG: not here.
-bool SchematicModel::createSubNetlist(stream_t& stream, int& countInit,
+bool SchematicModel::createSubNetlist(ostream_t& stream, int& countInit,
                      QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
 		  bool creatingLib, NetLang const& nl)
 { untested();

@@ -237,6 +237,15 @@ std::string Symbol::paramName(unsigned i) const
 	}
 }
 /*--------------------------------------------------------------------------*/
+void Symbol::setParameter(unsigned n, std::string const& v)
+{
+	if(n<Symbol::paramCount()){
+		incomplete();
+	}else{
+		throw ExceptionCantFind(std::to_string(n), label().toStdString());
+	}
+}
+/*--------------------------------------------------------------------------*/
 void Symbol::setParameter(std::string const& name, std::string const& v)
 {
 	if(name == "$xposition"){

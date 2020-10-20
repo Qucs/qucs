@@ -106,7 +106,7 @@ public: // stuff saved from Schematic
 	bool throughAllComps(DocumentStream&, int&, QStringList&, QPlainTextEdit *, int,
 			bool creatingLib, NetLang const&);
 	bool createLibNetlist(DocumentStream&, QPlainTextEdit*, int, NetLang const&);
-	bool createSubNetlist(stream_t&, int&, QStringList&, QPlainTextEdit*, int,
+	bool createSubNetlist(ostream_t&, int&, QStringList&, QPlainTextEdit*, int,
 			bool creatingLib, NetLang const&);
 	void throughAllNodes(unsigned& z) const;
 //	void propagateNode(Node* z) const;
@@ -117,7 +117,7 @@ private:
 public:
 	void collectDigitalSignals(void);
 //	QString createNetlist(DocumentStream&, int, NetLang const&);
-	void createSubNetlistPlain(stream_t&, QPlainTextEdit*, int,
+	void createSubNetlistPlain(ostream_t&, QPlainTextEdit*, int,
 			bool creatingLib, NetLang const&);
 	QFileInfo const& getFileInfo ()const;
 	void print(QPrinter*, QPainter*, bool, bool);

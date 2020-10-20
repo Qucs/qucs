@@ -705,7 +705,7 @@ QUndoCommand* MouseActionNewElement::enter(QEvent* ev)
 	Element* elt;
 	if(!_gfx){ untested();
 		assert(_proto);
-		elt = _proto->clone();
+		elt = _proto->clone_instance();
 		elt->setCenter(sp.x(), sp.y());
 		_gfx = new ElementGraphics(elt); // BUG
 	}else{ untested();

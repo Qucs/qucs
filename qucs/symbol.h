@@ -35,7 +35,7 @@ protected: // Element
 	void paint(ViewPainter*) const;
 	virtual std::pair<int, int> center()const override;
 
-public: // interface
+public:
 	// what is this?
 	// some kind of "init"??!
 	virtual void recreate(); // SchematicModel const& ctx);
@@ -74,9 +74,7 @@ protected: // needed in netlister
 
 public: // Parameters
 	virtual void setParameter(std::string const& name, std::string const&);
-	virtual void setParameter(unsigned i, std::string const&){
-		throw ExceptionCantFind(std::to_string(i), label().toStdString());
-	}
+	virtual void setParameter(unsigned i, std::string const&);
 
 	virtual std::string paramValue(std::string const&s) const;
 	virtual std::string paramValue(unsigned i) const;

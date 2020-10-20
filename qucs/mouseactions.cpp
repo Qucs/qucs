@@ -109,7 +109,7 @@ bool MouseActions::pasteElements(SchematicDoc *)
 { untested();
   QClipboard *cb = QApplication::clipboard();   // get system clipboard
   QString s = cb->text(QClipboard::Clipboard);
-  DocumentStream stream(&s, QIODevice::ReadOnly);
+//  DocumentStream stream(&s, QIODevice::ReadOnly);
   movingElements.clear();
 #if 0
   if(!Doc->paste(&stream, &movingElements)){

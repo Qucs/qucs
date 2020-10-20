@@ -21,7 +21,9 @@
 # Boston, MA 02110-1301, USA.
 #
 
-pkglib_LTLIBRARIES = legacy.la
+include MakeList
+
+pkglib_LTLIBRARIES = legacy.la legacylib.la
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include -I$(top_srcdir)/qucs
 AM_CXXFLAGS = ${CXXFLAGS} -fPIC
 
@@ -29,25 +31,14 @@ legacy_la_LDFLAGS = -module -avoid-version
 legacy_la_CPPFLAGS = $(AM_CPPFLAGS)
 # need Qt for TextStream.
 legacy_la_CPPFLAGS += $(QT_INCLUDES)
-legacy_la_SOURCES = \
-	curvediagram.cpp \
-	libcomp.cpp \
-	libfiles.cpp \
-	markerdialog.cpp \
-	polardiagram.cpp \
-	psdiagram.cpp \
-	rect3ddiagram.cpp \
-	rectdiagram.cpp \
-	schematic_format.cpp \
-	schematic_lang.cpp \
-	simulator.cpp \
-	smithdiagram.cpp \
-	subcircuit.cpp \
-	tabdiagram.cpp \
-	timingdiagram.cpp \
-	truthdiagram.cpp
-# phasordiagram.cpp
-# waveac.cpp
+legacy_la_SOURCES = ${LEGACY_SRC}
+
+legacylib_la_LDFLAGS = -module -avoid-version
+legacylib_la_CPPFLAGS = $(AM_CPPFLAGS)
+# need Qt for TextStream.
+legacylib_la_CPPFLAGS += $(QT_INCLUDES)
+legacylib_la_SOURCES = \
+	libfiles.cpp
 
 noinst_HEADERS = \
 	markerdialog.h
