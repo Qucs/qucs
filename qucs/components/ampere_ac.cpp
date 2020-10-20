@@ -1,24 +1,39 @@
 /***************************************************************************
-                               ampere_ac.cpp
-                              ---------------
-    begin                : Sun May 23 2004
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "ampere_ac.h"
+#include "component.h"
+#include "globals.h"
+#include "module.h"
 
+namespace{
+class Ampere_ac : public Component  {
+private:
+	Ampere_ac(Ampere_ac const&) = default;
+public:
+  Ampere_ac();
+  ~Ampere_ac() {}
+private:
+  Element* clone() const override{
+	  return new Ampere_ac(*this);
+  }
 
-Ampere_ac::Ampere_ac()
+  static Element* info(QString&, char* &, bool getNewOne=false);
+}D;
+Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Iac", &D);
+Module::INSTALL pp("lumped", &D);
+
+Ampere_ac::Ampere_ac() : Component()
 {
   Description = QObject::tr("ideal ac current source");
 
@@ -54,15 +69,6 @@ Ampere_ac::Ampere_ac()
   set_rotated(1);  // fix historical flaw ??
 }
 
-Ampere_ac::~Ampere_ac()
-{
-}
-
-Component* Ampere_ac::newOne()
-{
-  return new Ampere_ac();
-}
-
 Element* Ampere_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("ac Current Source");
@@ -70,4 +76,5 @@ Element* Ampere_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Ampere_ac();
   return 0;
+}
 }
