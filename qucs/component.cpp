@@ -585,7 +585,7 @@ void Component::setParameter(std::string const& name, std::string const& v)
   }else if(name=="$hflip"){itested();
     unsigned r = atoi(v.c_str());
     assert(r==1 || r==-1);
-    assert(r==1); // for now;
+    // assert(r==1); // not in _BJT?
     r -= 1;
     r /= -2;
     set_mirror_xaxis(r);

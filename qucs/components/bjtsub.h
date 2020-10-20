@@ -22,14 +22,18 @@
 
 
 class Basic_BJT : public MultiViewComponent  {
+protected:
+  Basic_BJT(Basic_BJT const& c) : MultiViewComponent(c) {}
 public:
-  Basic_BJT();
+  explicit Basic_BJT();
  ~Basic_BJT() {};
 };
 
 class BJTsub : public Basic_BJT  {
+protected:
+  BJTsub(BJTsub const& c) : Basic_BJT(c) {}
 public:
-  BJTsub();
+  explicit BJTsub();
  ~BJTsub() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
