@@ -70,9 +70,10 @@ void LIB::loadLibFiles()
     for (int i = 0; i < LibFiles.count(); ++i ) {
       libPath = LibFiles[i].first;
       libPath.chop(4); // remove extension
+		parsedlib.components.clear();
       int result = parseComponentLibrary(libPath, parsedlib);
 
-		trace1("got lib", parsedlib.name);
+		trace3("got lib", parsedlib.name, libPath, parsedlib.components.size());
       switch (result) {
       case QUCS_COMP_LIB_IO_ERROR:
       { untested();
@@ -106,6 +107,7 @@ void LIB::loadLibFiles()
 			istream_t stream(&c.modelString);
 			stream.readLine();
 			auto type = L->findType(stream);
+			trace2("DBG FT", c.modelString, type);
 
 			if(type=="Lib"){
 				// d'uh
@@ -126,7 +128,7 @@ void LIB::loadLibFiles()
 					sym->setTypeName(type);
 					L->parseItem(sym, stream);
 					new Module::INSTALL(parsedlib.name.toStdString(), sym);
-					trace1("paramset done", type);
+					trace3("paramset done", type, parsedlib.name, sym->label());
 				}else{
 					trace1("paramset skip", type);
 					// unreachable(); eventually

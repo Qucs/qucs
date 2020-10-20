@@ -1,25 +1,40 @@
 /***************************************************************************
-                                bjt.cpp
-                               ---------
-    begin                : Fri Jun 4 2004
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "bjt.h"
-#include "node.h"
+#include "bjtsub.h"
+//#include "node.h"
+#include "globals.h"
 
+namespace{
 
-BJT::BJT()
+class BJT : public Basic_BJT  {
+public:
+  BJT();
+ ~BJT() {};
+private:
+  BJT(BJT const& b) : Basic_BJT(b){ untested(); }
+  Element* clone() const override{ return new BJT(*this); }
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  static Element* info_pnp(QString&, char* &, bool getNewOne=false);
+
+protected:
+  void createSymbol();
+  QString netlist() const;
+}D;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "_BJT", &D);
+
+BJT::BJT() : Basic_BJT()
 {
   // properties obtained from "Basic_BJT" in bjtsub.cpp
   Description = QObject::tr("bipolar junction transistor");
@@ -30,6 +45,7 @@ BJT::BJT()
 }
 
 // -------------------------------------------------------
+#if 0
 Component* BJT::newOne()
 {
   BJT* p = new BJT();
@@ -37,6 +53,7 @@ Component* BJT::newOne()
   p->recreate(0);
   return p;
 }
+#endif
 
 // -------------------------------------------------------
 Element* BJT::info(QString& Name, char* &BitmapFile, bool getNewOne)
@@ -108,4 +125,6 @@ QString BJT::netlist() const
   return s + '\n';
 #endif
   return QString("incompleteBJT");
+}
+
 }

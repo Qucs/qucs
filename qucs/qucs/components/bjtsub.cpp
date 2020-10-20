@@ -18,7 +18,7 @@
 #include "bjtsub.h"
 
 
-Basic_BJT::Basic_BJT()
+Basic_BJT::Basic_BJT() : MultiViewComponent()
 {
   // this must be the first property in the list  !!!
   Props.append(new Property("Type", "npn", true,
