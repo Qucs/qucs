@@ -189,7 +189,7 @@ noinst_HEADERS = $(MOCHEADERS) components.h \
   ccvs.h coplanar.h hb_sim.h mscorner.h mslange.h \
   mscross.h msline.h msstep.h mstee.h substrate.h \
   tline.h tr_sim.h component.h gyrator.h phaseshifter.h vhdlfile.h \
-  iprobe.h wprobe.h volt_noise.h ampere_noise.h msmbend.h msopen.h ampere_ac.h bjt.h \
+  iprobe.h wprobe.h volt_noise.h ampere_noise.h msmbend.h msopen.h ampere_ac.h \
   jfet.h mosfet.h msgap.h bjtsub.h mosfet_sub.h vpulse.h ipulse.h vrect.h \
   irect.h msvia.h amplifier.h opamp.h spicefile.h cpwopen.h cpwshort.h \
   cpwgap.h cpwstep.h mutual.h mutual2.h noise_ii.h noise_iv.h \
