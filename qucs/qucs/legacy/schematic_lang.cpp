@@ -20,24 +20,24 @@ static void parseItem(QString Line, Element*e)
 {
 	assert(e);
 	// BUG: callback
-	if(auto p=dynamic_cast<Painting*>(e)) { untested();
+	if(auto p=dynamic_cast<Painting*>(e)) {
 		if(!p->load(Line)) { untested();
 			incomplete();
 			// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line format!"));
 			throw Exception("cannot parse painting");
 
-		}else{ untested();
+		}else{
 		}
 	}else{
 	}
 }
 /*--------------------------------------------------------------------------*/
 static bool PaintingListLoad(QTextStream& str, PaintingList& List)
-{ untested();
+{
 	auto stream=&str;
 	Painting *p=0;
 	QString Line, cstr;
-	while(!stream->atEnd()) { untested();
+	while(!stream->atEnd()) {
 
 		Line = stream->readLine();
 		if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
@@ -48,13 +48,13 @@ static bool PaintingListLoad(QTextStream& str, PaintingList& List)
 			incomplete();
 			// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line delimiter!"));
 			return false;
-		}else{ untested();
+		}else{
 		}
 		Line = Line.mid(1, Line.length()-2);  // cut off start and end character
 
 		cstr = Line.section(' ',0,0);    // painting type
 		qDebug() << cstr;
-		if(Painting const* pp = painting_dispatcher[cstr.toStdString()]){ untested();
+		if(Painting const* pp = painting_dispatcher[cstr.toStdString()]){
 			p=prechecked_cast<Painting*>(pp->clone());
 			assert(p);
 		}else{ untested();
@@ -106,12 +106,12 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 static CmdElement* loadCommand(const QString& _s, CmdElement* c);
 static Symbol* parseSymbol(const QString& _s, Symbol* c);
 static Element* loadElement(const QString& _s, Element* e)
-{ untested();
+{
 	trace1("loadElement", _s);
 	if(CmdElement* c=dynamic_cast<CmdElement*>(e)){ untested();
 		c = loadCommand(_s, c);
 		// incomplete();
-	}else if(Component* c=dynamic_cast<Component*>(e)){ untested();
+	}else if(Component* c=dynamic_cast<Component*>(e)){
 		// legacy components
 		// will not work non-qucs-.sch languages
 		incomplete();
@@ -138,7 +138,7 @@ static Element* loadElement(const QString& _s, Element* e)
 static std::list<Element*> implicit_hack;
 
 static bool obsolete_wireload(Symbol* w, const QString& sc)
-{ untested();
+{
 	Symbol* sym = w;
 	QString s(sc);
 	trace1("obsolete_wireload", s);
@@ -156,7 +156,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	int x1 = n.toInt(&ok);
 	if(!ok) { untested();
 		return false; // BUG: throw
-	}else{ untested();
+	}else{
 	}
 	sym->setParameter("$xposition", std::to_string(x1));
 
@@ -164,7 +164,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	int y1 = n.toInt(&ok);
 	if(!ok) { untested();
 		return false; // BUG: throw
-	}else{ untested();
+	}else{
 	}
 	sym->setParameter("$yposition", std::to_string(y1));
 
@@ -172,7 +172,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	int x2 = n.toInt(&ok);
 	if(!ok) { untested();
 		return false; // BUG: throw
-	}else{ untested();
+	}else{
 	}
 
 	assert(x1<=x2); // possibly the case in all legacy files
@@ -182,10 +182,10 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	int y2 = n.toInt(&ok);
 	if(!ok) { untested();
 		return false; // BUG: throw
-	}else{ untested();
+	}else{
 	}
 
-	if(y1<=y2){ untested();
+	if(y1<=y2){
 		// possibly the case in all legacy files
 	}else{ untested();
 		// nothing wrong with that, really?
@@ -194,7 +194,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 
 	n = s.section('"',1,1);
 	trace1("parse node label", n);
-	if(!n.isEmpty()) { untested();
+	if(!n.isEmpty()) {
 		Symbol* sym=w;
 		// there is a label hidden in this wire. go get it.
 		//
@@ -217,7 +217,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 		sym->setParameter("nx", nx); // not the node position, maybe the label position?
 		sym->setParameter("ny", ny); // not the node position, maybe the label position?
 		sym->expand(); //always?
-	}else{ untested();
+	}else{
 	}
 
 	return true;
@@ -226,7 +226,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 // some kind of parse_module_body
 // BUG: this is schematicFormat
 void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& owner) const
-{ untested();
+{
 	assert(!implicit_hack.size());
 	QString Line;
 
@@ -234,55 +234,55 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 	//       connect legacy "parsers".
 	// this is not needed in a proper SchematicLanguage
 	char mode='\0';
-	while(!stream.atEnd()) { untested();
+	while(!stream.atEnd()) {
 		Line = stream.readLine();
 		Line = Line.trimmed();
 		if(Line.size()<2){ untested();
 		}else if(Line.at(0) == '<'
-				&& Line.at(1) == '/'){ untested();
+				&& Line.at(1) == '/'){
 			qDebug() << "endtag?" << Line;
 		}else if(Line.isEmpty()){ untested();
-		}else if(Line == "<Components>") { untested();
+		}else if(Line == "<Components>") {
 			mode='C';
-		}else if(Line == "<Symbol>") { untested();
+		}else if(Line == "<Symbol>") {
 			mode='S';
-		}else if(Line == "<Wires>") { untested();
+		}else if(Line == "<Wires>") {
 			mode='W';
-		}else if(Line == "<Diagrams>") { untested();
+		}else if(Line == "<Diagrams>") {
 			mode='D';
-		}else if(Line == "<Properties>") { untested();
+		}else if(Line == "<Properties>") {
 			mode='Q';
-		}else if(Line == "<Paintings>") { untested();
+		}else if(Line == "<Paintings>") {
 			mode='P';
-		}else{ untested();
+		}else{
 
 			/// \todo enable user to load partial schematic, skip unknown components
 			Element*c=nullptr;
-			if(mode=='C'){ untested();
+			if(mode=='C'){
 				c = getComponentFromName(Line);
-				if(c){ untested();
+				if(c){
 					c->setOwner(&owner);
-				}else{ untested();
+				}else{
 				}
-				if(Symbol* sym=dynamic_cast<Symbol*>(c) ){ untested();
+				if(Symbol* sym=dynamic_cast<Symbol*>(c) ){
 					//always do this?
 
 //					assert(s.scope());
 					// what are those?!
 					sym->recreate(); // re? create symbol gfx and random other things. needs owner
 					sym->build(); // what's this?!
-				}else{ untested();
+				}else{
 				}
-			}else if(mode=='S'){ untested();
+			}else if(mode=='S'){
 				incomplete();
-				try{ untested();
+				try{
 					// incomplete. use parseItem.
 					PaintingListLoad(stream, owner.symbolPaintings());
 					c = nullptr;
 				}catch(...){ untested();
 					incomplete();
 				}
-			}else if(mode=='W'){ untested();
+			}else if(mode=='W'){
 				Symbol* sw= symbol_dispatcher.clone("Wire");
 				assert(sw);
 				sw->setOwner(&owner);
@@ -290,23 +290,23 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 				if(!err){ untested();
 					incomplete();
 					delete(sw);
-				}else{ untested();
+				}else{
 					c = sw;
 				}
-			}else if(mode=='D'){ untested();
+			}else if(mode=='D'){
 				trace1("diagram parse?", Line);
 
 				Diagram* d=loadDiagram(Line, stream);
-				if(d){ untested();
+				if(d){
 					c = d;
 					c->setOwner(&owner);
 				}else{ untested();
 					incomplete();
 				}
 
-			}else if(mode=='Q'){ untested();
+			}else if(mode=='Q'){
 
-			}else{ untested();
+			}else{
 				qDebug() << "LSL::parse" <<  Line;
 				incomplete();
 			}
@@ -342,13 +342,13 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 		trace1("diagram?", Line);
 		if(Line.at(0) == '<' && Line.at(1) == '/'){ untested();
 			return nullptr;
-		}else{ untested();
+		}else{
 			untested();
 		}
 		Line = Line.trimmed();
 		if(Line.isEmpty()){ untested();
 			return nullptr;
-		}else{ untested();
+		}else{
 		}
 		cstr = Line.section(' ',0,0);    // diagram type
 		std::string what=cstr.toStdString();
@@ -371,7 +371,7 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 			incomplete();
 			delete d;
 			return nullptr;
-		}else{ untested();
+		}else{
 		}
 		return d;
 	}
@@ -496,7 +496,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, ostream_t& s) const
 		s << " "+QString::number(c->cx())+" "+QString::number(c->cy());
 		s << " "+QString::number(c->tx)+" "+QString::number(c->ty);
 		s << " ";
-		if(c->mirroredX){ untested();
+		if(c->mirroredX){
 			s << "1";
 		}else{
 			s << "0";
@@ -617,7 +617,7 @@ static CmdElement* loadCommand(const QString& _s, CmdElement* c)
 /*--------------------------------------------------------------------------*/
 // decluttered parseComponentObsoleteCallback
 static Symbol* parseSymbol(const QString& _s, Symbol* sym)
-{ untested();
+{
 	trace1("parseSymbol", _s);
 	bool ok;
 	int  ttx, tty, tmp;
@@ -647,7 +647,7 @@ static Symbol* parseSymbol(const QString& _s, Symbol* sym)
 	qDebug() << "cx" << cx;
 	if(!ok){ untested();
 		throw Exception("xposition parse");
-	}else{ untested();
+	}else{
 		sym->setParameter("$xposition", std::to_string(cx));
 	//	sym->setParameter(3, std::to_string(cx));
 	}
@@ -656,7 +656,7 @@ static Symbol* parseSymbol(const QString& _s, Symbol* sym)
 	int cy=n.toInt(&ok);
 	if(!ok){ untested();
 		throw Exception("yposition parse");
-	}else{ untested();
+	}else{
 		sym->setParameter("$yposition", std::to_string(cy));
 	//	sym->setParameter(4, std::to_string(cy));
 	}
@@ -665,17 +665,17 @@ static Symbol* parseSymbol(const QString& _s, Symbol* sym)
 	ttx = n.toInt(&ok);
 	if(!ok){ untested();
 		throw Exception("tx parse");
-	}else{ untested();
+	}else{
 	}
 
 	n  = s.section(' ',6,6);    // ty
 	tty = n.toInt(&ok);
 	if(!ok){ untested();
 		throw Exception("ty parse");
-	}else{ untested();
+	}else{
 	}
 
-	{ untested();
+	{
 		n  = s.section(' ',7,7);    // mirror y axis
 		int nn = n.toInt(&ok);
 		if(!ok){
@@ -718,7 +718,7 @@ static Symbol* parseSymbol(const QString& _s, Symbol* sym)
 
 // BUG raise exceptions if something goes wrong.
 static Component* parseComponentObsoleteCallback(const QString& _s, Component* c)
-{ untested();
+{
 	Symbol* sym = c;
 	trace1("parseComponentObsoleteCallback", _s);
 	bool ok;
@@ -749,7 +749,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 	if(tmp & 4){ untested();
 	// sym->setParameter("hide_label", std::to_string(tmp & 4));
 		c->showName = false;
-	}else{ untested();
+	}else{
 		// use default, e.g. never show name for GND (bug?)
 	}
 
@@ -777,9 +777,9 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 	assert(c);
 //	assert(c->obsolete_model_hack().at(0) != '.');
 
-	{ untested();
+	{
 		n  = s.section(' ',7,7);    // mirror y axis
-		if(n.toInt(&ok) == 1){ untested();
+		if(n.toInt(&ok) == 1){
 			c->mirrorX();
 		}
 		if(!ok) return NULL;
@@ -788,7 +788,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 		tmp = n.toInt(&ok);
 		if(!ok){ untested();
 			return NULL;
-		}else if(int(c->rotated()) > tmp){ untested();
+		}else if(int(c->rotated()) > tmp){
 		  	// neccessary because of historical flaw in ...
 		  	// ... components like "volt_dc"
 			// ????
@@ -812,7 +812,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 	unsigned int z=0;
 	int counts = s.count('"');
 	// FIXME. use c->paramCount()
-	if(Model == "Sub"){ untested();
+	if(Model == "Sub"){
 		tmp = 2;   // first property (File) already exists
 	}else if(Model == "Lib"){ untested();
 		tmp = 3;
@@ -824,7 +824,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 		tmp = 2;
 	}else if(Model == "MUTX"){ untested();
 		tmp = 5; // number of properties for the default MUTX (2 inductors)
-	}else{ untested();
+	}else{
 		// "+1" because "counts" could be zero
 		tmp = counts + 1;
 	}
@@ -839,17 +839,17 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 	// set parameters.
 	Property *p1;
 	unsigned position=4;
-	for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) { untested();
+	for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
 		z++;
 		n = s.section('"',z,z);    // property value. gaah parse over and over again?
 		z++;
 		//qDebug() << "LOAD: " << p1->Description;
 
 		// not all properties have to be mentioned (backward compatible)
-		if(z > counts) { untested();
+		if(z > counts) {
 			if(p1->Description.isEmpty()){ untested();
 				c->Props.remove();    // remove if allocated in vain
-			}else{ untested();
+			}else{
 			}
 
 			if(Model == "Diode") { // BUG: don't use names
@@ -895,11 +895,11 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 					}
 					c->Props.current()->Value = "10";
 				}
-			}else{ untested();
+			}else{
 			}
 
 			return c;
-		}else{ untested();
+		}else{
 			// z <= counts
 		}
 
@@ -911,14 +911,14 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 				p1->Name = n.section('=',0,0);
 				n = n.section('=',1);
 				// allocate memory for a new property (e.g. for equations)
-				if(c->Props.count() < (counts>>1)) { untested();
+				if(c->Props.count() < (counts>>1)) {
 					c->Props.insert(z >> 1, new Property("y", "1", true));
 					c->Props.prev();
 				}
 			}
 #endif
 		if(z == 6)  if(counts == 6)     // backward compatible
-			if(Model == "R") { untested();
+			if(Model == "R") {
 				c->Props.getLast()->Value = n;
 				return c;
 			}
@@ -941,7 +941,7 @@ void LegacySchematicLanguage::parseItem(Element* e, istream_t& c) const
 
 	if(auto s=dynamic_cast<Component*>(e)){ untested();
 		incomplete();
-	}else if(auto s=dynamic_cast<Symbol*>(e)){ untested();
+	}else if(auto s=dynamic_cast<Symbol*>(e)){
 		::parseSymbol(l, s);
 	}else{
 		::parseItem(l, e);
@@ -949,7 +949,7 @@ void LegacySchematicLanguage::parseItem(Element* e, istream_t& c) const
 }
 /*--------------------------------------------------------------------------*/
 std::string LegacySchematicLanguage::findType(istream_t& c) const
-{ untested();
+{
 	std::string l = c.fullString();
 	auto Line = QString::fromStdString(l);
 
@@ -957,7 +957,7 @@ std::string LegacySchematicLanguage::findType(istream_t& c) const
 	if(Line.at(0) != '<') { untested();
 		throw "notyet_exception"
 			"Format Error:\nWrong line start!";
-	}else{ untested();
+	}else{
 	}
 
 	QString type = Line.section (' ',0,0); // component type
@@ -967,7 +967,7 @@ std::string LegacySchematicLanguage::findType(istream_t& c) const
 }
 /*--------------------------------------------------------------------------*/
 Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
-{ untested();
+{
 	qDebug() << "component?" << Line;
 	Element *e = nullptr;
 
@@ -975,7 +975,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 	if(Line.at(0) != '<') { untested();
 		throw "notyet_exception"
 			"Format Error:\nWrong line start!";
-	}else{ untested();
+	}else{
 	}
 
 	QString type = Line.section (' ',0,0); // component type
@@ -987,7 +987,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 ///		incomplete();
 ///		// c = new LibComp ();
 ///	}else
-	if (type == "Eqn"){ untested();
+	if (type == "Eqn"){
 		incomplete();
 		// c = new Equation ();
 	}else if (type == "SPICE"){ untested();
@@ -1006,7 +1006,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 	if(!s){
 		incomplete(); // throw? warn? error?
 		trace1("cannot find", typestring);
-	} else if(Component const* sc=dynamic_cast<Component const*>(s)){ untested();
+	} else if(Component const* sc=dynamic_cast<Component const*>(s)){
 		// legacy component
 		Element* k = sc->clone(); // memory leak?
 		e = prechecked_cast<Element*>(k);
@@ -1031,11 +1031,11 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 		e = s->clone();
 	}
 
-	if(e) { untested();
+	if(e) {
 		incomplete();
 		loadElement(Line, e);
 		// setType()
-	}else{ untested();
+	}else{
 		qDebug() << "error with" << type;
 		message(QucsWarningMsg,
 			"Format Error:\nUnknown component!\n"

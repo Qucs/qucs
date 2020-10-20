@@ -553,13 +553,13 @@ void Component::setParameter(unsigned pos, std::string const& v)
   int p = int(pos) - int(Symbol::paramCount()) - num_component_params ;
 
   trace2("Component::setParameter", pos, v);
-  if(pos==Symbol::paramCount()){ untested();
+  if(pos==Symbol::paramCount()){
     // tx
-  }else if(pos==Symbol::paramCount()+1){ untested();
+  }else if(pos==Symbol::paramCount()+1){
     // ty
   }else if(pos<Symbol::paramCount()){ untested();
     Symbol::setParameter(pos, v);
-  }else if (p<Props.size()){ untested();
+  }else if (p<Props.size()){
     assert(Props.at(p));
     //Props.at(p)->setValue(v);
     Props.at(p)->Value = QString::fromStdString(v);

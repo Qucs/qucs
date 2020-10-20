@@ -453,9 +453,9 @@ std::string Wire::paramValue(std::string const& n) const
 // ----------------------------------------------------------------
 void Wire::setParameter(std::string const& n, std::string const& v)
 {
-  if(n=="nx"){ untested();
+  if(n=="nx"){
     nx = v;
-  }else if(n=="ny"){ untested();
+  }else if(n=="ny"){
     ny = v;
   }else if(n=="$xposition"){
     _cx = atoi(v.c_str());
@@ -480,7 +480,7 @@ void Wire::setParameter(std::string const& n, std::string const& v)
     }else{
       unreachable();
     }
-  }else if(n=="delta"){ untested();
+  }else if(n=="delta"){
     delta = v;
   }else if(n=="deltax"){
     int V = atoi(v.c_str());
@@ -488,7 +488,7 @@ void Wire::setParameter(std::string const& n, std::string const& v)
     p1.first = V;
     if(V){
       p1.second = 0;
-    }else{ untested();
+    }else{
     }
     setP1(p1);
     findScaleAndAngle();
@@ -499,12 +499,12 @@ void Wire::setParameter(std::string const& n, std::string const& v)
     p1.second = V;
     if(V){
       p1.first = 0;
-    }else{ untested();
+    }else{
     }
     setP1(p1);
     findScaleAndAngle();
     updatePort();
-  }else if(n=="netname"){ untested();
+  }else if(n=="netname"){
     _netname = v;
   }else{ untested();
     Symbol::setParameter(n, v);
@@ -517,10 +517,10 @@ unsigned Wire::numPorts() const
 }
 // ----------------------------------------------------------------
 void Wire::expand()
-{ untested();
+{
   // stash NodeLabels as subdevices.
   // just not sure where exactly.
-  if (_netname != ""){ untested();
+  if (_netname != ""){
     new_subckt();
     Symbol* n = symbol_dispatcher.clone("NodeLabel");
     n->setLabel(_netname);
@@ -570,7 +570,7 @@ Node* Wire::connectNode(unsigned i, NodeMap& nm)
       n->setNetLabel(n2->netLabel());
     }else if(!n2->hasNetLabel()){
       n2->setNetLabel(n->netLabel());
-    }else{ untested();
+    }else{
       std::cerr << "possible label conflict. not sure what to do\n";
       std::cerr << n->netLabel() << " vs " << n2->netLabel() << "\n";
     }
@@ -582,7 +582,7 @@ Node* Wire::connectNode(unsigned i, NodeMap& nm)
   nm.addEdge(this, n);
   trace3("Wire::connect", i, n->degree(), degree());
 
-  if(_netname!=""){ untested();
+  if(_netname!=""){
     trace2("wire override netlabel", n->netLabel(), _netname);
     n->setNetLabel(QString::fromStdString(_netname));
   }else{

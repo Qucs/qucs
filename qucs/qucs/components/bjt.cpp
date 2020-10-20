@@ -23,7 +23,7 @@ public:
   BJT();
  ~BJT() {};
 private:
-  BJT(BJT const& b) : Basic_BJT(b){ untested(); }
+  BJT(BJT const& b) : Basic_BJT(b){ }
   Element* clone() const override{ return new BJT(*this); }
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_pnp(QString&, char* &, bool getNewOne=false);
