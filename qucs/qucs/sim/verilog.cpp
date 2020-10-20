@@ -45,12 +45,13 @@ static std::string netLabel(Net const* n)
 }
 
 class Verilog : public NetLang {
-	void printCommand(CmdElement const*, QTextStream&) const override;
-	void printSymbol(Symbol const*, QTextStream&) const override;
-	void printPainting(Painting const*, stream_t&) const override {incomplete();}
-	void printDiagram(Symbol const*, stream_t&) const override {incomplete();}
-private:
-  SchematicModel const* modelhack;
+	void printCommand(CmdElement const*, ostream_t&) const override;
+	void printSymbol(Symbol const*, ostream_t&) const override;
+	void printPainting(Painting const*, ostream_t&) const override {incomplete();}
+	void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
+
+private: //NetLang
+	std::string findType(istream_t&) const override {incomplete();}
 } V;
 
 static Dispatcher<DocumentLanguage>::INSTALL p(&doclang_dispatcher, "verilog", &V);
@@ -58,12 +59,12 @@ static Dispatcher<DocumentLanguage>::INSTALL p(&doclang_dispatcher, "verilog", &
 /*!
  * verilog does not know about commands
  */
-void Verilog::printCommand(CmdElement const* c, QTextStream& s) const
+void Verilog::printCommand(CmdElement const* c, ostream_t& s) const
 {
   s << "//" << c->label() << "\n";
 }
 
-void Verilog::printSymbol(Symbol const* sym, QTextStream& s) const
+void Verilog::printSymbol(Symbol const* sym, ostream_t& s) const
 {
 	Component const* c=dynamic_cast<Component const*>(sym);
 #if 0
@@ -147,7 +148,7 @@ private: // legacy cruft
   }
 
 private: // hacks.
-  void printSymbol(Symbol const*, stream_t&) const;
+  void printSymbol(Symbol const*, ostream_t&) const;
 }VS;
 
 static Dispatcher<DocumentFormat>::INSTALL
@@ -191,7 +192,7 @@ void VerilogSchematicFormat::save(DocumentStream& stream, SchematicSymbol const&
 
 // similar to Verilog::printSymbol, but with the actual node names and
 // coordinates.
-void VerilogSchematicFormat::printSymbol(Symbol const* sym, stream_t& s) const
+void VerilogSchematicFormat::printSymbol(Symbol const* sym, ostream_t& s) const
 {
 #if 0
 	Component const* c=dynamic_cast<Component const*>(sym);

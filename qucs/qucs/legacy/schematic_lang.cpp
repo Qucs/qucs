@@ -88,14 +88,15 @@ private: // stuff from component.cc
 //	Component* parseComponentObsoleteCallback(const QString& _s, Component* c) const;
 	Element* getComponentFromName(QString& Line) const;
 private: // overrides
-	// BUG: need parseItem
 	void parse(DocumentStream& stream, SchematicSymbol& s) const;
+	std::string findType(istream_t&) const override;
+	void parseItem(Element*, istream_t&) const override;
 
 private:
-	void printSymbol(Symbol const*, stream_t&) const override;
-	void printCommand(CmdElement const*, stream_t&) const override;
-	void printPainting(Painting const*, stream_t&) const override {incomplete();}
-   void printDiagram(Symbol const*, stream_t&) const override {incomplete();}
+	void printSymbol(Symbol const*, ostream_t&) const override;
+	void printCommand(CmdElement const*, ostream_t&) const override;
+	void printPainting(Painting const*, ostream_t&) const override {incomplete();}
+   void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
 }defaultSchematicLanguage_;
 static Dispatcher<DocumentLanguage>::INSTALL
     p(&doclang_dispatcher, "leg_sch", &defaultSchematicLanguage_);
@@ -388,7 +389,7 @@ static std::string mangle(std::string t)
 	return t.substr(0, pos);
 }
 
-void LegacySchematicLanguage::printCommand(CmdElement const* c, stream_t& s) const
+void LegacySchematicLanguage::printCommand(CmdElement const* c, ostream_t& s) const
 {
 	s << "  <." << c->Name << " ";
 
@@ -432,7 +433,7 @@ void LegacySchematicLanguage::printCommand(CmdElement const* c, stream_t& s) con
 	s << ">";
 }
 
-static void printArgs(Symbol const* sym, stream_t& s)
+static void printArgs(Symbol const* sym, ostream_t& s)
 {
 	s << " " << sym->paramValue("$mfactor");
 	s << " " << sym->paramValue("$xposition");
@@ -471,7 +472,7 @@ static void printArgs(Symbol const* sym, stream_t& s)
 	}
 }
 // was: void Schematic::saveComponent(QTextStream& s, Component const* c) const
-void LegacySchematicLanguage::printSymbol(Symbol const* sym, stream_t& s) const
+void LegacySchematicLanguage::printSymbol(Symbol const* sym, ostream_t& s) const
 {
 	s << "  <" << mangle(sym->typeName()) << " ";
 
@@ -676,11 +677,11 @@ static Symbol* parseSymbol(const QString& _s, Symbol* sym)
 
 	{ untested();
 		n  = s.section(' ',7,7);    // mirror y axis
-		n.toInt(&ok);
+		int nn = n.toInt(&ok);
 		if(!ok){
 			throw Exception("hflip parse");
 		}else{
-			sym->setParameter("$hflip", n);
+			sym->setParameter("$hflip", std::to_string(1-2*nn));
 		}
 
 		n  = s.section(' ',8,8);    // rotated
@@ -696,7 +697,6 @@ static Symbol* parseSymbol(const QString& _s, Symbol* sym)
 	}
 
 	// set parameters.
-	Property *p1;
 	unsigned position = 2; // Symbol::paramCount();
 	unsigned int z=0;
 	int counts = s.count('"');
@@ -705,13 +705,11 @@ static Symbol* parseSymbol(const QString& _s, Symbol* sym)
 		z++;
 		n = s.section('"',z,z);    // property value. gaah parse over and over again?
 		z++;
-		//qDebug() << "LOAD: " << p1->Description;
 
 		trace2("set", position, n);
 		sym->setParameter(position, n);
 
 		n  = s.section('"',z,z);    // display
-		p1->display = (n.at(1) == '1');
 	}
 
 	trace1("done sym parse", sym->label());
@@ -936,7 +934,38 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 	trace1("done legacy load", c->label());
 	return c;
 }
+/*--------------------------------------------------------------------------*/
+void LegacySchematicLanguage::parseItem(Element* e, istream_t& c) const
+{
+	QString l = QString::fromStdString( c.fullString());
 
+	if(auto s=dynamic_cast<Component*>(e)){ untested();
+		incomplete();
+	}else if(auto s=dynamic_cast<Symbol*>(e)){ untested();
+		::parseSymbol(l, s);
+	}else{
+		::parseItem(l, e);
+	}
+}
+/*--------------------------------------------------------------------------*/
+std::string LegacySchematicLanguage::findType(istream_t& c) const
+{ untested();
+	std::string l = c.fullString();
+	auto Line = QString::fromStdString(l);
+
+	Line = Line.trimmed();
+	if(Line.at(0) != '<') { untested();
+		throw "notyet_exception"
+			"Format Error:\nWrong line start!";
+	}else{ untested();
+	}
+
+	QString type = Line.section (' ',0,0); // component type
+	type.remove (0,1);    // remove leading "<"
+	std::string typestring = type.toStdString();
+	return typestring;
+}
+/*--------------------------------------------------------------------------*/
 Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 { untested();
 	qDebug() << "component?" << Line;

@@ -93,17 +93,47 @@ void LIB::loadLibFiles()
 //			trace2("libcomp", parsedlib.name, c.name); // ->label());
 			trace0("=================");
 			if(c.symbol==""){
-				c.symbol=parsedlib.defaultSymbol;
+				c.symbol = parsedlib.defaultSymbol;
 			}else{
 			}
 			trace4("libcomp", c.name, c.modelString, c.symbol, c.definition);
 			trace0("=================");
-			Symbol* sym = symbol_dispatcher.clone("Lib");
 
-			if (0){
-				auto D = doclang_dispatcher["leg_sch"];
-				auto L = dynamic_cast<SchematicLanguage const*>(D);
-				assert(L);
+			auto D = doclang_dispatcher["leg_sch"];
+			auto L = dynamic_cast<SchematicLanguage const*>(D);
+			assert(L);
+
+			istream_t stream(&c.modelString);
+			stream.readLine();
+			auto type = L->findType(stream);
+
+			if(type=="Lib"){
+				// d'uh
+			}else if(c.modelString.count('\n') < 2){
+				trace1("paramset?", c.modelString);
+				Symbol* sym = symbol_dispatcher.clone("LegacyParamset");
+				sym->setParameter("modelstring", c.modelString.toStdString());
+				trace2("libfiles", c.modelString, type);
+#if 1
+				std::string t = "P:" + parsedlib.name.toStdString() + ":" + c.name.toStdString();
+				sym->setLabel(t);
+#else
+				auto line = stream.fullString();
+				L->parseItem(sym, line);
+#endif
+
+				if(symbol_dispatcher[type]){
+					sym->setTypeName(type);
+					L->parseItem(sym, stream);
+					new Module::INSTALL(parsedlib.name.toStdString(), sym);
+					trace1("paramset done", type);
+				}else{
+					trace1("paramset skip", type);
+					// unreachable(); eventually
+					// possibly not ported yet.
+				}
+			}else if (0){
+				Symbol* sym = symbol_dispatcher.clone("Lib");
 
 				DocumentStream stream(&c.symbol);
 
@@ -111,16 +141,21 @@ void LIB::loadLibFiles()
 //					incomplete();
 //					auto type = L->find_type(stream);
 //				}
+
+				// e->setTypeName(parsedlib.name.toStdString() + ":" + c.name.toStdString());
+
+				std::string t = parsedlib.name.toStdString() + ":" + c.name.toStdString();
+				sym->setLabel(t);
+				new Dispatcher<Symbol>::INSTALL(&symbol_dispatcher, t, sym);
+
+				sym->setParameter("section", parsedlib.name.toStdString());
+				sym->setParameter("component", c.name.toStdString());
+
+				new Module::INSTALL(parsedlib.name.toStdString(), sym);
+			}else{
+				trace1("no whitespace", c.modelString);
+				assert(false);
 			}
-
-			// e->setTypeName(parsedlib.name.toStdString() + ":" + c.name.toStdString());
-
-			sym->setLabel(parsedlib.name.toStdString() + ":" + c.name.toStdString());
-
-			sym->setParameter("section", parsedlib.name.toStdString());
-		   sym->setParameter("component", c.name.toStdString());
-
-			new Module::INSTALL(parsedlib.name.toStdString(), sym);
 			// todo: memory leak.
 		}
 

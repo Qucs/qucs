@@ -173,7 +173,6 @@ bool SimMessage::startProcess()
   }else{itested();
   }
 
-  Stream.setDevice(&NetlistFile);
 
   // BUG: ask simulator driver
   auto dl=docfmt_dispatcher["qucsator"];
@@ -226,6 +225,8 @@ bool SimMessage::startProcess()
 // BUG: must create netlist in netlister.
 void SimMessage::nextSPICE()
 { untested();
+
+#if 0
   incomplete();
   QString Line;
   for(;;) {  // search for next SPICE component
@@ -306,6 +307,7 @@ void SimMessage::nextSPICE()
   SimProcess.setStandardInputFile(command);  //? FIXME works?
   qDebug() << command;
   connect(&SimProcess, SIGNAL(wroteToStdin()), SLOT(slotCloseStdin()));
+#endif
 }
 
 // ------------------------------------------------------------------------
@@ -318,6 +320,7 @@ void SimMessage::slotCloseStdin()
 // ------------------------------------------------------------------------
 void SimMessage::slotReadSpiceNetlist()
 {
+#if 0
   int i;
   QString s;
   ProgressText += QString(SimProcess.readAllStandardOutput());
@@ -337,11 +340,13 @@ void SimMessage::slotReadSpiceNetlist()
     }
     Stream << "  " << s << '\n';
   }
+#endif
 }
 
 // ------------------------------------------------------------------------
 void SimMessage::slotFinishSpiceNetlist(int status )
 {
+#if 0
   Q_UNUSED(status);
 
   if(makeSubcircuit){ untested();
@@ -350,6 +355,7 @@ void SimMessage::slotFinishSpiceNetlist(int status )
   }
 
   nextSPICE();
+#endif
 }
 
 // ------------------------------------------------------------------------
@@ -406,7 +412,7 @@ void SimMessage::startSimulator()
     incomplete();
 
     // Take VHDL file in memory as it could contain unsaved changes.
-    Stream << Doc->toPlainText();
+    // Stream << Doc->toPlainText();
     NetlistFile.close();
     ProgText->insertPlainText(tr("done.\n"));  // of "creating netlist...
 
@@ -475,7 +481,9 @@ void SimMessage::startSimulator()
 #endif
     }
   }else if(SchematicDoc const* d=dynamic_cast<SchematicDoc const*>(DocWidget)){itested();
+    incomplete();
 
+  ostream_t Stream(&NetlistFile);
     // output NodeSets, SPICE simulations etc.
     for(QStringList::Iterator it = Collect.begin();
 	it != Collect.end(); ++it) {

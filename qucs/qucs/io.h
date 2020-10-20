@@ -19,12 +19,16 @@
 #include "trace.h"
 
 class QFile;
+
+// output stream
 class DocumentStream : public QTextStream {
+private:
+	DocumentStream(DocumentStream const&) = delete;
 public:
-	explicit DocumentStream(){ incomplete(); }
+//	explicit DocumentStream(){ incomplete(); }
 	explicit DocumentStream(QFile* /* BUG const */ file);
-	explicit DocumentStream(QString /* BUG const */ * filename, QIODevice::OpenModeFlag flag = QIODevice::ReadOnly) :
-		QTextStream(filename, flag){}
+	explicit DocumentStream(QString /* BUG const */ * filename) :
+		QTextStream(filename, QIODevice::WriteOnly){}
 
 public:
 	DocumentStream& operator<<(std::string const& x){
@@ -36,12 +40,32 @@ public:
 		QTextStream::operator<<(x);
 		return *this;
 	}
+	bool atEnd() const{return QTextStream::atEnd();}
 };
-typedef QTextStream stream_t; //  BUG
+
+typedef DocumentStream ostream_t;
+
+// CS like stream. replace by CS...
+class istream_t : private QTextStream{
+private:
+	istream_t(istream_t const&) = delete;
+public:
+	template<class T>
+	istream_t(T t) : QTextStream(t), _current("") {}
+public:
+	QString const& readLine(){
+		_current = QTextStream::readLine();
+		return _current;
+	}
+	std::string fullString() const { return _current.toStdString(); }
+	bool atEnd() const{return QTextStream::atEnd();}
+private:
+	QString _current;
+};
 
 // not here
 inline std::ostream& operator<<(std::ostream&o, std::pair<int, int> const& p)
-{
+{ untested(); // still used?
   return o << "(" << p.first << ", " << p.second << ")";
 }
 

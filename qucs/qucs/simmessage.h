@@ -101,7 +101,6 @@ public:
   bool           makeSubcircuit, insertSim;
   QStringList    Collect;
   QFile          NetlistFile;
-  DocumentStream Stream;
 
   QVBoxLayout  *all;
 protected:

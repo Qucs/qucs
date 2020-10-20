@@ -1,0 +1,21 @@
+
+LEGACY_SRC = \
+	curvediagram.cpp \
+	libcomp.cpp \
+	markerdialog.cpp \
+	paramset.cpp \
+	polardiagram.cpp \
+	psdiagram.cpp \
+	rect3ddiagram.cpp \
+	rectdiagram.cpp \
+	schematic_format.cpp \
+	schematic_lang.cpp \
+	simulator.cpp \
+	smithdiagram.cpp \
+	subcircuit.cpp \
+	tabdiagram.cpp \
+	timingdiagram.cpp \
+	truthdiagram.cpp
+
+# phasordiagram.cpp
+# waveac.cpp
