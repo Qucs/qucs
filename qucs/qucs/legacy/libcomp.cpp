@@ -50,7 +50,8 @@ private:
 	int  loadSymbol();
 	int  loadSection(const QString&, QString&, QStringList* i=0);
 	QString createType() const;
-};
+}d0;
+static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "LegacyLibProto", &d0);
 
 class Lib : public Symbol{
 public:
@@ -126,7 +127,6 @@ LibComp::LibComp()
   Props.append(new Property("Comp", "", true,
 		QObject::tr("name of component in library")));
 }
-static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "LegacyLibProto", &D);
 
 // ---------------------------------------------------------------------
 

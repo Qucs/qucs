@@ -3,7 +3,12 @@
 #include "symbol.h"
 #include "language.h"
 
-void DocumentLanguage::printItem(Element const* c, stream_t& s) const
+void DocumentLanguage::parseItem(Element* c, istream_t& s) const
+{
+	unreachable();
+}
+
+void DocumentLanguage::printItem(Element const* c, ostream_t& s) const
 {
   assert(c);
   if (auto C=dynamic_cast<const CmdElement*>(c)) {

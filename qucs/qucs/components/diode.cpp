@@ -22,10 +22,12 @@
 namespace{
 
 class Diode : public MultiViewComponent  {
+private:
+  Diode(Diode const& p) : MultiViewComponent(p) {}
 public:
   Diode();
  ~Diode() {};
-  Component* newOne();
+  Element* clone() const{ return new Diode(*this); }
   static Element* info(QString&, char* &, bool getNewOne=false);
 
 protected:
@@ -35,7 +37,7 @@ static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Diode", &D);
 static Module::INSTALL pp("nonlinear", &D);
 
 
-Diode::Diode()
+Diode::Diode() : MultiViewComponent()
 {
   info(Name, bitmap_file);
   Description = QObject::tr("diode");
@@ -104,11 +106,6 @@ Diode::Diode()
   ty = y2+4;
   Model = "Diode";
   Name  = "D";
-}
-
-Component* Diode::newOne()
-{
-  return new Diode();
 }
 
 Element* Diode::info(QString& Name, char* &BitmapFile, bool getNewOne)
