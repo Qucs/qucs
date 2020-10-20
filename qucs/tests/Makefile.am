@@ -73,7 +73,8 @@ PRJ_TESTS = \
 	AC_bandpass.prj \
 	AC_groupdelay_ac.prj \
 	AC_SW_resonance.prj \
-	DC_SP_LPF-Balun2.prj
+	DC_SP_LPF-Balun2.prj \
+	DC_TR_active_mixer.prj
 
 LATER_TESTS = \
 	AC_SW_swr_meter.prj \
@@ -101,7 +102,6 @@ LATER_TESTS = \
 	DC_SW_fgummel.prj \
 	DC_SW_preregulator.prj \
 	DC_SW_rgummel.prj \
-	DC_TR_active_mixer.prj \
 	DC_TR_SW_TestHBProbe.prj \
 	SP_bpf_10Ghz.prj \
 	SP_chebyshev1_5th.prj \
