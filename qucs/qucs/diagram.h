@@ -42,6 +42,7 @@
 
 class QMouseEvent;
 class DocumentStream; // BUG
+class istream_t;
 class FontMetrics;
 
 struct Axis {
@@ -105,7 +106,7 @@ public: // ??!
   bool    getSelected(int, int);
   bool    resizeTouched(float, float, float);
   QString save();
-  bool    load(const QString&, DocumentStream&);
+  bool    load(const QString&, istream_t&);
 
   void getAxisLimits(Graph*);
   void updateGraphData();
