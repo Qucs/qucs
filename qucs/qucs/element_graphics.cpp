@@ -212,10 +212,13 @@ void ElementGraphics::attachElement(Element* e)
 
 	if(!s){
 	}else if(auto sp = s->symbolPaintings()){
+		unsigned k = 0;
 		for(Element const* p : *sp){
 			assert(p);
 			new SymbolGraphics(p, this);
+			++k;
 		}
+		trace1("elementgraphics symbolpaints", k);
 	}else{
 	}
 
