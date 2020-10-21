@@ -287,4 +287,9 @@ void Symbol::setParameter(unsigned pos, QString const& b)
 	setParameter(pos, v);
 }
 /*--------------------------------------------------------------------------*/
+QDialog* Symbol::schematicWidget(QucsDoc* Doc) const
+{ untested();
+  return nullptr; // new ComponentDialog(Doc); // memory leak?
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
