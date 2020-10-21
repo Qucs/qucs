@@ -544,7 +544,7 @@ public:
 		QFile file(scktfilename);
 		qDebug() << "getting sckt definition from" << scktfilename << "type" << s;
 		file.open(QIODevice::ReadOnly);
-		DocumentStream pstream(&file);
+		istream_t pstream(&file);
 
 		auto D=docfmt_dispatcher["leg_sch"];
 		assert(D);

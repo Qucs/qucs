@@ -18,11 +18,11 @@ protected:
 	SchematicLanguage() : DocumentLanguage() {}
 public:
 	virtual ~SchematicLanguage() {}
-	virtual void parse(DocumentStream& stream, SchematicSymbol&) const=0;
+	virtual void parse(istream_t& stream, SchematicSymbol&) const=0;
 };
 
 template<class container>
-void schematicParse(DocumentStream& s, SchematicSymbol& c, SchematicLanguage const* L)
+void schematicParse(istream_t& s, SchematicSymbol& c, SchematicLanguage const* L)
 {
 	assert(L);
 	while(!s.atEnd()){ untested();

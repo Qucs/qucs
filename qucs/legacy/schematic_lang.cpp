@@ -87,13 +87,13 @@ public:
 	LegacySchematicLanguage() : SchematicLanguage(){
 	}
 private: // stuff saved from schematic_file.cpp
-	Diagram* loadDiagram(QString const& Line, DocumentStream& /*, DiagramList *List */) const;
+	Diagram* loadDiagram(QString const& Line, istream_t& /*, DiagramList *List */) const;
 private: // stuff from component.cc
 	void loadProperties(QTextStream& stream, SchematicSymbol& m) const;
 //	Component* parseComponentObsoleteCallback(const QString& _s, Component* c) const;
 	Element* getComponentFromName(QString& Line) const;
 private: // overrides
-	void parse(DocumentStream& stream, SchematicSymbol& s) const;
+	void parse(istream_t& stream, SchematicSymbol& s) const;
 	std::string findType(istream_t&) const override;
 	void parseItem(Element*, istream_t&) const override;
 
@@ -230,7 +230,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 
 // some kind of parse_module_body
 // BUG: this is schematicFormat
-void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& owner) const
+void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) const
 {
 	assert(!implicit_hack.size());
 	QString Line;
@@ -282,9 +282,9 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 				// incomplete();
 				try{
 					// incomplete. use parseItem.
-					QString Line = stream.readLine();
+					auto Line = QString::fromStdString(stream.fullString());
 					PaintingListLoad(Line, owner.symbolPaintings());
-					trace1("symbolpaint", owner.symbolPaintings().size());
+					trace1("symbolpaint", Line);
 					c = nullptr;
 				}catch(...){ untested();
 					incomplete();
@@ -340,7 +340,7 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 }
 
 Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
-		DocumentStream& stream)const
+		istream_t& stream)const
 {itested();
 	Diagram *d;
 	QString Line=line_in;

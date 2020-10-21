@@ -1312,7 +1312,7 @@ QString Diagram::save()
 
 // ------------------------------------------------------------
 // // MOVE to legacy lang
-bool Diagram::load(const QString& Line, DocumentStream& stream)
+bool Diagram::load(const QString& Line, istream_t& stream)
 {itested();
 	incomplete(); // use Lang
   bool ok;

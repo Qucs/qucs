@@ -172,7 +172,7 @@ bool SchematicDoc::loadDocument(QFile& /*BUG*/ file)
 {itested();
 	incomplete();
   QString Line;
-  DocumentStream stream(&file);
+  istream_t stream(&file);
 
   // read header **************************
   do {itested();
@@ -196,7 +196,7 @@ bool SchematicDoc::loadDocument(QFile& /*BUG*/ file)
   return true;
 }
 
-void SchematicDoc::parse(DocumentStream& s, SchematicLanguage const* L)
+void SchematicDoc::parse(istream_t& s, SchematicLanguage const* L)
 {itested();
 	if(!L){itested();
 		auto D=doclang_dispatcher["leg_sch"];

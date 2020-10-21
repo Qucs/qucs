@@ -39,7 +39,7 @@ private: // legacy implementation
   void createDeclarations(DocumentStream& d) const;
 private: // overrides
   void save(DocumentStream& stream, SchematicSymbol const& m) const;
-  void load(DocumentStream&, SchematicSymbol&) const{ incomplete(); }
+  void load(istream_t&, SchematicSymbol&) const{ incomplete(); }
 private: // implementation
   void nodeMap(SchematicSymbol const& m) const;
 private:
