@@ -99,6 +99,8 @@ public:
 		Element const* e = element(parent);
 		setParentItem(parent);
 
+		setFlags(ItemIgnoresTransformations);
+
 		int k=0;
 		if(e->showLabel()){
 			_labeltext = new QGraphicsTextItem(this);
@@ -113,6 +115,7 @@ public:
 				if(n.at(0)=='$'){
 				}else if(show % 2){
 					auto t=new QGraphicsTextItem(this);
+					t->setFlags(ItemIgnoresTransformations);
 					auto v = QString::fromStdString(s->paramValue(i));
 					t->setPlainText(n+"="+v);
 					t->setPos(0, k/2);
