@@ -29,7 +29,9 @@ public:
 				assert(elt);
 				int dx = getX(delta);
 				int dy = getY(delta);
-				elt->setCenter(dx, dy, true);
+
+				pos_t c = elt->center() + pos_t(dx, dy);
+				elt->setCenter(c);
 
 				qSwap(eg, elt); // gaah.
 			}else{ untested();
