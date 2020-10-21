@@ -24,8 +24,6 @@
 
 #include "rectangle.h"
 #include "ellipse.h"
-#include "arrow.h"
-#include "graphicline.h"
 #include "graphictext.h"
 #include "portsymbol.h"
 #include "ellipsearc.h"

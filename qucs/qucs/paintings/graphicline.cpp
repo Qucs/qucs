@@ -2,7 +2,7 @@
                               graphicline.cpp
                              -----------------
     copyright            : (C) 2003 by Michael Margraf
-                               2018 Felix Salfelder
+                               2018, 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -13,7 +13,6 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "graphicline.h"
 #include "filldialog.h"
 #include "misc.h"
 #include "globals.h"
@@ -24,12 +23,48 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include <QComboBox>
+#include "painting.h"
+
+#include <QPen>
 
 namespace{
-GraphicLine D;
+
+
+class GraphicLine : public Painting  {
+public:
+  GraphicLine();
+  ~GraphicLine();
+  
+  void setSomeStuff( int cx_=0, int cy_=0, int x2_=0, int y2_=0,
+              QPen Pen_=QPen(QColor()));
+
+  void paintScheme(SchematicDoc*);
+  void getCenter(int&, int&);
+  void setCenter(int, int, bool relative=false);
+
+  Element* clone() const {return new GraphicLine(*this);}
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  bool load(const QString&);
+  QString save();
+  QString saveCpp();
+  QString saveJSON();
+  void paint(ViewPainter*) const override;
+  void MouseMoving(SchematicDoc*, int, int, int, int, SchematicDoc*, int, int, bool);
+  bool MousePressing();
+  bool getSelected(float, float, float);
+  void Bounding(int&, int&, int&, int&);
+  bool resizeTouched(float, float, float);
+  void MouseResizeMoving(int, int, SchematicDoc*);
+
+  void rotate();
+  void mirrorX();
+  void mirrorY();
+  bool Dialog();
+
+  QPen   Pen;
+}D;
 Dispatcher<Painting>::INSTALL p(&painting_dispatcher, "Line", &D);
 Module::INSTALL pp("paintings", &D);
-}
 
 GraphicLine::GraphicLine()
 {
@@ -402,3 +437,5 @@ bool GraphicLine::Dialog()
   delete d;
   return changed;
 }
+
+} // namespace
