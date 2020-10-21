@@ -56,6 +56,9 @@ private: // Element override
   void    paint(ViewPainter*) const;
   QDialog* schematicWidget(QucsDoc*) const override;
   QRectF boundingRect() const override;
+  bool legacyTransformHack() const override{
+	  return true;
+  }
 
 private: // Symbol interface.
   virtual void recreate() {}; // obsolete?

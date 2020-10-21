@@ -223,6 +223,9 @@ public: // set protected variables. don't use
 // 		  cy = value;
 // 	  }
 //   }
+	virtual bool legacyTransformHack() const{
+		return false;
+	}
 
 protected:
   int _cx, _cy; // BUG: store in symbol.

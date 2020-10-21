@@ -31,7 +31,7 @@ static void parsePainting(QString Line, Painting*p)
 }
 /*--------------------------------------------------------------------------*/
 static bool PaintingListLoad(QString Line, PaintingList& List)
-{ untested();
+{ itested();
 	Painting *p=0;
 	QString cstr;
 //	while(!stream->atEnd()) {
@@ -73,7 +73,7 @@ static bool PaintingListLoad(QString Line, PaintingList& List)
 		List.append(p);
 	//}
 
-	incomplete();
+	// incomplete();
 	// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\n'Painting' field is not closed!"));
 	return false;
 }
@@ -688,7 +688,9 @@ static Symbol* parseSymbol(const QString& _s, Symbol* sym)
 		if(!ok){
 			throw Exception("hflip parse");
 		}else{
-			sym->setParameter("$hflip", std::to_string(1-2*nn));
+			int hflip = 1-2*nn;
+			assert(hflip==1 || hflip==-1);
+			sym->setParameter("$hflip", std::to_string(hflip));
 		}
 
 		n  = s.section(' ',8,8);    // rotated
@@ -700,7 +702,7 @@ static Symbol* parseSymbol(const QString& _s, Symbol* sym)
 
 		tmp *= 90;
 		sym->setParameter("$angle", std::to_string(tmp));
-		// assert(sym->paramValue("$angle") == std::to_string(tmp));
+		assert(sym->paramValue("$angle") == std::to_string(tmp));
 	}
 
 	// set parameters.

@@ -55,6 +55,9 @@ private: // Element
 	QDialog* schematicWidget(QucsDoc*) const override;
 	void paint(ViewPainter*) const override;
 	QRectF boundingRect() const override;
+	bool legacyTransformHack() const override{
+		return true;
+	}
 
 private: // Conductor
 	Symbol* newUnion(const Symbol*) const override;
