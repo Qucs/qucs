@@ -26,7 +26,7 @@
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // A graphics element on the screen.
-// kind of smart-pointer/proxy.
+// sort of proxy for Element
 class ElementGraphics : public QGraphicsItem {
 private:
 	ElementGraphics();

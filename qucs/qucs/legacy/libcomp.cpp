@@ -58,7 +58,8 @@ private:
 	QRectF boundingRect() const override{
 		// BUG. cache.
 		QRectF br;
-		for(auto p : symbolPaintings()){
+		assert(symbolPaintings());
+		for(auto p : *symbolPaintings()){
 			assert(p);
 			Element const* e = p;
 			trace2("br", e->boundingRect().topLeft(), e->boundingRect().bottomRight());
@@ -66,9 +67,11 @@ private:
 			auto cc = makeQPointF(c);
 			br |= e->boundingRect().translated(cc);
 		}
-		trace3("br", symbolPaintings().size(), br.topLeft(), br.bottomRight());
+		trace3("br", symbolPaintings()->size(), br.topLeft(), br.bottomRight());
 		return br;
 	}
+#if 0
+	not needed. let Qt deal with it.
 	void paint(ViewPainter* vp) const override{
 		for(Element const* p : symbolPaintings()){ untested();
 			assert(p);
@@ -76,6 +79,8 @@ private:
 			p->paint(vp);
 		}
 	}
+
+#endif
 
 protected:
 	QString netlist() const;
@@ -127,6 +132,13 @@ private: // Element
   }
 
 private: // Symbol
+	PaintingList const* symbolPaintings() const override{
+		if(_parent){ untested();
+			return _parent->symbolPaintings();
+		}else{ untested();
+			return nullptr;
+		}
+	}
 	unsigned numPorts() const override{
 		incomplete();
 		return 0;
@@ -183,11 +195,7 @@ private: // Symbol
 		}
 	}
 	std::string paramValue(std::string const& n) const override{
-		if (n=="$angle"){
-			 // Symbol?
-			  incomplete();
-			return "0";
-		}else if (n=="$tx"){
+		if (n=="$tx"){
 			return std::to_string(_tx);
 		}else if (n=="$ty"){
 			return std::to_string(_ty);

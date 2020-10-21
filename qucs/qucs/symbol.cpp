@@ -24,13 +24,19 @@ void Symbol::recreate(){ // }SchematicModel const&){ untested();
 /*--------------------------------------------------------------------------*/
 Symbol::Symbol()
     : Element(),
-		_subckt(nullptr)
+		_subckt(nullptr),
+		_vflip(1),
+		_hflip(1),
+		_angle(0)
 {
 }
 /*--------------------------------------------------------------------------*/
 Symbol::Symbol(Symbol const& s)
     : Element(s),
-		_subckt(nullptr)
+		_subckt(nullptr),
+		_vflip(s._vflip),
+		_hflip(s._hflip),
+		_angle(s._angle)
 {
   setTypeName(s.typeName());
 }
@@ -134,12 +140,14 @@ std::string Symbol::paramValue(std::string const& n) const
 		return "0";
 	}else if(n=="$hflip"){
 		incomplete();
-		return std::to_string(1);
+		return std::to_string(_hflip);
 	}else if(n=="$vflip"){
 		incomplete();
-		return std::to_string(1);
+		return std::to_string(_vflip);
+	}else if(n=="$angle"){itested();
+		return std::to_string(_angle);
 	}else{ untested();
-	  throw ExceptionCantFind(n, label().toStdString());
+		throw ExceptionCantFind(n, label().toStdString());
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -253,11 +261,14 @@ void Symbol::setParameter(std::string const& name, std::string const& v)
 	}else if(name == "$yposition"){
 		_cy = atoi(v.c_str());
 	}else if(name == "$angle"){
-		incomplete();
+		trace1("angle", v);
+		_angle = atoi(v.c_str());
 	}else if(name == "$hflip"){
-		incomplete();
+		_hflip = atoi(v.c_str());
+		assert(_hflip==1 || _hflip==-1);
 	}else if(name == "$vflip"){
-		incomplete();
+		_vflip = atoi(v.c_str());
+		assert(_hflip==1 || _hflip==-1);
 	}else{
 		throw ExceptionCantFind(name, label().toStdString());
 	}
