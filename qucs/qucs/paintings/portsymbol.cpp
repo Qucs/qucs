@@ -58,8 +58,8 @@ PortSymbol::~PortSymbol()
 // --------------------------------------------------------------------------
 void PortSymbol::paint(ViewPainter *p)
 {
-	 auto cx=Element::cx();
-     auto cy=Element::cy();
+	auto cx=0;
+	auto cy=0;
 
   // keep track of painter state
   p->save();
@@ -125,17 +125,6 @@ void PortSymbol::paint(ViewPainter *p)
     p->drawRoundRect(cx+x1-4, cy+y1-4, x2+8, y2+8);
   }
 #endif
-}
-
-// --------------------------------------------------------------------------
-void PortSymbol::paintScheme(SchematicDoc *p)
-{
-	 auto cx=Element::cx();
-     auto cy=Element::cy();
-
-	incomplete();
-  p->PostPaintEvent(_Ellipse, cx-4, cy-4, 8, 8);
-  p->PostPaintEvent(_Rect, cx+x1, cy+y1, x2, y2);
 }
 
 // --------------------------------------------------------------------------
