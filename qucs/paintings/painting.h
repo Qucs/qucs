@@ -66,6 +66,19 @@ public:
 
   QString name() const{return Name;}
 
+private: // Element?
+  QRectF boundingRect() const override {untested();
+	  int x1_, y1_, x2_, y2_;
+
+	  auto p = const_cast<Painting*>(this);
+	  p->Bounding(x1_, y1_, x2_, y2_);
+
+	  QPointF tl(x1, y1);
+	  QPointF br(x2, y2);
+	  return QRectF(tl, br);
+  }
+
+
 protected:
   QString Name; // the type
 };

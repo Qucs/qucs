@@ -294,8 +294,8 @@ bool GraphicText::getSelected(float fX, float fY, float)
 // ------------------------------------------------------------------------
 void GraphicText::Bounding(int& xmin, int& ymin, int& xmax, int& ymax)
 {
-	   auto cx=Element::cx();
-     auto cy=Element::cy();
+	   auto cx=0;
+     auto cy=0;
 
   double phi = pi/180.0*double(Angle);
   double sine = sin(phi), cosine = cos(phi);

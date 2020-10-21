@@ -16,6 +16,7 @@
 #include "schematic_doc.h"
 #include "misc.h"
 #include "globals.h"
+#include "qt_compat.h"
 
 #include <limits.h>
 
@@ -31,14 +32,49 @@ class QString;
 
 namespace{
 
-class LibComp : public MultiViewComponent  {
+class LibComp : public SchematicSymbol  {
+private:
+	LibComp(LibComp const&p) : SchematicSymbol(p) {
+		new_subckt();
+	}
 public:
 	LibComp();
 	~LibComp() {};
 	Symbol* clone() const{return new LibComp(*this);}
+	Symbol* clone_instance() const{incomplete(); return new LibComp(*this);}
 
 	bool createSubNetlist(DocumentStream&, QStringList&, int type=1); // BUG
 	QString getSubcircuitFile() const;
+
+private:
+	std::string paramValue(std::string const&) const override{
+		incomplete();
+		return "incomplete";
+	}
+	unsigned numPorts() const override{
+		incomplete();
+		return 0;
+	}
+	QRectF boundingRect() const override{
+		// BUG. cache.
+		QRectF br;
+		for(auto p : symbolPaintings()){
+			assert(p);
+			Element const* e = p;
+			trace2("br", e->boundingRect().topLeft(), e->boundingRect().bottomRight());
+			auto c = e->center();
+			auto cc = makeQPointF(c);
+			br |= e->boundingRect().translated(cc);
+		}
+		trace3("br", symbolPaintings().size(), br.topLeft(), br.bottomRight());
+		return br;
+	}
+	void paint(ViewPainter* vp) const override{
+		for(auto p : symbolPaintings()){ untested();
+			assert(p);
+			p->paint(vp);
+		}
+	}
 
 protected:
 	QString netlist() const;
@@ -50,43 +86,99 @@ private:
 	int  loadSymbol();
 	int  loadSection(const QString&, QString&, QStringList* i=0);
 	QString createType() const;
+
+
+	int _tx;
+	int _ty;
+	Property _section;
+	Property _component;
 }d0;
 static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "LegacyLibProto", &d0);
 
 class Lib : public Symbol{
 public:
-	explicit Lib():Symbol(){
+	explicit Lib():Symbol(), _parent(nullptr) {
 		setTypeName("Lib"); // really?
 	}
-	Lib( Lib const& l) : Symbol(l){}
+	Lib( Lib const& l) : Symbol(l), _parent(nullptr){}
 
 private: // Element
 	Symbol* clone()const override{
 		return new Lib(*this);
 	}
-
-private: // Symbol
-	unsigned numPorts() const override{ incomplete(); return 0; }
-	void setParameter(std::string const& n, std::string const& v) override{
-		if(n == "section"){ itested();
-			_section.Value = QString::fromStdString(v);
-		}else if(n=="component"){ itested();
-			_section.Value = QString::fromStdString(v);
+	void paint(ViewPainter* p) const override{
+		if(_parent){ untested();
+			// TODO: honour flip/rotate when painting
+			((Element*)_parent)->paint(p);
 		}else{ untested();
-			trace2("fwd", n, v);
-			Symbol::setParameter(n, v);
 		}
 	}
+  // QDialog* schematicWidget(QucsDoc*) const override{
+  // }
+  QRectF boundingRect() const override{
+	  if(_parent){ untested();
+		  // TODO: honour flip/rotate when painting
+		  return _parent->boundingRect();
+		  assert(false);
+	  }else{ untested();
+		  return QRectF();
+	  }
+  }
+
+private: // Symbol
+	unsigned numPorts() const override{
+		incomplete();
+		return 0;
+		if(_parent){ untested();
+			return _parent->numPorts();
+		}else{ untested();
+			return 0;
+		}
+	}
+	void setParameter(std::string const& n, std::string const& v) override{
+		bool redo = false;
+		if(n == "Lib"){ itested();
+			_section.Value = QString::fromStdString(v);
+			redo = true;
+		}else if(n=="Component"){ itested();
+			_component.Value = QString::fromStdString(v);
+			redo = true;
+		}else{ untested();
+			Symbol::setParameter(n, v);
+		}
+
+		if(redo){
+			attachProto();	
+		}else{
+		}
+	}
+	unsigned paramCount() const{ return Symbol::paramCount() + 4; }
 	void setParameter(unsigned n, std::string const& v) override{
+		bool redo = false;
 		int m = int(n) - int(Symbol::paramCount());
-		switch(n){
+		trace3("Lib:SP", n, v, m);
+		switch(m){
 		case 0:
-			_section.Value = QString::fromStdString(v);
+			break;
 		case 1:
+			break;
+		case 2:
 			_section.Value = QString::fromStdString(v);
+			redo = true;
+			break;
+		case 3:
+			_component.Value = QString::fromStdString(v);
+			redo = true;
+			break;
 		default: untested();
 			trace2("fwd", n, v);
 			Symbol::setParameter(n, v);
+			break;
+		}
+
+		if(redo){
+			attachProto();	
+		}else{
 		}
 	}
 	std::string paramValue(std::string const& n) const override{
@@ -98,8 +190,50 @@ private: // Symbol
 			return std::to_string(_tx);
 		}else if (n=="$ty"){
 			return std::to_string(_ty);
-		}else{
+		}else{ untested();
 			return Symbol::paramValue(n);
+		}
+	}
+	std::string paramValue(unsigned i) const override{
+		int j = i - Symbol::paramCount();
+		switch(j){
+		case 0:
+			return std::to_string(_tx);
+		case 1:
+			return std::to_string(_ty);
+		case 2:
+			return _section.Value.toStdString();
+		case 3:
+			return _component.Value.toStdString();
+		default: untested();
+			return Symbol::paramName(i);
+		}
+	}
+	std::string paramName(unsigned i) const override{
+		int j = i - Symbol::paramCount();
+		switch(j){
+		case 0:
+			return "$tx";
+		case 1:
+			return "$ty";
+		case 2:
+			return "Lib";
+		case 3:
+			return "Component";
+		default: untested();
+			return Symbol::paramName(i);
+		}
+	}
+
+private:
+	void attachProto() {
+		if(_component.Value == "") {
+		}else if(_section.Value == "") {
+		}else{
+			std::string t = "Lib:" + _section.Value.toStdString() + ":" + _component.Value.toStdString();
+			Symbol* s = symbol_dispatcher[t];
+			trace2("Lib::attachProto", t, s);
+			_parent = s;
 		}
 	}
 
@@ -113,19 +247,11 @@ private:
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Lib", &D);
 
 LibComp::LibComp()
+	: SchematicSymbol()
 {
-  Type = isComponent;   // both analog and digital
-  Description = QObject::tr("Component taken from Qucs library");
+  // Description = QObject::tr("Component taken from Qucs library");
 
-  Ports.append(new Port(0, 0)); // dummy port because of being device
-
-  Model = "Lib";
-  Name  = "X";
-
-  Props.append(new Property("Lib", "", true,
-		QObject::tr("name of qucs library file")));
-  Props.append(new Property("Comp", "", true,
-		QObject::tr("name of component in library")));
+  // Ports.append(new Port(0, 0)); // dummy port because of being device
 }
 
 // ---------------------------------------------------------------------
@@ -135,6 +261,7 @@ LibComp::LibComp()
 // of ports.
 void LibComp::createSymbol()
 {
+#if 0
   tx = INT_MIN;
   ty = INT_MIN;
   if(loadSymbol() > 0) {
@@ -153,6 +280,7 @@ void LibComp::createSymbol()
     tx = x1+4;
     ty = y2+4;
   }
+#endif
 }
 
 // ---------------------------------------------------------------------
@@ -161,6 +289,7 @@ void LibComp::createSymbol()
 int LibComp::loadSection(const QString& Name, QString& Section,
 			 QStringList *Includes)
 {
+#if 0
   QDir Directory(QucsSettings.libDir());
   QFile file(Directory.absoluteFilePath(Props.first()->Value + ".lib"));
   if(!file.open(QIODevice::ReadOnly)){
@@ -251,6 +380,7 @@ int LibComp::loadSection(const QString& Name, QString& Section,
   // snip actual model
   Section = Section.mid(Start, End-Start);
   return 0;
+#endif
 }
 
 // ---------------------------------------------------------------------
@@ -258,6 +388,7 @@ int LibComp::loadSection(const QString& Name, QString& Section,
 // returns the number of painting elements.
 int LibComp::loadSymbol()
 {
+#if 0
   int z, Result;
   QString FileString, Line;
   z = loadSection("Symbol", FileString);
@@ -302,14 +433,17 @@ int LibComp::loadSymbol()
   x1 -= 4;  x2 += 4;   // enlarge component boundings a little
   y1 -= 4;  y2 += 4;
   return z;      // return number of ports
+#endif
 }
 
 // -------------------------------------------------------
 QString LibComp::getSubcircuitFile() const
 {
+#if 0
   QDir Directory(QucsSettings.libDir());
   QString FileName = Directory.absoluteFilePath(Props.first()->Value);
   return misc::properAbsFileName(FileName);
+#endif
 }
 
 // -------------------------------------------------------
@@ -355,8 +489,10 @@ bool LibComp::createSubNetlist(DocumentStream& stream, QStringList &FileList,
 // -------------------------------------------------------
 QString LibComp::createType() const
 {
+#if 0
   QString Type = misc::properFileName(Props.first()->Value);
   return misc::properName(Type + "_" + Props.next()->Value);
+#endif
 }
 
 // -------------------------------------------------------

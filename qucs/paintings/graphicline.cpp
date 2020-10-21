@@ -314,8 +314,8 @@ bool GraphicLine::getSelected(float fX, float fY, float w)
 // --------------------------------------------------------------------------
 void GraphicLine::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
-	   auto cx=Element::cx();
-     auto cy=Element::cy();
+	   auto cx=0;
+     auto cy=0;
 
   if(x2 < 0) { _x1 = cx+x2; _x2 = cx; }
   else { _x1 = cx; _x2 = cx+x2; }

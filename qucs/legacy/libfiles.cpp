@@ -18,6 +18,8 @@
 #include "module.h"
 #include "schematic_lang.h"
 #include "symbol.h"
+#include "schematic_symbol.h"
+#include "schematic_model.h" // tmp, debugging
 #include "io_trace.h"
 #include "qt_compat.h"
 #include <QList>
@@ -30,10 +32,23 @@ public:
 	LIB(){
 		loadLibFiles();
 	}
+	~LIB(){
+		incomplete();
+#if 0
+		for(auto i: stash){
+			delete i->item;
+			delete i;
+		}
+#endif
+	}
 private:
 	void loadLibFiles();
+	void stash(Dispatcher<Symbol>::INSTALL* i){
+		_stash.push_back(i);
+	}
 
-	std::vector<Symbol*> _sym;
+	std::vector<Dispatcher<Symbol>::INSTALL*> _stash;
+
 	std::vector<Module::INSTALL*> _mod;
 }l;
 
@@ -88,8 +103,8 @@ void LIB::loadLibFiles()
         break;
       }
 
-		// TODO: ComponentLibraryItem are not Elements, but just a concoction of QStrings.
-		// turn it into Element...
+		// ComponentLibraryItem are not Elements, but just a concoction of QStrings.
+		// turn it into Element... (do it here, for now, but that's silly).
 		for(ComponentLibraryItem c : parsedlib){
 //			trace2("libcomp", parsedlib.name, c.name); // ->label());
 			trace0("=================");
@@ -97,7 +112,7 @@ void LIB::loadLibFiles()
 				c.symbol = parsedlib.defaultSymbol;
 			}else{
 			}
-			trace4("libcomp", c.name, c.modelString, c.symbol, c.definition);
+//			trace4("libcomp", c.name, c.modelString, c.symbol, c.definition);
 			trace0("=================");
 
 			auto D = doclang_dispatcher["leg_sch"];
@@ -107,11 +122,28 @@ void LIB::loadLibFiles()
 			istream_t stream(&c.modelString);
 			stream.readLine();
 			auto type = L->findType(stream);
-			trace2("DBG FT", c.modelString, type);
 
 			if(type=="Lib"){
-				// possibly a subcircuit
-				trace3("Lib", c.modelString, type, c.symbol);
+				// possibly a subcircuit. parse and stash
+				//
+				// // stuff should already be parsed in, but isn't
+//				trace3("Lib", c.modelString, type, c.symbol);
+				QString symstring = "<Symbol>\n" + c.symbol + "\n</Symbol>\n";
+				                // + <Model> +c.modelString + </Model>
+				DocumentStream stream(&symstring); // BUG: istream (CS)
+				Symbol* sym = symbol_dispatcher.clone("LegacyLibProto");
+				auto ssym = prechecked_cast<SchematicSymbol*>(sym);
+				std::string t = "Lib:" + parsedlib.name.toStdString() + ":" + c.name.toStdString();
+
+				assert(ssym);
+				try{
+					L->parse(stream, *ssym);
+					trace3("stashing", t, ssym->symbolPaintings().size(), symstring);
+					stash(new Dispatcher<Symbol>::INSTALL(&symbol_dispatcher, t, ssym));
+				}catch(Exception const&){
+					delete ssym;
+				}
+
 				trace3("Lib", c.modelString, type, c.definition);
 				// d'uh
 			}else if(c.modelString.count('\n') < 2){
@@ -129,26 +161,6 @@ void LIB::loadLibFiles()
 					// unreachable(); eventually
 					// possibly not ported yet.
 				}
-			}else if (0){
-				Symbol* sym = symbol_dispatcher.clone("Lib");
-
-				DocumentStream stream(&c.symbol);
-
-//				while(!stream.atEnd()){
-//					incomplete();
-//					auto type = L->find_type(stream);
-//				}
-
-				// e->setTypeName(parsedlib.name.toStdString() + ":" + c.name.toStdString());
-
-				std::string t = parsedlib.name.toStdString() + ":" + c.name.toStdString();
-				sym->setLabel(t);
-				new Dispatcher<Symbol>::INSTALL(&symbol_dispatcher, t, sym);
-
-				sym->setParameter("section", parsedlib.name.toStdString());
-				sym->setParameter("component", c.name.toStdString());
-
-				new Module::INSTALL(parsedlib.name.toStdString(), sym);
 			}else{
 				trace1("no whitespace", c.modelString);
 				assert(false);
