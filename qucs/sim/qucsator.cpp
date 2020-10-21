@@ -160,7 +160,8 @@ void QucsatorLang::printSubckt(SubcktProto const* p, ostream_t& s) const
 	}
 	s << "\n";
 
-	for(auto pi : p->symbolPaintings()){
+	assert(p->symbolPaintings());
+	for(auto pi : *p->symbolPaintings()){
 		incomplete();
 		if(pi->name() == ".ID ") { untested();
 			incomplete();

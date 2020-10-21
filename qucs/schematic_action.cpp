@@ -482,6 +482,7 @@ public:
 typedef MouseActionSelCmd<DeleteSelection> MouseActionDelete;
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+// BUG: SchematicEdit.
 template<class T>
 class TransformSelection : public QUndoCommand {
 public:

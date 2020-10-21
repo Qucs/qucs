@@ -39,10 +39,10 @@ PaintingList& SchematicSymbol::symbolPaintings()
 	return *_paint;
 }
 /*--------------------------------------------------------------------------*/
-PaintingList const& SchematicSymbol::symbolPaintings() const
+PaintingList const* SchematicSymbol::symbolPaintings() const
 {
 	assert(_paint);
-	return *_paint;
+	return _paint;
 }
 /*--------------------------------------------------------------------------*/
 WireList const& SchematicSymbol::wires() const

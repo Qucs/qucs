@@ -22,6 +22,7 @@
 #include "schematic_model.h"
 #include <QGraphicsScene>
 #include "element_graphics.h"
+#include "paintings/painting.h" // BUG
 #include "io.h"
 #include "platform.h"
 #include "place.h"
@@ -65,6 +66,29 @@ ElementGraphics::~ElementGraphics()
 	}
 }
 /*--------------------------------------------------------------------------*/
+// almost ElementGraphics. could use ElementGraphics?
+class SymbolGraphics : public QGraphicsItem{
+	explicit SymbolGraphics();
+public:
+	explicit SymbolGraphics(Element const* e, QGraphicsItem* parent)
+	  : QGraphicsItem(parent){
+		_e = e;
+		setPos(makeQPointF(_e->center()));
+		setParentItem(parent);
+	}
+private: // QGraphicsItem override
+	void paint(QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override{
+		assert(_e);
+		ViewPainter v(p);
+		return _e->paint(&v);
+	}
+	QRectF boundingRect() const override {itested();
+		assert(_e);
+		return _e->boundingRect();
+	}
+private:
+	Element const* _e;
+};
 // there is also QGraphicsSimpleTextItem, but is does not allow for edits.
 class ElementText : public QGraphicsItem{
 private:
@@ -184,6 +208,16 @@ void ElementGraphics::attachElement(Element* e)
 
 	// who owns this?
 	auto t = new ElementText(this);
+	auto s = dynamic_cast<Symbol const*>(_e);
+
+	if(!s){
+	}else if(auto sp = s->symbolPaintings()){
+		for(Element const* p : *sp){
+			assert(p);
+			new SymbolGraphics(p, this);
+		}
+	}else{
+	}
 
 	auto sym = dynamic_cast<Symbol const*>(_e);
 
@@ -205,6 +239,28 @@ void ElementGraphics::attachElement(Element* e)
 			QGraphicsItem* cg = new ElementGraphics(i->clone());
 			cg->setParentItem(this);
 		}
+	}else{
+	}
+
+
+	if(!_e){
+	}else if(_e->legacyTransformHack()){
+		// throw that in the bin some day..
+	}else if(auto s=prechecked_cast<Symbol const*>(_e)){
+		// could be made accessible through Symbol interface.
+		int hflip = atoi(s->paramValue("$hflip").c_str());
+		int vflip = atoi(s->paramValue("$vflip").c_str());
+		int angle = atoi(s->paramValue("$angle").c_str());
+		assert(hflip==1 || hflip==-1);
+		assert(vflip==1 || vflip==-1);
+
+		trace3("transform", angle, hflip, vflip);
+
+		QTransform transform;
+		transform.rotate(-angle); // chirality...
+		transform.scale(hflip, vflip);
+		setTransform(transform);
+
 	}else{
 	}
 }

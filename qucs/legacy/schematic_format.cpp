@@ -20,7 +20,8 @@ class LegacySchematicFormat : public DocumentFormat{
 private: // legacy cruft
 	bool isSymbolMode() const{ return false; }
 	PaintingList const& symbolPaints(SchematicSymbol const& m) const{
-		return m.symbolPaintings();
+		assert( m.symbolPaintings());
+		return *m.symbolPaintings();
 	}
 	DiagramList const& diagrams(SchematicSymbol const& m) const{
 		return m.diagrams();

@@ -37,6 +37,7 @@ public:
 	PaintingList const& paintings() const;
 	CmdEltList const* commands() const;
 	ComponentList const& components() const; // possibly "devices". lets see.
+	PaintingList const* symbolPaintings() const override;
 
 	// commands were part of the circuit model. fix this.
 	// CommandList const& commands() const;
@@ -57,7 +58,6 @@ private:
 
 public: //legacy hack
 	PaintingList& symbolPaintings();
-	PaintingList const& symbolPaintings() const;
 
 private:
 	PaintingList* _paint; // BUG

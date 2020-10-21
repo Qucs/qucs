@@ -22,6 +22,7 @@
 /*--------------------------------------------------------------------------*/
 class QPainter;
 class NodeMap;
+class PaintingList;
 class Net;
 /*--------------------------------------------------------------------------*/
 class Symbol : public Element{
@@ -68,6 +69,7 @@ public: // TODO: something like this.
 
 public:
 	SchematicModel const* scope() const;
+	virtual PaintingList const* symbolPaintings() const {return nullptr;}
 
 protected: // needed in netlister
 	virtual SchematicModel* scope();
@@ -126,6 +128,9 @@ protected: // maybe not here. but need to rebase MultiViewComponent to ScktProto
 	// such as subckt components. meta data or symbol gfx
 private:
 	std::string _type;
+	int _angle;
+	int _hflip; // hscale??
+	int _vflip; // vscale??
 }; // symbol
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
