@@ -34,12 +34,14 @@ enum LIB_PARSE_RESULT { QUCS_COMP_LIB_OK,
 enum LIB_PARSE_WHAT { QUCS_COMP_LIB_HEADER_ONLY,
                       QUCS_COMP_LIB_FULL };
 
+//gaah. replace by Element. see libfiles.cpp
 struct ComponentLibraryItem
 {
     QString name;
     QString definition;
     QString symbol;
     QString modelString;
+//    QString description; // todo
 } ;
 
 struct ComponentLibrary
@@ -119,43 +121,39 @@ inline bool getCompLineIntegers(const QString& s,
 }
 
 
-// constructs the model string used to paste component libraries
-// into a schematic
-//
+// constructs the obsolete "model string"
 // returns an empty string if it couldn't be constructed
-inline int makeModelString (QString libPath, QString compname, QString compstring, QString &modelstring, QString default_sym)
+inline int makeModelString (QString libPath, QString compname, QString
+		compstring, QString &modelstring, QString default_sym)
 {
 
-    if (!getSection("Model", compstring, modelstring))
-    {
+    if (!getSection("Model", compstring, modelstring)) {
         return QUCS_COMP_LIB_CORRUPT;
     }
 
     // check for a single component line
-    if(!modelstring.isEmpty())
-    {
-        if(modelstring.count('\n') < 2)
-        {
-            modelstring = modelstring.remove('\n');
-            return QUCS_COMP_LIB_OK;
-        }
-    }
+    if(modelstring.isEmpty()) {
+	 }else if(modelstring.count('\n') < 2) {
+		 modelstring = modelstring.remove('\n');
+		 return QUCS_COMP_LIB_OK;
+	 }else{
+	 }
 
     // The model wasn't a single line so we have to pick through the
     // symbol definition to get the ID for the model string
     QString symbolSection;
-    if (!getSection("Symbol", compstring, symbolSection))
-    {
+    if (!getSection("Symbol", compstring, symbolSection)) {
         return QUCS_COMP_LIB_CORRUPT;
-    }
-    if(symbolSection.isEmpty())
-    {   // component definition contains no symbol, use library default
-        if (default_sym.isEmpty())
-        {   // library does not define a default symbol
+    }else if(symbolSection.isEmpty()) { 
+	  	 // component definition contains no symbol, use library default
+        if (default_sym.isEmpty()) { 
+			  // library does not define a default symbol
            return QUCS_COMP_LIB_CORRUPT;
-        }
+        }else{
+		  }
         symbolSection = default_sym; // use library default symbol
-    }
+    }else{
+	 }
 
     QStringList symbolstringLines = symbolSection.split ("\n");
 
@@ -163,8 +161,7 @@ inline int makeModelString (QString libPath, QString compname, QString compstrin
     int Text_x = 0;
     int Text_y = 0;
 
-    for (int i = 0; i < symbolstringLines.count (); i++)
-    {
+    for (int i = 0; i < symbolstringLines.count (); i++) {
         // remove white space from start and end of line
         symbolstringLines[i] = symbolstringLines[i].trimmed ();
 
@@ -172,14 +169,12 @@ inline int makeModelString (QString libPath, QString compname, QString compstrin
 
         // check for and strip the surrounding < >, returning an empty
         // string if they're not found
-        if(symbolstringLines[i].at(0) != '<')
-        {
+        if(symbolstringLines[i].at(0) != '<') {
             return QUCS_COMP_LIB_CORRUPT;
-        }
-        if(symbolstringLines[i].at(symbolstringLines[i].length()-1) != '>')
-        {
+        }else if(symbolstringLines[i].at(symbolstringLines[i].length()-1) != '>') {
             return QUCS_COMP_LIB_CORRUPT;
-        }
+        }else{
+		  }
 
         // cut off start and end character
         symbolstringLines[i] = symbolstringLines[i].mid(1, symbolstringLines[i].length()-2);
@@ -187,17 +182,18 @@ inline int makeModelString (QString libPath, QString compname, QString compstrin
         // get the first statement which contains the component type
         QString s = symbolstringLines[i].section(' ',0,0);
         // check if it's the ID
-        if(s == ".ID")
-        {
-
-            if (!getCompLineIntegers(symbolstringLines[i], &Text_x, &Text_y))  return QUCS_COMP_LIB_OK;
+        if(s == ".ID") {
+            if (!getCompLineIntegers(symbolstringLines[i], &Text_x, &Text_y)) {
+				  	return QUCS_COMP_LIB_OK;
+				}else{
+				}
 
             Prefix = symbolstringLines[i].section(' ',3,3);
 
-            if(Prefix.isEmpty())
-            {
+            if(Prefix.isEmpty()) {
                 Prefix = "X";
-            }
+            }else{
+				}
 
             break;
         }
@@ -211,7 +207,6 @@ inline int makeModelString (QString libPath, QString compname, QString compstrin
                    libPath + "\" 0 \"" + compname + "\" 0>";
 
     return QUCS_COMP_LIB_OK;
-
 }
 
 // convert relative path to system library path
@@ -226,105 +221,114 @@ inline QString getLibAbsPath(QString libPath)
 
 inline int parseComponentLibrary (QString libPath, ComponentLibrary &library, LIB_PARSE_WHAT what = QUCS_COMP_LIB_FULL)
 {
-    int Start, End, NameStart, NameEnd;
+	int Start, End, NameStart, NameEnd;
 
-    QString filename = getLibAbsPath(libPath);
+	QString filename = getLibAbsPath(libPath);
 
-    QFile file (filename);
-    qDebug() << "trying to read" << filename;
+	QFile file (filename);
+	qDebug() << "trying to read" << filename;
 
-    if(!file.open(QIODevice::ReadOnly))
-    {
-        return QUCS_COMP_LIB_IO_ERROR;
-    }
+	if(!file.open(QIODevice::ReadOnly)) {
+		return QUCS_COMP_LIB_IO_ERROR;
+	}else{
+	}
 
-    // Read the whole library file into a string then close it
-    QTextStream ReadWhole(&file);
-    QString LibraryString = ReadWhole.readAll();
-    file.close();
+	// Read the whole library file into a string then close it
+	QTextStream ReadWhole(&file);
+	QString LibraryString = ReadWhole.readAll();
+	file.close();
 
-    LibraryString.replace(QRegExp("\\r\\n"), "\n");
+	LibraryString.replace(QRegExp("\\r\\n"), "\n");
 
-    // The libraries have a header statement like the following:
-    //
-    // <Qucs Library 0.0.18 "libname">
-    //
-    // First do some checking on this statement
-    //
-    // Check for presence of correctly formatted header statement
-    // if it's not present assume it is corrupt and exit
-    Start = LibraryString.indexOf("<Qucs Library ");
-    if(Start < 0)
-    {
-        return QUCS_COMP_LIB_CORRUPT;
-    }
-    // The library was ok so far, look for the closing > of the header
-    End = LibraryString.indexOf('>', Start);
-    // If the closing > is not found assume corrupt and exit
-    if(End < 0)
-    {
+	// The libraries have a header statement like the following:
+	//
+	// <Qucs Library 0.0.18 "libname">
+	//
+	// First do some checking on this statement
+	//
+	// Check for presence of correctly formatted header statement
+	// if it's not present assume it is corrupt and exit
+	Start = LibraryString.indexOf("<Qucs Library ");
+	if(Start < 0) {
+		return QUCS_COMP_LIB_CORRUPT;
+	}else{
+	}
+	// The library was ok so far, look for the closing > of the header
+	End = LibraryString.indexOf('>', Start);
+	// If the closing > is not found assume corrupt and exit
+	if(End < 0) {
+		return QUCS_COMP_LIB_CORRUPT;
+	}else{
+	}
 
-        return QUCS_COMP_LIB_CORRUPT;
-    }
-    // Still ok, so try to extract the library name
-    library.name = LibraryString.mid(Start, End-Start).section('"', 1, 1);
-    // look for nex opening brace of a tag sequence
-    Start = LibraryString.indexOf("\n<", End);
+	// Still ok, so try to extract the library name
+	library.name = LibraryString.mid(Start, End-Start).section('"', 1, 1);
+	// look for nex opening brace of a tag sequence
+	Start = LibraryString.indexOf("\n<", End);
 
-    if(Start < 0)
-    {
-        // nothing else found, library is empty
-        return QUCS_COMP_LIB_EMPTY;
-    }
+	if(Start < 0) {
+		// nothing else found, library is empty
+		return QUCS_COMP_LIB_EMPTY;
+	}else{
+	}
 
-    // libraries can have a default symbol section, parse this
-    if(LibraryString.mid(Start+2, 14) == "DefaultSymbol>")
-    {
-        End = LibraryString.indexOf("\n</DefaultSymbol>");
-        if(End < 0)
-        {
-            return QUCS_COMP_LIB_CORRUPT;
-        }
-        // copy the contents of default symbol section to a string
-        library.defaultSymbol = LibraryString.mid(Start+16, End-Start-16);
-        Start = End + 3;
-    }
+	// libraries can have a default symbol section, parse this
+	if(LibraryString.mid(Start+2, 14) == "DefaultSymbol>") {
+		End = LibraryString.indexOf("\n</DefaultSymbol>");
+		if(End < 0) {
+			return QUCS_COMP_LIB_CORRUPT;
+		}else{
+		}
+		// copy the contents of default symbol section to a string
+		library.defaultSymbol = LibraryString.mid(Start+16, End-Start-16);
+		Start = End + 3;
+	}else{
+	}
 
-    if (what == QUCS_COMP_LIB_HEADER_ONLY)
-    {
-        // only the header was requested, stop here
-        return QUCS_COMP_LIB_OK;
-    }
+	if (what == QUCS_COMP_LIB_HEADER_ONLY) {
+		// only the header was requested, stop here
+		return QUCS_COMP_LIB_OK;
+	}else{
+	}
 
-    // Now go through the rest of the component library, extracting each
-    // component name
-    while((Start=LibraryString.indexOf("\n<Component ", Start)) > 0)
-    {
-        Start++;
-        NameStart = Start + 11;
-        NameEnd = LibraryString.indexOf('>', NameStart);
-        if(NameEnd < 0)  continue;
+	// Now go through the rest of the component library, extracting each
+	// component name
+	while((Start=LibraryString.indexOf("\n<Component ", Start)) > 0) {
+		Start++;
+		NameStart = Start + 11;
+		NameEnd = LibraryString.indexOf('>', NameStart);
+		if(NameEnd < 0) {
+			continue;
+		}else{
+		}
 
-        End = LibraryString.indexOf("\n</Component>", NameEnd);
-        if(End < 0)  continue;
-        End += 13;
+		End = LibraryString.indexOf("\n</Component>", NameEnd);
+		if(End < 0) {
+			continue;
+		}else{
+		}
+		End += 13;
 
-        ComponentLibraryItem component;
+		ComponentLibraryItem component;
 
-        component.name = LibraryString.mid(NameStart, NameEnd-NameStart);
-        component.definition = LibraryString.mid(Start, End-Start);
+		component.name = LibraryString.mid(NameStart, NameEnd-NameStart);
 
-        // construct model string
-        int result = makeModelString (libPath, component.name, component.definition, component.modelString, library.defaultSymbol);
-        if (result != QUCS_COMP_LIB_OK) return result;
+		// TODO: parse this definition (where?)
+		component.definition = LibraryString.mid(Start, End-Start);
 
-        library.components.append (component);
+		// construct model string
+		int result = makeModelString (libPath, component.name,
+				component.definition, component.modelString,
+				library.defaultSymbol);
+		if (result != QUCS_COMP_LIB_OK){
+			return result;
+		}else{
+		}
 
-        Start = End;
-    }
-
-    return QUCS_COMP_LIB_OK;
-
+		library.components.append (component);
+		Start = End;
+	}
+	return QUCS_COMP_LIB_OK;
 }
 
 #endif // _QUCSLIB_COMMON_H_
