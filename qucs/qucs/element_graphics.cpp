@@ -239,19 +239,17 @@ void ElementGraphics::attachElement(Element* e)
 		p->setWidget(w);
 	}else if(!sym){
 	}else if(auto s = sym->subckt()){
-		trace0("child gfx");
 		for(auto i : s->components()){itested();
-			trace0("child comp clone");
 			QGraphicsItem* cg = new ElementGraphics(i->clone());
 			cg->setParentItem(this);
 		}
 
 		// BUG
 		for(auto i : s->wires()){itested();
-			trace0("child gfx clone");
 			QGraphicsItem* cg = new ElementGraphics(i->clone());
 			cg->setParentItem(this);
 		}
+		trace2("child gfx", s->wires().size(), s->components().size());
 	}else{
 	}
 
@@ -365,7 +363,7 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 		assert(symbol(s));
 
 		if(Symbol* u = c->newUnion(symbol(s)) ){ untested();
-			trace1("new union", u);
+			trace3("new union", u, symbol(s)->typeName(), symbol(s)->label());
 			ng = new ElementGraphics(u);
 			assert(_e->mutable_owner());
 			u->setOwner(_e->mutable_owner());
@@ -373,6 +371,7 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 			scene()->addItem(ng);
 			return ng;
 		}else{ untested();
+			trace1("no new union", symbol(s)->typeName());
 		}
 	}else if(auto o=dynamic_cast<Conductor const*>(element(s))){ untested();
 		// HACK HACK HACK

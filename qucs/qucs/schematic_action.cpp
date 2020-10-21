@@ -249,7 +249,8 @@ bool SchematicEdit::addmerge(ElementGraphics* s, T& del_done)
 		// gfxi is already on scene.
 		auto n = gfxi->newUnion(s);
 		if(n){ untested();
-			trace0("got union");
+			collision = true;
+			trace1("hiding", element(gfxi)->label());
 			gfxi->hide();
 
 			// collision delete.
@@ -274,17 +275,18 @@ bool SchematicEdit::addmerge(ElementGraphics* s, T& del_done)
 					_ins.push_front(cc); // BUG // need a different q for derived objects
 					++kk;
 				}else{
+					trace0("not useful");
 					// text, maybe
 					// unreachable();
 				}
 			}
-			if(nc.size()){
+			if(kk){
+				// found something useful
 				trace2("unpacked", kk, nc.size());
 				delete n; // does it delete them all?
 			}else{
 				_ins.push_front(n);
 			}
-			collision = true;
 			break;
 		}else{
 			trace0("no union");
@@ -449,9 +451,10 @@ void SchematicEdit::do_it_first()
 		done_del.push_back(r);
 	}
 
+	trace1("try insert...", _ins.size());
 	while(_ins.size()){
-		trace1("try insert...", _ins.size());
 		ElementGraphics* gfx = _ins.front();
+		trace1("try insert...", element(gfx)->label());
 		_ins.pop_front();
 
 		if(addmerge(gfx, done_del)){
