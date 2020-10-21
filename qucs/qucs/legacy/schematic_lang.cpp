@@ -16,7 +16,7 @@
 #include <typeinfo>
 #endif
 /*--------------------------------------------------------------------------*/
-static void parseItem(QString Line, Element*e)
+static void parsePainting(QString Line, Painting*e)
 {
 	assert(e);
 	// BUG: callback
@@ -63,8 +63,7 @@ static bool PaintingListLoad(QTextStream& str, PaintingList& List)
 			return false;
 		}
 
-		parseItem(Line, p);
-
+		::parsePainting(Line, p);
 		List.append(p);
 	}
 
@@ -701,7 +700,7 @@ static Symbol* parseSymbol(const QString& _s, Symbol* sym)
 	unsigned int z=0;
 	int counts = s.count('"');
 	trace1("set?", s);
-	for(; position<counts/2; ++ position){
+	for(; int(position)<counts/2; ++ position){
 		z++;
 		n = s.section('"',z,z);    // property value. gaah parse over and over again?
 		z++;
@@ -846,7 +845,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 		//qDebug() << "LOAD: " << p1->Description;
 
 		// not all properties have to be mentioned (backward compatible)
-		if(z > counts) {
+		if(int(z) > int(counts)) {
 			if(p1->Description.isEmpty()){ untested();
 				c->Props.remove();    // remove if allocated in vain
 			}else{
@@ -911,7 +910,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 				p1->Name = n.section('=',0,0);
 				n = n.section('=',1);
 				// allocate memory for a new property (e.g. for equations)
-				if(c->Props.count() < (counts>>1)) {
+				if(c->Props.count() < (int(counts)>>1)) {
 					c->Props.insert(z >> 1, new Property("y", "1", true));
 					c->Props.prev();
 				}
@@ -943,8 +942,9 @@ void LegacySchematicLanguage::parseItem(Element* e, istream_t& c) const
 		incomplete();
 	}else if(auto s=dynamic_cast<Symbol*>(e)){
 		::parseSymbol(l, s);
+	}else if(auto s=dynamic_cast<Painting*>(e)){ untested();
+		::parsePainting(l, s);
 	}else{
-		::parseItem(l, e);
 	}
 }
 /*--------------------------------------------------------------------------*/

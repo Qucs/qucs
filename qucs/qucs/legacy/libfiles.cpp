@@ -110,25 +110,18 @@ void LIB::loadLibFiles()
 			trace2("DBG FT", c.modelString, type);
 
 			if(type=="Lib"){
+				trace2("Lib", c.modelString, type);
 				// d'uh
 			}else if(c.modelString.count('\n') < 2){
-				trace1("paramset?", c.modelString);
 				Symbol* sym = symbol_dispatcher.clone("LegacyParamset");
 				sym->setParameter("modelstring", c.modelString.toStdString());
-				trace2("libfiles", c.modelString, type);
-#if 1
 				std::string t = "P:" + parsedlib.name.toStdString() + ":" + c.name.toStdString();
 				sym->setLabel(t);
-#else
-				auto line = stream.fullString();
-				L->parseItem(sym, line);
-#endif
 
 				if(symbol_dispatcher[type]){
 					sym->setTypeName(type);
 					L->parseItem(sym, stream);
 					new Module::INSTALL(parsedlib.name.toStdString(), sym);
-					trace3("paramset done", type, parsedlib.name, sym->label());
 				}else{
 					trace1("paramset skip", type);
 					// unreachable(); eventually
