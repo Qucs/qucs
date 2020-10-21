@@ -16,35 +16,35 @@
 #include <typeinfo>
 #endif
 /*--------------------------------------------------------------------------*/
-static void parsePainting(QString Line, Painting*e)
+static void parsePainting(QString Line, Painting*p)
 {
-	assert(e);
+	assert(p);
 	// BUG: callback
-	if(auto p=dynamic_cast<Painting*>(e)) {
-		if(!p->load(Line)) { untested();
-			incomplete();
-			// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line format!"));
-			throw Exception("cannot parse painting");
+	if(!p->load(Line)) { untested();
+		incomplete();
+		// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line format!"));
+		throw Exception("cannot parse painting");
 
-		}else{
-		}
 	}else{
 	}
 }
 /*--------------------------------------------------------------------------*/
-static bool PaintingListLoad(QTextStream& str, PaintingList& List)
+static bool PaintingListLoad(QString Line, PaintingList& List)
 {
-	auto stream=&str;
 	Painting *p=0;
-	QString Line, cstr;
-	while(!stream->atEnd()) {
+	QString cstr;
+//	while(!stream->atEnd()) {
 
-		Line = stream->readLine();
-		if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
+	 // not here.
+		if(Line.at(0) == '<' && Line.at(1) == '/'){
+			return true;
+		}else{
+		}
 
 		Line = Line.trimmed();
-		if(Line.isEmpty()) continue;
-		if( (Line.at(0) != '<') || (Line.at(Line.length()-1) != '>')) { untested();
+		if(Line.isEmpty()) {
+			return true;
+		}else if( (Line.at(0) != '<') || (Line.at(Line.length()-1) != '>')) { untested();
 			incomplete();
 			// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line delimiter!"));
 			return false;
@@ -65,7 +65,7 @@ static bool PaintingListLoad(QTextStream& str, PaintingList& List)
 
 		::parsePainting(Line, p);
 		List.append(p);
-	}
+	//}
 
 	incomplete();
 	// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\n'Painting' field is not closed!"));
@@ -276,7 +276,8 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 				incomplete();
 				try{
 					// incomplete. use parseItem.
-					PaintingListLoad(stream, owner.symbolPaintings());
+					QString Line = stream.readLine();
+					PaintingListLoad(Line, owner.symbolPaintings());
 					c = nullptr;
 				}catch(...){ untested();
 					incomplete();
