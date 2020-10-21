@@ -1231,11 +1231,10 @@ void Diagram::setCenter(int x, int y, bool relative)
 }
 
 // -------------------------------------------------------
-// override Element::center...
-std::pair<int, int> Diagram::center() const
+// override Element::center... not needed?
+pos_t Diagram::center() const
 { untested();
-  trace3("diag center", label(), _cx, _cy);
-  return std::make_pair(_cx, _cy);
+  return pos_t(_cx, _cy);
 }
 
 // -------------------------------------------------------

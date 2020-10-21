@@ -56,7 +56,7 @@ private:
 	}
 private:
 	// is this needed?
-	std::pair<int, int> center() const override{
+	pos_t center() const override{
 		return Element::center();
 	}
 

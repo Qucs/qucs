@@ -185,13 +185,15 @@ public: // other stuff
 
   // virtual void draw(QPainter&) { incomplete(); }
   virtual void setCenter(int x, int y, bool relative=false);
-  virtual std::pair<int, int> center()const;
   virtual void getCenter(int&, int&) const; // BUG
   virtual void paint(ViewPainter*) const = 0;
   virtual QDialog* schematicWidget(QucsDoc*) const { return nullptr; }
 
   // really?
   virtual QWidget* newWidget() {return nullptr;}
+
+  // BUG: not virtual
+  virtual pos_t center()const;
 
 public: // alias
   void setCenter(pos_t const& c){

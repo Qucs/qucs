@@ -168,7 +168,7 @@ public:
 public:
   int cx() const{return Element::_cx;}
   int cy() const{return Element::_cy;}
-  std::pair<int, int> center() const{return std::make_pair(Element::_cx, Element::_cy);}
+  pos_t center() const override{return pos_t(Element::_cx, Element::_cy);}
 
 protected:
   QString Name; // the label, but sometimes the type. yikes.

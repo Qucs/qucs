@@ -44,10 +44,7 @@ public: // legacy anonymous stuff.
 
 public:
   virtual bool load(const QString&) { return true; };
-  virtual QString save();
-  virtual QString saveCpp();
-  virtual QString saveJSON();
-  virtual void paint(ViewPainter*) const {}
+  virtual QString save() /*const*/ =0;
   virtual void MouseMoving(SchematicDoc*, int, int, int, int,
                            SchematicDoc*, int, int, bool) {}
   virtual bool MousePressing() { return false; }
@@ -67,6 +64,11 @@ public:
   QString name() const{return Name;}
 
 private: // Element?
+  void paint(ViewPainter* p) const {
+	  auto c = const_cast<Painting*>(this);
+	  c->paint(p);
+  }
+  virtual void paint(ViewPainter*){}
   QRectF boundingRect() const override {untested();
 	  int x1_, y1_, x2_, y2_;
 

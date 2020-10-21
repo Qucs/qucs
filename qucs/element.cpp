@@ -101,13 +101,9 @@ SchematicModel* Element::scope()
 	}
 }
 
-std::pair<int, int> Element::center()const
+pos_t /* const & */ Element::center()const
 {
-	incomplete();
-	// incomplete. bug. wrong.
-	std::pair<int, int> ret;
-	getCenter( ret.first, ret.second);
-	return ret;
+	return pos_t(cx(), cy());
 }
 
 // legacy stuff. pretend that Element points to an Element

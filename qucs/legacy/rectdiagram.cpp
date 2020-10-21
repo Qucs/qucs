@@ -53,7 +53,7 @@ private:
   void finishMarkerCoordinates(float&, float&) const;
   bool insideDiagram(float, float) const;
 
-  std::pair<int, int> center() const override{
+  pos_t center() const override{
     return Element::center();
   }
 
