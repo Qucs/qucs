@@ -44,8 +44,11 @@ ID_Text::~ID_Text()
 // --------------------------------------------------------------------------
 void ID_Text::paint(ViewPainter *p)
 {
-	  auto cx=Element::cx();
-       auto cy=Element::cy();
+	// incomplete();
+	return;
+
+	auto cx=0;
+	auto cy=0;
   int x, y;
   p->setPen(QPen(Qt::black,1));
   p->map(cx, cy, x, y);
@@ -68,24 +71,11 @@ void ID_Text::paint(ViewPainter *p)
     }
   }
 
-#if 0
-  if(isSelected()) {
-    p->setPen(QPen(Qt::darkGray,3));
-    p->drawRoundRect(x-4, y-4, x2+8, y2+8);
-  }
-#endif
-
   x2 = int(float(x2) / p->Scale);
   y2 = int(float(y2) / p->Scale);
 }
 
 // --------------------------------------------------------------------------
-void ID_Text::paintScheme(SchematicDoc *p)
-{
-	  auto cx=Element::cx();
-      auto cy=Element::cy();
-  p->PostPaintEvent(_Rect, cx, cy, x2, y2);
-}
 
 // --------------------------------------------------------------------------
 void ID_Text::getCenter(int& x, int &y)

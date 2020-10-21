@@ -247,7 +247,7 @@ Symbol* Wire::intersectPorts(Symbol const* s) const
 		++next;
 		while(next!=split.end()){
 			m->pushBack(new Wire(*pp, *next));
-			trace2("intersectPorts", *pp, *next);
+			trace3("intersectPorts", *pp, *next, split.size());
 			pp = next;
 			++next;
 		}

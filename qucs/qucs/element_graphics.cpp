@@ -184,8 +184,14 @@ void ElementGraphics::attachElement(Element* e)
 	QGraphicsItem::hide();
 	assert(e);
 	_e = e;
+
+	auto flags = ItemIsSelectable|ItemIsMovable|ItemSendsGeometryChanges;
+	if(_e->legacyTransformHack()){
+		flags |= ItemIgnoresTransformations;
+	}else{
+	}
+	setFlags(flags);
 	// BUG: ask element?
-	setFlags(ItemIsSelectable|ItemIsMovable|ItemSendsGeometryChanges);
 	setAcceptHoverEvents(true);
 
 	auto sp = _e->center();
@@ -203,6 +209,7 @@ void ElementGraphics::attachElement(Element* e)
 		trace2("attachElement", e->label(), c->Texts.size());
 		for(auto& i : c->Texts){itested();
 			//auto t=
+			//// what are texts?
 			new TextGraphics(*i, this);
 
 		}
