@@ -29,21 +29,6 @@ void Painting::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
   _x2 = _cx+x2;  _y2 = _cy+y2;
 }
 
-QString Painting::save()
-{
-  return QString();
-}
-
-QString Painting::saveCpp()
-{
-  return QString();
-}
-
-QString Painting::saveJSON()
-{
-  return QString();
-}
-
 QString Painting::toPenString (int pen) {
   switch (pen) {
   case Qt::NoPen: return "Qt::NoPen";

@@ -26,6 +26,7 @@ static void parsePainting(QString Line, Painting*p)
 		throw Exception("cannot parse painting");
 
 	}else{
+		trace2("parsePainting", Line, p->center());
 	}
 }
 /*--------------------------------------------------------------------------*/

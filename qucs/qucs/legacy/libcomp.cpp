@@ -70,8 +70,9 @@ private:
 		return br;
 	}
 	void paint(ViewPainter* vp) const override{
-		for(auto p : symbolPaintings()){ untested();
+		for(Element const* p : symbolPaintings()){ untested();
 			assert(p);
+			trace1("paintLib", p->center());
 			p->paint(vp);
 		}
 	}

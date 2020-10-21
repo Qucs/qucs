@@ -83,7 +83,7 @@ public:
   
 private:
   virtual void paint(ViewPainter*) const override;
-  std::pair<int, int> center() const override;
+  pos_t center() const override;
   void    getCenter(int&, int&); //override; //remove this.
   QDialog* schematicWidget(QucsDoc* Doc) const override;
 

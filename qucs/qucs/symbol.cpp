@@ -110,10 +110,10 @@ Net const* Symbol::portValue(unsigned i) const
   }
 }
 /*--------------------------------------------------------------------------*/
-// "position"?
-std::pair<int, int> Symbol::center()const
+// same as Element::center?
+pos_t Symbol::center()const
 {itested();
-	return std::make_pair(_cx, _cy);
+	return pos_t(_cx, _cy);
 }
 /*--------------------------------------------------------------------------*/
 Port const& Symbol::port(unsigned i) const

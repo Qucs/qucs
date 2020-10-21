@@ -257,15 +257,16 @@ int SchematicDoc::saveSymbolCpp (void)
     if (x2 > xmax) xmax = x2;
     if (y1 < ymin) ymin = y1;
     if (y2 > ymax) ymax = y2;
-    stream << "  " << pp->saveCpp () << "\n";
+//    stream << "  " << pp->saveCpp () << "\n";
   }
 
   stream << "\n  // terminal definitions\n";
   for (int i = 1; i <= maxNum; i++) {
     for (pp = SymbolPaints.first (); pp != 0; pp = SymbolPaints.next ()) {
       if (pp->name() == ".PortSym ")
-	if (((PortSymbol*)pp)->numberStr.toInt() == i)
-	  stream << "  " << pp->saveCpp () << "\n";
+	if (((PortSymbol*)pp)->numberStr.toInt() == i){
+//	  stream << "  " << pp->saveCpp () << "\n";
+	  }
     }
   }
 
@@ -275,9 +276,9 @@ int SchematicDoc::saveSymbolCpp (void)
 
   stream << "\n  // property text position\n";
   for (pp = SymbolPaints.first (); pp != 0; pp = SymbolPaints.next ())
-    if (pp->name() == ".ID ")
-      stream << "  " << pp->saveCpp () << "\n";
-
+    if (pp->name() == ".ID "){
+//      stream << "  " << pp->saveCpp () << "\n";
+    }
   file.close ();
   return 0;
 }
@@ -333,7 +334,7 @@ int SchematicDoc::saveSymbolJSON()
     if (x2 > xmax) xmax = x2;
     if (y1 < ymin) ymin = y1;
     if (y2 > ymax) ymax = y2;
-    stream << "  " << pp->saveJSON() << "\n";
+//    stream << "  " << pp->saveJSON() << "\n";
   }
 
   // terminal definitions
@@ -341,8 +342,9 @@ int SchematicDoc::saveSymbolJSON()
   for (int i = 1; i <= maxNum; i++) {
     for (pp = SymbolPaints.first (); pp != 0; pp = SymbolPaints.next ()) {
       if (pp->name() == ".PortSym ")
-	if (((PortSymbol*)pp)->numberStr.toInt() == i)
-	  stream << "  " << pp->saveJSON () << "\n";
+	if (((PortSymbol*)pp)->numberStr.toInt() == i){
+	//  stream << "  " << pp->saveJSON () << "\n";
+	}
     }
   }
 
@@ -355,8 +357,9 @@ int SchematicDoc::saveSymbolJSON()
 
   // property text position
   for (pp = SymbolPaints.first (); pp != 0; pp = SymbolPaints.next ())
-    if (pp->name() == ".ID ")
-      stream << "  " << pp->saveJSON () << "\n";
+    if (pp->name() == ".ID "){
+    //  stream << "  " << pp->saveJSON () << "\n";
+    }
 
   stream << "}\n";
 
