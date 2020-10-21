@@ -26,11 +26,11 @@ git clone ./ release/qucs-$RELEASE
 cd release/qucs-$RELEASE
 git submodule init
 git submodule update
-git apply contrib/ubuntu-debian/disable_tests.diff
+git apply --reject --whitespace=fix contrib/ubuntu-debian/disable_tests.diff
 ./bootstrap
 
 
-#rm -rf .git
+rm -rf .git
 #move qucs-doc out and build the pdf's for the qucs-doc debian package
 mv qucs-doc ../build_qucs-doc
 cd ../build_qucs-doc
