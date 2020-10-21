@@ -51,11 +51,18 @@ GraphicLine::~GraphicLine()
 }
 
 // --------------------------------------------------------------------------
-void GraphicLine::paint(ViewPainter *p)
-{
+void GraphicLine::paint(ViewPainter *p) const
+{ untested();
+
+	// oops;
+	int cx = Element::cx();
+	int cy = Element::cy();
+
+	//??
+	cx=0;
+	cy=0;
 #if 0
   if(isSelected()) {
-    p->setPen(QPen(Qt::darkGray,Pen.width()+5));
     p->drawLine(cx, cy, cx+x2, cy+y2);
     p->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
     p->drawLine(cx, cy, cx+x2, cy+y2);
@@ -66,8 +73,8 @@ void GraphicLine::paint(ViewPainter *p)
     return;
   }
 #endif
-  p->setPen(Pen);
-  p->drawLine(_cx, _cy, _cx+x2, _cy+y2);
+//   p->setPen(Pen);
+  p->drawLine(cx, cy, cx+x2, cy+y2);
 }
 
 // --------------------------------------------------------------------------
@@ -79,17 +86,19 @@ void GraphicLine::paintScheme(SchematicDoc *p)
 // --------------------------------------------------------------------------
 void GraphicLine::getCenter(int& x, int &y)
 {
-	 auto cx=Element::cx();
-     auto cy=Element::cy();
+	assert(false);
+	auto cx=Element::cx();
+	auto cy=Element::cy();
 
-  x = cx+(x2>>1);
-  y = cy+(y2>>1);
+	x = cx+(x2>>1);
+	y = cy+(y2>>1);
 }
 
 // --------------------------------------------------------------------------
 // Sets the center of the painting to x/y.
 void GraphicLine::setCenter(int x, int y, bool relative)
 {
+	assert(false);
 	 auto cx=Element::cx();
      auto cy=Element::cy();
 
@@ -143,6 +152,8 @@ bool GraphicLine::load(const QString& s)
   Pen.setStyle((Qt::PenStyle)n.toInt(&ok));
   if(!ok) return false;
 
+  trace1("Line::load", s);
+
   return true;
 }
 
@@ -160,6 +171,7 @@ QString GraphicLine::save()
 }
 
 // --------------------------------------------------------------------------
+#if 0
 QString GraphicLine::saveCpp()
 {
 	 auto cx=Element::cx();
@@ -186,6 +198,7 @@ QString GraphicLine::saveJSON()
       arg(Pen.color().name()).arg(Pen.width()).arg(toPenString(Pen.style()));
   return s;
 }
+#endif
 
 // --------------------------------------------------------------------------
 // Checks if the resize area was clicked.

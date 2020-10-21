@@ -33,7 +33,7 @@ public: // construct
 
 protected: // Element
 	void paint(ViewPainter*) const;
-	virtual std::pair<int, int> center()const override;
+	virtual pos_t center()const override;
 
 public:
 	// what is this?
