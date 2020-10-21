@@ -10,13 +10,14 @@
 
 class SchematicSymbol;
 class DocumentStream;
+class istream_t;
 
 class DocumentFormat : public Object{
 protected:
 	DocumentFormat() : Object() {}
 public:
 	virtual ~DocumentFormat() {}
-	virtual void load(DocumentStream&, SchematicSymbol&) const=0;
+	virtual void load(istream_t&, SchematicSymbol&) const=0;
 	virtual void save(DocumentStream&, SchematicSymbol const&) const{incomplete();}
 };
 

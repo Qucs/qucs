@@ -133,8 +133,9 @@ QString SchematicModel::createClipboardFile()
 
 // -------------------------------------------------------------
 // Only read fields without loading them.
-bool SchematicDoc::loadIntoNothing(DocumentStream *stream)
+bool SchematicDoc::loadIntoNothing(istream_t *stream)
 {
+  unreachable();
   QString Line, cstr;
   while(!stream->atEnd()) {
     Line = stream->readLine();

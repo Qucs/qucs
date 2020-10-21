@@ -137,7 +137,7 @@ void LIB::loadLibFiles()
 									 //
 				// BUG: parse c.definition. but not here.
 				// BUG: use istream (CS)
-				DocumentStream stream(&symstring);
+				istream_t stream(&symstring);
 				Symbol* sym = symbol_dispatcher.clone("LegacyLibProto");
 				auto ssym = prechecked_cast<SchematicSymbol*>(sym);
 				std::string t = "Lib:" + parsedlib.name.toStdString() + ":" + c.name.toStdString();

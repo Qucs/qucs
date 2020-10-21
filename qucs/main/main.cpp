@@ -225,7 +225,7 @@ void doNetlist(QString schematic_fn, std::string netlist, DocumentFormat const& 
   sch.setFileInfo(schematic_fn);
   QFile file(schematic_fn);  // save simulator messages
   file.open(QIODevice::ReadOnly);
-  DocumentStream stream (&file);
+  istream_t stream (&file);
   SchematicLanguage const* L=nullptr;
 
   if(!L){

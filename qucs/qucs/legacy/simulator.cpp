@@ -45,7 +45,7 @@ private: // legacy implementation
   void printDeclarations(DocumentStream& d, SchematicSymbol const&m) const;
 private: // overrides
   void save(DocumentStream& stream, SchematicSymbol const& m) const;
-  void load(DocumentStream&, SchematicSymbol&) const;
+  void load(istream_t&, SchematicSymbol&) const;
 private:
   mutable SubMap FileList; // BUG (maybe not)
   mutable DocumentLanguage* _qucslang;
@@ -114,7 +114,7 @@ void LegacyNetlister::clear() const
 	// declarations.clear();
 }
 
-void LegacyNetlister::load(DocumentStream&, SchematicSymbol&) const
+void LegacyNetlister::load(istream_t&, SchematicSymbol&) const
 {
    _qucslang = doclang_dispatcher["qucsator"];
 	assert(_qucslang);

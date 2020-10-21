@@ -479,8 +479,8 @@ public:
 	bool loadDocument(QFile& /*BUG*/ file);
 	bool load(QTextStream& stream);
 
-private:
-	void parse(DocumentStream& stream, SchematicLanguage const*l=nullptr);
+private: // probably wrong.
+	void parse(istream_t& stream, SchematicLanguage const*l=nullptr);
 
 private:
   void simpleInsertElement(Element*);
@@ -488,9 +488,9 @@ private:
   void saveDocument() const;
 
   bool loadWires(QTextStream*, EGPList *List=0);
-  bool loadIntoNothing(DocumentStream*);
+  bool loadIntoNothing(istream_t*);
 
-  bool    pasteFromClipboard(DocumentStream *, EGPList*);
+  bool    pasteFromClipboard(istream_t*, EGPList*);
 
   bool    rebuild(QString *);
   bool    rebuildSymbol(QString *);

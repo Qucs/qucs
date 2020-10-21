@@ -15,7 +15,7 @@ namespace{
 // TODO this is a command
 class LegacySchematicFormat : public DocumentFormat{
 	void save(DocumentStream& stream, SchematicSymbol const&) const;
-	void load(DocumentStream& stream, SchematicSymbol&) const;
+	void load(istream_t& stream, SchematicSymbol&) const; //  override;
 
 private: // legacy cruft
 	bool isSymbolMode() const{ return false; }
@@ -42,7 +42,7 @@ private: // legacy cruft
 static Dispatcher<DocumentFormat>::INSTALL
     p(&docfmt_dispatcher, "leg_sch", &D);
 
-void LegacySchematicFormat::load(DocumentStream& s, SchematicSymbol& c) const
+void LegacySchematicFormat::load(istream_t& s, SchematicSymbol& c) const
 {
 	auto l=doclang_dispatcher["leg_sch"];
 	assert(l);
