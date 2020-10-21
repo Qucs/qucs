@@ -55,6 +55,7 @@ private:
 		incomplete();
 		return 0;
 	}
+	void paint(ViewPainter* p) const override{}
 	QRectF boundingRect() const override{
 		// BUG. cache.
 		QRectF br;
@@ -114,8 +115,8 @@ private: // Element
 	}
 	void paint(ViewPainter* p) const override{
 		if(_parent){ untested();
-			// TODO: honour flip/rotate when painting
-			((Element*)_parent)->paint(p);
+			// no-op?
+			// ((Element*)_parent)->paint(p);
 		}else{ untested();
 		}
 	}
@@ -252,7 +253,7 @@ private:
 	Property _section;
 	Property _component;
 	Symbol const* _parent; // BUG. common.
-}D;
+}D; // Lib
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Lib", &D);
 
 LibComp::LibComp()
