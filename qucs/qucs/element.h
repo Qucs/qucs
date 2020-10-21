@@ -184,7 +184,7 @@ public: // other stuff
   //virtual bool showParam(int i) const{ return true; } // later
 
   // virtual void draw(QPainter&) { incomplete(); }
-  virtual void setCenter(int x, int y, bool relative=false);
+//  virtual void setCenter(int x, int y, bool relative=false);
   virtual void getCenter(int&, int&) const; // BUG
   virtual void paint(ViewPainter*) const = 0;
   virtual QDialog* schematicWidget(QucsDoc*) const { return nullptr; }

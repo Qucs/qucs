@@ -524,6 +524,7 @@ void ElementGraphics::hide()
 	}
 }
 /*--------------------------------------------------------------------------*/
+	// does not make sense.
 template<class P>
 void ElementGraphics::moveElement(P const& delta)
 { untested();
@@ -534,7 +535,9 @@ void ElementGraphics::moveElement(P const& delta)
 	trace3("moveElement", _e->label(), dx, dy);
 	
 	prepareGeometryChange(); // needed??
-	_e->setCenter(dx, dy, true);
+	auto x = _e->center();
+	x = x + pos_t(dx, dy);
+	_e->setCenter(x);
 
 	// not redundant.
 	auto p = _e->center();
@@ -559,7 +562,7 @@ void ElementGraphics::setPos(int i, int j, bool relative)
 	assert(!relative); // use move, for now.
 	// prepareGeometryChange();
 	QGraphicsItem::setPos(i, j);
-	_e->setCenter(i, j, false);
+	_e->setCenter(pos_t(i, j));
 }
 /*--------------------------------------------------------------------------*/
 template
