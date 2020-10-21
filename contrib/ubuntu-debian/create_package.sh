@@ -26,6 +26,7 @@ git clone ./ release/qucs-$RELEASE
 cd release/qucs-$RELEASE
 git submodule init
 git submodule update
+git apply contrib/ubuntu-debian/disable_tests.diff
 ./bootstrap
 
 
@@ -57,9 +58,6 @@ tar -zxvf qucs-doc_$RELEASE.orig.tar.gz
 
 #copy debian packaging files from contrib into qucs-$RELEASE
 mv qucs-$RELEASE/contrib/ubuntu-debian/qucs/debian qucs-$RELEASE
-cd qucs-$RELEASE
-git apply contrib/ubuntu-debian/disable_tests.diff
-cd ..
 rm -r qucs-$RELEASE/contrib
 
 #Create signed source packages ready to upload to the PPA
