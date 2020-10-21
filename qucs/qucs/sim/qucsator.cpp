@@ -22,6 +22,10 @@
 
 namespace {
 
+static const std::string typesep(":");
+static const char _typesep = ':';
+
+
 static std::string netLabel(Net const* n)
 {
 	if(!n){
@@ -34,7 +38,6 @@ static std::string netLabel(Net const* n)
 	}
 }
 
-static const std::string typesep(":");
 static std::string mangleType(std::string& t)
 {
 	auto pos = t.find(typesep);
@@ -132,8 +135,6 @@ void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 	}
 }
 
-static const char _typesep = ':';
-
 // partly from Schematic::createSubnetlistplain
 void QucsatorLang::printSubckt(SubcktProto const* p, ostream_t& s) const
 {
@@ -165,7 +166,7 @@ void QucsatorLang::printSubckt(SubcktProto const* p, ostream_t& s) const
 		incomplete();
 		if(pi->name() == ".ID ") { untested();
 			incomplete();
-			s<<"TODO " << pi->label() << pi->name() << "\n";
+			s << "# TODO ID & params" << pi->label() << pi->name() << "\n";
 	//		ID_Text *pid = (ID_Text*)pi;
 	//		QList<SubParameter *>::const_iterator it;
 	//		for(it = pid->Parameter.constBegin(); it != pid->Parameter.constEnd(); it++) { untested();
