@@ -16,6 +16,9 @@
  * \Declaration of some miscellaneous function
  */
 
+#ifndef QUCS_MISC_H
+#define QUCS_MISC_H
+
 #include <QWidget>
 #include <QPalette>
 #include <QIcon>
@@ -95,3 +98,5 @@ class VersionTriplet {
  private:
   int major, minor, patch;
 };
+
+#endif

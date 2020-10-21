@@ -20,7 +20,6 @@
   \brief The Arrow class implements the arrow painting
 */
 
-#include "arrow.h"
 #include "arrowdialog.h"
 #include "schematic_doc.h" // BUG
 #include "misc.h"
@@ -31,6 +30,52 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QComboBox>
+#include "globals.h"
+#include "painting.h"
+
+#include <QPen>
+
+namespace{
+
+class Arrow : public Painting  {
+public:
+  Arrow();
+ ~Arrow();
+
+  void paint(ViewPainter*);
+  void paintScheme(SchematicDoc*);
+  void getCenter(int&, int&);
+  void setCenter(int, int, bool relative=false);
+
+  Element* newOne() { return new Arrow(*this); }
+  Element* clone() const { return new Arrow(*this); }
+
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  bool load(const QString&);
+  QString save();
+  QString saveCpp();
+  QString saveJSON();
+  void MouseMoving(SchematicDoc*, int, int, int, int, SchematicDoc*, int, int, bool);
+  bool MousePressing();
+  bool getSelected(float, float, float);
+  void Bounding(int&, int&, int&, int&);
+  bool resizeTouched(float, float, float);
+  void MouseResizeMoving(int, int, SchematicDoc*);
+
+  void rotate();
+  void mirrorX();
+  void mirrorY();
+  bool Dialog();
+
+  void calcArrowHead();
+
+  QPen   Pen;
+  int    Style;
+  double Height, Width;  // size of the arrow head
+  double Length, beta;
+  int    xp1, yp1, xp2, yp2;   // coordinates to paint the arrow head
+};
+
 
 Arrow::Arrow() : Painting()
 {
@@ -50,11 +95,14 @@ Arrow::~Arrow()
 {
 }
 
+Arrow D;
+Dispatcher<Painting>::INSTALL p(&painting_dispatcher, "Arrow", &D);
+//Module::INSTALL pp("paintings", &D);
 // --------------------------------------------------------------------------
 void Arrow::paint(ViewPainter *p)
 {
-	 auto cx=Element::cx();
-     auto cy=Element::cy();
+	 auto cx=0;
+     auto cy=0;
 
   QPolygon Points;
   int x1_, y1_, x2_, y2_, x3_, y3_;
@@ -562,3 +610,5 @@ bool Arrow::Dialog()
   delete d;
   return changed;
 }
+
+} // namespace

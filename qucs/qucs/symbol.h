@@ -35,6 +35,7 @@ public: // construct
 protected: // Element
 	void paint(ViewPainter*) const;
 	virtual pos_t center()const override;
+	QDialog* schematicWidget(QucsDoc*) const override;
 
 public:
 	// what is this?
