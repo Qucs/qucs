@@ -194,6 +194,15 @@ void Wire::findScaleAndAngle()
   assert(x==x2());
   assert(y==y2());
 #endif
+
+#if 0
+	auto n0 = nodePosition(0);
+	auto n1 = nodePosition(1);
+	setLabel("wire_" + std::to_string(n0.first) +
+			        ":"+ std::to_string(n0.second) +
+			        "_"+ std::to_string(n1.first) +
+			        ":"+ std::to_string(n1.second));
+#endif
 }
 /*--------------------------------------------------------------------------*/
 Symbol* Wire::newPort(Place const* pl) const
@@ -220,10 +229,11 @@ Symbol* Wire::intersectPorts(Symbol const* s) const
 	std::vector<pos_t> split;
 	for(unsigned i=0; i<s->numPorts(); ++i){
 		pos_t p = s->nodePosition(i);
+		trace4("intersectPorts", i, s->nodePosition(i), s->label(), s->typeName());
 
 		if(nodePosition(0) == p) { untested();
 		}else if(nodePosition(1) == p) { untested();
-		}else if(isInterior(p)) {
+		}else if(isInterior(p)) { untested();
 			split.push_back(p);
 		}
 	}
@@ -262,15 +272,15 @@ Wire* Wire::extendTowards(pos_t const& other) const
 	auto n0 = nodePosition(0);
 	auto n1 = nodePosition(1);
 
-	if(in_order(n0, other, n1)){
+	if(in_order(n0, other, n1)){ untested();
 		return clone();
-	}else if(in_order(other, n1, n0) && _port1->numPorts()==1){
+	}else if(in_order(other, n1, n0) && _port1->numPorts()==1){ untested();
 		trace3("extend1", other, n1, n0);
 		return new Wire(other, n0);
-	}else if(in_order(other, n0, n1) && _port0->numPorts()==1){
+	}else if(in_order(other, n0, n1) && _port0->numPorts()==1){ untested();
 		trace3("extend2",other, n0, n1);
 		return new Wire(other, n1);
-	}else{
+	}else{ untested();
 		return nullptr;
 	}
 }
@@ -327,12 +337,13 @@ Symbol* Wire::newTee(Wire const* o) const
 /*--------------------------------------------------------------------------*/
 Symbol* Wire::newUnion(Symbol const* s) const
 {
+	trace3("Wire::newUnion(Symbol)", s->label(), nodePosition(0), nodePosition(1));
 	auto p = dynamic_cast<Place const*>(s);
 	auto o = dynamic_cast<Wire const*>(s);
 	if(p){ untested();
 		return newPort(p);
 	}else if(o){
-		trace2("Wire::newUnion(Wire)", nodePosition(0), nodePosition(1));
+		trace2("Wire::newUnion(Wire)", o->nodePosition(0), o->nodePosition(1));
 		trace2("Wire::newUnion(Wire)", _port0->degree(), _port1->degree());
 		
 		if( (_angle - o->_angle )%2 ){
