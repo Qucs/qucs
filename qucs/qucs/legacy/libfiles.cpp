@@ -76,7 +76,7 @@ void LIB::loadLibFiles()
 	 trace2("scanning", QucsSettings.libDir(), &QucsSettings);
 	 QDir SysLibDir(QucsSettings.libDir());
     // system libraries
-    QStringList SysLibFiles = SysLibDir.entryList(QStringList("*.lib"), QDir::Files, QDir::Name);
+    QStringList SysLibFiles = SysLibDir.entryList(QStringList("LED*.lib"), QDir::Files, QDir::Name);
     foreach(QString s, SysLibFiles) {
 		 // build list with relative path
       LibFiles.append(qMakePair(s, true));
@@ -107,13 +107,15 @@ void LIB::loadLibFiles()
 		// turn it into Element... (do it here, for now, but that's silly).
 		for(ComponentLibraryItem c : parsedlib){
 //			trace2("libcomp", parsedlib.name, c.name); // ->label());
-			trace0("=================");
+			if(c.symbol==""){
+				getSection("Symbol", c.definition, c.symbol); // GAAH
+			}else{
+			}
+
 			if(c.symbol==""){
 				c.symbol = parsedlib.defaultSymbol;
 			}else{
 			}
-//			trace4("libcomp", c.name, c.modelString, c.symbol, c.definition);
-			trace0("=================");
 
 			auto D = doclang_dispatcher["leg_sch"];
 			auto L = dynamic_cast<SchematicLanguage const*>(D);
@@ -127,10 +129,15 @@ void LIB::loadLibFiles()
 				// possibly a subcircuit. parse and stash
 				//
 				// // stuff should already be parsed in, but isn't
-//				trace3("Lib", c.modelString, type, c.symbol);
+			trace3("Lib", c.modelString, type, c.symbol);
+			assert(c.symbol!="");
 				QString symstring = "<Symbol>\n" + c.symbol + "\n</Symbol>\n";
 				                // + <Model> +c.modelString + </Model>
-				DocumentStream stream(&symstring); // BUG: istream (CS)
+									 //
+									 //
+				// BUG: parse c.definition. but not here.
+				// BUG: use istream (CS)
+				DocumentStream stream(&symstring);
 				Symbol* sym = symbol_dispatcher.clone("LegacyLibProto");
 				auto ssym = prechecked_cast<SchematicSymbol*>(sym);
 				std::string t = "Lib:" + parsedlib.name.toStdString() + ":" + c.name.toStdString();

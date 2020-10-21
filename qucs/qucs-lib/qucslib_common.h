@@ -219,6 +219,8 @@ inline QString getLibAbsPath(QString libPath)
 }
 
 
+// BUG: this does not parse anythig, just splits up the file
+// and stores as QString
 inline int parseComponentLibrary (QString libPath, ComponentLibrary &library, LIB_PARSE_WHAT what = QUCS_COMP_LIB_FULL)
 {
 	int Start, End, NameStart, NameEnd;
@@ -285,10 +287,10 @@ inline int parseComponentLibrary (QString libPath, ComponentLibrary &library, LI
 	}else{
 	}
 
-	if (what == QUCS_COMP_LIB_HEADER_ONLY) {
+	if (what == QUCS_COMP_LIB_HEADER_ONLY) { untested();
 		// only the header was requested, stop here
 		return QUCS_COMP_LIB_OK;
-	}else{
+	}else{ untested();
 	}
 
 	// Now go through the rest of the component library, extracting each
