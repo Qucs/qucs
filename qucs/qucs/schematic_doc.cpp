@@ -777,7 +777,7 @@ void SchematicDoc::sceneRemoveItem(ElementGraphics* x)
 
 QGraphicsItem& SchematicDoc::addToScene(Element* x)
 {itested();
-	unreachable();
+	unreachable(); // why?
 	assert(scene());
 	return scene()->addElement(x);
 }

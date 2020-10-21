@@ -16,8 +16,16 @@
 #include "schematic_doc.h"
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-SchematicSymbol::SchematicSymbol(){
+SchematicSymbol::SchematicSymbol()
+	: Symbol()
+{
 	_paint = new PaintingList();
+}
+/*--------------------------------------------------------------------------*/
+SchematicSymbol::SchematicSymbol(SchematicSymbol const& p)
+	: Symbol()
+{ untested();
+	_paint = new PaintingList(); // copy??
 }
 /*--------------------------------------------------------------------------*/
 SchematicSymbol::~SchematicSymbol(){

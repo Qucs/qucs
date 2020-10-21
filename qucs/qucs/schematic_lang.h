@@ -12,6 +12,7 @@
 
 class SchematicModel;
 
+// obsolete? DocumentLanguage::parseItem
 class SchematicLanguage : public DocumentLanguage{
 protected:
 	SchematicLanguage() : DocumentLanguage() {}

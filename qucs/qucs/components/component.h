@@ -55,6 +55,7 @@ public: //??!
 private: // Element override
   void    paint(ViewPainter*) const;
   QDialog* schematicWidget(QucsDoc*) const override;
+  QRectF boundingRect() const override;
 
 private: // Symbol interface.
   virtual void recreate() {}; // obsolete?
@@ -102,7 +103,6 @@ public: // BUG
   void setParameter(std::string const& name, std::string const& value) override;
 
 public: // BUG
-  void    paintScheme(SchematicDoc*) const; // BUG
   void    print(ViewPainter*, float);
   void    setCenter(int, int, bool relative=false) override;
   void    getCenter(int&, int&) const; // BUG
@@ -236,8 +236,6 @@ protected:
 
 private: // (hopefully) obsolete callbacks
   void recreateCallback();
-
-	QRectF boundingRect() const override;
 
 public: // BUG
   // center and relative boundings
