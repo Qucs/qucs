@@ -110,7 +110,8 @@ void LIB::loadLibFiles()
 			trace2("DBG FT", c.modelString, type);
 
 			if(type=="Lib"){
-				trace2("Lib", c.modelString, type);
+				// possibly a subcircuit
+				trace3("Lib", c.modelString, type, c.definition);
 				// d'uh
 			}else if(c.modelString.count('\n') < 2){
 				Symbol* sym = symbol_dispatcher.clone("LegacyParamset");
