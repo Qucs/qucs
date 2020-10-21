@@ -30,10 +30,13 @@ static void parsePainting(QString Line, Painting*p)
 }
 /*--------------------------------------------------------------------------*/
 static bool PaintingListLoad(QString Line, PaintingList& List)
-{
+{ untested();
 	Painting *p=0;
 	QString cstr;
 //	while(!stream->atEnd()) {
+		if(Line.isEmpty()){
+			return true;
+		}else
 
 	 // not here.
 		if(Line.at(0) == '<' && Line.at(1) == '/'){
@@ -58,12 +61,14 @@ static bool PaintingListLoad(QString Line, PaintingList& List)
 			p=prechecked_cast<Painting*>(pp->clone());
 			assert(p);
 		}else{ untested();
+			trace1("no painting", cstr);
 			// incomplete();
 			// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nUnknown painting " + cstr));
 			return false;
 		}
 
 		::parsePainting(Line, p);
+
 		List.append(p);
 	//}
 
@@ -273,11 +278,12 @@ void LegacySchematicLanguage::parse(DocumentStream& stream, SchematicSymbol& own
 				}else{
 				}
 			}else if(mode=='S'){
-				incomplete();
+				// incomplete();
 				try{
 					// incomplete. use parseItem.
 					QString Line = stream.readLine();
 					PaintingListLoad(Line, owner.symbolPaintings());
+					trace1("symbolpaint", owner.symbolPaintings().size());
 					c = nullptr;
 				}catch(...){ untested();
 					incomplete();
@@ -697,17 +703,20 @@ static Symbol* parseSymbol(const QString& _s, Symbol* sym)
 	}
 
 	// set parameters.
-	unsigned position = 2; // Symbol::paramCount();
+	unsigned position = 0;
+
+	// skip the first 4. x y tx ty.
+	unsigned offset = 4; // Symbol::paramCountBase()
 	unsigned int z=0;
 	int counts = s.count('"');
-	trace1("set?", s);
+	trace2("set?", s, counts);
 	for(; int(position)<counts/2; ++ position){
 		z++;
 		n = s.section('"',z,z);    // property value. gaah parse over and over again?
 		z++;
 
-		trace2("set", position, n);
-		sym->setParameter(position, n);
+		trace2("legacy:set", position, n);
+		sym->setParameter(position + offset, n);
 
 		n  = s.section('"',z,z);    // display
 	}

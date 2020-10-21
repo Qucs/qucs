@@ -371,10 +371,10 @@ void Component::paint(ViewPainter *p) const
 
 // -------------------------------------------------------
 // Paints the component when moved with the mouse.
+#if 0
 void Component::paintScheme(SchematicDoc *p) const
 { untested();
   unreachable(); // obsolete.
-#if 0
   // qDebug() << "paintScheme" << Model;
   int cx=cx_();
   int cy=cy_();
@@ -433,8 +433,8 @@ void Component::paintScheme(SchematicDoc *p) const
   foreach(Area *pa, Ellips){ untested();
     p->PostPaintEvent(_Ellipse,cx+pa->x, cy+pa->y, pa->w, pa->h);
   }
-#endif
 }
+#endif
 
 // -------------------------------------------------------
 // For output on a printer device.
@@ -1130,8 +1130,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(i2+i4 < y1)  y1 = i2+i4;
     if(i2+i4 > y2)  y2 = i2+i4;
     return 1;
-  }
-  else if(s == "Text") {  // must be last in order to reuse "s" *********
+  }else if(s == "Text") {  // must be last in order to reuse "s" *********
     if(!getIntegers(Row, &i1, &i2, &i3, 0, &i4))  return -1;
     Color.setNamedColor(Row.section(' ',4,4));
     if(!Color.isValid()) return -1;

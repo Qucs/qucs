@@ -16,8 +16,8 @@ class CmdEltList;
 class ComponentList;
 
 class SchematicSymbol : public Symbol{
-private: // hide. don't mess with this.
-	SchematicSymbol(SchematicSymbol const&) = delete;
+protected:
+	SchematicSymbol(SchematicSymbol const& p);
 public:
 	explicit SchematicSymbol();
 	~SchematicSymbol();

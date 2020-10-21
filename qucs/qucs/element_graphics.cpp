@@ -169,7 +169,7 @@ void ElementGraphics::attachElement(Element* e)
 
 	if(dynamic_cast<Conductor*>(e)){ untested();
 		setZValue(-1.);
-	}else{ untested();
+	}else{ itested();
 	}
 
 	if(auto c=dynamic_cast<Component*>(e)){itested();
@@ -179,6 +179,7 @@ void ElementGraphics::attachElement(Element* e)
 			new TextGraphics(*i, this);
 
 		}
+	}else{ untested();
 	}
 
 	// who owns this?
