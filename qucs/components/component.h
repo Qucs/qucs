@@ -104,7 +104,7 @@ public: // BUG
 
 public: // BUG
   void    print(ViewPainter*, float);
-  void    setCenter(int, int, bool relative=false) override;
+//  void    setCenter(int, int, bool relative=false) override;
   void    getCenter(int&, int&) const; // BUG
   int     textSize(int&, int&);
   void    Bounding(int&, int&, int&, int&);

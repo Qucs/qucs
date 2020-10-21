@@ -176,34 +176,6 @@ void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2, float Corr)
 }
 
 // -------------------------------------------------------
-// "center" is the position
-// move to Element?
-void Component::setCenter(int x, int y, bool relative)
-{itested();
-#if 0 // does not make sense.
-  if(scope()){ untested();
-    scope()->disconnect(this);
-  }else{ untested();
-  }
-#endif
-
-  if(relative) { untested();
-    Element::_cx += x;
-    Element::_cy += y;
-  } else {itested();
-    Element::_cx = x;
-    Element::_cy = y;
-  }
-
-#if 0
-  if(scope()){ untested();
-    scope()->connect(this);
-  }else{ untested();
-  }
-#endif
-}
-
-// -------------------------------------------------------
 #if 1 // REMOVE
 void Component::getCenter(int& x, int& y) const
 {itested();
