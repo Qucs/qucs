@@ -10,7 +10,7 @@ then
   RELEASE=$1
 else
   RELEASE=$(date +"%y%m%d")
-  RELEASE="0.0.19."${RELEASE:0:6}
+  RELEASE="0.0.20."${RELEASE:0:6}
 fi
 echo Building release: $RELEASE
 
@@ -26,9 +26,10 @@ git clone ./ release/qucs-$RELEASE
 cd release/qucs-$RELEASE
 git submodule init
 git submodule update
+./bootstrap
 
 
-rm -rf .git
+#rm -rf .git
 #move qucs-doc out and build the pdf's for the qucs-doc debian package
 mv qucs-doc ../build_qucs-doc
 cd ../build_qucs-doc
@@ -56,16 +57,24 @@ tar -zxvf qucs-doc_$RELEASE.orig.tar.gz
 
 #copy debian packaging files from contrib into qucs-$RELEASE
 mv qucs-$RELEASE/contrib/ubuntu-debian/qucs/debian qucs-$RELEASE
+cd qucs-$RELEASE
+git apply contrib/ubuntu-debian/disable_tests.diff
+cd ..
 rm -r qucs-$RELEASE/contrib
 
 #Create signed source packages ready to upload to the PPA
-DISTS="trusty vivid wily xenial"
+DISTS="bionic focal"
 tar -zcvhf qucs_$RELEASE.orig.tar.gz qucs-$RELEASE
 rm -rf qucs-$RELEASE
 tar -zxvf qucs_$RELEASE.orig.tar.gz #make the symbolic links actual files
 
 
 cd qucs-$RELEASE
+cd qucs-core
+./configure
+make
+make clean
+cd ..
 COUNT=-0 #last version number in repository
 for DIST in ${DISTS} ; do
 	COUNT=$(($COUNT-1))
