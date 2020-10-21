@@ -111,6 +111,7 @@ void LIB::loadLibFiles()
 
 			if(type=="Lib"){
 				// possibly a subcircuit
+				trace3("Lib", c.modelString, type, c.symbol);
 				trace3("Lib", c.modelString, type, c.definition);
 				// d'uh
 			}else if(c.modelString.count('\n') < 2){
