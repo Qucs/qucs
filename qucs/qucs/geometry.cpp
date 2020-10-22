@@ -16,8 +16,8 @@ pos_t angle_t::apply(pos_t const& p) const
 	trace3("angle_apply", a, s, c);
 	// @angle_apply  a=2  s=0  c=1
 
-	int rx = c*p.first - s*p.second;
-	int ry = s*p.first + c*p.second;
+	int rx = c*p.first + s*p.second;
+	int ry =-s*p.first + c*p.second;
 	trace3("angle_apply", _degrees, rx, ry);
 	return pos_t(rx, ry);
 }

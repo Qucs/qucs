@@ -177,9 +177,9 @@ void Wire::findScaleAndAngle()
   }else if(x2()<0){
     _angle = 2;
   }else if(y2()>0){
-    _angle = 1;
-  }else if(y2()<0){
     _angle = 3;
+  }else if(y2()<0){
+    _angle = 1;
   }
 #ifndef NDEBUG
   trace2("dbg", _angle, _scale);
@@ -425,7 +425,7 @@ void Wire::updatePort()
   assert(x1() == 0);
   assert(y1() == 0);
   int x = dcos(_angle) * _scale;
-  int y = dsin(_angle) * _scale;
+  int y = -dsin(_angle) * _scale;
   setP1(pos_t(x, y));
 }
 /*--------------------------------------------------------------------------*/
@@ -546,7 +546,7 @@ QRectF Wire::boundingRect() const
   int N = 10;
   // assert(_scale>0); oops??
 
-  if(_angle==0 || _angle==1){ itested();
+  if(_angle==0 || _angle==3){ itested();
     return QRectF(-5, -5, x2()+N, y2()+N);
   }else{ itested();
     return QRectF(x2()-5, y2()-5, -x2()+N, -y2()+N);

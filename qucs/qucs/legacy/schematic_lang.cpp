@@ -462,7 +462,7 @@ static void printArgs(Symbol const* sym, ostream_t& s)
 	assert(hflip);
 	assert(vflip);
 	if(hflip==1){
-		s << " " << (1+vflip) / 2;
+		s << " " << (1-vflip) / 2;
 		s << " " << (angle/90) % 4;
 	}else if(vflip==1){ untested();
 		assert(hflip==-1);
