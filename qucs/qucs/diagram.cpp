@@ -74,8 +74,6 @@ Diagram::Diagram(Diagram const& p)
 Diagram::Diagram(int cx, int cy)
   : Element(cx, cy)
 {itested();
-  assert(_cx == cx);
-  assert(_cy == cy);
   
   // x1, x2, y1, y2 are the selectable boundings of the diagram, but these
   // are the real boundings. They are set in "createAxisLabels()".
@@ -1221,32 +1219,32 @@ int Diagram::checkColumnWidth(const QString& Str,
 }
 
 // ------------------------------------------------------------
-void Diagram::setCenter(int x, int y, bool relative)
-{
-  if(relative) { untested();
-    _cx += x;  _cy += y;
-  } else {
-    _cx = x;  _cy = y;
-  }
-}
+//void Diagram::setCenter(int x, int y, bool relative)
+//{
+//  if(relative) { untested();
+//    _cx += x;  _cy += y;
+//  } else {
+//    _cx = x;  _cy = y;
+//  }
+//}
 
 // -------------------------------------------------------
 // override Element::center... not needed?
-pos_t Diagram::center() const
-{ untested();
-  return pos_t(_cx, _cy);
-}
+//pos_t Diagram::center() const
+//{ untested();
+//  return pos_t(_cx, _cy);
+//}
 
 // -------------------------------------------------------
-void Diagram::getCenter(int& x, int& y)
-{ untested();
-
-  trace3("diag getcenter", label(), _cx, _cy);
-  assert(false);
-  //????
-  x = _cx;
-  y = _cy;
-}
+//void Diagram::getCenter(int& x, int& y)
+//{ untested();
+//
+//  trace3("diag getcenter", label(), _cx, _cy);
+//  assert(false);
+//  //????
+//  x = _cx;
+//  y = _cy;
+//}
 
 // ------------------------------------------------------------
 // Object* Diagram::newOne() const
@@ -1334,7 +1332,7 @@ bool Diagram::load(const QString& Line, istream_t& stream)
   int cy = n.toInt(&ok);
   if(!ok) return false;
 
-  setCenter(cx, cy);
+  setCenter(pos_t(cx, cy));
 
   n  = s.section(' ',3,3);    // x2
   x2 = n.toInt(&ok);
@@ -2440,7 +2438,7 @@ bool Diagram::pressElement(SchematicDoc* Doc, Element*& selElem, QMouseEvent* Ev
 	}else{ untested();
 
 		Doc->pushBack(Diag);
-		Doc->enlargeView(Diag->cx(), Diag->cy()-Diag->y2_(), Diag->cx()+Diag->x2_(), Diag->cy());
+//		Doc->enlargeView(Diag->cx(), Diag->cy()-Diag->y2_(), Diag->cx()+Diag->x2_(), Diag->cy());
 		Doc->setChanged(true, true);   // document has been changed
 
 		Doc->viewport()->repaint();

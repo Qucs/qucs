@@ -72,8 +72,8 @@ void EllipseArc::paintScheme(SchematicDoc *p)
 // --------------------------------------------------------------------------
 void EllipseArc::getCenter(int& x, int &y)
 {
-	 auto cx=Element::cx();
-     auto cy=Element::cy();
+	auto cx=0;
+	auto cy=0;
 
   x = cx+(x2>>1);
   y = cy+(y2>>1);
@@ -81,11 +81,11 @@ void EllipseArc::getCenter(int& x, int &y)
 
 // --------------------------------------------------------------------------
 // Sets the center of the painting to x/y.
-void EllipseArc::setCenter(int x, int y, bool relative)
-{
-  if(relative) { _cx += x;  _cy += y; }
-  else { _cx = x-(x2>>1);  _cy = y-(y2>>1); }
-}
+//void EllipseArc::setCenter(int x, int y, bool relative)
+//{
+//  if(relative) { _cx += x;  _cy += y; }
+//  else { _cx = x-(x2>>1);  _cy = y-(y2>>1); }
+//}
 
 // --------------------------------------------------------------------------
 Element* EllipseArc::info(QString& Name, char* &BitmapFile, bool getNewOne)
@@ -104,12 +104,14 @@ bool EllipseArc::load(const QString& s)
   QString n;
 
   n  = s.section(' ',1,1);    // cx
-  _cx = n.toInt(&ok);
+  int cx = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  _cy = n.toInt(&ok);
+  int cy = n.toInt(&ok);
   if(!ok) return false;
+
+  setCenter(pos_t(cx, cy));
 
   n  = s.section(' ',3,3);    // x2
   x2 = n.toInt(&ok);
@@ -369,8 +371,8 @@ bool EllipseArc::getSelected(float fX, float fY, float w)
 // Rotates around the center.
 void EllipseArc::rotate()
 {
-  _cy += (y2-x2) >> 1;
-  _cx += (x2-y2) >> 1;
+  //_cy += (y2-x2) >> 1;
+  //_cx += (x2-y2) >> 1;
   int tmp = x2;
   x2 = y2;
   y2 = tmp;

@@ -44,8 +44,8 @@ public:
   void setHighlighted (bool newval) { isHighlighted = newval; };
 
   // this is likely wrong.
-  void moveTo(int x, int y){ _cx=x; _cy=y; }
-  void moveCenter(int x, int y){ _cx+=x; _cy+=y; }
+  void moveTo(int x, int y){ incomplete(); } // {_cx=x; _cy=y; }
+  void moveCenter(int x, int y){ incomplete(); } // {_cx+=x; _cy+=y; }
   void moveLeft(int x){ x1-=x; }
 
   Element* clone()const override{
@@ -63,12 +63,12 @@ public:
   void    getLabelBounding(int& _xmin, int& _ymin, int& _xmax, int& _ymax);
 
 public: // FIXME
-	int & cx__() {incomplete(); return _cx; }
-	int & cy__() {incomplete(); return _cy; }
-	int & x1__() {incomplete(); return x1; }
-	int & y1__() {incomplete(); return y1; }
-	int & x2__() {incomplete(); return x2; }
-	int & y2__() {incomplete(); return y2; }
+//	int & cx__() {incomplete(); return _cx; }
+//	int & cy__() {incomplete(); return _cy; }
+//	int & x1__() {incomplete(); return x1; }
+//	int & y1__() {incomplete(); return y1; }
+//	int & x2__() {incomplete(); return x2; }
+//	int & y2__() {incomplete(); return y2; }
 
 private:
   bool isHighlighted;

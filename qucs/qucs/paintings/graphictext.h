@@ -32,7 +32,7 @@ public:
 
   void paintScheme(SchematicDoc*);
   void getCenter(int&, int&);
-  void setCenter(int, int, bool relative=false);
+//  void setCenter(int, int, bool relative=false);
 
   Element* newOne() const {return new GraphicText(*this);}
   Element* clone() const {return new GraphicText(*this);}

@@ -843,6 +843,7 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
   }
 #endif
 
+#if 0
   // find boundings of all wires
   for(auto pw : wires()) {itested();
     if(pw->x1_() < xmin) xmin = pw->x1_();
@@ -850,7 +851,6 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
     if(pw->y1_() < ymin) ymin = pw->y1_();
     if(pw->y2_() > ymax) ymax = pw->y2_();
 
-#if 0
     pl = pw->Label;
     if(pl) {     // check position of wire label
         pl->getLabelBounding(x1,y1,x2,y2);
@@ -859,8 +859,8 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
         if(y1 < ymin) ymin = y1;
         if(y2 > ymax) ymax = y2;
     }
-#endif
   }
+#endif
 
 #if 0
   // find boundings of all node labels

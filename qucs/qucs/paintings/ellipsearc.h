@@ -30,7 +30,7 @@ public:
 
   void paintScheme(SchematicDoc*);
   void getCenter(int&, int&);
-  void setCenter(int, int, bool relative=false);
+//  void setCenter(int, int, bool relative=false);
 
   Element* clone() const {return new EllipseArc(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);

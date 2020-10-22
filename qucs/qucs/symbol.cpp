@@ -119,7 +119,7 @@ Net const* Symbol::portValue(unsigned i) const
 // same as Element::center?
 pos_t Symbol::center()const
 {itested();
-	return pos_t(_cx, _cy);
+	return Element::center(); // pos_t(_cx, _cy);
 }
 /*--------------------------------------------------------------------------*/
 Port const& Symbol::port(unsigned i) const
@@ -257,9 +257,9 @@ void Symbol::setParameter(unsigned n, std::string const& v)
 void Symbol::setParameter(std::string const& name, std::string const& v)
 {
 	if(name == "$xposition"){
-		_cx = atoi(v.c_str());
+		setCenter(pos_t(atoi(v.c_str()), cy()));
 	}else if(name == "$yposition"){
-		_cy = atoi(v.c_str());
+		setCenter(pos_t(cx(), atoi(v.c_str())));
 	}else if(name == "$angle"){
 		trace1("angle", v);
 		_angle = atoi(v.c_str());
