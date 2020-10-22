@@ -129,22 +129,23 @@ Port const& Symbol::port(unsigned i) const
 }
 /*--------------------------------------------------------------------------*/
 std::string Symbol::paramValue(std::string const& n) const
-{
-	if(n=="$xposition"){
+{ untested();
+	if(n=="$xposition"){ untested();
 		return std::to_string(cx());
-	}else if(n=="$yposition"){
+	}else if(n=="$yposition"){ untested();
+		trace1("..", cy());
 		return std::to_string(cy());
-	}else if(n=="$mfactor"){
+	}else if(n=="$mfactor"){ untested();
 		return "1"; // isActive in Component.
-	}else if(n=="$param_display"){
+	}else if(n=="$param_display"){ untested();
 		return "0";
-	}else if(n=="$hflip"){
+	}else if(n=="$hflip"){ untested();
 		incomplete();
 		return std::to_string(_hflip);
-	}else if(n=="$vflip"){
+	}else if(n=="$vflip"){ untested();
 		incomplete();
 		return std::to_string(_vflip);
-	}else if(n=="$angle"){itested();
+	}else if(n=="$angle"){ untested();
 		return std::to_string(_angle);
 	}else{ untested();
 		throw ExceptionCantFind(n, label().toStdString());

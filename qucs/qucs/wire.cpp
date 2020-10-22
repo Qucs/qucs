@@ -510,7 +510,7 @@ void Wire::setParameter(std::string const& n, std::string const& v)
     updatePort();
   }else if(n=="netname"){
     _netname = v;
-  }else{ untested();
+  }else{
     Symbol::setParameter(n, v);
   }
 }

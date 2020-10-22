@@ -46,15 +46,22 @@ public:
 	QString getSubcircuitFile() const;
 
 private:
-	std::string paramValue(std::string const&) const override{
-		incomplete();
-		return "incomplete";
+	std::string paramValue(unsigned n) const override{ untested();
+		return SchematicSymbol::paramValue(n);
+	}
+	std::string paramValue(std::string const& n) const override{ untested();
+		if(n=="$tx"){
+			return "0";
+		}else if(n=="$ty"){
+			return "0";
+		}else{
+			return SchematicSymbol::paramValue(n);
+		}
 	}
 	unsigned numPorts() const override{
 		incomplete();
 		return 0;
 	}
-	void paint(ViewPainter* p) const override{}
 	QRectF boundingRect() const override{
 		// BUG. cache.
 		QRectF br;
@@ -70,17 +77,6 @@ private:
 		trace4("br", label(), symbolPaintings()->size(), br.topLeft(), br.bottomRight());
 		return br;
 	}
-#if 0
-	not needed. let Qt deal with it.
-	void paint(ViewPainter* vp) const override{
-		for(Element const* p : symbolPaintings()){ untested();
-			assert(p);
-			trace1("paintLib", p->center());
-			p->paint(vp);
-		}
-	}
-
-#endif
 
 protected:
 	QString netlist() const;
@@ -103,7 +99,7 @@ static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "LegacyLibProto", &d0)
 /*--------------------------------------------------------------------------*/
 class Lib : public Symbol{
 public:
-	explicit Lib():Symbol(), _parent(nullptr) {
+	explicit Lib():Symbol(), _tx(0), _ty(0), _parent(nullptr) {
 		setTypeName("Lib"); // really?
 	}
 	Lib( Lib const& l) : Symbol(l), _parent(l._parent){}
@@ -118,6 +114,7 @@ private: // Element
 			// ((Element*)_parent)->paint(p);
 		}else{ untested();
 		}
+		Symbol::paint(p);
 	}
 	QRectF boundingRect() const override{
 		if(_parent){ untested();

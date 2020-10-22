@@ -290,7 +290,7 @@ inline int parseComponentLibrary (QString libPath, ComponentLibrary &library, LI
 	if (what == QUCS_COMP_LIB_HEADER_ONLY) { untested();
 		// only the header was requested, stop here
 		return QUCS_COMP_LIB_OK;
-	}else{ untested();
+	}else{
 	}
 
 	// Now go through the rest of the component library, extracting each
