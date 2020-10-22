@@ -268,6 +268,10 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 			mode='Q';
 		}else if(Line == "<Paintings>") {
 			mode='P';
+		}else if(Line == "<Model>") { untested();
+			mode='P';
+		}else if(Line == "<Description>") { untested();
+			mode='X';
 		}else{
 
 			/// \todo enable user to load partial schematic, skip unknown components
@@ -323,7 +327,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 			}else if(mode=='Q'){
 
 			}else{
-				qDebug() << "LSL::parse" <<  Line;
+				trace2("LSL::parse", mode, Line);
 				incomplete();
 			}
 
