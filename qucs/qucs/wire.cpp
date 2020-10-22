@@ -238,6 +238,8 @@ Symbol* Wire::intersectPorts(Symbol const* s) const
 		Symbol *sckt = new SubcktBase(); // BUG: inherit.
 		sckt->new_subckt();
 		SchematicModel* m = sckt->subckt();
+
+		// TODO: ordering bug probably here as well.
 		m->pushBack(s->clone());
 
 		auto pp = split.begin();
