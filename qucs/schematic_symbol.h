@@ -43,7 +43,12 @@ public:
 	// CommandList const& commands() const;
 
 public:
-	std::string paramValue(std::string const&) const = 0;
+	std::string paramValue(std::string const&n) const{ untested();
+		return Symbol::paramValue(n);
+	}
+	std::string paramValue(unsigned n) const{ untested();
+		return Symbol::paramValue(n);
+	}
 	virtual void setParameter(std::string const&, std::string const&){ unreachable(); }
 
 private: // SchematicSymbol

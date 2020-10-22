@@ -24,7 +24,7 @@ SchematicSymbol::SchematicSymbol()
 /*--------------------------------------------------------------------------*/
 SchematicSymbol::SchematicSymbol(SchematicSymbol const& p)
 	: Symbol()
-{ untested();
+{
 	_paint = new PaintingList(); // copy??
 }
 /*--------------------------------------------------------------------------*/
