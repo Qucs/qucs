@@ -394,6 +394,7 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 // transform around pivot (in scope coordinates).
 void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot)
 {itested();
+	incomplete(); // obsolete;
 	trace1("..", a.degrees_int());
 	assert(!(a.degrees_int()%90));
 	assert(_e);
