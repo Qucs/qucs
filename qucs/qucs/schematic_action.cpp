@@ -198,9 +198,6 @@ QUndoCommand* MouseActionSelCmd<CMD>::release(QMouseEvent*)
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
 // swapSelection?
 class DeleteSelection : public SchematicEdit {
 public:
@@ -217,16 +214,97 @@ public:
 typedef MouseActionSelCmd<DeleteSelection> MouseActionDelete;
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-// BUG: SchematicEdit.
+void transformElement(Element* e, qucsSymbolTransform a, pos_t pivot)
+{itested();
+	trace1("..", a.degrees_int());
+	assert(!(a.degrees_int()%90));
+	assert(e);
+	if(auto* s=dynamic_cast<Symbol*>(e)){ untested();
+		int mx = 0;
+		int my = 0;
+		unsigned r = 0;
+		try {itested();
+			std::string mxs = s->paramValue("$hflip"); // indicates if x axis is mirrored
+			mx = atoi(mxs.c_str()); // \pm 1
+			trace3("hflip", mx, my, r);
+			assert(mx == 1);
+			mx -= 1;
+			mx /= -2;
+		}catch(ExceptionCantFind const&){ untested();
+			incomplete();
+		}
+		try {itested();
+			std::string mys = s->paramValue("$vflip"); // indicates if y axis is mirrored
+			my = atoi(mys.c_str());
+			my -= 1;
+			my /= -2;
+		}catch(ExceptionCantFind const&){ untested();
+			unreachable();
+		}
+		try {itested();
+			std::string rs = s->paramValue("$angle");
+			r = atoi(rs.c_str());
+			assert(!(r%90));
+			assert(r<360);
+			r /= 90;
+		}catch(ExceptionCantFind const&){ untested();
+			unreachable();
+		}
+
+		trace3("stuff", mx, my, r);
+
+		assert(mx==0 || mx==1);
+		assert(my==0 || my==1);
+		assert(r < 4); // yikes //
+
+		assert(!mx); // for now.
+
+		rotate_after_mirror1_t current(int(r*90), bool(my));
+		assert(!(current.degrees_int()%90));
+		rotate_after_mirror1_t new_mr = a * current;
+		assert(!(new_mr.degrees_int()%90));
+
+		auto vflip = -2 * int(new_mr.mirror()) + 1;
+		trace2("transform", vflip, new_mr.degrees_int());
+
+		s->setParameter(std::string("$hflip"), std::string("1"));
+		s->setParameter(std::string("$vflip"), std::to_string(vflip));
+		s->setParameter(std::string("$angle"), std::to_string(new_mr.degrees_int()));
+
+		auto p = e->center();
+		trace1("posttransform setpos0", p);
+		int x = getX(p);
+		int y = getY(p);
+
+		x -= pivot.first;
+		y -= pivot.second;
+
+		pos_t new_xy(x,y);
+		new_xy = a.apply(new_xy);
+
+		x = pivot.first + new_xy.first;
+		y = pivot.second + new_xy.second;
+
+		// todo: rounding errors.
+
+		p = pos_t(x, y);
+		trace1("posttransform setpos1", p);
+		e->setCenter(p);
+	// prepareGeometryChange(); // needed??
+	}else{ untested();
+	}
+}
+/*--------------------------------------------------------------------------*/
 template<class T>
-class TransformSelection : public QUndoCommand {
+class TransformSelection : public SchematicEdit {
 public:
 	template<class IT>
-	TransformSelection(SchematicDoc& ctx, IT selection, T const& transform)
-	: _ctx(ctx), _t(transform){itested();
+	TransformSelection(SchematicDoc& ctx, IT selection, T const& t)
+	: SchematicEdit(*ctx.sceneHACK()){itested();
 		size_t k = 0;
 		// TODO: bounding box center?
 		QRectF bb;
+		std::vector<std::pair<ElementGraphics*,Element*>> buf;
 		for(auto i : selection){itested();
 			++k;
 			QGraphicsItem const* g = i;//huh?
@@ -235,32 +313,24 @@ public:
 				br.translate(eg->pos());
 				bb |= br;
 				trace1("DBG", bb.center());
-				_gfx.push_back(eg);
+				Element* e = eg->cloneElement();
+				buf.push_back(std::make_pair(eg, e));
+				// qSwap(eg, e);
 			}else{ untested();
 				unreachable(); // really? use prechecked_cast then.
 			}
 		}
-		_pivot_g.first = getX(bb.center());
-		_pivot_g.second = getY(bb.center());
+
+		auto center = bb.center();
+		pos_t pivot(getX(center), getY(center));
+
+		for(auto i : buf){
+			transformElement(i.second, t, pivot);
+			qSwap(i.first, i.second);
+		}
 
 		setText("transform " + QString::number(k) + " items");
 	}
-	void undo() override { untested();
-		auto t = _t.inverse();
-		for(auto& d : _gfx){ untested();
-			d->transform(t, _pivot_g);
-		}
-	}
-	void redo() override {itested();
-		for(auto& d : _gfx){itested();
-			d->transform(_t, _pivot_g);
-		}
-	}
-private:
-    SchematicDoc& _ctx;
-    std::vector<ElementGraphics*> _gfx;
-	 std::pair<int, int> _pivot_g; // pivot in global coordinates
-	 T const& _t;
 }; // TransformSelection
 /*--------------------------------------------------------------------------*/
 static const rotate_after_mirror1_t ninety_degree_transform(270, false); // !!
