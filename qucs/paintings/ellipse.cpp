@@ -127,12 +127,14 @@ bool Ellipse::load(const QString& s)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  _cx = n.toInt(&ok);
+  int cx = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  _cy = n.toInt(&ok);
+  int cy = n.toInt(&ok);
   if(!ok) return false;
+
+  setCenter(cx, cy);
 
   n  = s.section(' ',3,3);    // x2
   x2 = n.toInt(&ok);
@@ -371,11 +373,11 @@ bool Ellipse::getSelected(float fX, float fY, float w)
 // Rotates around the center.
 void Ellipse::rotate()
 {
-  _cy += (y2-x2) >> 1;
-  _cx += (x2-y2) >> 1;
-  int tmp = x2;
-  x2 = y2;
-  y2 = tmp;
+	//??
+//  _cy += (y2-x2) >> 1;
+//  _cx += (x2-y2) >> 1;
+
+  std::swap(x2, y2);
 }
 
 // --------------------------------------------------------------------------

@@ -66,8 +66,6 @@ CmdElement::CmdElement() : Element()
   isActive = COMP_IS_ACTIVE;
   showName = true;
 
-  _cx = 0;
-  _cy = 0;
   tx = 0;
   ty = 0;
 
@@ -131,23 +129,23 @@ void CmdElement::entireBounds(int&, int&, int&, int&, float)
 
 // -------------------------------------------------------
 // obsolete?
-void CmdElement::setCenter(int x, int y, bool relative)
-{
-  if(relative) {
-    _cx += x;  _cy += y;
-  } else {
-    _cx = x;  _cy = y;
-  }
-}
+//void CmdElement::setCenter(int x, int y, bool relative)
+//{
+//  if(relative) {
+//    _cx += x;  _cy += y;
+//  } else {
+//    _cx = x;  _cy = y;
+//  }
+//}
 
-// -------------------------------------------------------
-void CmdElement::getCenter(int& x, int& y)
-{
-  unreachable();
-  x = cx();
-  y = cy();
-}
-
+//// -------------------------------------------------------
+//void CmdElement::getCenter(int& x, int& y)
+//{
+//  unreachable();
+//  x = cx();
+//  y = cy();
+//}
+//
 // -------------------------------------------------------
 int CmdElement::getTextSelected(int x_, int y_, float Corr)
 {
@@ -212,8 +210,9 @@ bool CmdElement::getSelected(int x_, int y_)
 // -------------------------------------------------------
 void CmdElement::paint(ViewPainter *p) const
 {
-  int cx=_cx;
-  int cy=_cy;
+	int x2=0; int y2=0; //?
+  int cx = center().first;
+  int cy = center().second;
   int x, y, a, b, xb, yb;
   QFont f = p->font();   // save current font
   QFont newFont = f;

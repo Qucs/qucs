@@ -166,6 +166,7 @@ bool MouseActions::pasteElements(SchematicDoc *)
 void MouseActions::editLabel(SchematicDoc *Doc, WireLabel *pl)
 { untested();
   unreachable();
+#if 0
   LabelDialog *Dia = new LabelDialog(pl, Doc);
   int Result = Dia->exec();
   if(Result == 0) return;
@@ -198,6 +199,7 @@ void MouseActions::editLabel(SchematicDoc *Doc, WireLabel *pl)
   updateViewport();
   setDrawn(false);
   Doc->setChanged(true, true);
+#endif
 }
 
 // -----------------------------------------------------------
@@ -1356,7 +1358,8 @@ void MouseActions::MPressMarker(SchematicDoc *Doc, QMouseEvent* Event)
     assert(pm->diag());
     int x0 = pm->diag()->cx();
     int y0 = pm->diag()->cy();
-    Doc->enlargeView(x0+pm->x1_(), y0-pm->y1_()-pm->y2_(), x0+pm->x1_()+pm->x2_(), y0-pm->y1_());
+    incomplete();
+//    Doc->enlargeView(x0+pm->x1_(), y0-pm->y1_()-pm->y2_(), x0+pm->x1_()+pm->x2_(), y0-pm->y1_());
   }
   updateViewport();
   setDrawn(false);

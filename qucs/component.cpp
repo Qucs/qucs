@@ -191,7 +191,7 @@ Component::Component(Component const& p)
  * \class Component
  * \brief The Component class implements a legacy qucs component symbol
  */
-Component::Component() : _rotated(0)
+Component::Component() : Symbol(),  _rotated(0)
 {
   Type = isAnalogComponent;
 
@@ -199,8 +199,6 @@ Component::Component() : _rotated(0)
   isActive = COMP_IS_ACTIVE;
   showName = true;
 
-  Element::_cx = 0;
-  Element::_cy = 0;
   tx = 0;
   ty = 0;
 

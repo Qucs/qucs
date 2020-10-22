@@ -26,8 +26,8 @@ WireLabel::WireLabel(const QString& _Name, int cx, int cy,
                      int _x1, int _y1, int _Type) : Element()
 {
 	incomplete();
-  _cx = cx;
-  _cy = cy;
+  // _cx = cx;
+  // _cy = cy;
   x1 = _x1;
   y1 = _y1;
   setName(_Name); //?!
@@ -100,11 +100,11 @@ void WireLabel::setCenter(int x_, int y_, bool relative)
 // ----------------------------------------------------------------
 bool WireLabel::getSelected(int x, int y)
 {
-  if(x1 <= x)
-    if(y1 <= y)
-      if((x1+x2) >= x)
-        if((y1+y2) >= y)
-          return true;
+//  if(x1 <= x)
+//    if(y1 <= y)
+//      if((x1+x2) >= x)
+//        if((y1+y2) >= y)
+//          return true;
 
   return false;
 }
@@ -129,6 +129,7 @@ void WireLabel::paint(ViewPainter *p) const
     p->setPen(QPen(Qt::black,1));
   }
   p->setFont (newFont);
+  int x2=0; int y2=0;
   x2 = p->drawText("TODO", x1, y1, &y2);
   p->setFont(f); // restore old font
 
@@ -209,8 +210,8 @@ void WireLabel::setName(const QString& Name_)
   // get size of text using the screen-compatible metric
   FontMetrics metrics;
   QSize r = metrics.size(0, Name_);
-  x2 = r.width();
-  y2 = r.height()-2;    // remember size of text
+  // x2 = r.width();
+  // y2 = r.height()-2;    // remember size of text
 }
 
 // ----------------------------------------------------------------
@@ -232,9 +233,10 @@ QString WireLabel::save()
 
 void WireLabel::getLabelBounding(int& _xmin, int& _ymin, int& _xmax, int& _ymax)
 {
-    _xmin = std::min(x1,x1+(x2+6));
-    _xmax = std::max(x1,x1+(x2+6));
-    _ymin = std::min(y1,y1+(y2+6));
-    _ymax = std::max(y1,y1+(y2+5));
-    _ymax = std::max(cy(),_ymax);
+	incomplete();
+//    _xmin = std::min(x1,x1+(x2+6));
+//    _xmax = std::max(x1,x1+(x2+6));
+//    _ymin = std::min(y1,y1+(y2+6));
+//    _ymax = std::max(y1,y1+(y2+5));
+//    _ymax = std::max(cy(),_ymax);
 }

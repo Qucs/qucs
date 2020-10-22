@@ -46,7 +46,6 @@ public:
 
   void paintScheme(SchematicDoc*);
   void getCenter(int&, int&);
-  void setCenter(int, int, bool relative=false);
 
   bool load(const QString&);
   QString save();

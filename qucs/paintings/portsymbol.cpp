@@ -36,8 +36,7 @@ void PortSymbol::setSomeArgsHack(int cx_, int cy_, const QString& numberStr_,
                                          const QString& nameStr_)
 {
   Name = ".PortSym ";
-  Element::_cx = cx_;
-  Element::_cy = cy_;
+  setCenter(cx_, cy_);
 
   Angel = 0;
   nameStr = nameStr_;
@@ -152,12 +151,14 @@ bool PortSymbol::load(const QString& s)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  _cx = n.toInt(&ok);
+  int cx = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  _cy = n.toInt(&ok);
+  int cy = n.toInt(&ok);
   if(!ok) return false;
+
+  setCenter(cx, cy);
 
   numberStr  = s.section(' ',3,3);    // number
   if(numberStr.isEmpty()) return false;

@@ -169,9 +169,8 @@ public:
   bool showLabel() const override{ return showName; }
 
 public:
-  int cx() const{return Element::_cx;}
-  int cy() const{return Element::_cy;}
-  pos_t center() const override{return pos_t(Element::_cx, Element::_cy);}
+  int cx() const{return getX(Element::center());}
+  int cy() const{return getY(Element::center());}
 
 protected:
   QString Name; // the label, but sometimes the type. yikes.

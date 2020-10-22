@@ -88,13 +88,13 @@ void ID_Text::getCenter(int& x, int &y)
 
 // --------------------------------------------------------------------------
 // Sets the center of the painting to x/y.
-void ID_Text::setCenter(int x, int y, bool relative)
-{
-	  auto cx=Element::cx();
-      auto cy=Element::cy();
-  if(relative) { cx += x;  cy += y; }
-  else { cx = x-(x2>>1);  cy = y-(y2>>1); }
-}
+//void ID_Text::setCenter(int x, int y, bool relative)
+//{
+//	  auto cx=Element::cx();
+//      auto cy=Element::cy();
+//  if(relative) { cx += x;  cy += y; }
+//  else { cx = x-(x2>>1);  cy = y-(y2>>1); }
+//}
 
 // --------------------------------------------------------------------------
 bool ID_Text::load(const QString& s)
@@ -104,12 +104,14 @@ bool ID_Text::load(const QString& s)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  Element::_cx = n.toInt(&ok);
+  int cx = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  Element::_cy = n.toInt(&ok);
+  int cy = n.toInt(&ok);
   if(!ok) return false;
+
+  setCenter(pos_t(cx, cy));
 
   Prefix = s.section(' ',3,3);    // Prefix
   if(Prefix.isEmpty()) return false;

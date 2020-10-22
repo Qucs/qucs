@@ -137,12 +137,12 @@ public: // compat with old code
 
 public: // access coordinates from old code.
 	     // newer code might use Qt conventions...?
-	int const& cx_() const { assert(_e); return _e->cx_(); }
-	int const& cy_() const { assert(_e); return _e->cy_(); }
-	int const& x1_() const { assert(_e); return _e->x1_(); }
-	int const& y1_() const { assert(_e); return _e->y1_(); }
-	int const& x2_() const { assert(_e); return _e->x2_(); }
-	int const& y2_() const { assert(_e); return _e->y2_(); }
+//	int const& cx_() const { assert(_e); return _e->cx_(); }
+//	int const& cy_() const { assert(_e); return _e->cy_(); }
+//	int const& x1_() const { assert(_e); return _e->x1_(); }
+//	int const& y1_() const { assert(_e); return _e->y1_(); }
+//	int const& x2_() const { assert(_e); return _e->x2_(); }
+//	int const& y2_() const { assert(_e); return _e->y2_(); }
 public:
 	// don't use. just to compile
 	int Type; // BUG BUG

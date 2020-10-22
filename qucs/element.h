@@ -158,20 +158,21 @@ class Element : public Object {
 public:
   friend class ElementGraphics;
   typedef QRectF Rect; // BUG.
+protected:
+  Element(Element const&);
 public:
   Element();
-  Element(int cx, int cy) : _cx(cx), _cy(cy) {} // BUG
-  Element(Element const&);
+  Element(int cx, int cy) : _center(cx, cy) { unreachable(); }
   virtual ~Element();
 
 public: // make old variables accessible
-	int const& cx() const { return _cx; }
-	int const& cy() const { return _cy; }
+	int const& cx() const { return _center.first; }
+	int const& cy() const { return _center.second; }
 
 	int const& x1_() const { return x1; }
 	int const& y1_() const { return y1; }
-	int const& x2_() const { return x2; }
-	int const& y2_() const { return y2; }
+//	int const& x2_() const { return x2; }
+//	int const& y2_() const { return y2; }
 	void snapToGrid(SchematicDoc& s);
 
 	void setObsoleteType(int t){
@@ -183,7 +184,7 @@ public: // other stuff
   virtual bool showLabel() const{ return true; }
   //virtual bool showParam(int i) const{ return true; } // later
 
-  // virtual void draw(QPainter&) { incomplete(); }
+  void setCenter(pos_t const& c){ _center = c; }
 //  virtual void setCenter(int x, int y, bool relative=false);
   virtual void getCenter(int&, int&) const; // BUG
   virtual void paint(ViewPainter*) const = 0;
@@ -195,11 +196,6 @@ public: // other stuff
   // BUG: not virtual
   virtual pos_t center()const;
 
-public: // alias
-  void setCenter(pos_t const& c){
-    _cx = c.first;
-	 _cy = c.second;
-  }
 
 public:
 	virtual Element* clone()const = 0;
@@ -227,14 +223,15 @@ public: // set protected variables. don't use
 		return false;
 	}
 
+private:
+   pos_t _center; // BUG: store in symbol?
+
 protected:
-  int _cx, _cy; // BUG: store in symbol.
-               // also used in Node. and in Diagrams
   int x1, y1;
 public:
   
   // BUG; abused in Command
-  mutable int x2, y2;  // center and relative boundings
+//  mutable int x2, y2;  // center and relative boundings
 
   // create a declaration, e.g. subcircuit definition or include directive
   virtual Symbol const* proto(SchematicModel const*) const{return nullptr;}

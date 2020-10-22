@@ -15,22 +15,17 @@
 #include "element.h"
 #include "schematic_doc.h"
 
-Element::Element()
-  : _cx(0), _cy(0), _owner(nullptr)
+Element::Element() : _center(0, 0), _owner(nullptr)
 {
   Type = isDummyElement; // BUG
-  x1 = y1 = x2 = y2 = 0; // really?
+  x1 = y1 = 0; // x2 = y2 = 0; // really?
 //  setLabel(name());
-
-  // BUG
-  // Selected = false;
 }
 
 Element::Element(Element const& e)
  : Object(e),
-   _cx(e._cx),
-   _cy(e._cy),
-   x1(e.x1), y1(e.y1), x2(e.x2), y2(e.y2), // BUG diagram & whatever.
+   _center(e._center),
+   x1(e.x1), y1(e.y1), // x2(e.x2), y2(e.y2), // BUG diagram & whatever.
    _owner(nullptr) // sic.
 	//Name(e.Name) // yikes.
 {
@@ -54,19 +49,14 @@ void Element::setCenter(int x, int y, bool relative)
 
 void Element::getCenter(int&x, int&y) const
 {
-	incomplete();
-	x=_cx;
-	y=_cy;
+	unreachable();
+	x = _center.first;
+	y = _center.second;
 }
 
 // pure? maybe not. there could be non-paintable elements...
 void Element::paint(ViewPainter* p) const
 {
-	// draw bounding box for debugging.
-	//if(isSelected()){
-	//	p->setPen(QPen(Qt::red,2));
-	//}else
-	
 #ifndef NDEBUG
 	p->setPen(QPen(Qt::yellow,1));
 	p->drawRoundedRect(boundingRect());
@@ -76,9 +66,12 @@ void Element::paint(ViewPainter* p) const
 // does not work for nodes and diagrams
 QRectF Element::boundingRect() const
 {
+	unreachable();
 	// QRectF b(cx+x1, cy+y1, x2-x1, y2-y1);
-	QRectF b(x1, y1, x2-x1, y2-y1);
-	return b;
+//	QRectF b(x1, y1, x2-x1, y2-y1);
+//	return b;
+//
+	return QRectF();
 }
 
 void Element::attachToModel()

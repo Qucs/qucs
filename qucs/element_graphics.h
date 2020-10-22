@@ -93,12 +93,12 @@ public:
 	// BUG: selected is stored in Element.
 	void setSelected(bool s);
 
-	int const& cx_() const { assert(_e); return _e->cx(); }
-	int const& cy_() const { assert(_e); return _e->cy(); }
-	int const& x1_() const { assert(_e); return _e->x1_(); }
-	int const& y1_() const { assert(_e); return _e->y1_(); }
-	int const& x2_() const { assert(_e); return _e->x2_(); }
-	int const& y2_() const { assert(_e); return _e->y2_(); }
+//	int const& cx_() const { assert(_e); return _e->cx(); }
+//	int const& cy_() const { assert(_e); return _e->cy(); }
+//	int const& x1_() const { assert(_e); return _e->x1_(); }
+//	int const& y1_() const { assert(_e); return _e->y1_(); }
+//	int const& x2_() const { assert(_e); return _e->x2_(); }
+//	int const& y2_() const { assert(_e); return _e->y2_(); }
 private:
   Element* _e;
 }; // ElementGraphics

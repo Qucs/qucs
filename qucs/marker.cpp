@@ -57,8 +57,8 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
   Type = isMarker;
   transparent = false;
 
-  _cx =  cx_;
-  _cy = -cy_;
+  setCenter(cx_, -cy_, false);
+//  _cy = -cy_;
   fCX = float(cx());
   fCY = float(cy());
 
@@ -323,8 +323,10 @@ void Marker::getTextSize()
   // get size of text using the screen-compatible metric
   FontMetrics metrics;
   QSize r = metrics.size(0, Text);
-  x2 = r.width()+5;
-  y2 = r.height()+5;
+
+  incomplete();
+  // x2 = r.width()+5;
+  // y2 = r.height()+5;
 }
 
 // ---------------------------------------------------------------------
@@ -514,13 +516,14 @@ void Marker::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
   if(diag()) {
     _x1 = diag()->cx() + x1;
     _y1 = diag()->cy() + y1;
-    _x2 = diag()->cx() + x1+x2;
-    _y2 = diag()->cy() + y1+y2;
+	 incomplete();
+//    _x2 = diag()->cx() + x1+x2;
+//    _y2 = diag()->cy() + y1+y2;
   }
   else {
     _x1 = x1;
-    _y1 = y1+y2;
-    _x2 = x1+x2;
+//    _y1 = y1+y2;
+//    _x2 = x1+x2;
     _y2 = y1;
   }
 }
@@ -615,8 +618,8 @@ bool Marker::load(const QString& _s)
 // to diagram cx/cy.
 bool Marker::getSelected(int x_, int y_)
 {
-  if(x_ >= x1) if(x_ <= x1+x2) if(y_ >= y1) if(y_ <= y1+y2)
-    return true;
+//  if(x_ >= x1) if(x_ <= x1+x2) if(y_ >= y1) if(y_ <= y1+y2)
+//    return true;
 
   return false;
 }
@@ -653,10 +656,11 @@ const Diagram* Marker::diag() const
 // ------------------------------------------------------------------------
 Marker* Marker::sameNewOne(Graph *pGraph_)
 {
+	unreachable();
   Marker *pm = new Marker(pGraph_, 0, cx() ,cy());
 
   pm->x1 = x1;  pm->y1 = y1;
-  pm->x2 = x2;  pm->y2 = y2;
+//  pm->x2 = x2;  pm->y2 = y2;
 
   pm->VarPos = VarPos;
 

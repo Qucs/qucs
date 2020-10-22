@@ -80,10 +80,10 @@ public: // power matching stuff. some sort of VarPos (ab?)use
   Graph const *pGraph;   // the corresponding graph
 
 public: // FIXME, these are still around.
-	int & x1__() { return x1; }
-	int & y1__() { return y1; }
-	int & x2__() { return x2; }
-	int & y2__() { return y2; }
+//	int & x1__() { return x1; }
+//	int & y1__() { return y1; }
+//	int & x2__() { return x2; }
+//	int & y2__() { return y2; }
 
 private:
   std::vector<double> VarPos;   // values the marker is pointing to
