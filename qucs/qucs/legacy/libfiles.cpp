@@ -129,12 +129,8 @@ void LIB::loadLibFiles()
 				// possibly a subcircuit. parse and stash
 				//
 				// // stuff should already be parsed in, but isn't
-			trace3("Lib", c.modelString, type, c.symbol);
+			trace3("Lib", c.definition, type, c.symbol);
 			assert(c.symbol!="");
-				QString symstring = "<Symbol>\n" + c.symbol + "\n</Symbol>\n";
-				                // + <Model> +c.modelString + </Model>
-									 //
-									 //
 				// BUG: parse c.definition. but not here.
 				// BUG: use istream (CS)
 				istream_t stream(&c.definition);
@@ -145,7 +141,7 @@ void LIB::loadLibFiles()
 				assert(ssym);
 				try{
 					L->parse(stream, *ssym);
-					trace3("stashing", t, ssym->symbolPaintings().size(), symstring);
+					trace2("stashing", t, ssym->symbolPaintings().size());
 					stash(new Dispatcher<Symbol>::INSTALL(&symbol_dispatcher, t, ssym));
 					new Module::INSTALL(parsedlib.name.toStdString(), ssym);
 				}catch(Exception const&){ untested();
