@@ -76,7 +76,7 @@ void LIB::loadLibFiles()
 	 trace2("scanning", QucsSettings.libDir(), &QucsSettings);
 	 QDir SysLibDir(QucsSettings.libDir());
     // system libraries
-    QStringList SysLibFiles = SysLibDir.entryList(QStringList("LED*.lib"), QDir::Files, QDir::Name);
+    QStringList SysLibFiles = SysLibDir.entryList(QStringList("*.lib"), QDir::Files, QDir::Name);
     foreach(QString s, SysLibFiles) {
 		 // build list with relative path
       LibFiles.append(qMakePair(s, true));
@@ -147,7 +147,9 @@ void LIB::loadLibFiles()
 					L->parse(stream, *ssym);
 					trace3("stashing", t, ssym->symbolPaintings().size(), symstring);
 					stash(new Dispatcher<Symbol>::INSTALL(&symbol_dispatcher, t, ssym));
-				}catch(Exception const&){
+					new Module::INSTALL(parsedlib.name.toStdString(), ssym);
+				}catch(Exception const&){ untested();
+					trace0("not stashing");
 					delete ssym;
 				}
 
