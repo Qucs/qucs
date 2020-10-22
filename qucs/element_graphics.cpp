@@ -211,7 +211,6 @@ void ElementGraphics::attachElement(Element* e)
 			//auto t=
 			//// what are texts?
 			new TextGraphics(*i, this);
-
 		}
 	}else{ untested();
 	}
@@ -252,7 +251,6 @@ void ElementGraphics::attachElement(Element* e)
 		trace2("child gfx", s->wires().size(), s->components().size());
 	}else{
 	}
-
 
 	if(!_e){
 	}else if(_e->legacyTransformHack()){

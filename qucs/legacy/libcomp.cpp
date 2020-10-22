@@ -25,13 +25,12 @@
 #include <QRegExp>
 #include <QDebug>
 
-
 class QTextStream;
 class DocumentStream;
 class QString;
-
+/*--------------------------------------------------------------------------*/
 namespace{
-
+/*--------------------------------------------------------------------------*/
 class LibComp : public SchematicSymbol  {
 private:
 	LibComp(LibComp const&p) : SchematicSymbol(p) {
@@ -68,7 +67,7 @@ private:
 			auto cc = makeQPointF(c);
 			br |= e->boundingRect().translated(cc);
 		}
-		trace3("br", symbolPaintings()->size(), br.topLeft(), br.bottomRight());
+		trace4("br", label(), symbolPaintings()->size(), br.topLeft(), br.bottomRight());
 		return br;
 	}
 #if 0
@@ -94,20 +93,20 @@ private:
 	int  loadSection(const QString&, QString&, QStringList* i=0);
 	QString createType() const;
 
-
 	int _tx;
 	int _ty;
 	Property _section;
 	Property _component;
 }d0;
 static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "LegacyLibProto", &d0);
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 class Lib : public Symbol{
 public:
 	explicit Lib():Symbol(), _parent(nullptr) {
 		setTypeName("Lib"); // really?
 	}
-	Lib( Lib const& l) : Symbol(l), _parent(nullptr){}
+	Lib( Lib const& l) : Symbol(l), _parent(l._parent){}
 
 private: // Element
 	Symbol* clone()const override{
@@ -120,17 +119,14 @@ private: // Element
 		}else{ untested();
 		}
 	}
-  // QDialog* schematicWidget(QucsDoc*) const override{
-  // }
-  QRectF boundingRect() const override{
-	  if(_parent){ untested();
-		  // TODO: honour flip/rotate when painting
-		  return _parent->boundingRect();
-		  assert(false);
-	  }else{ untested();
-		  return QRectF();
-	  }
-  }
+	QRectF boundingRect() const override{
+		if(_parent){ untested();
+			return _parent->boundingRect();
+		}else{ untested();
+			unreachable();
+			return QRectF();
+		}
+	}
 
 private: // Symbol
 	PaintingList const* symbolPaintings() const override{
@@ -255,7 +251,8 @@ private:
 	Symbol const* _parent; // BUG. common.
 }D; // Lib
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Lib", &D);
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 LibComp::LibComp()
 	: SchematicSymbol()
 {
@@ -263,10 +260,7 @@ LibComp::LibComp()
 
   // Ports.append(new Port(0, 0)); // dummy port because of being device
 }
-
-// ---------------------------------------------------------------------
-
-// ---------------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 // Makes the schematic symbol subcircuit with the correct number
 // of ports.
 void LibComp::createSymbol()
@@ -292,8 +286,7 @@ void LibComp::createSymbol()
   }
 #endif
 }
-
-// ---------------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 // Loads the section with name "Name" from library file into "Section".
 //  negative return value seems to indicate an error state.
 int LibComp::loadSection(const QString& Name, QString& Section,
@@ -392,8 +385,7 @@ int LibComp::loadSection(const QString& Name, QString& Section,
   return 0;
 #endif
 }
-
-// ---------------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 // Loads the symbol for the subcircuit from the schematic file and
 // returns the number of painting elements.
 int LibComp::loadSymbol()
@@ -445,8 +437,7 @@ int LibComp::loadSymbol()
   return z;      // return number of ports
 #endif
 }
-
-// -------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 QString LibComp::getSubcircuitFile() const
 {
 #if 0
@@ -455,8 +446,7 @@ QString LibComp::getSubcircuitFile() const
   return misc::properAbsFileName(FileName);
 #endif
 }
-
-// -------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 bool LibComp::createSubNetlist(DocumentStream& stream, QStringList &FileList,
 			       int type)
 {
@@ -495,8 +485,7 @@ bool LibComp::createSubNetlist(DocumentStream& stream, QStringList &FileList,
   stream << "\n" << FileString << "\n"; //??
   return error > 0 ? false : true;
 }
-
-// -------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 QString LibComp::createType() const
 {
 #if 0
@@ -525,8 +514,7 @@ QString LibComp::netlist() const
   return s + '\n';
 #endif
 }
-
-// -------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 QString LibComp::verilogCode(int)
 {
 #if 0
@@ -545,8 +533,7 @@ QString LibComp::verilogCode(int)
   return s;
 #endif
 }
-
-// -------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 QString LibComp::vhdlCode(int)
 {
 #if 0
@@ -565,5 +552,7 @@ QString LibComp::vhdlCode(int)
   return s;
 #endif
 }
-
+/*--------------------------------------------------------------------------*/
 } //namespace
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/

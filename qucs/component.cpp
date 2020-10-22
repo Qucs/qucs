@@ -711,7 +711,9 @@ std::string Component::paramValue(std::string const& name) const
   }else if(name=="$yposition"){
     return std::to_string(center().second);
   }else if(name=="$vflip"){itested();
-    int m = mirroredX * 2 - 1;
+    // 0 |-> 1
+    // 1 |-> -1
+    int m = 1 - mirroredX * 2;
     return std::to_string(m);
   }else if(name=="$hflip"){itested();
     return "1";
