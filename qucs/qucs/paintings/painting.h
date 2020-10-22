@@ -69,7 +69,7 @@ private: // Element?
 	  c->paint(p);
   }
   virtual void paint(ViewPainter*){}
-  QRectF boundingRect() const override {untested();
+  QRectF boundingRect() const override {itested();
 	  int x1_, y1_, x2_, y2_;
 
 	  auto p = const_cast<Painting*>(this);

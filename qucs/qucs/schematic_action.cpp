@@ -220,56 +220,59 @@ void transformElement(Element* e, qucsSymbolTransform a, pos_t pivot)
 	assert(!(a.degrees_int()%90));
 	assert(e);
 	if(auto* s=dynamic_cast<Symbol*>(e)){ untested();
+		int angle = 0;
+		int vflip = 0;
+		int hflip = 0;
 		int mx = 0;
 		int my = 0;
 		unsigned r = 0;
 		try {itested();
 			std::string mxs = s->paramValue("$hflip"); // indicates if x axis is mirrored
-			mx = atoi(mxs.c_str()); // \pm 1
-			trace3("hflip", mx, my, r);
-			assert(mx == 1);
-			mx -= 1;
-			mx /= -2;
+			hflip = atoi(mxs.c_str()); // \pm 1
+			// 1  |-> 0
+			// -1 |-> 1
+			mx = (1 - hflip) / 2;
 		}catch(ExceptionCantFind const&){ untested();
 			incomplete();
 		}
 		try {itested();
 			std::string mys = s->paramValue("$vflip"); // indicates if y axis is mirrored
-			my = atoi(mys.c_str());
-			my -= 1;
-			my /= -2;
+			vflip = atoi(mys.c_str());
+			assert(vflip == 1); // for now.
+			// 1  |-> 0
+			// -1 |-> 1
+			my = (1 - vflip) / 2;
 		}catch(ExceptionCantFind const&){ untested();
 			unreachable();
 		}
 		try {itested();
 			std::string rs = s->paramValue("$angle");
-			r = atoi(rs.c_str());
-			assert(!(r%90));
-			assert(r<360);
-			r /= 90;
+			angle = atoi(rs.c_str());
+			assert(!(angle%90));
+			assert(angle<360);
+			r = angle/90;
 		}catch(ExceptionCantFind const&){ untested();
 			unreachable();
 		}
 
-		trace3("stuff", mx, my, r);
+		trace2("pretransform", vflip, angle);
 
 		assert(mx==0 || mx==1);
 		assert(my==0 || my==1);
 		assert(r < 4); // yikes //
-
-		assert(!mx); // for now.
 
 		rotate_after_mirror1_t current(int(r*90), bool(my));
 		assert(!(current.degrees_int()%90));
 		rotate_after_mirror1_t new_mr = a * current;
 		assert(!(new_mr.degrees_int()%90));
 
-		auto vflip = -2 * int(new_mr.mirror()) + 1;
-		trace2("transform", vflip, new_mr.degrees_int());
+		vflip = -2 * int(new_mr.mirror()) + 1;
 
 		s->setParameter(std::string("$hflip"), std::string("1"));
 		s->setParameter(std::string("$vflip"), std::to_string(vflip));
 		s->setParameter(std::string("$angle"), std::to_string(new_mr.degrees_int()));
+
+		trace2("posttransform", vflip, new_mr.degrees_int());
 
 		auto p = e->center();
 		trace1("posttransform setpos0", p);
@@ -333,7 +336,7 @@ public:
 	}
 }; // TransformSelection
 /*--------------------------------------------------------------------------*/
-static const rotate_after_mirror1_t ninety_degree_transform(270, false); // !!
+static const rotate_after_mirror1_t ninety_degree_transform(90, false);
 class RotateSelectionTransform : public TransformSelection<qucsSymbolTransform>{
 	typedef TransformSelection<qucsSymbolTransform> base;
 public:
