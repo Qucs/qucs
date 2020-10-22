@@ -29,6 +29,7 @@
 #include "globals.h"
 #include "schematic_action.h"
 #include "schematic_dialog.h"
+#include "schematic_edit.h"
 #include "globals.h"
 
 #include "changedialog.h"
@@ -196,278 +197,9 @@ QUndoCommand* MouseActionSelCmd<CMD>::release(QMouseEvent*)
 } // select::release
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-static std::vector<pos_t> placeVector(ElementGraphics const* e)
-{
-	std::vector<pos_t> p;
-	if(auto s=prechecked_cast<Symbol const*>(element(e))){
-
-		for(unsigned i=0; i<s->numPorts(); ++i){
-			// if s->isConnected(i) ...
-			auto pp = s->nodePosition(i);
-			p.push_back(pp);
-		}
-	}else{
-	}
-	return p;
-}
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-Node const* SchematicEdit::nodeAt(pos_t const& p) const
-{
-	assert(scene());
-	return scene()->nodeAt(p);
-}
-/*--------------------------------------------------------------------------*/
-QList<ElementGraphics*> SchematicEdit::items(
-           const QPointF &pos, Qt::ItemSelectionMode mode,
-           Qt::SortOrder order) const
-{
-	return _scn.items(pos, mode, order);
-}
-/*--------------------------------------------------------------------------*/
-QList<ElementGraphics*> SchematicEdit::items(QRectF const& r) const
-{
-	return _scn.items(r);
-}
-/*--------------------------------------------------------------------------*/
-// merge new item into existing.
-// return false if new item does not interfere with existing.
-template<class T>
-bool SchematicEdit::addmerge(ElementGraphics* s, T& del_done)
-{
-	bool collision = false;
-	assert(!s->isVisible());
-	assert(s->scene());
-	QRectF bb = s->absoluteBoundingRect();
-	auto it = items(bb);
-	trace3("addmerge", s, element(s)->label(), it.size());
-	for(auto gfxi : it){ untested();
-		assert(gfxi!=s); // s is invisible.
-		trace1("addmerge coll?", element(gfxi)->label());
-
-		// gfxi is already on scene.
-		auto n = gfxi->newUnion(s);
-		if(n){ untested();
-			collision = true;
-			trace1("hiding", element(gfxi)->label());
-			gfxi->hide();
-
-			// collision delete.
-			del_done.push_back(gfxi);
-			auto nc = n->childItems();
-			trace1("got union", nc.size());
-
-			size_t kk=0;
-
-			// unpack q insert.
-			for(auto c : nc){ untested();
-				if(auto g = dynamic_cast<ElementGraphics*>(c)){
-					auto cc = g->clone();
-					assert(cc);
-					assert(!cc->isVisible());
-					_scn.addItem(cc);
-					assert(!cc->isVisible());
-					assert(!element(cc)->scope());
-					c->setParentItem(nullptr);
-					element(cc)->setOwner(element(n)->mutable_owner()); // not here.
-					assert(element(cc)->scope());
-					_ins.push_front(cc); // BUG // need a different q for derived objects
-					++kk;
-				}else{
-					trace0("not useful");
-					// text, maybe
-					// unreachable();
-				}
-			}
-			if(kk){
-				// found something useful
-				trace2("unpacked", kk, nc.size());
-				delete n; // does it delete them all?
-			}else{
-				_ins.push_front(n);
-			}
-			break;
-		}else{
-			trace0("no union");
-		}
-	}
-
-	trace1("done addmerge", collision);
-	return collision;
-}
-/*--------------------------------------------------------------------------*/
-// remove stuff adjacent to degree-2 nodes. add back later.
-template<class T>
-void SchematicEdit::postRmPort(pos_t remove_at, T& del_done)
-{
-	auto it = items(makeQPointF(remove_at));
-	Node const* node = nodeAt(remove_at);
-
-	if(!node){
-		trace1("no node at", remove_at);
-	}else if(node->degree() == 2){
-		trace1("postrm, degree 2", remove_at);
-		for(auto gfx : it){
-			gfx->hide();
-			// additional delete
-			del_done.push_back(gfx);
-			_ins.push_front(gfx); // hmm.
-			trace1("queued", gfx);
-		}
-	}else{
-	}
-}
-/*--------------------------------------------------------------------------*/
-void SchematicEdit::do_it()
-{
-	trace2("do_it", _del.size(), _ins.size());
-	for(auto& d : _del){ untested();
-		trace1("hide", d);
-		assert(d->isVisible());
-		d->hide();
-	}
-	for(auto& d : _ins){ untested();
-		trace1("show", d);
-		assert(!d->isVisible());
-		d->show();
-	}
-	std::swap(_ins, _del);
-}
-/*--------------------------------------------------------------------------*/
-void SchematicEdit::qDelete(ElementGraphics* gfx)
-{
-	assert(gfx->isVisible());
-	_del.push_back(gfx);
-}
-/*--------------------------------------------------------------------------*/
-void SchematicEdit::qInsert(ElementGraphics* gfx)
-{
-	assert(!gfx->isVisible());
-	assert(gfx->scene() == &_scn); // wrong?
-	_ins.push_back(gfx);
-}
-/*--------------------------------------------------------------------------*/
-// turn swap into add/delete
-void SchematicEdit::qSwap(ElementGraphics* gfx, Element* e)
-{
-	assert(!e->mutable_owner());
-
-	auto ng = new ElementGraphics(e);
-	{// ?
-		assert(!element(ng)->scope());
-		_scn.addItem(ng);
-		ng->hide(); // what??
-		e->setOwner(element(gfx)->mutable_owner()); // not here.
-		assert(e->mutable_owner());
-		//	assert(element(ng)->scope());
-	}
-
-	qDelete(gfx);
-	qInsert(ng);
-}
-/*--------------------------------------------------------------------------*/
-struct{
-	bool operator ()(ElementGraphics* a, ElementGraphics* b) const{
-		return intptr_t(a) < intptr_t(b);
-	}
-}lt;
-/*--------------------------------------------------------------------------*/
-template<class T>
-void SchematicEdit::save(T& del, T& ins)
-{
-	trace2("save", del.size(), ins.size());
-	// return;
-	assert(!_ins.size());
-	assert(!_del.size());
-	std::sort(ins.begin(), ins.end(), lt);
-	std::sort(del.begin(), del.end(), lt);
-	std::unique(ins.begin(), ins.end(), lt);
-	std::unique(del.begin(), del.end(), lt);
-
-	auto ii = ins.begin();
-	auto di = del.begin();
-
-	while(ii != ins.end() && di != del.end()){
-		ElementGraphics* i = *ii;
-		ElementGraphics* d = *di;
-		// trace2("save", i, d);
-
-		if(i==d){ untested();
-			if(i->isVisible()){
-				// has been added eventually
-			}else{
-				// has been deleted eventually, but added before.
-				// -> temporary? no it could have been in the initial insert q.
-//				delete i; // crash.
-			};
-			++ii;
-			++di;
-		}else if(i<d){ untested();
-			if(i->isVisible()){
-				delete i;
-			}else{
-				_ins.push_back(i);
-			}
-			++ii;
-		}else{ untested();
-			if(d->isVisible()){
-				_del.push_back(d);
-			}else{
-				delete d;
-			}
-			++di;
-		}
-	}
-
-	_ins.insert(_ins.end(), ii, ins.end());
-	_del.insert(_del.end(), di, del.end());
-
-	trace2("saved", _del.size(), _ins.size());
-}
-/*--------------------------------------------------------------------------*/
-// Perform an edit action for the first time. keep track of induced changes.
-// This is a generic version of legacy implementation, and it still requires a
-// scene implementing the geometry.
-void SchematicEdit::do_it_first()
-{ untested();
-
-	std::vector<ElementGraphics*> done_ins;
-	std::vector<ElementGraphics*> done_del;
-
-	// remove ports and join adjacent wires. keep track.
-	while(_del.size()){
-		auto r = _del.front();
-		trace1("remove", r);
-		_del.pop_front();
-		auto ps = placeVector(r);
-		r->hide();
-		for(auto portremove : ps){ untested();
-			trace1("postremove", portremove);
-			postRmPort(portremove, done_del);
-		}
-
-		// queued delete.
-		done_del.push_back(r);
-	}
-
-	trace1("try insert...", _ins.size());
-	while(_ins.size()){
-		ElementGraphics* gfx = _ins.front();
-		trace1("try insert...", element(gfx)->label());
-		_ins.pop_front();
-
-		if(addmerge(gfx, done_del)){
-			trace0("merged");
-		}else{
-			trace1("done insert, show", element(gfx)->label());
-			gfx->show();
-			done_ins.push_back(gfx);
-		}
-	}
-
-	save(done_ins, done_del);
-}
 /*--------------------------------------------------------------------------*/
 // swapSelection?
 class DeleteSelection : public SchematicEdit {
@@ -995,13 +727,18 @@ static bool isWire(Symbol const* e)
 	}
 }
 /*--------------------------------------------------------------------------*/
-Symbol* symbol(Element* e)
+inline Symbol* symbol(Element* e)
 {
 	return dynamic_cast<Symbol*>(e);
 }
-Symbol* symbol(QGraphicsItem* g)
+inline Symbol* symbol(QGraphicsItem* g)
 {
 	auto e=dynamic_cast<ElementGraphics*>(g);
+	if(!e) return nullptr;
+	return symbol(e->operator->());
+}
+inline Symbol* symbol(ElementGraphics* e)
+{
 	if(!e) return nullptr;
 	return symbol(e->operator->());
 }

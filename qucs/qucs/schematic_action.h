@@ -15,10 +15,9 @@
 #define QUCS_SCHEMATIC_ACTION
 /*--------------------------------------------------------------------------*/
 #include "mouseactions.h"
-#include <QUndoCommand> // really?
+#include "schematic_edit.h"
 /*--------------------------------------------------------------------------*/
 class SchematicDoc;
-/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // merge into scene altogether?
 class SchematicActions : public MouseActions{
@@ -55,93 +54,6 @@ public: // actions... private?
 	// MouseAction* maZoomOut; // not a mouseaction
 };
 /*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-// edit a schematic add/delete/alter
-class SchematicEdit : public QUndoCommand {
-public:
-	typedef std::list<ElementGraphics*> list_t;
-	struct swap_t{
-		swap_t(ElementGraphics* gfx, Element* elt)
-			: _gfx(gfx), _elt(elt) {}
-		ElementGraphics* _gfx;
-		Element* _elt;
-		~swap_t(){
-			delete _elt;
-		}
-	};
-protected:
-	explicit SchematicEdit(SchematicScene& s)
-	  : QUndoCommand(), _first(true), _scn(s) {}
-	SchematicEdit(SchematicEdit const&) = delete;
-
-	template<class IT>
-	void qDelete(IT const& deletelist) {
-		for(auto i : deletelist){ untested();
-			// ++k; // TODO: set label
-			if(auto eg=dynamic_cast<ElementGraphics*>(i)){ untested();
-				qDelete(eg);
-			}else{ untested();
-				unreachable(); // really? use prechecked_cast then.
-			}
-		}
-	}
-	void qDelete(ElementGraphics* eg);
-	template<class IT>
-	void qInsert(IT const& deletelist) {
-		for(auto i : deletelist){ untested();
-			// ++k; // TODO: set label
-			if(auto eg=dynamic_cast<ElementGraphics*>(i)){ untested();
-				qInsert(eg);
-			}else{ untested();
-				unreachable(); // really? use prechecked_cast then.
-			}
-		}
-	}
-	void qInsert(ElementGraphics* eg);
-	void qSwap(ElementGraphics* eg, Element* e);
-
-private: // QUndoCommand
-	void undo() override { untested();
-		redo();
-	}
-	void redo() override { untested();
-		if(_first){
-			do_it_first();
-			_first = false;
-		}else{
-			do_it();
-		}
-	}
-
-private:
-	void do_it_first();
-	void do_it();
-
-	template<class T>
-	void expandSwap(T& rem);
-	template<class T>
-	void postRmPort(pos_t, T&);
-	template<class T>
-	bool addmerge(ElementGraphics*, T& rem);
-	template<class T>
-	void save(T& rem, T& add);
-
-	QList<ElementGraphics*> items(QRectF const& area) const;
-	QList<ElementGraphics*> items(QPointF const &pos,
-                                 Qt::ItemSelectionMode mode=Qt::IntersectsItemShape,
-                                 Qt::SortOrder order = Qt::DescendingOrder) const;
-	Node const* nodeAt(pos_t const&) const;
-	SchematicScene const* scene() const{
-		return &_scn;
-	}
-
-private:
-	list_t _ins;
-	list_t _del;
-	std::vector<swap_t*> _swap;
-	bool _first;
-	SchematicScene& _scn;
-};
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif

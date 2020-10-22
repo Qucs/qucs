@@ -21,8 +21,11 @@
 #define QUCS_ELEMENT_GFX_H
 
 #include <QEvent>
+#include <QGraphicsItem>
+#include "element.h"
 #include "geometry.h"
 /*--------------------------------------------------------------------------*/
+class SchematicScene;
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // A graphics element on the screen.

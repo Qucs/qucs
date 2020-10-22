@@ -2,21 +2,20 @@
 # 2020 Felix Salfelder
 
 CPP_SRC = \
-	globals.cpp \
-	cursors.cpp \
-	module.cpp \
 	attach.cpp \
 	cmdeltdlg.cpp \
 	command.cpp \
 	component.cpp \
 	component_widget.cpp \
 	conductor.cpp \
+	cursors.cpp \
 	diagram.cpp \
 	element.cpp \
 	element_graphics.cpp \
+	gatecomponent.cpp \
 	geometry.cpp \
 	ghostwire.cpp \
-	gatecomponent.cpp \
+	globals.cpp \
 	graph.cpp \
 	imagewriter.cpp \
 	io.cpp \
@@ -26,6 +25,7 @@ CPP_SRC = \
 	messagedock.cpp \
 	misc.cpp \
 	mnemo.cpp \
+	module.cpp \
 	mouseaction.cpp \
 	mouseactions.cpp \
 	netlist.cpp \
@@ -47,6 +47,7 @@ CPP_SRC = \
 	schematic.cpp \
 	schematic_dialog.cpp \
 	schematic_doc.cpp \
+	schematic_edit.cpp \
 	schematic_element.cpp \
 	schematic_file.cpp \
 	schematic_model.cpp \
