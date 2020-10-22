@@ -83,6 +83,7 @@ private: // Element?
 
 protected:
   QString Name; // the type
+  int x2, y2; // yikes
 };
 
 #endif

@@ -39,7 +39,7 @@ private:
 public:
   void    paintScheme(SchematicDoc*) const;
   void    print(ViewPainter*, float);
-  void    setCenter(int, int, bool relative=false);
+//  void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
   int     textSize(int&, int&);
   void    entireBounds(int&, int&, int&, int&, float);
@@ -73,6 +73,8 @@ public:
   int  isActive; // should it be used in simulation or not ?
   // BUG: abused in some display function
   mutable int  tx, ty;   // upper left corner of text (position)
+  int  x2, y2;
+
   bool showName;
   QString  Name;
   QString  Description;

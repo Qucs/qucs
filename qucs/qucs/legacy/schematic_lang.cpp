@@ -575,7 +575,7 @@ static CmdElement* loadCommand(const QString& _s, CmdElement* c)
 		if(!ok) return NULL;
 
 		n  = s.section(' ',4,4);    // cy
-		c->setCenter(cx, n.toInt(&ok));
+		c->setCenter(pos_t(cx, n.toInt(&ok)));
 		if(!ok) return NULL;
 
 		n  = s.section(' ',5,5);    // tx

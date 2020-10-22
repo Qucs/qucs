@@ -84,7 +84,7 @@ public:
   
 private:
   virtual void paint(ViewPainter*) const override;
-  pos_t center() const override;
+//  pos_t center() const override;
   void    getCenter(int&, int&); //override; //remove this.
   QDialog* schematicWidget(QucsDoc* Doc) const override;
 
@@ -100,7 +100,7 @@ protected:
 public: // ??!
   virtual void paintDiagram(ViewPainter* p);
   void paintMarkers(ViewPainter* p, bool paintAll = true);
-  void    setCenter(int, int, bool relative=false);
+//  void    setCenter(int, int, bool relative=false);
   void    paintScheme(SchematicDoc*) const;
   void    Bounding(int&, int&, int&, int&);
   bool    getSelected(int, int);
@@ -169,14 +169,9 @@ public: // from mouseactions.cpp
   // returns drawn, for now.
   bool pressElement(SchematicDoc* Doc, Element*& selElem, QMouseEvent* Event);
 
-public: // FIXME, these are still around.
-	int & cx__() {incomplete(); return _cx; }
-	int & cy__() {incomplete(); return _cy; }
-	int & x1__() {incomplete(); return x1; }
-	int & y1__() {incomplete(); return y1; }
-	int & x2__() {incomplete(); return x2; }
-	int & y2__() {incomplete(); return y2; }
-
+protected: // FIXME
+  int x2;
+  int y2;
 private:
   int Bounding_x1, Bounding_x2, Bounding_y1, Bounding_y2;
 }; // Diagram

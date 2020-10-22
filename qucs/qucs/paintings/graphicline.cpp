@@ -40,7 +40,7 @@ public:
 
   void paintScheme(SchematicDoc*);
   void getCenter(int&, int&);
-  void setCenter(int, int, bool relative=false);
+//  void setCenter(int, int, bool relative=false);
 
   Element* clone() const {return new GraphicLine(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
@@ -74,8 +74,10 @@ void GraphicLine::setSomeStuff(int cx_, int cy_, int x2_, int y2_, QPen Pen_)
 {
   Name = "Line ";
   Pen = Pen_;
-  _cx = cx_;
-  _cy = cy_;
+
+  incomplete();
+//  _cx = cx_;
+//  _cy = cy_;
   x1 = y1 = 0;
   x2 = x2_;
   y2 = y2_;
@@ -131,15 +133,15 @@ void GraphicLine::getCenter(int& x, int &y)
 
 // --------------------------------------------------------------------------
 // Sets the center of the painting to x/y.
-void GraphicLine::setCenter(int x, int y, bool relative)
-{
-	assert(false);
-	 auto cx=Element::cx();
-     auto cy=Element::cy();
-
-  if(relative) { cx += x;  cy += y; }
-  else { cx = x-(x2>>1);  cy = y-(y2>>1); }
-}
+//void GraphicLine::setCenter(int x, int y, bool relative)
+//{
+//	assert(false);
+//	 auto cx=Element::cx();
+//     auto cy=Element::cy();
+//
+//  if(relative) { cx += x;  cy += y; }
+//  else { cx = x-(x2>>1);  cy = y-(y2>>1); }
+//}
 
 // --------------------------------------------------------------------------
 Element* GraphicLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
@@ -158,12 +160,14 @@ bool GraphicLine::load(const QString& s)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  _cx = n.toInt(&ok);
+  int cx = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  _cy = n.toInt(&ok);
+  int cy = n.toInt(&ok);
   if(!ok) return false;
+
+  setCenter(pos_t(cx, cy));
 
   n  = s.section(' ',3,3);    // x2
   x2 = n.toInt(&ok);
@@ -376,8 +380,8 @@ void GraphicLine::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 // Rotates around the center.
 void GraphicLine::rotate()
 {
-  _cx += (x2>>1) - (y2>>1);
-  _cy += (x2>>1) + (y2>>1);
+  //_cx += (x2>>1) - (y2>>1);
+  //_cy += (x2>>1) + (y2>>1);
 
   int tmp = x2;
   x2  =  y2;

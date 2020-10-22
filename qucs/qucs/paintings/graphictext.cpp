@@ -125,17 +125,17 @@ void GraphicText::getCenter(int& x, int &y)
 
 // -----------------------------------------------------------------------
 // Sets the center of the painting to x/y.
-void GraphicText::setCenter(int x, int y, bool relative)
-{
-  if(relative) {
-	  _cx += x;
-	  _cy += y;
-  }else{
-	  _cx = x-(x2>>1);
-	  _cy = y-(y2>>1);
-  }
-}
-
+// void GraphicText::setCenter(int x, int y, bool relative)
+// {
+//   if(relative) {
+// 	  _cx += x;
+// 	  _cy += y;
+//   }else{
+// 	  _cx = x-(x2>>1);
+// 	  _cy = y-(y2>>1);
+//   }
+// }
+// 
 // -----------------------------------------------------------------------
 Element* GraphicText::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
@@ -153,12 +153,14 @@ bool GraphicText::load(const QString& s)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  _cx = n.toInt(&ok);
+  int cx = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  _cy = n.toInt(&ok);
+  int cy = n.toInt(&ok);
   if(!ok) return false;
+
+  setCenter(pos_t(cx, cy));
 
   n  = s.section(' ',3,3);    // Size
   Font.setPointSize(n.toInt(&ok));
@@ -329,8 +331,8 @@ void GraphicText::rotate()
 {
   Angle += 90;
   Angle %= 360;
-  _cx -= x2 >> 1;
-  _cy -= y2 >> 1;
+  // _cx -= x2 >> 1;
+  // _cy -= y2 >> 1;
 }
 
 // -----------------------------------------------------------------------

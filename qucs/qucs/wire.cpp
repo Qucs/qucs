@@ -45,7 +45,7 @@ public:
 	explicit Wire();
 	~Wire();
 
-	void setCenter(int, int, bool relative=false);
+//	void setCenter(int, int, bool relative=false);
 	void getCenter(int&, int&);
 
 private: // Element
@@ -123,14 +123,14 @@ private:
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Wire", &w);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-Wire::Wire()
-   : _port0(0, 0), _port1(1, 0), _angle(0), _scale(1.)
+Wire::Wire() : Symbol(),
+    _port0(0, 0), _port1(1, 0),
+    _angle(0), _scale(1.)
 {
-  _cx = 0;
-  _cy = 0;
+	Symbol::setCenter(pos_t(0, 0)); // redundant?
 
-  setTypeName("wire");
-  setLabel("noname"); // BUG
+	setTypeName("wire");
+	setLabel("noname"); // BUG
 }
 /*--------------------------------------------------------------------------*/
 Wire::Wire(Wire const& w)
@@ -146,15 +146,11 @@ Wire::Wire(pos_t const& p0, pos_t const& p1)
     _angle(0), _scale(1)
 { itested();
 
-	_cx = getX(p0);
-	_cy = getY(p0);
-	trace2("new Wire", p0, p1);
-	trace2("new Wire", _cx, _cy);
+	Symbol::setCenter(p0);
 
 	findScaleAndAngle();
 	updatePort();
 
-	trace3("new Wire", _scale, _cx, _cy);
 	assert(_scale>0); // for now?
 
 	// assert(cx() == _x1);
@@ -360,18 +356,10 @@ Symbol* Wire::newUnion(Symbol const* s) const
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
-void Wire::setCenter(int x, int y, bool relative)
-{ untested();
-	//  Symbol::setCenter(x, y, relative);
-	if(relative) { untested();
-		_cx += x;
-		_cy += y;
-		//    if(Label) Label->setCenter(x, y, true);
-	} else { untested();
-		_cx = x;
-		_cy = y;
-	}
-}
+//void Wire::setCenter(int x, int y, bool relative)
+//{ untested();
+//	Symbol::setCenter(x, y, relative);
+//}
 /*--------------------------------------------------------------------------*/
 QDialog* Wire::schematicWidget(QucsDoc* Doc) const
 { untested();
@@ -473,10 +461,10 @@ void Wire::setParameter(std::string const& n, std::string const& v)
     nx = v;
   }else if(n=="ny"){
     ny = v;
-  }else if(n=="$xposition"){
-    _cx = atoi(v.c_str());
-  }else if(n=="$yposition"){
-    _cy = atoi(v.c_str());
+//  }else if(n=="$xposition"){
+//    _cx = atoi(v.c_str());
+//  }else if(n=="$yposition"){
+//    _cy = atoi(v.c_str());
   }else if(n=="$hflip"){ untested();
     _scale = abs(_scale) * atoi(v.c_str());
     updatePort();
@@ -486,7 +474,7 @@ void Wire::setParameter(std::string const& n, std::string const& v)
     _angle/=90;
     _angle %=4;
     updatePort();
-    trace4("new angle", _angle, _cx, _cy, _scale);
+//    trace4("new angle", _angle, _cx, _cy, _scale);
     trace4("new angle", x1(), y1(), x2(), y2());
   }else if(n=="$vflip"){ untested();
     // it does not matter.

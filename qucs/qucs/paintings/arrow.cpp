@@ -207,12 +207,14 @@ bool Arrow::load(const QString& s)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  _cx = n.toInt(&ok);
+  int cx = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  _cy = n.toInt(&ok);
+  int cy = n.toInt(&ok);
   if(!ok) return false;
+
+  setCenter(cx, cy);
 
   n  = s.section(' ',3,3);    // x2
   x2 = n.toInt(&ok);
@@ -520,8 +522,8 @@ void Arrow::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 // Rotates around the center.
 void Arrow::rotate()
 {
-  _cx += (x2>>1) - (y2>>1);
-  _cy += (x2>>1) + (y2>>1);
+  //_cx += (x2>>1) - (y2>>1);
+  //_cy += (x2>>1) + (y2>>1);
 
   int tmp = x2;
   x2  =  y2;
@@ -542,7 +544,7 @@ void Arrow::mirrorX()
 {
   yp1 = -yp1;
   yp2 = -yp2;
-  _cy +=  y2;   // change cy after the other changes !
+  // _cy +=  y2;   // change cy after the other changes !
   y2  = -y2;
 }
 
@@ -552,7 +554,7 @@ void Arrow::mirrorY()
 {
   xp1 = -xp1;
   xp2 = -xp2;
-  _cx +=  x2;   // change cx after the other changes !
+  // _cx +=  x2;   // change cx after the other changes !
   x2  = -x2;
 }
 
