@@ -45,7 +45,7 @@
 #include "misc.h"
 #include "sim/sim.h"
 #include "io_trace.h"
-#include "command.h"
+#include "task_element.h"
 #include "globals.h"
 #include "docfmt.h"
 #include "schematic_lang.h"
@@ -218,6 +218,7 @@ bool SchematicDoc::pasteFromClipboard(DocumentStream *stream, EGPList* pe)
 // -------------------------------------------------------------
 int SchematicDoc::saveSymbolCpp (void)
 {
+#if 0
   QFileInfo info (docName());
   QString cppfile = info.path () + QDir::separator() + DataSet;
   QFile file (cppfile);
@@ -281,12 +282,14 @@ int SchematicDoc::saveSymbolCpp (void)
 //      stream << "  " << pp->saveCpp () << "\n";
     }
   file.close ();
+#endif
   return 0;
 }
 
 // save symbol paintings in JSON format
 int SchematicDoc::saveSymbolJSON()
 {
+#if 0
   QFileInfo info (docName());
   QString jsonfile = info.path () + QDir::separator()
                    + info.completeBaseName() + "_sym.json";
@@ -365,9 +368,8 @@ int SchematicDoc::saveSymbolJSON()
   stream << "}\n";
 
   file.close ();
+#endif
   return 0;
-
-
 }
 
 // BUG: move to SchematicModel

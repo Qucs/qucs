@@ -9,5 +9,5 @@ Dispatcher<Symbol> symbol_dispatcher;
 Dispatcher<Simulator> simulator_dispatcher;
 Dispatcher<DocumentLanguage> doclang_dispatcher; // Fmt baseclasses?
 Dispatcher<DocumentFormat> docfmt_dispatcher;
-Dispatcher<CmdElement> command_dispatcher; // CommandSymbol ..
+Dispatcher<TaskElement> command_dispatcher; // taskElementSymbol ..
 Dispatcher<Painting> painting_dispatcher;

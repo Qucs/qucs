@@ -1,8 +1,6 @@
 /***************************************************************************
-                        portsymbol.cpp  -  description
-                             -------------------
     copyright            : (C) 2003 by Michael Margraf
-                               2018 Felix Salfelder
+                               2018, 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -14,7 +12,6 @@
  *                                                                         *
  ***************************************************************************/
 #include "qucs.h"
-#include "portsymbol.h"
 #include "globals.h"
 #include "module.h"
 #include "schematic_doc.h"
@@ -23,20 +20,50 @@
 #include <QPainter>
 
 namespace{
+class PortSymbol : public Painting  {
+public:
+  PortSymbol();
+  ~PortSymbol();
+  Element* clone() const{
+	  return new PortSymbol(*this);
+  }
+  void setSomeArgsHack(int cx_, int cy_, const QString& numberStr_,  const QString& nameStr_);
+
+  void paintScheme(SchematicDoc*);
+  void getCenter(int&, int&);
+//  void setCenter(int, int, bool relative=false);
+
+  bool load(const QString&);
+  QString save();
+  QString saveCpp();
+  QString saveJSON();
+  void paint(ViewPainter*);
+  void Bounding(int&, int&, int&, int&);
+
+  void rotate();
+  void mirrorX();
+  void mirrorY();
+
+  int Angel;
+  QString numberStr, nameStr;
+};
+
 PortSymbol D;
 Dispatcher<Painting>::INSTALL p(&painting_dispatcher, ".PortSym", &D);
 Module::INSTALL pp("paintings", &D);
-}
 
 PortSymbol::PortSymbol() : Painting()
 {
+	// setTypeName(".Portsym");
+  Name = ".PortSym ";
 }
 
 void PortSymbol::setSomeArgsHack(int cx_, int cy_, const QString& numberStr_,
                                          const QString& nameStr_)
 {
+	unreachable();
   Name = ".PortSym ";
-  setCenter(cx_, cy_);
+  setCenter(pos_t(cx_, cy_));
 
   Angel = 0;
   nameStr = nameStr_;
@@ -49,12 +76,11 @@ void PortSymbol::setSomeArgsHack(int cx_, int cy_, const QString& numberStr_,
   x2 = 8 - x1;
   y2 = r.height() + 8;
 }
-
+/*--------------------------------------------------------------------------*/
 PortSymbol::~PortSymbol()
 {
 }
-
-// --------------------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 void PortSymbol::paint(ViewPainter *p)
 {
 	auto cx=0;
@@ -134,15 +160,6 @@ void PortSymbol::getCenter(int& x, int &y)
 }
 
 // --------------------------------------------------------------------------
-// Sets the center of the painting to x/y.
-void PortSymbol::setCenter(int x, int y, bool relative)
-{
-	 auto cx=Element::cx();
-     auto cy=Element::cy();
-
-  if(relative) { cx += x;  cy += y; }
-  else { cx = x;  cy = y; }
-}
 
 // --------------------------------------------------------------------------
 bool PortSymbol::load(const QString& s)
@@ -158,7 +175,7 @@ bool PortSymbol::load(const QString& s)
   int cy = n.toInt(&ok);
   if(!ok) return false;
 
-  setCenter(cx, cy);
+  setCenter(pos_t(cx, cy));
 
   numberStr  = s.section(' ',3,3);    // number
   if(numberStr.isEmpty()) return false;
@@ -174,8 +191,8 @@ bool PortSymbol::load(const QString& s)
 // --------------------------------------------------------------------------
 QString PortSymbol::save()
 {
-	 auto cx=Element::cx();
-     auto cy=Element::cy();
+	auto cx=Element::cx();
+	auto cy=Element::cy();
 
   QString s = Name+QString::number(cx)+" "+QString::number(cy)+" ";
   s += numberStr+" "+QString::number(Angel);
@@ -206,25 +223,10 @@ QString PortSymbol::saveJSON()
 }
 
 // --------------------------------------------------------------------------
-// Checks if the coordinates x/y point to the painting.
-bool PortSymbol::getSelected(float fX, float fY, float)
-{
-	 auto cx=Element::cx();
-     auto cy=Element::cy();
-
-  if(int(fX) < cx+x1)  return false;
-  if(int(fY) < cy+y1)  return false;
-  if(int(fX) > cx+x1+x2)  return false;
-  if(int(fY) > cy+y1+y2)  return false;
-
-  return true;
-}
-
-// --------------------------------------------------------------------------
 void PortSymbol::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
-	 auto cx=Element::cx();
-     auto cy=Element::cy();
+	auto cx=0;
+	auto cy=0;
 
   _x1 = cx+x1;     _y1 = cy+y1;
   _x2 = cx+x1+x2;  _y2 = cy+y1+y2;
@@ -252,4 +254,5 @@ void PortSymbol::mirrorY()
 {
   if(Angel == 0)  Angel = 180;
   else  if(Angel == 180)  Angel = 0;
+}
 }

@@ -15,13 +15,13 @@
  ***************************************************************************/
 #include "qucs.h"
 #include "globals.h"
-#include "command.h"
+#include "task_element.h"
 #include "module.h"
 
 namespace{
 
 
-class TR_Sim : public CmdElement  {
+class TR_Sim : public TaskElement  {
 public:
   TR_Sim(TR_Sim const&) = default;
   TR_Sim();
@@ -30,7 +30,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(SchematicDoc*);
 } D;
-Dispatcher<CmdElement>::INSTALL p(&command_dispatcher, "TR", &D);
+Dispatcher<TaskElement>::INSTALL p(&command_dispatcher, "TR", &D);
 Module::INSTALL pp("simulations", &D);
 
 TR_Sim::TR_Sim()

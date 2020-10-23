@@ -106,7 +106,7 @@ noinst_HEADERS += $(MOCHEADERS)
 # must be installed. but later
 noinst_HEADERS += \
 	actions.h \
-	command.h \
+	task_element.h \
 	diagram.h \
 	dispatcher.h \
 	globals.h \

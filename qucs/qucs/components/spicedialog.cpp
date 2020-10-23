@@ -353,11 +353,11 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
       piping = false;
     }
     script = QucsSettings.BinDir + script;
-    QString spiceCommand;
+    QString spicetaskElement;
     SpicePrep = new QProcess(this);
-    spiceCommand+=interpreter + " ";
-    spiceCommand+=script + " ";
-    spiceCommand+=FileInfo.filePath() + " ";
+    spicetaskElement+=interpreter + " ";
+    spicetaskElement+=script + " ";
+    spicetaskElement+=FileInfo.filePath() + " ";
 
     QFile PrepFile;
     QFileInfo PrepInfo(QucsSettings.QucsWorkDir, s + ".pre");
@@ -365,7 +365,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
 
     if (!piping)
     {
-      spiceCommand += PrepName + " ";
+      spicetaskElement += PrepName + " ";
       connect(SpicePrep, SIGNAL(readyReadStandardOutput()), SLOT(slotSkipOut()));
       connect(SpicePrep, SIGNAL(readyReadStandardError()), SLOT(slotGetPrepErr()));
     }
@@ -396,7 +396,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
       }
       prestream = new QTextStream(&PrepFile);
     }
-    SpicePrep->start(spiceCommand);
+    SpicePrep->start(spicetaskElement);
     if ((SpicePrep->state() != QProcess::Starting) &&
         (SpicePrep->state() != QProcess::Running))
     {
@@ -437,7 +437,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
             << "-of" <<  "qucs"
             << "-i" << FileInfo.filePath();
 
-  qDebug() << "Command :" << Program << Arguments.join(" ");
+  qDebug() << "taskElement :" << Program << Arguments.join(" ");
 
   connect(QucsConv, SIGNAL(readyReadStandardOutput()), SLOT(slotGetNetlist()));
   connect(QucsConv, SIGNAL(readyReadStandardError()), SLOT(slotGetError()));

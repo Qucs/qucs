@@ -17,7 +17,7 @@
 #include "node.h"
 #include <QString>
 #include "globals.h"
-#include "command.h"
+#include "task_element.h"
 #include "docfmt.h"
 #include "schematic_model.h"
 #include "schematic_doc.h" // BUG
@@ -211,7 +211,7 @@ void LegacyNetlister::prepareSave(DocumentStream& stream, SchematicSymbol const&
 		if(pc->isActive == COMP_IS_OPEN){ untested();
 			// open circuit (or so)
 			//    }else if(pc->obsolete_model_hack().at(0) == '.') { untested();
-	}else if(dynamic_cast<Command const*>(pc)) { untested();
+	}else if(dynamic_cast<taskElement const*>(pc)) { untested();
 
 		qDebug() << pc->obsolete_model_hack();
 		if(pc->obsolete_model_hack() == ".Digi") { untested();

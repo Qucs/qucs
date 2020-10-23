@@ -174,7 +174,7 @@ bool Optimize_Sim::createASCOFiles() const
     QTextStream stream(&efile);
 	stream << "# Info #\n";
 	stream << "#\n\n";
-	stream << "# Commands #\n";
+	stream << "# taskElements #\n";
 	stream << "#\n\n";
 	stream << "# Post Processing #\n";
 	stream << "MEASURE_VAR:#SYMBOL#:SEARCH_FOR:'<indep " << VarName

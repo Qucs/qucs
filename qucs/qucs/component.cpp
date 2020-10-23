@@ -337,7 +337,7 @@ void Component::paint(ViewPainter *p) const
   Element::paint(p);
   QFont f = p->font();   // save current font
   QFont newFont = f;
-  if(dynamic_cast<CmdElement const*>(this)) { untested();
+  if(dynamic_cast<TaskElement const*>(this)) { untested();
     unreachable();
   }else{itested();
     // normal components go here
@@ -448,7 +448,7 @@ void Component::paintScheme(SchematicDoc *p) const
   int cx=cx_();
   int cy=cy_();
 
-  if(dynamic_cast<CmdElement const*>(this)) { // FIXME: separate Commands from Components
+  if(dynamic_cast<TaskElement const*>(this)) { // FIXME: separate taskElements from Components
     int a, b, xb, yb;
     QFont newFont = p->font();
 
@@ -1065,8 +1065,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(i2 < y1)  y1 = i2;
     if(i2 > y2)  y2 = i2;
     return 0;   // do not count Ports
-  }
-  else if(s == "Line") {
+  }else if(s == "Line") {
     if(!getIntegers(Row, &i1, &i2, &i3, &i4))  return -1;
     if(!getPen(Row, Pen, 5))  return -1;
     i3 += i1;
@@ -1082,8 +1081,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(i4 < y1)  y1 = i4;
     if(i4 > y2)  y2 = i4;
     return 1;
-  }
-  else if(s == "EArc") { untested();
+  }else if(s == "EArc") { untested();
     if(!getIntegers(Row, &i1, &i2, &i3, &i4, &i5, &i6))
       return -1;
     if(!getPen(Row, Pen, 7))  return -1;
@@ -1094,8 +1092,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(i2 < y1)  y1 = i2;
     if(i2+i4 > y2)  y2 = i2+i4;
     return 1;
-  }
-  else if(s == ".ID") {
+  }else if(s == ".ID") {
     if(!getIntegers(Row, &i1, &i2))  return -1;
     tx = i1;
     ty = i2;
@@ -1169,8 +1166,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(i6 > y2)  y2 = i6;
 
     return 1;
-  }
-  else if(s == "Ellipse") { untested();
+  }else if(s == "Ellipse") { untested();
     if(!getIntegers(Row, &i1, &i2, &i3, &i4))  return -1;
     if(!getPen(Row, Pen, 5))  return -1;
     if(!getBrush(Row, Brush, 8))  return -1;
@@ -1185,8 +1181,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(i2+i4 < y1)  y1 = i2+i4;
     if(i2+i4 > y2)  y2 = i2+i4;
     return 1;
-  }
-  else if(s == "Rectangle") { untested();
+  }else if(s == "Rectangle") { untested();
     if(!getIntegers(Row, &i1, &i2, &i3, &i4))  return -1;
     if(!getPen(Row, Pen, 5))  return -1;
     if(!getBrush(Row, Brush, 8))  return -1;
@@ -1234,6 +1229,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(i3 > x2)  x2 = i3;
     if(i4 > y2)  y2 = i4;
     return 1;
+  }else{
   }
 
   return 0;
@@ -1642,7 +1638,7 @@ Element* getComponentFromName(QString& Line)
       // legacy component
     Element* s=sc->clone(); // memory leak?
     e=prechecked_cast<Element*>(s);
-  }else if(CmdElement const* sc=dynamic_cast<CmdElement const*>(s)){ untested();
+  }else if(TaskElement const* sc=dynamic_cast<TaskElement const*>(s)){ untested();
       // legacy component
     Element* s=sc->clone(); // memory leak?
     e=prechecked_cast<Element*>(s);
@@ -1687,8 +1683,8 @@ Element* getComponentFromName(QString& Line)
 
 #if 0 // legacy cruft?
   // BUG: don't use schematic.
-  if(CmdElement* cmd=command(e)){ untested();
-    sp->loadCommand(Line, cmd);
+  if(TaskElement* cmd=command(e)){ untested();
+    sp->loadtaskElement(Line, cmd);
   }else if(Component* c=component(e)){ untested();
     if(!sp->loadComponent(Line, c)) { untested();
       QMessageBox::critical(0, QObject::tr("Error"),

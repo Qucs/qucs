@@ -1307,6 +1307,7 @@ int SchematicDoc::save()
 // (not even sure, what it is trying to do...)
 int SchematicDoc::adjustPortNumbers()
 { untested();
+#if 0
   int x1, x2, y1, y2;
   // get size of whole symbol to know where to place new ports
   if(isSymbolMode()) { untested();
@@ -1542,6 +1543,8 @@ int SchematicDoc::adjustPortNumbers()
   }
 
   return countPort;
+#endif
+  return 0;
 }
 
 // ---------------------------------------------------
@@ -2083,8 +2086,8 @@ void SchematicDoc::simpleInsertElement(Element* e)
 		simpleInsertWire(c);
 	}else if(Component* c=dynamic_cast<Component*>(e)){ untested();
 		simpleInsertComponent(c);
-	}else if(CmdElement* c=dynamic_cast<CmdElement*>(e)){ untested();
-		simpleInsertCommand(c);
+	}else if(TaskElement* c=dynamic_cast<TaskElement*>(e)){ untested();
+		simpleInserttaskElement(c);
 	}else{ untested();
 		incomplete();
 	}
@@ -2195,7 +2198,7 @@ void SchematicDoc::pushBack(Element* what)
 #else
   if(auto c=command(what)){ untested();
     incomplete();
-    simpleInsertCommand(c);
+    simpleInserttaskElement(c);
   }else if(auto c=component(what)){ untested();
     qDebug() << "sic" << c->label();
     simpleInsertComponent(c);

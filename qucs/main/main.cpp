@@ -582,7 +582,7 @@ void createListComponentEntry()
 
       if(auto c = dynamic_cast<Symbol*>(ce)){
 	ce->setLabel("my_" + c->typeName());
-      }else if(auto c = dynamic_cast<CmdElement*>(ce)){
+      }else if(auto c = dynamic_cast<TaskElement*>(ce)){
 	ce->setLabel("my_" + c->typeName());
       }else{
 	// not sure.

@@ -105,10 +105,10 @@ pos_t /* const & */ Element::center()const
 #include "components/component.h"
 #include "diagram.h"
 #include "wirelabel.h"
-#include "command.h"
+#include "task_element.h"
 
 Component* component(Element* e){ return dynamic_cast<Component*>(e); }
-CmdElement* command(Element* e){ return dynamic_cast<CmdElement*>(e); }
+TaskElement* command(Element* e){ return dynamic_cast<TaskElement*>(e); }
 // Wire* wire(Element* e){ return dynamic_cast<Wire*>(e); }
 WireLabel* wireLabel(Element* e){ return dynamic_cast<WireLabel*>(e); }
 Diagram* diagram(Element* e){ return dynamic_cast<Diagram*>(e); }

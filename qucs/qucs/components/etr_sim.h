@@ -18,10 +18,10 @@
 #ifndef ETR_SIM_H
 #define ETR_SIM_H
 
-#include "command.h"
+#include "task_element.h"
 
 
-class ETR_Sim : public Command {
+class ETR_Sim : public taskElement {
 public:
   ETR_Sim();
   ~ETR_Sim();

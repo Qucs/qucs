@@ -551,7 +551,7 @@ void MouseActions::MMoveMoving(SchematicDoc *Doc, QMouseEvent*)
   movingElements=Doc->cropSelectedElements(); // obsolete.
   Doc->viewport()->repaint();
 
-//  currentCommand = new MoveElementsCommand(selectedItems, startposition);
+//  currenttaskElement = new MoveElementsCommand(selectedItems, startposition);
 
   // Changes the position of all moving elements by dx/dy
   for(auto pe : movingElements) { untested();
@@ -2025,7 +2025,7 @@ bool MouseActions::handle(QEvent*e)
 
   if(c){itested();
     // emit signalUndoState(true);
-    executeCommand(c);
+    executetaskElement(c);
     return true;
   }else{
     return false;
@@ -2033,7 +2033,7 @@ bool MouseActions::handle(QEvent*e)
 
 }
 
-void MouseActions::executeCommand(QUndoCommand* c)
+void MouseActions::executetaskElement(QUndoCommand* c)
 {
   assert(c);
   QUndoStack* u = _doc.undoStack();

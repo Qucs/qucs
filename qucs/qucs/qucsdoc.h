@@ -140,7 +140,7 @@ public:
 		assert(e);
 		return QMouseEvent(*e);
 	}
-	void executeCommand(QUndoCommand*);
+	void executetaskElement(QUndoCommand*);
 private:
 	void setActiveAction(MouseAction* a);
 	MouseAction* activeAction();

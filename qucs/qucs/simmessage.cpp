@@ -574,7 +574,7 @@ void SimMessage::startSimulator()
             /// \todo remvoe the command line arguments? use only netlist annotation?
             //Arguments << "-p" << QucsSettings.QucsWorkDir.absolutePath()
             //          << "-m" << usedComponents;
-            //qDebug() << "Command :" << Program << Arguments.join(" ");
+            //qDebug() << "taskElement :" << Program << Arguments.join(" ");
 
             /// Anotate netlist with Verilog-A dynamic path and module names
             ///
@@ -647,7 +647,7 @@ void SimMessage::startSimulator()
   QString sep(PATHSEP);
   SimProcess.setProcessEnvironment(env);
 
-  qDebug() << "Command :" << Program << Arguments.join(" ");
+  qDebug() << "taskElement :" << Program << Arguments.join(" ");
   SimProcess.start(Program, Arguments); // launch the program
 
   delete sim;

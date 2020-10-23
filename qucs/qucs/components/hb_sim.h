@@ -18,10 +18,10 @@
 #ifndef HB_SIM_H
 #define HB_SIM_H
 
-#include "command.h"
+#include "task_element.h"
 
 
-class HB_Sim : public CmdElement {
+class HB_Sim : public TaskElement {
 public:
   HB_Sim();
   ~HB_Sim();

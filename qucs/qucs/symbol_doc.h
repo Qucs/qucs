@@ -483,9 +483,9 @@ private: // legacy, don't use
 	  assert(_model);
 	  return _model->simpleInsertComponent(c);
   }
-  void simpleInsertCommand(Command* c) {
+  void simpleInserttaskElement(Command* c) {
 	  assert(_model);
-	  return _model->simpleInsertCommand(c);
+	  return _model->simpleInserttaskElement(c);
   }
   void simpleInsertWire(Wire* w) {
 	  assert(_model);
@@ -527,9 +527,9 @@ private:
   DigMap Signals; // collecting node names for VHDL signal declarations
 
 public: // for now
-	Command* loadCommand(const QString& _s, Command* c) const{
+	taskElement* loadCommand(const QString& _s, Command* c) const{
 		assert(_model);
-		return _model->loadCommand(_s, c);
+		return _model->loadtaskElement(_s, c);
 	}
 	Component* loadComponent(const QString& _s, Component* c) const{
 		assert(_model);
