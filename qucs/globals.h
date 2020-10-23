@@ -16,8 +16,9 @@
 #ifndef QUCS_GLOBALS_H
 #define QUCS_GLOBALS_H
 
-#include "platform.h"
+#include "command.h"
 #include "dispatcher.h"
+#include "platform.h"
 
 class TaskElement;
 class Diagram;
@@ -28,6 +29,7 @@ class Simulator;
 class Symbol;
 
 extern INTERFACE Dispatcher<TaskElement> element_dispatcher;
+extern INTERFACE Dispatcher<Command> command_dispatcher;
 extern INTERFACE Dispatcher<Diagram> diagram_dispatcher;
 extern INTERFACE Dispatcher<DocumentLanguage> doclang_dispatcher;
 extern INTERFACE Dispatcher<DocumentFormat> docfmt_dispatcher;
