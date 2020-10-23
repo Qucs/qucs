@@ -197,7 +197,7 @@ void VerilogNetlister::prepareSave(DocumentStream& stream, SchematicSymbol const
 		if(pc->isActive == COMP_IS_OPEN){
 			// open circuit (or so)
 			//    }else if(pc->obsolete_model_hack().at(0) == '.') {
-	}else if(dynamic_cast<Command const*>(pc)) {
+	}else if(dynamic_cast<taskElement const*>(pc)) {
 
 		qDebug() << pc->obsolete_model_hack();
 		if(pc->obsolete_model_hack() == ".Digi") {

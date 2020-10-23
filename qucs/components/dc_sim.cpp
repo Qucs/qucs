@@ -11,14 +11,14 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "command.h"
+#include "task_element.h"
 #include "qucs.h"
 #include "globals.h"
 #include "module.h"
 
 namespace{
 
-class DC_Sim : public CmdElement  {
+class DC_Sim : public TaskElement  {
 private:
 	DC_Sim(DC_Sim const&);
 public:
@@ -29,14 +29,14 @@ public:
   }
   static Element* info(QString&, char* &, bool getNewOne=false);
 }D;
-Dispatcher<CmdElement>::INSTALL p(&command_dispatcher, "DC", &D);
+Dispatcher<TaskElement>::INSTALL p(&command_dispatcher, "DC", &D);
 Module::INSTALL pp("simulations", &D);
 
-DC_Sim::DC_Sim(DC_Sim const& s) : CmdElement(s)
+DC_Sim::DC_Sim(DC_Sim const& s) : TaskElement(s)
 {
 }
 
-DC_Sim::DC_Sim() : CmdElement()
+DC_Sim::DC_Sim() : TaskElement()
 {
   Description = QObject::tr("dc simulation");
   setLabel("DC");

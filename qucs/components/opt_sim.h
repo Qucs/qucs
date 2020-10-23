@@ -18,10 +18,10 @@
 #ifndef OPT_SIM_H
 #define OPT_SIM_H
 
-#include "command.h"
+#include "task_element.h"
 
 
-class Optimize_Sim : public CmdElement  {
+class Optimize_Sim : public TaskElement  {
 public:
   Optimize_Sim();
  ~Optimize_Sim();

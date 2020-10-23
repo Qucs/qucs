@@ -97,7 +97,8 @@ public: // Node stuff
 private:
 	Port const& port(unsigned) const; // TODO. don't expose "Port"
 
-public: // Port access
+public: // Port stuff
+	virtual void setPort(int index, std::string const& value){unreachable();}
 	virtual pos_t portPosition(unsigned) const; // why virtual?
 	virtual pos_t nodePosition(unsigned) const; // why virtual?
 

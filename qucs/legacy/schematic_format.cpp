@@ -20,7 +20,7 @@
 
 #include "paintings/painting.h" // BUG
 #include "diagram.h" // BUG?
-#include "command.h" // BUG?
+#include "task_element.h" // BUG?
 
 namespace{
 
@@ -304,7 +304,7 @@ void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& 
 				return -1;
 			}
 
-			qDebug() << "Command: " << admsXml << Arguments.join(" ");
+			qDebug() << "taskElement: " << admsXml << Arguments.join(" ");
 
 			// need to cd into project to run admsXml?
 			QDir::setCurrent(workDir);

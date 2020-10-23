@@ -306,7 +306,7 @@ public: // TODO. move into mouse actions
 
   bool eventFilter(QObject *obj, QEvent *event);
   virtual bool handle(QEvent*);
-  void executeCommand(QUndoCommand* c);
+  void executetaskElement(QUndoCommand* c);
   MouseAction* activeAction(){ return _maCurrent; }
   void setActive(MouseAction* a);
 

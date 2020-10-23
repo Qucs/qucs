@@ -18,10 +18,10 @@
 #ifndef DIGI_SIM_H
 #define DIGI_SIM_H
 
-#include "command.h"
+#include "task_element.h"
 
 
-class Digi_Sim : public CmdElement {
+class Digi_Sim : public TaskElement {
 public:
   Digi_Sim();
  ~Digi_Sim();

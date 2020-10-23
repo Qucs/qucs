@@ -2183,7 +2183,7 @@ void SchematicDoc::insertElement(Element *c)
   if(Component* x=dynamic_cast<Component*>(c)){
     // legacy code
     insertComponent(x);
-  }else if(CmdElement* x=dynamic_cast<CmdElement*>(c)){
+  }else if(TaskElement* x=dynamic_cast<TaskElement*>(c)){
       (void)x;
     incomplete();
 //    insertSymbol(x);

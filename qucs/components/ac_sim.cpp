@@ -14,13 +14,13 @@
  *                                                                         *
  ***************************************************************************/
 #include "qucs.h"
-#include "command.h"
+#include "task_element.h"
 #include "globals.h"
 #include "module.h"
 
 namespace{
 
-class AC_Sim : public CmdElement  {
+class AC_Sim : public TaskElement  {
 private:
   AC_Sim(AC_Sim const& s);
 public:
@@ -29,13 +29,13 @@ public:
   Element* clone() const{return new AC_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(SchematicDoc*);
-private: // CmdElement
+private: // TaskElement
 //  QString const& name() const override{
 //	  return "AC";
 //  }
 }D;
 
-Dispatcher<CmdElement>::INSTALL p(&command_dispatcher, "AC", &D);
+Dispatcher<TaskElement>::INSTALL p(&command_dispatcher, "AC", &D);
 Module::INSTALL pp("simulations", &D);
 
 AC_Sim::AC_Sim()
@@ -79,7 +79,7 @@ AC_Sim::~AC_Sim()
 {
 }
 
-AC_Sim::AC_Sim(AC_Sim const& x): CmdElement(x)
+AC_Sim::AC_Sim(AC_Sim const& x): TaskElement(x)
 {
 	setTypeName("AC");
 }

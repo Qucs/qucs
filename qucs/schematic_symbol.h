@@ -40,7 +40,7 @@ public:
 	PaintingList const* symbolPaintings() const override;
 
 	// commands were part of the circuit model. fix this.
-	// CommandList const& commands() const;
+	// taskElementList const& commands() const;
 
 public:
 	std::string paramValue(std::string const&n) const{ untested();

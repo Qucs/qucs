@@ -15,7 +15,7 @@
 #ifndef QUCS_CMDELTDLG_H
 #define QUCS_CMDELTDLG_H
 
-#include "command.h"
+#include "task_element.h"
 #include "platform.h"
 #include "schematic_dialog.h"
 
@@ -33,10 +33,10 @@ class QCheckBox;
 class QPushButton;
 class QLabel;
 
-class CmdElementDialog : public SchematicDialog {
+class TaskElementDialog : public SchematicDialog {
 public:
-  CmdElementDialog(QucsDoc*);
-  ~CmdElementDialog();
+  TaskElementDialog(QucsDoc*);
+  ~TaskElementDialog();
 
   void attach(ElementGraphics* c) override;
 
@@ -108,7 +108,7 @@ private:
 
 private:
   ElementGraphics* _gfx;
-  CmdElement const* _comp;
+  TaskElement const* _comp;
 };
 
 #endif

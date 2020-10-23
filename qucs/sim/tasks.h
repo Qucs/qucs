@@ -17,8 +17,8 @@
 //
 #include <list>
 
-class CmdElement; // Task??
+class TaskElement; // Task??
 
-class CmdEltList /*HACK, for now */ : public std::list<CmdElement*> {
+class CmdEltList /*HACK, for now */ : public std::list<TaskElement*> {
 };
 #endif

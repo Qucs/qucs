@@ -189,7 +189,7 @@ public:
   Component* find_component(QString const&);
 
   // really?
-  // CommandList const& commands() const{
+  // taskElementList const& commands() const{
   //    return _commands;
   // }
   CmdEltList& commands(){
@@ -514,9 +514,9 @@ private:
   DigMap Signals; // collecting node names for VHDL signal declarations
 
 public: // for now
-	CmdElement* loadCommand(const QString& _s, CmdElement* c) const{
+	TaskElement* loadtaskElement(const QString& _s, TaskElement* c) const{
 		assert(_model);
-		return _model->loadCommand(_s, c);
+		return _model->loadtaskElement(_s, c);
 	}
 	Component* loadComponent(const QString& _s, Component* c) const{
 		assert(_model);

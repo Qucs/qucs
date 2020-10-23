@@ -16,7 +16,7 @@
 #include <QString>
 #include "globals.h"
 #include "docfmt.h"
-#include "command.h"
+#include "task_element.h"
 #include "schematic_lang.h"
 #include "schematic_model.h"
 #include "net.h"
@@ -45,7 +45,7 @@ static std::string netLabel(Net const* n)
 }
 
 class Verilog : public NetLang {
-	void printCommand(CmdElement const*, ostream_t&) const override;
+	void printtaskElement(TaskElement const*, ostream_t&) const override;
 	void printSymbol(Symbol const*, ostream_t&) const override;
 	void printPainting(Painting const*, ostream_t&) const override {incomplete();}
 	void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
@@ -59,7 +59,7 @@ static Dispatcher<DocumentLanguage>::INSTALL p(&doclang_dispatcher, "verilog", &
 /*!
  * verilog does not know about commands
  */
-void Verilog::printCommand(CmdElement const* c, ostream_t& s) const
+void Verilog::printtaskElement(TaskElement const* c, ostream_t& s) const
 {
   s << "//" << c->label() << "\n";
 }
@@ -164,9 +164,9 @@ void VerilogSchematicFormat::load(istream_t& stream, SchematicSymbol& s) const
 void VerilogSchematicFormat::save(DocumentStream& stream, SchematicSymbol const& m) const
 {
   for(auto pc : components(m)){
-	  if(dynamic_cast<CmdElement const*>(pc)){ untested();
+	  if(dynamic_cast<TaskElement const*>(pc)){ untested();
 		  unreachable();
-		  // BUG. a CmdElement is not a Component
+		  // BUG. a TaskElement is not a Component
 		  continue;
 	  }
 	  printSymbol(pc, stream); // BUG: use V::printItem

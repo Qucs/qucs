@@ -439,7 +439,7 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
   QucsConv->setProcessEnvironment(env);
 
-  qDebug() << "SpiceFile::recreateSubNetlist :Command:" << prog << com.join(" ");
+  qDebug() << "SpiceFile::recreateSubNetlist :taskElement:" << prog << com.join(" ");
 //  QucsConv->start(com.join(" "));
   QucsConv->start(prog, com);
 

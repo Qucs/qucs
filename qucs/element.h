@@ -230,7 +230,7 @@ protected:
   int x1, y1;
 public:
   
-  // BUG; abused in Command
+  // BUG; abused in taskElement
 //  mutable int x2, y2;  // center and relative boundings
 
   // create a declaration, e.g. subcircuit definition or include directive
@@ -265,7 +265,7 @@ inline SchematicModel const* Element::scope() const
 }
 /*--------------------------------------------------------------------------*/
 class Component;
-class CmdElement;
+class TaskElement;
 class WireLabel;
 class Diagram;
 class Painting;
@@ -279,7 +279,7 @@ Painting const* painting(Element const*);
 Graph const* graph(Element const*);
 /*--------------------------------------------------------------------------*/
 Component* component(Element*);
-CmdElement* command(Element*);
+TaskElement* command(Element*);
 inline Element*& element(Element*& x){return x;}
 WireLabel* wireLabel(Element*);
 Diagram* diagram(Element*);
