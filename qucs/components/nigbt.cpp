@@ -111,9 +111,9 @@ void nigbt::createSymbol()
   Lines.append(new Line(  0,  9,  0, 15,QPen(Qt::darkBlue,2)));
 
   // terminal definitions
-  Ports.append(new Port(  0,-30)); // collector
-  Ports.append(new Port(-30,  0)); // gate
-  Ports.append(new Port(  0, 30)); // emitter
+  Ports.append(new ComponentPort(  0,-30)); // collector
+  Ports.append(new ComponentPort(-30,  0)); // gate
+  Ports.append(new ComponentPort(  0, 30)); // emitter
 
   // relative boundings
   x1 = -30; y1 = -30;

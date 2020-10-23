@@ -32,8 +32,8 @@ MSmbend::MSmbend()
   Lines.append(new Line(  8,  8,  8, 18,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( -8, 18,  8, 18,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(-30, 0));
-  Ports.append(new Port(  0,30));
+  Ports.append(new ComponentPort(-30, 0));
+  Ports.append(new ComponentPort(  0,30));
 
   x1 = -30; y1 =-11;
   x2 =  11; y2 = 30;

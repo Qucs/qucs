@@ -21,6 +21,8 @@
 # the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
 # Boston, MA 02110-1301, USA.  
 #
+#
+include MakeList
 
 #private library
 qucsdir=${pkglibdir}
@@ -33,15 +35,13 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 libpaintings_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 include ../../common.mk
 
-libpaintings_la_SOURCES = rectangle.cpp arrow.cpp  \
-  graphictextdialog.cpp graphictext.cpp graphicline.cpp ellipse.cpp           \
-  arrowdialog.cpp filldialog.cpp portsymbol.cpp ellipsearc.cpp id_text.cpp    \
-  id_dialog.cpp
+libpaintings_la_SOURCES = ${SRCS}
+
 
 nodist_libpaintings_la_SOURCES = $(MOCFILES)
 
-noinst_HEADERS = $(MOCHEADERS) ellipse.h graphictext.h  \
-  painting.h paintings.h rectangle.h ellipsearc.h id_text.h
+# noinst_HEADERS = $(MOCHEADERS) graphictext.h  \
+#   paintings.h rectangle.h ellipsearc.h id_text.h
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include -I$(top_srcdir)/qucs
 

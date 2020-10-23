@@ -46,8 +46,8 @@ Ampere_dc::Ampere_dc()
   Lines.append(new Line(  6,  0,  0, -4,QPen(Qt::darkBlue,3)));
   Lines.append(new Line(  6,  0,  0,  4,QPen(Qt::darkBlue,3)));
 
-  Ports.append(new Port( 30,  0));
-  Ports.append(new Port(-30,  0));
+  Ports.append(new ComponentPort( 30,  0));
+  Ports.append(new ComponentPort(-30,  0));
 
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  14;

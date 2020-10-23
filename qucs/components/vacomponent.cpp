@@ -261,7 +261,7 @@ void vacomponent::createSymbol(QString filename)
     if (!type.compare("portsymbol")) {
       x = getDouble(entry, "x");
       y = getDouble(entry, "y");
-      Ports.append (new Port (x, y));
+      Ports.append (new ComponentPort(x, y));
     }
 
     if (!type.compare("graphictext")) {

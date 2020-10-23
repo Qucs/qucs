@@ -24,7 +24,6 @@
 #include "wirelabel.h"
 #include "platform.h"
 #include "symbol.h"
-#include "place.h"
 #include "sckt_base.h"
 
 class QPainter;
@@ -64,7 +63,7 @@ private: // Conductor
 	bool isNet(pos_t const&) const override;
 
 private:
-	Symbol* newPort(const Place*) const;
+//	Symbol* newPort(const Place*) const;
 	Symbol* newTee(const Wire*) const;
 	Symbol* intersectPorts(const Symbol*) const;
 	bool isInterior(pos_t const&) const;
@@ -75,6 +74,14 @@ private: // Symbol
 	bool showLabel() const override{ return false; }
 	void expand() override;
 	unsigned numPorts() const override;
+	pos_t portPosition(unsigned i) const{
+		switch(i){
+			case 0: return pos_t(0,0);
+			case 1: return _pp1;
+			default: unreachable();
+			 return pos_t(0,0);
+		}
+	}
 
 private: // symbol Node stuff
 	Node* connectNode(unsigned idx, NodeMap&) override;
@@ -99,21 +106,22 @@ private:
 	Wire* extendTowards(pos_t const&) const;
 
 	pos_t pP1() const{
-		return _port1.position();
+		return _pp1;
 	}
 	void setP1(pos_t const& p){
-		_port1.setPosition(p);
+		_pp1 = p;
 	}
 
 public: // FIXME, these are still around. (from element)
-	int x1() const { return _port0.x(); }
-	int y1() const { return _port0.y(); }
-	int x2() const { return _port1.x(); }
-	int y2() const { return _port1.y(); }
+//	int x1() const { return _port0.x(); }
+//	int y1() const { return _port0.y(); }
+	int x2() const { return _pp1.first; }
+	int y2() const { return _pp1.second; }
 
 private:
 	Port _port0;
 	Port _port1;
+	pos_t _pp1;
 	std::string nx, ny, delta;
 	std::string _netname;
 
@@ -124,7 +132,7 @@ static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Wire", &w);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 Wire::Wire() : Symbol(),
-    _port0(0, 0), _port1(1, 0),
+    _port0(), _port1(), _pp1(1,0),
     _angle(0), _scale(1.)
 {
 	Symbol::setCenter(pos_t(0, 0)); // redundant?
@@ -134,15 +142,15 @@ Wire::Wire() : Symbol(),
 }
 /*--------------------------------------------------------------------------*/
 Wire::Wire(Wire const& w)
-  : Symbol(w), _port0(w._port0), _port1(w._port1),
+  : Symbol(w), _port0(), _port1(), _pp1(w._pp1),
    _angle(w._angle), _scale(w._scale)
 {
   setLabel(w.label());
 }
 /*--------------------------------------------------------------------------*/
 Wire::Wire(pos_t const& p0, pos_t const& p1)
-  : Symbol(), _port0(0, 0),
-    _port1((p1 - p0).first, (p1 - p0).second),
+  : Symbol(), _port0(),
+    _port1(), _pp1((p1 - p0).first, (p1 - p0).second),
     _angle(0), _scale(1)
 { itested();
 
@@ -201,6 +209,8 @@ void Wire::findScaleAndAngle()
 #endif
 }
 /*--------------------------------------------------------------------------*/
+#if 0
+// places don't work like this.
 Symbol* Wire::newPort(Place const* pl) const
 { untested();
 	pos_t where = pl->nodePosition(0);
@@ -219,6 +229,7 @@ Symbol* Wire::newPort(Place const* pl) const
 	}
 	return nullptr;
 }
+#endif
 /*--------------------------------------------------------------------------*/
 Symbol* Wire::intersectPorts(Symbol const* s) const
 {
@@ -334,11 +345,12 @@ Symbol* Wire::newTee(Wire const* o) const
 Symbol* Wire::newUnion(Symbol const* s) const
 {
 	trace3("Wire::newUnion(Symbol)", s->label(), nodePosition(0), nodePosition(1));
-	auto p = dynamic_cast<Place const*>(s);
+//	auto p = dynamic_cast<Place const*>(s);
 	auto o = dynamic_cast<Wire const*>(s);
-	if(p){ untested();
-		return newPort(p);
-	}else if(o){
+//	if(p){ untested();
+//		return newPort(p);
+//	}else
+	if(o){
 		trace2("Wire::newUnion(Wire)", o->nodePosition(0), o->nodePosition(1));
 		trace2("Wire::newUnion(Wire)", _port0->degree(), _port1->degree());
 		
@@ -369,9 +381,9 @@ QDialog* Wire::schematicWidget(QucsDoc* Doc) const
 /*--------------------------------------------------------------------------*/
 void Wire::paint(ViewPainter *p) const
 {itested();
-  int x1 = Wire::x1();
+  int x1 = 0; // Wire::x1();
   int x2 = Wire::x2();
-  int y1 = Wire::y1();
+  int y1 = 0; // Wire::y1();
   int y2 = Wire::y2();
 
   { itested();
@@ -422,8 +434,6 @@ void Wire::updatePort()
   assert(dcos(2) == -1);
   assert(dcos(3) == 0);
 
-  assert(x1() == 0);
-  assert(y1() == 0);
   int x = dcos(_angle) * _scale;
   int y = -dsin(_angle) * _scale;
   setP1(pos_t(x, y));
@@ -475,7 +485,6 @@ void Wire::setParameter(std::string const& n, std::string const& v)
     _angle %=4;
     updatePort();
 //    trace4("new angle", _angle, _cx, _cy, _scale);
-    trace4("new angle", x1(), y1(), x2(), y2());
   }else if(n=="$vflip"){ untested();
     // it does not matter.
     int tmp = atoi(v.c_str());
@@ -541,8 +550,6 @@ void Wire::expand()
 // ----------------------------------------------------------------
 QRectF Wire::boundingRect() const
 { itested();
-  assert(x1() == 0);
-  assert(y1() == 0);
   int N = 10;
   // assert(_scale>0); oops??
 
@@ -628,7 +635,7 @@ bool Wire::isNet(pos_t const& p) const
   int y = getY(p);
   x -= cx();
   y -= cy();
-  return in_order(x1(), x, x2()) && in_order(y1(), y, y2());
+  return in_order(0, x, x2()) && in_order(0, y, y2());
 }
 /*--------------------------------------------------------------------------*/
 }

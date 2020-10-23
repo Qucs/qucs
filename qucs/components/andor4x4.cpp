@@ -98,27 +98,27 @@ void andor4x4::createSymbol()
   Lines.append(new Line(  7, -30, 17, -35,QPen(Qt::darkBlue,2))); 
   Lines.append(new Line( 22, -30, 22, -45,QPen(Qt::darkBlue,2)));  
 
-  Ports.append(new Port(-50,-50));  // A11
-  Ports.append(new Port(-50,-40));  // A12
-  Ports.append(new Port(-50,-30));  // A13
-  Ports.append(new Port(-50,-20));  // A14
+  Ports.append(new ComponentPort(-50,-50));  // A11
+  Ports.append(new ComponentPort(-50,-40));  // A12
+  Ports.append(new ComponentPort(-50,-30));  // A13
+  Ports.append(new ComponentPort(-50,-20));  // A14
 
-  Ports.append(new Port(-50,  0));  // A21
-  Ports.append(new Port(-50, 10));  // A22
-  Ports.append(new Port(-50, 20));  // A23
-  Ports.append(new Port(-50, 30));  // A24
+  Ports.append(new ComponentPort(-50,  0));  // A21
+  Ports.append(new ComponentPort(-50, 10));  // A22
+  Ports.append(new ComponentPort(-50, 20));  // A23
+  Ports.append(new ComponentPort(-50, 30));  // A24
 
-  Ports.append(new Port(-50, 50));  // A31
-  Ports.append(new Port(-50, 60));  // A32
-  Ports.append(new Port(-50, 70));  // A33
-  Ports.append(new Port(-50, 80));  // A34
+  Ports.append(new ComponentPort(-50, 50));  // A31
+  Ports.append(new ComponentPort(-50, 60));  // A32
+  Ports.append(new ComponentPort(-50, 70));  // A33
+  Ports.append(new ComponentPort(-50, 80));  // A34
 
-  Ports.append(new Port(-50,100));  // A41
-  Ports.append(new Port(-50,110));  // A42
-  Ports.append(new Port(-50,120));  // A43
-  Ports.append(new Port(-50,130));  // A44
+  Ports.append(new ComponentPort(-50,100));  // A41
+  Ports.append(new ComponentPort(-50,110));  // A42
+  Ports.append(new ComponentPort(-50,120));  // A43
+  Ports.append(new ComponentPort(-50,130));  // A44
 
-  Ports.append(new Port( 50, 40));  // Y
+  Ports.append(new ComponentPort( 50, 40));  // Y
 
   x1 = -50; y1 = -64;
   x2 =  50; y2 = 144;

@@ -98,7 +98,7 @@ Subcircuit::Subcircuit() : Component() // gaah sckt_base
   setTypeName("Sub");
 
   // Do NOT call createSymbol() here. But create port to let it rotate.
-  Ports.append(new Port(0, 0, false));
+  Ports.append(new ComponentPort(0, 0, false));
 
   new_subckt(); // triggers sckt expansion
 }
@@ -192,8 +192,8 @@ void Subcircuit::createSymbol() // SchematicModel const& scope)
 		  if(tx == INT_MIN)  tx = x1+4;
 		  if(ty == INT_MIN)  ty = y2+4;
 		  // remove unused ports
-		  QMutableListIterator<Port *> ip(Ports);
-		  Port *pp;
+		  QMutableListIterator<ComponentPort *> ip(Ports);
+		  ComponentPort *pp;
 		  while (ip.hasNext()) {
 			  pp = ip.next();
 			  if(!pp->avail) { untested();
@@ -226,13 +226,13 @@ void Subcircuit::defaultSymbol(int No)
   while(i<No) {
     i++;
     Lines.append(new Line(-30,  y,-15,  y,QPen(Qt::darkBlue,2)));
-    Ports.append(new Port(-30,  y));
+    Ports.append(new ComponentPort(-30,  y));
     Texts.append(new Text(-25,y-14,QString::number(i)));
 
     if(i == No) break;
     i++;
     Lines.append(new Line( 15,  y, 30,  y,QPen(Qt::darkBlue,2)));
-    Ports.append(new Port( 30,  y));
+    Ports.append(new ComponentPort( 30,  y));
     Texts.append(new Text( 19,y-14,QString::number(i)));
     y += 60;
   }
@@ -564,9 +564,13 @@ private:
 		incomplete();
 		return "incomplete";
 	}
-	Port& port(unsigned){ untested();
+	Port& port(unsigned) override{ untested();
 		unreachable();
-		return *new Port(0,0);
+		return *new Port();
+	}
+	pos_t portPosition(unsigned) const  override{
+		unreachable();
+		return pos_t(0,0);
 	}
 };
 

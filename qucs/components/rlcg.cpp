@@ -45,8 +45,8 @@ RLCG::RLCG()
   int w = smallmetrics.width(tmp);
   Texts.append(new Text(w/-2, -fHeight, tmp));
 
-  Ports.append(new Port(-30, 0));
-  Ports.append(new Port( 30, 0));
+  Ports.append(new ComponentPort(-30, 0));
+  Ports.append(new ComponentPort( 30, 0));
 
   x1 = -30; y1 = -fHeight;
   x2 =  30; y2 = 16;

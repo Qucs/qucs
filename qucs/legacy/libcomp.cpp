@@ -12,11 +12,12 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "globals.h"
+#include "misc.h"
+#include "painting.h"
+#include "qt_compat.h"
 #include "qucs.h"
 #include "schematic_doc.h"
-#include "misc.h"
-#include "globals.h"
-#include "qt_compat.h"
 
 #include <limits.h>
 
@@ -59,14 +60,19 @@ private:
 		}
 	}
 	unsigned numPorts() const override{
-		incomplete();
-		return 0;
+		assert(subckt());
+		return subckt()->numPorts();
 	}
+	virtual pos_t portPosition(unsigned i) const{
+		unreachable();
+		return pos_t(0,0);
+	}
+
 	QRectF boundingRect() const override{
 		// BUG. cache.
 		QRectF br;
-		assert(symbolPaintings());
-		for(auto p : *symbolPaintings()){
+//		assert(symbolPaintings());
+		for(auto p : paintings()){
 			assert(p);
 			Element const* e = p;
 			trace2("br", e->boundingRect().topLeft(), e->boundingRect().bottomRight());
@@ -128,19 +134,23 @@ private: // Element
 private: // Symbol
 	PaintingList const* symbolPaintings() const override{
 		if(_parent){ untested();
-			return _parent->symbolPaintings();
+			assert( _parent->subckt());
+			return &_parent->subckt()->paintings();
 		}else{ untested();
 			return nullptr;
 		}
 	}
 	unsigned numPorts() const override{
-		incomplete();
-		return 0;
 		if(_parent){ untested();
+			trace2("Lib::numPorts", label(), _parent->numPorts());
 			return _parent->numPorts();
 		}else{ untested();
 			return 0;
 		}
+	}
+	pos_t portPosition(unsigned i) const override{
+		assert(_parent);
+		return _parent->portPosition(i);
 	}
 	void setParameter(std::string const& n, std::string const& v) override{
 		bool redo = false;
@@ -379,8 +389,8 @@ int LibComp::loadSection(const QString& Name, QString& Section,
 
   // snip actual model
   Section = Section.mid(Start, End-Start);
-  return 0;
 #endif
+  return 0;
 }
 /*--------------------------------------------------------------------------*/
 // Loads the symbol for the subcircuit from the schematic file and

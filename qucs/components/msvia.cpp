@@ -31,7 +31,7 @@ MSvia::MSvia()
   Lines.append(new Line( -7, 20,  7, 20,QPen(Qt::darkBlue,3)));
   Lines.append(new Line( -3, 26,  3, 26,QPen(Qt::darkBlue,3)));
 
-  Ports.append(new Port(-20,  0));
+  Ports.append(new ComponentPort(-20,  0));
 
   x1 = -20; y1 = -7;
   x2 =  14; y2 = 30;

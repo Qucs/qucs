@@ -42,8 +42,8 @@ iExp::iExp()
   Lines.append(new Line( 13,  20, 13, 23,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 17,  23, 13, 23,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port( 30,  0));
-  Ports.append(new Port(-30,  0));
+  Ports.append(new ComponentPort( 30,  0));
+  Ports.append(new ComponentPort(-30,  0));
 
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  20;

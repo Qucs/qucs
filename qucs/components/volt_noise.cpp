@@ -31,8 +31,8 @@ Volt_noise::Volt_noise()
   Lines.append(new Line( -7, 10, 10, -7,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( -2, 12, 12, -2,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port( 30,  0));
-  Ports.append(new Port(-30,  0));
+  Ports.append(new ComponentPort( 30,  0));
+  Ports.append(new ComponentPort(-30,  0));
 
   x1 = -30; y1 = -15;
   x2 =  30; y2 =  15;

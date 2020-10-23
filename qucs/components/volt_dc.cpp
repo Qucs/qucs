@@ -42,8 +42,8 @@ Volt_dc::Volt_dc()
   Lines.append(new Line( 14,  8,  8,  8,QPen(Qt::red,1)));
   Lines.append(new Line(-11,  5,-11, 11,QPen(Qt::black,1)));
 
-  Ports.append(new Port( 30,  0));
-  Ports.append(new Port(-30,  0));
+  Ports.append(new ComponentPort( 30,  0));
+  Ports.append(new ComponentPort(-30,  0));
 
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  14;

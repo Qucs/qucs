@@ -23,7 +23,6 @@
 #include "painting.h"
 
 #include "rectangle.h"
-#include "ellipse.h"
 #include "graphictext.h"
 #include "ellipsearc.h"
 #include "id_text.h"

@@ -76,10 +76,10 @@ void gatedDlatch::createSymbol()
   Texts.append(new Text( 11,  7, "Q", Qt::darkBlue, 12.0));
   Texts.last()->over=true;
 
-  Ports.append(new Port(-50,-20));  // D
-  Ports.append(new Port(-50, 20));  // C
-  Ports.append(new Port( 50, 20));  // QB
-  Ports.append(new Port( 50,-20));  // Q
+  Ports.append(new ComponentPort(-50,-20));  // D
+  Ports.append(new ComponentPort(-50, 20));  // C
+  Ports.append(new ComponentPort( 50, 20));  // QB
+  Ports.append(new ComponentPort( 50,-20));  // Q
 
   x1 = -50; y1 = -44;
   x2 =  50; y2 =  44;

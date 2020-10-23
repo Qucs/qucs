@@ -154,7 +154,7 @@ void Diagram::paintDiagram(ViewPainter *p)
     p->save();
 
     // write whole text (axis label inclusively)
-    QMatrix wm = p->worldMatrix();
+    auto wm = p->worldMatrix();
     foreach(Text *pt, Texts) {itested();
 //      p->setWorldMatrix(
 //          QMatrix(pt->mCos, -pt->mSin, pt->mSin, pt->mCos,

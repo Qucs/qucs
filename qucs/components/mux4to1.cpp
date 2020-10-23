@@ -91,14 +91,14 @@ void mux4to1::createSymbol()
 
   Lines.append(new Line(11, -8, 23, -8, QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(-50,-40));  // En
-  Ports.append(new Port(-50,-20));  // A
-  Ports.append(new Port(-50,  0));  // B
-  Ports.append(new Port(-50, 30));  // D0
-  Ports.append(new Port(-50, 50));  // D1
-  Ports.append(new Port(-50, 70));  // D2
-  Ports.append(new Port(-50, 90));  // D3
-  Ports.append(new Port( 50, 10));  // Y
+  Ports.append(new ComponentPort(-50,-40));  // En
+  Ports.append(new ComponentPort(-50,-20));  // A
+  Ports.append(new ComponentPort(-50,  0));  // B
+  Ports.append(new ComponentPort(-50, 30));  // D0
+  Ports.append(new ComponentPort(-50, 50));  // D1
+  Ports.append(new ComponentPort(-50, 70));  // D2
+  Ports.append(new ComponentPort(-50, 90));  // D3
+  Ports.append(new ComponentPort( 50, 10));  // Y
 
   x1 = -50; y1 = -84;
   x2 =  50; y2 =  104;

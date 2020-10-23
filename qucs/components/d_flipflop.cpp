@@ -41,10 +41,10 @@ D_FlipFlop::D_FlipFlop()
   Lines.append(new Line(-20,  6,-12, 10,QPen(Qt::darkBlue,0)));
   Lines.append(new Line(-20, 14,-12, 10,QPen(Qt::darkBlue,0)));
 
-  Ports.append(new Port(-30,-10));  // D
-  Ports.append(new Port(-30, 10));  // Clock
-  Ports.append(new Port( 30,-10));  // Q
-  Ports.append(new Port(  0, 30));  // Reset
+  Ports.append(new ComponentPort(-30,-10));  // D
+  Ports.append(new ComponentPort(-30, 10));  // Clock
+  Ports.append(new ComponentPort( 30,-10));  // Q
+  Ports.append(new ComponentPort(  0, 30));  // Reset
 
   x1 = -30; y1 = -24;
   x2 =  30; y2 =  30;

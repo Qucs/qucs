@@ -41,8 +41,8 @@ iProbe::iProbe()
   Arcs.append(new Arc(-20,-23, 39, 39, 16*50, 16*80,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-11,-24, -2, -9,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(-30,  0));
-  Ports.append(new Port( 30,  0));
+  Ports.append(new ComponentPort(-30,  0));
+  Ports.append(new ComponentPort( 30,  0));
 
   x1 = -30; y1 = -34;
   x2 =  30; y2 =  12;

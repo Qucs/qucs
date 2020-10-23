@@ -58,6 +58,7 @@ private:
   QTextStream *outstream, *filstream, *prestream;
   QDateTime lastLoaded;
   bool recreateSubNetlist(QString *, QString *);
+  pos_t portPosition(unsigned) const override{ incomplete(); return pos_t(0,0);}
 
 protected:
   QString netlist() const;

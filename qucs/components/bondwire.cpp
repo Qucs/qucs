@@ -29,8 +29,8 @@ BondWire::BondWire()
   Arcs.append(new Arc(-19,-13, 10, 13,16*205,16*130,QPen(Qt::darkBlue,1)));
   Arcs.append(new Arc(  9,-13, 10, 13,16*205,16*130,QPen(Qt::darkBlue,1)));
 
-  Ports.append(new Port(-30, 0));
-  Ports.append(new Port( 30, 0));
+  Ports.append(new ComponentPort(-30, 0));
+  Ports.append(new ComponentPort( 30, 0));
 
   x1 = -30; y1 =-13;
   x2 =  30; y2 =  5;

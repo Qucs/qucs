@@ -91,14 +91,14 @@ void fa2b::createSymbol()
   Texts.append(new Text( 28, -3,   "1",  Qt::darkBlue, 12.0));
   Texts.append(new Text( 10, 17,  "CO",  Qt::darkBlue, 12.0));
 
-  Ports.append(new Port(-60,-10));  // X0 -> D
-  Ports.append(new Port(-60, 10));  // X1 -> C
-  Ports.append(new Port(-60, 30));  // Y0 -> B
-  Ports.append(new Port(-60, 50));  // Y1 -> A
-  Ports.append(new Port(-60, 70));  // CI -> E
-  Ports.append(new Port( 60, 30));  // CO
-  Ports.append(new Port( 60, 10));  // S1
-  Ports.append(new Port( 60,-10));  // S0
+  Ports.append(new ComponentPort(-60,-10));  // X0 -> D
+  Ports.append(new ComponentPort(-60, 10));  // X1 -> C
+  Ports.append(new ComponentPort(-60, 30));  // Y0 -> B
+  Ports.append(new ComponentPort(-60, 50));  // Y1 -> A
+  Ports.append(new ComponentPort(-60, 70));  // CI -> E
+  Ports.append(new ComponentPort( 60, 30));  // CO
+  Ports.append(new ComponentPort( 60, 10));  // S1
+  Ports.append(new ComponentPort( 60,-10));  // S0
 
   x1 = -60; y1 = -64;
   x2 =  60; y2 =  94;

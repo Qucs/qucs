@@ -107,7 +107,7 @@ void MStee::createSymbol()
     Texts.append(new Text(  5, 30-a-1, "3")); // bottom-aligned
   }
 
-  Ports.append(new Port(-30, 0));
-  Ports.append(new Port( 30, 0));
-  Ports.append(new Port(  0,30));
+  Ports.append(new ComponentPort(-30, 0));
+  Ports.append(new ComponentPort( 30, 0));
+  Ports.append(new ComponentPort(  0,30));
 }

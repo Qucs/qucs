@@ -43,8 +43,8 @@ Inductor::Inductor()
   Lines.append(new Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(-30,  0));
-  Ports.append(new Port( 30,  0));
+  Ports.append(new ComponentPort(-30,  0));
+  Ports.append(new ComponentPort( 30,  0));
 
   x1 = -30; y1 = -10;
   x2 =  30; y2 =   6;

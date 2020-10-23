@@ -201,7 +201,11 @@ private: // SchematicSymbol
   }
 
 private:
-  unsigned numPorts() const{ incomplete(); return 0; }
+  unsigned numPorts() const override{ incomplete(); return 0; }
+  pos_t portPosition(unsigned) const override{
+    unreachable();
+    return pos_t(0,0);
+  }
   Net const* portValue(unsigned)const {unreachable(); return nullptr;}
   void setPort(unsigned, Node*){incomplete();}
 

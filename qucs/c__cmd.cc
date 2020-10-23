@@ -43,7 +43,8 @@ INTERFACE void error(int,const std::string&);
  * parse, and act on, a command string
  */
 void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
-{
+{ untested();
+  trace1("cmdproc", cmd.fullstring());
 
 #if 0
   bool get_timer_was_running = ::status.get.is_running();
@@ -89,28 +90,29 @@ void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
   else if (cmd.umatch("!"))		{	     s = "system";}
   else if (cmd.umatch("<"))		{itested();  s = "<";}
   else if (cmd.umatch(">"))		{itested();  s = ">";}
-  else{ /* no shortcut available */
+  else
+#endif
+  { /* no shortcut available */
     cmd >> s;
     didsomething = false;
   }
-#endif
 
-  if (s == "xxxxcomment") {
+  if (s == "xxxxcomment") { untested();
     // nothing
-  }else if (s != "") {
+  }else if (s != "") { untested();
     CMD* c = command_dispatcher[s];
-    if (c) {
+    if (c) { untested();
       c->do_it(cmd, scope);
       didsomething = true;
-    }else{itested();
+    }else{untested();
       incomplete();
 //      cmd.warn(bWARNING, here, "what's this?");
     }
-  }else if (!didsomething) {
+  }else if (!didsomething) { untested();
     incomplete();
 //    cmd.check(bWARNING, "bad command");
     didsomething = false;
-  }else{itested();
+  }else{untested();
   }
   
 #if 0

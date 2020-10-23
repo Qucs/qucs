@@ -104,8 +104,8 @@ void Switch::createSymbol()
   Ellips.append(new Area(-18, -3, 6, 6, QPen(Qt::darkBlue,2),
                 QBrush(Qt::darkBlue, Qt::SolidPattern)));
 
-  Ports.append(new Port(-30,  0));
-  Ports.append(new Port( 30,  0));
+  Ports.append(new ComponentPort(-30,  0));
+  Ports.append(new ComponentPort( 30,  0));
 
   x1 = -30;
   x2 =  30; y2 =   7;

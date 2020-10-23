@@ -6,6 +6,7 @@ LEGACY_SRC = \
 	paramset.cpp \
 	polardiagram.cpp \
 	psdiagram.cpp \
+	portcmd.cpp \
 	rect3ddiagram.cpp \
 	rectdiagram.cpp \
 	schematic_format.cpp \

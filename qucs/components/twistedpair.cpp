@@ -42,10 +42,10 @@ TwistedPair::TwistedPair()
   Arcs.append(new Arc( 20,-10, 20, 33, 16*90, 16*58,QPen(Qt::darkBlue,2)));
   Arcs.append(new Arc( 20,-23, 20, 33,16*212, 16*58,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(-30,-10));
-  Ports.append(new Port( 30,-10));
-  Ports.append(new Port( 30, 10));
-  Ports.append(new Port(-30, 10));
+  Ports.append(new ComponentPort(-30,-10));
+  Ports.append(new ComponentPort( 30,-10));
+  Ports.append(new ComponentPort( 30, 10));
+  Ports.append(new ComponentPort(-30, 10));
 
   x1 = -30; y1 =-12;
   x2 =  30; y2 = 12;

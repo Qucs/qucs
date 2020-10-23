@@ -19,11 +19,11 @@ namespace {
 /*--------------------------------------------------------------------------*/
 class NodeLabel : public Symbol {
 public:
-	explicit NodeLabel() : Symbol(), _port(0,0) {}
+	explicit NodeLabel() : Symbol(), _port() {}
 	~NodeLabel(){}
 private:
 	NodeLabel(NodeLabel const& p)
-     : Symbol(p), _port(p._port),
+     : Symbol(p), _port(),
 		 _highlight(p._highlight) {}
 	Element* clone()const override{
 		return new NodeLabel(*this);
@@ -35,6 +35,7 @@ private:
 	virtual unsigned numPorts() const {return 1;}
 	Rect boundingRect() const override;
 	Port& port(unsigned i);
+	pos_t portPosition(unsigned) const override{ untested(); return pos_t(0,0);}
 private:
 	Port _port;
 	bool _highlight;

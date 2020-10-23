@@ -80,13 +80,13 @@ void hpribin4bit::createSymbol()
   Texts.append(new Text( 25, -3,  "Y",  Qt::darkBlue, 12.0));
   Texts.append(new Text( 25,-23,  "X",  Qt::darkBlue, 12.0));
 
-  Ports.append(new Port(-60,-10));  // A
-  Ports.append(new Port(-60, 10));  // B
-  Ports.append(new Port(-60, 30));  // C
-  Ports.append(new Port(-60, 50));  // D
-  Ports.append(new Port( 60, 30));  // V
-  Ports.append(new Port( 60, 10));  // Y
-  Ports.append(new Port( 60,-10));  // X
+  Ports.append(new ComponentPort(-60,-10));  // A
+  Ports.append(new ComponentPort(-60, 10));  // B
+  Ports.append(new ComponentPort(-60, 30));  // C
+  Ports.append(new ComponentPort(-60, 50));  // D
+  Ports.append(new ComponentPort( 60, 30));  // V
+  Ports.append(new ComponentPort( 60, 10));  // Y
+  Ports.append(new ComponentPort( 60,-10));  // X
 
   x1 = -60; y1 = -54;
   x2 =  60; y2 =  64;
