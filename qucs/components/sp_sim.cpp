@@ -28,7 +28,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(SchematicDoc*);
 }D;
-Dispatcher<TaskElement>::INSTALL d(&command_dispatcher, "SP", &D);
+Dispatcher<TaskElement>::INSTALL d(&element_dispatcher, "SP", &D);
 Module::INSTALL pp("simulations", &D);
 
 SP_Sim::SP_Sim()

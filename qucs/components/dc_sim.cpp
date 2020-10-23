@@ -29,7 +29,7 @@ public:
   }
   static Element* info(QString&, char* &, bool getNewOne=false);
 }D;
-Dispatcher<TaskElement>::INSTALL p(&command_dispatcher, "DC", &D);
+Dispatcher<TaskElement>::INSTALL p(&element_dispatcher, "DC", &D);
 Module::INSTALL pp("simulations", &D);
 
 DC_Sim::DC_Sim(DC_Sim const& s) : TaskElement(s)

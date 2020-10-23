@@ -1048,7 +1048,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 		incomplete();
 	}else if(typestring.c_str()[0] == '.'){ untested();
 		std::string type = typestring.substr(1); // drop dot.
-		e = command_dispatcher.clone(type);
+		e = element_dispatcher.clone(type);
 		if(auto ce = dynamic_cast<TaskElement*>(e)){ untested();
 			// should use setType lower down. drop name.
 			ce->setTypeName(QString::fromStdString(type));

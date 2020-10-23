@@ -35,7 +35,7 @@ private: // TaskElement
 //  }
 }D;
 
-Dispatcher<TaskElement>::INSTALL p(&command_dispatcher, "AC", &D);
+Dispatcher<TaskElement>::INSTALL p(&element_dispatcher, "AC", &D);
 Module::INSTALL pp("simulations", &D);
 
 AC_Sim::AC_Sim()

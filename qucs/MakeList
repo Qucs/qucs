@@ -3,6 +3,7 @@
 
 CPP_SRC = \
 	attach.cpp \
+	c__cmd.cc \
 	cmdeltdlg.cpp \
 	component.cpp \
 	component_widget.cpp \
