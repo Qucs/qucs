@@ -91,17 +91,17 @@ void comp_4bit::createSymbol()
   Texts.append(new Text(  5, -3, "X>Y",  Qt::darkBlue, 12.0));
   Texts.append(new Text(  5,-23, "X=Y",  Qt::darkBlue, 12.0));
 
-  Ports.append(new Port(-60,-50));  // X0
-  Ports.append(new Port(-60,-30));  // X1
-  Ports.append(new Port(-60,-10));  // X2
-  Ports.append(new Port(-60, 10));  // X3
-  Ports.append(new Port(-60, 30));  // Y0
-  Ports.append(new Port(-60, 50));  // Y1
-  Ports.append(new Port(-60, 70));  // Y2
-  Ports.append(new Port(-60, 90));  // Y3
-  Ports.append(new Port( 60, 30));  // L
-  Ports.append(new Port( 60, 10));  // G
-  Ports.append(new Port( 60,-10));  // E
+  Ports.append(new ComponentPort(-60,-50));  // X0
+  Ports.append(new ComponentPort(-60,-30));  // X1
+  Ports.append(new ComponentPort(-60,-10));  // X2
+  Ports.append(new ComponentPort(-60, 10));  // X3
+  Ports.append(new ComponentPort(-60, 30));  // Y0
+  Ports.append(new ComponentPort(-60, 50));  // Y1
+  Ports.append(new ComponentPort(-60, 70));  // Y2
+  Ports.append(new ComponentPort(-60, 90));  // Y3
+  Ports.append(new ComponentPort( 60, 30));  // L
+  Ports.append(new ComponentPort( 60, 10));  // G
+  Ports.append(new ComponentPort( 60,-10));  // E
 
   x1 = -60; y1 = -94;
   x2 =  60; y2 =  104;

@@ -38,7 +38,7 @@ VHDL_File::VHDL_File()
   Name  = "X";
 
   // Do NOT call createSymbol() here. But create port to let it rotate.
-  Ports.append(new Port(0, 0));
+  Ports.append(new ComponentPort(0, 0));
 }
 
 // -------------------------------------------------------
@@ -151,10 +151,10 @@ void VHDL_File::createSymbol()
   Texts.append(new Text(w/-2, fHeight/-2, tmp));
 
   int y = 15-h, i = 0;
-  Port *pp;
+  ComponentPort *pp;
   while(i<No) {
     Lines.append(new Line(-30,  y,-HALFWIDTH,  y,QPen(Qt::darkBlue,2)));
-    pp = new Port(-30,  y);
+    pp = new ComponentPort(-30,  y);
     Ports.append(pp);
     pp->Type = TypeNames.section(',', i, i);
     tmp = PortNames.section(',', i, i);
@@ -164,7 +164,7 @@ void VHDL_File::createSymbol()
 
     if(i == No) break;
     Lines.append(new Line(HALFWIDTH,  y, 30,  y,QPen(Qt::darkBlue,2)));
-    pp = new Port( 30,  y);
+    pp = new ComponentPort( 30,  y);
     Ports.append(pp);
     pp->Type = TypeNames.section(',', i, i);
     tmp = PortNames.section(',', i, i);

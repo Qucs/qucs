@@ -1,7 +1,5 @@
 /***************************************************************************
-    begin                : 2018
-    copyright            : Felix
-    email                : felix@salfelder.org
+    copyright            : 2018, 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -53,26 +51,55 @@ private:
 	istream_t(istream_t const&) = delete;
 public:
 	template<class T>
-	istream_t(T t) : QTextStream(t), _current("") {}
-	istream_t(istream_t::STRING, const std::string&s ) : _current(QString::fromStdString(s)){}
+	istream_t(T t) : QTextStream(t), _cmd(""), _cnt(0), _ok(true) { }
+	istream_t(istream_t::STRING, const std::string&s );
 
-private:
+private: // there are more in ap.h
 	std::string ctos(const std::string& term=",=(){};",
 	                 const std::string& b="\"'{",
 	                 const std::string& e="\"'}",
 	                 const std::string& trap="");
+	int ctoi();
+
+  istream_t&	      skip(int c=1) 
+    {_cnt=static_cast<size_t>(static_cast<int>(_cnt)+c); _ok=_cnt<=_cmd.size(); return *this;}
+  istream_t& skipbl();
+  istream_t& skip1b(char);
+  istream_t& skip1(char);
+  istream_t& skip1(const std::string&);
+  istream_t& skip1b(const std::string&);
+  istream_t& skipcom(){return skip1b(",");}
+  char		    peek()const			{
+	  if(_cnt <_cmd.size()){
+		  return _cmd[_cnt];
+	  }else{
+		  return '\0';
+	  }
+  }
+public: // match
+  bool	      ns_more()const	{return peek()!='\0';}
+  bool	      match1(char c)const{return (peek()==c);}
+  bool	      match1(const std::string& c)const
+		{return ns_more() && strchr(c.c_str(),peek());}
 public:
-	QString const& readLine(){
-		_current = QTextStream::readLine();
-		return _current;
-	}
-	std::string fullString() const { return _current.toStdString(); }
+	QString const readLine();
+	std::string fullString() const { return _cmd; }
 	bool atEnd() const{return QTextStream::atEnd();}
 	istream_t& operator>>(std::string& x) {x=ctos();return *this;}
+	istream_t& operator>>(int& x) {x=ctoi();return *this;}
 	istream_t& warn(int, size_t, const std::string&){ incomplete(); return *this;}
 	istream_t& warn(int i, const std::string& s)	{return warn(i,0 , s);}
+
+	size_t cursor() const{ return _cnt; }
+	operator bool()const	{return _ok;}
+
+  bool	      is_digit()const	{return (match1("0123456789"));}
+  char	      ctoc();
 private:
-	QString _current;
+	size_t _current_start;
+	std::string _cmd;
+	size_t _cnt;
+	bool _ok;
 };
 
 // not here
@@ -81,75 +108,5 @@ inline std::ostream& operator<<(std::ostream&o, std::pair<int, int> const& p)
   return o << "(" << p.first << ", " << p.second << ")";
 }
 
-// borrowed from ap_convert.cc
-inline std::string istream_t::ctos(const std::string& term, 
-		     const std::string& begin_quote,
-		     const std::string& end_quote,
-		     const std::string& trap)
-{
-#if 0 // later
-	assert(begin_quote.length() == end_quote.length());
-
-	// skipbl();
-	size_t begin_string = cursor();
-	size_t end_string = cursor();
-
-	std::string s;
-	std::string::size_type which_quote = find1(begin_quote);
-	if (which_quote != std::string::npos) {
-		int quotes = 1;
-		skip(); // the quote
-		begin_string = cursor();
-		char the_begin_quote = begin_quote[which_quote];
-		char the_end_quote = end_quote[which_quote];
-		for (;;) {
-			if (!ns_more()) {itested();
-				end_string = cursor();
-				warn(bDANGER, std::string("need ") + the_end_quote);
-				break;
-			}else if (skip1(the_end_quote)) {
-				if (--quotes <= 0) {
-					end_string = cursor() - 1;
-					break;
-				}else{
-				}
-			}else if (skip1(the_begin_quote)) {
-				++quotes;
-				skip();
-			}else if (skip1('\\')) {
-				end_string = cursor() - 1;
-				s += _cmd.substr(begin_string, end_string-begin_string);
-				begin_string = cursor();
-				skip1(the_end_quote);
-			}else{
-				skip();
-			}
-		}
-		s += _cmd.substr(begin_string, end_string-begin_string);
-	}else{
-		while(ns_more() && !is_term(term)) {
-			skip();
-		}
-		if (match1(trap)) {untested();
-			warn(bDANGER, "ap_convert trap-exit");
-		}else{
-		}
-		end_string = cursor();
-		s = _cmd.substr(begin_string, end_string-begin_string);
-	}
-
-	skipcom();
-	_ok = end_string > begin_string;
-	return s;
-#else
-	(void)term;
-	(void)begin_quote;
-	(void)end_quote;
-	(void)trap;
-	std::string full = fullString();
-	size_t i = full.find(" ");
-	return full.substr(0, i);
-#endif
-}
 
 #endif

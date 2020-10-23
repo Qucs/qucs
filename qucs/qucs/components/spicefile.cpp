@@ -54,7 +54,7 @@ SpiceFile::SpiceFile()
   changed = false;
 
   // Do NOT call createSymbol() here. But create port to let it rotate.
-  Ports.append(new Port(0, 0));
+  Ports.append(new ComponentPort(0, 0));
 }
 
 // -------------------------------------------------------
@@ -109,7 +109,7 @@ void SpiceFile::createSymbol()
   int y = 15-h;
   while(i<No) { // add ports lines and numbers
     Lines.append(new Line(-30,  y,-HALFWIDTH,  y,QPen(Qt::darkBlue,2)));
-    Ports.append(new Port(-30,  y));
+    Ports.append(new ComponentPort(-30,  y));
     tmp = PortNames.section(',', i, i).mid(4);
     w = smallmetrics.width(tmp);
     Texts.append(new Text(-20-w, y-fHeight-2, tmp)); // text right-aligned
@@ -117,7 +117,7 @@ void SpiceFile::createSymbol()
 
     if(i == No) break; // if odd number of ports there will be one port less on the right side
     Lines.append(new Line(HALFWIDTH,  y, 30,  y,QPen(Qt::darkBlue,2)));
-    Ports.append(new Port( 30,  y));
+    Ports.append(new ComponentPort( 30,  y));
     tmp = PortNames.section(',', i, i).mid(4);
     Texts.append(new Text( 20, y-fHeight-2, tmp)); // text left-aligned
     y += 60;
@@ -127,7 +127,7 @@ void SpiceFile::createSymbol()
   if(No > 0) {
     Lines.append(new Line( 0, h, 0,h+15,QPen(Qt::darkBlue,2)));
     Texts.append(new Text( 4, h,"Ref"));
-    Ports.append(new Port( 0, h+15));    // 'Ref' port
+    Ports.append(new ComponentPort( 0, h+15));    // 'Ref' port
   }
 
   x1 = -30; y1 = -h-2;

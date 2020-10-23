@@ -86,11 +86,11 @@ void mux2to1::createSymbol()
   Texts.append(new Text(-25,  7, "0", Qt::darkBlue, 12.0));
   Texts.append(new Text(-25, 27, "1", Qt::darkBlue, 12.0));
 
-  Ports.append(new Port(-50,-20));  // En
-  Ports.append(new Port(-50,  0));  // A
-  Ports.append(new Port(-50, 20));  // D0
-  Ports.append(new Port(-50, 40));  // D1
-  Ports.append(new Port( 50, 0 ));  // Y
+  Ports.append(new ComponentPort(-50,-20));  // En
+  Ports.append(new ComponentPort(-50,  0));  // A
+  Ports.append(new ComponentPort(-50, 20));  // D0
+  Ports.append(new ComponentPort(-50, 40));  // D1
+  Ports.append(new ComponentPort( 50, 0 ));  // Y
 
   x1 = -50; y1 = -64;
   x2 =  50; y2 =  54;

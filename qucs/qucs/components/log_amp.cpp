@@ -103,9 +103,9 @@ void log_amp::createSymbol()
   Texts.append(new Text(-17, -26, QObject::tr("I"), Qt::black, 10.0, 1.0, 0.0));
   Texts.append(new Text(-17,  14, QObject::tr("R"), Qt::black, 10.0, 1.0, 0.0));
   
-  Ports.append(new Port(-30,-20));
-  Ports.append(new Port(-30, 20));
-  Ports.append(new Port( 40,  0));
+  Ports.append(new ComponentPort(-30,-20));
+  Ports.append(new ComponentPort(-30, 20));
+  Ports.append(new ComponentPort( 40,  0));
 
   x1 = -30; y1 = -38;
   x2 =  40; y2 =  38;

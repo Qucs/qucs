@@ -49,7 +49,7 @@ CPWopen::CPWopen()
   Lines.append(new Line( -6, 13,  2, 21,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( -2,  9, 10, 21,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(-30, 0));
+  Ports.append(new ComponentPort(-30, 0));
 
   x1 = -30; y1 =-24;
   x2 =  17; y2 = 24;

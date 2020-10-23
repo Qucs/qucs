@@ -35,8 +35,8 @@ MSstep::MSstep()
 
   Lines.append(new Line(-22, -4,-26,  4,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(-30, 0));
-  Ports.append(new Port( 30, 0));
+  Ports.append(new ComponentPort(-30, 0));
+  Ports.append(new ComponentPort( 30, 0));
 
   x1 = -30; y1 =-13;
   x2 =  30; y2 = 13;

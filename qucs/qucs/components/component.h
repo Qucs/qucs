@@ -27,6 +27,38 @@ class ComponentDialog;
 
 class QTextStream; // BUG
 
+
+class ComponentPort : public Port{
+public:
+  ComponentPort(const ComponentPort&p) : Port(), _p(p._p), avail(p.avail),
+					Type(p.Type), Name(p.Name) {}
+  explicit ComponentPort(int x, int y, bool _avail=true)
+	  : Port(), _p(x, y), avail(_avail)
+  {
+    Type=""; Name="";
+  }
+
+public:
+  int x_()const{return getX(_p);}
+  int y_()const{return getY(_p);}
+  pos_t const& position() const { return _p; }
+  void setPosition(int x, int y) { _p=pos_t(x,y); }
+  void setPosition(pos_t p) { _p=p; }
+  int x() const{ return getX(_p); }
+  int y() const{ return getY(_p); }
+
+  QString const& name() const{return Name;}
+
+private:
+  pos_t _p;
+
+public:
+  bool  avail;
+  QString Type; // BUG. type is "Port".
+  QString Name; // BUG?
+
+};
+
 struct Property // : public Object
 {
   Property(const QString& _Name="", const QString& _Value="",
@@ -79,11 +111,14 @@ public: // legacy stuff. don't use
 public: // Element interface, private?!
   Element* clone() const;
 
+protected: // Symbol
   virtual unsigned numPorts() const override{ return Ports.count(); }
-protected: // symbol interface
-  Port& port(unsigned i) {
+  Port& port(unsigned i) override{
 	  assert(i<unsigned(Ports.count()));
 	  return *Ports[i]; 
+  }
+  pos_t portPosition(unsigned i) const override{
+	  return Ports[i]->position();
   }
   //virtual Port const* portValue(unsigned i) const { return Ports[i]; } ... ?
 
@@ -148,7 +183,7 @@ public: // BUG
   QList<struct Arc *>      Arcs;
   QList<Area *>     Rects;
   QList<Area *>     Ellips;
-  QList<Port *>     Ports;
+  QList<ComponentPort*> Ports;
   QList<Text *>     Texts;
   mutable //bug: Q3PtrList does not support constness
       Q3PtrList<Property> Props;
@@ -160,7 +195,7 @@ public: // BUG
   bool isOpen() const{return isActive==COMP_IS_OPEN;}
 //  QString label() const{return Name;}
   Q3PtrList<Property> const& params() const{return Props;}
-  QList<Port*>const& ports() const{return Ports;}
+  QList<ComponentPort*>const& ports() const{return Ports;}
 // private: // not yet
   int  isActive; // should it be used in simulation or not ?
   mutable /*BUGBUGBUG*/ int  tx, ty;   // upper left corner of text (position)

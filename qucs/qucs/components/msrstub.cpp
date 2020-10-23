@@ -28,7 +28,7 @@ MSrstub::MSrstub()
   Lines.append(new Line( 5,   0, 18,-18,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 0,   0,  0, 10,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(0, 10));
+  Ports.append(new ComponentPort(0, 10));
 
   x1 = -22; y1 =-30;
   x2 =  22; y2 = 10;

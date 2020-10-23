@@ -153,7 +153,7 @@ void SubCirPort::createSymbol()
     }
   }
 
-  Ports.append(new Port(  0,  0));
+  Ports.append(new ComponentPort(  0,  0));
 }
 // -------------------------------------------------------
 std::string SubCirPort::paramName(unsigned n) const

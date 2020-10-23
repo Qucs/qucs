@@ -60,8 +60,8 @@ vProbe::vProbe()
 
   Lines.append(new Line(-10,  9,-10, 20,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 10,  9, 10, 20,QPen(Qt::darkBlue,2)));
-  Ports.append(new Port(-10, 20));
-  Ports.append(new Port( 10, 20));
+  Ports.append(new ComponentPort(-10, 20));
+  Ports.append(new ComponentPort( 10, 20));
 
   x1 = -24; y1 = -35;
   x2 =  24; y2 =  20;

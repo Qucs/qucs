@@ -147,11 +147,11 @@ void phototransistor::createSymbol()
   Lines.append(new Line(-57, -40, -54, -35,QPen(Qt::black,2)));
   Lines.append(new Line(-54, -35, -51, -40,QPen(Qt::black,2)));
 
-  Ports.append(new Port(  0,-30)); // Collector
-  Ports.append(new Port(-30,  0)); // Base
-  Ports.append(new Port(  0, 30)); // Emitter
-  Ports.append(new Port(-50,-50)); // Power
-  Ports.append(new Port(-50,-30)); // Wavelength
+  Ports.append(new ComponentPort(  0,-30)); // Collector
+  Ports.append(new ComponentPort(-30,  0)); // Base
+  Ports.append(new ComponentPort(  0, 30)); // Emitter
+  Ports.append(new ComponentPort(-50,-50)); // Power
+  Ports.append(new ComponentPort(-50,-30)); // Wavelength
 
   x1 = -50; y1 = -60;
   x2 =  20; y2 =  30;

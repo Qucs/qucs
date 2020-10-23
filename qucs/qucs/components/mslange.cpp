@@ -32,10 +32,10 @@ MSlange::MSlange()
   Lines.append(new Line( 30,-30, 30,-20,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 30,-10, 30, 30,QPen(Qt::darkBlue,2)));          
 
-  Ports.append(new Port(-30,-30));
-  Ports.append(new Port( 30, 30));
-  Ports.append(new Port( 30,-30));
-  Ports.append(new Port(-30, 30));
+  Ports.append(new ComponentPort(-30,-30));
+  Ports.append(new ComponentPort( 30, 30));
+  Ports.append(new ComponentPort( 30,-30));
+  Ports.append(new ComponentPort(-30, 30));
 
   x1 = -30; y1 =-33;
   x2 =  30; y2 = 33;

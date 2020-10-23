@@ -33,8 +33,9 @@ public:
   }
 
 private:
-  Port& port(unsigned){ unreachable(); return *new Port(0,0); }
-  unsigned numPorts() const{ return 0; }
+  Port& port(unsigned) override{ unreachable(); throw Exception(); }
+  pos_t portPosition(unsigned) const override{ unreachable(); throw Exception();}
+  unsigned numPorts() const override{ return 0; }
 private: // SchematicSymbol
   SchematicModel const& schematicModel() const{ untested();
     incomplete();

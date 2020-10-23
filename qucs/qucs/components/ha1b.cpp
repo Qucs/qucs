@@ -73,10 +73,10 @@ void ha1b::createSymbol()
   Lines.append(new Line(  5,-25,-10, -15, QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-10,-15, 10, -15, QPen(Qt::darkBlue,2)));
  
-  Ports.append(new Port(-50,-10));  // A
-  Ports.append(new Port(-50, 10));  // B
-  Ports.append(new Port( 50, 10));  // CO
-  Ports.append(new Port( 50,-10));  // S
+  Ports.append(new ComponentPort(-50,-10));  // A
+  Ports.append(new ComponentPort(-50, 10));  // B
+  Ports.append(new ComponentPort( 50, 10));  // CO
+  Ports.append(new ComponentPort( 50,-10));  // S
 
   x1 = -50; y1 = -44;
   x2 =  50; y2 =  34;

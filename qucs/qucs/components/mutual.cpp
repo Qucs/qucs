@@ -41,10 +41,10 @@ Mutual::Mutual()
   Texts.append(new Text( 15, -22, "2"));
   Lines.append(new Line(  0,-20,  0, 20,QPen(Qt::darkBlue,1,Qt::DashLine)));
 
-  Ports.append(new Port(-30,-30));
-  Ports.append(new Port( 30,-30));
-  Ports.append(new Port( 30, 30));
-  Ports.append(new Port(-30, 30));
+  Ports.append(new ComponentPort(-30,-30));
+  Ports.append(new ComponentPort( 30,-30));
+  Ports.append(new ComponentPort( 30, 30));
+  Ports.append(new ComponentPort(-30, 30));
 
   x1 = -33; y1 = -34;
   x2 =  33; y2 =  34;

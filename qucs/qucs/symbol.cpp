@@ -69,16 +69,22 @@ QString const& Symbol::netLabel(unsigned i) const
 #endif
 /*--------------------------------------------------------------------------*/
 // connect to a node. (connectPort?)
+// is this a kind of mapNode?
 Node* Symbol::connectNode(unsigned i, NodeMap&nm)
 {
 	trace2("connectNode", label(), i);
-	Port const& pp = port(i);
-	Port& mp = port(i);
-	pos_t p(pp.x_()+cx(), pp.y_()+cy());
+	// Port const& pp = port(i);
+	// (pp.x_()+cx(), pp.y_()+cy());
+	pos_t p = portPosition(i) + center(); // nodePosition(i)?
 	Node* n = &nm.at(p);
 	assert(n->hasNet());
 
+	trace0("connectNode set port");
+
+	Port& mp = port(i); // hmm setPort(...) instead?
 	mp.connect(n /*,this*/);
+
+//	n->connect(mp, /*this*/);
 	return n;
 }
 /*--------------------------------------------------------------------------*/
@@ -182,19 +188,12 @@ void Symbol::paint(ViewPainter* p) const
 // global/external position
 pos_t Symbol::nodePosition(unsigned i) const
 {
-	if(port(i).isConnected()){
+	if(port(i).isConnected()){ untested();
+		assert( portPosition(i) + center() == port(i)->position());
 		return port(i)->position();	
 	}else{
-		pos_t c(center().first, center().second); // ...
-		return port(i).position() + c;
+		return portPosition(i) + center();
 	}
-}
-/*--------------------------------------------------------------------------*/
-// local/relative position
-pos_t Symbol::portPosition(unsigned i) const
-{
-	auto p = port(i).position();	
-	return p;
 }
 /*--------------------------------------------------------------------------*/
 // BUG: not here. legacy stuff...

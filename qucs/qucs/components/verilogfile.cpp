@@ -40,7 +40,7 @@ Verilog_File::Verilog_File()
   Name  = "X";
 
   // Do NOT call createSymbol() here. But create port to let it rotate.
-  Ports.append(new Port(0, 0));
+  Ports.append(new ComponentPort(0, 0));
 }
 
 // -------------------------------------------------------
@@ -144,7 +144,7 @@ void Verilog_File::createSymbol()
   int y = 15-h, i = 0;
   while(i<No) {
     Lines.append(new Line(-30,  y,-HALFWIDTH,  y,QPen(Qt::darkBlue,2)));
-    Ports.append(new Port(-30,  y));
+    Ports.append(new ComponentPort(-30,  y));
     tmp = PortNames.section(',', i, i);
     w = metrics.width(tmp);
     Texts.append(new Text(-26-w, y-fHeight-2, tmp));
@@ -152,7 +152,7 @@ void Verilog_File::createSymbol()
 
     if(i == No) break;
     Lines.append(new Line(HALFWIDTH,  y, 30,  y,QPen(Qt::darkBlue,2)));
-    Ports.append(new Port( 30,  y));
+    Ports.append(new ComponentPort( 30,  y));
     tmp = PortNames.section(',', i, i);
     Texts.append(new Text( 27, y-fHeight-2, tmp));
     y += 60;

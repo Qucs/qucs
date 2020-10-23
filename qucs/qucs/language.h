@@ -8,8 +8,10 @@ class Symbol;
 class Element;
 class TaskElement;
 class Painting;
+class Command;
 class istream_t;
 class SchematicModel;
+class DEV_DOT;
 
 // baseclass for schematic and net languages.
 // use u_lang.h instead?
@@ -22,10 +24,13 @@ public:
   virtual void printItem(Element const*, ostream_t&) const;
 
   virtual Element* parseItem(istream_t&, Element*) const;
+  virtual DEV_DOT* parseCommand(istream_t&, DEV_DOT*) const{
+	  untested(); return nullptr;
+  }
   virtual std::string findType(istream_t&) const = 0;
   void new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
-                     SchematicModel* Scope);
-  const Element* find_proto(const std::string&, const Element*);
+                     SchematicModel* Scope) const;
+  const Element* find_proto(const std::string&, const Element*) const;
 private: //called by printItem
   virtual void printPainting(Painting const*, ostream_t&) const = 0;
   virtual void printDiagram(Symbol const*, ostream_t&) const = 0;

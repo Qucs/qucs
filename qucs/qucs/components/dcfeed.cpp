@@ -33,8 +33,8 @@ dcFeed::dcFeed()
   Lines.append(new Line(-23,-13,-23, 13,QPen(Qt::darkBlue,1)));
   Lines.append(new Line( 23,-13, 23, 13,QPen(Qt::darkBlue,1)));
 
-  Ports.append(new Port(-30,  0));
-  Ports.append(new Port( 30,  0));
+  Ports.append(new ComponentPort(-30,  0));
+  Ports.append(new ComponentPort( 30,  0));
 
   x1 = -30; y1 = -15;
   x2 =  30; y2 =  16;

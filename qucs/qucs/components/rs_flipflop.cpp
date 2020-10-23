@@ -41,10 +41,10 @@ RS_FlipFlop::RS_FlipFlop()
   Texts.append(new Text(  6, -1, "Q", Qt::darkBlue, 12.0));
   Texts.last()->over=true;
 
-  Ports.append(new Port(-30,-10));  // R
-  Ports.append(new Port(-30, 10));  // S
-  Ports.append(new Port( 30,-10));  // Q
-  Ports.append(new Port( 30, 10));  // nQ
+  Ports.append(new ComponentPort(-30,-10));  // R
+  Ports.append(new ComponentPort(-30, 10));  // S
+  Ports.append(new ComponentPort( 30,-10));  // Q
+  Ports.append(new ComponentPort( 30, 10));  // nQ
 
   x1 = -30; y1 = -24;
   x2 =  30; y2 =  24;

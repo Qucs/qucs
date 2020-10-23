@@ -83,13 +83,13 @@ void comp_2bit::createSymbol()
   Texts.append(new Text(  5, -3, "X>Y", Qt::darkBlue, 12.0));
   Texts.append(new Text(  5,-23, "X=Y", Qt::darkBlue, 12.0));
 
-  Ports.append(new Port(-60,-10));  // X0
-  Ports.append(new Port(-60, 10));  // X1
-  Ports.append(new Port(-60, 30));  // Y0
-  Ports.append(new Port(-60, 50));  // Y1
-  Ports.append(new Port( 60, 30));  // L
-  Ports.append(new Port( 60, 10));  // G
-  Ports.append(new Port( 60,-10));  // E
+  Ports.append(new ComponentPort(-60,-10));  // X0
+  Ports.append(new ComponentPort(-60, 10));  // X1
+  Ports.append(new ComponentPort(-60, 30));  // Y0
+  Ports.append(new ComponentPort(-60, 50));  // Y1
+  Ports.append(new ComponentPort( 60, 30));  // L
+  Ports.append(new ComponentPort( 60, 10));  // G
+  Ports.append(new ComponentPort( 60,-10));  // E
 
   x1 = -60; y1 = -54;
   x2 =  60; y2 =  64;

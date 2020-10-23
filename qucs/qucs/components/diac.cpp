@@ -32,8 +32,8 @@ Diac::Diac()
   Lines.append(new Line(  9, -6,  0,  6,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(  9, -6, 18,  6,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(  0,-30));
-  Ports.append(new Port(  0, 30));
+  Ports.append(new ComponentPort(  0,-30));
+  Ports.append(new ComponentPort(  0, 30));
 
   x1 = -20; y1 = -30;
   x2 =  20; y2 =  30;

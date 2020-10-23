@@ -36,10 +36,10 @@ TLine_4Port::TLine_4Port()
   Arcs.append(new Arc( 22,-10, 16, 28, 16*90, 16*45,QPen(Qt::darkBlue,1)));
   Arcs.append(new Arc( 22,-18, 16, 28,16*225, 16*45,QPen(Qt::darkBlue,1)));
 
-  Ports.append(new Port(-30,-10));
-  Ports.append(new Port( 30,-10));
-  Ports.append(new Port( 30, 10));
-  Ports.append(new Port(-30, 10));
+  Ports.append(new ComponentPort(-30,-10));
+  Ports.append(new ComponentPort( 30,-10));
+  Ports.append(new ComponentPort( 30, 10));
+  Ports.append(new ComponentPort(-30, 10));
 
   x1 = -30; y1 =-12;
   x2 =  30; y2 = 12;

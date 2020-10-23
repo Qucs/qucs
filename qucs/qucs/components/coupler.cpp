@@ -46,10 +46,10 @@ Coupler::Coupler()
   Lines.append(new Line(-14, 14, -9, 14,QPen(Qt::darkBlue,1)));
   Lines.append(new Line(-14, 14,-14,  9,QPen(Qt::darkBlue,1)));
 
-  Ports.append(new Port(-30,-20));
-  Ports.append(new Port( 30,-20));
-  Ports.append(new Port( 30, 20));
-  Ports.append(new Port(-30, 20));
+  Ports.append(new ComponentPort(-30,-20));
+  Ports.append(new ComponentPort( 30,-20));
+  Ports.append(new ComponentPort( 30, 20));
+  Ports.append(new ComponentPort(-30, 20));
 
 
   x1 = -30; y1 = -25;

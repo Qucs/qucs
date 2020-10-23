@@ -28,42 +28,6 @@
    *****                                                         *****
    ******************************************************************* */
 
-// Inserts a port into the schematic and connects it to another node if
-// the coordinates are identical. The node is returned.
-Node* SchematicModel::insertNode(int , int , Element *)
-{   untested();
-    unreachable();
-
-#if 0
-    Node *pn;
-    pn = &nodes().at(x,y);
-    pn->connectionsAppend(e);
-
-    // check if the new node lies within an existing wire
-    //
-    if(pn->degree()==1){
-	// BUG. the wire is connected. just use it.
-	for(auto pw : wires()) {
-	    if(pw->x1_() == x) {
-		if(pw->y1_() > y) continue;
-		if(pw->y2_() < y) continue;
-	    } else if(pw->y1_() == y) {
-		if(pw->x1_() > x) continue;
-		if(pw->x2_() < x) continue;
-	    }else{
-		continue;
-	    }
-
-	    // split the wire into two wires
-	    splitWire(pw, pn);
-	    break;
-	}
-    }else{
-    }
-    return pn;
-#endif
-    return nullptr;
-}
 /*--------------------------------------------------------------------------*/
 // obsolete
 Node* SchematicDoc::selectedNode(int , int )

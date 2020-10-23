@@ -36,8 +36,8 @@ iPulse::iPulse()
   Lines.append(new Line( 13, 10, 19, 10,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 13, 14, 19, 14,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port( 30,  0));
-  Ports.append(new Port(-30,  0));
+  Ports.append(new ComponentPort( 30,  0));
+  Ports.append(new ComponentPort(-30,  0));
 
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  20;

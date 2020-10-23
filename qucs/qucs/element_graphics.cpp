@@ -22,11 +22,10 @@
 #include "schematic_model.h"
 #include <QGraphicsScene>
 #include "element_graphics.h"
-#include "paintings/painting.h" // BUG
 #include "io.h"
 #include "platform.h"
-#include "place.h"
 #include "qt_compat.h"
+#include "painting.h"
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 ElementGraphics::ElementGraphics() : QGraphicsItem()

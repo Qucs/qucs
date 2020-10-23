@@ -31,9 +31,9 @@ Thyristor::Thyristor()
   Lines.append(new Line( -9, 10, -5,  6,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-20, 10, -9, 10,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(  0,-30));
-  Ports.append(new Port(  0, 30));
-  Ports.append(new Port(-20, 10));
+  Ports.append(new ComponentPort(  0,-30));
+  Ports.append(new ComponentPort(  0, 30));
+  Ports.append(new ComponentPort(-20, 10));
 
   x1 = -20; y1 = -30;
   x2 =  11; y2 =  30;

@@ -14,6 +14,7 @@
 #include "qucs.h"
 #include "globals.h"
 #include "module.h"
+#include "painting.h"
 #include "schematic_doc.h"
 #include "some_font_stuff.h"
 
@@ -49,7 +50,7 @@ public:
 };
 
 PortSymbol D;
-Dispatcher<Painting>::INSTALL p(&painting_dispatcher, ".PortSym", &D);
+Dispatcher<Painting>::INSTALL p(&painting_dispatcher, "PortSym", &D);
 Module::INSTALL pp("paintings", &D);
 
 PortSymbol::PortSymbol() : Painting()
@@ -99,7 +100,8 @@ void PortSymbol::paint(ViewPainter *p)
   x2 = Unit - x1;
   y2 = r.height() + Unit;
 
-  QMatrix wm = p->worldMatrix();
+  auto wm = p->worldMatrix();
+#if 0
   QMatrix Mat(1.0, 0.0, 0.0, 1.0, p->DX + float(cx) * p->Scale,
 				   p->DY + float(cy) * p->Scale);
   p->setWorldMatrix(Mat);
@@ -130,6 +132,7 @@ void PortSymbol::paint(ViewPainter *p)
   p->drawText(tx, ty, 0, 0, Qt::TextDontClip, nameStr);
 
 
+#endif
   p->setWorldMatrix(wm);
   p->setWorldMatrixEnabled(false);
 

@@ -100,7 +100,7 @@ private:
 
 public: // Port stuff
 	virtual void setPort(int, std::string const&){unreachable();}
-	virtual pos_t portPosition(unsigned) const; // why virtual?
+	virtual pos_t portPosition(unsigned) const = 0;
 	virtual pos_t nodePosition(unsigned) const; // why virtual?
 
 	virtual Net const* portValue(unsigned) const; // why virtual?
@@ -132,8 +132,8 @@ protected: // maybe not here. but need to rebase MultiViewComponent to ScktProto
 private:
 	std::string _type;
 	int _angle;
-	int _hflip; // hscale??
 	int _vflip; // vscale??
+	int _hflip; // hscale??
 }; // symbol
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

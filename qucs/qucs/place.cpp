@@ -15,19 +15,22 @@
 #define QUCS_PLACE_H
 /*--------------------------------------------------------------------------*/
 #include "symbol.h"
+#include "globals.h"
 #include "exception.h"
 #include "geometry.h"
+/*--------------------------------------------------------------------------*/
+namespace{
 /*--------------------------------------------------------------------------*/
 class Place : public Symbol{
 private:
 	explicit Place(Place const& p)
-		: Symbol(p),
-	     _port(p._port){
+		: Symbol(p){
 	}
 public: // construct
-	explicit Place(pos_t p) : _port(0, 0){
-		setCenter(p);
-	}
+	explicit Place() : Symbol() { }
+	//explicit Place(pos_t p) : Symbol(),  _port(0, 0){
+	//	setCenter(p);
+	//}
 	virtual ~Place() {}
 
 private: // Element
@@ -65,7 +68,10 @@ private: // internal port access
 
 private:
 	Port _port;
-}; // symbol
+}d0; // Place
+Dispatcher<Command>::INSTALL p(&symbol_dispatcher, "place", &d0);
+/*--------------------------------------------------------------------------*/
+} // namespace
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif

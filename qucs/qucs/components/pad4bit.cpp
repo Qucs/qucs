@@ -60,10 +60,10 @@ void pad4bit::createSymbol()
   Texts.append(new Text(-58,  0, " 8   9  10 11", Qt::darkGreen, 12.0));
   Texts.append(new Text(-58, 23, "12 13 14 15", Qt::darkGreen, 12.0));
  
-  Ports.append(new Port(40, 30));  // D
-  Ports.append(new Port(40, 10));  // C
-  Ports.append(new Port(40,-10));  // B
-  Ports.append(new Port(40,-30));  // A
+  Ports.append(new ComponentPort(40, 30));  // D
+  Ports.append(new ComponentPort(40, 10));  // C
+  Ports.append(new ComponentPort(40,-10));  // B
+  Ports.append(new ComponentPort(40,-30));  // A
 
   x1 = -64; y1 = -54;
   x2 =  40; y2 =  54;

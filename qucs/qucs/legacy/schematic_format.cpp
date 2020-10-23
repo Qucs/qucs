@@ -18,7 +18,7 @@
 #include "schematic_model.h"
 #include "misc.h" //?!!
 
-#include "paintings/painting.h" // BUG
+#include "painting.h"
 #include "diagram.h" // BUG?
 #include "task_element.h" // BUG?
 

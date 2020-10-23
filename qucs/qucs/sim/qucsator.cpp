@@ -231,7 +231,7 @@ void QucsatorLang::printComponent(Component const* c, ostream_t& s) const
 		// replace by some resistors (hack?)
 		incomplete();
 		int z=0;
-		QListIterator<Port *> iport(c->ports());
+		QListIterator<ComponentPort*> iport(c->ports());
 		iport.next(); // BUG
 		unsigned k=0;
 		std::string Node1 = netLabel(c->portValue(k));

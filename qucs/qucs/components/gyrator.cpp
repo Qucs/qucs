@@ -38,10 +38,10 @@ Gyrator::Gyrator()
   Lines.append(new Line( 22, 22,-22, 22,QPen(Qt::darkGray,1)));
   Lines.append(new Line(-22, 22,-22,-22,QPen(Qt::darkGray,1)));
 
-  Ports.append(new Port(-30,-30));
-  Ports.append(new Port( 30,-30));
-  Ports.append(new Port( 30, 30));
-  Ports.append(new Port(-30, 30));
+  Ports.append(new ComponentPort(-30,-30));
+  Ports.append(new ComponentPort( 30,-30));
+  Ports.append(new ComponentPort( 30, 30));
+  Ports.append(new ComponentPort(-30, 30));
 
   x1 = -30; y1 = -30;
   x2 =  30; y2 =  30;

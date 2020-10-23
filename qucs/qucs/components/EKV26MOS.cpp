@@ -261,10 +261,10 @@ void EKV26MOS::createSymbol()
   Lines.append(new Line(-18,-30,-16,-24,QPen(Qt::darkBlue,1)));
   Lines.append(new Line(-14,-30,-16,-24,QPen(Qt::darkBlue,1)));
 
-  Ports.append(new Port(  0,-30)); // drain
-  Ports.append(new Port(-30,  0)); // gate
-  Ports.append(new Port(  0, 30)); // source
-  Ports.append(new Port( 20,  0)); // bulk
+  Ports.append(new ComponentPort(  0,-30)); // drain
+  Ports.append(new ComponentPort(-30,  0)); // gate
+  Ports.append(new ComponentPort(  0, 30)); // source
+  Ports.append(new ComponentPort( 20,  0)); // bulk
 
   x1 = -30; y1 = -30;
   x2 =  20; y2 =  30;

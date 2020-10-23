@@ -1,9 +1,6 @@
 /***************************************************************************
-                          painting.cpp  -  description
-                             -------------------
-    begin                : Sat Nov 22 2003
     copyright            : (C) 2003 by Michael Margraf
-	                            2018 Felix Salfelder / QUCS team
+	                            2018, 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -14,7 +11,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "paintings/painting.h"
+#include "painting.h"
 
 Painting::Painting()
 {

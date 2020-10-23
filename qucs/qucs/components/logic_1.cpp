@@ -63,7 +63,7 @@ void logic_1::createSymbol()
 
   Texts.append(new Text(-30,-12, "1", Qt::darkGreen, 12.0));
 
-  Ports.append(new Port(  0,  0)); // L1
+  Ports.append(new ComponentPort(  0,  0)); // L1
 
   x1 = -39; y1 = -14;
   x2 = 0;   y2 =  14;

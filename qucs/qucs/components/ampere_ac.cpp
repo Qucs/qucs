@@ -46,8 +46,8 @@ Ampere_ac::Ampere_ac() : Component()
   Arcs.append(new Arc( 12,  5,  6,  6,16*270, 16*180,QPen(Qt::darkBlue,2)));
   Arcs.append(new Arc( 12, 11,  6,  6, 16*90, 16*180,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port( 30,  0));
-  Ports.append(new Port(-30,  0));
+  Ports.append(new ComponentPort( 30,  0));
+  Ports.append(new ComponentPort(-30,  0));
 
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  16;

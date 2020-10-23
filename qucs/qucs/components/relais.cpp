@@ -43,10 +43,10 @@ Relais::Relais()
   Ellips.append(new Area( 27, 12, 6, 6, QPen(Qt::darkBlue,2),
                          QBrush(Qt::darkBlue, Qt::SolidPattern)));
 
-  Ports.append(new Port(-30,-30));
-  Ports.append(new Port( 30,-30));
-  Ports.append(new Port( 30, 30));
-  Ports.append(new Port(-30, 30));
+  Ports.append(new ComponentPort(-30,-30));
+  Ports.append(new ComponentPort( 30,-30));
+  Ports.append(new ComponentPort( 30, 30));
+  Ports.append(new ComponentPort(-30, 30));
 
   x1 = -48; y1 = -30;
   x2 =  45; y2 =  30;

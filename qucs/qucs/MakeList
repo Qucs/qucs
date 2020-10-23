@@ -35,6 +35,7 @@ CPP_SRC = \
 	object.cpp \
 	octave_window.cpp \
 	painting.cpp \
+	place.cpp \
 	port.cpp \
 	printerwriter.cpp \
 	projectView.cpp \

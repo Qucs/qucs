@@ -154,7 +154,7 @@ void EqnDefined::createSymbol()
     i++;
     // left connection with port
     Lines.append(new Line(-30, y,-15, y,QPen(Qt::darkBlue,2)));
-    Ports.append(new Port(-30, y));
+    Ports.append(new ComponentPort(-30, y));
     // small black arrow inside the box
     Lines.append(new Line( 7,y-3, 10, y,QPen(Qt::black,1)));
     Lines.append(new Line( 7,y+3, 10, y,QPen(Qt::black,1)));
@@ -167,7 +167,7 @@ void EqnDefined::createSymbol()
     }
     // right connection with port
     Lines.append(new Line( 15, y, 30, y,QPen(Qt::darkBlue,2)));
-    Ports.append(new Port( 30, y));
+    Ports.append(new ComponentPort( 30, y));
     // add branch number near the right connection port
     Texts.append(new Text(25,y-fHeight-2,QString::number(i))); // left-aligned
     // move the vertical center down for the next branch

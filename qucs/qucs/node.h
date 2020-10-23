@@ -40,6 +40,12 @@ private: // managed by NodeMap
 public:
   void inc_ports(){ ++_ports; }
   void dec_ports(){ assert(_ports); --_ports; }
+
+  // possibly wrong.
+//  void connect(Port&);
+//  void disconnect(Port&);
+
+public:
   bool hasPorts() const{ return _ports; }
   unsigned numPorts() const{ return _ports; }
 
@@ -51,33 +57,10 @@ public:
   }
   bool isNet(pos_t const&) const override;
 
-#if 0 // what is this?
-  void setState(int i){
-	  State |= i;
-  }
-  bool hasState(int i) const{
-	  return State & i;
-  }
-#endif
-
 private:
   // QString DType; // type of node (used by digital files)
 
 public: // protected coordinate abuse
-#if 0
-  void markUnChecked(){
-	  y1=0;
-  }
-  void markChecked(){
-	  y1=1;
-  }
-  void reset_something(){
-	  x1=0;
-  }
-  void set_something(int x){
-	  x1|=x;
-  }
-#endif
 
 private:
   const pos_t _position;

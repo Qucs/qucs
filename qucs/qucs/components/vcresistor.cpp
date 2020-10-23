@@ -52,10 +52,10 @@ vcresistor::vcresistor()
   Lines.append(new Line(-25, 27,-25,-27,QPen(Qt::darkGray,1)));
 
 
-  Ports.append(new Port(-30,-30));
-  Ports.append(new Port(-30, 30));
-  Ports.append(new Port( 30,-30));
-  Ports.append(new Port( 30, 30));
+  Ports.append(new ComponentPort(-30,-30));
+  Ports.append(new ComponentPort(-30, 30));
+  Ports.append(new ComponentPort( 30,-30));
+  Ports.append(new ComponentPort( 30, 30));
 
 
   x1 = -30; y1 = -30;
