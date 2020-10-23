@@ -20,7 +20,6 @@ namespace notstd{
 	static void to_lower(std::string*){}
 }
 using std::to_string;
-static const int bWARNING=1;
 #include <map>
 #include <assert.h>
 #include "platform.h"

@@ -19,6 +19,7 @@
 #include "element.h"
 #include "exception.h"
 #include "geometry.h"
+#include "io_error.h"
 /*--------------------------------------------------------------------------*/
 class QPainter;
 class NodeMap;
@@ -98,7 +99,7 @@ private:
 	Port const& port(unsigned) const; // TODO. don't expose "Port"
 
 public: // Port stuff
-	virtual void setPort(int index, std::string const& value){unreachable();}
+	virtual void setPort(int, std::string const&){unreachable();}
 	virtual pos_t portPosition(unsigned) const; // why virtual?
 	virtual pos_t nodePosition(unsigned) const; // why virtual?
 
