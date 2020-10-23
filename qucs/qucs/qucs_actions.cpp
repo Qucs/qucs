@@ -490,7 +490,7 @@ void QucsApp::editFile(const QString& File)
       }
 
       QProcess *externalEditor = new QProcess();
-      qDebug() << "Command: " << editorPath << args.join(" ");
+      qDebug() << "taskElement: " << editorPath << args.join(" ");
       externalEditor->start(prog, args);
 
       if( !externalEditor->waitForStarted(1000) ) {
@@ -612,7 +612,7 @@ void QucsApp::launchTool(const QString& prog, const QString& progDesc, const QSt
     tool->setWorkingDirectory(QucsSettings.BinDir);
   }
 
-  qDebug() << "Command :" << cmd + " " + args;
+  qDebug() << "taskElement :" << cmd + " " + args;
 
   // FIXME: use start(const QString& program, const QStringList& arguments);
   tool->start(cmd + " " + args);
@@ -1068,7 +1068,7 @@ void QucsApp::slotBuildModule()
     QString cmdString = QString("%1 %2\n").arg(make, Arguments.join(" "));
     messageDock->admsOutput->appendPlainText(cmdString);
 
-    qDebug() << "Command :" << make << Arguments.join(" ");
+    qDebug() << "taskElement :" << make << Arguments.join(" ");
     builder->start(make, Arguments);
 
     // admsXml seems to communicate all via stdout, or is it because of make?

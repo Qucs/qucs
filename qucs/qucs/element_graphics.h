@@ -63,7 +63,7 @@ private: // QGraphicsItem
   bool sceneEvent(QEvent*) override;
   QVariant itemChange(GraphicsItemChange c, const QVariant &v) override;
 
-public: // manipulate (used in UndoCommands)
+public: // manipulate (used in UndotaskElements)
   void hide();
   void show();
 

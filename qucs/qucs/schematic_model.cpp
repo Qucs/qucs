@@ -250,7 +250,7 @@ Element* SchematicModel::detach(Element* what)
 Element* SchematicModel::attach(Element* what)
 {itested();
 	trace2("SchematicModel::attach", what->label(), this);
-	if(auto c=dynamic_cast<CmdElement*>(what)){ untested();
+	if(auto c=dynamic_cast<TaskElement*>(what)){ untested();
 		commands().push_back(c);
 	}else if(auto c=component(what)){itested();
 		// really?

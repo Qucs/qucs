@@ -390,22 +390,22 @@ private:
 	Element const* _proto;
 };
 /*--------------------------------------------------------------------------*/
-class NewElementCommand : public SchematicEdit {
+class NewElementtaskElement : public SchematicEdit {
 public:
-	NewElementCommand(SchematicDoc& ctx, ElementGraphics* gfx)
+	NewElementtaskElement(SchematicDoc& ctx, ElementGraphics* gfx)
 	: SchematicEdit(*ctx.sceneHACK()) { untested();
 		gfx->hide();
 		ctx.takeOwnership(element(gfx)); // BUG?
 		// elment->setOwner(ctx)...?
 		setText("NewElement" /*element(gfx)->label()*/); // tr?
-		trace0("NewElementCommand::NewElementCommand");
+		trace0("NewElementtaskElement::NewElementCommand");
 		qInsert(gfx);
 	}
-	~NewElementCommand(){ untested();
+	~NewElementtaskElement(){ untested();
 		// _gfx is owned by ctx
 		// _gfx owns element(_gfx)
 	}
-}; // NewElementCommand
+}; // NewElementtaskElement
 /*--------------------------------------------------------------------------*/
 #include <component_widget.h> // not here.
 QUndoCommand* MouseActionNewElement::activate(QObject* sender)
@@ -449,7 +449,7 @@ QUndoCommand* MouseActionNewElement::makeNew(QMouseEvent* ev)
 	}else{
 	}
 
-	cmd* c = new NewElementCommand(doc(), _gfx);
+	cmd* c = new NewElementtaskElement(doc(), _gfx);
 	// _gfx = nullptr;
 
 	{ untested();

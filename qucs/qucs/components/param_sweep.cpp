@@ -13,7 +13,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "command.h"
+#include "task_element.h"
 #include "globals.h"
 #include "module.h"
 #include "qucs.h"
@@ -21,7 +21,7 @@
 
 namespace{
 
-class Param_Sweep : public CmdElement  {
+class Param_Sweep : public TaskElement  {
 public:
   Param_Sweep();
   ~Param_Sweep();
@@ -29,7 +29,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(SchematicDoc*);
 }D;
-Dispatcher<CmdElement>::INSTALL p(&command_dispatcher, "SW", &D);
+Dispatcher<TaskElement>::INSTALL p(&command_dispatcher, "SW", &D);
 Module::INSTALL pp("simulations", &D);
 
 Param_Sweep::Param_Sweep()

@@ -255,7 +255,7 @@ void ImportDialog::slotImport()
   MsgText->appendPlainText(Program + CommandLine.join(" "));
   MsgText->appendPlainText("\n");
 
-  qDebug() << "Command:" << Program << CommandLine.join(" ");
+  qDebug() << "taskElement:" << Program << CommandLine.join(" ");
   Process.start(Program, CommandLine);
   
   if(Process.state() == QProcess::Running){

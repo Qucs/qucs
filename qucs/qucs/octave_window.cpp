@@ -39,7 +39,7 @@ OctaveWindow::OctaveWindow(QDockWidget *parent_): QWidget()
   allLayout->addWidget(output);
 
   input = new QLineEdit(this);
-  connect(input, SIGNAL(returnPressed()), SLOT(slotSendCommand()));
+  connect(input, SIGNAL(returnPressed()), SLOT(slotSendtaskElement()));
   allLayout->addWidget(input);
   all->setLayout(allLayout);
 
@@ -106,7 +106,7 @@ bool OctaveWindow::startOctave()
   octProcess.setProcessEnvironment(env);
   output->clear();
 
-  qDebug() << "Command :" << Program << Arguments.join(" ");
+  qDebug() << "taskElement :" << Program << Arguments.join(" ");
   octProcess.start(Program, Arguments);
   octProcess.waitForStarted();
 
@@ -122,11 +122,11 @@ bool OctaveWindow::startOctave()
 // ------------------------------------------------------------------------
 void OctaveWindow::adjustDirectory()
 {
-  sendCommand("cd \"" + QucsSettings.QucsWorkDir.absolutePath() + "\"");
+  sendtaskElement("cd \"" + QucsSettings.QucsWorkDir.absolutePath() + "\"");
 }
 
 // ------------------------------------------------------------------------
-void OctaveWindow::sendCommand(const QString& cmd)
+void OctaveWindow::sendtaskElement(const QString& cmd)
 {
   //int par = output->paragraphs() - 1;
   //int idx = output->paragraphLength(par);
@@ -144,13 +144,13 @@ void OctaveWindow::sendCommand(const QString& cmd)
 void OctaveWindow::runOctaveScript(const QString& name)
 {
   QFileInfo info(name);
-  sendCommand(info.completeBaseName());
+  sendtaskElement(info.completeBaseName());
 }
 
 // ------------------------------------------------------------------------
-void OctaveWindow::slotSendCommand()
+void OctaveWindow::slotSendtaskElement()
 {
-  sendCommand(input->text());
+  sendtaskElement(input->text());
   if(!input->text().trimmed().isEmpty())
     cmdHistory.append(input->text());
   //histIterator = cmdHistory.end();

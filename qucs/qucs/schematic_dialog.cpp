@@ -4,5 +4,5 @@
 
 void SchematicDialog::execute(QUndoCommand* c)
 {
-	Doc->executeCommand(c);
+	Doc->executetaskElement(c);
 }

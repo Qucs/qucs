@@ -43,16 +43,16 @@ SchematicDialog::SchematicDialog(QucsDoc* d)
   assert(Doc);
 }
 
-CmdElementDialog::CmdElementDialog(QucsDoc* d) : SchematicDialog(d)
+TaskElementDialog::TaskElementDialog(QucsDoc* d) : SchematicDialog(d)
 {
   resize(450, 250);
   setWindowTitle(tr("Edit Component Properties"));
 }
 
-void CmdElementDialog::attach(ElementGraphics* gfx)
+void TaskElementDialog::attach(ElementGraphics* gfx)
 {
-  trace0("CmdElementDialog::attach");
-  auto Comp = prechecked_cast<CmdElement*>(element(gfx));
+  trace0("TaskElementDialog::attach");
+  auto Comp = prechecked_cast<TaskElement*>(element(gfx));
   assert(Comp);
   if(_comp){
     incomplete();
@@ -497,7 +497,7 @@ void CmdElementDialog::attach(ElementGraphics* gfx)
                 SLOT(slotSelectProperty(QTableWidgetItem*)));
 }
 
-CmdElementDialog::~CmdElementDialog()
+TaskElementDialog::~TaskElementDialog()
 {
   delete _all;
   delete Validator;
@@ -509,7 +509,7 @@ CmdElementDialog::~CmdElementDialog()
 // check if Enter is pressed while the ComboEdit has focus
 // in case, behave as for the LineEdits
 // (QComboBox by default does not handle the Enter/Return key)
-bool CmdElementDialog::eventFilter(QObject *obj, QEvent *event)
+bool TaskElementDialog::eventFilter(QObject *obj, QEvent *event)
 {
   if (obj == ComboEdit) {
     if (event->type() == QEvent::KeyPress) {
@@ -525,7 +525,7 @@ bool CmdElementDialog::eventFilter(QObject *obj, QEvent *event)
 }
 
 // Updates component property list. Useful for MultiViewComponents (really?)
-void CmdElementDialog::updateCompPropsList()
+void TaskElementDialog::updateCompPropsList()
 {
 	auto Comp=_comp;
     int last_prop=0; // last property not to put in ListView
@@ -598,7 +598,7 @@ void CmdElementDialog::updateCompPropsList()
 // Is called if a property is selected.
 // Handle the Property editor tab.
 // It transfers the values to the right side for editing.
-void CmdElementDialog::slotSelectProperty(QTableWidgetItem *item)
+void TaskElementDialog::slotSelectProperty(QTableWidgetItem *item)
 {
   auto Comp = _comp;
   if(item == 0) return;
@@ -703,7 +703,7 @@ void CmdElementDialog::slotSelectProperty(QTableWidgetItem *item)
 }
 
 // -------------------------------------------------------------------------
-void CmdElementDialog::slotApplyChange(const QString& Text)
+void TaskElementDialog::slotApplyChange(const QString& Text)
 { untested();
   /// \bug what if the table have no items?
   // pick selected row
@@ -732,7 +732,7 @@ void CmdElementDialog::slotApplyChange(const QString& Text)
  The parameter is edited on the right pane.
  Return key commits the change, and steps to the next parameter in the list.
 */
-void CmdElementDialog::slotApplyProperty()
+void TaskElementDialog::slotApplyProperty()
 {
   // pick selected row
   QTableWidgetItem *item = prop->currentItem();
@@ -775,7 +775,7 @@ void CmdElementDialog::slotApplyProperty()
 
 // -------------------------------------------------------------------------
 // Is called if the "RETURN"-button is pressed in the "NameEdit" Widget.
-void CmdElementDialog::slotApplyPropName()
+void TaskElementDialog::slotApplyPropName()
 {
   // pick selected row
   QTableWidgetItem *item = prop->selectedItems()[0];
@@ -796,7 +796,7 @@ void CmdElementDialog::slotApplyPropName()
 
 // -------------------------------------------------------------------------
 // Is called if the checkbox is pressed (changed).
-void CmdElementDialog::slotApplyState(int State)
+void TaskElementDialog::slotApplyState(int State)
 {
   // pick selected row
   QTableWidgetItem *item = prop->selectedItems()[0];
@@ -819,7 +819,7 @@ void CmdElementDialog::slotApplyState(int State)
 
 // -------------------------------------------------------------------------
 // Is called if the "OK"-button is pressed.
-void CmdElementDialog::slotButtOK()
+void TaskElementDialog::slotButtOK()
 {
   slotApplyInput();
   slotButtCancel();
@@ -827,7 +827,7 @@ void CmdElementDialog::slotButtOK()
 
 // -------------------------------------------------------------------------
 // Is called if the "Cancel"-button is pressed.
-void CmdElementDialog::slotButtCancel()
+void TaskElementDialog::slotButtCancel()
 {
   if(changed){
     // changed could have been done before
@@ -840,19 +840,19 @@ void CmdElementDialog::slotButtCancel()
 
 //-----------------------------------------------------------------
 // To get really all close events (even <Escape> key).
-void CmdElementDialog::reject()
+void TaskElementDialog::reject()
 {
   slotButtCancel();
 }
 
 // -------------------------------------------------------------------------
 // Is called, if the "Apply"-button is pressed.
-void CmdElementDialog::slotApplyInput()
+void TaskElementDialog::slotApplyInput()
 {
   assert(_comp);
   auto C = _comp->clone();
   C->setOwner( _comp->mutable_owner() );
-  auto Comp = prechecked_cast<CmdElement*>(C);
+  auto Comp = prechecked_cast<TaskElement*>(C);
   assert(Comp);
 
   qDebug() << " \n == Apply ";
@@ -1111,7 +1111,7 @@ void CmdElementDialog::slotApplyInput()
 
 //    assert(_gfx->pos() == pos); // for now.
 
-	 assert(Comp == prechecked_cast<CmdElement*>(element(_gfx)));
+	 assert(Comp == prechecked_cast<TaskElement*>(element(_gfx)));
 
     _comp = Comp;
 
@@ -1131,7 +1131,7 @@ void CmdElementDialog::slotApplyInput()
 }
 
 // -------------------------------------------------------------------------
-void CmdElementDialog::slotBrowseFile()
+void TaskElementDialog::slotBrowseFile()
 {
   incomplete();
   // current file name from the component properties
@@ -1194,7 +1194,7 @@ void CmdElementDialog::slotBrowseFile()
 }
 
 // -------------------------------------------------------------------------
-void CmdElementDialog::slotEditFile()
+void TaskElementDialog::slotEditFile()
 {
   schematic()->App->editFile(QucsSettings.QucsWorkDir.filePath(edit->text()));
 }
@@ -1220,7 +1220,7 @@ void CmdElementDialog::slotEditFile()
    If new name, insert item after selected, set it to focus
 
 */
-void CmdElementDialog::slotButtAdd()
+void TaskElementDialog::slotButtAdd()
 {
   // Set existing equation into focus, return
   for(int row=0; row < prop->rowCount(); row++) {
@@ -1270,7 +1270,7 @@ void CmdElementDialog::slotButtAdd()
  If desc is empy, ButtRem is enabled, this slot handles if it is clicked.
  Used with: Equations, ?
 */
-void CmdElementDialog::slotButtRem()
+void TaskElementDialog::slotButtRem()
 {
   if(prop->rowCount() < 3)
     return;  // the last property cannot be removed
@@ -1290,10 +1290,10 @@ void CmdElementDialog::slotButtRem()
 }
 
 /*!
- * \brief CmdElementDialog::slotButtUp
+ * \brief TaskElementDialog::slotButtUp
  * Move a table item up. Enabled for Equation component.
  */
-void CmdElementDialog::slotButtUp()
+void TaskElementDialog::slotButtUp()
 {
   qDebug() << "slotButtUp" << prop->currentRow() << prop->rowCount();
 
@@ -1317,10 +1317,10 @@ void CmdElementDialog::slotButtUp()
 }
 
 /*!
- * \brief CmdElementDialog::slotButtDown
+ * \brief TaskElementDialog::slotButtDown
  * Move a table item down. Enabled for Equation component.
  */
-void CmdElementDialog::slotButtDown()
+void TaskElementDialog::slotButtDown()
 {
   qDebug() << "slotButtDown" << prop->currentRow() << prop->rowCount();
 
@@ -1344,7 +1344,7 @@ void CmdElementDialog::slotButtDown()
 }
 
 // -------------------------------------------------------------------------
-void CmdElementDialog::slotSimTypeChange(int Type)
+void TaskElementDialog::slotSimTypeChange(int Type)
 {
   if(Type < 2) {  // new type is "linear" or "logarithmic"
     if(!editNumber->isEnabled()) {  // was the other mode before ?
@@ -1405,7 +1405,7 @@ void CmdElementDialog::slotSimTypeChange(int Type)
 // -------------------------------------------------------------------------
 // Is called when "Start", "Stop" or "Number" is edited.
 // // BUG: transient only
-void CmdElementDialog::slotNumberChanged(const QString&)
+void TaskElementDialog::slotNumberChanged(const QString&)
 {
   QString Unit, tmp;
   double x, y, Factor;
@@ -1443,7 +1443,7 @@ void CmdElementDialog::slotNumberChanged(const QString&)
 
 // -------------------------------------------------------------------------
 // // BUG: transient only
-void CmdElementDialog::slotStepChanged(const QString& Step)
+void TaskElementDialog::slotStepChanged(const QString& Step)
 {
   QString Unit;
   double x, y, Factor;
@@ -1479,7 +1479,7 @@ void CmdElementDialog::slotStepChanged(const QString& Step)
 
 // -------------------------------------------------------------------------
 // Is called if return is pressed in LineEdit "Parameter".
-void CmdElementDialog::slotParamEntered()
+void TaskElementDialog::slotParamEntered()
 {
   if(editValues->isEnabled()){ untested();
     editValues->setFocus();
@@ -1490,48 +1490,48 @@ void CmdElementDialog::slotParamEntered()
 
 // -------------------------------------------------------------------------
 // Is called if return is pressed in LineEdit "Simulation".
-void CmdElementDialog::slotSimEntered(int)
+void TaskElementDialog::slotSimEntered(int)
 {
   editParam->setFocus();
 }
 
 // -------------------------------------------------------------------------
 // Is called if return is pressed in LineEdit "Values".
-void CmdElementDialog::slotValuesEntered()
+void TaskElementDialog::slotValuesEntered()
 {
   slotButtOK();
 }
 
 // -------------------------------------------------------------------------
 // Is called if return is pressed in LineEdit "Start".
-void CmdElementDialog::slotStartEntered()
+void TaskElementDialog::slotStartEntered()
 {
   editStop->setFocus();
 }
 
 // -------------------------------------------------------------------------
 // Is called if return is pressed in LineEdit "Stop".
-void CmdElementDialog::slotStopEntered()
+void TaskElementDialog::slotStopEntered()
 {
   editStep->setFocus();
 }
 
 // -------------------------------------------------------------------------
 // Is called if return is pressed in LineEdit "Step".
-void CmdElementDialog::slotStepEntered()
+void TaskElementDialog::slotStepEntered()
 {
   editNumber->setFocus();
 }
 
 // -------------------------------------------------------------------------
 // Is called if return is pressed in LineEdit "Number".
-void CmdElementDialog::slotNumberEntered()
+void TaskElementDialog::slotNumberEntered()
 {
   slotButtOK();
 }
 
 // if clicked on 'display' header toggle visibility for all items
-void CmdElementDialog::slotHHeaderClicked(int headerIdx)
+void TaskElementDialog::slotHHeaderClicked(int headerIdx)
 {
   if (headerIdx != 2) return; // clicked on header other than 'display'
 
@@ -1554,13 +1554,13 @@ void CmdElementDialog::slotHHeaderClicked(int headerIdx)
   setAllVisible = not setAllVisible; // toggle visibility for the next double-click
 }
 
-void CmdElementDialog::disableButtons()
+void TaskElementDialog::disableButtons()
 {
   ButtUp->setEnabled(false);
   ButtDown->setEnabled(false);
 }
 
-void CmdElementDialog::enableButtons()
+void TaskElementDialog::enableButtons()
 {
   ButtUp->setEnabled(true);
   ButtDown->setEnabled(true);

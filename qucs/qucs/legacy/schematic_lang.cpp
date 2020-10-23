@@ -16,7 +16,7 @@
 #include "schematic_symbol.h"
 #include "schematic_model.h" /// hmm
 #include "globals.h"
-#include "command.h"
+#include "task_element.h"
 #include "paintings/painting.h"
 #include "diagram.h" // BUG
 #include "docfmt.h" // BUG
@@ -65,6 +65,7 @@ static bool PaintingListLoad(QString Line, PaintingList& List)
 		}
 		Line = Line.mid(1, Line.length()-2);  // cut off start and end character
 
+
 		cstr = Line.section(' ',0,0);    // painting type
 		qDebug() << cstr;
 		if(Painting const* pp = painting_dispatcher[cstr.toStdString()]){
@@ -108,7 +109,7 @@ private: // overrides
 
 private:
 	void printSymbol(Symbol const*, ostream_t&) const override;
-	void printCommand(CmdElement const*, ostream_t&) const override;
+	void printtaskElement(TaskElement const*, ostream_t&) const override;
 	void printPainting(Painting const*, ostream_t&) const override {incomplete();}
    void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
 }defaultSchematicLanguage_;
@@ -117,13 +118,13 @@ static Dispatcher<DocumentLanguage>::INSTALL
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 static Component* parseComponentObsoleteCallback(const QString& _s, Component* c);
-static CmdElement* loadCommand(const QString& _s, CmdElement* c);
+static TaskElement* loadtaskElement(const QString& _s, TaskElement* c);
 static Symbol* parseSymbol(const QString& _s, Symbol* c);
 static Element* loadElement(const QString& _s, Element* e)
 {
 	trace1("loadElement", _s);
-	if(CmdElement* c=dynamic_cast<CmdElement*>(e)){ untested();
-		c = loadCommand(_s, c);
+	if(TaskElement* c=dynamic_cast<TaskElement*>(e)){ untested();
+		c = loadtaskElement(_s, c);
 		// incomplete();
 	}else if(Component* c=dynamic_cast<Component*>(e)){
 		// legacy components
@@ -247,7 +248,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 	// mode: a throwback to the legacy format:
 	//       connect legacy "parsers".
 	// this is not needed in a proper SchematicLanguage
-	char mode='\0';
+	char mode='?';
 	while(!stream.atEnd()) {
 		Line = stream.readLine();
 		Line = Line.trimmed();
@@ -269,7 +270,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 		}else if(Line == "<Paintings>") {
 			mode='P';
 		}else if(Line == "<Model>") { untested();
-			mode='P';
+			mode='M';
 		}else if(Line == "<Description>") { untested();
 			mode='X';
 		}else{
@@ -292,6 +293,8 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 				}else{
 				}
 			}else if(mode=='S'){
+				std::string typeName = findType(stream);
+				trace1("findtype", typeName);
 				// incomplete();
 				try{
 					// incomplete. use parseItem.
@@ -323,9 +326,9 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 				}else{ untested();
 					incomplete();
 				}
-
 			}else if(mode=='Q'){
-
+			}else if(mode=='X'){
+				trace1("legacy_lang description", Line);
 			}else{
 				trace2("LSL::parse", mode, Line);
 				incomplete();
@@ -409,7 +412,7 @@ static std::string mangle(std::string t)
 	return t.substr(0, pos);
 }
 
-void LegacySchematicLanguage::printCommand(CmdElement const* c, ostream_t& s) const
+void LegacySchematicLanguage::printtaskElement(TaskElement const* c, ostream_t& s) const
 {
 	s << "  <." << c->Name << " ";
 
@@ -434,7 +437,7 @@ void LegacySchematicLanguage::printCommand(CmdElement const* c, ostream_t& s) co
 
 	// write all properties
 	// FIXME: ask element for properties, not for dictionary
-	auto cc=const_cast<CmdElement*>(c); // BUGBUGBUGBUG
+	auto cc=const_cast<TaskElement*>(c); // BUGBUGBUGBUG
 	// cannot access Props without this hack
 	for(Property *p1 = cc->Props.first(); p1 != 0; p1 = cc->Props.next()) {
 		if(p1->Description.isEmpty()){ untested();
@@ -542,7 +545,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, ostream_t& s) const
 	s << ">";
 } // printSymbol
 
-static CmdElement* loadCommand(const QString& _s, CmdElement* c)
+static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
 { untested();
 	bool ok;
 	int  ttx, tty, tmp;
@@ -981,8 +984,7 @@ std::string LegacySchematicLanguage::findType(istream_t& c) const
 
 	Line = Line.trimmed();
 	if(Line.at(0) != '<') { untested();
-		throw "notyet_exception"
-			"Format Error:\nWrong line start!";
+		return "unknown_type";
 	}else{
 	}
 
@@ -1038,7 +1040,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 		e = prechecked_cast<Element*>(k);
 
 		// set_type?
-	}else if(CmdElement const* sc=dynamic_cast<CmdElement const*>(s)){ untested();
+	}else if(TaskElement const* sc=dynamic_cast<TaskElement const*>(s)){ untested();
 		// legacy component
 		Element* k = sc->clone(); // memory leak?
 		e = prechecked_cast<Element*>(k);
@@ -1047,7 +1049,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 	}else if(typestring.c_str()[0] == '.'){ untested();
 		std::string type = typestring.substr(1); // drop dot.
 		e = command_dispatcher.clone(type);
-		if(auto ce = dynamic_cast<CmdElement*>(e)){ untested();
+		if(auto ce = dynamic_cast<TaskElement*>(e)){ untested();
 			// should use setType lower down. drop name.
 			ce->setTypeName(QString::fromStdString(type));
 		}else{ untested();
@@ -1081,8 +1083,8 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 
 #if 0 // legacy cruft?
 	// BUG: don't use schematic.
-	if(CmdElement* cmd=command(e)){ untested();
-		p->loadCommand(Line, cmd);
+	if(TaskElement* cmd=command(e)){ untested();
+		p->loadtaskElement(Line, cmd);
 	}else if(Component* c=component(e)){ untested();
 		if(!p->parseComponentObsoleteCallback(Line, c)) { untested();
 			QMessageBox::critical(0, QObject::tr("Error"),

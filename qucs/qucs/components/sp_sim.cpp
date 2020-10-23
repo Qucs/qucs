@@ -15,12 +15,12 @@
  ***************************************************************************/
 #include "qucs.h"
 #include "globals.h"
-#include "command.h"
+#include "task_element.h"
 #include "module.h"
 
 namespace{
 
-class SP_Sim : public CmdElement  {
+class SP_Sim : public TaskElement  {
 public:
   SP_Sim();
   ~SP_Sim();
@@ -28,7 +28,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(SchematicDoc*);
 }D;
-Dispatcher<CmdElement>::INSTALL d(&command_dispatcher, "SP", &D);
+Dispatcher<TaskElement>::INSTALL d(&command_dispatcher, "SP", &D);
 Module::INSTALL pp("simulations", &D);
 
 SP_Sim::SP_Sim()

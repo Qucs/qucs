@@ -32,17 +32,14 @@
 #include <QPainter>
 #include <QDebug>
 
-CmdElement::CmdElement(CmdElement const& p)
+TaskElement::TaskElement(TaskElement const& p)
   : Element(),
-    mirroredX(p.mirroredX),
-    rotated(p.rotated),
     //cx(p.cx),
     //cy(p.cy),
     tx(p.tx),
     ty(p.ty),
     showName(p.showName),
-	 Name(p.Name),
-    containingSchematic(p.containingSchematic)
+	 Name(p.Name)
 {
   qDebug() << "component copy";
 
@@ -55,14 +52,12 @@ CmdElement::CmdElement(CmdElement const& p)
 
 /*!
  * \class Component
- * \brief The CmdElement class constitutes a baseclass for commands.
+ * \brief The TaskElement class constitutes a baseclass for commands.
  *        this one is a copy of the legacy Component class, the former
- *        baseclass for CmdElements. As such, it contains unneeded stuff.
+ *        baseclass for TaskElements. As such, it contains unneeded stuff.
  */
-CmdElement::CmdElement() : Element()
+TaskElement::TaskElement() : Element()
 {
-  mirroredX = false;
-  rotated = 0;
   isActive = COMP_IS_ACTIVE;
   showName = true;
 
@@ -70,11 +65,9 @@ CmdElement::CmdElement() : Element()
   ty = 0;
 
   Props.setAutoDelete(true);
-
-  containingSchematic = NULL;
 }
 /*--------------------------------------------------------------------------*/
-SchematicModel* CmdElement::scope()
+SchematicModel* TaskElement::scope()
 {
 	if(auto o=dynamic_cast<Symbol*>(owner())){
 		return o->subckt();
@@ -84,7 +77,7 @@ SchematicModel* CmdElement::scope()
 }
 /*--------------------------------------------------------------------------*/
 // Size of component text.
-int CmdElement::textSize(int& _dx, int& _dy)
+int TaskElement::textSize(int& _dx, int& _dy)
 {
   // get size of text using the screen-compatible metric
   QFontMetrics metrics(QucsSettings.font, 0);
@@ -112,16 +105,16 @@ int CmdElement::textSize(int& _dx, int& _dy)
   return count;
 }
 /*--------------------------------------------------------------------------*/
-QDialog* CmdElement::schematicWidget(QucsDoc* Doc) const
+QDialog* TaskElement::schematicWidget(QucsDoc* Doc) const
 { untested();
   trace0("Component::editElement");
-  return new CmdElementDialog(Doc); // memory leak?
+  return new TaskElementDialog(Doc); // memory leak?
 }
 /*--------------------------------------------------------------------------*/
 
 // -------------------------------------------------------
 // Boundings including the component text.
-void CmdElement::entireBounds(int&, int&, int&, int&, float)
+void TaskElement::entireBounds(int&, int&, int&, int&, float)
 {
   // qt does that.
   assert(false);
@@ -129,7 +122,7 @@ void CmdElement::entireBounds(int&, int&, int&, int&, float)
 
 // -------------------------------------------------------
 // obsolete?
-//void CmdElement::setCenter(int x, int y, bool relative)
+//void TaskElement::setCenter(int x, int y, bool relative)
 //{
 //  if(relative) {
 //    _cx += x;  _cy += y;
@@ -139,7 +132,7 @@ void CmdElement::entireBounds(int&, int&, int&, int&, float)
 //}
 
 //// -------------------------------------------------------
-//void CmdElement::getCenter(int& x, int& y)
+//void TaskElement::getCenter(int& x, int& y)
 //{
 //  unreachable();
 //  x = cx();
@@ -147,7 +140,7 @@ void CmdElement::entireBounds(int&, int&, int&, int&, float)
 //}
 //
 // -------------------------------------------------------
-int CmdElement::getTextSelected(int x_, int y_, float Corr)
+int TaskElement::getTextSelected(int x_, int y_, float Corr)
 {
   x_ -= cx();
   y_ -= cy();
@@ -180,7 +173,7 @@ int CmdElement::getTextSelected(int x_, int y_, float Corr)
   return Props.at()+1;  // number the property
 }
 
-std::string CmdElement::paramValue(std::string const& n) const
+std::string TaskElement::paramValue(std::string const& n) const
 {
 	if(n=="$xposition"){
 		return std::to_string(cx());
@@ -196,7 +189,7 @@ std::string CmdElement::paramValue(std::string const& n) const
 
 // -------------------------------------------------------
 #if 0
-bool CmdElement::getSelected(int x_, int y_)
+bool TaskElement::getSelected(int x_, int y_)
 {
   x_ -= cx();
   y_ -= cy();
@@ -208,7 +201,7 @@ bool CmdElement::getSelected(int x_, int y_)
 #endif
 
 // -------------------------------------------------------
-void CmdElement::paint(ViewPainter *p) const
+void TaskElement::paint(ViewPainter *p) const
 {
 	int x2=0; int y2=0; //?
   int cx = center().first;
@@ -287,11 +280,11 @@ void CmdElement::paint(ViewPainter *p) const
     p->drawRoundRect(cx+x1, cy+y1, x2-x1, y2-y1);
   }
 #endif
-} // CmdElement::paint
+} // TaskElement::paint
 
 // -------------------------------------------------------
 // For output on a printer device.
-void CmdElement::print(ViewPainter *p, float FontScale)
+void TaskElement::print(ViewPainter *p, float FontScale)
 {
   foreach(Text *pt, Texts)
     pt->Size *= FontScale;
@@ -302,19 +295,19 @@ void CmdElement::print(ViewPainter *p, float FontScale)
     pt->Size /= FontScale;
 }
 // -------------------------------------------------------
-QString CmdElement::netlist()
+QString TaskElement::netlist()
 {
   incomplete(); // remove.
   return "obsolete";
 }
 // -------------------------------------------------------
-QString CmdElement::getNetlist()
+QString TaskElement::getNetlist()
 {
   unreachable(); // obsolete
   return QString("");
 }
 // -------------------------------------------------------
-bool CmdElement::getPen(const QString& s, QPen& Pen, int i)
+bool TaskElement::getPen(const QString& s, QPen& Pen, int i)
 {
 	unreachable();
 	bool ok;
@@ -340,7 +333,7 @@ bool CmdElement::getPen(const QString& s, QPen& Pen, int i)
 }
 
 // ---------------------------------------------------------------------
-bool CmdElement::getBrush(const QString& s, QBrush& Brush, int i)
+bool TaskElement::getBrush(const QString& s, QBrush& Brush, int i)
 {
 	unreachable();
 	bool ok;
@@ -366,7 +359,8 @@ bool CmdElement::getBrush(const QString& s, QBrush& Brush, int i)
 }
 
 // ---------------------------------------------------------------------
-Property * CmdElement::getProperty(const QString& name)
+#if 0
+Property * TaskElement::getProperty(const QString& name)
 {
   incomplete();
   for(Property *pp = Props.first(); pp != 0; pp = Props.next()){
@@ -377,49 +371,19 @@ Property * CmdElement::getProperty(const QString& name)
   }
   return NULL;
 }
+#endif
 
 // ---------------------------------------------------------------------
-// // BUG: implements assign
-void CmdElement::copyComponent(Component *)
-{
-  incomplete();
-#if 0 // WTF?
-  Type = pc->Type;
-  x1 = pc->x1;
-  y1 = pc->y1;
-  x2 = pc->x2;
-  y2 = pc->y2;
-
-  Model = pc->Model;
-  Name  = pc->Name;
-  showName = pc->showName;
-  Description = pc->Description;
-
-  isActive = pc->isActive;
-  rotated  = pc->rotated;
-  mirroredX = pc->mirroredX;
-  tx = pc->tx;
-  ty = pc->ty;
-
-  Props  = pc->Props;
-  Ports  = pc->Ports;
-  Lines  = pc->Lines;
-  Arcs   = pc->Arcs;
-  Rects  = pc->Rects;
-  Ellips = pc->Ellips;
-  Texts  = pc->Texts;
-#endif
-}
 
 // do something with Dialog Buttons
-void CmdElement::dialgButtStuff(ComponentDialog& /*d*/)const
+void TaskElement::dialgButtStuff(ComponentDialog& /*d*/)const
 {
   incomplete();
   // d.disableButtons();
 }
 //
 // BUG, tmp.
-//void SchematicModel::simpleInsertCommand(CmdElement *)
+//void SchematicModel::simpleInserttaskElement(TaskElement *)
 //{
 //  unreachable();
 //}

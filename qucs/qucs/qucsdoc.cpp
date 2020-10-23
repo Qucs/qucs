@@ -166,7 +166,7 @@ void QucsDoc::possiblyToggleAction(MouseAction* a, QAction* sender)
 	}
 
 	if(cmd){itested();
-		executeCommand(cmd);
+		executetaskElement(cmd);
 	}else{itested();
 	}
 }
@@ -189,10 +189,10 @@ MouseAction const* QucsDoc::activeAction() const
 	return d->activeAction();
 }
 /* -------------------------------------------------------------------------------- */
-void QucsDoc::executeCommand(QUndoCommand* c)
+void QucsDoc::executetaskElement(QUndoCommand* c)
 {
 	if(mouseActions()){itested();
-		mouseActions()->executeCommand(c);
+		mouseActions()->executetaskElement(c);
 	}else{
 	}
 }

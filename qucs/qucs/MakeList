@@ -4,7 +4,6 @@
 CPP_SRC = \
 	attach.cpp \
 	cmdeltdlg.cpp \
-	command.cpp \
 	component.cpp \
 	component_widget.cpp \
 	conductor.cpp \
@@ -57,6 +56,7 @@ CPP_SRC = \
 	sim.cpp \
 	symbol.cpp \
 	syntax.cpp \
+	task_element.cpp \
 	textdoc.cpp \
 	viewpainter.cpp \
 	wire.cpp \
@@ -99,7 +99,6 @@ DIALG_MOCHEADERS = \
 
 noinst_HEADERS = \
 	actions.h \
-	command.h \
 	element.h \
 	exception.h \
 	imagewriter.h \
@@ -120,6 +119,7 @@ noinst_HEADERS = \
 	schematic_lang.h \
 	schematic_symbol.h \
 	some_font_stuff.h \
+	task_element.h \
 	trace.h \
 	viewpainter.h \
 	wirelabel.h

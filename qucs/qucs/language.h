@@ -6,7 +6,7 @@
 
 class Symbol;
 class Element;
-class CmdElement;
+class TaskElement;
 class Painting;
 
 // baseclass for schematic and net languages.
@@ -25,7 +25,7 @@ private: //called by printItem
   virtual void printPainting(Painting const*, ostream_t&) const = 0;
   virtual void printDiagram(Symbol const*, ostream_t&) const = 0;
   virtual void printSymbol(Symbol const*, ostream_t&) const = 0;
-  virtual void printCommand(CmdElement const*, ostream_t&) const = 0;
+  virtual void printtaskElement(TaskElement const*, ostream_t&) const = 0;
 };
 
 #endif

@@ -25,14 +25,14 @@ public:
   QSize sizeHint() const;
   bool startOctave();
   void runOctaveScript(const QString&);
-  void sendCommand(const QString&);
+  void sendtaskElement(const QString&);
   void adjustDirectory();
 
 private slots:
   void slotDisplayMsg();
   void slotDisplayErr();
   void slotOctaveEnded(int status);
-  void slotSendCommand();
+  void slotSendtaskElement();
 
 protected:
   bool eventFilter(QObject *obj, QEvent *event);

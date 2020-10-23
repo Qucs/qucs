@@ -53,7 +53,7 @@ protected:
   QString netlist() const;
   QString vhdlCode(int);
   void createSymbol(); // SchematicModel const& scope);
-  void remakeSymbol(int No);
+  void defaultSymbol(int No);
   int  loadSymbol(const QString&);
 
 private: // Symbol
@@ -205,14 +205,15 @@ void Subcircuit::createSymbol() // SchematicModel const& scope)
 		  No = SchematicDoc::testFile(FileName);
 		  if(No < 0)  No = 0;
 		  Ports.clear();
-		  remakeSymbol(No);  // no symbol was found -> create standard symbol
+		  defaultSymbol(No);  // no symbol was found -> create standard symbol
 	  }
   }
 }
 
 // ---------------------------------------------------------------------
-void Subcircuit::remakeSymbol(int No)
-{
+void Subcircuit::defaultSymbol(int No)
+{ untested();
+	// sort of default symbol if there is no symbol section?
 	incomplete();
   int h = 30*((No-1)/2) + 15;
   Lines.append(new Line(-15, -h, 15, -h,QPen(Qt::darkBlue,2)));
@@ -546,9 +547,8 @@ public:
 		file.open(QIODevice::ReadOnly);
 		istream_t pstream(&file);
 
-		auto D=docfmt_dispatcher["leg_sch"];
+		auto D = docfmt_dispatcher["leg_sch"];
 		assert(D);
-
 		D->load(pstream, *this);
 		//d->parse(pstream);
 

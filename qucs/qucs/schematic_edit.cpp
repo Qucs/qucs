@@ -109,7 +109,7 @@ void SchematicEdit::do_it_first()
 		auto ps = placeVector(r);
 		r->hide();
 		for(auto portremove : ps){ untested();
-			trace1("postremove", portremove);
+			// trace1("postremove", portremove);
 			postRmPort(portremove, done_del);
 		}
 
@@ -227,9 +227,9 @@ void SchematicEdit::postRmPort(pos_t remove_at, T& del_done)
 	Node const* node = nodeAt(remove_at);
 
 	if(!node){
-		trace1("no node at", remove_at);
+		// trace1("no node at", remove_at);
 	}else if(node->degree() == 2){
-		trace1("postrm, degree 2", remove_at);
+		// trace1("postrm, degree 2", remove_at);
 		for(auto gfx : it){
 			gfx->hide();
 			// additional delete

@@ -57,7 +57,7 @@ private: // NetLang
   std::string findType(istream_t&) const override {incomplete();}
 
 private: // local
-  void printCommand(CmdElement const*, ostream_t&) const; // override?
+  void printtaskElement(TaskElement const*, ostream_t&) const; // override?
   void printSymbol(Symbol const*, ostream_t&) const override;
   void printSubckt(SubcktProto const*, ostream_t&) const;
   void printComponent(Component const*, ostream_t&) const;
@@ -122,9 +122,9 @@ void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 	}else if(auto c=dynamic_cast<SubcktProto const*>(d)){
 		// why is this a Symbol??
 		printSubckt(c, s);
-	}else if(auto c=dynamic_cast<CmdElement const*>(d)){ untested();
+	}else if(auto c=dynamic_cast<TaskElement const*>(d)){ untested();
 		// why is this a Symbol??
-		printCommand(c, s);
+		printtaskElement(c, s);
 	}else if(auto c=dynamic_cast<Component const*>(d)){
 		printComponent(c, s);
 	}else if(d){
@@ -197,7 +197,7 @@ void QucsatorLang::printSubckt(SubcktProto const* p, ostream_t& s) const
 	s << ".Def:End\n";
 }
 
-void QucsatorLang::printCommand(CmdElement const* c, ostream_t& s) const
+void QucsatorLang::printtaskElement(TaskElement const* c, ostream_t& s) const
 {itested();
 	assert(c);
 	s << "." << c->typeName() << ":" << c->label();

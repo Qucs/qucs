@@ -1,5 +1,5 @@
 /***************************************************************************
-    copyright            : (C) 2018 Felix Salfelder
+    copyright            : (C) 2018, 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -17,14 +17,13 @@
 #include "components/component.h"
 #include "platform.h"
 
-class CmdElement : public Element {
+class TaskElement : public Element {
 protected:
-  CmdElement(const CmdElement&);
-  explicit CmdElement();
+  TaskElement(const TaskElement&);
+  explicit TaskElement();
 public:
-  virtual ~CmdElement() {};
+  virtual ~TaskElement() {};
 
-//  virtual Object* newOne(); from Symbol.
   virtual void recreate(SchematicDoc*) {};
   QString getNetlist();
 private:
@@ -46,15 +45,6 @@ public:
   int     getTextSelected(int, int, float);
   bool    load(const QString&);
 
-//  QString const& type() const{ // HACK
-//	  return name();
-//  }
-
-  // to hold track of the component appearance for saving and copying
-  bool mirroredX;   // is it mirrored about X axis or not
-  int  rotated;     // rotation angle divided by 90 degrees
-
-  virtual QString getSubcircuitFile() { return ""; }
   // set the pointer scematic associated with the component
   // do somehting with buttons. can sb think of a more descriptive name?
   virtual void dialgButtStuff(ComponentDialog&)const;
@@ -92,16 +82,15 @@ private:
 protected:
   virtual QString netlist();
 
-  int  analyseLine(const QString&, int);
+//  int  analyseLine(const QString&, int);
   bool getIntegers(const QString&, int *i1=0, int *i2=0, int *i3=0,
                    int *i4=0, int *i5=0, int *i6=0);
   bool getPen(const QString&, QPen&, int);
   bool getBrush(const QString&, QBrush&, int);
 
-  void copyComponent(Component*);
-  Property * getProperty(const QString&);
-  SchematicDoc* containingSchematic;
+  // void copyComponent(Component*);
+  // Property * getProperty(const QString&);
+  // SchematicDoc* containingSchematic;
 };
-
 
 #endif
