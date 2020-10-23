@@ -159,7 +159,7 @@ void LIB::loadLibFiles()
 
 				if(symbol_dispatcher[type]){
 					sym->setTypeName(type);
-					L->parseItem(sym, stream);
+					L->parseItem(stream, sym);
 					new Module::INSTALL(parsedlib.name.toStdString(), sym);
 				}else{
 					trace1("paramset skip", type);

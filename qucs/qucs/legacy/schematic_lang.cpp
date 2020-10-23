@@ -105,7 +105,7 @@ private: // stuff from component.cc
 private: // overrides
 	void parse(istream_t& stream, SchematicSymbol& s) const;
 	std::string findType(istream_t&) const override;
-	void parseItem(Element*, istream_t&) const override;
+	Element* parseItem(istream_t&, Element*) const override;
 
 private:
 	void printSymbol(Symbol const*, ostream_t&) const override;
@@ -963,7 +963,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 	return c;
 }
 /*--------------------------------------------------------------------------*/
-void LegacySchematicLanguage::parseItem(Element* e, istream_t& c) const
+Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 {
 	QString l = QString::fromStdString( c.fullString());
 
@@ -975,6 +975,8 @@ void LegacySchematicLanguage::parseItem(Element* e, istream_t& c) const
 		::parsePainting(l, s);
 	}else{
 	}
+
+	return e; // wrong.
 }
 /*--------------------------------------------------------------------------*/
 std::string LegacySchematicLanguage::findType(istream_t& c) const
