@@ -27,7 +27,7 @@ class Painting;
 class Simulator;
 class Symbol;
 
-extern INTERFACE Dispatcher<TaskElement> command_dispatcher;
+extern INTERFACE Dispatcher<TaskElement> element_dispatcher;
 extern INTERFACE Dispatcher<Diagram> diagram_dispatcher;
 extern INTERFACE Dispatcher<DocumentLanguage> doclang_dispatcher;
 extern INTERFACE Dispatcher<DocumentFormat> docfmt_dispatcher;

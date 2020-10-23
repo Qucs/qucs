@@ -1643,7 +1643,7 @@ Element* getComponentFromName(QString& Line)
     Element* s=sc->clone(); // memory leak?
     e=prechecked_cast<Element*>(s);
   }else{ untested();
-    e=command_dispatcher[cstr.toStdString()];
+    e=element_dispatcher[cstr.toStdString()];
   // don't know what this is (yet);
     incomplete();
   }

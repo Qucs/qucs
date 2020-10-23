@@ -30,7 +30,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(SchematicDoc*);
 } D;
-Dispatcher<TaskElement>::INSTALL p(&command_dispatcher, "TR", &D);
+Dispatcher<TaskElement>::INSTALL p(&element_dispatcher, "TR", &D);
 Module::INSTALL pp("simulations", &D);
 
 TR_Sim::TR_Sim()
