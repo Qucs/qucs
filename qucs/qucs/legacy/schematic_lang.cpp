@@ -17,19 +17,52 @@
 #include "schematic_model.h" /// hmm
 #include "globals.h"
 #include "task_element.h"
-#include "paintings/painting.h"
+#include "painting.h"
 #include "diagram.h" // BUG
 #include "docfmt.h" // BUG
+#include "d_dot.h"
 
 #ifdef DO_TRACE
 #include <typeinfo>
 #endif
+/*--------------------------------------------------------------------------*/
+static Element* parseCommand(QString Line, DEV_DOT*x)
+{
+#if 0 // not sure.
+	auto scope = x->owner()->subckt();
+#else
+	auto scope = x->scope();
+#endif
+//	assert(p);
+
+#if 0
+	c >> s;
+#else
+	std::string s = Line.section(' ',0,0).toStdString();    // painting type
+#endif
+	// c.reset(here);
+	if (!command_dispatcher[s]) {
+		unreachable(); // for now
+//		trace2("uuh", s, c.fullString());
+		assert(false);
+		//    cmd.skip();
+		//    ++here;
+	}else{
+	}
+
+	istream_t c(istream_t::_STRING, Line.toStdString());
+	Command::cmdproc(c, scope);
+
+	delete x;
+	return nullptr;
+}
 /*--------------------------------------------------------------------------*/
 static void parsePainting(QString Line, Painting*p)
 {
 	assert(p);
 	// BUG: callback
 	if(!p->load(Line)) { untested();
+		trace2("ERROR parsePainting", Line, p->label());
 		incomplete();
 		// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line format!"));
 		throw Exception("cannot parse painting");
@@ -43,7 +76,7 @@ static bool PaintingListLoad(QString Line, PaintingList& List)
 { itested();
 	Painting *p=0;
 	QString cstr;
-//	while(!stream->atEnd()) {
+	{
 		if(Line.isEmpty()){
 			return true;
 		}else
@@ -81,7 +114,7 @@ static bool PaintingListLoad(QString Line, PaintingList& List)
 		::parsePainting(Line, p);
 
 		List.append(p);
-	//}
+	}	
 
 	// incomplete();
 	// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\n'Painting' field is not closed!"));
@@ -94,7 +127,7 @@ namespace{
 /*--------------------------------------------------------------------------*/
 class LegacySchematicLanguage : public SchematicLanguage {
 public:
-	LegacySchematicLanguage() : SchematicLanguage(){
+	LegacySchematicLanguage(bool mod=false) : SchematicLanguage(), _lib_mod(mod){
 	}
 private: // stuff saved from schematic_file.cpp
 	Diagram* loadDiagram(QString const& Line, istream_t& /*, DiagramList *List */) const;
@@ -106,15 +139,20 @@ private: // overrides
 	void parse(istream_t& stream, SchematicSymbol& s) const;
 	std::string findType(istream_t&) const override;
 	Element* parseItem(istream_t&, Element*) const override;
+   DEV_DOT* parseCommand(istream_t&, DEV_DOT*) const override;
 
 private:
 	void printSymbol(Symbol const*, ostream_t&) const override;
 	void printtaskElement(TaskElement const*, ostream_t&) const override;
 	void printPainting(Painting const*, ostream_t&) const override {incomplete();}
    void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
-}defaultSchematicLanguage_;
+	bool _lib_mod; // HACK HACK
+}d0;
 static Dispatcher<DocumentLanguage>::INSTALL
-    p(&doclang_dispatcher, "leg_sch", &defaultSchematicLanguage_);
+    p0(&doclang_dispatcher, "leg_sch", &d0);
+LegacySchematicLanguage d1(true);
+static Dispatcher<DocumentLanguage>::INSTALL
+    p1(&doclang_dispatcher, "legacy_lib", &d1);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 static Component* parseComponentObsoleteCallback(const QString& _s, Component* c);
@@ -297,10 +335,15 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 				trace1("findtype", typeName);
 				// incomplete();
 				try{
-					// incomplete. use parseItem.
-					auto Line = QString::fromStdString(stream.fullString());
-					PaintingListLoad(Line, owner.symbolPaintings());
-					trace1("symbolpaint", Line);
+					if(_lib_mod){
+						new__instance(stream, &owner, owner.subckt());
+						// assert(0);
+					}else{
+						// incomplete. hack use parseItem.
+						auto Line = QString::fromStdString(stream.fullString());
+						PaintingListLoad(Line, owner.symbolPaintings());
+						trace1("symbolpaint", Line);
+					}
 					c = nullptr;
 				}catch(...){ untested();
 					incomplete();
@@ -327,6 +370,8 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 					incomplete();
 				}
 			}else if(mode=='Q'){
+			}else if(mode=='M'){
+				// incomplete();
 			}else if(mode=='X'){
 				trace1("legacy_lang description", Line);
 			}else{
@@ -646,12 +691,12 @@ static Symbol* parseSymbol(const QString& _s, Symbol* sym)
 	int  ttx, tty, tmp;
 	QString s = _s;
 
-	if(s.at(0) != '<'){ untested();
-		return NULL;
-	}else if(s.at(s.length()-1) != '>'){ untested();
-		return NULL;
-	}
-	s = s.mid(1, s.length()-2);   // cut off start and end character
+//	if(s.at(0) != '<'){ untested();
+//		return NULL;
+//	}else if(s.at(s.length()-1) != '>'){ untested();
+//		return NULL;
+//	}
+//	s = s.mid(1, s.length()-2);   // cut off start and end character
 
 	QString label=s.section(' ',1,1);
 	sym->setLabel(label);
@@ -965,7 +1010,21 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 /*--------------------------------------------------------------------------*/
 Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 {
-	QString l = QString::fromStdString( c.fullString());
+	QString Line = QString::fromStdString( c.fullString());
+
+	QString l = Line.trimmed();
+	if(l.isEmpty()) { untested();
+		delete e;
+		return nullptr;
+	}else if( (l.at(0) != '<') || (l.at(l.length()-1) != '>')) { untested();
+		incomplete();
+		// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line delimiter!"));
+		delete e;
+		return nullptr;
+	}else{
+	}
+	l = l.mid(1, l.length()-2);  // cut off start and end character
+
 
 	if(auto s=dynamic_cast<Component*>(e)){ untested();
 		incomplete();
@@ -973,10 +1032,47 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 		::parseSymbol(l, s);
 	}else if(auto s=dynamic_cast<Painting*>(e)){ untested();
 		::parsePainting(l, s);
-	}else{
+	}else if(auto s=dynamic_cast<DEV_DOT*>(e)){ untested();
+		return ::parseCommand(l, s);
+	}else{ untested();
+		return DocumentLanguage::parseItem(c, e);
 	}
 
 	return e; // wrong.
+}
+/*--------------------------------------------------------------------------*/
+DEV_DOT* LegacySchematicLanguage::parseCommand(istream_t& c, DEV_DOT* x) const
+{
+  assert(x);
+  // x->set(cmd.fullstring());
+  DEV_DOT const* cx = x;
+  assert(cx->owner());
+#if 0 // not sure.
+  auto scope = x->owner()->subckt();
+#else
+  auto scope = x->scope();
+#endif
+
+//  cmd.reset();
+//  skip_pre_stuff(cmd);
+
+  size_t here = c.cursor();
+
+  std::string s;
+  c >> s;
+  // c.reset(here);
+  if (!command_dispatcher[s]) {
+	  unreachable(); // for now
+	  trace2("uuh", s, c.fullString());
+	  assert(false);
+//    cmd.skip();
+//    ++here;
+  }else{
+  }
+  Command::cmdproc(c, scope);
+
+  delete x;
+  return NULL;
 }
 /*--------------------------------------------------------------------------*/
 std::string LegacySchematicLanguage::findType(istream_t& c) const

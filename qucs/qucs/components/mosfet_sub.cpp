@@ -217,10 +217,10 @@ void MOSFET_sub::createSymbol()
   else
     Lines.append(new Line(-10, -4,-10,  4,QPen(Qt::darkBlue,3)));
 
-  Ports.append(new Port(-30,  0));
-  Ports.append(new Port(  0,-30));
-  Ports.append(new Port(  0, 30));
-  Ports.append(new Port( 20,  0));
+  Ports.append(new ComponentPort(-30,  0));
+  Ports.append(new ComponentPort(  0,-30));
+  Ports.append(new ComponentPort(  0, 30));
+  Ports.append(new ComponentPort( 20,  0));
 
   x1 = -30; y1 = -30;
   x2 =  30; y2 =  30;

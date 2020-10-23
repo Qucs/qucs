@@ -59,8 +59,8 @@ Source_ac::Source_ac()
   Lines.append(new Line( 28,  8, 22,  8,QPen(Qt::red,1)));
   Lines.append(new Line(-25,  5,-25, 11,QPen(Qt::black,1)));
 
-  Ports.append(new Port( 30,  0));
-  Ports.append(new Port(-30,  0));
+  Ports.append(new ComponentPort( 30,  0));
+  Ports.append(new ComponentPort(-30,  0));
 
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  14;

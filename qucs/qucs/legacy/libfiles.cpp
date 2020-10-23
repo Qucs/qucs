@@ -117,7 +117,7 @@ void LIB::loadLibFiles()
 			}else{
 			}
 
-			auto D = doclang_dispatcher["leg_sch"];
+			auto D = doclang_dispatcher["legacy_lib"];
 			auto L = dynamic_cast<SchematicLanguage const*>(D);
 			assert(L);
 

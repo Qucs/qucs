@@ -1144,6 +1144,7 @@ void MouseActions::MPressActivate(SchematicDoc *Doc, QMouseEvent* Event)
 // -----------------------------------------------------------
 void MouseActions::MPressMirrorX(SchematicDoc *Doc, QMouseEvent* Event)
 { untested();
+#if 0
   QPointF pos=Doc->mapToScene(Event->pos());
   float fX=pos.x();
   float fY=pos.y();
@@ -1164,11 +1165,13 @@ void MouseActions::MPressMirrorX(SchematicDoc *Doc, QMouseEvent* Event)
   updateViewport();
   setDrawn(false);
   Doc->setChanged(true, true);
+#endif
 }
 
 // -----------------------------------------------------------
 void MouseActions::MPressMirrorY(SchematicDoc *Doc, QMouseEvent* Event)
 { untested();
+#if 0
   QPointF pos=Doc->mapToScene(Event->pos());
   float fX=pos.x();
   float fY=pos.y();
@@ -1189,6 +1192,7 @@ void MouseActions::MPressMirrorY(SchematicDoc *Doc, QMouseEvent* Event)
   updateViewport();
   setDrawn(false);
   Doc->setChanged(true, true);
+#endif
 }
 
 // -----------------------------------------------------------

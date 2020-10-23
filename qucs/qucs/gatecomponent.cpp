@@ -89,11 +89,11 @@ void GateComponent::createSymbol()
     Ellips.append(new Area(xr,-4, 8, 8,
                   QPen(Qt::darkBlue,0), QBrush(Qt::darkBlue)));
 
-  Ports.append(new Port( 30,  0));
+  Ports.append(new ComponentPort( 30,  0));
   y += 10;
   for(z=0; z<Num; z++) {
     y -= 20;
-    Ports.append(new Port(-30, y));
+    Ports.append(new ComponentPort(-30, y));
     if(xl == 10) if((z == 0) || (z == Num-1)) {
       Lines.append(new Line(-30, y, 9, y,QPen(Qt::darkBlue,2)));
       continue;

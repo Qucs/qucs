@@ -1,5 +1,5 @@
 /***************************************************************************
-    copyright            : (C) 2020 Felix Salfelder / QUCS team
+    copyright            : (C) 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -10,34 +10,43 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+/*--------------------------------------------------------------------------*/
+#include "command.h"
+#include "io.h"
+#include "schematic_model.h"
+#include "globals.h"
+#include "painting.h"
+/*--------------------------------------------------------------------------*/
+namespace{
+/*--------------------------------------------------------------------------*/
+class PortSym : public Command{
+  virtual void do_it(istream_t& cs, SchematicModel* s){
+	  auto fullstring = cs.fullString();
+	  trace1("PortSym", fullstring);
 
-#include "port.h"
-#include "node.h"
-/*--------------------------------------------------------------------------*/
-//Port::Port(Port const& p)
-//	: _p(p._p), _node(nullptr)
-//{
-//}
-/*--------------------------------------------------------------------------*/
-QString const& Port::netLabel() const
-{
-	assert(_node);
-	return _node->netLabel();
-}
-/*--------------------------------------------------------------------------*/
-void Port::connect(Node* n)
-{
-	assert(!_node);
-	_node = n;
-	_node->inc_ports();
-}
-/*--------------------------------------------------------------------------*/
-void Port::disconnect(Node* n)
-{
-	assert(_node);
-	n->dec_ports();
 
-	_node = nullptr;
-}
+	  std::string type;
+	  int cx, cy, tx, ty;
+	  cs >> type;
+	  cs >> cx;
+	  cs >> cy;
+	  cs >> tx;
+	  cs >> ty;
+
+	  auto ps = painting_dispatcher.clone("PortSym");
+	  ps->setCenter(pos_t(cx,cy));
+	  s->pushBack(ps);
+	  auto n = s->numPorts();
+	  trace6("PortSym", type, cx, cy, tx, ty, n);
+
+	  auto place = symbol_dispatcher.clone("place");
+	  assert(place);
+	  place->setCenter(pos_t(cx,cy));
+	  Node* node = place->connectNode(0, s->nodes());
+
+	  s->setPort(n, node);
+  }
+}d0;
+Dispatcher<Command>::INSTALL p(&command_dispatcher, ".PortSym", &d0);
 /*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
+} // namespace

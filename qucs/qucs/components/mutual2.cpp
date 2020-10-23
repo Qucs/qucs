@@ -57,12 +57,12 @@ Mutual2::Mutual2()
 
   Lines.append(new Line(  0,-57,  0, 57,QPen(Qt::darkBlue,1,Qt::DashLine)));
 
-  Ports.append(new Port(-30,-70));
-  Ports.append(new Port( 30,-30));
-  Ports.append(new Port( 30, 30));
-  Ports.append(new Port(-30, 70));
-  Ports.append(new Port(-30, 10));
-  Ports.append(new Port(-30,-10));
+  Ports.append(new ComponentPort(-30,-70));
+  Ports.append(new ComponentPort( 30,-30));
+  Ports.append(new ComponentPort( 30, 30));
+  Ports.append(new ComponentPort(-30, 70));
+  Ports.append(new ComponentPort(-30, 10));
+  Ports.append(new ComponentPort(-30,-10));
 
   x1 = -33; y1 = -74;
   x2 =  33; y2 =  74;

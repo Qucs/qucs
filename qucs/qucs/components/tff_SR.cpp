@@ -85,12 +85,12 @@ void tff_SR::createSymbol()
   Texts.last()->over=true;
   Texts.append(new Text( -5, 17, "R", Qt::darkBlue, 12.0));
  
-  Ports.append(new Port(  0,-60));  // S
-  Ports.append(new Port(-50,-20));  // T
-  Ports.append(new Port(-50, 20));  // CLK
-  Ports.append(new Port(  0, 60));  // R
-  Ports.append(new Port( 50, 20));  // QB
-  Ports.append(new Port( 50,-20));  // Q
+  Ports.append(new ComponentPort(  0,-60));  // S
+  Ports.append(new ComponentPort(-50,-20));  // T
+  Ports.append(new ComponentPort(-50, 20));  // CLK
+  Ports.append(new ComponentPort(  0, 60));  // R
+  Ports.append(new ComponentPort( 50, 20));  // QB
+  Ports.append(new ComponentPort( 50,-20));  // Q
 
   x1 = -50; y1 = -60;
   x2 =  50; y2 =  60;

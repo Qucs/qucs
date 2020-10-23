@@ -100,18 +100,18 @@ void dmux3to8::createSymbol()
 
   Lines.append(new Line(0, -11, 12, -11, QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(-50,-50));  // En
-  Ports.append(new Port(-50,-30));  // A
-  Ports.append(new Port(-50,-10));  // B
-  Ports.append(new Port(-50, 10));  // C
-  Ports.append(new Port( 50, 90));  // Y7
-  Ports.append(new Port( 50, 70));  // Y6
-  Ports.append(new Port( 50, 50));  // Y5
-  Ports.append(new Port( 50, 30));  // Y4
-  Ports.append(new Port( 50, 10));  // Y3
-  Ports.append(new Port( 50,-10));  // Y2
-  Ports.append(new Port( 50,-30));  // Y1
-  Ports.append(new Port( 50,-50));  // Y0
+  Ports.append(new ComponentPort(-50,-50));  // En
+  Ports.append(new ComponentPort(-50,-30));  // A
+  Ports.append(new ComponentPort(-50,-10));  // B
+  Ports.append(new ComponentPort(-50, 10));  // C
+  Ports.append(new ComponentPort( 50, 90));  // Y7
+  Ports.append(new ComponentPort( 50, 70));  // Y6
+  Ports.append(new ComponentPort( 50, 50));  // Y5
+  Ports.append(new ComponentPort( 50, 30));  // Y4
+  Ports.append(new ComponentPort( 50, 10));  // Y3
+  Ports.append(new ComponentPort( 50,-10));  // Y2
+  Ports.append(new ComponentPort( 50,-30));  // Y1
+  Ports.append(new ComponentPort( 50,-50));  // Y0
 
   x1 = -50; y1 = -94;
   x2 =  50; y2 = 104;

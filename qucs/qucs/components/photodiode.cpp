@@ -108,9 +108,9 @@ void photodiode::createSymbol()
   Lines.append(new Line( -6,  0,  6,  9,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(  0, 12,  0,  30,QPen(Qt::green,2)));
 
-  Ports.append(new Port( 30, 0));
-  Ports.append(new Port(-30, 0));
-  Ports.append(new Port( 0, 30));
+  Ports.append(new ComponentPort( 30, 0));
+  Ports.append(new ComponentPort(-30, 0));
+  Ports.append(new ComponentPort( 0, 30));
 
   x1 = -30; y1 = -20;
   x2 =  30; y2 =  30;

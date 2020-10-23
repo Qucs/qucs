@@ -85,15 +85,15 @@ void binarytogrey4bit::createSymbol()
   Texts.append(new Text( 15, -3, "2", Qt::darkBlue, 12.0));
   Texts.append(new Text( 15, 17, "3", Qt::darkBlue, 12.0));
 
-  Ports.append(new Port(-50,-30));  // B0
-  Ports.append(new Port(-50,-10));  // B1
-  Ports.append(new Port(-50, 10));  // B2
-  Ports.append(new Port(-50, 30));  // B3
+  Ports.append(new ComponentPort(-50,-30));  // B0
+  Ports.append(new ComponentPort(-50,-10));  // B1
+  Ports.append(new ComponentPort(-50, 10));  // B2
+  Ports.append(new ComponentPort(-50, 30));  // B3
 
-  Ports.append(new Port( 50, 30));  // G3
-  Ports.append(new Port( 50, 10));  // G2
-  Ports.append(new Port( 50,-10));  // G1
-  Ports.append(new Port( 50,-30));  // G0
+  Ports.append(new ComponentPort( 50, 30));  // G3
+  Ports.append(new ComponentPort( 50, 10));  // G2
+  Ports.append(new ComponentPort( 50,-10));  // G1
+  Ports.append(new ComponentPort( 50,-30));  // G0
 
   x1 = -50; y1 = -64;
   x2 =  50; y2 =  44;

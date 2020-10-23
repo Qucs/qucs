@@ -182,7 +182,7 @@ void SPDeEmbed::createSymbol()
   while(i<Num) { // add ports lines and numbers
     i++;
     Lines.append(new Line(-30, y,-15, y,QPen(Qt::darkBlue,2)));
-    Ports.append(new Port(-30, y));
+    Ports.append(new ComponentPort(-30, y));
     stmp = QString::number(i);
     w = smallmetrics.width(stmp);
     Texts.append(new Text(-25-w, y-fHeight-2, stmp)); // text right-aligned
@@ -190,7 +190,7 @@ void SPDeEmbed::createSymbol()
     if(i == Num) break; // if odd number of ports there will be one port less on the right side
     i++;
     Lines.append(new Line( 15, y, 30, y,QPen(Qt::darkBlue,2)));
-    Ports.append(new Port( 30, y));
+    Ports.append(new ComponentPort( 30, y));
     stmp = QString::number(i);
     Texts.append(new Text(25, y-fHeight-2, stmp)); // text left-aligned
     y += PortDistance;
@@ -198,7 +198,7 @@ void SPDeEmbed::createSymbol()
 
   Lines.append(new Line( 0, h, 0,h+15,QPen(Qt::darkBlue,2)));
   Texts.append(new Text( 4, h,"Ref"));
-  Ports.append(new Port( 0,h+15));    // 'Ref' port
+  Ports.append(new ComponentPort( 0,h+15));    // 'Ref' port
 
   x1 = -30; y1 = -h-2;
   x2 =  30; y2 =  h+15;

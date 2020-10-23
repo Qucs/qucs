@@ -165,7 +165,7 @@ Component::Component(Component const& p)
   }
 
   for(auto i : p.Ports){
-    Ports.append(new Port(*i));
+    Ports.append(new ComponentPort(*i));
   }
 
   assert(typeName() == p.typeName());
@@ -375,7 +375,8 @@ void Component::paint(ViewPainter *p) const
     // keep track of painter state
     p->save();
 
-    QMatrix wm = p->worldMatrix();
+#if 0
+    auto wm = p->worldMatrix();
     // write all text
     foreach(Text *pt, Texts) {itested();
       p->setWorldMatrix(
@@ -397,6 +398,7 @@ void Component::paint(ViewPainter *p) const
     }
     p->setWorldMatrix(wm);
     p->setWorldMatrixEnabled(false);
+#endif
 
     // restore painter state
     p->restore();
@@ -538,7 +540,7 @@ void Component::rotate()
   }
 
   // rotate all ports
-  foreach(Port *p2, Ports) {
+  for(ComponentPort* p2 : Ports) {
     // p2->rotate();
     tmp = -p2->x_();
     p2->setPosition(p2->y_(), tmp);
@@ -780,7 +782,7 @@ void Component::mirrorX()
   }
 
   // mirror all ports
-  foreach(Port *p2, Ports){
+  foreach(ComponentPort *p2, Ports){
     p2->setPosition(p2->x_(), -p2->y_());
   }
 
@@ -851,7 +853,7 @@ void Component::mirrorY()
   }
 
   // mirror all ports
-  foreach(Port *p2, Ports){
+  foreach(ComponentPort *p2, Ports){
     p2->setPosition(-p2->x_(), p2->y_());
   }
 
@@ -1054,9 +1056,9 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(!getIntegers(Row, &i1, &i2, &i3))
       return -1;
     for(i6 = Ports.count(); i6<i3; i6++)  // if ports not in numerical order
-      Ports.append(new Port(0, 0, false));
+      Ports.append(new ComponentPort(0, 0, false));
 
-    Port *po = Ports.at(i3-1);
+    ComponentPort *po = Ports.at(i3-1);
     po->setPosition(i1, i2);
     po->avail = true;
 

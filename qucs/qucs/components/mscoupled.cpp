@@ -54,10 +54,10 @@ MScoupled::MScoupled() : Component()
   Lines.append(new Line(-15,  4,-25, 20,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 21,  4, 11, 20,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(-30,-30));
-  Ports.append(new Port( 30,-30));
-  Ports.append(new Port( 30, 30));
-  Ports.append(new Port(-30, 30));
+  Ports.append(new ComponentPort(-30,-30));
+  Ports.append(new ComponentPort( 30,-30));
+  Ports.append(new ComponentPort( 30, 30));
+  Ports.append(new ComponentPort(-30, 30));
 
   x1 = -30; y1 =-33;
   x2 =  30; y2 = 33;

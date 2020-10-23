@@ -31,8 +31,8 @@ dcBlock::dcBlock()
   Lines.append(new Line(-23,-14,-23, 14,QPen(Qt::darkBlue,1)));
   Lines.append(new Line( 23,-14, 23, 14,QPen(Qt::darkBlue,1)));
 
-  Ports.append(new Port(-30,  0));
-  Ports.append(new Port( 30,  0));
+  Ports.append(new ComponentPort(-30,  0));
+  Ports.append(new ComponentPort( 30,  0));
 
   x1 = -30; y1 = -16;
   x2 =  30; y2 =  17;

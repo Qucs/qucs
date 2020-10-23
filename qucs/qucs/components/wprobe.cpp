@@ -52,14 +52,14 @@ wProbe::wProbe()
   Lines.append(new Line(  9,  8, 15,  8,QPen(Qt::darkBlue,2)));
 
 //Current Entries
-  Ports.append(new Port(-30,  0));
-  Ports.append(new Port( 30,  0));
+  Ports.append(new ComponentPort(-30,  0));
+  Ports.append(new ComponentPort( 30,  0));
 
 //Voltage Entries
   Lines.append(new Line(-10,  14,-10, 20,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 10,  14, 10, 20,QPen(Qt::darkBlue,2)));
-  Ports.append(new Port(-10, 20));
-  Ports.append(new Port( 10, 20));
+  Ports.append(new ComponentPort(-10, 20));
+  Ports.append(new ComponentPort( 10, 20));
 
 //Letter V
   Lines.append(new Line(-3,  7 ,0,  13,QPen(Qt::darkBlue,2)));

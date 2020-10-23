@@ -172,7 +172,7 @@ void RFedd::createSymbol()
   while(i<No) { // add ports lines and numbers
     // left side
     Lines.append(new Line(-30,  y,-HALFWIDTH,  y,QPen(Qt::darkBlue,2)));
-    Ports.append(new Port(-30,  y));
+    Ports.append(new ComponentPort(-30,  y));
     tmp = QString::number(i+1);
     w = smallmetrics.width(tmp);
     Texts.append(new Text(-25-w, y-fHeight-2, tmp)); // text right-aligned
@@ -181,7 +181,7 @@ void RFedd::createSymbol()
     if(i == No) break; // if odd number of ports there will be one port less on the right side
     // right side
     Lines.append(new Line(HALFWIDTH,  y, 30,  y,QPen(Qt::darkBlue,2)));
-    Ports.append(new Port( 30,  y));
+    Ports.append(new ComponentPort( 30,  y));
     tmp = QString::number(i+1);
     Texts.append(new Text(25, y-fHeight-2, tmp)); // text left-aligned
     y += 60;

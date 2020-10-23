@@ -88,16 +88,16 @@ void andor4x2::createSymbol()
   Lines.append(new Line( 22, -30, 22, -45,QPen(Qt::darkBlue,2)));  
 
 
-  Ports.append(new Port(-50,-50));  // A11
-  Ports.append(new Port(-50,-40));  // A12
-  Ports.append(new Port(-50,-20));  // A21
-  Ports.append(new Port(-50,-10));  // A22
-  Ports.append(new Port(-50, 10));  // A31
-  Ports.append(new Port(-50, 20));  // A32
-  Ports.append(new Port(-50, 40));  // A41
-  Ports.append(new Port(-50, 50));  // A42
+  Ports.append(new ComponentPort(-50,-50));  // A11
+  Ports.append(new ComponentPort(-50,-40));  // A12
+  Ports.append(new ComponentPort(-50,-20));  // A21
+  Ports.append(new ComponentPort(-50,-10));  // A22
+  Ports.append(new ComponentPort(-50, 10));  // A31
+  Ports.append(new ComponentPort(-50, 20));  // A32
+  Ports.append(new ComponentPort(-50, 40));  // A41
+  Ports.append(new ComponentPort(-50, 50));  // A42
 
-  Ports.append(new Port( 50, 0 )); // Y
+  Ports.append(new ComponentPort( 50, 0 )); // Y
 
   x1 = -50; y1 = -64;
   x2 =  50; y2 =  64;

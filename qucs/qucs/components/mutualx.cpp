@@ -217,8 +217,8 @@ void MutualX::createSymbol()
     Lines.append(new Line(x,-18,x,-30,QPen(Qt::darkBlue,2)));
     Lines.append(new Line(x, 18,x, 30,QPen(Qt::darkBlue,2)));
 
-    Ports.append(new Port(x,-30));
-    Ports.append(new Port(x, 30));
+    Ports.append(new ComponentPort(x,-30));
+    Ports.append(new ComponentPort(x, 30));
     x += 14;
   }
 }

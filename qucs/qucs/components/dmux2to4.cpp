@@ -89,13 +89,13 @@ void dmux2to4::createSymbol()
 
   Lines.append(new Line(0, -18, 12, -18, QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(-50,-50));  // En
-  Ports.append(new Port(-50,-30));  // A
-  Ports.append(new Port(-50,-10));  // B
-  Ports.append(new Port( 50, 10));  // Y3
-  Ports.append(new Port( 50,-10));  // Y2
-  Ports.append(new Port( 50,-30));  // Y1
-  Ports.append(new Port( 50,-50));  // Y0
+  Ports.append(new ComponentPort(-50,-50));  // En
+  Ports.append(new ComponentPort(-50,-30));  // A
+  Ports.append(new ComponentPort(-50,-10));  // B
+  Ports.append(new ComponentPort( 50, 10));  // Y3
+  Ports.append(new ComponentPort( 50,-10));  // Y2
+  Ports.append(new ComponentPort( 50,-30));  // Y1
+  Ports.append(new ComponentPort( 50,-50));  // Y0
 
   x1 = -50; y1 = -94;
   x2 =  50; y2 =  24;

@@ -3,6 +3,7 @@
     license              : GPLv3+
  ***************************************************************************/
 #include "globals.h"
+//#include "painting.h"
 
 Dispatcher<Diagram> diagram_dispatcher;
 Dispatcher<Command> command_dispatcher;

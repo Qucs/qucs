@@ -1,14 +1,21 @@
+#include "command.h"
 #include "element.h"
 #include "globals.h"
 #include "task_element.h"
 #include "schematic_model.h"
 #include "symbol.h"
+#include "painting.h"
 #include "language.h"
 #include "d_dot.h"
 
-Element* DocumentLanguage::parseItem(istream_t& s, Element*) const
+Element* DocumentLanguage::parseItem(istream_t& s, Element* c) const
 {
-	unreachable();
+  if (DEV_DOT* d = dynamic_cast<DEV_DOT*>(c)) { untested();
+    return parseCommand(s, d);
+  }else{
+	  incomplete();
+	  return nullptr;
+  }
 }
 
 void DocumentLanguage::printItem(Element const* c, ostream_t& s) const
@@ -25,31 +32,34 @@ void DocumentLanguage::printItem(Element const* c, ostream_t& s) const
 
 // borrowed from u_lang.h
 void DocumentLanguage::new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
-		SchematicModel* Scope)
+		SchematicModel* Scope) const
 {
 	if (cmd.atEnd()) {untested();
+		incomplete();
+		assert(false);
 		// nothing
-	}else{
+	}else{ untested();
 		std::string type = findType(cmd);
-		if (const Element* proto = find_proto(type, owner)) {
-			if (Element* new_instance = proto->clone_instance()) {
+		trace2("new_instance", type, cmd.fullString());
+		if (const Element* proto = find_proto(type, owner)) { untested();
+			if (Element* new_instance = proto->clone_instance()) { untested();
 				new_instance->setOwner(owner);
-				Element* x = parseItem(cmd, new_instance);
-				if (x) {
+				Element* o = parseItem(cmd, new_instance);
+				if (Element* x=dynamic_cast<Element*>(o)) { untested();
 					assert(Scope);
 					Scope->pushBack(x);
-				}else{
+				}else{ untested();
 				}
-			}else{
+			}else{ untested();
 				cmd.warn(bDANGER, type + ": incomplete prototype");
 			}
-		}else{
+		}else{ untested();
 			cmd.warn(bDANGER, type + ": no match");
 		}
 	}
 }
 /*--------------------------------------------------------------------------*/
-const Element* DocumentLanguage::find_proto(const std::string& Name, const Element* Scope)
+Element const* DocumentLanguage::find_proto(const std::string& Name, const Element* Scope) const
 {
 #if 0
   const CARD* p = NULL;
@@ -77,6 +87,8 @@ const Element* DocumentLanguage::find_proto(const std::string& Name, const Eleme
   }else if ((p = element_dispatcher[Name])) {
     return p;
   }else if ((p = symbol_dispatcher[Name])) {
+    return p;
+  }else if ((p = painting_dispatcher[Name])) {
     return p;
   }else{
 #if 0

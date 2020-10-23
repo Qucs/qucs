@@ -75,11 +75,11 @@ void comp_1bit::createSymbol()
   Texts.append(new Text( -5,-13, "X>Y", Qt::darkBlue, 12.0));
   Texts.append(new Text( -5,-33, "X=Y", Qt::darkBlue, 12.0));
 
-  Ports.append(new Port(-50,-10));  // X
-  Ports.append(new Port(-50, 10));  // Y
-  Ports.append(new Port( 50, 20));  // L
-  Ports.append(new Port( 50,  0));  // G
-  Ports.append(new Port( 50,-20));  // E
+  Ports.append(new ComponentPort(-50,-10));  // X
+  Ports.append(new ComponentPort(-50, 10));  // Y
+  Ports.append(new ComponentPort( 50, 20));  // L
+  Ports.append(new ComponentPort( 50,  0));  // G
+  Ports.append(new ComponentPort( 50,-20));  // E
 
   x1 = -50; y1 = -64;
   x2 =  50; y2 =  34;

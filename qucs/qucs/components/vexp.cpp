@@ -42,8 +42,8 @@ vExp::vExp()
   Lines.append(new Line( -3,  6, -3, 9,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 1,  9, -3, 9,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port( 30,  0));
-  Ports.append(new Port(-30,  0));
+  Ports.append(new ComponentPort( 30,  0));
+  Ports.append(new ComponentPort(-30,  0));
 
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  14;

@@ -49,10 +49,10 @@ Noise_iv::Noise_iv()
 
   Lines.append(new Line(-18,  0, 18,  0,QPen(Qt::darkBlue,3)));
 
-  Ports.append(new Port(-30,-30));
-  Ports.append(new Port( 30,-30));
-  Ports.append(new Port( 30, 30));
-  Ports.append(new Port(-30, 30));
+  Ports.append(new ComponentPort(-30,-30));
+  Ports.append(new ComponentPort( 30,-30));
+  Ports.append(new ComponentPort( 30, 30));
+  Ports.append(new ComponentPort(-30, 30));
 
   x1 = -44; y1 = -30;
   x2 =  44; y2 =  30;

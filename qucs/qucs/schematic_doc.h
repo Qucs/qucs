@@ -20,7 +20,7 @@
 #include "qucsdoc.h"
 #include "viewpainter.h"
 #include "diagram.h"
-#include "paintings/painting.h"
+//#include "painting.h"
 #include "components/component.h"
 #include "sim/sim.h"
 #include "sim/tasks.h"

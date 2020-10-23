@@ -79,6 +79,7 @@ class SchematicLanguage;
 // Base class for all schematic models.
 // currently containging chunks/cruft from legacy Schematic implementation
 // reminiscent of "subckt", "cardlist" ...
+// TODO: rename to ElementList or CircuitModel, SymbolModel.
 class SchematicModel{
 private:
 	SchematicModel(SchematicModel const&) = delete;
@@ -189,12 +190,12 @@ public: // obsolete.
 	static void saveComponent(QTextStream& s, Component const* c);
 private:
 	WireList& wires();
-	NodeMap& nodes();
 	DiagramList& diagrams();
 	PaintingList& paintings();
 	ComponentList& components(); // possibly "devices". lets see.
 	CmdEltList& commands();
 public:
+	NodeMap& nodes();
 	bool isNode(pos_t p) const{
 		return nodes().find_at(p);
 	}

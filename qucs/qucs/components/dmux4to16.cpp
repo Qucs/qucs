@@ -116,27 +116,27 @@ void dmux4to16::createSymbol()
 
   Lines.append(new Line(-6,  2, 9,  2, QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(-50,-50));  // En
-  Ports.append(new Port(-50,-30));  // A
-  Ports.append(new Port(-50,-10));  // B
-  Ports.append(new Port(-50, 10));  // C
-  Ports.append(new Port(-50, 30));  // D
-  Ports.append(new Port( 50,100));  // Y15
-  Ports.append(new Port( 50, 90));  // Y14
-  Ports.append(new Port( 50, 80));  // Y13
-  Ports.append(new Port( 50, 70));  // Y12
-  Ports.append(new Port( 50, 60));  // Y11
-  Ports.append(new Port( 50, 50));  // Y10
-  Ports.append(new Port( 50, 40));  // Y9
-  Ports.append(new Port( 50, 30));  // Y8
-  Ports.append(new Port( 50, 20));  // Y7
-  Ports.append(new Port( 50, 10));  // Y6
-  Ports.append(new Port( 50,  0));  // Y5
-  Ports.append(new Port( 50,-10));  // Y4
-  Ports.append(new Port( 50,-20));  // Y3
-  Ports.append(new Port( 50,-30));  // Y2
-  Ports.append(new Port( 50,-40));  // Y1
-  Ports.append(new Port( 50,-50));  // Y0
+  Ports.append(new ComponentPort(-50,-50));  // En
+  Ports.append(new ComponentPort(-50,-30));  // A
+  Ports.append(new ComponentPort(-50,-10));  // B
+  Ports.append(new ComponentPort(-50, 10));  // C
+  Ports.append(new ComponentPort(-50, 30));  // D
+  Ports.append(new ComponentPort( 50,100));  // Y15
+  Ports.append(new ComponentPort( 50, 90));  // Y14
+  Ports.append(new ComponentPort( 50, 80));  // Y13
+  Ports.append(new ComponentPort( 50, 70));  // Y12
+  Ports.append(new ComponentPort( 50, 60));  // Y11
+  Ports.append(new ComponentPort( 50, 50));  // Y10
+  Ports.append(new ComponentPort( 50, 40));  // Y9
+  Ports.append(new ComponentPort( 50, 30));  // Y8
+  Ports.append(new ComponentPort( 50, 20));  // Y7
+  Ports.append(new ComponentPort( 50, 10));  // Y6
+  Ports.append(new ComponentPort( 50,  0));  // Y5
+  Ports.append(new ComponentPort( 50,-10));  // Y4
+  Ports.append(new ComponentPort( 50,-20));  // Y3
+  Ports.append(new ComponentPort( 50,-30));  // Y2
+  Ports.append(new ComponentPort( 50,-40));  // Y1
+  Ports.append(new ComponentPort( 50,-50));  // Y0
 
   x1 = -50; y1 = -94;
   x2 =  50; y2 = 114;

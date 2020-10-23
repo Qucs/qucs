@@ -1,0 +1,14 @@
+
+SRCS = \
+	arrow.cpp  \
+	arrowdialog.cpp \
+	ellipsearc.cpp \
+	ellipse.cpp \
+	filldialog.cpp \
+	graphicline.cpp \
+	graphictext.cpp \
+	graphictextdialog.cpp \
+	id_dialog.cpp \
+	id_text.cpp \
+	portsymbol.cpp \
+	rectangle.cpp

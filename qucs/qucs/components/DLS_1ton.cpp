@@ -62,8 +62,8 @@ void DLS_1ton::createSymbol()
   Texts.append(new Text(-10,-32, "1", Qt::darkRed, 12.0));
   Texts.append(new Text(  0,  8, "n", Qt::darkRed, 12.0));
  
-  Ports.append(new Port(-40, 0));  // Lin
-  Ports.append(new Port( 40, 0));  // Lout
+  Ports.append(new ComponentPort(-40, 0));  // Lin
+  Ports.append(new ComponentPort( 40, 0));  // Lout
 
   x1 = -40; y1 = -34;
   x2 =  40; y2 =  34;

@@ -99,9 +99,9 @@ void BJT::createSymbol()
     Lines.append(new Line( -5, 10,  1, 10,QPen(Qt::darkBlue,2)));
   }
 
-  Ports.append(new Port(-30,  0));
-  Ports.append(new Port(  0,-30));
-  Ports.append(new Port(  0, 30));
+  Ports.append(new ComponentPort(-30,  0));
+  Ports.append(new ComponentPort(  0,-30));
+  Ports.append(new ComponentPort(  0, 30));
 
   x1 = -30; y1 = -30;
   x2 =   4; y2 =  30;

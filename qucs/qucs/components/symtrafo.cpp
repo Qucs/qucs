@@ -80,12 +80,12 @@ symTrafo::symTrafo()
   Arcs.append(new Arc(-21, 15,  5,  5,  0, 16*360,QPen(Qt::darkBlue,2)));
   Arcs.append(new Arc( 15,-24,  5,  5,  0, 16*360,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(-30,-70));
-  Ports.append(new Port( 30,-30));
-  Ports.append(new Port( 30, 30));
-  Ports.append(new Port(-30, 70));
-  Ports.append(new Port(-30, 10));
-  Ports.append(new Port(-30,-10));
+  Ports.append(new ComponentPort(-30,-70));
+  Ports.append(new ComponentPort( 30,-30));
+  Ports.append(new ComponentPort( 30, 30));
+  Ports.append(new ComponentPort(-30, 70));
+  Ports.append(new ComponentPort(-30, 10));
+  Ports.append(new ComponentPort(-30,-10));
 
   x1 = -33; y1 = -74;
   x2 =  33; y2 =  74;

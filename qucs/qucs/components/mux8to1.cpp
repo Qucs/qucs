@@ -100,19 +100,19 @@ void mux8to1::createSymbol()
 
   Lines.append(new Line(11, 0, 23, 0, QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(-50,-40));  // En
-  Ports.append(new Port(-50,-20));  // A
-  Ports.append(new Port(-50,  0));  // B
-  Ports.append(new Port(-50, 20));  // C
-  Ports.append(new Port(-50, 40));  // D0
-  Ports.append(new Port(-50, 60));  // D1
-  Ports.append(new Port(-50, 80));  // D2
-  Ports.append(new Port(-50,100));  // D3
-  Ports.append(new Port(-50,120));  // D4
-  Ports.append(new Port(-50,140));  // D5
-  Ports.append(new Port(-50,160));  // D6
-  Ports.append(new Port(-50,180));  // D7
-  Ports.append(new Port( 50, 60));  // Y
+  Ports.append(new ComponentPort(-50,-40));  // En
+  Ports.append(new ComponentPort(-50,-20));  // A
+  Ports.append(new ComponentPort(-50,  0));  // B
+  Ports.append(new ComponentPort(-50, 20));  // C
+  Ports.append(new ComponentPort(-50, 40));  // D0
+  Ports.append(new ComponentPort(-50, 60));  // D1
+  Ports.append(new ComponentPort(-50, 80));  // D2
+  Ports.append(new ComponentPort(-50,100));  // D3
+  Ports.append(new ComponentPort(-50,120));  // D4
+  Ports.append(new ComponentPort(-50,140));  // D5
+  Ports.append(new ComponentPort(-50,160));  // D6
+  Ports.append(new ComponentPort(-50,180));  // D7
+  Ports.append(new ComponentPort( 50, 60));  // Y
 
   x1 = -50; y1 = -84;
   x2 =  50; y2 =  194;

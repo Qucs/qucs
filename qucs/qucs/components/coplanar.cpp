@@ -45,8 +45,8 @@ Coplanar::Coplanar()
   Lines.append(new Line(  8, 13, 16, 21,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 16, 13, 24, 21,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(-30, 0));
-  Ports.append(new Port( 30, 0));
+  Ports.append(new ComponentPort(-30, 0));
+  Ports.append(new ComponentPort( 30, 0));
 
   x1 = -30; y1 =-24;
   x2 =  30; y2 = 24;

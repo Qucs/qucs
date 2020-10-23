@@ -48,7 +48,7 @@ CPWshort::CPWshort()
   Lines.append(new Line( -8, 11,  2, 21,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( -5,  6, 10, 21,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(-30, 0));
+  Ports.append(new ComponentPort(-30, 0));
 
   x1 = -30; y1 =-24;
   x2 =  14; y2 = 24;

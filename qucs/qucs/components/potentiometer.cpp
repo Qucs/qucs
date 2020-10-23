@@ -99,9 +99,9 @@ void potentiometer::createSymbol()
   Texts.append(new Text(-23,   0, QObject::tr("B"), Qt::black, 6.0, 1.0, 0.0));
   Texts.append(new Text( 18,   0, QObject::tr("T"), Qt::black, 6.0, 1.0, 0.0));
 
-  Ports.append(new Port(-40,   0)); // B
-  Ports.append(new Port(  0, -20)); // M
-  Ports.append(new Port( 40,   0)); // T
+  Ports.append(new ComponentPort(-40,   0)); // B
+  Ports.append(new ComponentPort(  0, -20)); // M
+  Ports.append(new ComponentPort( 40,   0)); // T
 
   x1 = -40; y1 = -20;
   x2 =  40; y2 =  15;

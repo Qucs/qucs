@@ -106,6 +106,7 @@ pos_t /* const & */ Element::center()const
 #include "diagram.h"
 #include "wirelabel.h"
 #include "task_element.h"
+#include "painting.h"
 
 Component* component(Element* e){ return dynamic_cast<Component*>(e); }
 TaskElement* command(Element* e){ return dynamic_cast<TaskElement*>(e); }

@@ -36,9 +36,9 @@ PM_Modulator::PM_Modulator()
   Lines.append(new Line(-12,  0,-17, -5,QPen(Qt::darkBlue,2)));
   Texts.append(new Text(-30,-22, QObject::tr("PM"), Qt::black, 10.0,1.0,0.0));
 
-  Ports.append(new Port(  0,-30));
-  Ports.append(new Port(  0, 30));
-  Ports.append(new Port(-30,  0));
+  Ports.append(new ComponentPort(  0,-30));
+  Ports.append(new ComponentPort(  0, 30));
+  Ports.append(new ComponentPort(-30,  0));
 
   x1 = -30; y1 = -30;
   x2 =  14; y2 =  30;

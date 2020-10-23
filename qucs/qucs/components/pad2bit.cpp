@@ -55,8 +55,8 @@ void pad2bit::createSymbol()
  
   Texts.append(new Text(-58,-33, " 0   1   2    3", Qt::darkGreen, 12.0));
 
-  Ports.append(new Port(40,-10));  // B
-  Ports.append(new Port(40,-30));  // A
+  Ports.append(new ComponentPort(40,-10));  // B
+  Ports.append(new ComponentPort(40,-30));  // A
 
   x1 = -64; y1 = -54;
   x2 =  40; y2 =  14;

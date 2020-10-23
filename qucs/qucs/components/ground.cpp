@@ -55,7 +55,7 @@ Ground::Ground(Ground const& g) : Component(g)
   }
 
 //  Ports.clear(); // why??
-//  Ports.append(new Port(  0,  0));
+//  Ports.append(new ComponentPort(  0,  0));
 
   x1 = g.x1;
   y1 = g.y1;
@@ -88,7 +88,7 @@ void	Ground::init()
   Lines.append(new Line( -3, 22,  3, 22,QPen(Qt::darkBlue,3)));
 
   Ports.clear(); // why??
-  Ports.append(new Port(  0,  0));
+  Ports.append(new ComponentPort(  0,  0));
 
   x1 = -12; y1 =  0;
   x2 =  12; y2 = 25;

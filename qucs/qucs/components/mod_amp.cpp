@@ -92,9 +92,9 @@ void mod_amp::createSymbol()
   Lines.append(new Line(  0,  0,  10, -10,QPen(Qt::red,2)));
   Lines.append(new Line( 10, -10, 10,  10,QPen(Qt::red,2)));
   
-  Ports.append(new Port(-30,-20));
-  Ports.append(new Port(-30, 20));
-  Ports.append(new Port( 40,  0));
+  Ports.append(new ComponentPort(-30,-20));
+  Ports.append(new ComponentPort(-30, 20));
+  Ports.append(new ComponentPort( 40,  0));
 
   x1 = -30; y1 = -38;
   x2 =  40; y2 =  38;

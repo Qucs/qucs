@@ -123,14 +123,14 @@ public: // just forward
 	QPen pen(){
 		return Painter->pen();
 	}
-	QMatrix worldMatrix(){
-		return Painter->worldMatrix();
+	QTransform worldMatrix(){
+		return Painter->worldTransform();
 	}
 	void setWorldMatrixEnabled(bool b){
 		Painter->setWorldMatrixEnabled(b);
 	}
-	void setWorldMatrix(QMatrix const& m){
-		 Painter->setWorldMatrix(m);
+	void setWorldMatrix(QTransform const& m){
+		 Painter->setWorldTransform(m);
 	}
 	template<class T>
 	void rotate(T t){

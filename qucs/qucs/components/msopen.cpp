@@ -28,7 +28,7 @@ MSopen::MSopen()
   Lines.append(new Line(-13, -8,-23,  8,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 13, -8,  3,  8,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port(-30, 0));
+  Ports.append(new ComponentPort(-30, 0));
 
   x1 = -30; y1 =-11;
   x2 =  16; y2 = 11;

@@ -37,7 +37,7 @@ Digi_Source::Digi_Source()
   Lines.append(new Line(-28,-5,-28, 5,QPen(Qt::darkGreen,2)));
   Lines.append(new Line(-24,-5,-24, 5,QPen(Qt::darkGreen,2)));
 
-  Ports.append(new Port(  0,  0));
+  Ports.append(new ComponentPort(  0,  0));
 
   x1 = -39; y1 = -14;
   x2 =   0; y2 =  14;

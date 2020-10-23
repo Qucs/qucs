@@ -106,7 +106,7 @@ private: // internal. Portstuff
   unsigned numPorts() const {unreachable(); return 0;}
   Net const* portValue(unsigned) const{ unreachable(); return nullptr; } // BUG
   void setPort(unsigned, Node*){ unreachable(); }
-  Port& port(unsigned){unreachable(); return *new Port(0,0);}
+  Port& port(unsigned){ throw Exception(); }
 
 private: // SchematicSymbol
 	SchematicModel const& schematicModel() const{ untested();
@@ -163,10 +163,14 @@ void SchematicModel::pushBack(Element* what)
 		connect(s);
 		components().push_back(s);
 	}else if(auto s=dynamic_cast<SchematicSymbol*>(what)){
-		(void)s;
+		trace1("hmm", s->label());
 		assert(false);
 		//delete _symbol;
 		//_symbol = s;
+	}else if(auto d=painting(what)){
+		/// BUG BUG BUG. some are "symbolpaints", some are just paintings. the
+		//Object should decide.
+		paintings().append(d);
 	}else{
 		incomplete();
 	}
@@ -675,7 +679,46 @@ void PrototypeMap::clear()
 	}
 	_map.clear();
 }
-
+/*--------------------------------------------------------------------------*/
 PrototypeMap::PrototypeMap()
 {
 }
+/*--------------------------------------------------------------------------*/
+// Inserts a port into the schematic and connects it to another node if
+// the coordinates are identical. The node is returned.
+Node* SchematicModel::insertNode(int , int , Element *)
+{   untested();
+    unreachable();
+
+#if 0
+    Node *pn;
+    pn = &nodes().at(x,y);
+    pn->connectionsAppend(e);
+
+    // check if the new node lies within an existing wire
+    //
+    if(pn->degree()==1){
+	// BUG. the wire is connected. just use it.
+	for(auto pw : wires()) {
+	    if(pw->x1_() == x) {
+		if(pw->y1_() > y) continue;
+		if(pw->y2_() < y) continue;
+	    } else if(pw->y1_() == y) {
+		if(pw->x1_() > x) continue;
+		if(pw->x2_() < x) continue;
+	    }else{
+		continue;
+	    }
+
+	    // split the wire into two wires
+	    splitWire(pw, pn);
+	    break;
+	}
+    }else{
+    }
+    return pn;
+#endif
+    return nullptr;
+}
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/

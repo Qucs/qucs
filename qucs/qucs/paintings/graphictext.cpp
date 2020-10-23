@@ -59,16 +59,19 @@ void GraphicText::paint(ViewPainter *p)
   // keep track of painter state
   p->save();
 
-  QMatrix wm = p->worldMatrix();
+  auto wm = p->worldMatrix();
+#if 0
   QMatrix Mat(1.0, 0.0, 0.0, 1.0, p->DX + float(cx) * p->Scale,
 				   p->DY + float(cy) * p->Scale);
   p->setWorldMatrix(Mat);
   p->rotate(-Angle);   // automatically enables transformation
 
+#endif
   int Size = Font.pointSize();
   Font.setPointSizeF( p->FontScale * float(Size) );
 
   QFont f = p->font();
+#if 0
   p->setPen(Color);
   p->setFont(Font);
 
@@ -76,6 +79,7 @@ void GraphicText::paint(ViewPainter *p)
   // contains linefeeds. Qt has problems with linefeeds. It remembers the
   // last font metrics (within the font ???) and does not calculate it again.
   // The error often appears at a very different drawText function !!!
+#endif
   int w, h;
   w = p->drawTextMapped(Text, 0, 0, &h);
 

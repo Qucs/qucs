@@ -50,13 +50,13 @@ JK_FlipFlop::JK_FlipFlop()
   Lines.append(new Line(-20, -4,-12,  0,QPen(Qt::darkBlue,0)));
   Lines.append(new Line(-20,  4,-12,  0,QPen(Qt::darkBlue,0)));
 
-  Ports.append(new Port(-30,-20));  // J
-  Ports.append(new Port(-30, 20));  // K
-  Ports.append(new Port( 30,-20));  // Q
-  Ports.append(new Port( 30, 20));  // nQ
-  Ports.append(new Port(-30,  0));  // Clock
-  Ports.append(new Port(  0,-40));  // set
-  Ports.append(new Port(  0, 40));  // reset
+  Ports.append(new ComponentPort(-30,-20));  // J
+  Ports.append(new ComponentPort(-30, 20));  // K
+  Ports.append(new ComponentPort( 30,-20));  // Q
+  Ports.append(new ComponentPort( 30, 20));  // nQ
+  Ports.append(new ComponentPort(-30,  0));  // Clock
+  Ports.append(new ComponentPort(  0,-40));  // set
+  Ports.append(new ComponentPort(  0, 40));  // reset
 
   x1 = -30; y1 = -40;
   x2 =  30; y2 =  40;
