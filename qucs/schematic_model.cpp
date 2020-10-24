@@ -609,9 +609,9 @@ void SchematicModel::setPort(unsigned i, Node* n)
 }
 
 Node const* SchematicModel::portValue(unsigned i) const
-{ untested();
+{
 	assert(i<numPorts());
-	if(_ports[i]){ untested();
+	if(_ports[i]){
 		return _ports[i];
 	}else{ untested();
 		return nullptr;

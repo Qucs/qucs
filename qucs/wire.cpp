@@ -240,7 +240,7 @@ Symbol* Wire::intersectPorts(Symbol const* s) const
 
 		if(nodePosition(0) == p) { untested();
 		}else if(nodePosition(1) == p) { untested();
-		}else if(isInterior(p)) { untested();
+		}else if(isInterior(p)) {
 			split.push_back(p);
 		}
 	}
@@ -279,15 +279,15 @@ Wire* Wire::extendTowards(pos_t const& other) const
 	auto n0 = nodePosition(0);
 	auto n1 = nodePosition(1);
 
-	if(in_order(n0, other, n1)){ untested();
+	if(in_order(n0, other, n1)){
 		return clone();
-	}else if(in_order(other, n1, n0) && _port1->numPorts()==1){ untested();
+	}else if(in_order(other, n1, n0) && _port1->numPorts()==1){
 		trace3("extend1", other, n1, n0);
 		return new Wire(other, n0);
 	}else if(in_order(other, n0, n1) && _port0->numPorts()==1){ untested();
 		trace3("extend2",other, n0, n1);
 		return new Wire(other, n1);
-	}else{ untested();
+	}else{
 		return nullptr;
 	}
 }
@@ -362,7 +362,7 @@ Symbol* Wire::newUnion(Symbol const* s) const
 			return extendTowards(o->nodePosition(0));
 		}else{ untested();
 		}
-	}else{ untested();
+	}else{
 		return intersectPorts(s);
 	}
 	return nullptr;

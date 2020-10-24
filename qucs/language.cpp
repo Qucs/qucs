@@ -38,22 +38,22 @@ void DocumentLanguage::new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
 		incomplete();
 		assert(false);
 		// nothing
-	}else{ untested();
+	}else{
 		std::string type = findType(cmd);
 		trace2("new_instance", type, cmd.fullString());
-		if (const Element* proto = find_proto(type, owner)) { untested();
-			if (Element* new_instance = proto->clone_instance()) { untested();
+		if (const Element* proto = find_proto(type, owner)) {
+			if (Element* new_instance = proto->clone_instance()) {
 				new_instance->setOwner(owner);
 				Element* o = parseItem(cmd, new_instance);
-				if (Element* x=dynamic_cast<Element*>(o)) { untested();
+				if (Element* x=dynamic_cast<Element*>(o)) {
 					assert(Scope);
 					Scope->pushBack(x);
-				}else{ untested();
+				}else{
 				}
 			}else{ untested();
 				cmd.warn(bDANGER, type + ": incomplete prototype");
 			}
-		}else{ untested();
+		}else{
 			cmd.warn(bDANGER, type + ": no match");
 		}
 	}

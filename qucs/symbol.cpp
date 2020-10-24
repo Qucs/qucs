@@ -135,10 +135,10 @@ Port const& Symbol::port(unsigned i) const
 }
 /*--------------------------------------------------------------------------*/
 std::string Symbol::paramValue(std::string const& n) const
-{ untested();
-	if(n=="$xposition"){ untested();
+{
+	if(n=="$xposition"){
 		return std::to_string(cx());
-	}else if(n=="$yposition"){ untested();
+	}else if(n=="$yposition"){
 		trace1("..", cy());
 		return std::to_string(cy());
 	}else if(n=="$mfactor"){ untested();
@@ -151,7 +151,7 @@ std::string Symbol::paramValue(std::string const& n) const
 	}else if(n=="$vflip"){ untested();
 		incomplete();
 		return std::to_string(_vflip);
-	}else if(n=="$angle"){ untested();
+	}else if(n=="$angle"){
 		return std::to_string(_angle);
 	}else{ untested();
 		throw ExceptionCantFind(label().toStdString(), n, "params");
@@ -188,7 +188,7 @@ void Symbol::paint(ViewPainter* p) const
 // global/external position
 pos_t Symbol::nodePosition(unsigned i) const
 {
-	if(port(i).isConnected()){ untested();
+	if(port(i).isConnected()){
 		assert( portPosition(i) + center() == port(i)->position());
 		return port(i)->position();	
 	}else{
