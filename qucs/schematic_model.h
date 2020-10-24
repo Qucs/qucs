@@ -225,7 +225,7 @@ public:
 
 	// not so sure about these
 	void setPort(unsigned i, Node* n);
-	Net const* portValue(unsigned i) const;
+	Node const* portValue(unsigned i) const;
 
 private:
 	mutable PrototypeMap _protos; // bit of a hack.

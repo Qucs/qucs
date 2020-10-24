@@ -111,12 +111,12 @@ Node const* Symbol::portNode(unsigned i) const
   }
 }
 /*--------------------------------------------------------------------------*/
-Net const* Symbol::portValue(unsigned i) const
+Node const* Symbol::portValue(unsigned i) const
 {
   assert(i<unsigned(numPorts()));
   if(port(i).isConnected()){
-	  assert( port(i).value()->net() );
-	  return port(i).value()->net();
+	  assert( port(i).value() );
+	  return port(i).value();
   }else{
 	  return nullptr;
   }
@@ -154,7 +154,7 @@ std::string Symbol::paramValue(std::string const& n) const
 	}else if(n=="$angle"){ untested();
 		return std::to_string(_angle);
 	}else{ untested();
-		throw ExceptionCantFind(n, label().toStdString());
+		throw ExceptionCantFind(label().toStdString(), n, "params");
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -228,7 +228,7 @@ std::string Symbol::paramValue(unsigned i) const
 	case 1:
 		return std::to_string(cy());
 	default:
-		throw ExceptionCantFind(std::to_string(i), label().toStdString());
+		throw ExceptionCantFind(label().toStdString(), std::to_string(i), "param values");
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -241,7 +241,7 @@ std::string Symbol::paramName(unsigned i) const
 	case 1:
 		return "$yposition";
 	default:
-		throw ExceptionCantFind(std::to_string(i), label().toStdString());
+		throw ExceptionCantFind(label().toStdString(), std::to_string(i), "param names");
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -250,7 +250,7 @@ void Symbol::setParameter(unsigned n, std::string const& v)
 	if(n<Symbol::paramCount()){
 		incomplete();
 	}else{
-		throw ExceptionCantFind(std::to_string(n), label().toStdString());
+		throw ExceptionCantFind( label().toStdString(), std::to_string(n), "params");
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -270,7 +270,7 @@ void Symbol::setParameter(std::string const& name, std::string const& v)
 		_vflip = atoi(v.c_str());
 		assert(_hflip==1 || _hflip==-1);
 	}else{
-		throw ExceptionCantFind(name, label().toStdString());
+		throw ExceptionCantFind( label().toStdString(), name, "params");
 	}
 }
 /*--------------------------------------------------------------------------*/

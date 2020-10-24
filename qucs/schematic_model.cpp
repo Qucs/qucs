@@ -104,7 +104,7 @@ private: // ModelInserter
 
 private: // internal. Portstuff
   unsigned numPorts() const {unreachable(); return 0;}
-  Net const* portValue(unsigned) const{ unreachable(); return nullptr; } // BUG
+  Node const* portValue(unsigned) const { unreachable(); return nullptr; }
   void setPort(unsigned, Node*){ unreachable(); }
   Port& port(unsigned){ throw Exception(); }
 
@@ -608,11 +608,11 @@ void SchematicModel::setPort(unsigned i, Node* n)
 	_ports[i] = n;
 }
 
-Net const* SchematicModel::portValue(unsigned i) const
-{
+Node const* SchematicModel::portValue(unsigned i) const
+{ untested();
 	assert(i<numPorts());
-	if(_ports[i]){
-		return _ports[i]->net();
+	if(_ports[i]){ untested();
+		return _ports[i];
 	}else{ untested();
 		return nullptr;
 	}
