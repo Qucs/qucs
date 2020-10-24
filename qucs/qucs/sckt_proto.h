@@ -43,7 +43,7 @@ private: // SchematicSymbol
 	bool portExists(unsigned i) const override;
 	unsigned numPorts() const override;
 public:
-   Net const* portValue(unsigned) const override;
+   Node const* portValue(unsigned) const override;
 //	QString portName(unsigned i) const;
 
 private:

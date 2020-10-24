@@ -26,7 +26,7 @@ unsigned SubcktProto::numPorts() const
 	return subckt()->numPorts();
 }
 
-Net const* SubcktProto::portValue(unsigned i) const
+Node const* SubcktProto::portValue(unsigned i) const
 {
 	trace1("sckt_proto::portValue", subckt()->numPorts());
 	// return node[i]->net()??

@@ -24,6 +24,8 @@ class ExceptionCantFind : public Exception{
 public:
 	explicit ExceptionCantFind(std::string w="?") : Exception("can't find:" + w) {}
 	explicit ExceptionCantFind(std::string w, std::string ww) : Exception("can't find:" + w + " in " + ww) {}
+	explicit ExceptionCantFind(std::string const& dev, std::string const& key, std::string const& scope)
+	: Exception(dev + ": can't find: " + key + " in " + scope) {}
 };
 
 class ExceptionCantParse : public std::exception{

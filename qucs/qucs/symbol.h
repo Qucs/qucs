@@ -103,7 +103,7 @@ public: // Port stuff
 	virtual pos_t portPosition(unsigned) const = 0;
 	virtual pos_t nodePosition(unsigned) const; // why virtual?
 
-	virtual Net const* portValue(unsigned) const; // why virtual?
+	virtual Node const* portValue(unsigned) const; // why virtual?
 	Node const* portNode(unsigned) const;
 	// TODO: rethink Port/Node semantics
 	virtual unsigned numPorts() const = 0;
@@ -116,6 +116,7 @@ public: // Port stuff
 
 private: // internal port access
 	virtual Port& port(unsigned i){
+		assert(false);
 		throw ExceptionCantFind(std::to_string(i), label().toStdString());
 	}
 
@@ -131,9 +132,9 @@ protected: // maybe not here. but need to rebase MultiViewComponent to ScktProto
 	// such as subckt components. meta data or symbol gfx
 private:
 	std::string _type;
-	int _angle;
 	int _vflip; // vscale??
 	int _hflip; // hscale??
+	int _angle;
 }; // symbol
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

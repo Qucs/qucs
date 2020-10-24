@@ -26,7 +26,7 @@ private:
   // Port(Port const&){unreachable();}
 
 public:
-  Port(Port const&) = delete;
+  Port(Port const&) : _node(nullptr) {}
   explicit Port() : _node(nullptr) {}
   virtual ~Port(){}
 
