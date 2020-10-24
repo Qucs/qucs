@@ -35,7 +35,7 @@ private:
 	virtual unsigned numPorts() const {return 1;}
 	Rect boundingRect() const override;
 	Port& port(unsigned i);
-	pos_t portPosition(unsigned) const override{ untested(); return pos_t(0,0);}
+	pos_t portPosition(unsigned) const override{ return pos_t(0,0);}
 private:
 	Port _port;
 	bool _highlight;

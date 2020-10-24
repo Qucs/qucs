@@ -104,7 +104,7 @@ static bool PaintingListLoad(QString Line, PaintingList& List)
 		if(Painting const* pp = painting_dispatcher[cstr.toStdString()]){
 			p=prechecked_cast<Painting*>(pp->clone());
 			assert(p);
-		}else{ untested();
+		}else{
 			trace1("no painting", cstr);
 			// incomplete();
 			// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nUnknown painting " + cstr));
@@ -290,7 +290,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 	while(!stream.atEnd()) {
 		Line = stream.readLine();
 		Line = Line.trimmed();
-		if(Line.size()<2){ untested();
+		if(Line.size()<2){
 		}else if(Line.at(0) == '<'
 				&& Line.at(1) == '/'){
 			qDebug() << "endtag?" << Line;
@@ -307,9 +307,9 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 			mode='Q';
 		}else if(Line == "<Paintings>") {
 			mode='P';
-		}else if(Line == "<Model>") { untested();
+		}else if(Line == "<Model>") {
 			mode='M';
-		}else if(Line == "<Description>") { untested();
+		}else if(Line == "<Description>") {
 			mode='X';
 		}else{
 
@@ -1030,9 +1030,9 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 		incomplete();
 	}else if(auto s=dynamic_cast<Symbol*>(e)){
 		::parseSymbol(l, s);
-	}else if(auto s=dynamic_cast<Painting*>(e)){ untested();
+	}else if(auto s=dynamic_cast<Painting*>(e)){
 		::parsePainting(l, s);
-	}else if(auto s=dynamic_cast<DEV_DOT*>(e)){ untested();
+	}else if(auto s=dynamic_cast<DEV_DOT*>(e)){
 		return ::parseCommand(l, s);
 	}else{ untested();
 		return DocumentLanguage::parseItem(c, e);

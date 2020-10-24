@@ -43,7 +43,7 @@ INTERFACE void error(int,const std::string&);
  * parse, and act on, a command string
  */
 void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
-{ untested();
+{
   trace1("cmdproc", cmd.fullstring());
 
 #if 0
@@ -99,9 +99,9 @@ void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
 
   if (s == "xxxxcomment") { untested();
     // nothing
-  }else if (s != "") { untested();
+  }else if (s != "") {
     CMD* c = command_dispatcher[s];
-    if (c) { untested();
+    if (c) {
       c->do_it(cmd, scope);
       didsomething = true;
     }else{untested();
