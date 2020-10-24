@@ -62,7 +62,7 @@ Dispatcher<Painting>::INSTALL p(&painting_dispatcher, "Ellipse", &D);
 Module::INSTALL pp("paintings", &D);
 
 Ellipse::Ellipse(bool _filled) : Painting()
-{ untested();
+{
   Name = "Ellipse ";
   Pen = QPen(QColor());
   Brush = QBrush(Qt::lightGray);
@@ -72,7 +72,7 @@ Ellipse::Ellipse(bool _filled) : Painting()
 }
 
 Ellipse::~Ellipse()
-{ untested();
+{
 }
 
 // --------------------------------------------------------------------------
@@ -117,7 +117,7 @@ void Ellipse::getCenter(int& x, int &y)
 // --------------------------------------------------------------------------
 // Sets the center of the painting to x/y.
 void Ellipse::setCenter(int x, int y, bool relative)
-{ untested();
+{
 	 auto cx=Element::cx();
      auto cy=Element::cy();
 
@@ -147,7 +147,7 @@ Element* Ellipse::info_filled(QString& Name, char* &BitmapFile, bool getNewOne)
 
 // --------------------------------------------------------------------------
 bool Ellipse::load(const QString& s)
-{ untested();
+{
   bool ok;
 
   QString n;

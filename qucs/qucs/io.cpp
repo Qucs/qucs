@@ -17,11 +17,11 @@
 
 DocumentStream::DocumentStream(QFile* /* BUG const */ file)
 	: QTextStream(file)
-{ untested();
+{
 }
 
 QString const istream_t::readLine()
-{ untested();
+{
 	_current_start = pos(); // really?
 
 	_cnt = 0;
@@ -49,20 +49,20 @@ istream_t::istream_t(istream_t::STRING, const std::string&s )
 /*--------------------------------------------------------------------------*/
 /// borrowed from ap_*.cc
 int istream_t::ctoi()
-{ untested();
+{
 	trace3("skipbl", fullString(), cursor(), _ok);
   int val = 0;
   int sign = 1;
 
   skipbl();
   size_t here = cursor();
-  if (skip1("-")) { untested();
+  if (skip1("-")) {
     sign = -1;
-  }else{ untested();
+  }else{
     skip1("+");
   }
 
-  while (is_digit()) { untested();
+  while (is_digit()) {
     val = 10 * val + (ctoc()-'0');
   }
   skipcom();
@@ -71,8 +71,8 @@ int istream_t::ctoi()
 }
 
 istream_t& istream_t::skipbl()
-{ untested();
-  while (peek() && (!isgraph(peek()))) { untested();
+{
+  while (peek() && (!isgraph(peek()))) {
 	trace1("skipbl", peek());
     skip();
   }
@@ -88,10 +88,10 @@ istream_t& istream_t::skip1b(char t)
 }
 /*--------------------------------------------------------------------------*/
 char istream_t::ctoc()
-{ untested();
+{
 	trace1("ctoc", _cmd);
   char c=_cmd[_cnt];
-  if(_cnt<=_cmd.size()) { untested();
+  if(_cnt<=_cmd.size()) {
     ++_cnt;
   }else{untested();
   }
@@ -99,7 +99,7 @@ char istream_t::ctoc()
 }
 /*--------------------------------------------------------------------------*/
 istream_t& istream_t::skip1b(const std::string& t)
-{ untested();
+{
   skipbl();
   skip1(t);
   skipbl();
@@ -107,11 +107,11 @@ istream_t& istream_t::skip1b(const std::string& t)
 }
 /*--------------------------------------------------------------------------*/
 istream_t& istream_t::skip1(const std::string& t)
-{ untested();
-  if (match1(t)) { untested();
+{
+  if (match1(t)) {
     skip();
     assert(_ok);
-  }else{ untested();
+  }else{
     _ok = false;
   }
   return *this;
