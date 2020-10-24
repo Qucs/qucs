@@ -26,11 +26,18 @@ static const std::string typesep(":");
 static const char _typesep = ':';
 
 
-static std::string netLabel(Net const* n)
+static std::string netLabel(Node const* nn)
 {
+	if(!nn){
+		return "(null)";
+	}else{
+
+	}
+	Net const* n = nn->net();
+
 	if(!n){
 		unreachable();
-		return("(null)");
+		return "(null)";
 	}else if(n->hasLabel()){
 		return n->label().toStdString();
 	}else{

@@ -43,7 +43,9 @@ class PortSym : public Command{
 	  assert(place);
 	  place->setCenter(pos_t(cx,cy));
 	  Node* node = place->connectNode(0, s->nodes());
+	  assert(node);
 
+	  trace1("portsym:setport", n);
 	  s->setPort(n, node);
   }
 }d0;

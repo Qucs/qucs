@@ -60,12 +60,20 @@ private:
 		}
 	}
 	unsigned numPorts() const override{
-		assert(subckt());
-		return subckt()->numPorts();
+		if(subckt()){
+			return subckt()->numPorts();
+		}else{
+			return 0;
+		}
 	}
-	virtual pos_t portPosition(unsigned i) const{
-		unreachable();
-		return pos_t(0,0);
+	pos_t portPosition(unsigned i) const override{
+		untested();
+		assert(subckt());
+		assert(subckt()->portValue(i));
+		auto pos = subckt()->portValue(i)->position();
+
+		// TODO rotate.
+		return pos;
 	}
 
 	QRectF boundingRect() const override{
@@ -99,6 +107,7 @@ private:
 	int _ty;
 	Property _section;
 	Property _component;
+
 }d0;
 static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "LegacyLibProto", &d0);
 /*--------------------------------------------------------------------------*/
@@ -108,7 +117,10 @@ public:
 	explicit Lib():Symbol(), _tx(0), _ty(0), _parent(nullptr) {
 		setTypeName("Lib"); // really?
 	}
-	Lib( Lib const& l) : Symbol(l), _parent(l._parent){}
+	Lib( Lib const& l) : Symbol(l), _parent(l._parent),
+		_ports(l._ports.size())
+	{
+	}
 
 private: // Element
 	Symbol* clone()const override{
@@ -151,6 +163,10 @@ private: // Symbol
 	pos_t portPosition(unsigned i) const override{
 		assert(_parent);
 		return _parent->portPosition(i);
+	}
+	Port& port(unsigned i) override{ untested();
+		assert(i < _ports.size());
+		return _ports[i];
 	}
 	void setParameter(std::string const& n, std::string const& v) override{
 		bool redo = false;
@@ -248,6 +264,10 @@ private:
 			trace2("Lib::attachProto", t, s);
 			_parent = s;
 		}
+
+		_ports.resize(numPorts());
+		trace2("Lib::attachProto", numPorts(), _ports.size());
+		// also prepare parameters here.
 	}
 
 private:
@@ -256,6 +276,7 @@ private:
 	Property _section;
 	Property _component;
 	Symbol const* _parent; // BUG. common.
+	std::vector<Port> _ports;
 }D; // Lib
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Lib", &D);
 /*--------------------------------------------------------------------------*/

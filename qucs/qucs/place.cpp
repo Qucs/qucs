@@ -41,8 +41,8 @@ private: // Symbol
 	virtual unsigned numPorts() const {return 1;}
 
 public: // Node stuff
-	virtual Node* connectNode(unsigned idx, NodeMap&){incomplete(); return nullptr;}
-	virtual Node* disconnectNode(unsigned idx, NodeMap&){incomplete(); return nullptr;}
+	//virtual Node* connectNode(unsigned idx, NodeMap&){incomplete(); return nullptr;}
+	//virtual Node* disconnectNode(unsigned idx, NodeMap&){incomplete(); return nullptr;}
 
 public: // Port access
 	virtual pos_t portPosition(unsigned i) const{
@@ -53,7 +53,7 @@ public: // Port access
 		return pos_t(center());
 	}
 
-	virtual Net const* portValue(unsigned) const{
+	virtual Node const* portValue(unsigned) const{
 		incomplete(); return nullptr;
 	}
 	Node const* portNode(unsigned) const{

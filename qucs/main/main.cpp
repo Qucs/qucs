@@ -206,7 +206,7 @@ private:
     unreachable();
     return pos_t(0,0);
   }
-  Net const* portValue(unsigned)const {unreachable(); return nullptr;}
+  Node const* portValue(unsigned)const {unreachable(); return nullptr;}
   void setPort(unsigned, Node*){incomplete();}
 
 public:
