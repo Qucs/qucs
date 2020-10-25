@@ -24,9 +24,15 @@
 /*--------------------------------------------------------------------------*/
 class pos_t : public std::pair<int, int>{
 public:
+	pos_t(pos_t const& p) : std::pair<int, int>(p) {}
 	pos_t(std::pair<int, int> const& p) : std::pair<int, int>(p) {}
 	pos_t(int a, int b) : std::pair<int, int>(a,b) {}
 	bool operator<=(pos_t const& b) const;
+
+	pos_t& operator=(pos_t const& o){
+		std::pair<int, int>::operator=(o);
+		return *this;
+	}
 };
 /*--------------------------------------------------------------------------*/
 inline bool pos_t::operator<=(pos_t const& b) const
@@ -167,11 +173,44 @@ private:
 	bool _m;
 };
 /*--------------------------------------------------------------------------*/
+class rotate_after_mirror : public angle_t{
+public:
+	rotate_after_mirror(int d, bool hflip=false, bool vflip=false)
+	    : angle_t(d), _h(hflip), _v(vflip){ }
+	rotate_after_mirror(angle_t const& d) : angle_t(d), _h(false), _v(false){ }
+	rotate_after_mirror(rotate_after_mirror const& d) : angle_t(d), _h(d._h), _v(d._v){ }
+
+public:
+	pos_t apply(pos_t const&) const;
+	rotate_after_mirror operator*(rotate_after_mirror const&);
+ 	int det() const{ untested(); return (1-_h*2) * (1-_v*2);}
+
+	rotate_after_mirror0_t inverse() const{
+		if(_h && _v){ untested();
+			return rotate_after_mirror(angle_t(degrees_int()+180));
+		}else if(_h || _v){ untested();
+			return *this;
+		}else{ untested();
+			return rotate_after_mirror(angle_t::inverse());
+		}
+	}
+
+private:
+	bool _h;
+	bool _v;
+};
+/*--------------------------------------------------------------------------*/
 inline angle_t::angle_t(int d) : _degrees(d)
 {
 	trace1("...", d);
 	assert(!(d%90)); // for now.
+	while(_degrees<0){ untested();
+		_degrees += 360;
+	}
+
+	_degrees %= 360;
 }
+/*--------------------------------------------------------------------------*/
 
 typedef rotate_after_mirror1_t qucsSymbolTransform;
 typedef rotate_after_mirror0_t gedaSymbolTransform;

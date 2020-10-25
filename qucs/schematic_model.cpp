@@ -142,10 +142,10 @@ ComponentList& SchematicModel::components()
 void SchematicModel::pushBack(Element* what)
 {
 	trace2("SchematicModel::pushBack", what->label(), this);
-	if(auto c=component(what)){
-		connect(c);
-		components().push_back(c);
-	}else if(prechecked_cast<Conductor*>(element(what))){
+//	if(auto c=component(what)){
+//		connect(c);
+//		components().push_back(c);
+	if(dynamic_cast<Conductor*>(element(what))){
 		auto s=dynamic_cast<Symbol*>(what);
 	  connect(s);
 	  // why not components??
@@ -243,8 +243,9 @@ Element* SchematicModel::detach(Element* what)
 		auto s=dynamic_cast<Symbol*>(what);
 		disconnect(s);
 		wires().removeRef(s);
-	}else if(auto w=dynamic_cast<Symbol*>(what)){ untested();
-		incomplete();
+	}else if(auto c=dynamic_cast<Symbol*>(what)){ untested();
+		disconnect(c);
+		components().removeRef(c);
 	}else{ untested();
 		unreachable();
 	}
@@ -266,10 +267,9 @@ Element* SchematicModel::attach(Element* what)
 		auto s=dynamic_cast<Symbol*>(what);
 		connect(s);
 		wires().append(s);
-	}else if(auto w=dynamic_cast<Symbol*>(what)){ untested();
-		incomplete();
-		//connect(c);
-		//components().append(c);
+	}else if(auto c=dynamic_cast<Symbol*>(what)){ untested();
+		connect(c);
+		components().append(c);
 	}else{ untested();
 		incomplete();
 	}
