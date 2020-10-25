@@ -17,9 +17,8 @@
 #include "schematic_scene.h"
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-static std::vector<pos_t> placeVector(ElementGraphics const* e)
+static void collectPorts(ElementGraphics const* e, std::vector<pos_t>& p)
 {
-	std::vector<pos_t> p;
 	if(auto s=prechecked_cast<Symbol const*>(element(e))){
 
 		for(unsigned i=0; i<s->numPorts(); ++i){
@@ -29,7 +28,6 @@ static std::vector<pos_t> placeVector(ElementGraphics const* e)
 		}
 	}else{
 	}
-	return p;
 }
 /*--------------------------------------------------------------------------*/
 struct{
@@ -100,24 +98,28 @@ void SchematicEdit::do_it_first()
 
 	std::vector<ElementGraphics*> done_ins;
 	std::vector<ElementGraphics*> done_del;
+	std::vector<pos_t> pl;
 
 	// remove ports and join adjacent wires. keep track.
-	while(_del.size()){
+	trace1("============ edit delete...", _del.size());
+	while(_del.size()){ untested();
 		auto r = _del.front();
 		trace1("remove", r);
 		_del.pop_front();
-		auto ps = placeVector(r);
+		collectPorts(r, pl);
 		r->hide();
-		for(auto portremove : ps){ untested();
-			// trace1("postremove", portremove);
-			postRmPort(portremove, done_del);
-		}
-
 		// queued delete.
 		done_del.push_back(r);
 	}
+	// sort pl?
+	// unique pl?
 
-	trace1("try insert...", _ins.size());
+	for(auto portremove : pl){ untested();
+		// trace1("postremove", portremove);
+		postRmPort(portremove, done_del);
+	}
+
+	trace1("============ edit insert...", _ins.size());
 	while(_ins.size()){
 		ElementGraphics* gfx = _ins.front();
 		trace1("try insert...", element(gfx)->label());
@@ -222,7 +224,7 @@ bool SchematicEdit::addmerge(ElementGraphics* s, T& del_done)
 // remove stuff adjacent to degree-2 nodes. add back later.
 template<class T>
 void SchematicEdit::postRmPort(pos_t remove_at, T& del_done)
-{
+{ untested();
 	auto it = items(makeQPointF(remove_at));
 	Node const* node = nodeAt(remove_at);
 
