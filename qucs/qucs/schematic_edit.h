@@ -62,10 +62,10 @@ protected:
 	void qSwap(ElementGraphics* eg, Element* e);
 
 private: // QUndoCommand
-	void undo() override { untested();
+	void undo() override {itested();
 		redo();
 	}
-	void redo() override { untested();
+	void redo() override {itested();
 		if(_first){
 			do_it_first();
 			_first = false;

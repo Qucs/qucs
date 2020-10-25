@@ -924,7 +924,7 @@ int main(int argc, char *argv[])
     else if(!strcmp(argv[i], "-doc")) { untested();
       createDocData();
       return 0;
-    } else if(!strcmp(argv[i], "-list-entries")) { untested();
+    } else if(!strcmp(argv[i], "-list-entries")) {
       incomplete(); // don't use.
       createListComponentEntry();
       return 0;

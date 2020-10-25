@@ -237,7 +237,7 @@ Element* SchematicModel::detach(Element* what)
 		auto s=dynamic_cast<Symbol*>(what);
 		disconnect(s);
 		wires().removeRef(s);
-	}else if(auto c=dynamic_cast<Symbol*>(what)){ untested();
+	}else if(auto c=dynamic_cast<Symbol*>(what)){itested();
 		disconnect(c);
 		components().removeRef(c);
 	}else{ untested();
@@ -257,7 +257,7 @@ Element* SchematicModel::attach(Element* what)
 		auto s=dynamic_cast<Symbol*>(what);
 		connect(s);
 		wires().append(s);
-	}else if(auto c=dynamic_cast<Symbol*>(what)){ untested();
+	}else if(auto c=dynamic_cast<Symbol*>(what)){itested();
 		connect(c);
 		components().append(c);
 	}else{ untested();
@@ -561,7 +561,7 @@ void SchematicModel::detachFromNode(Element* what, Node* from)
 void SchematicModel::disconnect(Symbol* c)
 {itested();
 	// drop port connections
-	for(unsigned i=0; i<c->numPorts(); ++i) {untested();
+	for(unsigned i=0; i<c->numPorts(); ++i) {
 		trace3("sm:ds", i, c->label(), c->portPosition(i));
 		Node* nn = c->disconnectNode(i, nodes());
 		assert(nn);
@@ -576,8 +576,8 @@ void SchematicModel::disconnect(Symbol* c)
 }
 
 void SchematicModel::connect(Symbol* c)
-{ untested();
-	for(unsigned i=0; i<c->numPorts(); ++i){ untested();
+{
+	for(unsigned i=0; i<c->numPorts(); ++i){
 		c->connectNode(i, nodes()); // use scope.
 //		assert(dynamic_cast<Symbol const*>(c)->port(i).connected());
 	}

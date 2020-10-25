@@ -57,7 +57,7 @@ void SchematicEdit::save(T& del, T& ins)
 		ElementGraphics* d = *di;
 		// trace2("save", i, d);
 
-		if(i==d){ untested();
+		if(i==d){itested();
 			if(i->isVisible()){
 				// has been added eventually
 			}else{
@@ -67,14 +67,14 @@ void SchematicEdit::save(T& del, T& ins)
 			};
 			++ii;
 			++di;
-		}else if(i<d){ untested();
+		}else if(i<d){itested();
 			if(i->isVisible()){
 				delete i;
 			}else{
 				_ins.push_back(i);
 			}
 			++ii;
-		}else{ untested();
+		}else{itested();
 			if(d->isVisible()){
 				_del.push_back(d);
 			}else{
@@ -94,7 +94,7 @@ void SchematicEdit::save(T& del, T& ins)
 // This is a generic version of legacy implementation, and it still requires a
 // scene implementing the geometry.
 void SchematicEdit::do_it_first()
-{ untested();
+{itested();
 
 	std::vector<ElementGraphics*> done_ins;
 	std::vector<ElementGraphics*> done_del;
@@ -102,7 +102,7 @@ void SchematicEdit::do_it_first()
 
 	// remove ports and join adjacent wires. keep track.
 	trace1("============ edit delete...", _del.size());
-	while(_del.size()){ untested();
+	while(_del.size()){itested();
 		auto r = _del.front();
 		trace1("remove", r);
 		_del.pop_front();
@@ -114,7 +114,7 @@ void SchematicEdit::do_it_first()
 	// sort pl?
 	// unique pl?
 
-	for(auto portremove : pl){ untested();
+	for(auto portremove : pl){itested();
 		// trace1("postremove", portremove);
 		postRmPort(portremove, done_del);
 	}
@@ -166,7 +166,7 @@ bool SchematicEdit::addmerge(ElementGraphics* s, T& del_done)
 	QRectF bb = s->absoluteBoundingRect();
 	auto it = items(bb);
 	trace3("addmerge", s, element(s)->label(), it.size());
-	for(auto gfxi : it){ untested();
+	for(auto gfxi : it){itested();
 		assert(gfxi!=s); // s is invisible.
 		trace1("addmerge coll?", element(gfxi)->label());
 
@@ -224,7 +224,7 @@ bool SchematicEdit::addmerge(ElementGraphics* s, T& del_done)
 // remove stuff adjacent to degree-2 nodes. add back later.
 template<class T>
 void SchematicEdit::postRmPort(pos_t remove_at, T& del_done)
-{ untested();
+{itested();
 	auto it = items(makeQPointF(remove_at));
 	Node const* node = nodeAt(remove_at);
 
@@ -246,12 +246,12 @@ void SchematicEdit::postRmPort(pos_t remove_at, T& del_done)
 void SchematicEdit::do_it()
 {
 	trace2("do_it", _del.size(), _ins.size());
-	for(auto& d : _del){ untested();
+	for(auto& d : _del){itested();
 		trace1("hide", d);
 		assert(d->isVisible());
 		d->hide();
 	}
-	for(auto& d : _ins){ untested();
+	for(auto& d : _ins){itested();
 		trace1("show", d);
 		assert(!d->isVisible());
 		d->show();

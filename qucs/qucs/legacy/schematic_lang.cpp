@@ -179,7 +179,7 @@ static Element* loadElement(const QString& _s, Element* e)
 		c->setLabel(cstr);
 		c->tx = x;
 		c->ty = y;
-	}else if(auto s=dynamic_cast<Symbol*>(e)){ untested();
+	}else if(auto s=dynamic_cast<Symbol*>(e)){itested();
 		s = parseSymbol(_s, s);
 	}else{ untested();
 		incomplete();
@@ -819,7 +819,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 	c->isActive = tmp & 3;
 	// sym->setParameter("is_active", std::to_string(tmp & 3));
 
-	if(tmp & 4){ untested();
+	if(tmp & 4){itested();
 	// sym->setParameter("hide_label", std::to_string(tmp & 4));
 		c->showName = false;
 	}else{

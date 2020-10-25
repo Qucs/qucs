@@ -46,7 +46,7 @@ SchematicModel* Symbol::scope()
 {
 	if(auto o=dynamic_cast<Symbol*>(owner())){
 		return o->subckt();
-	}else{ untested();
+	}else{itested();
 		return nullptr;
 	}
 }
@@ -126,7 +126,7 @@ pos_t Symbol::center()const
 }
 /*--------------------------------------------------------------------------*/
 Port const& Symbol::port(unsigned i) const
-{ untested();
+{
 	Symbol* s=const_cast<Symbol*>(this);
 	return s->port(i);
 }
@@ -138,15 +138,13 @@ std::string Symbol::paramValue(std::string const& n) const
 	}else if(n=="$yposition"){
 		trace1("..", cy());
 		return std::to_string(cy());
-	}else if(n=="$mfactor"){ untested();
+	}else if(n=="$mfactor"){
 		return "1"; // isActive in Component.
-	}else if(n=="$param_display"){ untested();
+	}else if(n=="$param_display"){
 		return "0";
-	}else if(n=="$hflip"){ untested();
-		incomplete();
+	}else if(n=="$hflip"){
 		return std::to_string(_hflip);
-	}else if(n=="$vflip"){ untested();
-		incomplete();
+	}else if(n=="$vflip"){
 		return std::to_string(_vflip);
 	}else if(n=="$angle"){
 		return std::to_string(_angle);
@@ -166,6 +164,7 @@ void Symbol::paint(ViewPainter* p) const
 		int y = getY(pp);
 
 		if(!port(i).isConnected()){ untested();
+			unreachable();
 			p->setPen(QPen(Qt::green,2));
 			p->drawEllipse(x-1, y-1, 2, 2);
 		}else if(port(i)->numPorts()==0){ untested();
@@ -187,7 +186,7 @@ pos_t Symbol::nodePosition(unsigned i) const
 {
 	pos_t pp = portPosition(i);
 
-	if(legacyTransformHack()){ untested();
+	if(legacyTransformHack()){
 		// ports use external coordinates...
 	}else{
 		rotate_after_mirror a(_angle, (1-_hflip)/2, (1-_vflip)/2);

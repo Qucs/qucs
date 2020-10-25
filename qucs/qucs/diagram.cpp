@@ -239,7 +239,7 @@ void Diagram::createAxisLabels()
 	  }else{
 	  }
     }
-  } else { untested();
+  } else {itested();
     y -= LineSpacing;
     encode_String(xAxis.Label, Str);
     w = metrics.width(Str) >> 1;
