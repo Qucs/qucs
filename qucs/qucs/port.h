@@ -18,17 +18,15 @@
 #include <QString> // BUG??
 #include "trace.h"
 #include "geometry.h"
-
+/*--------------------------------------------------------------------------*/
 class Node;
-
+/*--------------------------------------------------------------------------*/
 class Port {
 private:
-  // Port(Port const&){unreachable();}
-
 public:
-  Port(Port const&) : _node(nullptr) {}
+  Port(Port const& p) : _node(nullptr) {assert(!p._node);}
   explicit Port() : _node(nullptr) {}
-  virtual ~Port(){}
+  virtual ~Port(){ assert(!_node);}
 
 public: // This makes Port behave like a pointer (and that's what it will be).
   Node const* operator->() const {return _node;}
@@ -48,8 +46,7 @@ private:
 
 private:
   Node *_node;
-
 };
-
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 #endif

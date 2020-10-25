@@ -202,6 +202,7 @@ private: // SchematicSymbol
 
 private:
   unsigned numPorts() const override{ incomplete(); return 0; }
+  virtual Port& port(unsigned) override{ return *new Port();}
   pos_t portPosition(unsigned) const override{
     unreachable();
     return pos_t(0,0);

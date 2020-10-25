@@ -7,7 +7,7 @@
 #include "symbol.h"
 #include <QDrag>
 
-void ComponentWidget::startDrag(Qt::DropActions x)
+void ComponentWidget::startDrag(Qt::DropActions)
 { untested();
   QListWidgetItem *item = currentItem();
   assert(item);

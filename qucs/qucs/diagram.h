@@ -94,8 +94,6 @@ public:
   QString const& typeName() const{return Name;}
   void setName(QString const& n){ Name = n; }
 
-protected:
-  QString Name; // the label, but sometimes the type. yikes.
 
 public: // ??!
   virtual void paintDiagram(ViewPainter* p);
@@ -174,6 +172,8 @@ protected: // FIXME
   int y2;
 private:
   int Bounding_x1, Bounding_x2, Bounding_y1, Bounding_y2;
+protected:
+  QString Name; // the label, but sometimes the type. yikes.
 }; // Diagram
 
 #endif

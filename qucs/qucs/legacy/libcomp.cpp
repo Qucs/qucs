@@ -63,16 +63,16 @@ private:
 		if(subckt()){
 			return subckt()->numPorts();
 		}else{
+			unreachable();
 			return 0;
 		}
 	}
+	virtual Port& port(unsigned i) {unreachable(); return *new Port();}
 	pos_t portPosition(unsigned i) const override{
 		untested();
 		assert(subckt());
 		assert(subckt()->portValue(i));
 		auto pos = subckt()->portValue(i)->position();
-
-		// TODO rotate.
 		return pos;
 	}
 
@@ -118,8 +118,9 @@ public:
 		setTypeName("Lib"); // really?
 	}
 	Lib( Lib const& l) : Symbol(l), _parent(l._parent),
-		_ports(l._ports.size())
+		_ports(0)
 	{
+		_ports.resize(l._ports.size());
 	}
 
 private: // Element
@@ -160,6 +161,7 @@ private: // Symbol
 			return 0;
 		}
 	}
+	// Lib::
 	pos_t portPosition(unsigned i) const override{
 		assert(_parent);
 		return _parent->portPosition(i);
@@ -464,6 +466,7 @@ int LibComp::loadSymbol()
   y1 -= 4;  y2 += 4;
   return z;      // return number of ports
 #endif
+  return 0;
 }
 /*--------------------------------------------------------------------------*/
 QString LibComp::getSubcircuitFile() const
@@ -473,6 +476,7 @@ QString LibComp::getSubcircuitFile() const
   QString FileName = Directory.absoluteFilePath(Props.first()->Value);
   return misc::properAbsFileName(FileName);
 #endif
+  return "";
 }
 /*--------------------------------------------------------------------------*/
 bool LibComp::createSubNetlist(DocumentStream& stream, QStringList &FileList,
@@ -541,6 +545,7 @@ QString LibComp::netlist() const
 
   return s + '\n';
 #endif
+  return "";
 }
 /*--------------------------------------------------------------------------*/
 QString LibComp::verilogCode(int)

@@ -1,3 +1,15 @@
+/***************************************************************************
+    copyright            : (C) 2020 Felix Salfelder
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 
 #include "geometry.h"
 #include "io_trace.h"
@@ -8,17 +20,24 @@
 // rotate counterclockwise. NB: the y axis points downwards on the screen.
 pos_t angle_t::apply(pos_t const& p) const
 {itested();
-	trace3("angle_apply", _degrees, p.first, p.second);
+	trace3("angle_apply0", _degrees, p.first, p.second);
 	assert(! (_degrees%90) ); //for now
 	int a = _degrees/90;
 	int s = dsin(a);
 	int c = dcos(a);
-	trace3("angle_apply", a, s, c);
+	trace3("angle_apply1", a, s, c);
+	assert(s <=1 && s>=-1);
+	assert(c <=1 && c>=-1);
 	// @angle_apply  a=2  s=0  c=1
 
+#if 1
 	int rx = c*p.first + s*p.second;
 	int ry =-s*p.first + c*p.second;
-	trace3("angle_apply", _degrees, rx, ry);
+#else
+	int rx = c*p.first - s*p.second;
+	int ry = s*p.first + c*p.second;
+#endif
+	trace3("angle_apply2", _degrees, rx, ry);
 	return pos_t(rx, ry);
 }
 /*--------------------------------------------------------------------------*/
@@ -54,7 +73,7 @@ rotate_after_mirror1_t rotate_after_mirror1_t::operator*(rotate_after_mirror1_t 
 
 	int new_angle = A.degrees_int() + 360;
 	if(A._m){itested();
-		new_angle -= int(B.degrees_int());
+		new_angle -= int(B.degrees_int()) - 360;
 	}else{ untested();
 		new_angle += int(B.degrees_int());
 	}
@@ -63,6 +82,23 @@ rotate_after_mirror1_t rotate_after_mirror1_t::operator*(rotate_after_mirror1_t 
 
 	bool m1m2 = B._m && A._m;
 	return rotate_after_mirror1_t(m1m2, new_angle);
+}
+/*--------------------------------------------------------------------------*/
+pos_t rotate_after_mirror::apply(pos_t const& p) const
+{itested();
+	auto tmp = p;
+	if(_v){itested();
+		tmp.second *= -1;
+	}else{ untested();
+	}
+	if(_h){itested();
+		tmp.first *= -1;
+	}else{ untested();
+	}
+	pos_t ret = angle_t::apply(tmp);
+	trace2("rot", tmp, ret);
+
+	return ret;
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
