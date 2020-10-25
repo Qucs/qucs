@@ -64,7 +64,7 @@ bool Node::hasLabel() const
 #endif
 /*--------------------------------------------------------------------------*/
 void Conductor::detachNet(Net* n)
-{
+{ untested();
   assert(_net == n);
   assert(_net);
   _net->dec_nodes();

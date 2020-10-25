@@ -23,6 +23,7 @@ Painting::Painting()
 void Painting::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
 	unreachable();
+	_x1 = _x2 = _y1 = _y2 = 0;
 //  _x1 = _cx;     _y1 = _cy;
 //  _x2 = _cx+x2;  _y2 = _cy+y2;
 }
