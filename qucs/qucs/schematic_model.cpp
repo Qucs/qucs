@@ -142,9 +142,6 @@ ComponentList& SchematicModel::components()
 void SchematicModel::pushBack(Element* what)
 {
 	trace2("SchematicModel::pushBack", what->label(), this);
-//	if(auto c=component(what)){
-//		connect(c);
-//		components().push_back(c);
 	if(dynamic_cast<Conductor*>(element(what))){
 		auto s=dynamic_cast<Symbol*>(what);
 	  connect(s);
@@ -234,10 +231,7 @@ void SchematicModel::erase(Element* what)
 // TODO: take iterator.
 Element* SchematicModel::detach(Element* what)
 {itested();
-	if(auto c=component(what)){itested();
-		disconnect(c);
-		components().removeRef(c);
-	}else if(auto d=diagram(what)){ untested();
+	if(auto d=diagram(what)){ untested();
 		diagrams().removeRef(d);
 	}else if(prechecked_cast<Conductor*>(element(what))){
 		auto s=dynamic_cast<Symbol*>(what);
@@ -257,10 +251,6 @@ Element* SchematicModel::attach(Element* what)
 	trace2("SchematicModel::attach", what->label(), this);
 	if(auto c=dynamic_cast<TaskElement*>(what)){ untested();
 		commands().push_back(c);
-	}else if(auto c=component(what)){itested();
-		// really?
-		connect(c);
-		components().append(c);
 	}else if(auto d=diagram(what)){ untested();
 		diagrams().append(d);
 	}else if(prechecked_cast<Conductor*>(element(what))){
@@ -571,8 +561,8 @@ void SchematicModel::detachFromNode(Element* what, Node* from)
 void SchematicModel::disconnect(Symbol* c)
 {itested();
 	// drop port connections
-	for(unsigned i=0; i<c->numPorts(); ++i) {itested();
-		trace2("sm:ds", i, c->portPosition(i));
+	for(unsigned i=0; i<c->numPorts(); ++i) {untested();
+		trace3("sm:ds", i, c->label(), c->portPosition(i));
 		Node* nn = c->disconnectNode(i, nodes());
 		assert(nn);
 
@@ -586,8 +576,8 @@ void SchematicModel::disconnect(Symbol* c)
 }
 
 void SchematicModel::connect(Symbol* c)
-{
-	for(unsigned i=0; i<c->numPorts(); ++i){
+{ untested();
+	for(unsigned i=0; i<c->numPorts(); ++i){ untested();
 		c->connectNode(i, nodes()); // use scope.
 //		assert(dynamic_cast<Symbol const*>(c)->port(i).connected());
 	}

@@ -603,6 +603,7 @@ Node* Wire::connectNode(unsigned i, NodeMap& nm)
 // ----------------------------------------------------------------
 Node* Wire::disconnectNode(unsigned i, NodeMap& nm)
 { itested();
+  trace3("Wire::disconnect", label(), i, degree());
   assert(hasNet());
   Node* n = Symbol::disconnectNode(i, nm);
   trace3("Wire::disconnect", i, n->degree(), degree());
