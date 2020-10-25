@@ -238,8 +238,8 @@ Symbol* Wire::intersectPorts(Symbol const* s) const
 		pos_t p = s->nodePosition(i);
 		trace4("intersectPorts", i, s->nodePosition(i), s->label(), s->typeName());
 
-		if(nodePosition(0) == p) { untested();
-		}else if(nodePosition(1) == p) { untested();
+		if(nodePosition(0) == p) {itested();
+		}else if(nodePosition(1) == p) {itested();
 		}else if(isInterior(p)) {
 			split.push_back(p);
 		}
@@ -269,7 +269,7 @@ Symbol* Wire::intersectPorts(Symbol const* s) const
 			++next;
 		}
 		return sckt;
-	}else{ untested();
+	}else{itested();
 	}
 	return nullptr;
 }
@@ -623,7 +623,7 @@ bool Wire::isInterior(pos_t const& p) const
 {
 	if(p==nodePosition(0)){
 		return false;
-	}else if(p==nodePosition(1)){ untested();
+	}else if(p==nodePosition(1)){itested();
 		return false;
 	}else{
 		return isNet(p);

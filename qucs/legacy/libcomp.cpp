@@ -50,7 +50,7 @@ private:
 	std::string paramValue(unsigned n) const override{ untested();
 		return SchematicSymbol::paramValue(n);
 	}
-	std::string paramValue(std::string const& n) const override{ untested();
+	std::string paramValue(std::string const& n) const override{
 		if(n=="$tx"){
 			return "0";
 		}else if(n=="$ty"){
@@ -128,7 +128,7 @@ private: // Element
 		return new Lib(*this);
 	}
 	void paint(ViewPainter* p) const override{
-		if(_parent){ untested();
+		if(_parent){itested();
 			// no-op?
 			// ((Element*)_parent)->paint(p);
 		}else{ untested();
@@ -136,7 +136,7 @@ private: // Element
 		Symbol::paint(p);
 	}
 	QRectF boundingRect() const override{
-		if(_parent){ untested();
+		if(_parent){itested();
 			return _parent->boundingRect();
 		}else{ untested();
 			unreachable();
@@ -146,7 +146,7 @@ private: // Element
 
 private: // Symbol
 	PaintingList const* symbolPaintings() const override{
-		if(_parent){ untested();
+		if(_parent){itested();
 			assert( _parent->subckt());
 			return &_parent->subckt()->paintings();
 		}else{ untested();
@@ -154,10 +154,10 @@ private: // Symbol
 		}
 	}
 	unsigned numPorts() const override{
-		if(_parent){ untested();
+		if(_parent){itested();
 			trace2("Lib::numPorts", label(), _parent->numPorts());
 			return _parent->numPorts();
-		}else{ untested();
+		}else{itested();
 			return 0;
 		}
 	}
@@ -166,7 +166,7 @@ private: // Symbol
 		assert(_parent);
 		return _parent->portPosition(i);
 	}
-	Port& port(unsigned i) override{ untested();
+	Port& port(unsigned i) override{itested();
 		assert(i < _ports.size());
 		return _ports[i];
 	}
@@ -178,7 +178,7 @@ private: // Symbol
 		}else if(n=="Component"){ itested();
 			_component.Value = QString::fromStdString(v);
 			redo = true;
-		}else{ untested();
+		}else{itested();
 			Symbol::setParameter(n, v);
 		}
 
@@ -221,7 +221,7 @@ private: // Symbol
 			return std::to_string(_tx);
 		}else if (n=="$ty"){
 			return std::to_string(_ty);
-		}else{ untested();
+		}else{itested();
 			return Symbol::paramValue(n);
 		}
 	}
@@ -251,7 +251,7 @@ private: // Symbol
 			return "Lib";
 		case 3:
 			return "Component";
-		default: untested();
+		default:itested();
 			return Symbol::paramName(i);
 		}
 	}

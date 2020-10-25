@@ -91,7 +91,7 @@ QucsApp *QucsMain = 0;  // the Qucs application itself
  * \brief QucsApp::QucsApp main application
  */
 QucsApp::QucsApp()
-{ untested();
+{itested();
   setWindowTitle("Qucs " PACKAGE_VERSION);
 
   QucsFileFilter =
@@ -143,13 +143,13 @@ QucsApp::QucsApp()
   // load documents given as command line arguments
   // // ARGH. this is argv argc
   // TODO: move to main.cc...
-  for(int z=1; z<qApp->arguments().size(); z++) { untested();
+  for(int z=1; z<qApp->arguments().size(); z++) {itested();
     QString arg = qApp->arguments()[z];
     QByteArray ba = arg.toLatin1();
     const char *c_arg= ba.data();
-    if(*(c_arg) == '-') { untested();
+    if(*(c_arg) == '-') {itested();
         // do not open files with '-'
-    }else{ untested();
+    }else{itested();
       QFileInfo Info(arg);
       QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
       arg = QucsSettings.QucsWorkDir.filePath(Info.fileName());
@@ -175,7 +175,7 @@ QucsApp::~QucsApp()
  * @brief QucsApp::initView Setup the layout of all widgets
  */
 void QucsApp::initView()
-{ untested();
+{itested();
   // set application icon
   // APPLE sets the QApplication icon with Info.plist
 #ifndef __APPLE__
@@ -256,7 +256,7 @@ void QucsApp::initView()
           this, SLOT(slotListProjOpen(const QModelIndex &)));
 
   // ----------------------------------------------------------
-  { untested();
+  {itested();
     // "Content" Tab of the left QTabWidget
     Content = new ProjectView(this);
     Content->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -385,7 +385,7 @@ void QucsApp::initView()
 // Put all available libraries into ComboBox.
 // // BUG no here.
 void QucsApp::fillLibrariesTreeView ()
-{ untested();
+{itested();
     QStringList LibFiles;
     QStringList::iterator it;
     QList<QTreeWidgetItem *> topitems;
@@ -406,7 +406,7 @@ void QucsApp::fillLibrariesTreeView ()
     LibFiles = LibDir.entryList(QStringList("*.lib"), QDir::Files, QDir::Name);
 
     // create top level library items, base on the library names
-    for(it = LibFiles.begin(); it != LibFiles.end(); it++) { untested();
+    for(it = LibFiles.begin(); it != LibFiles.end(); it++) {itested();
         QString libPath(*it);
         libPath.chop(4); // remove extension
 
@@ -433,7 +433,7 @@ void QucsApp::fillLibrariesTreeView ()
                 break;
         }
 
-        for (int i = 0; i < parsedlibrary.components.count (); i++) { untested();
+        for (int i = 0; i < parsedlibrary.components.count (); i++) {itested();
             QStringList compNameAndDefinition;
 
             compNameAndDefinition.append (parsedlibrary.components[i].name);
@@ -523,7 +523,7 @@ void QucsApp::fillLibrariesTreeView ()
             topitems.append (newlibitem);
         }
         libTreeWidget->insertTopLevelItems(0, topitems);
-    } else { untested();
+    } else {itested();
         // make the user libraries section header
         newitem = new QTreeWidgetItem((QTreeWidget*)0, QStringList("No User Libraries"));
         sectionFont.setBold (false);
@@ -538,11 +538,11 @@ void QucsApp::fillLibrariesTreeView ()
 // Returns a pointer to the QucsDoc object whose number is "No".
 // If No < 0 then a pointer to the current document is returned.
 QucsDoc* QucsApp::getDoc(int No)
-{ untested();
+{itested();
   QWidget *w;
   if(No < 0){ untested();
     w = DocumentTab->currentWidget();
-  } else{ untested();
+  } else{itested();
     w = DocumentTab->widget(No);
   }
 
@@ -552,18 +552,18 @@ QucsDoc* QucsApp::getDoc(int No)
 // ---------------------------------------------------------------
 // Returns a pointer to the QucsDoc object whose file name is "Name".
 QucsDoc * QucsApp::findDoc (QString File, int * Pos)
-{ untested();
+{itested();
   QucsDoc * d;
   int No = 0;
   File = QDir::toNativeSeparators(File);
-  while ((d = getDoc (No++)) != 0){ untested();
+  while ((d = getDoc (No++)) != 0){itested();
     if (QDir::toNativeSeparators(d->docName()) == File) { untested();
       if (Pos) { untested();
         *Pos = No - 1;
       }else{ untested();
       }
       return d;
-    }else{ untested();
+    }else{itested();
     }
   }
   return 0;
@@ -576,16 +576,16 @@ QucsDoc * QucsApp::findDoc (QString File, int * Pos)
 // if setAll, add all categories to combobox
 // if not, set just paintings (symbol painting mode)
 void QucsApp::fillComboBox (bool setAll)
-{ untested();
+{itested();
   //CompChoose->setMaxVisibleItems (13); // Increase this if you add items below.
   CompChoose->clear ();
   CompSearch->clear(); // clear the search box, in case search was active...
 
   if (!setAll) { untested();
     CompChoose->insertItem(CompChoose->count(), QObject::tr("paintings"));
-  } else { untested();
+  } else {itested();
     QStringList cats = Category::getCategories ();
-    foreach (QString it, cats) { untested();
+    foreach (QString it, cats) {itested();
       CompChoose->insertItem(CompChoose->count(), it);
     }
   }
@@ -673,13 +673,13 @@ void QucsApp::slotSetCompView (int index)
       CompComps->addItem(icon);
       compIdx++;
     }
-  } else { untested();
+  } else {itested();
     QString File;
     // Populate list of ComponentListWidgetItems
     // // BUG: not here.
     QList<Module *>::const_iterator it;
-    for (it = Comps.constBegin(); it != Comps.constEnd(); it++) { untested();
-      if (Element const* e = (*it)->element()) { untested();
+    for (it = Comps.constBegin(); it != Comps.constEnd(); it++) {itested();
+      if (Element const* e = (*it)->element()) {itested();
         Name = e->description();
         File = e->iconBasename();
         trace1("adding icon?", File);
@@ -818,7 +818,7 @@ void QucsApp::slotSearchClear()
 // ####################################################################
 
 void QucsApp::initCursorMenu()
-{ untested();
+{itested();
   ContentMenu = new QMenu(this);
 #define APPEND_MENU(action, slot, text) \
   { \
@@ -1023,11 +1023,11 @@ void QucsApp::slotCMenuInsert()
 
 // Checks for qucs directory and reads all existing Qucs projects.
 void QucsApp::readProjects()
-{ untested();
+{itested();
   QString path = QucsSettings.projsDir.absolutePath();
   QString homepath = QucsSettings.QucsHomeDir.absolutePath();
 
-  if (path == homepath) { untested();
+  if (path == homepath) {itested();
     // in Qucs Home, disallow further up in the dirs tree
     m_homeDirModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
   } else { untested();
@@ -1314,7 +1314,7 @@ void QucsApp::slotTextNew()
 // Changes to the document "Name". If already open then it goes to it
 // directly, otherwise it loads it.
 bool QucsApp::gotoPage(const QString& Name)
-{ untested();
+{itested();
     // is Name the filename?!
   int No = DocumentTab->currentIndex();
 
@@ -1326,7 +1326,7 @@ bool QucsApp::gotoPage(const QString& Name)
     d->becomeCurrent(true);
     DocumentTab->setCurrentIndex(i);  // make new document the current
     return true;
-  }else{ untested();
+  }else{itested();
   }
 
   QFileInfo Info(Name);
@@ -1638,7 +1638,7 @@ void QucsApp::closeFile(int index)
  * @return true if all files were succesfully closed
  */
 bool QucsApp::closeAllFiles(int exceptTab)
-{ untested();
+{itested();
   if (DocumentTab->count() == 0) // no open tabs
     return true;
 
@@ -1654,7 +1654,7 @@ bool QucsApp::closeAllFiles(int exceptTab)
  * @return true if all requested tabs were succesfully closed
  */
 bool QucsApp::closeTabsRange(int startTab, int stopTab, int exceptTab)
-{ untested();
+{itested();
   if (stopTab < startTab)
     return false;
   // document to keep open, if any
@@ -1668,7 +1668,7 @@ bool QucsApp::closeTabsRange(int startTab, int stopTab, int exceptTab)
   Q_ASSERT(startTab >= 0);
   Q_ASSERT(stopTab < DocumentTab->count());
 
-  for(int i=startTab; i <= stopTab; ++i) { untested();
+  for(int i=startTab; i <= stopTab; ++i) {itested();
     QucsDoc *doc = getDoc(i);
     if ((doc->DocChanged) && (doc != docToKeep))
       sd->addUnsavedDoc(doc);
@@ -1683,11 +1683,11 @@ bool QucsApp::closeTabsRange(int startTab, int stopTab, int exceptTab)
   QucsDoc *doc = 0;
   QucsDoc *stopDoc = getDoc(stopTab);
   int i = 0;
-  do { untested();
+  do {itested();
     doc = getDoc(startTab+i);
     if (doc == docToKeep) { untested();
       i++; // skip to next doc
-    } else { untested();
+    } else {itested();
       delete doc;
     }
   } while (doc != stopDoc);
@@ -1748,12 +1748,12 @@ void QucsApp::slotHelpReport()
 // --------------------------------------------------------------
 // Is called when another document is selected via the TabBar.
 void QucsApp::slotChangeView(QWidget *w)
-{ untested();
+{itested();
 
   if(w==NULL){
     //what??
     return;
-  }else{ untested();
+  }else{itested();
   }
   editText->setHidden (true); // disable text edit of component property
   auto Doc = prechecked_cast<QucsDoc*>(w);
@@ -1784,7 +1784,7 @@ void QucsApp::slotChangeView(QWidget *w)
       changeSchematicSymbolMode(d);
     }
 #endif
-  }else{ untested();
+  }else{itested();
   }
 
   assert(Doc);
@@ -1925,7 +1925,7 @@ void QucsApp::slotFilePrintFit()
 // --------------------------------------------------------------------
 // Exits the application.
 void QucsApp::slotFileQuit()
-{ untested();
+{itested();
   statusBar()->showMessage(tr("Exiting application..."));
   slotHideEdit(); // disable text edit of component property
 
@@ -2442,7 +2442,7 @@ void QucsApp::slotSelectLibComponent(QTreeWidgetItem *item)
 // This function is called if the document type changes, i.e.
 // from schematic to text document or vice versa.
 void QucsApp::switchSchematicDoc (bool SchematicMode)
-{ untested();
+{itested();
   // switch our scroll key actions on/off according to SchematicMode
   cursorLeft->setEnabled(SchematicMode);
   cursorRight->setEnabled(SchematicMode);
@@ -2462,7 +2462,7 @@ void QucsApp::switchSchematicDoc (bool SchematicMode)
     select->blockSignals (false);
   }
   // schematic document
-  else { untested();
+  else {itested();
 #if 0
     MousePressAction = &MouseActions::MPressSelect;
     MouseReleaseAction = &MouseActions::MReleaseSelect;
@@ -2549,7 +2549,7 @@ void QucsApp::changeSchematicSymbolMode(SchematicDoc *Doc)
 
 // ---------------------------------------------------------
 bool QucsApp::isTextDocument(QWidget *w)
-{ untested();
+{itested();
   return w->inherits("QPlainTextEdit");
 }
 
@@ -2764,7 +2764,7 @@ void QucsApp::slotEditElement()
 // Hides the edit for component property. Called e.g. if QLineEdit
 // looses the focus.
 void QucsApp::slotHideEdit()
-{ untested();
+{itested();
   editText->setParent(this, 0);
   editText->setHidden(true);
 }
@@ -2780,7 +2780,7 @@ void QucsApp::slotFileChanged(bool changed)
 // Searches the qucs path list for all schematic files and creates
 // a hash for lookup later
 void QucsApp::updateSchNameHash(void)
-{ untested();
+{itested();
     // update the list of paths to search in qucsPathList, this
     // removes nonexisting entries
     updatePathList();
@@ -2823,7 +2823,7 @@ void QucsApp::updateSchNameHash(void)
 // Searches the qucs path list for all spice files and creates
 // a hash for lookup later
 void QucsApp::updateSpiceNameHash(void)
-{ untested();
+{itested();
     // update the list of paths to search in qucsPathList, this
     // removes nonexisting entries
     updatePathList();
@@ -2863,7 +2863,7 @@ void QucsApp::updateSpiceNameHash(void)
 // -----------------------------------------------------------
 // update the list of paths, pruning non-existing paths
 void QucsApp::updatePathList(void)
-{ untested();
+{itested();
     // check each path actually exists, if not remove it
     QMutableListIterator<QString> i(qucsPathList);
     while (i.hasNext()) { untested();
@@ -3021,7 +3021,7 @@ bool loadSettings()
 }
 
 ContextMenuTabWidget::ContextMenuTabWidget(QucsApp *parent) : QTabWidget(parent)
-{ untested();
+{itested();
   App = parent;
   setContextMenuPolicy(Qt::CustomContextMenu);
   connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint&)));
@@ -3071,7 +3071,7 @@ void ContextMenuTabWidget::showContextMenu(const QPoint& point)
 QucsDoc* newSchematicDoc(QucsApp&, QString const&); // tmp hack.
 
 QucsDoc *ContextMenuTabWidget::createEmptySchematic(const QString &name)
-{ untested();
+{itested();
   // create a schematic
   QFileInfo Info(name);
   assert(App);
@@ -3086,7 +3086,7 @@ QucsDoc *ContextMenuTabWidget::createEmptySchematic(const QString &name)
 QucsDoc* newTextDoc(QucsApp&, QString const&); // tmp hack.
 
 QucsDoc *ContextMenuTabWidget::createEmptyTextDoc(const QString &name)
-{ untested();
+{itested();
   // create a text document
   QFileInfo Info(name);
   QucsDoc *d = newTextDoc(*App, name);

@@ -444,12 +444,12 @@ QList<ElementGraphics*> SchematicScene::items() const
 }
 /*--------------------------------------------------------------------------*/
 QList<ElementGraphics*> SchematicScene::items(QRectF const& r) const
-{ untested();
+{itested();
 	auto L = QGraphicsScene::items(r);
 	for(auto l = L.begin(); l!=L.end(); ){ itested();
 		if(prechecked_cast<ElementGraphics*>(*l)){ itested();
 			++l;
-		}else{ untested();
+		}else{itested();
 			// incomplete(); // actually
 			auto prev = l;
 			l = L.erase(prev);
@@ -464,8 +464,8 @@ QList<ElementGraphics*> SchematicScene::items(
 		Qt::SortOrder order) const
 {itested();
 	auto L = QGraphicsScene::items(pos, mode, order);
-	for(auto l = L.begin(); l!=L.end(); ){ untested();
-		if(prechecked_cast<ElementGraphics*>(*l)){ untested();
+	for(auto l = L.begin(); l!=L.end(); ){itested();
+		if(prechecked_cast<ElementGraphics*>(*l)){itested();
 			++l;
 		}else{ untested();
 			// incomplete(); // actually

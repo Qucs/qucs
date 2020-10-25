@@ -89,7 +89,7 @@ GraphicLine::~GraphicLine()
 
 // --------------------------------------------------------------------------
 void GraphicLine::paint(ViewPainter *p) const
-{ untested();
+{itested();
 
 	// oops;
 	int cx = Element::cx();

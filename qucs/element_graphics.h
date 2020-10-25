@@ -80,7 +80,7 @@ public:
   Element* operator->(){ itested();
 	  assert(_e); return _e;
   }
-  Element const* operator->() const{ untested();
+  Element const* operator->() const{itested();
 	  assert(_e); return _e;
   }
 //  QPointF pos() const; // QGraphicsItem

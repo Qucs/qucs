@@ -779,7 +779,7 @@ QUndoCommand* MouseActionSelect::release(QMouseEvent *ev)
 }
 /*--------------------------------------------------------------------------*/
 static QPoint getDelta(ElementGraphics* e)
-{ untested();
+{itested();
 	auto p = e->pos().toPoint();
 	assert(element(e));
 	auto p1_ = element(e)->center();
@@ -845,12 +845,12 @@ static void selectWireLine(ElementGraphics *g)
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
-{untested();
+{itested();
 	bool ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
 
 	if(!ctrl) {itested();
 		incomplete();
-	}else{ untested();
+	}else{itested();
 	}
 
 	cmd* c = nullptr;
@@ -868,7 +868,7 @@ QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
 		int fX = int(delta.x());
 		int fY = int(delta.y());
 
-		if(fX || fY){ untested();
+		if(fX || fY){itested();
 			trace1("possible move", delta);
 			c = new MoveSelection(delta, doc(), s);
 		}else{itested();
@@ -878,7 +878,7 @@ QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
 	if(c){
 	}else if(s.size()!=1){
 	}else if(!symbol(s.front())){
-	}else if(Event->button() == Qt::LeftButton){ untested();
+	}else if(Event->button() == Qt::LeftButton){itested();
 			// if it's a wire, select the whole thing?
 			// (what is a wire?)
 		if(isWire(symbol(s.front()))) { untested();
@@ -886,7 +886,7 @@ QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
 #if 1
 			selectWireLine(s.front());
 #endif
-		}else{ untested();
+		}else{itested();
 		}
 	}else{itested();
 	}
@@ -1164,7 +1164,7 @@ void SchematicDoc::actionSelectElement(QObject*e)
 
 // is this still in use?
 void SchematicDoc::actionEditUndo(QAction*)
-{ untested();
+{itested();
   // really?
   App->hideEdit(); // disable text edit of component property
 

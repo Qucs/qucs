@@ -43,7 +43,7 @@ public:
 	// taskElementList const& commands() const;
 
 public:
-	std::string paramValue(std::string const&n) const{ untested();
+	std::string paramValue(std::string const&n) const{
 		return Symbol::paramValue(n);
 	}
 	std::string paramValue(unsigned n) const{ untested();
