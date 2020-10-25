@@ -101,7 +101,7 @@ private:
 public: // Port stuff
 	virtual void setPort(int, std::string const&){unreachable();}
 	virtual pos_t portPosition(unsigned) const = 0;
-	virtual pos_t nodePosition(unsigned) const; // why virtual?
+	pos_t nodePosition(unsigned) const;
 
 	virtual Node const* portValue(unsigned) const; // why virtual?
 	Node const* portNode(unsigned) const;
@@ -115,10 +115,7 @@ public: // Port stuff
 	void new_subckt();
 
 private: // internal port access
-	virtual Port& port(unsigned i){
-		assert(false);
-		throw ExceptionCantFind(std::to_string(i), label().toStdString());
-	}
+	virtual Port& port(unsigned i) = 0;
 
 public: // graphics
 	// hmm, maybe just dispatch a gfx object.
@@ -130,6 +127,9 @@ public: // graphics
 protected: // maybe not here. but need to rebase MultiViewComponent to ScktProto first.
 	SchematicModel* _subckt; // stuff contained in this symbol.
 	// such as subckt components. meta data or symbol gfx
+	int vflip() const{return _vflip;}
+	int hflip() const{return _hflip;}
+	int angle() const{return _angle;}
 private:
 	std::string _type;
 	int _vflip; // vscale??

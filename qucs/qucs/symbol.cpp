@@ -73,9 +73,7 @@ QString const& Symbol::netLabel(unsigned i) const
 Node* Symbol::connectNode(unsigned i, NodeMap&nm)
 {
 	trace2("connectNode", label(), i);
-	// Port const& pp = port(i);
-	// (pp.x_()+cx(), pp.y_()+cy());
-	pos_t p = portPosition(i) + center(); // nodePosition(i)?
+	pos_t p = nodePosition(i);
 	Node* n = &nm.at(p);
 	assert(n->hasNet());
 
@@ -84,7 +82,6 @@ Node* Symbol::connectNode(unsigned i, NodeMap&nm)
 	Port& mp = port(i); // hmm setPort(...) instead?
 	mp.connect(n /*,this*/);
 
-//	n->connect(mp, /*this*/);
 	return n;
 }
 /*--------------------------------------------------------------------------*/
@@ -129,7 +126,7 @@ pos_t Symbol::center()const
 }
 /*--------------------------------------------------------------------------*/
 Port const& Symbol::port(unsigned i) const
-{
+{ untested();
 	Symbol* s=const_cast<Symbol*>(this);
 	return s->port(i);
 }
@@ -169,7 +166,7 @@ void Symbol::paint(ViewPainter* p) const
 		int y = getY(pp);
 
 		if(!port(i).isConnected()){ untested();
-			p->setPen(QPen(Qt::red,2));
+			p->setPen(QPen(Qt::green,2));
 			p->drawEllipse(x-1, y-1, 2, 2);
 		}else if(port(i)->numPorts()==0){ untested();
 			unreachable();
@@ -188,12 +185,17 @@ void Symbol::paint(ViewPainter* p) const
 // global/external position
 pos_t Symbol::nodePosition(unsigned i) const
 {
-	if(port(i).isConnected()){
-		assert( portPosition(i) + center() == port(i)->position());
-		return port(i)->position();	
+	pos_t pp = portPosition(i);
+
+	if(legacyTransformHack()){ untested();
+		// ports use external coordinates...
 	}else{
-		return portPosition(i) + center();
+		rotate_after_mirror a(_angle, (1-_hflip)/2, (1-_vflip)/2);
+		trace4("nodePosition pre", pp, _angle, _hflip, _vflip);
+		pp = a.apply(pp);
+		trace2("nodePosition post", pp, center());
 	}
+	return pp + center();
 }
 /*--------------------------------------------------------------------------*/
 // BUG: not here. legacy stuff...

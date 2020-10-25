@@ -32,6 +32,7 @@ private:
 
 private: // Symbol
 	unsigned numPorts() const override{ return 0; }
+	Port& port(unsigned){ unreachable(); return *new Port();}
 	pos_t portPosition(unsigned) const override { unreachable(); return pos_t(0,0); }
 	void setParameter(std::string const& n, std::string const& v) override;
 	QRectF boundingRect() const override;

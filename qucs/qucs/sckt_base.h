@@ -21,6 +21,7 @@ private:
 	virtual Element* clone()const {unreachable(); return nullptr;}
 	virtual unsigned numPorts() const { incomplete(); return 0; }
 	virtual pos_t portPosition(unsigned) const{ unreachable(); return pos_t(0,0);}
+	Port& port(unsigned i){unreachable(); return *new Port();}
 public:
 	SchematicModel const* subckt() const{ return _subckt; }
 	SchematicModel* subckt(){ return _subckt; }

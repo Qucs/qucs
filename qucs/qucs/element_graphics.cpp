@@ -76,7 +76,8 @@ public:
 		setParentItem(parent);
 	}
 private: // QGraphicsItem override
-	void paint(QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override{
+	void paint(QPainter *p, const QStyleOptionGraphicsItem *, QWidget *widget = nullptr) override{
+		(void) widget;
 		assert(_e);
 		ViewPainter v(p);
 		return _e->paint(&v);
@@ -133,12 +134,12 @@ private:
 	virtual QRectF boundingRect() const override{
 		return QRectF();
 	}
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override{}
+	void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *) override{}
 public:
 private:
 	QGraphicsTextItem* _labeltext;
 	std::vector<QGraphicsTextItem*> _more;
-};
+}; // ElementText
 /*--------------------------------------------------------------------------*/
 class TextGraphics : public QGraphicsTextItem{
 public:
