@@ -164,7 +164,7 @@ private:
   // Frame *SchematicFrame;
   void drawBackground(QPainter *painter, const QRectF& rect);
 public:
-  SchematicScene *sceneHACK() {untested(); return scene(); }
+  SchematicScene *sceneHACK() {itested(); return scene(); }
 
   // TODO: take iterator?
   Element* detachFromModel(Element* e){

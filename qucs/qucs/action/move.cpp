@@ -18,8 +18,8 @@ public:
 	: SchematicEdit(*ctx.sceneHACK()) { itested();
 		trace1("MoveSelection", delta);
 		size_t k = 0;
-		for(auto i : selection){ untested();
-			if(auto eg=dynamic_cast<ElementGraphics*>(i)){ untested();
+		for(auto i : selection){itested();
+			if(auto eg=dynamic_cast<ElementGraphics*>(i)){itested();
 				++k;
 				Element* elt = eg->cloneElement();
 				eg->hide();

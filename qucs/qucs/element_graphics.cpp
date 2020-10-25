@@ -170,7 +170,7 @@ Element* ElementGraphics::detachElement()
 /*--------------------------------------------------------------------------*/
 Element* ElementGraphics::cloneElement() const
 {
-	if(_e){ untested();
+	if(_e){itested();
 		return _e->clone();
 	}else{ untested();
 		return nullptr;
@@ -200,7 +200,7 @@ void ElementGraphics::attachElement(Element* e)
 	trace2("attachElement", e->label(), boundingRect());
 	QGraphicsItem::setPos(sp.first, sp.second);
 
-	if(dynamic_cast<Conductor*>(e)){ untested();
+	if(dynamic_cast<Conductor*>(e)){itested();
 		setZValue(-1.);
 	}else{ itested();
 	}
@@ -212,7 +212,7 @@ void ElementGraphics::attachElement(Element* e)
 			//// what are texts?
 			new TextGraphics(*i, this);
 		}
-	}else{ untested();
+	}else{itested();
 	}
 
 	// who owns this?
@@ -357,7 +357,7 @@ ElementGraphics* ElementGraphics::newPort(pos_t where) const
 ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 {
 	ElementGraphics* ng = nullptr;
-	if(auto c=dynamic_cast<Conductor const*>(_e)){ untested();
+	if(auto c=dynamic_cast<Conductor const*>(_e)){itested();
 		assert(symbol(s));
 
 		if(Symbol* u = c->newUnion(symbol(s)) ){ untested();
@@ -368,10 +368,10 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 //			ng->setParentItem(scene());
 			scene()->addItem(ng);
 			return ng;
-		}else{ untested();
+		}else{itested();
 			trace1("no new union", symbol(s)->typeName());
 		}
-	}else if(auto o=dynamic_cast<Conductor const*>(element(s))){ untested();
+	}else if(auto o=dynamic_cast<Conductor const*>(element(s))){itested();
 		// HACK HACK HACK
 		if(Symbol* u = o->newUnion(symbol(this)) ){ untested();
 			trace1("new union2", u);
@@ -381,7 +381,7 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 //			ng->setParentItem(scene());
 			scene()->addItem(ng);
 			return ng;
-		}else{ untested();
+		}else{itested();
 		}
 	}else{
 	}
@@ -587,7 +587,7 @@ void ElementGraphics::hide()
 
 	if(_e->scope()){itested();
 		_e->detachFromModel();
-	}else{ untested();
+	}else{itested();
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -646,7 +646,7 @@ QVariant ElementGraphics::itemChange(GraphicsItemChange c, const QVariant &v)
     if (!scene()){itested();
 	 }else if(c == ItemPositionChange){ itested();
         QPointF tmp = v.toPointF();
-        if(QApplication::mouseButtons() != Qt::LeftButton){ untested();
+        if(QApplication::mouseButtons() != Qt::LeftButton){itested();
             return tmp;
 		  }else if(auto scn = dynamic_cast<SchematicScene*> (scene())){ itested();
             return scn->snapToGrid(tmp.toPoint()); // does toPoint round as intended?

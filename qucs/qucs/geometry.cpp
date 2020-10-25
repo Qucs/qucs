@@ -89,11 +89,11 @@ pos_t rotate_after_mirror::apply(pos_t const& p) const
 	auto tmp = p;
 	if(_v){itested();
 		tmp.second *= -1;
-	}else{ untested();
+	}else{
 	}
 	if(_h){itested();
 		tmp.first *= -1;
-	}else{ untested();
+	}else{
 	}
 	pos_t ret = angle_t::apply(tmp);
 	trace2("rot", tmp, ret);

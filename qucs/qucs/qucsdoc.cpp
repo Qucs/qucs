@@ -66,7 +66,7 @@ QucsDoc::~QucsDoc()
 void QucsDoc::undo()
 {
 	QUndoStack* u = undoStack();
-	if(u){ untested();
+	if(u){itested();
 		u->undo();
 		assert(App);
 		assert(App->redo);
