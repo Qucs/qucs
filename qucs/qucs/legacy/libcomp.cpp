@@ -18,6 +18,7 @@
 #include "qt_compat.h"
 #include "qucs.h"
 #include "schematic_doc.h"
+#include "sckt_base.h"
 
 #include <limits.h>
 
@@ -107,15 +108,19 @@ private:
 static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "LegacyLibProto", &d0);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+/// THIS IS WRONG> must be symbol
 class Lib : public Symbol{
 public:
 	explicit Lib():Symbol(), _tx(0), _ty(0), _parent(nullptr) {
 		setTypeName("Lib"); // really?
+		new_subckt(); // hmm.
 	}
 	Lib( Lib const& l) : Symbol(l), _parent(l._parent),
 		_ports(0)
 	{
 		_ports.resize(l._ports.size());
+		new_subckt(); // hmm. copy?
+		              // todo: move all the model stuff into common (more work)
 	}
 
 private: // Element
@@ -283,8 +288,6 @@ static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Lib", &D);
 // does not fullymake sense.
 Symbol const* Lib::proto(SchematicModel const* scope) const
 {
-	assert(false);
-	incomplete();
    auto t = QString::fromStdString(typeName());
 	auto p = scope->findProto(t);
 	if(p){
@@ -294,9 +297,11 @@ Symbol const* Lib::proto(SchematicModel const* scope) const
 		trace1("not cached", typeName());
 
 		assert(_parent);
-		scope->cacheProto(_parent);
+		scope->cacheProto(_parent); // this must be wrong. cache protos in list
+                                  // command as needed.
 	}
 
+	assert(_parent);
 	return _parent;
 }
 /*--------------------------------------------------------------------------*/

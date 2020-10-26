@@ -10,11 +10,10 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef SCKT_PROTO_H
-#define SCKT_PROTO_H
+#ifndef SCKT_BASE_H
+#define SCKT_BASE_H
 
-#include "schematic_symbol.h"
-#include "schematic_model.h"
+#include "symbol.h"
 
 class SubcktBase : public Symbol {
 private:
@@ -28,10 +27,4 @@ public:
 	void new_subckt();
 };
 
-
-inline void Symbol::new_subckt()
-{
-	assert(!_subckt);
-	_subckt = new SchematicModel(nullptr);
-}
 #endif

@@ -150,11 +150,12 @@ void LIB::loadLibFiles()
 
 				if(ssym){
 					// fix later
-					Symbol* def = symbol_dispatcher.clone("qucsatorScktHack");
-					assert(def);
-					def->setParameter("$qucsatorsckthack", c.modelString.toStdString());
+					Symbol* textdef = symbol_dispatcher.clone("qucsatorScktHack");
+					assert(textdef);
+					textdef->setParameter("qucsatorsckthack", c.modelHack.toStdString());
+					textdef->setLabel(":qucsatorsckthack:");
 					assert(ssym->subckt());
-					ssym->subckt()->pushBack(def);
+					ssym->subckt()->pushBack(textdef);
 				}else{
 				}
 
