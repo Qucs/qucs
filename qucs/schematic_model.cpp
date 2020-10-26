@@ -639,7 +639,7 @@ Symbol const* SchematicModel::findProto(QString const& what) const
 }
 
 PrototypeMap const& SchematicModel::declarations() const
-{
+{ untested();
 	return _protos;
 }
 
@@ -647,6 +647,7 @@ void SchematicModel::cacheProto(Symbol const* what) const
 {
 	auto key = what->label();
 	trace1("pushProto", key);
+	assert(what);
 	assert(!_protos[key]);
 	_protos.push(key, what);
 }
@@ -711,5 +712,22 @@ Node* SchematicModel::insertNode(int , int , Element *)
 #endif
     return nullptr;
 }
+/*--------------------------------------------------------------------------*/
+bool operator==(Symbol const*p, std::string const&s)
+{
+	if(p){
+		return p->label().toStdString()==s;
+	}else{
+		return false;
+	}
+}
+/*--------------------------------------------------------------------------*/
+SchematicModel::const_iterator SchematicModel::find_again(const std::string& short_name,
+						SchematicModel::const_iterator Begin)const
+{
+	// incomplete, does not find again.
+  return std::find(components().begin(), components().end(), short_name);
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

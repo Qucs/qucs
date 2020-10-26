@@ -46,6 +46,8 @@ class DiagramList : public Q3PtrList<Diagram> {
 };
 // TODO: refactor here
 class ComponentList : public std::list<Symbol*> {
+public:
+	typedef std::list<Symbol*>::const_iterator const_iterator;
 private:
 	ComponentList(ComponentList const&) = delete;
 public:
@@ -62,7 +64,9 @@ public:
 	void append(Symbol*s) {push_back(s);}
 	bool isEmpty() const { return empty(); }
 	void removeRef(Symbol* s) { erase(std::find(begin(), end(), s)); }
-	// void first(){} // GOAL: hide, still compile.
+public:
+	const_iterator begin() const{return std::list<Symbol*>::begin();}
+	const_iterator end() const{return std::list<Symbol*>::end();}
 };
 
 // TODO: use generic list.
@@ -81,6 +85,9 @@ class SchematicLanguage;
 // reminiscent of "subckt", "cardlist" ...
 // TODO: rename to ElementList or CircuitModel, SymbolModel.
 class SchematicModel{
+public: // stub
+	typedef ComponentList::iterator iterator;
+	typedef ComponentList::const_iterator const_iterator;
 private:
 	SchematicModel(SchematicModel const&) = delete;
 	SchematicModel();
@@ -211,6 +218,16 @@ public:
 
 	Symbol const* findProto(QString const& what) const;
 	void cacheProto(Symbol const* what) const;
+
+//	iterator find_(const std::string& short_name)
+//					{return find_again(short_name, begin());}
+//	iterator find_again(const std::string& short_name, iterator);
+  // return a const_iterator
+	const_iterator begin()const {return components().begin();}
+	const_iterator end()const {return components().end();}
+	const_iterator find_again(const std::string& short_name, const_iterator)const;
+	const_iterator find_(const std::string& short_name)const
+					{return find_again(short_name, begin());}
 
 	SchematicDoc* doc();
 	SchematicDoc const* doc() const{

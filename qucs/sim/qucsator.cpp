@@ -15,6 +15,7 @@
 
 #include "sim/sim.h"
 #include "sckt_proto.h"
+#include "sckt_base.h"
 #include "net.h"
 #include "docfmt.h" // <<
 #include "paintings/paintings.h" // really??
@@ -38,16 +39,17 @@ private: // Symbol
 	unsigned numPorts() const  override{untested(); return 0;}
 	Port& port(unsigned i) override{unreachable(); return *new Port();}
 	void setParameter(std::string const& name, std::string const& value){
-		if(name == "qucsatorscktdefhack"){
+		if(name == "qucsatorsckthack"){
 			_text = value;
 		}else{
-			incomplete();
+			Symbol::setParameter(name, value);
 		}
 	}
 	std::string paramValue(std::string const& name) const override{
-		if(name == "qucsatorscktdefhack"){
+		if(name == "qucsatorsckthack"){
 			return _text;
 		}else{
+			return Symbol::paramValue(name);
 		}
 	}
 
@@ -96,7 +98,7 @@ private: // NetLang
 private: // local
   void printtaskElement(TaskElement const*, ostream_t&) const; // override?
   void printSymbol(Symbol const*, ostream_t&) const override;
-  void printSubckt(SubcktProto const*, ostream_t&) const;
+  void printSubckt(SubcktBase const*, ostream_t&) const;
   void printComponent(Component const*, ostream_t&) const;
   void printPainting(Painting const*, ostream_t&) const override {incomplete();}
   void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
@@ -107,13 +109,15 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 {
 	// todo: mfactor.
 	//
+	//
 	assert(c);
 	trace2("pc", c->label(), c->typeName());
 
 	// if(c->isOpen())  TODO
-	if(0){
-	}else{
+	if(auto hack=dynamic_cast<QucsatorScktHack const*>(c)){
+		s << "aaaa\n";
 
+	}else{
 		std::string type = c->typeName();
 		std::string hack_type = mangleType(type);
 
@@ -156,6 +160,9 @@ void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 {
 	if(!d){ untested();
 		incomplete();
+	}else if(auto c=dynamic_cast<SubcktBase const*>(d)){
+		// why is this a Symbol??
+		printSubckt(c, s);
 	}else if(auto c=dynamic_cast<SubcktProto const*>(d)){
 		// why is this a Symbol??
 		printSubckt(c, s);
@@ -172,32 +179,42 @@ void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 	}
 }
 
-// partly from Schematic::createSubnetlistplain
-void QucsatorLang::printSubckt(SubcktProto const* p, ostream_t& s) const
+static void printDefHack(Symbol const* p, ostream_t& s)
 {
-	trace2("prinSckt", p, p->subckt());
+	std::string hack = p->paramValue("qucsatorsckthack");
+	s << hack;
+}
+
+// partly from Schematic::createSubnetlistplain
+void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
+{
 	Symbol const* sym = p;
+	assert(p->subckt());
 	std::string label = p->label().toStdString();
 
-	s << "\n";
+	auto h = p->subckt()->find_(":qucsatorsckthack:");
+	if(h != p->subckt()->end()){
+		return printDefHack(*h, s);
+	}else{
+	}
+
+	s << "\n"; //?
 	if(label.c_str()[3] == _typesep){
 		s << ".Def:" << label.substr(4);
 	}else{
 		incomplete();
 	}
 
-	// print_ports();
-	//
-	for(unsigned i=0; sym->portExists(i); ++i){
-		std::string N = netLabel(p->portValue(i));
-//		if(N=="0"){ untested();
-//			N = "gnd";
-//		}else{ untested();
-//		}
-		s << " " << N;
+	{ // print_ports();
+		for(unsigned i=0; sym->portExists(i); ++i){
+			std::string N = netLabel(p->portValue(i));
+			s << " " << N;
+		}
+		s << "\n";
 	}
-	s << "\n";
 
+	// somehow parameters are stashed as paintings.
+	// let's see.
 	assert(p->symbolPaintings());
 	for(auto pi : *p->symbolPaintings()){
 		incomplete();
@@ -217,12 +234,13 @@ void QucsatorLang::printSubckt(SubcktProto const* p, ostream_t& s) const
 	//(*tstream) << '\n';
 
 	// TODO: deduplicate.
-	trace1("sckt components", &p->schematicModel());
-	trace1("sckt components", sym->scope());
-	assert(sym->scope());
-	for(auto i : p->schematicModel().components()){
+//	trace1("sckt components", sym->scope());
+//	assert(sym->scope());
+	for(auto i : p->subckt()->components()){
       if(!i){ untested();
 			incomplete();
+		}else if(auto c=dynamic_cast<QucsatorScktHack const*>(i)){
+			s << " HERE!!!! \n";
 		}else if(i->typeName() == "Port"){
 		}else if(i->typeName() == "GND"){
 		}else{
@@ -231,7 +249,7 @@ void QucsatorLang::printSubckt(SubcktProto const* p, ostream_t& s) const
 		}
 	}
 
-	s << ".Def:End\n";
+	s << ".Def:End\n"; //  << p->label() << "\n";
 }
 
 void QucsatorLang::printtaskElement(TaskElement const* c, ostream_t& s) const

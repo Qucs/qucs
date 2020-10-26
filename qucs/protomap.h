@@ -16,6 +16,7 @@ public:
 			: map_type::const_iterator(i){}
 	public:
 		Symbol const* operator*() const{
+			assert(map_type::const_iterator::operator*().second);
 			return map_type::const_iterator::operator*().second;
 		}
 	};
@@ -24,12 +25,18 @@ public:
 	~PrototypeMap(){ clear(); }
 public:
 	void clear();
-	Symbol const* operator[](string_type const& s){
-		return _map[s];
-	}
+//	Symbol const* operator[](string_type const& s) const{
+//		auto i = _map.find(s);
+//		if(i==_map.end()){
+//			return nullptr;
+//		}else{
+//			return i->second;
+//		}
+//	}
 	Symbol const* operator[](string_type const& s) const;
 	void push(QString const& s, Symbol const* e){
 		assert(!_map[s]);
+		assert(e);
 		_map[s] = e;
 	}
 	size_t size() const{

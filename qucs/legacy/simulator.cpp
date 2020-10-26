@@ -177,6 +177,7 @@ void LegacyNetlister::printDeclarations(DocumentStream& stream, SchematicSymbol 
 
 	trace1("printing declarations", m.subckt()->declarations().size());
 	for(auto si : m.subckt()->declarations()){
+		assert(si);
 		//prepareSave(stream, m); // yikes
 // 		if(SchematicSymbol const* sym=dynamic_cast<SchematicSymbol const*>(si)){ untested();
 // 		}else{ untested();
@@ -395,6 +396,7 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 			// check analog/digital typed components
 			if((pc->Type & isAnalogComponent) == 0) {
 				incomplete();
+			//
 				// throw??
 				// return;
 			}else{
@@ -407,22 +409,17 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 		if(sym && sym->subckt()){
 			trace1("need expand?", sym->label());
 			// if there is a sckt, make sure it is populated.
-			// // THIS NEEDS WORK
+			// // THIS NEEDS WORK. collect prototypes here, not in schematicModel
 			Symbol const* p = pc->proto(&sckt); // just expand?
 			assert(p->subckt());
 		}else if(pc->typeName() == "GND") { // BUG.
 #if 0
-			qDebug() << "GND hack" << pc->portValue(0);
-			assert(pc->Ports.first()->value());
 			Net* n = pc->Ports.first()->value()->getNet();
-			n->setLabel("gnd"); // should already be "gnd". check instead.
+			assert(n->label == "gnd");
 #endif
-			// continue;
-		// }else if(dynamic_cast<Subcircuit const*>(pc)) { untested();
-		} else if(pc->typeName() == "Sub") { // BUG.
-				incomplete();
-			// save(pc, stream);
 		}else{
+			// no.
+			Symbol const* p = pc->proto(&sckt); // just expand?
 		}
 
 #if 0 // does not work

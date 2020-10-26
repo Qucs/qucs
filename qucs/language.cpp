@@ -20,8 +20,10 @@ Element* DocumentLanguage::parseItem(istream_t& s, Element* c) const
 
 void DocumentLanguage::printItem(Element const* c, ostream_t& s) const
 {
-  assert(c);
-  if (auto C=dynamic_cast<const TaskElement*>(c)) {
+  if(!c){
+	  s << "unreachable, no item\n";
+	  // assert(c);
+  }else if (auto C=dynamic_cast<const TaskElement*>(c)) {
     printtaskElement(C, s);
   }else if (auto C=dynamic_cast<const Symbol*>(c)) {
     printSymbol(C, s);
