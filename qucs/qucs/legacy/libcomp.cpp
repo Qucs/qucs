@@ -44,7 +44,6 @@ public:
 	Symbol* clone_instance() const{incomplete(); return new LibComp(*this);}
 
 	bool createSubNetlist(DocumentStream&, QStringList&, int type=1); // BUG
-	QString getSubcircuitFile() const;
 
 private:
 	std::string paramValue(unsigned n) const override{ untested();
@@ -67,7 +66,7 @@ private:
 			return 0;
 		}
 	}
-	virtual Port& port(unsigned i) {unreachable(); return *new Port();}
+	virtual Port& port(unsigned) {unreachable(); return *new Port();}
 	pos_t portPosition(unsigned i) const override{
 		untested();
 		assert(subckt());
@@ -99,10 +98,6 @@ protected:
 	void createSymbol();
 
 private:
-	int  loadSymbol();
-	int  loadSection(const QString&, QString&, QStringList* i=0);
-	QString createType() const;
-
 	int _tx;
 	int _ty;
 	Property _section;
@@ -271,6 +266,7 @@ private:
 		trace2("Lib::attachProto", numPorts(), _ports.size());
 		// also prepare parameters here.
 	}
+	Symbol const* proto(SchematicModel const* scope) const;
 
 private:
 	int _tx;
@@ -282,6 +278,27 @@ private:
 }D; // Lib
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Lib", &D);
 /*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+// partially tAC. build a new sckt proto.
+// does not fullymake sense.
+Symbol const* Lib::proto(SchematicModel const* scope) const
+{
+	assert(false);
+	incomplete();
+   auto t = QString::fromStdString(typeName());
+	auto p = scope->findProto(t);
+	if(p){
+		trace1("cached", typeName());
+		return p;
+	}else{
+		trace1("not cached", typeName());
+
+		assert(_parent);
+		scope->cacheProto(_parent);
+	}
+
+	return _parent;
+}
 /*--------------------------------------------------------------------------*/
 LibComp::LibComp()
 	: SchematicSymbol()
@@ -317,171 +334,10 @@ void LibComp::createSymbol()
 #endif
 }
 /*--------------------------------------------------------------------------*/
-// Loads the section with name "Name" from library file into "Section".
-//  negative return value seems to indicate an error state.
-int LibComp::loadSection(const QString& Name, QString& Section,
-			 QStringList *Includes)
-{
-#if 0
-  QDir Directory(QucsSettings.libDir());
-  QFile file(Directory.absoluteFilePath(Props.first()->Value + ".lib"));
-  if(!file.open(QIODevice::ReadOnly)){
-	  // throw?
-    return -1;
-  }else{
-  }
-
-  QString libDefaultSymbol;
-
-  QTextStream ReadWhole(&file);
-  Section = ReadWhole.readAll();
-  file.close();
-
-
-  if(Section.left(14) != "<Qucs Library "){
-	  // wrong file type ?
-    return -2;
-  }else{
-  }
-
-  int Start, End = Section.indexOf(' ', 14);
-  if(End < 15) return -3;
-  QString Line = Section.mid(14, End-14); // extract version string
-  VersionTriplet LibVersion = VersionTriplet(Line);
-  if (LibVersion > QucsVersion) // wrong version number ?
-    return -3;
-
-  if(Name == "Symbol") {
-    Start = Section.indexOf("\n<", 14); // library has default symbol
-    if(Start > 0)
-      if(Section.mid(Start+2, 14) == "DefaultSymbol>") {
-        Start += 16;
-        End = Section.indexOf("\n</DefaultSymbol>", Start);
-        if(End < 0)  return -9;
-        libDefaultSymbol = Section.mid(Start, End-Start);
-      }else{
-		}
-  }else{
-  }
-
-  // search component
-  Line = "\n<Component " + Props.next()->Value + ">";
-  Start = Section.indexOf(Line);
-  if(Start < 0)  return -4;  // component not found
-  Start = Section.indexOf('\n', Start);
-  if(Start < 0)  return -5;  // file corrupt
-  Start++;
-  End = Section.indexOf("\n</Component>", Start);
-  if(End < 0)  return -6;  // file corrupt
-  Section = Section.mid(Start, End-Start+1);
-  
-  // search model includes
-  if(Includes) {
-    int StartI, EndI;
-    StartI = Section.indexOf("<"+Name+"Includes");
-    if(StartI >= 0) {  // includes found
-      StartI = Section.indexOf('"', StartI);
-      if(StartI < 0)  return -10;  // file corrupt
-      EndI = Section.indexOf('>', StartI);
-      if(EndI < 0)  return -11;  // file corrupt
-      StartI++; EndI--;
-      QString inc = Section.mid(StartI, EndI-StartI);
-      QStringList f = inc.split(QRegExp("\"\\s+\""));
-      for(QStringList::Iterator it = f.begin(); it != f.end(); ++it ) {
-	Includes->append(*it);
-      }
-    }
-  }
-
-  // search model
-  Start = Section.indexOf("<"+Name+">");
-  if(Start < 0) {
-    if((Name == "Symbol") && (!libDefaultSymbol.isEmpty())) {
-      // component does not define its own symbol but the library defines a default symbol
-      Section = libDefaultSymbol;
-      return 0;
-    } else {
-      return -7;  // symbol not found
-    }
-  }
-  Start = Section.indexOf('\n', Start);
-  if(Start < 0)  return -8;  // file corrupt
-  while(Section.at(++Start) == ' ') ;
-  End = Section.indexOf("</"+Name+">", Start);
-  if(End < 0)  return -9;  // file corrupt
-
-  // snip actual model
-  Section = Section.mid(Start, End-Start);
-#endif
-  return 0;
-}
-/*--------------------------------------------------------------------------*/
-// Loads the symbol for the subcircuit from the schematic file and
-// returns the number of painting elements.
-int LibComp::loadSymbol()
-{
-#if 0
-  int z, Result;
-  QString FileString, Line;
-  z = loadSection("Symbol", FileString);
-  if(z < 0) {
-    if(z != -7)  return z;
-
-    // If library component not defined as subcircuit, then load
-    // new component and transfer data to this component.
-    z = loadSection("Model", Line);
-    if(z < 0)  return z;
-
-    Element *e=nullptr; incomplete(); // getComponentFromName(Line);
-    Component *pc = component(e);
-    if(pc == 0)  return -20;
-
-    copyComponent(pc);
-
-    pc->Props.setAutoDelete(false);
-    delete pc;
-
-    return 1;
-  }
-
-
-  z  = 0;
-  x1 = y1 = INT_MAX;
-  x2 = y2 = INT_MIN;
-
-  QTextStream stream(&FileString, QIODevice::ReadOnly);
-  while(!stream.atEnd()) {
-    Line = stream.readLine();
-    Line = Line.trimmed();
-    if(Line.isEmpty())  continue;
-    if(Line.at(0) != '<') return -11;
-    if(Line.at(Line.length()-1) != '>') return -12;
-    Line = Line.mid(1, Line.length()-2); // cut off start and end character
-    Result = analyseLine(Line, 2);
-    if(Result < 0) return -13;   // line format error
-    z += Result;
-  }
-
-  x1 -= 4;  x2 += 4;   // enlarge component boundings a little
-  y1 -= 4;  y2 += 4;
-  return z;      // return number of ports
-#endif
-  return 0;
-}
-/*--------------------------------------------------------------------------*/
-QString LibComp::getSubcircuitFile() const
-{
-#if 0
-  QDir Directory(QucsSettings.libDir());
-  QString FileName = Directory.absoluteFilePath(Props.first()->Value);
-  return misc::properAbsFileName(FileName);
-#endif
-  return "";
-}
-/*--------------------------------------------------------------------------*/
 bool LibComp::createSubNetlist(DocumentStream& stream, QStringList &FileList,
 			       int type)
 {
+#if 0
   int r = -1;
   QString FileString;
   QStringList Includes;
@@ -516,13 +372,6 @@ bool LibComp::createSubNetlist(DocumentStream& stream, QStringList &FileList,
 
   stream << "\n" << FileString << "\n"; //??
   return error > 0 ? false : true;
-}
-/*--------------------------------------------------------------------------*/
-QString LibComp::createType() const
-{
-#if 0
-  QString Type = misc::properFileName(Props.first()->Value);
-  return misc::properName(Type + "_" + Props.next()->Value);
 #endif
 }
 
