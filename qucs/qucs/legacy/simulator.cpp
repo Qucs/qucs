@@ -33,6 +33,7 @@ namespace {
 // PLAN/TODO: merge into (legacy) qucsator driver below
 //    meant to produce a netlist including the qucsator commands and process
 // (this is reminiscent of a "command", but qucs does not have commands)
+// NB: now it has commands. could fix this now.
 class LegacyNetlister : public DocumentFormat{
 	LegacyNetlister(LegacyNetlister const&) = delete;
 public:
@@ -126,10 +127,7 @@ void LegacyNetlister::save(DocumentStream& Stream, SchematicSymbol const& m) con
 {
    _qucslang = doclang_dispatcher["qucsator"];
 	clear();
-
 	qDebug() << "*** LegacyNetlister::save";
-	QStringList Collect;
-	Collect.clear();  // clear list for NodeSets, SPICE components etc.
 
 	int SimPorts = 10;//??
 	incomplete(); // HERE
@@ -158,9 +156,7 @@ void LegacyNetlister::save(DocumentStream& Stream, SchematicSymbol const& m) con
 #endif
 
 	printDeclarations(Stream, m);
-
 	Stream << '\n';
-
 	createNetlist(Stream, m);
 
 #if 0
@@ -411,9 +407,9 @@ void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol co
 		if(sym && sym->subckt()){
 			trace1("need expand?", sym->label());
 			// if there is a sckt, make sure it is populated.
+			// // THIS NEEDS WORK
 			Symbol const* p = pc->proto(&sckt); // just expand?
 			assert(p->subckt());
-			//
 		}else if(pc->typeName() == "GND") { // BUG.
 #if 0
 			qDebug() << "GND hack" << pc->portValue(0);

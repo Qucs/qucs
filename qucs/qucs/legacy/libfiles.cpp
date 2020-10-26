@@ -148,6 +148,16 @@ void LIB::loadLibFiles()
 					delete ssym;
 				}
 
+				if(ssym){
+					// fix later
+					Symbol* def = symbol_dispatcher.clone("qucsatorScktHack");
+					assert(def);
+					def->setParameter("$qucsatorsckthack", c.modelString.toStdString());
+					assert(ssym->subckt());
+					ssym->subckt()->pushBack(def);
+				}else{
+				}
+
 				trace3("Lib", c.modelString, type, c.definition);
 				// d'uh
 			}else{
