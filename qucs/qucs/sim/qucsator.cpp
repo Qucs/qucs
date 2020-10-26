@@ -36,19 +36,19 @@ private:
 	Element* clone() const override{return new QucsatorScktHack(*this);}
 private: // Symbol
 	pos_t portPosition(unsigned) const {unreachable(); return pos_t(0,0);}
-	unsigned numPorts() const  override{untested(); return 0;}
+	unsigned numPorts() const  override{ return 0;}
 	Port& port(unsigned i) override{unreachable(); return *new Port();}
 	void setParameter(std::string const& name, std::string const& value){
 		if(name == "qucsatorsckthack"){
 			_text = value;
-		}else{
+		}else{ untested();
 			Symbol::setParameter(name, value);
 		}
 	}
 	std::string paramValue(std::string const& name) const override{
 		if(name == "qucsatorsckthack"){
 			return _text;
-		}else{
+		}else{ untested();
 			return Symbol::paramValue(name);
 		}
 	}
@@ -60,14 +60,14 @@ static Dispatcher<Symbol>::INSTALL p0(&symbol_dispatcher, "qucsatorScktHack", &d
 
 static std::string netLabel(Node const* nn)
 {
-	if(!nn){
+	if(!nn){ untested();
 		return "(null)";
 	}else{
 
 	}
 	Net const* n = nn->net();
 
-	if(!n){
+	if(!n){ untested();
 		unreachable();
 		return "(null)";
 	}else if(n->hasLabel()){
@@ -114,7 +114,7 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 	trace2("pc", c->label(), c->typeName());
 
 	// if(c->isOpen())  TODO
-	if(auto hack=dynamic_cast<QucsatorScktHack const*>(c)){
+	if(auto hack=dynamic_cast<QucsatorScktHack const*>(c)){ untested();
 		s << "aaaa\n";
 
 	}else{
@@ -141,9 +141,9 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 //			}else if(!sym->paramIsPrintable(ii)){ untested();
 			}else if(name==""){itested();
 				incomplete();
-			}else if(name == "File") {
+			}else if(name == "File") { untested();
 				// hack
-			}else if(name == "Symbol") {
+			}else if(name == "Symbol") { untested();
 				// hack??
 			}else{
 				std::string value = sym->paramValue(ii);
@@ -163,7 +163,7 @@ void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 	}else if(auto c=dynamic_cast<SubcktBase const*>(d)){
 		// why is this a Symbol??
 		printSubckt(c, s);
-	}else if(auto c=dynamic_cast<SubcktProto const*>(d)){
+	}else if(auto c=dynamic_cast<SubcktProto const*>(d)){ untested();
 		// why is this a Symbol??
 		printSubckt(c, s);
 	}else if(auto c=dynamic_cast<TaskElement const*>(d)){ untested();
@@ -173,7 +173,7 @@ void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 		printComponent(c, s);
 	}else if(d){
 		printSymbol_(d, s);
-	}else{
+	}else{ untested();
 		assert(false);
 		incomplete();
 	}
@@ -201,7 +201,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	s << "\n"; //?
 	if(label.c_str()[3] == _typesep){
 		s << ".Def:" << label.substr(4);
-	}else{
+	}else{ untested();
 		incomplete();
 	}
 
@@ -239,7 +239,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	for(auto i : p->subckt()->components()){
       if(!i){ untested();
 			incomplete();
-		}else if(auto c=dynamic_cast<QucsatorScktHack const*>(i)){
+		}else if(auto c=dynamic_cast<QucsatorScktHack const*>(i)){ untested();
 			s << " HERE!!!! \n";
 		}else if(i->typeName() == "Port"){
 		}else if(i->typeName() == "GND"){
@@ -262,7 +262,7 @@ void QucsatorLang::printtaskElement(TaskElement const* c, ostream_t& s) const
 		if(p2->name() == "Symbol") { // hack??
 		}else if(p2->name()=="p" && p2->value()==""){itested();
 			// unreachable
-		}else{
+		}else{ untested();
 			s << " " << p2->name() << "=\"" << p2->value() << "\"";
 		}
 	}

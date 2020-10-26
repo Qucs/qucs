@@ -35,7 +35,7 @@ public:
 	~LIB(){
 		incomplete();
 #if 0
-		for(auto i: stash){
+		for(auto i: stash){ untested();
 			delete i->item;
 			delete i;
 		}
@@ -109,7 +109,7 @@ void LIB::loadLibFiles()
 //			trace2("libcomp", parsedlib.name, c.name); // ->label());
 			if(c.symbol==""){
 				getSection("Symbol", c.definition, c.symbol); // GAAH
-			}else{
+			}else{ untested();
 			}
 
 			if(c.symbol==""){
@@ -156,7 +156,7 @@ void LIB::loadLibFiles()
 					textdef->setLabel(":qucsatorsckthack:");
 					assert(ssym->subckt());
 					ssym->subckt()->pushBack(textdef);
-				}else{
+				}else{ untested();
 				}
 
 				trace3("Lib", c.modelString, type, c.definition);
