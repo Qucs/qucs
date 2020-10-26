@@ -5,7 +5,7 @@
 #ifndef QUCS_SCHEMATIC_SYMBOL_H
 #define QUCS_SCHEMATIC_SYMBOL_H
 
-#include "symbol.h"
+#include "sckt_base.h"
 
 class PaintingList;
 class WireList;
@@ -15,7 +15,7 @@ class PaintingList;
 class CmdEltList;
 class ComponentList;
 
-class SchematicSymbol : public Symbol{
+class SchematicSymbol : public SubcktBase{
 protected:
 	SchematicSymbol(SchematicSymbol const& p);
 public:
@@ -44,10 +44,10 @@ public:
 
 public:
 	std::string paramValue(std::string const&n) const{
-		return Symbol::paramValue(n);
+		return SubcktBase::paramValue(n);
 	}
 	std::string paramValue(unsigned n) const{ untested();
-		return Symbol::paramValue(n);
+		return SubcktBase::paramValue(n);
 	}
 	virtual void setParameter(std::string const&, std::string const&){ unreachable(); }
 

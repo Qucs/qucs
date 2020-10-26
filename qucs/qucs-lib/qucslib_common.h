@@ -41,6 +41,7 @@ struct ComponentLibraryItem
     QString definition;
     QString symbol;
     QString modelString;
+    QString modelHack;
 //    QString description; // todo
 } ;
 
@@ -124,12 +125,13 @@ inline bool getCompLineIntegers(const QString& s,
 // constructs the obsolete "model string"
 // returns an empty string if it couldn't be constructed
 inline int makeModelString (QString libPath, QString compname, QString
-		compstring, QString &modelstring, QString default_sym)
+		compstring, QString &modelstring, QString default_sym, ComponentLibraryItem& component)
 {
 
     if (!getSection("Model", compstring, modelstring)) {
         return QUCS_COMP_LIB_CORRUPT;
     }
+	 component.modelHack = modelstring; // gaaah.
 
     // check for a single component line
     if(modelstring.isEmpty()) {
@@ -321,7 +323,7 @@ inline int parseComponentLibrary (QString libPath, ComponentLibrary &library, LI
 		// construct model string
 		int result = makeModelString (libPath, component.name,
 				component.definition, component.modelString,
-				library.defaultSymbol);
+				library.defaultSymbol, component);
 		if (result != QUCS_COMP_LIB_OK){
 			return result;
 		}else{

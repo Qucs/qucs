@@ -17,13 +17,13 @@
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 SchematicSymbol::SchematicSymbol()
-	: Symbol()
+	: SubcktBase()
 {
 	_paint = new PaintingList();
 }
 /*--------------------------------------------------------------------------*/
 SchematicSymbol::SchematicSymbol(SchematicSymbol const& p)
-	: Symbol()
+	: SubcktBase()
 {
 	_paint = new PaintingList(); // copy??
 }
