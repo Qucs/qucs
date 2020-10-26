@@ -26,7 +26,7 @@ private:
 public:
   Port(Port const& p) : _node(nullptr) {assert(!p._node);}
   explicit Port() : _node(nullptr) {}
-  virtual ~Port(){ assert(!_node);}
+  virtual ~Port();
 
 public: // This makes Port behave like a pointer (and that's what it will be).
   Node const* operator->() const {return _node;}
