@@ -294,11 +294,6 @@ void LegacyNetlister::createNetlist(DocumentStream& stream,
 {
 	bool isAnalog=true;
 	bool isVerilog=false;
-	//  if(!isAnalog) { untested();
-	//    beginNetlistDigital(stream, nl);
-	//  }
-
-	//  Signals.clear();  // was filled in "giveNodeNames()"
 	FileList.clear();
 
 	int NumPorts=0; // huh??
@@ -310,6 +305,7 @@ void LegacyNetlister::createNetlist(DocumentStream& stream,
 	//
 	// legacy: qucsator expects all definitions at the top
 
+	// BUG: deduplicate.
 	QString s, Time;
 	for(auto pc : m.components()){
 		// if dynamic_cast<Label*>
