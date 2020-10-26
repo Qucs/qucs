@@ -14,10 +14,15 @@
 #include "port.h"
 #include "node.h"
 /*--------------------------------------------------------------------------*/
-//Port::Port(Port const& p)
-//	: _p(p._p), _node(nullptr)
-//{
-//}
+Port::~Port()
+{
+//	assert(!_node); not yet.
+	if(_node){
+		// memory leak
+		unreachable();
+	}else{
+	}
+}
 /*--------------------------------------------------------------------------*/
 QString const& Port::netLabel() const
 {

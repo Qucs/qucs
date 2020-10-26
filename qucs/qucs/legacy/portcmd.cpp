@@ -24,7 +24,6 @@ class PortSym : public Command{
 	  auto fullstring = cs.fullString();
 	  trace1("PortSym", fullstring);
 
-
 	  std::string type;
 	  int cx, cy, tx, ty;
 	  cs >> type;
@@ -39,12 +38,13 @@ class PortSym : public Command{
 	  auto n = s->numPorts();
 	  trace6("PortSym", type, cx, cy, tx, ty, n);
 
-	  auto place = symbol_dispatcher.clone("place");
+	  auto place = symbol_dispatcher.clone("place"); // memory leak.
 	  assert(place);
 	  place->setCenter(pos_t(cx,cy));
 	  Node* node = place->connectNode(0, s->nodes());
 	  assert(node);
 
+	  // tmp hack.
 	  trace1("portsym:setport", n);
 	  s->setPort(n, node);
   }
