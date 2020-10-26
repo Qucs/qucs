@@ -634,6 +634,7 @@ void SchematicModel::merge(SchematicModel& src)
 
 Symbol const* SchematicModel::findProto(QString const& what) const
 {
+	// incomplete.
 	return _protos[what];
 }
 

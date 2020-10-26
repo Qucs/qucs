@@ -25,6 +25,36 @@ namespace {
 static const std::string typesep(":");
 static const char _typesep = ':';
 
+// temporary kludge.
+class QucsatorScktHack : public Symbol {
+private:
+	QucsatorScktHack(QucsatorScktHack const&) = default;
+public:
+	QucsatorScktHack() : Symbol() {}
+private:
+	Element* clone() const override{return new QucsatorScktHack(*this);}
+private: // Symbol
+	pos_t portPosition(unsigned) const {unreachable(); return pos_t(0,0);}
+	unsigned numPorts() const  override{untested(); return 0;}
+	Port& port(unsigned i) override{unreachable(); return *new Port();}
+	void setParameter(std::string const& name, std::string const& value){
+		if(name == "qucsatorscktdefhack"){
+			_text = value;
+		}else{
+			incomplete();
+		}
+	}
+	std::string paramValue(std::string const& name) const override{
+		if(name == "qucsatorscktdefhack"){
+			return _text;
+		}else{
+		}
+	}
+
+private:
+	std::string _text;
+}d0;
+static Dispatcher<Symbol>::INSTALL p0(&symbol_dispatcher, "qucsatorScktHack", &d0);
 
 static std::string netLabel(Node const* nn)
 {
