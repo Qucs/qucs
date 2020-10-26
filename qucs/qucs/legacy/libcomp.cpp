@@ -50,19 +50,19 @@ private:
 	std::string paramValue(unsigned n) const override{ untested();
 		return SchematicSymbol::paramValue(n);
 	}
-	std::string paramValue(std::string const& n) const override{
-		if(n=="$tx"){
+	std::string paramValue(std::string const& n) const override{ untested();
+		if(n=="$tx"){ untested();
 			return "0";
-		}else if(n=="$ty"){
+		}else if(n=="$ty"){ untested();
 			return "0";
-		}else{
+		}else{ untested();
 			return SchematicSymbol::paramValue(n);
 		}
 	}
 	unsigned numPorts() const override{
 		if(subckt()){
 			return subckt()->numPorts();
-		}else{
+		}else{ untested();
 			unreachable();
 			return 0;
 		}
@@ -76,11 +76,11 @@ private:
 		return pos;
 	}
 
-	QRectF boundingRect() const override{
+	QRectF boundingRect() const override{ untested();
 		// BUG. cache.
 		QRectF br;
 //		assert(symbolPaintings());
-		for(auto p : paintings()){
+		for(auto p : paintings()){ untested();
 			assert(p);
 			Element const* e = p;
 			trace2("br", e->boundingRect().topLeft(), e->boundingRect().bottomRight());
@@ -127,7 +127,7 @@ private: // Element
 	Symbol* clone()const override{
 		return new Lib(*this);
 	}
-	void paint(ViewPainter* p) const override{
+	void paint(ViewPainter* p) const override{ untested();
 		if(_parent){itested();
 			// no-op?
 			// ((Element*)_parent)->paint(p);
@@ -135,7 +135,7 @@ private: // Element
 		}
 		Symbol::paint(p);
 	}
-	QRectF boundingRect() const override{
+	QRectF boundingRect() const override{ untested();
 		if(_parent){itested();
 			return _parent->boundingRect();
 		}else{ untested();
@@ -145,7 +145,7 @@ private: // Element
 	}
 
 private: // Symbol
-	PaintingList const* symbolPaintings() const override{
+	PaintingList const* symbolPaintings() const override{ untested();
 		if(_parent){itested();
 			assert( _parent->subckt());
 			return &_parent->subckt()->paintings();
@@ -182,9 +182,12 @@ private: // Symbol
 			Symbol::setParameter(n, v);
 		}
 
-		if(redo){
+		if(_section.Value == ""){
+		}else if(_component.Value == ""){ untested();
+		}else if(redo){ untested();
 			attachProto();	
-		}else{
+			assert(_parent); // for now.
+		}else{ untested();
 		}
 	}
 	unsigned paramCount() const{ return Symbol::paramCount() + 4; }
@@ -211,9 +214,12 @@ private: // Symbol
 			break;
 		}
 
-		if(redo){
+		if(_section.Value == ""){ untested();
+		}else if(_component.Value == ""){
+		}else if(redo){
 			attachProto();	
-		}else{
+			assert(_parent); // for now.
+		}else{ untested();
 		}
 	}
 	std::string paramValue(std::string const& n) const override{
@@ -258,13 +264,17 @@ private: // Symbol
 
 private:
 	void attachProto() {
-		if(_component.Value == "") {
-		}else if(_section.Value == "") {
+		std::string t = "Lib:" + _section.Value.toStdString() + ":" + _component.Value.toStdString();
+		if(_component.Value == "") { untested();
+		}else if(_section.Value == "") { untested();
 		}else{
-			std::string t = "Lib:" + _section.Value.toStdString() + ":" + _component.Value.toStdString();
 			Symbol* s = symbol_dispatcher[t];
 			trace2("Lib::attachProto", t, s);
 			_parent = s;
+			if(!_parent){
+//				throw ...
+				trace1("Lib::attachProto fail", t);
+			}
 		}
 
 		_ports.resize(numPorts());
@@ -290,7 +300,7 @@ Symbol const* Lib::proto(SchematicModel const* scope) const
 {
    auto t = QString::fromStdString(typeName());
 	auto p = scope->findProto(t);
-	if(p){
+	if(p){ untested();
 		trace1("cached", typeName());
 		return p;
 	}else{
@@ -316,14 +326,14 @@ LibComp::LibComp()
 // Makes the schematic symbol subcircuit with the correct number
 // of ports.
 void LibComp::createSymbol()
-{
+{ untested();
 #if 0
   tx = INT_MIN;
   ty = INT_MIN;
-  if(loadSymbol() > 0) {
+  if(loadSymbol() > 0) { untested();
     if(tx == INT_MIN)  tx = x1+4;
     if(ty == INT_MIN)  ty = y2+4;
-  }else{
+  }else{ untested();
     // only paint a rectangle
     Lines.append(new Line(-15, -15, 15, -15, QPen(Qt::darkBlue,2)));
     Lines.append(new Line( 15, -15, 15,  15, QPen(Qt::darkBlue,2)));
@@ -341,16 +351,16 @@ void LibComp::createSymbol()
 /*--------------------------------------------------------------------------*/
 bool LibComp::createSubNetlist(DocumentStream& stream, QStringList &FileList,
 			       int type)
-{
+{ untested();
 #if 0
   int r = -1;
   QString FileString;
   QStringList Includes;
-  if(type&1) {
+  if(type&1) { untested();
     r = loadSection("Model", FileString, &Includes);
-  } else if(type&2) {
+  } else if(type&2) { untested();
     r = loadSection("VHDLModel", FileString, &Includes);
-  } else if(type&4) {
+  } else if(type&4) { untested();
     r = loadSection("VerilogModel", FileString, &Includes);
   }
   if(r < 0)  return false;
@@ -358,16 +368,16 @@ bool LibComp::createSubNetlist(DocumentStream& stream, QStringList &FileList,
   // also include files
   int error = 0;
   for(QStringList::Iterator it = Includes.begin();
-      it != Includes.end(); ++it ) {
+      it != Includes.end(); ++it ) { untested();
     QString s = getSubcircuitFile()+"/"+*it;
     if(FileList.indexOf(s) >= 0) continue;
     FileList.append(s);
 
     // load file and stuff into stream
     QFile file(s);
-    if(!file.open(QIODevice::ReadOnly)) {
+    if(!file.open(QIODevice::ReadOnly)) { untested();
       error++;
-    } else {
+    } else { untested();
       QByteArray FileContent = file.readAll();
       file.close();
       //?stream->writeRawBytes(FileContent.value(), FileContent.size());
@@ -382,7 +392,7 @@ bool LibComp::createSubNetlist(DocumentStream& stream, QStringList &FileList,
 
 // -------------------------------------------------------
 QString LibComp::netlist() const
-{
+{ untested();
 #if 0
   QString s = "Sub:"+Name;   // output as subcircuit
 
@@ -403,7 +413,7 @@ QString LibComp::netlist() const
 }
 /*--------------------------------------------------------------------------*/
 QString LibComp::verilogCode(int)
-{
+{ untested();
 #if 0
   QString s = "  Sub_" + createType() + " " + Name + " (";
 
@@ -411,7 +421,7 @@ QString LibComp::verilogCode(int)
   QListIterator<Port *> iport(Ports);
   Port *pp = iport.next();
   if(pp)  s += pp->Connection->name();
-  while (iport.hasNext()) {
+  while (iport.hasNext()) { untested();
     pp = iport.next();
     s += ", "+pp->Connection->name();   // node names
   }
@@ -422,7 +432,7 @@ QString LibComp::verilogCode(int)
 }
 /*--------------------------------------------------------------------------*/
 QString LibComp::vhdlCode(int)
-{
+{ untested();
 #if 0
   QString s = "  " + Name + ": entity Sub_" + createType() + " port map (";
 
@@ -430,7 +440,7 @@ QString LibComp::vhdlCode(int)
   QListIterator<Port *> iport(Ports);
   Port *pp = iport.next();
   if(pp)  s += pp->Connection->name();
-  while (iport.hasNext()) {
+  while (iport.hasNext()) { untested();
     pp = iport.next();
     s += ", "+pp->Connection->name();   // node names
   }
