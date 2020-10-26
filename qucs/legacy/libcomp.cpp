@@ -280,6 +280,7 @@ private:
 		_ports.resize(numPorts());
 		trace2("Lib::attachProto", numPorts(), _ports.size());
 		// also prepare parameters here.
+		setTypeName(t);
 	}
 	Symbol const* proto(SchematicModel const* scope) const;
 
