@@ -639,7 +639,7 @@ Symbol const* SchematicModel::findProto(QString const& what) const
 }
 
 PrototypeMap const& SchematicModel::declarations() const
-{ untested();
+{
 	return _protos;
 }
 
@@ -653,12 +653,12 @@ void SchematicModel::cacheProto(Symbol const* what) const
 }
 
 Symbol const* PrototypeMap::operator[](QString const& s) const
-{ untested();
+{
 	auto i=_map.find(s);
 
-	if(i!=_map.end()){ untested();
+	if(i!=_map.end()){
 		return (*i).second;
-	}else{ untested();
+	}else{
 		return nullptr;
 	}
 }
