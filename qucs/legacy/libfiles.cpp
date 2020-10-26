@@ -113,7 +113,8 @@ void LIB::loadLibFiles()
 			}
 
 			if(c.symbol==""){
-				c.symbol = parsedlib.defaultSymbol;
+				c.definition += "\n<Symbol>\n" + parsedlib.defaultSymbol + "\n</Symbol>\n";
+				trace1("attached symbol to defn", c.definition);
 			}else{
 			}
 
@@ -129,8 +130,6 @@ void LIB::loadLibFiles()
 				// possibly a subcircuit. parse and stash
 				//
 				// // stuff should already be parsed in, but isn't
-			trace3("Lib", c.definition, type, c.symbol);
-			assert(c.symbol!="");
 				// BUG: parse c.definition. but not here.
 				// BUG: use istream (CS)
 				istream_t stream(&c.definition);
@@ -151,7 +150,8 @@ void LIB::loadLibFiles()
 
 				trace3("Lib", c.modelString, type, c.definition);
 				// d'uh
-			}else if(c.modelString.count('\n') < 2){
+			}else{
+				// TODO: new__instance does this.
 				Symbol* sym = symbol_dispatcher.clone("LegacyParamset");
 				sym->setParameter("modelstring", c.modelString.toStdString());
 				std::string t = "P:" + parsedlib.name.toStdString() + ":" + c.name.toStdString();
@@ -166,9 +166,6 @@ void LIB::loadLibFiles()
 					// unreachable(); eventually
 					// possibly not ported yet.
 				}
-			}else{
-				trace1("no whitespace", c.modelString);
-				assert(false);
 			}
 			// todo: memory leak.
 		}

@@ -74,7 +74,8 @@ PRJ_TESTS = \
 	AC_groupdelay_ac.prj \
 	AC_SW_resonance.prj \
 	DC_SP_LPF-Balun2.prj \
-	DC_TR_active_mixer.prj
+	DC_TR_active_mixer.prj \
+	TR_sawtooth-1.prj
 
 LATER_TESTS = \
 	AC_SW_swr_meter.prj \
@@ -137,7 +138,6 @@ LATER_TESTS = \
 	TR_Puls3b.prj \
 	TR_resistor.prj \
 	TR_rf_osci.prj \
-	TR_sawtooth-1.prj \
 	TR_sawtooth-2.prj \
 	TR_sawtooth-3.prj \
 	TR_sawtooth-discreet.prj \
