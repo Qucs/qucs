@@ -77,15 +77,27 @@ static std::string netLabel(Node const* nn)
 	}
 }
 
+static int notalnum(char c)
+{
+	return !std::isalnum(c);
+}
+
 static std::string mangleType(std::string& t)
 {
+	trace1("mangle", t);
 	auto pos = t.find(typesep);
 	std::string ret="";
 	if(pos == std::string::npos){
 	}else{
-		ret = " Type=\"" + t.substr(pos+1) + "\"";
+		auto sub = t.substr(pos+1);
+		std::replace_if(sub.begin(), sub.end(), notalnum, '_');
+		ret = " Type=\"" + sub + "\"";
 	}
 	t = t.substr(0, pos);
+	if(t=="Lib"){
+		t="Sub";
+	}else{
+	}
 	return ret;
 }
 
@@ -141,7 +153,11 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 //			}else if(!sym->paramIsPrintable(ii)){ untested();
 			}else if(name==""){itested();
 				incomplete();
+			}else if(name == "Component") { untested();
+				// hack
 			}else if(name == "File") { untested();
+				// hack
+			}else if(name == "Lib") { untested();
 				// hack
 			}else if(name == "Symbol") { untested();
 				// hack??
@@ -232,15 +248,10 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	//		break;
 	}
 	//(*tstream) << '\n';
-
-	// TODO: deduplicate.
-//	trace1("sckt components", sym->scope());
-//	assert(sym->scope());
+	//
 	for(auto i : p->subckt()->components()){
       if(!i){ untested();
 			incomplete();
-		}else if(auto c=dynamic_cast<QucsatorScktHack const*>(i)){ untested();
-			s << " HERE!!!! \n";
 		}else if(i->typeName() == "Port"){
 		}else if(i->typeName() == "GND"){
 		}else{
