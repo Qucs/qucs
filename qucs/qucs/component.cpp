@@ -438,74 +438,6 @@ void Component::paint(ViewPainter *p) const
 
   Symbol::paint(p);
 }
-
-// -------------------------------------------------------
-// Paints the component when moved with the mouse.
-#if 0
-void Component::paintScheme(SchematicDoc *p) const
-{ untested();
-  unreachable(); // obsolete.
-  // qDebug() << "paintScheme" << Model;
-  int cx=cx_();
-  int cy=cy_();
-
-  if(dynamic_cast<TaskElement const*>(this)) { // FIXME: separate taskElements from Components
-    int a, b, xb, yb;
-    QFont newFont = p->font();
-
-    float Scale =
-          ((SchematicDoc*)QucsMain->DocumentTab->currentWidget())->Scale;
-    newFont.setPointSizeF(float(Scale) * QucsSettings.largeFontSize);
-    newFont.setWeight(QFont::DemiBold);
-    // here the font metric is already the screen metric, since the font
-    // is the current font the painter is using
-    FontMetrics  metrics; // (newFont);
-
-    a = b = 0;
-    QSize r;
-    foreach(Text *pt, Texts) { untested();
-      r = metrics.size(0, pt->s);
-      b += r.height();
-      if(a < r.width())  a = r.width();
-    }
-    xb = a + int(12.0*Scale);
-    yb = b + int(10.0*Scale);
-    x2 = x1+25 + int(float(a) / Scale);
-    y2 = y1+23 + int(float(b) / Scale);
-    if(ty < y2+1) if(ty > y1-r.height())  ty = y2 + 1;
-
-    p->PostPaintEvent(_Rect,cx-6, cy-5, xb, yb);
-    p->PostPaintEvent(_Line,cx-1, cy+yb, cx-6, cy+yb-5);
-    p->PostPaintEvent(_Line,cx+xb-2, cy+yb, cx-1, cy+yb);
-    p->PostPaintEvent(_Line,cx+xb-2, cy+yb, cx+xb-6, cy+yb-5);
-    p->PostPaintEvent(_Line,cx+xb-2, cy+yb, cx+xb-2, cy);
-    p->PostPaintEvent(_Line,cx+xb-2, cy, cx+xb-6, cy-5);
-    return;
-  }else{ untested();
-  }
-
-  foreach(Line *p1, Lines){ untested();
-    p->PostPaintEvent(_Line,cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
-  }
-
-  foreach(Port *p2, Ports){ untested();
-    if(p2->avail) p->PostPaintEvent(_Ellipse,cx+p2->x_()-4, cy+p2->y_()-4, 8, 8);
-  }
-
-  foreach(Arc *p3, Arcs){ untested();
-    p->PostPaintEvent(_Arc,cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
-  }
-
-  foreach(Area *pa, Rects){ untested();
-    p->PostPaintEvent(_Rect,cx+pa->x, cy+pa->y, pa->w, pa->h);
-  }
-
-  foreach(Area *pa, Ellips){ untested();
-    p->PostPaintEvent(_Ellipse,cx+pa->x, cy+pa->y, pa->w, pa->h);
-  }
-}
-#endif
-
 // -------------------------------------------------------
 // For output on a printer device.
 void Component::print(ViewPainter *p, float FontScale)
@@ -984,28 +916,6 @@ QString Component::verilogCode(int)
   return QString("");   // no digital model
 }
 
-// -------------------------------------------------------
-QString Component::get_Verilog_Code(int)
-{ untested();
-  return "obsolete";
-#if 0
-  switch(isActive) {
-    case COMP_IS_OPEN:
-      return QString("");
-    case COMP_IS_ACTIVE:
-      return verilogCode(NumPorts);
-  }
-
-  // Component is shortened.
-  QListIterator<Port *> iport(Ports);
-  Port *pp = iport.next();
-  QString Node1 = pp->Connection->name();
-  QString s = "";
-  while (iport.hasNext())
-    s += "  assign " + iport.next()->Connection->name() + " = " + Node1 + ";\n";
-  return s;
-#endif
-}
 
 // -------------------------------------------------------
 QString Component::vhdlCode(int)
@@ -1337,40 +1247,6 @@ Property * Component::getProperty(const QString& name)
   return NULL;
 }
 
-// ---------------------------------------------------------------------
-void Component::copyComponent(Component *)
-{ untested();
-  unreachable();
-  assert(false);
-#if 0
-  Type = pc->Type;
-  x1 = pc->x1;
-  y1 = pc->y1;
-  x2 = pc->x2;
-  y2 = pc->y2;
-
-  Model = pc->Model;
-  Name  = pc->Name;
-  showName = pc->showName;
-  Description = pc->Description;
-
-  isActive = pc->isActive;
-  rotated  = pc->rotated;
-  mirroredX = pc->mirroredX;
-  tx = pc->tx;
-  ty = pc->ty;
-
-  Props  = pc->Props;
-  Ports  = pc->Ports;
-  Lines  = pc->Lines;
-  Arcs   = pc->Arcs;
-  Rects  = pc->Rects;
-  Ellips = pc->Ellips;
-  Texts  = pc->Texts;
-#endif
-}
-
-
 // ***********************************************************************
 // ********                                                       ********
 // ********          Functions of class MultiViewComponent        ********
@@ -1599,139 +1475,12 @@ QString GateComponent::verilogCode(int)
 // ********                                                       ********
 // ***********************************************************************
 
-#if 0 // moved
-Element* getComponentFromName(QString& Line)
-{ untested();
-  Element *e = 0;
-
-  Line = Line.trimmed();
-  if(Line.at(0) != '<') { untested();
-    QMessageBox::critical(0, QObject::tr("Error"),
-			QObject::tr("Format Error:\nWrong line start!"));
-    return 0;
-  }
-
-  QString cstr = Line.section (' ',0,0); // component type
-  cstr.remove (0,1);    // remove leading "<"
-
-// TODO: get rid of the exceptional cases.
-  if (cstr == "Lib"){ untested();
-    incomplete();
-   // c = new LibComp ();
-  }else if (cstr == "Eqn"){ untested();
-    incomplete();
-   // c = new Equation ();
-  }else if (cstr == "SPICE"){ untested();
-    incomplete();
-    // c = new SpiceFile();
-  }else if (cstr.left (6) == "SPfile" && cstr != "SPfile"){ untested();
-    incomplete();
-    // backward compatible
-    //c = new SParamFile ();
-    //c->Props.getLast()->Value = cstr.mid (6);
-  }
-
-  // fetch proto from dictionary.
-  Element const* s=symbol_dispatcher[cstr.toStdString()];
-  qDebug() << "lookup" << cstr << s;
-
-  if(Component const* sc=dynamic_cast<Component const*>(s)){ untested();
-      // legacy component
-    Element* s=sc->clone(); // memory leak?
-    e=prechecked_cast<Element*>(s);
-  }else if(TaskElement const* sc=dynamic_cast<TaskElement const*>(s)){ untested();
-      // legacy component
-    Element* s=sc->clone(); // memory leak?
-    e=prechecked_cast<Element*>(s);
-  }else{ untested();
-    e=element_dispatcher[cstr.toStdString()];
-  // don't know what this is (yet);
-    incomplete();
-  }
-
-  if(e) { untested();
-    loadElement(Line, e);
-  }else{ untested();
-    incomplete();
-    // BUG: use of messagebox in the parser.
-    // does not work. need to get rid of this
-      if (QucsMain!=0) { untested();
-          QMessageBox* msg = new QMessageBox(QMessageBox::Warning,QObject::tr("Warning"),
-                                             QObject::tr("Format Error:\nUnknown component!\n"
-                                                         "%1\n\n"
-                                                         "Do you want to load schematic anyway?\n"
-                                                         "Unknown components will be replaced \n"
-                                                         "by dummy subcircuit placeholders.").arg(cstr),
-                                             QMessageBox::Yes|QMessageBox::No);
-          int r = msg->exec();
-          delete msg;
-          if (r == QMessageBox::Yes) { untested();
-	     incomplete();
-             // c = new Subcircuit();
-             // // Hack: insert dummy File property before the first property
-             // int pos1 = Line.indexOf('"');
-             // QString filestr = QString("\"%1.sch\" 1 ").arg(cstr);
-             // Line.insert(pos1,filestr);
-          }
-      } else { untested();
-          QString err_msg = QString("Schematic loading error! Unknown device %1").arg(cstr);
-          qCritical()<<err_msg;
-          return 0;
-      }
-
-  }
-
-
-#if 0 // legacy cruft?
-  // BUG: don't use schematic.
-  if(TaskElement* cmd=command(e)){ untested();
-    sp->loadtaskElement(Line, cmd);
-  }else if(Component* c=component(e)){ untested();
-    if(!sp->loadComponent(Line, c)) { untested();
-      QMessageBox::critical(0, QObject::tr("Error"),
-	  QObject::tr("Format Error:\nWrong 'component' line format!"));
-      delete e;
-      return 0;
-    }else{ untested();
-    }
-    cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
-    int x = c->tx, y = c->ty;
-    c->setSchematicModel(sp); // setParent?
-    c->recreate(0);
-    c->obsolete_name_override_hack(cstr);
-    c->tx = x;  c->ty = y;
-  }else{ untested();
-  }
-#endif
-
-  return e;
-}
-#endif
-
 // do something with Dialog Buttons
 void Component::dialgButtStuff(ComponentDialog&)const
 { untested();
   incomplete();
   // d.disableButtons();
 }
-
-# if 0
-// is this needed in subcircuit?
-// (what is subcircuit?)
-void Component::setSchematic(Schematic* p)
-{ untested();
-  cstr = c->Name;   // is randomly changed in "recreate" (e.g. subcircuit)
-  int x = c->tx;
-  int y = c->ty;
-  Symbol::setSchematic(p);
-  recreate(0);
-  Name = cstr;
-  tx = x;
-  ty = y;
-{ untested();
-  d.disableButtons();
-}
-# endif
 
 /*--------------------------------------------------------------------------*/
 QRectF Component::boundingRect() const
@@ -1809,13 +1558,12 @@ QDialog* Component::schematicWidget(QucsDoc* Doc) const
 #include <QDebug>
 #include "swap.h"
 /*--------------------------------------------------------------------------*/
-
 ComponentDialog::ComponentDialog(QucsDoc* d) : SchematicDialog(d)
 {
   resize(450, 250);
   setWindowTitle(tr("Edit Component Properties"));
 }
-
+/*--------------------------------------------------------------------------*/
 void ComponentDialog::attach(ElementGraphics* gfx)
 {
   trace0("ComponentDialog::attach");
@@ -2071,7 +1819,7 @@ void ComponentDialog::attach(ElementGraphics* gfx)
   connect(prop, SIGNAL(itemClicked(QTableWidgetItem*)),
                 SLOT(slotSelectProperty(QTableWidgetItem*)));
 }
-
+/*--------------------------------------------------------------------------*/
 ComponentDialog::~ComponentDialog()
 {
   delete _all;
@@ -2080,7 +1828,7 @@ ComponentDialog::~ComponentDialog()
   delete ValRestrict;
   delete ValInteger;
 }
-
+/*--------------------------------------------------------------------------*/
 // check if Enter is pressed while the ComboEdit has focus
 // in case, behave as for the LineEdits
 // (QComboBox by default does not handle the Enter/Return key)
@@ -2098,7 +1846,7 @@ bool ComponentDialog::eventFilter(QObject *obj, QEvent *event)
   }
   return QDialog::eventFilter(obj, event); // standard event processing
 }
-
+/*--------------------------------------------------------------------------*/
 // Updates component property list. Useful for MultiViewComponents (really?)
 void ComponentDialog::updateCompPropsList()
 {
@@ -2156,8 +1904,7 @@ void ComponentDialog::updateCompPropsList()
     }else{
     }
 }
-
-// -------------------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 // Is called if a property is selected.
 // Handle the Property editor tab.
 // It transfers the values to the right side for editing.
@@ -2261,8 +2008,7 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
     }
   }
 }
-
-// -------------------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 void ComponentDialog::slotApplyChange(const QString& Text)
 { untested();
   /// \bug what if the table have no items?
@@ -2285,7 +2031,7 @@ void ComponentDialog::slotApplyChange(const QString& Text)
     slotSelectProperty(prop->item(row+1,0));
   }
 }
-
+/*--------------------------------------------------------------------------*/
 /*!
  Is called if the "RETURN" key is pressed in the "edit" Widget.
  The parameter is edited on the right pane.
@@ -2331,8 +2077,7 @@ void ComponentDialog::slotApplyProperty()
     return;
   }
 }
-
-// -------------------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 // Is called if the "RETURN"-button is pressed in the "NameEdit" Widget.
 void ComponentDialog::slotApplyPropName()
 {
@@ -2352,8 +2097,7 @@ void ComponentDialog::slotApplyPropName()
   }
   edit->setFocus();   // cursor into "edit" widget
 }
-
-// -------------------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 // Is called if the checkbox is pressed (changed).
 void ComponentDialog::slotApplyState(int State)
 {
@@ -2375,16 +2119,14 @@ void ComponentDialog::slotApplyState(int State)
     prop->item(row, 2)->setText(ButtonState);
   }
 }
-
-// -------------------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 // Is called if the "OK"-button is pressed.
 void ComponentDialog::slotButtOK()
 {
   slotApplyInput();
   slotButtCancel();
 }
-
-// -------------------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 // Is called if the "Cancel"-button is pressed.
 void ComponentDialog::slotButtCancel()
 {
@@ -2396,17 +2138,13 @@ void ComponentDialog::slotButtCancel()
     done(0);	
   }
 }
-
-//-----------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 // To get really all close events (even <Escape> key).
 void ComponentDialog::reject()
 {
   slotButtCancel();
 }
-
-
-// -------------------------------------------------------------------------
-// Is called, if the "Apply"-button is pressed.
+/*--------------------------------------------------------------------------*/
 void ComponentDialog::slotApplyInput()
 {
   assert(_comp);
@@ -2687,8 +2425,7 @@ void ComponentDialog::slotApplyInput()
   }else{
   }
 }
-
-// -------------------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 void ComponentDialog::slotBrowseFile()
 {
   incomplete();
@@ -2750,13 +2487,12 @@ void ComponentDialog::slotBrowseFile()
   /* FIX
   prop->currentIndex()->setText(1, s); */
 }
-
-// -------------------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 void ComponentDialog::slotEditFile()
 {
   schematic()->App->editFile(QucsSettings.QucsWorkDir.filePath(edit->text()));
 }
-
+/*--------------------------------------------------------------------------*/
 /*!
   Add description if missing.
   Is called if the add button is pressed. This is only possible for some
@@ -2821,13 +2557,8 @@ void ComponentDialog::slotButtAdd()
   // select new row
   prop->selectRow(insRow);
 }
-
-/*!
- Is called if the remove button is pressed. This is only possible for
- some properties.
- If desc is empy, ButtRem is enabled, this slot handles if it is clicked.
- Used with: Equations, ?
-*/
+/*--------------------------------------------------------------------------*/
+// only eqn?
 void ComponentDialog::slotButtRem()
 {
   if(prop->rowCount() < 3)
@@ -2847,10 +2578,8 @@ void ComponentDialog::slotButtRem()
     }
 }
 
-/*!
- * \brief ComponentDialog::slotButtUp
- * Move a table item up. Enabled for Equation component.
- */
+/*--------------------------------------------------------------------------*/
+// EQN only
 void ComponentDialog::slotButtUp()
 {
   qDebug() << "slotButtUp" << prop->currentRow() << prop->rowCount();
@@ -2873,11 +2602,8 @@ void ComponentDialog::slotButtUp()
   // select moved row
   prop->selectRow(curRow-1);
 }
-
-/*!
- * \brief ComponentDialog::slotButtDown
- * Move a table item down. Enabled for Equation component.
- */
+/*--------------------------------------------------------------------------*/
+// EQN only
 void ComponentDialog::slotButtDown()
 {
   qDebug() << "slotButtDown" << prop->currentRow() << prop->rowCount();
@@ -2900,8 +2626,7 @@ void ComponentDialog::slotButtDown()
   // select moved row
   prop->selectRow(curRow+1);
 }
-
-// -------------------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 void ComponentDialog::slotSimTypeChange(int Type)
 {
   if(Type < 2) {  // new type is "linear" or "logarithmic"
@@ -2959,84 +2684,7 @@ void ComponentDialog::slotSimTypeChange(int Type)
     textStep->setText(tr("Step:"));
   }
 }
-
-// -------------------------------------------------------------------------
-// Is called when "Start", "Stop" or "Number" is edited.
-// // BUG: transient only
-void ComponentDialog::slotNumberChanged(const QString&)
-{
-  QString Unit, tmp;
-  double x, y, Factor;
-  if(comboType->currentIndex() == 1) {   // logarithmic ?
-    misc::str2num(editStop->text(), x, Unit, Factor);
-    x *= Factor;
-    misc::str2num(editStart->text(), y, Unit, Factor);
-    y *= Factor;
-    if(y == 0.0)  y = x / 10.0;
-    if(x == 0.0)  x = y * 10.0;
-    if(y == 0.0) { y = 1.0;  x = 10.0; }
-    x = editNumber->text().toDouble() / log10(fabs(x / y));
-    Unit = QString::number(x);
-  }
-  else {
-    misc::str2num(editStop->text(), x, Unit, Factor);
-    x *= Factor;
-    misc::str2num(editStart->text(), y, Unit, Factor);
-    y *= Factor;
-    x = (x - y) / (editNumber->text().toDouble() - 1.0);
-
-    QString step = misc::num2str(x);
-
-    misc::str2num(step, x, Unit, Factor);
-    if(Factor == 1.0)
-        Unit = "";
-
-    Unit = QString::number(x) + " " + Unit;
-  }
-
-  editStep->blockSignals(true);  // do not calculate step again
-  editStep->setText(Unit);
-  editStep->blockSignals(false);
-}
-
-// -------------------------------------------------------------------------
-// // BUG: transient only
-void ComponentDialog::slotStepChanged(const QString& Step)
-{
-  QString Unit;
-  double x, y, Factor;
-  if(comboType->currentIndex() == 1) {   // logarithmic ?
-    misc::str2num(editStop->text(), x, Unit, Factor);
-    x *= Factor;
-    misc::str2num(editStart->text(), y, Unit, Factor);
-    y *= Factor;
-
-    x /= y;
-    misc::str2num(Step, y, Unit, Factor);
-    y *= Factor;
-
-    x = log10(fabs(x)) * y;
-  }
-  else {
-    misc::str2num(editStop->text(), x, Unit, Factor);
-    x *= Factor;
-    misc::str2num(editStart->text(), y, Unit, Factor);
-    y *= Factor;
-
-    x -= y;
-    misc::str2num(Step, y, Unit, Factor);
-    y *= Factor;
-
-    x /= y;
-  }
-
-  editNumber->blockSignals(true);  // do not calculate number again
-  editNumber->setText(QString::number(floor(x + 1.0)));
-  editNumber->blockSignals(false);
-}
-
-// -------------------------------------------------------------------------
-// Is called if return is pressed in LineEdit "Parameter".
+/*--------------------------------------------------------------------------*/
 void ComponentDialog::slotParamEntered()
 {
   if(editValues->isEnabled()){ untested();
@@ -3045,51 +2693,38 @@ void ComponentDialog::slotParamEntered()
     editStart->setFocus();
   }
 }
-
-// -------------------------------------------------------------------------
-// Is called if return is pressed in LineEdit "Simulation".
+/*--------------------------------------------------------------------------*/
 void ComponentDialog::slotSimEntered(int)
 {
   unreachable();
   editParam->setFocus();
 }
-
-// -------------------------------------------------------------------------
-// Is called if return is pressed in LineEdit "Values".
+/*--------------------------------------------------------------------------*/
 void ComponentDialog::slotValuesEntered()
 {
   slotButtOK();
 }
-
-// -------------------------------------------------------------------------
-// Is called if return is pressed in LineEdit "Start".
+/*--------------------------------------------------------------------------*/
 void ComponentDialog::slotStartEntered()
 {
   editStop->setFocus();
 }
-
-// -------------------------------------------------------------------------
-// Is called if return is pressed in LineEdit "Stop".
+/*--------------------------------------------------------------------------*/
 void ComponentDialog::slotStopEntered()
 {
   editStep->setFocus();
 }
-
-// -------------------------------------------------------------------------
-// Is called if return is pressed in LineEdit "Step".
+/*--------------------------------------------------------------------------*/
 void ComponentDialog::slotStepEntered()
 {
   editNumber->setFocus();
 }
-
-// -------------------------------------------------------------------------
-// Is called if return is pressed in LineEdit "Number".
+/*--------------------------------------------------------------------------*/
 void ComponentDialog::slotNumberEntered()
 {
   slotButtOK();
 }
-
-// if clicked on 'display' header toggle visibility for all items
+/*--------------------------------------------------------------------------*/
 void ComponentDialog::slotHHeaderClicked(int headerIdx)
 {
   if (headerIdx != 2) return; // clicked on header other than 'display'
@@ -3112,17 +2747,18 @@ void ComponentDialog::slotHHeaderClicked(int headerIdx)
   }
   setAllVisible = not setAllVisible; // toggle visibility for the next double-click
 }
-
+/*--------------------------------------------------------------------------*/
 void ComponentDialog::disableButtons()
 {
   ButtUp->setEnabled(false);
   ButtDown->setEnabled(false);
 }
-
+/*--------------------------------------------------------------------------*/
 void ComponentDialog::enableButtons()
 {
   ButtUp->setEnabled(true);
   ButtDown->setEnabled(true);
 }
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 // vim:ts=8:sw=2:noet
