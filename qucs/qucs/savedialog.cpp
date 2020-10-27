@@ -31,7 +31,7 @@
 #include <QGroupBox>
 #include <QListWidgetItem>
 
-SaveDialog::SaveDialog( QWidget* parent, const char* name, bool modal, Qt::WFlags fl )
+SaveDialog::SaveDialog( QWidget* parent, const char* name, bool, Qt::WFlags fl )
    : QDialog( parent, fl ),unsavedDocs()
 {
    if ( !name )

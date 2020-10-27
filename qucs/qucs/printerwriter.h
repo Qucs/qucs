@@ -34,7 +34,7 @@ class PrinterWriter
 public:
   PrinterWriter ();
   virtual ~PrinterWriter ();
-  void print(QWidget *);
+  void print(QucsDoc *);
   void noGuiPrint(SchematicDoc /* const?? */ * doc, QString printFile,
       QString page, int dpi, QString color, QString orientation);
 

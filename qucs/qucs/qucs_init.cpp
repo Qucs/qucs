@@ -20,6 +20,7 @@
 #include "octave_window.h"
 #include "misc.h"
 #include "io_trace.h"
+#include "qucs_tabs.h"
 
 #include <QAction>
 #include <QShortcut>
@@ -636,10 +637,10 @@ void QucsApp::initActions()
 
   dcbias = new QAction(tr("Calculate DC bias"), this);
   dcbias->setShortcut(Qt::Key_F8);
-  dcbias->setStatusTip(tr("Calculates DC bias and shows it"));
+  dcbias->setStatusTip(tr("Calculate DC bias and show it"));
   dcbias->setWhatsThis(
-	tr("Calculate DC bias\n\nCalculates DC bias and shows it"));
-  connect(dcbias, SIGNAL(triggered()), SLOT(slotDCbias()));
+	tr("Calculate DC bias\n\nCalculate DC bias and show it"));
+  connect(dcbias, &QAction::triggered, DocumentTab, &QucsTabWidget::slotDCbias);
 
   setMarker = new QAction(QIcon((":/bitmaps/marker.png")),	tr("Set Marker on Graph"), this);
   setMarker->setShortcut(Qt::CTRL+Qt::Key_B);

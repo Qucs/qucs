@@ -67,10 +67,11 @@
 #include "imagewriter.h"
 
 #include "settings.h"
-#include "../qucs-lib/qucslib_common.h"
+#include "../qucs-lib/qucslib_common.h" // BUG
 #include "misc.h"
 #include "platform.h"
 #include "globals.h"
+#include "qucs_tabs.h"
 
 struct iconCompInfoStruct{
   int catIdx; // index of the component Category
@@ -183,7 +184,7 @@ void QucsApp::initView()
   setWindowIcon (QPixmap(":/bitmaps/big.qucs.xpm"));
 #endif
 
-  DocumentTab = new ContextMenuTabWidget(this);
+  DocumentTab = new QucsTabWidget(this);
   assert(DocumentTab);
   setCentralWidget(DocumentTab);
 
@@ -541,7 +542,7 @@ QucsDoc* QucsApp::getDoc(int No)
 {itested();
   QWidget *w;
   if(No < 0){ untested();
-    w = DocumentTab->currentWidget();
+    return DocumentTab->current();
   } else{itested();
     w = DocumentTab->widget(No);
   }
@@ -1344,7 +1345,7 @@ bool QucsApp::gotoPage(const QString& Name)
     // view->drawn = false;
     return false;
   }else{itested();
-    slotChangeView(DocumentTab->currentWidget());
+    slotChangeView(DocumentTab->current());
 
     // if only an untitled document was open -> close it
     if(getDoc(0)->docName().isEmpty())
@@ -1417,8 +1418,10 @@ void QucsApp::slotFileSave()
 // --------------------------------------------------------------
 bool QucsApp::saveAs()
 { untested();
-  QWidget *w = DocumentTab->currentWidget();
   QucsDoc *Doc = getDoc();
+  QucsDoc *w = DocumentTab->current();
+  auto* W = prechecked_cast<QWidget*>(w);
+  assert(W);
 
   int n = -1;
   QString s, Filter;
@@ -1487,7 +1490,7 @@ bool QucsApp::saveAs()
     break;
   }
   Doc->setName(s);
-  DocumentTab->setTabText(DocumentTab->indexOf(w), misc::properFileName(s));
+  DocumentTab->setTabText(DocumentTab->indexOf(W), misc::properFileName(s));
   lastDirOpenSave = Info.absolutePath();  // remember last directory and file
 
   n = Doc->save();   // SAVE
@@ -1540,9 +1543,10 @@ void QucsApp::slotFileSaveAll()
   DocumentTab->blockSignals(false);
   // Call update() to update subcircuit symbols in current Schematic document.
   // TextDoc has no viewport, it needs no update.
-  QString tabType = DocumentTab->currentWidget()->metaObject()->className();
+  // //???
+//  QString tabType = DocumentTab->currentWidget()->metaObject()->className();
 
-  Doc = prechecked_cast<QucsDoc*>(DocumentTab->currentWidget()); // yikes. currentWidget must be QucsDoc.
+  Doc = prechecked_cast<QucsDoc*>(DocumentTab->current());
   assert(Doc);
   Doc->updateViewport();
 
@@ -1747,7 +1751,7 @@ void QucsApp::slotHelpReport()
 
 // --------------------------------------------------------------
 // Is called when another document is selected via the TabBar.
-void QucsApp::slotChangeView(QWidget *w)
+void QucsApp::slotChangeView(QucsDoc *w)
 {itested();
 
   if(w==NULL){
@@ -1756,8 +1760,7 @@ void QucsApp::slotChangeView(QWidget *w)
   }else{itested();
   }
   editText->setHidden (true); // disable text edit of component property
-  auto Doc = prechecked_cast<QucsDoc*>(w);
-  assert(Doc);
+  auto Doc = w;
   // for text documents
   if (isTextDocument (w)) { untested();
     TextDoc *d = (TextDoc*)w;
@@ -1800,7 +1803,7 @@ void QucsApp::slotFileSettings ()
 { untested();
   editText->setHidden (true); // disable text edit of component property
 
-  QWidget * w = DocumentTab->currentWidget ();
+  QucsDoc* w = DocumentTab->current();
   if (isTextDocument (w)) { untested();
     QucsDoc * Doc = (QucsDoc *) ((TextDoc *) w);
     QString ext = Doc->fileSuffix ();
@@ -1902,7 +1905,7 @@ void QucsApp::printCurrentDocument(bool fitToPage)
 
   PrinterWriter *writer = new PrinterWriter();
   writer->setFitToPage(fitToPage);
-  writer->print(DocumentTab->currentWidget());
+  writer->print(DocumentTab->current());
   delete writer;
 
   statusBar()->showMessage(tr("Ready."));
@@ -2032,9 +2035,10 @@ void QucsApp::slotSimulate()
 { untested();
   slotHideEdit(); // disable text edit of component property
 
-  QWidget *w = DocumentTab->currentWidget();
-  auto Doc = prechecked_cast<QucsDoc*>(w);
+  QucsDoc *Doc = DocumentTab->current();
   assert(Doc);
+  auto w = prechecked_cast<QWidget*>(Doc);
+  assert(w);
 
 #if 0 //not sure
   if(isTextDocument (w)) { untested();
@@ -2153,13 +2157,6 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 }
 
 // ------------------------------------------------------------------------
-void QucsApp::slotDCbias()
-{ untested();
-  getDoc()->showBias = 0;
-  slotSimulate();
-}
-
-// ------------------------------------------------------------------------
 // Changes to the corresponding data display page or vice versa.
 void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
 { untested();
@@ -2168,7 +2165,7 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
   QFileInfo Info(DocName);
   QString Name = Info.path() + QDir::separator() + DataDisplay;
 
-  QWidget  *w = DocumentTab->currentWidget();
+//  QWidget *w = DocumentTab->currentWidget();
 
   int z = 0;  // search, if page is already loaded
   QucsDoc * d = findDoc (Name, &z);
@@ -2209,9 +2206,10 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
   }
 
 
-  if(DocumentTab->currentWidget() == w)      // if page not ...
-    if(!isTextDocument (w))
-      ((QucsDoc*)w)->reloadGraphs();  // ... changes, reload here !
+  incomplete();
+//  if(DocumentTab->currentWidget() == w)      // if page not ...
+//    if(!isTextDocument (w))
+//      ((QucsDoc*)w)->reloadGraphs();  // ... changes, reload here !
 
   TabView->setCurrentIndex(2);   // switch to "Component"-Tab
   if (Name.right(4) == ".dpl") { untested();
@@ -2395,8 +2393,7 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
   // view->selElem = Comp;
 
 ///   if(view->drawn){ untested();
-  QWidget *w = DocumentTab->currentWidget();
-  auto Doc = prechecked_cast<QucsDoc*>(w);
+  QucsDoc *Doc = DocumentTab->current();
   assert(Doc);
   Doc->updateViewport();
 ///   }else{ untested();
@@ -2548,9 +2545,9 @@ void QucsApp::changeSchematicSymbolMode(SchematicDoc *Doc)
 }
 
 // ---------------------------------------------------------
-bool QucsApp::isTextDocument(QWidget *w)
+bool QucsApp::isTextDocument(QucsDoc const*w)
 {itested();
-  return w->inherits("QPlainTextEdit");
+  return dynamic_cast<QPlainTextEdit const*>(w);
 }
 
 // ---------------------------------------------------------
@@ -2560,13 +2557,12 @@ bool QucsApp::isTextDocument(QWidget *w)
 void QucsApp::slotSymbolEdit()
 { untested();
   incomplete();
-  QWidget *w = DocumentTab->currentWidget();
-  auto Doc = prechecked_cast<QucsDoc*>(w);
+  QucsDoc *Doc = DocumentTab->current();
   assert(Doc);
 
   // in a text document (e.g. VHDL)
-  if (isTextDocument (w)) { untested();
-    TextDoc *TDoc = (TextDoc*)w;
+  if (isTextDocument (Doc)) { untested();
+    TextDoc *TDoc = (TextDoc*)Doc;
     // set 'DataDisplay' document of text file to symbol file
     QFileInfo Info(Doc->docName());
     QString sym = Info.completeBaseName()+".sym";
@@ -2608,7 +2604,7 @@ void QucsApp::slotSymbolEdit()
     // view->drawn = false;
   }else{ untested();
     // in a normal schematic, data display or symbol file
-    SchematicDoc *SDoc = (SchematicDoc*)w;
+    SchematicDoc *SDoc = (SchematicDoc*)Doc;
     // in a symbol file
     //
 #if 0
@@ -2915,7 +2911,7 @@ void QucsApp::slotSaveSchematicToGraphicsFile(bool diagram)
 { untested();
   ImageWriter *writer = new ImageWriter(lastExportFilename);
   writer->setDiagram(diagram);
-  if (!writer->print(DocumentTab->currentWidget())) { untested();
+  if (!writer->print(DocumentTab->current())) { untested();
     lastExportFilename = writer->getLastSavedFile();
     statusBar()->showMessage(QObject::tr("Successfully exported"), 2000);
   }
@@ -3020,57 +3016,10 @@ bool loadSettings()
     return true;
 }
 
-ContextMenuTabWidget::ContextMenuTabWidget(QucsApp *parent) : QTabWidget(parent)
-{itested();
-  App = parent;
-  setContextMenuPolicy(Qt::CustomContextMenu);
-  connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint&)));
-}
-
-void ContextMenuTabWidget::showContextMenu(const QPoint& point)
-{ untested();
-  if (point.isNull()) { untested();
-    qDebug() << "ContextMenuTabWidget::showContextMenu() : point is null!";
-    return;
-  }
-
-  contextTabIndex = tabBar()->tabAt(point);
-  qDebug() << "contextTabIndex =" << contextTabIndex;
-  if (contextTabIndex >= 0) { // clicked over a tab
-    QMenu menu(this);
-
-    // get the document where the context menu was opened
-    QucsDoc *d = App->getDoc(contextTabIndex);
-    // save the document name (full path)
-    docName = d->docName();
-
-#define APPEND_MENU(action, slot, text)         \
-  QAction *action = new QAction(tr(text), &menu);    \
-  connect(action, SIGNAL(triggered()), SLOT(slot())); \
-  menu.addAction(action);
-
-  APPEND_MENU(ActionCxMenuClose, slotCxMenuClose, "Close")
-  APPEND_MENU(ActionCxMenuCloseOthers, slotCxMenuCloseOthers, "Close all but this")
-  APPEND_MENU(ActionCxMenuCloseLeft, slotCxMenuCloseLeft, "Close all to the left")
-  APPEND_MENU(ActionCxMenuCloseRight, slotCxMenuCloseRight, "Close all to the right")
-  APPEND_MENU(ActionCxMenuCloseAll, slotCxMenuCloseAll, "Close all")
-  menu.addSeparator();
-  APPEND_MENU(ActionCxMenuCopyPath, slotCxMenuCopyPath, "Copy full path")
-  APPEND_MENU(ActionCxMenuOpenFolder, slotCxMenuOpenFolder, "Open containing folder")
-#undef APPEND_MENU
-
-    // a not-yet-saved document does not have a name/full path
-    // so copying full path or opening containing folder does not make sense
-    ActionCxMenuCopyPath->setEnabled(!docName.isEmpty());
-    ActionCxMenuOpenFolder->setEnabled(!docName.isEmpty());
-
-    menu.exec(tabBar()->mapToGlobal(point));
-  }
-}
 
 QucsDoc* newSchematicDoc(QucsApp&, QString const&); // tmp hack.
 
-QucsDoc *ContextMenuTabWidget::createEmptySchematic(const QString &name)
+QucsDoc *QucsTabWidget::createEmptySchematic(const QString &name)
 {itested();
   // create a schematic
   QFileInfo Info(name);
@@ -3085,7 +3034,7 @@ QucsDoc *ContextMenuTabWidget::createEmptySchematic(const QString &name)
 
 QucsDoc* newTextDoc(QucsApp&, QString const&); // tmp hack.
 
-QucsDoc *ContextMenuTabWidget::createEmptyTextDoc(const QString &name)
+QucsDoc *QucsTabWidget::createEmptyTextDoc(const QString &name)
 {itested();
   // create a text document
   QFileInfo Info(name);
@@ -3097,7 +3046,7 @@ QucsDoc *ContextMenuTabWidget::createEmptyTextDoc(const QString &name)
   return d;
 }
 
-void ContextMenuTabWidget::setSaveIcon(bool state, int index)
+void QucsTabWidget::setSaveIcon(bool state, int index)
 { untested();
   // set document tab icon to "smallsave.xpm" or "empty.xpm"
   QString icon = (state)? ":/bitmaps/smallsave.xpm" : ":/bitmaps/empty.xpm";
@@ -3107,43 +3056,43 @@ void ContextMenuTabWidget::setSaveIcon(bool state, int index)
   setTabIcon(index, QPixmap(icon));
 }
 
-void ContextMenuTabWidget::slotCxMenuClose()
+void QucsTabWidget::slotCxMenuClose()
 { untested();
   // close tab where the context menu was opened
   App->slotFileClose(contextTabIndex);
 }
 
-void ContextMenuTabWidget::slotCxMenuCloseOthers()
+void QucsTabWidget::slotCxMenuCloseOthers()
 { untested();
   // close all tabs, except the one where the context menu was opened
   App->closeAllFiles(contextTabIndex);
 }
 
-void ContextMenuTabWidget::slotCxMenuCloseLeft()
+void QucsTabWidget::slotCxMenuCloseLeft()
 { untested();
   // close all tabs to the left of the current one
   App->closeAllLeft(contextTabIndex);
 }
 
-void ContextMenuTabWidget::slotCxMenuCloseRight()
+void QucsTabWidget::slotCxMenuCloseRight()
 { untested();
   // close all tabs to the right of the current one
   App->closeAllRight(contextTabIndex);
 }
 
-void ContextMenuTabWidget::slotCxMenuCloseAll()
+void QucsTabWidget::slotCxMenuCloseAll()
 { untested();
   App->slotFileCloseAll();
 }
 
-void ContextMenuTabWidget::slotCxMenuCopyPath()
+void QucsTabWidget::slotCxMenuCopyPath()
 { untested();
   // copy the document full path to the clipboard
   QClipboard *cb = QApplication::clipboard();
   cb->setText(docName);
 }
 
-void ContextMenuTabWidget::slotCxMenuOpenFolder()
+void QucsTabWidget::slotCxMenuOpenFolder()
 { untested();
   QFileInfo Info(docName);
   QDesktopServices::openUrl(QUrl::fromLocalFile(Info.canonicalPath()));
