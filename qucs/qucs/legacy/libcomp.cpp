@@ -108,7 +108,6 @@ private:
 static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "LegacyLibProto", &d0);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-/// THIS IS WRONG> must be symbol
 class Lib : public Symbol{
 public:
 	explicit Lib():Symbol(), _tx(0), _ty(0), _parent(nullptr) {
@@ -116,9 +115,10 @@ public:
 		new_subckt(); // hmm.
 	}
 	Lib( Lib const& l) : Symbol(l), _parent(l._parent),
-		_ports(0)
+	   _component(l._component),
+	   _section(l._section),
+		_ports(l._ports.size())
 	{
-		_ports.resize(l._ports.size());
 		new_subckt(); // hmm. copy?
 		              // todo: move all the model stuff into common (more work)
 	}
@@ -243,7 +243,7 @@ private: // Symbol
 		case 3:
 			return _component.Value.toStdString();
 		default: untested();
-			return Symbol::paramName(i);
+			return Symbol::paramValue(i);
 		}
 	}
 	std::string paramName(unsigned i) const override{
