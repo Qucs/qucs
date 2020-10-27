@@ -43,7 +43,7 @@ class SearchDialog;
 class OctaveWindow;
 class MessageDock;
 class ProjectView;
-class ContextMenuTabWidget;
+class QucsTabWidget;
 class VersionTriplet;
 class QucsApp;
 
@@ -118,7 +118,7 @@ public:
   QucsDoc *getDoc(int No=-1);
   QucsDoc* findDoc (QString, int * Pos = 0);
   QString fileType (const QString&);
-  static bool isTextDocument(QWidget *);
+  static bool isTextDocument(QucsDoc const*);
 
   QString ProjName;   // name of the project, that is open
   QHash<QString,QString> schNameHash; // QHash for the schematic files lookup
@@ -200,10 +200,9 @@ private slots:
   void slotButtonProjNew();
   void slotButtonProjOpen();
   void slotButtonProjDel();
-  void slotChangeView(QWidget*);
+  void slotChangeView(QucsDoc*);
   void slotSimulate();
   void slotAfterSimulation(int, SimMessage*);
-  void slotDCbias();
   void slotChangePage(QString&, QString&);
   void slotHideEdit();
   void slotFileChanged(bool);
@@ -215,7 +214,7 @@ public: // called directly from Schematic... bug?
 
 public:
 //  MouseActions *view;
-  ContextMenuTabWidget *DocumentTab;
+  QucsTabWidget *DocumentTab;
   QListWidget *CompComps;
   QTreeWidget *libTreeWidget;
 
@@ -432,33 +431,5 @@ private:
   QString lastExportFilename;
 }; // qucsApp
 
-/**
- * @brief a QTabWidget with context menu for tabs
- *
- */
-class ContextMenuTabWidget : public QTabWidget
-{
-  Q_OBJECT
-public:
-  ContextMenuTabWidget(QucsApp *parent = 0);
-  void setSaveIcon(bool state=true, int index=-1);
-public: // BUG, obsolete.
-  QucsDoc *createEmptySchematic(const QString &name);
-  QucsDoc *createEmptyTextDoc(const QString &name);
-public slots:
-  void showContextMenu(const QPoint& point);
-private:
-  int contextTabIndex; // index of tab where context menu was opened
-  QString docName; // name of the document where context menu was opened
-  QucsApp *App; // the main application - parent widget
-private slots:
-  void slotCxMenuClose();
-  void slotCxMenuCloseOthers();
-  void slotCxMenuCloseAll();
-  void slotCxMenuCloseRight();
-  void slotCxMenuCloseLeft();
-  void slotCxMenuCopyPath();
-  void slotCxMenuOpenFolder();
-};
 
 #endif /* QUCS_H */

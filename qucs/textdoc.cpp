@@ -608,7 +608,7 @@ void TextDoc::refreshLanguage()
     syntaxHighlight->setDocument(document());
 }
 
-void TextDoc::actionSelect(QAction*s)
+void TextDoc::actionSelect(QAction*)
 {
 	incomplete(); // toggle?!
 	viewport()->setFocus();
@@ -618,7 +618,7 @@ void TextDoc::actionSelect(QAction*s)
 	selectAction()->blockSignals(false);
 }
 
-void TextDoc::actionEditActivate(QAction*s)
+void TextDoc::actionEditActivate(QAction*)
 {
 	commentSelected();
 	// toggleAction(s);

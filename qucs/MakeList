@@ -43,6 +43,7 @@ CPP_SRC = \
 	qucs.cpp \
 	qucsdoc.cpp \
 	qucs_init.cpp \
+	qucs_tabs.cpp \
 	schematic_action.cpp \
 	schematic_component.cpp \
 	schematic.cpp \
@@ -67,17 +68,18 @@ CPP_SRC = \
 	wirelabel.cpp
 
 QMOCHEADERS = \
-  component_widget.h \
-  mouseactions.h \
-  messagedock.h \
-  octave_window.h \
-  projectView.h \
-  schematic_doc.h \
-  schematic_scene.h \
-  schematic_model.h \
-  textdoc.h \
-  schematic_dialog.h \
-  qucs.h
+	component_widget.h \
+	mouseactions.h \
+	messagedock.h \
+	octave_window.h \
+	projectView.h \
+	schematic_doc.h \
+	schematic_scene.h \
+	schematic_model.h \
+	textdoc.h \
+	schematic_dialog.h \
+	qucs_tabs.h \
+	qucs.h
 
 DIALG_MOCHEADERS = \
 	aboutdialog.h \

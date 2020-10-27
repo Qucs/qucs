@@ -89,8 +89,7 @@ void PrinterWriter::noGuiPrint(
     Printer->printRange() == QPrinter::AllPages, fitToPage);
 }
 
-void
-PrinterWriter::print(QWidget *doc)
+void PrinterWriter::print(QucsDoc *doc)
 {
   QPrintDialog *dialog = new QPrintDialog(Printer, 0);
   dialog->setOption(QAbstractPrintDialog::PrintSelection, true);
@@ -98,13 +97,12 @@ PrinterWriter::print(QWidget *doc)
   dialog->setOption(QAbstractPrintDialog::PrintToFile, true);
   dialog->setWindowTitle(QObject::tr("Print Document"));
 
-  if (QucsApp::isTextDocument(doc))
-  {
+#if 0
+  if (QucsApp::isTextDocument(doc)) {
     if (dialog->exec() == QDialog::Accepted) {
        static_cast<QPlainTextEdit *>(doc)->print(Printer);
     }
-  }
-  else {
+  } else {
     Printer->setOrientation(QPrinter::Landscape);
 
     if (dialog->exec() == QDialog::Accepted)
@@ -128,5 +126,6 @@ PrinterWriter::print(QWidget *doc)
       }
     }
   }
+#endif
   delete dialog;
 }
