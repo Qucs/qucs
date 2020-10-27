@@ -1,6 +1,4 @@
 /***************************************************************************
-                           qucssettingsdialog.cpp
-                          ------------------------
     begin                : Sun May 23 2004
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -12,7 +10,7 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -35,6 +33,7 @@
 #include "textdoc.h"
 #include "schematic_doc.h"
 #include "misc.h"
+#include "qucs_tabs.h" // ??
 
 #include <QWidget>
 #include <QLabel>
@@ -519,8 +518,10 @@ void QucsSettingsDialog::slotApply()
         QWidget *w;
 
         while((w=App->DocumentTab->widget(No++)) != 0) {
+			  auto Doc=prechecked_cast<QucsDoc const*>(w);
+			  assert(Doc);
           QWidget *vp;
-          if(QucsApp::isTextDocument(w)) {
+          if(QucsApp::isTextDocument(Doc)) {
             vp = ((TextDoc*)w)->viewport();
           } else {
             vp = ((SchematicDoc*)w)->viewport();

@@ -61,15 +61,9 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
 		: QDialog(parent) 
 {
   setWindowTitle(tr("Qucs Simulation Messages"));
-  QucsDoc *Doc;
+  QucsDoc *Doc = prechecked_cast<QucsDoc*>(w);
+  assert(Doc);
   DocWidget = w;
-
-  // huh? setup_doc?
-  if(QucsApp::isTextDocument(DocWidget)){
-    Doc = (QucsDoc*) ((TextDoc*)DocWidget);
-  } else{
-    Doc = (QucsDoc*) ((SchematicDoc*)DocWidget);
-  }
 
   DocName = Doc->docName();
   DataDisplay = Doc->DataDisplay;
@@ -180,7 +174,9 @@ bool SimMessage::startProcess()
   DocumentFormat const* n = prechecked_cast<DocumentFormat const*>(dl);
   assert(n);
 
-  if(QucsApp::isTextDocument(DocWidget)) { untested();
+  auto Doc = dynamic_cast<QucsDoc const*>(DocWidget);
+
+  if(QucsApp::isTextDocument(Doc)) { untested();
     incomplete();
     // throw(Error(" Cannot simulate a text file");
   }else if(SchematicDoc const* d=dynamic_cast<SchematicDoc const*>(DocWidget)){itested();

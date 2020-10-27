@@ -127,7 +127,7 @@ QString ImageWriter::getLastSavedFile()
 
 // FIXME: should check if filename exists and not silently overwrite
 // BUG: this is all exportdialog. d'uh
-int ImageWriter::print(QWidget *)
+int ImageWriter::print(QucsDoc const*)
 {
 #if 0
   SchematicDoc *sch = static_cast<SchematicDoc*>(doc);

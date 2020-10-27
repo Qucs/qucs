@@ -57,6 +57,7 @@
 #include "platform.h"
 
 #include "component_widget.h"
+#include "qucs_tabs.h"
 
 #if 0
 // BUG: not QucsApp
@@ -83,8 +84,7 @@ void QucsApp::slotToggle(bool on)
 // this could be done using Qt. but not yet.
 // Toolbar::?
 #define ASSIGN_STUFF \
-  QWidget *w = DocumentTab->currentWidget(); \
-  auto qd = dynamic_cast<QucsDoc*>(w); \
+  QucsDoc *qd = DocumentTab->current(); \
   assert(qd); \
   auto s = prechecked_cast<QAction*>(sender()); \
   assert(s);
@@ -96,8 +96,7 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
 {
   slotHideEdit(); // disable text edit of component property
 
-  QWidget *w = DocumentTab->currentWidget();
-  auto qd = dynamic_cast<QucsDoc*>(w);
+  QucsDoc* qd = DocumentTab->current();
   assert(qd);
 //  auto s = prechecked_cast<QAction*>(sender());
 //  assert(s);
@@ -335,8 +334,7 @@ void QucsApp::slotEditRedo()
 // --------------------------------------------------------------
 void QucsApp::slotAlignTop()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  QucsDoc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionAlign(0); // BUG use enum
@@ -344,8 +342,7 @@ void QucsApp::slotAlignTop()
 // --------------------------------------------------------------
 void QucsApp::slotAlignBottom()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  QucsDoc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionAlign(1); // BUG use enum
@@ -355,8 +352,7 @@ void QucsApp::slotAlignBottom()
 // Is called, when "Align left" action is triggered.
 void QucsApp::slotAlignLeft()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  QucsDoc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionAlign(2);
@@ -366,8 +362,7 @@ void QucsApp::slotAlignLeft()
 // Is called, when "Align right" action is triggered.
 void QucsApp::slotAlignRight()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  QucsDoc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionAlign(3);
@@ -377,8 +372,7 @@ void QucsApp::slotAlignRight()
 // Is called, when "Distribute horizontally" action is triggered.
 void QucsApp::slotDistribHoriz()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  QucsDoc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionDistrib(0);
@@ -388,8 +382,7 @@ void QucsApp::slotDistribHoriz()
 // Is called, when "Distribute vertically" action is triggered.
 void QucsApp::slotDistribVert()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  QucsDoc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionDistrib(1);
@@ -399,8 +392,7 @@ void QucsApp::slotDistribVert()
 // Is called, when "Center horizontally" action is triggered.
 void QucsApp::slotCenterHorizontal()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  QucsDoc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionAlign(4);
@@ -410,8 +402,7 @@ void QucsApp::slotCenterHorizontal()
 // Is called, when "Center vertically" action is triggered.
 void QucsApp::slotCenterVertical()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  QucsDoc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionAlign(5);
@@ -432,8 +423,7 @@ void QucsApp::slotSelectAll()
 // schematic only
 void QucsApp::slotSelectMarker()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  QucsDoc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionSelectMarker();
@@ -651,8 +641,8 @@ void QucsApp::showHTML(const QString& Page)
 // Is called when the find action is triggered.
 void QucsApp::slotEditFind()
 {
-  SearchDia->initSearch(DocumentTab->currentWidget(),
-      ((TextDoc *)DocumentTab->currentWidget())->textCursor().selectedText(), false);
+  SearchDia->initSearch(DocumentTab->current(),
+      ((TextDoc *)DocumentTab->current())->textCursor().selectedText(), false);
 }
 
 // --------------------------------------------------------------
@@ -755,8 +745,7 @@ static Marker const* marker(Element const* e)
 // -----------------------------------------------------------
 void QucsApp::slotCursor(arrow_dir_t dir)
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  QucsDoc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionCursor(dir);
@@ -768,8 +757,7 @@ void QucsApp::slotCursor(arrow_dir_t dir)
 // In "view->MAx3" is the number of the current property.
 void QucsApp::slotApplyCompText()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  QucsDoc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionApplyCompText();
@@ -781,7 +769,7 @@ void QucsApp::slotApplyCompText()
 // the width of the edit field.
 void QucsApp::slotResizePropEdit(const QString& t)
 {
-  editText->resize(editText->fontMetrics().width(t)+4,
+  editText->resize(editText->fontMetrics().horizontalAdvance(t)+4,
                    editText->fontMetrics().lineSpacing());
 }
 
@@ -836,8 +824,7 @@ void QucsApp::slotExportSchematic()
 // // BUG this is a diagram slot.
 void QucsApp::slotExportGraphAsCsv()
 {
-  QWidget *w=DocumentTab->currentWidget();
-  QucsDoc *qd=dynamic_cast<QucsDoc*>(w);
+  QucsDoc* qd = DocumentTab->current();
   assert(qd);
 
   hideEdit();

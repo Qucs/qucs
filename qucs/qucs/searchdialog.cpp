@@ -23,6 +23,8 @@
 
 #include "searchdialog.h"
 #include "ui_searchdialog.h"
+#include "platform.h"
+#include "qucsdoc.h" // BUG
 
 SearchDialog::SearchDialog(QWidget *parent) : 
     QDialog(parent),
@@ -40,9 +42,9 @@ SearchDialog::~SearchDialog()
 }
 
 // ---------------------------------------------------------------------
-void SearchDialog::initSearch(QWidget *_doc, const QString &text, bool replace)
+void SearchDialog::initSearch(QucsDoc *_doc, const QString &text, bool replace)
 {
-  doc = _doc;
+  doc = prechecked_cast<QWidget*>(_doc);
 
   if(replace) {
     setWindowTitle(tr("Replace Text"));
