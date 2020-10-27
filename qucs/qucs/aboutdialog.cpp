@@ -52,12 +52,12 @@ AboutDialog::AboutDialog(QWidget *parent)
     : QDialog(parent)
 {
   currAuths = {{
-    "Felix Salfelder - " + tr("Qt5 port, modularity, refactoring"),
+    "Felix Salfelder - " + tr("Qt5 port, modularity, refactoring")
   }};
   
   prevDevs = {{
     "Andrea Zonca - " + tr("temperature model for rectangular waveguide"),
-    "Andr\xe9s Mart\xednez Mera - " + tr("RF design tools")
+    "Andr\xe9s Mart\xednez Mera - " + tr("RF design tools"),
     "Bastien Roucaries - " + tr("bondwire and rectangular waveguide model implementation"),
     "Claudio Girardi - " + tr("testing, general fixes"),
     "Clemens Novak - " + tr("GUI programmer"),

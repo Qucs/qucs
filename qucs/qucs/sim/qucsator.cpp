@@ -84,6 +84,11 @@ static int notalnum(char c)
 
 static std::string mangleType(std::string& t)
 {
+	if(t == "_BJT"){
+		// for some reason...
+		t = "BJT";
+	}else{
+	}
 	trace1("mangle", t);
 	auto pos = t.find(typesep);
 	std::string ret="";
