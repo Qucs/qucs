@@ -84,8 +84,6 @@ private: // slot overrides.
   void slotButtDown();
 
   void slotSimTypeChange(int);
-  void slotNumberChanged(const QString&);
-  void slotStepChanged(const QString&);
 
   void slotParamEntered();
   void slotSimEntered(int);
@@ -587,9 +585,8 @@ void Component::setParameter(std::string const& name, std::string const& v)
     r /= -2;
     set_mirror_yaxis(r);
   }else if(name=="$hflip"){itested();
-    unsigned r = atoi(v.c_str());
+    int r = atoi(v.c_str());
     assert(r==1 || r==-1);
-    // assert(r==1); // not in _BJT?
     r -= 1;
     r /= -2;
     set_mirror_xaxis(r);
@@ -663,7 +660,7 @@ std::string Component::paramValue(std::string const& name) const
 void Component::set_rotated(unsigned r)
 {
   assert(r<4);
-  while(r != _rotated){
+  while(r != unsigned(_rotated)){
     rotate();
 
     // keep track of what's done
@@ -2627,8 +2624,10 @@ void ComponentDialog::slotButtDown()
   prop->selectRow(curRow+1);
 }
 /*--------------------------------------------------------------------------*/
-void ComponentDialog::slotSimTypeChange(int Type)
+// looks like simTask?
+void ComponentDialog::slotSimTypeChange(int)
 {
+#if 0
   if(Type < 2) {  // new type is "linear" or "logarithmic"
     if(!editNumber->isEnabled()) {  // was the other mode before ?
       // this text change, did not emit the textChange signal !??!
@@ -2683,6 +2682,7 @@ void ComponentDialog::slotSimTypeChange(int Type)
     checkNumber->setDisabled(true);
     textStep->setText(tr("Step:"));
   }
+#endif
 }
 /*--------------------------------------------------------------------------*/
 void ComponentDialog::slotParamEntered()

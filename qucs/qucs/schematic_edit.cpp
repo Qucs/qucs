@@ -130,6 +130,7 @@ void SchematicEdit::do_it_first()
 		}else{
 			trace1("done insert, show", element(gfx)->label());
 			gfx->show();
+			gfx->setSelected(true); // really?
 			done_ins.push_back(gfx);
 		}
 	}
@@ -255,6 +256,7 @@ void SchematicEdit::do_it()
 		trace1("show", d);
 		assert(!d->isVisible());
 		d->show();
+		d->setSelected(true); // really?
 	}
 	std::swap(_ins, _del);
 }
