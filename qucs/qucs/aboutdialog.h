@@ -45,8 +45,8 @@ private:
   void setAuthorsText(void);
   void setTrText(void);
 
-  std::array<QString, 9> currAuths; // current Qucs authors
-  std::array<QString, 12> prevDevs; // previous Qucs developers
+  std::array<QString, 1> currAuths; // current Qucs authors
+  std::array<QString, 20> prevDevs; // previous Qucs developers
   std::array<QString, 18> trAuths; // Qucs translators
 
   QVBoxLayout *all;
