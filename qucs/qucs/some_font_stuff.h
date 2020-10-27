@@ -17,7 +17,7 @@ inline int get_some_width(QString const& stmp)
   Font.setPointSize(10); 
   // get the small font size; use the screen-compatible metric
   QFontMetrics  smallmetrics(Font, 0);
-  return smallmetrics.width(stmp); // compute width to right-align
+  return smallmetrics.horizontalAdvance(stmp); // compute width to right-align
 }
 
 class FontMetrics{
@@ -36,7 +36,7 @@ public:
 	int width(QString const& s) const{
 		return 0;
 		QFontMetrics f(QucsSettings.font, 0); // crashes.
-		return f.width(s);
+		return f.horizontalAdvance(s);
 	}
 	int ascent() const{
 		return 1;

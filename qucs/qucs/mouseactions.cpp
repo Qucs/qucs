@@ -21,7 +21,6 @@
 #include "components/spicedialog.h"
 #include "components/spicefile.h"
 #include "components/optimizedialog.h"
-#include "components/componentdialog.h"
 #include "components/vacomponent.h"
 #include "legacy/markerdialog.h" // BUG
 #include "labeldialog.h"

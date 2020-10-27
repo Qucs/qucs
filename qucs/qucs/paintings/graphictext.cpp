@@ -53,8 +53,10 @@ GraphicText::~GraphicText()
 // -----------------------------------------------------------------------
 void GraphicText::paint(ViewPainter *p)
 {
-	   auto cx=Element::cx();
-     auto cy=Element::cy();
+
+	// return; ?
+//	   auto cx=Element::cx();
+//     auto cy=Element::cy();
 
   // keep track of painter state
   p->save();
@@ -248,8 +250,8 @@ QString GraphicText::saveJSON()
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
 void GraphicText::MouseMoving(
-	SchematicDoc*, int, int, int gx, int gy,
-	SchematicDoc *p, int x, int y, bool drawn)
+	SchematicDoc*, int, int, int , int,
+	SchematicDoc *, int , int, bool)
 {
 #if 0
   // FIXME #warning p->setPen(Qt::SolidLine);

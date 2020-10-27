@@ -16,7 +16,6 @@
 #include <stdlib.h>
 #include <cmath>
 
-#include "components/componentdialog.h"
 #include "components/component.h"
 #include "node.h"
 #include "qucs.h"

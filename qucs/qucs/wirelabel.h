@@ -44,8 +44,8 @@ public:
   void setHighlighted (bool newval) { isHighlighted = newval; };
 
   // this is likely wrong.
-  void moveTo(int x, int y){ incomplete(); } // {_cx=x; _cy=y; }
-  void moveCenter(int x, int y){ incomplete(); } // {_cx+=x; _cy+=y; }
+  void moveTo(int, int){ incomplete(); } // {_cx=x; _cy=y; }
+  void moveCenter(int, int){ incomplete(); } // {_cx+=x; _cy+=y; }
   void moveLeft(int x){ x1-=x; }
 
   Element* clone()const override{

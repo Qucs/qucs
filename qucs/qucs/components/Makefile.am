@@ -182,7 +182,6 @@ qucs_default_components_la_SOURCES += \
 
 noinst_HEADERS = $(MOCHEADERS) components.h \
 	spicedialog.h optimizedialog.h spicefile.h \
-	componentdialog.h \
   inductor.h biast.h dcblock.h dcfeed.h ground.h \
   attenuator.h circulator.h isolator.h \
   source_ac.h ac_sim.h cccs.h \
