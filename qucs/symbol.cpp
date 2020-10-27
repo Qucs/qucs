@@ -12,10 +12,92 @@
  ***************************************************************************/
 #include "symbol.h"
 #include "schematic_model.h"
+#include "schematic_dialog.h"
 #include <assert.h>
 #include "net.h"
 #include "geometry.h"
 /*--------------------------------------------------------------------------*/
+#include <QVBoxLayout>
+#include <QTableWidget>
+#include <QComboBox>
+#include <QCheckBox>
+#include <QLabel>
+/*--------------------------------------------------------------------------*/
+class SymbolDialog : public SchematicDialog {
+public:
+  SymbolDialog(QucsDoc*);
+  ~SymbolDialog();
+
+  void attach(ElementGraphics* c) override;
+
+private: // slot overrides.
+  void slotButtOK();
+  void slotButtCancel();
+  void slotSelectProperty(QTableWidgetItem *item);
+  void slotApplyInput();
+  void slotApplyState(int State);
+  void slotBrowseFile();
+  void slotEditFile();
+  void slotApplyChange(const QString& Text);
+  void slotApplyProperty();
+  void slotApplyPropName();
+
+  void slotButtAdd();
+  void slotButtRem();
+
+  void slotButtUp();
+  void slotButtDown();
+
+  void slotSimTypeChange(int);
+  void slotNumberChanged(const QString&);
+  void slotStepChanged(const QString&);
+
+  void slotParamEntered();
+  void slotSimEntered(int);
+  void slotValuesEntered();
+  void slotStartEntered();
+  void slotStopEntered();
+  void slotStepEntered();
+  void slotNumberEntered();
+  void slotHHeaderClicked(int headerIdx);
+
+public:
+  void enableButtons();
+  void disableButtons();
+
+protected slots:
+    void reject();
+    bool eventFilter(QObject *obj, QEvent *event);
+
+private:
+  QVBoxLayout *_all;
+  // QValidator  *Validator, *ValRestrict, *Validator2;
+  // QRegExp     Expr;
+  // QIntValidator *ValInteger;
+  QTableWidget  *prop;
+  QLineEdit   *edit, *NameEdit, *CompNameEdit;
+  QLabel      *Name, *Description;
+  QPushButton *BrowseButt, *EditButt, *ButtAdd, *ButtRem;
+  QPushButton *ButtUp, *ButtDown;
+  QCheckBox   *disp;
+  bool        changed;
+  int         tx_Dist, ty_Dist;   // remember the text position
+  bool        setAllVisible; // used for toggling visibility of properties
+ 
+  QLabel    *textType;
+  QLabel    *textSim, *textParam, *textValues, *textStart, *textStop,
+            *textStep, *textNumber;
+  QLineEdit *editParam, *editValues, *editStart, *editStop,
+            *editStep, *editNumber;
+  QCheckBox *checkSim, *checkParam, *checkValues, *checkStart, *checkStop,
+            *checkNumber, *checkType, *showName;
+
+  void updateCompPropsList(void);
+
+private:
+  ElementGraphics* _gfx;
+  Component const* _comp;
+};
 /*--------------------------------------------------------------------------*/
 // recreate schematic symbol. not sure why, maybe after parameter changes
 // (why not just call "Symbol::create??!")
