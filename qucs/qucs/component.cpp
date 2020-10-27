@@ -17,7 +17,6 @@
 #include <stdlib.h>
 #include <cmath>
 
-#include "components/componentdialog.h"
 #include "components/component.h"
 #include "node.h"
 #include "qucs.h"
@@ -630,7 +629,7 @@ void Component::setParameter(unsigned pos, std::string const& v)
     // ty
   }else if(pos<Symbol::paramCount()){ untested();
     Symbol::setParameter(pos, v);
-  }else if (p<Props.size()){
+  }else if (p<int(Props.size())){
     assert(Props.at(p));
     //Props.at(p)->setValue(v);
     Props.at(p)->Value = QString::fromStdString(v);
@@ -1339,7 +1338,7 @@ Property * Component::getProperty(const QString& name)
 }
 
 // ---------------------------------------------------------------------
-void Component::copyComponent(Component *pc)
+void Component::copyComponent(Component *)
 { untested();
   unreachable();
   assert(false);
@@ -1756,8 +1755,8 @@ std::string Component::paramValue(unsigned i) const
   }else if(i==s+1){ untested();
     return std::to_string(tx);
   }else{
+    assert(i>=s+num_component_params);
     i -= (s + num_component_params);
-    assert(i>=0);
 
     assert( Props.at(i));
     return Props.at(i)->value().toStdString();
@@ -1788,7 +1787,6 @@ QDialog* Component::schematicWidget(QucsDoc* Doc) const
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-#include "components/componentdialog.h"
 #include "qucs.h"
 #include "schematic_doc.h"
 #include "misc.h"

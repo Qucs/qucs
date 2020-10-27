@@ -600,7 +600,6 @@ void TaskElementDialog::updateCompPropsList()
 // It transfers the values to the right side for editing.
 void TaskElementDialog::slotSelectProperty(QTableWidgetItem *item)
 {
-  auto Comp = _comp;
   if(item == 0) return;
   item->setSelected(true);  // if called from elsewhere, this was not yet done
 
@@ -671,8 +670,7 @@ void TaskElementDialog::slotSelectProperty(QTableWidgetItem *item)
 
     // use the screen-compatible metric
     QFontMetrics metrics(QucsSettings.font, 0);   // get size of text
-    qDebug() << "desc = " << desc << metrics.width(desc);
-    while(metrics.width(desc) > 270) {  // if description too long, cut it nicely
+    while(metrics.horizontalAdvance(desc) > 270) {  // if description too long, cut it nicely
       // so 270 above will be the maximum size of the name label and associated edit line widget 
       if (desc.lastIndexOf(' ') != -1){
         desc = desc.left(desc.lastIndexOf(' ')) + "....";
@@ -1103,8 +1101,6 @@ void TaskElementDialog::slotApplyInput()
     }else{
     }
 
-
-    auto pos = _gfx->pos();
 
     auto cmd = new SwapSymbolCommand(_gfx, Comp);
     execute(cmd);

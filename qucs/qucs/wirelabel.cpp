@@ -22,7 +22,7 @@
 #include <QString>
 #include <QPainter>
 
-WireLabel::WireLabel(const QString& _Name, int cx, int cy,
+WireLabel::WireLabel(const QString& _Name, int, int,
                      int _x1, int _y1, int _Type) : Element()
 {
 	incomplete();
@@ -65,7 +65,7 @@ void WireLabel::paintScheme(QPainter *p) const
 #endif
 
 // ----------------------------------------------------------------
-void WireLabel::setCenter(int x_, int y_, bool relative)
+void WireLabel::setCenter(int, int, bool)
 {
 	incomplete();
 #if 0
@@ -98,33 +98,18 @@ void WireLabel::setCenter(int x_, int y_, bool relative)
 }
 
 // ----------------------------------------------------------------
-bool WireLabel::getSelected(int x, int y)
-{
-//  if(x1 <= x)
-//    if(y1 <= y)
-//      if((x1+x2) >= x)
-//        if((y1+y2) >= y)
-//          return true;
-
-  return false;
-}
-
-// ----------------------------------------------------------------
 void WireLabel::paint(ViewPainter *p) const
 {
   QFont f = p->font(); // save current font
   QFont newFont = f;
 
-  if (isHighlighted)
-  {
+  if (isHighlighted) {
 //    QColor highlightfill (Qt::blue);
 //    highlightfill.setAlpha(50);
 //    p->fillRect(x1-1, y1-1, x2, y2, highlightfill);
     p->setPen(QPen(Qt::darkBlue,3));
     newFont.setWeight (QFont::Bold);
-  }
-  else
-  {
+  } else {
     newFont.setWeight (QFont::Normal);
     p->setPen(QPen(Qt::black,1));
   }
@@ -208,8 +193,8 @@ void WireLabel::setName(const QString& Name_)
   setLabel(Name_);
   
   // get size of text using the screen-compatible metric
-  FontMetrics metrics;
-  QSize r = metrics.size(0, Name_);
+//  FontMetrics metrics;
+//  QSize r = metrics.size(0, Name_);
   // x2 = r.width();
   // y2 = r.height()-2;    // remember size of text
 }
@@ -231,7 +216,7 @@ QString WireLabel::save()
 }
 
 
-void WireLabel::getLabelBounding(int& _xmin, int& _ymin, int& _xmax, int& _ymax)
+void WireLabel::getLabelBounding(int& , int&, int& , int& )
 {
 	incomplete();
 //    _xmin = std::min(x1,x1+(x2+6));

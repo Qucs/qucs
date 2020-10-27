@@ -76,7 +76,6 @@ pqucs_LTLIBRARIES = \
 # dialogs related to components
 # sort out later.
 DIALOG_SRC = \
-	componentdialog.cpp \
 	diagramdialog.cpp \
 	optimizedialog.cpp
 

@@ -344,7 +344,7 @@ void SimMessage::slotReadSpiceNetlist()
 }
 
 // ------------------------------------------------------------------------
-void SimMessage::slotFinishSpiceNetlist(int status )
+void SimMessage::slotFinishSpiceNetlist(int)
 {
 #if 0
   Q_UNUSED(status);
@@ -654,7 +654,7 @@ void SimMessage::startSimulator()
 }
 
 // ------------------------------------------------------------------------
-Component * SimMessage::findOptimization(SchematicDoc *Doc)
+Component * SimMessage::findOptimization(SchematicDoc *)
 {
 #if 0
   for(auto pc : Doc->components()){
