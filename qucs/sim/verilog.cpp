@@ -56,7 +56,7 @@ class Verilog : public NetLang {
 	void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
 
 private: //NetLang
-	std::string findType(istream_t&) const override {incomplete();}
+	std::string findType(istream_t&) const override {incomplete(); return "incomplete";}
 } V;
 
 static Dispatcher<DocumentLanguage>::INSTALL p(&doclang_dispatcher, "verilog", &V);
@@ -131,6 +131,9 @@ class VerilogSchematicFormat : public DocumentFormat{
   void save(DocumentStream& stream, SchematicSymbol const&) const;
   void load(istream_t& stream, SchematicSymbol&) const;
 
+private: //command
+  void do_it(istream_t&, SchematicModel*) override{incomplete();}
+
 private: // legacy cruft
   bool isSymbolMode() const{ return false; }
   PaintingList const& symbolPaints(SchematicSymbol const& m) const{ untested();
@@ -156,12 +159,10 @@ private: // legacy cruft
 private: // hacks.
   void printSymbol(Symbol const*, ostream_t&) const;
 }VS;
-
-static Dispatcher<DocumentFormat>::INSTALL
-pp(&docfmt_dispatcher, "v_sch", &VS);
-// ------------------------------------------------------
-
-void VerilogSchematicFormat::load(istream_t& stream, SchematicSymbol& s) const
+static Dispatcher<Command>::INSTALL pp(&command_dispatcher, "v_sch", &VS);
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
+void VerilogSchematicFormat::load(istream_t&, SchematicSymbol&) const
 { untested();
   incomplete();
 }
