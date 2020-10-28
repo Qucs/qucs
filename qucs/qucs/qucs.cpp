@@ -1418,87 +1418,11 @@ void QucsApp::slotFileSave()
 // --------------------------------------------------------------
 bool QucsApp::saveAs()
 { untested();
-  QucsDoc *Doc = getDoc();
   QucsDoc *w = DocumentTab->current();
   auto* W = prechecked_cast<QWidget*>(w);
   assert(W);
 
-  int n = -1;
-  QString s, Filter;
-  QFileInfo Info;
-  while(true) { untested();
-    s = Doc->docName();
-    Info.setFile(s);
-    if(s.isEmpty()) {   // which is default directory ?
-      if(ProjName.isEmpty()) { untested();
-        if(lastDirOpenSave.isEmpty())  s = QDir::currentPath();
-        else  s = lastDirOpenSave;
-      }
-      else s = QucsSettings.QucsWorkDir.path();
-    }
-
-    // list of known file extensions
-    QString ext = "vhdl;vhd;v;va;sch;dpl;m;oct;net;qnet;txt";
-    QStringList extlist = ext.split (';');
-
-    if(isTextDocument (w))
-      Filter = tr("VHDL Sources")+" (*.vhdl *.vhd);;" +
-	       tr("Verilog Sources")+" (*.v);;"+
-	       tr("Verilog-A Sources")+" (*.va);;"+
-	       tr("Octave Scripts")+" (*.m *.oct);;"+
-	       tr("Qucs Netlist")+" (*.net *.qnet);;"+
-	       tr("Plain Text")+" (*.txt);;"+
-	       tr("Any File")+" (*)";
-    else
-      Filter = QucsFileFilter;
-
-    s = QFileDialog::getSaveFileName(this, tr("Enter a Document Name"),
-                                     QucsSettings.QucsWorkDir.absolutePath(),
-                                     Filter);
-    if(s.isEmpty())  return false;
-    Info.setFile(s);               // try to guess the best extension ...
-    ext = Info.suffix();
-
-    if(ext.isEmpty() || !extlist.contains(ext))
-    { untested();
-      // if no extension was specified or is unknown
-      if (!isTextDocument (w))
-      { untested();
-        // assume it is a schematic
-        s += ".sch";
-      }
-    }
-
-    Info.setFile(s);
-    if(QFile::exists(s)) { untested();
-      n = QMessageBox::warning(this, tr("Warning"),
-		tr("The file '")+Info.fileName()+tr("' already exists!\n")+
-		tr("Saving will overwrite the old one! Continue?"),
-		tr("No"), tr("Yes"), tr("Cancel"));
-      if(n == 2) return false;    // cancel
-      if(n == 0) continue;
-    }
-
-    // search, if document is open
-    QucsDoc * d = findDoc (s);
-    if(d) { untested();
-      QMessageBox::information(this, tr("Info"),
-		tr("Cannot overwrite an open document"));
-      return false;
-    }
-
-    break;
-  }
-  Doc->setName(s);
-  DocumentTab->setTabText(DocumentTab->indexOf(W), misc::properFileName(s));
-  lastDirOpenSave = Info.absolutePath();  // remember last directory and file
-
-  n = Doc->save();   // SAVE
-  if(n < 0)  return false;
-
-  updatePortNumber(Doc, n);
-  updateRecentFilesList(s);
-  return true;
+  w->saveAs();
 }
 
 // --------------------------------------------------------------
@@ -3017,14 +2941,14 @@ bool loadSettings()
 }
 
 
-QucsDoc* newSchematicDoc(QucsApp&, QString const&); // tmp hack.
+QucsDoc* newSchematicDoc(QucsApp&, QString const&, QWidget*); // tmp hack.
 
 QucsDoc *QucsTabWidget::createEmptySchematic(const QString &name)
 {itested();
   // create a schematic
   QFileInfo Info(name);
   assert(App);
-  QucsDoc *d = newSchematicDoc(*App, name);
+  QucsDoc *d = newSchematicDoc(*App, name, this);
   QWidget* w = prechecked_cast<QWidget*>(d);
   assert(w);
   int i = addTab(w, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
@@ -3032,13 +2956,13 @@ QucsDoc *QucsTabWidget::createEmptySchematic(const QString &name)
   return d;
 }
 
-QucsDoc* newTextDoc(QucsApp&, QString const&); // tmp hack.
+QucsDoc* newTextDoc(QucsApp&, QString const&, QWidget*); // tmp hack.
 
 QucsDoc *QucsTabWidget::createEmptyTextDoc(const QString &name)
 {itested();
   // create a text document
   QFileInfo Info(name);
-  QucsDoc *d = newTextDoc(*App, name);
+  QucsDoc *d = newTextDoc(*App, name, this);
   QWidget* w = prechecked_cast<QWidget*>(d);
   assert(w);
   int i = addTab(w, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());

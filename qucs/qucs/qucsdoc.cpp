@@ -24,9 +24,11 @@
 #include "io.h" // tmp?
 
 
-QucsDoc::QucsDoc(QucsApp &App_, const QString& Name_)
+QucsDoc::QucsDoc(QucsApp &App_, const QString& Name_, QWidget* o)
 	: App(&App_),
-     _app(App_), _simulators(0)
+     _app(App_),
+	  _simulators(0),
+	  _owner(o)
 {
   GridOn = true;
   DocName = Name_;
@@ -200,6 +202,100 @@ void QucsDoc::executetaskElement(QUndoCommand* c)
 QucsData* QucsDoc::qucsData(std::string const& /*key*/)
 {
 	return nullptr; // _data[key];
+}
+/* -------------------------------------------------------------------------------- */
+void QucsDoc::slotDCbias()
+{
+	incomplete();
+}
+/* -------------------------------------------------------------------------------- */
+#include <QFileDialog>
+#include <QMessageBox>
+bool QucsDoc::saveAs()
+{
+	int n = -1;
+	QString s;
+	QString Filter = QWidget::tr("Schematic") + " (*.sch);;" + QWidget::tr("Any File")+" (*)";
+	QFileInfo Info;
+	while(true) { untested();
+		s = docName();
+		Info.setFile(s);
+		// which is default directory ?
+		if(!s.isEmpty()) {
+#if 0
+		}else if(!ProjName.isEmpty()) { untested();
+			s = QucsSettings.QucsWorkDir.path();
+		}else if(!lastDirOpenSave.isEmpty()){
+			s = lastDirOpenSave;
+#endif
+		} else{
+			s = QDir::currentPath();
+		}
+
+		// list of known file extensions
+		QString ext = "vhdl;vhd;v;va;sch;dpl;m;oct;net;qnet;txt";
+		QStringList extlist = ext.split (';');
+
+		auto w = prechecked_cast<QWidget*>(this);
+		assert(w);
+
+		s = QFileDialog::getSaveFileName(w, QWidget::tr("Enter a Document Name"),
+				QucsSettings.QucsWorkDir.absolutePath(),
+				Filter);
+		if(s.isEmpty())  return false;
+		Info.setFile(s);               // try to guess the best extension ...
+		ext = Info.suffix();
+
+		if(ext.isEmpty() || !extlist.contains(ext)) { untested();
+			incomplete();
+			// if no extension was specified or is unknown
+		}
+
+		Info.setFile(s);
+		if(QFile::exists(s)) { untested();
+			n = QMessageBox::warning(w, QWidget::tr("Warning"),
+					QWidget::tr("The file '")+Info.fileName()+QWidget::tr("' already exists!\n")+
+					QWidget::tr("Saving will overwrite the old one! Continue?"),
+					QWidget::tr("No"), QWidget::tr("Yes"), QWidget::tr("Cancel"));
+			if(n == 2) return false;    // cancel
+			if(n == 0) continue;
+		}else{
+		}
+
+#if 0 // incomplete
+		// search, if document is open
+		QucsDoc * d = findDoc (s);
+		if(d) { untested();
+			QMessageBox::information(this, QWidget::tr("Info"),
+					QWidget::tr("Cannot overwrite an open document"));
+			return false;
+		}
+#endif
+
+		break;
+	}
+	setName(s);
+
+	auto W = prechecked_cast<QWidget*>(this);
+
+	if(auto o=prechecked_cast<QTabWidget*>(_owner)){
+		o->setTabText(o->indexOf(W), s); // misc::properFileName(s));
+		// lastDirOpenSave = Info.absolutePath();  // remember last directory and file
+	}else{
+	}
+
+
+	n = save();   // SAVE
+	if(n < 0){
+		return false;
+	}else{
+	}
+
+//	updatePortNumber(Doc, n);
+//
+//	// signal?
+//	updateRecentFilesList(s);
+	return true;
 }
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
