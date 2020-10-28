@@ -1,0 +1,2 @@
+These plugins aim at replicating Qucs 0.0.20, without spilling into the
+core library. The legacy implementation is preserved where possible.
