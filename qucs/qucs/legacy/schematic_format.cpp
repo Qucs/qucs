@@ -24,11 +24,12 @@
 
 namespace{
 
-// TODO this is a command
 class LegacySchematicFormat : public DocumentFormat{
 	void save(DocumentStream& stream, SchematicSymbol const&) const;
 	void load(istream_t& stream, SchematicSymbol&) const; //  override;
 
+private: //Command
+  virtual void do_it(istream_t&, SchematicModel*) {incomplete();}
 private: // legacy cruft
 	bool isSymbolMode() const{ return false; }
 	PaintingList const& symbolPaints(SchematicSymbol const& m) const{
@@ -51,8 +52,7 @@ private: // legacy cruft
 		return m.components();
 	}
 }D;
-static Dispatcher<DocumentFormat>::INSTALL
-    p(&docfmt_dispatcher, "leg_sch", &D);
+static Dispatcher<Command>::INSTALL p(&command_dispatcher, "leg_sch", &D);
 
 void LegacySchematicFormat::load(istream_t& s, SchematicSymbol& c) const
 {

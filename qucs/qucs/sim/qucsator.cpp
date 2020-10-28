@@ -37,7 +37,7 @@ private:
 private: // Symbol
 	pos_t portPosition(unsigned) const {unreachable(); return pos_t(0,0);}
 	unsigned numPorts() const  override{ return 0;}
-	Port& port(unsigned i) override{unreachable(); return *new Port();}
+	Port& port(unsigned) override{unreachable(); return *new Port();}
 	void setParameter(std::string const& name, std::string const& value){
 		if(name == "qucsatorsckthack"){
 			_text = value;
@@ -110,7 +110,7 @@ static std::string mangleType(std::string& t)
 class QucsatorLang : public NetLang {
 private: // NetLang
   // inline void printItem(Element const* c, stream_t& s) const;
-  std::string findType(istream_t&) const override {incomplete();}
+  std::string findType(istream_t&) const override {incomplete(); return "incomplete";}
 
 private: // local
   void printtaskElement(TaskElement const*, ostream_t&) const; // override?
@@ -130,11 +130,7 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 	assert(c);
 	trace2("pc", c->label(), c->typeName());
 
-	// if(c->isOpen())  TODO
-	if(auto hack=dynamic_cast<QucsatorScktHack const*>(c)){ untested();
-		s << "aaaa\n";
-
-	}else{
+	{
 		std::string type = c->typeName();
 		std::string hack_type = mangleType(type);
 
@@ -361,7 +357,9 @@ private: // Simulator
   NetLang const* netLang() const override { untested();
 	  return dynamic_cast<NetLang const*>(doclang_dispatcher["qucsator"]);
   }
-  DocumentFormat const* netLister() const override {return docfmt_dispatcher["qucsator"];}
+  DocumentFormat const* netLister() const override {
+	  return dynamic_cast<DocumentFormat const*>(command_dispatcher["legacy_nl"]);
+  }
   void run() override{incomplete();}
   void init() override{incomplete();}
 }QS;
