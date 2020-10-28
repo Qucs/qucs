@@ -6,7 +6,12 @@
 #include "element.h"
 #include "symbol.h"
 #include <QDrag>
+#include <QPainter>
+#include "viewpainter.h"
+#include "schematic_model.h"
+#include "painting.h"
 
+// ElementWidget??
 void ComponentWidget::startDrag(Qt::DropActions)
 { untested();
   QListWidgetItem *item = currentItem();
@@ -45,7 +50,7 @@ void ComponentWidget::startDrag(Qt::DropActions)
 
 ComponentListWidgetItem::ComponentListWidgetItem(Element const* e)
 	: _e(e)
-{
+{ untested();
 	assert(e);
 	QString File = e->iconBasename();
 	auto Name = e->label();
@@ -53,7 +58,54 @@ ComponentListWidgetItem::ComponentListWidgetItem(Element const* e)
 ////		Name = QString::fromStdString(s->typeName());
 ////	}else{
 ////	}
-	setIcon( QPixmap(":/bitmaps/" + File + ".png"));
+//	setIcon( QPixmap(":/bitmaps/" + File + ".png"));
+//
+//
+
+	static const int N = 128;
+	QRectF br = e->boundingRect();
+	QRectF bb = e->boundingRect();
+	QPointF bbc = bb.center();
+	QRectF bbt = bb.transposed();
+	bbt.moveCenter(bbc);
+	bb |= bbt;
+	assert(bbt.center() == bb.center());
+	assert(bb.height() == bb.width());
+
+	QPixmap p(N, N);
+	p.fill();
+	QPainter* q = new QPainter(&p);
+
+	QPointF center(N/2, N/2);
+	q->translate(center);
+	double s = double(N)/bb.width();
+	q->scale(s, s); // double(N)/bb.width(), double(N)/bb.height());
+	q->translate(- br.center());
+
+	//q->translate(getX(center) / s, getY(center)/s);
+
+	ViewPainter v(q);
+
+	e->paint(&v);
+	auto sym = dynamic_cast<SchematicSymbol const*>(e);
+
+	if(!sym){
+		q->setPen(QColor(255,34,255,255));
+		q->drawRect(bb);
+	}else if(auto s = sym->symbolPaintings()){
+		for(auto i : *sym->symbolPaintings()){
+			Element* e = i;
+			e->paint(&v);
+		}
+	}else{
+	}
+
+
+	delete q;
+//	q.setBackground(Qt::red);
+//	setBackground(Qt::red);
+	setIcon(p);
+
 	setText(Name);
 	setToolTip("element: " + Name);
 }

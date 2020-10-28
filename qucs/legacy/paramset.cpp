@@ -87,6 +87,29 @@ private: // Symbol
 			return Symbol::paramValue(n);
 		}
 	}
+	QRectF boundingRect() const override{ untested();
+		if(_proto){itested();
+			return _proto->boundingRect();
+		}else{ untested();
+		}
+	}
+	void paint(ViewPainter* p) const override{ untested();
+		if(_proto){untested();
+			((Element*)_proto)->paint(p);
+		}else{ untested();
+		}
+		Symbol::paint(p);
+	}
+
+private: // Symbol
+	PaintingList const* symbolPaintings() const override{ untested();
+		if(!_proto){untested();
+		}else if(_proto->subckt()){ untested();
+		  	SchematicModel const* m = _proto->subckt();
+		  	return &m->paintings();
+		}else{ untested();
+		}
+	}
 
 private:
 	Symbol* _proto; // BUG. common.
