@@ -448,7 +448,7 @@ void QucsApp::editFile(const QString& File)
     if ((QucsSettings.Editor.toLower() == "qucs") | QucsSettings.Editor.isEmpty()) {
         // The Editor is 'qucs' or empty, open a net document tab
         if (File.isEmpty()) {
-            TextDoc *d = new TextDoc(this, "");
+            TextDoc *d = new TextDoc(this, "", DocumentTab);
             int i = DocumentTab->addTab(d, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
             DocumentTab->setCurrentIndex(i);
         } else {

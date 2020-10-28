@@ -93,7 +93,7 @@ private:
 public:
   typedef QList<ElementGraphics*> EGPList;
 public:
-  SchematicDoc(QucsApp&, const QString&);
+  SchematicDoc(QucsApp&/*BUG*/, const QString&, QWidget* owner);
  ~SchematicDoc();
 
   void setName(const QString&);
@@ -322,6 +322,8 @@ public: // qt4 debris
 //   QPointF mapToScene(QPoint const& p) const;
 
 private:
+	void slotDCbias() override; // not a slot yet..
+
 public:
   // possible rule: return pointer:   transfer ownership
   //                return reference: don't

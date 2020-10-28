@@ -29,13 +29,14 @@ Copyright (C) 2006 by Michael Margraf <michael.margraf@alumni.tu-berlin.de>
  */
 
 // tmp hack.
-QucsDoc* newTextDoc(QucsApp& a, QString const& b)
+QucsDoc* newTextDoc(QucsApp& a /*BUG*/, QString const& b, QWidget* owner)
 {
-	return new TextDoc(&a, b);
+	return new TextDoc(&a, b, owner);
 }
 
-TextDoc::TextDoc(QucsApp *parent, const QString& initial_name)
-   : QPlainTextEdit(), QucsDoc(*parent, initial_name)
+TextDoc::TextDoc(QucsApp *parent, const QString& initial_name, QWidget* owner)
+   : QPlainTextEdit(),
+     QucsDoc(*parent, initial_name, owner)
 {
   App = parent; // BUG? should be in base class.
   TextFont = QFont("Courier New");

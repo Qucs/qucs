@@ -48,7 +48,7 @@ class QString;
 class TextDoc : public QPlainTextEdit, public QucsDoc {
   Q_OBJECT
 public:
-  TextDoc (QucsApp *, const QString&);
+  TextDoc (QucsApp * /*BUG*/, const QString&, QWidget* owner);
  ~TextDoc ();
 
   void  setName (const QString&);
