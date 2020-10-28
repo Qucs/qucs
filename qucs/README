@@ -24,10 +24,17 @@
 Description
 ===========
 
-Qucs is a circuit simulator with a graphical user interface. "Qucs, the GUI",
-this package, is the graphical user interface for circuit simulation. The
-software aims to support various kinds of circuit simulation, e.g. DC, AC,
+Qucs was a circuit simulator with a graphical user interface. "Qucs, the GUI",
+this package, was the graphical user interface for circuit simulation. The
+software aimed to support various kinds of circuit simulation, e.g. DC, AC,
 S-parameter and harmonic balance analysis.
+
+The current work aims at enhancing the extensibility and maintainability of
+"Qucs the GUI" and its user contributions. It consists of a library
+implementing circuit related data structures and and a GUI for interactive
+schematic editing and simulation. User data, such as circuit components,
+specific schematic/netlist languagesm, visualisation tools as well as
+simulator drivers can be loaded at runtime.
 
 Requirements
 ============
