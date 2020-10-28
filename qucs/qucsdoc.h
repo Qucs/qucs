@@ -41,10 +41,12 @@ class QucsDoc {
 protected:
 	QucsDoc(const QucsDoc&);
 public:
-  explicit QucsDoc(QucsApp&, const QString&);
+  explicit QucsDoc(QucsApp&, const QString&, QWidget* owner);
   virtual ~QucsDoc();
 
 public:
+  bool saveAs();
+
   virtual void  setName(const QString&) {};
   virtual bool  load() { return true; };
   virtual int   save() { return 0; };
@@ -130,6 +132,7 @@ public: // actions: These somehow correspond to buttons.
 	virtual void actionSelectElement(QObject*) {untested(); }
 
 	void uncheckActive();
+	virtual void slotDCbias(); // why "slot"? maybe later.
 
 protected: // cleaning up debris
 	QAction* selectAction();
@@ -155,12 +158,16 @@ public:
 	MouseAction const* activeAction() const;
 
 	QucsData* qucsData(std::string const& key);
+	QWidget* ownerWidget(){return _owner;}
+	void setOwner(QWidget* o){_owner=o;}
 
 private:
 	friend class Simulator;
 
 	std::map<std::string, QucsData*> _data;
 	unsigned _simulators;
+
+	QWidget* _owner;
 }; // QucsDoc
 
 #endif

@@ -12,6 +12,7 @@ void QucsTabWidget::slotDCbias()
   current()->showBias = 0; //???
   incomplete();
   // slotSimulate();
+  current()->slotDCbias();
 }
 /*--------------------------------------------------------------------------*/
 QucsTabWidget::QucsTabWidget(QucsApp *parent) : QTabWidget(parent)

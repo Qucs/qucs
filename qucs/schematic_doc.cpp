@@ -17,11 +17,12 @@
 #include "globals.h"
 #include "qucs.h" // BUG. QucsSettings?
 #include <QUndoStack>
+#include "simmessage.h"
 
 // tmp hack.
-QucsDoc* newSchematicDoc(QucsApp& a, QString const& b)
+QucsDoc* newSchematicDoc(QucsApp& a, QString const& b, QWidget* o)
 {
-	return new SchematicDoc(a, b);
+	return new SchematicDoc(a, b, o);
 }
 
 namespace{
@@ -53,9 +54,9 @@ private:
 };
 }
 
-SchematicDoc::SchematicDoc(QucsApp& App_, const QString& Name_)
+SchematicDoc::SchematicDoc(QucsApp& App_ /*BUG*/, const QString& Name_, QWidget* owner)
    : QGraphicsView(),
-     QucsDoc(App_, Name_),
+     QucsDoc(App_, Name_, owner),
      _root(nullptr),
      _model(nullptr),
      _undoStack(nullptr)
@@ -830,6 +831,57 @@ Node const* SchematicDoc::nodeAt(pos_t const& p) const
 {
 	assert(_model);
 	return _model->nodeAt(p);
+}
+/*--------------------------------------------------------------------------*/
+void SchematicDoc::slotDCbias()
+{
+//  slotHideEdit(); // disable text edit of component property (why?)
+
+  if(!docName().isEmpty()){
+	  // ok.
+  }else if(saveAs()){
+		// perhaps because the output filename is determined by the schematic
+		// filename!?
+  }else{
+	  incomplete();
+	  // could still use temp files...
+	  return;
+  }
+
+#if 0
+  // Perhaps the document was modified from another program ?
+  QFileInfo Info(Doc->docName());
+  if(Doc->lastSaved.isValid()) { untested();
+    if(Doc->lastSaved < Info.lastModified()) { untested();
+      int No = QMessageBox::warning(this, tr("Warning"),
+               tr("The document was modified by another program !") + '\n' +
+               tr("Do you want to reload or keep this version ?"),
+               tr("Reload"), tr("Keep it"));
+      if(No == 0)
+        Doc->load();
+    }
+  }
+#endif
+
+  // slotResetWarnings();
+  auto w = prechecked_cast<QWidget*>(this);
+
+  SimMessage *sim = new SimMessage(w, this);
+  // disconnect is automatically performed, if one of the involved objects
+  // is destroyed
+  connect(sim, SIGNAL(SimulationEnded(int, SimMessage*)), this,
+         SLOT(slotAfterSimulation(int, SimMessage*)));
+//  connect(sim, SIGNAL(displayDataPage(QString&, QString&)),
+//		this, SLOT(slotChangePage(QString&, QString&)));
+
+  sim->show();
+  if(sim->startProcess()){ untested();
+    // to kill it before qucs ends
+    connect(this, SIGNAL(signalKillEmAll()), sim, SLOT(slotClose()));
+  }else{ untested();
+    return;
+  }
+
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
