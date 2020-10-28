@@ -41,8 +41,8 @@ private:
 public:
 	LibComp();
 	~LibComp() {};
-	Symbol* clone() const{return new LibComp(*this);}
-	Symbol* clone_instance() const{incomplete(); return new LibComp(*this);}
+	Symbol* clone() const override{return new LibComp(*this);}
+	Symbol* clone_instance() const override;
 
 	bool createSubNetlist(DocumentStream&, QStringList&, int type=1); // BUG
 
@@ -74,6 +74,9 @@ private:
 		assert(subckt()->portValue(i));
 		auto pos = subckt()->portValue(i)->position();
 		return pos;
+	}
+	PaintingList const* symbolPaintings() const override{ untested();
+		return &paintings();
 	}
 
 	QRectF boundingRect() const override{ untested();
@@ -110,14 +113,27 @@ static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "LegacyLibProto", &d0)
 /*--------------------------------------------------------------------------*/
 class Lib : public Symbol{
 public:
+	explicit Lib(Symbol const* p)
+	  : Symbol(), _tx(0), _ty(0), _parent(p) {
+		 setTypeName("Lib"); // really?
+		 new_subckt(); // hmm, maybe not.
+
+		 if(p){
+			 _ports.resize(p->numPorts());
+		 }else{
+			 unreachable();
+		 }
+	}
 	explicit Lib():Symbol(), _tx(0), _ty(0), _parent(nullptr) {
 		setTypeName("Lib"); // really?
 		new_subckt(); // hmm.
 	}
-	Lib( Lib const& l) : Symbol(l), _parent(l._parent),
-	   _component(l._component),
-	   _section(l._section),
-		_ports(l._ports.size())
+	Lib( Lib const& l)
+	  : Symbol(l), _tx(l._tx), _ty(l._ty),
+	    _section(l._section),
+	    _component(l._component),
+		 _parent(l._parent),
+		 _ports(l._ports.size())
 	{
 		new_subckt(); // hmm. copy?
 		              // todo: move all the model stuff into common (more work)
@@ -389,6 +405,7 @@ bool LibComp::createSubNetlist(DocumentStream& stream, QStringList &FileList,
   stream << "\n" << FileString << "\n"; //??
   return error > 0 ? false : true;
 #endif
+  return false;
 }
 
 // -------------------------------------------------------
@@ -430,6 +447,7 @@ QString LibComp::verilogCode(int)
   s += ");\n";
   return s;
 #endif
+  return "";
 }
 /*--------------------------------------------------------------------------*/
 QString LibComp::vhdlCode(int)
@@ -449,6 +467,12 @@ QString LibComp::vhdlCode(int)
   s += ");\n";
   return s;
 #endif
+  return "";
+}
+/*--------------------------------------------------------------------------*/
+Symbol* LibComp::clone_instance() const
+{
+	return new Lib(this);
 }
 /*--------------------------------------------------------------------------*/
 } //namespace
