@@ -547,7 +547,8 @@ public:
 		file.open(QIODevice::ReadOnly);
 		istream_t pstream(&file);
 
-		auto D = docfmt_dispatcher["leg_sch"];
+		auto cmd = command_dispatcher["leg_sch"];
+		auto D = prechecked_cast<DocumentFormat const*>(cmd);
 		assert(D);
 		D->load(pstream, *this);
 		//d->parse(pstream);

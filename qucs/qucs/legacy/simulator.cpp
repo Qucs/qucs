@@ -38,6 +38,9 @@ class LegacyNetlister : public DocumentFormat{
 	LegacyNetlister(LegacyNetlister const&) = delete;
 public:
 	explicit LegacyNetlister() : _qucslang(nullptr) {}
+private: // Command
+	void do_it(istream_t&, SchematicModel*) override{}
+
 private: // legacy implementation
   void createNetlist(DocumentStream& stream, SchematicSymbol const& m) const;
   void prepareSave(DocumentStream& stream, SchematicSymbol const& m) const;
@@ -51,7 +54,7 @@ private:
   mutable SubMap FileList; // BUG (maybe not)
   mutable DocumentLanguage* _qucslang;
 }LNL;
-static Dispatcher<DocumentFormat>::INSTALL p1(&docfmt_dispatcher, "qucsator|legacy_nl", &LNL);
+static Dispatcher<Command>::INSTALL p1(&command_dispatcher, "qucsator|legacy_nl", &LNL);
 
 // "simulator" backend emulating legacy behaviour
 // TODO: forward to other simulator following legacy heuristic.
@@ -293,7 +296,7 @@ void LegacyNetlister::createNetlist(DocumentStream& stream,
 		SchematicSymbol const& m) const
 {
 	bool isAnalog=true;
-	bool isVerilog=false;
+//	bool isVerilog=false;
 	FileList.clear();
 
 	int NumPorts=0; // huh??

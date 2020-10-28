@@ -938,7 +938,9 @@ int main(int argc, char *argv[])
     }
   }
 
-  DocumentFormat const* fmt = docfmt_dispatcher[netlang_name];
+  Command const* cmd = command_dispatcher[netlang_name];
+  assert(cmd);
+  auto fmt=prechecked_cast<DocumentFormat const*>(cmd);
 
   if(fmt){
     // just use it.
@@ -969,7 +971,8 @@ int main(int argc, char *argv[])
     }
     // create netlist from schematic
     if (dump_flag) {
-      auto NLN=docfmt_dispatcher[netlang_name];
+      auto cmd = command_dispatcher[netlang_name];
+      auto NLN = prechecked_cast<DocumentFormat const*>(cmd);
       if(!NLN){ untested();
 	qDebug() << "no lang" << QString::fromStdString(netlang_name);
 	incomplete();

@@ -388,7 +388,9 @@ void SchematicDoc::saveDocument() const
 //  sda a(DocModel, *this);
 
   // TODO: provide selection GUI
-  auto D=docfmt_dispatcher["leg_sch"];
+  auto d = command_dispatcher["leg_sch"];
+  auto D = prechecked_cast<DocumentFormat const*>(d);
+  assert(D);
   assert(_root);
   D->save(stream, *_root);
 }

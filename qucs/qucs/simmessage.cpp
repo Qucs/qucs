@@ -159,17 +159,9 @@ bool SimMessage::startProcess()
   Collect.clear();  // clear list for NodeSets, SPICE components etc.
   ProgText->appendPlainText(tr("creating netlist... "));
   NetlistFile.setFileName(QucsSettings.QucsHomeDir.filePath("netlist.txt"));
-  if(!NetlistFile.open(QIODevice::WriteOnly)) {
-    ErrText->appendPlainText(tr("ERROR: Cannot write netlist file!"));
-    FinishSimulation(-1);
-    incomplete();
-    return false;
-  }else{itested();
-  }
-
 
   // BUG: ask simulator driver
-  auto dl=docfmt_dispatcher["qucsator"];
+  auto dl = command_dispatcher["legacy_nl"];
   assert(dl);
   DocumentFormat const* n = prechecked_cast<DocumentFormat const*>(dl);
   assert(n);
@@ -479,30 +471,26 @@ void SimMessage::startSimulator()
   }else if(SchematicDoc const* d=dynamic_cast<SchematicDoc const*>(DocWidget)){itested();
     incomplete();
 
-  ostream_t Stream(&NetlistFile);
-    // output NodeSets, SPICE simulations etc.
-    for(QStringList::Iterator it = Collect.begin();
-	it != Collect.end(); ++it) {
-      // don't put library includes into netlist...
-      if ((*it).right(4) != ".lst" &&
-	  (*it).right(5) != ".vhdl" &&
-	  (*it).right(4) != ".vhd" &&
-	  (*it).right(2) != ".v") {
-	Stream << *it << '\n';
-      }
-    }
-    Stream << '\n';
-
 
     assert(sim); //for now.
     // BUG: ask simulator driver
-    auto dl=sim->netLister();
+    auto dl = sim->netLister();
     assert(dl);
-    DocumentFormat const* n=prechecked_cast<DocumentFormat const*>(dl);
+    DocumentFormat const* n = prechecked_cast<DocumentFormat const*>(dl);
     assert(n);
 
 //    SimTime = d->createNetlist(Stream, SimPorts, *nl);
-    n->save(Stream, *d->root());
+//
+//    try{
+      ostream_t Stream(&NetlistFile);
+      n->save(Stream, *d->root());
+//    }catch(...){
+//      ErrText->appendPlainText(tr("ERROR: Cannot write netlist file!"));
+//      FinishSimulation(-1);
+//      incomplete();
+//      return false;
+//    }
+
 
     NetLang const* nl = sim->netLang();
 
@@ -511,7 +499,7 @@ void SimMessage::startSimulator()
     }
 
     if(SimTime.length()>0&&SimTime.at(0) == '\xA7') {
-      NetlistFile.close();
+    //  NetlistFile.close();
       ErrText->insertPlainText(SimTime.mid(1));
       FinishSimulation(-1);
       return;

@@ -28,6 +28,7 @@ namespace{
 
 // generate a simulateable netlist in verilog
 // contracts wires into nets, similar to qucsator
+// // TODO: one netlister for both languages.
 class VerilogNetlister : public DocumentFormat{
 public:
 	explicit VerilogNetlister();
@@ -37,9 +38,11 @@ private: // legacy implementation
   void throughAllComps(DocumentStream& d, SchematicSymbol const& m) const;
   void clear() const;
   void createDeclarations(DocumentStream& d) const;
-private: // overrides
-  void save(DocumentStream& stream, SchematicSymbol const& m) const;
-  void load(istream_t&, SchematicSymbol&) const{ incomplete(); }
+private: // Command
+  void do_it(istream_t&, SchematicModel*) override{incomplete();}
+private: // DocumentFormat
+  void save(DocumentStream& stream, SchematicSymbol const& m) const override;
+  void load(istream_t&, SchematicSymbol&) const override{ incomplete(); }
 private: // implementation
   void nodeMap(SchematicSymbol const& m) const;
 private:
@@ -48,7 +51,7 @@ private:
   DocumentLanguage const* verilog;
   mutable SchematicModel const* modelhack;
 }VNL;
-static Dispatcher<DocumentFormat>::INSTALL p1(&docfmt_dispatcher, "verilog_nl", &VNL);
+static Dispatcher<Command>::INSTALL p1(&command_dispatcher, "verilog_nl", &VNL);
 
 VerilogNetlister::VerilogNetlister() : DocumentFormat()
 {
@@ -113,8 +116,8 @@ void VerilogNetlister::save(DocumentStream& Stream, SchematicSymbol const& m) co
 
 void VerilogNetlister::nodeMap(SchematicSymbol const& m) const
 {
-	incomplete(); // obsolete.
-	unsigned count;
+	return;
+	assert(false);
 	auto& sm = *m.subckt();
 //	sm.throughAllNodes(count); // hack: number connected components.
 	                           // should already be numbered...

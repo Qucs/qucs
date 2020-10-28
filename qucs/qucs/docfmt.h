@@ -7,14 +7,16 @@
 #define QUCS_DOCFMT_H
 
 #include "object.h"
+#include "command.h"
 
 class SchematicSymbol;
 class DocumentStream;
 class istream_t;
 
-class DocumentFormat : public Object{
+// various list commands?
+class DocumentFormat : public Command{
 protected:
-	DocumentFormat() : Object() {}
+	DocumentFormat() : Command() {}
 public:
 	virtual ~DocumentFormat() {}
 	virtual void load(istream_t&, SchematicSymbol&) const=0;
