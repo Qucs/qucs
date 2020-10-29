@@ -60,6 +60,7 @@ using namespace std;
 SimMessage::SimMessage(QWidget *w, QWidget *parent)
 		: QDialog(parent) 
 {
+  _what = "DC"; // for now.
   setWindowTitle(tr("Qucs Simulation Messages"));
   QucsDoc *Doc = prechecked_cast<QucsDoc*>(w);
   assert(Doc);
@@ -158,7 +159,8 @@ bool SimMessage::startProcess()
 
   Collect.clear();  // clear list for NodeSets, SPICE components etc.
   ProgText->appendPlainText(tr("creating netlist... "));
-  NetlistFile.setFileName(QucsSettings.QucsHomeDir.filePath("netlist.txt"));
+  trace1("netlist", QucsSettings.QucsHomeDir.filePath("netlist.txt"));
+  _netlistFile.setFileName(QucsSettings.QucsHomeDir.filePath("netlist.txt"));
 
   // BUG: ask simulator driver
   auto dl = command_dispatcher["legacy_nl"];
@@ -185,7 +187,7 @@ bool SimMessage::startProcess()
 
 #if 0 //???
   if(SimPorts < -5) {
-    NetlistFile.close();
+    _netlistFile.close();
     ErrText->appendPlainText(tr("ERROR: Cannot simulate a text file!"));
     FinishSimulation(-1);
     return false;
@@ -204,11 +206,11 @@ bool SimMessage::startProcess()
                        SLOT(slotFinishSpiceNetlist(int)));
 
 //  nextSPICE(); /// ???
-  startSimulator();
+  startSimulator("legacy");
   return true;
   // Since now, the Doc pointer may be obsolete, as the user could have
   // closed the schematic !!!
-}
+} // startProcess
 
 // BUG: must create netlist in netlister.
 void SimMessage::nextSPICE()
@@ -363,14 +365,13 @@ static QString pathName(QString longpath) {
 #endif
 
 // "run" simulator?
-void SimMessage::startSimulator()
+void SimMessage::startSimulator(std::string const& which)
 {
   // TODO: let user choose
-  Simulator const* proto=simulator_dispatcher["legacy"];
+  Simulator const* proto = simulator_dispatcher[which];
   Simulator* sim = proto->clone();
 
   { // not here
-
     auto qucsdoc = prechecked_cast<QucsDoc*>(DocWidget);
     assert(qucsdoc);
 
@@ -401,7 +402,7 @@ void SimMessage::startSimulator()
 
     // Take VHDL file in memory as it could contain unsaved changes.
     // Stream << Doc->toPlainText();
-    NetlistFile.close();
+    _netlistFile.close();
     ProgText->insertPlainText(tr("done.\n"));  // of "creating netlist...
 
     if (Doc->simulation) {
@@ -471,35 +472,54 @@ void SimMessage::startSimulator()
   }else if(SchematicDoc const* d=dynamic_cast<SchematicDoc const*>(DocWidget)){itested();
     incomplete();
 
-
     assert(sim); //for now.
-    // BUG: ask simulator driver
     auto dl = sim->netLister();
     assert(dl);
     DocumentFormat const* n = prechecked_cast<DocumentFormat const*>(dl);
     assert(n);
 
-//    SimTime = d->createNetlist(Stream, SimPorts, *nl);
-//
-//    try{
-      ostream_t Stream(&NetlistFile);
+    {
+      //
+      //    try{
+      //
+      trace1("nl", _netlistFile.fileName());
+      if(!_netlistFile.open(QIODevice::WriteOnly | QFile::Truncate)){
+        error(5, "cannot open netlist file");
+        throw Exception("cannot write");
+      }else{
+      }
+
+      ostream_t Stream(&_netlistFile);
+
+      // do_it?
       n->save(Stream, *d->root());
-//    }catch(...){
-//      ErrText->appendPlainText(tr("ERROR: Cannot write netlist file!"));
-//      FinishSimulation(-1);
-//      incomplete();
-//      return false;
-//    }
 
+      //    }catch(...){
+      //      ErrText->appendPlainText(tr("ERROR: Cannot write netlist file!"));
+      //      FinishSimulation(-1);
+      //      incomplete();
+      //      return false;
+      //    }
 
-    NetLang const* nl = sim->netLang();
+      NetLang const* nl = sim->netLang();
 
-    for(auto c : d->commands()){
-      nl->printItem(c, Stream);
+      if(_what=="all"){
+        for(auto c : d->commands()){
+          trace1("cmd", c->label());
+          nl->printItem(c, Stream);
+        }
+      }else if(_what=="DC"){
+        Element const* dc = element_dispatcher["DC"];
+        nl->printItem(dc, Stream);
+      }else{
+        throw Exception("nothing to do");
+      }
+
+      _netlistFile.close();
     }
 
     if(SimTime.length()>0&&SimTime.at(0) == '\xA7') {
-    //  NetlistFile.close();
+    //  _netlistFile.close();
       ErrText->insertPlainText(SimTime.mid(1));
       FinishSimulation(-1);
       return;
@@ -515,7 +535,7 @@ void SimMessage::startSimulator()
 	     << "endmodule // TestBench\n";
     }
 #endif
-    NetlistFile.close();
+    _netlistFile.close();
     ProgText->insertPlainText(tr("done.\n"));  // of "creating netlist...
 
     if(1 || SimPorts < 0) {
@@ -540,10 +560,10 @@ void SimMessage::startSimulator()
           */
           QStringList usedComponents;
 
-          if (!NetlistFile.open(QIODevice::ReadOnly)) {
+          if (!_netlistFile.open(QIODevice::ReadOnly)) {
              QMessageBox::critical(this, tr("Error"), tr("Cannot read netlist!"));
           }else{
-             QString net = QString(NetlistFile.readAll());
+             QString net = QString(_netlistFile.readAll());
 
              QMapIterator<QString, QString> i(Module::vaComponents);
              while (i.hasNext()) {
@@ -551,7 +571,7 @@ void SimMessage::startSimulator()
                  if (net.contains(i.key()))
                      usedComponents << i.key();
              }
-             NetlistFile.close();
+             _netlistFile.close();
           }
 
           if (! usedComponents.isEmpty()) {
@@ -562,15 +582,15 @@ void SimMessage::startSimulator()
 
             /// Anotate netlist with Verilog-A dynamic path and module names
             ///
-            if (!NetlistFile.open(QFile::Append | QFile::Text)){
+            if (!_netlistFile.open(QFile::Append | QFile::Text)){
                QMessageBox::critical(this, tr("Error"), tr("Cannot read netlist!"));
             }else{
-               QTextStream out(&NetlistFile);
+               QTextStream out(&_netlistFile);
                out << "\n";
                out << "# --path=" << QucsSettings.QucsWorkDir.absolutePath() << "\n";
                out << "# --module=" << usedComponents.join(" ") << "\n";
 
-               NetlistFile.close();
+               _netlistFile.close();
             }
           }
       } // vaComponents not empty
@@ -635,22 +655,9 @@ void SimMessage::startSimulator()
   SimProcess.start(Program, Arguments); // launch the program
 
   delete sim;
-}
+} // startSimulator
 
 // ------------------------------------------------------------------------
-Component * SimMessage::findOptimization(SchematicDoc *)
-{
-#if 0
-  for(auto pc : Doc->components()){
-    if(pc->isActive){
-      if(pc->obsolete_model_hack() == ".Opt"){
-	return pc;
-      }
-    }
-  }
-#endif
-  return NULL;
-}
 
 
 /*!
@@ -681,8 +688,7 @@ void SimMessage::slotDisplayMsg()
 
     if(ProgressText.size()>0&&ProgressText.at(0).toLatin1() <= '\t')
       return;
-  }
-  else {
+  }else{
     i = ProgressText.indexOf('\t'); // marker for progress indicator
     if(i >= 0) {
       wasLF = true;
@@ -820,8 +826,7 @@ void SimMessage::FinishSimulation(int Status)
       arg(d.toString("ddd dd. MMM yyyy")).
       arg(t.toString("hh:mm:ss:zzz"));
     ProgText->appendPlainText("\n" + txt + "\n" + tr("Ready."));
-  }
-  else {
+  }else{
     QString txt = tr("Errors occurred during simulation on %1 at %2").
       arg(d.toString("ddd dd. MMM yyyy")).
       arg(t.toString("hh:mm:ss:zzz"));

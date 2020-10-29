@@ -137,6 +137,8 @@ void LIB::loadLibFiles()
 				auto ssym = prechecked_cast<SchematicSymbol*>(sym);
 				std::string t = "Lib:" + parsedlib.name.toStdString() + ":" + c.name.toStdString();
 
+				ssym->setLabel(c.name.toStdString());
+
 				assert(ssym);
 				try{
 					L->parse(stream, *ssym);
