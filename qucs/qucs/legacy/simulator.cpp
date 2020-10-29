@@ -71,7 +71,6 @@ private: // Simulator
 	void run() override{incomplete();}
 	void init() override{incomplete();}
 
-
 private: // implementation
 	Simulator* chooseBackend();
 }QS;
@@ -110,6 +109,19 @@ Simulator* LegacySimulator::chooseBackend()
                   << "-o" << "asco_out"
                   << "-s" << "\"" + QDir::toNativeSeparators(QucsSettings.Qucsator) + "\"";
       } else
+Component * SimMessage::findOptimization(SchematicDoc *)
+{
+#if 0
+  for(auto pc : Doc->components()){
+    if(pc->isActive){
+      if(pc->obsolete_model_hack() == ".Opt"){
+	return pc;
+      }
+    }
+  }
+#endif
+  return NULL;
+}
 #endif
 }
 

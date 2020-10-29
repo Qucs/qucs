@@ -621,8 +621,8 @@ void attach_single(std::string const&path, std::string const& what)
   if (full_file_name != "") {
     // found it, with search
   }else{untested();
-    std::cerr << "something seriously wrong with installation\n";
     std::cerr << "cannot find plugin " + what + " in " +path + "\n";
+    std::cerr << "(something wrong with installation?)\n";
     exit(1);
   }
   attach(full_file_name.c_str());

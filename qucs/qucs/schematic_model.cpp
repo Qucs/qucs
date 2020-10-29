@@ -150,10 +150,11 @@ void SchematicModel::pushBack(Element* what)
 	}else if(auto d=diagram(what)){
 		diagrams().append(d);
 	}else if(auto c=command(what)){
-		//trace1("SchematicModel::pushBack", owner());
 		if(doc()){
+			trace1("SchematicModel::pushBack command", c->label());
 			doc()->commands().push_back(c);
 		}else{
+			trace1("SchematicModel::pushBack no command", c->label());
 			// possibly a subcircuit model? ignore commands.
 		}
 	}else if(auto s=dynamic_cast<Symbol*>(what)){
