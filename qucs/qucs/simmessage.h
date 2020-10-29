@@ -78,7 +78,7 @@ private:
 private:
   void FinishSimulation(int);
   void nextSPICE();
-  void startSimulator();
+  void startSimulator(std::string const& which);
   Component * findOptimization(SchematicDoc *);
 
 public:
@@ -100,11 +100,14 @@ public:
   int            SimPorts;
   bool           makeSubcircuit, insertSim;
   QStringList    Collect;
-  QFile          NetlistFile;
+  QFile          _netlistFile;
 
   QVBoxLayout  *all;
 protected:
   QString Program;
+
+private:
+ 	std::string _what;
 };
 
 #endif

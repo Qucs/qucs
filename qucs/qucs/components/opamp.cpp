@@ -1,24 +1,35 @@
 /***************************************************************************
-                          opamp.cpp  -  description
-                             -------------------
-    begin                : Sun Oct 31 2004
     copyright            : (C) 2004 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "opamp.h"
+
+#include "component.h"
+#include "globals.h"
+#include "module.h"
+namespace{
 
 
-OpAmp::OpAmp()
+class OpAmp : public Component  {
+public:
+  OpAmp();
+  ~OpAmp();
+  Component* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
+}d0;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "OpAmp", &d0);
+static Module::INSTALL pp("lumped", &d0);
+
+OpAmp::OpAmp() : Component()
 {
   Description = QObject::tr("operational amplifier");
 
@@ -68,4 +79,6 @@ Element* OpAmp::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new OpAmp();
   return 0;
+}
+
 }

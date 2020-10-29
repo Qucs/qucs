@@ -228,7 +228,11 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	}else{
 	}
 
-	assert(x1<=x2); // possibly the case in all legacy files
+	if(x1<=x2){
+		// possibly the case in all legacy files..
+	}else{ itested();
+		// but not really necessary
+	}
 	sym->setParameter("deltax", std::to_string(x2 - x1));
 
 	n  = s.section(' ',3,3);    // y2
@@ -592,6 +596,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, ostream_t& s) const
 
 static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
 { untested();
+	trace1("loadtaskElement", c->label());
 	bool ok;
 	int  ttx, tty, tmp;
 	QString s = _s;
@@ -1092,6 +1097,7 @@ std::string LegacySchematicLanguage::findType(istream_t& c) const
 	return typestring;
 }
 /*--------------------------------------------------------------------------*/
+// findProto??
 Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 {
 	qDebug() << "component?" << Line;
@@ -1126,20 +1132,23 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 		//c->Props.getLast()->Value = type.mid (6);
 	}
 
+	// BUG: findProto
 	Element const* s = symbol_dispatcher[typestring];
+	if(!s){
+		s = element_dispatcher[typestring];
+	}else{
+	}
+
 	trace2("get", typestring, s);
 
-	if(!s){
-		incomplete(); // throw? warn? error?
-		trace1("cannot find", typestring);
-	} else if(Component const* sc=dynamic_cast<Component const*>(s)){
+	if(Component const* sc=dynamic_cast<Component const*>(s)){
 		// legacy component
 		Element* k = sc->clone(); // memory leak?
 		e = prechecked_cast<Element*>(k);
 
 		// set_type?
 	}else if(TaskElement const* sc=dynamic_cast<TaskElement const*>(s)){ untested();
-		// legacy component
+		trace1("TaskElement", Line);
 		Element* k = sc->clone(); // memory leak?
 		e = prechecked_cast<Element*>(k);
 	}else if(typestring.size() == 0){ untested();
@@ -1153,8 +1162,9 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 		}else{ untested();
 			untested();
 		}
+	}else if(s){
+		e = s->clone_instance();
 	}else{
-		e = s->clone();
 	}
 
 	if(e) {
