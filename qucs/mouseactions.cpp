@@ -162,7 +162,8 @@ bool MouseActions::pasteElements(SchematicDoc *)
 }
 
 // -----------------------------------------------------------
-void MouseActions::editLabel(SchematicDoc *Doc, WireLabel *pl)
+// TODO: graphical input texts
+void MouseActions::editLabel(SchematicDoc *, WireLabel *)
 { untested();
   unreachable();
 #if 0
@@ -1120,7 +1121,8 @@ void MouseActions::MPressLabel(SchematicDoc*, QMouseEvent*)
 // -----------------------------------------------------------
 
 // -----------------------------------------------------------
-void MouseActions::MPressActivate(SchematicDoc *Doc, QMouseEvent* Event)
+#if 0
+void MouseActions::MPressActivate(SchematicDoc*, QMouseEvent*)
 { untested();
   QPointF pos=Doc->mapToScene(Event->pos());
   float fX=pos.x();
@@ -1138,116 +1140,6 @@ void MouseActions::MPressActivate(SchematicDoc *Doc, QMouseEvent* Event)
   }
   updateViewport();
   setDrawn(false);
-}
-
-// -----------------------------------------------------------
-void MouseActions::MPressMirrorX(SchematicDoc *Doc, QMouseEvent* Event)
-{ untested();
-#if 0
-  QPointF pos=Doc->mapToScene(Event->pos());
-  float fX=pos.x();
-  float fY=pos.y();
-
-  // no use in mirroring wires or diagrams
-  Component *c = Doc->selectedComponent(int(fX), int(fY));
-  if(c) { untested();
-    if(c->Ports.count() < 1) return;  // only mirror components with ports
-    c->mirrorX();
-    Doc->setCompPorts(c);
-  }
-  else { untested();
-    Painting *p = Doc->selectedPainting(fX, fY);
-    if(p == 0) return;
-    p->mirrorX();
-  }
-
-  updateViewport();
-  setDrawn(false);
-  Doc->setChanged(true, true);
-#endif
-}
-
-// -----------------------------------------------------------
-void MouseActions::MPressMirrorY(SchematicDoc *Doc, QMouseEvent* Event)
-{ untested();
-#if 0
-  QPointF pos=Doc->mapToScene(Event->pos());
-  float fX=pos.x();
-  float fY=pos.y();
-
-  // no use in mirroring wires or diagrams
-  auto I = Doc->itemAt(int(fX), int(fY));
-  if(auto c=component(I)) { untested();
-    if(c->Ports.count() < 1) return;  // only mirror components with ports
-    c->mirrorY();
-    Doc->setCompPorts(c);
-  }else if(auto p=painting(I)) { untested();
-    if(p == 0) return;
-    p->mirrorY();
-  }else{ untested();
-    // missed something.
-  }
-
-  updateViewport();
-  setDrawn(false);
-  Doc->setChanged(true, true);
-#endif
-}
-
-// -----------------------------------------------------------
-#if 0
-void MouseActions::MPressRotate(SchematicDoc *Doc, QMouseEvent* Event)
-{
-  // QPointF pos=Doc->mapToScene(Event->pos());
-
-  // why is this not part of the event?
-  ElementMouseAction e=selectElement(Event->pos(), false);
-  if(!e) return;
-  e->Type &= isSpecialMask;  // remove special functions
-
-
-  WireLabel *pl;
-  int x1, y1, x2, y2;
-//  e->isSelected = false;
-//  ideally, this is just an element call.
-  if(auto c=component(e)){ untested();
-    if(c->Ports.count() < 1){ untested();
-      //break;  // do not rotate components without ports
-    }else{ untested();
-      c->rotate();
-      Doc->setCompPorts(c);
-      // enlarge viewarea if component lies outside the view
-      c->entireBounds(x1,y1,x2,y2, Doc->textCorr());
-      Doc->enlargeView(x1, y1, x2, y2);
-    }
-  }else if(auto W=wire(e)){ untested();
-////      pl = W->Label;
-///      W->Label = 0;    // prevent label to be deleted
-//      Doc->wires().setAutoDelete(false);
-      Doc->deleteWire(W);
-////      W->Label = pl;
-      W->rotate();
-      Doc->setOnGrid(W->x1__(), W->y1__());
-      Doc->setOnGrid(W->x2__(), W->y2__());
-////      if(pl)  Doc->setOnGrid(pl->cx__(), pl->cy__());
-      Doc->insertWire(W);
- //     Doc->wires().setAutoDelete(true);
-      if (Doc->wires().containsRef (W)){
-        Doc->enlargeView(e->x1_(), e->y1_(), e->x2_(), e->y2_());
-      }else{ untested();
-      }
-  }else if(auto P=painting(e)){ untested();
-      P->rotate();
-      // enlarge viewarea if component lies outside the view
-      P->Bounding(x1,y1,x2,y2);
-      Doc->enlargeView(x1, y1, x2, y2);
-  }else{ untested();
-    qDebug()<<"dont know how to rotate this thing\n";
-    return;
-  }
-  updateViewport();
-  setDrawn(false);
-  Doc->setChanged(true, true);
 }
 #endif
 
@@ -1347,8 +1239,9 @@ void MouseActions::MPressElement(SchematicDoc *Doc, QMouseEvent *Event)
 
 // -----------------------------------------------------------
 // Is called for setting a marker on a diagram's graph
-void MouseActions::MPressMarker(SchematicDoc *Doc, QMouseEvent* Event)
+void MouseActions::MPressMarker(SchematicDoc *, QMouseEvent*)
 { untested();
+#if 0
   QPointF pos=Doc->mapToScene(Event->pos());
   float fX=pos.x();
   float fY=pos.y();
@@ -1366,6 +1259,7 @@ void MouseActions::MPressMarker(SchematicDoc *Doc, QMouseEvent* Event)
   }
   updateViewport();
   setDrawn(false);
+#endif
 }
 
 // -----------------------------------------------------------
@@ -1494,8 +1388,9 @@ void MouseActions::MReleaseSelect2(SchematicDoc *Doc, QMouseEvent *Event)
 #endif
 
 // -----------------------------------------------------------
-void MouseActions::MReleaseActivate(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MReleaseActivate(SchematicDoc *, QMouseEvent *)
 { untested();
+#if 0
   if(Event->button() != Qt::LeftButton) return;
 
   // activates all components within the rectangle
@@ -1508,6 +1403,7 @@ void MouseActions::MReleaseActivate(SchematicDoc *Doc, QMouseEvent *Event)
   Doc->highlightWireLabels ();
   Doc->viewport()->update();
   setDrawn(false);
+#endif
 }
 
 // -----------------------------------------------------------

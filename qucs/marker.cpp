@@ -95,8 +95,9 @@ Marker::~Marker()
  *
  * FIXME: should use ScrPoints instead. do not call calcCoordinate from here!
  */
-void Marker::initText(int n)
+void Marker::initText(int)
 {
+#if 0
   if(pGraph->isEmpty()) {
       makeInvalid();
       return;
@@ -173,6 +174,7 @@ void Marker::initText(int n)
   }
 
   // createText();
+#endif
 }
 
 /* RELATED TO THE PHASOR DIAGRAM CODE
@@ -321,8 +323,8 @@ void Marker::makeInvalid()
 void Marker::getTextSize()
 {
   // get size of text using the screen-compatible metric
-  FontMetrics metrics;
-  QSize r = metrics.size(0, Text);
+//  FontMetrics metrics;
+//  QSize r = metrics.size(0, Text);
 
   incomplete();
   // x2 = r.width()+5;
@@ -330,8 +332,9 @@ void Marker::getTextSize()
 }
 
 // ---------------------------------------------------------------------
-bool Marker::moveLeftRight(bool left)
+bool Marker::moveLeftRight(bool)
 {
+#if 0
   int n;
   double *px;
 
@@ -357,12 +360,14 @@ bool Marker::moveLeftRight(bool left)
 
   createText();
 
+#endif
   return true;
 }
 
 // ---------------------------------------------------------------------
-bool Marker::moveUpDown(bool up)
+bool Marker::moveUpDown(bool)
 {
+#if 0
   int n, i=0;
   double *px;
 
@@ -411,12 +416,16 @@ bool Marker::moveUpDown(bool up)
   }
   createText();
 
+#endif
   return true;
 }
 
 // ---------------------------------------------------------------------
 void Marker::paint(ViewPainter *p, int x0, int y0)
 {
+	(void) p;
+	(void) x0;
+	(void) y0;
 #if 0
   // keep track of painter state
   p->save();
@@ -475,7 +484,7 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
 }
 
 // ---------------------------------------------------------------------
-void Marker::paintScheme(QPainter *p) const
+void Marker::paintScheme(QPainter *) const
 {
 #if 0
   assert(diag());
@@ -513,19 +522,11 @@ void Marker::setCenter(int x, int y, bool relative)
 // -------------------------------------------------------
 void Marker::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
-  if(diag()) {
-    _x1 = diag()->cx() + x1;
-    _y1 = diag()->cy() + y1;
-	 incomplete();
-//    _x2 = diag()->cx() + x1+x2;
-//    _y2 = diag()->cy() + y1+y2;
-  }
-  else {
-    _x1 = x1;
-//    _y1 = y1+y2;
-//    _x2 = x1+x2;
-    _y2 = y1;
-  }
+	incomplete();
+	_x1 = x1;
+	_y1 = y1; // +y2;
+	_x2 = x1; // +x2;
+	_y2 = y1;
 }
 
 // ---------------------------------------------------------------------
@@ -616,7 +617,7 @@ bool Marker::load(const QString& _s)
 // ------------------------------------------------------------------------
 // Checks if the coordinates x/y point to the marker text. x/y are relative
 // to diagram cx/cy.
-bool Marker::getSelected(int x_, int y_)
+bool Marker::getSelected(int, int)
 {
 //  if(x_ >= x1) if(x_ <= x1+x2) if(y_ >= y1) if(y_ <= y1+y2)
 //    return true;

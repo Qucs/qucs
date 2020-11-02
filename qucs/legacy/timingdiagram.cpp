@@ -40,7 +40,7 @@ public:
   Element* clone() const { return new TabDiagram(*this); }
 //  static Element* info(QString&, char* &, bool getNewOne=false);
   virtual void paint(ViewPainter*){}
-  virtual void paintDiagram(ViewPainter *p){}
+  virtual void paintDiagram(ViewPainter *){}
   virtual int calcDiagram() { incomplete(); return 0; }
   int scroll(int) {incomplete(); return 0; }
   bool scrollTo(int, int, int) { incomplete(); return false;}
@@ -210,6 +210,7 @@ int TimingDiagram::calcDiagram()
 
   double *px;
   // any graph with data ?
+#if 0
   while(g->isEmpty()) {
     if (!ig.hasNext()) break; // no more graphs, exit loop
     g = ig.next(); // point to next graph
@@ -222,6 +223,7 @@ int TimingDiagram::calcDiagram()
     Texts.append(new Text(x, y2-2, Str));
     return 0;
   }
+#endif
   firstGraph = g;
 
 

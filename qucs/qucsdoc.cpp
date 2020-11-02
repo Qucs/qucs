@@ -1,6 +1,4 @@
 /***************************************************************************
-                                qucsdoc.cpp
-                               -------------
     copyright            : (C) 2003, 2004 by Michael Margraf
                                2019 Felix Salfelder / QUCS team
  ***************************************************************************/
@@ -19,15 +17,16 @@
 
 #include "qucsdoc.h"
 #include "mouseactions.h"
+#include "simmessage.h"
 #include "qucs.h"
 #include <QUndoStack>
 #include "io.h" // tmp?
+#include "simulator.h"
 
 
 QucsDoc::QucsDoc(QucsApp &App_, const QString& Name_, QWidget* o)
 	: App(&App_),
      _app(App_),
-	  _simulators(0),
 	  _owner(o)
 {
   GridOn = true;
@@ -61,7 +60,10 @@ QucsDoc::QucsDoc(QucsApp &App_, const QString& Name_, QWidget* o)
 // vtable here?
 QucsDoc::~QucsDoc()
 {
-	assert(_simulators == 0);
+	for(auto i : _simulators){
+		delete i.second;
+	}
+//	assert(_simulators == 0);
 }
 
 // really?!
@@ -209,6 +211,11 @@ void QucsDoc::slotDCbias()
 	incomplete();
 }
 /* -------------------------------------------------------------------------------- */
+void QucsDoc::slotSimulate()
+{
+  incomplete();
+} // QucsDoc::slotSimulate
+/* -------------------------------------------------------------------------------- */
 // move around more.
 #include <QFileDialog>
 #include <QMessageBox>
@@ -297,6 +304,34 @@ bool QucsDoc::saveAs()
 //	// signal?
 //	updateRecentFilesList(s);
 	return true;
+}
+/* -------------------------------------------------------------------------------- */
+#include "globals.h"
+#include "simulator.h"
+/* -------------------------------------------------------------------------------- */
+void Simulator::attachDoc(QucsDoc* d)
+{
+	_doc = d;
+}
+/* -------------------------------------------------------------------------------- */
+Simulator* QucsDoc::simulator(std::string const& which)
+{
+	incomplete();
+
+	Simulator* sim = _simulators[which];
+
+	if(sim){ untested();
+	}else{ untested();
+		Simulator const* proto = simulator_dispatcher[which];
+		sim = proto->clone();
+		sim->attachDoc(this);
+		_simulators[which] = sim;
+	}
+
+	// sim->attachOutput(_data[which]);
+	assert(sim);
+
+	return sim;
 }
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */

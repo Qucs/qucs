@@ -216,7 +216,8 @@ void ElementGraphics::attachElement(Element* e)
 	}
 
 	// who owns this?
-	auto t = new ElementText(this);
+	// auto t =
+	new ElementText(this);
 	auto s = dynamic_cast<Symbol const*>(_e);
 
 	if(!s){

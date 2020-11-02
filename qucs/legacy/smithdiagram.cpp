@@ -143,6 +143,7 @@ Element* SmithDiagram::info_y(QString& Name, char* &BitmapFile, bool getNewOne)
 
 QString SmithDiagram::extraMarkerText(Marker const* m) const
 {
+#if 0
   assert(m);
   Graph const* pGraph = m->graph();
   assert(pGraph);
@@ -216,6 +217,8 @@ QString SmithDiagram::extraMarkerText(Marker const* m) const
       + "||" + misc::num2str(Ds, Precision) + unitSymbol;
   }
   return ExtraParamsText;
+#endif
+  return "incomplete";
 }
 
 // vim:ts=8:sw=2:noet

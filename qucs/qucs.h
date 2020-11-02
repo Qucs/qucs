@@ -37,7 +37,7 @@
 class QucsDoc;
 class SchematicDoc;
 class TextDoc;
-class SimMessage;
+class SimMessage; // BUG
 class MouseActions;
 class SearchDialog;
 class OctaveWindow;
@@ -66,6 +66,9 @@ class QShortcut;
 class QListView;
 class QModelIndex;
 class QPushButton;
+
+class SimProcess; // really?
+class Simulator;
 
 
 /* pi */
@@ -202,10 +205,13 @@ private slots:
   void slotButtonProjDel();
   void slotChangeView(QucsDoc*);
   void slotSimulate();
-  void slotAfterSimulation(int, SimMessage*);
   void slotChangePage(QString&, QString&);
   void slotHideEdit();
   void slotFileChanged(bool);
+
+public slots: // why? not here.
+  void slotAfterSimulation(Simulator const*);
+
 signals:
   void signalKillEmAll();
 

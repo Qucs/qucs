@@ -69,7 +69,7 @@ public:
 		static valuetype _v; // bit of a hack. lets see...
 	};
 public:
-	SimOutputData() : attach_count(0){}
+	SimOutputData() : _attach_count(0){}
 	virtual ~SimOutputData(){}
 
 public: // obsolete interface. don't use.
@@ -85,15 +85,13 @@ public:
 	virtual const_iterator end() const = 0; //  {return const_iterator(CPointsX.getFirst()->end(), NULL);}
 	virtual SimOutputData const* refresh() {return nullptr;}
 
-	static void attach(SimOutputData*, SimOutputData**);
-	static void detach(SimOutputData**);
 
 public:
 	const double& min()const {return Min;}
 	const double& max()const {return Max;}
 
 private:
-	unsigned attach_count;
+	unsigned _attach_count;
 	std::string _label;
 
 protected:
@@ -124,7 +122,7 @@ private:
 	QString Var;
 	std::string _fileName;
 	QDateTime lastLoaded;  // when it was loaded into memory
-	unsigned attach_count;
+	unsigned _attach_count;
 
 private:
 	void clear();
@@ -154,11 +152,5 @@ private:
 };
 #endif
 
-inline void SimOutputData::attach(SimOutputData* what, SimOutputData** where)
-{
-	assert(!*where); // for now.
-	*where = what;
-	++(what->attach_count);
-}
 
 #endif

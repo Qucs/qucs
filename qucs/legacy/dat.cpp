@@ -1,5 +1,5 @@
 
-#include "data.h"
+#include "sim/data.h"
 #include <QFile> // hmm
 #include <QFileInfo> // hmm
 /*!

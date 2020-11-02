@@ -125,8 +125,8 @@ private:
 public:
 	void collectDigitalSignals(void);
 //	QString createNetlist(DocumentStream&, int, NetLang const&);
-	void createSubNetlistPlain(ostream_t&, QPlainTextEdit*, int,
-			bool creatingLib, NetLang const&);
+//	void createSubNetlistPlain(ostream_t&, QPlainTextEdit*, int,
+//			bool creatingLib, NetLang const&);
 	QFileInfo const& getFileInfo ()const;
 	void print(QPrinter*, QPainter*, bool, bool);
 	void setFileInfo(QString FileName) { FileInfo = QFileInfo(FileName); }

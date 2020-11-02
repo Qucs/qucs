@@ -384,8 +384,9 @@ int Rect3DDiagram::comparePointZ(const void *Point1, const void *Point2)
 
 // --------------------------------------------------------------
 // Removes the invisible parts of the graph.
-void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
+void Rect3DDiagram::removeHiddenLines(char *, tBound *)
 {
+#if 0
   double Dummy = 0.0;  // number for 1-dimensional data in 3D cartesian
   double *px, *py, *pz;
 
@@ -593,6 +594,7 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
     qDebug("xyPoints:  %d/%d - %d - %d", p->x, p->y, p->No, p->done);
   qDebug("\n");
 #endif
+#endif
 }
 
 // --------------------------------------------------------------
@@ -761,6 +763,7 @@ void Rect3DDiagram::createAxis(Axis *Axis, bool Right,
 {
   Q_UNUSED(Right);
 
+#if 0
   DataX const *pD;
   double phi, cos_phi, sin_phi;
   int x, y, z, w, valid, Index = 0;
@@ -820,6 +823,7 @@ void Rect3DDiagram::createAxis(Axis *Axis, bool Right,
                           y+int(double((z-w)>>1)*sin_phi),
                           Axis->Label, Qt::black, 12.0, cos_phi, sin_phi));
   }
+#endif
 }
 
 // --------------------------------------------------------------
@@ -977,6 +981,7 @@ Frame:   // jump here if error occurred (e.g. impossible log boundings)
 // g->Points must already be empty!!!
 void Rect3DDiagram::calcData(Graph *g)
 {
+#if 0
   if(!pMem)  return;
   if(!g->cPointsY) return;
 
@@ -1046,6 +1051,7 @@ void Rect3DDiagram::calcData(Graph *g)
   }
 
   return;
+#endif
 }
 
 // ------------------------------------------------------------

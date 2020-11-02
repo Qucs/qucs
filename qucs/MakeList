@@ -57,7 +57,7 @@ CPP_SRC = \
 	schematic_symbol.cpp \
 	sckt_proto.cpp \
 	sckt_base.cpp \
-	sim.cpp \
+	simulator.cpp \
 	symbol.cpp \
 	syntax.cpp \
 	task_element.cpp \

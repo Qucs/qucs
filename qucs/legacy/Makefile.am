@@ -21,9 +21,10 @@
 # Boston, MA 02110-1301, USA.
 #
 
+include ../../common.mk
 include MakeList
 
-pkglib_LTLIBRARIES = legacy.la legacylib.la
+pkglib_LTLIBRARIES = legacy.la legacylib.la qucsator.la
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include -I$(top_srcdir)/qucs
 AM_CXXFLAGS = ${CXXFLAGS} -fPIC
 
@@ -39,6 +40,14 @@ legacylib_la_CPPFLAGS = $(AM_CPPFLAGS)
 legacylib_la_CPPFLAGS += $(QT_INCLUDES)
 legacylib_la_SOURCES = \
 	libfiles.cpp
+
+qucsator_la_SOURCES = qucsator.cpp dat.cpp qucsator.moc.cpp
+
+qucsator_la_LDFLAGS = -module -avoid-version
+# qucsator_la_CPPFLAGS = $(AM_CPPFLAGS)
+# need Qt for TextStream. (BUG?)
+qucsator_la_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES)
+# qucsator_la_LIBADD = $(QT_LIBS)
 
 noinst_HEADERS = \
 	markerdialog.h

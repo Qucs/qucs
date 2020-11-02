@@ -222,6 +222,7 @@ void Diagram::createAxisLabels()
   y = -y1;
   if(xAxis.Label.isEmpty()) {itested();
     // write all x labels ----------------------------------------
+#if 0
     foreach(Graph *pg, Graphs) {itested();
 	  DataX const *pD = pg->axis(0);
 	  if(!pD) continue;
@@ -239,6 +240,7 @@ void Diagram::createAxisLabels()
 	  }else{
 	  }
     }
+#endif
   } else {itested();
     y -= LineSpacing;
     encode_String(xAxis.Label, Str);
@@ -533,8 +535,9 @@ void Diagram::clip(Graph::iterator &p) const
 // ------------------------------------------------------------
 // g->Points must already be empty!!!
 // is this a Graph Member?
-void Diagram::calcData(Graph *g)
+void Diagram::calcData(Graph *)
 {itested();
+#if 0
   double *px;
   double *pz = g->cPointsY;
   if(!pz)  return;
@@ -620,6 +623,7 @@ for(int zz=0; zz<60; zz+=2)
   }
 
   // unreachable
+#endif
 }
 
 
@@ -680,8 +684,9 @@ bool Diagram::resizeTouched(float fX, float fY, float len)
 }
 
 // --------------------------------------------------------------------------
-void Diagram::getAxisLimits(Graph *pg)
+void Diagram::getAxisLimits(Graph *)
 {itested();
+#if 0
   // FIXME: Graph should know the limits. but it doesn't yet.
   //        we should only copy here. better: just wrap, dont use {x,y,z}Axis
   int z=0;
@@ -745,6 +750,7 @@ void Diagram::getAxisLimits(Graph *pg)
       }
     }
   }
+#endif
 }
 
 // --------------------------------------------------------------------------
@@ -854,8 +860,10 @@ void Diagram::updateGraphData()
  *
  * FIXME: must invalidate markers.
  */
-int Graph::loadDatFile(const QString& fileName)
+// obsolete.
+int Graph::loadDatFile(const QString&)
 {itested();
+#if 0
   Graph* g = this;
   QFile file;
   QString Variable;
@@ -1090,11 +1098,11 @@ if(Variable.right(3) != ".X ") { // not "digital"
 
   lastLoaded = QDateTime::currentDateTime();
   return 2;
+#endif
+  return 0;
 }
 
-/*!
-   Reads the data of an independent variable. Returns the number of points.
-*/
+#if 0 // obsolete
 int Graph::loadIndepVarData(const QString& Variable,
 			      char *FileString, DataX* pD)
 {itested();
@@ -1181,12 +1189,15 @@ int Graph::loadIndepVarData(const QString& Variable,
 
   return n;   // return number of independent data
 }
+#endif
 
 /*!
    Checks if the two graphs have the same independent variables.
 */
-bool Diagram::sameDependencies(Graph const*g1, Graph const*g2) const
+bool Diagram::sameDependencies(Graph const*, Graph const*) const
 { untested();
+  incomplete();
+#if 0
   // FIXME
   // return g1->same(*g2);
   if(g1 == g2)  return true;
@@ -1197,6 +1208,8 @@ bool Diagram::sameDependencies(Graph const*g1, Graph const*g2) const
   }
 
   return true;
+#endif
+  return false;
 }
 
 // ------------------------------------------------------------

@@ -23,8 +23,9 @@ SchematicSymbol::SchematicSymbol()
 }
 /*--------------------------------------------------------------------------*/
 SchematicSymbol::SchematicSymbol(SchematicSymbol const& p)
-	: SubcktBase()
+	: SubcktBase() // p??
 {
+	incomplete();
 	_paint = new PaintingList(); // copy??
 }
 /*--------------------------------------------------------------------------*/
