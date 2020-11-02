@@ -630,7 +630,7 @@ void TextDoc::actionEditActivate(QAction*)
 	// App->editActivate->blockSignals (false);
 }
 
-void TextDoc::actionEditDelete(QAction*s)
+void TextDoc::actionEditDelete(QAction*)
 {
 	viewport()->setFocus();
 	textCursor().deleteChar();
@@ -638,7 +638,7 @@ void TextDoc::actionEditDelete(QAction*s)
 //	toggleAction(s);
 }
 
-void TextDoc::actionEditPaste(QAction*s)
+void TextDoc::actionEditPaste(QAction*)
 {
 	paste();
 //	toggleAction(s);

@@ -118,7 +118,7 @@ WireDialog::~WireDialog()
 // check if Enter is pressed while the ComboEdit has focus
 // in case, behave as for the LineEdits
 // (QComboBox by default does not handle the Enter/Return key)
-bool WireDialog::eventFilter(QObject *obj, QEvent *event)
+bool WireDialog::eventFilter(QObject *, QEvent *)
 {
 #if 0
   if (obj == ComboEdit) {
@@ -180,7 +180,6 @@ void WireDialog::slotApplyInput()
 ///  }
 ///
   QString tmp;
-  Component *pc = nullptr;
   if(CompNameEdit->text() != Comp->label()) {
     trace2("Apply", Comp->label(), CompNameEdit->text());
 

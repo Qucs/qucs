@@ -90,7 +90,7 @@ ComponentListWidgetItem::ComponentListWidgetItem(Element const* e)
 		q->setPen(QColor(255,34,255,255));
 		q->drawRect(bb);
 	}else if(auto s = sym->symbolPaintings()){
-		for(auto i : *sym->symbolPaintings()){
+		for(auto i : *s){
 			Element* e = i;
 			e->paint(&v);
 		}

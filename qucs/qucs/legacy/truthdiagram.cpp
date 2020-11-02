@@ -130,10 +130,11 @@ int TruthDiagram::calcDiagram()
   int startWriting, z;
 
   // any graph with data ?
-  while(g->isEmpty()) {
-    if (!ig.hasNext()) break; // no more graphs, exit loop
-    g = ig.next(); // point to next graph
-  }
+  incomplete();
+//  while(g->isEmpty()) {
+//    if (!ig.hasNext()) break; // no more graphs, exit loop
+//    g = ig.next(); // point to next graph
+//  }
 
   if(!g->isEmpty()) { // did we find a graph with data ?
     // ................................................

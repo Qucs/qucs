@@ -504,7 +504,7 @@ void QucsSettingsDialog::slotApply()
       // if user aborts closing, just return
       if(!App->closeAllFiles()) return;
 
-      QucsSettings.QucsHomeDir = homeEdit->text();
+      QucsSettings.QucsHomeDir.setPath(homeEdit->text());
       homeDirChanged = true;
       // later below the file tree will be refreshed
     }
@@ -617,27 +617,27 @@ void QucsSettingsDialog::slotApply()
     }
 
     /*! Update QucsSettings, tool paths */
-    QucsSettings.AdmsXmlBinDir = admsXmlEdit->text();
-    QucsSettings.AscoBinDir = ascoEdit->text();
+    QucsSettings.AdmsXmlBinDir.setPath(admsXmlEdit->text());
+    QucsSettings.AscoBinDir.setPath(ascoEdit->text());
     QucsSettings.OctaveExecutable = octaveEdit->text();
 
-    if (QucsSettings.IgnoreFutureVersion != checkLoadFromFutureVersions->isChecked())
-    {
+    if (QucsSettings.IgnoreFutureVersion != checkLoadFromFutureVersions->isChecked()) {
       QucsSettings.IgnoreFutureVersion = checkLoadFromFutureVersions->isChecked();
       changed = true;
-    }
+    }else{
+	 }
 
-    if (QucsSettings.GraphAntiAliasing != checkAntiAliasing->isChecked())
-    {
+    if (QucsSettings.GraphAntiAliasing != checkAntiAliasing->isChecked()) {
       QucsSettings.GraphAntiAliasing = checkAntiAliasing->isChecked();
       changed = true;
-    }
+    }else{
+	 }
 
-    if (QucsSettings.TextAntiAliasing != checkTextAntiAliasing->isChecked())
-    {
+    if (QucsSettings.TextAntiAliasing != checkTextAntiAliasing->isChecked()) {
       QucsSettings.TextAntiAliasing = checkTextAntiAliasing->isChecked();
       changed = true;
-    }
+    }else{
+	 }
 
     if (QucsSettings.ShowDescriptionProjectTree != checkShowSchematicDescription->isChecked())
     {

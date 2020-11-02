@@ -833,6 +833,71 @@ Node const* SchematicDoc::nodeAt(pos_t const& p) const
 	return _model->nodeAt(p);
 }
 /*--------------------------------------------------------------------------*/
+#include <QMessageBox> // really??
+void SchematicDoc::slotSimulate()
+{
+  auto w = prechecked_cast<QWidget*>(this);
+  assert(w);
+
+
+#if 0 //not sure
+  if(isTextDocument (w)) { untested();
+    Doc = (QucsDoc*)((TextDoc*)w);
+    if(Doc->SimTime.isEmpty() && ((TextDoc*)Doc)->simulation) { untested();
+      DigiSettingsDialog *d = new DigiSettingsDialog((TextDoc*)Doc);
+      if(d->exec() == QDialog::Rejected)
+	return;
+    }
+  } else {
+    Doc = (QucsDoc*)((SchematicDoc*)w);
+  }
+#endif
+
+  auto Doc = this;
+  if(Doc->docName().isEmpty()) // if document 'untitled' ...
+    if(!saveAs()) return;    // ... save schematic before
+
+  // Perhaps the document was modified from another program ?
+  QFileInfo Info(Doc->docName());
+  if(Doc->lastSaved.isValid()) { untested();
+    if(Doc->lastSaved < Info.lastModified()) { untested();
+      int No = QMessageBox::warning(w, QObject::tr("Warning"),
+               QObject::tr("The document was modified by another program !") + '\n' +
+               QObject::tr("Do you want to reload or keep this version ?"),
+               QObject::tr("Reload"), QObject::tr("Keep it"));
+      if(No == 0){
+        Doc->load();
+		}else{
+		}
+    }
+  }
+
+  // slotResetWarnings();
+
+
+  Simulator *sim = Doc->simulator("qucsator");
+  assert(sim);
+  SimMessage *ctrl = new SimMessage(sim, Doc);
+  // disconnect is automatically performed, if one of the involved objects
+  // is destroyed !
+  
+
+//  connect(ctrl, &SimMessage::SimulationEnded,
+//          this, &SchematicDoc::slotRefreshData);
+//  connect(sim, SIGNAL(displayDataPage(QString&, QString&)),
+//		this, SLOT(slotChangePage(QString&, QString&)));
+
+//  ctrl->show();
+  ctrl->open();
+  if(!ctrl->startProcess()){ untested();
+    return;
+  }else{ untested();
+  }
+
+  // to kill it before qucs ends
+  connect(this, SIGNAL(signalKillEmAll()), ctrl, SLOT(slotClose()));
+} // SchematicDoc::slotSimulate
+/*--------------------------------------------------------------------------*/
 void SchematicDoc::slotDCbias()
 {
 //  slotHideEdit(); // disable text edit of component property (why?)
@@ -864,24 +929,44 @@ void SchematicDoc::slotDCbias()
 #endif
 
   // slotResetWarnings();
-  auto w = prechecked_cast<QWidget*>(this);
 
-  SimMessage *sim = new SimMessage(w, this);
+ //  SimMessage *sim = new SimMessage(w, simulator, what);
+ //
+  std::string which = "qucsator";
+
+  Simulator *sim = simulator(which);
+  SimMessage *ctrl = new SimMessage(sim, this); // memory leak??
+
+  QWidget* w = this;
+  // ctrl->setParent(w); embeds into scene...
+//  sim->setMode("dcop");
+  assert(sim);
   // disconnect is automatically performed, if one of the involved objects
   // is destroyed
-  connect(sim, SIGNAL(SimulationEnded(int, SimMessage*)), this,
-         SLOT(slotAfterSimulation(int, SimMessage*)));
+  //
+  connect(ctrl, &SimMessage::signalData, // int, SimMessage*),
+         this, &SchematicDoc::slotRefreshData); // (int, SimMessage*));
 //  connect(sim, SIGNAL(displayDataPage(QString&, QString&)),
 //		this, SLOT(slotChangePage(QString&, QString&)));
+//
 
-  sim->show();
-  if(sim->startProcess()){ untested();
+  ctrl->setAttribute(Qt::WA_DeleteOnClose);
+  ctrl->open();
+//  ctrl->show();
+//  sim->show(); //hmm why?
+
+  try{
+	 ctrl->startProcess(); // should fork. and come back with statusChanges
     // to kill it before qucs ends
-    connect(this, SIGNAL(signalKillEmAll()), sim, SLOT(slotClose()));
-  }else{ untested();
+    connect(this, SIGNAL(signalKillEmAll()), this, SLOT(killSimulator()));
+  }catch(...){ untested();
+	  incomplete();
     return;
   }
-
-}
+} // slotDCbias
 /*--------------------------------------------------------------------------*/
+void SchematicDoc::slotRefreshData(std::string const& what)
+{
+	incomplete();
+}
 /*--------------------------------------------------------------------------*/

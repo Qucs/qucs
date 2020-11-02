@@ -51,8 +51,10 @@
 
 #ifdef __MINGW32__
 #define executableSuffix ".exe"
+#define BATCH_FILE_SUFFIX ".bat"
 #else
 #define executableSuffix ""
+#define BATCH_FILE_SUFFIX ""
 #endif
 
 #if !defined(MS_DLL)

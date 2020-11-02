@@ -694,7 +694,7 @@ bool operator==(Symbol const*p, std::string const&s)
 }
 /*--------------------------------------------------------------------------*/
 SchematicModel::const_iterator SchematicModel::find_again(const std::string& short_name,
-						SchematicModel::const_iterator Begin)const
+						SchematicModel::const_iterator /*Begin*/)const
 {
 	// incomplete, does not find again.
   return std::find(components().begin(), components().end(), short_name);

@@ -11,7 +11,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "sim.h"
 #include "node.h"
 #include <QString>
 #include "globals.h"
@@ -20,6 +19,7 @@
 #include "schematic_lang.h"
 #include "schematic_model.h"
 #include "net.h"
+#include "simulator.h" // BUG. just NetLang
 
 // #include "schematic.h" // BUG, transition
 

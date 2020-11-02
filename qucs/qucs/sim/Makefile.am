@@ -22,8 +22,7 @@
 # Boston, MA 02110-1301, USA.
 #
 
-pkglib_LTLIBRARIES = verilog.la qucsator.la
-noinst_HEADERS = sim.h
+pkglib_LTLIBRARIES = verilog.la
 AM_DEFAULT_SOURCE_EXT = .cpp
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include -I$(top_srcdir)/qucs
 
@@ -33,8 +32,3 @@ verilog_la_LDFLAGS = -module -avoid-version
 # need Qt for TextStream (BUG?)
 verilog_la_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES)
 
-qucsator_la_SOURCES = qucsator.cpp dat.cpp
-qucsator_la_LDFLAGS = -module -avoid-version
-# qucsator_la_CPPFLAGS = $(AM_CPPFLAGS)
-# need Qt for TextStream. (BUG?)
-qucsator_la_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES)

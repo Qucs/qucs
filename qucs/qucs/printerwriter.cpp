@@ -91,6 +91,7 @@ void PrinterWriter::noGuiPrint(
 
 void PrinterWriter::print(QucsDoc *doc)
 {
+	(void)doc;
   QPrintDialog *dialog = new QPrintDialog(Printer, 0);
   dialog->setOption(QAbstractPrintDialog::PrintSelection, true);
   dialog->setOption(QAbstractPrintDialog::PrintPageRange, false);

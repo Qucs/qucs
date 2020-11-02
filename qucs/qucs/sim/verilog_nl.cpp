@@ -320,8 +320,8 @@ void VerilogNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol c
 		}
 
 		QStringList Collect; // BUG
-		int countInit = 0;  // ??
-		int NumPorts=0; // ??!
+		//int countInit = 0;  // ??
+		// int NumPorts=0; // ??!
 		qDebug() << "call tAC" << QString::fromStdString(it->typeName());
 
 		auto sym = it; // dynamic_cast<Symbol const*>(pc);

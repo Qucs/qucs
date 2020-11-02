@@ -41,7 +41,7 @@
 #include "printerwriter.h"
 #include "imagewriter.h"
 #include "schematic_lang.h"
-#include "sim/sim.h"
+#include "simulator.h"
 
 //#include "schematic.h"
 #include "module.h"
@@ -948,7 +948,9 @@ int main(int argc, char *argv[])
     incomplete();
     // ask a simulator.
 //    fmt = sd->netLang();
+  }else{
   }
+
   if(!fmt){ untested();
     // TODO: io_error...
     std::cerr << "Error: Cannot find language for "

@@ -13,7 +13,7 @@
 
 // stuff related to "simulation" collected from from lots of other files.
 
-#include "../sim/sim.h"
+#include "simulator.h"
 #include "node.h"
 #include <QString>
 #include "globals.h"
@@ -68,11 +68,14 @@ private: // Simulator
 	NetLang const* netLang() const override;
 	DocumentFormat const* netLister() const override {return &LNL;}
 
-	void run() override{incomplete();}
+	void run(SimCtrl*) override{ incomplete(); }
 	void init() override{incomplete();}
+	std::string errorString() const override{ incomplete(); return "incomplete";}
+	void kill() override{ incomplete(); }
 
 private: // implementation
 	Simulator* chooseBackend();
+	Simulator* _wrapped_simulator;
 }QS;
 static Dispatcher<Simulator>::INSTALL p(&simulator_dispatcher, "legacy", &QS);
 /* -------------------------------------------------------------------------------- */
@@ -310,8 +313,6 @@ void LegacyNetlister::createNetlist(DocumentStream& stream,
 	bool isAnalog=true;
 //	bool isVerilog=false;
 	FileList.clear();
-
-	int NumPorts=0; // huh??
 
 	/// include directives. qucsator does not seem to do that.
 	// for(auto si : directives){ untested();
