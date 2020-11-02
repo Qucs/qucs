@@ -31,7 +31,7 @@ else
 DOC_SUBDIR =
 endif
 
-SUBDIRS = qucs qucs-core $(DOC_SUBDIR)
+SUBDIRS = qucs qucsator $(DOC_SUBDIR)
 
 EXTRA_DIST = bootstrap VERSION README.md NEWS.md CONTRIBUTING.md
 
@@ -49,7 +49,7 @@ all-local:
   # Need to be on `script` section to raise error as failure
   # Use qucsator in-tree to generate gcov coverage for GCC (LINUX)
   #
-MORE_PATH=$(abs_top_builddir)/qucs/qucs:$(abs_top_builddir)/qucs-core/src:$(abs_top_builddir)/qucs-core/src/converter
+MORE_PATH=$(abs_top_builddir)/qucs/qucs:$(abs_top_builddir)/qucsator/src:$(abs_top_builddir)/qucsator/src/converter
 
 if QUCS_TEST
 check-local: qucsatorcheck eqncheck qucscheck
@@ -74,13 +74,13 @@ qucscheck: $(PWD)/qucs-test
 # Run test on qucsator
 qucsatorcheck: $(PWD)/qucs-test
 	$(QUCSTEST_ENV) \
-	cd qucs-test && $(PYTHON) run.py --prefix $(abs_top_builddir)/qucs-core/src/ \
+	cd qucs-test && $(PYTHON) run.py --prefix $(abs_top_builddir)/qucsator/src/ \
 		--qucsator --exclude skip$(macossuffix).txt
 
 # Run tests on Qucsator equation system
 eqncheck: $(PWD)/qucs-test
 	$(QUCSTEST_ENV) \
-	cd qucs-test && $(PYTHON) run_equations.py --prefix $(abs_top_builddir)/qucs-core/src/
+	cd qucs-test && $(PYTHON) run_equations.py --prefix $(abs_top_builddir)/qucsator/src/
 
 # BUG should not be necessary, but is.
 $(PWD)/qucs-test:
@@ -118,7 +118,7 @@ distclean-local:
 #-      git checkout gh-pages ;
 #-      git rm -r * ;
 #-      mv ../qucs/contrib/doxygen/html/ qucs/ ;
-#-      mv ../qucs-doc/doxygen/html/ qucs-core/ ;
+#-      mv ../qucs-doc/doxygen/html/ qucsator/ ;
 #-      git add --all . ;
 #-      git commit -m "Auto-updating Doxygen developer documentation" ;
 #-      git push https://${GH_TOKEN}@github.com/Qucs/qucs-doxygen gh-pages ;
