@@ -43,7 +43,7 @@
 #include "components/libcomp.h"
 #include "module.h"
 #include "misc.h"
-#include "sim/sim.h"
+// #include "simulator.h"
 #include "io_trace.h"
 #include "task_element.h"
 #include "globals.h"
@@ -539,6 +539,7 @@ void SchematicDoc::simpleInsertComponent(Component *c)
 }
 #endif
 
+#if 0
 // todo: proper string processing
 static std::string find_type_in_string(QString& Line)
 {
@@ -556,6 +557,7 @@ static std::string find_type_in_string(QString& Line)
 
   return cstr.toLatin1().data();
 }
+#endif
 
 // -------------------------------------------------------------
 
@@ -581,7 +583,7 @@ bool SchematicDoc::loadDocument()
     _model->setFileInfo(docName());
     loadDocument(file);
 
-    QGraphicsScene& s=*scene();
+//    QGraphicsScene& s = *scene();
     return true;
   }
 }
@@ -711,16 +713,6 @@ bool SchematicDoc::rebuildSymbol(QString *s)
 // *****             Functions to create netlist             *****
 // *****                                                     *****
 // ***************************************************************
-
-void createNodeSet(QStringList& Collect, int& countInit,
-			      Conductor *pw, Node *p1)
-{
-  incomplete(); // obsolete.
-//  if(pw->Label)
-//    if(!pw->Label->initValue.isEmpty())
-//      Collect.append("NodeSet:NS" + QString::number(countInit++) + " " +
-//                     p1->name() + " U=\"" + pw->Label->initValue + "\"");
-}
 
 // ----------------------------------------------------------
 // Check whether this file is a qucs file and whether it is an subcircuit.
@@ -871,11 +863,11 @@ static const std::string VHDL_SIGNAL_TYPE("std_logic");
 static const std::string VHDL_LIBRARIES("\nlibrary ieee;\nuse ieee.std_logic_1164.all;\n");
 
 // ---------------------------------------------------
-void SchematicModel::createSubNetlistPlain(ostream_t& str, QPlainTextEdit *ErrText,
-int NumPorts, bool creatingLib, NetLang const& )
-{
-  incomplete(); // obsolete.
-}
+// void SchematicModel::createSubNetlistPlain(ostream_t& str, QPlainTextEdit *ErrText,
+// int NumPorts, bool creatingLib, NetLang const& )
+// {
+//   incomplete(); // obsolete.
+// }
 // ---------------------------------------------------
 // Write the netlist as subcircuit to the text stream 'stream'.
 // BUG: not here.
@@ -886,6 +878,7 @@ bool SchematicModel::createSubNetlist(ostream_t& stream, int& countInit,
   (void) countInit;
   (void) Collect;
   (void) creatingLib;
+  (void) stream;
   DigMap Signals; //??
 //  int Collect_count = Collect.count();   // position for this subcircuit
 
@@ -907,7 +900,8 @@ bool SchematicModel::createSubNetlist(ostream_t& stream, int& countInit,
   // Emit subcircuit components
   incomplete();
   // BUG legacy
-  createSubNetlistPlain(stream, ErrText, NumPorts, false, nl);
+  assert(false);
+//  createSubNetlistPlain(stream, ErrText, NumPorts, false, nl);
 
   // Signals.clear();  // was filled in "giveNodeNames()"
   return true;

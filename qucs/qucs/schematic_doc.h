@@ -22,7 +22,7 @@
 #include "diagram.h"
 //#include "painting.h"
 #include "components/component.h"
-#include "sim/sim.h"
+#include "simulator.h"
 #include "sim/tasks.h"
 #include "schematic_scene.h"
 #include "schematic_model.h"
@@ -48,6 +48,7 @@ class QDragEnterEvent;
 class QPainter;
 class QUndoCommand;
 class MouseAction;
+class SimProcess;
 
 class SchematicDoc;
 class MouseActions;
@@ -323,6 +324,8 @@ public: // qt4 debris
 
 private:
 	void slotDCbias() override; // not a slot yet..
+	void slotSimulate() override; // not a slot yet?
+	void slotRefreshData(std::string const& what);
 
 public:
   // possible rule: return pointer:   transfer ownership
@@ -443,7 +446,7 @@ private: // old legacy stuff.
   void       insertComponent(Component*);
 public:
   void       activateCompsWithinRect(int, int, int, int);
-  bool       activateSpecifiedComponent(int, int);
+//  bool       activateSpecifiedComponent(int, int);
   bool       activateSelectedComponents();
   void       setCompPorts(Component*);
   Component* searchSelSubcircuit();
@@ -452,16 +455,16 @@ public:
   int      placeNodeLabel(WireLabel*);
   Element* getWireLabel(Node*);
   void     insertNodeLabel(WireLabel*);
-  void     copyLabels(int&, int&, int&, int&, QList<Element *> *);
+//  void     copyLabels(int&, int&, int&, int&, QList<Element *> *);
 
   Painting* selectedPainting(float, float);
-  void      copyPaintings(int&, int&, int&, int&, QList<Element *> *);
+//  void      copyPaintings(int&, int&, int&, int&, QList<Element *> *);
 
 
 private:
   int  copyWires(int&, int&, int&, int&, QList<Element *> *);
   int  copyComponents(int&, int&, int&, int&, QList<Element *> *);
-  void copyComponents2(int&, int&, int&, int&, QList<Element *> *);
+//  void copyComponents2(int&, int&, int&, int&, QList<Element *> *);
   bool copyComps2WiresPaints(int&, int&, int&, int&, QList<Element *> *);
   int  copyElements(int&, int&, int&, int&, QList<Element *> *);
 
@@ -590,8 +593,11 @@ private:
 
   void setDrawn(bool b=true){mouseActions()->setDrawn(b);}
   QUndoStack* undoStack() override{ return _undoStack; }
+
+  SimProcess* simProcess(std::string name);
+
 public: // serializer
-  void saveComponent(QTextStream& s, Component const* c) const;
+  // remove void saveComponent(QTextStream& s, Component const* c) const;
   SchematicSymbol const* root() const { return _root; }
 
 public: // need access to SchematicModel. grr
@@ -603,6 +609,7 @@ private:
   SchematicModel* _model;
   CmdEltList _commands;
   QUndoStack* _undoStack;
+  std::map<std::string, SimProcess*> _simProcess; // QucsDoc?
 }; // SchematicDocument
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */

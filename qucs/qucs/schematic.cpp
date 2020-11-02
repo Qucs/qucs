@@ -810,7 +810,7 @@ float SchematicDoc::textCorr()
 }
 
 // ---------------------------------------------------
-void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float textCorr) const
+void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float) const
 {itested();
   xmin=INT_MAX;
   ymin=INT_MAX;
@@ -828,12 +828,12 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
         }
 
 
-  float Corr = textCorr;
   int x1, y1, x2, y2;
   // find boundings of all components
 
   incomplete();
 #if 0
+  float Corr = textCorr;
   for(auto pc : components()) {itested();
     pc->entireBounds(x1, y1, x2, y2, Corr);
     if(x1 < xmin) xmin = x1;
@@ -1280,7 +1280,7 @@ int SchematicDoc::save()
   if(result >= 0) { untested();
     setChanged(false);
 
-    QVector<QString *>::iterator it;
+//    QVector<QString *>::iterator it;
 //    for (it = undoAction.begin(); it != undoAction.end(); it++) { untested();
 //      (*it)->replace(1, 1, ' '); //at(1) = ' '; state of being changed
 //    }
@@ -2077,22 +2077,6 @@ void SchematicDoc::getSelAreaWidthAndHeight(int &wsel, int &hsel, int& xmin_sel_
 }
 #endif
 
-// insert an Element into the schematic.
-void SchematicDoc::simpleInsertElement(Element* e)
-{ untested();
-  assert(false); // use PushBack
-#if 0
-	if(Wire* c=dynamic_cast<Wire*>(e)){ untested();
-		simpleInsertWire(c);
-	}else if(Component* c=dynamic_cast<Component*>(e)){ untested();
-		simpleInsertComponent(c);
-	}else if(TaskElement* c=dynamic_cast<TaskElement*>(e)){ untested();
-		simpleInserttaskElement(c);
-	}else{ untested();
-		incomplete();
-	}
-#endif
-}
 // ===============================================================
 void PaintingList::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const
 { untested();

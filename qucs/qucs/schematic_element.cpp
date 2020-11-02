@@ -1360,6 +1360,7 @@ QList<ElementGraphics*> SchematicDoc::cropSelectedElements()
 
 // ---------------------------------------------------
 // BUG: collect stuff in Qlist
+#if 0
 bool SchematicDoc::copyComps2WiresPaints(int& x1, int& y1, int& x2, int& y2,
                                       QList<Element *> *ElementCache)
 {
@@ -1375,6 +1376,7 @@ bool SchematicDoc::copyComps2WiresPaints(int& x1, int& y1, int& x2, int& y2,
     if(y1 == INT_MAX) return false;  // no element selected
     return true;
 }
+#endif
 
 // ---------------------------------------------------
 // Used in "aligning()", "distributeHorizontal()", "distributeVertical()".
@@ -1947,8 +1949,9 @@ bool SchematicDoc::distributeVertical()
 
 // Finds the correct number for power sources, subcircuit ports and
 // digital sources and sets them accordingly.
-void SchematicDoc::setComponentNumber(Component *c)
+void SchematicDoc::setComponentNumber(Component *)
 {
+#if 0
     Property *pp = c->Props.getFirst();
     if(!pp) return;
     if(pp->Name != "Num") return;
@@ -1982,6 +1985,7 @@ void SchematicDoc::setComponentNumber(Component *c)
     }
     while(pc);     // found not used component number
     pp->Value = s; // set new number
+#endif
 #endif
 }
 
@@ -2161,10 +2165,9 @@ void SchematicDoc::insertElement(Element *c)
 // ---------------------------------------------------
 
 // ---------------------------------------------------
-// this is possibly obsolete. SchematicScene does it,
-void SchematicDoc::activateCompsWithinRect(int x1, int y1, int x2, int y2)
+// TODO: actions & rectangle select?
+void SchematicDoc::activateCompsWithinRect(int, int, int, int)
 {
-    // CHECK: what is this used for?!
 #if 0
     bool changed = false;
     int  cx1, cy1, cx2, cy2, a;
@@ -2211,12 +2214,12 @@ void SchematicDoc::activateCompsWithinRect(int x1, int y1, int x2, int y2)
 }
 
 // ---------------------------------------------------
+#if 0
 bool SchematicDoc::activateSpecifiedComponent(int x, int y)
 {
     incomplete();
     return 0;
 
-#if 0
     int x1, y1, x2, y2, a;
     for(auto pc : components()) {
         pc->Bounding(x1, y1, x2, y2);
@@ -2245,7 +2248,6 @@ bool SchematicDoc::activateSpecifiedComponent(int x, int y)
                     }
     }
     return false;
-#endif
 }
 
 // ---------------------------------------------------
@@ -2282,13 +2284,15 @@ bool SchematicDoc::activateSelectedComponents()
     if(sel) setChanged(true, true);
     return sel;
 }
+#endif
 
 // ---------------------------------------------------
+#if 0
 // Sets the component ports anew. Used after rotate, mirror etc.
+// // obsolete
 void SchematicDoc::setCompPorts(Component *pc)
 {
     incomplete();
-#if 0
     Symbol* sym=pc;
     WireLabel *pl;
     Q3PtrList<WireLabel> LabelCache;
@@ -2327,14 +2331,14 @@ void SchematicDoc::setCompPorts(Component *pc)
 	incomplete();
         insertNodeLabel(pl);
     }
-#endif
 }
+#endif
 
 // ---------------------------------------------------
+#if 0
 // Returns a pointer of the component on whose text x/y points.
 Component* MouseActions::selectCompText(SchematicDoc* Doc, int x_, int y_, int& w, int& h)
 {
-#if 0
     incomplete();
     int a, b, dx, dy;
     for(auto *pc : Doc->components()) {
@@ -2351,10 +2355,10 @@ Component* MouseActions::selectCompText(SchematicDoc* Doc, int x_, int y_, int& 
         h = dy;
         return pc;
     }
-#endif
 
     return 0;
 }
+#endif
 
 // ---------------------------------------------------
 //  what does this do?!
@@ -2378,27 +2382,12 @@ Component* SchematicDoc::searchSelSubcircuit()
 }
 
 // ---------------------------------------------------
-Component* SchematicDoc::selectedComponent(int x, int y)
-{
-    incomplete();
-#if 0
-    // test all components
-    for(auto pc : components()) {
-        if(pc->getSelected(x, y))
-            return pc;
-    }
-#endif
-
-    return nullptr;
-}
-
-// ---------------------------------------------------
+#if 0 // this does not work
 int SchematicDoc::copyComponents(int& x1, int& y1, int& x2, int& y2,
                               QList<Element *> *ElementCache)
 {
     assert(0);
     return 0;
-#if 0 // this does not work
       // and there is no need to "copy components".
       // anyway, this function does not seem to do what the name suggests?!
 
@@ -2440,7 +2429,6 @@ int SchematicDoc::copyComponents(int& x1, int& y1, int& x2, int& y2,
         pc = components().next();
     }
     return count;
-#endif
 }
 
 // ---------------------------------------------------
@@ -2449,7 +2437,6 @@ void SchematicDoc::copyComponents2(int& x1, int& y1, int& x2, int& y2,
                                 QList<Element *> *ElementCache)
 {
     assert(false);
-#if 0
     Component *pc;
     // find bounds of all selected components
     for(pc = components().first(); pc != 0; ) {
@@ -2479,8 +2466,8 @@ void SchematicDoc::copyComponents2(int& x1, int& y1, int& x2, int& y2,
         }
         pc = components().next();
     }
-#endif
 }
+#endif
 
 
 /* *******************************************************************
@@ -2491,7 +2478,7 @@ void SchematicDoc::copyComponents2(int& x1, int& y1, int& x2, int& y2,
 
 // Test, if wire connects wire line with more than one label and delete
 // all further labels. Also delete all labels if wire line is grounded.
-void SchematicDoc::oneLabel(Node *n1)
+void SchematicDoc::oneLabel(Node *)
 {
 
 #if 0 // this is obsolete. (hooray!) just use the net label
@@ -2572,7 +2559,7 @@ void SchematicDoc::oneLabel(Node *n1)
 }
 
 // ---------------------------------------------------
-int SchematicDoc::placeNodeLabel(WireLabel *pl)
+int SchematicDoc::placeNodeLabel(WireLabel *)
 {
 #if 0
     Node *pn=nullptr;
@@ -2614,7 +2601,7 @@ int SchematicDoc::placeNodeLabel(WireLabel *pl)
 // Test, if wire line is already labeled and returns a pointer to the
 // labeled element.
 // possibly obsolete.
-Element* SchematicDoc::getWireLabel(Node *pn_)
+Element* SchematicDoc::getWireLabel(Node *)
 {
     // ...  pn->getNet()->label() or so.
 #if 0 // obsolete. just use the net label.
@@ -2661,7 +2648,7 @@ Element* SchematicDoc::getWireLabel(Node *pn_)
 
 // ---------------------------------------------------
 // Inserts a node label.
-void SchematicDoc::insertNodeLabel(WireLabel *pl)
+void SchematicDoc::insertNodeLabel(WireLabel *)
 {
 #if 0 // hopefully obsolete.
 
@@ -2691,13 +2678,13 @@ void SchematicDoc::insertNodeLabel(WireLabel *pl)
 
 // ---------------------------------------------------
 // why?!
+#if 0
 void SchematicDoc::copyLabels(int& x1, int& y1, int& x2, int& y2,
                            QList<Element *> *ElementCache)
 {
     WireLabel *pl;
     // find bounds of all selected wires
     incomplete();
-#if 0
     for(auto pw : wires()){
         pl = pw->Label;
         if(pl) if(pl->isSelected())
@@ -2724,8 +2711,8 @@ void SchematicDoc::copyLabels(int& x1, int& y1, int& x2, int& y2,
                 pl->pOwner = 0;
             }
     }
-#endif
 }
+#endif
 
 
 /* *******************************************************************
@@ -2735,26 +2722,26 @@ void SchematicDoc::copyLabels(int& x1, int& y1, int& x2, int& y2,
    ******************************************************************* */
 
 // don't use this.
+#if 0
 Painting* SchematicDoc::selectedPainting(float fX, float fY)
 {
-#if 0
     float Corr = 5.0 / Scale; // size of line select
 
     for(Painting *pp = paintings().first(); pp != 0; pp = paintings().next())
         if(pp->getSelected(fX, fY, Corr))
             return pp;
 
-#endif
     return 0;
 }
+#endif
 
 // ---------------------------------------------------
 // BUG: does not copy
+#if 0
 void SchematicDoc::copyPaintings(int& x1, int& y1, int& x2, int& y2,
                               QList<Element *> *ElementCache)
 {
     incomplete();
-#if 0
     Painting *pp;
     int bx1, by1, bx2, by2;
     // find boundings of all selected paintings
@@ -2772,7 +2759,7 @@ void SchematicDoc::copyPaintings(int& x1, int& y1, int& x2, int& y2,
             pp = paintings().current();
         }
         else pp = paintings().next();
-#endif
 }
+#endif
 
 // vim:ts=8:sw=4:noet

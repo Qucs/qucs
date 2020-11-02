@@ -73,6 +73,8 @@
 #include "globals.h"
 #include "qucs_tabs.h"
 
+#include "simulator.h"
+
 struct iconCompInfoStruct{
   int catIdx; // index of the component Category
   int compIdx; // index of the component itself in the Category
@@ -1284,13 +1286,13 @@ void QucsApp::slotButtonProjDel()
 // #####  documents.                                          #####
 // ################################################################
 
-void QucsApp::slotFileNew(bool enableOpenDpl)
+void QucsApp::slotFileNew(bool)
 { untested();
   statusBar()->showMessage(tr("Creating new schematic..."));
   slotHideEdit(); // disable text edit of component property
 
-  QucsDoc *d = DocumentTab->createEmptySchematic("");
- // d->SimOpenDpl = enableOpenDpl;
+  DocumentTab->createEmptySchematic("");
+  // d->SimOpenDpl = enableOpenDpl;
 
   statusBar()->showMessage(tr("Ready."));
 }
@@ -1422,7 +1424,7 @@ bool QucsApp::saveAs()
   auto* W = prechecked_cast<QWidget*>(w);
   assert(W);
 
-  w->saveAs();
+  return w->saveAs();
 }
 
 // --------------------------------------------------------------
@@ -1961,92 +1963,41 @@ void QucsApp::slotSimulate()
 
   QucsDoc *Doc = DocumentTab->current();
   assert(Doc);
-  auto w = prechecked_cast<QWidget*>(Doc);
-  assert(w);
-
-#if 0 //not sure
-  if(isTextDocument (w)) { untested();
-    Doc = (QucsDoc*)((TextDoc*)w);
-    if(Doc->SimTime.isEmpty() && ((TextDoc*)Doc)->simulation) { untested();
-      DigiSettingsDialog *d = new DigiSettingsDialog((TextDoc*)Doc);
-      if(d->exec() == QDialog::Rejected)
-	return;
-    }
-  } else {
-    Doc = (QucsDoc*)((SchematicDoc*)w);
-  }
-#endif
-
-  if(Doc->docName().isEmpty()) // if document 'untitled' ...
-    if(!saveAs()) return;    // ... save schematic before
-
-  // Perhaps the document was modified from another program ?
-  QFileInfo Info(Doc->docName());
-  if(Doc->lastSaved.isValid()) { untested();
-    if(Doc->lastSaved < Info.lastModified()) { untested();
-      int No = QMessageBox::warning(this, tr("Warning"),
-               tr("The document was modified by another program !") + '\n' +
-               tr("Do you want to reload or keep this version ?"),
-               tr("Reload"), tr("Keep it"));
-      if(No == 0)
-        Doc->load();
-    }
-  }
-
-  slotResetWarnings();
-
-  if(Info.suffix() == "m" || Info.suffix() == "oct") { untested();
-    // It is an Octave script.
-    if(Doc->DocChanged)
-      Doc->save();
-    slotViewOctaveDock(true);
-    octave->runOctaveScript(Doc->docName());
-    return;
-  }
-
-  SimMessage *sim = new SimMessage(w, this);
-  // disconnect is automatically performed, if one of the involved objects
-  // is destroyed !
-  connect(sim, SIGNAL(SimulationEnded(int, SimMessage*)), this,
-		SLOT(slotAfterSimulation(int, SimMessage*)));
-  connect(sim, SIGNAL(displayDataPage(QString&, QString&)),
-		this, SLOT(slotChangePage(QString&, QString&)));
-
-  sim->show();
-  if(!sim->startProcess()){ untested();
-    return;
-  }else{ untested();
-  }
-
-  // to kill it before qucs ends
-  connect(this, SIGNAL(signalKillEmAll()), sim, SLOT(slotClose()));
+  Doc->slotSimulate();
 }
 
 // ------------------------------------------------------------------------
 // Is called after the simulation process terminates.
-void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
+// why is this needed? just signal names of refreshed datasets to doc.
+void QucsApp::slotAfterSimulation(Simulator const* sim)
 { untested();
-  if(Status != 0) return;  // errors ocurred ?
-
-  if(sim->ErrText->document()->lineCount() > 1)   // were there warnings ?
-    slotShowWarnings();
-
-  int i=0;
-  QWidget *w;  // search, if page is still open
-  while((w=DocumentTab->widget(i++)) != 0)
-    if(w == sim->DocWidget)
-      break;
-
-  if(sim->showBias == 0) {  // paint dc bias into schematic ?
-    sim->slotClose();   // close and delete simulation window
-    if(w) {  // schematic still open ?
-      SweepDialog *Dia = new SweepDialog((SchematicDoc*)sim->DocWidget);
-
-      // silence warning about unused variable.
-      Q_UNUSED(Dia)
-    }
+  if(sim->state() != 0){ untested();
+    return;  // errors ocurred ?
   }else{ untested();
   }
+
+//  if(sim->ErrText->document()->lineCount() > 1){ untested();
+//    // possibly warnings why here?
+//    slotShowWarnings();
+//  }else{ untested();
+//  }
+
+//  int i=0;
+//  QWidget *w = sim->docWidget();
+//  (void)w;
+
+  // what?
+//   if(sim->showBias == 0) {  // paint dc bias into schematic ?
+//     if(w) { untested();
+//       // schematic still open ?
+//       SweepDialog *Dia = new SweepDialog((SchematicDoc*)sim->DocWidget);
+// 
+//       // silence warning about unused variable.
+//       Q_UNUSED(Dia)
+//     }else{ untested();
+//     }
+//   }else{ untested();
+//   }
 #if 0 // not here
   else { untested();
     if(sim->SimRunScript) { untested();
@@ -2246,9 +2197,11 @@ void QucsApp::slotOpenContent(const QModelIndex &idx)
 
 // ---------------------------------------------------------
 // Is called when the mouse is clicked within the Content QListView.
+// (where?)
 void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
 { untested();
   incomplete();
+#if 0
   editText->setHidden(true); // disable text edit of component property
 
   if(!idx.isValid()) {   // mouse button pressed not over an item ?
@@ -2298,6 +2251,7 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
   }
   activeAction = 0; //??
 
+#if 0
   Symbol* Symb;
   if(isVHDL){ untested();
 	  Symb = symbol_dispatcher.clone("VHDL_legacy");
@@ -2306,6 +2260,7 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
   }else{ untested();
 	  Symb = symbol_dispatcher.clone("Subcircuit_legacy");
   }
+#endif
 
 #if 0 // later.
   Component *Comp = prechecked_cast<Component*>(Symb);
@@ -2328,18 +2283,20 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
   incomplete();
   MouseReleaseAction = 0;
   MouseDoubleClickAction = 0;
+#endif
+  (void) idx;
 }
 
 // ---------------------------------------------------------
 // Is called when the mouse is clicked within the Content QListView.
+// (where?)
 void QucsApp::slotSelectLibComponent(QTreeWidgetItem *item)
 { untested();
-    // get the current document
-    SchematicDoc *Doc = (SchematicDoc*)DocumentTab->currentWidget();
-
     incomplete();
+    (void) item;
 
 #if 0
+    SchematicDoc *Doc = (SchematicDoc*)DocumentTab->currentWidget();
     // if the current document is a schematic activate the paste
     if(!isTextDocument(Doc)) { untested();
         // if theres not a higher level item, this is a top level item,
@@ -2450,7 +2407,8 @@ void QucsApp::switchEditMode(bool SchematicMode)
 }
 
 // ---------------------------------------------------------
-void QucsApp::changeSchematicSymbolMode(SchematicDoc *Doc)
+// // obsolete
+void QucsApp::changeSchematicSymbolMode(SchematicDoc *)
 { untested();
 
   // TODO: close currentwidget->document and reopen schematicSymbol (or the
@@ -2478,9 +2436,11 @@ bool QucsApp::isTextDocument(QucsDoc const*w)
 // Is called if the "symEdit" action is activated, i.e. if the user
 // switches between the two painting mode: SchematicDoc and (subcircuit)
 // symbol.
+// // TODO: open a symbol document
 void QucsApp::slotSymbolEdit()
 { untested();
   incomplete();
+#if 0
   QucsDoc *Doc = DocumentTab->current();
   assert(Doc);
 
@@ -2547,6 +2507,7 @@ void QucsApp::slotSymbolEdit()
     }
 #endif
   }
+#endif
 }
 
 // -----------------------------------------------------------
@@ -2876,8 +2837,8 @@ bool loadSettings()
     //if(settings.contains("BinDir"))QucsSettings.BinDir = settings.value("BinDir").toString();
     //if(settings.contains("LangDir"))QucsSettings.LangDir = settings.value("LangDir").toString();
     //if(settings.contains("LibDir"))QucsSettings.LibDir = settings.value("LibDir").toString();
-    if(settings.contains("AdmsXmlBinDir"))QucsSettings.AdmsXmlBinDir = settings.value("AdmsXmlBinDir").toString();
-    if(settings.contains("AscoBinDir"))QucsSettings.AscoBinDir = settings.value("AscoBinDir").toString();
+    if(settings.contains("AdmsXmlBinDir"))QucsSettings.AdmsXmlBinDir.setPath(settings.value("AdmsXmlBinDir").toString());
+    if(settings.contains("AscoBinDir"))QucsSettings.AscoBinDir.setPath(settings.value("AscoBinDir").toString());
     //if(settings.contains("OctaveDir"))QucsSettings.OctaveDir = settings.value("OctaveDir").toString();
     //if(settings.contains("ExamplesDir"))QucsSettings.ExamplesDir = settings.value("ExamplesDir").toString();
     //if(settings.contains("DocDir"))QucsSettings.DocDir = settings.value("DocDir").toString();

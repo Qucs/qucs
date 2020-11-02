@@ -190,6 +190,7 @@ bool Graph::load(const QString& _s)
  */
 int Graph::getSelected(int x, int y)
 {
+#if 0
   auto pp = ScrPoints.begin();
   if(pp == ScrPoints.end()) return -1;
 
@@ -267,6 +268,7 @@ int Graph::getSelected(int x, int y)
     z++;
   }
 
+#endif
   return -1;
 }
 // -----------------------------------------------------------------------
@@ -350,6 +352,7 @@ Graph* Graph::sameNewOne()
  */
 std::pair<double,double> Graph::findSample(std::vector<double>& VarPos) const
 {
+#if 0
   DataX const* pD;
   unsigned nVarPos=0;
   unsigned n=0;
@@ -369,6 +372,7 @@ std::pair<double,double> Graph::findSample(std::vector<double>& VarPos) const
   }
 
   return std::pair<double,double>(cPointsY[2*n], cPointsY[2*n+1]);
+#endif
 }
 
 // -----------------------------------------------------------------------

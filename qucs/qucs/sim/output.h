@@ -26,11 +26,35 @@
 /* -------------------------------------------------------------------------------- */
 // base class for output related classes
 class QucsData {
+private:
+	QucsData(QucsData const&) = delete;
+public:
+	explicit QucsData(): _attach_count(0){}
 public:
 	virtual QucsData* clone() { return NULL; }
 protected:
 	virtual QucsData* resolve(const std::string&){assert(false);}
+
+public:
+	static void attach(QucsData*, QucsData**);
+	static void detach(QucsData**);
+
+private:
+	unsigned _attach_count;
 };
+/* -------------------------------------------------------------------------------- */
+inline void QucsData::attach(QucsData* what, QucsData** where)
+{
+	incomplete();
+	assert(!*where); // for now.
+	*where = what;
+	++(what->_attach_count);
+}
+/* -------------------------------------------------------------------------------- */
+inline void QucsData::detach(QucsData** from)
+{
+	attach(nullptr, from);
+}
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 // base class for SimOutputs

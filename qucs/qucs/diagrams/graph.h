@@ -54,6 +54,7 @@ class Diagram;
 class ViewPainter;
 
 
+#if 0
 struct DataX {
   DataX(const QString& Var_, double *Points_=0, int count_=0)
        : Var(Var_), Points(Points_), count(count_), Min(INFINITY), Max(-INFINITY) {};
@@ -72,6 +73,7 @@ private:
   double Min;
   double Max;
 };
+#endif
 
 struct Axis;
 
@@ -123,7 +125,7 @@ public:
   typedef container::const_iterator const_iterator;
 
   int loadDatFile(const QString& filename);
-  int loadIndepVarData(const QString&, char* datfilecontent, DataX* where);
+//  int loadIndepVarData(const QString&, char* datfilecontent, DataX* where);
 
   void    paint(ViewPainter*, int, int);
   void    paint(ViewPainter*) const{ incomplete(); }
@@ -136,14 +138,15 @@ public:
   void    paintvect(ViewPainter*, int, int);
   
 private: // tmp hack
-  DataX* mutable_axis(uint i) { if(i<(uint)cPointsX.size()) return cPointsX.at(i); return NULL;}
+  // DataX* mutable_axis(uint i) { if(i<(uint)cPointsX.size()) return cPointsX.at(i); return NULL;}
+
 public:
-  unsigned numAxes() const { return cPointsX.size(); }
-  DataX const* axis(uint i) const { if(i<(uint)cPointsX.size()) return cPointsX.at(i); return NULL;}
-  size_t count(uint i) const { if(axis(i)) return axis(i)->count; return 0; }
-  QString axisName(unsigned i) const {if(axis(i))return axis(i)->Var; return "";}
-  bool isEmpty() const { return !cPointsX.size(); }
-  QVector<DataX*>& mutable_axes(){return cPointsX;} // HACK
+//  unsigned numAxes() const { return cPointsX.size(); }
+  // DataX const* axis(uint i) const { if(i<(uint)cPointsX.size()) return cPointsX.at(i); return NULL;}
+//  size_t count(uint i) const { if(axis(i)) return axis(i)->count; return 0; }
+//  QString axisName(unsigned i) const {if(axis(i))return axis(i)->Var; return "";}
+//  bool isEmpty() const { return !cPointsX.size(); }
+//  QVector<DataX*>& mutable_axes(){return cPointsX;} // HACK
 
   void clear(){ScrPoints.resize(0);}
   void resizeScrPoints(size_t s){assert(s>=ScrPoints.size()); ScrPoints.resize(s);}
@@ -178,7 +181,7 @@ public: // marker related
   std::pair<double,double> findSample(std::vector<double>&) const;
   Diagram const* parentDiagram() const{return diagram;}
 private:
-  QVector<DataX*>  cPointsX;
+//  QVector<DataX*>  cPointsX;
   std::vector<ScrPt> ScrPoints; // data in screen coordinates
   Diagram const* diagram;
 };

@@ -36,6 +36,7 @@ class QUndoStack;
 class QUndoCommand;
 class Element;
 class QucsData;
+class Simulator;
 
 class QucsDoc {
 protected:
@@ -84,9 +85,13 @@ public:
   bool GridOn;
   int  tmpPosX, tmpPosY;
 
-private:
-  void decSimulators(){ --_simulators; }
-  void incSimulators(){ ++_simulators; }
+  // probably not.
+// private:
+//   void decSimulators(){ --_simulators; }
+//   void incSimulators(){ ++_simulators; }
+
+protected: // gaah
+  Simulator* simulator(std::string const& which);
 
 protected: // why not directly connect to undostack slots?!
   virtual void undo();
@@ -132,6 +137,8 @@ public: // actions: These somehow correspond to buttons.
 	virtual void actionSelectElement(QObject*) {untested(); }
 
 	void uncheckActive();
+
+	virtual void slotSimulate(); // why "slot"? maybe later.
 	virtual void slotDCbias(); // why "slot"? maybe later.
 
 protected: // cleaning up debris
@@ -165,7 +172,7 @@ private:
 	friend class Simulator;
 
 	std::map<std::string, QucsData*> _data;
-	unsigned _simulators;
+	std::map<std::string, Simulator*> _simulators;
 
 	QWidget* _owner;
 }; // QucsDoc

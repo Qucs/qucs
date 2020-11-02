@@ -31,7 +31,7 @@
 // SpinBoxes are used to show the calculated bias points at the given set of sweep points
 mySpinBox::mySpinBox(int Min, int Max, int Step, double *Val, QWidget *Parent)
           : QSpinBox(Parent)
-{
+{ untested();
   setMinimum(Min);
   setMaximum(Max);
   setSingleStep(Step); 
@@ -45,7 +45,7 @@ mySpinBox::mySpinBox(int Min, int Max, int Step, double *Val, QWidget *Parent)
 #include <iostream>
 using namespace std;
 QString mySpinBox::textFromValue(int Val) const
-{
+{ untested();
   if (Values == NULL) return "";
 
   qDebug() << "Values + Val" << *(Values+Val) << endl;
@@ -53,7 +53,7 @@ QString mySpinBox::textFromValue(int Val) const
 }
 
 QValidator::State mySpinBox::validate ( QString & text, int & pos ) const
-{
+{ untested();
   if(pos>ValueSize)return QValidator::Invalid; 
   if(QString::number(*(Values+pos))==text)
   return QValidator::Acceptable;
@@ -67,23 +67,23 @@ QValidator::State mySpinBox::validate ( QString & text, int & pos ) const
 /// for a project which contains a sweep.
 SweepDialog::SweepDialog(SchematicDoc *Doc_)
 			: QDialog(Doc_)
-{
-  qDebug() << "SweepDialog::SweepDialog()";
+{ untested();
+#if 0
+	incomplete(); // simOutput?
 
   Doc = Doc_;
 
   pGraph = setBiasPoints();
   // if simulation has no sweeps, terminate dialog before showing it
-  if(!pGraph->numAxes()) {
+  if(!pGraph->numAxes()) { untested();
     reject();
     return;
+  }else if(pGraph->numAxes() > 1) {
+  }else if(pGraph->axis(0)->count <= 1) { untested();
+	  reject();
+	  return;
+  }else{
   }
-  if(pGraph->numAxes() <= 1)
-    if(pGraph->axis(0)->count <= 1) {
-      reject();
-      return;
-    }
-
 
   setWindowTitle(tr("Bias Points"));
 
@@ -96,7 +96,7 @@ SweepDialog::SweepDialog(SchematicDoc *Doc_)
   DataX const *pD;
   mySpinBox *Box;
   
-  for(unsigned ii=0; (pD=pGraph->axis(ii)); ++ii) {
+  for(unsigned ii=0; (pD=pGraph->axis(ii)); ++ii) { untested();
     all->addWidget(new QLabel(pD->Var, this), 0, 0);
     //cout<<"count: "<<pD->count-1<<", points: "<<*pD->Points<<endl;
     //works only for linear:
@@ -118,25 +118,27 @@ SweepDialog::SweepDialog(SchematicDoc *Doc_)
   all->addWidget(ButtClose, 1, 0, 1, 5);
   connect(ButtClose, SIGNAL(clicked()), SLOT(accept()));
   show();
+#endif
 }
 
 SweepDialog::~SweepDialog()
-{
+{ untested();
   delete pGraph;
 
-  while(!ValueList.isEmpty()) {
+  while(!ValueList.isEmpty()) { untested();
     delete ValueList.takeFirst();
   }
 }
 
 // ---------------------------------------------------------------
 void SweepDialog::slotNewValue(int)
-{
+{ untested();
+#if 0
   DataX const*pD = pGraph->axis(0);
 
   int Factor = 1, Index = 0;
   QList<mySpinBox *>::const_iterator it;
-  for(it = BoxList.constBegin(); it != BoxList.constEnd(); it++) {
+  for(it = BoxList.constBegin(); it != BoxList.constEnd(); it++) { untested();
     Index  += (*it)->value() * Factor;
     Factor *= pD->count;
   }
@@ -144,7 +146,7 @@ void SweepDialog::slotNewValue(int)
 
   QList<Node *>::iterator node_it;
   QList<double *>::const_iterator value_it = ValueList.begin();
-  for(node_it = NodeList.begin(); node_it != NodeList.end(); node_it++) {
+  for(node_it = NodeList.begin(); node_it != NodeList.end(); node_it++) { untested();
 //    qDebug() << "SweepDialog::slotNewValue:(*node_it)->Name:" << (*node_it)->name();
 
 	 incomplete();
@@ -155,11 +157,12 @@ void SweepDialog::slotNewValue(int)
   }
 
   Doc->viewport()->update();
+#endif
 }
 
 // ---------------------------------------------------
 Graph* SweepDialog::setBiasPoints()
-{
+{ untested();
   // When this function is entered, a simulation was performed.
   // Thus, the node names are still in "node->name()".
 
@@ -180,31 +183,31 @@ Graph* SweepDialog::setBiasPoints()
 
   // create DC voltage for all nodes
 #if 0 // use nets instead!
-  for(auto pn : Doc->nodes()){
+  for(auto pn : Doc->nodes()){ untested();
     if(pn->name().isEmpty()) continue;
 
     pn->reset_something();
-    if(pn->connectionsCount() < 2) {
+    if(pn->connectionsCount() < 2) { untested();
       // pn->Name = "";  // no text at open nodes
 		//                  // too late. d'uh
       continue; // BUG.
     }
-    else {
+    else { untested();
       hasNoComp = true;
-      for(auto i : pn->connections()){
+      for(auto i : pn->connections()){ untested();
         pe = i;
-        if(auto w=wire(pe)) {
-          if( w->isHorizontal() ) {
+        if(auto w=wire(pe)) { untested();
+          if( w->isHorizontal() ) { untested();
 				 pn->set_something(2);
 			 }
-        }else {
+        }else { untested();
           if( ((Component*)pe)->obsolete_model_hack() == "GND" ) { // BUG
             hasNoComp = true;   // no text at ground symbol
             break;
           }
 
 		  	 // to the right is no room
-          if(pn->cx_() < pe->cx_()){
+          if(pn->cx_() < pe->cx_()){ untested();
 			  	 pn->set_something(1);
 			 }
           hasNoComp = false;
@@ -218,21 +221,21 @@ Graph* SweepDialog::setBiasPoints()
 
     pg->Var = pn->name() + ".V";
     pg->lastLoaded = QDateTime(); // Note 1 at the start of this function
-    if(pg->loadDatFile(DataSet) == 2) {
+    if(pg->loadDatFile(DataSet) == 2) { untested();
 		 incomplete(); // node names are not mutable.
       // pn->name() = misc::num2str(*(pg->cPointsY)) + "V";
       NodeList.append(pn);             // remember node ...
       ValueList.append(pg->cPointsY);  // ... and all of its values
       pg->cPointsY = 0;   // do not delete it next time !
-    }else{
+    }else{ untested();
 		 incomplete();
     //  pn->Name = "0V";
 	 }
 
 
-    for(auto i : pn->connections()){
+    for(auto i : pn->connections()){ untested();
 		 pe = i;
-      if(pe->Type == isWire) {
+      if(pe->Type == isWire) { untested();
 #if 0
         if( ((Wire*)pe)->portValue(0) != pn )  // no text at next node
           ((Wire*)pe)->portValue(0)->setName("");
@@ -247,7 +250,7 @@ Graph* SweepDialog::setBiasPoints()
   // create DC current through each probe
 #if 0
   Node* pn;
-  for(auto pc : Doc->components()){
+  for(auto pc : Doc->components()){ untested();
     if(pc->obsolete_model_hack() == "IProbe") { // BUG.
       pn = pc->Ports.first()->Connection;
       if(!pn->name().isEmpty())   // preserve node voltage ?
@@ -257,25 +260,25 @@ Graph* SweepDialog::setBiasPoints()
       pn->set_something(0x10);   // mark current
       pg->Var = pc->name() + ".I";
       pg->lastLoaded = QDateTime(); // Note 1 at the start of this function
-      if(pg->loadDatFile(DataSet) == 2) {
+      if(pg->loadDatFile(DataSet) == 2) { untested();
         pn->setName( misc::num2str(*(pg->cPointsY)) + "A");
         NodeList.append(pn);             // remember node ...
         ValueList.append(pg->cPointsY);  // ... and all of its values
         pg->cPointsY = 0;   // do not delete it next time !
-      } else{
+      } else{ untested();
         pn->setName("0A");
 		}
 
-      for(auto i: pn->connections()){
+      for(auto i: pn->connections()){ untested();
 			pe=i;
-        if(pe->Type == isWire) {
-          if( ((Wire*)pe)->isHorizontal() ){
+        if(pe->Type == isWire) { untested();
+          if( ((Wire*)pe)->isHorizontal() ){ untested();
              pn->set_something(2);
-          }else{
+          }else{ untested();
           }
         }
-        else {
-          if(pn->cx_() < pe->cx_()) {
+        else { untested();
+          if(pn->cx_() < pe->cx_()) { untested();
             // to the right is no room
              pn->set_something(1);
           }

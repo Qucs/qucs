@@ -13,25 +13,46 @@
  ***************************************************************************/
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
-#include "sim/sim.h"
+#include "simulator.h"
 #include "qucsdoc.h"
 /* -------------------------------------------------------------------------------- */
 Simulator::~Simulator()
 {
-	if(_doc){
-		_doc->decSimulators();
-		_doc = nullptr;
-	}else{
-	}
+	QucsData::detach(_data_p);
 }
 /* -------------------------------------------------------------------------------- */
-void Simulator::attachDoc(QucsDoc* d)
+// possibly wrong.
+// void Simulator::attachData(QucsData** d)
+// {
+// 	assert(*d);
+// 	assert(!_data_p);
+// 	_data_p = d;
+// }
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
+#include "simulator.h"
+
+Simulator::Simulator()
+: _doc(nullptr), _state(sst_idle), _ctrl(nullptr) {
+}
+/* -------------------------------------------------------------------------------- */
+void Simulator::attachCtrl(SimCtrl* ctrl)
 {
-	assert(!_doc);
-	_doc = d;
-	_doc->incSimulators();
-	_data = _doc->qucsData(label().toStdString());
-	init();
+  if(!_ctrl){
+    _ctrl = ctrl;
+  }else if(_ctrl==ctrl){
+  }else{
+    throw Exception("already controlled");
+  }
 }
 /* -------------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------------- */
+void Simulator::detachCtrl(SimCtrl const* ctrl)
+{
+  if(_ctrl == ctrl){ untested();
+    _ctrl = nullptr;
+  }else{ untested();
+    _ctrl = nullptr;
+	 // throw?
+	  unreachable();
+  }
+}

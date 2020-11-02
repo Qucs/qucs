@@ -64,7 +64,9 @@ public:
 		if(_autodelete){
 			incomplete();
 			for(auto x : localList){ untested();
-				delete x;
+				incomplete(); // this does not work
+				(void)x;
+				// delete x;
 			}
 		}else{
 		}

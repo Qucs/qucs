@@ -276,7 +276,7 @@ public: // TODO. move into mouse actions
   void MMoveScrollBar(Schematic*, QMouseEvent*);
 
   void MPressSelect(QMouseEvent*);
-  void MPressActivate(Schematic*, QMouseEvent*);
+//  void MPressActivate(Schematic*, QMouseEvent*);
   void MPressMirrorX(Schematic*, QMouseEvent*);
   void MPressMirrorY(Schematic*, QMouseEvent*);
   void MPressRotate(Schematic*, QMouseEvent*);

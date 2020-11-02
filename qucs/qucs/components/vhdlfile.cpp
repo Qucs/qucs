@@ -96,6 +96,7 @@ QString VHDL_File::vhdlCode(int)
   }
   return s;
 #endif
+  return "incomplete";
 }
 
 // -------------------------------------------------------

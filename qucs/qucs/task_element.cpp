@@ -84,7 +84,7 @@ int TaskElement::textSize(int& _dx, int& _dy)
   int tmp, count=0;
   _dx = _dy = 0;
   if(showName) {
-    _dx = metrics.width(Name);
+    _dx = metrics.horizontalAdvance(Name);
     _dy = metrics.height();
     count++;
   }else{
@@ -92,7 +92,7 @@ int TaskElement::textSize(int& _dx, int& _dy)
   for(Property *pp = Props.first(); pp != 0; pp = Props.next()){
     if(pp->display) {
       // get width of text
-      tmp = metrics.width(pp->Name+"="+pp->Value);
+      tmp = metrics.horizontalAdvance(pp->Name+"="+pp->Value);
       if(tmp > _dx) {
 	_dx = tmp;
       }else{
@@ -152,7 +152,7 @@ int TaskElement::getTextSelected(int x_, int y_, float Corr)
   // use the screen-compatible metric
   QFontMetrics  metrics(QucsSettings.font, 0);
   if(showName) {
-    w  = metrics.width(Name);
+    w  = metrics.horizontalAdvance(Name);
     if(dy < 1) {
       if(x_ < w) return 0;
       return -1;
@@ -167,7 +167,7 @@ int TaskElement::getTextSelected(int x_, int y_, float Corr)
   if(!pp) return -1;
 
   // get width of text
-  w = metrics.width(pp->Name+"="+pp->Value);
+  w = metrics.horizontalAdvance(pp->Name+"="+pp->Value);
   if(x_ > w) return -1; // clicked past the property text end - selection invalid
   return Props.at()+1;  // number the property
 }
