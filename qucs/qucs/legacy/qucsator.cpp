@@ -40,20 +40,20 @@ static const std::string typesep(":");
 static const char _typesep = ':';
 
 // not sure what this is about
-#ifdef __MINGW32__ // -> platform.h
-#include <windows.h>
-static QString pathName(QString longpath) {
-  const char * lpath = QDir::toNativeSeparators(longpath).toAscii();
-  char spath[2048];
-  int len = GetShortPathNameA(lpath,spath,sizeof(spath)-1);
-  spath[len] = '\0';
-  return QString(spath);
-}
-#else
-static QString pathName(QString longpath) {
-  return longpath;
-}
-#endif
+/// #ifdef __MINGW32__ // -> platform.h
+/// #include <windows.h>
+/// static QString pathName(QString longpath) {
+///   const char * lpath = QDir::toNativeSeparators(longpath).toAscii();
+///   char spath[2048];
+///   int len = GetShortPathNameA(lpath,spath,sizeof(spath)-1);
+///   spath[len] = '\0';
+///   return QString(spath);
+/// }
+/// #else
+/// static QString pathName(QString longpath) {
+///   return longpath;
+/// }
+/// #endif
 /* -------------------------------------------------------------------------------- */
 // temporary kludge.
 class QucsatorScktHack : public Symbol {
@@ -169,7 +169,6 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 		trace3("print", c->label(), sym->numPorts(), sym->label());
 		for(unsigned i=0; i<sym->numPorts(); ++i){
 			std::string N = netLabel(sym->portValue(i));
-
 			s << " " << N;
 		}
 
@@ -428,20 +427,14 @@ void Qucsator::run(SimCtrl* ctrl)
 	Simulator::attachCtrl(ctrl);
 	std::string _what="DC"; // TODO.
 
-	// ProgText->appendPlainText(tr("creating netlist... "));
-	// trace1("netlist", QucsSettings.QucsHomeDir.filePath("netlist.txt"));
-
 	// possibly not a good idea.
-	_netlistFile.setFileName(QucsSettings.QucsHomeDir.filePath("netlist.txt"));
+	QString f = QucsSettings.QucsHomeDir.filePath("netlist.txt");
 
-	// auto dl = command_dispatcher["legacy_nl"];
-	// assert(dl);
-	// DocumentFormat const* n = prechecked_cast<DocumentFormat const*>(dl);
-	// assert(n);
+	message(QucsLogMsg, "creating netlist " + f.toStdString() + "...");
+	_netlistFile.setFileName(f);
 
-	trace1("nl", _netlistFile.fileName());
 	if(!_netlistFile.open(QIODevice::WriteOnly | QFile::Truncate)){
-		error(5, "cannot open netlist file");
+		message(QucsFatalMsg, "cannot open netlist file");
 		throw Exception("cannot write");
 	}else{
 	}

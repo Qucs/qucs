@@ -55,7 +55,7 @@ RS_FlipFlop::RS_FlipFlop()
 }
 
 // -------------------------------------------------------
-QString RS_FlipFlop::vhdlCode(int NumPorts)
+QString RS_FlipFlop::vhdlCode(int)
 {
 #if 0
   QString s = "";
@@ -75,10 +75,11 @@ QString RS_FlipFlop::vhdlCode(int NumPorts)
     Ports.at(2)->Connection->name() + s + '\n';
   return s;
 #endif
+  return "";
 }
 
 // -------------------------------------------------------
-QString RS_FlipFlop::verilogCode(int NumPorts)
+QString RS_FlipFlop::verilogCode(int)
 {
 #if 0
   QString t = "";
@@ -101,6 +102,7 @@ QString RS_FlipFlop::verilogCode(int NumPorts)
     "  assign" + t + b + " = ~(" + s + " | " + q + ");\n\n";
   return l;
 #endif
+  return "";
 }
 
 // -------------------------------------------------------

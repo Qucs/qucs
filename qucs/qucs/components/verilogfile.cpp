@@ -90,6 +90,7 @@ QString Verilog_File::verilogCode(int)
   }
   return s;
 #endif
+  return "";
 }
 
 // -------------------------------------------------------

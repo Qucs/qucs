@@ -13,10 +13,10 @@ LEGACY_SRC = \
 	schematic_lang.cpp \
 	simulator.cpp \
 	smithdiagram.cpp \
-	subcircuit.cpp
+	subcircuit.cpp \
+	tabdiagram.cpp
 
 NOTYET_SRC = \
-	tabdiagram.cpp \
 	timingdiagram.cpp \
 	truthdiagram.cpp \
 	phasordiagram.cpp \

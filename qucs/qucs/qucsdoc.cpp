@@ -170,7 +170,7 @@ void QucsDoc::possiblyToggleAction(MouseAction* a, QAction* sender)
 	}
 
 	if(cmd){itested();
-		executetaskElement(cmd);
+		executeCommand(cmd);
 	}else{itested();
 	}
 }
@@ -193,10 +193,19 @@ MouseAction const* QucsDoc::activeAction() const
 	return d->activeAction();
 }
 /* -------------------------------------------------------------------------------- */
-void QucsDoc::executetaskElement(QUndoCommand* c)
+void QucsDoc::executeCommand(QUndoCommand* c)
 {
 	if(mouseActions()){itested();
-		mouseActions()->executetaskElement(c);
+		mouseActions()->executeCommand(c);
+		// setChanged();
+		if(!DocChanged){
+			emit signalFileChanged(true);
+		}else{
+			// TODO: unset Changed in undo.
+		}
+		DocChanged = c;
+
+		showBias = -1;   // schematic changed => bias points may be invalid
 	}else{
 	}
 }

@@ -73,29 +73,14 @@ public:
 protected:
   void setState(state_t s){_state = s;}
   void notifyState(state_t);
+  void message(QucsMsgType, std::string const&);
+  void setData(QucsData* d) {
+    assert(d);
+    QucsData::attach(d, _data_p);
+  }
 
 private:
   virtual void init() = 0;
-
-protected:
-  void setData(QucsData* d) {
-    assert(d);
-
-    QucsData::attach(d, _data_p);
-#if 0
-
-    assert(!d->attachCount());
-
-    QucsData** _data_old = _data_p;
-    *_data_p = d;
-
-    if((*_data_old)->attachCount()){
-    }else{
-      // nobody uses this.
-      delete *_data_old;
-    }
-#endif
-  }
 
 private:
   QucsDoc* _doc; // const?

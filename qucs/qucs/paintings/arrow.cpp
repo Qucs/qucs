@@ -55,7 +55,7 @@ public:
   QString save();
   QString saveCpp();
   QString saveJSON();
-  void MouseMoving(SchematicDoc*, int, int, int, int, SchematicDoc*, int, int, bool);
+//  void MouseMoving(SchematicDoc*, int, int, int, int, SchematicDoc*, int, int, bool);
   bool MousePressing();
   bool getSelected(float, float, float);
   void Bounding(int&, int&, int&, int&);
@@ -191,6 +191,7 @@ void Arrow::setCenter(int x, int y, bool relative)
 }
 
 // --------------------------------------------------------------------------
+#if 0
 Element* Arrow::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Arrow");
@@ -199,6 +200,7 @@ Element* Arrow::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new Arrow();
   return 0;
 }
+#endif
 
 // --------------------------------------------------------------------------
 bool Arrow::load(const QString& s)
@@ -273,6 +275,7 @@ QString Arrow::save()
 }
 
 // --------------------------------------------------------------------------
+#if 0
 QString Arrow::saveCpp()
 {
 	 auto cx=Element::cx();
@@ -301,6 +304,7 @@ QString Arrow::saveJSON()
        arg(Pen.color().name()).arg(Pen.width()).arg(toPenString(Pen.style()));
   return s;
 }
+#endif
 
 // --------------------------------------------------------------------------
 // Checks if the resize area was clicked.
@@ -358,12 +362,12 @@ void Arrow::calcArrowHead()
 // --------------------------------------------------------------------------
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
+#if 0
 void Arrow::MouseMoving(
 	SchematicDoc *paintScale, int, int, int gx, int gy,
 	SchematicDoc *p, int x, int y, bool drawn)
 {
 	incomplete();
-#if 0
   if(State > 0) {
     if(State > 1) {
       calcArrowHead();
@@ -389,8 +393,8 @@ void Arrow::MouseMoving(
   p->PostPaintEvent(_Line, x1+25, y1, x1+13, y1+12,0,0,true);  // paint new cursor symbol
   p->PostPaintEvent(_Line, x1+18, y1+2, x1+25, y1,0,0,true);
   p->PostPaintEvent(_Line, x1+23, y1+7, x1+25, y1,0,0,true);
-#endif
 }
+#endif
 
 // --------------------------------------------------------------------------
 bool Arrow::MousePressing()

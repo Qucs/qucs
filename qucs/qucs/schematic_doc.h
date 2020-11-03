@@ -292,7 +292,7 @@ signals:
   void signalCursorPosChanged(int, int);
   void signalUndoState(bool);
   void signalRedoState(bool);
-  void signalFileChanged(bool);
+  void signalFileChanged(bool) override;
 
 protected:
   void paintFrame(ViewPainter*);

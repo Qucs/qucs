@@ -75,10 +75,6 @@ void WireDialog::attach(ElementGraphics* gfx)
 
   gp1->addWidget(hTop,1,0);
 
-  // H layout inside the GroupBox
-  QHBoxLayout *hProps = new QHBoxLayout;
-  // PropertyBox->setLayout(hProps);
-
   // left pane
   QWidget *vboxPropsL = new QWidget;
   QVBoxLayout *vL = new QVBoxLayout;
@@ -187,11 +183,6 @@ void WireDialog::slotApplyInput()
 	 _changed = true;
   }else{
   }
-
-  bool display;
-  QTableWidgetItem *item = 0;
-
-  //  make sure we have one item, take selected
 
   if(_changed) {
     auto pos = _gfx->pos();

@@ -218,16 +218,8 @@ public:
 
   void setDrawn(bool b=true){_drawn = b;}
   bool wasDrawn() const{return _drawn;}
-// private: BUG.
-//  Element *selElem;  // component/diagram/painting selected in IconView
-//  ElementMouseAction focusElement; // BUG: use focusMEvent instead
-//  QMouseEvent *focusMEvent;
 
-public: // really?
-//  bool hasElem(){ return selElem; }
-//  Element* getElem(){assert(selElem); return selElem; }
-//  void setElem(Element* e){selElem=e;}
-
+#if 0 //gone now?
 private:
 public: // BUG? called from MouseAction.
   void Set1(QMouseEvent*, SchematicDoc*ignore=nullptr);
@@ -240,6 +232,7 @@ private:
   QList<ElementGraphics*> movingElements;
 public:
   int movingRotated;
+#endif
 
   // menu appearing by right mouse button click on component
   QMenu *ComponentMenu;
@@ -306,7 +299,7 @@ public: // TODO. move into mouse actions
 
   bool eventFilter(QObject *obj, QEvent *event);
   virtual bool handle(QEvent*);
-  void executetaskElement(QUndoCommand* c);
+  void executeCommand(QUndoCommand* c);
   MouseAction* activeAction(){ return _maCurrent; }
   void setActive(MouseAction* a);
 

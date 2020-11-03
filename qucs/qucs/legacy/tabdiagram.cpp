@@ -203,6 +203,7 @@ int TabDiagram::calcDiagram()
   int counting, invisibleCount=0;
   int startWriting, lastCount = 1;
 
+#if 0 // interface change. possibly refactored somewhere.
   // any graph with data ?
   while(g->isEmpty()) {
     if (!ig.hasNext()) break; // no more graphs
@@ -373,6 +374,7 @@ funcEnd:
   }
 
   return 1;
+#endif
 }
 
 // ------------------------------------------------------------

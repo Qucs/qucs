@@ -63,6 +63,9 @@ void DocumentLanguage::new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
 /*--------------------------------------------------------------------------*/
 Element const* DocumentLanguage::find_proto(const std::string& Name, const Element* Scope) const
 {
+	if(Scope){
+		incomplete();
+	}
 #if 0
   const CARD* p = NULL;
   if (Scope) {

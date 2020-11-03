@@ -87,17 +87,6 @@ void MouseActions::setActive(MouseAction* a)
   _maCurrent = a;
 }
 
-#if 0
-void MouseActions::undo()
-{
-  incomplete();
-}
-void MouseActions::redo()
-{
-  incomplete();
-}
-#endif
-
 // -----------------------------------------------------------
 void MouseActions::setPainter(SchematicDoc *)
 {
@@ -109,8 +98,8 @@ bool MouseActions::pasteElements(SchematicDoc *)
   QClipboard *cb = QApplication::clipboard();   // get system clipboard
   QString s = cb->text(QClipboard::Clipboard);
 //  DocumentStream stream(&s, QIODevice::ReadOnly);
-  movingElements.clear();
 #if 0
+  movingElements.clear();
   if(!Doc->paste(&stream, &movingElements)){
     // something went wrong during parse.
     // throw?!
@@ -454,7 +443,6 @@ void MouseActions::MMoveWire2(SchematicDoc *, QMouseEvent *)
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickWire2;
   Doc->viewport()->update();
 }
-#endif
 
 void MouseActions::Set1(QMouseEvent* Event, SchematicDoc*)
 {
@@ -482,6 +470,7 @@ void MouseActions::Set3(QMouseEvent* Event, SchematicDoc*)
   MAx3 = pos.x();
   MAy3 = pos.y();
 }
+#endif
 
 #if 0
 /**
@@ -642,10 +631,10 @@ void MouseActions::MMoveMoving2(SchematicDoc *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMovePaste(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MMovePaste(SchematicDoc *, QMouseEvent *)
 {
   unreachable();
-  Set1(Event, Doc);
+  //Set1(Event, Doc);
 //  moveElements(Doc,MAx1,MAy1);
   // paintElementsScheme(Doc);
 
@@ -686,8 +675,9 @@ void MouseActions::MMoveScrollBar(SchematicDoc *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveLabel(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MMoveLabel(SchematicDoc *, QMouseEvent *)
 {
+#if 0
   Set3(Event, Doc);
 
   // paint marker
@@ -699,6 +689,7 @@ void MouseActions::MMoveLabel(SchematicDoc *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Line, MAx3+12, MAy3-12, MAx3+15, MAy3-23);
   Doc->PostPaintEvent (_Line, MAx3+14, MAy3-17, MAx3+17, MAy3-17);
   Doc->PostPaintEvent (_Line, MAx3+19, MAy3-12, MAx3+16, MAy3-23);
+#endif
 }
 
 
@@ -707,13 +698,15 @@ void MouseActions::MMoveLabel(SchematicDoc *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveMarker(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MMoveMarker(SchematicDoc *, QMouseEvent *)
 {
+#if 0
   Set3(Event, Doc);
 
   Doc->PostPaintEvent (_Line, MAx3, MAy3-2, MAx3-8, MAy3-10);
   Doc->PostPaintEvent (_Line, MAx3+1, MAy3-3, MAx3+8, MAy3-10);
   Doc->PostPaintEvent (_Line, MAx3-7, MAy3-10, MAx3+7, MAy3-10);
+#endif
 }
 
 
@@ -722,8 +715,9 @@ void MouseActions::MMoveMarker(SchematicDoc *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveMirrorY(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MMoveMirrorY(SchematicDoc *, QMouseEvent *)
 {
+#if 0
   Set3(Event, Doc);
 
   Doc->PostPaintEvent (_Line, MAx3-11, MAy3-4, MAx3-9, MAy3-9);
@@ -731,6 +725,7 @@ void MouseActions::MMoveMirrorY(SchematicDoc *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Line, MAx3+11, MAy3-4, MAx3+9, MAy3-9);
   Doc->PostPaintEvent (_Line, MAx3+11, MAy3-3, MAx3+6, MAy3-3);
   Doc->PostPaintEvent (_Arc, MAx3-10, MAy3-8, 21, 10, 16*20, 16*140,false);
+#endif
 }
 
 
@@ -739,8 +734,9 @@ void MouseActions::MMoveMirrorY(SchematicDoc *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveMirrorX(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MMoveMirrorX(SchematicDoc *, QMouseEvent *)
 {
+#if 0
   Set3(Event, Doc);
 
   Doc->PostPaintEvent (_Line, MAx3-4, MAy3-11, MAx3-9, MAy3-9);
@@ -748,6 +744,7 @@ void MouseActions::MMoveMirrorX(SchematicDoc *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Line, MAx3-4, MAy3+11, MAx3-9, MAy3+9);
   Doc->PostPaintEvent (_Line, MAx3-3, MAy3+11, MAx3-3, MAy3+6);
   Doc->PostPaintEvent (_Arc, MAx3-8, MAy3-10, 10, 21, 16*110, 16*140,false);
+#endif
 }
 
 /**
@@ -755,54 +752,27 @@ void MouseActions::MMoveMirrorX(SchematicDoc *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveRotate(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MMoveRotate(SchematicDoc *, QMouseEvent *)
 {
+#if 0
   Set3(Event, Doc);
 
   Doc->PostPaintEvent (_Line, MAx3-6, MAy3+8, MAx3-6, MAy3+1);
   Doc->PostPaintEvent (_Line, MAx3-7, MAy3+8, MAx3-12, MAy3+8);
   Doc->PostPaintEvent (_Arc, MAx3-10, MAy3-10, 21, 21, -16*20, 16*240,false);
+#endif
 }
 
-// this is probably not needed.
-bool MouseActions::eventFilter(QObject *obj, QEvent *e)
+// not sure why this is needed
+bool MouseActions::eventFilter(QObject *, QEvent *e)
 {
   if(e->isAccepted()){itested();
   }else{itested();
     // drop event?
   }
-//  assert(obj==&doc());
   assert(e);
   e->ignore(); // but why??
   return false; // don't filter
-
-  bool f = QObject::eventFilter(obj, e);
-
-  QMouseEvent* m = dynamic_cast<QMouseEvent*>(e);
-  if(!f){ untested();
-  }else if(m){ itested();
-    switch(e->type()){
-    case QEvent::MouseButtonPress:
-      break;
-    case QEvent::MouseMove:
-      break;
-    default:
-	trace1("possibly incomplete mouseaction", e->type());
-    }
-    auto ee = doc().snapToGrid(m);
-    handle(&ee);
-    if(ee.isAccepted()){ untested();
-      e->accept();
-    }else{ untested();
-      e->ignore();
-    }
-  }else{
-    //trace1("not mouse?", e->type());
-    assert(e->type() != QEvent::MouseMove);
-    assert(e->type() != QEvent::MouseButtonPress);
-    assert(e->type() != QEvent::MouseButtonRelease);
-  }
-  return f;
 }
 
 /**
@@ -810,13 +780,15 @@ bool MouseActions::eventFilter(QObject *obj, QEvent *e)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveActivate(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MMoveActivate(SchematicDoc *, QMouseEvent *)
 {
+#if 0
   Set3(Event, Doc);
 
   Doc->PostPaintEvent (_Rect, MAx3, MAy3-9, 14, 10);
   Doc->PostPaintEvent (_Line, MAx3, MAy3-9, MAx3+13, MAy3);
   Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx3+13, MAy3-9);
+#endif
 }
 
 
@@ -825,8 +797,9 @@ void MouseActions::MMoveActivate(SchematicDoc *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveOnGrid(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MMoveOnGrid(SchematicDoc *, QMouseEvent *)
 {
+#if 0
   Set3(Event, Doc);
 
   Doc->PostPaintEvent (_Line, MAx3+10, MAy3+ 3, MAx3+25, MAy3+3);
@@ -835,6 +808,7 @@ void MouseActions::MMoveOnGrid(SchematicDoc *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Line, MAx3+13, MAy3, MAx3+13, MAy3+15);
   Doc->PostPaintEvent (_Line, MAx3+17, MAy3, MAx3+17, MAy3+15);
   Doc->PostPaintEvent (_Line, MAx3+21, MAy3, MAx3+21, MAy3+15);
+#endif
 }
 
 
@@ -843,8 +817,9 @@ void MouseActions::MMoveOnGrid(SchematicDoc *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveMoveTextB(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MMoveMoveTextB(SchematicDoc *, QMouseEvent *)
 {
+#if 0
   Set3(Event, Doc);
 
   Doc->PostPaintEvent (_Line, MAx3+14, MAy3   , MAx3+16, MAy3);
@@ -855,6 +830,7 @@ void MouseActions::MMoveMoveTextB(SchematicDoc *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Line, MAx3+23, MAy3+10, MAx3+25, MAy3+10);
   Doc->PostPaintEvent (_Line, MAx3+26, MAy3   , MAx3+26, MAy3+ 3);
   Doc->PostPaintEvent (_Line, MAx3+26, MAy3+ 7, MAx3+26, MAy3+10);
+#endif
 }
 
 
@@ -863,8 +839,9 @@ void MouseActions::MMoveMoveTextB(SchematicDoc *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveMoveText(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MMoveMoveText(SchematicDoc *, QMouseEvent *)
 {
+#if 0
   QPointF pos=Doc->mapToScene(Event->pos());
   int newX=pos.x();
   int newY=pos.y();
@@ -875,6 +852,7 @@ void MouseActions::MMoveMoveText(SchematicDoc *Doc, QMouseEvent *Event)
   MAy3  = newY;
 
   Doc->PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);
+#endif
 }
 
 
@@ -883,14 +861,16 @@ void MouseActions::MMoveMoveText(SchematicDoc *Doc, QMouseEvent *Event)
  * @param Doc
  * @param Event
  */
-void MouseActions::MMoveZoomIn(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MMoveZoomIn(SchematicDoc *, QMouseEvent *)
 {
+#if 0 // TODO
   Set3(Event, Doc);
 
   Doc->PostPaintEvent (_Line, MAx3+14, MAy3   , MAx3+22, MAy3);
   Doc->PostPaintEvent (_Line, MAx3+18, MAy3-4 , MAx3+18, MAy3+4);
   Doc->PostPaintEvent (_Ellipse, MAx3+12, MAy3-6, 13, 13,0,0,false);
   Doc->viewport()->update();
+#endif
 }
 
 
@@ -1286,8 +1266,9 @@ void MouseActions::MPressOnGrid(SchematicDoc *Doc, QMouseEvent* Event)
 }
 
 // -----------------------------------------------------------
-void MouseActions::MPressMoveText(SchematicDoc *Doc, QMouseEvent* Event)
+void MouseActions::MPressMoveText(SchematicDoc *, QMouseEvent*)
 { untested();
+#if 0
   QPointF pos=Doc->mapToScene(Event->pos());
   float fX=pos.x();
   float fY=pos.y();
@@ -1314,6 +1295,7 @@ void MouseActions::MPressMoveText(SchematicDoc *Doc, QMouseEvent* Event)
     QucsMain->MouseReleaseAction = &MouseActions::MReleaseMoveText;
     Doc->grabKeyboard();  // no keyboard inputs during move actions
   }
+#endif
 #endif
 }
 
@@ -1578,8 +1560,9 @@ void MouseActions::rotateElements(SchematicDoc *Doc, int& x1, int& y1)
 
 // -----------------------------------------------------------
 #if 1
-void MouseActions::MReleasePaste(SchematicDoc *Doc, QMouseEvent *Event)
+void MouseActions::MReleasePaste(SchematicDoc *, QMouseEvent *)
 { untested();
+#if 0
   int x1, y1, x2, y2, rot;
   QFileInfo Info(Doc->docName());
   //QPainter painter(Doc->viewport());
@@ -1590,7 +1573,6 @@ void MouseActions::MReleasePaste(SchematicDoc *Doc, QMouseEvent *Event)
     // insert all moved elements into document
     for(auto pe : movingElements){
       pe->setSelected(false);
-#if 0
       switch(pe->Type) {
 	case isWire:
 	  if(pe->x1_() == pe->x2_()){ untested();
@@ -1623,7 +1605,6 @@ void MouseActions::MReleasePaste(SchematicDoc *Doc, QMouseEvent *Event)
 	default:
 	  incomplete();
       }
-#endif
       if(Component* C=dynamic_cast<Component*>(pe)){
 	// legacy component
 	Doc->insertElement(C);
@@ -1639,7 +1620,7 @@ void MouseActions::MReleasePaste(SchematicDoc *Doc, QMouseEvent *Event)
 
     pasteElements(Doc);
     // keep rotation sticky for pasted elements
-    rot = movingRotated;
+    // rot = movingRotated;
     x1 = y1 = 0;
     while(rot--) { incomplete();
       // rotateElements(Doc,x1,y1);
@@ -1676,6 +1657,7 @@ void MouseActions::MReleasePaste(SchematicDoc *Doc, QMouseEvent *Event)
 
   default: ;    // avoids compiler warnings
   }
+#endif
 }
 #endif
 
@@ -1924,7 +1906,7 @@ bool MouseActions::handle(QEvent*e)
 
   if(c){itested();
     // emit signalUndoState(true);
-    executetaskElement(c);
+    executeCommand(c);
     return true;
   }else{
     return false;
@@ -1932,7 +1914,7 @@ bool MouseActions::handle(QEvent*e)
 
 }
 
-void MouseActions::executetaskElement(QUndoCommand* c)
+void MouseActions::executeCommand(QUndoCommand* c)
 {
   assert(c);
   QUndoStack* u = _doc.undoStack();

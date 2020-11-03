@@ -1,9 +1,6 @@
 /***************************************************************************
-                              rectangle.cpp
-                             ---------------
-    begin                : Sat Nov 22 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -14,10 +11,10 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "rectangle.h"
 #include "filldialog.h"
 #include "misc.h"
 #include "schematic_doc.h"
+#include "painting.h"
 
 #include <QPainter>
 #include <QPushButton>
@@ -25,6 +22,42 @@
 #include <QComboBox>
 #include <QCheckBox>
 
+namespace{
+class Rectangle : public Painting  {
+public:
+  Rectangle(bool _filled=false);
+ ~Rectangle();
+
+  void paintScheme(SchematicDoc*) const;
+  void getCenter(int&, int&);
+  void setCenter(int, int, bool relative=false);
+
+  Element* clone() const { return new Rectangle(*this); }
+
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  static Element* info_filled(QString&, char* &, bool getNewOne=false);
+  bool load(const QString&);
+  QString save();
+  QString saveCpp();
+  QString saveJSON();
+  void paint(ViewPainter*);
+//  void MouseMoving(SchematicDoc*, int, int, int, int, SchematicDoc*, int, int, bool);
+  bool MousePressing();
+  bool getSelected(float, float, float);
+  bool resizeTouched(float, float, float);
+  void MouseResizeMoving(int, int, SchematicDoc*);
+
+  void rotate();
+  void mirrorX();
+  void mirrorY();
+  bool Dialog();
+
+  QPen  Pen;
+  QBrush Brush;    // filling style/color
+  bool  filled;    // filled or not (for "getSelected" etc.)
+};
+
+#if 0
 Rectangle::Rectangle(bool _filled) : Painting()
 {
   Name = "Rectangle ";
@@ -36,6 +69,7 @@ Rectangle::Rectangle(bool _filled) : Painting()
   x1 = x2 = 0;
   y1 = y2 = 0;
 }
+#endif
 
 Rectangle::~Rectangle()
 {
@@ -71,13 +105,6 @@ void Rectangle::paint(ViewPainter *p)
 }
 
 // --------------------------------------------------------------------------
-void Rectangle::paintScheme(SchematicDoc *) const
-{
-	incomplete();
-//  p->PostPaintEvent(_Rect, cx, cy, x2, y2);
-}
-
-// --------------------------------------------------------------------------
 void Rectangle::getCenter(int& x, int &y)
 {
 	 auto cx=Element::cx();
@@ -99,6 +126,7 @@ void Rectangle::setCenter(int x, int y, bool relative)
 }
 
 // --------------------------------------------------------------------------
+#if 0
 Element* Rectangle::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Rectangle");
@@ -117,6 +145,7 @@ Element* Rectangle::info_filled(QString& Name, char* &BitmapFile, bool getNewOne
   if(getNewOne)  return new Rectangle(true);
   return 0;
 }
+#endif
 
 // --------------------------------------------------------------------------
 bool Rectangle::load(const QString& s)
@@ -191,6 +220,7 @@ QString Rectangle::save()
 }
 
 // --------------------------------------------------------------------------
+#if 0
 QString Rectangle::saveCpp()
 {
 	 auto cx=Element::cx();
@@ -227,9 +257,9 @@ QString Rectangle::saveJSON()
       arg(b);
   return s;
 }
+#endif
 
 // --------------------------------------------------------------------------
-// Checks if the resize area was clicked.
 bool Rectangle::resizeTouched(float fX, float fY, float len)
 {
 	 auto cx=Element::cx();
@@ -280,12 +310,12 @@ incomplete();
 // --------------------------------------------------------------------------
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
+#if 0
 void Rectangle::MouseMoving(
 	SchematicDoc *paintScale, int, int, int gx, int gy,
 	SchematicDoc *p, int x, int y, bool drawn)
 {
 	incomplete();
-#if 0
   if(State > 0) {
     if(State > 1)
       paintScale->PostPaintEvent(_Rect,x1, y1, x2-x1, y2-y1);  // erase old painting
@@ -314,12 +344,13 @@ void Rectangle::MouseMoving(
     p->PostPaintEvent(_Line, cx+26, cy+1, cx+17, cy+10,0,0,true);
     p->PostPaintEvent(_Line, cx+29, cy+5, cx+24, cy+10,0,0,true);
   }
-#endif
 }
+#endif
 
 // --------------------------------------------------------------------------
 bool Rectangle::MousePressing()
 {
+#if 0
 	 auto cx=Element::cx();
      auto cy=Element::cy();
 
@@ -337,6 +368,7 @@ bool Rectangle::MousePressing()
     State = 0;
     return true;    // rectangle is ready
   }
+#endif
   return false;
 }
 
@@ -447,4 +479,5 @@ bool Rectangle::Dialog()
 
   delete d;
   return changed;
+}
 }
