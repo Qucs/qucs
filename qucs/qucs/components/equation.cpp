@@ -105,7 +105,7 @@ Element* Equation::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 #endif
 
-void Equation::dialgButtStuff(ComponentDialog& d)const
+void Equation::dialgButtStuff(ComponentDialog&)const
 {
   incomplete();
   // d.enableButtons();

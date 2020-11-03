@@ -188,7 +188,7 @@ bool Graph::load(const QString& _s)
  *
  * FIXME: should return reference to hit sample point or some context.
  */
-int Graph::getSelected(int x, int y)
+int Graph::getSelected(int , int )
 {
 #if 0
   auto pp = ScrPoints.begin();
@@ -350,7 +350,7 @@ Graph* Graph::sameNewOne()
 /*!
  * find a sample point close to VarPos, snap to it, and return data at VarPos
  */
-std::pair<double,double> Graph::findSample(std::vector<double>& VarPos) const
+std::pair<double,double> Graph::findSample(std::vector<double>&) const
 {
 #if 0
   DataX const* pD;
@@ -373,6 +373,7 @@ std::pair<double,double> Graph::findSample(std::vector<double>& VarPos) const
 
   return std::pair<double,double>(cPointsY[2*n], cPointsY[2*n+1]);
 #endif
+  return std::make_pair(0., 0.);
 }
 
 // -----------------------------------------------------------------------

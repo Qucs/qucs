@@ -141,7 +141,7 @@ Element* SmithDiagram::info_y(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-QString SmithDiagram::extraMarkerText(Marker const* m) const
+QString SmithDiagram::extraMarkerText(Marker const*) const
 {
 #if 0
   assert(m);

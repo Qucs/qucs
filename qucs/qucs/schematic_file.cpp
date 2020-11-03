@@ -871,6 +871,8 @@ static const std::string VHDL_LIBRARIES("\nlibrary ieee;\nuse ieee.std_logic_116
 // ---------------------------------------------------
 // Write the netlist as subcircuit to the text stream 'stream'.
 // BUG: not here.
+
+#if 0
 bool SchematicModel::createSubNetlist(ostream_t& stream, int& countInit,
                      QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
 		  bool creatingLib, NetLang const& nl)
@@ -906,5 +908,6 @@ bool SchematicModel::createSubNetlist(ostream_t& stream, int& countInit,
   // Signals.clear();  // was filled in "giveNodeNames()"
   return true;
 }
+#endif
 
 // vim:ts=8:sw=2:noet

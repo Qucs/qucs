@@ -306,9 +306,7 @@ void VerilogNetlister::createNetlist(DocumentStream& stream,
 /// hmm same as qucsator? cleanup and share.
 void VerilogNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol const& m) const
 { incomplete();
-	bool r;
 	QString s;
-	bool isAnalog=true;
 
 	auto const& sckt = *m.subckt();
 

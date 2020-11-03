@@ -15,10 +15,14 @@
 /* -------------------------------------------------------------------------------- */
 #include "simulator.h"
 #include "qucsdoc.h"
+#include "io_error.h"
 /* -------------------------------------------------------------------------------- */
 Simulator::~Simulator()
 {
-	QucsData::detach(_data_p);
+	if(_data_p){ untested();
+		QucsData::detach(_data_p);
+	}else{ untested();
+	}
 }
 /* -------------------------------------------------------------------------------- */
 // possibly wrong.
@@ -33,7 +37,11 @@ Simulator::~Simulator()
 #include "simulator.h"
 
 Simulator::Simulator()
-: _doc(nullptr), _state(sst_idle), _ctrl(nullptr) {
+  : _doc(nullptr),
+    _data_p(nullptr),
+    _state(sst_idle),
+    _ctrl(nullptr)
+{
 }
 /* -------------------------------------------------------------------------------- */
 void Simulator::attachCtrl(SimCtrl* ctrl)
@@ -55,4 +63,13 @@ void Simulator::detachCtrl(SimCtrl const* ctrl)
 	 // throw?
 	  unreachable();
   }
+}
+/* -------------------------------------------------------------------------------- */
+void Simulator::message(QucsMsgType lvl, std::string const& msg)
+{
+	if(_ctrl){
+		_ctrl->message(lvl, msg);
+	}else{
+		Object::message(lvl, msg.c_str());
+	}
 }

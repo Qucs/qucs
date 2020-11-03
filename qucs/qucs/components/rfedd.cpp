@@ -108,6 +108,7 @@ QString RFedd::netlist() const
 
   return s+e;
 #endif
+  return "";
 }
 
 // -------------------------------------------------------

@@ -198,18 +198,9 @@ void SchematicDoc::setName (const QString& Name_)
 
 // ---------------------------------------------------
 // Sets the document to be changed or not to be changed.
-void SchematicDoc::setChanged(bool c, bool fillStack, char Op)
+void SchematicDoc::setChanged(bool , bool , char)
 {itested();
-  if((!DocChanged) && c)
-    emit signalFileChanged(true);
-  else if(DocChanged && (!c))
-    emit signalFileChanged(false);
-  DocChanged = c;
-
-  showBias = -1;   // schematic changed => bias points may be invalid
-
-  if(!fillStack)
-    return;
+  unreachable(); // moved to doc::execute
 
 
   // ................................................

@@ -104,6 +104,7 @@ QString RFedd2P::netlist() const
 
   return s+e;
 #endif
+  return "";
 }
 
 // -------------------------------------------------------

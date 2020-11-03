@@ -27,6 +27,38 @@
 
 #include <cmath>
 
+namespace{
+class EllipseArc : public Painting  {
+public:
+  EllipseArc();
+ ~EllipseArc();
+
+  void paintScheme(SchematicDoc*);
+  void getCenter(int&, int&);
+//  void setCenter(int, int, bool relative=false);
+
+  Element* clone() const {return new EllipseArc(*this);}
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  bool load(const QString&);
+  QString save();
+  QString saveCpp();
+  QString saveJSON();
+  void paint(ViewPainter*);
+//  void MouseMoving(SchematicDoc*, int, int, int, int, SchematicDoc*, int, int, bool);
+//  bool MousePressing();
+  bool getSelected(float, float, float);
+  bool resizeTouched(float, float, float);
+//  void MouseResizeMoving(int, int, SchematicDoc*);
+
+  void rotate();
+  void mirrorX();
+  void mirrorY();
+  bool Dialog();
+
+  QPen  Pen;
+  int   Angle, ArcLen;   // start angle and arc length
+};
+
 EllipseArc::EllipseArc() : Painting()
 {
   Name = "EArc ";
@@ -61,12 +93,6 @@ void EllipseArc::paint(ViewPainter *p)
 
   p->setPen(Pen);
   p->drawArc(cx, cy, x2, y2, Angle, ArcLen);
-}
-
-// --------------------------------------------------------------------------
-void EllipseArc::paintScheme(SchematicDoc *p)
-{
-	incomplete();
 }
 
 // --------------------------------------------------------------------------
@@ -218,9 +244,9 @@ bool EllipseArc::resizeTouched(float fX, float fY, float len)
 
 // --------------------------------------------------------------------------
 // Mouse move action during resize.
+#if 0
 void EllipseArc::MouseResizeMoving(int x, int y, SchematicDoc *p)
 {
-#if 0
   paintScheme(p);  // erase old painting
   switch(State) {
     case 0: x2 = x-cx; y2 = y-cy; // lower right corner
@@ -236,17 +262,17 @@ void EllipseArc::MouseResizeMoving(int x, int y, SchematicDoc *p)
   if(y2 < 0) { State ^= 2; y2 *= -1; cy -= y2; }
 
   paintScheme(p);  // paint new painting
-#endif
 }
+#endif
 
 // --------------------------------------------------------------------------
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
+#if 0
 void EllipseArc::MouseMoving(
 	SchematicDoc *paintScale, int fx, int fy, int gx, int gy,
 	SchematicDoc *p, int x, int y, bool drawn)
 {
-#if 0
   switch(State) {
     case 0 :
        x2 = gx;
@@ -313,13 +339,11 @@ void EllipseArc::MouseMoving(
   x1 = x;
   y1 = y;
   p->PostPaintEvent(_Arc, x1+13, y1, 18, 12, 16*45, 16*200,true);  // paint new cursor symbol
-#endif
 }
 
 // --------------------------------------------------------------------------
 bool EllipseArc::MousePressing()
 {
-#if 0
   State++;
   switch(State) {
     case 1 :
@@ -331,9 +355,9 @@ bool EllipseArc::MousePressing()
 	State = 0;
 	return true;    // painting is ready
   }
-#endif
   return false;
 }
+#endif
 
 // --------------------------------------------------------------------------
 // Checks if the coordinates x/y point to the painting.
@@ -436,4 +460,5 @@ bool EllipseArc::Dialog()
 
   delete d;
   return changed;
+}
 }
