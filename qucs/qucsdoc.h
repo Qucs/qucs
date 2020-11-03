@@ -96,6 +96,7 @@ protected: // gaah
 protected: // why not directly connect to undostack slots?!
   virtual void undo();
   virtual void redo();
+  virtual void signalFileChanged(bool){incomplete();}
 
 protected:
 //  void toggleAction(QAction* sender);
@@ -150,7 +151,7 @@ public:
 		assert(e);
 		return QMouseEvent(*e);
 	}
-	void executetaskElement(QUndoCommand*);
+	void executeCommand(QUndoCommand*);
 private:
 	void setActiveAction(MouseAction* a);
 	MouseAction* activeAction();

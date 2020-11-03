@@ -53,7 +53,6 @@ Component* BJT::newOne()
   p->recreate(0);
   return p;
 }
-#endif
 
 // -------------------------------------------------------
 Element* BJT::info(QString& Name, char* &BitmapFile, bool getNewOne)
@@ -79,6 +78,7 @@ Element* BJT::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
   }
   return 0;
 }
+#endif
 
 // -------------------------------------------------------
 void BJT::createSymbol()

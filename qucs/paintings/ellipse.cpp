@@ -43,8 +43,8 @@ public:
   QString saveCpp();
   QString saveJSON();
   void paint(ViewPainter*);
-  void MouseMoving(SchematicDoc*, int, int, int, int, SchematicDoc*, int, int, bool);
-  bool MousePressing();
+//  void MouseMoving(SchematicDoc*, int, int, int, int, SchematicDoc*, int, int, bool);
+//  bool MousePressing();
   bool getSelected(float, float, float);
   bool resizeTouched(float, float, float);
   void MouseResizeMoving(int, int, SchematicDoc*);
@@ -281,7 +281,7 @@ bool Ellipse::resizeTouched(float fX, float fY, float len)
 
 // --------------------------------------------------------------------------
 // Mouse move action during resize.
-void Ellipse::MouseResizeMoving(int, int, SchematicDoc *p)
+void Ellipse::MouseResizeMoving(int, int, SchematicDoc *)
 { untested();
 #if 0
   paintScheme(p);  // erase old painting
@@ -304,11 +304,11 @@ void Ellipse::MouseResizeMoving(int, int, SchematicDoc *p)
 // --------------------------------------------------------------------------
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
+#if 0
 void Ellipse::MouseMoving(
 	SchematicDoc *paintScale, int, int, int gx, int gy,
 	SchematicDoc *p, int x, int y, bool drawn)
 { untested();
-#if 0
   if(State > 0) { untested();
     if(State > 1)
       // _Ellipse hang/crash application, using _Arc solved, see bug 141 (closed)
@@ -336,13 +336,13 @@ void Ellipse::MouseMoving(
     p->PostPaintEvent(_Line, cx+25, cy+2, cx+18, cy+9,0,0,true);
     p->PostPaintEvent(_Line, cx+29, cy+4, cx+23, cy+10,0,0,true);
   }
-#endif
 }
+#endif
 
 // --------------------------------------------------------------------------
+#if 0
 bool Ellipse::MousePressing()
 { untested();
-#if 0
   State++;
   if(State == 1) { untested();
     x1 = x2;
@@ -357,9 +357,9 @@ bool Ellipse::MousePressing()
     State = 0;
     return true;    // painting is ready
   }
-#endif
   return false;
 }
+#endif
 
 // --------------------------------------------------------------------------
 // Checks if the coordinates x/y point to the painting.

@@ -35,8 +35,8 @@ public:
   GraphicLine();
   ~GraphicLine();
   
-  void setSomeStuff( int cx_=0, int cy_=0, int x2_=0, int y2_=0,
-              QPen Pen_=QPen(QColor()));
+//  void setSomeStuff( int cx_=0, int cy_=0, int x2_=0, int y2_=0,
+//              QPen Pen_=QPen(QColor()));
 
   void paintScheme(SchematicDoc*);
   void getCenter(int&, int&);
@@ -70,6 +70,7 @@ GraphicLine::GraphicLine()
 {
 }
 
+#if 0
 void GraphicLine::setSomeStuff(int cx_, int cy_, int x2_, int y2_, QPen Pen_)
 {
   Name = "Line ";
@@ -82,6 +83,7 @@ void GraphicLine::setSomeStuff(int cx_, int cy_, int x2_, int y2_, QPen Pen_)
   x2 = x2_;
   y2 = y2_;
 }
+#endif
 
 GraphicLine::~GraphicLine()
 {

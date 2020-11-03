@@ -212,10 +212,9 @@ void SpiceDialog::reject()
 // Is called, if the "Apply"-button is pressed.
 void SpiceDialog::slotButtApply()
 {
-  Component *pc;
-  if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->name());
-  else if(CompNameEdit->text() != Comp->name())
-  {
+  if(CompNameEdit->text().isEmpty()){
+	  CompNameEdit->setText(Comp->name());
+  } else if(CompNameEdit->text() != Comp->name()) {
     auto pc = Doc->find_component(CompNameEdit->text());
 
     if (pc) {

@@ -70,6 +70,7 @@ Param_Sweep::~Param_Sweep()
 {
 }
 
+#if 0
 Element* Param_Sweep::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Parameter sweep");
@@ -78,6 +79,7 @@ Element* Param_Sweep::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new Param_Sweep();
   return 0;
 }
+#endif
 
 void Param_Sweep::recreate(SchematicDoc*)
 {

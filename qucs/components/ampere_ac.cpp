@@ -69,6 +69,7 @@ Ampere_ac::Ampere_ac() : Component()
   set_rotated(1);  // fix historical flaw ??
 }
 
+#if 0
 Element* Ampere_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("ac Current Source");
@@ -77,4 +78,6 @@ Element* Ampere_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new Ampere_ac();
   return 0;
 }
+#endif
+
 }

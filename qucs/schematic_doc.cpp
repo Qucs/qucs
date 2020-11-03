@@ -872,8 +872,7 @@ void SchematicDoc::slotSimulate()
     }
   }
 
-  // slotResetWarnings();
-
+  // qucsapp->slotResetWarnings(); // what does it do?
 
   Simulator *sim = Doc->simulator("qucsator");
   assert(sim);
@@ -888,16 +887,19 @@ void SchematicDoc::slotSimulate()
 //		this, SLOT(slotChangePage(QString&, QString&)));
 
 //  ctrl->show();
-  ctrl->open();
-  if(!ctrl->startProcess()){ untested();
-    return;
-  }else{ untested();
+  ctrl->open(); // does not work
+
+  try{
+	  ctrl->startProcess();
+  }catch(Exception& e){
+	  incomplete();
   }
 
   // to kill it before qucs ends
   connect(this, SIGNAL(signalKillEmAll()), ctrl, SLOT(slotClose()));
 } // SchematicDoc::slotSimulate
 /*--------------------------------------------------------------------------*/
+// TODO: deduplicate
 void SchematicDoc::slotDCbias()
 {
 //  slotHideEdit(); // disable text edit of component property (why?)
@@ -913,7 +915,7 @@ void SchematicDoc::slotDCbias()
 	  return;
   }
 
-#if 0
+#if 0 // TODO
   // Perhaps the document was modified from another program ?
   QFileInfo Info(Doc->docName());
   if(Doc->lastSaved.isValid()) { untested();
@@ -922,47 +924,41 @@ void SchematicDoc::slotDCbias()
                tr("The document was modified by another program !") + '\n' +
                tr("Do you want to reload or keep this version ?"),
                tr("Reload"), tr("Keep it"));
-      if(No == 0)
-        Doc->load();
+      if(No == 0){
+			Doc->load();
+		}else{
+		}
     }
   }
 #endif
 
-  // slotResetWarnings();
-
- //  SimMessage *sim = new SimMessage(w, simulator, what);
- //
+  //app.slotResetWarnings(); // ?
   std::string which = "qucsator";
 
   Simulator *sim = simulator(which);
-  SimMessage *ctrl = new SimMessage(sim, this); // memory leak??
+  SimMessage *ctrl = new SimMessage(sim, this);
 
-  QWidget* w = this;
+  // QWidget* w = this;
   // ctrl->setParent(w); embeds into scene...
 //  sim->setMode("dcop");
   assert(sim);
   // disconnect is automatically performed, if one of the involved objects
   // is destroyed
   //
-  connect(ctrl, &SimMessage::signalData, // int, SimMessage*),
-         this, &SchematicDoc::slotRefreshData); // (int, SimMessage*));
+  connect(ctrl, &SimMessage::signalData, this, &SchematicDoc::slotRefreshData);
 //  connect(sim, SIGNAL(displayDataPage(QString&, QString&)),
 //		this, SLOT(slotChangePage(QString&, QString&)));
 //
-
-  ctrl->setAttribute(Qt::WA_DeleteOnClose);
-  ctrl->open();
 //  ctrl->show();
-//  sim->show(); //hmm why?
+  ctrl->open(); // does not work
 
   try{
-	 ctrl->startProcess(); // should fork. and come back with statusChanges
-    // to kill it before qucs ends
-    connect(this, SIGNAL(signalKillEmAll()), this, SLOT(killSimulator()));
-  }catch(...){ untested();
+	  ctrl->startProcess();
+  }catch(Exception& e){
 	  incomplete();
-    return;
   }
+
+  connect(this, SIGNAL(signalKillEmAll()), this, SLOT(killSimulator()));
 } // slotDCbias
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::slotRefreshData(std::string const& what)
