@@ -7,6 +7,8 @@
 #include "qt_compat.h"
 #include "io_trace.h"
 
+class Simulator;
+
 struct tQucsSettings {
 	explicit tQucsSettings();
 	tQucsSettings(tQucsSettings const&) = delete;
@@ -58,8 +60,12 @@ struct tQucsSettings {
   bool GraphAntiAliasing;
   bool TextAntiAliasing;
   bool ShowDescriptionProjectTree;
+
+  void setSimulator(Simulator const* s);
+  Simulator const& simulator() const;
 private:
   QString _libDir;
+  Simulator const* _simulator;
 };
 extern tQucsSettings QucsSettings;
 

@@ -19,17 +19,18 @@
 
 #include <QString> // yikes
 
-enum QucsMsgType{
-	QucsTraceMsg=0,
-	QucsLogMsg=1,
-	QucsDebugMsg=2,
-	QucsWarningMsg=3,
-   QucsCriticalMsg=4,
-   QucsFatalMsg=5
-};
 
 // base object for qucs.
 class Object{
+public:
+	enum QucsMsgType{
+		QucsMsgTrace=0,
+		QucsMsgLog=1,
+		QucsMsgDebug=2,
+		QucsMsgWarning=3,
+		QucsMsgCritical=4,
+		QucsMsgFatal=5
+	};
 protected:
 	explicit Object(){}
 	explicit Object(Object const&){}

@@ -693,7 +693,7 @@ static Symbol* parseSymbol(const QString& _s, Symbol* sym)
 {
 	trace1("parseSymbol", _s);
 	bool ok;
-	int  ttx, tty, tmp;
+	int tmp;
 	QString s = _s;
 
 //	if(s.at(0) != '<'){ untested();
@@ -735,17 +735,21 @@ static Symbol* parseSymbol(const QString& _s, Symbol* sym)
 	}
 
 	n  = s.section(' ',5,5);    // tx
-	ttx = n.toInt(&ok);
+	tmp = n.toInt(&ok);
 	if(!ok){ untested();
 		throw Exception("tx parse");
 	}else{
+		(void)tmp;
+//		sym->setParameter("$ttx", std::to_string(tmp));
 	}
 
 	n  = s.section(' ',6,6);    // ty
-	tty = n.toInt(&ok);
+	tmp = n.toInt(&ok);
 	if(!ok){ untested();
 		throw Exception("ty parse");
 	}else{
+		(void)tmp;
+//		sym->setParameter("$tty", std::to_string(tmp));
 	}
 
 	{
@@ -983,7 +987,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 
 		// for equations
 		qDebug() << "Model" << Model;
-#if 1
+#if 0
 		if(Model != "EDD" && Model != "RFEDD" && Model != "RFEDD2P")
 			if(p1->Description.isEmpty()) {  // unknown number of properties ?
 				p1->Name = n.section('=',0,0);
@@ -1031,7 +1035,8 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 	l = l.mid(1, l.length()-2);  // cut off start and end character
 
 
-	if(auto s=dynamic_cast<Component*>(e)){ untested();
+	if(dynamic_cast<Component*>(e)){ untested();
+		// callback?!
 		incomplete();
 	}else if(auto s=dynamic_cast<Symbol*>(e)){
 		::parseSymbol(l, s);
@@ -1173,7 +1178,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 		// setType()
 	}else{
 		qDebug() << "error with" << type;
-		message(QucsWarningMsg,
+		message(QucsMsgWarning,
 			"Format Error:\nUnknown component!\n"
 			"%1\n\n"
 			"Do you want to load schematic anyway?\n"

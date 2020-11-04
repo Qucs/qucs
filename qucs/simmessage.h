@@ -50,6 +50,7 @@ signals:
 
 private: // simCtrl
   void stateChange() override;
+  void message(int level, std::string msg) override;
 
 public slots:
   void slotClose();
@@ -58,7 +59,7 @@ private slots:
   void slotDisplayMsg(std::string&);
   void slotDisplayErr(std::string&);
 //  void slotCloseStdin();
-  void slotStateChanged();
+//  void slotStateChanged();
   void slotSimEnded();
   void slotDisplayButton();
   void AbortSim();

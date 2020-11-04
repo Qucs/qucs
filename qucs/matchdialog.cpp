@@ -674,7 +674,8 @@ void MatchDialog::setS22LineEdits(double Real, double Imag) {
 
 // -----------------------------------------------------------------------
 // Is called if the "Create"-button is pressed.
-void MatchDialog::slotButtCreate() {
+void MatchDialog::slotButtCreate()
+{
   double Z1 = Ref1Edit->text().toDouble(); // Port 1 impedance
   double Z2 = Ref2Edit->text().toDouble(); // Port 2 impedance
   double Freq = FrequencyEdit->text().toDouble() *
@@ -740,6 +741,7 @@ void MatchDialog::slotButtCreate() {
   }
 
   incomplete();
+  (void)success;
 //  QucsMain->slotEditPaste(success);
   accept();
 }
