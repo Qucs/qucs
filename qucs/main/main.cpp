@@ -37,30 +37,37 @@
 
 #include "qucs.h"
 #include "docfmt.h"
-#include "node.h"
 #include "printerwriter.h"
 #include "imagewriter.h"
 #include "schematic_lang.h"
 #include "simulator.h"
 
-//#include "schematic.h"
 #include "module.h"
 #include "misc.h"
 #include "exception.h"
-
-// Wtf?
-#include "components/components.h"
+#include "io_error.h"
 #include "globals.h"
-// #include "components/components.h"
 
-// for now. move to lib later.
-#include "io_findf.cc"
+#include "io_findf.cc" // for now. move to lib later.
+#include "components/components.h" // FIXME
 
 #ifdef _WIN32
 #include <Windows.h>  //for OutputDebugString
 #endif
 
 static const std::string default_simulator="qucsator"; // FIXME: get from rc? maybe from environment?
+
+void setSimulator(char const* name)
+{ untested();
+  Simulator const* S = simulator_dispatcher[name];
+  if(S){ untested();
+    QucsSettings.setSimulator(S);
+  }else{ untested();
+    // message(5, "cannot find simulator " + std::string(name));
+    std::cerr << "cannot find simulator " << std::string(name) << "\n";
+    exit(1);
+  }
+}
 
 /*!
  * \brief qucsMessageOutput handles qDebug, qWarning, qCritical, qFatal.
@@ -261,6 +268,13 @@ void doNetlist(QString schematic_fn, std::string netlist, DocumentFormat const& 
 int doPrint(QString schematic, std::string printFile,
     QString page, int dpi, QString color, QString orientation)
 { untested();
+  incomplete();
+  (void)schematic;
+  (void)printFile;
+  (void)page;
+  (void)dpi;
+  (void)color;
+  (void)orientation;
 
   // there are two ways:
   // - just write a pdf, svg, (e)ps or whatever from schematicModel
@@ -486,7 +500,8 @@ void createDocData()
       // 	(Name, File, true);
         Name = e->label();
         File = e->iconBasename();
-        Component *c = (Component* ) e;
+        Component *c = dynamic_cast<Component*>(e);
+	assert(c); // will fail..
 
         // object info
         QStringList compData;
@@ -573,13 +588,13 @@ void createListComponentEntry()
     // \fixme, crash with diagrams, skip
     if(category == "diagrams") continue;
 
-    char * File;
+//    char * File;
     QString Name;
 
     foreach (Module *Mod, Comps) {
       qDebug() << "some module";
       Element const *e = Mod->element();
-      Component const *cc = prechecked_cast<Component const*>(e);
+//      Component const *cc = prechecked_cast<Component const*>(e);
       Element *ce = e->clone();
       assert(ce);
 
@@ -737,35 +752,29 @@ int main(int argc, char *argv[])
   var = getenv("ADMSXMLBINDIR");
   if(var != NULL) { untested();
       QucsSettings.AdmsXmlBinDir.setPath(QString(var));
-  }
-  else {
+  }else{ untested();
       // default admsXml bindir same as Qucs
       QString admsExec;
-#ifdef __MINGW32__
-      admsExec = QDir::toNativeSeparators(QucsSettings.BinDir+"/"+"admsXml.exe");
-#else
-      admsExec = QDir::toNativeSeparators(QucsSettings.BinDir+"/"+"admsXml");
-#endif
+      admsExec = QDir::toNativeSeparators(QucsSettings.BinDir+"/admsXml" executableSuffix);
       QFile adms(admsExec);
-      if(adms.exists())
+      if(adms.exists()){ untested();
         QucsSettings.AdmsXmlBinDir.setPath(QucsSettings.BinDir);
+      }else{ untested();
+      }
   }
 
   var = getenv("ASCOBINDIR");
   if(var != NULL)  { untested();
       QucsSettings.AscoBinDir.setPath(QString(var));
-  }
-  else  {
+  }else{ untested();
       // default ASCO bindir same as Qucs
       QString ascoExec;
-#ifdef __MINGW32__
-      ascoExec = QDir::toNativeSeparators(QucsSettings.BinDir+"/"+"asco.exe");
-#else
-      ascoExec = QDir::toNativeSeparators(QucsSettings.BinDir+"/"+"asco");
-#endif
+      ascoExec = QDir::toNativeSeparators(QucsSettings.BinDir+"/asco" executableSuffix);
       QFile asco(ascoExec);
-      if(asco.exists())
+      if(asco.exists()){ untested();
         QucsSettings.AscoBinDir.setPath(QucsSettings.BinDir);
+      }else{ untested();
+      }
   }
 
 
@@ -808,9 +817,10 @@ int main(int argc, char *argv[])
 
   QTranslator tor( 0 );
   QString lang = QucsSettings.Language;
-  if(lang.isEmpty()) {
+  if(lang.isEmpty()) { untested();
     QLocale loc;
     lang = loc.name();
+  }else{ untested();
   }
   tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
 
@@ -832,7 +842,7 @@ int main(int argc, char *argv[])
   QString orientation = "portrait";
   std::string netlang_name = default_simulator;
 
-  // simple command line parser
+  // parse_args(argc, argv);
   for (int i = 1; i < argc; ++i) {
     if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) { untested();
       fprintf(stdout,
@@ -861,6 +871,7 @@ int main(int argc, char *argv[])
   "  -i FILENAME    use file as input schematic\n"
   "  -o FILENAME    use file as output netlist\n"
   "  -l DOCLANG     language to be used by dump, can be a simulator name\n"
+  "  -s SIMULATOR   choose a simulator\n"
   "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
   "    --dpi NUMBER                 set dpi value (default 96)\n"
   "    --color [RGB|RGB]            set color mode (default RGB)\n"
@@ -874,26 +885,21 @@ int main(int argc, char *argv[])
       fprintf(stdout, "Qucs " PACKAGE_VERSION "\n");
 #endif
       return 0;
-    } else if (!strcmp(argv[i], "-d") || !strcmp(argv[i], "--dump")) { untested();
+    }else if (!strcmp(argv[i], "-d") || !strcmp(argv[i], "--dump")) { untested();
       dump_flag = true;
-    } else if (!strcmp(argv[i], "-n") || !strcmp(argv[i], "--netlist")) {
+    }else if (!strcmp(argv[i], "-n") || !strcmp(argv[i], "--netlist")) {
       dump_flag = true;
-    } else if (!strcmp(argv[i], "-p") || !strcmp(argv[i], "--print")) { untested();
+    }else if (!strcmp(argv[i], "-p") || !strcmp(argv[i], "--print")) { untested();
       print_flag = true;
-    }
-    else if (!strcmp(argv[i], "--page")) { untested();
+    }else if (!strcmp(argv[i], "--page")) { untested();
       page = argv[++i];
-    }
-    else if (!strcmp(argv[i], "--dpi")) { untested();
+    }else if (!strcmp(argv[i], "--dpi")) { untested();
       dpi = QString(argv[++i]).toInt();
-    }
-    else if (!strcmp(argv[i], "--color")) { untested();
+    }else if (!strcmp(argv[i], "--color")) { untested();
       color = argv[++i];
-    }
-    else if (!strcmp(argv[i], "--orin")) { untested();
+    }else if (!strcmp(argv[i], "--orin")) { untested();
       orientation = argv[++i];
-    }
-    else if (!strcmp(argv[i], "-a")) {
+    }else if (!strcmp(argv[i], "-a")) {
       ++i;
       qDebug() << "attaching" << argv[i];
       std::string pp = plugpath();
@@ -904,31 +910,27 @@ int main(int argc, char *argv[])
       }else{
       }
       attach_single(pp, what);
-    }
-    else if(!strcmp(argv[i], "-q") || !strcmp(argv[i], "--quit")) {
+    }else if(!strcmp(argv[i], "-q") || !strcmp(argv[i], "--quit")) {
 	exit(0);
-    }
-    else if (!strcmp(argv[i], "-i")) {
+    }else if (!strcmp(argv[i], "-i")) {
       inputfile = argv[++i];
-    }
-    else if (!strcmp(argv[i], "-o")) {
+    }else if (!strcmp(argv[i], "-o")) {
       outputfile = argv[++i];
-    }
-    else if (!strcmp(argv[i], "-l")) {
+    }else if (!strcmp(argv[i], "-l")) {
       netlang_name = argv[++i];
-    }
-    else if(!strcmp(argv[i], "-icons")) { untested();
+    }else if (!strcmp(argv[i], "-s")) {
+      setSimulator(argv[++i]);
+    }else if(!strcmp(argv[i], "-icons")) { untested();
       createIcons();
       return 0;
-    }
-    else if(!strcmp(argv[i], "-doc")) { untested();
+    }else if(!strcmp(argv[i], "-doc")) { untested();
       createDocData();
       return 0;
-    } else if(!strcmp(argv[i], "-list-entries")) {
+    }else if(!strcmp(argv[i], "-list-entries")) {
       incomplete(); // don't use.
       createListComponentEntry();
       return 0;
-    } else if(!strcmp(argv[i], "--list-entries")) {
+    }else if(!strcmp(argv[i], "--list-entries")) {
       createListComponentEntry();
       return 0;
     }
@@ -944,7 +946,7 @@ int main(int argc, char *argv[])
 
   if(fmt){
     // just use it.
-  }else if(auto sd = simulator_dispatcher[netlang_name]){ untested();
+  }else if(simulator_dispatcher[netlang_name]){ untested();
     incomplete();
     // ask a simulator.
 //    fmt = sd->netLang();

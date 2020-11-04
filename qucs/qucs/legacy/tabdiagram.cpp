@@ -181,7 +181,7 @@ int TabDiagram::calcDiagram()
   if(xAxis.limit_min < 0.0)
     xAxis.limit_min = 0.0;
 
-  Graph *firstGraph;
+//  Graph *firstGraph;
 
   QListIterator<Graph *> ig(Graphs);
   Graph *g = 0;
@@ -196,12 +196,12 @@ int TabDiagram::calcDiagram()
     return 0;
   }
 
-  int NumAll=0;   // how many numbers per column
-  int NumLeft=0;  // how many numbers could not be written
+//  int NumAll=0;   // how many numbers per column
+//  int NumLeft=0;  // how many numbers could not be written
 
-  double *py, *px;
-  int counting, invisibleCount=0;
-  int startWriting, lastCount = 1;
+//  double *py, *px;
+//  int counting, invisibleCount=0;
+//  int startWriting, lastCount = 1;
 
 #if 0 // interface change. possibly refactored somewhere.
   // any graph with data ?
@@ -380,7 +380,7 @@ funcEnd:
 // ------------------------------------------------------------
 int TabDiagram::scroll(int clickPos)
 {
-	auto cx=Element::cx();
+//	auto cx=Element::cx();
 	auto cy=Element::cy();
   if(x1 <= 0) return 0;   // no scroll bar ?
   int tmp = int(xAxis.limit_min + 0.5);

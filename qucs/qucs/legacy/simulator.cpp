@@ -26,6 +26,9 @@
 #include "sckt_proto.h"
 #include "net.h"
 #include "misc.h"
+#include "settings.h"
+
+extern tQucsSettings QucsSettings;  // bug, settings.h
 
 namespace {
 
@@ -78,6 +81,12 @@ private: // implementation
 	Simulator* _wrapped_simulator;
 }QS;
 static Dispatcher<Simulator>::INSTALL p(&simulator_dispatcher, "legacy", &QS);
+/* -------------------------------------------------------------------------------- */
+struct default_sim{
+	default_sim(){
+		QucsSettings.setSimulator(&QS);
+	}
+}ds;
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 NetLang const* LegacySimulator::netLang() const
@@ -379,7 +388,7 @@ void LegacyNetlister::createNetlist(DocumentStream& stream,
 // to target language somewhere else.
 
 // some kind of expand
-void LegacyNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol const& m) const
+void LegacyNetlister::throughAllComps(DocumentStream&, SchematicSymbol const& m) const
 { incomplete();
 	trace3("tac", m.label(), &m, m.owner());
 	if(m.owner()){ untested();
