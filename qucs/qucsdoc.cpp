@@ -323,23 +323,25 @@ void Simulator::attachDoc(QucsDoc* d)
 	_doc = d;
 }
 /* -------------------------------------------------------------------------------- */
-Simulator* QucsDoc::simulator(std::string const& which)
+Simulator* QucsDoc::simulatorInstance(std::string const& which)
 {
-	incomplete();
-
 	Simulator* sim = _simulators[which];
 
 	if(sim){ untested();
 	}else{ untested();
-		Simulator const* proto = simulator_dispatcher[which];
+		Simulator const* proto = QucsSettings.simulator();
+		if(which!=""){ untested();
+			proto = simulator_dispatcher[which];
+		}else{
+		}
 		sim = proto->clone();
 		sim->attachDoc(this);
 		_simulators[which] = sim;
 	}
 
+	incomplete();
 	// sim->attachOutput(_data[which]);
 	assert(sim);
-
 	return sim;
 }
 /* -------------------------------------------------------------------------------- */

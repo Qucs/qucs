@@ -90,8 +90,8 @@ public:
 //   void decSimulators(){ --_simulators; }
 //   void incSimulators(){ ++_simulators; }
 
-protected: // gaah
-  Simulator* simulator(std::string const& which);
+protected:
+  Simulator* simulatorInstance(std::string const& which="");
 
 protected: // why not directly connect to undostack slots?!
   virtual void undo();
