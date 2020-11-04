@@ -69,11 +69,11 @@ public:
   int state() const{return _state;}
   void attachCtrl(SimCtrl*);
   void detachCtrl(SimCtrl const*);
+  void message(QucsMsgType, std::string const&);
 
 protected:
   void setState(state_t s){_state = s;}
   void notifyState(state_t);
-  void message(QucsMsgType, std::string const&);
   void setData(QucsData* d) {
     assert(d);
     QucsData::attach(d, _data_p);

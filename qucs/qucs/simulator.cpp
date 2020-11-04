@@ -73,3 +73,4 @@ void Simulator::message(QucsMsgType lvl, std::string const& msg)
 		Object::message(lvl, msg.c_str());
 	}
 }
+/* -------------------------------------------------------------------------------- */

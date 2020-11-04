@@ -151,6 +151,7 @@ private: // local
 }qucslang;
 static Dispatcher<DocumentFormat>::INSTALL p(&doclang_dispatcher, "qucsator", &qucslang);
 /* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
 static void printSymbol_(Symbol const* c, ostream_t& s)
 {
 	// todo: mfactor.
@@ -396,32 +397,46 @@ private: // Simulator
   std::string errorString() const{ return "incomplete"; }
 
 public: // QProcess callback.
-	void slotStateChanged(QProcess::ProcessState newState){ untested();
-		trace2("slotStateChanged", newState, _process.error());
-		switch(newState){
+	void slotStateChanged(QProcess::ProcessState st){ untested();
+		trace2("slotStateChanged", st, _process.error());
+		switch(st){
 		case QProcess::NotRunning: untested();
-			notifyState(Simulator::sst_idle);
+			if(_oldState == QProcess::Starting){ untested();
+				message(QucsMsgFatal, "Failed to start process.");
+				notifyState(Simulator::sst_error);
+			}else{ untested();
+				notifyState(Simulator::sst_idle);
+			}
 			break;
 		case QProcess::Starting:
-			notifyState(Simulator::sst_starting);
+//			notifyState(Simulator::sst_starting); // not interesting.
 			break;
 		case QProcess::Running:
 			notifyState(Simulator::sst_running);
 			break;
 		default:
-			unreachable();
+			trace1("qprocess state change", st);
+			notifyState(Simulator::sst_error);
 		}
+		_oldState = st;
 	}
 
 private:
 	QString DataSet;
 	QFile _netlistFile;
 	QucsatorProcess _process;
-	int oldState;
 	SimCtrl* _ctrl;
+	QProcess::ProcessState _oldState;
 }QS;
 static Dispatcher<Simulator>::INSTALL qq(&simulator_dispatcher, "qucsator", &QS);
-
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
+struct default_sim{
+	default_sim(){
+		QucsSettings.setSimulator(&QS);
+	}
+}ds;
+/* -------------------------------------------------------------------------------- */
 void Qucsator::run(SimCtrl* ctrl)
 {
 	Simulator::attachCtrl(ctrl);
@@ -430,11 +445,11 @@ void Qucsator::run(SimCtrl* ctrl)
 	// possibly not a good idea.
 	QString f = QucsSettings.QucsHomeDir.filePath("netlist.txt");
 
-	message(QucsLogMsg, "creating netlist " + f.toStdString() + "...");
+	message(QucsMsgLog, "writing " + f.toStdString() + "...");
 	_netlistFile.setFileName(f);
 
 	if(!_netlistFile.open(QIODevice::WriteOnly | QFile::Truncate)){
-		message(QucsFatalMsg, "cannot open netlist file");
+		message(QucsMsgFatal, "cannot open netlist file");
 		throw Exception("cannot write");
 	}else{
 	}
@@ -448,14 +463,16 @@ void Qucsator::run(SimCtrl* ctrl)
 	assert(doc());
 	// if doc is schematic_doc?
 	if(auto d = dynamic_cast<SchematicDoc const*>(doc())){
-		n->save(Stream, *d->root());
-		// {
-		//    }catch(...){
+		try{
+			n->save(Stream, *d->root());
+		}catch(...){
+			message(QucsMsgFatal, "Error writing netlist file.");
+			throw;
+		}
 		//      ErrText->appendPlainText(tr("ERROR: Cannot write netlist file!"));
 		//      FinishSimulation(-1);
 		//      incomplete();
 		//      return false;
-		//    }
 
 		NetLang const* nl = netLang();
 
@@ -504,6 +521,9 @@ void Qucsator::run(SimCtrl* ctrl)
 	trace2("start", Program, DataSet);
 
 	_process.start(Program, Arguments); // launch the program
+
+	QString cmd = Program +" "+ Arguments.join(" ");
+	message(QucsMsgLog, cmd.toStdString());
 }
 
 }//namespace
@@ -514,4 +534,19 @@ void QucsatorProcess::slotStateChanged(QProcess::ProcessState newState)
 	trace1("QucsatorProcess callback", newState);
 	assert(_simulator);
 	_simulator->slotStateChanged(newState);
+}
+
+void QucsatorProcess::stderr_()
+{ untested();
+	assert(_simulator);
+	std::string msg = readAllStandardError().toStdString();
+	_simulator->message(Object::QucsMsgWarning, msg);
+}
+
+void QucsatorProcess::stdout_()
+{ untested();
+	assert(_simulator);
+	std::string msg = readAllStandardOutput().toStdString();
+	trace1("QucsatorProcess stdout", msg);
+	_simulator->message(Object::QucsMsgLog, msg);
 }

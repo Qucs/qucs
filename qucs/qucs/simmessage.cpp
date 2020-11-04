@@ -676,43 +676,6 @@ void SimMessage::slotDisplayErr(std::string& e)
   ErrText->appendPlainText(QString::fromStdString(e));
 }
 
-/*!
- * \brief The process state changes.
- *
- *  Called when the process changes state;
- *  \param[in] newState new status of the process
- */
-void SimMessage::slotStateChanged()
-{
-  assert(_simulator);
-  int state = _simulator->state();
-
-  if(state == Simulator::sst_error){
-    incomplete(); // report _simulator->errorString or so.
-  }else if(state != Simulator::sst_idle){
-  }else if(oldState == Simulator::sst_running){
-    slotSimEnded();
-  }else{
-    incomplete();
-  }
-#if 0
-  switch(state){
-    case Simulator::sst_idle:
-      incomplete();
-      break;
-    case Simulator::sst_running:
-      incomplete();
-      break;
-    case Simulator::sst_error:
-      incomplete();
-      break;
-    case Simulator::sst_killed:
-      incomplete();
-      break;
-  }
-#endif
-  oldState = Simulator::state_t(state);
-}
 
 /*!
  * \brief Check the simulation process exit status.
@@ -822,7 +785,7 @@ void SimMessage::slotDisplayButton()
 
 void SimMessage::AbortSim()
 {
-  ErrText->appendPlainText(tr("Simulation aborted by the user!"));
+  ErrText->appendPlainText(tr("Simulation aborted by the user"));
   simKilled = true;
   assert(_simulator);
   _simulator->kill();
@@ -830,6 +793,27 @@ void SimMessage::AbortSim()
 // -----------------------------
 void SimMessage::stateChange()
 {
-  slotStateChanged();
+  assert(_simulator);
+  int state = _simulator->state();
+
+  if(state == Simulator::sst_error){ untested();
+    ErrText->appendPlainText(tr("ERROR"));
+  }else if(state == Simulator::sst_idle){
+    slotSimEnded();
+  }else if(state == Simulator::sst_running){
+    ProgText->appendPlainText(tr("running..."));
+  }else{
+    trace1("stateChange", state);
+    incomplete();
+  }
+}
+static const int loglevel = Object::QucsMsgLog;
+void SimMessage::message(int level, std::string msg)
+{
+  if(level==loglevel){
+    ProgText->appendPlainText(QString::fromStdString(msg));
+  }else{
+    ErrText->appendPlainText(QString::fromStdString(msg));
+  }
 }
 // vim:ts=8:sw=2:et
