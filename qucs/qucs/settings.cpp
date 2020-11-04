@@ -106,6 +106,11 @@ bool loadSettings()
     return true;
 }
 /*--------------------------------------------------------------------------*/
+Simulator const* tQucsSettings::simulator() const
+{
+	return _simulator;
+}
+/*--------------------------------------------------------------------------*/
 void tQucsSettings::setSimulator(Simulator const* s)
 {
 	_simulator = s;

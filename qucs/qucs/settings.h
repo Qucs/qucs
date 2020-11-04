@@ -62,7 +62,7 @@ struct tQucsSettings {
   bool ShowDescriptionProjectTree;
 
   void setSimulator(Simulator const* s);
-  Simulator const& simulator() const;
+  Simulator const* simulator() const;
 private:
   QString _libDir;
   Simulator const* _simulator;

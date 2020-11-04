@@ -43,11 +43,10 @@ struct SimCtrl{
 class Simulator : public Object{
 public:
   typedef enum {
-    sst_killed = -2,
+    sst_killed = -2, // needed?
     sst_error = -1,
     sst_idle = 0,
-    sst_starting = 1,
-    sst_running = 2
+    sst_running = 1
   } state_t;
 protected:
   explicit Simulator();

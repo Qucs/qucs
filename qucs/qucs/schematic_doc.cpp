@@ -874,7 +874,7 @@ void SchematicDoc::slotSimulate()
 
   // qucsapp->slotResetWarnings(); // what does it do?
 
-  Simulator *sim = Doc->simulator("qucsator");
+  Simulator *sim = Doc->simulatorInstance();
   assert(sim);
   SimMessage *ctrl = new SimMessage(sim, Doc);
   // disconnect is automatically performed, if one of the involved objects
@@ -916,6 +916,7 @@ void SchematicDoc::slotDCbias()
   }
 
 #if 0 // TODO
+  //checkReload();
   // Perhaps the document was modified from another program ?
   QFileInfo Info(Doc->docName());
   if(Doc->lastSaved.isValid()) { untested();
@@ -933,9 +934,7 @@ void SchematicDoc::slotDCbias()
 #endif
 
   //app.slotResetWarnings(); // ?
-  std::string which = "qucsator";
-
-  Simulator *sim = simulator(which);
+  Simulator *sim = simulatorInstance();
   SimMessage *ctrl = new SimMessage(sim, this);
 
   // QWidget* w = this;
