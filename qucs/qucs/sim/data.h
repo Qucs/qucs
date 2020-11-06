@@ -50,7 +50,9 @@ public:
 	typedef std::pair<double, std::complex<double> > valuetype;
 	class const_iterator{
 		friend class SimOutputData; // need to access constructor.
+		friend class SimOutputDat; // bug.
 	protected:
+	public:
 		const_iterator(double const* x, double const* y) : seekx(x), seeky(y) {};
 	public:
 		const_iterator& operator++(){ ++seekx; ++seeky; ++seeky; return *this;}
@@ -69,7 +71,7 @@ public:
 		static valuetype _v; // bit of a hack. lets see...
 	};
 public:
-	SimOutputData() : _attach_count(0){}
+	SimOutputData() : QucsData() {}
 	virtual ~SimOutputData(){}
 
 public: // obsolete interface. don't use.
@@ -78,60 +80,21 @@ public: // obsolete interface. don't use.
 
 public:
 	virtual bool isEmpty() {return true;}
-	std::string label() const{return _label;}
 	size_t size() const{incomplete(); return 0;}
 
 	virtual const_iterator begin() const = 0; //  {return const_iterator(CPointsX.getFirst()->Points, CPointsY);}
 	virtual const_iterator end() const = 0; //  {return const_iterator(CPointsX.getFirst()->end(), NULL);}
 	virtual SimOutputData const* refresh() {return nullptr;}
 
-
 public:
 	const double& min()const {return Min;}
 	const double& max()const {return Max;}
-
-private:
-	unsigned _attach_count;
-	std::string _label;
 
 protected:
 	double Min;
 	double Max;
 };
 
-// "dat" file, legacy code rearranged.
-// just one var from dat file?
-class SimOutputDat : public SimOutputData {
-public:
-	SimOutputDat(std::string const& filename, std::string const& varname);
-	int loadIndepVarData(std::string const&, char* datfilecontent, DataX*);
-
-	bool isEmpty() const { return !numAxes(); }
-	unsigned numAxes() const { return CPointsX.size();}
-	int countY() const { return CountY; }
-
-public: // obsolete interface. don't use.
-	DataX const* axis(uint i) const override { if (i<axis_count) return CPointsX[i]; return NULL;}
-	double *cPointsY() const { return CPointsY; }
-	virtual SimOutputData const* refresh();
-private:
-	unsigned axis_count;
-	std::vector<DataX*>  CPointsX;
-	double *CPointsY;
-	int CountY;    // number of curves
-	QString Var;
-	std::string _fileName;
-	QDateTime lastLoaded;  // when it was loaded into memory
-	unsigned _attach_count;
-
-private:
-	void clear();
-public:
-	void setLimit(const double& x){
-		if (Min>x) Min=x;
-		if (Max<x) Max=x;
-	}
-};
 
 #if 0 // not yet?
 // a sequence of doubles (with a name on it)

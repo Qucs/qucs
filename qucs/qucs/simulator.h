@@ -73,9 +73,15 @@ public:
 protected:
   void setState(state_t s){_state = s;}
   void notifyState(state_t);
-  void setData(QucsData* d) {
-    assert(d);
+  void releaseOutput(QucsData* d) {
     QucsData::attach(d, _data_p);
+  }
+
+public:
+  void setOutput(QucsData** d) {
+    assert(d);
+    _data_p = d;
+    // QucsData::attach(d, _data_p);
   }
 
 private:

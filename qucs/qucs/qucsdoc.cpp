@@ -318,7 +318,7 @@ bool QucsDoc::saveAs()
 #include "globals.h"
 #include "simulator.h"
 /* -------------------------------------------------------------------------------- */
-void Simulator::attachDoc(QucsDoc* d)
+void Simulator::attachDoc(QucsDoc /* const?? */ * d)
 {
 	_doc = d;
 }
@@ -340,7 +340,7 @@ Simulator* QucsDoc::simulatorInstance(std::string const& which)
 	}
 
 	incomplete();
-	// sim->attachOutput(_data[which]);
+	sim->setOutput(&_data[which]);
 	assert(sim);
 	return sim;
 }
