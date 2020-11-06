@@ -1876,6 +1876,7 @@ void MouseActions::MDoubleClickWire2(SchematicDoc *, QMouseEvent *)
   }
 }
 
+#if 0
 void ElementMouseAction::setSelected(bool x)
 { untested();
   if(_e){
@@ -1890,6 +1891,7 @@ bool ElementMouseAction::isSelected() const
   assert(_e);
   return _e->isSelected();
 }
+#endif
 
 QucsDoc& MouseActions::doc()
 {
