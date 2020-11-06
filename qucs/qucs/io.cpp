@@ -128,12 +128,14 @@ istream_t& istream_t::skip1(char t)
   return *this;
 }
 /*--------------------------------------------------------------------------*/
+static const int bDANGER=5;
+// borrowed from ap_match
 std::string istream_t::ctos(const std::string& term,
 		     const std::string& begin_quote,
 		     const std::string& end_quote,
 		     const std::string& trap)
 {
-#if 0 // later
+#if 1 // later
 	assert(begin_quote.length() == end_quote.length());
 
 	// skipbl();
@@ -186,6 +188,7 @@ std::string istream_t::ctos(const std::string& term,
 
 	skipcom();
 	_ok = end_string > begin_string;
+	trace2("ctos", fullString(), s);
 	return s;
 #else
 	(void)term;
@@ -195,7 +198,70 @@ std::string istream_t::ctos(const std::string& term,
 	std::string full = fullString();
 	size_t i = full.find(" ");
 	_cnt = i;
-	return full.substr(0, i);
+	std::string s = full.substr(0, i);
+	trace2("ctos", fullString(), s);
+	return s;
 #endif
+}
+/*--------------------------------------------------------------------------*/
+// borrowed from ap_match
+istream_t& istream_t::umatch(const std::string& s)
+{
+  size_t start = cursor();
+  skipbl();
+  size_t begin_match = cursor();
+  const char* str2 = s.c_str();
+  bool optional = 0;
+
+  for (;;) {
+    if ((!*str2) || (*str2 == '|')) {
+      _ok = true;
+      break;
+    }else if ((str2[0] == '\\') && (peek() == str2[1])) {
+      skip();
+      str2 += 2;
+    }else if ((!optional) && (*str2 == '{')) {
+      ++str2;
+      optional = true;
+    }else if ((optional) && (*str2 == '}')) {
+      ++str2;
+      optional = false;
+    }else if ((*str2 == ' ') && is_term()) {
+      // blank in ref string matches anything that delimits tokens
+      skipbl();
+      ++str2;
+    }else if (peek() == *str2) {
+      skip();
+      ++str2;
+//    }else if ((OPT::case_insensitive) && (tolower(peek()) == tolower(*str2))) {
+//      skip();
+//      ++str2;
+    }else if (optional) {
+      while (*str2 != '}') {
+			++str2;
+      }
+    }else{
+      // mismatch
+      const char* bar = strchr(str2, '|');
+      if (bar && (bar[-1] != '\\')) {
+	str2 = bar+1;
+	reset(start);
+      }else{
+	_ok = false;
+	break;
+      }
+    }
+  }
+
+  if (_ok) {
+    _begin_match = begin_match;
+    _end_match = cursor();
+    skipcom();
+    _ok = true;
+  }else{
+    reset(start);
+    _ok = false;
+  }
+  return *this;
 }
 /*--------------------------------------------------------------------------*/
