@@ -242,7 +242,6 @@ private:
   // but that does not work, because ElementMouseAction lives here.
   // (does it matter?)
 public:
-  ElementMouseAction selectElement(QPoint const&, bool, int *index=0);
   Component* selectCompText(SchematicDoc*, int, int, int&, int&);
   void     deselectElements(ElementMouseAction);
 

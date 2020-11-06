@@ -829,6 +829,7 @@ AC_CONFIG_FILES([Makefile
     contrib/Makefile
     contrib/vadim/Makefile
     include/Makefile
+    legacy/Makefile
     main/Makefile
     man/Makefile
     examples/Makefile
@@ -845,7 +846,6 @@ AC_CONFIG_FILES([Makefile
     qucs-powercombining/Makefile
     qucs/Makefile
     qucs/action/Makefile
-    qucs/legacy/Makefile
     qucs/bitmaps/Makefile
     qucs/octave/Makefile
     qucs/components/Makefile

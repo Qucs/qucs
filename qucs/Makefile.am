@@ -42,6 +42,7 @@ SUBDIRS = \
 	main \
 	contrib \
 	tests \
+	legacy \
 	$(RELEASEDIRS)
 
 # used in qucs.in wrapper, to compile PATH

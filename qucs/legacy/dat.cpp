@@ -105,6 +105,7 @@ SimOutputDat::SimOutputDat(std::string const& fileName, std::string const& varna
 SimOutputData const* SimOutputDat::refresh()
 {
 	incomplete();
+	return nullptr;
 }
 // --------------------------------------------------------------------------
 // former "loadDatFile", former "loadVarData".

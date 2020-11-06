@@ -300,14 +300,6 @@ void SchematicDoc::markerUpDown(bool up, Q3PtrList<ElementGraphics> *Elements)
    menu.
 */
 
-#if 1 // obsolete.
-ElementMouseAction MouseActions::selectElement(
-	QPoint const&, bool, int*)
-{
-    assert(false);
-
-}
-#endif
 #if 0 // obsolete.
 { untested();
     (void) index;
