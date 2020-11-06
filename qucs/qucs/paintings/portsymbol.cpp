@@ -36,8 +36,6 @@ public:
 
   bool load(const QString&);
   QString save();
-  QString saveCpp();
-  QString saveJSON();
   void paint(ViewPainter*);
   void Bounding(int&, int&, int&, int&);
 
@@ -203,6 +201,7 @@ QString PortSymbol::save()
 }
 
 // --------------------------------------------------------------------------
+#if 0
 QString PortSymbol::saveCpp()
 {
 	 auto cx=Element::cx();
@@ -214,7 +213,6 @@ QString PortSymbol::saveCpp()
   s = "Ports.append (" + s + "); /* " + nameStr + " */";
   return s;
 }
-
 QString PortSymbol::saveJSON()
 {
 	 auto cx=Element::cx();
@@ -224,6 +222,7 @@ QString PortSymbol::saveJSON()
                        "\"x\" : %1, \"y\" : %2},").arg(cx).arg(cy);
   return s;
 }
+#endif
 
 // --------------------------------------------------------------------------
 void PortSymbol::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)

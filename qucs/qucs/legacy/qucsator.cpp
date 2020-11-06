@@ -24,6 +24,7 @@
 #include "schematic_doc.h"
 #include <QProcess>
 #include "qucsator.h"
+#include "dat.h"
 /* -------------------------------------------------------------------------------- */
 void Simulator::notifyState(Simulator::state_t st)
 {
@@ -396,6 +397,8 @@ private: // Simulator
   void init() override{incomplete();}
   std::string errorString() const{ return "incomplete"; }
 
+  void collectData();
+
 public: // QProcess callback.
 	void slotStateChanged(QProcess::ProcessState st){ untested();
 		trace2("slotStateChanged", st, _process.error());
@@ -405,6 +408,7 @@ public: // QProcess callback.
 				message(QucsMsgFatal, "Failed to start process.");
 				notifyState(Simulator::sst_error);
 			}else{ untested();
+				collectData();
 				notifyState(Simulator::sst_idle);
 			}
 			break;
@@ -526,6 +530,12 @@ void Qucsator::run(SimCtrl* ctrl)
 	message(QucsMsgLog, cmd.toStdString());
 }
 
+void Qucsator::collectData()
+{
+	auto data = new SimOutputDat(DataSet.toStdString(), "");
+	releaseOutput(data);
+}
+
 }//namespace
 
 // just forward
@@ -550,3 +560,4 @@ void QucsatorProcess::stdout_()
 	trace1("QucsatorProcess stdout", msg);
 	_simulator->message(Object::QucsMsgLog, msg);
 }
+

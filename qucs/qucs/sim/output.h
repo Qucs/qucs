@@ -19,17 +19,19 @@
 #include <assert.h>
 #include <iostream>
 #include "io_trace.h"
+#include "object.h"
 /* -------------------------------------------------------------------------------- */
 // data structure to deal with what a simulator outputs.
 // this is organized as a tree with pluggable directories.
 // the leaves are waveforms or parameter sets or something like that.
 /* -------------------------------------------------------------------------------- */
 // base class for output related classes
-class QucsData {
+class QucsData : public Object{
 private:
 	QucsData(QucsData const&) = delete;
 public:
-	explicit QucsData(): _attach_count(0){}
+	explicit QucsData() : Object(), _attach_count(0){}
+	virtual ~QucsData() {}
 public:
 	virtual QucsData* clone() { return NULL; }
 protected:
@@ -38,22 +40,65 @@ protected:
 public:
 	static void attach(QucsData*, QucsData**);
 	static void detach(QucsData**);
+	virtual QucsData const* refresh(){unreachable();}
 
 private:
 	unsigned _attach_count;
 };
 /* -------------------------------------------------------------------------------- */
-inline void QucsData::attach(QucsData* what, QucsData** where)
+// borrowed from e_compon
+inline void QucsData::attach(QucsData* d, QucsData** to)
 {
 	incomplete();
-	assert(!*where); // for now.
-	*where = what;
-	++(what->_attach_count);
+	assert(to);
+	if (d == *to) {
+		// The new and old are the same object.  Do nothing.
+	}else if (!d) {untested();
+		// There is no new common.  probably a simple element
+		detach(to);
+	}else if (!*to) {
+		// No old one, but have a new one.
+		++(d->_attach_count);
+		trace1("++1", d->_attach_count);
+		*to = d;
+#if 0
+	}else if (*d != **to) {
+		// They are different, usually by edit.
+		detach_common(to);
+		++(d->_attach_count);
+		trace1("++2", d->_attach_count);
+		*to = d;
+#endif
+	}else if (d->_attach_count == 0) {
+		// The new and old are identical.
+		// Use the old one.
+		// The new one is not used anywhere, so throw it away.
+		trace1("delete", d->_attach_count);    
+		delete d;
+	}else{untested();
+		// The new and old are identical.
+		// Use the old one.
+		// The new one is also used somewhere else, so keep it.
+	}
 }
 /* -------------------------------------------------------------------------------- */
+// borrowed from e_compon
 inline void QucsData::detach(QucsData** from)
 {
-	attach(nullptr, from);
+	assert(from);
+	if (*from) {
+		assert((**from)._attach_count > 0);
+		--((**from)._attach_count);
+		trace1("--", (**from)._attach_count);
+		if ((**from)._attach_count == 0) {
+			trace1("delete", (**from)._attach_count);
+			delete *from;
+		}else{
+			trace1("nodelete", (**from)._attach_count);
+		}
+		*from = NULL;
+	}else{
+	}
 }
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
@@ -112,8 +157,11 @@ public:
 		return x->second;
 	}
 protected:
-	mutable std::map<std::string, QucsData*> _d;
-};
+	void pushBack(QucsData*);
+
+protected:
+	mutable /*why?*/ std::map<std::string, QucsData*> _d;
+}; // SimOutputDir
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 // namespace{

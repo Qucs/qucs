@@ -38,7 +38,6 @@ public:
 //  void setSomeStuff( int cx_=0, int cy_=0, int x2_=0, int y2_=0,
 //              QPen Pen_=QPen(QColor()));
 
-  void paintScheme(SchematicDoc*);
   void getCenter(int&, int&);
 //  void setCenter(int, int, bool relative=false);
 
@@ -117,12 +116,6 @@ void GraphicLine::paint(ViewPainter *p) const
 }
 
 // --------------------------------------------------------------------------
-void GraphicLine::paintScheme(SchematicDoc *p)
-{
-	incomplete();
-}
-
-// --------------------------------------------------------------------------
 void GraphicLine::getCenter(int& x, int &y)
 {
 	assert(false);
@@ -146,6 +139,7 @@ void GraphicLine::getCenter(int& x, int &y)
 //}
 
 // --------------------------------------------------------------------------
+#if 0
 Element* GraphicLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Line");
@@ -154,6 +148,7 @@ Element* GraphicLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new GraphicLine();
   return 0;
 }
+#endif
 
 // --------------------------------------------------------------------------
 bool GraphicLine::load(const QString& s)
@@ -268,7 +263,7 @@ bool GraphicLine::resizeTouched(float fX, float fY, float len)
 
 // --------------------------------------------------------------------------
 // Mouse move action during resize.
-void GraphicLine::MouseResizeMoving(int x, int y, SchematicDoc *p)
+void GraphicLine::MouseResizeMoving(int, int, SchematicDoc *)
 {
 #if 0
 
