@@ -50,8 +50,13 @@ public:
 private:
 	istream_t(istream_t const&) = delete;
 public:
+// 	istream_t(QString const& t) : QTextStream(t), _cmd(""), _cnt(0), _ok(true) {
+// 		trace1("istream construct", t);
+// 	}
 	template<class T>
-	istream_t(T t) : QTextStream(t), _cmd(""), _cnt(0), _ok(true) { }
+	istream_t(T* t) : QTextStream(t), _cmd(""), _cnt(0), _ok(true) {
+		trace1("istream construct", t);
+	}
 	istream_t(istream_t::STRING, const std::string&s );
 
 private: // there are more in ap.h
@@ -63,9 +68,7 @@ private: // there are more in ap.h
 
   istream_t&	      skip(int c=1) 
     {_cnt=static_cast<size_t>(static_cast<int>(_cnt)+c); _ok=_cnt<=_cmd.size(); return *this;}
-  istream_t& skipbl();
   istream_t& skip1b(char);
-  istream_t& skip1(char);
   istream_t& skip1(const std::string&);
   istream_t& skip1b(const std::string&);
   istream_t& skipcom(){return skip1b(",");}
@@ -76,11 +79,35 @@ private: // there are more in ap.h
 		  return '\0';
 	  }
   }
+
+public:
+  istream_t& skip1(char);
+  istream_t&   reset(size_t c=0) {_cnt=c; _ok=true; return *this;}
+
+private:
+  bool	      is_term(const std::string& t = ",=(){};")
+	{char c=peek(); return (c=='\0' || isspace(c) || match1(t));}
+
+public:
+  istream_t& skipbl();
+
+public:
+  // string matching (ap_match.cc) possibly consuming, sets _ok
+  istream_t& umatch(const std::string&);
+  istream_t& scan(const std::string&);
+  std::string last_match()const;
+  std::string trimmed_last_match(const std::string& = " ,=;")const;
+
 public: // match
   bool	      ns_more()const	{return peek()!='\0';}
+  bool	      more()		{skipbl(); return ns_more();}
+  bool	      is_end()		{return !more();}
   bool	      match1(char c)const{return (peek()==c);}
   bool	      match1(const std::string& c)const
 		{return ns_more() && strchr(c.c_str(),peek());}
+  size_t      find1(const std::string& c)const
+	{return ((ns_more()) ? c.find_first_of(peek()) : std::string::npos);}
+
 public:
 	QString const readLine();
 	std::string fullString() const { return _cmd; }
@@ -100,6 +127,8 @@ private:
 	std::string _cmd;
 	size_t _cnt;
 	bool _ok;
+  size_t  _begin_match;
+  size_t  _end_match;
 };
 
 // not here

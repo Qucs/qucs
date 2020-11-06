@@ -22,6 +22,7 @@ namespace{
 class PortSym : public Command{
   virtual void do_it(istream_t& cs, SchematicModel* s){
 	  auto fullstring = cs.fullString();
+	  cs.reset();
 	  trace1("PortSym", fullstring);
 
 	  std::string type;

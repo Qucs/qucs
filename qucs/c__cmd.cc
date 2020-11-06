@@ -44,7 +44,7 @@ INTERFACE void error(int,const std::string&);
  */
 void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
 {
-  trace1("cmdproc", cmd.fullstring());
+  trace2("cmdproc", cmd.fullstring(), cmd.cursor());
 
 #if 0
   bool get_timer_was_running = ::status.get.is_running();
@@ -93,6 +93,7 @@ void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
   else
 #endif
   { /* no shortcut available */
+    trace1("cmdproc", cmd.fullString());
     cmd >> s;
     didsomething = false;
   }
@@ -101,11 +102,12 @@ void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
     // nothing
   }else if (s != "") {
     CMD* c = command_dispatcher[s];
-    if (c) {
+    if (c) { untested();
       c->do_it(cmd, scope);
       didsomething = true;
     }else{untested();
       incomplete();
+      assert(false);
 //      cmd.warn(bWARNING, here, "what's this?");
     }
   }else if (!didsomething) { untested();
@@ -135,6 +137,7 @@ void CMD::command(const std::string& cs, CARD_LIST* scope)
   CS cmd(CS::_STRING, cs); // from string, full command
   std::string s;
   cmd >> s;
+  trace1("CMD::command", s);
 
   CMD* c = command_dispatcher[s];
   if (c) {
