@@ -22,7 +22,7 @@
 #include "components/spicefile.h"
 #include "components/optimizedialog.h"
 #include "components/vacomponent.h"
-#include "legacy/markerdialog.h" // BUG
+//#include "../legacy/markerdialog.h" // BUG
 #include "labeldialog.h"
 
 #include <QTextStream>
@@ -1243,9 +1243,10 @@ void MouseActions::MPressMarker(SchematicDoc *, QMouseEvent*)
 }
 
 // -----------------------------------------------------------
-void MouseActions::MPressOnGrid(SchematicDoc *Doc, QMouseEvent* Event)
+void MouseActions::MPressOnGrid(SchematicDoc *, QMouseEvent*)
 {
   //QPointF pos=Doc->mapToScene(Event->pos());
+#if 0
 
   auto pe = selectElement(Event->pos(), false);
   if(pe)
@@ -1263,6 +1264,7 @@ void MouseActions::MPressOnGrid(SchematicDoc *Doc, QMouseEvent* Event)
     setDrawn(false);
   }
 
+#endif
 }
 
 // -----------------------------------------------------------

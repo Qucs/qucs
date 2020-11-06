@@ -21,7 +21,7 @@
 # Boston, MA 02110-1301, USA.
 #
 
-include ../../common.mk
+include ../common.mk
 include MakeList
 
 pkglib_LTLIBRARIES = legacy.la legacylib.la qucsator.la

@@ -91,6 +91,7 @@ private: // Symbol
 		if(_proto){itested();
 			return _proto->boundingRect();
 		}else{ untested();
+			return QRectF();
 		}
 	}
 	void paint(ViewPainter* p) const override{ untested();
@@ -109,6 +110,7 @@ private: // Symbol
 		  	return &m->paintings();
 		}else{ untested();
 		}
+		return nullptr;
 	}
 
 private:
