@@ -26,8 +26,9 @@
 #include <typeinfo>
 #endif
 /*--------------------------------------------------------------------------*/
-static Element* parseCommand(QString Line, DEV_DOT*x)
+static Element* parseCommand(istream_t& c, DEV_DOT*x)
 {
+	QString Line = QString::fromStdString(c.fullString());
 #if 0 // not sure.
 	auto scope = x->owner()->subckt();
 #else
@@ -35,23 +36,28 @@ static Element* parseCommand(QString Line, DEV_DOT*x)
 #endif
 //	assert(p);
 
-#if 0
+	std::string s;
+	c.reset();
+	c.skipbl();
+	c.skip1('<');
 	c >> s;
-#else
-	std::string s = Line.section(' ',0,0).toStdString();    // painting type
-#endif
+
 	// c.reset(here);
 	if (!command_dispatcher[s]) {
 		unreachable(); // for now
-//		trace2("uuh", s, c.fullString());
+		trace3("uuh", s, Line, c.cursor());
 		assert(false);
 		//    cmd.skip();
 		//    ++here;
 	}else{
 	}
 
-	istream_t c(istream_t::_STRING, Line.toStdString());
+	//istream_t c(istream_t::_STRING, Line.toStdString());
+	c.reset();
+	c.skipbl();
+	c.skip1('<');
 	Command::cmdproc(c, scope);
+	// assert(false);
 
 	delete x;
 	return nullptr;
@@ -194,7 +200,6 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 {
 	Symbol* sym = w;
 	QString s(sc);
-	trace1("obsolete_wireload", s);
 	bool ok;
 
 	if(s.at(0) != '<'){ untested();
@@ -250,7 +255,6 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	sym->setParameter("deltay", std::to_string(y2 - y1));
 
 	n = s.section('"',1,1);
-	trace1("parse node label", n);
 	if(!n.isEmpty()) {
 		Symbol* sym=w;
 		// there is a label hidden in this wire. go get it.
@@ -313,6 +317,8 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 			mode='P';
 		}else if(Line == "<Model>") {
 			mode='M';
+			trace1("model", stream.fullString());
+			new__instance(stream, &owner, owner.subckt());
 		}else if(Line == "<Description>") {
 			mode='X';
 		}else{
@@ -372,6 +378,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 				new__instance(stream, &owner, owner.subckt());
 			}else if(mode=='Q'){
 			}else if(mode=='M'){
+				// assert(false);
 				// incomplete();
 			}else if(mode=='X'){
 				trace1("legacy_lang description", Line);
@@ -1043,7 +1050,7 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 	}else if(auto s=dynamic_cast<Painting*>(e)){
 		::parsePainting(l, s);
 	}else if(auto s=dynamic_cast<DEV_DOT*>(e)){
-		return ::parseCommand(l, s);
+		return ::parseCommand(c, s);
 	}else{ untested();
 		return DocumentLanguage::parseItem(c, e);
 	}
@@ -1100,6 +1107,7 @@ std::string LegacySchematicLanguage::findType(istream_t& c) const
 	QString type = Line.section (' ',0,0); // component type
 	type.remove (0,1);    // remove leading "<"
 	std::string typestring = type.toStdString();
+	trace2("findType", c.fullString(), typestring);
 	return typestring;
 }
 /*--------------------------------------------------------------------------*/

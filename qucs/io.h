@@ -81,6 +81,8 @@ private: // there are more in ap.h
   }
 
 public:
+  const std::string substr(size_t i)const {return ((_cmd.length()>=i) ? _cmd.substr(i) : "");}
+  const std::string tail()const			{return substr(_cnt);}
   istream_t& skip1(char);
   istream_t&   reset(size_t c=0) {_cnt=c; _ok=true; return *this;}
 
