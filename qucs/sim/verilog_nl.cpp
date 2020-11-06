@@ -253,22 +253,13 @@ void VerilogNetlister::prepareSave(DocumentStream& stream, SchematicSymbol const
 		// isAnalog = true;
 	}
 
-	// first line is documentation
-	if(allTypes & isAnalogComponent)
-		stream << "#";
-	else if (isVerilog)
-		stream << "//";
-	else{
-		stream << "--";
-	}
-
 	std::string DocName;
 	try{
 		DocName=m.paramValue("DocName");
 	}catch(ExceptionCantFind const&){
 		DocName="unknown";
 	}
-	stream << " Qucs " << PACKAGE_VERSION << "  "
+	stream << "// Qucs " << PACKAGE_VERSION << "  "
 	       << QString::fromStdString(DocName) << "\n";
 
 	// set timescale property for verilog schematics

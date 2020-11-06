@@ -1,7 +1,4 @@
 /***************************************************************************
-                               ellipsearc.cpp
-                              ----------------
-    begin                : Thu Sep 9 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
@@ -14,11 +11,11 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "ellipsearc.h"
 #include "filldialog.h"
 #include "qucs.h"
 #include "misc.h"
-#include "schematic_doc.h" // BUG
+//#include "schematic_doc.h" // BUG
+#include "painting.h"
 
 #include <QPainter>
 #include <QPushButton>

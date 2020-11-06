@@ -518,7 +518,7 @@ void QucsSettingsDialog::slotApply()
         QWidget *w;
 
         while((w=App->DocumentTab->widget(No++)) != 0) {
-			  auto Doc=prechecked_cast<QucsDoc const*>(w);
+			  auto Doc = dynamic_cast<QucsDoc const*>(w);
 			  assert(Doc);
           QWidget *vp;
           if(QucsApp::isTextDocument(Doc)) {

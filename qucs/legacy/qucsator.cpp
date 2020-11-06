@@ -18,13 +18,13 @@
 #include "sckt_base.h"
 #include "net.h"
 #include "docfmt.h" // <<
-#include "paintings/paintings.h" // really??
 #include "globals.h"
 #include "settings.h" //??
 #include "schematic_doc.h"
 #include <QProcess>
 #include "qucsator.h"
 #include "dat.h"
+#include "painting.h"
 /* -------------------------------------------------------------------------------- */
 void Simulator::notifyState(Simulator::state_t st)
 {

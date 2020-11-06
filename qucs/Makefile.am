@@ -29,6 +29,7 @@ AM_DEFAULT_SOURCE_EXT = .cpp
 
 SUBDIRS = \
 	. \
+	action \
 	bitmaps \
 	components \
 	diagrams \
@@ -100,34 +101,8 @@ libqucs_la_SOURCES += qucs_.qrc
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include -I$(top_srcdir)/qucs-lib
 
 
-noinst_HEADERS += $(MOCHEADERS)
+noinst_HEADERS = $(HDR1) $(HDR2) $(MOCHEADERS)
 
-# must be installed. but later
-noinst_HEADERS += \
-	actions.h \
-	task_element.h \
-	diagram.h \
-	dispatcher.h \
-	globals.h \
-	imagewriter.h \
-	io.h \
-	misc.h \
-	mnemo.h \
-	module.h \
-	mouseactions.h \
-	object.h \
-	platform.h \
-	printerwriter.h \
-	projectView.h \
-	qt_compat.h \
-	schematic_lang.h \
-	schematic_model.h \
-	schematic_symbol.h \
-	syntax.h \
-	trace.h \
-	viewpainter.h \
-	wirelabel.h \
-	wirelabel.h
 
 hicolor16dir = ${prefix}/share/icons/hicolor/16x16/apps
 hicolor16_DATA =  bitmaps/hicolor/16x16/apps/qucs.png

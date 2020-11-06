@@ -26,7 +26,7 @@ include MakeList
 
 pkglib_LTLIBRARIES = legacy.la legacylib.la qucsator.la
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include -I$(top_srcdir)/qucs
-AM_CXXFLAGS = ${CXXFLAGS} -fPIC
+# AM_CXXFLAGS = ${CXXFLAGS} -fPIC # common?
 
 legacy_la_LDFLAGS = -module -avoid-version
 legacy_la_CPPFLAGS = $(AM_CPPFLAGS)
@@ -49,6 +49,4 @@ qucsator_la_LDFLAGS = -module -avoid-version
 qucsator_la_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES)
 # qucsator_la_LIBADD = $(QT_LIBS)
 
-noinst_HEADERS = \
-	markerdialog.h
-	marker.h
+noinst_HEADERS = $(HDR)

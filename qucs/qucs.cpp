@@ -1421,7 +1421,7 @@ void QucsApp::slotFileSave()
 bool QucsApp::saveAs()
 { untested();
   QucsDoc *w = DocumentTab->current();
-  auto* W = prechecked_cast<QWidget*>(w);
+  auto* W = dynamic_cast<QWidget*>(w);
   assert(W);
 
   return w->saveAs();
@@ -2814,7 +2814,7 @@ QucsDoc *QucsTabWidget::createEmptySchematic(const QString &name)
   QFileInfo Info(name);
   assert(App);
   QucsDoc *d = newSchematicDoc(*App, name, this);
-  QWidget* w = prechecked_cast<QWidget*>(d);
+  QWidget* w = dynamic_cast<QWidget*>(d);
   assert(w);
   int i = addTab(w, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
   setCurrentIndex(i);
@@ -2828,7 +2828,7 @@ QucsDoc *QucsTabWidget::createEmptyTextDoc(const QString &name)
   // create a text document
   QFileInfo Info(name);
   QucsDoc *d = newTextDoc(*App, name, this);
-  QWidget* w = prechecked_cast<QWidget*>(d);
+  QWidget* w = dynamic_cast<QWidget*>(d);
   assert(w);
   int i = addTab(w, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
   setCurrentIndex(i);

@@ -32,3 +32,7 @@ verilog_la_LDFLAGS = -module -avoid-version
 # need Qt for TextStream (BUG?)
 verilog_la_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES)
 
+noinst_HEADERS = \
+	data.h \
+	output.h \
+	tasks.h
