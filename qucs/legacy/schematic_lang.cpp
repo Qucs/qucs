@@ -130,7 +130,7 @@ public:
 	LegacySchematicLanguage(bool mod=false) : SchematicLanguage(), _lib_mod(mod){
 	}
 private: // stuff saved from schematic_file.cpp
-	Diagram* loadDiagram(QString const& Line, istream_t& /*, DiagramList *List */) const;
+	Diagram* loadDiagram(Diagram* d, istream_t& /*, DiagramList *List */) const;
 private: // stuff from component.cc
 	void loadProperties(QTextStream& stream, SchematicSymbol& m) const;
 //	Component* parseComponentObsoleteCallback(const QString& _s, Component* c) const;
@@ -318,8 +318,9 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 		}else{
 
 			/// \todo enable user to load partial schematic, skip unknown components
-			Element*c=nullptr;
+			Element*c = nullptr;
 			if(mode=='C'){
+				// TODO: new__instance(stream, &owner, owner.subckt());
 				c = getComponentFromName(Line);
 				if(c){
 					c->setOwner(&owner);
@@ -368,15 +369,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 				}
 #endif
 			}else if(mode=='D'){
-				trace1("diagram parse?", Line);
-
-				Diagram* d=loadDiagram(Line, stream);
-				if(d){
-					c = d;
-					c->setOwner(&owner);
-				}else{ untested();
-					incomplete();
-				}
+				new__instance(stream, &owner, owner.subckt());
 			}else if(mode=='Q'){
 			}else if(mode=='M'){
 				// incomplete();
@@ -408,11 +401,9 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 	}
 }
 
-Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
-		istream_t& stream)const
+Diagram* LegacySchematicLanguage::loadDiagram(Diagram* d, istream_t& stream)const
 {itested();
-	Diagram *d;
-	QString Line=line_in;
+	QString Line = QString::fromStdString(stream.fullString());
 	QString cstr;
 	if(!stream.atEnd()) {itested();
 		trace1("diagram?", Line);
@@ -431,7 +422,7 @@ Diagram* LegacySchematicLanguage::loadDiagram(QString const& line_in,
 
 		auto type = what.c_str()+1;
 		if(auto x=diagram_dispatcher[what.c_str()+1]){itested();
-			d=prechecked_cast<Diagram*>(x->clone());
+			// d=prechecked_cast<Diagram*>(x->clone());
 			assert(d);
 			qDebug() << "got diagram" << what.c_str();
 			d->setName(type); // yuck
@@ -998,7 +989,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 				p1->Name = n.section('=',0,0);
 				n = n.section('=',1);
 				// allocate memory for a new property (e.g. for equations)
-				if(c->Props.count() < (int(counts)>>1)) {
+				if(int(c->Props.count()) < (int(counts)>>1)) {
 					c->Props.insert(z >> 1, new Property("y", "1", true));
 					c->Props.prev();
 				}
@@ -1047,6 +1038,8 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 //		bool err = obsolete_wireload(w, Line);
 	}else if(auto s=dynamic_cast<Symbol*>(e)){
 		::parseSymbol(l, s);
+	}else if(auto d=dynamic_cast<Diagram*>(e)){ untested();
+		bool err = loadDiagram(d, c);
 	}else if(auto s=dynamic_cast<Painting*>(e)){
 		::parsePainting(l, s);
 	}else if(auto s=dynamic_cast<DEV_DOT*>(e)){

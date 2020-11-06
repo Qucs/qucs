@@ -1,3 +1,15 @@
+/***************************************************************************
+    copyright            : (C) 2018, 2020 Felix Salfelder
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 #include "command.h"
 #include "element.h"
 #include "globals.h"
@@ -7,6 +19,7 @@
 #include "painting.h"
 #include "language.h"
 #include "d_dot.h"
+#include "diagram.h"
 
 Element* DocumentLanguage::parseItem(istream_t& s, Element* c) const
 {
@@ -94,6 +107,8 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
   }else if ((p = symbol_dispatcher[Name])) {
     return p;
   }else if ((p = painting_dispatcher[Name])) {
+    return p;
+  }else if ((p = diagram_dispatcher[Name])) { untested();
     return p;
   }else{
 #if 0
