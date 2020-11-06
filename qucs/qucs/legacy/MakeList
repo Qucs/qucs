@@ -21,3 +21,15 @@ NOTYET_SRC = \
 	truthdiagram.cpp \
 	phasordiagram.cpp \
 	waveac.cpp
+
+HDR = \
+	curvediagram.h \
+	dat.h \
+	markerdialog.h \
+	marker.h \
+	qucsator.h \
+	rect3ddiagram.h \
+	smithdiagram.h \
+	polardiagram.h \
+	psdiagram.h \
+	tabdiagram.h

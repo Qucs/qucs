@@ -35,12 +35,12 @@ public:
 public:
 	virtual QucsData* clone() { return NULL; }
 protected:
-	virtual QucsData* resolve(const std::string&){assert(false);}
+	virtual QucsData* resolve(const std::string&){assert(false); return nullptr;}
 
 public:
 	static void attach(QucsData*, QucsData**);
 	static void detach(QucsData**);
-	virtual QucsData const* refresh(){unreachable();}
+	virtual QucsData const* refresh(){unreachable(); return nullptr;}
 
 private:
 	unsigned _attach_count;

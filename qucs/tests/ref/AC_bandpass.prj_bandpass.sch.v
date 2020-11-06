@@ -1,4 +1,4 @@
-# Qucs 0.1.0  ../../tests/AC_bandpass.prj/bandpass.sch
+// Qucs
 
 GND #() *(gnd);
 GND #() *(gnd);

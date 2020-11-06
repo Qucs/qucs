@@ -253,7 +253,7 @@ bool QucsDoc::saveAs()
 		QString ext = "vhdl;vhd;v;va;sch;dpl;m;oct;net;qnet;txt";
 		QStringList extlist = ext.split (';');
 
-		auto w = prechecked_cast<QWidget*>(this);
+		auto w = dynamic_cast<QWidget*>(this);
 		assert(w);
 
 		s = QFileDialog::getSaveFileName(w, QWidget::tr("Enter a Document Name"),
@@ -293,7 +293,7 @@ bool QucsDoc::saveAs()
 	}
 	setName(s);
 
-	auto W = prechecked_cast<QWidget*>(this);
+	auto W = dynamic_cast<QWidget*>(this);
 
 	if(auto o=prechecked_cast<QTabWidget*>(_owner)){
 		o->setTabText(o->indexOf(W), s); // misc::properFileName(s));

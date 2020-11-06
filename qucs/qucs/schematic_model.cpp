@@ -234,8 +234,8 @@ Element* SchematicModel::detach(Element* what)
 {itested();
 	if(auto d=diagram(what)){ untested();
 		diagrams().removeRef(d);
-	}else if(prechecked_cast<Conductor*>(element(what))){
-		auto s=dynamic_cast<Symbol*>(what);
+	}else if(dynamic_cast<Conductor*>(element(what))){
+		auto s = dynamic_cast<Symbol*>(what);
 		disconnect(s);
 		wires().removeRef(s);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){itested();
@@ -254,7 +254,7 @@ Element* SchematicModel::attach(Element* what)
 		commands().push_back(c);
 	}else if(auto d=diagram(what)){ untested();
 		diagrams().append(d);
-	}else if(prechecked_cast<Conductor*>(element(what))){
+	}else if(dynamic_cast<Conductor*>(element(what))){
 		auto s=dynamic_cast<Symbol*>(what);
 		connect(s);
 		wires().append(s);

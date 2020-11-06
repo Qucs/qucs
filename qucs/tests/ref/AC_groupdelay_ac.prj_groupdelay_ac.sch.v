@@ -1,4 +1,4 @@
-# Qucs 0.1.0  ../../tests/AC_groupdelay_ac.prj/groupdelay_ac.sch
+// Qucs
 
 C #(.C(39.01pF), .V(), .Symbol(neutral)) C1(gnd, P1);
 GND #() *(gnd);

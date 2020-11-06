@@ -47,13 +47,13 @@
 #include "viewpainter.h"
 #include "mouseactions.h"
 // #include "diagrams/diagrams.h"
-#include "paintings/paintings.h"
 #include "components/vhdlfile.h"
 #include "components/verilogfile.h"
 #include "components/vafile.h"
 #include "misc.h"
 #include "globals.h"
 #include "trace.h"
+#include "painting.h"
 
 #include "qt_compat.h"
 
@@ -1084,8 +1084,8 @@ bool SchematicDoc::mirrorXComponents()
   }
 
   setChanged(true, true);
-  return true;
 #endif
+  return true;
 }
 
 // ---------------------------------------------------
