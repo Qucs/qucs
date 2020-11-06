@@ -91,6 +91,7 @@ QString EqnDefined::netlist() const
 
   return s+e;
 #endif
+  return "";
 }
 
 // -------------------------------------------------------
