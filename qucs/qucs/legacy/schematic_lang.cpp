@@ -987,7 +987,8 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 
 		// for equations
 		qDebug() << "Model" << Model;
-#if 0
+#if 1
+		// gaah. breaks Eqn.
 		if(Model != "EDD" && Model != "RFEDD" && Model != "RFEDD2P")
 			if(p1->Description.isEmpty()) {  // unknown number of properties ?
 				p1->Name = n.section('=',0,0);
