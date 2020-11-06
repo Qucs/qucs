@@ -35,7 +35,6 @@ SUBDIRS = \
 	diagrams \
 	paintings \
 	octave \
-	legacy \
 	sim \
 	tests
 

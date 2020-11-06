@@ -16,7 +16,7 @@
 #define DIAGRAM_H
 
 #include "diagrams/graph.h"
-#include "legacy/marker.h"
+#include "../legacy/marker.h"
 #include "element.h"
 #include "viewpainter.h"
 
