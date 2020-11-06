@@ -103,6 +103,7 @@ private:
 // a mouse action on an element (first attempt)
 // formerly, a mouse action was implemented by means of messing with element
 // internals.
+#if 0
 class ElementMouseAction {
 public:
 	explicit ElementMouseAction(ElementGraphics* e)
@@ -197,6 +198,7 @@ inline Node* node(ElementMouseAction e)
   return node(element(e));
 }
 Label* label(ElementMouseAction e);
+#endif
 
 
 extern QAction *formerAction;
@@ -243,7 +245,7 @@ private:
   // (does it matter?)
 public:
   Component* selectCompText(SchematicDoc*, int, int, int&, int&);
-  void     deselectElements(ElementMouseAction);
+//  void     deselectElements(ElementMouseAction);
 
 public: // really?
   QucsDoc& doc();
@@ -319,7 +321,7 @@ protected:
 
 class Label;
 
-// really?
+#if 0
 ElementGraphics* element(ElementMouseAction);
 Component* component(ElementMouseAction);
 WireLabel* wireLabel(ElementMouseAction);
@@ -330,5 +332,5 @@ Marker* marker(ElementMouseAction);
 Node* node(ElementMouseAction);
 Label* label(ElementMouseAction);
 WireLabel* wireLabel(ElementMouseAction);
-
+#endif
 #endif

@@ -353,6 +353,9 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 					incomplete();
 				}
 			}else if(mode=='W'){
+#if 0 // not yet.
+				new__instance(stream, &owner, owner.subckt());
+#else
 				Symbol* sw= symbol_dispatcher.clone("Wire");
 				assert(sw);
 				sw->setOwner(&owner);
@@ -363,6 +366,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 				}else{
 					c = sw;
 				}
+#endif
 			}else if(mode=='D'){
 				trace1("diagram parse?", Line);
 
@@ -1039,6 +1043,8 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 	if(dynamic_cast<Component*>(e)){ untested();
 		// callback?!
 		incomplete();
+//	}else if(auto w=dynamic_cast<Wire*>(e)){
+//		bool err = obsolete_wireload(w, Line);
 	}else if(auto s=dynamic_cast<Symbol*>(e)){
 		::parseSymbol(l, s);
 	}else if(auto s=dynamic_cast<Painting*>(e)){
