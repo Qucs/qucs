@@ -765,57 +765,6 @@ void SchematicDoc::highlightWireLabels ()
 }
 
 // ---------------------------------------------------
-// Deselects all elements except 'e'.
-// bug: why do we not have a list of selected elements?!
-void MouseActions::deselectElements(ElementMouseAction e)
-{
-#ifndef USE_SCROLLVIEW
-    SchematicDoc* Doc = prechecked_cast<SchematicDoc*>(&_doc);
-    assert(Doc);
-    Doc->deselectElements();
-    e->setSelected(true); //?!
-#else
-    // test all components
-    for(auto* pc : Doc->components()){
-        if(e != pc)  pc->setSelected(false);
-    }
-
-    // test all wires
-    for(auto *pw : Doc->wires()) {
-        if(e != pw)  pw->setSelected(false);
-        if(pw->Label) if(e != pw->Label)  pw->Label->setSelected(false);
-    }
-
-    // test all node labels
-    for(auto *pn : Doc->nodes()){
-        if(pn->Label) if(e != pn->Label)  pn->Label->setSelected(false);
-    }
-
-    // test all diagrams
-    for(auto *pd : Doc->diagrams())
-    {
-        if(e != pd)  pd->setSelected(false);
-
-        // test graphs of diagram
-        foreach(Graph *pg, pd->Graphs)
-        {
-            if(e != pg) pg->setSelected(false);
-
-            // test markers of graph
-            foreach(Marker *pm, pg->Markers)
-                if(e != pm) pm->setSelected(false);
-        }
-
-    }
-
-    // test all paintings
-    for(auto *pp : Doc->paintings()){
-        if(e != pp)  pp->setSelected(false);
-    }
-#endif
-}
-
-// ---------------------------------------------------
 // flags elements that lie within the rectangle x1/y1, x2/y2.
 // return the number of elements selected.
 // flag?! is is the shift key?

@@ -44,7 +44,7 @@
 class MouseActionSelect : public MouseAction{
 public:
 	explicit MouseActionSelect(MouseActions& ctx)
-		: MouseAction(ctx), focusElement(nullptr) {}
+		: MouseAction(ctx) {}
 
 private: // override
 //	cmd* activate(QAction* sender) override;
@@ -75,10 +75,10 @@ protected:
 	}
 
 private: // more decoupling
-	ElementMouseAction focusElement;
+	//ElementMouseAction focusElement;
 	bool isMoveEqual; //?
 	QPointF _pos1;
-};
+}; // MouseActionSelect
 /*--------------------------------------------------------------------------*/
 
 //void MouseActions::MDoubleClickSelect(SchematicDoc *Doc, QMouseEvent *Event)
