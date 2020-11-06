@@ -1,4 +1,4 @@
-# Qucs 0.1.0  ../../tests/AC_SW_resonance.prj/resonance.sch
+// Qucs
 
 Vac #(.U(1 V), .f(1 GHz), .Phase(0), .Theta(0)) V1(_net7, gnd);
 GND #() *(gnd);

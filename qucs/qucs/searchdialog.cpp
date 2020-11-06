@@ -44,7 +44,7 @@ SearchDialog::~SearchDialog()
 // ---------------------------------------------------------------------
 void SearchDialog::initSearch(QucsDoc *_doc, const QString &text, bool replace)
 {
-  doc = prechecked_cast<QWidget*>(_doc);
+  doc = dynamic_cast<QWidget*>(_doc);
 
   if(replace) {
     setWindowTitle(tr("Replace Text"));

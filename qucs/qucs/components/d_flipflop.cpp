@@ -77,6 +77,7 @@ QString D_FlipFlop::vhdlCode(int NumPorts)
       Ports.at(0)->Connection->name() + s + "    end if;\n  end process;\n\n";
   return s;
 #endif
+  return "";
 }
 
 // -------------------------------------------------------
@@ -106,6 +107,7 @@ QString D_FlipFlop::verilogCode(int NumPorts)
     "  end\n\n";
   return s;
 #endif
+  return "";
 }
 
 // -------------------------------------------------------

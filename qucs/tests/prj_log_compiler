@@ -31,6 +31,9 @@ for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 	cmd="$QUCS -a ../qucs/sim/.libs/verilog.so -l verilog_nl -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.v"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
+
+	# BUG: use stdout and filter
+	sed -i '1 s/Qucs.*/Qucs/' ${out}/${base}_${schname}.v
 	
 	# dump legacy schematic
 	rm -f "${out}/${base}_${schname}.dup"

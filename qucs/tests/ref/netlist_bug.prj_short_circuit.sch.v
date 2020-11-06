@@ -1,4 +1,4 @@
-# Qucs 0.1.0  ../../tests/netlist_bug.prj/short_circuit.sch
+// Qucs
 #ifdef QUCS_INACTIVE
 #endif // QUCS_INACTIVE
 #ifdef QUCS_INACTIVE

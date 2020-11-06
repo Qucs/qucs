@@ -66,7 +66,7 @@ void QucsTabWidget::showContextMenu(const QPoint& point)
 QucsDoc* QucsTabWidget::current()
 {
 	QWidget* w = currentWidget();
-	auto d = prechecked_cast<QucsDoc*>(w);
+	auto d = dynamic_cast<QucsDoc*>(w);
 	assert(d);
 	return d;
 }

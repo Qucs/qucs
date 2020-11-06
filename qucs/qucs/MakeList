@@ -103,29 +103,75 @@ DIALG_MOCHEADERS = \
 	sweepdialog.h \
 	vasettingsdialog.h
 
-noinst_HEADERS = \
+HDR1 = \
 	actions.h \
+	cmdeltdlg.h \
+	command.h \
+	conductor.h \
+	docfmt.h \
+	dynamic_cc.h \
 	element.h \
+	element_graphics.h \
 	exception.h \
+	geometry.h \
 	imagewriter.h \
   	imagewriter.h \
 	language.h \
 	misc.h \
 	mnemo.h \
 	module.h \
-	port.h \
+	net.h \
+	netlist.h \
 	node.h \
 	nodemap.h \
+	painting.h \
+	port.h \
 	printerwriter.h \
 	projectView.h \
+	protomap.h \
 	qt_compat.h \
 	qucsdoc.h \
+	simulator.h \
 	symbol.h \
 	syntax.h \
+	settings.h \
+	schematic_action.h \
 	schematic_lang.h \
 	schematic_symbol.h \
+	schematic_edit.h \
+	sckt_base.h \
+	sckt_proto.h \
+	swap.h \
 	some_font_stuff.h \
 	task_element.h \
 	trace.h \
 	viewpainter.h \
+	wiredialog.h \
+	wirelabel.h
+
+# must be installed. but later
+HDR2 = \
+	actions.h \
+	task_element.h \
+	diagram.h \
+	dispatcher.h \
+	globals.h \
+	imagewriter.h \
+	io.h \
+	misc.h \
+	mnemo.h \
+	module.h \
+	mouseactions.h \
+	object.h \
+	platform.h \
+	printerwriter.h \
+	projectView.h \
+	qt_compat.h \
+	schematic_lang.h \
+	schematic_model.h \
+	schematic_symbol.h \
+	syntax.h \
+	trace.h \
+	viewpainter.h \
+	wirelabel.h \
 	wirelabel.h

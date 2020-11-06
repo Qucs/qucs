@@ -1,4 +1,4 @@
-# Qucs 0.1.0  ../../tests/netlist_bug.prj/test_circuit.sch
+// Qucs
 
 Vdc #(.U(1 V)) V1(in, gnd);
 GND #() *(gnd);

@@ -1,4 +1,4 @@
-# Qucs 0.1.0  ../../tests/AC_bandpass.prj/opa227.sch
+// Qucs
 
 VCVS #(.G(1), .T(0)) SRC2(_net6, _net1, gnd, gnd);
 GND #() *(gnd);

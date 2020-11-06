@@ -180,7 +180,9 @@ qucs_default_components_la_SOURCES += \
 	vafile.cpp \
 	spicefile.cpp
 
-noinst_HEADERS = $(MOCHEADERS) components.h \
+noinst_HEADERS = $(MOCHEADERS) \
+	libcomp.h \
+	components.h \
 	spicedialog.h optimizedialog.h spicefile.h \
   inductor.h biast.h dcblock.h dcfeed.h ground.h \
   attenuator.h circulator.h isolator.h \

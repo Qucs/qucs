@@ -1,0 +1,5 @@
+
+ACTION_CPP = \
+	move.cpp \
+	wire.cpp \
+	zoom.cpp

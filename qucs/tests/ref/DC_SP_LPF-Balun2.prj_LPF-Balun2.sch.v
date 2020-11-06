@@ -1,4 +1,4 @@
-# Qucs 0.1.0  ../../tests/DC_SP_LPF-Balun2.prj/LPF-Balun2.sch
+// Qucs
 
 L #(.L(1.2uH), .I()) L1(_net41, _net40);
 L #(.L(470nH), .I()) L2(_net40, _net3);
