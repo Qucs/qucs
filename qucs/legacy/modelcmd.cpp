@@ -19,39 +19,38 @@
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
-class PortSym : public Command{
+class Model : public Command{
   virtual void do_it(istream_t& cs, SchematicModel* s){
 	  auto fullstring = cs.fullString();
-	  cs.reset();
-	  trace1("PortSym", fullstring);
-	  cs.skipbl();
-	  cs.skip1('<');
+	  trace1("Model", fullstring);
 
-	  std::string type;
-	  int cx, cy, tx, ty;
-	  cs >> type;
-	  cs >> cx;
-	  cs >> cy;
-	  cs >> tx;
-	  cs >> ty;
-
-	  auto ps = painting_dispatcher.clone("PortSym");
-	  ps->setCenter(pos_t(cx,cy));
-	  s->pushBack(ps);
-	  auto n = s->numPorts();
-	  trace6("PortSymParams", type, cx, cy, tx, ty, n);
-
-	  auto place = symbol_dispatcher.clone("place"); // memory leak.
-	  assert(place);
-	  place->setCenter(pos_t(cx,cy));
-	  Node* node = place->connectNode(0, s->nodes());
-	  assert(node);
-
-	  // tmp hack.
-	  trace1("portsym:setport", n);
-	  s->setPort(n, node);
+	  std::string M;
+	  std::string buf;
+	  while(true){
+		  cs.readLine();
+		  trace1("Model", cs.fullString());
+		  if(cs.is_end()){
+			  break;
+		  }else if(cs.umatch("</Model>")){
+			  break;
+		  }else{
+			  cs.skipbl();
+			  M += cs.tail() + "\n";
+		  }
+	  }
+#if 1
+	  trace1("hack", M);
+	  Symbol* textdef = symbol_dispatcher.clone("qucsatorScktHack");
+	  assert(textdef);
+	  textdef->setParameter("qucsatorsckthack", M);
+	  textdef->setLabel(":qucsatorsckthack:");
+	  assert(s);
+	  s->pushBack(textdef);
+#endif
   }
 }d0;
-Dispatcher<Command>::INSTALL p(&command_dispatcher, ".PortSym", &d0);
+Dispatcher<Command>::INSTALL p0(&command_dispatcher, "Model", &d0);
+Dispatcher<Command>::INSTALL p1(&command_dispatcher, "Model>", &d0); // BUG
+Dispatcher<Command>::INSTALL p2(&command_dispatcher, "<Model>", &d0); // ...
 /*--------------------------------------------------------------------------*/
 } // namespace

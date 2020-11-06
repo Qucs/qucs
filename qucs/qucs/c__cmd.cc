@@ -95,6 +95,7 @@ void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
   { /* no shortcut available */
     trace1("cmdproc", cmd.fullString());
     cmd >> s;
+    trace1("got", s);
     didsomething = false;
   }
 
@@ -106,6 +107,7 @@ void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
       c->do_it(cmd, scope);
       didsomething = true;
     }else{untested();
+      trace1("no such command", s);
       incomplete();
       assert(false);
 //      cmd.warn(bWARNING, here, "what's this?");
