@@ -1070,7 +1070,8 @@ DEV_DOT* LegacySchematicLanguage::parseCommand(istream_t& c, DEV_DOT* x) const
 
   std::string s;
   c >> s;
-  // c.reset(here);
+  trace2("ctos?", c.fullString(), s);
+  c.reset(here);
   if (!command_dispatcher[s]) {
 	  unreachable(); // for now
 	  trace2("uuh", s, c.fullString());
