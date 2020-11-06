@@ -141,6 +141,7 @@ void LIB::loadLibFiles()
 
 				assert(ssym);
 				try{
+					trace1("parse", c.definition);
 					L->parse(stream, *ssym);
 					trace2("stashing", t, ssym->symbolPaintings().size());
 					stash(new Dispatcher<Symbol>::INSTALL(&symbol_dispatcher, t, ssym));
@@ -151,13 +152,23 @@ void LIB::loadLibFiles()
 				}
 
 				if(ssym){
+
+					// not needed!
 					// fix later
+#if 1
+					QString mh = "<Model>\n" + c.modelHack + "\n</Model>\n";
+					trace1("Modelparse", mh);
+					istream_t stream(&mh);
+		//			L->parse(stream, *ssym);
+#else
 					Symbol* textdef = symbol_dispatcher.clone("qucsatorScktHack");
 					assert(textdef);
 					textdef->setParameter("qucsatorsckthack", c.modelHack.toStdString());
 					textdef->setLabel(":qucsatorsckthack:");
 					assert(ssym->subckt());
 					ssym->subckt()->pushBack(textdef);
+#endif
+
 				}else{ untested();
 				}
 

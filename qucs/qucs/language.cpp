@@ -76,8 +76,10 @@ void DocumentLanguage::new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
 /*--------------------------------------------------------------------------*/
 Element const* DocumentLanguage::find_proto(const std::string& Name, const Element* Scope) const
 {
+	trace1("fp", Name);
 	if(Scope){
 		incomplete();
+	}else{
 	}
 #if 0
   const CARD* p = NULL;
@@ -100,7 +102,7 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
 #endif
   if (p) {
     return p;
-  }else if ((command_dispatcher[Name])) {
+  }else if ((command_dispatcher[Name])) { untested();
     return new DEV_DOT;	//BUG// memory leak
   }else if ((p = element_dispatcher[Name])) {
     return p;
