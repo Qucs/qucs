@@ -21,7 +21,7 @@ Simulator::~Simulator()
 {
 	if(_data_p){ untested();
 		QucsData::detach(_data_p);
-	}else{ untested();
+	}else{
 	}
 }
 /* -------------------------------------------------------------------------------- */

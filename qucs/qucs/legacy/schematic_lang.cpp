@@ -161,7 +161,7 @@ static Symbol* parseSymbol(const QString& _s, Symbol* c);
 static Element* loadElement(const QString& _s, Element* e)
 {
 	trace1("loadElement", _s);
-	if(TaskElement* c=dynamic_cast<TaskElement*>(e)){ untested();
+	if(TaskElement* c=dynamic_cast<TaskElement*>(e)){
 		c = loadtaskElement(_s, c);
 		// incomplete();
 	}else if(Component* c=dynamic_cast<Component*>(e)){
@@ -595,7 +595,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, ostream_t& s) const
 } // printSymbol
 
 static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
-{ untested();
+{
 	trace1("loadtaskElement", c->label());
 	bool ok;
 	int  ttx, tty, tmp;
@@ -605,7 +605,7 @@ static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
 		return NULL;
 	}else if(s.at(s.length()-1) != '>'){ untested();
 		return NULL;
-	}else{ untested();
+	}else{
 		s = s.mid(1, s.length()-2);   // cut off start and end character
 
 		QString label=s.section(' ',1,1);
@@ -623,7 +623,7 @@ static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
 
 		if(tmp & 4){ untested();
 			c->showName = false;
-		}else{ untested();
+		}else{
 			// use default, e.g. never show name for GND (bug?)
 		}
 
@@ -653,14 +653,14 @@ static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
 		// FIXME. use c->paramCount()
 
 		/// BUG FIXME. dont use Component parameter dictionary.
-		for(; tmp<=(int)counts/2; tmp++){ untested();
+		for(; tmp<=(int)counts/2; tmp++){
 			c->Props.append(new Property("p", "", true, " "));
 		}
 
 		// load all properties
 		Property *p1;
 		qDebug() << "load command props" << s;
-		for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) { untested();
+		for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
 			qDebug() << "load command props" << z;
 			z++;
 			n = s.section('"',z,z);    // property value
@@ -668,14 +668,14 @@ static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
 			//qDebug() << "LOAD: " << p1->Description;
 
 			// not all properties have to be mentioned (backward compatible)
-			if(z > counts) { untested();
+			if(z > counts) {
 				if(p1->Description.isEmpty()){ untested();
 					c->Props.remove();    // remove if allocated in vain
-				}else{ untested();
+				}else{
 				}
 
 				return c;
-			}else{ untested();
+			}else{
 			}
 
 			p1->Value = n;
@@ -1159,10 +1159,10 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 		e = prechecked_cast<Element*>(k);
 	}else if(typestring.size() == 0){ untested();
 		incomplete();
-	}else if(typestring.c_str()[0] == '.'){ untested();
+	}else if(typestring.c_str()[0] == '.'){
 		std::string type = typestring.substr(1); // drop dot.
 		e = element_dispatcher.clone(type);
-		if(auto ce = dynamic_cast<TaskElement*>(e)){ untested();
+		if(auto ce = dynamic_cast<TaskElement*>(e)){
 			// should use setType lower down. drop name.
 			ce->setTypeName(QString::fromStdString(type));
 		}else{ untested();

@@ -184,11 +184,11 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 //			}else if(!sym->paramIsPrintable(ii)){ untested();
 			}else if(name==""){itested();
 				incomplete();
-			}else if(name == "Component") { untested();
+			}else if(name == "Component") {
 				// hack
 			}else if(name == "File") { untested();
 				// hack
-			}else if(name == "Lib") { untested();
+			}else if(name == "Lib") {
 				// hack
 			}else if(name == "Symbol") { untested();
 				// hack??

@@ -752,28 +752,28 @@ int main(int argc, char *argv[])
   var = getenv("ADMSXMLBINDIR");
   if(var != NULL) { untested();
       QucsSettings.AdmsXmlBinDir.setPath(QString(var));
-  }else{ untested();
+  }else{
       // default admsXml bindir same as Qucs
       QString admsExec;
       admsExec = QDir::toNativeSeparators(QucsSettings.BinDir+"/admsXml" executableSuffix);
       QFile adms(admsExec);
       if(adms.exists()){ untested();
         QucsSettings.AdmsXmlBinDir.setPath(QucsSettings.BinDir);
-      }else{ untested();
+      }else{
       }
   }
 
   var = getenv("ASCOBINDIR");
   if(var != NULL)  { untested();
       QucsSettings.AscoBinDir.setPath(QString(var));
-  }else{ untested();
+  }else{
       // default ASCO bindir same as Qucs
       QString ascoExec;
       ascoExec = QDir::toNativeSeparators(QucsSettings.BinDir+"/asco" executableSuffix);
       QFile asco(ascoExec);
       if(asco.exists()){ untested();
         QucsSettings.AscoBinDir.setPath(QucsSettings.BinDir);
-      }else{ untested();
+      }else{
       }
   }
 
@@ -817,7 +817,7 @@ int main(int argc, char *argv[])
 
   QTranslator tor( 0 );
   QString lang = QucsSettings.Language;
-  if(lang.isEmpty()) { untested();
+  if(lang.isEmpty()) {
     QLocale loc;
     lang = loc.name();
   }else{ untested();
