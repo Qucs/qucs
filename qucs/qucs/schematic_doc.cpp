@@ -818,13 +818,10 @@ ElementGraphics* SchematicDoc::itemAt(float x, float y)
 }
 /*--------------------------------------------------------------------------*/
 // SchematicScene??
-QList<ElementGraphics*> SchematicDoc::selectedItems()
+QList<ElementGraphics*> SchematicDoc::selectedItems() const
 { itested();
 	assert(scene());
-	// TODO/BUG: proper iterator.
-	auto L = scene()->selectedItems();
-	auto EL = reinterpret_cast<QList<ElementGraphics*>* >(&L);
-	return *EL;
+	return scene()->selectedItems();
 }
 /*--------------------------------------------------------------------------*/
 Node const* SchematicDoc::nodeAt(pos_t const& p) const
@@ -964,4 +961,32 @@ void SchematicDoc::slotRefreshData(std::string const& what)
 {
 	incomplete();
 }
+/*--------------------------------------------------------------------------*/
+// Copy function, 
+#include <QApplication>
+#include <QClipboard>
+void SchematicDoc::copy()
+{itested();
+  QString s = createClipboardFile();
+  QClipboard *cb = QApplication::clipboard();  // get system clipboard
+  if (!s.isEmpty()) { untested();
+    cb->setText(s, QClipboard::Clipboard);
+  }
+}
+/*--------------------------------------------------------------------------*/
+QString SchematicDoc::createClipboardFile() const
+{
+	QString buf;
+	ostream_t s(&buf);
+
+	auto lang = doclang_dispatcher["leg_sch"];
+	assert(lang);
+	for (auto i : scene()->selectedItems()){
+		lang->printItem(element(i), s);
+	}
+	s.flush();
+	trace1("clip", buf);
+	return buf; //  .toString();
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

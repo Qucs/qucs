@@ -416,16 +416,21 @@ void SchematicScene::selectAll(bool v)
 	}
 }
 /*--------------------------------------------------------------------------*/
-#if 0
-QList<ElementGraphics*> SchematicDoc::selectedItems()
-{ itested();
-	assert(scene());
-	// TODO/BUG: proper iterator.
-	auto L = scene()->selectedItems();
+QList<ElementGraphics*> SchematicScene::selectedItems() const
+{ untested();
+	auto L = QGraphicsScene::selectedItems();
+	for(auto l = L.begin(); l!=L.end(); ){ untested();
+		if(prechecked_cast<ElementGraphics*>(*l)){ untested();
+			++l;
+		}else{ untested();
+			// incomplete(); // actually
+			auto prev = l;
+			l = L.erase(prev);
+		}
+	}
 	auto EL = reinterpret_cast<QList<ElementGraphics*>* >(&L);
 	return *EL;
 }
-#endif
 /*--------------------------------------------------------------------------*/
 QList<ElementGraphics*> SchematicScene::items() const
 { untested();

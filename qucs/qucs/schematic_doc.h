@@ -153,6 +153,7 @@ public: // scene
 
 private:
 	void deleteItem(ElementGraphics*);
+	QString createClipboardFile() const;
 
 public:
   SchematicScene const* scene() const{itested();
@@ -427,9 +428,9 @@ public:
   ElementGraphics* itemAt(QPointF x) { return itemAt(x.x(), x.y());}
 //  int      selectElements(int, int, int, int, bool);
   void     selectMarkers();
-  void     newMovingWires(QList<Element*>*, Node*, int);
-  QList<ElementGraphics*> cropSelectedElements();
-  QList<ElementGraphics*> selectedItems();
+//  void     newMovingWires(QList<Element*>*, Node*, int);
+//  QList<ElementGraphics*> cropSelectedElements();
+  QList<ElementGraphics*> selectedItems() const;
   QUndoCommand* deleteElements();
   bool     aligning(int);
   bool     distributeHorizontal();
