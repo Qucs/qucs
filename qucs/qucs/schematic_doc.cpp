@@ -18,6 +18,7 @@
 #include "qucs.h" // BUG. QucsSettings?
 #include <QUndoStack>
 #include "simmessage.h"
+#include "docfmt.h" // copy&paste
 
 // tmp hack.
 QucsDoc* newSchematicDoc(QucsApp& a, QString const& b, QWidget* o)
@@ -981,19 +982,16 @@ public:
 	}
 };
 /*--------------------------------------------------------------------------*/
-#include "docfmt.h"
+// BUG: it does not create a file.
 QString SchematicDoc::createClipboardFile() const
 {
-
 	cnpsymbol sym;
 	assert(sym.subckt());
 	for (auto i : scene()->selectedItems()){
 		sym.subckt()->pushBack(i->cloneElement());
-		// lang->printItem(element(i), s);
 	}
 
 	auto lang = command_dispatcher["leg_sch"];
-//	auto lang = command_dispatcher["cnp_sch"];
 	assert(lang);
 	auto fmt = prechecked_cast<DocumentFormat const*>(lang);
 	assert(fmt);
@@ -1002,8 +1000,7 @@ QString SchematicDoc::createClipboardFile() const
 	ostream_t s(&buf);
 	fmt->save(s, sym);
 	s.flush();
-	trace1("clip", buf);
-	return buf; //  .toString();
+	return buf;
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

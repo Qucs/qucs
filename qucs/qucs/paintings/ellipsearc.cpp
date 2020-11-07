@@ -111,6 +111,7 @@ void EllipseArc::getCenter(int& x, int &y)
 //}
 
 // --------------------------------------------------------------------------
+#if 0
 Element* EllipseArc::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Elliptic Arc");
@@ -119,6 +120,7 @@ Element* EllipseArc::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new EllipseArc();
   return 0;
 }
+#endif
 
 // --------------------------------------------------------------------------
 bool EllipseArc::load(const QString& s)
@@ -185,6 +187,7 @@ QString EllipseArc::save()
 }
 
 // --------------------------------------------------------------------------
+#if 0
 QString EllipseArc::saveCpp()
 {
 	   auto cx=Element::cx();
@@ -213,6 +216,7 @@ QString EllipseArc::saveJSON()
       arg(Pen.color().name()).arg(Pen.width()).arg(toPenString(Pen.style()));
   return s;
 }
+#endif
 
 // --------------------------------------------------------------------------
 // Checks if the resize area was clicked.

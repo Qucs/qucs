@@ -95,6 +95,7 @@ void MouseActions::setPainter(SchematicDoc *)
 // -----------------------------------------------------------
 bool MouseActions::pasteElements(SchematicDoc *)
 { untested();
+  assert(false);
   QClipboard *cb = QApplication::clipboard();   // get system clipboard
   QString s = cb->text(QClipboard::Clipboard);
 //  DocumentStream stream(&s, QIODevice::ReadOnly);

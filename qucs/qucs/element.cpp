@@ -59,19 +59,20 @@ void Element::paint(ViewPainter* p) const
 {
 #ifndef NDEBUG
 	p->setPen(QPen(Qt::yellow,1));
-	p->drawRoundedRect(boundingRect());
+	p->drawRoundedRect(bounding_rect().toRectF());
 #endif
 }
 
 // does not work for nodes and diagrams
-QRectF Element::boundingRect() const
+rect_t Element::bounding_rect() const
 {
 	unreachable();
 	// QRectF b(cx+x1, cy+y1, x2-x1, y2-y1);
 //	QRectF b(x1, y1, x2-x1, y2-y1);
 //	return b;
 //
-	return QRectF();
+	assert(false);
+	return rect_t(0,0,0,0);
 }
 
 void Element::attachToModel()

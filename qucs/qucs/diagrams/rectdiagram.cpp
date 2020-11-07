@@ -24,9 +24,10 @@ public:
 	DiagramWidget(Diagram* d)
 	: _diag(d){ untested();
 		assert(d);
-		QRectF br(d->boundingRect());
-		trace2("DiagramWidget", br.topLeft(), br.bottomRight());
-		setGeometry(br.toRect()); // this only sets the SIZE.
+		Element const*e = d;
+		auto br(e->bounding_rect());
+		trace2("DiagramWidget", br.tl(), br.br());
+		setGeometry(br.toRectF().toRect()); // this only sets the SIZE.
 		                          // origin is in topleft corner.
 	}
 // 	QSize sizeHint() const override{

@@ -80,8 +80,6 @@ private: // more decoupling
 	QPointF _pos1;
 }; // MouseActionSelect
 /*--------------------------------------------------------------------------*/
-
-//void MouseActions::MDoubleClickSelect(SchematicDoc *Doc, QMouseEvent *Event)
 QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
 { untested();
 	incomplete();
@@ -390,22 +388,22 @@ private:
 	Element const* _proto;
 };
 /*--------------------------------------------------------------------------*/
-class NewElementtaskElement : public SchematicEdit {
+class NewElementCommand : public SchematicEdit {
 public:
-	NewElementtaskElement(SchematicDoc& ctx, ElementGraphics* gfx)
+	NewElementCommand(SchematicDoc& ctx, ElementGraphics* gfx)
 	: SchematicEdit(*ctx.sceneHACK()) { untested();
 		gfx->hide();
 		ctx.takeOwnership(element(gfx)); // BUG?
 		// elment->setOwner(ctx)...?
 		setText("NewElement" /*element(gfx)->label()*/); // tr?
-		trace0("NewElementtaskElement::NewElementCommand");
+		trace0("NewElementCommand::NewElementCommand");
 		qInsert(gfx);
 	}
-	~NewElementtaskElement(){ untested();
-		// _gfx is owned by ctx
+	~NewElementCommand(){ untested();
 		// _gfx owns element(_gfx)
+		// ctx owns _gfx
 	}
-}; // NewElementtaskElement
+}; // NewElementCommand
 /*--------------------------------------------------------------------------*/
 #include <component_widget.h> // not here.
 QUndoCommand* MouseActionNewElement::activate(QObject* sender)
@@ -449,7 +447,7 @@ QUndoCommand* MouseActionNewElement::makeNew(QMouseEvent* ev)
 	}else{
 	}
 
-	cmd* c = new NewElementtaskElement(doc(), _gfx);
+	cmd* c = new NewElementCommand(doc(), _gfx);
 	// _gfx = nullptr;
 
 	{ untested();
@@ -570,6 +568,7 @@ QUndoCommand* MouseActionNewElement::press(QEvent* ev)
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #include "action/move.cpp" // for now.
+#include "action/paste.cpp" // for now.
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // was: MouseActions::MMoveSelect
@@ -931,6 +930,7 @@ SchematicActions::SchematicActions(SchematicDoc& ctx)
 	maMirrorXaxis = new MouseActionMirrorXaxis(*this);
 	maMirrorYaxis = new MouseActionMirrorYaxis(*this);
 	maRotate = new MouseActionRotate(*this);
+	maEditPaste = new MouseActionPaste(*this);
 
 	// this was in App previously, and scattered across a couple of pointer hacks.
 	// possibly initialised to "select". recheck.
@@ -1118,8 +1118,9 @@ void SchematicDoc::actionInsertEquation(QAction*)
 }
 #endif
 
-void SchematicDoc::actionEditPaste(QAction*)
+void SchematicDoc::actionEditPaste(QAction* sender)
 { untested();
+  possiblyToggleAction(schematicActions().maEditPaste, sender);
 #if 0
 	// if it's not a text doc, prevent the user from editing
 	// while we perform the paste operation

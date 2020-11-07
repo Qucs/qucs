@@ -34,11 +34,10 @@
 #define QUCS_ELEMENT_H
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-# include <QPen> // BUG
 
 #ifndef UNTANGLE_QT // later
-# include <QBrush>
-# include <QDebug>
+//# include <QBrush>
+//# include <QDebug>
 #endif
 
 #include <assert.h>
@@ -56,6 +55,7 @@ class SchematicModel;
 class Symbol;
 class QDialog;
 
+# include <QPen> // BUG
 struct Line {
 	Line(Line const&) = default;
   Line(int _x1, int _y1, int _x2, int _y2, QPen _style)
@@ -150,14 +150,13 @@ class Graph;
 class Marker;
 class Node;
 class ViewPainter;
-
+/*--------------------------------------------------------------------------*/
 class SchematicModel;
-
-
+/*--------------------------------------------------------------------------*/
 class Element : public Object {
 public:
   friend class ElementGraphics;
-  typedef QRectF Rect; // BUG.
+  typedef rect_t Rect;
 protected:
   Element(Element const&);
 public:
@@ -178,8 +177,8 @@ public: // make old variables accessible
 	void setObsoleteType(int t){
 		Type = t;
 	}
+	virtual rect_t bounding_rect() const;
 
-  virtual QRectF boundingRect() const; // BUG.
 public: // other stuff
   virtual bool showLabel() const{ return true; }
   //virtual bool showParam(int i) const{ return true; } // later
