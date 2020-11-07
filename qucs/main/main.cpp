@@ -219,9 +219,9 @@ private:
 
 public:
   SchematicModel* subckt(){return _subckt;}
-  // Commanlist* commands(){ ... }
+  // Commandlist* commands(){ ... }
 
-public: // tmo hack
+public: // tmp hack
   std::string DocName;
 };
 }
