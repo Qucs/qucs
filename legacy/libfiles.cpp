@@ -140,7 +140,7 @@ void LIB::loadLibFiles()
 
 				assert(ssym);
 				try{
-					trace1("parse", c.definition);
+					// trace1("parse", c.definition);
 					L->parse(stream, *ssym);
 					trace2("stashing", t, ssym->symbolPaintings().size());
 					stash(new Dispatcher<Symbol>::INSTALL(&symbol_dispatcher, t, ssym));
@@ -150,7 +150,7 @@ void LIB::loadLibFiles()
 					delete ssym;
 				}
 
-				trace3("Lib", c.modelString, type, c.definition);
+				// trace3("Lib", c.modelString, type, c.definition);
 				// d'uh
 			}else{
 				// TODO: new__instance does this.

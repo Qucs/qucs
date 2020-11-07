@@ -974,16 +974,33 @@ void SchematicDoc::copy()
   }
 }
 /*--------------------------------------------------------------------------*/
+class cnpsymbol : public SchematicSymbol{
+public:
+	explicit cnpsymbol(){
+		new_subckt();
+	}
+};
+/*--------------------------------------------------------------------------*/
+#include "docfmt.h"
 QString SchematicDoc::createClipboardFile() const
 {
+
+	cnpsymbol sym;
+	assert(sym.subckt());
+	for (auto i : scene()->selectedItems()){
+		sym.subckt()->pushBack(i->cloneElement());
+		// lang->printItem(element(i), s);
+	}
+
+	auto lang = command_dispatcher["leg_sch"];
+//	auto lang = command_dispatcher["cnp_sch"];
+	assert(lang);
+	auto fmt = prechecked_cast<DocumentFormat const*>(lang);
+	assert(fmt);
+
 	QString buf;
 	ostream_t s(&buf);
-
-	auto lang = doclang_dispatcher["leg_sch"];
-	assert(lang);
-	for (auto i : scene()->selectedItems()){
-		lang->printItem(element(i), s);
-	}
+	fmt->save(s, sym);
 	s.flush();
 	trace1("clip", buf);
 	return buf; //  .toString();
