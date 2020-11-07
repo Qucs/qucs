@@ -40,6 +40,13 @@ inline bool pos_t::operator<=(pos_t const& b) const
 	return first<=b.first && second<=b.second;
 }
 /*--------------------------------------------------------------------------*/
+inline pos_t& operator+=(pos_t& r, pos_t const& q)
+{
+  r.first += q.first;
+  r.second += q.second;
+  return r;
+}
+/*--------------------------------------------------------------------------*/
 inline pos_t operator+(pos_t const& p, pos_t const& q)
 {
   pos_t r(p);
@@ -55,6 +62,44 @@ inline pos_t operator-(pos_t const& p, pos_t const& q)
   r.second -= q.second;
   return r;
 }
+/*--------------------------------------------------------------------------*/
+inline pos_t operator*(pos_t const& p, double d)
+{
+  pos_t r(p);
+  r.first *= d;
+  r.second *= d;
+  return r;
+}
+/*--------------------------------------------------------------------------*/
+class QRectF;
+class rect_t{
+public:
+	explicit rect_t(int x, int y, int w, int h)
+		:_tl(x, y), _br(x+w, y+h) {}
+	explicit rect_t(pos_t const& tl, pos_t const& br)
+		:_tl(tl), _br(br) {}
+	rect_t() : _tl(0,0), _br(0,0) {}
+	rect_t(QRectF const&);
+	rect_t(rect_t const&) = default;
+public:
+	QRectF toRectF() const;
+	rect_t operator+(pos_t const& m) const;
+	rect_t& operator+=(pos_t const& m);
+	rect_t operator|(rect_t const&) const;
+	rect_t& operator|=(rect_t const&);
+
+	pos_t const& tl() const{return _tl;}
+	pos_t const& br() const{return _br;}
+	pos_t center() const{return (_tl+_br)*.5;}
+	int w() const{return _br.first - _tl.first;}
+	int h() const{return _br.second - _tl.second;}
+private:
+	pos_t _tl;
+	pos_t _br;
+
+	// unsigned _w;
+	// unsigned _h;
+};
 /*--------------------------------------------------------------------------*/
 inline int getX(std::pair<int, int> const& p)
 {itested();

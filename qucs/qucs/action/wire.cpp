@@ -35,7 +35,7 @@ private: // Symbol
 	Port& port(unsigned){ unreachable(); return *new Port();}
 	pos_t portPosition(unsigned) const override { unreachable(); return pos_t(0,0); }
 	void setParameter(std::string const& n, std::string const& v) override;
-	QRectF boundingRect() const override;
+	rect_t bounding_rect() const override;
 	void expand() override;
 
 private:
@@ -126,15 +126,15 @@ void WireUC::expand()
 	assert(sc->wires().size()); // BUG?
 }
 /*--------------------------------------------------------------------------*/
-QRectF WireUC::boundingRect() const { itested();
+rect_t WireUC::bounding_rect() const
+{ itested();
   int xlo = std::min(_p0.x(), _p1.x());
   int xhi = std::max(_p0.x(), _p1.x());
   int ylo = std::min(_p0.y(), _p1.y());
   int yhi = std::max(_p0.y(), _p1.y());
-  QPointF tl(xlo-5, ylo-5);
-  QPointF br(xhi+5, yhi+5);
-  auto r = QRectF(tl, br);
-  assert(!r.isEmpty());
+  pos_t tl(xlo-5, ylo-5);
+  pos_t br(xhi+5, yhi+5);
+  auto r = rect_t(tl, br);
   return r;
 }
 /*--------------------------------------------------------------------------*/

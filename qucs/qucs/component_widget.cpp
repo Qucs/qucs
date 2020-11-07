@@ -62,9 +62,9 @@ ComponentListWidgetItem::ComponentListWidgetItem(Element const* e)
 //	setIcon( QPixmap(":/bitmaps/" + File + ".png"));
 
 	static const int N = 128;
-	QRectF br = e->boundingRect();
-	QRectF bb = e->boundingRect();
-	QPointF bbc = bb.center();
+	QRectF br = e->bounding_rect().toRectF();
+	QRectF bb = e->bounding_rect().toRectF();
+	auto bbc = bb.center();
 	QRectF bbt = bb.transposed();
 	bbt.moveCenter(bbc);
 	bb |= bbt;

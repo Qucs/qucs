@@ -102,3 +102,48 @@ pos_t rotate_after_mirror::apply(pos_t const& p) const
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+#include <QRectF>
+#include "qt_compat.h"
+rect_t::rect_t(QRectF const& p) : _tl(0,0), _br(0,0)
+{
+	auto tl = p.topLeft();
+	_tl = pos_t(getX(tl), getY(tl));
+	auto br = p.bottomRight();
+	_br = pos_t(getX(br), getY(br));
+}
+/*--------------------------------------------------------------------------*/
+QRectF rect_t::toRectF() const
+{
+	return QRectF(_tl.first, _tl.second, w(), h());
+}
+/*--------------------------------------------------------------------------*/
+rect_t rect_t::operator+(pos_t const& m) const
+{
+	return rect_t(tl()+m, br()+m);
+}
+/*--------------------------------------------------------------------------*/
+rect_t& rect_t::operator+=(pos_t const& m)
+{
+	_tl += m;
+	_br += m;
+	return *this;
+}
+/*--------------------------------------------------------------------------*/
+rect_t& rect_t::operator|=(rect_t const& o)
+{
+	if(o.w()==0 || o.h()==0){
+	}else if(w()==0 || h()==0){
+		operator=(o);
+	}else{
+		int l = std::min(_tl.first, o._tl.first);
+		int t = std::min(_tl.second, o._tl.second);
+		int r = std::max(_br.first, o._br.first);
+		int b = std::min(_br.second, o._br.second);
+
+		_tl = pos_t(l,t);
+		_br = pos_t(r,b);
+	}
+	return *this;
+}
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/

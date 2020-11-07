@@ -55,7 +55,7 @@ D_FlipFlop::D_FlipFlop()
 }
 
 // -------------------------------------------------------
-QString D_FlipFlop::vhdlCode(int NumPorts)
+QString D_FlipFlop::vhdlCode(int)
 {
 #if 0
   QString s = "";
@@ -81,7 +81,7 @@ QString D_FlipFlop::vhdlCode(int NumPorts)
 }
 
 // -------------------------------------------------------
-QString D_FlipFlop::verilogCode(int NumPorts)
+QString D_FlipFlop::verilogCode(int)
 {
 #if 0
   QString t = "";

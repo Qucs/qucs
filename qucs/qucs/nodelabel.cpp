@@ -33,7 +33,7 @@ private:
 	std::string paramValue(std::string const& n) const override;
 	void setParameter(std::string const& n, std::string const& v) override;
 	virtual unsigned numPorts() const {return 1;}
-	Rect boundingRect() const override;
+	rect_t bounding_rect() const override;
 	Port& port(unsigned i);
 	pos_t portPosition(unsigned) const override{ return pos_t(0,0);}
 private:
@@ -63,9 +63,9 @@ Port& NodeLabel::port(unsigned n)
 	return _port;
 }
 /*--------------------------------------------------------------------------*/
-QRectF NodeLabel::boundingRect() const
+rect_t NodeLabel::bounding_rect() const
 {
-    return QRectF(0, 0, 15, 15);
+    return rect_t(0, 0, 15, 15);
 }
 /*--------------------------------------------------------------------------*/
 void NodeLabel::paint(ViewPainter* p) const
