@@ -25,10 +25,13 @@
 namespace{
 
 class LegacySchematicFormat : public DocumentFormat{
-	void save(DocumentStream& stream, SchematicSymbol const&) const;
-	void load(istream_t& stream, SchematicSymbol&) const; //  override;
+public:
+	explicit LegacySchematicFormat()
+		: DocumentFormat() {}
 
 private: //Command
+	void save(DocumentStream& stream, SchematicSymbol const&) const;
+	void load(istream_t& stream, SchematicSymbol&) const; //  override;
   virtual void do_it(istream_t&, SchematicModel*) {incomplete();}
 private: // legacy cruft
 	bool isSymbolMode() const{ return false; }
@@ -51,8 +54,8 @@ private: // legacy cruft
 	ComponentList const& components(SchematicSymbol const& m) const{
 		return m.components();
 	}
-}D;
-static Dispatcher<Command>::INSTALL p(&command_dispatcher, "leg_sch", &D);
+}d0;
+static Dispatcher<Command>::INSTALL p0(&command_dispatcher, "leg_sch", &d0);
 
 void LegacySchematicFormat::load(istream_t& s, SchematicSymbol& c) const
 {
@@ -73,8 +76,7 @@ static QString QG(SchematicSymbol const& m, std::string const& key)
 	return QString::fromStdString(m.paramValue(key));
 }
 
-
-void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& m) const
+static void printProperties(SchematicSymbol const& m, DocumentStream& stream)
 {
 	// get legacy "parameters"
 	float tmpScale;
@@ -113,15 +115,8 @@ void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& 
 	}catch (std::invalid_argument const&){
 		incomplete();
 	}
-
-	auto D=doclang_dispatcher["leg_sch"];
-	auto L = dynamic_cast<DocumentLanguage const*>(D);
-	assert(L);
-
-	stream << "<Qucs Schematic 0.0.20>\n";
-
 	stream << "<Properties>\n";
-	if(isSymbolMode()) {
+	if(0) { // } isSymbolMode()) {
 		incomplete();
 		assert(false); // => symbol_format.cc
 		stream << "  <View=" << tmpViewX1<<","<<tmpViewY1<<","
@@ -134,8 +129,7 @@ void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& 
 		/// \todo  stream << Scale <<","<<contentsX()<<","<<contentsY() << ">\n";
 		stream << Scale <<","<< 0 <<","<< 0 << ">\n";
 	}
-	stream << "  <Grid=" << GridX<<","<<GridY<<","
-		<< GridOn << ">\n";
+	stream << "  <Grid=" << GridX << "," << GridY <<"," << GridOn << ">\n";
 	stream << "  <DataSet=" << QG(m, "DataSet") << ">\n";
 	stream << "  <DataDisplay=" << QG(m, "DataDisplay") << ">\n";
 	stream << "  <OpenDisplay=" << QG(m, "SimOpenDpl") << ">\n";
@@ -158,6 +152,27 @@ void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& 
 	t = misc::convert2ASCII(Frame_Text3);
 	stream << "  <FrameText3=" << t << ">\n";
 	stream << "</Properties>\n";
+}
+
+void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& m) const
+{
+
+	auto D=doclang_dispatcher["leg_sch"];
+	auto L = dynamic_cast<DocumentLanguage const*>(D);
+	assert(L);
+
+	stream << "<Qucs Schematic 0.0.20>\n";
+
+	bool do_prop = false;
+	try{
+		m.paramValue("ViewX1");
+		do_prop = true;
+	}catch(ExceptionCantFind const&){
+	}
+	if(do_prop){
+		printProperties(m, stream);
+	}else{
+	}
 
 	stream << "<Symbol>\n";     // save all paintings for symbol
 	for(auto pp : symbolPaints(m)){
