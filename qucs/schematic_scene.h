@@ -72,6 +72,7 @@ public:
   bool isConductor(pos_t) const;
 
 public: // wrap items
+  QList<ElementGraphics*> selectedItems() const;
   QList<ElementGraphics*> items() const;
   QList<ElementGraphics*> items(QRectF const&) const;
   QList<ElementGraphics*> items(QPointF const& pos,
