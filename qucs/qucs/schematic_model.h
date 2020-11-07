@@ -102,7 +102,6 @@ public:
 	SchematicModel(SchematicDoc* s);
 	~SchematicModel();
 public: // stuff saved from Schematic
-	QString createClipboardFile();
 	void sizeOfAll(int&, int&, int&, int&, float) const;
 	//void simpleInsertComponent(Component* c);
 	//void simpleInserttaskElement(TaskElement* c);

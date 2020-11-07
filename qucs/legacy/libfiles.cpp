@@ -131,7 +131,6 @@ void LIB::loadLibFiles()
 				//
 				// // stuff should already be parsed in, but isn't
 				// BUG: parse c.definition. but not here.
-				// BUG: use istream (CS)
 				istream_t stream(&c.definition);
 				Symbol* sym = symbol_dispatcher.clone("LegacyLibProto");
 				auto ssym = prechecked_cast<SchematicSymbol*>(sym);
@@ -149,27 +148,6 @@ void LIB::loadLibFiles()
 				}catch(Exception const&){ untested();
 					trace0("not stashing");
 					delete ssym;
-				}
-
-				if(ssym){
-
-					// not needed!
-					// fix later
-#if 1
-					QString mh = "<Model>\n" + c.modelHack + "\n</Model>\n";
-					trace1("Modelparse", mh);
-					istream_t stream(&mh);
-		//			L->parse(stream, *ssym);
-#else
-					Symbol* textdef = symbol_dispatcher.clone("qucsatorScktHack");
-					assert(textdef);
-					textdef->setParameter("qucsatorsckthack", c.modelHack.toStdString());
-					textdef->setLabel(":qucsatorsckthack:");
-					assert(ssym->subckt());
-					ssym->subckt()->pushBack(textdef);
-#endif
-
-				}else{ untested();
 				}
 
 				trace3("Lib", c.modelString, type, c.definition);

@@ -1116,6 +1116,7 @@ void SchematicDoc::deselectElements()
 // For moving of elements: Copies all selected elements into the
 // list 'p' and deletes them from the document.
 // returns the number of "copied" _Markers_ only
+#if 0
 QList<ElementGraphics*> SchematicDoc::cropSelectedElements()
 {
     QList<ElementGraphics*> P;
@@ -1298,6 +1299,7 @@ QList<ElementGraphics*> SchematicDoc::cropSelectedElements()
     return P;
 #endif
 }
+#endif
 
 // ---------------------------------------------------
 // BUG: collect stuff in Qlist

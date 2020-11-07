@@ -1185,16 +1185,6 @@ void SchematicDoc::reloadGraphs()
   }
 }
 
-// Copy function, 
-void SchematicDoc::copy()
-{itested();
-  QString s = _model->createClipboardFile();
-  QClipboard *cb = QApplication::clipboard();  // get system clipboard
-  if (!s.isEmpty()) { untested();
-    cb->setText(s, QClipboard::Clipboard);
-  }
-}
-
 // ---------------------------------------------------
 // Cut function, copy followed by deletion
 void SchematicDoc::cut()

@@ -545,9 +545,48 @@ static void printArgs(Symbol const* sym, ostream_t& s)
 		show /= 2;
 	}
 }
+static void wirehack(Symbol const* w, DocumentStream& d)
+{
+	assert(w);
+	Symbol const* sym = w;
+  int x1=0, x2=0, y1=0, y2=0;
+  trace1("wirehack", w);
+  std::pair<int, int> X = w->portPosition(0);
+  trace1("wirehack", X.first);
+  x1 = X.first;
+  y1 = X.second;
+  X = w->portPosition(1);
+  x2 = X.first;
+  y2 = X.second;
+  std::tie(x1, y1) = w->portPosition(0);
+  std::tie(x2, y2) = w->portPosition(1);
+
+  int cx = atoi(sym->paramValue("$xposition").c_str());
+  int cy = atoi(sym->paramValue("$yposition").c_str());
+  int dx = atoi(sym->paramValue("deltax").c_str());
+  int dy = atoi(sym->paramValue("deltay").c_str());
+
+  d << "<" << cx << " " << cy
+    << " " << cx+dx << " " << cy+dy;
+
+  if(false) { untested();
+          // d << " \""+Label->name()+"\" ";
+          // d << QString::number(Label->x1_())+" "+QString::number(Label->y1_())+" ";
+          // d << QString::number(Label->cx_()-x1 + Label->cy_()-y1);
+          // d << " \""+Label->initValue+"\">";
+  } else {
+	  d << " \"\" 0 0 0 \"\">\n";
+  }
+}
 // was: void Schematic::saveComponent(QTextStream& s, Component const* c) const
 void LegacySchematicLanguage::printSymbol(Symbol const* sym, ostream_t& s) const
 {
+	trace1("printSymbol", sym->typeName());
+	if(sym->typeName()=="wire"){
+		// hack hack
+		return wirehack(sym, s);
+	}else{
+	}
 	s << "  <" << mangle(sym->typeName()) << " ";
 
 	if(sym->label()==""){ untested();
