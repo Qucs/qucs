@@ -84,11 +84,13 @@ private: // QGraphicsItem override
 	}
 	QRectF boundingRect() const override {itested();
 		assert(_e);
-		return _e->boundingRect();
+	  	rect_t r = _e->bounding_rect();
+		auto tl = r.tl();
+		return QRectF(getX(tl), getY(tl), r.w(), r.h());
 	}
 private:
 	Element const* _e;
-};
+}; // SymbolGraphics
 // there is also QGraphicsSimpleTextItem, but is does not allow for edits.
 class ElementText : public QGraphicsItem{
 private:
@@ -200,6 +202,7 @@ void ElementGraphics::attachElement(Element* e)
 	trace2("attachElement", e->label(), boundingRect());
 	QGraphicsItem::setPos(sp.first, sp.second);
 
+	// this is probably not needed. test later.
 	if(dynamic_cast<Conductor*>(e)){itested();
 		setZValue(-1.);
 	}else{ itested();
@@ -239,19 +242,20 @@ void ElementGraphics::attachElement(Element* e)
 		p->setWidget(w);
 	}else if(!sym){
 	}else if(auto s = sym->subckt()){
-		for(auto i : s->components()){itested();
+		for(auto i : s->components()){untested();
 			QGraphicsItem* cg = new ElementGraphics(i->clone());
 			cg->setParentItem(this);
 		}
 
 		// BUG
-		for(auto i : s->wires()){itested();
+		for(auto i : s->wires()){untested();
 			QGraphicsItem* cg = new ElementGraphics(i->clone());
 			cg->setParentItem(this);
 		}
 		trace2("child gfx", s->wires().size(), s->components().size());
 	}else{
 	}
+	trace1("ElementGraphics unpacked", childItems().size());
 
 	if(!_e){
 	}else if(_e->legacyTransformHack()){
@@ -483,7 +487,7 @@ SchematicScene* ElementGraphics::scene() const
 QRectF ElementGraphics::boundingRect() const
 {itested();
 	assert(_e);
-	return _e->boundingRect();
+	return _e->bounding_rect().toRectF();
 }
 /*--------------------------------------------------------------------------*/
 QRectF ElementGraphics::absoluteBoundingRect() const
@@ -568,6 +572,9 @@ void ElementGraphics::show()
 #endif
 
 	QGraphicsItem::show();
+	for(auto x : childItems()){
+		x->show();
+	}
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::hide()

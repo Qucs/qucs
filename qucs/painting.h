@@ -66,15 +66,12 @@ private: // Element?
 	  c->paint(p);
   }
   virtual void paint(ViewPainter*){}
-  QRectF boundingRect() const override {itested();
+  rect_t bounding_rect() const override {itested();
 	  int x1_, y1_, x2_, y2_;
 
 	  auto p = const_cast<Painting*>(this);
 	  p->Bounding(x1_, y1_, x2_, y2_);
-
-	  QPointF tl(x1, y1);
-	  QPointF br(x2, y2);
-	  return QRectF(tl, br);
+	  return rect_t(x1, y1, x2-x1, y2-y1);
   }
 
 

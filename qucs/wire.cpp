@@ -53,7 +53,7 @@ private: // Element
 	}
 	QDialog* schematicWidget(QucsDoc*) const override;
 	void paint(ViewPainter*) const override;
-	QRectF boundingRect() const override;
+	rect_t bounding_rect() const override;
 	bool legacyTransformHack() const override{
 		return true;
 	}
@@ -548,15 +548,15 @@ void Wire::expand()
   }
 }
 // ----------------------------------------------------------------
-QRectF Wire::boundingRect() const
+rect_t Wire::bounding_rect() const
 { itested();
   int N = 10;
   // assert(_scale>0); oops??
 
   if(_angle==0 || _angle==3){ itested();
-    return QRectF(-5, -5, x2()+N, y2()+N);
+    return rect_t(-5, -5, x2()+N, y2()+N);
   }else{ itested();
-    return QRectF(x2()-5, y2()-5, -x2()+N, -y2()+N);
+    return rect_t(x2()-5, y2()-5, -x2()+N, -y2()+N);
   }
 }
 // ----------------------------------------------------------------

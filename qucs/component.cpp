@@ -1480,10 +1480,9 @@ void Component::dialgButtStuff(ComponentDialog&)const
 }
 
 /*--------------------------------------------------------------------------*/
-QRectF Component::boundingRect() const
+rect_t Component::bounding_rect() const
 {
-  QRectF b(x1, y1, x2-x1, y2-y1);
-  return b;
+  return rect_t(x1, y1, x2-x1, y2-y1);
 }
 /*--------------------------------------------------------------------------*/
 unsigned Component::paramCount() const

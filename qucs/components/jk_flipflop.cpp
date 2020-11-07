@@ -67,7 +67,7 @@ JK_FlipFlop::JK_FlipFlop()
 }
 
 // -------------------------------------------------------
-QString JK_FlipFlop::vhdlCode(int NumPorts)
+QString JK_FlipFlop::vhdlCode(int)
 {
 #if 0
   QString s = "";
@@ -102,7 +102,7 @@ QString JK_FlipFlop::vhdlCode(int NumPorts)
 }
 
 // -------------------------------------------------------
-QString JK_FlipFlop::verilogCode(int NumPorts)
+QString JK_FlipFlop::verilogCode(int)
 {
 #if 0
   QString t = "";
@@ -136,6 +136,7 @@ QString JK_FlipFlop::verilogCode(int NumPorts)
     "  end\n\n";
   return l;
 #endif
+  return "";
 }
 
 // -------------------------------------------------------

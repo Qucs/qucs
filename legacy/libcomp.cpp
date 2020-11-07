@@ -79,19 +79,18 @@ private:
 		return &paintings();
 	}
 
-	QRectF boundingRect() const override{ untested();
+	rect_t bounding_rect() const override{ untested();
 		// BUG. cache.
-		QRectF br;
+		rect_t br;
 //		assert(symbolPaintings());
 		for(auto p : paintings()){ untested();
 			assert(p);
 			Element const* e = p;
-			trace2("br", e->boundingRect().topLeft(), e->boundingRect().bottomRight());
+//			trace2("br", e->boundingRect().topLeft(), e->boundingRect().bottomRight());
 			auto c = e->center();
-			auto cc = makeQPointF(c);
-			br |= e->boundingRect().translated(cc);
+			br |= ( e->bounding_rect() + c );
 		}
-		trace4("br", label(), symbolPaintings()->size(), br.topLeft(), br.bottomRight());
+//		trace4("br", label(), symbolPaintings()->size(), br.topLeft(), br.bottomRight());
 		return br;
 	}
 
@@ -151,12 +150,12 @@ private: // Element
 		}
 		Symbol::paint(p);
 	}
-	QRectF boundingRect() const override{ untested();
+	rect_t bounding_rect() const override{ untested();
 		if(_parent){itested();
-			return _parent->boundingRect();
+			return _parent->bounding_rect();
 		}else{ untested();
 			unreachable();
-			return QRectF();
+			return rect_t();
 		}
 	}
 

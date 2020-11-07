@@ -87,11 +87,11 @@ private: // Symbol
 			return Symbol::paramValue(n);
 		}
 	}
-	QRectF boundingRect() const override{ untested();
+	rect_t bounding_rect() const override{ untested();
 		if(_proto){itested();
-			return _proto->boundingRect();
+			return _proto->bounding_rect();
 		}else{ untested();
-			return QRectF();
+			return rect_t();
 		}
 	}
 	void paint(ViewPainter* p) const override{ untested();

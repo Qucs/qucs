@@ -84,6 +84,7 @@ QString Switch::netlist() const
 
   return s + '\n';
 #endif
+  return "";
 }
 
 // -------------------------------------------------------

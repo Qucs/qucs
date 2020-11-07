@@ -87,9 +87,15 @@ private:
 //  pos_t center() const override;
   void    getCenter(int&, int&); //override; //remove this.
   QDialog* schematicWidget(QucsDoc* Doc) const override;
+  virtual QRectF boundingRect() const; // { unreachable(); return QRectF(); }
+
+protected:
+  rect_t bounding_rect() const{
+	  auto br = boundingRect();
+	  return rect_t(br);
+  }
 
 public:
-  QRectF boundingRect() const override;
   QString const& name() const{ incomplete(); return Name;}
   QString const& typeName() const{return Name;}
   void setName(QString const& n){ Name = n; }
