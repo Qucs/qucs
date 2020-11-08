@@ -253,9 +253,9 @@ public: // really?
 
 public: // TODO. move into mouse actions
 #define Schematic SchematicDoc
-  void MMoveSelect(Schematic*, QMouseEvent*);
+//  void MMoveSelect(Schematic*, QMouseEvent*);
 //  void MMoveElement(Schematic*, QMouseEvent*);
-  void MMovePaste(Schematic*, QMouseEvent*);
+//  void MMovePaste(Schematic*, QMouseEvent*);
   void MMoveLabel(Schematic*, QMouseEvent*);
   void MMoveMarker(Schematic*, QMouseEvent*);
   void MMoveMirrorY(Schematic*, QMouseEvent*);

@@ -256,7 +256,7 @@ void SchematicEdit::do_it()
 		trace1("show", d);
 		assert(!d->isVisible());
 		d->show();
-		d->setSelected(true); // really?
+		d->setSelected(true); // BUG. this will select too many.
 	}
 	std::swap(_ins, _del);
 }

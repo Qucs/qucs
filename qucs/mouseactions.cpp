@@ -492,17 +492,6 @@ void MouseActions::MMoveWire1(SchematicDoc *Doc, QMouseEvent *Event)
 #endif
 
 
-/**
- * @brief MouseActions::MMoveSelect Paints a rectangle for select area.
- * @param Doc
- * @param Event
- */
-// can't we use Qt builtin ractangle selector?
-void MouseActions::MMoveSelect(SchematicDoc *, QMouseEvent *)
-{
-
- // now  SelectAction::move
-}
 
 // -----------------------------------------------------------
 void MouseActions::MMoveResizePainting(SchematicDoc *Doc, QMouseEvent *)
@@ -625,50 +614,6 @@ void MouseActions::MMoveMoving2(SchematicDoc *Doc, QMouseEvent *Event)
   MAy1 = MAy2;
 }
 #endif
-
-
-/**
- * @brief MouseActions::MMovePaste Moves components after paste from clipboard.
- * @param Doc
- * @param Event
- */
-void MouseActions::MMovePaste(SchematicDoc *, QMouseEvent *)
-{
-  unreachable();
-  //Set1(Event, Doc);
-//  moveElements(Doc,MAx1,MAy1);
-  // paintElementsScheme(Doc);
-
-  setDrawn();
-//  QucsMain->MouseMoveAction = &MouseActions::MMoveMoving2;
-//  QucsMain->MouseReleaseAction = &MouseActions::MReleasePaste;
-}
-
-// -----------------------------------------------------------
-// Moves scroll bar of diagram (e.g. tabular) according the mouse cursor.
-#if 0
-void MouseActions::MMoveScrollBar(SchematicDoc *Doc, QMouseEvent *Event)
-{ untested();
-  Diagram *d = diagram(focusElement);
-  QPointF pos=Doc->mapToScene(Event->pos());
-  int x = pos.x();
-  int y = pos.y();
-
-  if(d->scrollTo(MAx2, x - MAx1, y - MAy1)) { untested();
-    Doc->setChanged(true, true, 'm'); // 'm' = only the first time
-
-// FIXME #warning QPainter p(Doc->viewport());
-    // FIXME #warning ViewPainter Painter;
-    // FIXME #warning Painter.init(&p, Doc->Scale, -Doc->ViewX1, -Doc->ViewY1,
-// FIXME #warning                  Doc->contentsX(), Doc->contentsY());
-// FIXME #warning     Painter.fillRect(d->cx-d->x1, d->cy-d->y2, d->x2+d->x1, d->y2+d->y1,
-// FIXME #warning                      QucsSettings.BGColor);
-// FIXME #warning     d->paint(&Painter);
-  }
-}
-#endif
-
-
 
 
 /**
@@ -795,8 +740,8 @@ void MouseActions::MMoveActivate(SchematicDoc *, QMouseEvent *)
 
 /**
  * @brief MouseActions::MMoveOnGrid Paints a grid beside the mouse cursor, put "on grid" mode.
- * @param Doc
  * @param Event
+ * @param Doc
  */
 void MouseActions::MMoveOnGrid(SchematicDoc *, QMouseEvent *)
 {

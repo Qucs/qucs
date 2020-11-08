@@ -4,18 +4,31 @@
 
 static const std::string cnp_lang = "leg_sch";
 /*--------------------------------------------------------------------------*/
+// TODO: "NewElementCommand", deduplicate
 class PasteCommand : public SchematicEdit {
 public:
 	PasteCommand(SchematicDoc& ctx, ElementGraphics* gfx)
 	: SchematicEdit(*ctx.sceneHACK()) { untested();
 		setText("Paste $n elements"); // tr?
 
-	// 	for(auto i : gfx.children()){
-	// 	i->setParent(nullptr);
-	// 	i->hide();
-	// 	ctx.takeOwnership(element(i)); // BUG?
-	// 		qInsert(i);
-	// 	}
+		auto pos = gfx->pos();
+
+		for(auto i : gfx->childItems()){ untested();
+			if(auto j=dynamic_cast<ElementGraphics*>(i)){ untested();
+				auto c = j->clone();
+
+				auto p = i->pos();
+				c->setPos((p + pos).toPoint());
+
+				{ // move to qInsert?
+					ctx.sceneAddItem(c);
+					c->hide();
+					ctx.takeOwnership(element(c)); // BUG?
+				}
+				qInsert(c);
+			}else{ untested();
+			}
+		}
 	}
 	~PasteCommand(){ untested();
 		// _gfx owns element(_gfx)
@@ -48,10 +61,20 @@ private:
 /*--------------------------------------------------------------------------*/
 class pastebuffer : public SchematicSymbol{
 public:
-	explicit pastebuffer(){
+	explicit pastebuffer(){ untested();
 		new_subckt();
+		Command const* cmd = command_dispatcher[cnp_lang];
+		assert(cmd);
+		auto fmt=prechecked_cast<DocumentFormat const*>(cmd);
+
+		QClipboard *cb = QApplication::clipboard();
+		QString s = cb->text(QClipboard::Clipboard);
+		istream_t stream(&s);
+
+		fmt->load(stream, *this);
 	}
-private:
+
+public:
 	rect_t bounding_rect() const override{ untested();
 		rect_t r;
 		for (auto i : components()){ untested();
@@ -68,35 +91,50 @@ private:
 };
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionPaste::activate(QObject* sender)
-{
-  QClipboard *cb = QApplication::clipboard();   // get system clipboard
-  QString s = cb->text(QClipboard::Clipboard);
-  istream_t stream(&s);
+{ untested();
+	SchematicSymbol* buf = nullptr;
+	try{ untested();
+		buf = new pastebuffer();
+	}catch(...){ untested();
+		incomplete();
+		uncheck();
+		return nullptr;
+	}
 
-  Command const* cmd = command_dispatcher[cnp_lang];
-  assert(cmd);
-  auto fmt=prechecked_cast<DocumentFormat const*>(cmd);
+  auto br = buf->bounding_rect();
+  auto center = br.center();
+  QPoint gc = doc().snapToGrid(QPoint(getX(center), getY(center)));
+  center = pos_t(getX(gc), getY(gc));
 
-  auto buf = new pastebuffer();
-  try{
-	  fmt->load(stream, *buf);
-  }catch(...){
-	  incomplete();
-	  deactivate();
+
+  for(auto i : buf->components()){ untested();
+	  trace2("centering", i->label(), br.center());
+	  auto p = i->center();
+	  i->setPosition(p - center);
+  }
+
+   // BUG
+  for(auto i : buf->wires()){ untested();
+	  auto p = i->center();
+	  i->setPosition(p - center);
   }
 
   _gfx = new ElementGraphics(buf);
+  assert(_gfx);
+
   trace3("paste::activate", _gfx->boundingRect().topLeft(),
 		               _gfx->boundingRect().bottomRight(), _gfx->childItems().count());
-  auto br = _gfx->boundingRect();
 
-  for(auto i : buf->components()){
-	  trace2("centering", i->label(), br.center());
-	  i->setCenter(pos_t(0,0));
-  }
 
   doc().sceneAddItem(_gfx);
-  _gfx->show();
+
+  if(1){
+	  QPoint p = doc().mapFromGlobal(QCursor::pos());
+	  auto sp = mapToScene(p);
+	  _gfx->setPos(sp.x(), sp.y());
+	  //_gfx->show();
+  }else{
+  }
 
   return MouseAction::activate(sender);
 }
@@ -122,13 +160,13 @@ QUndoCommand* MouseActionPaste::makeNew(QMouseEvent* ev)
 		unreachable();
 	}
 
-	if(!_gfx){
+	if(!_gfx){ untested();
 		unreachable();
 		return nullptr;
-	}else if(!element(_gfx)){
+	}else if(!element(_gfx)){ untested();
 		unreachable();
 		return nullptr;
-	}else{
+	}else{ untested();
 	}
 	auto elt = element(_gfx);
 	assert(elt);
@@ -137,13 +175,15 @@ QUndoCommand* MouseActionPaste::makeNew(QMouseEvent* ev)
 		QPointF pos = se->scenePos();
 		QPoint xx = doc().snapToGrid(pos);
 		_gfx->setPos(xx);
-	}else{
+	}else{ untested();
 	}
 
 	cmd* c = new PasteCommand(doc(), _gfx);
-	_gfx = nullptr; // leak?
+	_gfx->hide();
+	delete _gfx;
+	_gfx = nullptr;
 
-	deactivate();
+	uncheck();
 
 	ev->accept();
 	return c;
@@ -156,6 +196,8 @@ QUndoCommand* MouseActionPaste::deactivate()
 	delete _gfx; // CHECK: who owns _elt?
 	_gfx = nullptr;
 	incomplete();
+//	uncheck();
+//	doc().setActiveAction(nullptr);
 	return MouseAction::deactivate();
 }
 /*--------------------------------------------------------------------------*/
@@ -170,9 +212,7 @@ QUndoCommand* MouseActionPaste::move(QEvent* ev)
 		sp = mapToScene(wp.toPoint());
 	}else if(auto ee=dynamic_cast<QGraphicsSceneMouseEvent*>(ev)){ untested();
 		sp = ee->scenePos();
-
-		QPoint xx = doc().snapToGrid(sp);
-		sp = xx;
+		sp = doc().snapToGrid(sp);
 	}else{ untested();
 		unreachable();
 	}
@@ -189,6 +229,11 @@ QUndoCommand* MouseActionPaste::move(QEvent* ev)
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionPaste::enter(QEvent* ev)
 { untested();
+	if(!_gfx){
+		unreachable();
+		return nullptr;
+	}else{
+	}
 	trace1("paste enter", ev->type());
 	auto ee = prechecked_cast<QEnterEvent*>(ev);
 	assert(ee);
@@ -200,6 +245,8 @@ QUndoCommand* MouseActionPaste::enter(QEvent* ev)
 
 	Element* elt;
 	assert(_gfx);
+
+	trace1("enter", sp);
 	_gfx->setPos(sp.x(), sp.y());
 	
 	doc().sceneAddItem(_gfx);
@@ -210,6 +257,11 @@ QUndoCommand* MouseActionPaste::enter(QEvent* ev)
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionPaste::leave(QEvent* ev)
 { untested();
+	if(!_gfx){
+		unreachable();
+		return nullptr;
+	}else{
+	}
 	sceneRemoveItem(_gfx);
 	ev->accept();
 	return nullptr;

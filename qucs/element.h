@@ -183,7 +183,8 @@ public: // other stuff
   virtual bool showLabel() const{ return true; }
   //virtual bool showParam(int i) const{ return true; } // later
 
-  void setCenter(pos_t const& c){ _center = c; }
+  void setCenter(pos_t const& c){ incomplete(); _center = c; }
+  void setPosition(pos_t const& c){ _center = c; }
 //  virtual void setCenter(int x, int y, bool relative=false);
   virtual void getCenter(int&, int&) const; // BUG
   virtual void paint(ViewPainter*) const = 0;
@@ -192,9 +193,13 @@ public: // other stuff
   // really?
   virtual QWidget* newWidget() {return nullptr;}
 
+  // BUG: remove "center"
   // BUG: not virtual
   virtual pos_t center()const;
 
+  pos_t position()const{
+	  return _center;
+  }
 
 public:
 	virtual Element* clone()const = 0;
