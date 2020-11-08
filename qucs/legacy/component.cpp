@@ -1563,7 +1563,7 @@ ComponentDialog::ComponentDialog(QucsDoc* d) : SchematicDialog(d)
 void ComponentDialog::attach(ElementGraphics* gfx)
 {
   trace0("ComponentDialog::attach");
-  auto Comp=component(gfx);
+  auto Comp = dynamic_cast<Component*>(element(gfx));
   assert(Comp);
   if(_comp){
     incomplete();
@@ -2405,7 +2405,8 @@ void ComponentDialog::slotApplyInput()
 
     assert(_gfx->pos() == pos); // for now.
 
-    _comp = Comp = component(_gfx);
+    Comp = dynamic_cast<Component*>(element(_gfx));
+    _comp = Comp;
 
     // BUG: cannot modify while shown.
     // maybe do in ElementGraohics::attach?

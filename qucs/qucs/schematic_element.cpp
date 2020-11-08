@@ -2089,8 +2089,10 @@ void SchematicModel::recreateSymbol(Symbol *Comp)
 #endif
 }
 // ---------------------------------------------------
-void SchematicDoc::insertElement(Element *c)
+void SchematicDoc::insertElement(Element *)
 {
+    assert(false);
+#if 0
   if(Component* x=dynamic_cast<Component*>(c)){
     // legacy code
     insertComponent(x);
@@ -2103,6 +2105,7 @@ void SchematicDoc::insertElement(Element *c)
       (void)x;
 //    insertSymbol(x);
   }
+#endif
 }
 
 // ---------------------------------------------------

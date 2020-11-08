@@ -243,7 +243,6 @@ QUndoCommand* MouseActionPaste::enter(QEvent* ev)
 	SchematicDoc* d = &doc();
 	auto sp = d->mapToScene(wp.toPoint());
 
-	Element* elt;
 	assert(_gfx);
 
 	trace1("enter", sp);

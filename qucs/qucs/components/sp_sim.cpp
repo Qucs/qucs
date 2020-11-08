@@ -1,8 +1,6 @@
 /***************************************************************************
-                                sp_sim.cpp
-                               ------------
     copyright            : (C) 2003 by Michael Margraf
-                               2018 Felix Salfelder / QUCS
+                               2018, 2020 Felix Salfelder / QUCS
  ***************************************************************************/
 
 /***************************************************************************
@@ -17,6 +15,7 @@
 #include "globals.h"
 #include "task_element.h"
 #include "module.h"
+#include "property.h"
 
 namespace{
 

@@ -179,7 +179,7 @@ Element* ElementGraphics::cloneElement() const
 	}
 }
 /*--------------------------------------------------------------------------*/
-#include "components/component.h" // BUG
+//#include "components/component.h" // BUG
 #include <QGraphicsProxyWidget>
 void ElementGraphics::attachElement(Element* e)
 {itested();
@@ -208,6 +208,7 @@ void ElementGraphics::attachElement(Element* e)
 	}else{ itested();
 	}
 
+#if 0
 	if(auto c=dynamic_cast<Component*>(e)){itested();
 		trace2("attachElement", e->label(), c->Texts.size());
 		for(auto& i : c->Texts){itested();
@@ -217,6 +218,7 @@ void ElementGraphics::attachElement(Element* e)
 		}
 	}else{itested();
 	}
+#endif
 
 	// who owns this?
 	// auto t =

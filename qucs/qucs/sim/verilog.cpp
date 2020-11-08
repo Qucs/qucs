@@ -69,10 +69,26 @@ void Verilog::printtaskElement(TaskElement const* c, ostream_t& s) const
   s << "//" << c->label() << "\n";
 }
 
+static void printArgs(Symbol const* sym, ostream_t& s)
+{
+		QString comma="";
+		s << "#(";
+
+		for(unsigned i=0; i<sym->paramCount(); ++i) {
+			auto name = sym->paramName(i);
+			if(name.at(0) == '$'){
+			}else{
+				s << comma << "." << sym->paramName(i) << "(" << sym->paramValue(i) << ")";
+				comma = ", ";
+			}
+		}
+		s << ") ";
+}
+
 void Verilog::printSymbol(Symbol const* sym, ostream_t& s) const
 {
-	Component const* c=dynamic_cast<Component const*>(sym);
 #if 0
+	Component const* c=nullptr; // dynamic_cast<Component const*>(sym);
 	if(!c){ untested();
 		/// wires...
 		incomplete();
@@ -98,25 +114,27 @@ void Verilog::printSymbol(Symbol const* sym, ostream_t& s) const
 		// : is not allowed in verilog
       std::replace( type.begin(), type.end(), ':', '$');
 		s << QString::fromStdString(type) << " ";
+
+		printArgs(sym, s);
+#if 0
 		QString comma="";
 		s << "#(";
-
-			// DUPLICATE		print_args
 			if(!c){
 				incomplete();
-			}else
-		for(auto p2 : c->params()) {
-			if(p2->name().at(0) == '$'){
 			}else{
-				s << comma << "." << p2->name() << "(" << p2->Value << ")";
-				comma = ", ";
+				for(auto p2 : c->params()) {
+					if(p2->name().at(0) == '$'){
+					}else{
+						s << comma << "." << p2->name() << "(" << p2->Value << ")";
+						comma = ", ";
+					}
+				}
 			}
-		}
-		s << ") ";
+#endif
 		s << label << "(";
 
 		// printPorts()
-		comma = "";
+		QString comma="";
 		for(unsigned i=0; i < sym->numPorts(); ++i){
 			s << comma << netLabel(sym->portValue(i));
 			comma = ", ";
@@ -229,24 +247,12 @@ void VerilogSchematicFormat::printSymbol(Symbol const* sym, ostream_t& s) const
 		}else{
 		}
 
-		QString comma="";
-		s << "#(";
 
-
-			// DUPLICATE		print_args
-		for(unsigned i=0; i<sym->paramCount(); ++i) {
-			auto name = sym->paramName(i);
-			if(name.at(0) == '$'){
-			}else{
-				s << comma << "." << sym->paramName(i) << "(" << sym->paramValue(i) << ")";
-				comma = ", ";
-			}
-		}
-		s << ") ";
+		printArgs(sym, s);
 		// s << QString::fromStdString(label) << "(";
 		s << label << "(";
 
-		comma = "";
+		QString comma = "";
 		for(unsigned i=0; i<sym->numPorts(); ++i){
 			trace3("...", sym->label(), i, sym->numPorts());
 			auto p = sym->nodePosition(i);

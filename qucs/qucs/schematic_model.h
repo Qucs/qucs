@@ -136,11 +136,11 @@ public:
 	void setOwner(Element* s);
 	int  prepareNetlist(DocumentStream&, QStringList&, QPlainTextEdit*,
 			bool creatingLib, NetLang const&);
-	Component* loadComponent(const QString& _s, Component* c) const;
+	// Component* loadComponent(const QString& _s, Component* c) const;
 	TaskElement* loadtaskElement(const QString& _s, TaskElement* c) const;
 //	bool loadPaintings(QTextStream*, PaintingList* p=NULL);
 	bool loadProperties(QTextStream*);
-	bool loadComponents(QTextStream*);
+	// bool loadComponents(QTextStream*);
 
 public: // not sure. leaves unconnected objects in the main container...
 	void connect(Symbol* c);
@@ -158,7 +158,7 @@ public: // container
 //	void merge(SchematicModel&);
 
 private: // used in erase?
-	void       deleteComp(Component*c);
+//	void       deleteComp(Component*c);
 
 public: // gone
 	size_t wireCount() const{ return wires().size(); }
@@ -192,8 +192,7 @@ private:
 
 public: // scene interaction
 	void toScene(QGraphicsScene& s, QList<ElementGraphics*>* l=nullptr) const;
-public: // obsolete.
-	static void saveComponent(QTextStream& s, Component const* c);
+
 private:
 	WireList& wires();
 	DiagramList& diagrams();

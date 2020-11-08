@@ -6,7 +6,7 @@
 #
 # Copyright (C) 2004-2011 Stefan Jahn <stefan@lkcc.org>
 #               2013 addded Mike Brinson  mbrin72043@yahoo.co.uk
-#               2018 Felix Salfelder
+#               2018, 2020 Felix Salfelder
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@ plugin_LTLIBRARIES = qucs-default-components.la
 
 qucs_default_components_la_LDFLAGS = -shared -module -avoid-version
 qucs_default_components_la_SOURCES = \
+	component.cpp \
 	spicedialog.cpp \
 	volt_dc.cpp \
 	volt_ac.cpp \

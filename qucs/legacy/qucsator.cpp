@@ -25,6 +25,9 @@
 #include "qucsator.h"
 #include "dat.h"
 #include "painting.h"
+#include "component.cpp" // BUG
+#include "gatecomponent.cpp" // BUG
+//#include "components/component.h"
 /* -------------------------------------------------------------------------------- */
 void Simulator::notifyState(Simulator::state_t st)
 {

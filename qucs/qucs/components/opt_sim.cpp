@@ -1,16 +1,13 @@
 /***************************************************************************
-                               opt_sim.cpp
-                              -------------
-    begin                : Sat Jul 22 2006
     copyright            : (C) 2006 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -22,6 +19,7 @@
 #include <QStringList>
 
 #include "opt_sim.h"
+#include "property.h"
 #include "qucs.h"
 
 

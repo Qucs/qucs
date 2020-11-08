@@ -1,9 +1,5 @@
 /***************************************************************************
-                               changedialog.cpp
-                              ------------------
-    begin                : Fri Jul 22 2005
     copyright            : (C) 2005 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -17,7 +13,6 @@
 #include "changedialog.h"
 #include "node.h"
 #include "schematic_doc.h"
-#include "components/component.h"
 
 #include <QLabel>
 #include <QLineEdit>

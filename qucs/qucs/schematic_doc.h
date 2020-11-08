@@ -21,7 +21,7 @@
 #include "viewpainter.h"
 #include "diagram.h"
 //#include "painting.h"
-#include "components/component.h"
+//#include "components/component.h"
 #include "simulator.h"
 #include "sim/tasks.h"
 #include "schematic_scene.h"
@@ -524,10 +524,10 @@ public: // for now
 		assert(_model);
 		return _model->loadtaskElement(_s, c);
 	}
-	Component* loadComponent(const QString& _s, Component* c) const{
-		assert(_model);
-		return _model->loadComponent(_s, c);
-	}
+//	Component* loadComponent(const QString& _s, Component* c) const{
+//		assert(_model);
+//		return _model->loadComponent(_s, c);
+//	}
    int  prepareNetlist(DocumentStream& a, QStringList& b, QPlainTextEdit* c,
 			bool creatingLib, NetLang const& nl){
 		assert(!creatingLib); // ?!

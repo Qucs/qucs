@@ -1,6 +1,4 @@
 /***************************************************************************
-                              schematic.cpp
-                             ---------------
     copyright            : (C) 2006 by Michael Margraf
                            2018 Felix Salfelder / QUCS team
  ***************************************************************************/
@@ -47,9 +45,9 @@
 #include "viewpainter.h"
 #include "mouseactions.h"
 // #include "diagrams/diagrams.h"
-#include "components/vhdlfile.h"
-#include "components/verilogfile.h"
-#include "components/vafile.h"
+// #include "components/vhdlfile.h"
+// #include "components/verilogfile.h"
+// #include "components/vafile.h"
 #include "misc.h"
 #include "globals.h"
 #include "trace.h"
@@ -2085,12 +2083,15 @@ void PaintingList::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const
 
 Component* SchematicDoc::find_component(QString const& n)
 { untested();
+  assert(false);
+#if 0
     for(auto pc : components()){ untested();
        if(pc->label() == n){ untested();
 	 incomplete();
 	 return dynamic_cast<Component*>(pc);
        }
     }
+#endif
     return nullptr;
 }
 

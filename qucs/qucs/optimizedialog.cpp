@@ -1,11 +1,7 @@
 /***************************************************************************
-                            optimizedialog.cpp
-                           --------------------
-    begin                : Sun Jul 30 2006
     copyright            : (C) 2006 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
-
-    copyright            : (C) 2016 Qucs Team
+                               2016 Qucs Team
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -21,6 +17,7 @@
 #include "components/optimizedialog.h"
 #include "components/opt_sim.h"
 #include "schematic_doc.h"
+#include "property.h"
 
 #include <QLabel>
 #include <QCheckBox>

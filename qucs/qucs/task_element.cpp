@@ -16,7 +16,6 @@
 #include <stdlib.h>
 #include <cmath>
 
-#include "components/component.h"
 #include "node.h"
 #include "qucs.h"
 #include "schematic_doc.h"
@@ -24,6 +23,7 @@
 #include "module.h"
 #include "misc.h"
 #include "cmdeltdlg.h"
+#include "property.h"
 
 #include <QPen>
 #include <QString>

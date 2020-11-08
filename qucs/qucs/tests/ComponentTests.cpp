@@ -21,6 +21,8 @@
  */
 
 #include "components/component.h"
+#include "legacy/component.cpp"
+#include "legacy/gatecomponent.cpp"
 #include "ComponentTests.h"
 
 #include <QTest>

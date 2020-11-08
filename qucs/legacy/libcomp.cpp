@@ -19,6 +19,7 @@
 #include "qucs.h"
 #include "schematic_doc.h"
 #include "sckt_base.h"
+#include "property.h"
 
 #include <limits.h>
 
