@@ -5,14 +5,12 @@ CPP_SRC = \
 	attach.cpp \
 	c__cmd.cc \
 	cmdeltdlg.cpp \
-	component.cpp \
 	component_widget.cpp \
 	conductor.cpp \
 	cursors.cpp \
 	diagram.cpp \
 	element.cpp \
 	element_graphics.cpp \
-	gatecomponent.cpp \
 	geometry.cpp \
 	ghostwire.cpp \
 	globals.cpp \
@@ -45,7 +43,6 @@ CPP_SRC = \
 	qucs_init.cpp \
 	qucs_tabs.cpp \
 	schematic_action.cpp \
-	schematic_component.cpp \
 	schematic.cpp \
 	schematic_dialog.cpp \
 	schematic_doc.cpp \
@@ -128,6 +125,7 @@ HDR1 = \
 	port.h \
 	printerwriter.h \
 	projectView.h \
+	property.h \
 	protomap.h \
 	qt_compat.h \
 	qucsdoc.h \

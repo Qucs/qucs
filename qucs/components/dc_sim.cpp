@@ -15,6 +15,7 @@
 #include "qucs.h"
 #include "globals.h"
 #include "module.h"
+#include "property.h"
 
 namespace{
 

@@ -217,8 +217,9 @@ void SchematicDoc::parse(istream_t& s, SchematicLanguage const* L)
 }
 
 // obsolete?
-void SchematicDoc::insertComponent(Component *c)
+void SchematicDoc::insertComponent(Component *)
 { untested();
+#if 0
     assert(_model);
 	 assert(false); // obsolete?
     _model->pushBack(c);
@@ -231,7 +232,6 @@ void SchematicDoc::insertComponent(Component *c)
     int  max=1, len = c->name().length(), z;
     if(c->name().isEmpty()) { // BUG
         // a ground symbol erases an existing label on the wire line
-#if 0 // moved to Ground::insertComponentNodes
         if(c->obsolete_model_hack() == "GND") { // BUG
             c->gnd_obsolete_model_override_hack("x");
             Element *pe = getWireLabel(c->Ports.first()->Connection);
@@ -242,7 +242,6 @@ void SchematicDoc::insertComponent(Component *c)
                 }
             c->gnd_obsolete_model_override_hack("GND");
         }
-#endif
     }else{ untested();
         // determines the name by looking for names with the same
         // prefix and increment the number
@@ -259,6 +258,7 @@ void SchematicDoc::insertComponent(Component *c)
     }
 
     setComponentNumber(c); // important for power sources and subcircuit ports
+#endif
 
 } // insertComponent
 

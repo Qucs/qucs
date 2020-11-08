@@ -26,6 +26,7 @@
 #include "globals.h"
 #include "docfmt.h"
 #include "module.h"
+#include "components/component.h" // BUG
 
 
 namespace {
@@ -144,6 +145,7 @@ Component* Subcircuit::newOne()
 }
 
 // -------------------------------------------------------
+#if 0
 Element* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
 { untested();
 	assert(false);
@@ -159,6 +161,7 @@ Element* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
   }
   return 0;
 }
+#endif
 
 // ---------------------------------------------------------------------
 // Makes the schematic symbol subcircuit with the correct number
@@ -504,7 +507,6 @@ public:
 		assert(scope()==subckt());
 
 		qDebug() << "pr::build";
-		int i;
 
 		Subcircuit const* inst=dynamic_cast<Subcircuit const*>(instance());
 		Component const* pc=inst;
@@ -536,7 +538,7 @@ public:
 		// load subcircuit schematic
 		QString s=pc->Props.first()->Value;
 		SchematicModel* d=schematicModel();
-		SchematicModel const* dc=schematicModel();
+//		SchematicModel const* dc=schematicModel();
 		_subckt = d; // bug. new sckt?
 
 		// todo: error handling.
@@ -593,7 +595,7 @@ Symbol const* Subcircuit::proto(SchematicModel const* scope) const
 		trace1("cached", typeName());
 		return p;
 	}else{
-		Symbol const* ownersym = dynamic_cast<Symbol const*>(owner());
+//		Symbol const* ownersym = dynamic_cast<Symbol const*>(owner());
 		Symbol* s = new pr(this);
 
 		assert(owner());

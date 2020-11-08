@@ -33,7 +33,7 @@
 #include "globals.h"
 
 #include "changedialog.h"
-#include "components/component.h" // BUG
+//#include "components/component.h" // BUG
 
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

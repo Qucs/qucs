@@ -448,6 +448,7 @@ void createIcons() { untested();
  */
 void createDocData()
 { untested();
+#if 0
   QMap<int, QString> typeMap;
   typeMap.insert(0x30000, "Component");
   typeMap.insert(0x30002, "ComponentText");
@@ -556,6 +557,7 @@ void createDocData()
     } // module
   } // category
   fprintf(stdout, "Created data for %i components from %i categories\n", nComps, nCats);
+#endif
 }
 
 // createListNetEntry prints to stdout the available netlist formats

@@ -4,6 +4,8 @@
 
 #include <qucs/schematic_model.h>
 #include <qucs/components/resistor.cpp>
+#include "legacy/component.cpp" // BUG
+#include "legacy/gatecomponent.cpp" // BUG
 #include "globals.h"
 
 void union0()

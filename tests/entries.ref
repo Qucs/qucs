@@ -60,7 +60,7 @@ R #(.R(50 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(europe
 R:my_R (null) (null) R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 ==============
   <Port my_Port 1 0 0 -23 12 0 0 "1" 1 "analog" 0>
-Port #(.Num(1), .Type(analog)) my_Port((null));
+Port #(.Num(1), .Type()) my_Port((null));
 Port:my_Port (null) Num="1" Type=""
 ==============
   <GND my_GND 5 0 0 0 0 0 0>

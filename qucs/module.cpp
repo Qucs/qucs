@@ -18,9 +18,6 @@
 #include <QDebug>
 
 #include "element.h"
-// #include "components/component.h"
-// #include "paintings/paintings.h"
-// #include "diagrams/diagrams.h"
 #include "module.h"
 #include "io_trace.h"
 #include "globals.h"

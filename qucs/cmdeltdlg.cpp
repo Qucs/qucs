@@ -15,6 +15,7 @@
 #include "cmdeltdlg.h"
 #include "qucs.h"
 #include "schematic_doc.h"
+#include "property.h"
 #include "misc.h"
 
 #include <cmath>
