@@ -508,9 +508,12 @@ QRectF ElementGraphics::absoluteBoundingRect() const
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::setSelected(bool s)
 {itested();
-	qDebug() << "setSeletected" << s << this;
+	qDebug() << "setSelected" << s << this;
 	QGraphicsItem::setSelected(s);
-	assert(QGraphicsItem::isSelected()==s);
+	if(QGraphicsItem::isSelected()==s){
+	}else{
+		//what??
+	}
 	assert(_e);
 }
 /*--------------------------------------------------------------------------*/

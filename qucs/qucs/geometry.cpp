@@ -138,7 +138,7 @@ rect_t& rect_t::operator|=(rect_t const& o)
 		int l = std::min(_tl.first, o._tl.first);
 		int t = std::min(_tl.second, o._tl.second);
 		int r = std::max(_br.first, o._br.first);
-		int b = std::min(_br.second, o._br.second);
+		int b = std::max(_br.second, o._br.second);
 
 		_tl = pos_t(l,t);
 		_br = pos_t(r,b);
