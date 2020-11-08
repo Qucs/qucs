@@ -141,7 +141,7 @@ void MouseAction::uncheck()
   }else{itested();
   }
 
-  deactivate();
+  deactivate(); // BUG?
 }
 /*--------------------------------------------------------------------------*/
 SchematicScene const* MouseAction::scene() const

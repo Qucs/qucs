@@ -66,12 +66,11 @@ void Element::paint(ViewPainter* p) const
 // does not work for nodes and diagrams
 rect_t Element::bounding_rect() const
 {
-	unreachable();
+	unreachable(); // but from diagrams or so
 	// QRectF b(cx+x1, cy+y1, x2-x1, y2-y1);
 //	QRectF b(x1, y1, x2-x1, y2-y1);
 //	return b;
 //
-	assert(false);
 	return rect_t(0,0,0,0);
 }
 
