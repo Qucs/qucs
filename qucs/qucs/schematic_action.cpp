@@ -290,7 +290,7 @@ void transformElement(Element* e, qucsSymbolTransform a, pos_t pivot)
 
 		p = pos_t(x, y);
 		trace1("posttransform setpos1", p);
-		e->setCenter(p);
+		e->setPosition(p);
 	// prepareGeometryChange(); // needed??
 	}else{ untested();
 	}
@@ -513,7 +513,7 @@ QUndoCommand* MouseActionNewElement::enter(QEvent* ev)
 	if(!_gfx){ untested();
 		assert(_proto);
 		elt = _proto->clone_instance();
-		elt->setCenter(pos_t(sp.x(), sp.y()));
+		elt->setPosition(pos_t(sp.x(), sp.y()));
 		_gfx = new ElementGraphics(elt); // BUG
 	}else{ untested();
 		_gfx->setPos(sp.x(), sp.y());

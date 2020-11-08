@@ -50,4 +50,4 @@ Element::~Element(){}
 //void Element::setCenter(int, int, bool){}
 //void Element::getCenter(int&, int&){}
 void Element::paint(ViewPainter*) const{}
-QRectF Element::boundingRect() const { return QRect(cx()-4,cy()-4,8,8); }
+rect_t Element::bounding_rect() const { return rect_t(cx()-4,cy()-4,8,8); }

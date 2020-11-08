@@ -44,7 +44,6 @@ public:
 	explicit Wire();
 	~Wire();
 
-//	void setCenter(int, int, bool relative=false);
 	void getCenter(int&, int&);
 
 private: // Element
@@ -135,7 +134,7 @@ Wire::Wire() : Symbol(),
     _port0(), _port1(), _pp1(1,0),
     _angle(0), _scale(1.)
 {
-	Symbol::setCenter(pos_t(0, 0)); // redundant?
+	Symbol::setPosition(pos_t(0, 0)); // redundant?
 
 	setTypeName("wire");
 	setLabel("noname"); // BUG
@@ -154,7 +153,7 @@ Wire::Wire(pos_t const& p0, pos_t const& p1)
     _angle(0), _scale(1)
 { itested();
 
-	Symbol::setCenter(p0);
+	Symbol::setPosition(p0);
 
 	findScaleAndAngle();
 	updatePort();
@@ -367,11 +366,6 @@ Symbol* Wire::newUnion(Symbol const* s) const
 	}
 	return nullptr;
 }
-/*--------------------------------------------------------------------------*/
-//void Wire::setCenter(int x, int y, bool relative)
-//{ untested();
-//	Symbol::setCenter(x, y, relative);
-//}
 /*--------------------------------------------------------------------------*/
 QDialog* Wire::schematicWidget(QucsDoc* Doc) const
 { untested();

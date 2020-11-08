@@ -615,7 +615,7 @@ void ElementGraphics::moveElement(P const& delta)
 	prepareGeometryChange(); // needed??
 	auto x = _e->center();
 	x = x + pos_t(dx, dy);
-	_e->setCenter(x);
+	_e->setPosition(x);
 
 	// not redundant.
 	auto p = _e->center();
@@ -640,7 +640,7 @@ void ElementGraphics::setPos(int i, int j, bool relative)
 	assert(!relative); // use move, for now.
 	// prepareGeometryChange();
 	QGraphicsItem::setPos(i, j);
-	_e->setCenter(pos_t(i, j));
+	_e->setPosition(pos_t(i, j));
 }
 /*--------------------------------------------------------------------------*/
 template

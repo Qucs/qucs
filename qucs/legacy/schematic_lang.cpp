@@ -673,7 +673,7 @@ static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
 		if(!ok) return NULL;
 
 		n  = s.section(' ',4,4);    // cy
-		c->setCenter(pos_t(cx, n.toInt(&ok)));
+		c->setPosition(pos_t(cx, n.toInt(&ok)));
 		if(!ok) return NULL;
 
 		n  = s.section(' ',5,5);    // tx
