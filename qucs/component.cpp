@@ -594,12 +594,12 @@ void Component::setParameter(std::string const& name, std::string const& v)
     int x = atoi(v.c_str());
     auto c = center();
     c.first = x;
-    Element::setCenter(c);
+    Element::setPosition(c);
   }else if(name=="$yposition"){
     int y = atoi(v.c_str());
     auto c = center();
     c.second = y;
-    Element::setCenter(c);
+    Element::setPosition(c);
   }else{ untested();
     Symbol::setParameter(name, v);
   }

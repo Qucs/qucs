@@ -39,14 +39,6 @@ Element::~Element()
 {
 }
 
-#if 0
-void Element::setCenter(int x, int y, bool relative)
-{
-	assert(!relative);
-	setCenter(pos_t(x,y));
-}
-#endif
-
 void Element::getCenter(int&x, int&y) const
 {
 	unreachable();
