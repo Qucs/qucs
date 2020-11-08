@@ -318,9 +318,9 @@ std::string Symbol::paramName(unsigned i) const
 void Symbol::setParameter(unsigned n, std::string const& v)
 {
 	if(n==0){ // xpos
-		setCenter(pos_t(atoi(v.c_str()), cy()));
+		setPosition(pos_t(atoi(v.c_str()), cy()));
 	}else if(n==1){ // ypos
-		setCenter(pos_t(cx(), atoi(v.c_str())));
+		setPosition(pos_t(cx(), atoi(v.c_str())));
 	}else if(n<Symbol::paramCount()){
 		unreachable();
 	}else{
@@ -331,9 +331,9 @@ void Symbol::setParameter(unsigned n, std::string const& v)
 void Symbol::setParameter(std::string const& name, std::string const& v)
 {
 	if(name == "$xposition"){
-		setCenter(pos_t(atoi(v.c_str()), cy()));
+		setPosition(pos_t(atoi(v.c_str()), cy()));
 	}else if(name == "$yposition"){
-		setCenter(pos_t(cx(), atoi(v.c_str())));
+		setPosition(pos_t(cx(), atoi(v.c_str())));
 	}else if(name == "$angle"){
 		trace1("angle", v);
 		_angle = atoi(v.c_str());

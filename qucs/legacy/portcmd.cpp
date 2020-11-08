@@ -36,14 +36,14 @@ class PortSym : public Command{
 	  cs >> ty;
 
 	  auto ps = painting_dispatcher.clone("PortSym");
-	  ps->setCenter(pos_t(cx,cy));
+	  ps->setPosition(pos_t(cx,cy));
 	  s->pushBack(ps);
 	  auto n = s->numPorts();
 	  trace6("PortSymParams", type, cx, cy, tx, ty, n);
 
 	  auto place = symbol_dispatcher.clone("place"); // memory leak.
 	  assert(place);
-	  place->setCenter(pos_t(cx,cy));
+	  place->setPosition(pos_t(cx,cy));
 	  Node* node = place->connectNode(0, s->nodes());
 	  assert(node);
 
