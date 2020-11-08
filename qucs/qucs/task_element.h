@@ -10,13 +10,14 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-
 #ifndef QUCS_COMMMAND_H
 #define QUCS_COMMMAND_H
-
-#include "components/component.h"
+/* -------------------------------------------------------------------------------- */
 #include "platform.h"
-
+#include "element.h"
+class ComponentDialog;//really??
+class Property;
+/* -------------------------------------------------------------------------------- */
 class TaskElement : public Element {
 protected:
   TaskElement(const TaskElement&);
@@ -26,15 +27,11 @@ public:
 
   virtual void recreate(SchematicDoc*) {};
   QString getNetlist();
+
 private:
-  Component* newOne(){ unreachable();
-	  Element* hack=clone();
-	  Component* e=prechecked_cast<Component*>(hack);
-	  assert(e);
-	  return e;
-  }
   void    paint(ViewPainter*) const;
   QDialog* schematicWidget(QucsDoc* Doc) const;
+
 public:
   void    paintScheme(SchematicDoc*) const;
   void    print(ViewPainter*, float);
@@ -92,5 +89,6 @@ protected:
   // Property * getProperty(const QString&);
   // SchematicDoc* containingSchematic;
 };
-
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
 #endif

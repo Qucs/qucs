@@ -21,6 +21,7 @@
 #include "diagram.h" // BUG
 #include "docfmt.h" // BUG
 #include "d_dot.h"
+#include "components/component.h"
 
 #ifdef DO_TRACE
 #include <typeinfo>
@@ -1085,7 +1086,7 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 	}else if(auto s=dynamic_cast<Symbol*>(e)){
 		::parseSymbol(l, s);
 	}else if(auto d=dynamic_cast<Diagram*>(e)){ untested();
-		bool err = loadDiagram(d, c);
+		loadDiagram(d, c);
 	}else if(auto s=dynamic_cast<Painting*>(e)){
 		::parsePainting(l, s);
 	}else if(auto s=dynamic_cast<DEV_DOT*>(e)){

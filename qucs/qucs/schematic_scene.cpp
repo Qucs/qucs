@@ -56,6 +56,7 @@ Element* element(ElementGraphics* g)
 	if(!g) return nullptr;
 	return g->operator->();
 }
+#if 0
 Component* component(QGraphicsItem* g)
 {
 	incomplete();
@@ -63,6 +64,7 @@ Component* component(QGraphicsItem* g)
 	if(!e) return nullptr;
 	return component(e->operator->());
 }
+#endif
 WireLabel* wireLabel(QGraphicsItem* g)
 {
 	auto e=dynamic_cast<ElementGraphics*>(g);
@@ -354,7 +356,7 @@ bool SchematicScene::event(QEvent* e)
 
 				trace1("setting pos", de->scenePos());
 				auto pos = de->scenePos();
-				elt->setCenter(pos_t(pos.x(), pos.y()));
+				elt->setPosition(pos_t(pos.x(), pos.y()));
 				doc()->takeOwnership(elt); // BUG
 				assert(elt->scope());
 				auto gfx = new ElementGraphics(elt);

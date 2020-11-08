@@ -94,13 +94,13 @@ pos_t /* const & */ Element::center()const
 }
 
 // legacy stuff. pretend that Element points to an Element
-#include "components/component.h"
+//#include "components/component.h"
 #include "diagram.h"
 #include "wirelabel.h"
 #include "task_element.h"
 #include "painting.h"
 
-Component* component(Element* e){ return dynamic_cast<Component*>(e); }
+// Component* component(Element* e){ return dynamic_cast<Component*>(e); }
 TaskElement* command(Element* e){ return dynamic_cast<TaskElement*>(e); }
 // Wire* wire(Element* e){ return dynamic_cast<Wire*>(e); }
 WireLabel* wireLabel(Element* e){ return dynamic_cast<WireLabel*>(e); }
@@ -111,7 +111,7 @@ Graph* graph(Element* e){ return dynamic_cast<Graph*>(e); }
 Node* node(Element* e){ return dynamic_cast<Node*>(e); }
 //Label* label(Element* e){ return dynamic_cast<Label*>(e); }
 
-Component const* component(Element const* e){ return dynamic_cast<Component const*>(e); }
+// Component const* component(Element const* e){ return dynamic_cast<Component const*>(e); }
 // Wire const* wire(Element const* e){ return dynamic_cast<Wire const*>(e); }
 WireLabel const* wireLabel(Element const* e){ return dynamic_cast<WireLabel const*>(e); }
 Diagram const* diagram(Element const* e){ return dynamic_cast<Diagram const*>(e); }

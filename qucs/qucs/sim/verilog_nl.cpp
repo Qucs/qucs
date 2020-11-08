@@ -14,7 +14,7 @@
 #include <map>
 #include "docfmt.h"
 #include "element.h"
-#include "components/component.h" // BUG
+//#include "components/component.h" // BUG
 #include "globals.h"
 #include "schematic_symbol.h"
 #include "schematic_model.h"

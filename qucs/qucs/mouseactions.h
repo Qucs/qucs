@@ -244,7 +244,7 @@ private:
   // but that does not work, because ElementMouseAction lives here.
   // (does it matter?)
 public:
-  Component* selectCompText(SchematicDoc*, int, int, int&, int&);
+  // Component* selectCompText(SchematicDoc*, int, int, int&, int&);
 //  void     deselectElements(ElementMouseAction);
 
 public: // really?

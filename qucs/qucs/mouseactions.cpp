@@ -17,11 +17,11 @@
 #include "misc.h"
 #include "mouseactions.h"
 #include "module.h"
-#include "components/component.h"
+//#include "components/component.h"
 #include "components/spicedialog.h"
 #include "components/spicefile.h"
 #include "components/optimizedialog.h"
-#include "components/vacomponent.h"
+//#include "components/vacomponent.h"
 //#include "../legacy/markerdialog.h" // BUG
 #include "labeldialog.h"
 
