@@ -15,10 +15,7 @@
 
 #ifndef QUCS_OBJECT_H
 #define QUCS_OBJECT_H
-#include "../include/io_trace.h"
-
-#include <QString> // yikes
-
+#include "io_trace.h"
 
 // base object for qucs.
 class Object{
@@ -38,16 +35,16 @@ protected:
 public:
 	virtual ~Object(){}
 
-	QString const& label() const{ return Label;}
-	void setLabel(QString const& l) {Label = l;}
-	void setLabel(std::string const& l) {Label = QString::fromStdString(l);}
-	void setLabel(char const* l) {Label = QString(l);}
+	std::string const& label() const{ return _label;}
+//	void setLabel(QString const& l) {_label = l.toStdString();}
+	void setLabel(std::string const& l) {_label = l;}
+	void setLabel(char const* l) {_label = l;}
 
 protected: // error handling
 	virtual void message(QucsMsgType, const char*) const;
 
 private:
-	QString Label;
+	std::string _label;
 };
 
 #endif

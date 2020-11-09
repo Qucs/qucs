@@ -549,7 +549,7 @@ PrototypeMap const& SchematicModel::declarations() const
 
 void SchematicModel::cacheProto(Symbol const* what) const
 {
-	auto key = what->label();
+	auto key = QString::fromStdString(what->label());
 	trace1("pushProto", key);
 	assert(what);
 	assert(!_protos[key]);
@@ -620,7 +620,7 @@ Node* SchematicModel::insertNode(int , int , Element *)
 bool operator==(Symbol const*p, std::string const&s)
 {
 	if(p){
-		return p->label().toStdString()==s;
+		return p->label() == s;
 	}else{
 		return false;
 	}

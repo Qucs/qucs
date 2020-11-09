@@ -43,7 +43,7 @@ static std::string netLabel(Node const* nn)
 		unreachable();
 		return "(null)";
 	}else if(n->hasLabel()){
-		return n->label().toStdString();
+		return n->label();
 	}else{
 		return "_net" + std::to_string(n->pos());
 	}
@@ -237,7 +237,7 @@ void VerilogSchematicFormat::printSymbol(Symbol const* sym, ostream_t& s) const
 	{
 		std::string type = sym->typeName();
       std::replace( type.begin(), type.end(), ':', '$');
-		std::string label = sym->label().toStdString();
+		std::string label = sym->label();
 
 		s << QString::fromStdString(type) << " ";
 

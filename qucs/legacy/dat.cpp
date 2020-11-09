@@ -9,7 +9,7 @@ void SimOutputDir::pushBack(QucsData* d)
 {
 	assert(d);
 	assert(d->label()!="");
-	_d[d->label().toStdString()] = d;
+	_d[d->label()] = d;
 }
 
 // a Var from a Dat file

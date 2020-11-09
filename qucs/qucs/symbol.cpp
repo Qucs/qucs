@@ -218,7 +218,7 @@ std::string Symbol::paramValue(std::string const& n) const
 	}else if(n=="$angle"){
 		return std::to_string(_angle);
 	}else{ untested();
-		throw ExceptionCantFind(label().toStdString(), n, "params");
+		throw ExceptionCantFind(label(), n, "params");
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -298,7 +298,7 @@ std::string Symbol::paramValue(unsigned i) const
 	case 1:
 		return std::to_string(cy());
 	default:
-		throw ExceptionCantFind(label().toStdString(), std::to_string(i), "param values");
+		throw ExceptionCantFind(label(), std::to_string(i), "param values");
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -311,7 +311,7 @@ std::string Symbol::paramName(unsigned i) const
 	case 1:
 		return "$yposition";
 	default:
-		throw ExceptionCantFind(label().toStdString(), std::to_string(i), "param names");
+		throw ExceptionCantFind(label(), std::to_string(i), "param names");
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -324,7 +324,7 @@ void Symbol::setParameter(unsigned n, std::string const& v)
 	}else if(n<Symbol::paramCount()){
 		unreachable();
 	}else{
-		throw ExceptionCantFind( label().toStdString(), std::to_string(n), "params");
+		throw ExceptionCantFind( label(), std::to_string(n), "params");
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -346,7 +346,7 @@ void Symbol::setParameter(std::string const& name, std::string const& v)
 		_vflip = atoi(v.c_str());
 		assert(_hflip==1 || _hflip==-1);
 	}else{
-		throw ExceptionCantFind( label().toStdString(), name, "params");
+		throw ExceptionCantFind( label(), name, "params");
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -574,7 +574,7 @@ void SymbolDialog::attach(ElementGraphics* gfx)
 	connect(cancel, SIGNAL(clicked()), SLOT(slotButtCancel()));
 
 	// ------------------------------------------------------------
-	CompNameEdit->setText(_sym->label());
+	CompNameEdit->setText(QString::fromStdString(_sym->label()));
 
 	incomplete();
 //	showName->setChecked(_sym->showName);
@@ -897,8 +897,8 @@ void SymbolDialog::slotApplyInput()
 
 	QString tmp;
 	if(CompNameEdit->text().isEmpty()){
-		CompNameEdit->setText(_sym->label());
-	}else if(CompNameEdit->text() != _sym->label()) {
+		CompNameEdit->setText(QString::fromStdString(_sym->label()));
+	}else if(CompNameEdit->text().toStdString() != _sym->label()) {
 		new_sym->setLabel(CompNameEdit->text().toStdString());
 		changed = true;
 	}

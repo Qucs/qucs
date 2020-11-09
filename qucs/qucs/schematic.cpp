@@ -2081,7 +2081,7 @@ void PaintingList::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const
   }
 }
 
-Component* SchematicDoc::find_component(QString const& n)
+Component* SchematicDoc::find_component(QString const&)
 { untested();
   assert(false);
 #if 0

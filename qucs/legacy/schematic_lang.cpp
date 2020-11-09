@@ -183,7 +183,7 @@ static Element* loadElement(const QString& _s, Element* e)
 		// c->setSchematic (p);
 	//	s->recreate(); // half-expand subcircuits? why not "precalc"?
 	//	               // why not in constructor? it needs parameters.
-		c->setLabel(cstr);
+		c->setLabel(cstr.toStdString());
 		c->tx = x;
 		c->ty = y;
 	}else if(auto s=dynamic_cast<Symbol*>(e)){itested();
@@ -429,7 +429,7 @@ Diagram* LegacySchematicLanguage::loadDiagram(Diagram* d, istream_t& stream)cons
 		std::string what=cstr.toStdString();
 
 		auto type = what.c_str()+1;
-		if(auto x=diagram_dispatcher[what.c_str()+1]){itested();
+		if(diagram_dispatcher[what.c_str()+1]){itested();
 			// d=prechecked_cast<Diagram*>(x->clone());
 			assert(d);
 			qDebug() << "got diagram" << what.c_str();
@@ -653,7 +653,7 @@ static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
 		QString label=s.section(' ',1,1);
 		trace1("NAME", label);
 ///		c->setName(label);//???
-		c->setLabel(label);
+		c->setLabel(label.toStdString());
 
 		QString n;
 		n  = s.section(' ',2,2);      // isActive
@@ -746,7 +746,7 @@ static Symbol* parseSymbol(const QString& _s, Symbol* sym)
 //	s = s.mid(1, s.length()-2);   // cut off start and end character
 
 	QString label=s.section(' ',1,1);
-	sym->setLabel(label);
+	sym->setLabel(label.toStdString());
 
 	QString n;
 	n  = s.section(' ',2,2);      // flags
@@ -859,7 +859,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 	QString label=s.section(' ',1,1);
 	c->obsolete_name_override_hack(label); //??
 	trace1("loadComp", label);
-	c->setLabel(label);
+	c->setLabel(label.toStdString());
 
 	QString n;
 	n  = s.section(' ',2,2);      // flags

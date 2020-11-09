@@ -24,7 +24,7 @@ Port::~Port()
 	}
 }
 /*--------------------------------------------------------------------------*/
-QString const& Port::netLabel() const
+std::string const& Port::netLabel() const
 {
 	assert(_node);
 	return _node->netLabel();

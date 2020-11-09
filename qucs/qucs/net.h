@@ -12,6 +12,8 @@
  ***************************************************************************/
 
 #include "object.h"
+#include <assert.h>
+
 class Net : public Object{
 public:
 private:

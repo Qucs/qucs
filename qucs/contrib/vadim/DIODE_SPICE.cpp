@@ -31,8 +31,8 @@ public:
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
 protected:
-  QString netlist();
-  QString spice_netlist(bool isXyce = false);
+//  QString netlist();
+//  QString spice_netlist(bool isXyce = false);
 }D;
 
 // this is the schematic name...
@@ -98,6 +98,7 @@ Element* DIODE_SPICE::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
+#if 0
 QString DIODE_SPICE::netlist()
 {
     return QString("");
@@ -105,7 +106,6 @@ QString DIODE_SPICE::netlist()
 
 QString DIODE_SPICE::spice_netlist(bool)
 {
-#if 0
     QString s = ""; // TODO spicecompat::check_refdes(Name,SpiceModel);
     foreach(Port *p1, Ports) {
         QString nam = p1->Connection->name();
@@ -126,8 +126,7 @@ QString DIODE_SPICE::spice_netlist(bool)
     if(  D_Line_5.length() > 0 )   s += QString("%1\n").arg(D_Line_5);
  
     return s;
-#endif
-	 return QString("incomlete");
 }
+#endif
 
 } // namespace

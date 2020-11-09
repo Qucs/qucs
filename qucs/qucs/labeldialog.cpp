@@ -41,7 +41,10 @@ LabelDialog::LabelDialog(WireLabel *pl, QWidget *parent)
   gbox->addWidget(Label1,0,0);
 
   NodeName = new QLineEdit();
-  if(pLabel)  NodeName->setText(pLabel->label());
+  if(pLabel){
+	  NodeName->setText(QString::fromStdString(pLabel->label()));
+  }else{
+  }
   NodeName->setValidator(Validator1);
   gbox->addWidget(NodeName,1,0,1,3);
 
