@@ -62,8 +62,8 @@ public: // internal net stuff
 	bool visited(unsigned lvl) const {return lvl == _visit;}
 	void visit(unsigned lvl){ _visit = lvl; }
 
-	QString const& netLabel() const;
-	void setNetLabel(QString const& l);
+	std::string const& netLabel() const;
+	void setNetLabel(std::string const& l);
 	bool hasNetLabel() const;
 
 public:

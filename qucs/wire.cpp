@@ -589,7 +589,7 @@ Node* Wire::connectNode(unsigned i, NodeMap& nm)
 
   if(_netname!=""){
     trace2("wire override netlabel", n->netLabel(), _netname);
-    n->setNetLabel(QString::fromStdString(_netname));
+    n->setNetLabel(_netname);
   }else{
   }
   return n;

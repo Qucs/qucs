@@ -287,7 +287,7 @@ void DiagramDialog::attach(ElementGraphics* g)
   // todo: replace by QTableWidget
   // see https://gist.github.com/ClemensFMN/8955411
 
-    Name = Diag->label();
+    Name = QString::fromStdString(Diag->label());
     connect(ChooseData, SIGNAL(activated(int)), SLOT(slotReadVars(int)));
     ChooseVars = new QTableWidget(1, 3);
     ChooseVars->verticalHeader()->setVisible(false);

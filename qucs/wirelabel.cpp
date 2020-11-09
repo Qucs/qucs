@@ -31,7 +31,7 @@ WireLabel::WireLabel(const QString& _Name, int, int,
   x1 = _x1;
   y1 = _y1;
   setName(_Name); //?!
-  setLabel(_Name);
+  setLabel(_Name.toStdString());
   initValue = "";
 
   Type = _Type;
@@ -190,7 +190,7 @@ void WireLabel::paint(ViewPainter *p) const
 void WireLabel::setName(const QString& Name_)
 {
   //setTypeName("wirelabel"); //  = Name_; //?!
-  setLabel(Name_);
+  setLabel(Name_.toStdString());
   
   // get size of text using the screen-compatible metric
 //  FontMetrics metrics;
@@ -203,6 +203,7 @@ void WireLabel::setName(const QString& Name_)
 // Converts all necessary data of the wire into a string. This can be used to
 // save it to an ASCII file or to transport it via the clipboard.
 // Wire labels use the same format like wires, but with length zero.
+#if 0
 QString WireLabel::save()
 {
 	unreachable();
@@ -214,6 +215,7 @@ QString WireLabel::save()
 	  +  initValue+"\">";
   return s;
 }
+#endif
 
 
 void WireLabel::getLabelBounding(int& , int&, int& , int& )

@@ -104,7 +104,7 @@ static std::string netLabel(Node const* nn)
 		unreachable();
 		return "(null)";
 	}else if(n->hasLabel()){
-		return n->label().toStdString();
+		return n->label();
 	}else{
 		return "_net" + std::to_string(n->pos());
 	}
@@ -240,7 +240,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 {
 	Symbol const* sym = p;
 	assert(p->subckt());
-	std::string label = p->label().toStdString();
+	std::string label = p->label();
 
 	auto h = p->subckt()->find_(":qucsatorsckthack:");
 	if(h != p->subckt()->end()){

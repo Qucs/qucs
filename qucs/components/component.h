@@ -204,8 +204,8 @@ public:
 	  return Model;
   }
   void setName(QString x){
-	  setLabel(x);
-	  // FIXME move to Element.
+	  incomplete();
+	  setLabel(x.toStdString());
 	  Name = x;
   }
   void obsolete_name_override_hack(QString x){
