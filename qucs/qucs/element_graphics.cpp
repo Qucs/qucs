@@ -106,7 +106,7 @@ public:
 		int k=0;
 		if(e->showLabel()){
 			_labeltext = new QGraphicsTextItem(this);
-			_labeltext->setPlainText(e->label());
+			_labeltext->setPlainText(QString::fromStdString(e->label()));
 			k += _labeltext->boundingRect().height();
 		}else{
 		}

@@ -12,7 +12,7 @@ public:
     : _gfx(g), _elt(e)
   {
     assert(e);
-    setText("Swap Element " + e->label());
+    setText("Swap Element " + QString::fromStdString(e->label()));
   }
 private:
   void undo(){

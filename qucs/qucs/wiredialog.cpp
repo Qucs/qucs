@@ -176,7 +176,7 @@ void WireDialog::slotApplyInput()
 ///  }
 ///
   QString tmp;
-  if(CompNameEdit->text() != Comp->label()) {
+  if(CompNameEdit->text().toStdString() != Comp->label()) {
     trace2("Apply", Comp->label(), CompNameEdit->text());
 
 	 Comp->setParameter("netname", CompNameEdit->text().toStdString());

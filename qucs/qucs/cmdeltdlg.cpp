@@ -433,7 +433,7 @@ void TaskElementDialog::attach(ElementGraphics* gfx)
   connect(cancel, SIGNAL(clicked()), SLOT(slotButtCancel()));
 
   // ------------------------------------------------------------
-  CompNameEdit->setText(Comp->label());
+  CompNameEdit->setText(QString::fromStdString(Comp->label()));
   showName->setChecked(Comp->showName);
   changed = false;
 
@@ -864,8 +864,8 @@ void TaskElementDialog::slotApplyInput()
   QString tmp;
   Component *pc = nullptr;
   if(CompNameEdit->text().isEmpty()){
-    CompNameEdit->setText(Comp->label());
-  }else if(CompNameEdit->text() != Comp->label()) {
+    CompNameEdit->setText(QString::fromStdString(Comp->label()));
+  }else if(CompNameEdit->text().toStdString() != Comp->label()) {
     trace2("Apply", Comp->label(), CompNameEdit->text());
 #if 0
     for(pc = schematic()->components().first(); pc!=0;
@@ -877,8 +877,8 @@ void TaskElementDialog::slotApplyInput()
     }
 #endif
     if(pc){
-      CompNameEdit->setText(Comp->label());
-    } else if (Comp->label() != CompNameEdit->text()) {
+      CompNameEdit->setText(QString::fromStdString(Comp->label()));
+    } else if (Comp->label() != CompNameEdit->text().toStdString()) {
       Comp->setLabel(CompNameEdit->text().toStdString());
       changed = true;
     }

@@ -17,7 +17,7 @@ Painting::Painting()
 {
   Type = isPainting;
   State = 0;
-  setLabel(Name); // legacy hack
+  setLabel(Name.toStdString()); // legacy hack
 }
 
 void Painting::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)

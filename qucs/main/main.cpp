@@ -230,7 +230,7 @@ public: // tmp hack
 void doNetlist(QString schematic_fn, std::string netlist, DocumentFormat const& NLN)
 {
   sda xs;
-  xs.setLabel(schematic_fn);
+  xs.setLabel(schematic_fn.toStdString());
   assert(xs.subckt());
   SchematicModel& sch = *xs.subckt();
   trace1("main schematic model", &sch);
@@ -605,7 +605,7 @@ void createListComponentEntry()
       if(auto c = dynamic_cast<Symbol*>(ce)){
 	ce->setLabel("my_" + c->typeName());
       }else if(auto c = dynamic_cast<TaskElement*>(ce)){
-	ce->setLabel("my_" + c->typeName());
+	ce->setLabel("my_" + c->typeName().toStdString());
       }else{
 	// not sure.
       }

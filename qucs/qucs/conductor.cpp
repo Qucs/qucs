@@ -28,13 +28,13 @@ Conductor::Conductor()
 {
 }
 /*--------------------------------------------------------------------------*/
-QString const& Conductor::netLabel() const
+std::string const& Conductor::netLabel() const
 {
 	assert(_net);
 	return _net->label();
 }
 /*--------------------------------------------------------------------------*/
-void Conductor::setNetLabel(QString const& l)
+void Conductor::setNetLabel(std::string const& l)
 {
   assert(_net);
   _net->setLabel(l);

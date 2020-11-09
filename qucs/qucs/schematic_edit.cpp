@@ -90,6 +90,15 @@ void SchematicEdit::save(T& del, T& ins)
 	trace2("saved", _del.size(), _ins.size());
 }
 /*--------------------------------------------------------------------------*/
+#include <schematic_model.h>
+static void possiblyRename(ElementGraphics* gfx)
+{
+	Element* e = element(gfx);
+	std::string label = e->label();
+
+	e->scope()->find_(label);
+}
+/*--------------------------------------------------------------------------*/
 // Perform an edit action for the first time. keep track of induced changes.
 // This is a generic version of legacy implementation, and it still requires a
 // scene implementing the geometry.
@@ -122,6 +131,7 @@ void SchematicEdit::do_it_first()
 	trace1("============ edit insert...", _ins.size());
 	while(_ins.size()){
 		ElementGraphics* gfx = _ins.front();
+		// find better name here? (no, too late)
 		trace1("try insert...", element(gfx)->label());
 		_ins.pop_front();
 
@@ -129,6 +139,7 @@ void SchematicEdit::do_it_first()
 			trace0("merged");
 		}else{
 			trace1("done insert, show", element(gfx)->label());
+			possiblyRename(gfx);
 			gfx->show();
 			gfx->setSelected(true); // really?
 			done_ins.push_back(gfx);
@@ -136,7 +147,7 @@ void SchematicEdit::do_it_first()
 	}
 
 	save(done_ins, done_del);
-}
+} // do_it_first
 /*--------------------------------------------------------------------------*/
 Node const* SchematicEdit::nodeAt(pos_t const& p) const
 {

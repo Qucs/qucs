@@ -53,7 +53,7 @@ ComponentListWidgetItem::ComponentListWidgetItem(Element const* e)
 { untested();
 	assert(e);
 	QString File = e->iconBasename();
-	auto Name = e->label();
+	QString Name = QString::fromStdString(e->label());
 
 ////	if(auto s=dynamic_cast<Symbol const*>(e)){
 ////		Name = QString::fromStdString(s->typeName());

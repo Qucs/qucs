@@ -15,7 +15,6 @@
 #ifndef QUCS_PORT_H
 #define QUCS_PORT_H
 
-#include <QString> // BUG??
 #include "trace.h"
 #include "geometry.h"
 /*--------------------------------------------------------------------------*/
@@ -32,7 +31,7 @@ public: // This makes Port behave like a pointer (and that's what it will be).
   Node const* operator->() const {return _node;}
 
 public:
-  QString const& netLabel() const;
+  std::string const& netLabel() const;
 
 public: // perhaps not here
   Node* value() const{return _node;}
