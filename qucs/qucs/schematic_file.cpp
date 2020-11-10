@@ -756,11 +756,13 @@ bool SchematicModel::createLibNetlist(DocumentStream& stream, QPlainTextEdit
   Signals.clear();
   // Apply node names and collect subcircuits and file include
   bool creatingLib = true;
+#if 0
   if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts, creatingLib, nl)) {
     creatingLib = false;
     return false;
   }else{
   }
+#endif
   creatingLib = false;
 
   // Marking start of actual top-level subcircuit

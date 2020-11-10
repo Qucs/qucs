@@ -28,15 +28,13 @@
 #include "netlist.h"
 #include "protomap.h"
 #include "sim/tasks.h"
-
-
+/*--------------------------------------------------------------------------*/
 class Node;
 class SchematicDoc;
 class QPlainTextEdit; //??!
 class TaskElement;
-// class QFileInfo;
-//
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 // TODO: refactor here
 class WireList : public Q3PtrList<Symbol> {
 };
@@ -68,18 +66,13 @@ public:
 	const_iterator begin() const{return std::list<Symbol*>::begin();}
 	const_iterator end() const{return std::list<Symbol*>::end();}
 };
-
+/*--------------------------------------------------------------------------*/
 // TODO: use generic list.
 class PaintingList : public Q3PtrList<Painting> {
 public:
 	void sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const;
 };
-
-// hmm, which?
-class DocumentLanguage;
-class SchematicLanguage;
-
-
+/*--------------------------------------------------------------------------*/
 // Base class for all schematic models.
 // currently containging chunks/cruft from legacy Schematic implementation
 // reminiscent of "subckt", "cardlist" ...
@@ -108,8 +101,8 @@ public: // stuff saved from Schematic
 	//void simpleInsertWire(Wire*);
 	void recreateSymbol(Symbol* s); // yikes.
 	//private??
-	bool giveNodeNames(DocumentStream&, int&, QStringList&, QPlainTextEdit*, int,
-			bool creatingLib, NetLang const&);
+//	bool giveNodeNames(DocumentStream&, int&, QStringList&, QPlainTextEdit*, int,
+//			bool creatingLib, NetLang const&);
 	bool throughAllComps(DocumentStream&, int&, QStringList&, QPlainTextEdit *, int,
 			bool creatingLib, NetLang const&);
 	bool createLibNetlist(DocumentStream&, QPlainTextEdit*, int, NetLang const&);
@@ -147,7 +140,6 @@ public: // not sure. leaves unconnected objects in the main container...
 	void disconnect(Symbol* c);
 
 public:
-	// TODO: take iterator.
 	Element* detach(Element* c);
 	Element* attach(Element* c);
 
@@ -172,8 +164,8 @@ public:
 
 public: // why?
 	Node* insertNode(int x, int y, Element* owner);
-	void insertSymbolNodes(Symbol *c, bool noOptimize);
-	bool  oneTwoWires(Node* n);
+//	void insertSymbolNodes(Symbol *c, bool noOptimize);
+//	bool  oneTwoWires(Node* n);
 
 #if 0
 	Wire* splitWire(Wire*, Node*);
@@ -188,7 +180,7 @@ public: // why?
 #endif
 
 private:
-	void removeNode(Node const* n);
+//	void removeNode(Node const* n);
 
 public: // scene interaction
 	void toScene(QGraphicsScene& s, QList<ElementGraphics*>* l=nullptr) const;
@@ -262,12 +254,18 @@ public:
 		_doc_ = d;
 	}
 
+public:
+	// HACK
+	unsigned nextIdx(std::string const& s) const;
+
 private:
 	SchematicDoc* _doc_;
+	std::multimap<std::string, Element*> _map;
 
 public: // for now.
 	friend class SchematicDoc;
 	friend class NodeMap;
+	friend class SchematicEdit;
 	friend class SchematicSymbol;
 }; // schematicmodel
 /*--------------------------------------------------------------------------*/

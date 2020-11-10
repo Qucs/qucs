@@ -93,10 +93,26 @@ void SchematicEdit::save(T& del, T& ins)
 #include <schematic_model.h>
 static void possiblyRename(ElementGraphics* gfx)
 {
-	Element* e = element(gfx);
+	assert(gfx);
+	Element const* e = element(gfx);
+	Element* ee = element(gfx);
+	assert(e);
+	auto s = e->scope();
+	assert(s);
 	std::string label = e->label();
 
-	e->scope()->find_(label);
+   int z = label.size() - 1;
+	while(z && std::isdigit(label[z])){
+		--z;
+	}
+	z += 1;
+	auto stem = label.substr(0, z);
+	trace3("possiblyRename", stem, label, z);
+
+	auto scope = e->scope();
+
+	unsigned i = scope->nextIdx(stem);
+	ee->setLabel(stem + std::to_string(i));
 }
 /*--------------------------------------------------------------------------*/
 // Perform an edit action for the first time. keep track of induced changes.
@@ -135,11 +151,11 @@ void SchematicEdit::do_it_first()
 		trace1("try insert...", element(gfx)->label());
 		_ins.pop_front();
 
+		possiblyRename(gfx);
 		if(addmerge(gfx, done_del)){
 			trace0("merged");
 		}else{
 			trace1("done insert, show", element(gfx)->label());
-			possiblyRename(gfx);
 			gfx->show();
 			gfx->setSelected(true); // really?
 			done_ins.push_back(gfx);
