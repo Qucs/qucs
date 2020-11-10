@@ -132,6 +132,7 @@ protected: // maybe not here. but need to rebase MultiViewComponent to ScktProto
 	int vflip() const{return _vflip;}
 	int hflip() const{return _hflip;}
 	int angle() const{return _angle;}
+	void setAngle(int a){_angle = a;}
 private:
 	std::string _type;
 	int _vflip; // vscale??

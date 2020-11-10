@@ -196,6 +196,10 @@ Element* SchematicModel::attach(Element* what)
 	}else if(auto c=dynamic_cast<Symbol*>(what)){itested();
 		connect(c);
 		components().append(c);
+	}else if(auto d=painting(what)){
+		/// BUG BUG BUG. some are "symbolpaints", some are just paintings. the
+		//Object should decide.
+		paintings().append(d);
 	}else{ untested();
 		incomplete();
 	}
