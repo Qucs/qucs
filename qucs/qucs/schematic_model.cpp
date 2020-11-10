@@ -17,19 +17,19 @@
 #include "nodemap.h"
 #include "net.h"
 #include "trace.h"
-
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 // getting here in CLI mode
 SchematicModel::SchematicModel()
   	: Nodes(Nets), _doc_(nullptr)
 { untested();
 	trace2("::SchematicModel", this, _doc_);
 }
-
+/*--------------------------------------------------------------------------*/
 SchematicModel::~SchematicModel()
 {
 }
-
+/*--------------------------------------------------------------------------*/
 // getting here in GUI mode
 SchematicModel::SchematicModel(SchematicDoc* s)
 	: Nodes(Nets),
@@ -42,7 +42,7 @@ SchematicModel::SchematicModel(SchematicDoc* s)
 	// presumably Q3PTRlist without this is just a QList<*> (check)
 //  _symbol=new SchematicSymbol();
 }
-
+/*--------------------------------------------------------------------------*/
 void SchematicModel::clear()
 {itested();
 	incomplete(); // disconnect components
@@ -61,75 +61,18 @@ void SchematicModel::clear()
 	paintings().clear();
 	//SymbolPaints.clear(); ??
 }
-
+/*--------------------------------------------------------------------------*/
 QString const& SchematicModel::devType() const
 { untested();
 	return DevType;
 }
-
+/*--------------------------------------------------------------------------*/
 void SchematicModel::setDevType(QString const& s)
 {
 	DevType = s;
 }
-
-namespace{
-  static const QString QSTRING_ERROR("ERROR");
-// TODO: use Object
-class ins : public SchematicSymbol{
-public:
-	ins(SchematicModel* m) : _m(m) { untested();
-		assert(false); // still used?
-		_subckt=m;
-		assert(m);
-	}
-	~ins(){ untested();
-	}
-private: // ModelInserter
-	void pushBack(Element* e){ untested();
-		if(auto s=dynamic_cast<SchematicSymbol*>(e)){ untested();
-			(void) s;
-			incomplete();
-		//delete _symbol;
-		//_symbol = s;
-		}else{ untested();
-			_m->pushBack(e);
-		}
-	}
-	void setParameter(std::string const&, std::string){ untested();
-		incomplete();
-	}
-	PaintingList& symbolPaintings(){ untested();
-		return _dummy;
-	}
-
-private: // internal. Portstuff
-  unsigned numPorts() const {unreachable(); return 0;}
-  Node const* portValue(unsigned) const { unreachable(); return nullptr; }
-  void setPort(unsigned, Node*){ unreachable(); }
-  Port& port(unsigned){ throw Exception(); }
-
-private: // SchematicSymbol
-	SchematicModel const& schematicModel() const{ untested();
-		assert(_m);
-		return *_m;
-	}
-	SchematicModel* schematicModel() { untested();
-		assert(_m);
-		return _m;
-	}
-	std::string getParameter(std::string const&) const{ untested();
-		incomplete();
-		return "incomplete getParameter";
-	}
-
-private:
-	SchematicModel* _m;
-	PaintingList _dummy; // ignore those paintings.
-};
-}
-
+/*--------------------------------------------------------------------------*/
 // BUG: not here.
-
 /// ACCESS FUNCTIONS.
 // these are required to move model methods over to SchematicModel
 // note that _doc->...() functions still involve pointer hacks
@@ -137,16 +80,21 @@ ComponentList& SchematicModel::components()
 {
 	return Components;
 }
-
+/*--------------------------------------------------------------------------*/
 // same as attach??
 void SchematicModel::pushBack(Element* what)
 {
+
+	attach(what);
+
+#if 0
+
 	trace2("SchematicModel::pushBack", what->label(), this);
 	if(dynamic_cast<Conductor*>(element(what))){
 		auto s=dynamic_cast<Symbol*>(what);
-	  connect(s);
-	  // why not components??
-	  wires().append(s);
+		connect(s);
+		// why not components??
+		wires().append(s);
 	}else if(auto d=diagram(what)){
 		diagrams().append(d);
 	}else if(auto c=command(what)){
@@ -173,52 +121,14 @@ void SchematicModel::pushBack(Element* what)
 		incomplete();
 	}
 
+#endif
+
   if(doc()){itested();
 	  doc()->addToScene(what);
   }else{
   }
 } // pushBack
 
-// was Schematic::insertComponentNodes.
-void SchematicModel::insertSymbolNodes(Symbol *c, bool noOptimize)
-{ untested();
-	// connect every node of the component to corresponding schematic node
-	for(unsigned i=0; i<c->numPorts(); ++i){ untested();
-		c->connectNode(i, nodes());
-	}
-
-	if(noOptimize)  return;
-#if 0
-	// replace wires. later.
-
-	Node    *pn;
-	Element *pe, *pe1;
-	Q3PtrList<Element> *pL;
-	// if component over wire then delete this wire
-	QListIterator<Port *> iport(c->Ports);
-	// omit the first element
-	Port *pp = iport.next();
-	while (iport.hasNext())
-	{ untested();
-		pp = iport.next();
-		pn = pp->Connection;
-		for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next()){ untested();
-			if(pe->Type == isWire)
-			{ untested();
-				if(((Wire*)pe)->portValue(0) == pn)  pL = &(((Wire*)pe)->Port2->Connections);
-				else  pL = &(((Wire*)pe)->portValue(0)->Connections);
-
-				for(pe1 = pL->first(); pe1!=0; pe1 = pL->next())
-					if(pe1 == c)
-					{ untested();
-						deleteWire((Wire*)pe);
-						break;
-					}
-			}
-		}
-	}
-#endif
-}
 
 // called from schematic::erase only
 // // possibly not needed. all actions must be undoable anyway
@@ -232,6 +142,22 @@ void SchematicModel::erase(Element* what)
 // TODO: take iterator.
 Element* SchematicModel::detach(Element* what)
 {itested();
+	assert(what);
+	std::string l = what->label();
+
+	if(_map.find(l) == _map.end()){
+		unreachable();
+		trace1("gone", l);
+	}else{
+		auto pos = _map.lower_bound(l);
+		assert(pos!=_map.end());
+		while(pos->second != what){
+			++pos;
+		}
+		/// TODO: map list iterators
+		_map.erase(pos);
+	}
+
 	if(auto d=diagram(what)){ untested();
 		diagrams().removeRef(d);
 	}else if(dynamic_cast<Conductor*>(element(what))){
@@ -249,9 +175,18 @@ Element* SchematicModel::detach(Element* what)
 // TODO: take iterator.
 Element* SchematicModel::attach(Element* what)
 {itested();
+
+	_map.insert(std::make_pair(what->label(), what));
+
 	trace2("SchematicModel::attach", what->label(), this);
 	if(auto c=dynamic_cast<TaskElement*>(what)){ untested();
-		commands().push_back(c);
+		if(doc()){
+			trace1("SchematicModel::pushBack command", c->label());
+			doc()->commands().push_back(c);
+		}else{
+			trace1("SchematicModel::pushBack no command", c->label());
+			// possibly a subcircuit model? ignore commands.
+		}
 	}else if(auto d=diagram(what)){ untested();
 		diagrams().append(d);
 	}else if(dynamic_cast<Conductor*>(element(what))){
@@ -347,7 +282,7 @@ DiagramList const& SchematicModel::diagrams() const
 //{ untested();
 //	return SymbolPaintings;
 //}
-
+/*--------------------------------------------------------------------------*/
 #if 0 // TODO: what is this? (perhaps DocumentFormat?)
 static void createNodeSet(QStringList& Collect, int& countInit,
 		Conductor *pw, Node *p1)
@@ -358,110 +293,7 @@ static void createNodeSet(QStringList& Collect, int& countInit,
 					p1->name() + " U=\"" + pw->Label->initValue + "\"");
 }
 #endif
-
-#if 0
-bool SchematicModel::throughAllComps(DocumentStream& stream, int& countInit,
-                   QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
-		   bool creatingLib, NetLang const& nl)
-{ untested();
-	bool r;
-	QString s;
-	bool isAnalog=true;
-	bool isVerilog=false;
-
-	// give the ground nodes the name "gnd", and insert subcircuits etc.
-	for(auto pc : components()) { untested();
-	}
-}
-#endif
-
-// really?
-bool SchematicModel::giveNodeNames(DocumentStream& stream, int& countInit,
-		QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
-		bool creatingLib, NetLang const& nl)
-{ untested();
-	incomplete(); // BUG. called from Sckt:tAC
-	(void) nl;
-	(void) Collect;
-	(void) ErrText;
-	(void) countInit;
-	(void) creatingLib;
-	(void) NumPorts;
-	(void) stream;
-#if 0
-	bool isAnalog=true;
-	// delete the node names
-	for(auto pn : nodes()) { untested();
-		pn->State = 0;
-		if(pn->Label) { untested();
-			if(isAnalog)
-				pn->setName(pn->Label->name());
-			else
-				pn->setName("net" + pn->Label->name());
-		}
-		else pn->setName("");
-	}
-
-	// set the wire names to the connected node
-	for(auto pw : wires()){ untested();
-		if(pw->Label != 0) { untested();
-			if(isAnalog)
-				pw->portValue(0)->setName(pw->Label->name());
-			else  // avoid to use reserved VHDL words
-				pw->portValue(0)->setName("net" + pw->Label->name());
-		}
-	}
-
-	// go through components
-	// BUG: ejects declarations
-	if(!throughAllComps(stream, countInit, Collect, ErrText, NumPorts, creatingLib, nl)){ untested();
-		fprintf(stderr, "Error: Could not go throughAllComps\n");
-		return false;
-	}
-
-	// work on named nodes first in order to preserve the user given names
-	throughAllNodes(true, Collect, countInit);
-
-	// give names to the remaining (unnamed) nodes
-	throughAllNodes(false, Collect, countInit);
-
-	if(!isAnalog) // collect all node names for VHDL signal declaration
-		collectDigitalSignals();
-
-#endif
-	return true;
-}
-
-
-// called from PushBack...
-#if 0
-void SchematicModel::simpleInsertComponent(Component *c)
-{
-	assert(c);
-
-	connect(c);
-	components().append(c);
-}
-#endif
-
-#if 0 // screw this.
-void SchematicModel::simpleInsertWire(Wire *)
-{
-//  Node *pn=nullptr;
-  // pn = &nodes().at(pw->x1_(), pw->y1_());
-  //
-  incomplete(); // but not here.
-  some label crazyness. propagate labels to nets in wire::connect.
-    pn->Label = pw->Label;   // wire with length zero are just node labels
-    if (pn->Label) { untested();
-      pn->Label->Type = isNodeLabel;
-      pn->Label->pOwner = pn;
-    }else{ untested();
-	 }
-}
-#endif
-
-
+/*--------------------------------------------------------------------------*/
 void SchematicModel::disconnect(Symbol* c)
 {itested();
 	// drop port connections
@@ -478,7 +310,7 @@ void SchematicModel::disconnect(Symbol* c)
 		}
 	}
 }
-
+/*--------------------------------------------------------------------------*/
 void SchematicModel::connect(Symbol* c)
 {
 	for(unsigned i=0; i<c->numPorts(); ++i){
@@ -486,7 +318,7 @@ void SchematicModel::connect(Symbol* c)
 //		assert(dynamic_cast<Symbol const*>(c)->port(i).connected());
 	}
 }
-
+/*--------------------------------------------------------------------------*/
 unsigned SchematicModel::numPorts() const
 {
 	assert(this);
@@ -494,14 +326,14 @@ unsigned SchematicModel::numPorts() const
 	// incomplete
 	return _ports.size();
 }
-
+/*--------------------------------------------------------------------------*/
 void SchematicModel::setPort(unsigned i, Node* n)
 {
 	trace2("setPort", i, _ports.size());
 	_ports.resize(std::max(_ports.size(), size_t(i)+1));
 	_ports[i] = n;
 }
-
+/*--------------------------------------------------------------------------*/
 Node const* SchematicModel::portValue(unsigned i) const
 {
 	assert(i<numPorts());
@@ -511,7 +343,7 @@ Node const* SchematicModel::portValue(unsigned i) const
 		return nullptr;
 	}
 }
-
+/*--------------------------------------------------------------------------*/
 void SchematicModel::setOwner(Element* o)
 { untested();
 	for(auto pc : components()){ untested();
@@ -522,7 +354,7 @@ void SchematicModel::setOwner(Element* o)
 		assert(sym->owner() == o);
 	}
 }
-
+/*--------------------------------------------------------------------------*/
 #if 0
 // needed?
 void SchematicModel::merge(SchematicModel& src)
@@ -535,18 +367,20 @@ void SchematicModel::merge(SchematicModel& src)
   src.components().clear();
 }
 #endif
-
+/*--------------------------------------------------------------------------*/
 Symbol const* SchematicModel::findProto(QString const& what) const
 {
 	// incomplete.
 	return _protos[what];
 }
-
+/*--------------------------------------------------------------------------*/
+// BUG
 PrototypeMap const& SchematicModel::declarations() const
 {
 	return _protos;
 }
-
+/*--------------------------------------------------------------------------*/
+// BUG
 void SchematicModel::cacheProto(Symbol const* what) const
 {
 	auto key = QString::fromStdString(what->label());
@@ -555,7 +389,7 @@ void SchematicModel::cacheProto(Symbol const* what) const
 	assert(!_protos[key]);
 	_protos.push(key, what);
 }
-
+/*--------------------------------------------------------------------------*/
 Symbol const* PrototypeMap::operator[](QString const& s) const
 {
 	auto i=_map.find(s);
@@ -580,43 +414,6 @@ PrototypeMap::PrototypeMap()
 {
 }
 /*--------------------------------------------------------------------------*/
-// Inserts a port into the schematic and connects it to another node if
-// the coordinates are identical. The node is returned.
-Node* SchematicModel::insertNode(int , int , Element *)
-{   untested();
-    unreachable();
-
-#if 0
-    Node *pn;
-    pn = &nodes().at(x,y);
-    pn->connectionsAppend(e);
-
-    // check if the new node lies within an existing wire
-    //
-    if(pn->degree()==1){
-	// BUG. the wire is connected. just use it.
-	for(auto pw : wires()) {
-	    if(pw->x1_() == x) {
-		if(pw->y1_() > y) continue;
-		if(pw->y2_() < y) continue;
-	    } else if(pw->y1_() == y) {
-		if(pw->x1_() > x) continue;
-		if(pw->x2_() < x) continue;
-	    }else{
-		continue;
-	    }
-
-	    // split the wire into two wires
-	    splitWire(pw, pn);
-	    break;
-	}
-    }else{
-    }
-    return pn;
-#endif
-    return nullptr;
-}
-/*--------------------------------------------------------------------------*/
 bool operator==(Symbol const*p, std::string const&s)
 {
 	if(p){
@@ -633,5 +430,28 @@ SchematicModel::const_iterator SchematicModel::find_again(const std::string& sho
   return std::find(components().begin(), components().end(), short_name);
 }
 /*--------------------------------------------------------------------------*/
+// HACK
+unsigned SchematicModel::nextIdx(std::string const& s) const
+{
+	unsigned r=0;
+	assert(s!="");
+	auto j = _map.lower_bound(s);
+	auto n = s.size();
+
+	while (j->second->label().substr(0, n) == s){
+		auto str = j->second->label().substr(n);
+		trace3("nextIdx", j->second->label().substr(0, n), n, str);
+		unsigned z;
+		if(sscanf(str.c_str(), "%d", &z) == 1){ untested();
+			r = std::max(z, r);
+		}else{ untested();
+		}
+
+		++j;
+	}
+
+	trace2("nextId", s, r);
+	return r+1;
+}
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
