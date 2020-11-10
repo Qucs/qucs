@@ -31,7 +31,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
 }D;
 Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Vac", &D);
-Module::INSTALL pp("lumped", &D);
+Module::INSTALL pp("sources", &D);
 
 Volt_ac::Volt_ac(Volt_ac const&p)
 	: Component(p)
