@@ -2199,6 +2199,7 @@ QString SchematicDoc::getParameter(std::string const& x) const
 
 // ----------------------------------------------------------------
 
+#if 0
 void SchematicModel::removeNode(Node const* x)
 { untested();
 #ifndef USE_SCROLLVIEW
@@ -2208,5 +2209,6 @@ void SchematicModel::removeNode(Node const* x)
 #endif
   nodes().erase((Node*)x);
 }
+#endif
 
 // vim:ts=8:sw=2:noet

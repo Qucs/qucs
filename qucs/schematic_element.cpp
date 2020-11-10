@@ -75,66 +75,6 @@ Wire* SchematicModel::splitWire(Wire *pw, Node *pn)
 }
 #endif
 /*--------------------------------------------------------------------------*/
-// If possible, make one wire out of two wires.
-// BUG: do in SchematicDocument?
-bool SchematicModel::oneTwoWires(Node *)
-{
-incomplete();
-return false;
-#if 0
-    Wire *e3;
-    Element *_e1 = n->firstConnection();  // two wires -> one wire
-    Element *_e2 = n->lastConnection();
-
-    Wire* e1 = dynamic_cast<Wire*>(_e1);
-    Wire* e2 = dynamic_cast<Wire*>(_e2);
-
-    if(!e1){
-    }else if(!e2){
-    }else{
-            if(e1->isHorizontal() == e2->isHorizontal()) {
-                if(e1->x1_() == e2->x2_()) if(e1->y1_() == e2->y2_()){
-                        e3 = e1;
-                        e1 = e2;
-                        e2 = e3;    // e1 must have lesser coordinates
-		}
-
-#if 0
-		incomplete();
-                if(e2->Label)     // take over the node name label ?
-                {
-                    e1->Label = e2->Label;
-                    e1->Label->pOwner = e1;
-                }
-                else if(n->Label)
-                {
-                    e1->Label = n->Label;
-                    e1->Label->pOwner = e1;
-                    if(e1->isHorizontal())
-                        e1->Label->Type = isHWireLabel;
-                    else
-                        e1->Label->Type = isVWireLabel;
-                }
-#endif
-
-		e1->disconnectNode(1, nodes());
-                e1->setPos1( e2->x2_(), e2->y2_() );
-		e1->connectNode(1, nodes());
-
-		// model->remove(n); // or so.
-                // nodes().removeRef(n);    // delete node (is auto delete)
-                // e1->portValue(1)->connectionsRemove(e2);
-                // e1->portValue(1)->connectionsAppend(e1);
-                // wires().removeRef(e2);
-		erase(e2);
-                return true;
-            }
-    }
-    return false;
-#endif
-}
-
-// ---------------------------------------------------
 #if 0
 // Deletes the wire 'w'.
 void SchematicModel::deleteWire(Wire *)
