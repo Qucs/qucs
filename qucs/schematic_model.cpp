@@ -434,20 +434,27 @@ SchematicModel::const_iterator SchematicModel::find_again(const std::string& sho
 unsigned SchematicModel::nextIdx(std::string const& s) const
 {
 	unsigned r=0;
-	assert(s!="");
-	auto j = _map.lower_bound(s);
-	auto n = s.size();
+	if(s==""){
+		return 0;
+	}else{
+		auto j = _map.lower_bound(s);
+		auto n = s.size();
 
-	while (j->second->label().substr(0, n) == s){
-		auto str = j->second->label().substr(n);
-		trace3("nextIdx", j->second->label().substr(0, n), n, str);
-		unsigned z;
-		if(sscanf(str.c_str(), "%d", &z) == 1){ untested();
-			r = std::max(z, r);
-		}else{ untested();
+		while (j!=_map.end()){
+			if(j->second->label().substr(0, n) == s){
+				auto str = j->second->label().substr(n);
+				trace3("nextIdx", j->second->label().substr(0, n), n, str);
+				unsigned z;
+				if(sscanf(str.c_str(), "%d", &z) == 1){ untested();
+					r = std::max(z, r);
+				}else{ untested();
+				}
+
+				++j;
+			}else{
+				break;
+			}
 		}
-
-		++j;
 	}
 
 	trace2("nextId", s, r);

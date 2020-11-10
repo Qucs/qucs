@@ -31,7 +31,7 @@ private:
   static Element* info(QString&, char* &, bool getNewOne=false);
 }D;
 Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Iac", &D);
-Module::INSTALL pp("lumped", &D);
+Module::INSTALL pp("sources", &D);
 
 Ampere_ac::Ampere_ac() : Component()
 {
@@ -49,7 +49,7 @@ Ampere_ac::Ampere_ac() : Component()
   Ports.append(new ComponentPort( 30,  0));
   Ports.append(new ComponentPort(-30,  0));
 
-  x1 = -30; y1 = -14;
+  x1 = -30; y1 = -14; // 16???
   x2 =  30; y2 =  16;
 
   tx = x1+4;
