@@ -140,6 +140,9 @@ public:
 	angle_t(angle_t const&) = default;
 
 public:
+	bool operator==(angle_t const& o){
+		return _degrees == o._degrees;
+	}
 	angle_t operator-() const{
 		return angle_t(-_degrees);
 	}
@@ -165,17 +168,25 @@ static const angle_t ninety_degree(90);
 // ( 1 0      )
 // ( 0 (-1)^m )
 // with m \in {0,1}
-// NB: qucs schematics use this representation
+// NB: qucs schematics use this representation. there was a mirroredX flag in
+// Comonent which indicates whether the y axis is flipped. this is widely known
+// as "flip vertically".
+class rotate_after_mirror;
 class rotate_after_mirror1_t : public angle_t{
 public:
 	explicit rotate_after_mirror1_t(int d, bool m) : angle_t(d), _m(m){ }
 	explicit rotate_after_mirror1_t(bool m, int d) : angle_t(d), _m(m){ }
 	explicit rotate_after_mirror1_t(angle_t const& d) : angle_t(d), _m(false){ }
+	explicit rotate_after_mirror1_t(rotate_after_mirror const& d);
 	rotate_after_mirror1_t(rotate_after_mirror1_t const& d) = default;
 
 public:
 	pos_t apply(pos_t const&) const;
 	rotate_after_mirror1_t operator*(rotate_after_mirror1_t const&);
+	rotate_after_mirror1_t operator*(rotate_after_mirror const&);
+	bool operator==(rotate_after_mirror1_t const& o){
+		return _m == o._m && angle_t::operator==(o);
+	}
 
 public:
  	bool mirror() const{return _m;}
@@ -184,8 +195,8 @@ public:
 private:
 	bool _m;
 };
-static const rotate_after_mirror1_t mirrorYaxis(0, true);
-static const rotate_after_mirror1_t mirrorXaxis(180, true);
+static const rotate_after_mirror1_t transformFlipVertically(0, true); // former "mirror Y axis"
+static const rotate_after_mirror1_t transformFlipHorizontally(180, true);
 /*--------------------------------------------------------------------------*/
 // elements of O(2) decomposed as rotation * mirror.
 // rotation is counterclockwise, and mirror is
@@ -239,6 +250,11 @@ public:
 			return rotate_after_mirror(angle_t::inverse());
 		}
 	}
+
+protected:
+	friend class rotate_after_mirror1_t;
+	bool mv() const{return _v;}
+	bool mh() const{return _h;}
 
 private:
 	bool _h;

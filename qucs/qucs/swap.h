@@ -1,6 +1,7 @@
 
 #include <QUndoCommand>
 
+// BUG: SchematicEdit.
 class SwapSymbolCommand : public QUndoCommand {
   SwapSymbolCommand() = delete;
   SwapSymbolCommand(SwapSymbolCommand const&) = delete;
@@ -29,6 +30,7 @@ private:
       _gfx->attachElement(_elt);
       _elt = tmp;
     }
+    // _gfx->update();
     _gfx->show();
 	 _gfx->setSelected(sel);
   }

@@ -87,6 +87,16 @@ void WireDialog::attach(ElementGraphics* gfx)
   hbox2->setLayout(h2);
   h2->setSpacing(5);
   _all->addWidget(hbox2);
+
+ 	std::string some_text =
+		"$xposition" + Comp->paramValue("$xposition") + "\n"
+		"$yposition" + Comp->paramValue("$yposition") + "\n"
+		"$vflip" + Comp->paramValue("$vflip") + "\n"
+		"$hflip" + Comp->paramValue("$hflip") + "\n"
+		"$angle" + Comp->paramValue("$angle") + "\n";
+
+  _all->addWidget(new QLabel(QString::fromStdString(some_text)));
+
   QPushButton *ok = new QPushButton(tr("OK"));
   QPushButton *apply = new QPushButton(tr("Apply"));
   QPushButton *cancel = new QPushButton(tr("Cancel"));

@@ -65,14 +65,7 @@ private: // QUndoCommand
 	void undo() override {itested();
 		redo();
 	}
-	void redo() override {itested();
-		if(_first){
-			do_it_first();
-			_first = false;
-		}else{
-			do_it();
-		}
-	}
+	void redo() override;
 
 private:
 	void do_it_first();

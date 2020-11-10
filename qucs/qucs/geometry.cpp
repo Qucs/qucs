@@ -15,6 +15,12 @@
 #include "io_trace.h"
 #include <assert.h>
 
+// not here.
+std::ostream& operator<<(std::ostream& o, pos_t const& p)
+{
+	o << "(" << getX(p) << ", " << getY(p) << ")";
+	return o;
+}
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // rotate counterclockwise. NB: the y axis points downwards on the screen.
@@ -68,20 +74,42 @@ rotate_after_mirror1_t rotate_after_mirror1_t::operator*(rotate_after_mirror1_t 
 	auto B = *this;
 	auto A = that;
 	// compute B*A
-	// m1 * r1 * m2 * r2 = m1*m2 * m2*r1*m2*r2
-	trace2("op*", degrees_int(), A.degrees_int());
+	// B*A = r1 m1 r2 m2 = r1*m1*r2 m1  m1m2
+	trace2("op*", degrees_int(), that.degrees_int());
 
-	int new_angle = A.degrees_int() + 360;
-	if(A._m){itested();
-		new_angle -= int(B.degrees_int()) - 360;
+	int new_angle = B.degrees_int() + 360;
+	if(_m){ untested();
+		new_angle -= int(A.degrees_int()) - 360;
 	}else{ untested();
-		new_angle += int(B.degrees_int());
+		new_angle += int(A.degrees_int());
 	}
 	trace2("op*", degrees_int(), new_angle);
 	new_angle %= 360;
 
-	bool m1m2 = B._m && A._m;
+	bool m1m2 = B._m ^ A._m;
 	return rotate_after_mirror1_t(m1m2, new_angle);
+}
+/*--------------------------------------------------------------------------*/
+rotate_after_mirror1_t rotate_after_mirror1_t::operator*(rotate_after_mirror const& that)
+{
+	rotate_after_mirror1_t t(that);
+	return (*this) * t;
+}
+/*--------------------------------------------------------------------------*/
+rotate_after_mirror1_t::rotate_after_mirror1_t(rotate_after_mirror const& that)
+	: angle_t(0)
+{
+	trace2("rotate_after_mirror1_t::rotate_after_mirror1_t", that.mh(), that.mv());
+	if(!that.mh()){ untested();
+		_m = that.mv();
+		_degrees = that._degrees;
+	}else if(that.mv()){ untested();
+		_m = false;
+		_degrees = (180 + that._degrees) % 360;
+	}else{ untested();
+		_m = true;
+		_degrees = (180 + that._degrees) % 360;
+	}
 }
 /*--------------------------------------------------------------------------*/
 pos_t rotate_after_mirror::apply(pos_t const& p) const

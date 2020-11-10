@@ -15,9 +15,17 @@ void union0()
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
 	w0->setParameter(std::string("deltax"), "10");
 
+	assert( w0->portPosition(0) == pos_t(0,0));
+	assert( w0->portPosition(1) == pos_t(10,0));
+
 	auto w1 = prechecked_cast<Symbol*>(wp->clone());
 	w1->setParameter(std::string("$xposition"), "1");
 	w1->setParameter(std::string("deltax"), "1");
+
+	assert( w1->portPosition(0) == pos_t(0,0));
+	assert( w1->portPosition(1) == pos_t(1,0));
+	assert( w1->nodePosition(0) == pos_t(1,0));
+	assert( w1->nodePosition(1) == pos_t(2,0));
 
 	M.pushBack(w0);
 	assert(M.nodeCount() == 2);
@@ -105,8 +113,14 @@ void union4()
 	w0->setParameter(std::string("deltax"), "10");
 	w0->setParameter(std::string("$xposition"), "-5");
 
+	assert( w0->nodePosition(0) == pos_t(-5,0));
+	assert( w0->nodePosition(1) == pos_t(5,0));
+
 	auto w2 = prechecked_cast<Symbol*>(wp->clone());
 	w2->setParameter(std::string("deltay"), "-10");
+
+	trace1("dbg", w2->portPosition(1));
+	assert( w2->nodePosition(1) == pos_t(0,-10));
 
 	M.pushBack(w0);
 	assert(M.nodeCount() == 2);
@@ -181,11 +195,11 @@ void union6()
 
 int main()
 {
+	union4();
 	union0();
 	union1();
 	union2();
 	union3();
-	union4();
 	union5();
 	union6();
 }
