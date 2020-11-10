@@ -20,12 +20,14 @@
 #include "symbol.h"
 #include "schematic_scene.h"
 #include "schematic_model.h"
-#include <QGraphicsScene>
 #include "element_graphics.h"
 #include "io.h"
 #include "platform.h"
 #include "qt_compat.h"
 #include "painting.h"
+
+#include <QGraphicsScene>
+#include <QGraphicsProxyWidget>
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 ElementGraphics::ElementGraphics() : QGraphicsItem()
@@ -35,7 +37,7 @@ ElementGraphics::ElementGraphics() : QGraphicsItem()
 }
 /*--------------------------------------------------------------------------*/
 ElementGraphics::ElementGraphics(ElementGraphics const& e)
-	: QGraphicsItem(), _e(nullptr)
+	: QGraphicsItem(), _e(nullptr), _elementText(nullptr)
 { untested();
 	assert(e._e);
 	Element* el = e._e->clone();
@@ -44,7 +46,7 @@ ElementGraphics::ElementGraphics(ElementGraphics const& e)
 }
 /*--------------------------------------------------------------------------*/
 ElementGraphics::ElementGraphics(Element* e)
-	: QGraphicsItem(), _e(nullptr)
+	: QGraphicsItem(), _e(nullptr), _elementText(nullptr)
 {itested();
 	assert(e);
 	attachElement(e);
@@ -63,6 +65,8 @@ ElementGraphics::~ElementGraphics()
 		// check: is this correct?
 		delete(_e);
 	}
+
+	delete _elementText;
 }
 /*--------------------------------------------------------------------------*/
 // almost ElementGraphics. could use ElementGraphics?
@@ -99,11 +103,10 @@ public:
 	explicit ElementText(ElementGraphics* parent)
 	  : QGraphicsItem(parent), _labeltext(nullptr) {
 		Element const* e = element(parent);
-		setParentItem(parent);
 
 		setFlags(ItemIgnoresTransformations);
 
-		int k=0;
+		int k = 0;
 		if(e->showLabel()){
 			_labeltext = new QGraphicsTextItem(this);
 			_labeltext->setPlainText(QString::fromStdString(e->label()));
@@ -129,15 +132,16 @@ public:
 		}else{
 		}
 	}
-	~ElementText(){
+	~ElementText(){ untested();
 		// delete stuff?
+		delete _labeltext;
 	}
 private:
 	virtual QRectF boundingRect() const override{
 		return QRectF();
 	}
 	void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *) override{}
-public:
+
 private:
 	QGraphicsTextItem* _labeltext;
 	std::vector<QGraphicsTextItem*> _more;
@@ -149,7 +153,6 @@ public:
 	  : QGraphicsTextItem(parent), _t(t){
 		setPlainText(t.s);
 		trace1("TextGraphics", t.s);
-		setParentItem(parent);
 	}
 public:
 private:
@@ -179,11 +182,11 @@ Element* ElementGraphics::cloneElement() const
 	}
 }
 /*--------------------------------------------------------------------------*/
-//#include "components/component.h" // BUG
-#include <QGraphicsProxyWidget>
 void ElementGraphics::attachElement(Element* e)
 {itested();
 	QGraphicsItem::hide();
+	delete _elementText;
+	_elementText = nullptr;
 	assert(e);
 	_e = e;
 
@@ -219,10 +222,12 @@ void ElementGraphics::attachElement(Element* e)
 	}else{itested();
 	}
 #endif
-
-	// who owns this?
-	// auto t =
-	new ElementText(this);
+	if(0){
+		auto a = new QGraphicsTextItem(this);
+		a->setPlainText(QString::fromStdString(e->label()));
+	}else{
+	}
+	_elementText = new ElementText(this);
 	auto s = dynamic_cast<Symbol const*>(_e);
 
 	if(!s){
@@ -270,13 +275,12 @@ void ElementGraphics::attachElement(Element* e)
 		assert(hflip==1 || hflip==-1);
 		assert(vflip==1 || vflip==-1);
 
-		trace3("transform", angle, hflip, vflip);
+		trace4("attach::transform", _e->label(), angle, hflip, vflip);
 
 		QTransform transform;
 		transform.rotate(-angle); // chirality...
 		transform.scale(hflip, vflip);
 		setTransform(transform);
-
 	}else{
 	}
 }
@@ -299,7 +303,7 @@ void ElementGraphics::paint(QPainter *p, const QStyleOptionGraphicsItem *o,
 #ifdef DO_TRACE
 		p->setPen(QPen(Qt::green,3));
 		p->drawRoundedRect(br, 3, 3);
-	  p->drawEllipse(-3, -3, 6, 6);
+		p->drawEllipse(-3, -3, 6, 6);
 #endif
 	}
 
@@ -504,8 +508,8 @@ QRectF ElementGraphics::absoluteBoundingRect() const
 	auto b=boundingRect();
 	auto p=pos();
 
-	b.moveTopLeft(p + b.topLeft());
-	return b;
+//	b.moveTopLeft(p + b.topLeft());
+	return b.translated(p);
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::setSelected(bool s)
@@ -586,6 +590,9 @@ void ElementGraphics::hide()
 {itested();
 	assert(_e);
 	QGraphicsItem::hide();
+//	for(auto x : childItems()){
+//		x->hide();
+//	}
 
 #ifdef DO_TRACE
 	if(auto sym=dynamic_cast<Symbol const*>(_e)){
@@ -599,6 +606,7 @@ void ElementGraphics::hide()
 #endif
 
 	if(_e->scope()){itested();
+//		_e->removeFromModel();?
 		_e->detachFromModel();
 	}else{itested();
 	}
@@ -635,6 +643,14 @@ void ElementGraphics::moveElement(P const& delta)
 void ElementGraphics::setPos(QPoint const& p)
 {
 	setPos(getX(p), getY(p), false);
+}
+/*--------------------------------------------------------------------------*/
+void ElementGraphics::update()
+{itested();
+	QGraphicsItem::update();
+	for(auto x : childItems()){
+		x->update();
+	}
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::setPos(int i, int j, bool relative)

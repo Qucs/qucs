@@ -32,6 +32,7 @@ check_PROGRAMS = \
 	model0 \
 	model1 \
 	wire0 \
+	geometry0 \
 	wire1
 endif
 
@@ -50,6 +51,9 @@ wire0_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
 
 wire1_LDADD = ${top_builddir}/qucs/libqucs.la
 wire1_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
+
+geometry0_LDADD = ${top_builddir}/qucs/libqucs.la
+geometry0_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
 
 NO_PLUGINS = \
 	../components/libcomponents.la \

@@ -478,19 +478,19 @@ void QucsApp::initActions()
   editRotate->setCheckable(true);
   connect(editRotate, &QAction::toggled, this, &QucsApp::slotEditRotate);
 
-  editMirror = new QAction(QIcon((":/bitmaps/mirror.png")), tr("Mirror about X Axis"), this);
+  editMirror = new QAction(QIcon((":/bitmaps/mirror.png")), tr("Mirror Y"), this);
   editMirror->setShortcut(Qt::CTRL+Qt::Key_J);
-  editMirror->setStatusTip(tr("Mirrors the selected item about X Axis"));
+  editMirror->setStatusTip(tr("Mirror the selected item vertically"));
   editMirror->setWhatsThis(
-	tr("Mirror about X Axis\n\nMirrors the selected item about X Axis"));
+	tr("Mirror Y\n\nMirror the selected item vertically"));
   editMirror->setCheckable(true);
   connect(editMirror, &QAction::toggled, this, &QucsApp::slotEditMirrorX);
 
-  editMirrorY = new QAction(QIcon((":/bitmaps/mirrory.png")), tr("Mirror about Y Axis"), this);
+  editMirrorY = new QAction(QIcon((":/bitmaps/mirrory.png")), tr("Mirror X"), this);
   editMirrorY->setShortcut(Qt::CTRL+Qt::Key_M);
-  editMirrorY->setStatusTip(tr("Mirrors the selected item about Y Axis"));
+  editMirrorY->setStatusTip(tr("Mirror selected items horizontally"));
   editMirrorY->setWhatsThis(
-	tr("Mirror about Y Axis\n\nMirrors the selected item about Y Axis"));
+	tr("Mirror X\n\nMirrors selected items horizontally"));
   editMirrorY->setCheckable(true);
   connect(editMirrorY, &QAction::toggled, this, &QucsApp::slotEditMirrorY);
 

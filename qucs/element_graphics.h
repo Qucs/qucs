@@ -54,6 +54,7 @@ public:
 	SchematicScene* scene() const; // really?
 
 public: // QGraphicsItem
+  void update();
   QRectF boundingRect() const override;
   void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override;
 
@@ -104,6 +105,7 @@ public:
 //	int const& y2_() const { assert(_e); return _e->y2_(); }
 private:
   Element* _e;
+  QGraphicsItem* _elementText;
 }; // ElementGraphics
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

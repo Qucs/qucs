@@ -225,8 +225,9 @@ void transformElement(Element* e, qucsSymbolTransform a, pos_t pivot)
 		int my = 0;
 		unsigned r = 0;
 		try {itested();
-			std::string mxs = s->paramValue("$hflip"); // indicates if x axis is mirrored
+			std::string mxs = s->paramValue("$hflip");
 			hflip = atoi(mxs.c_str()); // \pm 1
+			//assert(hflip == 1); // for now.
 			// 1  |-> 0
 			// -1 |-> 1
 			mx = (1 - hflip) / 2;
@@ -234,9 +235,9 @@ void transformElement(Element* e, qucsSymbolTransform a, pos_t pivot)
 			incomplete();
 		}
 		try {itested();
-			std::string mys = s->paramValue("$vflip"); // indicates if y axis is mirrored
+			// this is what legacy used ("mirrorX", vertical flip);
+			std::string mys = s->paramValue("$vflip");
 			vflip = atoi(mys.c_str());
-			assert(vflip == 1); // for now.
 			// 1  |-> 0
 			// -1 |-> 1
 			my = (1 - vflip) / 2;
@@ -253,13 +254,15 @@ void transformElement(Element* e, qucsSymbolTransform a, pos_t pivot)
 			unreachable();
 		}
 
-		trace2("pretransform", vflip, angle);
+		trace3("pretransform", hflip, vflip, angle);
 
 		assert(mx==0 || mx==1);
 		assert(my==0 || my==1);
 		assert(r < 4); // yikes //
 
-		rotate_after_mirror1_t current(int(r*90), bool(my));
+		//assert(hflip==1);
+
+		rotate_after_mirror current(int(r*90), bool(mx), bool(my));
 		assert(!(current.degrees_int()%90));
 		rotate_after_mirror1_t new_mr = a * current;
 		assert(!(new_mr.degrees_int()%90));
@@ -270,7 +273,7 @@ void transformElement(Element* e, qucsSymbolTransform a, pos_t pivot)
 		s->setParameter(std::string("$vflip"), std::to_string(vflip));
 		s->setParameter(std::string("$angle"), std::to_string(new_mr.degrees_int()));
 
-		trace2("posttransform", vflip, new_mr.degrees_int());
+		trace3("posttransform", hflip, vflip, new_mr.degrees_int());
 
 		auto p = e->center();
 		trace1("posttransform setpos0", p);
@@ -311,9 +314,7 @@ public:
 			QGraphicsItem const* g = i;//huh?
 			if(auto eg=dynamic_cast<ElementGraphics*>(i)){itested();
 				auto br = g->boundingRect();
-				br.translate(eg->pos());
-				bb |= br;
-				trace1("DBG", bb.center());
+				bb |= i->mapToScene(br).boundingRect(); // translate(eg->pos());
 				Element* e = eg->cloneElement();
 				buf.push_back(std::make_pair(eg, e));
 				// qSwap(eg, e);
@@ -324,6 +325,7 @@ public:
 
 		auto center = bb.center();
 		pos_t pivot(getX(center), getY(center));
+		trace1("transform", pivot);
 
 		for(auto i : buf){
 			transformElement(i.second, t, pivot);
@@ -348,7 +350,7 @@ class MirrorXaxisSelection : public TransformSelection<qucsSymbolTransform>{
 public:
 	template<class IT>
 	MirrorXaxisSelection(SchematicDoc& ctx, IT selection)
-	  : base(ctx, selection, mirrorXaxis) {}
+	  : base(ctx, selection, transformFlipHorizontally) {}
 };
 /*--------------------------------------------------------------------------*/
 class MirrorYaxisSelection : public TransformSelection<qucsSymbolTransform>{
@@ -356,7 +358,7 @@ class MirrorYaxisSelection : public TransformSelection<qucsSymbolTransform>{
 public:
 	template<class IT>
 	MirrorYaxisSelection(SchematicDoc& ctx, IT selection)
-	  : base(ctx, selection, mirrorYaxis) {}
+	  : base(ctx, selection, transformFlipVertically) {}
 };
 /*--------------------------------------------------------------------------*/
 typedef MouseActionSelCmd<DeleteSelection> MouseActionDelete;

@@ -255,6 +255,9 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	}
 	sym->setParameter("deltay", std::to_string(y2 - y1));
 
+	assert(sym->nodePosition(0) == pos_t(x1, y1));
+	assert(sym->nodePosition(1) == pos_t(x2, y2));
+
 	n = s.section('"',1,1);
 	if(!n.isEmpty()) {
 		Symbol* sym=w;
@@ -546,7 +549,7 @@ static void printArgs(Symbol const* sym, ostream_t& s)
 		show /= 2;
 	}
 }
-static void wirehack(Symbol const* w, DocumentStream& d)
+static void printwirehack(Symbol const* w, DocumentStream& d)
 {
 	assert(w);
 	Symbol const* sym = w;
@@ -559,16 +562,16 @@ static void wirehack(Symbol const* w, DocumentStream& d)
   X = w->portPosition(1);
   x2 = X.first;
   y2 = X.second;
-  std::tie(x1, y1) = w->portPosition(0);
-  std::tie(x2, y2) = w->portPosition(1);
+  std::tie(x1, y1) = w->nodePosition(0);
+  std::tie(x2, y2) = w->nodePosition(1);
 
-  int cx = atoi(sym->paramValue("$xposition").c_str());
-  int cy = atoi(sym->paramValue("$yposition").c_str());
-  int dx = atoi(sym->paramValue("deltax").c_str());
-  int dy = atoi(sym->paramValue("deltay").c_str());
+//  int cx = atoi(sym->paramValue("$xposition").c_str());
+//  int cy = atoi(sym->paramValue("$yposition").c_str());
+//  int dx = atoi(sym->paramValue("deltax").c_str());
+//  int dy = atoi(sym->paramValue("deltay").c_str());
 
-  d << "<" << cx << " " << cy
-    << " " << cx+dx << " " << cy+dy;
+  d << "<" << x1 << " " << y1
+    << " " << x2 << " " << y2;
 
   if(false) { untested();
           // d << " \""+Label->name()+"\" ";
@@ -585,7 +588,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, ostream_t& s) const
 	trace1("printSymbol", sym->typeName());
 	if(sym->typeName()=="wire"){
 		// hack hack
-		return wirehack(sym, s);
+		return printwirehack(sym, s);
 	}else{
 	}
 	s << "  <" << mangle(sym->typeName()) << " ";
@@ -798,11 +801,11 @@ static Symbol* parseSymbol(const QString& _s, Symbol* sym)
 		n  = s.section(' ',7,7);    // mirror y axis
 		int nn = n.toInt(&ok);
 		if(!ok){
-			throw Exception("hflip parse");
+			throw Exception("vflip parse");
 		}else{
-			int hflip = 1-2*nn;
-			assert(hflip==1 || hflip==-1);
-			sym->setParameter("$hflip", std::to_string(hflip));
+			int vflip = 1-2*nn;
+			assert(vflip==1 || vflip==-1);
+			sym->setParameter("$vflip", std::to_string(vflip));
 		}
 
 		n  = s.section(' ',8,8);    // rotated

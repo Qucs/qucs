@@ -282,6 +282,7 @@ void SchematicEdit::do_it()
 	for(auto& d : _ins){itested();
 		trace1("show", d);
 		assert(!d->isVisible());
+		//d->update(); // really?
 		d->show();
 		d->setSelected(true); // BUG. this will select too many.
 	}
@@ -320,4 +321,13 @@ void SchematicEdit::qSwap(ElementGraphics* gfx, Element* e)
 	qInsert(ng);
 }
 /*--------------------------------------------------------------------------*/
+void SchematicEdit::redo()
+{itested();
+	if(_first){
+		do_it_first();
+		_first = false;
+	}else{
+		do_it();
+	}
+}
 /*--------------------------------------------------------------------------*/
