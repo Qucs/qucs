@@ -156,6 +156,7 @@ Element* SchematicModel::detach(Element* what)
 		}
 		/// TODO: map list iterators
 		_map.erase(pos);
+		trace1("erased", l);
 	}
 
 	if(auto d=diagram(what)){ untested();
