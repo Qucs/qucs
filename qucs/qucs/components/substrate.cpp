@@ -1,24 +1,38 @@
 /***************************************************************************
-                          substrate.cpp  -  description
-                             -------------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "substrate.h"
+#include "component.h"
+#include "globals.h"
+#include "module.h"
 
+namespace{
 
-Substrate::Substrate()
+class Substrate : public Component  {
+private:
+  Substrate(Substrate const& s) : Component(s) {}
+public:
+  Substrate();
+  ~Substrate();
+
+private: // Symbol
+  Symbol* clone() const{return new Substrate(*this); }
+  static Element* info(QString&, char* &, bool getNewOne=false);
+}d0;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "SUBST", &d0);
+static Module::INSTALL pp("RF", &d0);
+
+Substrate::Substrate() : Component()
 {
   Description = QObject::tr("substrate definition");
 
@@ -73,11 +87,7 @@ Substrate::~Substrate()
 {
 }
 
-Component* Substrate::newOne()
-{
-  return new Substrate();
-}
-
+#if 0
 Element* Substrate::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Substrate");
@@ -85,4 +95,7 @@ Element* Substrate::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Substrate();
   return 0;
+}
+#endif
+
 }
