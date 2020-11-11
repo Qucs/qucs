@@ -101,18 +101,15 @@ static void possiblyRename(ElementGraphics* gfx)
 	assert(s);
 	std::string label = e->label();
 
-   int z = label.size() - 1;
-	while(z && std::isdigit(label[z])){
-		--z;
+   int z = label.size();
+	if(!z){
+	}else if(std::isdigit(label[z-1])){
+	}else{
+		auto scope = e->scope();
+		unsigned i = scope->nextIdx(label);
+		ee->setLabel(label + std::to_string(i));
+		// gfx->update();
 	}
-	z += 1;
-	auto stem = label.substr(0, z);
-	trace3("possiblyRename", stem, label, z);
-
-	auto scope = e->scope();
-
-	unsigned i = scope->nextIdx(stem);
-	ee->setLabel(stem + std::to_string(i));
 }
 /*--------------------------------------------------------------------------*/
 // Perform an edit action for the first time. keep track of induced changes.
