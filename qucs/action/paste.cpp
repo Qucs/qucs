@@ -26,19 +26,14 @@ public:
 					ctx.takeOwnership(element(c)); // BUG?
 				}
 
-
-#if 0
-        for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-            if(pc->name().left(len) == c->name())
-            {
-                s = pc->name().right(pc->name().length()-len);
-                z = s.toInt(&ok);
-                if(ok) if(z >= max) max = z + 1;
-            }
-        c->obsolete_name_override_hack(
-	    c->name() + QString::number(max));  // create name with new number
-#endif
-
+				{ // dropTrailingDigits(c)
+					std::string label = element(c)->label();
+					int z = label.size() - 1;
+					while(z && std::isdigit(label[z])){
+						--z;
+					}
+					element(c)->setLabel(label.substr(0, z+1));
+				}
 
 				qInsert(c);
 			}else{ untested();
