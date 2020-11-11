@@ -515,6 +515,10 @@ QUndoCommand* MouseActionNewElement::enter(QEvent* ev)
 	if(!_gfx){ untested();
 		assert(_proto);
 		elt = _proto->clone_instance();
+		if(auto sym=dynamic_cast<Symbol const*>(elt)){
+			elt->setLabel(sym->typeName());
+		}else{
+		}
 		elt->setPosition(pos_t(sp.x(), sp.y()));
 		_gfx = new ElementGraphics(elt); // BUG
 	}else{ untested();
