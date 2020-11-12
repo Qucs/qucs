@@ -1,0 +1,6 @@
+# Qucs
+## declarations end
+
+R:R2 Vout gnd R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R1 Vin Vout R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Vac:V1 Vin gnd U="10 V" f="1kHz" Phase="0" Theta="0"
