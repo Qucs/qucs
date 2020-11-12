@@ -76,6 +76,7 @@ PRJ_TESTS = \
 	DC_SP_LPF-Balun2.prj \
 	DC_TR_active_mixer.prj \
 	SP_mscoupler.prj \
+	TR_resistor.prj \
 	TR_sawtooth-1.prj
 
 LATER_TESTS = \
@@ -136,7 +137,6 @@ LATER_TESTS = \
 	TR_mixer.prj \
 	TR_multiplier.prj \
 	TR_Puls3b.prj \
-	TR_resistor.prj \
 	TR_rf_osci.prj \
 	TR_sawtooth-2.prj \
 	TR_sawtooth-3.prj \
