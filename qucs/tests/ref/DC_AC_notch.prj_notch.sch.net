@@ -1,0 +1,14 @@
+# Qucs
+## declarations end
+
+C:C1 _net9 _net15 C="1.01u" V=""
+R:R5 In Out R="10k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R3 _net10 _net18 R="1k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R4 _net5 _net18 R="1k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R2 _net15 _net10 R="1k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+C:C2 _net5 Out C="1u" V=""
+OpAmp:OP1 _net5 _net9 _net15 G="1e6" Umax="15 V"
+OpAmp:OP2 _net5 _net10 _net18 G="1e6" Umax="15 V"
+Eqn:Eqn1 Gain="dB(Out.v/In.v)" Export="yes"
+R:R1 gnd _net9 R="10k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Vac:V1 In gnd U="1uV" f="1 GHz" Phase="0" Theta="0"

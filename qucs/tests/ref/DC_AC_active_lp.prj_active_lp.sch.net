@@ -1,0 +1,20 @@
+# Qucs
+## declarations end
+
+R:R2 _net8 _net7 R="10k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R1 _net7 _net2 R="10k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+OpAmp:OP1 _net9 _net2 _net9 G="1e6" Umax="15 V"
+C:C4 gnd _net2 C="29.62n" V=""
+C:C1 _net7 _net9 C="68.6n" V=""
+Vac:V1 _net8 gnd U="1 V" f="1 GHz" Phase="0" Theta="0"
+R:R3 _net9 _net18 R="10k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R4 _net18 _net13 R="10k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+OpAmp:OP2 _net20 _net13 _net20 G="1e6" Umax="15 V"
+C:C5 gnd _net13 C="4.85n" V=""
+C:C2 _net18 _net20 C="93.7n" V=""
+R:R5 _net20 _net27 R="10k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R6 _net27 _net22 R="10k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+OpAmp:OP3 Output _net22 Output G="1e6" Umax="15 V"
+C:C6 gnd _net22 C="1n" V=""
+C:C3 _net27 Output C="256n" V=""
+Eqn:Eqn1 Ampl="dB(Output.v)" Phase="phase(Output.v)" Export="yes"

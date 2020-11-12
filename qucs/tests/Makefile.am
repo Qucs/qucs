@@ -73,15 +73,6 @@ PRJ_TESTS = \
 	AC_bandpass.prj \
 	AC_groupdelay_ac.prj \
 	AC_SW_resonance.prj \
-	DC_SP_LPF-Balun2.prj \
-	DC_TR_active_mixer.prj \
-	SP_mscoupler.prj \
-	TR_resistor.prj \
-	TR_sawtooth-1.prj
-
-LATER_TESTS = \
-	AC_SW_swr_meter.prj \
-	AC_wattmeter.prj \
 	DC_AC_active_bp.prj \
 	DC_AC_active_lp.prj \
 	DC_AC_bbv.prj \
@@ -92,6 +83,15 @@ LATER_TESTS = \
 	DC_AC_SP_HF_BPF.prj \
 	DC_AC_SP_Spiral_BPF.prj \
 	DC_AC_SP_stab.prj \
+	DC_SP_LPF-Balun2.prj \
+	DC_TR_active_mixer.prj \
+	SP_mscoupler.prj \
+	TR_resistor.prj \
+	TR_sawtooth-1.prj
+
+LATER_TESTS = \
+	AC_SW_swr_meter.prj \
+	AC_wattmeter.prj \
 	DC_SP_HICUM-fig10.prj \
 	DC_SP_LPF-Balun3.prj \
 	DC_SP_opamp_gyrator.prj \
