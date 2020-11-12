@@ -83,7 +83,10 @@ PRJ_TESTS = \
 	DC_AC_SP_HF_BPF.prj \
 	DC_AC_SP_Spiral_BPF.prj \
 	DC_AC_SP_stab.prj \
+	DC_SP_HICUM-fig10.prj \
 	DC_SP_LPF-Balun2.prj \
+	DC_SP_LPF-Balun3.prj \
+	DC_SP_opamp_gyrator.prj \
 	DC_TR_active_mixer.prj \
 	SP_mscoupler.prj \
 	TR_resistor.prj \
@@ -92,9 +95,6 @@ PRJ_TESTS = \
 LATER_TESTS = \
 	AC_SW_swr_meter.prj \
 	AC_wattmeter.prj \
-	DC_SP_HICUM-fig10.prj \
-	DC_SP_LPF-Balun3.prj \
-	DC_SP_opamp_gyrator.prj \
 	DC_SW_bridge.prj \
 	DC_SW_bsim4v30nMOS_Ids_Vgs.prj \
 	DC_SW_bsim4v30pMOS_Ids_Vgs.prj \

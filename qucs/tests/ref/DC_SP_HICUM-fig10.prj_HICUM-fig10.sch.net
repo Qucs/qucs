@@ -1,0 +1,8 @@
+# Qucs
+## declarations end
+
+Vdc:V1 _net10 gnd U="0.9 V"
+Pac:P1 _net2 gnd Num="1" Z="50 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
+Pac:P2 _net4 gnd Num="2" Z="50 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
+Vdc:V2 _net9 gnd U="2 V"
+Eqn:Eqn1 NFmin="10*log10(Fmin)" NF="10*log10(F)" Export="yes"
