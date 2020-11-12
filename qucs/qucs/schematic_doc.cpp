@@ -887,8 +887,10 @@ void SchematicDoc::slotSimulate()
 //  ctrl->show();
   ctrl->open(); // does not work
 
+  istream_t cs(istream_t::_STRING, "run all");
+
   try{
-	  ctrl->startProcess();
+	  ctrl->startProcess(cs);
   }catch(Exception& e){
 	  incomplete();
   }
@@ -949,8 +951,10 @@ void SchematicDoc::slotDCbias()
 //  ctrl->show();
   ctrl->open(); // does not work
 
+  istream_t cs(istream_t::_STRING, "run dcop");
+
   try{
-	  ctrl->startProcess();
+	  ctrl->startProcess(cs);
   }catch(Exception& e){
 	  incomplete();
   }

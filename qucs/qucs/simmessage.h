@@ -42,7 +42,7 @@ public:
   SimMessage(Simulator* sim, QucsDoc const* doc);
  ~SimMessage();
 
-  bool startProcess();
+  void startProcess(istream_t&);
 
 signals:
   void SimulationEnded(int, SimMessage*);
