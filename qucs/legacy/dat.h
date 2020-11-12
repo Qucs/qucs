@@ -13,8 +13,6 @@ public:
 //	int countY() const { return CountY; }
 
 public: // obsolete interface. don't use.
-//	DataX const* axis(uint i) const override { if (i<axis_count) return CPointsX[i]; return NULL;}
-//	double *cPointsY() const { return CPointsY; }
 	SimOutputData const* refresh() override;
 
 //	virtual const_iterator begin() const {return const_iterator(CPointsX.front()->Points, CPointsY);}
