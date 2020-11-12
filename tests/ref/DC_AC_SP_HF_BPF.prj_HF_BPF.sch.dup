@@ -1,0 +1,53 @@
+<Qucs Schematic 0.0.20>
+<Properties>
+  <View=0,0,0,0,0,0,0>
+  <Grid=0,0,0>
+  <DataSet=unknown>
+  <DataDisplay=unknown>
+  <OpenDisplay=unknown>
+  <Script=unknown>
+  <RunScript=unknown>
+  <showFrame=unknown>
+  <FrameText0=unknown>
+  <FrameText1=unknown>
+  <FrameText2=unknown>
+  <FrameText3=unknown>
+</Properties>
+<Symbol>
+</Symbol>
+<Components>
+    <GND * 5 800 220 0 0 0 0>
+    <Pac P1 1 800 170 18 -26 0 1 "2" 1 "50 Ohm" 1 "0 W" 0 "1 GHz" 0 "-273.15" 1>
+    <GND * 5 310 220 0 0 0 0>
+    <Eqn Eqn2 1 450 320 -28 15 0 0 "S21_dB=dB(S[2,1])" 1 "S11_dB=dB(S[1,1])" 1 "yes" 0>
+    <Eqn Eqn1 1 450 440 -31 17 0 0 "Ql=200" 1 "Qc=5000" 1 "f0=14e6" 1 "yes" 0>
+    <GND * 5 100 220 0 0 0 0>
+    <Pac P2 1 100 150 -122 -26 1 1 "1" 1 "50 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "-273.15" 1>
+    <GND * 5 630 290 0 0 0 0>
+    <Vdc V1 1 630 250 -75 -22 1 1 "1.1 V" 1>
+</Components>
+<Wires>
+<630 90 630 140 "" 0 0 0 "">
+<590 140 630 140 "" 0 0 0 "">
+<590 200 630 200 "" 0 0 0 "">
+<630 200 630 220 "" 0 0 0 "">
+<580 90 630 90 "" 0 0 0 "">
+<630 90 800 90 "" 0 0 0 "">
+<800 90 800 140 "" 0 0 0 "">
+<800 200 800 220 "" 0 0 0 "">
+<440 90 520 90 "" 0 0 0 "">
+<310 90 310 140 "" 0 0 0 "">
+<270 140 310 140 "" 0 0 0 "">
+<270 200 310 200 "" 0 0 0 "">
+<310 90 380 90 "" 0 0 0 "">
+<310 200 310 220 "" 0 0 0 "">
+<100 90 310 90 "" 0 0 0 "">
+<100 90 100 120 "" 0 0 0 "">
+<100 180 100 220 "" 0 0 0 "">
+<630 280 630 290 "" 0 0 0 "">
+<800 90 800 90 "" 0 0 0 "">
+</Wires>
+<Diagrams>
+</Diagrams>
+<Paintings>
+</Paintings>
