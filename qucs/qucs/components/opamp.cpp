@@ -23,7 +23,7 @@ class OpAmp : public Component  {
 public:
   OpAmp();
   ~OpAmp();
-  Component* newOne();
+  Symbol* clone() const{return new OpAmp(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 }d0;
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "OpAmp", &d0);
@@ -65,11 +65,6 @@ OpAmp::OpAmp() : Component()
 
 OpAmp::~OpAmp()
 {
-}
-
-Component* OpAmp::newOne()
-{
-  return new OpAmp();
 }
 
 #if 0
