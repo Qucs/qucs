@@ -395,7 +395,7 @@ private: // Simulator
   DocumentFormat const* netLister() const override {
 	  return dynamic_cast<DocumentFormat const*>(command_dispatcher["legacy_nl"]);
   }
-  void run(SimCtrl*) override;
+  void run(istream_t&, SimCtrl*) override;
   void kill() override{incomplete();}
   void init() override{incomplete();}
   std::string errorString() const{ return "incomplete"; }
@@ -444,10 +444,14 @@ struct default_sim{
 	}
 }ds;
 /* -------------------------------------------------------------------------------- */
-void Qucsator::run(SimCtrl* ctrl)
+void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
 {
 	Simulator::attachCtrl(ctrl);
-	std::string _what="DC"; // TODO.
+
+	cs.umatch("run");
+	std::string what;
+	cs >> what;
+
 
 	// possibly not a good idea.
 	QString f = QucsSettings.QucsHomeDir.filePath("netlist.txt");
@@ -483,15 +487,16 @@ void Qucsator::run(SimCtrl* ctrl)
 
 		NetLang const* nl = netLang();
 
-		if(_what=="all"){
+		if(what=="all"){
 			for(auto c : d->commands()){
 				trace1("cmd", c->label());
 				nl->printItem(c, Stream);
 			}
-		}else if(_what=="DC"){
+		}else if(what=="dcop"){
 			Element const* dc = element_dispatcher["DC"];
 			nl->printItem(dc, Stream);
 		}else{
+			assert(false);
 			throw Exception("nothing to do");
 		}
 		incomplete();

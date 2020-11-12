@@ -71,7 +71,7 @@ private: // Simulator
 	NetLang const* netLang() const override;
 	DocumentFormat const* netLister() const override {return &LNL;}
 
-	void run(SimCtrl*) override{ incomplete(); }
+	void run(istream_t&, SimCtrl*) override{ incomplete(); }
 	void init() override{incomplete();}
 	std::string errorString() const override{ incomplete(); return "incomplete";}
 	void kill() override{ incomplete(); }
