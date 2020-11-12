@@ -17,8 +17,9 @@ class SimOutputDatVar : public SimOutputData{
 	SimOutputDatVar(SimOutputDatVar const&) = delete;
 public:
 	explicit SimOutputDatVar(std::string const& fileName, std::string const& varname)
-	  : _var(QString::fromStdString(varname)),
-	    _fileName(fileName) {}
+	 : CPointsY(NULL),
+	   _var(QString::fromStdString(varname)),
+	   _fileName(fileName) {}
 
 private:
 	void clear();
@@ -33,12 +34,16 @@ private:
 		if (Min>x) Min=x;
 		if (Max<x) Max=x;
 	}
+
+public: // obsolete interface. don't use.
+	DataX const* axis(uint i) const override { if (i<axis_count) return CPointsX[i]; return NULL;}
+	double *cPointsY() const { return CPointsY; }
 private:
+	double *CPointsY;
 	QString _var;
 	std::string _fileName;
 	unsigned axis_count;
 	std::vector<DataX*>  CPointsX;
-	double *CPointsY;
 	int CountY;    // number of curves ??
 	QDateTime lastLoaded;
 };
@@ -116,6 +121,8 @@ SimOutputData const* SimOutputDatVar::refresh()
 	QString Variable;
 	QFileInfo Info(QString::fromStdString(_fileName));
 
+	setLabel(_var.toStdString()); // BUG
+
 	int pos = g->_var.indexOf(':');
 	//  if(g->Var.right(3) == "].X")  // e.g. stdl[8:0].X
 	//    if(pos > g->Var.indexOf('['))
@@ -179,6 +186,7 @@ SimOutputData const* SimOutputDatVar::refresh()
 	// look for variable name in data file  ****************************
 	bool isIndep = false;
 	Variable = "dep "+Variable+" ";
+	// trace2("getVar", Variable, FileString);
 	// "pFile" is used through-out the whole function and must NOT used
 	// for other purposes!
 	char *pFile = strstr(FileString, Variable.toLatin1());
@@ -193,7 +201,15 @@ SimOutputData const* SimOutputDatVar::refresh()
 		pFile = strstr(pFile+4, Variable.toLatin1());
 	}
 
-	if(!pFile)  return 0;   // data not found
+	if(!pFile){
+		incomplete();
+		return 0;   // data not found
+	}else{
+	}
+
+	bool ok=true;
+	double *p;
+	int counter = 0;
 
 	QString Line, tmp;
 	pFile += Variable.length();
@@ -203,34 +219,32 @@ SimOutputData const* SimOutputDatVar::refresh()
 	Line = QString(pFile);
 	*pPos = '>';
 	pFile = pPos+1;
+	trace2("DBG", Variable, isIndep);
 	if(!isIndep) { untested();
 		pos = 0;
 		tmp = Line.section(' ', pos, pos);
 		while(!tmp.isEmpty()) { untested();
+			trace2("push", pos, tmp);
 			CPointsX.push_back(new DataX(tmp.toStdString()));  // name of independet variable
 			pos++;
 			tmp = Line.section(' ', pos, pos);
 		}
+	}else{
 	}
 
-	// *****************************************************************
-	// get independent variable ****************************************
-	bool ok=true;
-	double *p;
-	int counting = 0;
 	if(isIndep) {    // create independent variable by myself ?
-		counting = Line.toInt(&ok);  // get number of values
-		CPointsX.push_back(new DataX("number", 0, counting));
+		counter = Line.toInt(&ok);  // get number of values
+		CPointsX.push_back(new DataX("number", 0, counter));
 		if(!ok)  return 0;
 
-		p = new double[counting];  // memory of new independent variable
+		p = new double[counter];  // memory of new independent variable
 		CountY = 1;
 		CPointsX.back()->Points = p;
-		for(int z=1; z<=counting; z++)  *(p++) = double(z);
+		for(int z=1; z<=counter; z++)  *(p++) = double(z);
 		auto Axis = CPointsX.back();
 		Axis->setLimit(1.);
-		Axis->setLimit(double(counting));
-		trace3("indep", counting, Axis->max(), Axis->min());
+		Axis->setLimit(double(counter));
+		trace3("indep", counter, Axis->max(), Axis->min());
 	}else{  // ...................................
 		// get independent variables from data file
 		CountY = 1;
@@ -253,24 +267,25 @@ SimOutputData const* SimOutputDatVar::refresh()
 			else if(pD == bLast)  pa = &yAxis;   // y axis for Rect3D
 #endif
 			trace1("refresh axis", pD->Var);
-			counting = loadIndepVarData(pD->Var, FileString, CPointsX[ii]);
-			if(counting <= 0) { untested();
+			counter = loadIndepVarData(pD->Var, FileString, CPointsX[ii]);
+			if(counter <= 0) { untested();
 				trace0("huh, nothing there");
 				return 0;
 			}else{ untested();
-				trace2("found sth", pD->Var, counting);
+				trace2("found sth", pD->Var, counter);
 			}
 
-			CountY *= counting;
+			CountY *= counter;
 		}
-		CountY /= counting;
+		trace3("dbg", g->numAxes(), CountY, counter);
+		CountY /= counter;
 	}
 
 
 	// *****************************************************************
 	// get dependent variables *****************************************
-	counting *= CountY;
-	p = new double[2*counting]; // memory for dependent variables
+	counter *= CountY;
+	p = new double[2*counter]; // dependent variables
 	CPointsY = p;
 #if 0 // FIXME: what does this do?!
 	if(g->yAxisNo == 0)  pa = &yAxis;   // for which axis
@@ -284,7 +299,7 @@ SimOutputData const* SimOutputDatVar::refresh()
 
 	if(Variable.right(3) != ".X ") { // not "digital"
 
-		for(int z=counting; z>0; z--) { untested();
+		for(int z=counter; z>0; z--) { untested();
 			pEnd = 0;
 			while((*pPos) && (*pPos <= ' '))  pPos++; // find start of next number
 			x = strtod(pPos, &pEnd);  // real part
@@ -335,9 +350,9 @@ SimOutputData const* SimOutputDatVar::refresh()
 	} else {  // of "if not digital"
 
 		char *pc = (char*)p;
-		pEnd = pc + 2*(counting-1)*sizeof(double);
+		pEnd = pc + 2*(counter-1)*sizeof(double);
 		// for digital variables (e.g. 100ZX0):
-		for(int z=counting; z>0; z--) { untested();
+		for(int z=counter; z>0; z--) { untested();
 
 			while((*pPos) && (*pPos <= ' '))  pPos++; // find start of next bit vector
 			if(*pPos == 0) { untested();
@@ -348,12 +363,12 @@ SimOutputData const* SimOutputDatVar::refresh()
 			while(*pPos > ' ') {    // copy bit vector
 				*(pc++) = *(pPos++);
 				if(pEnd <= pc) { untested();
-					counting = pc - (char*)CPointsY;
-					pc = (char*)realloc(g->CPointsY, counting+1024);
+					counter = pc - (char*)CPointsY;
+					pc = (char*)realloc(g->CPointsY, counter+1024);
 					pEnd = pc;
 					CPointsY = (double*)pEnd;
-					pc += counting;
-					pEnd += counting+1020;
+					pc += counter;
+					pEnd += counter+1020;
 				}
 			}
 			*(pc++) = 0;   // terminate each vector with NULL
