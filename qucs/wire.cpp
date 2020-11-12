@@ -381,7 +381,7 @@ void Wire::paint(ViewPainter *p) const
   { itested();
     p->setPen(QPen(Qt::darkBlue,2));
     p->drawLine(0, 0, abs(_scale), 0);
-    p->drawEllipse(x1-2, y1-2, 4, 4);
+//    p->drawEllipse(x1-2, y1-2, 4, 4);
   }
 
 #if 0
