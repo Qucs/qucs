@@ -75,6 +75,7 @@ PRJ_TESTS = \
 	AC_SW_resonance.prj \
 	DC_SP_LPF-Balun2.prj \
 	DC_TR_active_mixer.prj \
+	SP_mscoupler.prj \
 	TR_sawtooth-1.prj
 
 LATER_TESTS = \
@@ -113,7 +114,6 @@ LATER_TESTS = \
 	SP_giacoletto.prj \
 	SP_groupdelay_sp.prj \
 	SP_microstrip.prj \
-	SP_mscoupler.prj \
 	SP_SmithChartTest.prj \
 	SP_Sparam_diagrams.prj \
 	SP_sparam.prj \
