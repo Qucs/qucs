@@ -43,6 +43,10 @@ Pac:my_Pac (null) (null) Num="1" Z="50 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
 MCOUPLED #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) my_MCOUPLED((null), (null), (null), (null));
 MCOUPLED:my_MCOUPLED (null) (null) (null) (null) Subst="Subst1" W="1 mm" L="10 mm" S="1 mm" Model="Kirschning" DispModel="Kirschning" Temp="26.85"
 ==============
+  <SUBST my_SUBST 1 0 0 -30 24 0 0 "9.8" 1 "1 mm" 1 "35 um" 1 "2e-4" 1 "0.022e-6" 1 "0.15e-6" 1>
+SUBST #(.er(9.8), .h(1 mm), .t(35 um), .tand(2e-4), .rho(0.022e-6), .D(0.15e-6)) my_SUBST();
+SUBST:my_SUBST er="9.8" h="1 mm" t="35 um" tand="2e-4" rho="0.022e-6" D="0.15e-6"
+==============
   <Tr my_Tr 1 0 0 -29 38 0 0 "1" 1>
 Tr #(.T(1)) my_Tr((null), (null), (null), (null));
 Tr:my_Tr (null) (null) (null) (null) T="1"
@@ -4268,6 +4272,78 @@ Diode:my_Diode (null) (null) Is="1e-15 A" N="1" Cj0="10 fF" M="0.5" Vj="0.7 V" F
 
 
 .Def:End
+=====RO3003_=========
+  < my_ 1 0 0 0 0 0 0>
+ #() my_();
+:my_
+=====RO3203_=========
+  < my_ 1 0 0 0 0 0 0>
+ #() my_();
+:my_
+=====RO3006_=========
+  < my_ 1 0 0 0 0 0 0>
+ #() my_();
+:my_
+=====RO3010_=========
+  < my_ 1 0 0 0 0 0 0>
+ #() my_();
+:my_
+=====RO3210_=========
+  < my_ 1 0 0 0 0 0 0>
+ #() my_();
+:my_
+=====RO4003_=========
+  < my_ 1 0 0 0 0 0 0>
+ #() my_();
+:my_
+=====RO4350_=========
+  < my_ 1 0 0 0 0 0 0>
+ #() my_();
+:my_
+=====RT5880_=========
+  < my_ 1 0 0 0 0 0 0>
+ #() my_();
+:my_
+=====RT5870_=========
+  < my_ 1 0 0 0 0 0 0>
+ #() my_();
+:my_
+=====RT6002_=========
+  < my_ 1 0 0 0 0 0 0>
+ #() my_();
+:my_
+=====RT6006_=========
+  < my_ 1 0 0 0 0 0 0>
+ #() my_();
+:my_
+=====RT6010_=========
+  < my_ 1 0 0 0 0 0 0>
+ #() my_();
+:my_
+=====ULAM2000_=========
+  < my_ 1 0 0 0 0 0 0>
+ #() my_();
+:my_
+=====TMM3_=========
+  < my_ 1 0 0 0 0 0 0>
+ #() my_();
+:my_
+=====TMM4_=========
+  < my_ 1 0 0 0 0 0 0>
+ #() my_();
+:my_
+=====TMM6_=========
+  < my_ 1 0 0 0 0 0 0>
+ #() my_();
+:my_
+=====TMM10_=========
+  < my_ 1 0 0 0 0 0 0>
+ #() my_();
+:my_
+=====TMM10i_=========
+  < my_ 1 0 0 0 0 0 0>
+ #() my_();
+:my_
 =====T_2DA1774R_=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();

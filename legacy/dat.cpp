@@ -163,7 +163,6 @@ SimOutputData const* SimOutputDatVar::refresh()
 			return 0;  // digital variables only for tabulars and timing diagram
 #endif
 
-
 	if(!file.open(QIODevice::ReadOnly)){
 		return NULL;
 	}else{
