@@ -1,0 +1,18 @@
+# Qucs
+
+.Def:singleOPV _net6 _net7 _net16 _net10 _net20
+# TODO ID & params?????.ID 
+R:R1 _net13 _net1 R="4k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+C:C1 _net1 _net20 C="4p" V=""
+Idc:I1 _net17 _net16 I="5 uA"
+.Def:End
+## declarations end
+
+Vac:V4 Input gnd U="1 uV" f="2 kHz" Phase="0" Theta="0"
+R:R2 Output _net12 R="50k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R1 gnd Output R="100k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Vdc:V3 _net7 gnd U="2.5 V"
+Vdc:V6 _net15 gnd U="-2.5 V"
+Eqn:Eqn1 Gain="dB(Output.v/Input.v)" Phase="phase(Output.v/Input.v)" Export="yes"
+Sub:OPV1 _net12 Input _net7 _net15 Output Type="singleOPV"
+R:R3 _net12 gnd R="1.7k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
