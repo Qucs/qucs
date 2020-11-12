@@ -1,9 +1,6 @@
 /***************************************************************************
-                              simmessage.cpp
-                             ----------------
-    begin                : Sat Sep 6 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -15,11 +12,7 @@
  *                                                                         *
  ***************************************************************************/
 
-/*!
- * \file simmessage.cpp
- * \brief Simulation dialog implementation
- *
- */
+// Control simulator through "message" dialog
 
 #include <stdlib.h>
 #include <iostream>
@@ -43,18 +36,10 @@
 #include "qucs.h"
 #include "textdoc.h"
 #include "schematic_doc.h"
-//#include "components/opt_sim.h"
-//#include "components/vhdlfile.h"
 #include "misc.h"
 #include "globals.h"
 #include "docfmt.h"
-
-/*!
- * \brief Create a simulation messages dialog.
- *
- *  Create a new dialog to show the simulation steps progress and the
- *  simulator output messages
- */
+/*--------------------------------------------------------------------------*/
 SimMessage::SimMessage(Simulator *sim, QucsDoc const* doc)
   : QDialog(), _simulator(sim)
 {
@@ -127,7 +112,7 @@ SimMessage::SimMessage(Simulator *sim, QucsDoc const* doc)
   connect(this,SIGNAL(rejected()),SLOT(AbortSim()));
   connect(this, SIGNAL(finished(int)), SLOT(deleteLater));
 }
-
+/*--------------------------------------------------------------------------*/
 SimMessage::~SimMessage()
 {
   if(_simulator){
@@ -141,9 +126,8 @@ SimMessage::~SimMessage()
 //  }
   delete all;
 }
-
-// ------------------------------------------------------------------------
-bool SimMessage::startProcess( /*cs?*/ )
+/*--------------------------------------------------------------------------*/
+void SimMessage::startProcess(istream_t& cs)
 {
   Abort->setText(tr("Abort simulation"));
   Display->setDisabled(true);
@@ -194,8 +178,8 @@ bool SimMessage::startProcess( /*cs?*/ )
 
 //  nextSPICE(); /// ???
   assert(_simulator);
-  _simulator->run(this); // should fork here.
-  return true;
+  // do_it?
+  _simulator->run(cs, this); // should fork here.
   // Since now, the Doc pointer may be obsolete, as the user could have
   // closed the schematic !!!
 } // startProcess
@@ -205,7 +189,7 @@ bool SimMessage::startProcess( /*cs?*/ )
 //   _simulator->run(what, this);
 // }
 
-void SimMessage::do_it(istream_t, QucsDoc&)
+void SimMessage::do_it(istream_t cs, QucsDoc&)
 {
 //  _simMessage->start(); // really?
 
@@ -217,7 +201,7 @@ void SimMessage::do_it(istream_t, QucsDoc&)
 //                       SLOT(slotFinishSpiceNetlist(int)));
 
 //  startSimulator();
-  _simulator->run(this);
+  _simulator->run(cs, this);
 }
 
 #if 0
@@ -306,17 +290,7 @@ void SimMessage::nextSPICE()
   qDebug() << command;
   connect(&SimProcess, SIGNAL(wroteToStdin()), SLOT(slotCloseStdin()));
 }
-#endif
-
-// ------------------------------------------------------------------------
-///void SimMessage::slotCloseStdin()
-///{
-///  //SimProcess.closeStdin(); //? channel not available in Qt4?
-///  disconnect(&SimProcess, SIGNAL(wroteToStdin()), 0, 0);
-///}
-
-// ------------------------------------------------------------------------
-#if 0
+/*--------------------------------------------------------------------------*/
 void SimMessage::slotReadSpiceNetlist()
 {
   int i;
@@ -339,10 +313,7 @@ void SimMessage::slotReadSpiceNetlist()
     Stream << "  " << s << '\n';
   }
 }
-#endif
-
-// ------------------------------------------------------------------------
-#if 0
+/*--------------------------------------------------------------------------*/
 void SimMessage::slotFinishSpiceNetlist(int)
 {
   Q_UNUSED(status);
@@ -355,9 +326,7 @@ void SimMessage::slotFinishSpiceNetlist(int)
   nextSPICE();
 }
 #endif
-
-// ------------------------------------------------------------------------
-
+/*--------------------------------------------------------------------------*/
 // "run" simulator?
 void SimMessage::startSimulator(std::string const&)
 {
@@ -764,7 +733,7 @@ void SimMessage::FinishSimulation()
 
   emit SimulationEnded(status, this /*???*/);
 } // FinishSimulation
-
+/*--------------------------------------------------------------------------*/
 /*!
  * \brief Close and delete simulation dialog
  *
@@ -775,14 +744,13 @@ void SimMessage::slotClose()
 {
   accept();
 }
-
-// ------------------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 void SimMessage::slotDisplayButton()
 {
   emit displayDataPage(DocName, DataDisplay);
   accept();
 }
-
+/*--------------------------------------------------------------------------*/
 void SimMessage::AbortSim()
 {
   ErrText->appendPlainText(tr("Simulation aborted by the user"));
@@ -790,7 +758,7 @@ void SimMessage::AbortSim()
   assert(_simulator);
   _simulator->kill();
 }
-// -----------------------------
+/*--------------------------------------------------------------------------*/
 void SimMessage::stateChange()
 {
   assert(_simulator);
@@ -807,6 +775,7 @@ void SimMessage::stateChange()
     incomplete();
   }
 }
+/*--------------------------------------------------------------------------*/
 static const int loglevel = Object::QucsMsgLog;
 void SimMessage::message(int level, std::string msg)
 {
@@ -816,4 +785,5 @@ void SimMessage::message(int level, std::string msg)
     ErrText->appendPlainText(QString::fromStdString(msg));
   }
 }
+/*--------------------------------------------------------------------------*/
 // vim:ts=8:sw=2:et

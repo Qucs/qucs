@@ -61,7 +61,7 @@ public:
 public:
   void attachDoc(QucsDoc*);
   QucsDoc const* doc() const {return _doc;}
-  virtual void run(SimCtrl*) = 0;
+  virtual void run(istream_t& cs, SimCtrl* ctx) = 0;
   virtual std::string errorString() const = 0;
   virtual void kill() = 0;
 
