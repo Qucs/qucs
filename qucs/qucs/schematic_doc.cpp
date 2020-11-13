@@ -184,7 +184,7 @@ bool SchematicDoc::loadDocument(QFile& /*BUG*/ file)
       return true;
     }
 
-    Line = stream.readLine();
+    Line = QString::fromStdString(stream.read_line());
   } while(Line.isEmpty());
 
   if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?

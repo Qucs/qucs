@@ -300,7 +300,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 	// this is not needed in a proper SchematicLanguage
 	char mode='?';
 	while(!stream.atEnd()) {
-		Line = stream.readLine();
+		Line = QString::fromStdString(stream.read_line());
 		Line = Line.trimmed();
 		if(Line.size()<2){
 		}else if(Line.at(0) == '<'

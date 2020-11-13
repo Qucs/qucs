@@ -34,7 +34,7 @@
 #define CS istream_t
 #define CMD Command
 #define CARD_LIST SchematicModel
-#define fullstring fullString
+//#define fullstring fullString
 // TODO: connect with qucs error facilities.
 INTERFACE void error(int,const char*,...);
 INTERFACE void error(int,const std::string&);
@@ -103,7 +103,7 @@ void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
     // nothing
   }else if (s != "") {
     CMD* c = command_dispatcher[s];
-    if (c) { untested();
+    if (c) {
       c->do_it(cmd, scope);
       didsomething = true;
     }else{untested();

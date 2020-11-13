@@ -1461,7 +1461,7 @@ bool Diagram::load(const QString& Line, istream_t& stream)
   // .......................................................
   // load graphs of the diagram
   while(!stream.atEnd()) {itested();
-    s = stream.readLine();
+    s = QString::fromStdString(stream.read_line());
     s = s.trimmed();
     if(s.isEmpty()) continue;
 

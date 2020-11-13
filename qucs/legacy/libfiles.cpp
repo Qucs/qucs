@@ -123,7 +123,7 @@ void LIB::loadLibFiles()
 			assert(L);
 
 			istream_t stream(&c.modelString);
-			stream.readLine();
+			stream.read_line();
 			auto type = L->findType(stream);
 
 			if(type=="Lib"){

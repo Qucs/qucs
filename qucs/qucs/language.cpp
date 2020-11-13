@@ -102,7 +102,7 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
 #endif
   if (p) {
     return p;
-  }else if ((command_dispatcher[Name])) { untested();
+  }else if ((command_dispatcher[Name])) {
     return new DEV_DOT;	//BUG// memory leak
   }else if ((p = element_dispatcher[Name])) {
     return p;
