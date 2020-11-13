@@ -680,24 +680,12 @@ int main(int argc, char *argv[])
   // set the Qucs version string
   QucsVersion = VersionTriplet(PACKAGE_VERSION);
 
-  // apply default settings
-  QucsSettings.font = QFont("Helvetica", 12);
-  QucsSettings.largeFontSize = 16.0;
-  QucsSettings.maxUndo = 20;
-  QucsSettings.NodeWiring = 0;
-  QucsSettings.Editor = "qucs";
-
   // initially center the application
 
   QFile qf(":/bitmaps/doesnotexist.png");
   assert(!qf.exists());
   QFile qfl(":/bitmaps/line.png");
   assert(qfl.exists());
-
-
-  // default
-  QucsSettings.QucsHomeDir.setPath(QDir::homePath()+QDir::toNativeSeparators("/.qucs"));
-  QucsSettings.QucsWorkDir.setPath(QucsSettings.QucsHomeDir.canonicalPath());
 
   // load existing settings (if any)
   loadSettings();

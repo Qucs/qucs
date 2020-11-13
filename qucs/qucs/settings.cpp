@@ -10,6 +10,14 @@ extern QStringList qucsPathList; // BUG
 tQucsSettings::tQucsSettings()
   : _simulator(nullptr)
 { incomplete(); 
+  font = QFont("Helvetica", 12);
+  largeFontSize = 16.0;
+  maxUndo = 20;
+  NodeWiring = 0;
+  Editor = "qucs";
+
+  QucsSettings.QucsHomeDir.setPath(QDir::homePath()+QDir::toNativeSeparators("/.qucs"));
+  QucsSettings.QucsWorkDir.setPath(QucsSettings.QucsHomeDir.canonicalPath());
 }
 
 bool loadSettings()
