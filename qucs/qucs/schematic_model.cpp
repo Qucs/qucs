@@ -16,12 +16,15 @@
 #include "globals.h"
 #include "nodemap.h"
 #include "net.h"
-#include "trace.h"
+#include "io_trace.h"
+#include "u_parameter.h"
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // getting here in CLI mode
 SchematicModel::SchematicModel()
-  	: Nodes(Nets), _doc_(nullptr)
+  : Nodes(Nets),
+    _parent(nullptr),
+    _doc_(nullptr)
 { untested();
 	trace2("::SchematicModel", this, _doc_);
 }
@@ -32,8 +35,9 @@ SchematicModel::~SchematicModel()
 /*--------------------------------------------------------------------------*/
 // getting here in GUI mode
 SchematicModel::SchematicModel(SchematicDoc* s)
-	: Nodes(Nets),
-	  _doc_(s)
+  : Nodes(Nets),
+    _parent(nullptr),
+    _doc_(s)
 {
 	trace2("::SchematicModel s", this, _doc_);
 	if(s){ untested();
@@ -464,6 +468,26 @@ unsigned SchematicModel::nextIdx(std::string const& s) const
 
 	trace2("nextId", s, r);
 	return r+1;
+}
+/*--------------------------------------------------------------------------*/
+PARAM_LIST* SchematicModel::params()
+{
+  if (!_params) {
+    assert(!_parent);
+    _params = new PARAM_LIST;
+  }else{
+  }
+  return _params;
+}
+/*--------------------------------------------------------------------------*/
+PARAM_LIST const* SchematicModel::params() const
+{
+  if (!_params) {
+    assert(!_parent);
+    _params = new PARAM_LIST;
+  }else{
+  }
+  return _params;
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

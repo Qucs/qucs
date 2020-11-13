@@ -33,6 +33,7 @@ class Node;
 class SchematicDoc;
 class QPlainTextEdit; //??!
 class TaskElement;
+class PARAM_LIST;
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // TODO: refactor here
@@ -257,10 +258,14 @@ public:
 public:
 	// HACK
 	unsigned nextIdx(std::string const& s) const;
+	PARAM_LIST* params();
+	PARAM_LIST const* params() const;
 
 private:
+	const SchematicModel* _parent;
 	SchematicDoc* _doc_;
 	std::multimap<std::string, Element*> _map;
+	mutable PARAM_LIST* _params;
 
 public: // for now.
 	friend class SchematicDoc;
