@@ -27,7 +27,6 @@
 #include "painting.h"
 #include "component.cpp" // BUG
 #include "gatecomponent.cpp" // BUG
-//#include "components/component.h"
 /* -------------------------------------------------------------------------------- */
 void Simulator::notifyState(Simulator::state_t st)
 {
@@ -531,8 +530,7 @@ void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
 		<< "-o" << DataSet;
 
 	trace2("start", Program, DataSet);
-
-	_process.start(Program, Arguments); // launch the program
+	_process.start(Program, Arguments);
 
 	QString cmd = Program +" "+ Arguments.join(" ");
 	message(QucsMsgLog, cmd.toStdString());
@@ -545,22 +543,24 @@ void Qucsator::collectData()
 }
 
 }//namespace
-
-// just forward
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
+// BUG: must be anonymous
+/* -------------------------------------------------------------------------------- */
 void QucsatorProcess::slotStateChanged(QProcess::ProcessState newState)
 {
 	trace1("QucsatorProcess callback", newState);
 	assert(_simulator);
 	_simulator->slotStateChanged(newState);
 }
-
+/* -------------------------------------------------------------------------------- */
 void QucsatorProcess::stderr_()
 { untested();
 	assert(_simulator);
 	std::string msg = readAllStandardError().toStdString();
 	_simulator->message(Object::QucsMsgWarning, msg);
 }
-
+/* -------------------------------------------------------------------------------- */
 void QucsatorProcess::stdout_()
 { untested();
 	assert(_simulator);
@@ -568,4 +568,5 @@ void QucsatorProcess::stdout_()
 	trace1("QucsatorProcess stdout", msg);
 	_simulator->message(Object::QucsMsgLog, msg);
 }
-
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
