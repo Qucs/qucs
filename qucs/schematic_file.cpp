@@ -61,14 +61,7 @@ SubMap FileList;
 bool SchematicDoc::loadIntoNothing(istream_t *stream)
 {
   unreachable();
-  QString Line, cstr;
-  while(!stream->atEnd()) {
-    Line = stream->readLine();
-    if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
-  }
-
-  QMessageBox::critical(0, QObject::tr("Error"),
-	QObject::tr("Format Error:\n'Painting' field is not closed!"));
+  assert(false);
   return false;
 }
 

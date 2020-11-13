@@ -30,7 +30,9 @@ class PortSym : public Command{
 	  std::string type;
 	  int cx, cy, tx, ty;
 	  cs >> type;
+	  trace3("portcmd0", type, bool(cs), cs.cursor());
 	  cs >> cx;
+	  trace4("portcmd1", cx, bool(cs), cs.fullstring(), cs.cursor());
 	  cs >> cy;
 	  cs >> tx;
 	  cs >> ty;

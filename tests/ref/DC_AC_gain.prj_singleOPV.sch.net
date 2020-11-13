@@ -1,0 +1,11 @@
+# Qucs
+## declarations end
+
+R:R1 _net13 _net1 R="4k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+C:C1 _net1 _net20 C="4p" V=""
+Port:P3 _net16 Num="3" Type=""
+Port:P4 _net10 Num="4" Type=""
+Port:P6 _net20 Num="5" Type=""
+Port:P1 _net6 Num="1" Type=""
+Port:P2 _net7 Num="2" Type=""
+Idc:I1 _net17 _net16 I="5 uA"
