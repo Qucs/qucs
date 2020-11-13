@@ -317,6 +317,8 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 			mode='D';
 		}else if(Line == "<Properties>") {
 			mode='Q';
+			trace1("model", stream.fullString());
+			new__instance(stream, &owner, owner.subckt());
 		}else if(Line == "<Paintings>") {
 			mode='P';
 		}else if(Line == "<Model>") {
