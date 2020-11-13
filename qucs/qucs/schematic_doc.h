@@ -20,8 +20,6 @@
 #include "qucsdoc.h"
 #include "viewpainter.h"
 #include "diagram.h"
-//#include "painting.h"
-//#include "components/component.h"
 #include "simulator.h"
 #include "sim/tasks.h"
 #include "schematic_scene.h"
@@ -362,47 +360,6 @@ public: // mostly not here
 	  return _model->insertNode(x, y, e);
   }
   Node* selectedNode(int, int);
-
-#if 0
-  int   insertWireNode1(Wire* w){
-	  assert(_model);
-	  return _model->insertWireNode1(w);
-  }
-  bool  connectHWires1(Wire* w){
-	  assert(_model);
-	  return _model->connectHWires1(w);
-  }
-  bool  connectVWires1(Wire* w){
-	  assert(_model);
-	  return _model->connectVWires1(w);
-  }
-  int   insertWireNode2(Wire* w){
-	  assert(_model);
-	  return _model->insertWireNode2(w);
-  }
-  bool  connectHWires2(Wire* w){
-	  assert(_model);
-	  return _model->connectHWires2(w);
-  }
-  bool  connectVWires2(Wire* w){
-	  assert(_model);
-	  return _model->connectVWires2(w);
-  }
-  Wire* splitWire(Wire* w, Node* n){
-	  assert(_model);
-	  return _model->splitWire(w, n);
-  }
-  bool  oneTwoWires(Node* n){
-	  assert(_model);
-	  return _model->oneTwoWires(n);
-  }
-  void  deleteWire(Wire* w){
-	  //called from mouse actions...?
-	  assert(_model);
-	  return _model->deleteWire(w);
-  }
-#endif
-
   Marker* setMarker(int, int);
 
 private: // FIXME: remove
