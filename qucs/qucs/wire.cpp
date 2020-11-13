@@ -87,11 +87,11 @@ public: // needed?
 	QString const& netLabel() const;
 
 private: // Symbol, internal port access.
-	Port& port(unsigned i){ untested();
+	Port& port(unsigned i){
 		assert(i<2);
-		if(i==0){ untested();
+		if(i==0){
 			return _port0;
-		}else{ untested();
+		}else{
 			return _port1;
 		}
 	}
@@ -128,7 +128,7 @@ static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Wire", &w);
 Wire::Wire() : Symbol(),
     _port0(), _port1(),
     _scale(1.)
-{ untested();
+{
 	Symbol::setPosition(pos_t(0, 0)); // redundant?
 
 	setTypeName("wire");
@@ -166,7 +166,7 @@ Wire::Wire(pos_t const& p0, pos_t const& p1)
 }
 /*--------------------------------------------------------------------------*/
 Wire::~Wire()
-{ untested();
+{
 	assert(!port(0).isConnected());
 	assert(!port(1).isConnected());
 }

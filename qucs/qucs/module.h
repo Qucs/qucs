@@ -32,7 +32,7 @@ typedef Element * (* pInfoVAFunc) (QString&, QString&, bool, QString);
 //typedef Component * (* pCreatorFunc) ();
 #endif
 
-INTERFACE void guiRegisterElement (std::string const& category, Element const*);
+void guiRegisterElement (std::string const& category, Element const*);
 
 // sort of element wrapper for stuff displayed in the select menu.
 // each module is part of a Category. see below.

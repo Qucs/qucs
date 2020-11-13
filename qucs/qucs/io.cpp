@@ -17,16 +17,18 @@
 
 DocumentStream::DocumentStream(QFile* /* BUG const */ file)
 	: QTextStream(file)
-{
+{ untested();
 }
 
-QString const istream_t::readLine()
+std::string istream_t::read_line()
 {
-	_current_start = pos(); // really?
+	// _current_start = pos(); // really?
 
+	_ok = true;
 	_cnt = 0;
 	_cmd = QTextStream::readLine().toStdString();
-	return QString::fromStdString(_cmd);
+	_length = _cmd.length();
+	return _cmd;
 }
 
 
@@ -36,7 +38,7 @@ QString const istream_t::readLine()
 template<class T>
 istream_t::istream_t(T t)
 	: QTextStream(t), _cmd(""), _cnt(0)
-{
+{ untested();
 }
 template<>
 istream_t::istream_t(QFile* t);
@@ -44,7 +46,7 @@ istream_t::istream_t(QFile* t);
 /*--------------------------------------------------------------------------*/
 istream_t::istream_t(istream_t::STRING, const std::string&s )
 	: _cmd(s), _cnt(0), _ok(true)
-{
+{ untested();
 }
 /*--------------------------------------------------------------------------*/
 /// borrowed from ap_*.cc
@@ -118,8 +120,8 @@ istream_t& istream_t::skip1(const std::string& t)
 }
 /*--------------------------------------------------------------------------*/
 istream_t& istream_t::skip1(char t)
-{ untested();
-  if (match1(t)) { untested();
+{
+  if (match1(t)) {
     skip();
     assert(_ok);
   }else{ untested();
@@ -144,32 +146,32 @@ std::string istream_t::ctos(const std::string& term,
 
 	std::string s;
 	std::string::size_type which_quote = find1(begin_quote);
-	if (which_quote != std::string::npos) {
+	if (which_quote != std::string::npos) { untested();
 		int quotes = 1;
 		skip(); // the quote
 		begin_string = cursor();
 		char the_begin_quote = begin_quote[which_quote];
 		char the_end_quote = end_quote[which_quote];
-		for (;;) {
+		for (;;) { untested();
 			if (!ns_more()) {itested();
 				end_string = cursor();
 				warn(bDANGER, std::string("need ") + the_end_quote);
 				break;
-			}else if (skip1(the_end_quote)) {
-				if (--quotes <= 0) {
+			}else if (skip1(the_end_quote)) { untested();
+				if (--quotes <= 0) { untested();
 					end_string = cursor() - 1;
 					break;
-				}else{
+				}else{ untested();
 				}
-			}else if (skip1(the_begin_quote)) {
+			}else if (skip1(the_begin_quote)) { untested();
 				++quotes;
 				skip();
-			}else if (skip1('\\')) {
+			}else if (skip1('\\')) { untested();
 				end_string = cursor() - 1;
 				s += _cmd.substr(begin_string, end_string-begin_string);
 				begin_string = cursor();
 				skip1(the_end_quote);
-			}else{
+			}else{ untested();
 				skip();
 			}
 		}
@@ -217,33 +219,33 @@ istream_t& istream_t::umatch(const std::string& s)
     if ((!*str2) || (*str2 == '|')) {
       _ok = true;
       break;
-    }else if ((str2[0] == '\\') && (peek() == str2[1])) {
+    }else if ((str2[0] == '\\') && (peek() == str2[1])) { untested();
       skip();
       str2 += 2;
-    }else if ((!optional) && (*str2 == '{')) {
+    }else if ((!optional) && (*str2 == '{')) { untested();
       ++str2;
       optional = true;
-    }else if ((optional) && (*str2 == '}')) {
+    }else if ((optional) && (*str2 == '}')) { untested();
       ++str2;
       optional = false;
-    }else if ((*str2 == ' ') && is_term()) {
+    }else if ((*str2 == ' ') && is_term()) { untested();
       // blank in ref string matches anything that delimits tokens
       skipbl();
       ++str2;
     }else if (peek() == *str2) {
       skip();
       ++str2;
-//    }else if ((OPT::case_insensitive) && (tolower(peek()) == tolower(*str2))) {
+//    }else if ((OPT::case_insensitive) && (tolower(peek()) == tolower(*str2))) { untested();
 //      skip();
 //      ++str2;
-    }else if (optional) {
-      while (*str2 != '}') {
+    }else if (optional) { untested();
+      while (*str2 != '}') { untested();
 			++str2;
       }
     }else{
       // mismatch
       const char* bar = strchr(str2, '|');
-      if (bar && (bar[-1] != '\\')) {
+      if (bar && (bar[-1] != '\\')) { untested();
 	str2 = bar+1;
 	reset(start);
       }else{
@@ -264,4 +266,25 @@ istream_t& istream_t::umatch(const std::string& s)
   }
   return *this;
 }
+/*--------------------------------------------------------------------------*/
+// from ap_error.cc
+istream_t& istream_t::warn(int badness, size_t spot, const std::string& message)
+{
+	incomplete();
+#if 0
+  if (badness >= OPT::picky) { untested();
+    if (spot < 40) { untested();
+      IO::error << _cmd.substr(0,70) << '\n';
+      IO::error.tab(spot);
+    }else{ untested();
+      IO::error << _cmd.substr(0,15) << " ... " << _cmd.substr(spot-20, 56) << '\n';
+      IO::error.tab(40);
+    }
+    IO::error << "^ ? " + message + '\n';
+  }else{ untested();
+  }
+#endif
+  return *this;
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

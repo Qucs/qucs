@@ -43,6 +43,14 @@ public:
 
 typedef DocumentStream ostream_t;
 
+#define CS istream_t
+#define INTERFACE
+#include "ap.h"
+#undef CS
+#undef INTERFACE
+#define fullString fullstring
+
+#if 0
 // CS like stream. replace by CS...
 class istream_t : private QTextStream{
 public:
@@ -132,6 +140,7 @@ private:
   size_t  _begin_match;
   size_t  _end_match;
 };
+#endif
 
 // not here
 inline std::ostream& operator<<(std::ostream&o, std::pair<int, int> const& p)

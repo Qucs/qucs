@@ -27,7 +27,7 @@ class Model : public Command{
 	  std::string M;
 	  std::string buf;
 	  while(true){
-		  cs.readLine();
+		  cs.read_line();
 		  trace1("Model", cs.fullString());
 		  if(cs.is_end()){
 			  break;
