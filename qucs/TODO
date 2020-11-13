@@ -19,26 +19,18 @@
 
 ===== 0.1.* TODO =====
 
-- error message handling (Object)
+- resurrect diagrams as QWidgets
+- fix parameters in "Lib" style components
+- parameters in root circuit
+- connect error message handling (Object)
 - parse verilog schematic and round trip
+- named nets and parse qucsator models
 - use dispatcher in Module::INSTALL
-- split repos (qucs/qucsator/qucs-doc/...?)
-- port/untangle some stuff from 0.0.20
-- finish verilog netlister for testing.
+- proper "Label" symbol/component
+- split repos (qucs & qucs-doc)
 - untangle tAC and other callbacks
 - implement symbol editor (standalone, not as "mode")
-- connect disconnect ports/wires
-- undo/redo stack
-- make code (human) readable where possible
-  - const correctness
-  - "override", "delete" where applicable
-  - exception Semantics
-  - appropriate types
-  - avoid preprocessor
-  - break up functions
-  - literals
-  - auto
-  - is it thingCount or numberOfThings or numThings?
+- make code more (human) readable where possible
 
 ===== old stuff, mostly obsolete, implement plugins instead =====
 
