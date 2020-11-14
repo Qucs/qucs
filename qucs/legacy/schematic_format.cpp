@@ -21,6 +21,7 @@
 #include "painting.h"
 #include "diagram.h" // BUG?
 #include "task_element.h" // BUG?
+#include "u_parameter.h" // BUG?
 
 namespace{
 
@@ -154,7 +155,7 @@ static void printProperties(SchematicSymbol const& m, DocumentStream& stream)
 	stream << "</Properties>\n";
 }
 
-void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& m) const
+void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol /* qucsdoc? */ const& m) const
 {
 
 	auto D=doclang_dispatcher["leg_sch"];
@@ -164,14 +165,20 @@ void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol const& 
 	stream << "<Qucs Schematic 0.0.20>\n";
 
 	bool do_prop = false;
-	try{
-		m.paramValue("ViewX1");
-		do_prop = true;
-	}catch(ExceptionCantFind const&){
-	}
-	if(do_prop){
+	//try{
+	//	m.paramValue("ViewX1");
+	//	do_prop = true;
+	//}catch(ExceptionCantFind const&){
+	//}
+	if(0){
 		printProperties(m, stream);
 	}else{
+		stream << "<Properties>\n";
+		assert(m.subckt()->params());
+		for(auto i : *(m.subckt()->params())){
+			stream << "  <" << i.first << "=" << i.second.string() <<">\n";
+		}
+		stream << "</Properties>\n";
 	}
 
 	stream << "<Symbol>\n";     // save all paintings for symbol

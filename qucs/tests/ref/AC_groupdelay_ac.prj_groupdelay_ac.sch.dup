@@ -1,17 +1,20 @@
 <Qucs Schematic 0.0.20>
 <Properties>
-  <View=0,0,0,0,0,0,0>
-  <Grid=0,0,0>
-  <DataSet=unknown>
-  <DataDisplay=unknown>
-  <OpenDisplay=unknown>
-  <Script=unknown>
-  <RunScript=unknown>
-  <showFrame=unknown>
-  <FrameText0=unknown>
-  <FrameText1=unknown>
-  <FrameText2=unknown>
-  <FrameText3=unknown>
+  <DataDisplay=groupdelay_ac.dpl>
+  <DataSet=groupdelay_ac.dat>
+  <FrameText0=Titel>
+  <FrameText1=Gezeichnet von:>
+  <FrameText2=Datum:>
+  <FrameText3=Revision:>
+  <OpenDisplay=1>
+  <PosX=0>
+  <PosY=0>
+  <ViewScale=1>
+  <ViewX1=0>
+  <ViewX2=750>
+  <ViewY1=10>
+  <ViewY2=594>
+  <showFrame=0>
 </Properties>
 <Symbol>
 </Symbol>
