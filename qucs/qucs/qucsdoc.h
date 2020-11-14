@@ -169,6 +169,8 @@ public:
 	QWidget* ownerWidget(){return _owner;}
 	void setOwner(QWidget* o){_owner=o;}
 
+	void setParameter(std::string const&, std::string const&);
+
 private:
 	friend class Simulator;
 

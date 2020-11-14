@@ -19,7 +19,7 @@ namespace OPT{
 namespace notstd{
 	static void to_lower(std::string*){}
 }
-using std::to_string;
+std::string to_string(int);
 #include <map>
 #include <assert.h>
 #include "platform.h"

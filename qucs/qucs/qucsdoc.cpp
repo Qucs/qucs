@@ -345,4 +345,8 @@ Simulator* QucsDoc::simulatorInstance(std::string const& which)
 	return sim;
 }
 /* -------------------------------------------------------------------------------- */
+void setParameter(std::string const&, std::string const&)
+{
+	incomplete();
+}
 /* -------------------------------------------------------------------------------- */
