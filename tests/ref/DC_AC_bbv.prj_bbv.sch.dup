@@ -1,17 +1,15 @@
 <Qucs Schematic 0.0.20>
 <Properties>
-  <View=0,0,0,0,0,0,0>
-  <Grid=0,0,0>
-  <DataSet=unknown>
-  <DataDisplay=unknown>
-  <OpenDisplay=unknown>
-  <Script=unknown>
-  <RunScript=unknown>
-  <showFrame=unknown>
-  <FrameText0=unknown>
-  <FrameText1=unknown>
-  <FrameText2=unknown>
-  <FrameText3=unknown>
+  <DataDisplay=bbv.dpl>
+  <DataSet=bbv.dat>
+  <OpenDisplay=1>
+  <PosX=0>
+  <PosY=0>
+  <ViewScale=0.924731>
+  <ViewX1=-104>
+  <ViewX2=733>
+  <ViewY1=0>
+  <ViewY2=593>
 </Properties>
 <Symbol>
 </Symbol>

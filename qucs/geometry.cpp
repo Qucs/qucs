@@ -26,12 +26,12 @@ std::ostream& operator<<(std::ostream& o, pos_t const& p)
 // rotate counterclockwise. NB: the y axis points downwards on the screen.
 pos_t angle_t::apply(pos_t const& p) const
 {itested();
-	trace3("angle_apply0", _degrees, p.first, p.second);
+//	trace3("angle_apply0", _degrees, p.first, p.second);
 	assert(! (_degrees%90) ); //for now
 	int a = _degrees/90;
 	int s = dsin(a);
 	int c = dcos(a);
-	trace3("angle_apply1", a, s, c);
+//	trace3("angle_apply1", a, s, c);
 	assert(s <=1 && s>=-1);
 	assert(c <=1 && c>=-1);
 	// @angle_apply  a=2  s=0  c=1
@@ -43,7 +43,7 @@ pos_t angle_t::apply(pos_t const& p) const
 	int rx = c*p.first - s*p.second;
 	int ry = s*p.first + c*p.second;
 #endif
-	trace3("angle_apply2", _degrees, rx, ry);
+//	trace3("angle_apply2", _degrees, rx, ry);
 	return pos_t(rx, ry);
 }
 /*--------------------------------------------------------------------------*/
