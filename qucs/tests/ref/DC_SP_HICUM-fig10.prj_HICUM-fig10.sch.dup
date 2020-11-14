@@ -1,17 +1,22 @@
 <Qucs Schematic 0.0.20>
 <Properties>
-  <View=0,0,0,0,0,0,0>
-  <Grid=0,0,0>
-  <DataSet=unknown>
-  <DataDisplay=unknown>
-  <OpenDisplay=unknown>
-  <Script=unknown>
-  <RunScript=unknown>
-  <showFrame=unknown>
-  <FrameText0=unknown>
-  <FrameText1=unknown>
-  <FrameText2=unknown>
-  <FrameText3=unknown>
+  <DataDisplay=HICUM-fig10.dpl>
+  <DataSet=HICUM-fig10.dat>
+  <FrameText0=Title>
+  <FrameText1=Drawn By:>
+  <FrameText2=Date:>
+  <FrameText3=Revision:>
+  <OpenDisplay=0>
+  <PosX=0>
+  <PosY=15>
+  <RunScript=0>
+  <Script=HICUM-fig10.m>
+  <ViewScale=1>
+  <ViewX1=-54>
+  <ViewX2=800>
+  <ViewY1=-19>
+  <ViewY2=800>
+  <showFrame=0>
 </Properties>
 <Symbol>
 </Symbol>

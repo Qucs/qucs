@@ -32,24 +32,46 @@ class Properties : public Command{
 		  }else{
 			  cs.skipbl();
 			  cs.skip1('<');
-			  std::string name;
 			  std::string value;
-			  cs >> name;
-			  value = cs.ctos(">", "=", ">");
-			  trace3("Prop", name, value, cs.fullstring());
+
+			  if(cs.umatch("View")){
+				  cs >> "=";
+				  cs >> value;
+				  s->params()->set("ViewX1", value);
+				  cs >> value;
+				  s->params()->set("ViewY1", value);
+				  cs >> value;
+				  s->params()->set("ViewX2", value);
+				  cs >> value;
+				  s->params()->set("ViewY2", value);
+				  cs >> value;
+				  s->params()->set("ViewScale", value);
+				  cs >> value;
+				  s->params()->set("PosX", value);
+				  value = cs.ctos(">", "=", ">");
+				  s->params()->set("PosY", value);
+			  }else if(cs.umatch("Grid")){
+				  cs >> "=";
+				  cs >> value;
+			  }else{
+				  std::string name;
+				  cs >> name;
+				  value = cs.ctos(">", "=", ">");
+				  trace3("Prop", name, value, cs.fullstring());
 
 #if 0
-			  assert(s->owner());
-			  s->owner()->setParameter(name, value);
+				  assert(s->owner());
+				  s->owner()->setParameter(name, value);
 #else
 
-			  s->params()->set(name, value);
-			  // // cast to qucsDoc?
-			  // if(s->doc()){
-			  //    s->doc()->setParameter(name, value);
-			  // }else{
-			  // }
+				  s->params()->set(name, value);
+				  // // cast to qucsDoc?
+				  // if(s->doc()){
+				  //    s->doc()->setParameter(name, value);
+				  // }else{
+				  // }
 #endif
+			  }
 		  }
 	  }
   }
