@@ -1128,11 +1128,9 @@ DEV_DOT* LegacySchematicLanguage::parseCommand(istream_t& c, DEV_DOT* x) const
 	  unreachable(); // for now
 	  trace2("uuh", s, c.fullString());
 	  assert(false);
-//    cmd.skip();
-//    ++here;
   }else{
   }
-  Command::cmdproc(c, scope);
+  Command::cmdproc(c, scope); // where is x->owner gone?
 
   delete x;
   return NULL;

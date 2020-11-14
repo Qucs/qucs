@@ -60,6 +60,7 @@ CPP_SRC = \
 	syntax.cpp \
 	task_element.cpp \
 	textdoc.cpp \
+	u_parameter.cc \
 	viewpainter.cpp \
 	wire.cpp \
 	wiredialog.cpp \

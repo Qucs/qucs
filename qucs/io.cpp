@@ -287,4 +287,107 @@ istream_t& istream_t::warn(int badness, size_t spot, const std::string& message)
   return *this;
 }
 /*--------------------------------------------------------------------------*/
+#define CS istream_t
+#include <math.h>
+/*--------------------------------------------------------------------------*/
+// from ap_convert.cc
+double CS::ctof()
+{
+  double val = 0.0;
+  double power = 1.0;
+  int    sign = 1;
+
+  skipbl();
+  if (!is_float()) {
+    skipcom();
+    _ok = false;
+    return 0.;
+  }else{
+  }
+
+  if (skip1("-")) {			// sign
+    sign = -1;
+  }else{
+    skip1("+");
+  }
+
+  while (is_digit()) {			// up to dec pt
+    val = 10.0 * val + (ctoc()-'0');
+  }
+  skip1(".");				// dec pt
+
+  while (is_digit()) {			// after dec pt
+    val = 10.0 * val + (ctoc()-'0');
+    power *= .1;
+  }
+
+  if (skip1("eE")) {			// exponent: E form
+    int expo = 0;
+    int es = 1;
+    if (skip1("-")) {
+      es = -1;
+    }else{
+      skip1("+");
+    }
+    while (is_digit())
+      expo = 10 * expo + (ctoc()-'0');
+    expo *= es;
+    power *= pow(10., expo);
+//  }else if ((OPT::units == uSPICE) && skip1("mM")) {		// M is special
+//    if (skip1("eE")) {			// meg
+//      power *= 1e6;
+//    }else if (skip1("iI")) {		// mil
+//      power *= 25.4e-6;
+//    }else{				// plain m (milli)
+//      power *= 1e-3;
+//    }
+  }else if (skip1("M")) {
+//    assert(OPT::units == uSI);
+    power *= 1e6;
+  }else if (skip1("m")) {
+//    assert(OPT::units == uSI);
+    power *= 1e-3;
+  }else if (skip1("uU")) {		// other letters
+    power *= 1e-6;
+  }else if (skip1("nN")) {
+    power *= 1e-9;
+  }else if (skip1("p")) {
+    power *= 1e-12;
+  }else if (skip1("P")) {
+    power *= 1e15; // ((OPT::units == uSI) ? (1e15) : 1e-12);
+  }else if (skip1("fF")) {
+    power *= 1e-15;
+  }else if (skip1("aA")) {
+    power *= 1e-18;
+  }else if (skip1("kK")) {
+    power *= 1e3;
+  }else if (skip1("gG")) {
+    power *= 1e9;
+  }else if (skip1("tT")) {
+    power *= 1e12;
+  }else if (skip1("%")) {untested();
+    power *= 1e-2;
+  }else{
+  }
+  while (is_alpha()) {			// skip letters
+    skip();
+  }
+  skipcom();
+  _ok = true;
+  return (sign*val*power);
+}
+/*--------------------------------------------------------------------------*/
+CS & CS::check(int badness, const std::string& message)
+{
+  skipbl();
+  switch (peek()) {
+  case '/':	_ok = umatch("//"); skip(); break;
+  case ';':
+  case '\'':	_ok = true;  skip(); break;
+  case '\0':	_ok = true; break;
+  default:	_ok = false; warn(badness, message); break;
+  }
+  return *this;
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

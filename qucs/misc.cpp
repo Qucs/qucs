@@ -519,3 +519,13 @@ bool VersionTriplet::operator<=(const VersionTriplet& v2) {
 QString VersionTriplet::toString() {
   return QString("%1.%2.%3").arg(major).arg(minor).arg(patch);
 }
+
+// TODO
+std::string to_string(int n)
+{
+	return std::to_string(n);
+}
+std::string to_string(unsigned n)
+{
+	return std::to_string(n);
+}

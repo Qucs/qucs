@@ -33,11 +33,20 @@
 /*--------------------------------------------------------------------------*/
 // QUCS hacks
 #define CARD_LIST SchematicModel
-#define CS istream_t
 #define OMSTREAM ostream_t
 #include <limits>
+#include <string>
+#include "ap.h"
+#include "schematic_model.h"
+//#include "l_lib.h"
+#define CS istream_t
 static const double MAXDBL=std::numeric_limits<double>::max();
 double const NOT_INPUT = -(MAXDBL)*(.9547658);	/* unlikely number	  */
+inline void error(int, std::string const&)
+{
+  incomplete();
+}
+std::string to_string(int);
 /*--------------------------------------------------------------------------*/
 class LANGUAGE;
 /*--------------------------------------------------------------------------*/

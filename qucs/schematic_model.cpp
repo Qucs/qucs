@@ -24,6 +24,7 @@
 SchematicModel::SchematicModel()
   : Nodes(Nets),
     _parent(nullptr),
+    _params(nullptr),
     _doc_(nullptr)
 { untested();
 	trace2("::SchematicModel", this, _doc_);
@@ -37,6 +38,7 @@ SchematicModel::~SchematicModel()
 SchematicModel::SchematicModel(SchematicDoc* s)
   : Nodes(Nets),
     _parent(nullptr),
+    _params(nullptr),
     _doc_(s)
 {
 	trace2("::SchematicModel s", this, _doc_);
