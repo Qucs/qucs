@@ -29,29 +29,36 @@ QucsDoc* newSchematicDoc(QucsApp& a, QString const& b, QWidget* o)
 namespace{
 class sda : public SchematicSymbol{
 public:
-  sda(SchematicDoc& s) : SchematicSymbol(), _s(s) {itested();
-	  new_subckt();
-	  subckt()->attachDoc(&s);
-  }
+	sda(SchematicDoc& s)
+	  : SchematicSymbol(),
+	    _s(s) { itested();
+		new_subckt();
+		subckt()->attachDoc(&s); // yikes. taskElt hack.
+	}
 
 private:
-  Port& port(unsigned) override{ unreachable(); throw Exception(); }
-  pos_t portPosition(unsigned) const override{ unreachable(); throw Exception();}
-  unsigned numPorts() const override{ return 0; }
+	Port& port(unsigned) override{ unreachable(); throw Exception(); }
+	pos_t portPosition(unsigned) const override{ unreachable(); throw Exception();}
+	unsigned numPorts() const override{ return 0; }
+
 private: // SchematicSymbol
-  SchematicModel const& schematicModel() const{ untested();
-    incomplete();
-    return *subckt();
-  }
-  SchematicModel* schematicModel() { untested();
-    return nullptr;
-  }
-  std::string paramValue(std::string const&) const override{itested();
-    incomplete();
-    return "incomplete";
-  }
+	SchematicModel const& schematicModel() const{ untested();
+		incomplete();
+		return *subckt();
+	}
+	SchematicModel* schematicModel() { untested();
+		return nullptr;
+	}
+	std::string paramValue(std::string const&) const override{itested();
+		incomplete();
+		return "incomplete";
+	}
+	void setParameter(std::string const& n, std::string const& v) override{itested();
+		incomplete();
+		trace2("sda::setParameter", n, v);
+	}
 private:
-  SchematicDoc const& _s;
+	SchematicDoc const& _s;
 };
 }
 
@@ -979,7 +986,7 @@ void SchematicDoc::copy()
   }
 }
 /*--------------------------------------------------------------------------*/
-class cnpsymbol : public SchematicSymbol{
+class cnpsymbol : public SchematicSymbol /* BaseSckt! */ {
 public:
 	explicit cnpsymbol(){
 		new_subckt();

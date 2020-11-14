@@ -25,6 +25,10 @@
 #ifndef AP_H
 #define AP_H
 //#include "md.h"
+#define INTERFACE
+#include <QTextStream> // BUG
+#include "io_trace.h"
+#define CS istream_t
 /*--------------------------------------------------------------------------*/
 INTERFACE char* getcmd(const char*,char*,int);
 /*--------------------------------------------------------------------------*/
