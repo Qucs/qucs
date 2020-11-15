@@ -1,17 +1,22 @@
 <Qucs Schematic 0.0.20>
 <Properties>
-  <View=0,0,0,0,0,0,0>
-  <Grid=0,0,0>
-  <DataSet=unknown>
-  <DataDisplay=unknown>
-  <OpenDisplay=unknown>
-  <Script=unknown>
-  <RunScript=unknown>
-  <showFrame=unknown>
-  <FrameText0=unknown>
-  <FrameText1=unknown>
-  <FrameText2=unknown>
-  <FrameText3=unknown>
+  <DataDisplay=opa227.dpl>
+  <DataSet=opa227.dat>
+  <FrameText0=Title>
+  <FrameText1=Drawn By:>
+  <FrameText2=Date:>
+  <FrameText3=Revision:>
+  <OpenDisplay=0>
+  <PosX=0>
+  <PosY=0>
+  <RunScript=0>
+  <Script=opa227.m>
+  <ViewScale=0.87788>
+  <ViewX1=-20>
+  <ViewX2=848>
+  <ViewY1=78>
+  <ViewY2=615>
+  <showFrame=0>
 </Properties>
 <Symbol>
   <.ID -20 44 OPA227_>

@@ -28,13 +28,14 @@ private:
 	  return new MScoupled(*this);
   }
   // static Element* info(QString&, char* &, bool getNewOne=false);
-}D;
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "MCOUPLED", &D);
-static Module::INSTALL pp("RF", &D);
+}d0;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "MCOUPLED", &d0);
+static Module::INSTALL pp("RF", &d0);
 
 MScoupled::MScoupled() : Component()
 {
-  Description = QObject::tr("coupled microstrip line");
+  setLabel("coupled microstrip line");
+  setTypeName("MCOUPLED");
 
   Lines.append(new Line(-30,-12,-16,-12,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30,-30,-30,-12,QPen(Qt::darkBlue,2)));
