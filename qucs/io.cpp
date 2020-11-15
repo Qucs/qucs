@@ -17,7 +17,7 @@
 
 DocumentStream::DocumentStream(QFile* /* BUG const */ file)
 	: QTextStream(file)
-{ untested();
+{
 }
 
 std::string istream_t::read_line()

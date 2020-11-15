@@ -81,79 +81,12 @@ qucs_default_components_la_SOURCES = \
 	photodiode.cpp \
 	EKV26MOS.cpp
 
-LOGIC_STUFF =\
-  vfile.cpp \
-  dff_SR.cpp jkff_SR.cpp tff_SR.cpp \
-  logical_or.cpp \
-  logical_nor.cpp logical_and.cpp logical_nand.cpp logical_xor.cpp \
-  logical_xnor.cpp logical_inv.cpp digi_source.cpp \
-  logical_buf.cpp \
-  gatedDlatch.cpp logic_0.cpp logic_1.cpp mux2to1.cpp mux4to1.cpp mux8to1.cpp \
-  DLS_nto1.cpp DLS_1ton.cpp andor4x2.cpp andor4x3.cpp andor4x4.cpp \
-  dmux2to4.cpp dmux3to8.cpp dmux4to16.cpp ha1b.cpp fa1b.cpp fa2b.cpp
-
 
 qucs_default_components_la_LIBADD = $(QT_LIBS)
 
-# BUG: move to commands.
-COMMANDS = \
-	ac_sim.cpp \
-	dc_sim.cpp \
-	digi_sim.cpp \
-	hb_sim.cpp \
-	opt_sim.cpp \
-	param_sweep.cpp \
-	sp_sim.cpp \
-	tr_sim.cpp
 
-LUMPED_COMPONENTS = \
-	ampere_ac.cpp \
-	ampere_noise.cpp \
-	amplifier.cpp \
-	biast.cpp \
-	bjt.cpp \
-	bjtsub.cpp \
-	capacitor.cpp \
-	cccs.cpp \
-	ccvs.cpp \
-	coplanar.cpp \
-	cpwgap.cpp \
-	cpwopen.cpp \
-	cpwshort.cpp \
-	cpwstep.cpp \
-	dcblock.cpp \
-	dcfeed.cpp \
-	diode.cpp \
-	gyrator.cpp \
-	inductor.cpp \
-	iprobe.cpp \
-	ipulse.cpp \
-	irect.cpp \
-	jfet.cpp \
-	mosfet.cpp \
-	mosfet_sub.cpp \
-	mscorner.cpp \
-	mscross.cpp \
-	msgap.cpp \
-	mslange.cpp \
-	msline.cpp \
-	msmbend.cpp \
-	msopen.cpp \
-	msstep.cpp \
-	mstee.cpp \
-	msvia.cpp \
-	mutual.cpp \
-	opamp.cpp \
-	phaseshifter.cpp \
-	resistor.cpp \
-	subcirport.cpp \
-	substrate.cpp \
-	tline.cpp \
-	vccs.cpp \
-	vcvs.cpp \
-	volt_noise.cpp \
-	vpulse.cpp \
-	vrect.cpp
+include MakeList
+
 
 # are these really *source* files?!
 # verilogstuff =
@@ -171,8 +104,9 @@ qucs_default_components_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 # some stuff mostly related to legacy components
 qucs_default_components_la_SOURCES += \
-	${COMMANDS} \
+	${TASK_ELEMENTS} \
 	${LUMPED_COMPONENTS} \
+	${RF_COMPONENTS} \
 	vacomponent.cpp \
 	vhdlfile.cpp \
 	ground.cpp \
@@ -188,8 +122,7 @@ noinst_HEADERS = $(MOCHEADERS) \
   inductor.h biast.h dcblock.h dcfeed.h ground.h \
   attenuator.h circulator.h isolator.h \
   source_ac.h ac_sim.h cccs.h \
-  ccvs.h coplanar.h hb_sim.h mscorner.h mslange.h \
-  mscross.h msline.h msstep.h mstee.h \
+  ccvs.h coplanar.h hb_sim.h \
   tline.h tr_sim.h component.h gyrator.h phaseshifter.h vhdlfile.h \
   iprobe.h wprobe.h volt_noise.h ampere_noise.h msmbend.h msopen.h ampere_ac.h \
   jfet.h mosfet.h msgap.h bjtsub.h mosfet_sub.h vpulse.h ipulse.h vrect.h \

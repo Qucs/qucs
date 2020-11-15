@@ -1,26 +1,44 @@
 /***************************************************************************
-                          mscross.cpp  -  description
-                             -------------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "mscross.h"
+#include "component.h"
+#include "module.h"
+#include "globals.h"
 
+namespace{
 
-MScross::MScross()
+class MScross : public MultiViewComponent {
+private:
+	MScross(MScross const& x) : MultiViewComponent(x) {}
+public:
+  explicit MScross();
+  ~MScross();
+  Component* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
+
+private: // Symbol
+  Element* clone() const{return new MScross(*this);}
+protected:
+  void createSymbol();
+}d0;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "MCROSS", &d0);
+static Module::INSTALL pp("RF", &d0);
+
+MScross::MScross() : MultiViewComponent()
 {
-  Description = QObject::tr("microstrip cross");
+	setLabel("microstrip cross");
+	setTypeName("MCROSS");
 
   Model = "MCROSS";
   Name  = "MS";
@@ -106,4 +124,6 @@ void MScross::createSymbol()
 
   tx = x1+4;
   ty = y2+4;
+}
+
 }

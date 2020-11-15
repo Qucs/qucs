@@ -1,28 +1,40 @@
 /***************************************************************************
-                          mstee.cpp  -  description
-                             -------------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "mstee.h"
-#include "qucs.h"
+#include "qucs.h" // BUG
+#include "some_font_stuff.h" // BUG
+#include "component.h"
+#include "module.h"
+#include "globals.h"
 
-#include "some_font_stuff.h"
+namespace{
+class MStee : public MultiViewComponent  {
+public:
+  MStee();
+ ~MStee();
+  Component* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
 
+protected:
+  void createSymbol();
+}d0;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "MTEE", &d0);
+static Module::INSTALL pp("RF", &d0);
 
 MStee::MStee()
 {
-  Description = QObject::tr("microstrip tee");
+  setLabel("microstrip tee");
+  setTypeName("MTEE");
 
   x1 = -30; y1 = -11;
   x2 =  30; y2 =  30;
@@ -110,4 +122,5 @@ void MStee::createSymbol()
   Ports.append(new ComponentPort(-30, 0));
   Ports.append(new ComponentPort( 30, 0));
   Ports.append(new ComponentPort(  0,30));
+}
 }
