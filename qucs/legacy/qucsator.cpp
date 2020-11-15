@@ -451,7 +451,6 @@ void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
 	std::string what;
 	cs >> what;
 
-
 	// possibly not a good idea.
 	QString f = QucsSettings.QucsHomeDir.filePath("netlist.txt");
 
@@ -471,10 +470,13 @@ void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
 	DocumentFormat const* n = prechecked_cast<DocumentFormat const*>(dl);
 
 	assert(doc());
+	// n->save(Stream, d); // ??
 	// if doc is schematic_doc?
 	if(auto d = dynamic_cast<SchematicDoc const*>(doc())){
+		SchematicSymbol const* m = d->root();
+		assert(m);
 		try{
-			n->save(Stream, *d->root());
+			n->save(Stream, *m);
 		}catch(...){
 			message(QucsMsgFatal, "Error writing netlist file.");
 			throw;

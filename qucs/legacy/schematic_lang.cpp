@@ -335,7 +335,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 				// TODO: new__instance(stream, &owner, owner.subckt());
 				c = getComponentFromName(Line);
 				if(c){
-					c->setOwner(&owner);
+					c->setOwner(&owner); // owner->subckt()?
 				}else{
 				}
 				if(Symbol* sym=dynamic_cast<Symbol*>(c) ){
