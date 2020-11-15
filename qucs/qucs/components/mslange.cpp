@@ -1,26 +1,41 @@
 /***************************************************************************
-                          mscoupled.cpp  -  description
-                             -------------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2010 by Frans Schreuder
-    email                : fransschreuder@lists.sourceforge.net
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "mslange.h"
+#include "component.h"
+#include "globals.h"
+#include "module.h"
 
+namespace{
+
+class MSlange : public Component  {
+private:
+  MSlange(MSlange const& m) : Component(m) {};
+public:
+  MSlange();
+  ~MSlange();
+  Component* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
+private:
+  Element* clone() const{ return new MSlange(*this); }
+}d0;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "MLANGE", &d0);
+static Module::INSTALL pp("RF", &d0);
 
 MSlange::MSlange()
 {
-  Description = QObject::tr("microstrip lange coupler");
+  setLabel("microstrip lange coupler");
+  setTypeName("MLANGE");
 
   Lines.append(new Line(-30,-30,-30, 10,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30, 30,-30, 20,QPen(Qt::darkBlue,2)));
@@ -78,4 +93,6 @@ Element* MSlange::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new MSlange();
   return 0;
+}
+
 }

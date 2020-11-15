@@ -1,26 +1,42 @@
 /***************************************************************************
-                          msstep.cpp  -  description
-                             -------------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "msstep.h"
+#include "component.h"
+#include "globals.h"
+#include "module.h"
+
+namespace{
+
+class MSstep : public Component  {
+private:
+  MSstep(MSstep const& m) : Component(m) {};
+public:
+  MSstep();
+  ~MSstep();
+  Component* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
+private:
+  Element* clone() const{ return new MSstep(*this); }
+}d0;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "MSTEP", &d0);
+static Module::INSTALL pp("RF", &d0);
 
 
-MSstep::MSstep()
+MSstep::MSstep() : Component()
 {
-  Description = QObject::tr("microstrip impedance step");
+  setLabel("microstrip impedance step");
+  setTypeName("MSTEP");
 
   Lines.append(new Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));
@@ -76,4 +92,6 @@ Element* MSstep::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new MSstep();
   return 0;
+}
+
 }

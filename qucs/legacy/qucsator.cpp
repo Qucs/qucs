@@ -92,7 +92,7 @@ static Dispatcher<Symbol>::INSTALL p0(&symbol_dispatcher, "qucsatorScktHack", &d
 /* -------------------------------------------------------------------------------- */
 static std::string netLabel(Node const* nn)
 {
-	if(!nn){ untested();
+	if(!nn){
 		return "(null)";
 	}else{
 
@@ -250,7 +250,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	s << "\n"; //?
 	if(label.c_str()[3] == _typesep){
 		s << ".Def:" << label.substr(4);
-	}else{ untested();
+	}else{
 		incomplete();
 	}
 
@@ -306,7 +306,7 @@ void QucsatorLang::printtaskElement(TaskElement const* c, ostream_t& s) const
 		if(p2->name() == "Symbol") { // hack??
 		}else if(p2->name()=="p" && p2->value()==""){itested();
 			// unreachable
-		}else{ untested();
+		}else{
 			s << " " << p2->name() << "=\"" << p2->value() << "\"";
 		}
 	}

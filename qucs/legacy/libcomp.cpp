@@ -51,12 +51,12 @@ private:
 	std::string paramValue(unsigned n) const override{ untested();
 		return SchematicSymbol::paramValue(n);
 	}
-	std::string paramValue(std::string const& n) const override{ untested();
-		if(n=="$tx"){ untested();
+	std::string paramValue(std::string const& n) const override{
+		if(n=="$tx"){
 			return "0";
-		}else if(n=="$ty"){ untested();
+		}else if(n=="$ty"){
 			return "0";
-		}else{ untested();
+		}else{
 			return SchematicSymbol::paramValue(n);
 		}
 	}
@@ -76,7 +76,7 @@ private:
 		auto pos = subckt()->portValue(i)->position();
 		return pos;
 	}
-	PaintingList const* symbolPaintings() const override{ untested();
+	PaintingList const* symbolPaintings() const override{
 		return &paintings();
 	}
 
