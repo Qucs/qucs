@@ -19,6 +19,8 @@
 
 namespace{
 class MStee : public MultiViewComponent  {
+private:
+	MStee(MStee const& m) : MultiViewComponent(m) {}
 public:
   MStee();
  ~MStee();
@@ -31,7 +33,7 @@ protected:
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "MTEE", &d0);
 static Module::INSTALL pp("RF", &d0);
 
-MStee::MStee()
+MStee::MStee() : MultiViewComponent()
 {
   setLabel("microstrip tee");
   setTypeName("MTEE");
