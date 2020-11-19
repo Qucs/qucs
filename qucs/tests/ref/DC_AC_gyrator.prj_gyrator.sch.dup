@@ -40,4 +40,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 210 240 12 #000000 0 "This circuit is a primitive gyrator. It simulates an inductor\nby taking a capacitor and an transistor inverter. At the\noutput there should be only little ac voltage.">
 </Paintings>

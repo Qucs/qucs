@@ -90,4 +90,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 500 380 12 #000000 0 "Butterworth low-pass filter\n10MHz cutoff, PI-type,\nimpedance matching 100 Ohm">
 </Paintings>
