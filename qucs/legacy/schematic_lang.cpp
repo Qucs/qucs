@@ -306,6 +306,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 		}else if(Line.at(0) == '<'
 				&& Line.at(1) == '/'){
 			qDebug() << "endtag?" << Line;
+			mode = 0;
 		}else if(Line.isEmpty()){ untested();
 		}else if(Line == "<Components>") {
 			mode='C';
@@ -390,7 +391,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 				trace1("legacy_lang description", Line);
 			}else{
 				trace2("LSL::parse", mode, Line);
-				incomplete();
+				new__instance(stream, &owner, owner.subckt());
 			}
 
 			assert(owner.subckt());

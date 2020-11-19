@@ -10,6 +10,7 @@ LEGACY_SRC = \
 	psdiagram.cpp \
 	portcmd.cpp \
 	modelcmd.cpp \
+	spicecmd.cpp \
 	propertiescmd.cpp \
 	rect3ddiagram.cpp \
 	rectdiagram.cpp \

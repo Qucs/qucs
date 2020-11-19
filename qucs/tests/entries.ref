@@ -98,6 +98,10 @@ R:my_R (null) (null) R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
   <Port my_Port 1 0 0 -23 12 0 0 "1" 1 "analog" 0>
 Port #(.Num(1), .Type()) my_Port((null));
 Port:my_Port (null) Num="1" Type=""
+=====ideal transmission line=========
+  <TLIN my_TLIN 1 0 0 -26 20 0 0 "50 Ohm" 1 "1 mm" 1 "0 dB" 0 "26.85" 0>
+TLIN #(.Z(50 Ohm), .L(1 mm), .Alpha(0 dB), .Temp(26.85)) my_TLIN((null), (null));
+TLIN:my_TLIN (null) (null) Z="50 Ohm" L="1 mm" Alpha="0 dB" Temp="26.85"
 ==============
   <GND my_GND 5 0 0 0 0 0 0>
 GND #() my_GND((null));
