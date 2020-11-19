@@ -1,26 +1,40 @@
 /***************************************************************************
-                                tline.cpp
-                               -----------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "tline.h"
+#include "component.h"
+#include "module.h"
+#include "globals.h"
 
+namespace{
 
-TLine::TLine()
+class TLine : public Component  {
+  TLine(TLine const& t) : Component(t) {}
+public:
+  TLine();
+  ~TLine();
+  Component* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
+private:
+  Element* clone() const{return new TLine(*this); }
+}d0;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "TLIN", &d0);
+static Module::INSTALL pp("lumped", &d0);
+
+TLine::TLine() : Component()
 {
-  Description = QObject::tr("ideal transmission line");
+  setLabel("ideal transmission line");
+  setTypeName("TLIN");
 
   Lines.append(new Line(-30,  0, 30,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-28,  7, 28,  7,QPen(Qt::darkBlue,2)));
@@ -71,4 +85,6 @@ Element* TLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new TLine();
   return 0;
+}
+
 }

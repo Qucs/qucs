@@ -89,6 +89,7 @@ PRJ_TESTS = \
 	DC_SP_opamp_gyrator.prj \
 	DC_TR_active_mixer.prj \
 	SP_mscoupler.prj \
+	SP_wilkinson.prj \
 	TR_resistor.prj \
 	TR_sawtooth-1.prj
 
@@ -118,7 +119,6 @@ LATER_TESTS = \
 	SP_SmithChartTest.prj \
 	SP_Sparam_diagrams.prj \
 	SP_sparam.prj \
-	SP_wilkinson.prj \
 	TR_555_Fig7.prj \
 	TR_555_Fig9.prj \
 	TR_boostconverter.prj \
