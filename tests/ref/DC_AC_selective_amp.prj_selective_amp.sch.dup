@@ -58,4 +58,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 440 60 12 #000000 0 "Classical design of selective voltage amplifier:\n- common-emitter circuit\n- bias control with voltage divider R1, R2\n- bias stabilisation with negative current\n  feedback R3\n- use C2 to prevent R3 from decreasing gain\n- filtering with high Q resonance C1/L1/R4 load">
 </Paintings>
