@@ -1,26 +1,41 @@
 /***************************************************************************
-                          iprobe.cpp  -  description
-                             -------------------
-    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "iprobe.h"
+#include "component.h"
+#include "module.h"
+#include "globals.h"
+
+namespace{
+
+class iProbe : public Component  {
+  iProbe(iProbe const& p) : Component(p) {}
+public:
+  iProbe();
+  ~iProbe();
+  Component* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
+private:
+  Element* clone() const override{ return new iProbe(*this);}
+}d0;
+Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "IProbe", &d0);
+Module::INSTALL pp("sources", &d0);
 
 
-iProbe::iProbe()
+iProbe::iProbe() : Component()
 {
-  Description = QObject::tr("current probe");
+  setLabel("current probe");
+  setTypeName("IProbe");
 
   Lines.append(new Line(-30,  0,-20,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 30,  0, 20,  0,QPen(Qt::darkBlue,2)));
@@ -69,4 +84,6 @@ Element* iProbe::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new iProbe();
   return 0;
+}
+
 }
