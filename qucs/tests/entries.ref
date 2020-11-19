@@ -22,6 +22,10 @@ VProbe:my_VProbe (null) (null)
   <Iac my_Iac 1 0 0 20 -26 0 1 "1 mA" 1 "1 GHz" 0 "0" 0 "0" 0>
 Iac #(.I(1 mA), .f(1 GHz), .Phase(0), .Theta(0)) my_Iac((null), (null));
 Iac:my_Iac (null) (null) I="1 mA" f="1 GHz" Phase="0" Theta="0"
+=====current probe=========
+  <IProbe my_IProbe 1 0 0 -26 16 0 0>
+IProbe #() my_IProbe((null), (null));
+IProbe:my_IProbe (null) (null)
 ==============
   <VCCS my_VCCS 1 0 0 -26 34 0 0 "1 S" 1 "0" 0>
 VCCS #(.G(1 S), .T(0)) my_VCCS((null), (null), (null), (null));
