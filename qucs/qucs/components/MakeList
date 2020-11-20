@@ -1,0 +1,93 @@
+
+LUMPED_COMPONENTS = \
+	ampere_ac.cpp \
+	ampere_noise.cpp \
+	amplifier.cpp \
+	biast.cpp \
+	bjt.cpp \
+	bjtsub.cpp \
+	capacitor.cpp \
+	cccs.cpp \
+	ccvs.cpp \
+	coplanar.cpp \
+	cpwgap.cpp \
+	cpwopen.cpp \
+	cpwshort.cpp \
+	cpwstep.cpp \
+	dcblock.cpp \
+	dcfeed.cpp \
+	diode.cpp \
+	gyrator.cpp \
+	inductor.cpp \
+	iprobe.cpp \
+	ipulse.cpp \
+	irect.cpp \
+	jfet.cpp \
+	mosfet.cpp \
+	mosfet_sub.cpp \
+	mutual.cpp \
+	opamp.cpp \
+	phaseshifter.cpp \
+	resistor.cpp \
+	subcirport.cpp \
+	substrate.cpp \
+	tline.cpp \
+	vccs.cpp \
+	vcvs.cpp \
+	volt_noise.cpp \
+	vpulse.cpp \
+	vrect.cpp
+
+RF_COMPONENTS = \
+	mscorner.cpp \
+	mscross.cpp \
+	msgap.cpp \
+	mslange.cpp \
+	msline.cpp \
+	msmbend.cpp \
+	msopen.cpp \
+	msstep.cpp \
+	mstee.cpp \
+	msvia.cpp
+
+TASK_ELEMENTS = \
+	ac_sim.cpp \
+	dc_sim.cpp \
+	digi_sim.cpp \
+	hb_sim.cpp \
+	opt_sim.cpp \
+	param_sweep.cpp \
+	sp_sim.cpp \
+	tr_sim.cpp
+
+LOGIC_COMPONENTS = \
+	andor4x2.cpp \
+	andor4x3.cpp \
+	andor4x4.cpp \
+	dff_SR.cpp \
+	digi_source.cpp \
+	DLS_1ton.cpp \
+	DLS_nto1.cpp \
+	dmux2to4.cpp \
+	dmux3to8.cpp \
+	dmux4to16.cpp \
+	fa1b.cpp \
+	fa2b.cpp \
+	gatedDlatch.cpp \
+	ha1b.cpp \
+	jkff_SR.cpp \
+	logic_0.cpp \
+	logic_1.cpp \
+	logical_and.cpp \
+	logical_buf.cpp \
+	logical_inv.cpp \
+	logical_nand.cpp \
+	logical_nor.cpp \
+	logical_or.cpp \
+	logical_xnor.cpp \
+	logical_xor.cpp \
+	mux2to1.cpp \
+	mux4to1.cpp \
+	mux8to1.cpp \
+	tff_SR.cpp \
+	vfile.cpp
