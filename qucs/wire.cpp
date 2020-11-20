@@ -47,7 +47,7 @@ public:
 	void getCenter(int&, int&);
 
 private: // Element
-	Wire* clone() const override{ untested();
+	Wire* clone() const override{
 		return new Wire(*this);
 	}
 	QDialog* schematicWidget(QucsDoc*) const override;
@@ -70,7 +70,7 @@ private: // Symbol
 	bool showLabel() const override{ return false; }
 	void expand() override;
 	unsigned numPorts() const override;
-	pos_t portPosition(unsigned i) const{ itested();
+	pos_t portPosition(unsigned i) const{
 		switch(i){
 			case 0: return pos_t(0,0);
 			case 1: return pos_t(abs(_scale), 0);
@@ -133,7 +133,7 @@ Wire::Wire(Wire const& w)
     _port0(),
     _port1(),
     _scale(w._scale)
-{ untested();
+{
   setLabel(w.label());
 }
 /*--------------------------------------------------------------------------*/
@@ -142,7 +142,7 @@ Wire::Wire(pos_t const& p0, pos_t const& p1)
     _port0(),
     _port1(),
     _scale(1.)
-{ itested();
+{
 
 	Symbol::setPosition(p0);
 
@@ -171,18 +171,18 @@ Wire::~Wire()
 }
 /*--------------------------------------------------------------------------*/
 void Wire::findScaleAndAngle(pos_t p1)
-{ untested();
+{
   int x2 = getX(p1);
   int y2 = getY(p1);
   _scale = std::max(abs(x2), abs(y2));
-  if(!_scale){ untested();
-  }else if(x2 > 0){ untested();
+  if(!_scale){
+  }else if(x2 > 0){
     setAngle(0);
-  }else if(x2<0){ untested();
+  }else if(x2<0){
     setAngle(180);
-  }else if(y2>0){ untested();
+  }else if(y2>0){
     setAngle(270);
-  }else if(y2<0){ untested();
+  }else if(y2<0){
     setAngle(90);
   }else{ untested();
   }
@@ -207,21 +207,21 @@ void Wire::findScaleAndAngle(pos_t p1)
 }
 /*--------------------------------------------------------------------------*/
 Symbol* Wire::intersectPorts(Symbol const* s) const
-{ untested();
+{
 	std::vector<pos_t> split;
-	for(unsigned i=0; i<s->numPorts(); ++i){ untested();
+	for(unsigned i=0; i<s->numPorts(); ++i){
 		pos_t p = s->nodePosition(i);
 		trace4("intersectPorts", i, s->nodePosition(i), s->label(), s->typeName());
 
 		if(nodePosition(0) == p) {itested();
 		}else if(nodePosition(1) == p) {itested();
-		}else if(isInterior(p)) { untested();
+		}else if(isInterior(p)) {
 			trace1("found split", p);
 			split.push_back(p);
 		}
 	}
 
-	if(split.size()){ untested();
+	if(split.size()){
 		trace2("intersectPorts", split.size(), split[0]);
 		split.push_back(nodePosition(0));
 		split.push_back(nodePosition(1));
@@ -237,7 +237,7 @@ Symbol* Wire::intersectPorts(Symbol const* s) const
 		auto pp = split.begin();
 		auto next = pp;
 		++next;
-		while(next!=split.end()){ untested();
+		while(next!=split.end()){
 			m->pushBack(new Wire(*pp, *next));
 			trace3("intersectPorts new wire", *pp, *next, split.size());
 			pp = next;
@@ -250,25 +250,25 @@ Symbol* Wire::intersectPorts(Symbol const* s) const
 }
 /*--------------------------------------------------------------------------*/
 Wire* Wire::extendTowards(pos_t const& other) const
-{ untested();
+{
 	auto n0 = nodePosition(0);
 	auto n1 = nodePosition(1);
 
-	if(in_order(n0, other, n1)){ untested();
+	if(in_order(n0, other, n1)){
 		return clone();
-	}else if(in_order(other, n1, n0) && _port1->numPorts()==1){ untested();
+	}else if(in_order(other, n1, n0) && _port1->numPorts()==1){
 		trace3("extend1", other, n1, n0);
 		return new Wire(other, n0);
 	}else if(in_order(other, n0, n1) && _port0->numPorts()==1){ untested();
 		trace3("extend2",other, n0, n1);
 		return new Wire(other, n1);
-	}else{ untested();
+	}else{
 		return nullptr;
 	}
 }
 /*--------------------------------------------------------------------------*/
 Symbol* Wire::newTee(Wire const* o) const
-{ untested();
+{
 	assert((angle() - o->angle() )%180);
 	pos_t t0 = nodePosition(0);
 	pos_t t1 = nodePosition(1);
@@ -277,13 +277,13 @@ Symbol* Wire::newTee(Wire const* o) const
 	Symbol const* teew = o;
 
 	trace2("interior?", o->nodePosition(0), o->nodePosition(1));
-	if(isInterior(o->nodePosition(0))){ untested();
+	if(isInterior(o->nodePosition(0))){
 		s = new SubcktBase(); // BUG: inherit.
 		split = o->nodePosition(0);
 	}else if(isInterior(o->nodePosition(1))){ untested();
 		s = new SubcktBase(); // BUG: inherit.
 		split = o->nodePosition(1);
-	}else if(o->isInterior(nodePosition(0))){ untested();
+	}else if(o->isInterior(nodePosition(0))){
 		// BUG: call o->newUnion(this)
 		s = new SubcktBase(); // BUG: inherit.
 		split = nodePosition(0);
@@ -297,10 +297,10 @@ Symbol* Wire::newTee(Wire const* o) const
 		t0 = o->nodePosition(0);
 		t1 = o->nodePosition(1);
 		teew = this;
-	}else{ untested();
+	}else{
 	}
 
-	if(s){ untested();
+	if(s){
 		trace1("building tee", split);
 		s->new_subckt();
 		SchematicModel* m = s->subckt();
@@ -310,7 +310,7 @@ Symbol* Wire::newTee(Wire const* o) const
 		m->pushBack(new Wire(t0, split));
 		m->pushBack(teew->clone());
 		m->pushBack(new Wire(t1, split));
-	}else{ untested();
+	}else{
 		trace1("no tee", split);
 	}
 
@@ -318,27 +318,27 @@ Symbol* Wire::newTee(Wire const* o) const
 }
 /*--------------------------------------------------------------------------*/
 Symbol* Wire::newUnion(Symbol const* s) const
-{ untested();
+{
 	trace3("Wire::newUnion(Symbol)", s->label(), nodePosition(0), nodePosition(1));
 //	auto p = dynamic_cast<Place const*>(s);
 	auto o = dynamic_cast<Wire const*>(s);
 //	if(p){ untested();
 //		return newPort(p);
 //	}else
-	if(o){ untested();
+	if(o){
 		trace2("Wire::newUnion(Wire)", o->nodePosition(0), o->nodePosition(1));
 		trace2("Wire::newUnion(Wire)", _port0->degree(), _port1->degree());
 		trace2("Wire::newUnion(Wire)", angle(), o->angle());
 		
-		if( (360 + angle() - o->angle() )%180 ){ untested();
+		if( (360 + angle() - o->angle() )%180 ){
 			return newTee(o);
-		}else if(isNet(o->nodePosition(0))){ untested();
+		}else if(isNet(o->nodePosition(0))){
 			return extendTowards(o->nodePosition(1));
 		}else if(isNet(o->nodePosition(1))){ untested();
 			return extendTowards(o->nodePosition(0));
 		}else{ untested();
 		}
-	}else{ untested();
+	}else{
 		return intersectPorts(s);
 	}
 	return nullptr;
@@ -393,14 +393,14 @@ void Wire::setName(const QString&, const QString&, int, int, int)
 #endif
 /*--------------------------------------------------------------------------*/
 void Wire::updatePort()
-{ untested();
+{
 //  int x = dcos(angle()) * _scale;
 //  int y = -dsin(angle()) * _scale;
   // setP1(pos_t(abs(_scale), 0));
 }
 /*--------------------------------------------------------------------------*/
 std::string Wire::paramValue(std::string const& n) const
-{ untested();
+{
 //  if(n=="$hflip"){ untested();
 //    if (_scale<0){ untested();
 //      incomplete();
@@ -422,16 +422,16 @@ std::string Wire::paramValue(std::string const& n) const
     return std::to_string(getY(p));
   }else if(n=="netname"){ untested();
     return _netname;
-  }else{ untested();
+  }else{
     return Symbol::paramValue(n);
   }
 }
 // ----------------------------------------------------------------
 void Wire::setParameter(std::string const& n, std::string const& v)
-{ untested();
-  if(n=="nx"){ untested();
+{
+  if(n=="nx"){
     nx = v;
-  }else if(n=="ny"){ untested();
+  }else if(n=="ny"){
     ny = v;
 //  }else if(n=="$xposition"){ untested();
 //    _cx = atoi(v.c_str());
@@ -449,45 +449,45 @@ void Wire::setParameter(std::string const& n, std::string const& v)
     Symbol::setParameter(n, v);
     int tmp = atoi(v.c_str());
     assert(tmp==1);
-  }else if(n=="delta"){ untested();
+  }else if(n=="delta"){
     delta = v;
-  }else if(n=="deltax"){ untested();
+  }else if(n=="deltax"){
     int V = atoi(v.c_str());
     auto p1 = pP1();
     p1.first = V;
-    if(V){ untested();
+    if(V){
       p1.second = 0;
-    }else{ untested();
+    }else{
     }
     findScaleAndAngle(p1);
     updatePort();
-  }else if(n=="deltay"){ untested();
+  }else if(n=="deltay"){
     int V = atoi(v.c_str());
     auto p1 = pP1();
     p1.second = V;
-    if(V){ untested();
+    if(V){
       p1.first = 0;
-    }else{ untested();
+    }else{
     }
     findScaleAndAngle(p1);
     updatePort();
-  }else if(n=="netname"){ untested();
+  }else if(n=="netname"){
     _netname = v;
-  }else{ untested();
+  }else{
     Symbol::setParameter(n, v);
   }
 }
 // ----------------------------------------------------------------
 unsigned Wire::numPorts() const
-{ itested();
+{
   return 2; /* really? */
 }
 // ----------------------------------------------------------------
 void Wire::expand()
-{ untested();
+{
   // stash NodeLabels as subdevices.
   // just not sure where exactly.
-  if (_netname != ""){ untested();
+  if (_netname != ""){
     new_subckt();
     Symbol* n = symbol_dispatcher.clone("NodeLabel");
     n->setLabel(_netname);
@@ -511,48 +511,48 @@ rect_t Wire::bounding_rect() const
 }
 // ----------------------------------------------------------------
 Node* Wire::connectNode(unsigned i, NodeMap& nm)
-{ untested();
+{
   assert(i<2);
 
-  if(hasNet()){ itested();
-  }else{ untested();
+  if(hasNet()){
+  }else{
     nm.registerVertex(this);
   }
   assert(hasNet());
 
   Node* n = Symbol::connectNode(i, nm);
 
-  if(Node* n2 = port((i+1)%2).value()){ untested();
+  if(Node* n2 = port((i+1)%2).value()){
     trace3("wire::connectnode", i, n, n2);
     trace2("wire addedge", n->netLabel(), n2->netLabel());
 
     // resolve conflicts more carefully...
-    if(!n->hasNetLabel()){ untested();
+    if(!n->hasNetLabel()){
       n->setNetLabel(n2->netLabel());
-    }else if(!n2->hasNetLabel()){ untested();
+    }else if(!n2->hasNetLabel()){
       n2->setNetLabel(n->netLabel());
-    }else{ untested();
+    }else{
       std::cerr << "possible label conflict. not sure what to do\n";
       std::cerr << n->netLabel() << " vs " << n2->netLabel() << "\n";
     }
     trace2("wire addededge", n->netLabel(), n2->netLabel());
     trace2("wire addededge2", n->netLabel(), n2->netLabel());
-  }else{ untested();
+  }else{
   }
 
   nm.addEdge(this, n);
   trace3("Wire::connect", i, n->degree(), degree());
 
-  if(_netname!=""){ untested();
+  if(_netname!=""){
     trace2("wire override netlabel", n->netLabel(), _netname);
     n->setNetLabel(_netname);
-  }else{ untested();
+  }else{
   }
   return n;
 }
 // ----------------------------------------------------------------
 Node* Wire::disconnectNode(unsigned i, NodeMap& nm)
-{ itested();
+{
   trace3("Wire::disconnect", label(), i, degree());
   assert(hasNet());
   Node* n = Symbol::disconnectNode(i, nm);
@@ -561,8 +561,8 @@ Node* Wire::disconnectNode(unsigned i, NodeMap& nm)
   //Conductor::removeEdge(n, nm);?
   nm.removeEdge(n, this);
 
-  if(degree()){ itested();
-  }else{ untested();
+  if(degree()){
+  }else{
     nm.deregisterVertex(this);
   }
 
@@ -570,18 +570,18 @@ Node* Wire::disconnectNode(unsigned i, NodeMap& nm)
 }
 /*--------------------------------------------------------------------------*/
 bool Wire::isInterior(pos_t const& p) const
-{ untested();
-	if(p==nodePosition(0)){ untested();
+{
+	if(p==nodePosition(0)){
 		return false;
 	}else if(p==nodePosition(1)){itested();
 		return false;
-	}else{ untested();
+	}else{
 		return isNet(p);
 	}
 }
 /*--------------------------------------------------------------------------*/
 bool Wire::isNet(pos_t const& p) const
-{itested();
+{
   int x = getX(p);
   int y = getY(p);
   x -= cx();
@@ -591,7 +591,7 @@ bool Wire::isNet(pos_t const& p) const
 }
 /*--------------------------------------------------------------------------*/
 pos_t Wire::pP1() const
-{ untested();
+{
 	pos_t p(abs(_scale), 0);
 	assert(!(angle()%90));
 	rotate_after_mirror a(angle(), (1-hflip())/2, (1-vflip())/2);

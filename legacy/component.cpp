@@ -570,15 +570,15 @@ void Component::setParameter(unsigned pos, std::string const& v)
 
 // -------------------------------------------------------
 void Component::setParameter(std::string const& name, std::string const& v)
-{itested();
-  if(name=="$angle"){itested();
+{
+  if(name=="$angle"){
     int r = atoi(v.c_str());
     trace3("Component::setParameter", name, v, label());
     assert(!(r % 90)); // for now.
     r /= 90;
     r %= 4;
     set_rotated(r);
-  }else if(name=="$vflip"){itested();
+  }else if(name=="$vflip"){
     int r = atoi(v.c_str());
     assert(r==1 || r==-1);
     r -= 1;
@@ -628,8 +628,8 @@ static int paramDisplay(P const& p, int offset)
 
 // -------------------------------------------------------
 std::string Component::paramValue(std::string const& name) const
-{itested();
-  if(name=="$angle"){itested();
+{
+  if(name=="$angle"){
     trace1("Component::paramValue", _rotated);
     return std::to_string(_rotated*90);
   }else if(name=="$tx"){
@@ -640,12 +640,12 @@ std::string Component::paramValue(std::string const& name) const
     return std::to_string(center().first);
   }else if(name=="$yposition"){
     return std::to_string(center().second);
-  }else if(name=="$vflip"){itested();
+  }else if(name=="$vflip"){
     // 0 |-> 1
     // 1 |-> -1
     int m = 1 - mirroredX * 2;
     return std::to_string(m);
-  }else if(name=="$hflip"){itested();
+  }else if(name=="$hflip"){
     return "1";
   }else if(name=="$param_display"){
     return std::to_string(paramDisplay(Props, 2 + Symbol::paramCount()));
@@ -1277,7 +1277,7 @@ void MultiViewComponent::recreate()
     if(mmir){
       mirrorX();
     }
-    if (rrot){itested();
+    if (rrot){
       set_rotated( rrot%4 );
     }else{
     }
