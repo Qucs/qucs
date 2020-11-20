@@ -124,7 +124,7 @@ istream_t& istream_t::skip1(char t)
   if (match1(t)) {
     skip();
     assert(_ok);
-  }else{ untested();
+  }else{
     _ok = false;
   }
   return *this;
@@ -146,19 +146,19 @@ std::string istream_t::ctos(const std::string& term,
 
 	std::string s;
 	std::string::size_type which_quote = find1(begin_quote);
-	if (which_quote != std::string::npos) { untested();
+	if (which_quote != std::string::npos) {
 		int quotes = 1;
 		skip(); // the quote
 		begin_string = cursor();
 		char the_begin_quote = begin_quote[which_quote];
 		char the_end_quote = end_quote[which_quote];
-		for (;;) { untested();
+		for (;;) {
 			if (!ns_more()) {itested();
 				end_string = cursor();
 				warn(bDANGER, std::string("need ") + the_end_quote);
 				break;
-			}else if (skip1(the_end_quote)) { untested();
-				if (--quotes <= 0) { untested();
+			}else if (skip1(the_end_quote)) {
+				if (--quotes <= 0) {
 					end_string = cursor() - 1;
 					break;
 				}else{ untested();
@@ -171,7 +171,7 @@ std::string istream_t::ctos(const std::string& term,
 				s += _cmd.substr(begin_string, end_string-begin_string);
 				begin_string = cursor();
 				skip1(the_end_quote);
-			}else{ untested();
+			}else{
 				skip();
 			}
 		}

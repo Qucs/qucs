@@ -67,7 +67,7 @@ public: // internal net stuff
 	bool hasNetLabel() const;
 
 public:
-	size_t degree() const{itested();
+	size_t degree() const{
 		return _adj.size();
 	}
 	void addAdj(Conductor* c){

@@ -80,7 +80,7 @@ static void parsePainting(QString Line, Painting*p)
 }
 /*--------------------------------------------------------------------------*/
 static bool PaintingListLoad(QString Line, PaintingList& List)
-{ itested();
+{
 	Painting *p=0;
 	QString cstr;
 	{
@@ -395,12 +395,12 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 			}
 
 			assert(owner.subckt());
-			if(c){itested();
+			if(c){
 				trace2("pushing back", c->label(), typeid(*c).name());
 				Element const* cc = c;
 				assert(cc->owner() == &owner);
 				owner.subckt()->pushBack(c);
-			}else{itested();
+			}else{
 			}
 		}
 	}
@@ -416,10 +416,10 @@ void LegacySchematicLanguage::parse(istream_t& stream, SchematicSymbol& owner) c
 }
 
 Diagram* LegacySchematicLanguage::loadDiagram(Diagram* d, istream_t& stream)const
-{itested();
+{
 	QString Line = QString::fromStdString(stream.fullString());
 	QString cstr;
-	if(!stream.atEnd()) {itested();
+	if(!stream.atEnd()) {
 		trace1("diagram?", Line);
 		if(Line.at(0) == '<' && Line.at(1) == '/'){ untested();
 			return nullptr;
@@ -435,7 +435,7 @@ Diagram* LegacySchematicLanguage::loadDiagram(Diagram* d, istream_t& stream)cons
 		std::string what=cstr.toStdString();
 
 		auto type = what.c_str()+1;
-		if(diagram_dispatcher[what.c_str()+1]){itested();
+		if(diagram_dispatcher[what.c_str()+1]){
 			// d=prechecked_cast<Diagram*>(x->clone());
 			assert(d);
 			qDebug() << "got diagram" << what.c_str();
@@ -1091,7 +1091,7 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 //		bool err = obsolete_wireload(w, Line);
 	}else if(auto s=dynamic_cast<Symbol*>(e)){
 		::parseSymbol(l, s);
-	}else if(auto d=dynamic_cast<Diagram*>(e)){ untested();
+	}else if(auto d=dynamic_cast<Diagram*>(e)){
 		loadDiagram(d, c);
 	}else if(auto s=dynamic_cast<Painting*>(e)){
 		::parsePainting(l, s);
@@ -1143,7 +1143,7 @@ std::string LegacySchematicLanguage::findType(istream_t& c) const
 	auto Line = QString::fromStdString(l);
 
 	Line = Line.trimmed();
-	if(Line.at(0) != '<') { untested();
+	if(Line.at(0) != '<') {
 		return "unknown_type";
 	}else{
 	}

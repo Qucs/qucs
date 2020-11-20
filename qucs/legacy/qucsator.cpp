@@ -359,7 +359,7 @@ void QucsatorLang::printComponent(Component const* c, ostream_t& s) const
 			std::string name = sym->paramName(ii);
 			//trace2("param", name, value);
 
-			if(name.at(0)=='$'){itested();
+			if(name.at(0)=='$'){
 				// hmmm
 //			}else if(!sym->paramIsPrintable(ii)){ untested();
 			}else if(name==""){itested();

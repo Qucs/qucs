@@ -924,7 +924,7 @@ int main(int argc, char *argv[])
       createListComponentEntry();
       return 0;
     }
-    else { untested();
+    else {
       fprintf(stderr, "Error: Unknown option: %s\n", argv[i]);
       return -1;
     }
