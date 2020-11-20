@@ -456,7 +456,7 @@ unsigned SchematicModel::nextIdx(std::string const& s) const
 				auto str = j->second->label().substr(n);
 				trace3("nextIdx", j->second->label().substr(0, n), n, str);
 				unsigned z;
-				if(sscanf(str.c_str(), "%d", &z) == 1){ untested();
+				if(sscanf(str.c_str(), "%d", &z) == 1){ itested();
 					r = std::max(z, r);
 				}else{ untested();
 				}

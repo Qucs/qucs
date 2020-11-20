@@ -102,15 +102,8 @@ private:
 	Wire* extendTowards(pos_t const&) const;
 
 	pos_t pP1() const;
-//		return _pp1;
-//	}
-//	void setP1(pos_t const& p){ untested();
-//		_pp1 = p;
-//	}
 
 public: // FIXME, these are still around. (from element)
-//	int x1() const { return _port0.x(); }
-//	int y1() const { return _port0.y(); }
 	int x2() const { return pP1().first; }
 	int y2() const { return pP1().second; }
 
@@ -136,25 +129,31 @@ Wire::Wire() : Symbol(),
 }
 /*--------------------------------------------------------------------------*/
 Wire::Wire(Wire const& w)
-  : Symbol(w), _port0(), _port1(), _scale(w._scale)
+  : Symbol(w),
+    _port0(),
+    _port1(),
+    _scale(w._scale)
 { untested();
   setLabel(w.label());
 }
 /*--------------------------------------------------------------------------*/
 Wire::Wire(pos_t const& p0, pos_t const& p1)
   : Symbol(),
-	 _port0(),
+    _port0(),
     _port1(),
-    _scale(1)
+    _scale(1.)
 { itested();
 
 	Symbol::setPosition(p0);
 
-	 pos_t pp1((p1 - p0).first, (p1 - p0).second),
+	pos_t pp1((p1 - p0).first, (p1 - p0).second);
 	findScaleAndAngle(pp1);
 	updatePort();
 
 	assert(_scale>0); // for now?
+
+	assert(p0 == nodePosition(0));
+	assert(p1 == nodePosition(1));
 
 	// assert(cx() == _x1);
 	// assert(cy() == _y1);
@@ -207,28 +206,6 @@ void Wire::findScaleAndAngle(pos_t p1)
 #endif
 }
 /*--------------------------------------------------------------------------*/
-#if 0
-// places don't work like this.
-Symbol* Wire::newPort(Place const* pl) const
-{ untested();
-	pos_t where = pl->nodePosition(0);
-
-	if(nodePosition(0) == where) { untested();
-	}else if(nodePosition(1) == where) { untested();
-	}else if(isNet(where)) { untested();
-		Symbol *s = new SubcktBase(); // BUG: inherit.
-		s->new_subckt();
-		SchematicModel* m = s->subckt();
-		m->pushBack( new Wire(nodePosition(0), where));
-		m->pushBack( new Wire(nodePosition(1), where));
-
-		return s;
-	}else{ untested();
-	}
-	return nullptr;
-}
-#endif
-/*--------------------------------------------------------------------------*/
 Symbol* Wire::intersectPorts(Symbol const* s) const
 { untested();
 	std::vector<pos_t> split;
@@ -239,10 +216,10 @@ Symbol* Wire::intersectPorts(Symbol const* s) const
 		if(nodePosition(0) == p) {itested();
 		}else if(nodePosition(1) == p) {itested();
 		}else if(isInterior(p)) { untested();
+			trace1("found split", p);
 			split.push_back(p);
 		}
 	}
-
 
 	if(split.size()){ untested();
 		trace2("intersectPorts", split.size(), split[0]);
@@ -262,7 +239,7 @@ Symbol* Wire::intersectPorts(Symbol const* s) const
 		++next;
 		while(next!=split.end()){ untested();
 			m->pushBack(new Wire(*pp, *next));
-			trace3("intersectPorts", *pp, *next, split.size());
+			trace3("intersectPorts new wire", *pp, *next, split.size());
 			pp = next;
 			++next;
 		}
@@ -502,7 +479,7 @@ void Wire::setParameter(std::string const& n, std::string const& v)
 }
 // ----------------------------------------------------------------
 unsigned Wire::numPorts() const
-{ untested();
+{ itested();
   return 2; /* really? */
 }
 // ----------------------------------------------------------------
@@ -537,7 +514,7 @@ Node* Wire::connectNode(unsigned i, NodeMap& nm)
 { untested();
   assert(i<2);
 
-  if(hasNet()){ untested();
+  if(hasNet()){ itested();
   }else{ untested();
     nm.registerVertex(this);
   }
