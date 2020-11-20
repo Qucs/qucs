@@ -190,7 +190,7 @@ Node const* Symbol::portValue(unsigned i) const
 /*--------------------------------------------------------------------------*/
 // same as Element::center?
 pos_t Symbol::center()const
-{itested();
+{
 	return Element::center(); // pos_t(_cx, _cy);
 }
 /*--------------------------------------------------------------------------*/

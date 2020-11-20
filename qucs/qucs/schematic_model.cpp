@@ -50,7 +50,7 @@ SchematicModel::SchematicModel(SchematicDoc* s)
 }
 /*--------------------------------------------------------------------------*/
 void SchematicModel::clear()
-{itested();
+{
 	incomplete(); // disconnect components
 	components().clear();
 
@@ -147,7 +147,7 @@ void SchematicModel::erase(Element* what)
 
 // TODO: take iterator.
 Element* SchematicModel::detach(Element* what)
-{itested();
+{
 	assert(what);
 	std::string l = what->label();
 
@@ -181,12 +181,12 @@ Element* SchematicModel::detach(Element* what)
 }
 // TODO: take iterator.
 Element* SchematicModel::attach(Element* what)
-{itested();
+{
 
 	_map.insert(std::make_pair(what->label(), what));
 
 	trace2("SchematicModel::attach", what->label(), this);
-	if(auto c=dynamic_cast<TaskElement*>(what)){ untested();
+	if(auto c=dynamic_cast<TaskElement*>(what)){
 		if(doc()){
 			trace1("SchematicModel::pushBack command", c->label());
 			doc()->commands().push_back(c);
@@ -194,13 +194,13 @@ Element* SchematicModel::attach(Element* what)
 			trace1("SchematicModel::pushBack no command", c->label());
 			// possibly a subcircuit model? ignore commands.
 		}
-	}else if(auto d=diagram(what)){ untested();
+	}else if(auto d=diagram(what)){
 		diagrams().append(d);
 	}else if(dynamic_cast<Conductor*>(element(what))){
 		auto s=dynamic_cast<Symbol*>(what);
 		connect(s);
 		wires().append(s);
-	}else if(auto c=dynamic_cast<Symbol*>(what)){itested();
+	}else if(auto c=dynamic_cast<Symbol*>(what)){
 		connect(c);
 		components().append(c);
 	}else if(auto d=painting(what)){
@@ -242,7 +242,7 @@ NodeMap& SchematicModel::nodes()
 //}
 
 PaintingList& SchematicModel::paintings()
-{itested();
+{
 	return Paintings;
 }
 //
@@ -306,7 +306,7 @@ static void createNodeSet(QStringList& Collect, int& countInit,
 #endif
 /*--------------------------------------------------------------------------*/
 void SchematicModel::disconnect(Symbol* c)
-{itested();
+{
 	// drop port connections
 	for(unsigned i=0; i<c->numPorts(); ++i) {
 		trace3("sm:ds", i, c->label(), c->portPosition(i));

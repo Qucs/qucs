@@ -73,7 +73,7 @@ Diagram::Diagram(Diagram const& p)
 
 Diagram::Diagram(int cx, int cy)
   : Element(cx, cy)
-{itested();
+{
   
   // x1, x2, y1, y2 are the selectable boundings of the diagram, but these
   // are the real boundings. They are set in "createAxisLabels()".
@@ -112,7 +112,7 @@ Diagram::Diagram(int cx, int cy)
 }
 
 Diagram::~Diagram()
-{itested();
+{
   if(freq!=nullptr) delete[] freq;
   freq= nullptr;
 }
@@ -1324,7 +1324,7 @@ QString Diagram::save()
 // ------------------------------------------------------------
 // // MOVE to legacy lang
 bool Diagram::load(const QString& Line, istream_t& stream)
-{itested();
+{
 	incomplete(); // use Lang
   bool ok;
   QString s = Line;
@@ -1332,7 +1332,7 @@ bool Diagram::load(const QString& Line, istream_t& stream)
   if(s.at(0) != '<') return false;
   if(s.at(s.length()-1) != '>'){ untested();
 	  return false;
-  }else{itested();
+  }else{
   }
   s = s.mid(1, s.length()-2);   // cut off start and end character
 
@@ -1351,7 +1351,7 @@ bool Diagram::load(const QString& Line, istream_t& stream)
   x2 = n.toInt(&ok);
   if(!ok){ untested();
 	  return false;
-  }else{itested();
+  }else{
   }
 
   n  = s.section(' ',4,4);    // y2
@@ -1370,7 +1370,7 @@ bool Diagram::load(const QString& Line, istream_t& stream)
   GridPen.setColor(co);
   if(!GridPen.color().isValid()){ untested();
 	  return false;
-  }else{itested();
+  }else{
   }
 
   n = s.section(' ',7,7);    // line style
@@ -1384,7 +1384,7 @@ bool Diagram::load(const QString& Line, istream_t& stream)
   zAxis.log = ((c - '0') & 2) == 2;
 
   n = s.section(' ',9,9);   // xAxis.autoScale
-  if(n.at(0) != '"') {itested();
+  if(n.at(0) != '"') {
 	  // backward compatible
     if(n == "1")  xAxis.autoScale = true;
     else  xAxis.autoScale = false;
@@ -1434,7 +1434,7 @@ bool Diagram::load(const QString& Line, istream_t& stream)
     if(!ok) return false;
 
     n = s.section(' ',21,21); // rotX
-    if(n.at(0) != '"') {itested();
+    if(n.at(0) != '"') {
  		 // backward compatible
       rotX = n.toInt(&ok);
       if(!ok) return false;
@@ -1460,13 +1460,13 @@ bool Diagram::load(const QString& Line, istream_t& stream)
   Graph *pg;
   // .......................................................
   // load graphs of the diagram
-  while(!stream.atEnd()) {itested();
+  while(!stream.atEnd()) {
     s = QString::fromStdString(stream.read_line());
     s = s.trimmed();
     if(s.isEmpty()) continue;
 
     trace2("diagram::load", Name, label());
-    if(s == ("</"+Name+">")){itested();
+    if(s == ("</"+Name+">")){
       return true;  // found end tag ?
     }else if(s.section(' ', 0,0) == "<Mkr") { untested();
 
@@ -1773,10 +1773,10 @@ void Diagram::createPolarDiagram(Axis *Axis, int Mode)
 */
 bool Diagram::calcAxisScale(Axis *Axis, double& GridNum, double& zD,
 				double& zDstep, double& GridStep, double Dist)
-{itested();
+{
   bool back=false;
   double numGrids, Base, Expo, corr;
-if(Axis->autoScale) {itested();
+if(Axis->autoScale) {
 
   if(fabs(Axis->max-Axis->min) < 1e-200) { untested();
     if((Axis->max == 0.0) && (Axis->min == 0.0)) { untested();
@@ -1793,7 +1793,7 @@ if(Axis->autoScale) {itested();
     Axis->up  = Axis->max + 0.1*(Axis->max-Axis->min);
     Axis->low = Axis->min - 0.1*(Axis->max-Axis->min);
   }
-  else {itested();
+  else {
     Axis->up  = Axis->max;   // normal case for x axis
     Axis->low = Axis->min;
   }
@@ -1835,7 +1835,7 @@ if(Axis->autoScale) {itested();
   zD = fabs(fmod(Axis->low, GridStep));// expand grid to lower diagram edge ?
   GridNum = zD/GridStep;
   if((1.0-GridNum) < 1e-10) zD = GridNum = 0.0;  // fix rounding errors
-  if(Axis->low <= 0.0) {itested();
+  if(Axis->low <= 0.0) {
     if(GridNum > 0.7) { Axis->low -= GridStep-zD;  zD = 0.0; }
     else if(GridNum < 0.1)
 	   if(GridNum*Dist >= 1.0) { // more than 1 pixel above ?

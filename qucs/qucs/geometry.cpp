@@ -25,7 +25,7 @@ std::ostream& operator<<(std::ostream& o, pos_t const& p)
 /*--------------------------------------------------------------------------*/
 // rotate counterclockwise. NB: the y axis points downwards on the screen.
 pos_t angle_t::apply(pos_t const& p) const
-{itested();
+{
 //	trace3("angle_apply0", _degrees, p.first, p.second);
 	assert(! (_degrees%90) ); //for now
 	int a = _degrees/90;
@@ -60,17 +60,17 @@ rotate_after_mirror1_t rotate_after_mirror1_t::inverse() const
 }
 /*--------------------------------------------------------------------------*/
 pos_t rotate_after_mirror1_t::apply(pos_t const& p) const
-{itested();
+{
 	auto tmp = p;
-	if(_m){itested();
+	if(_m){
 		tmp.second *= -1;
-	}else{ untested();
+	}else{
 	}
 	return angle_t::apply(tmp);
 }
 /*--------------------------------------------------------------------------*/
 rotate_after_mirror1_t rotate_after_mirror1_t::operator*(rotate_after_mirror1_t const& that)
-{itested();
+{
 	auto B = *this;
 	auto A = that;
 	// compute B*A
@@ -78,9 +78,9 @@ rotate_after_mirror1_t rotate_after_mirror1_t::operator*(rotate_after_mirror1_t 
 	trace2("op*", degrees_int(), that.degrees_int());
 
 	int new_angle = B.degrees_int() + 360;
-	if(_m){ untested();
+	if(_m){
 		new_angle -= int(A.degrees_int()) - 360;
-	}else{ untested();
+	}else{
 		new_angle += int(A.degrees_int());
 	}
 	trace2("op*", degrees_int(), new_angle);
@@ -100,26 +100,26 @@ rotate_after_mirror1_t::rotate_after_mirror1_t(rotate_after_mirror const& that)
 	: angle_t(0)
 {
 	trace2("rotate_after_mirror1_t::rotate_after_mirror1_t", that.mh(), that.mv());
-	if(!that.mh()){ untested();
+	if(!that.mh()){
 		_m = that.mv();
 		_degrees = that._degrees;
-	}else if(that.mv()){ untested();
+	}else if(that.mv()){
 		_m = false;
 		_degrees = (180 + that._degrees) % 360;
-	}else{ untested();
+	}else{
 		_m = true;
 		_degrees = (180 + that._degrees) % 360;
 	}
 }
 /*--------------------------------------------------------------------------*/
 pos_t rotate_after_mirror::apply(pos_t const& p) const
-{itested();
+{
 	auto tmp = p;
-	if(_v){itested();
+	if(_v){
 		tmp.second *= -1;
 	}else{
 	}
-	if(_h){itested();
+	if(_h){
 		tmp.first *= -1;
 	}else{
 	}

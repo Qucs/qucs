@@ -144,7 +144,7 @@ private:
 
 // not here
 inline std::ostream& operator<<(std::ostream&o, std::pair<int, int> const& p)
-{ itested(); // still used? yes :(
+{ // still used? yes :(
   return o << "(" << p.first << ", " << p.second << ")";
 }
 

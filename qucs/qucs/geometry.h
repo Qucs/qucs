@@ -112,24 +112,24 @@ inline int getY(std::pair<int, int> const& p)
 }
 /*--------------------------------------------------------------------------*/
 inline int getX(pos_t const& p)
-{itested();
+{
 	return p.first;
 }
 /*--------------------------------------------------------------------------*/
 inline int getY(pos_t const& p)
-{itested();
+{
 	return p.second;
 }
 /*--------------------------------------------------------------------------*/
 inline int dsin(int angle)
-{itested();
+{
 	int d = angle%2;
 	d *= 1-2*(angle/2);
 	return d;
 }
 /*--------------------------------------------------------------------------*/
 inline int dcos(int angle)
-{itested();
+{
   return dsin(angle+1);
 }
 /*--------------------------------------------------------------------------*/
@@ -190,7 +190,7 @@ public:
 
 public:
  	bool mirror() const{return _m;}
- 	int det() const{ untested(); return -_m*2 + 1;}
+ 	int det() const{ return -_m*2 + 1;}
 	rotate_after_mirror1_t inverse() const;
 private:
 	bool _m;
@@ -239,7 +239,7 @@ public:
 public:
 	pos_t apply(pos_t const&) const;
 	rotate_after_mirror operator*(rotate_after_mirror const&);
- 	int det() const{ untested(); return (1-_h*2) * (1-_v*2);}
+ 	int det() const{ return (1-_h*2) * (1-_v*2);}
 
 	rotate_after_mirror0_t inverse() const{
 		if(_h && _v){ untested();
