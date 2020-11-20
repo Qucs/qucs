@@ -38,7 +38,17 @@ void union0()
 	assert(nu);
 	assert(nu->subckt());
 	trace1("gnd", nu->subckt()->numWires());
-	assert(nu->subckt()->numWires()==2);
+	SchematicModel const* s = nu->subckt();
+	assert(s->numWires()==2);
+
+	auto a = s->wires().begin();
+
+	assert((*a)->nodePosition(0) == pos_t(30, -50));
+	assert((*a)->nodePosition(1) == pos_t(30, 0));
+	++a;
+	assert((*a)->nodePosition(0) == pos_t(30, 0));
+	assert((*a)->nodePosition(1) == pos_t(30, 50));
+
 //	assert(w->subckt()->numComponents()==3);
 }
 

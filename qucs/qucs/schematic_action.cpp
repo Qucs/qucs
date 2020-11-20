@@ -870,6 +870,7 @@ QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
 		auto delta = getDelta(s.first());
 #ifndef NDEBUG
 		for(auto i : s){
+			trace2("check delta", delta, getDelta(i));
 			assert(delta == getDelta(i));
 		}
 #endif
