@@ -1,8 +1,10 @@
 
 HDR = \
+	ap.h \
 	c_comand.h \
 	d_dot.h \
 	io_error.h \
 	io_trace.h \
 	l_compar.h \
-	l_dispatcher.h
+	l_dispatcher.h \
+	u_parameter.h
