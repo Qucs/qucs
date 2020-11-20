@@ -226,11 +226,14 @@ private: // override
 	cmd* release(QMouseEvent*) override;
 	cmd* activate(QObject* sender) override;
 	cmd* deactivate() override;
+	cmd* dblclk(QEvent* e) override;
 
 private: // legacy code
 	cmd* press1(QGraphicsSceneMouseEvent*);
 	cmd* press2(QGraphicsSceneMouseEvent*);
 
+private:
+	cmd* finish();
 	void toggleMode(){ untested();
 		assert(_gfx.size());
 		auto w = _gfx.back();
@@ -298,6 +301,28 @@ QUndoCommand* MouseActionWire::release(QMouseEvent* m)
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionWire::dblclk(QEvent* e)
+{ untested();
+	trace1("wire::dblclk1", _gfx.size());
+
+	if(_gfx.size()){
+		delete _gfx.back();
+		_gfx.pop_back();
+		trace1("wire::dblclk2", _gfx.size());
+	}else{
+	}
+
+
+	if(_gfx.size()){
+		return finish();
+	}else{
+		unreachable();
+		return nullptr;
+	}
+	e->accept();
+}
+/*--------------------------------------------------------------------------*/
+
 QUndoCommand* MouseActionWire::press(QEvent* e)
 {itested();
 	auto m = dynamic_cast<QMouseEvent*>(e);
@@ -364,6 +389,7 @@ QUndoCommand* MouseActionWire::press1(QGraphicsSceneMouseEvent* ev)
 	fX = getX(xx);
 	fY = getY(xx);
 
+	assert(_gfx.size());
 	ElementGraphics* cur = _gfx.back();
 	Element* ee = element(cur);
 	auto e = prechecked_cast<Symbol*>(ee);
@@ -405,9 +431,33 @@ QUndoCommand* MouseActionWire::press1(QGraphicsSceneMouseEvent* ev)
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionWire::finish()
+{
+	trace1("finish", _gfx.size());
+	std::list<Element*> new_wires;
+	for(auto& i: _gfx){itested();
+		auto s = prechecked_cast<Symbol*>(element(i));
+		assert(s);
+		s->expand();
+		SchematicModel const* cs = s->subckt();
+		assert(cs);
+		trace1("prepare NewWire", cs->wires().size());
+		for(Element const* j : cs->wires()){itested();
+			new_wires.push_back(j->clone());
+		}
+		delete(i);
+	}
+	QUndoCommand* c = new MakeWire(doc(), new_wires);
+	_gfx.clear();
+
+// 	_phase=1; ??
+
+	return c;
+}
+/*--------------------------------------------------------------------------*/
 //* MouseActions::MPressWire2 Is called if ending point of wire is pressed
 QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* ev)
-{itested();
+{untested();
 	cmd* c=nullptr;
 
 	assert(ev);
@@ -419,21 +469,7 @@ QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* ev)
 	pos_t p(fX, fY);
 
 	if(isNode(p) || isConductor(p)){itested();
-		std::list<Element*> new_wires;
-		for(auto& i: _gfx){itested();
-			auto s = prechecked_cast<Symbol*>(element(i));
-			assert(s);
-			s->expand();
-			SchematicModel const* cs = s->subckt();
-			assert(cs);
-			trace1("prepare NewWire", cs->wires().size());
-			for(Element const* j : cs->wires()){itested();
-				new_wires.push_back(j->clone());
-			}
-			delete(i);
-		}
-		c = new MakeWire(doc(), new_wires);
-		_gfx.clear();
+		c = finish();
 	}else{  // same as press1?
 		new_gfx();
 
