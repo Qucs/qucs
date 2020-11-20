@@ -15,8 +15,8 @@
 
 #include <QAction>
 #include <QMessageBox> // BUG
-#include <QLineEdit> // BUG?
-#include <QRegExp> // BUG?
+// #include <QLineEdit> // BUG?
+// #include <QRegExp> // BUG?
 #include <QRegExpValidator>
 #include <QFileDialog>
 #include <QUndoCommand>

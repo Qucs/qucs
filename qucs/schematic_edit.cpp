@@ -190,14 +190,14 @@ bool SchematicEdit::addmerge(ElementGraphics* s, T& del_done)
 	assert(s->scene());
 	QRectF bb = s->absoluteBoundingRect();
 	auto it = items(bb);
-	trace3("addmerge", s, element(s)->label(), it.size());
+	trace3("addmerge candidates", s, element(s)->label(), it.size());
 	for(auto gfxi : it){itested();
 		assert(gfxi!=s); // s is invisible.
 		trace1("addmerge coll?", element(gfxi)->label());
 
 		// gfxi is already on scene.
 		auto n = gfxi->newUnion(s);
-		if(n){ untested();
+		if(n){itested();
 			collision = true;
 			trace1("hiding", element(gfxi)->label());
 			gfxi->hide();
@@ -210,7 +210,7 @@ bool SchematicEdit::addmerge(ElementGraphics* s, T& del_done)
 			size_t kk=0;
 
 			// unpack q insert.
-			for(auto c : nc){ untested();
+			for(auto c : nc){itested();
 				if(auto g = dynamic_cast<ElementGraphics*>(c)){
 					auto cc = g->clone();
 					assert(cc);

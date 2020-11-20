@@ -38,7 +38,7 @@ ElementGraphics::ElementGraphics() : QGraphicsItem()
 /*--------------------------------------------------------------------------*/
 ElementGraphics::ElementGraphics(ElementGraphics const& e)
 	: QGraphicsItem(), _e(nullptr), _elementText(nullptr)
-{ untested();
+{itested();
 	assert(e._e);
 	Element* el = e._e->clone();
 	assert(el);
@@ -53,7 +53,7 @@ ElementGraphics::ElementGraphics(Element* e)
 }
 /*--------------------------------------------------------------------------*/
 ElementGraphics* ElementGraphics::clone() const
-{ untested();
+{itested();
 	return new ElementGraphics(*this);
 }
 /*--------------------------------------------------------------------------*/
@@ -61,7 +61,7 @@ ElementGraphics::~ElementGraphics()
 {itested();
 	if(isVisible()){itested();
 		// element is owned by SchematicModel.
-	}else{ untested();
+	}else{itested();
 		// check: is this correct?
 		delete(_e);
 	}
@@ -132,7 +132,7 @@ public:
 		}else{
 		}
 	}
-	~ElementText(){ untested();
+	~ElementText(){itested();
 		// delete stuff?
 		delete _labeltext;
 	}
@@ -255,7 +255,7 @@ void ElementGraphics::attachElement(Element* e)
 		}
 
 		// BUG
-		for(auto i : s->wires()){untested();
+		for(auto i : s->wires()){itested();
 			QGraphicsItem* cg = new ElementGraphics(i->clone());
 			cg->setParentItem(this);
 		}
@@ -501,15 +501,12 @@ QRectF ElementGraphics::absoluteBoundingRect() const
 #ifdef DO_TRACE
 	if(auto sym=dynamic_cast<Symbol const*>(_e)){
 		for(unsigned i=0; i<sym->numPorts(); ++i){
-			trace3("abr", sym->label(), i, sym->nodePosition(i));
+			trace4("abr", pos(), sym->label(), i, sym->nodePosition(i));
 		}
 	}
 #endif
-	auto b=boundingRect();
-	auto p=pos();
-
-//	b.moveTopLeft(p + b.topLeft());
-	return b.translated(p);
+	auto b = boundingRect();
+	return mapRectToScene(b);
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::setSelected(bool s)
