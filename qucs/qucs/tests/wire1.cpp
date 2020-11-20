@@ -10,6 +10,10 @@
 
 void union0()
 {
+	
+	//     __           __  |
+	//   -[__]-   ->  -[__]-o
+	//                      |
 	SchematicModel M(NULL);
 	auto wp=symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
@@ -84,9 +88,44 @@ void union1()
 //	assert(w->subckt()->numComponents()==3);
 }
 
+void union2()
+{
+	trace0("union1");
+	//                |
+	//          =>    |
+	// ------      ---o---
+	SchematicModel M(NULL);
+	auto wp=symbol_dispatcher["Wire"];
+
+	auto w0 = prechecked_cast<Symbol*>(wp->clone());
+	w0->setParameter(std::string("deltax"), "100");
+	w0->setParameter(std::string("$xposition"), "-50");
+	M.pushBack(w0);
+	assert(M.numWires() == 1);
+	assert(M.nodeCount() == 2);
+
+	auto w1 = prechecked_cast<Symbol*>(wp->clone());
+#if 1
+	w1->setParameter(std::string("deltay"), "100");
+#else
+	w1->setParameter(std::string("$yposition"), "-100");
+	w1->setParameter(std::string("deltay"), "100");
+#endif
+
+	auto c = dynamic_cast<Conductor const*>(w0);
+	Symbol* w = c->newUnion(w1);
+
+	assert(w);
+	assert(w->subckt());
+	trace1("gnd", w->subckt()->numWires());
+	assert(w->subckt()->numWires()==3);
+//	assert(w->subckt()->numComponents()==3);
+}
+
 
 int main()
 {
 	union0();
 	union1();
+	union2();
 }

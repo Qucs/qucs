@@ -17,7 +17,11 @@ private:
 	WireUC(WireUC const&) = default;
 
 public:
-	WireUC() : _mode(am_H), _proto(nullptr) { }
+	WireUC()
+	  : _mode(am_H),
+	    _p0(0,0),
+	    _p1(0,0),
+	    _proto(nullptr) { }
 	~WireUC() { }
 
 private: // Element
@@ -27,8 +31,8 @@ private: // Element
 	void paint(ViewPainter *p) const override;
 
 private:
-	QPoint pmid() const;
-	void pushWire(int x, int y, int mx, int my);
+	pos_t pmid() const;
+	void pushWire(pos_t, pos_t);
 
 private: // Symbol
 	unsigned numPorts() const override{ return 0; }
@@ -40,8 +44,8 @@ private: // Symbol
 
 private:
 	angle_mode_t _mode;
-	QPoint _p0;
-	QPoint _p1;
+	pos_t _p0;
+	pos_t _p1;
 	Element const* _proto;
 } w;
 /*--------------------------------------------------------------------------*/
@@ -49,15 +53,22 @@ void WireUC::paint(ViewPainter *p) const
 { itested();
 	assert(p);
 
-	QPoint pm = pmid();
+	pos_t m = pmid();
+	QPoint pm = QPoint(getX(m), getY(m));
+	QPoint p0 = QPoint(getX(_p0), getY(_p0));
+	QPoint p1 = QPoint(getX(_p1), getY(_p1));
 	trace3("paint", _p0, _p1, pm);
 	p->setPen(QPen(Qt::darkBlue, 1));
-	p->drawLine(_p0, pm);
-	p->drawLine(pm, _p1);
+	p->drawLine(p0, pm);
+	p->drawLine(pm, p1);
 }
 /*--------------------------------------------------------------------------*/
-void WireUC::pushWire(int x, int y, int mx, int my)
+void WireUC::pushWire(pos_t p0, pos_t delta)
 {
+	int x = getX(p0);
+	int y = getY(p0);
+	int mx = getX(delta);
+	int my = getY(delta);
 	trace4("pw", x, y, mx, my);
 	Element* wc = _proto->clone();
 	Symbol* w = prechecked_cast<Symbol*>(wc);
@@ -72,15 +83,14 @@ void WireUC::pushWire(int x, int y, int mx, int my)
 	subckt()->pushBack(w);
 }
 /*--------------------------------------------------------------------------*/
-QPoint WireUC::pmid() const{itested();
-	QPoint pm;
+pos_t WireUC::pmid() const
+{itested();
+	pos_t pm = _p0;
 	switch(_mode){
 	case am_H: itested();
-				  pm = _p0;
 				  pm.setX(_p1.x());
 				  break;
 	case am_V: untested();
-				  pm = _p0;
 				  pm.setY(_p1.y());
 				  break;
 	}
@@ -101,23 +111,15 @@ void WireUC::expand()
 	assert(_proto);
 
 	auto pm = pmid();
-	int x = getX(_p0);
-	int y = getY(_p0);
-	int dx = getX(pm) - getX(_p0);
-	int dy = getY(pm) - getY(_p0);
-
-	if(dx || dy){
-		pushWire(x, y, dx, dy);
+	pos_t delta = pm - _p0;
+	if(delta){
+		pushWire(_p0, delta);
 	}else{
 	}
 
-	x = getX(_p1);
-	y = getY(_p1);
-	dx = getX(pm) - getX(_p1);
-	dy = getY(pm) - getY(_p1);
-
-	if(dx || dy){
-		pushWire(x, y, dx, dy);
+	delta = pm - _p1;
+	if(delta){
+		pushWire(_p1, delta);
 	}else{
 	}
 

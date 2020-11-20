@@ -28,11 +28,17 @@ public:
 	pos_t(std::pair<int, int> const& p) : std::pair<int, int>(p) {}
 	pos_t(int a, int b) : std::pair<int, int>(a,b) {}
 	bool operator<=(pos_t const& b) const;
+	operator bool() const{ return x() || y(); }
 
 	pos_t& operator=(pos_t const& o){
 		std::pair<int, int>::operator=(o);
 		return *this;
 	}
+
+	pos_t& setX(int x){ first=x; return *this;}
+	pos_t& setY(int x){ second=x; return *this;}
+	int x()const{ return first;}
+	int y()const{ return second;}
 };
 /*--------------------------------------------------------------------------*/
 inline bool pos_t::operator<=(pos_t const& b) const
