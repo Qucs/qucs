@@ -19,40 +19,38 @@
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
-// ignore "<Spice>" section. (use <Model> instead.)
 class Model : public Command{
-  virtual void do_it(istream_t& cs, SchematicModel* s){
+  virtual void do_it(istream_t& cs, SchematicModel* s){ untested();
 	  auto fullstring = cs.fullString();
-	  trace1("Model", fullstring);
+	  trace1("Symbol", fullstring);
 
 	  std::string M;
 	  std::string buf;
-	  while(true){
+
+	  trace1("hack", M);
+	  Symbol* sym = symbol_dispatcher.clone("symbolSection");
+	  assert(sym);
+	  sym->setLabel("symbolSection");
+	  assert(s);
+
+	  while(true){ untested();
 		  cs.read_line();
-		  trace1("Model", cs.fullString());
-		  if(cs.is_end()){
+		  trace1("Symbol", cs.fullString());
+		  if(cs.is_end()){ untested();
 			  break;
-		  }else if(cs.umatch("</Spice>")){
+		  }else if(cs.umatch("</Symbol>")){ untested();
 			  break;
-		  }else{
+		  }else{ untested();
 			  cs.skipbl();
-			  M += cs.tail() + "\n";
+			  lang->parse_item(cs, sym->subckt());
 		  }
 	  }
-#if 0 // this does not work (surprise!)
-      // but it may help to integrate spice hacks.
-	  trace1("hack", M);
-	  Symbol* textdef = symbol_dispatcher.clone("spiceVerbatimHack");
-	  assert(textdef);
-	  textdef->setParameter("spiceVerbatimHack", M);
-	  textdef->setLabel(":spiceVerbatimHack:");
-	  assert(s);
-	  s->pushBack(textdef);
-#endif
+
+	  s->pushBack(sym);
   }
 }d0;
-Dispatcher<Command>::INSTALL p0(&command_dispatcher, "Spice", &d0);
-Dispatcher<Command>::INSTALL p1(&command_dispatcher, "Spice>", &d0); // BUG
-Dispatcher<Command>::INSTALL p2(&command_dispatcher, "<Spice>", &d0); // ...
+Dispatcher<Command>::INSTALL p0(&command_dispatcher, "Symbol", &d0);
+Dispatcher<Command>::INSTALL p1(&command_dispatcher, "Symbol>", &d0); // BUG
+Dispatcher<Command>::INSTALL p2(&command_dispatcher, "<Symbol>", &d0); // ...
 /*--------------------------------------------------------------------------*/
 } // namespace

@@ -1,12 +1,20 @@
-// 2018 Felix
-// part of QUCS, GPLv3+
-//
+/***************************************************************************
+    copyright            : (C) 2018, 2020 Felix Salfelder
+ ***************************************************************************/
 
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 #ifndef QUCS_SCHEMATIC_SYMBOL_H
 #define QUCS_SCHEMATIC_SYMBOL_H
-
+/*--------------------------------------------------------------------------*/
 #include "sckt_base.h"
-
+/*--------------------------------------------------------------------------*/
 class PaintingList;
 class WireList;
 class NodeMap;
@@ -14,7 +22,9 @@ class DiagramList;
 class PaintingList;
 class CmdEltList;
 class ComponentList;
-
+/*--------------------------------------------------------------------------*/
+// A symbol ("component"), formerly implicit schematic contents.
+// needs work. rename to DocSymbol? or QucsDoc : Symbol?
 class SchematicSymbol : public SubcktBase{
 protected:
 	SchematicSymbol(SchematicSymbol const& p);
@@ -25,8 +35,8 @@ public:
 private: // Symbol
   virtual void setPort(unsigned, Node*){ incomplete(); }
 
-protected:
 public: // subckt. could rename to "model", but is it really worth it?
+  // BUG: is this not in SubcktBase?
   SchematicModel* subckt() {return _subckt;}
   SchematicModel const* subckt() const {return _subckt;}
 
@@ -67,5 +77,6 @@ public: //legacy hack
 private:
 	PaintingList* _paint; // BUG
 };
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 #endif
