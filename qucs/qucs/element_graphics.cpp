@@ -67,6 +67,7 @@ ElementGraphics::~ElementGraphics()
 	}
 
 	delete _elementText;
+	_elementText = nullptr;
 }
 /*--------------------------------------------------------------------------*/
 // almost ElementGraphics. could use ElementGraphics?
@@ -184,16 +185,17 @@ Element* ElementGraphics::cloneElement() const
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::attachElement(Element* e)
 {itested();
+	assert(e);
+	trace1("attach", e->label());
 	QGraphicsItem::hide();
 	delete _elementText;
 	_elementText = nullptr;
-	assert(e);
 	_e = e;
 
 	auto flags = ItemIsSelectable|ItemIsMovable|ItemSendsGeometryChanges;
-	if(_e->legacyTransformHack()){
+	if(_e->legacyTransformHack()){ untested();
 		flags |= ItemIgnoresTransformations;
-	}else{
+	}else{ untested();
 	}
 	setFlags(flags);
 	// BUG: ask element?
@@ -244,11 +246,11 @@ void ElementGraphics::attachElement(Element* e)
 
 	auto sym = dynamic_cast<Symbol const*>(_e);
 
-	if (auto w=_e->newWidget()){
+	if (auto w=_e->newWidget()){ untested();
 		auto p = new QGraphicsProxyWidget(this);
 		p->setWidget(w);
-	}else if(!sym){
-	}else if(auto s = sym->subckt()){
+	}else if(!sym){ untested();
+	}else if(auto s = sym->subckt()){ untested();
 		for(auto i : s->components()){untested();
 			QGraphicsItem* cg = new ElementGraphics(i->clone());
 			cg->setParentItem(this);
@@ -260,14 +262,14 @@ void ElementGraphics::attachElement(Element* e)
 			cg->setParentItem(this);
 		}
 		trace2("child gfx", s->wires().size(), s->components().size());
-	}else{
+	}else{ untested();
 	}
 	trace1("ElementGraphics unpacked", childItems().size());
 
-	if(!_e){
-	}else if(_e->legacyTransformHack()){
+	if(!_e){ untested();
+	}else if(_e->legacyTransformHack()){ untested();
 		// throw that in the bin some day..
-	}else if(auto s=prechecked_cast<Symbol const*>(_e)){
+	}else if(auto s=dynamic_cast<Symbol const*>(_e)){ untested();
 		// could be made accessible through Symbol interface.
 		int hflip = atoi(s->paramValue("$hflip").c_str());
 		int vflip = atoi(s->paramValue("$vflip").c_str());
@@ -281,7 +283,7 @@ void ElementGraphics::attachElement(Element* e)
 		transform.rotate(-angle); // chirality...
 		transform.scale(hflip, vflip);
 		setTransform(transform);
-	}else{
+	}else{ untested();
 	}
 }
 /*--------------------------------------------------------------------------*/

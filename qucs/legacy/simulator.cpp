@@ -45,13 +45,13 @@ private: // Command
 	void do_it(istream_t&, SchematicModel*) override{}
 
 private: // legacy implementation
-  void createNetlist(DocumentStream& stream, SchematicSymbol const& m) const;
-  void prepareSave(DocumentStream& stream, SchematicSymbol const& m) const;
-  void throughAllComps(DocumentStream& d, SchematicSymbol const& m) const;
+  void createNetlist(ostream_t& stream, SchematicSymbol const& m) const;
+  void prepareSave(ostream_t& stream, SchematicSymbol const& m) const;
+  void throughAllComps(ostream_t& d, SchematicSymbol const& m) const;
   void clear() const;
-  void printDeclarations(DocumentStream& d, SchematicSymbol const&m) const;
+  void printDeclarations(ostream_t& d, SchematicSymbol const&m) const;
 private: // overrides
-  void save(DocumentStream& stream, SchematicSymbol const& m) const;
+  void save(ostream_t& stream, SchematicSymbol const& m) const;
   void load(istream_t&, SchematicSymbol&) const;
 private:
   mutable SubMap FileList; // BUG (maybe not)
@@ -150,11 +150,10 @@ void LegacyNetlister::load(istream_t&, SchematicSymbol&) const
 }
 
 // was main::doNetlist, but it only works for qucsator. merge into qucsator driver.
-void LegacyNetlister::save(DocumentStream& Stream, SchematicSymbol const& m) const
+void LegacyNetlister::save(ostream_t& Stream, SchematicSymbol const& m) const
 {
    _qucslang = doclang_dispatcher["qucsator"];
 	clear();
-	qDebug() << "*** LegacyNetlister::save";
 
 	int SimPorts = 10;//??
 	incomplete(); // HERE
@@ -182,7 +181,7 @@ void LegacyNetlister::save(DocumentStream& Stream, SchematicSymbol const& m) con
 	}
 #endif
 
-	printDeclarations(Stream, m);
+	printDeclarations(Stream, m); // BUG.
 	Stream << '\n';
 	createNetlist(Stream, m);
 
@@ -195,7 +194,7 @@ void LegacyNetlister::save(DocumentStream& Stream, SchematicSymbol const& m) con
 #endif
 }
 
-void LegacyNetlister::printDeclarations(DocumentStream& stream, SchematicSymbol const& m) const
+void LegacyNetlister::printDeclarations(ostream_t& stream, SchematicSymbol const& m) const
 {
 	assert(m.subckt());
 	// assert(_qucslang);
@@ -218,7 +217,7 @@ void LegacyNetlister::printDeclarations(DocumentStream& stream, SchematicSymbol 
 
 // was Schematic::prepareNetlist
 // visit lot of components, strange callbacks...
-void LegacyNetlister::prepareSave(DocumentStream& stream, SchematicSymbol const& m) const
+void LegacyNetlister::prepareSave(ostream_t& stream, SchematicSymbol const& m) const
 {
 	incomplete();
 
@@ -316,13 +315,18 @@ void LegacyNetlister::prepareSave(DocumentStream& stream, SchematicSymbol const&
 }
 
 // former Schematic::createNetlist
-void LegacyNetlister::createNetlist(DocumentStream& stream,
+void LegacyNetlister::createNetlist(ostream_t& stream,
 		SchematicSymbol const& m) const
 {
 	bool isAnalog=true;
 //	bool isVerilog=false;
 	FileList.clear();
 
+	// it seems that legacy qucsator does not do recursive prototypes.
+	// (do it properly in alternative netlister).
+	// collectPrototypes();
+	// ejectProtootypes();
+	//
 	/// include directives. qucsator does not seem to do that.
 	// for(auto si : directives){ untested();
 	// 	qucslang.printItem(si, stream);
@@ -388,7 +392,7 @@ void LegacyNetlister::createNetlist(DocumentStream& stream,
 // to target language somewhere else.
 
 // some kind of expand
-void LegacyNetlister::throughAllComps(DocumentStream&, SchematicSymbol const& m) const
+void LegacyNetlister::throughAllComps(ostream_t&, SchematicSymbol const& m) const
 { incomplete();
 	trace3("tac", m.label(), &m, m.owner());
 	if(m.owner()){ untested();
@@ -440,6 +444,8 @@ void LegacyNetlister::throughAllComps(DocumentStream&, SchematicSymbol const& m)
 #endif
 		}else{
 			// no.
+			// find_type(pc->typeName()); // but where?
+
 			Symbol const* p = pc->proto(&sckt); // just expand?
 		}
 

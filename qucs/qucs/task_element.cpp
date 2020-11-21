@@ -173,14 +173,15 @@ int TaskElement::getTextSelected(int x_, int y_, float Corr)
 }
 
 std::string TaskElement::paramValue(std::string const& n) const
-{
-	if(n=="$xposition"){
+{ untested();
+	if(n=="$xposition"){ untested();
 		return std::to_string(cx());
-	}else if(n=="$yposition"){
+	}else if(n=="$yposition"){ untested();
 		return std::to_string(cy());
-	}else if(n=="$mfactor"){
+	}else if(n=="$mfactor"){ untested();
 		return std::to_string(isActive); // move to element? it does not have params (yet).
-	}else{
+	}else{ untested();
+		trace1("TaskElement::paramValue", n);
 		incomplete();
 		return "incomplete";
 	}
