@@ -590,9 +590,12 @@ void Subcircuit::build()
 Symbol const* Subcircuit::proto(SchematicModel const* scope) const
 {
    auto t = QString::fromStdString(typeName());
-//	auto p = scope->findProto(t);
+#if 1
+	auto p = scope->findProto(t);
+#else
    assert(owner());
 	auto p = owner()->findProto(t);
+#endif
 
 	if(p){
 		trace1("cached", typeName());

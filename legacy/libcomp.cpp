@@ -315,6 +315,7 @@ static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Lib", &D);
 // does not fullymake sense.
 Symbol const* Lib::proto(SchematicModel const* scope) const
 {
+	assert(scope);
    auto t = QString::fromStdString(typeName());
 	auto p = scope->findProto(t);
 	if(p){ untested();
@@ -324,12 +325,8 @@ Symbol const* Lib::proto(SchematicModel const* scope) const
 		trace1("not cached", typeName());
 
 		assert(_parent);
-		if(auto o=dynamic_cast<SchematicSymbol*>(owner())){
-			o->cacheProto(_parent); // this must be wrong. cache protos in list
+		scope->cacheProto(_parent); // this must be wrong. cache protos in list
 												 // command as needed.
-		}else{
-			untested();
-		}
 	}
 
 	assert(_parent);
