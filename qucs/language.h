@@ -4,14 +4,15 @@
 #include "io.h"
 #include "object.h"
 
-class Symbol;
-class Element;
-class TaskElement;
-class Painting;
 class Command;
-class istream_t;
-class SchematicModel;
 class DEV_DOT;
+class Element;
+class istream_t;
+class Painting;
+class SchematicModel;
+class SubcktBase;
+class Symbol;
+class TaskElement;
 
 // baseclass for schematic and net languages.
 // use u_lang.h instead?
@@ -35,6 +36,7 @@ private: //called by printItem
   virtual void printPainting(Painting const*, ostream_t&) const = 0;
   virtual void printDiagram(Symbol const*, ostream_t&) const = 0;
   virtual void printSymbol(Symbol const*, ostream_t&) const = 0;
+  virtual void printSubckt(SubcktBase const*, ostream_t&) const = 0;
   virtual void printtaskElement(TaskElement const*, ostream_t&) const = 0;
 };
 

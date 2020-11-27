@@ -52,6 +52,7 @@ static std::string netLabel(Node const* nn)
 class Verilog : public NetLang {
 	void printtaskElement(TaskElement const*, ostream_t&) const override;
 	void printSymbol(Symbol const*, ostream_t&) const override;
+	void printSubckt(SubcktBase const*, ostream_t&) const override;
 	void printPainting(Painting const*, ostream_t&) const override {incomplete();}
 	void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
 
@@ -61,6 +62,10 @@ private: //NetLang
 
 static Dispatcher<DocumentLanguage>::INSTALL p(&doclang_dispatcher, "verilog", &V);
 
+void Verilog::printSubckt(SubcktBase const* c, ostream_t& s) const
+{
+  s << "// sckt declaration " << c->label() << "\n";
+}
 /*!
  * verilog does not know about commands
  */
@@ -146,7 +151,7 @@ void Verilog::printSymbol(Symbol const* sym, ostream_t& s) const
 
 /// --------------------------------------------------------
 class VerilogSchematicFormat : public DocumentFormat{
-  void save(DocumentStream& stream, SchematicSymbol const&) const;
+  void save(DocumentStream& stream, Object const*) const;
   void load(istream_t& stream, Object*) const;
 
 private: //command
@@ -154,10 +159,10 @@ private: //command
 
 private: // legacy cruft
   bool isSymbolMode() const{ return false; }
-  PaintingList const& symbolPaints(SchematicSymbol const& m) const{ untested();
-    assert(m.symbolPaintings());
-    return *m.symbolPaintings();
-  }
+//  PaintingList const& symbolPaints(SchematicSymbol const& m) const{ untested();
+//    assert(m.symbolPaintings());
+//    return *m.symbolPaintings();
+//  }
   DiagramList const& diagrams(SchematicSymbol const& m) const{ untested();
     return m.diagrams();
   }
@@ -184,9 +189,13 @@ void VerilogSchematicFormat::load(istream_t&, Object*) const
 { untested();
   incomplete();
 }
-
-void VerilogSchematicFormat::save(DocumentStream& stream, SchematicSymbol const& m) const
+/* -------------------------------------------------------------------------------- */
+void VerilogSchematicFormat::save(DocumentStream& stream, Object const* o) const
 {
+	auto m_ = dynamic_cast<SchematicSymbol const*>(o);
+	assert(m_);
+	auto& m = *m_;
+
   for(auto pc : components(m)){
 	  if(dynamic_cast<TaskElement const*>(pc)){ untested();
 		  unreachable();

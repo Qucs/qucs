@@ -139,8556 +139,9669 @@ Eqn:my_Eqn y="1" Export="yes"
 Diode #(.Is(1e-15 A), .N(1), .Cj0(10 fF), .M(0.5), .Vj(0.7 V), .Fc(0.5), .Cp(0.0 fF), .Isr(0.0), .Nr(2.0), .Rs(0.0 Ohm), .Tt(0.0 ps), .Ikf(0), .Kf(0.0), .Af(1.0), .Ffe(1.0), .Bv(0), .Ibv(1 mA), .Temp(26.85), .Xti(3.0), .Eg(1.11), .Tbv(0.0), .Trs(0.0), .Ttt1(0.0), .Ttt2(0.0), .Tm1(0.0), .Tm2(0.0), .Tnom(26.85), .Area(1.0), .Symbol(normal)) my_Diode((null), (null));
 Diode:my_Diode (null) (null) Is="1e-15 A" N="1" Cj0="10 fF" M="0.5" Vj="0.7 V" Fc="0.5" Cp="0.0 fF" Isr="0.0" Nr="2.0" Rs="0.0 Ohm" Tt="0.0 ps" Ikf="0" Kf="0.0" Af="1.0" Ffe="1.0" Bv="0" Ibv="1 mA" Temp="26.85" Xti="3.0" Eg="1.11" Tbv="0.0" Trs="0.0" Ttt1="0.0" Ttt2="0.0" Tm1="0.0" Tm2="0.0" Tnom="26.85" Area="1.0"
 ==============
+  <Ellipse 0 0 0 0 #000000 1 1 #c0c0c0 1 0>
 
 ==============
+  <0 0 0 0 #000000 1 1>
 
 ==============
+  <Text 0 0 12 #000000 0 "">
 
 =====?????=========
+  <.ID 0 0 SUB>
 
 ==============
+  <.PortSym 0 0  0>
 
 =====GBU4G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====DF005=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====DF01=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====DF02=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====DF04=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====DF06=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====DF08=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====DF10=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1KAB5=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1KAB10=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1KAB20=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1KAB40=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1KAB60=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1KAB80=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1KAB100=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====18DB05=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====18DB1=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====18DB2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====18DB4=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====18DB6=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====18DB8=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====18DB10=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====2KBB5=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====2KBB10=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====2KBB20=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====2KBB40=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====2KBB60=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====2KBB80=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====2KBB100=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====2KBP005=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====2KBP01=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====2KBP02=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====2KBP04=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====2KBP06=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====2KBP08=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====2KBP10=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====KBPC1005=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====KBPC101=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====KBPC102=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====KBPC104=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====KBPC106=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====KBPC108=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====KBPC110=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====KBPC6005=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====KBPC601=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====KBPC602=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====KBPC604=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====KBPC606=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====KBPC608=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====KBPC610=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1BQ20=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1BQ40=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
-=====D_1N4148_=========
+=====P:Diodes:1N4148=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_1N4148W_=========
+=====P:Diodes:1N4148W=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_1N4148WS_=========
+=====P:Diodes:1N4148WS=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_1N4148WT_=========
+=====P:Diodes:1N4148WT=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_1N4001_=========
+=====P:Diodes:1N4001=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_1N4002_=========
+=====P:Diodes:1N4002=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_1N4003_=========
+=====P:Diodes:1N4003=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_1N4004_=========
+=====P:Diodes:1N4004=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_1N4005_=========
+=====P:Diodes:1N4005=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_1N4006_=========
+=====P:Diodes:1N4006=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_1N4007_=========
+=====P:Diodes:1N4007=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_1N5400_=========
+=====P:Diodes:1N5400=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_1N5401_=========
+=====P:Diodes:1N5401=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_1N5402_=========
+=====P:Diodes:1N5402=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_1N5404_=========
+=====P:Diodes:1N5404=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_1N5406_=========
+=====P:Diodes:1N5406=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_1N5407_=========
+=====P:Diodes:1N5407=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_1N5408_=========
+=====P:Diodes:1N5408=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_6A05_=========
+=====P:Diodes:6A05=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_6A01_=========
+=====P:Diodes:6A01=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_6A02_=========
+=====P:Diodes:6A02=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_6A04_=========
+=====P:Diodes:6A04=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_6A06_=========
+=====P:Diodes:6A06=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_6A08_=========
+=====P:Diodes:6A08=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_6A10_=========
+=====P:Diodes:6A10=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_10A01_=========
+=====P:Diodes:10A01=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_10A2_=========
+=====P:Diodes:10A02=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_10A03_=========
+=====P:Diodes:10A03=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_10A04_=========
+=====P:Diodes:10A04=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_10A05_=========
+=====P:Diodes:10A05=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_10A06_=========
+=====P:Diodes:10A06=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_10A07_=========
+=====P:Diodes:10A07=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_DFLR1200_=========
+=====P:Diodes:DFLR1200=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_DLFR1400_=========
+=====P:Diodes:DLFR1400=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S1A_=========
+=====P:Diodes:S1A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S1AB_=========
+=====P:Diodes:S1AB=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S1B_=========
+=====P:Diodes:S1B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S1BB_=========
+=====P:Diodes:S1BB=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S1D_=========
+=====P:Diodes:S1D=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S1DB_=========
+=====P:Diodes:S1DB=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S1G_=========
+=====P:Diodes:S1G=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S1GB_=========
+=====P:Diodes:S1GB=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S1J_=========
+=====P:Diodes:S1J=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S1JB_=========
+=====P:Diodes:S1JB=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S1K_=========
+=====P:Diodes:S1K=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S1KB_=========
+=====P:Diodes:S1KB=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S1M_=========
+=====P:Diodes:S1M=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S1MB_=========
+=====P:Diodes:S1MB=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S2A_=========
+=====P:Diodes:S2A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S2B_=========
+=====P:Diodes:S2B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S2D_=========
+=====P:Diodes:S2D=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S2G_=========
+=====P:Diodes:S2G=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S2J_=========
+=====P:Diodes:S2J=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S2K_=========
+=====P:Diodes:S2K=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S2M_=========
+=====P:Diodes:S2M=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S3A_=========
+=====P:Diodes:S3A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S3BB_=========
+=====P:Diodes:S3BB=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S3D_=========
+=====P:Diodes:S3D=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S3GB_=========
+=====P:Diodes:S3GB=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S3K_=========
+=====P:Diodes:S3K=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S3M_=========
+=====P:Diodes:S3M=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S5AC_=========
+=====P:Diodes:S5AC=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S5BC_=========
+=====P:Diodes:S5BC=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S5DC_=========
+=====P:Diodes:S5DC=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S5GC_=========
+=====P:Diodes:S5GC=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S5JC_=========
+=====P:Diodes:S5JC=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S5KC_=========
+=====P:Diodes:S5KC=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_S5MC_=========
+=====P:Diodes:S5MC=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAL99_=========
+=====P:Diodes:BAL99=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAS116_=========
+=====P:Diodes:BAS116=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAS116T_=========
+=====P:Diodes:BAS116T=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAS16T_=========
+=====P:Diodes:BAS16T=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAS16TW_=========
+=====P:Diodes:BAS16TW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAS16V_=========
+=====P:Diodes:BAS16V=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAS16W_=========
+=====P:Diodes:BAS16W=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAS19_=========
+=====P:Diodes:BAS19=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAS19W_=========
+=====P:Diodes:BAS19W=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAS20_=========
+=====P:Diodes:BAS20=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAS20W_=========
+=====P:Diodes:BAS20W=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAS21_=========
+=====P:Diodes:BAS21=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAS21T_=========
+=====P:Diodes:BAS21T=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAS21W_=========
+=====P:Diodes:BAS21W=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV116W_=========
+=====P:Diodes:BAV116W=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV16W_=========
+=====P:Diodes:BAV16W=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV16WS_=========
+=====P:Diodes:BAV16WS=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV170_=========
+=====P:Diodes:BAV170=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV170T_=========
+=====P:Diodes:BAV170T=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV199_=========
+=====P:Diodes:BAV199=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV199DW_=========
+=====P:Diodes:BAV199DW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV199T_=========
+=====P:Diodes:BAV199T=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV19W_=========
+=====P:Diodes:BAV19W=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV19WS_=========
+=====P:Diodes:BAV19WS=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV20W_=========
+=====P:Diodes:BAV20W=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV20WS_=========
+=====P:Diodes:BAV20WS=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV21W_=========
+=====P:Diodes:BAV21W=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV21WS_=========
+=====P:Diodes:BAV21WS=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV23A_=========
+=====P:Diodes:BAV23A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV23C_=========
+=====P:Diodes:BAV23C=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV23S_=========
+=====P:Diodes:BAV23S=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV3004W_=========
+=====P:Diodes:BAV3004W=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV70_=========
+=====P:Diodes:BAV70=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV70T_=========
+=====P:Diodes:BAV70T=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV70W_=========
+=====P:Diodes:BAV70W=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV756DW_=========
+=====P:Diodes:BAV756DW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV99_=========
+=====P:Diodes:BAV99=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV99BRW_=========
+=====P:Diodes:BAV99BRW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV99DW_=========
+=====P:Diodes:BAV99DW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV99T_=========
+=====P:Diodes:BAV99T=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAV99W_=========
+=====P:Diodes:BAV99W=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAW156_=========
+=====P:Diodes:BAW156=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAW156T_=========
+=====P:Diodes:BAW156T=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAW56_=========
+=====P:Diodes:BAW56=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAW567DW_=========
+=====P:Diodes:BAW567DW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAW56DW_=========
+=====P:Diodes:BAW56DW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAW56T_=========
+=====P:Diodes:BAW56T=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAW56W_=========
+=====P:Diodes:BAW56W=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_LL4148_=========
+=====P:Diodes:LL4148=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAS40_=========
+=====P:Diodes:BAS40=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====D_BAS70_=========
+=====P:Diodes:BAS70=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BAS40_=========
+=====P:Diodes:BAS40_Philips=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BAS70_=========
+=====P:Diodes:BAS70_Philips=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
 =====VSum=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====VSub=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====VDelay=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====VCO=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====Sqrt=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====Quantizer=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====OpAmp=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====Notch2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====Mul=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====Limiter=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LP2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LP1=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====Int=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====HardLimiter=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====HP2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====HP1=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====Div=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====Diff=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BP2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====Abs=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====AP2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====AP1=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====infrared=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====red=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====yellow=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====green=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====blue=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ24N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ34N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ44N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ46N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF730=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====2N7000=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====2N7002=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BS170=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSP125=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSP149=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSP295=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSP299=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSP318=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSP319=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSP88=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSP89=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSS87=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSS88=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSS89=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSS98=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSS100=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSS101=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSS119=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSS125=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSS129=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSS135=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSS145=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSS229=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSS295=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSS296=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSS297=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ10L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ10M=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ10=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ11_2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ11GE=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ11=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ12AL=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ12=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ20=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ21=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ22=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ30A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ31=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ40B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ41A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ45B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ50B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ51=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ53A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ60=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ61A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ64=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ70=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ71LGE=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ71L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ71=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ72GE=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ72=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ73AGE=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ73L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ73=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ74A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ76=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ77A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ78=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ80A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ81=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ84A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ90=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ91A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ92=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ100_1=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ100_2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ101=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ102=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ104=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ220=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ305=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ310=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ311=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ323=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ325=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ326=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ331=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ334=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ338=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ341=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ342KL=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ342=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ344=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ345=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ346=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ350=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ356=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ358=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF1010E=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF1010EZ=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF1010N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF1010NS=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF1010ZSL=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF1104=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF1310NS=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF1310=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF1324S-7PPBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF1404=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF1404S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF1404ZSL=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF1404Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF1405=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF1405ZS-7P=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF1405Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF1407=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF1503S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF2804S7P=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF2804_S_L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF2804=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF2807S_L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF2807=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF2807ZS_L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF2807Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF2907Z_S_L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3205=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3205S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3305=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3315=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3415=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3706SL=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3707ZCS_L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3707Z_S_L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3708=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3709ZCS_L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3709Z_S_L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3710=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3710S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3710Z_S_L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3710Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3711=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3805S-7P=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3805SL=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF3808=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF4104SL=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF510=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF520N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF520NS=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF530N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF530NS=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF540N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF540NS=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF540ZS_L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF540Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF5801=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF5802=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF610=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF620=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF630=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF640NS=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF640=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF640S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF644S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6603=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6604=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6607=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6608=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6609=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6610=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6611=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6612=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6613=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6614=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6616=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6617=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6618=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6619=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6620=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6621=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6622=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6623=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6626=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6628PBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6629PBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6631=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6633=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6635=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6636=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6638=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6644=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6645=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6646=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6648=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6665=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6668=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6691=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6712SPBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6775MPBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7201=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF720=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF730A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF730=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7401=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7403=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF740LC=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7413=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7413Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7450=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7451=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7452=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7453=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7456=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7457=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7460=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7463=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7464=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7465=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7469=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7470=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7473=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7475=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7476=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7477=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7478=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7484Q=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7484=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7492=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7494=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7495=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7601=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7603=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7607=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7805=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7807=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7807V=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7809AV=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7811AV=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7811W=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7821=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7822=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7831=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7832=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7832Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7834=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7855PBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF8113=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF820=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF830=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF840=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF9410=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFB17N50L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFB18N50K=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFB3077PBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFB31N20D=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFB4020PBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFB4103PBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFB4110PBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFB4227PBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFB4229PBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFB42N20D=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFB4321PBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFB4332PBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFB4710=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFB59N10D=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFB61N15D=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFBA1405P=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFBA90N20D=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFBC20=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFBC30=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFBC40=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFBE20=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFBE30=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFBF20=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFBF30=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFBG20=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFBG30=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFI1010N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFI1310N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFI4227PBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFI520N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFI530N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFI540N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFI840GLC=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFI840G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFIZ44N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFIZ46N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFIZ48N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFL024Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFL4105=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFL4310=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP044N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP048N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP054N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP064N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP064V=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP1405=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP140N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP150N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP250N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP260N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP2907=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP2907Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP350=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP3703=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP3710=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP4232PBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP440=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP450A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP450=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP460A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP460N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP460=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFPS3810=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFPS3815=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR014=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR024N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR110=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR1205=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR120N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR13N20D=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR18N15D=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR210=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR220=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR2405=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR24N15D=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR320=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR3303=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR3518=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR3910=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR3911=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR4105=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR420A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFS4227PBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFS4710=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFS52N15D=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFSL4321PBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFU110=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFU1205=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFU120N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFU220=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFU320=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFU3910=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFU4105=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ14=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ24N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ24NS=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ24V=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ34E=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ34N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ34NS=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ44E=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ44N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ44NS=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ44Z_S_L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ46N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ46NS=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ46Z_S_L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ48N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ48NS=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ48VS=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFZ48Z_S_L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL1004=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL1404=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL1404Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL2203N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL2203NS=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL2505=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL2505S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL2703=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL2703S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL2910=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL2910S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL3102=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL3102S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL3103=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL3103S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL3302=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL3303=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL3303S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL3402=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL3705N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL3705NS=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL3705Z_S_L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL3713SL=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL3713=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL3714=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL3714Z_S_L=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL3803S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL520=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL530N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL530NS=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL540NS=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL540=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL8113SL=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLBA3803=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLI2203N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLI2505=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLI2910=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLI3705N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLI3803=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLI530N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLIB4343=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLIZ24N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLIZ34N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLIZ44N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLL014N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLL024Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLL2705=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLL3303=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLML2402=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLML2502=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLML2803=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLMS1902=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLMS2002=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLR024N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLR120N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLR2703=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLR2705=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLR2905=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLR2908=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLR3103=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLR3303=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLR3410=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLR3915=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLR8103V=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLR8503=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLR8711CPBF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLU024N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLU120N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLU2703=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLU2705=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLU2905=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLU3103=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLU3303=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLZ14S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLZ34N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLZ34NS=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLZ44N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLZ44NS=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLZ44ZSL=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====VN10LF=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====ZVN0124=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====ZVN2106=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====ZVN3306F=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====ZVN3306=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====ZVN4106=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====ZVN4210=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====ZVN4310=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====uA741=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====op27(mod)=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====op27(boyle)=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====ua741(mod)=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====ua741(boyle)=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====ua741(TI)=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====opa27(TI)=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====tl081(TI)=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====tl071(TI)=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====OP07(TI)=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====OP37(TI)=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====mc1458(TI)=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====AD825=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LM3886=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSP171=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSP315=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSP316=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSP317=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSS92_1=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSS92=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BSS110=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ171=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ173=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ271=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BUZ272=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF4905=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF4905S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF5210=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF5210S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF5305=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF5305S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF5803=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF5805=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6100=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6215=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6216=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF6217=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7204=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7220=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7233=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7404=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7406=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7410=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7416=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7424=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7425=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7604=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7606=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7705=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF7707=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF9510=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF9520=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF9530=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF9540N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF9640=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF9Z24N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRF9Z34N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP9140N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFP9240=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR5305=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR5410=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR9024N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR9120N=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFR9210=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFU9014=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFU9120=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFU9220=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRFU9310=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRL5602S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLIB9343=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLML5103=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLML5203=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLML6302=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLML6401=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLML6402=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====IRLRU9343=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====ZVP2106G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====ZVP2106=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====ZVP3306=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====PVR100AZ-B12V=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====PVR100AZ-B5V0=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====PVR100AZ-B3V3=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====PVR100AZ-B3V0=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====PVR100AZ-B2V5=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LM140-5V=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LM317K-1=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LM317K-2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LM337K=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LM311=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LM324=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LM358=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====MAX495=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====NE5532=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====NE5534=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====ad822=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====ad822a=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====ad822b=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====ad822s=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LF411=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
-=====RO3003_=========
+=====P:Substrates:RO3003=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====RO3203_=========
+=====P:Substrates:RO3203=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====RO3006_=========
+=====P:Substrates:RO3006=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====RO3010_=========
+=====P:Substrates:RO3010=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====RO3210_=========
+=====P:Substrates:RO3210=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====RO4003_=========
+=====P:Substrates:RO4003=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====RO4350_=========
+=====P:Substrates:RO4350=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====RT5880_=========
+=====P:Substrates:RT/duroid 5880=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====RT5870_=========
+=====P:Substrates:RT/duroid 5870=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====RT6002_=========
+=====P:Substrates:RT/duroid 6002=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====RT6006_=========
+=====P:Substrates:RT/duroid 6006=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====RT6010_=========
+=====P:Substrates:RT/duroid 6010LM=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====ULAM2000_=========
+=====P:Substrates:ULTRALAM 2000=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====TMM3_=========
+=====P:Substrates:TMM 3=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====TMM4_=========
+=====P:Substrates:TMM 4=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====TMM6_=========
+=====P:Substrates:TMM 6=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====TMM10_=========
+=====P:Substrates:TMM 10=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====TMM10i_=========
+=====P:Substrates:TMM 10i=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_2DA1774R_=========
+=====P:Transistors:2DA1774R=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_2DC4617R_=========
+=====P:Transistors:2DC4617R=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N2219A_=========
+=====P:Transistors:2N2219A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_2N2222_=========
+=====P:Transistors:2N2222=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N2222A_=========
+=====P:Transistors:2N2222A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N2369A_=========
+=====P:Transistors:2N2369A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N2484_=========
+=====P:Transistors:2N2484=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N2905A_=========
+=====P:Transistors:2N2905A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_2N2907_=========
+=====P:Transistors:2N2907=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N2907A_=========
+=====P:Transistors:2N2907A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N2955_=========
+=====P:Transistors:2N2955=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3019_=========
+=====P:Transistors:2N3019=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3053_=========
+=====P:Transistors:2N3053=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3055_=========
+=====P:Transistors:2N3055=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3390_=========
+=====P:Transistors:2N3390=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3391A_=========
+=====P:Transistors:2N3391A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3392_=========
+=====P:Transistors:2N3392=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3393_=========
+=====P:Transistors:2N3393=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3415_=========
+=====P:Transistors:2N3415=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3416_=========
+=====P:Transistors:2N3416=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3417_=========
+=====P:Transistors:2N3417=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3501_=========
+=====P:Transistors:2N3501=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3507_=========
+=====P:Transistors:2N3507=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3700_=========
+=====P:Transistors:2N3700=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3702_=========
+=====P:Transistors:2N3702=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3703_=========
+=====P:Transistors:2N3703=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3859A_=========
+=====P:Transistors:2N3859A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3903_=========
+=====P:Transistors:2N3903=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3904_=========
+=====P:Transistors:2N3904=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3905_=========
+=====P:Transistors:2N3905=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3906_=========
+=====P:Transistors:2N3906=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N3947_=========
+=====P:Transistors:2N3947=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N4123_=========
+=====P:Transistors:2N4123=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N4124_=========
+=====P:Transistors:2N4124=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N4125_=========
+=====P:Transistors:2N4125=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N4126_=========
+=====P:Transistors:2N4126=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N4400_=========
+=====P:Transistors:2N4400=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N4401_=========
+=====P:Transistors:2N4401=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N4402_=========
+=====P:Transistors:2N4402=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N4403_=========
+=====P:Transistors:2N4403=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N4410_=========
+=====P:Transistors:2N4410=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N5086_=========
+=====P:Transistors:2N5086=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N5087_=========
+=====P:Transistors:2N5087=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N5088_=========
+=====P:Transistors:2N5088=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N5089_=========
+=====P:Transistors:2N5089=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N5172_=========
+=====P:Transistors:2N5172=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N5210_=========
+=====P:Transistors:2N5210=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N5366_=========
+=====P:Transistors:2N5366=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N5400_=========
+=====P:Transistors:2N5400=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N5401_=========
+=====P:Transistors:2N5401=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N5550_=========
+=====P:Transistors:2N5550=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N5551_=========
+=====P:Transistors:2N5551=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N5551_=========
+=====P:Transistors:2N5551=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N5769_=========
+=====P:Transistors:2N5769=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N5771_=========
+=====P:Transistors:2N5771=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N5772_=========
+=====P:Transistors:2N5772=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N5830_=========
+=====P:Transistors:2N5830=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N6431_=========
+=====P:Transistors:2N6431=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N6517_=========
+=====P:Transistors:2N6517=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2N6715_=========
+=====P:Transistors:2N6715=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2SA1213_=========
+=====P:Transistors:2SA1213=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====Q2SC2873_=========
+=====P:Transistors:2SC2873=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC107A_=========
+=====P:Transistors:BC107A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC107BP_=========
+=====P:Transistors:BC107BP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC108BP_=========
+=====P:Transistors:BC108BP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC109BP_=========
+=====P:Transistors:BC109BP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC109C_=========
+=====P:Transistors:BC109C=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC177AP_=========
+=====P:Transistors:BC177AP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC178AP_=========
+=====P:Transistors:BC178AP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====QBC182BP_=========
+=====P:Transistors:BC182BP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====QBC183BP_=========
+=====P:Transistors:BC183BP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====QBC184BP_=========
+=====P:Transistors:BC184BP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC237BP_=========
+=====P:Transistors:BC237BP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC238BP_=========
+=====P:Transistors:BC238BP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC239BP_=========
+=====P:Transistors:BC239BP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC307AP_=========
+=====P:Transistors:BC307AP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC308AP_=========
+=====P:Transistors:BC308AP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC337AP_=========
+=====P:Transistors:BC337AP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC338AP_=========
+=====P:Transistors:BC338AP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC413BP_=========
+=====P:Transistors:BC413BP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC414BP_=========
+=====P:Transistors:BC414BP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC415AP_=========
+=====P:Transistors:BC415AP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC416AP_=========
+=====P:Transistors:BC416AP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC546BP_=========
+=====P:Transistors:BC546BP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC547BP_=========
+=====P:Transistors:BC547BP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC548BP_=========
+=====P:Transistors:BC548BP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC548C_=========
+=====P:Transistors:BC548C=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC549_=========
+=====P:Transistors:BC549=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC549BP_=========
+=====P:Transistors:BC549BP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC550BP_=========
+=====P:Transistors:BC550BP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC556AP_=========
+=====P:Transistors:BC556AP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC557AP_=========
+=====P:Transistors:BC557AP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC557B_=========
+=====P:Transistors:BC557B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC558AP_=========
+=====P:Transistors:BC558AP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC559AP_=========
+=====P:Transistors:BC559AP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC560AP_=========
+=====P:Transistors:BC560AP=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC639_=========
+=====P:Transistors:BC639=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC640_=========
+=====P:Transistors:BC640=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC807_16_=========
+=====P:Transistors:BC807-16=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC807_25_=========
+=====P:Transistors:BC807-25=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC807_40_=========
+=====P:Transistors:BC807-40=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC817_16_=========
+=====P:Transistors:BC817-16=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC817_25_=========
+=====P:Transistors:BC817-25=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC817_40_=========
+=====P:Transistors:BC817-40=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC846A_=========
+=====P:Transistors:BC846A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC846AW_=========
+=====P:Transistors:BC846AW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC846B_=========
+=====P:Transistors:BC846B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC846B_=========
+=====P:Transistors:BC846B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC846BW_=========
+=====P:Transistors:BC846BW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC846C_=========
+=====P:Transistors:BC846C=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC846CW_=========
+=====P:Transistors:BC846CW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC847A_=========
+=====P:Transistors:BC847A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC847AT_=========
+=====P:Transistors:BC847AT=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC847AW_=========
+=====P:Transistors:BC847AW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC847B_=========
+=====P:Transistors:BC847B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC847B_=========
+=====P:Transistors:BC847B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC847BS_=========
+=====P:Transistors:BC847BS=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC847BT_=========
+=====P:Transistors:BC847BT=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC847BV_=========
+=====P:Transistors:BC847BV=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC847BW_=========
+=====P:Transistors:BC847BW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC847C_=========
+=====P:Transistors:BC847C=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC847CT_=========
+=====P:Transistors:BC847CT=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC847CW_=========
+=====P:Transistors:BC847CW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC847PN_=========
+=====P:Transistors:BC847PN=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC848A_=========
+=====P:Transistors:BC848A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC848AW_=========
+=====P:Transistors:BC848AW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC848B_=========
+=====P:Transistors:BC848B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC848B_=========
+=====P:Transistors:BC848B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC848BW_=========
+=====P:Transistors:BC848BW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC848C_=========
+=====P:Transistors:BC848C=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC848CW_=========
+=====P:Transistors:BC848CW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC849B_=========
+=====P:Transistors:BC849B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC850B_=========
+=====P:Transistors:BC850B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC856A_=========
+=====P:Transistors:BC856A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC856AW_=========
+=====P:Transistors:BC856AW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC856B_=========
+=====P:Transistors:BC856B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC856BW_=========
+=====P:Transistors:BC856BW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC857A_=========
+=====P:Transistors:BC857A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC857AT_=========
+=====P:Transistors:BC857AT=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC857AW_=========
+=====P:Transistors:BC857AW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC857B_=========
+=====P:Transistors:BC857B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC857BS_=========
+=====P:Transistors:BC857BS=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC857BT_=========
+=====P:Transistors:BC857BT=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC857BV_=========
+=====P:Transistors:BC857BV=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC857BW_=========
+=====P:Transistors:BC857BW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC857C_=========
+=====P:Transistors:BC857C=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC857CW_=========
+=====P:Transistors:BC857CW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC857CT_=========
+=====P:Transistors:BC857CT=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC858A_=========
+=====P:Transistors:BC858A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC858AW_=========
+=====P:Transistors:BC858AW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC858B_=========
+=====P:Transistors:BC858B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC858BW_=========
+=====P:Transistors:BC858BW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC858C_=========
+=====P:Transistors:BC858C=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_BC858CW_=========
+=====P:Transistors:BC858CW=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC856A_=========
+=====P:Transistors:BC856A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC857A_=========
+=====P:Transistors:BC857A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC858A_=========
+=====P:Transistors:BC858A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC859A_=========
+=====P:Transistors:BC859A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BC860A_=========
+=====P:Transistors:BC860A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BCV72_=========
+=====P:Transistors:BCV72=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BCW32_=========
+=====P:Transistors:BCW32=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BD135_137_139_=========
+=====P:Transistors:BD135=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BD136_138_140_=========
+=====P:Transistors:BD136=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BD139_=========
+=====P:Transistors:BD139=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
 =====BD675=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BD675A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BD676=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BD676A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BD677=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BD677A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BD678=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BD678A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BD679=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BD679A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BD680=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BD680A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BD681=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BD682=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
-=====BF720_=========
+=====P:Transistors:BF720=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BF721_=========
+=====P:Transistors:BF721=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BFG425W_=========
+=====P:Transistors:BFG425W=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BFP193W_=========
+=====P:Transistors:BFP193W=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BFP405_=========
+=====P:Transistors:BFP405=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BFP420_=========
+=====P:Transistors:BFP420=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BFP540_=========
+=====P:Transistors:BFP540=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BFP620_=========
+=====P:Transistors:BFP620=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BFP640_=========
+=====P:Transistors:BFP640=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BFR92A_=========
+=====P:Transistors:BFR92A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BFS20_=========
+=====P:Transistors:BFS20=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BFT92_=========
+=====P:Transistors:BFT92=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BFT92A_=========
+=====P:Transistors:BFT92A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====BFT93_=========
+=====P:Transistors:BFT93=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_DMMT3904W_=========
+=====P:Transistors:DMMT3904W=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_DMMT3906_=========
+=====P:Transistors:DMMT3906=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_DMMT3906W_=========
+=====P:Transistors:DMMT3906W=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_DMMT5551_=========
+=====P:Transistors:DMMT5551=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT458_=========
+=====P:Transistors:FZT458=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT489_=========
+=====P:Transistors:FZT489=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT491_=========
+=====P:Transistors:FZT491=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT491A_=========
+=====P:Transistors:FZT491A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT493_=========
+=====P:Transistors:FZT493=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT549_=========
+=====P:Transistors:FZT549=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT558_=========
+=====P:Transistors:FZT558=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT560_=========
+=====P:Transistors:FZT560=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT589_=========
+=====P:Transistors:FZT589=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT591_=========
+=====P:Transistors:FZT591=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT591A_=========
+=====P:Transistors:FZT591A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT649_=========
+=====P:Transistors:FZT649=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT651_=========
+=====P:Transistors:FZT651=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT653_=========
+=====P:Transistors:FZT653=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT655_=========
+=====P:Transistors:FZT655=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT657_=========
+=====P:Transistors:FZT657=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT658_=========
+=====P:Transistors:FZT658=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT688B_=========
+=====P:Transistors:FZT688B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT689B_=========
+=====P:Transistors:FZT689B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT690B_=========
+=====P:Transistors:FZT690B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT692B_=========
+=====P:Transistors:FZT692B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT694B_=========
+=====P:Transistors:FZT694B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT696B_=========
+=====P:Transistors:FZT696B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT717_=========
+=====P:Transistors:FZT717=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT749_=========
+=====P:Transistors:FZT749=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT751_=========
+=====P:Transistors:FZT751=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT753_=========
+=====P:Transistors:FZT753=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT755_=========
+=====P:Transistors:FZT755=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT757_=========
+=====P:Transistors:FZT757=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT758_=========
+=====P:Transistors:FZT758=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT788A_=========
+=====P:Transistors:FZT788A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT788B_=========
+=====P:Transistors:FZT788B=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT789A_=========
+=====P:Transistors:FZT789A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT790A_=========
+=====P:Transistors:FZT790A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT795A_=========
+=====P:Transistors:FZT795A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT796A_=========
+=====P:Transistors:FZT796A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT849_=========
+=====P:Transistors:FZT849=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT851_=========
+=====P:Transistors:FZT851=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT853_=========
+=====P:Transistors:FZT853=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT855_=========
+=====P:Transistors:FZT855=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT857_=========
+=====P:Transistors:FZT857=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT869_=========
+=====P:Transistors:FZT869=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT948_=========
+=====P:Transistors:FZT948=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT949_=========
+=====P:Transistors:FZT949=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT951_=========
+=====P:Transistors:FZT951=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT953_=========
+=====P:Transistors:FZT953=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT955_=========
+=====P:Transistors:FZT955=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT956_=========
+=====P:Transistors:FZT956=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT957_=========
+=====P:Transistors:FZT957=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT958_=========
+=====P:Transistors:FZT958=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT968_=========
+=====P:Transistors:FZT968=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT1047A_=========
+=====P:Transistors:FZT1047A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT1048A_=========
+=====P:Transistors:FZT1048A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT1049A_=========
+=====P:Transistors:FZT1049A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT1051A_=========
+=====P:Transistors:FZT1051A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT1053A_=========
+=====P:Transistors:FZT1053A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT1147A_=========
+=====P:Transistors:FZT1147A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT1149A_=========
+=====P:Transistors:FZT1149A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZT1151A_=========
+=====P:Transistors:FZT1151A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====FZTA42_=========
+=====P:Transistors:FZTA42=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_IMT4_=========
+=====P:Transistors:IMT4=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_IMX8_=========
+=====P:Transistors:IMX8=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MJ15024_=========
+=====P:Transistors:MJ15024=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MJ15024_=========
+=====P:Transistors:MJ15025=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBT123S_=========
+=====P:Transistors:MMBT123S=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBT2222A_=========
+=====P:Transistors:MMBT2222A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBT2222AT_=========
+=====P:Transistors:MMBT2222AT=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBT2907A_=========
+=====P:Transistors:MMBT2907A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBT2907AT_=========
+=====P:Transistors:MMBT2907AT=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBT3904_=========
+=====P:Transistors:MMBT3904=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBT3904T_=========
+=====P:Transistors:MMBT3904T=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBT3906_=========
+=====P:Transistors:MMBT3906=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBT3906T_=========
+=====P:Transistors:MMBT3906T=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBT4401T_=========
+=====P:Transistors:MMBT4401T=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBT4124_=========
+=====P:Transistors:MMBT4124=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBT4126_=========
+=====P:Transistors:MMBT4126=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBTA05_=========
+=====P:Transistors:MMBTA05=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBTA06_=========
+=====P:Transistors:MMBTA06=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBTA42_=========
+=====P:Transistors:MMBTA42=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBTA55_=========
+=====P:Transistors:MMBTA55=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBTA56_=========
+=====P:Transistors:MMBTA56=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBTA92_=========
+=====P:Transistors:MMBTA92=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBTH10_=========
+=====P:Transistors:MMBTH10=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMBTH24_=========
+=====P:Transistors:MMBTH24=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMDT2222A_=========
+=====P:Transistors:MMDT2222A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMDT2227_=========
+=====P:Transistors:MMDT2227_npn=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMDT2227_=========
+=====P:Transistors:MMDT2227_pnp=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMDT2907A_=========
+=====P:Transistors:MMDT2907A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMDT3904_=========
+=====P:Transistors:MMDT3904=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMDT3904V_=========
+=====P:Transistors:MMDT3904V=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMDT3906_=========
+=====P:Transistors:MMDT3906=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMDT3946_=========
+=====P:Transistors:MMDT3946_npn=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMDT3946_=========
+=====P:Transistors:MMDT3946_pnp=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMDT4401_=========
+=====P:Transistors:MMDT4401=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMDT4403_=========
+=====P:Transistors:MMDT4403=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMDT4124_=========
+=====P:Transistors:MMDT4124=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMDT4413_=========
+=====P:Transistors:MMDT4413_npn=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMDT4413_=========
+=====P:Transistors:MMDT4413_pnp=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMDT5401_=========
+=====P:Transistors:MMDT5401=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMDT5551_=========
+=====P:Transistors:MMDT5551=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMST2222A_=========
+=====P:Transistors:MMST2222A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMST2907A_=========
+=====P:Transistors:MMST2907A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMST3904_=========
+=====P:Transistors:MMST3904=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMST3906_=========
+=====P:Transistors:MMST3906=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMST4124_=========
+=====P:Transistors:MMST4124=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMST4126_=========
+=====P:Transistors:MMST4126=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMST4401_=========
+=====P:Transistors:MMST4401=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMST4403_=========
+=====P:Transistors:MMST4403=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMST5401_=========
+=====P:Transistors:MMST5401=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMST5551_=========
+=====P:Transistors:MMST5551=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMSTA05_=========
+=====P:Transistors:MMSTA05=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMSTA06_=========
+=====P:Transistors:MMSTA06=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMSTA42_=========
+=====P:Transistors:MMSTA42=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMSTA55_=========
+=====P:Transistors:MMSTA55=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMSTA56_=========
+=====P:Transistors:MMSTA56=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====T_MMSTA92_=========
+=====P:Transistors:MMSTA92=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPS3702_=========
+=====P:Transistors:MPS3702=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPS3703_=========
+=====P:Transistors:MPS3703=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPS5179_=========
+=====P:Transistors:MPS5179=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPS6513_=========
+=====P:Transistors:MPS6513=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPS6514_=========
+=====P:Transistors:MPS6514=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPS6515_=========
+=====P:Transistors:MPS6515=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPS6518_=========
+=====P:Transistors:MPS6518=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPS6521_=========
+=====P:Transistors:MPS6521=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPS6523_=========
+=====P:Transistors:MPS6523=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPS6531_=========
+=====P:Transistors:MPS6531=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPS6534_=========
+=====P:Transistors:MPS6534=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPS6562_=========
+=====P:Transistors:MPS6562=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPS8098_=========
+=====P:Transistors:MPS8098=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPSA05_=========
+=====P:Transistors:MPSA05=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPSA06_=========
+=====P:Transistors:MPSA06=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPSA10_=========
+=====P:Transistors:MPSA10=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPSA18_=========
+=====P:Transistors:MPSA18=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPSA20_=========
+=====P:Transistors:MPSA20=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPSA42_=========
+=====P:Transistors:MPSA42=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPSA43_=========
+=====P:Transistors:MPSA43=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPSA55_=========
+=====P:Transistors:MPSA55=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPSA56_=========
+=====P:Transistors:MPSA56=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPSA92_=========
+=====P:Transistors:MPSA92=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPSA93_=========
+=====P:Transistors:MPSA93=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPSH10_=========
+=====P:Transistors:MPSH10=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPSL01_=========
+=====P:Transistors:MPSL01=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====MPSL51_=========
+=====P:Transistors:MPSL51=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====TIP35C_=========
+=====P:Transistors:TIP35C=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====TIP36C_=========
+=====P:Transistors:TIP36C=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====TIP41C_=========
+=====P:Transistors:TIP41C=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====TIP42C_=========
+=====P:Transistors:TIP42C=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====TN6714A_=========
+=====P:Transistors:TN6714A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====TN6715A_=========
+=====P:Transistors:TN6715A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====TN6726A_=========
+=====P:Transistors:TN6726A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====TN6727A_=========
+=====P:Transistors:TN6727A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====TN6728A_=========
+=====P:Transistors:TN6728A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
-=====TN6729A_=========
+=====P:Transistors:TN6729A=========
   < my_ 1 0 0 0 0 0 0>
  #() my_();
 :my_
 =====B32K130=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B32K150=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B32K230=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B32K250=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B32K275=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B32K320=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B32K385=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B32K420=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B32K440=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B32K460=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B32K550=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B32K680=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B32K750=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B40K75=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B40K130=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B40K150=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B40K230=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B40K250=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B40K275=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B40K320=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B40K385=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B40K420=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B40K440=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B40K460=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B40K550=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B40K680=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B40K750=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B60K75=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B60K130=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B60K150=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B60K230=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B60K250=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B60K275=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B60K320=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B60K385=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B60K420=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B60K440=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B60K460=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B60K550=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B60K680=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B60K750=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B60K1000=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B80K130=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B80K150=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B80K230=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B80K250=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B80K275=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B80K320=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B80K385=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B80K420=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B80K440=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B80K460=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B80K550=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B80K680=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B80K750=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====B80K1100=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K11G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K14G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K14AUTOG2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K17G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K17AUTOG2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K20G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K25G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K30G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K30AUTOG2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K35G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K40G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K50G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K60G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K75G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K95G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K115G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K130G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K140G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K150G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K175G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K230G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K250G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K275G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU3225K300G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K11G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K14G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K14AUTOG2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K17G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K17AUTOG2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K20G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K25G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K30G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K30AUTOG2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K35G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K40G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K50G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K60G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K75G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K95G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K115G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K130G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K140G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K150G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K175G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K230G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K250G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K275G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CU4032K300G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN0603M4G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN0603M6G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN0603K7G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN0603L8G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN0603K11G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN0603K14G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN0805M4G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN0805M6G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN0805L8G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN0805K11G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN0805K14G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN0805S14BAUTOG=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN0805K17G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN0805K20G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN0805K25G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1206M4G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1206M6G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1206L8G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1206K11G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1206K14G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1206S14BAUTOG=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1206K17G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1206K20G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1206K25G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1206K30G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1206K35G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1206K40G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1206K50G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1206K60G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1210M4G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1210M6G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1210L8G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1210K11G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1210K14G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1210S14BAUTOG=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1210K17G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1210K20G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1210K25G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1210K30G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1210K35G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1210K40G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1210K50G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1210K60G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1812M4G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1812M6G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1812L8G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1812K11G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1812K14G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1812S14BAUTOG=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1812K17G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1812K20G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1812K25G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1812K30G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1812K35G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1812K40G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1812K50G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1812K60G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1812S60AG=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN1812S95AG2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN2220M4G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN2220M6G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN2220L8G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN2220K11G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN2220K14G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN2220S14BAUTOG=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN2220S14BAUTOE2G2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN2220K17G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN2220K20G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN2220K25G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN2220K30G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN2220K30AUTOG=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN2220K35G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN2220K40G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN2220K50G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====CN2220K60G=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LS40K130QP=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LS40K150QP=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LS40K230QP=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LS40K250QP=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LS40K275QP=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LS40K320QP=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LS40K385QP=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LS40K420QP=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LS40K440QP=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LS40K460QP=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LS40K550QP=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LS40K680QP=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====LS40K750QP=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====PD80K1100=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K11=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K14=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K17=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K20=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K25=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K30=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K35=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K40=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K50=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K60=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K75=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K95=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K115=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K130=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K140=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K150=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K175=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K230=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K250=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K275=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K300=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K385=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K420=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K440=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S05K460=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K11=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K14=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K17=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K20=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K25=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K30=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K35=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K40=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K50=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K60=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07S60AGS2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K75=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K95=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07S95AGS2=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K115=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K130=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K140=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K150=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K175=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K230=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K250=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K275=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K300=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K385=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K420=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K440=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S07K460=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K11=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K14=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K14AUTO=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K17=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K17AUTO=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K20=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K25=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K30=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K35=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K40=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K50=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K60=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K75=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K95=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K115=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K130=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K140=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K150=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K175=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K230=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K250=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K275=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K300=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K320=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K385=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K420=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K440=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K460=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K510=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K550=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K625=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S10K680=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K11=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K14=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K14AUTO=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K17=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K17AUTO=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K20=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K25=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K30=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K30AUTO=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K35=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K40=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K50=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K60=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K75=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K95=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K115=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K130=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K140=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K150=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K175=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K230=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K250=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K275=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K300=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K320=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K385=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K420=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K440=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K460=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K510=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K550=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K625=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K680=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S14K1000=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S18K130=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S18K140=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S18K150=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S18K175=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S18K230=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S18K250=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S18K275=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S18K300=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S18K320=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S18K385=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S18K420=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S18K440=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S18K460=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K11=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K14=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K14AUTO=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K17=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K17AUTO=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K20=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K25=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K25AUTO=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K30=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K30AUTO=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K35=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K40=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K50=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K60=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K75=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K95=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K115=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K130=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K140=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K150=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K175=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K230=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K250=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K275=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K300=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K320=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K385=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K420=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K440=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K460=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K510=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K550=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K625=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K680=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====S20K1000=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====SR1210M4S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====SR1210M6S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====SR1210L8S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====SR1S14BM105Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====SR1S14BM155Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====SR1S14BM474X=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====SR1K20M105Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====SR1K20M155Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====SR1K20M474X=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====SR2220M4S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====SR2220M6S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====SR2220L8S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====SR2S14BM105Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====SR2S14BM155Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====SR2S14BM474X=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====SR2K20M105Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====SR2K20M155Z=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====SR2K20M474X=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BZT52C10T=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BZT52C10S=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====BZT52C10=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4728A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4729A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4730A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4731A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4732A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4733A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4734A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4735A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4741A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4742A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4743A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4744A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4745A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4746A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4747A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4757A=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N746=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N747=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N748=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N749=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N750=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N751=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N752=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N753=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N754=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N755=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N756=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N757=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N758=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N759=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4728=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4729=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4730=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4731=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4732=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4733=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4734=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4735=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4736=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4737=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4738=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4739=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4740=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4741=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4742=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4743=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4744=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4745=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4746=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4747=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4748=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4749=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4750=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4751=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4752=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4753=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4754=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4755=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4756=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4757=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4758=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4759=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4760=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4761=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4762=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4763=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N4764=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5342B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5344B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5346B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5348B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5350B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5351B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5353B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5355B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5357B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5359B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5361B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5363B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5365B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5367B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5369B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5371B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5373B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5375B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5377B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5379B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5381B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5383B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5385B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End
 =====1N5387B=========
-  < my_ 1 0 0 0 0 0 0>
- #() my_();
+
+// sckt declaration my_
 
 
+# Missing ID & paramsmy_
 .Def:End

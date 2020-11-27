@@ -1,3 +1,4 @@
+ #() :SymbolSection:();
 sTr #(.T1(0.5), .T2(0.5)) Tr1(net_410_140, net_350_180, net_350_240, net_410_280, net_410_220, net_410_200);
 Port #(.Num(3), .Type(analog)) P3(net_460_280);
 Port #(.Num(4), .Type(analog)) P4(net_460_140);

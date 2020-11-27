@@ -1,3 +1,4 @@
+ #() :SymbolSection:(net_-30_0, net_30_0);
 Port #(.Num(2), .Type(analog)) P2(net_400_180);
 Port #(.Num(1), .Type(analog)) P1(net_180_180);
 R #(.R(0 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(US)) R1(net_260_260, net_320_260);

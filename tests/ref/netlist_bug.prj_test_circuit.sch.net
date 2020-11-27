@@ -1,7 +1,10 @@
 # Qucs
+## declarations
+### Sub:short_circuit
 
 .Def:short_circuit _net1 _net1
-# TODO ID & params?????.ID 
+# Missing ID & paramsSub:short_circuit
+# skip non-device :SymbolSection:
 .Def:End
 ## declarations end
 

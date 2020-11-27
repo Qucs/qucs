@@ -1,3 +1,4 @@
+ #() :SymbolSection:();
 C #(.C(39.01pF), .V(), .Symbol(neutral)) C1(net_240_250, net_240_190);
 GND #() anonymous_gnd_hack_0(net_240_250);
 L #(.L(280.9nH), .I()) L1(net_280_140, net_340_140);

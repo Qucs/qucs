@@ -152,7 +152,8 @@ private: // overrides
 private:
 	void printSymbol(Symbol const*, ostream_t&) const override;
 	void printtaskElement(TaskElement const*, ostream_t&) const override;
-	void printPainting(Painting const*, ostream_t&) const override {incomplete();}
+	void printPainting(Painting const*, ostream_t&) const override;
+	void printSubckt(SubcktBase const*, ostream_t&) const override;
    void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
 	bool _lib_mod; // HACK HACK
 }d0;
@@ -331,6 +332,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
 			trace1("model", stream.fullString());
 			new__instance(stream, owner, sckt);
 		}else if(Line == "<Paintings>") {
+			trace1("paintings?", stream.fullString());
 			mode='P';
 		}else if(Line == "<Model>") {
 			mode='M';
@@ -356,7 +358,8 @@ void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
 					// what are those?! FIXME: do later.
 					Symbol const* cs = sym;
 					assert(cs->owner());
-					sym->recreate(); // re? create symbol gfx and random other things. needs owner
+					sym->recreate(); // BUG: re? create symbol gfx and random other things. needs owner
+					                 //  used in legacy/subcircuit.cpp
 					sym->build(); // what's this?!
 				}else{
 				}
@@ -492,7 +495,12 @@ static std::string mangle(std::string t)
 	std::string ret="";
 	return t.substr(0, pos);
 }
-
+/*--------------------------------------------------------------------------*/
+void LegacySchematicLanguage::printSubckt(SubcktBase const*, ostream_t&) const
+{
+	unreachable();
+}
+/*--------------------------------------------------------------------------*/
 void LegacySchematicLanguage::printtaskElement(TaskElement const* c, ostream_t& s) const
 {
 	s << "  <." << c->Name << " ";
@@ -535,6 +543,12 @@ void LegacySchematicLanguage::printtaskElement(TaskElement const* c, ostream_t& 
 	}
 
 	s << ">";
+}
+
+void LegacySchematicLanguage::printPainting(Painting const* pp, ostream_t& s) const
+{
+	auto mp = const_cast<Painting*>(pp);
+	s << "  <" << mp->save() << ">\n";
 }
 
 static void printArgs(Symbol const* sym, ostream_t& s)

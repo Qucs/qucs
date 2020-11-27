@@ -1,3 +1,4 @@
+ #() :SymbolSection:();
 GND #() anonymous_gnd_hack_0(net_650_120);
 Vdc #(.U(15 V)) V1(net_650_60, net_650_120);
 IProbe #() Collector(net_470_140, net_470_200);

@@ -1,3 +1,4 @@
+ #() :SymbolSection:(net_-40_20, net_-40_-20, net_60_0, net_10_50, net_10_-50);
 R #(.R(4k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(net_380_160, net_440_160);
 C #(.C(4p), .V(), .Symbol(neutral)) C1(net_440_160, net_500_160);
 Port #(.Num(3), .Type()) P3(net_50_60);

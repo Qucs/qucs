@@ -1,3 +1,4 @@
+ #() :SymbolSection:();
 R #(.R(10k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R2(net_60_210, net_120_210);
 R #(.R(10k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(net_120_210, net_180_210);
 OpAmp #(.G(1e6), .Umax(15 V)) OP1(net_200_170, net_200_210, net_270_190);
