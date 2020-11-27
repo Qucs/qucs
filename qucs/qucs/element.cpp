@@ -15,7 +15,7 @@
 #include "element.h"
 #include "schematic_doc.h"
 
-Element::Element() : _center(0, 0), _owner(nullptr)
+Element::Element() : _position(0, 0), _owner(nullptr)
 {
   Type = isDummyElement; // BUG
   x1 = y1 = 0; // x2 = y2 = 0; // really?
@@ -24,7 +24,7 @@ Element::Element() : _center(0, 0), _owner(nullptr)
 
 Element::Element(Element const& e)
  : Object(e),
-   _center(e._center),
+   _position(e._position),
    x1(e.x1), y1(e.y1), // x2(e.x2), y2(e.y2), // BUG diagram & whatever.
    _owner(nullptr) // sic.
 	//Name(e.Name) // yikes.
@@ -42,8 +42,8 @@ Element::~Element()
 void Element::getCenter(int&x, int&y) const
 {
 	unreachable();
-	x = _center.first;
-	y = _center.second;
+	x = _position.first;
+	y = _position.second;
 }
 
 // pure? maybe not. there could be non-paintable elements...
@@ -78,20 +78,87 @@ void Element::detachFromModel()
 	assert(scope());
 	scope()->detach(this);
 }
-
+/*--------------------------------------------------------------------------*/
 SchematicModel* Element::scope()
-{
-	if(auto o=dynamic_cast<Symbol*>(owner())){
-		return o->subckt();
+{ untested();
+	if(auto o=dynamic_cast<Symbol*>(owner())){ untested();
+		if(o->subckt()){ untested();
+			return o->subckt();
+//		}else if(o->makes_own_scope()){ untested();
+		}else{ untested();
+			return o->scope();
+			return nullptr;
+		}
 	}else{ untested();
 		return nullptr;
 	}
 }
-
+/*--------------------------------------------------------------------------*/
 pos_t /* const & */ Element::center()const
 {
 	return pos_t(cx(), cy());
 }
+
+// borrowed/modified from e_card.h
+const Element* Element::find_looking_out(const std::string& name)const
+{
+	try {
+		return find_in_parent_scope(name);
+	}catch (ExceptionCantFind&) {
+		if (auto o=dynamic_cast<Element const*>(owner())) {
+			return o->find_looking_out(name);
+		// }else if (makes_own_scope()) {
+		// 	// probably a subckt or "module"
+		// 	CARD_LIST::const_iterator i = CARD_LIST::card_list.find_(name);
+		// 	if (i != CARD_LIST::card_list.end()) {
+		// 		return *i;
+		// 	}else{
+		// 		throw;
+		// 	}
+		}else{
+			throw;
+		}
+	}
+}
+/*--------------------------------------------------------------------------*/
+// borrowed/modified from e_card.h
+const Element* Element::find_in_parent_scope(const std::string& name)const
+{
+	assert(name != "");
+	//  const CARD_LIST* p_scope = (scope()->parent()) ? scope()->parent() : scope();
+	//
+	if(!owner()){
+		incomplete();
+		return nullptr;
+		throw ExceptionCantFind(name, label());
+	}else{
+	}
+
+	SchematicModel const* p_scope = nullptr;
+	if(auto o = dynamic_cast<Element const*>(owner())){
+		p_scope = o->scope();
+	}else if(auto o = dynamic_cast<QucsDoc const*>(owner())){
+		return o->find_proto(name);
+	}else if(dynamic_cast<Object const*>(owner())){
+		incomplete();
+	}else{
+		unreachable();
+	}
+
+	if(p_scope){
+	}else{
+		throw ExceptionCantFind(name, label());
+	}
+
+	auto i = p_scope->find_(name);
+	if (i == p_scope->end()) {
+		throw ExceptionCantFind(name, label());
+	}else{
+	}
+	return *i;
+}
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 
 // legacy stuff. pretend that Element points to an Element
 //#include "components/component.h"

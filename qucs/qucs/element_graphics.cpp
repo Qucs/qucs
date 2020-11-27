@@ -232,7 +232,8 @@ void ElementGraphics::attachElement(Element* e)
 	_elementText = new ElementText(this);
 	auto s = dynamic_cast<Symbol const*>(_e);
 
-	if(!s){
+	if(1){
+	}else if(!s){
 	}else if(auto sp = s->symbolPaintings()){
 		unsigned k = 0;
 		for(Element const* p : *sp){

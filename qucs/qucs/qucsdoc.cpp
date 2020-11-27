@@ -24,9 +24,8 @@
 #include "simulator.h"
 
 
-QucsDoc::QucsDoc(QucsApp &App_, const QString& Name_, QWidget* o)
-	: App(&App_),
-     _app(App_),
+QucsDoc::QucsDoc(QucsApp* App_, const QString& Name_, QWidget* o)
+   : _app(App_),
 	  _owner(o)
 {
   GridOn = true;
@@ -72,9 +71,9 @@ void QucsDoc::undo()
 	QUndoStack* u = undoStack();
 	if(u){itested();
 		u->undo();
-		assert(App);
-		assert(App->redo);
-		App->redo->setEnabled(true); // yikes.
+		assert(_app);
+		assert(_app->redo);
+		_app->redo->setEnabled(true); // yikes.
 	}else{ untested();
 	}
 }
@@ -114,8 +113,8 @@ QString QucsDoc::fileBase (void)
 QAction* QucsDoc::selectAction()
 {
 	unreachable();
-	assert(App);
-  	return App->select;
+	assert(_app);
+  	return _app->select;
 }
 
 void QucsDoc::setActiveAction(MouseAction* a)
@@ -349,4 +348,30 @@ void setParameter(std::string const&, std::string const&)
 {
 	incomplete();
 }
+/* -------------------------------------------------------------------------------- */
+// don't know how this works in legacy qucs. the tabs suggest that circuits
+// from different "projects" can be openened simultaneously.
+// Now a project might have prototypes (e.g. user library) that are not global,
+// they are stashed here.
+void QucsDoc::installElement(Element const* e)
+{
+	trace1("installElement", e->label());
+	auto& p = _protos[e->label()];
+	if(p){
+		delete p;
+	}else{
+	}
+	p = e;
+}
+/* -------------------------------------------------------------------------------- */
+Element const* QucsDoc::find_proto(std::string const& n) const
+{
+	auto i = _protos.find(n);
+	if(i==_protos.end()){
+		throw ExceptionCantFind(n, label());
+	}else{
+		return i->second;
+	}
+}
+/* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */

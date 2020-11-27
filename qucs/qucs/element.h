@@ -161,17 +161,15 @@ protected:
   Element(Element const&);
 public:
   Element();
-  Element(int cx, int cy) : _center(cx, cy) { unreachable(); }
+  Element(int cx, int cy) : _position(cx, cy) { unreachable(); }
   virtual ~Element();
 
 public: // make old variables accessible
-	int const& cx() const { return _center.first; }
-	int const& cy() const { return _center.second; }
+	int const& cx() const { return _position.first; }
+	int const& cy() const { return _position.second; }
 
 	int const& x1_() const { return x1; }
 	int const& y1_() const { return y1; }
-//	int const& x2_() const { return x2; }
-//	int const& y2_() const { return y2; }
 	void snapToGrid(SchematicDoc& s);
 
 	void setObsoleteType(int t){
@@ -183,8 +181,8 @@ public: // other stuff
   virtual bool showLabel() const{ return true; }
   //virtual bool showParam(int i) const{ return true; } // later
 
-  void setCenter(pos_t const& c){ incomplete(); _center = c; }
-  void setPosition(pos_t const& c){ _center = c; }
+  void setCenter(pos_t const& c){ incomplete(); _position = c; }
+  void setPosition(pos_t const& c){ _position = c; }
 //  virtual void setCenter(int x, int y, bool relative=false);
   virtual void getCenter(int&, int&) const; // BUG
   virtual void paint(ViewPainter*) const = 0;
@@ -198,7 +196,7 @@ public: // other stuff
   virtual pos_t center()const;
 
   pos_t position()const{
-	  return _center;
+	  return _position;
   }
 
 public:
@@ -206,29 +204,19 @@ public:
 	virtual Element* clone_instance()const{
 		return clone();
 	}
-//  virtual QString const& name() const{return Name;}
-//  void setName(QString const& n){ Name = n; }
   virtual QString const& description() const{return incomplete_description;}
   virtual char const* iconBasename() const{return nullptr;}
 
 public: // BUG
   int  Type;    // whether it is Component, Wire, ...
 
-public: // set protected variables. don't use
-//   void obsolete_set(std::string name, int value){
-// 	  incomplete();
-// 	  if(name == "cx"){
-// 		  cx = value;
-// 	  }else if(name == "cy"){
-// 		  cy = value;
-// 	  }
-//   }
+public: // compatibility
 	virtual bool legacyTransformHack() const{
 		return false;
 	}
 
 private:
-   pos_t _center; // BUG: store in symbol?
+   pos_t _position; // BUG: store in symbol?
 
 protected:
   int x1, y1;
@@ -246,20 +234,21 @@ public: // friend ElementGraphics?
   void attachToModel();
   void detachFromModel();
 
-protected: //BUG
-
 public:
-  Element const* owner() const{return _owner;}
-  Element* mutable_owner() const{return _owner;}
+  Object const* owner() const{return _owner;}
+  Object* mutable_owner() const{return _owner;}
 
 protected:
-  Element* owner(){ return _owner;}
+  Object* owner(){ return _owner;}
 
 public:
-  void setOwner(Element* e) { _owner=e;}
+  void setOwner(Object* e) { assert(!_owner || e==_owner); _owner=e;}
+  const Element* find_looking_out(const std::string& name)const;
+  const Element* find_in_parent_scope(const std::string& name)const;
+  const Element* find_in_my_scope(const std::string& name)const;
 
 private:
-  Element* _owner; // should probably be const all the way
+  Object* _owner; // should probably be const all the way
 }; // Element
 
 inline SchematicModel const* Element::scope() const

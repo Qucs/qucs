@@ -375,6 +375,7 @@ funcEnd:
 
   return 1;
 #endif
+  return 0;
 }
 
 // ------------------------------------------------------------
@@ -433,6 +434,7 @@ bool TabDiagram::scrollTo(int initial, int, int dy)
 
 
 // ------------------------------------------------------------
+#if 0
 Element* TabDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Tabular");
@@ -441,5 +443,6 @@ Element* TabDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new TabDiagram();
   return 0;
 }
+#endif
 
 }

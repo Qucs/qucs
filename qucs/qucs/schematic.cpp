@@ -61,7 +61,7 @@ class QPrinter;
 WireList      SymbolWires;
 //NodeList      SymbolNodes;
 DiagramList   SymbolDiags;
-ComponentList SymbolComps;
+ElementList SymbolComps;
 
 //PaintingList& SchematicDoc::symbolPaintings()
 //{ untested();
@@ -72,7 +72,7 @@ void SchematicDoc::printCursorPosition(int x, int y)
 {itested();
   QPoint p(x,y);
   QPointF mp=mapToScene(p);
-  App->printCursorPosition(mp.x(),mp.y());
+  _app->printCursorPosition(mp.x(),mp.y());
 }
 
 
@@ -144,18 +144,18 @@ void SchematicDoc::becomeCurrent(bool update)
   if (isSymbolMode()) { untested();
     incomplete(); // SymbolDoc.
     if (docName().right(4) == ".sym") { untested();
-      App->symEdit->setText(tr("Edit Text"));
-      App->symEdit->setStatusTip(tr("Edits the Text"));
-      App->symEdit->setWhatsThis(tr("Edit Text\n\nEdits the text file"));
+      _app->symEdit->setText(tr("Edit Text"));
+      _app->symEdit->setStatusTip(tr("Edits the Text"));
+      _app->symEdit->setWhatsThis(tr("Edit Text\n\nEdits the text file"));
     }else{ untested();
-      App->symEdit->setText(tr("Edit Schematic"));
-      App->symEdit->setStatusTip(tr("Edits the schematic"));
-      App->symEdit->setWhatsThis(tr("Edit Schematic\n\nEdits the schematic"));
+      _app->symEdit->setText(tr("Edit Schematic"));
+      _app->symEdit->setStatusTip(tr("Edits the schematic"));
+      _app->symEdit->setWhatsThis(tr("Edit Schematic\n\nEdits the schematic"));
     }
   }else{itested();
-    App->symEdit->setText(tr("Edit Circuit Symbol"));
-    App->symEdit->setStatusTip(tr("Edits the symbol for this schematic"));
-    App->symEdit->setWhatsThis(
+    _app->symEdit->setText(tr("Edit Circuit Symbol"));
+    _app->symEdit->setStatusTip(tr("Edits the symbol for this schematic"));
+    _app->symEdit->setWhatsThis(
 	tr("Edit Circuit Symbol\n\nEdits the symbol for this schematic"));
   }
 
@@ -1929,7 +1929,8 @@ bool SchematicDoc::scrollRight(int step)
 // Is called if the scroll arrow of the ScrollBar is pressed.
 void SchematicDoc::slotScrollUp()
 { untested();
-  App->editText->setHidden(true);  // disable edit of component property
+  assert(_app);
+  _app->editText->setHidden(true);  // disable edit of component property
   scrollUp(verticalScrollBar()->singleStep());
   updateViewport();
   // App->view->drawn = false;
@@ -1939,7 +1940,8 @@ void SchematicDoc::slotScrollUp()
 // Is called if the scroll arrow of the ScrollBar is pressed.
 void SchematicDoc::slotScrollDown()
 { untested();
-  App->editText->setHidden(true);  // disable edit of component property
+  assert(_app);
+  _app->editText->setHidden(true);  // disable edit of component property
   scrollDown(-verticalScrollBar()->singleStep());
   updateViewport();
   // App->view->drawn = false;
@@ -1949,7 +1951,8 @@ void SchematicDoc::slotScrollDown()
 // Is called if the scroll arrow of the ScrollBar is pressed.
 void SchematicDoc::slotScrollLeft()
 { untested();
-  App->editText->setHidden(true);  // disable edit of component property
+  assert(_app);
+  _app->editText->setHidden(true);  // disable edit of component property
   scrollLeft(horizontalScrollBar()->singleStep());
   updateViewport();
   // App->view->drawn = false;
@@ -1959,7 +1962,8 @@ void SchematicDoc::slotScrollLeft()
 // Is called if the scroll arrow of the ScrollBar is pressed.
 void SchematicDoc::slotScrollRight()
 { untested();
-  App->editText->setHidden(true);  // disable edit of component property
+  assert(_app);
+  _app->editText->setHidden(true);  // disable edit of component property
   scrollRight(-horizontalScrollBar()->singleStep());
   updateViewport();
   // App->view->drawn = false;

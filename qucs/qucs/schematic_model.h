@@ -44,14 +44,15 @@ class NodeMap;
 class DiagramList : public Q3PtrList<Diagram> {
 };
 // TODO: refactor here
-class ComponentList : public std::list<Symbol*> {
+class ElementList : public std::list<Element*> {
 public:
-	typedef std::list<Symbol*>::const_iterator const_iterator;
+	typedef std::list<Element*> container;
+	typedef std::list<Element*>::const_iterator const_iterator;
 private:
-	ComponentList(ComponentList const&) = delete;
+	ElementList(ElementList const&) = delete;
 public:
-	explicit ComponentList() {}
-	~ComponentList() {
+	explicit ElementList() {}
+	~ElementList() {
 		while(!empty()){
 			delete(front());
 			pop_front();
@@ -59,13 +60,13 @@ public:
 	}
 
 public:
-	void pushBack(Symbol*s) {push_back(s);}
-	void append(Symbol*s) {push_back(s);}
+	void pushBack(Element*s) {push_back(s);}
+	void append(Element*s) {push_back(s);}
 	bool isEmpty() const { return empty(); }
 	void removeRef(Symbol* s) { erase(std::find(begin(), end(), s)); }
 public:
-	const_iterator begin() const{return std::list<Symbol*>::begin();}
-	const_iterator end() const{return std::list<Symbol*>::end();}
+	const_iterator begin() const{return container::begin();}
+	const_iterator end() const{return container::end();}
 };
 /*--------------------------------------------------------------------------*/
 // TODO: use generic list.
@@ -80,8 +81,8 @@ public:
 // TODO: rename to ElementList or CircuitModel, SymbolModel.
 class SchematicModel{
 public: // stub
-	typedef ComponentList::iterator iterator;
-	typedef ComponentList::const_iterator const_iterator;
+	typedef ElementList::iterator iterator;
+	typedef ElementList::const_iterator const_iterator;
 private:
 	SchematicModel(SchematicModel const&) = delete;
 	SchematicModel();
@@ -148,7 +149,7 @@ public: // container
 	void clear();
 	void pushBack(Element* what);
 	void erase(Element* what);
-//	void merge(SchematicModel&);
+	size_t size() const{ return components().size(); }
 
 private: // used in erase?
 //	void       deleteComp(Component*c);
@@ -166,19 +167,6 @@ public:
 public: // why?
 	Node* insertNode(int x, int y, Element* owner);
 //	void insertSymbolNodes(Symbol *c, bool noOptimize);
-//	bool  oneTwoWires(Node* n);
-
-#if 0
-	Wire* splitWire(Wire*, Node*);
-	int   insertWireNode1(Wire* w);
-	bool  connectHWires1(Wire* w);
-	bool  connectVWires1(Wire* w);
-	int   insertWireNode2(Wire* w);
-	bool  connectHWires2(Wire* w);
-	bool  connectVWires2(Wire* w);
-//	int   insertWire(Wire* w); // BUG, what is simpleInsertWire?
-	void  deleteWire(Wire*);
-#endif
 
 private:
 //	void removeNode(Node const* n);
@@ -190,8 +178,9 @@ private:
 	WireList& wires();
 	DiagramList& diagrams();
 	PaintingList& paintings();
-	ComponentList& components(); // possibly "devices". lets see.
+	ElementList& components(); // possibly "devices". lets see.
 	CmdEltList& commands();
+
 public:
 	NodeMap& nodes();
 	bool isNode(pos_t p) const{
@@ -204,7 +193,7 @@ public:
 	NodeMap const& nodes() const;
 	DiagramList const& diagrams() const;
 	PaintingList const& paintings() const;
-	ComponentList const& components() const;
+	ElementList const& components() const;
 	PrototypeMap const& declarations() const;
 
 	Symbol const* findProto(QString const& what) const;
@@ -237,7 +226,7 @@ public:
 
 private:
 	mutable PrototypeMap _protos; // bit of a hack.
-	ComponentList Components;
+	ElementList Components;
 	PaintingList Paintings;
 	NetList Nets;
 	NodeMap Nodes;
@@ -263,9 +252,9 @@ public:
 
 private:
 	const SchematicModel* _parent;
-	SchematicDoc* _doc_;
 	std::multimap<std::string, Element*> _map;
 	mutable PARAM_LIST* _params;
+	SchematicDoc* _doc_;
 
 public: // for now.
 	friend class SchematicDoc;

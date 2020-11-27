@@ -50,7 +50,7 @@ fi
 
 subdirs="$( make -C $top subdirs )"
 if [ 0 -ne $? ]; then
-	echo could not obtain list ob subdirectories >&2
+	echo could not obtain list of subdirectories >&2
 fi
 
 for i in $subdirs; do

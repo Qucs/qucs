@@ -41,8 +41,8 @@ private: // legacy implementation
 private: // Command
   void do_it(istream_t&, SchematicModel*) override{incomplete();}
 private: // DocumentFormat
-  void save(DocumentStream& stream, SchematicSymbol const& m) const override;
-  void load(istream_t&, SchematicSymbol&) const override{ incomplete(); }
+  void save(ostream_t& stream, Object const* m) const override;
+  void load(istream_t&, Object*) const override{ incomplete(); }
 private: // implementation
   void nodeMap(SchematicSymbol const& m) const;
 private:
@@ -65,8 +65,16 @@ void VerilogNetlister::clear() const
 	declarations.clear();
 }
 // was main::doNetlist
-void VerilogNetlister::save(DocumentStream& Stream, SchematicSymbol const& m) const
+void VerilogNetlister::save(DocumentStream& Stream, Object const* o) const
 {
+	auto m_ = dynamic_cast<SchematicSymbol const*>(o);
+	if(!m_){
+		incomplete();
+		return;
+	}else{
+	}
+	auto& m = *m_;
+
 	modelhack = m.subckt();
 	clear();
 
@@ -301,7 +309,14 @@ void VerilogNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol c
 
 	auto const& sckt = *m.subckt();
 
-	for(auto it : sckt.components()){
+	for(auto it_ : sckt.components()){
+
+		auto it = dynamic_cast<Symbol const*>(it_);
+		if(it){
+		}else{
+			incomplete();
+			continue;
+		}
 
 		if(it->paramValue("$mfactor") == "0") {
 			stream << "#ifdef QUCS_INACTIVE\n";

@@ -22,6 +22,7 @@
 #include "schematic_model.h" // tmp, debugging
 #include "io_trace.h"
 #include "qt_compat.h"
+#include "docfmt.h"
 #include <QList>
 #include "../qucs-lib/qucslib_common.h"
 
@@ -67,6 +68,7 @@ void LIB::loadLibFiles()
 
 #if 0
     // user libraries
+	 // here? or in QucsDoc?
     QStringList UserLibFiles = UserLibDir.entryList(QStringList("*.lib"), QDir::Files, QDir::Name);
     UserLibCount = UserLibFiles.count();
     foreach(QString s, UserLibFiles) // build list with full path
@@ -106,25 +108,27 @@ void LIB::loadLibFiles()
 		// ComponentLibraryItem are not Elements, but just a concoction of QStrings.
 		// turn it into Element... (do it here, for now, but that's silly).
 		for(ComponentLibraryItem c : parsedlib){
-//			trace2("libcomp", parsedlib.name, c.name); // ->label());
+			trace2("libcomp", parsedlib.name, c.name); // ->label());
 			if(c.symbol==""){
 				getSection("Symbol", c.definition, c.symbol); // GAAH
 			}else{ untested();
 			}
 
 			if(c.symbol==""){
-				c.definition += "\n<Symbol>\n" + parsedlib.defaultSymbol + "\n</Symbol>\n";
+				c.definition += "\n<Symbol>" + parsedlib.defaultSymbol + "\n</Symbol>\n";
 				trace1("attached symbol to defn", c.definition);
 			}else{
 			}
 
 			auto D = doclang_dispatcher["legacy_lib"];
-			auto L = dynamic_cast<SchematicLanguage const*>(D);
+			auto L_ = dynamic_cast<SchematicLanguage const*>(D);
+			auto C = command_dispatcher["leg_sch"];
+			auto L = dynamic_cast<DocumentFormat const*>(C);
 			assert(L);
 
 			istream_t stream(&c.modelString);
 			stream.read_line();
-			auto type = L->findType(stream);
+			std::string type = L_->findType(stream); // BUG?
 
 			if(type=="Lib"){
 				// possibly a subcircuit. parse and stash
@@ -133,16 +137,17 @@ void LIB::loadLibFiles()
 				// BUG: parse c.definition. but not here.
 				istream_t stream(&c.definition);
 				Symbol* sym = symbol_dispatcher.clone("LegacyLibProto");
-				auto ssym = prechecked_cast<SchematicSymbol*>(sym);
+				auto ssym = prechecked_cast<SubcktBase*>(sym);
 				std::string t = "Lib:" + parsedlib.name.toStdString() + ":" + c.name.toStdString();
 
-				ssym->setLabel(c.name.toStdString());
+				sym->setLabel(c.name.toStdString());
 
 				assert(ssym);
 				try{
 					// trace1("parse", c.definition);
-					L->parse(stream, *ssym);
-					trace2("stashing", t, ssym->symbolPaintings().size());
+					L->load(stream, ssym);
+
+					// trace2("stashing", t, ssym->symbolPaintings()->size());
 					stash(new Dispatcher<Symbol>::INSTALL(&symbol_dispatcher, t, ssym));
 					new Module::INSTALL(parsedlib.name.toStdString(), ssym);
 				}catch(Exception const&){ untested();
@@ -161,7 +166,7 @@ void LIB::loadLibFiles()
 
 				if(symbol_dispatcher[type]){
 					sym->setTypeName(type);
-					L->parseItem(stream, sym);
+					L->load(stream, sym);
 					new Module::INSTALL(parsedlib.name.toStdString(), sym);
 				}else{
 					trace1("paramset skip", type);

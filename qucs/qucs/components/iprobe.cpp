@@ -77,6 +77,7 @@ Component* iProbe::newOne()
   return new iProbe();
 }
 
+#if 0
 Element* iProbe::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Current Probe");
@@ -85,5 +86,6 @@ Element* iProbe::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new iProbe();
   return 0;
 }
+#endif
 
 }

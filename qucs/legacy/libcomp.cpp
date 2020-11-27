@@ -34,22 +34,31 @@ class QString;
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
-class LibComp : public SchematicSymbol  {
+ElementList empty;
+// this is a prototype
+class LibComp : public SubcktBase {
 private:
-	LibComp(LibComp const&p) : SchematicSymbol(p) {
+	LibComp(LibComp const&p)
+	  : SubcktBase(p),
+	    _paint(nullptr) { untested();
 		new_subckt();
+		// _paint = new PaintingList(); // BUG
 	}
 public:
-	LibComp();
-	~LibComp() {};
+	LibComp()
+	  : SubcktBase(),
+	    _paint(nullptr) { untested();
+		new_subckt();
+		// _paint = new PaintingList(); // BUG
+	}
+	~LibComp() { incomplete(); };
 	Symbol* clone() const override{return new LibComp(*this);}
 	Symbol* clone_instance() const override;
 
-	bool createSubNetlist(DocumentStream&, QStringList&, int type=1); // BUG
-
 private:
+	bool is_device() const override {return false;}
 	std::string paramValue(unsigned n) const override{ untested();
-		return SchematicSymbol::paramValue(n);
+		return SubcktBase::paramValue(n);
 	}
 	std::string paramValue(std::string const& n) const override{
 		if(n=="$tx"){
@@ -57,11 +66,13 @@ private:
 		}else if(n=="$ty"){
 			return "0";
 		}else{
-			return SchematicSymbol::paramValue(n);
+			return SubcktBase::paramValue(n);
 		}
 	}
 	unsigned numPorts() const override{
-		if(subckt()){
+		if(painting()){ untested();
+			return painting()->numPorts();
+		}else if(subckt()){
 			return subckt()->numPorts();
 		}else{ untested();
 			unreachable();
@@ -69,30 +80,77 @@ private:
 		}
 	}
 	virtual Port& port(unsigned) {unreachable(); return *new Port();}
-	pos_t portPosition(unsigned i) const override{
-		untested();
-		assert(subckt());
-		assert(subckt()->portValue(i));
-		auto pos = subckt()->portValue(i)->position();
+	pos_t portPosition(unsigned i) const override{ untested();
+	//	assert(subckt());
+	//	assert(subckt()->portValue(i));
+		// auto pos = subckt()->portValue(i)->position();
+		Symbol const* s = painting();
+		auto pos = s->portPosition(i);
 		return pos;
 	}
 	PaintingList const* symbolPaintings() const override{
-		return &paintings();
+		incomplete(); // need painting stash in sckt();
+		return nullptr; // &paintings();
 	}
 
 	rect_t bounding_rect() const override{ untested();
 		// BUG. cache.
 		rect_t br;
 //		assert(symbolPaintings());
-		for(auto p : paintings()){ untested();
+		assert(paintings());
+		for(auto p : *paintings()){ untested();
 			assert(p);
 			Element const* e = p;
 //			trace2("br", e->boundingRect().topLeft(), e->boundingRect().bottomRight());
 			auto c = e->center();
 			br |= ( e->bounding_rect() + c );
 		}
-//		trace4("br", label(), symbolPaintings()->size(), br.topLeft(), br.bottomRight());
+		trace4("LibComp::br", label(), paintings()->size(), br.tl(), br.br());
 		return br;
+	}
+	void paint(ViewPainter* v) const override{ untested();
+		assert(paintings());
+		for(auto p : *paintings()){ untested();
+			v->save();
+			v->translate(p->position());
+			p->paint(v);
+			v->restore();
+		}
+	}
+
+	SubcktBase const* painting() const{
+		// cache?
+			assert(subckt());
+			auto p_ = subckt()->find_(":SymbolSection:");
+			if(p_==subckt()->end()){
+				return nullptr;
+			}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){
+				return p;
+			}else{
+				return nullptr;
+			}
+	}
+
+	// TODO: move to painting.
+	ElementList const* paintings() const{
+		if(!_paint){
+			assert(subckt());
+			auto p_ = subckt()->find_(":SymbolSection:");
+			if(p_==subckt()->end()){
+			}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){
+				assert(p->subckt());
+				auto const* q = p->subckt();
+				_paint = &q->components();
+			}else{
+			}
+		}else{
+		}
+		if(!_paint){
+			message(QucsMsgCritical, "no paint");
+			_paint = &empty;
+		}else{
+		}
+		return _paint;
 	}
 
 protected:
@@ -106,11 +164,12 @@ private:
 	int _ty;
 	Property _section;
 	Property _component;
-
+	mutable ElementList const* _paint; // just caching
 }d0;
 static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "LegacyLibProto", &d0);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+// Lib instance.
 class Lib : public Symbol{
 public:
 	explicit Lib(Symbol const* p)
@@ -144,9 +203,9 @@ private: // Element
 		return new Lib(*this);
 	}
 	void paint(ViewPainter* p) const override{ untested();
-		if(_parent){itested();
+		if(_parent){untested();
 			// no-op?
-			// ((Element*)_parent)->paint(p);
+			((Element*)_parent)->paint(p);
 		}else{ untested();
 		}
 		Symbol::paint(p);
@@ -284,13 +343,19 @@ private:
 		if(_component.Value == "") { untested();
 		}else if(_section.Value == "") { untested();
 		}else{
-			Symbol* s = symbol_dispatcher[t];
+			Symbol* s = symbol_dispatcher[t]; // BUG: userlib. need find_looking_out
 			trace2("Lib::attachProto", t, s);
+//			attach_common(s->mutable_common());
 			_parent = s;
 			if(!_parent){
-//				throw ...
-				trace1("Lib::attachProto fail", t);
+				message(QucsMsgCritical, ("cannot find " + t).c_str());
+			}else{
 			}
+		}
+
+		if(!_parent){
+			_parent = &d0;
+		}else{
 		}
 
 		_ports.resize(numPorts());
@@ -298,54 +363,77 @@ private:
 		// also prepare parameters here.
 		setTypeName(t);
 	}
-	Symbol const* proto(SchematicModel const* scope) const;
 
+private:
+	Symbol const* proto() const;
 private:
 	int _tx;
 	int _ty;
 	Property _section;
 	Property _component;
-	Symbol const* _parent; // BUG. common.
+	Symbol const* _parent; // TODO. common.
 	std::vector<Port> _ports;
 }D; // Lib
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Lib", &D);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+// go to the top.
+#if 0
+QucsDoc* getProject(Object const* o)
+{
+	auto E = dynamic_cast<Element const*>(o);
+	assert(E);
+	Object* e = E->mutable_owner();
+
+	while(auto E = dynamic_cast<Element*>(e)){
+		if(auto d = dynamic_cast<QucsDoc*>(e)){
+			return d;
+		}else{
+	  		e = E->mutable_owner();
+		}
+	}
+
+	assert(false);
+	return nullptr;
+}
+#endif
+/*--------------------------------------------------------------------------*/
 // partially tAC. build a new sckt proto.
 // does not fullymake sense.
-Symbol const* Lib::proto(SchematicModel const* scope) const
+#if 0
+Symbol const* Lib::proto() const
 {
-	assert(scope);
-   auto t = QString::fromStdString(typeName());
-	auto p = scope->findProto(t);
-	if(p){ untested();
+   auto t = typeName();
+	auto p = find_looking_out(t);
+
+	if(auto sp = dynamic_cast<Symbol const*>(p)){ untested();
 		trace1("cached", typeName());
-		return p;
+		return sp;
 	}else{
 		trace1("not cached", typeName());
 
+		assert(false);
+#if 0
+		
+		// prototypes must be stashed in the project, as they are not global.
+		QucsDoc* project = getProject(this);
+
 		assert(_parent);
-		scope->cacheProto(_parent); // this must be wrong. cache protos in list
-												 // command as needed.
+		//if(auto o=dynamic_cast<SchematicSymbol*>(owner()))
+		project->cacheProto(_parent);
+#endif
 	}
 
 	assert(_parent);
 	return _parent;
 }
-/*--------------------------------------------------------------------------*/
-LibComp::LibComp()
-	: SchematicSymbol()
-{
-  // Description = QObject::tr("Component taken from Qucs library");
-
-  // Ports.append(new Port(0, 0)); // dummy port because of being device
-}
+#endif
 /*--------------------------------------------------------------------------*/
 // Makes the schematic symbol subcircuit with the correct number
 // of ports.
+#if 0
 void LibComp::createSymbol()
 { untested();
-#if 0
   tx = INT_MIN;
   ty = INT_MIN;
   if(loadSymbol() > 0) { untested();
@@ -364,55 +452,12 @@ void LibComp::createSymbol()
     tx = x1+4;
     ty = y2+4;
   }
-#endif
 }
+#endif
 /*--------------------------------------------------------------------------*/
-bool LibComp::createSubNetlist(DocumentStream& stream, QStringList &FileList,
-			       int type)
-{ untested();
 #if 0
-  int r = -1;
-  QString FileString;
-  QStringList Includes;
-  if(type&1) { untested();
-    r = loadSection("Model", FileString, &Includes);
-  } else if(type&2) { untested();
-    r = loadSection("VHDLModel", FileString, &Includes);
-  } else if(type&4) { untested();
-    r = loadSection("VerilogModel", FileString, &Includes);
-  }
-  if(r < 0)  return false;
-
-  // also include files
-  int error = 0;
-  for(QStringList::Iterator it = Includes.begin();
-      it != Includes.end(); ++it ) { untested();
-    QString s = getSubcircuitFile()+"/"+*it;
-    if(FileList.indexOf(s) >= 0) continue;
-    FileList.append(s);
-
-    // load file and stuff into stream
-    QFile file(s);
-    if(!file.open(QIODevice::ReadOnly)) { untested();
-      error++;
-    } else { untested();
-      QByteArray FileContent = file.readAll();
-      file.close();
-      //?stream->writeRawBytes(FileContent.value(), FileContent.size());
-      stream << FileContent.data(); // BUG. lang?!
-    }
-  }
-
-  stream << "\n" << FileString << "\n"; //??
-  return error > 0 ? false : true;
-#endif
-  return false;
-}
-
-// -------------------------------------------------------
 QString LibComp::netlist() const
 { untested();
-#if 0
   QString s = "Sub:"+Name;   // output as subcircuit
 
   // output all node names
@@ -427,13 +472,13 @@ QString LibComp::netlist() const
     s += " "+pp->Name+"=\""+pp->Value+"\"";
 
   return s + '\n';
-#endif
   return "";
 }
+#endif
 /*--------------------------------------------------------------------------*/
+#if 0
 QString LibComp::verilogCode(int)
 { untested();
-#if 0
   QString s = "  Sub_" + createType() + " " + Name + " (";
 
   // output all node names
@@ -447,13 +492,13 @@ QString LibComp::verilogCode(int)
 
   s += ");\n";
   return s;
-#endif
   return "";
 }
+#endif
 /*--------------------------------------------------------------------------*/
+#if 0
 QString LibComp::vhdlCode(int)
 { untested();
-#if 0
   QString s = "  " + Name + ": entity Sub_" + createType() + " port map (";
 
   // output all node names
@@ -467,9 +512,8 @@ QString LibComp::vhdlCode(int)
 
   s += ");\n";
   return s;
-#endif
-  return "";
 }
+#endif
 /*--------------------------------------------------------------------------*/
 Symbol* LibComp::clone_instance() const
 {
