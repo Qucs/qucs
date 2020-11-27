@@ -1,5 +1,8 @@
+ #() :SymbolSection:();
 Vdc #(.U(0.9 V)) V1(net_70_200, net_70_260);
 GND #() anonymous_gnd_hack_0(net_400_270);
+IProbe #() Ib(net_270_170, net_330_170);
+IProbe #() Ic(net_480_110, net_420_110);
 Pac #(.Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P1(net_150_200, net_150_260);
 Pac #(.Num(2), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P2(net_550_180, net_550_240);
 Vdc #(.U(2 V)) V2(net_630_190, net_630_250);

@@ -348,7 +348,7 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 	QString s, Time;
 	for(auto it_ : m.components()){
 		auto pc = dynamic_cast<Symbol const*>(it_);
-		if(it_){
+		if(pc){
 		}else{
 			incomplete();
 			continue;
@@ -473,7 +473,8 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicSymbol const& m) cons
 			auto key = sym->typeName();
 			trace2("need declaration?", sym->label(), key);
 
-			Element const* proto = sym->find_looking_out(key);
+			// Element const* proto = sym->find_looking_out(key);
+			Element const* proto = _qucslang->find_proto(key, sym);
 			auto& d = _declarations[key];
 
 			// only one proto per key

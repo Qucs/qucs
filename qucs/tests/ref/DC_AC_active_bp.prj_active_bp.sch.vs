@@ -1,3 +1,4 @@
+ #() :SymbolSection:();
 OpAmp #(.G(1e6), .Umax(15 V)) OP1(net_340_180, net_340_140, net_410_160);
 GND #() anonymous_gnd_hack_0(net_300_180);
 GND #() anonymous_gnd_hack_1(net_180_260);

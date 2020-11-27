@@ -88,7 +88,7 @@ private:
 		auto pos = s->portPosition(i);
 		return pos;
 	}
-	PaintingList const* symbolPaintings() const override{
+	ElementList const* symbolPaintings() const override{
 		incomplete(); // need painting stash in sckt();
 		return nullptr; // &paintings();
 	}
@@ -220,10 +220,11 @@ private: // Element
 	}
 
 private: // Symbol
-	PaintingList const* symbolPaintings() const override{ untested();
+	ElementList const* symbolPaintings() const override{ untested();
 		if(_parent){itested();
 			assert( _parent->subckt());
-			return &_parent->subckt()->paintings();
+			incomplete();
+			return nullptr; // &_parent->subckt()->paintings(); // bug or feature?
 		}else{ untested();
 			return nullptr;
 		}

@@ -1,3 +1,4 @@
+ #() :SymbolSection:();
 Vac #(.U(1 uV), .f(2 kHz), .Phase(0), .Theta(0)) V4(net_40_200, net_40_260);
 GND #() anonymous_gnd_hack_0(net_40_270);
 R #(.R(50k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R2(net_290_310, net_230_310);

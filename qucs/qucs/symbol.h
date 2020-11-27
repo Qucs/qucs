@@ -26,6 +26,7 @@ class NodeMap;
 class PaintingList;
 class Net;
 class Symbol;
+class ElementList;
 /*--------------------------------------------------------------------------*/
 enum {CC_STATIC=27342};
 /*--------------------------------------------------------------------------*/
@@ -129,7 +130,7 @@ public: // manage shared data across symbols
 
 public:
 	SchematicModel const* scope() const;
-	virtual PaintingList const* symbolPaintings() const {return nullptr;}
+	virtual ElementList const* symbolPaintings() const;
 
 // protected: // needed in netlister. public use in parse...
 	virtual SchematicModel* scope();

@@ -1,3 +1,4 @@
+ #() :SymbolSection:();
 Vdc #(.U(1 V)) V1(net_140_220, net_140_280);
 GND #() anonymous_gnd_hack_0(net_140_320);
 R #(.R(50 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(US)) R1(net_340_220, net_340_280);

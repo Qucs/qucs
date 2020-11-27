@@ -1,4 +1,5 @@
 # Qucs
+## declarations
 ## declarations end
 
 OpAmp:OP1 gnd _net11 Output G="1e6" Umax="15 V"

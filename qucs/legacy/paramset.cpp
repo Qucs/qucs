@@ -103,15 +103,15 @@ private: // Symbol
 	}
 
 private: // Symbol
-	PaintingList const* symbolPaintings() const override{ untested();
-		if(!_proto){untested();
-		}else if(_proto->subckt()){ untested();
-		  	SchematicModel const* m = _proto->subckt();
-		  	return &m->paintings();
-		}else{ untested();
-		}
-		return nullptr;
-	}
+//	ElementList const* symbolPaintings() const override{ untested();
+//		if(!_proto){untested();
+//		}else if(_proto){ untested();
+//		  	SchematicModel const* m = _proto->subckt();
+//		  	return &m->paintings();
+//		}else{ untested();
+//		}
+//		return nullptr;
+//	}
 
 private:
 	Symbol* _proto; // BUG. common.

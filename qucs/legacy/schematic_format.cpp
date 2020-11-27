@@ -36,7 +36,7 @@ private: //Command
 	virtual void do_it(istream_t&, SchematicModel*) {incomplete();}
 private: // legacy cruft
 	bool isSymbolMode() const{ return false; }
-	PaintingList const& symbolPaints(SchematicSymbol const& m) const{
+	ElementList const& symbolPaints(SchematicSymbol const& m) const{
 		assert( m.symbolPaintings());
 		return *m.symbolPaintings();
 	}
@@ -168,6 +168,7 @@ static void printProperties(SchematicSymbol const& m, DocumentStream& stream)
 void LegacySchematicFormat::save(DocumentStream& stream, Object const* o) const
 {
 	auto m_ = dynamic_cast<SchematicSymbol const*>(o);
+	std::vector<Element const*> paintings;
 
 	if(!m_){
 		incomplete();
@@ -195,17 +196,28 @@ void LegacySchematicFormat::save(DocumentStream& stream, Object const* o) const
 	}
 
 	stream << "<Symbol>\n";     // save all paintings for symbol
-	for(auto pp : symbolPaints(m)){
+	for(auto sp : symbolPaints(m)){
 		// BUG callback
-		stream << "  <" << pp->save() << ">\n";
+		if(auto pp = dynamic_cast<Painting const*>(sp)){
+			auto mp = const_cast<Painting*>(pp); // yikes.
+			stream << "  <" << mp->save() << ">\n";
+		}else{
+		}
 	}
 	stream << "</Symbol>\n";
 
 	stream << "<Components>\n";    // save all components
 	for(auto pc : components(m)){
-		stream << "  ";
-		L->printItem(pc, stream);
-		stream << "\n"; // BUG?
+		if(dynamic_cast<Painting const*>(pc)){
+			paintings.push_back(pc);
+		}else if(pc->label()==":SymbolSection:"){
+			incomplete();
+			continue;
+		}else{
+			stream << "  ";
+			L->printItem(pc, stream);
+			stream << "\n"; // BUG?
+		}
 	}
 	if(m.commands()){
 		for(auto pc : *(m.commands())){
@@ -238,8 +250,8 @@ void LegacySchematicFormat::save(DocumentStream& stream, Object const* o) const
 	stream << "</Diagrams>\n";
 
 	stream << "<Paintings>\n";     // save all paintings
-	for(auto pp : paintings(m)){
-		stream << "  <" << pp->save() << ">\n";
+	for(auto pp : paintings){
+		L->printItem(pp, stream);
 	}
 	stream << "</Paintings>\n";
 

@@ -15,35 +15,57 @@
 #include "schematic_model.h"
 #include "schematic_doc.h"
 /*--------------------------------------------------------------------------*/
+ElementList empty;
 /*--------------------------------------------------------------------------*/
 SchematicSymbol::SchematicSymbol()
-	: SubcktBase()
+	: SubcktBase(),
+     _paint(nullptr)
 {
-	_paint = new PaintingList();
+//	_paint = new PaintingList();
 }
 /*--------------------------------------------------------------------------*/
 SchematicSymbol::SchematicSymbol(SchematicSymbol const&)
-	: SubcktBase() // p??
+	: SubcktBase(), // p??
+     _paint(nullptr)
 {
 	incomplete();
-	_paint = new PaintingList(); // copy??
+//	_paint = new PaintingList(); // copy??
 }
 /*--------------------------------------------------------------------------*/
 SchematicSymbol::~SchematicSymbol(){
-	delete _paint;
+	// delete _paint;
 	_paint = nullptr;
 }
 /*--------------------------------------------------------------------------*/
 PaintingList& SchematicSymbol::symbolPaintings()
 {
 	assert(_paint);
-	return *_paint;
+	assert(false);
+	throw 0;
+//	return *_paint;
 }
 /*--------------------------------------------------------------------------*/
-PaintingList const* SchematicSymbol::symbolPaintings() const
+ElementList const* SchematicSymbol::symbolPaintings() const
 {
-	assert(_paint);
+	if(!_paint){
+		assert(subckt());
+		auto p_ = subckt()->find_(":SymbolSection:");
+		if(p_==subckt()->end()){
+		}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){
+			assert(p->subckt());
+			auto const* q = p->subckt();
+			_paint = &q->components();
+		}else{
+		}
+	}else{
+	}
+	if(!_paint){
+		message(QucsMsgCritical, "no paint");
+		_paint = &empty;
+	}else{
+	}
 	return _paint;
+
 }
 /*--------------------------------------------------------------------------*/
 WireList const& SchematicSymbol::wires() const

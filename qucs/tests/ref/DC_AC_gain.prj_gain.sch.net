@@ -1,7 +1,10 @@
 # Qucs
+## declarations
+### Sub:singleOPV
 
 .Def:singleOPV _net6 _net7 _net16 _net10 _net20
-# TODO ID & params?????.ID 
+# Missing ID & paramsSub:singleOPV
+# skip non-device :SymbolSection:
 R:R1 _net13 _net1 R="4k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 C:C1 _net1 _net20 C="4p" V=""
 Idc:I1 _net17 _net16 I="5 uA"

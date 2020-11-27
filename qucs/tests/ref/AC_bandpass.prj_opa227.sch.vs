@@ -1,3 +1,4 @@
+ #() :SymbolSection:(net_30_0, net_-30_-30, net_-30_30);
 VCVS #(.G(1), .T(0)) SRC2(net_500_160, net_560_160, net_560_220, net_500_220);
 GND #() anonymous_gnd_hack_0(net_410_220);
 R #(.R(1 kOhm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(net_330_160, net_390_160);
