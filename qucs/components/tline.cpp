@@ -78,6 +78,7 @@ Component* TLine::newOne()
   return new TLine();
 }
 
+#if 0
 Element* TLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Transmission Line");
@@ -86,5 +87,6 @@ Element* TLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new TLine();
   return 0;
 }
+#endif
 
 }

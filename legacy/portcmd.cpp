@@ -20,7 +20,8 @@
 namespace{
 /*--------------------------------------------------------------------------*/
 class PortSym : public Command{
-  virtual void do_it(istream_t& cs, SchematicModel* s){
+  virtual void do_it(istream_t& cs, SchematicModel* s){ untested();
+	  assert(s);
 	  auto fullstring = cs.fullString();
 	  cs.reset();
 	  trace1("PortSym", fullstring);
@@ -43,7 +44,12 @@ class PortSym : public Command{
 	  auto n = s->numPorts();
 	  trace6("PortSymParams", type, cx, cy, tx, ty, n);
 
-	  auto place = symbol_dispatcher.clone("place"); // memory leak.
+	  auto place = symbol_dispatcher.clone("place");
+	  if(1){
+		  // memory leak.
+	  }else{ // later
+		  s->pushBack(place);
+	  }
 	  assert(place);
 	  place->setPosition(pos_t(cx,cy));
 	  Node* node = place->connectNode(0, s->nodes());

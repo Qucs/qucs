@@ -36,7 +36,7 @@ QucsDoc* newTextDoc(QucsApp& a /*BUG*/, QString const& b, QWidget* owner)
 
 TextDoc::TextDoc(QucsApp *parent, const QString& initial_name, QWidget* owner)
    : QPlainTextEdit(),
-     QucsDoc(*parent, initial_name, owner)
+     QucsDoc(parent, initial_name, owner)
 {
   App = parent; // BUG? should be in base class.
   TextFont = QFont("Courier New");

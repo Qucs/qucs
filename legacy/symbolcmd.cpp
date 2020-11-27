@@ -16,33 +16,71 @@
 #include "schematic_model.h"
 #include "globals.h"
 #include "painting.h"
+#include "language.h"
+#include "symbol.h"
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
-class Model : public Command{
+// stuff paintings in here
+class SymbolSection : public SubcktBase{
+public:
+	SymbolSection() : SubcktBase() {
+		new_subckt();
+	}
+private:
+	SymbolSection(SymbolSection const& p) : SubcktBase(p) {
+//		incomplete(); so what.
+		new_subckt();
+	}
+
+private: // Symbol
+	bool is_device() const override { return false; }
+	unsigned numPorts() const override{
+		if(subckt()){ untested();
+			return subckt()->numPorts();
+		}else{ untested();
+			unreachable();
+			return 0;
+		}
+	}
+	Port& port(unsigned) override {incomplete(); throw "incomplete";}
+public:
+	Symbol* clone() const override{
+		return new SymbolSection(*this);
+	}
+}symbolSection;
+/*--------------------------------------------------------------------------*/
+class SymbolCommand : public Command{
   virtual void do_it(istream_t& cs, SchematicModel* s){ untested();
 	  auto fullstring = cs.fullString();
-	  trace1("Symbol", fullstring);
+	  trace1("SymbolSection", fullstring);
 
 	  std::string M;
-	  std::string buf;
 
 	  trace1("hack", M);
-	  Symbol* sym = symbol_dispatcher.clone("symbolSection");
+	  Symbol* sc = symbolSection.clone(); // symbol_dispatcher.clone("symbolSection");
+	  auto* sym = dynamic_cast<SubcktBase*>(sc);
 	  assert(sym);
-	  sym->setLabel("symbolSection");
+	  sym->setLabel(":SymbolSection:");
 	  assert(s);
 
+	  auto lang = doclang_dispatcher["legacy_lib"];
+	  assert(lang);
+
 	  while(true){ untested();
+		  trace1("Symbol Command", cs.fullString());
 		  cs.read_line();
-		  trace1("Symbol", cs.fullString());
-		  if(cs.is_end()){ untested();
-			  break;
-		  }else if(cs.umatch("</Symbol>")){ untested();
+		  trace1("Symbol Command", cs.fullString());
+		  ///if(cs.is_end()){ untested();
+		  ///   // bug. matches newlines...??
+		  ///   break;
+		  ///}else
+		  if(cs.umatch("</Symbol>")){ untested();
 			  break;
 		  }else{ untested();
 			  cs.skipbl();
-			  lang->parse_item(cs, sym->subckt());
+			  lang->new__instance(cs, sym, sym->subckt());
+			  trace2("symbolpaint", cs.fullstring(), sym->subckt()->size());
 		  }
 	  }
 

@@ -38,11 +38,11 @@ class Element;
 class QucsData;
 class Simulator;
 
-class QucsDoc {
+class QucsDoc : public Object {
 protected:
 	QucsDoc(const QucsDoc&);
 public:
-  explicit QucsDoc(QucsApp&, const QString&, QWidget* owner);
+  explicit QucsDoc(QucsApp*, const QString&, QWidget* owner);
   virtual ~QucsDoc();
 
 public:
@@ -52,7 +52,7 @@ public:
   virtual bool  load() { return true; };
   virtual int   save() { return 0; };
   virtual void  print(QPrinter*, QPainter*, bool, bool) {};
-  virtual void  becomeCurrent(bool) = 0;
+  virtual void  becomeCurrent(bool){ unreachable(); }
   virtual float zoomBy(float) { return 1.0; };
   virtual void  showAll() {};
   virtual void  showNoZoom() {};
@@ -76,8 +76,7 @@ public:
   QDateTime lastSaved;
 
 //  float Scale;
-  QucsApp* App; // TODO: delete.
-  QucsApp &_app;
+  QucsApp* _app;
   bool DocChanged;
   bool SimOpenDpl;   // open data display after simulation ?
   bool SimRunScript; // run script after simulation ?
@@ -85,10 +84,8 @@ public:
   bool GridOn;
   int  tmpPosX, tmpPosY;
 
-  // probably not.
-// private:
-//   void decSimulators(){ --_simulators; }
-//   void incSimulators(){ ++_simulators; }
+  void installElement(Element const*);
+  Element const* find_proto(std::string const& name) const;
 
 protected:
   Simulator* simulatorInstance(std::string const& which="");
@@ -102,15 +99,15 @@ protected:
 //  void toggleAction(QAction* sender);
 
 public: // actions: These somehow correspond to buttons.
-        // needs cleanup...
-	virtual void actionSelect(QAction* sender) = 0;
-	virtual void actionCopy(QAction* sender) = 0;
-	virtual void actionCut(QAction* sender) = 0;
-	virtual void actionEditActivate(QAction* sender) = 0;
-	virtual void actionEditUndo(QAction* sender) = 0;
-	virtual void actionEditRedo(QAction* sender) = 0;
-	virtual void actionSelectAll(QAction* sender) = 0;
-	virtual void actionChangeProps(QAction* sender) = 0;
+        // needs cleanup... better use qt signals, but where?
+	virtual void actionSelect(QAction*) { unreachable(); }
+	virtual void actionCopy(QAction*) { unreachable(); }
+	virtual void actionCut(QAction*) { unreachable(); }
+	virtual void actionEditActivate(QAction*) { unreachable(); }
+	virtual void actionEditUndo(QAction*) { unreachable(); }
+	virtual void actionEditRedo(QAction*) { unreachable(); }
+	virtual void actionSelectAll(QAction*) { unreachable(); }
+	virtual void actionChangeProps(QAction*) { unreachable(); }
 
 	// these are not implemented for qucstext, not called perhaps?
 	virtual void actionApplyCompText() { unreachable(); }
@@ -134,7 +131,7 @@ public: // actions: These somehow correspond to buttons.
 	virtual void actionInsertGround(QAction*) {unreachable();}
 	virtual void actionSetMarker(QAction*) {unreachable();}
 	virtual void actionMoveText(QAction*) {unreachable();}
-	virtual void actionZoomIn(QAction*) = 0;
+	virtual void actionZoomIn(QAction*) { unreachable(); }
 	virtual void actionSelectElement(QObject*) {untested(); }
 
 	void uncheckActive();
@@ -174,6 +171,7 @@ public:
 private:
 	friend class Simulator;
 
+	std::map<std::string, Element const*> _protos;
 	std::map<std::string, QucsData*> _data;
 	std::map<std::string, Simulator*> _simulators;
 

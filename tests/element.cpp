@@ -43,7 +43,7 @@ install_element_stub p1 (&e);
 
 // this is fixed in #742
 // (here for now, because libraries are not accessible)
-Element::Element() : _center(0, 0){}
+Element::Element() : _position(0, 0){}
 Element::~Element(){}
 //void Element::paintScheme(Schematic*){}
 //void Element::paintScheme(QPainter*){}

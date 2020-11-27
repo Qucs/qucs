@@ -31,9 +31,9 @@ public:
 		: DocumentFormat() {}
 
 private: //Command
-	void save(DocumentStream& stream, SchematicSymbol const&) const;
-	void load(istream_t& stream, SchematicSymbol&) const; //  override;
-  virtual void do_it(istream_t&, SchematicModel*) {incomplete();}
+	void save(ostream_t& stream, Object const*) const override;
+	void load(istream_t& stream, Object*) const override;
+	virtual void do_it(istream_t&, SchematicModel*) {incomplete();}
 private: // legacy cruft
 	bool isSymbolMode() const{ return false; }
 	PaintingList const& symbolPaints(SchematicSymbol const& m) const{
@@ -52,22 +52,32 @@ private: // legacy cruft
 	NodeMap const& nodes(SchematicSymbol const& m) const{
 		return m.nodes();
 	}
-	ComponentList const& components(SchematicSymbol const& m) const{
+	ElementList const& components(SchematicSymbol const& m) const{
 		return m.components();
 	}
 }d0;
 static Dispatcher<Command>::INSTALL p0(&command_dispatcher, "leg_sch", &d0);
 
-void LegacySchematicFormat::load(istream_t& s, SchematicSymbol& c) const
+void LegacySchematicFormat::load(istream_t& s, Object* c) const
 {
+// TODO: move stuff here that does not belong to leg_sch.
 	auto l=doclang_dispatcher["leg_sch"];
 	assert(l);
 	auto L=dynamic_cast<SchematicLanguage const*>(l);
 	assert(L);
 
-	while(!s.atEnd()){
-		L->parse(s, c);
-		assert(s.atEnd()); // happens with legacy lang
+	if(auto cc=dynamic_cast<SchematicSymbol*>(c)){
+		while(!s.atEnd()){
+			L->parse(s, cc); // BUG BUG only pass SchematicModel
+			assert(s.atEnd()); // happens with legacy lang
+		}
+	}else if(auto cc=dynamic_cast<SubcktBase*>(c)){
+		while(!s.atEnd()){
+			L->parse(s, cc); // BUG BUG only pass SchematicModel
+			assert(s.atEnd()); // happens with legacy lang
+		}
+	}else{
+		unreachable();
 	}
 
 }
@@ -155,8 +165,17 @@ static void printProperties(SchematicSymbol const& m, DocumentStream& stream)
 	stream << "</Properties>\n";
 }
 
-void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol /* qucsdoc? */ const& m) const
+void LegacySchematicFormat::save(DocumentStream& stream, Object const* o) const
 {
+	auto m_ = dynamic_cast<SchematicSymbol const*>(o);
+
+	if(!m_){
+		incomplete();
+		return;
+	}else{
+	}
+
+	auto& m = *m_;
 
 	auto D=doclang_dispatcher["leg_sch"];
 	auto L = dynamic_cast<DocumentLanguage const*>(D);
@@ -164,12 +183,6 @@ void LegacySchematicFormat::save(DocumentStream& stream, SchematicSymbol /* qucs
 
 	stream << "<Qucs Schematic 0.0.20>\n";
 
-	bool do_prop = false;
-	//try{
-	//	m.paramValue("ViewX1");
-	//	do_prop = true;
-	//}catch(ExceptionCantFind const&){
-	//}
 	if(0){
 		printProperties(m, stream);
 	}else{

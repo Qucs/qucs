@@ -164,7 +164,7 @@ bool GraphicLine::load(const QString& s)
   int cy = n.toInt(&ok);
   if(!ok) return false;
 
-  setCenter(pos_t(cx, cy));
+  setPosition(pos_t(cx, cy));
 
   n  = s.section(' ',3,3);    // x2
   x2 = n.toInt(&ok);
@@ -279,7 +279,7 @@ void GraphicLine::MouseResizeMoving(int, int, SchematicDoc *)
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
 void GraphicLine::MouseMoving(
-	SchematicDoc *paintScale, int, int, int gx, int gy,
+	SchematicDoc *pAppaintScale, int, int, int gx, int gy,
 	SchematicDoc *p, int x, int y, bool drawn)
 {
 #if 0

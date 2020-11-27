@@ -950,7 +950,7 @@ QString Component::get_VHDL_Code(int)
 
 int Component::analyseLine(const QString& Row, int numProps)
 {
-  incomplete(); // obsolete
+  // incomplete(); // obsolete (later...)
   QPen Pen;
   QBrush Brush;
   QColor Color;
@@ -2487,7 +2487,7 @@ void ComponentDialog::slotBrowseFile()
 /*--------------------------------------------------------------------------*/
 void ComponentDialog::slotEditFile()
 {
-  schematic()->App->editFile(QucsSettings.QucsWorkDir.filePath(edit->text()));
+  schematic()->_app->editFile(QucsSettings.QucsWorkDir.filePath(edit->text()));
 }
 /*--------------------------------------------------------------------------*/
 /*!

@@ -2806,14 +2806,14 @@ void QucsApp::slotSaveSchematicToGraphicsFile(bool diagram)
 // #########################################################################
 
 
-QucsDoc* newSchematicDoc(QucsApp&, QString const&, QWidget*); // tmp hack.
+QucsDoc* newSchematicDoc(QucsApp*, QString const&, QWidget*); // tmp hack.
 
 QucsDoc *QucsTabWidget::createEmptySchematic(const QString &name)
 {itested();
   // create a schematic
   QFileInfo Info(name);
   assert(App);
-  QucsDoc *d = newSchematicDoc(*App, name, this);
+  QucsDoc *d = newSchematicDoc(App, name, this);
   QWidget* w = dynamic_cast<QWidget*>(d);
   assert(w);
   int i = addTab(w, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());

@@ -79,6 +79,7 @@ Component* MSline::newOne()
   return new MSline();
 }
 
+#if 0
 Element* MSline::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Microstrip Line");
@@ -87,5 +88,6 @@ Element* MSline::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new MSline();
   return 0;
 }
+#endif
 
 }

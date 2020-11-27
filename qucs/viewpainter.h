@@ -17,6 +17,7 @@
 
 #include <QPainter> // ugly, still better than direct include..
 #include "trace.h"
+#include "geometry.h"
 
 class QString;
 class QColor;
@@ -125,6 +126,12 @@ public: // just forward
 	}
 	QTransform worldMatrix(){
 		return Painter->worldTransform();
+	}
+	void translate(pos_t const& p){
+		Painter->translate(getX(p), getY(p));
+	}
+	void resetTransform(){
+		Painter->resetTransform();
 	}
 	void setWorldMatrixEnabled(bool b){
 		Painter->setWorldMatrixEnabled(b);

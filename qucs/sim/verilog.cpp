@@ -147,7 +147,7 @@ void Verilog::printSymbol(Symbol const* sym, ostream_t& s) const
 /// --------------------------------------------------------
 class VerilogSchematicFormat : public DocumentFormat{
   void save(DocumentStream& stream, SchematicSymbol const&) const;
-  void load(istream_t& stream, SchematicSymbol&) const;
+  void load(istream_t& stream, Object*) const;
 
 private: //command
   void do_it(istream_t&, SchematicModel*) override{incomplete();}
@@ -170,7 +170,7 @@ private: // legacy cruft
   NodeMap const& nodes(SchematicSymbol const& m) const{
     return m.nodes();
   }
-  ComponentList const& components(SchematicSymbol const& m) const{
+  ElementList const& components(SchematicSymbol const& m) const{
     return m.components();
   }
 
@@ -180,7 +180,7 @@ private: // hacks.
 static Dispatcher<Command>::INSTALL pp(&command_dispatcher, "v_sch", &VS);
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
-void VerilogSchematicFormat::load(istream_t&, SchematicSymbol&) const
+void VerilogSchematicFormat::load(istream_t&, Object*) const
 { untested();
   incomplete();
 }
@@ -192,9 +192,10 @@ void VerilogSchematicFormat::save(DocumentStream& stream, SchematicSymbol const&
 		  unreachable();
 		  // BUG. a TaskElement is not a Component
 		  continue;
+	  }else if(auto s=dynamic_cast<Symbol const*>(pc)){
+		  printSymbol(s, stream); // BUG: use V::printItem
+											// but uses different port names...
 	  }
-	  printSymbol(pc, stream); // BUG: use V::printItem
-	                           // but uses different port names...
   }
   for(auto w : wires(m)){
 	  printSymbol(w, stream); // BUG: use V::printItem

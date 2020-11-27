@@ -11,6 +11,7 @@ LEGACY_SRC = \
 	portcmd.cpp \
 	modelcmd.cpp \
 	spicecmd.cpp \
+	symbolcmd.cpp \
 	propertiescmd.cpp \
 	rect3ddiagram.cpp \
 	rectdiagram.cpp \

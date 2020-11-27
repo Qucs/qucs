@@ -104,6 +104,7 @@ void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
   }else if (s != "") {
     CMD* c = command_dispatcher[s];
     if (c) {
+      assert(scope);
       c->do_it(cmd, scope);
       didsomething = true;
     }else{untested();

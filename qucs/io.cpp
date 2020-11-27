@@ -271,6 +271,7 @@ istream_t& istream_t::umatch(const std::string& s)
 istream_t& istream_t::warn(int badness, size_t spot, const std::string& message)
 {
 	incomplete();
+	std::cerr << "parse warning " << message << "\n";
 #if 0
   if (badness >= OPT::picky) { untested();
     if (spot < 40) { untested();

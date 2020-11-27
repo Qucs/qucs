@@ -25,6 +25,63 @@ class QPainter;
 class NodeMap;
 class PaintingList;
 class Net;
+class Symbol;
+/*--------------------------------------------------------------------------*/
+enum {CC_STATIC=27342};
+/*--------------------------------------------------------------------------*/
+// borrowed (modified) from e_compon.h
+class COMMON_COMPONENT : public Object {
+public:
+  static void attach_common(COMMON_COMPONENT* c, COMMON_COMPONENT** to);
+  static void detach_common(COMMON_COMPONENT** from);
+private:
+  COMMON_COMPONENT& operator=(const COMMON_COMPONENT&)
+			      {unreachable(); return *this;}
+  explicit COMMON_COMPONENT() : Object() {unreachable();incomplete();}
+protected:
+  explicit COMMON_COMPONENT(const COMMON_COMPONENT& p);
+  explicit COMMON_COMPONENT(int c);
+public:
+  virtual ~COMMON_COMPONENT();
+
+  void attach_model(const Symbol*)const;
+//  COMMON_COMPONENT& attach(const MODEL_CARD* m) {_model = m; return *this;}
+//  void set_modelname(const std::string& n) {_modelname = n;}
+
+  virtual COMMON_COMPONENT* clone()const = 0;
+
+  // virtual bool is_trivial()const {return false;}
+
+public: // params, not yet.
+//   virtual bool param_is_printable(int)const;
+//   virtual std::string param_name(int)const;
+//   virtual std::string param_name(int,int)const;
+//   virtual std::string param_value(int)const;
+//   virtual void set_param_by_name(std::string, std::string);
+//   void Set_param_by_name(std::string, std::string); //BUG// see implementation
+//   virtual void set_param_by_index(int, std::string&, int);
+//   virtual int param_count()const {return 4;}
+public: // also, not yet
+//  virtual void precalc_first(const CARD_LIST*)	{}
+//  virtual void expand(const COMPONENT*)		{}
+//  virtual COMMON_COMPONENT* deflate()		{return this;}
+//  virtual void precalc_last(const CARD_LIST*);
+
+  // virtual std::string name()const	= 0;
+  virtual bool  operator==(const COMMON_COMPONENT&x)const;
+
+  bool operator!=(const COMMON_COMPONENT& x)const {return !(*this == x);}
+//  std::string	      modelname()const	{return _modelname;}
+//  const MODEL_CARD*   model()const	{assert(_model); return _model;}
+//  bool		      has_model()const	{return _model;}
+//   const PARAMETER<double>& mfactor()const {return _mfactor;}
+//   const PARAMETER<double>& value()const {return _value;}
+private:
+//  std::string	_modelname;
+//  mutable const MODEL_CARD* _model;
+  int		_attach_count;
+};
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 class Symbol : public Element{
 protected:
@@ -62,20 +119,19 @@ public: // TODO. something like this.
 	// virtual void prepare();
 	// virtual void unPrepare();
 	//
-public: // TODO: something like this.
-	//   // common
-	//   COMMON_COMPONENT* mutable_common()	  {return _common;}
-	//   const COMMON_COMPONENT* common()const	  {return _common;}
-	//   bool	has_common()const		  {return _common;}
-	//   void	attach_common(COMMON_COMPONENT*c) {COMMON_COMPONENT::attach_common(c,&_common);}
-	//   void	detach_common()			  {COMMON_COMPONENT::detach_common(&_common);}
-	//   void	deflate_common();
+public: // manage shared data across symbols
+	COMMON_COMPONENT* mutable_common()	  {return _common;}
+	const COMMON_COMPONENT* common()const	  {return _common;}
+	bool	has_common()const		  {return _common;}
+	void	attach_common(COMMON_COMPONENT*c) {COMMON_COMPONENT::attach_common(c,&_common);}
+	void	detach_common()			  {COMMON_COMPONENT::detach_common(&_common);}
+	void	deflate_common();
 
 public:
 	SchematicModel const* scope() const;
 	virtual PaintingList const* symbolPaintings() const {return nullptr;}
 
-protected: // needed in netlister
+// protected: // needed in netlister. public use in parse...
 	virtual SchematicModel* scope();
 
 public: // Parameters
@@ -94,6 +150,7 @@ public: // non-virtual (on purpose)
 	QString const& netLabel(unsigned i) const;
 
 public: // Node stuff
+	virtual bool is_device() const{return true;}
 	virtual Node* connectNode(unsigned idx, NodeMap&);
 	virtual Node* disconnectNode(unsigned idx, NodeMap&);
 
@@ -140,6 +197,7 @@ private:
 	int _angle;
 	unsigned _param_display;
 	bool _label_display;
+	COMMON_COMPONENT* _common;
 }; // symbol
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
