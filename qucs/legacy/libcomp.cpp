@@ -40,14 +40,14 @@ class LibComp : public SubcktBase {
 private:
 	LibComp(LibComp const&p)
 	  : SubcktBase(p),
-	    _paint(nullptr) { untested();
+	    _paint(nullptr) {
 		new_subckt();
 		// _paint = new PaintingList(); // BUG
 	}
 public:
 	LibComp()
 	  : SubcktBase(),
-	    _paint(nullptr) { untested();
+	    _paint(nullptr) {
 		new_subckt();
 		// _paint = new PaintingList(); // BUG
 	}
@@ -70,7 +70,7 @@ private:
 		}
 	}
 	unsigned numPorts() const override{
-		if(painting()){ untested();
+		if(painting()){
 			return painting()->numPorts();
 		}else if(subckt()){
 			return subckt()->numPorts();
@@ -80,7 +80,7 @@ private:
 		}
 	}
 	virtual Port& port(unsigned) {unreachable(); return *new Port();}
-	pos_t portPosition(unsigned i) const override{ untested();
+	pos_t portPosition(unsigned i) const override{
 	//	assert(subckt());
 	//	assert(subckt()->portValue(i));
 		// auto pos = subckt()->portValue(i)->position();

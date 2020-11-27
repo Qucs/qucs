@@ -318,7 +318,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
 		}else if(Line.isEmpty()){ untested();
 		}else if(Line == "<Components>") {
 			mode='C';
-		}else if(Line == "<Symbol>") { untested();
+		}else if(Line == "<Symbol>") {
 			mode='S';
 			trace1("symbol??", stream.fullstring());
 			new__instance(stream, owner, sckt);
@@ -419,7 +419,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
 				assert(cc->owner() == owner);
 
 
-				if(auto sym=dynamic_cast<Symbol*>(c)){ untested();
+				if(auto sym=dynamic_cast<Symbol*>(c)){
 					sym->build(); // here?!
 				}else{
 				}
@@ -1024,8 +1024,8 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 				if(counts < 56) {  // backward compatible
 					counts >>= 1;
 					p1 = c->Props.at(counts-1);
-					for(; p1 != 0; p1 = c->Props.current()) { untested();
-						if(counts-- < 19){ untested();
+					for(; p1 != 0; p1 = c->Props.current()) {
+						if(counts-- < 19){
 							break;
 						}
 
@@ -1104,7 +1104,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 }
 /*--------------------------------------------------------------------------*/
 Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
-{ untested();
+{
 	QString Line = QString::fromStdString( c.fullString());
 
 	QString l = Line.trimmed();
@@ -1132,7 +1132,7 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 		loadDiagram(d, c);
 	}else if(auto s=dynamic_cast<Painting*>(e)){
 		::parsePainting(l, s);
-	}else if(auto s=dynamic_cast<DEV_DOT*>(e)){ untested();
+	}else if(auto s=dynamic_cast<DEV_DOT*>(e)){
 		return ::parseCommand(c, s);
 	}else{ untested();
 		return DocumentLanguage::parseItem(c, e);
@@ -1175,7 +1175,7 @@ DEV_DOT* LegacySchematicLanguage::parseCommand(istream_t& c, DEV_DOT* x) const
 }
 /*--------------------------------------------------------------------------*/
 std::string LegacySchematicLanguage::findType(istream_t& c) const
-{ untested();
+{
 	std::string l = c.fullString();
 	auto Line = QString::fromStdString(l);
 

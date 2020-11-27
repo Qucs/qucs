@@ -32,21 +32,21 @@ Element* DocumentLanguage::parseItem(istream_t& s, Element* c) const
 }
 
 void DocumentLanguage::printItem(Element const* c, ostream_t& s) const
-{ untested();
+{
   if(!c){ untested();
 	  s << "unreachable, no item\n";
 	  // assert(c);
   }else if (auto C=dynamic_cast<const TaskElement*>(c)) { untested();
     printtaskElement(C, s);
-  }else if (auto C=dynamic_cast<const SubcktBase*>(c)) { untested();
+  }else if (auto C=dynamic_cast<const SubcktBase*>(c)) {
 	  if(C->is_device()){
 		  printSymbol(C, s);
 	  }else{
 		  printSubckt(C, s);
 	  }
-  }else if (auto C=dynamic_cast<const Symbol*>(c)) { untested();
+  }else if (auto C=dynamic_cast<const Symbol*>(c)) {
 	  printSymbol(C, s);
-  }else if (auto C=dynamic_cast<const Painting*>(c)) { untested();
+  }else if (auto C=dynamic_cast<const Painting*>(c)) {
     printPainting(C, s);
   }else{ untested();
     incomplete();
@@ -56,41 +56,41 @@ void DocumentLanguage::printItem(Element const* c, ostream_t& s) const
 // borrowed from u_lang.h
 void DocumentLanguage::new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
 		SchematicModel* Scope) const
-{ untested();
+{
 	if (cmd.atEnd()) {untested();
 		incomplete();
 		assert(false);
 		// nothing
-	}else{ untested();
+	}else{
 		std::string type = findType(cmd);
 		trace4("new_instance", type, cmd.fullString(), owner, Scope);
-		if (const Element* proto = find_proto(type, owner)) { untested();
-			if (Element* new_instance = proto->clone_instance()) { untested();
+		if (const Element* proto = find_proto(type, owner)) {
+			if (Element* new_instance = proto->clone_instance()) {
 				new_instance->setOwner(owner);
 				Element* o = parseItem(cmd, new_instance);
-				if (Element* x=dynamic_cast<Element*>(o)) { untested();
+				if (Element* x=dynamic_cast<Element*>(o)) {
 					assert(Scope);
 					Scope->pushBack(x);
-				}else{ untested();
+				}else{
 				}
 			}else{ untested();
 				cmd.warn(bDANGER, type + ": incomplete prototype");
 			}
-		}else{ untested();
+		}else{
 			cmd.warn(bDANGER, type + ": no match");
 		}
 	}
 }
 /*--------------------------------------------------------------------------*/
 Element const* DocumentLanguage::find_proto(const std::string& Name, const Element* Scope) const
-{ untested();
+{
 	trace1("fp", Name);
 	Element const* p=nullptr;
-	if(Scope){ untested();
-		try { untested();
+	if(Scope){
+		try {
 			p = Scope->find_looking_out(Name);
 			trace2("found", Name, p);
-		}catch (ExceptionCantFind& e) { untested();
+		}catch (ExceptionCantFind& e) {
 			assert(!p);
 		}
 	}else{ untested();
@@ -105,19 +105,19 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
 #else
   }
 #endif
-  if (p) { untested();
+  if (p) {
     return p;
-  }else if ((command_dispatcher[Name])) { untested();
+  }else if ((command_dispatcher[Name])) {
     return new DEV_DOT;	//BUG// memory leak
   }else if ((p = element_dispatcher[Name])) { untested();
     return p;
-  }else if ((p = symbol_dispatcher[Name])) { untested();
+  }else if ((p = symbol_dispatcher[Name])) {
     return p;
-  }else if ((p = painting_dispatcher[Name])) { untested();
+  }else if ((p = painting_dispatcher[Name])) {
     return p;
-  }else if ((p = diagram_dispatcher[Name])) { untested();
+  }else if ((p = diagram_dispatcher[Name])) {
     return p;
-  }else{ untested();
+  }else{
 	  trace1("try more", Name);
 #if 0
     assert(!p);

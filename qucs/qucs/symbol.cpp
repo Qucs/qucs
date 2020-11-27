@@ -132,7 +132,7 @@ SchematicModel* Symbol::scope()
 // reuse overrides to give both const and non-const access.
 // (move to header)
 SchematicModel const* Symbol::scope() const
-{ untested();
+{
 	auto s=const_cast<Symbol*>(this);
 	return s->scope();
 }

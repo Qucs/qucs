@@ -36,7 +36,7 @@ private:
 private: // Symbol
 	bool is_device() const override { return false; }
 	unsigned numPorts() const override{
-		if(subckt()){ untested();
+		if(subckt()){
 			return subckt()->numPorts();
 		}else{ untested();
 			unreachable();
@@ -51,7 +51,7 @@ public:
 }symbolSection;
 /*--------------------------------------------------------------------------*/
 class SymbolCommand : public Command{
-  virtual void do_it(istream_t& cs, SchematicModel* s){ untested();
+  virtual void do_it(istream_t& cs, SchematicModel* s){
 	  auto fullstring = cs.fullString();
 	  trace1("SymbolSection", fullstring);
 
@@ -67,7 +67,7 @@ class SymbolCommand : public Command{
 	  auto lang = doclang_dispatcher["legacy_lib"];
 	  assert(lang);
 
-	  while(true){ untested();
+	  while(true){
 		  trace1("Symbol Command", cs.fullString());
 		  cs.read_line();
 		  trace1("Symbol Command", cs.fullString());
@@ -75,9 +75,9 @@ class SymbolCommand : public Command{
 		  ///   // bug. matches newlines...??
 		  ///   break;
 		  ///}else
-		  if(cs.umatch("</Symbol>")){ untested();
+		  if(cs.umatch("</Symbol>")){
 			  break;
-		  }else{ untested();
+		  }else{
 			  cs.skipbl();
 			  lang->new__instance(cs, sym, sym->subckt());
 			  trace2("symbolpaint", cs.fullstring(), sym->subckt()->size());
