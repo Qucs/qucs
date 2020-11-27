@@ -245,7 +245,7 @@ public:
 	T* current() {
 		if (cur==localList.end()){ untested();
 			return nullptr;
-		}else{ untested();
+		}else{
 			return *cur;
 		}
 	};

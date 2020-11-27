@@ -24,7 +24,7 @@ public:
 	explicit CommonSubckt(int x)
 		: COMMON_COMPONENT(x), _subckt(nullptr) {}
 public:
-	SchematicModel* subckt(){ untested(); return &_subckt; }
+	SchematicModel* subckt(){ return &_subckt; }
 	COMMON_COMPONENT* clone()const override{
 		return new CommonSubckt(0);
 	}
@@ -58,7 +58,7 @@ private: // Symbol
 	pos_t portPosition(unsigned) const{ assert(false); return pos_t(0,0);}
 	Element* clone()const override{return new SubcktProto(*this);}
 	Element* clone_instance()const override{assert(false); return nullptr;}
-	bool makes_own_scope()const override {untested(); return true;}
+	bool makes_own_scope()const override { return true;}
 //   bool portExists(unsigned) const override;
 	bool portExists(unsigned i) const override;
 	unsigned numPorts() const override;
@@ -71,7 +71,7 @@ private: // internal
 		assert(cs);
 		return cs->subckt();
 	}
-	SchematicModel const* subckt() const{ untested();
+	SchematicModel const* subckt() const{
 		auto s=const_cast<SubcktProto*>(this);
 		return s->scope();
 	}
@@ -119,7 +119,7 @@ SubcktProto::SubcktProto(Element const* p)
 }
 /*--------------------------------------------------------------------------*/
 SchematicModel* SubcktProto::scope()
-{ untested();
+{
 	COMMON_COMPONENT* cc = mutable_common();
 	assert(cc);
 	auto cs = prechecked_cast<CommonSubckt*>(cc);
