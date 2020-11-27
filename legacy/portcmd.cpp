@@ -20,7 +20,7 @@
 namespace{
 /*--------------------------------------------------------------------------*/
 class PortSym : public Command{
-  virtual void do_it(istream_t& cs, SchematicModel* s){ untested();
+  virtual void do_it(istream_t& cs, SchematicModel* s){
 	  assert(s);
 	  auto fullstring = cs.fullString();
 	  cs.reset();

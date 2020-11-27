@@ -414,7 +414,7 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 void LegacyNetlister::throughAllComps(ostream_t&, SchematicSymbol const& m) const
 { incomplete();
 	trace3("tac", m.label(), &m, m.owner());
-	if(m.owner()){ untested();
+	if(m.owner()){
 	}else{
 	}
 	QString s;
@@ -423,7 +423,7 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicSymbol const& m) cons
 	assert(m.subckt());
 	auto const& sckt = *m.subckt();
 
-	for(auto it_ : sckt.components()){ untested();
+	for(auto it_ : sckt.components()){
 
 		auto pc = dynamic_cast<Symbol const*>(it_);
 		if(pc){

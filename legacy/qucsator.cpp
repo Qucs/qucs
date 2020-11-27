@@ -310,7 +310,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 			continue;
 		}
 
-      if(!i){ untested();
+      if(!i){
 			incomplete();
 		}else if(i->typeName() == "Port"){
 		}else if(i->typeName() == "Wire"){ // is Conductor?
