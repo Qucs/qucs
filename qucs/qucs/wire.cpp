@@ -32,7 +32,8 @@ class QString;
 namespace{
 
 class Wires : public SubcktBase{
-	//...
+private:
+	Port& port(unsigned i){ throw "unreachable";}
 };
 
 class Wire : public Symbol, public Conductor {
@@ -227,7 +228,8 @@ Symbol* Wire::intersectPorts(Symbol const* s) const
 		split.push_back(nodePosition(1));
 
 		std::sort(split.begin(), split.end());
-		Symbol *sckt = new SubcktBase(); // BUG: inherit.
+		Symbol *sckt = symbol_dispatcher.clone("subckt_proto");
+		assert(sckt);
 		sckt->new_subckt();
 		SchematicModel* m = sckt->subckt();
 
@@ -278,21 +280,21 @@ Symbol* Wire::newTee(Wire const* o) const
 
 	trace2("interior?", o->nodePosition(0), o->nodePosition(1));
 	if(isInterior(o->nodePosition(0))){
-		s = new SubcktBase(); // BUG: inherit.
+		s = new Wires();
 		split = o->nodePosition(0);
 	}else if(isInterior(o->nodePosition(1))){ untested();
-		s = new SubcktBase(); // BUG: inherit.
+		s = new Wires();
 		split = o->nodePosition(1);
 	}else if(o->isInterior(nodePosition(0))){
 		// BUG: call o->newUnion(this)
-		s = new SubcktBase(); // BUG: inherit.
+		s = new Wires();
 		split = nodePosition(0);
 		t0 = o->nodePosition(0);
 		t1 = o->nodePosition(1);
 		teew = this;
 	}else if(o->isInterior(nodePosition(1))){ untested();
 		// BUG: call o->newUnion(this)
-		s = new SubcktBase(); // BUG: inherit.
+		s = new Wires();
 		split = nodePosition(1);
 		t0 = o->nodePosition(0);
 		t1 = o->nodePosition(1);

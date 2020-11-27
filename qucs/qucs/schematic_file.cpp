@@ -310,7 +310,7 @@ void SchematicDoc::saveDocument() const
   auto D = prechecked_cast<DocumentFormat const*>(d);
   assert(D);
   assert(_root);
-  D->save(stream, *_root);
+  D->save(stream, _root);
 }
 
 // -------------------------------------------------------------

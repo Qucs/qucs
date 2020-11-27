@@ -99,7 +99,7 @@ void ID_Text::getCenter(int& x, int &y)
 // --------------------------------------------------------------------------
 bool ID_Text::load(const QString& s)
 {
-	incomplete();
+//	incomplete(); fix later.
   bool ok;
 
   QString n;
@@ -111,7 +111,7 @@ bool ID_Text::load(const QString& s)
   int cy = n.toInt(&ok);
   if(!ok) return false;
 
-  setCenter(pos_t(cx, cy));
+  setPosition(pos_t(cx, cy));
 
   Prefix = s.section(' ',3,3);    // Prefix
   if(Prefix.isEmpty()) return false;

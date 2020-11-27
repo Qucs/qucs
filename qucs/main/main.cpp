@@ -155,7 +155,7 @@ Schematic *openSchematic(QString schematic)
 
 // BUG: move to SchematicModel
 namespace{
-class sda : public SchematicSymbol{
+class sda : public SchematicSymbol {
 public:
   explicit sda() : SchematicSymbol() {
     new_subckt();
@@ -229,7 +229,10 @@ public: // tmp hack
 // moved to legacy/qucsator, QucsatorNetlister::save
 void doNetlist(QString schematic_fn, std::string netlist, DocumentFormat const& NLN)
 {
+  QucsDoc d(nullptr, "", nullptr);
+  d.setLabel("main");
   sda xs;
+  xs.setOwner(&d);
   xs.setLabel(schematic_fn.toStdString());
   assert(xs.subckt());
   SchematicModel& sch = *xs.subckt();
@@ -241,14 +244,17 @@ void doNetlist(QString schematic_fn, std::string netlist, DocumentFormat const& 
   SchematicLanguage const* L=nullptr;
 
   if(!L){
-    auto D=doclang_dispatcher["leg_sch"];
+    auto D = doclang_dispatcher["leg_sch"];
     L = dynamic_cast<SchematicLanguage const*>(D);
   }else{ untested();
   }
   assert(L);
 
+//  assert(xs.owner());
+  // TODO: use a command.
   while(!stream.atEnd()){
-    L->parse(stream, xs);
+    trace1("parse", stream.fullstring());
+    L->parse(stream, &xs);
   }
 
   QFile NetlistFile(QString::fromStdString(netlist));
@@ -262,7 +268,7 @@ void doNetlist(QString schematic_fn, std::string netlist, DocumentFormat const& 
   // sch.setOwner(&xs);
 
   xs.DocName = schematic_fn.toStdString(); // tmp
-  NLN.save(os, xs);
+  NLN.save(os, &xs);
 }
 
 int doPrint(QString schematic, std::string printFile,

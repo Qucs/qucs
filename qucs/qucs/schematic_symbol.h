@@ -21,7 +21,7 @@ class NodeMap;
 class DiagramList;
 class PaintingList;
 class CmdEltList;
-class ComponentList;
+class ElementList;
 /*--------------------------------------------------------------------------*/
 // A symbol ("component"), formerly implicit schematic contents.
 // needs work. rename to DocSymbol? or QucsDoc : Symbol?
@@ -46,7 +46,7 @@ public:
 	DiagramList const& diagrams() const;
 	PaintingList const& paintings() const;
 	CmdEltList const* commands() const;
-	ComponentList const& components() const; // possibly "devices". lets see.
+	ElementList const& components() const; // possibly "devices". lets see.
 	PaintingList const* symbolPaintings() const override;
 
 	// commands were part of the circuit model. fix this.

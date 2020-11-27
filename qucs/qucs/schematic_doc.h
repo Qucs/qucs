@@ -92,7 +92,7 @@ private:
 public:
   typedef QList<ElementGraphics*> EGPList;
 public:
-  SchematicDoc(QucsApp&/*BUG*/, const QString&, QWidget* owner);
+  SchematicDoc(QucsApp* /*BUG?*/, const QString&, QWidget* owner);
  ~SchematicDoc();
 
   void setName(const QString&);
@@ -198,7 +198,7 @@ public:
   CmdEltList const& commands() const{
 	  return _commands;
   }
-  ComponentList const& components() const{
+  ElementList const& components() const{
 	  assert(_model);
 	  return _model->components();
   }
@@ -554,8 +554,7 @@ private:
 
   SimProcess* simProcess(std::string name);
 
-public: // serializer
-  // remove void saveComponent(QTextStream& s, Component const* c) const;
+public:
   SchematicSymbol const* root() const { return _root; }
 
 public: // need access to SchematicModel. grr
@@ -563,7 +562,9 @@ public: // need access to SchematicModel. grr
   friend class ImageWriter;
 
 private:
-  SchematicSymbol* _root;
+  SchematicSymbol* _root; // really? use *this. and QucsDoc : Element?
+                          //                        QucsDoc : ScktBase?
+                          //                        QucsDoc : Object?
   SchematicModel* _model;
   CmdEltList _commands;
   QUndoStack* _undoStack;

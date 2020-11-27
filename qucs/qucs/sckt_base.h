@@ -16,11 +16,17 @@
 #include "symbol.h"
 
 class SubcktBase : public Symbol {
+public:
+	explicit SubcktBase() {} // HACK
+protected:
+	SubcktBase(SubcktBase const& p) : Symbol(p) {}
 private:
 	virtual Element* clone()const {unreachable(); return nullptr;}
+//	Port& port(unsigned) override {unreachable(); return *new Port();}
+	virtual pos_t portPosition(unsigned i) const;
+public:
 	virtual unsigned numPorts() const { incomplete(); return 0; }
-	virtual pos_t portPosition(unsigned) const{ unreachable(); return pos_t(0,0);}
-	Port& port(unsigned){unreachable(); return *new Port();}
+	virtual bool makes_own_scope()const  {return false;}
 public:
 	SchematicModel const* subckt() const{ return _subckt; }
 	SchematicModel* subckt(){ return _subckt; }

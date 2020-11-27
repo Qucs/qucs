@@ -1193,7 +1193,8 @@ void TaskElementDialog::slotBrowseFile()
 // -------------------------------------------------------------------------
 void TaskElementDialog::slotEditFile()
 {
-  schematic()->App->editFile(QucsSettings.QucsWorkDir.filePath(edit->text()));
+	untested();
+	schematic()->_app->editFile(QucsSettings.QucsWorkDir.filePath(edit->text()));
 }
 
 /*!

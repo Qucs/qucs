@@ -51,11 +51,12 @@ private: // legacy implementation
   void clear() const;
   void printDeclarations(ostream_t& d, SchematicSymbol const&m) const;
 private: // overrides
-  void save(ostream_t& stream, SchematicSymbol const& m) const;
-  void load(istream_t&, SchematicSymbol&) const;
+  void save(ostream_t& stream, Object const* m) const override;
+  void load(istream_t&, Object*) const override;
 private:
   mutable SubMap FileList; // BUG (maybe not)
   mutable DocumentLanguage* _qucslang;
+  mutable std::map<std::string, Element const*> _declarations;
 }LNL;
 static Dispatcher<Command>::INSTALL p1(&command_dispatcher, "qucsator|legacy_nl", &LNL);
 
@@ -139,10 +140,10 @@ Component * SimMessage::findOptimization(SchematicDoc *)
 
 void LegacyNetlister::clear() const
 {
-	// declarations.clear();
+	_declarations.clear();
 }
 
-void LegacyNetlister::load(istream_t&, SchematicSymbol&) const
+void LegacyNetlister::load(istream_t&, Object*) const
 {
    _qucslang = doclang_dispatcher["qucsator"];
 	assert(_qucslang);
@@ -150,8 +151,18 @@ void LegacyNetlister::load(istream_t&, SchematicSymbol&) const
 }
 
 // was main::doNetlist, but it only works for qucsator. merge into qucsator driver.
-void LegacyNetlister::save(ostream_t& Stream, SchematicSymbol const& m) const
+void LegacyNetlister::save(ostream_t& Stream, Object const* o) const
 {
+	auto m_ = dynamic_cast<SchematicSymbol const*>(o);
+
+	if(!m_){
+		incomplete();
+		return;
+	}else{
+	}
+
+	auto& m = *m_;
+
    _qucslang = doclang_dispatcher["qucsator"];
 	clear();
 
@@ -161,7 +172,7 @@ void LegacyNetlister::save(ostream_t& Stream, SchematicSymbol const& m) const
 	// assert(m.owner()); // root symbol does not have owner...
 	prepareSave(Stream, m);
 
-	qDebug() << "done prep\n";
+	trace1("done prep", m.label());
 
 	if(SimPorts < -5) { untested();
 		throw "not_enough_ports_exception"; // ?!
@@ -181,7 +192,7 @@ void LegacyNetlister::save(ostream_t& Stream, SchematicSymbol const& m) const
 	}
 #endif
 
-	printDeclarations(Stream, m); // BUG.
+	printDeclarations(Stream, m);
 	Stream << '\n';
 	createNetlist(Stream, m);
 
@@ -201,16 +212,15 @@ void LegacyNetlister::printDeclarations(ostream_t& stream, SchematicSymbol const
    _qucslang = doclang_dispatcher["qucsator"];
 	assert(_qucslang);
 
-	trace1("printing declarations", m.subckt()->declarations().size());
-	for(auto si : m.subckt()->declarations()){
-		assert(si);
-		//prepareSave(stream, m); // yikes
-// 		if(SchematicSymbol const* sym=dynamic_cast<SchematicSymbol const*>(si)){ untested();
-// 		}else{ untested();
-// 		}
+	stream << "## declarations\n";
+	trace1("printing declarations", _declarations.size());
+	for(auto si : _declarations){
+		stream << "### " << si.first << "\n";
 
-		trace2("printing declaration", si, si->label());
-		_qucslang->printItem(si, stream);
+		if(dynamic_cast<SubcktBase const*>(si.second)){
+			_qucslang->printItem(si.second, stream);
+		}else{
+		}
 	}
 	stream << "## declarations end\n";
 }
@@ -336,7 +346,16 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 
 	// BUG: deduplicate.
 	QString s, Time;
-	for(auto pc : m.components()){
+	for(auto it_ : m.components()){
+		auto pc = dynamic_cast<Symbol const*>(it_);
+		if(it_){
+		}else{
+			incomplete();
+			continue;
+		}
+
+
+
 		// if dynamic_cast<Label*>
 		//   ignore
 		if(pc->typeName()=="GND"){
@@ -404,10 +423,26 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicSymbol const& m) cons
 	assert(m.subckt());
 	auto const& sckt = *m.subckt();
 
-	for(auto pc : sckt.components()){
+	for(auto it_ : sckt.components()){ untested();
+
+		auto pc = dynamic_cast<Symbol const*>(it_);
+		if(pc){
+		}else{
+			incomplete();
+			continue;
+		}
+
+
 		Symbol const* sym = pc;
 		assert(pc);
 		trace4("tac", pc->label(), pc, sym->owner(), pc->typeName());
+
+		if(!sym->owner()){
+			incomplete(); //?
+//			symbolSection...
+			continue;
+		}else{
+		}
 		trace1("tac", sym->owner()->label());
 
 		// because they are components
@@ -431,12 +466,20 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicSymbol const& m) cons
 		}else{ untested();
 		}
 
-		if(sym && sym->subckt()){
-			trace1("need expand?", sym->label());
-			// if there is a sckt, make sure it is populated.
-			// // THIS NEEDS WORK. collect prototypes here, not in schematicModel
-			Symbol const* p = pc->proto(&sckt); // just expand?
-			assert(p->subckt());
+		if(dynamic_cast<SubcktBase const*>(sym)){
+			trace2("is sckt?", sym->label(), sym->typeName());
+			incomplete();
+		}else if(sym && sym->subckt()){ // really??
+			auto key = sym->typeName();
+			trace2("need declaration?", sym->label(), key);
+
+			Element const* proto = sym->find_looking_out(key);
+			auto& d = _declarations[key];
+
+			// only one proto per key
+			assert(!d || d == proto);
+		  	d = proto;
+
 		}else if(pc->typeName() == "GND") { // BUG.
 #if 0
 			Net* n = pc->Ports.first()->value()->getNet();
@@ -445,8 +488,9 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicSymbol const& m) cons
 		}else{
 			// no.
 			// find_type(pc->typeName()); // but where?
-
-			Symbol const* p = pc->proto(&sckt); // just expand?
+			trace1("not sure", pc->typeName());
+//			_declarations.insert(pc->typeName());
+			// Symbol const* p = pc->proto(&sckt); // just expand?
 		}
 
 #if 0 // does not work

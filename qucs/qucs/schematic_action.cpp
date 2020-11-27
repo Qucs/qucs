@@ -1177,7 +1177,8 @@ void SchematicDoc::actionSelectElement(QObject*e)
 void SchematicDoc::actionEditUndo(QAction*)
 {itested();
   // really?
-  App->hideEdit(); // disable text edit of component property
+	assert(_app);
+  _app->hideEdit(); // disable text edit of component property
 
   undo();
   updateViewport();
@@ -1188,7 +1189,8 @@ void SchematicDoc::actionEditUndo(QAction*)
 // is this still in use?
 void SchematicDoc::actionEditRedo(QAction*)
 { untested();
-  App->hideEdit(); // disable text edit of component property
+	assert(_app);
+  _app->hideEdit(); // disable text edit of component property
 
   redo();
   updateViewport();
@@ -1197,7 +1199,8 @@ void SchematicDoc::actionEditRedo(QAction*)
 
 void SchematicDoc::actionAlign(int what)
 { untested();
-  App->hideEdit(); // disable text edit of component property
+	assert(_app);
+  _app->hideEdit(); // disable text edit of component property
 
   if(!aligning(what)){ untested();
     QMessageBox::information(this, tr("Info"),
@@ -1210,7 +1213,8 @@ void SchematicDoc::actionAlign(int what)
 
 void SchematicDoc::actionDistrib(int d)
 { untested();
-  App->hideEdit(); // disable text edit of component property
+  assert(_app);
+  _app->hideEdit(); // disable text edit of component property
 
   if (d==0){ untested();
 	  distributeHorizontal();
@@ -1232,7 +1236,8 @@ void SchematicDoc::actionSelectAll(QAction*)
 
 void SchematicDoc::actionSelectMarker()
 { untested();
-  App->hideEdit(); // disable text edit of component property
+	assert(_app);
+  _app->hideEdit(); // disable text edit of component property
 
   selectMarkers();
   updateViewport();

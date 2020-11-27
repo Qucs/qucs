@@ -74,7 +74,7 @@ PaintingList const& SchematicSymbol::paintings() const
 	return s->paintings(); // really?
 }
 /*--------------------------------------------------------------------------*/
-ComponentList const& SchematicSymbol::components() const // possibly "devices". lets see.
+ElementList const& SchematicSymbol::components() const // possibly "devices". lets see.
 {
 	auto s = subckt();
 	assert(s);

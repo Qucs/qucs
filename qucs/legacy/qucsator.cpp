@@ -207,14 +207,18 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 /* -------------------------------------------------------------------------------- */
 void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 {
+	// is_device??
 	if(!d){ untested();
 		incomplete();
 	}else if(auto c=dynamic_cast<SubcktBase const*>(d)){
-		// why is this a Symbol??
-		printSubckt(c, s);
-	}else if(auto c=dynamic_cast<SubcktProto const*>(d)){ untested();
-		// why is this a Symbol??
-		printSubckt(c, s);
+		if(c->is_device()){ // here?
+			printSubckt(c, s);
+		}else{
+		   s << "# skip non-device " << d->label() << "\n";
+		}
+//	}else if(auto c=dynamic_cast<SubcktProto const*>(d)){ untested();
+//		// why is this a Symbol??
+//		printSubckt(c, s);
 	}else if(auto c=dynamic_cast<TaskElement const*>(d)){ untested();
 		// why is this a Symbol??
 		printtaskElement(c, s);
@@ -237,13 +241,21 @@ static void printDefHack(Symbol const* p, ostream_t& s)
 // partly from Schematic::createSubnetlistplain
 void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 {
+//	assert(!p->is_device());
 	Symbol const* sym = p;
-	assert(p->subckt());
+	SchematicModel const* sckt;
+	if(p->makes_own_scope()){
+		sckt = p->scope();
+	}else{
+		sckt = p->subckt();
+	}
+	assert(sckt);
 	std::string label = p->label();
 
-	auto h = p->subckt()->find_(":qucsatorsckthack:");
-	if(h != p->subckt()->end()){
-		return printDefHack(*h, s);
+	auto h = sckt->find_(":qucsatorsckthack:");
+	if(h == sckt->end()){
+	}else if(auto p = dynamic_cast<Symbol const*>(*h)){
+		return printDefHack(p, s);
 	}else{
 	}
 
@@ -264,28 +276,39 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 
 	// somehow parameters are stashed as paintings.
 	// let's see.
-	assert(p->symbolPaintings());
-	for(auto pi : *p->symbolPaintings()){
-		incomplete();
-		if(pi->name() == ".ID ") {
+	if(!p->symbolPaintings()){
+		s << "# Missing ID & params" << p->label() << "\n";
+	}else{
+		for(auto pi : *p->symbolPaintings()){
 			incomplete();
-			s << "# TODO ID & params" << pi->label() << pi->name() << "\n";
-	//		ID_Text *pid = (ID_Text*)pi;
-	//		QList<SubParameter *>::const_iterator it;
-	//		for(it = pid->Parameter.constBegin(); it != pid->Parameter.constEnd(); it++) { untested();
-	//			s = (*it)->Name; // keep 'Name' unchanged
-	//			(*tstream) << " " << s.replace("=", "=\"") << '"';
-	//			}
-		}else{
+			if(pi->name() == ".ID ") {
+				incomplete();
+				s << "# TODO ID & params" << pi->label() << pi->name() << "\n";
+		//		ID_Text *pid = (ID_Text*)pi;
+		//		QList<SubParameter *>::const_iterator it;
+		//		for(it = pid->Parameter.constBegin(); it != pid->Parameter.constEnd(); it++) { untested();
+		//			s = (*it)->Name; // keep 'Name' unchanged
+		//			(*tstream) << " " << s.replace("=", "=\"") << '"';
+		//			}
+			}else{
+			}
+		//		break;
 		}
-	//		break;
 	}
 	//(*tstream) << '\n';
 	//
-	for(auto i : p->subckt()->components()){
+	for(auto it_ : sckt->components()){
+		auto i = dynamic_cast<Symbol const*>(it_);
+		if(it_){
+		}else{
+			incomplete();
+			continue;
+		}
+
       if(!i){ untested();
 			incomplete();
 		}else if(i->typeName() == "Port"){
+		}else if(i->typeName() == "Wire"){ // is Conductor?
 		}else if(i->typeName() == "GND"){
 		}else{
 			trace1("ps", i->typeName());
@@ -476,7 +499,7 @@ void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
 		SchematicSymbol const* m = d->root();
 		assert(m);
 		try{
-			n->save(Stream, *m);
+			n->save(Stream, m);
 		}catch(...){
 			message(QucsMsgFatal, "Error writing netlist file.");
 			throw;

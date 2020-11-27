@@ -21,12 +21,13 @@
 #include "docfmt.h" // copy&paste
 
 // tmp hack.
-QucsDoc* newSchematicDoc(QucsApp& a, QString const& b, QWidget* o)
+QucsDoc* newSchematicDoc(QucsApp* a, QString const& b, QWidget* o)
 {
 	return new SchematicDoc(a, b, o);
 }
 
 namespace{
+	// do I need this if QucsDoc becomes an Object?
 class sda : public SchematicSymbol{
 public:
 	sda(SchematicDoc& s)
@@ -34,6 +35,7 @@ public:
 	    _s(s) { itested();
 		new_subckt();
 		subckt()->attachDoc(&s); // yikes. taskElt hack.
+		setOwner(&s);
 	}
 
 private:
@@ -58,11 +60,11 @@ private: // SchematicSymbol
 		trace2("sda::setParameter", n, v);
 	}
 private:
-	SchematicDoc const& _s;
+	SchematicDoc const& _s; // obsolete?
 };
 }
 
-SchematicDoc::SchematicDoc(QucsApp& App_ /*BUG*/, const QString& Name_, QWidget* owner)
+SchematicDoc::SchematicDoc(QucsApp* App_/*BUG?*/, const QString& Name_, QWidget* owner)
    : QGraphicsView(),
      QucsDoc(App_, Name_, owner),
      _root(nullptr),
@@ -131,8 +133,8 @@ SchematicDoc::SchematicDoc(QucsApp& App_ /*BUG*/, const QString& Name_, QWidget*
       viewport(), SLOT(update()));
   */
 
-  //if (App_)
   {itested();
+	  assert(_app);
     connect(this, SIGNAL(signalCursorPosChanged(int, int)), 
         this, SLOT(printCursorPosition(int, int)));
     /** \todo
@@ -142,9 +144,9 @@ SchematicDoc::SchematicDoc(QucsApp& App_ /*BUG*/, const QString& Name_, QWidget*
         App_, SLOT(slotHideEdit()));
     */
     connect(this, SIGNAL(signalUndoState(bool)),
-        &App_, SLOT(slotUpdateUndo(bool)));
+        _app, SLOT(slotUpdateUndo(bool)));
     connect(this, SIGNAL(signalRedoState(bool)),
-        &App_, SLOT(slotUpdateRedo(bool)));
+        _app, SLOT(slotUpdateRedo(bool)));
     connect(this, SIGNAL(signalFileChanged(bool)),
         this, SLOT(slotFileChanged(bool)));
   }
@@ -208,6 +210,7 @@ bool SchematicDoc::loadDocument(QFile& /*BUG*/ file)
 
 void SchematicDoc::parse(istream_t& s, SchematicLanguage const* L)
 {itested();
+	incomplete(); // this should be obsolete now
 	if(!L){itested();
 		auto D=doclang_dispatcher["leg_sch"];
 		L = dynamic_cast<SchematicLanguage const*>(D);
@@ -215,10 +218,8 @@ void SchematicDoc::parse(istream_t& s, SchematicLanguage const* L)
 	}
 	assert(L);
 	assert(_root);
-	// ins i(this); // BUG
 	while(!s.atEnd()){itested();
-		qDebug() << "entering parse";
-		L->parse(s, *_root);
+		L->parse(s, _root);
 		assert(s.atEnd()); // happens with legacy lang
 	}
 }
@@ -986,11 +987,14 @@ void SchematicDoc::copy()
   }
 }
 /*--------------------------------------------------------------------------*/
-class cnpsymbol : public SchematicSymbol /* BaseSckt! */ {
+class cnpsymbol : public SubcktBase {
 public:
-	explicit cnpsymbol(){
+	explicit cnpsymbol() : SubcktBase(){
 		new_subckt();
 	}
+
+private:
+	virtual Port& port(unsigned i){ assert(false); return *new Port(); }
 };
 /*--------------------------------------------------------------------------*/
 // BUG: it does not create a file.
@@ -1009,7 +1013,7 @@ QString SchematicDoc::createClipboardFile() const
 
 	QString buf;
 	ostream_t s(&buf);
-	fmt->save(s, sym);
+	fmt->save(s, &sym);
 	s.flush();
 	return buf;
 }

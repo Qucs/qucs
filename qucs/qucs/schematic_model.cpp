@@ -18,6 +18,7 @@
 #include "net.h"
 #include "io_trace.h"
 #include "u_parameter.h"
+#include "painting.h" // BUG
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // getting here in CLI mode
@@ -39,7 +40,7 @@ SchematicModel::SchematicModel(SchematicDoc* s)
   : Nodes(Nets),
     _parent(nullptr),
     _params(nullptr),
-    _doc_(s)
+    _doc_(s) // BUG
 {
 	trace2("::SchematicModel s", this, _doc_);
 	if(s){ untested();
@@ -82,7 +83,7 @@ void SchematicModel::setDevType(QString const& s)
 /// ACCESS FUNCTIONS.
 // these are required to move model methods over to SchematicModel
 // note that _doc->...() functions still involve pointer hacks
-ComponentList& SchematicModel::components()
+ElementList& SchematicModel::components()
 {
 	return Components;
 }
@@ -201,12 +202,14 @@ Element* SchematicModel::attach(Element* what)
 		connect(s);
 		wires().append(s);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
-		connect(c);
+
+		if(c->is_device()){
+			connect(c);
+		}else{
+		}
 		components().append(c);
-	}else if(auto d=painting(what)){
-		/// BUG BUG BUG. some are "symbolpaints", some are just paintings. the
-		//Object should decide.
-		paintings().append(d);
+	}else if(dynamic_cast<Painting*>(what)){
+		components().append(what);
 	}else{ untested();
 		incomplete();
 	}
@@ -264,7 +267,7 @@ DiagramList& SchematicModel::diagrams()
 }
 
 // same, but const.
-ComponentList const& SchematicModel::components() const
+ElementList const& SchematicModel::components() const
 {
 	return Components;
 }
@@ -324,6 +327,7 @@ void SchematicModel::disconnect(Symbol* c)
 /*--------------------------------------------------------------------------*/
 void SchematicModel::connect(Symbol* c)
 {
+	assert(c->is_device());
 	for(unsigned i=0; i<c->numPorts(); ++i){
 		c->connectNode(i, nodes()); // use scope.
 //		assert(dynamic_cast<Symbol const*>(c)->port(i).connected());
@@ -361,7 +365,7 @@ void SchematicModel::setOwner(Element* o)
 		assert(pc);
 		trace3("set_owner", pc->label(), pc, o);
 		pc->setOwner(o);
-		const Symbol* sym = pc;
+		const Element* sym = pc;
 		assert(sym->owner() == o);
 	}
 }
@@ -394,9 +398,13 @@ PrototypeMap const& SchematicModel::declarations() const
 // BUG
 void SchematicModel::cacheProto(Symbol const* what) const
 {
+	incomplete();
+	return;
+
 	auto key = QString::fromStdString(what->label());
 	trace1("pushProto", key);
 	assert(what);
+	assert(key!="");
 	assert(!_protos[key]);
 	_protos.push(key, what);
 }
@@ -425,7 +433,7 @@ PrototypeMap::PrototypeMap()
 {
 }
 /*--------------------------------------------------------------------------*/
-bool operator==(Symbol const*p, std::string const&s)
+bool operator==(Object const*p, std::string const&s)
 {
 	if(p){
 		return p->label() == s;

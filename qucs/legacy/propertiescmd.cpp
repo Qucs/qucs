@@ -22,6 +22,7 @@ namespace{
 /*--------------------------------------------------------------------------*/
 class Properties : public Command{
   virtual void do_it(istream_t& cs, SchematicModel* s){
+	  assert(s);
 	  while(true){
 		  cs.read_line();
 		  trace1("Properties", cs.fullString());
@@ -34,6 +35,7 @@ class Properties : public Command{
 			  cs.skip1('<');
 			  std::string value;
 
+			  assert(s->params());
 			  if(cs.umatch("View")){
 				  cs >> "=";
 				  cs >> value;

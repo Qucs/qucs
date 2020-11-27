@@ -72,6 +72,7 @@ Component* MScorner::newOne()
   return new MScorner();
 }
 
+#if 0
 Element* MScorner::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Microstrip Corner");
@@ -80,4 +81,5 @@ Element* MScorner::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new MScorner();
   return 0;
 }
+#endif
 }

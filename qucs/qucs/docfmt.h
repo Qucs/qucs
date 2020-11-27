@@ -19,8 +19,8 @@ protected:
 	DocumentFormat() : Command() {}
 public:
 	virtual ~DocumentFormat() {}
-	virtual void load(istream_t&, SchematicSymbol&) const=0;
-	virtual void save(DocumentStream&, SchematicSymbol const&) const{incomplete();}
+	virtual void load(istream_t&, Object*) const=0;
+	virtual void save(ostream_t&, Object const*) const{incomplete();}
 };
 
 #include <QTextStream>

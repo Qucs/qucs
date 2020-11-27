@@ -22,25 +22,25 @@
 #include "diagram.h"
 
 Element* DocumentLanguage::parseItem(istream_t& s, Element* c) const
-{
+{ untested();
   if (DEV_DOT* d = dynamic_cast<DEV_DOT*>(c)) { untested();
     return parseCommand(s, d);
-  }else{
+  }else{ untested();
 	  incomplete();
 	  return nullptr;
   }
 }
 
 void DocumentLanguage::printItem(Element const* c, ostream_t& s) const
-{
-  if(!c){
+{ untested();
+  if(!c){ untested();
 	  s << "unreachable, no item\n";
 	  // assert(c);
-  }else if (auto C=dynamic_cast<const TaskElement*>(c)) {
+  }else if (auto C=dynamic_cast<const TaskElement*>(c)) { untested();
     printtaskElement(C, s);
-  }else if (auto C=dynamic_cast<const Symbol*>(c)) {
+  }else if (auto C=dynamic_cast<const Symbol*>(c)) { untested();
     printSymbol(C, s);
-  }else{
+  }else{ untested();
     incomplete();
   }
 }
@@ -48,71 +48,69 @@ void DocumentLanguage::printItem(Element const* c, ostream_t& s) const
 // borrowed from u_lang.h
 void DocumentLanguage::new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
 		SchematicModel* Scope) const
-{
+{ untested();
 	if (cmd.atEnd()) {untested();
 		incomplete();
 		assert(false);
 		// nothing
-	}else{
+	}else{ untested();
 		std::string type = findType(cmd);
-		trace2("new_instance", type, cmd.fullString());
-		if (const Element* proto = find_proto(type, owner)) {
-			if (Element* new_instance = proto->clone_instance()) {
+		trace4("new_instance", type, cmd.fullString(), owner, Scope);
+		if (const Element* proto = find_proto(type, owner)) { untested();
+			if (Element* new_instance = proto->clone_instance()) { untested();
 				new_instance->setOwner(owner);
 				Element* o = parseItem(cmd, new_instance);
-				if (Element* x=dynamic_cast<Element*>(o)) {
+				if (Element* x=dynamic_cast<Element*>(o)) { untested();
 					assert(Scope);
 					Scope->pushBack(x);
-				}else{
+				}else{ untested();
 				}
 			}else{ untested();
 				cmd.warn(bDANGER, type + ": incomplete prototype");
 			}
-		}else{
+		}else{ untested();
 			cmd.warn(bDANGER, type + ": no match");
 		}
 	}
 }
 /*--------------------------------------------------------------------------*/
 Element const* DocumentLanguage::find_proto(const std::string& Name, const Element* Scope) const
-{
+{ untested();
 	trace1("fp", Name);
-	if(Scope){
-		incomplete();
-	}else{
-	}
+	Element const* p=nullptr;
+	if(Scope){ untested();
+		try { untested();
+			p = Scope->find_looking_out(Name);
+			trace2("found", Name, p);
+		}catch (ExceptionCantFind& e) { untested();
+			assert(!p);
+		}
+	}else{ untested();
+		// top_level? not reachable from here.
 #if 0
-  const CARD* p = NULL;
-  if (Scope) {
-    try {
-      p = Scope->find_looking_out(Name);
-    }catch (Exception_Cant_Find& e) {
-      assert(!p);
-    }
-  }else{
     CARD_LIST::const_iterator i = CARD_LIST::card_list.find_(Name);
-    if (i != CARD_LIST::card_list.end()) {
+    if (i != CARD_LIST::card_list.end()) { untested();
       p = *i;
-    }else{
+    }else{ untested();
       assert(!p);
     }
-  }
 #else
-  Element* p=nullptr;
+  }
 #endif
-  if (p) {
+  if (p) { untested();
     return p;
-  }else if ((command_dispatcher[Name])) {
+  }else if ((command_dispatcher[Name])) { untested();
     return new DEV_DOT;	//BUG// memory leak
-  }else if ((p = element_dispatcher[Name])) {
+  }else if ((p = element_dispatcher[Name])) { untested();
     return p;
-  }else if ((p = symbol_dispatcher[Name])) {
+  }else if ((p = symbol_dispatcher[Name])) { untested();
     return p;
-  }else if ((p = painting_dispatcher[Name])) {
+  }else if ((p = painting_dispatcher[Name])) { untested();
     return p;
-  }else if ((p = diagram_dispatcher[Name])) {
+  }else if ((p = diagram_dispatcher[Name])) { untested();
     return p;
-  }else{
+  }else{ untested();
+	  trace1("try more", Name);
 #if 0
     assert(!p);
     std::string s;
@@ -136,9 +134,9 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
     else{ /* no shortcut available */
       s = Name;
     }
-    if ((command_dispatcher[s])) {
+    if ((command_dispatcher[s])) { untested();
       return new DEV_DOT; //BUG// we will look it up twice, //BUG// memory leak
-    }else{
+    }else{ untested();
       return NULL;
     }
 #endif

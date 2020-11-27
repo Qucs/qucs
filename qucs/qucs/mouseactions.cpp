@@ -1873,9 +1873,9 @@ void MouseActions::executeCommand(QUndoCommand* c)
     u->push(c); // also calls redo
 
     // train wreck. must be part of push. fix later.
-    assert(doc().App);
-    assert(doc().App->undo);
-    doc().App->undo->setEnabled(true);
+    assert(doc()._app);
+    assert(doc()._app->undo);
+    doc()._app->undo->setEnabled(true);
   }else{ untested();
     // forget about it.
     delete c;

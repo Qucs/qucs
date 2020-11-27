@@ -1,3 +1,15 @@
+/***************************************************************************
+    copyright            : (C) 2018-2020 Felix Salfelder
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 #include <QApplication>
 #include <QClipboard>
 #include "docfmt.h"
@@ -81,7 +93,7 @@ public:
 		QString s = cb->text(QClipboard::Clipboard);
 		istream_t stream(&s);
 
-		fmt->load(stream, *this);
+		fmt->load(stream, this);
 	}
 
 public:
@@ -98,6 +110,8 @@ public:
 
 		return r;
 	}
+private:
+	Port& port(unsigned) override { throw "unreachable"; }
 };
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionPaste::activate(QObject* sender)

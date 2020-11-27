@@ -602,7 +602,7 @@ void SpiceDialog::slotGetNetlist()
 // -------------------------------------------------------------------------
 void SpiceDialog::slotButtEdit()
 {
-  Doc->App->editFile(QucsSettings.QucsWorkDir.filePath(FileEdit->text()));
+  Doc->_app->editFile(QucsSettings.QucsWorkDir.filePath(FileEdit->text()));
 }
 
 // -------------------------------------------------------------------------

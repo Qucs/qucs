@@ -95,7 +95,8 @@ Symbol::Symbol()
 		_vflip(1),
 		_hflip(1),
 		_angle(0),
-		_param_display(0)
+		_param_display(0),
+		_common(nullptr)
 {
 }
 /*--------------------------------------------------------------------------*/
@@ -105,17 +106,25 @@ Symbol::Symbol(Symbol const& s)
 		_vflip(s._vflip),
 		_hflip(s._hflip),
 		_angle(s._angle),
-		_param_display(s._param_display)
+		_param_display(s._param_display),
+		_common(nullptr)
 {
+  attach_common(s._common);
   setTypeName(s.typeName());
 }
 /*--------------------------------------------------------------------------*/
 // dup
 SchematicModel* Symbol::scope()
 {
-	if(auto o=dynamic_cast<Symbol*>(owner())){
+	return Element::scope();
+
+	if(auto o=dynamic_cast<Symbol*>(owner())){ untested();
 		return o->subckt();
-	}else{itested();
+	}else if(auto o=dynamic_cast<QucsDoc*>(owner())){ untested();
+		assert(subckt());
+		return subckt(); // yikes
+	}else{untested();
+		trace1("owner not a symbol?", label());
 		return nullptr;
 	}
 }
@@ -123,7 +132,7 @@ SchematicModel* Symbol::scope()
 // reuse overrides to give both const and non-const access.
 // (move to header)
 SchematicModel const* Symbol::scope() const
-{
+{ untested();
 	auto s=const_cast<Symbol*>(this);
 	return s->scope();
 }
@@ -366,6 +375,87 @@ void Symbol::setParameter(unsigned pos, QString const& b)
 QDialog* Symbol::schematicWidget(QucsDoc* Doc) const
 { untested();
   return new SymbolDialog(Doc); // memory leak?
+}
+/*--------------------------------------------------------------------------*/
+COMMON_COMPONENT::COMMON_COMPONENT(int c)
+  :Object(),
+//   _tnom_c(NOT_INPUT),
+//   _dtemp(0),
+//   _temp_c(NOT_INPUT),
+//   _mfactor(1),
+//   _value(0),
+//   _modelname(),
+//   _model(0),
+   _attach_count(c)
+{
+}
+/*--------------------------------------------------------------------------*/
+COMMON_COMPONENT::~COMMON_COMPONENT()
+{
+  trace1("common,destruct", _attach_count);
+  assert(_attach_count == 0 || _attach_count == CC_STATIC);
+}
+/*--------------------------------------------------------------------------*/
+void COMMON_COMPONENT::attach_common(COMMON_COMPONENT*c, COMMON_COMPONENT**to)
+{
+  assert(to);
+  if (c == *to) {
+    // The new and old are the same object.  Do nothing.
+  }else if (!c) {untested();
+    // There is no new common.  probably a simple element
+    detach_common(to);
+  }else if (!*to) {
+    // No old one, but have a new one.
+    ++(c->_attach_count);
+    trace1("++1", c->_attach_count);
+    *to = c;
+  }else if (*c != **to) {
+    // They are different, usually by edit.
+    detach_common(to);
+    ++(c->_attach_count);
+    trace1("++2", c->_attach_count);
+    *to = c;
+  }else if (c->_attach_count == 0) {
+    // The new and old are identical.
+    // Use the old one.
+    // The new one is not used anywhere, so throw it away.
+    trace1("delete", c->_attach_count);    
+    delete c;
+  }else{untested();
+    // The new and old are identical.
+    // Use the old one.
+    // The new one is also used somewhere else, so keep it.
+  }
+}
+/*--------------------------------------------------------------------------*/
+void COMMON_COMPONENT::detach_common(COMMON_COMPONENT** from)
+{
+  assert(from);
+  if (*from) {
+    assert((**from)._attach_count > 0);
+    --((**from)._attach_count);
+    trace1("--", (**from)._attach_count);
+    if ((**from)._attach_count == 0) {
+      trace1("delete", (**from)._attach_count);
+      delete *from;
+    }else{
+      trace1("nodelete", (**from)._attach_count);
+    }
+    *from = NULL;
+  }else{
+  }
+}
+/*--------------------------------------------------------------------------*/
+bool COMMON_COMPONENT::operator==(const COMMON_COMPONENT& x)const
+{
+  return true;
+//  (_modelname == x._modelname
+//	  && _model == x._model
+//	  && _tnom_c == x._tnom_c
+//	  && _dtemp == x._dtemp
+//	  && _temp_c == x._temp_c
+//	  && _mfactor == x._mfactor
+//	  && _value == x._value);
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
