@@ -1,4 +1,6 @@
 # Qucs
+## declarations
+### Lib:Z-Diodes:1N4732A
 .Def:Z_Diodes_1N4732A _net1 _net2
 Diode:D1 _net1 _net2 Is="87.7p" Rs="0.62" N="1.1" Cj0="214p" Vj="0.75" M="0.33" Tt="50.1n"
 Diode:DZ _net3 _net1 Is="17.5f" Rs="0.333" N="2.28" M="0.5" Cj0="1e-14" Vj="0.7"

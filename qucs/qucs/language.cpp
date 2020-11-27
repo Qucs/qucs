@@ -38,8 +38,16 @@ void DocumentLanguage::printItem(Element const* c, ostream_t& s) const
 	  // assert(c);
   }else if (auto C=dynamic_cast<const TaskElement*>(c)) { untested();
     printtaskElement(C, s);
+  }else if (auto C=dynamic_cast<const SubcktBase*>(c)) { untested();
+	  if(C->is_device()){
+		  printSymbol(C, s);
+	  }else{
+		  printSubckt(C, s);
+	  }
   }else if (auto C=dynamic_cast<const Symbol*>(c)) { untested();
-    printSymbol(C, s);
+	  printSymbol(C, s);
+  }else if (auto C=dynamic_cast<const Painting*>(c)) { untested();
+    printPainting(C, s);
   }else{ untested();
     incomplete();
   }

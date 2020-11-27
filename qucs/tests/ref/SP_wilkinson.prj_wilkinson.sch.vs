@@ -1,3 +1,4 @@
+ #() :SymbolSection:();
 Pac #(.Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P1(net_60_80, net_60_140);
 GND #() anonymous_gnd_hack_0(net_60_140);
 TLIN #(.Z(50 Ohm), .L(100 mm), .Alpha(0 dB), .Temp(26.85)) Line1(net_100_80, net_160_80);

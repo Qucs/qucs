@@ -1083,4 +1083,10 @@ void SymbolDialog::enableButtons()
 	ButtDown->setEnabled(true);
 }
 /*--------------------------------------------------------------------------*/
+ElementList const* Symbol::symbolPaintings() const
+{
+	unreachable(); // obsolete
+	return nullptr;
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

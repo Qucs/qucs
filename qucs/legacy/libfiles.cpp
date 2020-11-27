@@ -147,7 +147,7 @@ void LIB::loadLibFiles()
 					// trace1("parse", c.definition);
 					L->load(stream, ssym);
 
-					// trace2("stashing", t, ssym->symbolPaintings()->size());
+					trace1("Lib stashing", t);
 					stash(new Dispatcher<Symbol>::INSTALL(&symbol_dispatcher, t, ssym));
 					new Module::INSTALL(parsedlib.name.toStdString(), ssym);
 				}catch(Exception const&){ untested();

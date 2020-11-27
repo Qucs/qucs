@@ -1,4 +1,5 @@
 # Qucs
+## declarations
 ## declarations end
 
 C:C1 _net1 _net2 C="1 uF" V=""

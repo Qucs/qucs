@@ -1,3 +1,4 @@
+ #() :SymbolSection:();
 GND #() anonymous_gnd_hack_0(net_800_220);
 Pac #(.Num(2), .Z(50 Ohm), .P(0 W), .f(1 GHz), .Temp(-273.15)) P1(net_800_140, net_800_200);
 GND #() anonymous_gnd_hack_1(net_310_220);

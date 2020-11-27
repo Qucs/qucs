@@ -1,4 +1,5 @@
 # Qucs
+## declarations
 ## declarations end
 
 Port:P2 _net1 Num="2" Type="analog"

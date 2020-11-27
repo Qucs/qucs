@@ -1,3 +1,4 @@
+ #() :SymbolSection:();
 L #(.L(1.2uH), .I()) L1(net_480_90, net_540_90);
 L #(.L(470nH), .I()) L2(net_620_90, net_680_90);
 C #(.C(270pF), .V(), .Symbol(neutral)) C1(net_440_200, net_440_140);

@@ -298,7 +298,14 @@ void VerilogNetlister::createNetlist(DocumentStream& stream,
 	QString s, Time;
 	for(auto pc : m.components()){
 		assert(verilog);
-		verilog->printItem(pc, stream);
+		auto sym = dynamic_cast<Symbol const*>(pc);
+
+		if(!sym){
+			verilog->printItem(pc, stream);
+		}else if(sym->is_device()){ // hack, here?
+			verilog->printItem(pc, stream);
+		}else{
+		}
 	}
 }
 

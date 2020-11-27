@@ -1,3 +1,4 @@
+ #() :SymbolSection:();
 GND #() anonymous_gnd_hack_0(net_280_310);
 GND #() anonymous_gnd_hack_1(net_570_310);
 GND #() anonymous_gnd_hack_2(net_170_150);

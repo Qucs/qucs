@@ -47,7 +47,7 @@ public:
 	PaintingList const& paintings() const;
 	CmdEltList const* commands() const;
 	ElementList const& components() const; // possibly "devices". lets see.
-	PaintingList const* symbolPaintings() const override;
+	ElementList const* symbolPaintings() const override;
 
 	// commands were part of the circuit model. fix this.
 	// taskElementList const& commands() const;
@@ -75,7 +75,7 @@ public: //legacy hack
 	PaintingList& symbolPaintings();
 
 private:
-	PaintingList* _paint; // BUG
+	mutable ElementList const* _paint; // cache. not here.
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

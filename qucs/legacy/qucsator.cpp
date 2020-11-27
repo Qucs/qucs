@@ -241,6 +241,9 @@ static void printDefHack(Symbol const* p, ostream_t& s)
 // partly from Schematic::createSubnetlistplain
 void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 {
+	if(p->label()[0] == ':'){
+		return;
+	}
 //	assert(!p->is_device());
 	Symbol const* sym = p;
 	SchematicModel const* sckt;
@@ -281,6 +284,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	}else{
 		for(auto pi : *p->symbolPaintings()){
 			incomplete();
+#if 0
 			if(pi->name() == ".ID ") {
 				incomplete();
 				s << "# TODO ID & params" << pi->label() << pi->name() << "\n";
@@ -292,6 +296,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 		//			}
 			}else{
 			}
+#endif
 		//		break;
 		}
 	}

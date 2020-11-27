@@ -994,7 +994,7 @@ public:
 	}
 
 private:
-	virtual Port& port(unsigned i){ assert(false); return *new Port(); }
+	virtual Port& port(unsigned){ assert(false); return *new Port(); }
 };
 /*--------------------------------------------------------------------------*/
 // BUG: it does not create a file.

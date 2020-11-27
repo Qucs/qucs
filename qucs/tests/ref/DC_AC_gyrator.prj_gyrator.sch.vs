@@ -1,3 +1,4 @@
+ #() :SymbolSection:();
 GND #() anonymous_gnd_hack_0(net_120_320);
 Vdc #(.U(10 V)) V1(net_120_260, net_120_320);
 Vac #(.U(1 V), .f(1 GHz), .Phase(0), .Theta(0)) V2(net_120_200, net_120_260);
