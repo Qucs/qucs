@@ -41,7 +41,6 @@ public: // subckt. could rename to "model", but is it really worth it?
   SchematicModel const* subckt() const {return _subckt;}
 
 public:
-	WireList const& wires() const;
 	NodeMap const& nodes() const;
 	DiagramList const& diagrams() const;
 	PaintingList const& paintings() const;

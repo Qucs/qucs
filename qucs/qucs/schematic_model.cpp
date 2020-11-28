@@ -33,6 +33,16 @@ SchematicModel::SchematicModel()
 /*--------------------------------------------------------------------------*/
 SchematicModel::~SchematicModel()
 {
+	for(auto i : *this){
+	  	if(auto c=dynamic_cast<Symbol*>(i)){
+			if(c->is_device()){
+				disconnect(c);
+			}else{
+				assert(!dynamic_cast<Conductor*>(i));
+			}
+		}else{
+		}
+	}
 }
 /*--------------------------------------------------------------------------*/
 // getting here in GUI mode
@@ -52,18 +62,9 @@ SchematicModel::SchematicModel(SchematicDoc* s)
 /*--------------------------------------------------------------------------*/
 void SchematicModel::clear()
 {
-	incomplete(); // disconnect components
+	incomplete(); // disconnect components?
 	components().clear();
-
 	diagrams().clear();
-	{ // clearWires
-		// (in legacy code) deleting a wire may create another wire.
-		while(wires().size()){
-			trace2("clear wire", wires().size(), nodes().size());
-			erase(wires().first());
-		}
-	}
-
 	nodes().clear();
 	paintings().clear();
 	//SymbolPaints.clear(); ??
@@ -168,10 +169,10 @@ Element* SchematicModel::detach(Element* what)
 
 	if(auto d=diagram(what)){ untested();
 		diagrams().removeRef(d);
-	}else if(dynamic_cast<Conductor*>(element(what))){
-		auto s = dynamic_cast<Symbol*>(what);
-		disconnect(s);
-		wires().removeRef(s);
+// 	}else if(dynamic_cast<Conductor*>(element(what))){
+// 		auto s = dynamic_cast<Symbol*>(what);
+// 		disconnect(s);
+// 		wires().removeRef(s);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){itested();
 		disconnect(c);
 		components().removeRef(c);
@@ -197,15 +198,16 @@ Element* SchematicModel::attach(Element* what)
 		}
 	}else if(auto d=diagram(what)){
 		diagrams().append(d);
-	}else if(dynamic_cast<Conductor*>(element(what))){
-		auto s=dynamic_cast<Symbol*>(what);
-		connect(s);
-		wires().append(s);
+//	}else if(dynamic_cast<Conductor*>(element(what))){
+//		auto s=dynamic_cast<Symbol*>(what);
+//		connect(s);
+//		wires().append(s);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
 
 		if(c->is_device()){
 			connect(c);
 		}else{
+			assert(!dynamic_cast<Conductor*>(element(what)));
 		}
 		components().append(c);
 	}else if(dynamic_cast<Painting*>(what)){
@@ -227,11 +229,6 @@ SchematicDoc* SchematicModel::doc()
 QFileInfo const& SchematicModel::getFileInfo ()const
 {
 	return FileInfo;
-}
-
-WireList& SchematicModel::wires()
-{
-	return _wires;
 }
 
 NodeMap& SchematicModel::nodes()
@@ -270,11 +267,6 @@ DiagramList& SchematicModel::diagrams()
 ElementList const& SchematicModel::components() const
 {
 	return Components;
-}
-
-WireList const& SchematicModel::wires() const
-{
-	return _wires;
 }
 
 NodeMap const& SchematicModel::nodes() const

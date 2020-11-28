@@ -1,5 +1,6 @@
 # Qucs
 ## declarations
+### wire
 ## declarations end
 
 R:RE1 gnd _net6 R="12" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

@@ -58,7 +58,7 @@
 class QPrinter;
 
 // just dummies for empty lists
-WireList      SymbolWires;
+//WireList      SymbolWires;
 //NodeList      SymbolNodes;
 DiagramList   SymbolDiags;
 ElementList SymbolComps;
@@ -799,12 +799,15 @@ float SchematicDoc::textCorr()
 }
 
 // ---------------------------------------------------
+// use boundingRect instead
 void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float) const
 {itested();
+#if 0
   xmin=INT_MAX;
   ymin=INT_MAX;
   xmax=INT_MIN;
   ymax=INT_MIN;
+  unreachable();
 //  WireLabel *pl;
 
   if(components().isEmpty())
@@ -820,8 +823,6 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
   int x1, y1, x2, y2;
   // find boundings of all components
 
-  incomplete();
-#if 0
   float Corr = textCorr;
   for(auto pc : components()) {itested();
     pc->entireBounds(x1, y1, x2, y2, Corr);
@@ -863,7 +864,6 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
         if(y2 > ymax) ymax = y2;
     }
   }
-#endif
 
   // find boundings of all diagrams
   for(auto pd : diagrams()) {itested();
@@ -892,6 +892,7 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
     if(y1 < ymin) ymin = y1;
     if(y2 > ymax) ymax = y2;
   }
+#endif
 }
 
 // ---------------------------------------------------

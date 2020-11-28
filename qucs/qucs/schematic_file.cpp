@@ -52,18 +52,7 @@
 
 // Here the subcircuits, SPICE components etc are collected. It must be
 // global to also work within the subcircuits.
-SubMap FileList;
-
-
-
-// -------------------------------------------------------------
-// Only read fields without loading them.
-bool SchematicDoc::loadIntoNothing(istream_t *stream)
-{
-  unreachable();
-  assert(false);
-  return false;
-}
+// SubMap FileList;
 
 // -------------------------------------------------------------
 #if 0
@@ -745,7 +734,6 @@ bool SchematicModel::createLibNetlist(DocumentStream& stream, QPlainTextEdit
   int countInit = 0;
   QStringList Collect;
   Collect.clear();
-  FileList.clear();
   Signals.clear();
   // Apply node names and collect subcircuits and file include
   bool creatingLib = true;

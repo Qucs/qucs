@@ -68,13 +68,6 @@ ElementList const* SchematicSymbol::symbolPaintings() const
 
 }
 /*--------------------------------------------------------------------------*/
-WireList const& SchematicSymbol::wires() const
-{
-	auto s = subckt();
-	assert(s);
-	return s->wires();
-}
-/*--------------------------------------------------------------------------*/
 NodeMap const& SchematicSymbol::nodes() const
 {
 	auto s = subckt();

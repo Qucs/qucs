@@ -22,9 +22,9 @@ void more()
 	M.pushBack(w1);
 //	assert(w0->hasNet());
 
-	assert(M.wireCount()==2);
+	assert(numWires(M)==2);
 	M.clear();
-	assert(M.wireCount()==0);
+	assert(numWires(M)==0);
 
 	std::cout << "cleared\n";
 
@@ -39,7 +39,7 @@ void more()
 	{
 		std::cout << "disconnect\n";
 		M.disconnect(w0);
-		assert(M.wireCount()==1);
+		assert(numWires(M)==1);
 //		assert(!w0->hasNet());
 	}
 	{
@@ -60,7 +60,7 @@ void more()
 
 	std::cout << "disconnect\n";
 	M.disconnect(w1);
-	assert(M.wireCount()==2);
+	assert(numWires(M)==2);
 //	assert(!w1->hasNet());
 	std::cout << "reconnect\n";
 	M.connect(w1);
@@ -72,7 +72,7 @@ void more()
 	w2->setParameter(std::string("deltax"), "1");
 
 	M.pushBack(w2);
-	assert(M.wireCount()==3);
+	assert(numWires(M)==3);
 //	trace1("w2", w2->net());
 
 	unsigned i = M.nodeCount();
@@ -86,7 +86,7 @@ void more()
 	std::cout << "=== try detach\n";
 	delete(M.detach(w1));
 	std::cout << "=== detached\n";
-	assert(M.wireCount()==2);
+	assert(numWires(M)==2);
 //	trace2("different", w0->net(), w2->net());
 //	assert(w0->net() != w2->net());
 
@@ -96,7 +96,7 @@ void more()
 	w3->setParameter(std::string("deltay"), "1");
 
 	M.pushBack(w3);
-	assert(M.wireCount()==3);
+	assert(numWires(M)==3);
 //	trace2("same", w0->net(), w2->net());
 //	assert(w2->net() == w0->net());
 //	assert(w3->net() == w0->net());
@@ -113,14 +113,15 @@ void more()
 	std::cout << "=== square test\n";
 	M.pushBack(w1);
 	SchematicModel const& cM = M;
-	for(auto i : cM.wires()){
-		Symbol* s = i;
+	for(auto i : cM){
+		Symbol* s = prechecked_cast<Symbol*>(i);
+		assert(s);
 		int cx = atoi(s->paramValue("$xposition").c_str());
 		int cy = atoi(s->paramValue("$xposition").c_str());
 		std::cout << "W" << cx << cy << "\n";
 	}
 	
-	assert(M.wireCount()==4);
+	assert(numWires(M)==4);
 //	trace1("w1", w1->net());
 
 	std::cout << "=== try clear\n";

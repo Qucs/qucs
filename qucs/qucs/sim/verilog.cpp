@@ -169,9 +169,6 @@ private: // legacy cruft
   PaintingList const& paintings(SchematicSymbol const& m) const{ untested();
     return m.paintings();
   }
-  WireList const& wires(SchematicSymbol const& m) const{
-    return m.wires();
-  }
   NodeMap const& nodes(SchematicSymbol const& m) const{
     return m.nodes();
   }
@@ -206,9 +203,9 @@ void VerilogSchematicFormat::save(DocumentStream& stream, Object const* o) const
 											// but uses different port names...
 	  }
   }
-  for(auto w : wires(m)){
-	  printSymbol(w, stream); // BUG: use V::printItem
-  }
+//  for(auto w : wires(m)){
+//	  printSymbol(w, stream); // BUG: use V::printItem
+//  }
   for(auto const& n : nodes(m)){
 	  int x, y;
 	  std::tie(x, y) = n.position();

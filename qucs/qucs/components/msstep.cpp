@@ -85,6 +85,7 @@ Component* MSstep::newOne()
   return new MSstep();
 }
 
+#if 0
 Element* MSstep::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Microstrip Step");
@@ -93,5 +94,6 @@ Element* MSstep::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new MSstep();
   return 0;
 }
+#endif
 
 }

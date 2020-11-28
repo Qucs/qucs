@@ -35,10 +35,6 @@ class QPlainTextEdit; //??!
 class TaskElement;
 class PARAM_LIST;
 /*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-// TODO: refactor here
-class WireList : public Q3PtrList<Symbol> {
-};
 class NodeMap;
 // TODO: refactor here
 class DiagramList : public Q3PtrList<Diagram> {
@@ -154,13 +150,11 @@ public: // container
 private: // used in erase?
 //	void       deleteComp(Component*c);
 
-public: // gone
-	size_t wireCount() const{ return wires().size(); }
+public: // compat? test? debug?
 	size_t nodeCount() const{ return nodes().size(); }
 	unsigned numberOfNets() const{ return Nets.size(); }
 
 public:
-	size_t numWires() const{ return wires().size(); }
 	size_t numNodes() const{ return nodes().size(); }
 	unsigned numNets() const{ return Nets.size(); }
 
@@ -175,7 +169,7 @@ public: // scene interaction
 	void toScene(QGraphicsScene& s, QList<ElementGraphics*>* l=nullptr) const;
 
 private:
-	WireList& wires();
+//	WireList& wires();
 	DiagramList& diagrams();
 	PaintingList& paintings();
 	ElementList& components(); // possibly "devices". lets see.
@@ -189,7 +183,7 @@ public:
 	Node const* nodeAt(pos_t p) const{
 		return nodes().find_at(p);
 	}
-	WireList const& wires() const;
+//	WireList const& wires() const;
 	NodeMap const& nodes() const;
 	DiagramList const& diagrams() const;
 	PaintingList const& paintings() const;
@@ -231,7 +225,6 @@ private:
 	NetList Nets;
 	NodeMap Nodes;
 	DiagramList Diagrams;
-	WireList _wires;
 //	SchematicSymbol* _symbol;
 	QStringList PortTypes; // obsolete.
 	std::vector<Node*> _ports; // -> symbol?
@@ -262,6 +255,19 @@ public: // for now.
 	friend class SchematicEdit;
 	friend class SchematicSymbol;
 }; // schematicmodel
+/*--------------------------------------------------------------------------*/
+// debug (any other use?!)
+inline size_t numWires(SchematicModel const& m)
+{
+	size_t r = 0;
+	for(auto i : m){
+		if(dynamic_cast<Conductor const*>(i)){
+			++r;
+		}else{
+		}
+	}
+	return r;
+}
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif
