@@ -31,7 +31,7 @@ void union0()
 	assert(g0->nodePosition(1) == pos_t(30, 0));
 
 	M.pushBack(w0);
-	assert(M.numWires() == 1);
+	assert(numWires(M) == 1);
 	assert(M.nodeCount() == 2);
 
 	auto c = dynamic_cast<Conductor const*>(w0);
@@ -41,17 +41,28 @@ void union0()
 
 	assert(nu);
 	assert(nu->subckt());
-	trace1("gnd", nu->subckt()->numWires());
 	SchematicModel const* s = nu->subckt();
-	assert(s->numWires()==2);
+	assert(s);
+	trace1("gnd", numWires(*s));
+	assert(numWires(*s)==2);
 
-	auto a = s->wires().begin();
+	auto ii = s->begin();
+	assert(ii != s->end());
+	auto a = prechecked_cast<Symbol const*>(*ii);
+	assert(a); // resistor.
+	++ii;
+	a = prechecked_cast<Symbol const*>(*ii);
 
-	assert((*a)->nodePosition(0) == pos_t(30, -50));
-	assert((*a)->nodePosition(1) == pos_t(30, 0));
-	++a;
-	assert((*a)->nodePosition(0) == pos_t(30, 0));
-	assert((*a)->nodePosition(1) == pos_t(30, 50));
+	assert(a->nodePosition(0) == pos_t(30, -50));
+	assert(a->nodePosition(1) == pos_t(30, 0));
+	++ii;
+	assert(ii != s->end());
+	a = prechecked_cast<Symbol const*>(*ii);
+	assert(a);
+	assert(a->nodePosition(0) == pos_t(30, 0));
+	assert(a->nodePosition(1) == pos_t(30, 50));
+	++ii;
+	assert(ii == s->end());
 
 //	assert(w->subckt()->numComponents()==3);
 }
@@ -73,7 +84,7 @@ void union1()
 	w1->setParameter(std::string("$xposition"), "-50");
 
 	M.pushBack(w0);
-	assert(M.numWires() == 1);
+	assert(numWires(M) == 1);
 	assert(M.nodeCount() == 2);
 
 	auto c = dynamic_cast<Conductor const*>(w0);
@@ -83,8 +94,8 @@ void union1()
 
 	assert(w);
 	assert(w->subckt());
-	trace1("gnd", w->subckt()->numWires());
-	assert(w->subckt()->numWires()==3);
+	trace1("gnd", numWires(*w->subckt()));
+	assert(numWires(*w->subckt())==3);
 //	assert(w->subckt()->numComponents()==3);
 }
 
@@ -101,7 +112,7 @@ void union2()
 	w0->setParameter(std::string("deltax"), "100");
 	w0->setParameter(std::string("$xposition"), "-50");
 	M.pushBack(w0);
-	assert(M.numWires() == 1);
+	assert(numWires(M) == 1);
 	assert(M.nodeCount() == 2);
 
 	auto w1 = prechecked_cast<Symbol*>(wp->clone());
@@ -117,8 +128,8 @@ void union2()
 
 	assert(w);
 	assert(w->subckt());
-	trace1("gnd", w->subckt()->numWires());
-	assert(w->subckt()->numWires()==3);
+	trace1("gnd", numWires(*w->subckt()));
+	assert(numWires(*w->subckt())==3);
 //	assert(w->subckt()->numComponents()==3);
 }
 

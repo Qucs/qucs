@@ -55,6 +55,8 @@ void PARAM_LIST::parse(CS& cmd)
 /*--------------------------------------------------------------------------*/
 void PARAM_LIST::print(OMSTREAM& o, LANGUAGE* lang)const
 {
+  (void) o;
+  (void) lang;
   assert(0);
 //  for (const_iterator i = _pl.begin(); i != _pl.end(); ++i) {
 //    if (i->second.has_hard_value()) {

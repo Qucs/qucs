@@ -302,6 +302,8 @@ void VerilogNetlister::createNetlist(DocumentStream& stream,
 
 		if(!sym){
 			verilog->printItem(pc, stream);
+		}else if(dynamic_cast<Conductor const*>(sym)){
+			// possibly a wire.
 		}else if(sym->is_device()){ // hack, here?
 			verilog->printItem(pc, stream);
 		}else{

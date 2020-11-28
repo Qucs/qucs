@@ -80,6 +80,7 @@ Component* MStee::newOne()
   return new MStee();
 }
 
+#if 0
 Element* MStee::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Microstrip Tee");
@@ -88,6 +89,7 @@ Element* MStee::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new MStee();
   return 0;
 }
+#endif
 
 void MStee::createSymbol()
 {

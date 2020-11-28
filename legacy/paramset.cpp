@@ -56,7 +56,7 @@ private: // Symbol
 		}
 	}
 	unsigned numPorts() const override{ incomplete(); return 0; }
-	Port& port(unsigned i) override {unreachable(); return *new Port();}
+	Port& port(unsigned) override {unreachable(); return *new Port();}
 	pos_t portPosition(unsigned) const override{
 		incomplete(); return pos_t(0,0);
 	}

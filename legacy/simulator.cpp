@@ -344,7 +344,7 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 	//
 	// legacy: qucsator expects all definitions at the top
 
-	// BUG: deduplicate.
+	// BUG: deduplicate. "print_module_body" or so.
 	QString s, Time;
 	for(auto it_ : m.components()){
 		auto pc = dynamic_cast<Symbol const*>(it_);
@@ -354,11 +354,11 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 			continue;
 		}
 
-
-
 		// if dynamic_cast<Label*>
 		//   ignore
-		if(pc->typeName()=="GND"){
+		if(dynamic_cast<Conductor const*>(pc)){
+			// possibly a wire.
+		}else if(pc->typeName()=="GND"){
 			// qucsator hack, just ignore.
 		}else if(pc->typeName()=="NodeLabel"){ untested();
 			// qucsator hack, just ignore.

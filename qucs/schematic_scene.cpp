@@ -179,28 +179,10 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &r)
 
 // scene::display(SchematicModel&)?
 // 'l' is a bit of a hack. let's see
-void SchematicModel::toScene(QGraphicsScene& s, QList<ElementGraphics*>* l) const
+void SchematicModel::toScene(QGraphicsScene&, QList<ElementGraphics*>*) const
 {
 	incomplete(); // this is too strange.
 	assert(false); // obsolete
-  for(auto i : components()){ untested();
-    auto x=new ElementGraphics(i);
-	 if(l){
-		 l->append(x);
-	 }
-    s.addItem(x);
-  }
-  for(auto i : wires()){ untested();
-    auto x=new ElementGraphics(i);
-	 if(l){
-		 l->append(x);
-	 }
-    s.addItem(x);
-  }
-
-  incomplete(); // do the others...
-  qDebug() << "wires" << s.items().size();
-  s.update();
 }
 
 #if 0

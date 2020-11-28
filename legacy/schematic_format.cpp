@@ -46,9 +46,6 @@ private: // legacy cruft
 	PaintingList const& paintings(SchematicSymbol const& m) const{
 		return m.paintings();
 	}
-	WireList const& wires(SchematicSymbol const& m) const{
-		return m.wires();
-	}
 	NodeMap const& nodes(SchematicSymbol const& m) const{
 		return m.nodes();
 	}
@@ -168,6 +165,9 @@ static void printProperties(SchematicSymbol const& m, DocumentStream& stream)
 void LegacySchematicFormat::save(DocumentStream& stream, Object const* o) const
 {
 	auto m_ = dynamic_cast<SchematicSymbol const*>(o);
+
+/// these are separate in legacy format.
+	std::vector<Element const*> wires;
 	std::vector<Element const*> paintings;
 
 	if(!m_){
@@ -208,7 +208,9 @@ void LegacySchematicFormat::save(DocumentStream& stream, Object const* o) const
 
 	stream << "<Components>\n";    // save all components
 	for(auto pc : components(m)){
-		if(dynamic_cast<Painting const*>(pc)){
+		if(dynamic_cast<Conductor const*>(pc)){
+			wires.push_back(pc);
+		}else if(dynamic_cast<Painting const*>(pc)){
 			paintings.push_back(pc);
 		}else if(pc->label()==":SymbolSection:"){
 			incomplete();
@@ -229,8 +231,8 @@ void LegacySchematicFormat::save(DocumentStream& stream, Object const* o) const
 	}
 	stream << "</Components>\n";
 
-	stream << "<Wires>\n";    // save all wires
-	for(Symbol const* pw : wires(m)){
+	stream << "<Wires>\n";
+	for(Element const* pw : wires){
 		L->printItem(pw, stream);
 //		stream << "  " << pw->save() << "\n";
 	}

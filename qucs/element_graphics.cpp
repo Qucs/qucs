@@ -257,12 +257,13 @@ void ElementGraphics::attachElement(Element* e)
 			cg->setParentItem(this);
 		}
 
-		// BUG
+#if 0		// BUG
 		for(auto i : s->wires()){itested();
 			QGraphicsItem* cg = new ElementGraphics(i->clone());
 			cg->setParentItem(this);
 		}
 		trace2("child gfx", s->wires().size(), s->components().size());
+#endif
 	}else{ untested();
 	}
 	trace1("ElementGraphics unpacked", childItems().size());

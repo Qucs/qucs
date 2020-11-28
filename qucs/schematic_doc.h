@@ -206,10 +206,10 @@ public:
 	  assert(_model);
 	  return _model->nodes();
   }
-  WireList const& wires() const{
-	  assert(_model);
-	  return _model->wires();
-  }
+//  WireList const& wires() const{
+//	  assert(_model);
+//	  return _model->wires();
+//  }
   DiagramList const& diagrams() const{
 	  assert(_model);
 	  return _model->diagrams();
