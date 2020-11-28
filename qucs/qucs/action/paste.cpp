@@ -103,10 +103,10 @@ public:
 			auto c = i->center();
 			r |= i->bounding_rect() + c;
 		}
-		for (auto i : wires()){ untested();
-			auto c = i->center();
-			r |= i->bounding_rect() + c;
-		}
+//		for (auto i : wires()){ untested();
+//			auto c = i->center();
+//			r |= i->bounding_rect() + c;
+//		}
 
 		return r;
 	}
@@ -137,11 +137,13 @@ QUndoCommand* MouseActionPaste::activate(QObject* sender)
 	  i->setPosition(p - center);
   }
 
-   // BUG
+#if 0
+  // BUG
   for(auto i : buf->wires()){ untested();
 	  auto p = i->center();
 	  i->setPosition(p - center);
   }
+#endif
 
   _gfx = new ElementGraphics(buf);
   assert(_gfx);

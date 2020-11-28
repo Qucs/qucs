@@ -224,6 +224,8 @@ void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 		printtaskElement(c, s);
 	}else if(auto c=dynamic_cast<Component const*>(d)){
 		printComponent(c, s);
+	}else if(dynamic_cast<Conductor const*>(d)){
+		// possibly a wire.
 	}else if(d){
 		printSymbol_(d, s);
 	}else{ untested();

@@ -124,8 +124,7 @@ void WireUC::expand()
 	}
 
 	SchematicModel const* sc = subckt();
-	trace1("expanded", sc->wires().size());
-	if(sc->wires().size()){ itested();
+	if(sc->size()){ itested();
 	}else{ itested();
 		// possible when double clicking on empty wire
 	}
@@ -449,8 +448,8 @@ QUndoCommand* MouseActionWire::finish()
 		s->expand();
 		SchematicModel const* cs = s->subckt();
 		assert(cs);
-		trace1("prepare NewWire", cs->wires().size());
-		for(Element const* j : cs->wires()){itested();
+		trace1("prepare NewWire", cs->size());
+		for(Element const* j : *cs){itested();
 			new_wires.push_back(j->clone());
 		}
 		delete(i);

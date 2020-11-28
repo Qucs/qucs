@@ -33,7 +33,7 @@ namespace{
 
 class Wires : public SubcktBase{
 private:
-	Port& port(unsigned i){ throw "unreachable";}
+	Port& port(unsigned){ throw "unreachable";}
 };
 
 class Wire : public Symbol, public Conductor {
@@ -354,8 +354,8 @@ QDialog* Wire::schematicWidget(QucsDoc* Doc) const
 /*--------------------------------------------------------------------------*/
 void Wire::paint(ViewPainter *p) const
 {itested();
-  int x1 = 0; // Wire::x1();
-  int y1 = 0; // Wire::y1();
+//  int x1 = 0; // Wire::x1();
+//  int y1 = 0; // Wire::y1();
 
   { itested();
     p->setPen(QPen(Qt::darkBlue,2));

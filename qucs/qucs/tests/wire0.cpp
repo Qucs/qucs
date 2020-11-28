@@ -129,7 +129,7 @@ void union4()
 	Symbol* w = c->newUnion(w2);
 	assert(w);
 	assert(w->subckt());
-	assert(w->subckt()->numWires()==3);
+	assert(numWires(*w->subckt()));
 }
 
 void union5()
@@ -146,7 +146,7 @@ void union5()
 	assert(g0->nodePosition(0) == pos_t(0, 0));
 
 	M.pushBack(w0);
-	assert(M.numWires() == 1);
+	assert(numWires(M) == 1);
 	assert(M.nodeCount() == 2);
 
 	auto c = dynamic_cast<Conductor const*>(w0);
@@ -156,8 +156,8 @@ void union5()
 
 	assert(w);
 	assert(w->subckt());
-	trace1("gnd", w->subckt()->numWires());
-	assert(w->subckt()->numWires()==2);
+	trace1("gnd", numWires(*w->subckt()));
+	assert(numWires(*w->subckt())==2);
 }
 
 void union6()

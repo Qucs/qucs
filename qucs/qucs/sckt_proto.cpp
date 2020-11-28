@@ -51,7 +51,7 @@ public:
 // 		return m->subckt();
 // 	}
 private:
-	Port& port(unsigned i) override{ incomplete(); throw "a";}
+	Port& port(unsigned) override{ incomplete(); throw "a";}
 //	SchematicModel const* scope() const override { return &sm; }
 
 private: // Symbol
@@ -108,7 +108,7 @@ Node const* SubcktProto::portValue(unsigned i) const
 	return subckt()->portValue(i);
 }
 /*--------------------------------------------------------------------------*/
-SubcktProto::SubcktProto(Element const* p)
+SubcktProto::SubcktProto(Element const*)
 	: SubcktBase()
 {
 //	auto sym = dynamic_cast<Symbol const*>(p);

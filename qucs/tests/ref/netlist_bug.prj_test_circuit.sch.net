@@ -6,6 +6,7 @@
 # Missing ID & paramsSub:short_circuit
 # skip non-device :SymbolSection:
 .Def:End
+### wire
 ## declarations end
 
 Vdc:V1 in gnd U="1 V"

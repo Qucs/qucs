@@ -34,7 +34,7 @@ int main()
 		trace2("new wires", w0, w1);
 	}
 //	assert(w1->net() != w0->net());
-	assert(M.wireCount()==2*N);
+	assert(numWires(M)==2*N);
 	std::cout << "nodecount" << M.numNodes() << "\n";
 	assert(M.numNodes()==2*N+2);
 	std::cout << "numNets" << M.numNets() << "\n";
