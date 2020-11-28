@@ -6,7 +6,7 @@ ACLOCAL=${ACLOCAL:-aclocal}
 AUTOMAKE=${AUTOMAKE:-automake}
 AUTOCONF=${AUTOCONF:-autoconf}
 
-MODULES="qucs-core qucs qucs-doc"
+MODULES="qucsator qucs qucs-doc"
 ACLOCAL_FLAGS=-Im4
 
 echo "Running $ACLOCAL..."
