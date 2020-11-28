@@ -125,7 +125,10 @@ void WireUC::expand()
 
 	SchematicModel const* sc = subckt();
 	trace1("expanded", sc->wires().size());
-	assert(sc->wires().size()); // BUG?
+	if(sc->wires().size()){ itested();
+	}else{ itested();
+		// possible when double clicking on empty wire
+	}
 }
 /*--------------------------------------------------------------------------*/
 rect_t WireUC::bounding_rect() const
@@ -237,7 +240,10 @@ private: // legacy code
 private:
 	cmd* finish();
 	void toggleMode(){ untested();
-		assert(_gfx.size());
+		if(!_gfx.size()){
+			incomplete(); // always keep a wireUC
+			return;
+		}
 		auto w = _gfx.back();
 		Element* ee = element(w);
 		auto e = prechecked_cast<Symbol*>(ee);
