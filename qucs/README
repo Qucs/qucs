@@ -33,13 +33,13 @@ The current work aims at enhancing the extensibility and maintainability of
 "Qucs the GUI" and its user contributions. It consists of a library
 implementing circuit related data structures and and a GUI for interactive
 schematic editing and simulation. User data, such as circuit components,
-specific schematic/netlist languagesm, visualisation tools as well as
+specific schematic/netlist languages, visualisation tools as well as
 simulator drivers can be loaded at runtime.
 
 Requirements
 ============
 
-Qucs needs Qt version 5. or later. For simplicity, the Qt configuration is
+Qucs needs Qt version 5 or later. For simplicity, the Qt configuration is
 currently obtained through pkg-config, which you need to install in addition
 to Qt.
 
@@ -64,24 +64,19 @@ Change into the source directory:
 
     $ cd qucs-<version>
 
-Configure the source package for your system:
+Configure and build binaries for your system.
 
-    $ ./configure
-
-Now compile the package:
-
+    $ mkdir build
+    $ cd build
+    $ ../configure
     $ make
 
-Install Qucs:
+Install Qucs (optional).
 
     $ make install
 
-You must have root privileges if you want to install the package in the
-standard location (/usr/local) or in any location that is only writable
-by root.
-
-For further information on installing the package, please consult the
-file INSTALL included in this distribution.
+You need write permissions to the prefix of the installation (default:
+/usr/local). See INSTALL for further details.
 
 Please note:  Users of the FreeBSD OS may use a GNU make (probably gmake)
 to compile and install the package.
@@ -89,22 +84,19 @@ to compile and install the package.
 Getting the latest Git snapshot
 ===============================
 
-You can always get the latest Qucs version from our Git repository.
-Please use an official release if you want to work with Qucs.  The Git
-version might not even compile.
-
-    $ git clone http://git.code.sf.net/p/qucs/git qucs-git
-
-Press 'Enter' when asked for a password.  Run `sh bootstrap' and `configure'
-(see above) with the appropriate options.  Maintainance currently requires
-Autoconf version 2.57 and GNU automake 1.7.0.
+You can get the latest Qucs version from our Git repository. Please use an
+official release if you want to work with Qucs. The Git version might not
+always compile or run smoothly. Currently, the main git repository is hosted
+on github.
 
 Debugging
 =========
 
-It's not normally recommended to install during development. Debugging is
-still possible with libtool, but the environment variables that are not
+It is not normally recommended to install during development. Running the
+programs directly from the build directory is possible, with some caveats.
+Debugging is easiest with libtool, but the environment variables that are not
 handled by autotools need to be set first.
 
+$ cd $build_directory
 $ . main/qucs       # set environment variables for running from builddir
 $ libtool --mode=execute gdb --args main/qucs.real -i examples/bandpass.sch
