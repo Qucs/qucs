@@ -80,8 +80,6 @@ class SymbolCommand : public Command{
 			  break;
 		  }else{
 			  cs.skipbl();
-			  // TODO: Qucs has two different sets of graphics objects. the names
-			  // are ambiguous. this would be a place to select or set a flag.
 			  lang->new__instance(cs, sym, sym->subckt());
 			  trace2("symbolpaint", cs.fullstring(), sym->subckt()->size());
 		  }

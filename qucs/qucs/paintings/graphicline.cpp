@@ -31,6 +31,9 @@ namespace{
 
 
 class GraphicLine : public Painting  {
+private:
+  GraphicLine(GraphicLine const& g) : Painting(g), Pen(g.Pen){
+  }
 public:
   GraphicLine();
   ~GraphicLine();
@@ -111,7 +114,7 @@ void GraphicLine::paint(ViewPainter *p) const
     return;
   }
 #endif
-//   p->setPen(Pen);
+  p->setPen(Pen);
   p->drawLine(cx, cy, cx+x2, cy+y2);
 }
 
