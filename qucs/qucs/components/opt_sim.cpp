@@ -21,6 +21,7 @@
 #include "opt_sim.h"
 #include "property.h"
 #include "qucs.h"
+#include "../legacy/obsolete_paintings.h"
 
 
 Optimize_Sim::Optimize_Sim()

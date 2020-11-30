@@ -17,6 +17,7 @@
 #include "property.h"
 #include "qucs.h"
 #include <assert.h>
+#include "../legacy/obsolete_paintings.h"
 
 namespace{
 

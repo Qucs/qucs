@@ -31,6 +31,8 @@
 #include <QPainter>
 #include <QDebug>
 
+#include "../legacy/obsolete_paintings.h" // BUG
+
 TaskElement::TaskElement(TaskElement const& p)
   : Element(),
     //cx(p.cx),

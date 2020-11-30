@@ -23,6 +23,7 @@
 #include "module.h"
 
 #include "some_font_stuff.h"
+#include "obsolete_paintings.h"
 
 namespace{
 class TabDiagram : public Diagram  {

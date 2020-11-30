@@ -22,6 +22,11 @@
 #include <QString>
 #include <QPainter>
 
+// BUG
+#define isHWireLabel       0x4020
+#define isVWireLabel       0x4040
+#define isNodeLabel        0x4080
+
 WireLabel::WireLabel(const QString& _Name, int, int,
                      int _x1, int _y1, int _Type) : Element()
 {

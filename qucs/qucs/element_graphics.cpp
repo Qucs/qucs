@@ -28,6 +28,8 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsProxyWidget>
+
+#include "../legacy/obsolete_paintings.h"
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 ElementGraphics::ElementGraphics() : QGraphicsItem()

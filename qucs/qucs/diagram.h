@@ -28,6 +28,11 @@
 
 #define INVALID_STR QObject::tr(" <invalid>")
 
+// BUG obsolete_paintings
+class Arc;
+class Line;
+class Text;
+
 // ------------------------------------------------------------
 // Enlarge memory block if neccessary.
 #define  FIT_MEMORY_SIZE  \

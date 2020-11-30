@@ -17,6 +17,7 @@
 
 #include "../symbol.h" // FIXME
 #include "../qt_compat.h" // FIXME
+#include "../legacy/obsolete_paintings.h"
 #include "property.h"
 
 class SchematicModel;
@@ -28,6 +29,9 @@ class ComponentDialog;
 
 class QTextStream; // BUG
 
+class Line;
+class Text;
+class Area;
 
 class ComponentPort : public Port{
 public:

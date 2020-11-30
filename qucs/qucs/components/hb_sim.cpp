@@ -14,6 +14,7 @@
 #include "hb_sim.h"
 #include "qucs.h"
 #include "property.h"
+#include "../legacy/obsolete_paintings.h"
 
 
 HB_Sim::HB_Sim()
