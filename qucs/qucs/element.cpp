@@ -122,13 +122,14 @@ const Element* Element::find_looking_out(const std::string& name)const
 }
 /*--------------------------------------------------------------------------*/
 // borrowed/modified from e_card.h
+// BUG: finds in owner scope
+// BUG: finds recursively
 const Element* Element::find_in_parent_scope(const std::string& name)const
 {
 	assert(name != "");
 	//  const CARD_LIST* p_scope = (scope()->parent()) ? scope()->parent() : scope();
 	//
 	if(!owner()){
-		incomplete();
 		return nullptr;
 		throw ExceptionCantFind(name, label());
 	}else{

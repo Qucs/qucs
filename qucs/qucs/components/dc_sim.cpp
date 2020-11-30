@@ -17,6 +17,8 @@
 #include "module.h"
 #include "property.h"
 
+#include "../legacy/obsolete_paintings.h"
+
 namespace{
 
 class DC_Sim : public TaskElement  {

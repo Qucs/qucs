@@ -15,7 +15,7 @@
 
 Painting::Painting()
 {
-  Type = isPainting;
+//  Type = isPainting;
   State = 0;
   setLabel(Name.toStdString()); // legacy hack
 }
