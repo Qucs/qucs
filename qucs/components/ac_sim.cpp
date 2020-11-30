@@ -16,6 +16,7 @@
 #include "globals.h"
 #include "module.h"
 #include "property.h"
+#include "../legacy/obsolete_paintings.h"
 
 namespace{
 

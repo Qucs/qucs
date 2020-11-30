@@ -31,6 +31,8 @@
 
 #include "element.h"
 
+#include "../legacy/obsolete_paintings.h"
+
 /*!
  * \file symbolwidget.h
  * \brief Definition of the SymbolWidget class.

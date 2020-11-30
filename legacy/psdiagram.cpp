@@ -30,6 +30,7 @@
 #endif
 
 #include "psdiagram.h"
+#include "obsolete_paintings.h"
 
 // mixed polar and smith diagram
 PSDiagram::PSDiagram(int _cx, int _cy, bool _polarUp)

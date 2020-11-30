@@ -13,6 +13,7 @@
 #include "digi_sim.h"
 #include "qucs.h"
 #include "property.h"
+#include "../legacy/obsolete_paintings.h"
 
 
 Digi_Sim::Digi_Sim()

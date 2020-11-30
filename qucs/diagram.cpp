@@ -51,6 +51,7 @@
 #include <QMouseEvent>
 #include <QRectF>
 #include "some_font_stuff.h"
+#include "../legacy/obsolete_paintings.h" // BUG
 
 Diagram::Diagram(Diagram const& p)
   : Element(p),
@@ -104,7 +105,7 @@ Diagram::Diagram(int cx, int cy)
   rotZ = 225;
   hideLines = true;  // hide invisible lines
 
-  Type = isDiagram;
+//  Type = isDiagram;
   GridPen = QPen(Qt::lightGray,0);
 
   setLabel("diag");

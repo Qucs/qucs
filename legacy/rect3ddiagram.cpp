@@ -36,6 +36,7 @@
 #include "misc.h"
 #include "qt_compat.h"
 #include "some_font_stuff.h"
+#include "obsolete_paintings.h"
 
 Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {

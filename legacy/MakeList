@@ -29,6 +29,7 @@ NOTYET_SRC = \
 	waveac.cpp
 
 HDR = \
+	obsolete_paintings.h \
 	curvediagram.h \
 	dat.h \
 	markerdialog.h \

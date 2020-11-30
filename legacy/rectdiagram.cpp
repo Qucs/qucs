@@ -33,6 +33,7 @@
 #include "globals.h"
 #include "module.h"
 #include <QLineEdit>
+#include "obsolete_paintings.h"
 
 namespace {
 
@@ -279,6 +280,7 @@ void RectDiagram::clip(Graph::iterator &p) const
 }
 
 // ------------------------------------------------------------
+#if 0
 Element* RectDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   unreachable();
@@ -288,6 +290,7 @@ Element* RectDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new RectDiagram();
   return 0;
 }
+#endif
 
 }
 // vim:ts=8:sw=2:noet

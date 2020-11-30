@@ -17,6 +17,12 @@
 #include "element.h"
 class ComponentDialog;//really??
 class Property;
+
+// BUG. obsolete paintings
+class Line;
+class Text;
+class Area;
+class Arc;
 /* -------------------------------------------------------------------------------- */
 class TaskElement : public Element {
 protected:

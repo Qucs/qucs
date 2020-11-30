@@ -14,9 +14,9 @@
 
 #ifndef QUCS_PORT_H
 #define QUCS_PORT_H
-
-#include "trace.h"
-#include "geometry.h"
+/*--------------------------------------------------------------------------*/
+#include <string>
+#include <assert.h>
 /*--------------------------------------------------------------------------*/
 class Node;
 /*--------------------------------------------------------------------------*/
@@ -27,7 +27,7 @@ public:
   explicit Port() : _node(nullptr) {}
   virtual ~Port();
 
-public: // This makes Port behave like a pointer (and that's what it will be).
+public: // This makes Port behave like a pointer (and that's what it is).
   Node const* operator->() const {return _node;}
 
 public:
