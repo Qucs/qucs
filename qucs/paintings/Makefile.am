@@ -43,7 +43,6 @@ nodist_libpaintings_la_SOURCES = $(MOCFILES)
 #   paintings.h rectangle.h ellipsearc.h id_text.h
 noinst_HEADERS = $(MOCHEADERS) \
 	graphictext.h  \
-	id_text.h \
 	graphictextdialog.h \
 	filldialog.h
 

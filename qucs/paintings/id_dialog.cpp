@@ -14,29 +14,13 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "id_dialog.h"
-#include "id_text.h"
-
-#include <QHeaderView>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QGridLayout>
-#include <QLabel>
-#include <QTableWidget>
-#include <QTableWidgetItem>
-#include <QCheckBox>
-#include <QLineEdit>
-#include <QGroupBox>
-#include <QValidator>
-#include <QPushButton>
-#include <QMessageBox>
-
-#include "qt_compat.h"
 
 
-ID_Dialog::ID_Dialog(ID_Text *idText_)
+ID_Dialog::ID_Dialog(Element *idText_)
 {
-  idText = idText_;
+  auto idt = prechecked_cast<ID_Text*>(idText_);
+  idText = idt;
+  assert(idText);
   setWindowTitle(tr("Edit Subcircuit Properties"));
 
   all = new QVBoxLayout;
@@ -49,7 +33,7 @@ ID_Dialog::ID_Dialog(ID_Text *idText_)
 
   Expr.setPattern("[A-Za-z][A-Za-z0-9_]*");
   SubVal = new QRegExpValidator(Expr, this);
-  Prefix = new QLineEdit(idText->Prefix);
+  Prefix = new QLineEdit(idt->Prefix);
   Prefix->setValidator(SubVal);
 
   htop->addWidget(new QLabel(tr("Prefix:")));
@@ -76,7 +60,7 @@ ID_Dialog::ID_Dialog(ID_Text *idText_)
 
   QTableWidgetItem *item;
   QList<SubParameter *>::const_iterator it;
-  for(it = idText->Parameter.constBegin(); it != idText->Parameter.constEnd(); it++) {
+  for(it = idt->Parameter.constBegin(); it != idt->Parameter.constEnd(); it++) {
     int row = ParamTable->rowCount();
     ParamTable->insertRow(row);
     item = new QTableWidgetItem(((*it)->display)? tr("yes") : tr("no"));
@@ -262,10 +246,11 @@ void ID_Dialog::slotRemoveParameter()
 void ID_Dialog::slotOk()
 {
   bool changed = false;
+  auto idt = prechecked_cast<ID_Text*>(idText);
 
   if(!Prefix->text().isEmpty())
-    if(idText->Prefix != Prefix->text()) {
-      idText->Prefix = Prefix->text();
+    if(idt->Prefix != Prefix->text()) {
+      idt->Prefix = Prefix->text();
       changed = true;
     }
 
@@ -280,12 +265,12 @@ void ID_Dialog::slotOk()
       scratch.append(new SubParameter(display, s, desc, type));
   }
 
-  if (scratch.size()!=idText->Parameter.size()) {
+  if (scratch.size()!=idt->Parameter.size()) {
       changed = true;
   } else {
       QList<SubParameter *>::const_iterator A(scratch.begin()),
                                             end(scratch.end()),
-                                            B(idText->Parameter.begin());
+                                            B(idt->Parameter.begin());
       for(;A!=end; ++A, ++B) {
           if((*A)->display!=(*B)->display || (*A)->Name!=(*B)->Name ||
              (*A)->Description!=(*B)->Description || (*A)->Type!=(*B)->Type) {
@@ -296,7 +281,7 @@ void ID_Dialog::slotOk()
   }
 
   if(changed)
-      idText->Parameter.swap(scratch);
+      idt->Parameter.swap(scratch);
 
   foreach(SubParameter *p, scratch) {
       delete p;

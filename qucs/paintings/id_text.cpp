@@ -1,8 +1,6 @@
 /***************************************************************************
-                        portsymbol.cpp  -  description
-                             -------------------
     copyright            : (C) 2003 by Michael Margraf
-                               2018 Felix Salfelder
+                               2018, 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -13,15 +11,75 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "id_text.h"
-#include "id_dialog.h"
 #include "schematic_doc.h" // BUG
 #include "globals.h"
 #include "module.h"
+#include "painting.h"
 
+// yikes.
 #include <QPainter>
+#include <QHeaderView>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QGridLayout>
+#include <QLabel>
+#include <QTableWidget>
+#include <QTableWidgetItem>
+#include <QCheckBox>
+#include <QLineEdit>
+#include <QGroupBox>
+#include <QValidator>
+#include <QPushButton>
+#include <QMessageBox>
+
+#include "qt_compat.h"
+
+#include <QDialog> // BUG
+#include <QRegExp> // BUG
+
+#include "id_dialog.h" //for now.
 
 namespace{
+
+struct SubParameter {
+  SubParameter(bool display_, const QString& Name_, const QString& Descr_)
+     : display(display_), Name(Name_), Description(Descr_) { Type = ""; };
+  SubParameter(bool display_, const QString& Name_, const QString& Descr_,
+	       const QString& Type_)
+     : display(display_), Name(Name_), Description(Descr_), Type(Type_) {};
+
+  bool display;
+  QString Name, Description, Type;
+};
+
+
+// not sure what this is.
+class ID_Text : public Painting  {
+public:
+  ID_Text(int cx_=0, int cy_=0);
+  ~ID_Text();
+  Element* clone() const{
+	  return new ID_Text(*this);
+  }
+
+  void paintScheme(SchematicDoc*);
+  void getCenter(int&, int&);
+
+  bool load(const QString&);
+  QString save();
+  QString saveCpp();
+  QString saveJSON();
+  void paint(ViewPainter*);
+  bool getSelected(float, float, float);
+
+  void rotate();
+  void mirrorX();
+  void mirrorY();
+  bool Dialog();
+
+  QString Prefix;
+  QList<SubParameter *> Parameter;
+};
 ID_Text D;
 Dispatcher<Painting>::INSTALL p(&painting_dispatcher, ".ID", &D);
 Module::INSTALL pp("paintings", &D);
@@ -151,6 +209,7 @@ QString ID_Text::save()
 }
 
 // --------------------------------------------------------------------------
+#if 0
 QString ID_Text::saveCpp()
 {
   QString s =
@@ -163,6 +222,7 @@ QString ID_Text::saveJSON()
   QString s =  QString ("\"tx\" : %1,\n  \"ty\" : %2,").arg(cx()).arg(cy());
   return s;
 }
+#endif
 
 // --------------------------------------------------------------------------
 // Checks if the coordinates x/y point to the painting.
@@ -211,3 +271,5 @@ bool ID_Text::Dialog()
   delete d;
   return true;
 }
+
+#include "id_dialog.cpp" //for now.
