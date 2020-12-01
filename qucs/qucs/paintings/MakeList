@@ -8,7 +8,9 @@ SRCS = \
 	graphicline.cpp \
 	graphictext.cpp \
 	graphictextdialog.cpp \
-	id_dialog.cpp \
 	id_text.cpp \
 	portsymbol.cpp \
 	rectangle.cpp
+
+EXTRA_DIST = \
+	id_dialog.cpp

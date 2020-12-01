@@ -22,15 +22,14 @@
 #ifndef ID_DIALOG_H
 #define ID_DIALOG_H
 
-#include <QDialog>
-#include <QRegExp>
+#include <QDialog> // oops?
 
-class ID_Text;
 class QTableWidget;
 class QLineEdit;
 class QCheckBox;
 class QVBoxLayout;
 class QRegExpValidator;
+class Element;
 
 /*!
  * \brief The ID_Dialog class, edit subcircuit symbol properties.
@@ -38,11 +37,11 @@ class QRegExpValidator;
 class ID_Dialog : public QDialog  {
 Q_OBJECT
 public:
-  ID_Dialog(ID_Text*);
+  ID_Dialog(Element*);
  ~ID_Dialog();
 
 private:
-  ID_Text *idText;
+  Element *idText;
 
   QVBoxLayout *all;
   QLineEdit *Prefix;
