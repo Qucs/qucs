@@ -48,7 +48,7 @@ public:
 	Element* detachElement();
 	Element* cloneElement() const;
 	ElementGraphics* newUnion(ElementGraphics const*) const;
-	ElementGraphics* newPort(pos_t) const;
+//	ElementGraphics* newPort(pos_t) const; obsolete?
 
 public:
 	SchematicScene* scene() const; // really?
@@ -70,8 +70,9 @@ public: // manipulate (used in UndotaskElements)
 
   template<class P>
   void moveElement(P const& delta);
-  void transform(rotate_after_mirror1_t, std::pair<int, int> pivot=std::make_pair(0,0));
 
+public: // schematic_action.cpp
+  void transform(rotate_after_mirror1_t, std::pair<int, int> pivot=std::make_pair(0,0));
   // void snap();
 
 public:
@@ -87,7 +88,7 @@ public:
 //  QPointF pos() const; // QGraphicsItem
   void setPos(int i, int j, bool relative=false);
   void setPos(QPoint const&);
-  void center(int& i, int& j);
+//  void center(int& i, int& j);
 
 	// BUG
 	void prepareGeometryChange(){
@@ -97,15 +98,10 @@ public:
 	// BUG: selected is stored in Element.
 	void setSelected(bool s);
 
-//	int const& cx_() const { assert(_e); return _e->cx(); }
-//	int const& cy_() const { assert(_e); return _e->cy(); }
-//	int const& x1_() const { assert(_e); return _e->x1_(); }
-//	int const& y1_() const { assert(_e); return _e->y1_(); }
-//	int const& x2_() const { assert(_e); return _e->x2_(); }
-//	int const& y2_() const { assert(_e); return _e->y2_(); }
 private:
-  Element* _e;
-  QGraphicsItem* _elementText;
+	Element* _e;
+	QGraphicsItem* _elementText;
+	bool _select__;
 }; // ElementGraphics
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

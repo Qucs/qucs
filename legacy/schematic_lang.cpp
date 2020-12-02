@@ -149,6 +149,10 @@ private: // overrides
 	Element* parseItem(istream_t&, Element*) const override;
    DEV_DOT* parseCommand(istream_t&, DEV_DOT*) const override;
 
+private: // local/incomplete
+	Symbol* parseSymbol(QString const&, Symbol*) const;
+	Element* loadElement_(const QString& _s, Element* e) const;
+
 private:
 	void printSymbol(Symbol const*, ostream_t&) const override;
 	void printtaskElement(TaskElement const*, ostream_t&) const override;
@@ -166,8 +170,8 @@ static Dispatcher<DocumentLanguage>::INSTALL
 /*--------------------------------------------------------------------------*/
 static Component* parseComponentObsoleteCallback(const QString& _s, Component* c);
 static TaskElement* loadtaskElement(const QString& _s, TaskElement* c);
-static Symbol* parseSymbol(const QString& _s, Symbol* c);
-static Element* loadElement(const QString& _s, Element* e)
+/*--------------------------------------------------------------------------*/
+Element* LegacySchematicLanguage::loadElement_(const QString& _s, Element* e) const
 {
 	trace1("loadElement", _s);
 	if(TaskElement* c=dynamic_cast<TaskElement*>(e)){
@@ -592,7 +596,7 @@ static void printArgs(Symbol const* sym, ostream_t& s)
 static void printwirehack(Symbol const* w, DocumentStream& d)
 {
 	assert(w);
-	Symbol const* sym = w;
+	// Symbol const* sym = w;
   int x1=0, x2=0, y1=0, y2=0;
   trace1("wirehack", w);
   std::pair<int, int> X = w->portPosition(0);
@@ -774,7 +778,7 @@ static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
 }
 /*--------------------------------------------------------------------------*/
 // decluttered parseComponentObsoleteCallback
-static Symbol* parseSymbol(const QString& _s, Symbol* sym)
+Symbol* LegacySchematicLanguage::parseSymbol(const QString& _s, Symbol* sym) const
 {
 	trace1("parseSymbol", _s);
 	bool ok;
@@ -874,7 +878,14 @@ static Symbol* parseSymbol(const QString& _s, Symbol* sym)
 		z++;
 
 		trace2("legacy:set", position, n);
-		sym->setParameter(position + offset, n);
+		try{ untested();
+			sym->setParameter(position + offset, n);
+		}catch(ExceptionCantFind const*){
+			incomplete(); // CS has error messages...
+			error(5, "cannot parse Symbol param " +
+					std::to_string(position + offset) + " in " + sym->label());
+			throw; // BUG
+		}
 
 		n  = s.section('"',z,z);    // display
 	}
@@ -999,6 +1010,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 
 	/// BUG FIXME. dont use Component parameter dictionary.
 	for(; tmp<=(int)counts/2; tmp++){ untested();
+		incomplete();
 		c->Props.append(new Property("p", "", true, " "));
 		//	sym->setParameter("p__" + std::to_string(tmp), "");
 	}
@@ -1085,11 +1097,14 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 				}
 			}
 #endif
-		if(z == 6)  if(counts == 6)     // backward compatible
+		if(z == 6 && counts == 6) {
+			// backward compatible
 			if(Model == "R") {
 				c->Props.getLast()->Value = n;
 				return c;
 			}
+		}else{
+		}
 		p1->Value = n; // TODO: remove
 
 		Symbol* sym = c;
@@ -1127,7 +1142,7 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 //	}else if(auto w=dynamic_cast<Wire*>(e)){
 //		bool err = obsolete_wireload(w, Line);
 	}else if(auto s=dynamic_cast<Symbol*>(e)){
-		::parseSymbol(l, s);
+		parseSymbol(l, s);
 	}else if(auto d=dynamic_cast<Diagram*>(e)){
 		loadDiagram(d, c);
 	}else if(auto s=dynamic_cast<Painting*>(e)){
@@ -1265,7 +1280,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 	if(e) {
 		trace1("e bug", Line);
 		incomplete();
-		loadElement(Line, e);
+		loadElement_(Line, e);
 		// setType()
 	}else{
 		qDebug() << "error with" << type;

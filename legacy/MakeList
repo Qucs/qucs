@@ -12,6 +12,7 @@ LEGACY_SRC = \
 	modelcmd.cpp \
 	spicecmd.cpp \
 	symbolcmd.cpp \
+	idcmd.cpp \
 	propertiescmd.cpp \
 	rect3ddiagram.cpp \
 	rectdiagram.cpp \

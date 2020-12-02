@@ -293,6 +293,7 @@ private: // Symbol
 		if(_section.Value == ""){ untested();
 		}else if(_component.Value == ""){
 		}else if(redo){
+			// BUG: not here.
 			attachProto();	
 			assert(_parent); // for now.
 		}else{ untested();
