@@ -723,20 +723,20 @@ void SchematicModel::collectDigitalSignals(void)
  */
 
 // ---------------------------------------------------
-bool SchematicModel::createLibNetlist(DocumentStream& stream, QPlainTextEdit
-    *ErrText, int NumPorts, NetLang const& nl)
+bool SchematicModel::createLibNetlist(DocumentStream& stream,
+     QPlainTextEdit*, int, NetLang const&)
 { untested();
   incomplete(); // wrong place.
   qDebug() << "createLibNetlist";
   bool isAnalog=true;
   bool isVerilog=false;
   DigMap Signals; //?!
-  int countInit = 0;
+//  int countInit = 0;
   QStringList Collect;
   Collect.clear();
   Signals.clear();
   // Apply node names and collect subcircuits and file include
-  bool creatingLib = true;
+//  bool creatingLib = true;
 #if 0
   if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts, creatingLib, nl)) {
     creatingLib = false;
@@ -744,7 +744,7 @@ bool SchematicModel::createLibNetlist(DocumentStream& stream, QPlainTextEdit
   }else{
   }
 #endif
-  creatingLib = false;
+//  creatingLib = false;
 
   // Marking start of actual top-level subcircuit
   QString c;
