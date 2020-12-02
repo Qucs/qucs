@@ -409,7 +409,7 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 // transform around pivot (in scope coordinates).
 void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot)
 {itested();
-	incomplete(); // obsolete;
+	incomplete(); // obsolete?
 	trace1("..", a.degrees_int());
 	assert(!(a.degrees_int()%90));
 	assert(_e);
@@ -526,9 +526,11 @@ void ElementGraphics::setSelected(bool s)
 	assert(_e);
 }
 /*--------------------------------------------------------------------------*/
+// """
 // Reimplement this function to intercept events before they are dispatched to
 // the specialized event handlers. should return true if the event e was
 // recognized and processed.
+// """
 bool ElementGraphics::sceneEvent(QEvent* e)
 {itested();
 	if(e->type() == QEvent::WindowActivate){itested();
@@ -587,6 +589,11 @@ void ElementGraphics::show()
 	for(auto x : childItems()){
 		x->show();
 	}
+	// TODO
+	// if (_selected__){
+	// 	setSeleted();
+	// }else{
+	// }
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::hide()
@@ -615,10 +622,11 @@ void ElementGraphics::hide()
 	}
 }
 /*--------------------------------------------------------------------------*/
-	// does not make sense.
+#if 0 // does not make sense. reachable??
 template<class P>
 void ElementGraphics::moveElement(P const& delta)
 { untested();
+	unreachable();
 	hide();
 	assert(_e);
 	int dx = getX(delta);
@@ -642,6 +650,7 @@ void ElementGraphics::moveElement(P const& delta)
 
 	show();
 }
+#endif
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::setPos(QPoint const& p)
 {
@@ -664,8 +673,10 @@ void ElementGraphics::setPos(int i, int j, bool relative)
 	_e->setPosition(pos_t(i, j));
 }
 /*--------------------------------------------------------------------------*/
+#if 0
 template
 void ElementGraphics::moveElement<QPoint>(QPoint const& delta);
+#endif
 /*--------------------------------------------------------------------------*/
 ItemEvent::ItemEvent(QEvent const& a, ElementGraphics& b)
 	: QEvent(a), _item(b)
@@ -678,6 +689,8 @@ QVariant ElementGraphics::itemChange(GraphicsItemChange c, const QVariant &v)
     if (!scene()){itested();
 	 }else if(c == ItemPositionChange){ itested();
         QPointF tmp = v.toPointF();
+
+		  // BUG: why is QApplication needed for this??
         if(QApplication::mouseButtons() != Qt::LeftButton){itested();
             return tmp;
 		  }else if(auto scn = dynamic_cast<SchematicScene*> (scene())){ itested();
