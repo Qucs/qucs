@@ -400,27 +400,56 @@ void SchematicScene::selectAll(bool v)
 	}
 }
 /*--------------------------------------------------------------------------*/
+static QList<ElementGraphics const*> filter(QList<QGraphicsItem const*> L)
+{
+	trace1("items raw mutable", L.size());
+	for(auto l = L.begin(); l!=L.end(); ){ untested();
+		if(dynamic_cast<ElementGraphics const*>(*l)){ untested();
+			++l;
+		}else{ untested();
+			// incomplete(); // actually
+			auto prev = l;
+			l = L.erase(prev);
+		}
+	}
+	auto EL = reinterpret_cast<QList<ElementGraphics const*>* >(&L);
+	return *EL;
+}
+/*--------------------------------------------------------------------------*/
+static QList<ElementGraphics*> filter(QList<QGraphicsItem*> L)
+{
+	trace1("items raw mutable", L.size());
+	for(auto l = L.begin(); l!=L.end(); ){ untested();
+		if(dynamic_cast<ElementGraphics*>(*l)){ untested();
+			++l;
+		}else{ untested();
+			// incomplete(); // actually
+			auto prev = l;
+			l = L.erase(prev);
+		}
+	}
+	auto EL = reinterpret_cast<QList<ElementGraphics*>* >(&L);
+	return *EL;
+}
+/*--------------------------------------------------------------------------*/
 QList<ElementGraphics*> SchematicScene::selectedItems() const
 { untested();
 	auto L = QGraphicsScene::selectedItems();
-	for(auto l = L.begin(); l!=L.end(); ){ untested();
-		if(prechecked_cast<ElementGraphics*>(*l)){ untested();
-			++l;
-		}else{ untested();
-			// incomplete(); // actually
-			auto prev = l;
-			l = L.erase(prev);
-		}
-	}
-	auto EL = reinterpret_cast<QList<ElementGraphics*>* >(&L);
-	return *EL;
+	return filter(L);
 }
 /*--------------------------------------------------------------------------*/
-QList<ElementGraphics*> SchematicScene::items() const
+QList<ElementGraphics*> SchematicScene::items()
+{
+	auto L = QGraphicsScene::items();
+	return filter(L);
+}
+/*--------------------------------------------------------------------------*/
+QList<ElementGraphics const*> SchematicScene::items() const
 { untested();
 	auto L = QGraphicsScene::items();
+	trace1("items raw", L.size());
 	for(auto l = L.begin(); l!=L.end(); ){ untested();
-		if(prechecked_cast<ElementGraphics*>(*l)){ untested();
+		if(dynamic_cast<ElementGraphics const*>(*l)){ untested();
 			++l;
 		}else{ untested();
 			// incomplete(); // actually
@@ -428,24 +457,22 @@ QList<ElementGraphics*> SchematicScene::items() const
 			l = L.erase(prev);
 		}
 	}
-	auto EL = reinterpret_cast<QList<ElementGraphics*>* >(&L);
+	auto EL = reinterpret_cast<QList<ElementGraphics const*>* >(&L);
 	return *EL;
 }
 /*--------------------------------------------------------------------------*/
-QList<ElementGraphics*> SchematicScene::items(QRectF const& r) const
+QList<ElementGraphics const*> SchematicScene::items(QRectF const& r) const
 {itested();
 	auto L = QGraphicsScene::items(r);
-	for(auto l = L.begin(); l!=L.end(); ){ itested();
-		if(prechecked_cast<ElementGraphics*>(*l)){ itested();
-			++l;
-		}else{itested();
-			// incomplete(); // actually
-			auto prev = l;
-			l = L.erase(prev);
-		}
-	}
-	auto EL = reinterpret_cast<QList<ElementGraphics*>* >(&L);
-	return *EL;
+	auto b = filter(L);
+	return *reinterpret_cast<QList<ElementGraphics const*>* >(&b);
+}
+/*--------------------------------------------------------------------------*/
+QList<ElementGraphics*> SchematicScene::items(QRectF const& r)
+{itested();
+	auto L = QGraphicsScene::items(r);
+	auto b = filter(L);
+	return b;
 }
 /*--------------------------------------------------------------------------*/
 QList<ElementGraphics*> SchematicScene::items(

@@ -278,6 +278,7 @@ private: // Symbol
 	}
 	unsigned paramCount() const{ return Symbol::paramCount() + 4 + _params.size(); }
 	void setParameter(unsigned n, std::string const& v) override{ untested();
+		assert(n<LibComp::paramCount());
 		bool redo = false;
 		int m = int(n) - int(Symbol::paramCount());
 		trace3("Lib:SP", n, v, m);
@@ -295,8 +296,14 @@ private: // Symbol
 			redo = true;
 			break;
 		default: untested();
-			trace2("fwd", n, v);
-			Symbol::setParameter(n, v);
+			trace3("fwd", n, m, v);
+			if(m - 4 >= _params.size()){ untested();
+				Symbol::setParameter(n, v);
+			}else if(auto p = dynamic_cast<PARAMETER<double>* >(_params[m-4])){ untested();
+				*p = v;
+			}else{
+				unreachable();
+			}
 			break;
 		}
 
@@ -319,8 +326,8 @@ private: // Symbol
 		}
 	}
 	std::string paramValue(unsigned i) const override{
-		int j = i - Symbol::paramCount();
-		switch(j){
+		int m = i - Symbol::paramCount();
+		switch(m){
 		case 0:
 			return std::to_string(_tx);
 		case 1:
@@ -330,12 +337,19 @@ private: // Symbol
 		case 3:
 			return _component.Value.toStdString();
 		default: untested();
-			return Symbol::paramValue(i);
+			if(m - 4 >= _param_names.size()){ untested();
+				return Symbol::paramValue(i);
+			}else if(auto p = dynamic_cast<PARAMETER<double>* >(_params[m-4])){ untested();
+			  	return p->string();
+			}else{
+				unreachable();
+				return "NA";
+			}
 		}
 	}
 	std::string paramName(unsigned i) const override{
-		int j = i - Symbol::paramCount();
-		switch(j){
+		int m = i - Symbol::paramCount();
+		switch(m){
 		case 0:
 			return "$tx";
 		case 1:
@@ -345,7 +359,11 @@ private: // Symbol
 		case 3:
 			return "Component";
 		default:itested();
-			return Symbol::paramName(i);
+			if(m - 4 >= _param_names.size()){ untested();
+				return Symbol::paramName(i);
+			}else{
+			  	return _param_names[m-4];
+			}
 		}
 	}
 
@@ -375,10 +393,26 @@ private:
 		// also prepare parameters here.
 		setTypeName(t);
 
-		assert(!_params.size());
+		for(auto i : _params){
+			delete i;
+		}
+		_params.clear();
+		_param_names.clear();
 		for(auto i : *paintings()){
 			if(auto a=dynamic_cast<DEV_DOT*>(i)){
-				trace1("DOT", a->s());
+				istream_t cs(istream_t::_STRING, a->s());
+				if(cs.umatch("parameter")){ // portparameter?
+					trace1("LibComp DOT", a->s());
+					std::string name;
+					std::string defv;
+					cs >> name;
+					cs >> defv;
+					auto p = new PARAMETER<double>;
+					*p = defv;
+					_params.push_back(p);
+					_param_names.push_back(name);
+				}else{
+				}
 			}else{
 			}
 		}
@@ -403,6 +437,7 @@ private:
 	Property _component;
 	Symbol const* _parent; // TODO. common.
 	std::vector<Port> _ports;
+	std::vector<std::string> _param_names; // could be common?
 	std::vector<PARA_BASE*> _params; // could be common
 }D; // Lib
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Lib", &D);
