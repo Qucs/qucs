@@ -19,7 +19,7 @@
 /*--------------------------------------------------------------------------*/
 static void collectPorts(ElementGraphics const* e, std::vector<pos_t>& p)
 {
-	if(auto s=prechecked_cast<Symbol const*>(element(e))){
+	if(auto s=dynamic_cast<Symbol const*>(element(e))){
 
 		for(unsigned i=0; i<s->numPorts(); ++i){
 			// if s->isConnected(i) ...
@@ -176,7 +176,7 @@ QList<ElementGraphics*> SchematicEdit::items(
 }
 /*--------------------------------------------------------------------------*/
 QList<ElementGraphics*> SchematicEdit::items(QRectF const& r) const
-{
+{ untested();
 	return _scn.items(r);
 }
 /*--------------------------------------------------------------------------*/
@@ -189,6 +189,7 @@ bool SchematicEdit::addmerge(ElementGraphics* s, T& del_done)
 	assert(!s->isVisible());
 	assert(s->scene());
 	QRectF bb = s->absoluteBoundingRect();
+	trace2("addmerge candidates??", bb.topLeft(), bb.bottomRight());
 	auto it = items(bb);
 	trace3("addmerge candidates", s, element(s)->label(), it.size());
 	for(auto gfxi : it){itested();

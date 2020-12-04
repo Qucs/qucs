@@ -15,6 +15,8 @@
 #include "misc.h"
 #include "schematic_doc.h"
 #include "painting.h"
+#include "globals.h"
+#include "module.h"
 
 #include <QPainter>
 #include <QPushButton>
@@ -28,11 +30,13 @@ public:
   Rectangle(bool _filled=false);
  ~Rectangle();
 
+private:
+  Rectangle(Rectangle const& p) : Painting(p) {}
+  Element* clone() const { return new Rectangle(*this); }
+
   void paintScheme(SchematicDoc*) const;
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
-
-  Element* clone() const { return new Rectangle(*this); }
 
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_filled(QString&, char* &, bool getNewOne=false);
@@ -40,7 +44,8 @@ public:
   QString save();
   QString saveCpp();
   QString saveJSON();
-  void paint(ViewPainter*);
+  void paint(ViewPainter*) const override;
+  rect_t bounding_rect() const override;
 //  void MouseMoving(SchematicDoc*, int, int, int, int, SchematicDoc*, int, int, bool);
   bool MousePressing();
   bool getSelected(float, float, float);
@@ -55,9 +60,11 @@ public:
   QPen  Pen;
   QBrush Brush;    // filling style/color
   bool  filled;    // filled or not (for "getSelected" etc.)
-};
+}d0;
+Dispatcher<Painting>::INSTALL p(&painting_dispatcher, "Rectangle", &d0);
+Module::INSTALL pp("paintings", &d0);
 
-#if 0
+#if 1
 Rectangle::Rectangle(bool _filled) : Painting()
 {
   Name = "Rectangle ";
@@ -76,10 +83,16 @@ Rectangle::~Rectangle()
 }
 
 // --------------------------------------------------------------------------
-void Rectangle::paint(ViewPainter *p)
+rect_t Rectangle::bounding_rect() const
 {
-	 auto cx=Element::cx();
-     auto cy=Element::cy();
+	trace2("Rectangle::bounding_rect", x2, y2);
+	return rect_t(0,0,x2,y2);
+}
+
+void Rectangle::paint(ViewPainter *p) const
+{
+	auto cx=0;
+	auto cy=0;
 
 #if 0
   if(isSelected()) {
@@ -98,6 +111,8 @@ void Rectangle::paint(ViewPainter *p)
     return;
   }
 #endif
+
+  assert(false);
   p->setPen(Pen);
   if(filled)  p->setBrush(Brush);
   p->drawRect(cx, cy, x2, y2);

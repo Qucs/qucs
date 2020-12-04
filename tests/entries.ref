@@ -153,6 +153,9 @@ Diode:my_Diode (null) (null) Is="1e-15 A" N="1" Cj0="10 fF" M="0.5" Vj="0.7 V" F
 ==============
   <.PortSym 0 0  0>
 
+==============
+  <Rectangle 0 0 0 0 #000000 1 1 #000000 0 1>
+
 =====GBU4G=========
 
 // sckt declaration my_
