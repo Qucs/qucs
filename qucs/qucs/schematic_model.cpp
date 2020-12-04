@@ -198,21 +198,17 @@ Element* SchematicModel::attach(Element* what)
 		}
 	}else if(auto d=diagram(what)){
 		diagrams().append(d);
-//	}else if(dynamic_cast<Conductor*>(element(what))){
-//		auto s=dynamic_cast<Symbol*>(what);
-//		connect(s);
-//		wires().append(s);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
-
 		if(c->is_device()){
 			connect(c);
 		}else{
 			assert(!dynamic_cast<Conductor*>(element(what)));
 		}
 		components().append(c);
-	}else if(dynamic_cast<Painting*>(what)){
+	}else if(dynamic_cast<Element*>(what)){
 		components().append(what);
 	}else{ untested();
+//		unreachable?
 		incomplete();
 	}
 	return what;
