@@ -18,6 +18,7 @@
 #include "painting.h"
 #include "language.h"
 #include "symbol.h"
+#include "d_dot.h"
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
@@ -32,6 +33,9 @@ private:
 	SymbolSection(SymbolSection const& p) : SubcktBase(p) {
 //		incomplete(); so what.
 		new_subckt();
+	}
+
+	void setParameter(int i, std::string const&){
 	}
 
 private: // Symbol
@@ -56,9 +60,6 @@ class SymbolCommand : public Command{
 	  auto fullstring = cs.fullString();
 	  trace1("SymbolSection", fullstring);
 
-	  std::string M;
-
-	  trace1("hack", M);
 	  Symbol* sc = symbolSection.clone(); // symbol_dispatcher.clone("symbolSection");
 	  auto* sym = dynamic_cast<SubcktBase*>(sc);
 	  assert(sym);
@@ -69,13 +70,7 @@ class SymbolCommand : public Command{
 	  assert(lang);
 
 	  while(true){
-		  trace1("Symbol Command", cs.fullString());
 		  cs.read_line();
-		  trace1("Symbol Command", cs.fullString());
-		  ///if(cs.is_end()){ untested();
-		  ///   // bug. matches newlines...??
-		  ///   break;
-		  ///}else
 		  if(cs.umatch("</Symbol>")){
 			  break;
 		  }else{
@@ -86,6 +81,15 @@ class SymbolCommand : public Command{
 	  }
 
 	  s->pushBack(sym);
+
+	  trace1("find DOT", sym->label());
+	  for(auto i : *sym->subckt()){
+		  if(auto d = dynamic_cast<DEV_DOT*>(i)){
+			  trace1("DOT incomplete", d->s());
+//			  sym->setParam(k, name); //?
+		  }else{
+		  }
+	  }
   }
 }d0;
 Dispatcher<Command>::INSTALL p0(&command_dispatcher, "Symbol", &d0);

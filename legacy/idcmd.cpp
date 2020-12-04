@@ -19,6 +19,7 @@
 #include "language.h"
 #include "symbol.h"
 #include "u_parameter.h"
+#include "d_dot.h"
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
@@ -28,49 +29,49 @@ class IdCommand : public Command{
 
 		std::string type;
 		int cx, cy, tx, ty;
-		cs >> type;
-		trace3("ID0", type, bool(cs), cs.cursor());
+//		cs >> type;
 		cs >> cx;
-		trace4("ID1", cx, bool(cs), cs.fullstring(), cs.cursor());
 		cs >> cy;
-		cs >> tx;
-		cs >> ty;
+		trace4("ID1", fullstring, type, cx, cy);
 
-		// from IDtext::load don't copy
+		std::string label = cs.ctos(">", "=", ">");
+
+		// from IDtext::load. don't copy
 		QString s = QString::fromStdString(fullstring);
+		trace2("ID parameter", s, label);
 		int i = 1;
 		for(;;) {
-			trace1("ID parameter", s);
 			auto n = s.section('"', i,i);
 			if(n.isEmpty())  break;
 
 			// Parameter.append(new SubParameter(
 			bool disp = (n.at(0) == '0') ? false : true;
-			auto name = n.section('=', 1,1);
-			auto def = n.section('=', 2,2);
-			auto desc = n.section('=', 3,3);
-			auto type = n.section('=', 4,4);
+			auto name = n.section('=', 1,1).toStdString();
+			auto def = n.section('=', 2,2).toStdString();
+			auto desc = n.section('=', 3,3).toStdString();
+			auto type = n.section('=', 4,4).toStdString();
 
 			assert(scope->params());
 
 			//does not work, as intended. parameter values are not ordered.
-			scope->params()->set(name.toStdString(), def.toStdString());
+			scope->params()->set(name, def);
 
 			trace5("ID parameter", disp, name, def, desc, type);
 
-#if 0 // maybe this could work:
-			auto p = painting_dispatcher.clone("parameter");
-			p->set( name, def etc.)
-				p->setParameter("position", i/2);
+			auto dot = new DEV_DOT();
+			// is this a portparameter?
+			dot->set("parameter " + name + " " + def); //TODO: desc & type.
 
-			scope->pushBack(p);
-#endif
+			trace2("push DOT", name, def);
+			scope->pushBack(dot);
 
 			i += 2;
 		}
 
 		auto ps = painting_dispatcher.clone(".ID");
+		trace3("ID push", label, cx, cy);
 		ps->setPosition(pos_t(cx,cy));
+		ps->setLabel(label);
 		scope->pushBack(ps);
 	}
 }d0;

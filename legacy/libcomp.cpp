@@ -20,6 +20,8 @@
 #include "schematic_doc.h"
 #include "sckt_base.h"
 #include "property.h"
+#include "u_parameter.h"
+#include "d_dot.h"
 
 #include <limits.h>
 
@@ -131,6 +133,7 @@ private:
 			}
 	}
 
+public: // HACK
 	// TODO: move to painting.
 	ElementList const* paintings() const{
 		if(!_paint){
@@ -169,7 +172,7 @@ private:
 static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "LegacyLibProto", &d0);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-// Lib instance.
+// Lib instance. TODO: use paramset + common
 class Lib : public Symbol{
 public:
 	explicit Lib(Symbol const* p)
@@ -203,6 +206,9 @@ private: // Element
 		return new Lib(*this);
 	}
 	void paint(ViewPainter* p) const override{ untested();
+		// if(has_common()){untested();
+		//   common()->paint(p);
+		// }else
 		if(_parent){untested();
 			// no-op?
 			((Element*)_parent)->paint(p);
@@ -211,6 +217,9 @@ private: // Element
 		Symbol::paint(p);
 	}
 	rect_t bounding_rect() const override{ untested();
+		// if(has_common()){untested();
+		//   return common()->bounding_rect(p);
+		// }else
 		if(_parent){itested();
 			return _parent->bounding_rect();
 		}else{ untested();
@@ -246,7 +255,7 @@ private: // Symbol
 		assert(i < _ports.size());
 		return _ports[i];
 	}
-	void setParameter(std::string const& n, std::string const& v) override{
+	void setParameter(std::string const& n, std::string const& v) override{ untested();
 		bool redo = false;
 		if(n == "Lib"){ itested();
 			_section.Value = QString::fromStdString(v);
@@ -258,6 +267,7 @@ private: // Symbol
 			Symbol::setParameter(n, v);
 		}
 
+		/// not here. move to some elaborate/expand hook.
 		if(_section.Value == ""){
 		}else if(_component.Value == ""){ untested();
 		}else if(redo){ untested();
@@ -266,8 +276,8 @@ private: // Symbol
 		}else{ untested();
 		}
 	}
-	unsigned paramCount() const{ return Symbol::paramCount() + 4; }
-	void setParameter(unsigned n, std::string const& v) override{
+	unsigned paramCount() const{ return Symbol::paramCount() + 4 + _params.size(); }
+	void setParameter(unsigned n, std::string const& v) override{ untested();
 		bool redo = false;
 		int m = int(n) - int(Symbol::paramCount());
 		trace3("Lib:SP", n, v, m);
@@ -364,6 +374,24 @@ private:
 		trace2("Lib::attachProto", numPorts(), _ports.size());
 		// also prepare parameters here.
 		setTypeName(t);
+
+		assert(!_params.size());
+		for(auto i : *paintings()){
+			if(auto a=dynamic_cast<DEV_DOT*>(i)){
+				trace1("DOT", a->s());
+			}else{
+			}
+		}
+	}
+
+private:
+	ElementList const* paintings() const{
+		assert(_parent);
+		if(auto p = dynamic_cast<LibComp const*>(_parent)){
+			return p->paintings();
+		}else{
+			return &empty;
+		}
 	}
 
 private:
@@ -375,30 +403,10 @@ private:
 	Property _component;
 	Symbol const* _parent; // TODO. common.
 	std::vector<Port> _ports;
+	std::vector<PARA_BASE*> _params; // could be common
 }D; // Lib
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Lib", &D);
 /*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-// go to the top.
-#if 0
-QucsDoc* getProject(Object const* o)
-{
-	auto E = dynamic_cast<Element const*>(o);
-	assert(E);
-	Object* e = E->mutable_owner();
-
-	while(auto E = dynamic_cast<Element*>(e)){
-		if(auto d = dynamic_cast<QucsDoc*>(e)){
-			return d;
-		}else{
-	  		e = E->mutable_owner();
-		}
-	}
-
-	assert(false);
-	return nullptr;
-}
-#endif
 /*--------------------------------------------------------------------------*/
 // partially tAC. build a new sckt proto.
 // does not fullymake sense.

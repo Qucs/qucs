@@ -62,7 +62,7 @@ protected:
 private: // Symbol
 // unsigned numPorts() const override;
   bool portExists(unsigned) const override;
-  QString portName(unsigned) const override;
+  std::string const& portName(unsigned) const override;
 
   // void setParameter(QString const& name, QString const& value);
   void setParameter(unsigned i, std::string const& value) override;
@@ -680,10 +680,12 @@ bool Subcircuit::portExists(unsigned i) const
 	return false;
 }
 
-QString Subcircuit::portName(unsigned) const
+static std::string invalid_="invalid";
+std::string const& Subcircuit::portName(unsigned) const
 { untested();
 	incomplete();
-	return "invalid";
+	// throw?
+	return invalid_;
 }
 
 static const std::string typesep(":");
