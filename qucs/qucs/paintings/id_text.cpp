@@ -90,7 +90,7 @@ ID_Text::ID_Text(int cx_, int cy_) : Painting(cx_, cy_)
   Name = ".ID ";
   x2 = y2 = 20;
 
-  Prefix = "SUB";
+  Prefix = ""; // what?!
 
   setLabel("?????");
 }
@@ -157,7 +157,7 @@ void ID_Text::getCenter(int& x, int &y)
 // --------------------------------------------------------------------------
 bool ID_Text::load(const QString& s)
 {
-//	incomplete(); fix later.
+	incomplete(); // fix later.
   bool ok;
 
   QString n;
@@ -197,7 +197,8 @@ QString ID_Text::save()
 	  auto cx=Element::cx();
      auto cy=Element::cy();
   QString s = Name+QString::number(cx)+" "+QString::number(cy)+" ";
-  s += Prefix;
+//  s += Prefix; //what?
+  s += QString::fromStdString(label());
 
   QList<SubParameter *>::const_iterator it;
   for(it = Parameter.constBegin(); it != Parameter.constEnd(); it++) {
