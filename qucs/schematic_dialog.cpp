@@ -12,9 +12,18 @@
  ***************************************************************************/
 #include "schematic_dialog.h"
 #include "schematic_doc.h"
-//#include <QUndoCommand>
-
+/*--------------------------------------------------------------------------*/
 void SchematicDialog::execute(QUndoCommand* c)
 {
 	Doc->executeCommand(c);
 }
+/*--------------------------------------------------------------------------*/
+SchematicDialog::SchematicDialog(QucsDoc* d)
+  : QDialog(prechecked_cast<SchematicDoc*>(d))
+{
+  assert(d);
+  Doc=dynamic_cast<SchematicDoc*>(d);
+  assert(Doc);
+}
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
