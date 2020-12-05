@@ -89,7 +89,9 @@ private: // overrides
 
 	void proto(SchematicModel const* schem);
 	void build_sckt(SubcktBase* proto) const;
-}; // Subcircuit
+}d0; // Subcircuit
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Sub", &d0);
+static Module::INSTALL pp("stuff", &d0);
 /*--------------------------------------------------------------------------*/
 Subcircuit::Subcircuit() : Component() // gaah sckt_base
 {
@@ -701,12 +703,6 @@ void Subcircuit::setParameter(unsigned i, std::string const& value)
 	}else{ untested();
 		incomplete();
 	}
-}
-
-namespace{
-Subcircuit D;
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Sub", &D);
-static Module::INSTALL pp("stuff", &D);
 }
 
 }

@@ -1,9 +1,6 @@
 /***************************************************************************
-                              verilogfile.cpp
-                              ---------------
-    begin                : Sat Mar 31 2007
     copyright            : (C) 2007 by Stefan Jahn
-    email                : stefa@lkcc.org
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -14,10 +11,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-
-#include "verilogfile.h"
 #include "qucs.h"
-//#include "schematic.h"
 #include "io.h"
 #include "qucsdoc.h"
 #include "misc.h"
@@ -26,6 +20,50 @@
 #include <QTextStream>
 #include <QRegExp>
 #include <QFileInfo>
+
+#include "components/component.h"
+#include "globals.h"
+#include "module.h"
+
+class DocumentStream;
+class QString;
+
+namespace{
+
+class Verilog_File : public MultiViewComponent  {
+public:
+  Verilog_File();
+ ~Verilog_File() {};
+  Component* newOne() ; // BUG {return new Verilog_File(*this);}
+  static Element* info(QString&, char* &, bool getNewOne=false);
+
+  bool createSubNetlist(DocumentStream&); // BUG
+  QString getErrorText() { return ErrText; }
+  QString getSubcircuitFile() const;
+
+protected:
+  QString verilogCode(int);
+  void createSymbol();
+  QString loadFile();
+
+  QString ModuleName;
+  QString ErrText;
+}d0;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "VerilogFile", &d0);
+static Module::INSTALL pp("stuff", &d0);
+
+class Verilog_File_Info {
+public:
+  Verilog_File_Info();
+  Verilog_File_Info(QString, bool isfile = false);
+ ~Verilog_File_Info() {};
+  QString parsePorts(QString, int);
+
+public:
+  QString ModuleName;
+  QString PortNames;
+};
+
 
 
 Verilog_File::Verilog_File()
@@ -55,6 +93,7 @@ Component* Verilog_File::newOne()
 }
 
 // -------------------------------------------------------
+#if 0
 Element* Verilog_File::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Verilog file");
@@ -67,6 +106,7 @@ Element* Verilog_File::info(QString& Name, char* &BitmapFile, bool getNewOne)
   }
   return 0;
 }
+#endif
 
 // -------------------------------------------------------
 QString Verilog_File::verilogCode(int)
@@ -308,4 +348,5 @@ QString Verilog_File_Info::parsePorts(QString s, int i)
   s.remove('\n');
   s.remove('\t');
   return s;
+}
 }

@@ -110,7 +110,6 @@ qucs_default_components_la_SOURCES += \
 	vacomponent.cpp \
 	vhdlfile.cpp \
 	ground.cpp \
-	verilogfile.cpp \
 	equation.cpp \
 	vafile.cpp \
 	spicefile.cpp
@@ -132,7 +131,7 @@ noinst_HEADERS = $(MOCHEADERS) \
   logical_xor.h logical_xnor.h logical_inv.h digi_sim.h digi_source.h \
   coupler.h rs_flipflop.h d_flipflop.h jk_flipflop.h coaxialline.h \
   switch.h relais.h am_modulator.h pm_modulator.h opt_sim.h tline_4port.h \
-  twistedpair.h bondwire.h verilogfile.h vexp.h iexp.h \
+  twistedpair.h bondwire.h vexp.h iexp.h \
   eqndefined.h vfile.h ifile.h mod_amp.h thyristor.h triac.h \
   diac.h log_amp.h potentiometer.h rfedd.h rfedd2p.h MESFET.h \
   rectline.h photodiode.h EKV26MOS.h rlcg.h \
