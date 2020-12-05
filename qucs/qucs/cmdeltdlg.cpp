@@ -36,14 +36,6 @@
 #include <QDebug>
 #include "swap.h"
 
-SchematicDialog::SchematicDialog(QucsDoc* d)
-  : QDialog(prechecked_cast<SchematicDoc*>(d))
-{
-  assert(d);
-  Doc=dynamic_cast<SchematicDoc*>(d);
-  assert(Doc);
-}
-
 TaskElementDialog::TaskElementDialog(QucsDoc* d) : SchematicDialog(d)
 {
   resize(450, 250);
