@@ -21,6 +21,7 @@ LEGACY_SRC = \
 	simulator.cpp \
 	smithdiagram.cpp \
 	subcircuit.cpp \
+	verilogfile.cpp \
 	tabdiagram.cpp
 
 NOTYET_SRC = \

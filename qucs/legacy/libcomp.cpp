@@ -278,7 +278,7 @@ private: // Symbol
 	}
 	unsigned paramCount() const{ return Symbol::paramCount() + 4 + _params.size(); }
 	void setParameter(unsigned n, std::string const& v) override{ untested();
-		assert(n<LibComp::paramCount());
+		assert(n<Lib::paramCount());
 		bool redo = false;
 		int m = int(n) - int(Symbol::paramCount());
 		trace3("Lib:SP", n, v, m);
