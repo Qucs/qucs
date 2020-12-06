@@ -12,7 +12,7 @@ copyright            : 2016, 2020 Felix Salfelder
  ***************************************************************************/
 
 // attach plugins.
-// basic functionality inspired by gnucap, but without command base.
+// basic functionality inspired by gnucap.
 
 #include <iostream>
 #include <map>
@@ -22,20 +22,29 @@ copyright            : 2016, 2020 Felix Salfelder
 #include "command.h"
 #include "ap.h"
 #include "io_trace.h"
+#include "globals.h"
+#include <unistd.h>	// TODO: io_.h
+
+std::string findfile(const std::string& filename, const std::string& path, int mode);
+
+namespace{
 
 class plugins : public Command{
 public:
-  ~plugins(){
+	explicit plugins() : Command(){ untested();
+	}
+public:
+  ~plugins(){ untested();
     for (std::map<std::string, void*>::iterator ii = attach_list.begin();
-	ii != attach_list.end(); ++ii) {
+	ii != attach_list.end(); ++ii) { untested();
       void* m=ii->second;
-      if(m){
+      if(m){ untested();
 	dlclose(m);
       }
     }
   }
 
-  void attach(std::string what){
+  void attach(std::string what){ untested();
     // RTLD_NOW means to resolve symbols on loading
     // RTLD_LOCAL means symbols defined in a plugin are local
     int dl_scope = RTLD_LOCAL;
@@ -43,9 +52,9 @@ public:
     void* handle;
 
     handle = dlopen((what).c_str(), check | dl_scope);
-    if (handle) {
+    if (handle) { untested();
       attach_list[what] = handle;
-    }else{
+    }else{ untested();
       std::cerr << "failed to attach " << what << " (" << errno << ")\n";
       std::cerr << dlerror() << "\n";
       exit(1); // temporary, should actually throw.
@@ -54,13 +63,61 @@ public:
   }
 
 private:
-  virtual void do_it(istream_t&, SchematicModel*) {incomplete();}
+  virtual void do_it(istream_t&, SchematicModel*);
 private:
   std::map<std::string, void*> attach_list;
 } my_plugins;
+Dispatcher<Command>::INSTALL p(&command_dispatcher, "attach", &my_plugins);
 
-void attach(const char* what)
-{
-  my_plugins.attach(std::string(what));
+static std::string plugpath()
+{ untested();
+  const char* ppenv=getenv("QUCS_PLUGPATH");
+  if(!ppenv){ untested();
+    unreachable();
+	 return "";
+  }else{ untested();
+    return ppenv;
+  }
 }
 
+void plugins::do_it(istream_t& cs, SchematicModel*)
+{ untested();
+	cs.reset();
+	if(cs.umatch("attach")){ untested();
+		auto path = plugpath();
+		std::string what;
+		cs >> what;
+
+#if 0		// does not work
+		const int n = strlen(SOEXT);
+		if(what.size()<=n){ untested();
+		}else if(what[what.size()-n]!='.'){
+		}else{
+		}
+#else
+		what += SOEXT;
+#endif
+
+		std::string full_file_name;
+		if(what.size()==0){ untested();
+		}else if(what[0]=='.'){ untested();
+			full_file_name=what;
+		}else{ untested();
+			full_file_name = findfile(what, path, R_OK);
+		}
+
+		if (full_file_name != "") { untested();
+			// found it, with search
+		}else{untested();
+			std::cerr << "cannot find plugin " + what + " in " +path + "\n";
+			std::cerr << "(something wrong with installation?)\n";
+			exit(1);
+		}
+		attach(full_file_name.c_str());
+
+	}else{ untested();
+		incomplete();
+	}
+}
+
+}
