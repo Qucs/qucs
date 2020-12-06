@@ -25,8 +25,8 @@
 #endif
 
 #include "qucspowercombiningtool.h"
-#include "../qucs/qucs.h"
-#include "../qucs/misc.h"
+#include "qucs.h" // BUG?
+#include "misc.h"
 #include "../qucs-filter/material_props.h"
 
 

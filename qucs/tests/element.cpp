@@ -1,23 +1,19 @@
 /***************************************************************************
-										  element.cpp
-                                ----------
-    begin                : yes
     copyright            : 2018 by Felix Salfelder
-    email                : felix@salfelder.org
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This plugin is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
 // testing an element
 
-#include "../qucs/element.h"
+#include "element.h"
 
 struct install_element_stub{
 	install_element_stub(Element* e) : _e(e){}

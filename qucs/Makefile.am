@@ -28,7 +28,7 @@ check-recursive: all
 
 SUBDIRS = \
 	man \
-	qucs \
+	src \
 	qucs-activefilter \
 	qucs-attenuator \
 	qucs-filter \
@@ -43,6 +43,7 @@ SUBDIRS = \
 	contrib \
 	tests \
 	legacy \
+	plugins \
 	$(RELEASEDIRS)
 
 # used in qucs.in wrapper, to compile PATH

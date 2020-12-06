@@ -16,10 +16,13 @@
 # Boston, MA 02110-1301, USA.
 #
 
+include ../../common.mk
+
 AM_CPPFLAGS = -I${top_srcdir}/include -I${srcdir}/.. -I${top_srcdir} ${QT_CFLAGS} ${QTest_CFLAGS} -DPIC
 AM_DEFAULT_SOURCE_EXT = .cpp
 # AM_CXXFLAGS = -fPIC
 AM_LDFLAGS = -Wl,--no-as-needed
+LIBQUCS = ${top_builddir}/src/libqucs.la
 
 guitests = \
 	SchematicTests ElementTests ComponentTests
@@ -38,21 +41,21 @@ endif
 
 # model0_CPPFLAGS = ${AM_CPPFLAGS} -I${top_srcdir} -DUNTANGLE_QT
 model0_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) # yikes.
-model0_LDADD = ${top_builddir}/qucs/libqucs.la
+model0_LDADD = ${LIBQUCS}
 model0_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
 
 # model1_CPPFLAGS = ${AM_CPPFLAGS} -I${top_srcdir} -DUNTANGLE_QT
 model1_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) # yikes.
-model1_LDADD = ${top_builddir}/qucs/libqucs.la
+model1_LDADD = ${LIBQUCS}
 model1_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
 
-wire0_LDADD = ${top_builddir}/qucs/libqucs.la
+wire0_LDADD = ${LIBQUCS}
 wire0_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
 
-wire1_LDADD = ${top_builddir}/qucs/libqucs.la
+wire1_LDADD = ${LIBQUCS}
 wire1_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
 
-geometry0_LDADD = ${top_builddir}/qucs/libqucs.la
+geometry0_LDADD = ${LIBQUCS}
 geometry0_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
 
 NO_PLUGINS = \
@@ -82,8 +85,6 @@ ComponentTests_LDADD = \
 
 MOCFILES = ${check_PROGRAMS:%=%.moc.cpp}
 BUILT_SOURCES = ${MOCFILES}
-
-include ../../common.mk
 
 if COND_WIN32
 TESTS =

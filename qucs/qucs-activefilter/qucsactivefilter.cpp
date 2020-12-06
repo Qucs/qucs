@@ -27,7 +27,7 @@
 #endif
 #include <QTextCodec>
 
-#include "../qucs/qt_compat.h"
+#include "qt_compat.h"
 
 QucsActiveFilter::QucsActiveFilter(QWidget *parent)
     : QMainWindow(parent)

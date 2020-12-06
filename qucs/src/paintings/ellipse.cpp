@@ -218,6 +218,7 @@ QString Ellipse::save()
 }
 
 // --------------------------------------------------------------------------
+#if 0
 QString Ellipse::saveCpp()
 { untested();
 	 auto cx=Element::cx();
@@ -253,6 +254,7 @@ QString Ellipse::saveJSON()
     arg(b);
   return s;
 }
+#endif
 
 // --------------------------------------------------------------------------
 // Checks if the resize area was clicked.

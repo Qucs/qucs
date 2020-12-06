@@ -25,7 +25,7 @@
 #include <QDebug>
 #endif
 
-#include "trace.h"
+#include "io_trace.h"
 
 #ifndef QT_MAJOR_VERSION
 #define QT_MAJOR_VERSION (QT_VERSION >> 16)

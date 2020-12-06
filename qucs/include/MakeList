@@ -1,10 +1,18 @@
 
 HDR = \
 	ap.h \
+	data.h \
+	element.h \
+	object.h \
 	c_comand.h \
 	d_dot.h \
+	geometry.h \
 	io_error.h \
 	io_trace.h \
+	output.h \
+	port.h \
+	qt_compat.h \
+	tasks.h \
 	l_compar.h \
 	l_dispatcher.h \
 	u_parameter.h

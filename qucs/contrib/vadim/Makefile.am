@@ -20,6 +20,8 @@
 # Boston, MA 02110-1301, USA.
 #
 
+# include common.mk?
+
 plugindir = ${pkglibdir}
 plugin_LTLIBRARIES = vadim-components.la
 
@@ -34,6 +36,6 @@ vadim_components_la_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS)
 
 AM_CPPFLAGS = \
 		-I${top_srcdir}/include \
-		-I$(top_srcdir)/qucs
+		-I$(top_srcdir)/src
 
 CLEANFILES = *~ Makefile.in
