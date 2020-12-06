@@ -56,7 +56,6 @@ bin_PROGRAMS = qucs.real
 transform=s&\.real$$&&;$(program_transform_name)
 
 EXTRA_DIST = \
-	io_findf.cc \
 	README
 
 CLEANFILES = qucs_.cpp

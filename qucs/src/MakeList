@@ -2,6 +2,7 @@
 # 2020 Felix Salfelder
 
 CPP_SRC = \
+	globals.cpp \
 	attach.cpp \
 	c__cmd.cc \
 	cmdeltdlg.cpp \
@@ -13,11 +14,11 @@ CPP_SRC = \
 	element_graphics.cpp \
 	geometry.cpp \
 	ghostwire.cpp \
-	globals.cpp \
 	graph.cpp \
 	imagewriter.cpp \
 	io.cpp \
 	io_error.cpp \
+	io_findf.cc \
 	language.cpp \
 	marker.cpp \
 	messagedock.cpp \

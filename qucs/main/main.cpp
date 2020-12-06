@@ -55,6 +55,34 @@
 #include <Windows.h>  //for OutputDebugString
 #endif
 
+namespace OS{
+  inline std::string getenv(const std::string& s) {
+    char* ev = ::getenv(s.c_str());
+    if (ev) {
+      return ev;
+    }else{itested();
+      return "";
+    }
+  }
+  inline void setenv(const std::string& Name, const std::string& Value, bool Overwrite=true) {
+    if (Name == "") {untested();
+      throw Exception("setenv: bad name " + Name);
+    }else if (Value == "") {untested();
+      throw Exception("setenv: bad value " + Value);
+    }else if (!Overwrite && getenv(Name) != "") {
+      error(bDEBUG, "setenv: " + Name + " overwrite prohibited");
+    }else{
+      std::string ev = Name + "=" + Value;
+      char *es = ::strdup(ev.c_str());	//BUG// memory leak
+      assert(es);
+      if (::putenv(es) != 0) {untested();
+	throw Exception("");
+      }else{
+      }
+    }
+  }
+}
+
 static const std::string default_simulator="qucsator"; // FIXME: get from rc? maybe from environment?
 
 void setSimulator(char const* name)
@@ -103,21 +131,6 @@ void qucsMessageOutput(QtMsgType type, const char *msg)
 #ifdef _WIN32
   OutputDebugStringA(msg);
 #endif
-}
-
-/*!
- * \brief attaches shared object code
- */
-void attach(const char* what);
-
-static std::string plugpath()
-{
-  const char* ppenv=getenv("QUCS_PLUGPATH");
-  if(!ppenv){ untested();
-    return QUCS_PLUGPATH;
-  }else{
-    return ppenv;
-  }
 }
 
 // BUG: not here.
@@ -630,49 +643,46 @@ void createListComponentEntry()
   } // category
 }
 
-// TODO: turn into command.
-void attach_single(std::string const&path, std::string const& what)
+void attach_single(std::string const& what)
 {
-  std::string full_file_name;
-  if(what.size()==0){ untested();
-  }else if(what[0]=='.'){
-    full_file_name=what;
-  }else{
-    full_file_name = findfile(what, path, R_OK);
-  }
-
-  if (full_file_name != "") {
-    // found it, with search
-  }else{untested();
-    std::cerr << "cannot find plugin " + what + " in " +path + "\n";
-    std::cerr << "(something wrong with installation?)\n";
-    exit(1);
-  }
-  attach(full_file_name.c_str());
+  CMD::command(std::string("attach ") + what, nullptr);
 }
 
 void attach_default_plugins()
 {
-  std::string pp = plugpath();
-  attach_single(pp, "legacy" SOEXT);
-  attach_single(pp, "qucsator" SOEXT);
+  attach_single("legacy");
+  attach_single("qucsator");
 
   // TODO: remove "lib" prefix
-  attach_single(pp, "qucs-default-components" SOEXT);
-  attach_single(pp, "libpaintings" SOEXT);
-  attach_single(pp, "legacylib" SOEXT);
+  attach_single("qucs-default-components");
+  attach_single("libpaintings");
+  attach_single("legacylib");
  // attach_single(pp, "libdialogs" SOEXT);
  //
  //
  // not yet. legacy diagrams are now part of legacy (above)
  // new diagrams: load manually.
-  // attach_single(pp, "libdiagrams" SOEXT);
+  // attach_single(pp, "diagrams" SOEXT);
 }
 
 void qucsMessageHandler(QtMsgType type, const QMessageLogContext &, const QString & str)
 {
   auto msg=str.toStdString();
   qucsMessageOutput(type, msg.c_str());
+}
+
+static void prepare_env()
+{
+  static const char* plugpath="PLUGPATH=" QUCS_PLUGPATH
+                              "\0         (reserved space)                 ";
+
+  std::string ldlpath = OS::getenv("LD_LIBRARY_PATH");
+  if (ldlpath != "") {
+    ldlpath += ":";
+  }else{
+  }
+  assert(strlen("PLUGPATH=") == 9);
+  OS::setenv("QUCS_PLUGPATH", ldlpath + (plugpath+9), false);
 }
 
 // #########################################################################
@@ -682,6 +692,7 @@ void qucsMessageHandler(QtMsgType type, const QMessageLogContext &, const QStrin
 // #########################################################################
 int main(int argc, char *argv[])
 {
+  prepare_env();
   qInstallMsgHandler(qucsMessageHandler);
   // set the Qucs version string
   QucsVersion = VersionTriplet(PACKAGE_VERSION);
@@ -897,15 +908,9 @@ int main(int argc, char *argv[])
       orientation = argv[++i];
     }else if (!strcmp(argv[i], "-a")) {
       ++i;
-      qDebug() << "attaching" << argv[i];
-      std::string pp = plugpath();
       std::string what = argv[i];
-      if(what.size()<4){ untested();
-      }else if(what[what.size()-3]!='.'){
-	what += SOEXT;
-      }else{
-      }
-      attach_single(pp, what);
+      trace2("attaching", argv[i], what);
+      attach_single(what);
     }else if(!strcmp(argv[i], "-q") || !strcmp(argv[i], "--quit")) {
 	exit(0);
     }else if (!strcmp(argv[i], "-i")) {

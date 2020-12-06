@@ -35,15 +35,16 @@
 //#include "l_lib.h"
 #include "platform.h" // PATHSEP
 /*--------------------------------------------------------------------------*/
-// from io_
+// from io_ TODO
 #include <unistd.h>	/* chdir, access, getcwd */
+#include <string.h>
 namespace OS{
 inline bool access_ok(const std::string& file, int mode) {
   return (::access(file.c_str(), mode) == 0/*file_ok*/);
 }
 }
 /*--------------------------------------------------------------------------*/
-inline std::string findfile(const std::string& filename, const std::string& path, int mode)
+std::string findfile(const std::string& filename, const std::string& path, int mode)
 {
 #ifdef CHECK_LOCAL_FIRST
   if (OS::access_ok(filename, mode)) {untested();
