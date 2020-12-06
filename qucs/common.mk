@@ -36,3 +36,7 @@ SUFFIXES += .moc.cpp
 $(MOCFILES): $(top_builddir)/qt_version
 
 AM_CXXFLAGS = ${CXXFLAGS} -fPIC
+AM_CPPFLAGS = -I$(top_srcdir)/include
+
+# BUG
+AM_CPPFLAGS += -I$(top_srcdir)/src

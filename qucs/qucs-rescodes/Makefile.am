@@ -44,7 +44,7 @@ qucsrescodes_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 nodist_qucsrescodes_SOURCES = $(MOCFILES)
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS)
+AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
 qucsrescodes_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 qucsrescodes_LDADD = $(X11_LIBS) $(QT_LIBS)
 

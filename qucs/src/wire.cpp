@@ -494,6 +494,8 @@ Node* Wire::connectNode(unsigned i, NodeMap& nm)
 			n->setNetLabel(n2->netLabel());
 		}else if(!n2->hasNetLabel()){
 			n2->setNetLabel(n->netLabel());
+		}else if(n->netLabel() == n2->netLabel()){
+			// nothing to do
 		}else{
 			message(QucsMsgWarning, ("possible label conflict. not sure what to do in "
 					+ n->netLabel() + " vs " + n2->netLabel()).c_str());

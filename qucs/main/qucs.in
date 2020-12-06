@@ -39,11 +39,11 @@ if [ -z "$QUCS_LIBRARY" ]; then
 fi
 
 if [ -z "$QUCS_PLUGPATH" ]; then
-	QUCS_PLUGPATH="$top/qucs/sim/.libs";
-	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/qucs/components/.libs";
-	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/qucs/diagrams/.libs";
-	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/qucs/paintings/.libs";
-	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/qucs/dialogs/.libs";
+	QUCS_PLUGPATH="$top/plugins/.libs";
+	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/src/components/.libs";
+	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/src/diagrams/.libs";
+	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/src/paintings/.libs";
+	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/src/dialogs/.libs";
 	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/legacy/.libs";
 	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/contrib/.libs";
 fi

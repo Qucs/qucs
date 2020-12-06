@@ -27,7 +27,7 @@
 #include "nodemap.h"
 #include "netlist.h"
 #include "protomap.h"
-#include "sim/tasks.h"
+#include "tasks.h"
 /*--------------------------------------------------------------------------*/
 class Node;
 class SchematicDoc;

@@ -21,7 +21,7 @@
 #include "viewpainter.h"
 #include "diagram.h"
 #include "simulator.h"
-#include "sim/tasks.h"
+#include "tasks.h"
 #include "schematic_scene.h"
 #include "schematic_model.h"
 #include "schematic_lang.h"

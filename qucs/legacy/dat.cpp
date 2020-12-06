@@ -1,5 +1,5 @@
 
-#include "sim/data.h"
+#include "data.h"
 #include "dat.h"
 #include "qt_compat.h"
 #include <QFile> // hmm

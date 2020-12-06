@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# qucs/paintings/Makefile.am
+# qucs/diagrams/Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,32 +21,43 @@
 # the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
 # Boston, MA 02110-1301, USA.  
 #
-#
-include MakeList
 
-#private library
-qucsdir=${pkglibdir}
+# private library
+qucsdir = ${pkglibdir}
 
-qucs_LTLIBRARIES = libpaintings.la
+qucs_LTLIBRARIES = diagrams.la
 
-MOCHEADERS = arrowdialog.h graphictextdialog.h filldialog.h id_dialog.h
-MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
-
-libpaintings_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 include ../../common.mk
 
-libpaintings_la_SOURCES = ${SRCS}
+# MOCHEADERS = diagramdialog.h  markerdialog.h
+MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
+diagrams_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
+diagrams_la_LDFLAGS = -module -avoid-version
 
-nodist_libpaintings_la_SOURCES = $(MOCFILES)
+diagrams_la_SOURCES = \
+	rectdiagram.cpp
 
-#   paintings.h rectangle.h ellipsearc.h id_text.h
-noinst_HEADERS = $(MOCHEADERS) \
-	graphictext.h  \
-	graphictextdialog.h \
-	filldialog.h
+NOTYET = \
+	curvediagram.cpp \
+	markerdialog.cpp \
+	phasordiagram.cpp \
+	polardiagram.cpp \
+	psdiagram.cpp \
+	rect3ddiagram.cpp \
+	smithdiagram.cpp \
+	timingdiagram.cpp \
+	truthdiagram.cpp \
+	waveac.cpp
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include -I$(top_srcdir)/qucs
+nodist_diagrams_la_SOURCES = $(MOCFILES)
+
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include
+
+# BUG
+AM_CPPFLAGS += -I$(top_srcdir)/src
 
 CLEANFILES = *~ *.moc.cpp
 MAINTAINERCLEANFILES = Makefile.in
+
+noinst_HEADERS = graph.h

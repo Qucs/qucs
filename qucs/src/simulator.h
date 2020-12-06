@@ -24,7 +24,7 @@
 #include <QDebug>
 #include "object.h"
 #include "language.h"
-#include "sim/data.h"
+#include "data.h"
 
 class DocumentFormat;
 class NetLang;

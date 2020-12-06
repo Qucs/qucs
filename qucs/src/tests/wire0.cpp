@@ -2,8 +2,8 @@
 // (c) 2020 Felix Salfelder
 // GPLv3+
 
-#include <qucs/schematic_model.h>
-#include <qucs/components/ground.cpp>
+#include "schematic_model.h"
+#include "src/components/ground.cpp" // BUG
 #include "legacy/component.cpp" // BUG
 #include "legacy/gatecomponent.cpp" // BUG
 #include "globals.h"

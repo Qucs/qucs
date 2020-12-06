@@ -40,10 +40,10 @@ qucs_real_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) \
 
 if COND_WIN32
 qucs_real_LDADD = \
-	../qucs/libqucs.la
+	../src/libqucs.la
 else
 qucs_real_LDADD = \
-	../qucs/libqucs.la \
+	../src/libqucs.la \
 	$(X11_LIBS) $(QT_LIBS)
 endif
 
