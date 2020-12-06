@@ -39,7 +39,7 @@ qucsattenuator_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 nodist_qucsattenuator_SOURCES = $(MOCFILES)
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS)
+AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
 qucsattenuator_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 qucsattenuator_LDADD = $(X11_LIBS) $(QT_LIBS)
 

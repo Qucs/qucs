@@ -7,7 +7,7 @@ dnl Read version from file
 m4_define([QUCS_VERSION], m4_esyscmd([tr -d '\n' < VERSION]))
 
 AC_INIT([qucs], [QUCS_VERSION], [qucs-bugs@lists.sourceforge.net], [], [https://sf.net/p/qucs])
-AC_CONFIG_SRCDIR([qucs/qucs.cpp])
+AC_CONFIG_SRCDIR([src/qucs.cpp])
 
 # qt_version is not really a config header. it is touched whenever the
 # QT_VERSION changes, triggers moc recompilation
@@ -833,6 +833,7 @@ AC_CONFIG_FILES([Makefile
     main/Makefile
     man/Makefile
     examples/Makefile
+    plugins/Makefile
     qucs-filter/Makefile
     qucs-activefilter/Makefile
     qucs-transcalc/Makefile
@@ -844,15 +845,14 @@ AC_CONFIG_FILES([Makefile
     qucs-attenuator/bitmaps/Makefile
     qucs-rescodes/Makefile
     qucs-powercombining/Makefile
-    qucs/Makefile
-    qucs/action/Makefile
-    qucs/bitmaps/Makefile
-    qucs/octave/Makefile
-    qucs/components/Makefile
-    qucs/diagrams/Makefile
-    qucs/paintings/Makefile
-    qucs/sim/Makefile
-    qucs/tests/Makefile
+    src/Makefile
+    src/action/Makefile
+    src/bitmaps/Makefile
+    src/octave/Makefile
+    src/components/Makefile
+    src/diagrams/Makefile
+    src/paintings/Makefile
+    src/tests/Makefile
     tests/Makefile
     translations/Makefile
     man/qucs.1

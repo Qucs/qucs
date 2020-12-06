@@ -16,7 +16,7 @@
 #define QUCS_COMPONENT_H
 
 #include "../symbol.h" // FIXME
-#include "../qt_compat.h" // FIXME
+#include "qt_compat.h"
 #include "../legacy/obsolete_paintings.h"
 #include "property.h"
 

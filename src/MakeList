@@ -108,10 +108,8 @@ HDR1 = \
 	conductor.h \
 	docfmt.h \
 	dynamic_cc.h \
-	element.h \
 	element_graphics.h \
 	exception.h \
-	geometry.h \
 	imagewriter.h \
   	imagewriter.h \
 	language.h \
@@ -123,12 +121,10 @@ HDR1 = \
 	node.h \
 	nodemap.h \
 	painting.h \
-	port.h \
 	printerwriter.h \
 	projectView.h \
 	property.h \
 	protomap.h \
-	qt_compat.h \
 	qucsdoc.h \
 	simulator.h \
 	symbol.h \
@@ -161,11 +157,9 @@ HDR2 = \
 	mnemo.h \
 	module.h \
 	mouseactions.h \
-	object.h \
 	platform.h \
 	printerwriter.h \
 	projectView.h \
-	qt_compat.h \
 	schematic_lang.h \
 	schematic_model.h \
 	schematic_symbol.h \

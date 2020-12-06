@@ -38,7 +38,7 @@ qucsactivefilter_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 nodist_qucsactivefilter_SOURCES = $(MOCFILES)
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS)
+AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
 qucsactivefilter_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 qucsactivefilter_LDADD = $(X11_LIBS) $(QT_LIBS)
 

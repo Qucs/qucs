@@ -24,15 +24,13 @@
 
 pkglib_LTLIBRARIES = verilog.la
 AM_DEFAULT_SOURCE_EXT = .cpp
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include -I$(top_srcdir)/qucs
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include
+
+#BUG
+AM_CPPFLAGS += -I$(top_srcdir)/src
 
 verilog_la_SOURCES = verilog.cpp verilog_nl.cpp
 verilog_la_LDFLAGS = -module -avoid-version
 # verilog_la_CPPFLAGS = $(AM_CPPFLAGS)
 # need Qt for TextStream (BUG?)
 verilog_la_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES)
-
-noinst_HEADERS = \
-	data.h \
-	output.h \
-	tasks.h

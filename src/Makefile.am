@@ -35,7 +35,6 @@ SUBDIRS = \
 	diagrams \
 	paintings \
 	octave \
-	sim \
 	tests
 
 all-local: qucs

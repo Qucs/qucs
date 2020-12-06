@@ -2,7 +2,7 @@
 // (c) 2020 Felix Salfelder
 // GPLv3+
 
-#include <qucs/schematic_model.h>
+#include "schematic_model.h"
 #include "globals.h"
 
 static const unsigned N=9999;
