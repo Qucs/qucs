@@ -297,7 +297,9 @@ private: // Symbol
 			break;
 		default: untested();
 			trace3("fwd", n, m, v);
-			if(m - 4 >= _params.size()){ untested();
+			if(m - 4 < 0){
+				Symbol::setParameter(n, v);
+			}else if(m - 4 >= int(_params.size())){ untested();
 				Symbol::setParameter(n, v);
 			}else if(auto p = dynamic_cast<PARAMETER<double>* >(_params[m-4])){ untested();
 				*p = v;
@@ -337,7 +339,9 @@ private: // Symbol
 		case 3:
 			return _component.Value.toStdString();
 		default: untested();
-			if(m - 4 >= _param_names.size()){ untested();
+			if(m - 4 < 0){
+				return Symbol::paramValue(i);
+			}else if(m - 4 >= int(_param_names.size())){ untested();
 				return Symbol::paramValue(i);
 			}else if(auto p = dynamic_cast<PARAMETER<double>* >(_params[m-4])){ untested();
 			  	return p->string();
@@ -359,10 +363,12 @@ private: // Symbol
 		case 3:
 			return "Component";
 		default:itested();
-			if(m - 4 >= _param_names.size()){ untested();
+			if(m - 4 < 0){
 				return Symbol::paramName(i);
-			}else{
+			}else if(m - 4 < int(_param_names.size())){ untested();
 			  	return _param_names[m-4];
+			}else{
+				return Symbol::paramName(i);
 			}
 		}
 	}
