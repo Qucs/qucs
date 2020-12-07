@@ -592,7 +592,7 @@ void attach_default_plugins()
 
   // TODO: remove "lib" prefix
   attach_single("qucs-default-components");
-  attach_single("libpaintings");
+  attach_single("paintings");
   attach_single("legacylib");
   attach_single("misc");
  // attach_single(pp, "libdialogs" SOEXT);

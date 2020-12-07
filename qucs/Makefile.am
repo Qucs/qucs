@@ -43,6 +43,7 @@ SUBDIRS = \
 	contrib \
 	tests \
 	legacy \
+	paintings \
 	plugins \
 	$(RELEASEDIRS)
 
