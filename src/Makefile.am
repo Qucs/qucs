@@ -33,7 +33,6 @@ SUBDIRS = \
 	bitmaps \
 	components \
 	diagrams \
-	paintings \
 	octave \
 	tests
 

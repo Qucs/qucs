@@ -24,21 +24,19 @@
 #
 include MakeList
 
-#private library
-qucsdir=${pkglibdir}
+include ../common.mk
 
-qucs_LTLIBRARIES = libpaintings.la
+pkglib_LTLIBRARIES = paintings.la
 
 MOCHEADERS = arrowdialog.h graphictextdialog.h filldialog.h id_dialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-libpaintings_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
-include ../../common.mk
+paintings_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
+paintings_la_LDFLAGS = -module -avoid-version
 
-libpaintings_la_SOURCES = ${SRCS}
+paintings_la_SOURCES = ${SRCS}
 
-
-nodist_libpaintings_la_SOURCES = $(MOCFILES)
+nodist_paintings_la_SOURCES = $(MOCFILES)
 
 #   paintings.h rectangle.h ellipsearc.h id_text.h
 noinst_HEADERS = $(MOCHEADERS) \
@@ -46,7 +44,7 @@ noinst_HEADERS = $(MOCHEADERS) \
 	graphictextdialog.h \
 	filldialog.h
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include
+AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
 
 # BUG
 AM_CPPFLAGS += -I$(top_srcdir)/src
