@@ -931,6 +931,10 @@ SchematicActions::SchematicActions(SchematicDoc& ctx)
 	assert(port);
 	maInsertPort = new MouseActionNewElement(*this, port);
 
+	Element const* eqn = symbol_dispatcher["Eqn"];
+	assert(eqn);
+	maInsertEqn = new MouseActionNewElement(*this, eqn);
+
 	maInsertElement = new MouseActionNewElement(*this);
 
 	maActivate = new MouseActionActivate(*this);
@@ -988,10 +992,9 @@ void SchematicDoc::actionInsertGround(QAction* sender)
 	possiblyToggleAction(schematicActions().maInsertGround, sender);
 }
 /*--------------------------------------------------------------------------*/
-void SchematicDoc::actionInsertEquation(QAction*)
+void SchematicDoc::actionInsertEquation(QAction* sender)
 {
-	incomplete();
-  //possiblyToggleAction(schematicActions().maInsertEqn, sender);
+	possiblyToggleAction(schematicActions().maInsertEqn, sender);
 }
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::actionInsertPort(QAction* sender)

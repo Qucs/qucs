@@ -16,7 +16,7 @@
 
 #include "some_font_stuff.h"
 
-#include "component.h"
+#include "components/component.h" // BUG
 
 namespace{
 

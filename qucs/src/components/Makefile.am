@@ -110,10 +110,10 @@ qucs_default_components_la_SOURCES += \
 	vacomponent.cpp \
 	vhdlfile.cpp \
 	ground.cpp \
-	equation.cpp \
 	vafile.cpp \
 	spicefile.cpp
 
+# TODO: get rid of these
 noinst_HEADERS = $(MOCHEADERS) \
 	libcomp.h \
 	components.h \
