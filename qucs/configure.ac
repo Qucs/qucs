@@ -833,6 +833,7 @@ AC_CONFIG_FILES([Makefile
     main/Makefile
     man/Makefile
     examples/Makefile
+    paintings/Makefile
     plugins/Makefile
     qucs-filter/Makefile
     qucs-activefilter/Makefile
@@ -851,7 +852,6 @@ AC_CONFIG_FILES([Makefile
     src/octave/Makefile
     src/components/Makefile
     src/diagrams/Makefile
-    src/paintings/Makefile
     src/tests/Makefile
     tests/Makefile
     translations/Makefile

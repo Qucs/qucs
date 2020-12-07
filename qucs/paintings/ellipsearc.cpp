@@ -14,8 +14,9 @@
 #include "filldialog.h"
 #include "qucs.h"
 #include "misc.h"
-//#include "schematic_doc.h" // BUG
 #include "painting.h"
+#include "module.h"
+#include "globals.h"
 
 #include <QPainter>
 #include <QPushButton>
@@ -54,7 +55,9 @@ public:
 
   QPen  Pen;
   int   Angle, ArcLen;   // start angle and arc length
-};
+}d0;
+Dispatcher<Painting>::INSTALL p(&painting_dispatcher, "EArc", &d0);
+Module::INSTALL pp("paintings", &d0);
 
 EllipseArc::EllipseArc() : Painting()
 {
