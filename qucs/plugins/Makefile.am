@@ -22,7 +22,7 @@
 # Boston, MA 02110-1301, USA.
 #
 
-pkglib_LTLIBRARIES = verilog.la
+pkglib_LTLIBRARIES = verilog.la misc.la
 AM_DEFAULT_SOURCE_EXT = .cpp
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include
 
@@ -34,3 +34,7 @@ verilog_la_LDFLAGS = -module -avoid-version
 # verilog_la_CPPFLAGS = $(AM_CPPFLAGS)
 # need Qt for TextStream (BUG?)
 verilog_la_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES)
+
+
+misc_la_SOURCES = listcompentry.cpp
+misc_la_LDFLAGS = -module -avoid-version

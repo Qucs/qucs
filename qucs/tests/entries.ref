@@ -1,4 +1,44 @@
 ==============
+  <Eqn my_Eqn 1 0 0 1 9 0 0 "y=1" 1 "yes" 0>
+Eqn #(.y(1), .Export(yes)) my_Eqn();
+Eqn:my_Eqn y="1" Export="yes"
+==============
+  <Tr my_Tr 1 0 0 -29 38 0 0 "1" 1>
+Tr #(.T(1)) my_Tr((null), (null), (null), (null));
+Tr:my_Tr (null) (null) (null) (null) T="1"
+==============
+  <sTr my_sTr 1 0 0 -29 78 0 0 "1" 1 "1" 1>
+sTr #(.T1(1), .T2(1)) my_sTr((null), (null), (null), (null), (null), (null));
+sTr:my_sTr (null) (null) (null) (null) (null) (null) T1="1" T2="1"
+==============
+  <C my_C 1 0 0 -26 17 0 0 "1 pF" 1 "" 0 "neutral" 0>
+C #(.C(1 pF), .V(), .Symbol(neutral)) my_C((null), (null));
+C:my_C (null) (null) C="1 pF" V=""
+==============
+  <L my_L 1 0 0 -26 10 0 0 "1 nH" 1 "" 0>
+L #(.L(1 nH), .I()) my_L((null), (null));
+L:my_L (null) (null) L="1 nH" I=""
+==============
+  <OpAmp my_OpAmp 1 0 0 -26 42 0 0 "1e6" 1 "15 V" 0>
+OpAmp #(.G(1e6), .Umax(15 V)) my_OpAmp((null), (null), (null));
+OpAmp:my_OpAmp (null) (null) (null) G="1e6" Umax="15 V"
+==============
+  <R my_R 1 0 0 -26 15 0 0 "50 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+R #(.R(50 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) my_R((null), (null));
+R:my_R (null) (null) R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+==============
+  <Port my_Port 1 0 0 -23 12 0 0 "1" 1 "analog" 0>
+Port #(.Num(1), .Type()) my_Port((null));
+Port:my_Port (null) Num="1" Type=""
+=====ideal transmission line=========
+  <TLIN my_TLIN 1 0 0 -26 20 0 0 "50 Ohm" 1 "1 mm" 1 "0 dB" 0 "26.85" 0>
+TLIN #(.Z(50 Ohm), .L(1 mm), .Alpha(0 dB), .Temp(26.85)) my_TLIN((null), (null));
+TLIN:my_TLIN (null) (null) Z="50 Ohm" L="1 mm" Alpha="0 dB" Temp="26.85"
+==============
+  <GND my_GND 5 0 0 0 0 0 0>
+GND #() my_GND((null));
+GND:my_GND (null)
+==============
   <Sub my_Sub 1 0 0 0 0 0 0 "" 0>
 Sub #(.File()) my_Sub((null));
 Sub:my_Sub (null)
@@ -78,46 +118,6 @@ MSTEP:my_MSTEP (null) (null) Subst="Subst1" W1="2 mm" W2="1 mm" MSModel="Hammers
   <MTEE my_MTEE 1 0 0 -26 -25 0 0 "Subst1" 1 "1 mm" 1 "1 mm" 1 "2 mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0 "showNumbers" 0>
 MTEE #(.Subst(Subst1), .W1(1 mm), .W2(1 mm), .W3(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Temp(26.85), .Symbol(showNumbers)) my_MTEE((null), (null), (null));
 MTEE:my_MTEE (null) (null) (null) Subst="Subst1" W1="1 mm" W2="1 mm" W3="2 mm" MSModel="Hammerstad" MSDispModel="Kirschning" Temp="26.85"
-==============
-  <Tr my_Tr 1 0 0 -29 38 0 0 "1" 1>
-Tr #(.T(1)) my_Tr((null), (null), (null), (null));
-Tr:my_Tr (null) (null) (null) (null) T="1"
-==============
-  <sTr my_sTr 1 0 0 -29 78 0 0 "1" 1 "1" 1>
-sTr #(.T1(1), .T2(1)) my_sTr((null), (null), (null), (null), (null), (null));
-sTr:my_sTr (null) (null) (null) (null) (null) (null) T1="1" T2="1"
-==============
-  <C my_C 1 0 0 -26 17 0 0 "1 pF" 1 "" 0 "neutral" 0>
-C #(.C(1 pF), .V(), .Symbol(neutral)) my_C((null), (null));
-C:my_C (null) (null) C="1 pF" V=""
-==============
-  <L my_L 1 0 0 -26 10 0 0 "1 nH" 1 "" 0>
-L #(.L(1 nH), .I()) my_L((null), (null));
-L:my_L (null) (null) L="1 nH" I=""
-==============
-  <OpAmp my_OpAmp 1 0 0 -26 42 0 0 "1e6" 1 "15 V" 0>
-OpAmp #(.G(1e6), .Umax(15 V)) my_OpAmp((null), (null), (null));
-OpAmp:my_OpAmp (null) (null) (null) G="1e6" Umax="15 V"
-==============
-  <R my_R 1 0 0 -26 15 0 0 "50 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-R #(.R(50 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) my_R((null), (null));
-R:my_R (null) (null) R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-==============
-  <Port my_Port 1 0 0 -23 12 0 0 "1" 1 "analog" 0>
-Port #(.Num(1), .Type()) my_Port((null));
-Port:my_Port (null) Num="1" Type=""
-=====ideal transmission line=========
-  <TLIN my_TLIN 1 0 0 -26 20 0 0 "50 Ohm" 1 "1 mm" 1 "0 dB" 0 "26.85" 0>
-TLIN #(.Z(50 Ohm), .L(1 mm), .Alpha(0 dB), .Temp(26.85)) my_TLIN((null), (null));
-TLIN:my_TLIN (null) (null) Z="50 Ohm" L="1 mm" Alpha="0 dB" Temp="26.85"
-==============
-  <GND my_GND 5 0 0 0 0 0 0>
-GND #() my_GND((null));
-GND:my_GND (null)
-==============
-  <Eqn my_Eqn 1 0 0 1 9 0 0 "y=1" 1 "yes" 0>
-Eqn #(.y(1), .Export(yes)) my_Eqn();
-Eqn:my_Eqn y="1" Export="yes"
 ==============
   <.AC my_AC 1 0 0 0 33  0 0 "lin" 1 "1 GHz" 1 "10 GHz" 1 "19" 1 "no" 0>
 //my_AC

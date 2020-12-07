@@ -579,69 +579,6 @@ void createDocData()
 #endif
 }
 
-// createListNetEntry prints to stdout the available netlist formats
-//
-//  Prints the default component entries format for
-//   - Qucs schematic
-//   - Qucsator netlist
-//   - Verilog netlist
-//   - Verilog schematic
-//
-// table for quick reference and testing
-void createListComponentEntry()
-{
-  QStringList cats = Category::getCategories ();
-  QFile data("/dev/stdout");
-  data.open (QFile::WriteOnly | QFile::Truncate);
-  ostream_t s(&data);
-
-  auto lang = doclang_dispatcher["leg_sch"];
-  assert(lang);
-  auto qucsatorlang = doclang_dispatcher["qucsator"];
-  assert(qucsatorlang);
-  auto verilog = doclang_dispatcher["verilog"];
-
-  foreach(QString category, cats) {
-
-    QList<Module *> Comps;
-    Comps = Category::getModules(category);
-
-    // \fixme, crash with diagrams, skip
-    if(category == "diagrams") continue;
-
-//    char * File;
-    QString Name;
-
-    foreach (Module *Mod, Comps) {
-      qDebug() << "some module";
-      Element const *e = Mod->element();
-//      Component const *cc = prechecked_cast<Component const*>(e);
-      Element *ce = e->clone();
-      assert(ce);
-
-      s << "=====" << e->label() << "=========\n";
-
-      if(auto c = dynamic_cast<Symbol*>(ce)){
-	ce->setLabel("my_" + c->typeName());
-      }else if(auto c = dynamic_cast<TaskElement*>(ce)){
-	ce->setLabel("my_" + c->typeName().toStdString());
-      }else{
-	// not sure.
-      }
-
-      lang->printItem(ce, s);
-      s << "\n";
-
-      if(verilog){
-	verilog->printItem(ce, s);
-      }else{ untested();
-      }
-
-      qucsatorlang->printItem(ce, s);
-
-    } // module
-  } // category
-}
 
 void attach_single(std::string const& what)
 {
@@ -657,6 +594,7 @@ void attach_default_plugins()
   attach_single("qucs-default-components");
   attach_single("libpaintings");
   attach_single("legacylib");
+  attach_single("misc");
  // attach_single(pp, "libdialogs" SOEXT);
  //
  //
@@ -929,10 +867,10 @@ int main(int argc, char *argv[])
       return 0;
     }else if(!strcmp(argv[i], "-list-entries")) {
       incomplete(); // don't use.
-      createListComponentEntry();
+      CMD::command(std::string("listcompentry "), nullptr);
       return 0;
     }else if(!strcmp(argv[i], "--list-entries")) {
-      createListComponentEntry();
+      CMD::command(std::string("listcompentry "), nullptr);
       return 0;
     }
     else {
