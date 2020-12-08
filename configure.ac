@@ -821,17 +821,15 @@ AH_TOP([
 #endif
 ])
 
-
-
-
 dnl Add here all your Makefiles. These are created by configure.
-AC_CONFIG_FILES([Makefile
+AC_CONFIG_FILES([Makefile:autotools/top.in
     contrib/Makefile
     contrib/vadim/Makefile
     include/Makefile
     legacy/Makefile
     main/Makefile
     man/Makefile
+    autotools/Makefile
     diagrams/Makefile
     examples/Makefile
     paintings/Makefile
@@ -847,7 +845,7 @@ AC_CONFIG_FILES([Makefile
     qucs-attenuator/bitmaps/Makefile
     qucs-rescodes/Makefile
     qucs-powercombining/Makefile
-    src/Makefile
+    src/Makefile:autotools/src.in
     src/action/Makefile
     src/bitmaps/Makefile
     src/octave/Makefile
