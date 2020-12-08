@@ -27,7 +27,7 @@ qucsdir = ${pkglibdir}
 
 qucs_LTLIBRARIES = diagrams.la
 
-include ../../common.mk
+include ../common.mk
 
 # MOCHEADERS = diagramdialog.h  markerdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
@@ -52,12 +52,10 @@ NOTYET = \
 
 nodist_diagrams_la_SOURCES = $(MOCFILES)
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include
+AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
 
 # BUG
 AM_CPPFLAGS += -I$(top_srcdir)/src
 
 CLEANFILES = *~ *.moc.cpp
 MAINTAINERCLEANFILES = Makefile.in
-
-noinst_HEADERS = graph.h

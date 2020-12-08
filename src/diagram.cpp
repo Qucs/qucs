@@ -52,6 +52,7 @@
 #include <QRectF>
 #include "some_font_stuff.h"
 #include "../legacy/obsolete_paintings.h" // BUG
+#include "graph.h"
 
 Diagram::Diagram(Diagram const& p)
   : Element(p),
@@ -393,7 +394,7 @@ Marker* Diagram::setMarker(int x, int y)
 // Cohen-Sutherland clipping algorithm
 // possibly better to leave this to Qt.
 // the real issue is resampling, not clipping.
-void Diagram::rectClip(Graph::iterator &p) const
+void Diagram::rectClip(GraphIterator &p) const
 { untested();
   int code, z=0;
   float x=0, y=0, dx, dy;

@@ -41,6 +41,7 @@ SUBDIRS = \
 	include \
 	main \
 	contrib \
+	diagrams \
 	tests \
 	legacy \
 	paintings \

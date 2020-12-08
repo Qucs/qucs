@@ -3,6 +3,7 @@ LEGACY_SRC = \
 	component.cpp \
 	gatecomponent.cpp \
 	curvediagram.cpp \
+	diagram.cpp \
 	equation.cpp \
 	libcomp.cpp \
 	markerdialog.cpp \

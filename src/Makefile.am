@@ -32,7 +32,6 @@ SUBDIRS = \
 	action \
 	bitmaps \
 	components \
-	diagrams \
 	octave \
 	tests
 

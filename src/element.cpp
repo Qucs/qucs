@@ -176,7 +176,7 @@ WireLabel* wireLabel(Element* e){ return dynamic_cast<WireLabel*>(e); }
 Diagram* diagram(Element* e){ return dynamic_cast<Diagram*>(e); }
 Painting* painting(Element* e){ return dynamic_cast<Painting*>(e); }
 Marker* marker(Element* e){ return dynamic_cast<Marker*>(e); }
-Graph* graph(Element* e){ return dynamic_cast<Graph*>(e); }
+//Graph* graph(Element* e){ return dynamic_cast<Graph*>(e); }
 Node* node(Element* e){ return dynamic_cast<Node*>(e); }
 //Label* label(Element* e){ return dynamic_cast<Label*>(e); }
 
