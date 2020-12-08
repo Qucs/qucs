@@ -51,7 +51,6 @@ endif
 
 bin_SCRIPTS = qucsdigi${BAT_EXT} qucsveri${BAT_EXT} qucsdigilib${BAT_EXT}
 
-
 UICFILES = ui_searchdialog.h
 BUILT_SOURCES = $(UICFILES)
 
@@ -94,7 +93,10 @@ libqucs_la_SOURCES = \
 
 libqucs_la_SOURCES += qucs_.qrc
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include -I$(top_srcdir)/qucs-lib
+AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
+
+# BUG
+AM_CPPFLAGS += -I$(top_srcdir)/qucs-lib
 
 
 noinst_HEADERS = $(HDR1) $(HDR2) $(MOCHEADERS)
@@ -123,7 +125,6 @@ hicolorsc_DATA =bitmaps/hicolor/scalable/apps/qucs.svg
 desktopdir = ${prefix}/share/applications
 desktop_DATA = qucs.desktop
 
-
 EXTRA_DIST = \
 	searchdialog.ui \
 	qucsdigi qucsdigilib qucsdigi.bat qucsdigilib.bat qucsveri qucsveri.bat \
@@ -139,7 +140,6 @@ EXTRA_DIST = \
 	bitmaps/qucsedit.icns \
 	bitmaps/qucsrescodes.icns \
 	bitmaps/qucstrans.icns
-
 
 CLEANFILES = *~ *.rej *.orig qucs_.cpp *.moc.cpp qucs \
 	${UICFILES}
