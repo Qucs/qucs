@@ -27,6 +27,7 @@ ACLOCAL_AMFLAGS=-Im4
 check-recursive: all
 
 SUBDIRS = \
+	autotools \
 	man \
 	src \
 	qucs-activefilter \
