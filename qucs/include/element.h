@@ -219,17 +219,13 @@ class Marker;
 WireLabel const* wireLabel(Element const*);
 Diagram const* diagram(Element const*);
 Painting const* painting(Element const*);
-Graph const* graph(Element const*);
 /*--------------------------------------------------------------------------*/
 // Component* component(Element*);
 TaskElement* command(Element*);
 inline Element*& element(Element*& x){return x;}
 WireLabel* wireLabel(Element*);
-Diagram* diagram(Element*);
 Painting* painting(Element*);
-Graph* graph(Element*);
 Marker* marker(Element*);
-Node* node(Element*);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif

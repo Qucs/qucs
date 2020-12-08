@@ -196,7 +196,7 @@ Element* SchematicModel::attach(Element* what)
 			trace1("SchematicModel::pushBack no command", c->label());
 			// possibly a subcircuit model? ignore commands.
 		}
-	}else if(auto d=diagram(what)){
+	}else if(auto d=dynamic_cast<Diagram*>(what)){
 		diagrams().append(d);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
 		if(c->is_device()){

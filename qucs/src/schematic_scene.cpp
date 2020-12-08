@@ -75,7 +75,7 @@ Diagram* diagram(QGraphicsItem* g)
 {
 	auto e=dynamic_cast<ElementGraphics*>(g);
 	if(!e) return nullptr;
-	return diagram(e->operator->());
+	return dynamic_cast<Diagram*>(e->operator->());
 }
 Painting* painting(QGraphicsItem* g)
 {
@@ -88,18 +88,6 @@ Marker* marker(QGraphicsItem* g)
 	auto e=dynamic_cast<ElementGraphics*>(g);
 	if(!e) return nullptr;
 	return marker(e->operator->());
-}
-Node* node(QGraphicsItem* g)
-{
-	auto e=dynamic_cast<ElementGraphics*>(g);
-	if(!e) return nullptr;
-	return node(e->operator->());
-}
-Graph* graph(QGraphicsItem* g)
-{
-	auto e=dynamic_cast<ElementGraphics*>(g);
-	if(!e) return nullptr;
-	return graph(e->operator->());
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
