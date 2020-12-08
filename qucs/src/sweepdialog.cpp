@@ -19,7 +19,7 @@
 #include "qucs.h"
 
 #include <QGridLayout>
-#include "diagrams/graph.h"
+#include "graph.h"
 #include "misc.h"
 
 #include <QLabel>

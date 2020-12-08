@@ -15,7 +15,7 @@
 #ifndef DIAGRAM_H
 #define DIAGRAM_H
 
-#include "diagrams/graph.h"
+//#include "graph.h"
 #include "../legacy/marker.h"
 #include "element.h"
 #include "viewpainter.h"
@@ -49,6 +49,7 @@ class QMouseEvent;
 class DocumentStream; // BUG
 class istream_t;
 class FontMetrics;
+class Graph;
 
 struct Axis {
   double  min, max; // least and greatest values of all graph data
@@ -62,6 +63,10 @@ struct Axis {
   double limit_min, limit_max, step;   // if not auto-scale
 };
 
+
+// yikes.
+#include "graph.h"
+typedef Graph::iterator GraphIterator;
 
 class Diagram : public Element {
 protected:
@@ -81,7 +86,7 @@ public:
   virtual int  calcDiagram() { return 0; };
   virtual void calcCoordinate
                (const double*, const double*, const double*, float*, float*, Axis const*) const {}
-  void calcCoordinateP (const double*x, const double*y, const double*z, Graph::iterator& p, Axis const* A) const;
+  void calcCoordinateP (const double*x, const double*y, const double*z, GraphIterator& p, Axis const* A) const;
   virtual void calcCoordinatePh(const double*, float*, float*, Axis const*, Axis const*) const{};
   virtual void finishMarkerCoordinates(float&, float&) const;
   virtual void calcLimits() {}
@@ -125,7 +130,7 @@ public: // ??!
   int  checkColumnWidth(const QString&, const FontMetrics&, int, int, int);
 
   virtual bool insideDiagram(float, float) const;
-  bool insideDiagramP(Graph::iterator const& ) const;
+  bool insideDiagramP(GraphIterator const& ) const;
   Marker* setMarker(int x, int y);
 
 private: // internals
@@ -163,8 +168,8 @@ protected:
   virtual void createAxisLabels();
 
   int  regionCode(float, float) const;
-  virtual void clip(Graph::iterator &) const;
-  void rectClip(Graph::iterator &) const;
+  virtual void clip(GraphIterator &) const;
+  void rectClip(GraphIterator &) const;
 
   virtual void calcData(Graph*);
 

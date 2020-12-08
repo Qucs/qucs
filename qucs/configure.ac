@@ -832,6 +832,7 @@ AC_CONFIG_FILES([Makefile
     legacy/Makefile
     main/Makefile
     man/Makefile
+    diagrams/Makefile
     examples/Makefile
     paintings/Makefile
     plugins/Makefile
@@ -851,7 +852,6 @@ AC_CONFIG_FILES([Makefile
     src/bitmaps/Makefile
     src/octave/Makefile
     src/components/Makefile
-    src/diagrams/Makefile
     src/tests/Makefile
     tests/Makefile
     translations/Makefile

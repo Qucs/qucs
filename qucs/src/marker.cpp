@@ -23,7 +23,7 @@
 
 #include "../legacy/marker.h"
 #include "diagram.h"
-#include "diagrams/graph.h"
+#include "graph.h"
 #include "qucs.h"
 
 #include <QString>

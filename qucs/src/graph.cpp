@@ -11,7 +11,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "diagrams/graph.h"
+#include "graph.h"
 #include "viewpainter.h"
 
 #include <stdlib.h>
