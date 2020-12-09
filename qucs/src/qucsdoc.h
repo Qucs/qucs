@@ -24,7 +24,7 @@
 
 #include "object.h"
 #include "actions.h"
-#include "trace.h"
+#include "io_trace.h"
 
 class QucsApp;
 class QAction;

@@ -140,7 +140,6 @@ HDR1 = \
 	swap.h \
 	some_font_stuff.h \
 	task_element.h \
-	trace.h \
 	viewpainter.h \
 	wiredialog.h \
 	wirelabel.h
@@ -165,7 +164,6 @@ HDR2 = \
 	schematic_model.h \
 	schematic_symbol.h \
 	syntax.h \
-	trace.h \
 	viewpainter.h \
 	wirelabel.h \
 	wirelabel.h

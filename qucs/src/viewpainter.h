@@ -16,7 +16,7 @@
 #define QUCS_VIEWPAINTER_H
 
 #include <QPainter> // ugly, still better than direct include..
-#include "trace.h"
+#include "io_trace.h"
 #include "geometry.h"
 
 class QString;
