@@ -36,25 +36,8 @@ qucs_default_components_la_LDFLAGS = -shared -module -avoid-version
 
 include MakeList
 
-
 qucs_default_components_la_SOURCES = $(DEFAULT_COMPONENTS)
-
-
 qucs_default_components_la_LIBADD = $(QT_LIBS)
-
-
-# are these really *source* files?!
-# verilogstuff =
-# binarytogrey4bit.cpp \
-#  pad2bit.cpp pad3bit.cpp pad4bit.cpp
-#   greytobinary4bit.cpp comp_1bit.cpp comp_2bit.cpp comp_4bit.cpp \
-#   hpribin4bit.cpp msrstub.cpp phototransistor.cpp nigbt.cpp \
-#   hybrid.cpp ctline.cpp tunneldiode.cpp \
-#   etr_sim.cpp ecvs.cpp vcresistor.cpp \
-#   mutualx.cpp
-
-# AM_CXXFLAGS = ${CXXFLAGS}
-
 qucs_default_components_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 # some stuff mostly related to legacy components
@@ -64,9 +47,8 @@ qucs_default_components_la_SOURCES += \
 	${RF_COMPONENTS} \
 	$(OTHERCOMPONENTS)
 
-# TODO: get rid of these
 noinst_HEADERS = 	$(MOCHEADERS) \
-			$(HEADERS)
+			$(HEADERS_)
 
 AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
 
@@ -75,3 +57,4 @@ AM_CPPFLAGS += -I$(top_srcdir)/src
 
 CLEANFILES = *~ *.moc.cpp
 MAINTAINERCLEANFILES = Makefile.in
+EXTRA_DIST = MakeList

@@ -822,7 +822,8 @@ AH_TOP([
 ])
 
 dnl Add here all your Makefiles. These are created by configure.
-AC_CONFIG_FILES([Makefile:autotools/top.in
+AC_CONFIG_FILES([
+    Makefile:autotools/top.in
     contrib/Makefile
     contrib/vadim/Makefile
     include/Makefile
