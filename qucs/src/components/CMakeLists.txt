@@ -1,8 +1,8 @@
 # qucs/componenets library
 
-include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
+include(../../../cmake/readMakeList.txt)
 
-# INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
+readVariable(MakeList BASICS BASICS_)
 
 set(COMPONENTS_SRCS
     DLS_1ton.cpp
