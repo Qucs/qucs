@@ -14,7 +14,7 @@
 #define QUCS_IO_H
 
 #include <QTextStream> // BUG
-#include "trace.h"
+#include "io_trace.h"
 
 class QFile;
 
