@@ -44,29 +44,17 @@
 #include "textdoc.h"
 #include "viewpainter.h"
 #include "mouseactions.h"
-// #include "diagrams/diagrams.h"
-// #include "components/vhdlfile.h"
-// #include "components/verilogfile.h"
-// #include "components/vafile.h"
 #include "misc.h"
 #include "globals.h"
-#include "trace.h"
+#include "io_trace.h"
 #include "painting.h"
 
 #include "qt_compat.h"
 
 class QPrinter;
 
-// just dummies for empty lists
-//WireList      SymbolWires;
-//NodeList      SymbolNodes;
 DiagramList   SymbolDiags;
 ElementList SymbolComps;
-
-//PaintingList& SchematicDoc::symbolPaintings()
-//{ untested();
-//  return DocModel.symbolPaintings();
-//}
 
 void SchematicDoc::printCursorPosition(int x, int y)
 {itested();
@@ -74,7 +62,6 @@ void SchematicDoc::printCursorPosition(int x, int y)
   QPointF mp=mapToScene(p);
   _app->printCursorPosition(mp.x(),mp.y());
 }
-
 
 // ---------------------------------------------------
 bool SchematicDoc::createSubcircuitSymbol()

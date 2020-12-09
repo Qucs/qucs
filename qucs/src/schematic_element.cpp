@@ -19,7 +19,7 @@
 #include "qt_compat.h"
 #include <QDebug>
 #include "platform.h"
-#include "trace.h"
+#include "io_trace.h"
 
 
 /* *******************************************************************

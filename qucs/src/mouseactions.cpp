@@ -17,13 +17,13 @@
 #include "misc.h"
 #include "mouseactions.h"
 #include "module.h"
-//#include "components/component.h"
 #include "components/spicedialog.h"
 #include "components/spicefile.h"
 #include "components/optimizedialog.h"
-//#include "components/vacomponent.h"
-//#include "../legacy/markerdialog.h" // BUG
 #include "labeldialog.h"
+#include "io_trace.h"
+#include "schematic_scene.h"
+#include "wirelabel.h"
 
 #include <QTextStream>
 #include "qt_compat.h"
@@ -40,9 +40,6 @@
 
 #include <limits.h>
 #include <stdlib.h>
-#include "trace.h"
-#include "schematic_scene.h"
-#include "wirelabel.h"
 
 
 void MouseAction::sceneAddItem(ElementGraphics* x)

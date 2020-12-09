@@ -3,7 +3,7 @@
 /* -------------------------------------------------------------- */
 #include "nodemap.h"
 #include "node.h"
-#include "trace.h"
+#include "io_trace.h"
 #include "netlist.h"
 #include "net.h"
 #include "dynamic_cc.h"
