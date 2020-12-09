@@ -1,6 +1,8 @@
 # python scripts
+include(../../../cmake/readMakeList.txt)
 
-set(BASICS parse_result.py parse_result_example.py rc_ac_sweep.dat
-           rc_ac_sweep.net)
+readVariable(MakeList BASICS BASICS_)
 
-install(FILES ${BASICS} DESTINATION share/qucs/python/)
+install(FILES ${BASICS_} DESTINATION share/qucs/python/)
+
+# TODO: also qucs-py???
