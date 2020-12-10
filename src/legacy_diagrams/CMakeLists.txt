@@ -43,7 +43,5 @@ set(DIAGRAMS_SRCS
 
 set(DIAGRAMS_MOC_HDRS diagramdialog.h markerdialog.h)
 
-qt4_wrap_cpp(DIAGRAMS_MOC_SRCS ${DIAGRAMS_MOC_HDRS})
-
 add_library(diagrams OBJECT ${DIAGRAMS_HDRS} ${DIAGRAMS_SRCS}
-                            ${DIAGRAMS_MOC_SRCS})
+                            ${DIAGRAMS_MOC_SRCS} ${DIAGRAMS_MOC_HDRS})
