@@ -1,0 +1,56 @@
+# read variable from file.
+# (c) 2020 Felix Salfelder
+# (c) 2020 Martin Marmsoler
+#     GPLv3
+macro( readVariable FILENAME VARIABLE OUTVAR_NAME)
+    # not sure about the scoping
+    unset(FILE_BUFFER)
+    unset(_RESULT)
+    file( READ MakeList FILE_BUFFER )
+
+    # foreach does not work with newlines.
+    # important that tabs are replaced first. Makes problems if not
+    # replace all tabs, because otherwise tabs are used in the filename and so
+    # the files are not recognized
+    string(REPLACE "\t" "    " BUFFER ${FILE_BUFFER})
+    string(REGEX REPLACE "\n" "${Esc} ;" BUFFER "${BUFFER}")
+    #message("STATE 1")
+
+    # CONT is the statemachine variable
+    foreach(LINE ${BUFFER})
+        string(REGEX MATCH "^[ ]*#" COMMENT_LINE ${LINE})
+        if (NOT "${COMMENT_LINE}" STREQUAL "")
+            #message("Skip comment line")
+            continue() # continue if it is a comment line
+        endif()
+        #message("LINE: ${LINE}")
+        if(CONT)
+            if("${LINE}" MATCHES "\\\\[ ]*${Esc}$")
+                #message("STATE 3")
+                set(CONT True)
+            else()
+                set(CONT False)
+                #message("STATE 1")
+            endif()
+            string(REGEX REPLACE "\\\\" "" LINE ${LINE})
+            list( APPEND _RESULT ${LINE})
+        endif()
+      # startline, where the variable was found
+      if("${LINE}" MATCHES "${VARIABLE}")
+           #message("Variable found")
+           #message("STATE 2")
+           string(REGEX REPLACE "${VARIABLE} =" "" _RESULT ${LINE})
+           if("${LINE}" MATCHES "\\\\[ ]*${Esc}")
+               set(CONT True)
+           else()
+               set(CONT False)
+               #message("STATE 1")
+           endif()
+           string(REGEX REPLACE "\\\\" "" LINE ${LINE})
+       endif()
+    endforeach()
+    separate_arguments(_RESULT)
+
+    # seems to be global
+    set(${OUTVAR_NAME} ${_RESULT})
+endmacro()
