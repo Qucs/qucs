@@ -1,12 +1,8 @@
+# qucs-suite
+# whats the difference between it and the qucs subfolder?
 project(qucs-suite CXX)
-cmake_minimum_required(VERSION 2.8)
-cmake_policy(VERSION 2.8)
-
-file(STRINGS "${qucs-suite_SOURCE_DIR}/VERSION" QUCS_VERSION)
-message(STATUS "Configuring Qucs: VERSION ${QUCS_VERSION}")
-message(STATUS "THIS IS INCOMPLETE -- use autotools for now")
-message(STATUS "(please help completing the cmake files)")
-use_autotools_for_now()
+cmake_minimum_required(VERSION 3.18)
+cmake_policy(VERSION 3.18)
 
 set(QUCS_URL "https://sf.net/p/qucs")
 set(QUCS_BUGREPORT "qucs-bugs@lists.sourceforge.net")
@@ -26,7 +22,7 @@ endif()
 message(STATUS "${PROJECT_NAME} ${CMAKE_INSTALL_PREFIX}
     ${qucs-suite_BINARY_DIR}")
 
-find_package(Qt4 REQUIRED)
+find_package(Qt5 REQUIRED Core Gui Script)
 
 set(QT_USE_QT TRUE)
 # SET( QT_USE_QTXML TRUE ) SET( QT_USE_QTSVG TRUE )
@@ -37,6 +33,7 @@ set(QT_USE_QTSCRIPT TRUE)
 
 set(QT_DEBUG TRUE)
 
+message(${QT_USE_FILE})
 include(${QT_USE_FILE})
 
 add_definitions(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
