@@ -66,21 +66,22 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-rescodes/qucsrescodes.1.cmake.in
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1.cmake.in
                ${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1)
 
-add_subdirectory(man)
 add_subdirectory(src)
-add_subdirectory(plugins)
-add_subdirectory(legacy)
-add_subdirectory(qucs-activefilter)
-add_subdirectory(qucs-attenuator)
-# ADD_SUBDIRECTORY( qucs-doc )
-add_subdirectory(qucs-filter)
-add_subdirectory(qucs-lib)
-add_subdirectory(qucs-transcalc)
-add_subdirectory(qucs-rescodes)
-# ADD_SUBDIRECTORY( examples )
-add_subdirectory(translations)
-add_subdirectory(contrib)
-add_subdirectory(qucs-powercombining)
+
+# add_subdirectory(man)
+# add_subdirectory(plugins)
+# add_subdirectory(legacy)
+# add_subdirectory(qucs-activefilter)
+# add_subdirectory(qucs-attenuator)
+# # ADD_SUBDIRECTORY( qucs-doc )
+# add_subdirectory(qucs-filter)
+# add_subdirectory(qucs-lib)
+# add_subdirectory(qucs-transcalc)
+# add_subdirectory(qucs-rescodes)
+# # ADD_SUBDIRECTORY( examples )
+# add_subdirectory(translations)
+# add_subdirectory(contrib)
+# add_subdirectory(qucs-powercombining)
 
 #
 # Custom uninstall target

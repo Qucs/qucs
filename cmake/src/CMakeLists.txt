@@ -119,7 +119,7 @@ set(CMAKE_AUTOUIC ON)
 
 #add_definitions(${QT_DEFINITIONS} -DQT3_SUPPORT_WARNINGS)
 
-include(../../cmake/readMakeList.txt)
+include(readMakeList.txt)
 
 # where does qucs_SOURCE_DIR come from?
 include_directories(
@@ -132,7 +132,6 @@ include_directories(
   ${qucs_SOURCE_DIR}/paintings)
 
 add_subdirectory( bitmaps ) #-> added as resources
-add_subdirectory(components)
 add_subdirectory(octave)
 add_subdirectory(python)
 add_subdirectory(tests)
