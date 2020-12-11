@@ -29,9 +29,10 @@
 #include "settings.h"
 
 extern tQucsSettings QucsSettings;  // bug, settings.h
-
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
 namespace {
-
+/* -------------------------------------------------------------------------------- */
 // -------------------------------------------------------------------
 // PLAN/TODO: merge into (legacy) qucsator driver below
 //    meant to produce a netlist including the qucsator commands and process
@@ -46,20 +47,22 @@ private: // Command
 
 private: // legacy implementation
   void createNetlist(ostream_t& stream, SchematicSymbol const& m) const;
-  void prepareSave(ostream_t& stream, SchematicSymbol const& m) const;
-  void throughAllComps(ostream_t& d, SchematicSymbol const& m) const;
+  void prepareSave(ostream_t& stream, SchematicSymbol const& m,
+		std::map<std::string, Element const*>& declarations) const;
+  void throughAllComps(ostream_t& d, SchematicSymbol const& m,
+		std::map<std::string, Element const*>& declarations) const;
   void clear() const;
-  void printDeclarations(ostream_t& d, SchematicSymbol const&m) const;
+  void printDeclarations(ostream_t& d,
+		std::map<std::string, Element const*>& declarations) const;
 private: // overrides
   void save(ostream_t& stream, Object const* m) const override;
   void load(istream_t&, Object*) const override;
 private:
   mutable SubMap FileList; // BUG (maybe not)
   mutable DocumentLanguage* _qucslang;
-  mutable std::map<std::string, Element const*> _declarations;
 }LNL;
 static Dispatcher<Command>::INSTALL p1(&command_dispatcher, "qucsator|legacy_nl", &LNL);
-
+/* -------------------------------------------------------------------------------- */
 // "simulator" backend emulating legacy behaviour
 // TODO: forward to other simulator following legacy heuristic.
 class LegacySimulator : public Simulator{
@@ -140,19 +143,20 @@ Component * SimMessage::findOptimization(SchematicDoc *)
 
 void LegacyNetlister::clear() const
 {
-	_declarations.clear();
+	//_declarations.clear();
 }
-
+/* -------------------------------------------------------------------------------- */
 void LegacyNetlister::load(istream_t&, Object*) const
 {
    _qucslang = doclang_dispatcher["qucsator"];
 	assert(_qucslang);
 	incomplete();
 }
-
+/* -------------------------------------------------------------------------------- */
 // was main::doNetlist, but it only works for qucsator. merge into qucsator driver.
 void LegacyNetlister::save(ostream_t& Stream, Object const* o) const
 {
+	std::map<std::string, Element const*> declarations;
 	auto m_ = dynamic_cast<SchematicSymbol const*>(o);
 
 	if(!m_){
@@ -170,7 +174,7 @@ void LegacyNetlister::save(ostream_t& Stream, Object const* o) const
 	incomplete(); // HERE
 
 	// assert(m.owner()); // root symbol does not have owner...
-	prepareSave(Stream, m);
+	prepareSave(Stream, m, declarations);
 
 	trace1("done prep", m.label());
 
@@ -192,7 +196,7 @@ void LegacyNetlister::save(ostream_t& Stream, Object const* o) const
 	}
 #endif
 
-	printDeclarations(Stream, m);
+	printDeclarations(Stream, declarations);
 	Stream << '\n';
 	createNetlist(Stream, m);
 
@@ -205,16 +209,15 @@ void LegacyNetlister::save(ostream_t& Stream, Object const* o) const
 #endif
 }
 
-void LegacyNetlister::printDeclarations(ostream_t& stream, SchematicSymbol const& m) const
+void LegacyNetlister::printDeclarations(ostream_t& stream,
+		std::map<std::string, Element const*>& declarations) const
 {
-	assert(m.subckt());
-	// assert(_qucslang);
    _qucslang = doclang_dispatcher["qucsator"];
 	assert(_qucslang);
 
 	stream << "## declarations\n";
-	trace1("printing declarations", _declarations.size());
-	for(auto si : _declarations){
+	trace1("printing declarations", declarations.size());
+	for(auto si : declarations){
 		stream << "### " << si.first << "\n";
 
 		if(dynamic_cast<SubcktBase const*>(si.second)){
@@ -227,7 +230,8 @@ void LegacyNetlister::printDeclarations(ostream_t& stream, SchematicSymbol const
 
 // was Schematic::prepareNetlist
 // visit lot of components, strange callbacks...
-void LegacyNetlister::prepareSave(ostream_t& stream, SchematicSymbol const& m) const
+void LegacyNetlister::prepareSave(ostream_t& stream, SchematicSymbol const& m,
+		std::map<std::string, Element const*>& declarations) const
 {
 	incomplete();
 
@@ -321,7 +325,7 @@ void LegacyNetlister::prepareSave(ostream_t& stream, SchematicSymbol const& m) c
 	}
 
 	// assert(m.owner()); //root does not have owner...
-	throughAllComps(stream, m);
+	throughAllComps(stream, m, declarations);
 }
 
 // former Schematic::createNetlist
@@ -411,7 +415,8 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 // to target language somewhere else.
 
 // some kind of expand
-void LegacyNetlister::throughAllComps(ostream_t&, SchematicSymbol const& m) const
+void LegacyNetlister::throughAllComps(ostream_t&, SchematicSymbol const& m,
+		std::map<std::string, Element const*>& declarations) const
 { incomplete();
 	trace3("tac", m.label(), &m, m.owner());
 	if(m.owner()){
@@ -475,7 +480,7 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicSymbol const& m) cons
 
 			// Element const* proto = sym->find_looking_out(key);
 			Element const* proto = _qucslang->find_proto(key, sym);
-			auto& d = _declarations[key];
+			auto& d = declarations[key];
 
 			// only one proto per key
 			assert(!d || d == proto);
