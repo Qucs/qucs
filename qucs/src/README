@@ -1,0 +1,2 @@
+This is the qucs shared library. It contains everything that can't be plugins,
+and essential plugins.
