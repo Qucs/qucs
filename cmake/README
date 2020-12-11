@@ -1,0 +1,13 @@
+build qucs with cmake
+
+$ cmake .
+
+or
+
+$ mkdir build
+$ cd build
+$ cmake ..
+
+TODO: cmake is hard to convince that the source is
+      somewhere else, but this is not a problem, it just needs fixing
+      (is there a better way?)
