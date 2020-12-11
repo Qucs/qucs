@@ -22,6 +22,9 @@
 # Boston, MA 02110-1301, USA.
 #
 
+SUBDIRS = \
+	diagrams
+
 pkglib_LTLIBRARIES = verilog.la misc.la
 AM_DEFAULT_SOURCE_EXT = .cpp
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include
