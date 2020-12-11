@@ -18,7 +18,7 @@
 #include "node.h"
 #include "misc.h"
 // #include "extsimkernels/spicecompat.h" not yet.
-#include "components/component.h"
+#include "../legacy/components/component.h" // yikes.
 #include "globals.h"
 #include "module.h"
 

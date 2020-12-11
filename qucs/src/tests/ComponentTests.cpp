@@ -20,9 +20,9 @@
  *
  */
 
-#include "components/component.h"
-#include "legacy/component.cpp"
-#include "legacy/gatecomponent.cpp"
+#include "../legacy/components/component.h" // yikes
+#include "../legacy/component.cpp" // yikes
+#include "../legacy/gatecomponent.cpp" // yikes
 #include "ComponentTests.h"
 
 #include <QTest>

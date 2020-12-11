@@ -24,6 +24,8 @@
 include ../common.mk
 include MakeList
 
+SUBDIRS = components
+
 pkglib_LTLIBRARIES = legacy.la legacylib.la qucsator.la
 AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
 # AM_CXXFLAGS = ${CXXFLAGS} -fPIC # common?

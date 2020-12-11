@@ -3,9 +3,9 @@
 // GPLv3+
 
 #include "schematic_model.h"
-#include "src/components/ground.cpp" // BUG
-#include "legacy/component.cpp" // BUG
-#include "legacy/gatecomponent.cpp" // BUG
+#include "../legacy/components/ground.cpp" // BUG
+#include "../legacy/component.cpp" // BUG
+#include "../legacy/gatecomponent.cpp" // BUG
 #include "globals.h"
 
 void union0()
