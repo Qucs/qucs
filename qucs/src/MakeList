@@ -121,6 +121,9 @@ HDR1 = \
 	netlist.h \
 	node.h \
 	nodemap.h \
+	optimizedialog.h \
+	spicedialog.h \
+	spicefile.h \
 	painting.h \
 	printerwriter.h \
 	projectView.h \
@@ -167,3 +170,24 @@ HDR2 = \
 	viewpainter.h \
 	wirelabel.h \
 	wirelabel.h
+
+# plugins? lets see
+DIALOG_SRC+= \
+	aboutdialog.cpp \
+	changedialog.cpp \
+	digisettingsdialog.cpp \
+	exportdialog.cpp \
+	importdialog.cpp \
+	labeldialog.cpp \
+	librarydialog.cpp \
+	loaddialog.cpp \
+	matchdialog.cpp \
+	newprojdialog.cpp \
+	packagedialog.cpp \
+	qucssettingsdialog.cpp \
+	savedialog.cpp \
+	searchdialog.cpp \
+	settingsdialog.cpp \
+	simmessage.cpp \
+	sweepdialog.cpp \
+	vasettingsdialog.cpp

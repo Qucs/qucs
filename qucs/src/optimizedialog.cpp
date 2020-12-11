@@ -14,8 +14,7 @@
  ***************************************************************************/
 
 #include "qucs.h"
-#include "components/optimizedialog.h"
-#include "components/opt_sim.h"
+#include "optimizedialog.h"
 #include "schematic_doc.h"
 #include "property.h"
 
@@ -723,7 +722,10 @@ void OptimizeDialog::slotOK()
 }
 
 // -----------------------------------------------------------
-void OptimizeDialog::slotApply()
+#if 1 // move to optimizeSim
+void OptimizeDialog::slotApply(){}
+void OptimizeDialog::slotCancel(){}
+#else
 {
   if(NameEdit->text().isEmpty())
     NameEdit->setText(QString::fromStdString(Comp->label()));
@@ -934,4 +936,5 @@ void OptimizeDialog::slotSetPrecision(const QPoint& pos)
     }
   }
 }
+#endif
 

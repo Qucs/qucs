@@ -40,7 +40,7 @@ fi
 
 if [ -z "$QUCS_PLUGPATH" ]; then
 	QUCS_PLUGPATH="$top/plugins/.libs";
-	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/src/components/.libs";
+	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/legacy/components/.libs";
 	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/src/diagrams/.libs";
 	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/paintings/.libs";
 	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/legacy/.libs";

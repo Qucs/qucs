@@ -99,15 +99,17 @@ RF_COMPONENTS = \
 	mstee.cpp \
 	msvia.cpp
 
+# wrong place.
 TASK_ELEMENTS = \
 	ac_sim.cpp \
 	dc_sim.cpp \
 	digi_sim.cpp \
 	hb_sim.cpp \
-	opt_sim.cpp \
 	param_sweep.cpp \
 	sp_sim.cpp \
 	tr_sim.cpp
+
+# opt_sim.cpp
 
 LOGIC_COMPONENTS = \
 	andor4x2.cpp \
@@ -251,7 +253,6 @@ HEADERS_ = \
     noise_vv.h \
     opamp.h \
     opt_sim.h \
-    optimizedialog.h \
     pad2bit.h \
     pad3bit.h \
     pad4bit.h \
@@ -268,9 +269,6 @@ HEADERS_ = \
     rs_flipflop.h \
     source_ac.h \
     spdeembed.h \
-    spicedialog.h \
-    spicefile.h  \
-    spicefile.h \
     spiralinductor.h \
     switch.h \
     taperedline.h \

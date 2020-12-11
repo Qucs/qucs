@@ -828,6 +828,7 @@ AC_CONFIG_FILES([
     contrib/vadim/Makefile
     include/Makefile
     legacy/Makefile
+    legacy/components/Makefile
     main/Makefile
     man/Makefile
     autotools/Makefile
@@ -850,7 +851,6 @@ AC_CONFIG_FILES([
     src/action/Makefile
     src/bitmaps/Makefile
     src/octave/Makefile
-    src/components/Makefile
     src/tests/Makefile
     tests/Makefile
     translations/Makefile

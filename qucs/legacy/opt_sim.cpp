@@ -22,6 +22,24 @@
 #include "property.h"
 #include "qucs.h"
 #include "../legacy/obsolete_paintings.h"
+#include "task_element.h"
+
+namespace{
+
+
+class Optimize_Sim : public TaskElement  {
+public:
+  Optimize_Sim();
+ ~Optimize_Sim();
+  Element* clone() const{return new Optimize_Sim(*this);}
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  bool createASCOFiles() const;
+  bool createASCOnetlist();
+  bool loadASCOout();
+
+protected:
+  QString netlist() const;
+};
 
 
 Optimize_Sim::Optimize_Sim()
@@ -291,4 +309,5 @@ bool Optimize_Sim::loadASCOout()
     }
   }
   return changed;
+}
 }
