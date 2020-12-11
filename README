@@ -81,6 +81,20 @@ You need write permissions to the prefix of the installation (default:
 Please note:  Users of the FreeBSD OS may use a GNU make (probably gmake)
 to compile and install the package.
 
+use CMake instead
+=================
+
+(this needs work)
+
+$ cd cmake
+$ cmake .
+
+or
+
+$ mkdir cb
+$ cd cb
+$ cmake ../cmake
+
 Getting the latest Git snapshot
 ===============================
 
