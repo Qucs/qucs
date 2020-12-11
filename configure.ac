@@ -824,7 +824,7 @@ AH_TOP([
 dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([
     Makefile:autotools/top.in
-    contrib/Makefile
+    contrib/Makefile:autotools/contrib.in
     contrib/vadim/Makefile
     include/Makefile
     legacy/Makefile
@@ -832,10 +832,10 @@ AC_CONFIG_FILES([
     main/Makefile
     man/Makefile
     autotools/Makefile
-    diagrams/Makefile
     examples/Makefile
     paintings/Makefile
-    plugins/Makefile
+    plugins/Makefile:autotools/plugins.in
+    plugins/diagrams/Makefile:autotools/diagrams.in
     qucs-filter/Makefile
     qucs-activefilter/Makefile
     qucs-transcalc/Makefile
