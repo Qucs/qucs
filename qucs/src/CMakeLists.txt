@@ -11,7 +11,7 @@
 # env CTEST_OUTPUT_ON_FAILURE=1 make test    # for verbose output
 
 project(qucs_lib CXX)
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.16)
 
 # use top VERSION file
 file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
@@ -121,11 +121,11 @@ set(CMAKE_AUTOUIC ON)
 
 include(../../cmake/readMakeList.txt)
 
+# where does qucs_SOURCE_DIR come from?
 include_directories(
   ${qucs_SOURCE_DIR}
   ${qucs_SOURCE_DIR}/../include
   # ${qucs_SOURCE_DIR}/bitmaps ->no sources here
-  ${qucs_SOURCE_DIR}/components
   ${qucs_SOURCE_DIR}/diagrams
   ${qucs_SOURCE_DIR}/dialogs
   # ${qucs_SOURCE_DIR}/octave ->no sources here
