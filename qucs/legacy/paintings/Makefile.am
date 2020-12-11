@@ -24,7 +24,7 @@
 #
 include MakeList
 
-include ../common.mk
+include ../../common.mk
 
 pkglib_LTLIBRARIES = paintings.la
 

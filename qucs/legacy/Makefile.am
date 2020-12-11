@@ -24,7 +24,9 @@
 include ../common.mk
 include MakeList
 
-SUBDIRS = components
+SUBDIRS = \
+	components \
+	paintings
 
 pkglib_LTLIBRARIES = legacy.la legacylib.la qucsator.la
 AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
