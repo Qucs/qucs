@@ -829,11 +829,11 @@ AC_CONFIG_FILES([
     include/Makefile
     legacy/Makefile
     legacy/components/Makefile
+    legacy/paintings/Makefile
     main/Makefile
     man/Makefile
     autotools/Makefile
     examples/Makefile
-    paintings/Makefile
     plugins/Makefile:autotools/plugins.in
     plugins/diagrams/Makefile:autotools/diagrams.in
     qucs-filter/Makefile
