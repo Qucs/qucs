@@ -24,24 +24,21 @@
 # Boston, MA 02110-1301, USA.
 #
 
-# private library
-qucsdir=${pkglibdir}
-
 include ../../common.mk
 
 plugindir = ${pkglibdir}
-plugin_LTLIBRARIES = qucs-default-components.la
+plugin_LTLIBRARIES = legacy-components.la
 
-qucs_default_components_la_LDFLAGS = -shared -module -avoid-version
+legacy_components_la_LDFLAGS = -shared -module -avoid-version
 
 include MakeList
 
-qucs_default_components_la_SOURCES = $(DEFAULT_COMPONENTS)
-qucs_default_components_la_LIBADD = $(QT_LIBS)
-qucs_default_components_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
+legacy_components_la_SOURCES = $(DEFAULT_COMPONENTS)
+legacy_components_la_LIBADD = $(QT_LIBS)
+legacy_components_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 # some stuff mostly related to legacy components
-qucs_default_components_la_SOURCES += \
+legacy_components_la_SOURCES += \
 	${TASK_ELEMENTS} \
 	${LUMPED_COMPONENTS} \
 	${RF_COMPONENTS} \

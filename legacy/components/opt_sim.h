@@ -18,21 +18,5 @@
 #ifndef OPT_SIM_H
 #define OPT_SIM_H
 
-#include "task_element.h"
-
-
-class Optimize_Sim : public TaskElement  {
-public:
-  Optimize_Sim();
- ~Optimize_Sim();
-  Element* clone() const{return new Optimize_Sim(*this);}
-  static Element* info(QString&, char* &, bool getNewOne=false);
-  bool createASCOFiles() const;
-  bool createASCOnetlist();
-  bool loadASCOout();
-
-protected:
-  QString netlist() const;
-};
 
 #endif

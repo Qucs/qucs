@@ -31,7 +31,6 @@ SUBDIRS = \
 	. \
 	action \
 	bitmaps \
-	components \
 	octave \
 	tests
 
@@ -74,15 +73,6 @@ pqucs_LTLIBRARIES = \
 DIALOG_SRC = \
 	diagramdialog.cpp \
 	optimizedialog.cpp
-
-# plugins? lets see
-DIALOG_SRC+= \
-								settingsdialog.cpp newprojdialog.cpp \
-     simmessage.cpp qucssettingsdialog.cpp labeldialog.cpp changedialog.cpp \
-     matchdialog.cpp sweepdialog.cpp digisettingsdialog.cpp searchdialog.cpp \
-     librarydialog.cpp importdialog.cpp packagedialog.cpp \
-     savedialog.cpp vasettingsdialog.cpp exportdialog.cpp loaddialog.cpp \
-     aboutdialog.cpp
 
 
 include MakeList

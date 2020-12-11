@@ -48,9 +48,6 @@
 #include "io_error.h"
 #include "globals.h"
 
-#include "io_findf.cc" // for now. move to lib later.
-#include "components/components.h" // FIXME
-
 #ifdef _WIN32
 #include <Windows.h>  //for OutputDebugString
 #endif
@@ -588,10 +585,10 @@ void attach_single(std::string const& what)
 void attach_default_plugins()
 {
   attach_single("legacy");
+//  attach_single("legacy-misc");
   attach_single("qucsator");
 
-  // TODO: remove "lib" prefix
-  attach_single("qucs-default-components");
+  attach_single("legacy-components");
   attach_single("paintings");
   attach_single("legacylib");
   attach_single("misc");
