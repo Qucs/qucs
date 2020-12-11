@@ -1,0 +1,7 @@
+
+CPP_SRC = main.cpp
+
+TGT_PROGRAM = qucs
+
+EXTRA_DIST = \
+	README

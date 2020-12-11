@@ -25,13 +25,12 @@
 qucs_appledir = $(bindir)/qucs.app/Contents/MacOS/
 
 include ../common.mk
+include MakeList
 
-all-local: qucs
-
-# why this? qucs_real_LDADD does not seem to work on windows (yet?)
+all-local: ${TGT_PROGRAM}
 
 qucs_real_LDFLAGS = $(QT_LDFLAGS)
-qucs_real_SOURCES = main.cpp # qucs_.qrc
+qucs_real_SOURCES = ${CPP_SRC}
 qucs_real_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) \
 		-I${top_srcdir}/include \
 		-I${top_srcdir}/qucs \
@@ -52,10 +51,8 @@ qucs_apple_PROGRAMS = qucs.real
 else
 endif
 
+# bin_PROGRAMS = ${TGT_PROGRAM}.real does not work
 bin_PROGRAMS = qucs.real
 transform=s&\.real$$&&;$(program_transform_name)
-
-EXTRA_DIST = \
-	README
 
 CLEANFILES = qucs_.cpp

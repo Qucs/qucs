@@ -830,7 +830,7 @@ AC_CONFIG_FILES([
     legacy/Makefile
     legacy/components/Makefile
     legacy/paintings/Makefile
-    main/Makefile
+    main/Makefile:autotools/main.in
     man/Makefile
     autotools/Makefile
     examples/Makefile
