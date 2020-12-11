@@ -170,14 +170,12 @@ dist-hook:
 
 	mkdir -p $(distdir)/ref
 	cp -r $(abs_srcdir)/ref/*.{v,vs,net,dup} $(distdir)/ref
+	cp $(abs_srcdir)/ref/entries.out $(distdir)/ref
 
 clean-local:
 	rm -rf out/
 
 EXTRA_DIST = \
-	${SCHEMATICS:%=%.net.ref} \
-	${SCHEMATICS:%=%.ref} \
-	entries.ref \
 	prj_log_compiler \
 	$(SH_TESTS)
 
