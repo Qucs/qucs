@@ -36,6 +36,25 @@ if(UNIX AND NOT APPLE)
 	set(DESKTOP qucs.desktop)
 	install(FILES ${DESKTOP}
 		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
+
+	install(FILES bitmaps/hicolor/16x16/apps/qucs.png
+		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/16x16/apps)
+	install(FILES bitmaps/hicolor/22x22/apps/qucs.png
+		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/22x22/apps)
+	install(FILES bitmaps/hicolor/32x32/apps/qucs.png
+		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/32x32/apps)
+	install(FILES bitmaps/hicolor/48x48/apps/qucs.png
+		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/48x48/apps)
+	install(FILES bitmaps/hicolor/64x64/apps/qucs.png
+		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/64x64/apps)
+	install(FILES bitmaps/hicolor/128x128/apps/qucs.png
+		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/128x128/apps)
+	install(FILES bitmaps/hicolor/256x256/apps/qucs.png
+		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/256x256/apps)
+	install(FILES bitmaps/hicolor/512x512/apps/qucs.png
+		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/512x512/apps)
+	install(FILES bitmaps/hicolor/scalable/apps/qucs.svg
+		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps)
 endif()
 
 ##
