@@ -822,11 +822,12 @@ AH_TOP([
 ])
 
 dnl Add here all your Makefiles. These are created by configure.
+dnl just collect autotools/*.am?
 AC_CONFIG_FILES([
     Makefile:autotools/top.in
     contrib/Makefile:autotools/contrib.in
     contrib/vadim/Makefile
-    include/Makefile
+    include/Makefile:autotools/include.in
     legacy/Makefile
     legacy/components/Makefile
     legacy/paintings/Makefile
