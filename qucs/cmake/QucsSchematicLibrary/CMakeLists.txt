@@ -39,31 +39,6 @@ endif()
 # enable testing for current directory and below
 #enable_testing()
 
-## ------ WHY needed?
-# If Git hash not defined, try to define it
-#if(NOT GIT)
-#  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/../../.git)
-#    find_package(Git)
-#    # Get the latest abbreviated commit hash of the working branch
-#    execute_process(
-#      COMMAND ${GIT_EXECUTABLE} log --pretty=format:%h -n 1u
-#      WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-#      OUTPUT_VARIABLE GIT_COMMIT_HASH)
-#    set(GIT ${GIT_COMMIT_HASH})
-#    message(STATUS "Found Git repository, last commit hash: ${GIT}")
-#  endif()
-#endif()
-
-#if(UNIX AND NOT APPLE)
-#  # string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWERCASE) set(BIN_INSTALL_DIR
-#  # "bin") set(DOC_INSTALL_DIR "share/doc/${PROJECT_NAME_LOWERCASE}/")
-#else()
-#  # set(BIN_INSTALL_DIR ".") set(DOC_INSTALL_DIR ".")
-#endif()
-
-#
-#add_definitions(-DHAVE_CONFIG_H)
-
 find_package(
   Qt5
   REQUIRED
@@ -80,36 +55,6 @@ find_package(
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
-
-## configure the header config.h
-#configure_file("${PROJECT_SOURCE_DIR}/../config.h.cmake"
-#               "${PROJECT_BINARY_DIR}/config.h")
-
-#include_directories("${PROJECT_BINARY_DIR}")
-#include_directories(${CMAKE_SOURCE_DIR})
-
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11
-
-## flag not available in mingw 4.8.2, MSVC10
-#if(NOT WIN32)
-#  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
-#endif()
-
-## For some reason, on Windows QT_LIBRARIES point to static(?) .a libs which do
-## not provide the needed symbols. They are found on the .dll libraries.
-#if(WIN32)
-#  link_directories("${QT_BINARY_DIR}")
-#endif(WIN32)
-
-#
-# Set position independed code PIC
-#
-#if(UNIX AND NOT APPLE)
-#  if(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
-#    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-#  endif()
-#endif()
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/../../../cmake/readMakeList.txt)
 
@@ -133,50 +78,6 @@ list(TRANSFORM QUCS_DIALOG_SRC PREPEND ${coreSchematicPath}/)
 readVariable(${coreSchematicPath}/MakeList RESOURCES QUCS_RESOURCES)
 list(TRANSFORM QUCS_RESOURCES PREPEND ${coreSchematicPath}/)
 
-##
-## configure Apple bundle information
-##
-#if(APPLE)
-#  # set information on Info.plist file
-#  set(MACOSX_BUNDLE_INFO_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
-#  set(MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_NAME} ${PROJECT_VERSION}")
-#  set(MACOSX_BUNDLE_LONG_VERSION_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
-#  set(MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}")
-#  set(MACOSX_BUNDLE_COPYRIGHT "${PROJECT_COPYRIGHT_YEAR} ${PROJECT_VENDOR}")
-#  set(MACOSX_BUNDLE_GUI_IDENTIFIER
-#      "${PROJECT_DOMAIN_SECOND}.${PROJECT_DOMAIN_FIRST}")
-#  set(MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}")
-#  set(MACOSX_BUNDLE_ICON_FILE qucs.icns)
-
-#  # set where in the bundle to put the icns file
-#  set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/bitmaps/qucs.icns
-#                              PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
-#  # include the icns file in the target
-#  set(QUCS_SRCS ${QUCS_SRCS} ${CMAKE_CURRENT_SOURCE_DIR}/bitmaps/qucs.icns)
-
-#  # This tells cmake where to place the translations inside the bundle
-#  # SET_SOURCE_FILES_PROPERTIES( ${LANG_SRCS} PROPERTIES MACOSX_PACKAGE_LOCATION
-#  # Resources/lang ) include the translation files in the target
-#  # SET(RESOURCES_SRCS ${RESOURCES_SRCS} ${LANG_SRCS})
-#endif(APPLE)
-
-##
-## Set up RPATH for the project
-##
-#option(ENABLE_RPATH "Enable rpath support on Linux and Mac" ON)
-#if(NOT CMAKE_INSTALL_RPATH)
-#  set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
-#endif()
-#if(APPLE AND NOT CMAKE_INSTALL_NAME_DIR)
-#  set(CMAKE_INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/lib")
-#endif()
-#if(UNIX AND ENABLE_RPATH)
-#  set(CMAKE_SKIP_BUILD_RPATH FALSE)
-#  set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
-#  set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-#  set(CMAKE_MACOSX_RPATH TRUE)
-#endif()
-
 ## schematic library
 add_library(coreSchematic OBJECT ${QUCS_SRCS} ${QUCS_RESOURCES} ${UIC_HDRS} ${QUCS_DIALOG_SRC})
 target_include_directories(coreSchematic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
@@ -194,4 +95,3 @@ add_library(
   qucsschematic SHARED
   $<TARGET_OBJECTS:coreSchematic> #$<TARGET_OBJECTS:components>
   )
-
