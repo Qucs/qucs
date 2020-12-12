@@ -21,7 +21,8 @@ file(STRINGS ${coreSchematicPath}/VERSION QUCS_VERSION)
 set(PROJECT_VERSION "${QUCS_VERSION}")
 
 # add compiler definitions/symbols
-add_compile_definitions(PACKAGE_VERSION="${PROJECT_VERSION}")
+# already in qucs_app CMakeLists.txt. Maybe renaming it?
+#add_compile_definitions(PACKAGE_VERSION="${PROJECT_VERSION}")
 
 set(PROJECT_VENDOR "Qucs team. This program is licensed under the GNU GPL")
 set(PROJECT_COPYRIGHT_YEAR "2020")
@@ -120,9 +121,11 @@ add_subdirectory(${coreSchematicPath}/python src/python)
 readVariable(${coreSchematicPath}/MakeList CPP_SRC QUCS_SRCS)
 readVariable(${coreSchematicPath}/MakeList CPP_HEADERS QUCS_HDRS)
 readVariable(${coreSchematicPath}/MakeList UI_FILES UIC_HDRS)
+readVariable(${coreSchematicPath}/MakeList DIALOG_SRC QUCS_DIALOG_SRC)
 list(TRANSFORM QUCS_SRCS PREPEND ${coreSchematicPath}/)
 list(TRANSFORM QUCS_HDRS PREPEND ${coreSchematicPath}/)
 list(TRANSFORM UIC_HDRS PREPEND ${coreSchematicPath}/)
+list(TRANSFORM QUCS_DIALOG_SRC PREPEND ${coreSchematicPath}/)
 
 #
 # Read variable to generate rules for building source files from bitmap resources
@@ -175,7 +178,7 @@ list(TRANSFORM QUCS_RESOURCES PREPEND ${coreSchematicPath}/)
 #endif()
 
 ## schematic library
-add_library(coreSchematic OBJECT ${QUCS_SRCS} ${QUCS_RESOURCES} ${UIC_HDRS})
+add_library(coreSchematic OBJECT ${QUCS_SRCS} ${QUCS_RESOURCES} ${UIC_HDRS} ${QUCS_DIALOG_SRC})
 target_include_directories(coreSchematic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
 target_include_directories(coreSchematic PRIVATE ${coreSchematicPath})
 
