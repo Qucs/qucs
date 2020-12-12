@@ -6,7 +6,7 @@ macro( readVariable FILENAME VARIABLE OUTVAR_NAME)
     # not sure about the scoping
     unset(FILE_BUFFER)
     unset(_RESULT)
-    file( READ MakeList FILE_BUFFER )
+	file( READ ${FILENAME} FILE_BUFFER )
 
     # foreach does not work with newlines.
     # important that tabs are replaced first. Makes problems if not
