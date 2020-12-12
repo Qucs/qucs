@@ -210,9 +210,9 @@ bool SchematicDoc::loadDocument(QFile& /*BUG*/ file)
 
 void SchematicDoc::parse(istream_t& s, SchematicLanguage const* L)
 {itested();
-	incomplete(); // this should be obsolete now
+	incomplete(); // but still used in qucs -i $file
 	if(!L){itested();
-		auto D=doclang_dispatcher["leg_sch"];
+		auto D = doclang_dispatcher["leg_sch"]; // use command instead.
 		L = dynamic_cast<SchematicLanguage const*>(D);
 	}else{ untested();
 	}
