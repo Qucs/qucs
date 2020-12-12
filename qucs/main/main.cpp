@@ -143,6 +143,7 @@ public:
   }
 private: // SchematicSymbol
   SchematicModel* schematicModel(){ untested();
+    assert(false);
     // obsolete.
     unreachable();
     return nullptr;
@@ -252,6 +253,7 @@ void doNetlist(QString schematic_fn, std::string netlist, DocumentFormat const& 
   xs.setParam("$filename", schematic_fn.toStdString());
 #endif
   fmt.save(os, &xs);
+//  fmt.do_it(os, xs->subckt());
 }
 
 void attach_single(std::string const& what)
