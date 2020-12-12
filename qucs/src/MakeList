@@ -167,6 +167,7 @@ HDR2 = \
 DIALOG_SRC= \
 	aboutdialog.cpp \
 	changedialog.cpp \
+	diagramdialog.cpp \
 	digisettingsdialog.cpp \
 	exportdialog.cpp \
 	importdialog.cpp \
