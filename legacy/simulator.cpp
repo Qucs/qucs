@@ -46,10 +46,10 @@ private: // Command
 	void do_it(istream_t&, SchematicModel*) override{}
 
 private: // legacy implementation
-  void createNetlist(ostream_t& stream, SchematicSymbol const& m) const;
+  void createNetlist(ostream_t& stream, SchematicModel const*) const;
   void prepareSave(ostream_t& stream, SchematicSymbol const& m,
 		std::map<std::string, Element const*>& declarations) const;
-  void throughAllComps(ostream_t& d, SchematicSymbol const& m,
+  void throughAllComps(ostream_t& d, SchematicModel const* m,
 		std::map<std::string, Element const*>& declarations) const;
   void clear() const;
   void printDeclarations(ostream_t& d,
@@ -198,7 +198,7 @@ void LegacyNetlister::save(ostream_t& Stream, Object const* o) const
 
 	printDeclarations(Stream, declarations);
 	Stream << '\n';
-	createNetlist(Stream, m);
+	createNetlist(Stream, m.subckt());
 
 #if 0
 	if(m.doc()){ untested();
@@ -325,12 +325,12 @@ void LegacyNetlister::prepareSave(ostream_t& stream, SchematicSymbol const& m,
 	}
 
 	// assert(m.owner()); //root does not have owner...
-	throughAllComps(stream, m, declarations);
+	throughAllComps(stream, m.subckt(), declarations);
 }
 
 // former Schematic::createNetlist
 void LegacyNetlister::createNetlist(ostream_t& stream,
-		SchematicSymbol const& m) const
+		SchematicModel const* scope) const
 {
 	bool isAnalog=true;
 //	bool isVerilog=false;
@@ -350,7 +350,8 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 
 	// BUG: deduplicate. "print_module_body" or so.
 	QString s, Time;
-	for(auto it_ : m.components()){
+	assert(scope);
+	for(auto it_ : *scope){
 		auto pc = dynamic_cast<Symbol const*>(it_);
 		if(pc){
 		}else{
@@ -415,20 +416,13 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 // to target language somewhere else.
 
 // some kind of expand
-void LegacyNetlister::throughAllComps(ostream_t&, SchematicSymbol const& m,
+void LegacyNetlister::throughAllComps(ostream_t&, SchematicModel const* sckt,
 		std::map<std::string, Element const*>& declarations) const
 { incomplete();
-	trace3("tac", m.label(), &m, m.owner());
-	if(m.owner()){
-	}else{
-	}
 	QString s;
 	bool isAnalog = true;
 
-	assert(m.subckt());
-	auto const& sckt = *m.subckt();
-
-	for(auto it_ : sckt.components()){
+	for(auto it_ : *sckt){
 
 		auto pc = dynamic_cast<Symbol const*>(it_);
 		if(pc){
@@ -451,8 +445,8 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicSymbol const& m,
 		trace1("tac", sym->owner()->label());
 
 		// because they are components
-		assert(sym->owner()==&m);
-		assert(sym->scope()==&sckt);
+//		assert(sym->owner()==&m);
+		assert(sym->scope()==sckt);
 
 		if(pc->paramValue("$mfactor") == "0"){
 			incomplete();
