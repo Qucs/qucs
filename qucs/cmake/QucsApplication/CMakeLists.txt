@@ -28,8 +28,9 @@ target_link_libraries(qucs qucsschematic)
 target_link_libraries(qucs Qt5::Widgets)
 target_link_libraries(qucs Qt5::Svg)
 
-message("PATH: ${CMAKE_SOURCE_DIR}/../../src")
-target_link_directories(qucs PUBLIC ${CMAKE_SOURCE_DIR}/../../src)
+# Don't like to include them all here. TODO: find cleaner method. Included in qucsschematic already. So can it be reused?
+target_include_directories(qucs PRIVATE ${CMAKE_SOURCE_DIR}/../../include)
+target_include_directories(qucs PRIVATE ${CMAKE_SOURCE_DIR}/../../src)
 
 if(UNIX AND NOT APPLE)
 	set(DESKTOP qucs.desktop)
