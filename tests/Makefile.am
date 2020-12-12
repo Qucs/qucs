@@ -16,12 +16,15 @@
 # Boston, MA 02110-1301, USA.
 #
 
+include ../common.mk
+
 AM_CXXFLAGS = -fPIC
 
 examplesdir=$(srcdir)/../examples
 
 AM_DEFAULT_SOURCE_EXT = .cpp
 check_LTLIBRARIES = helloworld.la element.la
+LIBQUCS = ${top_builddir}/src/libqucs.la
 
 helloworld_la_LDFLAGS = -shared -no-undefined -module -avoid-version -rpath /dev/null
 element_la_LDFLAGS = -shared -no-undefined -module -avoid-version -rpath /dev/null
@@ -54,6 +57,13 @@ SH_LOG_COMPILER = $(SHELL)
 PRJ_LOG_COMPILER = $(srcdir)/prj_log_compiler
 SH_LOG_FLAGS =
 TEST_EXTENSIONS = .sh .prj
+
+check_PROGRAMS = \
+	geometry0 \
+	model0 \
+	model1 \
+	wire0 \
+	wire1
 
 TESTS = \
 	${check_PROGRAMS} \
@@ -153,6 +163,28 @@ XFAIL_TESTS = \
 	DC_SP_HICUM-fig10.prj \
 	DC_SW_bsim4v30nMOS_Ids_Vgs.prj \
 	DC_SW_bsim4v30pMOS_Ids_Vgs.prj
+
+# model0_CPPFLAGS = ${AM_CPPFLAGS} -DUNTANGLE_QT
+model0_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) # yikes.
+model0_LDADD = ${LIBQUCS}
+model0_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
+
+# model1_CPPFLAGS = ${AM_CPPFLAGS} -DUNTANGLE_QT
+model1_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) # yikes.
+model1_LDADD = ${LIBQUCS}
+model1_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
+
+# wire0_CPPFLAGS = ${AM_CPPFLAGS} -DUNTANGLE_QT
+wire0_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) # yikes.
+wire0_LDADD = ${LIBQUCS}
+wire0_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
+
+wire1_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) # yikes.
+wire1_LDADD = ${LIBQUCS}
+wire1_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
+
+geometry0_LDADD = ${LIBQUCS}
+geometry0_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
 
 
 if COND_WIN32

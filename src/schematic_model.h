@@ -15,8 +15,8 @@
 
 #ifndef UNTANGLE_QT // later.
 # include <QGraphicsScene>
-#endif
 # include <QFileInfo> // BUG
+#endif
 
 #include "object.h"
 //#include "node.h"
