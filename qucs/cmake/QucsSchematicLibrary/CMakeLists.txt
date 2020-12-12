@@ -22,8 +22,6 @@ set(PROJECT_VERSION "${QUCS_VERSION}")
 
 # add compiler definitions/symbols
 add_compile_definitions(PACKAGE_VERSION="${PROJECT_VERSION}")
-add_compile_definitions(QUCS_PREFIX="${prefix}")
-add_compile_definitions(QUCS_PLUGPATH="${pkglibdir}")
 
 set(PROJECT_VENDOR "Qucs team. This program is licensed under the GNU GPL")
 set(PROJECT_COPYRIGHT_YEAR "2014")
@@ -101,12 +99,6 @@ set(CMAKE_AUTOUIC ON)
 ## not provide the needed symbols. They are found on the .dll libraries.
 #if(WIN32)
 #  link_directories("${QT_BINARY_DIR}")
-
-#  if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-#    set(QT_LIBRARIES QtCored4 QtGuid4 Qt3Supportd4 QtSvgd4 QtXmld4 QtScriptd4)
-#  else()
-#    set(QT_LIBRARIES QtCore4 QtGui4 Qt3Support4 QtSvg4 QtXml4 QtScript4)
-#  endif()
 #endif(WIN32)
 
 #
@@ -117,8 +109,6 @@ set(CMAKE_AUTOUIC ON)
 #    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 #  endif()
 #endif()
-
-#add_definitions(${QT_DEFINITIONS} -DQT3_SUPPORT_WARNINGS)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/../../../cmake/readMakeList.txt)
 
@@ -139,38 +129,6 @@ list(TRANSFORM UIC_HDRS PREPEND ${coreSchematicPath}/)
 #
 readVariable(${coreSchematicPath}/MakeList RESOURCES QUCS_RESOURCES)
 list(TRANSFORM QUCS_RESOURCES PREPEND ${coreSchematicPath}/)
-
-#if(UNIX AND NOT APPLE)
-
-#  set(ICON16 bitmaps/hicolor/16x16/apps/qucs.png)
-#  set(ICON22 bitmaps/hicolor/22x22/apps/qucs.png)
-#  set(ICON32 bitmaps/hicolor/32x32/apps/qucs.png)
-#  set(ICON48 bitmaps/hicolor/48x48/apps/qucs.png)
-#  set(ICON64 bitmaps/hicolor/64x64/apps/qucs.png)
-#  set(ICON128 bitmaps/hicolor/128x128/apps/qucs.png)
-#  set(ICON256 bitmaps/hicolor/256x256/apps/qucs.png)
-#  set(ICON512 bitmaps/hicolor/512x512/apps/qucs.png)
-#  set(ICONsc bitmaps/hicolor/scalable/apps/qucs.svg)
-
-#  install(FILES ${ICON16}
-#          DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/16x16/apps)
-#  install(FILES ${ICON22}
-#          DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/22x22/apps)
-#  install(FILES ${ICON32}
-#          DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/32x32/apps)
-#  install(FILES ${ICON48}
-#          DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/48x48/apps)
-#  install(FILES ${ICON64}
-#          DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/64x64/apps)
-#  install(FILES ${ICON128}
-#          DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/128x128/apps)
-#  install(FILES ${ICON256}
-#          DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/256x256/apps)
-#  install(FILES ${ICON512}
-#          DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/512x512/apps)
-#  install(FILES ${ICONsc}
-#          DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps)
-#endif()
 
 ##
 ## configure Apple bundle information
@@ -233,7 +191,4 @@ add_library(
   qucsschematic SHARED
   $<TARGET_OBJECTS:coreSchematic> #$<TARGET_OBJECTS:components>
   )
-
-## link system libraries
-#target_link_libraries(qucsschematic ${CMAKE_DL_LIBS})
 
