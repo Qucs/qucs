@@ -52,6 +52,9 @@
 #include <Windows.h>  //for OutputDebugString
 #endif
 
+static const std::string default_simulator="qucsator"; // FIXME: get from rc? maybe from environment?
+
+// temporary stuff.
 namespace OS{
   inline std::string getenv(const std::string& s) {
     char* ev = ::getenv(s.c_str());
@@ -79,8 +82,6 @@ namespace OS{
     }
   }
 }
-
-static const std::string default_simulator="qucsator"; // FIXME: get from rc? maybe from environment?
 
 void setSimulator(char const* name)
 { untested();
@@ -130,7 +131,8 @@ void qucsMessageOutput(QtMsgType type, const char *msg)
 #endif
 }
 
-// TODO. maybe use a list as root, not a symbol (finally)
+// TODO. use a list as root, not a symbol (finally)
+// stash circuit model into "main"
 namespace{
 class sda : public SchematicSymbol {
 public:
@@ -204,7 +206,7 @@ public: // tmp hack
 }
 
 // moved to legacy/qucsator, QucsatorNetlister::save
-void doNetlist(QString schematic_fn, std::string netlist, DocumentFormat const& NLN)
+void doNetlist(QString schematic_fn, std::string netlist, DocumentFormat const& fmt)
 {
   QucsDoc d(nullptr, "", nullptr);
   d.setLabel("main");
@@ -218,21 +220,21 @@ void doNetlist(QString schematic_fn, std::string netlist, DocumentFormat const& 
   QFile file(schematic_fn);  // save simulator messages
   file.open(QIODevice::ReadOnly);
   istream_t stream (&file);
-  SchematicLanguage const* L=nullptr;
+  DocumentFormat const* L=nullptr;
 
   if(!L){
-    auto D = doclang_dispatcher["leg_sch"];
-    L = dynamic_cast<SchematicLanguage const*>(D);
+    auto D = command_dispatcher["leg_sch"];
+    L = dynamic_cast<DocumentFormat const*>(D);
   }else{ untested();
   }
   assert(L);
 
-//  assert(xs.owner());
-  // TODO: use a command.
-  while(!stream.atEnd()){
-    trace1("parse", stream.fullstring());
-    L->parse(stream, &xs);
-  }
+#if 0 // TODO
+  CMD::command("get", xs->subckt);?
+  => L->do_it(stream, document);
+#else
+  L->load(stream, &xs);
+#endif
 
   QFile NetlistFile(QString::fromStdString(netlist));
   if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
@@ -244,8 +246,12 @@ void doNetlist(QString schematic_fn, std::string netlist, DocumentFormat const& 
 
   // sch.setOwner(&xs);
 
+#if 1
   xs.DocName = schematic_fn.toStdString(); // tmp
-  NLN.save(os, &xs);
+#else
+  xs.setParam("$filename", schematic_fn.toStdString());
+#endif
+  fmt.save(os, &xs);
 }
 
 void attach_single(std::string const& what)
@@ -471,19 +477,20 @@ int main(int argc, char *argv[])
   "    --color [RGB|RGB]            set color mode (default RGB)\n"
   "    --orin [portrait|landscape]  set orientation (default portrait)\n"
   "  -i FILENAME    use file as input schematic\n"
-  "  -o FILENAME    use file as output netlist\n"
+  "  -o FILENAME    write output to filename\n"
   "  -icons         create component icons under ./bitmaps_generated\n"
   "  -doc           dump data for documentation:\n"
   "                 * file with of categories: categories.txt\n"
   "                 * one directory per category (e.g. ./lumped components/)\n"
   "                   - CSV file with component data ([comp#]_data.csv)\n"
   "                   - CSV file with component properties. ([comp#]_props.csv)\n"
-  "  -list-entries  list component entry formats for schematic and netlist\n"
+  "  --list-entries list component entry formats for schematic and netlist\n"
   "Options:\n"
   "  -i FILENAME    use file as input schematic\n"
   "  -o FILENAME    use file as output netlist\n"
   "  -l DOCLANG     language to be used by dump, can be a simulator name\n"
   "  -s SIMULATOR   choose a simulator\n"
+  "  -r FORMAT      run simulation\n"
   "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
   "    --dpi NUMBER                 set dpi value (default 96)\n"
   "    --color [RGB|RGB]            set color mode (default RGB)\n"
@@ -577,13 +584,13 @@ int main(int argc, char *argv[])
       result = -1;
     }else if (dump_flag) {
       auto cmd = command_dispatcher[netlang_name];
-      auto NLN = prechecked_cast<DocumentFormat const*>(cmd);
-      if(!NLN){ untested();
+      auto fmt = prechecked_cast<DocumentFormat const*>(cmd);
+      if(!fmt){ untested();
 	qDebug() << "no lang" << QString::fromStdString(netlang_name);
 	incomplete();
 	result = 1;
       }else{
-	doNetlist(inputfile, outputfile, *NLN);
+	doNetlist(inputfile, outputfile, *fmt);
 	result = 0;
       }
     } else if (print_flag) { untested();
