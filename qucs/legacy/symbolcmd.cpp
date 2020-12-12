@@ -35,7 +35,7 @@ private:
 		new_subckt();
 	}
 
-	void setParameter(int i, std::string const&){
+	void setParameter(int, std::string const&){
 	}
 
 private: // Symbol
