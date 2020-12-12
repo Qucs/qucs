@@ -7,6 +7,11 @@ cmake_minimum_required(VERSION 3.16)
 file(STRINGS ${PROJECT_SOURCE_DIR}/../../VERSION QUCS_VERSION)
 message(STATUS "Configuring ${PROJECT_NAME} (GUI): VERSION ${QUCS_VERSION}")
 
+# add compiler definitions/symbols
+add_compile_definitions(PACKAGE_VERSION="${PROJECT_VERSION}")
+add_compile_definitions(QUCS_PREFIX="${prefix}")
+add_compile_definitions(QUCS_PLUGPATH="${pkglibdir}")
+
 add_subdirectory(${CMAKE_SOURCE_DIR}/../QucsSchematicLibrary QucsSchematicLibrary)
 
 find_package(
@@ -19,7 +24,6 @@ find_package(
 ##
 ## CMake's way of creating an executable
 ##
-message("${CMAKE_SOURCE_DIR}/../../main/main.cpp")
 add_executable(qucs MACOSX_BUNDLE WIN32)
 target_sources(qucs PRIVATE
 	${CMAKE_SOURCE_DIR}/../../main/main.cpp
