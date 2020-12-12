@@ -13,9 +13,10 @@
 project(qucs_lib CXX)
 cmake_minimum_required(VERSION 3.16)
 
+set(coreSchematicPath ${CMAKE_CURRENT_SOURCE_DIR}/../../src)
+
 # use top VERSION file
-file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
-message(STATUS "Configuring ${PROJECT_NAME} (GUI): VERSION ${QUCS_VERSION}")
+file(STRINGS ${coreSchematicPath}/VERSION QUCS_VERSION)
 
 set(PROJECT_VERSION "${QUCS_VERSION}")
 
@@ -119,32 +120,25 @@ set(CMAKE_AUTOUIC ON)
 
 #add_definitions(${QT_DEFINITIONS} -DQT3_SUPPORT_WARNINGS)
 
-include(readMakeList.txt)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../../../cmake/readMakeList.txt)
 
-# where does qucs_SOURCE_DIR come from?
-include_directories(
-  ${qucs_SOURCE_DIR}
-  ${qucs_SOURCE_DIR}/../include
-  # ${qucs_SOURCE_DIR}/bitmaps ->no sources here
-  ${qucs_SOURCE_DIR}/diagrams
-  ${qucs_SOURCE_DIR}/dialogs
-  # ${qucs_SOURCE_DIR}/octave ->no sources here
-  ${qucs_SOURCE_DIR}/paintings)
+add_subdirectory(${coreSchematicPath}/bitmaps src/bitmaps) #-> added as resources
+add_subdirectory(${coreSchematicPath}/octave src/octave)
+add_subdirectory(${coreSchematicPath}/python src/python)
+#add_subdirectory(${coreSchematicPath}/tests src/tests)
 
-add_subdirectory( bitmaps ) #-> added as resources
-add_subdirectory(octave)
-add_subdirectory(python)
-add_subdirectory(tests)
-
-readVariable(MakeList CPP_SRC QUCS_SRCS)
-readVariable(MakeList CPP_HEADERS QUCS_HDRS)
-readVariable(MakeList UI_FILES UIC_HDRS)
+readVariable(${coreSchematicPath}/MakeList CPP_SRC QUCS_SRCS)
+readVariable(${coreSchematicPath}/MakeList CPP_HEADERS QUCS_HDRS)
+readVariable(${coreSchematicPath}/MakeList UI_FILES UIC_HDRS)
+list(TRANSFORM QUCS_SRCS PREPEND ${coreSchematicPath}/)
+list(TRANSFORM QUCS_HDRS PREPEND ${coreSchematicPath}/)
+list(TRANSFORM UIC_HDRS PREPEND ${coreSchematicPath}/)
 
 #
 # Read variable to generate rules for building source files from bitmap resources
 #
-readVariable(MakeList RESOURCES QUCS_RESOURCES)
-set(UIC_HDRS searchdialog.ui)
+readVariable(${coreSchematicPath}/MakeList RESOURCES QUCS_RESOURCES)
+list(TRANSFORM QUCS_RESOURCES PREPEND ${coreSchematicPath}/)
 
 #if(UNIX AND NOT APPLE)
 
@@ -176,10 +170,6 @@ set(UIC_HDRS searchdialog.ui)
 #          DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/512x512/apps)
 #  install(FILES ${ICONsc}
 #          DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps)
-
-#  set(DESKTOP qucs.desktop)
-#  install(FILES ${DESKTOP}
-#          DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
 #endif()
 
 ##
@@ -228,6 +218,9 @@ set(UIC_HDRS searchdialog.ui)
 
 ## schematic library
 add_library(coreSchematic OBJECT ${QUCS_SRCS} ${QUCS_RESOURCES} ${UIC_HDRS})
+target_include_directories(coreSchematic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
+target_include_directories(coreSchematic PRIVATE ${coreSchematicPath})
+
 target_link_libraries(coreSchematic Qt5::Core)
 target_link_libraries(coreSchematic Qt5::Gui)
 target_link_libraries(coreSchematic Qt5::Widgets)
@@ -238,113 +231,9 @@ target_link_libraries(coreSchematic Qt5::Script)
 ## create shared library
 add_library(
   qucsschematic SHARED
-  $<TARGET_OBJECTS:coreSchematic> $<TARGET_OBJECTS:components>
+  $<TARGET_OBJECTS:coreSchematic> #$<TARGET_OBJECTS:components>
   )
 
 ## link system libraries
-target_link_libraries(qucsschematic ${CMAKE_DL_LIBS})
+#target_link_libraries(qucsschematic ${CMAKE_DL_LIBS})
 
-
-##
-## CMake's way of creating an executable
-##
-#add_executable(qucs MACOSX_BUNDLE WIN32 main.cpp ${RESOURCES_SRCS})
-#add_executable(qucs ${RESOURCES_SRCS})
-#target_sources(qucs PRIVATE
-#	${CMAKE_SOURCE_DIR}/../main/main.cpp
-#	)
-#target_link_libraries(qucs qucsschematic)
-#target_link_libraries(qucs Qt5::Widgets)
-
-##
-## Prepare the installation
-##
-#set(plugin_dest_dir bin)
-#set(qtconf_dest_dir bin)
-#set(APPS "${CMAKE_INSTALL_PREFIX}/bin/${PROJECT_NAME}")
-#if(APPLE)
-#  set(plugin_dest_dir ${PROJECT_NAME}.app/Contents/MacOS)
-#  set(qtconf_dest_dir ${PROJECT_NAME}.app/Contents/Resources)
-#  set(APPS "${CMAKE_INSTALL_PREFIX}/bin/${PROJECT_NAME}.app")
-#endif(APPLE)
-
-#if(WIN32)
-#  set(APPS "${CMAKE_INSTALL_PREFIX}/bin/${PROJECT_NAME}.exe")
-#endif(WIN32)
-
-##
-## Install the Qucs application, on Apple, the bundle is installed as on other
-## platforms it'll go into the bin directory.
-##
-#install(
-#  TARGETS qucs
-#  BUNDLE DESTINATION bin COMPONENT Runtime
-#  RUNTIME DESTINATION bin COMPONENT Runtime)
-
-## set Windows runtime location for libqucschematic See:
-## http://www.cmake.org/pipermail/cmake/2010-June/037461.html
-#install(
-#  TARGETS qucsschematic
-#  RUNTIME DESTINATION bin COMPONENT runtime
-#  ARCHIVE DESTINATION lib COMPONENT devel
-#  LIBRARY DESTINATION lib COMPONENT library)
-
-##
-## Install needed Qt plugins by copying directories from the qt installation One
-## can cull what gets copied by using 'REGEX "..." EXCLUDE'
-##
-#if(APPLE)
-#  install(
-#    DIRECTORY "${QT_PLUGINS_DIR}/imageformats"
-#    DESTINATION bin/${plugin_dest_dir}/plugins
-#    COMPONENT Runtime)
-#endif()
-##
-## install a qt.conf file this inserts some cmake code into the install script to
-## write the file
-##
-#if(APPLE)
-#  install(CODE "
-#    file(WRITE \"\${CMAKE_INSTALL_PREFIX}/bin/${qtconf_dest_dir}/qt.conf\" \"\")
-#    " COMPONENT Runtime)
-#endif()
-
-## ------------------------------------------------------------------------------
-## --
-## Use BundleUtilities to get all other dependencies for the application to work.
-## It takes a bundle or executable along with possible plugins and inspects it
-## for dependencies.  If they are not system dependencies, they are copied.
-
-## directories to look for dependencies
-#if(APPLE)
-#  set(DIRS ${QT_LIBRARY_DIRS})
-#endif()
-
-## Now the work of copying dependencies into the bundle/package The quotes are
-## escaped and variables to use at install time have their $ escaped An
-## alternative is the do a configure_file() on a script and use install(SCRIPT
-## ...). Note that the image plugins depend on QtSvg and QtXml, and it got those
-## copied over.
-#if(APPLE)
-#  install(
-#    CODE "
-#    file(GLOB_RECURSE QTPLUGINS
-#      \"\${CMAKE_INSTALL_PREFIX}/bin/${plugin_dest_dir}/plugins/*${CMAKE_SHARED_LIBRARY_SUFFIX}\")
-#    set(BU_CHMOD_BUNDLE_ITEMS ON)
-#    include(BundleUtilities)
-#    fixup_bundle(\"${APPS}\" \"\${QTPLUGINS}\" \"${DIRS}\")
-#    "
-#    COMPONENT Runtime)
-#endif()
-
-## Install wrapper scripts
-#if(WIN32)
-#  set(SCRIPTS qucsdigi.bat qucsveri.bat qucsdigilib.bat)
-#else()
-#  set(SCRIPTS qucsdigi qucsveri qucsdigilib)
-#endif()
-#install(FILES ${SCRIPTS} DESTINATION bin/)
-
-## To Create a package, one can run "cpack -G DragNDrop CPackConfig.cmake" on Mac
-## OS X where CPackConfig.cmake is created by including CPack And then there's
-## ways to customize this as well set(CPACK_BINARY_DRAGNDROP ON) include(CPack)
