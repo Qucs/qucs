@@ -3,9 +3,6 @@
 // GPLv3+
 
 #include "schematic_model.h"
-#include "../legacy/components/resistor.cpp" // BUG
-#include "../legacy/component.cpp" // BUG
-#include "../legacy/gatecomponent.cpp" // BUG
 #include "globals.h"
 
 void union0()
@@ -136,6 +133,8 @@ void union2()
 
 int main()
 {
+	 // TODO: CMD:: attach
+	dlopen("../legacy/components/.libs/legacy-components.so", RTLD_NOW);
 	union0();
 	union1();
 	union2();

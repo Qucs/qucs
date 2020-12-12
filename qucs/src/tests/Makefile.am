@@ -22,7 +22,6 @@ AM_CPPFLAGS += -I${srcdir}/.. -I${top_srcdir} ${QT_CFLAGS} ${QTest_CFLAGS} -DPIC
 AM_DEFAULT_SOURCE_EXT = .cpp
 # AM_CXXFLAGS = -fPIC
 AM_LDFLAGS = -Wl,--no-as-needed
-LIBQUCS = ${top_builddir}/src/libqucs.la
 
 guitests = \
 	SchematicTests ElementTests ComponentTests
@@ -31,38 +30,9 @@ if COND_WIN32
 check_PROGRAMS =
 else
 check_PROGRAMS = \
-	${guitests} \
-	model0 \
-	model1 \
-	wire0 \
-	geometry0 \
-	wire1
+	${guitests}
 endif
 
-# model0_CPPFLAGS = ${AM_CPPFLAGS} -I${top_srcdir} -DUNTANGLE_QT
-model0_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) # yikes.
-model0_LDADD = ${LIBQUCS}
-model0_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
-
-# model1_CPPFLAGS = ${AM_CPPFLAGS} -I${top_srcdir} -DUNTANGLE_QT
-model1_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) # yikes.
-model1_LDADD = ${LIBQUCS}
-model1_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
-
-wire0_LDADD = ${LIBQUCS}
-wire0_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
-
-wire1_LDADD = ${LIBQUCS}
-wire1_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
-
-geometry0_LDADD = ${LIBQUCS}
-geometry0_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
-
-NO_PLUGINS = \
-	../components/libcomponents.la \
-	../diagrams/libdiagrams.la \
-	../paintings/libpaintings.la \
-	../dialogs/libdialogs.la
 
 SchematicTests_SOURCES = SchematicTests.cpp SchematicTests.moc.cpp
 
