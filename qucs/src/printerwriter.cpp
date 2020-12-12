@@ -34,8 +34,7 @@ PrinterWriter::PrinterWriter()
   //default setting
   Printer = new QPrinter(QPrinter::HighResolution);
 
-
-  Printer->setPaperSize(QPrinter::A4);
+  Printer->setPageSize(QPageSize(QPageSize::A4));
   Printer->setColorMode(QPrinter::Color);
   Printer->setFullPage(true);
 
@@ -58,13 +57,13 @@ void PrinterWriter::noGuiPrint(
 
   //page size
   if (page == "A3") {
-    Printer->setPaperSize(QPrinter::A3);
+    Printer->setPageSize(QPageSize(QPageSize::A3));
   } else if (page == "B4") {
-    Printer->setPaperSize(QPrinter::B4);
+    Printer->setPageSize(QPageSize(QPageSize::B4));
   } else if (page == "B5") {
-    Printer->setPaperSize(QPrinter::B5);
+    Printer->setPageSize(QPageSize(QPageSize::B5));
   } else {
-    Printer->setPaperSize(QPrinter::A4);
+    Printer->setPageSize(QPageSize(QPageSize::A4));
   }
   //dpi
   Printer->setResolution(dpi);
@@ -76,9 +75,9 @@ void PrinterWriter::noGuiPrint(
   }
   //orientation
   if (orientation == "landscape") {
-    Printer->setOrientation(QPrinter::Landscape);
+    Printer->setPageOrientation(QPageLayout::Orientation::Landscape);
   } else {
-    Printer->setOrientation(QPrinter::Portrait);
+    Printer->setPageOrientation(QPageLayout::Orientation::Portrait);
   }
   QPainter Painter(Printer);
   if(!Painter.device()) {      // valid device available ?
