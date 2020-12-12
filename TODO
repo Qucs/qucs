@@ -20,8 +20,9 @@
 ===== 0.1.* TODO =====
 
 - resurrect diagrams as QWidgets
-- could add CMake at some point.
+- could add CMake at some point
 - hide text during symbols drag
+- movable (tx, ty) and editable text
 - adjust selection bits after "wire optimisation"
 - connect error message handling (Object)
 - named nets and parse qucsator models
@@ -33,6 +34,7 @@
 - make code more (human) readable where possible
 - symbol text position / move text
 - refactor VHDLcode
+- qucsator process namesspace issue (important?)
 
 done?
 - fix parameters in "Lib" style components
