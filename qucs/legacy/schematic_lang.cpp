@@ -205,16 +205,17 @@ static std::list<Element*> implicit_hack;
 
 static bool obsolete_wireload(Symbol* w, const QString& sc)
 {
+	trace1("ow", sc);
 	Symbol* sym = w;
 	QString s(sc);
 	bool ok;
 
-	if(s.at(0) != '<'){ untested();
-		throw ExceptionCantParse();
-	}else if(s.at(s.length()-1) != '>'){ untested();
-		throw ExceptionCantParse();
-	}
-	s = s.mid(1, s.length()-2);   // cut off start and end character
+//	if(s.at(0) != '<'){ untested();
+//		throw ExceptionCantParse();
+//	}else if(s.at(s.length()-1) != '>'){ untested();
+//		throw ExceptionCantParse();
+//	}
+//	s = s.mid(1, s.length()-2);   // cut off start and end character
 
 	QString n;
 	n  = s.section(' ',0,0);
@@ -393,8 +394,8 @@ void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
 				std::string typeName = findType(stream);
 				trace2("W", typeName, stream.fullstring());
 				assert(typeName=="Wire");
-#if 0 // not yet.
-				new__instance(stream, &owner, owner.subckt());
+#if 1
+				new__instance(stream, owner, sckt);
 #else
 				Symbol* sw= symbol_dispatcher.clone("Wire");
 				assert(sw);
@@ -1145,7 +1146,12 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 //	}else if(auto w=dynamic_cast<Wire*>(e)){
 //		bool err = obsolete_wireload(w, Line);
 	}else if(auto s=dynamic_cast<Symbol*>(e)){
-		parseSymbol(l, s);
+		if(s->typeName()=="wire"){
+			// yikes.
+			obsolete_wireload(s, l);
+		}else{
+			parseSymbol(l, s);
+		}
 	}else if(auto d=dynamic_cast<Diagram*>(e)){
 		loadDiagram(d, c);
 	}else if(auto s=dynamic_cast<Painting*>(e)){
@@ -1206,6 +1212,8 @@ std::string LegacySchematicLanguage::findType(istream_t& c) const
 	QString type = Line.section (' ',0,0); // component type
 	type.remove (0,1);    // remove leading "<"
 	if('0' <= type.at(0) && type.at(0) <= '9'){
+		return "Wire";
+	}else if('-' == type.at(0)){
 		return "Wire";
 	}else{
 		std::string typestring = type.toStdString();
