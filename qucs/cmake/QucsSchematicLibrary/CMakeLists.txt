@@ -91,3 +91,10 @@ target_link_libraries(coreSchematic Qt5::Svg)
 target_link_libraries(coreSchematic Qt5::PrintSupport)
 target_link_libraries(coreSchematic Qt5::Script)
 
+## create shared library
+add_library(
+  qucsschematic SHARED
+  # must be done, because coreSchematic is not a shared or static library, but only an object
+  # for shared/ static libraries the target name is sufficent
+  $<TARGET_OBJECTS:coreSchematic> #$<TARGET_OBJECTS:components>
+  )
