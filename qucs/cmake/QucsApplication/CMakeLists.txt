@@ -12,12 +12,29 @@ set(PROJECT_COPYRIGHT_YEAR "2020")
 set(PROJECT_DOMAIN_FIRST "qucs")
 set(PROJECT_DOMAIN_SECOND "org")
 
+# when true, all the dependencies (Qucsator, legacy and so on are also compiled)
+set(CompileDependencies true)
+
 # add compiler definitions/symbols
 add_compile_definitions(PACKAGE_VERSION="${PROJECT_VERSION}")
 add_compile_definitions(QUCS_PREFIX="${prefix}")
 add_compile_definitions(QUCS_PLUGPATH="${pkglibdir}")
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/../QucsSchematicLibrary QucsSchematicLibrary)
+
+if (${CompileDependencies})
+	file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/libraries)
+
+	add_subdirectory(${CMAKE_SOURCE_DIR}/../../legacy legacy)
+
+	# copy the library into a common folder for all dependencies of qucs
+	# so they can be used independently to the installed ones
+	install(TARGETS legacy LIBRARY DESTINATION ${CMAKE_BINARY_DIR}/libraries)
+
+	add_compile_definitions(QUCS_PLUGPATH="${CMAKE_BINARY_DIR}/libraries")
+	#message("QUCS_PLUGPATH: ${CMAKE_BINARY_DIR}/libraries")
+endif()
+
 
 ## ------ WHY needed?
 # If Git hash not defined, try to define it
