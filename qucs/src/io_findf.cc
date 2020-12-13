@@ -65,10 +65,11 @@ std::string findfile(const std::string& filename, const std::string& path, int m
     }else{
     }
     
-    target += filename;
-    if (OS::access_ok(target, mode)) {	// found it
-      return target;
-    }else if (p_ptr==path.end()) {	// ran out of path, didn't find it
+    if (OS::access_ok(target + filename, mode)) {	// found it
+      return target + filename;
+    } else if(OS::access_ok(target + "lib" + filename, mode)) {
+        return target + "lib" + filename;
+    } else if (p_ptr==path.end()) {	// ran out of path, didn't find it
       return "";
     }else{				// else try again
     }
