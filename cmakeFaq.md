@@ -47,3 +47,18 @@ target_include_directories() #add include directory!
 in commit: 4dea239df439ca650615f67248b73a5105156fc1
 solution: target_include_directories instead of target_link_directories must be used!
 
+## /usr/bin/ld: QucsSchematicLibrary/libqucsschematic.so: undefined reference to `PackageDialog::extractPackage()'
+qucs_app CMakeLists.txt. In qucs_lib the error message does not show up
+
+## /usr/bin/ld: QucsSchematicLibrary/libqucsschematic.so: undefined reference to `QPrintDialog::QPrintDialog(QPrinter*, QWidget*)'
+qucs_app CMakeLists.txt. In qucs_lib the error message does not show up. But building the CMakeLists.txt of QucsSchematicLibrary in the qucs_app project the same error occurs
+
+solution: in main.cpp there war printerwriter included, but not used. So the header must be removed or the source file must be included into the qucs app
+
+## /usr/bin/ld: QucsSchematicLibrary/libqucsschematic.so: undefined reference to `DiagramDialog::DiagramDialog(QucsDoc*)'
+solution: 2bc5a07e6a380c65829fc824e82be58181a3ea1b
+add diagrammdialog.cpp to MakeList as src
+
+## /usr/bin/ld: QucsSchematicLibrary/libqucsschematic.so: undefined reference to `QPrinter::QPrinter(QPrinter::PrinterMode)'
+I have to link again Printsupport in qucs_app target. Don't understand why
+
