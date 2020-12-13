@@ -13,7 +13,7 @@
 project(qucs_lib CXX)
 cmake_minimum_required(VERSION 3.16)
 
-set(coreSchematicPath ${CMAKE_CURRENT_SOURCE_DIR}/../../src)
+set(coreSchematicPath ${PROJECT_SOURCE_DIR}/../../src)
 
 # use top VERSION file
 file(STRINGS ${coreSchematicPath}/VERSION QUCS_VERSION)
@@ -56,7 +56,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/../../../cmake/readMakeList.txt)
+include(${PROJECT_SOURCE_DIR}/../../../cmake/readMakeList.txt)
 
 add_subdirectory(${coreSchematicPath}/bitmaps src/bitmaps) #-> added as resources
 add_subdirectory(${coreSchematicPath}/octave src/octave)
@@ -80,7 +80,7 @@ list(TRANSFORM QUCS_RESOURCES PREPEND ${coreSchematicPath}/)
 
 ## schematic library
 add_library(coreSchematic OBJECT ${QUCS_SRCS} ${QUCS_RESOURCES} ${QUCS_UI_FILES} ${QUCS_DIALOG_SRC})
-target_include_directories(coreSchematic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
+target_include_directories(coreSchematic PRIVATE ${PROJECT_SOURCE_DIR}/../../include)
 target_include_directories(coreSchematic PRIVATE ${coreSchematicPath})
 # the order of the links is important. At least the libraries without dependencies are added
 # here the Qt ones (https://stackoverflow.com/questions/51994603/cmake-qt5-undefined-reference-to-qprinterqprinterqprinterprintermode)
