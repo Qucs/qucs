@@ -390,6 +390,9 @@ void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
 					incomplete();
 				}
 			}else if(mode=='W'){
+				std::string typeName = findType(stream);
+				trace2("W", typeName, stream.fullstring());
+				assert(typeName=="Wire");
 #if 0 // not yet.
 				new__instance(stream, &owner, owner.subckt());
 #else
@@ -1202,9 +1205,13 @@ std::string LegacySchematicLanguage::findType(istream_t& c) const
 
 	QString type = Line.section (' ',0,0); // component type
 	type.remove (0,1);    // remove leading "<"
-	std::string typestring = type.toStdString();
-	trace2("findType", c.fullString(), typestring);
-	return typestring;
+	if('0' <= type.at(0) && type.at(0) <= '9'){
+		return "Wire";
+	}else{
+		std::string typestring = type.toStdString();
+		trace3("findType", c.fullString(), typestring, type.at(0));
+		return typestring;
+	}
 }
 /*--------------------------------------------------------------------------*/
 // findProto??
