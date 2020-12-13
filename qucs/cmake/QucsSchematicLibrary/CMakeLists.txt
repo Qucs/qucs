@@ -65,11 +65,11 @@ add_subdirectory(${coreSchematicPath}/python src/python)
 
 readVariable(${coreSchematicPath}/MakeList CPP_SRC QUCS_SRCS)
 readVariable(${coreSchematicPath}/MakeList CPP_HEADERS QUCS_HDRS)
-readVariable(${coreSchematicPath}/MakeList UI_FILES UIC_HDRS)
+readVariable(${coreSchematicPath}/MakeList UI_FILES QUCS_UI_FILES)
 readVariable(${coreSchematicPath}/MakeList DIALOG_SRC QUCS_DIALOG_SRC)
 list(TRANSFORM QUCS_SRCS PREPEND ${coreSchematicPath}/)
 list(TRANSFORM QUCS_HDRS PREPEND ${coreSchematicPath}/)
-list(TRANSFORM UIC_HDRS PREPEND ${coreSchematicPath}/)
+list(TRANSFORM QUCS_UI_FILES PREPEND ${coreSchematicPath}/)
 list(TRANSFORM QUCS_DIALOG_SRC PREPEND ${coreSchematicPath}/)
 
 #
@@ -79,10 +79,11 @@ readVariable(${coreSchematicPath}/MakeList RESOURCES QUCS_RESOURCES)
 list(TRANSFORM QUCS_RESOURCES PREPEND ${coreSchematicPath}/)
 
 ## schematic library
-add_library(coreSchematic OBJECT ${QUCS_SRCS} ${QUCS_RESOURCES} ${UIC_HDRS} ${QUCS_DIALOG_SRC})
+add_library(coreSchematic OBJECT ${QUCS_SRCS} ${QUCS_RESOURCES} ${QUCS_UI_FILES} ${QUCS_DIALOG_SRC})
 target_include_directories(coreSchematic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
 target_include_directories(coreSchematic PRIVATE ${coreSchematicPath})
-
+# the order of the links is important. At least the libraries without dependencies are added
+# here the Qt ones (https://stackoverflow.com/questions/51994603/cmake-qt5-undefined-reference-to-qprinterqprinterqprinterprintermode)
 target_link_libraries(coreSchematic Qt5::Core)
 target_link_libraries(coreSchematic Qt5::Gui)
 target_link_libraries(coreSchematic Qt5::Widgets)
@@ -90,8 +91,3 @@ target_link_libraries(coreSchematic Qt5::Svg)
 target_link_libraries(coreSchematic Qt5::PrintSupport)
 target_link_libraries(coreSchematic Qt5::Script)
 
-## create shared library
-add_library(
-  qucsschematic SHARED
-  $<TARGET_OBJECTS:coreSchematic> #$<TARGET_OBJECTS:components>
-  )
