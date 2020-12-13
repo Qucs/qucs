@@ -3,6 +3,7 @@
 # (c) 2020 Martin Marmsoler
 #     GPLv3
 macro( readVariable FILENAME VARIABLE OUTVAR_NAME)
+	message("Read file from ${CMAKE_CURRENT_SOURCE_DIR}. Variable: ${VARIABLE}")
     # not sure about the scoping
     unset(FILE_BUFFER)
     unset(_RESULT)
@@ -14,7 +15,7 @@ macro( readVariable FILENAME VARIABLE OUTVAR_NAME)
     # the files are not recognized
     string(REPLACE "\t" "    " BUFFER ${FILE_BUFFER})
     string(REGEX REPLACE "\n" "${Esc} ;" BUFFER "${BUFFER}")
-    #message("STATE 1")
+    message("STATE 1")
 
     # CONT is the statemachine variable
     foreach(LINE ${BUFFER})
@@ -23,34 +24,40 @@ macro( readVariable FILENAME VARIABLE OUTVAR_NAME)
             #message("Skip comment line")
             continue() # continue if it is a comment line
         endif()
-        #message("LINE: ${LINE}")
+        message("LINE: ${LINE}")
         if(CONT)
             if("${LINE}" MATCHES "\\\\[ ]*${Esc}$")
-                #message("STATE 3")
+                message("STATE 3")
                 set(CONT True)
             else()
                 set(CONT False)
-                #message("STATE 1")
+                message("STATE 1")
             endif()
             string(REGEX REPLACE "\\\\" "" LINE ${LINE})
             list( APPEND _RESULT ${LINE})
+            #message("RESULT: ${_RESULT}")
         endif()
       # startline, where the variable was found
-      if("${LINE}" MATCHES "${VARIABLE}")
-           #message("Variable found")
-           #message("STATE 2")
+      if("${LINE}" MATCHES "^[ ]*${VARIABLE}[ =]") # otherwise TEMPLATE_HDR will be recognized as TEMPLATE only if it will not be started from beginning
+           message("Variable found")
+           message("STATE 2")
+           message("LINE: ${LINE}")
            string(REGEX REPLACE "${VARIABLE}[ ]*=" "" _RESULT ${LINE})
+           message("_RESULT: ${_RESULT}")
            if("${LINE}" MATCHES "\\\\[ ]*${Esc}")
                set(CONT True)
            else()
                set(CONT False)
-               #message("STATE 1")
+               message("STATE 1")
            endif()
            string(REGEX REPLACE "\\\\" "" LINE ${LINE})
+           message("RESULT: ${_RESULT}")
        endif()
     endforeach()
+    
+    string(REGEX REPLACE "\\\\" "" _RESULT ${_RESULT})
     separate_arguments(_RESULT)
-
+	message("END RESULT: ${_RESULT}")
     # seems to be global
     set(${OUTVAR_NAME} ${_RESULT})
 endmacro()
