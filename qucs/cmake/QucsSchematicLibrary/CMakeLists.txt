@@ -22,7 +22,7 @@ set(PROJECT_VERSION "${QUCS_VERSION}")
 
 # add compiler definitions/symbols
 # already in qucs_app CMakeLists.txt. Maybe renaming it?
-#add_compile_definitions(PACKAGE_VERSION="${PROJECT_VERSION}")
+add_compile_definitions(PACKAGE_VERSION="${PROJECT_VERSION}")
 
 set(PROJECT_VENDOR "Qucs team. This program is licensed under the GNU GPL")
 set(PROJECT_COPYRIGHT_YEAR "2020")
