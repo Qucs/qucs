@@ -181,10 +181,9 @@ Element* SchematicModel::detach(Element* what)
 	}
 	return what;
 }
-// TODO: take iterator.
+/*--------------------------------------------------------------------------*/
 Element* SchematicModel::attach(Element* what)
 {
-
 	_map.insert(std::make_pair(what->label(), what));
 
 	trace2("SchematicModel::attach", what->label(), this);
@@ -199,11 +198,15 @@ Element* SchematicModel::attach(Element* what)
 	}else if(auto d=dynamic_cast<Diagram*>(what)){
 		diagrams().append(d);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
+		c->recreate(); // BUG: re? create symbol gfx and random other things. needs owner
+		c->build(); // what's this?!
 		if(c->is_device()){
 			connect(c);
 		}else{
 			assert(!dynamic_cast<Conductor*>(element(what)));
 		}
+
+
 		components().append(c);
 	}else if(dynamic_cast<Element*>(what)){
 		components().append(what);
