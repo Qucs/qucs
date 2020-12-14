@@ -181,6 +181,7 @@ Element* LegacySchematicLanguage::loadElement_(const QString& _s, Element* e) co
 		// legacy components
 		// will not work non-qucs-.sch languages
 		incomplete();
+		assert(false);
 		c = parseComponentObsoleteCallback(_s, c);
 
 		QString cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
@@ -350,7 +351,9 @@ void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
 			/// \todo enable user to load partial schematic, skip unknown components
 			Element*c = nullptr;
 			if(mode=='C'){
-				// TODO: new__instance(stream, &owner, owner.subckt());
+#if 1
+				new__instance(stream, owner, sckt);
+#else
 				c = getComponentFromName(Line);
 				if(c){
 					c->setOwner(owner); // owner->subckt()?
@@ -368,6 +371,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
 					sym->build(); // what's this?!
 				}else{
 				}
+#endif
 			}else if(mode=='S'){ untested();
 				std::string typeName = findType(stream);
 				trace2("modeS findtype", typeName, _lib_mod);
@@ -908,11 +912,10 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 	QString s = _s;
 
 	if(s.at(0) != '<'){ untested();
-		return NULL;
 	}else if(s.at(s.length()-1) != '>'){ untested();
-		return NULL;
+	}else{
+		s = s.mid(1, s.length()-2);   // cut off start and end character
 	}
-	s = s.mid(1, s.length()-2);   // cut off start and end character
 
 	QString label=s.section(' ',1,1);
 	c->obsolete_name_override_hack(label); //??
@@ -1140,9 +1143,11 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 	l = l.mid(1, l.length()-2);  // cut off start and end character
 
 
-	if(dynamic_cast<Component*>(e)){ untested();
+	if(auto cc=dynamic_cast<Component*>(e)){ untested();
 		// callback?!
-		incomplete();
+		trace2("compon callback", l, cc->label());
+		e = parseComponentObsoleteCallback(l, cc);
+
 //	}else if(auto w=dynamic_cast<Wire*>(e)){
 //		bool err = obsolete_wireload(w, Line);
 	}else if(auto s=dynamic_cast<Symbol*>(e)){
