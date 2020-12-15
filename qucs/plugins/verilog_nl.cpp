@@ -21,7 +21,6 @@
 #include "schematic_lang.h"
 #include "io.h"
 #include "net.h"
-#include "sckt_proto.h"
 #include "exception.h"
 
 namespace{

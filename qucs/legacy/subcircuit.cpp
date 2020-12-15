@@ -12,7 +12,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "sckt_proto.h"
 #include "qucs.h"
 #include "schematic_doc.h"
 #include "misc.h"
