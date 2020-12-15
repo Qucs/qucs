@@ -14,7 +14,6 @@
 // qucsator simulator "driver", legacy
 
 #include "simulator.h"
-#include "sckt_proto.h"
 #include "sckt_base.h"
 #include "net.h"
 #include "docfmt.h" // <<
