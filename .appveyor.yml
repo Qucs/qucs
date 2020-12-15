@@ -1,3 +1,4 @@
+image: Visual Studio 2019
 environment:
   matrix:
     - MSYSTEM : MINGW64
@@ -24,6 +25,8 @@ install:
   - set QUCSDIR=c:\qucs-win%MBITS%\
   - set MSYSHOME=C:\msys64\home\appveyor\
   - set "PATH=C:\msys64\usr\bin;%QTDIR%\bin;%PATH%"
+  #correction to pgk-config path (needed for Qt5)
+  - set PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/share/pkgconfig:/mingw%MBITS%/lib/pkgconfig
 
   - bash -lc ""
   - bash -lc "pacman --version"
@@ -31,7 +34,7 @@ install:
   # Switch from SF to msys2.org (default, much faster)
   - bash -lc "pacman --noconfirm --needed --sync pacman-mirrors"
   - bash -lc "pacman --noconfirm --needed -S autoconf automake bison flex"
-  #- bash -lc "pacman --noconfirm --needed -S mingw-w64-$MARCH-qt4"
+  - bash -lc "pacman --noconfirm --needed -S mingw-w64-$MARCH-qt5"
   # Qt4 was removed from MSYS2, see
   #   https://github.com/msys2/MINGW-packages/issues/3881
   #   and https://github.com/slowphil/texmacs-win-builder/issues/3 for the "fix"
@@ -43,9 +46,9 @@ install:
   #
   # download package directly into the local pacman packages directory, cached by AppVeyor
   # make sure pacman packages directory exists (may not be there if no packages downloaded yet)
-  - bash -lc "mkdir -p /var/cache/pacman/pkg"
+  #- bash -lc "mkdir -p /var/cache/pacman/pkg"
   # use "no-clobber" option for wget since the file could/should already be in the cache
-  - bash -lc "cd /var/cache/pacman/pkg && wget -nc http://repo.msys2.org/mingw/$MARCH/mingw-w64-$MARCH-qt4-4.8.7-4-any.pkg.tar.xz && pacman --noconfirm --needed -U mingw-w64-$MARCH-qt4-4.8.7-4-any.pkg.tar.xz"
+  #- bash -lc "cd /var/cache/pacman/pkg && wget -nc http://repo.msys2.org/mingw/$MARCH/mingw-w64-$MARCH-qt4-4.8.7-4-any.pkg.tar.xz && pacman --noconfirm --needed -U mingw-w64-$MARCH-qt4-4.8.7-4-any.pkg.tar.xz"
 
   # Set compiler (64bit)
   - set "CC=/c/msys64/mingw%MBITS%/bin/gcc.exe"
@@ -61,7 +64,7 @@ build_script:
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && ./bootstrap"
 
     # does not work. there is no qt5
-    #   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && export QTDIR=/c/msys64/mingw$MBITS && ./configure --prefix=/c/qucs-win$MBITS --disable-dependency-tracking"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && export PKG_CONFIG_PATH=$PKG_CONFIG_PATH && ./configure --prefix=/c/qucs-win$MBITS --disable-dependency-tracking"
     #   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && make -j2 install"
     #   - bash -lc "exec 0</dev/null && cd /c/qucs-win$MBITS/bin && ./qucs -v"
 
