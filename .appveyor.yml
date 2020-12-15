@@ -60,7 +60,7 @@ build_script:
 after_build:
    - 7z a %APPVEYOR_BUILD_FOLDER%\qucs-win%MBITS%.zip %QUCSDIR%
 
- artifacts:
+artifacts:
    # variables here must use the PowerShell syntax
    - path: qucs-win$(MBITS).zip
      name: qucs-win$(MBITS).zip
