@@ -131,97 +131,29 @@ void qucsMessageOutput(QtMsgType type, const char *msg)
 #endif
 }
 
-// TODO. use a list as root, not a symbol (finally)
-// stash circuit model into "main"
-namespace{
-class sda : public SchematicSymbol {
-public:
-  explicit sda() : SchematicSymbol() {
-    new_subckt();
-  }
-  ~sda(){
-  }
-private: // SchematicSymbol
-  SchematicModel* schematicModel(){ untested();
-    assert(false);
-    // obsolete.
-    unreachable();
-    return nullptr;
-  }
-  // bug, forward to schematic object (it doesn't exist yet).
-  std::string paramValue(std::string const&x) const{
-    if(x=="DocName"){
-      return DocName;
-    }else if(x=="ViewX1"){
-      incomplete(); // there is no view.
-      return "0";
-    }else if(x=="ViewX2"){
-      incomplete(); // there is no view.
-      return "0";
-    }else if(x=="ViewY1"){
-      incomplete(); // there is no view.
-      return "0";
-    }else if(x=="ViewY2"){
-      incomplete(); // there is no view.
-      return "0";
-    }else if(x=="Scale"){
-      incomplete(); // there is no view.
-      return "0";
-    }else if(x=="GridOn"){
-      incomplete(); // there is no view.
-      return "0";
-    }else if(x=="GridX"){
-      incomplete(); // there is no view.
-      return "0";
-    }else if(x=="GridY"){
-      incomplete(); // there is no view.
-      return "0";
-    }else if(x=="tmpViewX1"){
-      incomplete(); // there is no view.
-      return "0";
-    }else{
-      qDebug() << "unknown parameter" << QString::fromStdString(x);
-      incomplete();
-      return "unknown";
-      throw ExceptionCantFind(x, "main");
-    }
-  }
-
-private:
-  unsigned numPorts() const override{ incomplete(); return 0; }
-  virtual Port& port(unsigned) override{ return *new Port();}
-  pos_t portPosition(unsigned) const override{
-    unreachable();
-    return pos_t(0,0);
-  }
-  Node const* portValue(unsigned)const {unreachable(); return nullptr;}
-  void setPort(unsigned, Node*){incomplete();}
-
-public:
-  SchematicModel* subckt(){return _subckt;}
-  // Commandlist* commands(){ ... }
-
-public: // tmp hack
-  std::string DocName;
-};
-}
 
 // moved to legacy/qucsator, QucsatorNetlister::save
-void doNetlist(QString schematic_fn, std::string netlist, DocumentFormat const& fmt)
+void doNetlist(QString schematic_fn, std::string netlist, DocumentFormat& fmt)
 {
+  std::string sfn = schematic_fn.toStdString();
   QucsDoc d(nullptr, "", nullptr);
   d.setLabel("main");
-  sda xs;
-  xs.setOwner(&d);
-  xs.setLabel(schematic_fn.toStdString());
-  assert(xs.subckt());
-  SchematicModel& sch = *xs.subckt();
+
+  Symbol* root = symbol_dispatcher.clone("schematic_root");
+  assert(root);
+  root->setParameter("$filename", sfn);
+  root->setOwner(&d);
+  root->setLabel(sfn);
+  assert(root->subckt()); // BUG
+
+  Symbol& xs = *root;
+  SchematicModel& sch = *root->subckt();
   trace1("main schematic model", &sch);
   sch.setFileInfo(schematic_fn);
   QFile file(schematic_fn);  // save simulator messages
   file.open(QIODevice::ReadOnly);
   istream_t stream (&file);
-  DocumentFormat const* L=nullptr;
+  DocumentFormat const* L = nullptr;
 
   if(!L){
     auto D = command_dispatcher["leg_sch"];
@@ -234,33 +166,46 @@ void doNetlist(QString schematic_fn, std::string netlist, DocumentFormat const& 
   CMD::command("get", xs->subckt);?
   => L->do_it(stream, document);
 #else
-  L->load(stream, &xs);
+//  L->load(stream, &xs);
+  {
+    auto l=doclang_dispatcher["leg_sch"];
+    assert(l);
+    auto L=dynamic_cast<SchematicLanguage const*>(l);
+    assert(L);
+
+    stream.read_line();
+    while(!stream.atEnd()){
+      L->new__instance(stream, root, &sch);
+      stream.read_line();
+    }
+  }
+  sch.setOwner(root); // needed?
 #endif
 
-  QFile NetlistFile(QString::fromStdString(netlist));
-  if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
-    fprintf(stderr, "Error: Could write to %s\n", netlist.c_str());
-    exit(1);
-  }else{
-  }
-  DocumentStream os(&NetlistFile);
+//  QFile NetlistFile(QString::fromStdString(netlist));
+//  if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
+//    fprintf(stderr, "Error: Could write to %s\n", netlist.c_str());
+//    exit(1);
+//  }else{
+//  }
+//  DocumentStream os(&NetlistFile);
 
-  // sch.setOwner(&xs);
 
 #if 1
-  xs.DocName = schematic_fn.toStdString(); // tmp
+//  xs.DocName = schematic_fn.toStdString(); // tmp
 #else
   xs.setParam("$filename", schematic_fn.toStdString());
 #endif
-  fmt.save(os, &xs);
-//  fmt.do_it(os, xs->subckt());
+  istream_t cs(istream_t::_STRING, netlist);
+//  fmt.save(os, &xs);
+  fmt.do_it(cs, xs.subckt());
 }
-
+/*--------------------------------------------------------------------------*/
 void attach_single(std::string const& what)
 {
   CMD::command(std::string("attach ") + what, nullptr);
 }
-
+/*--------------------------------------------------------------------------*/
 void attach_default_plugins()
 {
   attach_single("legacy");
@@ -278,13 +223,13 @@ void attach_default_plugins()
  // new diagrams: load manually.
   // attach_single(pp, "diagrams" SOEXT);
 }
-
+/*--------------------------------------------------------------------------*/
 void qucsMessageHandler(QtMsgType type, const QMessageLogContext &, const QString & str)
 {
   auto msg=str.toStdString();
   qucsMessageOutput(type, msg.c_str());
 }
-
+/*--------------------------------------------------------------------------*/
 static void prepare_env()
 {
   static const char* plugpath="PLUGPATH=" QUCS_PLUGPATH
@@ -298,27 +243,18 @@ static void prepare_env()
   assert(strlen("PLUGPATH=") == 9);
   OS::setenv("QUCS_PLUGPATH", ldlpath + (plugpath+9), false);
 }
-
-// #########################################################################
-// ##########                                                     ##########
-// ##########                  Program Start                      ##########
-// ##########                                                     ##########
-// #########################################################################
+/*--------------------------------------------------------------------------*/
 int main(int argc, char *argv[])
 {
   prepare_env();
   qInstallMsgHandler(qucsMessageHandler);
-  // set the Qucs version string
   QucsVersion = VersionTriplet(PACKAGE_VERSION);
-
-  // initially center the application
 
   QFile qf(":/bitmaps/doesnotexist.png");
   assert(!qf.exists());
   QFile qfl(":/bitmaps/line.png");
   assert(qfl.exists());
 
-  // load existing settings (if any)
   loadSettings();
 
   // continue to set up overrides or default settings (some are saved on exit)
@@ -586,7 +522,7 @@ int main(int argc, char *argv[])
       result = -1;
     }else if (dump_flag) {
       auto cmd = command_dispatcher[netlang_name];
-      auto fmt = prechecked_cast<DocumentFormat const*>(cmd);
+      auto fmt = prechecked_cast<DocumentFormat*>(cmd);
       if(!fmt){ untested();
 	qDebug() << "no lang" << QString::fromStdString(netlang_name);
 	incomplete();

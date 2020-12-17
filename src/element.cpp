@@ -83,10 +83,10 @@ void Element::detachFromModel()
 SchematicModel* Element::scope()
 {
 	if(auto o=dynamic_cast<Symbol*>(owner())){
-		if(o->subckt()){
+		if(o->subckt()){ untested();
 			return o->subckt();
 //		}else if(o->makes_own_scope()){ untested();
-		}else{
+		}else{ untested();
 			return o->scope();
 			return nullptr;
 		}
@@ -103,10 +103,12 @@ pos_t /* const & */ Element::center()const
 // borrowed/modified from e_card.h
 const Element* Element::find_looking_out(const std::string& name)const
 {
+	trace2("find_looking_out1", name, label());
 	try {
 		return find_in_parent_scope(name);
 	}catch (ExceptionCantFind&) {
 		if (auto o=dynamic_cast<Element const*>(owner())) {
+			trace3("find_looking_out2", name, label(), o->label());
 			return o->find_looking_out(name);
 		// }else if (makes_own_scope()) {
 		// 	// probably a subckt or "module"
@@ -126,6 +128,27 @@ const Element* Element::find_looking_out(const std::string& name)const
 // BUG: finds in owner scope
 // BUG: finds recursively
 const Element* Element::find_in_parent_scope(const std::string& name)const
+{
+  assert(name != "");
+  auto const* p_scope = (scope()->parent()) ? scope()->parent() : scope();
+
+  if(!p_scope){
+	  unreachable();
+	  trace2("no scope", name, label());
+	  throw ExceptionCantFind(label(), name);
+  }else{
+  }
+
+  auto i = p_scope->find_(name);
+  if (i == p_scope->end()) {
+    throw ExceptionCantFind(label(), name);
+  }else{
+  }
+  return *i;
+
+}
+
+#if 0
 {
 	assert(name != "");
 	//  const CARD_LIST* p_scope = (scope()->parent()) ? scope()->parent() : scope();
@@ -159,6 +182,7 @@ const Element* Element::find_in_parent_scope(const std::string& name)const
 	}
 	return *i;
 }
+#endif
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 

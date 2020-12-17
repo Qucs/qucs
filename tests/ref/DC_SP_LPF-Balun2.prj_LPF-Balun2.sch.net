@@ -1,10 +1,12 @@
 # Qucs
-## declarations
-### Sub:IdealBalun
+## declarations 1
+### item Sub:IdealBalun
+# sckt Sub:IdealBalun
+# sckt own Sub:IdealBalun
 
 .Def:IdealBalun _net10 _net5 _net3 _net0 _net6
 # Missing ID & paramsSub:IdealBalun
-# skip non-device :SymbolSection:
+# 16
 sTr:Tr1 _net0 _net10 _net6 _net3 _net5 _net5 T1="0.5" T2="0.5"
 .Def:End
 ## declarations end

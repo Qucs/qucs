@@ -3,6 +3,7 @@
 QUCS=../main/qucs
 out=out
 ref=${srcdir}/ref
+DIFF=diff\ -rup
 
 base=$( basename $1 )
 eval echo $base ${REDIR}
@@ -53,7 +54,7 @@ for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 	files="${base}_${schname}.net ${base}_${schname}.dup ${base}_${schname}.vs ${base}_${schname}.v"
 
 	for F in $files; do
-		cmd="diff ${out}/${F} ${ref}/${F}"
+		cmd="$DIFF ${out}/${F} ${ref}/${F}"
 		eval echo "$cmd" ${REDIR}
 		eval "$cmd" ${REDIR}
 		if [ $? -ne 0 ]; then status=FAIL; fi

@@ -33,6 +33,9 @@ namespace {
 // BUG: must derive from subckt_model (or so)
 // Subcircuit is used as "subcircuit instance"..
 // but a subcircuit instance is not a Component...
+//
+// BUG: split into factory, instance and proto.
+// ( this is a subcircuit instance )
 class Subcircuit : public Component /*BUG*/ {
 public:
   Subcircuit();
@@ -40,19 +43,21 @@ public:
 
 private:
   Subcircuit(Subcircuit const&x);
-  Component* newOne();
+//  Component* newOne();
 
 public: // obsolete.
   static Element* info(QString&, char* &, bool getNewOne=false);
 
 private:
-  Element* clone() const override{ return new Subcircuit(*this); }
+  Element* clone() const override{ untested();
+	  trace0("Subcircuit::clone");
+	  return new Subcircuit(*this);
+  }
 
 public:
   QString getSubcircuitFile(SchematicModel const* scope) const;
 
 protected:
-  QString netlist() const;
   QString vhdlCode(int);
   void createSymbol(); // SchematicModel const& scope);
   void defaultSymbol(int No);
@@ -60,10 +65,10 @@ protected:
 
 private: // Symbol
 // unsigned numPorts() const override;
-  bool portExists(unsigned) const override;
+//  bool portExists(unsigned) const override;
   std::string const& portName(unsigned) const override;
 
-  // void setParameter(QString const& name, QString const& value);
+  void setParameter(std::string const& name, std::string const& value);
   void setParameter(unsigned i, std::string const& value) override;
   unsigned paramCount() const override;
 
@@ -88,11 +93,16 @@ private: // overrides
 
 	void proto(SchematicModel const* schem);
 	void build_sckt(SubcktBase* proto) const;
+
+private:
+	std::string _subPath;
+	SchematicModel* _protoscope; // stash prototypes here.
 }d0; // Subcircuit
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Sub", &d0);
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "LegacySub", &d0);
 static Module::INSTALL pp("stuff", &d0);
 /*--------------------------------------------------------------------------*/
-Subcircuit::Subcircuit() : Component() // gaah sckt_base
+Subcircuit::Subcircuit() : Component(), // gaah sckt_base
+	_protoscope(nullptr)
 {
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("subcircuit");
@@ -124,16 +134,23 @@ unsigned Subcircuit::paramCount() const
   return 1 + Symbol::paramCount() + num_component_params;
 }
 /*--------------------------------------------------------------------------*/
-Subcircuit::Subcircuit(Subcircuit const&x) : Component(x)
+Subcircuit::Subcircuit(Subcircuit const&x) : Component(x),
+	_subPath(x._subPath), _protoscope(nullptr)
 {
   Props.append(new Property("File", "", false,
 		QObject::tr("name of qucs schematic file")));
 
   setTypeName("Sub");
 
+  // HACK.
+  if(auto oo = prechecked_cast<SubcktBase*>(x.mutable_owner())){
+	  _protoscope = oo->subckt();
+  }else{
+  }
   new_subckt(); // triggers sckt expansion
 }
 /*--------------------------------------------------------------------------*/
+#if 0
 Component* Subcircuit::newOne()
 { untested();
 	unreachable();
@@ -146,7 +163,6 @@ Component* Subcircuit::newOne()
 	return p;
 }
 /*--------------------------------------------------------------------------*/
-#if 0
 Element* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
 { untested();
 	assert(false);
@@ -170,6 +186,7 @@ Element* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // TODO: is this used in case the file does not exist?
 void Subcircuit::createSymbol() // SchematicModel const& scope)
 {
+	trace1("legacy createSymbol", label());
   int No;
   QString FileName(Props.getFirst()->Value);
 
@@ -178,17 +195,17 @@ void Subcircuit::createSymbol() // SchematicModel const& scope)
   if(FileName.length()<4){ unreachable();
 	  // throw?
 	  return;
+  }else if(!owner()){
+	  incomplete(); //??
   }else{
-
-	  //  trace2("sckt::createSymbol", this, scope);
-	  incomplete();
+	  incomplete(); // rework with parser.
 	  assert(owner());
 	  auto os = prechecked_cast<Symbol*>(owner());
 	  assert(os);
 //	  trace1("hmm", typeid(*os).name());
-	  assert(os->subckt());
-	  FileName = getSubcircuitFile(os->subckt());
-	  trace2("getting symbol", FileName, os->subckt());
+	  assert(os->scope());
+	  FileName = getSubcircuitFile(os->scope());
+	  trace2("getting symbol", FileName, os->scope());
 
 	  tx = INT_MIN;
 	  ty = INT_MIN;
@@ -314,12 +331,11 @@ int Subcircuit::loadSymbol(const QString& DocName)
 }
 
 // -------------------------------------------------------
-// BUG: obsolete callback
+#if 0 // BUG: obsolete callback
 QString Subcircuit::netlist() const
 { untested();
 	incomplete();
 	return "bla";
-#if 0
   QString s = Model+":"+Name;
 
   // output all node names
@@ -334,8 +350,8 @@ QString Subcircuit::netlist() const
   for(Property *pp = Props.next(); pp != 0; pp = Props.next())
     s += " "+pp->name()+"=\""+pp->Value+"\"";
   return s + '\n';
-#endif
 }
+#endif
 
 // -------------------------------------------------------
 QString Subcircuit::vhdlCode(int)
@@ -409,7 +425,7 @@ QString Subcircuit::verilogCode(int)
 // -------------------------------------------------------
 QString Subcircuit::getSubcircuitFile(SchematicModel const* scp) const
 {
-  trace3("getSubcircuitFile", this, scp, scope());
+	trace4("getSubcircuitFile", this, scp, scope(), _subPath);
 
 	if(scp){
 	}else{ untested();
@@ -418,7 +434,7 @@ QString Subcircuit::getSubcircuitFile(SchematicModel const* scp) const
 	}
 	assert(scp);
   // construct full filename
-  QString FileName = Props.getFirst()->Value;
+	QString FileName = Props.getFirst()->Value;
 
   if (FileName.isEmpty()) { untested();
 	  incomplete();
@@ -443,13 +459,10 @@ QString Subcircuit::getSubcircuitFile(SchematicModel const* scp) const
         // the file has no path information, just the file name
 		 qDebug() << "no path info";
 	 }else if (scp) {
-		 qDebug() << "trying to inherit path from sch";
-		 // check if a file of the same name is in the same directory
-		 // as the schematic file, if we have a pointer to it, in
-		 // which case we use this one
-		 QFileInfo schematicFileInfo = scp->getFileInfo ();
+		 // // yikes. what a mess.
+		 QFileInfo schematicFileInfo = QFileInfo(QString::fromStdString(_subPath));
 		 QFileInfo localFIleInfo (schematicFileInfo.canonicalPath () + "/" + baseName + ".sch");
-		 qDebug() << schematicFileInfo.canonicalPath() << "seems to exist";
+		 trace1("seems to exist", schematicFileInfo.canonicalPath());
 		 if (localFIleInfo.exists ()) {
 			 // return the subcircuit saved in the same directory
 			 // as the schematic file
@@ -459,6 +472,8 @@ QString Subcircuit::getSubcircuitFile(SchematicModel const* scp) const
 	 }else{ untested();
 		 qDebug() << "no schematic";
 	 }
+
+#if 0 // not sure what this is.
 
     // look up the hash table for the schematic file as
     // it does not seem to be an absolute path, this will also
@@ -489,97 +504,20 @@ QString Subcircuit::getSubcircuitFile(SchematicModel const* scp) const
             return misc::properAbsFileName(FileName);
         }
     }
+#endif
   }
+  return "fail";
 }
-
-static SubMap FileList;
-
-#if 0 // obsolete. just use SubcktProto??
-class pr : public SubcktProto{
-public:
-  	pr(Element const* e) : SubcktProto(e){ untested();
-	}
-	~pr() { untested(); }
-
-	void build() override{ untested();
-#if 0
-		assert(owner());
-		assert(scope()==subckt());
-
-		qDebug() << "pr::build";
-
-		Subcircuit const* inst=dynamic_cast<Subcircuit const*>(instance());
-		Component const* pc=inst;
-		assert(inst);
-
-		trace2("gSsf", inst, inst->scope());
-		QString f = inst->getSubcircuitFile(inst->scope());
-		qDebug() << "sckt" << f;
-
-		// load subcircuit schematic
-		QString s=pc->Props.first()->Value;
-//		SchematicModel* d=schematicModel();
-//		SchematicModel const* dc=schematicModel();
-//		_subckt = d; // bug. new sckt?
-
-		// todo: error handling.
-		QString scktfilename(f);
-		assert(scktfilename!="");
-		QFile file(scktfilename);
-		qDebug() << "getting sckt definition from" << scktfilename << "type" << s;
-		file.open(QIODevice::ReadOnly);
-		istream_t pstream(&file);
-
-		auto cmd = command_dispatcher["leg_sch"];
-		auto D = prechecked_cast<DocumentFormat const*>(cmd);
-		assert(D);
-		D->load(pstream, this);
-
-		d->setDevType(s);
-#endif
-	}
-
-	SchematicModel* scope() override{return _subckt;};
-
-private:
-	std::string paramValue(std::string const&) const{ untested();
-		incomplete();
-		return "incomplete";
-	}
-	Port& port(unsigned) override{ untested();
-		unreachable();
-		return *new Port();
-	}
-	pos_t portPosition(unsigned) const  override{ untested();
-		unreachable();
-		return pos_t(0,0);
-	}
-};
-#endif
 /*--------------------------------------------------------------------------*/
 void Subcircuit::build()
-{
-	incomplete();
- 	createSymbol(); // BUG. multiple symbols, but embedded into Component
-	                // swap by proper symbols later.
-	proto(nullptr);
-}
-/*--------------------------------------------------------------------------*/
-// go to the top.
-QucsDoc* getProject(Object const* o)
-{
-	auto E = dynamic_cast<Element const*>(o);
-	assert(E);
-	Object* e = E->mutable_owner();
-
-	while(auto E = dynamic_cast<Element*>(e)){
-		trace2("project?", e->label(), E->mutable_owner());
-		e = E->mutable_owner();
-	}
-	if(auto d = dynamic_cast<QucsDoc*>(e)){
-		return d;
-	}else{
-		throw Exception("no project, " + o->label());
+{ untested();
+	if(owner()){ untested();
+		createSymbol(); // BUG. multiple symbols, but embedded into Component
+							 // swap by proper symbols later.
+		proto(nullptr);
+	}else{ untested();
+		trace1("no owner in subckt", label());
+		incomplete(); // ?
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -606,34 +544,27 @@ void Subcircuit::proto(SchematicModel const* scope)
 		auto s = prechecked_cast<SubcktBase*>(ss);
 		assert(s);
 
-#if 1
-		assert(owner());
-		Object* mutable_owner_hack = const_cast<Object*>(owner());
-		s->setOwner(mutable_owner_hack); // BUG. project?
-#else
-		QucsDoc* project = getProject(this);
-		s->setOwner(project); // BUG. project?
-#endif
 		build_sckt(s);
 		assert(!s->subckt());
 		assert(s->scope());
 
 		QString t = Props.first()->Value;
 		trace2("Subcircuit::proto", t, owner());
+
+		for(auto i : *s->scope()){
+			trace1("proto", i->label());
+		}
 		
 		s->setLabel(typeName());
-		trace2("sckt::proto", typeName(), s->typeName());
+		trace2("sckt::proto install", typeName(), s->typeName());
 
-		incomplete();
-		QucsDoc* project = getProject(this);
-		assert(project);
-		project->installElement(s);
+		_protoscope->pushBack(s);
 
 		p = s;
 	}
 
 	{
-		auto q = prechecked_cast<Symbol*>(p->clone());
+		auto q = prechecked_cast<Symbol*>(p->clone_instance());
 		assert(q);
 		assert(q->common() == p->common());
 		attach_common(q->mutable_common());
@@ -661,25 +592,43 @@ void Subcircuit::build_sckt(SubcktBase* proto) const
 	QString scktfilename(f);
 	assert(scktfilename!="");
 	QFile file(scktfilename);
-	trace2("sckt definition from", scktfilename, s);
+	trace3("sckt definition", label(), scktfilename, s);
 	file.open(QIODevice::ReadOnly);
+	assert(file.isOpen());
 	istream_t pstream(&file);
 
 	auto cmd = command_dispatcher["leg_sch"];
 	auto D = prechecked_cast<DocumentFormat const*>(cmd);
 	assert(D);
+
+#if 0
 	D->load(pstream, proto);
+#else
+//	proto->new_subckt(); wrong.
+	auto LL = doclang_dispatcher["leg_sch"]; // use command instead?
+	auto L = dynamic_cast<SchematicLanguage const*>(LL);
+	assert(L);
+	pstream.read_line();
+	while(!pstream.atEnd()){itested();
+		trace1("parse schematic subckt", pstream.fullstring());
+		assert(proto->scope());
+		// assert(proto->scope() == proto->subckt()); nope
+		// L->parse_top_item(s, _root->subckt());
+		L->new__instance(pstream, proto, proto->scope());
+		pstream.read_line();
+	}
+#endif
 
 	proto->setTypeName(s.toStdString());
 }
 
-bool Subcircuit::portExists(unsigned i) const
-{ untested();
-	assert(scope());
-	trace1("Subcircuit::portExists", i);
-	incomplete();
-	return false;
-}
+//bool Subcircuit::portExists(unsigned i) const
+//{ untested();
+//	assert(scope());
+//	trace1("Subcircuit::portExists", i);
+//	incomplete();
+//	return false;
+//}
 
 static std::string invalid_="invalid";
 std::string const& Subcircuit::portName(unsigned) const
@@ -691,6 +640,15 @@ std::string const& Subcircuit::portName(unsigned) const
 
 static const std::string typesep(":");
 
+void Subcircuit::setParameter(std::string const& name, std::string const& value)
+{
+	if(name=="$SUB_PATH"){ untested();
+		_subPath = value;
+	}else{
+		Component::setParameter(name, value);
+	}
+}
+
 void Subcircuit::setParameter(unsigned i, std::string const& value)
 {
 	QString v = QString::fromStdString(value);
@@ -698,6 +656,7 @@ void Subcircuit::setParameter(unsigned i, std::string const& value)
 		std::string newTypeName = "Sub" + typesep + v.left(v.length()-4).toStdString();
 		trace2("Subcircuit::setParameter", v, newTypeName);
 		setTypeName(newTypeName);
+		build(); // tmp hack.
 		trace2("Subcircuit::setParameter2", v, newTypeName);
 	}else{ untested();
 		incomplete();

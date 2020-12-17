@@ -34,7 +34,9 @@ static Element* parseCommand(istream_t& c, DEV_DOT*x)
 	auto scope = x->owner()->subckt();
 #else
 	auto scope = x->scope();
-	assert(scope);
+	if(scope){ untested();
+	}else{ untested();
+	}
 #endif
 //	assert(p);
 
@@ -144,7 +146,9 @@ private: // stuff from component.cc
 //	Component* parseComponentObsoleteCallback(const QString& _s, Component* c) const;
 	Element* getComponentFromName(QString& Line) const;
 private: // overrides
-	void parse(istream_t& stream, SubcktBase* s) const;
+	void parse(istream_t& stream, SubcktBase* s) const; // BUG
+
+	void parse_top_item(istream_t& stream, SchematicModel* sckt) const override;
 	std::string findType(istream_t&) const override;
 	Element* parseItem(istream_t&, Element*) const override;
    DEV_DOT* parseCommand(istream_t&, DEV_DOT*) const override;
@@ -178,10 +182,9 @@ Element* LegacySchematicLanguage::loadElement_(const QString& _s, Element* e) co
 		c = loadtaskElement(_s, c);
 		// incomplete();
 	}else if(Component* c=dynamic_cast<Component*>(e)){
+		trace1("loadComponent", _s);
 		// legacy components
 		// will not work non-qucs-.sch languages
-		incomplete();
-		assert(false);
 		c = parseComponentObsoleteCallback(_s, c);
 
 		QString cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
@@ -296,18 +299,13 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	return true;
 }
 
-// some kind of parse_module_body
-// BUG: this is schematicFormat
-void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
+// somehow this does not work. (owner?)
+void LegacySchematicLanguage::parse_top_item(istream_t& stream, SchematicModel* sckt) const
 {
 	assert(!implicit_hack.size());
 	QString Line;
-	auto sckt = owner->subckt();
-	if(owner->makes_own_scope()){
-	  	sckt = owner->scope();
-	}else{
-	}
 	assert(sckt);
+	Symbol* owner = nullptr;
 
 	// mode: a throwback to the legacy format:
 	//       connect legacy "parsers".
@@ -322,8 +320,9 @@ void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
 			qDebug() << "endtag?" << Line;
 			mode = 0;
 		}else if(Line.isEmpty()){ untested();
-		}else if(Line == "<Components>") {
+		}else if(stream.umatch("<Components>")) { untested();
 			mode='C';
+			new__instance(stream, owner, sckt);
 		}else if(Line == "<Symbol>") {
 			mode='S';
 			trace1("symbol??", stream.fullstring());
@@ -331,7 +330,9 @@ void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
 			trace1("done symbol", stream.fullstring());
 		}else if(Line == "<Wires>") {
 			mode='W';
-		}else if(Line == "<Diagrams>") {
+		}else if(stream.umatch("<Diagrams>")) {
+			trace1("diag", stream.fullString());
+			new__instance(stream, owner, sckt);
 			mode='D';
 		}else if(Line == "<Properties>") {
 			mode='Q';
@@ -342,7 +343,160 @@ void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
 			mode='P';
 		}else if(Line == "<Model>") {
 			mode='M';
+			trace2("model", stream.fullString(), owner);
+			new__instance(stream, owner, sckt);
+		}else if(Line == "<Description>") {
+			mode='X';
+		}else{
+
+			/// \todo enable user to load partial schematic, skip unknown components
+			Element*c = nullptr;
+			if(mode=='C'){
+				unreachable();
+				assert(false);
+				// new__instance(stream, &owner, owner.subckt());
+				c = getComponentFromName(Line);
+				if(c){
+					c->setOwner(owner); // owner->subckt()?
+				}else{
+				}
+				if(Symbol* sym=dynamic_cast<Symbol*>(c) ){
+					//always do this?
+
+//					assert(s.scope());
+					// what are those?! FIXME: do later.
+					Symbol const* cs = sym;
+					assert(cs->owner());
+					sym->recreate(); // BUG: re? create symbol gfx and random other things. needs owner
+					                 //  used in legacy/subcircuit.cpp
+					sym->build(); // what's this?!
+				}else{
+				}
+			}else if(mode=='S'){ untested();
+				std::string typeName = findType(stream);
+				trace2("modeS findtype", typeName, _lib_mod);
+				// incomplete();
+				try{
+					if(_lib_mod || !dynamic_cast<SchematicSymbol*>(owner)){ untested();
+						// TODO: always do this
+						new__instance(stream, owner, sckt);
+						// assert(0);
+					}else{
+						// incomplete. hack use parseItem.
+						auto Line = QString::fromStdString(stream.fullString());
+
+						auto ss = dynamic_cast<SchematicSymbol*>(owner);
+						assert(ss);
+						PaintingListLoad(Line, ss->symbolPaintings());
+						trace1("symbolpaint", Line);
+					}
+					c = nullptr;
+				}catch(...){ untested();
+					incomplete();
+				}
+			}else if(mode=='W'){
+				std::string typeName = findType(stream);
+				assert(typeName=="Wire");
+				assert(owner->subckt());
+				auto main = owner->subckt()->find_("main");
+				assert(main != owner->subckt()->end());
+				assert(*main);
+				auto mm=dynamic_cast<SubcktBase*>(*main);
+				assert(mm);
+
+				new__instance(stream, mm, mm->subckt());
+			}else if(mode=='D'){
+				new__instance(stream, owner, sckt);
+			}else if(mode=='Q'){
+			}else if(mode=='M'){
+				// assert(false);
+				// incomplete();
+			}else if(mode=='X'){
+				trace1("legacy_lang description", Line);
+			}else{
+				trace2("LSL::parse", mode, Line);
+				new__instance(stream, owner, sckt);
+			}
+
+			if(c){
+				trace2("pushing back", c->label(), typeid(*c).name());
+				Element const* cc = c;
+				assert(cc->owner() == owner);
+
+
+				if(auto sym=dynamic_cast<Symbol*>(c)){
+					sym->build(); // here?!
+				}else{
+				}
+
+
+				sckt->pushBack(c);
+			}else{
+			}
+		}
+	}
+
+	/// some components are implicit, collect them here
+	while(implicit_hack.size()){ untested();
+		auto cc = implicit_hack.front();
+		cc->setOwner(owner);
+		implicit_hack.pop_front();
+		// c->precalc(); // here?!
+		sckt->pushBack(cc);
+	}
+}
+// some kind of parse_module_body
+// BUG: this is schematicFormat
+void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
+{
+	assert(!implicit_hack.size());
+	QString Line;
+	auto sckt = owner->subckt();
+	if(owner->makes_own_scope()){
+	  	sckt = owner->scope();
+	}else{
+	}
+	assert(sckt);
+
+//	return parse_top_item(stream, sckt);
+
+	// mode: a throwback to the legacy format:
+	//       connect legacy "parsers".
+	// this is not needed in a proper SchematicLanguage (WIP)
+	char mode='?';
+	while(!stream.atEnd()) {
+		Line = QString::fromStdString(stream.read_line());
+		Line = Line.trimmed();
+		if(Line.size()<2){
+		}else if(Line.at(0) == '<'
+				&& Line.at(1) == '/'){
+			qDebug() << "endtag?" << Line;
+			mode = 0;
+		}else if(Line.isEmpty()){ untested();
+		}else if(stream.umatch("<Components>")) { untested();
+			mode='C';
+			new__instance(stream, owner, sckt);
+		}else if(Line == "<Symbol>") {
+			mode='S';
+			trace1("symbol??", stream.fullstring());
+			new__instance(stream, owner, sckt);
+			trace1("done symbol", stream.fullstring());
+		}else if(Line == "<Wires>") {
+			mode='W';
+			new__instance(stream, owner, sckt);
+		}else if(stream.umatch("<Diagrams>")) {
+			new__instance(stream, owner, sckt);
+			mode='D';
+		}else if(Line == "<Properties>") {
+			mode='Q';
 			trace1("model", stream.fullString());
+			new__instance(stream, owner, sckt);
+		}else if(Line == "<Paintings>") {
+			trace1("paintings?", stream.fullString());
+			mode='P';
+		}else if(stream.umatch("<Model>")) { untested();
+			mode='M';
+			trace3("model", Line, stream.fullString(), owner);
 			new__instance(stream, owner, sckt);
 		}else if(Line == "<Description>") {
 			mode='X';
@@ -396,27 +550,19 @@ void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
 				}
 			}else if(mode=='W'){
 				std::string typeName = findType(stream);
-				trace2("W", typeName, stream.fullstring());
 				assert(typeName=="Wire");
-#if 1
-				new__instance(stream, owner, sckt);
-#else
-				Symbol* sw= symbol_dispatcher.clone("Wire");
-				assert(sw);
-				sw->setOwner(owner);
-				bool err = obsolete_wireload(sw, Line);
-				if(!err){ untested();
-					incomplete();
-					delete(sw);
-				}else{
-					c = sw;
-				}
-#endif
+				assert(owner->subckt());
+				auto main = owner->subckt()->find_("main");
+				assert(main != owner->subckt()->end());
+				assert(*main);
+				auto mm=dynamic_cast<SubcktBase*>(*main);
+				assert(mm);
+
+				new__instance(stream, mm, mm->subckt());
 			}else if(mode=='D'){
 				new__instance(stream, owner, sckt);
 			}else if(mode=='Q'){
 			}else if(mode=='M'){
-				// assert(false);
 				// incomplete();
 			}else if(mode=='X'){
 				trace1("legacy_lang description", Line);
@@ -497,9 +643,8 @@ Diagram* LegacySchematicLanguage::loadDiagram(Diagram* d, istream_t& stream)cons
 
 	return nullptr;
 }
-//
-//
-// -------------------------------------------------------
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 static const std::string typesep(":");
 static std::string mangle(std::string t)
 {
@@ -556,13 +701,13 @@ void LegacySchematicLanguage::printtaskElement(TaskElement const* c, ostream_t& 
 
 	s << ">";
 }
-
+/*--------------------------------------------------------------------------*/
 void LegacySchematicLanguage::printPainting(Painting const* pp, ostream_t& s) const
 {
 	auto mp = const_cast<Painting*>(pp);
 	s << "  <" << mp->save() << ">\n";
 }
-
+/*--------------------------------------------------------------------------*/
 static void printArgs(Symbol const* sym, ostream_t& s)
 {
 	s << " " << sym->paramValue("$mfactor");
@@ -688,7 +833,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, ostream_t& s) const
 		printArgs(sym, s);
 	}
 
-	s << ">";
+	s << ">\n";
 } // printSymbol
 
 static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
@@ -1128,6 +1273,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 {
 	QString Line = QString::fromStdString( c.fullString());
+	trace1("LegacySchematicLanguage::parseItem", Line);
 
 	QString l = Line.trimmed();
 	if(l.isEmpty()) { untested();
@@ -1141,7 +1287,6 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 	}else{
 	}
 	l = l.mid(1, l.length()-2);  // cut off start and end character
-
 
 	if(auto cc=dynamic_cast<Component*>(e)){ untested();
 		// callback?!
@@ -1419,6 +1564,82 @@ void LegacySchematicLanguage::loadProperties(QTextStream& s_in,
 
 	throw "QObject::tr(\"Format Error:\n'Property' field is not closed!\")";
 }
+/*--------------------------------------------------------------------------*/
+class PaintingCommand : public Command{
+	void do_it(istream_t& cs, SchematicModel* s) override{
+	  auto fullstring = cs.fullString();
+	  trace1("Section", fullstring);
+
+	  Symbol* sc = symbol_dispatcher.clone("subckt_proto");
+	  auto* sym = dynamic_cast<SubcktBase*>(sc);
+	  assert(sym);
+	  sym->new_subckt();
+	  sym->setLabel(":Paintings:");
+	  assert(s);
+
+	  auto lang = doclang_dispatcher["legacy_lib"];
+	  assert(lang);
+
+	  while(true){
+		  cs.read_line();
+		  if(cs.umatch("</Paintings>")){
+			  break;
+		  }else{
+			  cs.skipbl();
+			  lang->new__instance(cs, sym, sym->subckt());
+		  }
+	  }
+
+	  s->pushBack(sym);
+
+	  trace1("find DOT", sym->label());
+	  for(auto i : *sym->subckt()){
+		  if(auto d = dynamic_cast<DEV_DOT*>(i)){
+			  trace1("DOT incomplete", d->s());
+//			  sym->setParam(k, name); //?
+		  }else{
+		  }
+	  }
+  }
+}d3;
+Dispatcher<Command>::INSTALL _p0(&command_dispatcher, "Paintings", &d3);
+Dispatcher<Command>::INSTALL _p1(&command_dispatcher, "Paintings>", &d3); // BUG
+Dispatcher<Command>::INSTALL _p2(&command_dispatcher, "<Paintings>", &d3); // ...
+/*--------------------------------------------------------------------------*/
+class DiagramCommand : public Command{
+	void do_it(istream_t& cs, SchematicModel* s) override{ untested();
+	  auto fullstring = cs.fullString();
+	  trace1("Section", fullstring);
+
+	  Symbol* sc = symbol_dispatcher.clone("subckt_proto");
+	  auto* sym = dynamic_cast<SubcktBase*>(sc);
+	  assert(sym);
+	  sym->new_subckt();
+	  sym->setLabel(":Diagrams:");
+	  assert(s);
+
+	  auto lang = doclang_dispatcher["legacy_lib"];
+	  assert(lang);
+
+	  while(true){
+		  cs.read_line();
+		  if(cs.umatch("</Diagrams>")){
+			  break;
+		  }else{
+			  trace2("Diag parse", sym->label(), cs.fullstring());
+			  cs.skipbl();
+			  lang->new__instance(cs, sym, sym->subckt());
+		  }
+	  }
+	  trace1("Diag parse", sym->subckt()->size());
+
+	  s->pushBack(sym);
+  }
+}d4;
+Dispatcher<Command>::INSTALL p3_(&command_dispatcher, "Diagrams", &d4);
+Dispatcher<Command>::INSTALL p4_(&command_dispatcher, "Diagrams>", &d4); // BUG
+Dispatcher<Command>::INSTALL p5_(&command_dispatcher, "<Diagrams>", &d4); // ...
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 } // namespace

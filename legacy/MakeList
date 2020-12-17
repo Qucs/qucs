@@ -3,6 +3,7 @@ LEGACY_SRC = \
 	component.cpp \
 	gatecomponent.cpp \
 	curvediagram.cpp \
+	compcmd.cpp \
 	diagram.cpp \
 	equation.cpp \
 	libcomp.cpp \
@@ -18,6 +19,7 @@ LEGACY_SRC = \
 	propertiescmd.cpp \
 	rect3ddiagram.cpp \
 	rectdiagram.cpp \
+	root.cpp \
 	schematic_format.cpp \
 	schematic_lang.cpp \
 	simulator.cpp \

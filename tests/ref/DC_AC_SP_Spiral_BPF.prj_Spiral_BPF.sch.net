@@ -1,6 +1,6 @@
 # Qucs
-## declarations
-### wire
+## declarations 1
+# unresolved symbol wire
 ## declarations end
 
 C:C1 gnd _net21 C="195 fF" V=""

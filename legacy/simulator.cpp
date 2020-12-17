@@ -42,11 +42,11 @@ class LegacyNetlister : public DocumentFormat{
 public:
 	explicit LegacyNetlister() : _qucslang(nullptr) {}
 private: // Command
-	void do_it(istream_t&, SchematicModel*) override{}
+	void do_it(istream_t&, SchematicModel*) override;
 
 private: // legacy implementation
   void createNetlist(ostream_t& stream, SchematicModel const*) const;
-  void prepareSave(ostream_t& stream, SchematicSymbol const& m,
+  void prepareSave(ostream_t& stream, SchematicModel const* m,
 		std::map<std::string, Element const*>& declarations) const;
   void throughAllComps(ostream_t& d, SchematicModel const* m,
 		std::map<std::string, Element const*>& declarations) const;
@@ -152,9 +152,10 @@ void LegacyNetlister::load(istream_t&, Object*) const
 	incomplete();
 }
 /* -------------------------------------------------------------------------------- */
-// was main::doNetlist, but it only works for qucsator. merge into qucsator driver.
-void LegacyNetlister::save(ostream_t& Stream, Object const* o) const
+void LegacyNetlister::save(ostream_t&, Object const* o) const
 {
+	unreachable();
+	assert(false);
 	std::map<std::string, Element const*> declarations;
 	auto m_ = dynamic_cast<SchematicSymbol const*>(o);
 
@@ -163,8 +164,25 @@ void LegacyNetlister::save(ostream_t& Stream, Object const* o) const
 		return;
 	}else{
 	}
+	assert(false);
+//	do_it(Stream, m_->subckt());
+}
+/* -------------------------------------------------------------------------------- */
+void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
+{
+	std::map<std::string, Element const*> declarations;
+	std::string fn;
+	cs >> fn;
 
-	auto& m = *m_;
+	QFile NetlistFile(QString::fromStdString(fn));
+	if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
+		fprintf(stderr, "Error: Could write to %s\n", fn.c_str());
+		exit(1); // BUG
+	}else{
+	}
+	DocumentStream Stream(&NetlistFile);
+
+//	auto& m = *m_;
 
    _qucslang = doclang_dispatcher["qucsator"];
 	clear();
@@ -174,8 +192,6 @@ void LegacyNetlister::save(ostream_t& Stream, Object const* o) const
 
 	// assert(m.owner()); // root symbol does not have owner...
 	prepareSave(Stream, m, declarations);
-
-	trace1("done prep", m.label());
 
 	if(SimPorts < -5) { untested();
 		throw "not_enough_ports_exception"; // ?!
@@ -197,7 +213,7 @@ void LegacyNetlister::save(ostream_t& Stream, Object const* o) const
 
 	printDeclarations(Stream, declarations);
 	Stream << '\n';
-	createNetlist(Stream, m.subckt());
+	createNetlist(Stream, m);
 
 #if 0
 	if(m.doc()){ untested();
@@ -214,14 +230,16 @@ void LegacyNetlister::printDeclarations(ostream_t& stream,
    _qucslang = doclang_dispatcher["qucsator"];
 	assert(_qucslang);
 
-	stream << "## declarations\n";
-	trace1("printing declarations", declarations.size());
+	stream << "## declarations "<< declarations.size() << "\n";
 	for(auto si : declarations){
-		stream << "### " << si.first << "\n";
 
-		if(dynamic_cast<SubcktBase const*>(si.second)){
+		if(!si.second){
+			stream << "# unresolved symbol " << si.first << "\n";
+		}else if(dynamic_cast<SubcktBase const*>(si.second)){
+			stream << "### item " << si.first << "\n";
 			_qucslang->printItem(si.second, stream);
 		}else{
+			stream << "## " << si.first << "\n";
 		}
 	}
 	stream << "## declarations end\n";
@@ -229,7 +247,7 @@ void LegacyNetlister::printDeclarations(ostream_t& stream,
 
 // was Schematic::prepareNetlist
 // visit lot of components, strange callbacks...
-void LegacyNetlister::prepareSave(ostream_t& stream, SchematicSymbol const& m,
+void LegacyNetlister::prepareSave(ostream_t& stream, SchematicModel const* m,
 		std::map<std::string, Element const*>& declarations) const
 {
 	incomplete();
@@ -311,7 +329,7 @@ void LegacyNetlister::prepareSave(ostream_t& stream, SchematicSymbol const& m,
 
 	std::string DocName;
 	try{
-		DocName = m.paramValue("DocName");
+//		DocName = m.paramValue("DocName");
 	}catch(ExceptionCantFind const&){ untested();
 		DocName = "unknown";
 	}
@@ -324,13 +342,19 @@ void LegacyNetlister::prepareSave(ostream_t& stream, SchematicSymbol const& m,
 	}
 
 	// assert(m.owner()); //root does not have owner...
-	throughAllComps(stream, m.subckt(), declarations);
+	throughAllComps(stream, m, declarations);
 }
 
 // former Schematic::createNetlist
 void LegacyNetlister::createNetlist(ostream_t& stream,
-		SchematicModel const* scope) const
+		SchematicModel const* scope_) const
 {
+	assert(scope_);
+	auto s = scope_->find_("main");
+	assert(s!=scope_->end());
+	assert(*s);
+	auto scope = (*s)->scope();
+
 	bool isAnalog=true;
 //	bool isVerilog=false;
 	FileList.clear();
@@ -348,9 +372,10 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 	// legacy: qucsator expects all definitions at the top
 
 	// BUG: deduplicate. "print_module_body" or so.
-	QString s, Time;
+	QString Time;
 	assert(scope);
 	for(auto it_ : *scope){
+	//	stream << "...\n";
 		auto pc = dynamic_cast<Symbol const*>(it_);
 		if(pc){
 		}else{
@@ -414,22 +439,28 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 // could eject "include" statements instead, but need to convert sub schematics
 // to target language somewhere else.
 
-// some kind of expand
-void LegacyNetlister::throughAllComps(ostream_t&, SchematicModel const* sckt,
+void LegacyNetlister::throughAllComps(ostream_t&, SchematicModel const* scope_,
 		std::map<std::string, Element const*>& declarations) const
 { incomplete();
 	QString s;
 	bool isAnalog = true;
 
-	for(auto it_ : *sckt){
+	SchematicModel const* sckt = scope_;
 
+	auto f = scope_->find_("main");
+	if(f!=scope_->end()){
+		assert(*f);
+		sckt = (*f)->scope();
+	}else{
+	}
+
+	for(auto it_ : *sckt){
 		auto pc = dynamic_cast<Symbol const*>(it_);
 		if(pc){
 		}else{
 			incomplete();
 			continue;
 		}
-
 
 		Symbol const* sym = pc;
 		assert(pc);
@@ -441,11 +472,15 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicModel const* sckt,
 			continue;
 		}else{
 		}
-		trace1("tac", sym->owner()->label());
+		trace2("tac", sym->label(), sym->owner()->label());
 
 		// because they are components
 //		assert(sym->owner()==&m);
-		assert(sym->scope()==sckt);
+		if(sym->scope()==sckt){
+		}else{
+			// ?
+			assert(sym->label()=="main");
+		}
 
 		if(pc->paramValue("$mfactor") == "0"){
 			incomplete();

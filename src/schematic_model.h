@@ -188,7 +188,6 @@ public:
 	DiagramList const& diagrams() const;
 	PaintingList const& paintings() const;
 	ElementList const& components() const;
-	PrototypeMap const& declarations() const;
 
 	Symbol const* findProto(QString const& what) const;
 	void cacheProto(Symbol const* what) const;
@@ -197,6 +196,7 @@ public:
 //					{return find_again(short_name, begin());}
 //	iterator find_again(const std::string& short_name, iterator);
   // return a const_iterator
+	SchematicModel const* parent() const;
 	const_iterator begin()const {return components().begin();}
 	const_iterator end()const {return components().end();}
 	const_iterator find_again(const std::string& short_name, const_iterator)const;
@@ -219,7 +219,6 @@ public:
 	Node const* portValue(unsigned i) const;
 
 private:
-	mutable PrototypeMap _protos; // bit of a hack.
 	ElementList Components;
 	PaintingList Paintings;
 	NetList Nets;
@@ -232,10 +231,7 @@ private:
 	QString DevType; // BUG move to parent
 
 public:
-	void attachDoc(SchematicDoc*d){
-		assert(!_doc_);
-		_doc_ = d;
-	}
+	void attachDoc(SchematicDoc*d);
 
 public:
 	// HACK
@@ -247,7 +243,7 @@ private:
 	const SchematicModel* _parent;
 	std::multimap<std::string, Element*> _map;
 	mutable PARAM_LIST* _params;
-	SchematicDoc* _doc_;
+	Object* _project;
 
 public: // for now.
 	friend class SchematicDoc;

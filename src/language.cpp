@@ -58,15 +58,14 @@ void DocumentLanguage::new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
 		SchematicModel* Scope) const
 {
 	if (cmd.atEnd()) {untested();
-		incomplete();
-		assert(false);
-		// nothing
+		unreachable(); // some bogus loop condition
+		return;
 	}else{
 		std::string type = findType(cmd);
-		trace4("new_instance", type, cmd.fullString(), owner, Scope);
+		trace4("new_instance", type, cmd.fullString(), owner->label(), Scope);
 		if (const Element* proto = find_proto(type, owner)) {
 			if (Element* new_instance = proto->clone_instance()) {
-				new_instance->setOwner(owner);
+				new_instance->setOwner(owner); // owner is null, usually.
 				Element* o = parseItem(cmd, new_instance);
 				if (Element* x=dynamic_cast<Element*>(o)) {
 					assert(Scope);

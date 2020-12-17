@@ -28,6 +28,9 @@ public:
 	COMMON_COMPONENT* clone()const override{
 		return new CommonSubckt(0);
 	}
+   bool  operator==(const COMMON_COMPONENT&x)const override{
+		return false;
+	}
 private:
 	SchematicModel _subckt;
 };
@@ -38,30 +41,36 @@ class SubcktProto : public SubcktBase {
 private:
 	SubcktProto(SubcktProto const& p) : SubcktBase(p){
 //		attach_common(comms.clone()); // really?
+//		attach_common(new CommonSubckt(0)); // really?
 	}
 public:
 	explicit SubcktProto(Element const* p=nullptr); // ?
 
 	virtual void build() { incomplete(); } // needed??
 	SchematicModel* scope() override;
-// 	SchematicModel const* scope() const override { untested();
-// 		auto m = prechecked_cast<CommonSubckt*>(mutable_common());
-// 		assert(m);
-// 		assert(m->subckt());
-// 		return m->subckt();
-// 	}
+ 	SchematicModel const* scope() const { untested();
+ 		auto m = const_cast<SubcktProto*>(this);
+ 		return m->scope();
+ 	}
 private:
 	Port& port(unsigned) override{ incomplete(); throw "a";}
 //	SchematicModel const* scope() const override { return &sm; }
 
 private: // Symbol
 	pos_t portPosition(unsigned) const{ assert(false); return pos_t(0,0);}
-	Element* clone()const override{return new SubcktProto(*this);}
-	Element* clone_instance()const override{assert(false); return nullptr;}
+	Element* clone()const override{
+		auto a=new SubcktProto(*this);
+		a->attach_common(new CommonSubckt(0));
+		return a;
+	}
+	Element* clone_instance()const override{
+		return new SubcktProto(*this);
+	}
 	bool makes_own_scope()const override { return true;}
 //   bool portExists(unsigned) const override;
 	bool portExists(unsigned i) const override;
 	unsigned numPorts() const override;
+	bool is_device() const override{return false;}
 
 private: // internal
 	SchematicModel* subckt() { untested();
@@ -89,21 +98,26 @@ static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "subckt_proto", &d0);
 /*--------------------------------------------------------------------------*/
 bool SubcktProto::portExists(unsigned i) const
 {
-	trace3("sckt_proto::portExists", i, subckt(), this);
 	assert(subckt());
+	trace4("sckt_proto::portExists", i, subckt(), this, subckt()->numPorts());
 	return i<subckt()->numPorts(); //?
 }
 /*--------------------------------------------------------------------------*/
 unsigned SubcktProto::numPorts() const
 { untested();
 	assert(subckt());
-	trace1("sckt_proto::numPorts", subckt()->numPorts());
-	return subckt()->numPorts();
+	if(makes_own_scope()){
+		trace1("sckt_proto::numPorts", scope()->numPorts());
+		return scope()->numPorts();
+	}else{
+		trace1("sckt_proto::numPorts", subckt()->numPorts());
+		return subckt()->numPorts();
+	}
 }
 /*--------------------------------------------------------------------------*/
 Node const* SubcktProto::portValue(unsigned i) const
 {
-	trace1("sckt_proto::portValue", subckt()->numPorts());
+	trace2("sckt_proto::portValue", subckt()->numPorts(), i);
 	// return node[i]->net()??
 	return subckt()->portValue(i);
 }

@@ -1,4 +1,4 @@
- #() :SymbolSection:();
+module main();
 Pac #(.Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P1(net_60_80, net_60_140);
 GND #() anonymous_gnd_hack_0(net_60_140);
 TLIN #(.Z(50 Ohm), .L(100 mm), .Alpha(0 dB), .Temp(26.85)) Line1(net_100_80, net_160_80);
@@ -41,3 +41,9 @@ place #(.$xposition(410),.$yposition(40)) place_410_40(net_410_40);
 place #(.$xposition(410),.$yposition(100)) place_410_100(net_410_100);
 place #(.$xposition(410),.$yposition(140)) place_410_140(net_410_140);
 place #(.$xposition(410),.$yposition(200)) place_410_200(net_410_200);
+endmodule // main
+
+Sub #(.File()) Sub(net_0_0);
+// skip sckt :SymbolSection:
+// skip sckt :Diagrams:
+// skip sckt :Paintings:

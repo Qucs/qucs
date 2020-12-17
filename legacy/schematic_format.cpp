@@ -22,8 +22,11 @@
 #include "diagram.h" // BUG?
 #include "task_element.h" // BUG?
 #include "u_parameter.h" // BUG?
+#include "sckt_base.h"
 
 namespace{
+
+SchematicModel empty(nullptr);
 
 class LegacySchematicFormat : public DocumentFormat{
 public:
@@ -31,20 +34,26 @@ public:
 		: DocumentFormat() {}
 
 private: //Command
-	void save(ostream_t& stream, Object const*) const override;
 	void load(istream_t& stream, Object*) const override;
-	virtual void do_it(istream_t&, SchematicModel*) {incomplete();}
+	void do_it(istream_t&, SchematicModel*) override;
 private: // legacy cruft
 	bool isSymbolMode() const{ return false; }
 	ElementList const& symbolPaints(SchematicSymbol const& m) const{
 		assert( m.symbolPaintings());
 		return *m.symbolPaintings();
 	}
-	DiagramList const& diagrams(SchematicSymbol const& m) const{
-		return m.diagrams();
-	}
-	PaintingList const& paintings(SchematicSymbol const& m) const{
-		return m.paintings();
+	SchematicModel const& section(SchematicModel const* m, std::string name) const{
+		assert(m);
+		auto p = m->find_(name);
+		if(p==m->end()){
+			return empty;
+		}else if(!dynamic_cast<SubcktBase const*>(*p)){
+			return empty;
+		}else if(auto s=dynamic_cast<SubcktBase const*>(*p)->subckt()){
+			return *s;
+		}else{
+			return empty;
+		}
 	}
 	NodeMap const& nodes(SchematicSymbol const& m) const{
 		return m.nodes();
@@ -162,21 +171,24 @@ static void printProperties(SchematicSymbol const& m, DocumentStream& stream)
 	stream << "</Properties>\n";
 }
 
-void LegacySchematicFormat::save(DocumentStream& stream, Object const* o) const
+void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 {
-	auto m_ = dynamic_cast<SchematicSymbol const*>(o);
+	std::map<std::string, Element const*> declarations;
+	std::string fn;
+	cs >> fn;
+
+	QFile NetlistFile(QString::fromStdString(fn));
+	if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
+		fprintf(stderr, "Error: Could write to %s\n", fn.c_str());
+		exit(1); // BUG
+	}else{
+	}
+	DocumentStream stream(&NetlistFile);
 
 /// these are separate in legacy format.
 	std::vector<Element const*> wires;
 	std::vector<Element const*> paintings;
-
-	if(!m_){
-		incomplete();
-		return;
-	}else{
-	}
-
-	auto& m = *m_;
+	std::vector<Element const*> diagrams;
 
 	auto D=doclang_dispatcher["leg_sch"];
 	auto L = dynamic_cast<DocumentLanguage const*>(D);
@@ -185,51 +197,76 @@ void LegacySchematicFormat::save(DocumentStream& stream, Object const* o) const
 	stream << "<Qucs Schematic 0.0.20>\n";
 
 	if(0){
-		printProperties(m, stream);
+//		printProperties(m, stream);
 	}else{
 		stream << "<Properties>\n";
-		assert(m.subckt()->params());
-		for(auto i : *(m.subckt()->params())){
+		assert(m->params());
+		for(auto i : *(m->params())){
 			stream << "  <" << i.first << "=" << i.second.string() <<">\n";
 		}
 		stream << "</Properties>\n";
 	}
 
-	stream << "<Symbol>\n";     // save all paintings for symbol
-	for(auto sp : symbolPaints(m)){
-		// BUG callback
-		if(auto pp = dynamic_cast<Painting const*>(sp)){
-			auto mp = const_cast<Painting*>(pp); // yikes.
-			stream << "  <" << mp->save() << ">\n";
+	{
+		stream << "<Symbol>\n";     // save all paintings for symbol
+		auto pc_=m->find_(":SymbolSection:");
+		if(pc_==m->end()){
+		}else if(auto cc=dynamic_cast<SubcktBase*>(*pc_)){
+			assert(cc->subckt());
+			for(auto sp : *cc->subckt()){
+				// BUG callback
+				if(auto pp = dynamic_cast<Painting const*>(sp)){
+					auto mp = const_cast<Painting*>(pp); // yikes.
+					stream << "  <" << mp->save() << ">\n";
+				}else{
+				}
+			}
 		}else{
 		}
+		stream << "</Symbol>\n";
 	}
-	stream << "</Symbol>\n";
 
-	stream << "<Components>\n";    // save all components
-	for(auto pc : components(m)){
+	for(auto pc : *m){
 		if(dynamic_cast<Conductor const*>(pc)){
-			wires.push_back(pc);
+			unreachable();
+			//wires.push_back(pc);
 		}else if(dynamic_cast<Painting const*>(pc)){
+			unreachable();
 			paintings.push_back(pc);
+		}else if(pc->label()=="main"){
+			if(auto cc=dynamic_cast<SubcktBase*>(pc)){
+				assert(cc->scope());
+				stream << "<Components>\n";
+				for(auto pc : *cc->scope()){
+					if(dynamic_cast<Conductor const*>(pc)){
+						wires.push_back(pc);
+					}else if(dynamic_cast<Diagram const*>(pc)){
+						diagrams.push_back(pc);
+					}else if(dynamic_cast<Painting const*>(pc)){
+						paintings.push_back(pc);
+					}else{
+						stream << "  ";
+						L->printItem(pc, stream);
+					}
+				}
+				stream << "</Components>\n";
+			}else{
+			}
 		}else if(pc->label()==":SymbolSection:"){
-			incomplete();
-			continue;
+			// done
 		}else{
-			stream << "  ";
-			L->printItem(pc, stream);
-			stream << "\n"; // BUG?
+//			L->printItem(pc, stream);
+//			stream << "\n"; // BUG?
 		}
 	}
-	if(m.commands()){
-		for(auto pc : *(m.commands())){
-			stream << "  ";
-			L->printItem(pc, stream);
-			stream << "\n"; // BUG?
-		}
-	}else{
-	}
-	stream << "</Components>\n";
+///	if(m.commands()){
+///		for(auto pc : *(m.commands())){
+///			stream << "  ";
+///			L->printItem(pc, stream);
+///			stream << "\n"; // BUG?
+///		}
+///	}else{
+///	}
 
 	stream << "<Wires>\n";
 	for(Element const* pw : wires){
@@ -245,14 +282,21 @@ void LegacySchematicFormat::save(DocumentStream& stream, Object const* o) const
 #endif
 	stream << "</Wires>\n";
 
-	stream << "<Diagrams>\n";    // save all diagrams
-	for(auto pd : diagrams(m)){
-		stream << "  " << pd->save() << "\n";
+	stream << "<Diagrams>\n";
+	for(auto pd : diagrams){
+		auto d = dynamic_cast<Diagram const*>(pd);
+		auto dd = const_cast<Diagram*>(d); // HACK (old iface)
+		stream << "  " << dd->save() << "\n";
+	}
+	for(auto pd : section(m, ":Diagrams:")){
+		auto d = dynamic_cast<Diagram const*>(pd);
+		auto dd = const_cast<Diagram*>(d); // HACK (old iface)
+		stream << "  " << dd->save() << "\n";
 	}
 	stream << "</Diagrams>\n";
 
-	stream << "<Paintings>\n";     // save all paintings
-	for(auto pp : paintings){
+	stream << "<Paintings>\n";
+	for(auto pp : section(m, ":Paintings:")){ // BUG?
 		L->printItem(pp, stream);
 	}
 	stream << "</Paintings>\n";

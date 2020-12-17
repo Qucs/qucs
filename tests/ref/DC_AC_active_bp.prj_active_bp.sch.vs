@@ -1,4 +1,4 @@
- #() :SymbolSection:();
+module main();
 OpAmp #(.G(1e6), .Umax(15 V)) OP1(net_340_180, net_340_140, net_410_160);
 GND #() anonymous_gnd_hack_0(net_300_180);
 GND #() anonymous_gnd_hack_1(net_180_260);
@@ -46,3 +46,9 @@ place #(.$xposition(340),.$yposition(140)) place_340_140(net_340_140);
 place #(.$xposition(340),.$yposition(180)) place_340_180(net_340_180);
 place #(.$xposition(410),.$yposition(50)) place_410_50(net_410_50);
 place #(.$xposition(410),.$yposition(160)) place_410_160(net_410_160);
+endmodule // main
+
+Sub #(.File()) Sub(net_0_0);
+// skip sckt :SymbolSection:
+// skip sckt :Diagrams:
+// skip sckt :Paintings:

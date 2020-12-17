@@ -1,5 +1,4 @@
-// Qucs
-
+module main();
 GND #() *(gnd);
 GND #() *(gnd);
 GND #() *(gnd);
@@ -17,3 +16,6 @@ R #(.R(10 kOhm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(europ
 C #(.C(0.1 uF), .V(), .Symbol(neutral)) C2(gnd, _net26);
 R #(.R(1591 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R3(_net5, gnd);
 R #(.R(1.59 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R6(_net12, _net26);
+endmodule // main
+
+Sub #(.File()) Sub(_net0);

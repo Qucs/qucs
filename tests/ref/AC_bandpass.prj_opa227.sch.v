@@ -1,5 +1,4 @@
-// Qucs
-
+module main(_net13, _net15, _net1);
 VCVS #(.G(1), .T(0)) SRC2(_net6, _net1, gnd, gnd);
 GND #() *(gnd);
 R #(.R(1 kOhm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(_net10, _net6);
@@ -9,3 +8,6 @@ Port #(.Num(1), .Type(analog)) P1(_net13);
 Port #(.Num(3), .Type(analog)) P3(_net1);
 Port #(.Num(2), .Type(analog)) P2(_net15);
 GND #() *(gnd);
+endmodule // main
+
+Sub #(.File()) Sub(_net0);

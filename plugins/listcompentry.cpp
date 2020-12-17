@@ -64,7 +64,6 @@ void createListComponentEntry::do_it(istream_t&, SchematicModel*)
       }
 
       lang->printItem(ce, s);
-      s << "\n";
 
       if(verilog){
 	verilog->printItem(ce, s);

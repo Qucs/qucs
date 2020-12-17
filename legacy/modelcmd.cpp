@@ -20,7 +20,7 @@
 namespace{
 /*--------------------------------------------------------------------------*/
 class Model : public Command{
-  virtual void do_it(istream_t& cs, SchematicModel* s){
+  virtual void do_it(istream_t& cs, SchematicModel* s) {
 	  auto fullstring = cs.fullString();
 	  trace1("Model", fullstring);
 

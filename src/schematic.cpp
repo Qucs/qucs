@@ -1182,57 +1182,6 @@ void SchematicDoc::cut()
 
 
 // ---------------------------------------------------
-// Loads this Qucs document.
-bool SchematicDoc::load()
-{itested();
-  assert(_model);
-  _model->clear();
-
-  if(!loadDocument()){ untested();
-    return false;
-  }else{itested();
-    // Keep reference to source file (the schematic file)
-    // setFileInfo(DocName);
-  }
-  lastSaved = QDateTime::currentDateTime();
-
-#if 0 // obsolete
-  while(!undoAction.isEmpty()) {itested();
-    delete undoAction.last();
-    undoAction.pop_back();
-  }
-  undoActionIdx = 0;
-  while(!undoSymbol.isEmpty()) {itested();
-    delete undoSymbol.last();
-    undoSymbol.pop_back();
-  }
-  setSymbolMode(true);
-  setChanged(false, true); // "not changed" state, but put on undo stack
-  undoSymbolIdx = 0;
-  undoSymbol.at(undoSymbolIdx)->replace(1, 1, 'i');
-  setSymbolMode(false);
-  setChanged(false, true); // "not changed" state, but put on undo stack
-  undoActionIdx = 0;
-  undoAction.at(undoActionIdx)->replace(1, 1, 'i');
-#endif
-
-  // The undo stack of the circuit symbol is initialized when first
-  // entering its edit mode.
-  
-  // have to call this to avoid crash at sizeOfAll
-  becomeCurrent(false);
-
-  sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
-  if(ViewX1 > UsedX1)  ViewX1 = UsedX1;
-  if(ViewY1 > UsedY1)  ViewY1 = UsedY1;
-  if(ViewX2 < UsedX2)  ViewX2 = UsedX2;
-  if(ViewY2 < UsedY2)  ViewY2 = UsedY2;
-  zoom(1.0f);
-  TODO("Fix setContentsPos");
-  /// \todo setContentsPos(tmpViewX1, tmpViewY1);
-  tmpViewX1 = tmpViewY1 = -200;   // was used as temporary cache
-  return true;
-}
 
 // ---------------------------------------------------
 // Saves this Qucs document. Returns the number of subcircuit ports.

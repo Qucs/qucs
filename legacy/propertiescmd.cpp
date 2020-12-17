@@ -21,7 +21,7 @@
 namespace{
 /*--------------------------------------------------------------------------*/
 class Properties : public Command{
-  virtual void do_it(istream_t& cs, SchematicModel* s){
+	void do_it(istream_t& cs, SchematicModel* s) override{
 	  assert(s);
 	  while(true){
 		  cs.read_line();
