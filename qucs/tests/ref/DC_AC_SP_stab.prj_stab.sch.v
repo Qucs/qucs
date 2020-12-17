@@ -1,5 +1,4 @@
-// Qucs
-
+module main();
 GND #() *(gnd);
 Vdc #(.U(15 V)) V1(_net11, gnd);
 IProbe #() Collector(output, _net25);
@@ -27,3 +26,6 @@ R #(.R(20 kOhm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(europ
 Eqn #(.LoopGain(output.v / input.v), .LoopPhase(phase(output.v / input.v)), .Export(yes)) Eqn1();
 C #(.C(0.1 uF), .V(), .Symbol(neutral)) C1(_net25, gnd);
 C #(.C(5 uF), .V(), .Symbol(neutral)) C2(_net12, gnd);
+endmodule // main
+
+Sub #(.File()) Sub(_net0);

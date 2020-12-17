@@ -24,11 +24,11 @@
 namespace{
 /*--------------------------------------------------------------------------*/
 class IdCommand : public Command{
-	virtual void do_it(istream_t& cs, SchematicModel* scope){
+	void do_it(istream_t& cs, SchematicModel* scope) override{
 		auto fullstring = cs.fullString();
 
 		std::string type;
-		int cx, cy, tx, ty;
+		int cx, cy; // , tx, ty;
 //		cs >> type;
 		cs >> cx;
 		cs >> cy;

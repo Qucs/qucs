@@ -26,9 +26,9 @@ SchematicModel::SchematicModel()
   : Nodes(Nets),
     _parent(nullptr),
     _params(nullptr),
-    _doc_(nullptr)
+    _project(nullptr)
 { untested();
-	trace2("::SchematicModel", this, _doc_);
+	trace2("::SchematicModel", this, _project);
 }
 /*--------------------------------------------------------------------------*/
 SchematicModel::~SchematicModel()
@@ -50,9 +50,9 @@ SchematicModel::SchematicModel(SchematicDoc* s)
   : Nodes(Nets),
     _parent(nullptr),
     _params(nullptr),
-    _doc_(s) // BUG
+    _project(nullptr)
 {
-	trace2("::SchematicModel s", this, _doc_);
+	attachDoc(s);// bug?
 	if(s){ untested();
 	}else{
 	}
@@ -67,6 +67,7 @@ void SchematicModel::clear()
 	diagrams().clear();
 	nodes().clear();
 	paintings().clear();
+	_map.clear();
 	//SymbolPaints.clear(); ??
 }
 /*--------------------------------------------------------------------------*/
@@ -89,55 +90,20 @@ ElementList& SchematicModel::components()
 	return Components;
 }
 /*--------------------------------------------------------------------------*/
-// same as attach??
+// TODO: check relation to attach. maybe not here.
 void SchematicModel::pushBack(Element* what)
 {
-
 	attach(what);
 
-#if 0
-
-	trace2("SchematicModel::pushBack", what->label(), this);
-	if(dynamic_cast<Conductor*>(element(what))){
-		auto s=dynamic_cast<Symbol*>(what);
-		connect(s);
-		// why not components??
-		wires().append(s);
-	}else if(auto d=diagram(what)){
-		diagrams().append(d);
-	}else if(auto c=command(what)){
-		if(doc()){
-			trace1("SchematicModel::pushBack command", c->label());
-			doc()->commands().push_back(c);
-		}else{
-			trace1("SchematicModel::pushBack no command", c->label());
-			// possibly a subcircuit model? ignore commands.
-		}
-	}else if(auto s=dynamic_cast<Symbol*>(what)){
-		connect(s);
-		components().push_back(s);
-	}else if(auto s=dynamic_cast<SchematicSymbol*>(what)){
-		trace1("hmm", s->label());
-		assert(false);
-		//delete _symbol;
-		//_symbol = s;
-	}else if(auto d=painting(what)){
-		/// BUG BUG BUG. some are "symbolpaints", some are just paintings. the
-		//Object should decide.
-		paintings().append(d);
+	// here?!
+	if(doc()){itested();
+		trace1("SchematicModel::pushBack doc", what->label());
+		doc()->addToScene(what);
 	}else{
-		incomplete();
+		trace1("SchematicModel::pushBack no doc", what->label());
 	}
-
-#endif
-
-  if(doc()){itested();
-	  doc()->addToScene(what);
-  }else{
-  }
 } // pushBack
-
-
+/*--------------------------------------------------------------------------*/
 // called from schematic::erase only
 // // possibly not needed. all actions must be undoable anyway
 // -> use detach, store reference in UndoAction.
@@ -146,8 +112,7 @@ void SchematicModel::erase(Element* what)
 	Element* e = detach(what);
 	delete(e);
 }
-
-// TODO: take iterator.
+/*--------------------------------------------------------------------------*/
 Element* SchematicModel::detach(Element* what)
 {
 	assert(what);
@@ -195,17 +160,17 @@ Element* SchematicModel::attach(Element* what)
 			trace1("SchematicModel::pushBack no command", c->label());
 			// possibly a subcircuit model? ignore commands.
 		}
-	}else if(auto d=dynamic_cast<Diagram*>(what)){
-		diagrams().append(d);
+//	}else if(auto d=dynamic_cast<Diagram*>(what)){
+//		components().append(d);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
-		c->recreate(); // BUG: re? create symbol gfx and random other things. needs owner
-		c->build(); // what's this?!
+//		c->recreate(); // BUG: re? create symbol gfx and random other things. needs owner
+//		c->build(); // what's this?!
 		if(c->is_device()){
+			trace1("connect", what->label());
 			connect(c);
 		}else{
 			assert(!dynamic_cast<Conductor*>(element(what)));
 		}
-
 
 		components().append(c);
 	}else if(dynamic_cast<Element*>(what)){
@@ -216,25 +181,28 @@ Element* SchematicModel::attach(Element* what)
 	}
 	return what;
 }
-
-
-// should be a QucsDoc*, probably
+/*--------------------------------------------------------------------------*/
 SchematicDoc* SchematicModel::doc()
 {
-	trace2("doc", _doc_, this);
-	return _doc_;
+	return dynamic_cast<SchematicDoc*>(_project);
 }
-
+/*--------------------------------------------------------------------------*/
+void SchematicModel::attachDoc(SchematicDoc*d)
+{
+	assert(!_project);
+	_project = d;
+}
+/*--------------------------------------------------------------------------*/
 QFileInfo const& SchematicModel::getFileInfo ()const
 {
 	return FileInfo;
 }
-
+/*--------------------------------------------------------------------------*/
 NodeMap& SchematicModel::nodes()
 {
 	return Nodes;
 }
-
+/*--------------------------------------------------------------------------*/
 //PaintingList const& SchematicModel::symbolPaints() const
 //{ untested();
 //	return SymbolPaints;
@@ -341,7 +309,7 @@ void SchematicModel::setPort(unsigned i, Node* n)
 }
 /*--------------------------------------------------------------------------*/
 Node const* SchematicModel::portValue(unsigned i) const
-{
+{ untested();
 	assert(i<numPorts());
 	if(_ports[i]){
 		return _ports[i];
@@ -361,6 +329,10 @@ void SchematicModel::setOwner(Element* o)
 	}
 }
 /*--------------------------------------------------------------------------*/
+SchematicModel const* SchematicModel::parent() const
+{
+	return nullptr;
+}
 #if 0
 // needed?
 void SchematicModel::merge(SchematicModel& src)
@@ -374,55 +346,6 @@ void SchematicModel::merge(SchematicModel& src)
 }
 #endif
 /*--------------------------------------------------------------------------*/
-Symbol const* SchematicModel::findProto(QString const& what) const
-{
-	// incomplete.
-	return _protos[what];
-}
-/*--------------------------------------------------------------------------*/
-// BUG
-PrototypeMap const& SchematicModel::declarations() const
-{
-	return _protos;
-}
-/*--------------------------------------------------------------------------*/
-// BUG
-void SchematicModel::cacheProto(Symbol const* what) const
-{
-	incomplete();
-	return;
-
-	auto key = QString::fromStdString(what->label());
-	trace1("pushProto", key);
-	assert(what);
-	assert(key!="");
-	assert(!_protos[key]);
-	_protos.push(key, what);
-}
-/*--------------------------------------------------------------------------*/
-Symbol const* PrototypeMap::operator[](QString const& s) const
-{
-	auto i=_map.find(s);
-
-	if(i!=_map.end()){
-		return (*i).second;
-	}else{
-		return nullptr;
-	}
-}
-
-void PrototypeMap::clear()
-{
-	for(auto i: _map){
-		// no, we don't own them
-		// delete i.second;
-	}
-	_map.clear();
-}
-/*--------------------------------------------------------------------------*/
-PrototypeMap::PrototypeMap()
-{
-}
 /*--------------------------------------------------------------------------*/
 bool operator==(Object const*p, std::string const&s)
 {
@@ -437,7 +360,10 @@ SchematicModel::const_iterator SchematicModel::find_again(const std::string& sho
 						SchematicModel::const_iterator /*Begin*/)const
 {
 	// incomplete, does not find again.
-  return std::find(components().begin(), components().end(), short_name);
+	trace1("find_again", short_name);
+	auto it = std::find(components().begin(), components().end(), short_name);
+	trace2("found?", components().size(), it==components().end());
+	return it;
 }
 /*--------------------------------------------------------------------------*/
 // HACK

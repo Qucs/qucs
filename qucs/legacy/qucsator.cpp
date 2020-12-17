@@ -211,6 +211,7 @@ void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 		incomplete();
 	}else if(auto c=dynamic_cast<SubcktBase const*>(d)){
 		if(c->is_device()){ // here?
+		   s << "# got sckt device " << d->label() << "\n";
 			printSubckt(c, s);
 		}else{
 		   s << "# skip non-device " << d->label() << "\n";
@@ -242,15 +243,19 @@ static void printDefHack(Symbol const* p, ostream_t& s)
 // partly from Schematic::createSubnetlistplain
 void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 {
+	s << "# sckt " + p->label() + "\n";
 	if(p->label()[0] == ':'){
 		return;
+	}else{
 	}
 //	assert(!p->is_device());
 	Symbol const* sym = p;
 	SchematicModel const* sckt;
 	if(p->makes_own_scope()){
+		s << "# sckt own " + p->label() + "\n";
 		sckt = p->scope();
 	}else{
+		s << "# sckt sckt " + p->label() + "\n";
 		sckt = p->subckt();
 	}
 	assert(sckt);
@@ -262,6 +267,13 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 		return printDefHack(p, s);
 	}else{
 	}
+	h = sckt->find_("main");
+	if(h == sckt->end()){
+	}else{
+		sckt = (*h)->scope();
+		sym = prechecked_cast<Symbol const*>(*h);
+		assert(sym);
+	}
 
 	s << "\n"; //?
 	if(label.c_str()[3] == _typesep){
@@ -272,7 +284,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 
 	{ // print_ports();
 		for(unsigned i=0; sym->portExists(i); ++i){
-			std::string N = netLabel(p->portValue(i));
+			std::string N = netLabel(sym->portValue(i));
 			s << " " << N;
 		}
 		s << "\n";
@@ -303,7 +315,8 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	}
 	//(*tstream) << '\n';
 	//
-	for(auto it_ : sckt->components()){
+	s << "# " << sckt->size() << "\n";
+	for(auto it_ : *sckt){
 		auto i = dynamic_cast<Symbol const*>(it_);
 		if(it_){
 		}else{
@@ -317,7 +330,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 		}else if(i->typeName() == "Wire"){ // is Conductor?
 		}else if(i->typeName() == "GND"){
 		}else{
-			trace1("ps", i->typeName());
+			// s << "# ps" << i->typeName() << " " << i->label() << "\n";
 			printSymbol(i, s);
 		}
 	}

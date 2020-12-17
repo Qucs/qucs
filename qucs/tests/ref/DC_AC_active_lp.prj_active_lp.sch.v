@@ -1,5 +1,4 @@
-// Qucs
-
+module main();
 R #(.R(10k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R2(_net8, _net7);
 R #(.R(10k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(_net7, _net2);
 OpAmp #(.G(1e6), .Umax(15 V)) OP1(_net9, _net2, _net9);
@@ -21,3 +20,6 @@ C #(.C(1n), .V(), .Symbol(neutral)) C6(gnd, _net22);
 GND #() *(gnd);
 C #(.C(256n), .V(), .Symbol(neutral)) C3(_net27, Output);
 Eqn #(.Ampl(dB(Output.v)), .Phase(phase(Output.v)), .Export(yes)) Eqn1();
+endmodule // main
+
+Sub #(.File()) Sub(_net0);

@@ -17,3 +17,8 @@ void Object::message(QucsMsgType t, const char* m) const
 	// if logfile
 	//   printf to logfile
 }
+
+void Object::message(QucsMsgType t, std::string const& m) const
+{
+	std::cerr << label() << ":" << t << " " << m << "\n";
+}

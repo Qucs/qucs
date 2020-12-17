@@ -1,4 +1,4 @@
- #() :SymbolSection:();
+module main();
 GND #() anonymous_gnd_hack_0(net_120_330);
 GND #() anonymous_gnd_hack_1(net_190_330);
 GND #() anonymous_gnd_hack_2(net_280_330);
@@ -68,3 +68,9 @@ place #(.$xposition(350),.$yposition(140)) place_350_140(net_350_140);
 place #(.$xposition(420),.$yposition(80)) place_420_80(net_420_80);
 place #(.$xposition(420),.$yposition(170)) place_420_170(net_420_170);
 place #(.$xposition(420),.$yposition(230)) place_420_230(net_420_230);
+endmodule // main
+
+Sub #(.File()) Sub(net_0_0);
+// skip sckt :SymbolSection:
+// skip sckt :Diagrams:
+// skip sckt :Paintings:

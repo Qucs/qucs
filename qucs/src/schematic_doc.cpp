@@ -25,45 +25,7 @@ QucsDoc* newSchematicDoc(QucsApp* a, QString const& b, QWidget* o)
 {
 	return new SchematicDoc(a, b, o);
 }
-
-namespace{
-	// do I need this if QucsDoc becomes an Object?
-class sda : public SchematicSymbol{
-public:
-	sda(SchematicDoc& s)
-	  : SchematicSymbol(),
-	    _s(s) { itested();
-		new_subckt();
-		subckt()->attachDoc(&s); // yikes. taskElt hack.
-		setOwner(&s);
-	}
-
-private:
-	Port& port(unsigned) override{ unreachable(); throw Exception(); }
-	pos_t portPosition(unsigned) const override{ unreachable(); throw Exception();}
-	unsigned numPorts() const override{ return 0; }
-
-private: // SchematicSymbol
-	SchematicModel const& schematicModel() const{ untested();
-		incomplete();
-		return *subckt();
-	}
-	SchematicModel* schematicModel() { untested();
-		return nullptr;
-	}
-	std::string paramValue(std::string const&) const override{itested();
-		incomplete();
-		return "incomplete";
-	}
-	void setParameter(std::string const& n, std::string const& v) override{itested();
-		incomplete();
-		trace2("sda::setParameter", n, v);
-	}
-private:
-	SchematicDoc const& _s; // obsolete?
-};
-}
-
+/*--------------------------------------------------------------------------*/
 SchematicDoc::SchematicDoc(QucsApp* App_/*BUG?*/, const QString& Name_, QWidget* owner)
    : QGraphicsView(),
      QucsDoc(App_, Name_, owner),
@@ -73,8 +35,19 @@ SchematicDoc::SchematicDoc(QucsApp* App_/*BUG?*/, const QString& Name_, QWidget*
 {itested();
   qDebug() << "SchematicDoc::SchematicDoc" << Name_;
 
-  _root = new sda(*this);
+  // ...........................................................
+  // create empty schematic... (clear?)
+  auto root = symbol_dispatcher.clone("schematic_root");
+  _root = dynamic_cast<SchematicSymbol*>(root);
+  assert(_root);
   _model = _root->subckt();
+
+  { // HACK HACK HACK
+	  auto mainscope = (*_model->find_("main"))->scope();
+	  assert(mainscope);
+	  mainscope->attachDoc(this);
+  }
+  // ...........................................................
 
   _mouseActions = new SchematicActions(*this);
   _undoStack = new QUndoStack();
@@ -155,7 +128,7 @@ SchematicDoc::SchematicDoc(QucsApp* App_/*BUG?*/, const QString& Name_, QWidget*
     emit signalUndoState(true);
     emit signalRedoState(false);
 } // ::SchematicDocument
-
+/*--------------------------------------------------------------------------*/
 SchematicDoc::~SchematicDoc()
 {itested();
 	delete _root;
@@ -163,7 +136,7 @@ SchematicDoc::~SchematicDoc()
 	delete _mouseActions;
 //	delete Scene; ???
 }
-
+/*--------------------------------------------------------------------------*/
 void SchematicDoc::showEvent(QShowEvent*e)
 {itested();
 	QGraphicsView::showEvent(e);
@@ -179,7 +152,7 @@ void SchematicDoc::showEvent(QShowEvent*e)
 //   incomplete();
 // }
 #endif
-
+/*--------------------------------------------------------------------------*/
 bool SchematicDoc::loadDocument(QFile& /*BUG*/ file)
 {itested();
 	incomplete();
@@ -208,6 +181,74 @@ bool SchematicDoc::loadDocument(QFile& /*BUG*/ file)
   return true;
 }
 
+// why both?!
+bool SchematicDoc::load()
+{itested();
+  delete _root;
+  _root = nullptr;
+
+  auto root = symbol_dispatcher.clone("schematic_root");
+  _root = dynamic_cast<SchematicSymbol*>(root);
+  assert(_root);
+  _root->setOwner(this); //needed?
+
+  _root->setParameter("$filename", docName().toStdString());
+
+  _model = _root->scope();
+
+  { // HACK HACK HACK
+	  auto mainscope = (*_model->find_("main"))->scope();
+	  assert(mainscope);
+	  mainscope->attachDoc(this);
+  }
+
+  if(!loadDocument()){ untested();
+    return false;
+  }else{itested();
+    // Keep reference to source file (the schematic file)
+    // setFileInfo(DocName);
+  }
+  lastSaved = QDateTime::currentDateTime();
+
+#if 0 // obsolete
+  while(!undoAction.isEmpty()) {itested();
+    delete undoAction.last();
+    undoAction.pop_back();
+  }
+  undoActionIdx = 0;
+  while(!undoSymbol.isEmpty()) {itested();
+    delete undoSymbol.last();
+    undoSymbol.pop_back();
+  }
+  setSymbolMode(true);
+  setChanged(false, true); // "not changed" state, but put on undo stack
+  undoSymbolIdx = 0;
+  undoSymbol.at(undoSymbolIdx)->replace(1, 1, 'i');
+  setSymbolMode(false);
+  setChanged(false, true); // "not changed" state, but put on undo stack
+  undoActionIdx = 0;
+  undoAction.at(undoActionIdx)->replace(1, 1, 'i');
+#endif
+
+  // The undo stack of the circuit symbol is initialized when first
+  // entering its edit mode.
+  
+  // have to call this to avoid crash at sizeOfAll
+  becomeCurrent(false);
+
+  sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
+  if(ViewX1 > UsedX1)  ViewX1 = UsedX1;
+  if(ViewY1 > UsedY1)  ViewY1 = UsedY1;
+  if(ViewX2 < UsedX2)  ViewX2 = UsedX2;
+  if(ViewY2 < UsedY2)  ViewY2 = UsedY2;
+  zoom(1.0f);
+  TODO("Fix setContentsPos");
+  /// \todo setContentsPos(tmpViewX1, tmpViewY1);
+  tmpViewX1 = tmpViewY1 = -200;   // was used as temporary cache
+  return true;
+}
+/*--------------------------------------------------------------------------*/
+// here?? CMD::get? but need owner in new__instance...
 void SchematicDoc::parse(istream_t& s, SchematicLanguage const* L)
 {itested();
 	incomplete(); // but still used in qucs -i $file
@@ -218,9 +259,13 @@ void SchematicDoc::parse(istream_t& s, SchematicLanguage const* L)
 	}
 	assert(L);
 	assert(_root);
+
+	s.read_line();
 	while(!s.atEnd()){itested();
-		L->parse(s, _root);
-		assert(s.atEnd()); // happens with legacy lang
+		assert(_root->subckt());
+		trace1("SchematicDoc::parse", s.fullstring());
+		L->new__instance(s, _root, _model);
+		s.read_line();
 	}
 }
 
@@ -1003,17 +1048,20 @@ QString SchematicDoc::createClipboardFile() const
 	cnpsymbol sym;
 	assert(sym.subckt());
 	for (auto i : scene()->selectedItems()){
-		sym.subckt()->pushBack(i->cloneElement());
+		auto cl = i->cloneElement();
+		sym.subckt()->pushBack(cl);
 	}
 
-	auto lang = command_dispatcher["leg_sch"];
+	auto lang = doclang_dispatcher["leg_sch"];
 	assert(lang);
-	auto fmt = prechecked_cast<DocumentFormat const*>(lang);
+	auto fmt = prechecked_cast<DocumentLanguage const*>(lang);
 	assert(fmt);
 
 	QString buf;
 	ostream_t s(&buf);
-	fmt->save(s, &sym);
+	for(auto i : *sym.subckt()){
+		fmt->printItem(i, s);
+	}
 	s.flush();
 	return buf;
 }

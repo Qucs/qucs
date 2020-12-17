@@ -20,7 +20,7 @@ protected:
 public:
 	virtual ~DocumentFormat() {}
 	virtual void load(istream_t&, Object*) const=0;
-	virtual void save(ostream_t&, Object const*) const=0;
+	virtual void save(ostream_t&, Object const*) const{assert(false);}
 };
 
 #include <QTextStream>

@@ -589,6 +589,12 @@ void ElementGraphics::show()
 	for(auto x : childItems()){
 		x->show();
 	}
+
+#if 0
+	assert(!_e->owner());
+	_e->setOwner(subckt());
+	subckt()->push_back(_e);
+#endif
 	// TODO
 	// if (_selected__){
 	// 	setSeleted();
@@ -613,6 +619,12 @@ void ElementGraphics::hide()
 		}else{
 		}
 	}
+#endif
+
+#if 0 // not yet
+	assert(_e->owner());
+	erase(subckt(), _e);
+	assert(!_e->owner());
 #endif
 
 	if(_e->scope()){itested();

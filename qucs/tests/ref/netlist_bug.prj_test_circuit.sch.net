@@ -1,12 +1,14 @@
 # Qucs
-## declarations
-### Sub:short_circuit
+## declarations 2
+### item Sub:short_circuit
+# sckt Sub:short_circuit
+# sckt own Sub:short_circuit
 
 .Def:short_circuit _net1 _net1
 # Missing ID & paramsSub:short_circuit
-# skip non-device :SymbolSection:
+# 15
 .Def:End
-### wire
+# unresolved symbol wire
 ## declarations end
 
 Vdc:V1 in gnd U="1 V"

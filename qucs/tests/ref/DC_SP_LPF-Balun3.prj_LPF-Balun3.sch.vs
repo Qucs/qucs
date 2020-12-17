@@ -1,4 +1,4 @@
- #() :SymbolSection:();
+module main();
 Pac #(.Num(1), .Z(100 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P1(net_40_110, net_40_170);
 L #(.L(1.2uH), .I()) L1(net_480_80, net_540_80);
 L #(.L(470nH), .I()) L2(net_620_80, net_680_80);
@@ -126,3 +126,9 @@ place #(.$xposition(960),.$yposition(80)) place_960_80(net_960_80);
 place #(.$xposition(960),.$yposition(100)) place_960_100(net_960_100);
 place #(.$xposition(960),.$yposition(160)) place_960_160(net_960_160);
 place #(.$xposition(960),.$yposition(200)) place_960_200(net_960_200);
+endmodule // main
+
+Sub #(.File()) Sub(net_0_0);
+// skip sckt :SymbolSection:
+// skip sckt :Diagrams:
+// skip sckt :Paintings:

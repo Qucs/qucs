@@ -41,7 +41,8 @@ public:
 	void setLabel(char const* l) {_label = l;}
 
 protected: // error handling
-	virtual void message(QucsMsgType, const char*) const;
+	void message(QucsMsgType, const char*) const;
+	virtual void message(QucsMsgType, std::string const&) const;
 
 private:
 	std::string _label;

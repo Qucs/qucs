@@ -24,6 +24,7 @@ public:
 // virtual void parse(DocumentStream& stream, SchematicModel*) const=0;
   virtual void printItem(Element const*, ostream_t&) const;
 
+  virtual void		parse_top_item(istream_t&, SchematicModel*) const {incomplete();}
   virtual Element* parseItem(istream_t&, Element*) const;
   virtual DEV_DOT* parseCommand(istream_t&, DEV_DOT*) const{
 	  untested(); return nullptr;

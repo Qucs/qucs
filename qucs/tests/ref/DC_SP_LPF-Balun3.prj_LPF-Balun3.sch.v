@@ -1,5 +1,4 @@
-// Qucs
-
+module main();
 Pac #(.Num(1), .Z(100 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P1(_net11, gnd);
 L #(.L(1.2uH), .I()) L1(_net42, _net41);
 L #(.L(470nH), .I()) L2(_net41, _net5);
@@ -21,3 +20,6 @@ Vdc #(.U(1V)) V1(_net27, gnd);
 GND #() *(gnd);
 VProbe #() Pr1(_net23, gnd);
 GND #() *(gnd);
+endmodule // main
+
+Sub #(.File()) Sub(_net0);

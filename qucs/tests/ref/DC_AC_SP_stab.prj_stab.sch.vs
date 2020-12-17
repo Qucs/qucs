@@ -1,4 +1,4 @@
- #() :SymbolSection:();
+module main();
 GND #() anonymous_gnd_hack_0(net_650_120);
 Vdc #(.U(15 V)) V1(net_650_60, net_650_120);
 IProbe #() Collector(net_470_140, net_470_200);
@@ -90,3 +90,9 @@ place #(.$xposition(650),.$yposition(120)) place_650_120(net_650_120);
 place #(.$xposition(650),.$yposition(360)) place_650_360(net_650_360);
 place #(.$xposition(650),.$yposition(400)) place_650_400(net_650_400);
 place #(.$xposition(650),.$yposition(460)) place_650_460(net_650_460);
+endmodule // main
+
+Sub #(.File()) Sub(net_0_0);
+// skip sckt :SymbolSection:
+// skip sckt :Diagrams:
+// skip sckt :Paintings:

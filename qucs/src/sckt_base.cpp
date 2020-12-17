@@ -13,11 +13,13 @@
 
 #include "sckt_base.h"
 #include "schematic_model.h"
+/*--------------------------------------------------------------------------*/
 void SubcktBase::new_subckt()
 {
 	assert(!_subckt);
 	_subckt = new SchematicModel(nullptr);
 }
+/*--------------------------------------------------------------------------*/
 pos_t SubcktBase::portPosition(unsigned i) const{
 	if(subckt()){
 		return subckt()->portValue(i)->position();
@@ -26,3 +28,5 @@ pos_t SubcktBase::portPosition(unsigned i) const{
 		return pos_t(0,0);
 	}
 }
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/

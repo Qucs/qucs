@@ -1,5 +1,4 @@
-// Qucs
-
+module main();
 GND #() *(gnd);
 GND #() *(gnd);
 GND #() *(gnd);
@@ -16,3 +15,6 @@ C #(.C(100n), .V(), .Symbol(neutral)) C2(gnd, _net11);
 GND #() *(gnd);
 Vdc #(.U(12 V)) V1(_net14, gnd);
 Eqn #(.Gain(dB(Output.v/Input.v)), .Export(yes)) Eqn1();
+endmodule // main
+
+Sub #(.File()) Sub(_net0);

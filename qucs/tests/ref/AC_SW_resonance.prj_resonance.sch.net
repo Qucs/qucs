@@ -1,6 +1,6 @@
 # Qucs
-## declarations
-### wire
+## declarations 1
+# unresolved symbol wire
 ## declarations end
 
 Vac:V1 _net7 gnd U="1 V" f="1 GHz" Phase="0" Theta="0"

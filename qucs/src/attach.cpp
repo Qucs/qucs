@@ -44,7 +44,7 @@ public:
     }
   }
 
-  void attach(std::string what){ untested();
+  void attach(std::string what) const{ untested();
     // RTLD_NOW means to resolve symbols on loading
     // RTLD_LOCAL means symbols defined in a plugin are local
     int dl_scope = RTLD_LOCAL;
@@ -63,9 +63,9 @@ public:
   }
 
 private:
-  virtual void do_it(istream_t&, SchematicModel*);
+  void do_it(istream_t&, SchematicModel*) override;
 private:
-  std::map<std::string, void*> attach_list;
+  mutable std::map<std::string, void*> attach_list;
 } my_plugins;
 Dispatcher<Command>::INSTALL p(&command_dispatcher, "attach", &my_plugins);
 

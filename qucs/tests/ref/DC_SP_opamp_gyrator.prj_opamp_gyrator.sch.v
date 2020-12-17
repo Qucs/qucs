@@ -1,5 +1,4 @@
-// Qucs
-
+module main();
 GND #() *(gnd);
 C #(.C(1 uF), .V(), .Symbol(neutral)) C1(_net1, _net2);
 Pac #(.Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P1(_net1, gnd);
@@ -14,3 +13,6 @@ R #(.R(500k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european
 R #(.R(10 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R3(_net15, _net7);
 GND #() *(gnd);
 L #(.L(5 H), .I()) L1(gnd, _net15);
+endmodule // main
+
+Sub #(.File()) Sub(_net0);

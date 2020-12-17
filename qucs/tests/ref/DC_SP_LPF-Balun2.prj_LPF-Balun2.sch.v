@@ -1,5 +1,4 @@
-// Qucs
-
+module main();
 L #(.L(1.2uH), .I()) L1(_net41, _net40);
 L #(.L(470nH), .I()) L2(_net40, _net3);
 C #(.C(270pF), .V(), .Symbol(neutral)) C1(_net4, _net41);
@@ -21,3 +20,6 @@ GND #() *(gnd);
 Pac #(.Num(2), .Z(100 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P2(_net27, gnd);
 GND #() *(gnd);
 Eqn #(.dBS21(dB(S[2,1])), .dBS11(dB(S[1,1])), .Export(yes)) Eqn1();
+endmodule // main
+
+Sub #(.File()) Sub(_net0);

@@ -56,7 +56,7 @@ public:
 }symbolSection;
 /*--------------------------------------------------------------------------*/
 class SymbolCommand : public Command{
-  virtual void do_it(istream_t& cs, SchematicModel* s){
+	void do_it(istream_t& cs, SchematicModel* s) override{
 	  auto fullstring = cs.fullString();
 	  trace1("SymbolSection", fullstring);
 

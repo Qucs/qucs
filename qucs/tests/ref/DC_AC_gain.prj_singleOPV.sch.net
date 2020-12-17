@@ -1,5 +1,5 @@
 # Qucs
-## declarations
+## declarations 0
 ## declarations end
 
 R:R1 _net13 _net1 R="4k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

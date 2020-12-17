@@ -167,8 +167,8 @@ public: // Port stuff
 	virtual Node const* portValue(unsigned) const; // why virtual?
 	Node const* portNode(unsigned) const;
 	// TODO: rethink Port/Node semantics
-	virtual unsigned numPorts() const = 0;
-	virtual bool portExists(unsigned) const{ return false; }
+	virtual unsigned numPorts() const = 0; // net_nodes?
+	virtual bool portExists(unsigned i) const{ return i<numPorts(); }
 	virtual /*?*/ std::string const& portName(unsigned) const{return invalid_; }
 
 public: // hierarchy. move to SubcktBase
