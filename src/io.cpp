@@ -15,6 +15,7 @@
 #include "io.h"
 #include <QFile>
 
+// BUG.
 DocumentStream::DocumentStream(QFile* /* BUG const */ file)
 	: QTextStream(file)
 {
@@ -47,6 +48,17 @@ istream_t::istream_t(QFile* t);
 istream_t::istream_t(istream_t::STRING, const std::string&s )
 	: _cmd(s), _cnt(0), _ok(true)
 {
+}
+/*--------------------------------------------------------------------------*/
+istream_t::istream_t(istream_t::WHOLE_FILE, const std::string& fn)
+	: _cnt(0), _ok(true)
+{
+	trace1("whole file", fn);
+	auto qfn = QString::fromStdString(fn);
+	auto d = new QFile(qfn); // BUG: memory leak. (get rid of QTextStream...)
+	d->open(QIODevice::ReadOnly);
+	assert(d->isOpen());
+	QTextStream::setDevice(d);
 }
 /*--------------------------------------------------------------------------*/
 /// borrowed from ap_*.cc

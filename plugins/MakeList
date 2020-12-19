@@ -1,2 +1,4 @@
 
-listcompentry.cpp
+RAW_SRCS = \
+	listcompentry.cpp \
+	get.cpp

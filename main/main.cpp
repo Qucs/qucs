@@ -133,72 +133,29 @@ void qucsMessageOutput(QtMsgType type, const char *msg)
 
 
 // moved to legacy/qucsator, QucsatorNetlister::save
-void doNetlist(QString schematic_fn, std::string netlist, DocumentFormat& fmt)
+void doNetlist(QString schematic_fn, std::string netlist, Command* fmt)
 {
-  std::string sfn = schematic_fn.toStdString();
-  QucsDoc d(nullptr, "", nullptr);
-  d.setLabel("main");
+	std::string sfn = schematic_fn.toStdString();
+	QucsDoc d(nullptr, "", nullptr);
+	d.setLabel("main");
 
-  Symbol* root = symbol_dispatcher.clone("schematic_root");
-  assert(root);
-  root->setParameter("$filename", sfn);
-  root->setOwner(&d);
-  root->setLabel(sfn);
-  assert(root->subckt()); // BUG
+	Symbol* root = symbol_dispatcher.clone("schematic_root");
+	assert(root);
+	root->setParameter("$filename", sfn);
+	root->setOwner(&d);
+	root->setLabel(sfn);
+	assert(root->subckt()); // BUG
 
-  Symbol& xs = *root;
-  SchematicModel& sch = *root->subckt();
-  trace1("main schematic model", &sch);
-  sch.setFileInfo(schematic_fn);
-  QFile file(schematic_fn);  // save simulator messages
-  file.open(QIODevice::ReadOnly);
-  istream_t stream (&file);
-  DocumentFormat const* L = nullptr;
+	SchematicModel* cl = root->subckt();
+	assert(cl);
 
-  if(!L){
-    auto D = command_dispatcher["leg_sch"];
-    L = dynamic_cast<DocumentFormat const*>(D);
-  }else{ untested();
-  }
-  assert(L);
+	std::string cs = "get " + sfn;
+	CMD::command(cs, cl);
 
-#if 0 // TODO
-  CMD::command("get", xs->subckt);?
-  => L->do_it(stream, document);
-#else
-//  L->load(stream, &xs);
-  {
-    auto l=doclang_dispatcher["leg_sch"];
-    assert(l);
-    auto L=dynamic_cast<SchematicLanguage const*>(l);
-    assert(L);
-
-    stream.read_line();
-    while(!stream.atEnd()){
-      L->new__instance(stream, root, &sch);
-      stream.read_line();
-    }
-  }
-  sch.setOwner(root); // needed?
-#endif
-
-//  QFile NetlistFile(QString::fromStdString(netlist));
-//  if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
-//    fprintf(stderr, "Error: Could write to %s\n", netlist.c_str());
-//    exit(1);
-//  }else{
-//  }
-//  DocumentStream os(&NetlistFile);
-
-
-#if 1
-//  xs.DocName = schematic_fn.toStdString(); // tmp
-#else
-  xs.setParam("$filename", schematic_fn.toStdString());
-#endif
-  istream_t cs(istream_t::_STRING, netlist);
-//  fmt.save(os, &xs);
-  fmt.do_it(cs, xs.subckt());
+	istream_t cs2(istream_t::_STRING, netlist);
+	//  fmt.save(os, &xs);
+	assert(fmt);
+	fmt->do_it(cs2, cl);
 }
 /*--------------------------------------------------------------------------*/
 void attach_single(std::string const& what)
@@ -528,7 +485,7 @@ int main(int argc, char *argv[])
 	incomplete();
 	result = 1;
       }else{
-	doNetlist(inputfile, outputfile, *fmt);
+	doNetlist(inputfile, outputfile, fmt);
 	result = 0;
       }
     } else if (print_flag) { untested();
@@ -562,4 +519,4 @@ int main(int argc, char *argv[])
   }
   return result;
 }
-// vim:ts=8:sw=2:noet
+// vim:ts=8:sw=8:noet

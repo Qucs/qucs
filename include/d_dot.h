@@ -1,5 +1,6 @@
 /*$Id: d_dot.h 2014/11/23$ -*- C++ -*-
  * Copyright (C) 2007 Albert Davis
+ *               2020 Felix Salfelder
  * Author: Albert Davis <aldavis@gnu.org>
  *
  * This file is part of "Gnucap", the Gnu Circuit Analysis Package
@@ -28,19 +29,34 @@
 class DEV_DOT : public Element {
 private:
   std::string	_s;
-  explicit DEV_DOT(const DEV_DOT& p) :Element(p), _s(p._s) {}//{set_constant(true);}
+  explicit DEV_DOT(const DEV_DOT& p)
+    :Element(p), _s(p._s), _scope(nullptr) {}//{set_constant(true);}
 public:
   explicit	DEV_DOT()		:Element() {}//{set_constant(true);}
 private: // override virtual
   std::string   value_name()const	{untested();return "";}
   char		id_letter()const	{untested();return '\0';}
   std::string	dev_type()const		{untested();return "dotcard";}
-  Element*		clone()const		{return new DEV_DOT(*this);}
   void paint(ViewPainter*) const override{}
+public: // override
+  DEV_DOT* clone()const override {return new DEV_DOT(*this);}
+  SchematicModel* scope() override;
 public:
   void set(const std::string& S) {_s = S;}
+  void set_scope(SchematicModel* s){_scope = s;}
   const std::string& s()const {untested();return _s;}
+private:
+  SchematicModel* _scope;
 };
+/*--------------------------------------------------------------------------*/
+inline SchematicModel* DEV_DOT::scope()
+{
+  if(_scope){ untested();
+    return _scope;
+  }else{ untested();
+    return Element::scope();
+  }
+}
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif
