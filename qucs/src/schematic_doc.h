@@ -570,7 +570,7 @@ public: // need access to SchematicModel. grr
 private:
   SchematicSymbol* _root;
   SchematicModel* _model;
-  Symbol* _main;
+  SubcktBase* _main;
   CmdEltList _commands;
   QUndoStack* _undoStack;
   std::map<std::string, SimProcess*> _simProcess; // QucsDoc?

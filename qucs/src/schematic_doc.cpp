@@ -45,9 +45,11 @@ SchematicDoc::SchematicDoc(QucsApp* App_/*BUG?*/, const QString& Name_, QWidget*
   { // hack?
 	  _model = _root->subckt();
 	  auto e = (*_model->find_("main"));
-	  _main = prechecked_cast<SubcktBase*>(e);
+	  _main = dynamic_cast<SubcktBase*>(e);
 	  assert(_main);
+	  assert(_main->makes_own_scope()); // for now.
 	  _model = _main->scope();
+	  assert(_model);
   }
   // ...........................................................
 
@@ -154,6 +156,33 @@ void SchematicDoc::showEvent(QShowEvent*e)
 //   incomplete();
 // }
 #endif
+
+// another one?!
+bool SchematicDoc::loadDocument()
+{itested();
+  QFile file(docName());
+  qDebug() << "opening" << docName();
+  if(!file.open(QIODevice::ReadOnly)) { untested();
+    /// \todo implement unified error/warning handling GUI and CLI
+#if 0
+    if (QucsMain)
+      QMessageBox::critical(0, QObject::tr("Error"),
+                 QObject::tr("Cannot load document: ")+docName());
+    else
+      qCritical() << "SchematicDoc::loadDocument:"
+                  << QObject::tr("Cannot load document: ")+docName();
+#endif
+	 incomplete();
+    return false;
+  }else{
+//    assert(_model);
+//    _model->setFileInfo(docName());
+    loadDocument(file);
+
+//    QGraphicsScene& s = *scene();
+    return true;
+  }
+}
 /*--------------------------------------------------------------------------*/
 bool SchematicDoc::loadDocument(QFile& /*BUG*/ file)
 {itested();
@@ -181,6 +210,7 @@ bool SchematicDoc::loadDocument(QFile& /*BUG*/ file)
   parse(stream);
   file.close();
   for(auto i : *_model){
+	  trace1("postload addElement", i->label());
 	 scene()->addElement(i);
   }
   return true;
@@ -202,9 +232,11 @@ bool SchematicDoc::load()
   {
 	  _model = _root->subckt();
 	  auto e = (*_model->find_("main"));
-	  _main = prechecked_cast<SubcktBase*>(e);
+	  _main = dynamic_cast<SubcktBase*>(e);
 	  assert(_main);
+	  assert(_main->makes_own_scope()); // for now.
 	  _model = _main->scope();
+	  assert(_model);
   }
 
   if(!loadDocument()){ untested();
@@ -265,12 +297,13 @@ void SchematicDoc::parse(istream_t& s, SchematicLanguage const* L)
 	}
 	assert(L);
 	assert(_root);
+	assert(_model);
 
 	s.read_line();
 	while(!s.atEnd()){itested();
 		assert(_root->subckt());
-		trace1("SchematicDoc::parse", s.fullstring());
-		L->new__instance(s, _root, _model);
+		trace2("SchematicDoc::parse", s.fullstring(), _root->label());
+		L->new__instance(s, _root, _root->subckt());
 		s.read_line();
 	}
 }

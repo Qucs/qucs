@@ -30,7 +30,7 @@ class DEV_DOT : public Element {
 private:
   std::string	_s;
   explicit DEV_DOT(const DEV_DOT& p)
-    :Element(p), _s(p._s), _scope(nullptr) {}//{set_constant(true);}
+    :Element(p), _s(p._s), _scope(p._scope) {}//{set_constant(true);}
 public:
   explicit	DEV_DOT()		:Element() {}//{set_constant(true);}
 private: // override virtual

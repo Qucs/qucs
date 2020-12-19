@@ -472,28 +472,6 @@ static std::string find_type_in_string(QString& Line)
  * \brief SchematicDoc::loadDocument tries to load a schematic document.
  * \return true/false in case of success/failure
  */
-bool SchematicDoc::loadDocument()
-{itested();
-  QFile file(docName());
-  qDebug() << "opening" << docName();
-  if(!file.open(QIODevice::ReadOnly)) { untested();
-    /// \todo implement unified error/warning handling GUI and CLI
-    if (QucsMain)
-      QMessageBox::critical(0, QObject::tr("Error"),
-                 QObject::tr("Cannot load document: ")+docName());
-    else
-      qCritical() << "SchematicDoc::loadDocument:"
-                  << QObject::tr("Cannot load document: ")+docName();
-    return false;
-  }else{
-    assert(_model);
-    _model->setFileInfo(docName());
-    loadDocument(file);
-
-//    QGraphicsScene& s = *scene();
-    return true;
-  }
-}
 
 #if 0 // obsolete
 // -------------------------------------------------------------
