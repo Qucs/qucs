@@ -30,18 +30,18 @@ class ComponentList;
 namespace {
 
 static std::string netLabel(Node const* nn)
-{ untested();
-	if(!nn){ untested();
+{
+	if(!nn){
 		return "(null)";
-	}else{ untested();
+	}else{
 	}
 	Net const* n = nn->net();
 	if(!n){ untested();
 		unreachable();
 		return "(null)";
-	}else if(n->hasLabel()){ untested();
+	}else if(n->hasLabel()){
 		return n->label();
-	}else{ untested();
+	}else{
 		return "_net" + std::to_string(n->pos());
 	}
 }
@@ -68,14 +68,14 @@ private:
 static Dispatcher<DocumentLanguage>::INSTALL p1(&doclang_dispatcher, "verilog_schematic", &V_);
 /*--------------------------------------------------------------------------*/
 static void printArgs(Symbol const* sym, ostream_t& s)
-{ untested();
+{
 		QString comma="";
 		s << "#(";
 
-		for(unsigned i=0; i<sym->paramCount(); ++i) { untested();
+		for(unsigned i=0; i<sym->paramCount(); ++i) {
 			auto name = sym->paramName(i);
-			if(name.at(0) == '$'){ untested();
-			}else{ untested();
+			if(name.at(0) == '$'){
+			}else{
 				s << comma << "." << sym->paramName(i) << "(" << sym->paramValue(i) << ")";
 				comma = ", ";
 			}
@@ -84,11 +84,11 @@ static void printArgs(Symbol const* sym, ostream_t& s)
 }
 /*--------------------------------------------------------------------------*/
 void VS::print_ports_short(ostream_t& o, const Symbol* x) const
-{ untested();
+{
 	assert(x);
 
 	QString comma = "";
-	for(unsigned i=0; i<x->numPorts(); ++i){ untested();
+	for(unsigned i=0; i<x->numPorts(); ++i){
 		trace3("...", x->label(), i, x->numPorts());
 		auto p = x->nodePosition(i);
 		auto x = p.first;
@@ -106,14 +106,14 @@ void VS::print_ports_short(ostream_t& o, const Symbol* x) const
 }
 /*--------------------------------------------------------------------------*/
 void Verilog::print_ports_short(ostream_t& o, const Symbol* x) const
-{ untested();
+{
   // print in short form ...   value only
 //  o<<"xxx" << x->label() << "xxx";
   assert(x);
 
   std::string sep = "";
 #if 1
-  for (int ii = 0;  x->portExists(ii);  ++ii) { untested();
+  for (int ii = 0;  x->portExists(ii);  ++ii) {
     o << sep << netLabel(x->portValue(ii));
     sep = ", ";
   }
@@ -136,29 +136,29 @@ void Verilog::print_ports_short(ostream_t& o, const Symbol* x) const
 #define short_label label
 
 void Verilog::printSubckt(SubcktBase const* x, ostream_t& o) const
-{ untested();
+{
 	SchematicModel const* scope = nullptr;
 
 	if(x->label()[0] == ':'){ untested();
 		o << "// skip sckt " << x->label() << "\n";
-	}else if(x->subckt()){ untested();
+	}else if(x->subckt()){
 		scope = x->subckt();
-	}else if(x->scope()){ untested();
+	}else if(x->scope()){
 		scope = x->scope();
 	}else{ untested();
 	}
 
-	if(scope){ untested();
+	if(scope){
 		assert(x);
 
 		o << "module " <<  x->short_label() << "(";
 		print_ports_short(o, x);
 		o << ");\n";
 
-		for (auto ci : *scope) { untested();
+		for (auto ci : *scope) {
 //			o << "  "; later.
-			if(dynamic_cast<Conductor const*>(ci)){ untested();
-			}else{ untested();
+			if(dynamic_cast<Conductor const*>(ci)){
+			}else{
 				printItem(ci, o);
 			}
 		}
@@ -172,12 +172,12 @@ void Verilog::printSubckt(SubcktBase const* x, ostream_t& o) const
  * verilog does not know about commands
  */
 void Verilog::printtaskElement(TaskElement const* c, ostream_t& s) const
-{ untested();
+{
   s << "//" << c->label() << "\n";
 }
 /*--------------------------------------------------------------------------*/
 void Verilog::printSymbol(Symbol const* sym, ostream_t& s) const
-{ untested();
+{
 #if 0
 	Component const* c=nullptr; // dynamic_cast<Component const*>(sym);
 	if(!c){ untested();
@@ -199,7 +199,7 @@ void Verilog::printSymbol(Symbol const* sym, ostream_t& s) const
 		}
 	}else
 #endif
-	{ untested();
+	{
 		auto label = sym->label();
 		auto type = sym->typeName();
 		// : is not allowed in verilog
@@ -236,8 +236,8 @@ void Verilog::printSymbol(Symbol const* sym, ostream_t& s) const
 }
 /*--------------------------------------------------------------------------*/
 void VS::printSymbol(Symbol const* sym, ostream_t& s) const
-{ untested();
-	{ untested();
+{
+	{
 		auto label = sym->label();
 		auto type = sym->typeName();
 		// : is not allowed in verilog
@@ -245,10 +245,10 @@ void VS::printSymbol(Symbol const* sym, ostream_t& s) const
 		s << QString::fromStdString(type) << " ";
 
 		printArgs(sym, s);
-		if(label == "*"){ untested();
+		if(label == "*"){
 			// bug/feature/wtf?
 			label="anonymous_gnd_hack_" + std::to_string(gndhackn++);
-		}else{ untested();
+		}else{
 		}
 		s << label << "(";
 		print_ports_short(s, sym);
@@ -257,7 +257,7 @@ void VS::printSymbol(Symbol const* sym, ostream_t& s) const
 }
 /*--------------------------------------------------------------------------*/
 void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
-{ untested();
+{
 	SchematicModel const* scope = nullptr;
 //	if(x->label()[0] == ':'){ untested();
 //		unreachable();
@@ -266,41 +266,41 @@ void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 //	}else
 	if(x->subckt()){ untested();
 		scope = x->subckt();
-	}else if(x->scope()){ untested();
+	}else if(x->scope()){
 		scope = x->scope();
 	}else{ untested();
 	}
 
 	auto it = scope->find_("main");
-	if(it == scope->end()){ untested();
-	}else if(auto xx = dynamic_cast<SubcktBase const*>(*it)){ untested();
+	if(it == scope->end()){
+	}else if(auto xx = dynamic_cast<SubcktBase const*>(*it)){
 		o << "// just main scope\n";
 		scope = xx->scope();
 		// good idea?
 	}else{ untested();
 	}
 
-	if(scope){ untested();
+	if(scope){
 		assert(x);
 
 		o << "module " <<  x->short_label() << "(";
 		print_ports_short(o, x);
 		o << ");\n";
 
-		for (auto ci : *scope){ untested();
-			if(dynamic_cast<Conductor const*>(ci)){ untested();
+		for (auto ci : *scope){
+			if(dynamic_cast<Conductor const*>(ci)){
 				// TODO: defer
 				printItem(ci, o);
 			}else if(ci->label()[0] == ':'){ untested();
-			}else{ untested();
+			}else{
 				// o << "  ";
 				printItem(ci, o);
 			}
 		}
 
 //		if(auto m=dynamic_cast<SchematicModel const*>(x)){ untested();
-      if(scope){ untested();
-			for(auto const& n : scope->nodes()){ untested();
+      if(scope){
+			for(auto const& n : scope->nodes()){
 				int a, b;
 				std::tie(a, b) = n.position();
 				o << "place #(.$xposition(" << a << "),"
@@ -355,7 +355,7 @@ void VerilogSchematicFormat::load(istream_t&, Object*) const
 }
 /* -------------------------------------------------------------------------------- */
 void VerilogSchematicFormat::do_it(istream_t& cs, SchematicModel* o)
-{ untested();
+{
 	std::string fn;
 	cs >> fn;
 
@@ -363,18 +363,18 @@ void VerilogSchematicFormat::do_it(istream_t& cs, SchematicModel* o)
 	if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
 		message(QucsMsgFatal, "Cannot open "+fn+" for writing\n");
 		return; // throw?
-	}else{ untested();
+	}else{
 	}
 	DocumentStream stream(&NetlistFile);
 
-	for(auto pc : *o){ untested();
+	for(auto pc : *o){
 		if(dynamic_cast<TaskElement const*>(pc)){ untested();
 			unreachable();
 			// BUG. a TaskElement is not a Component
 			continue;
-		}else if(pc->label()[0] == ':'){ untested();
+		}else if(pc->label()[0] == ':'){
 			stream << "// skip sckt " << pc->label() << "\n";
-		}else if(auto s=dynamic_cast<Symbol const*>(pc)){ untested();
+		}else if(auto s=dynamic_cast<Symbol const*>(pc)){
 			V_.printItem(s, stream);
 		}
 	}

@@ -34,7 +34,7 @@ static Element* parseCommand(istream_t& c, DEV_DOT*x)
 	auto scope = x->owner()->subckt();
 #else
 	auto scope = x->scope();
-	if(scope){ untested();
+	if(scope){
 	}else{ untested();
 	}
 #endif
@@ -494,7 +494,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
 		}else if(Line == "<Paintings>") {
 			trace1("paintings?", stream.fullString());
 			mode='P';
-		}else if(stream.umatch("<Model>")) { untested();
+		}else if(stream.umatch("<Model>")) {
 			mode='M';
 			trace3("model", Line, stream.fullString(), owner);
 			new__instance(stream, owner, sckt);
@@ -1031,7 +1031,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(const QString& _s, Symbol* sym) con
 		z++;
 
 		trace2("legacy:set", position, n);
-		try{ untested();
+		try{
 			sym->setParameter(position + offset, n);
 		}catch(ExceptionCantFind const*){
 			incomplete(); // CS has error messages...
@@ -1056,7 +1056,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 	int  ttx, tty, tmp;
 	QString s = _s;
 
-	if(s.at(0) != '<'){ untested();
+	if(s.at(0) != '<'){
 	}else if(s.at(s.length()-1) != '>'){ untested();
 	}else{
 		s = s.mid(1, s.length()-2);   // cut off start and end character
@@ -1288,7 +1288,7 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 	}
 	l = l.mid(1, l.length()-2);  // cut off start and end character
 
-	if(auto cc=dynamic_cast<Component*>(e)){ untested();
+	if(auto cc=dynamic_cast<Component*>(e)){
 		// callback?!
 		trace2("compon callback", l, cc->label());
 		e = parseComponentObsoleteCallback(l, cc);
@@ -1609,7 +1609,7 @@ Dispatcher<Command>::INSTALL _p1(&command_dispatcher, "Paintings>", &d3); // BUG
 Dispatcher<Command>::INSTALL _p2(&command_dispatcher, "<Paintings>", &d3); // ...
 /*--------------------------------------------------------------------------*/
 class DiagramCommand : public Command{
-	void do_it(istream_t& cs, SchematicModel* s) override{ untested();
+	void do_it(istream_t& cs, SchematicModel* s) override{
 	  auto fullstring = cs.fullString();
 	  trace1("Section", fullstring);
 

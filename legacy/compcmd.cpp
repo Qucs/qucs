@@ -25,7 +25,7 @@ namespace{
 	// FIXME: use proto
 class Section : public SubcktBase{
 public:
-	Section() : SubcktBase() { untested();
+	Section() : SubcktBase() {
 		new_subckt();
 	}
 private:
@@ -58,7 +58,7 @@ public:
 }mainSection;
 /*--------------------------------------------------------------------------*/
 class CompCommand : public Command{
-	void do_it(istream_t& cs, SchematicModel* s) override{ untested();
+	void do_it(istream_t& cs, SchematicModel* s) override{
 		auto fullstring = cs.fullString();
 		trace1("CompCommand", fullstring);
 
@@ -66,7 +66,7 @@ class CompCommand : public Command{
 		auto p_ = s->find_("main");
 		if(p_!=s->end()){
 			sym = dynamic_cast<SubcktBase*>(*p_);
-		}else{ untested();
+		}else{
 			// "headless" mode
 			// create main, but no project.
 			//  (defer expansion of components that need a project)
@@ -84,13 +84,13 @@ class CompCommand : public Command{
 		auto lang = doclang_dispatcher["legacy_lib"];
 		assert(lang);
 
-		while(true){ untested();
+		while(true){
 			cs.read_line();
-			if(cs.umatch("</Components>")){ untested();
+			if(cs.umatch("</Components>")){
 				break;
-			}else if(cs.umatch("</Wires>")){ untested();
+			}else if(cs.umatch("</Wires>")){
 				break;
-			}else{ untested();
+			}else{
 				cs.skipbl();
 				trace2("compcmd", cs.fullstring(), sym->scope()->size());
 				lang->new__instance(cs, sym, sym->scope());
@@ -98,11 +98,11 @@ class CompCommand : public Command{
 		}
 
 		trace1("find DOT", sym->label());
-		for(auto i : *sym->scope()){ untested();
+		for(auto i : *sym->scope()){
 			if(auto d = dynamic_cast<DEV_DOT*>(i)){ untested();
 				trace1("DOT incomplete", d->s());
 				//			  sym->setParam(k, name); //?
-			}else{ untested();
+			}else{
 			}
 		}
 	}
