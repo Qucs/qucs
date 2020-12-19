@@ -120,7 +120,7 @@ void LIB::loadLibFiles()
 			}else{
 			}
 
-			auto D = doclang_dispatcher["legacy_lib"];
+			auto D = language_dispatcher["legacy_lib"];
 			auto L_ = dynamic_cast<SchematicLanguage const*>(D);
 			auto C = command_dispatcher["leg_sch"];
 			auto L = dynamic_cast<DocumentFormat const*>(C);

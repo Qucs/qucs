@@ -51,7 +51,7 @@ static Dispatcher<Command>::INSTALL p1(&command_dispatcher, "verilog_nl", &VNL);
 /*--------------------------------------------------------------------------*/
 VerilogNetlister::VerilogNetlister() : DocumentFormat()
 {
-	lang = doclang_dispatcher["verilog"];
+	lang = language_dispatcher["verilog"];
 	// verilog = dynamic_cast<NetLang const*>(l);
 	assert(lang);
 }
@@ -63,7 +63,7 @@ void VerilogNetlister::clear() const
 /*--------------------------------------------------------------------------*/
 void VerilogNetlister::do_it(istream_t& cs, SchematicModel* o)
 {
-	lang = doclang_dispatcher["verilog"];
+	lang = language_dispatcher["verilog"];
 	assert(lang);
 
 	std::map<std::string, Element const*> declarations;

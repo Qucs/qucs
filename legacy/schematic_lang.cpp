@@ -166,10 +166,10 @@ private:
 	bool _lib_mod; // HACK HACK
 }d0;
 static Dispatcher<DocumentLanguage>::INSTALL
-    p0(&doclang_dispatcher, "leg_sch", &d0);
+    p0(&language_dispatcher, "leg_sch", &d0);
 LegacySchematicLanguage d1(true);
 static Dispatcher<DocumentLanguage>::INSTALL
-    p1(&doclang_dispatcher, "legacy_lib", &d1);
+    p1(&language_dispatcher, "legacy_lib", &d1);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 static Component* parseComponentObsoleteCallback(const QString& _s, Component* c);
@@ -1579,7 +1579,7 @@ class PaintingCommand : public Command{
 	  sym->setLabel(":Paintings:");
 	  assert(s);
 
-	  auto lang = doclang_dispatcher["legacy_lib"];
+	  auto lang = language_dispatcher["legacy_lib"];
 	  assert(lang);
 
 	  while(true){
@@ -1620,7 +1620,7 @@ class DiagramCommand : public Command{
 	  sym->setLabel(":Diagrams:");
 	  assert(s);
 
-	  auto lang = doclang_dispatcher["legacy_lib"];
+	  auto lang = language_dispatcher["legacy_lib"];
 	  assert(lang);
 
 	  while(true){

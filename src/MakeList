@@ -152,7 +152,6 @@ HDR2 = \
 	task_element.h \
 	diagram.h \
 	dispatcher.h \
-	globals.h \
 	imagewriter.h \
 	io.h \
 	misc.h \

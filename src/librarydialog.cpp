@@ -426,7 +426,7 @@ void LibraryDialog::slotSave()
 
 // BUG: where is the language specified?
 // BUG: wrong place for header here
-	auto nlp=doclang_dispatcher["qucsator"];
+	auto nlp=language_dispatcher["qucsator"];
 	assert(nlp);
 	NetLang const* n=prechecked_cast<NetLang const*>(nlp);
 	assert(n);

@@ -259,7 +259,7 @@ void SchematicDoc::parse(istream_t& s, SchematicLanguage const* L)
 {itested();
 	incomplete(); // but still used in qucs -i $file
 	if(!L){itested();
-		auto D = doclang_dispatcher["leg_sch"]; // use command instead.
+		auto D = language_dispatcher["leg_sch"]; // use command instead.
 		L = dynamic_cast<SchematicLanguage const*>(D);
 	}else{ untested();
 	}
@@ -1068,7 +1068,7 @@ QString SchematicDoc::createClipboardFile() const
 		sym.subckt()->pushBack(cl);
 	}
 
-	auto lang = doclang_dispatcher["leg_sch"];
+	auto lang = language_dispatcher["leg_sch"];
 	assert(lang);
 	auto fmt = prechecked_cast<DocumentLanguage const*>(lang);
 	assert(fmt);

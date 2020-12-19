@@ -29,11 +29,11 @@ void createListComponentEntry::do_it(istream_t&, SchematicModel*)
   data.open (QFile::WriteOnly | QFile::Truncate);
   ostream_t s(&data);
 
-  auto lang = doclang_dispatcher["leg_sch"];
+  auto lang = language_dispatcher["leg_sch"];
   assert(lang);
-  auto qucsatorlang = doclang_dispatcher["qucsator"];
+  auto qucsatorlang = language_dispatcher["qucsator"];
   assert(qucsatorlang);
-  auto verilog = doclang_dispatcher["verilog"];
+  auto verilog = language_dispatcher["verilog"];
 
   foreach(QString category, cats) {
 

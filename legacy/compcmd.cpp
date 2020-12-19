@@ -81,7 +81,7 @@ class CompCommand : public Command{
 			assert(s);
 		}
 
-		auto lang = doclang_dispatcher["legacy_lib"];
+		auto lang = language_dispatcher["legacy_lib"];
 		assert(lang);
 
 		while(true){
