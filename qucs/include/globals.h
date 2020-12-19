@@ -31,7 +31,7 @@ class Symbol;
 extern INTERFACE Dispatcher<TaskElement> element_dispatcher;
 extern INTERFACE Dispatcher<Command> command_dispatcher;
 extern INTERFACE Dispatcher<Diagram> diagram_dispatcher;
-extern INTERFACE Dispatcher<DocumentLanguage> doclang_dispatcher;
+extern INTERFACE Dispatcher<DocumentLanguage> language_dispatcher;
 extern INTERFACE Dispatcher<Painting> painting_dispatcher;
 extern INTERFACE Dispatcher<Simulator> simulator_dispatcher;
 extern INTERFACE Dispatcher<Symbol> symbol_dispatcher;

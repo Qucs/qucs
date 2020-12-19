@@ -2080,7 +2080,7 @@ private:
 void SchematicDoc::parse(DocumentStream& s, SchematicLanguage const* L)
 { untested();
   if(!L){ untested();
-    auto D=doclang_dispatcher["leg_sch"];
+    auto D=language_dispatcher["leg_sch"];
     L = dynamic_cast<SchematicLanguage const*>(D);
   }else{ untested();
   }

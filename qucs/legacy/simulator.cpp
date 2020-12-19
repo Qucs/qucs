@@ -94,7 +94,7 @@ struct default_sim{
 /* -------------------------------------------------------------------------------- */
 NetLang const* LegacySimulator::netLang() const
 { untested();
-	DocumentLanguage const* d = doclang_dispatcher["qucsator"];
+	DocumentLanguage const* d = language_dispatcher["qucsator"];
 	assert(d);
 	auto n = prechecked_cast<NetLang const*>(d);
 	assert(n);
@@ -147,7 +147,7 @@ void LegacyNetlister::clear() const
 /* -------------------------------------------------------------------------------- */
 void LegacyNetlister::load(istream_t&, Object*) const
 {
-   _qucslang = doclang_dispatcher["qucsator"];
+   _qucslang = language_dispatcher["qucsator"];
 	assert(_qucslang);
 	incomplete();
 }
@@ -184,7 +184,7 @@ void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 
 //	auto& m = *m_;
 
-   _qucslang = doclang_dispatcher["qucsator"];
+   _qucslang = language_dispatcher["qucsator"];
 	clear();
 
 	int SimPorts = 10;//??
@@ -227,7 +227,7 @@ void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 void LegacyNetlister::printDeclarations(ostream_t& stream,
 		std::map<std::string, Element const*>& declarations) const
 {
-   _qucslang = doclang_dispatcher["qucsator"];
+   _qucslang = language_dispatcher["qucsator"];
 	assert(_qucslang);
 
 	stream << "## declarations "<< declarations.size() << "\n";

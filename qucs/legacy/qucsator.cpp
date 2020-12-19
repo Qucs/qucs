@@ -151,7 +151,7 @@ private: // local
   void printPainting(Painting const*, ostream_t&) const override {incomplete();}
   void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
 }qucslang;
-static Dispatcher<DocumentFormat>::INSTALL p(&doclang_dispatcher, "qucsator", &qucslang);
+static Dispatcher<DocumentFormat>::INSTALL p(&language_dispatcher, "qucsator", &qucslang);
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 static void printSymbol_(Symbol const* c, ostream_t& s)
@@ -431,7 +431,7 @@ public:
 private: // Simulator
   Simulator* clone() const override {return new Qucsator();}
   NetLang const* netLang() const override { untested();
-	  return dynamic_cast<NetLang const*>(doclang_dispatcher["qucsator"]);
+	  return dynamic_cast<NetLang const*>(language_dispatcher["qucsator"]);
   }
   DocumentFormat const* netLister() const override {
 	  return dynamic_cast<DocumentFormat const*>(command_dispatcher["legacy_nl"]);

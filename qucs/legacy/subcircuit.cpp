@@ -605,7 +605,7 @@ void Subcircuit::build_sckt(SubcktBase* proto) const
 	D->load(pstream, proto);
 #else
 //	proto->new_subckt(); wrong.
-	auto LL = doclang_dispatcher["leg_sch"]; // use command instead?
+	auto LL = language_dispatcher["leg_sch"]; // use command instead?
 	auto L = dynamic_cast<SchematicLanguage const*>(LL);
 	assert(L);
 	pstream.read_line();

@@ -67,7 +67,7 @@ static Dispatcher<Command>::INSTALL p0(&command_dispatcher, "leg_sch", &d0);
 void LegacySchematicFormat::load(istream_t& s, Object* c) const
 {
 // TODO: move stuff here that does not belong to leg_sch.
-	auto l=doclang_dispatcher["leg_sch"];
+	auto l=language_dispatcher["leg_sch"];
 	assert(l);
 	auto L=dynamic_cast<SchematicLanguage const*>(l);
 	assert(L);
@@ -190,7 +190,7 @@ void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 	std::vector<Element const*> paintings;
 	std::vector<Element const*> diagrams;
 
-	auto D=doclang_dispatcher["leg_sch"];
+	auto D=language_dispatcher["leg_sch"];
 	auto L = dynamic_cast<DocumentLanguage const*>(D);
 	assert(L);
 

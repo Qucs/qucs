@@ -66,7 +66,7 @@ class SymbolCommand : public Command{
 	  sym->setLabel(":SymbolSection:");
 	  assert(s);
 
-	  auto lang = doclang_dispatcher["legacy_lib"];
+	  auto lang = language_dispatcher["legacy_lib"];
 	  assert(lang);
 
 	  while(true){

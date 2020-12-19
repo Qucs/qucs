@@ -57,7 +57,7 @@ private:
 private: //DocumentLanguage
 	std::string findType(istream_t&) const override {incomplete(); return "incomplete";}
 } V;
-static Dispatcher<DocumentLanguage>::INSTALL p0(&doclang_dispatcher, "verilog|verilog_nl", &V);
+static Dispatcher<DocumentLanguage>::INSTALL p0(&language_dispatcher, "verilog|verilog_nl", &V);
 /*--------------------------------------------------------------------------*/
 class VS : public Verilog {
 	void printSymbol(Symbol const*, ostream_t&) const override;
@@ -65,7 +65,7 @@ class VS : public Verilog {
 private:
 	void print_ports_short(ostream_t& o, const Symbol* x) const;
 } V_;
-static Dispatcher<DocumentLanguage>::INSTALL p1(&doclang_dispatcher, "verilog_schematic", &V_);
+static Dispatcher<DocumentLanguage>::INSTALL p1(&language_dispatcher, "verilog_schematic", &V_);
 /*--------------------------------------------------------------------------*/
 static void printArgs(Symbol const* sym, ostream_t& s)
 {

@@ -37,7 +37,7 @@ void Get::do_it(istream_t& cmd, SchematicModel* sckt)
 // TODO: any language.
 // magic = stream.fullstring ...
 
-	auto L = doclang_dispatcher["leg_sch"];
+	auto L = language_dispatcher["leg_sch"];
 	assert(L);
 
 	while(!stream.atEnd()){
