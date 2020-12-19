@@ -64,7 +64,12 @@ void DocumentLanguage::new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
 		std::string type = findType(cmd);
 		trace4("new_instance", type, cmd.fullString(), owner->label(), Scope);
 		if (const Element* proto = find_proto(type, owner)) {
-			if (Element* new_instance = proto->clone_instance()) {
+			if (auto p = dynamic_cast<DEV_DOT const*>(proto)){ untested();
+				DEV_DOT* new_instance = p->clone();
+				delete p;
+				new_instance->set_scope(Scope);
+				Element* o = parseItem(cmd, new_instance);
+			}else if (Element* new_instance = proto->clone_instance()) {
 				new_instance->setOwner(owner); // owner is null, usually.
 				Element* o = parseItem(cmd, new_instance);
 				if (Element* x=dynamic_cast<Element*>(o)) {
@@ -107,7 +112,9 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
   if (p) {
     return p;
   }else if ((command_dispatcher[Name])) {
-    return new DEV_DOT;	//BUG// memory leak
+    auto d=new DEV_DOT;	//BUG// memory leak
+//	 d->setOwner(Scope); // really??
+	 return d;
   }else if ((p = element_dispatcher[Name])) { untested();
     return p;
   }else if ((p = symbol_dispatcher[Name])) {
