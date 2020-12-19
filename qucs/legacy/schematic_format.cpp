@@ -26,7 +26,7 @@
 
 namespace{
 
-SchematicModel empty(nullptr);
+SchematicModel empty;
 
 class LegacySchematicFormat : public DocumentFormat{
 public:

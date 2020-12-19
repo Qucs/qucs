@@ -11,7 +11,7 @@ void union0()
 	//     __           __  |
 	//   -[__]-   ->  -[__]-o
 	//                      |
-	SchematicModel M(NULL);
+	SchematicModel M;
 	auto wp=symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
 	w0->setParameter(std::string("deltay"), "100");
@@ -71,8 +71,8 @@ void union1()
 	// |         |
 	// |   =>    |
 	// |      ---o---
-	SchematicModel M(NULL);
-	auto wp=symbol_dispatcher["Wire"];
+	SchematicModel M;
+	auto wp = symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
 	w0->setParameter(std::string("deltay"), "100");
 
@@ -102,7 +102,7 @@ void union2()
 	//                |
 	//          =>    |
 	// ------      ---o---
-	SchematicModel M(NULL);
+	SchematicModel M;
 	auto wp=symbol_dispatcher["Wire"];
 
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());

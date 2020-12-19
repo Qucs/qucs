@@ -90,28 +90,6 @@ void SchematicEdit::save(T& del, T& ins)
 	trace2("saved", _del.size(), _ins.size());
 }
 /*--------------------------------------------------------------------------*/
-#include <schematic_model.h>
-static void possiblyRename(ElementGraphics* gfx)
-{
-	assert(gfx);
-	Element const* e = element(gfx);
-	Element* ee = element(gfx);
-	assert(e);
-	auto s = e->scope();
-	assert(s);
-	std::string label = e->label();
-
-   int z = label.size();
-	if(!z){
-	}else if(std::isdigit(label[z-1])){
-	}else{
-		auto scope = e->scope();
-		unsigned i = scope->nextIdx(label);
-		ee->setLabel(label + std::to_string(i));
-		// gfx->update();
-	}
-}
-/*--------------------------------------------------------------------------*/
 // Perform an edit action for the first time. keep track of induced changes.
 // This is a generic version of legacy implementation, and it still requires a
 // scene implementing the geometry.
@@ -148,7 +126,9 @@ void SchematicEdit::do_it_first()
 		trace1("try insert...", element(gfx)->label());
 		_ins.pop_front();
 
-		possiblyRename(gfx);
+		SchematicScene* scn = gfx->scene();
+		Element* e = gfx->operator->();
+		scn->possiblyRename(e);
 		if(addmerge(gfx, done_del)){
 			trace0("merged");
 		}else{
@@ -310,8 +290,8 @@ void SchematicEdit::qSwap(ElementGraphics* gfx, Element* e)
 		assert(!element(ng)->scope());
 		_scn.addItem(ng);
 		ng->hide(); // what??
-		e->setOwner(element(gfx)->mutable_owner()); // not here.
-		assert(e->mutable_owner());
+		// e->setOwner(element(gfx)->mutable_owner()); // not here.
+		// assert(e->mutable_owner());
 		//	assert(element(ng)->scope());
 	}
 

@@ -22,13 +22,13 @@ namespace {
 class CommonSubckt : public COMMON_COMPONENT{
 public:
 	explicit CommonSubckt(int x)
-		: COMMON_COMPONENT(x), _subckt(nullptr) {}
+		: COMMON_COMPONENT(x), _subckt() {}
 public:
 	SchematicModel* subckt(){ return &_subckt; }
 	COMMON_COMPONENT* clone()const override{
 		return new CommonSubckt(0);
 	}
-   bool  operator==(const COMMON_COMPONENT&x)const override{
+   bool  operator==(const COMMON_COMPONENT&)const override{
 		return false;
 	}
 private:

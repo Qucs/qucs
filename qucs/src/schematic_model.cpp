@@ -25,10 +25,8 @@
 SchematicModel::SchematicModel()
   : Nodes(Nets),
     _parent(nullptr),
-    _params(nullptr),
-    _project(nullptr)
+    _params(nullptr)
 { untested();
-	trace2("::SchematicModel", this, _project);
 }
 /*--------------------------------------------------------------------------*/
 SchematicModel::~SchematicModel()
@@ -43,21 +41,6 @@ SchematicModel::~SchematicModel()
 		}else{
 		}
 	}
-}
-/*--------------------------------------------------------------------------*/
-// getting here in GUI mode
-SchematicModel::SchematicModel(SchematicDoc* s)
-  : Nodes(Nets),
-    _parent(nullptr),
-    _params(nullptr),
-    _project(nullptr)
-{
-	attachDoc(s);// bug?
-	if(s){ untested();
-	}else{
-	}
-	// presumably Q3PTRlist without this is just a QList<*> (check)
-//  _symbol=new SchematicSymbol();
 }
 /*--------------------------------------------------------------------------*/
 void SchematicModel::clear()
@@ -95,6 +78,7 @@ void SchematicModel::pushBack(Element* what)
 {
 	attach(what);
 
+#if 0
 	// here?!
 	if(doc()){itested();
 		trace1("SchematicModel::pushBack doc", what->label());
@@ -102,6 +86,7 @@ void SchematicModel::pushBack(Element* what)
 	}else{
 		trace1("SchematicModel::pushBack no doc", what->label());
 	}
+#endif
 } // pushBack
 /*--------------------------------------------------------------------------*/
 // called from schematic::erase only
@@ -144,6 +129,8 @@ Element* SchematicModel::detach(Element* what)
 	}else{ untested();
 		unreachable();
 	}
+
+	what->setOwner(nullptr);
 	return what;
 }
 /*--------------------------------------------------------------------------*/
@@ -153,6 +140,7 @@ Element* SchematicModel::attach(Element* what)
 
 	trace2("SchematicModel::attach", what->label(), this);
 	if(auto c=dynamic_cast<TaskElement*>(what)){
+#if 0
 		if(doc()){
 			trace1("SchematicModel::pushBack command", c->label());
 			doc()->commands().push_back(c);
@@ -160,6 +148,7 @@ Element* SchematicModel::attach(Element* what)
 			trace1("SchematicModel::pushBack no command", c->label());
 			// possibly a subcircuit model? ignore commands.
 		}
+#endif
 //	}else if(auto d=dynamic_cast<Diagram*>(what)){
 //		components().append(d);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
@@ -180,17 +169,6 @@ Element* SchematicModel::attach(Element* what)
 		incomplete();
 	}
 	return what;
-}
-/*--------------------------------------------------------------------------*/
-SchematicDoc* SchematicModel::doc()
-{
-	return dynamic_cast<SchematicDoc*>(_project);
-}
-/*--------------------------------------------------------------------------*/
-void SchematicModel::attachDoc(SchematicDoc*d)
-{
-	assert(!_project);
-	_project = d;
 }
 /*--------------------------------------------------------------------------*/
 QFileInfo const& SchematicModel::getFileInfo ()const
@@ -220,11 +198,6 @@ PaintingList& SchematicModel::paintings()
 //	return _symbol->symbolPaintings();
 //}
 //
-CmdEltList& SchematicModel::commands()
-{ untested();
-	assert(doc());
-	return doc()->commands();
-}
 DiagramList& SchematicModel::diagrams()
 {
 	return Diagrams;
@@ -333,19 +306,6 @@ SchematicModel const* SchematicModel::parent() const
 {
 	return nullptr;
 }
-#if 0
-// needed?
-void SchematicModel::merge(SchematicModel& src)
-{ untested();
-	assert(false);
-  for(auto i : src.components()){ itested();
-	  assert(i);
-	  components().append(i);
-  }
-  src.components().clear();
-}
-#endif
-/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 bool operator==(Object const*p, std::string const&s)
 {

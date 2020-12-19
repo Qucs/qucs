@@ -31,6 +31,7 @@ SchematicDoc::SchematicDoc(QucsApp* App_/*BUG?*/, const QString& Name_, QWidget*
      QucsDoc(App_, Name_, owner),
      _root(nullptr),
      _model(nullptr),
+     _main(nullptr),
      _undoStack(nullptr)
 {itested();
   qDebug() << "SchematicDoc::SchematicDoc" << Name_;
@@ -40,12 +41,13 @@ SchematicDoc::SchematicDoc(QucsApp* App_/*BUG?*/, const QString& Name_, QWidget*
   auto root = symbol_dispatcher.clone("schematic_root");
   _root = dynamic_cast<SchematicSymbol*>(root);
   assert(_root);
-  _model = _root->subckt();
 
-  { // HACK HACK HACK
-	  auto mainscope = (*_model->find_("main"))->scope();
-	  assert(mainscope);
-	  mainscope->attachDoc(this);
+  { // hack?
+	  _model = _root->subckt();
+	  auto e = (*_model->find_("main"));
+	  _main = prechecked_cast<SubcktBase*>(e);
+	  assert(_main);
+	  _model = _main->scope();
   }
   // ...........................................................
 
@@ -178,6 +180,9 @@ bool SchematicDoc::loadDocument(QFile& /*BUG*/ file)
 
   parse(stream);
   file.close();
+  for(auto i : *_model){
+	 scene()->addElement(i);
+  }
   return true;
 }
 
@@ -194,12 +199,12 @@ bool SchematicDoc::load()
 
   _root->setParameter("$filename", docName().toStdString());
 
-  _model = _root->scope();
-
-  { // HACK HACK HACK
-	  auto mainscope = (*_model->find_("main"))->scope();
-	  assert(mainscope);
-	  mainscope->attachDoc(this);
+  {
+	  _model = _root->subckt();
+	  auto e = (*_model->find_("main"));
+	  _main = prechecked_cast<SubcktBase*>(e);
+	  assert(_main);
+	  _model = _main->scope();
   }
 
   if(!loadDocument()){ untested();
@@ -209,6 +214,7 @@ bool SchematicDoc::load()
     // setFileInfo(DocName);
   }
   lastSaved = QDateTime::currentDateTime();
+
 
 #if 0 // obsolete
   while(!undoAction.isEmpty()) {itested();
@@ -823,7 +829,8 @@ void SchematicDoc::sceneAddItem(ElementGraphics* x)
 {
 	assert(scene());
 	scene()->addItem(x);
-	x->show();
+	QGraphicsItem* g = x;
+	g->show();
 }
 void SchematicDoc::sceneRemoveItem(ElementGraphics* x)
 {
@@ -831,12 +838,21 @@ void SchematicDoc::sceneRemoveItem(ElementGraphics* x)
 	scene()->removeItem(x);
 }
 
+void SchematicDoc::addElement(Element* x)
+{
+	assert(!x->mutable_owner());
+	x->setOwner(_main);
+	_model->pushBack(x);
+}
+
+#if 0
 QGraphicsItem& SchematicDoc::addToScene(Element* x)
 {itested();
 	unreachable(); // why?
 	assert(scene());
 	return scene()->addElement(x);
 }
+#endif
 
 // questionable.
 Element* SchematicDoc::eraseFromScene(ElementGraphics* g)

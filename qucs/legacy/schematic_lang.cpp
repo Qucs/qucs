@@ -1490,6 +1490,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 }
 /*--------------------------------------------------------------------------*/
 // was Schematic::loadProperties
+#if 0
 void LegacySchematicLanguage::loadProperties(QTextStream& s_in,
 		SchematicSymbol& m) const
 { untested();
@@ -1564,6 +1565,7 @@ void LegacySchematicLanguage::loadProperties(QTextStream& s_in,
 
 	throw "QObject::tr(\"Format Error:\n'Property' field is not closed!\")";
 }
+#endif
 /*--------------------------------------------------------------------------*/
 class PaintingCommand : public Command{
 	void do_it(istream_t& cs, SchematicModel* s) override{

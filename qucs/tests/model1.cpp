@@ -9,7 +9,7 @@ static const unsigned N=9999;
 
 int main()
 {
-	SchematicModel M(NULL);
+	SchematicModel M;
 
 	Symbol* w0;
 	Symbol* w1;

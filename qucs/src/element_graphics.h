@@ -53,42 +53,45 @@ public:
 public:
 	SchematicScene* scene() const; // really?
 
-public: // QGraphicsItem
-  void update();
-  QRectF boundingRect() const override;
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override;
+private:
+	SchematicModel* model();
 
-  QRectF absoluteBoundingRect() const;
+public: // QGraphicsItem
+	void update();
+	QRectF boundingRect() const override;
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override;
+
+	QRectF absoluteBoundingRect() const;
 
 private: // QGraphicsItem
-  bool sceneEvent(QEvent*) override;
-  QVariant itemChange(GraphicsItemChange c, const QVariant &v) override;
+	bool sceneEvent(QEvent*) override;
+	QVariant itemChange(GraphicsItemChange c, const QVariant &v) override;
 
 public: // manipulate (used in UndotaskElements)
-  void hide();
-  void show();
+	void hide();
+	void show();
 
-  template<class P>
-  void moveElement(P const& delta);
+	template<class P>
+	void moveElement(P const& delta);
 
 public: // schematic_action.cpp
-  void transform(rotate_after_mirror1_t, std::pair<int, int> pivot=std::make_pair(0,0));
-  // void snap();
+	void transform(rotate_after_mirror1_t, std::pair<int, int> pivot=std::make_pair(0,0));
+	// void snap();
 
 public:
-  Element& operator*(){ itested();
-	  assert(_e); return *_e;
-  }
-  Element* operator->(){ itested();
-	  assert(_e); return _e;
-  }
-  Element const* operator->() const{itested();
-	  assert(_e); return _e;
-  }
-//  QPointF pos() const; // QGraphicsItem
-  void setPos(int i, int j, bool relative=false);
-  void setPos(QPoint const&);
-//  void center(int& i, int& j);
+	Element& operator*(){ itested();
+		assert(_e); return *_e;
+	}
+	Element* operator->(){ itested();
+		assert(_e); return _e;
+	}
+	Element const* operator->() const{itested();
+		assert(_e); return _e;
+	}
+	//  QPointF pos() const; // QGraphicsItem
+	void setPos(int i, int j, bool relative=false);
+	void setPos(QPoint const&);
+	//  void center(int& i, int& j);
 
 	// BUG
 	void prepareGeometryChange(){
@@ -125,7 +128,7 @@ Node* node(QGraphicsItem*);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #include <QEvent> // TODO: check if ItemEvent is needed at all, if so,
-                  // move to a different place
+// move to a different place
 /*--------------------------------------------------------------------------*/
 class ItemEvent: public QEvent{
 public:

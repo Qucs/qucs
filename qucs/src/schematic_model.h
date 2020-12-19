@@ -81,16 +81,8 @@ public: // stub
 	typedef ElementList::const_iterator const_iterator;
 private:
 	SchematicModel(SchematicModel const&) = delete;
-	SchematicModel();
-#if 0
-	SchematicModel() : _doc(nullptr),
-	_symbol(new SchematicSymbol());
-	{
-		incomplete();
-	}
-#endif
 public:
-	SchematicModel(SchematicDoc* s);
+	explicit SchematicModel();
 	~SchematicModel();
 public: // stuff saved from Schematic
 	void sizeOfAll(int&, int&, int&, int&, float) const;
@@ -203,11 +195,6 @@ public:
 	const_iterator find_(const std::string& short_name)const
 					{return find_again(short_name, begin());}
 
-	SchematicDoc* doc();
-	SchematicDoc const* doc() const{
-		auto c=const_cast<SchematicModel*>(this);
-		return c->doc();
-	}
 	QString const& portType(int i) const{
 		return PortTypes[i];
 	}
@@ -231,9 +218,6 @@ private:
 	QString DevType; // BUG move to parent
 
 public:
-	void attachDoc(SchematicDoc*d);
-
-public:
 	// HACK
 	unsigned nextIdx(std::string const& s) const;
 	PARAM_LIST* params();
@@ -243,7 +227,6 @@ private:
 	const SchematicModel* _parent;
 	std::multimap<std::string, Element*> _map;
 	mutable PARAM_LIST* _params;
-	Object* _project;
 
 public: // for now.
 	friend class SchematicDoc;

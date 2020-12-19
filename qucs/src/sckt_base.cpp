@@ -17,7 +17,7 @@
 void SubcktBase::new_subckt()
 {
 	assert(!_subckt);
-	_subckt = new SchematicModel(nullptr);
+	_subckt = new SchematicModel();
 }
 /*--------------------------------------------------------------------------*/
 pos_t SubcktBase::portPosition(unsigned i) const{
