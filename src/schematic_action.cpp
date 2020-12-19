@@ -394,8 +394,10 @@ class NewElementCommand : public SchematicEdit {
 public:
 	NewElementCommand(SchematicDoc& ctx, ElementGraphics* gfx)
 	: SchematicEdit(*ctx.sceneHACK()) { untested();
+		assert(gfx->scene());
+		assert(!element(gfx)->mutable_owner());
 		gfx->hide();
-		ctx.takeOwnership(element(gfx)); // BUG?
+//		ctx.takeOwnership(element(gfx)); // BUG?
 		// elment->setOwner(ctx)...?
 		setText("NewElement" /*element(gfx)->label()*/); // tr?
 		trace0("NewElementCommand::NewElementCommand");

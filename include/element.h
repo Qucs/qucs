@@ -192,7 +192,7 @@ protected:
   Object* owner(){ return _owner;}
 
 public:
-  void setOwner(Object* e) { assert(!_owner || e==_owner); _owner=e;}
+  void setOwner(Object* e) { assert(!_owner || e==_owner || !e); _owner=e;}
   const Element* find_looking_out(const std::string& name)const;
   const Element* find_in_parent_scope(const std::string& name)const;
   const Element* find_in_my_scope(const std::string& name)const;

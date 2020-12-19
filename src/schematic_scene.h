@@ -37,6 +37,7 @@ class Element;
 class ElementGraphics;
 class Node;
 class SchematicDoc;
+class SchematicModel;
 
 // TODO: merge schematic mouse actions into this.
 class SchematicScene : public QGraphicsScene
@@ -56,8 +57,17 @@ public:
   }
 #endif
 
+  void attachToModel(Element*);
+  Element* detachFromModel(Element*);
+
+private:
+  SchematicModel* scope();
+
 public:
   QGraphicsItem& addElement(Element* x);
+  SchematicModel const* scope() const{
+	  return const_cast<SchematicScene*>(this)->scope();
+  }
 
   // qt implements that.
   void selectedItemsAndBoundingBox(QList<ElementGraphics*>& ElementCache, QRectF& BB);
@@ -70,6 +80,8 @@ public:
   bool isNode(pos_t) const;
   Node const* nodeAt(pos_t) const;
   bool isConductor(pos_t) const;
+
+  void possiblyRename(Element* e) const;
 
 public: // wrap items
   QList<ElementGraphics*> selectedItems() const;
@@ -96,9 +108,9 @@ protected:
   void drawBackground(QPainter *painter, const QRectF& rect);
 };
 
-#include "qt_compat.h"
-#include "element.h" // TODO: move implementation to .cpp
-                     // also: this relates to scene, but is this the right place?
-							// (having other problems, still)
-
+// #include "qt_compat.h"
+// #include "element.h" // TODO: move implementation to .cpp
+//                      // also: this relates to scene, but is this the right place?
+// 							// (having other problems, still)
+// 
 #endif /* SCHEMATICSCENE_H_ */

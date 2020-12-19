@@ -96,6 +96,7 @@ ElementList const& SchematicSymbol::components() const // possibly "devices". le
 	return s->components();
 }
 /*--------------------------------------------------------------------------*/
+#if 0
 CmdEltList const* SchematicSymbol::commands() const
 {
 	auto s = subckt();
@@ -107,5 +108,6 @@ CmdEltList const* SchematicSymbol::commands() const
 		return &d->commands();
 	}
 }
+#endif
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

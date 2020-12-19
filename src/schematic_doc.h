@@ -155,13 +155,11 @@ private:
 
 public:
   SchematicScene const* scene() const{itested();
-	  return prechecked_cast<SchematicScene const*>(QGraphicsView::scene()); }
+	  return prechecked_cast<SchematicScene const*>(QGraphicsView::scene());
+  }
+
 private:
-  // schematic Scene for this View
-//  SchematicScene *Scene;
   SchematicScene *scene() {itested(); return prechecked_cast<SchematicScene*>(QGraphicsView::scene()); }
-  // schematic frame item
-  // Frame *SchematicFrame;
   void drawBackground(QPainter *painter, const QRectF& rect);
 public:
   SchematicScene *sceneHACK() {itested(); return scene(); }
@@ -556,16 +554,23 @@ private:
 
 public:
   SchematicSymbol const* root() const { return _root; }
+  SchematicModel const* model() const { return _model; }
+
+  void addElement(Element*);
+
+protected:
+  // HACK
+  SchematicModel* model() { return _model; }
 
 public: // need access to SchematicModel. grr
   friend class MouseActions;
   friend class ImageWriter;
+  friend class SchematicScene;
 
 private:
-  SchematicSymbol* _root; // really? use *this. and QucsDoc : Element?
-                          //                        QucsDoc : ScktBase?
-                          //                        QucsDoc : Object?
+  SchematicSymbol* _root;
   SchematicModel* _model;
+  Symbol* _main;
   CmdEltList _commands;
   QUndoStack* _undoStack;
   std::map<std::string, SimProcess*> _simProcess; // QucsDoc?

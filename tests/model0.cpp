@@ -7,7 +7,7 @@
 
 void more()
 {
-	SchematicModel M(NULL);
+	SchematicModel M;
 
 	auto wp=symbol_dispatcher["Wire"];
 //	 Wire(0,0,1,0);
@@ -130,7 +130,7 @@ void more()
 
 int main()
 {
-	SchematicModel M(NULL);
+	SchematicModel M;
 	//auto w0 = new Wire(0,0,1,0);
 	auto wp=symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());

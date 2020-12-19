@@ -279,7 +279,7 @@ pos_t Symbol::nodePosition(unsigned i) const
 void Symbol::new_subckt()
 {
 	assert(!_subckt);
-	_subckt = new SchematicModel(nullptr);
+	_subckt = new SchematicModel();
 }
 /*--------------------------------------------------------------------------*/
 Symbol::~Symbol()

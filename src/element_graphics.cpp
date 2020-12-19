@@ -62,8 +62,10 @@ ElementGraphics* ElementGraphics::clone() const
 ElementGraphics::~ElementGraphics()
 {itested();
 	if(isVisible()){itested();
+		// assert(_e->owner()); ??
 		// element is owned by SchematicModel.
 	}else{itested();
+		// assert(!_e->owner()); ??
 		// check: is this correct?
 		delete(_e);
 	}
@@ -569,11 +571,10 @@ bool ElementGraphics::sceneEvent(QEvent* e)
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::show()
 {itested();
-	if(_e->scope()){itested();
-		_e->attachToModel();
-	}else{ untested();
-		trace0("no attachToModel");
-	}
+
+	assert(scene());
+	scene()->attachToModel(_e);
+
 #ifdef DO_TRACE
 	if(auto sym=dynamic_cast<Symbol const*>(_e)){
 		if(sym->numPorts() == 1){
@@ -621,17 +622,12 @@ void ElementGraphics::hide()
 	}
 #endif
 
-#if 0 // not yet
-	assert(_e->owner());
-	erase(subckt(), _e);
-	assert(!_e->owner());
-#endif
-
-	if(_e->scope()){itested();
-//		_e->removeFromModel();?
-		_e->detachFromModel();
+	if(_e->owner()){itested();
+		// detach(_e, model());
+		scene()->detachFromModel(_e);
 	}else{itested();
 	}
+	assert(!_e->owner());
 }
 /*--------------------------------------------------------------------------*/
 #if 0 // does not make sense. reachable??
