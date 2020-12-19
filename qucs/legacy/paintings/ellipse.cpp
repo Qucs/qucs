@@ -202,7 +202,7 @@ bool Ellipse::load(const QString& s)
 
 // --------------------------------------------------------------------------
 QString Ellipse::save()
-{ untested();
+{
 	 auto cx=Element::cx();
      auto cy=Element::cy();
 

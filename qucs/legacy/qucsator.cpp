@@ -180,7 +180,7 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 			std::string name = sym->paramName(ii);
 			//trace2("param", name, value);
 
-			if(name.at(0)=='$'){itested();
+			if(name.at(0)=='$'){
 				// hmmm
 //			}else if(!sym->paramIsPrintable(ii)){ untested();
 			}else if(name==""){itested();
@@ -339,7 +339,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 }
 
 void QucsatorLang::printtaskElement(TaskElement const* c, ostream_t& s) const
-{itested();
+{
 	assert(c);
 	s << "." << c->typeName() << ":" << c->label();
 

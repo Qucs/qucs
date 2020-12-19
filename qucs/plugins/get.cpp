@@ -16,37 +16,11 @@
 #include "language.h"
 
 namespace{
-
+/*--------------------------------------------------------------------------*/
 class Get : public Command {
 	void do_it(istream_t&, SchematicModel*) override;
 }c;
 static Dispatcher<Command>::INSTALL p0(&command_dispatcher, "get", &c);
-
-#if 0
-void Get::load(istream_t& s, Object* c) const
-{
-// TODO: move stuff here that does not belong to leg_sch.
-	auto l=doclang_dispatcher["leg_sch"];
-	assert(l);
-	auto L=dynamic_cast<SchematicLanguage const*>(l);
-	assert(L);
-
-	if(auto cc=dynamic_cast<SchematicSymbol*>(c)){
-		while(!s.atEnd()){
-			L->parse(s, cc); // BUG BUG only pass SchematicModel
-			assert(s.atEnd()); // happens with legacy lang
-		}
-	}else if(auto cc=dynamic_cast<SubcktBase*>(c)){
-		while(!s.atEnd()){
-			L->parse(s, cc); // BUG BUG only pass SchematicModel
-			assert(s.atEnd()); // happens with legacy lang
-		}
-	}else{
-		unreachable();
-	}
-
-}
-#endif
 
 void Get::do_it(istream_t& cmd, SchematicModel* sckt)
 {
@@ -58,16 +32,19 @@ void Get::do_it(istream_t& cmd, SchematicModel* sckt)
 	trace1("get", fn);
 	istream_t stream (istream_t::_WHOLE_FILE, fn);
 
+	stream.read_line();
+
 // TODO: any language.
+// magic = stream.fullstring ...
+
 	auto L = doclang_dispatcher["leg_sch"];
-// 	assert(l);
-// 	auto L=dynamic_cast<SchematicLanguage const*>(l);
 	assert(L);
 
-	stream.read_line();
 	while(!stream.atEnd()){
 		L->new__instance(stream, nullptr, sckt);
 		stream.read_line();
 	}
 }
 }
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
