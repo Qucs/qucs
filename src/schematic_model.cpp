@@ -123,7 +123,7 @@ Element* SchematicModel::detach(Element* what)
 // 		auto s = dynamic_cast<Symbol*>(what);
 // 		disconnect(s);
 // 		wires().removeRef(s);
-	}else if(auto c=dynamic_cast<Symbol*>(what)){itested();
+	}else if(auto c=dynamic_cast<Symbol*>(what)){
 		disconnect(c);
 		components().removeRef(c);
 	}else{ untested();

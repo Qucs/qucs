@@ -1,15 +1,27 @@
+/***************************************************************************
+    copyright            : 2018, 2020 Felix Salfelder
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 
 #ifndef QUCS_ERROR_H
 #define QUCS_ERROR_H
 
 /// for now.
-#define	bNOERROR	0
+#define bNOERROR	0
 #define bTRACE		1
 #define bLOG		2
 #define bDEBUG		3
 #define bPICKY		4
-#define	bWARNING	5
-#define bDANGER		6
+#define bWARNING	5
+#define bDANGER   6
 
 class Exception : public std::exception{
 public:
@@ -31,5 +43,10 @@ public:
 class ExceptionCantParse : public std::exception{
 };
 
+struct Exception_File_Open :public Exception{
+  Exception_File_Open(const std::string& Message)
+    :Exception(Message) {
+  }
+};
 
 #endif

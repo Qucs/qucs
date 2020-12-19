@@ -44,14 +44,14 @@ public: // override
 public:
   void set(const std::string& S) {_s = S;}
   void set_scope(SchematicModel* s){_scope = s;}
-  const std::string& s()const {untested();return _s;}
+  const std::string& s()const {return _s;}
 private:
   SchematicModel* _scope;
 };
 /*--------------------------------------------------------------------------*/
 inline SchematicModel* DEV_DOT::scope()
 {
-  if(_scope){ untested();
+  if(_scope){
     return _scope;
   }else{ untested();
     return Element::scope();

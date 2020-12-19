@@ -62,9 +62,9 @@ void DocumentLanguage::new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
 		return;
 	}else{
 		std::string type = findType(cmd);
-		trace4("new_instance", type, cmd.fullString(), owner->label(), Scope);
+		trace3("new_instance", type, cmd.fullString(), Scope);
 		if (const Element* proto = find_proto(type, owner)) {
-			if (auto p = dynamic_cast<DEV_DOT const*>(proto)){ untested();
+			if (auto p = dynamic_cast<DEV_DOT const*>(proto)){
 				DEV_DOT* new_instance = p->clone();
 				delete p;
 				new_instance->set_scope(Scope);

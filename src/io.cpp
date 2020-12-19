@@ -1,7 +1,5 @@
 /***************************************************************************
-    begin                : 2018
-    copyright            : Felix
-    email                : felix@salfelder.org
+    copyright            : 2018, 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -13,12 +11,14 @@
  *                                                                         *
  ***************************************************************************/
 #include "io.h"
+#include "io_error.h"
 #include <QFile>
 
 // BUG.
 DocumentStream::DocumentStream(QFile* /* BUG const */ file)
 	: QTextStream(file)
 {
+	incomplete(); // still used...?
 }
 
 std::string istream_t::read_line()
@@ -50,15 +50,18 @@ istream_t::istream_t(istream_t::STRING, const std::string&s )
 {
 }
 /*--------------------------------------------------------------------------*/
-istream_t::istream_t(istream_t::WHOLE_FILE, const std::string& fn)
+istream_t::istream_t(istream_t::WHOLE_FILE, const std::string& name)
 	: _cnt(0), _ok(true)
 {
-	trace1("whole file", fn);
-	auto qfn = QString::fromStdString(fn);
+	trace1("whole file", name);
+	auto qfn = QString::fromStdString(name);
 	auto d = new QFile(qfn); // BUG: memory leak. (get rid of QTextStream...)
 	d->open(QIODevice::ReadOnly);
-	assert(d->isOpen());
-	QTextStream::setDevice(d);
+	if(!d->isOpen()){ itested();
+		throw Exception_File_Open(name + ':' + " error"); // strerror(errno));
+	}else{
+		QTextStream::setDevice(d);
+	}
 }
 /*--------------------------------------------------------------------------*/
 /// borrowed from ap_*.cc
@@ -142,7 +145,6 @@ istream_t& istream_t::skip1(char t)
   return *this;
 }
 /*--------------------------------------------------------------------------*/
-static const int bDANGER=5;
 // borrowed from ap_match
 std::string istream_t::ctos(const std::string& term,
 		     const std::string& begin_quote,
