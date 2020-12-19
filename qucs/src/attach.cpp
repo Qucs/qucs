@@ -31,20 +31,20 @@ namespace{
 
 class plugins : public Command{
 public:
-	explicit plugins() : Command(){ untested();
+	explicit plugins() : Command(){
 	}
 public:
-  ~plugins(){ untested();
+  ~plugins(){
     for (std::map<std::string, void*>::iterator ii = attach_list.begin();
-	ii != attach_list.end(); ++ii) { untested();
+	ii != attach_list.end(); ++ii) {
       void* m=ii->second;
-      if(m){ untested();
+      if(m){
 	dlclose(m);
       }
     }
   }
 
-  void attach(std::string what) const{ untested();
+  void attach(std::string what) const{
     // RTLD_NOW means to resolve symbols on loading
     // RTLD_LOCAL means symbols defined in a plugin are local
     int dl_scope = RTLD_LOCAL;
@@ -52,9 +52,9 @@ public:
     void* handle;
 
     handle = dlopen((what).c_str(), check | dl_scope);
-    if (handle) { untested();
+    if (handle) {
       attach_list[what] = handle;
-    }else{ untested();
+    }else{
       std::cerr << "failed to attach " << what << " (" << errno << ")\n";
       std::cerr << dlerror() << "\n";
       exit(1); // temporary, should actually throw.
@@ -70,20 +70,20 @@ private:
 Dispatcher<Command>::INSTALL p(&command_dispatcher, "attach", &my_plugins);
 
 static std::string plugpath()
-{ untested();
+{
   const char* ppenv=getenv("QUCS_PLUGPATH");
   if(!ppenv){ untested();
     unreachable();
 	 return "";
-  }else{ untested();
+  }else{
     return ppenv;
   }
 }
 
 void plugins::do_it(istream_t& cs, SchematicModel*)
-{ untested();
+{
 	cs.reset();
-	if(cs.umatch("attach")){ untested();
+	if(cs.umatch("attach")){
 		auto path = plugpath();
 		std::string what;
 		cs >> what;
@@ -100,13 +100,13 @@ void plugins::do_it(istream_t& cs, SchematicModel*)
 
 		std::string full_file_name;
 		if(what.size()==0){ untested();
-		}else if(what[0]=='.'){ untested();
+		}else if(what[0]=='.'){
 			full_file_name=what;
-		}else{ untested();
+		}else{
 			full_file_name = findfile(what, path, R_OK);
 		}
 
-		if (full_file_name != "") { untested();
+		if (full_file_name != "") {
 			// found it, with search
 		}else{untested();
 			std::cerr << "cannot find plugin " + what + " in " +path + "\n";

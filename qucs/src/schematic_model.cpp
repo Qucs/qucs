@@ -26,7 +26,7 @@ SchematicModel::SchematicModel()
   : Nodes(Nets),
     _parent(nullptr),
     _params(nullptr)
-{ untested();
+{
 }
 /*--------------------------------------------------------------------------*/
 SchematicModel::~SchematicModel()
@@ -282,7 +282,7 @@ void SchematicModel::setPort(unsigned i, Node* n)
 }
 /*--------------------------------------------------------------------------*/
 Node const* SchematicModel::portValue(unsigned i) const
-{ untested();
+{
 	assert(i<numPorts());
 	if(_ports[i]){
 		return _ports[i];
@@ -292,8 +292,8 @@ Node const* SchematicModel::portValue(unsigned i) const
 }
 /*--------------------------------------------------------------------------*/
 void SchematicModel::setOwner(Element* o)
-{ untested();
-	for(auto pc : components()){ untested();
+{
+	for(auto pc : components()){
 		assert(pc);
 		trace3("set_owner", pc->label(), pc, o);
 		pc->setOwner(o);

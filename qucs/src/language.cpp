@@ -36,7 +36,7 @@ void DocumentLanguage::printItem(Element const* c, ostream_t& s) const
   if(!c){ untested();
 	  s << "unreachable, no item\n";
 	  // assert(c);
-  }else if (auto C=dynamic_cast<const TaskElement*>(c)) { untested();
+  }else if (auto C=dynamic_cast<const TaskElement*>(c)) {
     printtaskElement(C, s);
   }else if (auto C=dynamic_cast<const SubcktBase*>(c)) {
 	  if(C->is_device()){

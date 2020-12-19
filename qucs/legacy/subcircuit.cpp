@@ -49,7 +49,7 @@ public: // obsolete.
   static Element* info(QString&, char* &, bool getNewOne=false);
 
 private:
-  Element* clone() const override{ untested();
+  Element* clone() const override{
 	  trace0("Subcircuit::clone");
 	  return new Subcircuit(*this);
   }
@@ -510,8 +510,8 @@ QString Subcircuit::getSubcircuitFile(SchematicModel const* scp) const
 }
 /*--------------------------------------------------------------------------*/
 void Subcircuit::build()
-{ untested();
-	if(owner()){ untested();
+{
+	if(owner()){
 		createSymbol(); // BUG. multiple symbols, but embedded into Component
 							 // swap by proper symbols later.
 		proto(nullptr);
@@ -642,7 +642,7 @@ static const std::string typesep(":");
 
 void Subcircuit::setParameter(std::string const& name, std::string const& value)
 {
-	if(name=="$SUB_PATH"){ untested();
+	if(name=="$SUB_PATH"){
 		_subPath = value;
 	}else{
 		Component::setParameter(name, value);

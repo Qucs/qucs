@@ -255,7 +255,7 @@ private: // Symbol
 		assert(i < _ports.size());
 		return _ports[i];
 	}
-	void setParameter(std::string const& n, std::string const& v) override{ untested();
+	void setParameter(std::string const& n, std::string const& v) override{
 		bool redo = false;
 		if(n == "Lib"){ itested();
 			_section.Value = QString::fromStdString(v);
@@ -277,7 +277,7 @@ private: // Symbol
 		}
 	}
 	unsigned paramCount() const{ return Symbol::paramCount() + 4 + _params.size(); }
-	void setParameter(unsigned n, std::string const& v) override{ untested();
+	void setParameter(unsigned n, std::string const& v) override{
 		assert(n<Lib::paramCount());
 		bool redo = false;
 		int m = int(n) - int(Symbol::paramCount());

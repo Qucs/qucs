@@ -196,7 +196,7 @@ void SubCirPort::setParameter(unsigned n, std::string const& vv)
 			incomplete();
 			throw Exception("can't parse " + vv);
 			// throw approriate error
-		}else if(portExists(pos)){ untested();
+		}else if(portExists(pos)){
 			// possibly missing more error handling
 			assert(scope());
 			assert(owner());

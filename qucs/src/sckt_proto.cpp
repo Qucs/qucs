@@ -48,10 +48,10 @@ public:
 
 	virtual void build() { incomplete(); } // needed??
 	SchematicModel* scope() override;
- 	SchematicModel const* scope() const { untested();
- 		auto m = const_cast<SubcktProto*>(this);
- 		return m->scope();
- 	}
+	SchematicModel const* scope() const {
+		auto m = const_cast<SubcktProto*>(this);
+		return m->scope();
+	}
 private:
 	Port& port(unsigned) override{ incomplete(); throw "a";}
 //	SchematicModel const* scope() const override { return &sm; }
@@ -104,7 +104,7 @@ bool SubcktProto::portExists(unsigned i) const
 }
 /*--------------------------------------------------------------------------*/
 unsigned SubcktProto::numPorts() const
-{ untested();
+{
 	assert(subckt());
 	if(makes_own_scope()){
 		trace1("sckt_proto::numPorts", scope()->numPorts());

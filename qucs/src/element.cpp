@@ -83,10 +83,10 @@ void Element::detachFromModel()
 SchematicModel* Element::scope()
 {
 	if(auto o=dynamic_cast<Symbol*>(owner())){
-		if(o->subckt()){ untested();
+		if(o->subckt()){
 			return o->subckt();
 //		}else if(o->makes_own_scope()){ untested();
-		}else{ untested();
+		}else{
 			return o->scope();
 			return nullptr;
 		}

@@ -46,7 +46,7 @@ istream_t::istream_t(QFile* t);
 /*--------------------------------------------------------------------------*/
 istream_t::istream_t(istream_t::STRING, const std::string&s )
 	: _cmd(s), _cnt(0), _ok(true)
-{ untested();
+{
 }
 /*--------------------------------------------------------------------------*/
 /// borrowed from ap_*.cc
