@@ -75,8 +75,8 @@ list(TRANSFORM QUCS_DIALOG_SRC PREPEND ${coreSchematicPath}/)
 #
 # Read variable to generate rules for building source files from bitmap resources
 #
-readVariable(${coreSchematicPath}/MakeList RESOURCES QUCS_RESOURCES)
-list(TRANSFORM QUCS_RESOURCES PREPEND ${coreSchematicPath}/)
+#readVariable(${coreSchematicPath}/MakeList RESOURCES QUCS_RESOURCES)
+#list(TRANSFORM QUCS_RESOURCES PREPEND ${coreSchematicPath}/)
 
 ## schematic library
 add_library(coreSchematic OBJECT ${QUCS_SRCS} ${QUCS_RESOURCES} ${QUCS_UI_FILES} ${QUCS_DIALOG_SRC})
