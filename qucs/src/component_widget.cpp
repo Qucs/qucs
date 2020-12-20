@@ -84,6 +84,7 @@ ComponentListWidgetItem::ComponentListWidgetItem(Element const* e)
 	ViewPainter v(q);
 
 	e->paint(&v);
+#if 0
 	auto sym = dynamic_cast<SchematicSymbol const*>(e);
 
 	if(!sym){
@@ -97,6 +98,10 @@ ComponentListWidgetItem::ComponentListWidgetItem(Element const* e)
 		}
 	}else{
 	}
+
+#else
+	e->paint(&v);
+#endif
 
 	delete q;
 	setIcon(p);

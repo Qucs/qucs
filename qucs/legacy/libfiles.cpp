@@ -18,12 +18,12 @@
 #include "module.h"
 #include "schematic_lang.h"
 #include "symbol.h"
-#include "schematic_symbol.h"
 #include "schematic_model.h" // tmp, debugging
 #include "io_trace.h"
 #include "qt_compat.h"
 #include "docfmt.h"
-#include <QList>
+#include "sckt_base.h"
+#include <QList> // yikes.
 #include "../qucs-lib/qucslib_common.h"
 
 namespace{

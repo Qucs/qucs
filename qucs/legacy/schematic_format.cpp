@@ -39,8 +39,9 @@ private: //Command
 private: // legacy cruft
 	bool isSymbolMode() const{ return false; }
 	ElementList const& symbolPaints(SchematicSymbol const& m) const{
-		assert( m.symbolPaintings());
-		return *m.symbolPaintings();
+		assert(false);
+		//assert( m.symbolPaintings());
+		//return *m.symbolPaintings();
 	}
 	SchematicModel const& section(SchematicModel const* m, std::string name) const{
 		assert(m);
@@ -56,10 +57,12 @@ private: // legacy cruft
 		}
 	}
 	NodeMap const& nodes(SchematicSymbol const& m) const{
-		return m.nodes();
+		assert(false);
+//		return m.nodes();
 	}
 	ElementList const& components(SchematicSymbol const& m) const{
-		return m.components();
+		assert(false);
+//		return m.components();
 	}
 }d0;
 static Dispatcher<Command>::INSTALL p0(&command_dispatcher, "leg_sch", &d0);
@@ -72,12 +75,7 @@ void LegacySchematicFormat::load(istream_t& s, Object* c) const
 	auto L=dynamic_cast<SchematicLanguage const*>(l);
 	assert(L);
 
-	if(auto cc=dynamic_cast<SchematicSymbol*>(c)){
-		while(!s.atEnd()){
-			L->parse(s, cc); // BUG BUG only pass SchematicModel
-			assert(s.atEnd()); // happens with legacy lang
-		}
-	}else if(auto cc=dynamic_cast<SubcktBase*>(c)){
+	if(auto cc=dynamic_cast<SubcktBase*>(c)){
 		while(!s.atEnd()){
 			L->parse(s, cc); // BUG BUG only pass SchematicModel
 			assert(s.atEnd()); // happens with legacy lang
@@ -88,11 +86,12 @@ void LegacySchematicFormat::load(istream_t& s, Object* c) const
 
 }
 
-static QString QG(SchematicSymbol const& m, std::string const& key)
+static QString QG(SubcktBase const& m, std::string const& key)
 {
 	return QString::fromStdString(m.paramValue(key));
 }
 
+#if 0
 static void printProperties(SchematicSymbol const& m, DocumentStream& stream)
 {
 	// get legacy "parameters"
@@ -170,6 +169,7 @@ static void printProperties(SchematicSymbol const& m, DocumentStream& stream)
 	stream << "  <FrameText3=" << t << ">\n";
 	stream << "</Properties>\n";
 }
+#endif
 
 void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 {

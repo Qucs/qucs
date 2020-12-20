@@ -26,6 +26,7 @@
 #include "net.h"
 #include "misc.h"
 #include "settings.h"
+#include "sckt_base.h"
 
 extern tQucsSettings QucsSettings;  // bug, settings.h
 /* -------------------------------------------------------------------------------- */
@@ -155,15 +156,6 @@ void LegacyNetlister::load(istream_t&, Object*) const
 void LegacyNetlister::save(ostream_t&, Object const* o) const
 {
 	unreachable();
-	assert(false);
-	std::map<std::string, Element const*> declarations;
-	auto m_ = dynamic_cast<SchematicSymbol const*>(o);
-
-	if(!m_){
-		incomplete();
-		return;
-	}else{
-	}
 	assert(false);
 //	do_it(Stream, m_->subckt());
 }

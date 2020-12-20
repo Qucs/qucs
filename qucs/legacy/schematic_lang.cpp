@@ -13,7 +13,6 @@
 #include "qucsdoc.h"
 #include "schematic_model.h"
 #include "schematic_lang.h"
-#include "schematic_symbol.h"
 #include "schematic_model.h" /// hmm
 #include "globals.h"
 #include "task_element.h"
@@ -22,6 +21,7 @@
 #include "docfmt.h" // BUG
 #include "d_dot.h"
 #include "components/component.h"
+#include "sckt_base.h"
 
 #ifdef DO_TRACE
 #include <typeinfo>
@@ -377,19 +377,7 @@ void LegacySchematicLanguage::parse_top_item(istream_t& stream, SchematicModel* 
 				trace2("modeS findtype", typeName, _lib_mod);
 				// incomplete();
 				try{
-					if(_lib_mod || !dynamic_cast<SchematicSymbol*>(owner)){ untested();
-						// TODO: always do this
-						new__instance(stream, owner, sckt);
-						// assert(0);
-					}else{
-						// incomplete. hack use parseItem.
-						auto Line = QString::fromStdString(stream.fullString());
-
-						auto ss = dynamic_cast<SchematicSymbol*>(owner);
-						assert(ss);
-						PaintingListLoad(Line, ss->symbolPaintings());
-						trace1("symbolpaint", Line);
-					}
+					new__instance(stream, owner, sckt);
 					c = nullptr;
 				}catch(...){ untested();
 					incomplete();
@@ -531,19 +519,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
 				trace2("modeS findtype", typeName, _lib_mod);
 				// incomplete();
 				try{
-					if(_lib_mod || !dynamic_cast<SchematicSymbol*>(owner)){ untested();
-						// TODO: always do this
-						new__instance(stream, owner, sckt);
-						// assert(0);
-					}else{
-						// incomplete. hack use parseItem.
-						auto Line = QString::fromStdString(stream.fullString());
-
-						auto ss = dynamic_cast<SchematicSymbol*>(owner);
-						assert(ss);
-						PaintingListLoad(Line, ss->symbolPaintings());
-						trace1("symbolpaint", Line);
-					}
+					new__instance(stream, owner, sckt);
 					c = nullptr;
 				}catch(...){ untested();
 					incomplete();

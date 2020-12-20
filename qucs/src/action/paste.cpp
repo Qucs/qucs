@@ -13,6 +13,7 @@
 #include <QApplication>
 #include <QClipboard>
 #include "docfmt.h"
+#include "sckt_base.h"
 
 static const std::string cnp_lang = "leg_sch";
 /*--------------------------------------------------------------------------*/
@@ -81,7 +82,7 @@ private:
 	Element const* _proto;
 };
 /*--------------------------------------------------------------------------*/
-class pastebuffer : public SchematicSymbol{
+class pastebuffer : public SubcktBase{
 public:
 	explicit pastebuffer(){ untested();
 		new_subckt();
@@ -99,7 +100,7 @@ public:
 public:
 	rect_t bounding_rect() const override{ untested();
 		rect_t r;
-		for (auto i : components()){ untested();
+		for (auto i : *subckt()){ untested();
 			auto c = i->center();
 			r |= i->bounding_rect() + c;
 		}
@@ -116,7 +117,7 @@ private:
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionPaste::activate(QObject* sender)
 { untested();
-	SchematicSymbol* buf = nullptr;
+	SubcktBase* buf = nullptr;
 	try{ untested();
 		buf = new pastebuffer();
 	}catch(...){ untested();
@@ -131,7 +132,7 @@ QUndoCommand* MouseActionPaste::activate(QObject* sender)
   center = pos_t(getX(gc), getY(gc));
 
 
-  for(auto i : buf->components()){ untested();
+  for(auto i : *buf->subckt()){ untested();
 	  trace2("centering", i->label(), br.center());
 	  auto p = i->center();
 	  i->setPosition(p - center);

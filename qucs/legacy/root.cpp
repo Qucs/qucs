@@ -12,7 +12,7 @@
  ***************************************************************************/
 
 #include "globals.h"
-#include "schematic_symbol.h"
+#include "sckt_base.h"
 
 namespace{
 class sda : public SubcktBase  {

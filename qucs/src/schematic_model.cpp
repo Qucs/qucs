@@ -377,4 +377,17 @@ PARAM_LIST const* SchematicModel::params() const
   return _params;
 }
 /*--------------------------------------------------------------------------*/
+// debug (any other use?!)
+size_t numWires(SchematicModel const& m)
+{
+	size_t r = 0;
+	for(auto i : m){
+		if(dynamic_cast<Conductor const*>(i)){
+			++r;
+		}else{
+		}
+	}
+	return r;
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

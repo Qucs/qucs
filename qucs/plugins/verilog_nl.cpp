@@ -16,12 +16,12 @@
 #include "element.h"
 //#include "components/component.h" // BUG
 #include "globals.h"
-#include "schematic_symbol.h"
 #include "schematic_model.h"
 #include "schematic_lang.h"
 #include "io.h"
 #include "net.h"
 #include "exception.h"
+#include "sckt_base.h"
 
 namespace{
 
@@ -33,7 +33,7 @@ public:
 	explicit VerilogNetlister();
 private: // legacy implementation
   void createNetlist(DocumentStream& stream, SchematicModel const* m) const;
-  void throughAllComps(DocumentStream& d, SchematicSymbol const& m) const;
+  void throughAllComps(DocumentStream& d, SubcktBase const& m) const;
   void clear() const;
 private: // Command
   void do_it(istream_t&, SchematicModel*) override;
@@ -95,10 +95,6 @@ void VerilogNetlister::do_it(istream_t& cs, SchematicModel* o)
 void VerilogNetlister::printDeclarations(DocumentStream& stream) const
 {
 	for(auto si : declarations){
-		if(SchematicSymbol* sym=dynamic_cast<SchematicSymbol*>(si.second)){
-		}else{
-		}
-
 		lang->printItem(si.second, stream);
 	}
 }
@@ -132,7 +128,7 @@ void VerilogNetlister::createNetlist(DocumentStream& stream,
 	}
 }
 /*--------------------------------------------------------------------------*/
-void VerilogNetlister::throughAllComps(DocumentStream& stream, SchematicSymbol const& m) const
+void VerilogNetlister::throughAllComps(DocumentStream& stream, SubcktBase const& m) const
 { incomplete();
 	auto const& sckt = *m.subckt();
 

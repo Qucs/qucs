@@ -171,8 +171,9 @@ public:
   }
 
   void takeOwnership(Element* e){
+	  assert(false);
 	  // bit of a hack.
-	  e->setOwner(_root);
+//	  e->setOwner(_root);
   }
 
   void deselectElements();

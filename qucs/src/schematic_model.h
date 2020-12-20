@@ -22,18 +22,30 @@
 //#include "node.h"
 #include "io.h"
 #include "schematic_scene.h"
-#include "schematic_symbol.h"
 #include "qucsdoc.h"
 #include "nodemap.h"
 #include "netlist.h"
 #include "protomap.h"
 #include "tasks.h"
+#include "element.h"
+#include "symbol.h"
 /*--------------------------------------------------------------------------*/
 class Node;
 class SchematicDoc;
 class QPlainTextEdit; //??!
 class TaskElement;
 class PARAM_LIST;
+class NetLang;
+/*--------------------------------------------------------------------------*/
+class PaintingList;
+class WireList;
+class NodeMap;
+class DiagramList;
+class PaintingList;
+class CmdEltList;
+class ElementList;
+class Diagram;
+class Painting;
 /*--------------------------------------------------------------------------*/
 class NodeMap;
 // TODO: refactor here
@@ -235,18 +247,6 @@ public: // for now.
 	friend class SchematicSymbol;
 }; // schematicmodel
 /*--------------------------------------------------------------------------*/
-// debug (any other use?!)
-inline size_t numWires(SchematicModel const& m)
-{
-	size_t r = 0;
-	for(auto i : m){
-		if(dynamic_cast<Conductor const*>(i)){
-			++r;
-		}else{
-		}
-	}
-	return r;
-}
-/*--------------------------------------------------------------------------*/
+size_t numWires(SchematicModel const& m);
 /*--------------------------------------------------------------------------*/
 #endif
