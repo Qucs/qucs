@@ -10,6 +10,7 @@ HDR = \
 	graph.h \
 	io_error.h \
 	io_trace.h \
+	language.h \
 	l_compar.h \
 	l_dispatcher.h \
 	l_lib.h \
@@ -17,5 +18,8 @@ HDR = \
 	output.h \
 	port.h \
 	qt_compat.h \
+	settings.h \
+	simulator.h \
+	symbol.h \
 	tasks.h \
 	u_parameter.h

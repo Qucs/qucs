@@ -113,7 +113,6 @@ HDR1 = \
 	exception.h \
 	imagewriter.h \
   	imagewriter.h \
-	language.h \
 	misc.h \
 	mnemo.h \
 	module.h \
@@ -130,10 +129,7 @@ HDR1 = \
 	property.h \
 	protomap.h \
 	qucsdoc.h \
-	simulator.h \
-	symbol.h \
 	syntax.h \
-	settings.h \
 	schematic_action.h \
 	schematic_lang.h \
 	schematic_symbol.h \
