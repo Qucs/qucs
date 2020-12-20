@@ -39,7 +39,7 @@ SchematicDoc::SchematicDoc(QucsApp* App_/*BUG?*/, const QString& Name_, QWidget*
   // ...........................................................
   // create empty schematic... (clear?)
   auto root = symbol_dispatcher.clone("schematic_root");
-  _root = dynamic_cast<SchematicSymbol*>(root);
+  _root = dynamic_cast<SubcktBase*>(root);
   assert(_root);
 
   { // hack?
@@ -223,7 +223,7 @@ bool SchematicDoc::load()
   _root = nullptr;
 
   auto root = symbol_dispatcher.clone("schematic_root");
-  _root = dynamic_cast<SchematicSymbol*>(root);
+  _root = dynamic_cast<SubcktBase*>(root);
   assert(_root);
   _root->setOwner(this); //needed?
 

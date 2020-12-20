@@ -15,11 +15,11 @@
 #include "schematic_symbol.h"
 
 namespace{
-class sda : public SchematicSymbol {
+class sda : public SubcktBase  {
 public:
-  explicit sda() : SchematicSymbol() {
+  explicit sda() : SubcktBase () {
   }
-  explicit sda(sda const&x) : SchematicSymbol(x) {
+  explicit sda(sda const&x) : SubcktBase (x) {
     new_subckt(); // really?
 
     auto a = symbol_dispatcher.clone("subckt_proto");

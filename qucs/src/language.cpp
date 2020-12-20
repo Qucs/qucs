@@ -68,7 +68,7 @@ void DocumentLanguage::new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
 				DEV_DOT* new_instance = p->clone();
 				delete p;
 				new_instance->set_scope(Scope);
-				Element* o = parseItem(cmd, new_instance);
+				parseItem(cmd, new_instance);
 			}else if (Element* new_instance = proto->clone_instance()) {
 				new_instance->setOwner(owner); // owner is null, usually.
 				Element* o = parseItem(cmd, new_instance);

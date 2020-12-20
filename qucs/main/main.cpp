@@ -103,19 +103,17 @@ void qucsMessageOutput(QtMsgType type, const char *msg)
   OutputDebugStringA(msg);
 #endif
 }
-
-
-// moved to legacy/qucsator, QucsatorNetlister::save
+/*--------------------------------------------------------------------------*/
 void doNetlist(QString schematic_fn, std::string netlist, Command* fmt)
 {
 	std::string sfn = schematic_fn.toStdString();
-	QucsDoc d(nullptr, "", nullptr);
+	QucsDoc d(nullptr, "", nullptr); // obsolete?
 	d.setLabel("main");
 
 	Symbol* root = symbol_dispatcher.clone("schematic_root");
 	assert(root);
-	root->setParameter("$filename", sfn);
-	root->setOwner(&d);
+	root->setParameter("$filename", sfn); // BUG: PATH.
+	root->setOwner(&d); // obsolete?
 	root->setLabel(sfn);
 	assert(root->subckt()); // BUG
 
@@ -321,6 +319,7 @@ int main(int argc, char *argv[])
   std::string outputfile;
 
   bool dump_flag = false;
+  bool run_flag = false;
   bool print_flag = false;
   QString page = "A4";
   int dpi = 96;
@@ -372,6 +371,8 @@ int main(int argc, char *argv[])
       fprintf(stdout, "Qucs " PACKAGE_VERSION "\n");
 #endif
       return 0;
+    }else if (!strcmp(argv[i], "-r") || !strcmp(argv[i], "--run")) { untested();
+      run_flag = true;
     }else if (!strcmp(argv[i], "-d") || !strcmp(argv[i], "--dump")) { untested();
       dump_flag = true;
     }else if (!strcmp(argv[i], "-n") || !strcmp(argv[i], "--netlist")) {
@@ -440,6 +441,7 @@ int main(int argc, char *argv[])
     std::cerr << "Error: Cannot find language for "
               << netlang_name << "\n";
     result = -1;
+  }else if (run_flag) { untested();
   }else if (dump_flag and print_flag) { untested();
     fprintf(stderr, "Error: --print and --netlist cannot be used together\n");
     result = -1;

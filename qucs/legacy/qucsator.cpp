@@ -515,7 +515,7 @@ void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
 	// n->save(Stream, d); // ??
 	// if doc is schematic_doc?
 	if(auto d = dynamic_cast<SchematicDoc const*>(doc())){
-		SchematicSymbol const* m = d->root();
+		SubcktBase const* m = d->root();
 		assert(m);
 		try{
 			n->save(Stream, m);

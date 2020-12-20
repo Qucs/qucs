@@ -553,7 +553,7 @@ private:
   SimProcess* simProcess(std::string name);
 
 public:
-  SchematicSymbol const* root() const { return _root; }
+  SubcktBase const* root() const { return _root; }
   SchematicModel const* model() const { return _model; }
 
   void addElement(Element*);
@@ -568,7 +568,7 @@ public: // need access to SchematicModel. grr
   friend class SchematicScene;
 
 private:
-  SchematicSymbol* _root;
+  SubcktBase* _root;
   SchematicModel* _model;
   SubcktBase* _main;
   CmdEltList _commands;
