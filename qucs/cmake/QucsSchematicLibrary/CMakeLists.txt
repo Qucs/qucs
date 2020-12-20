@@ -13,7 +13,7 @@
 project(qucs_lib CXX)
 cmake_minimum_required(VERSION 3.16)
 
-set(coreSchematicPath ${PROJECT_SOURCE_DIR}/../../src)
+set(coreSchematicPath ${CMAKE_CURRENT_SOURCE_DIR}/../../src)
 
 # use top VERSION file
 file(STRINGS ${coreSchematicPath}/VERSION QUCS_VERSION)
