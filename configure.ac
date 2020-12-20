@@ -838,6 +838,7 @@ AC_CONFIG_FILES([
     examples/Makefile
     plugins/Makefile:autotools/plugins.in
     plugins/diagrams/Makefile:autotools/diagrams.in
+    plugins/verilog/Makefile:autotools/verilog.in
     qucs-filter/Makefile
     qucs-activefilter/Makefile
     qucs-transcalc/Makefile

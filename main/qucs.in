@@ -38,10 +38,12 @@ if [ -z "$QUCS_LIBRARY" ]; then
 	QUCS_LIBRARY="$top_src/qucs-lib/library";
 fi
 
+# BUG? this will only work with autotools/libtool
 if [ -z "$QUCS_PLUGPATH" ]; then
 	QUCS_PLUGPATH="$top/plugins/.libs";
 	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/legacy/components/.libs";
 	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/plugins/diagrams/.libs";
+	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/plugins/verilog/.libs";
 	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/legacy/paintings/.libs";
 	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/legacy/.libs";
 	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/contrib/.libs";

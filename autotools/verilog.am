@@ -1,10 +1,4 @@
-## Process this file with automake to produce Makefile.in
-#
-# qucs/sim/Makefile.am
-#
-# Automake input file.
-#
-# Copyright (C) 2015, 2019 Felix Salfelder felix@salfelder.org
+# Copyright (C) 2015, 2019, 2020 Felix Salfelder felix@salfelder.org
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,18 +16,16 @@
 # Boston, MA 02110-1301, USA.
 #
 
-SUBDIRS = \
-	diagrams \
-	verilog
+include ../../common.mk
 
-include ../common.mk
-
-pkglib_LTLIBRARIES = misc.la
+pkglib_LTLIBRARIES = verilog.la
 AM_DEFAULT_SOURCE_EXT = .cpp
+
+verilog_la_SOURCES = ${RAW_SRCS}
+verilog_la_LDFLAGS = -module -avoid-version
+# verilog_la_CPPFLAGS = $(AM_CPPFLAGS)
+# need Qt for TextStream (BUG?)
+# verilog_la_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES)
+
+# BUG
 AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
-
-#BUG
-AM_CPPFLAGS += -I$(top_srcdir)/src
-
-misc_la_SOURCES = $(RAW_SRCS)
-misc_la_LDFLAGS = -module -avoid-version

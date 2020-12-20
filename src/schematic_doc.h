@@ -281,8 +281,10 @@ public:
 
   /*! \brief Get (schematic) file reference */
   QFileInfo getFileInfo (void) {
+	  assert(false);
 	  assert(_model);
-	  return _model->getFileInfo();
+	  return QFileInfo();
+//	  return _model->getFileInfo();
   }
   /*! \brief Set reference to file (schematic) */
 

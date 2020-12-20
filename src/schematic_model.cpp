@@ -171,10 +171,10 @@ Element* SchematicModel::attach(Element* what)
 	return what;
 }
 /*--------------------------------------------------------------------------*/
-QFileInfo const& SchematicModel::getFileInfo ()const
-{
-	return FileInfo;
-}
+// QFileInfo const& SchematicModel::getFileInfo ()const
+// {
+// 	return FileInfo;
+// }
 /*--------------------------------------------------------------------------*/
 NodeMap& SchematicModel::nodes()
 {
