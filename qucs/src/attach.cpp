@@ -44,6 +44,11 @@ public:
     }
   }
 
+  std::string compile(std::string what) const{
+	  // TODO: compile contents and return plugin name.
+	  //    better cache results...
+  }
+
   void attach(std::string what) const{
     // RTLD_NOW means to resolve symbols on loading
     // RTLD_LOCAL means symbols defined in a plugin are local
@@ -88,15 +93,7 @@ void plugins::do_it(istream_t& cs, SchematicModel*)
 		std::string what;
 		cs >> what;
 
-#if 0		// does not work
-		const int n = strlen(SOEXT);
-		if(what.size()<=n){ untested();
-		}else if(what[what.size()-n]!='.'){
-		}else{
-		}
-#else
 		what += SOEXT;
-#endif
 
 		std::string full_file_name;
 		if(what.size()==0){ untested();
@@ -113,7 +110,12 @@ void plugins::do_it(istream_t& cs, SchematicModel*)
 			std::cerr << "(something wrong with installation?)\n";
 			exit(1);
 		}
-		attach(full_file_name.c_str());
+
+		// if(is_directory){ untested();
+		// 	full_file_name = compile(full_file_name);
+		// }else{ untested();
+		// }
+		attach(full_file_name);
 
 	}else{ untested();
 		incomplete();
