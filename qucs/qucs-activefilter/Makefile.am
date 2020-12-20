@@ -49,7 +49,7 @@ noinst_HEADERS = $(MOCHEADERS) qf_matrix.h bessel.h legendre.h \
 CLEANFILES = *~ qucsactivefilter_.cpp
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
 DISTCLEANFILES = *.moc.cpp
-EXTRA_DIST = $(BITMAPS)
+EXTRA_DIST += $(BITMAPS)
 
 BITMAPS = \
 bitmaps/high-pass.svg \

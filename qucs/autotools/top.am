@@ -26,26 +26,9 @@ ACLOCAL_AMFLAGS=-Im4
 # TODO: why is this needed?
 check-recursive: all
 
-SUBDIRS = \
-	autotools \
-	man \
-	src \
-	qucs-activefilter \
-	qucs-attenuator \
-	qucs-filter \
-	qucs-lib \
-	qucs-rescodes \
-	qucs-transcalc \
-	qucs-powercombining \
-	translations \
-	examples \
-	include \
-	main \
-	contrib \
-	tests \
-	legacy \
-	plugins \
-	$(RELEASEDIRS)
+include common.mk
+
+SUBDIRS += $(RELEASEDIRS)
 
 # used in qucs.in wrapper, to compile PATH
 subdirs:
@@ -53,7 +36,7 @@ subdirs:
 
 .PHONY: subdirs
 
-EXTRA_DIST = ar-lib bootstrap depcomp PLATFORMS RELEASE Info.plist \
+EXTRA_DIST += ar-lib bootstrap depcomp PLATFORMS RELEASE Info.plist \
 	common.mk
 
 # MacOSX specific installation of applications

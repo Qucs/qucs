@@ -23,6 +23,8 @@
 # Boston, MA 02110-1301, USA.
 #
 
+include MakeList
+
 SUFFIXES = .qrc
 
 .qrc.cpp:
@@ -40,3 +42,4 @@ AM_CPPFLAGS = -I$(top_srcdir)/include
 
 # BUG
 AM_CPPFLAGS += -I$(top_srcdir)/src
+EXTRA_DIST += MakeList

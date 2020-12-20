@@ -70,16 +70,16 @@ pqucs_LTLIBRARIES = \
 
 # dialogs related to components
 # sort out later.
-DIALOG_SRC = \
+DIALOG_SRC2 = \
 	diagramdialog.cpp \
 	optimizedialog.cpp
 
 
-include MakeList
 libqucs_la_SOURCES = \
 	${CPP_SRC} \
 	$(MOCCPP) \
-	${DIALOG_SRC}
+	${DIALOG_SRC} \
+	${DIALOG_SRC2}
 
 libqucs_la_SOURCES += qucs_.qrc
 
@@ -115,12 +115,15 @@ hicolorsc_DATA =bitmaps/hicolor/scalable/apps/qucs.svg
 desktopdir = ${prefix}/share/applications
 desktop_DATA = qucs.desktop
 
-EXTRA_DIST = \
+EXTRA_DIST += \
 	searchdialog.ui \
 	qucsdigi qucsdigilib qucsdigi.bat qucsdigilib.bat qucsveri qucsveri.bat \
 	$(hicolor16_DATA) $(hicolor22_DATA) $(hicolor32_DATA) $(hicolor48_DATA) \
 	$(hicolor64_DATA) $(hicolor128_DATA) $(hicolor256_DATA) $(hicolor512_DATA) \
-	$(hicolorsc_DATA) $(desktop_DATA) \
+	$(hicolorsc_DATA) $(desktop_DATA)
+
+# BUG
+EXTRA_DIST += \
 	bitmaps/qucs.icns \
 	bitmaps/qucsattenuator.icns \
 	bitmaps/qucsfilter.icns \

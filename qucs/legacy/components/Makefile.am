@@ -31,8 +31,6 @@ plugin_LTLIBRARIES = legacy-components.la
 
 legacy_components_la_LDFLAGS = -shared -module -avoid-version
 
-include MakeList
-
 legacy_components_la_SOURCES = $(DEFAULT_COMPONENTS)
 legacy_components_la_LIBADD = $(QT_LIBS)
 legacy_components_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
@@ -54,4 +52,3 @@ AM_CPPFLAGS += -I$(top_srcdir)/src
 
 CLEANFILES = *~ *.moc.cpp
 MAINTAINERCLEANFILES = Makefile.in
-EXTRA_DIST = MakeList

@@ -26,7 +26,7 @@ qucs_appledir = $(bindir)/qucs.app/Contents/MacOS/
 
 include ../common.mk
 
-all-local: qucs # ${TGT_PROGRAM}
+all-local: qucs
 
 qucs_real_LDFLAGS = $(QT_LDFLAGS)
 qucs_real_SOURCES = ${CPP_SRC}

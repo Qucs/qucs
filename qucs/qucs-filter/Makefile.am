@@ -78,7 +78,7 @@ noinst_HEADERS = \
 CLEANFILES = *~ qucsfilter_.cpp
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
 DISTCLEANFILES = *.moc.cpp
-EXTRA_DIST = ${BITMAPS}
+EXTRA_DIST += ${BITMAPS}
 BITMAPS = \
 	bitmaps/Quarterwave_Notch_Microstrip.svg \
 	bitmaps/CCoupled_Lines_Microstrip.svg \

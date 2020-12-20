@@ -1,0 +1,23 @@
+
+SUBDIRS = \
+	autotools \
+	man \
+	src \
+	qucs-activefilter \
+	qucs-attenuator \
+	qucs-filter \
+	qucs-lib \
+	qucs-rescodes \
+	qucs-transcalc \
+	qucs-powercombining \
+	translations \
+	examples \
+	include \
+	main \
+	cli \
+	contrib \
+	tests \
+	legacy \
+	plugins
+
+EXTRA_DIST =

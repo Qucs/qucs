@@ -53,7 +53,7 @@ noinst_HEADERS = $(MOCHEADERS) classproto.h
 CLEANFILES = *~ qucsrescodes.cpp
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
 DISTCLEANFILES = *.moc.cpp
-EXTRA_DIST = ${BITMAPS}
+EXTRA_DIST += ${BITMAPS}
 BITMAPS = \
 	bitmaps/next.png \
 	bitmaps/previous.png \

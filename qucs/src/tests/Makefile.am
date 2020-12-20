@@ -62,6 +62,6 @@ else
 TESTS = ${check_PROGRAMS}
 endif
 
-EXTRA_DIST = SchematicTests.h ElementTests.h ComponentTests.h
+EXTRA_DIST += SchematicTests.h ElementTests.h ComponentTests.h
 
 CLEANFILES = *core *.moc.cpp

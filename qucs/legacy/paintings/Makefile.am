@@ -22,7 +22,6 @@
 # Boston, MA 02110-1301, USA.  
 #
 #
-include MakeList
 
 include ../../common.mk
 

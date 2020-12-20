@@ -170,7 +170,7 @@ HDR2 = \
 	wirelabel.h
 
 # plugins? lets see
-DIALOG_SRC+= \
+DIALOG_SRC = \
 	aboutdialog.cpp \
 	changedialog.cpp \
 	digisettingsdialog.cpp \
@@ -189,3 +189,5 @@ DIALOG_SRC+= \
 	simmessage.cpp \
 	sweepdialog.cpp \
 	vasettingsdialog.cpp
+
+EXTRA_DIST =

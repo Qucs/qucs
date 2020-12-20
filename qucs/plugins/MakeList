@@ -2,3 +2,5 @@
 RAW_SRCS = \
 	listcompentry.cpp \
 	get.cpp
+
+EXTRA_DIST =

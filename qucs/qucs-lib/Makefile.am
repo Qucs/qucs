@@ -50,4 +50,4 @@ noinst_HEADERS = $(MOCHEADERS)
 CLEANFILES = *~ qucslib_.cpp
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
 DISTCLEANFILES = *.moc.cpp
-EXTRA_DIST = bitmaps/home.png bitmaps/big.qucs.xpm
+EXTRA_DIST += bitmaps/home.png bitmaps/big.qucs.xpm
