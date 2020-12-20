@@ -4,6 +4,12 @@ include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 
 # INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 
+find_package(
+  Qt5
+  REQUIRED
+  Widgets
+  )
+
 set(PAINTINGS_HDRS
     arrowdialog.h
     filldialog.h

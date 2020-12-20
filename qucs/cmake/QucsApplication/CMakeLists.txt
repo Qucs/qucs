@@ -13,7 +13,7 @@ set(PROJECT_DOMAIN_FIRST "qucs")
 set(PROJECT_DOMAIN_SECOND "org")
 
 # when true, all the dependencies (Qucsator, legacy and so on are also compiled)
-set(CompileDependencies true)
+option(CompileDependencies "Compile dependencies related to qucs (qucsator ...), default ON" ON)
 
 # add compiler definitions/symbols
 add_compile_definitions(PACKAGE_VERSION="${PROJECT_VERSION}")
@@ -23,16 +23,21 @@ add_compile_definitions(QUCS_PLUGPATH="${pkglibdir}")
 add_subdirectory(${CMAKE_SOURCE_DIR}/../QucsSchematicLibrary QucsSchematicLibrary)
 
 if (${CompileDependencies})
-	file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/libraries)
-
-	add_subdirectory(${CMAKE_SOURCE_DIR}/../../legacy legacy)
-
-	# copy the library into a common folder for all dependencies of qucs
-	# so they can be used independently to the installed ones
-	install(TARGETS legacy LIBRARY DESTINATION ${CMAKE_BINARY_DIR}/libraries)
+	set(LIB_PATH_TEMP ${CMAKE_BINARY_DIR}/libraries)
+	file(MAKE_DIRECTORY ${LIB_PATH_TEMP})
 
 	add_compile_definitions(QUCS_PLUGPATH="${CMAKE_BINARY_DIR}/libraries")
 	#message("QUCS_PLUGPATH: ${CMAKE_BINARY_DIR}/libraries")
+
+	# copy the library into a common folder for all dependencies of qucs
+	# so they can be used independently to the installed ones
+	add_subdirectory(${CMAKE_SOURCE_DIR}/../../legacy legacy)
+	file(COPY ${CMAKE_CURRENT_BINARY_DIR}/legacy/liblegacy.so DESTINATION ${LIB_PATH_TEMP})
+
+	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../../qucsator qucsator)
+	file(COPY ${CMAKE_CURRENT_BINARY_DIR}/qucsator/src/libqucsator.so DESTINATION ${LIB_PATH_TEMP})
+
+	add_subdirectory(${CMAKE_SOURCE_DIR}/../../legacy/components legacy/components)
 endif()
 
 
