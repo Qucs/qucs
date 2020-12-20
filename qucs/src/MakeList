@@ -184,4 +184,6 @@ DIALOG_SRC = \
 	sweepdialog.cpp \
 	vasettingsdialog.cpp
 
+UI_FILES = searchdialog.ui
+
 EXTRA_DIST =

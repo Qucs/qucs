@@ -1,4 +1,4 @@
-include(../../../cmake/readMakeList.txt)
+include(../../cmake/readMakeList.txt)
 
 readVariable(MakeList XPMS XPMS_)
 

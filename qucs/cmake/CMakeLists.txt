@@ -33,38 +33,38 @@ set(QT_USE_QTSCRIPT TRUE)
 
 set(QT_DEBUG TRUE)
 
-message(${QT_USE_FILE})
-include(${QT_USE_FILE})
+# message(${QT_USE_FILE})
+# include(${QT_USE_FILE})
 
 add_definitions(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucs.1.cmake.in
-               ${CMAKE_CURRENT_SOURCE_DIR}/man/qucs.1)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigi.1.cmake.in
-               ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigi.1)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigilib.1.cmake.in
-               ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigilib.1)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsveri.1.cmake.in
-               ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsveri.1)
+configure_file(../man/qucs.1.cmake.in
+               ../man/qucs.1)
+configure_file(../man/qucsdigi.1.cmake.in
+               ../man/qucsdigi.1)
+configure_file(../man/qucsdigilib.1.cmake.in
+               ../man/qucsdigilib.1)
+configure_file(../man/qucsveri.1.cmake.in
+               ../man/qucsveri.1)
 
 # Tools
 configure_file(
-  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-activefilter/qucsactivefilter.1.cmake.in
-  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-activefilter/qucsactivefilter.1)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-filter/qucsfilter.1.cmake.in
-               ${CMAKE_CURRENT_SOURCE_DIR}/qucs-filter/qucsfilter.1)
+  ../qucs-activefilter/qucsactivefilter.1.cmake.in
+  ../qucs-activefilter/qucsactivefilter.1)
+configure_file(../qucs-filter/qucsfilter.1.cmake.in
+               ../qucs-filter/qucsfilter.1)
 configure_file(
-  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-attenuator/qucsattenuator.1.cmake.in
-  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-attenuator/qucsattenuator.1)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-lib/qucslib.1.cmake.in
-               ${CMAKE_CURRENT_SOURCE_DIR}/qucs-lib/qucslib.1)
+  ../qucs-attenuator/qucsattenuator.1.cmake.in
+  ../qucs-attenuator/qucsattenuator.1)
+configure_file(../qucs-lib/qucslib.1.cmake.in
+               ../qucs-lib/qucslib.1)
 configure_file(
-  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-powercombining/qucspowercombining.1.cmake.in
-  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-powercombining/qucspowercombining.1)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-rescodes/qucsrescodes.1.cmake.in
-               ${CMAKE_CURRENT_SOURCE_DIR}/qucs-rescodes/qucsrescodes.1)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1.cmake.in
-               ${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1)
+  ../qucs-powercombining/qucspowercombining.1.cmake.in
+  ../qucs-powercombining/qucspowercombining.1)
+configure_file(../qucs-rescodes/qucsrescodes.1.cmake.in
+               ../qucs-rescodes/qucsrescodes.1)
+configure_file(../qucs-transcalc/qucstrans.1.cmake.in
+               ../qucs-transcalc/qucstrans.1)
 
 add_subdirectory(src)
 
@@ -86,7 +86,7 @@ add_subdirectory(src)
 #
 # Custom uninstall target
 #
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/uninstall.cmake.in"
+configure_file("../cmake/uninstall.cmake.in"
                "${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake" IMMEDIATE @ONLY)
 
 add_custom_target(uninstall-ui COMMAND ${CMAKE_COMMAND} -P
