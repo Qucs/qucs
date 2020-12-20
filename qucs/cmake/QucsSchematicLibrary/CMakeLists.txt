@@ -64,11 +64,11 @@ add_subdirectory(${coreSchematicPath}/python src/python)
 #add_subdirectory(${coreSchematicPath}/tests src/tests)
 
 readVariable(${coreSchematicPath}/MakeList CPP_SRC QUCS_SRCS)
-readVariable(${coreSchematicPath}/MakeList CPP_HEADERS QUCS_HDRS)
+#readVariable(${coreSchematicPath}/MakeList CPP_HEADERS QUCS_HDRS)
 readVariable(${coreSchematicPath}/MakeList UI_FILES QUCS_UI_FILES)
 readVariable(${coreSchematicPath}/MakeList DIALOG_SRC QUCS_DIALOG_SRC)
 list(TRANSFORM QUCS_SRCS PREPEND ${coreSchematicPath}/)
-list(TRANSFORM QUCS_HDRS PREPEND ${coreSchematicPath}/)
+#list(TRANSFORM QUCS_HDRS PREPEND ${coreSchematicPath}/)
 list(TRANSFORM QUCS_UI_FILES PREPEND ${coreSchematicPath}/)
 list(TRANSFORM QUCS_DIALOG_SRC PREPEND ${coreSchematicPath}/)
 
