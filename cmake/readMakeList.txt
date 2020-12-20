@@ -4,9 +4,9 @@
 #     GPLv3
 macro( conditionalPrintOfMessage condition message)
 
-	if (${condition})
+if (${condition})
 		message("${message}")
-	endif()
+endif()
 
 endmacro()
 
@@ -15,6 +15,8 @@ macro( readVariable FILENAME VARIABLE OUTVAR_NAME)
     # not sure about the scoping
     unset(FILE_BUFFER)
     unset(_RESULT)
+
+message("try ${FILENAME}")
 	file( READ ${FILENAME} FILE_BUFFER )
 	
 	set(debugPrint false) # set to true to see message output

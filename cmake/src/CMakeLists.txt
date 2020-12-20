@@ -20,10 +20,11 @@
 project(qucs_lib CXX)
 cmake_minimum_required(VERSION 3.16)
 
-set(coreSchematicPath ${CMAKE_CURRENT_SOURCE_DIR}/../../src)
+# this is where the library source is.
+set(coreSchematicPath ../../src)
 
 # use top VERSION file
-file(STRINGS ${coreSchematicPath}/VERSION QUCS_VERSION)
+file(STRINGS ../../VERSION QUCS_VERSION)
 
 set(PROJECT_VERSION "${QUCS_VERSION}")
 
@@ -63,7 +64,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-include(${PROJECT_SOURCE_DIR}/../../../cmake/readMakeList.txt)
+include(../readMakeList.txt)
 
 add_subdirectory(${coreSchematicPath}/bitmaps src/bitmaps) #-> added as resources
 add_subdirectory(${coreSchematicPath}/octave src/octave)
