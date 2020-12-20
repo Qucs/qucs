@@ -132,7 +132,6 @@ HDR1 = \
 	syntax.h \
 	schematic_action.h \
 	schematic_lang.h \
-	schematic_symbol.h \
 	schematic_edit.h \
 	sckt_base.h \
 	swap.h \
@@ -159,7 +158,6 @@ HDR2 = \
 	projectView.h \
 	schematic_lang.h \
 	schematic_model.h \
-	schematic_symbol.h \
 	syntax.h \
 	viewpainter.h \
 	wirelabel.h \

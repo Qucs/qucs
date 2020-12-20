@@ -8,7 +8,6 @@
 
 #include "object.h"
 #include "language.h"
-#include "schematic_symbol.h"
 
 class SchematicModel;
 
@@ -21,6 +20,7 @@ public:
 	virtual void parse(istream_t& stream, SubcktBase*) const=0;
 };
 
+#if 0
 // BUG? obsolete?
 template<class container>
 void schematicParse(istream_t& s, SchematicSymbol& c, SchematicLanguage const* L)
@@ -31,6 +31,7 @@ void schematicParse(istream_t& s, SchematicSymbol& c, SchematicLanguage const* L
 		assert(s.atEnd()); // happens with legacy lang
 	}
 }
+#endif
 
 
 #endif

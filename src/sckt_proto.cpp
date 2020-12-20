@@ -11,7 +11,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "schematic_symbol.h"
+//#include "schematic_symbol.h"
+#include "sckt_base.h"
 #include "schematic_model.h"
 #include "globals.h"
 namespace {

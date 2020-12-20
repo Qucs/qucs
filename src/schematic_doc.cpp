@@ -19,6 +19,7 @@
 #include <QUndoStack>
 #include "simmessage.h"
 #include "docfmt.h" // copy&paste
+#include "sckt_base.h"
 
 // tmp hack.
 QucsDoc* newSchematicDoc(QucsApp* a, QString const& b, QWidget* o)

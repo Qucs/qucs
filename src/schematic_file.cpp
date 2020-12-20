@@ -35,21 +35,14 @@
 #include "qucs.h"
 #include "node.h"
 #include "schematic_doc.h"
-// #include "diagrams/diagrams.h"
-// #include "components/spicefile.h"
-// #include "components/vhdlfile.h"
-// #include "components/verilogfile.h"
-// #include "components/libcomp.h"
 #include "module.h"
 #include "misc.h"
-// #include "simulator.h"
 #include "io_trace.h"
 #include "task_element.h"
 #include "globals.h"
 #include "docfmt.h"
 #include "schematic_lang.h"
-
-
+#include "sckt_base.h"
 // -------------------------------------------------------------
 void SchematicDoc::saveDocument() const
 {

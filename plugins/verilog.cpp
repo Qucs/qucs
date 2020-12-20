@@ -19,6 +19,7 @@
 #include "schematic_lang.h"
 #include "schematic_model.h"
 #include "net.h"
+#include "sckt_base.h"
 
 unsigned gndhackn=0;
 
@@ -330,6 +331,7 @@ private: // legacy cruft
 //    assert(m.symbolPaintings());
 //    return *m.symbolPaintings();
 //  }
+#if 0
   DiagramList const& diagrams(SchematicSymbol const& m) const{ untested();
     return m.diagrams();
   }
@@ -342,6 +344,7 @@ private: // legacy cruft
   ElementList const& components(SchematicSymbol const& m) const{ untested();
     return m.components();
   }
+#endif
 
 private: // hacks.
   void printSymbol(Symbol const*, ostream_t&) const;
