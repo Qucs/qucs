@@ -195,7 +195,8 @@ QString SpiceFile::getSubcircuitFile() const
             // check if a file of the same name is in the same directory
             // as the schematic file, if we have a pointer to it, in
             // which case we use this one
-            QFileInfo schematicFileInfo = scope()->getFileInfo ();
+				incomplete();
+            QFileInfo schematicFileInfo; //  = scope()->getFileInfo ();
 
             for (int i = 0; i < QucsSettings.spiceExtensions.count (); i++)
             {

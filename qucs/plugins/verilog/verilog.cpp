@@ -12,7 +12,6 @@
  ***************************************************************************/
 
 #include "node.h"
-#include <QString>
 #include "globals.h"
 #include "docfmt.h"
 #include "task_element.h"
@@ -70,18 +69,18 @@ static Dispatcher<DocumentLanguage>::INSTALL p1(&language_dispatcher, "verilog_s
 /*--------------------------------------------------------------------------*/
 static void printArgs(Symbol const* sym, ostream_t& s)
 {
-		QString comma="";
-		s << "#(";
+	std::string comma="";
+	s << "#(";
 
-		for(unsigned i=0; i<sym->paramCount(); ++i) {
-			auto name = sym->paramName(i);
-			if(name.at(0) == '$'){
-			}else{
-				s << comma << "." << sym->paramName(i) << "(" << sym->paramValue(i) << ")";
-				comma = ", ";
-			}
+	for(unsigned i=0; i<sym->paramCount(); ++i) {
+		auto name = sym->paramName(i);
+		if(name.at(0) == '$'){
+		}else{
+			s << comma << "." << sym->paramName(i) << "(" << sym->paramValue(i) << ")";
+			comma = ", ";
 		}
-		s << ") ";
+	}
+	s << ") ";
 }
 /*--------------------------------------------------------------------------*/
 void VS::print_ports_short(ostream_t& o, const Symbol* x) const

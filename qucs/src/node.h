@@ -16,7 +16,7 @@
 #define QUCS_NODE_H
 
 #include "conductor.h"
-#include "qt_compat.h"
+// #include "qt_compat.h"
 #include "platform.h"
 #include "object.h"
 /*--------------------------------------------------------------------------*/

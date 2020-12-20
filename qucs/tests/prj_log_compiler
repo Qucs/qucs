@@ -4,6 +4,7 @@ QUCS=../main/qucs
 out=out
 ref=${srcdir}/ref
 DIFF=diff\ -rup
+VERILOG_PLUGIN=../plugins/verilog/.libs/verilog
 
 base=$( basename $1 )
 eval echo $base ${REDIR}
@@ -29,7 +30,7 @@ for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 
 	# dump verilog netlist
 	rm -f "${out}/${base}_${schname}.v"
-	cmd="$QUCS -a ../plugins/.libs/verilog -l verilog_nl -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.v"
+	cmd="$QUCS -a $VERILOG_PLUGIN -l verilog_nl -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.v"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
 
@@ -44,7 +45,7 @@ for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 
 	# dump verilog schematic
 	rm -f "${out}/${base}_${schname}.vs"
-	cmd="$QUCS -a ../plugins/.libs/verilog -l v_sch -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.vs"
+	cmd="$QUCS -a $VERILOG_PLUGIN -l v_sch -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.vs"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
 

@@ -14,8 +14,8 @@
 #define QUCS_SCHEMATIC_MODEL_H
 
 #ifndef UNTANGLE_QT // later.
-# include <QGraphicsScene>
-# include <QFileInfo> // BUG
+//# include <QGraphicsScene>
+//# include <QFileInfo> // BUG
 #endif
 
 #include "object.h"
@@ -33,6 +33,7 @@
 class Node;
 class SchematicDoc;
 class QPlainTextEdit; //??!
+class QFileInfo; // BUG
 class TaskElement;
 class PARAM_LIST;
 class NetLang;
@@ -121,9 +122,9 @@ public:
 //	QString createNetlist(DocumentStream&, int, NetLang const&);
 //	void createSubNetlistPlain(ostream_t&, QPlainTextEdit*, int,
 //			bool creatingLib, NetLang const&);
-	QFileInfo const& getFileInfo ()const;
+//	QFileInfo const& getFileInfo ()const;
 	void print(QPrinter*, QPainter*, bool, bool);
-	void setFileInfo(QString FileName) { FileInfo = QFileInfo(FileName); }
+//	void setFileInfo(QString FileName); // { FileInfo = QFileInfo(FileName); }
 	void setDevType(QString const& type); // BUG. move to parent.
 	QString const& devType() const;
 
@@ -226,7 +227,7 @@ private:
 //	SchematicSymbol* _symbol;
 	QStringList PortTypes; // obsolete.
 	std::vector<Node*> _ports; // -> symbol?
-	QFileInfo FileInfo;
+//	QFileInfo FileInfo;
 	QString DevType; // BUG move to parent
 
 public:
