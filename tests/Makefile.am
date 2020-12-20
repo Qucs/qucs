@@ -18,7 +18,7 @@
 
 include ../common.mk
 
-AM_CXXFLAGS = -fPIC
+#AM_CXXFLAGS = -fPIC
 
 examplesdir=$(srcdir)/../examples
 
@@ -207,7 +207,7 @@ dist-hook:
 clean-local:
 	rm -rf out/
 
-EXTRA_DIST = \
+EXTRA_DIST += \
 	prj_log_compiler \
 	$(SH_TESTS)
 

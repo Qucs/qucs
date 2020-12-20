@@ -22,7 +22,6 @@
 #
 
 include ../common.mk
-include MakeList
 
 SUBDIRS = \
 	components \

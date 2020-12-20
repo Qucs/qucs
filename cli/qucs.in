@@ -1,0 +1,74 @@
+#!/bin/sh
+#***************************************************************************
+#*   copyright      : (C) 2015 Felix Salfelder                             *
+#*   email          : felix@salfelder.org                                  *
+#***************************************************************************
+#*                                                                         *
+#*   This program is free software; you can redistribute it and/or modify  *
+#*   it under the terms of the GNU General Public License as published by  *
+#*   the Free Software Foundation; either version 2 of the License, or     *
+#*   (at your option) any later version.                                   *
+#*                                                                         *
+#***************************************************************************
+dir=`dirname $0`
+top="@abs_top_builddir@"
+top_src="@abs_top_srcdir@"
+
+if [ -z "$QUCSATOR" ]; then
+	# this will work within the current git layout,
+	# needs more thought (configuration) for standalone build.
+	QUCSATOR="$top/../qucs-core/src/qucsator";
+fi
+
+if [ -z "$QUCSCONV" ]; then
+	# this will work within the current git layout,
+	# needs more thought (configuration) for standalone build.
+	QUCSCONV="$top/../qucs-core/src/converter/qucsconv";
+fi
+
+if [ -z "$QUCSTRANS" ]; then
+	QUCSTRANS="$top/qucs-transline/qucstrans";
+fi
+
+if [ -z "$QUCSHELP" ]; then
+	QUCSTRANS="$top/qucs-help/qucshelp";
+fi
+
+if [ -z "$QUCS_LIBRARY" ]; then
+	QUCS_LIBRARY="$top_src/qucs-lib/library";
+fi
+
+if [ -z "$QUCS_PLUGPATH" ]; then
+	QUCS_PLUGPATH="$top/plugins/.libs";
+	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/legacy/components/.libs";
+	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/plugins/diagrams/.libs";
+	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/legacy/paintings/.libs";
+	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/legacy/.libs";
+	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/contrib/.libs";
+fi
+
+subdirs="$( make -C $top subdirs )"
+if [ 0 -ne $? ]; then
+	echo could not obtain list of subdirectories >&2
+fi
+
+for i in $subdirs; do
+	PATH="$top/$i:$PATH"
+done
+
+if [ -z "$QUCSDIR" ]; then
+	# use these (part of qucs-core)
+	export QUCSATOR
+	export QUCSCONV
+	export QUCS_LIBRARY
+	export QUCS_PLUGPATH
+	# rely on path, forget about QUCSDIR
+	# this is *not* a user variable. don't touch.
+	export QUCS_USE_PATH=yes
+	export PATH
+else
+	: # not doing anything for
+	  # backwards compatibility
+fi
+
+$dir/qucs.real "$@"

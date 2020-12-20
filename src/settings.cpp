@@ -4,6 +4,7 @@
 #include "platform.h"
 
 extern QStringList qucsPathList; // BUG
+DocumentLanguage* tQucsSettings::language;
 
 // Loads the settings file and stores the settings.
 // BUG: move to QucsSettings::QucsSettings

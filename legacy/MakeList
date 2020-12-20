@@ -46,3 +46,5 @@ HDR = \
 	polardiagram.h \
 	psdiagram.h \
 	tabdiagram.h
+
+EXTRA_DIST =

@@ -825,6 +825,7 @@ dnl Add here all your Makefiles. These are created by configure.
 dnl just collect autotools/*.am?
 AC_CONFIG_FILES([
     Makefile:autotools/top.in
+    cli/Makefile:autotools/cli.in
     contrib/Makefile:autotools/contrib.in
     contrib/vadim/Makefile
     include/Makefile:autotools/include.in
@@ -868,6 +869,7 @@ AC_CONFIG_FILES([
     qucs-powercombining/qucspowercombining.1])
 
 AC_CONFIG_FILES([main/qucs], [chmod +x main/qucs])
+AC_CONFIG_FILES([cli/qucs], [chmod +x cli/qucs])
 
 dnl Check for Git short SHA to tag version
 dnl The release package should also keep it on the config.h

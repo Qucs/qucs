@@ -8,6 +8,7 @@
 #include "io_trace.h"
 
 class Simulator;
+class DocumentLanguage;
 
 struct tQucsSettings {
 	explicit tQucsSettings();
@@ -17,6 +18,7 @@ struct tQucsSettings {
   float largeFontSize;
   QColor BGColor;      // background color of view area
   QString Language;
+  static DocumentLanguage* language;
 
   // syntax highlighting
   QColor Comment, String, Integer, Real, Character, Type,

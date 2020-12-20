@@ -33,7 +33,7 @@ include ../common.mk
 qucspowercombining_SOURCES = main.cpp qucspowercombiningtool.cpp qrc_qucspowercombining.cpp
 qucspowercombining_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
-EXTRA_DIST = qucspowercombining.qrc
+EXTRA_DIST += qucspowercombining.qrc
 qrc_qucspowercombining.cpp: qucspowercombining.qrc
 	$(RCC) -o $@ $<
 

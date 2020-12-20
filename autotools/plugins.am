@@ -25,11 +25,11 @@
 SUBDIRS = \
 	diagrams
 
-include MakeList
+include ../common.mk
 
 pkglib_LTLIBRARIES = verilog.la misc.la
 AM_DEFAULT_SOURCE_EXT = .cpp
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/include
+AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
 
 #BUG
 AM_CPPFLAGS += -I$(top_srcdir)/src

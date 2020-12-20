@@ -27,6 +27,7 @@ class Exception : public std::exception{
 public:
 	explicit Exception(std::string w="?") : _what(w) {}
 	const char* what() const noexcept { return _what.c_str(); }
+	std::string const& message() const noexcept { return _what; }
 
 private:
 	std::string _what;
@@ -43,6 +44,16 @@ public:
 class ExceptionCantParse : public std::exception{
 };
 
+struct Exception_End_Of_Input :public Exception{
+  Exception_End_Of_Input(const std::string& Message) 
+    :Exception(Message) {
+  }
+};
+struct Exception_Quit :public Exception{
+  Exception_Quit(const std::string& Message) 
+    :Exception(Message) {
+  }
+};
 struct Exception_File_Open :public Exception{
   Exception_File_Open(const std::string& Message)
     :Exception(Message) {

@@ -22,6 +22,8 @@
 #define PLATFORM_H_INCLUDED
 
 #include <string>
+#include <csignal>
+#include <csetjmp>
 /*--------------------------------------------------------------------------*/
 /* autoconf stuff */
 #ifdef HAVE_CONFIG_H

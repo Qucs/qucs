@@ -57,7 +57,7 @@ private:
 //	SchematicModel const* scope() const override { return &sm; }
 
 private: // Symbol
-	pos_t portPosition(unsigned) const{ assert(false); return pos_t(0,0);}
+	pos_t portPosition(unsigned) const;
 	Element* clone()const override{
 		auto a=new SubcktProto(*this);
 		a->attach_common(new CommonSubckt(0));
@@ -112,6 +112,17 @@ unsigned SubcktProto::numPorts() const
 	}else{
 		trace1("sckt_proto::numPorts", subckt()->numPorts());
 		return subckt()->numPorts();
+	}
+}
+/*--------------------------------------------------------------------------*/
+pos_t SubcktProto::portPosition(unsigned i) const
+{
+	auto p = subckt()->portValue(i);
+	if(p){
+		return p->position();
+	}else{
+		unreachable();
+		return pos_t(0, 0);
 	}
 }
 /*--------------------------------------------------------------------------*/

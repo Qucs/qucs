@@ -50,6 +50,12 @@ istream_t::istream_t(istream_t::STRING, const std::string&s )
 {
 }
 /*--------------------------------------------------------------------------*/
+istream_t::istream_t(istream_t::STDIN)
+	: _cnt(0), _ok(true)
+{
+  incomplete();
+}
+/*--------------------------------------------------------------------------*/
 istream_t::istream_t(istream_t::WHOLE_FILE, const std::string& name)
 	: _cnt(0), _ok(true)
 {
@@ -405,4 +411,9 @@ CS & CS::check(int badness, const std::string& message)
   return *this;
 }
 /*--------------------------------------------------------------------------*/
+CS& istream_t::get_line(std::string const&)
+{
+	incomplete();
+	return *this;
+}
 /*--------------------------------------------------------------------------*/
