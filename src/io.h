@@ -19,29 +19,27 @@
 class QFile;
 
 // output stream
-class DocumentStream : public QTextStream {
+class ostream_t : public QTextStream {
 private:
-	DocumentStream(DocumentStream const&) = delete;
+	ostream_t(ostream_t const&) = delete;
 public:
-//	explicit DocumentStream(){ incomplete(); }
-	explicit DocumentStream(QFile* /* BUG const */ file);
-	explicit DocumentStream(QString /* BUG const */ * filename) :
+//	explicit ostream_t(){ incomplete(); }
+	explicit ostream_t(QFile* /* BUG const */ file);
+	explicit ostream_t(QString /* BUG const */ * filename) :
 		QTextStream(filename, QIODevice::WriteOnly){}
 
 public:
-	DocumentStream& operator<<(std::string const& x){
+	ostream_t& operator<<(std::string const& x){
 		QTextStream::operator<<(QString::fromStdString(x));
 		return *this;
 	}
 	template<class T>
-	DocumentStream& operator<<(T x){
+	ostream_t& operator<<(T x){
 		QTextStream::operator<<(x);
 		return *this;
 	}
 	//bool atEnd() const{return QTextStream::atEnd();}
 };
-
-typedef DocumentStream ostream_t;
 
 #define CS istream_t
 #define INTERFACE

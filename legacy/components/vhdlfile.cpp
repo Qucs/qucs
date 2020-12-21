@@ -216,7 +216,7 @@ QString VHDL_File::getSubcircuitFile() const
 }
 
 // -------------------------------------------------------
-bool VHDL_File::createSubNetlist(DocumentStream& stream)
+bool VHDL_File::createSubNetlist(ostream_t& stream)
 {
   ErrText = "";
 

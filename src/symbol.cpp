@@ -120,7 +120,7 @@ SchematicModel* Symbol::scope()
 
 	if(auto o=dynamic_cast<Symbol*>(owner())){ untested();
 		return o->subckt();
-	}else if(auto o=dynamic_cast<QucsDoc*>(owner())){ untested();
+	}else if(dynamic_cast<QucsDoc*>(owner())){ untested();
 		assert(subckt());
 		return subckt(); // yikes
 	}else{untested();

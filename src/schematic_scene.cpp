@@ -327,8 +327,6 @@ bool SchematicScene::event(QEvent* e)
 				trace1("setting pos", de->scenePos());
 				auto pos = de->scenePos();
 				elt->setPosition(pos_t(pos.x(), pos.y()));
-				doc()->takeOwnership(elt); // BUG
-				assert(elt->scope());
 				auto gfx = new ElementGraphics(elt);
 				{ untested();
 					addItem(gfx);

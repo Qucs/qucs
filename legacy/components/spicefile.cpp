@@ -261,7 +261,7 @@ QString SpiceFile::getSubcircuitFile() const
 }
 
 // -------------------------------------------------------------------------
-bool SpiceFile::createSubNetlist(DocumentStream &stream)
+bool SpiceFile::createSubNetlist(ostream_t &stream)
 {
   // check file name
   QString FileName = Props.first()->Value;

@@ -46,7 +46,6 @@ class Text;
   }
 
 class QMouseEvent;
-class DocumentStream; // BUG
 class istream_t;
 class FontMetrics;
 class Graph;

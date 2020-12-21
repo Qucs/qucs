@@ -47,6 +47,8 @@ public:
   std::string compile(std::string what) const{
 	  // TODO: compile contents and return plugin name.
 	  //    better cache results...
+	  incomplete();
+	  return what;
   }
 
   void attach(std::string what) const{

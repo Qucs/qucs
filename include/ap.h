@@ -25,8 +25,9 @@
 #ifndef AP_H
 #define AP_H
 //#include "md.h"
+#include <string.h>
 #define INTERFACE
-#include <QTextStream> // BUG
+//#include <QTextStream> // BUG
 #include "io_trace.h"
 #define CS istream_t
 /*--------------------------------------------------------------------------*/
@@ -44,7 +45,8 @@ enum AP_MOD{
 
 const bool ONE_OF = false;
 
-class istream_t : private QTextStream{
+class QTextStream;
+class istream_t {
 public:
   enum STDIN {_STDIN};
   enum INC_FILE {_INC_FILE};
@@ -67,10 +69,10 @@ public:
   explicit    CS(WHOLE_FILE, const std::string& name);
   explicit    CS(STRING, const std::string& s);
   CS(const CS& p) = delete;
-  template<class T>
-  istream_t(T* t) : QTextStream(t), _cmd(""), _cnt(0), _ok(true) {
-    trace1("istream construct", t);
-  }
+//  template<class T>
+//  istream_t(T* t) : _cmd(""), _cnt(0), _ok(true), _stream(t) {
+//    trace1("istream construct", t);
+//  }
   CS&	      operator=(const std::string& s);
   CS&	      operator=(const CS& p);
   CS&	      get_line(const std::string& prompt);
@@ -94,7 +96,7 @@ public:
   bool	      ns_more()const	{return peek()!='\0';}
   bool	      more()		{skipbl(); return ns_more();}
   bool	      is_end()		{return !more();}
-  bool atEnd() const{return QTextStream::atEnd();}
+  bool atEnd() const;
 //  bool	      is_file()		{return (_file && !isatty(fileno(_file)));}
   bool	      is_first_read()const {untested(); return (_line_number == 0);}
 
@@ -167,6 +169,8 @@ public:
   CS&	      skipcom()			{return skip1b(",");}
   CS&	      operator>>(const char& x)	{return skip1b(x);}
   CS&	      operator>>(const char* x)	{return umatch(x);}
+private: // historical hack
+  QTextStream* _stream;
 };	
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
