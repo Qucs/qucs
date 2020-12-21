@@ -64,7 +64,7 @@ namespace IO{
 #define CS istream_t
 #define CARD_LIST SchematicModel
 #define OPT tQucsSettings
-static std::string I_PROMPT="qucs>";
+static std::string I_PROMPT = "qucs> ";
 SchematicModel static_model;
 /*--------------------------------------------------------------------------*/
 struct JMP_BUF{

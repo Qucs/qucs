@@ -413,10 +413,38 @@ CS & CS::check(int badness, const std::string& message)
   return *this;
 }
 /*--------------------------------------------------------------------------*/
-CS& istream_t::get_line(std::string const&)
+CS& istream_t::get_line(std::string const& prompt)
 {
-	incomplete();
-	return *this;
+  ++_line_number;
+
+#if 1 // HACK
+	 std::cout << prompt;
+	 _cmd = _stream->readLine().toStdString();
+    _cnt = 0;
+    _length = _cmd.length();
+    _ok = true;
+#else
+  if (is_file()) {
+    _cmd = getlines(_file);
+    _cnt = 0;
+    _length = _cmd.length();
+    _ok = true;
+  }else{itested();
+    assert(_file == stdin);
+    char cmdbuf[BUFLEN];
+    getcmd(prompt.c_str(), cmdbuf, BUFLEN);
+    _cmd = cmdbuf;
+    _cnt = 0;
+    _length = _cmd.length();
+    _ok = true;
+  }
+
+  if (OPT::listing) {
+    IO::mstdout << "\"" << fullstring() << "\"\n";
+  }else{
+  }
+#endif
+  return *this;
 }
 /*--------------------------------------------------------------------------*/
 bool istream_t::atEnd() const
