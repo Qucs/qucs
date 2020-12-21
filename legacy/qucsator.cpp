@@ -156,9 +156,7 @@ static Dispatcher<DocumentFormat>::INSTALL p(&language_dispatcher, "qucsator", &
 /* -------------------------------------------------------------------------------- */
 static void printSymbol_(Symbol const* c, ostream_t& s)
 {
-	// todo: mfactor.
-	//
-	//
+	// todo: mfactor/active?
 	assert(c);
 	trace2("pc", c->label(), c->typeName());
 

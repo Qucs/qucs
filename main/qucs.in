@@ -43,6 +43,7 @@ if [ -z "$QUCS_PLUGPATH" ]; then
 	QUCS_PLUGPATH="$top/plugins/.libs";
 	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/legacy/components/.libs";
 	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/plugins/diagrams/.libs";
+	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/plugins/misc/.libs";
 	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/plugins/verilog/.libs";
 	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/legacy/paintings/.libs";
 	QUCS_PLUGPATH="$QUCS_PLUGPATH:$top/legacy/.libs";

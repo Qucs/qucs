@@ -1,4 +1,4 @@
-# Copyright (C) 2015, 2019 Felix Salfelder felix@salfelder.org
+# Copyright (C) 2015, 2019, 2020 Felix Salfelder felix@salfelder.org
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,4 +15,14 @@
 # the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
 # Boston, MA 02110-1301, USA.
 
-include MakeList
+include ../../common.mk
+
+pkglib_LTLIBRARIES = misc.la
+AM_DEFAULT_SOURCE_EXT = .cpp
+AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
+
+#BUG
+AM_CPPFLAGS += -I$(top_srcdir)/src
+
+misc_la_SOURCES = $(RAW_SRCS)
+misc_la_LDFLAGS = -module -avoid-version
