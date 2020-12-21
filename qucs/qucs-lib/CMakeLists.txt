@@ -1,6 +1,7 @@
 project(qucslib CXX C)
-cmake_minimum_required(VERSION 2.6)
-cmake_policy(VERSION 2.6)
+cmake_minimum_required(VERSION 3.16)
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/readMakeList.txt)
 
 # use top VERSION file
 file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
@@ -31,22 +32,14 @@ if(NOT WIN32)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
 endif()
 
-find_package(Qt4 REQUIRED)
+find_package(Qt5 REQUIRED Widgets)
 set(QT_USE_QTGUI TRUE)
-
-include(${QT_USE_FILE})
 
 add_definitions(${QT_DEFINITIONS})
 
-set(QUCSLIB_SRCS main.cpp qucslib.cpp displaydialog.cpp symbolwidget.cpp
-                 librarydialog.cpp)
+readVariable(MakeList SRCS QUCSLIB_SRCS)
 
-set(QUCSLIB_MOC_HDRS qucslib.h displaydialog.h symbolwidget.h librarydialog.h)
-
-qt4_wrap_cpp(QUCSLIB_MOC_SRCS ${QUCSLIB_MOC_HDRS})
-
-set(RESOURCES qucslib_.qrc)
-qt4_add_resources(RESOURCES_SRCS ${RESOURCES})
+readVariable(MakeList RESOURCES RESOURCES_SRCS)
 
 if(APPLE)
   # set information on Info.plist file
@@ -62,18 +55,22 @@ if(APPLE)
 
   # set where in the bundle to put the icns file
   set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucslib.icns
+	  ${CMAKE_CURRENT_SOURCE_DIR}/../src/bitmaps/qucslib.icns
     PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
   # include the icns file in the target
   set(QUCSLIB_SRCS ${QUCSLIB_SRCS}
-                   ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucslib.icns)
+	  ${CMAKE_CURRENT_SOURCE_DIR}/../src/bitmaps/qucslib.icns)
 
 endif(APPLE)
 
-add_executable(qucslib MACOSX_BUNDLE WIN32 ${QUCSLIB_SRCS} ${QUCSLIB_MOC_SRCS}
-                                           ${RESOURCES_SRCS})
+add_executable(qucslib MACOSX_BUNDLE WIN32 ${QUCSLIB_SRCS} ${RESOURCES_SRCS})
+set_property(TARGET qucslib PROPERTY AUTOMOC ON)
 
-target_link_libraries(qucslib ${QT_LIBRARIES})
+target_link_libraries(qucslib Qt5::Widgets)
+target_include_directories(qucslib
+	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+	PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../include
+	)
 
 install(
   TARGETS qucslib
