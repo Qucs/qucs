@@ -122,6 +122,11 @@ int main(int argc, char *argv[])
 	  trace0("no QUCS_LIBRARY");
   }
 
+#ifdef QUCS_LIBRARY
+  // define in the cmake file
+  QucsSettings.setLibDir(QUCS_LIBRARY);
+#endif
+
   loadSettings();
 
   SysLibDir.setPath(QucsSettings.libDir());

@@ -7,6 +7,8 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/readMakeList.txt)
 file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
 message(STATUS "Configuring ${PROJECT_NAME} (GUI): VERSION ${QUCS_VERSION}")
 
+option(useLibSourceDirectory "Use the libraries inside the qucs-lib/library folder (Only in debug mode), default ON" ON)
+
 set(PROJECT_VERSION "${QUCS_VERSION}")
 
 set(PROJECT_VENDOR "Qucs team. This program is licensed under the GNU GPL")
@@ -17,6 +19,11 @@ set(PROJECT_DOMAIN_SECOND "org")
 set(CMAKE_BUILD_TYPE Debug)
 
 add_definitions(-DHAVE_CONFIG_H)
+
+string(COMPARE EQUAL ${CMAKE_BUILD_TYPE} "Debug" isDEBUG)
+if (isDEBUG AND useLibSourceDirectory)
+	add_compile_definitions(QUCS_LIBRARY="${CMAKE_CURRENT_SOURCE_DIR}/library")
+endif()
 
 # configure the header config.h
 configure_file("${PROJECT_SOURCE_DIR}/../config.h.cmake"
