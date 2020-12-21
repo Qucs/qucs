@@ -15,7 +15,7 @@
 #include <QFile>
 
 // BUG.
-DocumentStream::DocumentStream(QFile* /* BUG const */ file)
+ostream_t::ostream_t(QFile* /* BUG const */ file)
 	: QTextStream(file)
 {
 	incomplete(); // still used...?
@@ -24,10 +24,11 @@ DocumentStream::DocumentStream(QFile* /* BUG const */ file)
 std::string istream_t::read_line()
 {
 	// _current_start = pos(); // really?
+	assert(_stream);
 
 	_ok = true;
 	_cnt = 0;
-	_cmd = QTextStream::readLine().toStdString();
+	_cmd = _stream->readLine().toStdString();
 	_length = _cmd.length();
 	return _cmd;
 }
@@ -46,18 +47,19 @@ istream_t::istream_t(QFile* t);
 #endif
 /*--------------------------------------------------------------------------*/
 istream_t::istream_t(istream_t::STRING, const std::string&s )
-	: _cmd(s), _cnt(0), _ok(true)
+	: _cmd(s), _cnt(0), _ok(true), _stream(nullptr)
 {
+	auto qs = new QString(QString::fromStdString(s)); // BUG: memory leak.
+	_stream = new QTextStream(qs);
 }
 /*--------------------------------------------------------------------------*/
 istream_t::istream_t(istream_t::STDIN)
-	: _cnt(0), _ok(true)
-{
-  incomplete();
+	: _cnt(0), _ok(true), _stream(new QTextStream(stdin))
+{ untested();
 }
 /*--------------------------------------------------------------------------*/
 istream_t::istream_t(istream_t::WHOLE_FILE, const std::string& name)
-	: _cnt(0), _ok(true)
+	: _cnt(0), _ok(true), _stream(nullptr)
 {
 	trace1("whole file", name);
 	auto qfn = QString::fromStdString(name);
@@ -66,7 +68,7 @@ istream_t::istream_t(istream_t::WHOLE_FILE, const std::string& name)
 	if(!d->isOpen()){ itested();
 		throw Exception_File_Open(name + ':' + " error"); // strerror(errno));
 	}else{
-		QTextStream::setDevice(d);
+		_stream = new QTextStream(d);
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -416,4 +418,11 @@ CS& istream_t::get_line(std::string const&)
 	incomplete();
 	return *this;
 }
+/*--------------------------------------------------------------------------*/
+bool istream_t::atEnd() const
+{
+	assert(_stream);
+	return _stream->atEnd();
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

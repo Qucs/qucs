@@ -52,7 +52,7 @@ void SchematicDoc::saveDocument() const
   // }
   QFile file(docName());
   file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-  DocumentStream stream(&file);
+  ostream_t stream(&file); // BUG
 
 //  sda a(DocModel, *this);
 
@@ -181,20 +181,10 @@ void SchematicModel::collectDigitalSignals(void)
 
 //#include <iostream>
 
-/*!
- * \brief SchematicDoc::throughAllComps
- * Goes through all schematic components and allows special component
- * handling, e.g. like subcircuit netlisting.
- * \param stream is a pointer to the text stream used to collect the netlist
- * \param countInit is the reference to a counter for nodesets (initial conditions)
- * \param Collect is the reference to a list of collected nodesets
- * \param ErrText is pointer to the QPlainTextEdit used for error messages
- * \param NumPorts counter for the number of ports
- * \return true in case of success (false otherwise)
- */
 
 // ---------------------------------------------------
-bool SchematicModel::createLibNetlist(DocumentStream& stream,
+// // what is this?
+bool SchematicModel::createLibNetlist(ostream_t& stream,
      QPlainTextEdit*, int, NetLang const&)
 { untested();
   incomplete(); // wrong place.

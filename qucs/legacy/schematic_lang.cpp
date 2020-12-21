@@ -722,7 +722,7 @@ static void printArgs(Symbol const* sym, ostream_t& s)
 		show /= 2;
 	}
 }
-static void printwirehack(Symbol const* w, DocumentStream& d)
+static void printwirehack(Symbol const* w, ostream_t& d)
 {
 	assert(w);
 	// Symbol const* sym = w;

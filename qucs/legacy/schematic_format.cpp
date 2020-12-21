@@ -92,7 +92,7 @@ static QString QG(SubcktBase const& m, std::string const& key)
 }
 
 #if 0
-static void printProperties(SchematicSymbol const& m, DocumentStream& stream)
+static void printProperties(SchematicSymbol const& m, ostream_t& stream)
 {
 	// get legacy "parameters"
 	float tmpScale;
@@ -183,7 +183,7 @@ void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 		exit(1); // BUG
 	}else{
 	}
-	DocumentStream stream(&NetlistFile);
+	ostream_t stream(&NetlistFile);
 
 /// these are separate in legacy format.
 	std::vector<Element const*> wires;

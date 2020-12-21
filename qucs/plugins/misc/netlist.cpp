@@ -45,7 +45,7 @@ void Netlist::do_it(istream_t& cs, SchematicModel* m)
 		throw Exception("...");
 	}else{
 	}
-	DocumentStream Stream(&NetlistFile);
+	ostream_t Stream(&NetlistFile);
 
 	Language const* lang = nullptr;
 	if(language==""){

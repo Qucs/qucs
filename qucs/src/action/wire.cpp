@@ -187,8 +187,8 @@ public:
 
 				{ // BUG: not here/one call or do later?
 					ctx.sceneAddItem(eg);
-					eg->hide();
-					ctx.takeOwnership(e);
+					eg->setVisible(false);
+//					ctx.takeOwnership(e);
 				}
 
 				qInsert(eg);

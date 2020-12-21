@@ -10,7 +10,6 @@
 #include "command.h"
 
 class SchematicSymbol;
-class DocumentStream;
 class istream_t;
 
 // various list commands?

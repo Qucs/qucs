@@ -20,7 +20,7 @@
 
 #include "component.h"
 
-class DocumentStream;
+class ostream_t;
 class QString;
 
 
@@ -31,7 +31,7 @@ public:
   Component* newOne(); // BUG {return new VHDL_File(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 
-  bool createSubNetlist(DocumentStream&);
+  bool createSubNetlist(ostream_t&); // what??
   QString getErrorText() { return ErrText; }
   QString getSubcircuitFile() const;
 

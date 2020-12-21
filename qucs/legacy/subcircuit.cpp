@@ -594,9 +594,9 @@ void Subcircuit::build_sckt(SubcktBase* proto) const
 	assert(scktfilename!="");
 	QFile file(scktfilename);
 	trace3("sckt definition", label(), scktfilename, s);
-	file.open(QIODevice::ReadOnly);
-	assert(file.isOpen());
-	istream_t pstream(&file);
+//	file.open(QIODevice::ReadOnly);
+//	assert(file.isOpen());
+	istream_t pstream(istream_t::_WHOLE_FILE, scktfilename.toStdString());
 
 	auto cmd = command_dispatcher["leg_sch"];
 	auto D = prechecked_cast<DocumentFormat const*>(cmd);

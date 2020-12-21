@@ -178,19 +178,21 @@ bool SchematicDoc::loadDocument()
   }else{
 //    assert(_model);
 //    _model->setFileInfo(docName());
-    loadDocument(file);
+    QString d = docName();
+    loadDocument(d);
 
 //    QGraphicsScene& s = *scene();
     return true;
   }
 }
 /*--------------------------------------------------------------------------*/
-bool SchematicDoc::loadDocument(QFile& /*BUG*/ file)
+bool SchematicDoc::loadDocument(QString& /*BUG*/ file)
 {itested();
 	incomplete();
   QString Line;
-  istream_t stream(&file);
+  istream_t stream(istream_t::_WHOLE_FILE, file.toStdString());
 
+#if 0
   // read header **************************
   do {itested();
     if(stream.atEnd()) {itested();
@@ -200,16 +202,11 @@ bool SchematicDoc::loadDocument(QFile& /*BUG*/ file)
 
     Line = QString::fromStdString(stream.read_line());
   } while(Line.isEmpty());
-
-  if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
-    file.close();
-    throw "incomplete_exception";
-  }
+#endif
 
   Line = Line.mid(16, Line.length()-17);
 
   parse(stream);
-  file.close();
   for(auto i : *_model){
 	  trace1("postload addElement", i->label());
 	 scene()->addElement(i);

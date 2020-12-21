@@ -104,11 +104,11 @@ public: // stuff saved from Schematic
 	//void simpleInsertWire(Wire*);
 	void recreateSymbol(Symbol* s); // yikes.
 	//private??
-//	bool giveNodeNames(DocumentStream&, int&, QStringList&, QPlainTextEdit*, int,
+//	bool giveNodeNames(ostream_t&, int&, QStringList&, QPlainTextEdit*, int,
 //			bool creatingLib, NetLang const&);
-	bool throughAllComps(DocumentStream&, int&, QStringList&, QPlainTextEdit *, int,
+	bool throughAllComps(ostream_t&, int&, QStringList&, QPlainTextEdit *, int,
 			bool creatingLib, NetLang const&);
-	bool createLibNetlist(DocumentStream&, QPlainTextEdit*, int, NetLang const&);
+	bool createLibNetlist(ostream_t&, QPlainTextEdit*, int, NetLang const&);
 	bool createSubNetlist(ostream_t&, int&, QStringList&, QPlainTextEdit*, int,
 			bool creatingLib, NetLang const&);
 	void throughAllNodes(unsigned& z) const;
@@ -119,7 +119,7 @@ private:
 
 public:
 	void collectDigitalSignals(void);
-//	QString createNetlist(DocumentStream&, int, NetLang const&);
+//	QString createNetlist(ostream_t&, int, NetLang const&);
 //	void createSubNetlistPlain(ostream_t&, QPlainTextEdit*, int,
 //			bool creatingLib, NetLang const&);
 //	QFileInfo const& getFileInfo ()const;
@@ -130,7 +130,7 @@ public:
 
 public:
 	void setOwner(Element* s);
-	int  prepareNetlist(DocumentStream&, QStringList&, QPlainTextEdit*,
+	int  prepareNetlist(ostream_t&, QStringList&, QPlainTextEdit*,
 			bool creatingLib, NetLang const&);
 	// Component* loadComponent(const QString& _s, Component* c) const;
 	TaskElement* loadtaskElement(const QString& _s, TaskElement* c) const;
