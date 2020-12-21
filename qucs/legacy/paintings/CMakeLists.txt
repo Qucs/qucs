@@ -29,6 +29,10 @@ set(PAINTINGS_SRCS
     rectangle.cpp
     filldialog.cpp)
 
-add_library(paintings OBJECT ${PAINTINGS_HDRS} ${PAINTINGS_SRCS}
+add_library(paintings SHARED ${PAINTINGS_HDRS} ${PAINTINGS_SRCS}
                              ${PAINTINGS_MOC_SRCS})
+target_include_directories(paintings
+	PRIVATE
+	${qucs_app_SOURCE_DIR}/../../src
+	${qucs_app_SOURCE_DIR}/../../include)
 target_link_libraries(paintings Qt5::Widgets)
