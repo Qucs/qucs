@@ -1,8 +1,5 @@
-/*$Id: main.cc  $ -*- C++ -*-
- * Copyright (C) 2001 Albert Davis
- * Author: Albert Davis <aldavis@gnu.org>
- *
- * This file is part of "Gnucap", the Gnu Circuit Analysis Package
+/* Copyright (C) 2001 Albert Davis
+ *               2020 Felix Salfelder
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -97,8 +94,10 @@ static void prepare_env()
 }
 /*--------------------------------------------------------------------------*/
 static void read_startup_files(void)
-{
-#if 0
+{ untested();
+#if 1
+  CMD::command(std::string("load " "misc"), &static_model);
+#else
   {
     std::string name = findfile(SYSTEMSTARTFILE, SYSTEMSTARTPATH, R_OK);
     if (name != "") {untested();
