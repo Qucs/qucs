@@ -2,6 +2,8 @@ project(qucsattenuator CXX C)
 cmake_minimum_required(VERSION 2.6)
 cmake_policy(VERSION 2.6)
 
+include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/readMakeList.txt)
+
 # use top VERSION file
 file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
 message(STATUS "Configuring ${PROJECT_NAME} (GUI): VERSION ${QUCS_VERSION}")
@@ -31,24 +33,17 @@ if(NOT WIN32)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
 endif()
 
-find_package(Qt4 REQUIRED)
+find_package(Qt5 REQUIRED Widgets)
 set(QT_USE_QTGUI TRUE)
 
-include(${QT_USE_FILE})
-
-add_definitions(${QT_DEFINITIONS})
+# TODO: why needed?
+#add_definitions(${QT_DEFINITIONS})
 
 # ADD_SUBDIRECTORY( bitmaps ) -> added as resources
 
-set(attenuator_sources attenuatorfunc.cpp main.cpp qucsattenuator.cpp)
+readVariable(MakeList SRCS attenuator_sources)
 
-set(attenuator_moc_headers qucsattenuator.h)
-
-qt4_wrap_cpp(attenuator_moc_sources ${attenuator_moc_headers})
-
-set(RESOURCES qucsattenuator_.qrc)
-
-qt4_add_resources(RESOURCES_SRCS ${RESOURCES})
+readVariable(MakeList RESOURCES RESOURCES_)
 
 if(APPLE)
   # set information on Info.plist file
@@ -75,9 +70,14 @@ endif(APPLE)
 
 add_executable(
   qucsattenuator MACOSX_BUNDLE WIN32
-  ${attenuator_sources} ${attenuator_moc_sources} ${RESOURCES_SRCS})
+  ${attenuator_sources} ${RESOURCES_})
 
 target_link_libraries(qucsattenuator ${QT_LIBRARIES})
+target_link_libraries(qucsattenuator Qt5::Widgets)
+target_include_directories(qucsattenuator
+                           PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+                           PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../include)
+set_property(TARGET qucsattenuator PROPERTY AUTOMOC ON)
 
 # INSTALL (TARGETS qucsattenuator DESTINATION bin)
 #
