@@ -32,7 +32,7 @@ set(COMPONENTS_MOC_HDRS spicedialog.h optimizedialog.h
                         spicefile.h)
 
 # An object library compiles source files but does not archive or link their object files into a library.
-add_library(components shared ${HEADERS} ${COMPONENTS_SRCS}
+add_library(components SHARED ${HEADERS} ${COMPONENTS_SRCS}
                               ${COMPONENTS_MOC_SRCS})
 target_include_directories(components
 	PUBLIC
