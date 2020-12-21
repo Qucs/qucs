@@ -178,10 +178,10 @@ int main(int argc, char *argv[])
   qInstallMsgHandler(qucsMessageHandler);
   QucsVersion = VersionTriplet(PACKAGE_VERSION);
 
-  QFile qf(":/bitmaps/doesnotexist.png");
-  assert(!qf.exists());
-  QFile qfl(":/bitmaps/line.png");
-  assert(qfl.exists());
+//  QFile qf(":/bitmaps/doesnotexist.png");
+//  assert(!qf.exists());
+//  QFile qfl(":/bitmaps/line.png");
+//  assert(qfl.exists());
 
   loadSettings();
 
