@@ -2,22 +2,17 @@
 # testing basic module loading and unloading.
 
 QUCS=../main/qucs
+refdir=$srcdir/ref
 
 if [ ! -x ${QUCS} ]; then
 	echo ${QUCS} does not exist >&9
    exit 1
 fi
 
-text=$( ${QUCS} -a ./helloworld -q | \
+mkdir -p out
+
+${QUCS} -a ./helloworld -q | \
        tr '\n' '|' | tr '\r' '|' | \
-       awk -F"|" '{print $1 $2 $3;}' )
+       awk -F"|" '{print $1 $2 $3;}' > out/helloworld.sh.out
 
-if [ "$text" = "hellogoodbye" ]; then
-	echo hellogoodbye passed; >&2
-	echo hellogoodbye passed; >&9
-else
-	echo "unexpected: ->$text<-" >&2
-	echo "unexpected: ->$text<-" >&9
-	exit 1
-fi
-
+diff out/helloworld.sh.out $refdir/helloworld.sh.out

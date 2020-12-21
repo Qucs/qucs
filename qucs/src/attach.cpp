@@ -74,7 +74,7 @@ private:
 private:
   mutable std::map<std::string, void*> attach_list;
 } my_plugins;
-Dispatcher<Command>::INSTALL p(&command_dispatcher, "attach", &my_plugins);
+Dispatcher<Command>::INSTALL p(&command_dispatcher, "load|attach", &my_plugins);
 
 static std::string plugpath()
 {
@@ -90,7 +90,7 @@ static std::string plugpath()
 void plugins::do_it(istream_t& cs, SchematicModel*)
 {
 	cs.reset();
-	if(cs.umatch("attach")){
+	if(cs.umatch("attach") || cs.umatch("load")){
 		auto path = plugpath();
 		std::string what;
 		cs >> what;

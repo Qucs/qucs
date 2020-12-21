@@ -55,8 +55,9 @@ endif
 
 SH_LOG_COMPILER = $(SHELL)
 PRJ_LOG_COMPILER = $(srcdir)/prj_log_compiler
+QX_LOG_COMPILER = $(srcdir)/qx_log_compiler
 SH_LOG_FLAGS =
-TEST_EXTENSIONS = .sh .prj
+TEST_EXTENSIONS = .sh .prj .qx
 
 check_PROGRAMS = \
 	geometry0 \
@@ -68,94 +69,8 @@ check_PROGRAMS = \
 TESTS = \
 	${check_PROGRAMS} \
 	${SH_TESTS} \
-	${PRJ_TESTS}
-
-
-SH_TESTS = \
-	helloworld.sh \
-	element.sh \
-	doesnotexist.sh \
-	entries.sh \
-	run.sh
-
-PRJ_TESTS = \
-	netlist_bug.prj \
-	AC_bandpass.prj \
-	AC_groupdelay_ac.prj \
-	AC_SW_resonance.prj \
-	DC_AC_active_bp.prj \
-	DC_AC_active_lp.prj \
-	DC_AC_bbv.prj \
-	DC_AC_gain.prj \
-	DC_AC_gyrator.prj \
-	DC_AC_notch.prj \
-	DC_AC_selective_amp.prj \
-	DC_AC_SP_HF_BPF.prj \
-	DC_AC_SP_Spiral_BPF.prj \
-	DC_AC_SP_stab.prj \
-	DC_SP_HICUM-fig10.prj \
-	DC_SP_LPF-Balun2.prj \
-	DC_SP_LPF-Balun3.prj \
-	DC_SP_opamp_gyrator.prj \
-	DC_TR_active_mixer.prj \
-	SP_mscoupler.prj \
-	SP_wilkinson.prj \
-	TR_resistor.prj \
-	TR_sawtooth-1.prj
-
-LATER_TESTS = \
-	AC_SW_swr_meter.prj \
-	AC_wattmeter.prj \
-	DC_SW_bridge.prj \
-	DC_SW_bsim4v30nMOS_Ids_Vgs.prj \
-	DC_SW_bsim4v30pMOS_Ids_Vgs.prj \
-	DC_SW_charac.prj \
-	DC_SW_curtice_1_tb1.prj \
-	DC_SW_diff1.prj \
-	DC_SW_diode.prj \
-	DC_SW_fgummel.prj \
-	DC_SW_preregulator.prj \
-	DC_SW_rgummel.prj \
-	DC_TR_SW_TestHBProbe.prj \
-	SP_bpf_10Ghz.prj \
-	SP_chebyshev1_5th.prj \
-	SP_CIRCWG.prj \
-	SP_elliptic_5th.prj \
-	SP_fet_noise.prj \
-	SP_fhr01fh.prj \
-	SP_giacoletto.prj \
-	SP_groupdelay_sp.prj \
-	SP_microstrip.prj \
-	SP_SmithChartTest.prj \
-	SP_Sparam_diagrams.prj \
-	SP_sparam.prj \
-	TR_555_Fig7.prj \
-	TR_555_Fig9.prj \
-	TR_boostconverter.prj \
-	TR_buckboost.prj \
-	TR_buckconverter.prj \
-	TR_chargepump.prj \
-	TR_classic_osci.prj \
-	TR_colpitts_base.prj \
-	TR_colpitts.prj \
-	TR_diode_hb.prj \
-	TR_fullwaverectifier_1.prj \
-	TR_fullwaverectifier_2.prj \
-	TR_gilbert.prj \
-	TR_lc_osc.prj \
-	TR_lf_osci.prj \
-	TR_mixer.prj \
-	TR_multiplier.prj \
-	TR_Puls3b.prj \
-	TR_rf_osci.prj \
-	TR_sawtooth-2.prj \
-	TR_sawtooth-3.prj \
-	TR_sawtooth-discreet.prj \
-	TR_schmitt.prj \
-	TR_single_balanced.prj \
-	TR_supply.prj \
-	TR_sym_osci.prj \
-	TR_TTL_NAND_spice.prj
+	${PRJ_TESTS} \
+	${QX_TESTS}
 
 # something wrong. fix later.
 XFAIL_TESTS = \
@@ -201,15 +116,19 @@ dist-hook:
 	done
 
 	mkdir -p $(distdir)/ref
-	cp -r $(abs_srcdir)/ref/*.{v,vs,net,dup} $(distdir)/ref
-	cp $(abs_srcdir)/ref/entries.out $(distdir)/ref
+	cp $(abs_srcdir)/ref/*.{v,vs,net,dup,out} $(distdir)/ref
 
 clean-local:
 	rm -rf out/
 
+out/%.qx.out: %.qx
+	../cli/qucs < $< > $@
+
 EXTRA_DIST += \
 	prj_log_compiler \
-	$(SH_TESTS)
+	qx_log_compiler \
+	$(SH_TESTS) \
+	$(QX_TESTS)
 
 CLEANFILES = \
 	*.sch.net \
@@ -218,3 +137,4 @@ CLEANFILES = \
 .PHONY: .P
 ${PRJ_TESTS:%.prj=%.log} : .P
 ${SH_TESTS:%.sh=%.log} : .P
+${QX_TESTS:%.qx=%.log} : .P
